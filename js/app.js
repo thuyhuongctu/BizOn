@@ -1,4 +1,5 @@
-/* BizOn Bật Nghiệp 2026 — UI controller (SPA, localStorage persistence) */
+/* BizOn Bật Nghiệp 2026 — UI controller (SPA, localStorage persistence)
+ * © 2026 Đỗ Thùy Hương (Je m'appelle Hương) & Phan Anh Tú. Bảo lưu mọi quyền. */
 
 const STORAGE_KEY = 'bizon2026';
 let S = null;
