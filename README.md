@@ -6,6 +6,7 @@
 ![license](https://img.shields.io/badge/license-Proprietary%20·%20All%20rights%20reserved-lightgrey)
 ![PWA](https://img.shields.io/badge/PWA-offline%20ready-5cc4e6)
 ![deploy](https://img.shields.io/badge/GitHub%20Pages-live-2ea44f)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21592242.svg)](https://doi.org/10.5281/zenodo.21592242)
 
 | | |
 |---|---|
@@ -13,7 +14,7 @@
 | **Đơn vị** | Đại học Cần Thơ (CTU) |
 | **Chơi ngay** | 🎮 [Game](https://thuyhuongctu.github.io/BizOn/) · 🌐 [Trang giới thiệu](https://thuyhuongctu.github.io/BizOn/gioi-thieu.html) · 🕹️ [Arcade](https://thuyhuongctu.github.io/BizOn/games.html) · 🌏 [BizOn Global](https://thuyhuongctu.github.io/BizOn/global.html) |
 | **Liên hệ** | thuyhuongctu@gmail.com |
-| **Lưu trữ & DOI** | Zenodo: *đang đăng ký* — DOI sẽ cập nhật tại đây sau khi phát hành bản chính thức (xem mục [Trích dẫn](#-trích-dẫn--lưu-trữ)) |
+| **Lưu trữ & DOI** | Zenodo concept DOI: [10.5281/zenodo.21592242](https://doi.org/10.5281/zenodo.21592242) — mọi phiên bản phát hành được lưu trữ vĩnh viễn |
 
 ---
 
@@ -84,10 +85,10 @@ docs/                 # Hướng dẫn giảng viên, đề án V-Monitor, lời
 
 Nếu sử dụng BizOn trong giảng dạy hoặc nghiên cứu, vui lòng trích dẫn:
 
-> Do, T. H., & Phan, A. T. (2026). *BizOn Bật Nghiệp: A 3D claymorphism business-simulation game for entrepreneurship education* [Computer software]. Can Tho University. https://github.com/thuyhuongctu/BizOn
+> Do, T. H., & Phan, A. T. (2026). *BizOn Bật Nghiệp: A 3D claymorphism business-simulation game for entrepreneurship education* [Computer software]. Can Tho University. https://doi.org/10.5281/zenodo.21592242
 
 - Tệp trích dẫn máy đọc được: [`CITATION.cff`](CITATION.cff) (GitHub hiển thị nút **"Cite this repository"**).
-- **Zenodo/DOI:** kho sẽ được lưu trữ trên Zenodo theo đúng quy trình đã áp dụng cho M-AIDA — bật tích hợp *Zenodo ↔ GitHub*, phát hành release `v1.0.0`, DOI concept + version sẽ được cập nhật vào bảng đầu trang này.
+- **Zenodo:** concept DOI [10.5281/zenodo.21592242](https://doi.org/10.5281/zenodo.21592242) (đại diện mọi phiên bản); mỗi release GitHub được Zenodo tự lưu trữ và cấp version DOI riêng.
 
 ## ⚖️ Bản quyền & Sở hữu trí tuệ
 
