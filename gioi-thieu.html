@@ -133,6 +133,10 @@ tailwind.config = {
   @keyframes fadeUp { from {opacity:0; transform:translateY(14px);} to {opacity:1; transform:none;} }
   #catch-canvas { touch-action:none; border-radius:20px; background:linear-gradient(180deg,#dff2fb 0%,#f4faff 100%); box-shadow:inset 3px 3px 8px rgba(0,102,135,.12); width:100%; }
 
+  .faq summary::-webkit-details-marker { display:none; }
+  .faq summary { list-style:none; cursor:pointer; }
+  .faq .faq-arr { transition:transform .25s ease; }
+  .faq[open] .faq-arr { transform:rotate(180deg); }
   /* ===== Chế độ tối ===== */
   :root { --dt: 3 51 55; }
   html[data-theme="dark"] { --dt: 214 236 240; background:#081a20; color-scheme:dark; }
@@ -268,6 +272,62 @@ tailwind.config = {
     <div class="clay-card p-6 tilt reveal"><p class="text-4xl tilt-pop inline-block">🏦</p><h3 class="font-display font-extrabold mt-3">Tài chính C-Suite</h3><p class="text-sm text-deep-teal/60 mt-2">Gọi vốn chủ sở hữu hay vay ngân hàng, kỳ hạn thanh toán 30/60/90 ngày, chế độ khủng hoảng thanh khoản CFO — như phòng họp HĐQT thật.</p></div>
     <div class="clay-card p-6 tilt reveal reveal-d1"><p class="text-4xl tilt-pop inline-block">🏆</p><h3 class="font-display font-extrabold mt-3">Học mà chơi</h3><p class="text-sm text-deep-teal/60 mt-2">Nhiệm vụ, thành tựu, cây kỹ năng, chứng nhận hoàn thành, nhật ký đội và chế độ giảng viên cho lớp học khởi nghiệp.</p></div>
     <div class="clay-card p-6 tilt reveal reveal-d2"><p class="text-4xl tilt-pop inline-block">📱</p><h3 class="font-display font-extrabold mt-3">Web + App một chạm</h3><p class="text-sm text-deep-teal/60 mt-2">Chạy mượt trên trình duyệt, cài lên điện thoại như app thật (PWA), chơi offline sau lần tải đầu tiên.</p></div>
+  </div>
+</section>
+
+
+<!-- ===== 5 VAI TRÒ LÃNH ĐẠO ===== -->
+<section id="roles" class="max-w-6xl mx-auto px-5 py-20">
+  <p class="text-center text-xs font-extrabold text-primary uppercase tracking-[.2em] reveal">Triết lý 5 góc nhìn</p>
+  <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-center mt-2 mb-12 reveal">5 vai trò lãnh đạo cốt lõi</h2>
+  <div class="grid grid-cols-2 md:grid-cols-5 gap-4 tilt-wrap">
+    <div class="clay-card p-5 text-center tilt reveal"><div class="w-14 h-14 mx-auto rounded-full bg-primary/10 flex items-center justify-center text-2xl tilt-pop">🧭</div><h3 class="font-display font-extrabold text-primary mt-3">CEO</h3><p class="text-[11px] text-deep-teal/60 mt-1.5">Tổng giám đốc điều hành — người cầm lái chiến lược.</p></div>
+    <div class="clay-card p-5 text-center tilt reveal reveal-d1"><div class="w-14 h-14 mx-auto rounded-full bg-clay-gold/20 flex items-center justify-center text-2xl tilt-pop">💰</div><h3 class="font-display font-extrabold text-primary mt-3">CFO</h3><p class="text-[11px] text-deep-teal/60 mt-1.5">Giám đốc tài chính — quản trị dòng tiền & lợi nhuận.</p></div>
+    <div class="clay-card p-5 text-center tilt reveal reveal-d2"><div class="w-14 h-14 mx-auto rounded-full bg-clay-orange/15 flex items-center justify-center text-2xl tilt-pop">📣</div><h3 class="font-display font-extrabold text-primary mt-3">CMO</h3><p class="text-[11px] text-deep-teal/60 mt-1.5">Giám đốc marketing — chiếm lĩnh thị phần.</p></div>
+    <div class="clay-card p-5 text-center tilt reveal reveal-d1"><div class="w-14 h-14 mx-auto rounded-full bg-primary-container/20 flex items-center justify-center text-2xl tilt-pop">🏭</div><h3 class="font-display font-extrabold text-primary mt-3">COO</h3><p class="text-[11px] text-deep-teal/60 mt-1.5">Giám đốc vận hành — tối ưu hóa quy trình.</p></div>
+    <div class="clay-card p-5 text-center tilt reveal reveal-d2 col-span-2 md:col-span-1"><div class="w-14 h-14 mx-auto rounded-full bg-emerald-100 flex items-center justify-center text-2xl tilt-pop">📝</div><h3 class="font-display font-extrabold text-primary mt-3">SEC</h3><p class="text-[11px] text-deep-teal/60 mt-1.5">Thư ký hội đồng — quản lý thông tin & rủi ro.</p></div>
+  </div>
+</section>
+
+<!-- ===== LỘ TRÌNH 6 VÒNG ===== -->
+<section id="roadmap" class="bg-white/70 py-20">
+  <div class="max-w-6xl mx-auto px-5">
+    <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-center mb-14 reveal">Lộ trình trải nghiệm 6 vòng</h2>
+    <div class="relative">
+      <div class="hidden md:block absolute top-6 left-0 w-full h-1 rounded-full bg-primary/10"></div>
+      <div class="grid grid-cols-2 md:grid-cols-6 gap-8 relative">
+        <div class="flex flex-col items-center text-center reveal"><div class="w-12 h-12 rounded-full bg-primary text-white font-display font-extrabold text-lg flex items-center justify-center shadow-lg mb-3">1</div><h3 class="font-display font-bold text-primary text-sm">Nghiên cứu</h3><p class="text-[11px] text-deep-teal/55 mt-1">Phân tích thị trường & đối thủ.</p></div>
+        <div class="flex flex-col items-center text-center reveal reveal-d1"><div class="w-12 h-12 rounded-full bg-primary text-white font-display font-extrabold text-lg flex items-center justify-center shadow-lg mb-3">2</div><h3 class="font-display font-bold text-primary text-sm">Thiết lập</h3><p class="text-[11px] text-deep-teal/55 mt-1">Định vị sản phẩm & giá bán.</p></div>
+        <div class="flex flex-col items-center text-center reveal reveal-d2"><div class="w-12 h-12 rounded-full bg-primary text-white font-display font-extrabold text-lg flex items-center justify-center shadow-lg mb-3">3</div><h3 class="font-display font-bold text-primary text-sm">Thâm nhập</h3><p class="text-[11px] text-deep-teal/55 mt-1">Triển khai chiến dịch marketing.</p></div>
+        <div class="flex flex-col items-center text-center reveal"><div class="w-12 h-12 rounded-full bg-primary text-white font-display font-extrabold text-lg flex items-center justify-center shadow-lg mb-3">4</div><h3 class="font-display font-bold text-primary text-sm">Vận hành</h3><p class="text-[11px] text-deep-teal/55 mt-1">Quản trị sản xuất & tồn kho.</p></div>
+        <div class="flex flex-col items-center text-center reveal reveal-d1"><div class="w-12 h-12 rounded-full bg-primary text-white font-display font-extrabold text-lg flex items-center justify-center shadow-lg mb-3">5</div><h3 class="font-display font-bold text-primary text-sm">Tăng tốc</h3><p class="text-[11px] text-deep-teal/55 mt-1">Mở rộng quy mô kinh doanh.</p></div>
+        <div class="flex flex-col items-center text-center reveal reveal-d2"><div class="w-12 h-12 rounded-full text-white font-display font-extrabold text-lg flex items-center justify-center shadow-lg mb-3" style="background:linear-gradient(160deg,#fda127,#e8762d)">6</div><h3 class="font-display font-bold text-clay-orange text-sm">Chốt sổ</h3><p class="text-[11px] text-deep-teal/55 mt-1">Báo cáo P&L & chứng nhận.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LUMINA AI NỔI BẬT ===== -->
+<section id="lumina" class="max-w-6xl mx-auto px-5 py-20">
+  <div class="relative overflow-hidden rounded-clay text-white p-8 sm:p-12 reveal" style="background:linear-gradient(135deg,#033337,#02444d)">
+    <div class="blob w-64 h-64 bg-primary-container top-[-60px] right-[-40px]" style="opacity:.25"></div>
+    <div class="flex flex-col md:flex-row items-center gap-10 relative z-10">
+      <div class="flex-1 text-center md:text-left">
+        <p class="inline-flex items-center gap-2 bg-primary-container/15 border border-primary-container/30 rounded-full px-4 py-1.5 text-[11px] font-extrabold tracking-widest uppercase text-primary-container">✦ Powered by Lumina AI</p>
+        <h2 class="font-display font-extrabold text-3xl sm:text-4xl mt-4">Cố vấn chiến lược Lumina</h2>
+        <p class="text-white/70 text-sm mt-3 leading-relaxed">Lumina phân tích số liệu mô phỏng của đội bạn theo thời gian thực — đề xuất kịch bản tối ưu và cảnh báo rủi ro sớm để bạn dẫn đầu thị trường.</p>
+        <ul class="space-y-2.5 mt-5 text-sm text-left inline-block">
+          <li class="flex items-center gap-2.5"><span class="text-primary-container">✅</span> Phân tích kịch bản "Nếu — Thì" & dự báo P&L</li>
+          <li class="flex items-center gap-2.5"><span class="text-primary-container">✅</span> Cảnh báo rủi ro thị trường (Cam / Đỏ)</li>
+          <li class="flex items-center gap-2.5"><span class="text-primary-container">✅</span> Tối ưu tồn kho & hiệu suất vận hành OEE</li>
+          <li class="flex items-center gap-2.5"><span class="text-primary-container">✅</span> Gợi ý marketing từ dữ liệu đối thủ AI</li>
+        </ul>
+      </div>
+      <div class="shrink-0 relative">
+        <span class="scene-spark" style="top:6%; right:2%">✨</span>
+        <img src="assets/character/lumina-office-present.png" alt="Lumina Vest Trắng — cố vấn chiến lược AI" class="h-72 sm:h-80 w-auto animate-float drop-shadow-[0_30px_30px_rgba(0,0,0,.45)]">
+      </div>
+    </div>
   </div>
 </section>
 
@@ -413,18 +473,56 @@ tailwind.config = {
   <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-center mt-2 reveal">Đội ngũ sáng lập</h2>
   <p class="text-center mb-12 mt-3 reveal"><a href="doi-ngu.html" class="clay-btn inline-block bg-white text-primary text-xs font-bold px-6 py-2.5">👥 Xem trang đội ngũ đầy đủ →</a></p>
   <div class="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto tilt-wrap">
-    <div class="clay-card p-6 text-center tilt reveal">
-      <img src="assets/character/lumina-ao-dai.png" alt="Đỗ Thùy Hương" class="tilt-pop w-28 h-28 mx-auto rounded-full object-cover shadow-lg" style="object-position:50% 10%">
-      <h3 class="font-display font-extrabold mt-4">Đỗ Thùy Hương</h3>
-      <p class="text-xs text-primary font-bold mt-1.5">Sáng lập & Thiết kế game</p>
-      <p class="text-[11px] text-deep-teal/60 mt-2">Hóa thân thành cố vấn AI Lumina trong game — áo dài truyền thống & vest trắng hiện đại.</p>
+    <div class="clay-card !rounded-[2.5rem] p-8 text-center tilt reveal">
+      <div class="w-40 h-40 mx-auto rounded-full overflow-hidden border-4 border-white shadow-xl bg-gradient-to-b from-primary-container/25 to-transparent">
+        <img src="assets/character/lumina-ao-dai-wave.png" alt="Đỗ Thùy Hương" class="tilt-pop w-full h-full object-cover" style="object-position:50% 8%">
+      </div>
+      <h3 class="font-display font-extrabold text-xl text-primary mt-5">Đỗ Thùy Hương</h3>
+      <p class="text-[10px] font-extrabold text-primary/70 uppercase tracking-[.18em] mt-1.5">Founder & Creative Lead</p>
+      <p class="text-[11px] text-deep-teal/60 mt-3 leading-relaxed">Kiến trúc sư chính của BizOn — hóa thân thành cố vấn AI Lumina, tập trung vào trải nghiệm người dùng và thẩm mỹ Claymorphism hiện đại.</p>
     </div>
-    <div class="clay-card p-6 text-center tilt reveal reveal-d1">
-      <img src="assets/character/anh-tu-present.png" alt="Phan Anh Tú" class="tilt-pop w-28 h-28 mx-auto rounded-full object-cover shadow-lg" style="object-position:50% 8%">
-      <h3 class="font-display font-extrabold mt-4">Phan Anh Tú</h3>
-      <p class="text-xs text-primary font-bold mt-1.5">Đồng sáng lập · Cố vấn chuyên môn</p>
-      <p class="text-[11px] text-deep-teal/60 mt-2">Bảo chứng học thuật cho mô hình mô phỏng kinh doanh và chế độ giảng viên.</p>
+    <div class="clay-card !rounded-[2.5rem] p-8 text-center tilt reveal reveal-d1">
+      <div class="w-40 h-40 mx-auto rounded-full overflow-hidden border-4 border-white shadow-xl bg-gradient-to-b from-emerald-200/40 to-transparent">
+        <img src="assets/character/anh-tu-open-arms.png" alt="Phan Anh Tú" class="tilt-pop w-full h-full object-cover" style="object-position:50% 6%">
+      </div>
+      <h3 class="font-display font-extrabold text-xl text-primary mt-5">Phan Anh Tú</h3>
+      <p class="text-[10px] font-extrabold text-primary/70 uppercase tracking-[.18em] mt-1.5">Academic Advisor</p>
+      <p class="text-[11px] text-deep-teal/60 mt-3 leading-relaxed">Cố vấn học thuật cao cấp — đảm bảo tính thực tiễn và chiều sâu kiến thức kinh doanh trong mọi kịch bản mô phỏng.</p>
     </div>
+  </div>
+</section>
+
+
+<!-- ===== GIẢNG VIÊN & DOANH NGHIỆP ===== -->
+<section id="instructor" class="bg-white/70 py-20">
+  <div class="max-w-3xl mx-auto px-5 text-center">
+    <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-primary reveal">Dành cho giảng viên & doanh nghiệp</h2>
+    <p class="text-sm text-deep-teal/60 mt-4 reveal">Mang BizOn vào lớp học hoặc chương trình đào tạo: Class ID cho từng lớp, chế độ Giảng viên (khóa vòng, cấp vốn thưởng, nhật ký), hành vi đối thủ AI tất định — kết quả tái lập được, tiện chấm điểm giữa các đội.</p>
+    <div class="flex flex-wrap gap-3 justify-center mt-7 reveal">
+      <a href="https://github.com/thuyhuongctu/BizOn/blob/main/docs/huong-dan-giang-vien.md" target="_blank" rel="noopener" class="clay-btn bg-white text-primary font-display font-extrabold px-8 py-3.5 text-sm">📖 Hướng dẫn giảng viên</a>
+      <a href="index.html" class="clay-btn-primary clay-btn text-white font-display font-extrabold px-8 py-3.5 text-sm">🚀 Dùng cho lớp học</a>
+    </div>
+    <p class="text-[11px] text-deep-teal/45 mt-5 reveal">✅ Kèm khung chấm điểm, bảng hành vi AI và gợi ý tổ chức lớp đầy đủ trên GitHub</p>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section id="faq" class="max-w-3xl mx-auto px-5 py-20">
+  <p class="text-center text-xs font-extrabold text-primary uppercase tracking-[.2em] reveal">Hỗ trợ</p>
+  <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-center mt-2 mb-10 reveal">Câu hỏi thường gặp</h2>
+  <div class="space-y-4">
+    <details class="faq clay-card p-6 reveal">
+      <summary class="flex items-center justify-between font-display font-extrabold text-deep-teal">Làm thế nào để tham gia BizOn?<span class="faq-arr text-primary">▾</span></summary>
+      <p class="text-sm text-deep-teal/60 mt-3 leading-relaxed">Mở game ngay trên trình duyệt hoặc cài lên điện thoại như app thật (PWA) — hoàn toàn miễn phí, không cần tài khoản. Học trên lớp thì nhập Class ID do giảng viên cung cấp khi đăng nhập.</p>
+    </details>
+    <details class="faq clay-card p-6 reveal reveal-d1">
+      <summary class="flex items-center justify-between font-display font-extrabold text-deep-teal">Cố vấn AI Lumina có miễn phí không?<span class="faq-arr text-primary">▾</span></summary>
+      <p class="text-sm text-deep-teal/60 mt-3 leading-relaxed">Có — Lumina được tích hợp sẵn trong game: trò chuyện giọng nói tiếng Việt, mô phỏng "Nếu — Thì" trước khi chốt và bộ não cố vấn riêng cho từng vai trò C-Suite.</p>
+    </details>
+    <details class="faq clay-card p-6 reveal reveal-d2">
+      <summary class="flex items-center justify-between font-display font-extrabold text-deep-teal">Hệ thống chấm điểm các đội như thế nào?<span class="faq-arr text-primary">▾</span></summary>
+      <p class="text-sm text-deep-teal/60 mt-3 leading-relaxed">Đánh giá đa chiều: lợi nhuận ròng, thị phần & số cờ chinh phục 🚩, sức khỏe thương hiệu, hiệu quả vận hành (OEE) và quản trị rủi ro. Hành vi đối thủ AI tất định theo từng đội nên kết quả tái lập được — công bằng khi so sánh.</p>
+    </details>
   </div>
 </section>
 
