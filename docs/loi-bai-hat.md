@@ -86,6 +86,11 @@ Je m'appelle Hương — and the world sings along...
 
 ---
 
+### Trạng thái sản xuất
+- ✅ **Bản phối instrumental v1 đã phát hành** (tổng hợp synth theo đúng cấu trúc, nhịp và hợp âm ở trên): `assets/audio/bat-nghiep.mp3` (112 BPM, Am/C — arp đất sét + trống V-pop) và `assets/audio/huong-and-the-world.mp3` (118 BPM, D pentatonic — riff kiểu đàn tranh + pad quốc tế).
+- Đã nối vào game (playlist nhạc nền: BizOn Theme → Bật Nghiệp), máy phát nhạc trang giới thiệu và nút 🎵 trên BizOn Global.
+- Khi có bản thu AI-vocal (quy trình M-AIDA), chỉ cần thay 2 file mp3 cùng tên — mọi trình phát tự dùng bản mới.
+
 ### Ghi chú sản xuất
 - Bản phối game Việt Nam nên có bộ gõ tre/đàn bầu điểm xuyết; bản Global thêm dàn dây + synth hiện đại.
 - Hook «Bốn ba phần trăm» và «inverted-U» là "trứng phục sinh" từ kết quả luận án (điểm ngoặt ≈ 43,6% FSTS) — giữ nguyên khi phối.
