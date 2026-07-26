@@ -320,6 +320,7 @@ tailwind.config = {
               <span class="online-dot w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span> Online · Cố vấn chiến lược
             </p>
           </div>
+          <button id="huong-voice-btn" onclick="playHuongIntro()" title="Nghe giọng thật của Hương AI" class="clay-btn bg-white w-11 h-11 rounded-full text-xl shrink-0 self-start">🔊</button>
         </div>
         <div class="relative mt-3">
           <img id="advisor-hero" src="assets/character/lumina-vest.png" alt="" class="w-full h-44 object-cover" style="object-position:50% 18%">
@@ -559,6 +560,14 @@ tailwind.config = {
       <p class="text-center text-xs text-deep-teal/40 mt-6">BizOn Bật Nghiệp 2026 · v1.0.0 · © 2026 Đỗ Thùy Hương (Je m'appelle Hương) &amp; PGS.TS Phan Anh Tú — Bảo lưu mọi quyền</p>
     </section>
   </main>
+
+  <!-- Phụ đề giọng nói Hương AI -->
+  <div id="huong-caption-box" class="hidden fixed bottom-24 inset-x-0 z-50 flex justify-center px-5 pointer-events-none">
+    <div class="clay-card px-5 py-3 flex items-center gap-3 max-w-sm shadow-clay-lg">
+      <img src="assets/character/lumina-ao-dai.png" alt="Hương AI" class="w-10 h-10 rounded-full object-cover shrink-0" style="object-position:50% 10%">
+      <p id="huong-caption" class="signature text-xl text-primary leading-tight min-w-[10rem]"></p>
+    </div>
+  </div>
 
   <!-- Bottom Nav -->
   <nav class="fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur border-t border-primary/5 pb-[env(safe-area-inset-bottom)]">
