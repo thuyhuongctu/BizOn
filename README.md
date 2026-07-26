@@ -19,6 +19,16 @@ python3 -m http.server 8000
 
 Tiến trình chơi được lưu tự động trong `localStorage` của trình duyệt.
 
+## Triển khai Web App & Mobile App
+
+- **Web (GitHub Pages):** workflow [`deploy-pages.yml`](.github/workflows/deploy-pages.yml)
+  tự động deploy mỗi khi push lên `main` → game chạy tại
+  `https://thuyhuongctu.github.io/BizOn/`.
+- **Mobile (PWA):** game là Progressive Web App — mở link trên điện thoại rồi chọn
+  **"Thêm vào màn hình chính"** (Android/Chrome tự gợi ý cài đặt) là có app icon
+  Lumina, chạy toàn màn hình như app native và **chơi được offline** nhờ service
+  worker (`sw.js` + `manifest.webmanifest`).
+
 ## Tính năng
 
 | Màn hình | Mô tả |
@@ -59,10 +69,13 @@ Tiến trình chơi được lưu tự động trong `localStorage` của trình
 ## Cấu trúc mã nguồn
 
 ```
-index.html          # SPA — toàn bộ màn hình + Tailwind config
+index.html          # SPA — toàn bộ màn hình + Tailwind config + đăng ký PWA
 js/engine.js        # Engine mô phỏng 6 vòng, biến cố, vật phẩm, kỹ năng, Lumina AI
 js/app.js           # Điều khiển UI, điều hướng tab, render, localStorage
+sw.js               # Service worker — cache app shell, chơi offline
+manifest.webmanifest# Khai báo PWA (tên, icon, màu thương hiệu)
 assets/character/   # Ảnh 3D nhân vật Lumina (áo dài & vest trắng)
+assets/icons/       # Icon app (mặt Lumina trên nền gradient clay)
 docs/               # Hồ sơ kỹ thuật (schema, API, design system, sở hữu trí tuệ)
 ```
 
