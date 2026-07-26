@@ -72,7 +72,8 @@ function pickRole(id) {
 function doLogin() {
   const email = $('login-email').value.trim() || 'sinhvien@bizon.vn';
   const team = $('login-team').value.trim() || 'Đội Claymorphism';
-  S = newGameState({ email, teamName: team, role: pickedRole });
+  const classId = $('login-class').value.trim();
+  S = newGameState({ email, teamName: team, role: pickedRole, classId });
   save();
   $('screen-login').classList.remove('active');
   enterApp();
@@ -122,6 +123,11 @@ function maybeShowEventIntro() {
           <p class="text-sm text-deep-teal italic leading-relaxed">"${ev.luminaMsg}"</p>
         </div>
       </div>
+      ${bad ? `
+      <div class="clay-raised p-3 mt-3 flex items-center gap-3">
+        <img src="assets/character/anh-tu-think.png" alt="PGS.TS Phan Anh Tú" class="w-11 h-11 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 8%">
+        <p class="text-xs text-deep-teal/80 italic">"Bình tĩnh phân tích số liệu trước khi hành động — khủng hoảng luôn ẩn chứa cơ hội cho đội có kỷ luật." — <b class="text-emerald-700">PGS.TS Phan Anh Tú · Cố vấn học thuật</b></p>
+      </div>` : ''}
       <button id="ev-cta" class="clay-button-primary w-full text-white font-display font-bold text-lg py-4 mt-6">${ev.cta ? ev.cta.label : '🎯 Nhập quyết định'}</button>
       <button id="ev-close" class="clay-button-secondary w-full text-primary font-display font-bold py-4 mt-3">Về Trung tâm điều hành</button>
     </div>`;
@@ -164,6 +170,10 @@ function showVictory(r) {
         <div class="clay-card p-4"><p class="text-2xl">📈</p><p class="font-display font-extrabold text-deep-teal">+${r.adEff}%</p><p class="text-[10px] text-deep-teal/50 font-semibold">Hiệu quả quảng cáo</p></div>
         <div class="clay-card p-4"><p class="text-2xl">😊</p><p class="font-display font-extrabold text-deep-teal">${satisfaction}/5</p><p class="text-[10px] text-deep-teal/50 font-semibold">Độ hài lòng thương hiệu</p></div>
       </div>
+      <div class="clay-raised p-3 mb-4 flex items-center gap-3 text-left">
+        <img src="assets/character/anh-tu-celebrate.png" alt="PGS.TS Phan Anh Tú" class="w-12 h-12 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 8%">
+        <p class="text-xs text-deep-teal/80 italic">"Xuất sắc! Đây là minh chứng cho một chiến lược được thực thi kỷ luật." — <b class="text-emerald-700">PGS.TS Phan Anh Tú</b></p>
+      </div>
       <button id="vic-report" class="clay-btn w-full bg-deep-teal text-white font-display font-bold py-4 mb-3">📊 XEM BÁO CÁO CHI TIẾT</button>
       <button id="vic-next" class="clay-btn w-full bg-white text-deep-teal font-display font-bold py-4">LẬP KẾ HOẠCH TIẾP THEO</button>
     </div>`;
@@ -189,7 +199,83 @@ function renderAll() {
   if (!S) return;
   renderHeader(); renderDashboard(); renderDecisions(); renderAdvisorIntro();
   renderShop(); renderSkills(); renderLeaderboard(); renderAchievements(); renderProfile();
-  renderMissions(); renderMinigame(); renderInstructor();
+  renderMissions(); renderMinigame(); renderInstructor(); renderJournal();
+}
+
+// ---------- Nhật ký đội (Team Journal — SEC ghi chép) ----------
+function journalLesson(r) {
+  const parts = [];
+  if (r.netProfit < 0) {
+    const costs = [['giá vốn sản xuất', r.cogs], ['marketing', r.marketing], ['chi phí cố định', r.fixed], ['khấu hao', r.depreciation]];
+    costs.sort((a, b) => b[1] - a[1]);
+    parts.push(`Lỗ ${money(Math.abs(r.netProfit))} — khoản chi lớn nhất là ${costs[0][0]} (${money(costs[0][1])}). Cần cân đối lại cơ cấu chi phí.`);
+  } else {
+    parts.push(`Lãi ${money(r.netProfit)} với biên lợi nhuận ${Math.round(100 * r.netProfit / Math.max(1, r.revenue))}%.`);
+  }
+  if (r.lostSales > 200) parts.push(`Hụt ${r.lostSales.toLocaleString('vi-VN')} đơn vì thiếu hàng — cầu vượt cung, nên tăng sản lượng.`);
+  if (r.inventory > 400) parts.push(`Tồn kho ${r.inventory.toLocaleString('vi-VN')} sp do dự báo sai nhu cầu — chi phí lưu kho tăng.`);
+  if (r.oee && r.oee < 80) parts.push(`OEE giảm còn ${r.oee}% — cần bảo trì/nâng cấp dây chuyền.`);
+  return parts.join(' ');
+}
+
+const JOURNAL_QUOTES = [
+  { text: 'Mục tiêu không phải là đánh bại đối thủ, mà là làm cho họ trở nên không còn quan trọng.', by: 'Lumina AI', color: 'text-primary' },
+  { text: 'Mọi báo cáo tài chính đều là một câu chuyện, hãy đảm bảo đội của bạn đang viết một chương thành công.', by: 'SEC', color: 'text-red-600' },
+  { text: 'Dữ liệu cho ta biết quá khứ, quyết định hôm nay viết nên tương lai.', by: 'PGS.TS Phan Anh Tú', color: 'text-emerald-700' },
+  { text: 'Khủng hoảng là bài kiểm tra tốt nhất cho năng lực quản trị dòng tiền.', by: 'Lumina AI', color: 'text-primary' },
+  { text: 'Thị phần mua được bằng tiền, nhưng lòng trung thành phải xây bằng giá trị.', by: 'PGS.TS Phan Anh Tú', color: 'text-emerald-700' },
+  { text: 'Đừng sợ commit sai — hãy sợ việc không rút ra được bài học nào.', by: 'SEC', color: 'text-red-600' },
+];
+
+function renderJournal() {
+  const list = $('journal-list');
+  if (!list) return;
+  const entries = [];
+  if (!S.finished) {
+    const ev = currentEvent(S);
+    entries.push(`
+      <div class="relative">
+        <span class="absolute -left-[22px] top-5 w-3.5 h-3.5 rounded-full bg-primary shadow-clay"></span>
+        <div class="clay-raised p-4">
+          <div class="flex justify-between items-start mb-1">
+            <span class="text-[10px] font-extrabold px-2.5 py-1 rounded-full bg-deep-teal text-white">ĐANG DIỄN RA</span>
+            <span class="text-[11px] font-bold text-deep-teal/50">V${S.round}/6</span>
+          </div>
+          <p class="font-display font-bold text-deep-teal">Vòng ${S.round}: ${ev.name.replace('Biến cố: ', '')}</p>
+          <div class="clay-sunken rounded-2xl p-3 mt-2">
+            <p class="text-[10px] font-bold text-deep-teal/50 uppercase">Trạng thái</p>
+            <p class="text-sm font-bold text-primary">${S.committed ? 'Đã commit — chờ kết quả' : 'Đang thảo luận quyết định'}</p>
+          </div>
+        </div>
+      </div>`);
+  }
+  [...S.history].reverse().forEach(r => {
+    const q = JOURNAL_QUOTES[(r.round - 1) % JOURNAL_QUOTES.length];
+    const priceDelta = Math.round(100 * (r.decisions.price - REF_PRICE) / REF_PRICE);
+    entries.push(`
+      <div class="relative">
+        <span class="absolute -left-[22px] top-5 w-3.5 h-3.5 rounded-full ${r.netProfit >= 0 ? 'bg-primary-container' : 'bg-orange-400'} shadow-clay"></span>
+        <div class="clay-raised p-4">
+          <div class="flex justify-between items-start mb-1">
+            <span class="text-[10px] font-extrabold px-2.5 py-1 rounded-full clay-sunken text-deep-teal/70">HOÀN THÀNH</span>
+            <span class="text-[11px] font-bold text-deep-teal/50">V${r.round}/6</span>
+          </div>
+          <p class="font-display font-bold text-deep-teal">Vòng ${r.round}: ${r.event.name.replace('Biến cố: ', '')}</p>
+          <div class="clay-sunken rounded-2xl p-3 mt-2">
+            <p class="text-[10px] font-bold text-deep-teal/50 uppercase">Quyết định then chốt</p>
+            <p class="text-sm font-bold text-primary">Giá bán: ${r.decisions.price.toLocaleString('vi-VN')}k₫ (${priceDelta >= 0 ? '+' : ''}${priceDelta}% so với ĐT) · R&D ${r.rd}tr₫</p>
+          </div>
+          <p class="text-[10px] font-bold text-deep-teal/50 uppercase mt-2.5">Kết quả & bài học</p>
+          <p class="text-sm text-deep-teal/80">${journalLesson(r)}</p>
+          <div class="border-t border-surface-bright mt-2.5 pt-2.5 flex gap-2 items-start">
+            <span class="text-base">💬</span>
+            <p class="text-xs text-deep-teal/70 italic">"${q.text}" — <b class="${q.color}">${q.by}</b></p>
+          </div>
+        </div>
+      </div>`);
+  });
+  list.innerHTML = '<div class="absolute left-2 top-2 bottom-2 w-0.5 bg-primary/15 rounded-full"></div>' +
+    (entries.length ? entries.join('') : '<p class="text-sm text-deep-teal/50">Hành trình sẽ được ghi lại tại đây sau vòng đầu tiên.</p>');
 }
 
 function renderHeader() {
@@ -731,7 +817,7 @@ function renderAchievements() {
 // ---------- Profile & Settings ----------
 function renderProfile() {
   $('pf-name').textContent = S.profile.teamName;
-  $('pf-email').textContent = S.profile.email;
+  $('pf-email').textContent = S.profile.email + (S.profile.classId ? ' · Lớp ' + S.profile.classId : '');
   $('pf-role').textContent = { CEO: '🧭 CEO — Quyết định', CFO: '💰 CFO — Tài chính', CMO: '📣 CMO — Thị trường', COO: '🏭 COO — Vận hành', SEC: '📝 SEC — Thư ký' }[S.profile.role];
   const level = 1 + Math.floor(S.xp / XP_PER_LEVEL);
   $('pf-level').textContent = level;
