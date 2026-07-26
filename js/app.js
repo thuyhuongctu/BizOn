@@ -17,6 +17,7 @@ function load() {
     if (s) { // migration cho save cũ thiếu trường mới
       s.missionsClaimed ??= []; s.aiAskedTotal ??= 0; s.itemsBought ??= 0;
       s.minigameBest ??= 0; s.minigamePlays ??= 0; s.roundLocked ??= false; s.grantLog ??= [];
+      s.minigamePoints ??= 0; s.rewardsOwned ??= []; s.rewardEquipped ??= null;
       s.oee ??= 85; s.defect ??= 2.0; s.brandLoyalty ??= 65; s.adEff ??= 0;
       s.quickRatio ??= 1.0; s.roi ??= 0; s.energyLines ??= [2100, 4850, 1470];
       s.lineUpgraded ??= [false, false, false]; s.maintBonus ??= 0; s.maintenanceLog ??= [];
@@ -653,7 +654,8 @@ function renderJournal() {
 
 function renderHeader() {
   $('hdr-team').textContent = S.profile.teamName;
-  $('hdr-level').textContent = 'Lv.' + (1 + Math.floor((S.xp - S.spentXp < 0 ? 0 : S.xp) / XP_PER_LEVEL));
+  const eqR = MG_REWARDS.find(r => r.id === S.rewardEquipped);
+  $('hdr-level').textContent = 'Lv.' + (1 + Math.floor((S.xp - S.spentXp < 0 ? 0 : S.xp) / XP_PER_LEVEL)) + (eqR ? ' ' + eqR.icon : '');
   $('hdr-xp').textContent = S.xp.toLocaleString('vi-VN') + ' XP';
   $('hdr-balance').textContent = money(S.balance);
 }
@@ -1695,6 +1697,7 @@ let mg = null; // trạng thái phiên chơi hiện tại
 
 function renderMinigame() {
   $('mg-best').textContent = S.minigameBest;
+  const pts = $('mg-points'); if (pts) pts.textContent = (S.minigamePoints || 0).toLocaleString('vi-VN');
   $('mg-plays').textContent = Math.min(3, (S.minigamePlays || 0) + 1);
   const btn = $('mg-start');
   const out = (S.minigamePlays || 0) >= 3;
@@ -1751,12 +1754,152 @@ function endMinigame() {
   document.querySelectorAll('.mg-item').forEach(e => e.remove());
   const reward = Math.min(60, score * 2);
   S.balance += reward;
+  S.minigamePoints = (S.minigamePoints || 0) + score * 10;   // điểm đổi thưởng Clay Reward Shop
   if (score > (S.minigameBest || 0)) S.minigameBest = score;
   mg = null;
   save(); renderAll();
   if (reward > 0) createConfetti();
   $('mg-start').innerHTML = `🎉 +${reward}tr₫! Chơi lại (lượt ${Math.min(3, S.minigamePlays + 1)}/3)`;
   if (S.minigamePlays < 3) { $('mg-start').disabled = false; $('mg-start').classList.remove('opacity-50'); }
+}
+
+// ---------- Clay Reward Shop + Xếp hạng mini-game (thiết kế Stitch) ----------
+const MG_REWARDS = [
+  { id: 'R_HAT',    icon: '🥳', name: 'Mũ tiệc sắc màu',        cost: 300 },
+  { id: 'R_TIE',    icon: '👔', name: 'Cà vạt đất nặn',          cost: 500 },
+  { id: 'R_CASE',   icon: '💼', name: 'Cặp táp đất sét mini',    cost: 800 },
+  { id: 'R_MKT',    icon: '📈', name: 'Huy hiệu Marketing Boost', cost: 1000, lockLevel: 5 },
+  { id: 'R_PLANT',  icon: '🪴', name: 'Chậu cây để bàn cao cấp', cost: 1200 },
+  { id: 'R_LUNCH',  icon: '🍱', name: 'Voucher ăn trưa cả đội',  cost: 1500 },
+  { id: 'R_MYSTERY', icon: '🎁', name: 'Hộp quà bí ẩn',          cost: 2000, lockMissions: 5 },
+];
+function showRewardShop() {
+  const old = document.getElementById('rshop-overlay'); if (old) old.remove();
+  const lvl = 1 + Math.floor(S.xp / XP_PER_LEVEL);
+  const claimed = (S.missionsClaimed || []).length;
+  const div = document.createElement('div');
+  div.id = 'rshop-overlay';
+  div.className = 'fixed inset-0 z-[65] bg-surface-bright overflow-y-auto';
+  div.innerHTML = `
+    <div class="max-w-md mx-auto px-5 py-6 pb-24">
+      <div class="flex justify-between items-center mb-5">
+        <button onclick="document.getElementById('rshop-overlay').remove()" class="clay-btn bg-white w-9 h-9 rounded-full text-deep-teal font-bold">←</button>
+        <button onclick="showMgLeaderboard()" class="clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2">🏆 Xếp hạng</button>
+      </div>
+      <div class="text-center mb-6">
+        <div class="clay-card inline-flex items-center gap-3 px-6 py-3">
+          <span class="text-3xl">🐷</span>
+          <div class="text-left"><p class="font-display font-extrabold text-primary text-2xl leading-none">${(S.minigamePoints || 0).toLocaleString('vi-VN')}</p><p class="text-[10px] font-extrabold text-deep-teal/50 uppercase">Points</p></div>
+        </div>
+        <h2 class="font-display font-extrabold text-deep-teal text-xl mt-4">🏺 Clay Reward Shop</h2>
+        <p class="text-xs text-deep-teal/60 mt-1">Đổi điểm Clay Factory lấy quà lưu niệm cho đội (điểm ×10 mỗi lượt chơi).</p>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        ${MG_REWARDS.map(r => {
+          const owned = S.rewardsOwned.includes(r.id);
+          const locked = (r.lockLevel && lvl < r.lockLevel) || (r.lockMissions && claimed < r.lockMissions);
+          const lockText = r.lockLevel ? `Khóa — Đạt cấp ${r.lockLevel}` : r.lockMissions ? `Khóa — Nhận ${r.lockMissions} nhiệm vụ` : '';
+          const equipped = S.rewardEquipped === r.id;
+          return `<div class="clay-card p-4 text-center ${locked ? 'opacity-70' : ''} ${equipped ? 'ring-2 ring-primary-container' : ''}">
+            <p class="text-4xl mb-2 ${locked ? 'grayscale' : 'animate-float'}">${locked ? '🔒' : r.icon}</p>
+            <p class="font-bold text-xs text-deep-teal leading-tight min-h-[2rem]">${r.name}</p>
+            ${locked
+              ? `<p class="text-[10px] font-bold text-deep-teal/50 mt-2">${lockText}</p>`
+              : owned
+                ? `<button onclick="equipReward('${r.id}')" class="clay-btn w-full ${equipped ? 'bg-surface-bright text-deep-teal/50' : 'bg-white text-deep-teal'} text-xs font-bold py-2 mt-2">${equipped ? '✓ Đang đeo' : 'Đeo'}</button>`
+                : `<p class="font-display font-extrabold text-primary text-sm mt-1">${r.cost.toLocaleString('vi-VN')} điểm</p>
+                   <button onclick="redeemReward('${r.id}', event)" class="clay-btn w-full ${S.minigamePoints >= r.cost ? 'bg-emerald-500 text-white' : 'bg-surface-bright text-deep-teal/40'} text-xs font-bold py-2 mt-2">Redeem</button>`}
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  document.body.appendChild(div);
+}
+function redeemReward(id, e) {
+  const r = MG_REWARDS.find(x => x.id === id);
+  if (!r || S.rewardsOwned.includes(id)) return;
+  if ((S.minigamePoints || 0) < r.cost) { itemToast('Chưa đủ điểm — chơi thêm Clay Factory nhé!'); return; }
+  S.minigamePoints -= r.cost;
+  S.rewardsOwned.push(id);
+  save();
+  if (e) itemSparkles(e.clientX, e.clientY);
+  showUnboxing(r);
+}
+function showUnboxing(r) {
+  const div = document.createElement('div');
+  div.className = 'fixed inset-0 z-[75] flex flex-col items-center justify-center text-center px-8';
+  div.style.background = 'radial-gradient(circle at 50% 34%, rgba(0,196,255,.18), transparent 50%), linear-gradient(160deg,#0b1420,#033337)';
+  div.innerHTML = `
+    <h2 class="font-display font-extrabold text-3xl text-white leading-tight">Mở khóa<br><span style="color:#fda127; text-shadow:0 0 20px rgba(253,161,39,.6)">phần thưởng mới!</span></h2>
+    <p class="text-8xl mt-8 animate-float" style="filter:drop-shadow(0 0 30px rgba(0,196,255,.7))">${r.icon}</p>
+    <p class="font-display font-extrabold text-white text-xl mt-6">${r.name}</p>
+    <div class="flex gap-3 mt-9">
+      <button id="unbox-wear" class="clay-btn font-display font-extrabold text-white text-sm px-8 py-3.5" style="background:linear-gradient(90deg,#00a2d8,#00c4ff)">Đeo ngay</button>
+      <button id="unbox-back" class="clay-btn bg-white text-deep-teal font-display font-extrabold text-sm px-8 py-3.5">Về cửa hàng</button>
+    </div>`;
+  document.body.appendChild(div);
+  createConfetti(); playEventSting('good');
+  div.querySelector('#unbox-wear').addEventListener('click', () => { equipReward(r.id); div.remove(); });
+  div.querySelector('#unbox-back').addEventListener('click', () => { div.remove(); showRewardShop(); });
+}
+function equipReward(id) {
+  S.rewardEquipped = S.rewardEquipped === id ? null : id;
+  save(); renderAll();
+  const open = document.getElementById('rshop-overlay');
+  if (open) { open.remove(); showRewardShop(); }
+}
+function showMgLeaderboard() {
+  const old = document.getElementById('mglb-overlay'); if (old) old.remove();
+  const AI = [
+    { name: 'Alex', team: 'Alpha Dynamics', score: 28 }, { name: 'Bella', team: 'Mekong Ventures', score: 24 },
+    { name: 'Chris', team: 'Star Clay Co.', score: 21 }, { name: 'David', team: 'Team Rocket', score: 18 },
+    { name: 'Emily', team: 'Clay Masters', score: 15 }, { name: 'Frank', team: 'The Sculptors', score: 12 },
+  ];
+  const you = { name: S.profile.teamName, team: 'Đội của bạn', score: S.minigameBest || 0, you: true };
+  const all = AI.concat([you]).sort((a, b) => b.score - a.score);
+  const rank = all.indexOf(you) + 1;
+  const podium = all.slice(0, 3);
+  const rest = all.slice(3);
+  const medal = ['🥇', '🥈', '🥉'];
+  const div = document.createElement('div');
+  div.id = 'mglb-overlay';
+  div.className = 'fixed inset-0 z-[70] bg-surface-bright overflow-y-auto';
+  div.innerHTML = `
+    <div class="max-w-md mx-auto px-5 py-6 pb-24">
+      <div class="flex justify-between items-center mb-6">
+        <button onclick="document.getElementById('mglb-overlay').remove()" class="clay-btn bg-white w-9 h-9 rounded-full text-deep-teal font-bold">←</button>
+        <p class="font-display font-extrabold text-deep-teal">🏆 Xếp hạng Clay Factory</p>
+        <span class="w-9"></span>
+      </div>
+      <div class="flex items-end justify-center gap-2 mb-6">
+        ${[podium[1], podium[0], podium[2]].filter(Boolean).map((p, i) => {
+          const real = i === 1 ? 0 : i === 0 ? 1 : 2;
+          const h = ['h-20', 'h-28', 'h-16'][i];
+          return `<div class="flex-1 max-w-[110px] text-center">
+            <p class="text-2xl">${medal[real]}</p>
+            <p class="font-bold text-[11px] text-deep-teal truncate">${p.you ? '⭐ ' : ''}${p.name}</p>
+            <div class="clay-card ${h} mt-1.5 flex flex-col items-center justify-center ${p.you ? 'ring-2 ring-primary-container' : ''}">
+              <p class="font-display font-extrabold ${real === 0 ? 'text-clay-gold text-2xl' : 'text-deep-teal text-xl'}" style="${real === 0 ? 'color:#fda127' : ''}">${real + 1}</p>
+              <p class="text-[10px] font-bold text-deep-teal/50">${p.score} điểm</p>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+      <div class="space-y-2.5">
+        ${rest.map((p, i) => `
+        <div class="clay-card p-3.5 flex items-center gap-3 ${p.you ? 'ring-2 ring-primary-container' : ''}">
+          <span class="font-display font-extrabold text-deep-teal/40 w-8">#${i + 4}</span>
+          <div class="flex-1 min-w-0"><p class="font-bold text-sm text-deep-teal truncate">${p.you ? '⭐ ' : ''}${p.name}</p><p class="text-[10px] text-deep-teal/50">${p.team}</p></div>
+          <p class="font-display font-extrabold text-primary">${p.score}</p>
+        </div>`).join('')}
+      </div>
+      <div class="clay-card p-4 mt-5 flex items-center justify-between" style="background:linear-gradient(90deg,#e8762d,#fda127)">
+        <p class="font-display font-extrabold text-white text-sm">Hạng của bạn: #${rank}</p>
+        <p class="font-display font-extrabold text-white">${you.score} điểm</p>
+      </div>
+      <p class="text-[10px] text-deep-teal/40 text-center mt-3">So tài cùng 6 đội AI — phá kỷ lục điểm Clay Factory để leo hạng!</p>
+    </div>`;
+  document.body.appendChild(div);
 }
 
 // ---------- Instructor ----------
