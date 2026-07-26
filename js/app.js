@@ -1,5 +1,5 @@
 /* BizOn Bật Nghiệp 2026 — UI controller (SPA, localStorage persistence)
- * © 2026 Đỗ Thùy Hương (Je m'appelle Hương) & Phan Anh Tú. Bảo lưu mọi quyền. */
+ * © 2026 Đỗ Thùy Hương (Je m'appelle Hương) & PGS.TS Phan Anh Tú. Bảo lưu mọi quyền. */
 
 const STORAGE_KEY = 'bizon2026';
 let S = null;
@@ -21,6 +21,7 @@ function load() {
       s.quickRatio ??= 1.0; s.roi ??= 0; s.energyLines ??= [2100, 4850, 1470];
       s.lineUpgraded ??= [false, false, false]; s.maintBonus ??= 0; s.maintenanceLog ??= [];
       s.loan ??= 0; s.costCutter ??= false; s.peakShare ??= 0; s.eventShownRound ??= 0;
+      s.whatIfUsed ??= 0; s.advisorHistory ??= [];
     }
     return s;
   } catch { return null; }
@@ -100,26 +101,29 @@ function maybeShowEventIntro() {
   div.className = 'fixed inset-0 z-50 bg-surface-bright overflow-y-auto';
   div.innerHTML = `
     <div class="max-w-md mx-auto px-6 py-8 ${ev.shake ? 'animate-shake' : ''}">
-      <span class="inline-flex items-center gap-1.5 text-[11px] font-extrabold px-3 py-1.5 rounded-full ${tagCls}">● ${ev.tag || 'BIẾN CỐ THỊ TRƯỜNG'}</span>
-      <h1 class="font-display text-3xl font-extrabold ${titleCls} uppercase mt-3 leading-tight">${ev.name}</h1>
-      <p class="text-sm text-deep-teal/70 mt-2">${ev.desc}</p>
-      <div class="grid grid-cols-2 gap-3 mt-5">
+      <div class="text-center">
+        <span class="inline-flex items-center gap-1.5 text-[11px] font-extrabold px-4 py-1.5 rounded-full ${tagCls}">● ${ev.tag || 'BIẾN CỐ THỊ TRƯỜNG'}</span>
+        <h1 class="font-display text-3xl font-extrabold ${titleCls} uppercase mt-3 leading-tight">${ev.name}</h1>
+        <p class="text-sm text-deep-teal/70 mt-2 max-w-sm mx-auto">${ev.desc}</p>
+      </div>
+      <div class="grid grid-cols-2 gap-4 mt-5">
         ${(ev.impacts || []).map(im => `
-          <div class="clay-card p-4 text-center">
-            <p class="text-2xl">${im.icon}</p>
-            <p class="text-[10px] uppercase font-bold text-deep-teal/50 mt-1">${im.label}</p>
-            <p class="font-display font-extrabold text-xl ${dirCls(im.dir)}">${dirIcon(im.dir)} ${im.value}</p>
+          <div class="clay-raised p-5 text-center flex flex-col items-center gap-1.5">
+            <div class="w-12 h-12 rounded-full clay-sunken flex items-center justify-center text-xl">${im.icon}</div>
+            <p class="text-[10px] uppercase font-bold text-deep-teal/50 tracking-wide">${im.label}</p>
+            <p class="font-display font-extrabold text-2xl ${dirCls(im.dir)}">${dirIcon(im.dir)} ${im.value}</p>
           </div>`).join('')}
       </div>
-      <div class="clay-card p-4 mt-4 flex gap-3 items-start">
-        <img src="assets/character/${ev.luminaImg || 'lumina-vest'}.png" alt="Lumina" class="w-14 h-20 rounded-2xl object-cover shrink-0 shadow-clay" style="object-position:50% 10%">
-        <div>
-          <p class="font-display font-bold text-deep-teal text-sm">Je m'appelle Hương <span class="ml-1 text-[9px] bg-primary-container/30 text-primary font-extrabold px-2 py-0.5 rounded-full">AI ADVISOR</span></p>
-          <p class="text-sm text-deep-teal/80 italic mt-1">"${ev.luminaMsg}"</p>
+      <div class="flex items-end gap-3 mt-6">
+        <img src="assets/character/${ev.luminaImg || 'lumina-vest'}.png" alt="Je m'appelle Hương AI Advisor" class="w-28 shrink-0 rounded-2xl object-cover animate-float drop-shadow-xl" style="aspect-ratio:3/4; object-position:50% 8%">
+        <div class="relative clay-raised p-4 rounded-bl-none border-l-4 border-primary-container flex-1">
+          <div class="speech-tail"></div>
+          <p class="text-[10px] font-extrabold text-primary mb-1">JE M'APPELLE HƯƠNG · AI ADVISOR</p>
+          <p class="text-sm text-deep-teal italic leading-relaxed">"${ev.luminaMsg}"</p>
         </div>
       </div>
-      <button id="ev-cta" class="clay-btn w-full ${bad ? 'bg-deep-teal' : 'bg-primary'} text-white font-display font-bold py-4 mt-5">${ev.cta ? ev.cta.label : '🎯 Nhập quyết định'}</button>
-      <button id="ev-close" class="clay-btn w-full bg-white text-deep-teal font-display font-bold py-4 mt-3">Về Trung tâm điều hành</button>
+      <button id="ev-cta" class="clay-button-primary w-full text-white font-display font-bold text-lg py-4 mt-6">${ev.cta ? ev.cta.label : '🎯 Nhập quyết định'}</button>
+      <button id="ev-close" class="clay-button-secondary w-full text-primary font-display font-bold py-4 mt-3">Về Trung tâm điều hành</button>
     </div>`;
   div.querySelector('#ev-cta').onclick = () => {
     div.remove();
@@ -235,6 +239,8 @@ function syncDecisionLabels() {
 function renderDecisions() {
   document.querySelectorAll('.dec-round').forEach(e => e.textContent = Math.min(S.round, ROUNDS_TOTAL));
   syncDecisionLabels();
+  const wq = $('whatif-quota');
+  if (wq) wq.textContent = Math.max(0, WHAT_IF_LIMIT - (S.whatIfUsed || 0));
   const btn = $('btn-commit');
   if (S.finished) {
     btn.disabled = true;
@@ -315,7 +321,7 @@ function renderAdvisorIntro() {
   const quota = AI_QUOTA_PER_ROUND + (hasSkill(S, 'SK_AI1') ? 2 : 0) - S.aiUsed;
   $('ai-quota').textContent = Math.max(0, quota);
   if (!$('advisor-chat').childElementCount) {
-    pushLumina({ risk: 'low', text: `Xin chào, Je m'appelle Hương! 👋 Tôi là Lumina — cố vấn AI của đội ${S.profile.teamName}. Hãy chọn một câu hỏi bên dưới, tôi sẽ phân tích kịch bản "Nếu — Thì" cho bạn.` });
+    pushLumina({ risk: 'low', log: false, text: `Xin chào, Je m'appelle Hương! 👋 Tôi là Lumina — cố vấn AI của đội ${S.profile.teamName}. Hãy chọn một câu hỏi bên dưới, tôi sẽ phân tích kịch bản "Nếu — Thì" cho bạn.` });
   }
   // Badge biến động thị trường + ảnh cảm xúc theo biến cố hiện tại
   const ev = currentEvent(S);
@@ -324,6 +330,60 @@ function renderAdvisorIntro() {
   $('vol-text').textContent = 'MARKET VOLATILITY: ' + vol.toUpperCase();
   $('advisor-hero').src = 'assets/character/' + (S.finished ? 'lumina-ao-dai-clap' : (ev.luminaImg || 'lumina-vest')) + '.png';
   renderRoleDeepdive();
+  renderAdvisorHistory();
+}
+
+function renderAdvisorHistory() {
+  const riskIco = { low: '🟢', medium: '🟡', high: '🔴' };
+  $('advisor-history').innerHTML = (S.advisorHistory || []).length
+    ? S.advisorHistory.slice(-8).reverse().map(h =>
+        `<p class="text-deep-teal/80"><b class="text-primary">V${h.round}</b> ${riskIco[h.risk] || '🟢'} ${h.text}${h.text.length >= 160 ? '…' : ''}</p>`).join('')
+    : '<p class="text-deep-teal/40">Chưa có ghi chép nào — mọi lời tư vấn của Lumina sẽ được SEC lưu tại đây.</p>';
+}
+
+// ---------- What-If Analysis (mô phỏng Nếu–Thì trước Commit) ----------
+function runWhatIf(role) {
+  if (S.finished || S.committed) {
+    alert('Vòng này đã khóa — mô phỏng Nếu–Thì sẽ mở lại ở vòng sau.');
+    return;
+  }
+  if (S.whatIfUsed >= WHAT_IF_LIMIT) {
+    $('whatif-result').innerHTML = '<div class="clay-sunken rounded-2xl p-3 text-xs text-deep-teal/70 font-semibold">ERR_AI_LIMIT_REACHED — Đã hết 2 lượt mô phỏng Nếu–Thì của vòng này. Lượt sẽ làm mới sau khi Commit.</div>';
+    return;
+  }
+  const d = {
+    price: +$('in-price').value,
+    marketing: +$('in-mkt').value,
+    production: +$('in-prod').value,
+    rd: +$('in-rd').value,
+  };
+  if (role === 'CFO') { d.loanAmount = S.loan > 0 ? 0 : 300; d.costCutPct = 15; }
+  S.whatIfUsed++;
+  save();
+  const r = whatIfSimulate(S, role, d);
+  const statusMap = {
+    SAFE: ['risk-low', '✅ AN TOÀN'], SAFE_AND_EFFICIENT: ['risk-low', '✅ AN TOÀN & HIỆU QUẢ'],
+    VIABLE_BUT_RISKY: ['risk-medium', '🟡 KHẢ THI NHƯNG RỦI RO'], CAPITAL_EROSION: ['risk-medium', '🟡 CẢNH BÁO MÒN VỐN'],
+    HIGH_RISK: ['risk-high', '🔴 RỦI RO CAO'], INSOLVENCY_RISK: ['risk-high', '🔴 NGUY CƠ MẤT THANH KHOẢN'],
+  };
+  const [cls, label] = statusMap[r.status] || ['risk-medium', r.status];
+  $('whatif-result').innerHTML = `
+    <div class="clay-raised p-4">
+      <div class="flex justify-between items-center mb-2">
+        <p class="font-display font-bold text-deep-teal text-sm">${r.title}</p>
+        <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full ${cls}">${label}</span>
+      </div>
+      ${r.metrics.map(m => `<div class="flex justify-between text-xs py-1 border-b border-surface-bright last:border-0">
+        <span class="text-deep-teal/60">${m.label}</span>
+        <span class="font-bold ${m.bad ? 'text-red-600' : 'text-deep-teal'}">${m.value}</span></div>`).join('')}
+      <div class="flex gap-2 items-start mt-2.5">
+        <img src="assets/character/lumina-vest.png" alt="Lumina" class="w-8 h-8 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 12%">
+        <p class="text-xs text-deep-teal/80 italic">"${r.msg}"</p>
+      </div>
+      <p class="text-[10px] text-deep-teal/40 mt-2 text-right">Còn ${Math.max(0, WHAT_IF_LIMIT - S.whatIfUsed)} lượt mô phỏng trong vòng này</p>
+    </div>`;
+  const q = $('whatif-quota');
+  if (q) q.textContent = Math.max(0, WHAT_IF_LIMIT - S.whatIfUsed);
 }
 
 // ---------- Phân tích chuyên sâu theo vai trò (CFO / COO / CMO) ----------
@@ -408,6 +468,13 @@ function doMaintainFromAdvisor() {
 }
 
 function pushLumina(advice) {
+  // Ghi vào Bộ nhớ doanh nghiệp (ai_advisor_history) — trừ lời chào mở đầu
+  if (S && advice.log !== false && S.history) {
+    S.advisorHistory ??= [];
+    S.advisorHistory.push({ round: Math.min(S.round, ROUNDS_TOTAL), risk: advice.risk, text: advice.text.slice(0, 160) });
+    if (S.advisorHistory.length > 20) S.advisorHistory.shift();
+    save();
+  }
   const riskLabel = { low: '🟢 Cơ hội', medium: '🟡 Thận trọng', high: '🔴 Rủi ro cao' }[advice.risk];
   const el = document.createElement('div');
   el.className = 'flex gap-3 items-start';
@@ -424,7 +491,7 @@ function pushLumina(advice) {
 function askLumina(topic) {
   const quota = AI_QUOTA_PER_ROUND + (hasSkill(S, 'SK_AI1') ? 2 : 0);
   if (S.aiUsed >= quota) {
-    pushLumina({ risk: 'medium', text: 'ERR_AI_LIMIT — Lumina đang bận! Bạn đã dùng hết lượt hỏi của vòng này. Lượt hỏi sẽ được làm mới sau khi commit quyết định.' });
+    pushLumina({ risk: 'medium', text: 'ERR_AI_LIMIT_REACHED — Lumina đang bận! Bạn đã dùng hết lượt tư vấn của vòng này. Lượt hỏi sẽ được làm mới sau khi commit quyết định.' });
     return;
   }
   S.aiUsed++;

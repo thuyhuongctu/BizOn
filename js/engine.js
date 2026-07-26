@@ -1,5 +1,5 @@
 /* BizOn Bật Nghiệp 2026 — Engine mô phỏng 6 vòng (client-side)
- * © 2026 Đỗ Thùy Hương (Je m'appelle Hương) & Phan Anh Tú. Bảo lưu mọi quyền.
+ * © 2026 Đỗ Thùy Hương (Je m'appelle Hương) & PGS.TS Phan Anh Tú. Bảo lưu mọi quyền.
  * Mô hình hóa: decisions {price, marketing_budget,
  * production_volume, rd_investment} → financial_reports {revenue, net_profit,
  * market_share, inventory_stock}. Đơn vị tiền: nghìn ₫ (giá) / triệu ₫ (ngân sách).
@@ -103,6 +103,85 @@ function claimMission(s, id) {
   return true;
 }
 
+/* ===== WHAT-IF ANALYSIS (mô phỏng Nếu–Thì trước khi Commit) =====
+ * Theo tài liệu logic CEO (STRATEGIC_OVERVIEW) & CFO (FINANCIAL_STRESS_TEST).
+ * Giới hạn what_if_limit = 2 lượt/vòng (ERR_AI_LIMIT_REACHED).
+ */
+const WHAT_IF_LIMIT = 2;
+const LOAN_INTEREST_RATE = 10; // %/phiên — dùng cho phân tích đòn bẩy
+
+function whatIfSimulate(s, role, d) {
+  const ev = currentEvent(s);
+  const last = s.history[s.history.length - 1];
+  const lastShare = last ? last.share : 25;
+
+  // Ước tính thị phần: sức hấp dẫn mới so với vòng trước
+  const elasticity = PRICE_ELASTICITY * (ev.elasticityMul || 1);
+  const attr = (price, mkt) => Math.pow(REF_PRICE / price, elasticity) * (1 + Math.sqrt(mkt * (ev.mktBoost || 1)) / 18) * s.brand;
+  const lastD = last ? last.decisions : { price: REF_PRICE, marketing: 50 };
+  const oldAttr = attr(lastD.price, lastD.marketing);
+  const compAttr = oldAttr * (100 - lastShare) / Math.max(1, lastShare);
+  const newAttr = attr(d.price, d.marketing);
+  const estShare = 100 * newAttr / (newAttr + compAttr);
+  const deltaShare = estShare - lastShare;
+
+  // Ước tính P&L
+  const marketUnits = BASE_MARKET_UNITS * ev.demand;
+  const estSold = Math.min(d.production + s.inventory, Math.round(marketUnits * estShare / 100));
+  const unitCost = UNIT_COST * ev.costMul;
+  const dep = Math.max(s.machineCapacity, d.production) * 0.02;
+  const fixed = FIXED_COST * ev.costMul;
+  const estRevenue = estSold * d.price / 1000;
+  const estCost = d.production * unitCost / 1000 + d.marketing + d.rd + fixed + dep + s.loan * 0.05;
+  const estProfit = estRevenue - estCost;
+  const contribution = (d.price - unitCost) / 1000;                 // tr₫/sp
+  const breakEven = Math.ceil((fixed + dep + d.marketing + d.rd) / Math.max(0.001, contribution));
+  const plannedSpend = d.marketing + d.rd + d.production * unitCost / 1000;
+  const liquidityRisk = Math.round(100 * plannedSpend / Math.max(1, s.balance)) / 100;
+
+  if (role === 'CFO') {
+    const loan = d.loanAmount || 0;
+    const cut = d.costCutPct || 0;
+    const projCash = s.balance + loan - plannedSpend + estRevenue - (estCost - plannedSpend) * (1 - cut / 100);
+    const projQuickRatio = Math.round(Math.max(0.05, (s.balance + loan - plannedSpend * 0.6) / STARTING_BALANCE) * 100) / 100;
+    const roiHyp = Math.round(1000 * (estProfit + fixed * cut / 100) / Math.max(1, STARTING_BALANCE + loan)) / 10;
+    const leverageOK = roiHyp > LOAN_INTEREST_RATE;
+    const qrDanger = projQuickRatio < 1.1;
+    return {
+      role, type: 'FINANCIAL_STRESS_TEST', title: '💰 Stress test tài chính (CFO)',
+      status: qrDanger ? 'INSOLVENCY_RISK' : leverageOK ? 'SAFE_AND_EFFICIENT' : 'CAPITAL_EROSION',
+      metrics: [
+        { label: 'Dòng tiền cuối vòng (dự báo)', value: Math.round(projCash) + 'tr₫', bad: projCash < 100 },
+        { label: 'Quick Ratio dự báo', value: projQuickRatio + (qrDanger ? ' ⚠️' : ''), bad: qrDanger },
+        { label: 'ROI giả định vs lãi vay ' + LOAN_INTEREST_RATE + '%', value: roiHyp + '%', bad: !leverageOK },
+      ],
+      msg: qrDanger
+        ? `CFO ơi, kịch bản này cho thấy Quick Ratio rơi xuống ${projQuickRatio} — dưới ngưỡng an toàn 1.1. Nếu doanh số thực tế thấp hơn dự báo 5%, chúng ta sẽ mất khả năng thanh toán. Tôi đề xuất vay thêm ít nhất 100tr₫ làm lớp đệm an toàn.`
+        : leverageOK
+        ? `Phân tích cho thấy sử dụng vốn lúc này là bước đi thông minh: ROI kỳ vọng ${roiHyp}% cao hơn lãi suất vay ${LOAN_INTEREST_RATE}%. Đòn bẩy hiệu quả — có thể mạnh dạn tăng đầu tư R&D!`
+        : `Cảnh báo mòn vốn: ROI kỳ vọng chỉ ${roiHyp}%, thấp hơn chi phí vốn ${LOAN_INTEREST_RATE}%. Nên cắt giảm chi phí cố định hoặc hoãn vay cho tới khi biên lợi nhuận cải thiện.`,
+    };
+  }
+
+  // CEO — STRATEGIC_OVERVIEW
+  const risky = estProfit < 0 || liquidityRisk > 0.8;
+  const aggressive = deltaShare > 3 && estProfit < 0;
+  return {
+    role: 'CEO', type: 'STRATEGIC_OVERVIEW', title: '🧭 Tổng quan chiến lược (CEO)',
+    status: aggressive ? 'VIABLE_BUT_RISKY' : risky ? 'HIGH_RISK' : 'SAFE',
+    metrics: [
+      { label: 'Thị phần dự báo', value: estShare.toFixed(1) + '% (' + (deltaShare >= 0 ? '+' : '') + deltaShare.toFixed(1) + '%)', bad: deltaShare < 0 },
+      { label: 'Lợi nhuận ròng dự báo', value: Math.round(estProfit) + 'tr₫', bad: estProfit < 0 },
+      { label: 'Điểm hòa vốn', value: breakEven.toLocaleString('vi-VN') + ' sp (bán dự kiến ' + estSold.toLocaleString('vi-VN') + ')', bad: estSold < breakEven },
+    ],
+    msg: aggressive
+      ? `Thưa CEO, kịch bản này có thể chiếm thêm ${deltaShare.toFixed(1)}% thị phần ngay vòng tới, nhưng lợi nhuận ròng sẽ âm ${Math.abs(Math.round(estProfit))}tr₫. Bạn có sẵn sàng đánh đổi lợi nhuận ngắn hạn để lấy vị thế dẫn đầu?`
+      : risky
+      ? `Cảnh báo: kế hoạch chi chiếm ${Math.round(liquidityRisk * 100)}% ví hiện có và điểm hòa vốn là ${breakEven.toLocaleString('vi-VN')} sp. Hãy phối hợp với CFO thu xếp khoản vay ngắn hạn trước khi Commit.`
+      : `Dữ liệu cho thấy đây là kịch bản an toàn: bán dự kiến ${estSold.toLocaleString('vi-VN')} sp, vượt điểm hòa vốn ${breakEven.toLocaleString('vi-VN')} sp. Tôi đề xuất giữ ít nhất 20% ngân sách Marketing để phòng thủ trước đối thủ.`,
+  };
+}
+
 /* ===== LUMINA ADVISOR PRO — kịch bản "Nếu — Thì" từ số liệu thực ===== */
 function advisorProScenarios(inp) {
   // inp: {revenue, cost, marketing, growthTarget} (triệu ₫/tháng, %)
@@ -165,6 +244,8 @@ function newGameState(profile) {
     costCutter: false,
     peakShare: 0,
     eventShownRound: 0,
+    whatIfUsed: 0,
+    advisorHistory: [],
   };
 }
 
@@ -347,6 +428,7 @@ function simulateRound(s, d) {
 
   s.committed = false;
   s.aiUsed = 0;
+  s.whatIfUsed = 0;
   s.minigamePlays = 0;
   if (s.round >= ROUNDS_TOTAL) s.finished = true;
   else s.round += 1;
