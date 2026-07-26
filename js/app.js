@@ -130,6 +130,90 @@ function showLevelUp(level) {
   div.querySelector('#lvl-close').addEventListener('click', () => div.remove());
 }
 
+// ---------- Sổ tay hướng dẫn (User Manual — thiết kế Stitch) ----------
+const MANUAL = {
+  start: { icon: '🚀', name: 'Bắt đầu', html: `
+    <p class="text-sm text-deep-teal/75 mb-4">Chào mừng bạn đến với BizOn — môi trường mô phỏng kinh doanh 3D. Ba bước thiết lập:</p>
+    ${[['1', 'Lập đội & chọn vai trò', 'Đăng nhập với tên đội, Class ID (nếu học trên lớp) và chọn vai trò CEO · CFO · CMO · COO · SEC.'],
+       ['2', 'Nhận vốn khởi điểm', 'Mỗi đội bắt đầu với 500tr₫ vốn giảng viên cấp. Giữ ít nhất 15% dự phòng cho biến cố!'],
+       ['3', 'Vào vòng 1', 'Đọc biến cố thị trường, hỏi Lumina AI, rồi vào Quyết định để chốt kế hoạch đầu tiên.']].map(([n, t, d]) => `
+    <div class="clay-card p-4 mb-3 flex gap-3.5 items-start"><span class="w-9 h-9 shrink-0 rounded-full bg-primary-container/30 text-primary font-display font-extrabold flex items-center justify-center">${n}</span>
+      <div><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p></div></div>`).join('')}` },
+  roles: { icon: '👥', name: 'Vai trò & Đội ngũ', html: `
+    <p class="text-sm text-deep-teal/75 mb-4">Sự phối hợp giữa 5 vị trí cốt lõi là chìa khóa thành công:</p>
+    ${[['CEO', 'Quyết định', 'Định hướng chiến lược, duyệt ngân sách cuối cùng và chốt hạ quyết định.', '🤝 Làm việc chặt với CFO trước khi chốt số.'],
+       ['CFO', 'Tài chính', 'Quản lý dòng tiền, phân bổ vốn, phân tích lỗ lãi và nguồn vốn vay.', '🔄 Cấp ngân sách cho CMO & COO.'],
+       ['CMO', 'Thị trường', 'Quảng cáo, nghiên cứu đối thủ, định giá và giành thị phần.', '📈 Đẩy doanh số, báo cáo cho CEO.'],
+       ['COO', 'Vận hành', 'Tối ưu sản xuất, quản lý tồn kho, bảo trì và nhân công.', '📦 Đồng bộ sản lượng với CMO.'],
+       ['SEC', 'Thư ký', 'Ghi chép, nhắc thời hạn, quản trị thông tin và điều phối toàn đội.', '🔔 Điều phối toàn bộ team.']].map(([r, tag, d, i]) => `
+    <div class="clay-card p-4 mb-3"><div class="flex items-center gap-2 mb-1"><p class="font-display font-extrabold text-primary">${r}</p><span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full risk-low">${tag}</span></div>
+      <p class="text-xs text-deep-teal/70">${d}</p><p class="text-[11px] font-bold text-deep-teal/50 mt-1.5">${i}</p></div>`).join('')}` },
+  rounds: { icon: '🎮', name: 'Cách chơi theo vòng', html: `
+    <p class="text-sm text-deep-teal/75 mb-4">Mỗi vòng là một chu trình 6 bước:</p>
+    ${[['Phân tích báo cáo', 'Đánh giá tài chính, thị phần từ vòng trước.', '💡 Chú ý dòng tiền và hàng tồn kho.'],
+       ['Thảo luận đội', 'Thống nhất chiến lược dựa trên dữ liệu.', '💡 Phân công vai trò rõ ràng.'],
+       ['Nhập quyết định', 'Giá bán, Marketing, Sản lượng, R&D, Nhân sự, Nguồn vốn.', '⚠️ Kiểm tra kỹ số liệu trước khi Commit.'],
+       ['Theo dõi kết quả', 'Hệ thống mô phỏng và trả kết quả tức thì.', '💡 So sánh dự báo với thực tế.'],
+       ['Đối phó biến cố', 'Price War, khủng hoảng năng lượng, chuỗi cung ứng…', '💡 Luôn giữ dự phòng tiền mặt.'],
+       ['Tổng kết', 'Xem xếp hạng, rút kinh nghiệm cho vòng sau.', '💡 SEC ghi chép bài học vào Nhật ký đội.']].map(([t, d, tip], i) => `
+    <div class="clay-card p-4 mb-3 flex gap-3.5 items-start"><span class="w-9 h-9 shrink-0 rounded-full font-display font-extrabold flex items-center justify-center text-white" style="background:#00c4ff; box-shadow:0 3px 0 #0095c2">${i + 1}</span>
+      <div><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p><p class="text-[11px] font-semibold text-amber-700 mt-1">${tip}</p></div></div>`).join('')}` },
+  lumina: { icon: '🤖', name: 'Cố vấn AI Lumina', html: `
+    <div class="clay-card p-4 mb-4 flex gap-3 items-center"><img src="assets/character/lumina-vest.png" alt="" class="w-12 h-12 rounded-full object-cover" style="object-position:50% 14%"><p class="text-xs text-deep-teal/75">Hương là trợ lý AI cá nhân của đội — trò chuyện được bằng giọng nói tiếng Việt trong tab Lumina.</p></div>
+    ${[['📊 Phân tích dữ liệu', 'Kịch bản tối ưu theo mục tiêu tài chính; mô phỏng "Nếu — Thì" trước khi Commit (2 lượt/vòng).'],
+       ['🔮 Dự đoán thị trường', 'Cảnh báo rủi ro (đỏ/cam) hoặc cơ hội (xanh ngọc) theo từng vai trò CFO · COO · CMO · SEC.'],
+       ['🛟 Phòng ngừa khủng hoảng', 'Kịch bản ứng phó khi thị trường biến động mạnh; lời khuyên khẩn cấp khi thanh khoản đỏ.']].map(([t, d]) => `
+    <div class="clay-card p-4 mb-3"><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p></div>`).join('')}` },
+  tips: { icon: '💡', name: 'Mẹo & Thủ thuật', html: `
+    ${[['👑 Chiến thuật CEO', 'Luôn tham khảo CFO trước khi chốt số. Một quyết định đầu tư lớn thiếu kiểm soát chi phí có thể dẫn đến phá sản.'],
+       ['🏭 Tối ưu sản xuất', 'Đừng mở rộng quá nhanh — kiểm tra báo cáo khấu hao và bảo trì máy móc đúng lúc.'],
+       ['📣 Chiếm lĩnh thị trường', 'Dùng Lumina AI dự báo xu hướng trước khi tung chiến dịch Marketing lớn.'],
+       ['🛡️ Quản lý rủi ro', 'Giữ ít nhất 15% vốn dự phòng. Không bao giờ đầu tư hết tiền mặt vào một vòng.']].map(([t, d]) => `
+    <div class="clay-card p-4 mb-3"><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p></div>`).join('')}
+    <p class="font-display font-extrabold text-deep-teal text-sm mt-5 mb-2">⚡ Quick Wins</p>
+    ${['Dành 5 phút đầu vòng đọc bản tin Thị trường sống — nó chứa manh mối về đối thủ.',
+       'Pin Mặt Trời hoàn vốn ~2 vòng và kháng khủng hoảng năng lượng vòng 4.',
+       'Điều chỉnh giá linh hoạt theo độ nhạy của thị trường — đừng giữ nguyên giá cả 6 vòng.'].map(t => `
+    <div class="clay-sunken rounded-2xl p-3 mb-2 flex gap-2 items-start"><span class="text-primary font-bold">✓</span><p class="text-xs text-deep-teal/75">${t}</p></div>`).join('')}` },
+  trouble: { icon: '🔧', name: 'Xử lý sự cố', html: `
+    ${[['📶 Kiểm tra mạng', 'BizOn chạy offline sau lần tải đầu (PWA) — nhưng lần đầu cần Wi-Fi hoặc 4G/5G ổn định.'],
+       ['🔄 Làm mới ứng dụng', 'Đóng hoàn toàn và mở lại BizOn. Nếu đã cài lên màn hình chính, đóng hẳn app để nhận bản cập nhật mới.'],
+       ['🧹 Xóa dữ liệu cũ', 'Nếu giao diện hiển thị lạ sau bản cập nhật: Cài đặt → Chơi lại từ đầu (Reset) — lưu ý sẽ mất tiến trình.'],
+       ['🐞 Liên hệ hỗ trợ', 'Dùng nút "Gửi báo cáo lỗi" trong Cài đặt nếu vấn đề tiếp diễn.']].map(([t, d]) => `
+    <div class="clay-card p-4 mb-3"><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p></div>`).join('')}` },
+};
+function showManual(sec) {
+  const old = document.getElementById('manual-overlay');
+  if (old) old.remove();
+  const div = document.createElement('div');
+  div.id = 'manual-overlay';
+  div.className = 'fixed inset-0 z-[65] bg-surface-bright overflow-y-auto';
+  const body = sec && MANUAL[sec]
+    ? `<button onclick="showManual()" class="clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 mb-4">← Sổ tay</button>
+       <h2 class="font-display font-extrabold text-deep-teal text-2xl mb-4">${MANUAL[sec].icon} ${MANUAL[sec].name}</h2>${MANUAL[sec].html}`
+    : `<div class="text-center mb-6">
+         <h2 class="font-display font-extrabold text-primary text-2xl">📖 Sổ tay hướng dẫn</h2>
+         <p class="text-sm text-deep-teal/60 mt-1">Mọi thứ bạn cần để vận hành BizOn mượt mà.</p>
+       </div>
+       <div class="grid grid-cols-2 gap-3">
+         ${Object.entries(MANUAL).map(([k, m]) => `
+         <button onclick="showManual('${k}')" class="clay-card p-4 text-left">
+           <span class="w-12 h-12 clay-sunken rounded-full flex items-center justify-center text-2xl mb-3">${m.icon}</span>
+           <p class="font-display font-bold text-primary text-sm">${m.name}</p>
+         </button>`).join('')}
+       </div>`;
+  div.innerHTML = `
+    <div class="max-w-md mx-auto px-5 py-6 pb-24">
+      <div class="flex justify-between items-center mb-5">
+        <div class="flex items-center gap-2"><img src="assets/icons/icon-192.png" alt="" class="w-8 h-8 rounded-lg"><span class="font-display font-extrabold text-primary">BizOn</span></div>
+        <button onclick="document.getElementById('manual-overlay').remove()" class="clay-btn bg-white w-9 h-9 rounded-full text-deep-teal font-bold">✕</button>
+      </div>
+      ${body}
+    </div>`;
+  document.body.appendChild(div);
+  div.scrollTop = 0;
+}
+
 // ---------- BizOn Premium — luồng nâng cấp tài khoản (thiết kế Stitch) ----------
 function showPremium() {
   const requested = localStorage.getItem('bizon-premium') === 'requested';
@@ -1440,7 +1524,37 @@ function renderInvDetail() {
   useBtn.disabled = isBlueprint;
   useBtn.classList.toggle('opacity-50', isBlueprint);
   useBtn.textContent = isBlueprint ? 'Hiệu lực vĩnh viễn ✅' : active ? 'Tắt kích hoạt' : 'Sử dụng 🚀';
-  useBtn.onclick = () => { if (!isBlueprint) { toggleBoost(it.id); renderInventory(); } };
+  useBtn.onclick = (e) => {
+    if (isBlueprint) return;
+    const wasActive = active;
+    toggleBoost(it.id);
+    itemSparkles(e.clientX, e.clientY);
+    itemToast(wasActive ? 'Đã tắt kích hoạt vật phẩm' : '✨ Vật phẩm đã được kích hoạt!');
+    renderInventory();
+  };
+}
+
+// Hiệu ứng lấp lánh + toast khi dùng vật phẩm (thiết kế Stitch)
+function itemSparkles(x, y) {
+  const colors = ['#00c4ff', '#71d2ff', '#c0e8ff', '#fda127', '#ffffff'];
+  for (let i = 0; i < 14; i++) {
+    const p = document.createElement('div');
+    p.className = 'sparkle-particle';
+    const size = 4 + Math.random() * 8;
+    p.style.cssText = `width:${size}px;height:${size}px;background:${colors[i % colors.length]};left:${x}px;top:${y}px;`;
+    const ang = Math.random() * Math.PI * 2, v = 40 + Math.random() * 70;
+    p.style.setProperty('--tx', Math.cos(ang) * v + 'px');
+    p.style.setProperty('--ty', Math.sin(ang) * v + 'px');
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 700);
+  }
+}
+function itemToast(text) {
+  const t = document.createElement('div');
+  t.className = 'item-toast clay-card px-5 py-2.5 flex items-center gap-2.5';
+  t.innerHTML = `<span class="w-6 h-6 rounded-full bg-primary-container/30 text-primary flex items-center justify-center text-sm font-bold">✓</span><span class="text-sm font-bold text-deep-teal">${text}</span>`;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 3000);
 }
 
 function buyItem(id) {
