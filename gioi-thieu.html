@@ -99,6 +99,20 @@ tailwind.config = {
   .reveal.visible { opacity:1; transform:none; }
   .reveal-d1 { transition-delay:.12s; } .reveal-d2 { transition-delay:.24s; } .reveal-d3 { transition-delay:.36s; }
 
+  /* ===== hoạt cảnh nhân vật ===== */
+  @keyframes sceneInL { from { opacity:0; transform:translateX(-70px); } 70% { transform:translateX(8px); } to { opacity:1; transform:translateX(0); } }
+  @keyframes sceneInR { from { opacity:0; transform:translateX(70px); } 70% { transform:translateX(-8px); } to { opacity:1; transform:translateX(0); } }
+  .scene-enter-left { animation:sceneInL 1s cubic-bezier(.22,1,.36,1) both .2s; }
+  .scene-enter-right { animation:sceneInR 1s cubic-bezier(.22,1,.36,1) both .45s; }
+  .scene-bubble { position:absolute; top:-3.4rem; z-index:5; max-width:15rem; background:#fff; color:#033337; font-size:12px; font-weight:700; padding:.55rem .9rem; border-radius:18px; box-shadow:0 8px 20px -6px rgba(0,0,0,.35); opacity:0; transform:translateY(8px) scale(.92); transition:opacity .4s ease, transform .4s cubic-bezier(.34,1.56,.64,1); pointer-events:none; white-space:normal; }
+  .scene-bubble.show { opacity:1; transform:translateY(0) scale(1); }
+  .scene-bubble-l { left:8%; border-bottom-left-radius:4px; }
+  .scene-bubble-r { right:8%; border-bottom-right-radius:4px; }
+  .scene-bubble-l::after { content:''; position:absolute; left:14px; bottom:-7px; width:14px; height:14px; background:#fff; clip-path:polygon(0 0, 100% 0, 30% 100%); }
+  .scene-bubble-r::after { content:''; position:absolute; right:14px; bottom:-7px; width:14px; height:14px; background:#fff; clip-path:polygon(0 0, 100% 0, 70% 100%); }
+  @keyframes twinkle { 0%,100% { opacity:.25; transform:scale(.8); } 50% { opacity:1; transform:scale(1.15); } }
+  .scene-spark { position:absolute; font-size:1.3rem; animation:twinkle 2.6s ease-in-out infinite; pointer-events:none; z-index:1; }
+
   /* ===== dải số liệu & marquee ===== */
   @keyframes marquee { from {transform:translateX(0);} to {transform:translateX(-50%);} }
   .marquee-track { display:flex; width:max-content; animation:marquee 26s linear infinite; }
@@ -169,10 +183,19 @@ tailwind.config = {
         <span>📱 Cài như App (PWA)</span><span>🎓 Dành cho lớp khởi nghiệp</span><span>🇻🇳 100% tiếng Việt</span>
       </div>
     </div>
-    <div class="relative flex justify-center lg:justify-end">
+    <div class="relative flex justify-center lg:justify-end items-end gap-3 sm:gap-6 pt-16">
       <div class="absolute inset-0 m-auto w-72 h-72 rounded-full border-2 border-dashed border-white/15" style="animation:spinSlow 40s linear infinite"></div>
-      <img src="assets/character/lumina-ao-dai.png" alt="Lumina AI — áo dài" class="relative h-80 sm:h-[26rem] w-auto animate-float drop-shadow-[0_35px_35px_rgba(0,0,0,.45)]" style="--rot:2deg">
-      <img src="assets/character/anh-tu-welcome.png" alt="PGS.TS Phan Anh Tú" class="absolute -left-2 sm:left-6 bottom-0 h-52 sm:h-64 w-auto animate-float-slow drop-shadow-[0_25px_25px_rgba(0,0,0,.4)]" style="--rot:-4deg; animation-delay:-2.5s">
+      <span class="scene-spark" style="top:12%; left:6%">✨</span>
+      <span class="scene-spark" style="top:28%; right:4%; animation-delay:-1.2s">✨</span>
+      <span class="scene-spark" style="bottom:16%; left:16%; animation-delay:-2.1s">⭐</span>
+      <div class="relative scene-enter-left">
+        <div id="bubble-tu" class="scene-bubble scene-bubble-l">Chào mừng đến BizOn! 🎓</div>
+        <img src="assets/character/anh-tu-welcome.png" alt="PGS.TS Phan Anh Tú" class="h-64 sm:h-80 w-auto animate-float-slow drop-shadow-[0_25px_25px_rgba(0,0,0,.4)]" style="--rot:-2deg; animation-delay:-2.5s">
+      </div>
+      <div class="relative scene-enter-right">
+        <div id="bubble-huong" class="scene-bubble scene-bubble-r">Xin chào! Mình là Hương AI 👋</div>
+        <img src="assets/character/lumina-ao-dai.png" alt="Lumina AI — áo dài" class="h-80 sm:h-[24rem] w-auto animate-float drop-shadow-[0_35px_35px_rgba(0,0,0,.45)]" style="--rot:2deg">
+      </div>
     </div>
   </div>
   <a href="#stats" class="absolute bottom-5 left-1/2 -translate-x-1/2 text-white/50 text-2xl animate-bounce">▾</a>
@@ -466,6 +489,30 @@ if (matchMedia('(hover:hover)').matches) {
     card.addEventListener('mouseleave', () => { card.style.transform = ''; });
   });
 }
+
+/* ================= HOẠT CẢNH HỘI THOẠI 2 NHÂN VẬT ================= */
+const SCENE_SCRIPT = [
+  ['huong', 'Xin chào! Mình là Hương AI 👋'],
+  ['tu', 'Chào mừng đến BizOn! 🎓'],
+  ['huong', 'Cùng điều hành công ty qua 6 vòng thị trường nhé!'],
+  ['tu', 'Nhớ giữ 15% vốn dự phòng cho biến cố đấy 😉'],
+  ['huong', 'Bạn đã thử Đấu Trường 1v1 ở Arcade chưa?'],
+  ['tu', 'Kinh doanh là hành trình học hỏi không ngừng!'],
+  ['huong', 'Bấm CHƠI NGAY để bắt đầu Bật Nghiệp nào! 🚀'],
+];
+let sceneIdx = 0;
+function scenePlay() {
+  const bh = document.getElementById('bubble-huong'), bt = document.getElementById('bubble-tu');
+  if (!bh || !bt) return;
+  const [who, line] = SCENE_SCRIPT[sceneIdx % SCENE_SCRIPT.length];
+  const active = who === 'huong' ? bh : bt, other = who === 'huong' ? bt : bh;
+  other.classList.remove('show');
+  active.textContent = line;
+  active.classList.add('show');
+  sceneIdx++;
+}
+setTimeout(scenePlay, 1200);
+setInterval(scenePlay, 3400);
 
 /* ================= DEMO MÔ PHỎNG 1 VÒNG ================= */
 function demoSim() {
