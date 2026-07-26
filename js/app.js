@@ -130,6 +130,47 @@ function showLevelUp(level) {
   div.querySelector('#lvl-close').addEventListener('click', () => div.remove());
 }
 
+// ---------- BizOn Premium — luồng nâng cấp tài khoản (thiết kế Stitch) ----------
+function showPremium() {
+  const requested = localStorage.getItem('bizon-premium') === 'requested';
+  const div = document.createElement('div');
+  div.id = 'premium-overlay';
+  div.className = 'fixed inset-0 z-[70] overflow-y-auto';
+  div.style.background = 'radial-gradient(circle at 50% 18%, rgba(253,161,39,.22), transparent 42%), linear-gradient(160deg,#0b1420,#033337)';
+  div.innerHTML = `
+    <div class="min-h-full flex flex-col items-center justify-center text-center px-8 py-12">
+      <p class="text-7xl animate-float" style="filter:drop-shadow(0 0 30px rgba(253,161,39,.85))">👑</p>
+      <h2 class="font-display font-extrabold text-3xl text-white mt-6">BizOn <span style="color:#fda127">Premium</span></h2>
+      <p class="text-white/60 text-sm mt-2 max-w-xs">Dành cho giảng viên & trường học — mở khóa toàn bộ sức mạnh quản trị lớp học.</p>
+      <div class="w-full max-w-sm text-left mt-7 space-y-2.5">
+        ${['🏫 Lớp học không giới hạn số đội', '📊 Xuất báo cáo tổng kết & chứng chỉ PDF', '🎛️ Chế độ giảng viên nâng cao (khóa vòng, cấp vốn, biến cố tùy chỉnh)', '📈 Bảng phân tích hiệu suất từng thành viên', '🤝 Hỗ trợ ưu tiên & tùy biến thương hiệu trường'].map(f => `
+        <div class="clay-card p-3.5 flex items-center gap-3 text-sm font-semibold text-deep-teal">${f}</div>`).join('')}
+      </div>
+      ${requested
+        ? `<div class="clay-card p-4 mt-7 max-w-sm flex items-center gap-3"><p class="text-3xl">✅</p><p class="text-sm text-deep-teal font-semibold text-left">Yêu cầu đã gửi! Quản trị viên sẽ phê duyệt và cấp quyền cho tài khoản của bạn.</p></div>`
+        : `<button id="prem-req" class="clay-btn font-display font-extrabold text-white text-sm px-12 py-4 mt-8" style="background:linear-gradient(90deg,#fda127,#e8762d)">👑 Gửi yêu cầu nâng cấp</button>`}
+      <button id="prem-close" class="text-white/50 text-xs font-bold mt-5 underline">Đóng</button>
+    </div>`;
+  document.body.appendChild(div);
+  div.querySelector('#prem-close').addEventListener('click', () => div.remove());
+  const req = div.querySelector('#prem-req');
+  if (req) req.addEventListener('click', () => {
+    localStorage.setItem('bizon-premium', 'requested');
+    div.remove();
+    createConfetti();
+    playEventSting('good');
+    const ok = document.createElement('div');
+    ok.className = 'fixed inset-0 z-[70] flex flex-col items-center justify-center text-center px-8';
+    ok.style.background = 'radial-gradient(circle at 50% 30%, rgba(253,161,39,.2), transparent 48%), linear-gradient(160deg,#0b1420,#033337)';
+    ok.innerHTML = `
+      <p class="text-8xl animate-float" style="filter:drop-shadow(0 0 34px rgba(253,161,39,.85))">🏆</p>
+      <h2 class="font-display font-extrabold text-3xl text-white mt-8 leading-tight">Tuyệt vời! Yêu cầu<br><span style="color:#fda127">đã được gửi</span></h2>
+      <p class="text-white/60 text-sm mt-3 max-w-xs">Quản trị viên sẽ phê duyệt và cấp quyền Premium cho bạn. Trong lúc chờ, hãy tiếp tục chinh phục TOP 1 thị phần nhé!</p>
+      <button class="clay-btn font-display font-extrabold text-white text-sm px-12 py-4 mt-9" style="background:linear-gradient(90deg,#00a2d8,#fda127)" onclick="this.parentElement.remove()">Bắt đầu ngay</button>`;
+    document.body.appendChild(ok);
+  });
+}
+
 // ---------- Nhạc nền game (bài "BizOn Theme" — Đỗ Thùy Hương) ----------
 let bgm = null;
 function musicEnabled() { return localStorage.getItem('bizon-music') !== 'off'; }
