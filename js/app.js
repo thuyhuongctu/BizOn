@@ -23,6 +23,7 @@ function load() {
       s.lineUpgraded ??= [false, false, false]; s.maintBonus ??= 0; s.maintenanceLog ??= [];
       s.loan ??= 0; s.costCutter ??= false; s.peakShare ??= 0; s.eventShownRound ??= 0;
       s.whatIfUsed ??= 0; s.advisorHistory ??= [];
+      s.conquest ??= [];
     }
     return s;
   } catch { return null; }
@@ -79,6 +80,7 @@ function doLogin() {
   $('screen-login').classList.remove('active');
   enterApp();
   createConfetti();
+  try { if (!localStorage.getItem('bizon-intro-seen')) showIntro(); } catch (e) {}
   playHuongIntro();   // giọng chào thật của Hương AI (được phép vì gọi từ thao tác chạm)
   startMusic();       // nhạc nền BizOn Theme
 }
@@ -449,6 +451,7 @@ function renderAll() {
   renderHeader(); renderDashboard(); renderDecisions(); renderAdvisorIntro();
   renderShop(); renderSkills(); renderLeaderboard(); renderAchievements(); renderProfile();
   renderMissions(); renderMinigame(); renderInstructor(); renderJournal(); renderMarket();
+  renderConquest();
   const mt = $('music-toggle'); if (mt) mt.checked = musicEnabled();
 }
 
@@ -778,6 +781,7 @@ function commitDecisions() {
 
   setTimeout(() => {
     const report = simulateRound(S, d);
+    recordConquest(report);
     save();
     hideLoading();
     $('processing-box').classList.add('hidden');
@@ -796,6 +800,11 @@ function commitDecisions() {
 
 function showRoundResult(r) {
   const ok = r.netProfit > 0;
+  const cq = (S.conquest || [])[r.round - 1];
+  const cqStop = CONQUEST_STOPS[r.round - 1];
+  const cqLine = cq && cqStop ? (cq.win
+    ? `<p class="mt-1 text-xs font-bold text-emerald-600">🚩 Đội bạn cắm cờ tại ${cqStop.name}!</p>`
+    : `<p class="mt-1 text-xs font-bold text-orange-600">🏴 ${cq.winner} chiếm ${cqStop.name} vòng này</p>`) : '';
   const div = document.createElement('div');
   div.className = 'fixed inset-0 z-50 bg-deep-teal/50 backdrop-blur-sm flex items-center justify-center p-6';
   div.innerHTML = `
@@ -810,6 +819,7 @@ function showRoundResult(r) {
         <div class="bg-surface-bright rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Thị phần</p><p class="font-display font-bold text-deep-teal">${r.share.toFixed(1)}%</p></div>
       </div>
       <p class="mt-3 text-xs font-bold text-primary">+${r.xpGain} XP</p>
+      ${cqLine}
       <button class="clay-btn w-full bg-primary text-white font-display font-bold py-3 mt-4">Tiếp tục</button>
     </div>`;
   div.querySelector('button').onclick = () => {
@@ -819,6 +829,105 @@ function showRoundResult(r) {
     else maybeShowEventIntro();
   };
   document.body.appendChild(div);
+}
+
+
+// ---------- Bản đồ chinh phục Việt Nam (theo tỉnh thành mới sau sáp nhập) ----------
+const VN_OUTLINE = '108.9,25.2 148.2,39.0 145.3,52.5 158.2,69.0 186.7,80.1 166.7,96.0 158.2,99.0 148.2,102.0 138.2,120.0 126.8,129.0 120.3,156.0 125.4,177.0 142.5,189.0 159.6,210.0 174.4,231.0 192.4,243.0 202.9,258.0 210.9,273.0 216.6,291.0 222.3,312.0 223.7,336.0 220.9,357.0 218.0,378.0 198.1,396.0 183.8,405.0 159.6,415.5 152.5,417.0 146.8,429.0 141.1,441.0 119.7,456.0 95.5,468.0 94.6,454.5 93.5,439.5 101.2,427.5 96.3,415.5 84.1,413.4 101.2,399.0 124.0,397.5 124.8,378.0 140.2,374.4 145.3,363.0 172.4,348.0 169.6,321.0 169.6,294.0 172.4,284.4 173.8,270.0 169.6,249.0 153.9,240.0 134.0,219.0 116.8,198.0 104.0,174.0 72.7,147.0 85.5,137.4 88.3,121.5 81.2,113.4 44.2,99.0 39.9,86.4 18.2,83.4 18.5,54.0 31.3,43.5 52.7,50.4 61.3,42.0 81.2,43.2 95.8,38.4 105.5,32.4 108.9,25.2';
+const CONQUEST_STOPS = [
+  { name: 'Cần Thơ',          x: 108, y: 449 },
+  { name: 'TP. Hồ Chí Minh',  x: 150, y: 406 },
+  { name: 'Khánh Hòa',        x: 208, y: 302 },
+  { name: 'Đà Nẵng',          x: 166, y: 220 },
+  { name: 'Thanh Hóa',        x: 122, y: 140 },
+  { name: 'Hà Nội',           x: 110, y: 92 },
+];
+
+function recordConquest(report) {
+  const best = S.competitors.reduce((acc, c) => ((c.share || 0) > (acc.share || 0) ? c : acc), { share: 0, name: 'AI' });
+  const win = report.share >= (best.share || 0);
+  (S.conquest ??= []).push({ round: report.round, win, winner: win ? S.profile.teamName : best.name });
+  return win;
+}
+
+function renderConquest() {
+  const box = $('conquest-map');
+  if (!box) return;
+  const cq = S.conquest || [];
+  const wins = cq.filter(c => c.win).length;
+  const cnt = $('cq-count');
+  if (cnt) cnt.textContent = `🚩 ${wins}/${ROUNDS_TOTAL}`;
+
+  const journey = CONQUEST_STOPS.map((st, i) => `${i ? 'L' : 'M'}${st.x},${st.y}`).join(' ');
+  const marks = CONQUEST_STOPS.map((st, i) => {
+    const c = cq[i];
+    const cur = !S.finished && i === Math.min(S.round, ROUNDS_TOTAL) - 1;
+    let m = `<circle cx="${st.x}" cy="${st.y}" r="6" fill="${c ? (c.win ? '#e8762d' : '#93a8ae') : 'rgba(0,102,135,.12)'}" stroke="#006687" stroke-width="2.5"${cur ? ' class="cq-pulse"' : ''}/>`;
+    if (c) m += `<text x="${st.x + 3}" y="${st.y - 9}" font-size="26">${c.win ? '🚩' : '🏴'}</text>`;
+    return m;
+  }).join('');
+  box.innerHTML = `<svg viewBox="0 0 245 500" class="w-full h-auto" aria-label="Bản đồ chinh phục Việt Nam">
+    <g transform="scale(.85) translate(4,10)">
+      <polygon points="${VN_OUTLINE}" fill="rgba(0,102,135,.07)" stroke="#006687" stroke-width="2.4" stroke-linejoin="round"/>
+      <path d="${journey}" fill="none" stroke="#e8762d" stroke-width="2" stroke-dasharray="5 6" stroke-linecap="round" opacity=".55"/>
+      ${marks}
+    </g>
+  </svg>`;
+
+  const list = $('conquest-list');
+  if (list) list.innerHTML = CONQUEST_STOPS.map((st, i) => {
+    const c = cq[i];
+    const status = c
+      ? (c.win ? `<b class="text-emerald-600">🚩 ${c.winner}</b>` : `<b class="text-deep-teal/45">🏴 ${c.winner}</b>`)
+      : (!S.finished && i === cq.length ? '<b class="text-primary">⚔️ đang tranh</b>' : '<span class="text-deep-teal/35">⏳</span>');
+    return `<p class="flex justify-between items-baseline gap-2"><span class="font-bold text-deep-teal/70 truncate">V${i + 1} · ${st.name}</span><span class="shrink-0">${status}</span></p>`;
+  }).join('');
+}
+
+// ---------- Giới thiệu game (Intro — hành trình chinh phục) ----------
+const INTRO_SLIDES = [
+  { icon: '🇻🇳', title: 'Việt Nam 2026', img: 'assets/illustrations/hero-vietnam-2026.png',
+    text: 'Nền kinh tế đang vươn mình "Hóa Rồng". Đội của bạn điều hành một công ty đồ chơi đất sét — khởi nghiệp từ Miền Tây, khát vọng vươn ra cả nước.' },
+  { icon: '🗺️', title: '6 vòng · 6 tỉnh thành', 
+    text: 'Mỗi vòng là một quý kinh doanh tại một tỉnh/thành trên bản đồ mới: Cần Thơ → TP. Hồ Chí Minh → Khánh Hòa → Đà Nẵng → Thanh Hóa → Hà Nội. Đội thắng vòng nào sẽ cắm cờ 🚩 công ty lên tỉnh đó!' },
+  { icon: '👥', title: 'Đội hình C-Suite', 
+    text: 'CEO chèo lái chiến lược, CFO giữ két sắt, CMO đánh chiếm thị trường, COO vận hành xưởng, SEC ghi biên bản — bên cạnh cố vấn Lumina AI và thầy Phan Anh Tú.' },
+  { icon: '🏆', title: 'Mục tiêu của bạn', 
+    text: 'Cắm nhiều cờ nhất, đạt TOP 1 thị phần Việt Nam và nhận chứng nhận hoàn thành. Sẵn sàng Bật Nghiệp? 🚀' },
+];
+
+function showIntro() {
+  let idx = 0;
+  const div = document.createElement('div');
+  div.className = 'fixed inset-0 z-[70] bg-deep-teal/60 backdrop-blur-sm flex items-center justify-center p-6';
+  const paint = () => {
+    const s = INTRO_SLIDES[idx];
+    const last = idx === INTRO_SLIDES.length - 1;
+    div.innerHTML = `
+      <div class="clay-card max-w-sm w-full overflow-hidden text-center">
+        ${s.img ? `<img src="${s.img}" alt="" class="w-full h-32 object-cover">` : ''}
+        <div class="p-6">
+          <p class="text-5xl mb-2">${s.icon}</p>
+          <h3 class="font-display font-extrabold text-deep-teal text-xl">${s.title}</h3>
+          <p class="text-sm text-deep-teal/70 mt-2 leading-relaxed">${s.text}</p>
+          <div class="flex justify-center gap-1.5 mt-5">${INTRO_SLIDES.map((_, i) =>
+            `<span class="w-2 h-2 rounded-full ${i === idx ? 'bg-primary' : 'bg-primary/20'}"></span>`).join('')}</div>
+          <div class="flex gap-2 mt-5">
+            <button id="intro-skip" class="clay-btn flex-1 bg-surface-bright text-deep-teal/60 font-bold py-3 text-sm">${idx ? '← Trước' : 'Bỏ qua'}</button>
+            <button id="intro-next" class="clay-btn flex-1 bg-primary text-white font-display font-bold py-3 text-sm">${last ? 'Bắt đầu 🚀' : 'Tiếp theo →'}</button>
+          </div>
+        </div>
+      </div>`;
+    div.querySelector('#intro-next').onclick = () => {
+      if (last) { div.remove(); } else { idx++; paint(); }
+    };
+    div.querySelector('#intro-skip').onclick = () => {
+      if (idx) { idx--; paint(); } else div.remove();
+    };
+  };
+  paint();
+  document.body.appendChild(div);
+  try { localStorage.setItem('bizon-intro-seen', '1'); } catch (e) {}
 }
 
 // ---------- Lumina Advisor ----------
