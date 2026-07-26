@@ -112,6 +112,6 @@ Thành phần bên thứ ba: Tailwind CSS (MIT), Google Fonts Plus Jakarta Sans 
 | Tác giả | Vai trò |
 |---|---|
 | **Đỗ Thùy Hương** | Founder & Creative Lead — thiết kế game, hóa thân nhân vật Lumina AI · thuyhuongctu@gmail.com |
-| **Phan Anh Tú** | Academic Advisor — cố vấn học thuật, bảo chứng chuyên môn quản trị kinh doanh |
+| **Phan Anh Tú** | Academic Advisor — cố vấn học thuật, bảo chứng chuyên môn quản trị kinh doanh · patu@ctu.edu.vn |
 
 © 2026 Đỗ Thùy Hương & Phan Anh Tú · **BizOn Bật Nghiệp** — Bảo lưu mọi quyền.
