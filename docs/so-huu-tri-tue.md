@@ -30,20 +30,48 @@
 - **Nơi đăng ký:** Cục Bản quyền tác giả — thể loại "tác phẩm viết".
 
 ### 1.4. Nhãn hiệu (Trademark)
-- **Đối tượng:** Tên **"BizOn Bật Nghiệp"**, logo chữ B 3D, tên nhân vật
-  **"Je m'appelle Hương"**.
-- **Nơi đăng ký:** Cục Sở hữu trí tuệ (Bộ KH-CN).
-- **Nhóm Nice khuyến nghị:**
-  - Nhóm 9 (phần mềm trò chơi, ứng dụng di động);
-  - Nhóm 41 (giáo dục, đào tạo, tổ chức cuộc thi);
-  - Nhóm 42 (dịch vụ phần mềm SaaS).
+- **Word Mark:** Tên **"BIZON BẬT NGHIỆP"** — kiểu chữ Plus Jakarta Sans Extra Bold;
+  slogan kèm theo: *"Powering Your Business"* / *"Làm chủ thương trường ảo"*;
+  tên nhân vật **"Je m'appelle Hương"**.
+- **Device Mark (Logo):** Chữ **B 3D Claymorphism** — 2 phiên bản: (a) B đất sét +
+  vầng trăng neon cam (`assets/illustrations/logo-splash.png`), (b) B trong khiên
+  vàng (`assets/illustrations/splash-shield.png`). Màu chỉ định: Xanh dương
+  `#006687`, Xanh ngọc `#00c4ff`, Cam `#e8762d`, Vàng `#fda127`.
+- **Nơi đăng ký:** Cục Sở hữu trí tuệ (Bộ KH-CN) — tờ khai mẫu **04-NH**,
+  kèm **5 bản mẫu nhãn 80mm × 80mm** + mô tả phần hình/phần chữ.
+- **Nhóm Nice:**
+  - **Nhóm 09:** phần mềm tải xuống, ứng dụng di động mô phỏng kinh doanh, game giáo dục;
+  - **Nhóm 41:** dịch vụ trò chơi trực tuyến, đào tạo quản lý-tài chính qua mô phỏng, tổ chức cuộc thi kinh doanh ảo;
+  - **Nhóm 42:** SaaS (Lumina AI Advisor), phát triển phần mềm mô phỏng theo yêu cầu, R&D thuật toán AI giáo dục.
+- **Chiến lược quốc tế:** sau khi nộp tại Việt Nam, mở rộng qua **Hệ thống Madrid**
+  (ưu tiên Singapore, Thái Lan, Mỹ, EU) — một đơn cho nhiều quốc gia.
 
-### 1.5. Sáng chế / Giải pháp hữu ích (dài hạn)
-- **Đối tượng tiềm năng:** Quy trình tương tác thời gian thực giữa các đội chơi
-  trong môi trường EdTech kết hợp cố vấn AI cá nhân hóa theo dữ liệu tài chính
-  từng vòng.
-- **Lưu ý:** Cần hoàn thiện backend nhiều đội thời gian thực trước khi nộp đơn;
-  đánh giá tính mới với luật sư SHTT.
+### 1.5. Sáng chế / Giải pháp hữu ích
+- **Tên sáng chế dự kiến:** *Hệ thống và Phương pháp Mô phỏng Tương tác Kinh doanh
+  Đa tầng dựa trên Trí tuệ nhân tạo* (AI-Driven Multi-layer Business Interaction
+  Simulation System). Lĩnh vực: EdTech, hệ thống máy tính và xử lý dữ liệu.
+- **Tình trạng kỹ thuật (Prior Art):** các hệ mô phỏng hiện có dùng biến số tĩnh,
+  kịch bản tuyến tính, chủ yếu Player-vs-Environment — thiếu biến động thời gian
+  thực từ hành vi đối thủ.
+- **3 điểm yêu cầu bảo hộ (Claims):**
+  1. *Phương pháp mô phỏng:* xử lý tập trung — quyết định từ nhiều đội được đồng bộ
+     và xử lý đồng thời tạo trạng thái thị trường mới ("Tâm lý thị trường ảo" +
+     biến cố ngẫu nhiên);
+  2. *Cấu trúc tương tác:* trao đổi vật phẩm/blueprint và cấp vốn giữa tài khoản
+     Giảng viên và Người chơi không làm gián đoạn engine;
+  3. *Trực quan hóa 3D:* chuyển chỉ số tài chính thành trạng thái hoạt họa nhà máy
+     (khói, băng chuyền, hiệu ứng rung lắc).
+- **Hồ sơ:** bản mô tả chi tiết (sơ đồ luồng dữ liệu + logic toán học), tờ khai
+  mẫu **01-SC**, chứng từ phí. Cần luật sư SHTT đánh giá tính mới trước khi nộp.
+
+### 1.6. Bản quyền kịch bản game (Tác phẩm văn học)
+- **Tên tác phẩm:** *Kịch bản Mô phỏng Kinh doanh 6 Vòng chơi — BizOn Bật Nghiệp*.
+- **Nội dung bảo hộ:** cấu trúc 6 vòng (Khởi sự & Thiết lập đội → Định giá & Xâm
+  nhập thị trường → Biến cố & Thử thách dòng tiền → Đòn bẩy & Tối ưu sản xuất →
+  Chiến dịch Marketing & Chiếm thị phần → Tổng kết P&L), hệ thống biến cố thị
+  trường theo logic "Nếu — Thì", và toàn bộ lời thoại cố vấn AI Lumina.
+- **Hồ sơ:** 2 bản thảo in A4, tờ khai theo mẫu Bộ VH-TT-DL, văn bản cam đoan
+  tự sáng tạo của đồng tác giả.
 
 ---
 
