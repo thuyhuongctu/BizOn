@@ -96,6 +96,11 @@ tailwind.config = {
   .lumina-name { background:linear-gradient(90deg,#006687 0%,#00c4ff 40%,#006687 60%,#00c4ff 100%); background-size:200% auto; -webkit-background-clip:text; background-clip:text; color:transparent; animation:shineText 4s linear infinite; }
   @keyframes shineText { to { background-position:-200% center; } }
   .signature { font-family:'Dancing Script',cursive; font-weight:700; }
+  /* Hiệu ứng dùng vật phẩm */
+  @keyframes sparkleFly { to { transform:translate(var(--tx), var(--ty)) scale(0) rotate(160deg); opacity:0; } }
+  .sparkle-particle { position:fixed; border-radius:50%; pointer-events:none; z-index:100; animation:sparkleFly .65s cubic-bezier(0,.9,.57,1) forwards; }
+  @keyframes toastSlide { 0% { opacity:0; transform:translate(-50%,16px); } 10%,90% { opacity:1; transform:translate(-50%,0); } 100% { opacity:0; transform:translate(-50%,-16px); } }
+  .item-toast { position:fixed; top:76px; left:50%; z-index:80; animation:toastSlide 3s cubic-bezier(.16,1,.3,1) forwards; }
   .signature-underline { display:inline-block; position:relative; }
   .signature-underline::after { content:''; position:absolute; left:8%; right:8%; bottom:-2px; height:3px; border-radius:999px; background:linear-gradient(90deg,#fda127,#e8762d); box-shadow:0 2px 4px rgba(232,118,45,.4); }
   .glow-ring { position:relative; }
@@ -210,6 +215,7 @@ tailwind.config = {
       <div class="grid grid-cols-4 gap-3 mb-4">
         <button onclick="showTab('missions')" class="clay-card p-3 text-center relative"><span id="missions-badge" class="hidden absolute -top-1 -right-1 w-5 h-5 rounded-full bg-orange-500 text-white text-[10px] font-bold flex items-center justify-center"></span><p class="text-2xl">📋</p><p class="text-[10px] font-bold text-deep-teal mt-1">Nhiệm vụ</p></button>
         <button onclick="showTab('minigame')" class="clay-card p-3 text-center"><p class="text-2xl">🏭</p><p class="text-[10px] font-bold text-deep-teal mt-1">Mini-game</p></button>
+        <button onclick="showManual()" class="clay-card p-3 text-center"><p class="text-2xl">📖</p><p class="text-[10px] font-bold text-deep-teal mt-1">Sổ tay</p></button>
         <button onclick="showTab('skills')" class="clay-card p-3 text-center"><p class="text-2xl">🌳</p><p class="text-[10px] font-bold text-deep-teal mt-1">Kỹ năng</p></button>
         <button onclick="showTab('leaderboard')" class="clay-card p-3 text-center"><p class="text-2xl">🏆</p><p class="text-[10px] font-bold text-deep-teal mt-1">Xếp hạng</p></button>
         <button onclick="showTab('achievements')" class="clay-card p-3 text-center"><p class="text-2xl">🎖️</p><p class="text-[10px] font-bold text-deep-teal mt-1">Thành tựu</p></button>
@@ -554,6 +560,7 @@ tailwind.config = {
         <div class="p-5 flex items-center justify-between"><span class="font-bold text-sm text-deep-teal">🔔 Thông báo vòng chơi</span><input type="checkbox" checked class="w-5 h-5 accent-primary"></div>
         <div class="p-5 flex items-center justify-between"><span class="font-bold text-sm text-deep-teal">🔊 Âm thanh hiệu ứng</span><input type="checkbox" checked class="w-5 h-5 accent-primary"></div>
         <div class="p-5 flex items-center justify-between"><span class="font-bold text-sm text-deep-teal">🎵 Nhạc nền (BizOn Theme)</span><input id="music-toggle" type="checkbox" onchange="toggleMusic()" class="w-5 h-5 accent-primary"></div>
+        <div class="p-5"><button onclick="showManual()" class="font-bold text-sm text-deep-teal w-full text-left">📖 Sổ tay hướng dẫn (User Manual)</button></div>
         <div class="p-5"><button onclick="showPremium()" class="font-bold text-sm text-deep-teal w-full text-left">👑 BizOn Premium <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full align-middle" style="background:#fff4d6;color:#946200">GIẢNG VIÊN</span></button></div>
         <div class="p-5"><a href="gioi-thieu.html" class="font-bold text-sm text-primary block">🌐 Trang giới thiệu & Mini-game</a></div>
         <div class="p-5"><button onclick="alert('Đã gửi báo cáo lỗi tới đội ngũ BizOn. Cảm ơn bạn!')" class="font-bold text-sm text-primary">🐞 Gửi báo cáo lỗi</button></div>
