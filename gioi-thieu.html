@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 — © Đỗ Thùy Hương (Je m'appelle Hương) & PGS.TS Phan Anh Tú. Bảo lưu mọi quyền. -->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>BizOn Bật Nghiệp 2026 — Giới thiệu & Mini-game</title>
+<meta name="author" content="Đỗ Thùy Hương (Je m'appelle Hương), Phan Anh Tú">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & PGS.TS Phan Anh Tú. Bảo lưu mọi quyền.">
+<meta name="description" content="Trang giới thiệu BizOn Bật Nghiệp — game mô phỏng kinh doanh EdTech với cố vấn AI Lumina, kèm 3 mini-game khởi nghiệp chơi ngay trên trang.">
+<meta name="theme-color" content="#006687">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#006687',
+        'primary-container': '#00c4ff',
+        'surface-bright': '#f4faff',
+        'deep-teal': '#033337',
+        'clay-orange': '#e8762d',
+        'clay-gold': '#fda127',
+      },
+      fontFamily: {
+        display: ['"Plus Jakarta Sans"', 'sans-serif'],
+        body: ['Manrope', 'sans-serif'],
+      },
+      borderRadius: { clay: '24px' },
+    },
+  },
+};
+</script>
+<style>
+  body { font-family:'Manrope',sans-serif; background:#f4faff; color:#033337; }
+  h1,h2,h3,h4,.font-display { font-family:'Plus Jakarta Sans',sans-serif; }
+  .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.05), inset 0 -4px 0 rgba(0,0,0,.05); }
+  .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease, box-shadow .12s ease; }
+  .clay-btn:active { transform:translateY(2px); box-shadow:0 4px 10px -4px rgba(0,102,135,.3), inset 0 -2px 0 rgba(0,0,0,.12); }
+  .clay-btn-primary { border-radius:24px; background:#e8762d; box-shadow:0 6px 0 #b3541a, 0 12px 24px -8px rgba(232,118,45,.5); transition:transform .1s ease, box-shadow .1s ease; }
+  .clay-btn-primary:active { transform:translateY(4px); box-shadow:0 2px 0 #b3541a; }
+  .clay-sunken { background:#e8f2f8; box-shadow:inset 3px 3px 8px rgba(0,102,135,.12), inset -3px -3px 8px rgba(255,255,255,.9); }
+  @keyframes floaty { 0%,100% {transform:translateY(0);} 50% {transform:translateY(-12px);} }
+  .animate-float { animation:floaty 3.6s ease-in-out infinite; }
+  @keyframes fadeUp { from {opacity:0; transform:translateY(14px);} to {opacity:1; transform:none;} }
+  .game-panel { display:none; }
+  .game-panel.open { display:block; animation:fadeUp .3s ease; }
+  #catch-canvas { touch-action:none; border-radius:20px; background:linear-gradient(180deg,#dff2fb 0%,#f4faff 100%); box-shadow:inset 3px 3px 8px rgba(0,102,135,.12); width:100%; }
+</style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<header class="bg-deep-teal text-white overflow-hidden relative">
+  <div class="max-w-5xl mx-auto px-5 pt-10 pb-14 text-center relative z-10">
+    <img src="assets/illustrations/logo-splash.png" alt="BizOn logo" class="w-28 h-28 mx-auto rounded-clay shadow-lg animate-float object-cover">
+    <h1 class="font-display font-extrabold text-3xl sm:text-5xl mt-6 tracking-tight">BizOn <span class="text-primary-container">Bật Nghiệp</span> 2026</h1>
+    <p class="mt-3 text-white/80 max-w-2xl mx-auto text-sm sm:text-base">Game mô phỏng kinh doanh phong cách đất nặn 3D (Claymorphism) dành cho sinh viên khởi nghiệp — điều hành công ty qua 6 vòng thị trường cùng cố vấn AI <b>Lumina · Je m'appelle Hương</b>.</p>
+    <div class="flex flex-wrap justify-center gap-3 mt-7">
+      <a href="index.html" class="clay-btn-primary inline-block text-white font-display font-extrabold px-8 py-3.5 text-sm">🎮 Chơi bản đầy đủ</a>
+      <a href="#minigames" class="clay-btn inline-block bg-white text-deep-teal font-display font-extrabold px-8 py-3.5 text-sm">🕹️ Mini-game ngay trên trang</a>
+    </div>
+    <p class="mt-4 text-[11px] text-white/50">Chạy trên web · Cài được lên điện thoại (PWA) · Miễn phí cho lớp học</p>
+  </div>
+</header>
+
+<!-- ===== GIỚI THIỆU ===== -->
+<section class="max-w-5xl mx-auto px-5 py-12">
+  <h2 class="font-display font-extrabold text-2xl text-center">Trò chơi có gì?</h2>
+  <p class="text-center text-deep-teal/60 text-sm mt-1 mb-8">Một công ty ảo — số liệu thật, quyết định thật, bài học thật.</p>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div class="clay-card p-5"><p class="text-3xl">📊</p><h3 class="font-display font-bold mt-2">6 vòng thị trường</h3><p class="text-xs text-deep-teal/60 mt-1">Định giá, sản lượng, marketing, R&D, nhân sự, nguồn vốn — đấu với 3 đối thủ AI qua các biến cố Price War, suy thoái, hội chợ quốc tế.</p></div>
+    <div class="clay-card p-5"><p class="text-3xl">🤖</p><h3 class="font-display font-bold mt-2">Cố vấn AI Lumina</h3><p class="text-xs text-deep-teal/60 mt-1">Trò chuyện bằng giọng nói tiếng Việt, mô phỏng "Nếu — Thì", bộ não cố vấn riêng cho CEO · CFO · COO · CMO.</p></div>
+    <div class="clay-card p-5"><p class="text-3xl">📑</p><h3 class="font-display font-bold mt-2">7 báo cáo quản trị</h3><p class="text-xs text-deep-teal/60 mt-1">P&L, dòng tiền 3 hoạt động, CVP hòa vốn, nhân sự, BMC, khấu hao, kiểm toán năng lượng — chuẩn giáo trình.</p></div>
+    <div class="clay-card p-5"><p class="text-3xl">🏆</p><h3 class="font-display font-bold mt-2">Học mà chơi</h3><p class="text-xs text-deep-teal/60 mt-1">Nhiệm vụ, thành tựu, chứng nhận hoàn thành, nhật ký đội, chế độ giảng viên cho lớp học khởi nghiệp.</p></div>
+  </div>
+</section>
+
+<!-- ===== MINI-GAMES ===== -->
+<section id="minigames" class="bg-white/60 py-12">
+  <div class="max-w-5xl mx-auto px-5">
+    <h2 class="font-display font-extrabold text-2xl text-center">🕹️ Mini-game khởi nghiệp</h2>
+    <p class="text-center text-deep-teal/60 text-sm mt-1 mb-8">Chơi ngay tại đây — không cần đăng nhập.</p>
+    <div class="grid md:grid-cols-3 gap-4 items-start">
+
+      <!-- Quiz -->
+      <div class="clay-card p-5">
+        <div class="flex items-center gap-2"><p class="text-2xl">🧠</p><h3 class="font-display font-extrabold">Trắc nghiệm Khởi nghiệp</h3></div>
+        <p class="text-xs text-deep-teal/60 mt-1 mb-3">8 câu hỏi về tài chính & chiến lược — kiểm tra tố chất CEO của bạn.</p>
+        <button onclick="quizStart()" class="clay-btn w-full bg-primary text-white font-display font-bold py-2.5 text-sm">Bắt đầu</button>
+        <div id="quiz-panel" class="game-panel mt-4">
+          <div class="clay-sunken rounded-2xl p-3">
+            <p id="quiz-progress" class="text-[10px] font-extrabold text-deep-teal/50 uppercase mb-1"></p>
+            <p id="quiz-q" class="text-sm font-bold"></p>
+          </div>
+          <div id="quiz-opts" class="mt-3 space-y-2"></div>
+          <p id="quiz-fb" class="text-xs mt-2 font-semibold"></p>
+        </div>
+      </div>
+
+      <!-- Đoán giá -->
+      <div class="clay-card p-5">
+        <div class="flex items-center gap-2"><p class="text-2xl">💰</p><h3 class="font-display font-extrabold">Đoán Giá Thị Trường</h3></div>
+        <p class="text-xs text-deep-teal/60 mt-1 mb-3">Thị trường đã "chốt" một mức giá cân bằng từ 50–250 nghìn ₫. Bạn có 7 lần đoán!</p>
+        <button onclick="priceStart()" class="clay-btn w-full bg-primary text-white font-display font-bold py-2.5 text-sm">Bắt đầu</button>
+        <div id="price-panel" class="game-panel mt-4">
+          <p id="price-info" class="text-xs font-semibold text-deep-teal/70 mb-2"></p>
+          <div class="flex gap-2">
+            <input id="price-input" type="number" min="50" max="250" placeholder="VD: 150" class="clay-sunken rounded-2xl px-4 py-2.5 w-full text-sm font-bold outline-none">
+            <button onclick="priceGuess()" class="clay-btn bg-clay-orange text-white font-display font-bold px-5 text-sm shrink-0">Đoán</button>
+          </div>
+          <p id="price-fb" class="text-xs mt-2 font-semibold"></p>
+        </div>
+      </div>
+
+      <!-- Bắt vốn vàng -->
+      <div class="clay-card p-5">
+        <div class="flex items-center gap-2"><p class="text-2xl">🪙</p><h3 class="font-display font-extrabold">Bắt Vốn Vàng</h3></div>
+        <p class="text-xs text-deep-teal/60 mt-1 mb-3">30 giây gọi vốn: hứng đồng vàng, né chi phí phát sinh 💣. Điều khiển bằng chạm / chuột / phím ← →.</p>
+        <button id="catch-btn" onclick="catchStart()" class="clay-btn w-full bg-primary text-white font-display font-bold py-2.5 text-sm">Bắt đầu</button>
+        <div id="catch-panel" class="game-panel mt-4">
+          <div class="flex justify-between text-xs font-extrabold mb-2">
+            <span>💰 Vốn: <span id="catch-score">0</span>tr₫</span>
+            <span>⏱️ <span id="catch-time">30</span>s</span>
+          </div>
+          <canvas id="catch-canvas" width="320" height="300"></canvas>
+          <p id="catch-fb" class="text-xs mt-2 font-semibold"></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== ĐỘI NGŨ ===== -->
+<section class="max-w-5xl mx-auto px-5 py-12">
+  <h2 class="font-display font-extrabold text-2xl text-center mb-8">Đội ngũ sáng lập</h2>
+  <div class="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
+    <div class="clay-card p-5 text-center">
+      <img src="assets/character/lumina-ao-dai.png" alt="Đỗ Thùy Hương" class="w-24 h-24 mx-auto rounded-full object-cover shadow-lg" style="object-position:50% 10%">
+      <h3 class="font-display font-extrabold mt-3">Đỗ Thùy Hương</h3>
+      <p class="text-xs text-primary font-bold">Je m'appelle Hương · Sáng lập & Thiết kế game</p>
+      <p class="text-[11px] text-deep-teal/60 mt-1">Hóa thân thành cố vấn AI Lumina trong game — áo dài truyền thống & vest trắng hiện đại.</p>
+    </div>
+    <div class="clay-card p-5 text-center">
+      <img src="assets/character/anh-tu-celebrate.png" alt="Phan Anh Tú" class="w-24 h-24 mx-auto rounded-full object-cover shadow-lg" style="object-position:50% 10%">
+      <h3 class="font-display font-extrabold mt-3">PGS.TS Phan Anh Tú</h3>
+      <p class="text-xs text-primary font-bold">Đồng sáng lập · Cố vấn chuyên môn</p>
+      <p class="text-[11px] text-deep-teal/60 mt-1">Bảo chứng học thuật cho mô hình mô phỏng kinh doanh và chế độ giảng viên.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA + FOOTER ===== -->
+<section class="max-w-5xl mx-auto px-5 pb-14 text-center">
+  <div class="clay-card p-8 bg-gradient-to-br from-primary to-deep-teal text-white" style="background:linear-gradient(135deg,#006687,#033337)">
+    <h2 class="font-display font-extrabold text-2xl">Sẵn sàng "Bật Nghiệp"?</h2>
+    <p class="text-white/75 text-sm mt-2">Lập đội, chọn vai trò CEO · CFO · COO · CMO và chinh phục TOP 1 thị phần.</p>
+    <a href="index.html" class="clay-btn-primary inline-block text-white font-display font-extrabold px-10 py-4 text-sm mt-5">🚀 Vào game ngay</a>
+  </div>
+</section>
+<footer class="text-center text-[11px] text-deep-teal/50 pb-8 px-5">
+  © 2026 Đỗ Thùy Hương (Je m'appelle Hương) & PGS.TS Phan Anh Tú · BizOn Bật Nghiệp — Bảo lưu mọi quyền.
+</footer>
+
+<script>
+/* ================= MINI-GAME 1: QUIZ ================= */
+const QUIZ = [
+  { q: 'Điểm hòa vốn (Break-even) là gì?', o: ['Mức sản lượng mà doanh thu = tổng chi phí', 'Lúc công ty hết tiền mặt', 'Khi thị phần đạt 50%'], a: 0 },
+  { q: 'Quick Ratio dưới 1.0 cảnh báo điều gì?', o: ['Thương hiệu yếu', 'Rủi ro thanh khoản — khó trả nợ ngắn hạn', 'Máy móc lạc hậu'], a: 1 },
+  { q: 'Khi đối thủ giảm giá 15% (Price War), chiến lược nào thường bền vững hơn?', o: ['Giảm giá sâu hơn đối thủ', 'Tăng giá trị cảm nhận qua R&D và thương hiệu', 'Ngừng quảng cáo để tiết kiệm'], a: 1 },
+  { q: 'ROI 12% trong khi lãi vay 10% nghĩa là gì?', o: ['Vay thêm là tự sát tài chính', 'Đòn bẩy vẫn sinh lời — mỗi đồng vay tạo hơn 1 đồng lãi', 'Không liên quan đến nhau'], a: 1 },
+  { q: 'OEE trong vận hành đo lường điều gì?', o: ['Hiệu suất tổng thể thiết bị', 'Số nhân viên nghỉ việc', 'Chi phí marketing'], a: 0 },
+  { q: 'Doanh thu / Chi phí marketing < 3.0 cho thấy?', o: ['Marketing đang rất hiệu quả', 'Chi tiếp thị cao nhưng chuyển đổi kém — cần rà soát thông điệp', 'Cần tăng gấp đôi ngân sách ngay'], a: 1 },
+  { q: 'Kỳ hạn thanh toán 90 ngày cho khách giúp gì và đánh đổi gì?', o: ['Tăng nhu cầu mua nhưng dòng tiền về chậm, rủi ro cao hơn', 'Giảm nhu cầu nhưng tiền về nhanh', 'Không ảnh hưởng gì'], a: 0 },
+  { q: 'Brand Loyalty dưới 60% thì việc cần làm trước tiên là?', o: ['Sa thải bớt nhân viên', 'Chiến dịch tái định vị thương hiệu', 'Tăng sản lượng tối đa'], a: 1 },
+];
+let qi = 0, qScore = 0;
+function quizStart() {
+  qi = 0; qScore = 0;
+  document.getElementById('quiz-panel').classList.add('open');
+  document.getElementById('quiz-fb').textContent = '';
+  quizRender();
+}
+function quizRender() {
+  const it = QUIZ[qi];
+  document.getElementById('quiz-progress').textContent = `Câu ${qi + 1}/${QUIZ.length} · Đúng: ${qScore}`;
+  document.getElementById('quiz-q').textContent = it.q;
+  document.getElementById('quiz-opts').innerHTML = it.o.map((o, i) =>
+    `<button onclick="quizPick(${i})" class="clay-btn w-full bg-white text-deep-teal text-left text-xs font-semibold px-4 py-2.5">${'ABC'[i]}. ${o}</button>`).join('');
+}
+function quizPick(i) {
+  const it = QUIZ[qi], fb = document.getElementById('quiz-fb');
+  if (i === it.a) { qScore++; fb.textContent = '✅ Chính xác!'; fb.className = 'text-xs mt-2 font-semibold text-emerald-600'; }
+  else { fb.textContent = `❌ Chưa đúng — đáp án: ${'ABC'[it.a]}. ${it.o[it.a]}`; fb.className = 'text-xs mt-2 font-semibold text-red-600'; }
+  qi++;
+  if (qi < QUIZ.length) { setTimeout(quizRender, 900); }
+  else setTimeout(() => {
+    const tier = qScore >= 7 ? '🏆 Tố chất CEO thực thụ!' : qScore >= 5 ? '👍 Nhà sáng lập tiềm năng!' : '📚 Vào game BizOn luyện thêm nhé!';
+    document.getElementById('quiz-q').textContent = `Kết quả: ${qScore}/${QUIZ.length} — ${tier}`;
+    document.getElementById('quiz-progress').textContent = 'HOÀN THÀNH';
+    document.getElementById('quiz-opts').innerHTML = `<button onclick="quizStart()" class="clay-btn w-full bg-primary text-white text-xs font-bold py-2.5">🔄 Chơi lại</button>`;
+    fb.textContent = '';
+  }, 1200);
+}
+
+/* ================= MINI-GAME 2: ĐOÁN GIÁ ================= */
+let pTarget = 0, pLeft = 0;
+function priceStart() {
+  pTarget = 50 + Math.floor(Math.random() * 201);
+  pLeft = 7;
+  document.getElementById('price-panel').classList.add('open');
+  document.getElementById('price-info').textContent = 'Thị trường đã chốt giá cân bằng. Còn 7 lượt đoán.';
+  document.getElementById('price-fb').textContent = '';
+  document.getElementById('price-input').value = '';
+  document.getElementById('price-input').focus();
+}
+function priceGuess() {
+  if (!pLeft) return;
+  const v = parseInt(document.getElementById('price-input').value, 10);
+  const fb = document.getElementById('price-fb');
+  if (isNaN(v) || v < 50 || v > 250) { fb.textContent = '⚠️ Nhập một mức giá từ 50 đến 250 (nghìn ₫).'; fb.className = 'text-xs mt-2 font-semibold text-amber-600'; return; }
+  pLeft--;
+  if (v === pTarget) {
+    fb.textContent = `🎉 Chuẩn! Giá cân bằng là ${pTarget} nghìn ₫ — bạn đoán trúng khi còn ${pLeft} lượt. Đúng chất CFO!`;
+    fb.className = 'text-xs mt-2 font-semibold text-emerald-600'; pLeft = 0;
+  } else if (!pLeft) {
+    fb.textContent = `💥 Hết lượt! Giá cân bằng là ${pTarget} nghìn ₫. Nhấn "Bắt đầu" để thử lại.`;
+    fb.className = 'text-xs mt-2 font-semibold text-red-600';
+  } else {
+    const hot = Math.abs(v - pTarget) <= 15 ? ' 🔥 Rất gần rồi!' : '';
+    fb.textContent = (v < pTarget ? `📈 Giá bạn đặt THẤP hơn thị trường (dư cầu).` : `📉 Giá bạn đặt CAO hơn thị trường (ế hàng).`) + hot + ` Còn ${pLeft} lượt.`;
+    fb.className = 'text-xs mt-2 font-semibold text-deep-teal/70';
+  }
+  document.getElementById('price-info').textContent = pLeft ? `Còn ${pLeft} lượt đoán.` : 'Ván đã kết thúc.';
+  document.getElementById('price-input').value = '';
+  document.getElementById('price-input').focus();
+}
+document.getElementById('price-input').addEventListener('keydown', e => { if (e.key === 'Enter') priceGuess(); });
+
+/* ================= MINI-GAME 3: BẮT VỐN VÀNG ================= */
+const cv = document.getElementById('catch-canvas'), cx = cv.getContext('2d');
+let cState = null, cRaf = 0, cTimer = 0;
+function catchStart() {
+  document.getElementById('catch-panel').classList.add('open');
+  cancelAnimationFrame(cRaf); clearInterval(cTimer);
+  cState = { x: cv.width / 2, score: 0, time: 30, items: [], tick: 0, over: false };
+  document.getElementById('catch-fb').textContent = '';
+  document.getElementById('catch-btn').textContent = '🔄 Chơi lại';
+  cTimer = setInterval(() => {
+    if (!cState || cState.over) return;
+    cState.time--;
+    document.getElementById('catch-time').textContent = cState.time;
+    if (cState.time <= 0) catchEnd();
+  }, 1000);
+  cRaf = requestAnimationFrame(catchLoop);
+}
+function catchEnd() {
+  cState.over = true; clearInterval(cTimer); cancelAnimationFrame(cRaf);
+  const s = cState.score;
+  const msg = s >= 500 ? '🏆 Gọi vốn Series A thành công!' : s >= 250 ? '💼 Vòng hạt giống ổn áp!' : '🌱 Khởi đầu nào cũng đáng quý — thử lại nhé!';
+  document.getElementById('catch-fb').textContent = `Kết thúc! Bạn gọi được ${s}tr₫ vốn. ${msg}`;
+  document.getElementById('catch-fb').className = 'text-xs mt-2 font-semibold text-primary';
+}
+function catchLoop() {
+  const st = cState; if (!st || st.over) return;
+  st.tick++;
+  if (st.tick % Math.max(18, 34 - Math.floor((30 - st.time) / 4) * 4) === 0) {
+    const bomb = Math.random() < 0.28;
+    st.items.push({ x: 16 + Math.random() * (cv.width - 32), y: -14, v: 1.6 + Math.random() * 1.6 + (30 - st.time) * 0.05, bomb });
+  }
+  cx.clearRect(0, 0, cv.width, cv.height);
+  // giỏ vốn
+  cx.font = '30px serif'; cx.textAlign = 'center';
+  cx.fillText('🧺', st.x, cv.height - 10);
+  st.items = st.items.filter(it => {
+    it.y += it.v;
+    cx.font = '22px serif';
+    cx.fillText(it.bomb ? '💣' : '🪙', it.x, it.y);
+    if (it.y > cv.height - 34 && it.y < cv.height && Math.abs(it.x - st.x) < 26) {
+      if (it.bomb) { st.score = Math.max(0, st.score - 40); flashFb('💣 Chi phí phát sinh −40tr₫!', 'text-red-600'); }
+      else { st.score += 20; }
+      document.getElementById('catch-score').textContent = st.score;
+      return false;
+    }
+    return it.y < cv.height + 20;
+  });
+  cRaf = requestAnimationFrame(catchLoop);
+}
+let fbTo = 0;
+function flashFb(t, cls) {
+  const el = document.getElementById('catch-fb');
+  el.textContent = t; el.className = 'text-xs mt-2 font-semibold ' + cls;
+  clearTimeout(fbTo); fbTo = setTimeout(() => { if (cState && !cState.over) el.textContent = ''; }, 900);
+}
+function catchMove(clientX) {
+  if (!cState || cState.over) return;
+  const r = cv.getBoundingClientRect();
+  cState.x = Math.min(cv.width - 16, Math.max(16, (clientX - r.left) * (cv.width / r.width)));
+}
+cv.addEventListener('mousemove', e => catchMove(e.clientX));
+cv.addEventListener('touchmove', e => { e.preventDefault(); catchMove(e.touches[0].clientX); }, { passive: false });
+cv.addEventListener('touchstart', e => { e.preventDefault(); catchMove(e.touches[0].clientX); }, { passive: false });
+document.addEventListener('keydown', e => {
+  if (!cState || cState.over) return;
+  if (e.key === 'ArrowLeft') cState.x = Math.max(16, cState.x - 24);
+  if (e.key === 'ArrowRight') cState.x = Math.min(cv.width - 16, cState.x + 24);
+});
+</script>
+</body>
+</html>
