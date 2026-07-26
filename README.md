@@ -1,129 +1,116 @@
-# BizOn Bật Nghiệp 2026 — Business Simulation
+# BizOn Bật Nghiệp — Business Simulation Game
 
-Nền tảng **mô phỏng kinh doanh EdTech** theo phong cách **3D Claymorphism**, nơi các đội
-sinh viên điều hành doanh nghiệp ảo qua **6 vòng chơi** cùng cố vấn AI **Lumina
-(Je m'appelle Hương)**.
+> **Game mô phỏng kinh doanh EdTech phong cách 3D Claymorphism** — các đội sinh viên điều hành doanh nghiệp ảo qua **6 vòng chơi** trên bản đồ Việt Nam, cùng cố vấn AI **Lumina (Je m'appelle Hương)**, và vươn ra thị trường quốc tế với **BizOn Global**.
 
-## Chạy thử
+![version](https://img.shields.io/badge/version-1.0-blue)
+![license](https://img.shields.io/badge/license-Proprietary%20·%20All%20rights%20reserved-lightgrey)
+![PWA](https://img.shields.io/badge/PWA-offline%20ready-5cc4e6)
+![deploy](https://img.shields.io/badge/GitHub%20Pages-live-2ea44f)
 
-Không cần cài đặt — mở trực tiếp:
-
-```bash
-# Cách 1: mở file
-open index.html
-
-# Cách 2: chạy server tĩnh
-python3 -m http.server 8000
-# rồi mở http://localhost:8000
-```
-
-Tiến trình chơi được lưu tự động trong `localStorage` của trình duyệt.
-
-## Triển khai Web App & Mobile App
-
-- **Web (GitHub Pages):** workflow [`deploy-pages.yml`](.github/workflows/deploy-pages.yml)
-  tự động deploy mỗi khi push lên `main` → game chạy tại
-  `https://thuyhuongctu.github.io/BizOn/`.
-- **Mobile (PWA):** game là Progressive Web App — mở link trên điện thoại rồi chọn
-  **"Thêm vào màn hình chính"** (Android/Chrome tự gợi ý cài đặt) là có app icon
-  Lumina, chạy toàn màn hình như app native và **chơi được offline** nhờ service
-  worker (`sw.js` + `manifest.webmanifest`).
-
-## Tính năng
-
-| Màn hình | Mô tả |
+| | |
 |---|---|
-| Splash & Đăng nhập | Logo pulse, chọn vai trò CEO / CFO / CMO / COO / SEC |
-| Trung tâm điều hành | Vòng chơi R1→R6, chỉ số Dòng tiền / Thị phần / Thương hiệu, banner biến cố thị trường |
-| Nhập quyết định | Giá bán, Ngân sách Marketing, Sản lượng, Đầu tư R&D — nút **Commit** khóa quyết định |
-| Cố vấn Lumina AI | Kịch bản "Nếu — Thì", cảnh báo rủi ro (🔴 đỏ cam) / cơ hội (🟢 xanh ngọc), giới hạn lượt hỏi mỗi vòng |
-| Báo cáo | P&L, Dòng tiền, Khấu hao — biểu đồ cột theo vòng |
-| Cửa hàng & Kho đồ | Marketing Boost, R&D Upgrade, Khiên bảo hiểm… trừ trực tiếp ví ảo của đội |
-| Cây kỹ năng | Mở khóa bằng XP tích lũy từ lợi nhuận và thị phần |
-| Bảng xếp hạng | Đấu với 3 đội AI (Alpha Dynamics, Mekong Ventures, Star Clay Co.) |
-| Thành tựu & Chứng chỉ | 6 thành tựu + chứng chỉ hoàn thành sau vòng 6, hiệu ứng confetti |
-| Nhiệm vụ | 9 nhiệm vụ xuyên game với thưởng tiền ảo + XP, badge đếm nhiệm vụ chờ nhận |
-| Clay Factory Frenzy | Mini-game băng chuyền đất sét: chạm đúng đơn hàng trong 30 giây, 3 lượt/vòng, đổi điểm lấy tiền ảo |
-| Màn hình Giảng viên | Cấp vốn cho đội (+ nhật ký), khóa/mở vòng chơi (ERR_ROUND_LOCKED) |
-| Lumina Advisor Pro | Nhập số liệu kinh doanh thực → 3 kịch bản "Nếu — Thì" (Thận trọng / Cân bằng / Tăng tốc) |
-| Biến cố toàn màn hình | Mỗi vòng mở màn bằng màn hình biến cố kiểu Stitch: Cơ Hội Vàng, Chiến Tranh Giá, Khủng Hoảng Năng Lượng/Chuỗi Cung Ứng... kèm chỉ số tác động + lời khuyên Lumina theo vai trò |
-| Chúc mừng chiến thắng | Thị phần đạt đỉnh mới (≥30%, có lãi) → màn hình TOP 1 MARKET với Lumina vỗ tay, hiệu quả quảng cáo, độ hài lòng thương hiệu |
-| Kiểm toán Năng lượng | Báo cáo ⚡: tổng kWh vs mục tiêu (vòng tròn % quá tải), 3 dây chuyền với trạng thái, nâng cấp/bảo trì dây chuyền, lịch sử bảo trì |
-| Phân tích theo vai trò | Advisor: thẻ CFO (thanh toán nhanh, ROI, khoản vay, cắt chi phí), COO (OEE, phế phẩm, bảo trì), CMO (thị phần, Brand Loyalty, Price War/Green Marketing, Branding Premium) |
-| Mô phỏng "Nếu — Thì" | Trước khi Commit: chạy thử kịch bản CEO (thị phần, hòa vốn, đánh đổi) hoặc CFO (Quick Ratio ngưỡng 1.1, đòn bẩy ROI vs lãi vay) — 2 lượt/vòng theo `what_if_limit` |
-| Bộ nhớ doanh nghiệp | SEC: nhật ký toàn bộ lời tư vấn của Lumina theo vòng (mô phỏng bảng `ai_advisor_history`) |
-| Nhật ký đội | Timeline hành trình 6 vòng: quyết định then chốt, kết quả & bài học tự sinh từ số liệu, trích dẫn Lumina/SEC/Phan Anh Tú |
-| Chat giọng nói với Lumina | Nhập tự do hoặc nói (STT tiếng Việt), Lumina trả lời bằng giọng nói (TTS, chọn giọng Nữ/Nam), thanh sóng âm "Hương đang nói..." |
-| Quyết định nâng cao | Quản trị Tài chính (nguồn vốn tự có/vay 8.5%, kỳ hạn thanh toán 30/60/90 ngày) + Quản trị Nhân sự (số nhân viên, ngân sách đào tạo) + Dự báo dòng tiền CVP trực tiếp |
-| Báo cáo học thuật | CVP & Chi phí (điểm hòa vốn, lãi góp, cố định vs biến đổi, waterfall Gộp→HĐ→Ròng, ROS/ROE/ROA/Operating vs trung bình ngành), Báo cáo Nhân sự, BMC cập nhật theo dữ liệu thật |
-| Thị trường sống | Live ticker tin thị trường, cố vấn Hương LIVE, thị phần bạn-vs-đối thủ (cột đất sét), Tiếng nói khách hàng với chip cảm xúc, Radar xu hướng 4 trục, Brand Loyalty & hiệu quả quảng cáo vs mục tiêu |
-
-## Engine mô phỏng (client-side)
-
-- **6 vòng chơi**, mỗi vòng một biến cố thị trường: Bùng nổ công nghệ, Chiến tranh giá,
-  Suy thoái kinh tế (hiệu ứng `animate-shake`), Đứt gãy chuỗi cung ứng, Hội chợ quốc tế.
-- Mô hình thị phần theo **độ co giãn giá** + hiệu quả marketing + giá trị thương hiệu.
-- Chi phí: giá vốn / khấu hao theo công suất máy / phí lưu kho / chi phí cố định.
-- R&D tích lũy giảm giá thành và tăng thương hiệu; XP quy đổi từ lợi nhuận và thị phần.
-- Mã lỗi nghiệp vụ mô phỏng theo API spec: `ERR_ALREADY_COMMITTED`,
-  `ERR_INSUFFICIENT_FUNDS`, `ERR_AI_LIMIT_REACHED`, `ERR_ITEM_NOT_FOUND`…
-
-## Design Tokens
-
-| Token | Giá trị |
-|---|---|
-| Primary | `#006687` |
-| Primary Container | `#00c4ff` |
-| Surface Bright | `#f4faff` |
-| Deep Teal | `#033337` |
-| Font tiêu đề | Plus Jakarta Sans |
-| Font nội dung | Manrope |
-| Bo góc | `24px` |
-| Clay shadow | `0 10px 30px -5px rgba(0,102,135,.05)` + `inset 0 -4px 0 rgba(0,0,0,.05)` |
-
-## Cấu trúc mã nguồn
-
-```
-index.html          # SPA — toàn bộ màn hình + Tailwind config + đăng ký PWA
-js/engine.js        # Engine mô phỏng 6 vòng, biến cố, vật phẩm, kỹ năng, Lumina AI
-js/app.js           # Điều khiển UI, điều hướng tab, render, localStorage
-sw.js               # Service worker — cache app shell, chơi offline
-manifest.webmanifest# Khai báo PWA (tên, icon, màu thương hiệu)
-assets/character/   # Ảnh 3D nhân vật Lumina (áo dài & vest trắng)
-assets/icons/       # Icon app (mặt Lumina trên nền gradient clay)
-docs/               # Hồ sơ kỹ thuật (schema, API, design system, sở hữu trí tuệ)
-```
-
-> Nhân vật **Lumina — Je m'appelle Hương** xuất hiện xuyên suốt game:
-> bản **áo dài trắng** ở Splash / Đăng nhập / Chứng chỉ hoàn thành,
-> bản **vest trắng** ở Dashboard / màn hình Cố vấn AI / khung chat.
-
-## Lộ trình tiếp theo
-
-1. Backend API theo [`docs/api-structure.md`](docs/api-structure.md) (JWT, queue xử lý commit).
-2. Database PostgreSQL theo [`docs/database-schema.md`](docs/database-schema.md).
-3. Chế độ nhiều đội thời gian thực + màn hình Giảng viên (cấp vốn, khóa vòng).
-4. Tích hợp Lumina AI thật qua Claude API thay cho rule-based advisor.
-
-## Bản quyền & Sở hữu trí tuệ
-
-Đây là **phần mềm độc quyền** — xem [`LICENSE`](LICENSE). Mã nguồn, thuật toán
-engine mô phỏng, tạo hình nhân vật **Lumina — Je m'appelle Hương**, tên gọi và
-nhận diện **BizOn Bật Nghiệp** thuộc sở hữu của nhóm tác giả; nghiêm cấm sao chép
-hoặc sử dụng thương mại khi chưa được phép bằng văn bản.
-
-Hồ sơ đăng ký bảo hộ (quyền tác giả, nhãn hiệu) và chiến lược thương mại hóa:
-[`docs/so-huu-tri-tue.md`](docs/so-huu-tri-tue.md).
-
-Thành phần bên thứ ba: Tailwind CSS (MIT), Google Fonts Plus Jakarta Sans &
-Manrope (OFL 1.1) — giữ nguyên giấy phép gốc của chúng.
+| **Tác giả** | **Đỗ Thùy Hương** (Founder & Creative Lead) · **Phan Anh Tú** (Academic Advisor) |
+| **Đơn vị** | Đại học Cần Thơ (CTU) |
+| **Chơi ngay** | 🎮 [Game](https://thuyhuongctu.github.io/BizOn/) · 🌐 [Trang giới thiệu](https://thuyhuongctu.github.io/BizOn/gioi-thieu.html) · 🕹️ [Arcade](https://thuyhuongctu.github.io/BizOn/games.html) · 🌏 [BizOn Global](https://thuyhuongctu.github.io/BizOn/global.html) |
+| **Liên hệ** | thuyhuongctu@gmail.com |
+| **Lưu trữ & DOI** | Zenodo: *đang đăng ký* — DOI sẽ cập nhật tại đây sau khi phát hành bản chính thức (xem mục [Trích dẫn](#-trích-dẫn--lưu-trữ)) |
 
 ---
-## Thành viên nhóm
 
-| Thành viên | Vai trò |
+## 🗺️ Hệ sinh thái
+
+| Trang | Nội dung |
 |---|---|
-| **Đỗ Thùy Hương** | Tác giả thiết kế & nhân vật Lumina · thuyhuongctu@gmail.com |
-| **Phan Anh Tú** | Đồng sáng lập |
+| [`index.html`](https://thuyhuongctu.github.io/BizOn/) | **Game chính** — 6 vòng chinh phục bản đồ Việt Nam (Cần Thơ → Hà Nội), cắm cờ 🚩 khi thắng thị phần từng vòng; cột cờ Lũng Cú, quần đảo Hoàng Sa & Trường Sa trên bản đồ |
+| [`gioi-thieu.html`](https://thuyhuongctu.github.io/BizOn/gioi-thieu.html) | Landing quốc tế: demo tương tác, 5 vai trò lãnh đạo, lộ trình 6 vòng, mini-game, tour guide AI, FAQ, khu giảng viên |
+| [`games.html`](https://thuyhuongctu.github.io/BizOn/games.html) | **BizOn Arcade** — 8 trò chơi của hệ sinh thái |
+| [`global.html`](https://thuyhuongctu.github.io/BizOn/global.html) | **BizOn Global** (thử nghiệm) — từ Việt Nam ra thế giới: chọn thị trường, phương thức thâm nhập (Export · Licensing · Liên doanh · Đầu tư mới FDI), World Market LIVE và **I–P Lab** dựa trên luận án |
+| [`doi-ngu.html`](https://thuyhuongctu.github.io/BizOn/doi-ngu.html) | Đội ngũ sáng lập, sứ mệnh & tầm nhìn 2026 |
 
-© 2026 BizOn Bật Nghiệp
+Toàn bộ trang hỗ trợ **chế độ Sáng/Tối**, **song ngữ Việt–Anh** và **nhạc nền** (2 ca khúc chủ đề «Bật Nghiệp», «Je m'appelle Hương and the World» — lời tại [`docs/loi-bai-hat.md`](docs/loi-bai-hat.md)).
+
+## 🎮 Tính năng chính
+
+| Nhóm | Nội dung |
+|---|---|
+| Vòng chơi | 6 vòng = 6 tỉnh/thành theo bản đồ mới; mỗi vòng một biến cố thị trường (Cơ Hội Vàng, Price War, Khủng hoảng năng lượng, Siết tín dụng, Việt Nam Hóa Rồng) |
+| Quyết định | Giá bán · Marketing · R&D · Sản lượng · Nhân công & đào tạo · Nguồn vốn (tự có / vay 8,5%) · Kỳ hạn thanh toán 30/60/90 ngày · Bảo trì |
+| Đối thủ AI | 🐺 Alpha Dynamics (giá rẻ) · 🐘 Mekong Ventures (cân bằng) · 🦚 Star Clay Co. (cao cấp) — hành vi **tất định theo seed đội**, tiện chấm điểm |
+| Cố vấn Lumina AI | Kịch bản "Nếu — Thì", cảnh báo rủi ro theo vai trò, chat giọng nói tiếng Việt (STT/TTS), bộ não riêng cho CEO · CFO · CMO · COO · SEC |
+| Báo cáo | P&L, dòng tiền 3 hoạt động, CVP hòa vốn, nhân sự, BMC, khấu hao, kiểm toán năng lượng ⚡ |
+| Học mà chơi | Nhiệm vụ, thành tựu, cây kỹ năng, chứng nhận hoàn thành, nhật ký đội, Clay Reward Shop, mini-game |
+| Giảng viên | Class ID, khóa/mở vòng, cấp vốn kèm nhật ký — tài liệu đầy đủ tại [`docs/huong-dan-giang-vien.md`](docs/huong-dan-giang-vien.md) |
+| BizOn Monitor | Bảng theo dõi kiểu terminal: sparkline chỉ số đội + 3 đối thủ qua từng vòng |
+
+## 🔬 Cơ sở khoa học
+
+Chế độ **I–P Lab** (trang BizOn Global) mô phỏng quan hệ **quốc tế hóa – hiệu quả doanh nghiệp** theo chương trình nghiên cứu luận án tiến sĩ *"Internationalization and firm business performance in Asia"* (Đỗ Thùy Hương, ĐH Cần Thơ; người hướng dẫn: Phan Anh Tú) — dữ liệu WBES 92.564 doanh nghiệp, 50 nền kinh tế châu Á – Thái Bình Dương:
+
+- Quan hệ **chữ U ngược** với điểm ngoặt ≈ **43,6% FSTS** (mẫu gộp);
+- Thể chế mạnh (Singapore, Nhật Bản): gần tuyến tính; **"lá chắn số" DAI** tại Singapore;
+- Đảo nhỏ Thái Bình Dương (SIDS): **FIP — Forced Internationalization Penalty** (β = −1,339, quan hệ âm đơn điệu).
+
+> Luận án là công trình chưa công bố; các con số trong game là minh họa giáo dục từ kết quả nghiên cứu.
+
+## 🚀 Chạy & triển khai
+
+```bash
+# chạy cục bộ (không cần cài đặt)
+python3 -m http.server 8000   # rồi mở http://localhost:8000
+```
+
+- **Web:** workflow [`deploy-pages.yml`](.github/workflows/deploy-pages.yml) tự deploy lên GitHub Pages mỗi khi push `main`.
+- **Mobile (PWA):** mở link trên điện thoại → "Thêm vào màn hình chính" — chạy toàn màn hình, chơi offline (service worker + manifest).
+- Tiến trình chơi lưu trong `localStorage` của từng máy.
+
+## 🧱 Cấu trúc mã nguồn
+
+```
+index.html            # Game SPA — toàn bộ màn hình + Tailwind config + PWA
+gioi-thieu.html       # Landing page quốc tế
+games.html            # BizOn Arcade (8 trò chơi)
+global.html           # BizOn Global + World Market LIVE + I–P Lab
+doi-ngu.html          # Trang đội ngũ sáng lập
+js/engine.js          # Engine mô phỏng 6 vòng, biến cố, vật phẩm, kỹ năng
+js/app.js             # UI game: render, điều hướng, bản đồ chinh phục, intro
+js/site-ui.js         # Sáng/Tối + từ điển song ngữ Việt–Anh dùng chung
+sw.js                 # Service worker — app shell, chơi offline
+assets/character/     # Tạo hình 3D: Lumina Áo Dài, Lumina Vest Trắng, Phan Anh Tú
+assets/audio/         # Nhạc: BizOn Theme, Bật Nghiệp, Hương and the World, giọng Hương
+docs/                 # Hướng dẫn giảng viên, đề án V-Monitor, lời bài hát, hồ sơ SHTT
+```
+
+## 📚 Trích dẫn & Lưu trữ
+
+Nếu sử dụng BizOn trong giảng dạy hoặc nghiên cứu, vui lòng trích dẫn:
+
+> Do, T. H., & Phan, A. T. (2026). *BizOn Bật Nghiệp: A 3D claymorphism business-simulation game for entrepreneurship education* [Computer software]. Can Tho University. https://github.com/thuyhuongctu/BizOn
+
+- Tệp trích dẫn máy đọc được: [`CITATION.cff`](CITATION.cff) (GitHub hiển thị nút **"Cite this repository"**).
+- **Zenodo/DOI:** kho sẽ được lưu trữ trên Zenodo theo đúng quy trình đã áp dụng cho M-AIDA — bật tích hợp *Zenodo ↔ GitHub*, phát hành release `v1.0.0`, DOI concept + version sẽ được cập nhật vào bảng đầu trang này.
+
+## ⚖️ Bản quyền & Sở hữu trí tuệ
+
+**Phần mềm độc quyền** — xem [`LICENSE`](LICENSE). Mã nguồn, thuật toán engine mô phỏng, tạo hình nhân vật **Lumina — Je m'appelle Hương**, tên gọi và nhận diện **BizOn Bật Nghiệp** thuộc sở hữu của nhóm tác giả **Đỗ Thùy Hương & Phan Anh Tú**; nghiêm cấm sao chép hoặc sử dụng thương mại khi chưa được phép bằng văn bản.
+
+Hồ sơ đăng ký bảo hộ (quyền tác giả, nhãn hiệu) và chiến lược thương mại hóa: [`docs/so-huu-tri-tue.md`](docs/so-huu-tri-tue.md).
+
+Thành phần bên thứ ba: Tailwind CSS (MIT), Google Fonts Plus Jakarta Sans & Manrope (OFL 1.1) — giữ nguyên giấy phép gốc.
+
+## 🛣️ Lộ trình tiếp theo
+
+1. Backend API theo [`docs/api-structure.md`](docs/api-structure.md) (JWT, queue xử lý commit) → chế độ nhiều đội thời gian thực.
+2. Database PostgreSQL theo [`docs/database-schema.md`](docs/database-schema.md).
+3. Tích hợp cố vấn AI thật qua API mô hình ngôn ngữ lớn thay cho advisor luật.
+4. **V-Monitor** — dashboard dữ liệu thật thị trường Việt Nam, phát triển thành dự án độc lập: [`docs/de-an-vn-monitor.md`](docs/de-an-vn-monitor.md).
+
+---
+
+## 👥 Nhóm tác giả
+
+| Tác giả | Vai trò |
+|---|---|
+| **Đỗ Thùy Hương** | Founder & Creative Lead — thiết kế game, hóa thân nhân vật Lumina AI · thuyhuongctu@gmail.com |
+| **Phan Anh Tú** | Academic Advisor — cố vấn học thuật, bảo chứng chuyên môn quản trị kinh doanh |
+
+© 2026 Đỗ Thùy Hương & Phan Anh Tú · **BizOn Bật Nghiệp** — Bảo lưu mọi quyền.
