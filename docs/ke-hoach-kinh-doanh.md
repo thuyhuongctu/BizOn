@@ -1,7 +1,7 @@
 # KẾ HOẠCH KINH DOANH — HỆ SINH THÁI BIZON (BẬT NGHIỆP) 2026
 
 **Dự án:** BizOn (Bật Nghiệp) — AI-Native Business Simulation
-**Đồng sáng lập:** PGS.TS Phan Anh Tú & Đỗ Thùy Hương (Je m'appelle Hương)
+**Đồng sáng lập:** PGS.TS Phan Anh Tú & Đỗ Thùy Hương
 **Tầm nhìn:** Nền tảng mô phỏng kinh doanh dẫn đầu khu vực — kết hợp tri thức
 học thuật chuyên sâu và công nghệ AI đột phá.
 
