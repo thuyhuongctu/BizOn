@@ -52,7 +52,7 @@ Tiến trình chơi được lưu tự động trong `localStorage` của trình
 | Phân tích theo vai trò | Advisor: thẻ CFO (thanh toán nhanh, ROI, khoản vay, cắt chi phí), COO (OEE, phế phẩm, bảo trì), CMO (thị phần, Brand Loyalty, Price War/Green Marketing, Branding Premium) |
 | Mô phỏng "Nếu — Thì" | Trước khi Commit: chạy thử kịch bản CEO (thị phần, hòa vốn, đánh đổi) hoặc CFO (Quick Ratio ngưỡng 1.1, đòn bẩy ROI vs lãi vay) — 2 lượt/vòng theo `what_if_limit` |
 | Bộ nhớ doanh nghiệp | SEC: nhật ký toàn bộ lời tư vấn của Lumina theo vòng (mô phỏng bảng `ai_advisor_history`) |
-| Nhật ký đội | Timeline hành trình 6 vòng: quyết định then chốt, kết quả & bài học tự sinh từ số liệu, trích dẫn Lumina/SEC/PGS.TS Phan Anh Tú |
+| Nhật ký đội | Timeline hành trình 6 vòng: quyết định then chốt, kết quả & bài học tự sinh từ số liệu, trích dẫn Lumina/SEC/Phan Anh Tú |
 | Chat giọng nói với Lumina | Nhập tự do hoặc nói (STT tiếng Việt), Lumina trả lời bằng giọng nói (TTS, chọn giọng Nữ/Nam), thanh sóng âm "Hương đang nói..." |
 | Quyết định nâng cao | Quản trị Tài chính (nguồn vốn tự có/vay 8.5%, kỳ hạn thanh toán 30/60/90 ngày) + Quản trị Nhân sự (số nhân viên, ngân sách đào tạo) + Dự báo dòng tiền CVP trực tiếp |
 | Báo cáo học thuật | CVP & Chi phí (điểm hòa vốn, lãi góp, cố định vs biến đổi, waterfall Gộp→HĐ→Ròng, ROS/ROE/ROA/Operating vs trung bình ngành), Báo cáo Nhân sự, BMC cập nhật theo dữ liệu thật |
@@ -124,6 +124,6 @@ Manrope (OFL 1.1) — giữ nguyên giấy phép gốc của chúng.
 | Thành viên | Vai trò |
 |---|---|
 | **Đỗ Thùy Hương** | Tác giả thiết kế & nhân vật Lumina · thuyhuongctu@gmail.com |
-| **PGS.TS Phan Anh Tú** | Đồng sáng lập |
+| **Phan Anh Tú** | Đồng sáng lập |
 
 © 2026 BizOn Bật Nghiệp
