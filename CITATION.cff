@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "Nếu sử dụng phần mềm này trong giảng dạy hoặc nghiên cứu, vui lòng trích dẫn theo thông tin dưới đây. / If you use this software, please cite it as below."
+title: "BizOn Bật Nghiệp: A 3D claymorphism business-simulation game for entrepreneurship education"
+type: software
+version: "1.0"
+date-released: 2026-07-26
+authors:
+  - family-names: "Do"
+    given-names: "Thuy Huong"
+    email: thuyhuongctu@gmail.com
+    affiliation: "Can Tho University"
+  - family-names: "Phan"
+    given-names: "Anh Tu"
+    affiliation: "Can Tho University"
+repository-code: "https://github.com/thuyhuongctu/BizOn"
+url: "https://thuyhuongctu.github.io/BizOn/"
+license-url: "https://github.com/thuyhuongctu/BizOn/blob/main/LICENSE"
+keywords:
+  - business simulation
+  - entrepreneurship education
+  - serious game
+  - claymorphism
+  - internationalization
+  - Vietnam
+abstract: "BizOn Bật Nghiệp là game mô phỏng kinh doanh EdTech phong cách 3D claymorphism: các đội sinh viên điều hành doanh nghiệp qua 6 vòng chơi trên bản đồ Việt Nam cùng cố vấn AI Lumina, và mở rộng ra thị trường quốc tế (BizOn Global) với chế độ I-P Lab mô phỏng quan hệ quốc tế hóa - hiệu quả doanh nghiệp."
