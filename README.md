@@ -63,11 +63,16 @@ Tiến trình chơi được lưu tự động trong `localStorage` của trình
 ## Cấu trúc mã nguồn
 
 ```
-index.html      # SPA — toàn bộ màn hình + Tailwind config
-js/engine.js    # Engine mô phỏng 6 vòng, biến cố, vật phẩm, kỹ năng, Lumina AI
-js/app.js       # Điều khiển UI, điều hướng tab, render, localStorage
-docs/           # Hồ sơ kỹ thuật từ Stitch (schema, API, handoff)
+index.html          # SPA — toàn bộ màn hình + Tailwind config
+js/engine.js        # Engine mô phỏng 6 vòng, biến cố, vật phẩm, kỹ năng, Lumina AI
+js/app.js           # Điều khiển UI, điều hướng tab, render, localStorage
+assets/character/   # Ảnh 3D nhân vật Lumina (áo dài & vest trắng)
+docs/               # Hồ sơ kỹ thuật từ Stitch (schema, API, handoff)
 ```
+
+> Nhân vật **Lumina — Je m'appelle Hương** xuất hiện xuyên suốt game:
+> bản **áo dài trắng** ở Splash / Đăng nhập / Chứng chỉ hoàn thành,
+> bản **vest trắng** ở Dashboard / màn hình Cố vấn AI / khung chat.
 
 ## Lộ trình tiếp theo
 
