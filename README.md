@@ -42,6 +42,10 @@ Tiến trình chơi được lưu tự động trong `localStorage` của trình
 | Cây kỹ năng | Mở khóa bằng XP tích lũy từ lợi nhuận và thị phần |
 | Bảng xếp hạng | Đấu với 3 đội AI (Alpha Dynamics, Mekong Ventures, Star Clay Co.) |
 | Thành tựu & Chứng chỉ | 6 thành tựu + chứng chỉ hoàn thành sau vòng 6, hiệu ứng confetti |
+| Nhiệm vụ | 9 nhiệm vụ xuyên game với thưởng tiền ảo + XP, badge đếm nhiệm vụ chờ nhận |
+| Clay Factory Frenzy | Mini-game băng chuyền đất sét: chạm đúng đơn hàng trong 30 giây, 3 lượt/vòng, đổi điểm lấy tiền ảo |
+| Màn hình Giảng viên | Cấp vốn cho đội (+ nhật ký), khóa/mở vòng chơi (ERR_ROUND_LOCKED) |
+| Lumina Advisor Pro | Nhập số liệu kinh doanh thực → 3 kịch bản "Nếu — Thì" (Thận trọng / Cân bằng / Tăng tốc) |
 
 ## Engine mô phỏng (client-side)
 
