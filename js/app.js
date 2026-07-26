@@ -1,6 +1,6 @@
-/* BizArena 2026 — UI controller (SPA, localStorage persistence) */
+/* BizOn Bật Nghiệp 2026 — UI controller (SPA, localStorage persistence) */
 
-const STORAGE_KEY = 'bizarena2026';
+const STORAGE_KEY = 'bizon2026';
 let S = null;
 
 // ---------- Helpers ----------
@@ -57,7 +57,7 @@ function pickRole(id) {
 }
 
 function doLogin() {
-  const email = $('login-email').value.trim() || 'sinhvien@bizarena.vn';
+  const email = $('login-email').value.trim() || 'sinhvien@bizon.vn';
   const team = $('login-team').value.trim() || 'Đội Claymorphism';
   S = newGameState({ email, teamName: team, role: pickedRole });
   save();

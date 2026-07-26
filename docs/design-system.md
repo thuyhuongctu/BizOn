@@ -1,4 +1,4 @@
-# Design System — BizArena 2026 (3D Claymorphism)
+# Design System — BizOn Bật Nghiệp 2026 (3D Claymorphism)
 
 Trích từ Developer Handoff của Google Stitch.
 

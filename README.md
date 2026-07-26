@@ -1,4 +1,4 @@
-# BizArena 2026 — Business Simulation (BizOn)
+# BizOn Bật Nghiệp 2026 — Business Simulation
 
 Nền tảng **mô phỏng kinh doanh EdTech** theo phong cách **3D Claymorphism**, nơi các đội
 sinh viên điều hành doanh nghiệp ảo qua **6 vòng chơi** cùng cố vấn AI **Lumina
@@ -82,4 +82,11 @@ docs/               # Hồ sơ kỹ thuật từ Stitch (schema, API, handoff)
 4. Tích hợp Lumina AI thật qua Claude API thay cho rule-based advisor.
 
 ---
-**Tác giả thiết kế:** Je m'appelle Hương · thuyhuongctu@gmail.com · © 2026 BizArena
+## Thành viên nhóm
+
+| Thành viên | Vai trò |
+|---|---|
+| **Đỗ Thùy Hương** (Je m'appelle Hương) | Tác giả thiết kế & nhân vật Lumina · thuyhuongctu@gmail.com |
+| **Phan Anh Tú** | Đồng phát triển |
+
+© 2026 BizOn Bật Nghiệp
