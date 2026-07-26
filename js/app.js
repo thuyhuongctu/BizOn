@@ -78,6 +78,39 @@ function doLogin() {
   $('screen-login').classList.remove('active');
   enterApp();
   createConfetti();
+  playHuongIntro();   // giọng chào thật của Hương AI (được phép vì gọi từ thao tác chạm)
+}
+
+// ---------- Giọng nói thật của Hương AI (bản thu + phụ đề SRT) ----------
+const HUONG_CUES = [
+  [0.03, 0.87, 'Bonjour à tous!'],
+  [1.25, 2.01, "Je m'appelle Huong."],
+  [2.39, 3.17, 'Xin chào mọi người!'],
+  [3.53, 4.17, 'Tôi là Huong.'],
+];
+let huongAudio = null;
+function playHuongIntro() {
+  if (!huongAudio) {
+    huongAudio = new Audio('assets/audio/huong-intro.mp3');
+    huongAudio.addEventListener('timeupdate', () => {
+      const t = huongAudio.currentTime;
+      const cue = HUONG_CUES.find(c => t >= c[0] && t <= c[1] + 0.2);
+      const el = $('huong-caption');
+      if (el && cue) el.textContent = '“' + cue[2] + '”';
+    });
+    huongAudio.addEventListener('ended', () => {
+      const box = $('huong-caption-box');
+      if (box) setTimeout(() => box.classList.add('hidden'), 600);
+      const btn = $('huong-voice-btn');
+      if (btn) btn.classList.remove('animate-pulse');
+    });
+  }
+  const box = $('huong-caption-box'), btn = $('huong-voice-btn'), el = $('huong-caption');
+  if (el) el.textContent = '';
+  if (box) box.classList.remove('hidden');
+  if (btn) btn.classList.add('animate-pulse');
+  huongAudio.currentTime = 0;
+  huongAudio.play().catch(() => {});
 }
 
 function enterApp() {
