@@ -14,7 +14,7 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
 <script>
 tailwind.config = {
   theme: {
@@ -51,6 +51,9 @@ tailwind.config = {
   .game-panel { display:none; }
   .game-panel.open { display:block; animation:fadeUp .3s ease; }
   #catch-canvas { touch-action:none; border-radius:20px; background:linear-gradient(180deg,#dff2fb 0%,#f4faff 100%); box-shadow:inset 3px 3px 8px rgba(0,102,135,.12); width:100%; }
+  .lumina-name { background:linear-gradient(90deg,#00c4ff 0%,#7fe3ff 40%,#00c4ff 60%,#7fe3ff 100%); background-size:200% auto; -webkit-background-clip:text; background-clip:text; color:transparent; animation:shineText 4s linear infinite; }
+  @keyframes shineText { to { background-position:-200% center; } }
+  .signature { font-family:'Dancing Script',cursive; font-weight:700; }
 </style>
 </head>
 <body>
@@ -60,7 +63,7 @@ tailwind.config = {
   <div class="max-w-5xl mx-auto px-5 pt-10 pb-14 text-center relative z-10">
     <img src="assets/illustrations/logo-splash.png" alt="BizOn logo" class="w-28 h-28 mx-auto rounded-clay shadow-lg animate-float object-cover">
     <h1 class="font-display font-extrabold text-3xl sm:text-5xl mt-6 tracking-tight">BizOn <span class="text-primary-container">Bật Nghiệp</span> 2026</h1>
-    <p class="mt-3 text-white/80 max-w-2xl mx-auto text-sm sm:text-base">Game mô phỏng kinh doanh phong cách đất nặn 3D (Claymorphism) dành cho sinh viên khởi nghiệp — điều hành công ty qua 6 vòng thị trường cùng cố vấn AI <b>Lumina · Je m'appelle Hương</b>.</p>
+    <p class="mt-3 text-white/80 max-w-2xl mx-auto text-sm sm:text-base">Game mô phỏng kinh doanh phong cách đất nặn 3D (Claymorphism) dành cho sinh viên khởi nghiệp — điều hành công ty qua 6 vòng thị trường cùng cố vấn AI <b class="lumina-name font-display">Lumina AI</b> · <span class="signature text-xl text-white">Je m'appelle Hương</span>.</p>
     <div class="flex flex-wrap justify-center gap-3 mt-7">
       <a href="index.html" class="clay-btn-primary inline-block text-white font-display font-extrabold px-8 py-3.5 text-sm">🎮 Chơi bản đầy đủ</a>
       <a href="#minigames" class="clay-btn inline-block bg-white text-deep-teal font-display font-extrabold px-8 py-3.5 text-sm">🕹️ Mini-game ngay trên trang</a>
@@ -144,7 +147,8 @@ tailwind.config = {
     <div class="clay-card p-5 text-center">
       <img src="assets/character/lumina-ao-dai.png" alt="Đỗ Thùy Hương" class="w-24 h-24 mx-auto rounded-full object-cover shadow-lg" style="object-position:50% 10%">
       <h3 class="font-display font-extrabold mt-3">Đỗ Thùy Hương</h3>
-      <p class="text-xs text-primary font-bold">Je m'appelle Hương · Sáng lập & Thiết kế game</p>
+      <p class="signature text-xl text-primary leading-tight">Je m'appelle Hương</p>
+      <p class="text-xs text-primary font-bold">Sáng lập & Thiết kế game</p>
       <p class="text-[11px] text-deep-teal/60 mt-1">Hóa thân thành cố vấn AI Lumina trong game — áo dài truyền thống & vest trắng hiện đại.</p>
     </div>
     <div class="clay-card p-5 text-center">
