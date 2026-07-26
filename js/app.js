@@ -1145,7 +1145,7 @@ function renderEnergyReport(body) {
       <div class="flex gap-3 items-start">
         <img src="assets/character/lumina-vest.png" alt="Lumina" class="w-10 h-10 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 12%">
         <div>
-          <p class="font-display font-bold text-primary text-sm">Lumina AI Hương Advisor</p>
+          <p class="text-sm"><span class="font-display font-extrabold lumina-name">Lumina AI</span> <span class="signature text-base text-deep-teal">Je m'appelle Hương</span></p>
           <p class="text-sm text-deep-teal/80 italic mt-1">"${worst.upgraded
             ? 'Các dây chuyền đã vận hành tối ưu. Duy trì bảo trì định kỳ để giữ OEE ổn định nhé!'
             : `${worst.name} đang tiêu thụ năng lượng nhiều hơn 40% do máy móc đã cũ. Việc nâng cấp sẽ giúp giảm đáng kể chi phí vận hành (OPEX).`}"</p>
