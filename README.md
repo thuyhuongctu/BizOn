@@ -1,12 +1,8 @@
-# BizArena 2026 — Business Simulation (BizOn)
+# BizOn Bật Nghiệp 2026 — Business Simulation
 
 Nền tảng **mô phỏng kinh doanh EdTech** theo phong cách **3D Claymorphism**, nơi các đội
 sinh viên điều hành doanh nghiệp ảo qua **6 vòng chơi** cùng cố vấn AI **Lumina
 (Je m'appelle Hương)**.
-
-Bản prototype này được xây dựng theo hồ sơ thiết kế xuất từ **Google Stitch**
-(Design Tokens, kiến trúc màn hình, logic mô phỏng, database schema và API spec —
-xem thư mục [`docs/`](docs/)).
 
 ## Chạy thử
 
@@ -22,6 +18,16 @@ python3 -m http.server 8000
 ```
 
 Tiến trình chơi được lưu tự động trong `localStorage` của trình duyệt.
+
+## Triển khai Web App & Mobile App
+
+- **Web (GitHub Pages):** workflow [`deploy-pages.yml`](.github/workflows/deploy-pages.yml)
+  tự động deploy mỗi khi push lên `main` → game chạy tại
+  `https://thuyhuongctu.github.io/BizOn/`.
+- **Mobile (PWA):** game là Progressive Web App — mở link trên điện thoại rồi chọn
+  **"Thêm vào màn hình chính"** (Android/Chrome tự gợi ý cài đặt) là có app icon
+  Lumina, chạy toàn màn hình như app native và **chơi được offline** nhờ service
+  worker (`sw.js` + `manifest.webmanifest`).
 
 ## Tính năng
 
@@ -47,7 +53,7 @@ Tiến trình chơi được lưu tự động trong `localStorage` của trình
 - Mã lỗi nghiệp vụ mô phỏng theo API spec: `ERR_ALREADY_COMMITTED`,
   `ERR_INSUFFICIENT_FUNDS`, `ERR_AI_LIMIT`, `ERR_ITEM_NOT_FOUND`…
 
-## Design Tokens (từ Stitch)
+## Design Tokens
 
 | Token | Giá trị |
 |---|---|
@@ -63,11 +69,19 @@ Tiến trình chơi được lưu tự động trong `localStorage` của trình
 ## Cấu trúc mã nguồn
 
 ```
-index.html      # SPA — toàn bộ màn hình + Tailwind config
-js/engine.js    # Engine mô phỏng 6 vòng, biến cố, vật phẩm, kỹ năng, Lumina AI
-js/app.js       # Điều khiển UI, điều hướng tab, render, localStorage
-docs/           # Hồ sơ kỹ thuật từ Stitch (schema, API, handoff)
+index.html          # SPA — toàn bộ màn hình + Tailwind config + đăng ký PWA
+js/engine.js        # Engine mô phỏng 6 vòng, biến cố, vật phẩm, kỹ năng, Lumina AI
+js/app.js           # Điều khiển UI, điều hướng tab, render, localStorage
+sw.js               # Service worker — cache app shell, chơi offline
+manifest.webmanifest# Khai báo PWA (tên, icon, màu thương hiệu)
+assets/character/   # Ảnh 3D nhân vật Lumina (áo dài & vest trắng)
+assets/icons/       # Icon app (mặt Lumina trên nền gradient clay)
+docs/               # Hồ sơ kỹ thuật (schema, API, design system, sở hữu trí tuệ)
 ```
+
+> Nhân vật **Lumina — Je m'appelle Hương** xuất hiện xuyên suốt game:
+> bản **áo dài trắng** ở Splash / Đăng nhập / Chứng chỉ hoàn thành,
+> bản **vest trắng** ở Dashboard / màn hình Cố vấn AI / khung chat.
 
 ## Lộ trình tiếp theo
 
@@ -76,5 +90,25 @@ docs/           # Hồ sơ kỹ thuật từ Stitch (schema, API, handoff)
 3. Chế độ nhiều đội thời gian thực + màn hình Giảng viên (cấp vốn, khóa vòng).
 4. Tích hợp Lumina AI thật qua Claude API thay cho rule-based advisor.
 
+## Bản quyền & Sở hữu trí tuệ
+
+Đây là **phần mềm độc quyền** — xem [`LICENSE`](LICENSE). Mã nguồn, thuật toán
+engine mô phỏng, tạo hình nhân vật **Lumina — Je m'appelle Hương**, tên gọi và
+nhận diện **BizOn Bật Nghiệp** thuộc sở hữu của nhóm tác giả; nghiêm cấm sao chép
+hoặc sử dụng thương mại khi chưa được phép bằng văn bản.
+
+Hồ sơ đăng ký bảo hộ (quyền tác giả, nhãn hiệu) và chiến lược thương mại hóa:
+[`docs/so-huu-tri-tue.md`](docs/so-huu-tri-tue.md).
+
+Thành phần bên thứ ba: Tailwind CSS (MIT), Google Fonts Plus Jakarta Sans &
+Manrope (OFL 1.1) — giữ nguyên giấy phép gốc của chúng.
+
 ---
-**Tác giả thiết kế:** Je m'appelle Hương · thuyhuongctu@gmail.com · © 2026 BizArena
+## Thành viên nhóm
+
+| Thành viên | Vai trò |
+|---|---|
+| **Đỗ Thùy Hương** (Je m'appelle Hương) | Tác giả thiết kế & nhân vật Lumina · thuyhuongctu@gmail.com |
+| **Phan Anh Tú** | Đồng phát triển |
+
+© 2026 BizOn Bật Nghiệp

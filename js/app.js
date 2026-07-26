@@ -1,6 +1,7 @@
-/* BizArena 2026 — UI controller (SPA, localStorage persistence) */
+/* BizOn Bật Nghiệp 2026 — UI controller (SPA, localStorage persistence)
+ * © 2026 Đỗ Thùy Hương (Je m'appelle Hương) & Phan Anh Tú. Bảo lưu mọi quyền. */
 
-const STORAGE_KEY = 'bizarena2026';
+const STORAGE_KEY = 'bizon2026';
 let S = null;
 
 // ---------- Helpers ----------
@@ -57,7 +58,7 @@ function pickRole(id) {
 }
 
 function doLogin() {
-  const email = $('login-email').value.trim() || 'sinhvien@bizarena.vn';
+  const email = $('login-email').value.trim() || 'sinhvien@bizon.vn';
   const team = $('login-team').value.trim() || 'Đội Claymorphism';
   S = newGameState({ email, teamName: team, role: pickedRole });
   save();
@@ -216,7 +217,7 @@ function pushLumina(advice) {
   const el = document.createElement('div');
   el.className = 'flex gap-3 items-start';
   el.innerHTML = `
-    <div class="w-9 h-9 shrink-0 rounded-full bg-gradient-to-br from-primary-container to-primary flex items-center justify-center text-lg shadow-clay">🤖</div>
+    <img src="assets/character/lumina-vest.png" alt="Lumina" class="w-9 h-9 shrink-0 rounded-full object-cover shadow-clay" style="object-position:50% 12%">
     <div class="clay-card p-4 flex-1">
       <span class="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full mb-1.5 risk-${advice.risk}">${riskLabel}</span>
       <p class="text-sm text-deep-teal">${advice.text}</p>
