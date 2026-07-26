@@ -1,6 +1,6 @@
-# API Architecture Guide — BizArena 2026
+# API Architecture Guide — BizOn Bật Nghiệp 2026
 
-- **Base URL:** `https://api.bizarena2026.com/v1`
+- **Base URL:** `https://api.bizon2026.com/v1`
 - **Auth:** Bearer Token (JWT) trong header
 - **Content-Type:** `application/json`
 
