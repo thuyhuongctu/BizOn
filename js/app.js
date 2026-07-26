@@ -12,7 +12,14 @@ const money = m => (m >= 1000 || m <= -1000)
 
 function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(S)); }
 function load() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)); } catch { return null; }
+  try {
+    const s = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    if (s) { // migration cho save cũ thiếu trường mới
+      s.missionsClaimed ??= []; s.aiAskedTotal ??= 0; s.itemsBought ??= 0;
+      s.minigameBest ??= 0; s.minigamePlays ??= 0; s.roundLocked ??= false; s.grantLog ??= [];
+    }
+    return s;
+  } catch { return null; }
 }
 
 function createConfetti() {
@@ -88,6 +95,7 @@ function renderAll() {
   if (!S) return;
   renderHeader(); renderDashboard(); renderDecisions(); renderAdvisorIntro();
   renderShop(); renderSkills(); renderLeaderboard(); renderAchievements(); renderProfile();
+  renderMissions(); renderMinigame(); renderInstructor();
 }
 
 function renderHeader() {
@@ -155,6 +163,10 @@ function renderDecisions() {
 
 function commitDecisions() {
   if (S.finished || S.committed) return;
+  if (S.roundLocked) {
+    alert('ERR_ROUND_LOCKED — Giảng viên đã khóa vòng chơi này. Chờ mở khóa để tiếp tục.');
+    return;
+  }
   const d = {
     price: +$('in-price').value,
     marketing: +$('in-mkt').value,
@@ -233,6 +245,7 @@ function askLumina(topic) {
     return;
   }
   S.aiUsed++;
+  S.aiAskedTotal++;
   save();
   renderAdvisorIntro();
   pushLumina(luminaAdvice(S, topic));
@@ -317,6 +330,7 @@ function buyItem(id) {
   if (S.balance < price) { alert('ERR_INSUFFICIENT_FUNDS — Ví ảo của đội không đủ ' + price + 'tr₫.'); return; }
   S.balance -= price;
   S.items[id] = (S.items[id] || 0) + 1;
+  S.itemsBought++;
   save(); renderAll(); createConfetti();
 }
 
@@ -411,4 +425,164 @@ function resetGame() {
   if (!confirm('Xóa toàn bộ tiến trình và chơi lại từ đầu?')) return;
   localStorage.removeItem(STORAGE_KEY);
   location.reload();
+}
+
+// ---------- Missions ----------
+function renderMissions() {
+  const readyCount = MISSIONS.filter(m => missionStatus(S, m) === 'ready').length;
+  const badge = $('missions-badge');
+  badge.classList.toggle('hidden', readyCount === 0);
+  badge.textContent = readyCount;
+  $('missions-list').innerHTML = MISSIONS.map(m => {
+    const st = missionStatus(S, m);
+    return `<div class="clay-card p-4 flex items-center gap-3 ${st === 'pending' ? 'opacity-70' : ''} ${st === 'claimed' ? 'border-2 border-primary-container/40' : ''}">
+      <span class="text-3xl">${m.icon}</span>
+      <div class="flex-1">
+        <p class="font-display font-bold text-deep-teal text-sm">${m.name}</p>
+        <p class="text-[11px] text-deep-teal/60">${m.desc}</p>
+        <p class="text-[11px] font-bold text-primary mt-0.5">🎁 ${m.rewardMoney}tr₫ + ${m.rewardXp} XP</p>
+      </div>
+      ${st === 'claimed' ? '<span class="text-xl">✅</span>'
+        : st === 'ready' ? `<button onclick="doClaimMission('${m.id}')" class="clay-btn bg-primary text-white text-xs font-bold px-3 py-2 shrink-0">Nhận</button>`
+        : '<span class="text-lg opacity-40">🔒</span>'}
+    </div>`;
+  }).join('');
+}
+
+function doClaimMission(id) {
+  if (claimMission(S, id)) { save(); renderAll(); createConfetti(); }
+}
+
+// ---------- Clay Factory Frenzy ----------
+const MG_ITEMS = ['🏺', '🫖', '🧱', '🪴', '🏆'];
+let mg = null; // trạng thái phiên chơi hiện tại
+
+function renderMinigame() {
+  $('mg-best').textContent = S.minigameBest;
+  $('mg-plays').textContent = Math.min(3, (S.minigamePlays || 0) + 1);
+  const btn = $('mg-start');
+  const out = (S.minigamePlays || 0) >= 3;
+  btn.disabled = out || !!mg;
+  btn.classList.toggle('opacity-50', out);
+  if (out) btn.innerHTML = '⏳ Hết lượt — commit vòng mới để chơi tiếp';
+}
+
+function startMinigame() {
+  if ((S.minigamePlays || 0) >= 3 || mg) return;
+  S.minigamePlays = (S.minigamePlays || 0) + 1;
+  save();
+  mg = { score: 0, time: 30, target: MG_ITEMS[0], timers: [] };
+  pickTarget();
+  $('mg-score').textContent = '0';
+  $('mg-time').textContent = '30';
+  $('mg-start').disabled = true;
+  $('mg-start').classList.add('opacity-50');
+  mg.timers.push(setInterval(() => {
+    mg.time--;
+    $('mg-time').textContent = mg.time;
+    if (mg.time <= 0) endMinigame();
+  }, 1000));
+  mg.timers.push(setInterval(spawnItem, 700));
+}
+
+function pickTarget() {
+  mg.target = MG_ITEMS[Math.floor(Math.random() * MG_ITEMS.length)];
+  $('mg-target').textContent = mg.target;
+}
+
+function spawnItem() {
+  if (!mg) return;
+  const belt = $('mg-belt');
+  const el = document.createElement('span');
+  el.className = 'mg-item';
+  el.textContent = MG_ITEMS[Math.floor(Math.random() * MG_ITEMS.length)];
+  el.style.animationDuration = (2.6 + Math.random() * 1.6) + 's';
+  el.onclick = () => {
+    if (!mg) return;
+    if (el.textContent === mg.target) { mg.score++; pickTarget(); }
+    else mg.score = Math.max(0, mg.score - 1);
+    $('mg-score').textContent = mg.score;
+    el.remove();
+  };
+  el.addEventListener('animationend', () => el.remove());
+  belt.appendChild(el);
+}
+
+function endMinigame() {
+  if (!mg) return;
+  mg.timers.forEach(clearInterval);
+  const score = mg.score;
+  document.querySelectorAll('.mg-item').forEach(e => e.remove());
+  const reward = Math.min(60, score * 2);
+  S.balance += reward;
+  if (score > (S.minigameBest || 0)) S.minigameBest = score;
+  mg = null;
+  save(); renderAll();
+  if (reward > 0) createConfetti();
+  $('mg-start').innerHTML = `🎉 +${reward}tr₫! Chơi lại (lượt ${Math.min(3, S.minigamePlays + 1)}/3)`;
+  if (S.minigamePlays < 3) { $('mg-start').disabled = false; $('mg-start').classList.remove('opacity-50'); }
+}
+
+// ---------- Instructor ----------
+function renderInstructor() {
+  const lockBtn = $('btn-lock');
+  lockBtn.textContent = S.roundLocked ? '🔓 Mở khóa' : '🔒 Khóa';
+  lockBtn.classList.toggle('bg-orange-100', S.roundLocked);
+  const totalProfit = S.history.reduce((a, r) => a + r.netProfit, 0);
+  const teams = [
+    { id: 'YOU', name: S.profile.teamName + ' (đội của lớp)', balance: S.balance, profit: totalProfit, real: true },
+    ...S.competitors.map((c, i) => ({ id: 'AI' + i, name: c.name + ' (AI)', balance: null, profit: c.profit })),
+  ];
+  $('ins-teams').innerHTML = teams.map(t => `
+    <div class="clay-card p-4 flex items-center gap-3">
+      <span class="text-2xl">${t.real ? '🏢' : '🤖'}</span>
+      <div class="flex-1">
+        <p class="font-bold text-sm text-deep-teal">${t.name}</p>
+        <p class="text-[11px] text-deep-teal/60">Lợi nhuận lũy kế: ${money(t.profit)}${t.balance != null ? ' · Ví: ' + money(t.balance) : ''}</p>
+      </div>
+      ${t.real ? `<button onclick="grantFunds(100)" class="clay-btn bg-primary text-white text-xs font-bold px-3 py-2 shrink-0">+100tr₫</button>` : ''}
+    </div>`).join('');
+  $('ins-log').innerHTML = (S.grantLog || []).length
+    ? S.grantLog.slice(-8).reverse().map(g => `<p>💸 Cấp <b>${g.amount}tr₫</b> cho ${g.team} — vòng ${g.round}</p>`).join('')
+    : '<p class="text-deep-teal/40">Chưa có giao dịch nào.</p>';
+}
+
+function toggleRoundLock() {
+  S.roundLocked = !S.roundLocked;
+  save(); renderAll();
+}
+
+function grantFunds(amount) {
+  S.balance += amount;
+  S.grantLog.push({ team: S.profile.teamName, amount, round: Math.min(S.round, ROUNDS_TOTAL) });
+  save(); renderAll(); createConfetti();
+}
+
+// ---------- Lumina Advisor Pro ----------
+function runAdvisorPro() {
+  const inp = {
+    revenue: +$('ap-revenue').value || 0,
+    cost: +$('ap-cost').value || 0,
+    marketing: +$('ap-marketing').value || 0,
+    growthTarget: +$('ap-growth').value || 0,
+  };
+  const r = advisorProScenarios(inp);
+  const riskLabel = { low: '🟢 Rủi ro thấp', medium: '🟡 Rủi ro vừa', high: '🔴 Rủi ro cao' };
+  const riskClass = { low: 'risk-low', medium: 'risk-medium', high: 'risk-high' };
+  $('ap-result').innerHTML = `
+    <div class="clay-card p-4 mb-3 flex items-center gap-3">
+      <img src="assets/character/lumina-vest.png" alt="Lumina" class="w-10 h-10 rounded-full object-cover shadow-clay" style="object-position:50% 12%">
+      <p class="text-sm text-deep-teal">Biên lợi nhuận hiện tại của bạn là <b>${r.marginPct}%</b> — ${r.healthy ? 'nền tảng tốt để mở rộng! 💪' : 'hơi mỏng, nên tối ưu chi phí trước khi tăng tốc. ⚠️'}</p>
+    </div>
+    ${r.scenarios.map(sc => `
+      <div class="clay-card p-4 mb-3">
+        <div class="flex justify-between items-center mb-2">
+          <p class="font-display font-bold text-deep-teal">${sc.label}</p>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${riskClass[sc.risk]}">${riskLabel[sc.risk]}</span>
+        </div>
+        <p class="text-sm text-deep-teal/80"><b>Nếu</b> điều chỉnh ngân sách marketing thành <b>${sc.newMkt}tr₫/tháng</b>,
+        <b>thì</b> tăng trưởng dự kiến đạt <b>${sc.growth}%/quý</b> — doanh thu ~<b>${sc.newRevenue}tr₫</b>,
+        lợi nhuận ~<b class="${sc.newProfit >= 0 ? 'text-emerald-600' : 'text-orange-600'}">${sc.newProfit}tr₫/tháng</b>.</p>
+      </div>`).join('')}
+    <p class="text-[11px] text-deep-teal/40 text-center mb-4">Mô hình dự báo đơn giản hóa cho mục đích học tập — không phải tư vấn tài chính.</p>`;
 }
