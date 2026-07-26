@@ -49,6 +49,7 @@ tailwind.config = {
   .screen.active { display:block; animation:fadeUp .28s ease; }
   @keyframes fadeUp { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:none;} }
   @keyframes pulseLogo { 0%,100% {transform:scale(1); opacity:1;} 50% {transform:scale(1.08); opacity:.85;} }
+  @keyframes spin { to { transform:rotate(360deg); } }
   .animate-pulse-logo { animation:pulseLogo 1.4s ease-in-out infinite; }
   @keyframes shake { 0%,100%{transform:translateX(0);} 20%{transform:translateX(-8px);} 40%{transform:translateX(8px);} 60%{transform:translateX(-5px);} 80%{transform:translateX(5px);} }
   .animate-shake { animation:shake .6s ease; }
@@ -82,16 +83,11 @@ tailwind.config = {
 
 <!-- ===================== SPLASH ===================== -->
 <section id="screen-splash" class="screen active">
-  <div class="min-h-screen flex flex-col items-center justify-center gap-5 px-8 text-center">
-    <div class="animate-pulse-logo w-24 h-24 rounded-clay bg-gradient-to-br from-primary to-primary-container flex items-center justify-center shadow-clay-lg">
-      <span class="font-display font-extrabold text-white text-5xl">B</span>
+  <div class="min-h-screen relative bg-[#14161a]">
+    <img src="assets/illustrations/logo-splash.png" alt="BizOn Bật Nghiệp — Powering Your Business" class="absolute inset-0 w-full h-full object-cover">
+    <div class="absolute bottom-10 inset-x-0 flex justify-center">
+      <div class="animate-pulse-logo w-8 h-8 rounded-full border-4 border-orange-400 border-t-transparent" style="animation:spin 1s linear infinite"></div>
     </div>
-    <div>
-      <h1 class="font-display text-4xl font-extrabold text-deep-teal">BizOn <span class="text-primary">Bật Nghiệp</span></h1>
-      <p class="text-primary font-semibold mt-1">Business Simulation · 3D Claymorphism</p>
-    </div>
-    <img src="assets/character/lumina-ao-dai.png" alt="Lumina — Je m'appelle Hương (áo dài)" class="h-64 rounded-clay shadow-clay-lg object-cover">
-    <p class="text-sm text-deep-teal/60 max-w-xs">Điều hành doanh nghiệp ảo qua 6 vòng chơi cùng Cố vấn AI Lumina — Je m'appelle Hương.</p>
   </div>
 </section>
 
@@ -111,6 +107,8 @@ tailwind.config = {
       <input id="login-email" type="email" placeholder="sinhvien@truong.edu.vn" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 mb-4 outline-none focus:border-primary-container">
       <label class="block text-sm font-bold text-deep-teal mb-1">Tên đội</label>
       <input id="login-team" type="text" placeholder="VD: Rồng Xanh Corp" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 mb-4 outline-none focus:border-primary-container">
+      <label class="block text-sm font-bold text-deep-teal mb-1">Mã lớp học — Class ID <span class="font-normal text-deep-teal/40">(tùy chọn)</span></label>
+      <input id="login-class" type="text" placeholder="VD: QTKD-2026-A" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 mb-4 outline-none focus:border-primary-container">
       <label class="block text-sm font-bold text-deep-teal mb-2">Vai trò của bạn</label>
       <div id="role-picker" class="grid grid-cols-5 gap-2 mb-6"></div>
       <button onclick="doLogin()" class="clay-btn w-full bg-primary text-white font-display font-bold py-4">Bắt đầu mô phỏng 🚀</button>
@@ -187,6 +185,7 @@ tailwind.config = {
         <button onclick="showTab('achievements')" class="clay-card p-3 text-center"><p class="text-2xl">🎖️</p><p class="text-[10px] font-bold text-deep-teal mt-1">Thành tựu</p></button>
         <button onclick="showTab('advisorpro')" class="clay-card p-3 text-center"><p class="text-2xl">📈</p><p class="text-[10px] font-bold text-deep-teal mt-1">Advisor Pro</p></button>
         <button onclick="showTab('instructor')" class="clay-card p-3 text-center"><p class="text-2xl">🧑‍🏫</p><p class="text-[10px] font-bold text-deep-teal mt-1">Giảng viên</p></button>
+        <button onclick="showTab('journal')" class="clay-card p-3 text-center"><p class="text-2xl">📔</p><p class="text-[10px] font-bold text-deep-teal mt-1">Nhật ký đội</p></button>
         <button onclick="showTab('settings')" class="clay-card p-3 text-center"><p class="text-2xl">⚙️</p><p class="text-[10px] font-bold text-deep-teal mt-1">Cài đặt</p></button>
       </div>
       <button onclick="showTab('decisions')" class="clay-btn w-full bg-primary text-white font-display font-bold py-4">Nhập quyết định vòng này ➜</button>
@@ -380,6 +379,15 @@ tailwind.config = {
       <div id="ap-result"></div>
     </section>
 
+    <!-- ========== TEAM JOURNAL (Nhật ký đội) ========== -->
+    <section id="tab-journal" class="screen">
+      <h2 class="font-display text-xl font-extrabold text-deep-teal mb-1">📔 Nhật ký đội</h2>
+      <p class="text-sm text-deep-teal/60 mb-4">Timeline hành trình 6 vòng: quyết định then chốt, kết quả và bài học kinh nghiệm — do SEC ghi chép.</p>
+      <div id="journal-list" class="relative pl-6 space-y-4">
+        <div class="absolute left-2 top-2 bottom-2 w-0.5 bg-primary/15 rounded-full"></div>
+      </div>
+    </section>
+
     <!-- ========== PROFILE ========== -->
     <section id="tab-profile" class="screen">
       <div class="clay-card p-6 text-center mb-4">
@@ -392,9 +400,20 @@ tailwind.config = {
         <div class="flex justify-between text-sm font-bold text-deep-teal mb-1"><span>Tiến độ cấp <span id="pf-level">1</span></span><span id="pf-xp">0 XP</span></div>
         <div class="h-3 rounded-full bg-surface-bright overflow-hidden shadow-inner"><div id="pf-xpbar" class="h-full bg-gradient-to-r from-primary to-primary-container rounded-full" style="width:0%"></div></div>
       </div>
-      <div class="grid grid-cols-2 gap-3">
+      <div class="grid grid-cols-2 gap-3 mb-5">
         <div class="clay-card p-4 text-center"><p id="pf-profit" class="font-display font-extrabold text-primary">0₫</p><p class="text-[10px] text-deep-teal/50 font-semibold uppercase mt-1">Tổng lợi nhuận</p></div>
         <div class="clay-card p-4 text-center"><p id="pf-rounds" class="font-display font-extrabold text-primary">0/6</p><p class="text-[10px] text-deep-teal/50 font-semibold uppercase mt-1">Vòng hoàn thành</p></div>
+      </div>
+      <h3 class="font-display font-bold text-deep-teal mb-3">👥 Đội ngũ sáng lập BizOn</h3>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="clay-card overflow-hidden text-center">
+          <img src="assets/character/lumina-ao-dai.png" alt="Đỗ Thùy Hương" class="w-full h-36 object-cover" style="object-position:50% 12%">
+          <div class="p-3"><p class="font-display font-bold text-deep-teal text-xs">Đỗ Thùy Hương</p><p class="text-[10px] text-deep-teal/50">Je m'appelle Hương · Tác giả & Thiết kế</p></div>
+        </div>
+        <div class="clay-card overflow-hidden text-center">
+          <img src="assets/character/anh-tu-celebrate.png" alt="PGS.TS Phan Anh Tú" class="w-full h-36 object-cover" style="object-position:50% 8%">
+          <div class="p-3"><p class="font-display font-bold text-deep-teal text-xs">PGS.TS Phan Anh Tú</p><p class="text-[10px] text-deep-teal/50">Đồng sáng lập · Cố vấn học thuật</p></div>
+        </div>
       </div>
     </section>
 
