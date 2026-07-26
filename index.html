@@ -64,6 +64,8 @@ tailwind.config = {
   .skill-locked { filter:grayscale(1); opacity:.55; }
   .nav-item:not(.active) .nav-ico svg, .nav-item:not(.active) .nav-ico img { filter:grayscale(.65); opacity:.7; }
   .clay-ico { filter:drop-shadow(0 3px 4px rgba(0,102,135,.35)); }
+  .mg-item { position:absolute; bottom:10px; font-size:2.2rem; cursor:pointer; user-select:none; left:-48px; animation:beltMove linear forwards; filter:drop-shadow(0 4px 5px rgba(3,51,55,.25)); }
+  @keyframes beltMove { from { left:-48px; } to { left:105%; } }
 </style>
 </head>
 <body class="min-h-screen">
@@ -165,9 +167,13 @@ tailwind.config = {
       </div>
       <h3 class="font-display font-bold text-deep-teal mb-3">Truy cập nhanh</h3>
       <div class="grid grid-cols-4 gap-3 mb-4">
+        <button onclick="showTab('missions')" class="clay-card p-3 text-center relative"><span id="missions-badge" class="hidden absolute -top-1 -right-1 w-5 h-5 rounded-full bg-orange-500 text-white text-[10px] font-bold flex items-center justify-center"></span><p class="text-2xl">📋</p><p class="text-[10px] font-bold text-deep-teal mt-1">Nhiệm vụ</p></button>
+        <button onclick="showTab('minigame')" class="clay-card p-3 text-center"><p class="text-2xl">🏭</p><p class="text-[10px] font-bold text-deep-teal mt-1">Mini-game</p></button>
         <button onclick="showTab('skills')" class="clay-card p-3 text-center"><p class="text-2xl">🌳</p><p class="text-[10px] font-bold text-deep-teal mt-1">Kỹ năng</p></button>
         <button onclick="showTab('leaderboard')" class="clay-card p-3 text-center"><p class="text-2xl">🏆</p><p class="text-[10px] font-bold text-deep-teal mt-1">Xếp hạng</p></button>
         <button onclick="showTab('achievements')" class="clay-card p-3 text-center"><p class="text-2xl">🎖️</p><p class="text-[10px] font-bold text-deep-teal mt-1">Thành tựu</p></button>
+        <button onclick="showTab('advisorpro')" class="clay-card p-3 text-center"><p class="text-2xl">📈</p><p class="text-[10px] font-bold text-deep-teal mt-1">Advisor Pro</p></button>
+        <button onclick="showTab('instructor')" class="clay-card p-3 text-center"><p class="text-2xl">🧑‍🏫</p><p class="text-[10px] font-bold text-deep-teal mt-1">Giảng viên</p></button>
         <button onclick="showTab('settings')" class="clay-card p-3 text-center"><p class="text-2xl">⚙️</p><p class="text-[10px] font-bold text-deep-teal mt-1">Cài đặt</p></button>
       </div>
       <button onclick="showTab('decisions')" class="clay-btn w-full bg-primary text-white font-display font-bold py-4">Nhập quyết định vòng này ➜</button>
@@ -276,6 +282,69 @@ tailwind.config = {
         <p class="text-sm text-deep-teal/70 mt-1">Chứng nhận đội <span id="cert-team" class="font-bold text-primary">—</span> đã hoàn thành 6 vòng mô phỏng kinh doanh BizOn Bật Nghiệp 2026.</p>
         <p id="cert-result" class="font-display font-bold text-primary mt-3"></p>
       </div>
+    </section>
+
+    <!-- ========== MISSIONS ========== -->
+    <section id="tab-missions" class="screen">
+      <h2 class="font-display text-xl font-extrabold text-deep-teal mb-1">📋 Nhiệm vụ</h2>
+      <p class="text-sm text-deep-teal/60 mb-4">Hoàn thành nhiệm vụ để nhận thưởng tiền ảo và XP.</p>
+      <div id="missions-list" class="space-y-3"></div>
+    </section>
+
+    <!-- ========== CLAY FACTORY FRENZY ========== -->
+    <section id="tab-minigame" class="screen">
+      <h2 class="font-display text-xl font-extrabold text-deep-teal mb-1">🏭 Clay Factory Frenzy</h2>
+      <p class="text-sm text-deep-teal/60 mb-4">Băng chuyền xưởng đất sét! Chạm đúng món hàng được đặt để đóng gói. Mỗi vòng chơi được 3 lượt.</p>
+      <div class="clay-card p-4 mb-3 flex justify-between items-center">
+        <div><p class="text-[10px] uppercase font-bold text-deep-teal/50">Đơn hàng cần đóng gói</p><p id="mg-target" class="text-3xl">🏺</p></div>
+        <div class="text-center"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Điểm</p><p id="mg-score" class="font-display font-extrabold text-primary text-2xl">0</p></div>
+        <div class="text-center"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Giây</p><p id="mg-time" class="font-display font-extrabold text-deep-teal text-2xl">30</p></div>
+      </div>
+      <div id="mg-belt" class="clay-card relative h-28 mb-3 overflow-hidden bg-gradient-to-b from-white to-surface-bright">
+        <div class="absolute bottom-0 inset-x-0 h-6 bg-deep-teal/10"></div>
+      </div>
+      <button id="mg-start" onclick="startMinigame()" class="clay-btn w-full bg-primary text-white font-display font-bold py-4 mb-3">▶️ Bắt đầu (lượt <span id="mg-plays">1</span>/3)</button>
+      <div class="clay-card p-4 flex justify-between text-sm">
+        <span class="font-bold text-deep-teal">🏅 Điểm cao nhất: <span id="mg-best">0</span></span>
+        <span class="text-deep-teal/60">Thưởng: 2tr₫/điểm (tối đa 60tr₫/lượt)</span>
+      </div>
+    </section>
+
+    <!-- ========== INSTRUCTOR ========== -->
+    <section id="tab-instructor" class="screen">
+      <h2 class="font-display text-xl font-extrabold text-deep-teal mb-1">🧑‍🏫 Màn hình Giảng viên</h2>
+      <p class="text-sm text-deep-teal/60 mb-4">Quản lý lớp học: cấp vốn cho đội, khóa vòng chơi khi hết giờ thảo luận.</p>
+      <div class="clay-card p-4 mb-3 flex items-center justify-between">
+        <div><p class="font-bold text-sm text-deep-teal">🔒 Khóa vòng hiện tại</p><p class="text-[11px] text-deep-teal/60">Đội sẽ không commit được (ERR_ROUND_LOCKED)</p></div>
+        <button id="btn-lock" onclick="toggleRoundLock()" class="clay-btn bg-surface-bright text-deep-teal text-xs font-bold px-4 py-2">Khóa</button>
+      </div>
+      <h3 class="font-display font-bold text-deep-teal mb-2">Danh sách đội</h3>
+      <div id="ins-teams" class="space-y-3 mb-4"></div>
+      <h3 class="font-display font-bold text-deep-teal mb-2">Nhật ký cấp vốn</h3>
+      <div id="ins-log" class="clay-card p-4 text-sm text-deep-teal/70 space-y-1"><p class="text-deep-teal/40">Chưa có giao dịch nào.</p></div>
+    </section>
+
+    <!-- ========== LUMINA ADVISOR PRO ========== -->
+    <section id="tab-advisorpro" class="screen">
+      <div class="flex items-center gap-3 mb-4">
+        <img src="assets/character/lumina-vest.png" alt="Lumina" class="w-12 h-12 rounded-clay object-cover shadow-clay" style="object-position:50% 12%">
+        <div>
+          <h2 class="font-display text-xl font-extrabold text-deep-teal">Lumina Advisor Pro</h2>
+          <p class="text-xs text-primary font-semibold">Nhập số liệu kinh doanh thực → nhận kịch bản "Nếu — Thì"</p>
+        </div>
+      </div>
+      <div class="clay-card p-5 mb-4 space-y-3">
+        <div><label class="block text-sm font-bold text-deep-teal mb-1">💵 Doanh thu / tháng (triệu ₫)</label>
+          <input id="ap-revenue" type="number" value="500" min="0" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 outline-none focus:border-primary-container"></div>
+        <div><label class="block text-sm font-bold text-deep-teal mb-1">🧾 Tổng chi phí / tháng (triệu ₫)</label>
+          <input id="ap-cost" type="number" value="400" min="0" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 outline-none focus:border-primary-container"></div>
+        <div><label class="block text-sm font-bold text-deep-teal mb-1">📣 Ngân sách marketing / tháng (triệu ₫)</label>
+          <input id="ap-marketing" type="number" value="50" min="0" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 outline-none focus:border-primary-container"></div>
+        <div><label class="block text-sm font-bold text-deep-teal mb-1">🎯 Mục tiêu tăng trưởng (%/quý)</label>
+          <input id="ap-growth" type="number" value="15" min="0" max="100" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 outline-none focus:border-primary-container"></div>
+        <button onclick="runAdvisorPro()" class="clay-btn w-full bg-primary text-white font-display font-bold py-4">🔮 Phân tích kịch bản</button>
+      </div>
+      <div id="ap-result"></div>
     </section>
 
     <!-- ========== PROFILE ========== -->
