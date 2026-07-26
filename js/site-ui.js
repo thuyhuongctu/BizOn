@@ -778,8 +778,8 @@
 "Joint Venture"
 ],
 [
-"FDI — Đầu tư mới (Greenfield)",
-"FDI — Greenfield"
+"Đầu tư mới — Greenfield (FDI)",
+"Greenfield FDI"
 ],
 [
 "Vốn thấp, triển khai nhanh — nhưng chịu thuế quan và kiểm soát kênh phân phối thấp. Phù hợp thăm dò thị trường.",
@@ -876,6 +876,10 @@
 [
 "🎓 I–P Lab — Quốc tế hóa & Hiệu quả doanh nghiệp",
 "🎓 I–P Lab — Internationalization & Firm Performance"
+],
+[
+"Đầu tư mới (FDI)",
+"Greenfield (FDI)"
 ]
 ]);
   var SPECIAL = [
