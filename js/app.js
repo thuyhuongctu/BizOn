@@ -731,6 +731,7 @@ function showReport(kind) {
   if (kind === 'cvp') { renderCvpReport(body); return; }
   if (kind === 'hr') { renderHrReport(body); return; }
   if (kind === 'bmc') { renderBmcReport(body); return; }
+  if (kind === 'cash') { renderCashReport(body); return; }
   if (!S.history.length) {
     body.innerHTML = '<div class="clay-card p-8 text-center text-sm text-deep-teal/50">Chưa có dữ liệu — hãy hoàn thành vòng đầu tiên!</div>';
     return;
@@ -763,6 +764,55 @@ function showReport(kind) {
             <span class="block text-[10px] text-deep-teal/50">${rows[i].sub}</span></span>
           </div>`).join('')}
       </div>
+    </div>`;
+}
+
+// ---------- Phân tích Dòng tiền chi tiết (3 hoạt động) ----------
+function renderCashReport(body) {
+  if (!S.history.length) {
+    body.innerHTML = '<div class="clay-card p-8 text-center text-sm text-deep-teal/50">Chưa có dữ liệu — hãy hoàn thành vòng đầu tiên!</div>';
+    return;
+  }
+  const rows = S.history.map(r => {
+    const operating = r.revenue - r.cogs - r.marketing - r.rd - r.fixed - (r.wageCost || 0) - (r.trainingCost || 0) - (r.holding || 0);
+    const investing = -r.depreciation;
+    const financing = -(r.loanInterest || 0) - (r.creditInterest || 0);
+    return { r, operating, investing, financing, net: operating + investing + financing };
+  });
+  const last = rows[rows.length - 1];
+  const totalIn = last.r.revenue, totalOut = totalIn - last.net;
+  body.innerHTML = `
+    <div class="clay-card p-5 mb-3 text-center">
+      <p class="text-[11px] font-bold text-deep-teal/50 uppercase tracking-wider">Tổng dòng tiền thuần — Vòng ${last.r.round}</p>
+      <p class="font-display font-extrabold ${last.net >= 0 ? 'text-primary' : 'text-red-600'} text-3xl">${last.net >= 0 ? '+' : '−'} ${money(Math.abs(last.net))}</p>
+      <div class="grid grid-cols-2 gap-3 mt-3">
+        <div class="clay-sunken rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Tổng thu (Inflow)</p><p class="font-bold text-emerald-600">+ ${money(totalIn)}</p></div>
+        <div class="clay-sunken rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Tổng chi (Outflow)</p><p class="font-bold text-red-600">− ${money(totalOut)}</p></div>
+      </div>
+    </div>
+    <div class="clay-card p-5 mb-3">
+      <h3 class="font-display font-bold text-deep-teal text-sm mb-2">Theo hoạt động — Vòng ${last.r.round}</h3>
+      ${[['🏢 Hoạt động Kinh doanh', last.operating], ['🏗️ Hoạt động Đầu tư (khấu hao)', last.investing], ['🏦 Hoạt động Tài chính (lãi vay)', last.financing]].map(([lbl, v]) => `
+        <div class="flex justify-between text-sm py-2 border-b border-surface-bright last:border-0">
+          <span class="text-deep-teal/80">${lbl}</span>
+          <span class="font-bold ${v >= 0 ? 'text-emerald-600' : 'text-red-600'}">${v >= 0 ? '+' : '−'} ${money(Math.abs(v))}</span>
+        </div>`).join('')}
+    </div>
+    <div class="clay-card p-5 mb-3">
+      <h3 class="font-display font-bold text-deep-teal text-sm mb-3">Số dư ví theo vòng</h3>
+      <div class="flex items-end gap-2 h-32">
+        ${S.history.map(r => `<div class="flex-1 flex flex-col items-center justify-end h-full">
+          <div class="w-full rounded-t-xl bg-gradient-to-t from-primary to-primary-container" style="height:${Math.max(8, Math.min(100, r.balance / 10))}%"></div>
+          <p class="text-[10px] font-bold text-deep-teal/60 mt-1">V${r.round}</p>
+        </div>`).join('')}
+      </div>
+    </div>
+    <div class="clay-card p-4 bg-primary-container/10 flex gap-3 items-start">
+      <img src="assets/character/lumina-vest.png" alt="Mentor Hương" class="w-10 h-10 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 12%">
+      <div><p class="font-display font-bold text-primary text-sm">Mentor Hương</p>
+      <p class="text-xs text-deep-teal/80 italic mt-0.5">"${last.net >= 0
+        ? 'Dòng tiền thuần dương — nền tảng tốt! Hãy cân nhắc tái đầu tư vào R&D hoặc nâng cấp dây chuyền để lãi kép ở các vòng sau.'
+        : 'Dòng tiền thuần đang âm. Ưu tiên số 1: giảm chi phí biến đổi lớn nhất và cân nhắc kỳ hạn thanh toán ngắn hơn để thu tiền về nhanh.'}"</p></div>
     </div>`;
 }
 
@@ -813,6 +863,25 @@ function renderCvpReport(body) {
           <span class="w-24 text-right font-bold ${gross >= 0 ? 'text-deep-teal' : 'text-red-600'}">${money(gross)} (${marginPct}%)</span>
         </div>`;
       }).join('')}
+    </div>
+    <div class="clay-card p-5 mt-3">
+      <h3 class="font-display font-bold text-deep-teal text-sm mb-3">📈 Tỷ suất sinh lời — Vòng ${last.round}</h3>
+      ${(() => {
+        const gross = last.revenue - last.cogs;
+        const ros = Math.round(1000 * last.netProfit / Math.max(1, last.revenue)) / 10;
+        const grossMargin = Math.round(1000 * gross / Math.max(1, last.revenue)) / 10;
+        const assets = S.balance + S.machineCapacity * 0.05 + S.inventory * 0.045;
+        const roa = Math.round(1000 * last.netProfit / Math.max(1, assets)) / 10;
+        const roe = Math.round(1000 * last.netProfit / STARTING_BALANCE) / 10;
+        const ratio = (lbl, v, note) => `
+          <div class="flex items-center gap-2 text-xs py-1.5">
+            <span class="w-24 shrink-0 font-bold text-deep-teal">${lbl}</span>
+            <div class="flex-1 h-2.5 rounded-full bg-surface-bright overflow-hidden"><div class="h-full ${v >= 0 ? 'bg-primary' : 'bg-red-500'} rounded-full" style="width:${Math.min(100, Math.abs(v) * 2)}%"></div></div>
+            <span class="w-14 text-right font-bold ${v >= 0 ? 'text-deep-teal' : 'text-red-600'}">${v}%</span>
+            <span class="w-28 text-[10px] text-deep-teal/50">${note}</span>
+          </div>`;
+        return ratio('Biên gộp', grossMargin, 'LN gộp / Doanh thu') + ratio('ROS (ròng)', ros, 'LN ròng / Doanh thu') + ratio('ROA', roa, 'LN / Tổng tài sản') + ratio('ROE', roe, 'LN / Vốn chủ sở hữu');
+      })()}
     </div>` : '<div class="clay-card p-8 text-center text-sm text-deep-teal/50">Hoàn thành vòng đầu để xem cấu trúc chi phí và lợi nhuận gộp.</div>'}`;
 }
 
