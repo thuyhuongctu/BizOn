@@ -458,9 +458,13 @@ tailwind.config = {
         <div class="absolute bottom-0 inset-x-0 h-6 bg-deep-teal/10"></div>
       </div>
       <button id="mg-start" onclick="startMinigame()" class="clay-btn w-full bg-primary text-white font-display font-bold py-4 mb-3">▶️ Bắt đầu (lượt <span id="mg-plays">1</span>/3)</button>
-      <div class="clay-card p-4 flex justify-between text-sm">
+      <div class="clay-card p-4 flex justify-between text-sm mb-3">
         <span class="font-bold text-deep-teal">🏅 Điểm cao nhất: <span id="mg-best">0</span></span>
         <span class="text-deep-teal/60">Thưởng: 2tr₫/điểm (tối đa 60tr₫/lượt)</span>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <button onclick="showRewardShop()" class="clay-btn bg-white text-deep-teal text-sm font-bold py-3.5">🎁 Đổi thưởng (<span id="mg-points">0</span> điểm)</button>
+        <button onclick="showMgLeaderboard()" class="clay-btn bg-white text-deep-teal text-sm font-bold py-3.5">🏆 Xếp hạng</button>
       </div>
     </section>
 
