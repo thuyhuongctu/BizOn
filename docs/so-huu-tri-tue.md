@@ -1,6 +1,6 @@
 # HỒ SƠ SỞ HỮU TRÍ TUỆ & THƯƠNG MẠI HÓA — BIZON BẬT NGHIỆP 2026
 
-**Chủ sở hữu / Đồng tác giả:** Đỗ Thùy Hương (Je m'appelle Hương) & Phan Anh Tú
+**Chủ sở hữu / Đồng tác giả:** Đỗ Thùy Hương (Je m'appelle Hương) & PGS.TS Phan Anh Tú
 **Liên hệ:** thuyhuongctu@gmail.com
 **Trạng thái mã nguồn:** Giấy phép độc quyền (xem [`LICENSE`](../LICENSE))
 
