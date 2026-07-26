@@ -60,14 +60,15 @@ tailwind.config = {
 
 <!-- ===================== SPLASH ===================== -->
 <section id="screen-splash" class="screen active">
-  <div class="min-h-screen flex flex-col items-center justify-center gap-6 px-8 text-center">
-    <div class="animate-pulse-logo w-28 h-28 rounded-clay bg-gradient-to-br from-primary to-primary-container flex items-center justify-center shadow-clay-lg">
-      <span class="font-display font-extrabold text-white text-6xl">B</span>
+  <div class="min-h-screen flex flex-col items-center justify-center gap-5 px-8 text-center">
+    <div class="animate-pulse-logo w-24 h-24 rounded-clay bg-gradient-to-br from-primary to-primary-container flex items-center justify-center shadow-clay-lg">
+      <span class="font-display font-extrabold text-white text-5xl">B</span>
     </div>
     <div>
       <h1 class="font-display text-4xl font-extrabold text-deep-teal">BizArena</h1>
       <p class="text-primary font-semibold mt-1">Business Simulation · 3D Claymorphism</p>
     </div>
+    <img src="assets/character/lumina-ao-dai.png" alt="Lumina — Je m'appelle Hương (áo dài)" class="h-64 rounded-clay shadow-clay-lg object-cover">
     <p class="text-sm text-deep-teal/60 max-w-xs">Điều hành doanh nghiệp ảo qua 6 vòng chơi cùng Cố vấn AI Lumina — Je m'appelle Hương.</p>
   </div>
 </section>
@@ -76,11 +77,14 @@ tailwind.config = {
 <section id="screen-login" class="screen">
   <div class="min-h-screen flex flex-col justify-center px-6 py-10 max-w-md mx-auto">
     <div class="clay-card p-8">
-      <div class="w-16 h-16 rounded-clay bg-gradient-to-br from-primary to-primary-container flex items-center justify-center shadow-clay mb-5">
-        <span class="font-display font-extrabold text-white text-3xl">B</span>
+      <div class="flex items-center justify-between mb-5">
+        <div class="w-16 h-16 rounded-clay bg-gradient-to-br from-primary to-primary-container flex items-center justify-center shadow-clay">
+          <span class="font-display font-extrabold text-white text-3xl">B</span>
+        </div>
+        <img src="assets/character/lumina-ao-dai.png" alt="Lumina chào bạn" class="w-16 h-16 rounded-full object-cover shadow-clay" style="object-position:50% 12%">
       </div>
       <h2 class="font-display text-2xl font-extrabold text-deep-teal">Chào mừng trở lại!</h2>
-      <p class="text-sm text-deep-teal/60 mb-6">Đăng nhập để bắt đầu phiên mô phỏng.</p>
+      <p class="text-sm text-deep-teal/60 mb-6">Lumina — Je m'appelle Hương đang chờ đồng hành cùng đội của bạn.</p>
       <label class="block text-sm font-bold text-deep-teal mb-1">Email</label>
       <input id="login-email" type="email" placeholder="sinhvien@truong.edu.vn" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 mb-4 outline-none focus:border-primary-container">
       <label class="block text-sm font-bold text-deep-teal mb-1">Tên đội</label>
@@ -141,7 +145,8 @@ tailwind.config = {
         </div>
       </div>
       <div class="clay-card p-5 mb-4 flex items-center gap-4">
-        <div class="w-14 h-14 shrink-0 rounded-full bg-gradient-to-br from-primary-container to-primary flex items-center justify-center text-2xl shadow-clay">🤖</div>
+        <img src="assets/character/lumina-vest.png" alt="Lumina AI" class="w-14 h-14 shrink-0 rounded-full object-cover shadow-clay" style="object-position:50% 12%">
+
         <div class="flex-1">
           <p class="font-display font-bold text-deep-teal text-sm">Lumina AI · Je m'appelle Hương</p>
           <p id="dash-lumina" class="text-xs text-deep-teal/70 mt-0.5">Xin chào! Hãy vào mục Cố vấn để nhận gợi ý chiến thuật nhé.</p>
@@ -196,12 +201,15 @@ tailwind.config = {
 
     <!-- ========== ADVISOR ========== -->
     <section id="tab-advisor" class="screen">
-      <div class="flex items-center gap-4 mb-4">
-        <div class="w-16 h-16 rounded-clay bg-gradient-to-br from-primary-container to-primary flex items-center justify-center text-3xl shadow-clay-lg">🤖</div>
-        <div>
-          <h2 class="font-display text-xl font-extrabold text-deep-teal">Lumina AI</h2>
-          <p class="text-sm text-primary font-semibold">Je m'appelle Hương · Cố vấn chiến lược</p>
+      <div class="clay-card mb-4 overflow-hidden">
+        <div class="flex items-center gap-4 p-4 pb-0">
+          <img src="assets/character/lumina-vest.png" alt="Lumina AI — vest trắng" class="w-16 h-16 rounded-clay object-cover shadow-clay-lg" style="object-position:50% 12%">
+          <div>
+            <h2 class="font-display text-xl font-extrabold text-deep-teal">Lumina AI</h2>
+            <p class="text-sm text-primary font-semibold">Je m'appelle Hương · Cố vấn chiến lược</p>
+          </div>
         </div>
+        <img src="assets/character/lumina-vest.png" alt="" class="w-full h-40 object-cover mt-3" style="object-position:50% 20%">
       </div>
       <div id="advisor-chat" class="space-y-3 mb-4"></div>
       <div class="clay-card p-4">
@@ -252,6 +260,7 @@ tailwind.config = {
       <h2 class="font-display text-xl font-extrabold text-deep-teal mb-4">🎖️ Thành tựu</h2>
       <div id="ach-list" class="grid grid-cols-2 gap-3"></div>
       <div id="certificate-box" class="hidden mt-6 clay-card p-6 text-center border-2 border-primary-container">
+        <img src="assets/character/lumina-ao-dai.png" alt="Lumina áo dài chúc mừng" class="w-24 h-24 mx-auto rounded-full object-cover shadow-clay-lg mb-3" style="object-position:50% 12%">
         <p class="text-4xl mb-2">📜</p>
         <h3 class="font-display font-extrabold text-deep-teal text-lg">Chứng chỉ hoàn thành</h3>
         <p class="text-sm text-deep-teal/70 mt-1">Chứng nhận đội <span id="cert-team" class="font-bold text-primary">—</span> đã hoàn thành 6 vòng mô phỏng kinh doanh BizArena 2026.</p>

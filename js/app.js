@@ -216,7 +216,7 @@ function pushLumina(advice) {
   const el = document.createElement('div');
   el.className = 'flex gap-3 items-start';
   el.innerHTML = `
-    <div class="w-9 h-9 shrink-0 rounded-full bg-gradient-to-br from-primary-container to-primary flex items-center justify-center text-lg shadow-clay">🤖</div>
+    <img src="assets/character/lumina-vest.png" alt="Lumina" class="w-9 h-9 shrink-0 rounded-full object-cover shadow-clay" style="object-position:50% 12%">
     <div class="clay-card p-4 flex-1">
       <span class="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full mb-1.5 risk-${advice.risk}">${riskLabel}</span>
       <p class="text-sm text-deep-teal">${advice.text}</p>
