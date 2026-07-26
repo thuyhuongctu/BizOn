@@ -186,10 +186,6 @@
 "Celebrates your victories and hands you your completion certificate."
 ],
 [
-"Lumina · Vest trắng",
-"Lumina · White vest"
-],
-[
 "Cố vấn chiến lược AI",
 "AI strategy advisor"
 ],
@@ -392,10 +388,6 @@
 [
 "Thị trường nội địa 2026: biến cố Hóa Rồng, đối thủ Việt, bản tin Thị trường sống. Chơi đơn (offline) cùng 3 đội AI.",
 "The 2026 domestic market: Rising Dragon events, Vietnamese rivals, a live market newsfeed. Single-player (offline) against 3 AI teams."
-],
-[
-"Vươn tầm thế giới — cạnh tranh với các tập đoàn đa quốc gia và thị trường tài chính quốc tế. Đấu Trường online sẽ cần máy chủ.",
-"Go global — compete with multinationals and international financial markets. The online Arena will require a server."
 ],
 [
 "GAME CHÍNH",
@@ -744,6 +736,114 @@
 [
 "Bắt đầu 🚀",
 "Start 🚀"
+],
+[
+"🧪 BẢN THỬ NGHIỆM",
+"🧪 BETA"
+],
+[
+"THỬ NGHIỆM",
+"BETA"
+],
+[
+"🗺️ Bước 1 — Chọn thị trường quốc tế",
+"🗺️ Step 1 — Pick an international market"
+],
+[
+"Xuất phát từ Việt Nam — chạm vào một điểm đến trên bản đồ thế giới.",
+"Starting from Vietnam — tap a destination on the world map."
+],
+[
+"🛂 Bước 2 — Chọn phương thức thâm nhập (Entry mode)",
+"🛂 Step 2 — Choose your entry mode"
+],
+[
+"📊 Bước 3 — Kinh doanh trong kỷ nguyên số",
+"📊 Step 3 — Do business in the digital era"
+],
+[
+"📚 Bốn phương thức thâm nhập quốc tế",
+"📚 Four international entry modes"
+],
+[
+"Xuất khẩu (Export)",
+"Export"
+],
+[
+"Nhượng quyền (Licensing)",
+"Licensing"
+],
+[
+"Liên doanh (Joint Venture)",
+"Joint Venture"
+],
+[
+"FDI — Đầu tư mới (Greenfield)",
+"FDI — Greenfield"
+],
+[
+"Vốn thấp, triển khai nhanh — nhưng chịu thuế quan và kiểm soát kênh phân phối thấp. Phù hợp thăm dò thị trường.",
+"Low capital, fast to launch — but exposed to tariffs with little channel control. Good for testing a market."
+],
+[
+"Đối tác bản địa sản xuất, ta thu phí bản quyền — rủi ro vốn thấp nhất nhưng lợi nhuận mỏng và có rủi ro thương hiệu.",
+"A local partner produces while you collect royalties — lowest capital risk, but thin margins and brand risk."
+],
+[
+"Chia vốn, chia lợi nhuận với đối tác am hiểu bản địa — giảm mạnh khoảng cách văn hóa và rào cản pháp lý.",
+"Share capital and profit with a local partner — sharply reduces cultural distance and legal barriers."
+],
+[
+"Xây nhà máy/công ty con 100% vốn — kiểm soát tối đa, né thuế quan, nhưng vốn lớn và rủi ro cao nhất.",
+"Build a wholly-owned plant/subsidiary — maximum control, tariff-free, but the biggest capital and risk."
+],
+[
+"Chốt quý này 🚀",
+"Commit this quarter 🚀"
+],
+[
+"🌍 Thị trường phản ứng",
+"🌍 Market reaction"
+],
+[
+"Kho GitHub",
+"GitHub repos"
+],
+[
+"⭐ BizOn — mã nguồn",
+"⭐ BizOn — source code"
+],
+[
+"🎼 M-AIDA — mã nguồn",
+"🎼 M-AIDA — source code"
+],
+[
+"🌏 BizOn Global (thử nghiệm)",
+"🌏 BizOn Global (beta)"
+],
+[
+"🌏 BizOn Global (thử nghiệm quốc tế)",
+"🌏 BizOn Global (international beta)"
+],
+[
+"⭐ Mã nguồn trên GitHub",
+"⭐ Source code on GitHub"
+],
+[
+"⭐ GitHub BizOn",
+"⭐ BizOn on GitHub"
+],
+[
+"🎼 GitHub M-AIDA",
+"🎼 M-AIDA on GitHub"
+],
+[
+"🌏 Trang M-AIDA",
+"🌏 M-AIDA site"
+],
+[
+"Từ Việt Nam vươn ra thế giới: chọn thị trường Á · Âu · Mỹ, chọn phương thức thâm nhập (Export, Licensing, Liên doanh, FDI) và kinh doanh trong kỷ nguyên số.",
+"From Vietnam to the world: pick a market in Asia · Europe · America, choose an entry mode (Export, Licensing, Joint Venture, FDI) and do business in the digital era."
 ]
 ]);
   var SPECIAL = [
