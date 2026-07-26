@@ -23,7 +23,7 @@ function load() {
       s.lineUpgraded ??= [false, false, false]; s.maintBonus ??= 0; s.maintenanceLog ??= [];
       s.loan ??= 0; s.costCutter ??= false; s.peakShare ??= 0; s.eventShownRound ??= 0;
       s.whatIfUsed ??= 0; s.advisorHistory ??= [];
-      s.conquest ??= [];
+      s.conquest ??= []; s.aiHistory ??= [];
     }
     return s;
   } catch { return null; }
@@ -455,8 +455,82 @@ function renderAll() {
   const mt = $('music-toggle'); if (mt) mt.checked = musicEnabled();
 }
 
+// ---------- BizOn Monitor (bảng theo dõi thị trường kiểu terminal) ----------
+function mmSpark(series, w = 88, hgt = 26) {
+  if (!series || series.length < 2) return '<span style="opacity:.35;font-size:9px">—</span>';
+  const min = Math.min(...series), max = Math.max(...series), span = (max - min) || 1;
+  const pts = series.map((v, i) => `${(i / (series.length - 1) * w).toFixed(1)},${(hgt - 2 - (v - min) / span * (hgt - 4)).toFixed(1)}`).join(' ');
+  const up = series[series.length - 1] >= series[0];
+  return `<svg viewBox="0 0 ${w} ${hgt}" style="width:${w}px;height:${hgt}px"><polyline points="${pts}" fill="none" stroke="${up ? '#34d399' : '#f87171'}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>`;
+}
+
+function renderMonitor() {
+  const box = $('market-monitor');
+  if (!box) return;
+  const H = S.history;
+  if (!H.length) {
+    box.innerHTML = `<div class="rounded-clay p-5 text-center" style="background:#0d1117;color:#8fa89f;font-family:ui-monospace,Menlo,Consolas,monospace">
+      <p style="font-size:11px;letter-spacing:.14em">📊 BIZON MONITOR</p>
+      <p style="font-size:11px;margin-top:8px;opacity:.7">Hoàn thành vòng 1 để kích hoạt bảng theo dõi thị trường.</p></div>`;
+    return;
+  }
+  const metrics = [
+    { name: 'Thị phần',      tag: 'THỊ PHẦN',   s: H.map(r => r.share),        fmt: v => v.toFixed(1) + '%' },
+    { name: 'Doanh thu',     tag: 'DOANH THU',  s: H.map(r => r.revenue),      fmt: v => money(v) },
+    { name: 'Lợi nhuận',     tag: 'LỢI NHUẬN',  s: H.map(r => r.netProfit),    fmt: v => money(v) },
+    { name: 'Ví đội',        tag: 'DÒNG TIỀN',  s: H.map(r => r.balance),      fmt: v => money(v) },
+    { name: 'OEE xưởng',     tag: 'VẬN HÀNH',   s: H.map(r => r.oee),          fmt: v => v + '%' },
+    { name: 'Brand Loyalty', tag: 'THƯƠNG HIỆU', s: H.map(r => r.brandLoyalty), fmt: v => v + '%' },
+  ];
+  (S.aiHistory || []).length && COMPETITORS.forEach((c, i) => {
+    metrics.push({ name: c.name, tag: 'ĐỐI THỦ AI', s: (S.aiHistory || []).map(snap => (snap[i] || {}).share || 0), fmt: v => v.toFixed(1) + '%' });
+  });
+
+  const pct = m => {
+    const n = m.s.length;
+    if (n < 2) return null;
+    const prev = m.s[n - 2], lastV = m.s[n - 1];
+    if (!prev) return null;
+    return (lastV - prev) / Math.abs(prev) * 100;
+  };
+  const withPct = metrics.map(m => ({ ...m, chg: pct(m) }));
+  const rated = withPct.filter(m => m.chg !== null);
+  const ups = rated.filter(m => m.chg >= 0).length;
+  const best = rated.length ? rated.reduce((x, y) => (y.chg > x.chg ? y : x)) : null;
+  const worst = rated.length ? rated.reduce((x, y) => (y.chg < x.chg ? y : x)) : null;
+  const chip = (label, val, cls) => `<div style="border:1px solid #1f2b33;border-radius:12px;padding:8px 10px;flex:1;min-width:0">
+    <p style="font-size:9px;letter-spacing:.14em;color:#8fa89f">${label}</p>
+    <p style="font-size:12px;font-weight:700;margin-top:2px;color:${cls};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${val}</p></div>`;
+
+  const rows = withPct.map(m => {
+    const lastV = m.s[m.s.length - 1];
+    const chgTxt = m.chg === null ? '' : `<span style="color:${m.chg >= 0 ? '#34d399' : '#f87171'}">${m.chg >= 0 ? '+' : ''}${m.chg.toFixed(2)}%</span>`;
+    return `<div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.05)">
+      <div style="flex:1;min-width:0"><p style="font-size:13px;font-weight:700;color:#e8f2ec;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${m.name}</p>
+        <p style="font-size:8.5px;letter-spacing:.14em;color:#7d948b">${m.tag}</p></div>
+      <div style="flex-shrink:0">${mmSpark(m.s)}</div>
+      <div style="text-align:right;flex-shrink:0;min-width:64px"><p style="font-size:13px;font-weight:700;color:#e8f2ec">${m.fmt(lastV)}</p>
+        <p style="font-size:10px">${chgTxt}</p></div>
+    </div>`;
+  }).join('');
+
+  box.innerHTML = `<div class="rounded-clay p-4" style="background:#0d1117;color:#dce8e2;font-family:ui-monospace,Menlo,Consolas,monospace;box-shadow:0 10px 30px -5px rgba(0,0,0,.35)">
+    <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1f2b33;padding-bottom:8px">
+      <p style="font-size:11px;letter-spacing:.18em;font-weight:700">📊 BIZON MONITOR</p>
+      <p style="font-size:9px;letter-spacing:.14em;color:#8fa89f">VÒNG ${H.length}/6</p>
+    </div>
+    <div style="display:flex;gap:8px;margin:12px 0 4px">
+      ${chip('TĂNG', `${ups}/${rated.length || withPct.length}`, '#34d399')}
+      ${chip('MẠNH NHẤT', best ? `${best.name} +${best.chg.toFixed(1)}%` : '—', '#34d399')}
+      ${chip('YẾU NHẤT', worst ? `${worst.name} ${worst.chg.toFixed(1)}%` : '—', '#f87171')}
+    </div>
+    ${rows}
+  </div>`;
+}
+
 // ---------- Thị trường sống (Live Market Pulse — theo 3 màn hình Stitch) ----------
 function renderMarket() {
+  renderMonitor();
   const body = $('market-body');
   if (!body) return;
   const ev = currentEvent(S);
@@ -847,6 +921,7 @@ function recordConquest(report) {
   const best = S.competitors.reduce((acc, c) => ((c.share || 0) > (acc.share || 0) ? c : acc), { share: 0, name: 'AI' });
   const win = report.share >= (best.share || 0);
   (S.conquest ??= []).push({ round: report.round, win, winner: win ? S.profile.teamName : best.name });
+  (S.aiHistory ??= []).push(S.competitors.map(c => ({ name: c.name, share: Math.round((c.share || 0) * 10) / 10 })));
   return win;
 }
 
