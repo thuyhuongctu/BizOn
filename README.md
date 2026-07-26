@@ -123,7 +123,7 @@ Manrope (OFL 1.1) — giữ nguyên giấy phép gốc của chúng.
 
 | Thành viên | Vai trò |
 |---|---|
-| **Đỗ Thùy Hương** (Je m'appelle Hương) | Tác giả thiết kế & nhân vật Lumina · thuyhuongctu@gmail.com |
+| **Đỗ Thùy Hương** | Tác giả thiết kế & nhân vật Lumina · thuyhuongctu@gmail.com |
 | **PGS.TS Phan Anh Tú** | Đồng sáng lập |
 
 © 2026 BizOn Bật Nghiệp
