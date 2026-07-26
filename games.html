@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 — © Đỗ Thùy Hương & PGS.TS Phan Anh Tú. Bảo lưu mọi quyền. -->
+<html lang="vi" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>BizOn Arcade — Trung tâm trò chơi</title>
+<meta name="author" content="Đỗ Thùy Hương, Phan Anh Tú">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & PGS.TS Phan Anh Tú. Bảo lưu mọi quyền.">
+<meta name="description" content="BizOn Arcade — trung tâm trò chơi: mô phỏng kinh doanh 6 vòng, Clay Factory Frenzy, Trắc nghiệm Khởi nghiệp, Đoán Giá Thị Trường, Bắt Vốn Vàng.">
+<meta name="theme-color" content="#033337">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#006687', 'primary-container': '#00c4ff', 'surface-bright': '#f4faff',
+        'deep-teal': '#033337', 'clay-orange': '#e8762d', 'clay-gold': '#fda127',
+      },
+      fontFamily: { display: ['"Plus Jakarta Sans"', 'sans-serif'], body: ['Manrope', 'sans-serif'] },
+      borderRadius: { clay: '24px' },
+    },
+  },
+};
+</script>
+<style>
+  body { font-family:'Manrope',sans-serif; background:#f4faff; color:#033337; overflow-x:hidden; }
+  h1,h2,h3,.font-display { font-family:'Plus Jakarta Sans',sans-serif; }
+  .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
+  .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease; }
+  .clay-btn:active { transform:translateY(2px); }
+  .clay-btn-primary { border-radius:24px; background:#e8762d; box-shadow:0 6px 0 #b3541a, 0 12px 24px -8px rgba(232,118,45,.5); transition:transform .1s ease, box-shadow .1s ease; }
+  .clay-btn-primary:active { transform:translateY(4px); box-shadow:0 2px 0 #b3541a; }
+  .clay-sunken { background:#e8f2f8; box-shadow:inset 3px 3px 8px rgba(0,102,135,.12), inset -3px -3px 8px rgba(255,255,255,.9); }
+  .glass-nav { background:rgba(3,51,55,.78); backdrop-filter:blur(14px); }
+  @keyframes floaty { 0%,100% {transform:translateY(0);} 50% {transform:translateY(-10px);} }
+  .animate-float { animation:floaty 3.8s ease-in-out infinite; }
+  @keyframes fadeUp { from {opacity:0; transform:translateY(14px);} to {opacity:1; transform:none;} }
+  .game-panel { display:none; }
+  .game-panel.open { display:block; animation:fadeUp .3s ease; }
+  #catch-canvas { touch-action:none; border-radius:20px; background:linear-gradient(180deg,#dff2fb 0%,#f4faff 100%); box-shadow:inset 3px 3px 8px rgba(0,102,135,.12); width:100%; }
+  /* Clay Factory belt */
+  #cf-belt { position:relative; height:110px; overflow:hidden; border-radius:20px; background:linear-gradient(180deg,#ffffff,#eaf4fa); box-shadow:inset 3px 3px 8px rgba(0,102,135,.1); }
+  #cf-belt::after { content:''; position:absolute; bottom:0; left:0; right:0; height:22px; background:rgba(3,51,55,.08); }
+  .cf-item { position:absolute; bottom:8px; font-size:2.1rem; cursor:pointer; user-select:none; left:-48px; animation:cfMove linear forwards; filter:drop-shadow(0 4px 5px rgba(3,51,55,.25)); }
+  @keyframes cfMove { from { left:-48px; } to { left:105%; } }
+  .tag { font-size:10px; font-weight:800; padding:2px 10px; border-radius:999px; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="glass-nav fixed top-0 inset-x-0 z-50 text-white">
+  <div class="max-w-5xl mx-auto px-5 h-16 flex items-center justify-between gap-3">
+    <a href="gioi-thieu.html" class="flex items-center gap-2.5">
+      <img src="assets/icons/icon-192.png" alt="BizOn" class="w-9 h-9 rounded-xl shadow-lg">
+      <span class="font-display font-extrabold tracking-tight">BizOn <span class="text-clay-gold">Arcade</span></span>
+    </a>
+    <div class="flex items-center gap-3">
+      <a href="gioi-thieu.html" class="text-white/70 hover:text-white text-sm font-bold hidden sm:block">Giới thiệu</a>
+      <a href="index.html" class="clay-btn-primary text-white font-display font-extrabold px-5 py-2.5 text-xs sm:text-sm">🎮 GAME CHÍNH</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="pt-24 pb-8 text-center px-5" style="background:linear-gradient(160deg,#033337 0%,#02444d 70%,#006687 100%)">
+  <p class="text-5xl animate-float inline-block">🕹️</p>
+  <h1 class="font-display font-extrabold text-3xl sm:text-4xl text-white mt-3">Trung tâm trò chơi</h1>
+  <p class="text-white/70 text-sm mt-2 max-w-lg mx-auto pb-4">6 trò chơi của hệ sinh thái BizOn Bật Nghiệp — từ mô phỏng chiến lược 6 vòng đến các game phản xạ 30 giây. Chọn và chơi ngay!</p>
+</header>
+
+<main class="max-w-5xl mx-auto px-5 py-10 grid md:grid-cols-2 gap-5">
+
+  <!-- 1. GAME CHÍNH -->
+  <div class="clay-card p-6 md:col-span-2" style="background:linear-gradient(120deg,#ffffff 55%,#e6f7ff)">
+    <div class="flex flex-col sm:flex-row items-center gap-5">
+      <img src="assets/character/lumina-ao-dai.png" alt="Lumina" class="w-24 h-24 rounded-full object-cover shadow-lg shrink-0" style="object-position:50% 10%">
+      <div class="flex-1 text-center sm:text-left">
+        <div class="flex items-center gap-2 justify-center sm:justify-start"><h2 class="font-display font-extrabold text-xl">🏢 BizOn Bật Nghiệp</h2><span class="tag text-white" style="background:#e8762d">GAME CHÍNH</span></div>
+        <p class="text-sm text-deep-teal/65 mt-1.5">Mô phỏng kinh doanh chiến lược <b>6 vòng</b>: định giá, sản xuất, marketing, nhân sự, tài chính — đấu với 3 đối thủ AI qua các biến cố Price War, Khủng hoảng năng lượng, Việt Nam Hóa Rồng. Có cố vấn AI Lumina, 7 báo cáo quản trị, cửa hàng vật phẩm, cây kỹ năng và chứng nhận hoàn thành.</p>
+        <p class="text-[11px] text-deep-teal/45 mt-1.5">⏱️ 30–60 phút · 👥 chơi theo đội 5 vai trò · 📱 cài được lên điện thoại</p>
+      </div>
+      <a href="index.html" class="clay-btn-primary text-white font-display font-extrabold px-8 py-3.5 text-sm shrink-0">🚀 Chơi ngay</a>
+    </div>
+  </div>
+
+  <!-- 2. DEMO 1 VÒNG -->
+  <div class="clay-card p-5 flex items-center gap-4">
+    <p class="text-4xl shrink-0">🎛️</p>
+    <div class="flex-1">
+      <div class="flex items-center gap-2"><h3 class="font-display font-extrabold">Demo 1 vòng</h3><span class="tag risk" style="background:#e0fbf4;color:#0b7a5e">KHÔNG CẦN ĐĂNG NHẬP</span></div>
+      <p class="text-xs text-deep-teal/60 mt-1">Kéo 3 thanh quyết định, xem thị trường phản ứng tức thì — hiểu luật chơi trong 60 giây.</p>
+    </div>
+    <a href="gioi-thieu.html#demo" class="clay-btn bg-primary text-white text-xs font-bold px-5 py-2.5 shrink-0">Chơi thử</a>
+  </div>
+
+  <!-- 3. CLAY FACTORY -->
+  <div class="clay-card p-5">
+    <div class="flex items-center gap-4">
+      <p class="text-4xl shrink-0">🏭</p>
+      <div class="flex-1">
+        <div class="flex items-center gap-2"><h3 class="font-display font-extrabold">Clay Factory Frenzy</h3><span class="tag" style="background:#fff4d6;color:#946200">PHẢN XẠ 30s</span></div>
+        <p class="text-xs text-deep-teal/60 mt-1">Băng chuyền xưởng đất sét — chạm đúng món hàng được đặt để đóng gói. Trong game chính, điểm đổi được quà ở Clay Reward Shop!</p>
+      </div>
+      <button onclick="cfStart()" id="cf-btn" class="clay-btn bg-primary text-white text-xs font-bold px-5 py-2.5 shrink-0">Chơi</button>
+    </div>
+    <div id="cf-panel" class="game-panel mt-4">
+      <div class="flex justify-between items-center clay-sunken rounded-2xl px-4 py-2.5 mb-3 text-sm font-extrabold">
+        <span>Đơn hàng: <span id="cf-target" class="text-2xl align-middle">🏺</span></span>
+        <span>Điểm: <span id="cf-score" class="text-primary">0</span></span>
+        <span>⏱️ <span id="cf-time">30</span>s</span>
+      </div>
+      <div id="cf-belt"></div>
+      <p id="cf-fb" class="text-xs mt-2 font-semibold"></p>
+    </div>
+  </div>
+
+  <!-- 4. QUIZ -->
+  <div class="clay-card p-5">
+    <div class="flex items-center gap-4">
+      <p class="text-4xl shrink-0">🧠</p>
+      <div class="flex-1">
+        <div class="flex items-center gap-2"><h3 class="font-display font-extrabold">Trắc nghiệm Khởi nghiệp</h3><span class="tag" style="background:#e0fbf4;color:#0b7a5e">KIẾN THỨC</span></div>
+        <p class="text-xs text-deep-teal/60 mt-1">8 câu về hòa vốn, thanh khoản, Price War, đòn bẩy — kiểm tra tố chất CEO.</p>
+      </div>
+      <button onclick="quizStart()" class="clay-btn bg-primary text-white text-xs font-bold px-5 py-2.5 shrink-0">Chơi</button>
+    </div>
+    <div id="quiz-panel" class="game-panel mt-4">
+      <div class="clay-sunken rounded-2xl p-3">
+        <p id="quiz-progress" class="text-[10px] font-extrabold text-deep-teal/50 uppercase mb-1"></p>
+        <p id="quiz-q" class="text-sm font-bold"></p>
+      </div>
+      <div id="quiz-opts" class="mt-3 space-y-2"></div>
+      <p id="quiz-fb" class="text-xs mt-2 font-semibold"></p>
+    </div>
+  </div>
+
+  <!-- 5. ĐOÁN GIÁ -->
+  <div class="clay-card p-5">
+    <div class="flex items-center gap-4">
+      <p class="text-4xl shrink-0">💰</p>
+      <div class="flex-1">
+        <div class="flex items-center gap-2"><h3 class="font-display font-extrabold">Đoán Giá Thị Trường</h3><span class="tag" style="background:#e0f2ff;color:#004d67">TƯ DUY</span></div>
+        <p class="text-xs text-deep-teal/60 mt-1">Thị trường đã chốt giá cân bằng 50–250 nghìn ₫ — bạn có 7 lượt tìm ra nó.</p>
+      </div>
+      <button onclick="priceStart()" class="clay-btn bg-primary text-white text-xs font-bold px-5 py-2.5 shrink-0">Chơi</button>
+    </div>
+    <div id="price-panel" class="game-panel mt-4">
+      <p id="price-info" class="text-xs font-semibold text-deep-teal/70 mb-2"></p>
+      <div class="flex gap-2">
+        <input id="price-input" type="number" min="50" max="250" placeholder="VD: 150" class="clay-sunken rounded-2xl px-4 py-2.5 w-full text-sm font-bold outline-none">
+        <button onclick="priceGuess()" class="clay-btn bg-clay-orange text-white font-display font-bold px-5 text-sm shrink-0">Đoán</button>
+      </div>
+      <p id="price-fb" class="text-xs mt-2 font-semibold"></p>
+    </div>
+  </div>
+
+  <!-- 6. BẮT VỐN VÀNG -->
+  <div class="clay-card p-5">
+    <div class="flex items-center gap-4">
+      <p class="text-4xl shrink-0">🪙</p>
+      <div class="flex-1">
+        <div class="flex items-center gap-2"><h3 class="font-display font-extrabold">Bắt Vốn Vàng</h3><span class="tag" style="background:#fff4d6;color:#946200">PHẢN XẠ 30s</span></div>
+        <p class="text-xs text-deep-teal/60 mt-1">Gọi vốn 30 giây: hứng đồng vàng, né chi phí phát sinh 💣. Chạm / chuột / phím ← →.</p>
+      </div>
+      <button id="catch-btn" onclick="catchStart()" class="clay-btn bg-primary text-white text-xs font-bold px-5 py-2.5 shrink-0">Chơi</button>
+    </div>
+    <div id="catch-panel" class="game-panel mt-4">
+      <div class="flex justify-between text-xs font-extrabold mb-2">
+        <span>💰 Vốn: <span id="catch-score">0</span>tr₫</span>
+        <span>⏱️ <span id="catch-time">30</span>s</span>
+      </div>
+      <canvas id="catch-canvas" width="320" height="280"></canvas>
+      <p id="catch-fb" class="text-xs mt-2 font-semibold"></p>
+    </div>
+  </div>
+
+</main>
+
+<footer class="text-center text-[11px] text-deep-teal/45 pb-10 px-5">
+  © 2026 Đỗ Thùy Hương & PGS.TS Phan Anh Tú · BizOn Bật Nghiệp — Bảo lưu mọi quyền.<br>
+  <a href="gioi-thieu.html" class="text-primary font-bold">Trang giới thiệu</a> · <a href="index.html" class="text-primary font-bold">Game chính</a>
+</footer>
+
+<script>
+/* ============ CLAY FACTORY FRENZY (bản arcade) ============ */
+const CF_ITEMS = ['🏺', '🧸', '🚗', '🍎', '⭐'];
+let cf = null;
+function cfStart() {
+  document.getElementById('cf-panel').classList.add('open');
+  if (cf) { cf.timers.forEach(clearInterval); document.querySelectorAll('.cf-item').forEach(e => e.remove()); }
+  cf = { score: 0, time: 30, target: CF_ITEMS[0], timers: [] };
+  cfTarget();
+  document.getElementById('cf-score').textContent = '0';
+  document.getElementById('cf-time').textContent = '30';
+  document.getElementById('cf-fb').textContent = '';
+  document.getElementById('cf-btn').textContent = '🔄 Chơi lại';
+  cf.timers.push(setInterval(() => {
+    cf.time--;
+    document.getElementById('cf-time').textContent = cf.time;
+    if (cf.time <= 0) cfEnd();
+  }, 1000));
+  cf.timers.push(setInterval(cfSpawn, 700));
+}
+function cfTarget() {
+  cf.target = CF_ITEMS[Math.floor(Math.random() * CF_ITEMS.length)];
+  document.getElementById('cf-target').textContent = cf.target;
+}
+function cfSpawn() {
+  if (!cf) return;
+  const el = document.createElement('span');
+  el.className = 'cf-item';
+  el.textContent = CF_ITEMS[Math.floor(Math.random() * CF_ITEMS.length)];
+  el.style.animationDuration = (2.6 + Math.random() * 1.6) + 's';
+  el.onclick = () => {
+    if (!cf || cf.time <= 0) return;
+    if (el.textContent === cf.target) { cf.score++; cfTarget(); }
+    else cf.score = Math.max(0, cf.score - 1);
+    document.getElementById('cf-score').textContent = cf.score;
+    el.remove();
+  };
+  el.addEventListener('animationend', () => el.remove());
+  document.getElementById('cf-belt').appendChild(el);
+}
+function cfEnd() {
+  cf.timers.forEach(clearInterval);
+  document.querySelectorAll('.cf-item').forEach(e => e.remove());
+  const s = cf.score;
+  const msg = s >= 20 ? '🏆 Quản đốc xưởng thực thụ!' : s >= 12 ? '💪 Tay nghề cứng!' : '🌱 Luyện thêm nhé!';
+  document.getElementById('cf-fb').textContent = `Kết thúc! ${s} đơn hàng đóng gói đúng. ${msg} Vào game chính để tích điểm đổi quà ở Clay Reward Shop!`;
+  document.getElementById('cf-fb').className = 'text-xs mt-2 font-semibold text-primary';
+  cf = null;
+}
+
+/* ============ QUIZ ============ */
+const QUIZ = [
+  { q: 'Điểm hòa vốn (Break-even) là gì?', o: ['Mức sản lượng mà doanh thu = tổng chi phí', 'Lúc công ty hết tiền mặt', 'Khi thị phần đạt 50%'], a: 0 },
+  { q: 'Quick Ratio dưới 1.0 cảnh báo điều gì?', o: ['Thương hiệu yếu', 'Rủi ro thanh khoản — khó trả nợ ngắn hạn', 'Máy móc lạc hậu'], a: 1 },
+  { q: 'Khi đối thủ giảm giá 15% (Price War), chiến lược nào thường bền vững hơn?', o: ['Giảm giá sâu hơn đối thủ', 'Tăng giá trị cảm nhận qua R&D và thương hiệu', 'Ngừng quảng cáo để tiết kiệm'], a: 1 },
+  { q: 'ROI 12% trong khi lãi vay 10% nghĩa là gì?', o: ['Vay thêm là tự sát tài chính', 'Đòn bẩy vẫn sinh lời — mỗi đồng vay tạo hơn 1 đồng lãi', 'Không liên quan đến nhau'], a: 1 },
+  { q: 'OEE trong vận hành đo lường điều gì?', o: ['Hiệu suất tổng thể thiết bị', 'Số nhân viên nghỉ việc', 'Chi phí marketing'], a: 0 },
+  { q: 'Doanh thu / Chi phí marketing < 3.0 cho thấy?', o: ['Marketing đang rất hiệu quả', 'Chi tiếp thị cao nhưng chuyển đổi kém — cần rà soát thông điệp', 'Cần tăng gấp đôi ngân sách ngay'], a: 1 },
+  { q: 'Kỳ hạn thanh toán 90 ngày cho khách giúp gì và đánh đổi gì?', o: ['Tăng nhu cầu mua nhưng dòng tiền về chậm, rủi ro cao hơn', 'Giảm nhu cầu nhưng tiền về nhanh', 'Không ảnh hưởng gì'], a: 0 },
+  { q: 'Brand Loyalty dưới 60% thì việc cần làm trước tiên là?', o: ['Sa thải bớt nhân viên', 'Chiến dịch tái định vị thương hiệu', 'Tăng sản lượng tối đa'], a: 1 },
+];
+let qi = 0, qScore = 0;
+function quizStart() {
+  qi = 0; qScore = 0;
+  document.getElementById('quiz-panel').classList.add('open');
+  document.getElementById('quiz-fb').textContent = '';
+  quizRender();
+}
+function quizRender() {
+  const it = QUIZ[qi];
+  document.getElementById('quiz-progress').textContent = `Câu ${qi + 1}/${QUIZ.length} · Đúng: ${qScore}`;
+  document.getElementById('quiz-q').textContent = it.q;
+  document.getElementById('quiz-opts').innerHTML = it.o.map((o, i) =>
+    `<button onclick="quizPick(${i})" class="clay-btn w-full bg-white text-deep-teal text-left text-xs font-semibold px-4 py-2.5">${'ABC'[i]}. ${o}</button>`).join('');
+}
+function quizPick(i) {
+  const it = QUIZ[qi], fb = document.getElementById('quiz-fb');
+  if (i === it.a) { qScore++; fb.textContent = '✅ Chính xác!'; fb.className = 'text-xs mt-2 font-semibold text-emerald-600'; }
+  else { fb.textContent = `❌ Chưa đúng — đáp án: ${'ABC'[it.a]}. ${it.o[it.a]}`; fb.className = 'text-xs mt-2 font-semibold text-red-600'; }
+  qi++;
+  if (qi < QUIZ.length) { setTimeout(quizRender, 900); }
+  else setTimeout(() => {
+    const tier = qScore >= 7 ? '🏆 Tố chất CEO thực thụ!' : qScore >= 5 ? '👍 Nhà sáng lập tiềm năng!' : '📚 Vào game chính luyện thêm nhé!';
+    document.getElementById('quiz-q').textContent = `Kết quả: ${qScore}/${QUIZ.length} — ${tier}`;
+    document.getElementById('quiz-progress').textContent = 'HOÀN THÀNH';
+    document.getElementById('quiz-opts').innerHTML = `<button onclick="quizStart()" class="clay-btn w-full bg-primary text-white text-xs font-bold py-2.5">🔄 Chơi lại</button>`;
+    fb.textContent = '';
+  }, 1200);
+}
+
+/* ============ ĐOÁN GIÁ ============ */
+let pTarget = 0, pLeft = 0;
+function priceStart() {
+  pTarget = 50 + Math.floor(Math.random() * 201);
+  pLeft = 7;
+  document.getElementById('price-panel').classList.add('open');
+  document.getElementById('price-info').textContent = 'Thị trường đã chốt giá cân bằng. Còn 7 lượt đoán.';
+  document.getElementById('price-fb').textContent = '';
+  document.getElementById('price-input').value = '';
+  document.getElementById('price-input').focus();
+}
+function priceGuess() {
+  if (!pLeft) return;
+  const v = parseInt(document.getElementById('price-input').value, 10);
+  const fb = document.getElementById('price-fb');
+  if (isNaN(v) || v < 50 || v > 250) { fb.textContent = '⚠️ Nhập một mức giá từ 50 đến 250 (nghìn ₫).'; fb.className = 'text-xs mt-2 font-semibold text-amber-600'; return; }
+  pLeft--;
+  if (v === pTarget) {
+    fb.textContent = `🎉 Chuẩn! Giá cân bằng là ${pTarget} nghìn ₫ — đúng chất CFO!`;
+    fb.className = 'text-xs mt-2 font-semibold text-emerald-600'; pLeft = 0;
+  } else if (!pLeft) {
+    fb.textContent = `💥 Hết lượt! Giá cân bằng là ${pTarget} nghìn ₫. Nhấn "Chơi" để thử lại.`;
+    fb.className = 'text-xs mt-2 font-semibold text-red-600';
+  } else {
+    const hot = Math.abs(v - pTarget) <= 15 ? ' 🔥 Rất gần rồi!' : '';
+    fb.textContent = (v < pTarget ? '📈 Giá bạn đặt THẤP hơn thị trường (dư cầu).' : '📉 Giá bạn đặt CAO hơn thị trường (ế hàng).') + hot + ` Còn ${pLeft} lượt.`;
+    fb.className = 'text-xs mt-2 font-semibold text-deep-teal/70';
+  }
+  document.getElementById('price-info').textContent = pLeft ? `Còn ${pLeft} lượt đoán.` : 'Ván đã kết thúc.';
+  document.getElementById('price-input').value = '';
+  document.getElementById('price-input').focus();
+}
+document.getElementById('price-input').addEventListener('keydown', e => { if (e.key === 'Enter') priceGuess(); });
+
+/* ============ BẮT VỐN VÀNG ============ */
+const cv = document.getElementById('catch-canvas'), cx = cv.getContext('2d');
+let cState = null, cRaf = 0, cTimer = 0;
+function catchStart() {
+  document.getElementById('catch-panel').classList.add('open');
+  cancelAnimationFrame(cRaf); clearInterval(cTimer);
+  cState = { x: cv.width / 2, score: 0, time: 30, items: [], tick: 0, over: false };
+  document.getElementById('catch-fb').textContent = '';
+  document.getElementById('catch-btn').textContent = '🔄 Chơi lại';
+  cTimer = setInterval(() => {
+    if (!cState || cState.over) return;
+    cState.time--;
+    document.getElementById('catch-time').textContent = cState.time;
+    if (cState.time <= 0) catchEnd();
+  }, 1000);
+  cRaf = requestAnimationFrame(catchLoop);
+}
+function catchEnd() {
+  cState.over = true; clearInterval(cTimer); cancelAnimationFrame(cRaf);
+  const s = cState.score;
+  const msg = s >= 500 ? '🏆 Gọi vốn Series A thành công!' : s >= 250 ? '💼 Vòng hạt giống ổn áp!' : '🌱 Khởi đầu nào cũng đáng quý!';
+  document.getElementById('catch-fb').textContent = `Kết thúc! Bạn gọi được ${s}tr₫ vốn. ${msg}`;
+  document.getElementById('catch-fb').className = 'text-xs mt-2 font-semibold text-primary';
+}
+function catchLoop() {
+  const st = cState; if (!st || st.over) return;
+  st.tick++;
+  if (st.tick % Math.max(18, 34 - Math.floor((30 - st.time) / 4) * 4) === 0) {
+    const bomb = Math.random() < 0.28;
+    st.items.push({ x: 16 + Math.random() * (cv.width - 32), y: -14, v: 1.6 + Math.random() * 1.6 + (30 - st.time) * 0.05, bomb });
+  }
+  cx.clearRect(0, 0, cv.width, cv.height);
+  cx.font = '30px serif'; cx.textAlign = 'center';
+  cx.fillText('🧺', st.x, cv.height - 10);
+  st.items = st.items.filter(it => {
+    it.y += it.v;
+    cx.font = '22px serif';
+    cx.fillText(it.bomb ? '💣' : '🪙', it.x, it.y);
+    if (it.y > cv.height - 34 && it.y < cv.height && Math.abs(it.x - st.x) < 26) {
+      if (it.bomb) st.score = Math.max(0, st.score - 40);
+      else st.score += 20;
+      document.getElementById('catch-score').textContent = st.score;
+      return false;
+    }
+    return it.y < cv.height + 20;
+  });
+  cRaf = requestAnimationFrame(catchLoop);
+}
+function catchMove(clientX) {
+  if (!cState || cState.over) return;
+  const r = cv.getBoundingClientRect();
+  cState.x = Math.min(cv.width - 16, Math.max(16, (clientX - r.left) * (cv.width / r.width)));
+}
+cv.addEventListener('mousemove', e => catchMove(e.clientX));
+cv.addEventListener('touchmove', e => { e.preventDefault(); catchMove(e.touches[0].clientX); }, { passive: false });
+cv.addEventListener('touchstart', e => { e.preventDefault(); catchMove(e.touches[0].clientX); }, { passive: false });
+document.addEventListener('keydown', e => {
+  if (!cState || cState.over) return;
+  if (e.key === 'ArrowLeft') cState.x = Math.max(16, cState.x - 24);
+  if (e.key === 'ArrowRight') cState.x = Math.min(cv.width - 16, cState.x + 24);
+});
+</script>
+</body>
+</html>
