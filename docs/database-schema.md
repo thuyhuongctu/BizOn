@@ -1,6 +1,6 @@
 # Database Schema — BizOn Bật Nghiệp 2026
 
-Cấu trúc bảng dữ liệu cốt lõi (theo hồ sơ Stitch, dự kiến PostgreSQL).
+Cấu trúc bảng dữ liệu cốt lõi (dự kiến PostgreSQL).
 
 ## 1. Users & Teams
 

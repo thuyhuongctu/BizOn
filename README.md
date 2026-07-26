@@ -4,10 +4,6 @@ Nền tảng **mô phỏng kinh doanh EdTech** theo phong cách **3D Claymorphis
 sinh viên điều hành doanh nghiệp ảo qua **6 vòng chơi** cùng cố vấn AI **Lumina
 (Je m'appelle Hương)**.
 
-Bản prototype này được xây dựng theo hồ sơ thiết kế xuất từ **Google Stitch**
-(Design Tokens, kiến trúc màn hình, logic mô phỏng, database schema và API spec —
-xem thư mục [`docs/`](docs/)).
-
 ## Chạy thử
 
 Không cần cài đặt — mở trực tiếp:
@@ -47,7 +43,7 @@ Tiến trình chơi được lưu tự động trong `localStorage` của trình
 - Mã lỗi nghiệp vụ mô phỏng theo API spec: `ERR_ALREADY_COMMITTED`,
   `ERR_INSUFFICIENT_FUNDS`, `ERR_AI_LIMIT`, `ERR_ITEM_NOT_FOUND`…
 
-## Design Tokens (từ Stitch)
+## Design Tokens
 
 | Token | Giá trị |
 |---|---|
@@ -67,7 +63,7 @@ index.html          # SPA — toàn bộ màn hình + Tailwind config
 js/engine.js        # Engine mô phỏng 6 vòng, biến cố, vật phẩm, kỹ năng, Lumina AI
 js/app.js           # Điều khiển UI, điều hướng tab, render, localStorage
 assets/character/   # Ảnh 3D nhân vật Lumina (áo dài & vest trắng)
-docs/               # Hồ sơ kỹ thuật từ Stitch (schema, API, handoff)
+docs/               # Hồ sơ kỹ thuật (schema, API, design system, sở hữu trí tuệ)
 ```
 
 > Nhân vật **Lumina — Je m'appelle Hương** xuất hiện xuyên suốt game:
@@ -80,6 +76,19 @@ docs/               # Hồ sơ kỹ thuật từ Stitch (schema, API, handoff)
 2. Database PostgreSQL theo [`docs/database-schema.md`](docs/database-schema.md).
 3. Chế độ nhiều đội thời gian thực + màn hình Giảng viên (cấp vốn, khóa vòng).
 4. Tích hợp Lumina AI thật qua Claude API thay cho rule-based advisor.
+
+## Bản quyền & Sở hữu trí tuệ
+
+Đây là **phần mềm độc quyền** — xem [`LICENSE`](LICENSE). Mã nguồn, thuật toán
+engine mô phỏng, tạo hình nhân vật **Lumina — Je m'appelle Hương**, tên gọi và
+nhận diện **BizOn Bật Nghiệp** thuộc sở hữu của nhóm tác giả; nghiêm cấm sao chép
+hoặc sử dụng thương mại khi chưa được phép bằng văn bản.
+
+Hồ sơ đăng ký bảo hộ (quyền tác giả, nhãn hiệu) và chiến lược thương mại hóa:
+[`docs/so-huu-tri-tue.md`](docs/so-huu-tri-tue.md).
+
+Thành phần bên thứ ba: Tailwind CSS (MIT), Google Fonts Plus Jakarta Sans &
+Manrope (OFL 1.1) — giữ nguyên giấy phép gốc của chúng.
 
 ---
 ## Thành viên nhóm
