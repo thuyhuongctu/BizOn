@@ -43,6 +43,15 @@ tailwind.config = {
   #particles-container { position:fixed; inset:0; pointer-events:none; z-index:0; }
   .particle { position:absolute; border-radius:50%; opacity:.3; }
   .profile-mesh { background:radial-gradient(circle at 50% 50%, rgba(0,196,255,.12) 0%, transparent 70%); }
+  @keyframes sceneInL { from { opacity:0; transform:translateX(-70px); } 70% { transform:translateX(8px); } to { opacity:1; transform:translateX(0); } }
+  @keyframes sceneInR { from { opacity:0; transform:translateX(70px); } 70% { transform:translateX(-8px); } to { opacity:1; transform:translateX(0); } }
+  .scene-enter-left { animation:sceneInL 1s cubic-bezier(.22,1,.36,1) both .2s; }
+  .scene-enter-right { animation:sceneInR 1s cubic-bezier(.22,1,.36,1) both .45s; }
+  .scene-bubble { position:absolute; top:-3.2rem; left:50%; transform:translate(-50%,8px) scale(.92); z-index:5; width:max-content; max-width:14rem; background:#fff; color:#033337; font-size:12px; font-weight:700; padding:.55rem .9rem; border-radius:18px; border-bottom-left-radius:4px; box-shadow:0 10px 24px -8px rgba(0,102,135,.35); opacity:0; transition:opacity .4s ease, transform .4s cubic-bezier(.34,1.56,.64,1); pointer-events:none; }
+  .scene-bubble.show { opacity:1; transform:translate(-50%,0) scale(1); }
+  .scene-bubble::after { content:''; position:absolute; left:18px; bottom:-7px; width:14px; height:14px; background:#fff; clip-path:polygon(0 0, 100% 0, 30% 100%); }
+  @keyframes twinkle { 0%,100% { opacity:.25; transform:scale(.8); } 50% { opacity:1; transform:scale(1.15); } }
+  .scene-spark { position:absolute; font-size:1.2rem; animation:twinkle 2.6s ease-in-out infinite; pointer-events:none; }
 </style>
 </head>
 <body class="min-h-screen pb-20">
@@ -57,15 +66,19 @@ tailwind.config = {
 <main class="max-w-4xl mx-auto px-6 pt-10 relative z-10">
   <!-- Founders Hero -->
   <section class="mb-16">
-    <div class="grid grid-cols-2 gap-4 items-end mb-12">
-      <div class="relative">
+    <div class="grid grid-cols-2 gap-4 items-end mb-12 pt-14 relative">
+      <span class="scene-spark" style="top:2%; left:8%">✨</span>
+      <span class="scene-spark" style="top:10%; right:6%; animation-delay:-1.3s">✨</span>
+      <div class="relative scene-enter-left">
         <div class="profile-mesh absolute inset-0 -z-10 scale-150"></div>
+        <div id="bubble-huong" class="scene-bubble">Rất vui được gặp bạn! 👋</div>
         <div class="float-anim">
           <img src="assets/character/lumina-ao-dai.png" alt="Đỗ Thùy Hương — Lumina AI" class="h-64 sm:h-96 w-auto mx-auto drop-shadow-2xl">
         </div>
       </div>
-      <div class="relative">
+      <div class="relative scene-enter-right">
         <div class="profile-mesh absolute inset-0 -z-10 scale-150 rotate-180"></div>
+        <div id="bubble-tu" class="scene-bubble">Chào mừng đến với BizOn! 🎓</div>
         <div class="float-anim-delayed">
           <img src="assets/character/anh-tu-welcome.png" alt="PGS.TS Phan Anh Tú" class="h-64 sm:h-96 w-auto mx-auto drop-shadow-2xl">
         </div>
@@ -167,6 +180,29 @@ function initScrollReveal() {
   setTimeout(() => cards.forEach(c => { if (c.getBoundingClientRect().top < innerHeight) c.classList.add('visible'); }), 100);
 }
 document.addEventListener('DOMContentLoaded', () => { initParticles(); initScrollReveal(); });
+
+// Hoạt cảnh hội thoại giữa 2 nhà sáng lập
+const SCENE_SCRIPT = [
+  ['huong', 'Rất vui được gặp bạn! 👋'],
+  ['tu', 'Chào mừng đến với BizOn! 🎓'],
+  ['huong', 'Chúng tôi xây BizOn để ai cũng học được quản trị.'],
+  ['tu', 'Mọi kịch bản đều đạt chuẩn học thuật cao nhất!'],
+  ['huong', 'Gamification + AI = học mà chơi thật sự 🚀'],
+  ['tu', 'Hẹn gặp bạn trong lớp học Bật Nghiệp nhé!'],
+];
+let sceneIdx = 0;
+function scenePlay() {
+  const bh = document.getElementById('bubble-huong'), bt = document.getElementById('bubble-tu');
+  if (!bh || !bt) return;
+  const [who, line] = SCENE_SCRIPT[sceneIdx % SCENE_SCRIPT.length];
+  const active = who === 'huong' ? bh : bt, other = who === 'huong' ? bt : bh;
+  other.classList.remove('show');
+  active.textContent = line;
+  active.classList.add('show');
+  sceneIdx++;
+}
+setTimeout(scenePlay, 1300);
+setInterval(scenePlay, 3400);
 </script>
 </body>
 </html>
