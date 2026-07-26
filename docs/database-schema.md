@@ -1,4 +1,4 @@
-# Database Schema — BizArena 2026
+# Database Schema — BizOn Bật Nghiệp 2026
 
 Cấu trúc bảng dữ liệu cốt lõi (theo hồ sơ Stitch, dự kiến PostgreSQL).
 
