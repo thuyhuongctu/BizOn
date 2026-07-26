@@ -15,7 +15,7 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
 <script>
 tailwind.config = {
   theme: {
@@ -93,6 +93,17 @@ tailwind.config = {
   .ticker-content { display:inline-block; animation:tickerMove 28s linear infinite; }
   @keyframes tickerMove { 0% { transform:translateX(100%); } 100% { transform:translateX(-100%); } }
   .clay-bar-v { border-radius:999px; box-shadow:6px 6px 12px rgba(0,0,0,.1), inset 4px 4px 8px rgba(255,255,255,.5), inset -4px -4px 8px rgba(0,0,0,.1); transition:height 1s cubic-bezier(.4,0,.2,1); }
+  .lumina-name { background:linear-gradient(90deg,#006687 0%,#00c4ff 40%,#006687 60%,#00c4ff 100%); background-size:200% auto; -webkit-background-clip:text; background-clip:text; color:transparent; animation:shineText 4s linear infinite; }
+  @keyframes shineText { to { background-position:-200% center; } }
+  .signature { font-family:'Dancing Script',cursive; font-weight:700; }
+  .signature-underline { display:inline-block; position:relative; }
+  .signature-underline::after { content:''; position:absolute; left:8%; right:8%; bottom:-2px; height:3px; border-radius:999px; background:linear-gradient(90deg,#fda127,#e8762d); box-shadow:0 2px 4px rgba(232,118,45,.4); }
+  .glow-ring { position:relative; }
+  .glow-ring::before { content:''; position:absolute; inset:-3px; border-radius:inherit; padding:3px; background:conic-gradient(from 0deg,#00c4ff,#fda127,#00c4ff); -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite:xor; mask-composite:exclude; animation:spin 4s linear infinite; }
+  .glow-ring::after { content:''; position:absolute; inset:-3px; border-radius:inherit; border:2px solid rgba(0,196,255,.65); animation:ringPulse 2.2s ease-out infinite; }
+  @keyframes ringPulse { 0% { transform:scale(1); opacity:.65; } 100% { transform:scale(1.3); opacity:0; } }
+  .online-dot { position:relative; }
+  .online-dot::after { content:''; position:absolute; inset:0; border-radius:999px; background:#22c55e; animation:ringPulse 1.6s ease-out infinite; }
   .waterfall-bar { border-radius:8px 8px 4px 4px; box-shadow:inset 2px 2px 4px rgba(255,255,255,.3); }
   .spider-grid { stroke:#bfc8ce; stroke-dasharray:4; fill:none; }
 </style>
@@ -116,7 +127,7 @@ tailwind.config = {
       <img src="assets/illustrations/login-clay.png" alt="BizOn Bật Nghiệp" class="w-full h-44 object-cover" style="object-position:50% 12%">
       <div class="p-8 pt-5">
       <h2 class="font-display text-2xl font-extrabold text-deep-teal">Chào mừng trở lại!</h2>
-      <p class="text-sm text-deep-teal/60 mb-6">Lumina — Je m'appelle Hương đang chờ đồng hành cùng đội của bạn.</p>
+      <p class="text-sm text-deep-teal/60 mb-6"><span class="font-display font-extrabold lumina-name">Lumina AI</span> — <span class="signature text-lg text-deep-teal">Je m'appelle Hương</span> đang chờ đồng hành cùng đội của bạn.</p>
       <label class="block text-sm font-bold text-deep-teal mb-1">Email</label>
       <input id="login-email" type="email" placeholder="sinhvien@truong.edu.vn" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 mb-4 outline-none focus:border-primary-container">
       <label class="block text-sm font-bold text-deep-teal mb-1">Tên đội</label>
@@ -183,10 +194,14 @@ tailwind.config = {
         </div>
       </div>
       <div class="clay-card p-5 mb-4 flex items-center gap-4">
-        <img src="assets/character/lumina-vest.png" alt="Lumina AI" class="w-14 h-14 shrink-0 rounded-full object-cover shadow-clay" style="object-position:50% 12%">
-
-        <div class="flex-1">
-          <p class="font-display font-bold text-deep-teal text-sm">Lumina AI · Je m'appelle Hương</p>
+        <div class="glow-ring rounded-full shrink-0">
+          <img src="assets/character/lumina-vest.png" alt="Lumina AI" class="w-14 h-14 rounded-full object-cover shadow-clay" style="object-position:50% 12%">
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="flex items-baseline gap-1.5 flex-wrap">
+            <span class="font-display font-extrabold lumina-name text-base">Lumina AI</span>
+            <span class="signature text-lg text-deep-teal leading-none">Je m'appelle Hương</span>
+          </p>
           <p id="dash-lumina" class="text-xs text-deep-teal/70 mt-0.5">Xin chào! Hãy vào mục Cố vấn để nhận gợi ý chiến thuật nhé.</p>
         </div>
         <button onclick="showTab('advisor')" class="clay-btn bg-primary-container/30 text-primary font-bold px-3 py-2 text-xs">Hỏi</button>
@@ -292,10 +307,18 @@ tailwind.config = {
     <section id="tab-advisor" class="screen">
       <div class="clay-card mb-4 overflow-hidden">
         <div class="flex items-center gap-4 p-4 pb-0">
-          <img src="assets/character/lumina-vest.png" alt="Lumina AI — vest trắng" class="w-16 h-16 rounded-clay object-cover shadow-clay-lg" style="object-position:50% 12%">
-          <div>
-            <h2 class="font-display text-xl font-extrabold text-deep-teal">Lumina AI</h2>
-            <p class="text-sm text-primary font-semibold">Je m'appelle Hương · Cố vấn chiến lược</p>
+          <div class="glow-ring rounded-clay shrink-0">
+            <img src="assets/character/lumina-vest.png" alt="Lumina AI — vest trắng" class="w-16 h-16 rounded-clay object-cover shadow-clay-lg" style="object-position:50% 12%">
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2">
+              <h2 class="font-display text-2xl font-extrabold lumina-name tracking-tight">Lumina AI</h2>
+              <span class="text-[9px] font-extrabold text-white bg-gradient-to-r from-primary to-primary-container px-2 py-0.5 rounded-full shadow-clay shrink-0">✦ MENTOR</span>
+            </div>
+            <p class="signature signature-underline text-xl text-deep-teal leading-tight mt-0.5">Je m'appelle Hương</p>
+            <p class="flex items-center gap-1.5 text-[10px] font-bold text-deep-teal/60 uppercase tracking-wide mt-1.5">
+              <span class="online-dot w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span> Online · Cố vấn chiến lược
+            </p>
           </div>
         </div>
         <div class="relative mt-3">
@@ -514,7 +537,7 @@ tailwind.config = {
       <div class="grid grid-cols-2 gap-3">
         <div class="clay-card overflow-hidden text-center">
           <img src="assets/character/lumina-ao-dai.png" alt="Đỗ Thùy Hương" class="w-full h-36 object-cover" style="object-position:50% 12%">
-          <div class="p-3"><p class="font-display font-bold text-deep-teal text-xs">Đỗ Thùy Hương</p><p class="text-[10px] text-deep-teal/50">Je m'appelle Hương · Tác giả & Thiết kế</p></div>
+          <div class="p-3"><p class="font-display font-bold text-deep-teal text-xs">Đỗ Thùy Hương</p><p class="signature text-base text-primary leading-tight">Je m'appelle Hương</p><p class="text-[10px] text-deep-teal/50">Tác giả & Thiết kế</p></div>
         </div>
         <div class="clay-card overflow-hidden text-center">
           <img src="assets/character/anh-tu-point.png" alt="PGS.TS Phan Anh Tú" class="w-full h-36 object-cover" style="object-position:50% 8%">
