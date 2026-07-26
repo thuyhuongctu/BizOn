@@ -17,6 +17,10 @@ function load() {
     if (s) { // migration cho save cũ thiếu trường mới
       s.missionsClaimed ??= []; s.aiAskedTotal ??= 0; s.itemsBought ??= 0;
       s.minigameBest ??= 0; s.minigamePlays ??= 0; s.roundLocked ??= false; s.grantLog ??= [];
+      s.oee ??= 85; s.defect ??= 2.0; s.brandLoyalty ??= 65; s.adEff ??= 0;
+      s.quickRatio ??= 1.0; s.roi ??= 0; s.energyLines ??= [2100, 4850, 1470];
+      s.lineUpgraded ??= [false, false, false]; s.maintBonus ??= 0; s.maintenanceLog ??= [];
+      s.loan ??= 0; s.costCutter ??= false; s.peakShare ??= 0; s.eventShownRound ??= 0;
     }
     return s;
   } catch { return null; }
@@ -77,6 +81,92 @@ function doLogin() {
 function enterApp() {
   $('app-shell').classList.remove('hidden');
   showTab('home');
+  maybeShowEventIntro();
+}
+
+// ---------- Biến cố toàn màn hình (theo thiết kế Stitch) ----------
+function maybeShowEventIntro() {
+  if (!S || S.finished || S.committed) return;
+  if (S.eventShownRound >= S.round) return;
+  const ev = currentEvent(S);
+  S.eventShownRound = S.round;
+  save();
+  const bad = ev.tone === 'bad', warn = ev.tone === 'warn';
+  const tagCls = bad ? 'bg-red-100 text-red-600' : warn ? 'bg-amber-100 text-amber-700' : 'bg-primary-container/25 text-primary';
+  const titleCls = bad ? 'text-red-600' : 'text-deep-teal';
+  const dirIcon = d => ({ up: '📈', 'up-bad': '📈', down: '📉', 'down-good': '📉', flat: '➖' }[d] || '➖');
+  const dirCls = d => (d === 'up' || d === 'down-good') ? 'text-primary' : (d === 'flat' ? 'text-deep-teal' : 'text-red-600');
+  const div = document.createElement('div');
+  div.className = 'fixed inset-0 z-50 bg-surface-bright overflow-y-auto';
+  div.innerHTML = `
+    <div class="max-w-md mx-auto px-6 py-8 ${ev.shake ? 'animate-shake' : ''}">
+      <span class="inline-flex items-center gap-1.5 text-[11px] font-extrabold px-3 py-1.5 rounded-full ${tagCls}">● ${ev.tag || 'BIẾN CỐ THỊ TRƯỜNG'}</span>
+      <h1 class="font-display text-3xl font-extrabold ${titleCls} uppercase mt-3 leading-tight">${ev.name}</h1>
+      <p class="text-sm text-deep-teal/70 mt-2">${ev.desc}</p>
+      <div class="grid grid-cols-2 gap-3 mt-5">
+        ${(ev.impacts || []).map(im => `
+          <div class="clay-card p-4 text-center">
+            <p class="text-2xl">${im.icon}</p>
+            <p class="text-[10px] uppercase font-bold text-deep-teal/50 mt-1">${im.label}</p>
+            <p class="font-display font-extrabold text-xl ${dirCls(im.dir)}">${dirIcon(im.dir)} ${im.value}</p>
+          </div>`).join('')}
+      </div>
+      <div class="clay-card p-4 mt-4 flex gap-3 items-start">
+        <img src="assets/character/${ev.luminaImg || 'lumina-vest'}.png" alt="Lumina" class="w-14 h-20 rounded-2xl object-cover shrink-0 shadow-clay" style="object-position:50% 10%">
+        <div>
+          <p class="font-display font-bold text-deep-teal text-sm">Je m'appelle Hương <span class="ml-1 text-[9px] bg-primary-container/30 text-primary font-extrabold px-2 py-0.5 rounded-full">AI ADVISOR</span></p>
+          <p class="text-sm text-deep-teal/80 italic mt-1">"${ev.luminaMsg}"</p>
+        </div>
+      </div>
+      <button id="ev-cta" class="clay-btn w-full ${bad ? 'bg-deep-teal' : 'bg-primary'} text-white font-display font-bold py-4 mt-5">${ev.cta ? ev.cta.label : '🎯 Nhập quyết định'}</button>
+      <button id="ev-close" class="clay-btn w-full bg-white text-deep-teal font-display font-bold py-4 mt-3">Về Trung tâm điều hành</button>
+    </div>`;
+  div.querySelector('#ev-cta').onclick = () => {
+    div.remove();
+    if (ev.cta && ev.cta.report) currentReport = ev.cta.report;
+    showTab(ev.cta ? ev.cta.tab : 'decisions');
+  };
+  div.querySelector('#ev-close').onclick = () => { div.remove(); showTab('home'); };
+  document.body.appendChild(div);
+}
+
+// ---------- Màn hình Chúc mừng chiến thắng (TOP 1 MARKET) ----------
+function showVictory(r) {
+  const growth = (() => {
+    const prev = S.history[S.history.length - 2];
+    return prev ? (r.share - prev.share).toFixed(1) : r.share.toFixed(1);
+  })();
+  const satisfaction = Math.min(5, (S.brandLoyalty / 19)).toFixed(1);
+  const div = document.createElement('div');
+  div.className = 'fixed inset-0 z-50 bg-surface-bright overflow-y-auto';
+  div.innerHTML = `
+    <div class="max-w-md mx-auto px-6 py-8 text-center">
+      <div class="clay-card overflow-hidden mb-4">
+        <img src="assets/character/lumina-ao-dai-clap.png" alt="Lumina chúc mừng" class="w-full h-64 object-cover" style="object-position:50% 15%">
+      </div>
+      <div class="clay-card p-4 mb-4 text-left">
+        <p class="text-sm text-deep-teal italic">"Thật tuyệt vời thưa ${S.profile.role}! Chiến dịch vừa qua đã tạo nên một cú hích lịch sử. Chúng ta chính thức dẫn đầu thị trường với những con số ấn tượng!"</p>
+      </div>
+      <span class="inline-block bg-primary-container/25 text-primary text-[11px] font-extrabold px-3 py-1.5 rounded-full">🎊 CHÚC MỪNG CHIẾN THẮNG</span>
+      <h2 class="font-display font-extrabold text-deep-teal text-xl mt-1 mb-3">Thị Phần Đạt Đỉnh Mới!</h2>
+      <div class="clay-card p-5 mb-3 relative">
+        <span class="absolute -top-2 right-4 bg-primary-container text-deep-teal text-[11px] font-extrabold px-3 py-1.5 rounded-full shadow-clay">TOP 1 MARKET</span>
+        <p class="text-[10px] uppercase font-bold text-deep-teal/50 tracking-widest">Market Share</p>
+        <p class="font-display font-extrabold text-deep-teal text-5xl">${r.share.toFixed(1)}<span class="text-2xl">%</span></p>
+        <div class="h-3 rounded-full bg-surface-bright overflow-hidden mt-3"><div class="h-full bg-gradient-to-r from-primary to-primary-container rounded-full" style="width:${Math.min(100, r.share * 2)}%"></div></div>
+        <p class="text-xs text-deep-teal/60 mt-2">Tăng trưởng ${growth}% so với vòng trước.</p>
+      </div>
+      <div class="grid grid-cols-2 gap-3 mb-4">
+        <div class="clay-card p-4"><p class="text-2xl">📈</p><p class="font-display font-extrabold text-deep-teal">+${r.adEff}%</p><p class="text-[10px] text-deep-teal/50 font-semibold">Hiệu quả quảng cáo</p></div>
+        <div class="clay-card p-4"><p class="text-2xl">😊</p><p class="font-display font-extrabold text-deep-teal">${satisfaction}/5</p><p class="text-[10px] text-deep-teal/50 font-semibold">Độ hài lòng thương hiệu</p></div>
+      </div>
+      <button id="vic-report" class="clay-btn w-full bg-deep-teal text-white font-display font-bold py-4 mb-3">📊 XEM BÁO CÁO CHI TIẾT</button>
+      <button id="vic-next" class="clay-btn w-full bg-white text-deep-teal font-display font-bold py-4">LẬP KẾ HOẠCH TIẾP THEO</button>
+    </div>`;
+  div.querySelector('#vic-report').onclick = () => { div.remove(); showTab('reports'); };
+  div.querySelector('#vic-next').onclick = () => { div.remove(); showTab('home'); maybeShowEventIntro(); };
+  document.body.appendChild(div);
+  createConfetti();
 }
 
 // ---------- Navigation ----------
@@ -211,7 +301,12 @@ function showRoundResult(r) {
       <p class="mt-3 text-xs font-bold text-primary">+${r.xpGain} XP</p>
       <button class="clay-btn w-full bg-primary text-white font-display font-bold py-3 mt-4">Tiếp tục</button>
     </div>`;
-  div.querySelector('button').onclick = () => { div.remove(); renderAll(); if (S.finished) { showTab('achievements'); createConfetti(); } };
+  div.querySelector('button').onclick = () => {
+    div.remove(); renderAll();
+    if (S.finished) { showTab('achievements'); createConfetti(); }
+    else if (r.isNewPeak) showVictory(r);
+    else maybeShowEventIntro();
+  };
   document.body.appendChild(div);
 }
 
@@ -222,6 +317,94 @@ function renderAdvisorIntro() {
   if (!$('advisor-chat').childElementCount) {
     pushLumina({ risk: 'low', text: `Xin chào, Je m'appelle Hương! 👋 Tôi là Lumina — cố vấn AI của đội ${S.profile.teamName}. Hãy chọn một câu hỏi bên dưới, tôi sẽ phân tích kịch bản "Nếu — Thì" cho bạn.` });
   }
+  // Badge biến động thị trường + ảnh cảm xúc theo biến cố hiện tại
+  const ev = currentEvent(S);
+  const vol = S.finished ? 'low' : ev.tone === 'bad' ? 'high' : ev.tone === 'warn' ? 'medium' : 'low';
+  $('vol-dot').className = 'w-3 h-3 rounded-full ' + { low: 'bg-emerald-500', medium: 'bg-amber-500', high: 'bg-red-600' }[vol];
+  $('vol-text').textContent = 'MARKET VOLATILITY: ' + vol.toUpperCase();
+  $('advisor-hero').src = 'assets/character/' + (S.finished ? 'lumina-ao-dai-clap' : (ev.luminaImg || 'lumina-vest')) + '.png';
+  renderRoleDeepdive();
+}
+
+// ---------- Phân tích chuyên sâu theo vai trò (CFO / COO / CMO) ----------
+function renderRoleDeepdive() {
+  const qrBad = S.quickRatio < 1, roiBad = S.roi < 18;
+  const oeeBad = S.oee < 85, defBad = S.defect > 4.3;
+  const shareNow = S.history.length ? S.history[S.history.length - 1].share : 25;
+  const bar = (pct, bad) => `<div class="h-2 rounded-full bg-surface-bright overflow-hidden mt-1"><div class="h-full ${bad ? 'bg-red-500' : 'bg-primary'} rounded-full" style="width:${Math.min(100, Math.max(4, pct))}%"></div></div>`;
+  $('role-deepdive').innerHTML = `
+    <div class="clay-card p-4 ${qrBad ? 'border-l-4 border-red-400' : ''}">
+      <p class="font-display font-bold text-deep-teal text-sm mb-2">💰 Cố vấn rủi ro & ROI <span class="text-[10px] text-deep-teal/50">· dành cho CFO</span></p>
+      <div class="grid grid-cols-2 gap-3 mb-3">
+        <div><p class="text-[10px] uppercase font-bold text-deep-teal/50">Khả năng thanh toán nhanh</p>
+          <p class="font-display font-extrabold ${qrBad ? 'text-red-600' : 'text-deep-teal'} text-xl">${S.quickRatio.toFixed(2)} ${qrBad ? '⚠️' : ''}</p>${bar(S.quickRatio * 50, qrBad)}</div>
+        <div><p class="text-[10px] uppercase font-bold text-deep-teal/50">ROI thực tế</p>
+          <p class="font-display font-extrabold ${roiBad ? 'text-deep-teal' : 'text-emerald-600'} text-xl">${S.roi}%</p>
+          <p class="text-[10px] text-deep-teal/50">Mục tiêu: <b>18%</b></p>${bar(S.roi * 100 / 18, roiBad)}</div>
+      </div>
+      <div class="grid grid-cols-2 gap-2">
+        <button onclick="doApproveLoan()" class="clay-btn ${S.loan > 0 ? 'bg-surface-bright text-deep-teal/40' : 'bg-primary text-white'} text-xs font-bold py-2.5" ${S.loan > 0 ? 'disabled' : ''}>🏦 ${S.loan > 0 ? 'Đang vay 300tr₫' : 'Phê duyệt khoản vay'}</button>
+        <button onclick="doCutCosts()" class="clay-btn ${S.costCutter ? 'bg-surface-bright text-deep-teal/40' : 'bg-white text-deep-teal'} text-xs font-bold py-2.5" ${S.costCutter ? 'disabled' : ''}>✂️ Cắt giảm chi phí</button>
+      </div>
+    </div>
+    <div class="clay-card p-4 ${oeeBad ? 'border-l-4 border-amber-400' : ''}">
+      <p class="font-display font-bold text-deep-teal text-sm mb-2">🏭 Cảnh báo Hiệu suất Vận hành <span class="text-[10px] text-deep-teal/50">· dành cho COO</span></p>
+      <div class="grid grid-cols-2 gap-3 mb-3">
+        <div><p class="text-[10px] uppercase font-bold text-deep-teal/50">Hiệu suất thiết bị (OEE)</p>
+          <p class="font-display font-extrabold ${oeeBad ? 'text-deep-teal' : 'text-emerald-600'} text-xl">${S.oee}% ${oeeBad ? '↘️' : ''}</p>
+          <p class="text-[10px] text-deep-teal/50">${oeeBad ? 'Dưới mục tiêu 85% vận hành ổn định' : 'Đạt mục tiêu vận hành ổn định'}</p>${bar(S.oee, oeeBad)}</div>
+        <div><p class="text-[10px] uppercase font-bold text-deep-teal/50">Tỷ lệ phế phẩm</p>
+          <p class="font-display font-extrabold ${defBad ? 'text-red-600' : 'text-deep-teal'} text-xl">${S.defect}% ${defBad ? '<span class="text-[9px] risk-high px-1.5 py-0.5 rounded-full align-middle">CẢNH BÁO ĐỎ</span>' : ''}</p>
+          ${defBad ? `<p class="text-[10px] text-red-600 font-bold">Vượt ngưỡng cho phép (+${(S.defect - 4.3).toFixed(1)}%)</p>` : '<p class="text-[10px] text-deep-teal/50">Trong ngưỡng cho phép</p>'}${bar(S.defect * 10, defBad)}</div>
+      </div>
+      <div class="grid grid-cols-2 gap-2">
+        <button onclick="showReportFromAdvisor()" class="clay-btn bg-deep-teal text-white text-xs font-bold py-2.5">⬆️ Nâng cấp Dây chuyền</button>
+        <button onclick="doMaintainFromAdvisor()" class="clay-btn bg-white text-deep-teal text-xs font-bold py-2.5">🔧 Bảo trì ngay</button>
+      </div>
+    </div>
+    <div class="clay-card p-4">
+      <p class="font-display font-bold text-deep-teal text-sm mb-2">📣 Chiến lược Marketing <span class="text-[10px] text-deep-teal/50">· dành cho CMO</span></p>
+      <div class="grid grid-cols-2 gap-3 mb-3">
+        <div><p class="text-[10px] uppercase font-bold text-deep-teal/50">Thị phần (Market Share)</p>
+          <p class="font-display font-extrabold text-deep-teal text-xl">${shareNow.toFixed(1)}%</p>${bar(shareNow * 2, false)}</div>
+        <div><p class="text-[10px] uppercase font-bold text-deep-teal/50">Brand Loyalty</p>
+          <p class="font-display font-extrabold text-primary text-xl">${S.brandLoyalty}%</p>
+          <p class="text-[10px] text-deep-teal/50">Social Sentiment: <b class="text-emerald-600">Positive</b></p>${bar(S.brandLoyalty, false)}</div>
+      </div>
+      ${currentEvent(S).id === 'EV_PRICEWAR' && !S.finished ? `
+        <div class="bg-surface-bright rounded-2xl p-3 mb-2">
+          <p class="text-xs font-bold text-red-600 mb-1">⚔️ Price War Scenario</p>
+          <p class="text-[11px] text-deep-teal/70">Đối thủ giảm giá 15% tại kênh Modern Trade. Đừng đua giảm giá — chọn 1 trong 2 chiến thuật:</p>
+          <div class="flex gap-2 mt-2"><span class="text-[10px] font-bold bg-white rounded-full px-2.5 py-1 shadow-clay">CHIẾN THUẬT BUNDLING</span><span class="text-[10px] font-bold bg-white rounded-full px-2.5 py-1 shadow-clay">TĂNG VALUE-ADDED</span></div>
+        </div>` : `
+        <div class="bg-surface-bright rounded-2xl p-3 mb-2">
+          <p class="text-xs font-bold text-emerald-700 mb-1">🌱 Green Marketing</p>
+          <p class="text-[11px] text-deep-teal/70">Người tiêu dùng Gen Z sẵn sàng chi thêm 10-15% cho sản phẩm cam kết Net Zero. Dự báo ROI tăng 22% sau 6 tháng.</p>
+        </div>`}
+      <button onclick="doBrandingPremium()" class="clay-btn w-full bg-gradient-to-r from-primary to-primary-container text-white text-xs font-bold py-2.5">✨ Activate Branding Premium (120tr₫)</button>
+    </div>`;
+}
+
+function doApproveLoan() {
+  if (!approveLoan(S)) return;
+  save(); renderAll(); createConfetti();
+  pushLumina({ risk: 'medium', text: 'Đã giải ngân khoản vay 300tr₫! Lưu ý: lãi 5%/vòng (15tr₫) sẽ trừ vào lợi nhuận mỗi vòng còn lại. Hãy dùng vốn hiệu quả để ROI vượt chi phí vốn nhé.' });
+}
+function doCutCosts() {
+  if (!cutCosts(S)) return;
+  save(); renderAll();
+  pushLumina({ risk: 'low', text: 'Đã kích hoạt phương án cắt giảm chi phí — chi phí cố định vòng sau giảm 15%. Cẩn thận đừng cắt vào các khoản đầu tư dài hạn!' });
+}
+function doBrandingPremium() {
+  if (!brandingPremium(S)) { alert('ERR_INSUFFICIENT_FUNDS — Cần 120tr₫ để kích hoạt Branding Premium.'); return; }
+  save(); renderAll(); createConfetti();
+  pushLumina({ risk: 'low', text: 'Branding Premium đã kích hoạt! Giá trị thương hiệu tăng — thị phần và Brand Loyalty sẽ cải thiện từ vòng sau. 🎉' });
+}
+function showReportFromAdvisor() { currentReport = 'energy'; showTab('reports'); }
+function doMaintainFromAdvisor() {
+  if (!doMaintenance(S)) { alert('ERR_INSUFFICIENT_FUNDS — Cần 60tr₫ trong ví để bảo trì.'); return; }
+  save(); renderAll();
+  pushLumina({ risk: 'low', text: 'Đã lên lịch bảo trì khẩn! OEE sẽ cải thiện +3% và tỷ lệ phế phẩm giảm ở vòng tới. 🔧' });
 }
 
 function pushLumina(advice) {
@@ -261,6 +444,7 @@ function showReport(kind) {
     b.classList.toggle('bg-white', !on); b.classList.toggle('text-deep-teal', !on);
   });
   const body = $('report-body');
+  if (kind === 'energy') { renderEnergyReport(body); return; }
   if (!S.history.length) {
     body.innerHTML = '<div class="clay-card p-8 text-center text-sm text-deep-teal/50">Chưa có dữ liệu — hãy hoàn thành vòng đầu tiên!</div>';
     return;
@@ -294,6 +478,75 @@ function showReport(kind) {
           </div>`).join('')}
       </div>
     </div>`;
+}
+
+// ---------- Kiểm toán Năng lượng (theo thiết kế Stitch) ----------
+function renderEnergyReport(body) {
+  const er = energyReport(S);
+  const over = er.overloadPct > 100;
+  const statusChip = { ok: '<span class="text-[10px] font-bold px-2 py-0.5 rounded-full risk-low">Hiệu quả</span>', warn: '<span class="text-[10px] font-bold px-2 py-0.5 rounded-full risk-medium">Cảnh báo</span>', bad: '<span class="text-[10px] font-bold px-2 py-0.5 rounded-full risk-high">Nguy cấp</span>' };
+  const barColor = { ok: 'bg-primary', warn: 'bg-amber-500', bad: 'bg-red-500' };
+  const maxKwh = Math.max(...er.lines.map(l => l.kwh), 1);
+  const worst = er.lines.reduce((a, b) => (b.kwh > a.kwh ? b : a));
+  const worstIdx = er.lines.indexOf(worst);
+  const ringDeg = Math.min(360, er.overloadPct * 3.6);
+  body.innerHTML = `
+    <div class="clay-card p-5 mb-4 text-center">
+      <h3 class="font-display font-extrabold text-deep-teal text-lg">Tổng mức tiêu thụ</h3>
+      <p class="text-xs text-deep-teal/60 mb-3">Sản lượng tiêu thụ hiện tại so với mục tiêu.</p>
+      ${over ? '<span class="inline-block risk-high text-xs font-bold px-3 py-1.5 rounded-full mb-3">⚠️ Vượt Mức Tiêu Thụ</span>' : '<span class="inline-block risk-low text-xs font-bold px-3 py-1.5 rounded-full mb-3">✅ Trong ngưỡng an toàn</span>'}
+      <p class="font-display font-extrabold ${over ? 'text-red-600' : 'text-primary'} text-4xl">${er.total.toLocaleString('vi-VN')} <span class="text-base">kWh</span></p>
+      <p class="text-xs text-deep-teal/60 mb-4">Mục tiêu: <b>${er.target.toLocaleString('vi-VN')} kWh</b></p>
+      <div class="w-36 h-36 mx-auto rounded-full flex items-center justify-center" style="background:conic-gradient(${over ? '#dc2626' : '#006687'} ${ringDeg}deg, #e5f2f8 0deg)">
+        <div class="w-28 h-28 rounded-full bg-white flex flex-col items-center justify-center">
+          <span class="font-display font-extrabold ${over ? 'text-red-600' : 'text-primary'} text-2xl">${er.overloadPct}%</span>
+          <span class="text-[9px] font-bold text-deep-teal/50 uppercase">${over ? 'Quá tải' : 'Công suất'}</span>
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-between items-center mb-2">
+      <h3 class="font-display font-bold text-deep-teal">Chi tiết dây chuyền</h3>
+      <span class="text-[11px] text-deep-teal/50">Cập nhật theo vòng ${Math.min(S.round, ROUNDS_TOTAL)}</span>
+    </div>
+    ${er.lines.map((l, i) => `
+      <div class="clay-card p-4 mb-3 ${l.status === 'bad' ? 'border-2 border-red-200' : ''}">
+        <div class="flex items-center gap-3">
+          <span class="text-2xl">${['🦾', '🏭', '🔩'][i]}</span>
+          <div class="flex-1">
+            <p class="font-bold text-sm text-deep-teal">${l.name} ${l.upgraded ? '<span class="text-[9px] bg-primary-container/30 text-primary font-bold px-1.5 py-0.5 rounded-full">ĐÃ NÂNG CẤP</span>' : ''}</p>
+            <div class="h-2 rounded-full bg-surface-bright overflow-hidden mt-1.5"><div class="h-full ${barColor[l.status]} rounded-full" style="width:${Math.round(100 * l.kwh / maxKwh)}%"></div></div>
+          </div>
+          <div class="text-right"><p class="font-display font-bold ${l.status === 'bad' ? 'text-red-600' : 'text-primary'} text-sm">${l.kwh.toLocaleString('vi-VN')} kWh</p>${statusChip[l.status]}</div>
+        </div>
+      </div>`).join('')}
+    <div class="clay-card p-4 mb-3 bg-primary-container/10">
+      <div class="flex gap-3 items-start">
+        <img src="assets/character/lumina-vest.png" alt="Lumina" class="w-10 h-10 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 12%">
+        <div>
+          <p class="font-display font-bold text-primary text-sm">Lumina AI Hương Advisor</p>
+          <p class="text-sm text-deep-teal/80 italic mt-1">"${worst.upgraded
+            ? 'Các dây chuyền đã vận hành tối ưu. Duy trì bảo trì định kỳ để giữ OEE ổn định nhé!'
+            : `${worst.name} đang tiêu thụ năng lượng nhiều hơn 40% do máy móc đã cũ. Việc nâng cấp sẽ giúp giảm đáng kể chi phí vận hành (OPEX).`}"</p>
+          <p class="text-xs font-bold text-primary mt-2">💡 Tiềm năng tiết kiệm: ${Math.round(worst.kwh * 0.4 / 100) * 10}tr₫/vòng</p>
+        </div>
+      </div>
+    </div>
+    <button onclick="doOptimizeLine(${worstIdx})" class="clay-btn w-full bg-deep-teal text-white font-display font-bold py-4 mb-3 ${worst.upgraded ? 'opacity-50' : ''}" ${worst.upgraded ? 'disabled' : ''}>⚡ Tối ưu ${worst.name} (150tr₫)</button>
+    <button onclick="doMaintain()" class="clay-btn w-full bg-white text-deep-teal font-display font-bold py-4 mb-4">🕓 Bảo trì ngay (60tr₫)</button>
+    <h3 class="font-display font-bold text-deep-teal mb-2">Lịch sử bảo trì</h3>
+    <div class="clay-card p-4 text-sm text-deep-teal/70 space-y-1.5">
+      ${(S.maintenanceLog || []).length ? S.maintenanceLog.slice(-6).reverse().map(m => `<p>🔧 V${m.round}: ${m.text}</p>`).join('') : '<p class="text-deep-teal/40">Chưa có hoạt động bảo trì nào.</p>'}
+    </div>`;
+}
+
+function doOptimizeLine(idx) {
+  if (!optimizeLine(S, idx)) { alert('ERR_INSUFFICIENT_FUNDS — Cần 150tr₫ trong ví để nâng cấp dây chuyền.'); return; }
+  save(); renderAll(); showReport('energy'); createConfetti();
+}
+
+function doMaintain() {
+  if (!doMaintenance(S)) { alert('ERR_INSUFFICIENT_FUNDS — Cần 60tr₫ trong ví để bảo trì.'); return; }
+  save(); renderAll(); showReport('energy');
 }
 
 // ---------- Shop & Inventory ----------

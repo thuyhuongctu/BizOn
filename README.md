@@ -46,6 +46,10 @@ Tiến trình chơi được lưu tự động trong `localStorage` của trình
 | Clay Factory Frenzy | Mini-game băng chuyền đất sét: chạm đúng đơn hàng trong 30 giây, 3 lượt/vòng, đổi điểm lấy tiền ảo |
 | Màn hình Giảng viên | Cấp vốn cho đội (+ nhật ký), khóa/mở vòng chơi (ERR_ROUND_LOCKED) |
 | Lumina Advisor Pro | Nhập số liệu kinh doanh thực → 3 kịch bản "Nếu — Thì" (Thận trọng / Cân bằng / Tăng tốc) |
+| Biến cố toàn màn hình | Mỗi vòng mở màn bằng màn hình biến cố kiểu Stitch: Cơ Hội Vàng, Chiến Tranh Giá, Khủng Hoảng Năng Lượng/Chuỗi Cung Ứng... kèm chỉ số tác động + lời khuyên Lumina theo vai trò |
+| Chúc mừng chiến thắng | Thị phần đạt đỉnh mới (≥30%, có lãi) → màn hình TOP 1 MARKET với Lumina vỗ tay, hiệu quả quảng cáo, độ hài lòng thương hiệu |
+| Kiểm toán Năng lượng | Báo cáo ⚡: tổng kWh vs mục tiêu (vòng tròn % quá tải), 3 dây chuyền với trạng thái, nâng cấp/bảo trì dây chuyền, lịch sử bảo trì |
+| Phân tích theo vai trò | Advisor: thẻ CFO (thanh toán nhanh, ROI, khoản vay, cắt chi phí), COO (OEE, phế phẩm, bảo trì), CMO (thị phần, Brand Loyalty, Price War/Green Marketing, Branding Premium) |
 
 ## Engine mô phỏng (client-side)
 
