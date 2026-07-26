@@ -40,7 +40,27 @@ tailwind.config = {
 };
 </script>
 <style>
-  body { font-family:'Manrope',sans-serif; background:#f4faff; color:#033337; overflow-x:hidden; }
+  html { background:#f4faff; }
+  body { font-family:'Manrope',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
+  /* Bản đồ Việt Nam chìm dưới trang */
+  #vn-map { position:fixed; right:-4vw; top:50%; transform:translateY(-50%); height:94vh; z-index:-1; pointer-events:none; opacity:.07; color:#006687; }
+  /* AI tour guide (theo mẫu M-AIDA mini-guide) */
+  .guide-fab { position:fixed; left:16px; bottom:16px; z-index:70; width:62px; height:62px; border-radius:50%; padding:0; border:3px solid #fda127; background:#033337; cursor:pointer; overflow:hidden; box-shadow:0 12px 30px -10px rgba(0,0,0,.55); }
+  .guide-fab img { width:100%; height:150%; object-fit:cover; object-position:top center; display:block; pointer-events:none; }
+  .guide-fab::after { content:''; position:absolute; right:3px; bottom:3px; width:12px; height:12px; border-radius:50%; background:#22c55e; border:2px solid #033337; }
+  .guide-pop { position:fixed; left:16px; bottom:90px; z-index:70; width:min(86vw, 330px); display:none; }
+  .guide-pop.show { display:block; animation:fadeUp .25s ease; }
+  /* Trình phát nhạc nổi */
+  .music-pill { position:fixed; right:16px; bottom:16px; z-index:70; display:flex; align-items:center; gap:.55rem; padding:.45rem .7rem .45rem .5rem; border-radius:999px; background:rgba(3,51,55,.92); color:#fff; box-shadow:0 10px 30px -10px rgba(0,0,0,.6); backdrop-filter:blur(10px); max-width:min(72vw,300px); }
+  .music-pill .mp-btn { width:36px; height:36px; border-radius:50%; background:#e8762d; color:#fff; border:0; cursor:pointer; font-size:1rem; box-shadow:0 3px 0 #b3541a; flex:none; }
+  .music-pill .mp-txt { min-width:0; line-height:1.15; }
+  .music-pill .mp-txt b { font-size:.72rem; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .music-pill .mp-txt small { font-size:.58rem; color:#9fd8ea; }
+  .music-pill .mp-wave { display:flex; align-items:flex-end; gap:2px; height:14px; flex:none; }
+  .music-pill .mp-wave i { width:3px; height:4px; background:#fda127; border-radius:1px; }
+  .music-pill.playing .mp-wave i { animation:mpwv .7s ease-in-out infinite alternate; }
+  .music-pill.playing .mp-wave i:nth-child(2) { animation-delay:.15s; } .music-pill.playing .mp-wave i:nth-child(3) { animation-delay:.3s; }
+  @keyframes mpwv { from { height:4px; } to { height:13px; } }
   h1,h2,h3,h4,.font-display { font-family:'Plus Jakarta Sans',sans-serif; }
   .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
   .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease, box-shadow .12s ease; }
@@ -92,6 +112,13 @@ tailwind.config = {
 <body>
 <div id="scroll-progress"></div>
 
+<!-- Bản đồ Việt Nam chìm dưới trang -->
+<svg id="vn-map" viewBox="0 0 200 420" aria-hidden="true">
+  <path fill="currentColor" d="M62,10 C85,2 110,8 122,20 C140,30 148,48 138,62 C120,70 112,86 118,100 C126,118 140,132 152,150 C166,172 176,196 178,222 C180,250 172,278 156,300 C146,316 132,330 118,344 C104,358 88,370 70,376 C50,384 30,380 22,366 C14,352 20,340 34,336 C24,326 20,312 30,304 C22,290 28,278 42,276 C36,258 44,244 58,242 C50,222 56,204 68,196 C58,180 60,162 72,152 C62,136 62,118 74,108 C64,92 60,72 66,56 C56,44 52,26 62,10 Z"/>
+  <circle cx="150" cy="330" r="4" fill="currentColor"/>
+  <circle cx="168" cy="352" r="3" fill="currentColor"/>
+</svg>
+
 <!-- ===== NAV ===== -->
 <nav class="glass-nav fixed top-0 inset-x-0 z-50 text-white">
   <div class="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between gap-4">
@@ -101,6 +128,7 @@ tailwind.config = {
     </a>
     <div class="hidden md:flex items-center gap-6 text-sm font-bold text-white/75">
       <a href="#features" class="hover:text-primary-container transition-colors">Tính năng</a>
+      <a href="#demo" class="hover:text-primary-container transition-colors">Chơi thử</a>
       <a href="#characters" class="hover:text-primary-container transition-colors">Nhân vật</a>
       <a href="#minigames" class="hover:text-primary-container transition-colors">Mini-game</a>
       <a href="#team" class="hover:text-primary-container transition-colors">Đội ngũ</a>
@@ -207,7 +235,7 @@ tailwind.config = {
   <div class="grid sm:grid-cols-3 gap-6 mt-12 tilt-wrap">
     <div class="clay-card overflow-hidden tilt reveal">
       <div class="bg-gradient-to-b from-primary-container/25 to-transparent pt-6 px-6"><img src="assets/character/lumina-ao-dai.png" alt="Lumina áo dài" class="tilt-pop mx-auto h-64 object-contain drop-shadow-xl"></div>
-      <div class="p-5 text-center"><h3 class="font-display font-extrabold">Lumina · Áo dài</h3><p class="signature text-lg text-primary leading-tight">Je m'appelle Hương</p><p class="text-xs text-deep-teal/60 mt-1">Người dẫn chuyện, chúc mừng chiến thắng và trao chứng nhận của bạn.</p></div>
+      <div class="p-5 text-center"><h3 class="font-display font-extrabold">Lumina · Áo dài</h3><p class="text-xs font-bold text-primary mt-0.5">Người dẫn chuyện</p><p class="text-xs text-deep-teal/60 mt-1">Chúc mừng chiến thắng và trao chứng nhận hoàn thành của bạn.</p></div>
     </div>
     <div class="clay-card overflow-hidden tilt reveal reveal-d1">
       <div class="bg-gradient-to-b from-clay-gold/25 to-transparent pt-6 px-6"><img src="assets/character/lumina-vest.png" alt="Lumina vest trắng" class="tilt-pop mx-auto h-64 object-contain drop-shadow-xl"></div>
@@ -216,6 +244,45 @@ tailwind.config = {
     <div class="clay-card overflow-hidden tilt reveal reveal-d2">
       <div class="bg-gradient-to-b from-emerald-200/40 to-transparent pt-6 px-6"><img src="assets/character/anh-tu-present.png" alt="PGS.TS Phan Anh Tú" class="tilt-pop mx-auto h-64 object-contain drop-shadow-xl"></div>
       <div class="p-5 text-center"><h3 class="font-display font-extrabold">PGS.TS Phan Anh Tú</h3><p class="text-xs font-bold text-primary mt-0.5">Cố vấn học thuật</p><p class="text-xs text-deep-teal/60 mt-1">Xuất hiện ở những khoảnh khắc then chốt với lời khuyên quản trị kinh điển.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DEMO MÔ PHỎNG ===== -->
+<section id="demo" class="max-w-6xl mx-auto px-5 py-20">
+  <p class="text-center text-xs font-extrabold text-primary uppercase tracking-[.2em] reveal">Demo tương tác</p>
+  <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-center mt-2 reveal">🎮 Chơi thử 1 vòng BizOn</h2>
+  <p class="text-center text-deep-teal/60 text-sm mt-2 mb-10 reveal">Kéo 3 thanh quyết định — thị trường phản ứng ngay lập tức, đúng công thức của game thật.</p>
+  <div class="grid lg:grid-cols-2 gap-6 items-start">
+    <div class="clay-card p-6 reveal">
+      <p class="font-display font-extrabold text-deep-teal mb-4">🎯 Quyết định của bạn (CEO)</p>
+      <div class="mb-5">
+        <div class="flex justify-between text-xs font-bold mb-1"><span>💲 Giá bán</span><span><span id="dm-price-v">150</span> nghìn ₫</span></div>
+        <input id="dm-price" type="range" min="100" max="220" value="150" step="5" class="w-full" oninput="demoSim()">
+      </div>
+      <div class="mb-5">
+        <div class="flex justify-between text-xs font-bold mb-1"><span>📣 Ngân sách Marketing</span><span><span id="dm-mkt-v">50</span> tr₫</span></div>
+        <input id="dm-mkt" type="range" min="20" max="150" value="50" step="5" class="w-full" oninput="demoSim()">
+      </div>
+      <div class="mb-2">
+        <div class="flex justify-between text-xs font-bold mb-1"><span>🏭 Sản lượng</span><span><span id="dm-prod-v">3000</span> sp</span></div>
+        <input id="dm-prod" type="range" min="1000" max="6000" value="3000" step="100" class="w-full" oninput="demoSim()">
+      </div>
+      <div class="clay-sunken rounded-2xl p-3 mt-4 flex gap-2.5 items-start">
+        <img src="assets/character/lumina-vest.png" alt="Lumina" class="w-9 h-9 rounded-full object-cover shrink-0" style="object-position:50% 12%">
+        <p id="dm-lumina" class="text-[11px] text-deep-teal/80 italic"></p>
+      </div>
+    </div>
+    <div class="clay-card p-6 reveal reveal-d1">
+      <p class="font-display font-extrabold text-deep-teal mb-4">📊 Thị trường phản ứng <span class="text-[10px] text-deep-teal/50">· 12.000 sp tổng cầu · 3 đối thủ AI</span></p>
+      <div class="grid grid-cols-3 gap-3 text-center mb-5">
+        <div class="clay-sunken rounded-2xl p-3"><p id="dm-share" class="font-display font-extrabold text-primary text-xl">—</p><p class="text-[9px] font-extrabold text-deep-teal/50 uppercase">Thị phần</p></div>
+        <div class="clay-sunken rounded-2xl p-3"><p id="dm-rev" class="font-display font-extrabold text-deep-teal text-xl">—</p><p class="text-[9px] font-extrabold text-deep-teal/50 uppercase">Doanh thu</p></div>
+        <div class="clay-sunken rounded-2xl p-3"><p id="dm-profit" class="font-display font-extrabold text-xl">—</p><p class="text-[9px] font-extrabold text-deep-teal/50 uppercase">Lợi nhuận</p></div>
+      </div>
+      <div id="dm-bars" class="space-y-3"></div>
+      <p class="text-[10px] text-deep-teal/40 mt-4">Bản demo rút gọn từ engine thật (độ co giãn giá 1.8, giá tham chiếu 150k). Bản đầy đủ có 6 vòng, biến cố, nhân sự, tài chính, cố vấn AI.</p>
+      <a href="index.html" class="clay-btn-primary block text-center text-white font-display font-extrabold px-6 py-3.5 text-sm mt-4">🚀 Chơi bản đầy đủ 6 vòng</a>
     </div>
   </div>
 </section>
@@ -285,8 +352,7 @@ tailwind.config = {
     <div class="clay-card p-6 text-center tilt reveal">
       <img src="assets/character/lumina-ao-dai.png" alt="Đỗ Thùy Hương" class="tilt-pop w-28 h-28 mx-auto rounded-full object-cover shadow-lg" style="object-position:50% 10%">
       <h3 class="font-display font-extrabold mt-4">Đỗ Thùy Hương</h3>
-      <p class="signature text-xl text-primary leading-tight">Je m'appelle Hương</p>
-      <p class="text-xs text-primary font-bold">Sáng lập & Thiết kế game</p>
+      <p class="text-xs text-primary font-bold mt-1.5">Sáng lập & Thiết kế game</p>
       <p class="text-[11px] text-deep-teal/60 mt-2">Hóa thân thành cố vấn AI Lumina trong game — áo dài truyền thống & vest trắng hiện đại.</p>
     </div>
     <div class="clay-card p-6 text-center tilt reveal reveal-d1">
@@ -332,6 +398,35 @@ tailwind.config = {
   </div>
 </footer>
 
+<!-- ===== AI TOUR GUIDE ===== -->
+<button class="guide-fab" id="guide-fab" aria-label="Hương AI dẫn đường" onclick="guideToggle()">
+  <img src="assets/character/lumina-ao-dai.png" alt="Hương AI">
+</button>
+<div class="guide-pop clay-card p-4" id="guide-pop" role="dialog" aria-label="Hương AI dẫn đường">
+  <div class="flex items-start gap-2.5">
+    <img src="assets/character/lumina-ao-dai.png" alt="" class="w-10 h-10 rounded-full object-cover shrink-0" style="object-position:top center">
+    <div class="min-w-0">
+      <p class="font-display font-extrabold text-deep-teal text-sm">Hương AI dẫn đường</p>
+      <p id="guide-text" class="text-xs text-deep-teal/75 mt-1">Xin chào! Mình là Hương — hướng dẫn viên AI của BizOn Bật Nghiệp. Để mình dẫn bạn tham quan trò chơi nhé?</p>
+    </div>
+  </div>
+  <div class="flex gap-2 mt-3">
+    <button onclick="guideNext()" id="guide-next" class="clay-btn flex-1 bg-primary text-white text-xs font-bold py-2.5">▶️ Bắt đầu tour</button>
+    <button onclick="guideEnd()" class="clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2.5">Đóng</button>
+  </div>
+</div>
+
+<!-- ===== TRÌNH PHÁT NHẠC ===== -->
+<div class="music-pill" id="music-pill">
+  <button class="mp-btn" id="mp-btn" onclick="mpToggle()" aria-label="Phát nhạc">▶</button>
+  <div class="mp-txt">
+    <b id="mp-title">BizOn Theme</b>
+    <small id="mp-sub">Nhạc: Đỗ Thùy Hương · chạm để phát</small>
+  </div>
+  <div class="mp-wave" aria-hidden="true"><i></i><i></i><i></i></div>
+  <button class="mp-btn" style="background:#006687; box-shadow:0 3px 0 #004d66; font-size:.8rem" onclick="mpNext()" aria-label="Bài kế tiếp">⏭</button>
+</div>
+
 <script>
 /* ================= HIỆU ỨNG TRANG ================= */
 // thanh tiến trình cuộn
@@ -369,6 +464,122 @@ if (matchMedia('(hover:hover)').matches) {
     });
     card.addEventListener('mouseleave', () => { card.style.transform = ''; });
   });
+}
+
+/* ================= DEMO MÔ PHỎNG 1 VÒNG ================= */
+function demoSim() {
+  const price = +document.getElementById('dm-price').value;
+  const mkt = +document.getElementById('dm-mkt').value;
+  const prod = +document.getElementById('dm-prod').value;
+  document.getElementById('dm-price-v').textContent = price;
+  document.getElementById('dm-mkt-v').textContent = mkt;
+  document.getElementById('dm-prod-v').textContent = prod.toLocaleString('vi-VN');
+  const attr = (p, m, brand) => Math.pow(150 / p, 1.8) * (1 + Math.sqrt(m) / 18) * brand;
+  const you = attr(price, mkt, 1.0);
+  const comps = [
+    { name: 'Alpha Corp (giá rẻ)', a: attr(125, 90, 1.05) },
+    { name: 'Beta Ltd (cân bằng)', a: attr(150, 60, 1.0) },
+    { name: 'Delta Inc (cao cấp)', a: attr(195, 75, 1.15) },
+  ];
+  const total = you + comps.reduce((s, c) => s + c.a, 0);
+  const share = 100 * you / total;
+  const demand = Math.round(12000 * you / total);
+  const sold = Math.min(prod, demand);
+  const revenue = sold * price / 1000;
+  const cost = prod * 0.045 + mkt + 75;
+  const profit = Math.round(revenue - cost);
+  document.getElementById('dm-share').textContent = share.toFixed(1) + '%';
+  document.getElementById('dm-rev').textContent = Math.round(revenue) + 'tr₫';
+  const pEl = document.getElementById('dm-profit');
+  pEl.textContent = (profit >= 0 ? '+' : '') + profit + 'tr₫';
+  pEl.className = 'font-display font-extrabold text-xl ' + (profit >= 0 ? 'text-emerald-600' : 'text-red-600');
+  const rows = [{ name: 'BizOn (BẠN)', a: you, you: true }].concat(comps).sort((x, y) => y.a - x.a);
+  document.getElementById('dm-bars').innerHTML = rows.map(r => {
+    const pct = 100 * r.a / total;
+    return `<div><div class="flex justify-between text-[11px] font-bold mb-1"><span class="${r.you ? 'text-primary' : 'text-deep-teal/60'}">${r.name}</span><span>${pct.toFixed(1)}%</span></div>
+      <div class="h-3 rounded-full bg-surface-bright clay-sunken overflow-hidden"><div class="h-full rounded-full ${r.you ? 'bg-gradient-to-r from-primary to-primary-container' : 'bg-deep-teal/25'}" style="width:${Math.max(3, pct * 2)}%"></div></div></div>`;
+  }).join('');
+  let msg;
+  if (sold < demand) msg = `Nhu cầu tới ${demand.toLocaleString('vi-VN')} sp mà bạn chỉ sản xuất ${prod.toLocaleString('vi-VN')} — đang bỏ lỡ doanh thu đấy! Thử tăng sản lượng xem sao.`;
+  else if (profit < 0) msg = 'Kế hoạch này đang lỗ! Giá thấp quá hoặc chi phí cao quá — thử tăng giá nhẹ hoặc giảm sản lượng dư thừa nhé.';
+  else if (price >= 190) msg = 'Chiến lược cao cấp! Biên lợi nhuận dày nhưng thị phần mỏng — trong game thật, hãy đầu tư R&D và thương hiệu để giữ khách.';
+  else if (profit > 150) msg = `Xuất sắc! Lãi ${profit}tr₫ chỉ trong 1 vòng. Vào game thật để đấu 6 vòng với biến cố Price War và Khủng hoảng năng lượng nào!`;
+  else msg = 'Kế hoạch cân bằng, có lãi ổn định. Trong game thật, biến cố thị trường mỗi vòng sẽ thử thách chiến lược này của bạn!';
+  document.getElementById('dm-lumina').textContent = '"' + msg + '"';
+}
+demoSim();
+
+/* ================= AI TOUR GUIDE ================= */
+const TOUR = [
+  { sel: '#top',        text: 'Đây là BizOn Bật Nghiệp — game mô phỏng kinh doanh đất nặn 3D. Bạn sẽ điều hành một công ty qua 6 vòng thị trường Việt Nam 2026!' },
+  { sel: '#stats',      text: '6 vòng thị trường, 4 vai trò C-Suite, 7 báo cáo quản trị chuẩn giáo trình và hơn 15 thành tựu đang chờ bạn chinh phục.' },
+  { sel: '#features',   text: 'Mỗi vòng bạn quyết định giá bán, sản lượng, marketing, R&D, nhân sự và nguồn vốn — thị trường với 3 đối thủ AI sẽ phản ứng ngay.' },
+  { sel: '#demo',       text: 'Chơi thử ngay tại đây! Kéo 3 thanh quyết định và xem thị phần, doanh thu, lợi nhuận thay đổi theo thời gian thực.' },
+  { sel: '#characters', text: 'Đồng hành cùng bạn có mình — Lumina AI, và PGS.TS Phan Anh Tú, cố vấn học thuật của dự án.' },
+  { sel: '#minigames',  text: 'Ba mini-game khởi nghiệp: Trắc nghiệm, Đoán Giá Thị Trường và Bắt Vốn Vàng — không cần đăng nhập.' },
+  { sel: '#team',       text: 'BizOn được sáng lập bởi Đỗ Thùy Hương và PGS.TS Phan Anh Tú. Giờ thì... bấm CHƠI NGAY để bắt đầu hành trình Bật Nghiệp nhé! 🚀' },
+];
+let tourIdx = -1;
+function guideSpeak(text) {
+  try {
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'vi-VN'; u.rate = 1.02;
+    const v = speechSynthesis.getVoices().find(v => v.lang && v.lang.toLowerCase().startsWith('vi'));
+    if (v) u.voice = v;
+    speechSynthesis.speak(u);
+  } catch (e) {}
+}
+function guideToggle() {
+  const pop = document.getElementById('guide-pop');
+  if (pop.classList.contains('show')) { guideEnd(); return; }
+  pop.classList.add('show');
+  if (tourIdx < 0) { playHuongIntro(); }
+}
+function guideNext() {
+  tourIdx++;
+  if (tourIdx >= TOUR.length) { guideEnd(); return; }
+  const step = TOUR[tourIdx];
+  document.querySelector(step.sel).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.getElementById('guide-text').textContent = step.text;
+  document.getElementById('guide-next').textContent = tourIdx === TOUR.length - 1 ? '🏁 Kết thúc tour' : `▶️ Tiếp (${tourIdx + 1}/${TOUR.length})`;
+  guideSpeak(step.text);
+}
+function guideEnd() {
+  document.getElementById('guide-pop').classList.remove('show');
+  document.getElementById('guide-text').textContent = 'Xin chào! Mình là Hương — hướng dẫn viên AI của BizOn Bật Nghiệp. Để mình dẫn bạn tham quan trò chơi nhé?';
+  document.getElementById('guide-next').textContent = '▶️ Bắt đầu tour';
+  tourIdx = -1;
+  try { speechSynthesis.cancel(); } catch (e) {}
+}
+
+/* ================= TRÌNH PHÁT NHẠC (bài hát của Đỗ Thùy Hương) ================= */
+const MP_TRACKS = [
+  { t: 'BizOn Theme', s: 'Instrumental · Đỗ Thùy Hương', f: 'assets/audio/bizon-theme.mp3' },
+  { t: "Mon histoire", s: "Je m'appelle Hương · Đỗ Thùy Hương", f: 'assets/audio/mon-histoire.mp3' },
+];
+let mpAudio = null, mpIdx = 0;
+function mpLoad() {
+  if (!mpAudio) {
+    mpAudio = new Audio();
+    mpAudio.volume = 0.55;
+    mpAudio.addEventListener('ended', mpNext);
+  }
+  mpAudio.src = MP_TRACKS[mpIdx].f;
+  document.getElementById('mp-title').textContent = MP_TRACKS[mpIdx].t;
+  document.getElementById('mp-sub').textContent = MP_TRACKS[mpIdx].s;
+}
+function mpToggle() {
+  if (!mpAudio) mpLoad();
+  const pill = document.getElementById('music-pill'), btn = document.getElementById('mp-btn');
+  if (mpAudio.paused) { mpAudio.play().catch(() => {}); pill.classList.add('playing'); btn.textContent = '⏸'; }
+  else { mpAudio.pause(); pill.classList.remove('playing'); btn.textContent = '▶'; }
+}
+function mpNext() {
+  mpIdx = (mpIdx + 1) % MP_TRACKS.length;
+  const wasPlaying = mpAudio && !mpAudio.paused;
+  mpLoad();
+  if (wasPlaying || (mpAudio && mpAudio.ended)) { mpAudio.play().catch(() => {}); document.getElementById('music-pill').classList.add('playing'); document.getElementById('mp-btn').textContent = '⏸'; }
 }
 
 /* ================= GIỌNG NÓI THẬT CỦA HƯƠNG AI ================= */
