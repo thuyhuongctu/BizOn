@@ -1,7 +1,7 @@
 # KẾ HOẠCH KINH DOANH — HỆ SINH THÁI BIZON (BẬT NGHIỆP) 2026
 
 **Dự án:** BizOn (Bật Nghiệp) — AI-Native Business Simulation
-**Đồng sáng lập:** PGS.TS Phan Anh Tú & Đỗ Thùy Hương
+**Đồng sáng lập:** Phan Anh Tú & Đỗ Thùy Hương
 **Tầm nhìn:** Nền tảng mô phỏng kinh doanh dẫn đầu khu vực — kết hợp tri thức
 học thuật chuyên sâu và công nghệ AI đột phá.
 
@@ -10,7 +10,7 @@ học thuật chuyên sâu và công nghệ AI đột phá.
 BizOn là một **"Phòng Lab Kinh doanh ảo"**, không chỉ là trò chơi:
 - **Tính đột phá:** ngôn ngữ thiết kế 3D Claymorphism xóa bỏ sự khô khan của các con số tài chính.
 - **Linh hồn dự án:** Cố vấn AI Lumina (tạo hình Je m'appelle Hương) cá nhân hóa lộ trình học tập.
-- **Bảo chứng học thuật:** nội dung được thẩm định bởi PGS.TS Phan Anh Tú — kịch bản sát thực tế quản trị Việt Nam và quốc tế.
+- **Bảo chứng học thuật:** nội dung được thẩm định bởi Phan Anh Tú — kịch bản sát thực tế quản trị Việt Nam và quốc tế.
 
 ## 2. Lộ trình sản phẩm
 
@@ -27,7 +27,7 @@ BizOn là một **"Phòng Lab Kinh doanh ảo"**, không chỉ là trò chơi:
 3. **B2B Enterprise:** phiên bản white-label đào tạo quản lý kế cận.
 4. **Quảng cáo & đối tác:** tích hợp thương hiệu thực vào bản đồ 3D (in-game advertising).
 
-Định vị **Premium EdTech** nhờ uy tín học thuật của PGS.TS Phan Anh Tú; hoàn thiện
+Định vị **Premium EdTech** nhờ uy tín học thuật của Phan Anh Tú; hoàn thiện
 bộ chứng nhận SHTT (Patent, Copyright, Trademark — xem [`so-huu-tri-tue.md`](so-huu-tri-tue.md))
 để tăng giá trị công ty khi gọi vốn.
 
