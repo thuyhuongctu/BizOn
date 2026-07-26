@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<!-- BizOn Bật Nghiệp 2026 — © Đỗ Thùy Hương (Je m'appelle Hương) & Phan Anh Tú. Bảo lưu mọi quyền. -->
+<!-- BizOn Bật Nghiệp 2026 — © Đỗ Thùy Hương (Je m'appelle Hương) & PGS.TS Phan Anh Tú. Bảo lưu mọi quyền. -->
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>BizOn Bật Nghiệp 2026 — Business Simulation</title>
 <meta name="author" content="Đỗ Thùy Hương (Je m'appelle Hương), Phan Anh Tú">
-<meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & PGS.TS Phan Anh Tú. Bảo lưu mọi quyền.">
 <meta name="description" content="BizOn Bật Nghiệp — game mô phỏng kinh doanh EdTech 3D Claymorphism với cố vấn AI Lumina.">
 <meta name="theme-color" content="#006687">
 <link rel="manifest" href="manifest.webmanifest">
@@ -66,6 +66,16 @@ tailwind.config = {
   .clay-ico { filter:drop-shadow(0 3px 4px rgba(0,102,135,.35)); }
   .mg-item { position:absolute; bottom:10px; font-size:2.2rem; cursor:pointer; user-select:none; left:-48px; animation:beltMove linear forwards; filter:drop-shadow(0 4px 5px rgba(3,51,55,.25)); }
   @keyframes beltMove { from { left:-48px; } to { left:105%; } }
+  /* Claymorphism chuẩn từ Stitch export */
+  .clay-raised { background:#ffffff; box-shadow:8px 8px 16px rgba(0,77,102,.08), -8px -8px 16px rgba(255,255,255,.8), inset 2px 2px 4px rgba(255,255,255,.9); border-radius:24px; }
+  .clay-sunken { background:#eef4f9; box-shadow:inset 4px 4px 8px rgba(0,0,0,.05), inset -4px -4px 8px rgba(255,255,255,.9); }
+  .clay-button-primary { background:#006687; box-shadow:0 6px 0 #004d66, 0 12px 24px rgba(0,77,102,.2); transition:all .15s ease-out; border-radius:24px; }
+  .clay-button-primary:active { transform:translateY(4px); box-shadow:0 2px 0 #004d66, 0 4px 8px rgba(0,77,102,.1); }
+  .clay-button-secondary { background:#f4faff; box-shadow:0 4px 0 #d5dbe0, 0 8px 16px rgba(0,0,0,.05); transition:all .15s ease-out; border-radius:24px; }
+  .clay-button-secondary:active { transform:translateY(2px); box-shadow:0 1px 0 #d5dbe0, 0 2px 4px rgba(0,0,0,.05); }
+  @keyframes floatY { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-10px); } }
+  .animate-float { animation:floatY 4s ease-in-out infinite; }
+  .speech-tail { position:absolute; left:-14px; bottom:0; width:14px; height:14px; background:#fff; clip-path:polygon(100% 0, 0 100%, 100% 100%); }
 </style>
 </head>
 <body class="min-h-screen">
@@ -105,7 +115,7 @@ tailwind.config = {
       <div id="role-picker" class="grid grid-cols-5 gap-2 mb-6"></div>
       <button onclick="doLogin()" class="clay-btn w-full bg-primary text-white font-display font-bold py-4">Bắt đầu mô phỏng 🚀</button>
     </div>
-    <p class="text-center text-xs text-deep-teal/40 mt-6">© 2026 BizOn Bật Nghiệp · Đỗ Thùy Hương (Je m'appelle Hương) &amp; Phan Anh Tú</p>
+    <p class="text-center text-xs text-deep-teal/40 mt-6">© 2026 BizOn Bật Nghiệp · Đỗ Thùy Hương (Je m'appelle Hương) &amp; PGS.TS Phan Anh Tú</p>
   </div>
 </section>
 
@@ -205,6 +215,15 @@ tailwind.config = {
         <input id="in-rd" type="range" min="0" max="150" step="5" value="30" class="w-full" oninput="syncDecisionLabels()">
         <p class="text-[11px] text-deep-teal/50 mt-1">R&D tích lũy giúp giảm giá thành và tăng giá trị thương hiệu.</p>
       </div>
+      <div class="clay-card p-4 mb-4">
+        <p class="font-bold text-sm text-deep-teal mb-1">🔮 Mô phỏng "Nếu — Thì" trước khi Commit</p>
+        <p class="text-[11px] text-deep-teal/60 mb-3">Lumina chạy thử kịch bản với thông số bạn đang chọn (<span id="whatif-quota">2</span> lượt/vòng).</p>
+        <div class="grid grid-cols-2 gap-2">
+          <button onclick="runWhatIf('CEO')" class="clay-button-secondary text-primary text-xs font-bold py-2.5">🧭 Chiến lược (CEO)</button>
+          <button onclick="runWhatIf('CFO')" class="clay-button-secondary text-primary text-xs font-bold py-2.5">💰 Tài chính (CFO)</button>
+        </div>
+        <div id="whatif-result" class="mt-3"></div>
+      </div>
       <div id="commit-box">
         <button id="btn-commit" onclick="commitDecisions()" class="clay-btn w-full bg-primary text-white font-display font-bold py-4">🔒 Commit — Khóa quyết định</button>
         <p class="text-center text-[11px] text-deep-teal/50 mt-2">Sau khi commit, quyết định được đưa vào hàng chờ mô phỏng và không thể sửa (ERR_ROUND_LOCKED).</p>
@@ -246,7 +265,9 @@ tailwind.config = {
         </div>
       </div>
       <h3 class="font-display font-bold text-deep-teal mb-2">🔎 Phân tích chuyên sâu theo vai trò</h3>
-      <div id="role-deepdive" class="space-y-3"></div>
+      <div id="role-deepdive" class="space-y-3 mb-4"></div>
+      <h3 class="font-display font-bold text-deep-teal mb-2">🗂️ Bộ nhớ doanh nghiệp <span class="text-[10px] text-deep-teal/50">· SEC ghi chép</span></h3>
+      <div id="advisor-history" class="clay-card p-4 text-sm space-y-2"></div>
     </section>
 
     <!-- ========== REPORTS ========== -->
@@ -386,7 +407,7 @@ tailwind.config = {
         <div class="p-5"><button onclick="alert('Đã gửi báo cáo lỗi tới đội ngũ BizOn. Cảm ơn bạn!')" class="font-bold text-sm text-primary">🐞 Gửi báo cáo lỗi</button></div>
         <div class="p-5"><button onclick="resetGame()" class="font-bold text-sm text-orange-600">♻️ Chơi lại từ đầu (Reset)</button></div>
       </div>
-      <p class="text-center text-xs text-deep-teal/40 mt-6">BizOn Bật Nghiệp 2026 · v1.0.0 · © 2026 Đỗ Thùy Hương (Je m'appelle Hương) &amp; Phan Anh Tú — Bảo lưu mọi quyền</p>
+      <p class="text-center text-xs text-deep-teal/40 mt-6">BizOn Bật Nghiệp 2026 · v1.0.0 · © 2026 Đỗ Thùy Hương (Je m'appelle Hương) &amp; PGS.TS Phan Anh Tú — Bảo lưu mọi quyền</p>
     </section>
   </main>
 
