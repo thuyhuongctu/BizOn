@@ -82,6 +82,54 @@ function doLogin() {
   startMusic();       // nhạc nền BizOn Theme
 }
 
+// ---------- Màn hình loading toàn trang khi xử lý vòng (thiết kế Stitch) ----------
+const SIM_STEPS = [
+  'Đang tổng hợp quyết định của đội...',
+  'Thị trường đang phản ứng...',
+  '3 đối thủ AI đang ra quyết định...',
+  'Đang lập báo cáo tài chính...',
+];
+function showSimLoading() {
+  const div = document.createElement('div');
+  div.id = 'sim-loading';
+  div.className = 'fixed inset-0 z-[60] flex flex-col items-center justify-center text-center px-8';
+  div.style.background = 'linear-gradient(160deg,#02191c 0%,#033337 60%,#02444d 100%)';
+  div.innerHTML = `
+    <img src="assets/icons/icon-192.png" alt="" class="w-24 h-24 rounded-3xl animate-pulse-logo" style="filter:drop-shadow(0 0 28px rgba(0,196,255,.75))">
+    <h2 class="font-display font-extrabold text-2xl text-white mt-8 leading-tight">Đang chuẩn bị<br><span style="color:#7fe3ff; text-shadow:0 0 18px rgba(0,196,255,.6)">Dashboard của bạn...</span></h2>
+    <div class="w-full max-w-xs h-2.5 rounded-full mt-7 overflow-hidden" style="background:rgba(255,255,255,.15)">
+      <div id="sim-bar" class="h-full rounded-full" style="width:4%; background:linear-gradient(90deg,#00c4ff,#7fe3ff); box-shadow:0 0 12px rgba(0,196,255,.8); transition:width .25s"></div>
+    </div>
+    <p id="sim-pct" class="text-white font-display font-extrabold text-sm mt-2.5">0%</p>
+    <p id="sim-step" class="text-white/55 text-xs mt-1">${SIM_STEPS[0]}</p>`;
+  document.body.appendChild(div);
+  let p = 0, i = 0;
+  const iv = setInterval(() => {
+    p = Math.min(100, p + 6 + Math.random() * 8);
+    const bar = $('sim-bar'), pct = $('sim-pct'), step = $('sim-step');
+    if (bar) { bar.style.width = p + '%'; pct.textContent = Math.round(p) + '%'; }
+    if (p > (i + 1) * 25 && i < SIM_STEPS.length - 1) { i++; if (step) step.textContent = SIM_STEPS[i]; }
+    if (p >= 100) clearInterval(iv);
+  }, 150);
+  return () => { clearInterval(iv); div.remove(); };
+}
+
+// ---------- Màn chúc mừng toàn trang khi thăng cấp (thiết kế Stitch) ----------
+function showLevelUp(level) {
+  const div = document.createElement('div');
+  div.className = 'fixed inset-0 z-[70] flex flex-col items-center justify-center text-center px-8';
+  div.style.background = 'radial-gradient(circle at 50% 30%, rgba(253,161,39,.2), transparent 48%), linear-gradient(160deg,#0b1420,#033337)';
+  div.innerHTML = `
+    <p class="text-8xl animate-float" style="filter:drop-shadow(0 0 34px rgba(253,161,39,.85))">🏆</p>
+    <h2 class="font-display font-extrabold text-3xl text-white mt-8 leading-tight">Tuyệt vời! Đội đạt<br><span style="color:#fda127; text-shadow:0 0 20px rgba(253,161,39,.6)">Cấp ${level}</span></h2>
+    <p class="text-white/60 text-sm mt-3 max-w-xs">Bạn đã mở khóa thêm sức mạnh mới. Hãy trải nghiệm ngay để nâng cao hiệu quả điều hành của đội.</p>
+    <button id="lvl-close" class="clay-btn font-display font-extrabold text-white text-sm px-12 py-4 mt-9" style="background:linear-gradient(90deg,#00a2d8,#fda127)">Bắt đầu ngay</button>`;
+  document.body.appendChild(div);
+  createConfetti();
+  playEventSting('good');
+  div.querySelector('#lvl-close').addEventListener('click', () => div.remove());
+}
+
 // ---------- Nhạc nền game (bài "BizOn Theme" — Đỗ Thùy Hương) ----------
 let bgm = null;
 function musicEnabled() { return localStorage.getItem('bizon-music') !== 'off'; }
@@ -598,10 +646,13 @@ function commitDecisions() {
   renderDecisions();
   $('commit-box').classList.add('hidden');
   $('processing-box').classList.remove('hidden');
+  const hideLoading = showSimLoading();
+  const lvlBefore = 1 + Math.floor(S.xp / XP_PER_LEVEL);
 
   setTimeout(() => {
     const report = simulateRound(S, d);
     save();
+    hideLoading();
     $('processing-box').classList.add('hidden');
     $('commit-box').classList.remove('hidden');
     if (report.netProfit > 0) createConfetti();
@@ -610,7 +661,10 @@ function commitDecisions() {
     notes.forEach(m => pushLumina({ risk: m.risk, text: `【${m.role}】 ${m.text}` }));
     if (notes.some(m => m.risk === 'low')) createConfetti();
     showRoundResult(report);
-  }, 1800);
+    // Thăng cấp → màn chúc mừng toàn trang (sau khi bảng kết quả hiện)
+    const lvlAfter = 1 + Math.floor(S.xp / XP_PER_LEVEL);
+    if (lvlAfter > lvlBefore) setTimeout(() => showLevelUp(lvlAfter), 900);
+  }, 2300);
 }
 
 function showRoundResult(r) {
