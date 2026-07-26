@@ -1,5 +1,5 @@
 /* BizOn Bật Nghiệp 2026 — Engine mô phỏng 6 vòng (client-side)
- * © 2026 Đỗ Thùy Hương & PGS.TS Phan Anh Tú. Bảo lưu mọi quyền.
+ * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.
  * Mô hình hóa: decisions {price, marketing_budget,
  * production_volume, rd_investment} → financial_reports {revenue, net_profit,
  * market_share, inventory_stock}. Đơn vị tiền: nghìn ₫ (giá) / triệu ₫ (ngân sách).

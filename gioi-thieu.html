@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<!-- BizOn Bật Nghiệp 2026 — © Đỗ Thùy Hương & PGS.TS Phan Anh Tú. Bảo lưu mọi quyền. -->
+<!-- BizOn Bật Nghiệp 2026 — © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
 <html lang="vi" class="scroll-smooth">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>BizOn Bật Nghiệp 2026 — Game Mô Phỏng Kinh Doanh 3D</title>
 <meta name="author" content="Đỗ Thùy Hương, Phan Anh Tú">
-<meta name="copyright" content="© 2026 Đỗ Thùy Hương & PGS.TS Phan Anh Tú. Bảo lưu mọi quyền.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
 <meta name="description" content="BizOn Bật Nghiệp — game mô phỏng kinh doanh 3D Claymorphism với cố vấn AI Lumina. Điều hành công ty qua 6 vòng thị trường, đấu với 3 đối thủ AI. Chơi ngay trên web.">
 <meta property="og:title" content="BizOn Bật Nghiệp 2026 — Business Simulation Game">
 <meta property="og:description" content="Điều hành công ty của bạn qua 6 vòng thị trường cùng cố vấn AI Lumina. Phong cách đất nặn 3D độc đáo.">
@@ -26,7 +26,7 @@ tailwind.config = {
         primary: '#006687',
         'primary-container': '#00c4ff',
         'surface-bright': '#f4faff',
-        'deep-teal': '#033337',
+        'deep-teal': 'rgb(var(--dt) / <alpha-value>)',
         'clay-orange': '#e8762d',
         'clay-gold': '#fda127',
       },
@@ -39,6 +39,7 @@ tailwind.config = {
   },
 };
 </script>
+<script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
 <style>
   html { background:#f4faff; }
   body { font-family:'Manrope',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
@@ -131,6 +132,18 @@ tailwind.config = {
   .game-panel.open { display:block; animation:fadeUp .3s ease; }
   @keyframes fadeUp { from {opacity:0; transform:translateY(14px);} to {opacity:1; transform:none;} }
   #catch-canvas { touch-action:none; border-radius:20px; background:linear-gradient(180deg,#dff2fb 0%,#f4faff 100%); box-shadow:inset 3px 3px 8px rgba(0,102,135,.12); width:100%; }
+
+  /* ===== Chế độ tối ===== */
+  :root { --dt: 3 51 55; }
+  html[data-theme="dark"] { --dt: 214 236 240; background:#081a20; color-scheme:dark; }
+  html[data-theme="dark"] body { color:#d6ecf0; }
+  html[data-theme="dark"] .clay-card { background:#0e2a33; box-shadow:0 10px 30px -5px rgba(0,0,0,.45), inset 0 -4px 0 rgba(0,0,0,.3); }
+  html[data-theme="dark"] .clay-sunken { background:#0a222a; box-shadow:inset 3px 3px 8px rgba(0,0,0,.5), inset -3px -3px 8px rgba(255,255,255,.03); }
+  html[data-theme="dark"] .glass-nav { background:rgba(2,20,24,.85); }
+  html[data-theme="dark"] .bg-white { background-color:#0e2a33 !important; }
+  html[data-theme="dark"] .bg-white\/70 { background-color:rgba(10,34,42,.72) !important; }
+  html[data-theme="dark"] .text-primary { color:#5cc4e6 !important; }
+  html[data-theme="dark"] #vn-map { color:#6fc4d8; }
 </style>
 </head>
 <body>
@@ -170,7 +183,9 @@ tailwind.config = {
       <a href="games.html" class="hover:text-primary-container transition-colors">🕹️ Arcade</a>
       <a href="doi-ngu.html" class="hover:text-primary-container transition-colors">Đội ngũ</a>
     </div>
-    <a href="index.html" class="clay-btn-primary text-white font-display font-extrabold px-5 py-2.5 text-xs sm:text-sm shrink-0">🎮 CHƠI NGAY</a>
+    <button id="theme-btn" onclick="toggleTheme()" class="w-9 h-9 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 transition-colors shrink-0" title="Chế độ Sáng/Tối · Light/Dark mode">🌙</button>
+      <button id="lang-btn" onclick="toggleLang()" class="h-9 px-3 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 text-[11px] font-extrabold transition-colors shrink-0" title="Tiếng Việt / English">EN</button>
+      <a href="index.html" class="clay-btn-primary text-white font-display font-extrabold px-5 py-2.5 text-xs sm:text-sm shrink-0">🎮 CHƠI NGAY</a>
   </div>
 </nav>
 
@@ -213,7 +228,7 @@ tailwind.config = {
       <span class="scene-spark" style="bottom:16%; left:16%; animation-delay:-2.1s">⭐</span>
       <div class="relative scene-enter-left">
         <div id="bubble-tu" class="scene-bubble scene-bubble-l">Chào mừng đến BizOn! 🎓</div>
-        <img src="assets/character/anh-tu-welcome.png" alt="PGS.TS Phan Anh Tú" class="h-64 sm:h-80 w-auto animate-float-slow drop-shadow-[0_25px_25px_rgba(0,0,0,.4)]" style="--rot:-2deg; animation-delay:-2.5s">
+        <img src="assets/character/anh-tu-welcome.png" alt="Phan Anh Tú" class="h-64 sm:h-80 w-auto animate-float-slow drop-shadow-[0_25px_25px_rgba(0,0,0,.4)]" style="--rot:-2deg; animation-delay:-2.5s">
       </div>
       <div class="relative scene-enter-right">
         <div id="bubble-huong" class="scene-bubble scene-bubble-r">Xin chào! Mình là Hương AI 👋</div>
@@ -288,8 +303,8 @@ tailwind.config = {
       <div class="p-5 text-center"><h3 class="font-display font-extrabold">Lumina · Vest trắng</h3><p class="text-xs font-bold text-primary mt-0.5">Cố vấn chiến lược AI</p><p class="text-xs text-deep-teal/60 mt-1">Phân tích Nếu — Thì, cảnh báo rủi ro, đồng hành cùng cả 4 vai trò C-Suite.</p></div>
     </div>
     <div class="clay-card overflow-hidden tilt reveal reveal-d2">
-      <div class="bg-gradient-to-b from-emerald-200/40 to-transparent pt-6 px-6"><img src="assets/character/anh-tu-present.png" alt="PGS.TS Phan Anh Tú" class="tilt-pop mx-auto h-64 object-contain drop-shadow-xl"></div>
-      <div class="p-5 text-center"><h3 class="font-display font-extrabold">PGS.TS Phan Anh Tú</h3><p class="text-xs font-bold text-primary mt-0.5">Cố vấn học thuật</p><p class="text-xs text-deep-teal/60 mt-1">Xuất hiện ở những khoảnh khắc then chốt với lời khuyên quản trị kinh điển.</p></div>
+      <div class="bg-gradient-to-b from-emerald-200/40 to-transparent pt-6 px-6"><img src="assets/character/anh-tu-present.png" alt="Phan Anh Tú" class="tilt-pop mx-auto h-64 object-contain drop-shadow-xl"></div>
+      <div class="p-5 text-center"><h3 class="font-display font-extrabold">Phan Anh Tú</h3><p class="text-xs font-bold text-primary mt-0.5">Cố vấn học thuật</p><p class="text-xs text-deep-teal/60 mt-1">Xuất hiện ở những khoảnh khắc then chốt với lời khuyên quản trị kinh điển.</p></div>
     </div>
   </div>
 </section>
@@ -404,7 +419,7 @@ tailwind.config = {
     </div>
     <div class="clay-card p-6 text-center tilt reveal reveal-d1">
       <img src="assets/character/anh-tu-present.png" alt="Phan Anh Tú" class="tilt-pop w-28 h-28 mx-auto rounded-full object-cover shadow-lg" style="object-position:50% 8%">
-      <h3 class="font-display font-extrabold mt-4">PGS.TS Phan Anh Tú</h3>
+      <h3 class="font-display font-extrabold mt-4">Phan Anh Tú</h3>
       <p class="text-xs text-primary font-bold mt-1.5">Đồng sáng lập · Cố vấn chuyên môn</p>
       <p class="text-[11px] text-deep-teal/60 mt-2">Bảo chứng học thuật cho mô hình mô phỏng kinh doanh và chế độ giảng viên.</p>
     </div>
@@ -439,7 +454,7 @@ tailwind.config = {
     <div class="text-[12px] space-y-2">
       <p class="font-display font-extrabold text-white text-sm mb-2">Pháp lý</p>
       <p>© 2026 Đỗ Thùy Hương</p>
-      <p>& PGS.TS Phan Anh Tú</p>
+      <p>& Phan Anh Tú</p>
       <p>Bảo lưu mọi quyền · Nhãn hiệu đang đăng ký</p>
     </div>
   </div>
@@ -586,9 +601,9 @@ const TOUR = [
   { sel: '#stats',      text: '6 vòng thị trường, 4 vai trò C-Suite, 7 báo cáo quản trị chuẩn giáo trình và hơn 15 thành tựu đang chờ bạn chinh phục.' },
   { sel: '#features',   text: 'Mỗi vòng bạn quyết định giá bán, sản lượng, marketing, R&D, nhân sự và nguồn vốn — thị trường với 3 đối thủ AI sẽ phản ứng ngay.' },
   { sel: '#demo',       text: 'Chơi thử ngay tại đây! Kéo 3 thanh quyết định và xem thị phần, doanh thu, lợi nhuận thay đổi theo thời gian thực.' },
-  { sel: '#characters', text: 'Đồng hành cùng bạn có mình — Lumina AI, và PGS.TS Phan Anh Tú, cố vấn học thuật của dự án.' },
+  { sel: '#characters', text: 'Đồng hành cùng bạn có mình — Lumina AI, và Phan Anh Tú, cố vấn học thuật của dự án.' },
   { sel: '#minigames',  text: 'Ba mini-game khởi nghiệp: Trắc nghiệm, Đoán Giá Thị Trường và Bắt Vốn Vàng — không cần đăng nhập.' },
-  { sel: '#team',       text: 'BizOn được sáng lập bởi Đỗ Thùy Hương và PGS.TS Phan Anh Tú. Giờ thì... bấm CHƠI NGAY để bắt đầu hành trình Bật Nghiệp nhé! 🚀' },
+  { sel: '#team',       text: 'BizOn được sáng lập bởi Đỗ Thùy Hương và Phan Anh Tú. Giờ thì... bấm CHƠI NGAY để bắt đầu hành trình Bật Nghiệp nhé! 🚀' },
 ];
 let tourIdx = -1;
 function guideSpeak(text) {
@@ -824,5 +839,6 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight') cState.x = Math.min(cv.width - 16, cState.x + 24);
 });
 </script>
+<script src="js/site-ui.js" defer></script>
 </body>
 </html>
