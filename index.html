@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>BizArena 2026 — Business Simulation</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#006687',
+        'primary-container': '#00c4ff',
+        'surface-bright': '#f4faff',
+        'deep-teal': '#033337',
+      },
+      fontFamily: {
+        display: ['"Plus Jakarta Sans"', 'sans-serif'],
+        body: ['Manrope', 'sans-serif'],
+      },
+      borderRadius: { clay: '24px' },
+      boxShadow: {
+        clay: '0 10px 30px -5px rgba(0, 102, 135, 0.05), inset 0 -4px 0 rgba(0, 0, 0, 0.05)',
+        'clay-lg': '0 20px 45px -10px rgba(0, 102, 135, 0.15), inset 0 -4px 0 rgba(0, 0, 0, 0.05)',
+      },
+    },
+  },
+};
+</script>
+<style>
+  body { font-family: 'Manrope', sans-serif; background: #f4faff; color: #033337; }
+  h1,h2,h3,h4,.font-display { font-family: 'Plus Jakarta Sans', sans-serif; }
+  .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.05), inset 0 -4px 0 rgba(0,0,0,.05); }
+  .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease, box-shadow .12s ease; }
+  .clay-btn:active { transform:translateY(2px); box-shadow:0 4px 10px -4px rgba(0,102,135,.3), inset 0 -2px 0 rgba(0,0,0,.12); }
+  .screen { display:none; }
+  .screen.active { display:block; animation:fadeUp .28s ease; }
+  @keyframes fadeUp { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:none;} }
+  @keyframes pulseLogo { 0%,100% {transform:scale(1); opacity:1;} 50% {transform:scale(1.08); opacity:.85;} }
+  .animate-pulse-logo { animation:pulseLogo 1.4s ease-in-out infinite; }
+  @keyframes shake { 0%,100%{transform:translateX(0);} 20%{transform:translateX(-8px);} 40%{transform:translateX(8px);} 60%{transform:translateX(-5px);} 80%{transform:translateX(5px);} }
+  .animate-shake { animation:shake .6s ease; }
+  .confetti-piece { position:fixed; top:-16px; width:10px; height:14px; border-radius:3px; z-index:100; pointer-events:none; animation:confettiFall linear forwards; }
+  @keyframes confettiFall { to { transform:translateY(105vh) rotate(720deg); opacity:.9; } }
+  .nav-item.active { color:#006687; }
+  .nav-item.active .nav-ico { background:#00c4ff33; box-shadow:inset 0 -3px 0 rgba(0,102,135,.15); }
+  .nav-ico { border-radius:16px; padding:4px 14px; transition:background .2s; }
+  input[type=range] { accent-color:#006687; }
+  .risk-low { background:#e0fbf4; color:#0b7a5e; }
+  .risk-medium { background:#fff4d6; color:#946200; }
+  .risk-high { background:#ffe4dc; color:#c2410c; }
+  .skill-locked { filter:grayscale(1); opacity:.55; }
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- ===================== SPLASH ===================== -->
+<section id="screen-splash" class="screen active">
+  <div class="min-h-screen flex flex-col items-center justify-center gap-6 px-8 text-center">
+    <div class="animate-pulse-logo w-28 h-28 rounded-clay bg-gradient-to-br from-primary to-primary-container flex items-center justify-center shadow-clay-lg">
+      <span class="font-display font-extrabold text-white text-6xl">B</span>
+    </div>
+    <div>
+      <h1 class="font-display text-4xl font-extrabold text-deep-teal">BizArena</h1>
+      <p class="text-primary font-semibold mt-1">Business Simulation · 3D Claymorphism</p>
+    </div>
+    <p class="text-sm text-deep-teal/60 max-w-xs">Điều hành doanh nghiệp ảo qua 6 vòng chơi cùng Cố vấn AI Lumina — Je m'appelle Hương.</p>
+  </div>
+</section>
+
+<!-- ===================== LOGIN ===================== -->
+<section id="screen-login" class="screen">
+  <div class="min-h-screen flex flex-col justify-center px-6 py-10 max-w-md mx-auto">
+    <div class="clay-card p-8">
+      <div class="w-16 h-16 rounded-clay bg-gradient-to-br from-primary to-primary-container flex items-center justify-center shadow-clay mb-5">
+        <span class="font-display font-extrabold text-white text-3xl">B</span>
+      </div>
+      <h2 class="font-display text-2xl font-extrabold text-deep-teal">Chào mừng trở lại!</h2>
+      <p class="text-sm text-deep-teal/60 mb-6">Đăng nhập để bắt đầu phiên mô phỏng.</p>
+      <label class="block text-sm font-bold text-deep-teal mb-1">Email</label>
+      <input id="login-email" type="email" placeholder="sinhvien@truong.edu.vn" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 mb-4 outline-none focus:border-primary-container">
+      <label class="block text-sm font-bold text-deep-teal mb-1">Tên đội</label>
+      <input id="login-team" type="text" placeholder="VD: Rồng Xanh Corp" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 mb-4 outline-none focus:border-primary-container">
+      <label class="block text-sm font-bold text-deep-teal mb-2">Vai trò của bạn</label>
+      <div id="role-picker" class="grid grid-cols-5 gap-2 mb-6"></div>
+      <button onclick="doLogin()" class="clay-btn w-full bg-primary text-white font-display font-bold py-4">Bắt đầu mô phỏng 🚀</button>
+    </div>
+    <p class="text-center text-xs text-deep-teal/40 mt-6">© 2026 BizArena · Je m'appelle Hương</p>
+  </div>
+</section>
+
+<!-- ===================== APP SHELL ===================== -->
+<div id="app-shell" class="hidden">
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-surface-bright/90 backdrop-blur px-5 pt-4 pb-3 max-w-md mx-auto w-full">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <button onclick="showTab('profile')" class="w-11 h-11 rounded-clay bg-gradient-to-br from-primary to-primary-container flex items-center justify-center shadow-clay text-xl">👩‍💼</button>
+        <div>
+          <p id="hdr-team" class="font-display font-bold text-deep-teal leading-tight">—</p>
+          <p class="text-xs text-primary font-semibold"><span id="hdr-level">Lv.1</span> · <span id="hdr-xp">0 XP</span></p>
+        </div>
+      </div>
+      <div class="clay-card px-4 py-2 flex items-center gap-1.5">
+        <span>💰</span><span id="hdr-balance" class="font-display font-bold text-deep-teal text-sm">0₫</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-md mx-auto px-5 pb-32">
+
+    <!-- ========== DASHBOARD ========== -->
+    <section id="tab-home" class="screen">
+      <div id="event-banner" class="hidden clay-card p-4 mb-4 border-2"></div>
+      <div class="clay-card p-5 mb-4 bg-gradient-to-br from-primary to-deep-teal !text-white">
+        <div class="flex justify-between items-center">
+          <div>
+            <p class="text-white/70 text-xs font-semibold uppercase tracking-wide">Trung tâm điều hành</p>
+            <h2 class="font-display text-2xl font-extrabold text-white">Vòng <span id="dash-round">1</span>/6</h2>
+            <p id="dash-status" class="text-primary-container text-sm font-bold mt-1">Đang chờ quyết định</p>
+          </div>
+          <div class="flex gap-1.5" id="round-dots"></div>
+        </div>
+      </div>
+      <div class="grid grid-cols-3 gap-3 mb-4">
+        <div class="clay-card p-4 text-center">
+          <p class="text-2xl">💵</p><p id="m-cash" class="font-display font-extrabold text-deep-teal text-sm mt-1">—</p>
+          <p class="text-[10px] text-deep-teal/50 font-semibold uppercase">Dòng tiền</p>
+        </div>
+        <div class="clay-card p-4 text-center">
+          <p class="text-2xl">📊</p><p id="m-share" class="font-display font-extrabold text-deep-teal text-sm mt-1">—</p>
+          <p class="text-[10px] text-deep-teal/50 font-semibold uppercase">Thị phần</p>
+        </div>
+        <div class="clay-card p-4 text-center">
+          <p class="text-2xl">⭐</p><p id="m-brand" class="font-display font-extrabold text-deep-teal text-sm mt-1">—</p>
+          <p class="text-[10px] text-deep-teal/50 font-semibold uppercase">Thương hiệu</p>
+        </div>
+      </div>
+      <div class="clay-card p-5 mb-4 flex items-center gap-4">
+        <div class="w-14 h-14 shrink-0 rounded-full bg-gradient-to-br from-primary-container to-primary flex items-center justify-center text-2xl shadow-clay">🤖</div>
+        <div class="flex-1">
+          <p class="font-display font-bold text-deep-teal text-sm">Lumina AI · Je m'appelle Hương</p>
+          <p id="dash-lumina" class="text-xs text-deep-teal/70 mt-0.5">Xin chào! Hãy vào mục Cố vấn để nhận gợi ý chiến thuật nhé.</p>
+        </div>
+        <button onclick="showTab('advisor')" class="clay-btn bg-primary-container/30 text-primary font-bold px-3 py-2 text-xs">Hỏi</button>
+      </div>
+      <h3 class="font-display font-bold text-deep-teal mb-3">Truy cập nhanh</h3>
+      <div class="grid grid-cols-4 gap-3 mb-4">
+        <button onclick="showTab('skills')" class="clay-card p-3 text-center"><p class="text-2xl">🌳</p><p class="text-[10px] font-bold text-deep-teal mt-1">Kỹ năng</p></button>
+        <button onclick="showTab('leaderboard')" class="clay-card p-3 text-center"><p class="text-2xl">🏆</p><p class="text-[10px] font-bold text-deep-teal mt-1">Xếp hạng</p></button>
+        <button onclick="showTab('achievements')" class="clay-card p-3 text-center"><p class="text-2xl">🎖️</p><p class="text-[10px] font-bold text-deep-teal mt-1">Thành tựu</p></button>
+        <button onclick="showTab('settings')" class="clay-card p-3 text-center"><p class="text-2xl">⚙️</p><p class="text-[10px] font-bold text-deep-teal mt-1">Cài đặt</p></button>
+      </div>
+      <button onclick="showTab('decisions')" class="clay-btn w-full bg-primary text-white font-display font-bold py-4">Nhập quyết định vòng này ➜</button>
+    </section>
+
+    <!-- ========== DECISIONS ========== -->
+    <section id="tab-decisions" class="screen">
+      <h2 class="font-display text-xl font-extrabold text-deep-teal mb-1">Quyết định kinh doanh</h2>
+      <p class="text-sm text-deep-teal/60 mb-4">Vòng <span class="dec-round">1</span>/6 · Thống nhất với cả đội trước khi khóa!</p>
+      <div class="clay-card p-5 mb-3">
+        <div class="flex justify-between mb-1"><label class="font-bold text-sm text-deep-teal">💲 Giá bán / sản phẩm</label><span id="v-price" class="font-display font-bold text-primary">150.000₫</span></div>
+        <input id="in-price" type="range" min="80" max="300" step="5" value="150" class="w-full" oninput="syncDecisionLabels()">
+        <p class="text-[11px] text-deep-teal/50 mt-1">Giá cao → biên lợi nhuận tốt nhưng mất khách. Giá tham chiếu thị trường: 150.000₫</p>
+      </div>
+      <div class="clay-card p-5 mb-3">
+        <div class="flex justify-between mb-1"><label class="font-bold text-sm text-deep-teal">📣 Ngân sách Marketing</label><span id="v-mkt" class="font-display font-bold text-primary">50tr₫</span></div>
+        <input id="in-mkt" type="range" min="0" max="200" step="5" value="50" class="w-full" oninput="syncDecisionLabels()">
+      </div>
+      <div class="clay-card p-5 mb-3">
+        <div class="flex justify-between mb-1"><label class="font-bold text-sm text-deep-teal">🏭 Sản lượng sản xuất</label><span id="v-prod" class="font-display font-bold text-primary">1.200 sp</span></div>
+        <input id="in-prod" type="range" min="200" max="4000" step="100" value="1200" class="w-full" oninput="syncDecisionLabels()">
+        <p class="text-[11px] text-deep-teal/50 mt-1">Chi phí sản xuất: 60.000₫/sp + khấu hao máy móc theo công suất.</p>
+      </div>
+      <div class="clay-card p-5 mb-4">
+        <div class="flex justify-between mb-1"><label class="font-bold text-sm text-deep-teal">🔬 Đầu tư R&D</label><span id="v-rd" class="font-display font-bold text-primary">30tr₫</span></div>
+        <input id="in-rd" type="range" min="0" max="150" step="5" value="30" class="w-full" oninput="syncDecisionLabels()">
+        <p class="text-[11px] text-deep-teal/50 mt-1">R&D tích lũy giúp giảm giá thành và tăng giá trị thương hiệu.</p>
+      </div>
+      <div id="commit-box">
+        <button id="btn-commit" onclick="commitDecisions()" class="clay-btn w-full bg-primary text-white font-display font-bold py-4">🔒 Commit — Khóa quyết định</button>
+        <p class="text-center text-[11px] text-deep-teal/50 mt-2">Sau khi commit, quyết định được đưa vào hàng chờ mô phỏng và không thể sửa (ERR_ROUND_LOCKED).</p>
+      </div>
+      <div id="processing-box" class="hidden text-center py-8">
+        <div class="animate-pulse-logo w-20 h-20 mx-auto rounded-clay bg-gradient-to-br from-primary to-primary-container flex items-center justify-center shadow-clay-lg mb-4">
+          <span class="font-display font-extrabold text-white text-4xl">B</span>
+        </div>
+        <p class="font-display font-bold text-deep-teal">Engine mô phỏng đang xử lý…</p>
+        <p class="text-xs text-deep-teal/50">Đối thủ đang ra quyết định của họ</p>
+      </div>
+    </section>
+
+    <!-- ========== ADVISOR ========== -->
+    <section id="tab-advisor" class="screen">
+      <div class="flex items-center gap-4 mb-4">
+        <div class="w-16 h-16 rounded-clay bg-gradient-to-br from-primary-container to-primary flex items-center justify-center text-3xl shadow-clay-lg">🤖</div>
+        <div>
+          <h2 class="font-display text-xl font-extrabold text-deep-teal">Lumina AI</h2>
+          <p class="text-sm text-primary font-semibold">Je m'appelle Hương · Cố vấn chiến lược</p>
+        </div>
+      </div>
+      <div id="advisor-chat" class="space-y-3 mb-4"></div>
+      <div class="clay-card p-4">
+        <p class="font-bold text-sm text-deep-teal mb-2">Hỏi kịch bản "Nếu — Thì" (<span id="ai-quota">3</span> lượt/vòng)</p>
+        <div class="grid grid-cols-1 gap-2">
+          <button onclick="askLumina('pricing')" class="clay-btn bg-surface-bright text-deep-teal text-left font-semibold text-sm px-4 py-3">💲 Nếu tôi thay đổi giá bán thì sao?</button>
+          <button onclick="askLumina('marketing')" class="clay-btn bg-surface-bright text-deep-teal text-left font-semibold text-sm px-4 py-3">📣 Nếu tăng ngân sách Marketing 15%?</button>
+          <button onclick="askLumina('risk')" class="clay-btn bg-surface-bright text-deep-teal text-left font-semibold text-sm px-4 py-3">⚠️ Rủi ro lớn nhất vòng này là gì?</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== REPORTS ========== -->
+    <section id="tab-reports" class="screen">
+      <h2 class="font-display text-xl font-extrabold text-deep-teal mb-4">Báo cáo & Phân tích</h2>
+      <div class="flex gap-2 mb-4">
+        <button data-rep="pnl" class="rep-tab clay-btn bg-primary text-white text-xs font-bold px-4 py-2" onclick="showReport('pnl')">P&L</button>
+        <button data-rep="cash" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2" onclick="showReport('cash')">Dòng tiền</button>
+        <button data-rep="dep" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2" onclick="showReport('dep')">Khấu hao</button>
+      </div>
+      <div id="report-body"></div>
+    </section>
+
+    <!-- ========== SHOP ========== -->
+    <section id="tab-shop" class="screen">
+      <h2 class="font-display text-xl font-extrabold text-deep-teal mb-1">Cửa hàng</h2>
+      <p class="text-sm text-deep-teal/60 mb-4">Dùng ví ảo của đội để mua vật phẩm tăng lực.</p>
+      <div id="shop-list" class="space-y-3 mb-6"></div>
+      <h3 class="font-display font-bold text-deep-teal mb-3">🎒 Kho đồ của đội</h3>
+      <div id="inventory-list" class="space-y-3"><p class="text-sm text-deep-teal/50">Chưa có vật phẩm nào.</p></div>
+    </section>
+
+    <!-- ========== SKILLS ========== -->
+    <section id="tab-skills" class="screen">
+      <h2 class="font-display text-xl font-extrabold text-deep-teal mb-1">Cây kỹ năng</h2>
+      <p class="text-sm text-deep-teal/60 mb-4">Mở khóa bằng XP tích lũy từ kết quả kinh doanh.</p>
+      <div id="skill-tree" class="space-y-3"></div>
+    </section>
+
+    <!-- ========== LEADERBOARD ========== -->
+    <section id="tab-leaderboard" class="screen">
+      <h2 class="font-display text-xl font-extrabold text-deep-teal mb-4">🏆 Bảng xếp hạng</h2>
+      <div id="lb-list" class="space-y-3"></div>
+    </section>
+
+    <!-- ========== ACHIEVEMENTS ========== -->
+    <section id="tab-achievements" class="screen">
+      <h2 class="font-display text-xl font-extrabold text-deep-teal mb-4">🎖️ Thành tựu</h2>
+      <div id="ach-list" class="grid grid-cols-2 gap-3"></div>
+      <div id="certificate-box" class="hidden mt-6 clay-card p-6 text-center border-2 border-primary-container">
+        <p class="text-4xl mb-2">📜</p>
+        <h3 class="font-display font-extrabold text-deep-teal text-lg">Chứng chỉ hoàn thành</h3>
+        <p class="text-sm text-deep-teal/70 mt-1">Chứng nhận đội <span id="cert-team" class="font-bold text-primary">—</span> đã hoàn thành 6 vòng mô phỏng kinh doanh BizArena 2026.</p>
+        <p id="cert-result" class="font-display font-bold text-primary mt-3"></p>
+      </div>
+    </section>
+
+    <!-- ========== PROFILE ========== -->
+    <section id="tab-profile" class="screen">
+      <div class="clay-card p-6 text-center mb-4">
+        <div class="w-20 h-20 mx-auto rounded-clay bg-gradient-to-br from-primary to-primary-container flex items-center justify-center text-4xl shadow-clay-lg mb-3">👩‍💼</div>
+        <h2 id="pf-name" class="font-display text-xl font-extrabold text-deep-teal">—</h2>
+        <p id="pf-email" class="text-sm text-deep-teal/60">—</p>
+        <span id="pf-role" class="inline-block mt-2 bg-primary-container/30 text-primary font-bold text-xs px-3 py-1.5 rounded-full">—</span>
+      </div>
+      <div class="clay-card p-5 mb-4">
+        <div class="flex justify-between text-sm font-bold text-deep-teal mb-1"><span>Tiến độ cấp <span id="pf-level">1</span></span><span id="pf-xp">0 XP</span></div>
+        <div class="h-3 rounded-full bg-surface-bright overflow-hidden shadow-inner"><div id="pf-xpbar" class="h-full bg-gradient-to-r from-primary to-primary-container rounded-full" style="width:0%"></div></div>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="clay-card p-4 text-center"><p id="pf-profit" class="font-display font-extrabold text-primary">0₫</p><p class="text-[10px] text-deep-teal/50 font-semibold uppercase mt-1">Tổng lợi nhuận</p></div>
+        <div class="clay-card p-4 text-center"><p id="pf-rounds" class="font-display font-extrabold text-primary">0/6</p><p class="text-[10px] text-deep-teal/50 font-semibold uppercase mt-1">Vòng hoàn thành</p></div>
+      </div>
+    </section>
+
+    <!-- ========== SETTINGS ========== -->
+    <section id="tab-settings" class="screen">
+      <h2 class="font-display text-xl font-extrabold text-deep-teal mb-4">⚙️ Cài đặt</h2>
+      <div class="clay-card divide-y divide-surface-bright">
+        <div class="p-5 flex items-center justify-between"><span class="font-bold text-sm text-deep-teal">🔔 Thông báo vòng chơi</span><input type="checkbox" checked class="w-5 h-5 accent-primary"></div>
+        <div class="p-5 flex items-center justify-between"><span class="font-bold text-sm text-deep-teal">🔊 Âm thanh hiệu ứng</span><input type="checkbox" checked class="w-5 h-5 accent-primary"></div>
+        <div class="p-5"><button onclick="alert('Đã gửi báo cáo lỗi tới đội ngũ BizArena. Cảm ơn bạn!')" class="font-bold text-sm text-primary">🐞 Gửi báo cáo lỗi</button></div>
+        <div class="p-5"><button onclick="resetGame()" class="font-bold text-sm text-orange-600">♻️ Chơi lại từ đầu (Reset)</button></div>
+      </div>
+      <p class="text-center text-xs text-deep-teal/40 mt-6">BizArena 2026 · v1.0.0 · Thiết kế: Stitch (Google) · Tác giả: Je m'appelle Hương</p>
+    </section>
+  </main>
+
+  <!-- Bottom Nav -->
+  <nav class="fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur border-t border-primary/5 pb-[env(safe-area-inset-bottom)]">
+    <div class="max-w-md mx-auto flex justify-around py-2">
+      <button class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="home" onclick="showTab('home')"><span class="nav-ico text-xl">🏠</span><span class="text-[10px] font-bold">Trang chủ</span></button>
+      <button class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="decisions" onclick="showTab('decisions')"><span class="nav-ico text-xl">🎯</span><span class="text-[10px] font-bold">Quyết định</span></button>
+      <button class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="advisor" onclick="showTab('advisor')"><span class="nav-ico text-xl">🤖</span><span class="text-[10px] font-bold">Lumina</span></button>
+      <button class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="reports" onclick="showTab('reports')"><span class="nav-ico text-xl">📈</span><span class="text-[10px] font-bold">Báo cáo</span></button>
+      <button class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="shop" onclick="showTab('shop')"><span class="nav-ico text-xl">🛍️</span><span class="text-[10px] font-bold">Cửa hàng</span></button>
+    </div>
+  </nav>
+</div>
+
+<script src="js/engine.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
