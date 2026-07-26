@@ -55,7 +55,8 @@ Tiến trình chơi được lưu tự động trong `localStorage` của trình
 | Nhật ký đội | Timeline hành trình 6 vòng: quyết định then chốt, kết quả & bài học tự sinh từ số liệu, trích dẫn Lumina/SEC/PGS.TS Phan Anh Tú |
 | Chat giọng nói với Lumina | Nhập tự do hoặc nói (STT tiếng Việt), Lumina trả lời bằng giọng nói (TTS, chọn giọng Nữ/Nam), thanh sóng âm "Hương đang nói..." |
 | Quyết định nâng cao | Quản trị Tài chính (nguồn vốn tự có/vay 8.5%, kỳ hạn thanh toán 30/60/90 ngày) + Quản trị Nhân sự (số nhân viên, ngân sách đào tạo) + Dự báo dòng tiền CVP trực tiếp |
-| Báo cáo học thuật | CVP & Chi phí (điểm hòa vốn, giá hòa vốn, lãi góp, cố định vs biến đổi, lợi nhuận gộp), Báo cáo Nhân sự, Business Model Canvas cập nhật theo dữ liệu thật |
+| Báo cáo học thuật | CVP & Chi phí (điểm hòa vốn, lãi góp, cố định vs biến đổi, waterfall Gộp→HĐ→Ròng, ROS/ROE/ROA/Operating vs trung bình ngành), Báo cáo Nhân sự, BMC cập nhật theo dữ liệu thật |
+| Thị trường sống | Live ticker tin thị trường, cố vấn Hương LIVE, thị phần bạn-vs-đối thủ (cột đất sét), Tiếng nói khách hàng với chip cảm xúc, Radar xu hướng 4 trục, Brand Loyalty & hiệu quả quảng cáo vs mục tiêu |
 
 ## Engine mô phỏng (client-side)
 

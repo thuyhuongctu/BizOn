@@ -199,7 +199,131 @@ function renderAll() {
   if (!S) return;
   renderHeader(); renderDashboard(); renderDecisions(); renderAdvisorIntro();
   renderShop(); renderSkills(); renderLeaderboard(); renderAchievements(); renderProfile();
-  renderMissions(); renderMinigame(); renderInstructor(); renderJournal();
+  renderMissions(); renderMinigame(); renderInstructor(); renderJournal(); renderMarket();
+}
+
+// ---------- Thị trường sống (Live Market Pulse — theo 3 màn hình Stitch) ----------
+function renderMarket() {
+  const body = $('market-body');
+  if (!body) return;
+  const ev = currentEvent(S);
+  const last = S.history[S.history.length - 1];
+  const share = last ? last.share : 25;
+  const lastD = last ? last.decisions : { price: REF_PRICE, marketing: 50, rd: 30 };
+
+  // Live ticker từ trạng thái game
+  const ticker = [
+    `🔴 ${ev.name}: ${ev.desc}`,
+    `🔵 Alpha Dynamics duy trì chiến lược giá rẻ — theo dõi biên lợi nhuận của họ`,
+    `🟢 Brand Loyalty của đội bạn: ${S.brandLoyalty}% ${S.brandLoyalty >= 70 ? '(khách hàng gắn bó!)' : '(cần đầu tư thương hiệu)'}`,
+    `🟡 Star Clay Co. đẩy mạnh phân khúc cao cấp — cơ hội ở phân khúc phổ thông`,
+    S.loan > 0 ? `🏦 Đội đang có khoản vay ${S.loan}tr₫ — lãi trừ mỗi vòng` : `💰 Ví đội: ${money(S.balance)} — chưa dùng đòn bẩy`,
+  ];
+  $('market-ticker').innerHTML = '<span class="mx-6">' + ticker.join('</span><span class="mx-6">') + '</span>';
+
+  // Thị phần: bạn vs 3 đối thủ
+  const teams = [
+    { name: 'BẠN', share, me: true },
+    ...S.competitors.map(c => ({ name: c.name.split(' ')[0].toUpperCase(), share: c.share })),
+  ];
+  const maxShare = Math.max(...teams.map(t => t.share), 1);
+
+  // Tiếng nói khách hàng (sinh từ trạng thái)
+  const priceHigh = lastD.price > REF_PRICE * 1.15;
+  const voices = [
+    S.brandLoyalty >= 70
+      ? { tag: 'KHÁCH TRUNG THÀNH', text: 'Yêu quyết định đầu tư chất lượng của BizOn! Rất hợp bản sắc thương hiệu.', s: 'positive' }
+      : { tag: 'KHÁCH HÀNG MỚI', text: 'Sản phẩm ổn nhưng thương hiệu chưa đủ thuyết phục mình gắn bó lâu dài.', s: 'neutral' },
+    priceHigh
+      ? { tag: 'KHÁCH NHẠY GIÁ', text: `Giá ${lastD.price.toLocaleString('vi-VN')}k hơi chát so với túi tiền... đang ngó sang đối thủ. 📉`, s: 'negative' }
+      : { tag: 'KHÁCH NHẠY GIÁ', text: 'Mức giá hiện tại khá hợp lý so với chất lượng nhận được!', s: 'positive' },
+    ev.id === 'EV_PRICEWAR'
+      ? { tag: 'GIỚI PHÂN TÍCH', text: 'Đối thủ vừa giảm giá sâu. Thị trường chờ phản ứng của BizOn trong 48 giờ tới.', s: 'alert' }
+      : { tag: 'GIỚI PHÂN TÍCH', text: `R&D tích lũy ${Math.round(S.rdCumulative)}tr₫ — nền tảng đổi mới của BizOn đang được chú ý.`, s: 'neutral' },
+  ];
+  const sChip = { positive: '<span class="text-[9px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">TÍCH CỰC</span>', neutral: '<span class="text-[9px] font-bold text-deep-teal/60 bg-surface-bright px-2 py-0.5 rounded-full">TRUNG LẬP</span>', negative: '<span class="text-[9px] font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded-full">TIÊU CỰC</span>', alert: '<span class="text-[9px] font-bold text-white bg-red-500 px-2 py-0.5 rounded-full">⚠️ CẠNH TRANH</span>' };
+
+  // Radar xu hướng: Chất lượng / Giá / Bền vững / Tốc độ (0..90 bán kính)
+  const rQ = 30 + Math.min(60, S.brand * 40);
+  const rP = 30 + Math.min(60, Math.max(0, (REF_PRICE * 1.3 - lastD.price) / REF_PRICE * 150));
+  const rS = 30 + Math.min(60, S.rdCumulative / 8);
+  const rSp = 30 + Math.min(60, (S.oee - 55) * 1.6);
+  const radarPts = `100,${100 - rQ} ${100 + rP},100 100,${100 + rS} ${100 - rSp},100`;
+
+  const loyaltyPct = S.brandLoyalty, adEffPct = Math.min(100, Math.round(S.adEff * 8));
+  body.innerHTML = `
+    <div class="clay-card p-4 mb-3 border-l-4 border-primary-container flex gap-3 items-start">
+      <img src="assets/character/lumina-vest.png" alt="Cố vấn Hương" class="w-14 h-14 rounded-2xl object-cover shadow-clay shrink-0" style="object-position:50% 10%">
+      <div>
+        <p class="font-display font-bold text-deep-teal text-sm">Cố vấn Hương <span class="text-[9px] bg-primary-container text-white font-extrabold px-1.5 py-0.5 rounded ml-1">LIVE</span></p>
+        <p class="text-xs text-deep-teal/80 italic mt-1">"${ev.tone === 'warn' && ev.id === 'EV_PRICEWAR'
+          ? 'Nghe kỹ này: cú giảm giá của đối thủ là một cái bẫy — họ đang đốt vốn. Giữ vững vị thế và tập trung vào phân khúc Premium. Chất lượng sẽ bền hơn sự tuyệt vọng của họ.'
+          : ev.tone === 'bad'
+          ? 'Thị trường đang thở gấp. Ưu tiên phòng thủ dòng tiền, quan sát nhất cử nhất động của đối thủ trước khi phản công.'
+          : 'Thị trường đang thở đều. Đây là lúc quan sát điểm yếu của đối thủ và chuẩn bị nước đi chiếm thị phần kế tiếp.'}"</p>
+      </div>
+    </div>
+    <div class="clay-card p-5 mb-3">
+      <h3 class="font-display font-bold text-deep-teal text-sm mb-4">📊 Thị phần thời gian thực</h3>
+      <div class="clay-sunken rounded-2xl p-4 flex items-end justify-around h-48">
+        ${teams.map(t => `
+          <div class="flex flex-col items-center gap-2 h-full justify-end">
+            <span class="text-[10px] font-extrabold ${t.me ? 'text-primary' : 'text-deep-teal/50'}">${t.share.toFixed(0)}%</span>
+            <div class="clay-bar-v w-10" style="height:${Math.max(12, t.share / maxShare * 78)}%; background:${t.me ? 'linear-gradient(to top,#004d66,#00c4ff)' : '#dfe3e7'}"></div>
+            <span class="text-[9px] font-bold ${t.me ? 'text-primary' : 'text-deep-teal/50'}">${t.name}</span>
+          </div>`).join('')}
+      </div>
+    </div>
+    <div class="clay-card p-5 mb-3">
+      <div class="flex justify-between items-center mb-3">
+        <h3 class="font-display font-bold text-deep-teal text-sm">💬 Tiếng nói khách hàng</h3>
+        <span class="text-[10px] font-bold text-primary bg-primary-container/20 px-2 py-1 rounded-full">Social Pulse</span>
+      </div>
+      ${voices.map((v, i) => `
+        <div class="clay-bubble-in p-3.5 mb-2.5 animate-float" style="animation-delay:${i * 0.7}s">
+          <p class="text-[9px] font-extrabold text-deep-teal/40 tracking-wider mb-1">${v.tag}</p>
+          <p class="text-xs text-deep-teal/90">"${v.text}"</p>
+          <div class="mt-1.5">${sChip[v.s]}</div>
+        </div>`).join('')}
+    </div>
+    <div class="clay-card p-5 mb-3">
+      <h3 class="font-display font-bold text-deep-teal text-sm mb-2">🎯 Radar xu hướng</h3>
+      <div class="flex items-center gap-3">
+        <svg viewBox="0 0 200 200" class="w-36 h-36 shrink-0">
+          <circle class="spider-grid" cx="100" cy="100" r="30"/><circle class="spider-grid" cx="100" cy="100" r="60"/><circle class="spider-grid" cx="100" cy="100" r="90"/>
+          <line class="spider-grid" x1="100" y1="10" x2="100" y2="190"/><line class="spider-grid" x1="10" y1="100" x2="190" y2="100"/>
+          <polygon points="${radarPts}" fill="rgba(0,196,255,.3)" stroke="#006687" stroke-width="2"/>
+          <text x="100" y="8" text-anchor="middle" font-size="10" font-weight="700" fill="#006687">CHẤT LƯỢNG</text>
+          <text x="196" y="104" text-anchor="end" font-size="10" font-weight="700" fill="#006687">GIÁ</text>
+          <text x="100" y="199" text-anchor="middle" font-size="10" font-weight="700" fill="#006687">BỀN VỮNG</text>
+          <text x="4" y="104" font-size="10" font-weight="700" fill="#006687">TỐC ĐỘ</text>
+        </svg>
+        <div class="flex-1 space-y-2">
+          <div class="clay-sunken rounded-xl p-3 flex justify-between text-xs"><span class="text-deep-teal/70">Quan tâm sản phẩm xanh</span><b class="text-primary">+12.4%</b></div>
+          <div class="clay-sunken rounded-xl p-3 flex justify-between text-xs"><span class="text-deep-teal/70">Độ nhạy cảm về giá</span><b class="${ev.elasticityMul ? 'text-red-600' : 'text-deep-teal'}">${ev.elasticityMul ? '+18.0%' : '+4.2%'}</b></div>
+        </div>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 gap-3 mb-3">
+      <div class="clay-card p-4">
+        <div class="flex justify-between items-center mb-2"><p class="font-bold text-xs text-deep-teal">Brand Loyalty</p><span class="text-[10px] font-bold text-primary">${loyaltyPct}%</span></div>
+        <div class="h-3 clay-sunken rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-primary to-primary-container rounded-full" style="width:${loyaltyPct}%"></div></div>
+        <p class="text-[9px] text-deep-teal/50 mt-1.5 font-bold">MỤC TIÊU: 85%</p>
+      </div>
+      <div class="clay-card p-4">
+        <div class="flex justify-between items-center mb-2"><p class="font-bold text-xs text-deep-teal">Hiệu quả quảng cáo</p><span class="text-[10px] font-bold ${adEffPct >= 60 ? 'text-primary' : 'text-red-600'}">${adEffPct}%</span></div>
+        <div class="h-3 clay-sunken rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-primary to-primary-container rounded-full" style="width:${adEffPct}%"></div></div>
+        <p class="text-[9px] text-deep-teal/50 mt-1.5 font-bold">MỤC TIÊU: 60%</p>
+      </div>
+    </div>
+    <div class="clay-card p-5">
+      <h3 class="font-display font-bold text-deep-teal text-sm">Sẵn sàng can thiệp?</h3>
+      <p class="text-xs text-deep-teal/60 mb-3">Điều chỉnh chiến lược dựa trên nhịp đập thị trường hiện tại.</p>
+      <div class="grid grid-cols-2 gap-2">
+        <button onclick="showTab('decisions')" class="clay-button-primary text-white text-xs font-extrabold py-3 tracking-wider" style="background:linear-gradient(135deg,#00c4ff,#006687)">🚀 DEPLOY CAMPAIGN</button>
+        <button onclick="showTab('decisions')" class="clay-button-secondary text-primary text-xs font-extrabold py-3 tracking-wider">💲 REVISE PRICING</button>
+      </div>
+    </div>`;
 }
 
 // ---------- Nhật ký đội (Team Journal — SEC ghi chép) ----------
@@ -868,19 +992,38 @@ function renderCvpReport(body) {
       <h3 class="font-display font-bold text-deep-teal text-sm mb-3">📈 Tỷ suất sinh lời — Vòng ${last.round}</h3>
       ${(() => {
         const gross = last.revenue - last.cogs;
-        const ros = Math.round(1000 * last.netProfit / Math.max(1, last.revenue)) / 10;
-        const grossMargin = Math.round(1000 * gross / Math.max(1, last.revenue)) / 10;
+        const opex = last.marketing + last.rd + last.fixed + (last.wageCost || 0) + (last.trainingCost || 0) + (last.holding || 0);
+        const operating = gross - opex;
+        const net = last.netProfit;
+        const pct = v => Math.round(1000 * v / Math.max(1, last.revenue)) / 10;
+        const ros = pct(net), grossM = pct(gross), operM = pct(operating);
         const assets = S.balance + S.machineCapacity * 0.05 + S.inventory * 0.045;
-        const roa = Math.round(1000 * last.netProfit / Math.max(1, assets)) / 10;
-        const roe = Math.round(1000 * last.netProfit / STARTING_BALANCE) / 10;
-        const ratio = (lbl, v, note) => `
-          <div class="flex items-center gap-2 text-xs py-1.5">
-            <span class="w-24 shrink-0 font-bold text-deep-teal">${lbl}</span>
-            <div class="flex-1 h-2.5 rounded-full bg-surface-bright overflow-hidden"><div class="h-full ${v >= 0 ? 'bg-primary' : 'bg-red-500'} rounded-full" style="width:${Math.min(100, Math.abs(v) * 2)}%"></div></div>
-            <span class="w-14 text-right font-bold ${v >= 0 ? 'text-deep-teal' : 'text-red-600'}">${v}%</span>
-            <span class="w-28 text-[10px] text-deep-teal/50">${note}</span>
-          </div>`;
-        return ratio('Biên gộp', grossMargin, 'LN gộp / Doanh thu') + ratio('ROS (ròng)', ros, 'LN ròng / Doanh thu') + ratio('ROA', roa, 'LN / Tổng tài sản') + ratio('ROE', roe, 'LN / Vốn chủ sở hữu');
+        const roa = Math.round(1000 * net / Math.max(1, assets)) / 10;
+        const roe = Math.round(1000 * net / STARTING_BALANCE) / 10;
+        const wf = (v, color) => `<div class="flex-1 flex flex-col items-center justify-end h-full">
+          <div class="w-full waterfall-bar ${color}" style="height:${Math.max(6, Math.abs(v) / Math.max(1, gross) * 100)}%"></div></div>`;
+        const card = (lbl, v, note) => `<div class="clay-sunken rounded-2xl p-3">
+          <p class="text-[10px] font-extrabold text-deep-teal/50">${lbl}</p>
+          <p class="font-display font-extrabold ${v >= 0 ? 'text-primary' : 'text-red-600'} text-xl">${v}%</p>
+          <p class="text-[9px] text-deep-teal/50 font-semibold">${note}</p></div>`;
+        return `
+        <p class="text-[11px] font-bold text-deep-teal/60 uppercase mb-1">Biểu đồ lợi nhuận (Gộp → Hoạt động → Ròng)</p>
+        <div class="flex items-end gap-6 h-28 mb-1 px-2">${wf(gross, 'bg-slate-300')}${wf(operating, 'bg-primary-container')}${wf(net, net >= 0 ? 'bg-primary' : 'bg-red-400')}</div>
+        <div class="flex gap-6 px-2 mb-4 text-center">
+          <p class="flex-1 text-[10px] font-bold text-deep-teal/60">Gộp<br>${money(gross)}</p>
+          <p class="flex-1 text-[10px] font-bold text-deep-teal/60">HĐ<br>${money(operating)}</p>
+          <p class="flex-1 text-[10px] font-bold ${net >= 0 ? 'text-primary' : 'text-red-600'}">Ròng<br>${money(net)}</p>
+        </div>
+        <div class="grid grid-cols-2 gap-2.5">
+          ${card('ROS', ros, 'Lợi nhuận / Doanh thu')}
+          ${card('ROE', roe, 'Lợi nhuận / Vốn CSH')}
+          ${card('ROA', roa, 'Lợi nhuận / Tài sản')}
+          ${card('OPERATING', operM, 'Biên LN hoạt động')}
+        </div>
+        <div class="clay-sunken rounded-2xl p-3 mt-2.5 flex items-center gap-2">
+          <span class="text-lg">${ros >= 12 ? '🏆' : '📉'}</span>
+          <p class="text-[11px] text-deep-teal/70">Net Profit Margin <b class="${ros >= 12 ? 'text-emerald-700' : 'text-red-600'}">${ros}%</b> — ${ros >= 12 ? 'cao hơn' : 'thấp hơn'} trung bình ngành (12%). Biên gộp: <b>${grossM}%</b>.</p>
+        </div>`;
       })()}
     </div>` : '<div class="clay-card p-8 text-center text-sm text-deep-teal/50">Hoàn thành vòng đầu để xem cấu trúc chi phí và lợi nhuận gộp.</div>'}`;
 }
