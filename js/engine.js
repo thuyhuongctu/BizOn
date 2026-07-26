@@ -47,6 +47,56 @@ const COMPETITORS = [
   { name: 'Star Clay Co.',   style: 'premium' },
 ];
 
+/* ===== NHIỆM VỤ (Missions) ===== */
+const MISSIONS = [
+  { id: 'M_FIRST',    icon: '🚀', name: 'Khởi động', desc: 'Hoàn thành vòng chơi đầu tiên.', rewardMoney: 20, rewardXp: 10, test: s => s.history.length >= 1 },
+  { id: 'M_PROFIT',   icon: '💎', name: 'Kinh doanh có lãi', desc: 'Đạt lợi nhuận dương trong một vòng.', rewardMoney: 30, rewardXp: 20, test: s => s.history.some(r => r.netProfit > 0) },
+  { id: 'M_SHARE30',  icon: '👑', name: 'Chiếm lĩnh thị trường', desc: 'Đạt thị phần từ 30% trở lên.', rewardMoney: 50, rewardXp: 30, test: s => s.history.some(r => r.share >= 30) },
+  { id: 'M_SHOP',     icon: '🛍️', name: 'Nhà đầu tư thông thái', desc: 'Mua ít nhất 1 vật phẩm trong Cửa hàng.', rewardMoney: 20, rewardXp: 10, test: s => (s.itemsBought || 0) >= 1 },
+  { id: 'M_AI3',      icon: '🤖', name: 'Người bạn của Lumina', desc: 'Hỏi Lumina AI tổng cộng 3 lần.', rewardMoney: 15, rewardXp: 10, test: s => (s.aiAskedTotal || 0) >= 3 },
+  { id: 'M_SKILL',    icon: '🌳', name: 'Học không ngừng', desc: 'Mở khóa 1 kỹ năng trong Cây kỹ năng.', rewardMoney: 25, rewardXp: 15, test: s => s.skills.length >= 1 },
+  { id: 'M_MINIGAME', icon: '🏭', name: 'Thợ đất sét cừ khôi', desc: 'Đạt từ 15 điểm trong Clay Factory Frenzy.', rewardMoney: 25, rewardXp: 15, test: s => (s.minigameBest || 0) >= 15 },
+  { id: 'M_SURVIVE',  icon: '🛟', name: 'Thuyền trưởng bão táp', desc: 'Có lãi trong vòng Suy thoái kinh tế.', rewardMoney: 60, rewardXp: 40, test: s => s.history.some(r => r.event.id === 'EV_RECESSION' && r.netProfit > 0) },
+  { id: 'M_FINISH',   icon: '🎓', name: 'Tốt nghiệp BizOn', desc: 'Hoàn thành trọn vẹn 6 vòng mô phỏng.', rewardMoney: 100, rewardXp: 50, test: s => s.finished },
+];
+
+function missionStatus(s, m) {
+  if ((s.missionsClaimed || []).includes(m.id)) return 'claimed';
+  return m.test(s) ? 'ready' : 'pending';
+}
+
+function claimMission(s, id) {
+  const m = MISSIONS.find(x => x.id === id);
+  if (!m || missionStatus(s, m) !== 'ready') return false;
+  s.missionsClaimed.push(id);
+  s.balance += m.rewardMoney;
+  s.xp += m.rewardXp;
+  return true;
+}
+
+/* ===== LUMINA ADVISOR PRO — kịch bản "Nếu — Thì" từ số liệu thực ===== */
+function advisorProScenarios(inp) {
+  // inp: {revenue, cost, marketing, growthTarget} (triệu ₫/tháng, %)
+  const margin = inp.revenue - inp.cost;
+  const marginPct = inp.revenue > 0 ? (margin / inp.revenue) * 100 : 0;
+  const mk = (mkMul, growMul, label, risk) => {
+    const newMkt = Math.round(inp.marketing * mkMul);
+    const growth = Math.min(inp.growthTarget * growMul, inp.growthTarget + 25);
+    const newRevenue = Math.round(inp.revenue * (1 + growth / 100));
+    const newProfit = Math.round(newRevenue - inp.cost - (newMkt - inp.marketing));
+    return { label, risk, newMkt, growth: Math.round(growth), newRevenue, newProfit };
+  };
+  return {
+    marginPct: Math.round(marginPct * 10) / 10,
+    healthy: marginPct >= 15,
+    scenarios: [
+      mk(0.85, 0.45, '🛡️ Thận trọng', 'low'),
+      mk(1.15, 1.0,  '⚖️ Cân bằng', 'medium'),
+      mk(1.6,  1.5,  '🚀 Tăng tốc', 'high'),
+    ],
+  };
+}
+
 function newGameState(profile) {
   return {
     profile,                                  // {email, teamName, role}
@@ -68,6 +118,13 @@ function newGameState(profile) {
     achievements: [],
     finished: false,
     seed: 12345,
+    missionsClaimed: [],
+    aiAskedTotal: 0,
+    itemsBought: 0,
+    minigameBest: 0,
+    minigamePlays: 0,
+    roundLocked: false,
+    grantLog: [],
   };
 }
 
@@ -173,6 +230,7 @@ function simulateRound(s, d) {
 
   s.committed = false;
   s.aiUsed = 0;
+  s.minigamePlays = 0;
   if (s.round >= ROUNDS_TOTAL) s.finished = true;
   else s.round += 1;
 
