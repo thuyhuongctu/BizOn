@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 — © Đỗ Thùy Hương & PGS.TS Phan Anh Tú. Bảo lưu mọi quyền. -->
+<html lang="vi" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Đội ngũ Sáng lập BizOn</title>
+<meta name="author" content="Đỗ Thùy Hương, Phan Anh Tú">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & PGS.TS Phan Anh Tú. Bảo lưu mọi quyền.">
+<meta name="description" content="Đội ngũ Sáng lập BizOn — Đỗ Thùy Hương (Founder & Project Lead) và PGS.TS Phan Anh Tú (Co-founder & Chief Advisor). Sứ mệnh & Tầm nhìn 2026.">
+<meta name="theme-color" content="#f4faff">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#006687', 'primary-container': '#00c4ff', 'surface-bright': '#f4faff',
+        'deep-teal': '#033337', 'clay-gold': '#fda127', tertiary: '#885200',
+      },
+      fontFamily: { display: ['"Plus Jakarta Sans"', 'sans-serif'] },
+    },
+  },
+};
+</script>
+<style>
+  body { font-family:'Plus Jakarta Sans',sans-serif; background:#f4faff; color:#161c20; overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+  .clay-card { background:#f4faff; border-radius:2rem; box-shadow:12px 12px 24px #d1d9e0, -12px -12px 24px #ffffff; border:1px solid rgba(255,255,255,.6); }
+  .clay-inner { box-shadow:inset 4px 4px 8px #d1d9e0, inset -4px -4px 8px #ffffff; }
+  .clay-btn { background:#f4faff; border-radius:9999px; box-shadow:6px 6px 12px #d1d9e0, -6px -6px 12px #ffffff; transition:all .2s cubic-bezier(.34,1.56,.64,1); border:1px solid rgba(255,255,255,.8); }
+  .clay-btn:active { box-shadow:inset 4px 4px 8px #d1d9e0, inset -4px -4px 8px #ffffff; transform:scale(.96); }
+  .clay-btn-primary { background:linear-gradient(145deg,#00c4ff,#0095c2); box-shadow:6px 6px 15px rgba(0,196,255,.3), -6px -6px 15px #ffffff; color:#fff; border:none; }
+  .glass-header { background:rgba(244,250,255,.82); backdrop-filter:blur(12px); border-bottom:1px solid rgba(255,255,255,.5); }
+  @keyframes float { 0%,100% { transform:translateY(0) rotate(0deg); } 50% { transform:translateY(-15px) rotate(1deg); } }
+  .float-anim { animation:float 8s ease-in-out infinite; }
+  .float-anim-delayed { animation:float 9s ease-in-out infinite 1s; }
+  .reveal-card { opacity:0; transform:translateY(20px); transition:all .8s cubic-bezier(.16,1,.3,1); }
+  .reveal-card.visible { opacity:1; transform:translateY(0); }
+  #particles-container { position:fixed; inset:0; pointer-events:none; z-index:0; }
+  .particle { position:absolute; border-radius:50%; opacity:.3; }
+  .profile-mesh { background:radial-gradient(circle at 50% 50%, rgba(0,196,255,.12) 0%, transparent 70%); }
+</style>
+</head>
+<body class="min-h-screen pb-20">
+<div id="particles-container"></div>
+
+<header class="glass-header sticky top-0 w-full z-50 px-6 h-16 flex justify-between items-center">
+  <a href="gioi-thieu.html" aria-label="Quay lại" class="p-2 -ml-2 rounded-full hover:bg-white/40 transition-colors text-deep-teal font-bold text-xl">←</a>
+  <h1 class="font-bold text-lg tracking-tight text-primary">Đội ngũ Sáng lập BizOn</h1>
+  <a href="index.html" class="p-2 -mr-2 text-xl" aria-label="Vào game">🎮</a>
+</header>
+
+<main class="max-w-4xl mx-auto px-6 pt-10 relative z-10">
+  <!-- Founders Hero -->
+  <section class="mb-16">
+    <div class="grid grid-cols-2 gap-4 items-end mb-12">
+      <div class="relative">
+        <div class="profile-mesh absolute inset-0 -z-10 scale-150"></div>
+        <div class="float-anim">
+          <img src="assets/character/lumina-ao-dai.png" alt="Đỗ Thùy Hương — Lumina AI" class="w-full h-auto rounded-3xl drop-shadow-2xl">
+        </div>
+      </div>
+      <div class="relative">
+        <div class="profile-mesh absolute inset-0 -z-10 scale-150 rotate-180"></div>
+        <div class="float-anim-delayed">
+          <img src="assets/character/anh-tu-welcome.png" alt="PGS.TS Phan Anh Tú" class="w-full h-auto drop-shadow-2xl">
+        </div>
+      </div>
+    </div>
+
+    <!-- Biographies -->
+    <div class="space-y-8">
+      <div class="reveal-card clay-card p-8">
+        <div class="flex items-center gap-4 mb-4">
+          <div class="w-12 h-12 clay-card clay-inner rounded-full flex items-center justify-center text-primary text-xl">👩‍💼</div>
+          <div>
+            <h2 class="text-2xl font-bold text-primary leading-tight">Đỗ Thùy Hương</h2>
+            <p class="text-sm font-semibold uppercase tracking-widest text-deep-teal/60">Founder & Project Lead</p>
+          </div>
+        </div>
+        <p class="leading-relaxed mb-6 italic border-l-4 border-primary-container pl-4 text-deep-teal/85">
+          "Với niềm đam mê công nghệ và giáo dục, mục tiêu của tôi là xây dựng BizOn trở thành một nền tảng mô phỏng kinh doanh chân thực, sống động và dễ tiếp cận nhất. Chúng tôi đang tái định nghĩa cách người trẻ học hỏi và trải nghiệm môi trường doanh nghiệp thông qua lăng kính của trò chơi hiện đại, kết hợp cùng sức mạnh của AI để tạo ra những kịch bản kinh doanh không giới hạn."
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <span class="px-3 py-1 bg-primary-container/10 text-primary text-xs font-bold rounded-full">EdTech Pioneer</span>
+          <span class="px-3 py-1 bg-primary-container/10 text-primary text-xs font-bold rounded-full">AI Strategy</span>
+          <span class="px-3 py-1 bg-primary-container/10 text-primary text-xs font-bold rounded-full">Hóa thân Lumina AI</span>
+        </div>
+      </div>
+
+      <div class="reveal-card clay-card p-8" style="transition-delay:200ms">
+        <div class="flex items-center gap-4 mb-4">
+          <div class="w-12 h-12 clay-card clay-inner rounded-full flex items-center justify-center text-tertiary text-xl">🎓</div>
+          <div>
+            <h2 class="text-2xl font-bold text-deep-teal leading-tight">PGS.TS Phan Anh Tú</h2>
+            <p class="text-sm font-semibold uppercase tracking-widest text-deep-teal/60">Co-founder & Chief Advisor</p>
+          </div>
+        </div>
+        <p class="leading-relaxed mb-6 text-deep-teal/85">
+          Đóng vai trò là "bảo chứng học thuật" cho nền tảng BizOn. Với tầm nhìn chiến lược và bề dày kinh nghiệm trong lĩnh vực quản trị kinh doanh, PGS.TS Phan Anh Tú đảm bảo mọi kịch bản mô phỏng đều đạt tiêu chuẩn chuyên môn cao nhất, mang lại giá trị thực tiễn cho người dùng.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <span class="px-3 py-1 bg-tertiary/10 text-tertiary text-xs font-bold rounded-full">Academic Guarantee</span>
+          <span class="px-3 py-1 bg-tertiary/10 text-tertiary text-xs font-bold rounded-full">Strategic Vision</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission & Vision -->
+  <section class="mb-16">
+    <h3 class="text-xl font-bold mb-8 text-center text-deep-teal">Sứ mệnh & Tầm nhìn 2026</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="reveal-card clay-card p-6 flex flex-col gap-4">
+        <div class="w-10 h-10 clay-card rounded-xl flex items-center justify-center text-xl">🚀</div>
+        <h4 class="font-bold text-lg">Sứ mệnh</h4>
+        <p class="text-sm text-deep-teal/65">Dân chủ hóa giáo dục quản trị thông qua công nghệ Gamification và AI vượt trội.</p>
+      </div>
+      <div class="reveal-card clay-card p-6 flex flex-col gap-4">
+        <div class="w-10 h-10 clay-card rounded-xl flex items-center justify-center text-xl">👁️</div>
+        <h4 class="font-bold text-lg">Tầm nhìn 2026</h4>
+        <p class="text-sm text-deep-teal/65">Trở thành nền tảng mô phỏng kinh doanh số 1 tại Đông Nam Á cho thế hệ trẻ.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Actions -->
+  <section class="flex flex-col gap-4 mt-20">
+    <a class="clay-btn clay-btn-primary h-14 flex items-center justify-center gap-3 font-bold" href="mailto:thuyhuongctu@gmail.com">✉️ Liên hệ hợp tác</a>
+    <div class="grid grid-cols-2 gap-3">
+      <a class="clay-btn h-14 flex items-center justify-center gap-2 font-bold text-primary" href="gioi-thieu.html">🌐 Website</a>
+      <a class="clay-btn h-14 flex items-center justify-center gap-2 font-bold text-deep-teal" href="games.html">🕹️ Arcade</a>
+    </div>
+    <p class="text-center text-xs text-deep-teal/50 mt-12">© 2026 Đỗ Thùy Hương & PGS.TS Phan Anh Tú · BizOn Bật Nghiệp — Bảo lưu mọi quyền.</p>
+  </section>
+</main>
+
+<script>
+function initParticles() {
+  const container = document.getElementById('particles-container');
+  const colors = ['#00c4ff', '#006687', '#ffffff'];
+  for (let i = 0; i < 20; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 10 + 4;
+    p.style.width = size + 'px';
+    p.style.height = size + 'px';
+    p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    p.style.left = Math.random() * 100 + '%';
+    p.style.top = Math.random() * 100 + '%';
+    p.animate([
+      { transform: 'translate(0,0)', opacity: 0 },
+      { transform: `translate(${Math.random() * 40 - 20}px, ${Math.random() * -60 - 20}px)`, opacity: .3, offset: .5 },
+      { transform: `translate(${Math.random() * 80 - 40}px, ${Math.random() * -120 - 40}px)`, opacity: 0 },
+    ], { duration: (Math.random() * 10 + 10) * 1000, iterations: Infinity, easing: 'ease-in-out' });
+    container.appendChild(p);
+  }
+}
+function initScrollReveal() {
+  const cards = document.querySelectorAll('.reveal-card');
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }), { threshold: .15 });
+  cards.forEach(c => io.observe(c));
+  setTimeout(() => cards.forEach(c => { if (c.getBoundingClientRect().top < innerHeight) c.classList.add('visible'); }), 100);
+}
+document.addEventListener('DOMContentLoaded', () => { initParticles(); initScrollReveal(); });
+</script>
+</body>
+</html>
