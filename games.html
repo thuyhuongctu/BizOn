@@ -75,6 +75,28 @@ tailwind.config = {
   <p class="text-white/70 text-sm mt-2 max-w-lg mx-auto pb-4">6 trò chơi của hệ sinh thái BizOn Bật Nghiệp — từ mô phỏng chiến lược 6 vòng đến các game phản xạ 30 giây. Chọn và chơi ngay!</p>
 </header>
 
+<!-- CHỌN PHIÊN BẢN -->
+<section class="max-w-5xl mx-auto px-5 pt-10">
+  <p class="text-center text-xs font-extrabold text-primary uppercase tracking-[.2em]">Chọn phiên bản & chế độ chơi</p>
+  <div class="grid sm:grid-cols-2 gap-4 mt-4">
+    <a href="index.html" class="clay-card p-5 flex items-center gap-4 hover:-translate-y-0.5 transition-transform">
+      <p class="text-4xl shrink-0">🇻🇳</p>
+      <div class="flex-1">
+        <div class="flex items-center gap-2"><h3 class="font-display font-extrabold">BizOn Việt Nam</h3><span class="tag text-white" style="background:#e8762d">ĐANG MỞ</span></div>
+        <p class="text-xs text-deep-teal/60 mt-1">Thị trường nội địa 2026: biến cố Hóa Rồng, đối thủ Việt, bản tin Thị trường sống. Chơi đơn (offline) cùng 3 đội AI.</p>
+      </div>
+      <span class="clay-btn bg-primary text-white text-xs font-bold px-4 py-2.5 shrink-0">Vào game</span>
+    </a>
+    <div class="clay-card p-5 flex items-center gap-4 opacity-80">
+      <p class="text-4xl shrink-0">🌏</p>
+      <div class="flex-1">
+        <div class="flex items-center gap-2"><h3 class="font-display font-extrabold">BizOn Global</h3><span class="tag" style="background:#e0f2ff;color:#004d67">SẮP RA MẮT</span></div>
+        <p class="text-xs text-deep-teal/60 mt-1">Vươn tầm thế giới — cạnh tranh với các tập đoàn đa quốc gia và thị trường tài chính quốc tế. Đấu Trường online sẽ cần máy chủ.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <main class="max-w-5xl mx-auto px-5 py-10 grid md:grid-cols-2 gap-5">
 
   <!-- 1. GAME CHÍNH -->
@@ -161,6 +183,47 @@ tailwind.config = {
     </div>
   </div>
 
+  <!-- CLAY SORT -->
+  <div class="clay-card p-5">
+    <div class="flex items-center gap-4">
+      <p class="text-4xl shrink-0">📦</p>
+      <div class="flex-1">
+        <div class="flex items-center gap-2"><h3 class="font-display font-extrabold">Clay Sort — Phân loại</h3><span class="tag" style="background:#fff4d6;color:#946200">PHẢN XẠ 30s</span></div>
+        <p class="text-xs text-deep-teal/60 mt-1">Băng chuyền thả hình đất nặn — chạm đúng thùng (Hộp / Cầu / Tháp) trước khi hàng rơi xuống. Chuỗi đúng liên tiếp nhân điểm!</p>
+      </div>
+      <button onclick="csStart()" id="cs-btn" class="clay-btn bg-primary text-white text-xs font-bold px-5 py-2.5 shrink-0">Chơi</button>
+    </div>
+    <div id="cs-panel" class="game-panel mt-4">
+      <div class="flex justify-between items-center clay-sunken rounded-2xl px-4 py-2.5 mb-3 text-sm font-extrabold">
+        <span>Điểm: <span id="cs-score" class="text-primary">0</span></span>
+        <span id="cs-combo" class="text-clay-orange"></span>
+        <span>⏱️ <span id="cs-time">30</span>s</span>
+      </div>
+      <div id="cs-stage" class="relative h-36 rounded-2xl overflow-hidden mb-3" style="background:linear-gradient(180deg,#efe9fb,#f4faff); box-shadow:inset 3px 3px 8px rgba(0,102,135,.1)">
+        <p id="cs-item" class="absolute left-1/2 -translate-x-1/2 text-4xl transition-none select-none" style="top:-46px">📦</p>
+      </div>
+      <div class="grid grid-cols-3 gap-2.5">
+        <button onclick="csPick('📦')" class="clay-btn text-white font-display font-extrabold py-3.5" style="background:#3b82f6; box-shadow:0 5px 0 #1d4ed8">📦 Hộp</button>
+        <button onclick="csPick('🔴')" class="clay-btn text-white font-display font-extrabold py-3.5" style="background:#ef4444; box-shadow:0 5px 0 #b91c1c">🔴 Cầu</button>
+        <button onclick="csPick('🔺')" class="clay-btn text-white font-display font-extrabold py-3.5" style="background:#eab308; box-shadow:0 5px 0 #a16207">🔺 Tháp</button>
+      </div>
+      <p id="cs-fb" class="text-xs mt-2 font-semibold"></p>
+    </div>
+  </div>
+
+  <!-- ĐẤU TRƯỜNG 1v1 -->
+  <div class="clay-card p-5">
+    <div class="flex items-center gap-4">
+      <p class="text-4xl shrink-0">⚔️</p>
+      <div class="flex-1">
+        <div class="flex items-center gap-2"><h3 class="font-display font-extrabold">Đấu Trường 1v1</h3><span class="tag" style="background:#ffe4dc;color:#c2410c">CHIẾN THUẬT</span></div>
+        <p class="text-xs text-deep-teal/60 mt-1">Đối đầu CEO AI qua 3 hiệp: mỗi hiệp chọn 1 chiến lược giá — kết thúc bằng màn so tài chỉ số Head-to-Head.</p>
+      </div>
+      <button onclick="h2hStart()" class="clay-btn bg-primary text-white text-xs font-bold px-5 py-2.5 shrink-0">Chơi</button>
+    </div>
+    <div id="h2h-panel" class="game-panel mt-4"></div>
+  </div>
+
   <!-- 6. BẮT VỐN VÀNG -->
   <div class="clay-card p-5">
     <div class="flex items-center gap-4">
@@ -236,6 +299,148 @@ function cfEnd() {
   document.getElementById('cf-fb').textContent = `Kết thúc! ${s} đơn hàng đóng gói đúng. ${msg} Vào game chính để tích điểm đổi quà ở Clay Reward Shop!`;
   document.getElementById('cf-fb').className = 'text-xs mt-2 font-semibold text-primary';
   cf = null;
+}
+
+/* ============ CLAY SORT — PHÂN LOẠI (SWIPE TO SORT) ============ */
+const CS_SHAPES = ['📦', '🔴', '🔺'];
+let cs = null;
+function csStart() {
+  document.getElementById('cs-panel').classList.add('open');
+  if (cs) { clearInterval(cs.clock); cancelAnimationFrame(cs.raf); }
+  cs = { score: 0, combo: 0, time: 30, y: -46, speed: 1.4, item: CS_SHAPES[0], clock: 0, raf: 0, over: false };
+  csNew();
+  document.getElementById('cs-score').textContent = '0';
+  document.getElementById('cs-time').textContent = '30';
+  document.getElementById('cs-combo').textContent = '';
+  document.getElementById('cs-fb').textContent = '';
+  document.getElementById('cs-btn').textContent = '🔄 Chơi lại';
+  cs.clock = setInterval(() => {
+    cs.time--;
+    document.getElementById('cs-time').textContent = cs.time;
+    if (cs.time <= 0) csEnd();
+  }, 1000);
+  cs.raf = requestAnimationFrame(csFall);
+}
+function csNew() {
+  cs.item = CS_SHAPES[Math.floor(Math.random() * 3)];
+  cs.y = -46;
+  cs.speed = 1.4 + (30 - cs.time) * 0.05 + Math.random() * 0.8;
+  const el = document.getElementById('cs-item');
+  el.textContent = cs.item;
+  el.style.left = (25 + Math.random() * 50) + '%';
+}
+function csFall() {
+  if (!cs || cs.over) return;
+  cs.y += cs.speed;
+  const stage = document.getElementById('cs-stage');
+  document.getElementById('cs-item').style.top = cs.y + 'px';
+  if (cs.y > stage.offsetHeight) {   // rơi mất — trừ điểm, mất chuỗi
+    cs.score = Math.max(0, cs.score - 1); cs.combo = 0;
+    document.getElementById('cs-score').textContent = cs.score;
+    document.getElementById('cs-combo').textContent = '';
+    csNew();
+  }
+  cs.raf = requestAnimationFrame(csFall);
+}
+function csPick(shape) {
+  if (!cs || cs.over) return;
+  if (shape === cs.item) {
+    cs.combo++;
+    cs.score += cs.combo >= 6 ? 3 : cs.combo >= 3 ? 2 : 1;
+    document.getElementById('cs-combo').textContent = cs.combo >= 3 ? `🔥 Chuỗi ×${cs.combo}` : '';
+  } else {
+    cs.score = Math.max(0, cs.score - 1); cs.combo = 0;
+    document.getElementById('cs-combo').textContent = '';
+  }
+  document.getElementById('cs-score').textContent = cs.score;
+  csNew();
+}
+function csEnd() {
+  cs.over = true; clearInterval(cs.clock); cancelAnimationFrame(cs.raf);
+  const s = cs.score;
+  const msg = s >= 30 ? '🏆 Bậc thầy phân loại!' : s >= 18 ? '💪 Quản đốc tương lai!' : '🌱 Chuỗi đúng liên tiếp sẽ nhân điểm — thử lại nhé!';
+  document.getElementById('cs-fb').textContent = `Kết thúc! ${s} điểm. ${msg}`;
+  document.getElementById('cs-fb').className = 'text-xs mt-2 font-semibold text-primary';
+}
+
+/* ============ ĐẤU TRƯỜNG 1v1 (HEAD-TO-HEAD) ============ */
+const H2H_MOVES = [
+  { id: 'cheap',   icon: '🏷️', name: 'Giá rẻ',   desc: 'Giành thị phần, biên mỏng' },
+  { id: 'balance', icon: '⚖️', name: 'Cân bằng', desc: 'Ổn định đôi đường' },
+  { id: 'premium', icon: '💎', name: 'Cao cấp',  desc: 'Biên dày, kén khách' },
+];
+let h2h = null;
+function h2hStart() {
+  h2h = { round: 1, you: { profit: 0, share: 0, wins: 0 }, ai: { profit: 0, share: 0, wins: 0 }, log: [] };
+  h2hRender();
+}
+function h2hRender() {
+  document.getElementById('h2h-panel').classList.add('open');
+  document.getElementById('h2h-panel').innerHTML = `
+    <div class="clay-sunken rounded-2xl p-3 mb-3 text-center">
+      <p class="text-[10px] font-extrabold text-deep-teal/50 uppercase">Hiệp ${h2h.round}/3 · Bạn ⚔️ CEO AI "Delta"</p>
+      <p class="text-xs font-bold text-deep-teal mt-1">Chọn chiến lược giá cho hiệp này:</p>
+    </div>
+    <div class="grid grid-cols-3 gap-2.5">
+      ${H2H_MOVES.map(m => `
+      <button onclick="h2hPlay('${m.id}')" class="clay-btn bg-white text-deep-teal p-3 text-center">
+        <p class="text-2xl">${m.icon}</p><p class="font-display font-extrabold text-xs mt-1">${m.name}</p>
+        <p class="text-[9px] text-deep-teal/50 mt-0.5">${m.desc}</p>
+      </button>`).join('')}
+    </div>
+    ${h2h.log.length ? `<div class="mt-3 flex gap-2">${h2h.log.map(l => `
+      <div class="flex-1 clay-sunken rounded-xl p-2 text-center"><p class="text-[9px] font-extrabold ${l.win === 'you' ? 'text-emerald-600' : l.win === 'ai' ? 'text-red-600' : 'text-deep-teal/50'}">${l.win === 'you' ? 'THẮNG' : l.win === 'ai' ? 'THUA' : 'HÒA'}</p><p class="text-base">${l.icon}</p></div>`).join('')}</div>` : ''}`;
+}
+function h2hPlay(moveId) {
+  const you = H2H_MOVES.find(m => m.id === moveId);
+  const ai = H2H_MOVES[Math.floor(Math.random() * 3)];
+  // khắc chế vòng tròn: giá rẻ > cao cấp (cướp khách), cao cấp > cân bằng (biên dày), cân bằng > giá rẻ (bền vốn)
+  const beats = { cheap: 'premium', premium: 'balance', balance: 'cheap' };
+  const base = { cheap: [40, 42], balance: [70, 30], premium: [110, 20] }; // [profit, share]
+  const jit = () => 0.85 + Math.random() * 0.3;
+  let yp = base[you.id][0] * jit(), ys = base[you.id][1] * jit();
+  let ap = base[ai.id][0] * jit(), as = base[ai.id][1] * jit();
+  if (beats[you.id] === ai.id) { yp *= 1.45; ys *= 1.3; ap *= 0.65; }
+  else if (beats[ai.id] === you.id) { ap *= 1.45; as *= 1.3; yp *= 0.65; }
+  h2h.you.profit += yp; h2h.you.share += ys;
+  h2h.ai.profit += ap; h2h.ai.share += as;
+  const win = yp > ap ? 'you' : ap > yp ? 'ai' : 'tie';
+  if (win === 'you') h2h.you.wins++; if (win === 'ai') h2h.ai.wins++;
+  h2h.log.push({ icon: you.icon + 'vs' + ai.icon, win });
+  if (h2h.round < 3) { h2h.round++; h2hRender(); }
+  else h2hResult();
+}
+function h2hResult() {
+  const y = h2h.you, a = h2h.ai;
+  const youWin = y.wins > a.wins || (y.wins === a.wins && y.profit >= a.profit);
+  const bar = (label, yv, av, unit) => {
+    const total = yv + av || 1;
+    return `<div class="mb-3">
+      <p class="text-[10px] font-extrabold text-deep-teal/50 uppercase text-center mb-1">${label}</p>
+      <div class="flex items-center gap-2 text-xs font-extrabold">
+        <span class="text-primary w-14 text-right">${Math.round(yv)}${unit}</span>
+        <div class="flex-1 h-3.5 rounded-full overflow-hidden flex clay-sunken">
+          <div style="width:${100 * yv / total}%; background:linear-gradient(90deg,#00c4ff,#006687)"></div>
+          <div style="width:${100 * av / total}%; background:#f0b27a"></div>
+        </div>
+        <span class="text-clay-orange w-14">${Math.round(av)}${unit}</span>
+      </div>
+    </div>`;
+  };
+  document.getElementById('h2h-panel').innerHTML = `
+    <div class="text-center mb-4">
+      <p class="text-4xl">${youWin ? '🏆' : '💪'}</p>
+      <p class="font-display font-extrabold text-deep-teal text-lg mt-1">${youWin ? 'BẠN THẮNG TRẬN ĐỐI ĐẦU!' : 'CEO AI thắng trận này!'}</p>
+      <p class="text-[11px] text-deep-teal/55">Tỷ số hiệp: Bạn ${y.wins} — ${a.wins} AI</p>
+    </div>
+    <div class="flex justify-between text-xs font-extrabold mb-2"><span class="text-primary">🧑‍💼 BẠN</span><span class="text-clay-orange">🤖 DELTA AI</span></div>
+    ${bar('Lợi nhuận', y.profit, a.profit, 'tr')}
+    ${bar('Thị phần tích lũy', y.share, a.share, '%')}
+    ${bar('Hiệp thắng', y.wins, a.wins, '')}
+    <div class="grid grid-cols-3 gap-2 mt-1 mb-3">${h2h.log.map(l => `
+      <div class="clay-sunken rounded-xl p-2 text-center"><p class="text-[9px] font-extrabold ${l.win === 'you' ? 'text-emerald-600' : l.win === 'ai' ? 'text-red-600' : 'text-deep-teal/50'}">${l.win === 'you' ? 'THẮNG' : l.win === 'ai' ? 'THUA' : 'HÒA'}</p><p>${l.icon}</p></div>`).join('')}</div>
+    <button onclick="h2hStart()" class="clay-btn w-full bg-primary text-white font-display font-bold text-sm py-3">🔄 Tái đấu</button>
+    <p class="text-[10px] text-deep-teal/45 text-center mt-2">Mẹo khắc chế: 🏷️ Giá rẻ thắng 💎 Cao cấp · 💎 Cao cấp thắng ⚖️ Cân bằng · ⚖️ Cân bằng thắng 🏷️ Giá rẻ</p>`;
 }
 
 /* ============ QUIZ ============ */
