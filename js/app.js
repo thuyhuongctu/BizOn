@@ -1026,9 +1026,23 @@ function renderConquest() {
     if (c) m += `<text x="${st.x + 3}" y="${st.y - 9}" font-size="26">${c.win ? '🚩' : '🏴'}</text>`;
     return m;
   }).join('');
-  box.innerHTML = `<svg viewBox="0 0 245 500" class="w-full h-auto" aria-label="Bản đồ chinh phục Việt Nam">
+  box.innerHTML = `<svg viewBox="0 0 372 512" class="w-full h-auto" aria-label="Bản đồ chinh phục Việt Nam — Hoàng Sa & Trường Sa là của Việt Nam">
     <g transform="scale(.85) translate(4,10)">
       <polygon points="${VN_OUTLINE}" fill="rgba(0,102,135,.07)" stroke="#006687" stroke-width="2.4" stroke-linejoin="round"/>
+      <g transform="translate(108.9,25.2)">
+        <line x1="0" y1="0" x2="0" y2="-27" stroke="#8a6a4f" stroke-width="2.6"/>
+        <rect x="1" y="-27" width="21" height="13.5" rx="1.5" fill="#da251d"/>
+        <path fill="#ffce00" d="M11.5 -24.4 12.8 -21.1 16.2 -21.1 13.4 -19 14.5 -15.7 11.5 -17.8 8.5 -15.7 9.6 -19 6.8 -21.1 10.2 -21.1Z"/>
+      </g>
+      <text x="130" y="12" font-size="13" font-weight="800" fill="#006687" opacity=".75">Lũng Cú</text>
+      <g fill="#006687" opacity=".9">
+        <circle cx="287.8" cy="219" r="2.3"/><circle cx="299.2" cy="225" r="2.3"/><circle cx="307.8" cy="220.5" r="2.3"/><circle cx="319.2" cy="231" r="2.3"/><circle cx="299.2" cy="237" r="2.3"/><circle cx="290.7" cy="229.5" r="2.3"/><circle cx="312.1" cy="240" r="2.3"/>
+      </g>
+      <text x="304" y="208" font-size="13.5" font-weight="800" fill="#006687" opacity=".8" text-anchor="middle">Hoàng Sa</text>
+      <g fill="#006687" opacity=".9">
+        <circle cx="296.4" cy="384" r="2.1"/><circle cx="322" cy="402" r="2.1"/><circle cx="350.5" cy="393" r="2.1"/><circle cx="364.8" cy="414" r="2.1"/><circle cx="339.2" cy="432" r="2.1"/><circle cx="313.5" cy="438" r="2.1"/><circle cx="379" cy="429" r="2.1"/><circle cx="353.4" cy="462" r="2.1"/><circle cx="324.9" cy="474" r="2.1"/><circle cx="367.7" cy="489" r="2.1"/><circle cx="290.7" cy="420" r="2.1"/><circle cx="393.3" cy="447" r="2.1"/>
+      </g>
+      <text x="345" y="374" font-size="13.5" font-weight="800" fill="#006687" opacity=".8" text-anchor="middle">Trường Sa</text>
       <path d="${journey}" fill="none" stroke="#e8762d" stroke-width="2" stroke-dasharray="5 6" stroke-linecap="round" opacity=".55"/>
       ${marks}
     </g>
