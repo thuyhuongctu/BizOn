@@ -88,6 +88,13 @@ tailwind.config = {
   .item-icon-container { position:relative; background:radial-gradient(circle at 30% 30%, #f0f9ff, #c1e8ff); border-radius:20px; overflow:hidden; }
   .item-icon-container::after { content:''; position:absolute; inset:0; box-shadow:inset 0 0 15px rgba(255,255,255,.6); pointer-events:none; }
   .xp-bar-fill { transition:width 1s cubic-bezier(.34,1.56,.64,1); box-shadow:inset 0 2px 4px rgba(255,255,255,.4); }
+  /* Thị trường sống — Live Market Pulse */
+  .ticker-wrap { width:100%; overflow:hidden; white-space:nowrap; }
+  .ticker-content { display:inline-block; animation:tickerMove 28s linear infinite; }
+  @keyframes tickerMove { 0% { transform:translateX(100%); } 100% { transform:translateX(-100%); } }
+  .clay-bar-v { border-radius:999px; box-shadow:6px 6px 12px rgba(0,0,0,.1), inset 4px 4px 8px rgba(255,255,255,.5), inset -4px -4px 8px rgba(0,0,0,.1); transition:height 1s cubic-bezier(.4,0,.2,1); }
+  .waterfall-bar { border-radius:8px 8px 4px 4px; box-shadow:inset 2px 2px 4px rgba(255,255,255,.3); }
+  .spider-grid { stroke:#bfc8ce; stroke-dasharray:4; fill:none; }
 </style>
 </head>
 <body class="min-h-screen">
@@ -193,6 +200,7 @@ tailwind.config = {
         <button onclick="showTab('achievements')" class="clay-card p-3 text-center"><p class="text-2xl">🎖️</p><p class="text-[10px] font-bold text-deep-teal mt-1">Thành tựu</p></button>
         <button onclick="showTab('advisorpro')" class="clay-card p-3 text-center"><p class="text-2xl">📈</p><p class="text-[10px] font-bold text-deep-teal mt-1">Advisor Pro</p></button>
         <button onclick="showTab('instructor')" class="clay-card p-3 text-center"><p class="text-2xl">🧑‍🏫</p><p class="text-[10px] font-bold text-deep-teal mt-1">Giảng viên</p></button>
+        <button onclick="showTab('market')" class="clay-card p-3 text-center"><p class="text-2xl">📡</p><p class="text-[10px] font-bold text-deep-teal mt-1">Thị trường sống</p></button>
         <button onclick="showTab('journal')" class="clay-card p-3 text-center"><p class="text-2xl">📔</p><p class="text-[10px] font-bold text-deep-teal mt-1">Nhật ký đội</p></button>
         <button onclick="showTab('settings')" class="clay-card p-3 text-center"><p class="text-2xl">⚙️</p><p class="text-[10px] font-bold text-deep-teal mt-1">Cài đặt</p></button>
       </div>
@@ -461,6 +469,19 @@ tailwind.config = {
         <button onclick="runAdvisorPro()" class="clay-btn w-full bg-primary text-white font-display font-bold py-4">🔮 Phân tích kịch bản</button>
       </div>
       <div id="ap-result"></div>
+    </section>
+
+    <!-- ========== LIVE MARKET PULSE (Thị trường sống) ========== -->
+    <section id="tab-market" class="screen">
+      <div class="flex items-center justify-between mb-1">
+        <h2 class="font-display text-xl font-extrabold text-deep-teal">📡 Thị trường sống</h2>
+        <span class="clay-sunken rounded-full px-3 py-1.5 flex items-center gap-1.5 text-[10px] font-extrabold text-deep-teal/60"><span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span> LIVE SIMULATION</span>
+      </div>
+      <p class="text-sm text-deep-teal/60 mb-3">Nhịp đập thị trường thời gian thực: đối thủ, tiếng nói khách hàng và xu hướng.</p>
+      <div class="clay-sunken rounded-2xl py-2.5 mb-4 overflow-hidden">
+        <div class="ticker-wrap"><div id="market-ticker" class="ticker-content text-xs font-semibold text-deep-teal/70"></div></div>
+      </div>
+      <div id="market-body"></div>
     </section>
 
     <!-- ========== TEAM JOURNAL (Nhật ký đội) ========== -->
