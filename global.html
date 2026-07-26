@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 — © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>BizOn Global — Je m'appelle Hương and the World</title>
+<meta name="description" content="BizOn Global (bản thử nghiệm) — từ Việt Nam vươn ra thị trường quốc tế: chọn thị trường, chọn phương thức thâm nhập (Export, Licensing, Liên doanh, FDI) và kinh doanh trong kỷ nguyên số.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#006687', 'primary-container': '#00c4ff', 'surface-bright': '#f4faff',
+        'deep-teal': 'rgb(var(--dt) / <alpha-value>)', 'clay-orange': '#e8762d', 'clay-gold': '#fda127',
+      },
+      fontFamily: { display: ['"Plus Jakarta Sans"', 'sans-serif'], body: ['Manrope', 'sans-serif'] },
+      borderRadius: { clay: '24px' },
+    },
+  },
+};
+</script>
+<script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+  html { background:#f4faff; scroll-behavior:smooth; }
+  body { font-family:'Manrope',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
+  .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
+  .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease; }
+  .clay-btn:active { transform:translateY(2px); }
+  .clay-btn-primary { background:linear-gradient(160deg,#00c4ff,#006687); border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.5), inset 0 -4px 0 rgba(0,0,0,.18); }
+  .clay-sunken { background:#e8f2f8; box-shadow:inset 3px 3px 8px rgba(0,102,135,.12), inset -3px -3px 8px rgba(255,255,255,.9); }
+  .glass-nav { background:rgba(3,51,55,.78); backdrop-filter:blur(14px); }
+  .tag { font-size:10px; font-weight:800; padding:2px 10px; border-radius:999px; }
+  .market-pin { cursor:pointer; transition:transform .15s ease; transform-box:fill-box; transform-origin:center; }
+  .market-pin:hover { transform:scale(1.18); }
+  .market-pin.sel circle { stroke:#e8762d; stroke-width:4; }
+  .vn-pulse { animation:vnPulse 1.8s ease-in-out infinite; transform-box:fill-box; transform-origin:center; }
+  @keyframes vnPulse { 0%,100%{transform:scale(1);opacity:.85} 50%{transform:scale(1.25);opacity:1} }
+  .route { stroke-dasharray:6 7; animation:routeFlow 1.2s linear infinite; }
+  @keyframes routeFlow { to { stroke-dashoffset:-13; } }
+  input[type=range] { -webkit-appearance:none; height:10px; border-radius:999px; background:#dbe9f2; outline:none; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:26px; height:26px; border-radius:50%; background:linear-gradient(160deg,#00c4ff,#006687); box-shadow:0 4px 8px rgba(0,102,135,.4), inset 0 -3px 0 rgba(0,0,0,.15); cursor:pointer; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none} }
+  .fade-up { animation:fadeUp .35s ease; }
+  /* ===== Chế độ tối ===== */
+  :root { --dt: 3 51 55; }
+  html[data-theme="dark"] { --dt: 214 236 240; background:#081a20; color-scheme:dark; }
+  html[data-theme="dark"] body { color:#d6ecf0; }
+  html[data-theme="dark"] .clay-card { background:#0e2a33; box-shadow:0 10px 30px -5px rgba(0,0,0,.45), inset 0 -4px 0 rgba(0,0,0,.3); }
+  html[data-theme="dark"] .clay-sunken { background:#0a222a; box-shadow:inset 3px 3px 8px rgba(0,0,0,.5), inset -3px -3px 8px rgba(255,255,255,.03); }
+  html[data-theme="dark"] .glass-nav { background:rgba(2,20,24,.85); }
+  html[data-theme="dark"] .bg-white { background-color:#0e2a33 !important; }
+  html[data-theme="dark"] .text-primary { color:#5cc4e6 !important; }
+  html[data-theme="dark"] input[type=range] { background:#123540; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="glass-nav fixed top-0 inset-x-0 z-50 text-white">
+  <div class="max-w-5xl mx-auto px-5 h-16 flex items-center justify-between gap-3">
+    <a href="gioi-thieu.html" class="flex items-center gap-2.5">
+      <img src="assets/icons/icon-192.png" alt="BizOn" class="w-9 h-9 rounded-xl shadow-lg">
+      <span class="font-display font-extrabold tracking-tight">BizOn <span class="text-clay-gold">Global</span></span>
+    </a>
+    <div class="flex items-center gap-2.5">
+      <a href="games.html" class="text-white/70 hover:text-white text-sm font-bold hidden sm:block">🕹️ Arcade</a>
+      <a href="https://github.com/thuyhuongctu/BizOn" target="_blank" rel="noopener" title="Mã nguồn trên GitHub" class="w-9 h-9 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 transition-colors flex items-center justify-center shrink-0">
+        <svg viewBox="0 0 16 16" class="w-4.5 h-4.5 w-5 h-5" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+      </a>
+      <button id="theme-btn" onclick="toggleTheme()" class="w-9 h-9 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 transition-colors shrink-0" title="Chế độ Sáng/Tối · Light/Dark mode">🌙</button>
+      <button id="lang-btn" onclick="toggleLang()" class="h-9 px-3 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 text-[11px] font-extrabold transition-colors shrink-0" title="Tiếng Việt / English">EN</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="pt-24 pb-8 text-white" style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%)">
+  <div class="max-w-5xl mx-auto px-5">
+    <p class="tag inline-block bg-clay-gold text-deep-teal" style="color:#033337">🧪 BẢN THỬ NGHIỆM</p>
+    <h1 class="font-display font-extrabold text-3xl sm:text-4xl mt-3 leading-tight">🌏 BizOn Global</h1>
+    <p class="signature-like text-primary-container font-display font-bold mt-1">Je m'appelle Hương and the World</p>
+    <p class="text-white/75 text-sm mt-3 max-w-2xl">Từ Việt Nam 🇻🇳 vươn ra thị trường quốc tế trong kỷ nguyên số: chọn một thị trường, chọn <b class="text-white">phương thức thâm nhập</b> — Xuất khẩu, Licensing, Liên doanh hay FDI đầu tư mới — rồi ra quyết định kinh doanh qua 4 quý.</p>
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-5 py-8">
+
+  <!-- WORLD MONITOR LIVE -->
+  <section id="world-monitor" class="mb-8">
+    <div class="rounded-clay p-4" style="background:#0d1117;color:#dce8e2;font-family:ui-monospace,Menlo,Consolas,monospace;box-shadow:0 10px 30px -5px rgba(0,0,0,.35)">
+      <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1f2b33;padding-bottom:8px">
+        <p style="font-size:11px;letter-spacing:.18em;font-weight:700">🌐 WORLD MARKET</p>
+        <p id="wm-badge" style="font-size:9px;letter-spacing:.14em;color:#8fa89f">SAMPLE</p>
+      </div>
+      <div id="wm-rows" style="margin-top:6px"></div>
+      <p style="font-size:9px;color:#63757e;margin-top:8px">Dữ liệu trực tuyến: CoinGecko · open.er-api.com — bối cảnh thật cho quyết định quốc tế của bạn.</p>
+    </div>
+  </section>
+
+  <!-- BƯỚC 1: BẢN ĐỒ & CHỌN THỊ TRƯỜNG -->
+  <section class="mb-8">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-1">🗺️ Bước 1 — Chọn thị trường quốc tế</h2>
+    <p class="text-sm text-deep-teal/60 mb-4">Xuất phát từ Việt Nam — chạm vào một điểm đến trên bản đồ thế giới.</p>
+    <div class="clay-card p-3 sm:p-5 overflow-hidden">
+      <div id="world-map"></div>
+      <div id="market-cards" class="grid sm:grid-cols-5 gap-2.5 mt-4"></div>
+    </div>
+  </section>
+
+  <!-- BƯỚC 2: PHƯƠNG THỨC THÂM NHẬP -->
+  <section id="sec-mode" class="mb-8 hidden">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-1">🛂 Bước 2 — Chọn phương thức thâm nhập (Entry mode)</h2>
+    <p id="mode-sub" class="text-sm text-deep-teal/60 mb-4"></p>
+    <div id="mode-cards" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3"></div>
+  </section>
+
+  <!-- BƯỚC 3: RA QUYẾT ĐỊNH 4 QUÝ -->
+  <section id="sec-play" class="mb-8 hidden">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-1">📊 Bước 3 — Kinh doanh trong kỷ nguyên số</h2>
+    <p id="play-sub" class="text-sm text-deep-teal/60 mb-4"></p>
+    <div id="q-event" class="clay-card p-4 mb-4 border-2 border-primary-container/40"></div>
+    <div class="grid lg:grid-cols-2 gap-5">
+      <div class="clay-card p-5">
+        <p class="font-display font-extrabold text-deep-teal mb-4">🎯 Quyết định quý <span id="q-num">1</span>/4</p>
+        <label class="block text-xs font-bold text-deep-teal mb-1">💲 Giá bán quốc tế (USD) — <span id="gp-val" class="text-primary">12</span></label>
+        <input id="gp" type="range" min="6" max="25" value="12" class="w-full mb-4" oninput="gUpdate()">
+        <label class="block text-xs font-bold text-deep-teal mb-1">📱 Marketing số (nghìn USD/quý) — <span id="gm-val" class="text-primary">40</span></label>
+        <input id="gm" type="range" min="0" max="120" value="40" class="w-full mb-4" oninput="gUpdate()">
+        <label class="block text-xs font-bold text-deep-teal mb-1">🎨 Bản địa hóa sản phẩm (nghìn USD/quý) — <span id="gl-val" class="text-primary">25</span></label>
+        <input id="gl" type="range" min="0" max="100" value="25" class="w-full mb-2" oninput="gUpdate()">
+        <p id="g-lumina" class="text-[11px] text-deep-teal/70 italic mt-2 min-h-[2rem]"></p>
+        <button onclick="gCommit()" class="clay-btn-primary clay-btn w-full text-white font-display font-extrabold py-3.5 mt-3">Chốt quý này 🚀</button>
+      </div>
+      <div class="clay-card p-5">
+        <p class="font-display font-extrabold text-deep-teal mb-4">🌍 Thị trường phản ứng</p>
+        <div class="grid grid-cols-3 gap-2.5 text-center mb-4">
+          <div class="clay-sunken rounded-2xl p-3"><p id="g-share" class="font-display font-extrabold text-primary text-lg">—</p><p class="text-[9px] font-extrabold text-deep-teal/50 uppercase">Thị phần</p></div>
+          <div class="clay-sunken rounded-2xl p-3"><p id="g-rev" class="font-display font-extrabold text-deep-teal text-lg">—</p><p class="text-[9px] font-extrabold text-deep-teal/50 uppercase">Doanh thu</p></div>
+          <div class="clay-sunken rounded-2xl p-3"><p id="g-profit" class="font-display font-extrabold text-lg">—</p><p class="text-[9px] font-extrabold text-deep-teal/50 uppercase">Lợi nhuận</p></div>
+        </div>
+        <div id="g-log" class="space-y-2 text-xs"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KẾT QUẢ -->
+  <section id="sec-result" class="mb-8 hidden"></section>
+
+  <!-- GIẢI THÍCH ENTRY MODES -->
+  <section class="mb-8">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-4">📚 Bốn phương thức thâm nhập quốc tế</h2>
+    <div class="grid sm:grid-cols-2 gap-4 text-sm">
+      <div class="clay-card p-5"><p class="text-2xl">📦</p><h3 class="font-display font-extrabold mt-1">Xuất khẩu (Export)</h3><p class="text-deep-teal/60 text-xs mt-1">Vốn thấp, triển khai nhanh — nhưng chịu thuế quan và kiểm soát kênh phân phối thấp. Phù hợp thăm dò thị trường.</p></div>
+      <div class="clay-card p-5"><p class="text-2xl">📜</p><h3 class="font-display font-extrabold mt-1">Nhượng quyền (Licensing)</h3><p class="text-deep-teal/60 text-xs mt-1">Đối tác bản địa sản xuất, ta thu phí bản quyền — rủi ro vốn thấp nhất nhưng lợi nhuận mỏng và có rủi ro thương hiệu.</p></div>
+      <div class="clay-card p-5"><p class="text-2xl">🤝</p><h3 class="font-display font-extrabold mt-1">Liên doanh (Joint Venture)</h3><p class="text-deep-teal/60 text-xs mt-1">Chia vốn, chia lợi nhuận với đối tác am hiểu bản địa — giảm mạnh khoảng cách văn hóa và rào cản pháp lý.</p></div>
+      <div class="clay-card p-5"><p class="text-2xl">🏭</p><h3 class="font-display font-extrabold mt-1">FDI — Đầu tư mới (Greenfield)</h3><p class="text-deep-teal/60 text-xs mt-1">Xây nhà máy/công ty con 100% vốn — kiểm soát tối đa, né thuế quan, nhưng vốn lớn và rủi ro cao nhất.</p></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="text-white py-10 mt-4" style="background:#022a2e">
+  <div class="max-w-5xl mx-auto px-5 grid sm:grid-cols-3 gap-8 text-sm">
+    <div>
+      <p class="font-display font-extrabold">BizOn Bật Nghiệp</p>
+      <p class="text-white/55 text-xs mt-2">Game mô phỏng kinh doanh 3D Claymorphism dành cho thế hệ khởi nghiệp Việt Nam.</p>
+    </div>
+    <div>
+      <p class="font-display font-extrabold text-xs uppercase tracking-widest text-white/60">Khám phá</p>
+      <div class="mt-2 space-y-1.5 text-white/75">
+        <a href="index.html" class="block hover:text-white">Chơi game đầy đủ</a>
+        <a href="games.html" class="block hover:text-white">BizOn Arcade (tất cả trò chơi)</a>
+        <a href="gioi-thieu.html" class="block hover:text-white">Trang giới thiệu</a>
+      </div>
+    </div>
+    <div>
+      <p class="font-display font-extrabold text-xs uppercase tracking-widest text-white/60">Kho GitHub</p>
+      <div class="mt-2 space-y-1.5 text-white/75">
+        <a href="https://github.com/thuyhuongctu/BizOn" target="_blank" rel="noopener" class="block hover:text-white">⭐ BizOn — mã nguồn</a>
+        <a href="https://github.com/thuyhuongctu/M-AIDA" target="_blank" rel="noopener" class="block hover:text-white">🎼 M-AIDA — mã nguồn</a>
+        <a href="https://thuyhuongctu.github.io/M-AIDA/" target="_blank" rel="noopener" class="block hover:text-white">🌏 Je m'appelle Hương — M-AIDA</a>
+      </div>
+    </div>
+  </div>
+  <p class="text-center text-white/40 text-xs mt-8">© 2026 Đỗ Thùy Hương & Phan Anh Tú · BizOn Bật Nghiệp — Bảo lưu mọi quyền.</p>
+</footer>
+
+<script src="js/site-ui.js" defer></script>
+<script>
+/* ================= WORLD MARKET LIVE ================= */
+const WM_SAMPLE = [
+  { name: 'Bitcoin',  tag: 'CRYPTO', val: '64,702 $', chg: 0.9 },
+  { name: 'Ethereum', tag: 'CRYPTO', val: '1,905 $',  chg: 1.7 },
+  { name: 'USD/VND',  tag: 'FX',     val: '25,420',   chg: null },
+  { name: 'EUR/USD',  tag: 'FX',     val: '1.14',     chg: null },
+  { name: 'USD/JPY',  tag: 'FX',     val: '163.79',   chg: null },
+  { name: 'BizOn Clay Index', tag: 'GAME', val: '1,204', chg: 2.4 },
+];
+function wmRow(m) {
+  const chg = m.chg == null ? '' : `<span style="color:${m.chg >= 0 ? '#34d399' : '#f87171'}">${m.chg >= 0 ? '+' : ''}${m.chg.toFixed(2)}%</span>`;
+  return `<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05)">
+    <div style="flex:1;min-width:0"><p style="font-size:13px;font-weight:700;color:#e8f2ec">${m.name}</p>
+      <p style="font-size:8.5px;letter-spacing:.14em;color:#7d948b">${m.tag}</p></div>
+    <div style="text-align:right"><p style="font-size:13px;font-weight:700;color:#e8f2ec">${m.val}</p><p style="font-size:10px">${chg}</p></div>
+  </div>`;
+}
+function wmRender(rows, live) {
+  document.getElementById('wm-rows').innerHTML = rows.map(wmRow).join('');
+  const b = document.getElementById('wm-badge');
+  b.textContent = live ? '● LIVE' : 'SAMPLE';
+  b.style.color = live ? '#34d399' : '#8fa89f';
+}
+async function wmLoad() {
+  wmRender(WM_SAMPLE, false);
+  try {
+    const [cg, fx] = await Promise.all([
+      fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd&include_24hr_change=true').then(r => r.json()),
+      fetch('https://open.er-api.com/v6/latest/USD').then(r => r.json()),
+    ]);
+    const fmt = n => n.toLocaleString('en-US', { maximumFractionDigits: n > 100 ? 0 : 2 });
+    const rows = [
+      { name: 'Bitcoin',  tag: 'CRYPTO', val: fmt(cg.bitcoin.usd) + ' $',  chg: cg.bitcoin.usd_24h_change },
+      { name: 'Ethereum', tag: 'CRYPTO', val: fmt(cg.ethereum.usd) + ' $', chg: cg.ethereum.usd_24h_change },
+      { name: 'USD/VND',  tag: 'FX', val: fmt(fx.rates.VND), chg: null },
+      { name: 'EUR/USD',  tag: 'FX', val: (1 / fx.rates.EUR).toFixed(3), chg: null },
+      { name: 'USD/JPY',  tag: 'FX', val: fx.rates.JPY.toFixed(2), chg: null },
+      { name: 'USD/SGD',  tag: 'FX', val: fx.rates.SGD.toFixed(3), chg: null },
+      { name: 'BizOn Clay Index', tag: 'GAME', val: (1150 + new Date().getDate() * 4).toLocaleString('en-US'), chg: 2.4 },
+    ];
+    wmRender(rows, true);
+  } catch (e) { /* giữ SAMPLE khi offline */ }
+}
+wmLoad();
+
+/* ================= BIZON GLOBAL — GAME ================= */
+const MARKETS = [
+  { id: 'sea', flag: '🇸🇬', name: 'Đông Nam Á', hub: 'Singapore', x: 772, y: 258, size: 110000, ref: 10, elast: 2.4, tariff: 0.05, cult: 0.2, digital: 0.85, ai: 'Merlion Toys' },
+  { id: 'eas', flag: '🇯🇵', name: 'Đông Á',     hub: 'Tokyo',     x: 878, y: 142, size: 140000, ref: 14, elast: 2.0, tariff: 0.10, cult: 0.5, digital: 0.95, ai: 'Sakura Craft' },
+  { id: 'eu',  flag: '🇩🇪', name: 'Châu Âu',    hub: 'Berlin',    x: 522, y: 96,  size: 160000, ref: 16, elast: 1.8, tariff: 0.12, cult: 0.7, digital: 0.90, ai: 'EuroClay GmbH' },
+  { id: 'na',  flag: '🇺🇸', name: 'Bắc Mỹ',     hub: 'New York',  x: 248, y: 122, size: 190000, ref: 18, elast: 2.1, tariff: 0.15, cult: 0.6, digital: 0.92, ai: 'Liberty Toys' },
+  { id: 'me',  flag: '🇦🇪', name: 'Trung Đông', hub: 'Dubai',     x: 638, y: 192, size: 80000,  ref: 15, elast: 1.7, tariff: 0.08, cult: 0.8, digital: 0.80, ai: 'Falcon Trade' },
+];
+const MODES = [
+  { id: 'export', icon: '📦', name: 'Xuất khẩu',      cost0: 30,  fixedQ: 15, control: 0.35, tariffX: false, share: 1.0, desc: 'Vốn thấp · chịu thuế quan · kiểm soát thấp' },
+  { id: 'lic',    icon: '📜', name: 'Licensing',      cost0: 15,  fixedQ: 5,  control: 0.25, tariffX: true,  share: 0.35, desc: 'Thu phí bản quyền · rủi ro thấp nhất · lợi nhuận mỏng' },
+  { id: 'jv',     icon: '🤝', name: 'Liên doanh',     cost0: 80,  fixedQ: 25, control: 0.65, tariffX: true,  share: 0.55, desc: 'Chia lợi nhuận 55% · giảm khoảng cách văn hóa' },
+  { id: 'fdi',    icon: '🏭', name: 'FDI Đầu tư mới', cost0: 180, fixedQ: 45, control: 1.0,  tariffX: true,  share: 1.0, desc: 'Vốn lớn · né thuế quan · kiểm soát tối đa' },
+];
+const Q_EVENTS = [
+  { icon: '🛒', name: 'Sàn TMĐT bùng nổ',      desc: 'Thương mại điện tử xuyên biên giới tăng vọt — marketing số hiệu quả gấp rưỡi quý này.', mktBoost: 1.5, demand: 1.05 },
+  { icon: '🤖', name: 'AI cá nhân hóa',        desc: 'Đề xuất sản phẩm bằng AI giúp khách tìm đúng đồ chơi — thị trường sẵn sàng số hưởng lợi.', digBoost: 1.25, demand: 1.0 },
+  { icon: '⚔️', name: 'Chiến tranh thương mại', desc: 'Căng thẳng thuế quan leo thang — hàng xuất khẩu chịu thêm 8% thuế quý này.', tariffAdd: 0.08, demand: 0.95 },
+  { icon: '📱', name: 'Viral toàn cầu',         desc: 'Video đồ chơi đất sét Việt Nam viral trên mạng xã hội — tổng cầu tăng 20%!', demand: 1.2 },
+];
+const G = { market: null, mode: null, q: 0, profit: 0, shareHist: [], done: false };
+const gFlags = (() => { try { return JSON.parse(localStorage.getItem('bizon-global-flags') || '[]'); } catch (e) { return []; } })();
+
+function renderWorldMap() {
+  const sel = G.market;
+  const pins = MARKETS.map(m => {
+    const won = gFlags.includes(m.id);
+    return `<g class="market-pin${sel && sel.id === m.id ? ' sel' : ''}" onclick="pickMarket('${m.id}')">
+      <circle cx="${m.x}" cy="${m.y}" r="14" fill="#fff" stroke="#006687" stroke-width="2.5"/>
+      <text x="${m.x}" y="${m.y + 5}" text-anchor="middle" font-size="15">${m.flag}</text>
+      ${won ? `<text x="${m.x + 9}" y="${m.y - 12}" font-size="17">🚩</text>` : ''}
+      <text x="${m.x}" y="${m.y + 30}" text-anchor="middle" font-size="12" font-weight="800" fill="currentColor" opacity=".75">${m.name}</text>
+    </g>`;
+  }).join('');
+  const routes = sel ? `<path class="route" d="M755,215 Q${(755 + sel.x) / 2},${Math.min(215, sel.y) - 60} ${sel.x},${sel.y}" fill="none" stroke="#e8762d" stroke-width="3" stroke-linecap="round"/>` : '';
+  document.getElementById('world-map').innerHTML = `
+  <svg viewBox="0 0 1000 420" class="w-full h-auto text-deep-teal" aria-label="Bản đồ thế giới BizOn Global">
+    <g fill="rgba(0,102,135,.10)" stroke="rgba(0,102,135,.35)" stroke-width="2" stroke-linejoin="round">
+      <polygon points="70,55 175,38 300,55 295,105 255,150 215,195 165,160 105,125 65,95"/>
+      <polygon points="225,225 285,215 305,290 268,395 235,330 215,265"/>
+      <polygon points="448,72 560,55 585,115 545,148 470,135 445,100"/>
+      <polygon points="452,168 565,158 595,240 545,330 485,285 450,215"/>
+      <polygon points="585,55 780,42 900,75 905,165 830,225 745,235 655,205 590,140"/>
+      <polygon points="800,295 905,285 925,355 835,372"/>
+      <circle cx="795" cy="272" r="5"/><circle cx="815" cy="282" r="4"/><circle cx="838" cy="276" r="4"/>
+    </g>
+    ${routes}
+    <g class="vn-pulse"><circle cx="755" cy="215" r="9" fill="#da251d"/><text x="755" y="220" text-anchor="middle" font-size="10" fill="#ffce00">★</text></g>
+    <text x="755" y="200" text-anchor="middle" font-size="12" font-weight="800" fill="#da251d">Việt Nam</text>
+    ${pins}
+  </svg>`;
+  document.getElementById('market-cards').innerHTML = MARKETS.map(m => `
+    <button onclick="pickMarket('${m.id}')" class="clay-sunken rounded-2xl p-3 text-left transition-all ${sel && sel.id === m.id ? 'ring-2 ring-clay-orange' : ''}">
+      <p class="text-lg">${m.flag} ${gFlags.includes(m.id) ? '🚩' : ''}</p>
+      <p class="font-display font-extrabold text-deep-teal text-xs mt-0.5">${m.name}</p>
+      <p class="text-[9px] text-deep-teal/50">Quy mô ${(m.size / 1000).toFixed(0)}k sp · Thuế ${(m.tariff * 100).toFixed(0)}% · Số hóa ${(m.digital * 100).toFixed(0)}%</p>
+    </button>`).join('');
+}
+
+function pickMarket(id) {
+  G.market = MARKETS.find(m => m.id === id);
+  G.mode = null; G.q = 0; G.profit = 0; G.shareHist = []; G.done = false;
+  renderWorldMap();
+  const sec = document.getElementById('sec-mode');
+  sec.classList.remove('hidden'); sec.classList.add('fade-up');
+  document.getElementById('sec-play').classList.add('hidden');
+  document.getElementById('sec-result').classList.add('hidden');
+  document.getElementById('mode-sub').textContent = `Thị trường ${G.market.name} (${G.market.hub}): khoảng cách văn hóa ${Math.round(G.market.cult * 100)}%, thuế nhập khẩu ${Math.round(G.market.tariff * 100)}%, độ sẵn sàng số ${Math.round(G.market.digital * 100)}%.`;
+  document.getElementById('mode-cards').innerHTML = MODES.map(md => `
+    <button onclick="pickMode('${md.id}')" class="clay-card p-4 text-left hover:-translate-y-0.5 transition-transform">
+      <p class="text-2xl">${md.icon}</p>
+      <p class="font-display font-extrabold text-deep-teal text-sm mt-1">${md.name}</p>
+      <p class="text-[10px] text-deep-teal/55 mt-0.5">${md.desc}</p>
+      <p class="text-[10px] font-bold text-primary mt-1.5">Vốn ban đầu: ${md.cost0}k USD</p>
+    </button>`).join('');
+  sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function pickMode(id) {
+  G.mode = MODES.find(m => m.id === id);
+  G.q = 1; G.profit = -G.mode.cost0; G.shareHist = [];
+  const sec = document.getElementById('sec-play');
+  sec.classList.remove('hidden'); sec.classList.add('fade-up');
+  document.getElementById('sec-result').classList.add('hidden');
+  document.getElementById('play-sub').textContent = `${G.mode.icon} ${G.mode.name} tại ${G.market.flag} ${G.market.name} — đối thủ bản địa: ${G.market.ai}. Vốn ban đầu ${G.mode.cost0}k USD đã chi.`;
+  paintQuarter(); gUpdate();
+  sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function qEvent() { return Q_EVENTS[(G.q - 1) % Q_EVENTS.length]; }
+
+function paintQuarter() {
+  document.getElementById('q-num').textContent = G.q;
+  const ev = qEvent();
+  document.getElementById('q-event').innerHTML = `<p class="font-display font-extrabold text-deep-teal text-sm">${ev.icon} Quý ${G.q}: ${ev.name}</p><p class="text-xs text-deep-teal/60 mt-1">${ev.desc}</p>`;
+}
+
+function gCalc(p, mkt, loc) {
+  const m = G.market, md = G.mode, ev = qEvent();
+  const tariff = (md.tariffX ? 0 : m.tariff + (ev.tariffAdd || 0));
+  const mktEff = mkt * (0.5 + m.digital * (ev.digBoost || 1)) * (ev.mktBoost || 1);
+  const attr = Math.pow(m.ref / p, m.elast) * (1 + Math.sqrt(mktEff) / 14) * Math.pow(0.55 + 0.45 * Math.min(1, loc / 60), m.cult) * (0.72 + 0.5 * md.control);
+  const aiAttr = 2.3 + 0.1 * G.q;
+  const share = attr / (attr + aiAttr);
+  const units = m.size * (ev.demand || 1) * share / 1000;   // nghìn sản phẩm
+  const cogs = 5.5;
+  const revenue = units * p;                                 // nghìn USD
+  const gross = units * (p * (1 - tariff) - cogs);
+  const profit = (gross - md.fixedQ - mkt - loc) * md.share;
+  return { share: share * 100, revenue, profit };
+}
+
+function gUpdate() {
+  if (!G.mode || G.done) return;
+  const p = +document.getElementById('gp').value, mkt = +document.getElementById('gm').value, loc = +document.getElementById('gl').value;
+  document.getElementById('gp-val').textContent = p; document.getElementById('gm-val').textContent = mkt; document.getElementById('gl-val').textContent = loc;
+  const r = gCalc(p, mkt, loc);
+  document.getElementById('g-share').textContent = r.share.toFixed(1) + '%';
+  document.getElementById('g-rev').textContent = r.revenue.toFixed(0) + 'k$';
+  const pf = document.getElementById('g-profit');
+  pf.textContent = (r.profit >= 0 ? '+' : '') + r.profit.toFixed(0) + 'k$';
+  pf.className = 'font-display font-extrabold text-lg ' + (r.profit >= 0 ? 'text-emerald-600' : 'text-orange-600');
+  const hint = r.share < 35 ? 'Lumina: thị phần đang yếu — cân nhắc giảm giá hoặc tăng bản địa hóa cho hợp văn hóa bản địa.'
+    : r.profit < 0 ? 'Lumina: đang lỗ quý này — kiểm soát ngân sách hoặc chấp nhận đầu tư giai đoạn thâm nhập.'
+    : 'Lumina: cân bằng tốt! Kỷ nguyên số thưởng cho ai dám đầu tư marketing số đúng lúc. ✨';
+  document.getElementById('g-lumina').textContent = hint;
+}
+
+function gCommit() {
+  if (!G.mode || G.done) return;
+  const p = +document.getElementById('gp').value, mkt = +document.getElementById('gm').value, loc = +document.getElementById('gl').value;
+  const r = gCalc(p, mkt, loc);
+  G.profit += r.profit; G.shareHist.push(r.share);
+  const log = document.getElementById('g-log');
+  log.insertAdjacentHTML('afterbegin', `<div class="clay-sunken rounded-xl p-2.5"><b>Quý ${G.q}</b> · ${qEvent().icon} — thị phần <b class="text-primary">${r.share.toFixed(1)}%</b>, lợi nhuận <b class="${r.profit >= 0 ? 'text-emerald-600' : 'text-orange-600'}">${r.profit >= 0 ? '+' : ''}${r.profit.toFixed(0)}k$</b></div>`);
+  if (G.q >= 4) { gFinish(); return; }
+  G.q++; paintQuarter(); gUpdate();
+}
+
+function gFinish() {
+  G.done = true;
+  const avgShare = G.shareHist.reduce((a, b) => a + b, 0) / G.shareHist.length;
+  const win = avgShare >= 42 && G.profit > 0;
+  if (win && !gFlags.includes(G.market.id)) {
+    gFlags.push(G.market.id);
+    try { localStorage.setItem('bizon-global-flags', JSON.stringify(gFlags)); } catch (e) {}
+  }
+  renderWorldMap();
+  const sec = document.getElementById('sec-result');
+  sec.classList.remove('hidden'); sec.classList.add('fade-up');
+  sec.innerHTML = `<div class="clay-card p-6 text-center">
+    <p class="text-5xl">${win ? '🚩' : '💪'}</p>
+    <h3 class="font-display font-extrabold text-deep-teal text-xl mt-2">${win ? `Chinh phục ${G.market.flag} ${G.market.name} thành công!` : `${G.market.ai} vẫn giữ được sân nhà...`}</h3>
+    <p class="text-sm text-deep-teal/60 mt-2">Thị phần trung bình <b class="text-primary">${avgShare.toFixed(1)}%</b> · Lợi nhuận lũy kế <b class="${G.profit >= 0 ? 'text-emerald-600' : 'text-orange-600'}">${G.profit >= 0 ? '+' : ''}${G.profit.toFixed(0)}k USD</b> (đã trừ vốn ${G.mode.name})</p>
+    <p class="text-xs text-deep-teal/50 mt-2">${win ? 'Cờ 🚩 đã được cắm lên bản đồ thế giới. Chọn thị trường tiếp theo!' : 'Mẹo: chọn phương thức hợp với thị trường — văn hóa xa cần Liên doanh/bản địa hóa, thuế cao cần FDI.'}</p>
+    <p class="text-xs font-bold text-primary mt-3">Đã chinh phục ${gFlags.length}/${MARKETS.length} thị trường quốc tế</p>
+    <div class="flex gap-2 mt-4">
+      <button onclick="pickMarket('${G.market.id}')" class="clay-btn flex-1 bg-surface-bright text-deep-teal/70 font-bold py-3 text-sm">🔄 Chơi lại thị trường này</button>
+      <button onclick="document.getElementById('world-map').scrollIntoView({behavior:'smooth'})" class="clay-btn-primary clay-btn flex-1 text-white font-display font-extrabold py-3 text-sm">🌏 Chọn thị trường khác</button>
+    </div>
+  </div>`;
+  sec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+renderWorldMap();
+</script>
+</body>
+</html>
