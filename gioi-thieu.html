@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <!-- BizOn Bật Nghiệp 2026 — © Đỗ Thùy Hương (Je m'appelle Hương) & PGS.TS Phan Anh Tú. Bảo lưu mọi quyền. -->
-<html lang="vi">
+<html lang="vi" class="scroll-smooth">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>BizOn Bật Nghiệp 2026 — Giới thiệu & Mini-game</title>
+<title>BizOn Bật Nghiệp 2026 — Game Mô Phỏng Kinh Doanh 3D</title>
 <meta name="author" content="Đỗ Thùy Hương (Je m'appelle Hương), Phan Anh Tú">
 <meta name="copyright" content="© 2026 Đỗ Thùy Hương & PGS.TS Phan Anh Tú. Bảo lưu mọi quyền.">
-<meta name="description" content="Trang giới thiệu BizOn Bật Nghiệp — game mô phỏng kinh doanh EdTech với cố vấn AI Lumina, kèm 3 mini-game khởi nghiệp chơi ngay trên trang.">
-<meta name="theme-color" content="#006687">
+<meta name="description" content="BizOn Bật Nghiệp — game mô phỏng kinh doanh 3D Claymorphism với cố vấn AI Lumina. Điều hành công ty qua 6 vòng thị trường, đấu với 3 đối thủ AI. Chơi ngay trên web.">
+<meta property="og:title" content="BizOn Bật Nghiệp 2026 — Business Simulation Game">
+<meta property="og:description" content="Điều hành công ty của bạn qua 6 vòng thị trường cùng cố vấn AI Lumina. Phong cách đất nặn 3D độc đáo.">
+<meta property="og:image" content="assets/illustrations/hero-vietnam-2026.png">
+<meta name="theme-color" content="#033337">
 <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
 <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
 <script src="https://cdn.tailwindcss.com"></script>
@@ -37,62 +40,194 @@ tailwind.config = {
 };
 </script>
 <style>
-  body { font-family:'Manrope',sans-serif; background:#f4faff; color:#033337; }
+  body { font-family:'Manrope',sans-serif; background:#f4faff; color:#033337; overflow-x:hidden; }
   h1,h2,h3,h4,.font-display { font-family:'Plus Jakarta Sans',sans-serif; }
-  .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.05), inset 0 -4px 0 rgba(0,0,0,.05); }
+  .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
   .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease, box-shadow .12s ease; }
   .clay-btn:active { transform:translateY(2px); box-shadow:0 4px 10px -4px rgba(0,102,135,.3), inset 0 -2px 0 rgba(0,0,0,.12); }
   .clay-btn-primary { border-radius:24px; background:#e8762d; box-shadow:0 6px 0 #b3541a, 0 12px 24px -8px rgba(232,118,45,.5); transition:transform .1s ease, box-shadow .1s ease; }
+  .clay-btn-primary:hover { filter:brightness(1.06); }
   .clay-btn-primary:active { transform:translateY(4px); box-shadow:0 2px 0 #b3541a; }
   .clay-sunken { background:#e8f2f8; box-shadow:inset 3px 3px 8px rgba(0,102,135,.12), inset -3px -3px 8px rgba(255,255,255,.9); }
-  @keyframes floaty { 0%,100% {transform:translateY(0);} 50% {transform:translateY(-12px);} }
-  .animate-float { animation:floaty 3.6s ease-in-out infinite; }
-  @keyframes fadeUp { from {opacity:0; transform:translateY(14px);} to {opacity:1; transform:none;} }
-  .game-panel { display:none; }
-  .game-panel.open { display:block; animation:fadeUp .3s ease; }
-  #catch-canvas { touch-action:none; border-radius:20px; background:linear-gradient(180deg,#dff2fb 0%,#f4faff 100%); box-shadow:inset 3px 3px 8px rgba(0,102,135,.12); width:100%; }
+
+  /* ===== chuyển động nền & nổi 3D ===== */
+  @keyframes floaty { 0%,100% {transform:translateY(0) rotate(var(--rot,0deg));} 50% {transform:translateY(-16px) rotate(var(--rot,0deg));} }
+  .animate-float { animation:floaty 4.2s ease-in-out infinite; }
+  .animate-float-slow { animation:floaty 6.5s ease-in-out infinite; }
+  @keyframes blobMove { 0%,100% {transform:translate(0,0) scale(1);} 33% {transform:translate(40px,-30px) scale(1.15);} 66% {transform:translate(-30px,25px) scale(.92);} }
+  .blob { position:absolute; border-radius:9999px; filter:blur(70px); opacity:.5; animation:blobMove 16s ease-in-out infinite; pointer-events:none; }
+  @keyframes spinSlow { to { transform:rotate(360deg); } }
+
+  /* ===== chữ & huy hiệu ===== */
   .lumina-name { background:linear-gradient(90deg,#00c4ff 0%,#7fe3ff 40%,#00c4ff 60%,#7fe3ff 100%); background-size:200% auto; -webkit-background-clip:text; background-clip:text; color:transparent; animation:shineText 4s linear infinite; }
+  .hero-grad { background:linear-gradient(92deg,#ffffff 0%,#7fe3ff 45%,#fda127 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
   @keyframes shineText { to { background-position:-200% center; } }
   .signature { font-family:'Dancing Script',cursive; font-weight:700; }
+
+  /* ===== nav kính mờ & thanh tiến trình cuộn ===== */
+  .glass-nav { background:rgba(3,51,55,.72); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); }
+  #scroll-progress { position:fixed; top:0; left:0; height:3px; background:linear-gradient(90deg,#00c4ff,#fda127); z-index:60; width:0%; transition:width .1s linear; }
+
+  /* ===== thẻ nghiêng 3D ===== */
+  .tilt-wrap { perspective:900px; }
+  .tilt { transition:transform .18s ease-out, box-shadow .18s ease-out; transform-style:preserve-3d; will-change:transform; }
+  .tilt:hover { box-shadow:0 30px 60px -18px rgba(0,102,135,.35); }
+  .tilt .tilt-pop { transform:translateZ(46px); }
+
+  /* ===== hiện dần khi cuộn ===== */
+  .reveal { opacity:0; transform:translateY(34px); transition:opacity .7s ease, transform .7s cubic-bezier(.2,.7,.3,1); }
+  .reveal.visible { opacity:1; transform:none; }
+  .reveal-d1 { transition-delay:.12s; } .reveal-d2 { transition-delay:.24s; } .reveal-d3 { transition-delay:.36s; }
+
+  /* ===== dải số liệu & marquee ===== */
+  @keyframes marquee { from {transform:translateX(0);} to {transform:translateX(-50%);} }
+  .marquee-track { display:flex; width:max-content; animation:marquee 26s linear infinite; }
+
+  .game-panel { display:none; }
+  .game-panel.open { display:block; animation:fadeUp .3s ease; }
+  @keyframes fadeUp { from {opacity:0; transform:translateY(14px);} to {opacity:1; transform:none;} }
+  #catch-canvas { touch-action:none; border-radius:20px; background:linear-gradient(180deg,#dff2fb 0%,#f4faff 100%); box-shadow:inset 3px 3px 8px rgba(0,102,135,.12); width:100%; }
 </style>
 </head>
 <body>
+<div id="scroll-progress"></div>
+
+<!-- ===== NAV ===== -->
+<nav class="glass-nav fixed top-0 inset-x-0 z-50 text-white">
+  <div class="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between gap-4">
+    <a href="#top" class="flex items-center gap-2.5 shrink-0">
+      <img src="assets/icons/icon-192.png" alt="BizOn" class="w-9 h-9 rounded-xl shadow-lg">
+      <span class="font-display font-extrabold tracking-tight">BizOn <span class="text-primary-container">Bật Nghiệp</span></span>
+    </a>
+    <div class="hidden md:flex items-center gap-6 text-sm font-bold text-white/75">
+      <a href="#features" class="hover:text-primary-container transition-colors">Tính năng</a>
+      <a href="#characters" class="hover:text-primary-container transition-colors">Nhân vật</a>
+      <a href="#minigames" class="hover:text-primary-container transition-colors">Mini-game</a>
+      <a href="#team" class="hover:text-primary-container transition-colors">Đội ngũ</a>
+    </div>
+    <a href="index.html" class="clay-btn-primary text-white font-display font-extrabold px-5 py-2.5 text-xs sm:text-sm shrink-0">🎮 CHƠI NGAY</a>
+  </div>
+</nav>
 
 <!-- ===== HERO ===== -->
-<header class="bg-deep-teal text-white overflow-hidden relative">
-  <div class="max-w-5xl mx-auto px-5 pt-10 pb-14 text-center relative z-10">
-    <img src="assets/illustrations/logo-splash.png" alt="BizOn logo" class="w-28 h-28 mx-auto rounded-clay shadow-lg animate-float object-cover">
-    <h1 class="font-display font-extrabold text-3xl sm:text-5xl mt-6 tracking-tight">BizOn <span class="text-primary-container">Bật Nghiệp</span> 2026</h1>
-    <p class="mt-3 text-white/80 max-w-2xl mx-auto text-sm sm:text-base">Game mô phỏng kinh doanh phong cách đất nặn 3D (Claymorphism) dành cho sinh viên khởi nghiệp — điều hành công ty qua 6 vòng thị trường cùng cố vấn AI <b class="lumina-name font-display">Lumina AI</b> · <span class="signature text-xl text-white">Je m'appelle Hương</span>.</p>
-    <div class="flex flex-wrap justify-center gap-3 mt-7">
-      <a href="index.html" class="clay-btn-primary inline-block text-white font-display font-extrabold px-8 py-3.5 text-sm">🎮 Chơi bản đầy đủ</a>
-      <a href="#minigames" class="clay-btn inline-block bg-white text-deep-teal font-display font-extrabold px-8 py-3.5 text-sm">🕹️ Mini-game ngay trên trang</a>
+<header id="top" class="relative min-h-[100svh] flex items-center overflow-hidden text-white" style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%)">
+  <div class="blob w-96 h-96 bg-primary-container top-[-80px] left-[-100px]"></div>
+  <div class="blob w-80 h-80 bg-clay-gold bottom-[-60px] right-[-60px]" style="animation-delay:-8s"></div>
+  <div class="blob w-64 h-64 bg-clay-orange top-1/3 right-1/4" style="animation-delay:-4s; opacity:.25"></div>
+  <!-- vật thể clay nổi -->
+  <span class="absolute top-[18%] left-[8%] text-4xl animate-float-slow select-none" style="--rot:-12deg">🪙</span>
+  <span class="absolute top-[30%] right-[6%] text-5xl animate-float select-none" style="--rot:10deg; animation-delay:-2s">📈</span>
+  <span class="absolute bottom-[22%] left-[14%] text-4xl animate-float select-none" style="--rot:8deg; animation-delay:-1s">🏭</span>
+  <span class="absolute bottom-[30%] right-[16%] text-3xl animate-float-slow select-none" style="--rot:-8deg; animation-delay:-3s">💡</span>
+
+  <div class="max-w-6xl mx-auto px-5 pt-24 pb-16 grid lg:grid-cols-2 gap-10 items-center relative z-10 w-full">
+    <div>
+      <p class="inline-flex items-center gap-2 bg-white/10 border border-white/15 rounded-full px-4 py-1.5 text-[11px] font-extrabold tracking-widest uppercase reveal visible">
+        <span class="w-2 h-2 rounded-full bg-emerald-400"></span> EdTech Business Simulation · Việt Nam 2026
+      </p>
+      <h1 class="font-display font-extrabold text-4xl sm:text-6xl leading-[1.05] tracking-tight mt-5 reveal visible">
+        Xây đế chế<br><span class="hero-grad">kinh doanh</span> của bạn
+      </h1>
+      <p class="mt-5 text-white/75 max-w-xl text-sm sm:text-base leading-relaxed reveal visible">
+        Điều hành công ty qua <b class="text-white">6 vòng thị trường khốc liệt</b> — định giá, sản xuất, marketing, gọi vốn — đấu trí cùng 3 đối thủ AI, bên cạnh cố vấn <b class="lumina-name font-display">Lumina AI</b> <span class="signature text-lg text-white">Je m'appelle Hương</span>. Tất cả trong thế giới đất nặn 3D độc bản.
+      </p>
+      <div class="flex flex-wrap gap-3 mt-8 reveal visible">
+        <a href="index.html" class="clay-btn-primary text-white font-display font-extrabold px-8 py-4 text-sm">🚀 Chơi miễn phí trên Web</a>
+        <a href="#minigames" class="clay-btn bg-white/10 border border-white/20 text-white font-display font-extrabold px-8 py-4 text-sm backdrop-blur">🕹️ Thử Mini-game</a>
+      </div>
+      <div class="flex flex-wrap items-center gap-x-6 gap-y-2 mt-8 text-[11px] font-bold text-white/55 reveal visible">
+        <span>📱 Cài như App (PWA)</span><span>🎓 Dành cho lớp khởi nghiệp</span><span>🇻🇳 100% tiếng Việt</span>
+      </div>
     </div>
-    <p class="mt-4 text-[11px] text-white/50">Chạy trên web · Cài được lên điện thoại (PWA) · Miễn phí cho lớp học</p>
+    <div class="relative flex justify-center lg:justify-end">
+      <div class="absolute inset-0 m-auto w-72 h-72 rounded-full border-2 border-dashed border-white/15" style="animation:spinSlow 40s linear infinite"></div>
+      <img src="assets/character/lumina-ao-dai.png" alt="Lumina AI — áo dài" class="relative w-56 sm:w-72 animate-float drop-shadow-[0_35px_35px_rgba(0,0,0,.45)]" style="--rot:2deg">
+      <img src="assets/character/anh-tu-point.png" alt="PGS.TS Phan Anh Tú" class="absolute -left-2 sm:left-6 bottom-0 w-32 sm:w-40 animate-float-slow drop-shadow-[0_25px_25px_rgba(0,0,0,.4)]" style="--rot:-4deg; animation-delay:-2.5s">
+    </div>
   </div>
+  <a href="#stats" class="absolute bottom-5 left-1/2 -translate-x-1/2 text-white/50 text-2xl animate-bounce">▾</a>
 </header>
 
-<!-- ===== GIỚI THIỆU ===== -->
-<section class="max-w-5xl mx-auto px-5 py-12">
-  <h2 class="font-display font-extrabold text-2xl text-center">Trò chơi có gì?</h2>
-  <p class="text-center text-deep-teal/60 text-sm mt-1 mb-8">Một công ty ảo — số liệu thật, quyết định thật, bài học thật.</p>
-  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-    <div class="clay-card p-5"><p class="text-3xl">📊</p><h3 class="font-display font-bold mt-2">6 vòng thị trường</h3><p class="text-xs text-deep-teal/60 mt-1">Định giá, sản lượng, marketing, R&D, nhân sự, nguồn vốn — đấu với 3 đối thủ AI qua các biến cố Price War, suy thoái, hội chợ quốc tế.</p></div>
-    <div class="clay-card p-5"><p class="text-3xl">🤖</p><h3 class="font-display font-bold mt-2">Cố vấn AI Lumina</h3><p class="text-xs text-deep-teal/60 mt-1">Trò chuyện bằng giọng nói tiếng Việt, mô phỏng "Nếu — Thì", bộ não cố vấn riêng cho CEO · CFO · COO · CMO.</p></div>
-    <div class="clay-card p-5"><p class="text-3xl">📑</p><h3 class="font-display font-bold mt-2">7 báo cáo quản trị</h3><p class="text-xs text-deep-teal/60 mt-1">P&L, dòng tiền 3 hoạt động, CVP hòa vốn, nhân sự, BMC, khấu hao, kiểm toán năng lượng — chuẩn giáo trình.</p></div>
-    <div class="clay-card p-5"><p class="text-3xl">🏆</p><h3 class="font-display font-bold mt-2">Học mà chơi</h3><p class="text-xs text-deep-teal/60 mt-1">Nhiệm vụ, thành tựu, chứng nhận hoàn thành, nhật ký đội, chế độ giảng viên cho lớp học khởi nghiệp.</p></div>
+<!-- ===== DẢI SỐ LIỆU ===== -->
+<section id="stats" class="bg-deep-teal text-white border-t border-white/10">
+  <div class="max-w-6xl mx-auto px-5 py-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+    <div class="reveal"><p class="font-display font-extrabold text-3xl text-primary-container" data-count="6">0</p><p class="text-[11px] font-bold text-white/60 uppercase tracking-wide mt-1">Vòng thị trường</p></div>
+    <div class="reveal reveal-d1"><p class="font-display font-extrabold text-3xl text-primary-container" data-count="4">0</p><p class="text-[11px] font-bold text-white/60 uppercase tracking-wide mt-1">Vai trò C-Suite</p></div>
+    <div class="reveal reveal-d2"><p class="font-display font-extrabold text-3xl text-primary-container" data-count="7">0</p><p class="text-[11px] font-bold text-white/60 uppercase tracking-wide mt-1">Báo cáo quản trị</p></div>
+    <div class="reveal reveal-d3"><p class="font-display font-extrabold text-3xl text-primary-container" data-count="15">0</p><p class="text-[11px] font-bold text-white/60 uppercase tracking-wide mt-1">Thành tựu & nhiệm vụ</p></div>
+  </div>
+  <div class="overflow-hidden border-t border-white/10 py-2.5 text-[11px] font-bold text-white/45">
+    <div class="marquee-track gap-10 px-5">
+      <span>💹 PRICE ELASTICITY ENGINE</span><span>🤖 LUMINA AI MENTOR</span><span>🎙️ VOICE CHAT TIẾNG VIỆT</span><span>⚔️ PRICE WAR EVENTS</span><span>🏦 CFO CRISIS MODE</span><span>🌱 GREEN MARKETING</span><span>📊 WHAT-IF SIMULATOR</span><span>🏭 OEE & LEAN OPS</span>
+      <span>💹 PRICE ELASTICITY ENGINE</span><span>🤖 LUMINA AI MENTOR</span><span>🎙️ VOICE CHAT TIẾNG VIỆT</span><span>⚔️ PRICE WAR EVENTS</span><span>🏦 CFO CRISIS MODE</span><span>🌱 GREEN MARKETING</span><span>📊 WHAT-IF SIMULATOR</span><span>🏭 OEE & LEAN OPS</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TÍNH NĂNG ===== -->
+<section id="features" class="max-w-6xl mx-auto px-5 py-20">
+  <p class="text-center text-xs font-extrabold text-primary uppercase tracking-[.2em] reveal">Gameplay</p>
+  <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-center mt-2 reveal">Một công ty ảo. <span class="text-primary">Bài học thật.</span></h2>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-12 tilt-wrap">
+    <div class="clay-card p-6 tilt reveal"><p class="text-4xl tilt-pop inline-block">📊</p><h3 class="font-display font-extrabold mt-3">Cỗ máy thị trường thật</h3><p class="text-sm text-deep-teal/60 mt-2">Độ co giãn giá, thị phần, biến cố Cơ Hội Vàng · Price War · Khủng hoảng năng lượng — mỗi vòng là một ván cờ mới với 3 đối thủ AI.</p></div>
+    <div class="clay-card p-6 tilt reveal reveal-d1"><p class="text-4xl tilt-pop inline-block">🤖</p><h3 class="font-display font-extrabold mt-3">Cố vấn AI Lumina</h3><p class="text-sm text-deep-teal/60 mt-2">Trò chuyện bằng giọng nói tiếng Việt, mô phỏng "Nếu — Thì" trước khi chốt, bộ não cố vấn riêng cho CEO · CFO · COO · CMO.</p></div>
+    <div class="clay-card p-6 tilt reveal reveal-d2"><p class="text-4xl tilt-pop inline-block">📑</p><h3 class="font-display font-extrabold mt-3">7 báo cáo chuẩn giáo trình</h3><p class="text-sm text-deep-teal/60 mt-2">P&L, dòng tiền 3 hoạt động, CVP hòa vốn, nhân sự, BMC, khấu hao, kiểm toán năng lượng — số liệu sống từ chính quyết định của bạn.</p></div>
+    <div class="clay-card p-6 tilt reveal"><p class="text-4xl tilt-pop inline-block">🏦</p><h3 class="font-display font-extrabold mt-3">Tài chính C-Suite</h3><p class="text-sm text-deep-teal/60 mt-2">Gọi vốn chủ sở hữu hay vay ngân hàng, kỳ hạn thanh toán 30/60/90 ngày, chế độ khủng hoảng thanh khoản CFO — như phòng họp HĐQT thật.</p></div>
+    <div class="clay-card p-6 tilt reveal reveal-d1"><p class="text-4xl tilt-pop inline-block">🏆</p><h3 class="font-display font-extrabold mt-3">Học mà chơi</h3><p class="text-sm text-deep-teal/60 mt-2">Nhiệm vụ, thành tựu, cây kỹ năng, chứng nhận hoàn thành, nhật ký đội và chế độ giảng viên cho lớp học khởi nghiệp.</p></div>
+    <div class="clay-card p-6 tilt reveal reveal-d2"><p class="text-4xl tilt-pop inline-block">📱</p><h3 class="font-display font-extrabold mt-3">Web + App một chạm</h3><p class="text-sm text-deep-teal/60 mt-2">Chạy mượt trên trình duyệt, cài lên điện thoại như app thật (PWA), chơi offline sau lần tải đầu tiên.</p></div>
+  </div>
+</section>
+
+<!-- ===== SHOWCASE 2026 ===== -->
+<section class="bg-deep-teal text-white py-20 relative overflow-hidden">
+  <div class="blob w-80 h-80 bg-primary-container top-[-40px] right-[-80px]" style="opacity:.3"></div>
+  <div class="max-w-6xl mx-auto px-5 grid lg:grid-cols-2 gap-12 items-center relative z-10">
+    <div class="tilt-wrap reveal">
+      <img src="assets/illustrations/hero-vietnam-2026.png" alt="Việt Nam bứt phá 2026" class="tilt rounded-clay shadow-2xl w-full">
+    </div>
+    <div>
+      <p class="text-xs font-extrabold text-primary-container uppercase tracking-[.2em] reveal">Bối cảnh</p>
+      <h2 class="font-display font-extrabold text-3xl sm:text-4xl mt-2 reveal">Việt Nam 2026 —<br>kỷ nguyên bứt phá</h2>
+      <p class="text-white/70 text-sm sm:text-base mt-4 leading-relaxed reveal reveal-d1">Bạn khởi nghiệp giữa làn sóng chuyển đổi số và tiêu dùng xanh của Đông Nam Á. Mỗi bản tin "Thị trường sống", mỗi cú sốc cung ứng, mỗi xu hướng Gen Z đều được mô phỏng để bạn tập phản xạ chiến lược trước khi bước vào thương trường thật.</p>
+      <ul class="mt-6 space-y-3 text-sm reveal reveal-d2">
+        <li class="flex gap-3"><span class="text-clay-gold">◆</span> Bản tin thị trường LIVE với tiếng nói người tiêu dùng</li>
+        <li class="flex gap-3"><span class="text-clay-gold">◆</span> Radar xu hướng: Tiêu dùng xanh, AI, xuất khẩu</li>
+        <li class="flex gap-3"><span class="text-clay-gold">◆</span> Theo dõi đối thủ thời gian thực từng vòng</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== NHÂN VẬT ===== -->
+<section id="characters" class="max-w-6xl mx-auto px-5 py-20">
+  <p class="text-center text-xs font-extrabold text-primary uppercase tracking-[.2em] reveal">Nhân vật đất nặn 3D</p>
+  <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-center mt-2 reveal">Gặp gỡ những người đồng hành</h2>
+  <div class="grid sm:grid-cols-3 gap-6 mt-12 tilt-wrap">
+    <div class="clay-card overflow-hidden tilt reveal">
+      <div class="bg-gradient-to-b from-primary-container/25 to-transparent pt-6 px-6"><img src="assets/character/lumina-ao-dai.png" alt="Lumina áo dài" class="tilt-pop mx-auto h-64 object-contain drop-shadow-xl"></div>
+      <div class="p-5 text-center"><h3 class="font-display font-extrabold">Lumina · Áo dài</h3><p class="signature text-lg text-primary leading-tight">Je m'appelle Hương</p><p class="text-xs text-deep-teal/60 mt-1">Người dẫn chuyện, chúc mừng chiến thắng và trao chứng nhận của bạn.</p></div>
+    </div>
+    <div class="clay-card overflow-hidden tilt reveal reveal-d1">
+      <div class="bg-gradient-to-b from-clay-gold/25 to-transparent pt-6 px-6"><img src="assets/character/lumina-vest.png" alt="Lumina vest trắng" class="tilt-pop mx-auto h-64 object-contain drop-shadow-xl"></div>
+      <div class="p-5 text-center"><h3 class="font-display font-extrabold">Lumina · Vest trắng</h3><p class="text-xs font-bold text-primary mt-0.5">Cố vấn chiến lược AI</p><p class="text-xs text-deep-teal/60 mt-1">Phân tích Nếu — Thì, cảnh báo rủi ro, đồng hành cùng cả 4 vai trò C-Suite.</p></div>
+    </div>
+    <div class="clay-card overflow-hidden tilt reveal reveal-d2">
+      <div class="bg-gradient-to-b from-emerald-200/40 to-transparent pt-6 px-6"><img src="assets/character/anh-tu-point.png" alt="PGS.TS Phan Anh Tú" class="tilt-pop mx-auto h-64 object-contain drop-shadow-xl"></div>
+      <div class="p-5 text-center"><h3 class="font-display font-extrabold">PGS.TS Phan Anh Tú</h3><p class="text-xs font-bold text-primary mt-0.5">Cố vấn học thuật</p><p class="text-xs text-deep-teal/60 mt-1">Xuất hiện ở những khoảnh khắc then chốt với lời khuyên quản trị kinh điển.</p></div>
+    </div>
   </div>
 </section>
 
 <!-- ===== MINI-GAMES ===== -->
-<section id="minigames" class="bg-white/60 py-12">
-  <div class="max-w-5xl mx-auto px-5">
-    <h2 class="font-display font-extrabold text-2xl text-center">🕹️ Mini-game khởi nghiệp</h2>
-    <p class="text-center text-deep-teal/60 text-sm mt-1 mb-8">Chơi ngay tại đây — không cần đăng nhập.</p>
-    <div class="grid md:grid-cols-3 gap-4 items-start">
+<section id="minigames" class="bg-white/70 py-20">
+  <div class="max-w-6xl mx-auto px-5">
+    <p class="text-center text-xs font-extrabold text-primary uppercase tracking-[.2em] reveal">Chơi thử ngay</p>
+    <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-center mt-2 reveal">🕹️ Mini-game khởi nghiệp</h2>
+    <p class="text-center text-deep-teal/60 text-sm mt-2 mb-12 reveal">Không cần đăng nhập — thử tố chất CEO của bạn trong 60 giây.</p>
+    <div class="grid md:grid-cols-3 gap-5 items-start">
 
       <!-- Quiz -->
-      <div class="clay-card p-5">
+      <div class="clay-card p-5 reveal">
         <div class="flex items-center gap-2"><p class="text-2xl">🧠</p><h3 class="font-display font-extrabold">Trắc nghiệm Khởi nghiệp</h3></div>
         <p class="text-xs text-deep-teal/60 mt-1 mb-3">8 câu hỏi về tài chính & chiến lược — kiểm tra tố chất CEO của bạn.</p>
         <button onclick="quizStart()" class="clay-btn w-full bg-primary text-white font-display font-bold py-2.5 text-sm">Bắt đầu</button>
@@ -107,7 +242,7 @@ tailwind.config = {
       </div>
 
       <!-- Đoán giá -->
-      <div class="clay-card p-5">
+      <div class="clay-card p-5 reveal reveal-d1">
         <div class="flex items-center gap-2"><p class="text-2xl">💰</p><h3 class="font-display font-extrabold">Đoán Giá Thị Trường</h3></div>
         <p class="text-xs text-deep-teal/60 mt-1 mb-3">Thị trường đã "chốt" một mức giá cân bằng từ 50–250 nghìn ₫. Bạn có 7 lần đoán!</p>
         <button onclick="priceStart()" class="clay-btn w-full bg-primary text-white font-display font-bold py-2.5 text-sm">Bắt đầu</button>
@@ -122,7 +257,7 @@ tailwind.config = {
       </div>
 
       <!-- Bắt vốn vàng -->
-      <div class="clay-card p-5">
+      <div class="clay-card p-5 reveal reveal-d2">
         <div class="flex items-center gap-2"><p class="text-2xl">🪙</p><h3 class="font-display font-extrabold">Bắt Vốn Vàng</h3></div>
         <p class="text-xs text-deep-teal/60 mt-1 mb-3">30 giây gọi vốn: hứng đồng vàng, né chi phí phát sinh 💣. Điều khiển bằng chạm / chuột / phím ← →.</p>
         <button id="catch-btn" onclick="catchStart()" class="clay-btn w-full bg-primary text-white font-display font-bold py-2.5 text-sm">Bắt đầu</button>
@@ -141,38 +276,99 @@ tailwind.config = {
 </section>
 
 <!-- ===== ĐỘI NGŨ ===== -->
-<section class="max-w-5xl mx-auto px-5 py-12">
-  <h2 class="font-display font-extrabold text-2xl text-center mb-8">Đội ngũ sáng lập</h2>
-  <div class="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
-    <div class="clay-card p-5 text-center">
-      <img src="assets/character/lumina-ao-dai.png" alt="Đỗ Thùy Hương" class="w-24 h-24 mx-auto rounded-full object-cover shadow-lg" style="object-position:50% 10%">
-      <h3 class="font-display font-extrabold mt-3">Đỗ Thùy Hương</h3>
+<section id="team" class="max-w-6xl mx-auto px-5 py-20">
+  <p class="text-center text-xs font-extrabold text-primary uppercase tracking-[.2em] reveal">Studio</p>
+  <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-center mt-2 mb-12 reveal">Đội ngũ sáng lập</h2>
+  <div class="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto tilt-wrap">
+    <div class="clay-card p-6 text-center tilt reveal">
+      <img src="assets/character/lumina-ao-dai.png" alt="Đỗ Thùy Hương" class="tilt-pop w-28 h-28 mx-auto rounded-full object-cover shadow-lg" style="object-position:50% 10%">
+      <h3 class="font-display font-extrabold mt-4">Đỗ Thùy Hương</h3>
       <p class="signature text-xl text-primary leading-tight">Je m'appelle Hương</p>
       <p class="text-xs text-primary font-bold">Sáng lập & Thiết kế game</p>
-      <p class="text-[11px] text-deep-teal/60 mt-1">Hóa thân thành cố vấn AI Lumina trong game — áo dài truyền thống & vest trắng hiện đại.</p>
+      <p class="text-[11px] text-deep-teal/60 mt-2">Hóa thân thành cố vấn AI Lumina trong game — áo dài truyền thống & vest trắng hiện đại.</p>
     </div>
-    <div class="clay-card p-5 text-center">
-      <img src="assets/character/anh-tu-point.png" alt="Phan Anh Tú" class="w-24 h-24 mx-auto rounded-full object-cover shadow-lg" style="object-position:50% 8%">
-      <h3 class="font-display font-extrabold mt-3">PGS.TS Phan Anh Tú</h3>
-      <p class="text-xs text-primary font-bold">Đồng sáng lập · Cố vấn chuyên môn</p>
-      <p class="text-[11px] text-deep-teal/60 mt-1">Bảo chứng học thuật cho mô hình mô phỏng kinh doanh và chế độ giảng viên.</p>
+    <div class="clay-card p-6 text-center tilt reveal reveal-d1">
+      <img src="assets/character/anh-tu-point.png" alt="Phan Anh Tú" class="tilt-pop w-28 h-28 mx-auto rounded-full object-cover shadow-lg" style="object-position:50% 8%">
+      <h3 class="font-display font-extrabold mt-4">PGS.TS Phan Anh Tú</h3>
+      <p class="text-xs text-primary font-bold mt-1.5">Đồng sáng lập · Cố vấn chuyên môn</p>
+      <p class="text-[11px] text-deep-teal/60 mt-2">Bảo chứng học thuật cho mô hình mô phỏng kinh doanh và chế độ giảng viên.</p>
     </div>
   </div>
 </section>
 
-<!-- ===== CTA + FOOTER ===== -->
-<section class="max-w-5xl mx-auto px-5 pb-14 text-center">
-  <div class="clay-card p-8 bg-gradient-to-br from-primary to-deep-teal text-white" style="background:linear-gradient(135deg,#006687,#033337)">
-    <h2 class="font-display font-extrabold text-2xl">Sẵn sàng "Bật Nghiệp"?</h2>
-    <p class="text-white/75 text-sm mt-2">Lập đội, chọn vai trò CEO · CFO · COO · CMO và chinh phục TOP 1 thị phần.</p>
-    <a href="index.html" class="clay-btn-primary inline-block text-white font-display font-extrabold px-10 py-4 text-sm mt-5">🚀 Vào game ngay</a>
+<!-- ===== CTA CUỐI ===== -->
+<section class="max-w-6xl mx-auto px-5 pb-20">
+  <div class="relative overflow-hidden rounded-clay text-white text-center p-10 sm:p-14 reveal" style="background:linear-gradient(135deg,#006687,#033337)">
+    <div class="blob w-64 h-64 bg-primary-container top-[-40px] left-[-40px]" style="opacity:.35"></div>
+    <div class="blob w-52 h-52 bg-clay-gold bottom-[-50px] right-[-30px]" style="opacity:.3; animation-delay:-6s"></div>
+    <img src="assets/illustrations/logo-splash.png" alt="BizOn" class="relative w-20 h-20 mx-auto rounded-2xl shadow-xl animate-float mb-5">
+    <h2 class="relative font-display font-extrabold text-3xl sm:text-4xl">Sẵn sàng "Bật Nghiệp"?</h2>
+    <p class="relative text-white/75 text-sm mt-3 max-w-lg mx-auto">Lập đội, chọn vai trò CEO · CFO · COO · CMO và chinh phục TOP 1 thị phần Việt Nam 2026.</p>
+    <a href="index.html" class="relative clay-btn-primary inline-block text-white font-display font-extrabold px-12 py-4 text-sm mt-7">🚀 VÀO GAME NGAY — MIỄN PHÍ</a>
   </div>
 </section>
-<footer class="text-center text-[11px] text-deep-teal/50 pb-8 px-5">
-  © 2026 Đỗ Thùy Hương (Je m'appelle Hương) & PGS.TS Phan Anh Tú · BizOn Bật Nghiệp — Bảo lưu mọi quyền.
+
+<!-- ===== FOOTER ===== -->
+<footer class="bg-deep-teal text-white/60">
+  <div class="max-w-6xl mx-auto px-5 py-10 grid sm:grid-cols-3 gap-8 text-sm">
+    <div>
+      <div class="flex items-center gap-2.5"><img src="assets/icons/icon-192.png" alt="BizOn" class="w-8 h-8 rounded-lg"><span class="font-display font-extrabold text-white">BizOn Bật Nghiệp</span></div>
+      <p class="text-[11px] mt-3 leading-relaxed">Game mô phỏng kinh doanh 3D Claymorphism dành cho thế hệ khởi nghiệp Việt Nam.</p>
+    </div>
+    <div class="text-[12px] space-y-2">
+      <p class="font-display font-extrabold text-white text-sm mb-2">Khám phá</p>
+      <p><a href="index.html" class="hover:text-primary-container">Chơi game đầy đủ</a></p>
+      <p><a href="#minigames" class="hover:text-primary-container">Mini-game</a></p>
+      <p><a href="#characters" class="hover:text-primary-container">Nhân vật</a></p>
+    </div>
+    <div class="text-[12px] space-y-2">
+      <p class="font-display font-extrabold text-white text-sm mb-2">Pháp lý</p>
+      <p>© 2026 Đỗ Thùy Hương (Je m'appelle Hương)</p>
+      <p>& PGS.TS Phan Anh Tú</p>
+      <p>Bảo lưu mọi quyền · Nhãn hiệu đang đăng ký</p>
+    </div>
+  </div>
 </footer>
 
 <script>
+/* ================= HIỆU ỨNG TRANG ================= */
+// thanh tiến trình cuộn
+const prog = document.getElementById('scroll-progress');
+addEventListener('scroll', () => {
+  const h = document.documentElement;
+  prog.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+}, { passive: true });
+
+// hiện dần khi cuộn
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+}), { threshold: 0.15 });
+document.querySelectorAll('.reveal:not(.visible)').forEach(el => io.observe(el));
+
+// đếm số liệu khi hiện
+const ioCount = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return;
+  ioCount.unobserve(e.target);
+  const el = e.target, target = +el.dataset.count;
+  let cur = 0;
+  const step = () => { cur = Math.min(target, cur + Math.max(1, target / 30)); el.textContent = Math.round(cur); if (cur < target) requestAnimationFrame(step); };
+  step();
+}), { threshold: 0.5 });
+document.querySelectorAll('[data-count]').forEach(el => ioCount.observe(el));
+
+// thẻ nghiêng 3D theo con trỏ (tắt trên màn hình cảm ứng)
+if (matchMedia('(hover:hover)').matches) {
+  document.querySelectorAll('.tilt').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const rx = ((e.clientY - r.top) / r.height - .5) * -10;
+      const ry = ((e.clientX - r.left) / r.width - .5) * 10;
+      card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0)`;
+    });
+    card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+  });
+}
+
 /* ================= MINI-GAME 1: QUIZ ================= */
 const QUIZ = [
   { q: 'Điểm hòa vốn (Break-even) là gì?', o: ['Mức sản lượng mà doanh thu = tổng chi phí', 'Lúc công ty hết tiền mặt', 'Khi thị phần đạt 50%'], a: 0 },
@@ -279,7 +475,6 @@ function catchLoop() {
     st.items.push({ x: 16 + Math.random() * (cv.width - 32), y: -14, v: 1.6 + Math.random() * 1.6 + (30 - st.time) * 0.05, bomb });
   }
   cx.clearRect(0, 0, cv.width, cv.height);
-  // giỏ vốn
   cx.font = '30px serif'; cx.textAlign = 'center';
   cx.fillText('🧺', st.x, cv.height - 10);
   st.items = st.items.filter(it => {
