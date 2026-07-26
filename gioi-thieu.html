@@ -182,8 +182,10 @@ tailwind.config = {
       <a href="#characters" class="hover:text-primary-container transition-colors">Nhân vật</a>
       <a href="games.html" class="hover:text-primary-container transition-colors">🕹️ Arcade</a>
       <a href="doi-ngu.html" class="hover:text-primary-container transition-colors">Đội ngũ</a>
+      <a href="global.html" class="hover:text-primary-container transition-colors">🌏 Global</a>
     </div>
-    <button id="theme-btn" onclick="toggleTheme()" class="w-9 h-9 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 transition-colors shrink-0" title="Chế độ Sáng/Tối · Light/Dark mode">🌙</button>
+    <a href="https://github.com/thuyhuongctu/BizOn" target="_blank" rel="noopener" title="Mã nguồn BizOn trên GitHub" class="w-9 h-9 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 transition-colors flex items-center justify-center shrink-0"><svg viewBox="0 0 16 16" class="w-5 h-5" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></a>
+      <button id="theme-btn" onclick="toggleTheme()" class="w-9 h-9 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 transition-colors shrink-0" title="Chế độ Sáng/Tối · Light/Dark mode">🌙</button>
       <button id="lang-btn" onclick="toggleLang()" class="h-9 px-3 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 text-[11px] font-extrabold transition-colors shrink-0" title="Tiếng Việt / English">EN</button>
       <a href="index.html" class="clay-btn-primary text-white font-display font-extrabold px-5 py-2.5 text-xs sm:text-sm shrink-0">🎮 CHƠI NGAY</a>
   </div>
@@ -296,11 +298,11 @@ tailwind.config = {
   <div class="grid sm:grid-cols-3 gap-6 mt-12 tilt-wrap">
     <div class="clay-card overflow-hidden tilt reveal">
       <div class="bg-gradient-to-b from-primary-container/25 to-transparent pt-6 px-6"><img src="assets/character/lumina-ao-dai.png" alt="Lumina áo dài" class="tilt-pop mx-auto h-64 object-contain drop-shadow-xl"></div>
-      <div class="p-5 text-center"><h3 class="font-display font-extrabold">Lumina · Áo dài</h3><p class="text-xs font-bold text-primary mt-0.5">Người dẫn chuyện</p><p class="text-xs text-deep-teal/60 mt-1">Chúc mừng chiến thắng và trao chứng nhận hoàn thành của bạn.</p></div>
+      <div class="p-5 text-center"><h3 class="font-display font-extrabold">Lumina Áo Dài</h3><p class="text-xs font-bold text-primary mt-0.5">Người dẫn chuyện</p><p class="text-xs text-deep-teal/60 mt-1">Chúc mừng chiến thắng và trao chứng nhận hoàn thành của bạn.</p></div>
     </div>
     <div class="clay-card overflow-hidden tilt reveal reveal-d1">
       <div class="bg-gradient-to-b from-clay-gold/25 to-transparent pt-6 px-6"><img src="assets/character/lumina-vest.png" alt="Lumina vest trắng" class="tilt-pop mx-auto h-64 object-contain drop-shadow-xl"></div>
-      <div class="p-5 text-center"><h3 class="font-display font-extrabold">Lumina · Vest trắng</h3><p class="text-xs font-bold text-primary mt-0.5">Cố vấn chiến lược AI</p><p class="text-xs text-deep-teal/60 mt-1">Phân tích Nếu — Thì, cảnh báo rủi ro, đồng hành cùng cả 4 vai trò C-Suite.</p></div>
+      <div class="p-5 text-center"><h3 class="font-display font-extrabold">Lumina Vest Trắng</h3><p class="text-xs font-bold text-primary mt-0.5">Cố vấn chiến lược AI</p><p class="text-xs text-deep-teal/60 mt-1">Phân tích Nếu — Thì, cảnh báo rủi ro, đồng hành cùng cả 4 vai trò C-Suite.</p></div>
     </div>
     <div class="clay-card overflow-hidden tilt reveal reveal-d2">
       <div class="bg-gradient-to-b from-emerald-200/40 to-transparent pt-6 px-6"><img src="assets/character/anh-tu-present.png" alt="Phan Anh Tú" class="tilt-pop mx-auto h-64 object-contain drop-shadow-xl"></div>
@@ -440,7 +442,7 @@ tailwind.config = {
 
 <!-- ===== FOOTER ===== -->
 <footer class="bg-deep-teal text-white/60">
-  <div class="max-w-6xl mx-auto px-5 py-10 grid sm:grid-cols-3 gap-8 text-sm">
+  <div class="max-w-6xl mx-auto px-5 py-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-8 text-sm">
     <div>
       <div class="flex items-center gap-2.5"><img src="assets/icons/icon-192.png" alt="BizOn" class="w-8 h-8 rounded-lg"><span class="font-display font-extrabold text-white">BizOn Bật Nghiệp</span></div>
       <p class="text-[11px] mt-3 leading-relaxed">Game mô phỏng kinh doanh 3D Claymorphism dành cho thế hệ khởi nghiệp Việt Nam.</p>
@@ -449,7 +451,14 @@ tailwind.config = {
       <p class="font-display font-extrabold text-white text-sm mb-2">Khám phá</p>
       <p><a href="index.html" class="hover:text-primary-container">Chơi game đầy đủ</a></p>
       <p><a href="games.html" class="hover:text-primary-container">BizOn Arcade (tất cả trò chơi)</a></p>
+      <p><a href="global.html" class="hover:text-primary-container">🌏 BizOn Global (thử nghiệm)</a></p>
       <p><a href="#characters" class="hover:text-primary-container">Nhân vật</a></p>
+    </div>
+    <div class="text-[12px] space-y-2">
+      <p class="font-display font-extrabold text-white text-sm mb-2">Kho GitHub</p>
+      <p><a href="https://github.com/thuyhuongctu/BizOn" target="_blank" rel="noopener" class="hover:text-primary-container">⭐ BizOn — mã nguồn</a></p>
+      <p><a href="https://github.com/thuyhuongctu/M-AIDA" target="_blank" rel="noopener" class="hover:text-primary-container">🎼 M-AIDA — mã nguồn</a></p>
+      <p><a href="https://thuyhuongctu.github.io/M-AIDA/" target="_blank" rel="noopener" class="hover:text-primary-container">🌏 Je m'appelle Hương — M-AIDA</a></p>
     </div>
     <div class="text-[12px] space-y-2">
       <p class="font-display font-extrabold text-white text-sm mb-2">Pháp lý</p>
