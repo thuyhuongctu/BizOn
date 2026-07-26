@@ -77,6 +77,17 @@ tailwind.config = {
   @keyframes floatY { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-10px); } }
   .animate-float { animation:floatY 4s ease-in-out infinite; }
   .speech-tail { position:absolute; left:-14px; bottom:0; width:14px; height:14px; background:#fff; clip-path:polygon(100% 0, 0 100%, 100% 100%); }
+  /* Chat giọng nói — theo Stitch export */
+  .clay-bubble-in { background:#fff; border-radius:24px; border-bottom-left-radius:4px; box-shadow:8px 8px 16px rgba(0,0,0,.04), inset 2px 2px 4px rgba(255,255,255,1), inset -2px -2px 4px rgba(0,0,0,.02); }
+  .clay-bubble-out { background:#006687; color:#fff; border-radius:24px; border-bottom-right-radius:4px; box-shadow:8px 8px 16px rgba(0,102,135,.15), inset 2px 2px 4px rgba(255,255,255,.3), inset -4px -4px 8px rgba(0,0,0,.2); }
+  .clay-input { background:#eef4f9; box-shadow:inset 4px 4px 8px rgba(0,0,0,.05), inset -4px -4px 8px rgba(255,255,255,.8); border:none; outline:none; }
+  .wave-bar { width:4px; height:16px; background:linear-gradient(to bottom,#00c4ff,#ffb86a); border-radius:2px; animation:wave 1s ease-in-out infinite; }
+  @keyframes wave { 0%,100% { height:8px; } 50% { height:24px; } }
+  .avatar-glow { animation:avatarPulse 2s infinite; }
+  @keyframes avatarPulse { 0% { box-shadow:0 0 0 0 rgba(0,196,255,.7); } 70% { box-shadow:0 0 0 15px rgba(0,196,255,0); } 100% { box-shadow:0 0 0 0 rgba(0,196,255,0); } }
+  .item-icon-container { position:relative; background:radial-gradient(circle at 30% 30%, #f0f9ff, #c1e8ff); border-radius:20px; overflow:hidden; }
+  .item-icon-container::after { content:''; position:absolute; inset:0; box-shadow:inset 0 0 15px rgba(255,255,255,.6); pointer-events:none; }
+  .xp-bar-fill { transition:width 1s cubic-bezier(.34,1.56,.64,1); box-shadow:inset 0 2px 4px rgba(255,255,255,.4); }
 </style>
 </head>
 <body class="min-h-screen">
@@ -94,13 +105,9 @@ tailwind.config = {
 <!-- ===================== LOGIN ===================== -->
 <section id="screen-login" class="screen">
   <div class="min-h-screen flex flex-col justify-center px-6 py-10 max-w-md mx-auto">
-    <div class="clay-card p-8">
-      <div class="flex items-center justify-between mb-5">
-        <div class="w-16 h-16 rounded-clay bg-gradient-to-br from-primary to-primary-container flex items-center justify-center shadow-clay">
-          <span class="font-display font-extrabold text-white text-3xl">B</span>
-        </div>
-        <img src="assets/character/lumina-ao-dai.png" alt="Lumina chào bạn" class="w-16 h-16 rounded-full object-cover shadow-clay" style="object-position:50% 12%">
-      </div>
+    <div class="clay-card overflow-hidden p-0 mb-0">
+      <img src="assets/illustrations/login-clay.png" alt="BizOn Bật Nghiệp" class="w-full h-44 object-cover" style="object-position:50% 12%">
+      <div class="p-8 pt-5">
       <h2 class="font-display text-2xl font-extrabold text-deep-teal">Chào mừng trở lại!</h2>
       <p class="text-sm text-deep-teal/60 mb-6">Lumina — Je m'appelle Hương đang chờ đồng hành cùng đội của bạn.</p>
       <label class="block text-sm font-bold text-deep-teal mb-1">Email</label>
@@ -111,7 +118,8 @@ tailwind.config = {
       <input id="login-class" type="text" placeholder="VD: QTKD-2026-A" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 mb-4 outline-none focus:border-primary-container">
       <label class="block text-sm font-bold text-deep-teal mb-2">Vai trò của bạn</label>
       <div id="role-picker" class="grid grid-cols-5 gap-2 mb-6"></div>
-      <button onclick="doLogin()" class="clay-btn w-full bg-primary text-white font-display font-bold py-4">Bắt đầu mô phỏng 🚀</button>
+      <button onclick="doLogin()" class="clay-button-primary w-full text-white font-display font-bold py-4" style="background:#e8762d; box-shadow:0 6px 0 #b95618, 0 12px 24px rgba(184,86,24,.25)">Bắt đầu mô phỏng 🚀</button>
+      </div>
     </div>
     <p class="text-center text-xs text-deep-teal/40 mt-6">© 2026 BizOn Bật Nghiệp · Đỗ Thùy Hương (Je m'appelle Hương) &amp; PGS.TS Phan Anh Tú</p>
   </div>
@@ -209,10 +217,46 @@ tailwind.config = {
         <input id="in-prod" type="range" min="200" max="4000" step="100" value="1200" class="w-full" oninput="syncDecisionLabels()">
         <p class="text-[11px] text-deep-teal/50 mt-1">Chi phí sản xuất: 60.000₫/sp + khấu hao máy móc theo công suất.</p>
       </div>
-      <div class="clay-card p-5 mb-4">
+      <div class="clay-card p-5 mb-3">
         <div class="flex justify-between mb-1"><label class="font-bold text-sm text-deep-teal">🔬 Đầu tư R&D</label><span id="v-rd" class="font-display font-bold text-primary">30tr₫</span></div>
         <input id="in-rd" type="range" min="0" max="150" step="5" value="30" class="w-full" oninput="syncDecisionLabels()">
         <p class="text-[11px] text-deep-teal/50 mt-1">R&D tích lũy giúp giảm giá thành và tăng giá trị thương hiệu.</p>
+      </div>
+      <div class="clay-card p-5 mb-3">
+        <p class="font-bold text-sm text-deep-teal mb-3">🏦 Quản trị Tài chính</p>
+        <label class="block text-[11px] font-bold text-deep-teal/60 uppercase mb-1.5">Cơ cấu nguồn vốn</label>
+        <div class="grid grid-cols-2 gap-2 mb-1">
+          <button id="fund-equity" onclick="setFunding('equity')" class="clay-button-secondary text-primary text-xs font-bold py-2.5 ring-2 ring-primary-container">💼 Vốn tự có</button>
+          <button id="fund-loan" onclick="setFunding('loan')" class="clay-button-secondary text-deep-teal/60 text-xs font-bold py-2.5">🏦 Vay ngân hàng</button>
+        </div>
+        <p class="text-[11px] text-deep-teal/50 mb-3">Vay ngân hàng: được chi vượt ví, lãi suất 8.5%/vòng trên phần thấu chi.</p>
+        <label class="block text-[11px] font-bold text-deep-teal/60 uppercase mb-1.5">Kỳ hạn thanh toán cho khách</label>
+        <select id="in-term" onchange="syncDecisionLabels()" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 outline-none text-sm font-semibold text-deep-teal">
+          <option value="30">30 ngày (Tiêu chuẩn)</option>
+          <option value="60">60 ngày — cầu +4%, chi phí +2%</option>
+          <option value="90">90 ngày — cầu +8%, chi phí +5%</option>
+        </select>
+      </div>
+      <div class="clay-card p-5 mb-3">
+        <p class="font-bold text-sm text-deep-teal mb-3">👥 Quản trị Nhân sự</p>
+        <div class="flex justify-between mb-1"><label class="text-[11px] font-bold text-deep-teal/60 uppercase">Số lượng nhân viên</label><span id="v-workers" class="font-display font-bold text-primary">45 người</span></div>
+        <input id="in-workers" type="range" min="20" max="100" step="5" value="45" class="w-full mb-1" oninput="syncDecisionLabels()">
+        <p class="text-[11px] text-deep-teal/50 mb-3">Lương 1tr₫/người/vòng · Năng lực: 70 sp/người — thiếu người sẽ giảm OEE.</p>
+        <div class="flex justify-between mb-1"><label class="text-[11px] font-bold text-deep-teal/60 uppercase">Ngân sách đào tạo / người</label><span id="v-train" class="font-display font-bold text-primary">2tr₫</span></div>
+        <input id="in-train" type="range" min="0" max="10" step="1" value="1" class="w-full" oninput="syncDecisionLabels()">
+        <p class="text-[11px] text-deep-teal/50 mt-1">Đào tạo tăng OEE (tối đa +5%) và giảm phế phẩm.</p>
+      </div>
+      <div class="clay-card p-5 mb-4 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-28 h-28 bg-primary/5 rounded-full -mr-12 -mt-12"></div>
+        <div class="flex justify-between items-start mb-3 relative">
+          <div><p class="font-bold text-sm text-deep-teal">📊 Dự báo Dòng tiền</p><p class="text-[11px] text-deep-teal/50">Ước tính theo thông số đang nhập (CVP)</p></div>
+          <div class="text-right"><p class="text-[10px] text-deep-teal/50 uppercase font-bold">Lợi nhuận ròng</p><p id="fc-net" class="font-display font-extrabold text-primary">—</p></div>
+        </div>
+        <div class="grid grid-cols-2 gap-3 relative">
+          <div class="clay-sunken rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Dòng tiền vào</p><p id="fc-in" class="font-bold text-emerald-600 text-sm">—</p></div>
+          <div class="clay-sunken rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Dòng tiền ra</p><p id="fc-out" class="font-bold text-red-600 text-sm">—</p></div>
+        </div>
+        <p id="fc-be" class="text-[11px] text-deep-teal/60 mt-2 relative">—</p>
       </div>
       <div class="clay-card p-4 mb-4">
         <p class="font-bold text-sm text-deep-teal mb-1">🔮 Mô phỏng "Nếu — Thì" trước khi Commit</p>
@@ -256,11 +300,30 @@ tailwind.config = {
       </div>
       <div id="advisor-chat" class="space-y-3 mb-4"></div>
       <div class="clay-card p-4 mb-4">
-        <p class="font-bold text-sm text-deep-teal mb-2">Hỏi kịch bản "Nếu — Thì" (<span id="ai-quota">3</span> lượt/vòng)</p>
-        <div class="grid grid-cols-1 gap-2">
+        <div class="flex items-center justify-between mb-2">
+          <p class="font-bold text-sm text-deep-teal">Hỏi Lumina (<span id="ai-quota">3</span> lượt/vòng)</p>
+          <div class="flex items-center gap-1.5 clay-input rounded-full p-1">
+            <button id="voice-female" onclick="setVoiceGender('female')" class="px-3 py-1 rounded-full text-[11px] font-bold bg-white shadow-md text-primary">👩 Nữ</button>
+            <button id="voice-male" onclick="setVoiceGender('male')" class="px-3 py-1 rounded-full text-[11px] font-bold text-deep-teal/50">👨 Nam</button>
+            <button id="voice-toggle" onclick="toggleVoice()" class="px-3 py-1 rounded-full text-[11px] font-bold bg-primary-container/30 text-primary">🔊 Bật</button>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 gap-2 mb-3">
           <button onclick="askLumina('pricing')" class="clay-btn bg-surface-bright text-deep-teal text-left font-semibold text-sm px-4 py-3">💲 Nếu tôi thay đổi giá bán thì sao?</button>
           <button onclick="askLumina('marketing')" class="clay-btn bg-surface-bright text-deep-teal text-left font-semibold text-sm px-4 py-3">📣 Nếu tăng ngân sách Marketing 15%?</button>
           <button onclick="askLumina('risk')" class="clay-btn bg-surface-bright text-deep-teal text-left font-semibold text-sm px-4 py-3">⚠️ Rủi ro lớn nhất vòng này là gì?</button>
+        </div>
+        <div class="flex items-center gap-2">
+          <input id="chat-input" type="text" placeholder="Trò chuyện với Hương..." class="clay-input flex-1 rounded-full px-5 py-3 text-sm text-deep-teal" onkeydown="if(event.key==='Enter')sendChat()">
+          <button id="mic-btn" onclick="toggleMic()" class="clay-button-secondary w-11 h-11 rounded-full flex items-center justify-center text-lg shrink-0">🎤</button>
+          <button onclick="sendChat()" class="clay-button-primary w-11 h-11 rounded-full flex items-center justify-center text-white text-lg shrink-0">➤</button>
+        </div>
+        <div id="speaking-bar" class="hidden items-center gap-3 mt-3 clay-input rounded-2xl px-4 py-2.5">
+          <span class="text-primary">🎵</span>
+          <div class="flex items-center gap-1">
+            <div class="wave-bar" style="animation-delay:0s"></div><div class="wave-bar" style="animation-delay:.2s"></div><div class="wave-bar" style="animation-delay:.4s"></div><div class="wave-bar" style="animation-delay:.1s"></div><div class="wave-bar" style="animation-delay:.3s"></div><div class="wave-bar" style="animation-delay:.5s"></div><div class="wave-bar" style="animation-delay:.2s"></div>
+          </div>
+          <span class="text-[11px] font-bold text-primary ml-auto">Hương đang nói...</span>
         </div>
       </div>
       <h3 class="font-display font-bold text-deep-teal mb-2">🔎 Phân tích chuyên sâu theo vai trò</h3>
@@ -272,11 +335,14 @@ tailwind.config = {
     <!-- ========== REPORTS ========== -->
     <section id="tab-reports" class="screen">
       <h2 class="font-display text-xl font-extrabold text-deep-teal mb-4">Báo cáo & Phân tích</h2>
-      <div class="flex gap-2 mb-4">
-        <button data-rep="pnl" class="rep-tab clay-btn bg-primary text-white text-xs font-bold px-4 py-2" onclick="showReport('pnl')">P&L</button>
-        <button data-rep="cash" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2" onclick="showReport('cash')">Dòng tiền</button>
-        <button data-rep="dep" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2" onclick="showReport('dep')">Khấu hao</button>
-        <button data-rep="energy" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2" onclick="showReport('energy')">⚡ Năng lượng</button>
+      <div class="flex gap-2 mb-4 overflow-x-auto pb-1">
+        <button data-rep="pnl" class="rep-tab clay-btn bg-primary text-white text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('pnl')">P&L</button>
+        <button data-rep="cash" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('cash')">Dòng tiền</button>
+        <button data-rep="cvp" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('cvp')">CVP & Chi phí</button>
+        <button data-rep="hr" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('hr')">👥 Nhân sự</button>
+        <button data-rep="bmc" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('bmc')">🧩 BMC</button>
+        <button data-rep="dep" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('dep')">Khấu hao</button>
+        <button data-rep="energy" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('energy')">⚡ Năng lượng</button>
       </div>
       <div id="report-body"></div>
     </section>
@@ -287,7 +353,25 @@ tailwind.config = {
       <p class="text-sm text-deep-teal/60 mb-4">Dùng ví ảo của đội để mua vật phẩm tăng lực.</p>
       <div id="shop-list" class="space-y-3 mb-6"></div>
       <h3 class="font-display font-bold text-deep-teal mb-3">🎒 Kho đồ của đội</h3>
-      <div id="inventory-list" class="space-y-3"><p class="text-sm text-deep-teal/50">Chưa có vật phẩm nào.</p></div>
+      <div class="flex gap-2 mb-3 overflow-x-auto pb-1">
+        <button data-inv="all" onclick="setInvFilter('all')" class="inv-tab clay-btn bg-primary text-white text-xs font-bold px-4 py-2 whitespace-nowrap">Tất cả</button>
+        <button data-inv="item" onclick="setInvFilter('item')" class="inv-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap">Vật phẩm</button>
+        <button data-inv="blueprint" onclick="setInvFilter('blueprint')" class="inv-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap">Bản thiết kế</button>
+      </div>
+      <div id="inventory-list" class="grid grid-cols-2 gap-3 mb-3"></div>
+      <div id="inv-detail" class="clay-card p-5 bg-primary-container/10">
+        <div class="flex items-start gap-3">
+          <div class="item-icon-container w-16 h-16 flex items-center justify-center text-3xl shrink-0"><span id="invd-icon">🎒</span></div>
+          <div class="flex-1">
+            <div class="flex justify-between items-center mb-1">
+              <p id="invd-name" class="font-display font-bold text-deep-teal text-sm">Chọn một vật phẩm</p>
+              <span id="invd-count" class="bg-primary-container/40 text-primary text-[10px] font-extrabold px-2.5 py-1 rounded-full">--</span>
+            </div>
+            <p id="invd-desc" class="text-xs text-deep-teal/60 mb-3">Chạm vào một vật phẩm trong kho để xem chi tiết và sử dụng sức mạnh của nó.</p>
+            <button id="invd-use" class="clay-button-primary w-full text-white text-sm font-display font-bold py-3 opacity-50" disabled>Sử dụng 🚀</button>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- ========== SKILLS ========== -->
@@ -395,10 +479,11 @@ tailwind.config = {
         <h2 id="pf-name" class="font-display text-xl font-extrabold text-deep-teal">—</h2>
         <p id="pf-email" class="text-sm text-deep-teal/60">—</p>
         <span id="pf-role" class="inline-block mt-2 bg-primary-container/30 text-primary font-bold text-xs px-3 py-1.5 rounded-full">—</span>
+        <span id="pf-tier" class="inline-block mt-2 ml-1 clay-button-primary text-white font-bold text-xs px-3 py-1.5 rounded-full">🏅 —</span>
       </div>
       <div class="clay-card p-5 mb-4">
         <div class="flex justify-between text-sm font-bold text-deep-teal mb-1"><span>Tiến độ cấp <span id="pf-level">1</span></span><span id="pf-xp">0 XP</span></div>
-        <div class="h-3 rounded-full bg-surface-bright overflow-hidden shadow-inner"><div id="pf-xpbar" class="h-full bg-gradient-to-r from-primary to-primary-container rounded-full" style="width:0%"></div></div>
+        <div class="h-3 rounded-full bg-surface-bright overflow-hidden shadow-inner"><div id="pf-xpbar" class="xp-bar-fill h-full bg-gradient-to-r from-primary to-primary-container rounded-full" style="width:0%"></div></div>
       </div>
       <div class="grid grid-cols-2 gap-3 mb-5">
         <div class="clay-card p-4 text-center"><p id="pf-profit" class="font-display font-extrabold text-primary">0₫</p><p class="text-[10px] text-deep-teal/50 font-semibold uppercase mt-1">Tổng lợi nhuận</p></div>
