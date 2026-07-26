@@ -50,6 +50,8 @@ Tiến trình chơi được lưu tự động trong `localStorage` của trình
 | Chúc mừng chiến thắng | Thị phần đạt đỉnh mới (≥30%, có lãi) → màn hình TOP 1 MARKET với Lumina vỗ tay, hiệu quả quảng cáo, độ hài lòng thương hiệu |
 | Kiểm toán Năng lượng | Báo cáo ⚡: tổng kWh vs mục tiêu (vòng tròn % quá tải), 3 dây chuyền với trạng thái, nâng cấp/bảo trì dây chuyền, lịch sử bảo trì |
 | Phân tích theo vai trò | Advisor: thẻ CFO (thanh toán nhanh, ROI, khoản vay, cắt chi phí), COO (OEE, phế phẩm, bảo trì), CMO (thị phần, Brand Loyalty, Price War/Green Marketing, Branding Premium) |
+| Mô phỏng "Nếu — Thì" | Trước khi Commit: chạy thử kịch bản CEO (thị phần, hòa vốn, đánh đổi) hoặc CFO (Quick Ratio ngưỡng 1.1, đòn bẩy ROI vs lãi vay) — 2 lượt/vòng theo `what_if_limit` |
+| Bộ nhớ doanh nghiệp | SEC: nhật ký toàn bộ lời tư vấn của Lumina theo vòng (mô phỏng bảng `ai_advisor_history`) |
 
 ## Engine mô phỏng (client-side)
 
@@ -59,7 +61,7 @@ Tiến trình chơi được lưu tự động trong `localStorage` của trình
 - Chi phí: giá vốn / khấu hao theo công suất máy / phí lưu kho / chi phí cố định.
 - R&D tích lũy giảm giá thành và tăng thương hiệu; XP quy đổi từ lợi nhuận và thị phần.
 - Mã lỗi nghiệp vụ mô phỏng theo API spec: `ERR_ALREADY_COMMITTED`,
-  `ERR_INSUFFICIENT_FUNDS`, `ERR_AI_LIMIT`, `ERR_ITEM_NOT_FOUND`…
+  `ERR_INSUFFICIENT_FUNDS`, `ERR_AI_LIMIT_REACHED`, `ERR_ITEM_NOT_FOUND`…
 
 ## Design Tokens
 
@@ -117,6 +119,6 @@ Manrope (OFL 1.1) — giữ nguyên giấy phép gốc của chúng.
 | Thành viên | Vai trò |
 |---|---|
 | **Đỗ Thùy Hương** (Je m'appelle Hương) | Tác giả thiết kế & nhân vật Lumina · thuyhuongctu@gmail.com |
-| **Phan Anh Tú** | Đồng phát triển |
+| **PGS.TS Phan Anh Tú** | Đồng sáng lập |
 
 © 2026 BizOn Bật Nghiệp
