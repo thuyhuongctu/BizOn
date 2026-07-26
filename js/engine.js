@@ -17,12 +17,41 @@ const AI_QUOTA_PER_ROUND = 3;         // ERR_AI_LIMIT
 
 const MARKET_EVENTS = [
   null,
-  { id: 'EV_STABLE',    round: 1, tone: 'good', icon: '🌤️', name: 'Thị trường ổn định', desc: 'Vòng khởi động — nhu cầu thị trường ở mức chuẩn.', demand: 1.0, costMul: 1.0 },
-  { id: 'EV_TECHBOOM',  round: 2, tone: 'good', icon: '🚀', name: 'Bùng nổ công nghệ', desc: 'Nhu cầu tăng 20%! Đầu tư R&D vòng này hiệu quả gấp rưỡi.', demand: 1.2, costMul: 1.0, rdBoost: 1.5 },
-  { id: 'EV_PRICEWAR',  round: 3, tone: 'warn', icon: '⚔️', name: 'Chiến tranh giá', desc: 'Đối thủ đồng loạt giảm giá — khách hàng cực nhạy cảm về giá.', demand: 1.0, costMul: 1.0, elasticityMul: 1.4 },
-  { id: 'EV_RECESSION', round: 4, tone: 'bad',  icon: '📉', name: 'Suy thoái kinh tế', desc: 'Tổng cầu giảm 30%, chi phí cố định tăng. Giữ dòng tiền an toàn!', demand: 0.7, costMul: 1.15, shake: true },
-  { id: 'EV_SUPPLY',    round: 5, tone: 'warn', icon: '🚢', name: 'Đứt gãy chuỗi cung ứng', desc: 'Chi phí sản xuất mỗi đơn vị tăng 25% trong vòng này.', demand: 1.0, costMul: 1.25 },
-  { id: 'EV_EXPO',      round: 6, tone: 'good', icon: '🌏', name: 'Hội chợ quốc tế', desc: 'Cơ hội vàng: hiệu quả marketing tăng 40% ở vòng chung kết.', demand: 1.1, costMul: 1.0, mktBoost: 1.4 },
+  { id: 'EV_STABLE', round: 1, tone: 'good', icon: '🌤️', name: 'Thị trường ổn định', tag: 'VÒNG KHỞI ĐỘNG',
+    desc: 'Vòng khởi động — nhu cầu thị trường ở mức chuẩn.', demand: 1.0, costMul: 1.0,
+    impacts: [{ icon: '📈', label: 'Nhu cầu thị trường', value: 'Chuẩn', dir: 'flat' }, { icon: '⚙️', label: 'Chi phí vận hành', value: 'Ổn định', dir: 'flat' }],
+    luminaImg: 'lumina-vest-thumbsup', luminaMsg: 'Chào cả đội! Vòng đầu là lúc thiết lập nền tảng. CEO hãy thống nhất chiến lược giá, SEC nhớ ghi chép lại các quyết định nhé!',
+    cta: { label: '🎯 Nhập quyết định ngay', tab: 'decisions' } },
+  { id: 'EV_GOLDEN', round: 2, tone: 'good', icon: '🌟', name: 'Biến cố: Cơ Hội Vàng', tag: 'BIẾN CỐ ĐẶC BIỆT',
+    desc: 'Chính phủ vừa công bố gói kích cầu kinh tế và miễn thuế xuất khẩu. Đây là thời cơ để bứt phá doanh thu trên thị trường quốc tế.',
+    demand: 1.35, costMul: 1.0, rdBoost: 1.5,
+    impacts: [{ icon: '🧾', label: 'Thuế xuất khẩu', value: '0%', dir: 'down-good' }, { icon: '📦', label: 'Nhu cầu dự kiến', value: '+35%', dir: 'up' }],
+    luminaImg: 'lumina-ao-dai-clap', luminaMsg: 'Thật tuyệt vời! CFO hãy rà soát lại ngân sách đầu tư, còn COO hãy chuẩn bị tăng công suất để đáp ứng làn sóng đơn hàng mới này nhé!',
+    cta: { label: '🏭 Tăng công suất ngay', tab: 'decisions' } },
+  { id: 'EV_PRICEWAR', round: 3, tone: 'warn', icon: '⚔️', name: 'Biến cố: Chiến Tranh Giá', tag: 'CẢNH BÁO THỊ TRƯỜNG',
+    desc: 'Đối thủ giảm giá 15% điện rộng tại kênh Modern Trade — khách hàng cực nhạy cảm về giá trong vòng này.',
+    demand: 1.0, costMul: 1.0, elasticityMul: 1.4,
+    impacts: [{ icon: '🏷️', label: 'Giá đối thủ (kênh MT)', value: '-15%', dir: 'down' }, { icon: '💔', label: 'Độ nhạy giá của khách', value: 'CAO', dir: 'up-bad' }],
+    luminaImg: 'lumina-vest-worried', luminaMsg: 'Thưa CMO, đối thủ vừa châm ngòi chiến tranh giá! Ta có 2 lối đi: chiến thuật Bundling hoặc tăng Value-Added — đừng lao vào giảm giá sâu kẻo mất biên lợi nhuận.',
+    cta: { label: '🤖 Xem giải pháp từ Lumina', tab: 'advisor' } },
+  { id: 'EV_RECESSION', round: 4, tone: 'bad', icon: '⚡', name: 'Khủng Hoảng Năng Lượng', tag: 'CẢNH BÁO KHẨN CẤP',
+    desc: 'Thị trường năng lượng toàn cầu đang gặp biến động cực lớn. Giá điện sản xuất tăng vọt, tổng cầu suy giảm.',
+    demand: 0.7, costMul: 1.3, shake: true, oeeHit: 10,
+    impacts: [{ icon: '📈', label: 'Chi phí vận hành', value: '+30%', dir: 'up-bad' }, { icon: '🏭', label: 'Hiệu suất (OEE)', value: '-10%', dir: 'down' }],
+    luminaImg: 'lumina-ao-dai-alert', luminaMsg: 'Cảnh báo khẩn cấp! Giá điện sản xuất tăng vọt. COO hãy rà soát lịch chạy máy, còn CFO cần dự phòng thêm vốn ngay nhé!',
+    cta: { label: '⚡ Tối ưu năng lượng ngay', tab: 'reports', report: 'energy' } },
+  { id: 'EV_SUPPLY', round: 5, tone: 'bad', icon: '🚢', name: 'Khủng Hoảng Chuỗi Cung Ứng', tag: 'CẢNH BÁO KHẨN CẤP',
+    desc: 'Một sự cố nghiêm trọng tại các cửa ngõ giao thương quốc tế. Tàu chở hàng chính bị mắc kẹt, gây đình trệ dây chuyền sản xuất của BizOn.',
+    demand: 1.0, costMul: 1.25, fulfillMul: 0.85, shake: true,
+    impacts: [{ icon: '💰', label: 'Giá thành đơn vị', value: '+25%', dir: 'up-bad' }, { icon: '📦', label: 'Tỷ lệ đáp ứng đơn hàng', value: '-15%', dir: 'down' }],
+    luminaImg: 'lumina-ao-dai-alert', luminaMsg: 'Thưa CEO, tình hình rất khẩn cấp! Dây chuyền sản xuất đình trệ vì thiếu linh kiện đầu vào. Chúng ta cần quyết định ngay: tăng ngân sách vận chuyển hay đàm phán lại thời gian giao hàng?',
+    cta: { label: '👥 Họp khẩn cấp toàn đội', tab: 'decisions' } },
+  { id: 'EV_EXPO', round: 6, tone: 'good', icon: '🌏', name: 'Hội Chợ Quốc Tế', tag: 'VÒNG CHUNG KẾT',
+    desc: 'Cơ hội vàng ở vòng chung kết: hiệu quả marketing tăng 40%, nhu cầu quốc tế tăng mạnh.',
+    demand: 1.1, costMul: 1.0, mktBoost: 1.4,
+    impacts: [{ icon: '📣', label: 'Hiệu quả marketing', value: '+40%', dir: 'up' }, { icon: '🌏', label: 'Nhu cầu quốc tế', value: '+10%', dir: 'up' }],
+    luminaImg: 'lumina-ao-dai-clap', luminaMsg: 'Vòng cuối rồi cả đội ơi! Đây là lúc dồn lực marketing để chốt vị trí dẫn đầu. Cả đội cùng bứt phá nhé!',
+    cta: { label: '🚀 Bứt phá vòng cuối', tab: 'decisions' } },
 ];
 
 const SHOP_ITEMS = [
@@ -56,7 +85,7 @@ const MISSIONS = [
   { id: 'M_AI3',      icon: '🤖', name: 'Người bạn của Lumina', desc: 'Hỏi Lumina AI tổng cộng 3 lần.', rewardMoney: 15, rewardXp: 10, test: s => (s.aiAskedTotal || 0) >= 3 },
   { id: 'M_SKILL',    icon: '🌳', name: 'Học không ngừng', desc: 'Mở khóa 1 kỹ năng trong Cây kỹ năng.', rewardMoney: 25, rewardXp: 15, test: s => s.skills.length >= 1 },
   { id: 'M_MINIGAME', icon: '🏭', name: 'Thợ đất sét cừ khôi', desc: 'Đạt từ 15 điểm trong Clay Factory Frenzy.', rewardMoney: 25, rewardXp: 15, test: s => (s.minigameBest || 0) >= 15 },
-  { id: 'M_SURVIVE',  icon: '🛟', name: 'Thuyền trưởng bão táp', desc: 'Có lãi trong vòng Suy thoái kinh tế.', rewardMoney: 60, rewardXp: 40, test: s => s.history.some(r => r.event.id === 'EV_RECESSION' && r.netProfit > 0) },
+  { id: 'M_SURVIVE',  icon: '🛟', name: 'Thuyền trưởng bão táp', desc: 'Có lãi trong vòng Khủng hoảng năng lượng.', rewardMoney: 60, rewardXp: 40, test: s => s.history.some(r => r.event.id === 'EV_RECESSION' && r.netProfit > 0) },
   { id: 'M_FINISH',   icon: '🎓', name: 'Tốt nghiệp BizOn', desc: 'Hoàn thành trọn vẹn 6 vòng mô phỏng.', rewardMoney: 100, rewardXp: 50, test: s => s.finished },
 ];
 
@@ -125,7 +154,77 @@ function newGameState(profile) {
     minigamePlays: 0,
     roundLocked: false,
     grantLog: [],
+    // Chỉ số vận hành (theo màn hình Kiểm toán năng lượng & OEE)
+    oee: 85, defect: 2.0, brandLoyalty: 65, adEff: 0,
+    quickRatio: 1.0, roi: 0,
+    energyLines: [2100, 4850, 1470],   // kWh cơ sở 3 dây chuyền
+    lineUpgraded: [false, false, false],
+    maintBonus: 0,
+    maintenanceLog: [],
+    loan: 0,
+    costCutter: false,
+    peakShare: 0,
+    eventShownRound: 0,
   };
+}
+
+function clampNum(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+/** kWh từng dây chuyền theo sản lượng vòng gần nhất. */
+function energyReport(s) {
+  const last = s.history[s.history.length - 1];
+  const factor = last ? last.decisions.production / 2800 : 1;
+  const evMul = (!s.finished && currentEvent(s).id === 'EV_RECESSION') ? 1.2 : 1;
+  const lines = s.energyLines.map((base, i) => {
+    let kwh = Math.round(base * factor * evMul);
+    if (s.lineUpgraded[i]) kwh = Math.round(kwh * 0.6);
+    const status = kwh > 4000 ? 'bad' : kwh > 2200 ? 'warn' : 'ok';
+    return { name: 'Dây chuyền ' + (i + 1), kwh, status, upgraded: s.lineUpgraded[i] };
+  });
+  const total = lines.reduce((a, l) => a + l.kwh, 0);
+  const target = 7000;
+  return { lines, total, target, overloadPct: Math.round(100 * total / target) };
+}
+
+/* ===== Hành động vận hành theo vai trò (CFO / COO / CMO) ===== */
+function optimizeLine(s, idx, cost = 150) {
+  if (s.lineUpgraded[idx] || s.balance < cost) return false;
+  s.balance -= cost;
+  s.lineUpgraded[idx] = true;
+  s.maintBonus += 5;
+  s.maintenanceLog.push({ round: Math.min(s.round, ROUNDS_TOTAL), text: `Nâng cấp Dây chuyền ${idx + 1} (-${cost}tr₫) — tiết kiệm 40% điện năng, OEE +5%` });
+  return true;
+}
+
+function doMaintenance(s, cost = 60) {
+  if (s.balance < cost) return false;
+  s.balance -= cost;
+  s.maintBonus += 3;
+  s.maintenanceLog.push({ round: Math.min(s.round, ROUNDS_TOTAL), text: `Bảo trì định kỳ (-${cost}tr₫) — OEE +3%, giảm phế phẩm` });
+  return true;
+}
+
+function approveLoan(s, amount = 300) {
+  if (s.loan > 0) return false;             // mỗi phiên chỉ 1 khoản vay
+  s.loan = amount;
+  s.balance += amount;
+  s.maintenanceLog.push({ round: Math.min(s.round, ROUNDS_TOTAL), text: `CFO phê duyệt khoản vay +${amount}tr₫ (lãi 5%/vòng)` });
+  return true;
+}
+
+function cutCosts(s) {
+  if (s.costCutter) return false;
+  s.costCutter = true;
+  s.maintenanceLog.push({ round: Math.min(s.round, ROUNDS_TOTAL), text: 'CFO kích hoạt cắt giảm chi phí — chi phí cố định vòng sau -15%' });
+  return true;
+}
+
+function brandingPremium(s, cost = 120) {
+  if (s.balance < cost) return false;
+  s.balance -= cost;
+  s.brand = Math.min(1.6, s.brand + 0.08);
+  s.maintenanceLog.push({ round: Math.min(s.round, ROUNDS_TOTAL), text: `CMO kích hoạt Branding Premium (-${cost}tr₫) — giá trị thương hiệu +`});
+  return true;
 }
 
 // PRNG có seed để mô phỏng tái lập được
@@ -171,7 +270,8 @@ function simulateRound(s, d) {
   // --- Doanh số & tồn kho ---
   const demandUnits = Math.round(marketUnits * playerAttr / totalAttr);
   const available = d.production + s.inventory;
-  const sold = Math.min(demandUnits, available);
+  let sold = Math.min(demandUnits, available);
+  sold = Math.round(sold * (evEff.fulfillMul || 1));   // khủng hoảng cung ứng: hụt tỷ lệ đáp ứng đơn
   const lostSales = demandUnits - sold;
   s.inventory = available - sold;
 
@@ -187,7 +287,10 @@ function simulateRound(s, d) {
   const revenue = sold * d.price / 1000;                          // triệu ₫
   const cogs = d.production * unitCost / 1000;
   const holding = s.inventory * 0.005;                            // phí lưu kho
-  const totalCost = cogs + d.marketing + d.rd + FIXED_COST * evEff.costMul + depreciation + holding;
+  let fixedThisRound = FIXED_COST * evEff.costMul;
+  if (s.costCutter) { fixedThisRound *= 0.85; s.costCutter = false; }
+  const loanInterest = s.loan * 0.05;                              // lãi vay 5%/vòng
+  const totalCost = cogs + d.marketing + d.rd + fixedThisRound + depreciation + holding + loanInterest;
   let netProfit = revenue - totalCost;
   netProfit *= skillEffect(s, 'profitMul', 1);
 
@@ -211,13 +314,27 @@ function simulateRound(s, d) {
     x.c.brand = Math.min(1.5, x.c.brand + x.mkt / 5000);
   });
 
+  // --- Chỉ số vận hành (OEE, phế phẩm, tài chính) ---
+  const overload = Math.max(0, d.production / s.machineCapacity - 0.9);
+  s.oee = Math.round(clampNum(88 - (evEff.oeeHit || 0) - overload * 25 + s.maintBonus, 55, 96));
+  s.maintBonus = Math.max(0, s.maintBonus - 2);                    // hiệu ứng bảo trì phai dần
+  s.defect = Math.round((1.5 + Math.max(0, (82 - s.oee) * 0.45)) * 10) / 10;
+  s.brandLoyalty = Math.round(Math.min(95, 45 + s.brand * 25));
+  s.adEff = Math.round(Math.sqrt(mktEff) * 16) / 10;
+  s.quickRatio = Math.round(Math.max(0.1, s.balance / STARTING_BALANCE) * 100) / 100;
+  s.roi = Math.round(1000 * netProfit / Math.max(1, totalCost)) / 10;
+  const isNewPeak = share >= 30 && share > s.peakShare && netProfit > 0;
+  if (share > s.peakShare) s.peakShare = share;
+
   const report = {
     round: s.round, event: ev, shielded,
     decisions: d,
     revenue, netProfit, share, sold, demandUnits, lostSales,
     inventory: s.inventory, depreciation, cogs, unitCost,
     marketing: d.marketing, rd: d.rd,
-    fixed: FIXED_COST * evEff.costMul, holding,
+    fixed: fixedThisRound, holding, loanInterest,
+    oee: s.oee, defect: s.defect, adEff: s.adEff, brandLoyalty: s.brandLoyalty,
+    quickRatio: s.quickRatio, roi: s.roi, isNewPeak,
     xpGain, balance: s.balance,
   };
   s.history.push(report);
@@ -241,7 +358,7 @@ const ACHIEVEMENTS = [
   { id: 'A_FIRST',   icon: '🎉', name: 'Khởi nghiệp', desc: 'Hoàn thành vòng đầu tiên.', test: (s, r) => r.round === 1 },
   { id: 'A_PROFIT',  icon: '💎', name: 'Có lãi!', desc: 'Đạt lợi nhuận dương trong một vòng.', test: (s, r) => r.netProfit > 0 },
   { id: 'A_SHARE30', icon: '👑', name: 'Dẫn đầu thị trường', desc: 'Thị phần vượt 30%.', test: (s, r) => r.share >= 30 },
-  { id: 'A_SURVIVE', icon: '🛟', name: 'Vượt bão suy thoái', desc: 'Có lãi trong vòng Suy thoái.', test: (s, r) => r.event.id === 'EV_RECESSION' && r.netProfit > 0 },
+  { id: 'A_SURVIVE', icon: '🛟', name: 'Vượt bão khủng hoảng', desc: 'Có lãi trong vòng Khủng hoảng năng lượng.', test: (s, r) => r.event.id === 'EV_RECESSION' && r.netProfit > 0 },
   { id: 'A_RICH',    icon: '🏦', name: 'Két sắt đầy', desc: 'Số dư ví vượt 1 tỷ ₫.', test: (s, r) => s.balance >= 1000 },
   { id: 'A_FINISH',  icon: '📜', name: 'Tốt nghiệp BizOn', desc: 'Hoàn thành cả 6 vòng mô phỏng.', test: (s) => s.finished },
 ];
