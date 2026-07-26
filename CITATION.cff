@@ -12,6 +12,11 @@ authors:
   - family-names: "Phan"
     given-names: "Anh Tu"
     affiliation: "Can Tho University"
+doi: 10.5281/zenodo.21592242
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.21592242
+    description: "Concept DOI (mọi phiên bản / all versions)"
 repository-code: "https://github.com/thuyhuongctu/BizOn"
 url: "https://thuyhuongctu.github.io/BizOn/"
 license-url: "https://github.com/thuyhuongctu/BizOn/blob/main/LICENSE"
