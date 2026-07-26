@@ -162,6 +162,35 @@ tailwind.config = {
     </div>
   </section>
 
+
+  <!-- I–P LAB: CHẾ ĐỘ LUẬN ÁN -->
+  <section id="ip-lab" class="mb-8">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-1">🎓 I–P Lab — Quốc tế hóa & Hiệu quả doanh nghiệp</h2>
+    <p class="text-sm text-deep-teal/60 mb-4">Mô phỏng theo chương trình nghiên cứu luận án <i>"Internationalization and firm business performance in Asia"</i> (Đỗ Thùy Hương, ĐH Cần Thơ — dữ liệu WBES 92.564 doanh nghiệp, 50 nền kinh tế). Chọn thị trường, kéo mức <b>quốc tế hóa (FSTS %)</b> và đầu tư <b>năng lực số</b> — xem hiệu quả doanh nghiệp phản ứng theo đúng kết quả nghiên cứu.</p>
+    <div class="clay-card p-5">
+      <div id="ip-markets" class="flex flex-wrap gap-2 mb-4"></div>
+      <div class="grid lg:grid-cols-2 gap-5">
+        <div>
+          <label class="block text-xs font-bold text-deep-teal mb-1">🌏 Mức quốc tế hóa — FSTS <span id="ip-fsts-val" class="text-primary">30</span>% doanh thu từ nước ngoài</label>
+          <input id="ip-fsts" type="range" min="0" max="100" value="30" class="w-full mb-4" oninput="ipUpdate()">
+          <label class="block text-xs font-bold text-deep-teal mb-1">🖥️ Năng lực công nghệ (TCI) — <span id="ip-tci-val" class="text-primary">40</span>/100</label>
+          <input id="ip-tci" type="range" min="0" max="100" value="40" class="w-full mb-4" oninput="ipUpdate()">
+          <label class="block text-xs font-bold text-deep-teal mb-1">📱 Ứng dụng số (DAI) — <span id="ip-dai-val" class="text-primary">40</span>/100</label>
+          <input id="ip-dai" type="range" min="0" max="100" value="40" class="w-full mb-3" oninput="ipUpdate()">
+          <div class="clay-sunken rounded-2xl p-3 text-center">
+            <p class="text-[9px] font-extrabold text-deep-teal/50 uppercase">Hiệu quả doanh nghiệp (điểm)</p>
+            <p id="ip-score" class="font-display font-extrabold text-primary text-3xl">—</p>
+          </div>
+        </div>
+        <div>
+          <div id="ip-chart"></div>
+          <p id="ip-explain" class="text-[11px] text-deep-teal/70 italic mt-2 leading-relaxed"></p>
+        </div>
+      </div>
+      <p class="text-[10px] text-deep-teal/45 mt-4">📚 Nguồn: chương trình luận án tiến sĩ (chưa công bố) — <a href="https://github.com/thuyhuongctu/MY_THESIS_PHD_CANDIDATE_26" target="_blank" rel="noopener" class="font-bold text-primary">github.com/thuyhuongctu/MY_THESIS_PHD_CANDIDATE_26</a>. Các con số trong lab là minh họa giáo dục từ kết quả nghiên cứu (đỉnh chữ U ngược ≈ 43,6% FSTS; FIP ở đảo nhỏ Thái Bình Dương; "lá chắn số" DAI tại Singapore).</p>
+    </div>
+  </section>
+
 </main>
 
 <!-- FOOTER -->
@@ -403,6 +432,69 @@ function gFinish() {
 }
 
 renderWorldMap();
+
+/* ================= I–P LAB (chế độ luận án) ================= */
+const IP_MARKETS = [
+  { id: 'vn',   flag: '🇻🇳', name: 'Việt Nam (nội địa)', regime: 'transition', note: 'Thể chế chuyển đổi — chữ U ngược rõ nét, đỉnh ≈ 43% FSTS. Chỉ bán trong nước (FSTS = 0) là điểm xuất phát an toàn nhưng bỏ lỡ lợi ích học hỏi quốc tế.' },
+  { id: 'sg',   flag: '🇸🇬', name: 'Singapore', regime: 'strong', shield: true, note: 'Thể chế mạnh — quan hệ gần tuyến tính, càng quốc tế hóa càng lợi. Đặc biệt: DAI tạo "lá chắn số" giảm rủi ro khi FSTS cao.' },
+  { id: 'cn',   flag: '🇨🇳', name: 'Trung Quốc', regime: 'transition', note: 'Thể chế chuyển đổi quy mô lớn — chữ U ngược, quá đà (FSTS > 43%) chi phí phối hợp vượt lợi ích.' },
+  { id: 'in',   flag: '🇮🇳', name: 'Ấn Độ', regime: 'transition', note: 'Thị trường chuyển đổi đông dân — chữ U ngược; năng lực số nâng mặt bằng hiệu quả ở mọi mức FSTS.' },
+  { id: 'jp',   flag: '🇯🇵', name: 'Nhật Bản', regime: 'strong', note: 'Thể chế mạnh trưởng thành — đường cong phẳng gần tuyến tính, điểm ngoặt vượt ngoài vùng quan sát.' },
+  { id: 'sids', flag: '🏝️', name: 'Đảo nhỏ Thái Bình Dương (SIDS)', regime: 'fip', note: 'Trường hợp biên: FIP — "hình phạt quốc tế hóa cưỡng bức" (β = −1,339): thị trường nội địa quá nhỏ buộc doanh nghiệp ra biển sớm, càng quốc tế hóa hiệu quả càng giảm, không có điểm ngoặt.' },
+  { id: 'asia', flag: '🌏', name: 'Toàn châu Á (50 nền kinh tế)', regime: 'pooled', note: 'Mẫu gộp capstone P7: chữ U ngược với điểm ngoặt 43,6% FSTS (mô hình đầy đủ) — mức quốc tế hóa "vừa đủ sâu" là tối ưu.' },
+];
+let ipMarket = IP_MARKETS[0];
+
+function ipPerf(m, x, tci, dai) {
+  const lvl = 0.14 * tci + 0.12 * dai;                      // TCI/DAI nâng mặt bằng (hiệu ứng phổ quát)
+  if (m.regime === 'fip') return 58 + lvl - 0.34 * x;       // SIDS: âm đơn điệu (FIP)
+  if (m.regime === 'strong') {
+    let bend = m.shield ? 0.0016 * (1 - dai / 130) : 0.0016; // Singapore: DAI làm phẳng phần cong xuống
+    return 40 + lvl + 0.38 * x - Math.max(0, bend) * x * x * 0.55;
+  }
+  const peak = m.regime === 'pooled' ? 43.6 : 43;           // chuyển đổi & mẫu gộp: chữ U ngược
+  return 40 + lvl + 0.9 * x - (0.9 / (2 * peak)) * x * x;
+}
+
+function ipRenderMarkets() {
+  document.getElementById('ip-markets').innerHTML = IP_MARKETS.map(m => `
+    <button onclick="ipPick('${m.id}')" class="clay-sunken rounded-full px-3.5 py-2 text-[11px] font-extrabold text-deep-teal/75 ${ipMarket.id === m.id ? 'ring-2 ring-clay-orange !text-primary' : ''}">${m.flag} ${m.name}</button>`).join('');
+}
+function ipPick(id) { ipMarket = IP_MARKETS.find(m => m.id === id); ipRenderMarkets(); ipUpdate(); }
+
+function ipUpdate() {
+  const x = +document.getElementById('ip-fsts').value;
+  const tci = +document.getElementById('ip-tci').value;
+  const dai = +document.getElementById('ip-dai').value;
+  document.getElementById('ip-fsts-val').textContent = x;
+  document.getElementById('ip-tci-val').textContent = tci;
+  document.getElementById('ip-dai-val').textContent = dai;
+  const y = ipPerf(ipMarket, x, tci, dai);
+  document.getElementById('ip-score').textContent = y.toFixed(1);
+  // vẽ đường cong 0..100
+  const pts = [];
+  let ymin = 1e9, ymax = -1e9;
+  for (let i = 0; i <= 100; i += 2) { const v = ipPerf(ipMarket, i, tci, dai); pts.push([i, v]); if (v < ymin) ymin = v; if (v > ymax) ymax = v; }
+  const H = 170, W = 320, pad = 14, span = (ymax - ymin) || 1;
+  const px = i => pad + i / 100 * (W - 2 * pad);
+  const py = v => H - pad - (v - ymin) / span * (H - 2 * pad);
+  const line = pts.map(([i, v], k) => `${k ? 'L' : 'M'}${px(i).toFixed(1)},${py(v).toFixed(1)}`).join(' ');
+  const peakTxt = ipMarket.regime === 'fip' ? '' : ipMarket.regime === 'strong' ? '' :
+    `<line x1="${px(ipMarket.regime === 'pooled' ? 43.6 : 43)}" y1="${pad}" x2="${px(ipMarket.regime === 'pooled' ? 43.6 : 43)}" y2="${H - pad}" stroke="#fda127" stroke-width="1.5" stroke-dasharray="4 4"/><text x="${px(ipMarket.regime === 'pooled' ? 43.6 : 43) + 4}" y="${pad + 10}" font-size="9" fill="#b97a10" font-weight="800">đỉnh ≈ ${ipMarket.regime === 'pooled' ? '43,6' : '43'}%</text>`;
+  document.getElementById('ip-chart').innerHTML = `<svg viewBox="0 0 ${W} ${H}" class="w-full h-auto clay-sunken rounded-2xl">
+    <path d="${line}" fill="none" stroke="#006687" stroke-width="3" stroke-linecap="round"/>
+    ${peakTxt}
+    <circle cx="${px(x)}" cy="${py(y)}" r="6" fill="#e8762d" stroke="#fff" stroke-width="2.5"/>
+    <text x="${pad}" y="${H - 3}" font-size="9" fill="currentColor" opacity=".5">FSTS 0%</text>
+    <text x="${W - pad}" y="${H - 3}" font-size="9" text-anchor="end" fill="currentColor" opacity=".5">100%</text>
+  </svg>`;
+  let verdict = '';
+  if (ipMarket.regime === 'fip') verdict = x > 30 ? ' Lumina: bạn đang thấy FIP vận hành — ở SIDS, mỗi % FSTS thêm vào lại bào mòn hiệu quả. Bài học: quốc tế hóa không phải lúc nào cũng tốt!' : ' Lumina: giữ FSTS thấp là hợp lý ở SIDS — thị trường nội địa nhỏ nhưng quốc tế hóa cưỡng bức còn tệ hơn.';
+  else if (ipMarket.regime === 'strong') verdict = ' Lumina: thể chế mạnh hấp thụ chi phí phối hợp — cứ tự tin vươn xa' + (ipMarket.shield ? ', và đầu tư DAI để kích hoạt "lá chắn số"!' : '.');
+  else verdict = x > 55 ? ' Lumina: bạn đã vượt điểm ngoặt — chi phí phối hợp, thanh khoản ngoại tệ và quản trị đa thị trường đang nuốt lợi ích. Lùi về gần 43% nhé.' : x < 20 ? ' Lumina: còn dư địa — tăng dần FSTS để hưởng lợi ích học hỏi và quy mô, đỉnh nằm quanh 43%.' : ' Lumina: vùng tối ưu! Mức quốc tế hóa "vừa đủ sâu" đúng như kết quả luận án.';
+  document.getElementById('ip-explain').textContent = ipMarket.note + verdict;
+}
+ipRenderMarkets(); ipUpdate();
 </script>
 </body>
 </html>
