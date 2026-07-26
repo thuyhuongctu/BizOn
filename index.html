@@ -131,6 +131,9 @@ tailwind.config = {
 
     <!-- ========== DASHBOARD ========== -->
     <section id="tab-home" class="screen">
+      <div class="clay-card overflow-hidden mb-4">
+        <img src="assets/illustrations/hero-vietnam-2026.png" alt="Vietnam 2026 — Phát triển kinh tế" class="w-full h-28 object-cover">
+      </div>
       <div id="event-banner" class="hidden clay-card p-4 mb-4 border-2"></div>
       <div class="clay-card p-5 mb-4 bg-gradient-to-br from-primary to-deep-teal !text-white">
         <div class="flex justify-between items-center">
@@ -225,10 +228,16 @@ tailwind.config = {
             <p class="text-sm text-primary font-semibold">Je m'appelle Hương · Cố vấn chiến lược</p>
           </div>
         </div>
-        <img src="assets/character/lumina-vest.png" alt="" class="w-full h-40 object-cover mt-3" style="object-position:50% 20%">
+        <div class="relative mt-3">
+          <img id="advisor-hero" src="assets/character/lumina-vest.png" alt="" class="w-full h-44 object-cover" style="object-position:50% 18%">
+          <div id="volatility-badge" class="absolute bottom-3 left-1/2 -translate-x-1/2 bg-white/95 rounded-full px-4 py-1.5 shadow-clay flex items-center gap-2 text-[11px] font-extrabold tracking-wide">
+            <span id="vol-dot" class="w-3 h-3 rounded-full bg-emerald-500"></span>
+            <span id="vol-text" class="text-deep-teal">MARKET VOLATILITY: LOW</span>
+          </div>
+        </div>
       </div>
       <div id="advisor-chat" class="space-y-3 mb-4"></div>
-      <div class="clay-card p-4">
+      <div class="clay-card p-4 mb-4">
         <p class="font-bold text-sm text-deep-teal mb-2">Hỏi kịch bản "Nếu — Thì" (<span id="ai-quota">3</span> lượt/vòng)</p>
         <div class="grid grid-cols-1 gap-2">
           <button onclick="askLumina('pricing')" class="clay-btn bg-surface-bright text-deep-teal text-left font-semibold text-sm px-4 py-3">💲 Nếu tôi thay đổi giá bán thì sao?</button>
@@ -236,6 +245,8 @@ tailwind.config = {
           <button onclick="askLumina('risk')" class="clay-btn bg-surface-bright text-deep-teal text-left font-semibold text-sm px-4 py-3">⚠️ Rủi ro lớn nhất vòng này là gì?</button>
         </div>
       </div>
+      <h3 class="font-display font-bold text-deep-teal mb-2">🔎 Phân tích chuyên sâu theo vai trò</h3>
+      <div id="role-deepdive" class="space-y-3"></div>
     </section>
 
     <!-- ========== REPORTS ========== -->
@@ -245,6 +256,7 @@ tailwind.config = {
         <button data-rep="pnl" class="rep-tab clay-btn bg-primary text-white text-xs font-bold px-4 py-2" onclick="showReport('pnl')">P&L</button>
         <button data-rep="cash" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2" onclick="showReport('cash')">Dòng tiền</button>
         <button data-rep="dep" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2" onclick="showReport('dep')">Khấu hao</button>
+        <button data-rep="energy" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2" onclick="showReport('energy')">⚡ Năng lượng</button>
       </div>
       <div id="report-body"></div>
     </section>
