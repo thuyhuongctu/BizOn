@@ -1,6 +1,6 @@
-# Design System — BizArena 2026 (3D Claymorphism)
+# Design System — BizOn Bật Nghiệp 2026 (3D Claymorphism)
 
-Trích từ Developer Handoff của Google Stitch.
+Hệ thống thiết kế chính thức của BizOn Bật Nghiệp.
 
 ## Design Tokens
 
@@ -44,5 +44,7 @@ Trích từ Developer Handoff của Google Stitch.
 - Logo chữ **B 3D** gradient Primary → Primary Container.
 - Bộ icon menu 3D: Trang chủ, Kỹ năng, Hồ sơ, Nhiệm vụ, Bảng xếp hạng, Cửa hàng, Cài đặt.
 
-> Ảnh nhân vật/icon 3D gốc nằm trong Google Drive của dự án; prototype hiện dùng
-> emoji placeholder — thay bằng PNG/SVG xuất từ Stitch khi tích hợp asset thật.
+> Ảnh nhân vật Lumina đã được tích hợp tại `assets/character/`:
+> `lumina-ao-dai.png` (bản Việt Nam — màn hình Splash, Đăng nhập, Chứng chỉ) và
+> `lumina-vest.png` (bản công sở — Dashboard, Cố vấn AI, khung chat).
+> Bộ icon menu 3D hiện dùng emoji placeholder — sẽ thay bằng bộ icon 3D độc quyền.

@@ -1,0 +1,46 @@
+GIẤY PHÉP ĐỘC QUYỀN — PROPRIETARY LICENSE
+
+BizOn Bật Nghiệp — Business Simulation Game
+Bản quyền © 2026 Đỗ Thùy Hương (Je m'appelle Hương) và Phan Anh Tú.
+BẢO LƯU MỌI QUYỀN — ALL RIGHTS RESERVED.
+
+1. PHẠM VI BẢO HỘ
+   Toàn bộ nội dung trong kho mã nguồn này, bao gồm nhưng không giới hạn:
+   - Mã nguồn phần mềm (HTML, CSS, JavaScript) và thuật toán engine mô phỏng
+     kinh doanh 6 vòng;
+   - Tạo hình nhân vật "Lumina — Je m'appelle Hương" (phiên bản Áo dài và
+     phiên bản Vest trắng) cùng mọi tài sản đồ họa trong thư mục assets/;
+   - Tên gọi "BizOn Bật Nghiệp", nhận diện thương hiệu và hệ thống thiết kế
+     3D Claymorphism kèm theo;
+   - Tài liệu kỹ thuật, kịch bản biến cố thị trường và nội dung hướng dẫn
+     trong thư mục docs/;
+   là tài sản trí tuệ thuộc sở hữu của các tác giả nêu trên, được bảo hộ theo
+   Luật Sở hữu trí tuệ Việt Nam và các điều ước quốc tế liên quan (Công ước
+   Berne, Hiệp định TRIPS).
+
+2. HÀNH VI BỊ CẤM (khi chưa có văn bản cho phép của chủ sở hữu)
+   - Sao chép, phân phối, công bố lại toàn bộ hoặc một phần mã nguồn;
+   - Sử dụng hình ảnh, tên gọi nhân vật Lumina — Je m'appelle Hương hoặc
+     thương hiệu BizOn Bật Nghiệp cho mục đích thương mại;
+   - Chỉnh sửa, tạo tác phẩm phái sinh, dịch ngược hoặc khai thác engine
+     mô phỏng dưới bất kỳ hình thức nào;
+   - Sử dụng trong sản phẩm, dịch vụ hoặc hoạt động đào tạo có thu phí.
+
+3. NGOẠI LỆ
+   Các thành phần bên thứ ba được sử dụng theo giấy phép riêng của chúng:
+   - Tailwind CSS (MIT License) — https://tailwindcss.com
+   - Google Fonts: Plus Jakarta Sans, Manrope (SIL Open Font License 1.1)
+
+4. LIÊN HỆ CẤP PHÉP
+   Mọi nhu cầu hợp tác, cấp phép sử dụng hoặc thương mại hóa, vui lòng
+   liên hệ: thuyhuongctu@gmail.com
+
+---
+
+This software and all associated assets (source code, the "Lumina —
+Je m'appelle Hương" character designs, the "BizOn Bật Nghiệp" name and brand
+identity, and documentation) are the exclusive intellectual property of
+Đỗ Thùy Hương and Phan Anh Tú. No part of this repository may be copied,
+modified, distributed, or used commercially without prior written permission.
+Third-party components (Tailwind CSS — MIT; Google Fonts — OFL 1.1) remain
+under their respective licenses.

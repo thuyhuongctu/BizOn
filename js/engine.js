@@ -1,5 +1,6 @@
-/* BizArena 2026 — Engine mô phỏng 6 vòng (client-side)
- * Mô hình hóa theo hồ sơ kỹ thuật Stitch: decisions {price, marketing_budget,
+/* BizOn Bật Nghiệp 2026 — Engine mô phỏng 6 vòng (client-side)
+ * © 2026 Đỗ Thùy Hương (Je m'appelle Hương) & Phan Anh Tú. Bảo lưu mọi quyền.
+ * Mô hình hóa: decisions {price, marketing_budget,
  * production_volume, rd_investment} → financial_reports {revenue, net_profit,
  * market_share, inventory_stock}. Đơn vị tiền: nghìn ₫ (giá) / triệu ₫ (ngân sách).
  */
@@ -184,7 +185,7 @@ const ACHIEVEMENTS = [
   { id: 'A_SHARE30', icon: '👑', name: 'Dẫn đầu thị trường', desc: 'Thị phần vượt 30%.', test: (s, r) => r.share >= 30 },
   { id: 'A_SURVIVE', icon: '🛟', name: 'Vượt bão suy thoái', desc: 'Có lãi trong vòng Suy thoái.', test: (s, r) => r.event.id === 'EV_RECESSION' && r.netProfit > 0 },
   { id: 'A_RICH',    icon: '🏦', name: 'Két sắt đầy', desc: 'Số dư ví vượt 1 tỷ ₫.', test: (s, r) => s.balance >= 1000 },
-  { id: 'A_FINISH',  icon: '📜', name: 'Tốt nghiệp BizArena', desc: 'Hoàn thành cả 6 vòng mô phỏng.', test: (s) => s.finished },
+  { id: 'A_FINISH',  icon: '📜', name: 'Tốt nghiệp BizOn', desc: 'Hoàn thành cả 6 vòng mô phỏng.', test: (s) => s.finished },
 ];
 
 function unlockAchievements(s, r) {

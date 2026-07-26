@@ -1,9 +1,17 @@
 <!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 — © Đỗ Thùy Hương (Je m'appelle Hương) & Phan Anh Tú. Bảo lưu mọi quyền. -->
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>BizArena 2026 — Business Simulation</title>
+<title>BizOn Bật Nghiệp 2026 — Business Simulation</title>
+<meta name="author" content="Đỗ Thùy Hương (Je m'appelle Hương), Phan Anh Tú">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
+<meta name="description" content="BizOn Bật Nghiệp — game mô phỏng kinh doanh EdTech 3D Claymorphism với cố vấn AI Lumina.">
+<meta name="theme-color" content="#006687">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -54,20 +62,23 @@ tailwind.config = {
   .risk-medium { background:#fff4d6; color:#946200; }
   .risk-high { background:#ffe4dc; color:#c2410c; }
   .skill-locked { filter:grayscale(1); opacity:.55; }
+  .nav-item:not(.active) .nav-ico svg, .nav-item:not(.active) .nav-ico img { filter:grayscale(.65); opacity:.7; }
+  .clay-ico { filter:drop-shadow(0 3px 4px rgba(0,102,135,.35)); }
 </style>
 </head>
 <body class="min-h-screen">
 
 <!-- ===================== SPLASH ===================== -->
 <section id="screen-splash" class="screen active">
-  <div class="min-h-screen flex flex-col items-center justify-center gap-6 px-8 text-center">
-    <div class="animate-pulse-logo w-28 h-28 rounded-clay bg-gradient-to-br from-primary to-primary-container flex items-center justify-center shadow-clay-lg">
-      <span class="font-display font-extrabold text-white text-6xl">B</span>
+  <div class="min-h-screen flex flex-col items-center justify-center gap-5 px-8 text-center">
+    <div class="animate-pulse-logo w-24 h-24 rounded-clay bg-gradient-to-br from-primary to-primary-container flex items-center justify-center shadow-clay-lg">
+      <span class="font-display font-extrabold text-white text-5xl">B</span>
     </div>
     <div>
-      <h1 class="font-display text-4xl font-extrabold text-deep-teal">BizArena</h1>
+      <h1 class="font-display text-4xl font-extrabold text-deep-teal">BizOn <span class="text-primary">Bật Nghiệp</span></h1>
       <p class="text-primary font-semibold mt-1">Business Simulation · 3D Claymorphism</p>
     </div>
+    <img src="assets/character/lumina-ao-dai.png" alt="Lumina — Je m'appelle Hương (áo dài)" class="h-64 rounded-clay shadow-clay-lg object-cover">
     <p class="text-sm text-deep-teal/60 max-w-xs">Điều hành doanh nghiệp ảo qua 6 vòng chơi cùng Cố vấn AI Lumina — Je m'appelle Hương.</p>
   </div>
 </section>
@@ -76,11 +87,14 @@ tailwind.config = {
 <section id="screen-login" class="screen">
   <div class="min-h-screen flex flex-col justify-center px-6 py-10 max-w-md mx-auto">
     <div class="clay-card p-8">
-      <div class="w-16 h-16 rounded-clay bg-gradient-to-br from-primary to-primary-container flex items-center justify-center shadow-clay mb-5">
-        <span class="font-display font-extrabold text-white text-3xl">B</span>
+      <div class="flex items-center justify-between mb-5">
+        <div class="w-16 h-16 rounded-clay bg-gradient-to-br from-primary to-primary-container flex items-center justify-center shadow-clay">
+          <span class="font-display font-extrabold text-white text-3xl">B</span>
+        </div>
+        <img src="assets/character/lumina-ao-dai.png" alt="Lumina chào bạn" class="w-16 h-16 rounded-full object-cover shadow-clay" style="object-position:50% 12%">
       </div>
       <h2 class="font-display text-2xl font-extrabold text-deep-teal">Chào mừng trở lại!</h2>
-      <p class="text-sm text-deep-teal/60 mb-6">Đăng nhập để bắt đầu phiên mô phỏng.</p>
+      <p class="text-sm text-deep-teal/60 mb-6">Lumina — Je m'appelle Hương đang chờ đồng hành cùng đội của bạn.</p>
       <label class="block text-sm font-bold text-deep-teal mb-1">Email</label>
       <input id="login-email" type="email" placeholder="sinhvien@truong.edu.vn" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 mb-4 outline-none focus:border-primary-container">
       <label class="block text-sm font-bold text-deep-teal mb-1">Tên đội</label>
@@ -89,7 +103,7 @@ tailwind.config = {
       <div id="role-picker" class="grid grid-cols-5 gap-2 mb-6"></div>
       <button onclick="doLogin()" class="clay-btn w-full bg-primary text-white font-display font-bold py-4">Bắt đầu mô phỏng 🚀</button>
     </div>
-    <p class="text-center text-xs text-deep-teal/40 mt-6">© 2026 BizArena · Je m'appelle Hương</p>
+    <p class="text-center text-xs text-deep-teal/40 mt-6">© 2026 BizOn Bật Nghiệp · Đỗ Thùy Hương (Je m'appelle Hương) &amp; Phan Anh Tú</p>
   </div>
 </section>
 
@@ -141,7 +155,8 @@ tailwind.config = {
         </div>
       </div>
       <div class="clay-card p-5 mb-4 flex items-center gap-4">
-        <div class="w-14 h-14 shrink-0 rounded-full bg-gradient-to-br from-primary-container to-primary flex items-center justify-center text-2xl shadow-clay">🤖</div>
+        <img src="assets/character/lumina-vest.png" alt="Lumina AI" class="w-14 h-14 shrink-0 rounded-full object-cover shadow-clay" style="object-position:50% 12%">
+
         <div class="flex-1">
           <p class="font-display font-bold text-deep-teal text-sm">Lumina AI · Je m'appelle Hương</p>
           <p id="dash-lumina" class="text-xs text-deep-teal/70 mt-0.5">Xin chào! Hãy vào mục Cố vấn để nhận gợi ý chiến thuật nhé.</p>
@@ -196,12 +211,15 @@ tailwind.config = {
 
     <!-- ========== ADVISOR ========== -->
     <section id="tab-advisor" class="screen">
-      <div class="flex items-center gap-4 mb-4">
-        <div class="w-16 h-16 rounded-clay bg-gradient-to-br from-primary-container to-primary flex items-center justify-center text-3xl shadow-clay-lg">🤖</div>
-        <div>
-          <h2 class="font-display text-xl font-extrabold text-deep-teal">Lumina AI</h2>
-          <p class="text-sm text-primary font-semibold">Je m'appelle Hương · Cố vấn chiến lược</p>
+      <div class="clay-card mb-4 overflow-hidden">
+        <div class="flex items-center gap-4 p-4 pb-0">
+          <img src="assets/character/lumina-vest.png" alt="Lumina AI — vest trắng" class="w-16 h-16 rounded-clay object-cover shadow-clay-lg" style="object-position:50% 12%">
+          <div>
+            <h2 class="font-display text-xl font-extrabold text-deep-teal">Lumina AI</h2>
+            <p class="text-sm text-primary font-semibold">Je m'appelle Hương · Cố vấn chiến lược</p>
+          </div>
         </div>
+        <img src="assets/character/lumina-vest.png" alt="" class="w-full h-40 object-cover mt-3" style="object-position:50% 20%">
       </div>
       <div id="advisor-chat" class="space-y-3 mb-4"></div>
       <div class="clay-card p-4">
@@ -252,9 +270,10 @@ tailwind.config = {
       <h2 class="font-display text-xl font-extrabold text-deep-teal mb-4">🎖️ Thành tựu</h2>
       <div id="ach-list" class="grid grid-cols-2 gap-3"></div>
       <div id="certificate-box" class="hidden mt-6 clay-card p-6 text-center border-2 border-primary-container">
+        <img src="assets/character/lumina-ao-dai.png" alt="Lumina áo dài chúc mừng" class="w-24 h-24 mx-auto rounded-full object-cover shadow-clay-lg mb-3" style="object-position:50% 12%">
         <p class="text-4xl mb-2">📜</p>
         <h3 class="font-display font-extrabold text-deep-teal text-lg">Chứng chỉ hoàn thành</h3>
-        <p class="text-sm text-deep-teal/70 mt-1">Chứng nhận đội <span id="cert-team" class="font-bold text-primary">—</span> đã hoàn thành 6 vòng mô phỏng kinh doanh BizArena 2026.</p>
+        <p class="text-sm text-deep-teal/70 mt-1">Chứng nhận đội <span id="cert-team" class="font-bold text-primary">—</span> đã hoàn thành 6 vòng mô phỏng kinh doanh BizOn Bật Nghiệp 2026.</p>
         <p id="cert-result" class="font-display font-bold text-primary mt-3"></p>
       </div>
     </section>
@@ -283,26 +302,51 @@ tailwind.config = {
       <div class="clay-card divide-y divide-surface-bright">
         <div class="p-5 flex items-center justify-between"><span class="font-bold text-sm text-deep-teal">🔔 Thông báo vòng chơi</span><input type="checkbox" checked class="w-5 h-5 accent-primary"></div>
         <div class="p-5 flex items-center justify-between"><span class="font-bold text-sm text-deep-teal">🔊 Âm thanh hiệu ứng</span><input type="checkbox" checked class="w-5 h-5 accent-primary"></div>
-        <div class="p-5"><button onclick="alert('Đã gửi báo cáo lỗi tới đội ngũ BizArena. Cảm ơn bạn!')" class="font-bold text-sm text-primary">🐞 Gửi báo cáo lỗi</button></div>
+        <div class="p-5"><button onclick="alert('Đã gửi báo cáo lỗi tới đội ngũ BizOn. Cảm ơn bạn!')" class="font-bold text-sm text-primary">🐞 Gửi báo cáo lỗi</button></div>
         <div class="p-5"><button onclick="resetGame()" class="font-bold text-sm text-orange-600">♻️ Chơi lại từ đầu (Reset)</button></div>
       </div>
-      <p class="text-center text-xs text-deep-teal/40 mt-6">BizArena 2026 · v1.0.0 · Thiết kế: Stitch (Google) · Tác giả: Je m'appelle Hương</p>
+      <p class="text-center text-xs text-deep-teal/40 mt-6">BizOn Bật Nghiệp 2026 · v1.0.0 · © 2026 Đỗ Thùy Hương (Je m'appelle Hương) &amp; Phan Anh Tú — Bảo lưu mọi quyền</p>
     </section>
   </main>
 
   <!-- Bottom Nav -->
   <nav class="fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur border-t border-primary/5 pb-[env(safe-area-inset-bottom)]">
     <div class="max-w-md mx-auto flex justify-around py-2">
-      <button class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="home" onclick="showTab('home')"><span class="nav-ico text-xl">🏠</span><span class="text-[10px] font-bold">Trang chủ</span></button>
-      <button class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="decisions" onclick="showTab('decisions')"><span class="nav-ico text-xl">🎯</span><span class="text-[10px] font-bold">Quyết định</span></button>
-      <button class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="advisor" onclick="showTab('advisor')"><span class="nav-ico text-xl">🤖</span><span class="text-[10px] font-bold">Lumina</span></button>
-      <button class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="reports" onclick="showTab('reports')"><span class="nav-ico text-xl">📈</span><span class="text-[10px] font-bold">Báo cáo</span></button>
-      <button class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="shop" onclick="showTab('shop')"><span class="nav-ico text-xl">🛍️</span><span class="text-[10px] font-bold">Cửa hàng</span></button>
+      <button class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="home" onclick="showTab('home')">
+        <span class="nav-ico flex items-center justify-center">
+          <svg class="clay-ico w-6 h-6" viewBox="0 0 24 24"><defs><linearGradient id="gNavHome" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00c4ff"/><stop offset="1" stop-color="#006687"/></linearGradient></defs><path d="M12 3.1 3.7 9.9c-.4.3-.6.8-.6 1.2v8c0 1 .8 1.8 1.8 1.8h4.3v-4.7c0-1.5 1.3-2.8 2.8-2.8s2.8 1.3 2.8 2.8v4.7h4.3c1 0 1.8-.8 1.8-1.8v-8c0-.5-.2-.9-.6-1.2L12 3.1z" fill="url(#gNavHome)"/><ellipse cx="12" cy="6.6" rx="4" ry="1.3" fill="#fff" opacity=".3"/></svg>
+        </span><span class="text-[10px] font-bold">Trang chủ</span>
+      </button>
+      <button class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="decisions" onclick="showTab('decisions')">
+        <span class="nav-ico flex items-center justify-center">
+          <svg class="clay-ico w-6 h-6" viewBox="0 0 24 24"><defs><linearGradient id="gNavTarget" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00c4ff"/><stop offset="1" stop-color="#006687"/></linearGradient></defs><circle cx="12" cy="12" r="9.2" fill="url(#gNavTarget)"/><circle cx="12" cy="12" r="5.8" fill="#f4faff"/><circle cx="12" cy="12" r="2.8" fill="url(#gNavTarget)"/><ellipse cx="9.4" cy="7.4" rx="3.4" ry="1.5" fill="#fff" opacity=".35" transform="rotate(-25 9.4 7.4)"/></svg>
+        </span><span class="text-[10px] font-bold">Quyết định</span>
+      </button>
+      <button class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="advisor" onclick="showTab('advisor')">
+        <span class="nav-ico flex items-center justify-center">
+          <img src="assets/icons/icon-192.png" alt="Lumina" class="clay-ico w-6 h-6 rounded-full object-cover">
+        </span><span class="text-[10px] font-bold">Lumina</span>
+      </button>
+      <button class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="reports" onclick="showTab('reports')">
+        <span class="nav-ico flex items-center justify-center">
+          <svg class="clay-ico w-6 h-6" viewBox="0 0 24 24"><defs><linearGradient id="gNavChart" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00c4ff"/><stop offset="1" stop-color="#006687"/></linearGradient></defs><rect x="3.2" y="12.5" width="4.6" height="8.3" rx="2.3" fill="url(#gNavChart)"/><rect x="9.7" y="7.5" width="4.6" height="13.3" rx="2.3" fill="url(#gNavChart)"/><rect x="16.2" y="3.2" width="4.6" height="17.6" rx="2.3" fill="url(#gNavChart)"/><ellipse cx="18.5" cy="4.8" rx="1.7" ry=".8" fill="#fff" opacity=".35"/></svg>
+        </span><span class="text-[10px] font-bold">Báo cáo</span>
+      </button>
+      <button class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="shop" onclick="showTab('shop')">
+        <span class="nav-ico flex items-center justify-center">
+          <svg class="clay-ico w-6 h-6" viewBox="0 0 24 24"><defs><linearGradient id="gNavBag" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00c4ff"/><stop offset="1" stop-color="#006687"/></linearGradient></defs><path d="M5.4 8.2h13.2c.9 0 1.6.7 1.5 1.6l-.9 9.4a2.2 2.2 0 0 1-2.2 2H7a2.2 2.2 0 0 1-2.2-2l-.9-9.4c-.1-.9.6-1.6 1.5-1.6z" fill="url(#gNavBag)"/><path d="M8.6 10.2V7.1a3.4 3.4 0 1 1 6.8 0v3.1" fill="none" stroke="#033337" stroke-width="1.7" stroke-linecap="round" opacity=".55"/><ellipse cx="9.6" cy="11.3" rx="2.6" ry="1.1" fill="#fff" opacity=".3" transform="rotate(-18 9.6 11.3)"/></svg>
+        </span><span class="text-[10px] font-bold">Cửa hàng</span>
+      </button>
     </div>
   </nav>
 </div>
 
 <script src="js/engine.js"></script>
 <script src="js/app.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js'));
+}
+</script>
 </body>
 </html>
