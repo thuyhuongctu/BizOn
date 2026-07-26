@@ -880,6 +880,138 @@
 [
 "Đầu tư mới (FDI)",
 "Greenfield (FDI)"
+],
+[
+"Triết lý 5 góc nhìn",
+"The 5-lens philosophy"
+],
+[
+"5 vai trò lãnh đạo cốt lõi",
+"5 core leadership roles"
+],
+[
+"Tổng giám đốc điều hành — người cầm lái chiến lược.",
+"Chief Executive Officer — the one steering strategy."
+],
+[
+"Giám đốc tài chính — quản trị dòng tiền & lợi nhuận.",
+"Chief Financial Officer — managing cash flow & profit."
+],
+[
+"Giám đốc marketing — chiếm lĩnh thị phần.",
+"Chief Marketing Officer — capturing market share."
+],
+[
+"Giám đốc vận hành — tối ưu hóa quy trình.",
+"Chief Operating Officer — optimizing processes."
+],
+[
+"Thư ký hội đồng — quản lý thông tin & rủi ro.",
+"Board Secretary — managing information & risk."
+],
+[
+"Lộ trình trải nghiệm 6 vòng",
+"The 6-round journey"
+],
+[
+"Nghiên cứu",
+"Research"
+],
+[
+"Thiết lập",
+"Setup"
+],
+[
+"Thâm nhập",
+"Entry"
+],
+[
+"Vận hành",
+"Operations"
+],
+[
+"Tăng tốc",
+"Scale-up"
+],
+[
+"Chốt sổ",
+"Closing"
+],
+[
+"Phân tích thị trường & đối thủ.",
+"Analyze the market & rivals."
+],
+[
+"Định vị sản phẩm & giá bán.",
+"Position your product & price."
+],
+[
+"Triển khai chiến dịch marketing.",
+"Launch marketing campaigns."
+],
+[
+"Quản trị sản xuất & tồn kho.",
+"Manage production & inventory."
+],
+[
+"Mở rộng quy mô kinh doanh.",
+"Scale up the business."
+],
+[
+"Báo cáo P&L & chứng nhận.",
+"Final P&L & certificate."
+],
+[
+"Cố vấn chiến lược Lumina",
+"Lumina, your strategy advisor"
+],
+[
+"Lumina phân tích số liệu mô phỏng của đội bạn theo thời gian thực — đề xuất kịch bản tối ưu và cảnh báo rủi ro sớm để bạn dẫn đầu thị trường.",
+"Lumina analyzes your team's simulation data in real time — proposing optimal scenarios and early risk alerts so you stay ahead of the market."
+],
+[
+"Dành cho giảng viên & doanh nghiệp",
+"For instructors & businesses"
+],
+[
+"Mang BizOn vào lớp học hoặc chương trình đào tạo: Class ID cho từng lớp, chế độ Giảng viên (khóa vòng, cấp vốn thưởng, nhật ký), hành vi đối thủ AI tất định — kết quả tái lập được, tiện chấm điểm giữa các đội.",
+"Bring BizOn to your classroom or training program: per-class Class IDs, an Instructor mode (round locks, bonus funding, logs), and deterministic AI rivals — reproducible results, easy to grade across teams."
+],
+[
+"📖 Hướng dẫn giảng viên",
+"📖 Instructor guide"
+],
+[
+"🚀 Dùng cho lớp học",
+"🚀 Use it in class"
+],
+[
+"✅ Kèm khung chấm điểm, bảng hành vi AI và gợi ý tổ chức lớp đầy đủ trên GitHub",
+"✅ Includes a grading rubric, AI behavior tables and full classroom tips on GitHub"
+],
+[
+"Hỗ trợ",
+"Support"
+],
+[
+"Câu hỏi thường gặp",
+"Frequently asked questions"
+],
+[
+"Founder & Creative Lead",
+"Founder & Creative Lead"
+],
+[
+"Academic Advisor",
+"Academic Advisor"
+],
+[
+"Kiến trúc sư chính của BizOn — hóa thân thành cố vấn AI Lumina, tập trung vào trải nghiệm người dùng và thẩm mỹ Claymorphism hiện đại.",
+"BizOn's lead architect — embodied as the Lumina AI advisor, focused on user experience and modern claymorphism aesthetics."
+],
+[
+"Cố vấn học thuật cao cấp — đảm bảo tính thực tiễn và chiều sâu kiến thức kinh doanh trong mọi kịch bản mô phỏng.",
+"Senior academic advisor — ensuring practical rigor and business depth in every simulation scenario."
 ]
 ]);
   var SPECIAL = [
