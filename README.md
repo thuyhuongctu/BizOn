@@ -53,6 +53,9 @@ Tiến trình chơi được lưu tự động trong `localStorage` của trình
 | Mô phỏng "Nếu — Thì" | Trước khi Commit: chạy thử kịch bản CEO (thị phần, hòa vốn, đánh đổi) hoặc CFO (Quick Ratio ngưỡng 1.1, đòn bẩy ROI vs lãi vay) — 2 lượt/vòng theo `what_if_limit` |
 | Bộ nhớ doanh nghiệp | SEC: nhật ký toàn bộ lời tư vấn của Lumina theo vòng (mô phỏng bảng `ai_advisor_history`) |
 | Nhật ký đội | Timeline hành trình 6 vòng: quyết định then chốt, kết quả & bài học tự sinh từ số liệu, trích dẫn Lumina/SEC/PGS.TS Phan Anh Tú |
+| Chat giọng nói với Lumina | Nhập tự do hoặc nói (STT tiếng Việt), Lumina trả lời bằng giọng nói (TTS, chọn giọng Nữ/Nam), thanh sóng âm "Hương đang nói..." |
+| Quyết định nâng cao | Quản trị Tài chính (nguồn vốn tự có/vay 8.5%, kỳ hạn thanh toán 30/60/90 ngày) + Quản trị Nhân sự (số nhân viên, ngân sách đào tạo) + Dự báo dòng tiền CVP trực tiếp |
+| Báo cáo học thuật | CVP & Chi phí (điểm hòa vốn, giá hòa vốn, lãi góp, cố định vs biến đổi, lợi nhuận gộp), Báo cáo Nhân sự, Business Model Canvas cập nhật theo dữ liệu thật |
 
 ## Engine mô phỏng (client-side)
 

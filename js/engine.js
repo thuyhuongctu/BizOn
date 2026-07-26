@@ -7,8 +7,8 @@
 
 const ROUNDS_TOTAL = 6;
 const BASE_MARKET_UNITS = 12000;     // tổng cầu thị trường mỗi vòng
-const UNIT_COST = 60;                 // nghìn ₫ / sản phẩm
-const FIXED_COST = 50;                // triệu ₫ / vòng
+const UNIT_COST = 45;                 // nghìn ₫ / sản phẩm (chưa gồm nhân công)
+const FIXED_COST = 30;                // triệu ₫ / vòng (điện nước, mặt bằng)
 const REF_PRICE = 150;                // nghìn ₫ — giá tham chiếu
 const PRICE_ELASTICITY = 1.8;
 const STARTING_BALANCE = 500;         // triệu ₫ (vốn giảng viên cấp)
@@ -129,7 +129,7 @@ function whatIfSimulate(s, role, d) {
   const marketUnits = BASE_MARKET_UNITS * ev.demand;
   const estSold = Math.min(d.production + s.inventory, Math.round(marketUnits * estShare / 100));
   const unitCost = UNIT_COST * ev.costMul;
-  const dep = Math.max(s.machineCapacity, d.production) * 0.02;
+  const dep = Math.max(s.machineCapacity, d.production) * 0.015;
   const fixed = FIXED_COST * ev.costMul;
   const estRevenue = estSold * d.price / 1000;
   const estCost = d.production * unitCost / 1000 + d.marketing + d.rd + fixed + dep + s.loan * 0.05;
@@ -180,6 +180,26 @@ function whatIfSimulate(s, role, d) {
       ? `Cảnh báo: kế hoạch chi chiếm ${Math.round(liquidityRisk * 100)}% ví hiện có và điểm hòa vốn là ${breakEven.toLocaleString('vi-VN')} sp. Hãy phối hợp với CFO thu xếp khoản vay ngắn hạn trước khi Commit.`
       : `Dữ liệu cho thấy đây là kịch bản an toàn: bán dự kiến ${estSold.toLocaleString('vi-VN')} sp, vượt điểm hòa vốn ${breakEven.toLocaleString('vi-VN')} sp. Tôi đề xuất giữ ít nhất 20% ngân sách Marketing để phòng thủ trước đối thủ.`,
   };
+}
+
+/** Dự báo dòng tiền trực tiếp từ thông số đang nhập (panel CVP). */
+function forecastCash(s, d) {
+  const ev = currentEvent(s);
+  const term = PAYMENT_TERMS[d.paymentTerm] || PAYMENT_TERMS[30];
+  const last = s.history[s.history.length - 1];
+  const lastShare = last ? last.share : 25;
+  const laborCap = (d.workers || 45) * UNITS_PER_WORKER;
+  const prod = Math.min(d.production, laborCap);
+  const est = Math.min(prod + s.inventory, Math.round(BASE_MARKET_UNITS * ev.demand * term.demandMul * lastShare / 100));
+  const unitCost = UNIT_COST * ev.costMul;
+  const inflow = est * d.price / 1000;
+  const wage = (d.workers || 45) * WAGE_PER_WORKER;
+  const training = (d.workers || 45) * (d.training || 0);
+  const outflow = (prod * unitCost / 1000 + d.marketing + d.rd + FIXED_COST * ev.costMul
+    + Math.max(s.machineCapacity, prod) * 0.015 + wage + training) * term.costMul;
+  const contribution = (d.price - unitCost) / 1000;
+  const breakEven = Math.ceil((FIXED_COST * ev.costMul + wage + training + d.marketing + d.rd) / Math.max(0.001, contribution));
+  return { inflow: Math.round(inflow), outflow: Math.round(outflow), net: Math.round(inflow - outflow), breakEven, laborCap, estSold: est };
 }
 
 /* ===== LUMINA ADVISOR PRO — kịch bản "Nếu — Thì" từ số liệu thực ===== */
@@ -322,8 +342,24 @@ function skillEffect(s, key, def) {
 
 function currentEvent(s) { return MARKET_EVENTS[s.round]; }
 
+/* Kỳ hạn thanh toán (theo màn hình Quyết định nâng cao):
+ * cho khách trả chậm → cầu tăng nhưng chi phí vốn tăng */
+const PAYMENT_TERMS = {
+  30: { label: '30 ngày (Tiêu chuẩn)', demandMul: 1.0, costMul: 1.0 },
+  60: { label: '60 ngày (+2% chi phí)', demandMul: 1.04, costMul: 1.02 },
+  90: { label: '90 ngày (+5% chi phí)', demandMul: 1.08, costMul: 1.05 },
+};
+const WAGE_PER_WORKER = 1;        // triệu ₫/người/vòng
+const UNITS_PER_WORKER = 70;      // năng lực sản xuất mỗi nhân viên
+const CREDIT_INTEREST = 0.085;    // lãi vay ngân hàng 8.5%/vòng cho phần thấu chi
+
 /** Chạy mô phỏng 1 vòng với quyết định của người chơi. */
 function simulateRound(s, d) {
+  d.workers ??= 45; d.training ??= 0; d.funding ??= 'equity'; d.paymentTerm ??= 30;
+  const term = PAYMENT_TERMS[d.paymentTerm] || PAYMENT_TERMS[30];
+  // Năng lực nhân sự giới hạn sản lượng thực tế
+  const laborCap = d.workers * UNITS_PER_WORKER;
+  d.production = Math.min(d.production, laborCap);
   const ev = currentEvent(s);
   const shielded = s.activeBoosts.includes('INS_SHIELD_01') && ev.tone === 'bad';
   const evEff = shielded ? MARKET_EVENTS[1] : ev;
@@ -346,7 +382,7 @@ function simulateRound(s, d) {
   });
 
   const totalAttr = playerAttr + compDecisions.reduce((a, x) => a + x.attr, 0);
-  const marketUnits = BASE_MARKET_UNITS * evEff.demand;
+  const marketUnits = BASE_MARKET_UNITS * evEff.demand * term.demandMul;
 
   // --- Doanh số & tồn kho ---
   const demandUnits = Math.round(marketUnits * playerAttr / totalAttr);
@@ -362,7 +398,7 @@ function simulateRound(s, d) {
   unitCost *= Math.max(0.8, 1 - s.rdCumulative / 1500);          // R&D tích lũy giảm giá thành
 
   if (d.production > s.machineCapacity) s.machineCapacity = d.production; // đầu tư mở rộng
-  let depreciation = s.machineCapacity * 0.02;                    // khấu hao theo công suất
+  let depreciation = s.machineCapacity * 0.015;                    // khấu hao theo công suất
   if ((s.items['OPS_LEAN_01'] || 0) > 0) depreciation *= 0.8;
 
   const revenue = sold * d.price / 1000;                          // triệu ₫
@@ -370,8 +406,15 @@ function simulateRound(s, d) {
   const holding = s.inventory * 0.005;                            // phí lưu kho
   let fixedThisRound = FIXED_COST * evEff.costMul;
   if (s.costCutter) { fixedThisRound *= 0.85; s.costCutter = false; }
-  const loanInterest = s.loan * 0.05;                              // lãi vay 5%/vòng
-  const totalCost = cogs + d.marketing + d.rd + fixedThisRound + depreciation + holding + loanInterest;
+  const loanInterest = s.loan * 0.05;                              // lãi vay CFO 5%/vòng
+  const wageCost = d.workers * WAGE_PER_WORKER;
+  const trainingCost = d.workers * d.training;
+  // Vay ngân hàng bù thấu chi (nguồn vốn = 'loan'): lãi 8.5% trên phần thiếu hụt
+  const plannedSpend = cogs + d.marketing + d.rd + wageCost + trainingCost;
+  const overdraft = (d.funding === 'loan' && plannedSpend > s.balance) ? plannedSpend - s.balance : 0;
+  const creditInterest = overdraft * CREDIT_INTEREST;
+  const totalCost = (cogs + d.marketing + d.rd + fixedThisRound + depreciation + holding + loanInterest
+    + wageCost + trainingCost + creditInterest) * term.costMul;
   let netProfit = revenue - totalCost;
   netProfit *= skillEffect(s, 'profitMul', 1);
 
@@ -397,7 +440,9 @@ function simulateRound(s, d) {
 
   // --- Chỉ số vận hành (OEE, phế phẩm, tài chính) ---
   const overload = Math.max(0, d.production / s.machineCapacity - 0.9);
-  s.oee = Math.round(clampNum(88 - (evEff.oeeHit || 0) - overload * 25 + s.maintBonus, 55, 96));
+  const laborStrain = Math.max(0, d.production / Math.max(1, d.workers * UNITS_PER_WORKER) - 0.85) * 20; // thiếu người → OEE giảm
+  const trainingBoost = Math.min(5, (d.workers * d.training) / 50);   // đào tạo tăng năng suất
+  s.oee = Math.round(clampNum(88 - (evEff.oeeHit || 0) - overload * 25 - laborStrain + s.maintBonus + trainingBoost, 55, 96));
   s.maintBonus = Math.max(0, s.maintBonus - 2);                    // hiệu ứng bảo trì phai dần
   s.defect = Math.round((1.5 + Math.max(0, (82 - s.oee) * 0.45)) * 10) / 10;
   s.brandLoyalty = Math.round(Math.min(95, 45 + s.brand * 25));
@@ -413,6 +458,7 @@ function simulateRound(s, d) {
     revenue, netProfit, share, sold, demandUnits, lostSales,
     inventory: s.inventory, depreciation, cogs, unitCost,
     marketing: d.marketing, rd: d.rd,
+    wageCost, trainingCost, creditInterest, workers: d.workers,
     fixed: fixedThisRound, holding, loanInterest,
     oee: s.oee, defect: s.defect, adEff: s.adEff, brandLoyalty: s.brandLoyalty,
     quickRatio: s.quickRatio, roi: s.roi, isNewPeak,
