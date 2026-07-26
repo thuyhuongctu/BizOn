@@ -23,7 +23,7 @@ function load() {
       s.lineUpgraded ??= [false, false, false]; s.maintBonus ??= 0; s.maintenanceLog ??= [];
       s.loan ??= 0; s.costCutter ??= false; s.peakShare ??= 0; s.eventShownRound ??= 0;
       s.whatIfUsed ??= 0; s.advisorHistory ??= [];
-      s.conquest ??= []; s.aiHistory ??= [];
+      s.conquest ??= []; s.aiHistory ??= []; s.teamMembers ??= null;
     }
     return s;
   } catch { return null; }
@@ -45,16 +45,22 @@ function createConfetti() {
 
 // ---------- Boot: Splash → Login/App ----------
 const ROLES = [
-  { id: 'CEO', icon: '🧭' }, { id: 'CFO', icon: '💰' }, { id: 'CMO', icon: '📣' },
-  { id: 'COO', icon: '🏭' }, { id: 'SEC', icon: '📝' },
+  { id: 'CEO', icon: '🧭', title: 'Nhà lãnh đạo tầm nhìn',   desc: 'Chèo lái chiến lược, chốt hạ mọi quyết định' },
+  { id: 'CFO', icon: '💰', title: 'Chiến lược gia tài chính', desc: 'Giữ két sắt, cân đối dòng tiền & gọi vốn' },
+  { id: 'CMO', icon: '📣', title: 'Phù thủy marketing',       desc: 'Đánh chiếm thị phần bằng thương hiệu' },
+  { id: 'COO', icon: '🏭', title: 'Chuyên gia vận hành',      desc: 'Tối ưu xưởng, OEE & chất lượng sản phẩm' },
+  { id: 'SEC', icon: '📝', title: 'Thư ký pháp chế',          desc: 'Biên bản minh bạch, tuân thủ & hồ sơ đội' },
 ];
 let pickedRole = 'CEO';
 
 window.addEventListener('DOMContentLoaded', () => {
   $('role-picker').innerHTML = ROLES.map(r => `
     <button type="button" data-role="${r.id}" onclick="pickRole('${r.id}')"
-      class="role-chip clay-card !rounded-2xl py-2 text-center ${r.id === 'CEO' ? 'ring-2 ring-primary-container' : ''}">
-      <div class="text-lg">${r.icon}</div><div class="text-[10px] font-bold text-deep-teal">${r.id}</div>
+      class="role-chip clay-card !rounded-3xl p-4 text-center ${r.id === 'CEO' ? 'sel ring-2 ring-primary-container' : ''}">
+      <div class="text-5xl leading-none">${r.icon}</div>
+      <div class="font-display font-extrabold text-deep-teal text-sm mt-2">${r.id}</div>
+      <div class="text-[10px] font-bold text-primary leading-tight">${r.title}</div>
+      <div class="text-[9px] text-deep-teal/50 mt-1 leading-snug">${r.desc}</div>
     </button>`).join('');
 
   setTimeout(() => {
@@ -67,8 +73,71 @@ window.addEventListener('DOMContentLoaded', () => {
 
 function pickRole(id) {
   pickedRole = id;
-  document.querySelectorAll('.role-chip').forEach(b =>
-    b.classList.toggle('ring-2', b.dataset.role === id));
+  document.querySelectorAll('.role-chip').forEach(b => {
+    const on = b.dataset.role === id;
+    b.classList.toggle('ring-2', on);
+    b.classList.toggle('sel', on);
+    if (on) b.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  });
+}
+
+// ---------- Đội demo 5 nhân vật & 3 đối thủ đại diện ----------
+const DEMO_TEAM = [
+  { role: 'CEO', icon: '🧭', name: 'Minh Long',  note: 'Nhà lãnh đạo tầm nhìn' },
+  { role: 'CFO', icon: '💰', name: 'Thu Hà',     note: 'Chiến lược gia tài chính' },
+  { role: 'CMO', icon: '📣', name: 'Lan Chi',    note: 'Phù thủy marketing' },
+  { role: 'COO', icon: '🏭', name: 'Quốc Bảo',   note: 'Chuyên gia vận hành' },
+  { role: 'SEC', icon: '📝', name: 'Gia Hân',    note: 'Thư ký pháp chế' },
+];
+const AI_OPPONENTS = [
+  { name: 'Alpha Dynamics', icon: '🐺', style: 'Giá rẻ tốc chiến',   play: 'Giá ~125k · marketing ~90tr mỗi vòng (dao động ±12%)', counter: 'Đừng đua giá tận đáy — giữ biên lợi nhuận, xây thương hiệu để giữ khách trung thành.' },
+  { name: 'Mekong Ventures', icon: '🐘', style: 'Cân bằng chắc chắn', play: 'Giá ~150k · marketing ~60tr — ổn định như đồng bằng', counter: 'Vượt mặt bằng R&D và biến cố: họ ít khi phản ứng nhanh với thị trường.' },
+  { name: 'Star Clay Co.',   icon: '🦚', style: 'Cao cấp thương hiệu', play: 'Giá ~195k · marketing ~75tr — đánh phân khúc sang', counter: 'Chiếm phân khúc phổ thông họ bỏ ngỏ, hoặc đấu trực diện bằng chất lượng + ESG.' },
+];
+
+function doLoginDemo() {
+  $('login-email').value = 'demo@bizon.vn';
+  $('login-team').value = 'Đội Demo Rồng Xanh';
+  $('login-class').value = 'DEMO-2026';
+  pickedRole = 'CEO';
+  doLogin();
+  S.teamMembers = DEMO_TEAM;
+  save(); renderAll();
+}
+
+function renderTeamCard() {
+  const box = $('team-card');
+  if (!box) return;
+  if (!S.teamMembers) { box.innerHTML = ''; return; }
+  box.innerHTML = `<div class="clay-card p-5 mb-4">
+    <h3 class="font-display font-bold text-deep-teal mb-3">👥 Đội hình của bạn <span class="text-[10px] font-extrabold text-primary">DEMO</span></h3>
+    <div class="grid grid-cols-5 gap-2 text-center">${S.teamMembers.map(m => `
+      <div class="clay-sunken rounded-2xl p-2 ${m.role === S.profile.role ? 'ring-2 ring-primary-container' : ''}">
+        <p class="text-2xl">${m.icon}</p>
+        <p class="text-[10px] font-extrabold text-deep-teal mt-0.5">${m.role}</p>
+        <p class="text-[9px] text-deep-teal/55 leading-tight">${m.name}</p>
+      </div>`).join('')}</div>
+    <p class="text-[10px] text-deep-teal/45 mt-2.5">Bạn đang cầm vai ${S.profile.role} — các thành viên còn lại do đội thảo luận ngoài đời (chế độ lớp học).</p>
+  </div>`;
+}
+
+function renderOpponents() {
+  const box = $('opponents-card');
+  if (!box) return;
+  const shares = S.competitors.map(c => (c.share || 25));
+  box.innerHTML = `<div class="clay-card p-5 mb-4">
+    <h3 class="font-display font-bold text-deep-teal mb-1">⚔️ 3 đối thủ AI của bạn</h3>
+    <p class="text-[10px] text-deep-teal/45 mb-3">Mỗi vòng họ tự định giá & chi marketing theo tính cách — xem Sổ tay 📖 mục "Đối thủ AI" để biết cách khắc chế.</p>
+    ${AI_OPPONENTS.map((o, i) => `
+      <div class="flex items-center gap-3 py-2 ${i < 2 ? 'border-b border-surface-bright' : ''}">
+        <p class="text-2xl shrink-0">${o.icon}</p>
+        <div class="flex-1 min-w-0">
+          <p class="text-xs font-extrabold text-deep-teal">${o.name} <span class="font-bold text-primary">· ${o.style}</span></p>
+          <p class="text-[10px] text-deep-teal/55 truncate">${o.play}</p>
+        </div>
+        <p class="text-xs font-display font-extrabold text-deep-teal/70 shrink-0">${shares[i].toFixed(0)}%</p>
+      </div>`).join('')}
+  </div>`;
 }
 
 function doLogin() {
@@ -142,6 +211,14 @@ const MANUAL = {
        ['3', 'Vào vòng 1', 'Đọc biến cố thị trường, hỏi Lumina AI, rồi vào Quyết định để chốt kế hoạch đầu tiên.']].map(([n, t, d]) => `
     <div class="clay-card p-4 mb-3 flex gap-3.5 items-start"><span class="w-9 h-9 shrink-0 rounded-full bg-primary-container/30 text-primary font-display font-extrabold flex items-center justify-center">${n}</span>
       <div><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p></div></div>`).join('')}` },
+  ai: { icon: '⚔️', name: 'Đối thủ AI', html: `
+    <p class="text-sm text-deep-teal/75 mb-4">Ba đối thủ AI mô phỏng ba chiến lược kinh điển. Mỗi vòng, chúng tự định giá và chi marketing quanh mức đặc trưng (dao động ±12%), rồi cạnh tranh giành thị phần bằng đúng công thức sức hút của bạn: giá thấp hơn giá tham chiếu, marketing hiệu quả và thương hiệu tích lũy.</p>
+    ${[['🐺 Alpha Dynamics', 'Giá rẻ tốc chiến', 'Giá ~125k · marketing ~90tr. Mạnh khi thị trường nhạy giá (biến cố Price War càng lợi cho họ).', 'Khắc chế: đừng đua xuống đáy — giữ biên, xây Brand Loyalty ≥70% để khách không rời đi.'],
+       ['🐘 Mekong Ventures', 'Cân bằng chắc chắn', 'Giá ~150k · marketing ~60tr. Ổn định, ít bứt phá, ít sai lầm.', 'Khắc chế: tận dụng biến cố tốt (Cơ Hội Vàng, Hóa Rồng) — họ không tăng tốc theo thị trường.'],
+       ['🦚 Star Clay Co.', 'Cao cấp thương hiệu', 'Giá ~195k · marketing ~75tr. Hưởng lợi lớn ở vòng 6 khi thương hiệu được nhân trọng số ×1.5.', 'Khắc chế: chiếm phân khúc phổ thông, hoặc đầu tư R&D + ESG để đấu trực diện phân khúc sang.']].map(([n, s2, p, c]) => `
+    <div class="clay-card p-4 mb-3"><p class="font-bold text-sm text-deep-teal">${n} <span class="text-primary">· ${s2}</span></p>
+      <p class="text-xs text-deep-teal/60 mt-1">${p}</p><p class="text-xs font-semibold text-emerald-700 mt-1">${c}</p></div>`).join('')}
+    <p class="text-[11px] text-deep-teal/50 mt-2">📌 Giảng viên: hành vi AI là tất định (cùng seed đội → cùng kết quả), tiện chấm điểm & so sánh giữa các đội. Chi tiết trong tài liệu giảng viên trên GitHub.</p>` },
   roles: { icon: '👥', name: 'Vai trò & Đội ngũ', html: `
     <p class="text-sm text-deep-teal/75 mb-4">Sự phối hợp giữa 5 vị trí cốt lõi là chìa khóa thành công:</p>
     ${[['CEO', 'Quyết định', 'Định hướng chiến lược, duyệt ngân sách cuối cùng và chốt hạ quyết định.', '🤝 Làm việc chặt với CFO trước khi chốt số.'],
@@ -451,7 +528,7 @@ function renderAll() {
   renderHeader(); renderDashboard(); renderDecisions(); renderAdvisorIntro();
   renderShop(); renderSkills(); renderLeaderboard(); renderAchievements(); renderProfile();
   renderMissions(); renderMinigame(); renderInstructor(); renderJournal(); renderMarket();
-  renderConquest();
+  renderConquest(); renderTeamCard(); renderOpponents();
   const mt = $('music-toggle'); if (mt) mt.checked = musicEnabled();
 }
 
