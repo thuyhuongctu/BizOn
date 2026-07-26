@@ -79,6 +79,47 @@ function doLogin() {
   enterApp();
   createConfetti();
   playHuongIntro();   // giọng chào thật của Hương AI (được phép vì gọi từ thao tác chạm)
+  startMusic();       // nhạc nền BizOn Theme
+}
+
+// ---------- Nhạc nền game (bài "BizOn Theme" — Đỗ Thùy Hương) ----------
+let bgm = null;
+function musicEnabled() { return localStorage.getItem('bizon-music') !== 'off'; }
+function startMusic() {
+  if (!musicEnabled()) return;
+  if (!bgm) { bgm = new Audio('assets/audio/bizon-theme.mp3'); bgm.loop = true; bgm.volume = 0.22; }
+  bgm.play().catch(() => {});
+}
+function toggleMusic() {
+  if (musicEnabled()) { localStorage.setItem('bizon-music', 'off'); if (bgm) bgm.pause(); }
+  else { localStorage.setItem('bizon-music', 'on'); startMusic(); }
+  const t = $('music-toggle'); if (t) t.checked = musicEnabled();
+}
+// Trở lại phiên cũ: trình duyệt chặn autoplay — bắt đầu nhạc ở lần chạm đầu tiên
+document.addEventListener('pointerdown', function once() {
+  document.removeEventListener('pointerdown', once);
+  if (S) startMusic();
+}, { once: true });
+
+// ---------- Âm thanh kịch tính mở vòng (WebAudio, không cần tệp) ----------
+function playEventSting(tone) {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const notes = tone === 'bad' ? [[110, 0], [104, .22], [98, .44], [82.4, .7]]      // dồn dập đi xuống — kịch tính
+      : tone === 'warn' ? [[196, 0], [185, .2], [196, .4]]
+      : [[261.6, 0], [329.6, .16], [392, .32], [523.3, .5]];                          // vui — arpeggio đi lên
+    notes.forEach(([f, t]) => {
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = tone === 'bad' ? 'sawtooth' : 'triangle';
+      o.frequency.value = f;
+      g.gain.setValueAtTime(0.0001, ctx.currentTime + t);
+      g.gain.exponentialRampToValueAtTime(0.18, ctx.currentTime + t + 0.03);
+      g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + t + (tone === 'bad' ? 0.5 : 0.3));
+      o.connect(g); g.connect(ctx.destination);
+      o.start(ctx.currentTime + t); o.stop(ctx.currentTime + t + 0.6);
+    });
+    setTimeout(() => ctx.close(), 2000);
+  } catch (e) { /* trình duyệt không hỗ trợ WebAudio */ }
 }
 
 // ---------- Giọng nói thật của Hương AI (bản thu + phụ đề SRT) ----------
@@ -126,6 +167,7 @@ function maybeShowEventIntro() {
   const ev = currentEvent(S);
   S.eventShownRound = S.round;
   save();
+  playEventSting(ev.tone);   // âm thanh dồn dập/kịch tính mở vòng
   const bad = ev.tone === 'bad', warn = ev.tone === 'warn';
   const tagCls = bad ? 'bg-red-100 text-red-600' : warn ? 'bg-amber-100 text-amber-700' : 'bg-primary-container/25 text-primary';
   const titleCls = bad ? 'text-red-600' : 'text-deep-teal';
@@ -233,6 +275,7 @@ function renderAll() {
   renderHeader(); renderDashboard(); renderDecisions(); renderAdvisorIntro();
   renderShop(); renderSkills(); renderLeaderboard(); renderAchievements(); renderProfile();
   renderMissions(); renderMinigame(); renderInstructor(); renderJournal(); renderMarket();
+  const mt = $('music-toggle'); if (mt) mt.checked = musicEnabled();
 }
 
 // ---------- Thị trường sống (Live Market Pulse — theo 3 màn hình Stitch) ----------
@@ -562,6 +605,10 @@ function commitDecisions() {
     $('processing-box').classList.add('hidden');
     $('commit-box').classList.remove('hidden');
     if (report.netProfit > 0) createConfetti();
+    // Kịch bản Stitch: chúc mừng KPI xuất sắc + cảnh báo rủi ro theo vai trò
+    const notes = kpiCongrats(S, report).concat(riskAlerts(S, report));
+    notes.forEach(m => pushLumina({ risk: m.risk, text: `【${m.role}】 ${m.text}` }));
+    if (notes.some(m => m.risk === 'low')) createConfetti();
     showRoundResult(report);
   }, 1800);
 }
@@ -663,7 +710,7 @@ function renderRoleDeepdive() {
   const qrBad = S.quickRatio < 1, roiBad = S.roi < 18;
   const oeeBad = S.oee < 85, defBad = S.defect > 4.3;
   const shareNow = S.history.length ? S.history[S.history.length - 1].share : 25;
-  const cmo = cmoBrain(S), cfo = cfoBrain(S);
+  const cmo = cmoBrain(S), cfo = cfoBrain(S), coo = cooBrain(S), sec = secBrain(S);
   const badgeCls = { RED: 'risk-high', CRISIS: 'risk-high', YELLOW: 'risk-medium', GREEN: 'risk-low', OPPORTUNITY: 'risk-low', LEVERAGE: 'risk-low', SAFE: 'risk-low' };
   const cfoCrisis = cfo.status === 'CRISIS';
   const bar = (pct, bad) => `<div class="h-2 rounded-full bg-surface-bright overflow-hidden mt-1"><div class="h-full ${bad ? 'bg-red-500' : 'bg-primary'} rounded-full" style="width:${Math.min(100, Math.max(4, pct))}%"></div></div>`;
@@ -711,9 +758,18 @@ function renderRoleDeepdive() {
           <p class="font-display font-extrabold ${defBad ? 'text-red-600' : 'text-deep-teal'} text-xl">${S.defect}% ${defBad ? '<span class="text-[9px] risk-high px-1.5 py-0.5 rounded-full align-middle">CẢNH BÁO ĐỎ</span>' : ''}</p>
           ${defBad ? `<p class="text-[10px] text-red-600 font-bold">Vượt ngưỡng cho phép (+${(S.defect - 4.3).toFixed(1)}%)</p>` : '<p class="text-[10px] text-deep-teal/50">Trong ngưỡng cho phép</p>'}${bar(S.defect * 10, defBad)}</div>
       </div>
+      ${brain(coo, coo.status === 'RED' ? 'lumina-ao-dai-alert' : 'lumina-ao-dai')}
       <div class="grid grid-cols-2 gap-2">
         <button onclick="showReportFromAdvisor()" class="clay-btn bg-deep-teal text-white text-xs font-bold py-2.5">⬆️ Nâng cấp Dây chuyền</button>
         <button onclick="doMaintainFromAdvisor()" class="clay-btn bg-white text-deep-teal text-xs font-bold py-2.5">🔧 Bảo trì ngay</button>
+      </div>
+    </div>
+    <div class="clay-card p-4 ${sec.status === 'RED' ? 'border-l-4 border-red-400' : ''}">
+      <p class="font-display font-bold text-deep-teal text-sm mb-2">📔 Điều phối & Tuân thủ <span class="text-[10px] text-deep-teal/50">· dành cho SEC</span></p>
+      ${brain(sec, sec.status === 'RED' ? 'lumina-ao-dai-alert' : 'lumina-vest')}
+      <div class="grid grid-cols-2 gap-2">
+        <button onclick="showTab('journal')" class="clay-btn bg-primary text-white text-xs font-bold py-2.5">📔 Mở Nhật ký đội</button>
+        <button onclick="showTab('decisions')" class="clay-btn bg-white text-deep-teal text-xs font-bold py-2.5">🗳️ Bảng quyết định</button>
       </div>
     </div>
     <div class="clay-card p-4 ${cmo.status === 'RED' ? 'border-l-4 border-red-400' : ''}">
@@ -1145,7 +1201,19 @@ function renderEnergyReport(body) {
   const worst = er.lines.reduce((a, b) => (b.kwh > a.kwh ? b : a));
   const worstIdx = er.lines.indexOf(worst);
   const ringDeg = Math.min(360, er.overloadPct * 3.6);
+  const hasSolar = (S.items['SOLAR_01'] || 0) > 0;
   body.innerHTML = `
+    <div class="clay-card p-4 mb-4 flex items-center gap-4 ${hasSolar ? '' : 'opacity-90'}">
+      <p class="text-3xl">☀️</p>
+      <div class="flex-1">
+        <p class="font-display font-bold text-deep-teal text-sm">Pin Mặt Trời ${hasSolar ? '<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full risk-low align-middle">ĐANG HOẠT ĐỘNG</span>' : '<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full risk-medium align-middle">CHƯA LẮP</span>'}</p>
+        <p class="text-[11px] text-deep-teal/60">${hasSolar ? 'Tự chủ nguồn điện: -15% chi phí cố định, kháng khủng hoảng năng lượng.' : 'Lắp đặt trong Cửa hàng (150tr₫) để giảm 15% OPEX và tăng 20 điểm ESG. Hoàn vốn ~2 vòng.'}</p>
+      </div>
+      <div class="text-center shrink-0">
+        <p class="font-display font-extrabold ${esgScore(S) >= 70 ? 'text-emerald-600' : 'text-deep-teal'} text-2xl">${esgScore(S)}</p>
+        <p class="text-[9px] font-extrabold text-deep-teal/50 uppercase">ESG Score</p>
+      </div>
+    </div>
     <div class="clay-card p-5 mb-4 text-center">
       <h3 class="font-display font-extrabold text-deep-teal text-lg">Tổng mức tiêu thụ</h3>
       <p class="text-xs text-deep-teal/60 mb-3">Sản lượng tiêu thụ hiện tại so với mục tiêu.</p>

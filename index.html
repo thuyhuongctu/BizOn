@@ -538,7 +538,7 @@ tailwind.config = {
       <div class="grid grid-cols-2 gap-3">
         <div class="clay-card overflow-hidden text-center">
           <img src="assets/character/lumina-ao-dai.png" alt="Đỗ Thùy Hương" class="w-full h-36 object-cover" style="object-position:50% 12%">
-          <div class="p-3"><p class="font-display font-bold text-deep-teal text-xs">Đỗ Thùy Hương</p><p class="signature text-base text-primary leading-tight">Je m'appelle Hương</p><p class="text-[10px] text-deep-teal/50">Tác giả & Thiết kế</p></div>
+          <div class="p-3"><p class="font-display font-bold text-deep-teal text-xs">Đỗ Thùy Hương</p><p class="text-[10px] text-deep-teal/50">Tác giả & Thiết kế</p></div>
         </div>
         <div class="clay-card overflow-hidden text-center">
           <img src="assets/character/anh-tu-welcome.png" alt="PGS.TS Phan Anh Tú" class="w-full h-36 object-cover" style="object-position:50% 8%">
@@ -553,6 +553,7 @@ tailwind.config = {
       <div class="clay-card divide-y divide-surface-bright">
         <div class="p-5 flex items-center justify-between"><span class="font-bold text-sm text-deep-teal">🔔 Thông báo vòng chơi</span><input type="checkbox" checked class="w-5 h-5 accent-primary"></div>
         <div class="p-5 flex items-center justify-between"><span class="font-bold text-sm text-deep-teal">🔊 Âm thanh hiệu ứng</span><input type="checkbox" checked class="w-5 h-5 accent-primary"></div>
+        <div class="p-5 flex items-center justify-between"><span class="font-bold text-sm text-deep-teal">🎵 Nhạc nền (BizOn Theme)</span><input id="music-toggle" type="checkbox" onchange="toggleMusic()" class="w-5 h-5 accent-primary"></div>
         <div class="p-5"><a href="gioi-thieu.html" class="font-bold text-sm text-primary block">🌐 Trang giới thiệu & Mini-game</a></div>
         <div class="p-5"><button onclick="alert('Đã gửi báo cáo lỗi tới đội ngũ BizOn. Cảm ơn bạn!')" class="font-bold text-sm text-primary">🐞 Gửi báo cáo lỗi</button></div>
         <div class="p-5"><button onclick="resetGame()" class="font-bold text-sm text-orange-600">♻️ Chơi lại từ đầu (Reset)</button></div>

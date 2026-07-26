@@ -46,15 +46,16 @@ const MARKET_EVENTS = [
     impacts: [{ icon: '💰', label: 'Giá thành đơn vị', value: '+25%', dir: 'up-bad' }, { icon: '📦', label: 'Tỷ lệ đáp ứng đơn hàng', value: '-15%', dir: 'down' }],
     luminaImg: 'lumina-ao-dai-alert', luminaMsg: 'Thưa CEO, tình hình rất khẩn cấp! Dây chuyền sản xuất đình trệ vì thiếu linh kiện đầu vào. Chúng ta cần quyết định ngay: tăng ngân sách vận chuyển hay đàm phán lại thời gian giao hàng?',
     cta: { label: '👥 Họp khẩn cấp toàn đội', tab: 'decisions' } },
-  { id: 'EV_EXPO', round: 6, tone: 'good', icon: '🌏', name: 'Hội Chợ Quốc Tế', tag: 'VÒNG CHUNG KẾT',
-    desc: 'Cơ hội vàng ở vòng chung kết: hiệu quả marketing tăng 40%, nhu cầu quốc tế tăng mạnh.',
-    demand: 1.1, costMul: 1.0, mktBoost: 1.4,
-    impacts: [{ icon: '📣', label: 'Hiệu quả marketing', value: '+40%', dir: 'up' }, { icon: '🌏', label: 'Nhu cầu quốc tế', value: '+10%', dir: 'up' }],
-    luminaImg: 'lumina-ao-dai-clap', luminaMsg: 'Vòng cuối rồi cả đội ơi! Đây là lúc dồn lực marketing để chốt vị trí dẫn đầu. Cả đội cùng bứt phá nhé!',
-    cta: { label: '🚀 Bứt phá vòng cuối', tab: 'decisions' } },
+  { id: 'EV_MILESTONE', round: 6, tone: 'good', icon: '🐉', name: 'Việt Nam Hóa Rồng', tag: 'VÒNG CHUNG KẾT · CỘT MỐC LỊCH SỬ',
+    desc: 'World Bank chính thức xếp Việt Nam vào nhóm thu nhập trung bình cao (07/2026). Tầng lớp trung lưu mở rộng, sức mua bùng nổ — khách hàng ít nhạy cảm về giá, ưu tiên chất lượng và thương hiệu.',
+    demand: 1.25, costMul: 1.0, elasticityMul: 0.85, wageMul: 1.1, brandPow: 1.5, mktBoost: 1.2,
+    impacts: [{ icon: '🛍️', label: 'Tổng cầu thị trường', value: '+25%', dir: 'up' }, { icon: '🏷️', label: 'Độ nhạy giá của khách', value: '-15%', dir: 'down-good' }, { icon: '👷', label: 'Chi phí nhân công', value: '+10%', dir: 'up-bad' }, { icon: '✨', label: 'Trọng số thương hiệu', value: '×1.5', dir: 'up' }],
+    luminaImg: 'lumina-ao-dai-clap', luminaMsg: 'Một cột mốc lịch sử, thưa đội ngũ điều hành! Việt Nam đã chính thức gia nhập nhóm thu nhập trung bình cao. Thị trường đang "thay da đổi thịt" với sức mua bùng nổ. Đây là cơ hội vàng để CMO nâng tầm thương hiệu thành dòng Premium và CEO mở rộng quy mô phục vụ làn sóng tiêu dùng mới!',
+    cta: { label: '🐉 Bứt phá về đích', tab: 'decisions' } },
 ];
 
 const SHOP_ITEMS = [
+  { id: 'SOLAR_01',     icon: '☀️', name: 'Pin Mặt Trời',   type: 'blueprint',  price: 150, desc: 'Tự chủ nguồn điện: -15% chi phí cố định vĩnh viễn, +20 điểm ESG, giảm nửa tác động OEE khi khủng hoảng năng lượng. Hoàn vốn ~2 vòng.' },
   { id: 'MKT_BOOST_01', icon: '📣', name: 'Marketing Boost', type: 'booster',    price: 80,  desc: '+30% hiệu quả marketing trong vòng kế tiếp.' },
   { id: 'RD_UPGRADE_01', icon: '🔬', name: 'R&D Upgrade',    type: 'blueprint',  price: 120, desc: 'Giảm 8% giá thành sản xuất vĩnh viễn.' },
   { id: 'OPS_LEAN_01',  icon: '🏭', name: 'Lean Operations', type: 'blueprint',  price: 100, desc: 'Giảm 20% chi phí khấu hao máy móc.' },
@@ -291,6 +292,93 @@ function cfoBrain(s) {
   };
 }
 
+/* ===== THE COO BRAIN — cố vấn vận hành theo kịch bản ===== */
+function cooBrain(s) {
+  const last = s.history[s.history.length - 1] || null;
+  const prev = s.history[s.history.length - 2] || null;
+  const capUse = last ? last.decisions.production / Math.max(1, s.machineCapacity) : 0;
+  const invRatio = last && last.demandUnits > 0 ? s.inventory / last.demandUnits : 0;
+  if (invRatio > 0.4) return {
+    status: 'RED', badge: 'ĐỎ · NGUY CẤP', metric: `Tồn kho / Nhu cầu = ${Math.round(invRatio * 100)}% > 40%`,
+    dialogue: 'Lượng hàng tồn kho đang quá lớn, gây lãng phí chi phí lưu kho. Hãy phối hợp với CMO để đẩy mạnh tiêu thụ hoặc giảm sản lượng.',
+    actions: ['Giảm sản lượng vòng tới', 'Phối hợp CMO đẩy tiêu thụ'],
+  };
+  if (last && prev && last.defect > prev.defect * 1.12) return {
+    status: 'YELLOW', badge: 'VÀNG · RỦI RO', metric: `Phế phẩm tăng ${Math.round((last.defect / prev.defect - 1) * 100)}% so với vòng trước`,
+    dialogue: 'Thưa COO, tôi nhận thấy tỷ lệ sản phẩm lỗi tăng mạnh. Nguyên nhân là do đội ngũ nhân sự mới chưa được đào tạo bài bản. Chúng ta nên đầu tư vào gói "Đào tạo chuyên sâu" để lấy lại phong độ.',
+    actions: ['Tăng ngân sách đào tạo trong thẻ Nhân sự', 'Giữ chân kỹ sư lành nghề'],
+  };
+  if (capUse > 0.95) return {
+    status: 'YELLOW', badge: 'VÀNG · RỦI RO', metric: `Sản lượng / Công suất = ${Math.round(capUse * 100)}% > 95%`,
+    dialogue: 'COO ơi, nhà máy đang chạy quá tải. Nếu không đầu tư mở rộng ngay, chúng ta sẽ bỏ lỡ cơ hội bán hàng ở vòng tới.',
+    actions: ['Nâng cấp dây chuyền sản xuất', 'Thuê thêm nhân công'],
+  };
+  if (last && last.lostSales > 0) return {
+    status: 'GREEN', badge: 'XANH · CƠ HỘI', metric: `Thiếu ${last.lostSales.toLocaleString('vi-VN')} sp so với nhu cầu`,
+    dialogue: 'Thị trường đang "khát" hàng nhưng chúng ta không đủ năng lực cung ứng. Đây là lúc để kích hoạt tăng ca hoặc mở rộng công suất.',
+    actions: ['Tăng sản lượng + nhân công vòng tới', 'Đàm phán kỳ hạn 60 ngày để kích cầu'],
+  };
+  return {
+    status: 'SAFE', badge: 'XANH · ỔN ĐỊNH', metric: 'Cung — cầu đang cân bằng',
+    dialogue: 'Vận hành đang mượt mà, COO ạ. Hãy duy trì bảo trì định kỳ và theo dõi OEE để giữ phong độ nhé.',
+    actions: ['Bảo trì định kỳ', 'Theo dõi OEE mỗi vòng'],
+  };
+}
+
+/* ===== THE SEC BRAIN — cố vấn điều phối & tuân thủ ===== */
+function secBrain(s) {
+  const ev = currentEvent(s);
+  if (!s.finished && ev.tone === 'bad' && !s.committed) return {
+    status: 'RED', badge: 'ĐỎ · ĐIỀU PHỐI KHẨN', metric: `Biến cố "${ev.name}" đang diễn ra`,
+    dialogue: `Biến cố "${ev.name}" vừa ập đến! SEC hãy nhanh chóng tổng hợp thông tin từ COO về tình hình sản xuất và báo cáo cho CEO để điều chỉnh giá bán kịp thời.`,
+    actions: ['Kích hoạt họp khẩn cấp toàn đội', 'Cập nhật mục tiêu vòng theo tình hình mới'],
+  };
+  if (!s.finished && !s.committed) return {
+    status: 'YELLOW', badge: 'VÀNG · TIẾN ĐỘ', metric: `Vòng ${s.round} chưa chốt quyết định`,
+    dialogue: 'SEC ơi, các bộ phận vẫn chưa thống nhất con số cuối cùng. Hãy nhắc CEO chốt quyết định ngay để tránh bị hệ thống tự động khóa!',
+    actions: ['Rà soát bảng quyết định với từng vai trò', 'Nhắc CEO nhấn Commit'],
+  };
+  if ((s.advisorHistory || []).length === 0) return {
+    status: 'YELLOW', badge: 'VÀNG · TRI THỨC', metric: 'Nhật ký cố vấn đang trống',
+    dialogue: 'Dữ liệu lịch sử đang bị trống. SEC cần ghi chú lại các biến cố quan trọng để đội có cơ sở phân tích cho các vòng sau nhé.',
+    actions: ['Hỏi Lumina để lưu phân tích vào SEC log', 'Ghi chép Nhật ký đội'],
+  };
+  return {
+    status: 'GREEN', badge: 'XANH · SẴN SÀNG', metric: 'Toàn đội đã chốt phần việc',
+    dialogue: 'Tuyệt vời! Toàn đội đã sẵn sàng. SEC hãy kiểm tra lại lần cuối và báo cáo CEO thực hiện nút nhấn "Commit" thần thánh nhé.',
+    actions: ['Kiểm tra lần cuối bảng quyết định', 'Lưu biên bản vào Nhật ký đội'],
+  };
+}
+
+/* ===== ESG SCORE — bền vững hóa doanh nghiệp ===== */
+function esgScore(s) {
+  return Math.min(100, 50 + ((s.items['SOLAR_01'] || 0) > 0 ? 20 : 0) + Math.min(15, Math.round(s.rdCumulative / 50)) + ((s.items['OPS_LEAN_01'] || 0) > 0 ? 5 : 0));
+}
+
+/* ===== KPI XUẤT SẮC & RỦI RO THEO VAI TRÒ (kịch bản Stitch) ===== */
+function kpiCongrats(s, r) {
+  const prev = s.history[s.history.length - 2];
+  const shareGain = prev ? r.share - prev.share : 0;
+  const top1 = r.share >= Math.max(...s.competitors.map(c => c.share || 0), 0);
+  const out = [];
+  if (r.roi > 30) out.push({ role: 'CFO', risk: 'low',
+    text: 'Thật tuyệt vời, CFO! Chiến lược tối ưu cấu trúc vốn của bạn đã mang lại lợi nhuận kỷ lục (ROI ' + r.roi + '%). Dòng tiền đang cực kỳ dồi dào để chúng ta tái đầu tư mở rộng!' });
+  if (shareGain > 5 || (top1 && r.share >= 30)) out.push({ role: 'CMO', risk: 'low',
+    text: 'Chúc mừng CMO! Chiến dịch Marketing Mix của bạn đã đánh bại hoàn toàn đối thủ. Thương hiệu của đội hiện đang là lựa chọn số 1 của khách hàng!' });
+  if (r.oee >= 95 && r.defect < 1) out.push({ role: 'COO', risk: 'low',
+    text: 'COO ơi, hiệu suất nhà máy đạt mức không tưởng (OEE ' + r.oee + '%, phế phẩm ' + r.defect + '%)! Bảo trì dự phòng và đào tạo công nhân đã giúp dây chuyền chạy mượt tuyệt đối.' });
+  return out;
+}
+
+function riskAlerts(s, r) {
+  const out = [];
+  if (r.oee < 60 || r.defect > 7) out.push({ role: 'COO', risk: 'high',
+    text: 'Dây chuyền sản xuất đang kêu cứu! Tỷ lệ phế phẩm quá cao sẽ bào mòn lợi nhuận gộp. Đừng ép máy móc chạy quá tải mà bỏ qua bảo trì — hãy bảo trì định kỳ và đào tạo nhân sự kỹ thuật.' });
+  if (r.decisions && r.decisions.production > s.machineCapacity * 0.9 && s.quickRatio < 1) out.push({ role: 'CEO', risk: 'high',
+    text: 'Thưa CEO, chúng ta đang đứng trước ngưỡng cửa phá sản kỹ thuật. Sự đánh đổi giữa tăng trưởng nóng và an toàn dòng tiền đang bị lệch pha — hãy họp khẩn cấp toàn đội và rà soát lại quyết định.' });
+  return out;
+}
+
 function newGameState(profile) {
   return {
     profile,                                  // {email, teamName, role}
@@ -435,7 +523,8 @@ function simulateRound(s, d) {
   let mktEff = d.marketing * (evEff.mktBoost || 1) * skillEffect(s, 'mktMul', 1);
   if (s.activeBoosts.includes('MKT_BOOST_01')) mktEff *= 1.3;
 
-  const playerAttr = Math.pow(REF_PRICE / d.price, elasticity) * (1 + Math.sqrt(mktEff) / 18) * s.brand;
+  const brandPow = evEff.brandPow || 1;   // cột mốc thu nhập trung bình cao: trọng số thương hiệu ×1.5
+  const playerAttr = Math.pow(REF_PRICE / d.price, elasticity) * (1 + Math.sqrt(mktEff) / 18) * Math.pow(s.brand, brandPow);
 
   const compDecisions = s.competitors.map(c => {
     const jitter = 0.9 + rng(s) * 0.25;
@@ -443,7 +532,7 @@ function simulateRound(s, d) {
     if (c.style === 'aggressive') { price = 125 * jitter; mkt = 90 * jitter; }
     if (c.style === 'balanced')   { price = 150 * jitter; mkt = 60 * jitter; }
     if (c.style === 'premium')    { price = 195 * jitter; mkt = 75 * jitter; }
-    const attr = Math.pow(REF_PRICE / price, elasticity) * (1 + Math.sqrt(mkt) / 18) * c.brand;
+    const attr = Math.pow(REF_PRICE / price, elasticity) * (1 + Math.sqrt(mkt) / 18) * Math.pow(c.brand, brandPow);
     return { c, price, mkt, attr };
   });
 
@@ -471,9 +560,10 @@ function simulateRound(s, d) {
   const cogs = d.production * unitCost / 1000;
   const holding = s.inventory * 0.005;                            // phí lưu kho
   let fixedThisRound = FIXED_COST * evEff.costMul;
+  if ((s.items['SOLAR_01'] || 0) > 0) fixedThisRound *= 0.85;      // Pin Mặt Trời: tự chủ nguồn điện
   if (s.costCutter) { fixedThisRound *= 0.85; s.costCutter = false; }
   const loanInterest = s.loan * 0.05;                              // lãi vay CFO 5%/vòng
-  const wageCost = d.workers * WAGE_PER_WORKER;
+  const wageCost = d.workers * WAGE_PER_WORKER * (evEff.wageMul || 1);
   const trainingCost = d.workers * d.training;
   // Vay ngân hàng bù thấu chi (nguồn vốn = 'loan'): lãi 8.5% trên phần thiếu hụt
   const plannedSpend = cogs + d.marketing + d.rd + wageCost + trainingCost;
@@ -508,7 +598,8 @@ function simulateRound(s, d) {
   const overload = Math.max(0, d.production / s.machineCapacity - 0.9);
   const laborStrain = Math.max(0, d.production / Math.max(1, d.workers * UNITS_PER_WORKER) - 0.85) * 20; // thiếu người → OEE giảm
   const trainingBoost = Math.min(5, (d.workers * d.training) / 50);   // đào tạo tăng năng suất
-  s.oee = Math.round(clampNum(88 - (evEff.oeeHit || 0) - overload * 25 - laborStrain + s.maintBonus + trainingBoost, 55, 96));
+  const oeeHit = (evEff.oeeHit || 0) * ((s.items['SOLAR_01'] || 0) > 0 ? 0.5 : 1); // Pin Mặt Trời giảm nửa tác động
+  s.oee = Math.round(clampNum(88 - oeeHit - overload * 25 - laborStrain + s.maintBonus + trainingBoost, 55, 96));
   s.maintBonus = Math.max(0, s.maintBonus - 2);                    // hiệu ứng bảo trì phai dần
   s.defect = Math.round((1.5 + Math.max(0, (82 - s.oee) * 0.45)) * 10) / 10;
   s.brandLoyalty = Math.round(Math.min(95, 45 + s.brand * 25));
