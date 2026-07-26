@@ -1,5 +1,5 @@
 /* BizOn Bật Nghiệp 2026 — UI controller (SPA, localStorage persistence)
- * © 2026 Đỗ Thùy Hương & PGS.TS Phan Anh Tú. Bảo lưu mọi quyền. */
+ * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
 
 const STORAGE_KEY = 'bizon2026';
 let S = null;
@@ -374,8 +374,8 @@ function maybeShowEventIntro() {
       </div>
       ${bad ? `
       <div class="clay-raised p-3 mt-3 flex items-center gap-3">
-        <img src="assets/character/anh-tu-think.png" alt="PGS.TS Phan Anh Tú" class="w-11 h-11 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 8%">
-        <p class="text-xs text-deep-teal/80 italic">"Bình tĩnh phân tích số liệu trước khi hành động — khủng hoảng luôn ẩn chứa cơ hội cho đội có kỷ luật." — <b class="text-emerald-700">PGS.TS Phan Anh Tú · Cố vấn học thuật</b></p>
+        <img src="assets/character/anh-tu-think.png" alt="Phan Anh Tú" class="w-11 h-11 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 8%">
+        <p class="text-xs text-deep-teal/80 italic">"Bình tĩnh phân tích số liệu trước khi hành động — khủng hoảng luôn ẩn chứa cơ hội cho đội có kỷ luật." — <b class="text-emerald-700">Phan Anh Tú · Cố vấn học thuật</b></p>
       </div>` : ''}
       <button id="ev-cta" class="clay-button-primary w-full text-white font-display font-bold text-lg py-4 mt-6">${ev.cta ? ev.cta.label : '🎯 Nhập quyết định'}</button>
       <button id="ev-close" class="clay-button-secondary w-full text-primary font-display font-bold py-4 mt-3">Về Trung tâm điều hành</button>
@@ -420,8 +420,8 @@ function showVictory(r) {
         <div class="clay-card p-4"><p class="text-2xl">😊</p><p class="font-display font-extrabold text-deep-teal">${satisfaction}/5</p><p class="text-[10px] text-deep-teal/50 font-semibold">Độ hài lòng thương hiệu</p></div>
       </div>
       <div class="clay-raised p-3 mb-4 flex items-center gap-3 text-left">
-        <img src="assets/character/anh-tu-cheer.png" alt="PGS.TS Phan Anh Tú" class="w-12 h-12 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 8%">
-        <p class="text-xs text-deep-teal/80 italic">"Xuất sắc! Đây là minh chứng cho một chiến lược được thực thi kỷ luật." — <b class="text-emerald-700">PGS.TS Phan Anh Tú</b></p>
+        <img src="assets/character/anh-tu-cheer.png" alt="Phan Anh Tú" class="w-12 h-12 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 8%">
+        <p class="text-xs text-deep-teal/80 italic">"Xuất sắc! Đây là minh chứng cho một chiến lược được thực thi kỷ luật." — <b class="text-emerald-700">Phan Anh Tú</b></p>
       </div>
       <button id="vic-report" class="clay-btn w-full bg-deep-teal text-white font-display font-bold py-4 mb-3">📊 XEM BÁO CÁO CHI TIẾT</button>
       <button id="vic-next" class="clay-btn w-full bg-white text-deep-teal font-display font-bold py-4">LẬP KẾ HOẠCH TIẾP THEO</button>
@@ -595,9 +595,9 @@ function journalLesson(r) {
 const JOURNAL_QUOTES = [
   { text: 'Mục tiêu không phải là đánh bại đối thủ, mà là làm cho họ trở nên không còn quan trọng.', by: 'Lumina AI', color: 'text-primary' },
   { text: 'Mọi báo cáo tài chính đều là một câu chuyện, hãy đảm bảo đội của bạn đang viết một chương thành công.', by: 'SEC', color: 'text-red-600' },
-  { text: 'Dữ liệu cho ta biết quá khứ, quyết định hôm nay viết nên tương lai.', by: 'PGS.TS Phan Anh Tú', color: 'text-emerald-700' },
+  { text: 'Dữ liệu cho ta biết quá khứ, quyết định hôm nay viết nên tương lai.', by: 'Phan Anh Tú', color: 'text-emerald-700' },
   { text: 'Khủng hoảng là bài kiểm tra tốt nhất cho năng lực quản trị dòng tiền.', by: 'Lumina AI', color: 'text-primary' },
-  { text: 'Thị phần mua được bằng tiền, nhưng lòng trung thành phải xây bằng giá trị.', by: 'PGS.TS Phan Anh Tú', color: 'text-emerald-700' },
+  { text: 'Thị phần mua được bằng tiền, nhưng lòng trung thành phải xây bằng giá trị.', by: 'Phan Anh Tú', color: 'text-emerald-700' },
   { text: 'Đừng sợ commit sai — hãy sợ việc không rút ra được bài học nào.', by: 'SEC', color: 'text-red-600' },
 ];
 
