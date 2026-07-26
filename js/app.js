@@ -335,12 +335,20 @@ function showPremium() {
   });
 }
 
-// ---------- Nhạc nền game (bài "BizOn Theme" — Đỗ Thùy Hương) ----------
-let bgm = null;
+// ---------- Nhạc nền game (playlist: BizOn Theme → Bật Nghiệp) ----------
+const BGM_TRACKS = ['assets/audio/bizon-theme.mp3', 'assets/audio/bat-nghiep.mp3'];
+let bgm = null, bgmIdx = 0;
 function musicEnabled() { return localStorage.getItem('bizon-music') !== 'off'; }
 function startMusic() {
   if (!musicEnabled()) return;
-  if (!bgm) { bgm = new Audio('assets/audio/bizon-theme.mp3'); bgm.loop = true; bgm.volume = 0.22; }
+  if (!bgm) {
+    bgm = new Audio(BGM_TRACKS[0]); bgm.volume = 0.22;
+    bgm.addEventListener('ended', () => {
+      bgmIdx = (bgmIdx + 1) % BGM_TRACKS.length;
+      bgm.src = BGM_TRACKS[bgmIdx];
+      if (musicEnabled()) bgm.play().catch(() => {});
+    });
+  }
   bgm.play().catch(() => {});
 }
 function toggleMusic() {
