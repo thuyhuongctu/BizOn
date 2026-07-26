@@ -630,9 +630,26 @@ function renderRoleDeepdive() {
   const qrBad = S.quickRatio < 1, roiBad = S.roi < 18;
   const oeeBad = S.oee < 85, defBad = S.defect > 4.3;
   const shareNow = S.history.length ? S.history[S.history.length - 1].share : 25;
+  const cmo = cmoBrain(S), cfo = cfoBrain(S);
+  const badgeCls = { RED: 'risk-high', CRISIS: 'risk-high', YELLOW: 'risk-medium', GREEN: 'risk-low', OPPORTUNITY: 'risk-low', LEVERAGE: 'risk-low', SAFE: 'risk-low' };
+  const cfoCrisis = cfo.status === 'CRISIS';
   const bar = (pct, bad) => `<div class="h-2 rounded-full bg-surface-bright overflow-hidden mt-1"><div class="h-full ${bad ? 'bg-red-500' : 'bg-primary'} rounded-full" style="width:${Math.min(100, Math.max(4, pct))}%"></div></div>`;
+  const brain = (b, img) => `
+      <div class="clay-sunken rounded-2xl p-3 mb-3 ${b.status === 'RED' || b.status === 'CRISIS' ? 'border border-red-200' : ''}">
+        <div class="flex justify-between items-center mb-1.5">
+          <p class="text-[10px] font-extrabold text-deep-teal/50 uppercase">${b.metric}</p>
+          <span class="text-[9px] font-extrabold px-2 py-0.5 rounded-full ${badgeCls[b.status] || 'risk-low'} ${b.status === 'CRISIS' ? 'animate-pulse' : ''}">${b.badge}</span>
+        </div>
+        <div class="flex gap-2 items-start">
+          <img src="assets/character/${img}.png" alt="Hương" class="w-8 h-8 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 12%">
+          <p class="text-[11px] text-deep-teal/80 italic">"${b.dialogue}"</p>
+        </div>
+        ${b.actions ? `<div class="mt-2 space-y-1">${b.actions.map(a => `<p class="text-[10px] font-bold text-deep-teal/70">👉 ${a}</p>`).join('')}</div>` : ''}
+      </div>`;
+  const loyaltyTrend = S.history.slice(-6).map(r =>
+    `<div class="clay-bar-v" style="height:${Math.max(8, r.brandLoyalty)}%; width:10px" title="V${r.round}: ${r.brandLoyalty}%"><div class="w-full h-full rounded-full ${r.brandLoyalty < 60 ? 'bg-red-400' : 'bg-primary'}"></div></div>`).join('');
   $('role-deepdive').innerHTML = `
-    <div class="clay-card p-4 ${qrBad ? 'border-l-4 border-red-400' : ''}">
+    <div class="clay-card p-4 ${cfoCrisis ? 'border-l-4 border-red-500' : qrBad ? 'border-l-4 border-red-400' : ''}">
       <p class="font-display font-bold text-deep-teal text-sm mb-2">💰 Cố vấn rủi ro & ROI <span class="text-[10px] text-deep-teal/50">· dành cho CFO</span></p>
       <div class="grid grid-cols-2 gap-3 mb-3">
         <div><p class="text-[10px] uppercase font-bold text-deep-teal/50">Khả năng thanh toán nhanh</p>
@@ -641,8 +658,13 @@ function renderRoleDeepdive() {
           <p class="font-display font-extrabold ${roiBad ? 'text-deep-teal' : 'text-emerald-600'} text-xl">${S.roi}%</p>
           <p class="text-[10px] text-deep-teal/50">Mục tiêu: <b>18%</b></p>${bar(S.roi * 100 / 18, roiBad)}</div>
       </div>
+      <div class="flex justify-between items-center mb-3 clay-sunken rounded-2xl px-3 py-2">
+        <p class="text-[10px] uppercase font-bold text-deep-teal/50">Vòng quay tồn kho</p>
+        <p class="font-display font-extrabold ${cfo.invDays > 45 ? 'text-red-600' : 'text-deep-teal'} text-sm">${cfo.invDays} ngày <span class="text-[9px] text-deep-teal/40 font-bold">· ngưỡng an toàn ≤ 45</span></p>
+      </div>
+      ${brain(cfo, 'lumina-vest' + (cfoCrisis ? '-worried' : ''))}
       <div class="grid grid-cols-2 gap-2">
-        <button onclick="doApproveLoan()" class="clay-btn ${S.loan > 0 ? 'bg-surface-bright text-deep-teal/40' : 'bg-primary text-white'} text-xs font-bold py-2.5" ${S.loan > 0 ? 'disabled' : ''}>🏦 ${S.loan > 0 ? 'Đang vay 300tr₫' : 'Phê duyệt khoản vay'}</button>
+        <button onclick="doApproveLoan()" class="clay-btn ${S.loan > 0 ? 'bg-surface-bright text-deep-teal/40' : cfoCrisis ? 'bg-red-500 text-white' : 'bg-primary text-white'} text-xs font-bold py-2.5" ${S.loan > 0 ? 'disabled' : ''}>🏦 ${S.loan > 0 ? 'Đang vay 300tr₫' : cfoCrisis ? 'Vay vốn KHẨN CẤP' : 'Phê duyệt khoản vay'}</button>
         <button onclick="doCutCosts()" class="clay-btn ${S.costCutter ? 'bg-surface-bright text-deep-teal/40' : 'bg-white text-deep-teal'} text-xs font-bold py-2.5" ${S.costCutter ? 'disabled' : ''}>✂️ Cắt giảm chi phí</button>
       </div>
     </div>
@@ -661,25 +683,22 @@ function renderRoleDeepdive() {
         <button onclick="doMaintainFromAdvisor()" class="clay-btn bg-white text-deep-teal text-xs font-bold py-2.5">🔧 Bảo trì ngay</button>
       </div>
     </div>
-    <div class="clay-card p-4">
+    <div class="clay-card p-4 ${cmo.status === 'RED' ? 'border-l-4 border-red-400' : ''}">
       <p class="font-display font-bold text-deep-teal text-sm mb-2">📣 Chiến lược Marketing <span class="text-[10px] text-deep-teal/50">· dành cho CMO</span></p>
       <div class="grid grid-cols-2 gap-3 mb-3">
         <div><p class="text-[10px] uppercase font-bold text-deep-teal/50">Thị phần (Market Share)</p>
           <p class="font-display font-extrabold text-deep-teal text-xl">${shareNow.toFixed(1)}%</p>${bar(shareNow * 2, false)}</div>
         <div><p class="text-[10px] uppercase font-bold text-deep-teal/50">Brand Loyalty</p>
-          <p class="font-display font-extrabold text-primary text-xl">${S.brandLoyalty}%</p>
-          <p class="text-[10px] text-deep-teal/50">Social Sentiment: <b class="text-emerald-600">Positive</b></p>${bar(S.brandLoyalty, false)}</div>
+          <p class="font-display font-extrabold ${S.brandLoyalty < 60 ? 'text-red-600' : 'text-primary'} text-xl">${S.brandLoyalty}%</p>
+          ${loyaltyTrend ? `<div class="flex items-end gap-1 h-7 mt-1">${loyaltyTrend}</div>` : `<p class="text-[10px] text-deep-teal/50">Social Sentiment: <b class="text-emerald-600">Positive</b></p>${bar(S.brandLoyalty, false)}`}</div>
       </div>
       ${currentEvent(S).id === 'EV_PRICEWAR' && !S.finished ? `
         <div class="bg-surface-bright rounded-2xl p-3 mb-2">
-          <p class="text-xs font-bold text-red-600 mb-1">⚔️ Price War Scenario</p>
+          <p class="text-xs font-bold text-red-600 mb-1">📰 TIN NÓNG · Price War</p>
           <p class="text-[11px] text-deep-teal/70">Đối thủ giảm giá 15% tại kênh Modern Trade. Đừng đua giảm giá — chọn 1 trong 2 chiến thuật:</p>
           <div class="flex gap-2 mt-2"><span class="text-[10px] font-bold bg-white rounded-full px-2.5 py-1 shadow-clay">CHIẾN THUẬT BUNDLING</span><span class="text-[10px] font-bold bg-white rounded-full px-2.5 py-1 shadow-clay">TĂNG VALUE-ADDED</span></div>
-        </div>` : `
-        <div class="bg-surface-bright rounded-2xl p-3 mb-2">
-          <p class="text-xs font-bold text-emerald-700 mb-1">🌱 Green Marketing</p>
-          <p class="text-[11px] text-deep-teal/70">Người tiêu dùng Gen Z sẵn sàng chi thêm 10-15% cho sản phẩm cam kết Net Zero. Dự báo ROI tăng 22% sau 6 tháng.</p>
-        </div>`}
+        </div>` : ''}
+      ${brain(cmo, cmo.status === 'RED' ? 'lumina-ao-dai-alert' : 'lumina-ao-dai')}
       <button onclick="doBrandingPremium()" class="clay-btn w-full bg-gradient-to-r from-primary to-primary-container text-white text-xs font-bold py-2.5">✨ Activate Branding Premium (120tr₫)</button>
     </div>`;
 }

@@ -225,6 +225,72 @@ function advisorProScenarios(inp) {
   };
 }
 
+/* ===== THE CMO BRAIN — cố vấn marketing theo kịch bản động =====
+ * Bảng logic ưu tiên: Loyalty<60% (ĐỎ) → mất >5% thị phần (ĐỎ) → ROI marketing <3.0 (VÀNG)
+ * → đáp ứng cầu <90% (XANH cơ hội) → Price War (kịch bản A) → mặc định thị trường ngách xanh (kịch bản B). */
+function cmoBrain(s) {
+  const last = s.history[s.history.length - 1] || null;
+  const prev = s.history[s.history.length - 2] || null;
+  const ev = currentEvent(s);
+  const mroi = last && last.marketing > 0 ? Math.round(10 * last.revenue / last.marketing) / 10 : null;
+  const demandMet = last && last.demandUnits > 0 ? Math.round(100 * last.sold / last.demandUnits) : 100;
+  const shareDrop = last && prev ? Math.round(10 * (prev.share - last.share)) / 10 : 0;
+
+  if (s.brandLoyalty < 60) return {
+    status: 'RED', badge: 'ĐỎ · NGUY CẤP', metric: `Brand Loyalty ${s.brandLoyalty}% < ngưỡng 60%`,
+    dialogue: 'Khách hàng đang dần rời bỏ chúng ta để sang đối thủ. Chúng ta cần một chiến dịch tái định vị thương hiệu ngay lập tức.',
+    actions: ['Kích hoạt Branding Premium', 'Tăng R&D để tái định vị thương hiệu'],
+  };
+  if (shareDrop > 5) return {
+    status: 'RED', badge: 'ĐỎ · NGUY CẤP', metric: `Thị phần giảm ${shareDrop}% so với vòng trước`,
+    dialogue: 'Đối thủ đang xâm chiếm phân khúc của chúng ta bằng giá rẻ. Chúng ta cần tăng ngân sách quảng cáo hoặc tung sản phẩm R&D mới.',
+    actions: ['Tăng ngân sách Marketing vòng tới', 'Mua Marketing Boost trong Cửa hàng'],
+  };
+  if (mroi !== null && mroi < 3) return {
+    status: 'YELLOW', badge: 'VÀNG · RỦI RO', metric: `Doanh thu / CP Marketing = ${mroi} < 3.0`,
+    dialogue: 'CMO thân mến, chi phí tiếp thị của chúng ta đang quá cao nhưng không chuyển đổi thành doanh thu tương ứng. Hãy rà soát lại thông điệp chiến dịch.',
+    actions: ['Giảm ngân sách Marketing 15%', 'Rà soát lại thông điệp chiến dịch'],
+  };
+  if (demandMet < 90) return {
+    status: 'GREEN', badge: 'XANH · CƠ HỘI', metric: `Đáp ứng nhu cầu chỉ ${demandMet}% (mất ${last.lostSales} đơn)`,
+    dialogue: 'Nhu cầu thị trường đang rất lớn nhưng chúng ta không có đủ hàng để bán. Hãy phối hợp với COO để tăng sản lượng.',
+    actions: ['Tăng sản lượng + thuê thêm nhân công', 'Nâng cấp dây chuyền sản xuất'],
+  };
+  if (ev.id === 'EV_PRICEWAR' && !s.finished) return {
+    status: 'RED', badge: 'ĐỎ · PRICE WAR', metric: 'Đối thủ B hạ giá 15% tại Modern Trade',
+    dialogue: 'Thưa CMO, đối thủ B vừa hạ giá 15% và chiếm mất 8% thị phần của chúng ta. Nếu không phản ứng trong vòng tới, chúng ta sẽ mất vị thế dẫn đầu.',
+    actions: ["Triển khai gói 'Marketing Boost' giữ chân khách trung thành", 'Cải tiến bao bì (R&D) tăng giá trị cảm nhận — đừng đua giảm giá'],
+  };
+  return {
+    status: 'OPPORTUNITY', badge: 'XANH · CƠ HỘI VÀNG', metric: "Xu hướng 'Tiêu dùng xanh' +25% tại Đông Nam Á",
+    dialogue: "CMO ơi, thị trường đang khao khát sản phẩm bền vững. Nếu chúng ta 'Bật' chiến dịch xanh ngay bây giờ, chúng ta sẽ dẫn đầu xu hướng!",
+    actions: ["Phân bổ 40% ngân sách vào chiến dịch 'Green Initiative'", 'Tăng giá bán 10% cho dòng sản phẩm cao cấp'],
+  };
+}
+
+/* ===== CFO BRAIN — giám sát thanh khoản & chế độ khủng hoảng ===== */
+function cfoBrain(s) {
+  const last = s.history[s.history.length - 1] || null;
+  const invDays = last && last.sold > 0
+    ? Math.round(s.inventory / last.sold * 30)
+    : (s.inventory > 0 ? 90 : 0);
+  if (s.quickRatio < 1) return {
+    status: 'CRISIS', badge: 'ĐỎ · KHỦNG HOẢNG THANH KHOẢN', invDays,
+    metric: `Quick Ratio ${s.quickRatio.toFixed(2)} < 1.00`,
+    dialogue: `CFO, thanh khoản đang ở vùng đỏ! Tiền mặt chỉ còn ${Math.round(s.balance)}tr₫, vòng quay tồn kho lên tới ${invDays} ngày. Hãy phê duyệt khoản vay khẩn cấp hoặc cắt giảm chi phí ngay — đừng để lỡ kỳ trả lương.`,
+  };
+  if (s.roi >= LOAN_INTEREST_RATE && s.loan === 0) return {
+    status: 'LEVERAGE', badge: 'XANH · ĐÒN BẨY HIỆU QUẢ', invDays,
+    metric: `ROI ${s.roi}% > chi phí vốn ${LOAN_INTEREST_RATE}%`,
+    dialogue: `ROI hiện tại (${s.roi}%) đang cao hơn chi phí vốn vay (${LOAN_INTEREST_RATE}%). Đây là thời điểm tốt để dùng đòn bẩy tài chính mở rộng sản xuất, CFO ạ.`,
+  };
+  return {
+    status: 'SAFE', badge: 'XANH · AN TOÀN', invDays,
+    metric: `Quick Ratio ${s.quickRatio.toFixed(2)} ≥ 1.00`,
+    dialogue: `Thanh khoản ổn định, vòng quay tồn kho ${invDays} ngày trong ngưỡng an toàn. Hãy duy trì kỷ luật chi tiêu và theo dõi dòng tiền từng vòng nhé.`,
+  };
+}
+
 function newGameState(profile) {
   return {
     profile,                                  // {email, teamName, role}
