@@ -844,6 +844,38 @@
 [
 "Từ Việt Nam vươn ra thế giới: chọn thị trường Á · Âu · Mỹ, chọn phương thức thâm nhập (Export, Licensing, Liên doanh, FDI) và kinh doanh trong kỷ nguyên số.",
 "From Vietnam to the world: pick a market in Asia · Europe · America, choose an entry mode (Export, Licensing, Joint Venture, FDI) and do business in the digital era."
+],
+[
+"Nhà lãnh đạo tầm nhìn",
+"Visionary Leader"
+],
+[
+"Chiến lược gia tài chính",
+"Financial Strategist"
+],
+[
+"Phù thủy marketing",
+"Marketing Guru"
+],
+[
+"Chuyên gia vận hành",
+"Operations Expert"
+],
+[
+"Thư ký pháp chế",
+"Compliance Officer"
+],
+[
+"👥 Chơi thử với Đội Demo (5 nhân vật)",
+"👥 Try the Demo Team (5 characters)"
+],
+[
+"⚔️ 3 đối thủ AI của bạn",
+"⚔️ Your 3 AI rivals"
+],
+[
+"🎓 I–P Lab — Quốc tế hóa & Hiệu quả doanh nghiệp",
+"🎓 I–P Lab — Internationalization & Firm Performance"
 ]
 ]);
   var SPECIAL = [
