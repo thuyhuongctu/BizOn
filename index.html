@@ -24,7 +24,7 @@ tailwind.config = {
         primary: '#006687',
         'primary-container': '#00c4ff',
         'surface-bright': '#f4faff',
-        'deep-teal': '#033337',
+        'deep-teal': 'rgb(var(--dt) / <alpha-value>)',
       },
       fontFamily: {
         display: ['"Plus Jakarta Sans"', 'sans-serif'],
@@ -39,6 +39,7 @@ tailwind.config = {
   },
 };
 </script>
+<script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
 <style>
   html { background:#f4faff; }
   body { font-family: 'Manrope', sans-serif; background:transparent; color: #033337; }
@@ -124,6 +125,22 @@ tailwind.config = {
   .online-dot::after { content:''; position:absolute; inset:0; border-radius:999px; background:#22c55e; animation:ringPulse 1.6s ease-out infinite; }
   .waterfall-bar { border-radius:8px 8px 4px 4px; box-shadow:inset 2px 2px 4px rgba(255,255,255,.3); }
   .spider-grid { stroke:#bfc8ce; stroke-dasharray:4; fill:none; }
+
+  /* ===== Bản đồ chinh phục ===== */
+  .cq-pulse { animation:cqPulse 1.6s ease-in-out infinite; }
+  @keyframes cqPulse { 0%,100%{opacity:.45} 50%{opacity:1} }
+  /* ===== Chế độ tối ===== */
+  :root { --dt: 3 51 55; }
+  html[data-theme="dark"] { --dt: 214 236 240; background:#081a20; color-scheme:dark; }
+  html[data-theme="dark"] body { color:#d6ecf0; }
+  html[data-theme="dark"] .clay-card { background:#0e2a33; box-shadow:0 10px 30px -5px rgba(0,0,0,.45), inset 0 -4px 0 rgba(0,0,0,.3); }
+  html[data-theme="dark"] .clay-sunken, html[data-theme="dark"] .clay-input { background:#0a222a; box-shadow:inset 4px 4px 8px rgba(0,0,0,.5), inset -4px -4px 8px rgba(255,255,255,.03); color:#d6ecf0; }
+  html[data-theme="dark"] .bg-white, html[data-theme="dark"] .bg-white\/95 { background-color:#0e2a33 !important; }
+  html[data-theme="dark"] .bg-surface-bright { background-color:#0a222a !important; }
+  html[data-theme="dark"] .clay-button-secondary { background:#0e2a33; box-shadow:0 4px 0 #05141a, 0 8px 16px rgba(0,0,0,.35); }
+  html[data-theme="dark"] .text-primary { color:#5cc4e6 !important; }
+  html[data-theme="dark"] .nav-item.active { color:#5cc4e6; }
+  html[data-theme="dark"] #vn-map { color:#6fc4d8; }
 </style>
 </head>
 <body class="min-h-screen">
@@ -231,6 +248,17 @@ tailwind.config = {
           <p class="text-[10px] text-deep-teal/50 font-semibold uppercase">Thương hiệu</p>
         </div>
       </div>
+      <div class="clay-card p-5 mb-4">
+        <div class="flex items-center justify-between mb-1">
+          <h3 class="font-display font-bold text-deep-teal">🗺️ Hành trình chinh phục Việt Nam</h3>
+          <span id="cq-count" class="text-[10px] font-extrabold text-primary shrink-0">🚩 0/6</span>
+        </div>
+        <p class="text-[11px] text-deep-teal/50 mb-3">Thắng mỗi vòng để cắm cờ công ty — từ Cần Thơ tới Thủ đô Hà Nội.</p>
+        <div class="flex gap-4 items-center">
+          <div id="conquest-map" class="w-[44%] shrink-0"></div>
+          <div id="conquest-list" class="flex-1 space-y-1.5 text-[11px] min-w-0"></div>
+        </div>
+      </div>
       <div class="clay-card p-5 mb-4 flex items-center gap-4">
         <div class="glow-ring rounded-full shrink-0">
           <img src="assets/character/lumina-vest.png" alt="Lumina AI" class="w-14 h-14 rounded-full object-cover shadow-clay" style="object-position:50% 12%">
@@ -257,6 +285,7 @@ tailwind.config = {
         <button onclick="showTab('market')" class="clay-card p-3 text-center"><p class="text-2xl">📡</p><p class="text-[10px] font-bold text-deep-teal mt-1">Thị trường sống</p></button>
         <button onclick="showTab('journal')" class="clay-card p-3 text-center"><p class="text-2xl">📔</p><p class="text-[10px] font-bold text-deep-teal mt-1">Nhật ký đội</p></button>
         <button onclick="showTab('settings')" class="clay-card p-3 text-center"><p class="text-2xl">⚙️</p><p class="text-[10px] font-bold text-deep-teal mt-1">Cài đặt</p></button>
+        <button onclick="showIntro()" class="clay-card p-3 text-center"><p class="text-2xl">🎬</p><p class="text-[10px] font-bold text-deep-teal mt-1">Giới thiệu</p></button>
       </div>
       <button onclick="showTab('decisions')" class="clay-btn w-full bg-primary text-white font-display font-bold py-4">Nhập quyết định vòng này ➜</button>
     </section>
@@ -597,6 +626,9 @@ tailwind.config = {
         <div class="p-5 flex items-center justify-between"><span class="font-bold text-sm text-deep-teal">🔔 Thông báo vòng chơi</span><input type="checkbox" checked class="w-5 h-5 accent-primary"></div>
         <div class="p-5 flex items-center justify-between"><span class="font-bold text-sm text-deep-teal">🔊 Âm thanh hiệu ứng</span><input type="checkbox" checked class="w-5 h-5 accent-primary"></div>
         <div class="p-5 flex items-center justify-between"><span class="font-bold text-sm text-deep-teal">🎵 Nhạc nền (BizOn Theme)</span><input id="music-toggle" type="checkbox" onchange="toggleMusic()" class="w-5 h-5 accent-primary"></div>
+        <div class="p-5 flex items-center justify-between"><span class="font-bold text-sm text-deep-teal">🌙 Chế độ tối (Dark mode)</span><input id="theme-toggle-check" type="checkbox" onchange="toggleTheme()" class="w-5 h-5 accent-primary"></div>
+        <div class="p-5 flex items-center justify-between"><span class="font-bold text-sm text-deep-teal">🌐 Giao diện tiếng Anh (English)</span><input id="lang-toggle-check" type="checkbox" onchange="toggleLang()" class="w-5 h-5 accent-primary"></div>
+        <div class="p-5"><button onclick="showIntro()" class="font-bold text-sm text-deep-teal w-full text-left">🎬 Giới thiệu game (Intro)</button></div>
         <div class="p-5"><button onclick="showManual()" class="font-bold text-sm text-deep-teal w-full text-left">📖 Sổ tay hướng dẫn (User Manual)</button></div>
         <div class="p-5"><button onclick="showPremium()" class="font-bold text-sm text-deep-teal w-full text-left">👑 BizOn Premium <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full align-middle" style="background:#fff4d6;color:#946200">GIẢNG VIÊN</span></button></div>
         <div class="p-5"><a href="gioi-thieu.html" class="font-bold text-sm text-primary block">🌐 Trang giới thiệu</a></div>
@@ -648,6 +680,7 @@ tailwind.config = {
   </nav>
 </div>
 
+<script src="js/site-ui.js"></script>
 <script src="js/engine.js"></script>
 <script src="js/app.js"></script>
 <script>

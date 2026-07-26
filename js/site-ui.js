@@ -5,8 +5,11 @@
 
   /* ---------- Chế độ Sáng / Tối ---------- */
   function themeBtnSync() {
+    var dark = document.documentElement.dataset.theme === 'dark';
     var b = document.getElementById('theme-btn');
-    if (b) b.textContent = document.documentElement.dataset.theme === 'dark' ? '☀️' : '🌙';
+    if (b) b.textContent = dark ? '☀️' : '🌙';
+    var c = document.getElementById('theme-toggle-check');
+    if (c) c.checked = dark;
   }
   window.toggleTheme = function () {
     var el = document.documentElement;
@@ -541,6 +544,206 @@
 [
 "© 2026 Đỗ Thùy Hương & Phan Anh Tú · BizOn Bật Nghiệp — Bảo lưu mọi quyền.",
 "© 2026 Đỗ Thùy Hương & Phan Anh Tú · BizOn Bật Nghiệp — All rights reserved."
+],
+[
+"Chào mừng trở lại!",
+"Welcome back!"
+],
+[
+"Tên đội",
+"Team name"
+],
+[
+"Vai trò của bạn",
+"Your role"
+],
+[
+"Bắt đầu mô phỏng 🚀",
+"Start the simulation 🚀"
+],
+[
+"Trang chủ",
+"Home"
+],
+[
+"Quyết định",
+"Decisions"
+],
+[
+"Báo cáo",
+"Reports"
+],
+[
+"Cửa hàng",
+"Shop"
+],
+[
+"Trung tâm điều hành",
+"Command center"
+],
+[
+"Đang chờ quyết định",
+"Awaiting decisions"
+],
+[
+"Đã khóa — chờ kết quả",
+"Locked — awaiting results"
+],
+[
+"Dòng tiền",
+"Cash flow"
+],
+[
+"Thương hiệu",
+"Brand"
+],
+[
+"Truy cập nhanh",
+"Quick access"
+],
+[
+"Hỏi",
+"Ask"
+],
+[
+"Nhập quyết định vòng này ➜",
+"Enter this round's decisions ➜"
+],
+[
+"Nhiệm vụ",
+"Quests"
+],
+[
+"Sổ tay",
+"Handbook"
+],
+[
+"Kỹ năng",
+"Skills"
+],
+[
+"Xếp hạng",
+"Rankings"
+],
+[
+"Thành tựu",
+"Achievements"
+],
+[
+"Giảng viên",
+"Instructor"
+],
+[
+"Thị trường sống",
+"Live market"
+],
+[
+"Nhật ký đội",
+"Team journal"
+],
+[
+"Cài đặt",
+"Settings"
+],
+[
+"🗺️ Hành trình chinh phục Việt Nam",
+"🗺️ Vietnam Conquest Journey"
+],
+[
+"Thắng mỗi vòng để cắm cờ công ty — từ Cần Thơ tới Thủ đô Hà Nội.",
+"Win each round to plant your company flag — from Cần Thơ to Hà Nội."
+],
+[
+"⚙️ Cài đặt",
+"⚙️ Settings"
+],
+[
+"🔔 Thông báo vòng chơi",
+"🔔 Round notifications"
+],
+[
+"🔊 Âm thanh hiệu ứng",
+"🔊 Sound effects"
+],
+[
+"🎵 Nhạc nền (BizOn Theme)",
+"🎵 Music (BizOn Theme)"
+],
+[
+"🌙 Chế độ tối (Dark mode)",
+"🌙 Dark mode"
+],
+[
+"🌐 Giao diện tiếng Anh (English)",
+"🌐 English interface"
+],
+[
+"🎬 Giới thiệu game (Intro)",
+"🎬 Game intro"
+],
+[
+"📖 Sổ tay hướng dẫn (User Manual)",
+"📖 User Manual"
+],
+[
+"🌐 Trang giới thiệu",
+"🌐 About page"
+],
+[
+"🕹️ BizOn Arcade (trung tâm trò chơi)",
+"🕹️ BizOn Arcade (game hub)"
+],
+[
+"🐞 Gửi báo cáo lỗi",
+"🐞 Report a bug"
+],
+[
+"♻️ Chơi lại từ đầu (Reset)",
+"♻️ Restart (Reset)"
+],
+[
+"Lợi nhuận ròng",
+"Net profit"
+],
+[
+"Đã bán",
+"Units sold"
+],
+[
+"Tiếp tục",
+"Continue"
+],
+[
+"Việt Nam 2026",
+"Vietnam 2026"
+],
+[
+"6 vòng · 6 tỉnh thành",
+"6 rounds · 6 provinces"
+],
+[
+"Đội hình C-Suite",
+"Your C-Suite"
+],
+[
+"Mục tiêu của bạn",
+"Your goal"
+],
+[
+"Tiếp theo →",
+"Next →"
+],
+[
+"Bỏ qua",
+"Skip"
+],
+[
+"← Trước",
+"← Back"
+],
+[
+"Bắt đầu 🚀",
+"Start 🚀"
 ]
 ]);
   var SPECIAL = [
@@ -551,6 +754,8 @@
   function langBtnSync(lang) {
     var b = document.getElementById('lang-btn');
     if (b) b.textContent = lang === 'en' ? 'VI' : 'EN';
+    var c = document.getElementById('lang-toggle-check');
+    if (c) c.checked = lang === 'en';
   }
 
   window.applyLang = function (lang) {
@@ -559,13 +764,15 @@
       var vi = el.dataset.vi || el.textContent.trim();
       if (!EN.has(vi)) return;
       el.dataset.vi = vi;
-      el.textContent = lang === 'en' ? EN.get(vi) : vi;
+      var want = lang === 'en' ? EN.get(vi) : vi;
+      if (el.textContent !== want) el.textContent = want;
     });
     SPECIAL.forEach(function (s) {
       var el = document.querySelector(s.sel);
       if (!el) return;
       if (!el.dataset.viHtml) el.dataset.viHtml = el.innerHTML;
-      el.innerHTML = lang === 'en' ? s.en : el.dataset.viHtml;
+      var html = lang === 'en' ? s.en : el.dataset.viHtml;
+      if (el.innerHTML !== html) el.innerHTML = html;
     });
     document.documentElement.lang = lang === 'en' ? 'en' : 'vi';
     langBtnSync(lang);
@@ -577,10 +784,22 @@
     window.applyLang(next);
   };
 
+  var obsTimer = null;
+  function watchRerenders() {
+    new MutationObserver(function () {
+      var lang = 'vi';
+      try { lang = localStorage.getItem('bizon-lang') || 'vi'; } catch (e) {}
+      if (lang !== 'en') return;
+      clearTimeout(obsTimer);
+      obsTimer = setTimeout(function () { window.applyLang('en'); }, 150);
+    }).observe(document.body, { childList: true, subtree: true });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     themeBtnSync();
     var lang = 'vi';
     try { lang = localStorage.getItem('bizon-lang') || 'vi'; } catch (e) {}
     if (lang === 'en') window.applyLang('en'); else langBtnSync('vi');
+    watchRerenders();
   });
 })();
