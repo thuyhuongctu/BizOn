@@ -542,9 +542,17 @@ function gFinish() {
 renderWorldMap();
 
 /* ================= Nhạc nền: «Je m'appelle Hương and the World» ================= */
-let gAudio = null, gOn = false;
+let gAudio = null, gOn = false, gTrackIdx = 0;
+const G_TRACKS = ['assets/audio/huong-and-the-world.mp3', 'assets/audio/huong-and-the-world-en.mp3'];
 function gMusic() {
-  if (!gAudio) { gAudio = new Audio('assets/audio/huong-and-the-world.mp3'); gAudio.loop = true; gAudio.volume = 0.3; }
+  if (!gAudio) {
+    gAudio = new Audio(G_TRACKS[gTrackIdx]); gAudio.volume = 0.3;
+    gAudio.addEventListener('ended', () => {   // hết bài: chuyển bản VI ↔ EN
+      gTrackIdx = (gTrackIdx + 1) % G_TRACKS.length;
+      gAudio.src = G_TRACKS[gTrackIdx];
+      if (gOn) gAudio.play().catch(() => {});
+    });
+  }
   gOn = !gOn;
   if (gOn) gAudio.play().catch(() => { gOn = false; });
   else gAudio.pause();
