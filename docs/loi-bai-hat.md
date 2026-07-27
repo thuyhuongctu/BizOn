@@ -1,20 +1,28 @@
-# 🎵 Lời bài hát chính thức — BizOn Bật Nghiệp
+# 🎵 Lời bài hát chính thức — BizOn Bật Nghiệp (BẢN FULL)
 
-> Hai ca khúc chủ đề: một cho **game Việt Nam** và một cho **thị trường quốc tế (BizOn Global)**.
-> Sản xuất âm thanh đề xuất theo đúng quy trình đã dùng cho các ca khúc M-AIDA (viết lời → tạo nhạc AI → chọn bản phối → xuất mp3 đưa vào `assets/audio/`).
+> Hai ca khúc chủ đề, **lời đầy đủ ~3 phút 30**, chia sẵn **phân đoạn 30 giây** để tạo nhạc từng khúc (Gemini/Suno giới hạn 30s/lần) rồi ghép lại.
+> Mỗi phân đoạn ghi kèm **cảnh MV gợi ý** khớp với 4 video đã có: `hóa rồng.mp4`, `hóa rồng 1.mp4`, `wings_wide.mp4`, `vươn ra biển lớn.mp4`.
 > © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.
 
 ---
 
-## Bài 1 — «BẬT NGHIỆP» (game Việt Nam)
+# BÀI 1 — «BẬT NGHIỆP» (bản full tiếng Việt · ~3:30)
 
-*Thể loại đề xuất: V-pop điện tử tươi sáng, tempo ~112 BPM, màu sắc đồng bằng sông Cửu Long hiện đại.*
+*Thể loại: V-pop điện tử tươi sáng, 112 BPM, Am/C. Màu sắc Miền Tây hiện đại, bộ gõ tre + đàn bầu điểm xuyết.*
+
+## Phần 1 · [0:00 – 0:30] — Intro + Verse 1
+*🎬 MV: cảnh mở — xưởng đất sét nhỏ bên sông, bàn tay nặn đất*
+
+**[Intro nhạc cụ — 8 nhịp arp đất sét]**
 
 **[Verse 1]**
 Từ Cần Thơ nắng gió, tay nặn viên đất mềm,
 Một giấc mơ nho nhỏ, hóa công ty đầu tiên.
 Năm đứa bạn năm ghế — CEO đến SEC,
 Vốn năm trăm triệu lẻ, mà chí lớn hơn trời xanh.
+
+## Phần 2 · [0:30 – 1:00] — Pre-chorus + Chorus 1
+*🎬 MV: nhịp game tăng tốc, biểu đồ nhảy múa, cắm cờ đầu tiên*
 
 **[Pre-chorus]**
 Giá bao nhiêu? Sản xuất bao nhiêu?
@@ -28,26 +36,134 @@ Sáu vòng thị trường khốc liệt, cờ ta cắm mỗi ngày.
 BẬT NGHIỆP! Từ Miền Tây ra tới Thủ đô,
 Hóa Rồng cùng đất nước — giấc mơ không còn mơ hồ!
 
+## Phần 3 · [1:00 – 1:30] — Verse 2
+*🎬 MV: ba đối thủ xuất hiện (sói – voi – công), pin mặt trời trên mái xưởng*
+
 **[Verse 2]**
 Alpha đòi phá giá, Star Clay chơi hàng sang,
 Mekong đi nước giữa — mình chọn lối khôn ngoan.
 Dòng tiền như hơi thở, ESG là tấm gương,
 Pin mặt trời trên mái, xưởng xanh giữa phố phường.
 
-**[Bridge]**
+## Phần 4 · [1:30 – 2:00] — Pre-chorus 2 + Chorus 2
+*🎬 MV: `hóa rồng 1.mp4` — rồng đất sét cuộn mình bay lên từ dòng sông*
+
+**[Pre-chorus 2]**
+Vòng ba sóng gió, vòng năm siết vay,
+Sổ tay ghi từng bài học, đứng dậy sau mỗi lần say.
+Đôi vai gánh ước mơ, ánh mắt chẳng đổi thay,
+Nghe tiếng sông quê vẫy gọi: "Rồng ơi, đến giờ tung bay!"
+
+**[Chorus]**
+BẬT NGHIỆP! Bật lên như đất sét gặp bàn tay,
+Sáu vòng thị trường khốc liệt, cờ ta cắm mỗi ngày.
+BẬT NGHIỆP! Từ Miền Tây ra tới Thủ đô,
+Hóa Rồng cùng đất nước — giấc mơ không còn mơ hồ!
+
+## Phần 5 · [2:00 – 2:30] — Bridge «Hóa Rồng»
+*🎬 MV: `hóa rồng.mp4` — cao trào rồng bay qua bản đồ Việt Nam, chậm rồi bùng nổ*
+
+**[Bridge — hạ nhịp, tâm sự]**
 Có vòng thua trắng tay... có đêm ngồi tính sai...
 Nhưng nhật ký đội còn ghi: "thất bại dạy ta bài."
-Cầm chứng nhận trên tay, nhìn bản đồ đầy cờ,
-Việt Nam mình 2026 — tuổi trẻ chẳng đợi chờ!
+Lũng Cú cờ đỏ thắm, Trường Sa sóng vẫn ca,
+Đất nước đang chuyển mình — và ta cũng đang hóa... RỒNG!
 
-**[Chorus ×2 → Outro]**
-BẬT NGHIỆP!... (Cần Thơ – Sài Gòn – Khánh Hòa – Đà Nẵng – Thanh Hóa – Hà Nội... cắm cờ!)
+## Phần 6 · [2:30 – 3:00] — Final Chorus (lên tông +1)
+*🎬 MV: `wings_wide.mp4` — đôi cánh mở rộng, cả đội đứng trên đỉnh bản đồ*
+
+**[Final Chorus — lên tông]**
+BẬT NGHIỆP! Bật lên cho thế giới cùng hay,
+Bàn tay em nặn đất — nặn cả tương lai này.
+BẬT NGHIỆP! Sáu ngọn cờ rực rỡ tung bay,
+Hóa Rồng cùng đất nước — Việt Nam mình là đây!
+
+## Phần 7 · [3:00 – 3:30] — Outro
+*🎬 MV: hoàng hôn trên sông, logo BizOn, nhân vật vẫy tay*
+
+**[Outro — nhỏ dần]**
+Cần Thơ... Sài Gòn... Khánh Hòa... Đà Nẵng...
+Thanh Hóa... Hà Nội ơi... cắm cờ!
+(Bật Nghiệp... bật lên... giấc mơ Việt Nam...)
 
 ---
 
-## Bài 2 — «JE M'APPELLE HƯƠNG AND THE WORLD» (BizOn Global)
+# BÀI 2 — «HƯƠNG VÀ THẾ GIỚI — VƯƠN RA BIỂN LỚN» (bản full tiếng Việt · ~3:30)
 
-*Suggested style: uplifting global pop with Vietnamese instrument accents (đàn tranh riff), ~118 BPM, bilingual EN–VI hook.*
+*Thể loại: pop quốc tế màu sắc Việt, 118 BPM, D ngũ cung. Riff đàn tranh + dàn dây. Hook «Je m'appelle Hương» giữ nguyên tiếng Pháp làm chữ ký.*
+
+## Phần 1 · [0:00 – 0:30] — Intro + Verse 1
+*🎬 MV: xưởng nhỏ bên sông Mekong, đóng thùng hàng đầu tiên, dán nhãn "Made in Việt Nam"*
+
+**[Intro — riff đàn tranh 8 nhịp]**
+
+**[Verse 1]**
+Một xưởng đất sét nhỏ bên dòng Mekong,
+Gói giấc mơ vào thùng hàng, gửi theo những chuyến sông.
+Tem in dòng chữ ấm: "Làm từ Việt Nam mình",
+Cánh cửa đại dương mở — em bước ra khỏi bình minh.
+
+## Phần 2 · [0:30 – 1:00] — Pre-chorus + Chorus 1
+*🎬 MV: bản đồ thế giới sáng dần, các tuyến đường thương mại vẽ từ Việt Nam*
+
+**[Pre-chorus]**
+Xuất khẩu hay liên doanh? Nhượng quyền hay xây mới?
+Mỗi cánh cửa một cái giá, chẳng ai thắng đơn côi.
+Thuế quan ngoài khơi đó, văn hóa cách xa vời,
+Nhưng la bàn số trong tim em vẫn sáng không rời.
+
+**[Chorus]**
+Je m'appelle Hương — và thế giới chào em!
+Từ Sài Gòn qua Singapore, viên đất sét sáng lên.
+Đi sâu nhưng đi khéo — đường cong ấy chớ quên:
+Bốn ba phần trăm thôi nhé — vừa đủ để bay lên!
+
+## Phần 3 · [1:00 – 1:30] — Verse 2
+*🎬 MV: Tokyo, Berlin, Dubai — cắm cờ nhỏ trên từng thành phố*
+
+**[Verse 2]**
+Đèn Tokyo rực rỡ, tuyết Berlin trắng trời,
+Cát vàng Dubai lấp lánh — cờ em cắm khắp nơi.
+Đảo nhỏ Thái Bình Dương dạy em điều giản dị:
+Lớn nhất không phải tốt nhất — quê nhà là điểm tựa đời.
+
+## Phần 4 · [1:30 – 2:00] — Chorus 2
+*🎬 MV: `vươn ra biển lớn.mp4` — con thuyền đất sét rẽ sóng ra đại dương*
+
+**[Chorus]**
+Je m'appelle Hương — và thế giới chào em!
+Từ Sài Gòn qua Singapore, viên đất sét sáng lên.
+Đi sâu nhưng đi khéo — đường cong ấy chớ quên:
+Bốn ba phần trăm thôi nhé — vừa đủ để bay lên!
+
+## Phần 5 · [2:00 – 2:30] — Bridge
+*🎬 MV: `wings_wide.mp4` — đôi cánh dang rộng giữa bão, lá chắn số ánh xanh bao quanh*
+
+**[Bridge — hạ nhịp]**
+FDI hay ở lại? Dữ liệu sẽ soi đường,
+Chữ U ngược khẽ nhắc: "cân bằng thắng kiên cường."
+Lá chắn số quanh em, bão giông rồi sẽ qua,
+Việt Nam trong tim đó — đi đâu cũng là nhà...
+
+## Phần 6 · [2:30 – 3:00] — Final Chorus (lên tông +1)
+*🎬 MV: `hóa rồng.mp4` ghép cuối — rồng bay vòng quanh địa cầu*
+
+**[Final Chorus — lên tông]**
+Je m'appelle Hương — cả thế giới hát vang!
+Một ngọn cờ nhỏ bé mang hồn Việt hiên ngang.
+Vươn ra biển lớn — sóng cả chẳng cản đàng,
+Đất sét quê em đó — hóa kiệt tác huy hoàng!
+
+## Phần 7 · [3:00 – 3:30] — Outro
+*🎬 MV: quay về xưởng nhỏ ban đầu, giờ treo bản đồ thế giới đầy cờ; nhân vật cúi chào*
+
+**[Outro — nhỏ dần]**
+Je m'appelle Hương... et le monde... chante avec moi...
+(Một ngọn cờ nhỏ bé... mang hồn Việt... đi muôn phương...)
+
+---
+
+# PHỤ LỤC — «JE M'APPELLE HƯƠNG AND THE WORLD» (bản song ngữ EN gốc, dùng cho phát hành quốc tế)
 
 **[Verse 1]**
 A little clay workshop by the Mekong stream,
@@ -86,12 +202,17 @@ Je m'appelle Hương — and the world sings along...
 
 ---
 
-### Trạng thái sản xuất
-- ✅ **Bản phối instrumental v1 đã phát hành** (tổng hợp synth theo đúng cấu trúc, nhịp và hợp âm ở trên): `assets/audio/bat-nghiep.mp3` (112 BPM, Am/C — arp đất sét + trống V-pop) và `assets/audio/huong-and-the-world.mp3` (118 BPM, D pentatonic — riff kiểu đàn tranh + pad quốc tế).
-- Đã nối vào game (playlist nhạc nền: BizOn Theme → Bật Nghiệp), máy phát nhạc trang giới thiệu và nút 🎵 trên BizOn Global.
-- Khi có bản thu AI-vocal (quy trình M-AIDA), chỉ cần thay 2 file mp3 cùng tên — mọi trình phát tự dùng bản mới.
+## HƯỚNG DẪN SẢN XUẤT THEO PHÂN ĐOẠN 30 GIÂY
 
-### Ghi chú sản xuất
-- Bản phối game Việt Nam nên có bộ gõ tre/đàn bầu điểm xuyết; bản Global thêm dàn dây + synth hiện đại.
-- Hook «Bốn ba phần trăm» và «inverted-U» là "trứng phục sinh" từ kết quả luận án (điểm ngoặt ≈ 43,6% FSTS) — giữ nguyên khi phối.
-- Sau khi có bản thu: đặt `assets/audio/bat-nghiep.mp3` và `assets/audio/huong-and-the-world.mp3`, nhạc sẽ được nối vào máy phát nhạc của web và game (như bizon-theme.mp3 hiện tại).
+1. **Tạo từng phần theo đúng thứ tự** (Phần 1 → 7), mỗi lần đưa cho Gemini/Suno đúng lời của MỘT phần + mô tả phong cách cố định (ghi dưới) để các đoạn đồng nhất.
+2. **Câu mô tả phong cách dán kèm mọi phân đoạn:**
+   - Bài 1: `V-pop electronic, upbeat 112 BPM, key A minor, female Vietnamese vocal, bamboo percussion, bright synth arp, anthemic chorus`
+   - Bài 2: `International pop, 118 BPM, key D major pentatonic, female Vietnamese vocal, đàn tranh riff, strings, cinematic build`
+3. Phần 6 cả hai bài **lên tông +1** (modulation) — ghi thêm `key change up one semitone` vào mô tả.
+4. Ghép các đoạn bằng crossfade 0,5–1 giây (CapCut/Audacity đều làm được); tổng thời lượng ~3:30.
+5. Xong bản ghép: xuất `bat-nghiep.mp3` và `huong-and-the-world.mp3` gửi lên chat — hệ thống thay bản instrumental hiện tại, mọi trình phát trong game/web tự dùng bản mới.
+
+### Trạng thái sản xuất
+- ✅ Bản phối **instrumental v1** đang chạy trong game (`assets/audio/`).
+- 🎬 4 video MV đã có: `hóa rồng.mp4`, `hóa rồng 1.mp4`, `wings_wide.mp4`, `vươn ra biển lớn.mp4` — đã gắn vào phân đoạn tương ứng ở trên.
+- Hook «Bốn ba phần trăm» / «chữ U ngược» là trứng phục sinh từ luận án (điểm ngoặt ≈ 43,6% FSTS) — giữ nguyên khi phối.
