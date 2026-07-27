@@ -906,6 +906,46 @@
 "BizOn Music Library"
 ],
 [
+"🧷 Sản phẩm & Quà tặng",
+"🧷 Merchandise & Gifts"
+],
+[
+"Bộ cài áo (lapel pin) chính thức của BizOn — quà tặng cho đội vô địch và vật phẩm nhận diện thương hiệu.",
+"BizOn's official lapel-pin collection — champion-team gifts and brand keepsakes."
+],
+[
+"Cài áo Bản đồ Việt Nam",
+"Vietnam Map lapel pin"
+],
+[
+"Men đỏ viền vàng, sao vàng Lũng Cú — biểu tượng hành trình chinh phục 6 vòng chơi",
+"Red enamel with gold trim and the Lũng Cú gold star — symbol of the 6-round conquest"
+],
+[
+"Bộ ba Sao đỏ · +84 · VIETNAM",
+"Red Star · +84 · VIETNAM trio"
+],
+[
+"Bộ pin BizOn GO GlObal — mang mã vùng +84 ra thế giới",
+"The BizOn GO GlObal pin set — carrying the +84 dialing code to the world"
+],
+[
+"Tú Phan với cài áo Việt Nam",
+"Tú Phan with the Vietnam pin"
+],
+[
+"Cố vấn học thuật đeo cài áo bản đồ Việt Nam trên ve áo vest",
+"The academic advisor wearing the Vietnam-map pin on his lapel"
+],
+[
+"🔗 Khám phá thêm",
+"🔗 Explore more"
+],
+[
+"Toàn bộ tài sản sáng tạo của",
+"All creative assets of"
+],
+[
 "Ca khúc BizOn GO GlObal · International pop 118 BPM · bản thu tiếng Việt",
 "BizOn GO GlObal theme song · International pop 118 BPM · Vietnamese vocal recording"
 ],
