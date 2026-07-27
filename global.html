@@ -103,6 +103,25 @@ tailwind.config = {
     </div>
   </section>
 
+  <!-- BƯỚC 0: HỒ SƠ DOANH NGHIỆP -->
+  <section class="mb-8">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-1">🏢 Bước 0 — Hồ sơ doanh nghiệp của bạn</h2>
+    <p class="text-sm text-deep-teal/60 mb-4">Trước khi ra khơi, hãy khai báo năng lực xuất phát — hồ sơ ảnh hưởng đến toàn bộ mô phỏng.</p>
+    <div class="clay-card p-5">
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div>
+          <p class="text-xs font-bold text-deep-teal mb-2">🖥️ Năng lực công nghệ</p>
+          <div id="prof-tech" class="grid grid-cols-2 gap-2"></div>
+        </div>
+        <div>
+          <p class="text-xs font-bold text-deep-teal mb-2">🌏 Kinh nghiệm quốc tế</p>
+          <div id="prof-exp" class="grid grid-cols-2 gap-2"></div>
+        </div>
+      </div>
+      <p id="prof-note" class="text-[11px] text-deep-teal/70 italic mt-3"></p>
+    </div>
+  </section>
+
   <!-- BƯỚC 1: BẢN ĐỒ & CHỌN THỊ TRƯỜNG -->
   <section class="mb-8">
     <h2 class="font-display font-extrabold text-deep-teal text-xl mb-1">🗺️ Bước 1 — Chọn thị trường quốc tế</h2>
@@ -315,7 +334,34 @@ const Q_EVENTS = [
   { icon: '🚢', name: 'Khủng hoảng logistics',  desc: 'Cước vận tải biển tăng vọt — chi phí mỗi sản phẩm đội thêm 1.5 USD trong quý.', cogsAdd: 1.5, demand: 0.97 },
   { icon: '💱', name: 'Biến động tỷ giá',       desc: 'Đồng USD biến động mạnh — doanh thu quy đổi giảm 7% quý này. Ai lỡ vay ngoại tệ càng thấm đòn.', fx: 0.93, demand: 1.0 },
 ];
-const G = { market: null, mode: null, q: 0, profit: 0, shareHist: [], done: false };
+const G = { market: null, mode: null, q: 0, profit: 0, shareHist: [], done: false, qlog: [] };
+
+/* ===== Bước 0: Hồ sơ doanh nghiệp (Module 1 AIBIS) ===== */
+const PROFILE_OPTS = {
+  tech: [
+    { id: 'basic', icon: '🧰', name: 'Cơ bản', desc: 'Không phụ phí — marketing số hiệu quả chuẩn' },
+    { id: 'high',  icon: '🚀', name: 'Cao',    desc: '+10k USD vốn ban đầu · marketing số hiệu quả +12%' },
+  ],
+  exp: [
+    { id: 'new', icon: '🌱', name: 'Mới ra khơi',     desc: 'Chưa từng xuất khẩu — mức chuẩn' },
+    { id: 'exp', icon: '⚓', name: 'Đã từng xuất khẩu', desc: 'Kinh nghiệm giúp bản địa hóa hiệu quả hơn (+12 điểm quy đổi)' },
+  ],
+};
+const PROFILE = (() => { try { return Object.assign({ tech: 'basic', exp: 'new' }, JSON.parse(localStorage.getItem('bizon-global-profile') || '{}')); } catch (e) { return { tech: 'basic', exp: 'new' }; } })();
+function profRender() {
+  ['tech', 'exp'].forEach(k => {
+    const el = document.getElementById('prof-' + k);
+    if (!el) return;
+    el.innerHTML = PROFILE_OPTS[k].map(o => `
+      <button onclick="profPick('${k}','${o.id}')" class="clay-sunken rounded-2xl p-2.5 text-center ${PROFILE[k] === o.id ? 'ring-2 ring-clay-orange' : ''}">
+        <p class="text-xl">${o.icon}</p><p class="text-[11px] font-extrabold text-deep-teal mt-0.5">${o.name}</p><p class="text-[9px] text-deep-teal/50">${o.desc}</p>
+      </button>`).join('');
+  });
+  const note = document.getElementById('prof-note');
+  if (note) note.textContent = 'Lumina: ' + (PROFILE.tech === 'high' ? 'đầu tư công nghệ trước khi quốc tế hóa là "lá chắn số" của bạn. ' : 'năng lực cơ bản vẫn ra khơi được — nhưng marketing số sẽ kém sắc hơn. ')
+    + (PROFILE.exp === 'exp' ? 'Kinh nghiệm xuất khẩu giúp bạn đọc thị trường bản địa nhanh hơn hẳn.' : 'Lần đầu ra khơi: chọn thị trường gần về văn hóa để học hỏi trước.');
+}
+function profPick(k, id) { PROFILE[k] = id; try { localStorage.setItem('bizon-global-profile', JSON.stringify(PROFILE)); } catch (e) {} profRender(); if (G.mode && !G.done) gUpdate(); }
 const gFlags = (() => { try { return JSON.parse(localStorage.getItem('bizon-global-flags') || '[]'); } catch (e) { return []; } })();
 
 function renderWorldMap() {
@@ -375,7 +421,7 @@ function pickMarket(id) {
 
 function pickMode(id) {
   G.mode = MODES.find(m => m.id === id);
-  G.q = 1; G.profit = -G.mode.cost0; G.shareHist = [];
+  G.q = 1; G.profit = -(G.mode.cost0 + (PROFILE.tech === 'high' ? 10 : 0)); G.shareHist = []; G.qlog = [];
   const sec = document.getElementById('sec-play');
   sec.classList.remove('hidden'); sec.classList.add('fade-up');
   document.getElementById('sec-result').classList.add('hidden');
@@ -442,8 +488,9 @@ function paintQuarter() {
 function gCalc(p, mkt, loc) {
   const m = G.market, md = G.mode, ev = qEvent();
   const tariff = (md.tariffX ? 0 : m.tariff + (ev.tariffAdd || 0));
-  const mktEff = mkt * (0.5 + m.digital * (ev.digBoost || 1)) * (ev.mktBoost || 1);
-  let attr = Math.pow(m.ref / p, m.elast) * (1 + Math.sqrt(mktEff) / 14) * Math.pow(0.55 + 0.45 * Math.min(1, loc / 60), m.cult) * (0.72 + 0.5 * md.control);
+  const mktEff = mkt * (0.5 + m.digital * (ev.digBoost || 1)) * (ev.mktBoost || 1) * (PROFILE.tech === 'high' ? 1.12 : 1);
+  const locEff = loc + (PROFILE.exp === 'exp' ? 12 : 0);
+  let attr = Math.pow(m.ref / p, m.elast) * (1 + Math.sqrt(mktEff) / 14) * Math.pow(0.55 + 0.45 * Math.min(1, locEff / 60), m.cult) * (0.72 + 0.5 * md.control);
   if (ev.esg) attr *= 0.85 + 0.3 * Math.min(1, loc / 60);   // quý ESG: bản địa hóa/tuân thủ được thưởng
   const aiAttr = 2.3 + 0.1 * G.q;
   const share = attr / (attr + aiAttr);
@@ -483,6 +530,10 @@ function gCommit() {
   const p = +document.getElementById('gp').value, mkt = +document.getElementById('gm').value, loc = +document.getElementById('gl').value;
   const r = gCalc(p, mkt, loc);
   G.profit += r.profit; G.shareHist.push(r.share);
+  G.qlog.push({ time: new Date().toISOString(), market: G.market.id, mode: G.mode.id, nego: G.negoStance || 'none',
+    tech: PROFILE.tech, exp: PROFILE.exp, quarter: G.q, event: qEvent().name,
+    price: p, marketing: mkt, localization: loc,
+    share: +r.share.toFixed(1), profit: +r.profit.toFixed(1), esg: r.esg, risk: r.risk, doi: r.doi });
   const log = document.getElementById('g-log');
   log.insertAdjacentHTML('afterbegin', `<div class="clay-sunken rounded-xl p-2.5"><b>Quý ${G.q}</b> · ${qEvent().icon} — thị phần <b class="text-primary">${r.share.toFixed(1)}%</b>, lợi nhuận <b class="${r.profit >= 0 ? 'text-emerald-600' : 'text-orange-600'}">${r.profit >= 0 ? '+' : ''}${r.profit.toFixed(0)}k$</b></div>`);
   if (G.q >= 4) { gFinish(); return; }
@@ -510,10 +561,31 @@ function gMentor(avgShare, win) {
   return parts.join(' ');
 }
 
+/* Nhật ký quyết định: lưu bền vững + xuất CSV cho nghiên cứu/chấm điểm */
+function gSaveLog(win, avgShare) {
+  try {
+    const all = JSON.parse(localStorage.getItem('bizon-global-log') || '[]');
+    G.qlog.forEach(row => all.push({ ...row, result: win ? 'win' : 'lose', avgShare: +avgShare.toFixed(1), totalProfit: +G.profit.toFixed(1) }));
+    localStorage.setItem('bizon-global-log', JSON.stringify(all.slice(-400)));
+  } catch (e) {}
+}
+function gExportCSV() {
+  let rows = [];
+  try { rows = JSON.parse(localStorage.getItem('bizon-global-log') || '[]'); } catch (e) {}
+  if (!rows.length) return;
+  const cols = ['time', 'market', 'mode', 'nego', 'tech', 'exp', 'quarter', 'event', 'price', 'marketing', 'localization', 'share', 'profit', 'esg', 'risk', 'doi', 'result', 'avgShare', 'totalProfit'];
+  const csv = [cols.join(','), ...rows.map(r => cols.map(c => `"${String(r[c] ?? '').replace(/"/g, '""')}"`).join(','))].join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' }));
+  a.download = 'bizon-go-global-nhat-ky.csv';
+  a.click(); URL.revokeObjectURL(a.href);
+}
+
 function gFinish() {
   G.done = true;
   const avgShare = G.shareHist.reduce((a, b) => a + b, 0) / G.shareHist.length;
   const win = avgShare >= 42 && G.profit > 0;
+  gSaveLog(win, avgShare);
   if (win && !gFlags.includes(G.market.id)) {
     gFlags.push(G.market.id);
     try { localStorage.setItem('bizon-global-flags', JSON.stringify(gFlags)); } catch (e) {}
@@ -531,6 +603,7 @@ function gFinish() {
       <p class="font-display font-extrabold text-deep-teal text-xs mb-1.5">🎓 Lumina Mentor — góc lý thuyết</p>
       <p class="text-[11px] text-deep-teal/75 leading-relaxed">${gMentor(avgShare, win)}</p>
     </div>
+    <button onclick="gExportCSV()" class="clay-btn w-full bg-surface-bright text-deep-teal/70 font-bold py-3 text-sm mt-3">📥 Xuất nhật ký quyết định (CSV) — dữ liệu nghiên cứu / chấm điểm</button>
     <div class="flex gap-2 mt-4">
       <button onclick="pickMarket('${G.market.id}')" class="clay-btn flex-1 bg-surface-bright text-deep-teal/70 font-bold py-3 text-sm">🔄 Chơi lại thị trường này</button>
       <button onclick="document.getElementById('world-map').scrollIntoView({behavior:'smooth'})" class="clay-btn-primary clay-btn flex-1 text-white font-display font-extrabold py-3 text-sm">🌏 Chọn thị trường khác</button>
@@ -539,7 +612,7 @@ function gFinish() {
   sec.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
-renderWorldMap();
+renderWorldMap(); profRender();
 
 /* ================= Nhạc nền: «Je m'appelle Hương and the World» ================= */
 let gAudio = null, gOn = false, gTrackIdx = 0;
