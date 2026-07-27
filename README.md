@@ -1,6 +1,6 @@
-# BizOn Bật Nghiệp — Business Simulation Game
+# BizOn Bật Nghiệp — Business Simulation Game Ecosystem
 
-> A **3D-claymorphism EdTech business-simulation game** — student teams run a virtual company through **6 rounds** across a map of Vietnam, guided by the AI advisor **Lumina (Je m'appelle Hương)**, then expand to international markets with **BizOn GO GlObal**.
+> A **3D-claymorphism EdTech ecosystem of business-simulation games** — student teams run a virtual company through **6 rounds** across a map of Vietnam, guided by the AI advisor **Lumina (Je m'appelle Hương)**, expand to international markets with **BizOn GO GlObal**, and train reflexes in the **BizOn Arcade**. One app, many games — and still growing.
 
 ![version](https://img.shields.io/badge/version-1.1-blue)
 ![license](https://img.shields.io/badge/license-Proprietary%20·%20All%20rights%20reserved-lightgrey)
