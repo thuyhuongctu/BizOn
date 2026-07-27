@@ -180,7 +180,7 @@ Je m'appelle Hương — c'est la victoire!
 
 ---
 
-# PHỤ LỤC — «JE M'APPELLE HƯƠNG AND THE WORLD» (bản song ngữ EN gốc, dùng cho phát hành quốc tế)
+# PHỤ LỤC — «JE M'APPELLE HƯƠNG SANS FRONTIÈRES» (bản song ngữ EN gốc, dùng cho phát hành quốc tế)
 
 **[Verse 1]**
 A little clay workshop by the Mekong stream,

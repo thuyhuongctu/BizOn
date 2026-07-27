@@ -1022,8 +1022,8 @@
 "The 🎵 button in the game header — the playlist rotates through all three songs."
 ],
 [
-"«Hương and the World» — ca khúc chủ đề hành trình ra biển lớn.",
-"«Hương and the World» — the theme song of the voyage to the open sea."
+"«Hương sans frontières» — ca khúc chủ đề hành trình ra biển lớn.",
+"«Hương sans frontières» — the theme song of the voyage to the open sea."
 ],
 [
 "Nhạc nền tùy chọn khi chơi các mini-game phản xạ.",
