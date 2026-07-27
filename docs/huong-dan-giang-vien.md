@@ -63,7 +63,7 @@ Bản đồ chinh phục hiển thị trên Trang chủ của mỗi đội — d
 - **Sổ tay 📖**: luật chơi, vai trò, đối thủ AI, mẹo, xử lý sự cố — sinh viên tự tra cứu.
 - **7 báo cáo chuẩn giáo trình**: P&L, dòng tiền 3 hoạt động, CVP hòa vốn, nhân sự, BMC, khấu hao, kiểm toán năng lượng.
 - **BizOn Monitor** (tab Thị trường sống): sparkline chỉ số đội + 3 đối thủ theo vòng — dạy đọc dashboard.
-- **I–P Lab** (trang BizOn Global): mô phỏng quan hệ quốc tế hóa – hiệu quả doanh nghiệp theo kết quả luận án (chữ U ngược ≈43,6% FSTS, FIP ở đảo nhỏ Thái Bình Dương, lá chắn số Singapore) — dùng cho học phần Kinh doanh quốc tế.
+- **IE Lab — Khởi nghiệp quốc tế** (trang BizOn GO Global): công cụ mô phỏng số liệu quan hệ quốc tế hóa – hiệu quả doanh nghiệp (chữ U ngược với điểm ngoặt minh họa ≈43% FSTS, kịch bản đảo nhỏ, "lá chắn số") — dùng cho học phần Khởi nghiệp/Kinh doanh quốc tế; toàn bộ là tham số mô phỏng giáo dục.
 
 ## 7. Xử lý sự cố thường gặp
 
