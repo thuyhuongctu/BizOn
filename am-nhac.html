@@ -70,9 +70,12 @@ tailwind.config = {
 
 <!-- HERO -->
 <header class="pt-24 pb-8 text-white" style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%)">
-  <div class="max-w-5xl mx-auto px-5">
-    <h1 class="font-display font-extrabold text-3xl sm:text-4xl">🎶 Kho Âm nhạc BizOn</h1>
-    <p class="text-white/75 text-sm mt-3 max-w-2xl">Toàn bộ ca khúc gốc và giọng nói của vũ trụ BizOn Bật Nghiệp — sáng tác riêng cho game, thuộc bản quyền của nhóm tác giả.</p>
+  <div class="max-w-5xl mx-auto px-5 flex items-center gap-6">
+    <div class="min-w-0">
+      <h1 class="font-display font-extrabold text-3xl sm:text-4xl">🎶 Kho Âm nhạc BizOn</h1>
+      <p class="text-white/75 text-sm mt-3 max-w-2xl">Toàn bộ ca khúc gốc và giọng nói của vũ trụ BizOn Bật Nghiệp — sáng tác riêng cho game, thuộc bản quyền của nhóm tác giả.</p>
+    </div>
+    <img src="assets/character/lumina-music.jpg" alt="Lumina nghe nhạc" class="hidden sm:block w-36 h-36 rounded-3xl object-cover shadow-2xl shrink-0 border-2 border-white/20" style="object-position:50% 15%">
   </div>
 </header>
 
@@ -97,7 +100,7 @@ tailwind.config = {
     <h2 class="font-display font-extrabold text-deep-teal text-xl mb-5">🎮 Nghe nhạc ở đâu trong game?</h2>
     <div class="grid sm:grid-cols-3 gap-4">
       <a href="game.html" class="clay-card p-5 hover:-translate-y-0.5 transition-transform"><p class="text-2xl">🎮</p><h3 class="font-display font-extrabold text-deep-teal text-sm mt-1">Game chính</h3><p class="text-[11px] text-deep-teal/55 mt-1">Nút 🎵 trên đầu game — playlist tự xoay vòng cả ba ca khúc.</p></a>
-      <a href="global.html" class="clay-card p-5 hover:-translate-y-0.5 transition-transform"><p class="text-2xl">🌏</p><h3 class="font-display font-extrabold text-deep-teal text-sm mt-1">BizOn GO Global</h3><p class="text-[11px] text-deep-teal/55 mt-1">«Hương and the World» — ca khúc chủ đề hành trình ra biển lớn.</p></a>
+      <a href="global.html" class="clay-card p-5 hover:-translate-y-0.5 transition-transform"><p class="text-2xl">🌏</p><h3 class="font-display font-extrabold text-deep-teal text-sm mt-1">BizOn GO GlObal</h3><p class="text-[11px] text-deep-teal/55 mt-1">«Hương and the World» — ca khúc chủ đề hành trình ra biển lớn.</p></a>
       <a href="games.html" class="clay-card p-5 hover:-translate-y-0.5 transition-transform"><p class="text-2xl">🕹️</p><h3 class="font-display font-extrabold text-deep-teal text-sm mt-1">BizOn Arcade</h3><p class="text-[11px] text-deep-teal/55 mt-1">Nhạc nền tùy chọn khi chơi các mini-game phản xạ.</p></a>
     </div>
   </section>
@@ -110,7 +113,7 @@ tailwind.config = {
 /* ===== Trình phát ca khúc (một bài phát tại một thời điểm) ===== */
 const TRACKS = [
   { t: '«Bật Nghiệp»', s: 'Ca khúc chủ đề game Việt Nam · V-pop electronic 112 BPM · bản phối instrumental (bản thu có lời sắp ra mắt)', f: 'assets/audio/bat-nghiep.mp3', icon: '🐉' },
-  { t: "«Je m'appelle Hương and the World»", s: 'Ca khúc BizOn GO Global · International pop 118 BPM · bản thu có lời', f: 'assets/audio/huong-and-the-world.mp3', icon: '🌏' },
+  { t: "«Je m'appelle Hương and the World»", s: 'Ca khúc BizOn GO GlObal · International pop 118 BPM · bản thu có lời', f: 'assets/audio/huong-and-the-world.mp3', icon: '🌏' },
   { t: 'BizOn Theme', s: 'Nhạc nền menu và trong game · instrumental', f: 'assets/audio/bizon-theme.mp3', icon: '🏺' },
 ];
 let cur = null, curIdx = -1;
