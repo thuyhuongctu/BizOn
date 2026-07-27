@@ -1058,6 +1058,38 @@
 "BizOn startup team"
 ],
 [
+"🏙️ Bối cảnh & minh họa",
+"🏙️ Scenes & illustrations"
+],
+[
+"Trung tâm Điều hành Doanh nghiệp",
+"Business Command Center"
+],
+[
+"Biểu đồ 3D, la bàn vàng & cúp chiến thắng — quản trị dựa trên dữ liệu",
+"3D charts, golden compass & victory trophy — data-driven management"
+],
+[
+"Bàn họp chiến lược hologram",
+"Holographic strategy table"
+],
+[
+"5 vai trò nòng cốt thảo luận quanh biểu đồ Gantt — như trong Cuộc họp đội mỗi vòng",
+"The 5 core roles discussing around a Gantt chart — just like each round's Team Meeting"
+],
+[
+"Vươn ra biển lớn",
+"Sailing to the open sea"
+],
+[
+"Các tuyến bay & tàu hàng tỏa ra từ ghim Việt Nam — tinh thần BizOn GO GlObal",
+"Flight & cargo routes radiating from the Vietnam pin — the BizOn GO GlObal spirit"
+],
+[
+"Nơi mọi quyết định hội tụ: biểu đồ thị phần, la bàn chiến lược và chiếc cúp dành cho đội thắng cuộc — quản trị dựa trên dữ liệu qua từng vòng chơi.",
+"Where every decision converges: market-share charts, a strategy compass and the trophy for the winning team — data-driven management across every round."
+],
+[
 "Tú Phan",
 "Tu Phan"
 ],

@@ -1027,6 +1027,7 @@ function renderTeamMeeting() {
   if (!S.teamMembers || S.finished || S.committed) { box.innerHTML = ''; return; }
   const sug = teamSuggestions();
   box.innerHTML = `<div class="clay-card p-4">
+    <img src="assets/illustrations/team-holo-meeting.jpg" alt="Đội ngũ nòng cốt họp chiến lược quanh bàn điều hành hologram" class="w-full h-28 object-cover rounded-2xl mb-3" style="object-position:50% 32%" loading="lazy">
     <p class="font-display font-bold text-deep-teal text-sm mb-1">🗣️ Cuộc họp đội — vòng ${S.round}</p>
     <p class="text-[10px] text-deep-teal/50 mb-3">4 thành viên đề xuất theo vai trò. Bạn là ${S.profile.role} — quyền quyết định cuối cùng vẫn thuộc về bạn.</p>
     ${sug.map((m, i) => `
