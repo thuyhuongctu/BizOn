@@ -503,7 +503,7 @@ function maybeShowEventIntro() {
       </div>
       ${bad ? `
       <div class="clay-raised p-3 mt-3 flex items-center gap-3">
-        <img src="assets/character/anh-tu-think.png" alt="Tú Phan" class="w-11 h-11 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 8%">
+        <img src="assets/character/anh-tu-ao-dai-work.jpg" alt="Tú Phan" class="w-11 h-11 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 22%">
         <p class="text-xs text-deep-teal/80 italic">"Bình tĩnh phân tích số liệu trước khi hành động — khủng hoảng luôn ẩn chứa cơ hội cho đội có kỷ luật." — <b class="text-emerald-700">Tú Phan · Cố vấn học thuật</b></p>
       </div>` : ''}
       <button id="ev-cta" class="clay-button-primary w-full text-white font-display font-bold text-lg py-4 mt-6">${ev.cta ? ev.cta.label : '🎯 Nhập quyết định'}</button>
@@ -550,7 +550,7 @@ function showVictory(r) {
         <div class="clay-card p-4"><p class="text-2xl">😊</p><p class="font-display font-extrabold text-deep-teal">${satisfaction}/5</p><p class="text-[10px] text-deep-teal/50 font-semibold">Độ hài lòng thương hiệu</p></div>
       </div>
       <div class="clay-raised p-3 mb-4 flex items-center gap-3 text-left">
-        <img src="assets/character/anh-tu-cheer.png" alt="Tú Phan" class="w-12 h-12 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 8%">
+        <img src="assets/character/anh-tu-ao-dai-smile.jpg" alt="Tú Phan" class="w-12 h-12 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 16%">
         <p class="text-xs text-deep-teal/80 italic">"Xuất sắc! Đây là minh chứng cho một chiến lược được thực thi kỷ luật." — <b class="text-emerald-700">Tú Phan</b></p>
       </div>
       <button id="vic-report" class="clay-btn w-full bg-deep-teal text-white font-display font-bold py-4 mb-3">📊 XEM BÁO CÁO CHI TIẾT</button>
