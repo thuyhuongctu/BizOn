@@ -10,7 +10,7 @@
 
 | | |
 |---|---|
-| **Authors** | **Do Thuy Huong** (Founder & Creative Lead) · **Phan Anh Tu** (Academic Advisor) |
+| **Authors** | **Do Thuy Huong** (Founder & Creative Lead) · **Phan Anh Tu** (Co-founder & Academic Advisor) |
 | **Affiliation** | Can Tho University (CTU), Vietnam |
 | **Play now** | 🎮 [Game](https://thuyhuongctu.github.io/BizOn/) · 🌐 [Landing page](https://thuyhuongctu.github.io/BizOn/gioi-thieu.html) · 🕹️ [Arcade](https://thuyhuongctu.github.io/BizOn/games.html) · 🌏 [BizOn GO GlObal](https://thuyhuongctu.github.io/BizOn/global.html) |
 | **Contact** | thuyhuongctu@gmail.com |
@@ -112,6 +112,6 @@ Third-party components: Tailwind CSS (MIT), Google Fonts Plus Jakarta Sans & Man
 | Author | Role |
 |---|---|
 | **Do Thuy Huong** | Founder & Creative Lead — game design, embodiment of the Lumina AI character · thuyhuongctu@gmail.com |
-| **Phan Anh Tu** | Academic Advisor — academic oversight, business-administration expertise · patu@ctu.edu.vn |
+| **Phan Anh Tu** | Co-founder & Academic Advisor — academic oversight, business-administration expertise · patu@ctu.edu.vn |
 
 © 2026 Do Thuy Huong & Phan Anh Tu · **BizOn Bật Nghiệp** — All rights reserved.
