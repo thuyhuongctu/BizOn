@@ -1,7 +1,7 @@
 /* BizOn Bật Nghiệp 2026 — Service Worker (offline app shell)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
 
-const CACHE = 'bizon-v71';
+const CACHE = 'bizon-v72';
 const SHELL = [
   './',
   './index.html',
@@ -25,14 +25,14 @@ const SHELL = [
   './assets/illustrations/hero-vietnam-2026.png',
   './assets/illustrations/logo-splash.png',
   './assets/illustrations/login-clay.png',
-  './assets/character/anh-tu-welcome.png',
-  './assets/character/anh-tu-tablet.png',
-  './assets/character/anh-tu-present.png',
-  './assets/character/anh-tu-think.png',
-  './assets/character/anh-tu-cheer.png',
-  './assets/character/anh-tu-point.png',
+  './assets/character/anh-tu-ao-dai-welcome-cut.png',
+  './assets/character/anh-tu-ao-dai-welcome.jpg',
+  './assets/character/anh-tu-ao-dai.jpg',
+  './assets/character/anh-tu-ao-dai-smile.jpg',
+  './assets/character/anh-tu-ao-dai-explain.jpg',
+  './assets/character/anh-tu-ao-dai-work.jpg',
+  './assets/character/anh-tu-ao-dai-point.jpg',
   './assets/character/lumina-ao-dai-wave.png',
-  './assets/character/anh-tu-open-arms.png',
   './assets/character/lumina-office-present.png',
   './assets/audio/huong-intro.mp3',
   './assets/icons/icon-192.png',
