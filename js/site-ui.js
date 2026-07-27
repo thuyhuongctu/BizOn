@@ -1062,6 +1062,14 @@
 "🏙️ Scenes & illustrations"
 ],
 [
+"Tú Phan — Vest xanh rêu",
+"Tú Phan — Moss-green suit"
+],
+[
+"Dang tay chào đón · cài áo Bản đồ Việt Nam trên ve áo",
+"Open-armed welcome · Vietnam Map pin on the lapel"
+],
+[
 "Trung tâm Điều hành Doanh nghiệp",
 "Business Command Center"
 ],
