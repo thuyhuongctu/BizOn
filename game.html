@@ -310,6 +310,10 @@ tailwind.config = {
     <section id="tab-decisions" class="screen">
       <h2 class="font-display text-xl font-extrabold text-deep-teal mb-1">Quyết định kinh doanh</h2>
       <p class="text-sm text-deep-teal/60 mb-4">Vòng <span class="dec-round">1</span>/6 · Thống nhất với cả đội trước khi khóa!</p>
+      <div class="clay-card p-4 mb-3 border-2 border-clay-gold/50">
+        <p class="font-bold text-sm text-deep-teal">🎯 Cách thắng vòng này</p>
+        <p class="text-[11px] text-deep-teal/65 mt-1">Đạt <b>thị phần cao nhất</b> so với 3 đối thủ để cắm cờ 🚩 lên bản đồ — và giữ <b>lợi nhuận dương</b>. Kéo các thanh trượt bên dưới, ô «Dự báo thị phần» sẽ báo ngay bạn đang thắng hay thua.</p>
+      </div>
       <div id="team-meeting" class="mb-3"></div>
       <div class="clay-card p-5 mb-3">
         <div class="flex justify-between mb-1"><label class="font-bold text-sm text-deep-teal">💲 Giá bán / sản phẩm</label><span id="v-price" class="font-display font-bold text-primary">150.000₫</span></div>
@@ -319,6 +323,7 @@ tailwind.config = {
       <div class="clay-card p-5 mb-3">
         <div class="flex justify-between mb-1"><label class="font-bold text-sm text-deep-teal">📣 Ngân sách Marketing</label><span id="v-mkt" class="font-display font-bold text-primary">50tr₫</span></div>
         <input id="in-mkt" type="range" min="0" max="200" step="5" value="50" class="w-full" oninput="syncDecisionLabels()">
+        <p class="text-[11px] text-deep-teal/50 mt-1">Marketing kéo thêm khách về phía bạn — nhưng chi quá tay sẽ ăn hết lãi. Đối thủ chi 55–90tr/vòng.</p>
       </div>
       <div class="clay-card p-5 mb-3">
         <div class="flex justify-between mb-1"><label class="font-bold text-sm text-deep-teal">🏭 Sản lượng sản xuất</label><span id="v-prod" class="font-display font-bold text-primary">1.200 sp</span></div>
@@ -365,6 +370,17 @@ tailwind.config = {
           <div class="clay-sunken rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Dòng tiền ra</p><p id="fc-out" class="font-bold text-red-600 text-sm">—</p></div>
         </div>
         <p id="fc-be" class="text-[11px] text-deep-teal/60 mt-2 relative">—</p>
+      </div>
+      <div class="clay-card p-5 mb-4">
+        <div class="flex justify-between items-start mb-3">
+          <div><p class="font-bold text-sm text-deep-teal">🚩 Dự báo Thị phần — bạn có cắm được cờ?</p><p class="text-[11px] text-deep-teal/50">Ước tính theo thông số đang nhập, so với 3 đối thủ AI</p></div>
+          <p id="mf-share" class="font-display font-extrabold text-primary text-2xl">—</p>
+        </div>
+        <div class="h-3 rounded-full bg-surface-bright overflow-hidden shadow-inner relative">
+          <div id="mf-bar" class="h-full rounded-full bg-gradient-to-r from-primary to-primary-container" style="width:25%"></div>
+          <div class="absolute top-0 bottom-0" style="left:25%; width:2px; background:#e8762d"></div>
+        </div>
+        <p id="mf-verdict" class="text-[11px] text-deep-teal/70 mt-2">—</p>
       </div>
       <div class="clay-card p-4 mb-4">
         <p class="font-bold text-sm text-deep-teal mb-1">🔮 Mô phỏng "Nếu — Thì" trước khi Commit</p>
