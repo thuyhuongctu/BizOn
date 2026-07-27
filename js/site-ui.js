@@ -950,6 +950,114 @@
 "Analyzing simulation data on a laptop"
 ],
 [
+"Biến lớp học kinh doanh thành sân chơi mô phỏng",
+"Turning the business classroom into a simulation playground"
+],
+[
+"🧩 Bốn giải pháp cốt lõi",
+"🧩 Four core solutions"
+],
+[
+"Game mô phỏng Bật Nghiệp",
+"Bật Nghiệp business simulation game"
+],
+[
+"Cố vấn AI trong game",
+"In-game AI advisors"
+],
+[
+"Claymorphism & Âm nhạc gốc",
+"Claymorphism & original music"
+],
+[
+"🏫 Quy trình triển khai trong lớp học",
+"🏫 Classroom rollout process"
+],
+[
+"💡 Vì sao chọn BizOn?",
+"💡 Why choose BizOn?"
+],
+[
+"Sẵn sàng «bật nghiệp» cùng lớp của bạn?",
+"Ready to launch a venture with your class?"
+],
+[
+"Biến ý tưởng thành sản phẩm thật",
+"Turning ideas into real products"
+],
+[
+"Muốn cùng kiến tạo dự án tiếp theo?",
+"Want to build the next project together?"
+],
+[
+"Cùng nhào nặn tương lai với BizOn",
+"Mold the future together with BizOn"
+],
+[
+"🧬 Ba giá trị của nhóm",
+"🧬 Three team values"
+],
+[
+"📌 Vị trí cộng tác đang mở",
+"📌 Open collaboration roles"
+],
+[
+"Sẵn sàng tạo dấu ấn của bạn?",
+"Ready to make your mark?"
+],
+[
+"Kết nối với nhóm BizOn",
+"Connect with the BizOn team"
+],
+[
+"✍️ Gửi lời nhắn",
+"✍️ Send a message"
+],
+[
+"📡 Kênh chính thức",
+"📡 Official channels"
+],
+[
+"🤝 Nhóm đang tìm kiếm",
+"🤝 Who we're looking for"
+],
+[
+"Giải pháp",
+"Solutions"
+],
+[
+"Danh mục dự án",
+"Projects portfolio"
+],
+[
+"Tham gia nhóm",
+"Join the team"
+],
+[
+"Liên hệ & Hợp tác",
+"Contact & Partnership"
+],
+[
+"Bộ công cụ EdTech cho lớp học",
+"An EdTech toolkit for the classroom"
+],
+[
+"Sản phẩm nhóm đã thực hiện",
+"Products the team has shipped"
+],
+[
+"Văn hóa & vị trí cộng tác",
+"Culture & collaboration roles"
+],
+[
+"Kết nối với nhóm BizOn",
+"Connect with the BizOn team"
+],
+[
+"Nhóm khởi nghiệp BizOn",
+"BizOn startup team"
+],
+[
 "Tú Phan",
 "Tu Phan"
 ],
