@@ -161,6 +161,23 @@ Vươn ra biển lớn — sóng cả chẳng cản đàng,
 Je m'appelle Hương... et le monde... chante avec moi...
 (Một ngọn cờ nhỏ bé... mang hồn Việt... đi muôn phương...)
 
+## Phần 8 (tùy chọn) · [3:30 – 4:00] — Coda «Mekong Sunfire» 🔥🐉
+*🎬 MV: `mekong_sunfire.mp4` — rồng lửa vươn mình từ sóng Cửu Long, mặt trời rực cháy, hoa văn vi mạch chạy quanh — chữ «C'est la victoire!» bùng lên ở nhịp cuối*
+
+**[Coda — trống dồn, dàn kèn + đàn tranh cùng vào, năng lượng cao nhất]**
+Từ phù sa Chín Rồng — lửa mặt trời thắp lên,
+Vảy rồng là vi mạch — sáng con sóng vươn lên!
+Mekong ơi cuộn chảy — đưa em ra đại dương,
+C'est la victoire! — chiến thắng mang tên quê hương!
+
+**[Hô vang — cả đội đồng thanh, chồng bè]**
+Mekong Sunfire! (Hây!) — Rồng thức giấc rồi!
+Mekong Sunfire! (Hây!) — Thế giới gọi tên tôi!
+Je m'appelle Hương — c'est la victoire!
+(Việt Nam trong tim — tỏa sáng muôn nơi!)
+
+> 💡 Cách dùng: đây là đoạn **kết thay thế** hoặc **nối thêm** sau Outro. Nếu muốn giữ bài đúng 3:30 thì dùng Mekong Sunfire **thay cho Phần 7**; nếu làm bản MV full thì nối sau Phần 7 thành ~4:00. Khi đưa Gemini, thêm vào mô tả: `triumphant brass, taiko drums, chant vocals, final key change` — đây là đoạn duy nhất có hô vang tập thể.
+
 ---
 
 # PHỤ LỤC — «JE M'APPELLE HƯƠNG AND THE WORLD» (bản song ngữ EN gốc, dùng cho phát hành quốc tế)
@@ -214,5 +231,5 @@ Je m'appelle Hương — and the world sings along...
 
 ### Trạng thái sản xuất
 - ✅ Bản phối **instrumental v1** đang chạy trong game (`assets/audio/`).
-- 🎬 4 video MV đã có: `hóa rồng.mp4`, `hóa rồng 1.mp4`, `wings_wide.mp4`, `vươn ra biển lớn.mp4` — đã gắn vào phân đoạn tương ứng ở trên.
+- 🎬 5 video MV đã có: `hóa rồng.mp4`, `hóa rồng 1.mp4`, `wings_wide.mp4`, `vươn ra biển lớn.mp4`, `mekong_sunfire.mp4` — đã gắn vào phân đoạn tương ứng ở trên (Mekong Sunfire = coda Bài 2).
 - Hook «Bốn ba phần trăm» / «chữ U ngược» là trứng phục sinh từ luận án (điểm ngoặt ≈ 43,6% FSTS) — giữ nguyên khi phối.
