@@ -78,7 +78,7 @@ js/site-ui.js         # Sáng/Tối + từ điển song ngữ Việt–Anh dùng
 sw.js                 # Service worker — app shell, chơi offline
 assets/character/     # Tạo hình 3D: Lumina Áo Dài, Lumina Vest Trắng, Phan Anh Tú
 assets/audio/         # Nhạc: BizOn Theme, Bật Nghiệp, Hương and the World, giọng Hương
-docs/                 # Hướng dẫn giảng viên, đề án V-Monitor, lời bài hát, hồ sơ SHTT
+docs/                 # Hướng dẫn giảng viên, lời bài hát, tài liệu kỹ thuật
 ```
 
 ## 📚 Trích dẫn & Lưu trữ
@@ -94,7 +94,7 @@ Nếu sử dụng BizOn trong giảng dạy hoặc nghiên cứu, vui lòng trí
 
 **Phần mềm độc quyền** — xem [`LICENSE`](LICENSE). Mã nguồn, thuật toán engine mô phỏng, tạo hình nhân vật **Lumina — Je m'appelle Hương**, tên gọi và nhận diện **BizOn Bật Nghiệp** thuộc sở hữu của nhóm tác giả **Đỗ Thùy Hương & Phan Anh Tú**; nghiêm cấm sao chép hoặc sử dụng thương mại khi chưa được phép bằng văn bản.
 
-Hồ sơ đăng ký bảo hộ (quyền tác giả, nhãn hiệu) và chiến lược thương mại hóa: [`docs/so-huu-tri-tue.md`](docs/so-huu-tri-tue.md).
+Hồ sơ đăng ký bảo hộ (quyền tác giả, nhãn hiệu) và chiến lược thương mại hóa được quản lý trong kho tài liệu nội bộ của nhóm tác giả.
 
 Thành phần bên thứ ba: Tailwind CSS (MIT), Google Fonts Plus Jakarta Sans & Manrope (OFL 1.1) — giữ nguyên giấy phép gốc.
 
@@ -103,7 +103,7 @@ Thành phần bên thứ ba: Tailwind CSS (MIT), Google Fonts Plus Jakarta Sans 
 1. Backend API theo [`docs/api-structure.md`](docs/api-structure.md) (JWT, queue xử lý commit) → chế độ nhiều đội thời gian thực.
 2. Database PostgreSQL theo [`docs/database-schema.md`](docs/database-schema.md).
 3. Tích hợp cố vấn AI thật qua API mô hình ngôn ngữ lớn thay cho advisor luật.
-4. **V-Monitor** — dashboard dữ liệu thật thị trường Việt Nam, phát triển thành dự án độc lập: [`docs/de-an-vn-monitor.md`](docs/de-an-vn-monitor.md).
+4. **V-Monitor** — dashboard dữ liệu thật thị trường Việt Nam, phát triển thành dự án độc lập (đề án nội bộ).
 
 ---
 
