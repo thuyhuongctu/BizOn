@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 — © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Thư viện Sáng tạo — BizOn Bật Nghiệp</title>
+<meta name="description" content="Thư viện Sáng tạo BizOn: tạo hình nhân vật 3D claymorphism, âm nhạc, lời bài hát — kết nối hệ sinh thái Je m'appelle Hương và M-AIDA.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#006687', 'primary-container': '#00c4ff', 'surface-bright': '#f4faff',
+        'deep-teal': 'rgb(var(--dt) / <alpha-value>)', 'clay-orange': '#e8762d', 'clay-gold': '#fda127',
+      },
+      fontFamily: { display: ['"Plus Jakarta Sans"', 'sans-serif'], body: ['Manrope', 'sans-serif'] },
+      borderRadius: { clay: '24px' },
+    },
+  },
+};
+</script>
+<script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+  html { background:#f4faff; scroll-behavior:smooth; }
+  body { font-family:'Manrope',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
+  .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
+  .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease; }
+  .clay-btn:active { transform:translateY(2px); }
+  .clay-sunken { background:#e8f2f8; box-shadow:inset 3px 3px 8px rgba(0,102,135,.12), inset -3px -3px 8px rgba(255,255,255,.9); }
+  .glass-nav { background:rgba(3,51,55,.78); backdrop-filter:blur(14px); }
+  .art-card { transition:transform .2s cubic-bezier(.34,1.56,.64,1); }
+  .art-card:hover { transform:translateY(-5px) scale(1.02); }
+  /* ===== Chế độ tối ===== */
+  :root { --dt: 3 51 55; }
+  html[data-theme="dark"] { --dt: 214 236 240; background:#081a20; color-scheme:dark; }
+  html[data-theme="dark"] body { color:#d6ecf0; }
+  html[data-theme="dark"] .clay-card { background:#0e2a33; box-shadow:0 10px 30px -5px rgba(0,0,0,.45), inset 0 -4px 0 rgba(0,0,0,.3); }
+  html[data-theme="dark"] .clay-sunken { background:#0a222a; box-shadow:inset 3px 3px 8px rgba(0,0,0,.5), inset -3px -3px 8px rgba(255,255,255,.03); }
+  html[data-theme="dark"] .glass-nav { background:rgba(2,20,24,.85); }
+  html[data-theme="dark"] .text-primary { color:#5cc4e6 !important; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="glass-nav fixed top-0 inset-x-0 z-50 text-white">
+  <div class="max-w-5xl mx-auto px-5 h-16 flex items-center justify-between gap-3">
+    <a href="index.html" class="flex items-center gap-2.5">
+      <img src="assets/icons/icon-192.png" alt="BizOn" class="w-9 h-9 rounded-xl shadow-lg">
+      <span class="font-display font-extrabold tracking-tight">BizOn <span class="text-clay-gold">Thư viện</span></span>
+    </a>
+    <div class="flex items-center gap-2.5">
+      <a href="index.html" class="text-white/70 hover:text-white text-sm font-bold hidden sm:block">🏠 Trang chủ</a>
+      <button id="theme-btn" onclick="toggleTheme()" class="w-9 h-9 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 transition-colors shrink-0" title="Chế độ Sáng/Tối · Light/Dark mode">🌙</button>
+      <button id="lang-btn" onclick="toggleLang()" class="h-9 px-3 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 text-[11px] font-extrabold transition-colors shrink-0" title="Tiếng Việt / English">EN</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="pt-24 pb-8 text-white" style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%)">
+  <div class="max-w-5xl mx-auto px-5">
+    <h1 class="font-display font-extrabold text-3xl sm:text-4xl">📚 Thư viện Sáng tạo</h1>
+    <p class="text-white/75 text-sm mt-3 max-w-2xl">Toàn bộ tài sản sáng tạo của BizOn Bật Nghiệp — tạo hình nhân vật đất nặn 3D, âm nhạc gốc và lời bài hát — trong cùng một hệ sinh thái với <b class="text-white">Je m'appelle Hương &amp; M-AIDA</b>.</p>
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-5 py-10">
+
+  <!-- TẠO HÌNH NHÂN VẬT -->
+  <section class="mb-12">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-5">🎨 Tạo hình nhân vật</h2>
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+      <div class="clay-card art-card p-4 text-center"><div class="h-48 flex items-end justify-center bg-gradient-to-b from-primary-container/20 to-transparent rounded-2xl"><img src="assets/character/lumina-ao-dai-wave.png" alt="Lumina Áo Dài" class="h-44 w-auto drop-shadow-xl"></div><p class="font-display font-extrabold text-deep-teal text-sm mt-3">Lumina Áo Dài</p><p class="text-[10px] text-deep-teal/50">Người dẫn chuyện · hóa thân Je m'appelle Hương</p></div>
+      <div class="clay-card art-card p-4 text-center"><div class="h-48 flex items-end justify-center bg-gradient-to-b from-clay-gold/20 to-transparent rounded-2xl"><img src="assets/character/lumina-office-present.png" alt="Lumina Vest Trắng" class="h-44 w-auto drop-shadow-xl"></div><p class="font-display font-extrabold text-deep-teal text-sm mt-3">Lumina Vest Trắng</p><p class="text-[10px] text-deep-teal/50">Cố vấn chiến lược AI trong game</p></div>
+      <div class="clay-card art-card p-4 text-center"><div class="h-48 flex items-end justify-center bg-gradient-to-b from-emerald-200/30 to-transparent rounded-2xl"><img src="assets/character/anh-tu-open-arms.png" alt="Phan Anh Tú" class="h-44 w-auto drop-shadow-xl"></div><p class="font-display font-extrabold text-deep-teal text-sm mt-3">Phan Anh Tú</p><p class="text-[10px] text-deep-teal/50">Cố vấn học thuật · xuất hiện ở khoảnh khắc then chốt</p></div>
+      <div class="clay-card art-card p-4 text-center"><div class="h-48 flex items-end justify-center bg-gradient-to-b from-primary/10 to-transparent rounded-2xl"><img src="assets/character/lumina-vest.png" alt="Lumina Vest — bản gốc" class="h-44 w-auto drop-shadow-xl object-contain"></div><p class="font-display font-extrabold text-deep-teal text-sm mt-3">Lumina Vest — bản gốc</p><p class="text-[10px] text-deep-teal/50">Avatar khung chat cố vấn</p></div>
+      <div class="clay-card art-card p-4 text-center"><div class="h-48 flex items-end justify-center bg-gradient-to-b from-primary-container/15 to-transparent rounded-2xl"><img src="assets/character/lumina-ao-dai.png" alt="Lumina Áo Dài — bản gốc" class="h-44 w-auto drop-shadow-xl object-contain"></div><p class="font-display font-extrabold text-deep-teal text-sm mt-3">Lumina Áo Dài — bản gốc</p><p class="text-[10px] text-deep-teal/50">Màn chào &amp; chứng nhận hoàn thành</p></div>
+      <div class="clay-card art-card p-4 text-center"><div class="h-48 flex items-end justify-center bg-gradient-to-b from-emerald-100/40 to-transparent rounded-2xl"><img src="assets/character/anh-tu-cheer.png" alt="Phan Anh Tú cổ vũ" class="h-44 w-auto drop-shadow-xl object-contain"></div><p class="font-display font-extrabold text-deep-teal text-sm mt-3">Thầy Tú cổ vũ</p><p class="text-[10px] text-deep-teal/50">Màn chúc mừng chiến thắng</p></div>
+    </div>
+  </section>
+
+  <!-- ÂM NHẠC -->
+  <section class="mb-12">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-5">🎵 Âm nhạc gốc</h2>
+    <div class="grid sm:grid-cols-3 gap-4" id="music-cards"></div>
+    <p class="text-xs text-deep-teal/50 mt-4">📝 Lời đầy đủ 2 ca khúc: <a href="https://github.com/thuyhuongctu/BizOn/blob/main/docs/loi-bai-hat.md" target="_blank" rel="noopener" class="font-bold text-primary">docs/loi-bai-hat.md</a> · Giọng nói Hương AI trong game thu theo danh sách <a href="https://github.com/thuyhuongctu/BizOn/blob/main/docs/loi-thoai-lumina.md" target="_blank" rel="noopener" class="font-bold text-primary">loi-thoai-lumina.md</a></p>
+  </section>
+
+  <!-- HỆ SINH THÁI JE M'APPELLE HƯƠNG -->
+  <section class="mb-12">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">🌉 Hệ sinh thái Je m'appelle Hương</h2>
+    <p class="text-sm text-deep-teal/55 mb-5">BizOn và M-AIDA chia sẻ cùng một vũ trụ sáng tạo — nhân vật Hương, bản đồ Việt Nam và âm nhạc gốc.</p>
+    <div class="grid sm:grid-cols-2 gap-4">
+      <a href="https://thuyhuongctu.github.io/M-AIDA/library.html" target="_blank" rel="noopener" class="clay-card art-card p-6 flex items-center gap-4">
+        <p class="text-4xl shrink-0">🎨</p>
+        <div><h3 class="font-display font-extrabold text-deep-teal">Creative Library — M-AIDA</h3><p class="text-xs text-deep-teal/55 mt-1">Thư viện Sáng tạo phía M-AIDA: tạo hình Hương, trang phục, bối cảnh nghiên cứu.</p></div>
+      </a>
+      <a href="https://thuyhuongctu.github.io/M-AIDA/" target="_blank" rel="noopener" class="clay-card art-card p-6 flex items-center gap-4">
+        <p class="text-4xl shrink-0">🎼</p>
+        <div><h3 class="font-display font-extrabold text-deep-teal">Ứng dụng M-AIDA</h3><p class="text-xs text-deep-teal/55 mt-1">Meta-Analysis Intelligent Data Assistant — phần mềm luận án (DOI 10.5281/zenodo.21282516).</p></div>
+      </a>
+      <a href="https://thuyhuongctu.github.io/M-AIDA/songs.html" target="_blank" rel="noopener" class="clay-card art-card p-6 flex items-center gap-4">
+        <p class="text-4xl shrink-0">🎶</p>
+        <div><h3 class="font-display font-extrabold text-deep-teal">Songs — M-AIDA</h3><p class="text-xs text-deep-teal/55 mt-1">Các ca khúc gốc của vũ trụ Je m'appelle Hương.</p></div>
+      </a>
+      <a href="https://thuyhuongctu.github.io/M-AIDA/huong.html" target="_blank" rel="noopener" class="clay-card art-card p-6 flex items-center gap-4">
+        <p class="text-4xl shrink-0">👩‍🎓</p>
+        <div><h3 class="font-display font-extrabold text-deep-teal">Trang cá nhân Đỗ Thùy Hương</h3><p class="text-xs text-deep-teal/55 mt-1">PhD Candidate · School of Economics, Can Tho University.</p></div>
+      </a>
+    </div>
+  </section>
+
+  <p class="text-center text-xs text-deep-teal/40 mt-8">© 2026 Đỗ Thùy Hương &amp; Phan Anh Tú · BizOn Bật Nghiệp — Bảo lưu mọi quyền · <a href="index.html" class="font-bold text-primary">🏠 Trang chủ</a></p>
+</main>
+
+<script src="js/site-ui.js" defer></script>
+<script>
+/* Máy phát nhạc mini cho từng bài */
+const LIB_TRACKS = [
+  { t: 'BizOn Theme', s: 'Nhạc nền game · instrumental', f: 'assets/audio/bizon-theme.mp3' },
+  { t: 'Bật Nghiệp', s: 'Ca khúc chủ đề game Việt Nam', f: 'assets/audio/bat-nghiep.mp3' },
+  { t: "Hương and the World", s: 'Ca khúc BizOn Global', f: 'assets/audio/huong-and-the-world.mp3' },
+];
+let libAudio = null, libIdx = -1;
+function libPlay(i) {
+  if (libIdx === i && libAudio && !libAudio.paused) { libAudio.pause(); libIdx = -1; libRender(); return; }
+  if (libAudio) libAudio.pause();
+  libAudio = new Audio(LIB_TRACKS[i].f); libAudio.volume = 0.5; libAudio.play().catch(() => {});
+  libAudio.addEventListener('ended', () => { libIdx = -1; libRender(); });
+  libIdx = i; libRender();
+}
+function libRender() {
+  document.getElementById('music-cards').innerHTML = LIB_TRACKS.map((tr, i) => `
+    <button onclick="libPlay(${i})" class="clay-card art-card p-5 text-left w-full">
+      <p class="text-3xl">${libIdx === i ? '⏸️' : '▶️'}</p>
+      <p class="font-display font-extrabold text-deep-teal text-sm mt-2">${tr.t}</p>
+      <p class="text-[10px] text-deep-teal/50 mt-0.5">${tr.s}</p>
+    </button>`).join('');
+}
+libRender();
+</script>
+</body>
+</html>

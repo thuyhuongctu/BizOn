@@ -1012,6 +1012,90 @@
 [
 "Cố vấn học thuật cao cấp — đảm bảo tính thực tiễn và chiều sâu kiến thức kinh doanh trong mọi kịch bản mô phỏng.",
 "Senior academic advisor — ensuring practical rigor and business depth in every simulation scenario."
+],
+[
+"Chào mừng đến BizOn!",
+"Welcome to BizOn!"
+],
+[
+"Hệ sinh thái mô phỏng kinh doanh 3D Claymorphism — chọn một cánh cửa để bắt đầu.",
+"A 3D-claymorphism business-simulation ecosystem — pick a door to begin."
+],
+[
+"Chinh phục bản đồ Việt Nam từ Cần Thơ tới Hà Nội cùng cố vấn Lumina AI.",
+"Conquer the map of Vietnam from Cần Thơ to Hà Nội with the Lumina AI advisor."
+],
+[
+"CHƠI NGAY →",
+"PLAY NOW →"
+],
+[
+"Thư viện Sáng tạo",
+"Creative Library"
+],
+[
+"📚 Thư viện Sáng tạo",
+"📚 Creative Library"
+],
+[
+"🏠 Trang chủ BizOn",
+"🏠 BizOn Home"
+],
+[
+"🏠 Trang chủ",
+"🏠 Home"
+],
+[
+"Tạo hình nhân vật, âm nhạc, lời bài hát — kết nối hệ sinh thái Je m'appelle Hương & M-AIDA.",
+"Character art, original music and lyrics — connected to the Je m'appelle Hương & M-AIDA ecosystem."
+],
+[
+"Demo tương tác, 5 vai trò lãnh đạo, lộ trình 6 vòng, mini-game và FAQ.",
+"Interactive demo, 5 leadership roles, the 6-round journey, mini-games and FAQ."
+],
+[
+"8 trò chơi của hệ sinh thái — từ mô phỏng chiến lược đến phản xạ 30 giây.",
+"8 games in the ecosystem — from strategy sim to 30-second reflex games."
+],
+[
+"Từ Việt Nam ra thế giới: phương thức thâm nhập, World Market LIVE và I–P Lab.",
+"From Vietnam to the world: entry modes, World Market LIVE and the I–P Lab."
+],
+[
+"Đỗ Thùy Hương & Phan Anh Tú — sứ mệnh và tầm nhìn 2026.",
+"Do Thuy Huong & Phan Anh Tu — mission and vision 2026."
+],
+[
+"🎨 Tạo hình nhân vật",
+"🎨 Character art"
+],
+[
+"🎵 Âm nhạc gốc",
+"🎵 Original music"
+],
+[
+"🌉 Hệ sinh thái Je m'appelle Hương",
+"🌉 The Je m'appelle Hương ecosystem"
+],
+[
+"BizOn và M-AIDA chia sẻ cùng một vũ trụ sáng tạo — nhân vật Hương, bản đồ Việt Nam và âm nhạc gốc.",
+"BizOn and M-AIDA share one creative universe — the Hương character, the map of Vietnam and original music."
+],
+[
+"🎼 Ứng dụng M-AIDA",
+"🎼 M-AIDA app"
+],
+[
+"🎨 Creative Library (M-AIDA)",
+"🎨 Creative Library (M-AIDA)"
+],
+[
+"👩‍🎓 Trang cá nhân Đỗ Thùy Hương",
+"👩‍🎓 Do Thuy Huong's personal page"
+],
+[
+"Trang cá nhân Đỗ Thùy Hương",
+"Do Thuy Huong's personal page"
 ]
 ]);
   var SPECIAL = [
