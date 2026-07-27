@@ -12,7 +12,7 @@
 |---|---|
 | **Authors** | **Do Thuy Huong** (Founder & Creative Lead) · **Phan Anh Tu** (Co-founder & Academic Advisor) |
 | **Affiliation** | Can Tho University (CTU), Vietnam |
-| **Play now** | 🎮 [Game](https://thuyhuongctu.github.io/BizOn/) · 🌐 [Landing page](https://thuyhuongctu.github.io/BizOn/gioi-thieu.html) · 🕹️ [Arcade](https://thuyhuongctu.github.io/BizOn/games.html) · 🌏 [BizOn GO GlObal](https://thuyhuongctu.github.io/BizOn/global.html) |
+| **Play now** | 🏠 [Ecosystem hub](https://thuyhuongctu.github.io/BizOn/) · 🎮 [Main simulation](https://thuyhuongctu.github.io/BizOn/game.html) · 🕹️ [Arcade](https://thuyhuongctu.github.io/BizOn/games.html) · 🌏 [BizOn GO GlObal](https://thuyhuongctu.github.io/BizOn/global.html) |
 | **Contact** | thuyhuongctu@gmail.com |
 | **Archive & DOI** | Zenodo concept DOI: [10.5281/zenodo.21592241](https://doi.org/10.5281/zenodo.21592241) — every release is permanently archived |
 
@@ -22,7 +22,8 @@
 
 | Page | Content |
 |---|---|
-| [`index.html`](https://thuyhuongctu.github.io/BizOn/) | **Main game** — a 6-round conquest across the map of Vietnam (Cần Thơ → Hà Nội); win a round's market share to plant your flag 🚩; the map features the Lũng Cú flag tower and the Hoàng Sa & Trường Sa archipelagos |
+| [`index.html`](https://thuyhuongctu.github.io/BizOn/) | **Ecosystem hub** — one entry point for the main simulation, BizOn Arcade, GO GlObal, the creative library, music, team and partnership pages |
+| [`game.html`](https://thuyhuongctu.github.io/BizOn/game.html) | **Main simulation** — a 6-round conquest across the map of Vietnam (Cần Thơ → Hà Nội); win market share to plant your flag 🚩 |
 | [`gioi-thieu.html`](https://thuyhuongctu.github.io/BizOn/gioi-thieu.html) | International-style landing page: interactive demo, 5 leadership roles, the 6-round journey, mini-games, an AI tour guide, FAQ, instructor section |
 | [`games.html`](https://thuyhuongctu.github.io/BizOn/games.html) | **BizOn Arcade** — 8 games in the ecosystem |
 | [`global.html`](https://thuyhuongctu.github.io/BizOn/global.html) | **BizOn GO GlObal** (beta) — from Vietnam to the world: pick a market and an entry mode (Export · Licensing · Joint Venture · Greenfield FDI), with a live World Market board and the **IE Lab** (International Entrepreneurship, data simulation) |
@@ -71,7 +72,8 @@ python3 -m http.server 8000   # then open http://localhost:8000
 ## 🧱 Source layout
 
 ```
-index.html            # Game SPA — all screens + Tailwind config + PWA registration
+index.html            # Ecosystem hub and PWA entry point
+game.html             # Main 6-round business simulation
 gioi-thieu.html       # International landing page
 games.html            # BizOn Arcade (8 games)
 global.html           # BizOn GO GlObal + World Market LIVE + IE Lab
@@ -98,9 +100,19 @@ If you use BizOn in teaching or research, please cite:
 
 **Proprietary software** — see [`LICENSE`](LICENSE). The source code, the simulation-engine algorithms, the character design **Lumina — Je m'appelle Hương**, and the **BizOn Bật Nghiệp** name and identity belong to the authors **Do Thuy Huong & Phan Anh Tu**; copying or commercial use without written permission is prohibited.
 
-Registration dossiers (copyright, trademark) and the commercialization strategy are managed in the authors' private document repository.
+As of 27 July 2026, BizOn has **not been represented as holding an issued copyright or trademark registration certificate**. Registration dossiers are being prepared and managed separately; the Zenodo DOI, Git history, `CITATION.cff`, and this license document provenance but are not registration certificates.
 
 Third-party components: Tailwind CSS (MIT), Google Fonts Plus Jakarta Sans & Manrope (OFL 1.1) — their original licenses apply.
+
+## 📱 Google Play & commercial-pilot readiness
+
+- Public privacy policy: [`chinh-sach.html`](chinh-sach.html)
+- Google Play/TWA release runbook: [`docs/GOOGLE_PLAY_RELEASE.md`](docs/GOOGLE_PLAY_RELEASE.md)
+- Draft Vietnamese–English store listing: [`docs/google-play-listing-vi-en.md`](docs/google-play-listing-vi-en.md)
+- 90-day commercial pilot: [`docs/COMMERCIAL_PILOT_90_DAY_PLAN.md`](docs/COMMERCIAL_PILOT_90_DAY_PLAN.md)
+- IP status and evidence checklist: [`docs/IP_AND_EVIDENCE_STATUS.md`](docs/IP_AND_EVIDENCE_STATUS.md)
+
+The proposed Android package name is provisional until the authors confirm it in Play Console. Signing keys, passwords, service-account files, and final Digital Asset Links fingerprints must never be committed to this public repository.
 
 ## 🛣️ Roadmap
 
