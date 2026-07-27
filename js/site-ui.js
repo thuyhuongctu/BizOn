@@ -1066,6 +1066,38 @@
 "Tú Phan — Moss-green suit"
 ],
 [
+"Cắm cờ đầu tiên",
+"First flag planted"
+],
+[
+"Thắng một vòng trên bản đồ chinh phục.",
+"Win a round on the conquest map."
+],
+[
+"Chiến lược gia Nếu–Thì",
+"What-If strategist"
+],
+[
+"Dùng mô phỏng Nếu–Thì của Lumina ít nhất một lần.",
+"Use Lumina's What-If simulation at least once."
+],
+[
+"Lắng nghe đội",
+"Team listener"
+],
+[
+"Áp dụng 3 gợi ý từ Cuộc họp đội.",
+"Apply 3 suggestions from the Team Meeting."
+],
+[
+"Vô địch BizOn",
+"BizOn champion"
+],
+[
+"Kết thúc 6 vòng với lợi nhuận cao nhất sàn đấu.",
+"Finish all 6 rounds with the highest profit in the arena."
+],
+[
 "Dang tay chào đón · cài áo Bản đồ Việt Nam trên ve áo",
 "Open-armed welcome · Vietnam Map pin on the lapel"
 ],
