@@ -935,6 +935,34 @@ function syncDecisionLabels() {
   const capped = +$('in-prod').value > fc.laborCap;
   $('fc-be').textContent = `Sản lượng hòa vốn: ${fc.breakEven.toLocaleString('vi-VN')} sp · Bán dự kiến: ${fc.estSold.toLocaleString('vi-VN')} sp` +
     (capped ? ` · ⚠️ Nhân sự chỉ đủ sản xuất ${fc.laborCap.toLocaleString('vi-VN')} sp` : '');
+  renderMarketForecast();
+}
+
+/* Dự báo thị phần sống — trả lời thẳng câu hỏi "tôi có cắm được cờ không?" */
+function renderMarketForecast() {
+  const el = $('mf-share');
+  if (!el || !S) return;
+  const d = currentDecisionInput();
+  const ev = currentEvent(S) || MARKET_EVENTS[1];
+  const last = S.history[S.history.length - 1];
+  const lastShare = last ? last.share : 25;
+  const elasticity = PRICE_ELASTICITY * (ev.elasticityMul || 1);
+  const attr = (p, m) => Math.pow(REF_PRICE / p, elasticity) * (1 + Math.sqrt(m * (ev.mktBoost || 1)) / 18) * S.brand;
+  const lastD = last && last.decisions ? last.decisions : { price: REF_PRICE, marketing: 50 };
+  const compAttr = attr(lastD.price, lastD.marketing) * (100 - lastShare) / Math.max(1, lastShare);
+  const share = 100 * attr(d.price, d.marketing) / (attr(d.price, d.marketing) + compAttr);
+  const rivalAvg = (100 - share) / 3;
+  const winning = share > rivalAvg + 1;
+  el.textContent = share.toFixed(1) + '%';
+  el.classList.toggle('text-red-600', !winning);
+  el.classList.toggle('text-primary', winning);
+  const bar = $('mf-bar');
+  if (bar) { bar.style.width = Math.min(100, Math.max(4, share)) + '%'; bar.classList.toggle('opacity-50', !winning); }
+  const fc = forecastCash(S, d);
+  $('mf-verdict').innerHTML = winning
+    ? (fc.net >= 0 ? `✅ <b>Đang thắng!</b> Ước tính bạn vượt mức trung bình đối thủ (~${rivalAvg.toFixed(0)}%/đội) và có lãi — giữ vững là cắm được cờ 🚩.`
+                   : `🟡 Thị phần đủ thắng (~ đối thủ ${rivalAvg.toFixed(0)}%/đội) nhưng <b>đang lỗ</b> — tăng giá nhẹ hoặc bớt chi để có lãi, vì thắng vòng cần cả hai.`)
+    : `🔻 Chưa đủ — mỗi đối thủ đang giữ ~${rivalAvg.toFixed(0)}%. Gợi ý: <b>giảm giá gần 150k</b> hoặc <b>tăng marketing</b> để kéo khách (xem đề xuất của Lan Chi ở Cuộc họp đội).`;
 }
 
 /* ===== CUỘC HỌP ĐỘI — 4 thành viên demo đề xuất theo vai, tất định theo seed + vòng ===== */
