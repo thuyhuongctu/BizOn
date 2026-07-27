@@ -1114,11 +1114,63 @@ function commitDecisions() {
     const notes = kpiCongrats(S, report).concat(riskAlerts(S, report));
     notes.forEach(m => pushLumina({ risk: m.risk, text: `【${m.role}】 ${m.text}` }));
     if (notes.some(m => m.risk === 'low')) createConfetti();
-    showRoundResult(report);
+    showArena(report, () => showRoundResult(report));
     // Thăng cấp → màn chúc mừng toàn trang (sau khi bảng kết quả hiện)
     const lvlAfter = 1 + Math.floor(S.xp / XP_PER_LEVEL);
     if (lvlAfter > lvlBefore) setTimeout(() => showLevelUp(lvlAfter), 900);
   }, 2300);
+}
+
+/* ===== ⚔️ ĐẤU TRƯỜNG — các nhân vật ra sàn đấu giành thị phần sau mỗi Commit ===== */
+const RIVAL_ICONS = { aggressive: '🐺', balanced: '🐘', premium: '🦚' };
+function showArena(r, done) {
+  const stop = CONQUEST_STOPS[r.round - 1];
+  const fighters = [
+    { name: S.profile.teamName, icon: '🏺', share: r.share, me: true, img: 'assets/character/team/ceo.jpg' },
+    ...S.competitors.map(c => ({ name: c.name, icon: RIVAL_ICONS[c.style] || '🤖', share: c.share || 25 })),
+  ];
+  const max = Math.max(...fighters.map(f => f.share));
+  const div = document.createElement('div');
+  div.className = 'fixed inset-0 z-[70] flex items-center justify-center p-5';
+  div.style.background = 'radial-gradient(circle at 50% 30%, #06414d 0%, #021a20 75%)';
+  div.innerHTML = `
+    <div class="w-full max-w-sm text-center">
+      <p class="text-4xl mb-1 animate-bounce">⚔️</p>
+      <h3 class="font-display font-extrabold text-white text-xl">ĐẤU TRƯỜNG ${stop ? stop.name.toUpperCase() : 'VÒNG ' + r.round}</h3>
+      <p class="text-white/60 text-xs mb-5">${r.event.icon} ${r.event.name} — 4 công ty tranh giành 12.000 khách hàng</p>
+      <div class="space-y-3 text-left">${fighters.map((f, i) => `
+        <div class="rounded-2xl p-3 ${f.me ? 'bg-white/15 ring-2 ring-clay-gold' : 'bg-white/5'}" style="animation:fadeUp .4s ease both; animation-delay:${i * 0.55}s">
+          <div class="flex items-center gap-2.5 mb-1.5">
+            ${f.img ? `<img src="${f.img}" class="w-9 h-9 rounded-full object-cover object-top border-2 ${f.me ? 'border-clay-gold' : 'border-white/20'}">` : `<span class="text-2xl w-9 text-center">${f.icon}</span>`}
+            <p class="text-xs font-extrabold text-white truncate flex-1">${f.me ? '🏺 ' : ''}${f.name}${f.me ? ' (Bạn)' : ''}</p>
+            <p class="arena-num font-display font-extrabold ${f.me ? 'text-clay-gold' : 'text-white/70'} text-sm" data-share="${f.share.toFixed(1)}">0%</p>
+          </div>
+          <div class="h-3 rounded-full bg-white/10 overflow-hidden"><div class="arena-bar h-full rounded-full ${f.me ? 'bg-gradient-to-r from-clay-orange to-clay-gold' : 'bg-white/35'}" style="width:0%; transition:width 1.1s cubic-bezier(.2,.8,.3,1) ${i * 0.55 + 0.2}s" data-w="${Math.max(4, f.share / max * 100)}"></div></div>
+        </div>`).join('')}
+      </div>
+      <p id="arena-verdict" class="text-sm font-extrabold mt-5 min-h-[1.5rem] text-white opacity-0" style="transition:opacity .4s"></p>
+      <button id="arena-next" class="clay-btn w-full bg-white text-deep-teal font-display font-extrabold py-3.5 mt-3 opacity-0" style="transition:opacity .4s">Xem kết quả chi tiết →</button>
+    </div>`;
+  document.body.appendChild(div);
+  requestAnimationFrame(() => {
+    div.querySelectorAll('.arena-bar').forEach(b => b.style.width = b.dataset.w + '%');
+    div.querySelectorAll('.arena-num').forEach(n => {
+      const target = +n.dataset.share; let t0 = null;
+      const step = ts => { t0 ??= ts; const p = Math.min(1, (ts - t0) / 1400); n.textContent = (target * p).toFixed(1) + '%'; if (p < 1) requestAnimationFrame(step); };
+      requestAnimationFrame(step);
+    });
+  });
+  const win = r.share >= max - 0.01;
+  setTimeout(() => {
+    const v = div.querySelector('#arena-verdict');
+    v.textContent = win ? `🚩 ${S.profile.teamName} thắng sàn đấu${stop ? ' — cắm cờ tại ' + stop.name : ''}!` : `🏴 ${fighters.find(f => f.share === max).name} giữ vị trí số 1 vòng này…`;
+    v.style.opacity = 1; v.classList.add(win ? 'text-clay-gold' : 'text-white/80');
+    if (win) createConfetti();
+    const btn = div.querySelector('#arena-next');
+    btn.style.opacity = 1;
+    btn.onclick = () => { div.remove(); done(); };
+  }, fighters.length * 550 + 1300);
+  div.addEventListener('click', e => { if (e.target === div) { div.remove(); done(); } });
 }
 
 /* "Vì sao ra kết quả này?" — một câu giải thích nguyên nhân chính của vòng */
