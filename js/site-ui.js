@@ -818,12 +818,12 @@
 "🎼 M-AIDA — source code"
 ],
 [
-"🌏 BizOn GO Global (thử nghiệm)",
-"🌏 BizOn GO Global (beta)"
+"🌏 BizOn GO GlObal (thử nghiệm)",
+"🌏 BizOn GO GlObal (beta)"
 ],
 [
-"🌏 BizOn GO Global (thử nghiệm quốc tế)",
-"🌏 BizOn GO Global (international beta)"
+"🌏 BizOn GO GlObal (thử nghiệm quốc tế)",
+"🌏 BizOn GO GlObal (international beta)"
 ],
 [
 "⭐ Mã nguồn trên GitHub",
@@ -1170,8 +1170,8 @@
 "🎵 Original music"
 ],
 [
-"Ca khúc BizOn GO Global · bản thu có lời",
-"BizOn GO Global theme song · vocal recording"
+"Ca khúc BizOn GO GlObal · bản thu có lời",
+"BizOn GO GlObal theme song · vocal recording"
 ],
 [
 "Đội Demo Bật Nghiệp — 5 thành viên đất nặn",
