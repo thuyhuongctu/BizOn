@@ -902,6 +902,14 @@
 "Tu Phan"
 ],
 [
+"⏱️ Một ván 6 vòng ≈ 30–45 phút (mỗi vòng 5–7 phút) — vừa một buổi học. Chơi thử nhanh với Đội Demo: ~10 phút cho 2 vòng đầu.",
+"⏱️ A full 6-round match ≈ 30–45 minutes (5–7 min per round) — fits one class session. Quick try with the Demo Team: ~10 minutes for the first 2 rounds."
+],
+[
+"🌐 VI/EN",
+"🌐 EN/VI"
+],
+[
 "Kho Âm nhạc BizOn",
 "BizOn Music Library"
 ],

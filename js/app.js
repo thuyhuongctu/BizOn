@@ -229,7 +229,7 @@ function showLevelUp(level) {
 // ---------- Sổ tay hướng dẫn (User Manual — thiết kế Stitch) ----------
 const MANUAL = {
   start: { icon: '🚀', name: 'Bắt đầu', html: `
-    <p class="text-sm text-deep-teal/75 mb-4">Chào mừng bạn đến với BizOn — môi trường mô phỏng kinh doanh 3D. Ba bước thiết lập:</p>
+    <p class="text-sm text-deep-teal/75 mb-4">Chào mừng bạn đến với BizOn — môi trường mô phỏng kinh doanh 3D. ⏱️ Thời lượng: cả ván 6 vòng ≈ 30–45 phút (mỗi vòng 5–7 phút gồm đọc biến cố, họp đội, chốt quyết định và xem đấu trường); bản GO GlObal 4 quý ≈ 10–15 phút. Ba bước thiết lập:</p>
     ${[['1', 'Lập đội & chọn vai trò', 'Đăng nhập với tên đội (cũng là tên doanh nghiệp của bạn), Class ID (nếu học trên lớp) và chọn vai trò CEO · CFO · CMO · COO · SEC. Doanh nghiệp là xưởng đồ chơi đất sét — sản phẩm chủ lực «Bộ linh vật đất sét Việt».'],
        ['2', 'Nhận vốn khởi điểm', 'Mỗi đội bắt đầu với 500tr₫ vốn giảng viên cấp. Giữ ít nhất 15% dự phòng cho biến cố!'],
        ['3', 'Vào vòng 1', 'Đọc biến cố thị trường, hỏi Lumina AI, rồi vào Quyết định để chốt kế hoạch đầu tiên.']].map(([n, t, d]) => `
@@ -1312,7 +1312,7 @@ const INTRO_SLIDES = [
   { icon: '🏺', title: 'Doanh nghiệp & sản phẩm của bạn',
     text: 'Bạn điều hành một xưởng đồ chơi đất sét thủ công tại Cần Thơ, vốn khởi điểm 500 triệu ₫. Sản phẩm chủ lực: «Bộ linh vật đất sét Việt» — dòng quà tặng & đồ sưu tầm, giá tham chiếu 150.000₫/bộ. Tên doanh nghiệp chính là tên đội bạn đặt khi đăng nhập!' },
   { icon: '🗺️', title: '6 vòng · 6 tỉnh thành',
-    text: 'Mỗi vòng là một quý kinh doanh tại một tỉnh/thành trên bản đồ mới: Cần Thơ → TP. Hồ Chí Minh → Khánh Hòa → Đà Nẵng → Thanh Hóa → Hà Nội. Đội thắng vòng nào sẽ cắm cờ 🚩 công ty lên tỉnh đó!' },
+    text: 'Mỗi vòng là một quý kinh doanh tại một tỉnh/thành trên bản đồ mới: Cần Thơ → TP. Hồ Chí Minh → Khánh Hòa → Đà Nẵng → Thanh Hóa → Hà Nội. Đội thắng vòng nào sẽ cắm cờ 🚩 lên tỉnh đó! ⏱️ Mỗi vòng 5–7 phút, cả ván ≈ 30–45 phút.' },
   { icon: '👥', title: 'Đội hình C-Suite', 
     text: 'CEO chèo lái chiến lược, CFO giữ két sắt, CMO đánh chiếm thị trường, COO vận hành xưởng, SEC ghi biên bản — bên cạnh cố vấn Lumina AI và thầy Tú Phan.' },
   { icon: '🌏', title: 'Sau đó: ra biển lớn',

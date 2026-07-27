@@ -187,8 +187,15 @@ tailwind.config = {
     <div class="clay-card overflow-hidden p-0 mb-0">
       <img src="assets/illustrations/login-clay.png" alt="BizOn Bật Nghiệp" class="w-full h-44 object-cover" style="object-position:50% 12%">
       <div class="p-8 pt-5">
-      <h2 class="font-display text-2xl font-extrabold text-deep-teal">Chào mừng trở lại!</h2>
-      <p class="text-sm text-deep-teal/60 mb-6"><span class="font-display font-extrabold lumina-name">Lumina AI</span> — <span class="signature text-lg text-deep-teal">Je m'appelle Hương</span> đang chờ đồng hành cùng đội của bạn.</p>
+      <div class="flex items-start justify-between gap-3">
+        <h2 class="font-display text-2xl font-extrabold text-deep-teal">Chào mừng trở lại!</h2>
+        <div class="flex gap-1.5 shrink-0">
+          <button onclick="toggleLang()" class="clay-sunken rounded-full h-8 px-3 text-[11px] font-extrabold text-deep-teal/70" title="Tiếng Việt / English">🌐 VI/EN</button>
+          <button onclick="toggleTheme()" class="clay-sunken rounded-full w-8 h-8 text-sm" title="Sáng/Tối">🌙</button>
+        </div>
+      </div>
+      <p class="text-sm text-deep-teal/60 mb-2"><span class="font-display font-extrabold lumina-name">Lumina AI</span> — <span class="signature text-lg text-deep-teal">Je m'appelle Hương</span> đang chờ đồng hành cùng đội của bạn.</p>
+      <p class="text-[11px] font-bold text-deep-teal/55 mb-6">⏱️ Một ván 6 vòng ≈ 30–45 phút (mỗi vòng 5–7 phút) — vừa một buổi học. Chơi thử nhanh với Đội Demo: ~10 phút cho 2 vòng đầu.</p>
       <label class="block text-sm font-bold text-deep-teal mb-1">Email</label>
       <input id="login-email" type="email" placeholder="sinhvien@truong.edu.vn" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 mb-4 outline-none focus:border-primary-container">
       <label class="block text-sm font-bold text-deep-teal mb-1">Tên đội — cũng là tên doanh nghiệp của bạn</label>

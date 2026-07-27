@@ -34,6 +34,7 @@ Every page supports **light/dark mode**, a **Vietnamese–English bilingual inte
 
 | Area | Details |
 |---|---|
+| Play time | A full 6-round match ≈ 30–45 minutes (5–7 min/round) — fits one class session; BizOn GO GlObal ≈ 10–15 minutes for 4 quarters |
 | Rounds | 6 rounds = 6 provinces on Vietnam's new administrative map; each round brings a market event (Golden Opportunity, Price War, Energy Crisis, Credit Squeeze, Vietnam Rising Dragon) |
 | Decisions | Price · Marketing · R&D · Production volume · Workforce & training · Funding source (equity / 8.5% loans) · 30/60/90-day payment terms · Maintenance |
 | AI rivals | 🐺 Alpha Dynamics (budget) · 🐘 Mekong Ventures (balanced) · 🦚 Star Clay Co. (premium) — behavior is **deterministic per team seed**, which makes grading easy |
