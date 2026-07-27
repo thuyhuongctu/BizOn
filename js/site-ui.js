@@ -818,12 +818,12 @@
 "🎼 M-AIDA — source code"
 ],
 [
-"🌏 BizOn Global (thử nghiệm)",
-"🌏 BizOn Global (beta)"
+"🌏 BizOn GO Global (thử nghiệm)",
+"🌏 BizOn GO Global (beta)"
 ],
 [
-"🌏 BizOn Global (thử nghiệm quốc tế)",
-"🌏 BizOn Global (international beta)"
+"🌏 BizOn GO Global (thử nghiệm quốc tế)",
+"🌏 BizOn GO Global (international beta)"
 ],
 [
 "⭐ Mã nguồn trên GitHub",
@@ -874,8 +874,28 @@
 "⚔️ Your 3 AI rivals"
 ],
 [
-"🎓 I–P Lab — Quốc tế hóa & Hiệu quả doanh nghiệp",
-"🎓 I–P Lab — Internationalization & Firm Performance"
+"🚀 IE Lab — Khởi nghiệp quốc tế (International Entrepreneurship)",
+"🚀 IE Lab — International Entrepreneurship"
+],
+[
+"🧪 Lưu ý: IE Lab là công cụ mô phỏng số liệu phục vụ học tập môn Khởi nghiệp quốc tế — các đường cong, điểm ngoặt (≈ 43% FSTS), hiệu ứng \"lá chắn số\" và trường hợp đảo nhỏ đều là tham số mô phỏng minh họa, không phải số liệu thống kê thực của bất kỳ doanh nghiệp nào.",
+"🧪 Note: the IE Lab is a data-simulation tool for International Entrepreneurship courses — the curves, turning point (≈ 43% FSTS), \"digital shield\" effect and small-island scenario are illustrative simulation parameters, not real statistics of any firm."
+],
+[
+"📈 So sánh 4 kiểu thị trường (cùng mức năng lực số hiện tại)",
+"📈 Comparing 4 market types (at your current digital-capability level)"
+],
+[
+"Bốn đường cong mô phỏng trên cùng một trục: thể chế chuyển đổi (chữ U ngược), thể chế mạnh (gần tuyến tính), đảo nhỏ SIDS (giảm đơn điệu) và kịch bản gộp toàn châu Á.",
+"Four simulated curves on one axis: transition institutions (inverted U), strong institutions (near-linear), small islands SIDS (monotonic decline) and the pooled all-Asia scenario."
+],
+[
+"🧭 So sánh 4 phương thức thâm nhập",
+"🧭 Comparing 4 entry modes"
+],
+[
+"Vốn đầu tư ban đầu, mức kiểm soát và độ rủi ro (thang 0–10, tham số mô phỏng) — đổi lấy nhau: càng kiểm soát cao càng tốn vốn và rủi ro.",
+"Upfront capital, control level and risk (0–10 scale, simulation parameters) — trade-offs: more control costs more capital and carries more risk."
 ],
 [
 "Đầu tư mới (FDI)",
@@ -1058,8 +1078,8 @@
 "8 games in the ecosystem — from strategy sim to 30-second reflex games."
 ],
 [
-"Từ Việt Nam ra thế giới: phương thức thâm nhập, World Market LIVE và I–P Lab.",
-"From Vietnam to the world: entry modes, World Market LIVE and the I–P Lab."
+"Từ Việt Nam ra thế giới: phương thức thâm nhập, World Market LIVE và IE Lab Khởi nghiệp quốc tế.",
+"From Vietnam to the world: entry modes, World Market LIVE and the International Entrepreneurship Lab."
 ],
 [
 "Đỗ Thùy Hương & Phan Anh Tú — sứ mệnh và tầm nhìn 2026.",
@@ -1074,40 +1094,8 @@
 "🎵 Original music"
 ],
 [
-"Ca khúc BizOn Global · bản thu có lời",
-"BizOn Global theme song · vocal recording"
-],
-[
-"🎬 MV & Video",
-"🎬 MV & Videos"
-],
-[
-"Hóa Rồng — trỗi dậy",
-"Becoming the Dragon — Rising"
-],
-[
-"Hóa Rồng — cao trào",
-"Becoming the Dragon — Climax"
-],
-[
-"«Bật Nghiệp» · Phần 4 — rồng đất sét cuộn mình bay lên",
-"«Bật Nghiệp» · Part 4 — the clay dragon coils and takes flight"
-],
-[
-"«Bật Nghiệp» · Phần 5 (Bridge) — rồng bay qua bản đồ Việt Nam",
-"«Bật Nghiệp» · Part 5 (Bridge) — the dragon soars across the map of Vietnam"
-],
-[
-"«Bật Nghiệp» Phần 6 & «Hương and the World» Phần 5 — đôi cánh mở rộng",
-"«Bật Nghiệp» Part 6 & «Hương and the World» Part 5 — wings spread wide"
-],
-[
-"«Hương and the World» · Phần 4 — con thuyền đất sét rẽ sóng ra đại dương",
-"«Hương and the World» · Part 4 — the clay ship sails out to the open ocean"
-],
-[
-"«Hương and the World» · Coda — rồng lửa Cửu Long, «C'est la victoire!»",
-"«Hương and the World» · Coda — the Mekong fire dragon, «C'est la victoire!»"
+"Ca khúc BizOn GO Global · bản thu có lời",
+"BizOn GO Global theme song · vocal recording"
 ],
 [
 "Đội Demo Bật Nghiệp — 5 thành viên đất nặn",
