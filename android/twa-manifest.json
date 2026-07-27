@@ -1,0 +1,56 @@
+{
+  "packageId": "io.github.thuyhuongctu.bizon",
+  "host": "thuyhuongctu.github.io",
+  "name": "BizOn Bật Nghiệp",
+  "launcherName": "BizOn",
+  "display": "standalone",
+  "themeColor": "#006687",
+  "themeColorDark": "#081a20",
+  "navigationColor": "#033337",
+  "navigationColorDark": "#081a20",
+  "navigationDividerColor": "#033337",
+  "navigationDividerColorDark": "#081a20",
+  "backgroundColor": "#f4faff",
+  "enableNotifications": false,
+  "startUrl": "/BizOn/index.html",
+  "iconUrl": "https://thuyhuongctu.github.io/BizOn/assets/icons/icon-512.png",
+  "maskableIconUrl": "https://thuyhuongctu.github.io/BizOn/assets/icons/icon-512.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "./android.keystore",
+    "alias": "bizon"
+  },
+  "appVersionName": "1.1.0",
+  "appVersionCode": 1,
+  "shortcuts": [
+    {
+      "name": "Chơi Bật Nghiệp",
+      "shortName": "Bật Nghiệp",
+      "url": "/BizOn/game.html",
+      "chosenIconUrl": "https://thuyhuongctu.github.io/BizOn/assets/icons/icon-192.png"
+    },
+    {
+      "name": "BizOn GO GlObal",
+      "shortName": "GO GlObal",
+      "url": "/BizOn/global.html",
+      "chosenIconUrl": "https://thuyhuongctu.github.io/BizOn/assets/icons/icon-192.png"
+    }
+  ],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://thuyhuongctu.github.io/BizOn/manifest.webmanifest",
+  "fallbackType": "customtabs",
+  "features": {},
+  "alphaDependencies": {
+    "enabled": false
+  },
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "fullScopeUrl": "https://thuyhuongctu.github.io/BizOn/",
+  "minSdkVersion": 21,
+  "orientation": "default",
+  "fingerprints": [],
+  "additionalTrustedOrigins": [],
+  "retainedBundles": [],
+  "appVersion": "1.1.0"
+}
