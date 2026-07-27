@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 — © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Kho Âm nhạc BizOn — BizOn Bật Nghiệp</title>
+<meta name="description" content="Kho Âm nhạc BizOn: toàn bộ ca khúc gốc của hệ sinh thái BizOn Bật Nghiệp — Bật Nghiệp, Hương and the World, BizOn Theme — và giọng nói Lumina AI.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#006687', 'primary-container': '#00c4ff', 'surface-bright': '#f4faff',
+        'deep-teal': 'rgb(var(--dt) / <alpha-value>)', 'clay-orange': '#e8762d', 'clay-gold': '#fda127',
+      },
+      fontFamily: { display: ['"Plus Jakarta Sans"', 'sans-serif'], body: ['Manrope', 'sans-serif'] },
+      borderRadius: { clay: '24px' },
+    },
+  },
+};
+</script>
+<script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+  html { background:#f4faff; scroll-behavior:smooth; }
+  body { font-family:'Manrope',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
+  .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
+  .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease; }
+  .clay-btn:active { transform:translateY(2px); }
+  .clay-sunken { background:#e8f2f8; box-shadow:inset 3px 3px 8px rgba(0,102,135,.12), inset -3px -3px 8px rgba(255,255,255,.9); }
+  .glass-nav { background:rgba(3,51,55,.78); backdrop-filter:blur(14px); }
+  .seek { -webkit-appearance:none; appearance:none; width:100%; height:8px; border-radius:999px; background:#dbe9f2; outline:none; }
+  .seek::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:linear-gradient(160deg,#00c4ff,#006687); box-shadow:0 3px 6px rgba(0,102,135,.4); cursor:pointer; }
+  .eq { display:inline-flex; gap:2px; align-items:flex-end; height:14px; }
+  .eq span { width:3px; border-radius:2px; background:#e8762d; animation:eq 0.9s ease-in-out infinite; }
+  .eq span:nth-child(2){ animation-delay:.2s } .eq span:nth-child(3){ animation-delay:.4s }
+  @keyframes eq { 0%,100%{height:4px} 50%{height:14px} }
+  /* ===== Chế độ tối ===== */
+  :root { --dt: 3 51 55; }
+  html[data-theme="dark"] { --dt: 214 236 240; background:#081a20; color-scheme:dark; }
+  html[data-theme="dark"] body { color:#d6ecf0; }
+  html[data-theme="dark"] .clay-card { background:#0e2a33; box-shadow:0 10px 30px -5px rgba(0,0,0,.45), inset 0 -4px 0 rgba(0,0,0,.3); }
+  html[data-theme="dark"] .clay-sunken { background:#0a222a; box-shadow:inset 3px 3px 8px rgba(0,0,0,.5), inset -3px -3px 8px rgba(255,255,255,.03); }
+  html[data-theme="dark"] .glass-nav { background:rgba(2,20,24,.85); }
+  html[data-theme="dark"] .text-primary { color:#5cc4e6 !important; }
+  html[data-theme="dark"] .seek { background:#123540; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="glass-nav fixed top-0 inset-x-0 z-50 text-white">
+  <div class="max-w-5xl mx-auto px-5 h-16 flex items-center justify-between gap-3">
+    <a href="index.html" class="flex items-center gap-2.5">
+      <img src="assets/icons/icon-192.png" alt="BizOn" class="w-9 h-9 rounded-xl shadow-lg">
+      <span class="font-display font-extrabold tracking-tight">BizOn <span class="text-clay-gold">Âm nhạc</span></span>
+    </a>
+    <div class="flex items-center gap-2.5">
+      <a href="thu-vien.html" class="text-white/70 hover:text-white text-sm font-bold hidden sm:block">📚 Thư viện</a>
+      <a href="index.html" class="text-white/70 hover:text-white text-sm font-bold hidden sm:block">🏠 Trang chủ</a>
+      <button id="theme-btn" onclick="toggleTheme()" class="w-9 h-9 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 transition-colors shrink-0" title="Chế độ Sáng/Tối · Light/Dark mode">🌙</button>
+      <button id="lang-btn" onclick="toggleLang()" class="h-9 px-3 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 text-[11px] font-extrabold transition-colors shrink-0" title="Tiếng Việt / English">EN</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="pt-24 pb-8 text-white" style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%)">
+  <div class="max-w-5xl mx-auto px-5">
+    <h1 class="font-display font-extrabold text-3xl sm:text-4xl">🎶 Kho Âm nhạc BizOn</h1>
+    <p class="text-white/75 text-sm mt-3 max-w-2xl">Toàn bộ ca khúc gốc và giọng nói của vũ trụ BizOn Bật Nghiệp — sáng tác riêng cho game, thuộc bản quyền của nhóm tác giả.</p>
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-5 py-10">
+
+  <!-- CA KHÚC GỐC -->
+  <section class="mb-12">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-5">💿 Ca khúc gốc</h2>
+    <div id="tracks" class="space-y-4"></div>
+    <p class="text-xs text-deep-teal/50 mt-4">📝 Lời đầy đủ hai ca khúc (bản full ~3:30, chia phân đoạn 30 giây): <a href="https://github.com/thuyhuongctu/BizOn/blob/main/docs/loi-bai-hat.md" target="_blank" rel="noopener" class="font-bold text-primary">docs/loi-bai-hat.md</a></p>
+  </section>
+
+  <!-- GIỌNG LUMINA -->
+  <section class="mb-12">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">🎙️ Giọng Lumina AI</h2>
+    <p class="text-sm text-deep-teal/55 mb-5">Các đoạn giọng nói tiếng Việt của cố vấn Lumina đang dùng trong game — danh sách 49 câu thoại đầy đủ tại <a href="https://github.com/thuyhuongctu/BizOn/blob/main/docs/loi-thoai-lumina.md" target="_blank" rel="noopener" class="font-bold text-primary">loi-thoai-lumina.md</a>.</p>
+    <div id="voices" class="grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
+  </section>
+
+  <!-- NGHE TRONG GAME -->
+  <section class="mb-12">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-5">🎮 Nghe nhạc ở đâu trong game?</h2>
+    <div class="grid sm:grid-cols-3 gap-4">
+      <a href="game.html" class="clay-card p-5 hover:-translate-y-0.5 transition-transform"><p class="text-2xl">🎮</p><h3 class="font-display font-extrabold text-deep-teal text-sm mt-1">Game chính</h3><p class="text-[11px] text-deep-teal/55 mt-1">Nút 🎵 trên đầu game — playlist tự xoay vòng cả ba ca khúc.</p></a>
+      <a href="global.html" class="clay-card p-5 hover:-translate-y-0.5 transition-transform"><p class="text-2xl">🌏</p><h3 class="font-display font-extrabold text-deep-teal text-sm mt-1">BizOn GO Global</h3><p class="text-[11px] text-deep-teal/55 mt-1">«Hương and the World» — ca khúc chủ đề hành trình ra biển lớn.</p></a>
+      <a href="games.html" class="clay-card p-5 hover:-translate-y-0.5 transition-transform"><p class="text-2xl">🕹️</p><h3 class="font-display font-extrabold text-deep-teal text-sm mt-1">BizOn Arcade</h3><p class="text-[11px] text-deep-teal/55 mt-1">Nhạc nền tùy chọn khi chơi các mini-game phản xạ.</p></a>
+    </div>
+  </section>
+
+  <p class="text-center text-xs text-deep-teal/40 mt-8">© 2026 Đỗ Thùy Hương &amp; Phan Anh Tú · BizOn Bật Nghiệp — Bảo lưu mọi quyền · <a href="thu-vien.html" class="font-bold text-primary">📚 Thư viện Sáng tạo</a> · <a href="index.html" class="font-bold text-primary">🏠 Trang chủ</a></p>
+</main>
+
+<script src="js/site-ui.js" defer></script>
+<script>
+/* ===== Trình phát ca khúc (một bài phát tại một thời điểm) ===== */
+const TRACKS = [
+  { t: '«Bật Nghiệp»', s: 'Ca khúc chủ đề game Việt Nam · V-pop electronic 112 BPM · bản phối instrumental (bản thu có lời sắp ra mắt)', f: 'assets/audio/bat-nghiep.mp3', icon: '🐉' },
+  { t: "«Je m'appelle Hương and the World»", s: 'Ca khúc BizOn GO Global · International pop 118 BPM · bản thu có lời', f: 'assets/audio/huong-and-the-world.mp3', icon: '🌏' },
+  { t: 'BizOn Theme', s: 'Nhạc nền menu và trong game · instrumental', f: 'assets/audio/bizon-theme.mp3', icon: '🏺' },
+];
+let cur = null, curIdx = -1;
+const fmt = s => isFinite(s) ? `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}` : '–:––';
+function renderTracks() {
+  document.getElementById('tracks').innerHTML = TRACKS.map((tr, i) => `
+    <div class="clay-card p-4 sm:p-5 flex items-center gap-4">
+      <button onclick="playTrack(${i})" class="clay-btn shrink-0 w-14 h-14 rounded-full text-2xl flex items-center justify-center" style="background:linear-gradient(160deg,#00c4ff,#006687);color:#fff">${curIdx === i && cur && !cur.paused ? '⏸' : '▶'}</button>
+      <div class="min-w-0 flex-1">
+        <p class="font-display font-extrabold text-deep-teal text-sm truncate">${tr.icon} ${tr.t} ${curIdx === i && cur && !cur.paused ? '<span class="eq ml-1"><span></span><span></span><span></span></span>' : ''}</p>
+        <p class="text-[10px] text-deep-teal/50 mt-0.5">${tr.s}</p>
+        <div class="flex items-center gap-2 mt-2">
+          <span id="t-cur-${i}" class="text-[10px] font-bold text-deep-teal/50 w-8">–:––</span>
+          <input id="t-seek-${i}" type="range" min="0" max="100" value="0" class="seek flex-1" oninput="seekTrack(${i}, this.value)">
+          <span id="t-dur-${i}" class="text-[10px] font-bold text-deep-teal/50 w-8">–:––</span>
+        </div>
+      </div>
+    </div>`).join('');
+}
+function playTrack(i) {
+  if (curIdx === i && cur) { if (cur.paused) cur.play().catch(() => {}); else cur.pause(); renderTracks(); return; }
+  if (cur) { cur.pause(); cur = null; }
+  curIdx = i;
+  cur = new Audio(TRACKS[i].f);
+  cur.volume = 0.6;
+  cur.addEventListener('loadedmetadata', () => { const d = document.getElementById('t-dur-' + i); if (d) d.textContent = fmt(cur.duration); });
+  cur.addEventListener('timeupdate', () => {
+    const c = document.getElementById('t-cur-' + i), sk = document.getElementById('t-seek-' + i);
+    if (c) c.textContent = fmt(cur.currentTime);
+    if (sk && cur.duration) sk.value = cur.currentTime / cur.duration * 100;
+  });
+  cur.addEventListener('ended', () => { curIdx = -1; cur = null; renderTracks(); });
+  cur.addEventListener('play', renderTracks);
+  cur.addEventListener('pause', renderTracks);
+  cur.play().catch(() => {});
+  renderTracks();
+}
+function seekTrack(i, v) { if (curIdx === i && cur && cur.duration) cur.currentTime = v / 100 * cur.duration; }
+
+/* ===== Giọng Lumina ===== */
+const VOICES = [
+  { t: 'Lời chào Hương', f: 'assets/audio/huong-intro.mp3', icon: '👋' },
+  { t: 'Cố vấn xin chào', f: 'assets/audio/lumina-advisor-hello.mp3', icon: '💬' },
+  { t: 'Kết quả vòng chơi', f: 'assets/audio/lumina-round-result.mp3', icon: '📊' },
+  { t: 'Chúc mừng chiến thắng', f: 'assets/audio/lumina-victory.mp3', icon: '🏆' },
+];
+let vAudio = null;
+function playVoice(i) {
+  if (cur && !cur.paused) { cur.pause(); renderTracks(); }
+  if (vAudio) vAudio.pause();
+  vAudio = new Audio(VOICES[i].f); vAudio.volume = 0.8; vAudio.play().catch(() => {});
+}
+document.getElementById('voices').innerHTML = VOICES.map((v, i) => `
+  <button onclick="playVoice(${i})" class="clay-card p-4 text-center hover:-translate-y-0.5 transition-transform">
+    <p class="text-2xl">${v.icon}</p>
+    <p class="text-[11px] font-extrabold text-deep-teal mt-1.5">${v.t}</p>
+    <p class="text-[9px] text-deep-teal/45 mt-0.5">▶ Nghe thử</p>
+  </button>`).join('');
+renderTracks();
+</script>
+</body>
+</html>
