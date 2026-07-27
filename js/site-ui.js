@@ -878,6 +878,26 @@
 "🚀 IE Lab — International Entrepreneurship"
 ],
 [
+"🏢 Bước 0 — Hồ sơ doanh nghiệp của bạn",
+"🏢 Step 0 — Your company profile"
+],
+[
+"Trước khi ra khơi, hãy khai báo năng lực xuất phát — hồ sơ ảnh hưởng đến toàn bộ mô phỏng.",
+"Before setting sail, declare your starting capabilities — the profile affects the whole simulation."
+],
+[
+"🖥️ Năng lực công nghệ",
+"🖥️ Technology capability"
+],
+[
+"🌏 Kinh nghiệm quốc tế",
+"🌏 International experience"
+],
+[
+"📥 Xuất nhật ký quyết định (CSV) — dữ liệu nghiên cứu / chấm điểm",
+"📥 Export decision log (CSV) — research / grading data"
+],
+[
 "Tú Phan",
 "Tu Phan"
 ],

@@ -64,6 +64,7 @@ Bản đồ chinh phục hiển thị trên Trang chủ của mỗi đội — d
 - **7 báo cáo chuẩn giáo trình**: P&L, dòng tiền 3 hoạt động, CVP hòa vốn, nhân sự, BMC, khấu hao, kiểm toán năng lượng.
 - **BizOn Monitor** (tab Thị trường sống): sparkline chỉ số đội + 3 đối thủ theo vòng — dạy đọc dashboard.
 - **IE Lab — Khởi nghiệp quốc tế** (trang BizOn GO GlObal): công cụ mô phỏng số liệu quan hệ quốc tế hóa – hiệu quả doanh nghiệp (chữ U ngược với điểm ngoặt minh họa ≈43% FSTS, kịch bản đảo nhỏ, "lá chắn số") — dùng cho học phần Khởi nghiệp/Kinh doanh quốc tế; toàn bộ là tham số mô phỏng giáo dục.
+- **Nhật ký quyết định GO GlObal (CSV)**: game tự ghi lại từng quý — hồ sơ doanh nghiệp, thị trường, phương thức, thế đàm phán, giá/marketing/bản địa hóa, thị phần, lợi nhuận, ESG, rủi ro, DOI, kết quả thắng/thua. Sinh viên bấm «📥 Xuất nhật ký quyết định (CSV)» ở màn kết quả và nộp file — dùng để chấm điểm hoặc làm dữ liệu nghiên cứu (thực nghiệm giáo dục, SEM). Nhật ký lưu trong máy người chơi (localStorage, tối đa 400 dòng gần nhất).
 
 ## 7. Xử lý sự cố thường gặp
 
