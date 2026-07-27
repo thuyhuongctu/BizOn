@@ -1446,8 +1446,8 @@
 "The Bật Nghiệp demo team — 5 clay members"
 ],
 [
-"COO Quốc Bảo · CFO Thu Hà · CEO Minh Long · CMO Lan Chi · Thư ký pháp chế Gia Hân",
-"COO Quốc Bảo · CFO Thu Hà · CEO Minh Long · CMO Lan Chi · Compliance Officer Gia Hân"
+"CMO Lan Chi · CFO Thu Hà · CEO Minh Long · COO Quốc Bảo · Thư ký pháp chế Gia Hân",
+"CMO Lan Chi · CFO Thu Hà · CEO Minh Long · COO Quốc Bảo · Compliance Officer Gia Hân"
 ],
 [
 "🌉 Hệ sinh thái Je m'appelle Hương",
