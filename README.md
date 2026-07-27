@@ -2,7 +2,7 @@
 
 > A **3D-claymorphism EdTech business-simulation game** — student teams run a virtual company through **6 rounds** across a map of Vietnam, guided by the AI advisor **Lumina (Je m'appelle Hương)**, then expand to international markets with **BizOn GO GlObal**.
 
-![version](https://img.shields.io/badge/version-1.0-blue)
+![version](https://img.shields.io/badge/version-1.1-blue)
 ![license](https://img.shields.io/badge/license-Proprietary%20·%20All%20rights%20reserved-lightgrey)
 ![PWA](https://img.shields.io/badge/PWA-offline%20ready-5cc4e6)
 ![deploy](https://img.shields.io/badge/GitHub%20Pages-live-2ea44f)
@@ -42,6 +42,9 @@ Every page supports **light/dark mode**, a **Vietnamese–English bilingual inte
 | Learn by playing | Quests, achievements, a skill tree, completion certificates, a team journal, the Clay Reward Shop, mini-games |
 | Instructor tools | Class IDs, round locking, bonus funding with an audit log — full guide at [`docs/huong-dan-giang-vien.md`](docs/huong-dan-giang-vien.md) |
 | BizOn Monitor | A terminal-style market board: sparklines for the team's metrics and all 3 AI rivals, round by round |
+| Team meeting | The 4 demo teammates propose role-based numbers each round (deterministic per seed) — one tap applies them to the sliders |
+| Battle arena | After every commit, the four companies enter an animated arena named after the round's province; market-share bars race and the verdict decides the flag 🚩 |
+| Onboarding | Win-condition banner, live market-share forecast, Basic/Advanced decision modes (rounds 1–2 simplified), a one-line "Why?" after each round, and a plain-language glossary |
 
 ## 🔬 Simulation model
 
