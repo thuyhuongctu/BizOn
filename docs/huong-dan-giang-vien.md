@@ -76,7 +76,18 @@ Bản đồ chinh phục hiển thị trên Trang chủ của mỗi đội — d
 - **Hai đội dùng chung một máy:** dữ liệu sẽ ghi đè nhau — mỗi đội một máy/trình duyệt riêng (hoặc hồ sơ trình duyệt riêng).
 - **Cần "trọng tài":** hành vi AI tất định theo seed đội — kết quả tái lập được, không có yếu tố may rủi giữa các lần chơi lại cùng quyết định.
 
-## 8. Liên hệ & mã nguồn
+## 8. Đo lường hiệu quả lớp thử nghiệm
+
+Bộ phiếu khảo sát trước–sau in được trên khổ A4 (kèm đáp án và hướng dẫn chấm cho giảng viên):
+**https://thuyhuongctu.github.io/BizOn/khao-sat.html**
+
+- **Phiếu trước** (đầu buổi, 5–7 phút): 8 câu kiến thức + 5 câu tự tin ra quyết định (Likert 1–5)
+- **Phiếu sau** (cuối buổi, 7–10 phút): lặp lại A + B để đo chênh lệch, thêm phần C về mức độ tham gia, điểm giới thiệu 0–10 và 2 câu mở
+- Ẩn danh bằng mã tự đặt; trang thứ ba dành riêng cho giảng viên: đáp án, cách nhập bảng tính và các chỉ số Δ kiến thức / Δ tự tin / mức tham gia
+
+Dữ liệu trước–sau từ 2–3 lớp (~100 sinh viên) chính là bằng chứng hiệu quả học tập quan trọng nhất của dự án.
+
+## 9. Liên hệ & mã nguồn
 
 - Mã nguồn: https://github.com/thuyhuongctu/BizOn
 - Trang giới thiệu: https://thuyhuongctu.github.io/BizOn/gioi-thieu.html

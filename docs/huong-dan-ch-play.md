@@ -43,6 +43,8 @@
 5. **Điền hồ sơ Play Console** — dùng nội dung soạn sẵn ở phần dưới.
 6. **Kiểm thử kín**: tài khoản cá nhân mới cần **≥ 12 người thử nghiệm liên tục 14 ngày** trước khi
    xin phát hành chính thức (lớp sinh viên của cô là nguồn tester lý tưởng).
+   💡 Tận dụng luôn đợt này làm pilot đo hiệu quả học tập bằng bộ phiếu khảo sát trước–sau:
+   https://thuyhuongctu.github.io/BizOn/khao-sat.html
 7. Gửi xét duyệt.
 
 Lưu ý: từ **31/8/2026** app mới phải nhắm **Android 16 / API 36** — Bubblewrap bản mới sẽ nhắm SDK mới nhất;
