@@ -1,9 +1,10 @@
 {
-  "name": "BizOn Bật Nghiệp — Business Simulation",
+  "id": "./",
+  "name": "BizOn Bật Nghiệp — Business Simulation Ecosystem",
   "short_name": "BizOn",
-  "description": "Game mô phỏng kinh doanh EdTech 3D Claymorphism với cố vấn AI Lumina — Je m'appelle Hương.",
+  "description": "Hệ sinh thái game mô phỏng kinh doanh & khởi nghiệp 3D Claymorphism: Bật Nghiệp, GO GlObal, Arcade — với cố vấn AI Lumina.",
   "lang": "vi",
-  "start_url": "./game.html",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
