@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 — © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Liên hệ &amp; Hợp tác — BizOn Bật Nghiệp</title>
+<meta name="description" content="Liên hệ nhóm BizOn: hợp tác giảng dạy, nghiên cứu với DOI trích dẫn được, hoặc cộng tác sáng tạo âm nhạc và nghệ thuật claymorphism.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#006687', 'primary-container': '#00c4ff', 'surface-bright': '#f4faff',
+        'deep-teal': 'rgb(var(--dt) / <alpha-value>)', 'clay-orange': '#e8762d', 'clay-gold': '#fda127',
+      },
+      fontFamily: { display: ['"Plus Jakarta Sans"', 'sans-serif'], body: ['Manrope', 'sans-serif'] },
+      borderRadius: { clay: '24px' },
+    },
+  },
+};
+</script>
+<script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+  html { background:#f4faff; scroll-behavior:smooth; }
+  body { font-family:'Manrope',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
+  .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
+  .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease; }
+  .clay-btn:active { transform:translateY(2px); }
+  .clay-sunken { background:#e8f2f8; box-shadow:inset 3px 3px 8px rgba(0,102,135,.12), inset -3px -3px 8px rgba(255,255,255,.9); }
+  .glass-nav { background:rgba(3,51,55,.78); backdrop-filter:blur(14px); }
+  .art-card { transition:transform .2s cubic-bezier(.34,1.56,.64,1); }
+  .art-card:hover { transform:translateY(-5px) scale(1.02); }
+  .field { width:100%; border-radius:16px; padding:12px 16px; font-size:14px; background:#e8f2f8; color:inherit; border:none; outline:none; box-shadow:inset 3px 3px 8px rgba(0,102,135,.12), inset -3px -3px 8px rgba(255,255,255,.9); }
+  .field:focus { box-shadow:inset 3px 3px 8px rgba(0,102,135,.2), 0 0 0 2px rgba(0,102,135,.35); }
+  :root { --dt: 3 51 55; }
+  html[data-theme="dark"] { --dt: 214 236 240; background:#081a20; color-scheme:dark; }
+  html[data-theme="dark"] body { color:#d6ecf0; }
+  html[data-theme="dark"] .clay-card { background:#0e2a33; box-shadow:0 10px 30px -5px rgba(0,0,0,.45), inset 0 -4px 0 rgba(0,0,0,.3); }
+  html[data-theme="dark"] .clay-sunken, html[data-theme="dark"] .field { background:#0a222a; box-shadow:inset 3px 3px 8px rgba(0,0,0,.5), inset -3px -3px 8px rgba(255,255,255,.03); }
+  html[data-theme="dark"] .glass-nav { background:rgba(2,20,24,.85); }
+  html[data-theme="dark"] .text-primary { color:#5cc4e6 !important; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="glass-nav fixed top-0 inset-x-0 z-50 text-white">
+  <div class="max-w-5xl mx-auto px-5 h-16 flex items-center justify-between gap-3">
+    <a href="index.html" class="flex items-center gap-2.5">
+      <img src="assets/icons/icon-192.png" alt="BizOn" class="w-9 h-9 rounded-xl shadow-lg">
+      <span class="font-display font-extrabold tracking-tight">BizOn <span class="text-clay-gold">Liên hệ</span></span>
+    </a>
+    <div class="flex items-center gap-2.5">
+      <a href="giai-phap.html" class="text-white/70 hover:text-white text-sm font-bold hidden sm:block">🧩 Giải pháp</a>
+      <a href="du-an.html" class="text-white/70 hover:text-white text-sm font-bold hidden sm:block">🚀 Dự án</a>
+      <a href="index.html" class="text-white/70 hover:text-white text-sm font-bold hidden sm:block">🏠 Trang chủ</a>
+      <button id="theme-btn" onclick="toggleTheme()" class="w-9 h-9 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 transition-colors shrink-0" title="Chế độ Sáng/Tối · Light/Dark mode">🌙</button>
+      <button id="lang-btn" onclick="toggleLang()" class="h-9 px-3 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 text-[11px] font-extrabold transition-colors shrink-0" title="Tiếng Việt / English">EN</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="pt-24 pb-10 text-white" style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%)">
+  <div class="max-w-5xl mx-auto px-5 grid sm:grid-cols-[1fr_auto] gap-6 items-center">
+    <div>
+      <p class="text-[11px] font-extrabold uppercase tracking-[.2em] text-clay-gold">Liên hệ &amp; Hợp tác</p>
+      <h1 class="font-display font-extrabold text-3xl sm:text-4xl mt-2">Kết nối với nhóm BizOn</h1>
+      <p class="text-white/75 text-sm mt-3 max-w-2xl">Chúng tôi luôn sẵn sàng lắng nghe — từ góp ý về trò chơi, đề xuất hợp tác giảng dạy, đến những ý tưởng sáng tạo mới.</p>
+    </div>
+    <img src="assets/character/anh-tu-ao-dai-work.jpg" alt="Tú Phan tại bàn làm việc" class="h-44 sm:h-56 w-auto mx-auto rounded-2xl shadow-2xl hidden sm:block">
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-5 py-10">
+
+  <section class="grid lg:grid-cols-2 gap-6 mb-14">
+
+    <!-- FORM -->
+    <div class="clay-card p-6 sm:p-8">
+      <h2 class="font-display font-extrabold text-deep-teal text-xl">✍️ Gửi lời nhắn</h2>
+      <p class="text-xs text-deep-teal/50 mt-1.5 mb-5">Bấm «Soạn email» sẽ mở ứng dụng thư của bạn với nội dung điền sẵn — trang web không thu thập hay lưu trữ thông tin nào.</p>
+      <div class="space-y-4">
+        <div><label class="text-xs font-extrabold text-deep-teal/70 block mb-1.5" for="ct-name">Họ và tên</label><input id="ct-name" class="field" type="text" placeholder="Nguyễn Văn A"></div>
+        <div><label class="text-xs font-extrabold text-deep-teal/70 block mb-1.5" for="ct-topic">Chủ đề</label>
+          <select id="ct-topic" class="field">
+            <option>Hợp tác giảng dạy</option>
+            <option>Hợp tác nghiên cứu</option>
+            <option>Cộng tác sáng tạo (âm nhạc / nghệ thuật)</option>
+            <option>Góp ý về trò chơi</option>
+            <option>Khác</option>
+          </select>
+        </div>
+        <div><label class="text-xs font-extrabold text-deep-teal/70 block mb-1.5" for="ct-msg">Nội dung</label><textarea id="ct-msg" class="field" rows="5" placeholder="Chia sẻ ý tưởng hoặc câu hỏi của bạn..."></textarea></div>
+        <button onclick="ctSend()" class="clay-btn bg-primary text-white font-display font-extrabold w-full py-3.5 text-sm">📨 Soạn email</button>
+      </div>
+    </div>
+
+    <!-- KÊNH CHÍNH THỨC -->
+    <div class="space-y-4">
+      <div class="clay-card p-6">
+        <h2 class="font-display font-extrabold text-deep-teal text-xl mb-4">📡 Kênh chính thức</h2>
+        <div class="space-y-3">
+          <a href="mailto:thuyhuongctu@gmail.com" class="clay-sunken rounded-2xl p-4 flex items-center gap-3 block"><span class="text-2xl">✉️</span><span><b class="text-sm text-deep-teal block">Email</b><span class="text-xs text-deep-teal/60">thuyhuongctu@gmail.com</span></span></a>
+          <a href="https://github.com/thuyhuongctu/BizOn" target="_blank" rel="noopener" class="clay-sunken rounded-2xl p-4 flex items-center gap-3 block"><span class="text-2xl">🧑‍💻</span><span><b class="text-sm text-deep-teal block">GitHub</b><span class="text-xs text-deep-teal/60">github.com/thuyhuongctu/BizOn</span></span></a>
+          <a href="https://doi.org/10.5281/zenodo.21592241" target="_blank" rel="noopener" class="clay-sunken rounded-2xl p-4 flex items-center gap-3 block"><span class="text-2xl">📦</span><span><b class="text-sm text-deep-teal block">Zenodo (trích dẫn học thuật)</b><span class="text-xs text-deep-teal/60">DOI 10.5281/zenodo.21592241</span></span></a>
+          <a href="https://thuyhuongctu.github.io/BizOn/" class="clay-sunken rounded-2xl p-4 flex items-center gap-3 block"><span class="text-2xl">🌐</span><span><b class="text-sm text-deep-teal block">Ứng dụng web</b><span class="text-xs text-deep-teal/60">thuyhuongctu.github.io/BizOn</span></span></a>
+        </div>
+      </div>
+      <div class="clay-card p-6">
+        <h3 class="font-display font-extrabold text-deep-teal text-base mb-3">🤝 Nhóm đang tìm kiếm</h3>
+        <ul class="text-sm text-deep-teal/65 space-y-2">
+          <li>🏫 <b class="text-deep-teal">Giảng viên &amp; nhà trường</b> — dùng BizOn miễn phí trong lớp và chia sẻ phản hồi thực tế.</li>
+          <li>🔬 <b class="text-deep-teal">Nhà nghiên cứu</b> — trích dẫn qua DOI, hoặc cùng phát triển mô hình mô phỏng.</li>
+          <li>🎨 <b class="text-deep-teal">Đối tác sáng tạo</b> — âm nhạc, tạo hình đất nặn và bản địa hóa đa ngôn ngữ.</li>
+        </ul>
+        <a href="tuyen-dung.html" class="text-xs font-extrabold text-primary mt-4 inline-block">Xem các vị trí cộng tác →</a>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+<script>
+function ctSend() {
+  const name = document.getElementById('ct-name').value.trim();
+  const topic = document.getElementById('ct-topic').value;
+  const msg = document.getElementById('ct-msg').value.trim();
+  const subject = encodeURIComponent('[BizOn] ' + topic + (name ? ' — ' + name : ''));
+  const body = encodeURIComponent((msg || '') + (name ? '\n\n— ' + name : ''));
+  location.href = 'mailto:thuyhuongctu@gmail.com?subject=' + subject + '&body=' + body;
+}
+</script>
+<script src="js/site-ui.js" defer></script>
+</body>
+</html>
