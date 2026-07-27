@@ -882,6 +882,78 @@
 "Tu Phan"
 ],
 [
+"Kho Âm nhạc BizOn",
+"BizOn Music Library"
+],
+[
+"🎶 Kho Âm nhạc BizOn",
+"🎶 BizOn Music Library"
+],
+[
+"Ca khúc gốc, trình phát đầy đủ, lời bài hát và giọng Lumina AI.",
+"Original songs, a full player, lyrics and the Lumina AI voice."
+],
+[
+"Toàn bộ ca khúc gốc và giọng Lumina của riêng BizOn — trình phát đầy đủ.",
+"All of BizOn's own original songs and Lumina voice clips — with a full player."
+],
+[
+"Toàn bộ ca khúc gốc và giọng nói của vũ trụ BizOn Bật Nghiệp — sáng tác riêng cho game, thuộc bản quyền của nhóm tác giả.",
+"All original songs and voices of the BizOn Bật Nghiệp universe — composed for the game, copyright of the authors."
+],
+[
+"💿 Ca khúc gốc",
+"💿 Original songs"
+],
+[
+"🎙️ Giọng Lumina AI",
+"🎙️ Lumina AI voice"
+],
+[
+"🎮 Nghe nhạc ở đâu trong game?",
+"🎮 Where does the music play in-game?"
+],
+[
+"Game chính",
+"Main game"
+],
+[
+"Nút 🎵 trên đầu game — playlist tự xoay vòng cả ba ca khúc.",
+"The 🎵 button in the game header — the playlist rotates through all three songs."
+],
+[
+"«Hương and the World» — ca khúc chủ đề hành trình ra biển lớn.",
+"«Hương and the World» — the theme song of the voyage to the open sea."
+],
+[
+"Nhạc nền tùy chọn khi chơi các mini-game phản xạ.",
+"Optional background music while playing the reflex mini-games."
+],
+[
+"Lời chào Hương",
+"Hương's greeting"
+],
+[
+"Cố vấn xin chào",
+"Advisor hello"
+],
+[
+"Kết quả vòng chơi",
+"Round result"
+],
+[
+"Chúc mừng chiến thắng",
+"Victory cheer"
+],
+[
+"▶ Nghe thử",
+"▶ Preview"
+],
+[
+"📚 Thư viện",
+"📚 Library"
+],
+[
 "🧪 Lưu ý: IE Lab là công cụ mô phỏng số liệu phục vụ học tập môn Khởi nghiệp quốc tế — các đường cong, điểm ngoặt (≈ 43% FSTS), hiệu ứng \"lá chắn số\" và trường hợp đảo nhỏ đều là tham số mô phỏng minh họa, không phải số liệu thống kê thực của bất kỳ doanh nghiệp nào.",
 "🧪 Note: the IE Lab is a data-simulation tool for International Entrepreneurship courses — the curves, turning point (≈ 43% FSTS), \"digital shield\" effect and small-island scenario are illustrative simulation parameters, not real statistics of any firm."
 ],
