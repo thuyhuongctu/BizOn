@@ -902,6 +902,14 @@
 "English–Vietnamese bilingual · international release"
 ],
 [
+"Bản phối giọng nam · lời tiếng Anh song ngữ",
+"Male-vocal arrangement · bilingual English lyrics"
+],
+[
+"Bản phối giọng nam · lời tiếng Anh",
+"Male-vocal arrangement · English lyrics"
+],
+[
 "🎶 Kho Âm nhạc BizOn",
 "🎶 BizOn Music Library"
 ],
