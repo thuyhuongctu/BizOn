@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: "Nếu sử dụng phần mềm này trong giảng dạy hoặc nghiên cứu, vui lòng trích dẫn theo thông tin dưới đây. / If you use this software, please cite it as below."
 title: "BizOn Bật Nghiệp: A 3D claymorphism business-simulation game for entrepreneurship education"
 type: software
-version: "1.0"
+version: "1.1"
 date-released: 2026-07-26
 authors:
   - family-names: "Do"
