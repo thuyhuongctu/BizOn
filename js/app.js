@@ -153,13 +153,18 @@ function renderOpponents() {
     <h3 class="font-display font-bold text-deep-teal mb-1">⚔️ 3 đối thủ AI của bạn</h3>
     <p class="text-[10px] text-deep-teal/45 mb-3">Mỗi vòng họ tự định giá & chi marketing theo tính cách — xem Sổ tay 📖 mục "Đối thủ AI" để biết cách khắc chế.</p>
     ${AI_OPPONENTS.map((o, i) => `
-      <div class="flex items-center gap-3 py-2 ${i < 2 ? 'border-b border-surface-bright' : ''}">
-        <p class="text-2xl shrink-0">${o.icon}</p>
-        <div class="flex-1 min-w-0">
-          <p class="text-xs font-extrabold text-deep-teal">${o.name} <span class="font-bold text-primary">· ${o.style}</span></p>
-          <p class="text-[10px] text-deep-teal/55 truncate">${o.play}</p>
+      <div class="py-2 ${i < 2 ? 'border-b border-surface-bright' : ''}">
+        <div class="flex items-center gap-3">
+          <p class="text-2xl shrink-0">${o.icon}</p>
+          <div class="flex-1 min-w-0">
+            <p class="text-xs font-extrabold text-deep-teal">${o.name} <span class="font-bold text-primary">· ${o.style}</span></p>
+            <p class="text-[10px] text-deep-teal/55 truncate">${o.play}</p>
+          </div>
+          <p class="text-xs font-display font-extrabold text-deep-teal/70 shrink-0">${shares[i].toFixed(0)}%</p>
         </div>
-        <p class="text-xs font-display font-extrabold text-deep-teal/70 shrink-0">${shares[i].toFixed(0)}%</p>
+        <div class="h-1.5 rounded-full bg-surface-bright overflow-hidden mt-1.5 ml-10">
+          <div class="h-full rounded-full transition-all duration-700" style="width:${Math.min(100, shares[i]).toFixed(0)}%; background:${['#e8762d', '#00a0c8', '#10b981'][i]}"></div>
+        </div>
       </div>`).join('')}
   </div>`;
 }
@@ -947,6 +952,11 @@ function syncDecisionLabels() {
   $('fc-be').textContent = `Sản lượng hòa vốn: ${fc.breakEven.toLocaleString('vi-VN')} sp · Bán dự kiến: ${fc.estSold.toLocaleString('vi-VN')} sp` +
     (capped ? ` · ⚠️ Nhân sự chỉ đủ sản xuất ${fc.laborCap.toLocaleString('vi-VN')} sp` : '');
   renderMarketForecast();
+  const recap = $('commit-recap');
+  if (recap) {
+    recap.innerHTML = `🧾 <b class="text-deep-teal">Xem lại trước khi chốt:</b> Giá <b>${(+$('in-price').value).toLocaleString('vi-VN')}k</b> · Marketing <b>${$('in-mkt').value}tr</b> · Sản xuất <b>${(+$('in-prod').value).toLocaleString('vi-VN')} sp</b> · Nhân công <b>${$('in-workers').value}</b> · R&D <b>${$('in-rd').value}tr</b>` +
+      (capped ? ' · <span class="text-red-600 font-extrabold">⚠️ thiếu nhân sự cho sản lượng này</span>' : '');
+  }
 }
 
 /* Dự báo thị phần sống — trả lời thẳng câu hỏi "tôi có cắm được cờ không?" */
