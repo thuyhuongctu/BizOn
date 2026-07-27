@@ -23,6 +23,7 @@ function load() {
       s.lineUpgraded ??= [false, false, false]; s.maintBonus ??= 0; s.maintenanceLog ??= [];
       s.loan ??= 0; s.costCutter ??= false; s.peakShare ??= 0; s.eventShownRound ??= 0;
       s.whatIfUsed ??= 0; s.advisorHistory ??= [];
+      s.whatIfTotal ??= 0; s.suggestionsApplied ??= 0; s.achShown ??= (s.achievements || []).slice();
       s.conquest ??= []; s.aiHistory ??= []; s.teamMembers ??= null;
     }
     return s;
@@ -1027,6 +1028,8 @@ function applySuggestion(i) {
   const s = teamSuggestions()[i];
   if (!s || !s.apply) return;
   Object.entries(s.apply).forEach(([id, v]) => { const el = $(id); if (el) el.value = v; });
+  S.suggestionsApplied = (S.suggestionsApplied || 0) + 1;
+  save();
   syncDecisionLabels();
   const btn = document.getElementById('tm-applied-' + i);
   if (btn) { btn.textContent = '✓ Đã áp vào thanh trượt'; btn.classList.add('opacity-60'); }
@@ -1237,6 +1240,16 @@ function showRoundResult(r) {
       <div class="clay-sunken rounded-2xl p-3 mt-3 text-left"><p class="text-[10px] font-extrabold text-deep-teal/50 uppercase mb-0.5">💡 Vì sao?</p><p class="text-[11px] text-deep-teal/75">${explainRound(r)}</p></div>
       <p class="mt-3 text-xs font-bold text-primary">+${r.xpGain} XP</p>
       ${cqLine}
+      ${(() => {
+        S.achShown ??= [];
+        const fresh = (S.achievements || []).filter(id => !S.achShown.includes(id));
+        if (!fresh.length) return '';
+        S.achShown.push(...fresh); save();
+        return fresh.map(id => {
+          const a = ACHIEVEMENTS.find(x => x.id === id);
+          return a ? `<p class="mt-1.5 text-xs font-extrabold text-clay-gold bg-deep-teal/90 rounded-full py-1.5 px-3 inline-block">🎖️ Mở khóa thành tựu: ${a.icon} ${a.name}</p>` : '';
+        }).join('<br>');
+      })()}
       <button class="clay-btn w-full bg-primary text-white font-display font-bold py-3 mt-4">Tiếp tục</button>
     </div>`;
   div.querySelector('button').onclick = () => {
@@ -1265,6 +1278,7 @@ function recordConquest(report) {
   const win = report.share >= (best.share || 0);
   (S.conquest ??= []).push({ round: report.round, win, winner: win ? S.profile.teamName : best.name });
   (S.aiHistory ??= []).push(S.competitors.map(c => ({ name: c.name, share: Math.round((c.share || 0) * 10) / 10 })));
+  unlockAchievements(S, report);
   return win;
 }
 
@@ -1404,6 +1418,7 @@ function runWhatIf(role) {
   const d = currentDecisionInput();
   if (role === 'CFO') { d.loanAmount = S.loan > 0 ? 0 : 300; d.costCutPct = 15; }
   S.whatIfUsed++;
+  S.whatIfTotal = (S.whatIfTotal || 0) + 1;
   save();
   const r = whatIfSimulate(S, role, d);
   const statusMap = {
