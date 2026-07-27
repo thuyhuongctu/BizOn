@@ -1,18 +1,79 @@
 {
-  "id": "./",
-  "name": "BizOn Bật Nghiệp — Business Simulation Ecosystem",
+  "id": "/BizOn/",
+  "name": "BizOn Bật Nghiệp — Hệ sinh thái game mô phỏng kinh doanh",
   "short_name": "BizOn",
-  "description": "Hệ sinh thái game mô phỏng kinh doanh & khởi nghiệp 3D Claymorphism: Bật Nghiệp, GO GlObal, Arcade — với cố vấn AI Lumina.",
+  "description": "Hệ sinh thái nhiều game mô phỏng kinh doanh và khởi nghiệp: BizOn Việt Nam, GO GlObal, Arcade và cố vấn Lumina.",
   "lang": "vi",
-  "start_url": "./index.html",
+  "start_url": "./index.html?source=pwa",
   "scope": "./",
   "display": "standalone",
-  "orientation": "portrait",
+  "orientation": "any",
   "theme_color": "#006687",
   "background_color": "#f4faff",
   "icons": [
-    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": [
+    "education",
+    "games",
+    "business"
+  ],
+  "shortcuts": [
+    {
+      "name": "BizOn Việt Nam",
+      "short_name": "Việt Nam",
+      "description": "Game mô phỏng kinh doanh 6 vòng",
+      "url": "./game.html?source=pwa",
+      "icons": [
+        {
+          "src": "assets/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "BizOn Arcade",
+      "short_name": "Arcade",
+      "description": "Trung tâm nhiều game của BizOn",
+      "url": "./games.html?source=pwa",
+      "icons": [
+        {
+          "src": "assets/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "BizOn GO GlObal",
+      "short_name": "GO GlObal",
+      "description": "Mô phỏng quyết định quốc tế hóa",
+      "url": "./global.html?source=pwa",
+      "icons": [
+        {
+          "src": "assets/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
   ]
 }
