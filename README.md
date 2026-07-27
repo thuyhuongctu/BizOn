@@ -28,7 +28,7 @@
 | [`global.html`](https://thuyhuongctu.github.io/BizOn/global.html) | **BizOn GO GlObal** (beta) — from Vietnam to the world: pick a market and an entry mode (Export · Licensing · Joint Venture · Greenfield FDI), with a live World Market board and the **IE Lab** (International Entrepreneurship, data simulation) |
 | [`doi-ngu.html`](https://thuyhuongctu.github.io/BizOn/doi-ngu.html) | Founding team, mission & vision 2026 |
 
-Every page supports **light/dark mode**, a **Vietnamese–English bilingual interface**, and **background music** (two original theme songs, «Bật Nghiệp» and «Je m'appelle Hương and the World» — lyrics in [`docs/loi-bai-hat.md`](docs/loi-bai-hat.md)).
+Every page supports **light/dark mode**, a **Vietnamese–English bilingual interface**, and **background music** (two original theme songs, «Bật Nghiệp» and «Je m'appelle Hương sans frontières» — lyrics in [`docs/loi-bai-hat.md`](docs/loi-bai-hat.md)).
 
 ## 🎮 Key features
 
@@ -77,7 +77,7 @@ js/app.js             # Game UI: rendering, navigation, conquest map, intro
 js/site-ui.js         # Shared light/dark mode + Vietnamese–English dictionary
 sw.js                 # Service worker — app shell, offline play
 assets/character/     # 3D characters: Lumina Áo Dài, Lumina Vest Trắng, Phan Anh Tú
-assets/audio/         # Music: BizOn Theme, Bật Nghiệp, Hương and the World, Hương's voice
+assets/audio/         # Music: BizOn Theme, Bật Nghiệp, Hương sans frontières, Hương's voice
 docs/                 # Instructor guide, song lyrics, technical docs
 ```
 
