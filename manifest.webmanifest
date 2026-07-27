@@ -3,7 +3,7 @@
   "short_name": "BizOn",
   "description": "Game mô phỏng kinh doanh EdTech 3D Claymorphism với cố vấn AI Lumina — Je m'appelle Hương.",
   "lang": "vi",
-  "start_url": "./",
+  "start_url": "./game.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
