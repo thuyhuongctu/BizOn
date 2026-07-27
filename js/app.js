@@ -83,11 +83,11 @@ function pickRole(id) {
 
 // ---------- Đội demo 5 nhân vật & 3 đối thủ đại diện ----------
 const DEMO_TEAM = [
-  { role: 'CEO', icon: '🧭', name: 'Minh Long',  note: 'Nhà lãnh đạo tầm nhìn' },
-  { role: 'CFO', icon: '💰', name: 'Thu Hà',     note: 'Chiến lược gia tài chính' },
-  { role: 'CMO', icon: '📣', name: 'Lan Chi',    note: 'Phù thủy marketing' },
-  { role: 'COO', icon: '🏭', name: 'Quốc Bảo',   note: 'Chuyên gia vận hành' },
-  { role: 'SEC', icon: '📝', name: 'Gia Hân',    note: 'Thư ký pháp chế' },
+  { role: 'CEO', icon: '🧭', img: 'assets/character/team/ceo.jpg', name: 'Minh Long',  note: 'Nhà lãnh đạo tầm nhìn' },
+  { role: 'CFO', icon: '💰', img: 'assets/character/team/cfo.jpg', name: 'Thu Hà',     note: 'Chiến lược gia tài chính' },
+  { role: 'CMO', icon: '📣', img: 'assets/character/team/cmo.jpg', name: 'Lan Chi',    note: 'Phù thủy marketing' },
+  { role: 'COO', icon: '🏭', img: 'assets/character/team/coo.jpg', name: 'Quốc Bảo',   note: 'Chuyên gia vận hành' },
+  { role: 'SEC', icon: '📝', img: 'assets/character/team/sec.jpg', name: 'Gia Hân',    note: 'Thư ký pháp chế' },
 ];
 const AI_OPPONENTS = [
   { name: 'Alpha Dynamics', icon: '🐺', style: 'Giá rẻ tốc chiến',   play: 'Giá ~125k · marketing ~90tr mỗi vòng (dao động ±12%)', counter: 'Đừng đua giá tận đáy — giữ biên lợi nhuận, xây thương hiệu để giữ khách trung thành.' },
@@ -111,12 +111,12 @@ function renderTeamCard() {
   if (!S.teamMembers) { box.innerHTML = ''; return; }
   box.innerHTML = `<div class="clay-card p-5 mb-4">
     <h3 class="font-display font-bold text-deep-teal mb-3">👥 Đội hình của bạn <span class="text-[10px] font-extrabold text-primary">DEMO</span></h3>
-    <div class="grid grid-cols-5 gap-2 text-center">${S.teamMembers.map(m => `
+    <div class="grid grid-cols-5 gap-2 text-center">${S.teamMembers.map(m => { const img = m.img || (DEMO_TEAM.find(d => d.role === m.role) || {}).img; return `
       <div class="clay-sunken rounded-2xl p-2 ${m.role === S.profile.role ? 'ring-2 ring-primary-container' : ''}">
-        <p class="text-2xl">${m.icon}</p>
+        ${img ? `<img src="${img}" alt="${m.role}" class="h-16 w-full object-contain rounded-xl" onerror="this.outerHTML='<p class=\\'text-2xl\\'>${m.icon}</p>'">` : `<p class="text-2xl">${m.icon}</p>`}
         <p class="text-[10px] font-extrabold text-deep-teal mt-0.5">${m.role}</p>
         <p class="text-[9px] text-deep-teal/55 leading-tight">${m.name}</p>
-      </div>`).join('')}</div>
+      </div>`; }).join('')}</div>
     <p class="text-[10px] text-deep-teal/45 mt-2.5">Bạn đang cầm vai ${S.profile.role} — các thành viên còn lại do đội thảo luận ngoài đời (chế độ lớp học).</p>
   </div>`;
 }
