@@ -1,6 +1,6 @@
 # BizOn Bật Nghiệp — Business Simulation Game
 
-> **Game mô phỏng kinh doanh EdTech phong cách 3D Claymorphism** — các đội sinh viên điều hành doanh nghiệp ảo qua **6 vòng chơi** trên bản đồ Việt Nam, cùng cố vấn AI **Lumina (Je m'appelle Hương)**, và vươn ra thị trường quốc tế với **BizOn Global**.
+> A **3D-claymorphism EdTech business-simulation game** — student teams run a virtual company through **6 rounds** across a map of Vietnam, guided by the AI advisor **Lumina (Je m'appelle Hương)**, then expand to international markets with **BizOn Global**.
 
 ![version](https://img.shields.io/badge/version-1.0-blue)
 ![license](https://img.shields.io/badge/license-Proprietary%20·%20All%20rights%20reserved-lightgrey)
@@ -10,108 +10,108 @@
 
 | | |
 |---|---|
-| **Tác giả** | **Đỗ Thùy Hương** (Founder & Creative Lead) · **Phan Anh Tú** (Academic Advisor) |
-| **Đơn vị** | Đại học Cần Thơ (CTU) |
-| **Chơi ngay** | 🎮 [Game](https://thuyhuongctu.github.io/BizOn/) · 🌐 [Trang giới thiệu](https://thuyhuongctu.github.io/BizOn/gioi-thieu.html) · 🕹️ [Arcade](https://thuyhuongctu.github.io/BizOn/games.html) · 🌏 [BizOn Global](https://thuyhuongctu.github.io/BizOn/global.html) |
-| **Liên hệ** | thuyhuongctu@gmail.com |
-| **Lưu trữ & DOI** | Zenodo concept DOI: [10.5281/zenodo.21592242](https://doi.org/10.5281/zenodo.21592242) — mọi phiên bản phát hành được lưu trữ vĩnh viễn |
+| **Authors** | **Do Thuy Huong** (Founder & Creative Lead) · **Phan Anh Tu** (Academic Advisor) |
+| **Affiliation** | Can Tho University (CTU), Vietnam |
+| **Play now** | 🎮 [Game](https://thuyhuongctu.github.io/BizOn/) · 🌐 [Landing page](https://thuyhuongctu.github.io/BizOn/gioi-thieu.html) · 🕹️ [Arcade](https://thuyhuongctu.github.io/BizOn/games.html) · 🌏 [BizOn Global](https://thuyhuongctu.github.io/BizOn/global.html) |
+| **Contact** | thuyhuongctu@gmail.com |
+| **Archive & DOI** | Zenodo concept DOI: [10.5281/zenodo.21592242](https://doi.org/10.5281/zenodo.21592242) — every release is permanently archived |
 
 ---
 
-## 🗺️ Hệ sinh thái
+## 🗺️ Ecosystem
 
-| Trang | Nội dung |
+| Page | Content |
 |---|---|
-| [`index.html`](https://thuyhuongctu.github.io/BizOn/) | **Game chính** — 6 vòng chinh phục bản đồ Việt Nam (Cần Thơ → Hà Nội), cắm cờ 🚩 khi thắng thị phần từng vòng; cột cờ Lũng Cú, quần đảo Hoàng Sa & Trường Sa trên bản đồ |
-| [`gioi-thieu.html`](https://thuyhuongctu.github.io/BizOn/gioi-thieu.html) | Landing quốc tế: demo tương tác, 5 vai trò lãnh đạo, lộ trình 6 vòng, mini-game, tour guide AI, FAQ, khu giảng viên |
-| [`games.html`](https://thuyhuongctu.github.io/BizOn/games.html) | **BizOn Arcade** — 8 trò chơi của hệ sinh thái |
-| [`global.html`](https://thuyhuongctu.github.io/BizOn/global.html) | **BizOn Global** (thử nghiệm) — từ Việt Nam ra thế giới: chọn thị trường, phương thức thâm nhập (Export · Licensing · Liên doanh · Đầu tư mới FDI), World Market LIVE và **I–P Lab** dựa trên luận án |
-| [`doi-ngu.html`](https://thuyhuongctu.github.io/BizOn/doi-ngu.html) | Đội ngũ sáng lập, sứ mệnh & tầm nhìn 2026 |
+| [`index.html`](https://thuyhuongctu.github.io/BizOn/) | **Main game** — a 6-round conquest across the map of Vietnam (Cần Thơ → Hà Nội); win a round's market share to plant your flag 🚩; the map features the Lũng Cú flag tower and the Hoàng Sa & Trường Sa archipelagos |
+| [`gioi-thieu.html`](https://thuyhuongctu.github.io/BizOn/gioi-thieu.html) | International-style landing page: interactive demo, 5 leadership roles, the 6-round journey, mini-games, an AI tour guide, FAQ, instructor section |
+| [`games.html`](https://thuyhuongctu.github.io/BizOn/games.html) | **BizOn Arcade** — 8 games in the ecosystem |
+| [`global.html`](https://thuyhuongctu.github.io/BizOn/global.html) | **BizOn Global** (beta) — from Vietnam to the world: pick a market and an entry mode (Export · Licensing · Joint Venture · Greenfield FDI), with a live World Market board and the research-based **I–P Lab** |
+| [`doi-ngu.html`](https://thuyhuongctu.github.io/BizOn/doi-ngu.html) | Founding team, mission & vision 2026 |
 
-Toàn bộ trang hỗ trợ **chế độ Sáng/Tối**, **song ngữ Việt–Anh** và **nhạc nền** (2 ca khúc chủ đề «Bật Nghiệp», «Je m'appelle Hương and the World» — lời tại [`docs/loi-bai-hat.md`](docs/loi-bai-hat.md)).
+Every page supports **light/dark mode**, a **Vietnamese–English bilingual interface**, and **background music** (two original theme songs, «Bật Nghiệp» and «Je m'appelle Hương and the World» — lyrics in [`docs/loi-bai-hat.md`](docs/loi-bai-hat.md)).
 
-## 🎮 Tính năng chính
+## 🎮 Key features
 
-| Nhóm | Nội dung |
+| Area | Details |
 |---|---|
-| Vòng chơi | 6 vòng = 6 tỉnh/thành theo bản đồ mới; mỗi vòng một biến cố thị trường (Cơ Hội Vàng, Price War, Khủng hoảng năng lượng, Siết tín dụng, Việt Nam Hóa Rồng) |
-| Quyết định | Giá bán · Marketing · R&D · Sản lượng · Nhân công & đào tạo · Nguồn vốn (tự có / vay 8,5%) · Kỳ hạn thanh toán 30/60/90 ngày · Bảo trì |
-| Đối thủ AI | 🐺 Alpha Dynamics (giá rẻ) · 🐘 Mekong Ventures (cân bằng) · 🦚 Star Clay Co. (cao cấp) — hành vi **tất định theo seed đội**, tiện chấm điểm |
-| Cố vấn Lumina AI | Kịch bản "Nếu — Thì", cảnh báo rủi ro theo vai trò, chat giọng nói tiếng Việt (STT/TTS), bộ não riêng cho CEO · CFO · CMO · COO · SEC |
-| Báo cáo | P&L, dòng tiền 3 hoạt động, CVP hòa vốn, nhân sự, BMC, khấu hao, kiểm toán năng lượng ⚡ |
-| Học mà chơi | Nhiệm vụ, thành tựu, cây kỹ năng, chứng nhận hoàn thành, nhật ký đội, Clay Reward Shop, mini-game |
-| Giảng viên | Class ID, khóa/mở vòng, cấp vốn kèm nhật ký — tài liệu đầy đủ tại [`docs/huong-dan-giang-vien.md`](docs/huong-dan-giang-vien.md) |
-| BizOn Monitor | Bảng theo dõi kiểu terminal: sparkline chỉ số đội + 3 đối thủ qua từng vòng |
+| Rounds | 6 rounds = 6 provinces on Vietnam's new administrative map; each round brings a market event (Golden Opportunity, Price War, Energy Crisis, Credit Squeeze, Vietnam Rising Dragon) |
+| Decisions | Price · Marketing · R&D · Production volume · Workforce & training · Funding source (equity / 8.5% loans) · 30/60/90-day payment terms · Maintenance |
+| AI rivals | 🐺 Alpha Dynamics (budget) · 🐘 Mekong Ventures (balanced) · 🦚 Star Clay Co. (premium) — behavior is **deterministic per team seed**, which makes grading easy |
+| Lumina AI advisor | "What-If" scenarios, role-specific risk alerts, Vietnamese voice chat (STT/TTS), a dedicated advisor brain for CEO · CFO · CMO · COO · SEC |
+| Reports | P&L, three-activity cash flow, CVP break-even, HR, Business Model Canvas, depreciation, energy audit ⚡ |
+| Learn by playing | Quests, achievements, a skill tree, completion certificates, a team journal, the Clay Reward Shop, mini-games |
+| Instructor tools | Class IDs, round locking, bonus funding with an audit log — full guide at [`docs/huong-dan-giang-vien.md`](docs/huong-dan-giang-vien.md) |
+| BizOn Monitor | A terminal-style market board: sparklines for the team's metrics and all 3 AI rivals, round by round |
 
-## 🔬 Cơ sở khoa học
+## 🔬 Scientific basis
 
-Chế độ **I–P Lab** (trang BizOn Global) mô phỏng quan hệ **quốc tế hóa – hiệu quả doanh nghiệp** theo chương trình nghiên cứu luận án tiến sĩ *"Internationalization and firm business performance in Asia"* (Đỗ Thùy Hương, ĐH Cần Thơ; người hướng dẫn: Phan Anh Tú) — dữ liệu WBES 92.564 doanh nghiệp, 50 nền kinh tế châu Á – Thái Bình Dương:
+The **I–P Lab** mode (on the BizOn Global page) simulates the **internationalization–firm performance** relationship, following the doctoral research program *"Internationalization and firm business performance in Asia"* (Do Thuy Huong, Can Tho University; supervisor: Phan Anh Tu) — built on World Bank Enterprise Survey microdata covering 92,564 firms across 50 Asia-Pacific economies:
 
-- Quan hệ **chữ U ngược** với điểm ngoặt ≈ **43,6% FSTS** (mẫu gộp);
-- Thể chế mạnh (Singapore, Nhật Bản): gần tuyến tính; **"lá chắn số" DAI** tại Singapore;
-- Đảo nhỏ Thái Bình Dương (SIDS): **FIP — Forced Internationalization Penalty** (β = −1,339, quan hệ âm đơn điệu).
+- An **inverted-U** relationship with a turning point around **43.6% FSTS** (pooled sample);
+- Strong-institution economies (Singapore, Japan): near-linear; a **DAI "digital shield"** effect in Singapore;
+- Pacific Small Island Developing States (SIDS): the **FIP — Forced Internationalization Penalty** (β = −1.339, a monotonically negative relationship).
 
-> Luận án là công trình chưa công bố; các con số trong game là minh họa giáo dục từ kết quả nghiên cứu.
+> The dissertation is unpublished work in progress; the numbers in the game are educational illustrations of the research findings.
 
-## 🚀 Chạy & triển khai
+## 🚀 Run & deploy
 
 ```bash
-# chạy cục bộ (không cần cài đặt)
-python3 -m http.server 8000   # rồi mở http://localhost:8000
+# run locally (no install needed)
+python3 -m http.server 8000   # then open http://localhost:8000
 ```
 
-- **Web:** workflow [`deploy-pages.yml`](.github/workflows/deploy-pages.yml) tự deploy lên GitHub Pages mỗi khi push `main`.
-- **Mobile (PWA):** mở link trên điện thoại → "Thêm vào màn hình chính" — chạy toàn màn hình, chơi offline (service worker + manifest).
-- Tiến trình chơi lưu trong `localStorage` của từng máy.
+- **Web:** the [`deploy-pages.yml`](.github/workflows/deploy-pages.yml) workflow auto-deploys to GitHub Pages on every push to `main`.
+- **Mobile (PWA):** open the link on a phone → "Add to Home Screen" — runs full-screen and plays offline (service worker + manifest).
+- Game progress is saved in each device's `localStorage`.
 
-## 🧱 Cấu trúc mã nguồn
+## 🧱 Source layout
 
 ```
-index.html            # Game SPA — toàn bộ màn hình + Tailwind config + PWA
-gioi-thieu.html       # Landing page quốc tế
-games.html            # BizOn Arcade (8 trò chơi)
+index.html            # Game SPA — all screens + Tailwind config + PWA registration
+gioi-thieu.html       # International landing page
+games.html            # BizOn Arcade (8 games)
 global.html           # BizOn Global + World Market LIVE + I–P Lab
-doi-ngu.html          # Trang đội ngũ sáng lập
-js/engine.js          # Engine mô phỏng 6 vòng, biến cố, vật phẩm, kỹ năng
-js/app.js             # UI game: render, điều hướng, bản đồ chinh phục, intro
-js/site-ui.js         # Sáng/Tối + từ điển song ngữ Việt–Anh dùng chung
-sw.js                 # Service worker — app shell, chơi offline
-assets/character/     # Tạo hình 3D: Lumina Áo Dài, Lumina Vest Trắng, Phan Anh Tú
-assets/audio/         # Nhạc: BizOn Theme, Bật Nghiệp, Hương and the World, giọng Hương
-docs/                 # Hướng dẫn giảng viên, lời bài hát, tài liệu kỹ thuật
+doi-ngu.html          # Founding-team page
+js/engine.js          # Simulation engine: 6 rounds, events, items, skills
+js/app.js             # Game UI: rendering, navigation, conquest map, intro
+js/site-ui.js         # Shared light/dark mode + Vietnamese–English dictionary
+sw.js                 # Service worker — app shell, offline play
+assets/character/     # 3D characters: Lumina Áo Dài, Lumina Vest Trắng, Phan Anh Tú
+assets/audio/         # Music: BizOn Theme, Bật Nghiệp, Hương and the World, Hương's voice
+docs/                 # Instructor guide, song lyrics, technical docs
 ```
 
-## 📚 Trích dẫn & Lưu trữ
+## 📚 Citation & archiving
 
-Nếu sử dụng BizOn trong giảng dạy hoặc nghiên cứu, vui lòng trích dẫn:
+If you use BizOn in teaching or research, please cite:
 
 > Do, T. H., & Phan, A. T. (2026). *BizOn Bật Nghiệp: A 3D claymorphism business-simulation game for entrepreneurship education* [Computer software]. Can Tho University. https://doi.org/10.5281/zenodo.21592242
 
-- Tệp trích dẫn máy đọc được: [`CITATION.cff`](CITATION.cff) (GitHub hiển thị nút **"Cite this repository"**).
-- **Zenodo:** concept DOI [10.5281/zenodo.21592242](https://doi.org/10.5281/zenodo.21592242) (đại diện mọi phiên bản); mỗi release GitHub được Zenodo tự lưu trữ và cấp version DOI riêng.
+- Machine-readable citation file: [`CITATION.cff`](CITATION.cff) (GitHub shows a **"Cite this repository"** button).
+- **Zenodo:** concept DOI [10.5281/zenodo.21592242](https://doi.org/10.5281/zenodo.21592242) (represents all versions); each GitHub release is automatically archived with its own version DOI.
 
-## ⚖️ Bản quyền & Sở hữu trí tuệ
+## ⚖️ Copyright & intellectual property
 
-**Phần mềm độc quyền** — xem [`LICENSE`](LICENSE). Mã nguồn, thuật toán engine mô phỏng, tạo hình nhân vật **Lumina — Je m'appelle Hương**, tên gọi và nhận diện **BizOn Bật Nghiệp** thuộc sở hữu của nhóm tác giả **Đỗ Thùy Hương & Phan Anh Tú**; nghiêm cấm sao chép hoặc sử dụng thương mại khi chưa được phép bằng văn bản.
+**Proprietary software** — see [`LICENSE`](LICENSE). The source code, the simulation-engine algorithms, the character design **Lumina — Je m'appelle Hương**, and the **BizOn Bật Nghiệp** name and identity belong to the authors **Do Thuy Huong & Phan Anh Tu**; copying or commercial use without written permission is prohibited.
 
-Hồ sơ đăng ký bảo hộ (quyền tác giả, nhãn hiệu) và chiến lược thương mại hóa được quản lý trong kho tài liệu nội bộ của nhóm tác giả.
+Registration dossiers (copyright, trademark) and the commercialization strategy are managed in the authors' private document repository.
 
-Thành phần bên thứ ba: Tailwind CSS (MIT), Google Fonts Plus Jakarta Sans & Manrope (OFL 1.1) — giữ nguyên giấy phép gốc.
+Third-party components: Tailwind CSS (MIT), Google Fonts Plus Jakarta Sans & Manrope (OFL 1.1) — their original licenses apply.
 
-## 🛣️ Lộ trình tiếp theo
+## 🛣️ Roadmap
 
-1. Backend API theo [`docs/api-structure.md`](docs/api-structure.md) (JWT, queue xử lý commit) → chế độ nhiều đội thời gian thực.
-2. Database PostgreSQL theo [`docs/database-schema.md`](docs/database-schema.md).
-3. Tích hợp cố vấn AI thật qua API mô hình ngôn ngữ lớn thay cho advisor luật.
-4. **V-Monitor** — dashboard dữ liệu thật thị trường Việt Nam, phát triển thành dự án độc lập (đề án nội bộ).
+1. Backend API per [`docs/api-structure.md`](docs/api-structure.md) (JWT, commit-processing queue) → real-time multi-team mode.
+2. PostgreSQL database per [`docs/database-schema.md`](docs/database-schema.md).
+3. A real AI advisor via a large-language-model API, replacing the rule-based advisor.
+4. **V-Monitor** — a real-data dashboard for the Vietnamese market, to be developed as an independent project (internal proposal).
 
 ---
 
-## 👥 Nhóm tác giả
+## 👥 Authors
 
-| Tác giả | Vai trò |
+| Author | Role |
 |---|---|
-| **Đỗ Thùy Hương** | Founder & Creative Lead — thiết kế game, hóa thân nhân vật Lumina AI · thuyhuongctu@gmail.com |
-| **Phan Anh Tú** | Academic Advisor — cố vấn học thuật, bảo chứng chuyên môn quản trị kinh doanh · patu@ctu.edu.vn |
+| **Do Thuy Huong** | Founder & Creative Lead — game design, embodiment of the Lumina AI character · thuyhuongctu@gmail.com |
+| **Phan Anh Tu** | Academic Advisor — academic oversight, business-administration expertise · patu@ctu.edu.vn |
 
-© 2026 Đỗ Thùy Hương & Phan Anh Tú · **BizOn Bật Nghiệp** — Bảo lưu mọi quyền.
+© 2026 Do Thuy Huong & Phan Anh Tu · **BizOn Bật Nghiệp** — All rights reserved.
