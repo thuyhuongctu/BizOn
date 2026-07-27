@@ -878,6 +878,10 @@
 "🚀 IE Lab — International Entrepreneurship"
 ],
 [
+"Tú Phan",
+"Tu Phan"
+],
+[
 "🧪 Lưu ý: IE Lab là công cụ mô phỏng số liệu phục vụ học tập môn Khởi nghiệp quốc tế — các đường cong, điểm ngoặt (≈ 43% FSTS), hiệu ứng \"lá chắn số\" và trường hợp đảo nhỏ đều là tham số mô phỏng minh họa, không phải số liệu thống kê thực của bất kỳ doanh nghiệp nào.",
 "🧪 Note: the IE Lab is a data-simulation tool for International Entrepreneurship courses — the curves, turning point (≈ 43% FSTS), \"digital shield\" effect and small-island scenario are illustrative simulation parameters, not real statistics of any firm."
 ],
