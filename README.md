@@ -6,7 +6,7 @@
 ![license](https://img.shields.io/badge/license-Proprietary%20·%20All%20rights%20reserved-lightgrey)
 ![PWA](https://img.shields.io/badge/PWA-offline%20ready-5cc4e6)
 ![deploy](https://img.shields.io/badge/GitHub%20Pages-live-2ea44f)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21613899.svg)](https://doi.org/10.5281/zenodo.21613899)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21592241.svg)](https://doi.org/10.5281/zenodo.21592241)
 
 | | |
 |---|---|
@@ -14,7 +14,7 @@
 | **Affiliation** | Can Tho University (CTU), Vietnam |
 | **Play now** | 🎮 [Game](https://thuyhuongctu.github.io/BizOn/) · 🌐 [Landing page](https://thuyhuongctu.github.io/BizOn/gioi-thieu.html) · 🕹️ [Arcade](https://thuyhuongctu.github.io/BizOn/games.html) · 🌏 [BizOn GO GlObal](https://thuyhuongctu.github.io/BizOn/global.html) |
 | **Contact** | thuyhuongctu@gmail.com |
-| **Archive & DOI** | Zenodo concept DOI: [10.5281/zenodo.21613899](https://doi.org/10.5281/zenodo.21613899) — every release is permanently archived |
+| **Archive & DOI** | Zenodo concept DOI: [10.5281/zenodo.21592241](https://doi.org/10.5281/zenodo.21592241) — every release is permanently archived |
 
 ---
 
@@ -85,10 +85,10 @@ docs/                 # Instructor guide, song lyrics, technical docs
 
 If you use BizOn in teaching or research, please cite:
 
-> Do, T. H., & Phan, A. T. (2026). *BizOn Bật Nghiệp: A 3D claymorphism business-simulation game for entrepreneurship education* [Computer software]. Can Tho University. https://doi.org/10.5281/zenodo.21613899
+> Do, T. H., & Phan, A. T. (2026). *BizOn Bật Nghiệp: A 3D claymorphism business-simulation game for entrepreneurship education* [Computer software]. Can Tho University. https://doi.org/10.5281/zenodo.21592241
 
 - Machine-readable citation file: [`CITATION.cff`](CITATION.cff) (GitHub shows a **"Cite this repository"** button).
-- **Zenodo:** concept DOI [10.5281/zenodo.21613899](https://doi.org/10.5281/zenodo.21613899) (represents all versions); each GitHub release is automatically archived with its own version DOI.
+- **Zenodo:** concept DOI [10.5281/zenodo.21592241](https://doi.org/10.5281/zenodo.21592241) (represents all versions); each GitHub release is automatically archived with its own version DOI.
 
 ## ⚖️ Copyright & intellectual property
 
