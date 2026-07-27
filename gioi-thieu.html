@@ -186,7 +186,7 @@ tailwind.config = {
       <a href="#characters" class="hover:text-primary-container transition-colors">Nhân vật</a>
       <a href="games.html" class="hover:text-primary-container transition-colors">🕹️ Arcade</a>
       <a href="doi-ngu.html" class="hover:text-primary-container transition-colors">Đội ngũ</a>
-      <a href="global.html" class="hover:text-primary-container transition-colors">🌏 Global</a>
+      <a href="global.html" class="hover:text-primary-container transition-colors">🌏 GO Global</a>
     </div>
     <a href="https://github.com/thuyhuongctu/BizOn/tree/main" target="_blank" rel="noopener" title="Mã nguồn BizOn trên GitHub" class="w-9 h-9 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 transition-colors flex items-center justify-center shrink-0"><svg viewBox="0 0 16 16" class="w-5 h-5" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></a>
       <button id="theme-btn" onclick="toggleTheme()" class="w-9 h-9 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 transition-colors shrink-0" title="Chế độ Sáng/Tối · Light/Dark mode">🌙</button>
@@ -234,7 +234,7 @@ tailwind.config = {
       <span class="scene-spark" style="bottom:16%; left:16%; animation-delay:-2.1s">⭐</span>
       <div class="relative scene-enter-left">
         <div id="bubble-tu" class="scene-bubble scene-bubble-l">Chào mừng đến BizOn! 🎓</div>
-        <img src="assets/character/anh-tu-open-arms.png" alt="Phan Anh Tú" class="h-80 sm:h-[24rem] w-auto animate-float-slow drop-shadow-[0_25px_25px_rgba(0,0,0,.4)]" style="--rot:-2deg; animation-delay:-2.5s">
+        <img src="assets/character/anh-tu-open-arms.png" alt="Tú Phan" class="h-80 sm:h-[24rem] w-auto animate-float-slow drop-shadow-[0_25px_25px_rgba(0,0,0,.4)]" style="--rot:-2deg; animation-delay:-2.5s">
       </div>
       <div class="relative scene-enter-right">
         <div id="bubble-huong" class="scene-bubble scene-bubble-r">Xin chào! Mình là Hương AI 👋</div>
@@ -365,8 +365,8 @@ tailwind.config = {
       <div class="p-5 text-center"><h3 class="font-display font-extrabold">Lumina Vest Trắng</h3><p class="text-xs font-bold text-primary mt-0.5">Cố vấn chiến lược AI</p><p class="text-xs text-deep-teal/60 mt-1">Phân tích Nếu — Thì, cảnh báo rủi ro, đồng hành cùng cả 4 vai trò C-Suite.</p></div>
     </div>
     <div class="clay-card overflow-hidden tilt reveal reveal-d2">
-      <div class="bg-gradient-to-b from-emerald-200/40 to-transparent pt-6 px-6"><img src="assets/character/anh-tu-present.png" alt="Phan Anh Tú" class="tilt-pop mx-auto h-64 object-contain drop-shadow-xl"></div>
-      <div class="p-5 text-center"><h3 class="font-display font-extrabold">Phan Anh Tú</h3><p class="text-xs font-bold text-primary mt-0.5">Cố vấn học thuật</p><p class="text-xs text-deep-teal/60 mt-1">Xuất hiện ở những khoảnh khắc then chốt với lời khuyên quản trị kinh điển.</p></div>
+      <div class="bg-gradient-to-b from-emerald-200/40 to-transparent pt-6 px-6"><img src="assets/character/anh-tu-present.png" alt="Tú Phan" class="tilt-pop mx-auto h-64 object-contain drop-shadow-xl"></div>
+      <div class="p-5 text-center"><h3 class="font-display font-extrabold">Tú Phan</h3><p class="text-xs font-bold text-primary mt-0.5">Cố vấn học thuật</p><p class="text-xs text-deep-teal/60 mt-1">Xuất hiện ở những khoảnh khắc then chốt với lời khuyên quản trị kinh điển.</p></div>
     </div>
   </div>
 </section>
@@ -709,7 +709,7 @@ const TOUR = [
   { sel: '#stats',      text: '6 vòng thị trường, 4 vai trò C-Suite, 7 báo cáo quản trị chuẩn giáo trình và hơn 15 thành tựu đang chờ bạn chinh phục.' },
   { sel: '#features',   text: 'Mỗi vòng bạn quyết định giá bán, sản lượng, marketing, R&D, nhân sự và nguồn vốn — thị trường với 3 đối thủ AI sẽ phản ứng ngay.' },
   { sel: '#demo',       text: 'Chơi thử ngay tại đây! Kéo 3 thanh quyết định và xem thị phần, doanh thu, lợi nhuận thay đổi theo thời gian thực.' },
-  { sel: '#characters', text: 'Đồng hành cùng bạn có mình — Lumina AI, và Phan Anh Tú, cố vấn học thuật của dự án.' },
+  { sel: '#characters', text: 'Đồng hành cùng bạn có mình — Lumina AI, và Tú Phan, cố vấn học thuật của dự án.' },
   { sel: '#minigames',  text: 'Ba mini-game khởi nghiệp: Trắc nghiệm, Đoán Giá Thị Trường và Bắt Vốn Vàng — không cần đăng nhập.' },
   { sel: '#team',       text: 'BizOn được sáng lập bởi Đỗ Thùy Hương và Phan Anh Tú. Giờ thì... bấm CHƠI NGAY để bắt đầu hành trình Bật Nghiệp nhé! 🚀' },
 ];
