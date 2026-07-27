@@ -1123,33 +1123,43 @@ function commitDecisions() {
 
 /* ===== ⚔️ ĐẤU TRƯỜNG — các nhân vật ra sàn đấu giành thị phần sau mỗi Commit ===== */
 const RIVAL_ICONS = { aggressive: '🐺', balanced: '🐘', premium: '🦚' };
+/* Khi có tạo hình người đất sét cho 3 đối thủ: đặt ảnh vào assets/character/rivals/ và điền đường dẫn */
+const RIVAL_IMGS = { aggressive: null, balanced: null, premium: null };
 function showArena(r, done) {
   const stop = CONQUEST_STOPS[r.round - 1];
   const fighters = [
-    { name: S.profile.teamName, icon: '🏺', share: r.share, me: true, img: 'assets/character/team/ceo.jpg' },
-    ...S.competitors.map(c => ({ name: c.name, icon: RIVAL_ICONS[c.style] || '🤖', share: c.share || 25 })),
+    { name: S.profile.teamName, share: r.share, me: true, img: 'assets/character/team/ceo.jpg', pos: 'bottom' },
+    ...S.competitors.map((c, i) => ({ name: c.name, share: c.share || 25, icon: RIVAL_ICONS[c.style] || '🤖',
+      img: RIVAL_IMGS[c.style], pos: ['top', 'left', 'right'][i] })),
   ];
   const max = Math.max(...fighters.map(f => f.share));
+  const POS = { bottom: 'left:50%; bottom:2%; transform:translateX(-50%)', top: 'left:50%; top:2%; transform:translateX(-50%)',
+                left: 'left:2%; top:50%; transform:translateY(-50%)', right: 'right:2%; top:50%; transform:translateY(-50%)' };
   const div = document.createElement('div');
-  div.className = 'fixed inset-0 z-[70] flex items-center justify-center p-5';
-  div.style.background = 'radial-gradient(circle at 50% 30%, #06414d 0%, #021a20 75%)';
+  div.className = 'fixed inset-0 z-[70] flex items-center justify-center p-4 overflow-y-auto';
+  div.style.background = 'radial-gradient(circle at 50% 20%, #06414d 0%, #021a20 70%)';
   div.innerHTML = `
-    <div class="w-full max-w-sm text-center">
-      <p class="text-4xl mb-1 animate-bounce">⚔️</p>
-      <h3 class="font-display font-extrabold text-white text-xl">ĐẤU TRƯỜNG ${stop ? stop.name.toUpperCase() : 'VÒNG ' + r.round}</h3>
-      <p class="text-white/60 text-xs mb-5">${r.event.icon} ${r.event.name} — 4 công ty tranh giành 12.000 khách hàng</p>
-      <div class="space-y-3 text-left">${fighters.map((f, i) => `
-        <div class="rounded-2xl p-3 ${f.me ? 'bg-white/15 ring-2 ring-clay-gold' : 'bg-white/5'}" style="animation:fadeUp .4s ease both; animation-delay:${i * 0.55}s">
-          <div class="flex items-center gap-2.5 mb-1.5">
-            ${f.img ? `<img src="${f.img}" class="w-9 h-9 rounded-full object-cover object-top border-2 ${f.me ? 'border-clay-gold' : 'border-white/20'}">` : `<span class="text-2xl w-9 text-center">${f.icon}</span>`}
-            <p class="text-xs font-extrabold text-white truncate flex-1">${f.me ? '🏺 ' : ''}${f.name}${f.me ? ' (Bạn)' : ''}</p>
-            <p class="arena-num font-display font-extrabold ${f.me ? 'text-clay-gold' : 'text-white/70'} text-sm" data-share="${f.share.toFixed(1)}">0%</p>
+    <div class="w-full max-w-sm text-center py-6">
+      <h3 class="font-display font-extrabold text-white text-xl">⚔️ ĐẤU TRƯỜNG ${stop ? stop.name.toUpperCase() : 'VÒNG ' + r.round}</h3>
+      <p class="text-white/60 text-xs mb-3">${r.event.icon} ${r.event.name} — 12.000 khách hàng chờ trên khán đài</p>
+      <div class="relative mx-auto" style="width:min(88vw,340px); height:min(88vw,340px)">
+        <div class="absolute inset-0 rounded-full" style="background:radial-gradient(circle, rgba(232,118,45,.25) 0%, rgba(0,102,135,.18) 45%, rgba(255,255,255,.04) 46%, transparent 72%); border:2px solid rgba(255,255,255,.12)"></div>
+        <div class="absolute rounded-full border border-white/15" style="inset:18%"></div>
+        <div class="absolute rounded-full border border-white/10" style="inset:34%"></div>
+        <p id="arena-vs" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-display font-extrabold text-white/80 text-2xl" style="text-shadow:0 0 18px rgba(232,118,45,.9)">VS</p>
+        ${fighters.map((f, i) => `
+        <div class="absolute w-[92px] text-center" data-pod="${i}" style="${POS[f.pos]}; animation:fadeUp .5s ease both; animation-delay:${i * 0.45}s">
+          <div class="mx-auto w-14 h-14 rounded-full overflow-hidden border-2 ${f.me ? 'border-clay-gold shadow-[0_0_16px_rgba(253,161,39,.8)]' : 'border-white/30'} bg-white/10 flex items-center justify-center">
+            ${f.img ? `<img src="${f.img}" class="w-full h-full object-cover object-top">` : `<span class="text-3xl">${f.icon}</span>`}
           </div>
-          <div class="h-3 rounded-full bg-white/10 overflow-hidden"><div class="arena-bar h-full rounded-full ${f.me ? 'bg-gradient-to-r from-clay-orange to-clay-gold' : 'bg-white/35'}" style="width:0%; transition:width 1.1s cubic-bezier(.2,.8,.3,1) ${i * 0.55 + 0.2}s" data-w="${Math.max(4, f.share / max * 100)}"></div></div>
+          <div class="mx-auto w-10 h-1.5 rounded-full bg-black/50 blur-[2px] mt-0.5"></div>
+          <p class="text-[9px] font-extrabold ${f.me ? 'text-clay-gold' : 'text-white/80'} leading-tight mt-1 truncate">${f.me ? '🏺 ' : ''}${f.name}</p>
+          <p class="arena-num font-display font-extrabold ${f.me ? 'text-clay-gold' : 'text-white/70'} text-sm" data-share="${f.share.toFixed(1)}">0%</p>
+          <div class="h-1.5 rounded-full bg-white/10 overflow-hidden mx-2"><div class="arena-bar h-full rounded-full ${f.me ? 'bg-gradient-to-r from-clay-orange to-clay-gold' : 'bg-white/40'}" style="width:0%; transition:width 1.1s cubic-bezier(.2,.8,.3,1) ${i * 0.45 + 0.3}s" data-w="${Math.max(6, f.share / max * 100)}"></div></div>
         </div>`).join('')}
       </div>
-      <p id="arena-verdict" class="text-sm font-extrabold mt-5 min-h-[1.5rem] text-white opacity-0" style="transition:opacity .4s"></p>
-      <button id="arena-next" class="clay-btn w-full bg-white text-deep-teal font-display font-extrabold py-3.5 mt-3 opacity-0" style="transition:opacity .4s">Xem kết quả chi tiết →</button>
+      <p id="arena-verdict" class="text-sm font-extrabold mt-3 min-h-[1.5rem] text-white opacity-0" style="transition:opacity .4s"></p>
+      <button id="arena-next" class="clay-btn w-full bg-white text-deep-teal font-display font-extrabold py-3.5 mt-2 opacity-0" style="transition:opacity .4s">Xem kết quả chi tiết →</button>
     </div>`;
   document.body.appendChild(div);
   requestAnimationFrame(() => {
@@ -1161,15 +1171,19 @@ function showArena(r, done) {
     });
   });
   const win = r.share >= max - 0.01;
+  const winIdx = fighters.findIndex(f => f.share === max);
   setTimeout(() => {
+    const pod = div.querySelector(`[data-pod="${winIdx}"] div`);
+    if (pod) { pod.classList.add('ring-4', 'ring-clay-gold'); pod.insertAdjacentHTML('beforebegin', '<p class="text-lg" style="animation:fadeUp .4s ease">👑</p>'); }
+    const vs = div.querySelector('#arena-vs'); if (vs) vs.textContent = win ? '🚩' : '🏴';
     const v = div.querySelector('#arena-verdict');
-    v.textContent = win ? `🚩 ${S.profile.teamName} thắng sàn đấu${stop ? ' — cắm cờ tại ' + stop.name : ''}!` : `🏴 ${fighters.find(f => f.share === max).name} giữ vị trí số 1 vòng này…`;
+    v.textContent = win ? `🚩 ${S.profile.teamName} thắng sàn đấu${stop ? ' — cắm cờ tại ' + stop.name : ''}!` : `🏴 ${fighters[winIdx].name} giữ vị trí số 1 vòng này…`;
     v.style.opacity = 1; v.classList.add(win ? 'text-clay-gold' : 'text-white/80');
     if (win) createConfetti();
     const btn = div.querySelector('#arena-next');
     btn.style.opacity = 1;
     btn.onclick = () => { div.remove(); done(); };
-  }, fighters.length * 550 + 1300);
+  }, fighters.length * 450 + 1400);
   div.addEventListener('click', e => { if (e.target === div) { div.remove(); done(); } });
 }
 
