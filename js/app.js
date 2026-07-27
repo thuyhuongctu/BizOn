@@ -378,7 +378,7 @@ function showPremium() {
 }
 
 // ---------- Nhạc nền game (playlist: BizOn Theme → Bật Nghiệp) ----------
-const BGM_TRACKS = ['assets/audio/huong-on-return.mp3', 'assets/audio/bizon-theme.mp3', 'assets/audio/bat-nghiep.mp3'];
+const BGM_TRACKS = ['assets/audio/huong-on-return.mp3', 'assets/audio/vua-du-de-bay-cao.mp3', 'assets/audio/bizon-theme.mp3', 'assets/audio/bat-nghiep.mp3'];
 let bgm = null, bgmIdx = 0;
 function musicEnabled() { return localStorage.getItem('bizon-music') !== 'off'; }
 function startMusic() {
