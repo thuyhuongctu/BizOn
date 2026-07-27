@@ -581,11 +581,45 @@ function gExportCSV() {
   a.click(); URL.revokeObjectURL(a.href);
 }
 
+/* ⚔️ Đấu trường quốc tế: đội bạn vs đối thủ bản địa trước khi hiện kết quả */
+function gArena(avgShare, win, done) {
+  const m = G.market;
+  const rival = 100 - avgShare;
+  const div = document.createElement('div');
+  div.className = 'fixed inset-0 z-[70] flex items-center justify-center p-5';
+  div.style.background = 'radial-gradient(circle at 50% 30%, #06414d 0%, #021a20 75%)';
+  const row = (icon, name, share, me) => `
+    <div class="rounded-2xl p-3 ${me ? 'bg-white/15 ring-2 ring-clay-orange' : 'bg-white/5'} text-left">
+      <div class="flex items-center gap-2.5 mb-1.5"><span class="text-2xl w-9 text-center">${icon}</span>
+        <p class="text-xs font-extrabold text-white flex-1">${name}</p>
+        <p class="font-display font-extrabold ${me ? 'text-clay-gold' : 'text-white/70'} text-sm">${share.toFixed(1)}%</p></div>
+      <div class="h-3 rounded-full bg-white/10 overflow-hidden"><div class="g-arena-bar h-full rounded-full ${me ? 'bg-gradient-to-r from-clay-orange to-clay-gold' : 'bg-white/35'}" style="width:0%; transition:width 1.2s cubic-bezier(.2,.8,.3,1) ${me ? '.2s' : '.7s'}" data-w="${Math.max(4, share)}"></div></div>
+    </div>`;
+  div.innerHTML = `<div class="w-full max-w-sm text-center">
+    <p class="text-4xl mb-1 animate-bounce" style="animation:vnPulse 1.6s ease-in-out infinite">⚔️</p>
+    <h3 class="font-display font-extrabold text-white text-xl">ĐẤU TRƯỜNG ${m.hub.toUpperCase()}</h3>
+    <p class="text-white/60 text-xs mb-5">${G.mode.icon} ${G.mode.name} · 4 quý tranh thị phần ${m.flag} ${m.name}</p>
+    <div class="space-y-3">${row('🏺', 'Đội của bạn 🇻🇳', avgShare, true)}${row('🛡️', m.ai + ' (bản địa)', rival, false)}</div>
+    <p class="text-sm font-extrabold mt-5 min-h-[1.5rem] ${win ? 'text-clay-gold' : 'text-white/80'} opacity-0" id="ga-verdict" style="transition:opacity .4s"></p>
+    <button id="ga-next" class="clay-btn w-full bg-white text-deep-teal font-display font-extrabold py-3.5 mt-3 opacity-0" style="transition:opacity .4s">Xem kết quả chi tiết →</button>
+  </div>`;
+  document.body.appendChild(div);
+  requestAnimationFrame(() => div.querySelectorAll('.g-arena-bar').forEach(b => b.style.width = b.dataset.w + '%'));
+  setTimeout(() => {
+    div.querySelector('#ga-verdict').textContent = win ? `🚩 Chinh phục ${m.name} thành công!` : `🏴 ${m.ai} vẫn giữ được sân nhà…`;
+    div.querySelector('#ga-verdict').style.opacity = 1;
+    const btn = div.querySelector('#ga-next'); btn.style.opacity = 1;
+    btn.onclick = () => { div.remove(); done(); };
+  }, 2100);
+  div.addEventListener('click', e => { if (e.target === div) { div.remove(); done(); } });
+}
+
 function gFinish() {
   G.done = true;
   const avgShare = G.shareHist.reduce((a, b) => a + b, 0) / G.shareHist.length;
   const win = avgShare >= 42 && G.profit > 0;
   gSaveLog(win, avgShare);
+  gArena(avgShare, win, () => document.getElementById('sec-result').scrollIntoView({ behavior: 'smooth', block: 'start' }));
   if (win && !gFlags.includes(G.market.id)) {
     gFlags.push(G.market.id);
     try { localStorage.setItem('bizon-global-flags', JSON.stringify(gFlags)); } catch (e) {}
