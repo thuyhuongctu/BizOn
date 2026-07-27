@@ -910,6 +910,14 @@
 "BizOn's main theme song · vocal recording"
 ],
 [
+"Ca khúc tiếng Việt về «đường cong ta học» · bản thu có lời (remastered)",
+"Vietnamese song about «the curve we all learn» · vocal recording (remastered)"
+],
+[
+"Ca khúc tiếng Việt · bản thu có lời",
+"Vietnamese song · vocal recording"
+],
+[
 "🎵 Nhạc nền (Hương on Return)",
 "🎵 Background music (Hương on Return)"
 ],
