@@ -478,6 +478,7 @@ function maybeShowEventIntro() {
 
 // ---------- Màn hình Chúc mừng chiến thắng (TOP 1 MARKET) ----------
 function showVictory(r) {
+  playClip('assets/audio/lumina-victory.mp3');
   const growth = (() => {
     const prev = S.history[S.history.length - 2];
     return prev ? (r.share - prev.share).toFixed(1) : r.share.toFixed(1);
