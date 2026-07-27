@@ -886,6 +886,22 @@
 "BizOn Music Library"
 ],
 [
+"Ca khúc BizOn GO GlObal · International pop 118 BPM · bản thu tiếng Việt",
+"BizOn GO GlObal theme song · International pop 118 BPM · Vietnamese vocal recording"
+],
+[
+"Bản song ngữ Anh–Việt cho phát hành quốc tế · bản thu có lời",
+"English–Vietnamese bilingual version for international release · vocal recording"
+],
+[
+"Ca khúc BizOn GO GlObal · bản tiếng Việt",
+"BizOn GO GlObal theme song · Vietnamese version"
+],
+[
+"Bản song ngữ Anh–Việt · phát hành quốc tế",
+"English–Vietnamese bilingual · international release"
+],
+[
 "🎶 Kho Âm nhạc BizOn",
 "🎶 BizOn Music Library"
 ],
