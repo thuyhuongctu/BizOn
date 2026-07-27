@@ -5,11 +5,13 @@
   "creators": [
     {
       "name": "Do, Thuy Huong",
-      "affiliation": "Can Tho University"
+      "affiliation": "Can Tho University",
+      "orcid": "0000-0002-7711-2487"
     },
     {
       "name": "Phan, Anh Tu",
-      "affiliation": "Can Tho University"
+      "affiliation": "Can Tho University",
+      "orcid": "0000-0003-0667-3137"
     }
   ],
   "description": "BizOn Bật Nghiệp là game mô phỏng kinh doanh EdTech phong cách 3D claymorphism: các đội sinh viên điều hành doanh nghiệp qua 6 vòng chơi trên bản đồ Việt Nam cùng cố vấn AI Lumina, và mở rộng ra thị trường quốc tế (BizOn Global) với chế độ I-P Lab mô phỏng quan hệ quốc tế hóa - hiệu quả doanh nghiệp. / BizOn Bật Nghiệp is a 3D claymorphism EdTech business-simulation game: student teams run a company through 6 rounds across a map of Vietnam with the Lumina AI advisor, then expand internationally (BizOn Global) with an I-P Lab mode simulating the internationalization-performance relationship.",
