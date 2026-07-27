@@ -918,6 +918,38 @@
 "White áo dài & Vietnam pin · the cheerful version"
 ],
 [
+"Tú Phan — Chào đón",
+"Tú Phan — Welcome"
+],
+[
+"Dang rộng vòng tay chào người chơi mới",
+"Open arms welcoming new players"
+],
+[
+"Tú Phan — Hướng dẫn",
+"Tú Phan — Guiding"
+],
+[
+"Chỉ tay giới thiệu bảng số liệu & luật chơi",
+"Pointing out the data board & game rules"
+],
+[
+"Tú Phan — Giảng giải",
+"Tú Phan — Explaining"
+],
+[
+"Đưa tay diễn giải khái niệm kinh doanh",
+"Gesturing through a business concept"
+],
+[
+"Tú Phan — Bàn làm việc",
+"Tú Phan — At the desk"
+],
+[
+"Phân tích dữ liệu mô phỏng trên laptop",
+"Analyzing simulation data on a laptop"
+],
+[
 "Tú Phan",
 "Tu Phan"
 ],
