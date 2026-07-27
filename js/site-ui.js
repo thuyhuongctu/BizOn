@@ -898,6 +898,26 @@
 "📥 Export decision log (CSV) — research / grading data"
 ],
 [
+"Phiên bản tiếng Pháp · bản thu có lời",
+"French version · vocal recording"
+],
+[
+"Tú Phan — Áo dài trắng",
+"Tú Phan — White áo dài"
+],
+[
+"Trang phục lễ nghi · đeo cài áo Bản đồ Việt Nam",
+"Ceremonial outfit · wearing the Vietnam Map lapel pin"
+],
+[
+"Tú Phan — Nụ cười chiến thắng",
+"Tú Phan — Victory smile"
+],
+[
+"Áo dài trắng & cài áo Việt Nam · phiên bản tươi vui",
+"White áo dài & Vietnam pin · the cheerful version"
+],
+[
 "Tú Phan",
 "Tu Phan"
 ],
