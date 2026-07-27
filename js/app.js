@@ -913,9 +913,77 @@ function syncDecisionLabels() {
     (capped ? ` · ⚠️ Nhân sự chỉ đủ sản xuất ${fc.laborCap.toLocaleString('vi-VN')} sp` : '');
 }
 
+/* ===== CUỘC HỌP ĐỘI — 4 thành viên demo đề xuất theo vai, tất định theo seed + vòng ===== */
+function meetingJitter(k) {                       // dao động nhỏ nhưng lặp lại được để chấm điểm
+  const x = (S.seed * 9301 + S.round * 49297 + k * 7907) % 233280;
+  return x / 233280;                              // 0..1
+}
+function teamSuggestions() {
+  const ev = currentEvent(S) || {};
+  const last = S.history[S.history.length - 1];
+  const share = last ? last.share : 25;
+  const tight = S.quickRatio < 1 || S.balance < 120;
+  const priceWar = /price war/i.test(ev.name || '');
+  const energy = /năng lượng/i.test(ev.name || '');
+  const boom = /cơ hội vàng|hóa rồng/i.test(ev.name || '');
+
+  const cfoRd = tight ? 15 : (boom ? 60 : 35 + Math.round(meetingJitter(1) * 3) * 5);
+  const cmoPrice = Math.max(100, Math.min(220, (priceWar ? 130 : 150) + (S.brand > 1.2 ? 15 : 0) - (share < 22 ? 10 : 0) + Math.round(meetingJitter(2) * 2) * 5));
+  const cmoMkt = Math.min(200, (boom ? 95 : priceWar ? 80 : 55) + Math.round(meetingJitter(3) * 3) * 5);
+  const cooProd = Math.max(200, Math.min(4000, Math.round(S.machineCapacity * (energy ? 0.65 : 0.88) / 100) * 100));
+  const cooWorkers = energy ? 40 : 50;
+
+  return [
+    { img: 'assets/character/team/cfo.jpg', name: 'Thu Hà · CFO', icon: '💰',
+      say: tight ? `Thanh khoản đang căng (quick ratio ${S.quickRatio.toFixed(2)}). Em đề xuất giảm R&D về ${cfoRd}tr, ưu tiên giữ tiền mặt — cần thì vay ngắn hạn thay vì cắt marketing sát sàn.`
+                 : `Két sắt ổn (${Math.round(S.balance)}tr). Em đề xuất R&D ${cfoRd}tr — biến cố tốt thì đầu tư cho vòng sau, đừng để tiền nằm im.`,
+      apply: { 'in-rd': cfoRd } },
+    { img: 'assets/character/team/cmo.jpg', name: 'Lan Chi · CMO', icon: '📣',
+      say: priceWar ? `Đối thủ đang phá giá! Em đề xuất giá ${cmoPrice}k + marketing ${cmoMkt}tr — mình không đua tận đáy nhưng phải giữ độ phủ.`
+                    : `Với thương hiệu hiện tại, em đề xuất giá ${cmoPrice}k và marketing ${cmoMkt}tr${boom ? ' — biến cố này là thời cơ vàng để bung!' : ' — đủ áp lực lên cả ba đối thủ.'}`,
+      apply: { 'in-price': cmoPrice, 'in-mkt': cmoMkt } },
+    { img: 'assets/character/team/coo.jpg', name: 'Quốc Bảo · COO', icon: '🏭',
+      say: energy ? `Khủng hoảng năng lượng — em đề xuất hạ sản lượng về ${cooProd.toLocaleString('vi-VN')} sp và ${cooWorkers} nhân công, chạy máy quá tải lúc này là đốt tiền điện.`
+                  : `Công suất máy ${S.machineCapacity.toLocaleString('vi-VN')} sp — em đề xuất sản xuất ${cooProd.toLocaleString('vi-VN')} sp với ${cooWorkers} nhân công, chừa ~12% đệm cho bảo trì.`,
+      apply: { 'in-prod': cooProd, 'in-workers': cooWorkers } },
+    { img: 'assets/character/team/sec.jpg', name: 'Gia Hân · SEC', icon: '📝',
+      say: `Tóm tắt cuộc họp: biến cố vòng này là «${ev.name || '—'}». ${ev.icon || ''} ${tight ? 'Ưu tiên số 1 theo CFO: an toàn dòng tiền. ' : ''}Em đã ghi biên bản — cả đội thống nhất xong thì CEO bấm Commit nhé!` },
+  ];
+}
+function applySuggestion(i) {
+  const s = teamSuggestions()[i];
+  if (!s || !s.apply) return;
+  Object.entries(s.apply).forEach(([id, v]) => { const el = $(id); if (el) el.value = v; });
+  syncDecisionLabels();
+  const btn = document.getElementById('tm-applied-' + i);
+  if (btn) { btn.textContent = '✓ Đã áp vào thanh trượt'; btn.classList.add('opacity-60'); }
+}
+function renderTeamMeeting() {
+  const box = $('team-meeting');
+  if (!box) return;
+  if (!S.teamMembers || S.finished || S.committed) { box.innerHTML = ''; return; }
+  const sug = teamSuggestions();
+  box.innerHTML = `<div class="clay-card p-4">
+    <p class="font-display font-bold text-deep-teal text-sm mb-1">🗣️ Cuộc họp đội — vòng ${S.round}</p>
+    <p class="text-[10px] text-deep-teal/50 mb-3">4 thành viên đề xuất theo vai trò. Bạn là ${S.profile.role} — quyền quyết định cuối cùng vẫn thuộc về bạn.</p>
+    ${sug.map((m, i) => `
+      <div class="clay-sunken rounded-2xl p-3 mb-2">
+        <div class="flex gap-2.5 items-start">
+          <img src="${m.img}" alt="" class="w-9 h-9 rounded-full object-cover object-top shadow-clay shrink-0">
+          <div class="min-w-0">
+            <p class="text-[11px] font-extrabold text-deep-teal">${m.icon} ${m.name}</p>
+            <p class="text-[11px] text-deep-teal/75 italic mt-0.5">"${m.say}"</p>
+            ${m.apply ? `<button id="tm-applied-${i}" onclick="applySuggestion(${i})" class="clay-btn bg-surface-bright text-primary text-[10px] font-extrabold px-3 py-1.5 mt-1.5">👍 Nghe theo — áp vào thanh trượt</button>` : ''}
+          </div>
+        </div>
+      </div>`).join('')}
+  </div>`;
+}
+
 function renderDecisions() {
   document.querySelectorAll('.dec-round').forEach(e => e.textContent = Math.min(S.round, ROUNDS_TOTAL));
   syncDecisionLabels();
+  renderTeamMeeting();
   const wq = $('whatif-quota');
   if (wq) wq.textContent = Math.max(0, WHAT_IF_LIMIT - (S.whatIfUsed || 0));
   const btn = $('btn-commit');
