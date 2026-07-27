@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 — © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Tham gia nhóm — BizOn Bật Nghiệp</title>
+<meta name="description" content="Gia nhập nhóm khởi nghiệp BizOn: văn hóa làm việc, các vị trí cộng tác đang mở — lập trình web, họa sĩ claymorphism, sản xuất âm nhạc, giảng viên thử nghiệm và dịch thuật.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#006687', 'primary-container': '#00c4ff', 'surface-bright': '#f4faff',
+        'deep-teal': 'rgb(var(--dt) / <alpha-value>)', 'clay-orange': '#e8762d', 'clay-gold': '#fda127',
+      },
+      fontFamily: { display: ['"Plus Jakarta Sans"', 'sans-serif'], body: ['Manrope', 'sans-serif'] },
+      borderRadius: { clay: '24px' },
+    },
+  },
+};
+</script>
+<script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+  html { background:#f4faff; scroll-behavior:smooth; }
+  body { font-family:'Manrope',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
+  .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
+  .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease; }
+  .clay-btn:active { transform:translateY(2px); }
+  .glass-nav { background:rgba(3,51,55,.78); backdrop-filter:blur(14px); }
+  .art-card { transition:transform .2s cubic-bezier(.34,1.56,.64,1); }
+  .art-card:hover { transform:translateY(-5px) scale(1.02); }
+  .tag { display:inline-block; font-size:10px; font-weight:800; padding:3px 10px; border-radius:9999px; background:rgba(0,102,135,.08); color:#006687; }
+  :root { --dt: 3 51 55; }
+  html[data-theme="dark"] { --dt: 214 236 240; background:#081a20; color-scheme:dark; }
+  html[data-theme="dark"] body { color:#d6ecf0; }
+  html[data-theme="dark"] .clay-card { background:#0e2a33; box-shadow:0 10px 30px -5px rgba(0,0,0,.45), inset 0 -4px 0 rgba(0,0,0,.3); }
+  html[data-theme="dark"] .glass-nav { background:rgba(2,20,24,.85); }
+  html[data-theme="dark"] .text-primary { color:#5cc4e6 !important; }
+  html[data-theme="dark"] .tag { background:rgba(92,196,230,.14); color:#5cc4e6; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="glass-nav fixed top-0 inset-x-0 z-50 text-white">
+  <div class="max-w-5xl mx-auto px-5 h-16 flex items-center justify-between gap-3">
+    <a href="index.html" class="flex items-center gap-2.5">
+      <img src="assets/icons/icon-192.png" alt="BizOn" class="w-9 h-9 rounded-xl shadow-lg">
+      <span class="font-display font-extrabold tracking-tight">BizOn <span class="text-clay-gold">Tham gia</span></span>
+    </a>
+    <div class="flex items-center gap-2.5">
+      <a href="du-an.html" class="text-white/70 hover:text-white text-sm font-bold hidden sm:block">🚀 Dự án</a>
+      <a href="lien-he.html" class="text-white/70 hover:text-white text-sm font-bold hidden sm:block">✉️ Liên hệ</a>
+      <a href="index.html" class="text-white/70 hover:text-white text-sm font-bold hidden sm:block">🏠 Trang chủ</a>
+      <button id="theme-btn" onclick="toggleTheme()" class="w-9 h-9 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 transition-colors shrink-0" title="Chế độ Sáng/Tối · Light/Dark mode">🌙</button>
+      <button id="lang-btn" onclick="toggleLang()" class="h-9 px-3 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 text-[11px] font-extrabold transition-colors shrink-0" title="Tiếng Việt / English">EN</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="pt-24 pb-10 text-white" style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%)">
+  <div class="max-w-5xl mx-auto px-5">
+    <p class="text-[11px] font-extrabold uppercase tracking-[.2em] text-clay-gold">Tuyển cộng tác viên</p>
+    <h1 class="font-display font-extrabold text-3xl sm:text-4xl mt-2">Cùng nhào nặn tương lai với BizOn</h1>
+    <p class="text-white/75 text-sm mt-3 max-w-2xl">BizOn là nhóm khởi nghiệp giáo dục quy mô nhỏ, làm việc linh hoạt từ xa. Chúng tôi tìm những người bạn đồng hành yêu giáo dục, game và nghệ thuật đất nặn — cộng tác theo dự án, phù hợp cả sinh viên làm đồ án.</p>
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-5 py-10">
+
+  <!-- VĂN HÓA -->
+  <section class="mb-14">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-5">🧬 Ba giá trị của nhóm</h2>
+    <div class="grid sm:grid-cols-3 gap-4">
+      <div class="clay-card p-6"><p class="text-3xl">🏺</p><h3 class="font-display font-extrabold text-deep-teal text-base mt-3">Đất sét trong tay</h3><p class="text-sm text-deep-teal/60 mt-2">Mọi ý tưởng đều nặn được lại từ đầu. Sai thì bóp lại, nặn tiếp — thử nghiệm nhanh quan trọng hơn hoàn hảo ngay.</p></div>
+      <div class="clay-card p-6"><p class="text-3xl">📊</p><h3 class="font-display font-extrabold text-deep-teal text-base mt-3">Số liệu thật</h3><p class="text-sm text-deep-teal/60 mt-2">Trò chơi vui nhưng mô hình phía sau nghiêm túc: mô phỏng định lượng, dữ liệu mở, kết quả tái lập được.</p></div>
+      <div class="clay-card p-6"><p class="text-3xl">🎓</p><h3 class="font-display font-extrabold text-deep-teal text-base mt-3">Giáo dục trước tiên</h3><p class="text-sm text-deep-teal/60 mt-2">Người học là trung tâm. Mỗi tính năng phải trả lời được: «Điều này giúp sinh viên hiểu bài hơn thế nào?»</p></div>
+    </div>
+  </section>
+
+  <!-- VỊ TRÍ -->
+  <section class="mb-14">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">📌 Vị trí cộng tác đang mở</h2>
+    <p class="text-sm text-deep-teal/55 mb-5">Các vị trí dưới đây là cộng tác theo dự án (không phải việc làm toàn thời gian). Ghi rõ vị trí quan tâm khi liên hệ nhé!</p>
+    <div class="grid sm:grid-cols-2 gap-4">
+      <div class="clay-card art-card p-6">
+        <div class="flex items-start justify-between gap-3"><p class="text-3xl">🧑‍💻</p><span class="tag">Từ xa</span></div>
+        <h3 class="font-display font-extrabold text-deep-teal text-base mt-3">Lập trình web (JavaScript)</h3>
+        <p class="text-sm text-deep-teal/60 mt-2">Phát triển tính năng game, tối ưu PWA và trải nghiệm di động. Biết Tailwind hoặc canvas là điểm cộng.</p>
+      </div>
+      <div class="clay-card art-card p-6">
+        <div class="flex items-start justify-between gap-3"><p class="text-3xl">🎨</p><span class="tag">Từ xa</span></div>
+        <h3 class="font-display font-extrabold text-deep-teal text-base mt-3">Họa sĩ claymorphism 3D</h3>
+        <p class="text-sm text-deep-teal/60 mt-2">Tạo hình nhân vật và bối cảnh đất nặn — đặc biệt đang cần 3 tạo hình con người cho các công ty đối thủ trong đấu trường.</p>
+      </div>
+      <div class="clay-card art-card p-6">
+        <div class="flex items-start justify-between gap-3"><p class="text-3xl">🎼</p><span class="tag">Từ xa</span></div>
+        <h3 class="font-display font-extrabold text-deep-teal text-base mt-3">Sản xuất âm nhạc</h3>
+        <p class="text-sm text-deep-teal/60 mt-2">Thu âm và hòa âm cho kho nhạc BizOn — gần nhất là bản thu có lời cho ca khúc «Bật Nghiệp» đang chờ giọng hát.</p>
+      </div>
+      <div class="clay-card art-card p-6">
+        <div class="flex items-start justify-between gap-3"><p class="text-3xl">🏫</p><span class="tag">Linh hoạt</span></div>
+        <h3 class="font-display font-extrabold text-deep-teal text-base mt-3">Giảng viên thử nghiệm</h3>
+        <p class="text-sm text-deep-teal/60 mt-2">Đưa BizOn vào một buổi học thật, ghi nhận thời lượng và phản hồi của sinh viên để nhóm hiệu chỉnh trò chơi.</p>
+      </div>
+      <div class="clay-card art-card p-6 sm:col-span-2">
+        <div class="flex items-start justify-between gap-3"><p class="text-3xl">🌐</p><span class="tag">Từ xa</span></div>
+        <h3 class="font-display font-extrabold text-deep-teal text-base mt-3">Dịch thuật &amp; bản địa hóa</h3>
+        <p class="text-sm text-deep-teal/60 mt-2">Hoàn thiện bản tiếng Anh và mở rộng sang ngôn ngữ mới — ưu tiên tiếng Pháp (đã có ca khúc «Je m'appelle Hương et le Monde» mở đường!).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="clay-card p-8 text-center">
+    <img src="assets/character/team/lineup.jpg" alt="Đội Demo Bật Nghiệp" class="w-full max-w-xl mx-auto rounded-2xl mb-5" loading="lazy">
+    <h2 class="font-display font-extrabold text-deep-teal text-2xl">Sẵn sàng tạo dấu ấn của bạn?</h2>
+    <p class="text-sm text-deep-teal/60 mt-2 max-w-xl mx-auto">Gửi email giới thiệu ngắn về bản thân và sản phẩm bạn từng làm (nếu có) — nhóm sẽ phản hồi sớm nhất có thể.</p>
+    <div class="flex flex-wrap justify-center gap-3 mt-5">
+      <a href="mailto:thuyhuongctu@gmail.com?subject=Tham%20gia%20nh%C3%B3m%20BizOn" class="clay-btn bg-primary text-white font-display font-extrabold px-7 py-3.5 text-sm">✉️ Gửi email cho nhóm</a>
+      <a href="doi-ngu.html" class="clay-btn bg-white text-primary border border-primary/20 font-display font-bold px-7 py-3.5 text-sm">👥 Gặp đội ngũ hiện tại</a>
+    </div>
+  </section>
+
+</main>
+<script src="js/site-ui.js" defer></script>
+</body>
+</html>
