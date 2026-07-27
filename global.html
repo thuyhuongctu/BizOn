@@ -81,12 +81,16 @@ tailwind.config = {
 
 <!-- HERO -->
 <header class="pt-24 pb-8 text-white" style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%)">
-  <div class="max-w-5xl mx-auto px-5">
-    <p class="tag inline-block bg-clay-gold text-deep-teal" style="color:#033337">🧪 BẢN THỬ NGHIỆM</p>
-    <h1 class="font-display font-extrabold text-3xl sm:text-4xl mt-3 leading-tight">🌏 BizOn GO GlObal</h1>
-    <p class="signature-like text-primary-container font-display font-bold mt-1">Je m'appelle Hương sans frontières</p>
-    <p class="text-white/75 text-sm mt-3 max-w-2xl">Từ Việt Nam 🇻🇳 vươn ra thị trường quốc tế trong kỷ nguyên số: chọn một thị trường, chọn <b class="text-white">phương thức thâm nhập</b> — Xuất khẩu, Licensing, Liên doanh hay Đầu tư mới (FDI) — rồi ra quyết định kinh doanh qua 4 quý.</p>
+  <div class="max-w-5xl mx-auto px-5 grid sm:grid-cols-[1fr_auto] gap-6 items-center">
+    <div>
+      <p class="tag inline-block bg-clay-gold text-deep-teal" style="color:#033337">🧪 BẢN THỬ NGHIỆM</p>
+      <h1 class="font-display font-extrabold text-3xl sm:text-4xl mt-3 leading-tight">🌏 BizOn GO GlObal</h1>
+      <p class="signature-like text-primary-container font-display font-bold mt-1">Je m'appelle Hương sans frontières</p>
+      <p class="text-white/75 text-sm mt-3 max-w-2xl">Từ Việt Nam 🇻🇳 vươn ra thị trường quốc tế trong kỷ nguyên số: chọn một thị trường, chọn <b class="text-white">phương thức thâm nhập</b> — Xuất khẩu, Licensing, Liên doanh hay Đầu tư mới (FDI) — rồi ra quyết định kinh doanh qua 4 quý.</p>
+    </div>
+    <img src="assets/illustrations/globe-trade.png" alt="Địa cầu đất sét với các tuyến thương mại kết nối Việt Nam ra thế giới" class="h-44 sm:h-56 w-auto mx-auto drop-shadow-2xl hidden sm:block" style="animation:floaty 5s ease-in-out infinite">
   </div>
+  <style>@keyframes floaty { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }</style>
 </header>
 
 <main class="max-w-5xl mx-auto px-5 py-8">
