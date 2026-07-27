@@ -906,6 +906,14 @@
 "BizOn Music Library"
 ],
 [
+"Bài hát chính của BizOn · bản thu có lời",
+"BizOn's main theme song · vocal recording"
+],
+[
+"🎵 Nhạc nền (Hương on Return)",
+"🎵 Background music (Hương on Return)"
+],
+[
 "🧷 Sản phẩm & Quà tặng",
 "🧷 Merchandise & Gifts"
 ],
