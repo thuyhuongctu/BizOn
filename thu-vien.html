@@ -90,19 +90,6 @@ tailwind.config = {
     </div>
   </section>
 
-  <!-- MV & VIDEO -->
-  <section class="mb-12">
-    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">🎬 MV &amp; Video</h2>
-    <p class="text-sm text-deep-teal/55 mb-5">Các cảnh MV chính thức của hai ca khúc — mỗi clip gắn với một phân đoạn trong <a href="https://github.com/thuyhuongctu/BizOn/blob/main/docs/loi-bai-hat.md" target="_blank" rel="noopener" class="font-bold text-primary">lời bài hát</a>.</p>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      <div class="clay-card art-card p-3"><video controls preload="none" playsinline poster="assets/video/posters/hoa-rong-2.jpg" src="assets/video/hoa-rong-2.mp4" class="w-full rounded-2xl bg-black/5"></video><p class="font-display font-extrabold text-deep-teal text-sm mt-2.5">Hóa Rồng — trỗi dậy</p><p class="text-[10px] text-deep-teal/50">«Bật Nghiệp» · Phần 4 — rồng đất sét cuộn mình bay lên</p></div>
-      <div class="clay-card art-card p-3"><video controls preload="none" playsinline poster="assets/video/posters/hoa-rong.jpg" src="assets/video/hoa-rong.mp4" class="w-full rounded-2xl bg-black/5"></video><p class="font-display font-extrabold text-deep-teal text-sm mt-2.5">Hóa Rồng — cao trào</p><p class="text-[10px] text-deep-teal/50">«Bật Nghiệp» · Phần 5 (Bridge) — rồng bay qua bản đồ Việt Nam</p></div>
-      <div class="clay-card art-card p-3"><video controls preload="none" playsinline poster="assets/video/posters/wings-wide.jpg" src="assets/video/wings-wide.mp4" class="w-full rounded-2xl bg-black/5"></video><p class="font-display font-extrabold text-deep-teal text-sm mt-2.5">Wings Wide</p><p class="text-[10px] text-deep-teal/50">«Bật Nghiệp» Phần 6 &amp; «Hương and the World» Phần 5 — đôi cánh mở rộng</p></div>
-      <div class="clay-card art-card p-3"><video controls preload="none" playsinline poster="assets/video/posters/vuon-ra-bien-lon.jpg" src="assets/video/vuon-ra-bien-lon.mp4" class="w-full rounded-2xl bg-black/5"></video><p class="font-display font-extrabold text-deep-teal text-sm mt-2.5">Vươn ra biển lớn</p><p class="text-[10px] text-deep-teal/50">«Hương and the World» · Phần 4 — con thuyền đất sét rẽ sóng ra đại dương</p></div>
-      <div class="clay-card art-card p-3"><video controls preload="none" playsinline poster="assets/video/posters/mekong-sunfire.jpg" src="assets/video/mekong-sunfire.mp4" class="w-full rounded-2xl bg-black/5"></video><p class="font-display font-extrabold text-deep-teal text-sm mt-2.5">Mekong Sunfire</p><p class="text-[10px] text-deep-teal/50">«Hương and the World» · Coda — rồng lửa Cửu Long, «C'est la victoire!»</p></div>
-    </div>
-  </section>
-
   <!-- ÂM NHẠC -->
   <section class="mb-12">
     <h2 class="font-display font-extrabold text-deep-teal text-xl mb-5">🎵 Âm nhạc gốc</h2>
@@ -121,7 +108,7 @@ tailwind.config = {
       </a>
       <a href="https://thuyhuongctu.github.io/M-AIDA/" target="_blank" rel="noopener" class="clay-card art-card p-6 flex items-center gap-4">
         <p class="text-4xl shrink-0">🎼</p>
-        <div><h3 class="font-display font-extrabold text-deep-teal">Ứng dụng M-AIDA</h3><p class="text-xs text-deep-teal/55 mt-1">Meta-Analysis Intelligent Data Assistant — phần mềm luận án (DOI 10.5281/zenodo.21282516).</p></div>
+        <div><h3 class="font-display font-extrabold text-deep-teal">Ứng dụng M-AIDA</h3><p class="text-xs text-deep-teal/55 mt-1">Meta-Analysis Intelligent Data Assistant — phần mềm phân tích tổng hợp (DOI 10.5281/zenodo.21282516).</p></div>
       </a>
       <a href="https://thuyhuongctu.github.io/M-AIDA/songs.html" target="_blank" rel="noopener" class="clay-card art-card p-6 flex items-center gap-4">
         <p class="text-4xl shrink-0">🎶</p>
@@ -143,12 +130,8 @@ tailwind.config = {
 const LIB_TRACKS = [
   { t: 'BizOn Theme', s: 'Nhạc nền game · instrumental', f: 'assets/audio/bizon-theme.mp3' },
   { t: 'Bật Nghiệp', s: 'Ca khúc chủ đề game Việt Nam', f: 'assets/audio/bat-nghiep.mp3' },
-  { t: "Hương and the World", s: 'Ca khúc BizOn Global · bản thu có lời', f: 'assets/audio/huong-and-the-world.mp3' },
+  { t: "Hương and the World", s: 'Ca khúc BizOn GO Global · bản thu có lời', f: 'assets/audio/huong-and-the-world.mp3' },
 ];
-/* Đang xem MV thì tạm dừng nhạc nền để không chồng tiếng */
-document.addEventListener('play', e => {
-  if (e.target.tagName === 'VIDEO' && libAudio && !libAudio.paused) { libAudio.pause(); libIdx = -1; libRender(); }
-}, true);
 let libAudio = null, libIdx = -1;
 function libPlay(i) {
   if (libIdx === i && libAudio && !libAudio.paused) { libAudio.pause(); libIdx = -1; libRender(); return; }

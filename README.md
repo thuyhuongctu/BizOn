@@ -1,6 +1,6 @@
 # BizOn Bật Nghiệp — Business Simulation Game
 
-> A **3D-claymorphism EdTech business-simulation game** — student teams run a virtual company through **6 rounds** across a map of Vietnam, guided by the AI advisor **Lumina (Je m'appelle Hương)**, then expand to international markets with **BizOn Global**.
+> A **3D-claymorphism EdTech business-simulation game** — student teams run a virtual company through **6 rounds** across a map of Vietnam, guided by the AI advisor **Lumina (Je m'appelle Hương)**, then expand to international markets with **BizOn GO Global**.
 
 ![version](https://img.shields.io/badge/version-1.0-blue)
 ![license](https://img.shields.io/badge/license-Proprietary%20·%20All%20rights%20reserved-lightgrey)
@@ -12,7 +12,7 @@
 |---|---|
 | **Authors** | **Do Thuy Huong** (Founder & Creative Lead) · **Phan Anh Tu** (Academic Advisor) |
 | **Affiliation** | Can Tho University (CTU), Vietnam |
-| **Play now** | 🎮 [Game](https://thuyhuongctu.github.io/BizOn/) · 🌐 [Landing page](https://thuyhuongctu.github.io/BizOn/gioi-thieu.html) · 🕹️ [Arcade](https://thuyhuongctu.github.io/BizOn/games.html) · 🌏 [BizOn Global](https://thuyhuongctu.github.io/BizOn/global.html) |
+| **Play now** | 🎮 [Game](https://thuyhuongctu.github.io/BizOn/) · 🌐 [Landing page](https://thuyhuongctu.github.io/BizOn/gioi-thieu.html) · 🕹️ [Arcade](https://thuyhuongctu.github.io/BizOn/games.html) · 🌏 [BizOn GO Global](https://thuyhuongctu.github.io/BizOn/global.html) |
 | **Contact** | thuyhuongctu@gmail.com |
 | **Archive & DOI** | Zenodo concept DOI: [10.5281/zenodo.21592242](https://doi.org/10.5281/zenodo.21592242) — every release is permanently archived |
 
@@ -25,7 +25,7 @@
 | [`index.html`](https://thuyhuongctu.github.io/BizOn/) | **Main game** — a 6-round conquest across the map of Vietnam (Cần Thơ → Hà Nội); win a round's market share to plant your flag 🚩; the map features the Lũng Cú flag tower and the Hoàng Sa & Trường Sa archipelagos |
 | [`gioi-thieu.html`](https://thuyhuongctu.github.io/BizOn/gioi-thieu.html) | International-style landing page: interactive demo, 5 leadership roles, the 6-round journey, mini-games, an AI tour guide, FAQ, instructor section |
 | [`games.html`](https://thuyhuongctu.github.io/BizOn/games.html) | **BizOn Arcade** — 8 games in the ecosystem |
-| [`global.html`](https://thuyhuongctu.github.io/BizOn/global.html) | **BizOn Global** (beta) — from Vietnam to the world: pick a market and an entry mode (Export · Licensing · Joint Venture · Greenfield FDI), with a live World Market board and the research-based **I–P Lab** |
+| [`global.html`](https://thuyhuongctu.github.io/BizOn/global.html) | **BizOn GO Global** (beta) — from Vietnam to the world: pick a market and an entry mode (Export · Licensing · Joint Venture · Greenfield FDI), with a live World Market board and the **IE Lab** (International Entrepreneurship, data simulation) |
 | [`doi-ngu.html`](https://thuyhuongctu.github.io/BizOn/doi-ngu.html) | Founding team, mission & vision 2026 |
 
 Every page supports **light/dark mode**, a **Vietnamese–English bilingual interface**, and **background music** (two original theme songs, «Bật Nghiệp» and «Je m'appelle Hương and the World» — lyrics in [`docs/loi-bai-hat.md`](docs/loi-bai-hat.md)).
@@ -43,15 +43,15 @@ Every page supports **light/dark mode**, a **Vietnamese–English bilingual inte
 | Instructor tools | Class IDs, round locking, bonus funding with an audit log — full guide at [`docs/huong-dan-giang-vien.md`](docs/huong-dan-giang-vien.md) |
 | BizOn Monitor | A terminal-style market board: sparklines for the team's metrics and all 3 AI rivals, round by round |
 
-## 🔬 Scientific basis
+## 🔬 Simulation model
 
-The **I–P Lab** mode (on the BizOn Global page) simulates the **internationalization–firm performance** relationship, following the doctoral research program *"Internationalization and firm business performance in Asia"* (Do Thuy Huong, Can Tho University; supervisor: Phan Anh Tu) — built on World Bank Enterprise Survey microdata covering 92,564 firms across 50 Asia-Pacific economies:
+The **IE Lab** mode (on the BizOn GO Global page) is a **data-simulation sandbox** for International Entrepreneurship courses: players pick a market type, drag the internationalization level (FSTS %) and digital-capability sliders, and watch simulated firm performance respond. The stylized scenarios include:
 
-- An **inverted-U** relationship with a turning point around **43.6% FSTS** (pooled sample);
-- Strong-institution economies (Singapore, Japan): near-linear; a **DAI "digital shield"** effect in Singapore;
-- Pacific Small Island Developing States (SIDS): the **FIP — Forced Internationalization Penalty** (β = −1.339, a monotonically negative relationship).
+- An **inverted-U** curve with an illustrative turning point around **43% FSTS** (transition markets and the pooled all-Asia scenario);
+- Strong-institution economies (Singapore, Japan): near-linear curves, with a **"digital shield"** effect in the Singapore scenario;
+- A small-island scenario (Pacific SIDS): a monotonically negative curve — internationalization is not always beneficial.
 
-> The dissertation is unpublished work in progress; the numbers in the game are educational illustrations of the research findings.
+> All curves and figures in the IE Lab are illustrative simulation parameters for teaching, not real statistics of any firm or dataset.
 
 ## 🚀 Run & deploy
 
@@ -70,7 +70,7 @@ python3 -m http.server 8000   # then open http://localhost:8000
 index.html            # Game SPA — all screens + Tailwind config + PWA registration
 gioi-thieu.html       # International landing page
 games.html            # BizOn Arcade (8 games)
-global.html           # BizOn Global + World Market LIVE + I–P Lab
+global.html           # BizOn GO Global + World Market LIVE + IE Lab
 doi-ngu.html          # Founding-team page
 js/engine.js          # Simulation engine: 6 rounds, events, items, skills
 js/app.js             # Game UI: rendering, navigation, conquest map, intro
