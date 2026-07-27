@@ -646,6 +646,10 @@ const ACHIEVEMENTS = [
   { id: 'A_SURVIVE', icon: '🛟', name: 'Vượt bão khủng hoảng', desc: 'Có lãi trong vòng Khủng hoảng năng lượng.', test: (s, r) => r.event.id === 'EV_RECESSION' && r.netProfit > 0 },
   { id: 'A_RICH',    icon: '🏦', name: 'Két sắt đầy', desc: 'Số dư ví vượt 1 tỷ ₫.', test: (s, r) => s.balance >= 1000 },
   { id: 'A_FINISH',  icon: '📜', name: 'Tốt nghiệp BizOn', desc: 'Hoàn thành cả 6 vòng mô phỏng.', test: (s) => s.finished },
+  { id: 'A_FLAG',    icon: '🚩', name: 'Cắm cờ đầu tiên', desc: 'Thắng một vòng trên bản đồ chinh phục.', test: (s) => (s.conquest || []).some(c => c.win) },
+  { id: 'A_WHATIF',  icon: '🔮', name: 'Chiến lược gia Nếu–Thì', desc: 'Dùng mô phỏng Nếu–Thì của Lumina ít nhất một lần.', test: (s) => (s.whatIfTotal || 0) > 0 },
+  { id: 'A_TEAM',    icon: '🤝', name: 'Lắng nghe đội', desc: 'Áp dụng 3 gợi ý từ Cuộc họp đội.', test: (s) => (s.suggestionsApplied || 0) >= 3 },
+  { id: 'A_CHAMP',   icon: '🏆', name: 'Vô địch BizOn', desc: 'Kết thúc 6 vòng với lợi nhuận cao nhất sàn đấu.', test: (s) => s.finished && s.competitors.every(c => (c.profit || 0) <= s.history.reduce((a, r2) => a + r2.netProfit, 0)) },
 ];
 
 function unlockAchievements(s, r) {
