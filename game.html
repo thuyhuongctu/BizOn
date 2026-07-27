@@ -330,6 +330,8 @@ tailwind.config = {
         <input id="in-prod" type="range" min="200" max="4000" step="100" value="1200" class="w-full" oninput="syncDecisionLabels()">
         <p class="text-[11px] text-deep-teal/50 mt-1">Chi phí sản xuất: 60.000₫/sp + khấu hao máy móc theo công suất.</p>
       </div>
+      <button id="adv-toggle" onclick="toggleAdvDecisions()" class="clay-btn w-full bg-surface-bright text-deep-teal/70 font-bold py-3 text-sm mb-3">⚙️ Quyết định nâng cao (R&D · Tài chính · Nhân sự) ▾</button>
+      <div id="adv-decisions">
       <div class="clay-card p-5 mb-3">
         <div class="flex justify-between mb-1"><label class="font-bold text-sm text-deep-teal">🔬 Đầu tư R&D</label><span id="v-rd" class="font-display font-bold text-primary">30tr₫</span></div>
         <input id="in-rd" type="range" min="0" max="150" step="5" value="30" class="w-full" oninput="syncDecisionLabels()">
@@ -359,6 +361,7 @@ tailwind.config = {
         <input id="in-train" type="range" min="0" max="10" step="1" value="1" class="w-full" oninput="syncDecisionLabels()">
         <p class="text-[11px] text-deep-teal/50 mt-1">Đào tạo tăng OEE (tối đa +5%) và giảm phế phẩm.</p>
       </div>
+      </div><!-- /adv-decisions -->
       <div class="clay-card p-5 mb-4 relative overflow-hidden">
         <div class="absolute top-0 right-0 w-28 h-28 bg-primary/5 rounded-full -mr-12 -mt-12"></div>
         <div class="flex justify-between items-start mb-3 relative">
