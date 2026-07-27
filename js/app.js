@@ -286,6 +286,17 @@ const MANUAL = {
        ['🕹️ BizOn Arcade', 'Các mini-game phản xạ 30–60 giây: Clay Factory Frenzy, Trắc nghiệm Khởi nghiệp, Đoán Giá, Bắt Vốn Vàng.'],
        ['📚 Thư viện & 🎶 Kho Âm nhạc', 'Tạo hình nhân vật, sản phẩm cài áo, và toàn bộ ca khúc gốc với trình phát đầy đủ — mở từ Cài đặt hoặc Trang chủ.']].map(([t, d]) => `
     <div class="clay-card p-4 mb-3"><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p></div>`).join('')}` },
+  glossary: { icon: '📚', name: 'Thuật ngữ dễ hiểu', html: `
+    <p class="text-sm text-deep-teal/75 mb-4">Các thuật ngữ hay gặp trong game, giải thích bằng một câu:</p>
+    ${[['Thị phần', 'Miếng bánh khách hàng của bạn — trong 12.000 sp cầu thị trường mỗi vòng, bạn bán được bao nhiêu %.'],
+       ['Giá tham chiếu (150k)', 'Mức giá "chuẩn" thị trường — bán rẻ hơn thì hút khách, đắt hơn thì mất khách (mức độ theo độ co giãn giá 1.8).'],
+       ['Biên lợi nhuận', 'Tiền lời trên mỗi sản phẩm = giá bán − chi phí (~60k/sp). Giá 150k → lời ~90k/sp trước chi phí cố định.'],
+       ['Hòa vốn (CVP)', 'Số sản phẩm phải bán để bù hết chi phí cố định + marketing + R&D. Bán ít hơn mức này là lỗ.'],
+       ['OEE', 'Điểm sức khỏe dây chuyền (0–100%): máy chạy đều, ít hỏng, ít phế phẩm. Dưới 60% là báo động.'],
+       ['Quick Ratio', 'Khả năng trả nợ ngay bằng tiền mặt — dưới 1.0 nghĩa là chi kế hoạch đang vượt tiền trong két.'],
+       ['Thương hiệu (Brand)', 'Uy tín tích lũy qua các vòng — nhân sức hút của bạn, đặc biệt vòng 6 (trọng số ×1.5).'],
+       ['Khấu hao', 'Máy móc "mòn" theo công suất — đầu tư càng lớn, chi phí cố định mỗi vòng càng cao.']].map(([t, d]) => `
+    <div class="clay-card p-4 mb-2.5"><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p></div>`).join('')}` },
   trouble: { icon: '🔧', name: 'Xử lý sự cố', html: `
     ${[['📶 Kiểm tra mạng', 'BizOn chạy offline sau lần tải đầu (PWA) — nhưng lần đầu cần Wi-Fi hoặc 4G/5G ổn định.'],
        ['🔄 Làm mới ứng dụng', 'Đóng hoàn toàn và mở lại BizOn. Nếu đã cài lên màn hình chính, đóng hẳn app để nhận bản cập nhật mới.'],
@@ -1032,8 +1043,26 @@ function renderTeamMeeting() {
   </div>`;
 }
 
+/* Chế độ Cơ bản/Nâng cao: vòng 1–2 gấp gọn các quyết định nâng cao (giá trị mặc định vẫn hợp lý) */
+let advTouched = false;
+function toggleAdvDecisions() {
+  advTouched = true;
+  const box = $('adv-decisions'), btn = $('adv-toggle');
+  const hide = !box.classList.contains('hidden');
+  box.classList.toggle('hidden', hide);
+  if (btn) btn.textContent = hide ? '⚙️ Quyết định nâng cao (R&D · Tài chính · Nhân sự) ▾' : '⚙️ Thu gọn quyết định nâng cao ▴';
+}
+function syncAdvDecisions() {
+  const box = $('adv-decisions'), btn = $('adv-toggle');
+  if (!box || advTouched) return;
+  const hide = S.round <= 2;
+  box.classList.toggle('hidden', hide);
+  if (btn) btn.textContent = hide ? '⚙️ Quyết định nâng cao (R&D · Tài chính · Nhân sự) ▾' : '⚙️ Thu gọn quyết định nâng cao ▴';
+}
+
 function renderDecisions() {
   document.querySelectorAll('.dec-round').forEach(e => e.textContent = Math.min(S.round, ROUNDS_TOTAL));
+  syncAdvDecisions();
   syncDecisionLabels();
   renderTeamMeeting();
   const wq = $('whatif-quota');
@@ -1092,6 +1121,21 @@ function commitDecisions() {
   }, 2300);
 }
 
+/* "Vì sao ra kết quả này?" — một câu giải thích nguyên nhân chính của vòng */
+function explainRound(r) {
+  const prev = S.history[S.history.length - 2];
+  const dShare = prev ? r.share - prev.share : r.share - 25;
+  const d = r.decisions || {};
+  const causes = [];
+  if (r.event && r.event.tone === 'bad' && !r.shielded) causes.push(`biến cố «${r.event.name}» ép chi phí/nhu cầu`);
+  if (d.price > REF_PRICE * 1.25) causes.push(`giá ${d.price}k cao hơn hẳn tham chiếu 150k nên mất khách nhạy giá`);
+  if (d.price < REF_PRICE * 0.8) causes.push(`giá ${d.price}k rất thấp kéo khách nhưng bào mỏng biên lãi`);
+  if (r.sold < d.production * 0.85) causes.push(`sản xuất ${(d.production || 0).toLocaleString('vi-VN')} sp nhưng chỉ bán ${r.sold.toLocaleString('vi-VN')} — tồn kho chôn vốn`);
+  if ((d.marketing || 0) < 40) causes.push('marketing dưới mặt bằng đối thủ (55–90tr) nên độ phủ yếu');
+  const head = dShare >= 1 ? `Thị phần tăng ${dShare.toFixed(1)} điểm` : dShare <= -1 ? `Thị phần giảm ${Math.abs(dShare).toFixed(1)} điểm` : 'Thị phần đi ngang';
+  return `${head}${causes.length ? ' — nguyên nhân chính: ' + causes.slice(0, 2).join('; ') : r.netProfit > 0 ? ' — chiến lược cân bằng, không có điểm yếu rõ rệt.' : ' — lỗ chủ yếu do tổng chi vượt doanh thu, xem lại Dự báo Dòng tiền trước khi chốt.'}${causes.length ? '.' : ''}`;
+}
+
 function showRoundResult(r) {
   const ok = r.netProfit > 0;
   playClip('assets/audio/lumina-round-result.mp3');
@@ -1113,6 +1157,7 @@ function showRoundResult(r) {
         <div class="bg-surface-bright rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Đã bán</p><p class="font-display font-bold text-deep-teal">${r.sold.toLocaleString('vi-VN')} sp</p></div>
         <div class="bg-surface-bright rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Thị phần</p><p class="font-display font-bold text-deep-teal">${r.share.toFixed(1)}%</p></div>
       </div>
+      <div class="clay-sunken rounded-2xl p-3 mt-3 text-left"><p class="text-[10px] font-extrabold text-deep-teal/50 uppercase mb-0.5">💡 Vì sao?</p><p class="text-[11px] text-deep-teal/75">${explainRound(r)}</p></div>
       <p class="mt-3 text-xs font-bold text-primary">+${r.xpGain} XP</p>
       ${cqLine}
       <button class="clay-btn w-full bg-primary text-white font-display font-bold py-3 mt-4">Tiếp tục</button>
