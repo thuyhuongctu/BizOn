@@ -520,7 +520,14 @@ function showVictory(r) {
 }
 
 // ---------- Navigation ----------
+// ---------- Clip giọng Lumina (Bizon_1/Bizon_2 do tác giả thu) ----------
+let advisorHelloPlayed = false;
+function playClip(src, vol = 0.9) {
+  try { const au = new Audio(src); au.volume = vol; au.play().catch(() => {}); } catch (e) {}
+}
+
 function showTab(tab) {
+  if (tab === 'advisor' && !advisorHelloPlayed) { advisorHelloPlayed = true; playClip('assets/audio/lumina-advisor-hello.mp3'); }
   document.querySelectorAll('main .screen').forEach(s => s.classList.remove('active'));
   $('tab-' + tab).classList.add('active');
   document.querySelectorAll('.nav-item').forEach(b =>
@@ -959,6 +966,7 @@ function commitDecisions() {
 
 function showRoundResult(r) {
   const ok = r.netProfit > 0;
+  playClip('assets/audio/lumina-round-result.mp3');
   const cq = (S.conquest || [])[r.round - 1];
   const cqStop = CONQUEST_STOPS[r.round - 1];
   const cqLine = cq && cqStop ? (cq.win
