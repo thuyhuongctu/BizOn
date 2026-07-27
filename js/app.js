@@ -105,6 +105,30 @@ function doLoginDemo() {
   save(); renderAll();
 }
 
+/* Hồ sơ doanh nghiệp — tên công ty (= tên đội) + sản phẩm chủ lực */
+const COMPANY_INFO = {
+  product: 'Bộ linh vật đất sét Việt', segment: 'Quà tặng & đồ sưu tầm',
+  factory: 'Xưởng thủ công Cần Thơ', capital: 'Vốn khởi điểm 500tr₫', refPrice: 'Giá tham chiếu 150.000₫/bộ',
+};
+function renderCompanyCard() {
+  const box = $('company-card');
+  if (!box) return;
+  box.innerHTML = `<div class="clay-card p-5 mb-4">
+    <div class="flex items-center gap-3 mb-2.5">
+      <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-clay-orange to-clay-gold flex items-center justify-center text-2xl shadow-clay shrink-0">🏺</div>
+      <div class="min-w-0">
+        <p class="text-[9px] font-extrabold text-deep-teal/45 uppercase tracking-wide">Doanh nghiệp của bạn</p>
+        <h3 class="font-display font-extrabold text-deep-teal text-lg truncate">${S.profile.teamName}</h3>
+      </div>
+    </div>
+    <p class="text-xs text-deep-teal/65 mb-2.5">Xưởng đồ chơi đất sét thủ công khởi nghiệp từ Miền Tây — sản phẩm chủ lực: <b class="text-deep-teal">«${COMPANY_INFO.product}»</b>, dòng ${COMPANY_INFO.segment.toLowerCase()} mang hồn Việt.</p>
+    <div class="flex flex-wrap gap-1.5">
+      ${[['🏺', COMPANY_INFO.product], ['🎯', COMPANY_INFO.segment], ['💲', COMPANY_INFO.refPrice], ['🏭', COMPANY_INFO.factory], ['💰', COMPANY_INFO.capital]].map(([i, t]) => `
+      <span class="clay-sunken rounded-full px-2.5 py-1 text-[10px] font-bold text-deep-teal/70">${i} ${t}</span>`).join('')}
+    </div>
+  </div>`;
+}
+
 function renderTeamCard() {
   const box = $('team-card');
   if (!box) return;
@@ -206,7 +230,7 @@ function showLevelUp(level) {
 const MANUAL = {
   start: { icon: '🚀', name: 'Bắt đầu', html: `
     <p class="text-sm text-deep-teal/75 mb-4">Chào mừng bạn đến với BizOn — môi trường mô phỏng kinh doanh 3D. Ba bước thiết lập:</p>
-    ${[['1', 'Lập đội & chọn vai trò', 'Đăng nhập với tên đội, Class ID (nếu học trên lớp) và chọn vai trò CEO · CFO · CMO · COO · SEC.'],
+    ${[['1', 'Lập đội & chọn vai trò', 'Đăng nhập với tên đội (cũng là tên doanh nghiệp của bạn), Class ID (nếu học trên lớp) và chọn vai trò CEO · CFO · CMO · COO · SEC. Doanh nghiệp là xưởng đồ chơi đất sét — sản phẩm chủ lực «Bộ linh vật đất sét Việt».'],
        ['2', 'Nhận vốn khởi điểm', 'Mỗi đội bắt đầu với 500tr₫ vốn giảng viên cấp. Giữ ít nhất 15% dự phòng cho biến cố!'],
        ['3', 'Vào vòng 1', 'Đọc biến cố thị trường, hỏi Lumina AI, rồi vào Quyết định để chốt kế hoạch đầu tiên.']].map(([n, t, d]) => `
     <div class="clay-card p-4 mb-3 flex gap-3.5 items-start"><span class="w-9 h-9 shrink-0 rounded-full bg-primary-container/30 text-primary font-display font-extrabold flex items-center justify-center">${n}</span>
@@ -551,7 +575,7 @@ function renderAll() {
   renderHeader(); renderDashboard(); renderDecisions(); renderAdvisorIntro();
   renderShop(); renderSkills(); renderLeaderboard(); renderAchievements(); renderProfile();
   renderMissions(); renderMinigame(); renderInstructor(); renderJournal(); renderMarket();
-  renderConquest(); renderTeamCard(); renderOpponents();
+  renderCompanyCard(); renderConquest(); renderTeamCard(); renderOpponents();
   const mt = $('music-toggle'); if (mt) mt.checked = musicEnabled();
 }
 
@@ -1146,7 +1170,9 @@ function renderConquest() {
 const INTRO_SLIDES = [
   { icon: '🇻🇳', title: 'Việt Nam 2026', img: 'assets/illustrations/hero-vietnam-2026.png',
     text: 'Nền kinh tế đang vươn mình "Hóa Rồng". Đội của bạn điều hành một công ty đồ chơi đất sét — khởi nghiệp từ Miền Tây, khát vọng vươn ra cả nước.' },
-  { icon: '🗺️', title: '6 vòng · 6 tỉnh thành', 
+  { icon: '🏺', title: 'Doanh nghiệp & sản phẩm của bạn',
+    text: 'Bạn điều hành một xưởng đồ chơi đất sét thủ công tại Cần Thơ, vốn khởi điểm 500 triệu ₫. Sản phẩm chủ lực: «Bộ linh vật đất sét Việt» — dòng quà tặng & đồ sưu tầm, giá tham chiếu 150.000₫/bộ. Tên doanh nghiệp chính là tên đội bạn đặt khi đăng nhập!' },
+  { icon: '🗺️', title: '6 vòng · 6 tỉnh thành',
     text: 'Mỗi vòng là một quý kinh doanh tại một tỉnh/thành trên bản đồ mới: Cần Thơ → TP. Hồ Chí Minh → Khánh Hòa → Đà Nẵng → Thanh Hóa → Hà Nội. Đội thắng vòng nào sẽ cắm cờ 🚩 công ty lên tỉnh đó!' },
   { icon: '👥', title: 'Đội hình C-Suite', 
     text: 'CEO chèo lái chiến lược, CFO giữ két sắt, CMO đánh chiếm thị trường, COO vận hành xưởng, SEC ghi biên bản — bên cạnh cố vấn Lumina AI và thầy Tú Phan.' },
