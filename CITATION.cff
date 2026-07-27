@@ -7,10 +7,12 @@ date-released: 2026-07-26
 authors:
   - family-names: "Do"
     given-names: "Thuy Huong"
+    orcid: "https://orcid.org/0000-0002-7711-2487"
     email: thuyhuongctu@gmail.com
     affiliation: "Can Tho University"
   - family-names: "Phan"
     given-names: "Anh Tu"
+    orcid: "https://orcid.org/0000-0003-0667-3137"
     email: patu@ctu.edu.vn
     affiliation: "Can Tho University"
 doi: 10.5281/zenodo.21592242
