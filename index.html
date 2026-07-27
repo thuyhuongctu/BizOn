@@ -4,710 +4,140 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>BizOn Bật Nghiệp 2026 — Business Simulation</title>
-<meta name="author" content="Đỗ Thùy Hương, Phan Anh Tú">
+<title>BizOn Bật Nghiệp — Trang chủ</title>
+<meta name="description" content="Cổng vào hệ sinh thái BizOn Bật Nghiệp: game mô phỏng kinh doanh, Arcade, BizOn Global, Thư viện Sáng tạo và đội ngũ sáng lập.">
 <meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
-<meta name="description" content="BizOn Bật Nghiệp — game mô phỏng kinh doanh EdTech 3D Claymorphism với cố vấn AI Lumina.">
-<meta name="theme-color" content="#006687">
-<link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
-<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
 <script src="https://cdn.tailwindcss.com"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
 <script>
 tailwind.config = {
   theme: {
     extend: {
       colors: {
-        primary: '#006687',
-        'primary-container': '#00c4ff',
-        'surface-bright': '#f4faff',
-        'deep-teal': 'rgb(var(--dt) / <alpha-value>)',
+        primary: '#006687', 'primary-container': '#00c4ff', 'surface-bright': '#f4faff',
+        'deep-teal': 'rgb(var(--dt) / <alpha-value>)', 'clay-orange': '#e8762d', 'clay-gold': '#fda127',
       },
-      fontFamily: {
-        display: ['"Plus Jakarta Sans"', 'sans-serif'],
-        body: ['Manrope', 'sans-serif'],
-      },
+      fontFamily: { display: ['"Plus Jakarta Sans"', 'sans-serif'], body: ['Manrope', 'sans-serif'] },
       borderRadius: { clay: '24px' },
-      boxShadow: {
-        clay: '0 10px 30px -5px rgba(0, 102, 135, 0.05), inset 0 -4px 0 rgba(0, 0, 0, 0.05)',
-        'clay-lg': '0 20px 45px -10px rgba(0, 102, 135, 0.15), inset 0 -4px 0 rgba(0, 0, 0, 0.05)',
-      },
     },
   },
 };
 </script>
 <script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
 <style>
-  html { background:#f4faff; }
-  body { font-family: 'Manrope', sans-serif; background:transparent; color: #033337; }
-  /* Bản đồ Việt Nam chìm — theo M-AIDA */
-  #vn-map { position:fixed; top:50%; right:-2vw; transform:translateY(-50%); width:min(36vw,440px); z-index:-1; pointer-events:none; color:#006687; opacity:.07; }
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+  html { background:#f4faff; scroll-behavior:smooth; }
+  body { font-family:'Manrope',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
+  .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
+  .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease; }
+  .clay-btn:active { transform:translateY(2px); }
+  .clay-btn-primary { background:linear-gradient(160deg,#00c4ff,#006687); border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.5), inset 0 -4px 0 rgba(0,0,0,.18); }
+  .hub-card { transition:transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease; }
+  .hub-card:hover { transform:translateY(-6px) scale(1.015); box-shadow:0 18px 40px -8px rgba(0,102,135,.18), inset 0 -4px 0 rgba(0,0,0,.05); }
+  @keyframes float { 0%,100%{transform:translateY(0) rotate(var(--rot,0deg))} 50%{transform:translateY(-12px) rotate(var(--rot,0deg))} }
+  .animate-float { animation:float 6s ease-in-out infinite; }
+  #vn-map { position:fixed; top:50%; right:-2vw; transform:translateY(-50%); width:min(36vw,440px); z-index:-1; pointer-events:none; color:#006687; opacity:.08; }
   #vn-map svg { width:100%; height:auto; display:block; }
-  #vn-map .lh-light { animation:vnlh-blink 1.8s ease-in-out infinite; }
-  #vn-map .lh-halo { opacity:0; animation:vnlh-halo 1.8s ease-in-out infinite; }
-  #vn-map .lh2 .lh-light,#vn-map .lh2 .lh-halo { animation-delay:.45s; }
-  #vn-map .lh3 .lh-light,#vn-map .lh3 .lh-halo { animation-delay:.9s; }
-  #vn-map .lh4 .lh-light,#vn-map .lh4 .lh-halo { animation-delay:1.35s; }
-  @keyframes vnlh-blink { 0%,100%{opacity:.35} 50%{opacity:1} }
-  @keyframes vnlh-halo { 0%,100%{opacity:0} 50%{opacity:.7} }
   @media (max-width:820px) { #vn-map { right:-16vw; width:64vw; opacity:.05; } }
-
-  h1,h2,h3,h4,.font-display { font-family: 'Plus Jakarta Sans', sans-serif; }
-  .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.05), inset 0 -4px 0 rgba(0,0,0,.05); }
-  .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease, box-shadow .12s ease; }
-  .clay-btn:active { transform:translateY(2px); box-shadow:0 4px 10px -4px rgba(0,102,135,.3), inset 0 -2px 0 rgba(0,0,0,.12); }
-  .screen { display:none; }
-  .screen.active { display:block; animation:fadeUp .28s ease; }
-  @keyframes fadeUp { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:none;} }
-  @keyframes pulseLogo { 0%,100% {transform:scale(1); opacity:1;} 50% {transform:scale(1.08); opacity:.85;} }
-  @keyframes spin { to { transform:rotate(360deg); } }
-  .animate-pulse-logo { animation:pulseLogo 1.4s ease-in-out infinite; }
-  @keyframes shake { 0%,100%{transform:translateX(0);} 20%{transform:translateX(-8px);} 40%{transform:translateX(8px);} 60%{transform:translateX(-5px);} 80%{transform:translateX(5px);} }
-  .animate-shake { animation:shake .6s ease; }
-  .confetti-piece { position:fixed; top:-16px; width:10px; height:14px; border-radius:3px; z-index:100; pointer-events:none; animation:confettiFall linear forwards; }
-  @keyframes confettiFall { to { transform:translateY(105vh) rotate(720deg); opacity:.9; } }
-  .nav-item.active { color:#006687; }
-  .nav-item.active .nav-ico { background:#00c4ff33; box-shadow:inset 0 -3px 0 rgba(0,102,135,.15); }
-  .nav-ico { border-radius:16px; padding:4px 14px; transition:background .2s; }
-  input[type=range] { accent-color:#006687; }
-  .risk-low { background:#e0fbf4; color:#0b7a5e; }
-  .risk-medium { background:#fff4d6; color:#946200; }
-  .risk-high { background:#ffe4dc; color:#c2410c; }
-  .skill-locked { filter:grayscale(1); opacity:.55; }
-  .nav-item:not(.active) .nav-ico svg, .nav-item:not(.active) .nav-ico img { filter:grayscale(.65); opacity:.7; }
-  .clay-ico { filter:drop-shadow(0 3px 4px rgba(0,102,135,.35)); }
-  .mg-item { position:absolute; bottom:10px; font-size:2.2rem; cursor:pointer; user-select:none; left:-48px; animation:beltMove linear forwards; filter:drop-shadow(0 4px 5px rgba(3,51,55,.25)); }
-  @keyframes beltMove { from { left:-48px; } to { left:105%; } }
-  /* Claymorphism chuẩn từ Stitch export */
-  .clay-raised { background:#ffffff; box-shadow:8px 8px 16px rgba(0,77,102,.08), -8px -8px 16px rgba(255,255,255,.8), inset 2px 2px 4px rgba(255,255,255,.9); border-radius:24px; }
-  .clay-sunken { background:#eef4f9; box-shadow:inset 4px 4px 8px rgba(0,0,0,.05), inset -4px -4px 8px rgba(255,255,255,.9); }
-  .clay-button-primary { background:#006687; box-shadow:0 6px 0 #004d66, 0 12px 24px rgba(0,77,102,.2); transition:all .15s ease-out; border-radius:24px; }
-  .clay-button-primary:active { transform:translateY(4px); box-shadow:0 2px 0 #004d66, 0 4px 8px rgba(0,77,102,.1); }
-  .clay-button-secondary { background:#f4faff; box-shadow:0 4px 0 #d5dbe0, 0 8px 16px rgba(0,0,0,.05); transition:all .15s ease-out; border-radius:24px; }
-  .clay-button-secondary:active { transform:translateY(2px); box-shadow:0 1px 0 #d5dbe0, 0 2px 4px rgba(0,0,0,.05); }
-  @keyframes floatY { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-10px); } }
-  .animate-float { animation:floatY 4s ease-in-out infinite; }
-  .speech-tail { position:absolute; left:-14px; bottom:0; width:14px; height:14px; background:#fff; clip-path:polygon(100% 0, 0 100%, 100% 100%); }
-  /* Chat giọng nói — theo Stitch export */
-  .clay-bubble-in { background:#fff; border-radius:24px; border-bottom-left-radius:4px; box-shadow:8px 8px 16px rgba(0,0,0,.04), inset 2px 2px 4px rgba(255,255,255,1), inset -2px -2px 4px rgba(0,0,0,.02); }
-  .clay-bubble-out { background:#006687; color:#fff; border-radius:24px; border-bottom-right-radius:4px; box-shadow:8px 8px 16px rgba(0,102,135,.15), inset 2px 2px 4px rgba(255,255,255,.3), inset -4px -4px 8px rgba(0,0,0,.2); }
-  .clay-input { background:#eef4f9; box-shadow:inset 4px 4px 8px rgba(0,0,0,.05), inset -4px -4px 8px rgba(255,255,255,.8); border:none; outline:none; }
-  .wave-bar { width:4px; height:16px; background:linear-gradient(to bottom,#00c4ff,#ffb86a); border-radius:2px; animation:wave 1s ease-in-out infinite; }
-  @keyframes wave { 0%,100% { height:8px; } 50% { height:24px; } }
-  .avatar-glow { animation:avatarPulse 2s infinite; }
-  @keyframes avatarPulse { 0% { box-shadow:0 0 0 0 rgba(0,196,255,.7); } 70% { box-shadow:0 0 0 15px rgba(0,196,255,0); } 100% { box-shadow:0 0 0 0 rgba(0,196,255,0); } }
-  .item-icon-container { position:relative; background:radial-gradient(circle at 30% 30%, #f0f9ff, #c1e8ff); border-radius:20px; overflow:hidden; }
-  .item-icon-container::after { content:''; position:absolute; inset:0; box-shadow:inset 0 0 15px rgba(255,255,255,.6); pointer-events:none; }
-  .xp-bar-fill { transition:width 1s cubic-bezier(.34,1.56,.64,1); box-shadow:inset 0 2px 4px rgba(255,255,255,.4); }
-  /* Thị trường sống — Live Market Pulse */
-  .ticker-wrap { width:100%; overflow:hidden; white-space:nowrap; }
-  .ticker-content { display:inline-block; animation:tickerMove 28s linear infinite; }
-  @keyframes tickerMove { 0% { transform:translateX(100%); } 100% { transform:translateX(-100%); } }
-  .clay-bar-v { border-radius:999px; box-shadow:6px 6px 12px rgba(0,0,0,.1), inset 4px 4px 8px rgba(255,255,255,.5), inset -4px -4px 8px rgba(0,0,0,.1); transition:height 1s cubic-bezier(.4,0,.2,1); }
-  .lumina-name { background:linear-gradient(90deg,#006687 0%,#00c4ff 40%,#006687 60%,#00c4ff 100%); background-size:200% auto; -webkit-background-clip:text; background-clip:text; color:transparent; animation:shineText 4s linear infinite; }
-  @keyframes shineText { to { background-position:-200% center; } }
-  .signature { font-family:'Dancing Script',cursive; font-weight:700; }
-  /* Hiệu ứng dùng vật phẩm */
-  @keyframes sparkleFly { to { transform:translate(var(--tx), var(--ty)) scale(0) rotate(160deg); opacity:0; } }
-  .sparkle-particle { position:fixed; border-radius:50%; pointer-events:none; z-index:100; animation:sparkleFly .65s cubic-bezier(0,.9,.57,1) forwards; }
-  @keyframes toastSlide { 0% { opacity:0; transform:translate(-50%,16px); } 10%,90% { opacity:1; transform:translate(-50%,0); } 100% { opacity:0; transform:translate(-50%,-16px); } }
-  .item-toast { position:fixed; top:76px; left:50%; z-index:80; animation:toastSlide 3s cubic-bezier(.16,1,.3,1) forwards; }
-  .signature-underline { display:inline-block; position:relative; }
-  .signature-underline::after { content:''; position:absolute; left:8%; right:8%; bottom:-2px; height:3px; border-radius:999px; background:linear-gradient(90deg,#fda127,#e8762d); box-shadow:0 2px 4px rgba(232,118,45,.4); }
-  .glow-ring { position:relative; }
-  .glow-ring::before { content:''; position:absolute; inset:-3px; border-radius:inherit; padding:3px; background:conic-gradient(from 0deg,#00c4ff,#fda127,#00c4ff); -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite:xor; mask-composite:exclude; animation:spin 4s linear infinite; }
-  .glow-ring::after { content:''; position:absolute; inset:-3px; border-radius:inherit; border:2px solid rgba(0,196,255,.65); animation:ringPulse 2.2s ease-out infinite; }
-  @keyframes ringPulse { 0% { transform:scale(1); opacity:.65; } 100% { transform:scale(1.3); opacity:0; } }
-  .online-dot { position:relative; }
-  .online-dot::after { content:''; position:absolute; inset:0; border-radius:999px; background:#22c55e; animation:ringPulse 1.6s ease-out infinite; }
-  .waterfall-bar { border-radius:8px 8px 4px 4px; box-shadow:inset 2px 2px 4px rgba(255,255,255,.3); }
-  .spider-grid { stroke:#bfc8ce; stroke-dasharray:4; fill:none; }
-
-  /* ===== Carousel chọn nhân vật ===== */
-  #role-picker { display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; padding:6px 2px 10px; scrollbar-width:none; }
-  #role-picker::-webkit-scrollbar { display:none; }
-  .role-chip { scroll-snap-align:center; flex:0 0 8.5rem; transition:transform .18s ease, box-shadow .18s ease; }
-  .role-chip.sel { transform:translateY(-4px) scale(1.04); }
-  /* ===== Bản đồ chinh phục ===== */
-  .cq-pulse { animation:cqPulse 1.6s ease-in-out infinite; }
-  @keyframes cqPulse { 0%,100%{opacity:.45} 50%{opacity:1} }
   /* ===== Chế độ tối ===== */
   :root { --dt: 3 51 55; }
   html[data-theme="dark"] { --dt: 214 236 240; background:#081a20; color-scheme:dark; }
   html[data-theme="dark"] body { color:#d6ecf0; }
   html[data-theme="dark"] .clay-card { background:#0e2a33; box-shadow:0 10px 30px -5px rgba(0,0,0,.45), inset 0 -4px 0 rgba(0,0,0,.3); }
-  html[data-theme="dark"] .clay-sunken, html[data-theme="dark"] .clay-input { background:#0a222a; box-shadow:inset 4px 4px 8px rgba(0,0,0,.5), inset -4px -4px 8px rgba(255,255,255,.03); color:#d6ecf0; }
-  html[data-theme="dark"] .bg-white, html[data-theme="dark"] .bg-white\/95 { background-color:#0e2a33 !important; }
-  html[data-theme="dark"] .bg-surface-bright { background-color:#0a222a !important; }
-  html[data-theme="dark"] .clay-button-secondary { background:#0e2a33; box-shadow:0 4px 0 #05141a, 0 8px 16px rgba(0,0,0,.35); }
   html[data-theme="dark"] .text-primary { color:#5cc4e6 !important; }
-  html[data-theme="dark"] .nav-item.active { color:#5cc4e6; }
   html[data-theme="dark"] #vn-map { color:#6fc4d8; }
 </style>
 </head>
-<body class="min-h-screen">
-<!-- Bản đồ Việt Nam chìm dưới trang (theo M-AIDA) -->
+<body>
+<!-- Bản đồ Việt Nam chìm -->
 <div id="vn-map" aria-hidden="true"><svg viewBox="0 0 432 588" xmlns="http://www.w3.org/2000/svg">
   <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
     <polygon points="108.9,25.2 148.2,39.0 145.3,52.5 158.2,69.0 186.7,80.1 166.7,96.0 158.2,99.0 148.2,102.0 138.2,120.0 126.8,129.0 120.3,156.0 125.4,177.0 142.5,189.0 159.6,210.0 174.4,231.0 192.4,243.0 202.9,258.0 210.9,273.0 216.6,291.0 222.3,312.0 223.7,336.0 220.9,357.0 218.0,378.0 198.1,396.0 183.8,405.0 159.6,415.5 152.5,417.0 146.8,429.0 141.1,441.0 119.7,456.0 95.5,468.0 94.6,454.5 93.5,439.5 101.2,427.5 96.3,415.5 84.1,413.4 101.2,399.0 124.0,397.5 124.8,378.0 140.2,374.4 145.3,363.0 172.4,348.0 169.6,321.0 169.6,294.0 172.4,284.4 173.8,270.0 169.6,249.0 153.9,240.0 134.0,219.0 116.8,198.0 104.0,174.0 72.7,147.0 85.5,137.4 88.3,121.5 81.2,113.4 44.2,99.0 39.9,86.4 18.2,83.4 18.5,54.0 31.3,43.5 52.7,50.4 61.3,42.0 81.2,43.2 95.8,38.4 105.5,32.4 108.9,25.2"/>
-    <ellipse cx="71.2" cy="419.4" rx="4.5" ry="7"/>
   </g>
   <g fill="currentColor">
-    <circle cx="145.3" cy="465.6" r="1.8"/>
     <g opacity=".95"><circle cx="287.8" cy="219.0" r="1.5"/><circle cx="299.2" cy="225.0" r="1.5"/><circle cx="307.8" cy="220.5" r="1.5"/><circle cx="319.2" cy="231.0" r="1.5"/><circle cx="299.2" cy="237.0" r="1.5"/><circle cx="290.7" cy="229.5" r="1.5"/><circle cx="312.1" cy="240.0" r="1.5"/></g>
     <g opacity=".95"><circle cx="296.4" cy="384.0" r="1.4"/><circle cx="322.0" cy="402.0" r="1.4"/><circle cx="350.5" cy="393.0" r="1.4"/><circle cx="364.8" cy="414.0" r="1.4"/><circle cx="339.2" cy="432.0" r="1.4"/><circle cx="313.5" cy="438.0" r="1.4"/><circle cx="379.0" cy="429.0" r="1.4"/><circle cx="353.4" cy="462.0" r="1.4"/><circle cx="324.9" cy="474.0" r="1.4"/><circle cx="367.7" cy="489.0" r="1.4"/><circle cx="290.7" cy="420.0" r="1.4"/><circle cx="393.3" cy="447.0" r="1.4"/></g>
   </g>
-  <g transform="translate(108.9,25.2)">
-    <line x1="0" y1="0" x2="0" y2="-22" stroke="#8a6a4f" stroke-width="1.6"/>
-    <rect x="0.8" y="-22" width="17" height="11" rx="1.2" fill="#da251d"/>
-    <path fill="#ffce00" d="M9.3 -19.9 10.3 -17.2 13.1 -17.2 10.8 -15.5 11.7 -12.8 9.3 -14.5 6.9 -12.8 7.8 -15.5 5.5 -17.2 8.3 -17.2Z"/>
-  </g>
-  <g transform="translate(122.0,425.1)"><path fill="#b3701a" d="M0 -7 1.9 -2.2 7 -2.2 2.9 0.9 4.4 5.8 0 2.8 -4.4 5.8 -2.9 0.9 -7 -2.2 -1.9 -2.2Z"/></g>
-  <g class="lh" transform="translate(302.1,228.0)"><path d="M-2.4 0 L-1.4 -7 H1.4 L2.4 0 Z" fill="none" stroke="currentColor" stroke-width="1"/><line x1="-2.6" y1="0" x2="2.6" y2="0" stroke="currentColor" stroke-width="1"/><rect x="-1.7" y="-9.2" width="3.4" height="2.2" rx="0.6" fill="none" stroke="currentColor" stroke-width="1"/><circle class="lh-light" cx="0" cy="-8.1" r="1.3" fill="#e8483f"/><circle class="lh-halo" cx="0" cy="-8.1" r="4.2" fill="none" stroke="#e8483f" stroke-width="1"/></g><g class="lh lh2" transform="translate(344.8,435.0)"><path d="M-2.4 0 L-1.4 -7 H1.4 L2.4 0 Z" fill="none" stroke="currentColor" stroke-width="1"/><line x1="-2.6" y1="0" x2="2.6" y2="0" stroke="currentColor" stroke-width="1"/><rect x="-1.7" y="-9.2" width="3.4" height="2.2" rx="0.6" fill="none" stroke="currentColor" stroke-width="1"/><circle class="lh-light" cx="0" cy="-8.1" r="1.3" fill="#e8483f"/><circle class="lh-halo" cx="0" cy="-8.1" r="4.2" fill="none" stroke="#e8483f" stroke-width="1"/></g><g class="lh lh3" transform="translate(71.2,419.4)"><path d="M-2.4 0 L-1.4 -7 H1.4 L2.4 0 Z" fill="none" stroke="currentColor" stroke-width="1"/><line x1="-2.6" y1="0" x2="2.6" y2="0" stroke="currentColor" stroke-width="1"/><rect x="-1.7" y="-9.2" width="3.4" height="2.2" rx="0.6" fill="none" stroke="currentColor" stroke-width="1"/><circle class="lh-light" cx="0" cy="-8.1" r="1.3" fill="#e8483f"/><circle class="lh-halo" cx="0" cy="-8.1" r="4.2" fill="none" stroke="#e8483f" stroke-width="1"/></g><g class="lh lh4" transform="translate(145.3,465.6)"><path d="M-2.4 0 L-1.4 -7 H1.4 L2.4 0 Z" fill="none" stroke="currentColor" stroke-width="1"/><line x1="-2.6" y1="0" x2="2.6" y2="0" stroke="currentColor" stroke-width="1"/><rect x="-1.7" y="-9.2" width="3.4" height="2.2" rx="0.6" fill="none" stroke="currentColor" stroke-width="1"/><circle class="lh-light" cx="0" cy="-8.1" r="1.3" fill="#e8483f"/><circle class="lh-halo" cx="0" cy="-8.1" r="4.2" fill="none" stroke="#e8483f" stroke-width="1"/></g>
 </svg></div>
 
-
-<!-- ===================== SPLASH ===================== -->
-<section id="screen-splash" class="screen active">
-  <div class="min-h-screen relative bg-[#14161a]">
-    <img src="assets/illustrations/logo-splash.png" alt="BizOn Bật Nghiệp — Powering Your Business" class="absolute inset-0 w-full h-full object-cover">
-    <div class="absolute bottom-10 inset-x-0 flex justify-center">
-      <div class="animate-pulse-logo w-8 h-8 rounded-full border-4 border-orange-400 border-t-transparent" style="animation:spin 1s linear infinite"></div>
+<!-- Thanh trên -->
+<header class="max-w-5xl mx-auto px-5 pt-6 flex items-center justify-between">
+  <div class="flex items-center gap-2.5">
+    <img src="assets/icons/icon-192.png" alt="BizOn" class="w-10 h-10 rounded-xl shadow-lg">
+    <div>
+      <p class="font-display font-extrabold text-deep-teal leading-tight">BizOn <span class="text-primary">Bật Nghiệp</span></p>
+      <p class="text-[10px] font-bold text-deep-teal/50 uppercase tracking-widest">Business Simulation Ecosystem</p>
     </div>
   </div>
-</section>
-
-<!-- ===================== LOGIN ===================== -->
-<section id="screen-login" class="screen">
-  <div class="min-h-screen flex flex-col justify-center px-6 py-10 max-w-md sm:max-w-lg mx-auto">
-    <div class="clay-card overflow-hidden p-0 mb-0">
-      <img src="assets/illustrations/login-clay.png" alt="BizOn Bật Nghiệp" class="w-full h-44 object-cover" style="object-position:50% 12%">
-      <div class="p-8 pt-5">
-      <h2 class="font-display text-2xl font-extrabold text-deep-teal">Chào mừng trở lại!</h2>
-      <p class="text-sm text-deep-teal/60 mb-6"><span class="font-display font-extrabold lumina-name">Lumina AI</span> — <span class="signature text-lg text-deep-teal">Je m'appelle Hương</span> đang chờ đồng hành cùng đội của bạn.</p>
-      <label class="block text-sm font-bold text-deep-teal mb-1">Email</label>
-      <input id="login-email" type="email" placeholder="sinhvien@truong.edu.vn" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 mb-4 outline-none focus:border-primary-container">
-      <label class="block text-sm font-bold text-deep-teal mb-1">Tên đội</label>
-      <input id="login-team" type="text" placeholder="VD: Rồng Xanh Corp" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 mb-4 outline-none focus:border-primary-container">
-      <label class="block text-sm font-bold text-deep-teal mb-1">Mã lớp học — Class ID <span class="font-normal text-deep-teal/40">(tùy chọn)</span></label>
-      <input id="login-class" type="text" placeholder="VD: QTKD-2026-A" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 mb-4 outline-none focus:border-primary-container">
-      <label class="block text-sm font-bold text-deep-teal mb-2">Vai trò của bạn</label>
-      <div id="role-picker" class="grid grid-cols-5 gap-2 mb-6"></div>
-      <button onclick="doLogin()" class="clay-button-primary w-full text-white font-display font-bold py-4" style="background:#e8762d; box-shadow:0 6px 0 #b95618, 0 12px 24px rgba(184,86,24,.25)">Bắt đầu mô phỏng 🚀</button>
-      <button onclick="doLoginDemo()" class="clay-button-secondary w-full text-deep-teal/80 font-display font-bold py-3.5 mt-3 rounded-clay">👥 Chơi thử với Đội Demo (5 nhân vật)</button>
-      </div>
-    </div>
-    <p class="text-center text-xs text-deep-teal/40 mt-6">© 2026 BizOn Bật Nghiệp · Đỗ Thùy Hương &amp; Phan Anh Tú</p>
+  <div class="flex items-center gap-2">
+    <a href="https://github.com/thuyhuongctu/BizOn" target="_blank" rel="noopener" title="GitHub" class="w-9 h-9 rounded-full clay-card !rounded-full flex items-center justify-center text-deep-teal/70"><svg viewBox="0 0 16 16" class="w-5 h-5" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg></a>
+    <button id="theme-btn" onclick="toggleTheme()" class="w-9 h-9 rounded-full clay-card !rounded-full text-sm" title="Chế độ Sáng/Tối · Light/Dark mode">🌙</button>
+    <button id="lang-btn" onclick="toggleLang()" class="w-9 h-9 rounded-full clay-card !rounded-full text-[10px] font-extrabold text-primary" title="Tiếng Việt / English">EN</button>
   </div>
-</section>
+</header>
 
-<!-- ===================== APP SHELL ===================== -->
-<div id="app-shell" class="hidden">
-  <!-- Header -->
-  <header class="sticky top-0 z-40 bg-surface-bright/90 backdrop-blur px-5 pt-4 pb-3 max-w-md sm:max-w-2xl mx-auto w-full">
-    <div class="flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <button onclick="showTab('profile')" class="w-11 h-11 rounded-clay bg-gradient-to-br from-primary to-primary-container flex items-center justify-center shadow-clay text-xl">👩‍💼</button>
-        <div>
-          <p id="hdr-team" class="font-display font-bold text-deep-teal leading-tight">—</p>
-          <p class="text-xs text-primary font-semibold"><span id="hdr-level">Lv.1</span> · <span id="hdr-xp">0 XP</span></p>
-        </div>
+<main class="max-w-5xl mx-auto px-5 pb-16">
+  <!-- Chào mừng -->
+  <section class="text-center pt-10 pb-8">
+    <img src="assets/character/lumina-ao-dai-wave.png" alt="Lumina Áo Dài chào mừng" class="h-52 sm:h-64 w-auto mx-auto animate-float drop-shadow-2xl">
+    <h1 class="font-display font-extrabold text-3xl sm:text-5xl text-deep-teal mt-5">Chào mừng đến BizOn!</h1>
+    <p class="text-sm sm:text-base text-deep-teal/60 mt-3 max-w-xl mx-auto">Hệ sinh thái mô phỏng kinh doanh 3D Claymorphism — chọn một cánh cửa để bắt đầu.</p>
+  </section>
+
+  <!-- Lưới cổng vào -->
+  <section class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+    <a href="game.html" class="clay-card hub-card p-6 sm:col-span-2 lg:col-span-2 flex items-center gap-5" style="background:linear-gradient(135deg,#006687,#033337)">
+      <img src="assets/character/anh-tu-open-arms.png" alt="" class="h-32 sm:h-40 w-auto drop-shadow-xl shrink-0">
+      <div class="text-white">
+        <p class="text-[10px] font-extrabold uppercase tracking-widest text-white/60">Game chính · 6 vòng</p>
+        <h2 class="font-display font-extrabold text-2xl sm:text-3xl mt-1 !text-white">🎮 BizOn Bật Nghiệp</h2>
+        <p class="text-white/70 text-xs sm:text-sm mt-2">Chinh phục bản đồ Việt Nam từ Cần Thơ tới Hà Nội cùng cố vấn Lumina AI.</p>
+        <span class="clay-btn-primary clay-btn inline-block text-white font-display font-extrabold px-6 py-2.5 text-xs mt-4">CHƠI NGAY →</span>
       </div>
-      <div class="flex items-center gap-1.5">
-        <button id="theme-btn" onclick="toggleTheme()" class="w-9 h-9 rounded-full clay-card !rounded-full text-sm" title="Chế độ Sáng/Tối · Light/Dark">🌙</button>
-        <button id="lang-btn" onclick="toggleLang()" class="w-9 h-9 rounded-full clay-card !rounded-full text-[10px] font-extrabold text-primary" title="Tiếng Việt / English">EN</button>
-        <button onclick="toggleMusic(); renderAll()" class="w-9 h-9 rounded-full clay-card !rounded-full text-sm" title="Nhạc nền BizOn">🎵</button>
-      </div>
-      <div class="clay-card px-4 py-2 flex items-center gap-1.5">
-        <span>💰</span><span id="hdr-balance" class="font-display font-bold text-deep-teal text-sm">0₫</span>
-      </div>
+    </a>
+    <a href="thu-vien.html" class="clay-card hub-card p-6">
+      <p class="text-4xl">📚</p>
+      <h2 class="font-display font-extrabold text-deep-teal text-lg mt-2">Thư viện Sáng tạo</h2>
+      <p class="text-xs text-deep-teal/55 mt-1.5">Tạo hình nhân vật, âm nhạc, lời bài hát — kết nối hệ sinh thái Je m'appelle Hương &amp; M-AIDA.</p>
+    </a>
+    <a href="gioi-thieu.html" class="clay-card hub-card p-6">
+      <p class="text-4xl">🌐</p>
+      <h2 class="font-display font-extrabold text-deep-teal text-lg mt-2">Trang giới thiệu</h2>
+      <p class="text-xs text-deep-teal/55 mt-1.5">Demo tương tác, 5 vai trò lãnh đạo, lộ trình 6 vòng, mini-game và FAQ.</p>
+    </a>
+    <a href="games.html" class="clay-card hub-card p-6">
+      <p class="text-4xl">🕹️</p>
+      <h2 class="font-display font-extrabold text-deep-teal text-lg mt-2">BizOn Arcade</h2>
+      <p class="text-xs text-deep-teal/55 mt-1.5">8 trò chơi của hệ sinh thái — từ mô phỏng chiến lược đến phản xạ 30 giây.</p>
+    </a>
+    <a href="global.html" class="clay-card hub-card p-6">
+      <p class="text-4xl">🌏</p>
+      <h2 class="font-display font-extrabold text-deep-teal text-lg mt-2">BizOn Global</h2>
+      <p class="text-xs text-deep-teal/55 mt-1.5">Từ Việt Nam ra thế giới: phương thức thâm nhập, World Market LIVE và I–P Lab.</p>
+    </a>
+    <a href="doi-ngu.html" class="clay-card hub-card p-6">
+      <p class="text-4xl">👥</p>
+      <h2 class="font-display font-extrabold text-deep-teal text-lg mt-2">Đội ngũ sáng lập</h2>
+      <p class="text-xs text-deep-teal/55 mt-1.5">Đỗ Thùy Hương &amp; Phan Anh Tú — sứ mệnh và tầm nhìn 2026.</p>
+    </a>
+  </section>
+
+  <!-- Liên kết hệ sinh thái ngoài -->
+  <section class="mt-10 clay-card p-6">
+    <p class="text-[10px] font-extrabold uppercase tracking-widest text-deep-teal/50 mb-3">Hệ sinh thái Je m'appelle Hương</p>
+    <div class="flex flex-wrap gap-2.5">
+      <a href="https://thuyhuongctu.github.io/M-AIDA/" target="_blank" rel="noopener" class="clay-btn bg-surface-bright text-primary text-xs font-bold px-5 py-2.5">🎼 Ứng dụng M-AIDA</a>
+      <a href="https://thuyhuongctu.github.io/M-AIDA/library.html" target="_blank" rel="noopener" class="clay-btn bg-surface-bright text-primary text-xs font-bold px-5 py-2.5">🎨 Creative Library (M-AIDA)</a>
+      <a href="https://thuyhuongctu.github.io/M-AIDA/huong.html" target="_blank" rel="noopener" class="clay-btn bg-surface-bright text-primary text-xs font-bold px-5 py-2.5">👩‍🎓 Trang cá nhân Đỗ Thùy Hương</a>
+      <a href="https://doi.org/10.5281/zenodo.21592242" target="_blank" rel="noopener" class="clay-btn bg-surface-bright text-primary text-xs font-bold px-5 py-2.5">📦 DOI Zenodo</a>
+      <a href="https://github.com/thuyhuongctu/BizOn" target="_blank" rel="noopener" class="clay-btn bg-surface-bright text-primary text-xs font-bold px-5 py-2.5">⭐ Mã nguồn GitHub</a>
     </div>
-  </header>
+  </section>
 
-  <main class="max-w-md sm:max-w-2xl mx-auto px-5 pb-32">
+  <p class="text-center text-xs text-deep-teal/40 mt-10">© 2026 Đỗ Thùy Hương &amp; Phan Anh Tú · BizOn Bật Nghiệp — Bảo lưu mọi quyền.</p>
+</main>
 
-    <!-- ========== DASHBOARD ========== -->
-    <section id="tab-home" class="screen">
-      <div class="clay-card overflow-hidden mb-4">
-        <img src="assets/illustrations/hero-vietnam-2026.png" alt="Vietnam 2026 — Phát triển kinh tế" class="w-full h-28 object-cover">
-      </div>
-      <div id="event-banner" class="hidden clay-card p-4 mb-4 border-2"></div>
-      <div class="clay-card p-5 mb-4 bg-gradient-to-br from-primary to-deep-teal !text-white">
-        <div class="flex justify-between items-center">
-          <div>
-            <p class="text-white/70 text-xs font-semibold uppercase tracking-wide">Trung tâm điều hành</p>
-            <h2 class="font-display text-2xl font-extrabold text-white">Vòng <span id="dash-round">1</span>/6</h2>
-            <p id="dash-status" class="text-primary-container text-sm font-bold mt-1">Đang chờ quyết định</p>
-          </div>
-          <div class="flex gap-1.5" id="round-dots"></div>
-        </div>
-      </div>
-      <div class="grid grid-cols-3 gap-3 mb-4">
-        <div class="clay-card p-4 text-center">
-          <p class="text-2xl">💵</p><p id="m-cash" class="font-display font-extrabold text-deep-teal text-sm mt-1">—</p>
-          <p class="text-[10px] text-deep-teal/50 font-semibold uppercase">Dòng tiền</p>
-        </div>
-        <div class="clay-card p-4 text-center">
-          <p class="text-2xl">📊</p><p id="m-share" class="font-display font-extrabold text-deep-teal text-sm mt-1">—</p>
-          <p class="text-[10px] text-deep-teal/50 font-semibold uppercase">Thị phần</p>
-        </div>
-        <div class="clay-card p-4 text-center">
-          <p class="text-2xl">⭐</p><p id="m-brand" class="font-display font-extrabold text-deep-teal text-sm mt-1">—</p>
-          <p class="text-[10px] text-deep-teal/50 font-semibold uppercase">Thương hiệu</p>
-        </div>
-      </div>
-      <div class="clay-card p-5 mb-4">
-        <div class="flex items-center justify-between mb-1">
-          <h3 class="font-display font-bold text-deep-teal">🗺️ Hành trình chinh phục Việt Nam</h3>
-          <span id="cq-count" class="text-[10px] font-extrabold text-primary shrink-0">🚩 0/6</span>
-        </div>
-        <p class="text-[11px] text-deep-teal/50 mb-3">Thắng mỗi vòng để cắm cờ công ty — từ Cần Thơ tới Thủ đô Hà Nội.</p>
-        <div class="flex gap-4 items-center">
-          <div id="conquest-map" class="w-[54%] shrink-0"></div>
-          <div id="conquest-list" class="flex-1 space-y-1.5 text-[11px] min-w-0"></div>
-        </div>
-      </div>
-      <div id="team-card"></div>
-      <div id="opponents-card"></div>
-      <div class="clay-card p-5 mb-4 flex items-center gap-4">
-        <div class="glow-ring rounded-full shrink-0">
-          <img src="assets/character/lumina-vest.png" alt="Lumina AI" class="w-14 h-14 rounded-full object-cover shadow-clay" style="object-position:50% 12%">
-        </div>
-        <div class="flex-1 min-w-0">
-          <p class="flex items-baseline gap-1.5 flex-wrap">
-            <span class="font-display font-extrabold lumina-name text-base">Lumina AI</span>
-            <span class="signature text-lg text-deep-teal leading-none">Je m'appelle Hương</span>
-          </p>
-          <p id="dash-lumina" class="text-xs text-deep-teal/70 mt-0.5">Xin chào! Hãy vào mục Cố vấn để nhận gợi ý chiến thuật nhé.</p>
-        </div>
-        <button onclick="showTab('advisor')" class="clay-btn bg-primary-container/30 text-primary font-bold px-3 py-2 text-xs">Hỏi</button>
-      </div>
-      <h3 class="font-display font-bold text-deep-teal mb-3">Truy cập nhanh</h3>
-      <div class="grid grid-cols-4 gap-3 mb-4">
-        <button onclick="showTab('missions')" class="clay-card p-3 text-center relative"><span id="missions-badge" class="hidden absolute -top-1 -right-1 w-5 h-5 rounded-full bg-orange-500 text-white text-[10px] font-bold flex items-center justify-center"></span><p class="text-2xl">📋</p><p class="text-[10px] font-bold text-deep-teal mt-1">Nhiệm vụ</p></button>
-        <button onclick="showTab('minigame')" class="clay-card p-3 text-center"><p class="text-2xl">🏭</p><p class="text-[10px] font-bold text-deep-teal mt-1">Mini-game</p></button>
-        <button onclick="showManual()" class="clay-card p-3 text-center"><p class="text-2xl">📖</p><p class="text-[10px] font-bold text-deep-teal mt-1">Sổ tay</p></button>
-        <button onclick="showTab('skills')" class="clay-card p-3 text-center"><p class="text-2xl">🌳</p><p class="text-[10px] font-bold text-deep-teal mt-1">Kỹ năng</p></button>
-        <button onclick="showTab('leaderboard')" class="clay-card p-3 text-center"><p class="text-2xl">🏆</p><p class="text-[10px] font-bold text-deep-teal mt-1">Xếp hạng</p></button>
-        <button onclick="showTab('achievements')" class="clay-card p-3 text-center"><p class="text-2xl">🎖️</p><p class="text-[10px] font-bold text-deep-teal mt-1">Thành tựu</p></button>
-        <button onclick="showTab('advisorpro')" class="clay-card p-3 text-center"><p class="text-2xl">📈</p><p class="text-[10px] font-bold text-deep-teal mt-1">Advisor Pro</p></button>
-        <button onclick="showTab('instructor')" class="clay-card p-3 text-center"><p class="text-2xl">🧑‍🏫</p><p class="text-[10px] font-bold text-deep-teal mt-1">Giảng viên</p></button>
-        <button onclick="showTab('market')" class="clay-card p-3 text-center"><p class="text-2xl">📡</p><p class="text-[10px] font-bold text-deep-teal mt-1">Thị trường sống</p></button>
-        <button onclick="showTab('journal')" class="clay-card p-3 text-center"><p class="text-2xl">📔</p><p class="text-[10px] font-bold text-deep-teal mt-1">Nhật ký đội</p></button>
-        <button onclick="showTab('settings')" class="clay-card p-3 text-center"><p class="text-2xl">⚙️</p><p class="text-[10px] font-bold text-deep-teal mt-1">Cài đặt</p></button>
-        <button onclick="showIntro()" class="clay-card p-3 text-center"><p class="text-2xl">🎬</p><p class="text-[10px] font-bold text-deep-teal mt-1">Giới thiệu</p></button>
-      </div>
-      <button onclick="showTab('decisions')" class="clay-btn w-full bg-primary text-white font-display font-bold py-4">Nhập quyết định vòng này ➜</button>
-    </section>
-
-    <!-- ========== DECISIONS ========== -->
-    <section id="tab-decisions" class="screen">
-      <h2 class="font-display text-xl font-extrabold text-deep-teal mb-1">Quyết định kinh doanh</h2>
-      <p class="text-sm text-deep-teal/60 mb-4">Vòng <span class="dec-round">1</span>/6 · Thống nhất với cả đội trước khi khóa!</p>
-      <div class="clay-card p-5 mb-3">
-        <div class="flex justify-between mb-1"><label class="font-bold text-sm text-deep-teal">💲 Giá bán / sản phẩm</label><span id="v-price" class="font-display font-bold text-primary">150.000₫</span></div>
-        <input id="in-price" type="range" min="80" max="300" step="5" value="150" class="w-full" oninput="syncDecisionLabels()">
-        <p class="text-[11px] text-deep-teal/50 mt-1">Giá cao → biên lợi nhuận tốt nhưng mất khách. Giá tham chiếu thị trường: 150.000₫</p>
-      </div>
-      <div class="clay-card p-5 mb-3">
-        <div class="flex justify-between mb-1"><label class="font-bold text-sm text-deep-teal">📣 Ngân sách Marketing</label><span id="v-mkt" class="font-display font-bold text-primary">50tr₫</span></div>
-        <input id="in-mkt" type="range" min="0" max="200" step="5" value="50" class="w-full" oninput="syncDecisionLabels()">
-      </div>
-      <div class="clay-card p-5 mb-3">
-        <div class="flex justify-between mb-1"><label class="font-bold text-sm text-deep-teal">🏭 Sản lượng sản xuất</label><span id="v-prod" class="font-display font-bold text-primary">1.200 sp</span></div>
-        <input id="in-prod" type="range" min="200" max="4000" step="100" value="1200" class="w-full" oninput="syncDecisionLabels()">
-        <p class="text-[11px] text-deep-teal/50 mt-1">Chi phí sản xuất: 60.000₫/sp + khấu hao máy móc theo công suất.</p>
-      </div>
-      <div class="clay-card p-5 mb-3">
-        <div class="flex justify-between mb-1"><label class="font-bold text-sm text-deep-teal">🔬 Đầu tư R&D</label><span id="v-rd" class="font-display font-bold text-primary">30tr₫</span></div>
-        <input id="in-rd" type="range" min="0" max="150" step="5" value="30" class="w-full" oninput="syncDecisionLabels()">
-        <p class="text-[11px] text-deep-teal/50 mt-1">R&D tích lũy giúp giảm giá thành và tăng giá trị thương hiệu.</p>
-      </div>
-      <div class="clay-card p-5 mb-3">
-        <p class="font-bold text-sm text-deep-teal mb-3">🏦 Quản trị Tài chính</p>
-        <label class="block text-[11px] font-bold text-deep-teal/60 uppercase mb-1.5">Cơ cấu nguồn vốn</label>
-        <div class="grid grid-cols-2 gap-2 mb-1">
-          <button id="fund-equity" onclick="setFunding('equity')" class="clay-button-secondary text-primary text-xs font-bold py-2.5 ring-2 ring-primary-container">💼 Vốn tự có</button>
-          <button id="fund-loan" onclick="setFunding('loan')" class="clay-button-secondary text-deep-teal/60 text-xs font-bold py-2.5">🏦 Vay ngân hàng</button>
-        </div>
-        <p class="text-[11px] text-deep-teal/50 mb-3">Vay ngân hàng: được chi vượt ví, lãi suất 8.5%/vòng trên phần thấu chi.</p>
-        <label class="block text-[11px] font-bold text-deep-teal/60 uppercase mb-1.5">Kỳ hạn thanh toán cho khách</label>
-        <select id="in-term" onchange="syncDecisionLabels()" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 outline-none text-sm font-semibold text-deep-teal">
-          <option value="30">30 ngày (Tiêu chuẩn)</option>
-          <option value="60">60 ngày — cầu +4%, chi phí +2%</option>
-          <option value="90">90 ngày — cầu +8%, chi phí +5%</option>
-        </select>
-      </div>
-      <div class="clay-card p-5 mb-3">
-        <p class="font-bold text-sm text-deep-teal mb-3">👥 Quản trị Nhân sự</p>
-        <div class="flex justify-between mb-1"><label class="text-[11px] font-bold text-deep-teal/60 uppercase">Số lượng nhân viên</label><span id="v-workers" class="font-display font-bold text-primary">45 người</span></div>
-        <input id="in-workers" type="range" min="20" max="100" step="5" value="45" class="w-full mb-1" oninput="syncDecisionLabels()">
-        <p class="text-[11px] text-deep-teal/50 mb-3">Lương 1tr₫/người/vòng · Năng lực: 70 sp/người — thiếu người sẽ giảm OEE.</p>
-        <div class="flex justify-between mb-1"><label class="text-[11px] font-bold text-deep-teal/60 uppercase">Ngân sách đào tạo / người</label><span id="v-train" class="font-display font-bold text-primary">2tr₫</span></div>
-        <input id="in-train" type="range" min="0" max="10" step="1" value="1" class="w-full" oninput="syncDecisionLabels()">
-        <p class="text-[11px] text-deep-teal/50 mt-1">Đào tạo tăng OEE (tối đa +5%) và giảm phế phẩm.</p>
-      </div>
-      <div class="clay-card p-5 mb-4 relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-28 h-28 bg-primary/5 rounded-full -mr-12 -mt-12"></div>
-        <div class="flex justify-between items-start mb-3 relative">
-          <div><p class="font-bold text-sm text-deep-teal">📊 Dự báo Dòng tiền</p><p class="text-[11px] text-deep-teal/50">Ước tính theo thông số đang nhập (CVP)</p></div>
-          <div class="text-right"><p class="text-[10px] text-deep-teal/50 uppercase font-bold">Lợi nhuận ròng</p><p id="fc-net" class="font-display font-extrabold text-primary">—</p></div>
-        </div>
-        <div class="grid grid-cols-2 gap-3 relative">
-          <div class="clay-sunken rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Dòng tiền vào</p><p id="fc-in" class="font-bold text-emerald-600 text-sm">—</p></div>
-          <div class="clay-sunken rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Dòng tiền ra</p><p id="fc-out" class="font-bold text-red-600 text-sm">—</p></div>
-        </div>
-        <p id="fc-be" class="text-[11px] text-deep-teal/60 mt-2 relative">—</p>
-      </div>
-      <div class="clay-card p-4 mb-4">
-        <p class="font-bold text-sm text-deep-teal mb-1">🔮 Mô phỏng "Nếu — Thì" trước khi Commit</p>
-        <p class="text-[11px] text-deep-teal/60 mb-3">Lumina chạy thử kịch bản với thông số bạn đang chọn (<span id="whatif-quota">2</span> lượt/vòng).</p>
-        <div class="grid grid-cols-2 gap-2">
-          <button onclick="runWhatIf('CEO')" class="clay-button-secondary text-primary text-xs font-bold py-2.5">🧭 Chiến lược (CEO)</button>
-          <button onclick="runWhatIf('CFO')" class="clay-button-secondary text-primary text-xs font-bold py-2.5">💰 Tài chính (CFO)</button>
-        </div>
-        <div id="whatif-result" class="mt-3"></div>
-      </div>
-      <div id="commit-box">
-        <button id="btn-commit" onclick="commitDecisions()" class="clay-btn w-full bg-primary text-white font-display font-bold py-4">🔒 Commit — Khóa quyết định</button>
-        <p class="text-center text-[11px] text-deep-teal/50 mt-2">Sau khi commit, quyết định được đưa vào hàng chờ mô phỏng và không thể sửa (ERR_ROUND_LOCKED).</p>
-      </div>
-      <div id="processing-box" class="hidden text-center py-8">
-        <div class="animate-pulse-logo w-20 h-20 mx-auto rounded-clay bg-gradient-to-br from-primary to-primary-container flex items-center justify-center shadow-clay-lg mb-4">
-          <span class="font-display font-extrabold text-white text-4xl">B</span>
-        </div>
-        <p class="font-display font-bold text-deep-teal">Engine mô phỏng đang xử lý…</p>
-        <p class="text-xs text-deep-teal/50">Đối thủ đang ra quyết định của họ</p>
-      </div>
-    </section>
-
-    <!-- ========== ADVISOR ========== -->
-    <section id="tab-advisor" class="screen">
-      <div class="clay-card mb-4 overflow-hidden">
-        <div class="flex items-center gap-4 p-4 pb-0">
-          <div class="glow-ring rounded-clay shrink-0">
-            <img src="assets/character/lumina-vest.png" alt="Lumina AI — vest trắng" class="w-16 h-16 rounded-clay object-cover shadow-clay-lg" style="object-position:50% 12%">
-          </div>
-          <div class="flex-1 min-w-0">
-            <div class="flex items-center gap-2">
-              <h2 class="font-display text-2xl font-extrabold lumina-name tracking-tight">Lumina AI</h2>
-              <span class="text-[9px] font-extrabold text-white bg-gradient-to-r from-primary to-primary-container px-2 py-0.5 rounded-full shadow-clay shrink-0">✦ MENTOR</span>
-            </div>
-            <p class="signature signature-underline text-xl text-deep-teal leading-tight mt-0.5">Je m'appelle Hương</p>
-            <p class="flex items-center gap-1.5 text-[10px] font-bold text-deep-teal/60 uppercase tracking-wide mt-1.5">
-              <span class="online-dot w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span> Online · Cố vấn chiến lược
-            </p>
-          </div>
-          <button id="huong-voice-btn" onclick="playHuongIntro()" title="Nghe giọng thật của Hương AI" class="clay-btn bg-white w-11 h-11 rounded-full text-xl shrink-0 self-start">🔊</button>
-        </div>
-        <div class="relative mt-3">
-          <img id="advisor-hero" src="assets/character/lumina-vest.png" alt="" class="w-full h-44 object-cover" style="object-position:50% 18%">
-          <div id="volatility-badge" class="absolute bottom-3 left-1/2 -translate-x-1/2 bg-white/95 rounded-full px-4 py-1.5 shadow-clay flex items-center gap-2 text-[11px] font-extrabold tracking-wide">
-            <span id="vol-dot" class="w-3 h-3 rounded-full bg-emerald-500"></span>
-            <span id="vol-text" class="text-deep-teal">MARKET VOLATILITY: LOW</span>
-          </div>
-        </div>
-      </div>
-      <div id="advisor-chat" class="space-y-3 mb-4"></div>
-      <div class="clay-card p-4 mb-4">
-        <div class="flex items-center justify-between mb-2">
-          <p class="font-bold text-sm text-deep-teal">Hỏi Lumina (<span id="ai-quota">3</span> lượt/vòng)</p>
-          <div class="flex items-center gap-1.5 clay-input rounded-full p-1">
-            <button id="voice-female" onclick="setVoiceGender('female')" class="px-3 py-1 rounded-full text-[11px] font-bold bg-white shadow-md text-primary">👩 Nữ</button>
-            <button id="voice-male" onclick="setVoiceGender('male')" class="px-3 py-1 rounded-full text-[11px] font-bold text-deep-teal/50">👨 Nam</button>
-            <button id="voice-toggle" onclick="toggleVoice()" class="px-3 py-1 rounded-full text-[11px] font-bold bg-primary-container/30 text-primary">🔊 Bật</button>
-          </div>
-        </div>
-        <div class="grid grid-cols-1 gap-2 mb-3">
-          <button onclick="askLumina('pricing')" class="clay-btn bg-surface-bright text-deep-teal text-left font-semibold text-sm px-4 py-3">💲 Nếu tôi thay đổi giá bán thì sao?</button>
-          <button onclick="askLumina('marketing')" class="clay-btn bg-surface-bright text-deep-teal text-left font-semibold text-sm px-4 py-3">📣 Nếu tăng ngân sách Marketing 15%?</button>
-          <button onclick="askLumina('risk')" class="clay-btn bg-surface-bright text-deep-teal text-left font-semibold text-sm px-4 py-3">⚠️ Rủi ro lớn nhất vòng này là gì?</button>
-        </div>
-        <div class="flex items-center gap-2">
-          <input id="chat-input" type="text" placeholder="Trò chuyện với Hương..." class="clay-input flex-1 rounded-full px-5 py-3 text-sm text-deep-teal" onkeydown="if(event.key==='Enter')sendChat()">
-          <button id="mic-btn" onclick="toggleMic()" class="clay-button-secondary w-11 h-11 rounded-full flex items-center justify-center text-lg shrink-0">🎤</button>
-          <button onclick="sendChat()" class="clay-button-primary w-11 h-11 rounded-full flex items-center justify-center text-white text-lg shrink-0">➤</button>
-        </div>
-        <div id="speaking-bar" class="hidden items-center gap-3 mt-3 clay-input rounded-2xl px-4 py-2.5">
-          <span class="text-primary">🎵</span>
-          <div class="flex items-center gap-1">
-            <div class="wave-bar" style="animation-delay:0s"></div><div class="wave-bar" style="animation-delay:.2s"></div><div class="wave-bar" style="animation-delay:.4s"></div><div class="wave-bar" style="animation-delay:.1s"></div><div class="wave-bar" style="animation-delay:.3s"></div><div class="wave-bar" style="animation-delay:.5s"></div><div class="wave-bar" style="animation-delay:.2s"></div>
-          </div>
-          <span class="text-[11px] font-bold text-primary ml-auto">Hương đang nói...</span>
-        </div>
-      </div>
-      <h3 class="font-display font-bold text-deep-teal mb-2">🔎 Phân tích chuyên sâu theo vai trò</h3>
-      <div id="role-deepdive" class="space-y-3 mb-4"></div>
-      <h3 class="font-display font-bold text-deep-teal mb-2">🗂️ Bộ nhớ doanh nghiệp <span class="text-[10px] text-deep-teal/50">· SEC ghi chép</span></h3>
-      <div id="advisor-history" class="clay-card p-4 text-sm space-y-2"></div>
-    </section>
-
-    <!-- ========== REPORTS ========== -->
-    <section id="tab-reports" class="screen">
-      <h2 class="font-display text-xl font-extrabold text-deep-teal mb-4">Báo cáo & Phân tích</h2>
-      <div class="flex gap-2 mb-4 overflow-x-auto pb-1">
-        <button data-rep="pnl" class="rep-tab clay-btn bg-primary text-white text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('pnl')">P&L</button>
-        <button data-rep="cash" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('cash')">Dòng tiền</button>
-        <button data-rep="cvp" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('cvp')">CVP & Chi phí</button>
-        <button data-rep="hr" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('hr')">👥 Nhân sự</button>
-        <button data-rep="bmc" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('bmc')">🧩 BMC</button>
-        <button data-rep="dep" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('dep')">Khấu hao</button>
-        <button data-rep="energy" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('energy')">⚡ Năng lượng</button>
-      </div>
-      <div id="report-body"></div>
-    </section>
-
-    <!-- ========== SHOP ========== -->
-    <section id="tab-shop" class="screen">
-      <h2 class="font-display text-xl font-extrabold text-deep-teal mb-1">Cửa hàng</h2>
-      <p class="text-sm text-deep-teal/60 mb-4">Dùng ví ảo của đội để mua vật phẩm tăng lực.</p>
-      <div id="shop-list" class="space-y-3 mb-6"></div>
-      <h3 class="font-display font-bold text-deep-teal mb-3">🎒 Kho đồ của đội</h3>
-      <div class="flex gap-2 mb-3 overflow-x-auto pb-1">
-        <button data-inv="all" onclick="setInvFilter('all')" class="inv-tab clay-btn bg-primary text-white text-xs font-bold px-4 py-2 whitespace-nowrap">Tất cả</button>
-        <button data-inv="item" onclick="setInvFilter('item')" class="inv-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap">Vật phẩm</button>
-        <button data-inv="blueprint" onclick="setInvFilter('blueprint')" class="inv-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap">Bản thiết kế</button>
-      </div>
-      <div id="inventory-list" class="grid grid-cols-2 gap-3 mb-3"></div>
-      <div id="inv-detail" class="clay-card p-5 bg-primary-container/10">
-        <div class="flex items-start gap-3">
-          <div class="item-icon-container w-16 h-16 flex items-center justify-center text-3xl shrink-0"><span id="invd-icon">🎒</span></div>
-          <div class="flex-1">
-            <div class="flex justify-between items-center mb-1">
-              <p id="invd-name" class="font-display font-bold text-deep-teal text-sm">Chọn một vật phẩm</p>
-              <span id="invd-count" class="bg-primary-container/40 text-primary text-[10px] font-extrabold px-2.5 py-1 rounded-full">--</span>
-            </div>
-            <p id="invd-desc" class="text-xs text-deep-teal/60 mb-3">Chạm vào một vật phẩm trong kho để xem chi tiết và sử dụng sức mạnh của nó.</p>
-            <button id="invd-use" class="clay-button-primary w-full text-white text-sm font-display font-bold py-3 opacity-50" disabled>Sử dụng 🚀</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== SKILLS ========== -->
-    <section id="tab-skills" class="screen">
-      <h2 class="font-display text-xl font-extrabold text-deep-teal mb-1">Cây kỹ năng</h2>
-      <p class="text-sm text-deep-teal/60 mb-4">Mở khóa bằng XP tích lũy từ kết quả kinh doanh.</p>
-      <div id="skill-tree" class="space-y-3"></div>
-    </section>
-
-    <!-- ========== LEADERBOARD ========== -->
-    <section id="tab-leaderboard" class="screen">
-      <h2 class="font-display text-xl font-extrabold text-deep-teal mb-4">🏆 Bảng xếp hạng</h2>
-      <div id="lb-list" class="space-y-3"></div>
-    </section>
-
-    <!-- ========== ACHIEVEMENTS ========== -->
-    <section id="tab-achievements" class="screen">
-      <h2 class="font-display text-xl font-extrabold text-deep-teal mb-4">🎖️ Thành tựu</h2>
-      <div id="ach-list" class="grid grid-cols-2 gap-3"></div>
-      <div id="certificate-box" class="hidden mt-6 clay-card p-6 text-center border-2 border-primary-container">
-        <img src="assets/character/lumina-ao-dai.png" alt="Lumina áo dài chúc mừng" class="w-24 h-24 mx-auto rounded-full object-cover shadow-clay-lg mb-3" style="object-position:50% 12%">
-        <p class="text-4xl mb-2">📜</p>
-        <h3 class="font-display font-extrabold text-deep-teal text-lg">Chứng chỉ hoàn thành</h3>
-        <p class="text-sm text-deep-teal/70 mt-1">Chứng nhận đội <span id="cert-team" class="font-bold text-primary">—</span> đã hoàn thành 6 vòng mô phỏng kinh doanh BizOn Bật Nghiệp 2026.</p>
-        <p id="cert-result" class="font-display font-bold text-primary mt-3"></p>
-      </div>
-    </section>
-
-    <!-- ========== MISSIONS ========== -->
-    <section id="tab-missions" class="screen">
-      <h2 class="font-display text-xl font-extrabold text-deep-teal mb-1">📋 Nhiệm vụ</h2>
-      <p class="text-sm text-deep-teal/60 mb-4">Hoàn thành nhiệm vụ để nhận thưởng tiền ảo và XP.</p>
-      <div id="missions-list" class="space-y-3"></div>
-    </section>
-
-    <!-- ========== CLAY FACTORY FRENZY ========== -->
-    <section id="tab-minigame" class="screen">
-      <h2 class="font-display text-xl font-extrabold text-deep-teal mb-1">🏭 Clay Factory Frenzy</h2>
-      <p class="text-sm text-deep-teal/60 mb-4">Băng chuyền xưởng đất sét! Chạm đúng món hàng được đặt để đóng gói. Mỗi vòng chơi được 3 lượt.</p>
-      <div class="clay-card p-4 mb-3 flex justify-between items-center">
-        <div><p class="text-[10px] uppercase font-bold text-deep-teal/50">Đơn hàng cần đóng gói</p><p id="mg-target" class="text-3xl">🏺</p></div>
-        <div class="text-center"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Điểm</p><p id="mg-score" class="font-display font-extrabold text-primary text-2xl">0</p></div>
-        <div class="text-center"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Giây</p><p id="mg-time" class="font-display font-extrabold text-deep-teal text-2xl">30</p></div>
-      </div>
-      <div id="mg-belt" class="clay-card relative h-28 mb-3 overflow-hidden bg-gradient-to-b from-white to-surface-bright">
-        <div class="absolute bottom-0 inset-x-0 h-6 bg-deep-teal/10"></div>
-      </div>
-      <button id="mg-start" onclick="startMinigame()" class="clay-btn w-full bg-primary text-white font-display font-bold py-4 mb-3">▶️ Bắt đầu (lượt <span id="mg-plays">1</span>/3)</button>
-      <div class="clay-card p-4 flex justify-between text-sm mb-3">
-        <span class="font-bold text-deep-teal">🏅 Điểm cao nhất: <span id="mg-best">0</span></span>
-        <span class="text-deep-teal/60">Thưởng: 2tr₫/điểm (tối đa 60tr₫/lượt)</span>
-      </div>
-      <div class="grid grid-cols-2 gap-3">
-        <button onclick="showRewardShop()" class="clay-btn bg-white text-deep-teal text-sm font-bold py-3.5">🎁 Đổi thưởng (<span id="mg-points">0</span> điểm)</button>
-        <button onclick="showMgLeaderboard()" class="clay-btn bg-white text-deep-teal text-sm font-bold py-3.5">🏆 Xếp hạng</button>
-      </div>
-    </section>
-
-    <!-- ========== INSTRUCTOR ========== -->
-    <section id="tab-instructor" class="screen">
-      <div class="clay-card p-4 mb-4 border-2 border-clay-gold/40">
-        <p class="font-display font-bold text-deep-teal text-sm">📖 Tài liệu dành cho giảng viên / người quản lý</p>
-        <p class="text-[11px] text-deep-teal/55 mt-1">Toàn bộ luật chơi, hành vi 3 đối thủ AI, công thức thị trường, bản đồ chinh phục và gợi ý tổ chức lớp học được ghi trong <b>Hướng dẫn giảng viên</b>.</p>
-        <a href="https://github.com/thuyhuongctu/BizOn/blob/main/docs/huong-dan-giang-vien.md" target="_blank" rel="noopener" class="inline-block mt-2 text-xs font-extrabold text-primary">⭐ Mở tài liệu trên GitHub →</a>
-      </div>
-      <h2 class="font-display text-xl font-extrabold text-deep-teal mb-1">🧑‍🏫 Màn hình Giảng viên</h2>
-      <p class="text-sm text-deep-teal/60 mb-4">Quản lý lớp học: cấp vốn cho đội, khóa vòng chơi khi hết giờ thảo luận.</p>
-      <div class="clay-card p-4 mb-3 flex items-center justify-between">
-        <div><p class="font-bold text-sm text-deep-teal">🔒 Khóa vòng hiện tại</p><p class="text-[11px] text-deep-teal/60">Đội sẽ không commit được (ERR_ROUND_LOCKED)</p></div>
-        <button id="btn-lock" onclick="toggleRoundLock()" class="clay-btn bg-surface-bright text-deep-teal text-xs font-bold px-4 py-2">Khóa</button>
-      </div>
-      <h3 class="font-display font-bold text-deep-teal mb-2">Danh sách đội</h3>
-      <div id="ins-teams" class="space-y-3 mb-4"></div>
-      <h3 class="font-display font-bold text-deep-teal mb-2">Nhật ký cấp vốn</h3>
-      <div id="ins-log" class="clay-card p-4 text-sm text-deep-teal/70 space-y-1"><p class="text-deep-teal/40">Chưa có giao dịch nào.</p></div>
-    </section>
-
-    <!-- ========== LUMINA ADVISOR PRO ========== -->
-    <section id="tab-advisorpro" class="screen">
-      <div class="flex items-center gap-3 mb-4">
-        <img src="assets/character/lumina-vest.png" alt="Lumina" class="w-12 h-12 rounded-clay object-cover shadow-clay" style="object-position:50% 12%">
-        <div>
-          <h2 class="font-display text-xl font-extrabold text-deep-teal">Lumina Advisor Pro</h2>
-          <p class="text-xs text-primary font-semibold">Nhập số liệu kinh doanh thực → nhận kịch bản "Nếu — Thì"</p>
-        </div>
-      </div>
-      <div class="clay-card p-5 mb-4 space-y-3">
-        <div><label class="block text-sm font-bold text-deep-teal mb-1">💵 Doanh thu / tháng (triệu ₫)</label>
-          <input id="ap-revenue" type="number" value="500" min="0" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 outline-none focus:border-primary-container"></div>
-        <div><label class="block text-sm font-bold text-deep-teal mb-1">🧾 Tổng chi phí / tháng (triệu ₫)</label>
-          <input id="ap-cost" type="number" value="400" min="0" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 outline-none focus:border-primary-container"></div>
-        <div><label class="block text-sm font-bold text-deep-teal mb-1">📣 Ngân sách marketing / tháng (triệu ₫)</label>
-          <input id="ap-marketing" type="number" value="50" min="0" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 outline-none focus:border-primary-container"></div>
-        <div><label class="block text-sm font-bold text-deep-teal mb-1">🎯 Mục tiêu tăng trưởng (%/quý)</label>
-          <input id="ap-growth" type="number" value="15" min="0" max="100" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 outline-none focus:border-primary-container"></div>
-        <button onclick="runAdvisorPro()" class="clay-btn w-full bg-primary text-white font-display font-bold py-4">🔮 Phân tích kịch bản</button>
-      </div>
-      <div id="ap-result"></div>
-    </section>
-
-    <!-- ========== LIVE MARKET PULSE (Thị trường sống) ========== -->
-    <section id="tab-market" class="screen">
-      <div class="flex items-center justify-between mb-1">
-        <h2 class="font-display text-xl font-extrabold text-deep-teal">📡 Thị trường sống</h2>
-        <span class="clay-sunken rounded-full px-3 py-1.5 flex items-center gap-1.5 text-[10px] font-extrabold text-deep-teal/60"><span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span> LIVE SIMULATION</span>
-      </div>
-      <div id="market-monitor" class="mb-4"></div>
-      <p class="text-sm text-deep-teal/60 mb-3">Nhịp đập thị trường thời gian thực: đối thủ, tiếng nói khách hàng và xu hướng.</p>
-      <div class="clay-sunken rounded-2xl py-2.5 mb-4 overflow-hidden">
-        <div class="ticker-wrap"><div id="market-ticker" class="ticker-content text-xs font-semibold text-deep-teal/70"></div></div>
-      </div>
-      <div id="market-body"></div>
-    </section>
-
-    <!-- ========== TEAM JOURNAL (Nhật ký đội) ========== -->
-    <section id="tab-journal" class="screen">
-      <h2 class="font-display text-xl font-extrabold text-deep-teal mb-1">📔 Nhật ký đội</h2>
-      <p class="text-sm text-deep-teal/60 mb-4">Timeline hành trình 6 vòng: quyết định then chốt, kết quả và bài học kinh nghiệm — do SEC ghi chép.</p>
-      <div id="journal-list" class="relative pl-6 space-y-4">
-        <div class="absolute left-2 top-2 bottom-2 w-0.5 bg-primary/15 rounded-full"></div>
-      </div>
-    </section>
-
-    <!-- ========== PROFILE ========== -->
-    <section id="tab-profile" class="screen">
-      <div class="clay-card p-6 text-center mb-4">
-        <div class="w-20 h-20 mx-auto rounded-clay bg-gradient-to-br from-primary to-primary-container flex items-center justify-center text-4xl shadow-clay-lg mb-3">👩‍💼</div>
-        <h2 id="pf-name" class="font-display text-xl font-extrabold text-deep-teal">—</h2>
-        <p id="pf-email" class="text-sm text-deep-teal/60">—</p>
-        <span id="pf-role" class="inline-block mt-2 bg-primary-container/30 text-primary font-bold text-xs px-3 py-1.5 rounded-full">—</span>
-        <span id="pf-tier" class="inline-block mt-2 ml-1 clay-button-primary text-white font-bold text-xs px-3 py-1.5 rounded-full">🏅 —</span>
-      </div>
-      <div class="clay-card p-5 mb-4">
-        <div class="flex justify-between text-sm font-bold text-deep-teal mb-1"><span>Tiến độ cấp <span id="pf-level">1</span></span><span id="pf-xp">0 XP</span></div>
-        <div class="h-3 rounded-full bg-surface-bright overflow-hidden shadow-inner"><div id="pf-xpbar" class="xp-bar-fill h-full bg-gradient-to-r from-primary to-primary-container rounded-full" style="width:0%"></div></div>
-      </div>
-      <div class="grid grid-cols-2 gap-3 mb-5">
-        <div class="clay-card p-4 text-center"><p id="pf-profit" class="font-display font-extrabold text-primary">0₫</p><p class="text-[10px] text-deep-teal/50 font-semibold uppercase mt-1">Tổng lợi nhuận</p></div>
-        <div class="clay-card p-4 text-center"><p id="pf-rounds" class="font-display font-extrabold text-primary">0/6</p><p class="text-[10px] text-deep-teal/50 font-semibold uppercase mt-1">Vòng hoàn thành</p></div>
-      </div>
-      <h3 class="font-display font-bold text-deep-teal mb-3">👥 Đội ngũ sáng lập BizOn</h3>
-      <div class="grid grid-cols-2 gap-3">
-        <div class="clay-card overflow-hidden text-center">
-          <img src="assets/character/lumina-ao-dai.png" alt="Đỗ Thùy Hương" class="w-full h-36 object-cover" style="object-position:50% 12%">
-          <div class="p-3"><p class="font-display font-bold text-deep-teal text-xs">Đỗ Thùy Hương</p><p class="text-[10px] text-deep-teal/50">Tác giả & Thiết kế</p></div>
-        </div>
-        <div class="clay-card overflow-hidden text-center">
-          <img src="assets/character/anh-tu-welcome.png" alt="Phan Anh Tú" class="w-full h-36 object-cover" style="object-position:50% 8%">
-          <div class="p-3"><p class="font-display font-bold text-deep-teal text-xs">Phan Anh Tú</p><p class="text-[10px] text-deep-teal/50">Đồng sáng lập · Cố vấn học thuật</p></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== SETTINGS ========== -->
-    <section id="tab-settings" class="screen">
-      <h2 class="font-display text-xl font-extrabold text-deep-teal mb-4">⚙️ Cài đặt</h2>
-      <div class="clay-card divide-y divide-surface-bright">
-        <div class="p-5 flex items-center justify-between"><span class="font-bold text-sm text-deep-teal">🔔 Thông báo vòng chơi</span><input type="checkbox" checked class="w-5 h-5 accent-primary"></div>
-        <div class="p-5 flex items-center justify-between"><span class="font-bold text-sm text-deep-teal">🔊 Âm thanh hiệu ứng</span><input type="checkbox" checked class="w-5 h-5 accent-primary"></div>
-        <div class="p-5 flex items-center justify-between"><span class="font-bold text-sm text-deep-teal">🎵 Nhạc nền (BizOn Theme)</span><input id="music-toggle" type="checkbox" onchange="toggleMusic()" class="w-5 h-5 accent-primary"></div>
-        <div class="p-5 flex items-center justify-between"><span class="font-bold text-sm text-deep-teal">🌙 Chế độ tối (Dark mode)</span><input id="theme-toggle-check" type="checkbox" onchange="toggleTheme()" class="w-5 h-5 accent-primary"></div>
-        <div class="p-5 flex items-center justify-between"><span class="font-bold text-sm text-deep-teal">🌐 Giao diện tiếng Anh (English)</span><input id="lang-toggle-check" type="checkbox" onchange="toggleLang()" class="w-5 h-5 accent-primary"></div>
-        <div class="p-5"><button onclick="showIntro()" class="font-bold text-sm text-deep-teal w-full text-left">🎬 Giới thiệu game (Intro)</button></div>
-        <div class="p-5"><button onclick="showManual()" class="font-bold text-sm text-deep-teal w-full text-left">📖 Sổ tay hướng dẫn (User Manual)</button></div>
-        <div class="p-5"><button onclick="showPremium()" class="font-bold text-sm text-deep-teal w-full text-left">👑 BizOn Premium <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full align-middle" style="background:#fff4d6;color:#946200">GIẢNG VIÊN</span></button></div>
-        <div class="p-5"><a href="gioi-thieu.html" class="font-bold text-sm text-primary block">🌐 Trang giới thiệu</a></div>
-        <div class="p-5"><a href="games.html" class="font-bold text-sm text-primary block">🕹️ BizOn Arcade (trung tâm trò chơi)</a></div>
-        <div class="p-5"><a href="global.html" class="font-bold text-sm text-primary block">🌏 BizOn Global (thử nghiệm quốc tế)</a></div>
-        <div class="p-5"><a href="https://github.com/thuyhuongctu/BizOn" target="_blank" rel="noopener" class="font-bold text-sm text-primary block">⭐ Mã nguồn trên GitHub</a></div>
-        <div class="p-5"><button onclick="alert('Đã gửi báo cáo lỗi tới đội ngũ BizOn. Cảm ơn bạn!')" class="font-bold text-sm text-primary">🐞 Gửi báo cáo lỗi</button></div>
-        <div class="p-5"><button onclick="resetGame()" class="font-bold text-sm text-orange-600">♻️ Chơi lại từ đầu (Reset)</button></div>
-      </div>
-      <p class="text-center text-xs text-deep-teal/40 mt-6">BizOn Bật Nghiệp 2026 · v1.0.0 · © 2026 Đỗ Thùy Hương &amp; Phan Anh Tú — Bảo lưu mọi quyền</p>
-    </section>
-  </main>
-
-  <!-- Phụ đề giọng nói Hương AI -->
-  <div id="huong-caption-box" class="hidden fixed bottom-24 inset-x-0 z-50 flex justify-center px-5 pointer-events-none">
-    <div class="clay-card px-5 py-3 flex items-center gap-3 max-w-sm shadow-clay-lg">
-      <img src="assets/character/lumina-ao-dai.png" alt="Hương AI" class="w-10 h-10 rounded-full object-cover shrink-0" style="object-position:50% 10%">
-      <p id="huong-caption" class="signature text-xl text-primary leading-tight min-w-[10rem]"></p>
-    </div>
-  </div>
-
-  <!-- Bottom Nav -->
-  <nav class="fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur border-t border-primary/5 pb-[env(safe-area-inset-bottom)]">
-    <div class="max-w-md mx-auto flex justify-around py-2">
-      <button class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="home" onclick="showTab('home')">
-        <span class="nav-ico flex items-center justify-center">
-          <svg class="clay-ico w-6 h-6" viewBox="0 0 24 24"><defs><linearGradient id="gNavHome" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00c4ff"/><stop offset="1" stop-color="#006687"/></linearGradient></defs><path d="M12 3.1 3.7 9.9c-.4.3-.6.8-.6 1.2v8c0 1 .8 1.8 1.8 1.8h4.3v-4.7c0-1.5 1.3-2.8 2.8-2.8s2.8 1.3 2.8 2.8v4.7h4.3c1 0 1.8-.8 1.8-1.8v-8c0-.5-.2-.9-.6-1.2L12 3.1z" fill="url(#gNavHome)"/><ellipse cx="12" cy="6.6" rx="4" ry="1.3" fill="#fff" opacity=".3"/></svg>
-        </span><span class="text-[10px] font-bold">Trang chủ</span>
-      </button>
-      <button class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="decisions" onclick="showTab('decisions')">
-        <span class="nav-ico flex items-center justify-center">
-          <svg class="clay-ico w-6 h-6" viewBox="0 0 24 24"><defs><linearGradient id="gNavTarget" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00c4ff"/><stop offset="1" stop-color="#006687"/></linearGradient></defs><circle cx="12" cy="12" r="9.2" fill="url(#gNavTarget)"/><circle cx="12" cy="12" r="5.8" fill="#f4faff"/><circle cx="12" cy="12" r="2.8" fill="url(#gNavTarget)"/><ellipse cx="9.4" cy="7.4" rx="3.4" ry="1.5" fill="#fff" opacity=".35" transform="rotate(-25 9.4 7.4)"/></svg>
-        </span><span class="text-[10px] font-bold">Quyết định</span>
-      </button>
-      <button class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="advisor" onclick="showTab('advisor')">
-        <span class="nav-ico flex items-center justify-center">
-          <img src="assets/icons/icon-192.png" alt="Lumina" class="clay-ico w-6 h-6 rounded-full object-cover">
-        </span><span class="text-[10px] font-bold">Lumina</span>
-      </button>
-      <button class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="reports" onclick="showTab('reports')">
-        <span class="nav-ico flex items-center justify-center">
-          <svg class="clay-ico w-6 h-6" viewBox="0 0 24 24"><defs><linearGradient id="gNavChart" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00c4ff"/><stop offset="1" stop-color="#006687"/></linearGradient></defs><rect x="3.2" y="12.5" width="4.6" height="8.3" rx="2.3" fill="url(#gNavChart)"/><rect x="9.7" y="7.5" width="4.6" height="13.3" rx="2.3" fill="url(#gNavChart)"/><rect x="16.2" y="3.2" width="4.6" height="17.6" rx="2.3" fill="url(#gNavChart)"/><ellipse cx="18.5" cy="4.8" rx="1.7" ry=".8" fill="#fff" opacity=".35"/></svg>
-        </span><span class="text-[10px] font-bold">Báo cáo</span>
-      </button>
-      <button class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="shop" onclick="showTab('shop')">
-        <span class="nav-ico flex items-center justify-center">
-          <svg class="clay-ico w-6 h-6" viewBox="0 0 24 24"><defs><linearGradient id="gNavBag" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00c4ff"/><stop offset="1" stop-color="#006687"/></linearGradient></defs><path d="M5.4 8.2h13.2c.9 0 1.6.7 1.5 1.6l-.9 9.4a2.2 2.2 0 0 1-2.2 2H7a2.2 2.2 0 0 1-2.2-2l-.9-9.4c-.1-.9.6-1.6 1.5-1.6z" fill="url(#gNavBag)"/><path d="M8.6 10.2V7.1a3.4 3.4 0 1 1 6.8 0v3.1" fill="none" stroke="#033337" stroke-width="1.7" stroke-linecap="round" opacity=".55"/><ellipse cx="9.6" cy="11.3" rx="2.6" ry="1.1" fill="#fff" opacity=".3" transform="rotate(-18 9.6 11.3)"/></svg>
-        </span><span class="text-[10px] font-bold">Cửa hàng</span>
-      </button>
-    </div>
-  </nav>
-</div>
-
-<script src="js/site-ui.js"></script>
-<script src="js/engine.js"></script>
-<script src="js/app.js"></script>
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js'));
-}
-</script>
+<script src="js/site-ui.js" defer></script>
 </body>
 </html>
