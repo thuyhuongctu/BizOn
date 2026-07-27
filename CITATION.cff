@@ -15,6 +15,11 @@ authors:
     orcid: "https://orcid.org/0000-0003-0667-3137"
     email: patu@ctu.edu.vn
     affiliation: "Can Tho University"
+doi: 10.5281/zenodo.21613899
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.21613899
+    description: "Concept DOI (mọi phiên bản / all versions)"
 repository-code: "https://github.com/thuyhuongctu/BizOn"
 url: "https://thuyhuongctu.github.io/BizOn/"
 license-url: "https://github.com/thuyhuongctu/BizOn/blob/main/LICENSE"
