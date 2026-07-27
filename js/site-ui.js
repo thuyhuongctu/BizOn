@@ -1074,6 +1074,50 @@
 "🎵 Original music"
 ],
 [
+"Ca khúc BizOn Global · bản thu có lời",
+"BizOn Global theme song · vocal recording"
+],
+[
+"🎬 MV & Video",
+"🎬 MV & Videos"
+],
+[
+"Hóa Rồng — trỗi dậy",
+"Becoming the Dragon — Rising"
+],
+[
+"Hóa Rồng — cao trào",
+"Becoming the Dragon — Climax"
+],
+[
+"«Bật Nghiệp» · Phần 4 — rồng đất sét cuộn mình bay lên",
+"«Bật Nghiệp» · Part 4 — the clay dragon coils and takes flight"
+],
+[
+"«Bật Nghiệp» · Phần 5 (Bridge) — rồng bay qua bản đồ Việt Nam",
+"«Bật Nghiệp» · Part 5 (Bridge) — the dragon soars across the map of Vietnam"
+],
+[
+"«Bật Nghiệp» Phần 6 & «Hương and the World» Phần 5 — đôi cánh mở rộng",
+"«Bật Nghiệp» Part 6 & «Hương and the World» Part 5 — wings spread wide"
+],
+[
+"«Hương and the World» · Phần 4 — con thuyền đất sét rẽ sóng ra đại dương",
+"«Hương and the World» · Part 4 — the clay ship sails out to the open ocean"
+],
+[
+"«Hương and the World» · Coda — rồng lửa Cửu Long, «C'est la victoire!»",
+"«Hương and the World» · Coda — the Mekong fire dragon, «C'est la victoire!»"
+],
+[
+"Đội Demo Bật Nghiệp — 5 thành viên đất nặn",
+"The Bật Nghiệp demo team — 5 clay members"
+],
+[
+"COO Quốc Bảo · CFO Thu Hà · CEO Minh Long · CMO Lan Chi · Thư ký pháp chế Gia Hân",
+"COO Quốc Bảo · CFO Thu Hà · CEO Minh Long · CMO Lan Chi · Compliance Officer Gia Hân"
+],
+[
 "🌉 Hệ sinh thái Je m'appelle Hương",
 "🌉 The Je m'appelle Hương ecosystem"
 ],
