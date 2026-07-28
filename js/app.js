@@ -268,7 +268,7 @@ function showLevelUp(level) {
 // ---------- Sổ tay hướng dẫn (User Manual — thiết kế Stitch) ----------
 const MANUAL = {
   start: { icon: '🚀', name: 'Bắt đầu', html: `
-    <p class="text-sm text-deep-teal/75 mb-4">Chào mừng bạn đến với BizOn — môi trường mô phỏng kinh doanh 3D. ⏱️ Thời lượng: cả ván 6 vòng ≈ 30–45 phút (mỗi vòng 5–7 phút gồm đọc biến cố, họp đội, chốt quyết định và xem đấu trường); bản GO GlObal 4 quý ≈ 10–15 phút. Ba bước thiết lập:</p>
+    <p class="text-sm text-deep-teal/75 mb-4">Chào mừng bạn đến với BizOn — môi trường mô phỏng kinh doanh 3D. ⏱️ Thời lượng: cả ván 6 vòng ≈ 30–45 phút (mỗi vòng 5–7 phút gồm đọc biến cố, họp đội, chốt quyết định và xem đấu trường); bản Go Global 4 quý ≈ 10–15 phút. Ba bước thiết lập:</p>
     ${[['1', 'Lập đội & chọn vai trò', 'Đăng nhập với tên đội (cũng là tên doanh nghiệp của bạn), Class ID (nếu học trên lớp) và chọn vai trò CEO · CFO · CMO · COO · SEC. Doanh nghiệp là xưởng đồ chơi đất sét — sản phẩm chủ lực «Bộ linh vật đất sét Việt».'],
        ['2', 'Nhận vốn khởi điểm', 'Mỗi đội bắt đầu với 500tr₫ vốn giảng viên cấp. Giữ ít nhất 15% dự phòng cho biến cố!'],
        ['3', 'Vào vòng 1', 'Đọc biến cố thị trường, hỏi Lumina AI, rồi vào Quyết định để chốt kế hoạch đầu tiên.']].map(([n, t, d]) => `
@@ -321,7 +321,7 @@ const MANUAL = {
   world: { icon: '🌏', name: 'Hệ sinh thái BizOn', html: `
     <p class="text-sm text-deep-teal/75 mb-4">BizOn không chỉ có 6 vòng trong nước — cả một hệ sinh thái đang chờ bạn:</p>
     ${[['🗺️ Bản đồ chinh phục', 'Mỗi vòng thắng thị phần là một lá cờ 🚩 cắm lên bản đồ Việt Nam — từ Cần Thơ tới cột cờ Lũng Cú, kèm hai quần đảo Hoàng Sa & Trường Sa.'],
-       ['🌏 BizOn GO GlObal', 'Ra biển lớn: khai hồ sơ doanh nghiệp, chọn 1 trong 7 thị trường, đàm phán với đối tác bản địa, chọn phương thức thâm nhập (Export · Licensing · Liên doanh · FDI) và kinh doanh 4 quý. Có IE Lab mô phỏng số liệu và nút xuất nhật ký CSV để nộp giảng viên.'],
+       ['🌏 BizOn Go Global', 'Ra biển lớn: khai hồ sơ doanh nghiệp, chọn 1 trong 7 thị trường, đàm phán với đối tác bản địa, chọn phương thức thâm nhập (Export · Licensing · Liên doanh · FDI) và kinh doanh 4 quý. Có IE Lab mô phỏng số liệu và nút xuất nhật ký CSV để nộp giảng viên.'],
        ['🕹️ BizOn Arcade', 'Các mini-game phản xạ 30–60 giây: Clay Factory Frenzy, Trắc nghiệm Khởi nghiệp, Đoán Giá, Bắt Vốn Vàng.'],
        ['📚 Thư viện & 🎶 Kho Âm nhạc', 'Tạo hình nhân vật, sản phẩm cài áo, và toàn bộ ca khúc gốc với trình phát đầy đủ — mở từ Cài đặt hoặc Trang chủ.']].map(([t, d]) => `
     <div class="clay-card p-4 mb-3"><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p></div>`).join('')}` },
@@ -1374,7 +1374,7 @@ const INTRO_SLIDES = [
   { icon: '👥', title: 'Đội hình C-Suite', 
     text: 'CEO chèo lái chiến lược, CFO giữ két sắt, CMO đánh chiếm thị trường, COO vận hành xưởng, SEC ghi biên bản — bên cạnh cố vấn Lumina AI và thầy Tú Phan.' },
   { icon: '🌏', title: 'Sau đó: ra biển lớn',
-    text: 'Chinh phục xong Việt Nam? BizOn GO GlObal đang chờ — chọn 1 trong 7 thị trường quốc tế, đàm phán với đối tác bản địa và thử sức 4 phương thức thâm nhập.' },
+    text: 'Chinh phục xong Việt Nam? BizOn Go Global đang chờ — chọn 1 trong 7 thị trường quốc tế, đàm phán với đối tác bản địa và thử sức 4 phương thức thâm nhập.' },
   { icon: '🏆', title: 'Mục tiêu của bạn',
     text: 'Cắm nhiều cờ nhất, đạt TOP 1 thị phần Việt Nam và nhận chứng nhận hoàn thành. Sẵn sàng Bật Nghiệp? 🚀' },
 ];
