@@ -87,11 +87,12 @@ khi build kiểm tra lại `targetSdkVersion` trong log.
 Trò chơi giáo dục, không bạo lực, không cờ bạc, không nội dung người lớn, không quảng cáo,
 không mua trong ứng dụng, không tương tác giữa người dùng → thường được xếp **Mọi lứa tuổi / PEGI 3**.
 
-### Bộ ảnh cần chụp cho hồ sơ
-- Icon 512×512: đã có (`assets/icons/icon-512.png`)
-- Feature graphic 1024×500: có thể ghép từ `assets/illustrations/command-center.jpg` + logo
-- Ảnh màn hình điện thoại (tối thiểu 2, tỷ lệ 16:9 hoặc 9:16): chụp màn đăng nhập, bảng điều khiển,
-  đấu trường, GO GlObal trên điện thoại thật hoặc DevTools
+### Bộ ảnh hồ sơ — ĐÃ CHUẨN BỊ SẴN trong `docs/ch-play-assets/`
+- Icon 512×512: `assets/icons/icon-512.png` ✅
+- Feature graphic 1024×500: `docs/ch-play-assets/feature-graphic-1024x500.png` ✅
+- 6 ảnh màn hình điện thoại 1079×2397 (9:16, đạt chuẩn ≥1080px): trang chủ, đăng nhập,
+  trung tâm điều hành, quyết định + cuộc họp đội, GO GlObal, Kho Âm nhạc ✅
+- Khi phát hành bản mới chỉ cần chụp lại các màn thay đổi
 
 ## Thứ tự khuyến nghị
 
