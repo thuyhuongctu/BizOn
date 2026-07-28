@@ -1637,3 +1637,21 @@
     watchRerenders();
   });
 })();
+
+/* ===== Service worker toàn site: đăng ký + kiểm tra bản mới bỏ qua HTTP cache
+ * + tự tải lại trang một lần khi phiên bản mới tiếp quản (mọi trang, không riêng game) ===== */
+(function () {
+  if (!('serviceWorker' in navigator)) return;
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' })
+      .then(function (reg) { if (reg && reg.update) reg.update(); })
+      .catch(function () {});
+  });
+  var hadController = !!navigator.serviceWorker.controller;
+  var swReloaded = false;
+  navigator.serviceWorker.addEventListener('controllerchange', function () {
+    if (!hadController || swReloaded) return;
+    swReloaded = true;
+    location.reload();
+  });
+})();
