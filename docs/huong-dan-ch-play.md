@@ -56,7 +56,7 @@ khi build kiểm tra lại `targetSdkVersion` trong log.
 - **Mô tả ngắn** (≤80 ký tự): `Hệ sinh thái game mô phỏng kinh doanh & khởi nghiệp Việt Nam — học mà chơi`
 - **Mô tả đầy đủ**:
 
-  > BizOn Bật Nghiệp là hệ sinh thái game mô phỏng kinh doanh và khởi nghiệp dành cho sinh viên và lớp học kinh tế.
+  > BizOn – Bật Nghiệp: Trò chơi mô phỏng kinh doanh 3D phong cách đất sét dành cho đào tạo khởi nghiệp — một hệ sinh thái nhiều game cho sinh viên và lớp học kinh tế.
   >
   > 🎮 BẬT NGHIỆP — điều hành xưởng linh vật đất sét Việt qua 6 vòng kinh doanh trên bản đồ Việt Nam: định giá, marketing, sản xuất, R&D, nhân sự, tài chính. Đội 3–5 người với 5 vai trò CEO · CFO · CMO · COO · Thư ký pháp chế; mỗi ván ≈ 30–45 phút — vừa một buổi học.
   >
