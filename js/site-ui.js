@@ -1454,8 +1454,8 @@
 "Welcome to BizOn!"
 ],
 [
-"Hệ sinh thái mô phỏng kinh doanh 3D Claymorphism — chọn một cánh cửa để bắt đầu.",
-"A 3D-claymorphism business-simulation ecosystem — pick a door to begin."
+"Trò chơi mô phỏng kinh doanh 3D phong cách đất sét dành cho đào tạo khởi nghiệp — chọn một cánh cửa để bắt đầu.",
+"A 3D claymorphism business-simulation game for entrepreneurship education — pick a door to begin."
 ],
 [
 "Chinh phục bản đồ Việt Nam từ Cần Thơ tới Hà Nội cùng cố vấn Lumina AI.",
