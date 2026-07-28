@@ -354,7 +354,7 @@ function renderRivalsGlobal() {
   const box = document.getElementById('rivals-global');
   if (!box) return;
   const you = `<div class="clay-card overflow-hidden ring-2 ring-clay-gold">
-      <img src="assets/character/team/ceo-full.jpg" alt="CEO đội Việt Nam" class="w-full h-40 object-cover" style="object-position:50% 10%" loading="lazy">
+      <div class="h-40 flex items-end justify-center" style="background:linear-gradient(180deg,#fdf1dc 0%,#f7d9a8 100%)"><img src="assets/character/team/ceo-full-cut.png" alt="CEO đội Việt Nam" class="h-36 w-auto drop-shadow-lg" loading="lazy"></div>
       <div class="p-3">
         <p class="font-display font-extrabold text-deep-teal text-xs">Đội của bạn 🇻🇳</p>
         <p class="text-[10px] text-deep-teal/50">CEO Minh Long · Cần Thơ</p>
@@ -366,7 +366,7 @@ function renderRivalsGlobal() {
   box.innerHTML = you + MARKETS.map(m => {
     const r = RIVAL_CEOS[m.id];
     return `<div class="clay-card overflow-hidden">
-      <img src="assets/character/rivals-global/${m.id}.jpg" alt="CEO ${m.ai}" class="w-full h-40 object-cover" style="object-position:50% 12%" loading="lazy">
+      <div class="h-40 flex items-end justify-center" style="background:linear-gradient(180deg,#e8f4fa 0%,#cfe4ef 100%)"><img src="assets/character/rivals-global/${m.id}-cut.png" alt="CEO ${m.ai}" class="h-36 w-auto drop-shadow-lg" loading="lazy"></div>
       <div class="p-3">
         <p class="font-display font-extrabold text-deep-teal text-xs">${m.ai} ${m.flag}</p>
         <p class="text-[10px] text-deep-teal/50">CEO ${r.ceo} · ${m.hub}</p>
