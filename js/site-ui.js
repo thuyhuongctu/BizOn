@@ -818,12 +818,12 @@
 "🎼 M-AIDA — source code"
 ],
 [
-"🌏 BizOn GO GlObal (thử nghiệm)",
-"🌏 BizOn GO GlObal (beta)"
+"🌏 BizOn Go Global (thử nghiệm)",
+"🌏 BizOn Go Global (beta)"
 ],
 [
-"🌏 BizOn GO GlObal (thử nghiệm quốc tế)",
-"🌏 BizOn GO GlObal (international beta)"
+"🌏 BizOn Go Global (thử nghiệm quốc tế)",
+"🌏 BizOn Go Global (international beta)"
 ],
 [
 "⭐ Mã nguồn trên GitHub",
@@ -1150,8 +1150,8 @@
 "Sailing to the open sea"
 ],
 [
-"Các tuyến bay & tàu hàng tỏa ra từ ghim Việt Nam — tinh thần BizOn GO GlObal",
-"Flight & cargo routes radiating from the Vietnam pin — the BizOn GO GlObal spirit"
+"Các tuyến bay & tàu hàng tỏa ra từ ghim Việt Nam — tinh thần BizOn Go Global",
+"Flight & cargo routes radiating from the Vietnam pin — the BizOn Go Global spirit"
 ],
 [
 "Nơi mọi quyết định hội tụ: biểu đồ thị phần, la bàn chiến lược và chiếc cúp dành cho đội thắng cuộc — quản trị dựa trên dữ liệu qua từng vòng chơi.",
@@ -1210,8 +1210,8 @@
 "Red Star · +84 · VIETNAM trio"
 ],
 [
-"Bộ pin BizOn GO GlObal — mang mã vùng +84 ra thế giới",
-"The BizOn GO GlObal pin set — carrying the +84 dialing code to the world"
+"Bộ pin BizOn Go Global — mang mã vùng +84 ra thế giới",
+"The BizOn Go Global pin set — carrying the +84 dialing code to the world"
 ],
 [
 "Tú Phan với cài áo Việt Nam",
@@ -1230,16 +1230,16 @@
 "All creative assets of"
 ],
 [
-"Ca khúc BizOn GO GlObal · International pop 118 BPM · bản thu tiếng Việt",
-"BizOn GO GlObal theme song · International pop 118 BPM · Vietnamese vocal recording"
+"Ca khúc BizOn Go Global · International pop 118 BPM · bản thu tiếng Việt",
+"BizOn Go Global theme song · International pop 118 BPM · Vietnamese vocal recording"
 ],
 [
 "Bản song ngữ Anh–Việt cho phát hành quốc tế · bản thu có lời",
 "English–Vietnamese bilingual version for international release · vocal recording"
 ],
 [
-"Ca khúc BizOn GO GlObal · bản tiếng Việt",
-"BizOn GO GlObal theme song · Vietnamese version"
+"Ca khúc BizOn Go Global · bản tiếng Việt",
+"BizOn Go Global theme song · Vietnamese version"
 ],
 [
 "Bản song ngữ Anh–Việt · phát hành quốc tế",
@@ -1538,8 +1538,8 @@
 "🎵 Original music"
 ],
 [
-"Ca khúc BizOn GO GlObal · bản thu có lời",
-"BizOn GO GlObal theme song · vocal recording"
+"Ca khúc BizOn Go Global · bản thu có lời",
+"BizOn Go Global theme song · vocal recording"
 ],
 [
 "Đội Demo Bật Nghiệp — 5 thành viên đất nặn",

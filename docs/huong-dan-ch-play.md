@@ -91,7 +91,7 @@ không mua trong ứng dụng, không tương tác giữa người dùng → th�
 - Icon 512×512: `assets/icons/icon-512.png` ✅
 - Feature graphic 1024×500: `docs/ch-play-assets/feature-graphic-1024x500.png` ✅
 - 6 ảnh màn hình điện thoại 1079×2397 (9:16, đạt chuẩn ≥1080px): trang chủ, đăng nhập,
-  trung tâm điều hành, quyết định + cuộc họp đội, GO GlObal, Kho Âm nhạc ✅
+  trung tâm điều hành, quyết định + cuộc họp đội, Go Global, Kho Âm nhạc ✅
 - Khi phát hành bản mới chỉ cần chụp lại các màn thay đổi
 
 ## Thứ tự khuyến nghị
