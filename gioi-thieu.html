@@ -714,21 +714,38 @@ demoSim();
 
 /* ================= AI TOUR GUIDE ================= */
 const TOUR = [
-  { sel: '#top',        text: 'Đây là BizOn Bật Nghiệp — game mô phỏng kinh doanh đất nặn 3D. Bạn sẽ điều hành một công ty qua 6 vòng thị trường Việt Nam 2026!' },
-  { sel: '#stats',      text: '6 vòng thị trường, 4 vai trò C-Suite, 7 báo cáo quản trị chuẩn giáo trình và hơn 15 thành tựu đang chờ bạn chinh phục.' },
-  { sel: '#features',   text: 'Mỗi vòng bạn quyết định giá bán, sản lượng, marketing, R&D, nhân sự và nguồn vốn — thị trường với 3 đối thủ AI sẽ phản ứng ngay.' },
-  { sel: '#demo',       text: 'Chơi thử ngay tại đây! Kéo 3 thanh quyết định và xem thị phần, doanh thu, lợi nhuận thay đổi theo thời gian thực.' },
-  { sel: '#characters', text: 'Đồng hành cùng bạn có mình — Lumina AI, và Tú Phan, cố vấn học thuật của dự án.' },
-  { sel: '#minigames',  text: 'Ba mini-game khởi nghiệp: Trắc nghiệm, Đoán Giá Thị Trường và Bắt Vốn Vàng — không cần đăng nhập.' },
-  { sel: '#team',       text: 'BizOn được sáng lập bởi Đỗ Thùy Hương và Phan Anh Tú. Giờ thì... bấm CHƠI NGAY để bắt đầu hành trình Bật Nghiệp nhé! 🚀' },
+  { sel: '#top',        vi: 'Đây là BizOn Bật Nghiệp - game mô phỏng kinh doanh đất nặn 3D. Bạn sẽ điều hành một công ty qua 6 vòng thị trường Việt Nam 2026!',
+                        en: "This is BizOn Bật Nghiệp - a 3D clay business-simulation game. You'll run a company through 6 rounds across the Vietnam 2026 market!" },
+  { sel: '#stats',      vi: '6 vòng thị trường, 4 vai trò C-Suite, 7 báo cáo quản trị chuẩn giáo trình và hơn 15 thành tựu đang chờ bạn chinh phục.',
+                        en: 'Six market rounds, four C-Suite roles, seven textbook-standard management reports and over 15 achievements are waiting for you.' },
+  { sel: '#features',   vi: 'Mỗi vòng bạn quyết định giá bán, sản lượng, marketing, R&D, nhân sự và nguồn vốn - thị trường với 3 đối thủ AI sẽ phản ứng ngay.',
+                        en: 'Each round you set price, production, marketing, R&D, staffing and funding - and a market with 3 AI rivals reacts instantly.' },
+  { sel: '#demo',       vi: 'Chơi thử ngay tại đây! Kéo 3 thanh quyết định và xem thị phần, doanh thu, lợi nhuận thay đổi theo thời gian thực.',
+                        en: 'Try it right here! Drag the three decision sliders and watch market share, revenue and profit change in real time.' },
+  { sel: '#characters', vi: 'Đồng hành cùng bạn có mình - Lumina AI, và Tú Phan, cố vấn học thuật của dự án.',
+                        en: "By your side you'll have me - Lumina AI - and Tu Phan, the project's academic advisor." },
+  { sel: '#minigames',  vi: 'Ba mini-game khởi nghiệp: Trắc nghiệm, Đoán Giá Thị Trường và Bắt Vốn Vàng - không cần đăng nhập.',
+                        en: 'Three startup mini-games: the Quiz, Guess the Market Price, and Catch the Golden Capital - no sign-in needed.' },
+  { sel: '#team',       vi: 'BizOn được sáng lập bởi Đỗ Thùy Hương và Phan Anh Tú. Giờ thì... bấm CHƠI NGAY để bắt đầu hành trình Bật Nghiệp nhé! 🚀',
+                        en: 'BizOn was founded by Do Thuy Huong and Phan Anh Tu. Now... hit PLAY NOW and start your Bật Nghiệp journey! 🚀' },
 ];
+const GUIDE_GREET = {
+  vi: 'Xin chào! Mình là Hương - hướng dẫn viên AI của BizOn Bật Nghiệp. Để mình dẫn bạn tham quan trò chơi nhé?',
+  en: "Hi there! I'm Huong - your AI tour guide for BizOn Bật Nghiệp. Shall I show you around the game?",
+};
+const GUIDE_BTN = {
+  vi: { start: '▶️ Bắt đầu tour', next: n => `▶️ Tiếp (${n}/${TOUR.length})`, end: '🏁 Kết thúc tour' },
+  en: { start: '▶️ Start the tour', next: n => `▶️ Next (${n}/${TOUR.length})`, end: '🏁 Finish the tour' },
+};
+function guideLang() { try { return localStorage.getItem('bizon-lang') === 'en' ? 'en' : 'vi'; } catch (e) { return 'vi'; } }
 let tourIdx = -1;
 function guideSpeak(text) {
   try {
     speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
-    u.lang = 'vi-VN'; u.rate = 1.02;
-    const v = speechSynthesis.getVoices().find(v => v.lang && v.lang.toLowerCase().startsWith('vi'));
+    const pref = guideLang() === 'en' ? 'en' : 'vi';
+    u.lang = pref === 'en' ? 'en-US' : 'vi-VN'; u.rate = 1.02;
+    const v = speechSynthesis.getVoices().find(v => v.lang && v.lang.toLowerCase().startsWith(pref));
     if (v) u.voice = v;
     speechSynthesis.speak(u);
   } catch (e) {}
@@ -736,6 +753,9 @@ function guideSpeak(text) {
 function guideToggle() {
   const pop = document.getElementById('guide-pop');
   if (pop.classList.contains('show')) { guideEnd(); return; }
+  const L = guideLang();
+  document.getElementById('guide-text').textContent = GUIDE_GREET[L];
+  document.getElementById('guide-next').textContent = GUIDE_BTN[L].start;
   pop.classList.add('show');
   if (tourIdx < 0) { playHuongIntro(); }
 }
@@ -743,15 +763,17 @@ function guideNext() {
   tourIdx++;
   if (tourIdx >= TOUR.length) { guideEnd(); return; }
   const step = TOUR[tourIdx];
+  const L = guideLang();
   document.querySelector(step.sel).scrollIntoView({ behavior: 'smooth', block: 'start' });
-  document.getElementById('guide-text').textContent = step.text;
-  document.getElementById('guide-next').textContent = tourIdx === TOUR.length - 1 ? '🏁 Kết thúc tour' : `▶️ Tiếp (${tourIdx + 1}/${TOUR.length})`;
-  guideSpeak(step.text);
+  document.getElementById('guide-text').textContent = step[L];
+  document.getElementById('guide-next').textContent = tourIdx === TOUR.length - 1 ? GUIDE_BTN[L].end : GUIDE_BTN[L].next(tourIdx + 1);
+  guideSpeak(step[L]);
 }
 function guideEnd() {
   document.getElementById('guide-pop').classList.remove('show');
-  document.getElementById('guide-text').textContent = 'Xin chào! Mình là Hương — hướng dẫn viên AI của BizOn Bật Nghiệp. Để mình dẫn bạn tham quan trò chơi nhé?';
-  document.getElementById('guide-next').textContent = '▶️ Bắt đầu tour';
+  const Le = guideLang();
+  document.getElementById('guide-text').textContent = GUIDE_GREET[Le];
+  document.getElementById('guide-next').textContent = GUIDE_BTN[Le].start;
   tourIdx = -1;
   try { speechSynthesis.cancel(); } catch (e) {}
 }
