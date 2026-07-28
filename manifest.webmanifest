@@ -2,7 +2,7 @@
   "id": "./",
   "name": "BizOn Bật Nghiệp — Business Simulation Ecosystem",
   "short_name": "BizOn",
-  "description": "Hệ sinh thái game mô phỏng kinh doanh & khởi nghiệp 3D Claymorphism: Bật Nghiệp, GO GlObal, Arcade — với cố vấn AI Lumina.",
+  "description": "BizOn – Bật Nghiệp: Trò chơi mô phỏng kinh doanh 3D phong cách đất sét dành cho đào tạo khởi nghiệp — hệ sinh thái gồm Bật Nghiệp, GO GlObal, Arcade với cố vấn AI Lumina.",
   "lang": "vi",
   "start_url": "./index.html",
   "scope": "./",
