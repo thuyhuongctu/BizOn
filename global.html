@@ -201,6 +201,13 @@ tailwind.config = {
     </div>
   </section>
 
+  <!-- TÌNH BÁO ĐỐI THỦ TOÀN CẦU (Rival Intelligence — Module Intel AIBIS) -->
+  <section class="mb-10">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-1">🕵️ Tình báo đối thủ toàn cầu</h2>
+    <p class="text-xs text-deep-teal/55 mb-4">Hồ sơ 7 CEO bản địa bạn sẽ chạm trán ở từng thị trường — biết người biết ta trước khi chọn phương thức thâm nhập.</p>
+    <div id="rivals-global" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3"></div>
+  </section>
+
 
   <!-- IE LAB: MÔ PHỎNG SỐ LIỆU -->
   <section id="ip-lab" class="mb-8">
@@ -329,6 +336,45 @@ const MARKETS = [
   { id: 'kr',  flag: '🇰🇷', name: 'Hàn Quốc',   hub: 'Seoul',     x: 845, y: 118, size: 120000, ref: 13, elast: 2.1, tariff: 0.09, cult: 0.45, digital: 0.93, ai: 'Hanul Craft' },
   { id: 'af',  flag: '🇰🇪', name: 'Châu Phi',   hub: 'Nairobi',   x: 528, y: 262, size: 95000,  ref: 11, elast: 2.3, tariff: 0.10, cult: 0.75, digital: 0.55, ai: 'Savanna Play' },
 ];
+/* Hồ sơ CEO đối thủ bản địa (Rival Intelligence toàn cầu) */
+const RIVAL_CEOS = {
+  sea: { ceo: 'Wei Ming Tan',   tag: 'TRÙM HUB LOGISTICS', strength: 'Logistics tối ưu, thuế quan thấp, xoay hàng cực nhanh', weak: 'Thị trường nhỏ, phụ thuộc trung chuyển', counter: 'Đấu bằng bản sắc sản phẩm Việt và kênh số trực tiếp' },
+  eas: { ceo: 'Yuki Tanaka',    tag: 'CHẤT LƯỢNG THỦ CÔNG', strength: 'Hoàn thiện thủ công cao cấp, khách trung thành', weak: 'Giá cao, chậm ra mẫu mới', counter: 'Tung mẫu mới nhanh hơn với giá hợp lý, giữ chuẩn chất lượng' },
+  eu:  { ceo: 'Stefan Weber',   tag: 'TỰ ĐỘNG HÓA QUY MÔ', strength: 'Kỹ thuật chính xác, quy mô lớn, tiếp cận cả EU', weak: 'Cứng nhắc, bản địa hóa kém với đồ chơi văn hóa', counter: 'Kể câu chuyện văn hóa Việt mà dây chuyền không sao chép được' },
+  na:  { ceo: 'Jake Miller',    tag: 'ĐỔI MỚI VIRAL',       strength: 'Marketing viral, danh mục IP mạnh', weak: 'Chi phí cao, vòng đời trend ngắn', counter: 'Bền bỉ xây cộng đồng thay vì đua từng cơn sốt' },
+  me:  { ceo: 'Omar Al-Rashid', tag: 'VỐN SÂU',             strength: 'Tiềm lực vốn lớn, cửa ngõ trung chuyển toàn cầu', weak: 'Ít kinh nghiệm ngành đồ chơi', counter: 'Thắng bằng chuyên môn sản phẩm và quan hệ đối tác dài hạn' },
+  kr:  { ceo: 'Ji-Woo Park',    tag: 'NHÀ MÁY THÔNG MINH',  strength: 'Tích hợp nhà máy thông minh, dữ liệu vận hành tốt', weak: 'Khẩu vị thị trường thay đổi nhanh hơn dây chuyền', counter: 'Linh hoạt mẫu mã nhỏ lô, cá nhân hóa theo fan' },
+  af:  { ceo: 'David Kimani',   tag: 'TĂNG TRƯỞNG XANH',    strength: 'Vật liệu sinh thái, thống trị thị trường mới nổi', weak: 'Hạ tầng số và logistics còn yếu', counter: 'Hợp tác phân phối thay vì đối đầu; chuẩn ESG phải ngang ngửa' },
+};
+function renderRivalsGlobal() {
+  const box = document.getElementById('rivals-global');
+  if (!box) return;
+  const you = `<div class="clay-card overflow-hidden ring-2 ring-clay-gold">
+      <img src="assets/character/team/ceo-full.jpg" alt="CEO đội Việt Nam" class="w-full h-40 object-cover" style="object-position:50% 10%" loading="lazy">
+      <div class="p-3">
+        <p class="font-display font-extrabold text-deep-teal text-xs">Đội của bạn 🇻🇳</p>
+        <p class="text-[10px] text-deep-teal/50">CEO Minh Long · Cần Thơ</p>
+        <p class="text-[9px] font-extrabold uppercase text-primary mt-1">XƯỞNG LINH VẬT ĐẤT SÉT VIỆT</p>
+        <p class="text-[10px] text-deep-teal/70 mt-1">💪 5 vai trò C-Suite + cố vấn Lumina AI</p>
+        <p class="text-[10px] text-deep-teal/70 mt-0.5">🎯 Chọn thị trường phía trên để xuất quân!</p>
+      </div>
+    </div>`;
+  box.innerHTML = you + MARKETS.map(m => {
+    const r = RIVAL_CEOS[m.id];
+    return `<div class="clay-card overflow-hidden">
+      <img src="assets/character/rivals-global/${m.id}.jpg" alt="CEO ${m.ai}" class="w-full h-40 object-cover" style="object-position:50% 12%" loading="lazy">
+      <div class="p-3">
+        <p class="font-display font-extrabold text-deep-teal text-xs">${m.ai} ${m.flag}</p>
+        <p class="text-[10px] text-deep-teal/50">CEO ${r.ceo} · ${m.hub}</p>
+        <p class="text-[9px] font-extrabold uppercase text-clay-orange mt-1">${r.tag}</p>
+        <p class="text-[10px] text-deep-teal/70 mt-1">💪 ${r.strength}</p>
+        <p class="text-[10px] text-deep-teal/70 mt-0.5">🎯 Khắc chế: ${r.counter}</p>
+      </div>
+    </div>`;
+  }).join('');
+}
+document.addEventListener('DOMContentLoaded', renderRivalsGlobal);
+
 /* Phong cách đàm phán của đối tác bản địa (Module AI Negotiation) */
 const NEGO_STYLE = { sea: 'hợp tác', eas: 'thận trọng', eu: 'cứng rắn', na: 'mặc cả', me: 'quan hệ', kr: 'thận trọng', af: 'quan hệ' };
 const MODES = [
@@ -426,13 +472,24 @@ function pickMarket(id) {
   document.getElementById('sec-play').classList.add('hidden');
   document.getElementById('sec-result').classList.add('hidden');
   document.getElementById('mode-sub').textContent = `Thị trường ${G.market.name} (${G.market.hub}): khoảng cách văn hóa ${Math.round(G.market.cult * 100)}%, thuế nhập khẩu ${Math.round(G.market.tariff * 100)}%, độ sẵn sàng số ${Math.round(G.market.digital * 100)}%.`;
-  document.getElementById('mode-cards').innerHTML = MODES.map(md => `
-    <button onclick="pickMode('${md.id}')" class="clay-card p-4 text-left hover:-translate-y-0.5 transition-transform">
+  const m0 = G.market;
+  const rec = (m0.tariff >= 0.12 && m0.cult >= 0.6) ? 'jv' : (m0.tariff >= 0.12) ? 'fdi' : (m0.digital >= 0.9) ? 'digi' : (m0.cult >= 0.6) ? 'jv' : 'export';
+  document.getElementById('mode-cards').innerHTML = MODES.map(md => {
+    const risk = Math.round(md.cost0 / 180 * 100);
+    return `
+    <button onclick="pickMode('${md.id}')" class="clay-card p-4 text-left hover:-translate-y-0.5 transition-transform relative">
+      ${md.id === rec ? '<span class="absolute top-2 right-2 text-[8px] font-extrabold bg-clay-gold text-deep-teal px-2 py-0.5 rounded-full">⭐ GỢI Ý</span>' : ''}
       <p class="text-2xl">${md.icon}</p>
       <p class="font-display font-extrabold text-deep-teal text-sm mt-1">${md.name}</p>
       <p class="text-[10px] text-deep-teal/55 mt-0.5">${md.desc}</p>
+      <div class="mt-2 space-y-1">
+        <div class="flex items-center gap-1.5"><span class="text-[8px] font-extrabold text-deep-teal/45 uppercase w-16 whitespace-nowrap">⚠️ Rủi ro</span><div class="flex-1 h-1.5 bg-black/10 rounded-full"><div class="h-full rounded-full bg-orange-400" style="width:${risk}%"></div></div></div>
+        <div class="flex items-center gap-1.5"><span class="text-[8px] font-extrabold text-deep-teal/45 uppercase w-16 whitespace-nowrap">🎮 Kiểm soát</span><div class="flex-1 h-1.5 bg-black/10 rounded-full"><div class="h-full rounded-full bg-primary" style="width:${Math.round(md.control * 100)}%"></div></div></div>
+      </div>
       <p class="text-[10px] font-bold text-primary mt-1.5">Vốn ban đầu: ${md.cost0}k USD</p>
-    </button>`).join('');
+    </button>`;
+  }).join('') + `
+    <div class="sm:col-span-2 lg:col-span-4 clay-sunken rounded-2xl p-3 text-[11px] text-deep-teal/70">💡 <b>Mẹo:</b> đối tác ${m0.name} đàm phán kiểu «${NEGO_STYLE[m0.id]}» — ${m0.cult >= 0.6 ? 'văn hóa xa, dành thời gian xây quan hệ trước khi bàn điều khoản.' : 'thị trường giao dịch nhanh, chuẩn bị số liệu chắc để chốt gọn.'} Huy hiệu ⭐ là phương thức khớp nhất với thuế quan ${Math.round(m0.tariff * 100)}% và khoảng cách văn hóa ${Math.round(m0.cult * 100)}% của thị trường này.</div>`;
   sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
@@ -442,7 +499,8 @@ function pickMode(id) {
   const sec = document.getElementById('sec-play');
   sec.classList.remove('hidden'); sec.classList.add('fade-up');
   document.getElementById('sec-result').classList.add('hidden');
-  document.getElementById('play-sub').textContent = `${G.mode.icon} ${G.mode.name} tại ${G.market.flag} ${G.market.name} — đối thủ bản địa: ${G.market.ai}. Vốn ban đầu ${G.mode.cost0}k USD đã chi.`;
+  const rc = RIVAL_CEOS[G.market.id];
+  document.getElementById('play-sub').innerHTML = `<img src="assets/character/rivals-global/${G.market.id}.jpg" alt="CEO ${G.market.ai}" class="inline-block w-8 h-8 rounded-full object-cover mr-1 align-middle border border-white/40" style="object-position:50% 8%"> ${G.mode.icon} ${G.mode.name} tại ${G.market.flag} ${G.market.name} — đối thủ bản địa: <b>${G.market.ai}</b> (CEO ${rc.ceo}). Vốn ban đầu ${G.mode.cost0}k USD đã chi.`;
   G.negoAdj = 1; G.negoStance = null; G.negoTxt = ''; renderNego();
   paintQuarter(); gUpdate();
   sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
