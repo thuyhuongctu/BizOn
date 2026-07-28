@@ -87,7 +87,7 @@ const DEMO_TEAM = [
   { role: 'CEO', icon: '🧭', img: 'assets/character/team/ceo.jpg', name: 'Minh Long',  note: 'Nhà lãnh đạo tầm nhìn' },
   { role: 'CFO', icon: '💰', img: 'assets/character/team/cfo.jpg', name: 'Thu Hà',     note: 'Chiến lược gia tài chính' },
   { role: 'CMO', icon: '📣', img: 'assets/character/team/cmo.jpg', name: 'Lan Chi',    note: 'Phù thủy marketing' },
-  { role: 'COO', icon: '🏭', img: 'assets/character/team/coo.jpg', name: 'Quốc Bảo',   note: 'Chuyên gia vận hành' },
+  { role: 'COO', icon: '🏭', img: 'assets/character/team/coo.jpg', name: 'Bảo Ngọc',   note: 'Chuyên gia vận hành' },
   { role: 'SEC', icon: '📝', img: 'assets/character/team/sec.jpg', name: 'Gia Hân',    note: 'Thư ký pháp chế' },
 ];
 const AI_OPPONENTS = [
@@ -1049,7 +1049,7 @@ function teamSuggestions() {
       say: priceWar ? `Đối thủ đang phá giá! Em đề xuất giá ${cmoPrice}k + marketing ${cmoMkt}tr — mình không đua tận đáy nhưng phải giữ độ phủ.`
                     : `Với thương hiệu hiện tại, em đề xuất giá ${cmoPrice}k và marketing ${cmoMkt}tr${boom ? ' — biến cố này là thời cơ vàng để bung!' : ' — đủ áp lực lên cả ba đối thủ.'}`,
       apply: { 'in-price': cmoPrice, 'in-mkt': cmoMkt } },
-    { img: 'assets/character/team/coo.jpg', name: 'Quốc Bảo · COO', icon: '🏭',
+    { img: 'assets/character/team/coo.jpg', name: 'Bảo Ngọc · COO', icon: '🏭',
       say: energy ? `Khủng hoảng năng lượng — em đề xuất hạ sản lượng về ${cooProd.toLocaleString('vi-VN')} sp và ${cooWorkers} nhân công, chạy máy quá tải lúc này là đốt tiền điện.`
                   : `Công suất máy ${S.machineCapacity.toLocaleString('vi-VN')} sp — em đề xuất sản xuất ${cooProd.toLocaleString('vi-VN')} sp với ${cooWorkers} nhân công, chừa ~12% đệm cho bảo trì.`,
       apply: { 'in-prod': cooProd, 'in-workers': cooWorkers } },
