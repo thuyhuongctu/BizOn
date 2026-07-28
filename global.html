@@ -134,6 +134,7 @@ tailwind.config = {
     <div class="clay-card p-3 sm:p-5 overflow-hidden">
       <div id="world-map"></div>
       <div id="market-cards" class="grid sm:grid-cols-5 gap-2.5 mt-4"></div>
+      <button onclick="gAnnual()" class="clay-btn w-full bg-surface-bright text-deep-teal/75 font-bold py-3 text-sm mt-4">🗓️ Báo cáo Tổng kết Năm — thành tích mọi chiến dịch của đội</button>
     </div>
   </section>
 
@@ -186,6 +187,9 @@ tailwind.config = {
 
   <!-- KẾT QUẢ -->
   <section id="sec-result" class="mb-8 hidden"></section>
+
+  <!-- 🗓️ BÁO CÁO TỔNG KẾT NĂM: gộp thành tích mọi chiến dịch từ nhật ký -->
+  <section id="sec-annual" class="mb-8 hidden"></section>
 
   <!-- GIẢI THÍCH ENTRY MODES -->
   <section class="mb-8">
@@ -615,7 +619,8 @@ function gCommit() {
   G.qlog.push({ time: new Date().toISOString(), market: G.market.id, mode: G.mode.id, nego: G.negoStance || 'none',
     tech: PROFILE.tech, exp: PROFILE.exp, quarter: G.q, event: qEvent().name,
     price: p, marketing: mkt, localization: loc,
-    share: +r.share.toFixed(1), profit: +r.profit.toFixed(1), esg: r.esg, risk: r.risk, doi: r.doi, rep: r.rep, learn: r.learn });
+    share: +r.share.toFixed(1), profit: +r.profit.toFixed(1), revenue: +r.revenue.toFixed(1),
+    esg: r.esg, risk: r.risk, doi: r.doi, rep: r.rep, learn: r.learn });
   const log = document.getElementById('g-log');
   log.insertAdjacentHTML('afterbegin', `<div class="clay-sunken rounded-xl p-2.5"><b>Quý ${G.q}</b> · ${qEvent().icon} — thị phần <b class="text-primary">${r.share.toFixed(1)}%</b>, lợi nhuận <b class="${r.profit >= 0 ? 'text-emerald-600' : 'text-orange-600'}">${r.profit >= 0 ? '+' : ''}${r.profit.toFixed(0)}k$</b></div>`);
   if (G.q >= 4) { gFinish(); return; }
@@ -763,13 +768,111 @@ function gFinish() {
       <p class="font-display font-extrabold text-deep-teal text-xs mb-1.5">🎓 Lumina Mentor — góc lý thuyết</p>
       <p class="text-[11px] text-deep-teal/75 leading-relaxed">${gMentor(avgShare, win)}</p>
     </div>
-    <button onclick="gExportCSV()" class="clay-btn w-full bg-surface-bright text-deep-teal/70 font-bold py-3 text-sm mt-3">📥 Xuất nhật ký quyết định (CSV) — dữ liệu nghiên cứu / chấm điểm</button>
+    <button onclick="gAnnual()" class="clay-btn w-full bg-surface-bright text-deep-teal/70 font-bold py-3 text-sm mt-3">🗓️ Báo cáo Tổng kết Năm — thành tích mọi chiến dịch</button>
+    <button onclick="gExportCSV()" class="clay-btn w-full bg-surface-bright text-deep-teal/70 font-bold py-3 text-sm mt-2">📥 Xuất nhật ký quyết định (CSV) — dữ liệu nghiên cứu / chấm điểm</button>
     <div class="flex gap-2 mt-4">
       <button onclick="pickMarket('${G.market.id}')" class="clay-btn flex-1 bg-surface-bright text-deep-teal/70 font-bold py-3 text-sm">🔄 Chơi lại thị trường này</button>
       <button onclick="document.getElementById('world-map').scrollIntoView({behavior:'smooth'})" class="clay-btn-primary clay-btn flex-1 text-white font-display font-extrabold py-3 text-sm">🌏 Chọn thị trường khác</button>
     </div>
   </div>`;
   sec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+/* ===== 🗓️ Báo cáo Tổng kết Năm: gộp thành tích mọi chiến dịch từ nhật ký bền vững ===== */
+function gAnnual() {
+  const sec = document.getElementById('sec-annual');
+  let rows = [];
+  try { rows = JSON.parse(localStorage.getItem('bizon-global-log') || '[]'); } catch (e) {}
+  if (!rows.length) {
+    sec.classList.remove('hidden');
+    sec.innerHTML = '<div class="clay-card p-8 text-center text-sm text-deep-teal/50">Chưa có chiến dịch nào trong nhật ký — hãy chinh phục thị trường đầu tiên rồi quay lại xem tổng kết năm!</div>';
+    sec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+  const totalProfit = rows.reduce((a, r) => a + (r.profit || 0), 0);
+  const totalRev = rows.reduce((a, r) => a + (r.revenue || 0), 0);
+  const campaigns = rows.filter(r => r.quarter === 4).length;
+  const peakRep = Math.max(...rows.map(r => r.rep || 0));
+  const best = rows.reduce((acc, r) => (r.share > (acc.share || 0) ? r : acc), {});
+
+  // Gộp theo thị trường: quý đã chơi, lợi nhuận, thị phần bình quân
+  const byMkt = {};
+  rows.forEach(r => {
+    const a = (byMkt[r.market] ??= { id: r.market, q: 0, profit: 0, share: 0, rev: 0 });
+    a.q++; a.profit += r.profit || 0; a.share += r.share || 0; a.rev += r.revenue || 0;
+  });
+  const mktRows = Object.values(byMkt).map(a => {
+    const m = MARKETS.find(x => x.id === a.id) || { flag: '🌍', name: a.id, ai: '?' };
+    return { ...a, flag: m.flag, name: m.name, avgShare: a.share / a.q, won: gFlags.includes(a.id) };
+  }).sort((a, b) => b.profit - a.profit);
+  const maxAbsP = Math.max(...mktRows.map(x => Math.abs(x.profit)), 1);
+
+  // Thành tựu chủ chốt (suy ra từ dữ liệu thật)
+  const bestMkt = best.market ? (MARKETS.find(x => x.id === best.market) || {}) : {};
+  const achs = [];
+  if (gFlags.length) achs.push({ icon: '🚩', title: `Mở rộng ${gFlags.length} vùng lãnh thổ`, desc: `Đã cắm cờ: ${gFlags.map(id => (MARKETS.find(x => x.id === id) || {}).flag || '').join(' ')} — thương hiệu Việt hiện diện ${gFlags.length}/${MARKETS.length} thị trường.` });
+  if (best.share) achs.push({ icon: '👑', title: `Thị phần đỉnh ${best.share}%`, desc: `Lập tại ${bestMkt.flag || ''} ${bestMkt.name || best.market} bằng phương thức ${(MODES.find(x => x.id === best.mode) || {}).name || best.mode}.` });
+  achs.push(totalProfit >= 0
+    ? { icon: '💰', title: `Lãi lũy kế +${totalProfit.toFixed(0)}k$`, desc: `Tích lũy qua ${campaigns} chiến dịch · ${rows.length} quý ra quyết định trên thương trường quốc tế.` }
+    : { icon: '🎓', title: `${rows.length} quý kinh nghiệm thực chiến`, desc: `Lỗ lũy kế ${totalProfit.toFixed(0)}k$ — học phí của khởi nghiệp quốc tế; nhật ký CSV ghi lại từng bài học.` });
+
+  // Cố vấn AI cho năm tới: gợi ý thị trường chưa chinh phục hợp hồ sơ nhất
+  const openMkts = MARKETS.filter(m => !gFlags.includes(m.id));
+  let advisor;
+  if (!openMkts.length) {
+    advisor = `Kỳ tích! Đội đã cắm cờ toàn bộ ${MARKETS.length} thị trường. Năm tới hãy quay lại các thị trường khó nhất để nâng thị phần bình quân vượt 50% — và thử các phương thức chưa dùng để so bài học lý thuyết.`;
+  } else {
+    const next = openMkts.map(m => ({ m, fit: (PROFILE.tech === 'ai' ? m.digital : 0.5) + (1 - m.cult) * 0.6 + (1 - m.tariff * 2) * 0.4 }))
+      .sort((a, b) => b.fit - a.fit)[0].m;
+    const rec = (next.tariff >= 0.12 && next.cult >= 0.6) ? 'Liên doanh' : next.tariff >= 0.12 ? 'Đầu tư mới (FDI)' : next.digital >= 0.9 ? 'Nền tảng số' : next.cult >= 0.6 ? 'Liên doanh' : 'Xuất khẩu';
+    advisor = `Dựa trên nhật ký ${rows.length} quý: năm tới nên nhắm ${next.flag} ${next.name} — thị trường chưa có cờ với độ hợp hồ sơ đội cao nhất. Khuyến nghị mở màn bằng ${rec}; ${bestMkt.name ? `mang theo bài học thị phần ${best.share}% từ ${bestMkt.name}.` : 'áp dụng cấu trúc ngân sách của chiến dịch tốt nhất.'}`;
+  }
+
+  sec.classList.remove('hidden'); sec.classList.add('fade-up');
+  sec.innerHTML = `
+    <div class="clay-card p-6 text-center text-white mb-3" style="background:linear-gradient(135deg,#0e3d4d 0%,#006687 100%)">
+      <p class="text-[11px] font-bold text-white/60 uppercase tracking-wider">🗓️ Báo cáo Tổng kết Năm · AIBIS GO GlObal</p>
+      <p class="font-display font-extrabold text-2xl mt-1">${gFlags.length ? 'Dấu chân toàn cầu của đội Việt' : 'Năm khởi động hành trình toàn cầu'}</p>
+      <p class="text-xs text-white/70 mt-0.5">${campaigns} chiến dịch · ${rows.length} quý ra quyết định</p>
+      <div class="grid grid-cols-3 gap-2 mt-4 text-left">
+        <div class="bg-white/10 rounded-2xl p-2.5"><p class="text-[9px] uppercase font-bold text-white/50">${totalRev > 0 ? 'Tổng doanh thu' : 'Lợi nhuận lũy kế'}</p><p class="font-display font-extrabold text-sm">${totalRev > 0 ? totalRev.toFixed(0) + 'k$' : (totalProfit >= 0 ? '+' : '') + totalProfit.toFixed(0) + 'k$'}</p></div>
+        <div class="bg-white/10 rounded-2xl p-2.5"><p class="text-[9px] uppercase font-bold text-white/50">Thị trường chinh phục</p><p class="font-display font-extrabold text-sm text-clay-gold">${gFlags.length}/${MARKETS.length} 🚩</p></div>
+        <div class="bg-white/10 rounded-2xl p-2.5"><p class="text-[9px] uppercase font-bold text-white/50">Uy tín đỉnh</p><p class="font-display font-extrabold text-sm">${peakRep}/100</p></div>
+      </div>
+    </div>
+    <div class="clay-card p-5 mb-3">
+      <p class="font-display font-extrabold text-deep-teal text-sm mb-1">🌍 Phân bổ kết quả theo thị trường</p>
+      <p class="text-[11px] text-deep-teal/55 mb-3">Xếp theo lợi nhuận lũy kế · 🚩 = đã chinh phục</p>
+      ${mktRows.map(x => `
+      <div class="flex items-center gap-2.5 py-2 border-b border-surface-bright last:border-0">
+        <span class="text-xl w-7 text-center">${x.flag}</span>
+        <div class="flex-1 min-w-0">
+          <p class="text-xs font-extrabold text-deep-teal truncate">${x.name} ${x.won ? '🚩' : ''}</p>
+          <div class="h-2 rounded-full bg-surface-bright overflow-hidden mt-1"><div class="h-full rounded-full" style="width:${Math.max(4, Math.abs(x.profit) / maxAbsP * 100)}%;background:${x.profit >= 0 ? 'linear-gradient(90deg,#00c4ff,#006687)' : 'rgba(234,88,12,.65)'}"></div></div>
+        </div>
+        <div class="text-right shrink-0">
+          <p class="text-xs font-display font-extrabold ${x.profit >= 0 ? 'text-deep-teal' : 'text-orange-600'}">${x.profit >= 0 ? '+' : ''}${x.profit.toFixed(0)}k$</p>
+          <p class="text-[10px] font-bold text-deep-teal/50">TB ${x.avgShare.toFixed(1)}% · ${x.q} quý</p>
+        </div>
+      </div>`).join('')}
+    </div>
+    <div class="clay-card p-5 mb-3">
+      <p class="font-display font-extrabold text-deep-teal text-sm mb-3">🏅 Thành tựu chủ chốt</p>
+      <div class="grid sm:grid-cols-3 gap-2.5">
+        ${achs.map(a => `
+        <div class="clay-sunken rounded-2xl p-3">
+          <p class="text-2xl">${a.icon}</p>
+          <p class="text-xs font-extrabold text-deep-teal mt-1">${a.title}</p>
+          <p class="text-[10px] text-deep-teal/60 leading-snug mt-0.5">${a.desc}</p>
+        </div>`).join('')}
+      </div>
+    </div>
+    <div class="clay-card p-4 bg-primary-container/10 flex gap-3 items-start">
+      <img src="assets/character/lumina-office-present.png" alt="Lumina" class="w-10 h-10 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 8%">
+      <div><p class="font-display font-bold text-primary text-sm">Lumina · Cố vấn AI cho năm tới</p>
+      <p class="text-xs text-deep-teal/80 italic mt-0.5">"${advisor}"</p></div>
+    </div>`;
+  sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 renderWorldMap(); profRender();
