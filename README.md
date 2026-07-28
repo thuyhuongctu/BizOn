@@ -2,7 +2,7 @@
 
 > **BizOn – Bật Nghiệp: Trò chơi mô phỏng kinh doanh 3D phong cách đất sét dành cho đào tạo khởi nghiệp.**
 >
-> *A 3D claymorphism business-simulation game for entrepreneurship education* — student teams run a virtual company through **6 rounds** across a map of Vietnam, guided by the AI advisor **Lumina**, face **3 rival CEOs** with distinct personalities, expand to international markets with **BizOn GO GlObal**, and train reflexes in the **BizOn Arcade**. One app, many games — and still growing.
+> *A 3D claymorphism business-simulation game for entrepreneurship education* — student teams run a virtual company through **6 rounds** across a map of Vietnam, guided by the AI advisor **Lumina**, face **3 rival CEOs** with distinct personalities, expand to international markets with **BizOn Go Global**, and train reflexes in the **BizOn Arcade**. One app, many games — and still growing.
 
 ![version](https://img.shields.io/badge/version-1.1-blue)
 ![license](https://img.shields.io/badge/license-Proprietary%20·%20All%20rights%20reserved-lightgrey)
@@ -14,7 +14,7 @@
 |---|---|
 | **Authors** | **Do Thuy Huong** (Founder & Creative Lead) · **Phan Anh Tu** (Co-founder & Academic Advisor) |
 | **Affiliation** | Can Tho University (CTU), Vietnam |
-| **Play now** | 🎮 [Game](https://thuyhuongctu.github.io/BizOn/) · 🌐 [Landing page](https://thuyhuongctu.github.io/BizOn/gioi-thieu.html) · 🕹️ [Arcade](https://thuyhuongctu.github.io/BizOn/games.html) · 🌏 [BizOn GO GlObal](https://thuyhuongctu.github.io/BizOn/global.html) |
+| **Play now** | 🎮 [Game](https://thuyhuongctu.github.io/BizOn/) · 🌐 [Landing page](https://thuyhuongctu.github.io/BizOn/gioi-thieu.html) · 🕹️ [Arcade](https://thuyhuongctu.github.io/BizOn/games.html) · 🌏 [BizOn Go Global](https://thuyhuongctu.github.io/BizOn/global.html) |
 | **Contact** | thuyhuongctu@gmail.com |
 | **Archive & DOI** | Zenodo concept DOI: [10.5281/zenodo.21592241](https://doi.org/10.5281/zenodo.21592241) — every release is permanently archived |
 
@@ -27,7 +27,7 @@
 | [`index.html`](https://thuyhuongctu.github.io/BizOn/) | **Main game** — a 6-round conquest across the map of Vietnam (Cần Thơ → Hà Nội); win a round's market share to plant your flag 🚩; the map features the Lũng Cú flag tower and the Hoàng Sa & Trường Sa archipelagos |
 | [`gioi-thieu.html`](https://thuyhuongctu.github.io/BizOn/gioi-thieu.html) | International-style landing page: interactive demo, 5 leadership roles, the 6-round journey, mini-games, an AI tour guide, FAQ, instructor section |
 | [`games.html`](https://thuyhuongctu.github.io/BizOn/games.html) | **BizOn Arcade** — 8 games in the ecosystem |
-| [`global.html`](https://thuyhuongctu.github.io/BizOn/global.html) | **BizOn GO GlObal** (beta) — from Vietnam to the world: pick a market and an entry mode (Export · Licensing · Joint Venture · Greenfield FDI), with a live World Market board and the **IE Lab** (International Entrepreneurship, data simulation) |
+| [`global.html`](https://thuyhuongctu.github.io/BizOn/global.html) | **BizOn Go Global** (beta) — from Vietnam to the world: pick a market and an entry mode (Export · Licensing · Joint Venture · Greenfield FDI), with a live World Market board and the **IE Lab** (International Entrepreneurship, data simulation) |
 | [`doi-ngu.html`](https://thuyhuongctu.github.io/BizOn/doi-ngu.html) | Founding team, the 5-member Demo Team, mission & vision 2026 |
 | [`am-nhac.html`](https://thuyhuongctu.github.io/BizOn/am-nhac.html) | **Music library** — the project's original soundtrack («Hương on Return», «Bật Nghiệp», «Vừa Đủ Để Bay Cao», «Hương sans frontières» VI/EN, «And The World Say Hello!»…) |
 | [`thu-vien.html`](https://thuyhuongctu.github.io/BizOn/thu-vien.html) | Creative library: characters, artwork, the «Bản đồ Việt Nam» enamel-pin merch |
@@ -41,7 +41,7 @@ Every page supports **light/dark mode**, a **Vietnamese–English bilingual inte
 
 | Area | Details |
 |---|---|
-| Play time | A full 6-round match ≈ 30–45 minutes (5–7 min/round) — fits one class session; BizOn GO GlObal ≈ 10–15 minutes for 4 quarters |
+| Play time | A full 6-round match ≈ 30–45 minutes (5–7 min/round) — fits one class session; BizOn Go Global ≈ 10–15 minutes for 4 quarters |
 | Rounds | 6 rounds = 6 provinces on Vietnam's new administrative map; each round brings a market event (Golden Opportunity, Price War, Energy Crisis, Credit Squeeze, Vietnam Rising Dragon) |
 | Decisions | Price · Marketing · R&D · Production volume · Workforce & training · Funding source (equity / 8.5% loans) · 30/60/90-day payment terms · Maintenance |
 | AI rivals | Three rival CEOs with 3D portraits and distinct playbooks — 🐺 Alpha Dynamics (budget) · 🐘 Mekong Ventures (balanced) · 🦚 Star Clay Co. (premium); tap a rival for its **Rival Intelligence** profile (motto, playbook, weakness, counter-strategy); behavior is **deterministic per team seed**, which makes grading easy |
@@ -56,7 +56,7 @@ Every page supports **light/dark mode**, a **Vietnamese–English bilingual inte
 
 ## 🔬 Simulation model
 
-The **IE Lab** mode (on the BizOn GO GlObal page) is a **data-simulation sandbox** for International Entrepreneurship courses: players pick a market type, drag the internationalization level (FSTS %) and digital-capability sliders, and watch simulated firm performance respond. The stylized scenarios include:
+The **IE Lab** mode (on the BizOn Go Global page) is a **data-simulation sandbox** for International Entrepreneurship courses: players pick a market type, drag the internationalization level (FSTS %) and digital-capability sliders, and watch simulated firm performance respond. The stylized scenarios include:
 
 - An **inverted-U** curve with an illustrative turning point around **43% FSTS** (transition markets and the pooled all-Asia scenario);
 - Strong-institution economies (Singapore, Japan): near-linear curves, with a **"digital shield"** effect in the Singapore scenario;
@@ -81,7 +81,7 @@ python3 -m http.server 8000   # then open http://localhost:8000
 index.html            # Game SPA — all screens + Tailwind config + PWA registration
 gioi-thieu.html       # International landing page
 games.html            # BizOn Arcade (8 games)
-global.html           # BizOn GO GlObal + World Market LIVE + IE Lab
+global.html           # BizOn Go Global + World Market LIVE + IE Lab
 doi-ngu.html          # Founding-team page
 js/engine.js          # Simulation engine: 6 rounds, events, items, skills
 js/app.js             # Game UI: rendering, navigation, conquest map, intro
