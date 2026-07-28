@@ -91,9 +91,9 @@ const DEMO_TEAM = [
   { role: 'SEC', icon: '📝', img: 'assets/character/team/sec.jpg', name: 'Gia Hân',    note: 'Thư ký pháp chế' },
 ];
 const AI_OPPONENTS = [
-  { name: 'Alpha Dynamics', icon: '🐺', style: 'Giá rẻ tốc chiến',   play: 'Giá ~125k · marketing ~90tr mỗi vòng (dao động ±12%)', counter: 'Đừng đua giá tận đáy — giữ biên lợi nhuận, xây thương hiệu để giữ khách trung thành.' },
-  { name: 'Mekong Ventures', icon: '🐘', style: 'Cân bằng chắc chắn', play: 'Giá ~150k · marketing ~60tr — ổn định như đồng bằng', counter: 'Vượt mặt bằng R&D và biến cố: họ ít khi phản ứng nhanh với thị trường.' },
-  { name: 'Star Clay Co.',   icon: '🦚', style: 'Cao cấp thương hiệu', play: 'Giá ~195k · marketing ~75tr — đánh phân khúc sang', counter: 'Chiếm phân khúc phổ thông họ bỏ ngỏ, hoặc đấu trực diện bằng chất lượng + ESG.' },
+  { name: 'Alpha Dynamics', icon: '🐺', img: 'assets/character/rivals/alpha.png', accent: '#e8762d', motto: 'Tăng trưởng thần tốc, lấy số lượng đè lợi nhuận', weakness: 'Biên lợi nhuận cực mỏng, đốt vốn nhanh — dễ hụt hơi trong cuộc chiến dài hơi.', style: 'Giá rẻ tốc chiến',   play: 'Giá ~125k · marketing ~90tr mỗi vòng (dao động ±12%)', counter: 'Đừng đua giá tận đáy — giữ biên lợi nhuận, xây thương hiệu để giữ khách trung thành.' },
+  { name: 'Mekong Ventures', icon: '🐘', img: 'assets/character/rivals/mekong.png', accent: '#00a0c8', motto: 'Chậm mà chắc, bám rễ niềm tin địa phương', weakness: 'Trung thành với truyền thống nên phản ứng chậm trước biến động công nghệ và thị trường.', style: 'Cân bằng chắc chắn', play: 'Giá ~150k · marketing ~60tr — ổn định như đồng bằng', counter: 'Vượt mặt bằng R&D và biến cố: họ ít khi phản ứng nhanh với thị trường.' },
+  { name: 'Star Clay Co.',   icon: '🦚', img: 'assets/character/rivals/star.png', accent: '#5a32a3', motto: 'Sang trọng trong từng chi tiết, bán sự khan hiếm', weakness: 'Chi phí sản xuất thủ công cao — khó mở rộng quy mô nhanh, dễ nghẽn sản lượng.', style: 'Cao cấp thương hiệu', play: 'Giá ~195k · marketing ~75tr — đánh phân khúc sang', counter: 'Chiếm phân khúc phổ thông họ bỏ ngỏ, hoặc đấu trực diện bằng chất lượng + ESG.' },
 ];
 
 function doLoginDemo() {
@@ -154,20 +154,53 @@ function renderOpponents() {
     <h3 class="font-display font-bold text-deep-teal mb-1">⚔️ 3 đối thủ AI của bạn</h3>
     <p class="text-[10px] text-deep-teal/45 mb-3">Mỗi vòng họ tự định giá & chi marketing theo tính cách — xem Sổ tay 📖 mục "Đối thủ AI" để biết cách khắc chế.</p>
     ${AI_OPPONENTS.map((o, i) => `
-      <div class="py-2 ${i < 2 ? 'border-b border-surface-bright' : ''}">
+      <button onclick="showRivalDetail(${i})" class="w-full text-left py-2 ${i < 2 ? 'border-b border-surface-bright' : ''}">
         <div class="flex items-center gap-3">
-          <p class="text-2xl shrink-0">${o.icon}</p>
+          <img src="${o.img}" alt="${o.name}" class="w-10 h-10 rounded-full object-cover object-top shadow-clay shrink-0" style="background:${o.accent}22">
           <div class="flex-1 min-w-0">
-            <p class="text-xs font-extrabold text-deep-teal">${o.name} <span class="font-bold text-primary">· ${o.style}</span></p>
+            <p class="text-xs font-extrabold text-deep-teal">${o.icon} ${o.name} <span class="font-bold text-primary">· ${o.style}</span></p>
             <p class="text-[10px] text-deep-teal/55 truncate">${o.play}</p>
           </div>
-          <p class="text-xs font-display font-extrabold text-deep-teal/70 shrink-0">${shares[i].toFixed(0)}%</p>
+          <p class="text-xs font-display font-extrabold text-deep-teal/70 shrink-0">${shares[i].toFixed(0)}% ›</p>
         </div>
-        <div class="h-1.5 rounded-full bg-surface-bright overflow-hidden mt-1.5 ml-10">
-          <div class="h-full rounded-full transition-all duration-700" style="width:${Math.min(100, shares[i]).toFixed(0)}%; background:${['#e8762d', '#00a0c8', '#10b981'][i]}"></div>
+        <div class="h-1.5 rounded-full bg-surface-bright overflow-hidden mt-1.5 ml-[52px]">
+          <div class="h-full rounded-full transition-all duration-700" style="width:${Math.min(100, shares[i]).toFixed(0)}%; background:${o.accent}"></div>
         </div>
-      </div>`).join('')}
+      </button>`).join('')}
+    <p class="text-[10px] text-deep-teal/40 mt-2">👆 Chạm vào một đối thủ để xem hồ sơ tình báo</p>
   </div>`;
+}
+
+/* Hồ sơ tình báo đối thủ — chân dung, chiến lược, điểm yếu và cách khắc chế */
+function showRivalDetail(i) {
+  const o = AI_OPPONENTS[i];
+  if (!o) return;
+  const share = S && S.competitors && S.competitors[i] ? (S.competitors[i].share || 25) : 25;
+  const div = document.createElement('div');
+  div.className = 'fixed inset-0 z-[80] bg-deep-teal/60 backdrop-blur-sm flex items-center justify-center p-5 overflow-y-auto';
+  div.innerHTML = `
+    <div class="clay-card max-w-sm w-full overflow-hidden text-left">
+      <div class="relative pt-5 px-5 pb-0 flex items-end justify-center" style="background:linear-gradient(160deg, ${o.accent}33 0%, ${o.accent}0d 100%)">
+        <img src="${o.img}" alt="${o.name}" class="h-44 w-auto drop-shadow-xl">
+        <span class="absolute top-3 right-3 text-[10px] font-extrabold text-white px-2.5 py-1 rounded-full" style="background:${o.accent}">${o.icon} ${o.style}</span>
+      </div>
+      <div class="p-5">
+        <h3 class="font-display font-extrabold text-deep-teal text-lg">${o.name}</h3>
+        <p class="text-[11px] italic text-deep-teal/55 mt-0.5">«${o.motto}»</p>
+        <div class="flex items-center gap-2 mt-3">
+          <span class="text-[10px] font-extrabold uppercase text-deep-teal/50 shrink-0">Thị phần hiện tại</span>
+          <div class="h-2 flex-1 rounded-full bg-surface-bright overflow-hidden"><div class="h-full rounded-full" style="width:${Math.min(100, share).toFixed(0)}%; background:${o.accent}"></div></div>
+          <span class="text-xs font-display font-extrabold text-deep-teal shrink-0">${share.toFixed(0)}%</span>
+        </div>
+        <div class="clay-sunken rounded-2xl p-3 mt-3"><p class="text-[10px] font-extrabold text-deep-teal/50 uppercase mb-0.5">📈 Cách họ chơi</p><p class="text-[11px] text-deep-teal/75">${o.play}</p></div>
+        <div class="clay-sunken rounded-2xl p-3 mt-2"><p class="text-[10px] font-extrabold text-orange-600 uppercase mb-0.5">⚠️ Điểm yếu chí mạng</p><p class="text-[11px] text-deep-teal/75">${o.weakness}</p></div>
+        <div class="clay-sunken rounded-2xl p-3 mt-2"><p class="text-[10px] font-extrabold text-primary uppercase mb-0.5">💡 Lumina khuyên cách khắc chế</p><p class="text-[11px] text-deep-teal/75">${o.counter}</p></div>
+        <button class="clay-btn w-full bg-primary text-white font-display font-bold py-3 mt-4">Đã nắm tình báo — quay lại</button>
+      </div>
+    </div>`;
+  div.querySelector('button').onclick = () => div.remove();
+  div.addEventListener('click', e => { if (e.target === div) div.remove(); });
+  document.body.appendChild(div);
 }
 
 function doLogin() {
@@ -1138,7 +1171,7 @@ function commitDecisions() {
 /* ===== ⚔️ ĐẤU TRƯỜNG — các nhân vật ra sàn đấu giành thị phần sau mỗi Commit ===== */
 const RIVAL_ICONS = { aggressive: '🐺', balanced: '🐘', premium: '🦚' };
 /* Khi có tạo hình người đất sét cho 3 đối thủ: đặt ảnh vào assets/character/rivals/ và điền đường dẫn */
-const RIVAL_IMGS = { aggressive: null, balanced: null, premium: null };
+const RIVAL_IMGS = { aggressive: 'assets/character/rivals/alpha.png', balanced: 'assets/character/rivals/mekong.png', premium: 'assets/character/rivals/star.png' };
 function showArena(r, done) {
   const stop = CONQUEST_STOPS[r.round - 1];
   const fighters = [
