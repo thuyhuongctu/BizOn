@@ -1287,7 +1287,7 @@ function showRoundResult(r) {
     </div>`;
   div.querySelector('button').onclick = () => {
     div.remove(); renderAll();
-    if (S.finished) { showTab('achievements'); createConfetti(); }
+    if (S.finished) { currentReport = 'season'; showTab('reports'); createConfetti(); }
     else if (r.isNewPeak) showVictory(r);
     else maybeShowEventIntro();
   };
@@ -1739,6 +1739,7 @@ function showReport(kind) {
   if (kind === 'bmc') { renderBmcReport(body); return; }
   if (kind === 'cash') { renderCashReport(body); return; }
   if (kind === 'rival') { renderRivalCostReport(body); return; }
+  if (kind === 'season') { renderSeasonReport(body); return; }
   if (!S.history.length) {
     body.innerHTML = '<div class="clay-card p-8 text-center text-sm text-deep-teal/50">Chưa có dữ liệu — hãy hoàn thành vòng đầu tiên!</div>';
     return;
@@ -1930,6 +1931,28 @@ function renderRivalCostReport(body) {
       </div>
     </div>
     <div class="clay-card p-5 mb-3">
+      <h3 class="font-display font-bold text-deep-teal text-sm mb-1">📈 ROI Marketing: 1tr quảng cáo đổi được bao nhiêu doanh thu?</h3>
+      <p class="text-[11px] text-deep-teal/55 mb-3">Chuẩn hiệu quả của ngành: 3.0tr doanh thu cho mỗi 1tr marketing</p>
+      ${(() => {
+        const roiRows = [
+          { name: '🏺 ' + S.profile.teamName, roi: myMroi || 0, me: true },
+          ...rivals.map(x => ({ name: x.name, roi: x.mkt > 0 ? Math.round(10 * (x.revenue || 0) / x.mkt) / 10 : 0 })),
+        ].sort((a, b) => b.roi - a.roi);
+        const maxRoi = Math.max(...roiRows.map(x => x.roi), 3);
+        return roiRows.map((x, i) => `
+        <div class="flex items-center gap-2 py-1.5">
+          <span class="w-5 text-center text-xs">${['🥇', '🥈', '🥉', '4️⃣'][i]}</span>
+          <span class="w-24 shrink-0 text-[11px] font-bold ${x.me ? 'text-primary' : 'text-deep-teal/70'} truncate">${x.name}</span>
+          <div class="flex-1 h-3 rounded-full bg-surface-bright overflow-hidden relative">
+            <div class="h-full rounded-full ${x.me ? 'bg-gradient-to-r from-clay-orange to-clay-gold' : ''}" style="width:${Math.max(4, x.roi / maxRoi * 100)}%${x.me ? '' : x.roi >= 3 ? ';background:rgba(16,185,129,.55)' : ';background:rgba(0,102,135,.35)'}"></div>
+            <div class="absolute top-0 bottom-0 w-0.5 bg-deep-teal/30" style="left:${Math.min(97, 3 / maxRoi * 100)}%"></div>
+          </div>
+          <span class="w-12 text-right text-[11px] font-extrabold ${x.roi >= 3 ? 'text-emerald-600' : 'text-deep-teal'}">×${x.roi}</span>
+        </div>`).join('') + `
+        <p class="text-[10px] text-deep-teal/50 font-semibold mt-1.5">Vạch dọc = chuẩn ngành 3.0. ${roiRows[0].me ? 'Đội bạn đang dẫn đầu hiệu quả quảng cáo trên sàn! 🎯' : `${roiRows[0].name} đang có hiệu quả quảng cáo tốt nhất sàn (×${roiRows[0].roi}).`}</p>`;
+      })()}
+    </div>
+    <div class="clay-card p-5 mb-3">
       <h3 class="font-display font-bold text-deep-teal text-sm mb-1">🔬 R&D — vũ khí đối thủ không có</h3>
       <p class="text-[11px] text-deep-teal/55 mb-3">Cả 3 đối thủ AI không đầu tư R&D: giá thành của họ đứng yên ở ${rivalUnit}k/sp, còn của bạn giảm dần theo tích lũy</p>
       <div class="grid grid-cols-2 gap-2.5">
@@ -1954,6 +1977,111 @@ function renderRivalCostReport(body) {
       <img src="assets/character/lumina-vest.png" alt="Mentor Hương" class="w-10 h-10 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 12%">
       <div><p class="font-display font-bold text-primary text-sm">Mentor Hương · Tình báo cạnh tranh</p>
       <p class="text-xs text-deep-teal/80 italic mt-0.5">"${insight}"</p></div>
+    </div>`;
+}
+
+// ---------- 🏁 Tổng kết mùa giải — báo cáo năm kiểu Stitch: hero, xếp hạng, thành tựu ----------
+function renderSeasonReport(body) {
+  if (!S.history.length) {
+    body.innerHTML = '<div class="clay-card p-8 text-center text-sm text-deep-teal/50">Chưa có dữ liệu — hãy hoàn thành vòng đầu tiên!</div>';
+    return;
+  }
+  const rounds = S.history;
+  const last = rounds[rounds.length - 1];
+  const totalRev = rounds.reduce((a, r) => a + r.revenue, 0);
+  const totalProfit = rounds.reduce((a, r) => a + r.netProfit, 0);
+  const shareFirst = rounds[0].share, shareLast = last.share;
+  const growth = Math.round((shareLast - shareFirst) * 10) / 10;
+  const brandScore = Math.round((last.brandLoyalty || 45) / 10 * 10) / 10;
+
+  // Gộp số liệu cả mùa của từng đối thủ từ tình báo lưu theo vòng
+  const agg = {};
+  rounds.forEach(r => rivalIntelOf(r).forEach(x => {
+    const a = (agg[x.name] ??= { name: x.name, style: x.style, rev: 0, profit: 0, cost: 0, shareFirst: null, shareLast: 0 });
+    a.rev += x.revenue || 0; a.profit += x.profit || 0; a.cost += x.cost || 0;
+    a.shareFirst ??= x.share; a.shareLast = x.share;
+  }));
+  const teamCostTotal = rounds.reduce((a, r) => a + r.revenue - r.netProfit, 0);
+  const ranking = [
+    { name: S.profile.teamName, me: true, img: 'assets/character/team/ceo.jpg',
+      share: shareLast, growth, profit: Math.round(totalProfit),
+      roi: Math.round(1000 * totalProfit / Math.max(1, teamCostTotal)) / 10 },
+    ...Object.values(agg).map(a => ({ name: a.name, img: RIVAL_IMGS[a.style],
+      share: a.shareLast, growth: Math.round((a.shareLast - (a.shareFirst || 25)) * 10) / 10,
+      profit: Math.round(a.profit), roi: Math.round(1000 * a.profit / Math.max(1, a.cost)) / 10 })),
+  ].sort((a, b) => b.share - a.share);
+  const myRank = ranking.findIndex(x => x.me) + 1;
+  const champion = ranking[0].me;
+
+  const maxRev = Math.max(...rounds.map(r => r.revenue), 1);
+  const target = i => rounds[0].revenue * Math.pow(1.08, i);   // mục tiêu: tăng 8%/vòng từ vòng 1
+
+  const achUnlocked = (S.achievements || []).map(id => ACHIEVEMENTS.find(a => a.id === id)).filter(Boolean);
+  const verdict = champion
+    ? `Mùa giải trong mơ! Đội dẫn đầu thị phần chung cuộc với ${shareLast.toFixed(1)}% — vượt cả 3 tập đoàn AI${totalProfit > 0 ? `, kèm lợi nhuận tích lũy ${money(Math.round(totalProfit))}` : `. Lợi nhuận còn âm ${money(Math.abs(Math.round(totalProfit)))}, nhưng vị thế thị trường chính là bàn đạp cho mùa sau`}. Hãy chụp lại báo cáo này làm kỷ niệm nhé!`
+    : totalProfit > 0
+      ? `Kết thúc mùa ở hạng ${myRank}/4 với lợi nhuận dương ${money(Math.round(totalProfit))} — nền tảng rất tốt. Khoảng cách với ${ranking[0].name} nằm ở ${growth < 5 ? 'tốc độ chiếm thị phần: hãy mạnh tay marketing sớm hơn ở mùa sau' : 'biên lợi nhuận: xem lại cấu trúc chi phí tab CVP'}.`
+      : `Mùa giải lỗ ${money(Math.abs(Math.round(totalProfit)))} — nhưng đó là bài học đắt giá nhất của khởi nghiệp. Mở tab 🕵️ Chi phí đối thủ xem họ chi thế nào, rồi chơi lại mùa mới: người thắng là người đứng dậy nhanh nhất!`;
+
+  body.innerHTML = `
+    <div class="clay-card p-5 mb-3 text-center text-white" style="background:linear-gradient(135deg,#0e3d4d 0%,#006687 100%)">
+      <p class="text-[11px] font-bold text-white/60 uppercase tracking-wider">🏁 ${S.finished ? 'Báo cáo Tổng kết mùa giải' : 'Tổng kết tạm thời — sau vòng ' + last.round + '/' + ROUNDS_TOTAL}</p>
+      <p class="font-display font-extrabold text-3xl mt-1">${champion && S.finished ? '👑 VÔ ĐỊCH SÀN ĐẤU' : 'Hạng ' + myRank + '/4 toàn sàn'}</p>
+      <p class="text-xs text-white/70 mt-0.5">${S.profile.teamName} · ${rounds.length} vòng thi đấu</p>
+      <div class="grid grid-cols-3 gap-2 mt-4 text-left">
+        <div class="bg-white/10 rounded-2xl p-2.5"><p class="text-[9px] uppercase font-bold text-white/50">Tổng doanh thu</p><p class="font-display font-extrabold text-sm">${money(Math.round(totalRev))}</p></div>
+        <div class="bg-white/10 rounded-2xl p-2.5"><p class="text-[9px] uppercase font-bold text-white/50">Lợi nhuận tích lũy</p><p class="font-display font-extrabold text-sm ${totalProfit >= 0 ? 'text-clay-gold' : 'text-orange-300'}">${money(Math.round(totalProfit))}</p></div>
+        <div class="bg-white/10 rounded-2xl p-2.5"><p class="text-[9px] uppercase font-bold text-white/50">Uy tín thương hiệu</p><p class="font-display font-extrabold text-sm">${brandScore}/10</p></div>
+      </div>
+    </div>
+    <div class="clay-card p-5 mb-3">
+      <h3 class="font-display font-bold text-deep-teal text-sm mb-1">🏆 Bảng xếp hạng chung cuộc</h3>
+      <p class="text-[11px] text-deep-teal/55 mb-3">Xếp theo thị phần chung cuộc — thước đo chiến thắng của sàn đấu · tăng trưởng = thay đổi so với vòng 1</p>
+      ${ranking.map((x, i) => `
+      <div class="flex items-center gap-2.5 py-2 border-b border-surface-bright last:border-0 ${x.me ? 'bg-clay-gold/10 rounded-xl px-2 -mx-2' : ''}">
+        <span class="w-6 text-center text-base">${['🥇', '🥈', '🥉', '4️⃣'][i]}</span>
+        ${x.img ? `<img src="${x.img}" class="w-8 h-8 rounded-full object-cover object-top border ${x.me ? 'border-clay-gold' : 'border-surface-bright'}">` : ''}
+        <div class="flex-1 min-w-0">
+          <p class="text-xs font-extrabold ${x.me ? 'text-primary' : 'text-deep-teal/80'} truncate">${x.me ? '🏺 ' : ''}${x.name}</p>
+          <p class="text-[10px] text-deep-teal/50 font-semibold">Thị phần ${x.share.toFixed(1)}% · <span class="${x.growth >= 0 ? 'text-emerald-600' : 'text-orange-600'}">${x.growth >= 0 ? '▲' : '▼'} ${Math.abs(x.growth)} điểm</span></p>
+        </div>
+        <div class="text-right shrink-0">
+          <p class="text-xs font-display font-extrabold ${x.profit >= 0 ? 'text-deep-teal' : 'text-orange-600'}">${money(x.profit)}</p>
+          <p class="text-[10px] font-bold text-deep-teal/50">ROI ${x.roi}%</p>
+        </div>
+      </div>`).join('')}
+      <p class="text-[10px] text-deep-teal/45 font-semibold mt-2">💡 Lợi nhuận đối thủ AI trông cao vì họ không gánh chi phí nhân sự, đào tạo và R&D như đội thật — xem tab 🕵️ Chi phí đối thủ để hiểu cấu trúc chi của họ.</p>
+    </div>
+    <div class="clay-card p-5 mb-3">
+      <h3 class="font-display font-bold text-deep-teal text-sm mb-3">📊 Doanh thu thực tế vs Mục tiêu (+8%/vòng)</h3>
+      <div class="flex items-end gap-2 h-32">
+        ${rounds.map((r, i) => `
+        <div class="flex-1 h-full flex items-end justify-center gap-0.5">
+          <div class="rounded-t-lg bg-gradient-to-t from-primary to-primary-container" style="width:45%;height:${Math.max(6, r.revenue / Math.max(maxRev, target(rounds.length - 1)) * 100)}%"></div>
+          <div class="rounded-t-lg" style="width:45%;background:#cbd5e1;height:${Math.max(6, target(i) / Math.max(maxRev, target(rounds.length - 1)) * 100)}%"></div>
+        </div>`).join('')}
+      </div>
+      <div class="flex gap-2 mt-1">${rounds.map(r => `<p class="flex-1 text-center text-[10px] font-bold text-deep-teal/60">V${r.round}</p>`).join('')}</div>
+      <div class="flex items-center gap-4 mt-2 justify-center">
+        <span class="flex items-center gap-1 text-[10px] font-bold text-deep-teal/60"><span class="w-2.5 h-2.5 rounded-full bg-primary inline-block"></span> Thực tế</span>
+        <span class="flex items-center gap-1 text-[10px] font-bold text-deep-teal/60"><span class="w-2.5 h-2.5 rounded-full bg-slate-300 inline-block"></span> Mục tiêu</span>
+      </div>
+    </div>
+    ${achUnlocked.length ? `
+    <div class="clay-card p-5 mb-3">
+      <h3 class="font-display font-bold text-deep-teal text-sm mb-3">🎖️ Thành tựu chủ chốt (${achUnlocked.length}/${ACHIEVEMENTS.length})</h3>
+      <div class="grid grid-cols-2 gap-2">
+        ${achUnlocked.slice(0, 6).map(a => `
+        <div class="clay-sunken rounded-2xl p-2.5 flex items-center gap-2">
+          <span class="text-xl">${a.icon}</span>
+          <div class="min-w-0"><p class="text-[11px] font-extrabold text-deep-teal truncate">${a.name}</p><p class="text-[9px] text-deep-teal/50 leading-tight">${a.desc}</p></div>
+        </div>`).join('')}
+      </div>
+    </div>` : ''}
+    <div class="clay-card p-4 bg-primary-container/10 flex gap-3 items-start">
+      <img src="assets/character/lumina-vest-thumbsup.png" alt="Mentor Hương" class="w-10 h-10 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 10%">
+      <div><p class="font-display font-bold text-primary text-sm">Mentor Hương · Tổng kết mùa giải</p>
+      <p class="text-xs text-deep-teal/80 italic mt-0.5">"${verdict}"</p></div>
     </div>`;
 }
 
