@@ -59,8 +59,10 @@ tailwind.config = {
   .guide-fab { position:fixed; left:16px; bottom:16px; z-index:70; width:62px; height:62px; border-radius:50%; padding:0; border:3px solid #fda127; background:#033337; cursor:pointer; overflow:hidden; box-shadow:0 12px 30px -10px rgba(0,0,0,.55); }
   .guide-fab img { width:100%; height:150%; object-fit:cover; object-position:top center; display:block; pointer-events:none; }
   .guide-fab::after { content:''; position:absolute; right:3px; bottom:3px; width:12px; height:12px; border-radius:50%; background:#22c55e; border:2px solid #033337; }
-  .guide-pop { position:fixed; left:16px; bottom:90px; z-index:70; width:min(86vw, 330px); display:none; }
+  .guide-pop { position:fixed; left:10px; bottom:88px; z-index:70; width:min(94vw, 420px); display:none; }
   .guide-pop.show { display:block; animation:fadeUp .25s ease; }
+  .guide-bubble { position:relative; }
+  .guide-bubble::after { content:''; position:absolute; left:-7px; bottom:30px; width:14px; height:14px; transform:rotate(45deg); background:inherit; border-radius:3px; }
   /* Trình phát nhạc nổi */
   .music-pill { position:fixed; right:16px; bottom:16px; z-index:70; display:flex; align-items:center; gap:.55rem; padding:.45rem .7rem .45rem .5rem; border-radius:999px; background:rgba(3,51,55,.92); color:#fff; box-shadow:0 10px 30px -10px rgba(0,0,0,.6); backdrop-filter:blur(10px); max-width:min(72vw,300px); }
   .music-pill .mp-btn { width:36px; height:36px; border-radius:50%; background:#e8762d; color:#fff; border:0; cursor:pointer; font-size:1rem; box-shadow:0 3px 0 #b3541a; flex:none; }
@@ -579,17 +581,17 @@ tailwind.config = {
 <button class="guide-fab" id="guide-fab" aria-label="Hương AI dẫn đường" onclick="guideToggle()">
   <img src="assets/character/lumina-ao-dai.png" alt="Hương AI">
 </button>
-<div class="guide-pop clay-card p-4" id="guide-pop" role="dialog" aria-label="Hương AI dẫn đường">
-  <div class="flex items-start gap-2.5">
-    <img src="assets/character/lumina-ao-dai.png" alt="" class="w-10 h-10 rounded-full object-cover shrink-0" style="object-position:top center">
-    <div class="min-w-0">
+<div class="guide-pop" id="guide-pop" role="dialog" aria-label="Hương AI dẫn đường">
+  <div class="flex items-end gap-1.5">
+    <img src="assets/character/lumina-ao-dai-wave.png" alt="Hương AI" class="h-48 w-auto shrink-0 drop-shadow-[0_16px_18px_rgba(0,0,0,.35)]">
+    <div class="clay-card guide-bubble p-4 mb-4 min-w-0">
       <p class="font-display font-extrabold text-deep-teal text-sm">Hương AI dẫn đường</p>
       <p id="guide-text" class="text-xs text-deep-teal/75 mt-1">Xin chào! Mình là Hương — hướng dẫn viên AI của BizOn Bật Nghiệp. Để mình dẫn bạn tham quan trò chơi nhé?</p>
+      <div class="flex gap-2 mt-3">
+        <button onclick="guideNext()" id="guide-next" class="clay-btn flex-1 bg-primary text-white text-xs font-bold py-2.5">▶️ Bắt đầu tour</button>
+        <button onclick="guideEnd()" class="clay-btn bg-white text-deep-teal text-xs font-bold px-3 py-2.5">Đóng</button>
+      </div>
     </div>
-  </div>
-  <div class="flex gap-2 mt-3">
-    <button onclick="guideNext()" id="guide-next" class="clay-btn flex-1 bg-primary text-white text-xs font-bold py-2.5">▶️ Bắt đầu tour</button>
-    <button onclick="guideEnd()" class="clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2.5">Đóng</button>
   </div>
 </div>
 
