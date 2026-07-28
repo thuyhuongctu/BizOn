@@ -29,13 +29,13 @@
 | [`games.html`](https://thuyhuongctu.github.io/BizOn/games.html) | **BizOn Arcade** — 8 games in the ecosystem |
 | [`global.html`](https://thuyhuongctu.github.io/BizOn/global.html) | **BizOn GO GlObal** (beta) — from Vietnam to the world: pick a market and an entry mode (Export · Licensing · Joint Venture · Greenfield FDI), with a live World Market board and the **IE Lab** (International Entrepreneurship, data simulation) |
 | [`doi-ngu.html`](https://thuyhuongctu.github.io/BizOn/doi-ngu.html) | Founding team, the 5-member Demo Team, mission & vision 2026 |
-| [`am-nhac.html`](https://thuyhuongctu.github.io/BizOn/am-nhac.html) | **Music library** — 9 original tracks («Bật Nghiệp», «Hương on Return», «Vừa Đủ Để Bay Cao», «Hương sans frontières» VI/EN/FR…) |
+| [`am-nhac.html`](https://thuyhuongctu.github.io/BizOn/am-nhac.html) | **Music library** — the project's original soundtrack («Hương on Return», «Bật Nghiệp», «Vừa Đủ Để Bay Cao», «Hương sans frontières» VI/EN, «And The World Say Hello!»…) |
 | [`thu-vien.html`](https://thuyhuongctu.github.io/BizOn/thu-vien.html) | Creative library: characters, artwork, the «Bản đồ Việt Nam» enamel-pin merch |
 | [`giai-phap.html`](https://thuyhuongctu.github.io/BizOn/giai-phap.html) · [`du-an.html`](https://thuyhuongctu.github.io/BizOn/du-an.html) · [`tuyen-dung.html`](https://thuyhuongctu.github.io/BizOn/tuyen-dung.html) · [`lien-he.html`](https://thuyhuongctu.github.io/BizOn/lien-he.html) | Startup presence: solutions for instructors, project portfolio, join-us page, contact |
 | [`chinh-sach.html`](https://thuyhuongctu.github.io/BizOn/chinh-sach.html) | Privacy policy (no ads, no personal-data collection) |
 | [`khao-sat.html`](https://thuyhuongctu.github.io/BizOn/khao-sat.html) | Printable pre/post classroom survey forms |
 
-Every page supports **light/dark mode**, a **Vietnamese–English bilingual interface**, and **background music** from a library of **9 original tracks** (lyrics in [`docs/loi-bai-hat.md`](docs/loi-bai-hat.md)).
+Every page supports **light/dark mode**, a **Vietnamese–English bilingual interface**, and **background music** from the project's original soundtrack (lyrics in [`docs/loi-bai-hat.md`](docs/loi-bai-hat.md)).
 
 ## 🎮 Key features
 
