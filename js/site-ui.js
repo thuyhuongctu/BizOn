@@ -1066,6 +1066,34 @@
 "Tú Phan — Moss-green suit"
 ],
 [
+"🐺 CEO Alpha Dynamics",
+"🐺 Alpha Dynamics CEO"
+],
+[
+"Đối thủ AI · giá rẻ tốc chiến, khoanh tay thách thức",
+"AI rival · low-price blitz, arms crossed in defiance"
+],
+[
+"🐘 CEO Mekong Ventures",
+"🐘 Mekong Ventures CEO"
+],
+[
+"Đối thủ AI · cân bằng chắc chắn như đồng bằng",
+"AI rival · steady balance, solid as the delta"
+],
+[
+"🦚 CEO Star Clay Co.",
+"🦚 Star Clay Co. CEO"
+],
+[
+"Đối thủ AI · cao cấp thương hiệu, tay nâng cúp RIVAL",
+"AI rival · premium branding, holding the RIVAL trophy"
+],
+[
+"👆 Chạm vào một đối thủ để xem hồ sơ tình báo",
+"👆 Tap a rival to open their intelligence file"
+],
+[
 "Cắm cờ đầu tiên",
 "First flag planted"
 ],
