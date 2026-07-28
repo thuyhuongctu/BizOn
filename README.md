@@ -96,7 +96,9 @@ If you use BizOn in teaching or research, please cite:
 
 ## ⚖️ Copyright & intellectual property
 
-**Proprietary software** — see [`LICENSE`](LICENSE). The source code, the simulation-engine algorithms, the character design **Lumina — Je m'appelle Hương**, and the **BizOn Bật Nghiệp** name and identity belong to the authors **Do Thuy Huong & Phan Anh Tu**; copying or commercial use without written permission is prohibited.
+**Proprietary software** — see [`LICENSE`](LICENSE). The source code, the simulation-engine algorithms, the character designs (**Lumina**, **Tú Phan**, the Demo Team), the original music library, and the **BizOn** name and identity belong to the authors **Do Thuy Huong & Phan Anh Tu**.
+
+✅ **Free for non-commercial classroom teaching** at the official URL — instructors may use the app and print the bundled survey forms with no permission needed. ❌ Copying, re-deploying the source elsewhere, extracting characters/music, or any fee-charging use requires a **written non-exclusive license** — contact thuyhuongctu@gmail.com.
 
 Registration dossiers (copyright, trademark) and the commercialization strategy are managed in the authors' private document repository.
 
