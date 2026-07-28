@@ -1,6 +1,8 @@
 # BizOn Bật Nghiệp — Business Simulation Game Ecosystem
 
-> A **3D-claymorphism EdTech ecosystem of business-simulation games** — student teams run a virtual company through **6 rounds** across a map of Vietnam, guided by the AI advisor **Lumina (Je m'appelle Hương)**, expand to international markets with **BizOn GO GlObal**, and train reflexes in the **BizOn Arcade**. One app, many games — and still growing.
+> **BizOn – Bật Nghiệp: Trò chơi mô phỏng kinh doanh 3D phong cách đất sét dành cho đào tạo khởi nghiệp.**
+>
+> *A 3D claymorphism business-simulation game for entrepreneurship education* — student teams run a virtual company through **6 rounds** across a map of Vietnam, guided by the AI advisor **Lumina**, face **3 rival CEOs** with distinct personalities, expand to international markets with **BizOn GO GlObal**, and train reflexes in the **BizOn Arcade**. One app, many games — and still growing.
 
 ![version](https://img.shields.io/badge/version-1.1-blue)
 ![license](https://img.shields.io/badge/license-Proprietary%20·%20All%20rights%20reserved-lightgrey)
@@ -26,9 +28,14 @@
 | [`gioi-thieu.html`](https://thuyhuongctu.github.io/BizOn/gioi-thieu.html) | International-style landing page: interactive demo, 5 leadership roles, the 6-round journey, mini-games, an AI tour guide, FAQ, instructor section |
 | [`games.html`](https://thuyhuongctu.github.io/BizOn/games.html) | **BizOn Arcade** — 8 games in the ecosystem |
 | [`global.html`](https://thuyhuongctu.github.io/BizOn/global.html) | **BizOn GO GlObal** (beta) — from Vietnam to the world: pick a market and an entry mode (Export · Licensing · Joint Venture · Greenfield FDI), with a live World Market board and the **IE Lab** (International Entrepreneurship, data simulation) |
-| [`doi-ngu.html`](https://thuyhuongctu.github.io/BizOn/doi-ngu.html) | Founding team, mission & vision 2026 |
+| [`doi-ngu.html`](https://thuyhuongctu.github.io/BizOn/doi-ngu.html) | Founding team, the 5-member Demo Team, mission & vision 2026 |
+| [`am-nhac.html`](https://thuyhuongctu.github.io/BizOn/am-nhac.html) | **Music library** — 8 original tracks («Bật Nghiệp», «Hương on Return», «Vừa Đủ Để Bay Cao», «Hương sans frontières» VI/EN/FR…) |
+| [`thu-vien.html`](https://thuyhuongctu.github.io/BizOn/thu-vien.html) | Creative library: characters, artwork, the «Bản đồ Việt Nam» enamel-pin merch |
+| [`giai-phap.html`](https://thuyhuongctu.github.io/BizOn/giai-phap.html) · [`du-an.html`](https://thuyhuongctu.github.io/BizOn/du-an.html) · [`tuyen-dung.html`](https://thuyhuongctu.github.io/BizOn/tuyen-dung.html) · [`lien-he.html`](https://thuyhuongctu.github.io/BizOn/lien-he.html) | Startup presence: solutions for instructors, project portfolio, join-us page, contact |
+| [`chinh-sach.html`](https://thuyhuongctu.github.io/BizOn/chinh-sach.html) | Privacy policy (no ads, no personal-data collection) |
+| [`khao-sat.html`](https://thuyhuongctu.github.io/BizOn/khao-sat.html) | Printable pre/post classroom survey forms |
 
-Every page supports **light/dark mode**, a **Vietnamese–English bilingual interface**, and **background music** (two original theme songs, «Bật Nghiệp» and «Je m'appelle Hương sans frontières» — lyrics in [`docs/loi-bai-hat.md`](docs/loi-bai-hat.md)).
+Every page supports **light/dark mode**, a **Vietnamese–English bilingual interface**, and **background music** from a library of **8 original tracks** (lyrics in [`docs/loi-bai-hat.md`](docs/loi-bai-hat.md)).
 
 ## 🎮 Key features
 
@@ -37,13 +44,13 @@ Every page supports **light/dark mode**, a **Vietnamese–English bilingual inte
 | Play time | A full 6-round match ≈ 30–45 minutes (5–7 min/round) — fits one class session; BizOn GO GlObal ≈ 10–15 minutes for 4 quarters |
 | Rounds | 6 rounds = 6 provinces on Vietnam's new administrative map; each round brings a market event (Golden Opportunity, Price War, Energy Crisis, Credit Squeeze, Vietnam Rising Dragon) |
 | Decisions | Price · Marketing · R&D · Production volume · Workforce & training · Funding source (equity / 8.5% loans) · 30/60/90-day payment terms · Maintenance |
-| AI rivals | 🐺 Alpha Dynamics (budget) · 🐘 Mekong Ventures (balanced) · 🦚 Star Clay Co. (premium) — behavior is **deterministic per team seed**, which makes grading easy |
+| AI rivals | Three rival CEOs with 3D portraits and distinct playbooks — 🐺 Alpha Dynamics (budget) · 🐘 Mekong Ventures (balanced) · 🦚 Star Clay Co. (premium); tap a rival for its **Rival Intelligence** profile (motto, playbook, weakness, counter-strategy); behavior is **deterministic per team seed**, which makes grading easy |
 | Lumina AI advisor | "What-If" scenarios, role-specific risk alerts, Vietnamese voice chat (STT/TTS), a dedicated advisor brain for CEO · CFO · CMO · COO · SEC |
 | Reports | P&L, three-activity cash flow, CVP break-even, HR, Business Model Canvas, depreciation, energy audit ⚡ |
-| Learn by playing | Quests, achievements, a skill tree, completion certificates, a team journal, the Clay Reward Shop, mini-games |
+| Learn by playing | Quests, a skill tree, completion certificates, a team journal, the Clay Reward Shop, mini-games, and an **educational badge system** (conquest, What-If explorer, team player, champion…) with in-game toasts |
 | Instructor tools | Class IDs, round locking, bonus funding with an audit log — full guide at [`docs/huong-dan-giang-vien.md`](docs/huong-dan-giang-vien.md) |
 | BizOn Monitor | A terminal-style market board: sparklines for the team's metrics and all 3 AI rivals, round by round |
-| Team meeting | The 4 demo teammates propose role-based numbers each round (deterministic per seed) — one tap applies them to the sliders |
+| Team meeting | The Demo Team (CEO Minh Long · CFO Thu Hà · CMO Lan Chi · COO Bảo Ngọc · Legal Secretary Gia Hân) proposes role-based numbers each round (deterministic per seed) — one tap applies them to the sliders |
 | Battle arena | After every commit, the four companies enter an animated arena named after the round's province; market-share bars race and the verdict decides the flag 🚩 |
 | Onboarding | Win-condition banner, live market-share forecast, Basic/Advanced decision modes (rounds 1–2 simplified), a one-line "Why?" after each round, and a plain-language glossary |
 
@@ -79,10 +86,12 @@ doi-ngu.html          # Founding-team page
 js/engine.js          # Simulation engine: 6 rounds, events, items, skills
 js/app.js             # Game UI: rendering, navigation, conquest map, intro
 js/site-ui.js         # Shared light/dark mode + Vietnamese–English dictionary
-sw.js                 # Service worker — app shell, offline play
-assets/character/     # 3D characters: Lumina Áo Dài, Lumina Vest Trắng, Phan Anh Tú
-assets/audio/         # Music: BizOn Theme, Bật Nghiệp, Hương sans frontières, Hương's voice
-docs/                 # Instructor guide, song lyrics, technical docs
+sw.js                 # Service worker — app shell, offline play, auto-refresh on update
+assets/character/     # 3D characters: Lumina, Tú Phan (áo dài & suit), Demo Team, 3 rival CEOs
+assets/audio/         # 8 original tracks + Lumina voice lines
+assets/merch/         # «Bản đồ Việt Nam» enamel-pin product photos
+android/              # TWA config for the CH Play (Google Play) release
+docs/                 # Instructor guide, song lyrics, CH Play guide + store assets, technical docs
 ```
 
 ## 📚 Citation & archiving
@@ -106,6 +115,7 @@ Third-party components: Tailwind CSS (MIT), Google Fonts Plus Jakarta Sans & Man
 
 ## 🛣️ Roadmap
 
+0. **CH Play (Google Play) release** — TWA packaging ready ([`docs/huong-dan-ch-play.md`](docs/huong-dan-ch-play.md), store assets in `docs/ch-play-assets/`); awaiting Play Console setup.
 1. Backend API per [`docs/api-structure.md`](docs/api-structure.md) (JWT, commit-processing queue) → real-time multi-team mode.
 2. PostgreSQL database per [`docs/database-schema.md`](docs/database-schema.md).
 3. A real AI advisor via a large-language-model API, replacing the rule-based advisor.
