@@ -586,12 +586,18 @@ function simulateRound(s, d) {
   s.xp += xpGain;
 
   // --- Đối thủ ---
-  compDecisions.forEach(x => {
-    const cRev = (marketUnits * x.attr / totalAttr) * x.price / 1000;
-    const cProfit = cRev - (marketUnits * x.attr / totalAttr) * UNIT_COST * evEff.costMul / 1000 - x.mkt - FIXED_COST;
+  const rivalIntel = compDecisions.map(x => {
+    const cUnits = marketUnits * x.attr / totalAttr;
+    const cRev = cUnits * x.price / 1000;
+    const cCogs = cUnits * UNIT_COST * evEff.costMul / 1000;
+    const cProfit = cRev - cCogs - x.mkt - FIXED_COST;
     x.c.profit += cProfit;
     x.c.share = 100 * x.attr / totalAttr;
     x.c.brand = Math.min(1.5, x.c.brand + x.mkt / 5000);
+    return { name: x.c.name, style: x.c.style, price: Math.round(x.price),
+      mkt: Math.round(x.mkt), share: Math.round(x.c.share * 10) / 10,
+      revenue: Math.round(cRev), cost: Math.round(cCogs + x.mkt + FIXED_COST),
+      profit: Math.round(cProfit) };
   });
 
   // --- Chỉ số vận hành (OEE, phế phẩm, tài chính) ---
@@ -620,6 +626,7 @@ function simulateRound(s, d) {
     oee: s.oee, defect: s.defect, adEff: s.adEff, brandLoyalty: s.brandLoyalty,
     quickRatio: s.quickRatio, roi: s.roi, isNewPeak,
     xpGain, balance: s.balance,
+    rivals: rivalIntel,
   };
   s.history.push(report);
 
