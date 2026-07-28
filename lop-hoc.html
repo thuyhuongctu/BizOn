@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Kịch bản lớp học 40–60 SV — BizOn Bật Nghiệp</title>
-<meta name="description" content="Kịch bản triển khai BizOn Bật Nghiệp trong lớp học 40–60 sinh viên: chia đội 5 vai, tiến trình 90 phút, câu hỏi thảo luận, rubric chấm điểm và xử lý sự cố nhanh.">
+<meta name="description" content="Kịch bản triển khai BizOn Bật Nghiệp trong lớp học 40–60 sinh viên: chia đội 5 vai, tiến trình 90 phút, câu hỏi thảo luận, rubric chấm điểm và xử lý sự cố nhanh. Song ngữ Việt–Anh.">
 <meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
 <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
 <script src="https://cdn.tailwindcss.com"></script>
@@ -63,12 +63,12 @@ tailwind.config = {
   <div class="max-w-5xl mx-auto px-5 h-16 flex items-center justify-between gap-3">
     <a href="index.html" class="flex items-center gap-2.5">
       <img src="assets/icons/icon-192.png" alt="BizOn" class="w-9 h-9 rounded-xl shadow-lg">
-      <span class="font-display font-extrabold tracking-tight">BizOn <span class="text-clay-gold">Lớp học</span></span>
+      <span class="font-display font-extrabold tracking-tight">BizOn <span class="text-clay-gold kb-vi">Lớp học</span><span class="text-clay-gold kb-en hidden">Classroom</span></span>
     </a>
     <div class="flex items-center gap-2.5">
-      <a href="giai-phap.html" class="text-white/70 hover:text-white text-sm font-bold hidden sm:block">🧩 Giải pháp</a>
-      <a href="game.html" class="text-white/70 hover:text-white text-sm font-bold hidden sm:block">🎮 Vào game</a>
-      <a href="index.html" class="text-white/70 hover:text-white text-sm font-bold hidden sm:block">🏠 Trang chủ</a>
+      <a href="giai-phap.html" class="text-white/70 hover:text-white text-sm font-bold hidden sm:block"><span class="kb-vi">🧩 Giải pháp</span><span class="kb-en hidden">🧩 Solutions</span></a>
+      <a href="game.html" class="text-white/70 hover:text-white text-sm font-bold hidden sm:block"><span class="kb-vi">🎮 Vào game</span><span class="kb-en hidden">🎮 Play</span></a>
+      <a href="index.html" class="text-white/70 hover:text-white text-sm font-bold hidden sm:block"><span class="kb-vi">🏠 Trang chủ</span><span class="kb-en hidden">🏠 Home</span></a>
       <button id="theme-btn" onclick="toggleTheme()" class="w-9 h-9 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 transition-colors shrink-0" title="Chế độ Sáng/Tối · Light/Dark mode">🌙</button>
       <button id="lang-btn" onclick="toggleLang()" class="h-9 px-3 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 text-[11px] font-extrabold transition-colors shrink-0" title="Tiếng Việt / English">EN</button>
     </div>
@@ -79,12 +79,23 @@ tailwind.config = {
 <header class="pt-24 pb-10 text-white" style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%)">
   <div class="max-w-5xl mx-auto px-5 grid sm:grid-cols-[1fr_auto] gap-6 items-center">
     <div>
-      <p class="text-[11px] font-extrabold uppercase tracking-[.2em] text-clay-gold">Dành cho giảng viên</p>
-      <h1 class="font-display font-extrabold text-3xl sm:text-4xl mt-2">Kịch bản lớp học 40–60 sinh viên</h1>
-      <p class="text-white/75 text-sm mt-3 max-w-2xl">Một buổi 90 phút (kèm phương án 2 buổi 45–50 phút) — chia đội 5 vai, chơi 6 vòng đồng bộ cả lớp, tổng kết bằng dữ liệu. Không cần cài đặt, chỉ cần trình duyệt và máy chiếu.</p>
-      <div class="flex flex-wrap gap-3 mt-5 no-print">
-        <a href="game.html" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-6 py-3 text-sm">🎮 Mở game</a>
-        <button onclick="window.print()" class="clay-btn bg-white/10 border border-white/25 text-white font-display font-bold px-6 py-3 text-sm">🖨️ In kịch bản</button>
+      <div class="kb-vi">
+        <p class="text-[11px] font-extrabold uppercase tracking-[.2em] text-clay-gold">Dành cho giảng viên</p>
+        <h1 class="font-display font-extrabold text-3xl sm:text-4xl mt-2">Kịch bản lớp học 40–60 sinh viên</h1>
+        <p class="text-white/75 text-sm mt-3 max-w-2xl">Một buổi 90 phút (kèm phương án 2 buổi 45–50 phút) — chia đội 5 vai, chơi 6 vòng đồng bộ cả lớp, tổng kết bằng dữ liệu. Không cần cài đặt, chỉ cần trình duyệt và máy chiếu.</p>
+        <div class="flex flex-wrap gap-3 mt-5 no-print">
+          <a href="game.html" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-6 py-3 text-sm">🎮 Mở game</a>
+          <button onclick="window.print()" class="clay-btn bg-white/10 border border-white/25 text-white font-display font-bold px-6 py-3 text-sm">🖨️ In kịch bản</button>
+        </div>
+      </div>
+      <div class="kb-en hidden">
+        <p class="text-[11px] font-extrabold uppercase tracking-[.2em] text-clay-gold">For instructors</p>
+        <h1 class="font-display font-extrabold text-3xl sm:text-4xl mt-2">Classroom playbook for 40–60 students</h1>
+        <p class="text-white/75 text-sm mt-3 max-w-2xl">One 90-minute session (with a two-session 45–50 min option) — five-role teams, six synchronized rounds, data-driven debrief. No installation needed: just a browser and a projector.</p>
+        <div class="flex flex-wrap gap-3 mt-5 no-print">
+          <a href="game.html" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-6 py-3 text-sm">🎮 Open the game</a>
+          <button onclick="window.print()" class="clay-btn bg-white/10 border border-white/25 text-white font-display font-bold px-6 py-3 text-sm">🖨️ Print playbook</button>
+        </div>
       </div>
     </div>
     <img src="assets/character/lumina-office-present.png" alt="Lumina hướng dẫn lớp học" class="h-52 sm:h-64 w-auto mx-auto drop-shadow-2xl float-slow hidden sm:block">
@@ -93,7 +104,9 @@ tailwind.config = {
 
 <main class="max-w-5xl mx-auto px-5 py-10">
 
-  <!-- 1. CHIA ĐỘI -->
+<!-- ================= BẢN TIẾNG VIỆT ================= -->
+<div class="kb-vi">
+
   <section class="clay-card p-6 sm:p-7 mb-6">
     <h2 class="font-display font-extrabold text-deep-teal text-xl mb-4">1 · Chia đội và phân vai</h2>
     <div class="kb-wrap mb-5"><table class="kb">
@@ -114,7 +127,6 @@ tailwind.config = {
     <p class="text-xs italic text-deep-teal/60 mt-3">Mẹo chia nhanh: đánh số sinh viên 1–n theo danh sách rồi chia đều theo số dư. Cho mỗi đội 1 phút tự đặt tên công ty và khẩu hiệu để tăng gắn kết.</p>
   </section>
 
-  <!-- 2. CHUẨN BỊ -->
   <section class="clay-card p-6 sm:p-7 mb-6">
     <h2 class="font-display font-extrabold text-deep-teal text-xl mb-4">2 · Chuẩn bị trước buổi học</h2>
     <ul class="space-y-2.5 text-sm text-deep-teal/80">
@@ -126,7 +138,6 @@ tailwind.config = {
     </ul>
   </section>
 
-  <!-- 3. TIẾN TRÌNH 90 PHÚT -->
   <section class="clay-card p-6 sm:p-7 mb-6">
     <h2 class="font-display font-extrabold text-deep-teal text-xl mb-4">3 · Tiến trình buổi học 90 phút</h2>
     <div class="kb-wrap"><table class="kb">
@@ -148,7 +159,6 @@ tailwind.config = {
     </div>
   </section>
 
-  <!-- 4. VAI TRÒ GIẢNG VIÊN -->
   <section class="clay-card p-6 sm:p-7 mb-6">
     <h2 class="font-display font-extrabold text-deep-teal text-xl mb-4">4 · Vai trò giảng viên trong lúc chơi</h2>
     <ul class="space-y-2.5 text-sm text-deep-teal/80">
@@ -160,7 +170,6 @@ tailwind.config = {
     </ul>
   </section>
 
-  <!-- 5. CÂU HỎI THẢO LUẬN -->
   <section class="clay-card p-6 sm:p-7 mb-6">
     <h2 class="font-display font-extrabold text-deep-teal text-xl mb-4">5 · Câu hỏi thảo luận rút kinh nghiệm <span class="text-sm font-bold text-deep-teal/50">(chọn 3–4 câu)</span></h2>
     <ol class="space-y-2.5 text-sm text-deep-teal/80 list-decimal pl-5">
@@ -172,7 +181,6 @@ tailwind.config = {
     </ol>
   </section>
 
-  <!-- 6. CHẤM ĐIỂM -->
   <section class="clay-card p-6 sm:p-7 mb-6">
     <h2 class="font-display font-extrabold text-deep-teal text-xl mb-4">6 · Gợi ý chấm điểm (thang 10)</h2>
     <div class="kb-wrap"><table class="kb">
@@ -184,7 +192,6 @@ tailwind.config = {
     </table></div>
   </section>
 
-  <!-- 7. SỰ CỐ -->
   <section class="clay-card p-6 sm:p-7 mb-6">
     <h2 class="font-display font-extrabold text-deep-teal text-xl mb-4">7 · Xử lý sự cố nhanh</h2>
     <div class="kb-wrap"><table class="kb">
@@ -197,7 +204,6 @@ tailwind.config = {
     </table></div>
   </section>
 
-  <!-- CTA -->
   <section class="clay-card p-8 text-center no-print">
     <h2 class="font-display font-extrabold text-deep-teal text-2xl">Sẵn sàng cho buổi học đầu tiên?</h2>
     <p class="text-sm text-deep-teal/60 mt-2 max-w-xl mx-auto">Mở game chơi thử 1–2 vòng để quen nhịp, hoặc liên hệ nhóm để được hướng dẫn triển khai cho môn học của bạn.</p>
@@ -209,7 +215,141 @@ tailwind.config = {
     <p class="text-[11px] text-deep-teal/45 mt-5">© 2026 Đỗ Thùy Hương &amp; Phan Anh Tú — BizOn Bật Nghiệp</p>
   </section>
 
+</div>
+
+<!-- ================= ENGLISH VERSION ================= -->
+<div class="kb-en hidden">
+
+  <section class="clay-card p-6 sm:p-7 mb-6">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-4">1 · Team setup and roles</h2>
+    <div class="kb-wrap mb-5"><table class="kb">
+      <tr><th>Class size</th><th>Teams</th><th>How to split</th></tr>
+      <tr><td>40 students</td><td>8 teams × 5</td><td>All 5 roles per team</td></tr>
+      <tr><td>45–50 students</td><td>9–10 teams × 5</td><td>All 5 roles per team</td></tr>
+      <tr><td>55–60 students</td><td>11–12 teams × 5</td><td>Last team of 4: CEO doubles as Company Secretary</td></tr>
+    </table></div>
+    <p class="font-bold text-sm text-deep-teal mb-2">The 5 roles in every team (matching the game UI):</p>
+    <div class="kb-wrap"><table class="kb">
+      <tr><th>Role</th><th>Title</th><th>Duties every round</th></tr>
+      <tr><td>👑 CEO</td><td>Visionary leader</td><td>Runs the team meeting, makes the final call, presses «Lock decision»</td></tr>
+      <tr><td>💰 CFO</td><td>Finance strategist</td><td>Watches the vault, picks funding (equity / 8.5% loan) and payment terms</td></tr>
+      <tr><td>📣 CMO</td><td>Marketing wizard</td><td>Proposes pricing and marketing budget, reads the market-share forecast</td></tr>
+      <tr><td>🏭 COO</td><td>Operations expert</td><td>Sets production volume, staffing, maintenance; watches energy costs</td></tr>
+      <tr><td>📔 SEC</td><td>Company Secretary</td><td>Keeps the Team Journal, reads market events, keeps everyone on time</td></tr>
+    </table></div>
+    <p class="text-xs italic text-deep-teal/60 mt-3">Quick-split tip: number students 1–n down the roster and deal them out by remainder. Give each team one minute to invent a company name and slogan — it boosts commitment.</p>
+  </section>
+
+  <section class="clay-card p-6 sm:p-7 mb-6">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-4">2 · Before class checklist</h2>
+    <ul class="space-y-2.5 text-sm text-deep-teal/80">
+      <li class="flex gap-2.5"><span>📱</span><span><b>Devices:</b> at least one phone or laptop with a browser per team (one device to enter decisions, others to watch reports); a projector for the instructor.</span></li>
+      <li class="flex gap-2.5"><span>🔗</span><span><b>Share the link or QR in advance:</b> <a class="text-primary font-bold" href="https://thuyhuongctu.github.io/BizOn/">thuyhuongctu.github.io/BizOn</a> — ask students to open it once at home (after the first visit the game also runs offline, so weak classroom Wi-Fi is fine).</span></li>
+      <li class="flex gap-2.5"><span>🔑</span><span><b>Create a Class ID</b> in Instructor Mode and write it on the board — it synchronizes round locking for the whole class and logs capital bonuses.</span></li>
+      <li class="flex gap-2.5"><span>📋</span><span><b>Print the pre/post survey</b> (a print-ready version lives at <a class="text-primary font-bold" href="khao-sat.html">khao-sat.html</a>) if you want to measure learning gains.</span></li>
+      <li class="flex gap-2.5"><span>📖</span><span><b>Spend 10 minutes</b> with the Instructor Guide and play one or two rounds yourself to get the rhythm.</span></li>
+    </ul>
+  </section>
+
+  <section class="clay-card p-6 sm:p-7 mb-6">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-4">3 · The 90-minute session, minute by minute</h2>
+    <div class="kb-wrap"><table class="kb">
+      <tr><th>Time</th><th>Activity</th><th>Details</th></tr>
+      <tr><td class="whitespace-nowrap">0–10 min</td><td>Settle in &amp; form teams</td><td>Split teams per section 1, hand out the pre-survey (5 min), each team opens the game, names its company and assigns roles</td></tr>
+      <tr><td class="whitespace-nowrap">10–20 min</td><td>Explain the rules</td><td>Project the intro page and switch on the bilingual «Hương AI guide»; stress the win condition: highest market share + positive profit plants a flag in each province</td></tr>
+      <tr><td class="whitespace-nowrap">20–65 min</td><td>Play 6 rounds (7 min each)</td><td>Per-round rhythm: 3 min team meeting (hear the four AI teammates' proposals, then debate) → 2 min enter and lock decisions → 2 min results, the market-share arena and Lumina's «Why?» explanation. The instructor locks rounds in sync using the Class ID</td></tr>
+      <tr><td class="whitespace-nowrap">65–75 min</td><td>Final standings</td><td>Project the leaderboard and each team's «🏁 Season report» tab; the winning team presents for 2 minutes: strategy, best decision, biggest mistake</td></tr>
+      <tr><td class="whitespace-nowrap">75–85 min</td><td>Debrief discussion</td><td>Pick questions from section 5; connect to concepts: price elasticity, break-even point, cash flow, brand positioning</td></tr>
+      <tr><td class="whitespace-nowrap">85–90 min</td><td>Post-survey &amp; wrap-up</td><td>Post-survey, class photo with the leaderboard, announce each team's in-game badges</td></tr>
+    </table></div>
+    <div class="clay-card p-4 mt-4" style="background:rgba(0,102,135,.05); box-shadow:none">
+      <p class="font-display font-extrabold text-deep-teal text-sm mb-2">Two-session option (45–50 min periods)</p>
+      <ul class="space-y-1.5 text-[13px] text-deep-teal/75">
+        <li>• <b>Session 1:</b> teams + rules + rounds 1–3 (close with each team's «next-round prediction» — the homework).</li>
+        <li>• <b>Session 2:</b> rounds 4–6 + standings + debrief; teams that kept a complete Team Journal between sessions earn bonus points.</li>
+        <li>• <b>International Business classes:</b> add a third session with <a class="text-primary font-bold" href="global.html">BizOn Go Global</a> (10–15 min per run, 7 markets, 7 entry modes, CSV decision log submitted to the instructor).</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="clay-card p-6 sm:p-7 mb-6">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-4">4 · The instructor's role during play</h2>
+    <ul class="space-y-2.5 text-sm text-deep-teal/80">
+      <li class="flex gap-2.5"><span>⏲️</span><span>Keep tempo with a countdown timer on the projector; lock rounds on time — a slipping clock breaks the whole session.</span></li>
+      <li class="flex gap-2.5"><span>👀</span><span>Walk the room during team meetings: watch for teams where one person does all the tapping — prompt by role («What does your CFO think of this loan?»).</span></li>
+      <li class="flex gap-2.5"><span>⚡</span><span>When a market event hits (Price War, Energy Crisis…): pause 30 seconds and ask the class «which team is changing strategy because of this news?».</span></li>
+      <li class="flex gap-2.5"><span>💬</span><span>Encourage teams to use Lumina's «Why?» button after each round instead of explaining results for them.</span></li>
+      <li class="flex gap-2.5"><span>⚖️</span><span>AI rivals run on a fixed per-team seed, so results are reproducible — grading is fair and no team gets «luckier» than another.</span></li>
+    </ul>
+  </section>
+
+  <section class="clay-card p-6 sm:p-7 mb-6">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-4">5 · Debrief questions <span class="text-sm font-bold text-deep-teal/50">(pick 3–4)</span></h2>
+    <ol class="space-y-2.5 text-sm text-deep-teal/80 list-decimal pl-5">
+      <li>Which decision made your team win or lose? If you replayed, which round would you play differently?</li>
+      <li>When Alpha Dynamics slashed prices, did you follow or hold price and raise marketing? What does the result say about price elasticity?</li>
+      <li>Did any team have high profit but low market share (or the reverse)? Which goal should a real business chase, and when?</li>
+      <li>Did the 8.5% loan help or hurt your team? When is leverage worth it?</li>
+      <li>Which role was hardest? Why does a company need all five «seats» filled?</li>
+    </ol>
+  </section>
+
+  <section class="clay-card p-6 sm:p-7 mb-6">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-4">6 · Suggested grading rubric (out of 10)</h2>
+    <div class="kb-wrap"><table class="kb">
+      <tr><th>Criterion</th><th>Weight</th><th>Evidence</th></tr>
+      <tr><td>Business results (cumulative profit + flags planted)</td><td>40%</td><td>Final leaderboard + the «🏁 Season report» tab</td></tr>
+      <tr><td>Teamwork quality by role</td><td>30%</td><td>Instructor observation + the in-game Team Journal</td></tr>
+      <tr><td>Debrief presentation</td><td>20%</td><td>The 2-minute talk at the end</td></tr>
+      <tr><td>Surveys and participation</td><td>10%</td><td>Pre/post surveys, attendance</td></tr>
+    </table></div>
+  </section>
+
+  <section class="clay-card p-6 sm:p-7 mb-6">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-4">7 · Quick troubleshooting</h2>
+    <div class="kb-wrap"><table class="kb">
+      <tr><th>Situation</th><th>Fix</th></tr>
+      <tr><td>Weak / dropped classroom Wi-Fi</td><td>The game keeps running offline if it was opened once before; have students open it at home first (section 2)</td></tr>
+      <tr><td>A device shows an old version</td><td>Fully close the app and reopen it twice — the game self-updates</td></tr>
+      <tr><td>A team mis-taps / wants a restart</td><td>Progress is saved per device; use the restart button in the game settings, or switching devices starts a fresh run</td></tr>
+      <tr><td>Students mistype the address</td><td>They only need to remember thuyhuongctu.github.io — leaving out /BizOn still redirects to the right page</td></tr>
+      <tr><td>A team finishes early</td><td>Send them to BizOn Arcade (8 mini-games) or the Handbook's «AI rivals» chapter to prep the next round</td></tr>
+    </table></div>
+  </section>
+
+  <section class="clay-card p-8 text-center no-print">
+    <h2 class="font-display font-extrabold text-deep-teal text-2xl">Ready for your first session?</h2>
+    <p class="text-sm text-deep-teal/60 mt-2 max-w-xl mx-auto">Open the game and play a round or two to get the rhythm, or contact the team for help rolling it out in your course.</p>
+    <div class="flex flex-wrap justify-center gap-3 mt-5">
+      <a href="game.html" class="clay-btn bg-primary text-white font-display font-extrabold px-7 py-3.5 text-sm">🎮 Play now</a>
+      <button onclick="window.print()" class="clay-btn bg-white text-primary border border-primary/20 font-display font-bold px-7 py-3.5 text-sm">🖨️ Print the handout</button>
+      <a href="lien-he.html" class="clay-btn bg-white text-primary border border-primary/20 font-display font-bold px-7 py-3.5 text-sm">✉️ Contact the team</a>
+    </div>
+    <p class="text-[11px] text-deep-teal/45 mt-5">© 2026 Đỗ Thùy Hương &amp; Phan Anh Tú — BizOn Bật Nghiệp</p>
+  </section>
+
+</div>
+
 </main>
+
+<script>
+/* Song ngữ toàn trang: hoán đổi khối .kb-vi / .kb-en theo lựa chọn EN/VI dùng chung của site */
+(function () {
+  function kbSwap(lang) {
+    var en = lang === 'en';
+    document.querySelectorAll('.kb-vi').forEach(function (el) { el.classList.toggle('hidden', en); });
+    document.querySelectorAll('.kb-en').forEach(function (el) { el.classList.toggle('hidden', !en); });
+    document.title = en ? 'Classroom playbook for 40-60 students — BizOn' : 'Kịch bản lớp học 40–60 SV — BizOn Bật Nghiệp';
+  }
+  document.addEventListener('DOMContentLoaded', function () {
+    var orig = window.applyLang;
+    if (orig) window.applyLang = function (lang) { orig(lang); kbSwap(lang); };
+    var lang = 'vi';
+    try { lang = localStorage.getItem('bizon-lang') || 'vi'; } catch (e) {}
+    kbSwap(lang);
+  });
+})();
+</script>
 <script src="js/site-ui.js" defer></script>
 </body>
 </html>

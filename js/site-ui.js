@@ -1581,7 +1581,8 @@
 
   function langBtnSync(lang) {
     var b = document.getElementById('lang-btn');
-    if (b) b.textContent = lang === 'en' ? 'VI' : 'EN';
+    var want = lang === 'en' ? 'VI' : 'EN';
+    if (b && b.textContent !== want) b.textContent = want;
     var c = document.getElementById('lang-toggle-check');
     if (c) c.checked = lang === 'en';
   }
@@ -1619,7 +1620,12 @@
       try { lang = localStorage.getItem('bizon-lang') || 'vi'; } catch (e) {}
       if (lang !== 'en') return;
       clearTimeout(obsTimer);
-      obsTimer = setTimeout(function () { window.applyLang('en'); }, 150);
+      obsTimer = setTimeout(function () {
+        // Đọc lại lựa chọn tại thời điểm chạy: người dùng có thể vừa bấm về VI trong lúc chờ
+        var now = 'vi';
+        try { now = localStorage.getItem('bizon-lang') || 'vi'; } catch (e) {}
+        if (now === 'en') window.applyLang('en');
+      }, 150);
     }).observe(document.body, { childList: true, subtree: true });
   }
 
