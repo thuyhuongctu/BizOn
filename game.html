@@ -741,6 +741,14 @@ tailwind.config = {
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js'));
+  // Khi service worker phiên bản mới tiếp quản, tự tải lại một lần để hiện bản mới ngay
+  const hadController = !!navigator.serviceWorker.controller;
+  let swReloaded = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!hadController || swReloaded) return;
+    swReloaded = true;
+    location.reload();
+  });
 }
 </script>
 </body>
