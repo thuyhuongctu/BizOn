@@ -1738,6 +1738,7 @@ function showReport(kind) {
   if (kind === 'hr') { renderHrReport(body); return; }
   if (kind === 'bmc') { renderBmcReport(body); return; }
   if (kind === 'cash') { renderCashReport(body); return; }
+  if (kind === 'rival') { renderRivalCostReport(body); return; }
   if (!S.history.length) {
     body.innerHTML = '<div class="clay-card p-8 text-center text-sm text-deep-teal/50">Chưa có dữ liệu — hãy hoàn thành vòng đầu tiên!</div>';
     return;
@@ -1819,6 +1820,140 @@ function renderCashReport(body) {
       <p class="text-xs text-deep-teal/80 italic mt-0.5">"${last.net >= 0
         ? 'Dòng tiền thuần dương — nền tảng tốt! Hãy cân nhắc tái đầu tư vào R&D hoặc nâng cấp dây chuyền để lãi kép ở các vòng sau.'
         : 'Dòng tiền thuần đang âm. Ưu tiên số 1: giảm chi phí biến đổi lớn nhất và cân nhắc kỳ hạn thanh toán ngắn hơn để thu tiền về nhanh.'}"</p></div>
+    </div>`;
+}
+
+// ---------- 🆚 Tình báo chi phí đối thủ — so sánh ngân sách với 3 đối thủ AI ----------
+const RIVAL_STYLE_BASE = { aggressive: { price: 125, mkt: 90 }, balanced: { price: 150, mkt: 60 }, premium: { price: 195, mkt: 75 } };
+/* Ván chơi cũ chưa lưu tình báo trong report → ước lượng từ phong cách từng đối thủ */
+function rivalIntelOf(r) {
+  if (r.rivals && r.rivals.length) return r.rivals;
+  return S.competitors.map(c => {
+    const b = RIVAL_STYLE_BASE[c.style] || { price: 150, mkt: 55 };
+    const units = 12000 * (c.share || 25) / 100;
+    return { name: c.name, style: c.style, price: b.price, mkt: b.mkt,
+      share: Math.round((c.share || 25) * 10) / 10,
+      revenue: Math.round(units * b.price / 1000),
+      cost: Math.round(units * 45 / 1000 + b.mkt + 30), est: true };
+  });
+}
+function renderRivalCostReport(body) {
+  const last = S.history[S.history.length - 1];
+  if (!last) {
+    body.innerHTML = '<div class="clay-card p-8 text-center text-sm text-deep-teal/50">Chưa có dữ liệu tình báo — hãy hoàn thành vòng đầu tiên!</div>';
+    return;
+  }
+  const rivals = rivalIntelOf(last);
+  const est = rivals.some(x => x.est);
+  const myCost = last.cogs + last.marketing + last.rd + last.fixed + last.depreciation
+    + (last.holding || 0) + (last.loanInterest || 0) + (last.wageCost || 0)
+    + (last.trainingCost || 0) + (last.creditInterest || 0);
+
+  // --- Băng ghế tổng chi phí: 4 cột xếp từ thấp đến cao, đội bạn nổi bật ---
+  const bench = [
+    { name: S.profile.teamName, cost: Math.round(myCost), me: true, img: 'assets/character/team/ceo.jpg' },
+    ...rivals.map(x => ({ name: x.name, cost: x.cost, img: RIVAL_IMGS[x.style] })),
+  ].sort((a, b) => a.cost - b.cost);
+  const maxCost = Math.max(...bench.map(b => b.cost), 1);
+  const priciest = bench[bench.length - 1];
+  const myRank = bench.findIndex(b => b.me);
+  const gapVsPriciest = priciest.me ? 0 : Math.round(100 * (priciest.cost - myCost) / Math.max(1, priciest.cost));
+
+  // --- Marketing: chi thật của từng đối thủ vòng này ---
+  const mktRows = [
+    { name: S.profile.teamName, mkt: last.marketing, me: true, img: 'assets/character/team/ceo.jpg' },
+    ...rivals.map(x => ({ name: x.name, mkt: x.mkt, img: RIVAL_IMGS[x.style] })),
+  ].sort((a, b) => b.mkt - a.mkt);
+  const maxMkt = Math.max(...mktRows.map(m => m.mkt), 1);
+  const topSpender = mktRows[0];
+  const myMroi = last.marketing > 0 ? Math.round(10 * last.revenue / last.marketing) / 10 : null;
+
+  // --- R&D: lợi thế riêng — đối thủ AI không đầu tư R&D, giá thành họ đứng yên ---
+  const rdCum = Math.round(S.rdCumulative || 0);
+  const costDownPct = Math.min(20, Math.round((S.rdCumulative || 0) / 1500 * 1000) / 10);
+  const rivalUnit = 45; // giá thành gốc/sp của đối thủ (nghìn ₫), không giảm theo R&D
+  const unitGap = Math.round(10 * (rivalUnit - last.unitCost)) / 10;
+
+  // --- Hiệu quả: chi phí đổi lấy mỗi 1% thị phần ---
+  const myCps = Math.round(10 * myCost / Math.max(0.1, last.share)) / 10;
+  const rivalCps = rivals.map(x => ({ name: x.name, cps: Math.round(10 * x.cost / Math.max(0.1, x.share)) / 10 }))
+    .sort((a, b) => a.cps - b.cps);
+  const bestRival = rivalCps[0];
+
+  const insight = last.marketing < (rivals.find(x => x.style === 'aggressive') || { mkt: 90 }).mkt * 0.6
+    ? `Alpha Dynamics đang chi ${(rivals.find(x => x.style === 'aggressive') || { mkt: 90 }).mkt}tr cho marketing — hơn hẳn mức ${Math.round(last.marketing)}tr của bạn. Độ phủ thương hiệu sẽ lép vế nếu kéo dài; cân nhắc tăng ngân sách hoặc bù bằng R&D tạo khác biệt.`
+    : myCps <= bestRival.cps
+      ? `Xuất sắc! Mỗi 1% thị phần chỉ tốn của bạn ${myCps}tr — rẻ hơn cả đối thủ hiệu quả nhất (${bestRival.name}: ${bestRival.cps}tr). Bộ máy đang vận hành tinh gọn, có thể mạnh dạn mở rộng.`
+      : `Mỗi 1% thị phần đang tốn của bạn ${myCps}tr, trong khi ${bestRival.name} chỉ mất ${bestRival.cps}tr. Hãy rà soát khoản chi lớn nhất trong Cấu trúc chi phí (tab CVP) trước khi tăng thêm ngân sách.`;
+
+  const avatar = (b, size) => b.img
+    ? `<img src="${b.img}" class="${size} rounded-full object-cover object-top border ${b.me ? 'border-clay-gold' : 'border-white/40'} shrink-0">`
+    : '';
+
+  body.innerHTML = `
+    <div class="clay-card p-5 mb-3 text-center">
+      <p class="text-[11px] font-bold text-deep-teal/50 uppercase tracking-wider">🕵️ Tình báo chi phí — Vòng ${last.round}${est ? ' (ước lượng)' : ''}</p>
+      <p class="font-display font-extrabold text-deep-teal text-3xl">${money(Math.round(myCost))}</p>
+      <p class="text-xs text-deep-teal/60 mt-0.5">tổng chi phí của đội bạn — đứng thứ <b>${myRank + 1}/4</b> từ thấp đến cao</p>
+      ${gapVsPriciest > 0 ? `<p class="mt-2 text-xs font-bold text-emerald-600 bg-emerald-50 rounded-full py-1.5 px-3 inline-block">✅ Thấp hơn ${priciest.name} ${gapVsPriciest}%</p>`
+        : `<p class="mt-2 text-xs font-bold text-orange-600 bg-orange-50 rounded-full py-1.5 px-3 inline-block">⚠️ Bạn đang là đội chi tiêu cao nhất sàn đấu</p>`}
+    </div>
+    <div class="clay-card p-5 mb-3">
+      <h3 class="font-display font-bold text-deep-teal text-sm mb-3">🧾 Tổng chi phí: Bạn vs 3 đối thủ</h3>
+      <div class="flex items-end gap-3 h-36">
+        ${bench.map(b => `
+        <div class="flex-1 h-full flex flex-col justify-end items-center">
+          <p class="text-[10px] font-extrabold ${b.me ? 'text-primary' : 'text-deep-teal/60'} mb-1">${money(b.cost)}</p>
+          <div class="w-full rounded-t-xl ${b.me ? 'bg-gradient-to-t from-primary to-primary-container ring-2 ring-clay-gold' : 'bg-gradient-to-t from-slate-400 to-slate-200'}" style="height:${Math.max(10, b.cost / maxCost * 100)}%"></div>
+        </div>`).join('')}
+      </div>
+      <div class="flex gap-3 mt-1.5">
+        ${bench.map(b => `<div class="flex-1 flex flex-col items-center gap-0.5">${avatar(b, 'w-7 h-7')}<p class="text-[9px] font-bold ${b.me ? 'text-primary' : 'text-deep-teal/60'} text-center leading-tight">${b.me ? '🏺 Đội bạn' : b.name}</p></div>`).join('')}
+      </div>
+    </div>
+    <div class="clay-card p-5 mb-3">
+      <h3 class="font-display font-bold text-deep-teal text-sm mb-1">📣 Ngân sách Marketing vòng này</h3>
+      <p class="text-[11px] text-deep-teal/55 mb-3">Chi thật của từng đội trên sàn (không phải ước tính chung chung)</p>
+      ${mktRows.map(m => `
+      <div class="flex items-center gap-2 py-1.5">
+        ${avatar(m, 'w-6 h-6')}
+        <span class="w-24 shrink-0 text-[11px] font-bold ${m.me ? 'text-primary' : 'text-deep-teal/70'} truncate">${m.me ? '🏺 Đội bạn' : m.name}</span>
+        <div class="flex-1 h-3 rounded-full bg-surface-bright overflow-hidden"><div class="h-full rounded-full ${m.me ? 'bg-gradient-to-r from-clay-orange to-clay-gold' : 'bg-primary/35'}" style="width:${Math.max(4, m.mkt / maxMkt * 100)}%"></div></div>
+        <span class="w-12 text-right text-[11px] font-extrabold text-deep-teal">${Math.round(m.mkt)}tr</span>
+      </div>`).join('')}
+      <div class="clay-sunken rounded-2xl p-3 mt-2.5 flex items-center gap-2">
+        <span class="text-lg">${myMroi !== null && myMroi >= 3 ? '🎯' : '📉'}</span>
+        <p class="text-[11px] text-deep-teal/70">${myMroi !== null
+          ? `Mỗi 1tr marketing của bạn đem về <b>${myMroi}tr</b> doanh thu${myMroi >= 3 ? ' — trên chuẩn hiệu quả 3.0, đáng để giữ nhịp chi.' : ' — dưới chuẩn 3.0, thông điệp quảng cáo cần sắc bén hơn thay vì chỉ tăng tiền.'}`
+          : 'Bạn chưa chi marketing vòng này — đối thủ đang một mình phủ sóng thị trường.'}
+        ${topSpender.me ? '' : ` Chi mạnh tay nhất sàn hiện là <b>${topSpender.name}</b> (${Math.round(topSpender.mkt)}tr).`}</p>
+      </div>
+    </div>
+    <div class="clay-card p-5 mb-3">
+      <h3 class="font-display font-bold text-deep-teal text-sm mb-1">🔬 R&D — vũ khí đối thủ không có</h3>
+      <p class="text-[11px] text-deep-teal/55 mb-3">Cả 3 đối thủ AI không đầu tư R&D: giá thành của họ đứng yên ở ${rivalUnit}k/sp, còn của bạn giảm dần theo tích lũy</p>
+      <div class="grid grid-cols-2 gap-2.5">
+        <div class="clay-sunken rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">R&D tích lũy</p><p class="font-display font-extrabold text-primary text-lg">${rdCum}tr</p></div>
+        <div class="clay-sunken rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Giá thành đã giảm</p><p class="font-display font-extrabold text-primary text-lg">${costDownPct}%</p><p class="text-[9px] text-deep-teal/50 font-semibold">tối đa 20%</p></div>
+        <div class="clay-sunken rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Giá thành/sp của bạn</p><p class="font-display font-extrabold text-deep-teal text-lg">${Math.round(last.unitCost * 10) / 10}k</p></div>
+        <div class="clay-sunken rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">So với đối thủ</p><p class="font-display font-extrabold ${unitGap > 0 ? 'text-emerald-600' : 'text-deep-teal'} text-lg">${unitGap > 0 ? '−' + unitGap + 'k/sp' : 'Ngang nhau'}</p></div>
+      </div>
+      <div class="h-2.5 rounded-full bg-surface-bright overflow-hidden mt-3"><div class="h-full rounded-full bg-gradient-to-r from-primary to-clay-gold" style="width:${Math.min(100, costDownPct / 20 * 100)}%"></div></div>
+      <p class="text-[10px] text-deep-teal/50 font-semibold mt-1">Tiến độ khai thác lợi thế R&D: ${Math.min(100, Math.round(costDownPct / 20 * 100))}%</p>
+    </div>
+    <div class="clay-card p-5 mb-3">
+      <h3 class="font-display font-bold text-deep-teal text-sm mb-3">⚖️ Hiệu quả: chi phí đổi lấy 1% thị phần</h3>
+      ${[{ name: '🏺 ' + S.profile.teamName, cps: myCps, me: true }, ...rivalCps].sort((a, b) => a.cps - b.cps).map((x, i) => `
+      <div class="flex items-center gap-2 text-xs py-1.5 border-b border-surface-bright last:border-0">
+        <span class="w-5 text-center">${['🥇', '🥈', '🥉', '4️⃣'][i]}</span>
+        <span class="flex-1 font-bold ${x.me ? 'text-primary' : 'text-deep-teal/70'}">${x.name}</span>
+        <span class="font-extrabold ${x.me ? 'text-primary' : 'text-deep-teal'}">${x.cps}tr / 1%</span>
+      </div>`).join('')}
+    </div>
+    <div class="clay-card p-4 bg-primary-container/10 flex gap-3 items-start">
+      <img src="assets/character/lumina-vest.png" alt="Mentor Hương" class="w-10 h-10 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 12%">
+      <div><p class="font-display font-bold text-primary text-sm">Mentor Hương · Tình báo cạnh tranh</p>
+      <p class="text-xs text-deep-teal/80 italic mt-0.5">"${insight}"</p></div>
     </div>`;
 }
 
