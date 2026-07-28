@@ -87,7 +87,7 @@ Tổng cộng: **49 câu** trong 8 nhóm. Đã có giọng: 3 câu chào đăng 
 | `voice/quote-05.mp3` | giọng Phan Anh Tú | Thị phần mua được bằng tiền, nhưng lòng trung thành phải xây bằng giá trị. |
 | `voice/quote-06.mp3` | giọng SEC | Đừng sợ commit sai — hãy sợ việc không rút ra được bài học nào. |
 
-## BizOn GO GlObal trên web — tùy chọn, ưu tiên thấp
+## BizOn Go Global trên web — tùy chọn, ưu tiên thấp
 
 | Tên file | Ngữ cảnh | Lời thoại |
 |---|---|---|

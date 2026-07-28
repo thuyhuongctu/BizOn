@@ -63,11 +63,11 @@ Bản đồ chinh phục hiển thị trên Trang chủ của mỗi đội — d
 - **Sổ tay 📖**: luật chơi, vai trò, đối thủ AI, mẹo, xử lý sự cố — sinh viên tự tra cứu.
 - **7 báo cáo chuẩn giáo trình**: P&L, dòng tiền 3 hoạt động, CVP hòa vốn, nhân sự, BMC, khấu hao, kiểm toán năng lượng.
 - **BizOn Monitor** (tab Thị trường sống): sparkline chỉ số đội + 3 đối thủ theo vòng — dạy đọc dashboard.
-- **IE Lab — Khởi nghiệp quốc tế** (trang BizOn GO GlObal): công cụ mô phỏng số liệu quan hệ quốc tế hóa – hiệu quả doanh nghiệp (chữ U ngược với điểm ngoặt minh họa ≈43% FSTS, kịch bản đảo nhỏ, "lá chắn số") — dùng cho học phần Khởi nghiệp/Kinh doanh quốc tế; toàn bộ là tham số mô phỏng giáo dục.
+- **IE Lab — Khởi nghiệp quốc tế** (trang BizOn Go Global): công cụ mô phỏng số liệu quan hệ quốc tế hóa – hiệu quả doanh nghiệp (chữ U ngược với điểm ngoặt minh họa ≈43% FSTS, kịch bản đảo nhỏ, "lá chắn số") — dùng cho học phần Khởi nghiệp/Kinh doanh quốc tế; toàn bộ là tham số mô phỏng giáo dục.
 - **Cuộc họp đội (Đội Demo)**: 4 thành viên ảo đề xuất số liệu theo vai mỗi vòng — đề xuất tất định theo seed đội + vòng, nên hai đội cùng seed nghe cùng lời khuyên; dùng để dạy phân vai C-Suite ngay cả khi sinh viên chơi một mình.
 - **Đấu trường**: sau mỗi Commit, 4 công ty so tài trực quan (thanh thị phần chạy hoạt hình) trước khi hiện bảng số — tăng động lực, không đổi kết quả tính toán.
 - **Hỗ trợ người mới**: băng "Cách thắng vòng này", dự báo thị phần sống theo thanh trượt, chế độ Cơ bản/Nâng cao (vòng 1–2 chỉ hiện 3 quyết định cốt lõi), ô "Vì sao?" sau mỗi vòng và mục Thuật ngữ trong Sổ tay.
-- **Nhật ký quyết định GO GlObal (CSV)**: game tự ghi lại từng quý — hồ sơ doanh nghiệp, thị trường, phương thức, thế đàm phán, giá/marketing/bản địa hóa, thị phần, lợi nhuận, ESG, rủi ro, DOI, kết quả thắng/thua. Sinh viên bấm «📥 Xuất nhật ký quyết định (CSV)» ở màn kết quả và nộp file — dùng để chấm điểm hoặc làm dữ liệu nghiên cứu (thực nghiệm giáo dục, SEM). Nhật ký lưu trong máy người chơi (localStorage, tối đa 400 dòng gần nhất).
+- **Nhật ký quyết định Go Global (CSV)**: game tự ghi lại từng quý — hồ sơ doanh nghiệp, thị trường, phương thức, thế đàm phán, giá/marketing/bản địa hóa, thị phần, lợi nhuận, ESG, rủi ro, DOI, kết quả thắng/thua. Sinh viên bấm «📥 Xuất nhật ký quyết định (CSV)» ở màn kết quả và nộp file — dùng để chấm điểm hoặc làm dữ liệu nghiên cứu (thực nghiệm giáo dục, SEM). Nhật ký lưu trong máy người chơi (localStorage, tối đa 400 dòng gần nhất).
 
 ## 7. Xử lý sự cố thường gặp
 
