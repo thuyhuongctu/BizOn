@@ -497,43 +497,37 @@ function h2hResult() {
 }
 
 /* ============ QUIZ ============ */
-const QUIZ = [
-  { q: 'Điểm hòa vốn (Break-even) là gì?', o: ['Mức sản lượng mà doanh thu = tổng chi phí', 'Lúc công ty hết tiền mặt', 'Khi thị phần đạt 50%'], a: 0 },
-  { q: 'Quick Ratio dưới 1.0 cảnh báo điều gì?', o: ['Thương hiệu yếu', 'Rủi ro thanh khoản — khó trả nợ ngắn hạn', 'Máy móc lạc hậu'], a: 1 },
-  { q: 'Khi đối thủ giảm giá 15% (Price War), chiến lược nào thường bền vững hơn?', o: ['Giảm giá sâu hơn đối thủ', 'Tăng giá trị cảm nhận qua R&D và thương hiệu', 'Ngừng quảng cáo để tiết kiệm'], a: 1 },
-  { q: 'ROI 12% trong khi lãi vay 10% nghĩa là gì?', o: ['Vay thêm là tự sát tài chính', 'Đòn bẩy vẫn sinh lời — mỗi đồng vay tạo hơn 1 đồng lãi', 'Không liên quan đến nhau'], a: 1 },
-  { q: 'OEE trong vận hành đo lường điều gì?', o: ['Hiệu suất tổng thể thiết bị', 'Số nhân viên nghỉ việc', 'Chi phí marketing'], a: 0 },
-  { q: 'Doanh thu / Chi phí marketing < 3.0 cho thấy?', o: ['Marketing đang rất hiệu quả', 'Chi tiếp thị cao nhưng chuyển đổi kém — cần rà soát thông điệp', 'Cần tăng gấp đôi ngân sách ngay'], a: 1 },
-  { q: 'Kỳ hạn thanh toán 90 ngày cho khách giúp gì và đánh đổi gì?', o: ['Tăng nhu cầu mua nhưng dòng tiền về chậm, rủi ro cao hơn', 'Giảm nhu cầu nhưng tiền về nhanh', 'Không ảnh hưởng gì'], a: 0 },
-  { q: 'Brand Loyalty dưới 60% thì việc cần làm trước tiên là?', o: ['Sa thải bớt nhân viên', 'Chiến dịch tái định vị thương hiệu', 'Tăng sản lượng tối đa'], a: 1 },
-];
-let qi = 0, qScore = 0;
+/* Ngân hàng 100 câu tại js/quiz-bank.js — mỗi lượt rút ngẫu nhiên 10 câu, có chủ đề và giải thích */
+let qSet = [], qi = 0, qScore = 0;
 function quizStart() {
+  qSet = [...QUIZ_BANK].sort(() => Math.random() - 0.5).slice(0, 10);
   qi = 0; qScore = 0;
   document.getElementById('quiz-panel').classList.add('open');
   document.getElementById('quiz-fb').textContent = '';
   quizRender();
 }
 function quizRender() {
-  const it = QUIZ[qi];
-  document.getElementById('quiz-progress').textContent = `Câu ${qi + 1}/${QUIZ.length} · Đúng: ${qScore}`;
+  const it = qSet[qi];
+  document.getElementById('quiz-progress').textContent = `Câu ${qi + 1}/${qSet.length} · ${it.c} · Đúng: ${qScore}`;
   document.getElementById('quiz-q').textContent = it.q;
   document.getElementById('quiz-opts').innerHTML = it.o.map((o, i) =>
-    `<button onclick="quizPick(${i})" class="clay-btn w-full bg-white text-deep-teal text-left text-xs font-semibold px-4 py-2.5">${'ABC'[i]}. ${o}</button>`).join('');
+    `<button onclick="quizPick(${i})" class="clay-btn w-full bg-white text-deep-teal text-left text-xs font-semibold px-4 py-2.5">${'ABCD'[i]}. ${o}</button>`).join('');
+  document.getElementById('quiz-fb').textContent = '';
 }
 function quizPick(i) {
-  const it = QUIZ[qi], fb = document.getElementById('quiz-fb');
-  if (i === it.a) { qScore++; fb.textContent = '✅ Chính xác!'; fb.className = 'text-xs mt-2 font-semibold text-emerald-600'; }
-  else { fb.textContent = `❌ Chưa đúng — đáp án: ${'ABC'[it.a]}. ${it.o[it.a]}`; fb.className = 'text-xs mt-2 font-semibold text-red-600'; }
+  const it = qSet[qi], fb = document.getElementById('quiz-fb');
+  if (i === it.a) { qScore++; fb.innerHTML = `✅ Chính xác! <span class="font-normal text-deep-teal/70">${it.e}</span>`; fb.className = 'text-xs mt-2 font-semibold text-emerald-600'; }
+  else { fb.innerHTML = `❌ Đáp án đúng: ${'ABCD'[it.a]}. ${it.o[it.a]} <span class="font-normal text-deep-teal/70">— ${it.e}</span>`; fb.className = 'text-xs mt-2 font-semibold text-red-600'; }
+  document.getElementById('quiz-opts').innerHTML = `<button onclick="quizNext()" class="clay-btn w-full bg-primary text-white text-xs font-bold py-2.5">${qi + 1 < qSet.length ? '▶️ Câu tiếp theo' : '🏁 Xem kết quả'}</button>`;
   qi++;
-  if (qi < QUIZ.length) { setTimeout(quizRender, 900); }
-  else setTimeout(() => {
-    const tier = qScore >= 7 ? '🏆 Tố chất CEO thực thụ!' : qScore >= 5 ? '👍 Nhà sáng lập tiềm năng!' : '📚 Vào game chính luyện thêm nhé!';
-    document.getElementById('quiz-q').textContent = `Kết quả: ${qScore}/${QUIZ.length} — ${tier}`;
-    document.getElementById('quiz-progress').textContent = 'HOÀN THÀNH';
-    document.getElementById('quiz-opts').innerHTML = `<button onclick="quizStart()" class="clay-btn w-full bg-primary text-white text-xs font-bold py-2.5">🔄 Chơi lại</button>`;
-    fb.textContent = '';
-  }, 1200);
+}
+function quizNext() {
+  if (qi < qSet.length) { quizRender(); return; }
+  const tier = qScore >= 9 ? '🏆 Tố chất CEO thực thụ!' : qScore >= 7 ? '🥇 Nhà sáng lập tiềm năng!' : qScore >= 5 ? '👍 Nền tảng vững — luyện thêm nhé!' : '📚 Vào game chính học qua thực chiến nhé!';
+  document.getElementById('quiz-q').textContent = `Kết quả: ${qScore}/${qSet.length} — ${tier}`;
+  document.getElementById('quiz-progress').textContent = 'HOÀN THÀNH · Ngân hàng 100 câu — mỗi lượt là một bộ đề khác nhau';
+  document.getElementById('quiz-opts').innerHTML = `<button onclick="quizStart()" class="clay-btn w-full bg-primary text-white text-xs font-bold py-2.5">🔄 Bộ đề mới</button>`;
+  document.getElementById('quiz-fb').textContent = '';
 }
 
 /* ============ ĐOÁN GIÁ ============ */
@@ -632,6 +626,7 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight') cState.x = Math.min(cv.width - 16, cState.x + 24);
 });
 </script>
+<script src="js/quiz-bank.js"></script>
 <script src="js/site-ui.js" defer></script>
 <script>
 /* Nhạc nền Arcade — xoay vòng 3 ca khúc gốc */
