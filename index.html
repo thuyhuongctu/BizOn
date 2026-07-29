@@ -47,6 +47,17 @@ tailwind.config = {
   html[data-theme="dark"] .clay-card { background:#0e2a33; box-shadow:0 10px 30px -5px rgba(0,0,0,.45), inset 0 -4px 0 rgba(0,0,0,.3); }
   html[data-theme="dark"] .text-primary { color:#5cc4e6 !important; }
   html[data-theme="dark"] #vn-map { color:#6fc4d8; }
+  /* ===== Sơ đồ hệ sinh thái ===== */
+  .eco-wrap { position:relative; height:430px; }
+  .eco-ring { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:340px; height:340px; border:2px dashed rgba(0,102,135,.25); border-radius:50%; }
+  .eco-center { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); z-index:2; }
+  .eco-node { position:absolute; transform:translate(-50%,-50%); width:150px; }
+  @media (max-width:639px) { .eco-wrap, .eco-ring { display:none; } }
+  @media (min-width:640px) { .eco-grid { display:none !important; } }
+  .eco-card { transition:transform .2s cubic-bezier(.34,1.56,.64,1); }
+  .eco-card:hover { transform:translateY(-4px) scale(1.04); }
+  .flow-step { display:flex; align-items:center; gap:6px; }
+  .flow-arrow { color:#fda127; font-weight:800; }
 </style>
 </head>
 <body>
@@ -78,11 +89,24 @@ tailwind.config = {
 </header>
 
 <main class="max-w-5xl mx-auto px-5 pb-16">
-  <!-- Chào mừng -->
-  <section class="text-center pt-10 pb-8">
-    <img src="assets/character/lumina-ao-dai-wave.png" alt="Lumina Áo Dài chào mừng" class="h-52 sm:h-64 w-auto mx-auto animate-float drop-shadow-2xl">
-    <h1 class="font-display font-extrabold text-3xl sm:text-5xl text-deep-teal mt-5">Điều hành một doanh nghiệp.</h1>
-    <p class="text-sm sm:text-base text-deep-teal/60 mt-3 max-w-xl mx-auto">Ra quyết định dưới áp lực. Học kinh doanh bằng hậu quả của chính lựa chọn của bạn — nền tảng mô phỏng kinh doanh AI-enhanced với engine xác định, giải thích được.</p>
+  <!-- Chào mừng: hai nhà sáng lập hai bên -->
+  <section class="pt-10 pb-8">
+    <div class="grid grid-cols-1 sm:grid-cols-[auto_1fr_auto] gap-4 sm:gap-6 items-end text-center">
+      <div class="hidden sm:block">
+        <img src="assets/character/lumina-ao-dai-wave.png" alt="Lumina — hóa thân của Đỗ Thùy Hương" class="h-56 sm:h-64 w-auto mx-auto animate-float drop-shadow-2xl">
+        <p class="inline-block mt-2 px-3 py-1 rounded-full text-[10px] font-extrabold" style="background:rgba(0,102,135,.09);color:#006687">ThS. Đỗ Thùy Hương · Founder — hóa thân Lumina AI</p>
+      </div>
+      <div class="self-center">
+        <img src="assets/character/lumina-ao-dai-wave.png" alt="Lumina chào mừng" class="h-48 w-auto mx-auto animate-float drop-shadow-2xl sm:hidden">
+        <h1 class="font-display font-extrabold text-3xl sm:text-5xl text-deep-teal mt-4 sm:mt-0">Điều hành một doanh nghiệp.</h1>
+        <p class="text-sm sm:text-base text-deep-teal/60 mt-3 max-w-xl mx-auto">Ra quyết định dưới áp lực. Học kinh doanh bằng hậu quả của chính lựa chọn của bạn — nền tảng mô phỏng kinh doanh AI-enhanced với engine xác định, giải thích được.</p>
+        <p class="text-[11px] font-bold text-deep-teal/45 mt-3 sm:hidden">👩‍💼 ThS. Đỗ Thùy Hương (Lumina) · 🎓 PGS.TS. Phan Anh Tú</p>
+      </div>
+      <div class="hidden sm:block">
+        <img src="assets/character/anh-tu-suit-green.png" alt="Tú Phan — PGS.TS. Phan Anh Tú" class="h-56 sm:h-64 w-auto mx-auto animate-float drop-shadow-2xl" style="--rot:0deg;animation-delay:-3s">
+        <p class="inline-block mt-2 px-3 py-1 rounded-full text-[10px] font-extrabold" style="background:rgba(232,118,45,.1);color:#b95a1e">PGS.TS. Phan Anh Tú · Co-founder &amp; Chief Academic Advisor</p>
+      </div>
+    </div>
   </section>
 
   <!-- 3 cổng chính: Người học · Giảng viên · Tổ chức -->
@@ -107,6 +131,48 @@ tailwind.config = {
       <p class="text-xs text-deep-teal/55 mt-1.5 flex-1">Gói triển khai cho khoa/trường/trung tâm khởi nghiệp: Pilot Classroom, Instructor Pro, Institution Pass — kèm bằng chứng học thuật.</p>
       <a href="giai-phap.html" class="clay-btn block bg-white text-primary border border-primary/20 font-display font-extrabold px-5 py-2.5 text-xs mt-4 text-center">🧩 GÓI TRIỂN KHAI →</a>
       <a href="bang-chung.html" class="block text-[11px] font-bold text-primary mt-2.5 text-center">📊 Bằng chứng từ lớp học thật · ✉️ Đặt lịch pilot</a>
+    </div>
+  </section>
+
+  <!-- Sơ đồ hệ sinh thái -->
+  <section class="clay-card p-6 sm:p-8 mb-10 overflow-hidden">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl text-center">🌐 Một hệ sinh thái khởi nghiệp hoàn chỉnh</h2>
+    <p class="text-xs text-deep-teal/55 text-center mt-1.5 max-w-2xl mx-auto">Mọi cấu phần xoay quanh một engine mô phỏng xác định — từ ván chơi của sinh viên đến bằng chứng học tập cho nhà trường.</p>
+
+    <!-- Desktop: quỹ đạo -->
+    <div class="eco-wrap mt-4">
+      <div class="eco-ring"></div>
+      <div class="eco-center text-center">
+        <img src="assets/icons/icon-192.png" alt="BizOn Core" class="w-20 h-20 rounded-3xl shadow-xl mx-auto">
+        <p class="font-display font-extrabold text-deep-teal text-sm mt-2">BizOn Core</p>
+        <p class="text-[10px] text-deep-teal/50 font-bold">Engine xác định · giải thích được</p>
+      </div>
+      <a href="game.html" class="eco-node eco-card clay-card p-3 text-center" style="left:50%; top:6%"><p class="text-2xl">🎮</p><p class="text-[11px] font-extrabold text-deep-teal mt-0.5">Game Bật Nghiệp</p><p class="text-[9px] text-deep-teal/50">6 vòng · 5 vai C-Suite</p></a>
+      <a href="global.html" class="eco-node eco-card clay-card p-3 text-center" style="left:88%; top:28%"><p class="text-2xl">🌏</p><p class="text-[11px] font-extrabold text-deep-teal mt-0.5">Go Global · IE Lab</p><p class="text-[9px] text-deep-teal/50">7 thị trường · entry mode</p></a>
+      <a href="lop-hoc.html" class="eco-node eco-card clay-card p-3 text-center" style="left:88%; top:72%"><p class="text-2xl">🏫</p><p class="text-[11px] font-extrabold text-deep-teal mt-0.5">Lớp học &amp; Giải đấu</p><p class="text-[9px] text-deep-teal/50">90 phút · 15 tuần · Đại hội Cổ đông</p></a>
+      <a href="bang-chung.html" class="eco-node eco-card clay-card p-3 text-center" style="left:50%; top:94%"><p class="text-2xl">📊</p><p class="text-[11px] font-extrabold text-deep-teal mt-0.5">Dữ liệu &amp; Bằng chứng</p><p class="text-[9px] text-deep-teal/50">pre/post-test · pilot thật</p></a>
+      <a href="hoc-thuat.html" class="eco-node eco-card clay-card p-3 text-center" style="left:12%; top:72%"><p class="text-2xl">📐</p><p class="text-[11px] font-extrabold text-deep-teal mt-0.5">Học thuật</p><p class="text-[9px] text-deep-teal/50">chuẩn đầu ra · Model Cards</p></a>
+      <a href="thu-vien.html" class="eco-node eco-card clay-card p-3 text-center" style="left:12%; top:28%"><p class="text-2xl">🎨</p><p class="text-[11px] font-extrabold text-deep-teal mt-0.5">Thương hiệu &amp; Âm nhạc</p><p class="text-[9px] text-deep-teal/50">claymorphism · nhạc gốc</p></a>
+    </div>
+
+    <!-- Mobile: lưới -->
+    <div class="eco-grid sm:hidden grid grid-cols-2 gap-3 mt-5">
+      <div class="col-span-2 text-center mb-1"><img src="assets/icons/icon-192.png" alt="BizOn Core" class="w-16 h-16 rounded-2xl shadow-xl mx-auto"><p class="font-display font-extrabold text-deep-teal text-sm mt-1.5">BizOn Core — engine xác định</p></div>
+      <a href="game.html" class="clay-card eco-card p-3 text-center"><p class="text-2xl">🎮</p><p class="text-[11px] font-extrabold text-deep-teal mt-0.5">Game Bật Nghiệp</p></a>
+      <a href="global.html" class="clay-card eco-card p-3 text-center"><p class="text-2xl">🌏</p><p class="text-[11px] font-extrabold text-deep-teal mt-0.5">Go Global · IE Lab</p></a>
+      <a href="lop-hoc.html" class="clay-card eco-card p-3 text-center"><p class="text-2xl">🏫</p><p class="text-[11px] font-extrabold text-deep-teal mt-0.5">Lớp học &amp; Giải đấu</p></a>
+      <a href="bang-chung.html" class="clay-card eco-card p-3 text-center"><p class="text-2xl">📊</p><p class="text-[11px] font-extrabold text-deep-teal mt-0.5">Dữ liệu &amp; Bằng chứng</p></a>
+      <a href="hoc-thuat.html" class="clay-card eco-card p-3 text-center"><p class="text-2xl">📐</p><p class="text-[11px] font-extrabold text-deep-teal mt-0.5">Học thuật</p></a>
+      <a href="thu-vien.html" class="clay-card eco-card p-3 text-center"><p class="text-2xl">🎨</p><p class="text-[11px] font-extrabold text-deep-teal mt-0.5">Thương hiệu &amp; Âm nhạc</p></a>
+    </div>
+
+    <!-- Vòng tuần hoàn giá trị -->
+    <div class="flex flex-wrap justify-center items-center gap-x-3 gap-y-2 mt-6 text-[11px] font-bold text-deep-teal/70">
+      <span class="flow-step">🎓 Sinh viên chơi</span><span class="flow-arrow">→</span>
+      <span class="flow-step">📤 Kết quả tự nộp về hệ thống</span><span class="flow-arrow">→</span>
+      <span class="flow-step">👨‍🏫 Giảng viên chấm &amp; phản hồi</span><span class="flow-arrow">→</span>
+      <span class="flow-step">📊 Bằng chứng học tập</span><span class="flow-arrow">→</span>
+      <span class="flow-step">🏛️ Nhà trường nhân rộng</span><span class="flow-arrow">↺</span>
     </div>
   </section>
 
