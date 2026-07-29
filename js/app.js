@@ -2079,11 +2079,129 @@ function renderSeasonReport(body) {
         </div>`).join('')}
       </div>
     </div>` : ''}
+    ${S.finished ? `
+    <style>@keyframes fwExplode{to{transform:translate(var(--tx),var(--ty)) scale(0);opacity:0}}</style>
+    <div class="clay-card p-1.5 mb-3">
+      <div class="rounded-[20px] p-5 text-center relative overflow-hidden" style="background:linear-gradient(180deg,#fffdf6,#f4faff);border:3px solid rgba(253,161,39,.55);box-shadow:inset 0 0 0 1px rgba(0,102,135,.18)">
+        <p class="text-[10px] font-extrabold uppercase tracking-widest text-deep-teal/50">🎓 Giấy chứng nhận hoàn thành</p>
+        <p class="font-display font-extrabold text-deep-teal text-lg leading-tight mt-0.5">CERTIFICATE OF COMPLETION</p>
+        <p class="text-[11px] text-deep-teal/60 mt-3 italic">Trao cho</p>
+        <p class="font-display font-extrabold text-primary text-2xl mt-0.5 px-6 pb-1.5 border-b-2 border-clay-gold/40 inline-block">${S.profile.teamName}</p>
+        <p class="text-[11px] text-deep-teal/70 mt-2.5 max-w-xs mx-auto">đã hoàn thành trọn vẹn ${rounds.length} vòng mô phỏng kinh doanh <b>«BizOn Bật Nghiệp»</b>${champion ? ' với ngôi vị Quán quân sàn đấu' : ''}</p>
+        <div class="grid grid-cols-3 gap-2 mt-3.5">
+          <div class="clay-sunken rounded-2xl p-2"><p class="text-[9px] uppercase font-bold text-deep-teal/50">Hạng chung cuộc</p><p class="font-display font-extrabold text-primary text-base">${champion ? '👑 #1' : '#' + myRank}/4</p></div>
+          <div class="clay-sunken rounded-2xl p-2"><p class="text-[9px] uppercase font-bold text-deep-teal/50">Thị phần</p><p class="font-display font-extrabold text-primary text-base">${shareLast.toFixed(1)}%</p></div>
+          <div class="clay-sunken rounded-2xl p-2"><p class="text-[9px] uppercase font-bold text-deep-teal/50">Lợi nhuận</p><p class="font-display font-extrabold ${totalProfit >= 0 ? 'text-primary' : 'text-orange-600'} text-base">${money(Math.round(totalProfit))}</p></div>
+        </div>
+        <div class="flex items-end justify-between gap-2 mt-5">
+          <div class="text-center flex-1">
+            <p class="text-primary text-lg" style="font-family:'Segoe Script','Brush Script MT',cursive;transform:rotate(-2deg)">Đỗ Thùy Hương</p>
+            <div class="h-px bg-deep-teal/20 my-1 mx-2"></div>
+            <p class="text-[9px] font-extrabold text-deep-teal leading-tight">ThS. Đỗ Thùy Hương</p>
+            <p class="text-[8px] text-deep-teal/50 font-bold">Founder &amp; Project Lead</p>
+          </div>
+          <div class="w-16 h-16 shrink-0 rounded-full border-2 border-dashed border-clay-gold flex items-center justify-center rotate-12" style="background:rgba(253,161,39,.12)">
+            <div class="text-center leading-none"><p class="text-[7px] font-extrabold text-clay-orange uppercase">Official</p><p class="text-[10px] font-display font-extrabold text-clay-orange">BizOn</p><p class="text-[8px]">✓</p></div>
+          </div>
+          <div class="text-center flex-1">
+            <p class="text-primary text-lg" style="font-family:'Segoe Script','Brush Script MT',cursive;transform:rotate(-2deg)">Phan Anh Tú</p>
+            <div class="h-px bg-deep-teal/20 my-1 mx-2"></div>
+            <p class="text-[9px] font-extrabold text-deep-teal leading-tight">PGS.TS. Phan Anh Tú</p>
+            <p class="text-[8px] text-deep-teal/50 font-bold">Co-founder &amp; Chief Academic Advisor</p>
+          </div>
+        </div>
+        <p class="text-[9px] text-deep-teal/45 font-bold mt-3">Cấp ngày ${new Date().toLocaleDateString('vi-VN')} · thuyhuongctu.github.io/BizOn</p>
+        <button onclick="downloadCertificate()" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-5 py-2 text-[11px] mt-3">📥 Tải chứng nhận (PNG)</button>
+      </div>
+    </div>` : ''}
     <div class="clay-card p-4 bg-primary-container/10 flex gap-3 items-start">
       <img src="assets/character/lumina-vest-thumbsup.png" alt="Mentor Hương" class="w-10 h-10 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 10%">
       <div><p class="font-display font-bold text-primary text-sm">Mentor Hương · Tổng kết mùa giải</p>
       <p class="text-xs text-deep-teal/80 italic mt-0.5">"${verdict}"</p></div>
     </div>`;
+  S._cert = { team: S.profile.teamName, rank: myRank, champion, share: shareLast.toFixed(1), profit: Math.round(totalProfit), rounds: rounds.length };
+  if (S.finished) launchCelebration();
+}
+
+// ---------- Pháo hoa + confetti khi xem chứng nhận hoàn thành (thiết kế Stitch) ----------
+function launchCelebration() {
+  if (document.getElementById('fw-layer')) return;
+  const layer = document.createElement('div');
+  layer.id = 'fw-layer';
+  layer.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:120;overflow:hidden';
+  document.body.appendChild(layer);
+  const colors = ['#00c4ff', '#fda127', '#ffd700', '#006687', '#ffffff'];
+  const burst = (x, y) => {
+    for (let i = 0; i < 34; i++) {
+      const p = document.createElement('div');
+      const a = Math.random() * Math.PI * 2, d = 60 + Math.random() * 130;
+      p.style.cssText = `position:absolute;left:${x}px;top:${y}px;width:7px;height:7px;border-radius:50%;background:${colors[Math.floor(Math.random() * colors.length)]};--tx:${Math.cos(a) * d}px;--ty:${Math.sin(a) * d}px;animation:fwExplode 1s ease-out forwards`;
+      layer.appendChild(p);
+      p.addEventListener('animationend', () => p.remove());
+    }
+  };
+  for (let i = 0; i < 6; i++) setTimeout(() => burst(40 + Math.random() * (innerWidth - 80), innerHeight * 0.12 + Math.random() * innerHeight * 0.45), i * 380);
+  setTimeout(() => layer.remove(), 4200);
+}
+
+// ---------- Xuất chứng nhận hoàn thành ra ảnh PNG (vẽ canvas, chạy ngoại tuyến) ----------
+function downloadCertificate() {
+  const c = S._cert;
+  if (!c) return;
+  const cv = document.createElement('canvas');
+  cv.width = 1400; cv.height = 990;
+  const g = cv.getContext('2d');
+  const grad = g.createLinearGradient(0, 0, 0, 990);
+  grad.addColorStop(0, '#fffdf6'); grad.addColorStop(1, '#f4faff');
+  g.fillStyle = grad; g.fillRect(0, 0, 1400, 990);
+  g.strokeStyle = '#fda127'; g.lineWidth = 8; g.strokeRect(34, 34, 1332, 922);
+  g.strokeStyle = 'rgba(0,102,135,.35)'; g.lineWidth = 2; g.strokeRect(52, 52, 1296, 886);
+  g.textAlign = 'center'; g.fillStyle = '#5b6b72';
+  g.font = 'bold 26px "Plus Jakarta Sans", sans-serif';
+  g.fillText('🎓 GIẤY CHỨNG NHẬN HOÀN THÀNH', 700, 130);
+  g.fillStyle = '#033337'; g.font = '800 58px "Plus Jakarta Sans", sans-serif';
+  g.fillText('CERTIFICATE OF COMPLETION', 700, 200);
+  g.fillStyle = '#5b6b72'; g.font = 'italic 28px Georgia, serif';
+  g.fillText('Trao cho', 700, 280);
+  g.fillStyle = '#006687'; g.font = '800 64px "Plus Jakarta Sans", sans-serif';
+  g.fillText(c.team, 700, 360);
+  g.strokeStyle = 'rgba(253,161,39,.6)'; g.lineWidth = 3;
+  g.beginPath(); g.moveTo(420, 385); g.lineTo(980, 385); g.stroke();
+  g.fillStyle = '#3d484f'; g.font = '26px Manrope, sans-serif';
+  g.fillText(`đã hoàn thành trọn vẹn ${c.rounds} vòng mô phỏng kinh doanh «BizOn Bật Nghiệp»`, 700, 440);
+  if (c.champion) g.fillText('với ngôi vị Quán quân sàn đấu', 700, 478);
+  const stats = [[`${c.champion ? '👑 #1' : '#' + c.rank}/4`, 'HẠNG CHUNG CUỘC'], [`${c.share}%`, 'THỊ PHẦN'], [money(c.profit), 'LỢI NHUẬN TÍCH LŨY']];
+  stats.forEach(([v, l], i) => {
+    const x = 350 + i * 350;
+    g.fillStyle = 'rgba(0,102,135,.06)';
+    g.beginPath(); g.roundRect(x - 150, 520, 300, 110, 22); g.fill();
+    g.fillStyle = '#5b6b72'; g.font = 'bold 18px "Hanken Grotesk", sans-serif'; g.fillText(l, x, 555);
+    g.fillStyle = c.profit < 0 && i === 2 ? '#c2410c' : '#006687';
+    g.font = '800 38px "Plus Jakarta Sans", sans-serif'; g.fillText(v, x, 605);
+  });
+  const sign = (x, name, line1, line2) => {
+    g.fillStyle = '#006687'; g.font = 'italic 44px "Segoe Script", "Brush Script MT", cursive';
+    g.fillText(name, x, 760);
+    g.strokeStyle = 'rgba(3,51,55,.25)'; g.lineWidth = 2;
+    g.beginPath(); g.moveTo(x - 190, 785); g.lineTo(x + 190, 785); g.stroke();
+    g.fillStyle = '#033337'; g.font = '800 24px "Plus Jakarta Sans", sans-serif'; g.fillText(line1, x, 820);
+    g.fillStyle = '#5b6b72'; g.font = 'bold 19px Manrope, sans-serif'; g.fillText(line2, x, 850);
+  };
+  sign(340, 'Đỗ Thùy Hương', 'ThS. Đỗ Thùy Hương', 'Founder & Project Lead');
+  sign(1060, 'Phan Anh Tú', 'PGS.TS. Phan Anh Tú', 'Co-founder & Chief Academic Advisor');
+  g.save(); g.translate(700, 790); g.rotate(0.2);
+  g.strokeStyle = '#fda127'; g.lineWidth = 4; g.setLineDash([10, 7]);
+  g.beginPath(); g.arc(0, 0, 62, 0, Math.PI * 2); g.stroke(); g.setLineDash([]);
+  g.fillStyle = 'rgba(253,161,39,.14)'; g.beginPath(); g.arc(0, 0, 56, 0, Math.PI * 2); g.fill();
+  g.fillStyle = '#e8762d'; g.font = 'bold 15px "Hanken Grotesk", sans-serif'; g.fillText('OFFICIAL', 0, -12);
+  g.font = '800 24px "Plus Jakarta Sans", sans-serif'; g.fillText('BizOn', 0, 14);
+  g.font = '18px sans-serif'; g.fillText('✓', 0, 38); g.restore();
+  g.fillStyle = '#8a979e'; g.font = 'bold 19px Manrope, sans-serif';
+  g.fillText(`Cấp ngày ${new Date().toLocaleDateString('vi-VN')} · thuyhuongctu.github.io/BizOn`, 700, 920);
+  const a = document.createElement('a');
+  a.download = `BizOn-ChungNhan-${c.team.replace(/[^\p{L}\p{N}]+/gu, '-')}.png`;
+  a.href = cv.toDataURL('image/png');
+  a.click();
 }
 
 // ---------- CVP: Hòa vốn, Lợi nhuận gộp & Cấu trúc chi phí ----------
