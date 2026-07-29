@@ -29,6 +29,11 @@
     applyLandingLang(currentLang());
   }
 
+  function preserveLanguageControl() {
+    var languageButton = document.getElementById('lang-btn');
+    if (languageButton) languageButton.style.display = 'inline-grid';
+  }
+
   function installMobileMenu() {
     var button = document.getElementById('menu-btn');
     var menu = document.getElementById('mobile-nav');
@@ -74,6 +79,7 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     installTranslationBridge();
+    preserveLanguageControl();
     installMobileMenu();
     installFaqBehavior();
   });
