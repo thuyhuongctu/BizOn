@@ -21,8 +21,22 @@ nghiên cứu. Khi chưa bật, game hoạt động y hệt hiện tại.
 3. Làm tương tự với tệp `supabase/migrations/20260729120000_client_errors.sql`
    (bảng giám sát lỗi tự động — trang web tự báo lỗi JavaScript về đây
    để nhóm phát triển sửa sớm, sinh viên không cần báo cáo thủ công).
-4. Thấy `Success` là xong — sang **Table Editor** sẽ thấy 2 bảng
-   `round_submissions` và `client_errors`.
+4. Làm tương tự với tệp `supabase/migrations/20260730000000_instructor_dashboard.sql`
+   (bảng xếp hạng thời gian thực cho trang `giang-vien.html` — kèm
+   **Khóa giảng viên**, mặc định `BIZON-GV-2026`, **nên đổi ngay**:
+   `update app_secrets set value = 'KHOA-MOI' where name = 'instructor_key';`).
+5. Thấy `Success` là xong — sang **Table Editor** sẽ thấy các bảng
+   `round_submissions`, `client_errors` và `app_secrets`.
+
+> 💡 Nếu đã bật tích hợp GitHub (Supabase ↔ repo BizOn) thì các tệp
+> migration tự áp dụng mỗi khi nhánh `main` thay đổi — không cần dán tay.
+
+## Bảng điều khiển Giảng viên (giang-vien.html)
+
+1. Mở `https://thuyhuongctu.github.io/BizOn/giang-vien.html`.
+2. Nhập **Mã lớp** (đúng mã đã phát cho sinh viên) + **Khóa giảng viên**.
+3. Bảng xếp hạng tự làm mới mỗi 10 giây; cuối buổi bấm **Xuất CSV** để chấm.
+   Sinh viên không mở được dữ liệu: khóa được kiểm tra ngay trên server.
 
 ## Bước 3 — Lấy khóa kết nối
 
