@@ -331,12 +331,12 @@ tailwind.config = {
         </div>
       <div class="clay-card p-5 mb-3">
         <div class="flex justify-between mb-1"><label class="font-bold text-sm text-deep-teal">💲 Giá bán / sản phẩm</label><span id="v-price" class="font-display font-bold text-primary">150.000₫</span></div>
-        <input id="in-price" type="range" min="80" max="300" step="5" value="150" class="w-full" oninput="syncDecisionLabels()">
+        <input id="in-price" aria-label="Giá bán mỗi sản phẩm, nghìn đồng" type="range" min="80" max="300" step="5" value="150" class="w-full" oninput="syncDecisionLabels()">
         <p class="text-[11px] text-deep-teal/50 mt-1">Giá cao → biên lợi nhuận tốt nhưng mất khách. Giá tham chiếu thị trường: 150.000₫</p>
       </div>
       <div class="clay-card p-5 mb-3">
         <div class="flex justify-between mb-1"><label class="font-bold text-sm text-deep-teal">📣 Ngân sách Marketing</label><span id="v-mkt" class="font-display font-bold text-primary">50tr₫</span></div>
-        <input id="in-mkt" type="range" min="0" max="200" step="5" value="50" class="w-full" oninput="syncDecisionLabels()">
+        <input id="in-mkt" aria-label="Ngân sách marketing, triệu đồng" type="range" min="0" max="200" step="5" value="50" class="w-full" oninput="syncDecisionLabels()">
         <p class="text-[11px] text-deep-teal/50 mt-1">Marketing kéo thêm khách về phía bạn — nhưng chi quá tay sẽ ăn hết lãi. Đối thủ chi 55–90tr/vòng.</p>
       </div>
       <div class="clay-card p-5 mb-3">
@@ -360,16 +360,16 @@ tailwind.config = {
         </div>
       <div class="clay-card p-5 mb-3">
         <div class="flex justify-between mb-1"><label class="font-bold text-sm text-deep-teal">🏭 Sản lượng sản xuất</label><span id="v-prod" class="font-display font-bold text-primary">1.200 sp</span></div>
-        <input id="in-prod" type="range" min="200" max="4000" step="100" value="1200" class="w-full" oninput="syncDecisionLabels()">
+        <input id="in-prod" aria-label="Sản lượng sản xuất, sản phẩm" type="range" min="200" max="4000" step="100" value="1200" class="w-full" oninput="syncDecisionLabels()">
         <p class="text-[11px] text-deep-teal/50 mt-1">Chi phí sản xuất: 60.000₫/sp + khấu hao máy móc theo công suất.</p>
       </div>
       <div class="clay-card p-5 mb-3">
         <p class="font-bold text-sm text-deep-teal mb-3">👥 Quản trị Nhân sự</p>
         <div class="flex justify-between mb-1"><label class="text-[11px] font-bold text-deep-teal/60 uppercase">Số lượng nhân viên</label><span id="v-workers" class="font-display font-bold text-primary">45 người</span></div>
-        <input id="in-workers" type="range" min="20" max="100" step="5" value="45" class="w-full mb-1" oninput="syncDecisionLabels()">
+        <input id="in-workers" aria-label="Số lượng nhân viên" type="range" min="20" max="100" step="5" value="45" class="w-full mb-1" oninput="syncDecisionLabels()">
         <p class="text-[11px] text-deep-teal/50 mb-3">Lương 1tr₫/người/vòng · Năng lực: 70 sp/người — thiếu người sẽ giảm OEE.</p>
         <div class="flex justify-between mb-1"><label class="text-[11px] font-bold text-deep-teal/60 uppercase">Ngân sách đào tạo / người</label><span id="v-train" class="font-display font-bold text-primary">2tr₫</span></div>
-        <input id="in-train" type="range" min="0" max="10" step="1" value="1" class="w-full" oninput="syncDecisionLabels()">
+        <input id="in-train" aria-label="Ngân sách đào tạo mỗi người, triệu đồng" type="range" min="0" max="10" step="1" value="1" class="w-full" oninput="syncDecisionLabels()">
         <p class="text-[11px] text-deep-teal/50 mt-1">Đào tạo tăng OEE (tối đa +5%) và giảm phế phẩm.</p>
       </div>
       </div>
@@ -389,7 +389,7 @@ tailwind.config = {
         </div>
         <p class="text-[11px] text-deep-teal/50 mb-3">Vay ngân hàng: được chi vượt ví, lãi suất 8.5%/vòng trên phần thấu chi.</p>
         <label class="block text-[11px] font-bold text-deep-teal/60 uppercase mb-1.5">Kỳ hạn thanh toán cho khách</label>
-        <select id="in-term" onchange="syncDecisionLabels()" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 outline-none text-sm font-semibold text-deep-teal">
+        <select id="in-term" aria-label="Kỳ hạn thanh toán cho khách" onchange="syncDecisionLabels()" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 outline-none text-sm font-semibold text-deep-teal">
           <option value="30">30 ngày (Tiêu chuẩn)</option>
           <option value="60">60 ngày — cầu +4%, chi phí +2%</option>
           <option value="90">90 ngày — cầu +8%, chi phí +5%</option>
@@ -397,7 +397,7 @@ tailwind.config = {
       </div>
       <div class="clay-card p-5 mb-3">
         <div class="flex justify-between mb-1"><label class="font-bold text-sm text-deep-teal">🔬 Đầu tư R&amp;D</label><span id="v-rd" class="font-display font-bold text-primary">30tr₫</span></div>
-        <input id="in-rd" type="range" min="0" max="150" step="5" value="30" class="w-full" oninput="syncDecisionLabels()">
+        <input id="in-rd" aria-label="Đầu tư nghiên cứu phát triển, triệu đồng" type="range" min="0" max="150" step="5" value="30" class="w-full" oninput="syncDecisionLabels()">
         <p class="text-[11px] text-deep-teal/50 mt-1">R&amp;D tích lũy giúp giảm giá thành và tăng giá trị thương hiệu.</p>
       </div>
       <div class="clay-card p-5 mb-4 relative overflow-hidden">

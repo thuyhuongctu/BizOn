@@ -46,11 +46,11 @@ const MARKET_EVENTS = [
     impacts: [{ icon: '💰', label: 'Giá thành đơn vị', value: '+25%', dir: 'up-bad' }, { icon: '📦', label: 'Tỷ lệ đáp ứng đơn hàng', value: '-15%', dir: 'down' }],
     luminaImg: 'lumina-ao-dai-alert', luminaMsg: 'Thưa CEO, tình hình rất khẩn cấp! Dây chuyền sản xuất đình trệ vì thiếu linh kiện đầu vào. Chúng ta cần quyết định ngay: tăng ngân sách vận chuyển hay đàm phán lại thời gian giao hàng?',
     cta: { label: '👥 Họp khẩn cấp toàn đội', tab: 'decisions' } },
-  { id: 'EV_MILESTONE', round: 6, tone: 'good', icon: '🐉', name: 'Việt Nam Hóa Rồng', tag: 'VÒNG CHUNG KẾT · CỘT MỐC LỊCH SỬ',
-    desc: 'World Bank chính thức xếp Việt Nam vào nhóm thu nhập trung bình cao (07/2026). Tầng lớp trung lưu mở rộng, sức mua bùng nổ — khách hàng ít nhạy cảm về giá, ưu tiên chất lượng và thương hiệu.',
+  { id: 'EV_MILESTONE', round: 6, tone: 'good', icon: '🐉', name: 'Việt Nam Hóa Rồng', tag: 'VÒNG CHUNG KẾT · KỊCH BẢN GIẢ ĐỊNH',
+    desc: 'Kịch bản giả định «Rồng Việt vươn mình»: Việt Nam tiến vào nhóm thu nhập trung bình cao. Tầng lớp trung lưu mở rộng, sức mua bùng nổ — khách hàng ít nhạy cảm về giá, ưu tiên chất lượng và thương hiệu. (Tham số mô phỏng minh họa, không phải số liệu thống kê thực.)',
     demand: 1.25, costMul: 1.0, elasticityMul: 0.85, wageMul: 1.1, brandPow: 1.5, mktBoost: 1.2,
     impacts: [{ icon: '🛍️', label: 'Tổng cầu thị trường', value: '+25%', dir: 'up' }, { icon: '🏷️', label: 'Độ nhạy giá của khách', value: '-15%', dir: 'down-good' }, { icon: '👷', label: 'Chi phí nhân công', value: '+10%', dir: 'up-bad' }, { icon: '✨', label: 'Trọng số thương hiệu', value: '×1.5', dir: 'up' }],
-    luminaImg: 'lumina-ao-dai-clap', luminaMsg: 'Một cột mốc lịch sử, thưa đội ngũ điều hành! Việt Nam đã chính thức gia nhập nhóm thu nhập trung bình cao. Thị trường đang "thay da đổi thịt" với sức mua bùng nổ. Đây là cơ hội vàng để CMO nâng tầm thương hiệu thành dòng Premium và CEO mở rộng quy mô phục vụ làn sóng tiêu dùng mới!',
+    luminaImg: 'lumina-ao-dai-clap', luminaMsg: 'Kịch bản chung kết, thưa đội ngũ điều hành! Trong kịch bản giả định này, Việt Nam tiến vào nhóm thu nhập trung bình cao — thị trường "thay da đổi thịt" với sức mua bùng nổ. Đây là cơ hội vàng để CMO nâng tầm thương hiệu thành dòng Premium và CEO mở rộng quy mô phục vụ làn sóng tiêu dùng mới!',
     cta: { label: '🐉 Bứt phá về đích', tab: 'decisions' } },
 ];
 
