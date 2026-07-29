@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 — © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Quản trị học thuật — Learning Outcomes & Model Cards · BizOn</title>
+<meta name="description" content="Ma trận chuẩn đầu ra học tập (Bloom) và Model Cards của engine mô phỏng BizOn: mục tiêu sư phạm, biến số, phương trình, giả định và giới hạn diễn giải.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#006687', 'primary-container': '#00c4ff', 'surface-bright': '#f4faff',
+        'deep-teal': 'rgb(var(--dt) / <alpha-value>)', 'clay-orange': '#e8762d', 'clay-gold': '#fda127',
+      },
+      fontFamily: { display: ['"Plus Jakarta Sans"', 'sans-serif'], body: ['Manrope', 'sans-serif'] },
+      borderRadius: { clay: '24px' },
+    },
+  },
+};
+</script>
+<script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+  html { background:#f4faff; scroll-behavior:smooth; }
+  body { font-family:'Manrope',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
+  .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
+  .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease; }
+  .clay-btn:active { transform:translateY(2px); }
+  .glass-nav { background:rgba(3,51,55,.78); backdrop-filter:blur(14px); }
+  table.kb { width:100%; border-collapse:separate; border-spacing:0; font-size:13px; }
+  table.kb th { background:rgba(0,102,135,.08); color:inherit; font-weight:800; text-align:left; padding:9px 12px; }
+  table.kb td { padding:9px 12px; border-top:1px solid rgba(0,102,135,.1); vertical-align:top; }
+  table.kb th:first-child { border-top-left-radius:14px; } table.kb th:last-child { border-top-right-radius:14px; }
+  .kb-wrap { overflow-x:auto; border-radius:14px; }
+  .eq { font-family:'Courier New',monospace; font-size:12.5px; background:rgba(0,102,135,.06); border-radius:12px; padding:10px 14px; overflow-x:auto; }
+  :root { --dt: 3 51 55; }
+  html[data-theme="dark"] { --dt: 214 236 240; background:#081a20; color-scheme:dark; }
+  html[data-theme="dark"] body { color:#d6ecf0; }
+  html[data-theme="dark"] .clay-card { background:#0e2a33; box-shadow:0 10px 30px -5px rgba(0,0,0,.45), inset 0 -4px 0 rgba(0,0,0,.3); }
+  html[data-theme="dark"] .glass-nav { background:rgba(2,20,24,.85); }
+  html[data-theme="dark"] .text-primary { color:#5cc4e6 !important; }
+  html[data-theme="dark"] table.kb th { background:rgba(92,196,230,.12); }
+  html[data-theme="dark"] table.kb td { border-top-color:rgba(92,196,230,.15); }
+  html[data-theme="dark"] .eq { background:rgba(92,196,230,.1); }
+  @media print { nav, .no-print { display:none !important; } body { color:#000; } .clay-card { box-shadow:none; border:1px solid #ccc; break-inside:avoid; } header { background:#fff !important; color:#000 !important; padding-top:0 !important; } header p, header h1 { color:#000 !important; } }
+</style>
+</head>
+<body>
+
+<nav class="glass-nav fixed top-0 inset-x-0 z-50 text-white">
+  <div class="max-w-5xl mx-auto px-5 h-16 flex items-center justify-between gap-3">
+    <a href="index.html" class="flex items-center gap-2.5">
+      <img src="assets/icons/icon-192.png" alt="BizOn" class="w-9 h-9 rounded-xl shadow-lg">
+      <span class="font-display font-extrabold tracking-tight">BizOn <span class="text-clay-gold">Học thuật</span></span>
+    </a>
+    <div class="flex items-center gap-2.5">
+      <a href="lop-hoc.html" class="text-white/70 hover:text-white text-sm font-bold hidden sm:block">🏫 Kịch bản lớp học</a>
+      <a href="giai-phap.html" class="text-white/70 hover:text-white text-sm font-bold hidden sm:block">🧩 Giải pháp</a>
+      <a href="index.html" class="text-white/70 hover:text-white text-sm font-bold hidden sm:block">🏠 Trang chủ</a>
+      <button id="theme-btn" onclick="toggleTheme()" class="w-9 h-9 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 transition-colors shrink-0" title="Chế độ Sáng/Tối">🌙</button>
+    </div>
+  </div>
+</nav>
+
+<header class="pt-24 pb-10 text-white" style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%)">
+  <div class="max-w-5xl mx-auto px-5">
+    <p class="text-[11px] font-extrabold uppercase tracking-[.2em] text-clay-gold">Quản trị học thuật · Academic Rigor</p>
+    <h1 class="font-display font-extrabold text-3xl sm:text-4xl mt-2">Ma trận chuẩn đầu ra &amp; Model Cards</h1>
+    <p class="text-white/75 text-sm mt-3 max-w-2xl">Minh bạch hóa mô hình mô phỏng: mỗi cơ chế game gắn với chuẩn đầu ra học tập theo thang Bloom, và mỗi mô hình có "thẻ mô hình" công bố biến số, phương trình, giả định và giới hạn diễn giải.</p>
+    <button onclick="window.print()" class="clay-btn bg-white/10 border border-white/25 text-white font-display font-bold px-6 py-3 text-sm mt-5 no-print">🖨️ In tài liệu</button>
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-5 py-10">
+
+  <section class="clay-card p-6 sm:p-7 mb-6">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">1 · Ma trận Kết quả Học tập (Learning Outcomes Matrix)</h2>
+    <p class="text-sm text-deep-teal/70 mb-4">Kết nối: cơ chế game → chuẩn đầu ra → cấp độ Bloom → dữ liệu quan sát được → phương pháp đánh giá.</p>
+    <div class="kb-wrap"><table class="kb">
+      <tr><th>Cơ chế mô phỏng</th><th>Cấp độ Bloom</th><th>Chuẩn đầu ra</th><th>Chỉ số quan sát</th><th>Phương pháp đánh giá</th></tr>
+      <tr><td>Quyết định Giá &amp; Marketing (CMO)</td><td>Analyze — Phân tích</td><td>Phân tích quan hệ giữa độ co giãn giá, chi phí tiếp thị và tổng cầu thị trường</td><td>Hệ số co giãn thực hiện; doanh thu / chi phí marketing (ROI)</td><td>Báo cáo phân tích thị trường sau vòng chơi</td></tr>
+      <tr><td>Quản trị Dòng tiền (CFO)</td><td>Evaluate — Đánh giá</td><td>Tối ưu vốn lưu động, đòn bẩy tài chính và thanh khoản ngắn hạn</td><td>Số dư dòng tiền; tỷ lệ nợ/vốn chủ; tồn kho</td><td>Đánh giá báo cáo tài chính &amp; lưu chuyển tiền tệ</td></tr>
+      <tr><td>Quản trị Vận hành (COO)</td><td>Apply — Vận dụng</td><td>Cân đối năng lực sản xuất, chi phí khấu hao, bảo trì và mục tiêu năng lượng ESG</td><td>Sản lượng / công suất; chi phí khấu hao &amp; năng lượng; OEE</td><td>Chỉ số hiệu quả vận hành (OEE) trong báo cáo</td></tr>
+      <tr><td>BizOn Go Global</td><td>Evaluate — Đánh giá</td><td>So sánh rủi ro, chi phí và mức độ kiểm soát giữa các phương thức thâm nhập quốc tế</td><td>Điểm rủi ro quốc gia; tỷ suất lợi nhuận biên xuất khẩu</td><td>Bản thu hoạch chiến lược quốc tế hóa (reflection memo)</td></tr>
+      <tr><td>Hợp tác C-Suite (5 vai)</td><td>Create / Apply</td><td>Thực hành giao tiếp liên chức năng và ra quyết định dưới áp lực thời gian</td><td>Tần suất chỉnh sửa quyết định; Nhật ký đội (SEC)</td><td>Đánh giá đồng đẳng trong đội (peer-assessment)</td></tr>
+    </table></div>
+  </section>
+
+  <section class="clay-card p-6 sm:p-7 mb-6">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">2 · Model Card — BizOn Core Simulation Engine</h2>
+    <div class="kb-wrap mb-4"><table class="kb">
+      <tr><th>Trường</th><th>Nội dung</th></tr>
+      <tr><td>Mục tiêu sư phạm</td><td>Giúp người học hiểu các nguyên lý kinh tế vi mô ứng dụng trong quản trị doanh nghiệp sản xuất – kinh doanh nội địa</td></tr>
+      <tr><td>Biến đầu vào</td><td>Giá bán P (₫) · Ngân sách marketing M (₫) · Sản lượng Q (sp) · Đầu tư R&amp;D · Nhân sự &amp; đào tạo · Nguồn vốn · Kỳ hạn thanh toán</td></tr>
+      <tr><td>Biến đầu ra</td><td>Cầu thực hiện, doanh thu, chi phí, lợi nhuận, thị phần, tồn kho, dòng tiền</td></tr>
+      <tr><td>Tham số chuẩn</td><td>Giá tham chiếu P<sub>ref</sub> = 150.000₫ · Độ co giãn giá ε = 1,8 · Hệ số marketing β = 0,15 · Tổng cầu cơ sở 12.000 đơn vị/vòng</td></tr>
+      <tr><td>Giả định</td><td>Thị trường cạnh tranh độc quyền đơn giản; 3 đối thủ AI chạy chiến lược xác định (deterministic) theo hạt giống cố định để kết quả tái lập được</td></tr>
+      <tr><td>Giới hạn diễn giải</td><td>Tham số minh họa phục vụ sư phạm, không phải số liệu thống kê thực; chưa mô hình hóa tỷ giá và cạnh tranh đa phân khúc; biến cố trong game là <b>kịch bản giả định</b></td></tr>
+      <tr><td>Phiên bản · Phê duyệt</td><td>Engine v2 (2026.07) · Phê duyệt học thuật: PGS.TS. Phan Anh Tú</td></tr>
+    </table></div>
+    <p class="font-bold text-sm text-deep-teal mb-2">Phương trình cốt lõi</p>
+    <p class="eq">Cầu:  D<sub>i</sub> = BaseDemand × (P<sub>i</sub>/P<sub>ref</sub>)<sup>−ε</sup> × (1 + β·ln(1 + M<sub>i</sub>)) × RivalFactor<sub>i</sub></p>
+    <p class="eq mt-2">Giá thành:  C<sub>unit</sub> = C<sub>raw</sub> + FixedCost/Q<sub>prod</sub> × (1 − γ·R&amp;D<sub>tích lũy</sub>)</p>
+  </section>
+
+  <section class="clay-card p-6 sm:p-7 mb-6">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">3 · Model Card — IE Lab (Go Global)</h2>
+    <div class="kb-wrap"><table class="kb">
+      <tr><th>Trường</th><th>Nội dung</th></tr>
+      <tr><td>Mục tiêu sư phạm</td><td>Minh họa quan hệ quốc tế hóa – hiệu quả doanh nghiệp (đường cong chữ U, S) và các yếu tố khoảng cách văn hóa – thể chế khi chọn thị trường, phương thức thâm nhập</td></tr>
+      <tr><td>Biến đầu vào</td><td>Mức độ quốc tế hóa (FSTS) · Thị trường mục tiêu · Phương thức thâm nhập (7 mode) · Năng lực số</td></tr>
+      <tr><td>Tham số minh họa</td><td>Điểm ngoặt ≈ 43% FSTS; hiệu ứng "lá chắn số"; trường hợp đảo nhỏ — đều là <b>tham số mô phỏng minh họa</b>, không phải thống kê thực của doanh nghiệp nào</td></tr>
+      <tr><td>Nguồn lý thuyết</td><td>Các dòng nghiên cứu internationalization–performance, CAGE, OLI, Uppsala, born-global (chuẩn hóa trích dẫn đầy đủ trong giai đoạn tiếp theo)</td></tr>
+      <tr><td>Giới hạn diễn giải</td><td>Dùng cho thảo luận trên lớp; không dùng để dự báo hoặc tư vấn quyết định kinh doanh thực tế</td></tr>
+    </table></div>
+  </section>
+
+  <section class="clay-card p-6 sm:p-7 mb-6">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">4 · Nguyên tắc nội dung &amp; kiến trúc AI hai tầng</h2>
+    <ul class="space-y-2.5 text-sm text-deep-teal/80">
+      <li class="flex gap-2.5"><span>🎭</span><span><b>Mọi sự kiện trong game là kịch bản giả định</b> (ví dụ: kịch bản «Rồng Việt vươn mình») — không tuyên bố sự kiện thời sự là "chính thức" khi chưa có nguồn kiểm chứng.</span></li>
+      <li class="flex gap-2.5"><span>⚙️</span><span><b>Tầng 1 — Simulation intelligence:</b> engine xác định (deterministic), luật giải thích được, kết quả tái lập được — phục vụ chấm điểm công bằng và nghiên cứu.</span></li>
+      <li class="flex gap-2.5"><span>💬</span><span><b>Tầng 2 — Generative mentor (lộ trình):</b> mô hình ngôn ngữ chỉ tạo diễn giải và câu hỏi phản tư dựa trên trạng thái game, không can thiệp số liệu mô phỏng, không gửi dữ liệu định danh sinh viên.</span></li>
+      <li class="flex gap-2.5"><span>🏷️</span><span>Thông điệp chuẩn: <i>"AI-enhanced business simulation with an explainable deterministic engine."</i></span></li>
+    </ul>
+  </section>
+
+  <section class="clay-card p-6 sm:p-7 mb-6">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">5 · Cơ sở khoa học tham khảo</h2>
+    <ul class="space-y-2 text-[13px] text-deep-teal/75">
+      <li>• Lamb, R. L., Annetta, L. A., Firestone, J. B., &amp; Etopio, E. (2018). A meta-analysis with examination of moderators of student cognition, affect, and learning outcomes while using serious educational games, serious games, and simulations. <i>Computers in Human Behavior, 80</i>, 158–167.</li>
+      <li>• Sailer, M., &amp; Homner, L. (2020). The gamification of learning: A meta-analysis. <i>Educational Psychology Review, 32</i>, 77–112.</li>
+    </ul>
+    <p class="text-xs text-deep-teal/50 mt-3">Bằng chứng tổng hợp cho thấy gamification tác động tích cực đến kết quả nhận thức, động lực và hành vi học tập; sự kết hợp cạnh tranh + hợp tác (đúng mô hình BizOn: cạnh tranh giữa doanh nghiệp, hợp tác trong đội C-Suite) hỗ trợ tốt cho kết quả hành vi và động lực.</p>
+  </section>
+
+  <section class="clay-card p-8 text-center no-print">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl">Dành cho giảng viên</h2>
+    <div class="flex flex-wrap justify-center gap-3 mt-4">
+      <a href="lop-hoc.html" class="clay-btn bg-primary text-white font-display font-extrabold px-6 py-3 text-sm">🏫 Kịch bản lớp học &amp; Rubric</a>
+      <a href="giai-phap.html" class="clay-btn bg-white text-primary border border-primary/20 font-display font-bold px-6 py-3 text-sm">🧩 Gói triển khai</a>
+    </div>
+    <p class="text-[11px] text-deep-teal/45 mt-5">© 2026 Đỗ Thùy Hương &amp; PGS.TS. Phan Anh Tú — BizOn Bật Nghiệp</p>
+  </section>
+
+</main>
+<script src="js/site-ui.js" defer></script>
+</body>
+</html>

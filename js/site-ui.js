@@ -1655,3 +1655,12 @@
     location.reload();
   });
 })();
+
+/* Accessibility toàn site (WCAG 2.2): tôn trọng prefers-reduced-motion + trạng thái focus rõ ràng */
+(function () {
+  var st = document.createElement('style');
+  st.textContent =
+    '@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}}' +
+    ':focus-visible{outline:3px solid #fda127 !important;outline-offset:2px !important}';
+  document.head.appendChild(st);
+})();
