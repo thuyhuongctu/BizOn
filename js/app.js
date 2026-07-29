@@ -927,7 +927,7 @@ function renderDashboard() {
     banner.classList.remove('hidden');
     banner.className = 'clay-card p-4 mb-4 border-2 ' +
       (ev.tone === 'bad' ? 'border-orange-300 animate-shake' : ev.tone === 'warn' ? 'border-amber-200' : 'border-primary-container/40');
-    banner.innerHTML = `<div class="flex gap-3 items-start"><span class="text-2xl">${ev.icon}</span>
+    banner.innerHTML = `${ev.img ? `<img src="${ev.img}" alt="${ev.name}" class="w-full h-32 object-cover rounded-2xl mb-3" loading="lazy">` : ''}<div class="flex gap-3 items-start"><span class="text-2xl">${ev.icon}</span>
       <div><p class="font-display font-bold text-deep-teal text-sm">Biến cố vòng ${S.round}: ${ev.name}</p>
       <p class="text-xs text-deep-teal/70 mt-0.5">${ev.desc}</p></div></div>`;
   } else banner.classList.add('hidden');
@@ -2316,7 +2316,7 @@ function renderShop() {
   $('shop-list').innerHTML = SHOP_ITEMS.map(it => {
     const price = Math.round(it.price * mul);
     return `<div class="clay-card p-4 flex items-center gap-3">
-      <span class="text-3xl">${it.icon}</span>
+      ${it.img ? `<img src="${it.img}" alt="${it.name}" class="w-14 h-14 rounded-2xl object-cover shrink-0">` : `<span class="text-3xl">${it.icon}</span>`}
       <div class="flex-1"><p class="font-display font-bold text-deep-teal text-sm">${it.name}</p>
         <p class="text-[11px] text-deep-teal/60">${it.desc}</p></div>
       <button onclick="buyItem('${it.id}')" class="clay-btn bg-primary text-white text-xs font-bold px-3 py-2 shrink-0">${price}tr₫</button>
