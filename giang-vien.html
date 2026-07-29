@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 — © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Bảng điều khiển Giảng viên — BizOn Bật Nghiệp</title>
+<meta name="description" content="Bảng xếp hạng thời gian thực cho lớp học BizOn: giảng viên nhập Mã lớp và Khóa giảng viên để theo dõi các đội nộp kết quả từng vòng ngay trong buổi học, kèm xuất CSV chấm điểm.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<link rel="stylesheet" href="css/tw.css">
+<script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<script src="js/backend-config.js"></script>
+<script src="js/error-log.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+  html { background:#f4faff; }
+  body { font-family:'Manrope',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
+  .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
+  .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease; }
+  .clay-btn:active { transform:translateY(2px); }
+  .glass-nav { background:rgba(3,51,55,.78); backdrop-filter:blur(14px); }
+  .gv-input { width:100%; border-radius:16px; border:2px solid rgba(0,102,135,.18); background:#fff; padding:11px 14px; font-weight:700; font-size:14px; color:inherit; outline:none; }
+  .gv-input:focus { border-color:#006687; }
+  table.kb { width:100%; border-collapse:separate; border-spacing:0; font-size:13px; }
+  table.kb th { background:rgba(0,102,135,.08); font-weight:800; text-align:left; padding:9px 12px; white-space:nowrap; }
+  table.kb td { padding:9px 12px; border-top:1px solid rgba(0,102,135,.1); }
+  table.kb th:first-child { border-top-left-radius:14px; } table.kb th:last-child { border-top-right-radius:14px; }
+  .kb-wrap { overflow-x:auto; border-radius:14px; }
+  .pulse-dot { animation:gvpulse 1.6s ease-in-out infinite; }
+  @keyframes gvpulse { 0%,100%{opacity:1} 50%{opacity:.25} }
+  :root { --dt: 3 51 55; }
+  html[data-theme="dark"] { --dt: 214 236 240; background:#081a20; color-scheme:dark; }
+  html[data-theme="dark"] body { color:#d6ecf0; }
+  html[data-theme="dark"] .clay-card { background:#0e2a33; box-shadow:0 10px 30px -5px rgba(0,0,0,.45), inset 0 -4px 0 rgba(0,0,0,.3); }
+  html[data-theme="dark"] .glass-nav { background:rgba(2,20,24,.85); }
+  html[data-theme="dark"] .gv-input { background:#0b222a; border-color:rgba(92,196,230,.25); }
+  html[data-theme="dark"] table.kb th { background:rgba(92,196,230,.12); }
+  html[data-theme="dark"] table.kb td { border-top-color:rgba(92,196,230,.15); }
+</style>
+</head>
+<body>
+
+<nav class="glass-nav fixed top-0 inset-x-0 z-50 text-white">
+  <div class="max-w-5xl mx-auto px-5 h-16 flex items-center justify-between gap-3">
+    <a href="index.html" class="flex items-center gap-2.5">
+      <img src="assets/icons/icon-192.png" alt="BizOn" class="w-9 h-9 rounded-xl shadow-lg">
+      <span class="font-display font-extrabold tracking-tight">BizOn <span class="text-clay-gold">Giảng viên</span></span>
+    </a>
+    <div class="flex items-center gap-2.5">
+      <a href="lop-hoc.html" class="text-white/70 hover:text-white text-sm font-bold hidden sm:block">📚 Kịch bản lớp học</a>
+      <a href="game.html" class="text-white/70 hover:text-white text-sm font-bold hidden sm:block">🎮 Vào game</a>
+      <button id="theme-btn" onclick="toggleTheme()" class="w-9 h-9 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 transition-colors shrink-0" title="Chế độ Sáng/Tối">🌙</button>
+    </div>
+  </div>
+</nav>
+
+<header class="pt-24 pb-8 text-white" style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%)">
+  <div class="max-w-5xl mx-auto px-5">
+    <p class="text-[11px] font-extrabold uppercase tracking-[.2em] text-clay-gold">Dành cho giảng viên · Pilot Classroom</p>
+    <h1 class="font-display font-extrabold text-3xl sm:text-4xl mt-2">Bảng điều khiển lớp học</h1>
+    <p class="text-white/75 text-sm mt-3 max-w-2xl">Theo dõi các đội nộp kết quả <b>ngay trong buổi học</b>: bảng xếp hạng tự làm mới mỗi 10 giây, dòng thời gian từng lượt khóa vòng, và xuất CSV để chấm điểm. Dữ liệu chỉ mở bằng <b>Khóa giảng viên</b> — sinh viên không xem được của nhau.</p>
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-5 py-8">
+
+  <section class="clay-card p-6 sm:p-7 mb-6">
+    <h2 class="font-display font-extrabold text-deep-teal text-lg mb-4">🔑 Kết nối lớp</h2>
+    <div class="grid sm:grid-cols-[1fr_1fr_auto] gap-3 items-end">
+      <div>
+        <label class="block text-xs font-extrabold mb-1.5 opacity-70" for="gv-class">Mã lớp học (sinh viên nhập khi đăng nhập game)</label>
+        <input id="gv-class" class="gv-input" placeholder="VD: QTKD-2026-A" autocomplete="off">
+      </div>
+      <div>
+        <label class="block text-xs font-extrabold mb-1.5 opacity-70" for="gv-key">Khóa giảng viên</label>
+        <input id="gv-key" class="gv-input" type="password" placeholder="Khóa trong app_secrets" autocomplete="off">
+      </div>
+      <button onclick="gvConnect()" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-6 py-3 text-sm whitespace-nowrap">📡 Theo dõi lớp</button>
+    </div>
+    <p id="gv-status" class="text-xs font-bold mt-3 opacity-70">Chưa kết nối. Nhập Mã lớp + Khóa giảng viên rồi bấm "Theo dõi lớp".</p>
+  </section>
+
+  <section id="gv-board" class="hidden">
+    <div class="clay-card p-6 sm:p-7 mb-6">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+        <h2 class="font-display font-extrabold text-deep-teal text-lg">🏆 Bảng xếp hạng — <span id="gv-class-label"></span></h2>
+        <div class="flex items-center gap-3">
+          <span class="text-[11px] font-extrabold opacity-60"><span class="pulse-dot inline-block">🟢</span> Tự làm mới 10s · <span id="gv-updated">—</span></span>
+          <button onclick="gvExportCsv()" class="clay-btn bg-primary text-white font-display font-extrabold px-4 py-2 text-xs">⬇️ Xuất CSV</button>
+        </div>
+      </div>
+      <div class="kb-wrap">
+        <table class="kb">
+          <thead><tr>
+            <th>#</th><th>Đội</th><th>Vòng</th><th>Thị phần</th><th>Lợi nhuận ròng</th><th>Doanh thu</th><th>Số dư</th><th>Lượt nộp</th><th>Nộp gần nhất</th>
+          </tr></thead>
+          <tbody id="gv-rows"><tr><td colspan="9" class="text-center opacity-60 py-6">Đang tải…</td></tr></tbody>
+        </table>
+      </div>
+      <p class="text-[11px] opacity-60 mt-3">Xếp theo thị phần của vòng cao nhất mỗi đội. Một đội chơi lại vòng sẽ tính lần nộp mới nhất.</p>
+    </div>
+
+    <div class="clay-card p-6 sm:p-7 mb-6">
+      <h2 class="font-display font-extrabold text-deep-teal text-lg mb-4">⏱️ Dòng thời gian nộp bài</h2>
+      <ul id="gv-feed" class="space-y-2 text-sm font-semibold"><li class="opacity-60">Đang tải…</li></ul>
+    </div>
+  </section>
+
+  <section class="clay-card p-6 sm:p-7 mb-6">
+    <h2 class="font-display font-extrabold text-deep-teal text-lg mb-3">❓ Hướng dẫn nhanh</h2>
+    <ol class="list-decimal ml-5 space-y-1.5 text-sm">
+      <li>Phát cho lớp một <b>Mã lớp</b> tự đặt (VD: <code class="font-bold">QTKD-2026-A</code>) — sinh viên nhập mã này ở màn đăng nhập game.</li>
+      <li>Nhập cùng Mã lớp đó + <b>Khóa giảng viên</b> vào ô trên. Khóa nằm trong bảng <code class="font-bold">app_secrets</code> trên Supabase (mặc định <code class="font-bold">BIZON-GV-2026</code> — nên đổi ngay theo hướng dẫn trong <code class="font-bold">supabase/migrations/20260730000000_instructor_dashboard.sql</code>).</li>
+      <li>Chiếu trang này lên máy chiếu: mỗi khi một đội khóa vòng, bảng xếp hạng tự cập nhật trong vòng 10 giây.</li>
+      <li>Cuối buổi bấm <b>Xuất CSV</b> để tải bảng điểm về chấm (mở được bằng Excel).</li>
+    </ol>
+  </section>
+
+</main>
+
+<script>
+(function () {
+  const cfg = () => window.BIZON_BACKEND || {};
+  let timer = null, lastRows = [];
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const fmtN = v => v == null ? '—' : Number(v).toLocaleString('vi-VN');
+  const fmtPct = v => v == null ? '—' : (Number(v).toFixed(1) + '%');
+  const fmtT = ts => { try { return new Date(ts).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }); } catch (e) { return ''; } };
+
+  async function rpc(fn, args) {
+    const c = cfg();
+    const res = await fetch(c.url.replace(/\/$/, '') + '/rest/v1/rpc/' + fn, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', apikey: c.anonKey, Authorization: 'Bearer ' + c.anonKey },
+      body: JSON.stringify(args),
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    return res.json();
+  }
+
+  async function refresh() {
+    const klass = $('gv-class').value.trim(), key = $('gv-key').value.trim();
+    if (!klass || !key) return;
+    try {
+      const [board, feed] = await Promise.all([
+        rpc('bizon_leaderboard', { p_class_code: klass, p_key: key }),
+        rpc('bizon_feed', { p_class_code: klass, p_key: key, p_limit: 30 }),
+      ]);
+      lastRows = board;
+      const medals = ['🥇', '🥈', '🥉'];
+      $('gv-rows').innerHTML = board.length
+        ? board.map((r, i) => `<tr>
+            <td class="font-extrabold">${medals[i] || (i + 1)}</td>
+            <td class="font-extrabold">${esc(r.team_name)}</td>
+            <td>Vòng ${r.best_round}/6</td>
+            <td class="font-extrabold">${fmtPct(r.share)}</td>
+            <td>${fmtN(r.net_profit)} ₫</td>
+            <td>${fmtN(r.revenue)} ₫</td>
+            <td>${fmtN(r.balance)} ₫</td>
+            <td>${r.submissions}</td>
+            <td>${fmtT(r.last_submit)}</td>
+          </tr>`).join('')
+        : '<tr><td colspan="9" class="text-center opacity-60 py-6">Chưa có đội nào nộp kết quả — hoặc Khóa giảng viên chưa đúng.</td></tr>';
+      $('gv-feed').innerHTML = feed.length
+        ? feed.map(f => `<li>⏱️ <b>${fmtT(f.created_at)}</b> — đội <b>${esc(f.team_name)}</b> khóa <b>vòng ${f.round_number}</b> · lợi nhuận ${fmtN(f.net_profit)} ₫ · thị phần ${fmtPct(f.share)}</li>`).join('')
+        : '<li class="opacity-60">Chưa có lượt nộp nào.</li>';
+      $('gv-updated').textContent = 'cập nhật ' + fmtT(Date.now());
+      $('gv-status').textContent = '✅ Đang theo dõi lớp ' + klass + '.';
+    } catch (e) {
+      $('gv-status').textContent = '⚠️ Không tải được dữ liệu (' + e.message + ') — kiểm tra mạng hoặc cấu hình backend.';
+    }
+  }
+
+  window.gvConnect = function () {
+    const klass = $('gv-class').value.trim(), key = $('gv-key').value.trim();
+    if (!klass || !key) { $('gv-status').textContent = '⚠️ Cần nhập cả Mã lớp và Khóa giảng viên.'; return; }
+    try { localStorage.setItem('bizon-gv', JSON.stringify({ klass })); } catch (e) {}
+    $('gv-board').classList.remove('hidden');
+    $('gv-class-label').textContent = klass;
+    clearInterval(timer);
+    refresh();
+    timer = setInterval(refresh, 10000);
+  };
+
+  window.gvExportCsv = function () {
+    const head = 'hang,doi,vong_cao_nhat,thi_phan_pct,loi_nhuan_rong,doanh_thu,so_du,luot_nop,nop_gan_nhat\n';
+    const csv = head + lastRows.map((r, i) =>
+      [i + 1, '"' + String(r.team_name).replace(/"/g, '""') + '"', r.best_round, r.share, r.net_profit, r.revenue, r.balance, r.submissions, r.last_submit].join(',')
+    ).join('\n');
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' }));
+    a.download = 'bizon-bang-xep-hang-' + ($('gv-class').value.trim() || 'lop') + '.csv';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  };
+
+  try {
+    const saved = JSON.parse(localStorage.getItem('bizon-gv') || 'null');
+    if (saved && saved.klass) $('gv-class').value = saved.klass;
+  } catch (e) {}
+})();
+</script>
+<script src="js/site-ui.js" defer></script>
+<p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2 pb-6" style="color:rgba(100,116,125,.75)">🎓 Trang web chỉ phục vụ mục đích giáo dục và nghiên cứu, không đại diện, không liên kết và không nhận tài trợ từ bất kỳ tổ chức chính trị nào. · This website serves educational and research purposes only and is not affiliated with any political organization.</p>
+</body>
+</html>
