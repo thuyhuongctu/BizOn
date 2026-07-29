@@ -2087,6 +2087,7 @@ function renderSeasonReport(body) {
         <p class="font-display font-extrabold text-deep-teal text-lg leading-tight mt-0.5">CERTIFICATE OF COMPLETION</p>
         <p class="text-[11px] text-deep-teal/60 mt-3 italic">Trao cho</p>
         <p class="font-display font-extrabold text-primary text-2xl mt-0.5 px-6 pb-1.5 border-b-2 border-clay-gold/40 inline-block">${S.profile.teamName}</p>
+        ${S.profile.classId ? `<p class="text-[10px] font-extrabold text-deep-teal/60 mt-1.5">Lớp / Mã lớp: ${S.profile.classId}</p>` : ''}
         <p class="text-[11px] text-deep-teal/70 mt-2.5 max-w-xs mx-auto">đã hoàn thành trọn vẹn ${rounds.length} vòng mô phỏng kinh doanh <b>«BizOn Bật Nghiệp»</b>${champion ? ' với ngôi vị Quán quân sàn đấu' : ''}</p>
         <div class="grid grid-cols-3 gap-2 mt-3.5">
           <div class="clay-sunken rounded-2xl p-2"><p class="text-[9px] uppercase font-bold text-deep-teal/50">Hạng chung cuộc</p><p class="font-display font-extrabold text-primary text-base">${champion ? '👑 #1' : '#' + myRank}/4</p></div>
@@ -2111,7 +2112,7 @@ function renderSeasonReport(body) {
           </div>
         </div>
         <p class="text-[9px] text-deep-teal/45 font-bold mt-3">Cấp ngày ${new Date().toLocaleDateString('vi-VN')} · thuyhuongctu.github.io/BizOn</p>
-        <button onclick="downloadCertificate()" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-5 py-2 text-[11px] mt-3">📥 Tải chứng nhận (PNG)</button>
+        <div class="flex gap-2 justify-center mt-3"><button onclick="downloadCertificate('vi')" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-4 py-2 text-[11px]">📥 Tải chứng nhận</button><button onclick="downloadCertificate('en')" class="clay-btn bg-white text-primary border border-primary/25 font-display font-extrabold px-4 py-2 text-[11px]">📥 Certificate (EN)</button></div>
       </div>
     </div>` : ''}
     <div class="clay-card p-4 bg-primary-container/10 flex gap-3 items-start">
@@ -2119,7 +2120,7 @@ function renderSeasonReport(body) {
       <div><p class="font-display font-bold text-primary text-sm">Mentor Hương · Tổng kết mùa giải</p>
       <p class="text-xs text-deep-teal/80 italic mt-0.5">"${verdict}"</p></div>
     </div>`;
-  S._cert = { team: S.profile.teamName, rank: myRank, champion, share: shareLast.toFixed(1), profit: Math.round(totalProfit), rounds: rounds.length };
+  S._cert = { team: S.profile.teamName, classId: S.profile.classId || '', rank: myRank, champion, share: shareLast.toFixed(1), profit: Math.round(totalProfit), rounds: rounds.length };
   if (S.finished) launchCelebration();
 }
 
@@ -2154,9 +2155,27 @@ function loadSigImg(src) {
   });
 }
 
-async function downloadCertificate() {
+async function downloadCertificate(lang = 'vi') {
   const c = S._cert;
   if (!c) return;
+  const EN = lang === 'en';
+  const L = EN ? {
+    small: '🎓 BIZON BUSINESS SIMULATION ECOSYSTEM', to: 'This is to certify that',
+    cls: `Class ID: ${c.classId}`,
+    desc: `has successfully completed all ${c.rounds} rounds of the «BizOn Bật Nghiệp» business simulation`,
+    champ: 'as Champion of the Arena',
+    stats: ['FINAL RANK', 'MARKET SHARE', 'CUMULATIVE PROFIT'],
+    sig1: 'PhD Candidate Do Thuy Huong', sig2: 'Assoc. Prof. Phan Anh Tu, Ph.D.',
+    date: `Issued on ${new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })} · thuyhuongctu.github.io/BizOn`,
+  } : {
+    small: '🎓 GIẤY CHỨNG NHẬN HOÀN THÀNH', to: 'Trao cho',
+    cls: `Lớp / Mã lớp: ${c.classId}`,
+    desc: `đã hoàn thành trọn vẹn ${c.rounds} vòng mô phỏng kinh doanh «BizOn Bật Nghiệp»`,
+    champ: 'với ngôi vị Quán quân sàn đấu',
+    stats: ['HẠNG CHUNG CUỘC', 'THỊ PHẦN', 'LỢI NHUẬN TÍCH LŨY'],
+    sig1: 'ThS. Đỗ Thùy Hương', sig2: 'PGS.TS. Phan Anh Tú',
+    date: `Cấp ngày ${new Date().toLocaleDateString('vi-VN')} · thuyhuongctu.github.io/BizOn`,
+  };
   const [sigH, sigT] = await Promise.all([loadSigImg('assets/docs/sig-huong.png'), loadSigImg('assets/docs/sig-tu.png')]);
   const cv = document.createElement('canvas');
   cv.width = 1400; cv.height = 990;
@@ -2168,19 +2187,24 @@ async function downloadCertificate() {
   g.strokeStyle = 'rgba(0,102,135,.35)'; g.lineWidth = 2; g.strokeRect(52, 52, 1296, 886);
   g.textAlign = 'center'; g.fillStyle = '#5b6b72';
   g.font = 'bold 26px "Plus Jakarta Sans", sans-serif';
-  g.fillText('🎓 GIẤY CHỨNG NHẬN HOÀN THÀNH', 700, 130);
+  g.fillText(L.small, 700, 130);
   g.fillStyle = '#033337'; g.font = '800 58px "Plus Jakarta Sans", sans-serif';
   g.fillText('CERTIFICATE OF COMPLETION', 700, 200);
   g.fillStyle = '#5b6b72'; g.font = 'italic 28px Georgia, serif';
-  g.fillText('Trao cho', 700, 280);
+  g.fillText(L.to, 700, 280);
   g.fillStyle = '#006687'; g.font = '800 64px "Plus Jakarta Sans", sans-serif';
   g.fillText(c.team, 700, 360);
   g.strokeStyle = 'rgba(253,161,39,.6)'; g.lineWidth = 3;
   g.beginPath(); g.moveTo(420, 385); g.lineTo(980, 385); g.stroke();
+  if (c.classId) {
+    g.fillStyle = '#5b6b72'; g.font = 'bold 22px "Hanken Grotesk", sans-serif';
+    g.fillText(L.cls, 700, 422);
+  }
   g.fillStyle = '#3d484f'; g.font = '26px Manrope, sans-serif';
-  g.fillText(`đã hoàn thành trọn vẹn ${c.rounds} vòng mô phỏng kinh doanh «BizOn Bật Nghiệp»`, 700, 440);
-  if (c.champion) g.fillText('với ngôi vị Quán quân sàn đấu', 700, 478);
-  const stats = [[`${c.champion ? '👑 #1' : '#' + c.rank}/4`, 'HẠNG CHUNG CUỘC'], [`${c.share}%`, 'THỊ PHẦN'], [money(c.profit), 'LỢI NHUẬN TÍCH LŨY']];
+  const descY = c.classId ? 462 : 440;
+  g.fillText(L.desc, 700, descY);
+  if (c.champion) g.fillText(L.champ, 700, descY + 36);
+  const stats = [[`${c.champion ? '👑 #1' : '#' + c.rank}/4`, L.stats[0]], [`${c.share}%`, L.stats[1]], [money(c.profit), L.stats[2]]];
   stats.forEach(([v, l], i) => {
     const x = 350 + i * 350;
     g.fillStyle = 'rgba(0,102,135,.06)';
@@ -2202,8 +2226,8 @@ async function downloadCertificate() {
     g.fillStyle = '#033337'; g.font = '800 24px "Plus Jakarta Sans", sans-serif'; g.fillText(line1, x, 820);
     g.fillStyle = '#5b6b72'; g.font = 'bold 19px Manrope, sans-serif'; g.fillText(line2, x, 850);
   };
-  sign(340, sigH, 'Đỗ Thùy Hương', 'ThS. Đỗ Thùy Hương', 'Founder & Project Lead');
-  sign(1060, sigT, 'Phan Anh Tú', 'PGS.TS. Phan Anh Tú', 'Co-founder & Chief Academic Advisor');
+  sign(340, sigH, 'Đỗ Thùy Hương', L.sig1, 'Founder & Project Lead');
+  sign(1060, sigT, 'Phan Anh Tú', L.sig2, 'Co-founder & Chief Academic Advisor');
   g.save(); g.translate(700, 790); g.rotate(0.2);
   g.strokeStyle = '#fda127'; g.lineWidth = 4; g.setLineDash([10, 7]);
   g.beginPath(); g.arc(0, 0, 62, 0, Math.PI * 2); g.stroke(); g.setLineDash([]);
@@ -2212,7 +2236,7 @@ async function downloadCertificate() {
   g.font = '800 24px "Plus Jakarta Sans", sans-serif'; g.fillText('BizOn', 0, 14);
   g.font = '18px sans-serif'; g.fillText('✓', 0, 38); g.restore();
   g.fillStyle = '#8a979e'; g.font = 'bold 19px Manrope, sans-serif';
-  g.fillText(`Cấp ngày ${new Date().toLocaleDateString('vi-VN')} · thuyhuongctu.github.io/BizOn`, 700, 920);
+  g.fillText(L.date, 700, 920);
   const a = document.createElement('a');
   a.download = `BizOn-ChungNhan-${c.team.replace(/[^\p{L}\p{N}]+/gu, '-')}.png`;
   a.href = cv.toDataURL('image/png');
