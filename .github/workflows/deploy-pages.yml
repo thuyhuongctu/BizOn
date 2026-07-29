@@ -1,8 +1,10 @@
 name: Deploy lên GitHub Pages
 
-# Deploy bằng cách đẩy nội dung lên branch gh-pages — GitHub tự kích hoạt
-# Pages khi branch này tồn tại, không cần bật thủ công trong Settings
-# (token workflow không đủ quyền gọi API tạo Pages site trực tiếp).
+# Deploy theo HAI đường ray để chống sự cố cấu hình nguồn Pages:
+#  1. Đẩy nội dung lên branch gh-pages (phục vụ nguồn "Deploy from a branch").
+#  2. Deploy chính thức qua actions/deploy-pages (phục vụ nguồn "GitHub Actions").
+# Nguồn Pages đang ở chế độ nào thì đường ray tương ứng sẽ xuất bản site;
+# đường còn lại được phép thất bại êm (continue-on-error).
 
 on:
   push:
@@ -11,6 +13,8 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: pages
@@ -19,8 +23,12 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+
       - name: Publish lên branch gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
@@ -28,3 +36,21 @@ jobs:
           publish_dir: .
           exclude_assets: '.github,docs'
           commit_message: 'Deploy BizOn Bật Nghiệp'
+
+      - name: Loại thư mục không phục vụ khỏi artifact
+        run: rm -rf .github docs
+
+      - name: Cấu hình Pages (tự bật lại nếu bị tắt)
+        uses: actions/configure-pages@v5
+        continue-on-error: true
+        with:
+          enablement: true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy qua GitHub Actions
+        id: deployment
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
