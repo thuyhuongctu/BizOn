@@ -1153,6 +1153,7 @@ function commitDecisions() {
     const report = simulateRound(S, d);
     recordConquest(report);
     save();
+    if (window.BizonBackend) BizonBackend.submitRound(S, report);
     hideLoading();
     $('processing-box').classList.add('hidden');
     $('commit-box').classList.remove('hidden');
