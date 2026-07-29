@@ -1,7 +1,7 @@
 /* BizOn Bật Nghiệp 2026 — Service Worker (offline app shell)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
 
-const CACHE = 'bizon-v116';
+const CACHE = 'bizon-v117';
 const SHELL = [
   './',
   './index.html',
@@ -14,6 +14,7 @@ const SHELL = [
   './global.html',
   './giai-phap.html',
   './lop-hoc.html',
+  './hoc-thuat.html',
   './du-an.html',
   './tuyen-dung.html',
   './lien-he.html',
@@ -71,16 +72,45 @@ self.addEventListener('activate', e => {
   );
 });
 
-// Cache-first cho app shell; network-first (có fallback cache) cho phần còn lại
+// Chiến lược theo loại tài nguyên (không bao giờ trả index.html cho request không phải điều hướng):
+//  - Điều hướng HTML: network-first → cache trang đó → index.html (chỉ ở đây mới fallback index)
+//  - Ảnh: stale-while-revalidate (trả cache ngay, cập nhật nền)
+//  - Audio/video: cache-on-demand (không cache phản hồi 206 Range)
+//  - JS/CSS/font/còn lại: cache-first theo phiên bản CACHE, lỗi mạng thì báo lỗi thật
+function putIfOk(req, res) {
+  if (res && res.ok && res.status === 200) {
+    const copy = res.clone();
+    caches.open(CACHE).then(c => c.put(req, copy));
+  }
+  return res;
+}
+
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
-  e.respondWith(
-    caches.match(e.request).then(hit => hit || fetch(e.request).then(res => {
-      const copy = res.clone();
-      if (res.ok && e.request.url.startsWith(self.location.origin)) {
-        caches.open(CACHE).then(c => c.put(e.request, copy));
-      }
-      return res;
-    }).catch(() => caches.match('./index.html')))
-  );
+  const url = new URL(e.request.url);
+  if (url.origin !== self.location.origin) return; // CDN/fonts: để trình duyệt tự xử lý
+
+  if (e.request.mode === 'navigate') {
+    e.respondWith(
+      fetch(e.request).then(res => putIfOk(e.request, res))
+        .catch(() => caches.match(e.request).then(hit => hit || caches.match('./index.html')))
+    );
+    return;
+  }
+
+  const dest = e.request.destination;
+  if (dest === 'image') {
+    e.respondWith(
+      caches.match(e.request).then(hit => {
+        const net = fetch(e.request).then(res => putIfOk(e.request, res)).catch(() => hit);
+        return hit || net;
+      })
+    );
+    return;
+  }
+  if (dest === 'audio' || dest === 'video') {
+    e.respondWith(caches.match(e.request).then(hit => hit || fetch(e.request).then(res => putIfOk(e.request, res))));
+    return;
+  }
+  e.respondWith(caches.match(e.request).then(hit => hit || fetch(e.request).then(res => putIfOk(e.request, res))));
 });
