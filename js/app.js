@@ -2098,7 +2098,7 @@ function renderSeasonReport(body) {
           <div class="text-center flex-1">
             <img src="assets/docs/sig-huong.png" alt="Chữ ký Đỗ Thùy Hương" class="h-11 w-auto mx-auto">
             <div class="h-px bg-deep-teal/20 my-1 mx-2"></div>
-            <p class="text-[9px] font-extrabold text-deep-teal leading-tight">ThS. Đỗ Thùy Hương</p>
+            <p class="text-[9px] font-extrabold text-deep-teal leading-tight">NCS. Đỗ Thùy Hương</p>
             <p class="text-[8px] text-deep-teal/50 font-bold">Founder &amp; Project Lead</p>
           </div>
           <div class="w-16 h-16 shrink-0 rounded-full border-2 border-dashed border-clay-gold flex items-center justify-center rotate-12" style="background:rgba(253,161,39,.12)">
@@ -2173,7 +2173,7 @@ async function downloadCertificate(lang = 'vi') {
     desc: `đã hoàn thành trọn vẹn ${c.rounds} vòng mô phỏng kinh doanh «BizOn Bật Nghiệp»`,
     champ: 'với ngôi vị Quán quân sàn đấu',
     stats: ['HẠNG CHUNG CUỘC', 'THỊ PHẦN', 'LỢI NHUẬN TÍCH LŨY'],
-    sig1: 'ThS. Đỗ Thùy Hương', sig2: 'PGS.TS. Phan Anh Tú',
+    sig1: 'NCS. Đỗ Thùy Hương', sig2: 'PGS.TS. Phan Anh Tú',
     date: `Cấp ngày ${new Date().toLocaleDateString('vi-VN')} · thuyhuongctu.github.io/BizOn`,
   };
   const [sigH, sigT] = await Promise.all([loadSigImg('assets/docs/sig-huong.png'), loadSigImg('assets/docs/sig-tu.png')]);
