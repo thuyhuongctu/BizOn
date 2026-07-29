@@ -159,16 +159,23 @@ tailwind.config = {
         <div class="flex items-center gap-4 mb-4">
           <div class="w-12 h-12 clay-card clay-inner rounded-full flex items-center justify-center text-tertiary text-xl">🎓</div>
           <div>
-            <h2 class="text-2xl font-bold text-deep-teal leading-tight">Phan Anh Tú</h2>
-            <p class="text-sm font-semibold uppercase tracking-widest text-deep-teal/60">Co-founder & Chief Advisor</p>
+            <h2 class="text-2xl font-bold text-deep-teal leading-tight"><span class="tu-vi">PGS.TS. Phan Anh Tú</span><span class="tu-en hidden">Assoc. Prof. Phan Anh Tú, Ph.D.</span></h2>
+            <p class="text-sm font-semibold uppercase tracking-widest text-deep-teal/60">Co-founder &amp; Chief Academic Advisor</p>
           </div>
         </div>
-        <p class="leading-relaxed mb-6 text-deep-teal/85">
-          Đóng vai trò là "bảo chứng học thuật" cho nền tảng BizOn. Với tầm nhìn chiến lược và bề dày kinh nghiệm trong lĩnh vực quản trị kinh doanh, Phan Anh Tú đảm bảo mọi kịch bản mô phỏng đều đạt tiêu chuẩn chuyên môn cao nhất, mang lại giá trị thực tiễn cho người dùng.
+        <p class="tu-vi leading-relaxed mb-4 text-deep-teal/85">
+          PGS.TS. Phan Anh Tú là giảng viên, nhà nghiên cứu và cố vấn chuyên sâu về <b>khởi nghiệp, đổi mới sáng tạo, tạo lập doanh nghiệp và khởi nghiệp quốc tế</b>. Tại BizOn, ông dẫn dắt định hướng học thuật, chuyển hóa nghiên cứu thành các <b>mô phỏng kinh doanh ứng dụng AI</b> và trải nghiệm <b>học tập theo dự án</b>. Mỗi kịch bản được thiết kế để người học nhận diện cơ hội, kiểm chứng mô hình kinh doanh, phân tích rủi ro và <b>ra quyết định dựa trên dữ liệu</b> trong môi trường cạnh tranh toàn cầu. Mục tiêu là biến tri thức thành năng lực kiến tạo những dự án kinh doanh <b>khả thi, có thể mở rộng và tạo giá trị bền vững</b>.
+        </p>
+        <p class="tu-en hidden leading-relaxed mb-4 text-deep-teal/85">
+          Assoc. Prof. Phan Anh Tú, Ph.D. is an educator, researcher, and venture advisor specializing in <b>entrepreneurship, innovation, venture creation, and international entrepreneurship</b>. At BizOn, he leads the academic direction by translating research into <b>AI-enabled business simulations</b> and <b>project-based learning experiences</b>. Each scenario is designed to help learners recognize opportunities, validate business models, assess entrepreneurial risks, and make <b>data-driven decisions</b> in global markets. His mission is to transform knowledge into the capability to build <b>viable, scalable, and sustainable ventures</b>.
+        </p>
+        <p class="leading-relaxed mb-6 italic border-l-4 border-tertiary/40 pl-4 font-semibold text-deep-teal/80">
+          <span class="tu-vi">«Biến tri thức thành quyết định. Biến ý tưởng thành doanh nghiệp.»</span><span class="tu-en hidden">«Turning knowledge into decisions—and ideas into ventures.»</span>
         </p>
         <div class="flex flex-wrap gap-2">
-          <span class="px-3 py-1 bg-tertiary/10 text-tertiary text-xs font-bold rounded-full">Academic Guarantee</span>
-          <span class="px-3 py-1 bg-tertiary/10 text-tertiary text-xs font-bold rounded-full">Strategic Vision</span>
+          <span class="px-3 py-1 bg-tertiary/10 text-tertiary text-xs font-bold rounded-full">Academic Leadership</span>
+          <span class="px-3 py-1 bg-tertiary/10 text-tertiary text-xs font-bold rounded-full">International Entrepreneurship</span>
+          <span class="px-3 py-1 bg-tertiary/10 text-tertiary text-xs font-bold rounded-full">Data-Driven Venture Learning</span>
         </div>
       </div>
     </div>
@@ -254,6 +261,23 @@ function scenePlay() {
 }
 setTimeout(scenePlay, 1300);
 setInterval(scenePlay, 3400);
+</script>
+<script>
+/* Hồ sơ PGS.TS. Phan Anh Tú song ngữ: hoán đổi .tu-vi / .tu-en theo nút EN/VI dùng chung của site */
+(function () {
+  function tuSwap(lang) {
+    var en = lang === 'en';
+    document.querySelectorAll('.tu-vi').forEach(function (el) { el.classList.toggle('hidden', en); });
+    document.querySelectorAll('.tu-en').forEach(function (el) { el.classList.toggle('hidden', !en); });
+  }
+  document.addEventListener('DOMContentLoaded', function () {
+    var orig = window.applyLang;
+    if (orig) window.applyLang = function (lang) { orig(lang); tuSwap(lang); };
+    var lang = 'vi';
+    try { lang = localStorage.getItem('bizon-lang') || 'vi'; } catch (e) {}
+    tuSwap(lang);
+  });
+})();
 </script>
 <script src="js/site-ui.js" defer></script>
 </body>
