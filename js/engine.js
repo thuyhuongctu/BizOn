@@ -34,7 +34,7 @@ const MARKET_EVENTS = [
     impacts: [{ icon: '🏷️', label: 'Giá đối thủ (kênh MT)', value: '-15%', dir: 'down' }, { icon: '💔', label: 'Độ nhạy giá của khách', value: 'CAO', dir: 'up-bad' }],
     luminaImg: 'lumina-vest-worried', luminaMsg: 'Thưa CMO, đối thủ vừa châm ngòi chiến tranh giá! Ta có 2 lối đi: chiến thuật Bundling hoặc tăng Value-Added — đừng lao vào giảm giá sâu kẻo mất biên lợi nhuận.',
     cta: { label: '🤖 Xem giải pháp từ Lumina', tab: 'advisor' } },
-  { id: 'EV_RECESSION', round: 4, tone: 'bad', icon: '⚡', name: 'Khủng Hoảng Năng Lượng', tag: 'CẢNH BÁO KHẨN CẤP',
+  { id: 'EV_RECESSION', round: 4, tone: 'bad', icon: '⚡', name: 'Khủng Hoảng Năng Lượng', tag: 'CẢNH BÁO KHẨN CẤP', img: 'assets/illustrations/event-energy-crisis.jpg',
     desc: 'Thị trường năng lượng toàn cầu đang gặp biến động cực lớn. Giá điện sản xuất tăng vọt, tổng cầu suy giảm.',
     demand: 0.7, costMul: 1.3, shake: true, oeeHit: 10,
     impacts: [{ icon: '📈', label: 'Chi phí vận hành', value: '+30%', dir: 'up-bad' }, { icon: '🏭', label: 'Hiệu suất (OEE)', value: '-10%', dir: 'down' }],
@@ -46,7 +46,7 @@ const MARKET_EVENTS = [
     impacts: [{ icon: '💰', label: 'Giá thành đơn vị', value: '+25%', dir: 'up-bad' }, { icon: '📦', label: 'Tỷ lệ đáp ứng đơn hàng', value: '-15%', dir: 'down' }],
     luminaImg: 'lumina-ao-dai-alert', luminaMsg: 'Thưa CEO, tình hình rất khẩn cấp! Dây chuyền sản xuất đình trệ vì thiếu linh kiện đầu vào. Chúng ta cần quyết định ngay: tăng ngân sách vận chuyển hay đàm phán lại thời gian giao hàng?',
     cta: { label: '👥 Họp khẩn cấp toàn đội', tab: 'decisions' } },
-  { id: 'EV_MILESTONE', round: 6, tone: 'good', icon: '🐉', name: 'Việt Nam Hóa Rồng', tag: 'VÒNG CHUNG KẾT · KỊCH BẢN GIẢ ĐỊNH',
+  { id: 'EV_MILESTONE', round: 6, tone: 'good', icon: '🐉', name: 'Việt Nam Hóa Rồng', tag: 'VÒNG CHUNG KẾT · KỊCH BẢN GIẢ ĐỊNH', img: 'assets/illustrations/event-vietnam-2026.jpg',
     desc: 'Kịch bản giả định «Rồng Việt vươn mình»: Việt Nam tiến vào nhóm thu nhập trung bình cao. Tầng lớp trung lưu mở rộng, sức mua bùng nổ — khách hàng ít nhạy cảm về giá, ưu tiên chất lượng và thương hiệu. (Tham số mô phỏng minh họa, không phải số liệu thống kê thực.)',
     demand: 1.25, costMul: 1.0, elasticityMul: 0.85, wageMul: 1.1, brandPow: 1.5, mktBoost: 1.2,
     impacts: [{ icon: '🛍️', label: 'Tổng cầu thị trường', value: '+25%', dir: 'up' }, { icon: '🏷️', label: 'Độ nhạy giá của khách', value: '-15%', dir: 'down-good' }, { icon: '👷', label: 'Chi phí nhân công', value: '+10%', dir: 'up-bad' }, { icon: '✨', label: 'Trọng số thương hiệu', value: '×1.5', dir: 'up' }],
@@ -55,7 +55,7 @@ const MARKET_EVENTS = [
 ];
 
 const SHOP_ITEMS = [
-  { id: 'SOLAR_01',     icon: '☀️', name: 'Pin Mặt Trời',   type: 'blueprint',  price: 150, desc: 'Tự chủ nguồn điện: -15% chi phí cố định vĩnh viễn, +20 điểm ESG, giảm nửa tác động OEE khi khủng hoảng năng lượng. Hoàn vốn ~2 vòng.' },
+  { id: 'SOLAR_01',     icon: '☀️', name: 'Pin Mặt Trời',   type: 'blueprint',  price: 150, img: 'assets/illustrations/solar-farm.jpg', desc: 'Tự chủ nguồn điện: -15% chi phí cố định vĩnh viễn, +20 điểm ESG, giảm nửa tác động OEE khi khủng hoảng năng lượng. Hoàn vốn ~2 vòng.' },
   { id: 'MKT_BOOST_01', icon: '📣', name: 'Marketing Boost', type: 'booster',    price: 80,  desc: '+30% hiệu quả marketing trong vòng kế tiếp.' },
   { id: 'RD_UPGRADE_01', icon: '🔬', name: 'R&D Upgrade',    type: 'blueprint',  price: 120, desc: 'Giảm 8% giá thành sản xuất vĩnh viễn.' },
   { id: 'OPS_LEAN_01',  icon: '🏭', name: 'Lean Operations', type: 'blueprint',  price: 100, desc: 'Giảm 20% chi phí khấu hao máy móc.' },
