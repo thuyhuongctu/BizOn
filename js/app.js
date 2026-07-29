@@ -2095,7 +2095,7 @@ function renderSeasonReport(body) {
         </div>
         <div class="flex items-end justify-between gap-2 mt-5">
           <div class="text-center flex-1">
-            <p class="text-primary text-lg" style="font-family:'Segoe Script','Brush Script MT',cursive;transform:rotate(-2deg)">Đỗ Thùy Hương</p>
+            <img src="assets/docs/sig-huong.png" alt="Chữ ký Đỗ Thùy Hương" class="h-11 w-auto mx-auto">
             <div class="h-px bg-deep-teal/20 my-1 mx-2"></div>
             <p class="text-[9px] font-extrabold text-deep-teal leading-tight">ThS. Đỗ Thùy Hương</p>
             <p class="text-[8px] text-deep-teal/50 font-bold">Founder &amp; Project Lead</p>
@@ -2104,7 +2104,7 @@ function renderSeasonReport(body) {
             <div class="text-center leading-none"><p class="text-[7px] font-extrabold text-clay-orange uppercase">Official</p><p class="text-[10px] font-display font-extrabold text-clay-orange">BizOn</p><p class="text-[8px]">✓</p></div>
           </div>
           <div class="text-center flex-1">
-            <p class="text-primary text-lg" style="font-family:'Segoe Script','Brush Script MT',cursive;transform:rotate(-2deg)">Phan Anh Tú</p>
+            <img src="assets/docs/sig-tu.png" alt="Chữ ký Phan Anh Tú" class="h-10 w-auto mx-auto mt-1">
             <div class="h-px bg-deep-teal/20 my-1 mx-2"></div>
             <p class="text-[9px] font-extrabold text-deep-teal leading-tight">PGS.TS. Phan Anh Tú</p>
             <p class="text-[8px] text-deep-teal/50 font-bold">Co-founder &amp; Chief Academic Advisor</p>
@@ -2145,9 +2145,19 @@ function launchCelebration() {
 }
 
 // ---------- Xuất chứng nhận hoàn thành ra ảnh PNG (vẽ canvas, chạy ngoại tuyến) ----------
-function downloadCertificate() {
+function loadSigImg(src) {
+  return new Promise(res => {
+    const im = new Image();
+    im.onload = () => res(im);
+    im.onerror = () => res(null);   // thiếu ảnh chữ ký → rơi về chữ ký kiểu chữ viết
+    im.src = src;
+  });
+}
+
+async function downloadCertificate() {
   const c = S._cert;
   if (!c) return;
+  const [sigH, sigT] = await Promise.all([loadSigImg('assets/docs/sig-huong.png'), loadSigImg('assets/docs/sig-tu.png')]);
   const cv = document.createElement('canvas');
   cv.width = 1400; cv.height = 990;
   const g = cv.getContext('2d');
@@ -2179,16 +2189,21 @@ function downloadCertificate() {
     g.fillStyle = c.profit < 0 && i === 2 ? '#c2410c' : '#006687';
     g.font = '800 38px "Plus Jakarta Sans", sans-serif'; g.fillText(v, x, 605);
   });
-  const sign = (x, name, line1, line2) => {
-    g.fillStyle = '#006687'; g.font = 'italic 44px "Segoe Script", "Brush Script MT", cursive';
-    g.fillText(name, x, 760);
+  const sign = (x, sig, name, line1, line2) => {
+    if (sig) {
+      const h = 120, w = sig.width * h / sig.height;
+      g.drawImage(sig, x - w / 2, 775 - h, w, h);
+    } else {
+      g.fillStyle = '#006687'; g.font = 'italic 44px "Segoe Script", "Brush Script MT", cursive';
+      g.fillText(name, x, 760);
+    }
     g.strokeStyle = 'rgba(3,51,55,.25)'; g.lineWidth = 2;
     g.beginPath(); g.moveTo(x - 190, 785); g.lineTo(x + 190, 785); g.stroke();
     g.fillStyle = '#033337'; g.font = '800 24px "Plus Jakarta Sans", sans-serif'; g.fillText(line1, x, 820);
     g.fillStyle = '#5b6b72'; g.font = 'bold 19px Manrope, sans-serif'; g.fillText(line2, x, 850);
   };
-  sign(340, 'Đỗ Thùy Hương', 'ThS. Đỗ Thùy Hương', 'Founder & Project Lead');
-  sign(1060, 'Phan Anh Tú', 'PGS.TS. Phan Anh Tú', 'Co-founder & Chief Academic Advisor');
+  sign(340, sigH, 'Đỗ Thùy Hương', 'ThS. Đỗ Thùy Hương', 'Founder & Project Lead');
+  sign(1060, sigT, 'Phan Anh Tú', 'PGS.TS. Phan Anh Tú', 'Co-founder & Chief Academic Advisor');
   g.save(); g.translate(700, 790); g.rotate(0.2);
   g.strokeStyle = '#fda127'; g.lineWidth = 4; g.setLineDash([10, 7]);
   g.beginPath(); g.arc(0, 0, 62, 0, Math.PI * 2); g.stroke(); g.setLineDash([]);
