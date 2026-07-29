@@ -11,7 +11,7 @@
  * anon key là khóa CÔNG KHAI theo thiết kế của Supabase; không bao giờ dán
  * service_role key vào đây. */
 window.BIZON_BACKEND = {
-  enabled: false,
-  url: 'https://YOUR-PROJECT-REF.supabase.co',
-  anonKey: 'YOUR-ANON-PUBLIC-KEY',
+  enabled: true,
+  url: 'https://ceytblfelodpnudomccn.supabase.co',
+  anonKey: 'sb_publishable_5FPpCma_dVUs05K4hvahzQ_Yeq0bLJt',
 };
