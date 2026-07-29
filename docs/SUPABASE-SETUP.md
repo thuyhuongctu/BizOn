@@ -16,10 +16,13 @@ nghiên cứu. Khi chưa bật, game hoạt động y hệt hiện tại.
 ## Bước 2 — Tạo bảng dữ liệu
 
 1. Trong dashboard, mở **SQL Editor** → **New query**.
-2. Dán toàn bộ nội dung tệp `supabase/migrations/001_bizon_pilot.sql`
+2. Dán toàn bộ nội dung tệp `supabase/migrations/20260729000000_bizon_pilot.sql`
    (trong repo BizOn) → bấm **Run**.
-3. Thấy `Success` là xong — sang **Table Editor** sẽ thấy bảng
-   `round_submissions`.
+3. Làm tương tự với tệp `supabase/migrations/20260729120000_client_errors.sql`
+   (bảng giám sát lỗi tự động — trang web tự báo lỗi JavaScript về đây
+   để nhóm phát triển sửa sớm, sinh viên không cần báo cáo thủ công).
+4. Thấy `Success` là xong — sang **Table Editor** sẽ thấy 2 bảng
+   `round_submissions` và `client_errors`.
 
 ## Bước 3 — Lấy khóa kết nối
 
