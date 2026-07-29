@@ -81,21 +81,38 @@ tailwind.config = {
   <!-- Chào mừng -->
   <section class="text-center pt-10 pb-8">
     <img src="assets/character/lumina-ao-dai-wave.png" alt="Lumina Áo Dài chào mừng" class="h-52 sm:h-64 w-auto mx-auto animate-float drop-shadow-2xl">
-    <h1 class="font-display font-extrabold text-3xl sm:text-5xl text-deep-teal mt-5">Chào mừng đến BizOn!</h1>
-    <p class="text-sm sm:text-base text-deep-teal/60 mt-3 max-w-xl mx-auto">Trò chơi mô phỏng kinh doanh 3D phong cách đất sét dành cho đào tạo khởi nghiệp — chọn một cánh cửa để bắt đầu.</p>
+    <h1 class="font-display font-extrabold text-3xl sm:text-5xl text-deep-teal mt-5">Điều hành một doanh nghiệp.</h1>
+    <p class="text-sm sm:text-base text-deep-teal/60 mt-3 max-w-xl mx-auto">Ra quyết định dưới áp lực. Học kinh doanh bằng hậu quả của chính lựa chọn của bạn — nền tảng mô phỏng kinh doanh AI-enhanced với engine xác định, giải thích được.</p>
   </section>
 
-  <!-- Lưới cổng vào -->
+  <!-- 3 cổng chính: Người học · Giảng viên · Tổ chức -->
+  <section class="grid sm:grid-cols-3 gap-5 mb-10">
+    <div class="clay-card hub-card p-6 flex flex-col" style="background:linear-gradient(150deg,#006687,#033337)">
+      <p class="text-4xl">🎓</p>
+      <h2 class="font-display font-extrabold text-xl mt-2" style="color:#fff">Cổng Người học</h2>
+      <p class="text-xs mt-1.5 flex-1" style="color:rgba(255,255,255,.7)">Chơi thử 10 phút, vào ván 6 vòng đầy đủ, hoặc tiếp tục phiên chơi của đội bạn — có Lumina AI đồng hành.</p>
+      <a href="game.html" class="clay-btn block bg-clay-gold text-deep-teal font-display font-extrabold px-5 py-2.5 text-xs mt-4 text-center">🎮 CHƠI NGAY →</a>
+      <a href="global.html" class="block text-[11px] font-bold mt-2.5 text-center" style="color:rgba(255,255,255,.75)">🌏 Hoặc chinh phục thị trường quốc tế — Go Global</a>
+    </div>
+    <div class="clay-card hub-card p-6 flex flex-col">
+      <p class="text-4xl">👨‍🏫</p>
+      <h2 class="font-display font-extrabold text-deep-teal text-xl mt-2">Cổng Giảng viên</h2>
+      <p class="text-xs text-deep-teal/55 mt-1.5 flex-1">Kịch bản trọn gói cho lớp 40–60 sinh viên: buổi 90 phút hoặc giải đấu 15 tuần, kèm Rubric, bảng tổng sắp Excel và hướng dẫn chấm bài.</p>
+      <a href="lop-hoc.html" class="clay-btn block bg-primary text-white font-display font-extrabold px-5 py-2.5 text-xs mt-4 text-center">🏫 KỊCH BẢN LỚP HỌC →</a>
+      <a href="hoc-thuat.html" class="block text-[11px] font-bold text-primary mt-2.5 text-center">📐 Chuẩn đầu ra &amp; Model Cards</a>
+    </div>
+    <div class="clay-card hub-card p-6 flex flex-col">
+      <p class="text-4xl">🏛️</p>
+      <h2 class="font-display font-extrabold text-deep-teal text-xl mt-2">Cổng Tổ chức &amp; Đối tác</h2>
+      <p class="text-xs text-deep-teal/55 mt-1.5 flex-1">Gói triển khai cho khoa/trường/trung tâm khởi nghiệp: Pilot Classroom, Instructor Pro, Institution Pass — kèm bằng chứng học thuật.</p>
+      <a href="giai-phap.html" class="clay-btn block bg-white text-primary border border-primary/20 font-display font-extrabold px-5 py-2.5 text-xs mt-4 text-center">🧩 GÓI TRIỂN KHAI →</a>
+      <a href="lien-he.html" class="block text-[11px] font-bold text-primary mt-2.5 text-center">✉️ Đặt lịch demo / pilot</a>
+    </div>
+  </section>
+
+  <!-- Khám phá Vũ trụ BizOn -->
+  <p class="text-[10px] font-extrabold uppercase tracking-widest text-deep-teal/50 mb-3">🌌 Khám phá Vũ trụ BizOn</p>
   <section class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-    <a href="game.html" class="clay-card hub-card p-6 sm:col-span-2 lg:col-span-2 flex items-center gap-5" style="background:linear-gradient(135deg,#006687,#033337)">
-      <img src="assets/character/anh-tu-ao-dai-welcome-cut.png" alt="" class="h-32 sm:h-40 w-auto drop-shadow-xl shrink-0">
-      <div class="text-white">
-        <p class="text-[10px] font-extrabold uppercase tracking-widest text-white/60">Game chính · 6 vòng</p>
-        <h2 class="font-display font-extrabold text-2xl sm:text-3xl mt-1 !text-white">🎮 BizOn Bật Nghiệp</h2>
-        <p class="text-white/70 text-xs sm:text-sm mt-2">Chinh phục bản đồ Việt Nam từ Cần Thơ tới Hà Nội cùng cố vấn Lumina AI.</p>
-        <span class="clay-btn-primary clay-btn inline-block text-white font-display font-extrabold px-6 py-2.5 text-xs mt-4">CHƠI NGAY →</span>
-      </div>
-    </a>
     <a href="thu-vien.html" class="clay-card hub-card p-6">
       <p class="text-4xl">📚</p>
       <h2 class="font-display font-extrabold text-deep-teal text-lg mt-2">Thư viện Sáng tạo</h2>
@@ -110,12 +127,6 @@ tailwind.config = {
       <p class="text-4xl">🕹️</p>
       <h2 class="font-display font-extrabold text-deep-teal text-lg mt-2">BizOn Arcade</h2>
       <p class="text-xs text-deep-teal/55 mt-1.5">8 trò chơi của hệ sinh thái — từ mô phỏng chiến lược đến phản xạ 30 giây.</p>
-    </a>
-    <a href="global.html" class="clay-card hub-card p-6 relative overflow-hidden">
-      <img src="assets/illustrations/globe-trade.png" alt="" class="absolute -right-6 -bottom-8 h-32 w-auto opacity-90 pointer-events-none" loading="lazy">
-      <p class="text-4xl">🌏</p>
-      <h2 class="font-display font-extrabold text-deep-teal text-lg mt-2">BizOn Go Global</h2>
-      <p class="text-xs text-deep-teal/55 mt-1.5 pr-20">Từ Việt Nam ra thế giới: phương thức thâm nhập, World Market LIVE và IE Lab Khởi nghiệp quốc tế.</p>
     </a>
     <a href="doi-ngu.html" class="clay-card hub-card p-6">
       <p class="text-4xl">👥</p>
