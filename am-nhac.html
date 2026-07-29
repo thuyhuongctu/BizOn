@@ -111,33 +111,62 @@ tailwind.config = {
 <script src="js/site-ui.js" defer></script>
 <script>
 /* ===== Trình phát ca khúc (một bài phát tại một thời điểm) ===== */
-const TRACKS = [
-  { t: '«Hương on Return» ⭐', s: 'Bài hát chính của BizOn · bản thu có lời', f: 'assets/audio/huong-on-return.mp3', icon: '🌟' },
-  { t: '«Hương on Return» — bản remix (remastered)', s: 'Bản phối lại mới · hành trình Go Global gói trong một bài hát: entry mode, đường cong chữ U ngược, «bốn ba phần trăm — vừa đủ để bay cao»', f: 'assets/audio/huong-on-return-remix.mp3', icon: '🔁' },
-  { t: '«Bật Nghiệp»', s: 'Ca khúc chủ đề game Việt Nam · V-pop electronic 112 BPM · bản phối instrumental (bản thu có lời sắp ra mắt)', f: 'assets/audio/bat-nghiep.mp3', icon: '🐉' },
-  { t: '«Vừa Đủ Để Bay Cao»', s: 'Ca khúc tiếng Việt về «đường cong ta học» · bản thu có lời (remastered)', f: 'assets/audio/vua-du-de-bay-cao.mp3', icon: '🪁' },
-  { t: "«Je m'appelle Hương sans frontières»", s: 'Ca khúc BizOn Go Global · International pop 118 BPM · bản thu tiếng Việt', f: 'assets/audio/huong-and-the-world.mp3', icon: '🌏' },
-  { t: "«Je m'appelle Hương sans frontières» — English version", s: 'Bản song ngữ Anh–Việt cho phát hành quốc tế · bản thu có lời', f: 'assets/audio/huong-and-the-world-en.mp3', icon: '🌍' },
-  { t: "«Je m'appelle Hương sans frontières» — bản giọng nam", s: 'Bản phối giọng nam · lời tiếng Anh song ngữ', f: 'assets/audio/huong-and-the-world-male.mp3', icon: '🎤' },
-  { t: '«And The World Say Hello!»', s: 'Ca khúc mới của hệ sinh thái Je m\'appelle Hương · bản thu có lời', f: 'assets/audio/and-the-world-say-hello.mp3', icon: '👋' },
-  { t: '«Mekong Compass»', s: 'Ca khúc mới lấy cảm hứng dòng Mekong · bản thu có lời', f: 'assets/audio/mekong-compass.mp3', icon: '🧭' },
-  { t: '«Journey on the Golden Silt»', s: 'Ca khúc game BizOn · Global electro-pop đa ngôn ngữ Anh–Pháp–Việt · từ phù sa Mekong ra thế giới', f: 'assets/audio/journey-golden-silt.mp3', icon: '🌾' },
+/* Các ca khúc gom theo nhóm: bản gốc đứng đầu, các bản remix/bản phối xếp sau */
+const GROUPS = [
+  { name: '«Hương on Return»', icon: '🌟', desc: 'Bài hát chính của BizOn', tracks: [
+    { t: 'Bản gốc ⭐', s: 'Bản thu có lời', f: 'assets/audio/huong-on-return.mp3', icon: '🌟' },
+    { t: 'Bản remix (remastered)', s: 'Bản phối lại mới · hành trình Go Global gói trong một bài hát: entry mode, đường cong chữ U ngược, «bốn ba phần trăm — vừa đủ để bay cao»', f: 'assets/audio/huong-on-return-remix.mp3', icon: '🔁' },
+  ]},
+  { name: '«Journey on the Golden Silt»', icon: '🌾', desc: 'Global electro-pop đa ngôn ngữ Anh–Pháp–Việt · từ phù sa Mekong ra thế giới', tracks: [
+    { t: 'Bản gốc (4 phút)', s: 'Bản thu có lời chính thức', f: 'assets/audio/journey-golden-silt.mp3', icon: '🌾' },
+    { t: 'Bản remix', s: 'Bản phối lại mở rộng', f: 'assets/audio/journey-golden-silt-remix.mp3', icon: '🔁' },
+    { t: 'Bản remix «Mekong River»', s: 'Bản phối lại theo chủ đề dòng sông Mekong', f: 'assets/audio/mekong-river-remix.mp3', icon: '🌊' },
+  ]},
+  { name: "«Je m'appelle Hương sans frontières»", icon: '🌏', desc: 'Ca khúc BizOn Go Global · International pop 118 BPM', tracks: [
+    { t: 'Bản gốc — tiếng Việt', s: 'Bản thu tiếng Việt', f: 'assets/audio/huong-and-the-world.mp3', icon: '🌏' },
+    { t: 'English version', s: 'Bản song ngữ Anh–Việt cho phát hành quốc tế · bản thu có lời', f: 'assets/audio/huong-and-the-world-en.mp3', icon: '🌍' },
+    { t: 'Bản giọng nam', s: 'Bản phối giọng nam · lời tiếng Anh song ngữ', f: 'assets/audio/huong-and-the-world-male.mp3', icon: '🎤' },
+  ]},
+  { name: '«Bật Nghiệp»', icon: '🐉', desc: 'Ca khúc chủ đề game Việt Nam · V-pop electronic 112 BPM', tracks: [
+    { t: 'Bản gốc — instrumental', s: 'Bản phối instrumental (bản thu có lời sắp ra mắt)', f: 'assets/audio/bat-nghiep.mp3', icon: '🐉' },
+  ]},
+  { name: '«Vừa Đủ Để Bay Cao»', icon: '🪁', desc: 'Ca khúc tiếng Việt về «đường cong ta học»', tracks: [
+    { t: 'Bản gốc (remastered)', s: 'Bản thu có lời', f: 'assets/audio/vua-du-de-bay-cao.mp3', icon: '🪁' },
+  ]},
+  { name: '«And The World Say Hello!»', icon: '👋', desc: "Ca khúc của hệ sinh thái Je m'appelle Hương", tracks: [
+    { t: 'Bản gốc', s: 'Bản thu có lời', f: 'assets/audio/and-the-world-say-hello.mp3', icon: '👋' },
+  ]},
+  { name: '«Mekong Compass»', icon: '🧭', desc: 'Ca khúc lấy cảm hứng dòng Mekong', tracks: [
+    { t: 'Bản gốc', s: 'Bản thu có lời', f: 'assets/audio/mekong-compass.mp3', icon: '🧭' },
+  ]},
 ];
+const TRACKS = GROUPS.flatMap(g => g.tracks);
 let cur = null, curIdx = -1;
 const fmt = s => isFinite(s) ? `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}` : '–:––';
-function renderTracks() {
-  document.getElementById('tracks').innerHTML = TRACKS.map((tr, i) => `
-    <div class="clay-card p-4 sm:p-5 flex items-center gap-4">
-      <button onclick="playTrack(${i})" class="clay-btn shrink-0 w-14 h-14 rounded-full text-2xl flex items-center justify-center" style="background:linear-gradient(160deg,#00c4ff,#006687);color:#fff">${curIdx === i && cur && !cur.paused ? '⏸' : '▶'}</button>
+function trackRow(tr, i) {
+  return `
+    <div class="flex items-center gap-4 py-3 ${i > 0 ? 'border-t border-deep-teal/10' : ''}">
+      <button onclick="playTrack(${TRACKS.indexOf(tr)})" class="clay-btn shrink-0 w-12 h-12 rounded-full text-xl flex items-center justify-center" style="background:linear-gradient(160deg,#00c4ff,#006687);color:#fff">${curIdx === TRACKS.indexOf(tr) && cur && !cur.paused ? '⏸' : '▶'}</button>
       <div class="min-w-0 flex-1">
-        <p class="font-display font-extrabold text-deep-teal text-sm truncate">${tr.icon} ${tr.t} ${curIdx === i && cur && !cur.paused ? '<span class="eq ml-1"><span></span><span></span><span></span></span>' : ''}</p>
+        <p class="font-display font-extrabold text-deep-teal text-sm truncate">${tr.icon} ${tr.t} ${curIdx === TRACKS.indexOf(tr) && cur && !cur.paused ? '<span class="eq ml-1"><span></span><span></span><span></span></span>' : ''}</p>
         <p class="text-[10px] text-deep-teal/50 mt-0.5">${tr.s}</p>
         <div class="flex items-center gap-2 mt-2">
-          <span id="t-cur-${i}" class="text-[10px] font-bold text-deep-teal/50 w-8">–:––</span>
-          <input id="t-seek-${i}" type="range" min="0" max="100" value="0" class="seek flex-1" oninput="seekTrack(${i}, this.value)">
-          <span id="t-dur-${i}" class="text-[10px] font-bold text-deep-teal/50 w-8">–:––</span>
+          <span id="t-cur-${TRACKS.indexOf(tr)}" class="text-[10px] font-bold text-deep-teal/50 w-8">–:––</span>
+          <input id="t-seek-${TRACKS.indexOf(tr)}" type="range" min="0" max="100" value="0" class="seek flex-1" oninput="seekTrack(${TRACKS.indexOf(tr)}, this.value)">
+          <span id="t-dur-${TRACKS.indexOf(tr)}" class="text-[10px] font-bold text-deep-teal/50 w-8">–:––</span>
         </div>
       </div>
+    </div>`;
+}
+function renderTracks() {
+  document.getElementById('tracks').innerHTML = GROUPS.map(g => `
+    <div class="clay-card p-4 sm:p-5">
+      <div class="flex items-center justify-between gap-2 mb-1">
+        <h3 class="font-display font-extrabold text-deep-teal text-base truncate">${g.icon} ${g.name}</h3>
+        <span class="shrink-0 text-[10px] font-extrabold px-2.5 py-1 rounded-full" style="background:rgba(0,102,135,.1);color:#006687">${g.tracks.length} bản</span>
+      </div>
+      <p class="text-[10px] text-deep-teal/50 mb-1.5">${g.desc}</p>
+      ${g.tracks.map((tr, j) => trackRow(tr, j)).join('')}
     </div>`).join('');
 }
 function playTrack(i) {
