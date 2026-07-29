@@ -12,33 +12,10 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
 <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
-<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="css/tw.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      colors: {
-        primary: '#006687',
-        'primary-container': '#00c4ff',
-        'surface-bright': '#f4faff',
-        'deep-teal': 'rgb(var(--dt) / <alpha-value>)',
-      },
-      fontFamily: {
-        display: ['"Plus Jakarta Sans"', 'sans-serif'],
-        body: ['Manrope', 'sans-serif'],
-      },
-      borderRadius: { clay: '24px' },
-      boxShadow: {
-        clay: '0 10px 30px -5px rgba(0, 102, 135, 0.05), inset 0 -4px 0 rgba(0, 0, 0, 0.05)',
-        'clay-lg': '0 20px 45px -10px rgba(0, 102, 135, 0.15), inset 0 -4px 0 rgba(0, 0, 0, 0.05)',
-      },
-    },
-  },
-};
-</script>
 <script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
 <style>
   html { background:#f4faff; }
