@@ -1366,7 +1366,7 @@ function renderConquest() {
 // ---------- Giới thiệu game (Intro — hành trình chinh phục) ----------
 const INTRO_SLIDES = [
   { icon: '🇻🇳', title: 'Việt Nam 2026', img: 'assets/illustrations/hero-vietnam-2026.png',
-    text: 'Nền kinh tế đang vươn mình "Hóa Rồng". Đội của bạn điều hành một công ty đồ chơi đất sét — khởi nghiệp từ Miền Tây, khát vọng vươn ra cả nước.' },
+    text: 'Nền kinh tế đang vươn mình "Hóa Rồng". Đội của bạn điều hành một công ty đồ chơi đất sét — khởi nghiệp từ Miền Tây, khát vọng mở rộng cả thị trường nội địa và quốc tế.' },
   { icon: '🏺', title: 'Doanh nghiệp & sản phẩm của bạn',
     text: 'Bạn điều hành một xưởng đồ chơi đất sét thủ công tại Cần Thơ, vốn khởi điểm 500 triệu ₫. Sản phẩm chủ lực: «Bộ linh vật đất sét Việt» — dòng quà tặng & đồ sưu tầm, giá tham chiếu 150.000₫/bộ. Tên doanh nghiệp chính là tên đội bạn đặt khi đăng nhập!' },
   { icon: '🗺️', title: '6 vòng · 6 tỉnh thành',
