@@ -142,6 +142,15 @@
       <p class="text-sm font-semibold opacity-70 mt-1.5" id="ft-eff"></p>
       <div class="mt-4 space-y-2 text-left" id="ft-board"></div>
       <p class="text-xs opacity-60 mt-3" id="ft-reveal"></p>
+      <div class="mt-5 text-left hidden" id="ft-submit-box">
+        <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mb-1.5">📡 Nộp kết quả cho giảng viên (tùy chọn)</p>
+        <div class="flex flex-col sm:flex-row gap-2">
+          <input id="ft-class" placeholder="Mã lớp (VD: QTKD-2026-A)" class="flex-1 border-2 rounded-xl px-3 py-2.5 text-sm font-semibold" style="border-color:rgba(0,102,135,.25);background:transparent;color:inherit">
+          <input id="ft-name" placeholder="Tên của bạn" class="flex-1 border-2 rounded-xl px-3 py-2.5 text-sm font-semibold" style="border-color:rgba(0,102,135,.25);background:transparent;color:inherit">
+          <button id="ft-send" onclick="ftSubmit()" class="clay-btn bg-deep-teal text-white font-display font-extrabold px-5 py-2.5 text-sm shrink-0">Nộp</button>
+        </div>
+        <p id="ft-send-msg" class="text-[11px] font-semibold opacity-60 mt-1.5"></p>
+      </div>
       <div class="flex gap-3 mt-5">
         <button onclick="location.reload()" class="clay-btn flex-1 bg-clay-gold text-deep-teal font-display font-extrabold py-3.5">🔄 Chơi lại</button>
         <a href="games.html" class="clay-btn flex-1 bg-primary text-white font-display font-extrabold py-3.5 flex items-center justify-center">🕹️ Arcade</a>
@@ -391,8 +400,56 @@
       rank === 2 ? ['🥉', 'Hạng 3 — thị trường khốc liệt'] : ['🌱', 'Về chót… nhưng bài học là thật'];
     $('ft-medal').textContent = crown[0];
     $('ft-title').textContent = crown[1];
+    S.result = { eff: eff, rank: rank + 1 };
+    initSubmit();
     $('ft-reveal').innerHTML = '🔍 Đáp án của ván này: cặp thắng là ' + MENUS[bc[0]][0] + ' <b>' + MENUS[bc[0]][1] + '</b> × ' + LOCS[bc[1]][0] + ' <b>' + LOCS[bc[1]][1] + '</b>. Chiến lược tham chiếu: gánh hàng rong tuần 1–2 để dò, xe lưu động tuần 3–5 với cặp tốt nhất — và né khu đông đối thủ khi doanh thu gốc ngang nhau.';
   }
+
+  // ===== Nộp kết quả cho giảng viên (tùy chọn) — bảng ft_results, INSERT-only =====
+  var bcfg = function () { return window.BIZON_BACKEND || {}; };
+  var backendOn = function () { var c = bcfg(); return c.enabled && c.url && !c.url.includes('YOUR-PROJECT'); };
+
+  function initSubmit() {
+    if (!backendOn()) return; // backend tắt thì ẩn luôn khối nộp
+    $('ft-submit-box').classList.remove('hidden');
+    try {
+      $('ft-class').value = localStorage.getItem('bizon-ft-class') || localStorage.getItem('bizon-class') || '';
+      $('ft-name').value = localStorage.getItem('bizon-ft-name') || '';
+    } catch (e) {}
+  }
+
+  window.ftSubmit = async function () {
+    var klass = $('ft-class').value.trim(), name = $('ft-name').value.trim();
+    var msg = $('ft-send-msg'), btn = $('ft-send');
+    if (!klass) { msg.textContent = 'Nhập Mã lớp trước đã nhé.'; return; }
+    if (!S.result) return;
+    try { localStorage.setItem('bizon-ft-class', klass); localStorage.setItem('bizon-ft-name', name); } catch (e) {}
+    btn.disabled = true; btn.style.opacity = 0.5;
+    msg.textContent = 'Đang gửi…';
+    try {
+      var c = bcfg();
+      var res = await fetch(c.url.replace(/\/$/, '') + '/rest/v1/ft_results', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', apikey: c.anonKey, Authorization: 'Bearer ' + c.anonKey, Prefer: 'return=minimal' },
+        body: JSON.stringify({
+          class_code: klass,
+          player_name: name || null,
+          team_name: TEAMS[S.team].name + ' — ' + TEAM()[S.cap].name,
+          total_revenue: Math.round(S.total * 10) / 10,
+          efficiency: S.result.eff,
+          final_rank: S.result.rank,
+          detail_json: { captain: TEAM()[S.cap].name, rivals: RIVALS.map(function (r) { return { name: r.name, total: Math.round(r.total * 10) / 10 }; }) },
+          app_version: 'bizon-v155',
+          client_ts: new Date().toISOString(),
+        }),
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      msg.textContent = '✅ Đã nộp! Kết quả đã hiện trên bảng của giảng viên.';
+    } catch (e) {
+      btn.disabled = false; btn.style.opacity = 1;
+      msg.textContent = '⚠️ Chưa gửi được — kiểm tra mạng rồi thử lại.';
+    }
+  };
 
   renderTeams();
   renderAvatars();
