@@ -52,6 +52,11 @@
 
   async function submitRound(S, report) {
     if (!on()) return;
+    // Ván chơi thử (không nhập Mã lớp) không gửi lên máy chủ. Người chơi tự do
+    // vẫn chơi trọn 6 vòng, nhưng bảng dữ liệu của giảng viên chỉ còn các ván
+    // thuộc lớp thật – tránh nhiễu cho chấm điểm và cho nghiên cứu.
+    const classId = ((S.profile && S.profile.classId) || '').trim();
+    if (!classId) return;
     try {
       // Bản kết quả gọn: đủ cho chấm điểm + nghiên cứu, bỏ các khối nặng
       const result = {
@@ -65,7 +70,7 @@
       };
       const text = JSON.stringify(result);
       const row = {
-        class_code: (S.profile && S.profile.classId) || 'TU-DO',
+        class_code: classId,
         team_name: (S.profile && S.profile.teamName) || 'Đội chưa đặt tên',
         student_email: (S.profile && S.profile.email) || null,
         round_number: report.round,

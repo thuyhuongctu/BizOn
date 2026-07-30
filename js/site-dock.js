@@ -29,6 +29,7 @@
     ['Đội Phù Sa (remix)', 'doi-phu-sa-remix.mp3'],
     ['Brand Passport ⭐ (nhạc chủ đề Hộ Chiếu Thương Hiệu)', 'brand-passport.mp3'],
     ['Brand Passport – bản phối', 'brand-passport-v2.mp3'],
+    ['Brand Passport – bản remix', 'brand-passport-remix.mp3'],
     ['Stamps Beyond Borders', 'stamps-beyond-borders.mp3'],
     ['Stamps Beyond Borders – bản thu lại', 'stamps-beyond-borders-v2.mp3'],
     ['Stamps Beyond Borders – bản phối 3:35', 'stamps-beyond-borders-v3.mp3'],
