@@ -1,5 +1,5 @@
 -- ============================================================
--- BizOn Bật Nghiệp — Sổ nhận kết quả «Gánh Hàng Khởi Nghiệp» (food-truck.html)
+-- BizOn Bật Nghiệp – Sổ nhận kết quả «Gánh Hàng Khởi Nghiệp» (food-truck.html)
 -- Sinh viên chơi xong ván 5 tuần có thể nộp kết quả kèm Mã lớp; giảng viên
 -- xem tổng hợp trên giang-vien.html bằng Khóa giảng viên (app_secrets).
 -- Cùng triết lý các bảng khác: anon CHỈ ĐƯỢC GHI, đọc qua RPC có khóa.
@@ -30,7 +30,7 @@ create policy "sinh vien chi duoc nop ket qua ganh hang"
 
 -- KHÔNG tạo policy SELECT/UPDATE/DELETE cho anon → mặc định bị chặn.
 
--- Tổng hợp cho giảng viên: mỗi (sinh viên, đội) 1 dòng — ván có hiệu suất
+-- Tổng hợp cho giảng viên: mỗi (sinh viên, đội) 1 dòng – ván có hiệu suất
 -- cao nhất, kèm tổng lượt chơi; chỉ trả dữ liệu khi đúng Khóa giảng viên.
 create or replace function bizon_ft_board(p_class_code text, p_key text)
 returns table (

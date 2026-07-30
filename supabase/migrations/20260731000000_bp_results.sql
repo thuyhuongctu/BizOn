@@ -1,5 +1,5 @@
 -- ============================================================
--- BizOn Bật Nghiệp — Sổ nhận kết quả «Hộ Chiếu Thương Hiệu» (brand-passport.html)
+-- BizOn Bật Nghiệp – Sổ nhận kết quả «Hộ Chiếu Thương Hiệu» (brand-passport.html)
 -- Sinh viên chơi xong 6 quý có thể nộp kết quả kèm Mã lớp; giảng viên xem
 -- tổng hợp trên giang-vien.html bằng Khóa giảng viên (app_secrets).
 -- Cùng triết lý các bảng khác: anon CHỈ ĐƯỢC GHI, đọc qua RPC có khóa.

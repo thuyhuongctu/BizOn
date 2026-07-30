@@ -1,7 +1,7 @@
 -- ============================================================
--- BizOn Bật Nghiệp — Khảo sát trước–sau bản online (nghiên cứu giáo dục)
+-- BizOn Bật Nghiệp – Khảo sát trước–sau bản online (nghiên cứu giáo dục)
 -- Sinh viên làm phiếu trên điện thoại tại khao-sat-online.html; kết quả
--- tự chấm Phần A và nộp về đây — hết cảnh nhập tay 40–60 phiếu giấy.
+-- tự chấm Phần A và nộp về đây – hết cảnh nhập tay 40–60 phiếu giấy.
 -- Ẩn danh: chỉ thu "mã tự đặt", không họ tên. Tệp tự áp dụng qua tích
 -- hợp GitHub (hoặc dán vào SQL Editor → Run).
 -- ============================================================
@@ -27,7 +27,7 @@ create table if not exists survey_responses (
 
 create index if not exists idx_sr_class_phase on survey_responses (class_code, phase, created_at);
 
--- RLS: sinh viên (anon) CHỈ ĐƯỢC NỘP — không đọc/sửa/xóa được phiếu nào.
+-- RLS: sinh viên (anon) CHỈ ĐƯỢC NỘP – không đọc/sửa/xóa được phiếu nào.
 alter table survey_responses enable row level security;
 
 create policy "sinh vien chi duoc nop phieu"

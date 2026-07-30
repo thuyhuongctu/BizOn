@@ -1,4 +1,4 @@
-/* BizOn Bật Nghiệp 2026 — Engine mô phỏng 6 vòng (client-side)
+/* BizOn Bật Nghiệp 2026 – Engine mô phỏng 6 vòng (client-side)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.
  * Mô hình hóa: decisions {price, marketing_budget,
  * production_volume, rd_investment} → financial_reports {revenue, net_profit,
@@ -9,7 +9,7 @@ const ROUNDS_TOTAL = 6;
 const BASE_MARKET_UNITS = 12000;     // tổng cầu thị trường mỗi vòng
 const UNIT_COST = 45;                 // nghìn ₫ / sản phẩm (chưa gồm nhân công)
 const FIXED_COST = 30;                // triệu ₫ / vòng (điện nước, mặt bằng)
-const REF_PRICE = 150;                // nghìn ₫ — giá tham chiếu
+const REF_PRICE = 150;                // nghìn ₫ – giá tham chiếu
 const PRICE_ELASTICITY = 1.8;
 const STARTING_BALANCE = 500;         // triệu ₫ (vốn giảng viên cấp)
 const XP_PER_LEVEL = 100;
@@ -18,7 +18,7 @@ const AI_QUOTA_PER_ROUND = 3;         // ERR_AI_LIMIT
 const MARKET_EVENTS = [
   null,
   { id: 'EV_STABLE', round: 1, tone: 'good', icon: '🌤️', name: 'Thị trường ổn định', tag: 'VÒNG KHỞI ĐỘNG',
-    desc: 'Vòng khởi động — nhu cầu thị trường ở mức chuẩn.', demand: 1.0, costMul: 1.0,
+    desc: 'Vòng khởi động – nhu cầu thị trường ở mức chuẩn.', demand: 1.0, costMul: 1.0,
     impacts: [{ icon: '📈', label: 'Nhu cầu thị trường', value: 'Chuẩn', dir: 'flat' }, { icon: '⚙️', label: 'Chi phí vận hành', value: 'Ổn định', dir: 'flat' }],
     luminaImg: 'lumina-vest-thumbsup', luminaMsg: 'Chào cả đội! Vòng đầu là lúc thiết lập nền tảng. CEO hãy thống nhất chiến lược giá, SEC nhớ ghi chép lại các quyết định nhé!',
     cta: { label: '🎯 Nhập quyết định ngay', tab: 'decisions' } },
@@ -29,10 +29,10 @@ const MARKET_EVENTS = [
     luminaImg: 'lumina-ao-dai-clap', luminaMsg: 'Thật tuyệt vời! CFO hãy rà soát lại ngân sách đầu tư, còn COO hãy chuẩn bị tăng công suất để đáp ứng làn sóng đơn hàng mới này nhé!',
     cta: { label: '🏭 Tăng công suất ngay', tab: 'decisions' } },
   { id: 'EV_PRICEWAR', round: 3, tone: 'warn', icon: '⚔️', name: 'Biến cố: Chiến Tranh Giá', tag: 'CẢNH BÁO THỊ TRƯỜNG',
-    desc: 'Đối thủ giảm giá 15% điện rộng tại kênh Modern Trade — khách hàng cực nhạy cảm về giá trong vòng này.',
+    desc: 'Đối thủ giảm giá 15% điện rộng tại kênh Modern Trade – khách hàng cực nhạy cảm về giá trong vòng này.',
     demand: 1.0, costMul: 1.0, elasticityMul: 1.4,
     impacts: [{ icon: '🏷️', label: 'Giá đối thủ (kênh MT)', value: '-15%', dir: 'down' }, { icon: '💔', label: 'Độ nhạy giá của khách', value: 'CAO', dir: 'up-bad' }],
-    luminaImg: 'lumina-vest-worried', luminaMsg: 'Thưa CMO, đối thủ vừa châm ngòi chiến tranh giá! Ta có 2 lối đi: chiến thuật Bundling hoặc tăng Value-Added — đừng lao vào giảm giá sâu kẻo mất biên lợi nhuận.',
+    luminaImg: 'lumina-vest-worried', luminaMsg: 'Thưa CMO, đối thủ vừa châm ngòi chiến tranh giá! Ta có 2 lối đi: chiến thuật Bundling hoặc tăng Value-Added – đừng lao vào giảm giá sâu kẻo mất biên lợi nhuận.',
     cta: { label: '🤖 Xem giải pháp từ Lumina', tab: 'advisor' } },
   { id: 'EV_RECESSION', round: 4, tone: 'bad', icon: '⚡', name: 'Khủng Hoảng Năng Lượng', tag: 'CẢNH BÁO KHẨN CẤP', img: 'assets/illustrations/event-energy-crisis.jpg',
     desc: 'Thị trường năng lượng toàn cầu đang gặp biến động cực lớn. Giá điện sản xuất tăng vọt, tổng cầu suy giảm.',
@@ -47,10 +47,10 @@ const MARKET_EVENTS = [
     luminaImg: 'lumina-ao-dai-alert', luminaMsg: 'Thưa CEO, tình hình rất khẩn cấp! Dây chuyền sản xuất đình trệ vì thiếu linh kiện đầu vào. Chúng ta cần quyết định ngay: tăng ngân sách vận chuyển hay đàm phán lại thời gian giao hàng?',
     cta: { label: '👥 Họp khẩn cấp toàn đội', tab: 'decisions' } },
   { id: 'EV_MILESTONE', round: 6, tone: 'good', icon: '🐉', name: 'Việt Nam Hóa Rồng', tag: 'VÒNG CHUNG KẾT · KỊCH BẢN GIẢ ĐỊNH', img: 'assets/illustrations/event-vietnam-2026.jpg',
-    desc: 'Kịch bản giả định «Rồng Việt vươn mình»: Việt Nam tiến vào nhóm thu nhập trung bình cao. Tầng lớp trung lưu mở rộng, sức mua bùng nổ — khách hàng ít nhạy cảm về giá, ưu tiên chất lượng và thương hiệu. (Tham số mô phỏng minh họa, không phải số liệu thống kê thực.)',
+    desc: 'Kịch bản giả định «Rồng Việt vươn mình»: Việt Nam tiến vào nhóm thu nhập trung bình cao. Tầng lớp trung lưu mở rộng, sức mua bùng nổ – khách hàng ít nhạy cảm về giá, ưu tiên chất lượng và thương hiệu. (Tham số mô phỏng minh họa, không phải số liệu thống kê thực.)',
     demand: 1.25, costMul: 1.0, elasticityMul: 0.85, wageMul: 1.1, brandPow: 1.5, mktBoost: 1.2,
     impacts: [{ icon: '🛍️', label: 'Tổng cầu thị trường', value: '+25%', dir: 'up' }, { icon: '🏷️', label: 'Độ nhạy giá của khách', value: '-15%', dir: 'down-good' }, { icon: '👷', label: 'Chi phí nhân công', value: '+10%', dir: 'up-bad' }, { icon: '✨', label: 'Trọng số thương hiệu', value: '×1.5', dir: 'up' }],
-    luminaImg: 'lumina-ao-dai-clap', luminaMsg: 'Kịch bản chung kết, thưa đội ngũ điều hành! Trong kịch bản giả định này, Việt Nam tiến vào nhóm thu nhập trung bình cao — thị trường "thay da đổi thịt" với sức mua bùng nổ. Đây là cơ hội vàng để CMO nâng tầm thương hiệu thành dòng Premium và CEO mở rộng quy mô phục vụ làn sóng tiêu dùng mới!',
+    luminaImg: 'lumina-ao-dai-clap', luminaMsg: 'Kịch bản chung kết, thưa đội ngũ điều hành! Trong kịch bản giả định này, Việt Nam tiến vào nhóm thu nhập trung bình cao – thị trường "thay da đổi thịt" với sức mua bùng nổ. Đây là cơ hội vàng để CMO nâng tầm thương hiệu thành dòng Premium và CEO mở rộng quy mô phục vụ làn sóng tiêu dùng mới!',
     cta: { label: '🐉 Bứt phá về đích', tab: 'decisions' } },
 ];
 
@@ -109,7 +109,7 @@ function claimMission(s, id) {
  * Giới hạn what_if_limit = 2 lượt/vòng (ERR_AI_LIMIT_REACHED).
  */
 const WHAT_IF_LIMIT = 2;
-const LOAN_INTEREST_RATE = 10; // %/phiên — dùng cho phân tích đòn bẩy
+const LOAN_INTEREST_RATE = 10; // %/phiên – dùng cho phân tích đòn bẩy
 
 function whatIfSimulate(s, role, d) {
   const ev = currentEvent(s);
@@ -157,14 +157,14 @@ function whatIfSimulate(s, role, d) {
         { label: 'ROI giả định vs lãi vay ' + LOAN_INTEREST_RATE + '%', value: roiHyp + '%', bad: !leverageOK },
       ],
       msg: qrDanger
-        ? `CFO ơi, kịch bản này cho thấy Quick Ratio rơi xuống ${projQuickRatio} — dưới ngưỡng an toàn 1.1. Nếu doanh số thực tế thấp hơn dự báo 5%, chúng ta sẽ mất khả năng thanh toán. Tôi đề xuất vay thêm ít nhất 100tr₫ làm lớp đệm an toàn.`
+        ? `CFO ơi, kịch bản này cho thấy Quick Ratio rơi xuống ${projQuickRatio} – dưới ngưỡng an toàn 1.1. Nếu doanh số thực tế thấp hơn dự báo 5%, chúng ta sẽ mất khả năng thanh toán. Tôi đề xuất vay thêm ít nhất 100tr₫ làm lớp đệm an toàn.`
         : leverageOK
-        ? `Phân tích cho thấy sử dụng vốn lúc này là bước đi thông minh: ROI kỳ vọng ${roiHyp}% cao hơn lãi suất vay ${LOAN_INTEREST_RATE}%. Đòn bẩy hiệu quả — có thể mạnh dạn tăng đầu tư R&D!`
+        ? `Phân tích cho thấy sử dụng vốn lúc này là bước đi thông minh: ROI kỳ vọng ${roiHyp}% cao hơn lãi suất vay ${LOAN_INTEREST_RATE}%. Đòn bẩy hiệu quả – có thể mạnh dạn tăng đầu tư R&D!`
         : `Cảnh báo mòn vốn: ROI kỳ vọng chỉ ${roiHyp}%, thấp hơn chi phí vốn ${LOAN_INTEREST_RATE}%. Nên cắt giảm chi phí cố định hoặc hoãn vay cho tới khi biên lợi nhuận cải thiện.`,
     };
   }
 
-  // CEO — STRATEGIC_OVERVIEW
+  // CEO – STRATEGIC_OVERVIEW
   const risky = estProfit < 0 || liquidityRisk > 0.8;
   const aggressive = deltaShare > 3 && estProfit < 0;
   return {
@@ -203,7 +203,7 @@ function forecastCash(s, d) {
   return { inflow: Math.round(inflow), outflow: Math.round(outflow), net: Math.round(inflow - outflow), breakEven, laborCap, estSold: est };
 }
 
-/* ===== LUMINA ADVISOR PRO — kịch bản "Nếu — Thì" từ số liệu thực ===== */
+/* ===== LUMINA ADVISOR PRO – kịch bản "Nếu – Thì" từ số liệu thực ===== */
 function advisorProScenarios(inp) {
   // inp: {revenue, cost, marketing, growthTarget} (triệu ₫/tháng, %)
   const margin = inp.revenue - inp.cost;
@@ -226,7 +226,7 @@ function advisorProScenarios(inp) {
   };
 }
 
-/* ===== THE CMO BRAIN — cố vấn marketing theo kịch bản động =====
+/* ===== THE CMO BRAIN – cố vấn marketing theo kịch bản động =====
  * Bảng logic ưu tiên: Loyalty<60% (ĐỎ) → mất >5% thị phần (ĐỎ) → ROI marketing <3.0 (VÀNG)
  * → đáp ứng cầu <90% (XANH cơ hội) → Price War (kịch bản A) → mặc định thị trường ngách xanh (kịch bản B). */
 function cmoBrain(s) {
@@ -260,7 +260,7 @@ function cmoBrain(s) {
   if (ev.id === 'EV_PRICEWAR' && !s.finished) return {
     status: 'RED', badge: 'ĐỎ · PRICE WAR', metric: 'Đối thủ B hạ giá 15% tại Modern Trade',
     dialogue: 'Thưa CMO, đối thủ B vừa hạ giá 15% và chiếm mất 8% thị phần của chúng ta. Nếu không phản ứng trong vòng tới, chúng ta sẽ mất vị thế dẫn đầu.',
-    actions: ["Triển khai gói 'Marketing Boost' giữ chân khách trung thành", 'Cải tiến bao bì (R&D) tăng giá trị cảm nhận — đừng đua giảm giá'],
+    actions: ["Triển khai gói 'Marketing Boost' giữ chân khách trung thành", 'Cải tiến bao bì (R&D) tăng giá trị cảm nhận – đừng đua giảm giá'],
   };
   return {
     status: 'OPPORTUNITY', badge: 'XANH · CƠ HỘI VÀNG', metric: "Xu hướng 'Tiêu dùng xanh' +25% tại Đông Nam Á",
@@ -269,7 +269,7 @@ function cmoBrain(s) {
   };
 }
 
-/* ===== CFO BRAIN — giám sát thanh khoản & chế độ khủng hoảng ===== */
+/* ===== CFO BRAIN – giám sát thanh khoản & chế độ khủng hoảng ===== */
 function cfoBrain(s) {
   const last = s.history[s.history.length - 1] || null;
   const invDays = last && last.sold > 0
@@ -278,7 +278,7 @@ function cfoBrain(s) {
   if (s.quickRatio < 1) return {
     status: 'CRISIS', badge: 'ĐỎ · KHỦNG HOẢNG THANH KHOẢN', invDays,
     metric: `Quick Ratio ${s.quickRatio.toFixed(2)} < 1.00`,
-    dialogue: `CFO, thanh khoản đang ở vùng đỏ! Tiền mặt chỉ còn ${Math.round(s.balance)}tr₫, vòng quay tồn kho lên tới ${invDays} ngày. Hãy phê duyệt khoản vay khẩn cấp hoặc cắt giảm chi phí ngay — đừng để lỡ kỳ trả lương.`,
+    dialogue: `CFO, thanh khoản đang ở vùng đỏ! Tiền mặt chỉ còn ${Math.round(s.balance)}tr₫, vòng quay tồn kho lên tới ${invDays} ngày. Hãy phê duyệt khoản vay khẩn cấp hoặc cắt giảm chi phí ngay – đừng để lỡ kỳ trả lương.`,
   };
   if (s.roi >= LOAN_INTEREST_RATE && s.loan === 0) return {
     status: 'LEVERAGE', badge: 'XANH · ĐÒN BẨY HIỆU QUẢ', invDays,
@@ -292,7 +292,7 @@ function cfoBrain(s) {
   };
 }
 
-/* ===== THE COO BRAIN — cố vấn vận hành theo kịch bản ===== */
+/* ===== THE COO BRAIN – cố vấn vận hành theo kịch bản ===== */
 function cooBrain(s) {
   const last = s.history[s.history.length - 1] || null;
   const prev = s.history[s.history.length - 2] || null;
@@ -319,13 +319,13 @@ function cooBrain(s) {
     actions: ['Tăng sản lượng + nhân công vòng tới', 'Đàm phán kỳ hạn 60 ngày để kích cầu'],
   };
   return {
-    status: 'SAFE', badge: 'XANH · ỔN ĐỊNH', metric: 'Cung — cầu đang cân bằng',
+    status: 'SAFE', badge: 'XANH · ỔN ĐỊNH', metric: 'Cung – cầu đang cân bằng',
     dialogue: 'Vận hành đang mượt mà, COO ạ. Hãy duy trì bảo trì định kỳ và theo dõi OEE để giữ phong độ nhé.',
     actions: ['Bảo trì định kỳ', 'Theo dõi OEE mỗi vòng'],
   };
 }
 
-/* ===== THE SEC BRAIN — cố vấn điều phối & tuân thủ ===== */
+/* ===== THE SEC BRAIN – cố vấn điều phối & tuân thủ ===== */
 function secBrain(s) {
   const ev = currentEvent(s);
   if (!s.finished && ev.tone === 'bad' && !s.committed) return {
@@ -350,7 +350,7 @@ function secBrain(s) {
   };
 }
 
-/* ===== ESG SCORE — bền vững hóa doanh nghiệp ===== */
+/* ===== ESG SCORE – bền vững hóa doanh nghiệp ===== */
 function esgScore(s) {
   return Math.min(100, 50 + ((s.items['SOLAR_01'] || 0) > 0 ? 20 : 0) + Math.min(15, Math.round(s.rdCumulative / 50)) + ((s.items['OPS_LEAN_01'] || 0) > 0 ? 5 : 0));
 }
@@ -373,9 +373,9 @@ function kpiCongrats(s, r) {
 function riskAlerts(s, r) {
   const out = [];
   if (r.oee < 60 || r.defect > 7) out.push({ role: 'COO', risk: 'high',
-    text: 'Dây chuyền sản xuất đang kêu cứu! Tỷ lệ phế phẩm quá cao sẽ bào mòn lợi nhuận gộp. Đừng ép máy móc chạy quá tải mà bỏ qua bảo trì — hãy bảo trì định kỳ và đào tạo nhân sự kỹ thuật.' });
+    text: 'Dây chuyền sản xuất đang kêu cứu! Tỷ lệ phế phẩm quá cao sẽ bào mòn lợi nhuận gộp. Đừng ép máy móc chạy quá tải mà bỏ qua bảo trì – hãy bảo trì định kỳ và đào tạo nhân sự kỹ thuật.' });
   if (r.decisions && r.decisions.production > s.machineCapacity * 0.9 && s.quickRatio < 1) out.push({ role: 'CEO', risk: 'high',
-    text: 'Thưa CEO, chúng ta đang đứng trước ngưỡng cửa phá sản kỹ thuật. Sự đánh đổi giữa tăng trưởng nóng và an toàn dòng tiền đang bị lệch pha — hãy họp khẩn cấp toàn đội và rà soát lại quyết định.' });
+    text: 'Thưa CEO, chúng ta đang đứng trước ngưỡng cửa phá sản kỹ thuật. Sự đánh đổi giữa tăng trưởng nóng và an toàn dòng tiền đang bị lệch pha – hãy họp khẩn cấp toàn đội và rà soát lại quyết định.' });
   return out;
 }
 
@@ -447,7 +447,7 @@ function optimizeLine(s, idx, cost = 150) {
   s.balance -= cost;
   s.lineUpgraded[idx] = true;
   s.maintBonus += 5;
-  s.maintenanceLog.push({ round: Math.min(s.round, ROUNDS_TOTAL), text: `Nâng cấp Dây chuyền ${idx + 1} (-${cost}tr₫) — tiết kiệm 40% điện năng, OEE +5%` });
+  s.maintenanceLog.push({ round: Math.min(s.round, ROUNDS_TOTAL), text: `Nâng cấp Dây chuyền ${idx + 1} (-${cost}tr₫) – tiết kiệm 40% điện năng, OEE +5%` });
   return true;
 }
 
@@ -455,7 +455,7 @@ function doMaintenance(s, cost = 60) {
   if (s.balance < cost) return false;
   s.balance -= cost;
   s.maintBonus += 3;
-  s.maintenanceLog.push({ round: Math.min(s.round, ROUNDS_TOTAL), text: `Bảo trì định kỳ (-${cost}tr₫) — OEE +3%, giảm phế phẩm` });
+  s.maintenanceLog.push({ round: Math.min(s.round, ROUNDS_TOTAL), text: `Bảo trì định kỳ (-${cost}tr₫) – OEE +3%, giảm phế phẩm` });
   return true;
 }
 
@@ -470,7 +470,7 @@ function approveLoan(s, amount = 300) {
 function cutCosts(s) {
   if (s.costCutter) return false;
   s.costCutter = true;
-  s.maintenanceLog.push({ round: Math.min(s.round, ROUNDS_TOTAL), text: 'CFO kích hoạt cắt giảm chi phí — chi phí cố định vòng sau -15%' });
+  s.maintenanceLog.push({ round: Math.min(s.round, ROUNDS_TOTAL), text: 'CFO kích hoạt cắt giảm chi phí – chi phí cố định vòng sau -15%' });
   return true;
 }
 
@@ -478,7 +478,7 @@ function brandingPremium(s, cost = 120) {
   if (s.balance < cost) return false;
   s.balance -= cost;
   s.brand = Math.min(1.6, s.brand + 0.08);
-  s.maintenanceLog.push({ round: Math.min(s.round, ROUNDS_TOTAL), text: `CMO kích hoạt Branding Premium (-${cost}tr₫) — giá trị thương hiệu +`});
+  s.maintenanceLog.push({ round: Math.min(s.round, ROUNDS_TOTAL), text: `CMO kích hoạt Branding Premium (-${cost}tr₫) – giá trị thương hiệu +`});
   return true;
 }
 
@@ -665,16 +665,16 @@ function unlockAchievements(s, r) {
   });
 }
 
-/** Lumina AI — kịch bản "Nếu — Thì" theo dữ liệu vòng trước. */
+/** Lumina AI – kịch bản "Nếu – Thì" theo dữ liệu vòng trước. */
 function luminaAdvice(s, topic) {
   const last = s.history[s.history.length - 1];
   const ev = currentEvent(s);
   const fmt = n => n.toLocaleString('vi-VN');
 
   if (topic === 'pricing') {
-    if (ev.elasticityMul) return { risk: 'high', text: `Vòng này là Chiến tranh giá — khách cực nhạy về giá. Nếu bạn giữ giá trên ${fmt(REF_PRICE)}k₫, thị phần có thể rơi mạnh. Cân nhắc giảm 10–15% và bù bằng sản lượng.` };
-    if (last && last.lostSales > 0) return { risk: 'low', text: `Vòng trước bạn hụt ${fmt(last.lostSales)} đơn vì thiếu hàng — cầu đang vượt cung. Nếu tăng giá 5–10%, lợi nhuận biên sẽ cải thiện mà thị phần giảm không đáng kể.` };
-    return { risk: 'medium', text: `Giá tham chiếu thị trường là ${fmt(REF_PRICE)}k₫. Nếu giảm 10% giá, mô hình dự báo thị phần tăng ~3–4 điểm nhưng biên lợi nhuận mỏng đi — chỉ nên làm khi sản lượng đủ lớn.` };
+    if (ev.elasticityMul) return { risk: 'high', text: `Vòng này là Chiến tranh giá – khách cực nhạy về giá. Nếu bạn giữ giá trên ${fmt(REF_PRICE)}k₫, thị phần có thể rơi mạnh. Cân nhắc giảm 10–15% và bù bằng sản lượng.` };
+    if (last && last.lostSales > 0) return { risk: 'low', text: `Vòng trước bạn hụt ${fmt(last.lostSales)} đơn vì thiếu hàng – cầu đang vượt cung. Nếu tăng giá 5–10%, lợi nhuận biên sẽ cải thiện mà thị phần giảm không đáng kể.` };
+    return { risk: 'medium', text: `Giá tham chiếu thị trường là ${fmt(REF_PRICE)}k₫. Nếu giảm 10% giá, mô hình dự báo thị phần tăng ~3–4 điểm nhưng biên lợi nhuận mỏng đi – chỉ nên làm khi sản lượng đủ lớn.` };
   }
   if (topic === 'marketing') {
     const boost = ev.mktBoost ? ` Đặc biệt vòng này hiệu quả marketing được cộng hưởng ${Math.round((ev.mktBoost - 1) * 100)}% nhờ ${ev.name}!` : '';
@@ -682,7 +682,7 @@ function luminaAdvice(s, topic) {
     return { risk: 'low', text: `Nếu tăng ngân sách Marketing thêm 15%, thị phần dự kiến đạt ${(parseFloat(shareNow) + 2.5).toFixed(1)}% ở vòng sau.${boost} Khuyến nghị: Marketing Boost, R&D Upgrade.` };
   }
   // risk
-  if (ev.tone === 'bad') return { risk: 'high', text: `⚠️ Cảnh báo đỏ: ${ev.name} — ${ev.desc} Nếu không giữ ít nhất 15% vốn dự phòng, đội có thể âm dòng tiền. Cân nhắc mua "Khiên bảo hiểm" trong Cửa hàng.` };
+  if (ev.tone === 'bad') return { risk: 'high', text: `⚠️ Cảnh báo đỏ: ${ev.name} – ${ev.desc} Nếu không giữ ít nhất 15% vốn dự phòng, đội có thể âm dòng tiền. Cân nhắc mua "Khiên bảo hiểm" trong Cửa hàng.` };
   if (ev.tone === 'warn') return { risk: 'medium', text: `Rủi ro chính vòng này: ${ev.name}. ${ev.desc} Hãy điều chỉnh cơ cấu chi phí trước khi commit.` };
   return { risk: 'low', text: `Cơ hội xanh ngọc: ${ev.name}. ${ev.desc} Đây là lúc mạnh dạn đầu tư để bứt phá thị phần.` };
 }

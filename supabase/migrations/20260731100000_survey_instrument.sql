@@ -1,7 +1,7 @@
 -- ============================================================
--- BizOn Bật Nghiệp — Thêm «bộ câu hỏi» (instrument) cho khảo sát trước–sau
+-- BizOn Bật Nghiệp – Thêm «bộ câu hỏi» (instrument) cho khảo sát trước–sau
 -- GĐ3: khao-sat-online.html giờ có 2 bộ: 'batnghiep' (game chính) và
--- 'quocte' (Hộ Chiếu Thương Hiệu — kinh doanh quốc tế). Cột mới giúp
+-- 'quocte' (Hộ Chiếu Thương Hiệu – kinh doanh quốc tế). Cột mới giúp
 -- phân tích Δ/Cohen's d tách bạch từng bộ, không trộn lẫn dữ liệu.
 -- Tệp tự áp dụng qua tích hợp GitHub (hoặc dán vào SQL Editor → Run).
 -- ============================================================
