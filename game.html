@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<!-- BizOn Bật Nghiệp 2026 — © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
+<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>BizOn Bật Nghiệp 2026 — Business Simulation</title>
+<title>BizOn Bật Nghiệp 2026 – Business Simulation</title>
 <meta name="author" content="Đỗ Thùy Hương, Phan Anh Tú">
 <meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
-<meta name="description" content="BizOn – Bật Nghiệp: Trò chơi mô phỏng kinh doanh 3D phong cách đất sét dành cho đào tạo khởi nghiệp — với cố vấn AI Lumina đồng hành qua 6 vòng.">
+<meta name="description" content="BizOn – Bật Nghiệp: Trò chơi mô phỏng kinh doanh 3D phong cách đất sét dành cho đào tạo khởi nghiệp – với cố vấn AI Lumina đồng hành qua 6 vòng.">
 <meta name="theme-color" content="#006687">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
@@ -21,7 +21,7 @@
 <style>
   html { background:#f4faff; }
   body { font-family: 'Manrope', sans-serif; background:transparent; color: #033337; }
-  /* Bản đồ Việt Nam chìm — theo M-AIDA */
+  /* Bản đồ Việt Nam chìm – theo M-AIDA */
   #vn-map { position:fixed; top:50%; right:-2vw; transform:translateY(-50%); width:min(36vw,440px); z-index:-1; pointer-events:none; color:#006687; opacity:.07; }
   #vn-map svg { width:100%; height:auto; display:block; }
   #vn-map .lh-light { animation:vnlh-blink 1.8s ease-in-out infinite; }
@@ -69,7 +69,7 @@
   @keyframes floatY { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-10px); } }
   .animate-float { animation:floatY 4s ease-in-out infinite; }
   .speech-tail { position:absolute; left:-14px; bottom:0; width:14px; height:14px; background:#fff; clip-path:polygon(100% 0, 0 100%, 100% 100%); }
-  /* Chat giọng nói — theo Stitch export */
+  /* Chat giọng nói – theo Stitch export */
   .clay-bubble-in { background:#fff; border-radius:24px; border-bottom-left-radius:4px; box-shadow:8px 8px 16px rgba(0,0,0,.04), inset 2px 2px 4px rgba(255,255,255,1), inset -2px -2px 4px rgba(0,0,0,.02); }
   .clay-bubble-out { background:#006687; color:#fff; border-radius:24px; border-bottom-right-radius:4px; box-shadow:8px 8px 16px rgba(0,102,135,.15), inset 2px 2px 4px rgba(255,255,255,.3), inset -4px -4px 8px rgba(0,0,0,.2); }
   .clay-input { background:#eef4f9; box-shadow:inset 4px 4px 8px rgba(0,0,0,.05), inset -4px -4px 8px rgba(255,255,255,.8); border:none; outline:none; }
@@ -80,7 +80,7 @@
   .item-icon-container { position:relative; background:radial-gradient(circle at 30% 30%, #f0f9ff, #c1e8ff); border-radius:20px; overflow:hidden; }
   .item-icon-container::after { content:''; position:absolute; inset:0; box-shadow:inset 0 0 15px rgba(255,255,255,.6); pointer-events:none; }
   .xp-bar-fill { transition:width 1s cubic-bezier(.34,1.56,.64,1); box-shadow:inset 0 2px 4px rgba(255,255,255,.4); }
-  /* Thị trường sống — Live Market Pulse */
+  /* Thị trường sống – Live Market Pulse */
   .ticker-wrap { width:100%; overflow:hidden; white-space:nowrap; }
   .ticker-content { display:inline-block; animation:tickerMove 28s linear infinite; }
   @keyframes tickerMove { 0% { transform:translateX(100%); } 100% { transform:translateX(-100%); } }
@@ -130,8 +130,8 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="BizOn Bật Nghiệp">
 <meta property="og:locale" content="vi_VN">
-<meta property="og:title" content="BizOn Bật Nghiệp 2026 — Business Simulation">
-<meta property="og:description" content="BizOn – Bật Nghiệp: Trò chơi mô phỏng kinh doanh 3D phong cách đất sét dành cho đào tạo khởi nghiệp — với cố vấn AI Lumina đồng hành qua 6 vòng.">
+<meta property="og:title" content="BizOn Bật Nghiệp 2026 – Business Simulation">
+<meta property="og:description" content="BizOn – Bật Nghiệp: Trò chơi mô phỏng kinh doanh 3D phong cách đất sét dành cho đào tạo khởi nghiệp – với cố vấn AI Lumina đồng hành qua 6 vòng.">
 <meta property="og:url" content="https://thuyhuongctu.github.io/BizOn/game.html">
 <meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/og/og-cover.jpg">
 <meta property="og:image:width" content="1200">
@@ -163,7 +163,7 @@
 <!-- ===================== SPLASH ===================== -->
 <section id="screen-splash" class="screen active">
   <div class="min-h-screen relative bg-[#14161a]">
-    <img src="assets/illustrations/logo-splash.png" alt="BizOn Bật Nghiệp — Powering Your Business" class="absolute inset-0 w-full h-full object-cover">
+    <img src="assets/illustrations/logo-splash.png" alt="BizOn Bật Nghiệp – Powering Your Business" class="absolute inset-0 w-full h-full object-cover">
     <div class="absolute bottom-10 inset-x-0 flex justify-center">
       <div class="animate-pulse-logo w-8 h-8 rounded-full border-4 border-orange-400 border-t-transparent" style="animation:spin 1s linear infinite"></div>
     </div>
@@ -183,13 +183,13 @@
           <button onclick="toggleTheme()" class="clay-sunken rounded-full w-8 h-8 text-sm" title="Sáng/Tối">🌙</button>
         </div>
       </div>
-      <p class="text-sm text-deep-teal/60 mb-2"><span class="font-display font-extrabold lumina-name">Lumina AI</span> — <span class="signature text-lg text-deep-teal">Je m'appelle Hương</span> đang chờ đồng hành cùng đội của bạn.</p>
-      <p class="text-[11px] font-bold text-deep-teal/55 mb-6">⏱️ Một ván 6 vòng ≈ 30–45 phút (mỗi vòng 5–7 phút) — vừa một buổi học. Chơi thử nhanh với Đội Demo: ~10 phút cho 2 vòng đầu.</p>
+      <p class="text-sm text-deep-teal/60 mb-2"><span class="font-display font-extrabold lumina-name">Lumina AI</span> – <span class="signature text-lg text-deep-teal">Je m'appelle Hương</span> đang chờ đồng hành cùng đội của bạn.</p>
+      <p class="text-[11px] font-bold text-deep-teal/55 mb-6">⏱️ Một ván 6 vòng ≈ 30–45 phút (mỗi vòng 5–7 phút) – vừa một buổi học. Chơi thử nhanh với Đội Demo: ~10 phút cho 2 vòng đầu.</p>
       <label class="block text-sm font-bold text-deep-teal mb-1">Email</label>
       <input id="login-email" type="email" placeholder="sinhvien@truong.edu.vn" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 mb-4 outline-none focus:border-primary-container">
-      <label class="block text-sm font-bold text-deep-teal mb-1">Tên đội — cũng là tên doanh nghiệp của bạn</label>
+      <label class="block text-sm font-bold text-deep-teal mb-1">Tên đội – cũng là tên doanh nghiệp của bạn</label>
       <input id="login-team" type="text" placeholder="VD: Rồng Xanh Corp" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 mb-4 outline-none focus:border-primary-container">
-      <label class="block text-sm font-bold text-deep-teal mb-1">Mã lớp học — Class ID <span class="font-normal text-deep-teal/40">(tùy chọn)</span></label>
+      <label class="block text-sm font-bold text-deep-teal mb-1">Mã lớp học – Class ID <span class="font-normal text-deep-teal/40">(tùy chọn)</span></label>
       <input id="login-class" type="text" placeholder="VD: QTKD-2026-A" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 mb-4 outline-none focus:border-primary-container">
       <label class="block text-sm font-bold text-deep-teal mb-2">Vai trò của bạn</label>
       <div id="role-picker" class="grid grid-cols-5 gap-2 mb-6"></div>
@@ -210,7 +210,7 @@
       <div class="flex items-center gap-3">
         <button onclick="showTab('profile')" class="w-11 h-11 rounded-clay bg-gradient-to-br from-primary to-primary-container flex items-center justify-center shadow-clay text-xl">👩‍💼</button>
         <div>
-          <p id="hdr-team" class="font-display font-bold text-deep-teal leading-tight">—</p>
+          <p id="hdr-team" class="font-display font-bold text-deep-teal leading-tight">–</p>
           <p class="text-xs text-primary font-semibold"><span id="hdr-level">Lv.1</span> · <span id="hdr-xp">0 XP</span></p>
         </div>
       </div>
@@ -230,7 +230,7 @@
     <!-- ========== DASHBOARD ========== -->
     <section id="tab-home" class="screen">
       <div class="clay-card overflow-hidden mb-4">
-        <img src="assets/illustrations/hero-vietnam-2026.png" alt="Vietnam 2026 — Phát triển kinh tế" class="w-full h-28 object-cover">
+        <img src="assets/illustrations/hero-vietnam-2026.png" alt="Vietnam 2026 – Phát triển kinh tế" class="w-full h-28 object-cover">
       </div>
       <div id="event-banner" class="hidden clay-card p-4 mb-4 border-2"></div>
       <div id="company-card"></div>
@@ -246,15 +246,15 @@
       </div>
       <div class="grid grid-cols-3 gap-3 mb-4">
         <div class="clay-card p-4 text-center">
-          <p class="text-2xl">💵</p><p id="m-cash" class="font-display font-extrabold text-deep-teal text-sm mt-1">—</p>
+          <p class="text-2xl">💵</p><p id="m-cash" class="font-display font-extrabold text-deep-teal text-sm mt-1">–</p>
           <p class="text-[10px] text-deep-teal/50 font-semibold uppercase">Dòng tiền</p>
         </div>
         <div class="clay-card p-4 text-center">
-          <p class="text-2xl">📊</p><p id="m-share" class="font-display font-extrabold text-deep-teal text-sm mt-1">—</p>
+          <p class="text-2xl">📊</p><p id="m-share" class="font-display font-extrabold text-deep-teal text-sm mt-1">–</p>
           <p class="text-[10px] text-deep-teal/50 font-semibold uppercase">Thị phần</p>
         </div>
         <div class="clay-card p-4 text-center">
-          <p class="text-2xl">⭐</p><p id="m-brand" class="font-display font-extrabold text-deep-teal text-sm mt-1">—</p>
+          <p class="text-2xl">⭐</p><p id="m-brand" class="font-display font-extrabold text-deep-teal text-sm mt-1">–</p>
           <p class="text-[10px] text-deep-teal/50 font-semibold uppercase">Thương hiệu</p>
         </div>
       </div>
@@ -263,7 +263,7 @@
           <h3 class="font-display font-bold text-deep-teal">🗺️ Hành trình chinh phục Việt Nam</h3>
           <span id="cq-count" class="text-[10px] font-extrabold text-primary shrink-0">🚩 0/6</span>
         </div>
-        <p class="text-[11px] text-deep-teal/50 mb-3">Thắng mỗi vòng để cắm cờ công ty — từ Cần Thơ tới Thủ đô Hà Nội.</p>
+        <p class="text-[11px] text-deep-teal/50 mb-3">Thắng mỗi vòng để cắm cờ công ty – từ Cần Thơ tới Thủ đô Hà Nội.</p>
         <div class="flex gap-4 items-center">
           <div id="conquest-map" class="w-[54%] shrink-0"></div>
           <div id="conquest-list" class="flex-1 space-y-1.5 text-[11px] min-w-0"></div>
@@ -309,7 +309,7 @@
       <p class="text-sm text-deep-teal/60 mb-4">Vòng <span class="dec-round">1</span>/6 · Thống nhất với cả đội trước khi khóa!</p>
       <div class="clay-card p-4 mb-3 border-2 border-clay-gold/50">
         <p class="font-bold text-sm text-deep-teal">🎯 Cách thắng vòng này</p>
-        <p class="text-[11px] text-deep-teal/65 mt-1">Đạt <b>thị phần cao nhất</b> so với 3 đối thủ để cắm cờ 🚩 lên bản đồ — và giữ <b>lợi nhuận dương</b>. Kéo các thanh trượt bên dưới, ô «Dự báo thị phần» sẽ báo ngay bạn đang thắng hay thua.</p>
+        <p class="text-[11px] text-deep-teal/65 mt-1">Đạt <b>thị phần cao nhất</b> so với 3 đối thủ để cắm cờ 🚩 lên bản đồ – và giữ <b>lợi nhuận dương</b>. Kéo các thanh trượt bên dưới, ô «Dự báo thị phần» sẽ báo ngay bạn đang thắng hay thua.</p>
       </div>
       <div id="team-meeting" class="mb-3"></div>
 
@@ -317,7 +317,7 @@
       <div class="mb-5">
         <div class="flex items-center gap-2.5 mb-2">
           <span class="w-9 h-9 rounded-xl flex items-center justify-center text-lg shrink-0" style="background:rgba(253,161,39,.18)">📣</span>
-          <div><p class="font-display font-extrabold text-deep-teal text-sm">CMO — Phù thủy marketing</p><p class="text-[10px] text-deep-teal/50">Đề xuất giá bán và ngân sách marketing, đọc dự báo thị phần</p></div>
+          <div><p class="font-display font-extrabold text-deep-teal text-sm">CMO – Phù thủy marketing</p><p class="text-[10px] text-deep-teal/50">Đề xuất giá bán và ngân sách marketing, đọc dự báo thị phần</p></div>
         </div>
       <div class="clay-card p-5 mb-3">
         <div class="flex justify-between mb-1"><label class="font-bold text-sm text-deep-teal">💲 Giá bán / sản phẩm</label><span id="v-price" class="font-display font-bold text-primary">150.000₫</span></div>
@@ -327,18 +327,18 @@
       <div class="clay-card p-5 mb-3">
         <div class="flex justify-between mb-1"><label class="font-bold text-sm text-deep-teal">📣 Ngân sách Marketing</label><span id="v-mkt" class="font-display font-bold text-primary">50tr₫</span></div>
         <input id="in-mkt" aria-label="Ngân sách marketing, triệu đồng" type="range" min="0" max="200" step="5" value="50" class="w-full" oninput="syncDecisionLabels()">
-        <p class="text-[11px] text-deep-teal/50 mt-1">Marketing kéo thêm khách về phía bạn — nhưng chi quá tay sẽ ăn hết lãi. Đối thủ chi 55–90tr/vòng.</p>
+        <p class="text-[11px] text-deep-teal/50 mt-1">Marketing kéo thêm khách về phía bạn – nhưng chi quá tay sẽ ăn hết lãi. Đối thủ chi 55–90tr/vòng.</p>
       </div>
       <div class="clay-card p-5 mb-3">
         <div class="flex justify-between items-start mb-3">
-          <div><p class="font-bold text-sm text-deep-teal">🚩 Dự báo Thị phần — bạn có cắm được cờ?</p><p class="text-[11px] text-deep-teal/50">Ước tính theo thông số đang nhập, so với 3 đối thủ AI</p></div>
-          <p id="mf-share" class="font-display font-extrabold text-primary text-2xl">—</p>
+          <div><p class="font-bold text-sm text-deep-teal">🚩 Dự báo Thị phần – bạn có cắm được cờ?</p><p class="text-[11px] text-deep-teal/50">Ước tính theo thông số đang nhập, so với 3 đối thủ AI</p></div>
+          <p id="mf-share" class="font-display font-extrabold text-primary text-2xl">–</p>
         </div>
         <div class="h-3 rounded-full bg-surface-bright overflow-hidden shadow-inner relative">
           <div id="mf-bar" class="h-full rounded-full bg-gradient-to-r from-primary to-primary-container" style="width:25%"></div>
           <div class="absolute top-0 bottom-0" style="left:25%; width:2px; background:#e8762d"></div>
         </div>
-        <p id="mf-verdict" class="text-[11px] text-deep-teal/70 mt-2">—</p>
+        <p id="mf-verdict" class="text-[11px] text-deep-teal/70 mt-2">–</p>
       </div>
       </div>
 
@@ -346,7 +346,7 @@
       <div class="mb-5">
         <div class="flex items-center gap-2.5 mb-2">
           <span class="w-9 h-9 rounded-xl flex items-center justify-center text-lg shrink-0" style="background:rgba(232,118,45,.15)">🏭</span>
-          <div><p class="font-display font-extrabold text-deep-teal text-sm">COO — Chuyên gia vận hành</p><p class="text-[10px] text-deep-teal/50">Chốt sản lượng, nhân sự, đào tạo; canh năng suất và chi phí</p></div>
+          <div><p class="font-display font-extrabold text-deep-teal text-sm">COO – Chuyên gia vận hành</p><p class="text-[10px] text-deep-teal/50">Chốt sản lượng, nhân sự, đào tạo; canh năng suất và chi phí</p></div>
         </div>
       <div class="clay-card p-5 mb-3">
         <div class="flex justify-between mb-1"><label class="font-bold text-sm text-deep-teal">🏭 Sản lượng sản xuất</label><span id="v-prod" class="font-display font-bold text-primary">1.200 sp</span></div>
@@ -357,7 +357,7 @@
         <p class="font-bold text-sm text-deep-teal mb-3">👥 Quản trị Nhân sự</p>
         <div class="flex justify-between mb-1"><label class="text-[11px] font-bold text-deep-teal/60 uppercase">Số lượng nhân viên</label><span id="v-workers" class="font-display font-bold text-primary">45 người</span></div>
         <input id="in-workers" aria-label="Số lượng nhân viên" type="range" min="20" max="100" step="5" value="45" class="w-full mb-1" oninput="syncDecisionLabels()">
-        <p class="text-[11px] text-deep-teal/50 mb-3">Lương 1tr₫/người/vòng · Năng lực: 70 sp/người — thiếu người sẽ giảm OEE.</p>
+        <p class="text-[11px] text-deep-teal/50 mb-3">Lương 1tr₫/người/vòng · Năng lực: 70 sp/người – thiếu người sẽ giảm OEE.</p>
         <div class="flex justify-between mb-1"><label class="text-[11px] font-bold text-deep-teal/60 uppercase">Ngân sách đào tạo / người</label><span id="v-train" class="font-display font-bold text-primary">2tr₫</span></div>
         <input id="in-train" aria-label="Ngân sách đào tạo mỗi người, triệu đồng" type="range" min="0" max="10" step="1" value="1" class="w-full" oninput="syncDecisionLabels()">
         <p class="text-[11px] text-deep-teal/50 mt-1">Đào tạo tăng OEE (tối đa +5%) và giảm phế phẩm.</p>
@@ -368,7 +368,7 @@
       <div class="mb-5">
         <div class="flex items-center gap-2.5 mb-2">
           <span class="w-9 h-9 rounded-xl flex items-center justify-center text-lg shrink-0" style="background:rgba(0,102,135,.12)">💰</span>
-          <div><p class="font-display font-extrabold text-deep-teal text-sm">CFO — Chiến lược gia tài chính</p><p class="text-[10px] text-deep-teal/50">Chọn nguồn vốn, kỳ hạn thanh toán, đầu tư R&amp;D; theo dõi dòng tiền</p></div>
+          <div><p class="font-display font-extrabold text-deep-teal text-sm">CFO – Chiến lược gia tài chính</p><p class="text-[10px] text-deep-teal/50">Chọn nguồn vốn, kỳ hạn thanh toán, đầu tư R&amp;D; theo dõi dòng tiền</p></div>
         </div>
       <div class="clay-card p-5 mb-3">
         <p class="font-bold text-sm text-deep-teal mb-3">🏦 Quản trị Tài chính</p>
@@ -381,8 +381,8 @@
         <label class="block text-[11px] font-bold text-deep-teal/60 uppercase mb-1.5">Kỳ hạn thanh toán cho khách</label>
         <select id="in-term" aria-label="Kỳ hạn thanh toán cho khách" onchange="syncDecisionLabels()" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 outline-none text-sm font-semibold text-deep-teal">
           <option value="30">30 ngày (Tiêu chuẩn)</option>
-          <option value="60">60 ngày — cầu +4%, chi phí +2%</option>
-          <option value="90">90 ngày — cầu +8%, chi phí +5%</option>
+          <option value="60">60 ngày – cầu +4%, chi phí +2%</option>
+          <option value="90">90 ngày – cầu +8%, chi phí +5%</option>
         </select>
       </div>
       <div class="clay-card p-5 mb-3">
@@ -394,13 +394,13 @@
         <div class="absolute top-0 right-0 w-28 h-28 bg-primary/5 rounded-full -mr-12 -mt-12"></div>
         <div class="flex justify-between items-start mb-3 relative">
           <div><p class="font-bold text-sm text-deep-teal">📊 Dự báo Dòng tiền</p><p class="text-[11px] text-deep-teal/50">Ước tính theo thông số đang nhập (CVP)</p></div>
-          <div class="text-right"><p class="text-[10px] text-deep-teal/50 uppercase font-bold">Lợi nhuận ròng</p><p id="fc-net" class="font-display font-extrabold text-primary">—</p></div>
+          <div class="text-right"><p class="text-[10px] text-deep-teal/50 uppercase font-bold">Lợi nhuận ròng</p><p id="fc-net" class="font-display font-extrabold text-primary">–</p></div>
         </div>
         <div class="grid grid-cols-2 gap-3 relative">
-          <div class="clay-sunken rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Dòng tiền vào</p><p id="fc-in" class="font-bold text-emerald-600 text-sm">—</p></div>
-          <div class="clay-sunken rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Dòng tiền ra</p><p id="fc-out" class="font-bold text-red-600 text-sm">—</p></div>
+          <div class="clay-sunken rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Dòng tiền vào</p><p id="fc-in" class="font-bold text-emerald-600 text-sm">–</p></div>
+          <div class="clay-sunken rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Dòng tiền ra</p><p id="fc-out" class="font-bold text-red-600 text-sm">–</p></div>
         </div>
-        <p id="fc-be" class="text-[11px] text-deep-teal/60 mt-2 relative">—</p>
+        <p id="fc-be" class="text-[11px] text-deep-teal/60 mt-2 relative">–</p>
       </div>
       </div>
 
@@ -408,10 +408,10 @@
       <div class="mb-5">
         <div class="flex items-center gap-2.5 mb-2">
           <span class="w-9 h-9 rounded-xl flex items-center justify-center text-lg shrink-0" style="background:rgba(3,51,55,.08)">📔</span>
-          <div><p class="font-display font-extrabold text-deep-teal text-sm">SEC — Thư ký pháp chế</p><p class="text-[10px] text-deep-teal/50">Ghi nhật ký đội, đọc biến cố thị trường, giữ kỷ luật thời gian</p></div>
+          <div><p class="font-display font-extrabold text-deep-teal text-sm">SEC – Thư ký pháp chế</p><p class="text-[10px] text-deep-teal/50">Ghi nhật ký đội, đọc biến cố thị trường, giữ kỷ luật thời gian</p></div>
         </div>
       <div class="clay-card p-5 mb-3">
-        <p class="text-[11px] text-deep-teal/65 leading-relaxed mb-3">Trước khi CEO khóa quyết định: kiểm tra <b>biến cố thị trường</b> vòng này trên Bảng điều khiển và ghi lại lý do chọn phương án của đội — tư liệu quý nhất cho bài trình bày cuối buổi.</p>
+        <p class="text-[11px] text-deep-teal/65 leading-relaxed mb-3">Trước khi CEO khóa quyết định: kiểm tra <b>biến cố thị trường</b> vòng này trên Bảng điều khiển và ghi lại lý do chọn phương án của đội – tư liệu quý nhất cho bài trình bày cuối buổi.</p>
         <div class="grid grid-cols-2 gap-2">
           <button onclick="showTab('journal')" class="clay-button-secondary text-primary text-xs font-bold py-2.5">📔 Mở Nhật ký đội</button>
           <button onclick="showTab('home')" class="clay-button-secondary text-primary text-xs font-bold py-2.5">⚡ Xem biến cố vòng này</button>
@@ -423,10 +423,10 @@
       <div class="mb-5">
         <div class="flex items-center gap-2.5 mb-2">
           <span class="w-9 h-9 rounded-xl flex items-center justify-center text-lg shrink-0" style="background:rgba(0,196,255,.15)">👑</span>
-          <div><p class="font-display font-extrabold text-deep-teal text-sm">CEO — Nhà lãnh đạo tầm nhìn</p><p class="text-[10px] text-deep-teal/50">Điều phối họp đội, chạy thử kịch bản, chốt và khóa quyết định</p></div>
+          <div><p class="font-display font-extrabold text-deep-teal text-sm">CEO – Nhà lãnh đạo tầm nhìn</p><p class="text-[10px] text-deep-teal/50">Điều phối họp đội, chạy thử kịch bản, chốt và khóa quyết định</p></div>
         </div>
       <div class="clay-card p-4 mb-4">
-        <p class="font-bold text-sm text-deep-teal mb-1">🔮 Mô phỏng "Nếu — Thì" trước khi Commit</p>
+        <p class="font-bold text-sm text-deep-teal mb-1">🔮 Mô phỏng "Nếu – Thì" trước khi Commit</p>
         <p class="text-[11px] text-deep-teal/60 mb-3">Lumina chạy thử kịch bản với thông số bạn đang chọn (<span id="whatif-quota">2</span> lượt/vòng).</p>
         <div class="grid grid-cols-2 gap-2">
           <button onclick="runWhatIf('CEO')" class="clay-button-secondary text-primary text-xs font-bold py-2.5">🧭 Chiến lược (CEO)</button>
@@ -436,7 +436,7 @@
       </div>
       <div id="commit-box">
         <div id="commit-recap" class="clay-sunken rounded-2xl p-3 mb-3 text-[11px] text-deep-teal/70 font-semibold leading-relaxed"></div>
-        <button id="btn-commit" onclick="commitDecisions()" class="clay-btn w-full bg-primary text-white font-display font-bold py-4">🔒 Commit — Khóa quyết định</button>
+        <button id="btn-commit" onclick="commitDecisions()" class="clay-btn w-full bg-primary text-white font-display font-bold py-4">🔒 Commit – Khóa quyết định</button>
         <p class="text-center text-[11px] text-deep-teal/50 mt-2">Sau khi commit, quyết định được đưa vào hàng chờ mô phỏng và không thể sửa (ERR_ROUND_LOCKED).</p>
       </div>
       </div>
@@ -454,7 +454,7 @@
       <div class="clay-card mb-4 overflow-hidden">
         <div class="flex items-center gap-4 p-4 pb-0">
           <div class="glow-ring rounded-clay shrink-0">
-            <img src="assets/character/lumina-vest.png" alt="Lumina AI — vest trắng" class="w-16 h-16 rounded-clay object-cover shadow-clay-lg" style="object-position:50% 12%">
+            <img src="assets/character/lumina-vest.png" alt="Lumina AI – vest trắng" class="w-16 h-16 rounded-clay object-cover shadow-clay-lg" style="object-position:50% 12%">
           </div>
           <div class="flex-1 min-w-0">
             <div class="flex items-center gap-2">
@@ -575,7 +575,7 @@
         <img src="assets/character/lumina-ao-dai.png" alt="Lumina áo dài chúc mừng" class="w-24 h-24 mx-auto rounded-full object-cover shadow-clay-lg mb-3" style="object-position:50% 12%">
         <p class="text-4xl mb-2">📜</p>
         <h3 class="font-display font-extrabold text-deep-teal text-lg">Chứng chỉ hoàn thành</h3>
-        <p class="text-sm text-deep-teal/70 mt-1">Chứng nhận đội <span id="cert-team" class="font-bold text-primary">—</span> đã hoàn thành 6 vòng mô phỏng kinh doanh BizOn Bật Nghiệp 2026.</p>
+        <p class="text-sm text-deep-teal/70 mt-1">Chứng nhận đội <span id="cert-team" class="font-bold text-primary">–</span> đã hoàn thành 6 vòng mô phỏng kinh doanh BizOn Bật Nghiệp 2026.</p>
         <p id="cert-result" class="font-display font-bold text-primary mt-3"></p>
       </div>
     </section>
@@ -635,7 +635,7 @@
         <img src="assets/character/lumina-vest.png" alt="Lumina" class="w-12 h-12 rounded-clay object-cover shadow-clay" style="object-position:50% 12%">
         <div>
           <h2 class="font-display text-xl font-extrabold text-deep-teal">Lumina Advisor Pro</h2>
-          <p class="text-xs text-primary font-semibold">Nhập số liệu kinh doanh thực → nhận kịch bản "Nếu — Thì"</p>
+          <p class="text-xs text-primary font-semibold">Nhập số liệu kinh doanh thực → nhận kịch bản "Nếu – Thì"</p>
         </div>
       </div>
       <div class="clay-card p-5 mb-4 space-y-3">
@@ -669,7 +669,7 @@
     <!-- ========== TEAM JOURNAL (Nhật ký đội) ========== -->
     <section id="tab-journal" class="screen">
       <h2 class="font-display text-xl font-extrabold text-deep-teal mb-1">📔 Nhật ký đội</h2>
-      <p class="text-sm text-deep-teal/60 mb-4">Timeline hành trình 6 vòng: quyết định then chốt, kết quả và bài học kinh nghiệm — do SEC ghi chép.</p>
+      <p class="text-sm text-deep-teal/60 mb-4">Timeline hành trình 6 vòng: quyết định then chốt, kết quả và bài học kinh nghiệm – do SEC ghi chép.</p>
       <div id="journal-list" class="relative pl-6 space-y-4">
         <div class="absolute left-2 top-2 bottom-2 w-0.5 bg-primary/15 rounded-full"></div>
       </div>
@@ -679,10 +679,10 @@
     <section id="tab-profile" class="screen">
       <div class="clay-card p-6 text-center mb-4">
         <div class="w-20 h-20 mx-auto rounded-clay bg-gradient-to-br from-primary to-primary-container flex items-center justify-center text-4xl shadow-clay-lg mb-3">👩‍💼</div>
-        <h2 id="pf-name" class="font-display text-xl font-extrabold text-deep-teal">—</h2>
-        <p id="pf-email" class="text-sm text-deep-teal/60">—</p>
-        <span id="pf-role" class="inline-block mt-2 bg-primary-container/30 text-primary font-bold text-xs px-3 py-1.5 rounded-full">—</span>
-        <span id="pf-tier" class="inline-block mt-2 ml-1 clay-button-primary text-white font-bold text-xs px-3 py-1.5 rounded-full">🏅 —</span>
+        <h2 id="pf-name" class="font-display text-xl font-extrabold text-deep-teal">–</h2>
+        <p id="pf-email" class="text-sm text-deep-teal/60">–</p>
+        <span id="pf-role" class="inline-block mt-2 bg-primary-container/30 text-primary font-bold text-xs px-3 py-1.5 rounded-full">–</span>
+        <span id="pf-tier" class="inline-block mt-2 ml-1 clay-button-primary text-white font-bold text-xs px-3 py-1.5 rounded-full">🏅 –</span>
       </div>
       <div class="clay-card p-5 mb-4">
         <div class="flex justify-between text-sm font-bold text-deep-teal mb-1"><span>Tiến độ cấp <span id="pf-level">1</span></span><span id="pf-xp">0 XP</span></div>
@@ -727,7 +727,7 @@
         <div class="p-5"><button onclick="alert('Đã gửi báo cáo lỗi tới đội ngũ BizOn. Cảm ơn bạn!')" class="font-bold text-sm text-primary">🐞 Gửi báo cáo lỗi</button></div>
         <div class="p-5"><button onclick="resetGame()" class="font-bold text-sm text-orange-600">♻️ Chơi lại từ đầu (Reset)</button></div>
       </div>
-      <p class="text-center text-xs text-deep-teal/40 mt-6">BizOn Bật Nghiệp 2026 · v1.1.0 · © 2026 Đỗ Thùy Hương &amp; Phan Anh Tú — Bảo lưu mọi quyền · Chỉ phục vụ giáo dục, không đại diện cho tổ chức chính trị nào · ✉️ patu@ctu.edu.vn · thuyhuongctu@gmail.com</p>
+      <p class="text-center text-xs text-deep-teal/40 mt-6">BizOn Bật Nghiệp 2026 · v1.1.0 · © 2026 Đỗ Thùy Hương &amp; Phan Anh Tú – Bảo lưu mọi quyền · Chỉ phục vụ giáo dục, không đại diện cho tổ chức chính trị nào · ✉️ patu@ctu.edu.vn · thuyhuongctu@gmail.com</p>
     </section>
   </main>
 

@@ -1,4 +1,4 @@
-/* BizOn — Giám sát lỗi phía người dùng (backend mỏng Supabase)
+/* BizOn – Giám sát lỗi phía người dùng (backend mỏng Supabase)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú.
  *
  * Bắt lỗi JavaScript và Promise bị bỏ rơi trên máy sinh viên rồi gửi
@@ -8,7 +8,7 @@
  * Tắt backend (enabled=false) là tắt luôn giám sát lỗi. */
 (function () {
   const QKEY = 'bizon-error-queue';
-  const APP_VER = 'bizon-v164'; // khớp CACHE trong sw.js — biết lỗi thuộc phiên bản nào
+  const APP_VER = 'bizon-v166'; // khớp CACHE trong sw.js – biết lỗi thuộc phiên bản nào
   const MAX_PER_LOAD = 5;       // chống bão lỗi lặp: tối đa 5 bản ghi mỗi lượt tải trang
   let sent = 0;
   const seen = new Set();
@@ -59,7 +59,7 @@
       if (!on() || sent >= MAX_PER_LOAD) return;
       message = String(message || '').slice(0, 500);
       // "Script error." không kèm chi tiết = lỗi cross-origin (tiện ích trình
-      // duyệt, script bên thứ ba) — không phải lỗi của BizOn, bỏ qua.
+      // duyệt, script bên thứ ba) – không phải lỗi của BizOn, bỏ qua.
       if (!message || message === 'Script error.') return;
       if (/^(chrome|moz|safari)-extension:/.test(source || '')) return;
       const key = message + '|' + (source || '') + '|' + (line || 0);
@@ -81,12 +81,12 @@
       });
       writeQueue(q);
       flush();
-    } catch (e) { /* im lặng — giám sát lỗi không được phép tự gây lỗi */ }
+    } catch (e) { /* im lặng – giám sát lỗi không được phép tự gây lỗi */ }
   }
 
   window.addEventListener('error', function (e) {
     if (e.target && e.target !== window && (e.target.src || e.target.href)) {
-      // Tài nguyên (ảnh/script/css) tải hỏng — ghi gọn, không có stack
+      // Tài nguyên (ảnh/script/css) tải hỏng – ghi gọn, không có stack
       report('Tài nguyên lỗi: ' + (e.target.src || e.target.href), location.pathname, 0, 0, '');
       return;
     }
