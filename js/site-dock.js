@@ -27,6 +27,8 @@
     ['Đội Phù Sa', 'doi-phu-sa.mp3'],
     ['Đội Phù Sa (remix)', 'doi-phu-sa-remix.mp3'],
     ['Hộ Chiếu Thương Hiệu (Beyond the River Mouth)', 'beyond-the-river-mouth.mp3'],
+    ['Beyond the River Mouth – bản mở rộng', 'beyond-the-river-mouth-v2.mp3'],
+    ['Golden Silt Route', 'golden-silt-route.mp3'],
   ];
 
   /* ---------- CSS ---------- */
