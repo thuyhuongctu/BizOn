@@ -878,7 +878,18 @@ renderWorldMap(); profRender();
 
 /* ================= Nhạc nền: «Je m'appelle Hương sans frontières» ================= */
 let gAudio = null, gOn = false, gTrackIdx = 0;
-const G_TRACKS = ['assets/audio/journey-golden-silt.mp3', 'assets/audio/huong-and-the-world.mp3', 'assets/audio/huong-and-the-world-en.mp3', 'assets/audio/huong-and-the-world-male.mp3', 'assets/audio/huong-et-le-monde.mp3'];
+/* Tuyển tập riêng của Go Global: nhóm phù sa Mekong + nhóm đa ngôn ngữ */
+const G_TRACKS = [
+  'assets/audio/journey-golden-silt.mp3',
+  'assets/audio/journey-golden-silt-remix.mp3',
+  'assets/audio/mekong-river-remix.mp3',
+  'assets/audio/mekong-river-v2.mp3',
+  'assets/audio/mekong-compass.mp3',
+  'assets/audio/huong-and-the-world.mp3',
+  'assets/audio/huong-and-the-world-en.mp3',
+  'assets/audio/huong-and-the-world-male.mp3',
+  'assets/audio/huong-et-le-monde.mp3',
+];
 function gMusic() {
   if (!gAudio) {
     gAudio = new Audio(G_TRACKS[gTrackIdx]); gAudio.volume = 0.3;
