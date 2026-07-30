@@ -26,6 +26,7 @@
     ['Mekong Compass', 'mekong-compass.mp3'],
     ['Đội Phù Sa', 'doi-phu-sa.mp3'],
     ['Đội Phù Sa (remix)', 'doi-phu-sa-remix.mp3'],
+    ['Beyond the River Mouth', 'beyond-the-river-mouth.mp3'],
   ];
 
   /* ---------- CSS ---------- */
