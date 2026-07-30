@@ -107,6 +107,15 @@
       <h2 class="font-display font-extrabold text-deep-teal text-lg mb-4">⏱️ Dòng thời gian nộp bài</h2>
       <ul id="gv-feed" class="space-y-2 text-sm font-semibold"><li class="opacity-60">Đang tải…</li></ul>
     </div>
+
+    <div class="clay-card p-6 sm:p-7 mb-6">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-2">
+        <h2 class="font-display font-extrabold text-deep-teal text-lg">📊 Phân tích khảo sát trước–sau</h2>
+        <button onclick="gvAnalyzeSurvey()" class="clay-btn bg-primary text-white font-display font-extrabold px-4 py-2 text-xs">🔬 Phân tích ngay</button>
+      </div>
+      <p class="text-[11px] opacity-60 mb-3">Ghép cặp phiếu trước–sau theo mã tự đặt (lấy lần nộp mới nhất mỗi phiếu) và tính sẵn các chỉ số nghiên cứu. Muốn dữ liệu thô đầy đủ thì dùng nút "CSV khảo sát" ở trên.</p>
+      <div id="gv-survey-out" class="text-sm"><p class="opacity-60">Bấm "Phân tích ngay" sau khi lớp đã nộp phiếu.</p></div>
+    </div>
   </section>
 
   <section class="clay-card p-6 sm:p-7 mb-6">
@@ -184,6 +193,80 @@
     clearInterval(timer);
     refresh();
     timer = setInterval(refresh, 10000);
+  };
+
+  // ===== Phân tích khảo sát trước–sau ngay trên trang =====
+  const mean = a => a.length ? a.reduce((s, x) => s + x, 0) / a.length : null;
+  const sd = a => { if (a.length < 2) return null; const m = mean(a); return Math.sqrt(a.reduce((s, x) => s + (x - m) ** 2, 0) / (a.length - 1)); };
+  const f1 = v => v == null ? '—' : (Math.round(v * 100) / 100).toLocaleString('vi-VN', { maximumFractionDigits: 2 });
+  const sign = v => v == null ? '—' : (v > 0 ? '+' : '') + f1(v);
+
+  window.gvAnalyzeSurvey = async function () {
+    const klass = $('gv-class').value.trim(), key = $('gv-key').value.trim();
+    const out = $('gv-survey-out');
+    if (!klass || !key) { out.innerHTML = '<p class="font-bold">⚠️ Nhập Mã lớp và Khóa giảng viên ở trên rồi bấm lại.</p>'; return; }
+    out.innerHTML = '<p class="opacity-60">Đang tải và tính toán…</p>';
+    let rows;
+    try { rows = await rpc('bizon_survey_export', { p_class_code: klass, p_key: key }); }
+    catch (e) { out.innerHTML = '<p class="font-bold">⚠️ Không tải được dữ liệu (' + esc(e.message) + ').</p>'; return; }
+    if (!rows.length) { out.innerHTML = '<p class="font-bold">ℹ️ Lớp ' + esc(klass) + ' chưa có phiếu nào (hoặc khóa chưa đúng).</p>'; return; }
+
+    // Lấy lần nộp mới nhất của mỗi (mã sinh viên, loại phiếu)
+    const latest = {};
+    for (const r of rows) {
+      const k = r.student_code + '|' + r.phase;
+      if (!latest[k] || r.created_at > latest[k].created_at) latest[k] = r;
+    }
+    const pre = {}, post = {};
+    Object.values(latest).forEach(r => { (r.phase === 'pre' ? pre : post)[r.student_code] = r; });
+    const preArr = Object.values(pre), postArr = Object.values(post);
+    const pairs = Object.keys(pre).filter(c => post[c]).map(c => ({ p: pre[c], q: post[c] }));
+
+    // Δ kiến thức (điểm A /15) trên các cặp ghép được + cỡ ảnh hưởng Cohen's d
+    const dA = pairs.map(x => x.q.score_a - x.p.score_a);
+    const dAmean = mean(dA), dAsd = sd(dA);
+    const cohend = (dAmean != null && dAsd) ? dAmean / dAsd : null;
+    // Δ tự tin (trung bình 8 câu B, thang 1–5)
+    const avgB = r => mean((r.likert_b || []).map(Number));
+    const dB = pairs.map(x => avgB(x.q) - avgB(x.p));
+    // Δ theo 5 cụm chuẩn đầu ra (0–3 mỗi cụm)
+    const OUT_LABELS = { marketing: 'Giá & marketing', taichinh: 'Tài chính', vanhanh: 'Vận hành', kdqt: 'KD quốc tế', chienluoc: 'Chiến lược' };
+    const outRows = Object.entries(OUT_LABELS).map(([k, label]) => {
+      const ds = pairs.filter(x => x.p.score_by_outcome && x.q.score_by_outcome)
+        .map(x => (x.q.score_by_outcome[k] ?? 0) - (x.p.score_by_outcome[k] ?? 0));
+      const pm = mean(pairs.map(x => x.p.score_by_outcome ? (x.p.score_by_outcome[k] ?? 0) : null).filter(v => v != null));
+      const qm = mean(pairs.map(x => x.q.score_by_outcome ? (x.q.score_by_outcome[k] ?? 0) : null).filter(v => v != null));
+      return { label, pm, qm, d: mean(ds) };
+    });
+    // Trải nghiệm (C) + NPS trên phiếu sau
+    const cAll = postArr.map(r => mean((r.likert_c || []).map(Number))).filter(v => v != null);
+    const npsArr = postArr.map(r => r.nps).filter(v => v != null);
+    const npsHi = npsArr.length ? (npsArr.filter(v => v >= 9).length / npsArr.length * 100) : null;
+
+    const stat = (label, val, note) => `<div class="clay-card !shadow-none border border-primary/15 p-4 text-center">
+      <p class="font-display font-extrabold text-2xl text-primary">${val}</p>
+      <p class="text-[11px] font-extrabold mt-0.5">${label}</p>${note ? `<p class="text-[10px] opacity-55 mt-0.5">${note}</p>` : ''}</div>`;
+
+    out.innerHTML = `
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+        ${stat('Phiếu trước', preArr.length, '')}
+        ${stat('Phiếu sau', postArr.length, '')}
+        ${stat('Cặp ghép được', pairs.length, 'theo mã tự đặt')}
+        ${stat('Điểm giới thiệu TB', npsArr.length ? f1(mean(npsArr)) + '/10' : '—', npsHi != null ? f1(npsHi) + '% chấm ≥ 9' : '')}
+      </div>
+      <div class="grid sm:grid-cols-3 gap-3 mb-4">
+        ${stat('Δ Kiến thức', pairs.length ? sign(dAmean) + ' câu' : '—', pairs.length ? `${f1(mean(pairs.map(x => x.p.score_a)))} → ${f1(mean(pairs.map(x => x.q.score_a)))} /15 đúng` : 'cần cặp trước–sau')}
+        ${stat("Cohen's d", cohend != null ? f1(cohend) : '—', cohend != null ? (Math.abs(cohend) >= 0.8 ? 'ảnh hưởng lớn' : Math.abs(cohend) >= 0.5 ? 'ảnh hưởng vừa' : Math.abs(cohend) >= 0.2 ? 'ảnh hưởng nhỏ' : 'chưa rõ ảnh hưởng') : 'cần ≥ 2 cặp')}
+        ${stat('Δ Tự tin', pairs.length ? sign(mean(dB)) + ' /5' : '—', pairs.length ? `${f1(mean(pairs.map(x => avgB(x.p))))} → ${f1(mean(pairs.map(x => avgB(x.q))))} trên thang 5` : 'cần cặp trước–sau')}
+      </div>
+      <div class="kb-wrap mb-3">
+        <table class="kb">
+          <thead><tr><th>Chuẩn đầu ra (cụm 3 câu)</th><th>Trước /3</th><th>Sau /3</th><th>Δ</th></tr></thead>
+          <tbody>${outRows.map(r => `<tr><td class="font-bold">${r.label}</td><td>${f1(r.pm)}</td><td>${f1(r.qm)}</td><td class="font-extrabold">${sign(r.d)}</td></tr>`).join('')}</tbody>
+        </table>
+      </div>
+      <p class="text-[11px] opacity-60">Mức tham gia (Phần C, thang 5): <b>${cAll.length ? f1(mean(cAll)) : '—'}</b> · ${npsArr.length} phiếu sau có điểm giới thiệu. Δ tính trên ${pairs.length} cặp ghép; sinh viên nộp nhiều lần chỉ tính lần mới nhất. Số liệu phục vụ tham khảo nhanh sau buổi học — phân tích công bố khoa học nên dùng CSV thô với kiểm định phù hợp (paired t-test / Wilcoxon).</p>`;
+    $('gv-status').textContent = '✅ Đã phân tích ' + rows.length + ' phiếu khảo sát của lớp ' + klass + '.';
   };
 
   window.gvExportSurvey = async function () {
