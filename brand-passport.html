@@ -34,8 +34,16 @@
   .bp-q-dot { width:28px; height:28px; border-radius:9999px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:11px; background:rgba(0,102,135,.1); }
   .bp-q-dot.done { background:#006687; color:#fff; }
   .bp-q-dot.cur { background:#fda127; color:#033337; }
-  .bp-adv { display:flex; gap:10px; border:2px solid rgba(0,102,135,.12); border-radius:16px; padding:9px 12px; font-size:12px; }
+  .bp-adv { display:flex; gap:10px; border:2px solid rgba(0,102,135,.12); border-radius:16px; padding:9px 12px; font-size:12px; align-items:flex-start; }
   .bp-adv .who { font-weight:800; font-size:11px; opacity:.65; }
+  .bp-adv .face { width:42px; flex-shrink:0; display:flex; align-items:flex-start; justify-content:center; font-size:22px; }
+  .bp-adv .face img { width:42px; height:auto; object-fit:contain; filter:drop-shadow(0 3px 6px rgba(0,102,135,.18)); }
+  .bp-cast { display:flex; gap:8px; align-items:flex-end; flex-wrap:wrap; }
+  .bp-cast figure { width:74px; text-align:center; margin:0; }
+  .bp-cast img { width:100%; height:auto; }
+  .bp-cast .ph { width:74px; height:74px; border-radius:16px; border:2px dashed rgba(0,102,135,.2); display:flex; align-items:center; justify-content:center; font-size:26px; }
+  .bp-cast figcaption { font-size:9.5px; font-weight:800; line-height:1.2; margin-top:3px; opacity:.7; }
+  html[data-theme="dark"] .bp-cast .ph { border-color:rgba(92,196,230,.25); }
   :root { --dt: 3 51 55; }
   html[data-theme="dark"] { --dt: 214 236 240; background:#081a20; color-scheme:dark; }
   html[data-theme="dark"] body { color:#d6ecf0; }
@@ -114,12 +122,15 @@
       <p class="text-[11px] opacity-60 mt-1">Doanh thu cao nhất chưa chắc thắng — tăng trưởng nóng làm cạn vốn, mất đối tác hoặc vi phạm quy định sẽ trả giá.</p>
     </div>
     <h3 class="font-display font-extrabold text-deep-teal text-sm mt-5 mb-2">🧑‍💼 Ban cố vấn (quan điểm khác nhau — hãy tự đánh giá lập luận)</h3>
+    <div class="bp-cast mb-3" id="bp-cast"></div>
     <div class="grid sm:grid-cols-2 gap-2 text-[12px]">
-      <p>👵 <b>Bà Sáu Lành</b> · Nhà sáng lập — bảo vệ bản sắc Việt của thương hiệu.</p>
+      <p>👵 <b>Bà Sáu Lành</b> · Nhà sáng lập &amp; Chuyên gia Di sản — bảo vệ bản sắc Việt của thương hiệu. <i>«Giữ gìn giá trị cốt lõi trong thời đại số.»</i></p>
       <p>💰 <b>Minh Khang</b> · CFO — ưu tiên dòng tiền và kiểm soát rủi ro.</p>
       <p>📣 <b>An Nhiên</b> · CMO — muốn đầu tư mạnh cho cộng đồng khách hàng.</p>
       <p>🌍 <b>Victor Lâm</b> · Chuyên gia quốc tế hóa — nói theo dữ liệu, không phải lúc nào cũng đúng.</p>
     </div>
+    <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-5 mb-1.5">🌊 Nhạc chủ đề</p>
+    <button id="bp-music" onclick="bpMusic()" class="clay-btn w-full bg-deep-teal text-white font-display font-extrabold py-3 text-sm">🎵 Bật «Beyond the River Mouth»</button>
     <button id="bp-resume" onclick="bpResume()" class="clay-btn w-full bg-deep-teal text-white font-display font-extrabold py-3.5 mt-5 hidden">▶️ Tiếp tục ván đang dở</button>
     <button onclick="bpStart()" class="clay-btn w-full bg-clay-gold text-deep-teal font-display font-extrabold py-4 mt-3">🛫 Bắt đầu hành trình 6 quý</button>
   </section>
@@ -343,6 +354,21 @@
       { l: '🔎 Cảm ơn, và đi tìm đối tác nhỏ hơn', fx: function () { if (S.entered[1] === null) { S.entered[1] = 2; S.cash -= 0.8; } S.foot.push('Chọn đối tác vừa tầm thay vì hợp đồng lớn nhất'); return 'Đối tác nhỏ hơn, điều khoản dễ thở hơn — chậm mà chắc.'; } },
     ] };
 
+  // Tạo hình cố vấn — có ảnh thì dùng ảnh, chưa có thì dùng biểu tượng (đang bổ sung dần)
+  var CAST = [
+    { name: 'Bà Sáu Lành', role: 'Nhà sáng lập', icon: '👵', img: 'assets/character/advisors/ba-sau-lanh-cut.png' },
+    { name: 'Minh Khang', role: 'CFO', icon: '💰' },
+    { name: 'An Nhiên', role: 'CMO', icon: '📣' },
+    { name: 'Victor Lâm', role: 'Quốc tế hóa', icon: '🌍' },
+    { name: 'Lina Park', role: 'Phân phối', icon: '🚢' },
+  ];
+  var FACE = {};
+  CAST.forEach(function (c) { FACE[c.name] = c.img || null; });
+  function faceHtml(name, icon) {
+    return FACE[name] ? '<span class="face"><img src="' + FACE[name] + '" alt="' + name + '" loading="lazy"></span>'
+      : '<span class="face">' + icon + '</span>';
+  }
+
   var ADVICE = [
     function () { if (S.cash < 2.5) return ['💰', 'Minh Khang', 'Tiền mặt đang mỏng. Quý này tôi đề nghị củng cố thay vì mở rộng — doanh nghiệp chết vì hết tiền, không phải vì hết ý tưởng.']; },
     function () { if (S.know[0] < 35 && S.know[1] < 35 && S.know[2] < 35) return ['🌍', 'Victor Lâm', 'Ta đang bay trong sương mù. Mua dữ liệu trước khi đặt cược — nhưng nhớ hỏi: nguồn này có lợi ích gì khi nói với ta điều đó?']; },
@@ -411,7 +437,7 @@
     $('bp-stage').innerHTML =
       '<h2 class="font-display font-extrabold text-deep-teal text-base mb-1">Quý ' + (S.q + 1) + '/6 — 👁️ Quan sát &amp; Tình báo</h2>' +
       signals().map(function (s) { return '<p class="text-[12.5px] mt-2">' + s + '</p>'; }).join('') +
-      '<div class="mt-3 space-y-2">' + advs.map(function (a) { return '<div class="bp-adv"><span class="text-xl">' + a[0] + '</span><div><p class="who">' + a[1] + '</p><p>' + a[2] + '</p></div></div>'; }).join('') + '</div>' +
+      '<div class="mt-3 space-y-2">' + advs.map(function (a) { return '<div class="bp-adv">' + faceHtml(a[1], a[0]) + '<div><p class="who">' + a[1] + '</p><p>' + a[2] + '</p></div></div>'; }).join('') + '</div>' +
       '<p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-4 mb-1.5">Mua thông tin thị trường (tối đa 2 nguồn/quý)</p>' +
       '<div class="grid sm:grid-cols-2 gap-2">' + SOURCES.map(function (s, i) {
         return '<button class="bp-opt" data-src="' + i + '" onclick="bpIntel(' + i + ')">' + s.icon + ' ' + s.name + ' — ' + f1(s.cost * discount) + ' tỷ<small>+' + s.know + ' tri thức · ' + s.note + '</small></button>';
@@ -683,6 +709,7 @@
     $('bp-intro').classList.add('hidden');
     $('bp-play').classList.remove('hidden');
     addLog('🏢 Bạn tiếp quản <b>' + f.icon + ' ' + f.name + '</b> (' + f.prod + ') — ' + f.adv + '.');
+    autoTheme();
     stageObs();
   };
   window.bpResume = function () {
@@ -697,6 +724,29 @@
       stageObs();
     } catch (e) { window.bpStart(); }
   };
+  // Dàn nhân vật ở màn giới thiệu
+  $('bp-cast').innerHTML = CAST.map(function (c) {
+    return '<figure>' + (c.img ? '<img src="' + c.img + '" alt="' + c.name + '" loading="lazy">' : '<div class="ph">' + c.icon + '</div>') +
+      '<figcaption>' + c.name + '<br><span style="opacity:.6">' + c.role + '</span></figcaption></figure>';
+  }).join('');
+
+  /* Nhạc chủ đề — dùng chung trình phát của dock để không có hai nguồn nhạc */
+  var THEME = 'beyond-the-river-mouth.mp3';
+  function musicBtnSync(on) {
+    var b = $('bp-music');
+    if (b) b.textContent = on ? '⏸️ Tạm dừng nhạc chủ đề' : '🎵 Bật «Beyond the River Mouth»';
+  }
+  window.bpMusic = function () {
+    var d = window.BizonDock;
+    if (!d) return;
+    if (d.isPlaying()) { d.pause(); musicBtnSync(false); try { localStorage.setItem('bizon-bp-music', '0'); } catch (e) {} }
+    else { d.play(THEME); musicBtnSync(true); try { localStorage.setItem('bizon-bp-music', '1'); } catch (e) {} }
+  };
+  function autoTheme() { // bấm Bắt đầu là cử chỉ người dùng → được phép phát
+    try { if (localStorage.getItem('bizon-bp-music') !== '1') return; } catch (e) { return; }
+    if (window.BizonDock && !window.BizonDock.isPlaying()) { window.BizonDock.play(THEME); musicBtnSync(true); }
+  }
+
   renderFirms();
   try { if (localStorage.getItem('bizon-bp-save')) $('bp-resume').classList.remove('hidden'); } catch (e) {}
 })();
