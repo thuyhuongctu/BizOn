@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 — © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.
+     Ý tưởng mô phỏng «The Food Truck Challenge»: PGS.TS. Phan Anh Tú (Trường Kinh tế, ĐH Cần Thơ). -->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Food Truck Challenge — BizOn Bật Nghiệp</title>
+<meta name="description" content="Mô phỏng khởi nghiệp xe kem 5 tuần: chọn Phương thức – Thực đơn – Địa điểm mỗi tuần, học bài toán thử nghiệm nhanh (Xe đẩy) rồi nhân rộng (Food Truck). Dựa trên mô phỏng của PGS.TS. Phan Anh Tú.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<script src="js/backend-config.js"></script>
+<script src="js/error-log.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+  html { background:#f4faff; }
+  body { font-family:'Manrope',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
+  .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
+  .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease; }
+  .clay-btn:active { transform:translateY(2px); }
+  .glass-nav { background:rgba(3,51,55,.78); backdrop-filter:blur(14px); }
+  .ft-opt { border:2px solid rgba(0,102,135,.16); border-radius:16px; padding:10px 8px; text-align:center; cursor:pointer; font-weight:700; font-size:12px; transition:all .12s; background:transparent; color:inherit; width:100%; }
+  .ft-opt .big { font-size:22px; display:block; }
+  .ft-opt.sel { border-color:#006687; background:rgba(0,102,135,.08); box-shadow:0 4px 12px -4px rgba(0,102,135,.35); }
+  .ft-opt:disabled { opacity:.45; cursor:not-allowed; }
+  .ft-log li { border-left:3px solid rgba(0,102,135,.25); padding:6px 0 6px 12px; margin-top:8px; font-size:13px; }
+  .ft-week-dot { width:30px; height:30px; border-radius:9999px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:12px; background:rgba(0,102,135,.1); }
+  .ft-week-dot.done { background:#006687; color:#fff; }
+  .ft-week-dot.cur { background:#fda127; color:#033337; }
+  :root { --dt: 3 51 55; }
+  html[data-theme="dark"] { --dt: 214 236 240; background:#081a20; color-scheme:dark; }
+  html[data-theme="dark"] body { color:#d6ecf0; }
+  html[data-theme="dark"] .clay-card { background:#0e2a33; box-shadow:0 10px 30px -5px rgba(0,0,0,.45), inset 0 -4px 0 rgba(0,0,0,.3); }
+  html[data-theme="dark"] .glass-nav { background:rgba(2,20,24,.85); }
+  html[data-theme="dark"] .ft-opt { border-color:rgba(92,196,230,.22); }
+  html[data-theme="dark"] .ft-opt.sel { border-color:#5cc4e6; background:rgba(92,196,230,.12); }
+</style>
+<link rel="stylesheet" href="css/tw.css">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BizOn Bật Nghiệp">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:title" content="Food Truck Challenge — BizOn Bật Nghiệp">
+<meta property="og:description" content="Mô phỏng khởi nghiệp xe kem 5 tuần: chọn Phương thức – Thực đơn – Địa điểm mỗi tuần, học bài toán thử nghiệm nhanh (Xe đẩy) rồi nhân rộng (Food Truck). Dựa trên mô phỏng của PGS.TS. Phan Anh Tú.">
+<meta property="og:url" content="https://thuyhuongctu.github.io/BizOn/food-truck.html">
+<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/og/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+
+<nav class="glass-nav fixed top-0 inset-x-0 z-50 text-white">
+  <div class="max-w-2xl mx-auto px-5 h-16 flex items-center justify-between gap-3">
+    <a href="games.html" class="flex items-center gap-2.5">
+      <img src="assets/icons/icon-192.png" alt="BizOn" class="w-9 h-9 rounded-xl shadow-lg">
+      <span class="font-display font-extrabold tracking-tight">BizOn <span class="text-clay-gold">Food Truck</span></span>
+    </a>
+    <div class="flex items-center gap-2.5">
+      <a href="games.html" class="text-white/70 hover:text-white text-sm font-bold hidden sm:block">🕹️ Arcade</a>
+      <button id="theme-btn" onclick="toggleTheme()" class="w-9 h-9 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 transition-colors shrink-0" title="Chế độ Sáng/Tối">🌙</button>
+    </div>
+  </div>
+</nav>
+
+<header class="pt-24 pb-8 text-white" style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%)">
+  <div class="max-w-2xl mx-auto px-5">
+    <p class="text-[11px] font-extrabold uppercase tracking-[.2em] text-clay-gold">Mô phỏng khởi nghiệp · 5 tuần</p>
+    <h1 class="font-display font-extrabold text-3xl mt-2">🍦 Food Truck Challenge</h1>
+    <p class="text-white/75 text-sm mt-3">Bạn là nhà sáng lập startup đồ lạnh ở <b>Boomtown</b>. Mỗi tuần chọn <b>Phương thức – Thực đơn – Địa điểm</b>. Mục tiêu: tổng doanh thu cao nhất sau 5 tuần. Bí quyết nằm ở việc <b>thử nghiệm nhanh rồi nhân rộng đúng lúc</b>.</p>
+    <p class="text-white/55 text-[11px] mt-3">💡 Ý tưởng mô phỏng: PGS.TS. Phan Anh Tú — Trường Kinh tế, ĐH Cần Thơ · Hiện thực hóa trong hệ sinh thái BizOn.</p>
+  </div>
+</header>
+
+<main class="max-w-2xl mx-auto px-5 py-8">
+
+  <!-- MÀN GIỚI THIỆU -->
+  <section id="ft-intro" class="clay-card p-6">
+    <h2 class="font-display font-extrabold text-deep-teal text-lg mb-3">📜 Luật chơi</h2>
+    <ul class="space-y-2 text-sm">
+      <li>🚚 <b>Food Truck</b>: doanh thu <b>×3</b> — nhưng chốt cứng thực đơn &amp; địa điểm cả tuần. Dành cho lúc bạn đã <i>biết</i> công thức thắng.</li>
+      <li>🛒 <b>Xe đẩy</b>: doanh thu ~1/3 — nhưng len lỏi khắp nơi nên nghe ngóng được <b>rất nhiều thông tin thị trường</b>. Vũ khí của người thử nghiệm.</li>
+      <li>📊 <b>Nghiên cứu</b>: mất trọn tuần không bán hàng, nhận về <b>dữ liệu lịch sử</b> (đúng hướng nhưng có thể lỗi thời).</li>
+      <li>🎯 Nhu cầu thật của từng cặp <b>Thực đơn × Địa điểm</b> là ẩn số — mỗi ván mỗi khác. Quan sát sau từng tuần là manh mối quý nhất.</li>
+    </ul>
+    <button onclick="ftStart()" class="clay-btn w-full bg-clay-gold text-deep-teal font-display font-extrabold py-4 mt-5">🚀 Bắt đầu 5 tuần kinh doanh</button>
+  </section>
+
+  <!-- MÀN CHƠI -->
+  <section id="ft-play" class="hidden">
+    <div class="clay-card p-5 mb-4">
+      <div class="flex items-center justify-between">
+        <div class="flex gap-2" id="ft-weekdots"></div>
+        <p class="text-sm font-extrabold">💰 <span id="ft-total">0</span> triệu ₫</p>
+      </div>
+    </div>
+
+    <div class="clay-card p-6 mb-4">
+      <h2 class="font-display font-extrabold text-deep-teal text-base mb-3">Tuần <span id="ft-week">1</span>/5 — chọn 3 quyết định</h2>
+      <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mb-1.5">1 · Phương thức</p>
+      <div class="grid grid-cols-3 gap-2" id="ft-methods"></div>
+      <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mb-1.5 mt-4">2 · Thực đơn</p>
+      <div class="grid grid-cols-3 gap-2" id="ft-menus"></div>
+      <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mb-1.5 mt-4">3 · Địa điểm</p>
+      <div class="grid grid-cols-3 gap-2" id="ft-locs"></div>
+      <button id="ft-commit" onclick="ftCommit()" class="clay-btn w-full bg-primary text-white font-display font-extrabold py-3.5 mt-5">🔒 Chốt tuần này</button>
+      <p id="ft-hint" class="text-xs font-semibold opacity-60 mt-2 text-center"></p>
+    </div>
+
+    <div class="clay-card p-6">
+      <h2 class="font-display font-extrabold text-deep-teal text-base mb-1">🔎 Quan sát thị trường</h2>
+      <p class="text-[11px] opacity-55 font-semibold">Thông tin thu được sau mỗi tuần — manh mối quan trọng nhất của bạn.</p>
+      <ul id="ft-log" class="ft-log"><li class="opacity-50">Chưa có dữ liệu — hãy chốt tuần đầu tiên.</li></ul>
+    </div>
+  </section>
+
+  <!-- MÀN KẾT THÚC -->
+  <section id="ft-end" class="hidden">
+    <div class="clay-card p-7 text-center mb-4">
+      <p class="text-5xl" id="ft-medal">🏆</p>
+      <h2 class="font-display font-extrabold text-deep-teal text-2xl mt-2" id="ft-title">Kết quả</h2>
+      <p class="font-display font-extrabold text-primary text-4xl mt-3"><span id="ft-final">0</span> triệu ₫</p>
+      <p class="text-sm font-semibold opacity-70 mt-1.5" id="ft-eff"></p>
+      <p class="text-xs opacity-60 mt-3" id="ft-reveal"></p>
+      <div class="flex gap-3 mt-5">
+        <button onclick="location.reload()" class="clay-btn flex-1 bg-clay-gold text-deep-teal font-display font-extrabold py-3.5">🔄 Chơi lại</button>
+        <a href="games.html" class="clay-btn flex-1 bg-primary text-white font-display font-extrabold py-3.5 flex items-center justify-center">🕹️ Arcade</a>
+      </div>
+    </div>
+    <div class="clay-card p-6">
+      <h3 class="font-display font-extrabold text-deep-teal text-base mb-2">🎓 Câu hỏi tổng kết (thảo luận cùng lớp)</h3>
+      <ol class="list-decimal ml-5 space-y-1.5 text-sm">
+        <li>Tuần 1 bạn chọn gì? Vì sao?</li>
+        <li>Bạn có đổi chiến lược sau khi nhận phản hồi thị trường không?</li>
+        <li>Bạn cân bằng thế nào giữa <b>học hỏi</b> (xe đẩy) và <b>nhân rộng</b> (food truck)?</li>
+        <li>Bài học nào áp dụng được cho khởi nghiệp thật?</li>
+      </ol>
+      <p class="text-xs opacity-60 mt-3">💡 Bài học lõi: <b>thử nghiệm rẻ và nhanh trước</b> (prototyping bằng Xe đẩy), khi tín hiệu đủ rõ mới <b>đặt cược lớn</b> (Food Truck). Dữ liệu lịch sử chỉ mang tính định hướng — quan sát trực tiếp mới là vàng.</p>
+    </div>
+  </section>
+
+</main>
+
+<script>
+(function () {
+  var METHODS = [
+    { id: 'truck', icon: '🚚', name: 'Food Truck', sub: 'Doanh thu ×3' },
+    { id: 'cart', icon: '🛒', name: 'Xe đẩy', sub: 'Doanh thu ×1 · nhiều tin' },
+    { id: 'research', icon: '📊', name: 'Nghiên cứu', sub: 'Không bán · dữ liệu cũ' },
+  ];
+  var MENUS = [['🍦', 'Kem'], ['🍧', 'Sữa chua'], ['🥤', 'Sinh tố']];
+  var LOCS = [['🏖️', 'Bãi biển'], ['🏢', 'Trung tâm'], ['🎭', 'Khu nghệ thuật'], ['🚉', 'Nhà ga'], ['🛍️', 'Chợ thành phố'], ['🎓', 'Đại học']];
+
+  // RNG có seed để mỗi ván một thị trường riêng nhưng nhất quán trong ván
+  var seed = Math.floor(Math.random() * 1e9);
+  function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+
+  // Nhu cầu thật ẩn: D[menu][loc] (triệu ₫ cơ sở cho Xe đẩy) 1.0–3.4
+  var D = MENUS.map(function () { return LOCS.map(function () { return 1 + rnd() * 2.4; }); });
+  // Hệ số tuần theo địa điểm 0.8–1.25
+  var W = [0, 1, 2, 3, 4].map(function () { return LOCS.map(function () { return 0.8 + rnd() * 0.45; }); });
+
+  var S = { week: 0, total: 0, sel: { m: null, menu: null, loc: null }, log: [] };
+  var $ = function (id) { return document.getElementById(id); };
+  var f1 = function (v) { return (Math.round(v * 10) / 10).toLocaleString('vi-VN', { maximumFractionDigits: 1 }); };
+
+  function bestAt(loc) { var b = 0; for (var m = 1; m < 3; m++) if (D[m][loc] > D[b][loc]) b = m; return b; }
+  function bestCombo() {
+    var bm = 0, bl = 0;
+    for (var m = 0; m < 3; m++) for (var l = 0; l < 6; l++) if (D[m][l] > D[bm][bl]) { bm = m; bl = l; }
+    return [bm, bl];
+  }
+
+  window.ftStart = function () {
+    $('ft-intro').classList.add('hidden');
+    $('ft-play').classList.remove('hidden');
+    render();
+  };
+
+  function optBtn(group, idx, html) {
+    return '<button class="ft-opt" data-g="' + group + '" data-i="' + idx + '" onclick="ftPick(\'' + group + '\',' + idx + ')">' + html + '</button>';
+  }
+
+  function render() {
+    $('ft-week').textContent = S.week + 1;
+    $('ft-total').textContent = f1(S.total);
+    $('ft-weekdots').innerHTML = [0, 1, 2, 3, 4].map(function (i) {
+      return '<div class="ft-week-dot ' + (i < S.week ? 'done' : i === S.week ? 'cur' : '') + '">' + (i + 1) + '</div>';
+    }).join('');
+    $('ft-methods').innerHTML = METHODS.map(function (m, i) {
+      return optBtn('m', i, '<span class="big">' + m.icon + '</span>' + m.name + '<br><span style="font-size:10px;opacity:.6">' + m.sub + '</span>');
+    }).join('');
+    $('ft-menus').innerHTML = MENUS.map(function (m, i) { return optBtn('menu', i, '<span class="big">' + m[0] + '</span>' + m[1]); }).join('');
+    $('ft-locs').innerHTML = LOCS.map(function (l, i) { return optBtn('loc', i, '<span class="big">' + l[0] + '</span>' + l[1]); }).join('');
+    S.sel = { m: null, menu: null, loc: null };
+    syncSel();
+  }
+
+  window.ftPick = function (g, i) {
+    S.sel[g] = i;
+    syncSel();
+  };
+
+  function syncSel() {
+    document.querySelectorAll('.ft-opt').forEach(function (b) {
+      b.classList.toggle('sel', S.sel[b.dataset.g] === Number(b.dataset.i));
+    });
+    var research = S.sel.m === 2;
+    // Nghiên cứu thì không cần chọn thực đơn/địa điểm
+    document.querySelectorAll('[data-g="menu"],[data-g="loc"]').forEach(function (b) { b.disabled = research; });
+    var ready = S.sel.m !== null && (research || (S.sel.menu !== null && S.sel.loc !== null));
+    $('ft-commit').disabled = !ready;
+    $('ft-commit').style.opacity = ready ? 1 : 0.5;
+    $('ft-hint').textContent = research ? 'Tuần này bạn dừng bán để mua dữ liệu lịch sử.' :
+      (ready ? '' : 'Chọn đủ Phương thức + Thực đơn + Địa điểm để chốt.');
+  }
+
+  function addLog(week, html) {
+    S.log.unshift('<li><b>Tuần ' + week + ':</b> ' + html + '</li>');
+    $('ft-log').innerHTML = S.log.join('');
+  }
+
+  window.ftCommit = function () {
+    var w = S.week, m = S.sel.m, menu = S.sel.menu, loc = S.sel.loc;
+    if (m === null) return;
+    if (m === 2) {
+      // Nghiên cứu: dữ liệu lịch sử — đúng hướng nhưng 20% bị nhiễu
+      var bc = bestCombo();
+      var noisy = rnd() < 0.2;
+      var rm = noisy ? (bc[0] + 1) % 3 : bc[0];
+      var rl = noisy ? (bc[1] + 1 + Math.floor(rnd() * 5)) % 6 : bc[1];
+      addLog(w + 1, '📊 Báo cáo lịch sử: mùa trước, ' + MENUS[rm][0] + ' <b>' + MENUS[rm][1] + '</b> bán chạy nhất, khu <b>' + LOCS[rl][1] + '</b> đông khách nhất. <i>(dữ liệu cũ — chỉ mang tính tham khảo)</i>');
+    } else {
+      var mult = m === 0 ? 3 : 1;
+      var rev = D[menu][loc] * W[w][loc] * mult;
+      S.total += rev;
+      var icon = m === 0 ? '🚚' : '🛒';
+      addLog(w + 1, icon + ' Bán ' + MENUS[menu][0] + ' ' + MENUS[menu][1] + ' tại ' + LOCS[loc][0] + ' ' + LOCS[loc][1] + ' → <b>' + f1(rev) + ' triệu ₫</b>');
+      if (m === 1) {
+        // Xe đẩy: nghe ngóng được nhiều — món tốt nhất tại chỗ + so sánh 2 địa điểm
+        var b = bestAt(loc);
+        addLog(w + 1, '🛒 <i>Nghe ngóng:</i> tại ' + LOCS[loc][1] + ', khách hỏi <b>' + MENUS[b][1] + '</b> nhiều nhất.');
+        if (w < 4) {
+          var l1 = Math.floor(rnd() * 6), l2 = (l1 + 1 + Math.floor(rnd() * 5)) % 6;
+          var hot = W[w + 1][l1] >= W[w + 1][l2] ? l1 : l2;
+          addLog(w + 1, '🗣️ <i>Tin vỉa hè:</i> tuần tới khu <b>' + LOCS[hot][1] + '</b> có vẻ sẽ đông hơn ' + LOCS[hot === l1 ? l2 : l1][1] + '.');
+        }
+      } else {
+        var isBest = bestAt(loc) === menu;
+        addLog(w + 1, '🚚 <i>Cảm nhận:</i> ' + (isBest ? 'món của bạn đang là "vua" ở khu này! 👑' : 'hình như khách ở đây thèm một món khác…'));
+      }
+    }
+    S.week++;
+    if (S.week >= 5) return ftEnd();
+    render();
+  };
+
+  function ftEnd() {
+    $('ft-play').classList.add('hidden');
+    $('ft-end').classList.remove('hidden');
+    // Chuẩn so sánh: chơi Food Truck đúng cặp tốt nhất cả 5 tuần
+    var bc = bestCombo(), maxRev = 0;
+    for (var w = 0; w < 5; w++) maxRev += D[bc[0]][bc[1]] * W[w][bc[1]] * 3;
+    var eff = Math.min(100, Math.round(S.total / maxRev * 100));
+    $('ft-final').textContent = f1(S.total);
+    $('ft-eff').textContent = 'Hiệu suất ' + eff + '% so với kịch bản hoàn hảo (' + f1(maxRev) + ' triệu ₫).';
+    var medal = eff >= 70 ? ['🥇', 'Nhà sáng lập xuất sắc!'] : eff >= 50 ? ['🥈', 'Doanh nhân triển vọng'] : eff >= 30 ? ['🥉', 'Đã nộp đủ "học phí thị trường"'] : ['🌱', 'Thất bại là nguyên liệu của thành công'];
+    $('ft-medal').textContent = medal[0];
+    $('ft-title').textContent = medal[1];
+    $('ft-reveal').innerHTML = '🔍 Đáp án của ván này: cặp thắng là ' + MENUS[bc[0]][0] + ' <b>' + MENUS[bc[0]][1] + '</b> × ' + LOCS[bc[1]][0] + ' <b>' + LOCS[bc[1]][1] + '</b>. Chiến lược tham chiếu: Xe đẩy tuần 1–2 để dò, Food Truck tuần 3–5 với cặp tốt nhất.';
+  }
+})();
+</script>
+<script src="js/site-ui.js" defer></script>
+<script src="js/site-dock.js" defer></script>
+<script src="js/site-footer.js" defer></script>
+<p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2" style="color:rgba(100,116,125,.85)">✉️ Liên hệ · Contact: <a href="mailto:patu@ctu.edu.vn" style="color:inherit;text-decoration:underline">patu@ctu.edu.vn</a> · <a href="mailto:thuyhuongctu@gmail.com" style="color:inherit;text-decoration:underline">thuyhuongctu@gmail.com</a></p>
+<p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2 pb-6" style="color:rgba(100,116,125,.75)">🎓 Trang web chỉ phục vụ mục đích giáo dục và nghiên cứu, không đại diện, không liên kết và không nhận tài trợ từ bất kỳ tổ chức chính trị nào. · This website serves educational and research purposes only and is not affiliated with any political organization.</p>
+</body>
+</html>
