@@ -24,6 +24,18 @@
   .ft-opt .big { font-size:22px; display:block; }
   .ft-opt.sel { border-color:#006687; background:rgba(0,102,135,.08); box-shadow:0 4px 12px -4px rgba(0,102,135,.35); }
   .ft-opt:disabled { opacity:.45; cursor:not-allowed; }
+  .ft-ava { border:2px solid rgba(0,102,135,.16); border-radius:16px; padding:5px 4px 7px; cursor:pointer; background:transparent; color:inherit; width:100%; font-weight:700; font-size:10px; line-height:1.25; transition:all .12s; }
+  .ft-ava img { width:100%; aspect-ratio:1/1; object-fit:cover; object-position:top; border-radius:12px; background:rgba(0,102,135,.07); }
+  .ft-ava.sel { border-color:#006687; background:rgba(0,102,135,.08); box-shadow:0 4px 12px -4px rgba(0,102,135,.35); }
+  .ft-chip { display:inline-flex; align-items:center; gap:5px; }
+  .ft-chip img { width:20px; height:20px; border-radius:9999px; object-fit:cover; object-position:top; background:rgba(255,255,255,.25); }
+  .ft-row { display:flex; align-items:center; gap:10px; border:2px solid rgba(0,102,135,.14); border-radius:14px; padding:7px 12px; font-size:13px; font-weight:700; }
+  .ft-row img { width:34px; height:34px; border-radius:12px; object-fit:cover; object-position:top; background:rgba(0,102,135,.07); }
+  .ft-row.me { border-color:#fda127; background:rgba(253,161,39,.1); }
+  html[data-theme="dark"] .ft-ava { border-color:rgba(92,196,230,.22); }
+  html[data-theme="dark"] .ft-ava.sel { border-color:#5cc4e6; background:rgba(92,196,230,.12); }
+  html[data-theme="dark"] .ft-row { border-color:rgba(92,196,230,.2); }
+  html[data-theme="dark"] .ft-row.me { border-color:#fda127; background:rgba(253,161,39,.12); }
   .ft-log li { border-left:3px solid rgba(0,102,135,.25); padding:6px 0 6px 12px; margin-top:8px; font-size:13px; }
   .ft-week-dot { width:30px; height:30px; border-radius:9999px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:12px; background:rgba(0,102,135,.1); }
   .ft-week-dot.done { background:#006687; color:#fff; }
@@ -82,7 +94,10 @@
       <li>🛒 <b>Xe đẩy</b>: doanh thu ~1/3 — nhưng len lỏi khắp nơi nên nghe ngóng được <b>rất nhiều thông tin thị trường</b>. Vũ khí của người thử nghiệm.</li>
       <li>📊 <b>Nghiên cứu</b>: mất trọn tuần không bán hàng, nhận về <b>dữ liệu lịch sử</b> (đúng hướng nhưng có thể lỗi thời).</li>
       <li>🎯 Nhu cầu thật của từng cặp <b>Thực đơn × Địa điểm</b> là ẩn số — mỗi ván mỗi khác. Quan sát sau từng tuần là manh mối quý nhất.</li>
+      <li>⚔️ <b>3 đối thủ AI</b> — Alpha Dynamics 🐺, Mekong Ventures 🐘, Star Clay Co. 🦚 — cũng bán đồ lạnh khắp Boomtown. Đụng cùng địa điểm là <b>chia nhau khách</b>!</li>
     </ul>
+    <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-5 mb-1.5">Chọn thuyền trưởng cho đội của bạn</p>
+    <div class="grid grid-cols-5 gap-2" id="ft-avatars"></div>
     <button onclick="ftStart()" class="clay-btn w-full bg-clay-gold text-deep-teal font-display font-extrabold py-4 mt-5">🚀 Bắt đầu 5 tuần kinh doanh</button>
   </section>
 
@@ -93,6 +108,7 @@
         <div class="flex gap-2" id="ft-weekdots"></div>
         <p class="text-sm font-extrabold">💰 <span id="ft-total">0</span> triệu ₫</p>
       </div>
+      <div class="flex flex-wrap gap-x-4 gap-y-1 mt-3 text-[11px] font-bold opacity-70" id="ft-scores"></div>
     </div>
 
     <div class="clay-card p-6 mb-4">
@@ -121,6 +137,7 @@
       <h2 class="font-display font-extrabold text-deep-teal text-2xl mt-2" id="ft-title">Kết quả</h2>
       <p class="font-display font-extrabold text-primary text-4xl mt-3"><span id="ft-final">0</span> triệu ₫</p>
       <p class="text-sm font-semibold opacity-70 mt-1.5" id="ft-eff"></p>
+      <div class="mt-4 space-y-2 text-left" id="ft-board"></div>
       <p class="text-xs opacity-60 mt-3" id="ft-reveal"></p>
       <div class="flex gap-3 mt-5">
         <button onclick="location.reload()" class="clay-btn flex-1 bg-clay-gold text-deep-teal font-display font-extrabold py-3.5">🔄 Chơi lại</button>
@@ -151,6 +168,20 @@
   var MENUS = [['🍦', 'Kem'], ['🍧', 'Sữa chua'], ['🥤', 'Sinh tố']];
   var LOCS = [['🏖️', 'Bãi biển'], ['🏢', 'Trung tâm'], ['🎭', 'Khu nghệ thuật'], ['🚉', 'Nhà ga'], ['🛍️', 'Chợ thành phố'], ['🎓', 'Đại học']];
 
+  var TEAM = [
+    { img: 'assets/character/team/ceo-cut.png', name: 'Minh Long', role: 'CEO' },
+    { img: 'assets/character/team/cfo-cut.png', name: 'Thu Hà', role: 'CFO' },
+    { img: 'assets/character/team/cmo-cut.png', name: 'Lan Chi', role: 'CMO' },
+    { img: 'assets/character/team/coo-cut.png', name: 'Bảo Ngọc', role: 'COO' },
+    { img: 'assets/character/team/sec-cut.png', name: 'Gia Hân', role: 'Thư ký' },
+  ];
+  // 3 đối thủ AI của hệ sinh thái BizOn — mỗi "nhà" một tính cách kinh doanh
+  var RIVALS = [
+    { name: 'Alpha Dynamics', icon: '🐺', img: 'assets/character/rivals/alpha.png', style: 'tốc chiến: dò 2 tuần rồi dồn lực' },
+    { name: 'Mekong Ventures', icon: '🐘', img: 'assets/character/rivals/mekong.png', style: 'chậm mà chắc: bám trụ một khu' },
+    { name: 'Star Clay Co.', icon: '🦚', img: 'assets/character/rivals/star.png', style: 'thương hiệu: luân phiên hai khu' },
+  ];
+
   // RNG có seed để mỗi ván một thị trường riêng nhưng nhất quán trong ván
   var seed = Math.floor(Math.random() * 1e9);
   function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
@@ -160,7 +191,23 @@
   // Hệ số tuần theo địa điểm 0.8–1.25
   var W = [0, 1, 2, 3, 4].map(function () { return LOCS.map(function () { return 0.8 + rnd() * 0.45; }); });
 
-  var S = { week: 0, total: 0, sel: { m: null, menu: null, loc: null }, log: [] };
+  // Kế hoạch 5 tuần của từng đối thủ — sinh SAU D/W từ cùng seed nên mỗi ván mỗi khác
+  RIVALS.forEach(function (r) { r.menu = Math.floor(rnd() * 3); r.total = 0; });
+  (function () {
+    var a = RIVALS[0], mk = RIVALS[1], st = RIVALS[2];
+    // Alpha 🐺: xe đẩy dò 2 tuần ngẫu nhiên, rồi food truck bám khu tốt nhất cho món của nó
+    var ba = 0; for (var l = 1; l < 6; l++) if (D[a.menu][l] > D[a.menu][ba]) ba = l;
+    a.plan = [Math.floor(rnd() * 6), Math.floor(rnd() * 6), ba, ba, ba];
+    a.mult = [1, 1, 3, 3, 3];
+    // Mekong 🐘: chọn một khu "quê nhà" rồi cắm food truck ở đó cả ván
+    var home = Math.floor(rnd() * 6);
+    mk.plan = [home, home, home, home, home]; mk.mult = [3, 3, 3, 3, 3];
+    // Star 🦚: food truck luân phiên giữa hai khu ruột
+    var s1 = Math.floor(rnd() * 6), s2 = (s1 + 1 + Math.floor(rnd() * 5)) % 6;
+    st.plan = [s1, s2, s1, s2, s1]; st.mult = [3, 3, 3, 3, 3];
+  })();
+
+  var S = { week: 0, total: 0, cap: 0, sel: { m: null, menu: null, loc: null }, log: [] };
   var $ = function (id) { return document.getElementById(id); };
   var f1 = function (v) { return (Math.round(v * 10) / 10).toLocaleString('vi-VN', { maximumFractionDigits: 1 }); };
 
@@ -169,6 +216,28 @@
     var bm = 0, bl = 0;
     for (var m = 0; m < 3; m++) for (var l = 0; l < 6; l++) if (D[m][l] > D[bm][bl]) { bm = m; bl = l; }
     return [bm, bl];
+  }
+
+  // Đụng độ địa điểm: n người bán cùng khu thì mỗi người chỉ giữ được 1/(1+0.4(n−1)) lượng khách
+  function share(n) { return 1 / (1 + 0.4 * (n - 1)); }
+
+  function renderAvatars() {
+    $('ft-avatars').innerHTML = TEAM.map(function (t, i) {
+      return '<button class="ft-ava' + (i === S.cap ? ' sel' : '') + '" onclick="ftCap(' + i + ')">' +
+        '<img src="' + t.img + '" alt="' + t.name + '" loading="lazy"><span style="display:block;margin-top:4px">' + t.name + '</span>' +
+        '<span style="display:block;font-size:9px;opacity:.55">' + t.role + '</span></button>';
+    }).join('');
+  }
+  window.ftCap = function (i) { S.cap = i; renderAvatars(); };
+
+  function renderScores() {
+    var chips = [{ img: TEAM[S.cap].img, label: 'Đội bạn', total: S.total, me: true }].concat(RIVALS.map(function (r) {
+      return { img: r.img, label: r.icon + ' ' + r.name.split(' ')[0], total: r.total };
+    }));
+    $('ft-scores').innerHTML = chips.map(function (c) {
+      return '<span class="ft-chip' + (c.me ? '" style="color:#fda127' : '') + '"><img src="' + c.img + '" alt="">' +
+        c.label + ' · ' + f1(c.total) + ' tr</span>';
+    }).join('');
   }
 
   window.ftStart = function () {
@@ -192,6 +261,7 @@
     }).join('');
     $('ft-menus').innerHTML = MENUS.map(function (m, i) { return optBtn('menu', i, '<span class="big">' + m[0] + '</span>' + m[1]); }).join('');
     $('ft-locs').innerHTML = LOCS.map(function (l, i) { return optBtn('loc', i, '<span class="big">' + l[0] + '</span>' + l[1]); }).join('');
+    renderScores();
     S.sel = { m: null, menu: null, loc: null };
     syncSel();
   }
@@ -223,6 +293,12 @@
   window.ftCommit = function () {
     var w = S.week, m = S.sel.m, menu = S.sel.menu, loc = S.sel.loc;
     if (m === null) return;
+
+    // Đếm người bán tại từng khu tuần này (đối thủ luôn bán; người chơi trừ tuần Nghiên cứu)
+    var count = [0, 0, 0, 0, 0, 0];
+    RIVALS.forEach(function (r) { count[r.plan[w]]++; });
+    if (m !== 2) count[loc]++;
+
     if (m === 2) {
       // Nghiên cứu: dữ liệu lịch sử — đúng hướng nhưng 20% bị nhiễu
       var bc = bestCombo();
@@ -232,10 +308,12 @@
       addLog(w + 1, '📊 Báo cáo lịch sử: mùa trước, ' + MENUS[rm][0] + ' <b>' + MENUS[rm][1] + '</b> bán chạy nhất, khu <b>' + LOCS[rl][1] + '</b> đông khách nhất. <i>(dữ liệu cũ — chỉ mang tính tham khảo)</i>');
     } else {
       var mult = m === 0 ? 3 : 1;
-      var rev = D[menu][loc] * W[w][loc] * mult;
+      var rev = D[menu][loc] * W[w][loc] * mult * share(count[loc]);
       S.total += rev;
       var icon = m === 0 ? '🚚' : '🛒';
-      addLog(w + 1, icon + ' Bán ' + MENUS[menu][0] + ' ' + MENUS[menu][1] + ' tại ' + LOCS[loc][0] + ' ' + LOCS[loc][1] + ' → <b>' + f1(rev) + ' triệu ₫</b>');
+      var clash = count[loc] - 1;
+      addLog(w + 1, icon + ' Bán ' + MENUS[menu][0] + ' ' + MENUS[menu][1] + ' tại ' + LOCS[loc][0] + ' ' + LOCS[loc][1] + ' → <b>' + f1(rev) + ' triệu ₫</b>' +
+        (clash > 0 ? ' <i>(⚡ đụng độ ' + clash + ' đối thủ — chia nhau khách!)</i>' : ''));
       if (m === 1) {
         // Xe đẩy: nghe ngóng được nhiều — món tốt nhất tại chỗ + so sánh 2 địa điểm
         var b = bestAt(loc);
@@ -250,6 +328,17 @@
         addLog(w + 1, '🚚 <i>Cảm nhận:</i> ' + (isBest ? 'món của bạn đang là "vua" ở khu này! 👑' : 'hình như khách ở đây thèm một món khác…'));
       }
     }
+
+    // Đối thủ bán theo kế hoạch riêng — cùng chịu luật chia khách
+    RIVALS.forEach(function (r) {
+      var rl2 = r.plan[w];
+      r.total += D[r.menu][rl2] * W[w][rl2] * r.mult[w] * share(count[rl2]);
+    });
+    addLog(w + 1, '⚔️ <i>Đối thủ tuần này:</i> ' + RIVALS.map(function (r) {
+      var rl2 = r.plan[w];
+      return r.icon + ' ' + LOCS[rl2][1] + (m !== 2 && rl2 === loc ? ' ⚡' : '');
+    }).join(' · '));
+
     S.week++;
     if (S.week >= 5) return ftEnd();
     render();
@@ -264,11 +353,27 @@
     var eff = Math.min(100, Math.round(S.total / maxRev * 100));
     $('ft-final').textContent = f1(S.total);
     $('ft-eff').textContent = 'Hiệu suất ' + eff + '% so với kịch bản hoàn hảo (' + f1(maxRev) + ' triệu ₫).';
-    var medal = eff >= 70 ? ['🥇', 'Nhà sáng lập xuất sắc!'] : eff >= 50 ? ['🥈', 'Doanh nhân triển vọng'] : eff >= 30 ? ['🥉', 'Đã nộp đủ "học phí thị trường"'] : ['🌱', 'Thất bại là nguyên liệu của thành công'];
-    $('ft-medal').textContent = medal[0];
-    $('ft-title').textContent = medal[1];
-    $('ft-reveal').innerHTML = '🔍 Đáp án của ván này: cặp thắng là ' + MENUS[bc[0]][0] + ' <b>' + MENUS[bc[0]][1] + '</b> × ' + LOCS[bc[1]][0] + ' <b>' + LOCS[bc[1]][1] + '</b>. Chiến lược tham chiếu: Xe đẩy tuần 1–2 để dò, Food Truck tuần 3–5 với cặp tốt nhất.';
+
+    // Bảng xếp hạng 4 đội — thứ hạng quyết định danh hiệu
+    var rows = [{ img: TEAM[S.cap].img, name: 'Đội của bạn — thuyền trưởng ' + TEAM[S.cap].name, total: S.total, me: true }]
+      .concat(RIVALS.map(function (r) { return { img: r.img, name: r.icon + ' ' + r.name + ' <span style="font-weight:600;opacity:.55;font-size:11px">(' + r.style + ')</span>', total: r.total }; }));
+    rows.sort(function (a, b) { return b.total - a.total; });
+    var rank = rows.findIndex(function (r) { return r.me; });
+    var MEDALS = ['🥇', '🥈', '🥉', '4️⃣'];
+    $('ft-board').innerHTML = rows.map(function (r, i) {
+      return '<div class="ft-row' + (r.me ? ' me' : '') + '">' + MEDALS[i] + ' <img src="' + r.img + '" alt="">' +
+        '<span>' + r.name + '</span><b style="margin-left:auto;white-space:nowrap">' + f1(r.total) + ' tr₫</b></div>';
+    }).join('');
+
+    var crown = rank === 0 ? ['🏆', 'Vô địch Boomtown!'] :
+      rank === 1 ? ['🥈', 'Á quân Boomtown — sát nút!'] :
+      rank === 2 ? ['🥉', 'Hạng 3 — thị trường khốc liệt'] : ['🌱', 'Về chót… nhưng bài học là thật'];
+    $('ft-medal').textContent = crown[0];
+    $('ft-title').textContent = crown[1];
+    $('ft-reveal').innerHTML = '🔍 Đáp án của ván này: cặp thắng là ' + MENUS[bc[0]][0] + ' <b>' + MENUS[bc[0]][1] + '</b> × ' + LOCS[bc[1]][0] + ' <b>' + LOCS[bc[1]][1] + '</b>. Chiến lược tham chiếu: Xe đẩy tuần 1–2 để dò, Food Truck tuần 3–5 với cặp tốt nhất — và né khu đông đối thủ khi doanh thu gốc ngang nhau.';
   }
+
+  renderAvatars();
 })();
 </script>
 <script src="js/site-ui.js" defer></script>
