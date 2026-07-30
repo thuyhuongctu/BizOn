@@ -1191,22 +1191,33 @@ function showArena(r, done) {
       img: RIVAL_IMGS[c.style], pos: ['top', 'left', 'right'][i] })),
   ];
   const max = Math.max(...fighters.map(f => f.share));
-  const POS = { bottom: 'left:50%; bottom:2%; transform:translateX(-50%)', top: 'left:50%; top:2%; transform:translateX(-50%)',
-                left: 'left:2%; top:50%; transform:translateY(-50%)', right: 'right:2%; top:50%; transform:translateY(-50%)' };
+  // Bản đồ dựng đứng và hẹp nên xếp 4 đối thủ thành hai cột hai bên,
+  // chừa trọn dải đất liền để ghim địa phương luôn nhìn thấy.
+  const POS = { bottom: 'left:0; bottom:0', top: 'left:0; top:0',
+                left: 'right:0; top:0', right: 'right:0; bottom:0' };
   const div = document.createElement('div');
   div.className = 'fixed inset-0 z-[70] flex items-center justify-center p-4 overflow-y-auto';
-  div.style.background = 'radial-gradient(circle at 50% 20%, #06414d 0%, #021a20 70%)';
+  div.style.background = 'linear-gradient(180deg, #06282f 0%, #052026 55%, #04171c 100%)'; // đồng màu với nền ảnh bản đồ
+  // Sàn đấu là bản đồ Việt Nam đất nặn; ghim cắm tại địa phương của vòng này.
+  const pin = stop ? `
+        <div class="absolute" style="left:${stop.fx * 100}%; top:${stop.fy * 100}%; transform:translate(-50%,-50%); z-index:5">
+          <span class="block w-5 h-5 rounded-full bg-clay-gold border-2 border-white cq-pulse" style="box-shadow:0 0 16px rgba(253,161,39,.95)"></span>
+        </div>` : '';
   div.innerHTML = `
     <div class="w-full max-w-sm text-center py-6">
       <h3 class="font-display font-extrabold text-white text-xl">⚔️ ĐẤU TRƯỜNG ${stop ? stop.name.toUpperCase() : 'VÒNG ' + r.round}</h3>
-      <p class="text-white/60 text-xs mb-3">${r.event.icon} ${r.event.name} – 12.000 khách hàng chờ trên khán đài</p>
-      <div class="relative mx-auto" style="width:min(88vw,340px); height:min(88vw,340px)">
-        <div class="absolute inset-0 rounded-full" style="background:radial-gradient(circle, rgba(232,118,45,.25) 0%, rgba(0,102,135,.18) 45%, rgba(255,255,255,.04) 46%, transparent 72%); border:2px solid rgba(255,255,255,.12)"></div>
-        <div class="absolute rounded-full border border-white/15" style="inset:18%"></div>
-        <div class="absolute rounded-full border border-white/10" style="inset:34%"></div>
-        <p id="arena-vs" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-display font-extrabold text-white/80 text-2xl" style="text-shadow:0 0 18px rgba(232,118,45,.9)">VS</p>
+      <p class="text-white/60 text-xs">${r.event.icon} ${r.event.name} – 12.000 khách hàng chờ trên khán đài</p>
+      ${stop ? `<p class="text-[11px] font-extrabold mb-2" style="color:rgba(253,161,39,.9)">📍 ${stop.zone}</p>` : '<p class="mb-2"></p>'}
+      <div class="relative mx-auto" style="width:min(96vw,376px); height:min(54vh,392px)">
+        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" style="height:100%; aspect-ratio:768/1376">
+          <div class="w-full h-full" style="-webkit-mask-image:linear-gradient(to bottom, transparent 0, #000 3%, #000 97%, transparent 100%); mask-image:linear-gradient(to bottom, transparent 0, #000 3%, #000 97%, transparent 100%)">
+            <img src="assets/illustrations/arena-vietnam-map.png" alt="Bản đồ Việt Nam – sàn đấu giành thị phần" class="w-full h-full object-contain" style="-webkit-mask-image:linear-gradient(to right, transparent 0, #000 3%, #000 97%, transparent 100%); mask-image:linear-gradient(to right, transparent 0, #000 3%, #000 97%, transparent 100%)">
+          </div>
+          ${pin}
+        </div>
+        <p id="arena-vs" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-display font-extrabold text-3xl pointer-events-none" style="color:rgba(255,255,255,.92); text-shadow:0 0 22px rgba(232,118,45,.95), 0 2px 10px rgba(0,0,0,.9)">VS</p>
         ${fighters.map((f, i) => `
-        <div class="absolute w-[92px] text-center" data-pod="${i}" style="${POS[f.pos]}; animation:fadeUp .5s ease both; animation-delay:${i * 0.45}s">
+        <div class="absolute w-[76px] text-center" data-pod="${i}" style="${POS[f.pos]}; animation:fadeUp .5s ease both; animation-delay:${i * 0.45}s">
           <div class="mx-auto w-14 h-14 rounded-full overflow-hidden border-2 ${f.me ? 'border-clay-gold shadow-[0_0_16px_rgba(253,161,39,.8)]' : 'border-white/30'} bg-white/10 flex items-center justify-center">
             ${f.img ? `<img src="${f.img}" class="w-full h-full object-cover object-top">` : `<span class="text-3xl">${f.icon}</span>`}
           </div>
@@ -1308,13 +1319,15 @@ function showRoundResult(r) {
 
 // ---------- Bản đồ chinh phục Việt Nam (theo tỉnh thành mới sau sáp nhập) ----------
 const VN_OUTLINE = '108.9,25.2 148.2,39.0 145.3,52.5 158.2,69.0 186.7,80.1 166.7,96.0 158.2,99.0 148.2,102.0 138.2,120.0 126.8,129.0 120.3,156.0 125.4,177.0 142.5,189.0 159.6,210.0 174.4,231.0 192.4,243.0 202.9,258.0 210.9,273.0 216.6,291.0 222.3,312.0 223.7,336.0 220.9,357.0 218.0,378.0 198.1,396.0 183.8,405.0 159.6,415.5 152.5,417.0 146.8,429.0 141.1,441.0 119.7,456.0 95.5,468.0 94.6,454.5 93.5,439.5 101.2,427.5 96.3,415.5 84.1,413.4 101.2,399.0 124.0,397.5 124.8,378.0 140.2,374.4 145.3,363.0 172.4,348.0 169.6,321.0 169.6,294.0 172.4,284.4 173.8,270.0 169.6,249.0 153.9,240.0 134.0,219.0 116.8,198.0 104.0,174.0 72.7,147.0 85.5,137.4 88.3,121.5 81.2,113.4 44.2,99.0 39.9,86.4 18.2,83.4 18.5,54.0 31.3,43.5 52.7,50.4 61.3,42.0 81.2,43.2 95.8,38.4 105.5,32.4 108.9,25.2';
+/* x,y: toạ độ trên bản đồ SVG của thẻ Chinh phục.
+ * fx,fy: toạ độ tỉ lệ 0–1 trên ảnh bản đồ đất nặn dùng làm sàn Đấu trường. */
 const CONQUEST_STOPS = [
-  { name: 'Cần Thơ',          x: 108, y: 449 },
-  { name: 'TP. Hồ Chí Minh',  x: 150, y: 406 },
-  { name: 'Khánh Hòa',        x: 208, y: 302 },
-  { name: 'Đà Nẵng',          x: 166, y: 220 },
-  { name: 'Thanh Hóa',        x: 122, y: 140 },
-  { name: 'Hà Nội',           x: 110, y: 92 },
+  { name: 'Cần Thơ',          x: 108, y: 449, fx: .43, fy: .830, zone: 'Đồng bằng sông Cửu Long' },
+  { name: 'TP. Hồ Chí Minh',  x: 150, y: 406, fx: .56, fy: .735, zone: 'Đông Nam Bộ' },
+  { name: 'Khánh Hòa',        x: 208, y: 302, fx: .77, fy: .615, zone: 'Duyên hải Nam Trung Bộ' },
+  { name: 'Đà Nẵng',          x: 166, y: 220, fx: .68, fy: .460, zone: 'Duyên hải miền Trung' },
+  { name: 'Thanh Hóa',        x: 122, y: 140, fx: .34, fy: .255, zone: 'Bắc Trung Bộ' },
+  { name: 'Hà Nội',           x: 110, y:  92, fx: .32, fy: .145, zone: 'Đồng bằng sông Hồng' },
 ];
 
 function recordConquest(report) {
