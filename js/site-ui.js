@@ -1893,7 +1893,7 @@
 ["⚠️ Chưa gửi được — kiểm tra mạng rồi thử lại.", "⚠️ Could not send — check your connection and try again."],
 ["🧺 Gánh Hàng Khởi Nghiệp — kết quả lớp", "🧺 Entrepreneurial Street Vendor — class results"],
 ["Hộ Chiếu Thương Hiệu", "Brand Passport"],
-["BizOn Go Global: đưa thương hiệu Việt từ Vàm Thịnh ra 3 thị trường giả tưởng — sương mù thông tin, đàm phán đối tác, sự kiện bất định; thành công đo bằng 5 chiều: lợi nhuận, uy tín, năng lực, thích ứng, bền vững.", "BizOn Go Global: take a Vietnamese brand from Vàm Thịnh to 3 fictional markets — information fog, partner negotiation, uncertain events; success measured in 5 dimensions: profit, reputation, capability, adaptability, sustainability."],
+["BizOn Go Global: chọn 1 trong 4 doanh nghiệp, đưa thương hiệu Việt từ Vàm Thịnh ra 6 thị trường giả tưởng — sương mù thông tin, đàm phán đối tác, sự kiện bất định; thành công đo bằng 5 chiều: lợi nhuận, uy tín, năng lực, thích ứng, bền vững.", "BizOn Go Global: pick 1 of 4 companies and take a Vietnamese brand from Vàm Thịnh to 6 fictional markets — information fog, partner negotiation, uncertain events; success measured in 5 dimensions: profit, reputation, capability, adaptability, sustainability."],
 ["Sinh viên nộp từ màn kết thúc của game (cùng Mã lớp). Mỗi người tính ván có hiệu suất cao nhất; hạng là thứ hạng so với 3 đối thủ AI trong ván đó.", "Students submit from the game's end screen (same Class code). Each player counts their best-efficiency run; rank is their placing against the 3 AI rivals in that run."],
 ["Sinh viên", "Student"],
 ["Hiệu suất", "Efficiency"],
