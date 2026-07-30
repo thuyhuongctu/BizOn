@@ -12,7 +12,6 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
 <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
-<link rel="stylesheet" href="css/tw.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
@@ -127,6 +126,7 @@
   html[data-theme="dark"] .nav-item.active { color:#5cc4e6; }
   html[data-theme="dark"] #vn-map { color:#6fc4d8; }
 </style>
+<link rel="stylesheet" href="css/tw.css">
 </head>
 <body class="min-h-screen">
 <!-- Bản đồ Việt Nam chìm dưới trang (theo M-AIDA) -->
@@ -288,8 +288,9 @@
         <button onclick="showTab('journal')" class="clay-card p-3 text-center"><p class="text-2xl">📔</p><p class="text-[10px] font-bold text-deep-teal mt-1">Nhật ký đội</p></button>
         <button onclick="showTab('settings')" class="clay-card p-3 text-center"><p class="text-2xl">⚙️</p><p class="text-[10px] font-bold text-deep-teal mt-1">Cài đặt</p></button>
         <button onclick="showIntro()" class="clay-card p-3 text-center"><p class="text-2xl">🎬</p><p class="text-[10px] font-bold text-deep-teal mt-1">Giới thiệu</p></button>
+        <button onclick="BizonTour.start()" class="clay-card p-3 text-center"><p class="text-2xl">❓</p><p class="text-[10px] font-bold text-deep-teal mt-1">Hướng dẫn</p></button>
       </div>
-      <button onclick="showTab('decisions')" class="clay-btn w-full bg-primary text-white font-display font-bold py-4">Nhập quyết định vòng này ➜</button>
+      <button id="btn-go-decisions" onclick="showTab('decisions')" class="clay-btn w-full bg-primary text-white font-display font-bold py-4">Nhập quyết định vòng này ➜</button>
     </section>
 
     <!-- ========== DECISIONS ========== -->
@@ -764,6 +765,7 @@
 <script src="js/engine.js"></script>
 <script src="js/backend.js"></script>
 <script src="js/app.js"></script>
+<script src="js/tutorial.js"></script>
 <script>
 // Đăng ký service worker + tự làm mới khi có bản mới: dùng chung toàn site trong js/site-ui.js
 </script>
