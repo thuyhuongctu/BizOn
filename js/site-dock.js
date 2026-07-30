@@ -26,7 +26,7 @@
     ['Mekong Compass', 'mekong-compass.mp3'],
     ['Đội Phù Sa', 'doi-phu-sa.mp3'],
     ['Đội Phù Sa (remix)', 'doi-phu-sa-remix.mp3'],
-    ['Beyond the River Mouth', 'beyond-the-river-mouth.mp3'],
+    ['Hộ Chiếu Thương Hiệu (Beyond the River Mouth)', 'beyond-the-river-mouth.mp3'],
   ];
 
   /* ---------- CSS ---------- */
@@ -70,7 +70,7 @@
   dock.innerHTML =
     '<p class="bz-cap">🎛️ Tiện ích · Quick controls</p>' +
     '<div class="bz-row">' +
-      (IS_GAME ? '' : '<button class="bz-chip" id="bz-music" title="Phát/dừng playlist BizOn (13 ca khúc, tự lặp lại)">🎵</button>' +
+      (IS_GAME ? '' : '<button class="bz-chip" id="bz-music" title="Phát/dừng playlist nhạc gốc BizOn (tự lặp lại)">🎵</button>' +
         '<button class="bz-chip" id="bz-next" title="Bài kế tiếp">⏭️</button>') +
       '<button class="bz-chip" id="bz-theme" title="Sáng / Tối · Light / Dark">🌙</button>' +
       '<button class="bz-chip" id="bz-lang" title="Tiếng Việt / English" style="width:auto;padding:0 14px;font-size:12px;font-weight:800">EN</button>' +
@@ -154,11 +154,26 @@
         } else {
           audio.pause();
           musicBtn.classList.remove('on');
-          musicBtn.title = 'Phát playlist BizOn (13 ca khúc, tự lặp lại)';
+          musicBtn.title = 'Phát playlist nhạc gốc BizOn (tự lặp lại)';
         }
       });
       nextBtn.addEventListener('click', function () { playTrack(trackIdx + 1); });
     }
+
+    /* API cho các trang game gọi: phát đúng bài chủ đề bằng CHÍNH trình phát
+     * của dock — tránh hai nguồn nhạc chồng nhau, UI dock cũng đồng bộ theo. */
+    window.BizonDock = {
+      play: function (file) {
+        var i = PLAYLIST.findIndex(function (t) { return t[1] === file; });
+        if (i < 0) return false;
+        playTrack(i);
+        return true;
+      },
+      pause: function () {
+        if (audio && !audio.paused) { audio.pause(); if (musicBtn) musicBtn.classList.remove('on'); }
+      },
+      isPlaying: function () { return !!(audio && !audio.paused); },
+    };
 
     /* Sáng / Tối — dùng toggleTheme của site-ui, thiếu thì tự lo */
     var themeBtn = document.getElementById('bz-theme');
