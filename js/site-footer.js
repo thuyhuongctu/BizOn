@@ -13,7 +13,7 @@
       ['Game Bật Nghiệp', 'game.html'],
       ['Giới thiệu', 'gioi-thieu.html'],
       ['BizOn Arcade', 'games.html'],
-      ['Gánh Hàng Khởi Nghiệp', 'food-truck.html'],
+      ['Hộ Chiếu Thương Hiệu', 'brand-passport.html'],
       ['Go Global', 'global.html'],
       ['Kho Âm nhạc', 'am-nhac.html'],
       ['Thư viện Sáng tạo', 'thu-vien.html'],
