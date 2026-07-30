@@ -104,7 +104,7 @@
       <div class="clay-card p-6">
         <h2 class="font-display font-extrabold text-deep-teal text-xl mb-4">📡 Kênh chính thức</h2>
         <div class="space-y-3">
-          <a href="mailto:thuyhuongctu@gmail.com" class="clay-sunken rounded-2xl p-4 flex items-center gap-3 block"><span class="text-2xl">✉️</span><span><b class="text-sm text-deep-teal block">Email</b><span class="text-xs text-deep-teal/60">thuyhuongctu@gmail.com</span></span></a>
+          <a href="mailto:patu@ctu.edu.vn,thuyhuongctu@gmail.com" class="clay-sunken rounded-2xl p-4 flex items-center gap-3 block"><span class="text-2xl">✉️</span><span><b class="text-sm text-deep-teal block">Email</b><span class="text-xs text-deep-teal/60 block">patu@ctu.edu.vn</span><span class="text-xs text-deep-teal/60 block">thuyhuongctu@gmail.com</span></span></a>
           <a href="https://github.com/thuyhuongctu/BizOn" target="_blank" rel="noopener" class="clay-sunken rounded-2xl p-4 flex items-center gap-3 block"><span class="text-2xl">🧑‍💻</span><span><b class="text-sm text-deep-teal block">GitHub</b><span class="text-xs text-deep-teal/60">github.com/thuyhuongctu/BizOn</span></span></a>
           <a href="https://doi.org/10.5281/zenodo.21592241" target="_blank" rel="noopener" class="clay-sunken rounded-2xl p-4 flex items-center gap-3 block"><span class="text-2xl">📦</span><span><b class="text-sm text-deep-teal block">Zenodo (trích dẫn học thuật)</b><span class="text-xs text-deep-teal/60">DOI 10.5281/zenodo.21592241</span></span></a>
           <a href="https://thuyhuongctu.github.io/BizOn/" class="clay-sunken rounded-2xl p-4 flex items-center gap-3 block"><span class="text-2xl">🌐</span><span><b class="text-sm text-deep-teal block">Ứng dụng web</b><span class="text-xs text-deep-teal/60">thuyhuongctu.github.io/BizOn</span></span></a>
@@ -131,11 +131,12 @@ function ctSend() {
   const msg = document.getElementById('ct-msg').value.trim();
   const subject = encodeURIComponent('[BizOn] ' + topic + (name ? ' — ' + name : ''));
   const body = encodeURIComponent((msg || '') + (name ? '\n\n— ' + name : ''));
-  location.href = 'mailto:thuyhuongctu@gmail.com?subject=' + subject + '&body=' + body;
+  location.href = 'mailto:patu@ctu.edu.vn,thuyhuongctu@gmail.com?subject=' + subject + '&body=' + body;
 }
 </script>
 <script src="js/site-ui.js" defer></script>
 
+<p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2" style="color:rgba(100,116,125,.85)">✉️ Liên hệ · Contact: <a href="mailto:patu@ctu.edu.vn" style="color:inherit;text-decoration:underline">patu@ctu.edu.vn</a> · <a href="mailto:thuyhuongctu@gmail.com" style="color:inherit;text-decoration:underline">thuyhuongctu@gmail.com</a></p>
 <p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2 pb-6" style="color:rgba(100,116,125,.75)">🎓 Trang web chỉ phục vụ mục đích giáo dục và nghiên cứu, không đại diện cho bất kỳ tổ chức chính trị nào. Hình ảnh quốc kỳ, bản đồ chỉ mang ý nghĩa minh họa văn hóa – giáo dục. · This website serves educational and research purposes only and does not represent any political organization.</p>
 </body>
 </html>
