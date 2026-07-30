@@ -8,20 +8,22 @@
 (function () {
   var IS_GAME = /game\.html$/.test(location.pathname); // game có hệ nhạc riêng
   var SITE_URL = 'https://thuyhuongctu.github.io/BizOn/';
-  /* Playlist toàn bộ ca khúc gốc — phát nối tiếp đến hết rồi tự lặp lại từ đầu */
+  /* Playlist toàn bộ ca khúc gốc — phát nối tiếp đến hết rồi tự lặp lại từ đầu.
+   * Tên bài theo đúng Kho Âm nhạc (am-nhac.html) — nguồn chuẩn của hệ sinh thái. */
   var PLAYLIST = [
-    ['BizOn Theme', 'bizon-theme.mp3'],
-    ['Bật Nghiệp', 'bat-nghiep.mp3'],
+    ['Hương on Return ⭐ (bài hát chính)', 'huong-on-return.mp3'],
+    ['Hương on Return — remix (remastered)', 'huong-on-return-remix.mp3'],
+    ['Bật Nghiệp (instrumental · V-pop 112 BPM)', 'bat-nghiep.mp3'],
+    ['BizOn Theme (instrumental)', 'bizon-theme.mp3'],
+    ['Vừa Đủ Để Bay Cao', 'vua-du-de-bay-cao.mp3'],
     ['Journey on the Golden Silt', 'journey-golden-silt.mp3'],
-    ['Hương and the World', 'huong-and-the-world.mp3'],
-    ['Hương et le monde', 'huong-et-le-monde.mp3'],
-    ['Hương on Return', 'huong-on-return.mp3'],
-    ['Mekong Compass', 'mekong-compass.mp3'],
-    ['Mekong River (remix)', 'mekong-river-remix.mp3'],
+    ['Journey on the Golden Silt — remix', 'journey-golden-silt-remix.mp3'],
+    ['Journey on the Golden Silt — remix «Mekong River»', 'mekong-river-remix.mp3'],
+    ["Je m'appelle Hương sans frontières (tiếng Việt)", 'huong-and-the-world.mp3'],
+    ['Hương et le Monde (tiếng Pháp)', 'huong-et-le-monde.mp3'],
     ['Mon histoire', 'mon-histoire.mp3'],
-    ['Vừa đủ để bay cao', 'vua-du-de-bay-cao.mp3'],
-    ['And the World Say Hello', 'and-the-world-say-hello.mp3'],
-    ['Journey on the Golden Silt (remix)', 'journey-golden-silt-remix.mp3'],
+    ['And The World Say Hello!', 'and-the-world-say-hello.mp3'],
+    ['Mekong Compass', 'mekong-compass.mp3'],
   ];
 
   /* ---------- CSS ---------- */
@@ -65,7 +67,7 @@
   dock.innerHTML =
     '<p class="bz-cap">🎛️ Tiện ích · Quick controls</p>' +
     '<div class="bz-row">' +
-      (IS_GAME ? '' : '<button class="bz-chip" id="bz-music" title="Phát/dừng playlist BizOn (12 ca khúc, tự lặp lại)">🎵</button>' +
+      (IS_GAME ? '' : '<button class="bz-chip" id="bz-music" title="Phát/dừng playlist BizOn (13 ca khúc, tự lặp lại)">🎵</button>' +
         '<button class="bz-chip" id="bz-next" title="Bài kế tiếp">⏭️</button>') +
       '<button class="bz-chip" id="bz-theme" title="Sáng / Tối · Light / Dark">🌙</button>' +
       '<button class="bz-chip" id="bz-lang" title="Tiếng Việt / English" style="width:auto;padding:0 14px;font-size:12px;font-weight:800">EN</button>' +
@@ -149,7 +151,7 @@
         } else {
           audio.pause();
           musicBtn.classList.remove('on');
-          musicBtn.title = 'Phát playlist BizOn (12 ca khúc, tự lặp lại)';
+          musicBtn.title = 'Phát playlist BizOn (13 ca khúc, tự lặp lại)';
         }
       });
       nextBtn.addEventListener('click', function () { playTrack(trackIdx + 1); });
