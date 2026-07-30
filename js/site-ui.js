@@ -1062,6 +1062,74 @@
 "🏙️ Scenes & illustrations"
 ],
 [
+"Character Sheet – Bảng tạo hình «Hộ Chiếu Thương Hiệu»",
+"Character Sheet – the «Brand Passport» cast board"
+],
+[
+"🛂 Dàn nhân vật «Hộ Chiếu Thương Hiệu»",
+"🛂 The «Brand Passport» cast"
+],
+[
+"Cố vấn AI · người dẫn chuyện suốt sáu quý chơi",
+"AI adviser · narrator across all six quarters"
+],
+[
+"Nhà sáng lập · giữ hồn nghề, tay nâng hũ đặc sản gia truyền",
+"Founder · keeper of the craft, holding the family speciality jar"
+],
+[
+"Lễ phục · giỏ quà quê trong đêm trao Hộ chiếu Thương hiệu",
+"Gala outfit · hometown gift basket on Brand Passport night"
+],
+[
+"Giám đốc tài chính · đọc dòng tiền trên bảng số liệu",
+"CFO · reading cash flow off the dashboard"
+],
+[
+"Chiến lược & đổi mới · dựng câu chuyện thương hiệu",
+"Strategy & innovation · building the brand story"
+],
+[
+"Cố vấn quốc tế hóa · ôm tập báo cáo thị trường",
+"Internationalisation adviser · market reports in hand"
+],
+[
+"Lễ phục · hộp hồ sơ thị trường xuất khẩu",
+"Gala outfit · export market dossier box"
+],
+[
+"Cố vấn phân phối · bút chỉ và bản đồ tuyến hàng",
+"Distribution adviser · pointer and shipping-route map"
+],
+[
+"Lễ phục · bản vẽ tuyến phân phối cuộn trong tay",
+"Gala outfit · rolled distribution-route plan in hand"
+],
+[
+"Mỹ phẩm thảo mộc · câu chuyện thương hiệu là thế mạnh",
+"Herbal cosmetics · brand storytelling is the strength"
+],
+[
+"Thực phẩm chế biến · khay hũ đặc sản miền Tây",
+"Processed foods · tray of Mekong Delta speciality jars"
+],
+[
+"Lễ phục · mâm món ăn giới thiệu tại hội chợ",
+"Gala outfit · tasting tray for the trade fair"
+],
+[
+"Thời trang bền vững · vải chàm nhuộm tay và khung dệt",
+"Sustainable fashion · hand-dyed indigo cloth and loom"
+],
+[
+"Lễ phục · áo dài thêu hoa và dải lụa thủ công",
+"Gala outfit · embroidered áo dài and handmade silk sash"
+],
+[
+"Phần mềm quản trị · kênh số mạnh, biên lời cao",
+"Management software · strong digital channel, high margin"
+],
+[
 "Tú Phan – Vest xanh rêu",
 "Tú Phan – Moss-green suit"
 ],
