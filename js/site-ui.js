@@ -1122,8 +1122,8 @@
 "Sustainable fashion · hand-dyed indigo cloth and loom"
 ],
 [
-"Lễ phục · áo dài thêu hoa và dải lụa thủ công",
-"Gala outfit · embroidered áo dài and handmade silk sash"
+"Lễ phục · áo dài thêu hoa, tay nâng mẫu vải chàm",
+"Gala outfit · embroidered áo dài, holding an indigo fabric swatch"
 ],
 [
 "Phần mềm quản trị · kênh số mạnh, biên lời cao",
