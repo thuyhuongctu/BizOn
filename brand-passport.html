@@ -131,6 +131,7 @@
       <p>💰 <b>Minh Khang</b> · CFO – ưu tiên dòng tiền và kiểm soát rủi ro.</p>
       <p>📣 <b>An Nhiên</b> · CMO – muốn đầu tư mạnh cho cộng đồng khách hàng.</p>
       <p>🌍 <b>Victor Lâm</b> · Chuyên gia Chiến lược Toàn cầu, nói theo dữ liệu nhưng không phải lúc nào cũng đúng. <i>«Mở rộng tầm nhìn, chinh phục mọi giới hạn.»</i></p>
+      <p>🤖 <b>Lumina AI</b> · Cố vấn AI Chiến lược (hóa thân «Je m'appelle Hương») – đọc tín hiệu thị trường và nhắc bạn điều dễ bỏ sót. <i>«Kiến tạo tương lai bằng trí tuệ nhân tạo và dữ liệu chuẩn xác.»</i></p>
     </div>
     <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-5 mb-1.5">🌊 Nhạc chủ đề</p>
     <button id="bp-music" onclick="bpMusic()" class="clay-btn w-full bg-deep-teal text-white font-display font-extrabold py-3 text-sm">🎵 Bật «Beyond the River Mouth»</button>
@@ -364,6 +365,7 @@
     { name: 'An Nhiên', role: 'CMO', icon: '📣' },
     { name: 'Victor Lâm', role: 'Quốc tế hóa', icon: '🌍', img: 'assets/character/advisors/victor-lam-cut.png' },
     { name: 'Lina Park', role: 'Phân phối', icon: '🚢', img: 'assets/character/advisors/lina-park-cut.png' },
+    { name: 'Lumina AI', role: 'Cố vấn AI', icon: '🤖', img: 'assets/character/lumina-vest.png' },
   ];
   var FACE = {};
   CAST.forEach(function (c) { FACE[c.name] = c.img || null; });
@@ -374,6 +376,12 @@
 
   var ADVICE = [
     function () { if (S.cash < 2.5) return ['💰', 'Minh Khang', 'Tiền mặt đang mỏng. Quý này tôi đề nghị củng cố thay vì mở rộng – doanh nghiệp chết vì hết tiền, không phải vì hết ý tưởng.']; },
+    function () { // Lumina đọc chỉ số và nhắc điều dễ bỏ sót
+      if (S.resil < 40) return ['🤖', 'Lumina AI', 'Chỉ số chống chịu đang thấp: một cú sốc tỷ giá hoặc đứt chuỗi cung lúc này sẽ ăn sâu vào lợi nhuận. Dành một quý củng cố nội lực là đầu tư, không phải mất lượt.'];
+      if (S.susts < 2) return ['🤖', 'Lumina AI', 'Hồ sơ bền vững còn mỏng – Lục Đảo sẽ chỉ mở 60% tiềm năng và các gói ưu đãi xanh đều đòi bằng chứng truy xuất. Đây là đầu tư có lãi kép.'];
+      if (S.entered.filter(function (m) { return m !== null; }).length >= 3) return ['🤖', 'Lumina AI', 'Bạn đang hiện diện ở ba thị trường. Dữ liệu cho thấy mở rộng nhanh hơn năng lực giao hàng là nguyên nhân số một của «tăng trưởng nghẽn cổ chai» – hãy nâng năng lực trước khi thêm cửa mới.'];
+      return null;
+    },
     function () { if (S.know[0] < 35 && S.know[1] < 35 && S.know[2] < 35) return ['🌍', 'Victor Lâm', 'Ta đang bay trong sương mù. Mua dữ liệu trước khi đặt cược – nhưng nhớ hỏi: nguồn này có lợi ích gì khi nói với ta điều đó?']; },
     function () { if (S.rep >= 60) return ['📣', 'An Nhiên', 'Uy tín đang là tài sản lớn nhất của mình. Đầu tư thêm cho cộng đồng khách hàng – họ chính là kênh phân phối trung thành nhất.']; },
     function () { if (S.capab < 45) return ['👵', 'Bà Sáu Lành', 'Đừng nhận đơn lớn khi tay nghề chưa tới, con à. Thà chậm một quý còn hơn mất chữ tín cả đời.']; },
