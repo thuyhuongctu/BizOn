@@ -89,6 +89,7 @@
         <div class="flex items-center gap-3">
           <span class="text-[11px] font-extrabold opacity-60"><span class="pulse-dot inline-block">🟢</span> Tự làm mới 10s · <span id="gv-updated">—</span></span>
           <button onclick="gvExportCsv()" class="clay-btn bg-primary text-white font-display font-extrabold px-4 py-2 text-xs">⬇️ Xuất CSV</button>
+          <button onclick="gvExportSurvey()" class="clay-btn bg-deep-teal text-white font-display font-extrabold px-4 py-2 text-xs" title="Tải toàn bộ phiếu khảo sát trước–sau của lớp (khao-sat-online.html)">📋 CSV khảo sát</button>
         </div>
       </div>
       <div class="kb-wrap">
@@ -183,6 +184,35 @@
     clearInterval(timer);
     refresh();
     timer = setInterval(refresh, 10000);
+  };
+
+  window.gvExportSurvey = async function () {
+    const klass = $('gv-class').value.trim(), key = $('gv-key').value.trim();
+    if (!klass || !key) { $('gv-status').textContent = '⚠️ Cần nhập Mã lớp và Khóa giảng viên trước.'; return; }
+    try {
+      const rows = await rpc('bizon_survey_export', { p_class_code: klass, p_key: key });
+      if (!rows.length) { $('gv-status').textContent = 'ℹ️ Lớp ' + klass + ' chưa có phiếu khảo sát nào (hoặc khóa chưa đúng).'; return; }
+      const oc = r => (r.score_by_outcome || {});
+      const lk = (a, i) => (Array.isArray(a) && a[i] != null) ? a[i] : '';
+      const clean = s => '"' + String(s == null ? '' : s).replace(/"/g, '""').replace(/\r?\n/g, ' ') + '"';
+      const head = 'phieu,ma_sv,vai_tro,so_vong,diem_A,marketing,tai_chinh,van_hanh,kdqt,chien_luoc,' +
+        'B1,B2,B3,B4,B5,B6,B7,B8,C1,C2,C3,C4,C5,diem_gioi_thieu,thich_nhat,can_cai_thien,nop_luc\n';
+      const csv = head + rows.map(r => [
+        r.phase, r.student_code, r.role || '', r.rounds_played || '', r.score_a,
+        oc(r).marketing ?? '', oc(r).taichinh ?? '', oc(r).vanhanh ?? '', oc(r).kdqt ?? '', oc(r).chienluoc ?? '',
+        lk(r.likert_b,0), lk(r.likert_b,1), lk(r.likert_b,2), lk(r.likert_b,3), lk(r.likert_b,4), lk(r.likert_b,5), lk(r.likert_b,6), lk(r.likert_b,7),
+        lk(r.likert_c,0), lk(r.likert_c,1), lk(r.likert_c,2), lk(r.likert_c,3), lk(r.likert_c,4),
+        r.nps ?? '', clean(r.open_like), clean(r.open_improve), r.created_at,
+      ].join(',')).join('\n');
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' }));
+      a.download = 'bizon-khao-sat-' + klass + '.csv';
+      a.click();
+      URL.revokeObjectURL(a.href);
+      $('gv-status').textContent = '✅ Đã tải ' + rows.length + ' phiếu khảo sát của lớp ' + klass + '.';
+    } catch (e) {
+      $('gv-status').textContent = '⚠️ Không tải được khảo sát (' + e.message + ').';
+    }
   };
 
   window.gvExportCsv = function () {
