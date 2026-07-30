@@ -214,9 +214,9 @@
   ];
   // 4 doanh nghiệp – mỗi nhà một hành trình (concept mục 2)
   var FIRMS = [
-    { icon: '🧴', name: 'Mộc Nhiên', prod: 'Mỹ phẩm thảo mộc', adv: 'Câu chuyện thương hiệu mạnh', weak: 'Khó đạt tiêu chuẩn quốc tế', cash: 8, rep: 55, capab: 38, susts: 0, img: 'assets/character/advisors/ba-sau-lanh-cut.png' },
-    { icon: '🥫', name: 'Phù Sa Foods', prod: 'Thực phẩm chế biến', adv: 'Hương vị đặc trưng · hợp khách trẻ', weak: 'Chi phí bảo quản cao (+20% vận hành)', cash: 8, rep: 48, capab: 45, susts: 0, img: 'assets/character/firms/phu-sa-foods-cut.png' },
-    { icon: '👗', name: 'Lam Việt', prod: 'Thời trang bền vững', adv: 'Hồ sơ xanh sẵn có · hợp Lục Đảo', weak: 'Năng lực sản xuất hạn chế', cash: 8, rep: 50, capab: 32, susts: 1, img: 'assets/character/firms/lam-viet-cut.png' },
+    { icon: '🧴', name: 'Mộc Nhiên', prod: 'Mỹ phẩm thảo mộc', adv: 'Câu chuyện thương hiệu mạnh', weak: 'Khó đạt tiêu chuẩn quốc tế', cash: 8, rep: 55, capab: 38, susts: 0, img: 'assets/character/firms/moc-nhien-aodai-cut.png' },
+    { icon: '🥫', name: 'Phù Sa Foods', prod: 'Thực phẩm chế biến', adv: 'Hương vị đặc trưng · hợp khách trẻ', weak: 'Chi phí bảo quản cao (+20% vận hành)', cash: 8, rep: 48, capab: 45, susts: 0, img: 'assets/character/firms/phu-sa-foods-aodai-cut.png' },
+    { icon: '👗', name: 'Lam Việt', prod: 'Thời trang bền vững', adv: 'Hồ sơ xanh sẵn có · hợp Lục Đảo', weak: 'Năng lực sản xuất hạn chế', cash: 8, rep: 50, capab: 32, susts: 1, img: 'assets/character/firms/lam-viet-aodai-cut.png' },
     { icon: '💻', name: 'Mekong Digital', prod: 'Phần mềm quản trị', adv: 'Kênh số cực mạnh · biên lời cao', weak: 'Mù mờ pháp luật dữ liệu', cash: 7, rep: 46, capab: 48, susts: 0, img: 'assets/character/firms/mekong-digital-cut.png' },
   ];
   var MODES = [
@@ -359,13 +359,15 @@
     ] };
 
   // Tạo hình cố vấn – có ảnh thì dùng ảnh, chưa có thì dùng biểu tượng (đang bổ sung dần)
+  // Mỗi cố vấn hai tạo hình: áo dài dùng ở màn giới thiệu (bản sắc Việt),
+  // trang phục công sở dùng trong ván (bối cảnh đàm phán quốc tế).
   var CAST = [
-    { name: 'Bà Sáu Lành', role: 'Nhà sáng lập', icon: '👵', img: 'assets/character/advisors/ba-sau-lanh-cut.png' },
-    { name: 'Minh Khang', role: 'CFO', icon: '💰' },
+    { name: 'Bà Sáu Lành', role: 'Nhà sáng lập', icon: '👵', gala: 'assets/character/advisors/ba-sau-lanh-aodai-cut.png', img: 'assets/character/advisors/ba-sau-lanh-cut.png' },
+    { name: 'Minh Khang', role: 'CFO', icon: '💰', gala: 'assets/character/advisors/minh-khang-aodai-cut.png', img: 'assets/character/advisors/minh-khang-aodai-cut.png' },
     { name: 'An Nhiên', role: 'CMO', icon: '📣' },
-    { name: 'Victor Lâm', role: 'Quốc tế hóa', icon: '🌍', img: 'assets/character/advisors/victor-lam-cut.png' },
-    { name: 'Lina Park', role: 'Phân phối', icon: '🚢', img: 'assets/character/advisors/lina-park-cut.png' },
-    { name: 'Lumina AI', role: 'Cố vấn AI', icon: '🤖', img: 'assets/character/lumina-vest.png' },
+    { name: 'Victor Lâm', role: 'Quốc tế hóa', icon: '🌍', gala: 'assets/character/advisors/victor-lam-aodai-cut.png', img: 'assets/character/advisors/victor-lam-cut.png' },
+    { name: 'Lina Park', role: 'Phân phối', icon: '🚢', gala: 'assets/character/advisors/lina-park-aodai-cut.png', img: 'assets/character/advisors/lina-park-cut.png' },
+    { name: 'Lumina AI', role: 'Cố vấn AI', icon: '🤖', gala: 'assets/character/lumina-ao-dai-wave.png', img: 'assets/character/lumina-vest.png' },
   ];
   var FACE = {};
   CAST.forEach(function (c) { FACE[c.name] = c.img || null; });
@@ -739,7 +741,8 @@
   };
   // Dàn nhân vật ở màn giới thiệu
   $('bp-cast').innerHTML = CAST.map(function (c) {
-    return '<figure>' + (c.img ? '<img src="' + c.img + '" alt="' + c.name + '" loading="lazy">' : '<div class="ph">' + c.icon + '</div>') +
+    var pic = c.gala || c.img;
+    return '<figure>' + (pic ? '<img src="' + pic + '" alt="' + c.name + '" loading="lazy">' : '<div class="ph">' + c.icon + '</div>') +
       '<figcaption>' + c.name + '<br><span style="opacity:.6">' + c.role + '</span></figcaption></figure>';
   }).join('');
 
