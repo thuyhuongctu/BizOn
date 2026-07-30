@@ -190,6 +190,7 @@
       <label class="block text-sm font-bold text-deep-teal mb-1">Tên đội – cũng là tên doanh nghiệp của bạn</label>
       <input id="login-team" type="text" placeholder="VD: Rồng Xanh Corp" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 mb-4 outline-none focus:border-primary-container">
       <label class="block text-sm font-bold text-deep-teal mb-1">Mã lớp học – Class ID <span class="font-normal text-deep-teal/40">(tùy chọn)</span></label>
+      <p class="text-[11px] text-deep-teal/55 mb-1.5 leading-snug">Bỏ trống vẫn chơi được trọn 6 vòng ở chế độ <b>chơi thử</b>. Có Mã lớp thì kết quả mới vào bảng xếp hạng lớp và được cấp giấy chứng nhận.</p>
       <input id="login-class" type="text" placeholder="VD: QTKD-2026-A" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 mb-4 outline-none focus:border-primary-container">
       <label class="block text-sm font-bold text-deep-teal mb-2">Vai trò của bạn</label>
       <div id="role-picker" class="grid grid-cols-5 gap-2 mb-6"></div>
@@ -240,6 +241,7 @@
             <p class="text-white/70 text-xs font-semibold uppercase tracking-wide">Trung tâm điều hành</p>
             <h2 class="font-display text-2xl font-extrabold text-white">Vòng <span id="dash-round">1</span>/6</h2>
             <p id="dash-status" class="text-primary-container text-sm font-bold mt-1">Đang chờ quyết định</p>
+            <p id="dash-trial" class="hidden text-[10px] font-extrabold mt-1.5 inline-block px-2 py-0.5 rounded-full" style="background:rgba(253,161,39,.22); color:#ffd79a" title="Nhập Mã lớp của giảng viên để kết quả vào bảng xếp hạng lớp và được cấp chứng nhận">🧪 Chơi thử · kết quả không gửi về lớp</p>
           </div>
           <div class="flex gap-1.5" id="round-dots"></div>
         </div>
