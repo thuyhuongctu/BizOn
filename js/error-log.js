@@ -8,7 +8,7 @@
  * Tắt backend (enabled=false) là tắt luôn giám sát lỗi. */
 (function () {
   const QKEY = 'bizon-error-queue';
-  const APP_VER = 'bizon-v160'; // khớp CACHE trong sw.js — biết lỗi thuộc phiên bản nào
+  const APP_VER = 'bizon-v161'; // khớp CACHE trong sw.js — biết lỗi thuộc phiên bản nào
   const MAX_PER_LOAD = 5;       // chống bão lỗi lặp: tối đa 5 bản ghi mỗi lượt tải trang
   let sent = 0;
   const seen = new Set();
