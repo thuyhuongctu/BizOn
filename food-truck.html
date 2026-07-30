@@ -108,13 +108,13 @@
     <div class="clay-card p-5 mb-4">
       <div class="flex items-center justify-between">
         <div class="flex gap-2" id="ft-weekdots"></div>
-        <p class="text-sm font-extrabold">💰 <span id="ft-total">0</span> triệu ₫</p>
+        <p class="text-sm font-extrabold">💰 <span id="ft-total">0</span> <span>triệu ₫</span></p>
       </div>
       <div class="flex flex-wrap gap-x-4 gap-y-1 mt-3 text-[11px] font-bold opacity-70" id="ft-scores"></div>
     </div>
 
     <div class="clay-card p-6 mb-4">
-      <h2 class="font-display font-extrabold text-deep-teal text-base mb-3">Tuần <span id="ft-week">1</span>/5 — chọn 3 quyết định</h2>
+      <h2 class="font-display font-extrabold text-deep-teal text-base mb-3"><span>Tuần</span> <span id="ft-week">1</span>/5 — <span>chọn 3 quyết định</span></h2>
       <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mb-1.5">1 · Phương thức</p>
       <div class="grid grid-cols-3 gap-2" id="ft-methods"></div>
       <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mb-1.5 mt-4">2 · Thực đơn</p>
@@ -137,7 +137,7 @@
     <div class="clay-card p-7 text-center mb-4">
       <p class="text-5xl" id="ft-medal">🏆</p>
       <h2 class="font-display font-extrabold text-deep-teal text-2xl mt-2" id="ft-title">Kết quả</h2>
-      <p class="font-display font-extrabold text-primary text-4xl mt-3"><span id="ft-final">0</span> triệu ₫</p>
+      <p class="font-display font-extrabold text-primary text-4xl mt-3"><span id="ft-final">0</span> <span>triệu ₫</span></p>
       <p class="text-sm font-semibold opacity-70 mt-1.5" id="ft-eff"></p>
       <div class="mt-4 space-y-2 text-left" id="ft-board"></div>
       <p class="text-xs opacity-60 mt-3" id="ft-reveal"></p>
@@ -231,10 +231,10 @@
   function renderTeams() {
     $('ft-teams').innerHTML = TEAMS.map(function (t, i) {
       if (t.locked) {
-        return '<button class="ft-opt" disabled title="' + t.locked + '">' + t.icon + ' ' + t.name +
+        return '<button class="ft-opt" disabled title="' + t.locked + '"><span>' + t.icon + ' ' + t.name + '</span>' +
           '<br><span style="font-size:9px;opacity:.6">🔒 ' + t.locked + '</span></button>';
       }
-      return '<button class="ft-opt' + (i === S.team ? ' sel' : '') + '" onclick="ftTeam(' + i + ')">' + t.icon + ' ' + t.name +
+      return '<button class="ft-opt' + (i === S.team ? ' sel' : '') + '" onclick="ftTeam(' + i + ')"><span>' + t.icon + ' ' + t.name + '</span>' +
         '<br><span style="font-size:9px;opacity:.6">' + t.members.length + ' thành viên</span></button>';
     }).join('');
   }
@@ -276,10 +276,10 @@
       return '<div class="ft-week-dot ' + (i < S.week ? 'done' : i === S.week ? 'cur' : '') + '">' + (i + 1) + '</div>';
     }).join('');
     $('ft-methods').innerHTML = METHODS.map(function (m, i) {
-      return optBtn('m', i, '<span class="big">' + m.icon + '</span>' + m.name + '<br><span style="font-size:10px;opacity:.6">' + m.sub + '</span>');
+      return optBtn('m', i, '<span class="big">' + m.icon + '</span><span>' + m.name + '</span><br><span style="font-size:10px;opacity:.6">' + m.sub + '</span>');
     }).join('');
-    $('ft-menus').innerHTML = MENUS.map(function (m, i) { return optBtn('menu', i, '<span class="big">' + m[0] + '</span>' + m[1]); }).join('');
-    $('ft-locs').innerHTML = LOCS.map(function (l, i) { return optBtn('loc', i, '<span class="big">' + l[0] + '</span>' + l[1]); }).join('');
+    $('ft-menus').innerHTML = MENUS.map(function (m, i) { return optBtn('menu', i, '<span class="big">' + m[0] + '</span><span>' + m[1] + '</span>'); }).join('');
+    $('ft-locs').innerHTML = LOCS.map(function (l, i) { return optBtn('loc', i, '<span class="big">' + l[0] + '</span><span>' + l[1] + '</span>'); }).join('');
     renderScores();
     S.sel = { m: null, menu: null, loc: null };
     syncSel();
