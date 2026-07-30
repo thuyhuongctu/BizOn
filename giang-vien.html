@@ -119,6 +119,19 @@
     </div>
 
     <div class="clay-card p-6 sm:p-7 mb-6">
+      <h2 class="font-display font-extrabold text-deep-teal text-lg mb-2">🧺 Gánh Hàng Khởi Nghiệp — kết quả lớp</h2>
+      <p class="text-[11px] opacity-60 mb-3">Sinh viên nộp từ màn kết thúc của game (cùng Mã lớp). Mỗi người tính ván có hiệu suất cao nhất; hạng là thứ hạng so với 3 đối thủ AI trong ván đó.</p>
+      <div class="kb-wrap">
+        <table class="kb">
+          <thead><tr>
+            <th>#</th><th>Sinh viên</th><th>Đội</th><th>Hiệu suất</th><th>Doanh thu</th><th>Hạng trong ván</th><th>Lượt chơi</th><th>Lần cuối</th>
+          </tr></thead>
+          <tbody id="gv-ft-rows"><tr><td colspan="8" class="text-center opacity-60 py-6">Chưa có lượt chơi nào được nộp.</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="clay-card p-6 sm:p-7 mb-6">
       <div class="flex flex-wrap items-center justify-between gap-3 mb-2">
         <h2 class="font-display font-extrabold text-deep-teal text-lg">📊 Phân tích khảo sát trước–sau</h2>
         <button onclick="gvAnalyzeSurvey()" class="clay-btn bg-primary text-white font-display font-extrabold px-4 py-2 text-xs">🔬 Phân tích ngay</button>
@@ -192,6 +205,24 @@
     } catch (e) {
       $('gv-status').textContent = '⚠️ Không tải được dữ liệu (' + e.message + ') — kiểm tra mạng hoặc cấu hình backend.';
     }
+    // Bảng Gánh Hàng Khởi Nghiệp — tách try/catch riêng: migration chưa chạy thì
+    // các bảng chính vẫn hiển thị bình thường.
+    try {
+      const ft = await rpc('bizon_ft_board', { p_class_code: klass, p_key: key });
+      const rankIco = ['🏆', '🥈', '🥉', '4️⃣'];
+      $('gv-ft-rows').innerHTML = ft.length
+        ? ft.map((r, i) => `<tr>
+            <td class="font-extrabold">${['🥇', '🥈', '🥉'][i] || (i + 1)}</td>
+            <td class="font-extrabold">${esc(r.player_name)}</td>
+            <td>${esc(r.team_name)}</td>
+            <td class="font-extrabold">${r.best_eff}%</td>
+            <td>${fmtN(r.best_revenue)} triệu ₫</td>
+            <td>${rankIco[r.best_rank - 1] || r.best_rank} #${r.best_rank}/4</td>
+            <td>${r.plays}</td>
+            <td>${fmtT(r.last_play)}</td>
+          </tr>`).join('')
+        : '<tr><td colspan="8" class="text-center opacity-60 py-6">Chưa có lượt chơi nào được nộp.</td></tr>';
+    } catch (e) { /* giữ nguyên bảng — không chặn phần còn lại của dashboard */ }
   }
 
   window.gvConnect = function () {
