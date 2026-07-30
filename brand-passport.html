@@ -91,7 +91,7 @@
     <p class="text-white/50 text-[11px] mt-1 font-bold tracking-wide">Brand Passport: From Vietnam to the World</p>
     <p class="text-white/75 text-sm mt-3">Tại thị trấn ven sông <b>Vàm Thịnh</b>, bạn tiếp quản <b>Mộc Nhiên</b> – thương hiệu mỹ phẩm thảo mộc có câu chuyện đẹp nhưng nguồn lực hạn chế. Nhiệm vụ: đưa thương hiệu Việt ra thế giới qua <b>6 quý kinh doanh</b>, trong màn <b>sương mù thông tin</b> và những đánh đổi không có đáp án đúng duy nhất.</p>
     <p class="text-white/55 text-[11px] mt-3">💡 «Không có một con đường quốc tế hóa phù hợp với mọi doanh nghiệp.» · Các thị trường trong game là giả tưởng · Kịch bản, dữ liệu, thuật toán và nhân vật do BizOn tự thiết kế từ đầu.</p>
-    <p class="text-white/55 text-[11px] mt-2">🛂 Nhạc chủ đề: <a href="am-nhac.html" class="underline font-bold text-clay-gold">«Brand Passport»</a> – cùng nhóm còn «Beyond the River Mouth» và «Golden Silt Route», bật ngay từ nút ⋯ góc trái.</p>
+    <p class="text-white/55 text-[11px] mt-2">🛂 Nhạc chủ đề: <a href="am-nhac.html" class="underline font-bold text-clay-gold">«Brand Passport»</a> – cùng nhóm còn «Stamps Beyond Borders» và «Golden Silt Route», bật ngay từ nút ⋯ góc trái.</p>
   </div>
 </header>
 
@@ -748,6 +748,14 @@
 
   /* Nhạc chủ đề – dùng chung trình phát của dock để không có hai nguồn nhạc */
   var THEME = 'brand-passport.mp3';
+  /* Tuyển tập riêng của game: chỉ xoay vòng trong nhóm ca khúc quốc tế hóa,
+   * không lẫn nhạc của game Bật Nghiệp hay Arcade. */
+  var SOUNDTRACK = [
+    'brand-passport.mp3', 'brand-passport-v2.mp3',
+    'stamps-beyond-borders.mp3', 'stamps-beyond-borders-v2.mp3',
+    'stamps-beyond-borders-v3.mp3', 'stamps-beyond-borders-extended.mp3',
+    'golden-silt-route.mp3',
+  ];
   function musicBtnSync(on) {
     var b = $('bp-music');
     if (b) b.textContent = on ? '⏸️ Tạm dừng nhạc chủ đề' : '🎵 Bật «Brand Passport»';
@@ -755,12 +763,16 @@
   window.bpMusic = function () {
     var d = window.BizonDock;
     if (!d) return;
+    if (d.scope) d.scope(SOUNDTRACK, 'Hộ Chiếu Thương Hiệu');
     if (d.isPlaying()) { d.pause(); musicBtnSync(false); try { localStorage.setItem('bizon-bp-music', '0'); } catch (e) {} }
     else { d.play(THEME); musicBtnSync(true); try { localStorage.setItem('bizon-bp-music', '1'); } catch (e) {} }
   };
   function autoTheme() { // bấm Bắt đầu là cử chỉ người dùng → được phép phát
     try { if (localStorage.getItem('bizon-bp-music') !== '1') return; } catch (e) { return; }
-    if (window.BizonDock && !window.BizonDock.isPlaying()) { window.BizonDock.play(THEME); musicBtnSync(true); }
+    if (window.BizonDock && !window.BizonDock.isPlaying()) {
+      if (window.BizonDock.scope) window.BizonDock.scope(SOUNDTRACK, 'Hộ Chiếu Thương Hiệu');
+      window.BizonDock.play(THEME); musicBtnSync(true);
+    }
   }
 
   renderFirms();

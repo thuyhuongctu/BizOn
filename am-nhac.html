@@ -95,11 +95,25 @@
 
   <!-- NGHE TRONG GAME -->
   <section class="mb-12">
-    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-5">🎮 Nghe nhạc ở đâu trong game?</h2>
-    <div class="grid sm:grid-cols-3 gap-4">
-      <a href="game.html" class="clay-card p-5 hover:-translate-y-0.5 transition-transform"><p class="text-2xl">🎮</p><h3 class="font-display font-extrabold text-deep-teal text-sm mt-1">Game chính</h3><p class="text-[11px] text-deep-teal/55 mt-1">Nút 🎵 trên đầu game – playlist tự xoay vòng cả ba ca khúc.</p></a>
-      <a href="global.html" class="clay-card p-5 hover:-translate-y-0.5 transition-transform"><p class="text-2xl">🌏</p><h3 class="font-display font-extrabold text-deep-teal text-sm mt-1">BizOn Go Global</h3><p class="text-[11px] text-deep-teal/55 mt-1">«Hương sans frontières» – ca khúc chủ đề hành trình ra biển lớn.</p></a>
-      <a href="games.html" class="clay-card p-5 hover:-translate-y-0.5 transition-transform"><p class="text-2xl">🕹️</p><h3 class="font-display font-extrabold text-deep-teal text-sm mt-1">BizOn Arcade</h3><p class="text-[11px] text-deep-teal/55 mt-1">Nhạc nền tùy chọn khi chơi các mini-game phản xạ.</p></a>
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">🎮 Nhạc nào cho game nào?</h2>
+    <p class="text-sm text-deep-teal/55 mb-5">Kho nhạc đã đủ lớn để mỗi game có bản sắc âm nhạc riêng, nên các ca khúc được chia thành từng tuyển tập thay vì dùng chung một danh sách. Mỗi game chỉ xoay vòng trong tuyển tập của mình; muốn nghe trọn kho thì dùng thanh nhạc ⋯ ở góc trái màn hình.</p>
+    <div class="grid sm:grid-cols-2 gap-4">
+      <a href="game.html" class="clay-card p-5 hover:-translate-y-0.5 transition-transform">
+        <p class="text-2xl">🎮</p><h3 class="font-display font-extrabold text-deep-teal text-sm mt-1">Bật Nghiệp – game mô phỏng chính</h3>
+        <p class="text-[11px] text-deep-teal/55 mt-1"><b>7 bài · màu Việt Nam.</b> «Bật Nghiệp» · BizOn Theme · «Hương on Return» bản gốc và remix · «Vừa Đủ Để Bay Cao» · «Đội Phù Sa» bản gốc và remix.</p>
+      </a>
+      <a href="brand-passport.html" class="clay-card p-5 hover:-translate-y-0.5 transition-transform">
+        <p class="text-2xl">🛂</p><h3 class="font-display font-extrabold text-deep-teal text-sm mt-1">Hộ Chiếu Thương Hiệu</h3>
+        <p class="text-[11px] text-deep-teal/55 mt-1"><b>7 bài · màu quốc tế hóa.</b> «Brand Passport» bản gốc và bản phối · «Stamps Beyond Borders» cả bốn bản · «Golden Silt Route».</p>
+      </a>
+      <a href="global.html" class="clay-card p-5 hover:-translate-y-0.5 transition-transform">
+        <p class="text-2xl">🌏</p><h3 class="font-display font-extrabold text-deep-teal text-sm mt-1">BizOn Go Global</h3>
+        <p class="text-[11px] text-deep-teal/55 mt-1"><b>9 bài · phù sa Mekong và đa ngôn ngữ.</b> «Journey on the Golden Silt» và các bản phối · «Mekong River» · «Mekong Compass» · «Je m'appelle Hương sans frontières» bản Việt, Anh, giọng nam và Pháp.</p>
+      </a>
+      <a href="games.html" class="clay-card p-5 hover:-translate-y-0.5 transition-transform">
+        <p class="text-2xl">🕹️</p><h3 class="font-display font-extrabold text-deep-teal text-sm mt-1">BizOn Arcade</h3>
+        <p class="text-[11px] text-deep-teal/55 mt-1"><b>6 bài · nhịp nhanh.</b> BizOn Theme · «And The World Say Hello!» · «Đội Phù Sa» remix · «Mon histoire» · «Vừa Đủ Để Bay Cao» · «Bật Nghiệp».</p>
+      </a>
     </div>
   </section>
 
@@ -133,10 +147,10 @@ const GROUPS = [
   { name: '«Hộ Chiếu Thương Hiệu»', icon: '🛂', desc: 'Nhạc chủ đề game Hộ Chiếu Thương Hiệu (BizOn Go Global) · từ cửa sông Vàm Thịnh ra biển lớn', tracks: [
     { t: '«Brand Passport» – bản gốc ⭐', s: 'Ca khúc mang đúng tên game · 2:52 · nhạc nền mặc định trong game', f: 'assets/audio/brand-passport.mp3', icon: '🛂' },
     { t: '«Brand Passport» – bản phối', s: 'Bản phối lại 2:56 · cùng lời, màu nhạc dày hơn', f: 'assets/audio/brand-passport-v2.mp3', icon: '🔁' },
-    { t: '«Beyond the River Mouth» – bản gốc', s: 'Bản thu có lời tiếng Anh · 3:03', f: 'assets/audio/beyond-the-river-mouth.mp3', icon: '🌊' },
-    { t: '«Beyond the River Mouth» – bản thu lại', s: 'Bản thu khác cùng độ dài 3:03 · hòa âm mới', f: 'assets/audio/beyond-the-river-mouth-v4.mp3', icon: '🌊' },
-    { t: '«Beyond the River Mouth» – bản phối 3:35', s: 'Bản phối trung bình · hợp buổi học chạy 3 quý', f: 'assets/audio/beyond-the-river-mouth-v3.mp3', icon: '🔁' },
-    { t: '«Beyond the River Mouth» – bản mở rộng', s: 'Bản phối dài 4:43 · hợp cho buổi học chạy trọn 6 quý', f: 'assets/audio/beyond-the-river-mouth-v2.mp3', icon: '🔁' },
+    { t: '«Stamps Beyond Borders» – bản gốc ⭐', s: 'Bản thu gốc có lời tiếng Anh · 3:03', f: 'assets/audio/stamps-beyond-borders.mp3', icon: '🌊' },
+    { t: '«Stamps Beyond Borders» – bản thu lại', s: 'Bản thu khác cùng độ dài 3:03 · hòa âm mới', f: 'assets/audio/stamps-beyond-borders-v2.mp3', icon: '🌊' },
+    { t: '«Stamps Beyond Borders» – bản phối 3:35', s: 'Bản phối trung bình · hợp buổi học chạy 3 quý', f: 'assets/audio/stamps-beyond-borders-v3.mp3', icon: '🔁' },
+    { t: '«Stamps Beyond Borders» – bản mở rộng', s: 'Bản phối dài 4:43 · hợp cho buổi học chạy trọn 6 quý', f: 'assets/audio/stamps-beyond-borders-extended.mp3', icon: '🔁' },
     { t: '«Golden Silt Route»', s: 'Ca khúc mới của game · con đường phù sa vàng nối Mekong ra thế giới', f: 'assets/audio/golden-silt-route.mp3', icon: '🚢' },
   ]},
   { name: '«Bật Nghiệp»', icon: '🐉', desc: 'Ca khúc chủ đề game Việt Nam · V-pop electronic 112 BPM', tracks: [
