@@ -921,9 +921,15 @@ function renderHeader() {
   $('hdr-balance').textContent = money(S.balance);
 }
 
+/* Ván không có Mã lớp = chơi thử: chơi trọn 6 vòng nhưng không gửi kết quả
+ * về lớp và không cấp giấy chứng nhận. */
+function isTrial() { return !((S.profile && S.profile.classId) || '').trim(); }
+
 function renderDashboard() {
   const ev = currentEvent(S);
   $('dash-round').textContent = Math.min(S.round, ROUNDS_TOTAL);
+  const trial = $('dash-trial');
+  if (trial) trial.classList.toggle('hidden', !isTrial());
   $('dash-status').textContent = S.finished ? '🏁 Đã hoàn thành mô phỏng!'
     : S.committed ? 'Đã khóa – chờ kết quả' : 'Đang chờ quyết định';
   $('round-dots').innerHTML = Array.from({ length: ROUNDS_TOTAL }, (_, i) => {
@@ -2102,7 +2108,14 @@ function renderSeasonReport(body) {
         </div>`).join('')}
       </div>
     </div>` : ''}
-    ${S.finished ? `
+    ${S.finished && isTrial() ? `
+    <div class="clay-card p-5 mb-3 text-center border-2 border-dashed border-clay-gold/50">
+      <p class="text-3xl">🎓</p>
+      <p class="font-display font-extrabold text-deep-teal text-sm mt-1">Giấy chứng nhận dành cho ván có Mã lớp</p>
+      <p class="text-xs text-deep-teal/60 mt-1.5 max-w-xs mx-auto">Bạn vừa hoàn thành ván <b>chơi thử</b> nên chưa được cấp chứng nhận. Xin Mã lớp từ giảng viên rồi chơi lại một ván – kết quả sẽ vào bảng xếp hạng lớp và chứng nhận được cấp kèm tên lớp.</p>
+      <a href="lop-hoc.html" class="clay-btn inline-block bg-clay-gold text-deep-teal font-display font-extrabold px-4 py-2 text-[11px] mt-3">📘 Cách tổ chức lớp học</a>
+    </div>` : ''}
+    ${S.finished && !isTrial() ? `
     <style>@keyframes fwExplode{to{transform:translate(var(--tx),var(--ty)) scale(0);opacity:0}}</style>
     <div class="clay-card p-1.5 mb-3">
       <div class="rounded-[20px] p-5 text-center relative overflow-hidden" style="background:linear-gradient(180deg,#fffdf6,#f4faff);border:3px solid rgba(253,161,39,.55);box-shadow:inset 0 0 0 1px rgba(0,102,135,.18)">
@@ -2179,6 +2192,7 @@ function loadSigImg(src) {
 }
 
 async function downloadCertificate(lang = 'vi') {
+  if (isTrial()) { itemToast('Ván chơi thử chưa được cấp chứng nhận – cần Mã lớp của giảng viên.'); return; }
   const c = S._cert;
   if (!c) return;
   const EN = lang === 'en';
@@ -2673,7 +2687,7 @@ function renderAchievements() {
       <p class="text-[10px] text-deep-teal/50 mt-0.5">${a.desc}</p>
     </div>`;
   }).join('');
-  if (S.finished) {
+  if (S.finished && !isTrial()) {
     $('certificate-box').classList.remove('hidden');
     $('cert-team').textContent = S.profile.teamName;
     const total = S.history.reduce((a, r) => a + r.netProfit, 0);
