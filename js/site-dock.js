@@ -27,12 +27,12 @@
     ['Mekong Compass', 'mekong-compass.mp3'],
     ['Đội Phù Sa', 'doi-phu-sa.mp3'],
     ['Đội Phù Sa (remix)', 'doi-phu-sa-remix.mp3'],
-    ['Hộ Chiếu Thương Hiệu (Brand Passport)', 'brand-passport.mp3'],
+    ['Brand Passport ⭐ (nhạc chủ đề Hộ Chiếu Thương Hiệu)', 'brand-passport.mp3'],
     ['Brand Passport – bản phối', 'brand-passport-v2.mp3'],
-    ['Beyond the River Mouth', 'beyond-the-river-mouth.mp3'],
-    ['Beyond the River Mouth – bản thu lại', 'beyond-the-river-mouth-v4.mp3'],
-    ['Beyond the River Mouth – bản phối 3:35', 'beyond-the-river-mouth-v3.mp3'],
-    ['Beyond the River Mouth – bản mở rộng', 'beyond-the-river-mouth-v2.mp3'],
+    ['Stamps Beyond Borders', 'stamps-beyond-borders.mp3'],
+    ['Stamps Beyond Borders – bản thu lại', 'stamps-beyond-borders-v2.mp3'],
+    ['Stamps Beyond Borders – bản phối 3:35', 'stamps-beyond-borders-v3.mp3'],
+    ['Stamps Beyond Borders – bản mở rộng', 'stamps-beyond-borders-extended.mp3'],
     ['Golden Silt Route', 'golden-silt-route.mp3'],
   ];
 
@@ -133,19 +133,28 @@
     /* Nhạc nền – playlist nối tiếp toàn bộ ca khúc, hết danh sách tự quay lại
      * từ đầu; chỉ phát khi người dùng bấm (đúng chính sách autoplay) */
     var audio = null, trackIdx = 0;
+    /* scope = tuyển tập riêng của một game (mảng chỉ số trong PLAYLIST).
+     * null = nghe trọn kho. Nhờ vậy mỗi game có nhạc nền riêng mà vẫn dùng
+     * chung một trình phát duy nhất. */
+    var scope = null, scopeName = '';
+    function list() { return scope || PLAYLIST.map(function (_, i) { return i; }); }
     var musicBtn = document.getElementById('bz-music');
     var nextBtn = document.getElementById('bz-next');
     var trackEl = document.getElementById('bz-track');
     function showTrack() {
-      if (trackEl) { trackEl.style.display = 'block'; trackEl.textContent = '🎶 ' + (trackIdx + 1) + '/' + PLAYLIST.length + ' · ' + PLAYLIST[trackIdx][0]; }
+      if (!trackEl) return;
+      var L = list(), pos = L.indexOf(trackIdx) + 1;
+      trackEl.style.display = 'block';
+      trackEl.textContent = '🎶 ' + pos + '/' + L.length + ' · ' + PLAYLIST[trackIdx][0] + (scopeName ? ' · ' + scopeName : '');
     }
     function playTrack(i) {
-      trackIdx = ((i % PLAYLIST.length) + PLAYLIST.length) % PLAYLIST.length;
+      var L = list();
+      trackIdx = L[((i % L.length) + L.length) % L.length];
       if (!audio) {
         audio = new Audio();
         audio.volume = 0.55;
-        audio.addEventListener('ended', function () { playTrack(trackIdx + 1); }); // hết bài → bài kế; hết danh sách → vòng lại
-        audio.addEventListener('error', function () { if (!audio.paused) playTrack(trackIdx + 1); }); // bài lỗi mạng → bỏ qua
+        audio.addEventListener('ended', next);   // hết bài → bài kế; hết danh sách → vòng lại
+        audio.addEventListener('error', function () { if (!audio.paused) next(); }); // bài lỗi mạng → bỏ qua
       }
       audio.src = 'assets/audio/' + PLAYLIST[trackIdx][1];
       audio.play().catch(function () {});
@@ -153,18 +162,19 @@
       musicBtn.title = 'Tắt nhạc';
       showTrack();
     }
+    function next() { playTrack(list().indexOf(trackIdx) + 1); }
     if (musicBtn) {
       musicBtn.addEventListener('click', function () {
         if (!audio || audio.paused) {
           if (audio && audio.src) { audio.play().catch(function () {}); musicBtn.classList.add('on'); showTrack(); }
-          else playTrack(trackIdx);
+          else playTrack(list().indexOf(trackIdx));
         } else {
           audio.pause();
           musicBtn.classList.remove('on');
           musicBtn.title = 'Phát playlist nhạc gốc BizOn (tự lặp lại)';
         }
       });
-      nextBtn.addEventListener('click', function () { playTrack(trackIdx + 1); });
+      nextBtn.addEventListener('click', next);
     }
 
     /* API cho các trang game gọi: phát đúng bài chủ đề bằng CHÍNH trình phát
@@ -180,6 +190,21 @@
         if (audio && !audio.paused) { audio.pause(); if (musicBtn) musicBtn.classList.remove('on'); }
       },
       isPlaying: function () { return !!(audio && !audio.paused); },
+      /* Thu hẹp playlist về tuyển tập riêng của một game.
+       * files: mảng tên tệp mp3 (bỏ qua tên không có trong kho).
+       * Gọi scope(null) để nghe lại trọn kho. */
+      scope: function (files, name) {
+        if (!files) { scope = null; scopeName = ''; return PLAYLIST.length; }
+        var idx = [];
+        files.forEach(function (f) {
+          var i = PLAYLIST.findIndex(function (t) { return t[1] === f; });
+          if (i >= 0 && idx.indexOf(i) < 0) idx.push(i);
+        });
+        if (!idx.length) return 0;
+        scope = idx; scopeName = name || '';
+        if (idx.indexOf(trackIdx) < 0) trackIdx = idx[0];
+        return idx.length;
+      },
     };
 
     /* Sáng / Tối – dùng toggleTheme của site-ui, thiếu thì tự lo */

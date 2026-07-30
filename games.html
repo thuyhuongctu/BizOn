@@ -639,8 +639,15 @@ document.addEventListener('keydown', e => {
 <script src="js/quiz-bank.js"></script>
 <script src="js/site-ui.js" defer></script>
 <script>
-/* Nhạc nền Arcade – xoay vòng 3 ca khúc gốc */
-const AR_TRACKS = ['assets/audio/huong-on-return.mp3', 'assets/audio/vua-du-de-bay-cao.mp3', 'assets/audio/bizon-theme.mp3', 'assets/audio/bat-nghiep.mp3', 'assets/audio/huong-and-the-world.mp3', 'assets/audio/huong-and-the-world-en.mp3'];
+/* Nhạc nền Arcade – tuyển tập riêng: nhịp nhanh, hợp mini-game phản xạ */
+const AR_TRACKS = [
+  'assets/audio/bizon-theme.mp3',
+  'assets/audio/and-the-world-say-hello.mp3',
+  'assets/audio/doi-phu-sa-remix.mp3',
+  'assets/audio/mon-histoire.mp3',
+  'assets/audio/vua-du-de-bay-cao.mp3',
+  'assets/audio/bat-nghiep.mp3',
+];
 let arAudio = null, arIdx = 0, arOn = false;
 function arPlayNext() {
   arAudio = new Audio(AR_TRACKS[arIdx % AR_TRACKS.length]);

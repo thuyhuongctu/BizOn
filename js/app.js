@@ -416,8 +416,18 @@ function showPremium() {
   });
 }
 
-// ---------- Nhạc nền game (playlist: BizOn Theme → Bật Nghiệp) ----------
-const BGM_TRACKS = ['assets/audio/huong-on-return.mp3', 'assets/audio/vua-du-de-bay-cao.mp3', 'assets/audio/bizon-theme.mp3', 'assets/audio/bat-nghiep.mp3'];
+// ---------- Nhạc nền game «Bật Nghiệp» ----------
+// Tuyển tập riêng: ca khúc chủ đề Việt Nam + anthem đội chơi. Nhạc quốc tế hóa
+// dành cho Go Global và Hộ Chiếu Thương Hiệu, không trộn vào đây.
+const BGM_TRACKS = [
+  'assets/audio/bat-nghiep.mp3',
+  'assets/audio/bizon-theme.mp3',
+  'assets/audio/huong-on-return.mp3',
+  'assets/audio/huong-on-return-remix.mp3',
+  'assets/audio/vua-du-de-bay-cao.mp3',
+  'assets/audio/doi-phu-sa.mp3',
+  'assets/audio/doi-phu-sa-remix.mp3',
+];
 let bgm = null, bgmIdx = 0;
 function musicEnabled() { return localStorage.getItem('bizon-music') !== 'off'; }
 function startMusic() {
