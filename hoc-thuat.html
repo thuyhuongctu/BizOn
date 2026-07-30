@@ -123,7 +123,52 @@
   </section>
 
   <section class="clay-card p-6 sm:p-7 mb-6">
-    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">4 · Nguyên tắc nội dung &amp; kiến trúc AI hai tầng</h2>
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">4 · Model Card — Hộ Chiếu Thương Hiệu (BizOn Brand Passport)</h2>
+    <p class="text-xs text-deep-teal/55 mb-3">Game gốc của BizOn về quốc tế hóa doanh nghiệp — toàn bộ kịch bản, dữ liệu, thuật toán do BizOn tự thiết kế; engine công khai để kết quả giải thích được và tái lập được.</p>
+
+    <h3 class="font-display font-extrabold text-deep-teal text-sm mb-1.5">4.1 · Chuẩn đầu ra học tập (CLO) theo thang Bloom</h3>
+    <div class="kb-wrap"><table class="kb">
+      <tr><th>Mã</th><th>Chuẩn đầu ra — sau khi chơi và thảo luận, sinh viên có thể…</th><th>Bloom</th><th>Cơ chế game tương ứng</th></tr>
+      <tr><td>BP-1</td><td>So sánh và lựa chọn thị trường quốc tế dựa trên đặc điểm cầu, thể chế và cạnh tranh</td><td>Phân tích</td><td>6 thị trường giả tưởng với hồ sơ ẩn khác nhau</td></tr>
+      <tr><td>BP-2</td><td>Giải thích quan hệ giữa mức cam kết của phương thức thâm nhập với kiểm soát, lợi nhuận và rủi ro</td><td>Hiểu / Vận dụng</td><td>3 phương thức: nền tảng số · xuất khẩu trực tiếp · đối tác địa phương</td></tr>
+      <tr><td>BP-3</td><td>Đánh giá độ tin cậy và độ thiên lệch của các nguồn thông tin thị trường trước khi ra quyết định</td><td>Đánh giá</td><td>Sương mù thị trường + 6 nguồn tin có chi phí/độ chính xác/thiên lệch riêng</td></tr>
+      <tr><td>BP-4</td><td>Phân tích đánh đổi chuẩn hóa – thích nghi và tuân thủ thể chế khi vào thị trường khó tính</td><td>Phân tích</td><td>Chứng nhận Bắc Phong · hồ sơ bền vững Lục Đảo · sự kiện thể chế</td></tr>
+      <tr><td>BP-5</td><td>Nhận diện hệ quả dài hạn của chuỗi quyết định quản trị (path dependence)</td><td>Phân tích / Đánh giá</td><td>Dấu chân quyết định · nhiệm vụ đàm phán «Cánh cửa Bắc Phong»</td></tr>
+      <tr><td>BP-6</td><td>Ra quyết định theo mục tiêu đa tiêu chí thay vì tối đa hóa một chỉ số duy nhất</td><td>Sáng tạo</td><td>Điểm 5 chiều công khai 30/20/20/15/15 + 4 danh hiệu</td></tr>
+    </table></div>
+
+    <h3 class="font-display font-extrabold text-deep-teal text-sm mt-4 mb-1.5">4.2 · Engine công khai (explainable &amp; reproducible)</h3>
+    <div class="kb-wrap"><table class="kb">
+      <tr><th>Trường</th><th>Nội dung</th></tr>
+      <tr><td>Doanh thu quý/thị trường</td><td><code>1,2 × Fit(m) × Scale(mode) × Trend(q,m) ÷ Cạnh_tranh(m) × (0,8 + Uy_tín/250) × (0,8 + Năng_lực/250) × Ngân_sách × Sự_kiện</code> — Fit ∈ [0,7; 1,4] và Trend sinh từ seed mỗi ván; biên độ Trend theo tính cách thị trường (Nhật Quang ±6% · Kim Sa ±30%)</td></tr>
+      <tr><td>Lợi nhuận</td><td><code>Doanh thu × Biên(mode, hiệu chỉnh) − Chi_phí_vận_hành(mode) × Hệ_số_ngân_sách</code>; biên giảm 3 điểm/lần tham gia cuộc chiến giá (dấu chân)</td></tr>
+      <tr><td>Đặc tính thị trường</td><td>Hải Lam: kênh số ×1,25 · Bắc Phong: thiếu chứng nhận ×0,45 · Lục Đảo: bền vững &lt; 2 thì ×0,6 · Nhật Quang: min(1,15; 0,55 + 0,15 × số quý hiện diện) · Tân Cảng: doanh thu ×1,2, vận hành ×1,4</td></tr>
+      <tr><td>Điểm tổng cuối ván</td><td><code>30% Lợi nhuận + 20% Uy tín + 20% Năng lực + 15% Thích ứng + 15% Bền vững</code> — công khai cho người chơi từ quý 1</td></tr>
+      <tr><td>Nguồn tin &amp; thiên lệch</td><td>6 nguồn có chi phí và độ chính xác khác nhau; dữ liệu mạng xã hội cố ý thổi phồng mức quan tâm, tin từ đối tác địa phương cố ý thiên vị kênh của họ — dạy đánh giá nguồn (BP-3)</td></tr>
+      <tr><td>Ngẫu nhiên</td><td>RNG tuyến tính có seed: trong một ván mọi tham số nhất quán; giữa các ván khác nhau để chống học vẹt đáp án</td></tr>
+      <tr><td>Điều kiện dừng sớm</td><td>Âm tiền mặt 2 quý liên tiếp · uy tín &lt; 15 — kèm báo cáo giải thích chuỗi quyết định</td></tr>
+    </table></div>
+
+    <h3 class="font-display font-extrabold text-deep-teal text-sm mt-4 mb-1.5">4.3 · Rubric chấm thảo luận sau ván (thang 4 mức)</h3>
+    <div class="kb-wrap"><table class="kb">
+      <tr><th>Tiêu chí</th><th>1 · Chưa đạt</th><th>2 · Đạt</th><th>3 · Khá</th><th>4 · Xuất sắc</th></tr>
+      <tr><td>Lập luận chọn thị trường &amp; phương thức (BP-1, BP-2)</td><td>Kể lại lựa chọn, không lý do</td><td>Nêu được 1 lý do phù hợp</td><td>So sánh ≥ 2 phương án bằng dữ liệu trong ván</td><td>Gắn lựa chọn với khung lý thuyết (mức cam kết, khoảng cách thể chế)</td></tr>
+      <tr><td>Đánh giá nguồn thông tin (BP-3)</td><td>Tin mọi nguồn như nhau</td><td>Nhận ra có nguồn không đáng tin</td><td>Chỉ ra đúng nguồn thiên lệch và vì sao</td><td>Đề xuất chiến lược kết hợp nguồn theo chi phí – độ tin cậy</td></tr>
+      <tr><td>Phân tích dấu chân quyết định (BP-5)</td><td>Chỉ nhìn kết quả cuối</td><td>Nêu được 1 hệ quả dài hạn</td><td>Truy vết chuỗi quyết định → hệ quả</td><td>Đề xuất điểm can thiệp sớm nhất để đổi kết cục</td></tr>
+      <tr><td>Bài học chuyển giao (BP-6)</td><td>Không rút ra bài học</td><td>Bài học chung chung</td><td>Bài học gắn với tình huống cụ thể trong ván</td><td>Liên hệ được với doanh nghiệp Việt thực tế (có ví dụ)</td></tr>
+    </table></div>
+
+    <h3 class="font-display font-extrabold text-deep-teal text-sm mt-4 mb-1.5">4.4 · Giả định &amp; giới hạn diễn giải</h3>
+    <ul class="space-y-1.5 text-[13px] text-deep-teal/75">
+      <li>• Sáu quốc gia trong game là <b>giả tưởng</b>; mọi tham số là minh họa sư phạm, không phải dự báo hay số liệu thống kê thực.</li>
+      <li>• Đàm phán với nhân vật là <b>kịch bản hóa có trọng số</b> (uy tín, tri thức, lịch sử cam kết) — không phải mô hình ngôn ngữ sinh lời thoại tự do.</li>
+      <li>• Kết quả game dùng cho thảo luận và đánh giá quá trình học; <b>không dùng để tư vấn quyết định kinh doanh thực tế</b>.</li>
+      <li>• Đo lường học tập: dùng khảo sát trước–sau (khao-sat-online.html) kết hợp rubric 4.3; bộ câu hỏi riêng cho kinh doanh quốc tế đang trong lộ trình GĐ3.</li>
+    </ul>
+  </section>
+
+  <section class="clay-card p-6 sm:p-7 mb-6">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">5 · Nguyên tắc nội dung &amp; kiến trúc AI hai tầng</h2>
     <ul class="space-y-2.5 text-sm text-deep-teal/80">
       <li class="flex gap-2.5"><span>🎭</span><span><b>Mọi sự kiện trong game là kịch bản giả định</b> (ví dụ: kịch bản «Rồng Việt vươn mình») — không tuyên bố sự kiện thời sự là "chính thức" khi chưa có nguồn kiểm chứng.</span></li>
       <li class="flex gap-2.5"><span>⚙️</span><span><b>Tầng 1 — Simulation intelligence:</b> engine xác định (deterministic), luật giải thích được, kết quả tái lập được — phục vụ chấm điểm công bằng và nghiên cứu.</span></li>
@@ -133,7 +178,7 @@
   </section>
 
   <section class="clay-card p-6 sm:p-7 mb-6">
-    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">5 · Cơ sở khoa học tham khảo</h2>
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">6 · Cơ sở khoa học tham khảo</h2>
     <ul class="space-y-2 text-[13px] text-deep-teal/75">
       <li>• Lamb, R. L., Annetta, L. A., Firestone, J. B., &amp; Etopio, E. (2018). A meta-analysis with examination of moderators of student cognition, affect, and learning outcomes while using serious educational games, serious games, and simulations. <i>Computers in Human Behavior, 80</i>, 158–167.</li>
       <li>• Sailer, M., &amp; Homner, L. (2020). The gamification of learning: A meta-analysis. <i>Educational Psychology Review, 32</i>, 77–112.</li>
@@ -142,7 +187,7 @@
   </section>
 
   <section class="clay-card p-6 sm:p-7 mb-6">
-    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">6 · Bối cảnh chính sách — vì sao có BizOn?</h2>
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">7 · Bối cảnh chính sách — vì sao có BizOn?</h2>
     <p class="text-sm text-deep-teal/75 leading-relaxed">Chỉ số đổi mới sáng tạo cấp địa phương (PII) 2025 cho thấy một nghịch lý tại Cần Thơ và ĐBSCL: hệ thống viện, trường tạo ra tri thức tốt (trụ cột thể chế hạng 4/34) nhưng khu vực doanh nghiệp — với hơn 90% là doanh nghiệp nhỏ và vừa — chỉ xếp hạng 29/34 về trình độ phát triển, tức <b>thiếu năng lực hấp thụ và chuyển hóa tri thức thành năng suất</b>. Tình trạng «lãng phí kỹ năng» cũng gia tăng: tỉ lệ cử nhân làm việc đúng chuyên môn giảm từ 86% (2010) xuống 74% (2020–2024).</p>
     <p class="text-sm text-deep-teal/75 leading-relaxed mt-2.5">BizOn Bật Nghiệp là một nỗ lực giáo dục nhắm thẳng vào khoảng trống đó ở khâu sớm nhất — <b>trang bị năng lực ra quyết định kinh doanh cho sinh viên ngay trên ghế giảng đường</b> bằng mô phỏng, theo đúng tinh thần mạng lưới «Ba nhà» (nhà nước – nhà trường – doanh nghiệp) mà đồng sáng lập dự án, PGS.TS. Phan Anh Tú, đề xuất trong bài phỏng vấn trên Tạp chí Một Thế Giới (30/07/2026): <a href="https://1thegioi.vn/doi-moi-sang-tao-o-can-tho-diem-sang-va-khoang-trong-phat-trien-255702.html" target="_blank" rel="noopener" class="font-extrabold text-primary">«Đổi mới sáng tạo ở Cần Thơ: Điểm sáng và khoảng trống phát triển» →</a></p>
     <p class="text-sm text-deep-teal/75 leading-relaxed mt-2.5">Trước đó, tại hội thảo của Sở KH&amp;CN TP Cần Thơ, ông cũng kỳ vọng <i>«với đổi mới sáng tạo có thể tạo ra dòng di cư mới từ các thành phố lớn về nông thôn bằng cách khởi nghiệp đổi mới sáng tạo»</i> — <a href="https://tuoitre.vn/doi-moi-sang-tao-co-the-tao-ra-dong-di-cu-moi-ve-dong-bang-song-cuu-long-100260727183852615.htm" target="_blank" rel="noopener" class="font-extrabold text-primary">Tuổi Trẻ Online, 27/07/2026 →</a></p>
