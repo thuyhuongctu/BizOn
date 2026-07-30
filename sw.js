@@ -1,7 +1,7 @@
 /* BizOn Bật Nghiệp 2026 – Service Worker (offline app shell)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
 
-const CACHE = 'bizon-v169';
+const CACHE = 'bizon-v170';
 const SHELL = [
   './',
   './index.html',
@@ -57,9 +57,16 @@ const SHELL = [
   './assets/character/advisors/ba-sau-lanh-cut.png',
   './assets/character/advisors/victor-lam-cut.png',
   './assets/character/advisors/lina-park-cut.png',
+  './assets/character/advisors/ba-sau-lanh-aodai-cut.png',
+  './assets/character/advisors/victor-lam-aodai-cut.png',
+  './assets/character/advisors/lina-park-aodai-cut.png',
+  './assets/character/advisors/minh-khang-aodai-cut.png',
   './assets/character/firms/phu-sa-foods-cut.png',
   './assets/character/firms/lam-viet-cut.png',
   './assets/character/firms/mekong-digital-cut.png',
+  './assets/character/firms/moc-nhien-aodai-cut.png',
+  './assets/character/firms/phu-sa-foods-aodai-cut.png',
+  './assets/character/firms/lam-viet-aodai-cut.png',
   './assets/audio/beyond-the-river-mouth.mp3',
   './assets/character/rivals/alpha.png',
   './assets/character/rivals/mekong.png',
