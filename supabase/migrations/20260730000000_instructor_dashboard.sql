@@ -1,5 +1,5 @@
 -- ============================================================
--- BizOn Bật Nghiệp — Bảng xếp hạng & trang tổng hợp Giảng viên (GĐ2)
+-- BizOn Bật Nghiệp – Bảng xếp hạng & trang tổng hợp Giảng viên (GĐ2)
 -- Trang giang-vien.html gọi 2 hàm dưới đây để xem bảng xếp hạng lớp
 -- theo thời gian thực. Dữ liệu vẫn kín: sinh viên (anon key) không đọc
 -- được bảng nào; hàm chỉ trả kết quả khi nhập đúng KHÓA GIẢNG VIÊN.
@@ -13,7 +13,7 @@ create table if not exists app_secrets (
 );
 alter table app_secrets enable row level security;
 
--- Khóa giảng viên mặc định — ĐỔI NGAY sau khi chạy (xem ghi chú cuối tệp).
+-- Khóa giảng viên mặc định – ĐỔI NGAY sau khi chạy (xem ghi chú cuối tệp).
 insert into app_secrets (name, value) values ('instructor_key', 'BIZON-GV-2026')
 on conflict (name) do nothing;
 
@@ -28,7 +28,7 @@ as $$
   );
 $$;
 
--- Bảng xếp hạng: mỗi đội 1 dòng — vòng cao nhất đã khóa + chỉ số của lần nộp
+-- Bảng xếp hạng: mỗi đội 1 dòng – vòng cao nhất đã khóa + chỉ số của lần nộp
 -- mới nhất ở vòng đó, xếp theo thị phần giảm dần.
 create or replace function bizon_leaderboard(p_class_code text, p_key text)
 returns table (
@@ -91,5 +91,5 @@ $$;
 --  • ĐỔI KHÓA GIẢNG VIÊN (nên làm ngay, chọn khóa riêng của cô):
 --    update app_secrets set value = 'KHOA-MOI-CUA-CO' where name = 'instructor_key';
 --  • Khóa sai → hàm trả 0 dòng (không lộ thông tin gì).
---  • Trang giang-vien.html tự làm mới mỗi 10 giây — "thời gian thực" đủ
+--  • Trang giang-vien.html tự làm mới mỗi 10 giây – "thời gian thực" đủ
 --    dùng cho lớp học mà không tốn kết nối Realtime của gói miễn phí.

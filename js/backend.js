@@ -1,8 +1,8 @@
-/* BizOn — Nộp kết quả vòng chơi lên backend mỏng (Supabase)
+/* BizOn – Nộp kết quả vòng chơi lên backend mỏng (Supabase)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú.
  *
  * Engine mô phỏng vẫn chạy trên máy sinh viên; tệp này chỉ gửi bản sao
- * kết quả mỗi lần đội khóa vòng — kèm mã băm SHA-256 để giảng viên đối
+ * kết quả mỗi lần đội khóa vòng – kèm mã băm SHA-256 để giảng viên đối
  * chiếu. Mất mạng không sao: kết quả xếp hàng trong localStorage và tự
  * gửi lại khi có mạng. Mọi lỗi đều im lặng, không ảnh hưởng trải nghiệm. */
 (function () {
@@ -77,7 +77,7 @@
       q.push(row);
       writeQueue(q);
       flush();
-    } catch (e) { /* im lặng — không chặn game */ }
+    } catch (e) { /* im lặng – không chặn game */ }
   }
 
   window.addEventListener('online', flush);
