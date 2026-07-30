@@ -25,6 +25,7 @@
     ['And The World Say Hello!', 'and-the-world-say-hello.mp3'],
     ['Mekong Compass', 'mekong-compass.mp3'],
     ['Đội Phù Sa', 'doi-phu-sa.mp3'],
+    ['Đội Phù Sa (remix)', 'doi-phu-sa-remix.mp3'],
   ];
 
   /* ---------- CSS ---------- */
