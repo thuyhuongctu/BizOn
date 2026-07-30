@@ -43,6 +43,9 @@
   .bp-cast img { width:100%; height:auto; }
   .bp-cast .ph { width:74px; height:74px; border-radius:16px; border:2px dashed rgba(0,102,135,.2); display:flex; align-items:center; justify-content:center; font-size:26px; }
   .bp-cast figcaption { font-size:9.5px; font-weight:800; line-height:1.2; margin-top:3px; opacity:.7; }
+  .bp-firm { display:flex; gap:9px; align-items:center; }
+  .bp-firm img { width:52px; height:auto; max-height:86px; object-fit:contain; flex-shrink:0; filter:drop-shadow(0 3px 6px rgba(0,102,135,.18)); }
+  .bp-firm-txt { flex:1; min-width:0; }
   html[data-theme="dark"] .bp-cast .ph { border-color:rgba(92,196,230,.25); }
   :root { --dt: 3 51 55; }
   html[data-theme="dark"] { --dt: 214 236 240; background:#081a20; color-scheme:dark; }
@@ -210,10 +213,10 @@
   ];
   // 4 doanh nghiệp – mỗi nhà một hành trình (concept mục 2)
   var FIRMS = [
-    { icon: '🧴', name: 'Mộc Nhiên', prod: 'Mỹ phẩm thảo mộc', adv: 'Câu chuyện thương hiệu mạnh', weak: 'Khó đạt tiêu chuẩn quốc tế', cash: 8, rep: 55, capab: 38, susts: 0 },
-    { icon: '🥫', name: 'Phù Sa Foods', prod: 'Thực phẩm chế biến', adv: 'Hương vị đặc trưng · hợp khách trẻ', weak: 'Chi phí bảo quản cao (+20% vận hành)', cash: 8, rep: 48, capab: 45, susts: 0 },
-    { icon: '👗', name: 'Lam Việt', prod: 'Thời trang bền vững', adv: 'Hồ sơ xanh sẵn có · hợp Lục Đảo', weak: 'Năng lực sản xuất hạn chế', cash: 8, rep: 50, capab: 32, susts: 1 },
-    { icon: '💻', name: 'Mekong Digital', prod: 'Phần mềm quản trị', adv: 'Kênh số cực mạnh · biên lời cao', weak: 'Mù mờ pháp luật dữ liệu', cash: 7, rep: 46, capab: 48, susts: 0 },
+    { icon: '🧴', name: 'Mộc Nhiên', prod: 'Mỹ phẩm thảo mộc', adv: 'Câu chuyện thương hiệu mạnh', weak: 'Khó đạt tiêu chuẩn quốc tế', cash: 8, rep: 55, capab: 38, susts: 0, img: 'assets/character/advisors/ba-sau-lanh-cut.png' },
+    { icon: '🥫', name: 'Phù Sa Foods', prod: 'Thực phẩm chế biến', adv: 'Hương vị đặc trưng · hợp khách trẻ', weak: 'Chi phí bảo quản cao (+20% vận hành)', cash: 8, rep: 48, capab: 45, susts: 0, img: 'assets/character/firms/phu-sa-foods-cut.png' },
+    { icon: '👗', name: 'Lam Việt', prod: 'Thời trang bền vững', adv: 'Hồ sơ xanh sẵn có · hợp Lục Đảo', weak: 'Năng lực sản xuất hạn chế', cash: 8, rep: 50, capab: 32, susts: 1, img: 'assets/character/firms/lam-viet-cut.png' },
+    { icon: '💻', name: 'Mekong Digital', prod: 'Phần mềm quản trị', adv: 'Kênh số cực mạnh · biên lời cao', weak: 'Mù mờ pháp luật dữ liệu', cash: 7, rep: 46, capab: 48, susts: 0, img: 'assets/character/firms/mekong-digital-cut.png' },
   ];
   var MODES = [
     { id: 0, icon: '🛒', name: 'Nền tảng số', cost: 0.5, margin: 0.25, scale: 0.7, op: 0.25, note: 'cam kết thấp – vào nhanh, lời mỏng' },
@@ -360,7 +363,7 @@
     { name: 'Minh Khang', role: 'CFO', icon: '💰' },
     { name: 'An Nhiên', role: 'CMO', icon: '📣' },
     { name: 'Victor Lâm', role: 'Quốc tế hóa', icon: '🌍', img: 'assets/character/advisors/victor-lam-cut.png' },
-    { name: 'Lina Park', role: 'Phân phối', icon: '🚢' },
+    { name: 'Lina Park', role: 'Phân phối', icon: '🚢', img: 'assets/character/advisors/lina-park-cut.png' },
   ];
   var FACE = {};
   CAST.forEach(function (c) { FACE[c.name] = c.img || null; });
@@ -407,8 +410,10 @@
     var el = $('bp-firms');
     if (!el) return;
     el.innerHTML = FIRMS.map(function (f, i) {
-      return '<button class="bp-opt' + (i === S.firm ? ' sel' : '') + '" onclick="bpFirm(' + i + ')">' + f.icon + ' <b>' + f.name + '</b> · ' + f.prod +
-        '<small>✅ ' + f.adv + '</small><small>⚠️ ' + f.weak + '</small></button>';
+      return '<button class="bp-opt bp-firm' + (i === S.firm ? ' sel' : '') + '" onclick="bpFirm(' + i + ')">' +
+        (f.img ? '<img src="' + f.img + '" alt="' + f.name + '" loading="lazy">' : '') +
+        '<span class="bp-firm-txt">' + f.icon + ' <b>' + f.name + '</b> · ' + f.prod +
+        '<small>✅ ' + f.adv + '</small><small>⚠️ ' + f.weak + '</small></span></button>';
     }).join('');
   }
   window.bpFirm = function (i) { S.firm = i; renderFirms(); };
