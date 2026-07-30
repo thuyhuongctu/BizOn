@@ -1,6 +1,6 @@
 # Hướng dẫn đưa BizOn lên Google Play (CH Play)
 
-> BizOn được đóng gói theo hướng **Trusted Web Activity (TWA)** bằng Bubblewrap — dùng chính PWA đang chạy tại
+> BizOn được đóng gói theo hướng **Trusted Web Activity (TWA)** bằng Bubblewrap – dùng chính PWA đang chạy tại
 > https://thuyhuongctu.github.io/BizOn/ , không viết lại ứng dụng Android.
 
 ## Chi phí
@@ -13,17 +13,17 @@
 
 ## Những gì đã có sẵn trong repo
 
-- ✅ `chinh-sach.html` — Chính sách quyền riêng tư song ngữ Việt–Anh, URL công khai:
+- ✅ `chinh-sach.html` – Chính sách quyền riêng tư song ngữ Việt–Anh, URL công khai:
   `https://thuyhuongctu.github.io/BizOn/chinh-sach.html`
-- ✅ `manifest.webmanifest` — mở `index.html` (cổng hệ sinh thái), icon 192/512 + maskable
-- ✅ `android/twa-manifest.json` — cấu hình Bubblewrap: package `io.github.thuyhuongctu.bizon`
-- ✅ `.github/workflows/android-build.yml` — build `.aab` tự động (chạy tay, cần 4 secret)
-- ✅ `docs/assetlinks-template.json` — mẫu tệp xác minh Digital Asset Links
+- ✅ `manifest.webmanifest` – mở `index.html` (cổng hệ sinh thái), icon 192/512 + maskable
+- ✅ `android/twa-manifest.json` – cấu hình Bubblewrap: package `io.github.thuyhuongctu.bizon`
+- ✅ `.github/workflows/android-build.yml` – build `.aab` tự động (chạy tay, cần 4 secret)
+- ✅ `docs/assetlinks-template.json` – mẫu tệp xác minh Digital Asset Links
 - ✅ Service worker + chế độ ngoại tuyến
 
 ## Các bước cô cần tự làm (không thể ủy quyền)
 
-1. **Đăng ký Google Play Console** — trả 25 USD, xác minh danh tính + một điện thoại Android thật.
+1. **Đăng ký Google Play Console** – trả 25 USD, xác minh danh tính + một điện thoại Android thật.
    https://play.google.com/console/signup
 2. **Tạo khóa ký cục bộ** (một lần, giữ tuyệt mật, KHÔNG commit vào repo):
    ```bash
@@ -40,35 +40,35 @@
      theo mẫu `docs/assetlinks-template.json`;
    - Điền SHA-256 lấy từ Play Console → Setup → App signing (nên bật **Play App Signing** để Google giữ khóa phát hành);
      nếu bật Play App Signing thì fingerprint dùng là **App signing key certificate** của Google, không phải khóa upload.
-5. **Điền hồ sơ Play Console** — dùng nội dung soạn sẵn ở phần dưới.
+5. **Điền hồ sơ Play Console** – dùng nội dung soạn sẵn ở phần dưới.
 6. **Kiểm thử kín**: tài khoản cá nhân mới cần **≥ 12 người thử nghiệm liên tục 14 ngày** trước khi
    xin phát hành chính thức (lớp sinh viên của cô là nguồn tester lý tưởng).
    💡 Tận dụng luôn đợt này làm pilot đo hiệu quả học tập bằng bộ phiếu khảo sát trước–sau:
    https://thuyhuongctu.github.io/BizOn/khao-sat.html
 7. Gửi xét duyệt.
 
-Lưu ý: từ **31/8/2026** app mới phải nhắm **Android 16 / API 36** — Bubblewrap bản mới sẽ nhắm SDK mới nhất;
+Lưu ý: từ **31/8/2026** app mới phải nhắm **Android 16 / API 36** – Bubblewrap bản mới sẽ nhắm SDK mới nhất;
 khi build kiểm tra lại `targetSdkVersion` trong log.
 
 ## Nội dung hồ sơ CH Play (soạn sẵn)
 
 - **Tên ứng dụng** (≤30 ký tự): `BizOn Bật Nghiệp`
-- **Mô tả ngắn** (≤80 ký tự): `Hệ sinh thái game mô phỏng kinh doanh & khởi nghiệp Việt Nam — học mà chơi`
+- **Mô tả ngắn** (≤80 ký tự): `Hệ sinh thái game mô phỏng kinh doanh & khởi nghiệp Việt Nam – học mà chơi`
 - **Mô tả đầy đủ**:
 
-  > BizOn – Bật Nghiệp: Trò chơi mô phỏng kinh doanh 3D phong cách đất sét dành cho đào tạo khởi nghiệp — một hệ sinh thái nhiều game cho sinh viên và lớp học kinh tế.
+  > BizOn – Bật Nghiệp: Trò chơi mô phỏng kinh doanh 3D phong cách đất sét dành cho đào tạo khởi nghiệp – một hệ sinh thái nhiều game cho sinh viên và lớp học kinh tế.
   >
-  > 🎮 BẬT NGHIỆP — điều hành xưởng linh vật đất sét Việt qua 6 vòng kinh doanh trên bản đồ Việt Nam: định giá, marketing, sản xuất, R&D, nhân sự, tài chính. Đội 3–5 người với 5 vai trò CEO · CFO · CMO · COO · Thư ký pháp chế; mỗi ván ≈ 30–45 phút — vừa một buổi học.
+  > 🎮 BẬT NGHIỆP – điều hành xưởng linh vật đất sét Việt qua 6 vòng kinh doanh trên bản đồ Việt Nam: định giá, marketing, sản xuất, R&D, nhân sự, tài chính. Đội 3–5 người với 5 vai trò CEO · CFO · CMO · COO · Thư ký pháp chế; mỗi ván ≈ 30–45 phút – vừa một buổi học.
   >
-  > 🌏 BIZON GO GLOBAL — đưa sản phẩm Việt ra 7 thị trường thế giới: chọn phương thức thâm nhập (Xuất khẩu · Licensing · Liên doanh · FDI), đàm phán với đối tác AI, quản trị ESG, xuất nhật ký quyết định CSV cho giảng viên.
+  > 🌏 BIZON GO GLOBAL – đưa sản phẩm Việt ra 7 thị trường thế giới: chọn phương thức thâm nhập (Xuất khẩu · Licensing · Liên doanh · FDI), đàm phán với đối tác AI, quản trị ESG, xuất nhật ký quyết định CSV cho giảng viên.
   >
-  > 🕹️ BIZON ARCADE — các mini-game phản xạ kinh doanh.
+  > 🕹️ BIZON ARCADE – các mini-game phản xạ kinh doanh.
   >
   > 🤖 Cố vấn AI Lumina đồng hành từng vòng: cuộc họp đội, dự báo thị phần trực tiếp, giải thích «Vì sao?», mô phỏng Nếu–Thì và sổ tay thuật ngữ.
   >
   > ✅ Miễn phí, không quảng cáo, không thu thập dữ liệu, chơi được ngoại tuyến. Phong cách 3D claymorphism độc quyền cùng kho nhạc gốc đa ngôn ngữ.
   >
-  > Sản phẩm giáo dục của nhóm BizOn — Đỗ Thùy Hương & Phan Anh Tú.
+  > Sản phẩm giáo dục của nhóm BizOn – Đỗ Thùy Hương & Phan Anh Tú.
 
 - **Danh mục**: Giáo dục (hoặc Mô phỏng)
 - **URL chính sách quyền riêng tư**: `https://thuyhuongctu.github.io/BizOn/chinh-sach.html`
@@ -87,7 +87,7 @@ khi build kiểm tra lại `targetSdkVersion` trong log.
 Trò chơi giáo dục, không bạo lực, không cờ bạc, không nội dung người lớn, không quảng cáo,
 không mua trong ứng dụng, không tương tác giữa người dùng → thường được xếp **Mọi lứa tuổi / PEGI 3**.
 
-### Bộ ảnh hồ sơ — ĐÃ CHUẨN BỊ SẴN trong `docs/ch-play-assets/`
+### Bộ ảnh hồ sơ – ĐÃ CHUẨN BỊ SẴN trong `docs/ch-play-assets/`
 - Icon 512×512: `assets/icons/icon-512.png` ✅
 - Feature graphic 1024×500: `docs/ch-play-assets/feature-graphic-1024x500.png` ✅
 - 6 ảnh màn hình điện thoại 1079×2397 (9:16, đạt chuẩn ≥1080px): trang chủ, đăng nhập,
@@ -96,6 +96,6 @@ không mua trong ứng dụng, không tương tác giữa người dùng → th�
 
 ## Thứ tự khuyến nghị
 
-1. **BizOn Android v1** (tài liệu này) — mọi thứ kỹ thuật đã sẵn trong repo.
+1. **BizOn Android v1** (tài liệu này) – mọi thứ kỹ thuật đã sẵn trong repo.
 2. **M-AIDA** để sau: cần backend production (PostgreSQL, tài khoản, HTTPS) trước khi đóng gói,
    nếu không CH Play chỉ nhận được bản giới thiệu tĩnh.

@@ -1,4 +1,4 @@
-/* BizOn Bật Nghiệp 2026 — UI controller (SPA, localStorage persistence)
+/* BizOn Bật Nghiệp 2026 – UI controller (SPA, localStorage persistence)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
 
 const STORAGE_KEY = 'bizon2026';
@@ -91,9 +91,9 @@ const DEMO_TEAM = [
   { role: 'SEC', icon: '📝', img: 'assets/character/team/sec.jpg', name: 'Gia Hân',    note: 'Thư ký pháp chế' },
 ];
 const AI_OPPONENTS = [
-  { name: 'Alpha Dynamics', icon: '🐺', img: 'assets/character/rivals/alpha.png', accent: '#e8762d', motto: 'Tăng trưởng thần tốc, lấy số lượng đè lợi nhuận', weakness: 'Biên lợi nhuận cực mỏng, đốt vốn nhanh — dễ hụt hơi trong cuộc chiến dài hơi.', style: 'Giá rẻ tốc chiến',   play: 'Giá ~125k · marketing ~90tr mỗi vòng (dao động ±12%)', counter: 'Đừng đua giá tận đáy — giữ biên lợi nhuận, xây thương hiệu để giữ khách trung thành.' },
-  { name: 'Mekong Ventures', icon: '🐘', img: 'assets/character/rivals/mekong.png', accent: '#00a0c8', motto: 'Chậm mà chắc, bám rễ niềm tin địa phương', weakness: 'Trung thành với truyền thống nên phản ứng chậm trước biến động công nghệ và thị trường.', style: 'Cân bằng chắc chắn', play: 'Giá ~150k · marketing ~60tr — ổn định như đồng bằng', counter: 'Vượt mặt bằng R&D và biến cố: họ ít khi phản ứng nhanh với thị trường.' },
-  { name: 'Star Clay Co.',   icon: '🦚', img: 'assets/character/rivals/star.png', accent: '#5a32a3', motto: 'Sang trọng trong từng chi tiết, bán sự khan hiếm', weakness: 'Chi phí sản xuất thủ công cao — khó mở rộng quy mô nhanh, dễ nghẽn sản lượng.', style: 'Cao cấp thương hiệu', play: 'Giá ~195k · marketing ~75tr — đánh phân khúc sang', counter: 'Chiếm phân khúc phổ thông họ bỏ ngỏ, hoặc đấu trực diện bằng chất lượng + ESG.' },
+  { name: 'Alpha Dynamics', icon: '🐺', img: 'assets/character/rivals/alpha.png', accent: '#e8762d', motto: 'Tăng trưởng thần tốc, lấy số lượng đè lợi nhuận', weakness: 'Biên lợi nhuận cực mỏng, đốt vốn nhanh – dễ hụt hơi trong cuộc chiến dài hơi.', style: 'Giá rẻ tốc chiến',   play: 'Giá ~125k · marketing ~90tr mỗi vòng (dao động ±12%)', counter: 'Đừng đua giá tận đáy – giữ biên lợi nhuận, xây thương hiệu để giữ khách trung thành.' },
+  { name: 'Mekong Ventures', icon: '🐘', img: 'assets/character/rivals/mekong.png', accent: '#00a0c8', motto: 'Chậm mà chắc, bám rễ niềm tin địa phương', weakness: 'Trung thành với truyền thống nên phản ứng chậm trước biến động công nghệ và thị trường.', style: 'Cân bằng chắc chắn', play: 'Giá ~150k · marketing ~60tr – ổn định như đồng bằng', counter: 'Vượt mặt bằng R&D và biến cố: họ ít khi phản ứng nhanh với thị trường.' },
+  { name: 'Star Clay Co.',   icon: '🦚', img: 'assets/character/rivals/star.png', accent: '#5a32a3', motto: 'Sang trọng trong từng chi tiết, bán sự khan hiếm', weakness: 'Chi phí sản xuất thủ công cao – khó mở rộng quy mô nhanh, dễ nghẽn sản lượng.', style: 'Cao cấp thương hiệu', play: 'Giá ~195k · marketing ~75tr – đánh phân khúc sang', counter: 'Chiếm phân khúc phổ thông họ bỏ ngỏ, hoặc đấu trực diện bằng chất lượng + ESG.' },
 ];
 
 function doLoginDemo() {
@@ -106,7 +106,7 @@ function doLoginDemo() {
   save(); renderAll();
 }
 
-/* Hồ sơ doanh nghiệp — tên công ty (= tên đội) + sản phẩm chủ lực */
+/* Hồ sơ doanh nghiệp – tên công ty (= tên đội) + sản phẩm chủ lực */
 const COMPANY_INFO = {
   product: 'Bộ linh vật đất sét Việt', segment: 'Quà tặng & đồ sưu tầm',
   factory: 'Xưởng thủ công Cần Thơ', capital: 'Vốn khởi điểm 500tr₫', refPrice: 'Giá tham chiếu 150.000₫/bộ',
@@ -122,7 +122,7 @@ function renderCompanyCard() {
         <h3 class="font-display font-extrabold text-deep-teal text-lg truncate">${S.profile.teamName}</h3>
       </div>
     </div>
-    <p class="text-xs text-deep-teal/65 mb-2.5">Xưởng đồ chơi đất sét thủ công khởi nghiệp từ Miền Tây — sản phẩm chủ lực: <b class="text-deep-teal">«${COMPANY_INFO.product}»</b>, dòng ${COMPANY_INFO.segment.toLowerCase()} mang hồn Việt.</p>
+    <p class="text-xs text-deep-teal/65 mb-2.5">Xưởng đồ chơi đất sét thủ công khởi nghiệp từ Miền Tây – sản phẩm chủ lực: <b class="text-deep-teal">«${COMPANY_INFO.product}»</b>, dòng ${COMPANY_INFO.segment.toLowerCase()} mang hồn Việt.</p>
     <div class="flex flex-wrap gap-1.5">
       ${[['🏺', COMPANY_INFO.product], ['🎯', COMPANY_INFO.segment], ['💲', COMPANY_INFO.refPrice], ['🏭', COMPANY_INFO.factory], ['💰', COMPANY_INFO.capital]].map(([i, t]) => `
       <span class="clay-sunken rounded-full px-2.5 py-1 text-[10px] font-bold text-deep-teal/70">${i} ${t}</span>`).join('')}
@@ -142,7 +142,7 @@ function renderTeamCard() {
         <p class="text-[10px] font-extrabold text-deep-teal mt-0.5">${m.role}</p>
         <p class="text-[9px] text-deep-teal/55 leading-tight">${m.name}</p>
       </div>`; }).join('')}</div>
-    <p class="text-[10px] text-deep-teal/45 mt-2.5">Bạn đang cầm vai ${S.profile.role} — các thành viên còn lại do đội thảo luận ngoài đời (chế độ lớp học).</p>
+    <p class="text-[10px] text-deep-teal/45 mt-2.5">Bạn đang cầm vai ${S.profile.role} – các thành viên còn lại do đội thảo luận ngoài đời (chế độ lớp học).</p>
   </div>`;
 }
 
@@ -152,7 +152,7 @@ function renderOpponents() {
   const shares = S.competitors.map(c => (c.share || 25));
   box.innerHTML = `<div class="clay-card p-5 mb-4">
     <h3 class="font-display font-bold text-deep-teal mb-1">⚔️ 3 đối thủ AI của bạn</h3>
-    <p class="text-[10px] text-deep-teal/45 mb-3">Mỗi vòng họ tự định giá & chi marketing theo tính cách — xem Sổ tay 📖 mục "Đối thủ AI" để biết cách khắc chế.</p>
+    <p class="text-[10px] text-deep-teal/45 mb-3">Mỗi vòng họ tự định giá & chi marketing theo tính cách – xem Sổ tay 📖 mục "Đối thủ AI" để biết cách khắc chế.</p>
     ${AI_OPPONENTS.map((o, i) => `
       <button onclick="showRivalDetail(${i})" class="w-full text-left py-2 ${i < 2 ? 'border-b border-surface-bright' : ''}">
         <div class="flex items-center gap-3">
@@ -171,7 +171,7 @@ function renderOpponents() {
   </div>`;
 }
 
-/* Hồ sơ tình báo đối thủ — chân dung, chiến lược, điểm yếu và cách khắc chế */
+/* Hồ sơ tình báo đối thủ – chân dung, chiến lược, điểm yếu và cách khắc chế */
 function showRivalDetail(i) {
   const o = AI_OPPONENTS[i];
   if (!o) return;
@@ -195,7 +195,7 @@ function showRivalDetail(i) {
         <div class="clay-sunken rounded-2xl p-3 mt-3"><p class="text-[10px] font-extrabold text-deep-teal/50 uppercase mb-0.5">📈 Cách họ chơi</p><p class="text-[11px] text-deep-teal/75">${o.play}</p></div>
         <div class="clay-sunken rounded-2xl p-3 mt-2"><p class="text-[10px] font-extrabold text-orange-600 uppercase mb-0.5">⚠️ Điểm yếu chí mạng</p><p class="text-[11px] text-deep-teal/75">${o.weakness}</p></div>
         <div class="clay-sunken rounded-2xl p-3 mt-2"><p class="text-[10px] font-extrabold text-primary uppercase mb-0.5">💡 Lumina khuyên cách khắc chế</p><p class="text-[11px] text-deep-teal/75">${o.counter}</p></div>
-        <button class="clay-btn w-full bg-primary text-white font-display font-bold py-3 mt-4">Đã nắm tình báo — quay lại</button>
+        <button class="clay-btn w-full bg-primary text-white font-display font-bold py-3 mt-4">Đã nắm tình báo – quay lại</button>
       </div>
     </div>`;
   div.querySelector('button').onclick = () => div.remove();
@@ -265,19 +265,19 @@ function showLevelUp(level) {
   div.querySelector('#lvl-close').addEventListener('click', () => div.remove());
 }
 
-// ---------- Sổ tay hướng dẫn (User Manual — thiết kế Stitch) ----------
+// ---------- Sổ tay hướng dẫn (User Manual – thiết kế Stitch) ----------
 const MANUAL = {
   start: { icon: '🚀', name: 'Bắt đầu', html: `
-    <p class="text-sm text-deep-teal/75 mb-4">Chào mừng bạn đến với BizOn — môi trường mô phỏng kinh doanh 3D. ⏱️ Thời lượng: cả ván 6 vòng ≈ 30–45 phút (mỗi vòng 5–7 phút gồm đọc biến cố, họp đội, chốt quyết định và xem đấu trường); bản Go Global 4 quý ≈ 10–15 phút. Ba bước thiết lập:</p>
-    ${[['1', 'Lập đội & chọn vai trò', 'Đăng nhập với tên đội (cũng là tên doanh nghiệp của bạn), Class ID (nếu học trên lớp) và chọn vai trò CEO · CFO · CMO · COO · SEC. Doanh nghiệp là xưởng đồ chơi đất sét — sản phẩm chủ lực «Bộ linh vật đất sét Việt».'],
+    <p class="text-sm text-deep-teal/75 mb-4">Chào mừng bạn đến với BizOn – môi trường mô phỏng kinh doanh 3D. ⏱️ Thời lượng: cả ván 6 vòng ≈ 30–45 phút (mỗi vòng 5–7 phút gồm đọc biến cố, họp đội, chốt quyết định và xem đấu trường); bản Go Global 4 quý ≈ 10–15 phút. Ba bước thiết lập:</p>
+    ${[['1', 'Lập đội & chọn vai trò', 'Đăng nhập với tên đội (cũng là tên doanh nghiệp của bạn), Class ID (nếu học trên lớp) và chọn vai trò CEO · CFO · CMO · COO · SEC. Doanh nghiệp là xưởng đồ chơi đất sét – sản phẩm chủ lực «Bộ linh vật đất sét Việt».'],
        ['2', 'Nhận vốn khởi điểm', 'Mỗi đội bắt đầu với 500tr₫ vốn giảng viên cấp. Giữ ít nhất 15% dự phòng cho biến cố!'],
        ['3', 'Vào vòng 1', 'Đọc biến cố thị trường, hỏi Lumina AI, rồi vào Quyết định để chốt kế hoạch đầu tiên.']].map(([n, t, d]) => `
     <div class="clay-card p-4 mb-3 flex gap-3.5 items-start"><span class="w-9 h-9 shrink-0 rounded-full bg-primary-container/30 text-primary font-display font-extrabold flex items-center justify-center">${n}</span>
       <div><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p></div></div>`).join('')}` },
   ai: { icon: '⚔️', name: 'Đối thủ AI', html: `
     <p class="text-sm text-deep-teal/75 mb-4">Ba đối thủ AI mô phỏng ba chiến lược kinh điển. Mỗi vòng, chúng tự định giá và chi marketing quanh mức đặc trưng (dao động ±12%), rồi cạnh tranh giành thị phần bằng đúng công thức sức hút của bạn: giá thấp hơn giá tham chiếu, marketing hiệu quả và thương hiệu tích lũy.</p>
-    ${[['🐺 Alpha Dynamics', 'Giá rẻ tốc chiến', 'Giá ~125k · marketing ~90tr. Mạnh khi thị trường nhạy giá (biến cố Price War càng lợi cho họ).', 'Khắc chế: đừng đua xuống đáy — giữ biên, xây Brand Loyalty ≥70% để khách không rời đi.'],
-       ['🐘 Mekong Ventures', 'Cân bằng chắc chắn', 'Giá ~150k · marketing ~60tr. Ổn định, ít bứt phá, ít sai lầm.', 'Khắc chế: tận dụng biến cố tốt (Cơ Hội Vàng, Hóa Rồng) — họ không tăng tốc theo thị trường.'],
+    ${[['🐺 Alpha Dynamics', 'Giá rẻ tốc chiến', 'Giá ~125k · marketing ~90tr. Mạnh khi thị trường nhạy giá (biến cố Price War càng lợi cho họ).', 'Khắc chế: đừng đua xuống đáy – giữ biên, xây Brand Loyalty ≥70% để khách không rời đi.'],
+       ['🐘 Mekong Ventures', 'Cân bằng chắc chắn', 'Giá ~150k · marketing ~60tr. Ổn định, ít bứt phá, ít sai lầm.', 'Khắc chế: tận dụng biến cố tốt (Cơ Hội Vàng, Hóa Rồng) – họ không tăng tốc theo thị trường.'],
        ['🦚 Star Clay Co.', 'Cao cấp thương hiệu', 'Giá ~195k · marketing ~75tr. Hưởng lợi lớn ở vòng 6 khi thương hiệu được nhân trọng số ×1.5.', 'Khắc chế: chiếm phân khúc phổ thông, hoặc đầu tư R&D + ESG để đấu trực diện phân khúc sang.']].map(([n, s2, p, c]) => `
     <div class="clay-card p-4 mb-3"><p class="font-bold text-sm text-deep-teal">${n} <span class="text-primary">· ${s2}</span></p>
       <p class="text-xs text-deep-teal/60 mt-1">${p}</p><p class="text-xs font-semibold text-emerald-700 mt-1">${c}</p></div>`).join('')}
@@ -302,44 +302,44 @@ const MANUAL = {
     <div class="clay-card p-4 mb-3 flex gap-3.5 items-start"><span class="w-9 h-9 shrink-0 rounded-full font-display font-extrabold flex items-center justify-center text-white" style="background:#00c4ff; box-shadow:0 3px 0 #0095c2">${i + 1}</span>
       <div><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p><p class="text-[11px] font-semibold text-amber-700 mt-1">${tip}</p></div></div>`).join('')}` },
   lumina: { icon: '🤖', name: 'Cố vấn AI Lumina', html: `
-    <div class="clay-card p-4 mb-4 flex gap-3 items-center"><img src="assets/character/lumina-vest.png" alt="" class="w-12 h-12 rounded-full object-cover" style="object-position:50% 14%"><p class="text-xs text-deep-teal/75">Hương là trợ lý AI cá nhân của đội — trò chuyện được bằng giọng nói tiếng Việt trong tab Lumina.</p></div>
-    ${[['📊 Phân tích dữ liệu', 'Kịch bản tối ưu theo mục tiêu tài chính; mô phỏng "Nếu — Thì" trước khi Commit (2 lượt/vòng).'],
+    <div class="clay-card p-4 mb-4 flex gap-3 items-center"><img src="assets/character/lumina-vest.png" alt="" class="w-12 h-12 rounded-full object-cover" style="object-position:50% 14%"><p class="text-xs text-deep-teal/75">Hương là trợ lý AI cá nhân của đội – trò chuyện được bằng giọng nói tiếng Việt trong tab Lumina.</p></div>
+    ${[['📊 Phân tích dữ liệu', 'Kịch bản tối ưu theo mục tiêu tài chính; mô phỏng "Nếu – Thì" trước khi Commit (2 lượt/vòng).'],
        ['🔮 Dự đoán thị trường', 'Cảnh báo rủi ro (đỏ/cam) hoặc cơ hội (xanh ngọc) theo từng vai trò CFO · COO · CMO · SEC.'],
        ['🛟 Phòng ngừa khủng hoảng', 'Kịch bản ứng phó khi thị trường biến động mạnh; lời khuyên khẩn cấp khi thanh khoản đỏ.']].map(([t, d]) => `
     <div class="clay-card p-4 mb-3"><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p></div>`).join('')}` },
   tips: { icon: '💡', name: 'Mẹo & Thủ thuật', html: `
     ${[['👑 Chiến thuật CEO', 'Luôn tham khảo CFO trước khi chốt số. Một quyết định đầu tư lớn thiếu kiểm soát chi phí có thể dẫn đến phá sản.'],
-       ['🏭 Tối ưu sản xuất', 'Đừng mở rộng quá nhanh — kiểm tra báo cáo khấu hao và bảo trì máy móc đúng lúc.'],
+       ['🏭 Tối ưu sản xuất', 'Đừng mở rộng quá nhanh – kiểm tra báo cáo khấu hao và bảo trì máy móc đúng lúc.'],
        ['📣 Chiếm lĩnh thị trường', 'Dùng Lumina AI dự báo xu hướng trước khi tung chiến dịch Marketing lớn.'],
        ['🛡️ Quản lý rủi ro', 'Giữ ít nhất 15% vốn dự phòng. Không bao giờ đầu tư hết tiền mặt vào một vòng.']].map(([t, d]) => `
     <div class="clay-card p-4 mb-3"><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p></div>`).join('')}
     <p class="font-display font-extrabold text-deep-teal text-sm mt-5 mb-2">⚡ Quick Wins</p>
-    ${['Dành 5 phút đầu vòng đọc bản tin Thị trường sống — nó chứa manh mối về đối thủ.',
+    ${['Dành 5 phút đầu vòng đọc bản tin Thị trường sống – nó chứa manh mối về đối thủ.',
        'Pin Mặt Trời hoàn vốn ~2 vòng và kháng khủng hoảng năng lượng vòng 4.',
-       'Điều chỉnh giá linh hoạt theo độ nhạy của thị trường — đừng giữ nguyên giá cả 6 vòng.'].map(t => `
+       'Điều chỉnh giá linh hoạt theo độ nhạy của thị trường – đừng giữ nguyên giá cả 6 vòng.'].map(t => `
     <div class="clay-sunken rounded-2xl p-3 mb-2 flex gap-2 items-start"><span class="text-primary font-bold">✓</span><p class="text-xs text-deep-teal/75">${t}</p></div>`).join('')}` },
   world: { icon: '🌏', name: 'Hệ sinh thái BizOn', html: `
-    <p class="text-sm text-deep-teal/75 mb-4">BizOn không chỉ có 6 vòng trong nước — cả một hệ sinh thái đang chờ bạn:</p>
-    ${[['🗺️ Bản đồ chinh phục', 'Mỗi vòng thắng thị phần là một lá cờ 🚩 cắm lên bản đồ Việt Nam — từ Cần Thơ tới cột cờ Lũng Cú, kèm hai quần đảo Hoàng Sa & Trường Sa.'],
+    <p class="text-sm text-deep-teal/75 mb-4">BizOn không chỉ có 6 vòng trong nước – cả một hệ sinh thái đang chờ bạn:</p>
+    ${[['🗺️ Bản đồ chinh phục', 'Mỗi vòng thắng thị phần là một lá cờ 🚩 cắm lên bản đồ Việt Nam – từ Cần Thơ tới cột cờ Lũng Cú, kèm hai quần đảo Hoàng Sa & Trường Sa.'],
        ['🌏 BizOn Go Global', 'Ra biển lớn: khai hồ sơ doanh nghiệp, chọn 1 trong 7 thị trường, đàm phán với đối tác bản địa, chọn phương thức thâm nhập (Export · Licensing · Liên doanh · FDI) và kinh doanh 4 quý. Có IE Lab mô phỏng số liệu và nút xuất nhật ký CSV để nộp giảng viên.'],
        ['🕹️ BizOn Arcade', 'Các mini-game phản xạ 30–60 giây: Clay Factory Frenzy, Trắc nghiệm Khởi nghiệp, Đoán Giá, Bắt Vốn Vàng.'],
-       ['📚 Thư viện & 🎶 Kho Âm nhạc', 'Tạo hình nhân vật, sản phẩm cài áo, và toàn bộ ca khúc gốc với trình phát đầy đủ — mở từ Cài đặt hoặc Trang chủ.']].map(([t, d]) => `
+       ['📚 Thư viện & 🎶 Kho Âm nhạc', 'Tạo hình nhân vật, sản phẩm cài áo, và toàn bộ ca khúc gốc với trình phát đầy đủ – mở từ Cài đặt hoặc Trang chủ.']].map(([t, d]) => `
     <div class="clay-card p-4 mb-3"><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p></div>`).join('')}` },
   glossary: { icon: '📚', name: 'Thuật ngữ dễ hiểu', html: `
     <p class="text-sm text-deep-teal/75 mb-4">Các thuật ngữ hay gặp trong game, giải thích bằng một câu:</p>
-    ${[['Thị phần', 'Miếng bánh khách hàng của bạn — trong 12.000 sp cầu thị trường mỗi vòng, bạn bán được bao nhiêu %.'],
-       ['Giá tham chiếu (150k)', 'Mức giá "chuẩn" thị trường — bán rẻ hơn thì hút khách, đắt hơn thì mất khách (mức độ theo độ co giãn giá 1.8).'],
+    ${[['Thị phần', 'Miếng bánh khách hàng của bạn – trong 12.000 sp cầu thị trường mỗi vòng, bạn bán được bao nhiêu %.'],
+       ['Giá tham chiếu (150k)', 'Mức giá "chuẩn" thị trường – bán rẻ hơn thì hút khách, đắt hơn thì mất khách (mức độ theo độ co giãn giá 1.8).'],
        ['Biên lợi nhuận', 'Tiền lời trên mỗi sản phẩm = giá bán − chi phí (~60k/sp). Giá 150k → lời ~90k/sp trước chi phí cố định.'],
        ['Hòa vốn (CVP)', 'Số sản phẩm phải bán để bù hết chi phí cố định + marketing + R&D. Bán ít hơn mức này là lỗ.'],
        ['OEE', 'Điểm sức khỏe dây chuyền (0–100%): máy chạy đều, ít hỏng, ít phế phẩm. Dưới 60% là báo động.'],
-       ['Quick Ratio', 'Khả năng trả nợ ngay bằng tiền mặt — dưới 1.0 nghĩa là chi kế hoạch đang vượt tiền trong két.'],
-       ['Thương hiệu (Brand)', 'Uy tín tích lũy qua các vòng — nhân sức hút của bạn, đặc biệt vòng 6 (trọng số ×1.5).'],
-       ['Khấu hao', 'Máy móc "mòn" theo công suất — đầu tư càng lớn, chi phí cố định mỗi vòng càng cao.']].map(([t, d]) => `
+       ['Quick Ratio', 'Khả năng trả nợ ngay bằng tiền mặt – dưới 1.0 nghĩa là chi kế hoạch đang vượt tiền trong két.'],
+       ['Thương hiệu (Brand)', 'Uy tín tích lũy qua các vòng – nhân sức hút của bạn, đặc biệt vòng 6 (trọng số ×1.5).'],
+       ['Khấu hao', 'Máy móc "mòn" theo công suất – đầu tư càng lớn, chi phí cố định mỗi vòng càng cao.']].map(([t, d]) => `
     <div class="clay-card p-4 mb-2.5"><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p></div>`).join('')}` },
   trouble: { icon: '🔧', name: 'Xử lý sự cố', html: `
-    ${[['📶 Kiểm tra mạng', 'BizOn chạy offline sau lần tải đầu (PWA) — nhưng lần đầu cần Wi-Fi hoặc 4G/5G ổn định.'],
+    ${[['📶 Kiểm tra mạng', 'BizOn chạy offline sau lần tải đầu (PWA) – nhưng lần đầu cần Wi-Fi hoặc 4G/5G ổn định.'],
        ['🔄 Làm mới ứng dụng', 'Đóng hoàn toàn và mở lại BizOn. Nếu đã cài lên màn hình chính, đóng hẳn app để nhận bản cập nhật mới.'],
-       ['🧹 Xóa dữ liệu cũ', 'Nếu giao diện hiển thị lạ sau bản cập nhật: Cài đặt → Chơi lại từ đầu (Reset) — lưu ý sẽ mất tiến trình.'],
+       ['🧹 Xóa dữ liệu cũ', 'Nếu giao diện hiển thị lạ sau bản cập nhật: Cài đặt → Chơi lại từ đầu (Reset) – lưu ý sẽ mất tiến trình.'],
        ['🐞 Liên hệ hỗ trợ', 'Dùng nút "Gửi báo cáo lỗi" trong Cài đặt nếu vấn đề tiếp diễn.']].map(([t, d]) => `
     <div class="clay-card p-4 mb-3"><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p></div>`).join('')}` },
 };
@@ -375,7 +375,7 @@ function showManual(sec) {
   div.scrollTop = 0;
 }
 
-// ---------- BizOn Premium — luồng nâng cấp tài khoản (thiết kế Stitch) ----------
+// ---------- BizOn Premium – luồng nâng cấp tài khoản (thiết kế Stitch) ----------
 function showPremium() {
   const requested = localStorage.getItem('bizon-premium') === 'requested';
   const div = document.createElement('div');
@@ -386,7 +386,7 @@ function showPremium() {
     <div class="min-h-full flex flex-col items-center justify-center text-center px-8 py-12">
       <p class="text-7xl animate-float" style="filter:drop-shadow(0 0 30px rgba(253,161,39,.85))">👑</p>
       <h2 class="font-display font-extrabold text-3xl text-white mt-6">BizOn <span style="color:#fda127">Premium</span></h2>
-      <p class="text-white/60 text-sm mt-2 max-w-xs">Dành cho giảng viên & trường học — mở khóa toàn bộ sức mạnh quản trị lớp học.</p>
+      <p class="text-white/60 text-sm mt-2 max-w-xs">Dành cho giảng viên & trường học – mở khóa toàn bộ sức mạnh quản trị lớp học.</p>
       <div class="w-full max-w-sm text-left mt-7 space-y-2.5">
         ${['🏫 Lớp học không giới hạn số đội', '📊 Xuất báo cáo tổng kết & chứng chỉ PDF', '🎛️ Chế độ giảng viên nâng cao (khóa vòng, cấp vốn, biến cố tùy chỉnh)', '📈 Bảng phân tích hiệu suất từng thành viên', '🤝 Hỗ trợ ưu tiên & tùy biến thương hiệu trường'].map(f => `
         <div class="clay-card p-3.5 flex items-center gap-3 text-sm font-semibold text-deep-teal">${f}</div>`).join('')}
@@ -437,7 +437,7 @@ function toggleMusic() {
   else { localStorage.setItem('bizon-music', 'on'); startMusic(); }
   const t = $('music-toggle'); if (t) t.checked = musicEnabled();
 }
-// Trở lại phiên cũ: trình duyệt chặn autoplay — bắt đầu nhạc ở lần chạm đầu tiên
+// Trở lại phiên cũ: trình duyệt chặn autoplay – bắt đầu nhạc ở lần chạm đầu tiên
 document.addEventListener('pointerdown', function once() {
   document.removeEventListener('pointerdown', once);
   if (S) startMusic();
@@ -447,9 +447,9 @@ document.addEventListener('pointerdown', function once() {
 function playEventSting(tone) {
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const notes = tone === 'bad' ? [[110, 0], [104, .22], [98, .44], [82.4, .7]]      // dồn dập đi xuống — kịch tính
+    const notes = tone === 'bad' ? [[110, 0], [104, .22], [98, .44], [82.4, .7]]      // dồn dập đi xuống – kịch tính
       : tone === 'warn' ? [[196, 0], [185, .2], [196, .4]]
-      : [[261.6, 0], [329.6, .16], [392, .32], [523.3, .5]];                          // vui — arpeggio đi lên
+      : [[261.6, 0], [329.6, .16], [392, .32], [523.3, .5]];                          // vui – arpeggio đi lên
     notes.forEach(([f, t]) => {
       const o = ctx.createOscillator(), g = ctx.createGain();
       o.type = tone === 'bad' ? 'sawtooth' : 'triangle';
@@ -543,7 +543,7 @@ function maybeShowEventIntro() {
       ${bad ? `
       <div class="clay-raised p-3 mt-3 flex items-center gap-3">
         <img src="assets/character/anh-tu-ao-dai-work-cut.png" alt="Tú Phan" class="w-11 h-11 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 6%;background:#dbeef7">
-        <p class="text-xs text-deep-teal/80 italic">"Bình tĩnh phân tích số liệu trước khi hành động — khủng hoảng luôn ẩn chứa cơ hội cho đội có kỷ luật." — <b class="text-emerald-700">Tú Phan · Cố vấn học thuật</b></p>
+        <p class="text-xs text-deep-teal/80 italic">"Bình tĩnh phân tích số liệu trước khi hành động – khủng hoảng luôn ẩn chứa cơ hội cho đội có kỷ luật." – <b class="text-emerald-700">Tú Phan · Cố vấn học thuật</b></p>
       </div>` : ''}
       <button id="ev-cta" class="clay-button-primary w-full text-white font-display font-bold text-lg py-4 mt-6">${ev.cta ? ev.cta.label : '🎯 Nhập quyết định'}</button>
       <button id="ev-close" class="clay-button-secondary w-full text-primary font-display font-bold py-4 mt-3">Về Trung tâm điều hành</button>
@@ -590,7 +590,7 @@ function showVictory(r) {
       </div>
       <div class="clay-raised p-3 mb-4 flex items-center gap-3 text-left">
         <img src="assets/character/anh-tu-ao-dai-smile-cut.png" alt="Tú Phan" class="w-12 h-12 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 5%;background:#dbeef7">
-        <p class="text-xs text-deep-teal/80 italic">"Xuất sắc! Đây là minh chứng cho một chiến lược được thực thi kỷ luật." — <b class="text-emerald-700">Tú Phan</b></p>
+        <p class="text-xs text-deep-teal/80 italic">"Xuất sắc! Đây là minh chứng cho một chiến lược được thực thi kỷ luật." – <b class="text-emerald-700">Tú Phan</b></p>
       </div>
       <button id="vic-report" class="clay-btn w-full bg-deep-teal text-white font-display font-bold py-4 mb-3">📊 XEM BÁO CÁO CHI TIẾT</button>
       <button id="vic-next" class="clay-btn w-full bg-white text-deep-teal font-display font-bold py-4">LẬP KẾ HOẠCH TIẾP THEO</button>
@@ -631,7 +631,7 @@ function renderAll() {
 
 // ---------- BizOn Monitor (bảng theo dõi thị trường kiểu terminal) ----------
 function mmSpark(series, w = 88, hgt = 26) {
-  if (!series || series.length < 2) return '<span style="opacity:.35;font-size:9px">—</span>';
+  if (!series || series.length < 2) return '<span style="opacity:.35;font-size:9px">–</span>';
   const min = Math.min(...series), max = Math.max(...series), span = (max - min) || 1;
   const pts = series.map((v, i) => `${(i / (series.length - 1) * w).toFixed(1)},${(hgt - 2 - (v - min) / span * (hgt - 4)).toFixed(1)}`).join(' ');
   const up = series[series.length - 1] >= series[0];
@@ -695,14 +695,14 @@ function renderMonitor() {
     </div>
     <div style="display:flex;gap:8px;margin:12px 0 4px">
       ${chip('TĂNG', `${ups}/${rated.length || withPct.length}`, '#34d399')}
-      ${chip('MẠNH NHẤT', best ? `${best.name} +${best.chg.toFixed(1)}%` : '—', '#34d399')}
-      ${chip('YẾU NHẤT', worst ? `${worst.name} ${worst.chg.toFixed(1)}%` : '—', '#f87171')}
+      ${chip('MẠNH NHẤT', best ? `${best.name} +${best.chg.toFixed(1)}%` : '–', '#34d399')}
+      ${chip('YẾU NHẤT', worst ? `${worst.name} ${worst.chg.toFixed(1)}%` : '–', '#f87171')}
     </div>
     ${rows}
   </div>`;
 }
 
-// ---------- Thị trường sống (Live Market Pulse — theo 3 màn hình Stitch) ----------
+// ---------- Thị trường sống (Live Market Pulse – theo 3 màn hình Stitch) ----------
 function renderMarket() {
   renderMonitor();
   const body = $('market-body');
@@ -715,10 +715,10 @@ function renderMarket() {
   // Live ticker từ trạng thái game
   const ticker = [
     `🔴 ${ev.name}: ${ev.desc}`,
-    `🔵 Alpha Dynamics duy trì chiến lược giá rẻ — theo dõi biên lợi nhuận của họ`,
+    `🔵 Alpha Dynamics duy trì chiến lược giá rẻ – theo dõi biên lợi nhuận của họ`,
     `🟢 Brand Loyalty của đội bạn: ${S.brandLoyalty}% ${S.brandLoyalty >= 70 ? '(khách hàng gắn bó!)' : '(cần đầu tư thương hiệu)'}`,
-    `🟡 Star Clay Co. đẩy mạnh phân khúc cao cấp — cơ hội ở phân khúc phổ thông`,
-    S.loan > 0 ? `🏦 Đội đang có khoản vay ${S.loan}tr₫ — lãi trừ mỗi vòng` : `💰 Ví đội: ${money(S.balance)} — chưa dùng đòn bẩy`,
+    `🟡 Star Clay Co. đẩy mạnh phân khúc cao cấp – cơ hội ở phân khúc phổ thông`,
+    S.loan > 0 ? `🏦 Đội đang có khoản vay ${S.loan}tr₫ – lãi trừ mỗi vòng` : `💰 Ví đội: ${money(S.balance)} – chưa dùng đòn bẩy`,
   ];
   $('market-ticker').innerHTML = '<span class="mx-6">' + ticker.join('</span><span class="mx-6">') + '</span>';
 
@@ -740,7 +740,7 @@ function renderMarket() {
       : { tag: 'KHÁCH NHẠY GIÁ', text: 'Mức giá hiện tại khá hợp lý so với chất lượng nhận được!', s: 'positive' },
     ev.id === 'EV_PRICEWAR'
       ? { tag: 'GIỚI PHÂN TÍCH', text: 'Đối thủ vừa giảm giá sâu. Thị trường chờ phản ứng của BizOn trong 48 giờ tới.', s: 'alert' }
-      : { tag: 'GIỚI PHÂN TÍCH', text: `R&D tích lũy ${Math.round(S.rdCumulative)}tr₫ — nền tảng đổi mới của BizOn đang được chú ý.`, s: 'neutral' },
+      : { tag: 'GIỚI PHÂN TÍCH', text: `R&D tích lũy ${Math.round(S.rdCumulative)}tr₫ – nền tảng đổi mới của BizOn đang được chú ý.`, s: 'neutral' },
   ];
   const sChip = { positive: '<span class="text-[9px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">TÍCH CỰC</span>', neutral: '<span class="text-[9px] font-bold text-deep-teal/60 bg-surface-bright px-2 py-0.5 rounded-full">TRUNG LẬP</span>', negative: '<span class="text-[9px] font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded-full">TIÊU CỰC</span>', alert: '<span class="text-[9px] font-bold text-white bg-red-500 px-2 py-0.5 rounded-full">⚠️ CẠNH TRANH</span>' };
 
@@ -758,7 +758,7 @@ function renderMarket() {
       <div>
         <p class="font-display font-bold text-deep-teal text-sm">Cố vấn Hương <span class="text-[9px] bg-primary-container text-white font-extrabold px-1.5 py-0.5 rounded ml-1">LIVE</span></p>
         <p class="text-xs text-deep-teal/80 italic mt-1">"${ev.tone === 'warn' && ev.id === 'EV_PRICEWAR'
-          ? 'Nghe kỹ này: cú giảm giá của đối thủ là một cái bẫy — họ đang đốt vốn. Giữ vững vị thế và tập trung vào phân khúc Premium. Chất lượng sẽ bền hơn sự tuyệt vọng của họ.'
+          ? 'Nghe kỹ này: cú giảm giá của đối thủ là một cái bẫy – họ đang đốt vốn. Giữ vững vị thế và tập trung vào phân khúc Premium. Chất lượng sẽ bền hơn sự tuyệt vọng của họ.'
           : ev.tone === 'bad'
           ? 'Thị trường đang thở gấp. Ưu tiên phòng thủ dòng tiền, quan sát nhất cử nhất động của đối thủ trước khi phản công.'
           : 'Thị trường đang thở đều. Đây là lúc quan sát điểm yếu của đối thủ và chuẩn bị nước đi chiếm thị phần kế tiếp.'}"</p>
@@ -827,19 +827,19 @@ function renderMarket() {
     </div>`;
 }
 
-// ---------- Nhật ký đội (Team Journal — SEC ghi chép) ----------
+// ---------- Nhật ký đội (Team Journal – SEC ghi chép) ----------
 function journalLesson(r) {
   const parts = [];
   if (r.netProfit < 0) {
     const costs = [['giá vốn sản xuất', r.cogs], ['marketing', r.marketing], ['chi phí cố định', r.fixed], ['khấu hao', r.depreciation]];
     costs.sort((a, b) => b[1] - a[1]);
-    parts.push(`Lỗ ${money(Math.abs(r.netProfit))} — khoản chi lớn nhất là ${costs[0][0]} (${money(costs[0][1])}). Cần cân đối lại cơ cấu chi phí.`);
+    parts.push(`Lỗ ${money(Math.abs(r.netProfit))} – khoản chi lớn nhất là ${costs[0][0]} (${money(costs[0][1])}). Cần cân đối lại cơ cấu chi phí.`);
   } else {
     parts.push(`Lãi ${money(r.netProfit)} với biên lợi nhuận ${Math.round(100 * r.netProfit / Math.max(1, r.revenue))}%.`);
   }
-  if (r.lostSales > 200) parts.push(`Hụt ${r.lostSales.toLocaleString('vi-VN')} đơn vì thiếu hàng — cầu vượt cung, nên tăng sản lượng.`);
-  if (r.inventory > 400) parts.push(`Tồn kho ${r.inventory.toLocaleString('vi-VN')} sp do dự báo sai nhu cầu — chi phí lưu kho tăng.`);
-  if (r.oee && r.oee < 80) parts.push(`OEE giảm còn ${r.oee}% — cần bảo trì/nâng cấp dây chuyền.`);
+  if (r.lostSales > 200) parts.push(`Hụt ${r.lostSales.toLocaleString('vi-VN')} đơn vì thiếu hàng – cầu vượt cung, nên tăng sản lượng.`);
+  if (r.inventory > 400) parts.push(`Tồn kho ${r.inventory.toLocaleString('vi-VN')} sp do dự báo sai nhu cầu – chi phí lưu kho tăng.`);
+  if (r.oee && r.oee < 80) parts.push(`OEE giảm còn ${r.oee}% – cần bảo trì/nâng cấp dây chuyền.`);
   return parts.join(' ');
 }
 
@@ -849,7 +849,7 @@ const JOURNAL_QUOTES = [
   { text: 'Dữ liệu cho ta biết quá khứ, quyết định hôm nay viết nên tương lai.', by: 'Tú Phan', color: 'text-emerald-700' },
   { text: 'Khủng hoảng là bài kiểm tra tốt nhất cho năng lực quản trị dòng tiền.', by: 'Lumina AI', color: 'text-primary' },
   { text: 'Thị phần mua được bằng tiền, nhưng lòng trung thành phải xây bằng giá trị.', by: 'Tú Phan', color: 'text-emerald-700' },
-  { text: 'Đừng sợ commit sai — hãy sợ việc không rút ra được bài học nào.', by: 'SEC', color: 'text-red-600' },
+  { text: 'Đừng sợ commit sai – hãy sợ việc không rút ra được bài học nào.', by: 'SEC', color: 'text-red-600' },
 ];
 
 function renderJournal() {
@@ -869,7 +869,7 @@ function renderJournal() {
           <p class="font-display font-bold text-deep-teal">Vòng ${S.round}: ${ev.name.replace('Biến cố: ', '')}</p>
           <div class="clay-sunken rounded-2xl p-3 mt-2">
             <p class="text-[10px] font-bold text-deep-teal/50 uppercase">Trạng thái</p>
-            <p class="text-sm font-bold text-primary">${S.committed ? 'Đã commit — chờ kết quả' : 'Đang thảo luận quyết định'}</p>
+            <p class="text-sm font-bold text-primary">${S.committed ? 'Đã commit – chờ kết quả' : 'Đang thảo luận quyết định'}</p>
           </div>
         </div>
       </div>`);
@@ -894,7 +894,7 @@ function renderJournal() {
           <p class="text-sm text-deep-teal/80">${journalLesson(r)}</p>
           <div class="border-t border-surface-bright mt-2.5 pt-2.5 flex gap-2 items-start">
             <span class="text-base">💬</span>
-            <p class="text-xs text-deep-teal/70 italic">"${q.text}" — <b class="${q.color}">${q.by}</b></p>
+            <p class="text-xs text-deep-teal/70 italic">"${q.text}" – <b class="${q.color}">${q.by}</b></p>
           </div>
         </div>
       </div>`);
@@ -915,7 +915,7 @@ function renderDashboard() {
   const ev = currentEvent(S);
   $('dash-round').textContent = Math.min(S.round, ROUNDS_TOTAL);
   $('dash-status').textContent = S.finished ? '🏁 Đã hoàn thành mô phỏng!'
-    : S.committed ? 'Đã khóa — chờ kết quả' : 'Đang chờ quyết định';
+    : S.committed ? 'Đã khóa – chờ kết quả' : 'Đang chờ quyết định';
   $('round-dots').innerHTML = Array.from({ length: ROUNDS_TOTAL }, (_, i) => {
     const done = i < S.history.length;
     const cur = i + 1 === S.round && !S.finished;
@@ -993,7 +993,7 @@ function syncDecisionLabels() {
   }
 }
 
-/* Dự báo thị phần sống — trả lời thẳng câu hỏi "tôi có cắm được cờ không?" */
+/* Dự báo thị phần sống – trả lời thẳng câu hỏi "tôi có cắm được cờ không?" */
 function renderMarketForecast() {
   const el = $('mf-share');
   if (!el || !S) return;
@@ -1015,12 +1015,12 @@ function renderMarketForecast() {
   if (bar) { bar.style.width = Math.min(100, Math.max(4, share)) + '%'; bar.classList.toggle('opacity-50', !winning); }
   const fc = forecastCash(S, d);
   $('mf-verdict').innerHTML = winning
-    ? (fc.net >= 0 ? `✅ <b>Đang thắng!</b> Ước tính bạn vượt mức trung bình đối thủ (~${rivalAvg.toFixed(0)}%/đội) và có lãi — giữ vững là cắm được cờ 🚩.`
-                   : `🟡 Thị phần đủ thắng (~ đối thủ ${rivalAvg.toFixed(0)}%/đội) nhưng <b>đang lỗ</b> — tăng giá nhẹ hoặc bớt chi để có lãi, vì thắng vòng cần cả hai.`)
-    : `🔻 Chưa đủ — mỗi đối thủ đang giữ ~${rivalAvg.toFixed(0)}%. Gợi ý: <b>giảm giá gần 150k</b> hoặc <b>tăng marketing</b> để kéo khách (xem đề xuất của Lan Chi ở Cuộc họp đội).`;
+    ? (fc.net >= 0 ? `✅ <b>Đang thắng!</b> Ước tính bạn vượt mức trung bình đối thủ (~${rivalAvg.toFixed(0)}%/đội) và có lãi – giữ vững là cắm được cờ 🚩.`
+                   : `🟡 Thị phần đủ thắng (~ đối thủ ${rivalAvg.toFixed(0)}%/đội) nhưng <b>đang lỗ</b> – tăng giá nhẹ hoặc bớt chi để có lãi, vì thắng vòng cần cả hai.`)
+    : `🔻 Chưa đủ – mỗi đối thủ đang giữ ~${rivalAvg.toFixed(0)}%. Gợi ý: <b>giảm giá gần 150k</b> hoặc <b>tăng marketing</b> để kéo khách (xem đề xuất của Lan Chi ở Cuộc họp đội).`;
 }
 
-/* ===== CUỘC HỌP ĐỘI — 4 thành viên demo đề xuất theo vai, tất định theo seed + vòng ===== */
+/* ===== CUỘC HỌP ĐỘI – 4 thành viên demo đề xuất theo vai, tất định theo seed + vòng ===== */
 function meetingJitter(k) {                       // dao động nhỏ nhưng lặp lại được để chấm điểm
   const x = (S.seed * 9301 + S.round * 49297 + k * 7907) % 233280;
   return x / 233280;                              // 0..1
@@ -1042,19 +1042,19 @@ function teamSuggestions() {
 
   return [
     { img: 'assets/character/team/cfo.jpg', name: 'Thu Hà · CFO', icon: '💰',
-      say: tight ? `Thanh khoản đang căng (quick ratio ${S.quickRatio.toFixed(2)}). Em đề xuất giảm R&D về ${cfoRd}tr, ưu tiên giữ tiền mặt — cần thì vay ngắn hạn thay vì cắt marketing sát sàn.`
-                 : `Két sắt ổn (${Math.round(S.balance)}tr). Em đề xuất R&D ${cfoRd}tr — biến cố tốt thì đầu tư cho vòng sau, đừng để tiền nằm im.`,
+      say: tight ? `Thanh khoản đang căng (quick ratio ${S.quickRatio.toFixed(2)}). Em đề xuất giảm R&D về ${cfoRd}tr, ưu tiên giữ tiền mặt – cần thì vay ngắn hạn thay vì cắt marketing sát sàn.`
+                 : `Két sắt ổn (${Math.round(S.balance)}tr). Em đề xuất R&D ${cfoRd}tr – biến cố tốt thì đầu tư cho vòng sau, đừng để tiền nằm im.`,
       apply: { 'in-rd': cfoRd } },
     { img: 'assets/character/team/cmo.jpg', name: 'Lan Chi · CMO', icon: '📣',
-      say: priceWar ? `Đối thủ đang phá giá! Em đề xuất giá ${cmoPrice}k + marketing ${cmoMkt}tr — mình không đua tận đáy nhưng phải giữ độ phủ.`
-                    : `Với thương hiệu hiện tại, em đề xuất giá ${cmoPrice}k và marketing ${cmoMkt}tr${boom ? ' — biến cố này là thời cơ vàng để bung!' : ' — đủ áp lực lên cả ba đối thủ.'}`,
+      say: priceWar ? `Đối thủ đang phá giá! Em đề xuất giá ${cmoPrice}k + marketing ${cmoMkt}tr – mình không đua tận đáy nhưng phải giữ độ phủ.`
+                    : `Với thương hiệu hiện tại, em đề xuất giá ${cmoPrice}k và marketing ${cmoMkt}tr${boom ? ' – biến cố này là thời cơ vàng để bung!' : ' – đủ áp lực lên cả ba đối thủ.'}`,
       apply: { 'in-price': cmoPrice, 'in-mkt': cmoMkt } },
     { img: 'assets/character/team/coo.jpg', name: 'Bảo Ngọc · COO', icon: '🏭',
-      say: energy ? `Khủng hoảng năng lượng — em đề xuất hạ sản lượng về ${cooProd.toLocaleString('vi-VN')} sp và ${cooWorkers} nhân công, chạy máy quá tải lúc này là đốt tiền điện.`
-                  : `Công suất máy ${S.machineCapacity.toLocaleString('vi-VN')} sp — em đề xuất sản xuất ${cooProd.toLocaleString('vi-VN')} sp với ${cooWorkers} nhân công, chừa ~12% đệm cho bảo trì.`,
+      say: energy ? `Khủng hoảng năng lượng – em đề xuất hạ sản lượng về ${cooProd.toLocaleString('vi-VN')} sp và ${cooWorkers} nhân công, chạy máy quá tải lúc này là đốt tiền điện.`
+                  : `Công suất máy ${S.machineCapacity.toLocaleString('vi-VN')} sp – em đề xuất sản xuất ${cooProd.toLocaleString('vi-VN')} sp với ${cooWorkers} nhân công, chừa ~12% đệm cho bảo trì.`,
       apply: { 'in-prod': cooProd, 'in-workers': cooWorkers } },
     { img: 'assets/character/team/sec.jpg', name: 'Gia Hân · SEC', icon: '📝',
-      say: `Tóm tắt cuộc họp: biến cố vòng này là «${ev.name || '—'}». ${ev.icon || ''} ${tight ? 'Ưu tiên số 1 theo CFO: an toàn dòng tiền. ' : ''}Em đã ghi biên bản — cả đội thống nhất xong thì CEO bấm Commit nhé!` },
+      say: `Tóm tắt cuộc họp: biến cố vòng này là «${ev.name || '–'}». ${ev.icon || ''} ${tight ? 'Ưu tiên số 1 theo CFO: an toàn dòng tiền. ' : ''}Em đã ghi biên bản – cả đội thống nhất xong thì CEO bấm Commit nhé!` },
   ];
 }
 function applySuggestion(i) {
@@ -1074,8 +1074,8 @@ function renderTeamMeeting() {
   const sug = teamSuggestions();
   box.innerHTML = `<div class="clay-card p-4">
     <img src="assets/illustrations/team-holo-meeting.jpg" alt="Đội ngũ nòng cốt họp chiến lược quanh bàn điều hành hologram" class="w-full h-28 object-cover rounded-2xl mb-3" style="object-position:50% 32%" loading="lazy">
-    <p class="font-display font-bold text-deep-teal text-sm mb-1">🗣️ Cuộc họp đội — vòng ${S.round}</p>
-    <p class="text-[10px] text-deep-teal/50 mb-3">4 thành viên đề xuất theo vai trò. Bạn là ${S.profile.role} — quyền quyết định cuối cùng vẫn thuộc về bạn.</p>
+    <p class="font-display font-bold text-deep-teal text-sm mb-1">🗣️ Cuộc họp đội – vòng ${S.round}</p>
+    <p class="text-[10px] text-deep-teal/50 mb-3">4 thành viên đề xuất theo vai trò. Bạn là ${S.profile.role} – quyền quyết định cuối cùng vẫn thuộc về bạn.</p>
     ${sug.map((m, i) => `
       <div class="clay-sunken rounded-2xl p-3 mb-2">
         <div class="flex gap-2.5 items-start">
@@ -1083,7 +1083,7 @@ function renderTeamMeeting() {
           <div class="min-w-0">
             <p class="text-[11px] font-extrabold text-deep-teal">${m.icon} ${m.name}</p>
             <p class="text-[11px] text-deep-teal/75 italic mt-0.5">"${m.say}"</p>
-            ${m.apply ? `<button id="tm-applied-${i}" onclick="applySuggestion(${i})" class="clay-btn bg-surface-bright text-primary text-[10px] font-extrabold px-3 py-1.5 mt-1.5">👍 Nghe theo — áp vào thanh trượt</button>` : ''}
+            ${m.apply ? `<button id="tm-applied-${i}" onclick="applySuggestion(${i})" class="clay-btn bg-surface-bright text-primary text-[10px] font-extrabold px-3 py-1.5 mt-1.5">👍 Nghe theo – áp vào thanh trượt</button>` : ''}
           </div>
         </div>
       </div>`).join('')}
@@ -1125,7 +1125,7 @@ function renderDecisions() {
     btn.classList.add('opacity-50');
   } else {
     btn.disabled = false;
-    btn.textContent = '🔒 Commit — Khóa quyết định';
+    btn.textContent = '🔒 Commit – Khóa quyết định';
     btn.classList.remove('opacity-50');
   }
 }
@@ -1133,13 +1133,13 @@ function renderDecisions() {
 function commitDecisions() {
   if (S.finished || S.committed) return;
   if (S.roundLocked) {
-    alert('ERR_ROUND_LOCKED — Giảng viên đã khóa vòng chơi này. Chờ mở khóa để tiếp tục.');
+    alert('ERR_ROUND_LOCKED – Giảng viên đã khóa vòng chơi này. Chờ mở khóa để tiếp tục.');
     return;
   }
   const d = currentDecisionInput();
   const cashNeeded = d.marketing + d.rd + d.production * UNIT_COST / 1000 + d.workers * WAGE_PER_WORKER + d.workers * d.training;
   if (d.funding !== 'loan' && cashNeeded > S.balance + 300) {
-    alert('ERR_INSUFFICIENT_FUNDS — Kế hoạch chi vượt quá vốn tự có của đội. Hãy giảm ngân sách hoặc chuyển sang nguồn vốn "Vay ngân hàng" (lãi 8.5%/vòng).');
+    alert('ERR_INSUFFICIENT_FUNDS – Kế hoạch chi vượt quá vốn tự có của đội. Hãy giảm ngân sách hoặc chuyển sang nguồn vốn "Vay ngân hàng" (lãi 8.5%/vòng).');
     return;
   }
   S.committed = true;
@@ -1169,7 +1169,7 @@ function commitDecisions() {
   }, 2300);
 }
 
-/* ===== ⚔️ ĐẤU TRƯỜNG — các nhân vật ra sàn đấu giành thị phần sau mỗi Commit ===== */
+/* ===== ⚔️ ĐẤU TRƯỜNG – các nhân vật ra sàn đấu giành thị phần sau mỗi Commit ===== */
 const RIVAL_ICONS = { aggressive: '🐺', balanced: '🐘', premium: '🦚' };
 /* Khi có tạo hình người đất sét cho 3 đối thủ: đặt ảnh vào assets/character/rivals/ và điền đường dẫn */
 const RIVAL_IMGS = { aggressive: 'assets/character/rivals/alpha.png', balanced: 'assets/character/rivals/mekong.png', premium: 'assets/character/rivals/star.png' };
@@ -1189,7 +1189,7 @@ function showArena(r, done) {
   div.innerHTML = `
     <div class="w-full max-w-sm text-center py-6">
       <h3 class="font-display font-extrabold text-white text-xl">⚔️ ĐẤU TRƯỜNG ${stop ? stop.name.toUpperCase() : 'VÒNG ' + r.round}</h3>
-      <p class="text-white/60 text-xs mb-3">${r.event.icon} ${r.event.name} — 12.000 khách hàng chờ trên khán đài</p>
+      <p class="text-white/60 text-xs mb-3">${r.event.icon} ${r.event.name} – 12.000 khách hàng chờ trên khán đài</p>
       <div class="relative mx-auto" style="width:min(88vw,340px); height:min(88vw,340px)">
         <div class="absolute inset-0 rounded-full" style="background:radial-gradient(circle, rgba(232,118,45,.25) 0%, rgba(0,102,135,.18) 45%, rgba(255,255,255,.04) 46%, transparent 72%); border:2px solid rgba(255,255,255,.12)"></div>
         <div class="absolute rounded-full border border-white/15" style="inset:18%"></div>
@@ -1225,7 +1225,7 @@ function showArena(r, done) {
     if (pod) { pod.classList.add('ring-4', 'ring-clay-gold'); pod.insertAdjacentHTML('beforebegin', '<p class="text-lg" style="animation:fadeUp .4s ease">👑</p>'); }
     const vs = div.querySelector('#arena-vs'); if (vs) vs.textContent = win ? '🚩' : '🏴';
     const v = div.querySelector('#arena-verdict');
-    v.textContent = win ? `🚩 ${S.profile.teamName} thắng sàn đấu${stop ? ' — cắm cờ tại ' + stop.name : ''}!` : `🏴 ${fighters[winIdx].name} giữ vị trí số 1 vòng này…`;
+    v.textContent = win ? `🚩 ${S.profile.teamName} thắng sàn đấu${stop ? ' – cắm cờ tại ' + stop.name : ''}!` : `🏴 ${fighters[winIdx].name} giữ vị trí số 1 vòng này…`;
     v.style.opacity = 1; v.classList.add(win ? 'text-clay-gold' : 'text-white/80');
     if (win) createConfetti();
     const btn = div.querySelector('#arena-next');
@@ -1235,7 +1235,7 @@ function showArena(r, done) {
   div.addEventListener('click', e => { if (e.target === div) { div.remove(); done(); } });
 }
 
-/* "Vì sao ra kết quả này?" — một câu giải thích nguyên nhân chính của vòng */
+/* "Vì sao ra kết quả này?" – một câu giải thích nguyên nhân chính của vòng */
 function explainRound(r) {
   const prev = S.history[S.history.length - 2];
   const dShare = prev ? r.share - prev.share : r.share - 25;
@@ -1244,10 +1244,10 @@ function explainRound(r) {
   if (r.event && r.event.tone === 'bad' && !r.shielded) causes.push(`biến cố «${r.event.name}» ép chi phí/nhu cầu`);
   if (d.price > REF_PRICE * 1.25) causes.push(`giá ${d.price}k cao hơn hẳn tham chiếu 150k nên mất khách nhạy giá`);
   if (d.price < REF_PRICE * 0.8) causes.push(`giá ${d.price}k rất thấp kéo khách nhưng bào mỏng biên lãi`);
-  if (r.sold < d.production * 0.85) causes.push(`sản xuất ${(d.production || 0).toLocaleString('vi-VN')} sp nhưng chỉ bán ${r.sold.toLocaleString('vi-VN')} — tồn kho chôn vốn`);
+  if (r.sold < d.production * 0.85) causes.push(`sản xuất ${(d.production || 0).toLocaleString('vi-VN')} sp nhưng chỉ bán ${r.sold.toLocaleString('vi-VN')} – tồn kho chôn vốn`);
   if ((d.marketing || 0) < 40) causes.push('marketing dưới mặt bằng đối thủ (55–90tr) nên độ phủ yếu');
   const head = dShare >= 1 ? `Thị phần tăng ${dShare.toFixed(1)} điểm` : dShare <= -1 ? `Thị phần giảm ${Math.abs(dShare).toFixed(1)} điểm` : 'Thị phần đi ngang';
-  return `${head}${causes.length ? ' — nguyên nhân chính: ' + causes.slice(0, 2).join('; ') : r.netProfit > 0 ? ' — chiến lược cân bằng, không có điểm yếu rõ rệt.' : ' — lỗ chủ yếu do tổng chi vượt doanh thu, xem lại Dự báo Dòng tiền trước khi chốt.'}${causes.length ? '.' : ''}`;
+  return `${head}${causes.length ? ' – nguyên nhân chính: ' + causes.slice(0, 2).join('; ') : r.netProfit > 0 ? ' – chiến lược cân bằng, không có điểm yếu rõ rệt.' : ' – lỗ chủ yếu do tổng chi vượt doanh thu, xem lại Dự báo Dòng tiền trước khi chốt.'}${causes.length ? '.' : ''}`;
 }
 
 function showRoundResult(r) {
@@ -1332,7 +1332,7 @@ function renderConquest() {
     if (c) m += `<text x="${st.x + 3}" y="${st.y - 9}" font-size="26">${c.win ? '🚩' : '🏴'}</text>`;
     return m;
   }).join('');
-  box.innerHTML = `<svg viewBox="0 0 372 512" class="w-full h-auto" aria-label="Bản đồ chinh phục Việt Nam — Hoàng Sa & Trường Sa là của Việt Nam">
+  box.innerHTML = `<svg viewBox="0 0 372 512" class="w-full h-auto" aria-label="Bản đồ chinh phục Việt Nam – Hoàng Sa & Trường Sa là của Việt Nam">
     <g transform="scale(.85) translate(4,10)">
       <polygon points="${VN_OUTLINE}" fill="rgba(0,102,135,.07)" stroke="#006687" stroke-width="2.4" stroke-linejoin="round"/>
       <g transform="translate(108.9,25.2)">
@@ -1364,18 +1364,18 @@ function renderConquest() {
   }).join('');
 }
 
-// ---------- Giới thiệu game (Intro — hành trình chinh phục) ----------
+// ---------- Giới thiệu game (Intro – hành trình chinh phục) ----------
 const INTRO_SLIDES = [
   { icon: '🇻🇳', title: 'Việt Nam 2026', img: 'assets/illustrations/hero-vietnam-2026.png',
-    text: 'Nền kinh tế đang vươn mình "Hóa Rồng". Đội của bạn điều hành một công ty đồ chơi đất sét — khởi nghiệp từ Miền Tây, khát vọng mở rộng cả thị trường nội địa và quốc tế.' },
+    text: 'Nền kinh tế đang vươn mình "Hóa Rồng". Đội của bạn điều hành một công ty đồ chơi đất sét – khởi nghiệp từ Miền Tây, khát vọng mở rộng cả thị trường nội địa và quốc tế.' },
   { icon: '🏺', title: 'Doanh nghiệp & sản phẩm của bạn',
-    text: 'Bạn điều hành một xưởng đồ chơi đất sét thủ công tại Cần Thơ, vốn khởi điểm 500 triệu ₫. Sản phẩm chủ lực: «Bộ linh vật đất sét Việt» — dòng quà tặng & đồ sưu tầm, giá tham chiếu 150.000₫/bộ. Tên doanh nghiệp chính là tên đội bạn đặt khi đăng nhập!' },
+    text: 'Bạn điều hành một xưởng đồ chơi đất sét thủ công tại Cần Thơ, vốn khởi điểm 500 triệu ₫. Sản phẩm chủ lực: «Bộ linh vật đất sét Việt» – dòng quà tặng & đồ sưu tầm, giá tham chiếu 150.000₫/bộ. Tên doanh nghiệp chính là tên đội bạn đặt khi đăng nhập!' },
   { icon: '🗺️', title: '6 vòng · 6 tỉnh thành',
     text: 'Mỗi vòng là một quý kinh doanh tại một tỉnh/thành trên bản đồ mới: Cần Thơ → TP. Hồ Chí Minh → Khánh Hòa → Đà Nẵng → Thanh Hóa → Hà Nội. Đội thắng vòng nào sẽ cắm cờ 🚩 lên tỉnh đó! ⏱️ Mỗi vòng 5–7 phút, cả ván ≈ 30–45 phút.' },
   { icon: '👥', title: 'Đội hình C-Suite', 
-    text: 'CEO chèo lái chiến lược, CFO giữ két sắt, CMO đánh chiếm thị trường, COO vận hành xưởng, SEC ghi biên bản — bên cạnh cố vấn Lumina AI và thầy Tú Phan.' },
+    text: 'CEO chèo lái chiến lược, CFO giữ két sắt, CMO đánh chiếm thị trường, COO vận hành xưởng, SEC ghi biên bản – bên cạnh cố vấn Lumina AI và thầy Tú Phan.' },
   { icon: '🌏', title: 'Sau đó: ra biển lớn',
-    text: 'Chinh phục xong Việt Nam? BizOn Go Global đang chờ — chọn 1 trong 7 thị trường quốc tế, đàm phán với đối tác bản địa và thử sức 4 phương thức thâm nhập.' },
+    text: 'Chinh phục xong Việt Nam? BizOn Go Global đang chờ – chọn 1 trong 7 thị trường quốc tế, đàm phán với đối tác bản địa và thử sức 4 phương thức thâm nhập.' },
   { icon: '🏆', title: 'Mục tiêu của bạn',
     text: 'Cắm nhiều cờ nhất, đạt TOP 1 thị phần Việt Nam và nhận chứng nhận hoàn thành. Sẵn sàng Bật Nghiệp? 🚀' },
 ];
@@ -1419,7 +1419,7 @@ function renderAdvisorIntro() {
   const quota = AI_QUOTA_PER_ROUND + (hasSkill(S, 'SK_AI1') ? 2 : 0) - S.aiUsed;
   $('ai-quota').textContent = Math.max(0, quota);
   if (!$('advisor-chat').childElementCount) {
-    pushLumina({ risk: 'low', log: false, text: `Xin chào, Je m'appelle Hương! 👋 Tôi là Lumina — cố vấn AI của đội ${S.profile.teamName}. Hãy chọn một câu hỏi bên dưới, tôi sẽ phân tích kịch bản "Nếu — Thì" cho bạn.` });
+    pushLumina({ risk: 'low', log: false, text: `Xin chào, Je m'appelle Hương! 👋 Tôi là Lumina – cố vấn AI của đội ${S.profile.teamName}. Hãy chọn một câu hỏi bên dưới, tôi sẽ phân tích kịch bản "Nếu – Thì" cho bạn.` });
   }
   // Badge biến động thị trường + ảnh cảm xúc theo biến cố hiện tại
   const ev = currentEvent(S);
@@ -1436,17 +1436,17 @@ function renderAdvisorHistory() {
   $('advisor-history').innerHTML = (S.advisorHistory || []).length
     ? S.advisorHistory.slice(-8).reverse().map(h =>
         `<p class="text-deep-teal/80"><b class="text-primary">V${h.round}</b> ${riskIco[h.risk] || '🟢'} ${h.text}${h.text.length >= 160 ? '…' : ''}</p>`).join('')
-    : '<p class="text-deep-teal/40">Chưa có ghi chép nào — mọi lời tư vấn của Lumina sẽ được SEC lưu tại đây.</p>';
+    : '<p class="text-deep-teal/40">Chưa có ghi chép nào – mọi lời tư vấn của Lumina sẽ được SEC lưu tại đây.</p>';
 }
 
 // ---------- What-If Analysis (mô phỏng Nếu–Thì trước Commit) ----------
 function runWhatIf(role) {
   if (S.finished || S.committed) {
-    alert('Vòng này đã khóa — mô phỏng Nếu–Thì sẽ mở lại ở vòng sau.');
+    alert('Vòng này đã khóa – mô phỏng Nếu–Thì sẽ mở lại ở vòng sau.');
     return;
   }
   if (S.whatIfUsed >= WHAT_IF_LIMIT) {
-    $('whatif-result').innerHTML = '<div class="clay-sunken rounded-2xl p-3 text-xs text-deep-teal/70 font-semibold">ERR_AI_LIMIT_REACHED — Đã hết 2 lượt mô phỏng Nếu–Thì của vòng này. Lượt sẽ làm mới sau khi Commit.</div>';
+    $('whatif-result').innerHTML = '<div class="clay-sunken rounded-2xl p-3 text-xs text-deep-teal/70 font-semibold">ERR_AI_LIMIT_REACHED – Đã hết 2 lượt mô phỏng Nếu–Thì của vòng này. Lượt sẽ làm mới sau khi Commit.</div>';
     return;
   }
   const d = currentDecisionInput();
@@ -1559,7 +1559,7 @@ function renderRoleDeepdive() {
       ${currentEvent(S).id === 'EV_PRICEWAR' && !S.finished ? `
         <div class="bg-surface-bright rounded-2xl p-3 mb-2">
           <p class="text-xs font-bold text-red-600 mb-1">📰 TIN NÓNG · Price War</p>
-          <p class="text-[11px] text-deep-teal/70">Đối thủ giảm giá 15% tại kênh Modern Trade. Đừng đua giảm giá — chọn 1 trong 2 chiến thuật:</p>
+          <p class="text-[11px] text-deep-teal/70">Đối thủ giảm giá 15% tại kênh Modern Trade. Đừng đua giảm giá – chọn 1 trong 2 chiến thuật:</p>
           <div class="flex gap-2 mt-2"><span class="text-[10px] font-bold bg-white rounded-full px-2.5 py-1 shadow-clay">CHIẾN THUẬT BUNDLING</span><span class="text-[10px] font-bold bg-white rounded-full px-2.5 py-1 shadow-clay">TĂNG VALUE-ADDED</span></div>
         </div>` : ''}
       ${brain(cmo, cmo.status === 'RED' ? 'lumina-ao-dai-alert' : 'lumina-ao-dai')}
@@ -1575,22 +1575,22 @@ function doApproveLoan() {
 function doCutCosts() {
   if (!cutCosts(S)) return;
   save(); renderAll();
-  pushLumina({ risk: 'low', text: 'Đã kích hoạt phương án cắt giảm chi phí — chi phí cố định vòng sau giảm 15%. Cẩn thận đừng cắt vào các khoản đầu tư dài hạn!' });
+  pushLumina({ risk: 'low', text: 'Đã kích hoạt phương án cắt giảm chi phí – chi phí cố định vòng sau giảm 15%. Cẩn thận đừng cắt vào các khoản đầu tư dài hạn!' });
 }
 function doBrandingPremium() {
-  if (!brandingPremium(S)) { alert('ERR_INSUFFICIENT_FUNDS — Cần 120tr₫ để kích hoạt Branding Premium.'); return; }
+  if (!brandingPremium(S)) { alert('ERR_INSUFFICIENT_FUNDS – Cần 120tr₫ để kích hoạt Branding Premium.'); return; }
   save(); renderAll(); createConfetti();
-  pushLumina({ risk: 'low', text: 'Branding Premium đã kích hoạt! Giá trị thương hiệu tăng — thị phần và Brand Loyalty sẽ cải thiện từ vòng sau. 🎉' });
+  pushLumina({ risk: 'low', text: 'Branding Premium đã kích hoạt! Giá trị thương hiệu tăng – thị phần và Brand Loyalty sẽ cải thiện từ vòng sau. 🎉' });
 }
 function showReportFromAdvisor() { currentReport = 'energy'; showTab('reports'); }
 function doMaintainFromAdvisor() {
-  if (!doMaintenance(S)) { alert('ERR_INSUFFICIENT_FUNDS — Cần 60tr₫ trong ví để bảo trì.'); return; }
+  if (!doMaintenance(S)) { alert('ERR_INSUFFICIENT_FUNDS – Cần 60tr₫ trong ví để bảo trì.'); return; }
   save(); renderAll();
   pushLumina({ risk: 'low', text: 'Đã lên lịch bảo trì khẩn! OEE sẽ cải thiện +3% và tỷ lệ phế phẩm giảm ở vòng tới. 🔧' });
 }
 
 function pushLumina(advice) {
-  // Ghi vào Bộ nhớ doanh nghiệp (ai_advisor_history) — trừ lời chào mở đầu
+  // Ghi vào Bộ nhớ doanh nghiệp (ai_advisor_history) – trừ lời chào mở đầu
   if (S && advice.log !== false && S.history) {
     S.advisorHistory ??= [];
     S.advisorHistory.push({ round: Math.min(S.round, ROUNDS_TOTAL), risk: advice.risk, text: advice.text.slice(0, 160) });
@@ -1619,7 +1619,7 @@ function pushUserMsg(text) {
   el.scrollIntoView({ behavior: 'smooth', block: 'end' });
 }
 
-// ---------- Giọng nói (TTS/STT — theo màn hình Chat cố vấn AI giọng nói) ----------
+// ---------- Giọng nói (TTS/STT – theo màn hình Chat cố vấn AI giọng nói) ----------
 let voiceEnabled = localStorage.getItem('bizon-voice') !== 'off';
 let voiceGender = localStorage.getItem('bizon-voice-gender') || 'female';
 let recognizing = false, recognition = null;
@@ -1635,7 +1635,7 @@ function pickViVoice() {
 function speakLumina(text) {
   if (!voiceEnabled || !('speechSynthesis' in window)) return;
   speechSynthesis.cancel();
-  const clean = text.replace(/ERR_[A-Z_]+ — /g, '').replace(/[📣💲⚠️🎉🔧🟢🟡🔴👋]/g, '');
+  const clean = text.replace(/ERR_[A-Z_]+ – /g, '').replace(/[📣💲⚠️🎉🔧🟢🟡🔴👋]/g, '');
   const u = new SpeechSynthesisUtterance(clean);
   u.lang = 'vi-VN';
   const v = pickViVoice();
@@ -1664,7 +1664,7 @@ function setVoiceGender(g) {
 
 function toggleMic() {
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SR) { alert('Trình duyệt này chưa hỗ trợ nhận giọng nói — hãy dùng Chrome trên Android hoặc máy tính.'); return; }
+  if (!SR) { alert('Trình duyệt này chưa hỗ trợ nhận giọng nói – hãy dùng Chrome trên Android hoặc máy tính.'); return; }
   if (recognizing) { recognition.stop(); return; }
   recognition = new SR();
   recognition.lang = 'vi-VN';
@@ -1681,10 +1681,10 @@ function toggleMic() {
 
 function chatRespond(text) {
   const t = text.toLowerCase();
-  if (/xin chào|chào|hello|hi |^hi$/.test(t)) return { risk: 'low', free: true, text: `Chào bạn! Tôi là Hương — cố vấn AI của đội ${S.profile.teamName}. Bạn có thể hỏi tôi về giá bán, marketing, rủi ro, vốn vay hay vận hành nhé!` };
+  if (/xin chào|chào|hello|hi |^hi$/.test(t)) return { risk: 'low', free: true, text: `Chào bạn! Tôi là Hương – cố vấn AI của đội ${S.profile.teamName}. Bạn có thể hỏi tôi về giá bán, marketing, rủi ro, vốn vay hay vận hành nhé!` };
   if (/giá|price/.test(t)) return luminaAdvice(S, 'pricing');
   if (/marketing|quảng cáo|truyền thông/.test(t)) return luminaAdvice(S, 'marketing');
-  if (/vay|vốn|thanh khoản|tiền mặt|dòng tiền/.test(t)) return { risk: S.quickRatio < 1 ? 'high' : 'low', text: `Tình hình tài chính: ví còn ${money(S.balance)}, khả năng thanh toán nhanh ${S.quickRatio.toFixed(2)}${S.quickRatio < 1.1 ? ' — dưới ngưỡng an toàn 1.1, nên cân nhắc khoản vay đệm' : ' — an toàn'}. ROI hiện tại ${S.roi}%.` };
+  if (/vay|vốn|thanh khoản|tiền mặt|dòng tiền/.test(t)) return { risk: S.quickRatio < 1 ? 'high' : 'low', text: `Tình hình tài chính: ví còn ${money(S.balance)}, khả năng thanh toán nhanh ${S.quickRatio.toFixed(2)}${S.quickRatio < 1.1 ? ' – dưới ngưỡng an toàn 1.1, nên cân nhắc khoản vay đệm' : ' – an toàn'}. ROI hiện tại ${S.roi}%.` };
   if (/oee|máy|bảo trì|dây chuyền|vận hành|sản xuất/.test(t)) return { risk: S.oee < 80 ? 'medium' : 'low', text: `Vận hành: OEE ${S.oee}% (mục tiêu 85%), phế phẩm ${S.defect}%. ${S.oee < 85 ? 'Tôi khuyên COO nên bảo trì ngay hoặc nâng cấp dây chuyền tiêu thụ điện cao nhất trong báo cáo ⚡ Năng lượng.' : 'Nhà máy đang vận hành ổn định!'}` };
   if (/thị phần|đối thủ|cạnh tranh/.test(t)) {
     const last = S.history[S.history.length - 1];
@@ -1703,7 +1703,7 @@ function sendChat() {
   if (!reply.free) {
     const quota = AI_QUOTA_PER_ROUND + (hasSkill(S, 'SK_AI1') ? 2 : 0);
     if (S.aiUsed >= quota) {
-      pushLumina({ risk: 'medium', log: false, text: 'ERR_AI_LIMIT_REACHED — Bạn đã dùng hết lượt tư vấn của vòng này. Lượt sẽ làm mới sau khi Commit quyết định nhé!' });
+      pushLumina({ risk: 'medium', log: false, text: 'ERR_AI_LIMIT_REACHED – Bạn đã dùng hết lượt tư vấn của vòng này. Lượt sẽ làm mới sau khi Commit quyết định nhé!' });
       return;
     }
     S.aiUsed++; S.aiAskedTotal++; save(); renderAdvisorIntro();
@@ -1714,7 +1714,7 @@ function sendChat() {
 function askLumina(topic) {
   const quota = AI_QUOTA_PER_ROUND + (hasSkill(S, 'SK_AI1') ? 2 : 0);
   if (S.aiUsed >= quota) {
-    pushLumina({ risk: 'medium', text: 'ERR_AI_LIMIT_REACHED — Lumina đang bận! Bạn đã dùng hết lượt tư vấn của vòng này. Lượt hỏi sẽ được làm mới sau khi commit quyết định.' });
+    pushLumina({ risk: 'medium', text: 'ERR_AI_LIMIT_REACHED – Lumina đang bận! Bạn đã dùng hết lượt tư vấn của vòng này. Lượt hỏi sẽ được làm mới sau khi commit quyết định.' });
     return;
   }
   S.aiUsed++;
@@ -1742,7 +1742,7 @@ function showReport(kind) {
   if (kind === 'rival') { renderRivalCostReport(body); return; }
   if (kind === 'season') { renderSeasonReport(body); return; }
   if (!S.history.length) {
-    body.innerHTML = '<div class="clay-card p-8 text-center text-sm text-deep-teal/50">Chưa có dữ liệu — hãy hoàn thành vòng đầu tiên!</div>';
+    body.innerHTML = '<div class="clay-card p-8 text-center text-sm text-deep-teal/50">Chưa có dữ liệu – hãy hoàn thành vòng đầu tiên!</div>';
     return;
   }
   const rows = S.history.map(r => {
@@ -1779,7 +1779,7 @@ function showReport(kind) {
 // ---------- Phân tích Dòng tiền chi tiết (3 hoạt động) ----------
 function renderCashReport(body) {
   if (!S.history.length) {
-    body.innerHTML = '<div class="clay-card p-8 text-center text-sm text-deep-teal/50">Chưa có dữ liệu — hãy hoàn thành vòng đầu tiên!</div>';
+    body.innerHTML = '<div class="clay-card p-8 text-center text-sm text-deep-teal/50">Chưa có dữ liệu – hãy hoàn thành vòng đầu tiên!</div>';
     return;
   }
   const rows = S.history.map(r => {
@@ -1792,7 +1792,7 @@ function renderCashReport(body) {
   const totalIn = last.r.revenue, totalOut = totalIn - last.net;
   body.innerHTML = `
     <div class="clay-card p-5 mb-3 text-center">
-      <p class="text-[11px] font-bold text-deep-teal/50 uppercase tracking-wider">Tổng dòng tiền thuần — Vòng ${last.r.round}</p>
+      <p class="text-[11px] font-bold text-deep-teal/50 uppercase tracking-wider">Tổng dòng tiền thuần – Vòng ${last.r.round}</p>
       <p class="font-display font-extrabold ${last.net >= 0 ? 'text-primary' : 'text-red-600'} text-3xl">${last.net >= 0 ? '+' : '−'} ${money(Math.abs(last.net))}</p>
       <div class="grid grid-cols-2 gap-3 mt-3">
         <div class="clay-sunken rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Tổng thu (Inflow)</p><p class="font-bold text-emerald-600">+ ${money(totalIn)}</p></div>
@@ -1800,7 +1800,7 @@ function renderCashReport(body) {
       </div>
     </div>
     <div class="clay-card p-5 mb-3">
-      <h3 class="font-display font-bold text-deep-teal text-sm mb-2">Theo hoạt động — Vòng ${last.r.round}</h3>
+      <h3 class="font-display font-bold text-deep-teal text-sm mb-2">Theo hoạt động – Vòng ${last.r.round}</h3>
       ${[['🏢 Hoạt động Kinh doanh', last.operating], ['🏗️ Hoạt động Đầu tư (khấu hao)', last.investing], ['🏦 Hoạt động Tài chính (lãi vay)', last.financing]].map(([lbl, v]) => `
         <div class="flex justify-between text-sm py-2 border-b border-surface-bright last:border-0">
           <span class="text-deep-teal/80">${lbl}</span>
@@ -1820,12 +1820,12 @@ function renderCashReport(body) {
       <img src="assets/character/lumina-vest.png" alt="Mentor Hương" class="w-10 h-10 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 12%">
       <div><p class="font-display font-bold text-primary text-sm">Mentor Hương</p>
       <p class="text-xs text-deep-teal/80 italic mt-0.5">"${last.net >= 0
-        ? 'Dòng tiền thuần dương — nền tảng tốt! Hãy cân nhắc tái đầu tư vào R&D hoặc nâng cấp dây chuyền để lãi kép ở các vòng sau.'
+        ? 'Dòng tiền thuần dương – nền tảng tốt! Hãy cân nhắc tái đầu tư vào R&D hoặc nâng cấp dây chuyền để lãi kép ở các vòng sau.'
         : 'Dòng tiền thuần đang âm. Ưu tiên số 1: giảm chi phí biến đổi lớn nhất và cân nhắc kỳ hạn thanh toán ngắn hơn để thu tiền về nhanh.'}"</p></div>
     </div>`;
 }
 
-// ---------- 🆚 Tình báo chi phí đối thủ — so sánh ngân sách với 3 đối thủ AI ----------
+// ---------- 🆚 Tình báo chi phí đối thủ – so sánh ngân sách với 3 đối thủ AI ----------
 const RIVAL_STYLE_BASE = { aggressive: { price: 125, mkt: 90 }, balanced: { price: 150, mkt: 60 }, premium: { price: 195, mkt: 75 } };
 /* Ván chơi cũ chưa lưu tình báo trong report → ước lượng từ phong cách từng đối thủ */
 function rivalIntelOf(r) {
@@ -1842,7 +1842,7 @@ function rivalIntelOf(r) {
 function renderRivalCostReport(body) {
   const last = S.history[S.history.length - 1];
   if (!last) {
-    body.innerHTML = '<div class="clay-card p-8 text-center text-sm text-deep-teal/50">Chưa có dữ liệu tình báo — hãy hoàn thành vòng đầu tiên!</div>';
+    body.innerHTML = '<div class="clay-card p-8 text-center text-sm text-deep-teal/50">Chưa có dữ liệu tình báo – hãy hoàn thành vòng đầu tiên!</div>';
     return;
   }
   const rivals = rivalIntelOf(last);
@@ -1870,7 +1870,7 @@ function renderRivalCostReport(body) {
   const topSpender = mktRows[0];
   const myMroi = last.marketing > 0 ? Math.round(10 * last.revenue / last.marketing) / 10 : null;
 
-  // --- R&D: lợi thế riêng — đối thủ AI không đầu tư R&D, giá thành họ đứng yên ---
+  // --- R&D: lợi thế riêng – đối thủ AI không đầu tư R&D, giá thành họ đứng yên ---
   const rdCum = Math.round(S.rdCumulative || 0);
   const costDownPct = Math.min(20, Math.round((S.rdCumulative || 0) / 1500 * 1000) / 10);
   const rivalUnit = 45; // giá thành gốc/sp của đối thủ (nghìn ₫), không giảm theo R&D
@@ -1883,9 +1883,9 @@ function renderRivalCostReport(body) {
   const bestRival = rivalCps[0];
 
   const insight = last.marketing < (rivals.find(x => x.style === 'aggressive') || { mkt: 90 }).mkt * 0.6
-    ? `Alpha Dynamics đang chi ${(rivals.find(x => x.style === 'aggressive') || { mkt: 90 }).mkt}tr cho marketing — hơn hẳn mức ${Math.round(last.marketing)}tr của bạn. Độ phủ thương hiệu sẽ lép vế nếu kéo dài; cân nhắc tăng ngân sách hoặc bù bằng R&D tạo khác biệt.`
+    ? `Alpha Dynamics đang chi ${(rivals.find(x => x.style === 'aggressive') || { mkt: 90 }).mkt}tr cho marketing – hơn hẳn mức ${Math.round(last.marketing)}tr của bạn. Độ phủ thương hiệu sẽ lép vế nếu kéo dài; cân nhắc tăng ngân sách hoặc bù bằng R&D tạo khác biệt.`
     : myCps <= bestRival.cps
-      ? `Xuất sắc! Mỗi 1% thị phần chỉ tốn của bạn ${myCps}tr — rẻ hơn cả đối thủ hiệu quả nhất (${bestRival.name}: ${bestRival.cps}tr). Bộ máy đang vận hành tinh gọn, có thể mạnh dạn mở rộng.`
+      ? `Xuất sắc! Mỗi 1% thị phần chỉ tốn của bạn ${myCps}tr – rẻ hơn cả đối thủ hiệu quả nhất (${bestRival.name}: ${bestRival.cps}tr). Bộ máy đang vận hành tinh gọn, có thể mạnh dạn mở rộng.`
       : `Mỗi 1% thị phần đang tốn của bạn ${myCps}tr, trong khi ${bestRival.name} chỉ mất ${bestRival.cps}tr. Hãy rà soát khoản chi lớn nhất trong Cấu trúc chi phí (tab CVP) trước khi tăng thêm ngân sách.`;
 
   const avatar = (b, size) => b.img
@@ -1894,9 +1894,9 @@ function renderRivalCostReport(body) {
 
   body.innerHTML = `
     <div class="clay-card p-5 mb-3 text-center">
-      <p class="text-[11px] font-bold text-deep-teal/50 uppercase tracking-wider">🕵️ Tình báo chi phí — Vòng ${last.round}${est ? ' (ước lượng)' : ''}</p>
+      <p class="text-[11px] font-bold text-deep-teal/50 uppercase tracking-wider">🕵️ Tình báo chi phí – Vòng ${last.round}${est ? ' (ước lượng)' : ''}</p>
       <p class="font-display font-extrabold text-deep-teal text-3xl">${money(Math.round(myCost))}</p>
-      <p class="text-xs text-deep-teal/60 mt-0.5">tổng chi phí của đội bạn — đứng thứ <b>${myRank + 1}/4</b> từ thấp đến cao</p>
+      <p class="text-xs text-deep-teal/60 mt-0.5">tổng chi phí của đội bạn – đứng thứ <b>${myRank + 1}/4</b> từ thấp đến cao</p>
       ${gapVsPriciest > 0 ? `<p class="mt-2 text-xs font-bold text-emerald-600 bg-emerald-50 rounded-full py-1.5 px-3 inline-block">✅ Thấp hơn ${priciest.name} ${gapVsPriciest}%</p>`
         : `<p class="mt-2 text-xs font-bold text-orange-600 bg-orange-50 rounded-full py-1.5 px-3 inline-block">⚠️ Bạn đang là đội chi tiêu cao nhất sàn đấu</p>`}
     </div>
@@ -1926,8 +1926,8 @@ function renderRivalCostReport(body) {
       <div class="clay-sunken rounded-2xl p-3 mt-2.5 flex items-center gap-2">
         <span class="text-lg">${myMroi !== null && myMroi >= 3 ? '🎯' : '📉'}</span>
         <p class="text-[11px] text-deep-teal/70">${myMroi !== null
-          ? `Mỗi 1tr marketing của bạn đem về <b>${myMroi}tr</b> doanh thu${myMroi >= 3 ? ' — trên chuẩn hiệu quả 3.0, đáng để giữ nhịp chi.' : ' — dưới chuẩn 3.0, thông điệp quảng cáo cần sắc bén hơn thay vì chỉ tăng tiền.'}`
-          : 'Bạn chưa chi marketing vòng này — đối thủ đang một mình phủ sóng thị trường.'}
+          ? `Mỗi 1tr marketing của bạn đem về <b>${myMroi}tr</b> doanh thu${myMroi >= 3 ? ' – trên chuẩn hiệu quả 3.0, đáng để giữ nhịp chi.' : ' – dưới chuẩn 3.0, thông điệp quảng cáo cần sắc bén hơn thay vì chỉ tăng tiền.'}`
+          : 'Bạn chưa chi marketing vòng này – đối thủ đang một mình phủ sóng thị trường.'}
         ${topSpender.me ? '' : ` Chi mạnh tay nhất sàn hiện là <b>${topSpender.name}</b> (${Math.round(topSpender.mkt)}tr).`}</p>
       </div>
     </div>
@@ -1954,7 +1954,7 @@ function renderRivalCostReport(body) {
       })()}
     </div>
     <div class="clay-card p-5 mb-3">
-      <h3 class="font-display font-bold text-deep-teal text-sm mb-1">🔬 R&D — vũ khí đối thủ không có</h3>
+      <h3 class="font-display font-bold text-deep-teal text-sm mb-1">🔬 R&D – vũ khí đối thủ không có</h3>
       <p class="text-[11px] text-deep-teal/55 mb-3">Cả 3 đối thủ AI không đầu tư R&D: giá thành của họ đứng yên ở ${rivalUnit}k/sp, còn của bạn giảm dần theo tích lũy</p>
       <div class="grid grid-cols-2 gap-2.5">
         <div class="clay-sunken rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">R&D tích lũy</p><p class="font-display font-extrabold text-primary text-lg">${rdCum}tr</p></div>
@@ -1981,10 +1981,10 @@ function renderRivalCostReport(body) {
     </div>`;
 }
 
-// ---------- 🏁 Tổng kết mùa giải — báo cáo năm kiểu Stitch: hero, xếp hạng, thành tựu ----------
+// ---------- 🏁 Tổng kết mùa giải – báo cáo năm kiểu Stitch: hero, xếp hạng, thành tựu ----------
 function renderSeasonReport(body) {
   if (!S.history.length) {
-    body.innerHTML = '<div class="clay-card p-8 text-center text-sm text-deep-teal/50">Chưa có dữ liệu — hãy hoàn thành vòng đầu tiên!</div>';
+    body.innerHTML = '<div class="clay-card p-8 text-center text-sm text-deep-teal/50">Chưa có dữ liệu – hãy hoàn thành vòng đầu tiên!</div>';
     return;
   }
   const rounds = S.history;
@@ -2019,14 +2019,14 @@ function renderSeasonReport(body) {
 
   const achUnlocked = (S.achievements || []).map(id => ACHIEVEMENTS.find(a => a.id === id)).filter(Boolean);
   const verdict = champion
-    ? `Mùa giải trong mơ! Đội dẫn đầu thị phần chung cuộc với ${shareLast.toFixed(1)}% — vượt cả 3 tập đoàn AI${totalProfit > 0 ? `, kèm lợi nhuận tích lũy ${money(Math.round(totalProfit))}` : `. Lợi nhuận còn âm ${money(Math.abs(Math.round(totalProfit)))}, nhưng vị thế thị trường chính là bàn đạp cho mùa sau`}. Hãy chụp lại báo cáo này làm kỷ niệm nhé!`
+    ? `Mùa giải trong mơ! Đội dẫn đầu thị phần chung cuộc với ${shareLast.toFixed(1)}% – vượt cả 3 tập đoàn AI${totalProfit > 0 ? `, kèm lợi nhuận tích lũy ${money(Math.round(totalProfit))}` : `. Lợi nhuận còn âm ${money(Math.abs(Math.round(totalProfit)))}, nhưng vị thế thị trường chính là bàn đạp cho mùa sau`}. Hãy chụp lại báo cáo này làm kỷ niệm nhé!`
     : totalProfit > 0
-      ? `Kết thúc mùa ở hạng ${myRank}/4 với lợi nhuận dương ${money(Math.round(totalProfit))} — nền tảng rất tốt. Khoảng cách với ${ranking[0].name} nằm ở ${growth < 5 ? 'tốc độ chiếm thị phần: hãy mạnh tay marketing sớm hơn ở mùa sau' : 'biên lợi nhuận: xem lại cấu trúc chi phí tab CVP'}.`
-      : `Mùa giải lỗ ${money(Math.abs(Math.round(totalProfit)))} — nhưng đó là bài học đắt giá nhất của khởi nghiệp. Mở tab 🕵️ Chi phí đối thủ xem họ chi thế nào, rồi chơi lại mùa mới: người thắng là người đứng dậy nhanh nhất!`;
+      ? `Kết thúc mùa ở hạng ${myRank}/4 với lợi nhuận dương ${money(Math.round(totalProfit))} – nền tảng rất tốt. Khoảng cách với ${ranking[0].name} nằm ở ${growth < 5 ? 'tốc độ chiếm thị phần: hãy mạnh tay marketing sớm hơn ở mùa sau' : 'biên lợi nhuận: xem lại cấu trúc chi phí tab CVP'}.`
+      : `Mùa giải lỗ ${money(Math.abs(Math.round(totalProfit)))} – nhưng đó là bài học đắt giá nhất của khởi nghiệp. Mở tab 🕵️ Chi phí đối thủ xem họ chi thế nào, rồi chơi lại mùa mới: người thắng là người đứng dậy nhanh nhất!`;
 
   body.innerHTML = `
     <div class="clay-card p-5 mb-3 text-center text-white" style="background:linear-gradient(135deg,#0e3d4d 0%,#006687 100%)">
-      <p class="text-[11px] font-bold text-white/60 uppercase tracking-wider">🏁 ${S.finished ? 'Báo cáo Tổng kết mùa giải' : 'Tổng kết tạm thời — sau vòng ' + last.round + '/' + ROUNDS_TOTAL}</p>
+      <p class="text-[11px] font-bold text-white/60 uppercase tracking-wider">🏁 ${S.finished ? 'Báo cáo Tổng kết mùa giải' : 'Tổng kết tạm thời – sau vòng ' + last.round + '/' + ROUNDS_TOTAL}</p>
       <p class="font-display font-extrabold text-3xl mt-1">${champion && S.finished ? '👑 VÔ ĐỊCH SÀN ĐẤU' : 'Hạng ' + myRank + '/4 toàn sàn'}</p>
       <p class="text-xs text-white/70 mt-0.5">${S.profile.teamName} · ${rounds.length} vòng thi đấu</p>
       <div class="grid grid-cols-3 gap-2 mt-4 text-left">
@@ -2037,7 +2037,7 @@ function renderSeasonReport(body) {
     </div>
     <div class="clay-card p-5 mb-3">
       <h3 class="font-display font-bold text-deep-teal text-sm mb-1">🏆 Bảng xếp hạng chung cuộc</h3>
-      <p class="text-[11px] text-deep-teal/55 mb-3">Xếp theo thị phần chung cuộc — thước đo chiến thắng của sàn đấu · tăng trưởng = thay đổi so với vòng 1</p>
+      <p class="text-[11px] text-deep-teal/55 mb-3">Xếp theo thị phần chung cuộc – thước đo chiến thắng của sàn đấu · tăng trưởng = thay đổi so với vòng 1</p>
       ${ranking.map((x, i) => `
       <div class="flex items-center gap-2.5 py-2 border-b border-surface-bright last:border-0 ${x.me ? 'bg-clay-gold/10 rounded-xl px-2 -mx-2' : ''}">
         <span class="w-6 text-center text-base">${['🥇', '🥈', '🥉', '4️⃣'][i]}</span>
@@ -2051,7 +2051,7 @@ function renderSeasonReport(body) {
           <p class="text-[10px] font-bold text-deep-teal/50">ROI ${x.roi}%</p>
         </div>
       </div>`).join('')}
-      <p class="text-[10px] text-deep-teal/45 font-semibold mt-2">💡 Lợi nhuận đối thủ AI trông cao vì họ không gánh chi phí nhân sự, đào tạo và R&D như đội thật — xem tab 🕵️ Chi phí đối thủ để hiểu cấu trúc chi của họ.</p>
+      <p class="text-[10px] text-deep-teal/45 font-semibold mt-2">💡 Lợi nhuận đối thủ AI trông cao vì họ không gánh chi phí nhân sự, đào tạo và R&D như đội thật – xem tab 🕵️ Chi phí đối thủ để hiểu cấu trúc chi của họ.</p>
     </div>
     <div class="clay-card p-5 mb-3">
       <h3 class="font-display font-bold text-deep-teal text-sm mb-3">📊 Doanh thu thực tế vs Mục tiêu (+8%/vòng)</h3>
@@ -2266,14 +2266,14 @@ function renderCvpReport(body) {
       <h3 class="font-display font-bold text-deep-teal text-sm mb-3">📐 Phân tích Điểm hòa vốn (CVP)</h3>
       <div class="grid grid-cols-2 gap-3">
         <div class="clay-sunken rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Sản lượng hòa vốn</p><p class="font-display font-extrabold text-primary text-lg">${fc.breakEven.toLocaleString('vi-VN')} sp</p></div>
-        <div class="clay-sunken rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Giá hòa vốn</p><p class="font-display font-extrabold text-primary text-lg">${bePrice ? bePrice.toLocaleString('vi-VN') + 'k₫' : '—'}</p></div>
+        <div class="clay-sunken rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Giá hòa vốn</p><p class="font-display font-extrabold text-primary text-lg">${bePrice ? bePrice.toLocaleString('vi-VN') + 'k₫' : '–'}</p></div>
         <div class="clay-sunken rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Lãi góp / đơn vị</p><p class="font-display font-extrabold text-deep-teal text-lg">${Math.round(contribution * 1000)}k₫</p></div>
         <div class="clay-sunken rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Bán dự kiến vòng này</p><p class="font-display font-extrabold ${fc.estSold >= fc.breakEven ? 'text-emerald-600' : 'text-red-600'} text-lg">${fc.estSold.toLocaleString('vi-VN')} sp</p></div>
       </div>
     </div>
     ${last ? `
     <div class="clay-card p-5 mb-3">
-      <h3 class="font-display font-bold text-deep-teal text-sm mb-3">🧾 Cấu trúc chi phí — Vòng ${last.round}</h3>
+      <h3 class="font-display font-bold text-deep-teal text-sm mb-3">🧾 Cấu trúc chi phí – Vòng ${last.round}</h3>
       <p class="text-[11px] font-bold text-deep-teal/60 uppercase mb-1">Chi phí cố định (${Math.round(totalF)}tr₫)</p>
       ${fixedCosts.map(x => costBar(x[0], x[1], totalF + totalV, 'bg-primary')).join('')}
       <p class="text-[11px] font-bold text-deep-teal/60 uppercase mb-1 mt-3">Chi phí biến đổi (${Math.round(totalV)}tr₫)</p>
@@ -2292,7 +2292,7 @@ function renderCvpReport(body) {
       }).join('')}
     </div>
     <div class="clay-card p-5 mt-3">
-      <h3 class="font-display font-bold text-deep-teal text-sm mb-3">📈 Tỷ suất sinh lời — Vòng ${last.round}</h3>
+      <h3 class="font-display font-bold text-deep-teal text-sm mb-3">📈 Tỷ suất sinh lời – Vòng ${last.round}</h3>
       ${(() => {
         const gross = last.revenue - last.cogs;
         const opex = last.marketing + last.rd + last.fixed + (last.wageCost || 0) + (last.trainingCost || 0) + (last.holding || 0);
@@ -2325,7 +2325,7 @@ function renderCvpReport(body) {
         </div>
         <div class="clay-sunken rounded-2xl p-3 mt-2.5 flex items-center gap-2">
           <span class="text-lg">${ros >= 12 ? '🏆' : '📉'}</span>
-          <p class="text-[11px] text-deep-teal/70">Net Profit Margin <b class="${ros >= 12 ? 'text-emerald-700' : 'text-red-600'}">${ros}%</b> — ${ros >= 12 ? 'cao hơn' : 'thấp hơn'} trung bình ngành (12%). Biên gộp: <b>${grossM}%</b>.</p>
+          <p class="text-[11px] text-deep-teal/70">Net Profit Margin <b class="${ros >= 12 ? 'text-emerald-700' : 'text-red-600'}">${ros}%</b> – ${ros >= 12 ? 'cao hơn' : 'thấp hơn'} trung bình ngành (12%). Biên gộp: <b>${grossM}%</b>.</p>
         </div>`;
       })()}
     </div>` : '<div class="clay-card p-8 text-center text-sm text-deep-teal/50">Hoàn thành vòng đầu để xem cấu trúc chi phí và lợi nhuận gộp.</div>'}`;
@@ -2334,7 +2334,7 @@ function renderCvpReport(body) {
 // ---------- Báo cáo Nhân sự ----------
 function renderHrReport(body) {
   if (!S.history.length) {
-    body.innerHTML = '<div class="clay-card p-8 text-center text-sm text-deep-teal/50">Chưa có dữ liệu nhân sự — hãy hoàn thành vòng đầu tiên!</div>';
+    body.innerHTML = '<div class="clay-card p-8 text-center text-sm text-deep-teal/50">Chưa có dữ liệu nhân sự – hãy hoàn thành vòng đầu tiên!</div>';
     return;
   }
   const last = S.history[S.history.length - 1];
@@ -2369,7 +2369,7 @@ function renderBmcReport(body) {
       <p class="text-[11px] text-deep-teal/80 leading-relaxed">${content}</p>
     </div>`;
   body.innerHTML = `
-    <p class="text-[11px] text-deep-teal/50 mb-3">Business Model Canvas của đội ${S.profile.teamName} — cập nhật theo dữ liệu vòng ${Math.min(S.round, ROUNDS_TOTAL)}.</p>
+    <p class="text-[11px] text-deep-teal/50 mb-3">Business Model Canvas của đội ${S.profile.teamName} – cập nhật theo dữ liệu vòng ${Math.min(S.round, ROUNDS_TOTAL)}.</p>
     <div class="grid grid-cols-2 gap-3">
       ${block('Phân khúc khách hàng', '🎯', `Thị trường đại chúng ${share}% thị phần; khách nhạy giá ${currentEvent(S).elasticityMul ? 'CAO (chiến tranh giá!)' : 'trung bình'}.`)}
       ${block('Giá trị cốt lõi', '💎', `Sản phẩm giá ${(last ? last.decisions.price : 150).toLocaleString('vi-VN')}k₫, thương hiệu hạng ${S.brand >= 1.2 ? 'A' : 'B+'}, R&D tích lũy ${Math.round(S.rdCumulative)}tr₫.`)}
@@ -2377,7 +2377,7 @@ function renderBmcReport(body) {
       ${block('Quan hệ khách hàng', '❤️', `Brand Loyalty ${S.brandLoyalty}%; độ hài lòng ${Math.min(5, S.brandLoyalty / 19).toFixed(1)}/5.`)}
       ${block('Dòng doanh thu', '💵', `Bán sản phẩm: ${money(totalRev)} lũy kế; giá bán là đòn bẩy chính.`)}
       ${block('Nguồn lực chính', '🏭', `${last ? (last.workers || 45) : 45} nhân sự, công suất máy ${S.machineCapacity.toLocaleString('vi-VN')} sp, OEE ${S.oee}%.`)}
-      ${block('Hoạt động chính', '⚙️', `Sản xuất ${last ? last.decisions.production.toLocaleString('vi-VN') : '—'} sp/vòng, marketing, R&D, tối ưu năng lượng.`)}
+      ${block('Hoạt động chính', '⚙️', `Sản xuất ${last ? last.decisions.production.toLocaleString('vi-VN') : '–'} sp/vòng, marketing, R&D, tối ưu năng lượng.`)}
       ${block('Đối tác chính', '🤝', `Ngân hàng (tín dụng 8.5%/vòng), nhà cung ứng linh kiện, ${(S.grantLog || []).length ? 'Giảng viên cấp vốn' : 'lớp học BizOn'}.`)}
     </div>
     <div class="clay-card p-3.5 mt-3">
@@ -2458,12 +2458,12 @@ function renderEnergyReport(body) {
 }
 
 function doOptimizeLine(idx) {
-  if (!optimizeLine(S, idx)) { alert('ERR_INSUFFICIENT_FUNDS — Cần 150tr₫ trong ví để nâng cấp dây chuyền.'); return; }
+  if (!optimizeLine(S, idx)) { alert('ERR_INSUFFICIENT_FUNDS – Cần 150tr₫ trong ví để nâng cấp dây chuyền.'); return; }
   save(); renderAll(); showReport('energy'); createConfetti();
 }
 
 function doMaintain() {
-  if (!doMaintenance(S)) { alert('ERR_INSUFFICIENT_FUNDS — Cần 60tr₫ trong ví để bảo trì.'); return; }
+  if (!doMaintenance(S)) { alert('ERR_INSUFFICIENT_FUNDS – Cần 60tr₫ trong ví để bảo trì.'); return; }
   save(); renderAll(); showReport('energy');
 }
 
@@ -2536,7 +2536,7 @@ function renderInvDetail() {
   $('invd-icon').textContent = it.icon;
   $('invd-name').textContent = it.name;
   $('invd-count').textContent = '×' + q;
-  $('invd-desc').textContent = it.desc + (isBlueprint ? ' (Bản thiết kế — hiệu lực vĩnh viễn.)' : active ? ' (Đang bật — sẽ áp dụng ở vòng kế tiếp.)' : '');
+  $('invd-desc').textContent = it.desc + (isBlueprint ? ' (Bản thiết kế – hiệu lực vĩnh viễn.)' : active ? ' (Đang bật – sẽ áp dụng ở vòng kế tiếp.)' : '');
   useBtn.disabled = isBlueprint;
   useBtn.classList.toggle('opacity-50', isBlueprint);
   useBtn.textContent = isBlueprint ? 'Hiệu lực vĩnh viễn ✅' : active ? 'Tắt kích hoạt' : 'Sử dụng 🚀';
@@ -2575,9 +2575,9 @@ function itemToast(text) {
 
 function buyItem(id) {
   const it = SHOP_ITEMS.find(x => x.id === id);
-  if (!it) { alert('ERR_ITEM_NOT_FOUND — Vật phẩm không tồn tại.'); return; }
+  if (!it) { alert('ERR_ITEM_NOT_FOUND – Vật phẩm không tồn tại.'); return; }
   const price = Math.round(it.price * skillEffect(S, 'shopMul', 1));
-  if (S.balance < price) { alert('ERR_INSUFFICIENT_FUNDS — Ví ảo của đội không đủ ' + price + 'tr₫.'); return; }
+  if (S.balance < price) { alert('ERR_INSUFFICIENT_FUNDS – Ví ảo của đội không đủ ' + price + 'tr₫.'); return; }
   S.balance -= price;
   S.items[id] = (S.items[id] || 0) + 1;
   S.itemsBought++;
@@ -2616,7 +2616,7 @@ function renderSkills() {
 
 function unlockSkill(id) {
   const sk = SKILLS.find(x => x.id === id);
-  if (S.xp - S.spentXp < sk.cost) { alert('Chưa đủ XP — hãy hoàn thành thêm vòng chơi!'); return; }
+  if (S.xp - S.spentXp < sk.cost) { alert('Chưa đủ XP – hãy hoàn thành thêm vòng chơi!'); return; }
   S.spentXp += sk.cost;
   S.skills.push(id);
   save(); renderAll(); createConfetti();
@@ -2662,7 +2662,7 @@ function renderAchievements() {
 function renderProfile() {
   $('pf-name').textContent = S.profile.teamName;
   $('pf-email').textContent = S.profile.email + (S.profile.classId ? ' · Lớp ' + S.profile.classId : '');
-  $('pf-role').textContent = { CEO: '🧭 CEO — Quyết định', CFO: '💰 CFO — Tài chính', CMO: '📣 CMO — Thị trường', COO: '🏭 COO — Vận hành', SEC: '📝 SEC — Thư ký' }[S.profile.role];
+  $('pf-role').textContent = { CEO: '🧭 CEO – Quyết định', CFO: '💰 CFO – Tài chính', CMO: '📣 CMO – Thị trường', COO: '🏭 COO – Vận hành', SEC: '📝 SEC – Thư ký' }[S.profile.role];
   const level = 1 + Math.floor(S.xp / XP_PER_LEVEL);
   $('pf-level').textContent = level;
   const TIERS = ['Khởi nghiệp', 'Trưởng nhóm', 'Quản lý', 'Giám đốc', 'Executive', 'Chủ tịch'];
@@ -2717,7 +2717,7 @@ function renderMinigame() {
   const out = (S.minigamePlays || 0) >= 3;
   btn.disabled = out || !!mg;
   btn.classList.toggle('opacity-50', out);
-  if (out) btn.innerHTML = '⏳ Hết lượt — commit vòng mới để chơi tiếp';
+  if (out) btn.innerHTML = '⏳ Hết lượt – commit vòng mới để chơi tiếp';
 }
 
 function startMinigame() {
@@ -2812,7 +2812,7 @@ function showRewardShop() {
         ${MG_REWARDS.map(r => {
           const owned = S.rewardsOwned.includes(r.id);
           const locked = (r.lockLevel && lvl < r.lockLevel) || (r.lockMissions && claimed < r.lockMissions);
-          const lockText = r.lockLevel ? `Khóa — Đạt cấp ${r.lockLevel}` : r.lockMissions ? `Khóa — Nhận ${r.lockMissions} nhiệm vụ` : '';
+          const lockText = r.lockLevel ? `Khóa – Đạt cấp ${r.lockLevel}` : r.lockMissions ? `Khóa – Nhận ${r.lockMissions} nhiệm vụ` : '';
           const equipped = S.rewardEquipped === r.id;
           return `<div class="clay-card p-4 text-center ${locked ? 'opacity-70' : ''} ${equipped ? 'ring-2 ring-primary-container' : ''}">
             <p class="text-4xl mb-2 ${locked ? 'grayscale' : 'animate-float'}">${locked ? '🔒' : r.icon}</p>
@@ -2832,7 +2832,7 @@ function showRewardShop() {
 function redeemReward(id, e) {
   const r = MG_REWARDS.find(x => x.id === id);
   if (!r || S.rewardsOwned.includes(id)) return;
-  if ((S.minigamePoints || 0) < r.cost) { itemToast('Chưa đủ điểm — chơi thêm Clay Factory nhé!'); return; }
+  if ((S.minigamePoints || 0) < r.cost) { itemToast('Chưa đủ điểm – chơi thêm Clay Factory nhé!'); return; }
   S.minigamePoints -= r.cost;
   S.rewardsOwned.push(id);
   save();
@@ -2911,7 +2911,7 @@ function showMgLeaderboard() {
         <p class="font-display font-extrabold text-white text-sm">Hạng của bạn: #${rank}</p>
         <p class="font-display font-extrabold text-white">${you.score} điểm</p>
       </div>
-      <p class="text-[10px] text-deep-teal/40 text-center mt-3">So tài cùng 6 đội AI — phá kỷ lục điểm Clay Factory để leo hạng!</p>
+      <p class="text-[10px] text-deep-teal/40 text-center mt-3">So tài cùng 6 đội AI – phá kỷ lục điểm Clay Factory để leo hạng!</p>
     </div>`;
   document.body.appendChild(div);
 }
@@ -2936,7 +2936,7 @@ function renderInstructor() {
       ${t.real ? `<button onclick="grantFunds(100)" class="clay-btn bg-primary text-white text-xs font-bold px-3 py-2 shrink-0">+100tr₫</button>` : ''}
     </div>`).join('');
   $('ins-log').innerHTML = (S.grantLog || []).length
-    ? S.grantLog.slice(-8).reverse().map(g => `<p>💸 Cấp <b>${g.amount}tr₫</b> cho ${g.team} — vòng ${g.round}</p>`).join('')
+    ? S.grantLog.slice(-8).reverse().map(g => `<p>💸 Cấp <b>${g.amount}tr₫</b> cho ${g.team} – vòng ${g.round}</p>`).join('')
     : '<p class="text-deep-teal/40">Chưa có giao dịch nào.</p>';
 }
 
@@ -2965,7 +2965,7 @@ function runAdvisorPro() {
   $('ap-result').innerHTML = `
     <div class="clay-card p-4 mb-3 flex items-center gap-3">
       <img src="assets/character/lumina-vest.png" alt="Lumina" class="w-10 h-10 rounded-full object-cover shadow-clay" style="object-position:50% 12%">
-      <p class="text-sm text-deep-teal">Biên lợi nhuận hiện tại của bạn là <b>${r.marginPct}%</b> — ${r.healthy ? 'nền tảng tốt để mở rộng! 💪' : 'hơi mỏng, nên tối ưu chi phí trước khi tăng tốc. ⚠️'}</p>
+      <p class="text-sm text-deep-teal">Biên lợi nhuận hiện tại của bạn là <b>${r.marginPct}%</b> – ${r.healthy ? 'nền tảng tốt để mở rộng! 💪' : 'hơi mỏng, nên tối ưu chi phí trước khi tăng tốc. ⚠️'}</p>
     </div>
     ${r.scenarios.map(sc => `
       <div class="clay-card p-4 mb-3">
@@ -2974,8 +2974,8 @@ function runAdvisorPro() {
           <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${riskClass[sc.risk]}">${riskLabel[sc.risk]}</span>
         </div>
         <p class="text-sm text-deep-teal/80"><b>Nếu</b> điều chỉnh ngân sách marketing thành <b>${sc.newMkt}tr₫/tháng</b>,
-        <b>thì</b> tăng trưởng dự kiến đạt <b>${sc.growth}%/quý</b> — doanh thu ~<b>${sc.newRevenue}tr₫</b>,
+        <b>thì</b> tăng trưởng dự kiến đạt <b>${sc.growth}%/quý</b> – doanh thu ~<b>${sc.newRevenue}tr₫</b>,
         lợi nhuận ~<b class="${sc.newProfit >= 0 ? 'text-emerald-600' : 'text-orange-600'}">${sc.newProfit}tr₫/tháng</b>.</p>
       </div>`).join('')}
-    <p class="text-[11px] text-deep-teal/40 text-center mb-4">Mô hình dự báo đơn giản hóa cho mục đích học tập — không phải tư vấn tài chính.</p>`;
+    <p class="text-[11px] text-deep-teal/40 text-center mb-4">Mô hình dự báo đơn giản hóa cho mục đích học tập – không phải tư vấn tài chính.</p>`;
 }

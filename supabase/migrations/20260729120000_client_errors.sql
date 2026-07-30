@@ -1,7 +1,7 @@
 -- ============================================================
--- BizOn Bật Nghiệp — Giám sát lỗi phía người dùng (GĐ2 hạ tầng)
+-- BizOn Bật Nghiệp – Giám sát lỗi phía người dùng (GĐ2 hạ tầng)
 -- Khi game/website gặp lỗi JavaScript trên máy sinh viên, trang tự gửi
--- một bản ghi gọn về đây để nhóm phát triển biết và sửa sớm — sinh viên
+-- một bản ghi gọn về đây để nhóm phát triển biết và sửa sớm – sinh viên
 -- không cần báo cáo thủ công. Chạy tệp này 1 lần trong Supabase
 -- Dashboard → SQL Editor → Run (giống tệp 001 trước đây).
 -- ============================================================
@@ -23,7 +23,7 @@ create table if not exists client_errors (
 
 create index if not exists idx_ce_page_time on client_errors (page, created_at desc);
 
--- RLS: trình duyệt sinh viên (anon key) CHỈ ĐƯỢC GHI — không ai đọc được
+-- RLS: trình duyệt sinh viên (anon key) CHỈ ĐƯỢC GHI – không ai đọc được
 -- dữ liệu lỗi của người khác. Nhóm phát triển xem qua Dashboard → Table Editor.
 alter table client_errors enable row level security;
 
@@ -35,6 +35,6 @@ create policy "trinh duyet chi duoc ghi loi"
 
 -- Ghi chú vận hành:
 --  • Mỗi lượt tải trang gửi tối đa 5 lỗi, trùng lặp trong phiên bị lọc
---    ngay trên trình duyệt — bảng không bị "bão" bản ghi.
+--    ngay trên trình duyệt – bảng không bị "bão" bản ghi.
 --  • Dọn dữ liệu cũ định kỳ (tùy chọn):
 --    delete from client_errors where created_at < now() - interval '90 days';

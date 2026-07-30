@@ -1,8 +1,8 @@
-/* BizOn — Tour hướng dẫn tân thủ (spotlight từng nút thật trên màn hình)
+/* BizOn – Tour hướng dẫn tân thủ (spotlight từng nút thật trên màn hình)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú.
  *
  * Lần đầu vào game (sau màn Giới thiệu), Lumina dẫn người chơi qua 8 điểm
- * chính: vòng đấu, chỉ số, cố vấn, bảng quyết định và nút Commit — để lớp
+ * chính: vòng đấu, chỉ số, cố vấn, bảng quyết định và nút Commit – để lớp
  * 40–60 sinh viên tự biết bấm vào đâu mà không cần giảng viên chỉ từng máy.
  * Chạy lại bất cứ lúc nào bằng nút "❓ Hướng dẫn" ở Truy cập nhanh. */
 (function () {
@@ -11,19 +11,19 @@
     { tab: 'home', sel: '#dash-round', card: true,
       title: '🎯 Trung tâm điều hành', text: 'Đây là vòng hiện tại của đội. Một ván có <b>6 vòng</b>, mỗi vòng ≈ 5–7 phút: xem tình hình → quyết định → khóa vòng → đọc kết quả.' },
     { tab: 'home', sel: '#m-cash', grid: true,
-      title: '📊 Ba chỉ số sống còn', text: '<b>Dòng tiền</b> — hết tiền là nguy; <b>Thị phần</b> — cao nhất lớp thì cắm cờ 🚩; <b>Thương hiệu</b> — giữ khách quay lại. Ba số này đổi sau mỗi vòng.' },
+      title: '📊 Ba chỉ số sống còn', text: '<b>Dòng tiền</b> – hết tiền là nguy; <b>Thị phần</b> – cao nhất lớp thì cắm cờ 🚩; <b>Thương hiệu</b> – giữ khách quay lại. Ba số này đổi sau mỗi vòng.' },
     { tab: 'home', sel: '#dash-lumina', card: true,
-      title: '🤖 Lumina — cố vấn AI của đội', text: 'Bí thì hỏi Lumina! Cô ấy phân tích kịch bản «Nếu — Thì» trước khi bạn chốt. Mỗi vòng có số lượt hỏi giới hạn nên hãy dùng khôn ngoan.' },
+      title: '🤖 Lumina – cố vấn AI của đội', text: 'Bí thì hỏi Lumina! Cô ấy phân tích kịch bản «Nếu – Thì» trước khi bạn chốt. Mỗi vòng có số lượt hỏi giới hạn nên hãy dùng khôn ngoan.' },
     { tab: 'home', sel: '#btn-go-decisions',
-      title: '🗳️ Cánh cửa quan trọng nhất', text: 'Nút này mở <b>bảng quyết định</b> — nơi cả đội thống nhất giá bán, sản xuất, marketing… cho vòng này. Ta vào xem thử nhé!' },
+      title: '🗳️ Cánh cửa quan trọng nhất', text: 'Nút này mở <b>bảng quyết định</b> – nơi cả đội thống nhất giá bán, sản xuất, marketing… cho vòng này. Ta vào xem thử nhé!' },
     { tab: 'decisions', sel: '#in-price', card: true,
       title: '💲 Kéo là ra chiến lược', text: 'Kéo các thanh trượt để định <b>giá bán</b>, ngân sách <b>marketing</b>, <b>sản lượng</b>… Ô «Dự báo thị phần» sẽ báo ngay bạn đang thắng hay thua so với 3 đối thủ AI.' },
     { tab: 'decisions', sel: '#btn-commit',
-      title: '🔒 Commit — khóa quyết định', text: 'Cả đội thống nhất xong mới bấm nút này. Sau khi khóa, thị trường chạy mô phỏng và <b>không sửa lại được</b> — đúng như đời thật!' },
+      title: '🔒 Commit – khóa quyết định', text: 'Cả đội thống nhất xong mới bấm nút này. Sau khi khóa, thị trường chạy mô phỏng và <b>không sửa lại được</b> – đúng như đời thật!' },
     { tab: 'advisor', sel: '#advisor-chat',
       title: '💬 Phòng cố vấn', text: 'Đây là nơi trò chuyện với Lumina: chọn câu hỏi theo vai của bạn (CEO/CFO/CMO/COO/Thư ký) để nhận phân tích riêng. Sau mỗi vòng nhớ đọc mục <b>Báo cáo</b> để hiểu «Vì sao?».' },
     { tab: 'home', sel: '.nav-item[data-tab="home"]', nav: true,
-      title: '🧭 Thanh điều hướng', text: 'Di chuyển giữa các khu bằng thanh này. Vậy là đủ để bắt đầu — chúc đội của bạn thắng lớn! 🚀' },
+      title: '🧭 Thanh điều hướng', text: 'Di chuyển giữa các khu bằng thanh này. Vậy là đủ để bắt đầu – chúc đội của bạn thắng lớn! 🚀' },
   ];
 
   let idx = -1, overlay = null;
@@ -102,7 +102,7 @@
   }
 
   // Tự khởi động cho người chơi mới: đợi vào app xong và màn Giới thiệu
-  // (slide 🎬) đóng lại rồi mới dẫn tour — tối đa chờ 90 giây.
+  // (slide 🎬) đóng lại rồi mới dẫn tour – tối đa chờ 90 giây.
   function autoStart() {
     try { if (localStorage.getItem(SEEN_KEY)) return; } catch (e) {}
     let tries = 0;

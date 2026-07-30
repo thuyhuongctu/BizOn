@@ -1,4 +1,4 @@
-/* BizOn — Chân trang dùng chung toàn site (theo mẫu trang M-AIDA)
+/* BizOn – Chân trang dùng chung toàn site (theo mẫu trang M-AIDA)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú.
  *
  * Khối thương hiệu + DOI, ba cột liên kết tới mọi trang, dòng trích dẫn

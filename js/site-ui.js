@@ -1,4 +1,4 @@
-/* BizOn Bật Nghiệp — giao diện web: chế độ Sáng/Tối + song ngữ Việt/Anh
+/* BizOn Bật Nghiệp – giao diện web: chế độ Sáng/Tối + song ngữ Việt/Anh
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
 (function () {
   'use strict';
@@ -122,15 +122,15 @@
 "A real market engine"
 ],
 [
-"Độ co giãn giá, thị phần, biến cố Cơ Hội Vàng · Price War · Khủng hoảng năng lượng — mỗi vòng là một ván cờ mới với 3 đối thủ AI.",
-"Price elasticity, market share, Golden Opportunity · Price War · energy-crisis events — every round is a fresh chess match against 3 AI rivals."
+"Độ co giãn giá, thị phần, biến cố Cơ Hội Vàng · Price War · Khủng hoảng năng lượng – mỗi vòng là một ván cờ mới với 3 đối thủ AI.",
+"Price elasticity, market share, Golden Opportunity · Price War · energy-crisis events – every round is a fresh chess match against 3 AI rivals."
 ],
 [
 "Cố vấn AI Lumina",
 "Lumina AI advisor"
 ],
 [
-"Trò chuyện bằng giọng nói tiếng Việt, mô phỏng \"Nếu — Thì\" trước khi chốt, bộ não cố vấn riêng cho CEO · CFO · COO · CMO.",
+"Trò chuyện bằng giọng nói tiếng Việt, mô phỏng \"Nếu – Thì\" trước khi chốt, bộ não cố vấn riêng cho CEO · CFO · COO · CMO.",
 "Vietnamese voice chat, \"What-If\" simulations before you commit, and a dedicated advisor brain for CEO · CFO · COO · CMO."
 ],
 [
@@ -138,16 +138,16 @@
 "7 textbook-grade reports"
 ],
 [
-"P&L, dòng tiền 3 hoạt động, CVP hòa vốn, nhân sự, BMC, khấu hao, kiểm toán năng lượng — số liệu sống từ chính quyết định của bạn.",
-"P&L, 3-activity cash flow, CVP break-even, HR, BMC, depreciation, energy audit — living numbers driven by your own decisions."
+"P&L, dòng tiền 3 hoạt động, CVP hòa vốn, nhân sự, BMC, khấu hao, kiểm toán năng lượng – số liệu sống từ chính quyết định của bạn.",
+"P&L, 3-activity cash flow, CVP break-even, HR, BMC, depreciation, energy audit – living numbers driven by your own decisions."
 ],
 [
 "Tài chính C-Suite",
 "C-Suite finance"
 ],
 [
-"Gọi vốn chủ sở hữu hay vay ngân hàng, kỳ hạn thanh toán 30/60/90 ngày, chế độ khủng hoảng thanh khoản CFO — như phòng họp HĐQT thật.",
-"Raise equity or take bank loans, 30/60/90-day payment terms, CFO liquidity-crisis mode — just like a real boardroom."
+"Gọi vốn chủ sở hữu hay vay ngân hàng, kỳ hạn thanh toán 30/60/90 ngày, chế độ khủng hoảng thanh khoản CFO – như phòng họp HĐQT thật.",
+"Raise equity or take bank loans, 30/60/90-day payment terms, CFO liquidity-crisis mode – just like a real boardroom."
 ],
 [
 "Học mà chơi",
@@ -190,7 +190,7 @@
 "AI strategy advisor"
 ],
 [
-"Phân tích Nếu — Thì, cảnh báo rủi ro, đồng hành cùng cả 4 vai trò C-Suite.",
+"Phân tích Nếu – Thì, cảnh báo rủi ro, đồng hành cùng cả 4 vai trò C-Suite.",
 "What-If analysis, risk alerts, supporting all four C-Suite roles."
 ],
 [
@@ -210,8 +210,8 @@
 "🎮 Play one BizOn round"
 ],
 [
-"Kéo 3 thanh quyết định — thị trường phản ứng ngay lập tức, đúng công thức của game thật.",
-"Drag 3 decision sliders — the market reacts instantly, using the real game's formula."
+"Kéo 3 thanh quyết định – thị trường phản ứng ngay lập tức, đúng công thức của game thật.",
+"Drag 3 decision sliders – the market reacts instantly, using the real game's formula."
 ],
 [
 "🎯 Quyết định của bạn (CEO)",
@@ -262,16 +262,16 @@
 "🕹️ Startup mini-games"
 ],
 [
-"Không cần đăng nhập — thử tố chất CEO của bạn trong 60 giây.",
-"No sign-in needed — test your CEO instincts in 60 seconds."
+"Không cần đăng nhập – thử tố chất CEO của bạn trong 60 giây.",
+"No sign-in needed – test your CEO instincts in 60 seconds."
 ],
 [
 "Trắc nghiệm Khởi nghiệp",
 "Startup Quiz"
 ],
 [
-"8 câu hỏi về tài chính & chiến lược — kiểm tra tố chất CEO của bạn.",
-"8 questions on finance & strategy — test your CEO instincts."
+"8 câu hỏi về tài chính & chiến lược – kiểm tra tố chất CEO của bạn.",
+"8 questions on finance & strategy – test your CEO instincts."
 ],
 [
 "Đoán Giá Thị Trường",
@@ -302,8 +302,8 @@
 "Founder & Game Designer"
 ],
 [
-"Hóa thân thành cố vấn AI Lumina trong game — áo dài truyền thống & vest trắng hiện đại.",
-"Embodied in-game as the AI advisor Lumina — traditional áo dài & modern white vest."
+"Hóa thân thành cố vấn AI Lumina trong game – áo dài truyền thống & vest trắng hiện đại.",
+"Embodied in-game as the AI advisor Lumina – traditional áo dài & modern white vest."
 ],
 [
 "Đồng sáng lập · Cố vấn chuyên môn",
@@ -319,11 +319,11 @@
 ],
 [
 "Lập đội, chọn vai trò CEO · CFO · COO · CMO và chinh phục TOP 1 thị phần Việt Nam 2026.",
-"Build your team, pick a role — CEO · CFO · COO · CMO — and conquer the #1 market share of Vietnam 2026."
+"Build your team, pick a role – CEO · CFO · COO · CMO – and conquer the #1 market share of Vietnam 2026."
 ],
 [
-"🚀 VÀO GAME NGAY — MIỄN PHÍ",
-"🚀 PLAY NOW — FREE"
+"🚀 VÀO GAME NGAY – MIỄN PHÍ",
+"🚀 PLAY NOW – FREE"
 ],
 [
 "Game mô phỏng kinh doanh 3D Claymorphism dành cho thế hệ khởi nghiệp Việt Nam.",
@@ -354,8 +354,8 @@
 "Hương AI tour guide"
 ],
 [
-"Xin chào! Mình là Hương — hướng dẫn viên AI của BizOn Bật Nghiệp. Để mình dẫn bạn tham quan trò chơi nhé?",
-"Hi! I'm Hương — BizOn Bật Nghiệp's AI tour guide. Shall I show you around?"
+"Xin chào! Mình là Hương – hướng dẫn viên AI của BizOn Bật Nghiệp. Để mình dẫn bạn tham quan trò chơi nhé?",
+"Hi! I'm Hương – BizOn Bật Nghiệp's AI tour guide. Shall I show you around?"
 ],
 [
 "▶️ Bắt đầu tour",
@@ -366,8 +366,8 @@
 "Game hub"
 ],
 [
-"6 trò chơi của hệ sinh thái BizOn Bật Nghiệp — từ mô phỏng chiến lược 6 vòng đến các game phản xạ 30 giây. Chọn và chơi ngay!",
-"The BizOn Bật Nghiệp game ecosystem — from the 6-round strategy sim to 30-second reflex games. Pick one and play!"
+"6 trò chơi của hệ sinh thái BizOn Bật Nghiệp – từ mô phỏng chiến lược 6 vòng đến các game phản xạ 30 giây. Chọn và chơi ngay!",
+"The BizOn Bật Nghiệp game ecosystem – from the 6-round strategy sim to 30-second reflex games. Pick one and play!"
 ],
 [
 "Chọn phiên bản & chế độ chơi",
@@ -422,40 +422,40 @@
 "NO SIGN-IN NEEDED"
 ],
 [
-"Kéo 3 thanh quyết định, xem thị trường phản ứng tức thì — hiểu luật chơi trong 60 giây.",
-"Drag 3 decision sliders and watch the market react instantly — learn the rules in 60 seconds."
+"Kéo 3 thanh quyết định, xem thị trường phản ứng tức thì – hiểu luật chơi trong 60 giây.",
+"Drag 3 decision sliders and watch the market react instantly – learn the rules in 60 seconds."
 ],
 [
 "PHẢN XẠ 30s",
 "30s REFLEX"
 ],
 [
-"Băng chuyền xưởng đất sét — chạm đúng món hàng được đặt để đóng gói. Trong game chính, điểm đổi được quà ở Clay Reward Shop!",
-"A clay-factory conveyor — tap the ordered items to pack them. In the main game, points buy gifts at the Clay Reward Shop!"
+"Băng chuyền xưởng đất sét – chạm đúng món hàng được đặt để đóng gói. Trong game chính, điểm đổi được quà ở Clay Reward Shop!",
+"A clay-factory conveyor – tap the ordered items to pack them. In the main game, points buy gifts at the Clay Reward Shop!"
 ],
 [
 "KIẾN THỨC",
 "KNOWLEDGE"
 ],
 [
-"8 câu về hòa vốn, thanh khoản, Price War, đòn bẩy — kiểm tra tố chất CEO.",
-"8 questions on break-even, liquidity, price wars and leverage — test your CEO instincts."
+"8 câu về hòa vốn, thanh khoản, Price War, đòn bẩy – kiểm tra tố chất CEO.",
+"8 questions on break-even, liquidity, price wars and leverage – test your CEO instincts."
 ],
 [
 "TƯ DUY",
 "THINKING"
 ],
 [
-"Thị trường đã chốt giá cân bằng 50–250 nghìn ₫ — bạn có 7 lượt tìm ra nó.",
-"The market locked an equilibrium price between 50–250k ₫ — you get 7 tries to find it."
+"Thị trường đã chốt giá cân bằng 50–250 nghìn ₫ – bạn có 7 lượt tìm ra nó.",
+"The market locked an equilibrium price between 50–250k ₫ – you get 7 tries to find it."
 ],
 [
-"Clay Sort — Phân loại",
-"Clay Sort — Sorting"
+"Clay Sort – Phân loại",
+"Clay Sort – Sorting"
 ],
 [
-"Băng chuyền thả hình đất nặn — chạm đúng thùng (Hộp / Cầu / Tháp) trước khi hàng rơi xuống. Chuỗi đúng liên tiếp nhân điểm!",
-"Clay shapes drop from the belt — tap the right bin (Box / Ball / Tower) before they fall. Streaks multiply your score!"
+"Băng chuyền thả hình đất nặn – chạm đúng thùng (Hộp / Cầu / Tháp) trước khi hàng rơi xuống. Chuỗi đúng liên tiếp nhân điểm!",
+"Clay shapes drop from the belt – tap the right bin (Box / Ball / Tower) before they fall. Streaks multiply your score!"
 ],
 [
 "📦 Hộp",
@@ -478,8 +478,8 @@
 "TACTICS"
 ],
 [
-"Đối đầu CEO AI qua 3 hiệp: mỗi hiệp chọn 1 chiến lược giá — kết thúc bằng màn so tài chỉ số Head-to-Head.",
-"Face an AI CEO over 3 rounds: pick a pricing strategy each round — ending in a head-to-head stat showdown."
+"Đối đầu CEO AI qua 3 hiệp: mỗi hiệp chọn 1 chiến lược giá – kết thúc bằng màn so tài chỉ số Head-to-Head.",
+"Face an AI CEO over 3 rounds: pick a pricing strategy each round – ending in a head-to-head stat showdown."
 ],
 [
 "Gọi vốn 30 giây: hứng đồng vàng, né chi phí phát sinh 💣. Chạm / chuột / phím ← →.",
@@ -534,8 +534,8 @@
 "✉️ Partner with us"
 ],
 [
-"© 2026 Đỗ Thùy Hương & Phan Anh Tú · BizOn Bật Nghiệp — Bảo lưu mọi quyền.",
-"© 2026 Đỗ Thùy Hương & Phan Anh Tú · BizOn Bật Nghiệp — All rights reserved."
+"© 2026 Đỗ Thùy Hương & Phan Anh Tú · BizOn Bật Nghiệp – Bảo lưu mọi quyền.",
+"© 2026 Đỗ Thùy Hương & Phan Anh Tú · BizOn Bật Nghiệp – All rights reserved."
 ],
 [
 "Chào mừng trở lại!",
@@ -578,8 +578,8 @@
 "Awaiting decisions"
 ],
 [
-"Đã khóa — chờ kết quả",
-"Locked — awaiting results"
+"Đã khóa – chờ kết quả",
+"Locked – awaiting results"
 ],
 [
 "Dòng tiền",
@@ -642,8 +642,8 @@
 "🗺️ Vietnam Conquest Journey"
 ],
 [
-"Thắng mỗi vòng để cắm cờ công ty — từ Cần Thơ tới Thủ đô Hà Nội.",
-"Win each round to plant your company flag — from Cần Thơ to Hà Nội."
+"Thắng mỗi vòng để cắm cờ công ty – từ Cần Thơ tới Thủ đô Hà Nội.",
+"Win each round to plant your company flag – from Cần Thơ to Hà Nội."
 ],
 [
 "⚙️ Cài đặt",
@@ -746,20 +746,20 @@
 "BETA"
 ],
 [
-"🗺️ Bước 1 — Chọn thị trường quốc tế",
-"🗺️ Step 1 — Pick an international market"
+"🗺️ Bước 1 – Chọn thị trường quốc tế",
+"🗺️ Step 1 – Pick an international market"
 ],
 [
-"Xuất phát từ Việt Nam — chạm vào một điểm đến trên bản đồ thế giới.",
-"Starting from Vietnam — tap a destination on the world map."
+"Xuất phát từ Việt Nam – chạm vào một điểm đến trên bản đồ thế giới.",
+"Starting from Vietnam – tap a destination on the world map."
 ],
 [
-"🛂 Bước 2 — Chọn phương thức thâm nhập (Entry mode)",
-"🛂 Step 2 — Choose your entry mode"
+"🛂 Bước 2 – Chọn phương thức thâm nhập (Entry mode)",
+"🛂 Step 2 – Choose your entry mode"
 ],
 [
-"📊 Bước 3 — Kinh doanh trong kỷ nguyên số",
-"📊 Step 3 — Do business in the digital era"
+"📊 Bước 3 – Kinh doanh trong kỷ nguyên số",
+"📊 Step 3 – Do business in the digital era"
 ],
 [
 "📚 Bốn phương thức thâm nhập quốc tế",
@@ -778,24 +778,24 @@
 "Joint Venture"
 ],
 [
-"Đầu tư mới — Greenfield (FDI)",
+"Đầu tư mới – Greenfield (FDI)",
 "Greenfield FDI"
 ],
 [
-"Vốn thấp, triển khai nhanh — nhưng chịu thuế quan và kiểm soát kênh phân phối thấp. Phù hợp thăm dò thị trường.",
-"Low capital, fast to launch — but exposed to tariffs with little channel control. Good for testing a market."
+"Vốn thấp, triển khai nhanh – nhưng chịu thuế quan và kiểm soát kênh phân phối thấp. Phù hợp thăm dò thị trường.",
+"Low capital, fast to launch – but exposed to tariffs with little channel control. Good for testing a market."
 ],
 [
-"Đối tác bản địa sản xuất, ta thu phí bản quyền — rủi ro vốn thấp nhất nhưng lợi nhuận mỏng và có rủi ro thương hiệu.",
-"A local partner produces while you collect royalties — lowest capital risk, but thin margins and brand risk."
+"Đối tác bản địa sản xuất, ta thu phí bản quyền – rủi ro vốn thấp nhất nhưng lợi nhuận mỏng và có rủi ro thương hiệu.",
+"A local partner produces while you collect royalties – lowest capital risk, but thin margins and brand risk."
 ],
 [
-"Chia vốn, chia lợi nhuận với đối tác am hiểu bản địa — giảm mạnh khoảng cách văn hóa và rào cản pháp lý.",
-"Share capital and profit with a local partner — sharply reduces cultural distance and legal barriers."
+"Chia vốn, chia lợi nhuận với đối tác am hiểu bản địa – giảm mạnh khoảng cách văn hóa và rào cản pháp lý.",
+"Share capital and profit with a local partner – sharply reduces cultural distance and legal barriers."
 ],
 [
-"Xây nhà máy/công ty con 100% vốn — kiểm soát tối đa, né thuế quan, nhưng vốn lớn và rủi ro cao nhất.",
-"Build a wholly-owned plant/subsidiary — maximum control, tariff-free, but the biggest capital and risk."
+"Xây nhà máy/công ty con 100% vốn – kiểm soát tối đa, né thuế quan, nhưng vốn lớn và rủi ro cao nhất.",
+"Build a wholly-owned plant/subsidiary – maximum control, tariff-free, but the biggest capital and risk."
 ],
 [
 "Chốt quý này 🚀",
@@ -810,12 +810,12 @@
 "GitHub repos"
 ],
 [
-"⭐ BizOn — mã nguồn",
-"⭐ BizOn — source code"
+"⭐ BizOn – mã nguồn",
+"⭐ BizOn – source code"
 ],
 [
-"🎼 M-AIDA — mã nguồn",
-"🎼 M-AIDA — source code"
+"🎼 M-AIDA – mã nguồn",
+"🎼 M-AIDA – source code"
 ],
 [
 "🌏 BizOn Go Global (thử nghiệm)",
@@ -874,16 +874,16 @@
 "⚔️ Your 3 AI rivals"
 ],
 [
-"🚀 IE Lab — Khởi nghiệp quốc tế (International Entrepreneurship)",
-"🚀 IE Lab — International Entrepreneurship"
+"🚀 IE Lab – Khởi nghiệp quốc tế (International Entrepreneurship)",
+"🚀 IE Lab – International Entrepreneurship"
 ],
 [
-"🏢 Bước 0 — Hồ sơ doanh nghiệp của bạn",
-"🏢 Step 0 — Your company profile"
+"🏢 Bước 0 – Hồ sơ doanh nghiệp của bạn",
+"🏢 Step 0 – Your company profile"
 ],
 [
-"Trước khi ra khơi, hãy khai báo năng lực xuất phát — hồ sơ ảnh hưởng đến toàn bộ mô phỏng.",
-"Before setting sail, declare your starting capabilities — the profile affects the whole simulation."
+"Trước khi ra khơi, hãy khai báo năng lực xuất phát – hồ sơ ảnh hưởng đến toàn bộ mô phỏng.",
+"Before setting sail, declare your starting capabilities – the profile affects the whole simulation."
 ],
 [
 "🖥️ Năng lực công nghệ",
@@ -894,56 +894,56 @@
 "🌏 International experience"
 ],
 [
-"📥 Xuất nhật ký quyết định (CSV) — dữ liệu nghiên cứu / chấm điểm",
-"📥 Export decision log (CSV) — research / grading data"
+"📥 Xuất nhật ký quyết định (CSV) – dữ liệu nghiên cứu / chấm điểm",
+"📥 Export decision log (CSV) – research / grading data"
 ],
 [
 "Phiên bản tiếng Pháp · bản thu có lời",
 "French version · vocal recording"
 ],
 [
-"Tú Phan — Áo dài trắng",
-"Tú Phan — White áo dài"
+"Tú Phan – Áo dài trắng",
+"Tú Phan – White áo dài"
 ],
 [
 "Trang phục lễ nghi · đeo cài áo Bản đồ Việt Nam",
 "Ceremonial outfit · wearing the Vietnam Map lapel pin"
 ],
 [
-"Tú Phan — Nụ cười chiến thắng",
-"Tú Phan — Victory smile"
+"Tú Phan – Nụ cười chiến thắng",
+"Tú Phan – Victory smile"
 ],
 [
 "Áo dài trắng & cài áo Việt Nam · phiên bản tươi vui",
 "White áo dài & Vietnam pin · the cheerful version"
 ],
 [
-"Tú Phan — Chào đón",
-"Tú Phan — Welcome"
+"Tú Phan – Chào đón",
+"Tú Phan – Welcome"
 ],
 [
 "Dang rộng vòng tay chào người chơi mới",
 "Open arms welcoming new players"
 ],
 [
-"Tú Phan — Hướng dẫn",
-"Tú Phan — Guiding"
+"Tú Phan – Hướng dẫn",
+"Tú Phan – Guiding"
 ],
 [
 "Chỉ tay giới thiệu bảng số liệu & luật chơi",
 "Pointing out the data board & game rules"
 ],
 [
-"Tú Phan — Giảng giải",
-"Tú Phan — Explaining"
+"Tú Phan – Giảng giải",
+"Tú Phan – Explaining"
 ],
 [
 "Đưa tay diễn giải khái niệm kinh doanh",
 "Gesturing through a business concept"
 ],
 [
-"Tú Phan — Bàn làm việc",
-"Tú Phan — At the desk"
+"Tú Phan – Bàn làm việc",
+"Tú Phan – At the desk"
 ],
 [
 "Phân tích dữ liệu mô phỏng trên laptop",
@@ -1062,8 +1062,8 @@
 "🏙️ Scenes & illustrations"
 ],
 [
-"Tú Phan — Vest xanh rêu",
-"Tú Phan — Moss-green suit"
+"Tú Phan – Vest xanh rêu",
+"Tú Phan – Moss-green suit"
 ],
 [
 "🐺 CEO Alpha Dynamics",
@@ -1134,36 +1134,36 @@
 "Business Command Center"
 ],
 [
-"Biểu đồ 3D, la bàn vàng & cúp chiến thắng — quản trị dựa trên dữ liệu",
-"3D charts, golden compass & victory trophy — data-driven management"
+"Biểu đồ 3D, la bàn vàng & cúp chiến thắng – quản trị dựa trên dữ liệu",
+"3D charts, golden compass & victory trophy – data-driven management"
 ],
 [
 "Bàn họp chiến lược hologram",
 "Holographic strategy table"
 ],
 [
-"5 vai trò nòng cốt thảo luận quanh biểu đồ Gantt — như trong Cuộc họp đội mỗi vòng",
-"The 5 core roles discussing around a Gantt chart — just like each round's Team Meeting"
+"5 vai trò nòng cốt thảo luận quanh biểu đồ Gantt – như trong Cuộc họp đội mỗi vòng",
+"The 5 core roles discussing around a Gantt chart – just like each round's Team Meeting"
 ],
 [
 "Vươn ra biển lớn",
 "Sailing to the open sea"
 ],
 [
-"Các tuyến bay & tàu hàng tỏa ra từ ghim Việt Nam — tinh thần BizOn Go Global",
-"Flight & cargo routes radiating from the Vietnam pin — the BizOn Go Global spirit"
+"Các tuyến bay & tàu hàng tỏa ra từ ghim Việt Nam – tinh thần BizOn Go Global",
+"Flight & cargo routes radiating from the Vietnam pin – the BizOn Go Global spirit"
 ],
 [
-"Nơi mọi quyết định hội tụ: biểu đồ thị phần, la bàn chiến lược và chiếc cúp dành cho đội thắng cuộc — quản trị dựa trên dữ liệu qua từng vòng chơi.",
-"Where every decision converges: market-share charts, a strategy compass and the trophy for the winning team — data-driven management across every round."
+"Nơi mọi quyết định hội tụ: biểu đồ thị phần, la bàn chiến lược và chiếc cúp dành cho đội thắng cuộc – quản trị dựa trên dữ liệu qua từng vòng chơi.",
+"Where every decision converges: market-share charts, a strategy compass and the trophy for the winning team – data-driven management across every round."
 ],
 [
 "Tú Phan",
 "Tu Phan"
 ],
 [
-"⏱️ Một ván 6 vòng ≈ 30–45 phút (mỗi vòng 5–7 phút) — vừa một buổi học. Chơi thử nhanh với Đội Demo: ~10 phút cho 2 vòng đầu.",
-"⏱️ A full 6-round match ≈ 30–45 minutes (5–7 min per round) — fits one class session. Quick try with the Demo Team: ~10 minutes for the first 2 rounds."
+"⏱️ Một ván 6 vòng ≈ 30–45 phút (mỗi vòng 5–7 phút) – vừa một buổi học. Chơi thử nhanh với Đội Demo: ~10 phút cho 2 vòng đầu.",
+"⏱️ A full 6-round match ≈ 30–45 minutes (5–7 min per round) – fits one class session. Quick try with the Demo Team: ~10 minutes for the first 2 rounds."
 ],
 [
 "🌐 VI/EN",
@@ -1194,24 +1194,24 @@
 "🧷 Merchandise & Gifts"
 ],
 [
-"Bộ cài áo (lapel pin) chính thức của BizOn — quà tặng cho đội vô địch và vật phẩm nhận diện thương hiệu.",
-"BizOn's official lapel-pin collection — champion-team gifts and brand keepsakes."
+"Bộ cài áo (lapel pin) chính thức của BizOn – quà tặng cho đội vô địch và vật phẩm nhận diện thương hiệu.",
+"BizOn's official lapel-pin collection – champion-team gifts and brand keepsakes."
 ],
 [
 "Cài áo Bản đồ Việt Nam",
 "Vietnam Map lapel pin"
 ],
 [
-"Men đỏ viền vàng, sao vàng Lũng Cú — biểu tượng hành trình chinh phục 6 vòng chơi",
-"Red enamel with gold trim and the Lũng Cú gold star — symbol of the 6-round conquest"
+"Men đỏ viền vàng, sao vàng Lũng Cú – biểu tượng hành trình chinh phục 6 vòng chơi",
+"Red enamel with gold trim and the Lũng Cú gold star – symbol of the 6-round conquest"
 ],
 [
 "Bộ ba Sao đỏ · +84 · VIETNAM",
 "Red Star · +84 · VIETNAM trio"
 ],
 [
-"Bộ pin BizOn Go Global — mang mã vùng +84 ra thế giới",
-"The BizOn Go Global pin set — carrying the +84 dialing code to the world"
+"Bộ pin BizOn Go Global – mang mã vùng +84 ra thế giới",
+"The BizOn Go Global pin set – carrying the +84 dialing code to the world"
 ],
 [
 "Tú Phan với cài áo Việt Nam",
@@ -1262,12 +1262,12 @@
 "Original songs, a full player, lyrics and the Lumina AI voice."
 ],
 [
-"Toàn bộ ca khúc gốc và giọng Lumina của riêng BizOn — trình phát đầy đủ.",
-"All of BizOn's own original songs and Lumina voice clips — with a full player."
+"Toàn bộ ca khúc gốc và giọng Lumina của riêng BizOn – trình phát đầy đủ.",
+"All of BizOn's own original songs and Lumina voice clips – with a full player."
 ],
 [
-"Toàn bộ ca khúc gốc và giọng nói của vũ trụ BizOn Bật Nghiệp — sáng tác riêng cho game, thuộc bản quyền của nhóm tác giả.",
-"All original songs and voices of the BizOn Bật Nghiệp universe — composed for the game, copyright of the authors."
+"Toàn bộ ca khúc gốc và giọng nói của vũ trụ BizOn Bật Nghiệp – sáng tác riêng cho game, thuộc bản quyền của nhóm tác giả.",
+"All original songs and voices of the BizOn Bật Nghiệp universe – composed for the game, copyright of the authors."
 ],
 [
 "💿 Ca khúc gốc",
@@ -1286,12 +1286,12 @@
 "Main game"
 ],
 [
-"Nút 🎵 trên đầu game — playlist tự xoay vòng cả ba ca khúc.",
-"The 🎵 button in the game header — the playlist rotates through all three songs."
+"Nút 🎵 trên đầu game – playlist tự xoay vòng cả ba ca khúc.",
+"The 🎵 button in the game header – the playlist rotates through all three songs."
 ],
 [
-"«Hương sans frontières» — ca khúc chủ đề hành trình ra biển lớn.",
-"«Hương sans frontières» — the theme song of the voyage to the open sea."
+"«Hương sans frontières» – ca khúc chủ đề hành trình ra biển lớn.",
+"«Hương sans frontières» – the theme song of the voyage to the open sea."
 ],
 [
 "Nhạc nền tùy chọn khi chơi các mini-game phản xạ.",
@@ -1322,8 +1322,8 @@
 "📚 Library"
 ],
 [
-"🧪 Lưu ý: IE Lab là công cụ mô phỏng số liệu phục vụ học tập môn Khởi nghiệp quốc tế — các đường cong, điểm ngoặt (≈ 43% FSTS), hiệu ứng \"lá chắn số\" và trường hợp đảo nhỏ đều là tham số mô phỏng minh họa, không phải số liệu thống kê thực của bất kỳ doanh nghiệp nào.",
-"🧪 Note: the IE Lab is a data-simulation tool for International Entrepreneurship courses — the curves, turning point (≈ 43% FSTS), \"digital shield\" effect and small-island scenario are illustrative simulation parameters, not real statistics of any firm."
+"🧪 Lưu ý: IE Lab là công cụ mô phỏng số liệu phục vụ học tập môn Khởi nghiệp quốc tế – các đường cong, điểm ngoặt (≈ 43% FSTS), hiệu ứng \"lá chắn số\" và trường hợp đảo nhỏ đều là tham số mô phỏng minh họa, không phải số liệu thống kê thực của bất kỳ doanh nghiệp nào.",
+"🧪 Note: the IE Lab is a data-simulation tool for International Entrepreneurship courses – the curves, turning point (≈ 43% FSTS), \"digital shield\" effect and small-island scenario are illustrative simulation parameters, not real statistics of any firm."
 ],
 [
 "📈 So sánh 4 kiểu thị trường (cùng mức năng lực số hiện tại)",
@@ -1338,8 +1338,8 @@
 "🧭 Comparing 4 entry modes"
 ],
 [
-"Vốn đầu tư ban đầu, mức kiểm soát và độ rủi ro (thang 0–10, tham số mô phỏng) — đổi lấy nhau: càng kiểm soát cao càng tốn vốn và rủi ro.",
-"Upfront capital, control level and risk (0–10 scale, simulation parameters) — trade-offs: more control costs more capital and carries more risk."
+"Vốn đầu tư ban đầu, mức kiểm soát và độ rủi ro (thang 0–10, tham số mô phỏng) – đổi lấy nhau: càng kiểm soát cao càng tốn vốn và rủi ro.",
+"Upfront capital, control level and risk (0–10 scale, simulation parameters) – trade-offs: more control costs more capital and carries more risk."
 ],
 [
 "Đầu tư mới (FDI)",
@@ -1354,24 +1354,24 @@
 "5 core leadership roles"
 ],
 [
-"Tổng giám đốc điều hành — người cầm lái chiến lược.",
-"Chief Executive Officer — the one steering strategy."
+"Tổng giám đốc điều hành – người cầm lái chiến lược.",
+"Chief Executive Officer – the one steering strategy."
 ],
 [
-"Giám đốc tài chính — quản trị dòng tiền & lợi nhuận.",
-"Chief Financial Officer — managing cash flow & profit."
+"Giám đốc tài chính – quản trị dòng tiền & lợi nhuận.",
+"Chief Financial Officer – managing cash flow & profit."
 ],
 [
-"Giám đốc marketing — chiếm lĩnh thị phần.",
-"Chief Marketing Officer — capturing market share."
+"Giám đốc marketing – chiếm lĩnh thị phần.",
+"Chief Marketing Officer – capturing market share."
 ],
 [
-"Giám đốc vận hành — tối ưu hóa quy trình.",
-"Chief Operating Officer — optimizing processes."
+"Giám đốc vận hành – tối ưu hóa quy trình.",
+"Chief Operating Officer – optimizing processes."
 ],
 [
-"Thư ký hội đồng — quản lý thông tin & rủi ro.",
-"Board Secretary — managing information & risk."
+"Thư ký hội đồng – quản lý thông tin & rủi ro.",
+"Board Secretary – managing information & risk."
 ],
 [
 "Lộ trình trải nghiệm 6 vòng",
@@ -1430,16 +1430,16 @@
 "Lumina, your strategy advisor"
 ],
 [
-"Lumina phân tích số liệu mô phỏng của đội bạn theo thời gian thực — đề xuất kịch bản tối ưu và cảnh báo rủi ro sớm để bạn dẫn đầu thị trường.",
-"Lumina analyzes your team's simulation data in real time — proposing optimal scenarios and early risk alerts so you stay ahead of the market."
+"Lumina phân tích số liệu mô phỏng của đội bạn theo thời gian thực – đề xuất kịch bản tối ưu và cảnh báo rủi ro sớm để bạn dẫn đầu thị trường.",
+"Lumina analyzes your team's simulation data in real time – proposing optimal scenarios and early risk alerts so you stay ahead of the market."
 ],
 [
 "Dành cho giảng viên & doanh nghiệp",
 "For instructors & businesses"
 ],
 [
-"Mang BizOn vào lớp học hoặc chương trình đào tạo: Class ID cho từng lớp, chế độ Giảng viên (khóa vòng, cấp vốn thưởng, nhật ký), hành vi đối thủ AI tất định — kết quả tái lập được, tiện chấm điểm giữa các đội.",
-"Bring BizOn to your classroom or training program: per-class Class IDs, an Instructor mode (round locks, bonus funding, logs), and deterministic AI rivals — reproducible results, easy to grade across teams."
+"Mang BizOn vào lớp học hoặc chương trình đào tạo: Class ID cho từng lớp, chế độ Giảng viên (khóa vòng, cấp vốn thưởng, nhật ký), hành vi đối thủ AI tất định – kết quả tái lập được, tiện chấm điểm giữa các đội.",
+"Bring BizOn to your classroom or training program: per-class Class IDs, an Instructor mode (round locks, bonus funding, logs), and deterministic AI rivals – reproducible results, easy to grade across teams."
 ],
 [
 "📖 Hướng dẫn giảng viên",
@@ -1470,20 +1470,20 @@
 "Academic Advisor"
 ],
 [
-"Kiến trúc sư chính của BizOn — hóa thân thành cố vấn AI Lumina, tập trung vào trải nghiệm người dùng và thẩm mỹ Claymorphism hiện đại.",
-"BizOn's lead architect — embodied as the Lumina AI advisor, focused on user experience and modern claymorphism aesthetics."
+"Kiến trúc sư chính của BizOn – hóa thân thành cố vấn AI Lumina, tập trung vào trải nghiệm người dùng và thẩm mỹ Claymorphism hiện đại.",
+"BizOn's lead architect – embodied as the Lumina AI advisor, focused on user experience and modern claymorphism aesthetics."
 ],
 [
-"Cố vấn học thuật cao cấp — đảm bảo tính thực tiễn và chiều sâu kiến thức kinh doanh trong mọi kịch bản mô phỏng.",
-"Senior academic advisor — ensuring practical rigor and business depth in every simulation scenario."
+"Cố vấn học thuật cao cấp – đảm bảo tính thực tiễn và chiều sâu kiến thức kinh doanh trong mọi kịch bản mô phỏng.",
+"Senior academic advisor – ensuring practical rigor and business depth in every simulation scenario."
 ],
 [
 "Chào mừng đến BizOn!",
 "Welcome to BizOn!"
 ],
 [
-"Trò chơi mô phỏng kinh doanh 3D phong cách đất sét dành cho đào tạo khởi nghiệp — chọn một cánh cửa để bắt đầu.",
-"A 3D claymorphism business-simulation game for entrepreneurship education — pick a door to begin."
+"Trò chơi mô phỏng kinh doanh 3D phong cách đất sét dành cho đào tạo khởi nghiệp – chọn một cánh cửa để bắt đầu.",
+"A 3D claymorphism business-simulation game for entrepreneurship education – pick a door to begin."
 ],
 [
 "Chinh phục bản đồ Việt Nam từ Cần Thơ tới Hà Nội cùng cố vấn Lumina AI.",
@@ -1510,24 +1510,24 @@
 "🏠 Home"
 ],
 [
-"Tạo hình nhân vật, âm nhạc, lời bài hát — kết nối hệ sinh thái Je m'appelle Hương & M-AIDA.",
-"Character art, original music and lyrics — connected to the Je m'appelle Hương & M-AIDA ecosystem."
+"Tạo hình nhân vật, âm nhạc, lời bài hát – kết nối hệ sinh thái Je m'appelle Hương & M-AIDA.",
+"Character art, original music and lyrics – connected to the Je m'appelle Hương & M-AIDA ecosystem."
 ],
 [
 "Demo tương tác, 5 vai trò lãnh đạo, lộ trình 6 vòng, mini-game và FAQ.",
 "Interactive demo, 5 leadership roles, the 6-round journey, mini-games and FAQ."
 ],
 [
-"8 trò chơi của hệ sinh thái — từ mô phỏng chiến lược đến phản xạ 30 giây.",
-"8 games in the ecosystem — from strategy sim to 30-second reflex games."
+"8 trò chơi của hệ sinh thái – từ mô phỏng chiến lược đến phản xạ 30 giây.",
+"8 games in the ecosystem – from strategy sim to 30-second reflex games."
 ],
 [
 "Từ Việt Nam ra thế giới: phương thức thâm nhập, World Market LIVE và IE Lab Khởi nghiệp quốc tế.",
 "From Vietnam to the world: entry modes, World Market LIVE and the International Entrepreneurship Lab."
 ],
 [
-"Đỗ Thùy Hương & Phan Anh Tú — sứ mệnh và tầm nhìn 2026.",
-"Do Thuy Huong & Phan Anh Tu — mission and vision 2026."
+"Đỗ Thùy Hương & Phan Anh Tú – sứ mệnh và tầm nhìn 2026.",
+"Do Thuy Huong & Phan Anh Tu – mission and vision 2026."
 ],
 [
 "🎨 Tạo hình nhân vật",
@@ -1542,8 +1542,8 @@
 "BizOn Go Global theme song · vocal recording"
 ],
 [
-"Đội Demo Bật Nghiệp — 5 thành viên đất nặn",
-"The Bật Nghiệp demo team — 5 clay members"
+"Đội Demo Bật Nghiệp – 5 thành viên đất nặn",
+"The Bật Nghiệp demo team – 5 clay members"
 ],
 [
 "COO Bảo Ngọc · CFO Thu Hà · CEO Minh Long · CMO Lan Chi · Thư ký pháp chế Gia Hân",
@@ -1554,8 +1554,8 @@
 "🌉 The Je m'appelle Hương ecosystem"
 ],
 [
-"BizOn và M-AIDA chia sẻ cùng một vũ trụ sáng tạo — nhân vật Hương, bản đồ Việt Nam và âm nhạc gốc.",
-"BizOn and M-AIDA share one creative universe — the Hương character, the map of Vietnam and original music."
+"BizOn và M-AIDA chia sẻ cùng một vũ trụ sáng tạo – nhân vật Hương, bản đồ Việt Nam và âm nhạc gốc.",
+"BizOn and M-AIDA share one creative universe – the Hương character, the map of Vietnam and original music."
 ],
 [
 "🎼 Ứng dụng M-AIDA",
@@ -1766,8 +1766,8 @@
 "Which survey are you taking?"
 ],
 [
-"Mã tự đặt — 2 chữ cái + 2 số (nhớ dùng lại ở phiếu sau)",
-"Self-chosen code — 2 letters + 2 digits (reuse it on the post survey)"
+"Mã tự đặt – 2 chữ cái + 2 số (nhớ dùng lại ở phiếu sau)",
+"Self-chosen code – 2 letters + 2 digits (reuse it on the post survey)"
 ],
 [
 "Mã lớp học (giảng viên phát)",
@@ -1782,24 +1782,24 @@
 "Rounds played"
 ],
 [
-"🧠 Phần A — Kiến thức kinh doanh",
-"🧠 Part A — Business knowledge"
+"🧠 Phần A – Kiến thức kinh doanh",
+"🧠 Part A – Business knowledge"
 ],
 [
 "Chọn một đáp án mỗi câu (15 câu).",
-"Pick one answer per question (15 questions — in Vietnamese to keep the research instrument consistent)."
+"Pick one answer per question (15 questions – in Vietnamese to keep the research instrument consistent)."
 ],
 [
-"💪 Phần B — Mức độ tự tin",
-"💪 Part B — Confidence"
+"💪 Phần B – Mức độ tự tin",
+"💪 Part B – Confidence"
 ],
 [
 "1 = hoàn toàn không tự tin · 5 = rất tự tin",
 "1 = not confident at all · 5 = very confident"
 ],
 [
-"🎮 Phần C — Trải nghiệm với BizOn",
-"🎮 Part C — Your BizOn experience"
+"🎮 Phần C – Trải nghiệm với BizOn",
+"🎮 Part C – Your BizOn experience"
 ],
 [
 "1 = hoàn toàn không đồng ý · 5 = hoàn toàn đồng ý",
@@ -1818,8 +1818,8 @@
 "What was confusing or could be improved?"
 ],
 [
-"Kiểm tra kỹ rồi bấm nộp — mỗi phiếu chỉ nộp một lần.",
-"Double-check your answers — each survey can be submitted only once."
+"Kiểm tra kỹ rồi bấm nộp – mỗi phiếu chỉ nộp một lần.",
+"Double-check your answers – each survey can be submitted only once."
 ],
 [
 "📨 Nộp phiếu",
@@ -1833,8 +1833,8 @@
 ["🧺 Gánh Hàng Khởi Nghiệp: Bến Phù Sa", "🧺 Entrepreneurial Street Vendor: Ben Phu Sa"],
 ["Gánh Hàng Khởi Nghiệp", "Entrepreneurial Street Vendor"],
 ["Khởi nghiệp hàng rong ở thị trấn giả tưởng Bến Phù Sa: mỗi tuần chọn Phương thức – Món hàng – Địa điểm. Bản địa hóa giảng dạy phi thương mại dựa trên cấu trúc «Food Truck Challenge» (HBP), theo định hướng của PGS.TS. Phan Anh Tú.", "A street-vendor startup in the fictional river town of Bến Phù Sa: each week pick Method – Product – Location. A non-commercial teaching localization built on the structure of HBP's \"Food Truck Challenge\", guided by Assoc. Prof. Dr. Phan Anh Tú."],
-["«Từ một gánh hàng nhỏ, bạn có thể xây dựng nên một thương hiệu lớn — nếu biết quan sát thị trường, thấu hiểu khách hàng và ra quyết định đúng lúc.»", "\"From one small street stall, you can build a big brand — if you watch the market, understand your customers, and decide at the right moment.\""],
-["💡 Phương án bản địa hóa phục vụ giảng dạy, xây dựng dựa trên cấu trúc mô phỏng «The Food Truck Challenge» (Michael A. Roberto — Harvard Business Publishing · Forio), theo định hướng sư phạm của PGS.TS. Phan Anh Tú (Trường Kinh tế, ĐH Cần Thơ) · Chỉ dùng nội bộ lớp học, phi thương mại · Nhân vật, giao diện và lời thoại do BizOn tự phát triển.", "💡 A teaching localization built on the structure of the simulation \"The Food Truck Challenge\" (Michael A. Roberto — Harvard Business Publishing · Forio), under the pedagogical guidance of Assoc. Prof. Dr. Phan Anh Tú (School of Economics, Can Tho University) · For in-class, non-commercial use only · Characters, interface and writing developed by BizOn."],
+["«Từ một gánh hàng nhỏ, bạn có thể xây dựng nên một thương hiệu lớn – nếu biết quan sát thị trường, thấu hiểu khách hàng và ra quyết định đúng lúc.»", "\"From one small street stall, you can build a big brand – if you watch the market, understand your customers, and decide at the right moment.\""],
+["💡 Phương án bản địa hóa phục vụ giảng dạy, xây dựng dựa trên cấu trúc mô phỏng «The Food Truck Challenge» (Michael A. Roberto – Harvard Business Publishing · Forio), theo định hướng sư phạm của PGS.TS. Phan Anh Tú (Trường Kinh tế, ĐH Cần Thơ) · Chỉ dùng nội bộ lớp học, phi thương mại · Nhân vật, giao diện và lời thoại do BizOn tự phát triển.", "💡 A teaching localization built on the structure of the simulation \"The Food Truck Challenge\" (Michael A. Roberto – Harvard Business Publishing · Forio), under the pedagogical guidance of Assoc. Prof. Dr. Phan Anh Tú (School of Economics, Can Tho University) · For in-class, non-commercial use only · Characters, interface and writing developed by BizOn."],
 ["📜 Luật chơi", "📜 How to play"],
 ["Chọn đội của bạn", "Choose your team"],
 ["Chọn thuyền trưởng", "Pick your captain"],
@@ -1842,7 +1842,7 @@
 ["🐉 Đội Demo Rồng Xanh", "🐉 Green Dragon Demo Team"],
 ["5 thành viên", "5 members"],
 ["🌾 Đội Phù Sa", "🌾 Phù Sa Team"],
-["🔒 Đang tạo hình nhân vật — sắp ra mắt!", "🔒 Characters in the making — coming soon!"],
+["🔒 Đang tạo hình nhân vật – sắp ra mắt!", "🔒 Characters in the making – coming soon!"],
 ["Thư ký", "Secretary"],
 ["triệu ₫", "million ₫"],
 ["Tuần", "Week"],
@@ -1877,11 +1877,11 @@
 ["Chọn đủ Phương thức + Món hàng + Địa điểm để chốt.", "Pick a Method + Product + Location to lock in."],
 ["Tuần này bạn dừng bán để mua dữ liệu lịch sử.", "This week you pause sales to buy historical data."],
 ["🔎 Quan sát thị trường", "🔎 Market observations"],
-["Thông tin thu được sau mỗi tuần — manh mối quan trọng nhất của bạn.", "What you learn after each week — your most valuable clues."],
-["Chưa có dữ liệu — hãy chốt tuần đầu tiên.", "No data yet — lock in your first week."],
+["Thông tin thu được sau mỗi tuần – manh mối quan trọng nhất của bạn.", "What you learn after each week – your most valuable clues."],
+["Chưa có dữ liệu – hãy chốt tuần đầu tiên.", "No data yet – lock in your first week."],
 ["Vô địch Bến Phù Sa!", "Champion of Bến Phù Sa!"],
-["Á quân Bến Phù Sa — sát nút!", "Bến Phù Sa runner-up — so close!"],
-["Hạng 3 — thị trường khốc liệt", "3rd place — a brutal market"],
+["Á quân Bến Phù Sa – sát nút!", "Bến Phù Sa runner-up – so close!"],
+["Hạng 3 – thị trường khốc liệt", "3rd place – a brutal market"],
 ["Về chót… nhưng bài học là thật", "Last place… but the lessons are real"],
 ["🔄 Chơi lại", "🔄 Play again"],
 ["🎓 Câu hỏi tổng kết (thảo luận cùng lớp)", "🎓 Debrief questions (for class discussion)"],
@@ -1890,10 +1890,10 @@
 ["Đang gửi…", "Sending…"],
 ["Nhập Mã lớp trước đã nhé.", "Please enter your Class code first."],
 ["✅ Đã nộp! Kết quả đã hiện trên bảng của giảng viên.", "✅ Submitted! Your result now shows on the instructor's board."],
-["⚠️ Chưa gửi được — kiểm tra mạng rồi thử lại.", "⚠️ Could not send — check your connection and try again."],
-["🧺 Gánh Hàng Khởi Nghiệp — kết quả lớp", "🧺 Entrepreneurial Street Vendor — class results"],
+["⚠️ Chưa gửi được – kiểm tra mạng rồi thử lại.", "⚠️ Could not send – check your connection and try again."],
+["🧺 Gánh Hàng Khởi Nghiệp – kết quả lớp", "🧺 Entrepreneurial Street Vendor – class results"],
 ["Hộ Chiếu Thương Hiệu", "Brand Passport"],
-["BizOn Go Global: chọn 1 trong 4 doanh nghiệp, đưa thương hiệu Việt từ Vàm Thịnh ra 6 thị trường giả tưởng — sương mù thông tin, đàm phán đối tác, sự kiện bất định; thành công đo bằng 5 chiều: lợi nhuận, uy tín, năng lực, thích ứng, bền vững.", "BizOn Go Global: pick 1 of 4 companies and take a Vietnamese brand from Vàm Thịnh to 6 fictional markets — information fog, partner negotiation, uncertain events; success measured in 5 dimensions: profit, reputation, capability, adaptability, sustainability."],
+["BizOn Go Global: chọn 1 trong 4 doanh nghiệp, đưa thương hiệu Việt từ Vàm Thịnh ra 6 thị trường giả tưởng – sương mù thông tin, đàm phán đối tác, sự kiện bất định; thành công đo bằng 5 chiều: lợi nhuận, uy tín, năng lực, thích ứng, bền vững.", "BizOn Go Global: pick 1 of 4 companies and take a Vietnamese brand from Vàm Thịnh to 6 fictional markets – information fog, partner negotiation, uncertain events; success measured in 5 dimensions: profit, reputation, capability, adaptability, sustainability."],
 ["Sinh viên nộp từ màn kết thúc của game (cùng Mã lớp). Mỗi người tính ván có hiệu suất cao nhất; hạng là thứ hạng so với 3 đối thủ AI trong ván đó.", "Students submit from the game's end screen (same Class code). Each player counts their best-efficiency run; rank is their placing against the 3 AI rivals in that run."],
 ["Sinh viên", "Student"],
 ["Hiệu suất", "Efficiency"],
@@ -1905,20 +1905,20 @@
 ["Bài học nào áp dụng được cho khởi nghiệp thật?", "Which lessons carry over to real startups?"]
 ]);
   var SPECIAL = [
-    { page: 'food-truck', sel: 'header p.text-sm', en: "You are the founder of a street-food startup in <b>Bến Phù Sa</b> — a fictional river town inspired by Vietnam's Mekong Delta. Each week, pick <b>Method – Product – Location</b>. Goal: the highest total revenue after 5 weeks. The secret is to <b>test fast, then scale at the right moment</b>." },
-    { page: 'food-truck', sel: '#ft-intro ul li:nth-child(1)', en: "🛵 <b>Mobile vending cart</b>: revenue <b>×3</b> — but product &amp; location are locked for the whole week. For when you already <i>know</i> the winning formula." },
-    { page: 'food-truck', sel: '#ft-intro ul li:nth-child(2)', en: "🧺 <b>Street hawking</b>: ~1/3 the revenue — but you weave through every market lane and pick up <b>lots of market intel</b>. The experimenter's weapon." },
+    { page: 'food-truck', sel: 'header p.text-sm', en: "You are the founder of a street-food startup in <b>Bến Phù Sa</b> – a fictional river town inspired by Vietnam's Mekong Delta. Each week, pick <b>Method – Product – Location</b>. Goal: the highest total revenue after 5 weeks. The secret is to <b>test fast, then scale at the right moment</b>." },
+    { page: 'food-truck', sel: '#ft-intro ul li:nth-child(1)', en: "🛵 <b>Mobile vending cart</b>: revenue <b>×3</b> – but product &amp; location are locked for the whole week. For when you already <i>know</i> the winning formula." },
+    { page: 'food-truck', sel: '#ft-intro ul li:nth-child(2)', en: "🧺 <b>Street hawking</b>: ~1/3 the revenue – but you weave through every market lane and pick up <b>lots of market intel</b>. The experimenter's weapon." },
     { page: 'food-truck', sel: '#ft-intro ul li:nth-child(3)', en: "📋 <b>Market survey</b>: spend a full week not selling and receive <b>historical data</b> (directionally right, possibly outdated)." },
-    { page: 'food-truck', sel: '#ft-intro ul li:nth-child(4)', en: "🎯 True demand for each <b>Product × Location</b> pair is hidden — different every game. Weekly observation is your best clue." },
+    { page: 'food-truck', sel: '#ft-intro ul li:nth-child(4)', en: "🎯 True demand for each <b>Product × Location</b> pair is hidden – different every game. Weekly observation is your best clue." },
     { page: 'food-truck', sel: '#ft-intro ul li:nth-child(5)', en: "🧾 Each product runs a different operating model: 🥖 <b>bánh mì</b> serves fast (extra upside in peak weeks) · 🍧 <b>sweet soup</b> needs careful storage (occasional spoilage) · ☕ <b>phin coffee</b> has high margins but brews slowly." },
-    { page: 'food-truck', sel: '#ft-intro ul li:nth-child(6)', en: "⚔️ <b>3 AI rivals</b> — Alpha Dynamics 🐺, Mekong Ventures 🐘, Star Clay Co. 🦚 — also trade all over Bến Phù Sa. Share a location and you <b>split the customers</b>!" },
+    { page: 'food-truck', sel: '#ft-intro ul li:nth-child(6)', en: "⚔️ <b>3 AI rivals</b> – Alpha Dynamics 🐺, Mekong Ventures 🐘, Star Clay Co. 🦚 – also trade all over Bến Phù Sa. Share a location and you <b>split the customers</b>!" },
     { page: 'food-truck', sel: '#ft-end ol li:nth-child(3)', en: "How did you balance <b>learning</b> (street hawking) and <b>scaling</b> (mobile vending cart)?" },
-    { page: 'food-truck', sel: '#ft-end ol + p', en: "💡 Core lesson: <b>test cheap and fast first</b> (prototype by street hawking); only when the signal is clear do you <b>bet big</b> (mobile vending cart). Historical data is directional — direct observation is gold." },
-    { page: 'food-truck', sel: '#ft-end ol + p + p', en: "📰 True story: Croatian founder <b>Matko Kmezic</b> runs the «Viet Drip» phin-coffee cart with low plastic stools, Vietnamese-sidewalk style, in Amsterdam — selling just 3–4 cups a day at first, patiently explaining robusta to every customer, until people started queueing. Exactly this game's lesson: test small, learn fast, scale at the right time. <a href=\"https://znews.vn/xe-ca-phe-phin-ghe-nhua-do-kieu-viet-o-ha-lan-post1672015.html\" target=\"_blank\" rel=\"noopener\" class=\"underline font-bold\">Znews, Jul 26, 2026 →</a>" },
-    { page: 'giang-vien', sel: 'header p.max-w-2xl', en: "Watch teams submit results <b>live during class</b>: the leaderboard refreshes every 10 seconds, a timeline logs every locked round, and CSV export makes grading easy. Data opens only with the <b>Instructor key</b> — students cannot see each other's data." },
-    { page: 'khao-sat-online', sel: 'header .max-w-3xl p', en: "An <b>anonymous</b> survey used only to improve the game and for educational research. There are no answers that earn grades — please answer honestly based on what you know right now." },
+    { page: 'food-truck', sel: '#ft-end ol + p', en: "💡 Core lesson: <b>test cheap and fast first</b> (prototype by street hawking); only when the signal is clear do you <b>bet big</b> (mobile vending cart). Historical data is directional – direct observation is gold." },
+    { page: 'food-truck', sel: '#ft-end ol + p + p', en: "📰 True story: Croatian founder <b>Matko Kmezic</b> runs the «Viet Drip» phin-coffee cart with low plastic stools, Vietnamese-sidewalk style, in Amsterdam – selling just 3–4 cups a day at first, patiently explaining robusta to every customer, until people started queueing. Exactly this game's lesson: test small, learn fast, scale at the right time. <a href=\"https://znews.vn/xe-ca-phe-phin-ghe-nhua-do-kieu-viet-o-ha-lan-post1672015.html\" target=\"_blank\" rel=\"noopener\" class=\"underline font-bold\">Znews, Jul 26, 2026 →</a>" },
+    { page: 'giang-vien', sel: 'header p.max-w-2xl', en: "Watch teams submit results <b>live during class</b>: the leaderboard refreshes every 10 seconds, a timeline logs every locked round, and CSV export makes grading easy. Data opens only with the <b>Instructor key</b> – students cannot see each other's data." },
+    { page: 'khao-sat-online', sel: 'header .max-w-3xl p', en: "An <b>anonymous</b> survey used only to improve the game and for educational research. There are no answers that earn grades – please answer honestly based on what you know right now." },
     { sel: '#top h1', en: "Build your<br><span class=\"hero-grad\">business</span> empire" },
-    { sel: '#top .max-w-6xl > div > p.mt-5', en: "Run your company through <b class=\"text-white\">6 fierce market rounds</b> — pricing, production, marketing, fundraising — outsmarting 3 AI rivals with advisor <b class=\"lumina-name font-display\">Lumina AI</b> <span class=\"signature text-lg text-white\">Je m'appelle Hương</span> at your side. All inside a one-of-a-kind 3D clay world." }
+    { sel: '#top .max-w-6xl > div > p.mt-5', en: "Run your company through <b class=\"text-white\">6 fierce market rounds</b> – pricing, production, marketing, fundraising – outsmarting 3 AI rivals with advisor <b class=\"lumina-name font-display\">Lumina AI</b> <span class=\"signature text-lg text-white\">Je m'appelle Hương</span> at your side. All inside a one-of-a-kind 3D clay world." }
   ];
 
   function langBtnSync(lang) {

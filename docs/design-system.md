@@ -1,4 +1,4 @@
-# Design System — BizOn Bật Nghiệp 2026 (3D Claymorphism)
+# Design System – BizOn Bật Nghiệp 2026 (3D Claymorphism)
 
 Hệ thống thiết kế chính thức của BizOn Bật Nghiệp.
 
@@ -13,8 +13,8 @@ Hệ thống thiết kế chính thức của BizOn Bật Nghiệp.
 | Deep Teal | `#033337` | Headings, text tương phản cao |
 
 ### Typography
-- **Plus Jakarta Sans** — Headline / Display
-- **Manrope** — Body / Reports
+- **Plus Jakarta Sans** – Headline / Display
+- **Manrope** – Body / Reports
 
 ### Bo góc & đổ bóng (Clay Effect)
 - Border radius card/button: `24px`
@@ -40,11 +40,11 @@ Hệ thống thiết kế chính thức của BizOn Bật Nghiệp.
 - **Biến cố thị trường (Suy thoái):** class `animate-shake` (CSS keyframes).
 
 ## Nhân vật & thương hiệu
-- Cố vấn AI **Lumina — "Je m'appelle Hương"** (2 phiên bản: Office Suit quốc tế, Áo dài Việt Nam).
+- Cố vấn AI **Lumina – "Je m'appelle Hương"** (2 phiên bản: Office Suit quốc tế, Áo dài Việt Nam).
 - Logo chữ **B 3D** gradient Primary → Primary Container.
 - Bộ icon menu 3D: Trang chủ, Kỹ năng, Hồ sơ, Nhiệm vụ, Bảng xếp hạng, Cửa hàng, Cài đặt.
 
 > Ảnh nhân vật Lumina đã được tích hợp tại `assets/character/`:
-> `lumina-ao-dai.png` (bản Việt Nam — màn hình Splash, Đăng nhập, Chứng chỉ) và
-> `lumina-vest.png` (bản công sở — Dashboard, Cố vấn AI, khung chat).
-> Bộ icon menu 3D hiện dùng emoji placeholder — sẽ thay bằng bộ icon 3D độc quyền.
+> `lumina-ao-dai.png` (bản Việt Nam – màn hình Splash, Đăng nhập, Chứng chỉ) và
+> `lumina-vest.png` (bản công sở – Dashboard, Cố vấn AI, khung chat).
+> Bộ icon menu 3D hiện dùng emoji placeholder – sẽ thay bằng bộ icon 3D độc quyền.

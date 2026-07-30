@@ -1,4 +1,4 @@
-# API Architecture Guide — BizOn Bật Nghiệp 2026
+# API Architecture Guide – BizOn Bật Nghiệp 2026
 
 - **Base URL:** `https://api.bizon2026.com/v1`
 - **Auth:** Bearer Token (JWT) trong header
@@ -33,7 +33,7 @@ Khóa và gửi quyết định (đẩy vào queue xử lý).
 ## Lumina AI Advisor
 
 ### `GET /ai/advisor/suggestions`
-Kịch bản "Nếu — Thì" hiển thị qua nhân vật Je m'appelle Hương.
+Kịch bản "Nếu – Thì" hiển thị qua nhân vật Je m'appelle Hương.
 
 ```json
 {
@@ -45,12 +45,12 @@ Kịch bản "Nếu — Thì" hiển thị qua nhân vật Je m'appelle Hương.
 
 ## Shop & Inventory
 
-- `POST /shop/purchase` — body `{"item_id": "MKT_BOOST_01"}`; trừ ví ảo, thêm vào inventory.
-- `GET /inventory` — danh sách item/blueprint của đội.
+- `POST /shop/purchase` – body `{"item_id": "MKT_BOOST_01"}`; trừ ví ảo, thêm vào inventory.
+- `GET /inventory` – danh sách item/blueprint của đội.
 
 ## Instructor API
 
-- `POST /instructor/grant-funds` — body `{"target_team_id": "T001", "amount": 500000}`.
+- `POST /instructor/grant-funds` – body `{"target_team_id": "T001", "amount": 500000}`.
 
 ## Error Codes
 

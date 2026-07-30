@@ -1,4 +1,4 @@
-/* BizOn — Dock tiện ích toàn site (theo mẫu trang M-AIDA)
+/* BizOn – Dock tiện ích toàn site (theo mẫu trang M-AIDA)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú.
  *
  * Nút ⋯ nổi góc trái dưới, mở panel: nhạc nền BizOn Theme, chế độ
@@ -8,17 +8,17 @@
 (function () {
   var IS_GAME = /game\.html$/.test(location.pathname); // game có hệ nhạc riêng
   var SITE_URL = 'https://thuyhuongctu.github.io/BizOn/';
-  /* Playlist toàn bộ ca khúc gốc — phát nối tiếp đến hết rồi tự lặp lại từ đầu.
-   * Tên bài theo đúng Kho Âm nhạc (am-nhac.html) — nguồn chuẩn của hệ sinh thái. */
+  /* Playlist toàn bộ ca khúc gốc – phát nối tiếp đến hết rồi tự lặp lại từ đầu.
+   * Tên bài theo đúng Kho Âm nhạc (am-nhac.html) – nguồn chuẩn của hệ sinh thái. */
   var PLAYLIST = [
     ['Hương on Return ⭐ (bài hát chính)', 'huong-on-return.mp3'],
-    ['Hương on Return — remix (remastered)', 'huong-on-return-remix.mp3'],
+    ['Hương on Return – remix (remastered)', 'huong-on-return-remix.mp3'],
     ['Bật Nghiệp (instrumental · V-pop 112 BPM)', 'bat-nghiep.mp3'],
     ['BizOn Theme (instrumental)', 'bizon-theme.mp3'],
     ['Vừa Đủ Để Bay Cao', 'vua-du-de-bay-cao.mp3'],
     ['Journey on the Golden Silt', 'journey-golden-silt.mp3'],
-    ['Journey on the Golden Silt — remix', 'journey-golden-silt-remix.mp3'],
-    ['Journey on the Golden Silt — remix «Mekong River»', 'mekong-river-remix.mp3'],
+    ['Journey on the Golden Silt – remix', 'journey-golden-silt-remix.mp3'],
+    ['Journey on the Golden Silt – remix «Mekong River»', 'mekong-river-remix.mp3'],
     ["Je m'appelle Hương sans frontières (tiếng Việt)", 'huong-and-the-world.mp3'],
     ['Hương et le Monde (tiếng Pháp)', 'huong-et-le-monde.mp3'],
     ['Mon histoire', 'mon-histoire.mp3'],
@@ -65,7 +65,7 @@
 
   var dock = document.createElement('div');
   dock.id = 'bz-dock';
-  var shareText = encodeURIComponent('BizOn Bật Nghiệp — trò chơi mô phỏng kinh doanh 3D cho đào tạo khởi nghiệp');
+  var shareText = encodeURIComponent('BizOn Bật Nghiệp – trò chơi mô phỏng kinh doanh 3D cho đào tạo khởi nghiệp');
   var pageUrl = encodeURIComponent(SITE_URL);
   dock.innerHTML =
     '<p class="bz-cap">🎛️ Tiện ích · Quick controls</p>' +
@@ -123,7 +123,7 @@
     tick();
     setInterval(tick, 20000);
 
-    /* Nhạc nền — playlist nối tiếp toàn bộ ca khúc, hết danh sách tự quay lại
+    /* Nhạc nền – playlist nối tiếp toàn bộ ca khúc, hết danh sách tự quay lại
      * từ đầu; chỉ phát khi người dùng bấm (đúng chính sách autoplay) */
     var audio = null, trackIdx = 0;
     var musicBtn = document.getElementById('bz-music');
@@ -161,7 +161,7 @@
     }
 
     /* API cho các trang game gọi: phát đúng bài chủ đề bằng CHÍNH trình phát
-     * của dock — tránh hai nguồn nhạc chồng nhau, UI dock cũng đồng bộ theo. */
+     * của dock – tránh hai nguồn nhạc chồng nhau, UI dock cũng đồng bộ theo. */
     window.BizonDock = {
       play: function (file) {
         var i = PLAYLIST.findIndex(function (t) { return t[1] === file; });
@@ -175,7 +175,7 @@
       isPlaying: function () { return !!(audio && !audio.paused); },
     };
 
-    /* Sáng / Tối — dùng toggleTheme của site-ui, thiếu thì tự lo */
+    /* Sáng / Tối – dùng toggleTheme của site-ui, thiếu thì tự lo */
     var themeBtn = document.getElementById('bz-theme');
     function syncTheme() { themeBtn.textContent = document.documentElement.dataset.theme === 'dark' ? '☀️' : '🌙'; }
     themeBtn.addEventListener('click', function () {
@@ -189,7 +189,7 @@
     });
     syncTheme();
 
-    /* VI / EN — dùng cơ chế của từng trang; trang không hỗ trợ thì ẩn */
+    /* VI / EN – dùng cơ chế của từng trang; trang không hỗ trợ thì ẩn */
     var langBtn = document.getElementById('bz-lang');
     if (typeof window.toggleLang !== 'function') { langBtn.style.display = 'none'; }
     else {
