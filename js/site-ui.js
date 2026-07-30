@@ -1572,9 +1572,267 @@
 [
 "Trang cá nhân Đỗ Thùy Hương",
 "Do Thuy Huong's personal page"
+],
+[
+"Dành cho giảng viên · Pilot Classroom",
+"For instructors · Pilot Classroom"
+],
+[
+"Bảng điều khiển lớp học",
+"Classroom dashboard"
+],
+[
+"🔑 Kết nối lớp",
+"🔑 Connect your class"
+],
+[
+"Mã lớp học (sinh viên nhập khi đăng nhập game)",
+"Class ID (students enter it at game login)"
+],
+[
+"Khóa giảng viên",
+"Instructor key"
+],
+[
+"📡 Theo dõi lớp",
+"📡 Watch class"
+],
+[
+"Chưa kết nối. Nhập Mã lớp + Khóa giảng viên rồi bấm \"Theo dõi lớp\".",
+"Not connected. Enter the Class ID + Instructor key, then press \"Watch class\"."
+],
+[
+"⬇️ Xuất CSV",
+"⬇️ Export CSV"
+],
+[
+"📋 CSV khảo sát",
+"📋 Survey CSV"
+],
+[
+"Đội",
+"Team"
+],
+[
+"Vòng",
+"Round"
+],
+[
+"Số dư",
+"Balance"
+],
+[
+"Lượt nộp",
+"Submissions"
+],
+[
+"Nộp gần nhất",
+"Last submitted"
+],
+[
+"Xếp theo thị phần của vòng cao nhất mỗi đội. Một đội chơi lại vòng sẽ tính lần nộp mới nhất.",
+"Ranked by market share of each team's highest locked round. Replays count the latest submission."
+],
+[
+"⏱️ Dòng thời gian nộp bài",
+"⏱️ Submission timeline"
+],
+[
+"📊 Phân tích khảo sát trước–sau",
+"📊 Pre–post survey analysis"
+],
+[
+"🔬 Phân tích ngay",
+"🔬 Analyze now"
+],
+[
+"Ghép cặp phiếu trước–sau theo mã tự đặt (lấy lần nộp mới nhất mỗi phiếu) và tính sẵn các chỉ số nghiên cứu. Muốn dữ liệu thô đầy đủ thì dùng nút \"CSV khảo sát\" ở trên.",
+"Pairs pre–post surveys by self-chosen code (latest submission each) and computes the key research metrics. For full raw data use the \"Survey CSV\" button above."
+],
+[
+"Bấm \"Phân tích ngay\" sau khi lớp đã nộp phiếu.",
+"Press \"Analyze now\" once the class has submitted surveys."
+],
+[
+"❓ Hướng dẫn nhanh",
+"❓ Quick guide"
+],
+[
+"Phiếu trước",
+"Pre surveys"
+],
+[
+"Phiếu sau",
+"Post surveys"
+],
+[
+"Cặp ghép được",
+"Matched pairs"
+],
+[
+"theo mã tự đặt",
+"by self-code"
+],
+[
+"Điểm giới thiệu TB",
+"Avg. recommend score"
+],
+[
+"Δ Kiến thức",
+"Δ Knowledge"
+],
+[
+"Δ Tự tin",
+"Δ Confidence"
+],
+[
+"ảnh hưởng lớn",
+"large effect"
+],
+[
+"ảnh hưởng vừa",
+"medium effect"
+],
+[
+"ảnh hưởng nhỏ",
+"small effect"
+],
+[
+"chưa rõ ảnh hưởng",
+"unclear effect"
+],
+[
+"cần cặp trước–sau",
+"needs pre–post pairs"
+],
+[
+"cần ≥ 2 cặp",
+"needs ≥ 2 pairs"
+],
+[
+"Chuẩn đầu ra (cụm 3 câu)",
+"Learning outcome (3-item cluster)"
+],
+[
+"Trước /3",
+"Pre /3"
+],
+[
+"Sau /3",
+"Post /3"
+],
+[
+"Giá & marketing",
+"Pricing & marketing"
+],
+[
+"Tài chính",
+"Finance"
+],
+[
+"Vận hành",
+"Operations"
+],
+[
+"KD quốc tế",
+"International business"
+],
+[
+"Chiến lược",
+"Strategy"
+],
+[
+"📚 Kịch bản lớp học",
+"📚 Classroom playbook"
+],
+[
+"🎮 Vào game",
+"🎮 Play the game"
+],
+[
+"Lớp thử nghiệm · Ẩn danh",
+"Pilot class · Anonymous"
+],
+[
+"Khảo sát trước–sau BizOn",
+"BizOn pre–post survey"
+],
+[
+"📋 Thông tin phiếu",
+"📋 Survey info"
+],
+[
+"Bạn đang làm phiếu nào?",
+"Which survey are you taking?"
+],
+[
+"Mã tự đặt — 2 chữ cái + 2 số (nhớ dùng lại ở phiếu sau)",
+"Self-chosen code — 2 letters + 2 digits (reuse it on the post survey)"
+],
+[
+"Mã lớp học (giảng viên phát)",
+"Class ID (from your instructor)"
+],
+[
+"Vai trò trong đội",
+"Your team role"
+],
+[
+"Số vòng đã chơi",
+"Rounds played"
+],
+[
+"🧠 Phần A — Kiến thức kinh doanh",
+"🧠 Part A — Business knowledge"
+],
+[
+"Chọn một đáp án mỗi câu (15 câu).",
+"Pick one answer per question (15 questions — in Vietnamese to keep the research instrument consistent)."
+],
+[
+"💪 Phần B — Mức độ tự tin",
+"💪 Part B — Confidence"
+],
+[
+"1 = hoàn toàn không tự tin · 5 = rất tự tin",
+"1 = not confident at all · 5 = very confident"
+],
+[
+"🎮 Phần C — Trải nghiệm với BizOn",
+"🎮 Part C — Your BizOn experience"
+],
+[
+"1 = hoàn toàn không đồng ý · 5 = hoàn toàn đồng ý",
+"1 = strongly disagree · 5 = strongly agree"
+],
+[
+"Trên thang 0–10, bạn sẵn lòng giới thiệu BizOn cho bạn học khác ở mức nào?",
+"On a 0–10 scale, how likely are you to recommend BizOn to a classmate?"
+],
+[
+"Điều bạn thích nhất ở BizOn?",
+"What did you like most about BizOn?"
+],
+[
+"Điều gì còn khó hiểu hoặc cần cải thiện?",
+"What was confusing or could be improved?"
+],
+[
+"Kiểm tra kỹ rồi bấm nộp — mỗi phiếu chỉ nộp một lần.",
+"Double-check your answers — each survey can be submitted only once."
+],
+[
+"📨 Nộp phiếu",
+"📨 Submit survey"
+],
+[
+"🖨️ Bản in A4",
+"🖨️ Printable A4"
 ]
 ]);
   var SPECIAL = [
+    { page: 'giang-vien', sel: 'header p.max-w-2xl', en: "Watch teams submit results <b>live during class</b>: the leaderboard refreshes every 10 seconds, a timeline logs every locked round, and CSV export makes grading easy. Data opens only with the <b>Instructor key</b> — students cannot see each other's data." },
+    { page: 'khao-sat-online', sel: 'header .max-w-3xl p', en: "An <b>anonymous</b> survey used only to improve the game and for educational research. There are no answers that earn grades — please answer honestly based on what you know right now." },
     { sel: '#top h1', en: "Build your<br><span class=\"hero-grad\">business</span> empire" },
     { sel: '#top .max-w-6xl > div > p.mt-5', en: "Run your company through <b class=\"text-white\">6 fierce market rounds</b> — pricing, production, marketing, fundraising — outsmarting 3 AI rivals with advisor <b class=\"lumina-name font-display\">Lumina AI</b> <span class=\"signature text-lg text-white\">Je m'appelle Hương</span> at your side. All inside a one-of-a-kind 3D clay world." }
   ];
@@ -1588,7 +1846,7 @@
   }
 
   window.applyLang = function (lang) {
-    document.querySelectorAll('h1,h2,h3,h4,p,a,button,span,b').forEach(function (el) {
+    document.querySelectorAll('h1,h2,h3,h4,p,a,button,span,b,label,th,td,li,small').forEach(function (el) {
       if (el.childElementCount) return;
       var vi = el.dataset.vi || el.textContent.trim();
       if (!EN.has(vi)) return;
@@ -1597,6 +1855,7 @@
       if (el.textContent !== want) el.textContent = want;
     });
     SPECIAL.forEach(function (s) {
+      if (s.page && location.pathname.indexOf(s.page) === -1) return;
       var el = document.querySelector(s.sel);
       if (!el) return;
       if (!el.dataset.viHtml) el.dataset.viHtml = el.innerHTML;

@@ -7,8 +7,22 @@
  * thì dock tự dùng cơ chế dự phòng hoặc ẩn nút tương ứng. */
 (function () {
   var IS_GAME = /game\.html$/.test(location.pathname); // game có hệ nhạc riêng
-  var MUSIC_SRC = 'assets/audio/bizon-theme.mp3';
   var SITE_URL = 'https://thuyhuongctu.github.io/BizOn/';
+  /* Playlist toàn bộ ca khúc gốc — phát nối tiếp đến hết rồi tự lặp lại từ đầu */
+  var PLAYLIST = [
+    ['BizOn Theme', 'bizon-theme.mp3'],
+    ['Bật Nghiệp', 'bat-nghiep.mp3'],
+    ['Journey on the Golden Silt', 'journey-golden-silt.mp3'],
+    ['Hương and the World', 'huong-and-the-world.mp3'],
+    ['Hương et le monde', 'huong-et-le-monde.mp3'],
+    ['Hương on Return', 'huong-on-return.mp3'],
+    ['Mekong Compass', 'mekong-compass.mp3'],
+    ['Mekong River (remix)', 'mekong-river-remix.mp3'],
+    ['Mon histoire', 'mon-histoire.mp3'],
+    ['Vừa đủ để bay cao', 'vua-du-de-bay-cao.mp3'],
+    ['And the World Say Hello', 'and-the-world-say-hello.mp3'],
+    ['Journey on the Golden Silt (remix)', 'journey-golden-silt-remix.mp3'],
+  ];
 
   /* ---------- CSS ---------- */
   var css = document.createElement('style');
@@ -51,10 +65,12 @@
   dock.innerHTML =
     '<p class="bz-cap">🎛️ Tiện ích · Quick controls</p>' +
     '<div class="bz-row">' +
-      (IS_GAME ? '' : '<button class="bz-chip" id="bz-music" title="Nhạc nền BizOn Theme">🎵</button>') +
+      (IS_GAME ? '' : '<button class="bz-chip" id="bz-music" title="Phát/dừng playlist BizOn (12 ca khúc, tự lặp lại)">🎵</button>' +
+        '<button class="bz-chip" id="bz-next" title="Bài kế tiếp">⏭️</button>') +
       '<button class="bz-chip" id="bz-theme" title="Sáng / Tối · Light / Dark">🌙</button>' +
       '<button class="bz-chip" id="bz-lang" title="Tiếng Việt / English" style="width:auto;padding:0 14px;font-size:12px;font-weight:800">EN</button>' +
     '</div>' +
+    (IS_GAME ? '' : '<p id="bz-track" style="font-size:11px;font-weight:700;opacity:.55;margin:8px 2px 0;display:none">🎶</p>') +
     '<hr>' +
     '<p class="bz-cap">🌏 Đồng hồ thế giới · World clocks</p>' +
     '<div class="bz-clock">🇻🇳<span><small>Việt Nam</small><b id="bz-t-vn">--:--</b></span><span class="bz-sub" id="bz-d-vn"></span></div>' +
@@ -102,15 +118,41 @@
     tick();
     setInterval(tick, 20000);
 
-    /* Nhạc nền — chỉ phát khi người dùng bấm (đúng chính sách autoplay) */
-    var audio = null;
+    /* Nhạc nền — playlist nối tiếp toàn bộ ca khúc, hết danh sách tự quay lại
+     * từ đầu; chỉ phát khi người dùng bấm (đúng chính sách autoplay) */
+    var audio = null, trackIdx = 0;
     var musicBtn = document.getElementById('bz-music');
+    var nextBtn = document.getElementById('bz-next');
+    var trackEl = document.getElementById('bz-track');
+    function showTrack() {
+      if (trackEl) { trackEl.style.display = 'block'; trackEl.textContent = '🎶 ' + (trackIdx + 1) + '/' + PLAYLIST.length + ' · ' + PLAYLIST[trackIdx][0]; }
+    }
+    function playTrack(i) {
+      trackIdx = ((i % PLAYLIST.length) + PLAYLIST.length) % PLAYLIST.length;
+      if (!audio) {
+        audio = new Audio();
+        audio.volume = 0.55;
+        audio.addEventListener('ended', function () { playTrack(trackIdx + 1); }); // hết bài → bài kế; hết danh sách → vòng lại
+        audio.addEventListener('error', function () { if (!audio.paused) playTrack(trackIdx + 1); }); // bài lỗi mạng → bỏ qua
+      }
+      audio.src = 'assets/audio/' + PLAYLIST[trackIdx][1];
+      audio.play().catch(function () {});
+      musicBtn.classList.add('on');
+      musicBtn.title = 'Tắt nhạc';
+      showTrack();
+    }
     if (musicBtn) {
       musicBtn.addEventListener('click', function () {
-        if (!audio) { audio = new Audio(MUSIC_SRC); audio.loop = true; audio.volume = 0.55; }
-        if (audio.paused) { audio.play().catch(function () {}); musicBtn.classList.add('on'); musicBtn.title = 'Tắt nhạc nền'; }
-        else { audio.pause(); musicBtn.classList.remove('on'); musicBtn.title = 'Nhạc nền BizOn Theme'; }
+        if (!audio || audio.paused) {
+          if (audio && audio.src) { audio.play().catch(function () {}); musicBtn.classList.add('on'); showTrack(); }
+          else playTrack(trackIdx);
+        } else {
+          audio.pause();
+          musicBtn.classList.remove('on');
+          musicBtn.title = 'Phát playlist BizOn (12 ca khúc, tự lặp lại)';
+        }
       });
+      nextBtn.addEventListener('click', function () { playTrack(trackIdx + 1); });
     }
 
     /* Sáng / Tối — dùng toggleTheme của site-ui, thiếu thì tự lo */
