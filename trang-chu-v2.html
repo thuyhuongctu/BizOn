@@ -88,10 +88,11 @@
   /* ---------- SÁNG LẬP ---------- */
   .founder{display:grid;gap:var(--s-4);grid-template-columns:88px 1fr;align-items:start}
   .founder__ph{width:88px;height:112px;border-radius:var(--r-md);object-fit:cover;object-position:50% 18%}
-  .founder__mono{width:88px;height:112px;border-radius:var(--r-md);display:grid;place-items:center;
-    background:linear-gradient(160deg,color-mix(in srgb,var(--teal-600) 16%,transparent),
-                                      color-mix(in srgb,var(--navy-800) 12%,transparent));
-    font-family:var(--font-display);font-size:1.7rem;color:var(--ink)}
+  /* Ảnh nhân vật có nền trong suốt: cover sẽ cắt cụt chân, nên dùng contain
+     trên một nền nhạt để giữ đủ dáng người. */
+  img.founder__ph[src*="lumina"]{object-fit:contain;object-position:50% 100%;
+    background:linear-gradient(160deg,color-mix(in srgb,var(--teal-600) 14%,transparent),
+                                      color-mix(in srgb,var(--navy-800) 10%,transparent))}
   .chips{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.6rem}
   .links{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:.7rem;font-size:var(--t-sm);font-weight:700}
   .links a{color:var(--teal-ink);text-decoration:none;border-bottom:1.5px solid currentColor}
@@ -273,7 +274,8 @@
     <div class="g g-2 bz-reveal bz-stagger">
       <div class="bz-card">
         <div class="founder">
-          <div class="founder__mono" aria-hidden="true">ĐTH</div>
+          <img class="founder__ph" src="assets/character/lumina-vest.png"
+               alt="Đỗ Thùy Hương – thể hiện qua tạo hình nhân vật Lumina" loading="lazy">
           <div>
             <h3 class="bz-h3" style="margin:0">Đỗ Thùy Hương</h3>
             <p class="bz-eyebrow" style="margin:.2rem 0 .4rem">Founder &amp; Project Lead</p>
@@ -322,8 +324,9 @@
     </div>
 
     <p class="bz-muted bz-reveal" style="font-size:var(--t-xs);margin-top:var(--s-4);max-width:var(--measure)">
-      <b>Lumina</b> và <b>Victor Lâm</b> ở phần đầu trang là <b>nhân vật hư cấu</b> của hệ sinh thái BizOn,
-      không phải chân dung người thật. Hai nhà sáng lập có hồ sơ riêng ngay trên đây.
+      <b>Lumina</b> là nhân vật do Đỗ Thùy Hương thiết kế, vừa đóng vai cố vấn học tập AI trong game
+      vừa là hình đại diện của chị trong hệ sinh thái. <b>Victor Lâm</b> ở phần đầu trang là nhân vật hư cấu
+      chuyên trách quốc tế hoá. Cả hai đều là tạo hình 3D, không phải ảnh chụp.
     </p>
   </div>
 </section>
