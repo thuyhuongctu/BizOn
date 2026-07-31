@@ -12,8 +12,13 @@
 <script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
 <script src="js/backend-config.js"></script>
 <script src="js/error-log.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Phong nap khong chan hien thi: media="print" -> onload doi ve "all".
+     Neu Google Fonts cham hoac bi chan, trang van hien ngay bang phong du phong. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"></noscript>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
   html { background:#f4faff; scroll-behavior:smooth; }
   body { font-family:'Manrope',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
   .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
@@ -107,7 +112,7 @@
   <section class="pt-10 pb-8">
     <div class="grid grid-cols-1 sm:grid-cols-[auto_1fr_auto] gap-4 sm:gap-6 items-end text-center">
       <div class="hidden sm:block">
-        <img src="assets/illustrations/lumina-holo-classroom.jpg" alt="Lumina – Cố vấn học tập AI – đứng lớp mô phỏng kinh doanh" class="h-64 w-48 object-cover object-top rounded-3xl shadow-xl mx-auto">
+        <img src="assets/illustrations/lumina-holo-classroom.webp" alt="Lumina – Cố vấn học tập AI – đứng lớp mô phỏng kinh doanh" class="h-64 w-48 object-cover object-top rounded-3xl shadow-xl mx-auto">
         <p class="inline-block mt-2 px-3 py-1 rounded-full text-[10px] font-extrabold" style="background:rgba(0,102,135,.09);color:#006687">NCS. Đỗ Thùy Hương · Founder – hóa thân Lumina AI</p>
       </div>
       <div class="self-center">
@@ -115,17 +120,17 @@
         <p class="text-sm sm:text-base text-deep-teal/60 mt-3 max-w-xl mx-auto">Ra quyết định dưới điều kiện không chắc chắn. Học kinh doanh bằng hậu quả của chính lựa chọn của bạn – nền tảng mô phỏng kinh doanh AI-enhanced với engine xác định, giải thích được.</p>
         <div class="grid grid-cols-2 gap-3 mt-4 sm:hidden">
           <div>
-            <img src="assets/illustrations/lumina-holo-classroom.jpg" alt="Lumina – Cố vấn học tập AI" class="h-40 w-full object-cover object-top rounded-2xl shadow-lg">
+            <img src="assets/illustrations/lumina-holo-classroom.webp" alt="Lumina – Cố vấn học tập AI" fetchpriority="high" decoding="async" class="h-40 w-full object-cover object-top rounded-2xl shadow-lg">
             <p class="text-[10px] font-extrabold mt-1.5" style="color:#006687">NCS. Đỗ Thùy Hương · Lumina AI</p>
           </div>
           <div>
-            <img src="assets/illustrations/anh-tu-lecture-hall.jpg" alt="Tú Phan – PGS.TS. Phan Anh Tú trên giảng đường" class="h-40 w-full object-cover object-top rounded-2xl shadow-lg">
+            <img src="assets/illustrations/anh-tu-lecture-hall.webp" alt="Tú Phan – PGS.TS. Phan Anh Tú trên giảng đường" fetchpriority="high" decoding="async" class="h-40 w-full object-cover object-top rounded-2xl shadow-lg">
             <p class="text-[10px] font-extrabold mt-1.5" style="color:#b95a1e">PGS.TS. Phan Anh Tú</p>
           </div>
         </div>
       </div>
       <div class="hidden sm:block">
-        <img src="assets/illustrations/anh-tu-lecture-hall.jpg" alt="Tú Phan – PGS.TS. Phan Anh Tú trên giảng đường" class="h-64 w-48 object-cover object-top rounded-3xl shadow-xl mx-auto">
+        <img src="assets/illustrations/anh-tu-lecture-hall.webp" alt="Tú Phan – PGS.TS. Phan Anh Tú trên giảng đường" class="h-64 w-48 object-cover object-top rounded-3xl shadow-xl mx-auto">
         <p class="inline-block mt-2 px-3 py-1 rounded-full text-[10px] font-extrabold" style="background:rgba(232,118,45,.1);color:#b95a1e">PGS.TS. Phan Anh Tú · Co-founder &amp; Chief Academic Advisor</p>
       </div>
     </div>
@@ -166,7 +171,7 @@
     <div class="eco-wrap mt-4">
       <div class="eco-ring"></div>
       <div class="eco-center text-center">
-        <img src="assets/illustrations/globe-trade.png" alt="Từ Việt Nam ra thế giới" class="h-28 w-auto drop-shadow-xl mx-auto">
+        <img src="assets/illustrations/globe-trade.webp" alt="Từ Việt Nam ra thế giới" loading="lazy" decoding="async" class="h-28 w-auto drop-shadow-xl mx-auto">
         <p class="font-display font-extrabold text-deep-teal text-sm mt-1">Từ Việt Nam ra thế giới</p>
         <p class="text-[10px] text-deep-teal/50 font-bold">BizOn Core · engine xác định</p>
       </div>
@@ -180,7 +185,7 @@
 
     <!-- Mobile: lưới -->
     <div class="eco-grid sm:hidden grid grid-cols-2 gap-3 mt-5">
-      <div class="col-span-2 text-center mb-1"><img src="assets/illustrations/globe-trade.png" alt="Từ Việt Nam ra thế giới" class="h-24 w-auto drop-shadow-xl mx-auto"><p class="font-display font-extrabold text-deep-teal text-sm mt-1.5">Từ Việt Nam ra thế giới – BizOn Core</p></div>
+      <div class="col-span-2 text-center mb-1"><img src="assets/illustrations/globe-trade.webp" alt="Từ Việt Nam ra thế giới" loading="lazy" decoding="async" class="h-24 w-auto drop-shadow-xl mx-auto"><p class="font-display font-extrabold text-deep-teal text-sm mt-1.5">Từ Việt Nam ra thế giới – BizOn Core</p></div>
       <a href="game.html" class="clay-card eco-card p-3 text-center"><p class="text-2xl">🎮</p><p class="text-[11px] font-extrabold text-deep-teal mt-0.5">Game Bật Nghiệp</p></a>
       <a href="brand-passport.html" class="clay-card eco-card p-3 text-center"><p class="text-2xl">🛂</p><p class="text-[11px] font-extrabold text-deep-teal mt-0.5">Hộ Chiếu Thương Hiệu</p></a>
       <a href="lop-hoc.html" class="clay-card eco-card p-3 text-center"><p class="text-2xl">🏫</p><p class="text-[11px] font-extrabold text-deep-teal mt-0.5">Lớp học &amp; Giải đấu</p></a>

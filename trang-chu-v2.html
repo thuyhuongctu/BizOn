@@ -12,7 +12,10 @@
 <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<!-- Phong nap khong chan hien thi: media="print" -> onload doi ve "all".
+     Neu Google Fonts cham hoac bi chan, trang van hien ngay bang phong du phong. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap"></noscript>
 <link rel="stylesheet" href="css/bizon-tokens.css">
 <link rel="stylesheet" href="css/bizon-components.css">
 <link rel="stylesheet" href="css/bizon-motion.css">
@@ -146,7 +149,7 @@
       <div class="stage__dots bz-par bz-par--particles" aria-hidden="true"></div>
 
       <div class="globe bz-par bz-par--globe bz-drift" aria-hidden="true">
-        <img src="assets/illustrations/globe-trade.png" alt="" loading="eager" width="230" height="230">
+        <img src="assets/illustrations/globe-trade.webp" alt="" loading="eager" width="230" height="230">
       </div>
 
       <img class="figure figure--l bz-par bz-par--figure bz-breathe" style="--phase:0s"
@@ -300,7 +303,7 @@
 
       <div class="bz-card">
         <div class="founder">
-          <img class="founder__ph" src="assets/illustrations/anh-tu-lecture-hall.jpg"
+          <img class="founder__ph" src="assets/illustrations/anh-tu-lecture-hall.webp"
                alt="PGS.TS. Phan Anh Tú trên giảng đường" loading="lazy">
           <div>
             <h3 class="bz-h3" style="margin:0">PGS.TS. Phan Anh Tú</h3>

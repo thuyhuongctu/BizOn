@@ -9,7 +9,10 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Phong nap khong chan hien thi: media="print" -> onload doi ve "all".
+     Neu Google Fonts cham hoac bi chan, trang van hien ngay bang phong du phong. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap"></noscript>
   <link rel="stylesheet" href="css/tw.css">
   <link rel="stylesheet" href="css/bizon-academia3d.css">
   <style>
@@ -116,11 +119,11 @@
         </article>
 
         <figure class="hero-avatar hero-avatar-a" data-depth="3">
-          <img src="assets/illustrations/lumina-holo-classroom.jpg" alt="Lumina AI learning advisor in the BizOn ecosystem" loading="eager">
+          <img src="assets/illustrations/lumina-holo-classroom.webp" alt="Lumina AI learning advisor in the BizOn ecosystem" loading="eager">
           <figcaption>Lumina · AI Learning Advisor</figcaption>
         </figure>
         <figure class="hero-avatar hero-avatar-b" data-depth="2">
-          <img src="assets/illustrations/anh-tu-lecture-hall.jpg" alt="Academic advisor in BizOn learning environment" loading="eager">
+          <img src="assets/illustrations/anh-tu-lecture-hall.webp" alt="Academic advisor in BizOn learning environment" loading="eager">
           <figcaption>Academic Strategy Advisor</figcaption>
         </figure>
 
@@ -221,7 +224,7 @@
       </div>
       <div class="profile-grid">
         <article class="profile-card">
-          <img src="assets/illustrations/lumina-holo-classroom.jpg" alt="BizOn founder profile visual" loading="lazy">
+          <img src="assets/illustrations/lumina-holo-classroom.webp" alt="BizOn founder profile visual" loading="lazy">
           <div>
             <span class="academia-eyebrow">Founder & Project Lead</span>
             <h3>Đỗ Thùy Hương</h3>
