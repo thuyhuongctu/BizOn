@@ -43,6 +43,7 @@
     ['Hộ Chiếu Thương Hiệu – Phần III: Việt Nam ra thế giới', 'ho-chieu-p3-viet-nam-ra-the-gioi.mp3'],
     ['Hộ Chiếu Thương Hiệu – Phần III (remix)', 'ho-chieu-p3-remix.mp3'],
     ['Hộ Chiếu Thương Hiệu – Phần III (remix 2)', 'ho-chieu-p3-remix2.mp3'],
+    ['Hộ Chiếu Thương Hiệu – Phần III: Vietnam to the World (tiếng Anh)', 'ho-chieu-p3-vietnam-to-the-world-en.mp3'],
   ];
 
   /* ---------- CSS ---------- */

@@ -3144,10 +3144,6 @@
 "Up-tempo tracks for reflex mini-games – short, straight into the chorus."
 ],
 [
-"Nhạc và lời do nhóm tác giả sáng tác, phần hòa âm – thu âm có sử dụng công cụ hỗ trợ AI. Toàn bộ bản thu thuộc quyền của nhóm tác giả và chỉ dùng cho mục đích giáo dục, nghiên cứu.",
-"Music and lyrics written by the authors; arrangement and recording were produced with AI-assisted tools. All recordings belong to the authors and are used for educational and research purposes only."
-],
-[
 "«Mon histoire»",
 "«Mon histoire»"
 ],
@@ -3348,10 +3344,6 @@
 "the remaining 46 lines already have filenames assigned but have not been recorded"
 ],
 [
-"Phần thu âm và hòa âm có sử dụng công cụ hỗ trợ AI. Nội dung lời thoại do nhóm tác giả viết.",
-"Recording and arrangement used AI-assisted tools. The dialogue itself was written by the authors."
-],
-[
 "🔒 Dữ liệu người học",
 "🔒 Learner data"
 ],
@@ -3470,14 +3462,6 @@
 [
 "2 · Viết lời",
 "2 · Writing the lyrics"
-],
-[
-"3 · Hòa âm và thu âm với công cụ hỗ trợ AI",
-"3 · Arrangement and recording with AI-assisted tools"
-],
-[
-"Phần hòa âm và giọng hát được dựng bằng công cụ sản xuất nhạc có hỗ trợ AI, từ lời và ý đồ âm nhạc do nhóm tác giả đưa vào. Nhóm tác giả nghe, chọn bản, yêu cầu chỉnh và lặp lại cho tới khi đạt.",
-"Arrangement and vocals are built with AI-assisted music production tools, from lyrics and musical intent supplied by the authors. The authors listen, choose takes, request changes and iterate until it is right."
 ],
 [
 "4 · Làm nhiều bản cho nhiều tình huống lớp học",
@@ -3634,10 +3618,6 @@
 [
 "Đơn vị sản xuất",
 "Produced by"
-],
-[
-"Toàn bộ kho nhạc do BizOn tự sản xuất, không thuê đơn vị bên ngoài. Nhóm tác giả giữ quyền quyết định ở mọi khâu; công cụ hỗ trợ AI chỉ thực hiện phần dựng âm thanh theo yêu cầu đã nêu ở trên.",
-"The entire music library is produced in-house by BizOn, with no outside contractor. The authors hold decision rights at every stage; AI-assisted tools only carry out the audio production described above."
 ],
 [
 "Tất cả",
@@ -3842,6 +3822,22 @@
 [
 "Bản phối thứ hai của phần kết · 5:21 · hòa âm khác",
 "A second remix of the closing movement · 5:21 · a different arrangement"
+],
+[
+"«Hộ Chiếu Thương Hiệu» – tổ khúc ba phần",
+"«Brand Passport» – a song cycle in three parts"
+],
+[
+"Tổ khúc kể trọn hành trình của game – từ bến sông quê ra tới thế giới · lời tiếng Việt, phần kết có thêm bản tiếng Anh",
+"A song cycle telling the game's whole journey – from the home wharf out to the world · Vietnamese lyrics, with an English version of the closing part"
+],
+[
+"Phần III – «Vietnam to the World» (lời tiếng Anh)",
+"Part III – «Vietnam to the World» (English lyrics)"
+],
+[
+"Bản lời tiếng Anh của phần kết · 5:20 · dùng cho lớp quốc tế",
+"English-language version of the closing movement · 5:20 · for international classes"
 ]
 ]);
   var SPECIAL = [
