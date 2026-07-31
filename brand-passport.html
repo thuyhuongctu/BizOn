@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Hộ Chiếu Thương Hiệu – BizOn Bật Nghiệp</title>
-<meta name="description" content="Brand Passport: From Vietnam to the World – mô phỏng chiến lược quốc tế hóa 6 quý: đưa thương hiệu Việt từ thị trấn Vàm Thịnh ra ba thị trường giả tưởng, ra quyết định trong sương mù thông tin, cân bằng lợi nhuận – uy tín – năng lực – thích ứng – bền vững.">
+<meta name="description" content="Brand Passport: From Vietnam to the World – mô phỏng chiến lược quốc tế hóa 6 quý: đưa thương hiệu Việt từ thị trấn Vàm Thịnh ra sáu thị trường giả tưởng, ra quyết định trong sương mù thông tin, cân bằng lợi nhuận – uy tín – năng lực – thích ứng – bền vững.">
 <meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
 <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
 <script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
@@ -272,8 +272,11 @@
   function F() { return FIRMS[S.firm]; }
 
   /* ================= 24 SỰ KIỆN ================= */
-  function entMkts() { return [0, 1, 2, 3, 4, 5].filter(function (m) { return S.entered[m] !== null; }); }
+  function entMkts() { return MKTS.map(function (_, m) { return m; }).filter(function (m) { return S.entered[m] !== null; }); }
   function anyEnt() { return entMkts().length > 0; }
+  // Tri thức trung bình tính trên TOÀN BỘ thị trường – trước đây chỉ cộng ba thị
+  // trường đầu nên người chơi đi Lục Đảo / Nhật Quang / Tân Cảng bị bỏ sót hoàn toàn
+  function kAvgAll() { return S.know.reduce(function (a, b) { return a + b; }, 0) / MKTS.length; }
   var EVENTS = [
     // Thị trường
     { id: 'trend', cat: '🔥', t: 'Sản phẩm bất ngờ thành xu hướng', need: anyEnt, d: function () { return 'Một video về ' + F().name + ' lan mạnh tại ' + MKTS[entMkts()[0]].name + '.'; }, ch: [
@@ -306,7 +309,7 @@
       { l: '🕰️ Trì hoãn', fx: function () { return S.entered[1] !== null ? 'Doanh thu Bắc Phong sẽ bị giới hạn cho tới khi có chứng nhận.' : 'Chưa ảnh hưởng ngay – nhưng cánh cửa Bắc Phong vẫn khép hờ.'; } }] },
     { id: 'data', cat: '🔐', t: 'Siết bảo vệ dữ liệu người dùng', d: function () { return 'Quy định mới về dữ liệu khách hàng trên kênh số.'; }, ch: [
       { l: '🛠️ Nâng cấp hệ thống (0,6 tỷ)', fx: function () { S.cash -= 0.6; S.capab += 4; return 'Hệ thống đạt chuẩn – năng lực +4, khách yên tâm hơn.'; } },
-      { l: '🙈 Chưa nâng cấp', fx: function () { if (S.entered[0] === 0 || S.entered[1] === 0 || S.entered[2] === 0) { S.rep -= 6; return 'Kênh số của bạn bị nhắc nhở công khai – uy tín −6.'; } return 'Bạn chưa bán online nên tạm chưa sao – nhưng luật đã có hiệu lực.'; } }] },
+      { l: '🙈 Chưa nâng cấp', fx: function () { if (S.entered.indexOf(0) !== -1) { S.rep -= 6; return 'Kênh số của bạn bị nhắc nhở công khai – uy tín −6.'; } return 'Bạn chưa bán online nên tạm chưa sao – nhưng luật đã có hiệu lực.'; } }] },
     { id: 'greenlaw', cat: '🌱', t: 'Ưu đãi cho doanh nghiệp bền vững', d: function () { return 'Chính quyền sở tại công bố gói hỗ trợ thương hiệu xanh.'; }, ch: [
       { l: '📄 Nộp hồ sơ xin ưu đãi', fx: function () { if (S.susts >= 2) { S.cash += 0.8; S.rep += 4; return 'Hồ sơ xanh của bạn đủ dày – nhận 0,8 tỷ hỗ trợ, uy tín +4.'; } return 'Hồ sơ bền vững còn mỏng – bị từ chối. Đầu tư xanh sớm sẽ có lúc được đền đáp.'; } },
       { l: '🚶 Bỏ qua', fx: function () { return 'Bạn bỏ qua gói ưu đãi lần này.'; } }] },
@@ -349,7 +352,7 @@
       { l: '📝 Đăng ký bảo hộ + truyền thông chính chủ (0,6 tỷ)', fx: function () { S.cash -= 0.6; S.rep += 5; S.foot.push('Đăng ký bảo hộ nhãn hiệu sớm'); return 'Bạn giành lại tên của mình – uy tín +5, bài học: bảo hộ phải đi trước.'; } },
       { l: '🤷 Kệ, lo bán hàng trước', fx: function () { S.flags.copyLoss = true; S.foot.push('Chậm chân bảo hộ nhãn hiệu'); return 'Tạm không sao – nhưng mỗi quý hàng nhái sẽ gặm dần doanh thu của bạn.'; } }] },
     { id: 'board', cat: '🏛️', t: 'Hội đồng quản trị chất vấn', need: function () { return S.q >= 3 && S.profit < 1; }, d: function () { return 'Lợi nhuận tích lũy còn thấp – hội đồng yêu cầu giải trình chiến lược.'; }, ch: [
-      { l: '📊 Trình bày lộ trình bằng dữ liệu thị trường', fx: function () { if ((S.know[0] + S.know[1] + S.know[2]) / 3 >= 40) { S.adapt += 1; return 'Dữ liệu thuyết phục – hội đồng gia hạn niềm tin, thích ứng +1.'; } S.rep -= 5; return 'Thiếu dữ liệu chứng minh – niềm tin sứt mẻ, uy tín −5.'; } },
+      { l: '📊 Trình bày lộ trình bằng dữ liệu thị trường', fx: function () { if (kAvgAll() >= 40) { S.adapt += 1; return 'Dữ liệu thuyết phục – hội đồng gia hạn niềm tin, thích ứng +1.'; } S.rep -= 5; return 'Thiếu dữ liệu chứng minh – niềm tin sứt mẻ, uy tín −5.'; } },
       { l: '🤝 Hứa tăng tốc doanh số ngay', fx: function () { S.flags.wave = 1.1; S.resil -= 5; S.foot.push('Hứa với hội đồng chỉ tiêu ngắn hạn'); return 'Cả công ty tăng tốc (+10% quý này) nhưng căng như dây đàn – chống chịu −5.'; } }] },
   ];
 
@@ -387,10 +390,10 @@
     function () { // Lumina đọc chỉ số và nhắc điều dễ bỏ sót
       if (S.resil < 40) return ['🤖', 'Lumina AI', 'Chỉ số chống chịu đang thấp: một cú sốc tỷ giá hoặc đứt chuỗi cung lúc này sẽ ăn sâu vào lợi nhuận. Dành một quý củng cố nội lực là đầu tư, không phải mất lượt.'];
       if (S.susts < 2) return ['🤖', 'Lumina AI', 'Hồ sơ bền vững còn mỏng – Lục Đảo sẽ chỉ mở 60% tiềm năng và các gói ưu đãi xanh đều đòi bằng chứng truy xuất. Đây là đầu tư có lãi kép.'];
-      if (S.entered.filter(function (m) { return m !== null; }).length >= 3) return ['🤖', 'Lumina AI', 'Bạn đang hiện diện ở ba thị trường. Dữ liệu cho thấy mở rộng nhanh hơn năng lực giao hàng là nguyên nhân số một của «tăng trưởng nghẽn cổ chai» – hãy nâng năng lực trước khi thêm cửa mới.'];
+      if (entMkts().length >= 3) return ['🤖', 'Lumina AI', 'Bạn đang hiện diện ở ' + entMkts().length + '/' + MKTS.length + ' thị trường. Dữ liệu cho thấy mở rộng nhanh hơn năng lực giao hàng là nguyên nhân số một của «tăng trưởng nghẽn cổ chai» – hãy nâng năng lực trước khi thêm cửa mới.'];
       return null;
     },
-    function () { if (S.know[0] < 35 && S.know[1] < 35 && S.know[2] < 35) return ['🌍', 'Victor Lâm', 'Ta đang bay trong sương mù. Mua dữ liệu trước khi đặt cược – nhưng nhớ hỏi: nguồn này có lợi ích gì khi nói với ta điều đó?']; },
+    function () { if (S.know.every(function (k) { return k < 35; })) return ['🌍', 'Victor Lâm', 'Ta đang bay trong sương mù. Mua dữ liệu trước khi đặt cược – nhưng nhớ hỏi: nguồn này có lợi ích gì khi nói với ta điều đó?']; },
     function () { if (S.rep >= 60) return ['📣', 'An Nhiên', 'Uy tín đang là tài sản lớn nhất của mình. Đầu tư thêm cho cộng đồng khách hàng – họ chính là kênh phân phối trung thành nhất.']; },
     function () { if (S.capab < 45) return ['👵', 'Bà Sáu Lành', 'Đừng nhận đơn lớn khi tay nghề chưa tới, con à. Thà chậm một quý còn hơn mất chữ tín cả đời.']; },
     function () { if (S.entered[1] !== null && !S.certBP) return ['🌍', 'Victor Lâm', 'Bắc Phong không tha thứ cho hàng thiếu chứng nhận. Đầu tư kiểm định đi – dữ liệu các ngành đều nói vậy.']; },
@@ -401,7 +404,7 @@
   /* ================= VÒNG LẶP ================= */
   function hud() {
     $('bp-cash').textContent = f1(S.cash);
-    var kAvg = Math.round((S.know[0] + S.know[1] + S.know[2]) / 3);
+    var kAvg = Math.round(kAvgAll());
     $('bp-hud').innerHTML =
       '<span class="bp-chip">⭐ Uy tín ' + clamp(S.rep) + '</span>' +
       '<span class="bp-chip">🏭 Năng lực ' + clamp(S.capab) + '</span>' +
@@ -506,7 +509,7 @@
           '<div class="grid sm:grid-cols-3 gap-2">' + MODES.map(function (md) {
             return '<button class="bp-opt" data-g="ent" data-m="' + m + '" data-md="' + md.id + '" onclick="bpEnter(' + m + ',' + md.id + ')">' + md.icon + ' ' + md.name + '<small>vốn ' + f1(md.cost) + ' tỷ · ' + md.note + '</small></button>';
           }).join('') + '</div>';
-      }).join('') + '</div>' : '<p class="text-[12px] opacity-60">Bạn đã hiện diện ở cả 3 thị trường.</p>') +
+      }).join('') + '</div>' : '<p class="text-[12px] opacity-60">Bạn đã hiện diện ở cả ' + MKTS.length + ' thị trường.</p>') +
       '<p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-4 mb-1.5">3 · Mức vận hành</p>' +
       '<div class="grid grid-cols-3 gap-2">' + BUDGETS.map(function (b, i) {
         return '<button class="bp-opt" data-g="bud" data-i="' + i + '" onclick="bpPick(\'bud\',' + i + ')" style="text-align:center">' + b.icon + ' ' + b.name + '</button>';
@@ -633,7 +636,6 @@
 
   /* ================= KẾT THÚC ================= */
   function scores() {
-    var kAvg = (S.know[0] + S.know[1] + S.know[2]) / 3;
     var pS = clamp(S.profit / 12 * 100);
     var aS = clamp(S.resil * 0.55 + S.adapt * 9);
     var sS = clamp(20 + S.susts * 18);
