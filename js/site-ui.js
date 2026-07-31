@@ -1086,8 +1086,8 @@
 "1. Summary"
 ],
 [
-"15 tạo hình trên cùng khung chuẩn · tài liệu đăng ký quyền tác giả mỹ thuật ứng dụng · mã VN-BIZON-BP-CAST-001",
-"15 designs on one standard frame · applied fine art copyright filing document · ref. VN-BIZON-BP-CAST-001"
+"21 tạo hình trên cùng khung chuẩn · tài liệu đăng ký quyền tác giả mỹ thuật ứng dụng · mã VN-BIZON-BP-CAST-001",
+"21 designs on one standard frame · applied fine art copyright filing document · ref. VN-BIZON-BP-CAST-001"
 ],
 [
 "2 bản",
@@ -2048,6 +2048,54 @@
 [
 "Bản phối giọng nam · lời tiếng Anh",
 "Male-vocal mix · English lyrics"
+],
+[
+"Lumina AI – Áo dài",
+"Lumina AI – Áo dài"
+],
+[
+"Lễ phục · màn chào và đêm trao Hộ chiếu Thương hiệu",
+"Gala outfit · the welcome screen and Brand Passport night"
+],
+[
+"Giám đốc tài chính · ly cà phê giữa hai phiên họp",
+"CFO · a coffee between two meetings"
+],
+[
+"Lễ phục · đọc dòng tiền trên bảng số liệu",
+"Gala outfit · reading cash flow off the dashboard"
+],
+[
+"Chiến lược & đổi mới · bảng số liệu thị trường trong tay",
+"Strategy & innovation · market dashboard in hand"
+],
+[
+"Lễ phục · dựng câu chuyện thương hiệu",
+"Gala outfit · building the brand story"
+],
+[
+"Victor Lâm – Đời thường",
+"Victor Lâm – Everyday"
+],
+[
+"Áo khoác len và huy hiệu địa cầu trên ngực",
+"Knitted jacket with a globe pin on the chest"
+],
+[
+"Mỹ phẩm thảo mộc · ôm chậu thảo mộc nguyên liệu",
+"Herbal cosmetics · holding a pot of the raw herb"
+],
+[
+"Lễ phục · câu chuyện thương hiệu là thế mạnh",
+"Gala outfit · brand storytelling is the strength"
+],
+[
+"Mekong Digital – Đời thường",
+"Mekong Digital – Everyday"
+],
+[
+"Áo hoodie và túi đeo chéo trên đường tới lớp",
+"Hoodie and a crossbody bag on the way to class"
 ],
 [
 "🏙️ Bối cảnh & minh họa",
