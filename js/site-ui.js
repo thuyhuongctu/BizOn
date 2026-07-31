@@ -3810,6 +3810,22 @@
 [
 "Tổ khúc tiếng Việt của Hộ Chiếu Thương Hiệu mới có hai trong ba phần.",
 "The Brand Passport Vietnamese song cycle has only two of its three parts."
+],
+[
+"Phần III – «Việt Nam ra thế giới»",
+"Part III – «Vietnam Reaches the World»"
+],
+[
+"Phần kết tổ khúc · 5:09 · thương hiệu Việt đứng được trên bản đồ thế giới",
+"Closing movement · 5:09 · a Vietnamese brand earns its place on the world map"
+],
+[
+"Tổ khúc ba phần bằng tiếng Việt kể trọn hành trình của game – từ bến sông quê ra tới thế giới",
+"A three-part Vietnamese song cycle telling the game's whole journey – from the home wharf out to the world"
+],
+[
+"Phần giữa tổ khúc · 4:18 · sáu quý băng qua các thị trường xa",
+"Middle movement · 4:18 · six quarters crossing distant markets"
 ]
 ]);
   var SPECIAL = [
