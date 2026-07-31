@@ -1,0 +1,185 @@
+/* ===========================================================================
+   BizOn ACADEMIA 3D — lớp token
+   ---------------------------------------------------------------------------
+   Nguồn duy nhất cho màu, chữ, khoảng cách, bo góc, đổ bóng và nhịp chuyển động.
+   Nạp SAU css/tw.css để các token này thắng khi trùng.
+
+   Ba lớp nhận diện:
+     Academic   – sạch, nhiều khoảng thở, serif ở tiêu đề, dữ liệu được ưu tiên
+     Immersive  – chiều sâu, ánh sáng, hologram, parallax
+     Vietnamese – ngọc lam, phù sa, áo dài; dùng tinh tế, không thành theme du lịch
+
+   Không tệp nào khác được viết cứng mã màu. Cần màu mới thì thêm token ở đây.
+   =========================================================================== */
+
+:root {
+  /* --- Nền tảng: navy → teal → cyan --- */
+  --navy-950: #071D3A;   /* tiêu đề, thanh điều hướng */
+  --navy-800: #103A68;   /* nút chính, biểu tượng */
+  --teal-600: #078A96;   /* màu nhấn BizOn */
+  --cyan-400: #38C6DF;   /* hologram, ánh sáng */
+  --pearl:    #F7FAFC;   /* nền trang */
+  --paper:    #FFFFFF;   /* thẻ học thuật */
+
+  /* --- Nhấn cao cấp ---
+     CHỈ dùng cho: dấu mộc Brand Passport, trạng thái đang chọn, giải thưởng,
+     đường viền premium, điểm nhấn rất nhỏ. TUYỆT ĐỐI không gradient vàng cả trang.
+
+     Hai token, đừng dùng lẫn:
+       --champagne      TRANG TRÍ (viền, nền, quầng sáng). Trên nền trắng chỉ đạt
+                        tương phản 2,30 nên KHÔNG được dùng cho chữ.
+       --champagne-ink  CHỮ. Đạt 4,93 trên trắng và 4,70 trên nền trang → WCAG AA. */
+  --champagne: #C6A76B;
+  --champagne-ink: #856D40;
+
+  /* teal-600 dùng cho nhấn và chữ CỠ LỚN (4,13 trên trắng – chỉ đạt AA chữ lớn).
+     Chữ thường màu teal phải dùng --teal-ink (4,85 trên nền trang). */
+  --teal-ink: #067A85;
+
+  /* --- Dẫn xuất (đừng viết cứng ở nơi khác) --- */
+  --ink:        var(--navy-950);
+  --ink-2:      #24405F;                 /* chữ phụ */
+  --ink-3:      #5C7391;                 /* chú thích */
+  --hairline:   rgba(7, 29, 58, .10);    /* đường kẻ mảnh */
+  --surface:    var(--paper);
+  --surface-2:  #EEF4F8;                 /* nền chìm, khối mã */
+  --backdrop:   var(--pearl);
+
+  /* --- Chữ --- */
+  --font-display: 'DM Serif Display', Georgia, 'Times New Roman', serif;
+  --font-ui:      'Manrope', system-ui, -apple-system, sans-serif;
+  --font-mono:    'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Thang chữ – co giãn theo bề rộng, chặn hai đầu bằng clamp */
+  --t-hero:  clamp(2.4rem, 1.1rem + 4.4vw, 4.6rem);
+  --t-h1:    clamp(2rem,   1.2rem + 2.6vw, 3.1rem);
+  --t-h2:    clamp(1.5rem, 1.1rem + 1.5vw, 2.15rem);
+  --t-h3:    clamp(1.15rem, .98rem + .7vw, 1.45rem);
+  --t-body:  1rem;
+  --t-sm:    .8125rem;
+  --t-xs:    .6875rem;
+  --lh-tight: 1.08;
+  --lh-snug:  1.35;
+  --lh-body:  1.65;
+  --track-eyebrow: .16em;   /* giãn chữ cho nhãn viết hoa */
+
+  /* --- Khoảng cách: thang 4px --- */
+  --s-1: .25rem;  --s-2: .5rem;   --s-3: .75rem;  --s-4: 1rem;
+  --s-5: 1.5rem;  --s-6: 2rem;    --s-7: 3rem;    --s-8: 4rem;
+  --s-9: 6rem;    --s-10: 8rem;
+  --section-y: clamp(3.5rem, 2rem + 6vw, 7rem);   /* khoảng thở giữa các phần */
+  --measure: 68ch;                                 /* bề rộng đọc thoải mái */
+
+  /* --- Bo góc --- */
+  --r-sm: 10px;  --r-md: 16px;  --r-lg: 22px;  --r-xl: 28px;  --r-pill: 999px;
+
+  /* --- Đổ bóng: theo độ cao, không dùng bóng đen đặc --- */
+  --e-1: 0 1px 2px rgba(7,29,58,.05), 0 2px 8px rgba(7,29,58,.04);
+  --e-2: 0 2px 4px rgba(7,29,58,.05), 0 8px 22px -6px rgba(7,29,58,.10);
+  --e-3: 0 4px 8px rgba(7,29,58,.06), 0 18px 42px -10px rgba(7,29,58,.16);
+  --e-4: 0 8px 16px rgba(7,29,58,.07), 0 34px 70px -16px rgba(7,29,58,.22);
+  --glow-cyan: 0 0 0 1px rgba(56,198,223,.28), 0 12px 40px -12px rgba(56,198,223,.45);
+  --glow-gold: 0 0 0 1px rgba(198,167,107,.42), 0 10px 32px -14px rgba(198,167,107,.5);
+
+  /* --- Kính mờ --- */
+  --glass-bg: rgba(255,255,255,.72);
+  --glass-br: rgba(255,255,255,.55);
+  --glass-blur: 16px;
+
+  /* --- Nhịp chuyển động: bốn mức (xem bizon-motion.css) --- */
+  --m-micro:     150ms;   /* nút, chip */
+  --m-ui:        300ms;   /* thẻ, menu */
+  --m-narrative: 750ms;   /* hiện dần khi cuộn, passport */
+  --m-cinematic: 1100ms;  /* mở đầu hero, chuyển trang */
+  --ease-spring: cubic-bezier(.16, 1, .3, 1);
+  --ease-out:    cubic-bezier(.22, .61, .36, 1);
+  --ease-inout:  cubic-bezier(.65, .05, .36, 1);
+
+  /* --- Độ sâu parallax (px lệch tối đa theo con trỏ) --- */
+  --par-particles: 3px;
+  --par-globe:     6px;
+  --par-figure:    9px;
+  --par-hologram:  16px;
+  --par-passport:  22px;
+
+  /* --- Lớp xếp chồng --- */
+  --z-bg: -1; --z-base: 0; --z-raised: 10; --z-nav: 100; --z-overlay: 500; --z-modal: 1000;
+}
+
+/* ===================== Chế độ tối ===================== */
+html[data-theme="dark"] {
+  --navy-950: #E8F1F8;
+  --navy-800: #BBD5EA;
+  --teal-600: #37B6C4;
+  --cyan-400: #5FD8EE;
+  --pearl:    #060F1C;
+  --paper:    #0D1B2E;
+  --champagne:#D8BE87;
+  --champagne-ink: #E2CC9E;   /* nền tối: vàng phải SÁNG hơn mới đủ tương phản */
+  --teal-ink: #4FC9D6;
+
+  --ink:      #E8F1F8;
+  --ink-2:    #B4C7DC;
+  --ink-3:    #8098B4;
+  --hairline: rgba(232,241,248,.13);
+  --surface:  var(--paper);
+  --surface-2:#132539;
+  --backdrop: var(--pearl);
+
+  --e-1: 0 1px 2px rgba(0,0,0,.35), 0 2px 8px rgba(0,0,0,.28);
+  --e-2: 0 2px 4px rgba(0,0,0,.38), 0 8px 22px -6px rgba(0,0,0,.5);
+  --e-3: 0 4px 8px rgba(0,0,0,.4),  0 18px 42px -10px rgba(0,0,0,.62);
+  --e-4: 0 8px 16px rgba(0,0,0,.45), 0 34px 70px -16px rgba(0,0,0,.72);
+
+  --glass-bg: rgba(13,27,46,.68);
+  --glass-br: rgba(232,241,248,.14);
+}
+
+/* ===================== Lớp nền tảng ===================== */
+.bz {
+  font-family: var(--font-ui);
+  color: var(--ink);
+  background: var(--backdrop);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Tiêu đề serif – phần làm nên vẻ học thuật. Serif chỉ dùng cho tiêu đề,
+   tuyệt đối không dùng cho chữ chạy dài hay giao diện. */
+.bz-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: var(--lh-tight);
+  letter-spacing: -.015em;
+  color: var(--ink);
+}
+.bz-hero  { font-size: var(--t-hero); }
+.bz-h1    { font-size: var(--t-h1); }
+.bz-h2    { font-size: var(--t-h2); }
+.bz-h3    { font-size: var(--t-h3); font-family: var(--font-ui); font-weight: 800; letter-spacing: -.01em; }
+
+/* Dòng nghiêng khép tiêu đề – «from Vietnam to the world.» */
+.bz-display em { font-style: italic; color: var(--teal-600); }
+
+/* Nhãn viết hoa nhỏ phía trên tiêu đề */
+.bz-eyebrow {
+  font-family: var(--font-ui);
+  font-size: var(--t-xs);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: var(--track-eyebrow);
+  color: var(--ink-3);
+}
+
+/* Số liệu dùng chữ đẳng khoảng – dùng RẤT hạn chế, chỉ cho số và mã */
+.bz-num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+
+.bz-lede { font-size: 1.0625rem; line-height: var(--lh-body); color: var(--ink-2); max-width: var(--measure); }
+.bz-muted { color: var(--ink-3); }
+.bz-measure { max-width: var(--measure); }
+
+.bz-section { padding-block: var(--section-y); }
+.bz-container { width: min(100% - 2.5rem, 76rem); margin-inline: auto; }
+.bz-rule { height: 1px; background: var(--hairline); border: 0; }
