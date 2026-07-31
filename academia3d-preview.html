@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>BizOn Academia 3D — Homepage Preview</title>
+  <meta name="description" content="BizOn Academia 3D — premium academic homepage redesign preview for the BizOn business simulation ecosystem.">
+  <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tw.css">
+  <link rel="stylesheet" href="css/bizon-academia3d.css">
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Manrope,system-ui,sans-serif}
+    a{text-decoration:none;color:inherit}
+    .page-shell{width:min(1180px,calc(100% - 32px));margin:0 auto}
+    .nav-inner{min-height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;gap:18px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--bizon-navy-950)}
+    .brand img{width:38px;height:38px;border-radius:12px;box-shadow:0 10px 24px rgba(7,29,58,.13)}
+    .nav-links{display:flex;align-items:center;gap:24px;font-size:.84rem;font-weight:700;color:rgba(7,29,58,.72)}
+    .nav-actions{display:flex;align-items:center;gap:8px}
+    .nav-pill{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 13px;border-radius:999px;border:1px solid var(--bizon-border);background:rgba(255,255,255,.62);font-size:.78rem;font-weight:800}
+    .hero-copy{position:relative;z-index:3}
+    .trust-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+    .trust-chip{padding:10px 12px;border:1px solid var(--bizon-border);border-radius:14px;background:rgba(255,255,255,.58);font-size:.75rem;font-weight:700;color:rgba(7,29,58,.72)}
+    .hero-avatar{position:absolute;z-index:3;width:174px;overflow:hidden;border:1px solid rgba(255,255,255,.78);border-radius:30px;background:rgba(255,255,255,.64);box-shadow:0 28px 70px rgba(7,29,58,.20);backdrop-filter:blur(14px);transition:transform .5s var(--bizon-ease)}
+    .hero-avatar img{display:block;width:100%;height:255px;object-fit:cover;object-position:50% 15%}
+    .hero-avatar figcaption{padding:10px 12px;font-size:.72rem;font-weight:800;color:var(--bizon-navy-950)}
+    .hero-avatar-a{left:22%;bottom:3%;transform:rotate(-3deg) translateZ(45px)}
+    .hero-avatar-b{right:19%;bottom:2%;transform:rotate(3deg) translateZ(38px)}
+    .hero-avatar:hover{transform:translateY(-8px) scale(1.02)}
+    .section-head{max-width:720px}
+    .product-link{display:inline-flex;margin-top:20px;font-size:.82rem;font-weight:800;color:var(--bizon-teal-600)}
+    .academic-flow{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px;margin-top:28px;align-items:center}
+    .flow-node{min-height:112px;padding:18px 12px;border:1px solid var(--bizon-border);border-radius:20px;background:rgba(255,255,255,.68);display:flex;flex-direction:column;justify-content:center;text-align:center;box-shadow:0 14px 38px rgba(7,29,58,.06)}
+    .flow-node strong{font-family:'DM Serif Display',Georgia,serif;font-size:1.08rem;color:var(--bizon-navy-950)}
+    .flow-node span{margin-top:5px;font-size:.68rem;line-height:1.45;color:rgba(7,29,58,.58)}
+    .flow-arrow{text-align:center;color:var(--bizon-gold);font-weight:800}
+    .profile-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:24px;align-items:stretch;margin-top:28px}
+    .profile-card,.sound-card{border:1px solid var(--bizon-border);border-radius:28px;background:rgba(255,255,255,.66);box-shadow:0 18px 52px rgba(7,29,58,.08)}
+    .profile-card{display:grid;grid-template-columns:170px 1fr;gap:24px;padding:22px}
+    .profile-card img{width:170px;height:210px;object-fit:cover;object-position:50% 18%;border-radius:22px}
+    .profile-card h3{margin:4px 0 2px;font-family:'DM Serif Display',Georgia,serif;font-size:2rem;color:var(--bizon-navy-950)}
+    .profile-card p{font-size:.88rem;line-height:1.65;color:rgba(7,29,58,.68)}
+    .profile-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+    .profile-links a{padding:7px 9px;border-radius:999px;border:1px solid var(--bizon-border);font-size:.69rem;font-weight:800;background:rgba(255,255,255,.7)}
+    .sound-card{padding:24px;display:flex;flex-direction:column;justify-content:center}
+    .wave{height:66px;margin:16px 0;background:repeating-linear-gradient(90deg,rgba(16,58,104,.14) 0 2px,transparent 2px 7px);mask-image:linear-gradient(to bottom,transparent 10%,#000 35% 65%,transparent 90%);border-radius:10px}
+    .footer{padding:36px 0 54px;color:rgba(7,29,58,.55);font-size:.76rem}
+    .footer-grid{display:flex;justify-content:space-between;gap:20px;border-top:1px solid var(--bizon-border);padding-top:24px}
+    .academia-leaving body{opacity:.25;transform:scale(.995);transition:opacity .42s ease,transform .42s ease}
+    @media(max-width:900px){.nav-links{display:none}.hero-avatar{width:142px}.hero-avatar img{height:205px}.hero-avatar-a{left:13%}.hero-avatar-b{right:10%}.academic-flow{grid-template-columns:1fr}.flow-arrow{transform:rotate(90deg)}.profile-grid{grid-template-columns:1fr}}
+    @media(max-width:640px){.page-shell{width:min(100% - 20px,1180px)}.nav-inner{padding:0 10px}.brand span:last-child{display:none}.nav-actions .nav-pill:first-child{display:none}.hero-avatar{width:118px;border-radius:22px}.hero-avatar img{height:165px}.hero-avatar-a{left:8%;bottom:0}.hero-avatar-b{right:6%;bottom:1%}.profile-card{grid-template-columns:1fr}.profile-card img{width:100%;height:260px}.footer-grid{flex-direction:column}}
+  </style>
+</head>
+<body class="academia3d">
+  <header class="academia-nav" aria-label="Điều hướng chính">
+    <div class="nav-inner">
+      <a class="brand" href="index.html" aria-label="BizOn homepage">
+        <img src="assets/icons/icon-192.png" alt="BizOn">
+        <span>BizOn</span>
+        <span style="font-size:.68rem;letter-spacing:.12em;color:var(--bizon-teal-600)">ACADEMIA 3D</span>
+      </a>
+      <nav class="nav-links" aria-label="Navigation">
+        <a href="game.html">Games</a>
+        <a href="brand-passport.html">Brand Passport</a>
+        <a href="hoc-thuat.html">Academic</a>
+        <a href="bang-chung.html">Evidence</a>
+        <a href="giai-phap.html">Pilot</a>
+        <a href="doi-ngu.html">About</a>
+      </nav>
+      <div class="nav-actions">
+        <span class="nav-pill">VI · EN</span>
+        <a class="nav-pill" href="game.html">Launch ↗</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="academia-hero">
+      <div class="hero-copy reveal-academia is-visible">
+        <span class="academia-kicker">🇻🇳 Designed in the Mekong Delta · Built for the World</span>
+        <h1 class="academia-display">Simulation-based<br>business learning <em>from Vietnam to the world.</em></h1>
+        <p class="academia-lead">Explainable business simulations for learning, research and internationalization — combining deterministic game engines, AI-enhanced reflection and open-science practices.</p>
+        <div class="academia-actions">
+          <a class="academia-btn academia-btn-primary" href="game.html">Explore BizOn <span>→</span></a>
+          <a class="academia-btn academia-btn-secondary" data-passport-link href="brand-passport.html">Enter Brand Passport <span>↗</span></a>
+        </div>
+        <div class="trust-row" aria-label="Academic trust signals">
+          <span class="trust-chip">◉ Explainable simulation engine</span>
+          <span class="trust-chip">◇ Research-informed learning</span>
+          <span class="trust-chip">◎ Open-science orientation</span>
+        </div>
+      </div>
+
+      <div class="academia-stage" data-academia-stage aria-label="BizOn immersive knowledge world">
+        <div class="academia-globe" data-depth="1" aria-hidden="true"><span class="academia-orbit"></span></div>
+        <article class="academia-float-card" data-depth="2">
+          <h3>Meta-analysis</h3>
+          <p>Evidence → model → interpretable simulation</p>
+        </article>
+        <article class="academia-float-card" data-depth="2">
+          <h3>Learning evidence</h3>
+          <p>Decisions · reflection · observable outcomes</p>
+        </article>
+        <article class="academia-float-card" data-depth="3">
+          <h3>Internationalization</h3>
+          <p>Market → entry mode → adaptation → resilience</p>
+        </article>
+        <article class="academia-float-card" data-depth="4">
+          <h3>AI mentor</h3>
+          <p>Explain · question · reflect — not replace decisions</p>
+        </article>
+
+        <figure class="hero-avatar hero-avatar-a" data-depth="3">
+          <img src="assets/illustrations/lumina-holo-classroom.jpg" alt="Lumina AI learning advisor in the BizOn ecosystem" loading="eager">
+          <figcaption>Lumina · AI Learning Advisor</figcaption>
+        </figure>
+        <figure class="hero-avatar hero-avatar-b" data-depth="2">
+          <img src="assets/illustrations/anh-tu-lecture-hall.jpg" alt="Academic advisor in BizOn learning environment" loading="eager">
+          <figcaption>Academic Strategy Advisor</figcaption>
+        </figure>
+
+        <a class="academia-passport" data-passport-link href="brand-passport.html" aria-label="Enter Brand Passport">
+          <strong>BRAND PASSPORT</strong>
+          <span class="passport-mark">B</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="academia-section reveal-academia">
+      <div class="section-head">
+        <span class="academia-eyebrow">One ecosystem · four gateways</span>
+        <h2 class="academia-title">Learn business by making consequential decisions.</h2>
+      </div>
+      <div class="academia-products" style="margin-top:30px">
+        <a class="academia-product" data-tilt-card href="game.html">
+          <span class="product-index">01 · BIZON CORE</span>
+          <h3>Bật Nghiệp</h3>
+          <p>Build and operate a business through multi-round strategic decisions in a Vietnamese context.</p>
+          <span class="product-link">Build the business →</span>
+        </a>
+        <a class="academia-product" data-tilt-card data-passport-link href="brand-passport.html">
+          <span class="product-index">02 · BIZON INTERNATIONAL</span>
+          <h3>Brand Passport</h3>
+          <p>Take a Vietnamese brand across borders through market intelligence, entry strategy, adaptation and resilience.</p>
+          <span class="product-link">Take the brand abroad →</span>
+        </a>
+        <a class="academia-product" data-tilt-card href="global.html">
+          <span class="product-index">03 · BIZON LAB</span>
+          <h3>IE Lab</h3>
+          <p>Experiment with internationalization assumptions and observe how strategic variables change outcomes.</p>
+          <span class="product-link">Explore the model →</span>
+        </a>
+        <a class="academia-product" data-tilt-card href="games.html">
+          <span class="product-index">04 · BIZON ARCADE</span>
+          <h3>Arcade</h3>
+          <p>Short, focused simulations for practicing one business skill or decision pattern at a time.</p>
+          <span class="product-link">Practice a skill →</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="academia-section reveal-academia" id="evidence">
+      <div class="section-head">
+        <span class="academia-eyebrow">Evidence before marketing</span>
+        <h2 class="academia-title">Learning that can be examined.</h2>
+      </div>
+      <div class="academia-evidence-grid">
+        <article class="academia-evidence-card">
+          <span class="academia-eyebrow">01</span>
+          <strong>Explainable engine</strong>
+          <p>Core scoring and simulation logic remain deterministic so results can be inspected, discussed and reproduced.</p>
+        </article>
+        <article class="academia-evidence-card">
+          <span class="academia-eyebrow">02</span>
+          <strong>Observable decisions</strong>
+          <p>Strategic choices leave a trace that supports debriefing, rubrics, reflection and classroom analysis.</p>
+        </article>
+        <article class="academia-evidence-card">
+          <span class="academia-eyebrow">03</span>
+          <strong>Learning evidence</strong>
+          <p>BizOn connects simulation mechanics with intended learning outcomes, pre/post measures and documented limitations.</p>
+        </article>
+      </div>
+      <div class="academia-actions" style="margin-top:24px">
+        <a class="academia-btn academia-btn-secondary" href="hoc-thuat.html">View Academic Framework →</a>
+        <a class="academia-btn academia-btn-secondary" href="bang-chung.html">View Evidence →</a>
+      </div>
+    </section>
+
+    <section class="academia-section reveal-academia">
+      <div class="section-head">
+        <span class="academia-eyebrow">Research → learning design</span>
+        <h2 class="academia-title">From theory to decision.</h2>
+      </div>
+      <div class="academic-flow" aria-label="Research to evidence workflow">
+        <div class="flow-node"><strong>Research</strong><span>International business & entrepreneurship</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node"><strong>Model</strong><span>Explicit assumptions & parameters</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node"><strong>Simulation</strong><span>Consequential scenarios</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node"><strong>Decision</strong><span>Learner actions & trade-offs</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node"><strong>Outcome</strong><span>Explainable consequences</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node"><strong>Reflection</strong><span>AI-enhanced questioning</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node"><strong>Evidence</strong><span>Observable learning artifacts</span></div>
+      </div>
+    </section>
+
+    <section class="academia-section reveal-academia">
+      <div class="section-head">
+        <span class="academia-eyebrow">People & intellectual identity</span>
+        <h2 class="academia-title">Research-led, locally grounded, globally oriented.</h2>
+      </div>
+      <div class="profile-grid">
+        <article class="profile-card">
+          <img src="assets/illustrations/lumina-holo-classroom.jpg" alt="BizOn founder profile visual" loading="lazy">
+          <div>
+            <span class="academia-eyebrow">Founder & Project Lead</span>
+            <h3>Đỗ Thùy Hương</h3>
+            <p><strong>PhD Candidate in Business Administration · Can Tho University</strong></p>
+            <p>Research interests include internationalization strategy, firm performance, meta-analysis, quantitative research and AI-assisted research design. BizOn translates research-informed concepts into explainable simulation experiences for teaching and educational research.</p>
+            <div class="profile-links">
+              <a href="doi-ngu.html">Full profile</a>
+              <a href="hoc-thuat.html">Academic framework</a>
+              <a href="https://github.com/thuyhuongctu/BizOn" target="_blank" rel="noopener">GitHub</a>
+            </div>
+          </div>
+        </article>
+        <aside class="sound-card">
+          <span class="academia-eyebrow">Immersive learning layer</span>
+          <h3 style="font-family:'DM Serif Display',Georgia,serif;font-size:2rem;margin:8px 0;color:var(--bizon-navy-950)">Soundtrack for deeper learning.</h3>
+          <p style="margin:0;color:rgba(7,29,58,.66);font-size:.88rem;line-height:1.6">Brand Passport OST · From the Mekong · Across the Markets · Vietnam to the World</p>
+          <div class="wave" aria-hidden="true"></div>
+          <a class="academia-btn academia-btn-secondary" href="am-nhac.html" style="align-self:flex-start">Open BizOn Soundtrack →</a>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="page-shell footer">
+    <div class="footer-grid">
+      <div><strong style="color:var(--bizon-navy-950)">BizOn Academia 3D</strong><br>Research-driven business simulation from Vietnam.</div>
+      <div><a href="hoc-thuat.html">Academic</a> · <a href="bang-chung.html">Evidence</a> · <a href="chinh-sach.html">Privacy</a> · <a href="index.html">Current homepage</a></div>
+    </div>
+  </footer>
+
+  <script src="js/homepage-academia3d.js" defer></script>
+</body>
+</html>
