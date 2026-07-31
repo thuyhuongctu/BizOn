@@ -630,6 +630,11 @@ function simulateRound(s, d) {
   };
   s.history.push(report);
 
+  // Đặt cờ kết thúc TRƯỚC khi mở thành tựu. A_FINISH và A_CHAMP đều kiểm
+  // s.finished; nếu đặt sau thì tại thời điểm chấm thành tựu cờ vẫn là false
+  // nên hai thành tựu này không bao giờ mở được từ chính engine.
+  if (s.round >= ROUNDS_TOTAL) s.finished = true;
+
   // --- Thành tựu ---
   unlockAchievements(s, report);
 
@@ -640,8 +645,7 @@ function simulateRound(s, d) {
   s.aiUsed = 0;
   s.whatIfUsed = 0;
   s.minigamePlays = 0;
-  if (s.round >= ROUNDS_TOTAL) s.finished = true;
-  else s.round += 1;
+  if (!s.finished) s.round += 1;
 
   return report;
 }
