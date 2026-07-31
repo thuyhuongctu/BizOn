@@ -33,7 +33,6 @@
     ['Brand Passport ⭐ (nhạc chủ đề Hộ Chiếu Thương Hiệu)', 'brand-passport.mp3'],
     ['Brand Passport – bản phối', 'brand-passport-v2.mp3'],
     ['Brand Passport – bản remix', 'brand-passport-remix.mp3'],
-    ['Brand Passport – bản remix 2', 'brand-passport-remix2.mp3'],
     ['Stamps Beyond Borders', 'stamps-beyond-borders.mp3'],
     ['Stamps Beyond Borders – bản thu lại', 'stamps-beyond-borders-v2.mp3'],
     ['Stamps Beyond Borders – bản phối 3:35', 'stamps-beyond-borders-v3.mp3'],
@@ -45,6 +44,7 @@
     ['Hộ Chiếu Thương Hiệu – Phần III (remix)', 'ho-chieu-p3-remix.mp3'],
     ['Hộ Chiếu Thương Hiệu – Phần III (remix 2)', 'ho-chieu-p3-remix2.mp3'],
     ['Hộ Chiếu Thương Hiệu – Phần III: Vietnam to the World (tiếng Anh)', 'ho-chieu-p3-vietnam-to-the-world-en.mp3'],
+    ['Hộ Chiếu Thương Hiệu – Phần III tiếng Anh (remix)', 'ho-chieu-p3-en-remix.mp3'],
   ];
 
   /* ---------- CSS ---------- */
