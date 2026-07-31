@@ -109,14 +109,14 @@
   <!-- DÀN NHÂN VẬT HỘ CHIẾU THƯƠNG HIỆU -->
   <section class="mb-12">
     <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">🛂 Dàn nhân vật «Hộ Chiếu Thương Hiệu»</h2>
-    <p class="text-sm text-deep-teal/55 mb-5">Bộ 15 tạo hình đất nặn 3D của game <a href="brand-passport.html" class="font-bold text-primary">Hộ Chiếu Thương Hiệu</a> – 6 cố vấn đồng hành và 4 doanh nghiệp Việt, phần lớn nhân vật có cả bản thường và bản lễ phục áo dài.</p>
+    <p class="text-sm text-deep-teal/55 mb-5">Bộ 21 tạo hình đất nặn 3D của game <a href="brand-passport.html" class="font-bold text-primary">Hộ Chiếu Thương Hiệu</a> – 6 cố vấn đồng hành và 4 doanh nghiệp Việt, phần lớn nhân vật có cả bản thường và bản lễ phục áo dài.</p>
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4" id="bp-cast-lib"></div>
     <div class="clay-card art-card p-4 mt-4">
       <img src="assets/illustrations/cast-sheet-brand-passport.png" alt="Bảng tạo hình 15 nhân vật game Hộ Chiếu Thương Hiệu" class="w-full rounded-xl" loading="lazy">
       <p class="font-display font-extrabold text-deep-teal text-sm mt-3 text-center">Character Sheet – Bảng tạo hình «Hộ Chiếu Thương Hiệu»</p>
-      <p class="text-[10px] text-deep-teal/50 text-center mt-0.5">15 tạo hình trên cùng khung chuẩn · tài liệu đăng ký quyền tác giả mỹ thuật ứng dụng · mã VN-BIZON-BP-CAST-001</p>
+      <p class="text-[10px] text-deep-teal/50 text-center mt-0.5">21 tạo hình trên cùng khung chuẩn · tài liệu đăng ký quyền tác giả mỹ thuật ứng dụng · mã VN-BIZON-BP-CAST-001</p>
     </div>
-    <p class="text-[11px] text-deep-teal/50 mt-4">📐 Cả 15 tệp dựng trên cùng khung chuẩn <b>760 × 1100 px</b>, chiều cao nhân vật thống nhất và cùng một đường chân, nền trong suốt – dùng làm bộ ảnh gốc cho hồ sơ đăng ký quyền tác giả loại hình <b>mỹ thuật ứng dụng</b>.</p>
+    <p class="text-[11px] text-deep-teal/50 mt-4">📐 Cả 21 tệp dựng trên cùng khung chuẩn <b>760 × 1100 px</b>, chiều cao nhân vật thống nhất và cùng một đường chân, nền trong suốt – dùng làm bộ ảnh gốc cho hồ sơ đăng ký quyền tác giả loại hình <b>mỹ thuật ứng dụng</b>.</p>
   </section>
 
   <!-- BỐI CẢNH & MINH HỌA -->
@@ -187,22 +187,29 @@ const LIB_TRACKS = [
 ];
 /* Dàn nhân vật game Hộ Chiếu Thương Hiệu – cùng khung 760×1100 nên hiển thị bằng nhau */
 const BP_CAST = [
-  ['advisors/lumina-aodai-cut.png', 'Lumina AI', 'Cố vấn AI · người dẫn chuyện suốt sáu quý chơi'],
+  ['advisors/lumina-vest-cut.png', 'Lumina AI', 'Cố vấn AI · người dẫn chuyện suốt sáu quý chơi'],
+  ['advisors/lumina-aodai-cut.png', 'Lumina AI – Áo dài', 'Lễ phục · màn chào và đêm trao Hộ chiếu Thương hiệu'],
   ['advisors/ba-sau-lanh-cut.png', 'Bà Sáu Lành', 'Nhà sáng lập · giữ hồn nghề, tay nâng hũ đặc sản gia truyền'],
   ['advisors/ba-sau-lanh-aodai-cut.png', 'Bà Sáu Lành – Áo dài', 'Lễ phục · giỏ quà quê trong đêm trao Hộ chiếu Thương hiệu'],
-  ['advisors/minh-khang-aodai-cut.png', 'Minh Khang', 'Giám đốc tài chính · đọc dòng tiền trên bảng số liệu'],
-  ['advisors/an-nhien-aodai-cut.png', 'An Nhiên', 'Chiến lược &amp; đổi mới · dựng câu chuyện thương hiệu'],
+  ['advisors/minh-khang-cut.png', 'Minh Khang', 'Giám đốc tài chính · ly cà phê giữa hai phiên họp'],
+  ['advisors/minh-khang-aodai-cut.png', 'Minh Khang – Áo dài', 'Lễ phục · đọc dòng tiền trên bảng số liệu'],
+  ['advisors/an-nhien-cut.png', 'An Nhiên', 'Chiến lược &amp; đổi mới · bảng số liệu thị trường trong tay'],
+  ['advisors/an-nhien-aodai-cut.png', 'An Nhiên – Áo dài', 'Lễ phục · dựng câu chuyện thương hiệu'],
   ['advisors/victor-lam-cut.png', 'Victor Lâm', 'Cố vấn quốc tế hóa · ôm tập báo cáo thị trường'],
+  ['advisors/victor-lam-doithuong-cut.png', 'Victor Lâm – Đời thường', 'Áo khoác len và huy hiệu địa cầu trên ngực'],
   ['advisors/victor-lam-aodai-cut.png', 'Victor Lâm – Áo dài', 'Lễ phục · hộp hồ sơ thị trường xuất khẩu'],
   ['advisors/lina-park-cut.png', 'Lina Park', 'Cố vấn phân phối · bút chỉ và bản đồ tuyến hàng'],
   ['advisors/lina-park-aodai-cut.png', 'Lina Park – Áo dài', 'Lễ phục · bản vẽ tuyến phân phối cuộn trong tay'],
-  ['firms/moc-nhien-aodai-cut.png', 'Mộc Nhiên', 'Mỹ phẩm thảo mộc · câu chuyện thương hiệu là thế mạnh'],
+  ['firms/moc-nhien-cut.png', 'Mộc Nhiên', 'Mỹ phẩm thảo mộc · ôm chậu thảo mộc nguyên liệu'],
+  ['firms/moc-nhien-aodai-cut.png', 'Mộc Nhiên – Áo dài', 'Lễ phục · câu chuyện thương hiệu là thế mạnh'],
   ['firms/phu-sa-foods-cut.png', 'Phù Sa Foods', 'Thực phẩm chế biến · khay hũ đặc sản miền Tây'],
   ['firms/phu-sa-foods-aodai-cut.png', 'Phù Sa Foods – Áo dài', 'Lễ phục · mâm món ăn giới thiệu tại hội chợ'],
   ['firms/lam-viet-cut.png', 'Lam Việt', 'Thời trang bền vững · vải chàm nhuộm tay và khung dệt'],
   ['firms/lam-viet-aodai-cut.png', 'Lam Việt – Áo dài', 'Lễ phục · áo dài thêu hoa, tay nâng mẫu vải chàm'],
   ['firms/mekong-digital-cut.png', 'Mekong Digital', 'Phần mềm quản trị · kênh số mạnh, biên lời cao'],
+  ['firms/mekong-digital-doithuong-cut.png', 'Mekong Digital – Đời thường', 'Áo hoodie và túi đeo chéo trên đường tới lớp'],
 ];
+
 document.getElementById('bp-cast-lib').innerHTML = BP_CAST.map(([f, n, s]) => `
   <div class="clay-card art-card p-3 text-center">
     <div class="h-40 flex items-end justify-center bg-gradient-to-b from-primary-container/15 to-transparent rounded-2xl">
