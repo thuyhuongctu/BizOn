@@ -11,8 +11,13 @@
 <script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
 <script src="js/backend-config.js"></script>
 <script src="js/error-log.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Phong nap khong chan hien thi: media="print" -> onload doi ve "all".
+     Neu Google Fonts cham hoac bi chan, trang van hien ngay bang phong du phong. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"></noscript>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
   html { background:#f4faff; scroll-behavior:smooth; }
   body { font-family:'Manrope',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
   .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
@@ -89,7 +94,7 @@
       <p class="text-white/75 text-sm mt-3 max-w-2xl">Từ Việt Nam 🇻🇳 vươn ra thị trường quốc tế trong kỷ nguyên số: chọn một thị trường, chọn <b class="text-white">phương thức thâm nhập</b> – từ Xuất khẩu, Cấp phép (Licensing), Nhượng quyền thương mại (Franchising), Liên doanh, Liên minh chiến lược, Nền tảng số đến Đầu tư mới (FDI) – rồi ra quyết định kinh doanh qua 4 quý.</p>
       <a href="brand-passport.html" class="clay-btn inline-block bg-clay-gold text-deep-teal font-display font-extrabold text-sm px-6 py-3 mt-4">🛂 Chơi game chiến lược đầy đủ: Hộ Chiếu Thương Hiệu →</a>
     </div>
-    <img src="assets/illustrations/globe-trade.png" alt="Địa cầu đất sét với các tuyến thương mại kết nối Việt Nam ra thế giới" class="h-44 sm:h-56 w-auto mx-auto drop-shadow-2xl hidden sm:block" style="animation:floaty 5s ease-in-out infinite">
+    <img src="assets/illustrations/globe-trade.webp" alt="Địa cầu đất sét với các tuyến thương mại kết nối Việt Nam ra thế giới" class="h-44 sm:h-56 w-auto mx-auto drop-shadow-2xl hidden sm:block" style="animation:floaty 5s ease-in-out infinite">
   </div>
   <style>@keyframes floaty { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }</style>
 </header>
