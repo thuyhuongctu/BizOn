@@ -3630,6 +3630,14 @@
 [
 "Thẻ mô tả Lumina AI",
 "Lumina AI system card"
+],
+[
+"Đơn vị sản xuất",
+"Produced by"
+],
+[
+"Toàn bộ kho nhạc do BizOn tự sản xuất, không thuê đơn vị bên ngoài. Nhóm tác giả giữ quyền quyết định ở mọi khâu; công cụ hỗ trợ AI chỉ thực hiện phần dựng âm thanh theo yêu cầu đã nêu ở trên.",
+"The entire music library is produced in-house by BizOn, with no outside contractor. The authors hold decision rights at every stage; AI-assisted tools only carry out the audio production described above."
 ]
 ]);
   var SPECIAL = [
