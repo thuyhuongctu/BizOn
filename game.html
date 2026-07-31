@@ -125,6 +125,14 @@
   html[data-theme="dark"] .text-primary { color:#5cc4e6 !important; }
   html[data-theme="dark"] .nav-item.active { color:#5cc4e6; }
   html[data-theme="dark"] #vn-map { color:#6fc4d8; }
+  /* Máy nhỏ: thu gọn nút & ảnh đại diện để tên đội có thêm chỗ, thanh đầu không tràn */
+  @media (max-width: 400px) {
+    #app-shell header .hdr-ava { width:2.5rem; height:2.5rem; font-size:1.05rem; }
+    #app-shell header .hdr-toggle { width:2rem; height:2rem; }
+    #app-shell header .hdr-id { gap:.5rem; }
+    #app-shell header .hdr-tools { gap:.25rem; }
+    #app-shell header .hdr-money { padding-left:.5rem; padding-right:.5rem; }
+  }
 </style>
 <link rel="stylesheet" href="css/tw.css">
 <meta property="og:type" content="website">
@@ -207,21 +215,21 @@
 <div id="app-shell" class="hidden">
   <!-- Header -->
   <header class="sticky top-0 z-40 bg-surface-bright/90 backdrop-blur px-5 pt-4 pb-3 max-w-md sm:max-w-2xl mx-auto w-full">
-    <div class="flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <button onclick="showTab('profile')" class="w-11 h-11 rounded-clay bg-gradient-to-br from-primary to-primary-container flex items-center justify-center shadow-clay text-xl">👩‍💼</button>
-        <div>
-          <p id="hdr-team" class="font-display font-bold text-deep-teal leading-tight">–</p>
-          <p class="text-xs text-primary font-semibold"><span id="hdr-level">Lv.1</span> · <span id="hdr-xp">0 XP</span></p>
+    <div class="flex items-center justify-between gap-2">
+      <div class="hdr-id flex items-center gap-2.5 min-w-0 flex-1">
+        <button onclick="showTab('profile')" class="hdr-ava w-11 h-11 shrink-0 rounded-clay bg-gradient-to-br from-primary to-primary-container flex items-center justify-center shadow-clay text-xl">👩‍💼</button>
+        <div class="min-w-0">
+          <p id="hdr-team" class="font-display font-bold text-deep-teal leading-tight truncate">–</p>
+          <p class="text-xs text-primary font-semibold whitespace-nowrap"><span id="hdr-level">Lv.1</span> · <span id="hdr-xp">0 XP</span></p>
         </div>
       </div>
-      <div class="flex items-center gap-1.5">
-        <button id="theme-btn" onclick="toggleTheme()" class="w-9 h-9 rounded-full clay-card !rounded-full text-sm" title="Chế độ Sáng/Tối · Light/Dark">🌙</button>
-        <button id="lang-btn" onclick="toggleLang()" class="w-9 h-9 rounded-full clay-card !rounded-full text-[10px] font-extrabold text-primary" title="Tiếng Việt / English">EN</button>
-        <button onclick="toggleMusic(); renderAll()" class="w-9 h-9 rounded-full clay-card !rounded-full text-sm" title="Nhạc nền BizOn">🎵</button>
+      <div class="hdr-tools flex items-center gap-1.5 shrink-0">
+        <button id="theme-btn" onclick="toggleTheme()" class="hdr-toggle w-9 h-9 rounded-full clay-card !rounded-full text-sm" title="Chế độ Sáng/Tối · Light/Dark">🌙</button>
+        <button id="lang-btn" onclick="toggleLang()" class="hdr-toggle w-9 h-9 rounded-full clay-card !rounded-full text-[10px] font-extrabold text-primary" title="Tiếng Việt / English">EN</button>
+        <button onclick="toggleMusic(); renderAll()" class="hdr-toggle w-9 h-9 rounded-full clay-card !rounded-full text-sm" title="Nhạc nền BizOn">🎵</button>
       </div>
-      <div class="clay-card px-4 py-2 flex items-center gap-1.5">
-        <span>💰</span><span id="hdr-balance" class="font-display font-bold text-deep-teal text-sm">0₫</span>
+      <div class="hdr-money clay-card shrink-0 px-2.5 sm:px-4 py-2 flex items-center gap-1">
+        <span>💰</span><span id="hdr-balance" class="font-display font-bold text-deep-teal text-xs sm:text-sm whitespace-nowrap">0₫</span>
       </div>
     </div>
   </header>
