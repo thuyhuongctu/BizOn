@@ -1390,7 +1390,8 @@ function renderConquest() {
     const status = c
       ? (c.win ? `<b class="text-emerald-600">🚩 ${c.winner}</b>` : `<b class="text-deep-teal/45">🏴 ${c.winner}</b>`)
       : (!S.finished && i === cq.length ? '<b class="text-primary">⚔️ đang tranh</b>' : '<span class="text-deep-teal/35">⏳</span>');
-    return `<p class="flex justify-between items-baseline gap-2"><span class="font-bold text-deep-teal/70 truncate">V${i + 1} · ${st.name}</span><span class="shrink-0">${status}</span></p>`;
+    // Nhãn vòng phải luôn đọc được; tên đội thắng mới là phần được phép cắt bớt
+    return `<p class="flex justify-between items-baseline gap-2"><span class="font-bold text-deep-teal/70 shrink-0">V${i + 1} · ${st.name}</span><span class="min-w-0 truncate text-right">${status}</span></p>`;
   }).join('');
 }
 
