@@ -3774,6 +3774,14 @@
 [
 "Giai điệu BizOn",
 "BizOn Melodies"
+],
+[
+"Thuyền rời bến Vàm Thịnh",
+"Setting out from Vàm Thịnh wharf"
+],
+[
+"Phù điêu đất sét · dòng sông sen lúc bình minh – ảnh chủ đạo game Hộ Chiếu Thương Hiệu",
+"Clay relief · a lotus river at dawn – the hero image of the Brand Passport game"
 ]
 ]);
   var SPECIAL = [
