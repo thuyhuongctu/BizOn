@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Hậu trường sản xuất Kho Âm nhạc – BizOn Bật Nghiệp</title>
+<meta name="description" content="Kho Âm nhạc BizOn được làm ra thế nào: 13 ca khúc, 27 bản thu, ba ngôn ngữ – ghi chép quy trình phục vụ hồ sơ quyền tác giả.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<script src="js/backend-config.js"></script>
+<script src="js/error-log.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+  html { background:#f4faff; scroll-behavior:smooth; }
+  body { font-family:'Manrope',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
+  .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
+  .clay-sunken { background:#e8f2f8; box-shadow:inset 3px 3px 8px rgba(0,102,135,.12), inset -3px -3px 8px rgba(255,255,255,.9); }
+  .glass-nav { background:rgba(3,51,55,.78); backdrop-filter:blur(14px); }
+  .ht-step { position:relative; padding-left:28px; }
+  .ht-step::before { content:''; position:absolute; left:8px; top:6px; width:10px; height:10px; border-radius:50%; background:#006687; }
+  .ht-step::after { content:''; position:absolute; left:12px; top:18px; bottom:-14px; width:2px; background:rgba(0,102,135,.18); }
+  .ht-step:last-child::after { display:none; }
+  .ht-todo { border-left:4px solid #b45309; }
+  /* ===== Chế độ tối ===== */
+  :root { --dt: 3 51 55; }
+  html[data-theme="dark"] { --dt: 214 236 240; background:#081a20; color-scheme:dark; }
+  html[data-theme="dark"] body { color:#d6ecf0; }
+  html[data-theme="dark"] .clay-card { background:#0e2a33; box-shadow:0 10px 30px -5px rgba(0,0,0,.45), inset 0 -4px 0 rgba(0,0,0,.3); }
+  html[data-theme="dark"] .clay-sunken { background:#0a222a; box-shadow:inset 3px 3px 8px rgba(0,0,0,.5), inset -3px -3px 8px rgba(255,255,255,.03); }
+  html[data-theme="dark"] .glass-nav { background:rgba(2,20,24,.85); }
+  html[data-theme="dark"] .text-primary { color:#5cc4e6 !important; }
+  html[data-theme="dark"] .ht-step::before { background:#5cc4e6; }
+</style>
+<link rel="stylesheet" href="css/tw.css">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BizOn Bật Nghiệp">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:title" content="Hậu trường sản xuất Kho Âm nhạc BizOn">
+<meta property="og:description" content="13 ca khúc, 27 bản thu, ba ngôn ngữ – ghi chép quy trình sản xuất phục vụ hồ sơ quyền tác giả.">
+<meta property="og:url" content="https://thuyhuongctu.github.io/BizOn/hau-truong.html">
+<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/og/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="glass-nav fixed top-0 inset-x-0 z-50 text-white">
+  <div class="max-w-5xl mx-auto px-5 h-16 flex items-center justify-between gap-3">
+    <a href="index.html" class="flex items-center gap-2.5">
+      <img src="assets/icons/icon-192.png" alt="BizOn" class="w-9 h-9 rounded-xl shadow-lg">
+      <span class="font-display font-extrabold tracking-tight">BizOn <span class="text-clay-gold">Hậu trường</span></span>
+    </a>
+    <div class="flex items-center gap-2.5">
+      <a href="am-nhac.html" class="text-white/70 hover:text-white text-sm font-bold hidden sm:block">🎶 Kho Âm nhạc</a>
+      <a href="index.html" class="text-white/70 hover:text-white text-sm font-bold hidden sm:block">🏠 Trang chủ</a>
+      <button id="theme-btn" onclick="toggleTheme()" class="w-9 h-9 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 transition-colors shrink-0" title="Chế độ Sáng/Tối · Light/Dark mode">🌙</button>
+      <button id="lang-btn" onclick="toggleLang()" class="h-9 px-3 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 text-[11px] font-extrabold transition-colors shrink-0" title="Tiếng Việt / English">EN</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="pt-24 pb-8 text-white" style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%)">
+  <div class="max-w-5xl mx-auto px-5 flex items-center gap-6">
+    <div class="min-w-0">
+      <p class="text-[11px] font-extrabold uppercase tracking-wider" style="color:rgba(255,255,255,.6)">Ghi chép sản xuất</p>
+      <h1 class="font-display font-extrabold text-3xl sm:text-4xl mt-1">🎚️ Hậu trường Kho Âm nhạc</h1>
+      <p class="text-white/75 text-sm mt-3 max-w-2xl">Kho nhạc của BizOn được làm ra thế nào, ai làm phần nào, và phần nào có công cụ AI tham gia. Trang này viết ra để phục vụ hồ sơ quyền tác giả – nên chỉ ghi những gì kiểm chứng được.</p>
+    </div>
+    <img src="assets/character/advisors/lumina-nghe-nhac-vay-cut.png" alt="Lumina nghe nhạc" class="hidden sm:block w-36 object-contain shrink-0 drop-shadow-2xl" loading="lazy">
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-5 py-10">
+
+  <!-- CON SỐ -->
+  <section class="mb-12">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-5">📊 Kho nhạc tính đến hôm nay</h2>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div class="clay-sunken rounded-2xl px-4 py-3 text-center">
+        <p class="font-display font-extrabold text-deep-teal text-2xl">13</p>
+        <p class="text-[11px] text-deep-teal/55 mt-0.5">ca khúc riêng biệt</p>
+      </div>
+      <div class="clay-sunken rounded-2xl px-4 py-3 text-center">
+        <p class="font-display font-extrabold text-deep-teal text-2xl">27</p>
+        <p class="text-[11px] text-deep-teal/55 mt-0.5">bản thu (gồm bản phối và remix)</p>
+      </div>
+      <div class="clay-sunken rounded-2xl px-4 py-3 text-center">
+        <p class="font-display font-extrabold text-deep-teal text-2xl">3</p>
+        <p class="text-[11px] text-deep-teal/55 mt-0.5">ngôn ngữ: Việt, Anh, Pháp</p>
+      </div>
+      <div class="clay-sunken rounded-2xl px-4 py-3 text-center">
+        <p class="font-display font-extrabold text-deep-teal text-2xl">4</p>
+        <p class="text-[11px] text-deep-teal/55 mt-0.5">tuyển tập theo game</p>
+      </div>
+    </div>
+    <p class="text-[11px] text-deep-teal/45 mt-3">Đếm trực tiếp từ thư mục <b>assets/audio</b> trong kho mã công bố; bốn tệp giọng nói của Lumina không tính vào số này.</p>
+  </section>
+
+  <!-- QUY TRÌNH -->
+  <section class="mb-12">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">🛠️ Một ca khúc đi qua những bước nào</h2>
+    <p class="text-sm text-deep-teal/55 mb-5">Trình tự dưới đây áp dụng cho toàn bộ kho nhạc.</p>
+    <div class="clay-card p-5 sm:p-6 space-y-5">
+      <div class="ht-step">
+        <h3 class="font-display font-extrabold text-deep-teal text-sm">1 · Ý tưởng gắn với một game cụ thể</h3>
+        <p class="text-[13px] text-deep-teal/65 mt-1">Mỗi ca khúc sinh ra để phục vụ một màn chơi: «Bật Nghiệp» cho game mô phỏng chính, «Brand Passport» cho game Hộ Chiếu Thương Hiệu, «Đội Phù Sa» làm bài hát đội. Nhạc không đặt ngoài rồi lắp vào.</p>
+      </div>
+      <div class="ht-step">
+        <h3 class="font-display font-extrabold text-deep-teal text-sm">2 · Viết lời</h3>
+        <p class="text-[13px] text-deep-teal/65 mt-1">Lời do nhóm tác giả viết, bám vào bài học của màn chơi tương ứng – ví dụ «Thất bại là phù sa – bồi thành bến thành tên» trong «Đội Phù Sa». Lời đầy đủ công bố tại <a href="https://github.com/thuyhuongctu/BizOn/blob/main/docs/loi-bai-hat.md" target="_blank" rel="noopener" class="font-bold text-primary">docs/loi-bai-hat.md</a>.</p>
+      </div>
+      <div class="ht-step">
+        <h3 class="font-display font-extrabold text-deep-teal text-sm">3 · Hòa âm và thu âm với công cụ hỗ trợ AI</h3>
+        <p class="text-[13px] text-deep-teal/65 mt-1">Phần hòa âm và giọng hát được dựng bằng công cụ sản xuất nhạc có hỗ trợ AI, từ lời và ý đồ âm nhạc do nhóm tác giả đưa vào. Nhóm tác giả nghe, chọn bản, yêu cầu chỉnh và lặp lại cho tới khi đạt.</p>
+      </div>
+      <div class="ht-step">
+        <h3 class="font-display font-extrabold text-deep-teal text-sm">4 · Làm nhiều bản cho nhiều tình huống lớp học</h3>
+        <p class="text-[13px] text-deep-teal/65 mt-1">Một buổi học 3 quý và một buổi chạy trọn 6 quý cần độ dài nhạc khác nhau, nên nhiều ca khúc có bản gọn và bản mở rộng. «Stamps Beyond Borders» có tới bốn bản, từ 3:03 tới 4:43.</p>
+      </div>
+      <div class="ht-step">
+        <h3 class="font-display font-extrabold text-deep-teal text-sm">5 · Chuyển ngữ cho tuyến quốc tế</h3>
+        <p class="text-[13px] text-deep-teal/65 mt-1">«Je m'appelle Hương sans frontières» có bốn bản: tiếng Việt, tiếng Anh, giọng nam và tiếng Pháp «Hương et le Monde». Đây là tuyến nhạc cho phần BizOn Go Global.</p>
+      </div>
+      <div class="ht-step">
+        <h3 class="font-display font-extrabold text-deep-teal text-sm">6 · Sàng lọc vào tuyển tập của từng game</h3>
+        <p class="text-[13px] text-deep-teal/65 mt-1">Kho đủ lớn thì không dùng chung một danh sách nữa. Mỗi game xoay vòng trong tuyển tập riêng, chọn theo nhịp và màu nhạc hợp với màn chơi đó – xem <a href="am-nhac.html" class="font-bold text-primary">Kho Âm nhạc</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VÌ SAO NHIỀU BẢN -->
+  <section class="mb-12">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">🎧 Vì sao một bài lại có nhiều bản?</h2>
+    <div class="grid sm:grid-cols-3 gap-4">
+      <div class="clay-card p-5">
+        <p class="text-2xl">⏱️</p>
+        <h3 class="font-display font-extrabold text-deep-teal text-sm mt-1">Độ dài buổi học</h3>
+        <p class="text-[12px] text-deep-teal/60 mt-1">Buổi 3 quý và buổi 6 quý cần nhạc dài ngắn khác nhau, không muốn nhạc lặp lại giữa chừng.</p>
+      </div>
+      <div class="clay-card p-5">
+        <p class="text-2xl">🌏</p>
+        <h3 class="font-display font-extrabold text-deep-teal text-sm mt-1">Ngôn ngữ lớp học</h3>
+        <p class="text-[12px] text-deep-teal/60 mt-1">Lớp tiếng Việt, lớp quốc tế và tuyến Pháp ngữ dùng bản lời khác nhau của cùng ca khúc.</p>
+      </div>
+      <div class="clay-card p-5">
+        <p class="text-2xl">🎼</p>
+        <h3 class="font-display font-extrabold text-deep-teal text-sm mt-1">Sắc thái màn chơi</h3>
+        <p class="text-[12px] text-deep-teal/60 mt-1">Màn tổng kết cần nhịp dày hơn màn mở đầu, nên có bản remix riêng cho từng thời điểm.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI THAM GIA ĐẾN ĐÂU -->
+  <section class="mb-12">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">🤖 Công cụ AI tham gia đến đâu</h2>
+    <p class="text-sm text-deep-teal/55 mb-5">Ghi rõ để hồ sơ quyền tác giả minh bạch ngay từ đầu, tránh phải giải trình về sau.</p>
+    <div class="grid sm:grid-cols-2 gap-4">
+      <div class="clay-card p-5">
+        <h3 class="font-display font-extrabold text-deep-teal text-sm mb-3">Nhóm tác giả làm</h3>
+        <ul class="space-y-1.5 text-[13px] text-deep-teal/70">
+          <li>• Ý tưởng ca khúc và vai trò của nó trong từng game</li>
+          <li>• Viết lời tiếng Việt và các bản chuyển ngữ</li>
+          <li>• Quyết định thể loại, nhịp độ, sắc thái</li>
+          <li>• Nghe, chọn bản, yêu cầu chỉnh sửa, duyệt bản cuối</li>
+          <li>• Sàng lọc và xếp bài vào tuyển tập của từng game</li>
+        </ul>
+      </div>
+      <div class="clay-card p-5">
+        <h3 class="font-display font-extrabold text-deep-teal text-sm mb-3">Công cụ AI hỗ trợ</h3>
+        <ul class="space-y-1.5 text-[13px] text-deep-teal/70">
+          <li>• Dựng phần hòa âm từ lời và ý đồ âm nhạc đã có</li>
+          <li>• Tổng hợp giọng hát cho các bản thu</li>
+          <li>• Tạo các bản phối lại từ bản gốc</li>
+          <li>• Tổng hợp giọng nói tiếng Việt cho cố vấn Lumina</li>
+        </ul>
+      </div>
+    </div>
+    <p class="text-[12px] text-deep-teal/55 mt-4">Nói cách khác: <b>phần sáng tác là của nhóm tác giả, phần dựng âm thanh có máy tham gia.</b> Cách diễn đạt này chính xác hơn câu «sáng tác toàn bộ kho nhạc gốc» và thuận lợi hơn khi lập hồ sơ quyền tác giả.</p>
+  </section>
+
+  <!-- CÒN THIẾU -->
+  <section class="mb-12">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">📝 Phần còn dở</h2>
+    <div class="clay-card ht-todo p-5 sm:p-6">
+      <ul class="space-y-2.5 text-[13px] text-deep-teal/70">
+        <li>• <b>«Bật Nghiệp» mới có bản instrumental.</b> Bản thu có lời đang chờ giọng hát – xem mục tuyển cộng tác viên tại <a href="tuyen-dung.html" class="font-bold text-primary">trang tuyển dụng</a>.</li>
+        <li>• <b>46 câu thoại của Lumina chưa thu.</b> Danh sách đã soạn đủ tên tệp, mới thu được 4 câu.</li>
+        <li>• <b>Chưa nêu tên công cụ sản xuất cụ thể.</b> Nhóm tác giả sẽ bổ sung khi chốt danh mục công cụ để ghi vào hồ sơ.</li>
+        <li>• <b>Chưa đăng ký quyền tác giả cho các bản thu.</b> Hồ sơ đang chuẩn bị; trang này là một phần tài liệu chứng minh quá trình sáng tác.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- BẢN QUYỀN -->
+  <section class="mb-12">
+    <div class="clay-card p-5 sm:p-6">
+      <h2 class="font-display font-extrabold text-deep-teal text-lg mb-2">© Quyền tác giả</h2>
+      <p class="text-sm text-deep-teal/70">Toàn bộ ca khúc, lời và bản thu thuộc quyền của <b>Đỗ Thùy Hương và Phan Anh Tú</b>. Kho nhạc chỉ dùng cho mục đích giáo dục và nghiên cứu trong hệ sinh thái BizOn Bật Nghiệp, không phát hành thương mại.</p>
+    </div>
+  </section>
+
+  <p class="text-center text-xs text-deep-teal/40 mt-8">© 2026 Đỗ Thùy Hương &amp; Phan Anh Tú · BizOn Bật Nghiệp – Bảo lưu mọi quyền · <a href="am-nhac.html" class="font-bold text-primary">🎶 Kho Âm nhạc</a> · <a href="lumina.html" class="font-bold text-primary">🤖 Thẻ mô tả Lumina</a> · <a href="index.html" class="font-bold text-primary">🏠 Trang chủ</a></p>
+</main>
+
+<script src="js/site-ui.js" defer></script>
+<script src="js/site-dock.js" defer></script>
+<script src="js/site-footer.js" defer></script>
+<p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2" style="color:rgba(100,116,125,.85)">✉️ Liên hệ · Contact: <a href="mailto:patu@ctu.edu.vn" style="color:inherit;text-decoration:underline">patu@ctu.edu.vn</a> · <a href="mailto:thuyhuongctu@gmail.com" style="color:inherit;text-decoration:underline">thuyhuongctu@gmail.com</a></p>
+<p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2 pb-6" style="color:rgba(100,116,125,.75)">🎓 Trang web chỉ phục vụ mục đích giáo dục và nghiên cứu, không đại diện cho bất kỳ tổ chức chính trị nào. · This website serves educational and research purposes only and does not represent any political organization.</p>
+</body>
+</html>
