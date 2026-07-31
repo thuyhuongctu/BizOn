@@ -3194,6 +3194,442 @@
 [
 "Khu mini-game",
 "Mini-game arcade"
+],
+[
+"🎶 Âm nhạc",
+"🎶 Music"
+],
+[
+"Thẻ mô tả hệ thống",
+"System card"
+],
+[
+"🤖 Cố vấn Lumina AI",
+"🤖 Lumina AI advisor"
+],
+[
+"Trang này công bố Lumina thực sự hoạt động bằng gì, đọc dữ liệu nào và có giới hạn ra sao. Chúng tôi công bố để người dạy, người học và người phản biện kiểm chứng được – chứ không mô tả Lumina mạnh hơn thực tế.",
+"This page states what Lumina actually runs on, what data it reads and where its limits are. We publish it so teachers, learners and reviewers can verify it for themselves – not to make Lumina sound stronger than it is."
+],
+[
+"Tóm tắt trong một câu",
+"In one sentence"
+],
+[
+"nhân vật cố vấn trong trò chơi",
+"an in-game advisor character"
+],
+[
+"không phải",
+"is not"
+],
+[
+"✅ Lumina là gì – và không phải là gì",
+"✅ What Lumina is – and what it is not"
+],
+[
+"Đúng như công bố",
+"Accurate as stated"
+],
+[
+"• Đọc trạng thái ván chơi hiện tại để chọn kịch bản lời khuyên phù hợp.",
+"• Reads the current game state to pick the matching advice scenario."
+],
+[
+"• Chạy trên trình duyệt, không cần mạng sau lần tải đầu.",
+"• Runs in the browser; no network needed after the first load."
+],
+[
+"• Cùng một trạng thái ván chơi luôn cho ra cùng một lời khuyên – đây là tính chất của bộ luật tất định, kiểm chứng được bằng cách đọc mã nguồn.",
+"• The same game state always yields the same advice – a property of the deterministic rule set, verifiable by reading the source."
+],
+[
+"thấp / trung bình / cao",
+"low / medium / high"
+],
+[
+"Không phải – xin đừng hiểu nhầm",
+"Not this – please do not misread it"
+],
+[
+"Không",
+"No"
+],
+[
+"🔎 Lumina đọc gì và trả về gì",
+"🔎 What Lumina reads and what it returns"
+],
+[
+"Toàn bộ đầu vào đều là số liệu của chính ván chơi, nằm trong bộ nhớ trình duyệt.",
+"Every input is data from the game session itself, held in browser storage."
+],
+[
+"Đầu vào",
+"Input"
+],
+[
+"• Biến cố của vòng đang chơi và sắc thái của nó",
+"• The current round's event and its tone"
+],
+[
+"• Số đơn hàng bị hụt ở vòng trước",
+"• Orders lost to stock-outs in the previous round"
+],
+[
+"• Thị phần và số dư ví ảo hiện tại",
+"• Current market share and virtual wallet balance"
+],
+[
+"• Chủ đề người chơi hỏi: giá bán, marketing hoặc rủi ro",
+"• The topic asked about: pricing, marketing or risk"
+],
+[
+"• Giá tham chiếu thị trường của trò chơi",
+"• The game's market reference price"
+],
+[
+"Đầu ra",
+"Output"
+],
+[
+"• Một đoạn lời khuyên bằng tiếng Việt",
+"• A passage of advice in Vietnamese"
+],
+[
+"• Một mức rủi ro: thấp, trung bình hoặc cao",
+"• A risk level: low, medium or high"
+],
+[
+"• Gợi ý hành động cụ thể trong trò chơi (giảm giá, tăng marketing, mua vật phẩm phòng thủ…)",
+"• Concrete in-game actions (cut price, raise marketing, buy a defensive item…)"
+],
+[
+"• Với «Nếu – Thì»: dự báo thị phần và điểm hòa vốn theo thông số giả định",
+"• For «What-If»: projected market share and break-even point under hypothetical settings"
+],
+[
+"⏱️ Giới hạn lượt hỏi",
+"⏱️ Consultation limits"
+],
+[
+"Giới hạn này là dụng ý sư phạm: người học phải tự phân tích trước, hỏi cố vấn sau – chứ không hỏi thay cho suy nghĩ.",
+"The limit is pedagogical by design: learners must analyse first and consult second – asking must not replace thinking."
+],
+[
+"lượt tư vấn mỗi vòng",
+"consultations per round"
+],
+[
+"nếu mua kỹ năng «Cộng hưởng Lumina»",
+"if the «Lumina Resonance» skill is bought"
+],
+[
+"lượt mô phỏng «Nếu – Thì» mỗi vòng",
+"«What-If» simulations per round"
+],
+[
+"vòng chơi trong một ván đầy đủ",
+"rounds in a full session"
+],
+[
+"🎙️ Giọng nói của Lumina",
+"🎙️ Lumina's voice"
+],
+[
+"49 câu",
+"49 lines"
+],
+[
+"4 tệp giọng đã thu",
+"4 voice files recorded"
+],
+[
+"46 câu còn lại đã có sẵn tên tệp trong danh sách nhưng chưa thu",
+"the remaining 46 lines already have filenames assigned but have not been recorded"
+],
+[
+"Phần thu âm và hòa âm có sử dụng công cụ hỗ trợ AI. Nội dung lời thoại do nhóm tác giả viết.",
+"Recording and arrangement used AI-assisted tools. The dialogue itself was written by the authors."
+],
+[
+"🔒 Dữ liệu người học",
+"🔒 Learner data"
+],
+[
+"không có dữ liệu nào rời khỏi máy",
+"no data leaves the device"
+],
+[
+"Chơi trong lớp",
+"Playing in class"
+],
+[
+"Khi người học nhập Mã lớp, kết quả từng vòng mới được gửi lên cơ sở dữ liệu để giảng viên theo dõi và chấm.",
+"Only when a learner enters a Class ID are round results sent to the database for the instructor to follow and grade."
+],
+[
+"Không dùng để huấn luyện",
+"Never used for training"
+],
+[
+"Dữ liệu chơi không được dùng huấn luyện bất kỳ mô hình nào – hệ thống không có mô hình để huấn luyện.",
+"Gameplay data is not used to train any model – the system has no model to train."
+],
+[
+"⚠️ Hạn chế đã biết",
+"⚠️ Known limitations"
+],
+[
+"Nêu ra để người dạy biết trước khi đưa vào buổi học.",
+"Stated so teachers know before bringing it into a class."
+],
+[
+"Bộ luật còn hẹp.",
+"The rule set is narrow."
+],
+[
+"Chỉ đúng trong mô hình mô phỏng.",
+"Valid only inside the simulation model."
+],
+[
+"Chỉ có tiếng Việt trong trò chơi.",
+"In-game advice is Vietnamese only."
+],
+[
+"Chưa có nghiên cứu hiệu quả.",
+"No effectiveness study yet."
+],
+[
+"Hình ảnh nhân vật do công cụ AI tạo ảnh hỗ trợ,",
+"Character artwork was produced with AI image tools,"
+],
+[
+"🔬 Cách tự kiểm chứng",
+"🔬 How to verify this yourself"
+],
+[
+"Mọi tuyên bố ở trang này đều đọc được trực tiếp trong mã nguồn công bố:",
+"Every claim on this page can be read directly in the published source:"
+],
+[
+"Lưu ý: kho mã công bố là phần chạy trên trình duyệt. Nhóm tác giả giữ riêng một số tài liệu nội bộ và chưa công bố toàn bộ hồ sơ dự án.",
+"Note: the published repository covers what runs in the browser. The authors keep some internal documents private and have not published the entire project dossier."
+],
+[
+"Hậu trường",
+"Behind the scenes"
+],
+[
+"Ghi chép sản xuất",
+"Production notes"
+],
+[
+"🎚️ Hậu trường Kho Âm nhạc",
+"🎚️ Behind the BizOn music library"
+],
+[
+"Kho nhạc của BizOn được làm ra thế nào, ai làm phần nào, và phần nào có công cụ AI tham gia. Trang này viết ra để phục vụ hồ sơ quyền tác giả – nên chỉ ghi những gì kiểm chứng được.",
+"How the BizOn music library was made, who did which part, and where AI tools were involved. This page exists to support the copyright dossier – so it records only what can be verified."
+],
+[
+"📊 Kho nhạc tính đến hôm nay",
+"📊 The library as it stands today"
+],
+[
+"ca khúc riêng biệt",
+"distinct songs"
+],
+[
+"bản thu (gồm bản phối và remix)",
+"recordings (including arrangements and remixes)"
+],
+[
+"ngôn ngữ: Việt, Anh, Pháp",
+"languages: Vietnamese, English, French"
+],
+[
+"tuyển tập theo game",
+"collections, one per game"
+],
+[
+"🛠️ Một ca khúc đi qua những bước nào",
+"🛠️ The steps a song goes through"
+],
+[
+"Trình tự dưới đây áp dụng cho toàn bộ kho nhạc.",
+"The sequence below applies to the whole library."
+],
+[
+"1 · Ý tưởng gắn với một game cụ thể",
+"1 · An idea tied to a specific game"
+],
+[
+"Mỗi ca khúc sinh ra để phục vụ một màn chơi: «Bật Nghiệp» cho game mô phỏng chính, «Brand Passport» cho game Hộ Chiếu Thương Hiệu, «Đội Phù Sa» làm bài hát đội. Nhạc không đặt ngoài rồi lắp vào.",
+"Every song is born to serve a particular level: «Bật Nghiệp» for the main simulation, «Brand Passport» for the Brand Passport game, «Đội Phù Sa» as a team anthem. The music is not commissioned elsewhere and bolted on."
+],
+[
+"2 · Viết lời",
+"2 · Writing the lyrics"
+],
+[
+"3 · Hòa âm và thu âm với công cụ hỗ trợ AI",
+"3 · Arrangement and recording with AI-assisted tools"
+],
+[
+"Phần hòa âm và giọng hát được dựng bằng công cụ sản xuất nhạc có hỗ trợ AI, từ lời và ý đồ âm nhạc do nhóm tác giả đưa vào. Nhóm tác giả nghe, chọn bản, yêu cầu chỉnh và lặp lại cho tới khi đạt.",
+"Arrangement and vocals are built with AI-assisted music production tools, from lyrics and musical intent supplied by the authors. The authors listen, choose takes, request changes and iterate until it is right."
+],
+[
+"4 · Làm nhiều bản cho nhiều tình huống lớp học",
+"4 · Several versions for different class formats"
+],
+[
+"Một buổi học 3 quý và một buổi chạy trọn 6 quý cần độ dài nhạc khác nhau, nên nhiều ca khúc có bản gọn và bản mở rộng. «Stamps Beyond Borders» có tới bốn bản, từ 3:03 tới 4:43.",
+"A three-quarter class and a full six-quarter session need different music lengths, so many songs have a short and an extended version. «Stamps Beyond Borders» has four, from 3:03 to 4:43."
+],
+[
+"5 · Chuyển ngữ cho tuyến quốc tế",
+"5 · Translation for the international track"
+],
+[
+"«Je m'appelle Hương sans frontières» có bốn bản: tiếng Việt, tiếng Anh, giọng nam và tiếng Pháp «Hương et le Monde». Đây là tuyến nhạc cho phần BizOn Go Global.",
+"«Je m'appelle Hương sans frontières» exists in four versions: Vietnamese, English, a male vocal, and the French «Hương et le Monde». This is the soundtrack line for BizOn Go Global."
+],
+[
+"6 · Sàng lọc vào tuyển tập của từng game",
+"6 · Curating into each game's collection"
+],
+[
+"🎧 Vì sao một bài lại có nhiều bản?",
+"🎧 Why does one song have several versions?"
+],
+[
+"Độ dài buổi học",
+"Class length"
+],
+[
+"Buổi 3 quý và buổi 6 quý cần nhạc dài ngắn khác nhau, không muốn nhạc lặp lại giữa chừng.",
+"Three-quarter and six-quarter sessions need different lengths; we did not want the music looping mid-session."
+],
+[
+"Ngôn ngữ lớp học",
+"Class language"
+],
+[
+"Lớp tiếng Việt, lớp quốc tế và tuyến Pháp ngữ dùng bản lời khác nhau của cùng ca khúc.",
+"Vietnamese classes, international classes and the Francophone track use different lyric versions of the same song."
+],
+[
+"Sắc thái màn chơi",
+"The mood of the level"
+],
+[
+"Màn tổng kết cần nhịp dày hơn màn mở đầu, nên có bản remix riêng cho từng thời điểm.",
+"A closing level needs a denser beat than an opening one, so each moment has its own remix."
+],
+[
+"🤖 Công cụ AI tham gia đến đâu",
+"🤖 How far AI tools were involved"
+],
+[
+"Ghi rõ để hồ sơ quyền tác giả minh bạch ngay từ đầu, tránh phải giải trình về sau.",
+"Stated plainly so the copyright dossier is transparent from the start and needs no explaining later."
+],
+[
+"Nhóm tác giả làm",
+"Done by the authors"
+],
+[
+"• Ý tưởng ca khúc và vai trò của nó trong từng game",
+"• The song concept and its role in each game"
+],
+[
+"• Viết lời tiếng Việt và các bản chuyển ngữ",
+"• Writing the Vietnamese lyrics and the translated versions"
+],
+[
+"• Quyết định thể loại, nhịp độ, sắc thái",
+"• Deciding genre, tempo and mood"
+],
+[
+"• Nghe, chọn bản, yêu cầu chỉnh sửa, duyệt bản cuối",
+"• Listening, choosing takes, requesting edits, approving the final cut"
+],
+[
+"• Sàng lọc và xếp bài vào tuyển tập của từng game",
+"• Curating and assigning songs to each game's collection"
+],
+[
+"Công cụ AI hỗ trợ",
+"Assisted by AI tools"
+],
+[
+"• Dựng phần hòa âm từ lời và ý đồ âm nhạc đã có",
+"• Building the arrangement from the existing lyrics and musical intent"
+],
+[
+"• Tổng hợp giọng hát cho các bản thu",
+"• Synthesising the vocals for the recordings"
+],
+[
+"• Tạo các bản phối lại từ bản gốc",
+"• Generating remixes from the original"
+],
+[
+"• Tổng hợp giọng nói tiếng Việt cho cố vấn Lumina",
+"• Synthesising the Vietnamese speaking voice for advisor Lumina"
+],
+[
+"phần sáng tác là của nhóm tác giả, phần dựng âm thanh có máy tham gia.",
+"the composition belongs to the authors; the audio production had machine involvement."
+],
+[
+"📝 Phần còn dở",
+"📝 Still unfinished"
+],
+[
+"«Bật Nghiệp» mới có bản instrumental.",
+"«Bật Nghiệp» exists only as an instrumental."
+],
+[
+"trang tuyển dụng",
+"the recruitment page"
+],
+[
+"46 câu thoại của Lumina chưa thu.",
+"46 of Lumina's lines are unrecorded."
+],
+[
+"Chưa nêu tên công cụ sản xuất cụ thể.",
+"The specific production tools are not yet named."
+],
+[
+"Chưa đăng ký quyền tác giả cho các bản thu.",
+"The recordings are not yet registered for copyright."
+],
+[
+"© Quyền tác giả",
+"© Copyright"
+],
+[
+"Đỗ Thùy Hương và Phan Anh Tú",
+"Đỗ Thùy Hương and Phan Anh Tú"
+],
+[
+"🤖 Thẻ mô tả Lumina",
+"🤖 Lumina system card"
+],
+[
+"🎶 Kho Âm nhạc",
+"🎶 Music library"
+],
+[
+"Hậu trường sản xuất nhạc",
+"Music production notes"
+],
+[
+"Thẻ mô tả Lumina AI",
+"Lumina AI system card"
 ]
 ]);
   var SPECIAL = [
