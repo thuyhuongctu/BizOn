@@ -40,6 +40,7 @@
     ['Golden Silt Route', 'golden-silt-route.mp3'],
     ['Hộ Chiếu Thương Hiệu – Phần I: Từ dòng Mekong', 'ho-chieu-p1-tu-dong-mekong.mp3'],
     ['Hộ Chiếu Thương Hiệu – Phần II: Qua Những Thị Trường', 'ho-chieu-p2-qua-nhung-thi-truong.mp3'],
+    ['Hộ Chiếu Thương Hiệu – Phần III: Việt Nam ra thế giới', 'ho-chieu-p3-viet-nam-ra-the-gioi.mp3'],
   ];
 
   /* ---------- CSS ---------- */
