@@ -207,7 +207,12 @@
   var f1 = function (v) { return (Math.round(v * 10) / 10).toLocaleString('vi-VN', { maximumFractionDigits: 1 }); };
   var clamp = function (v) { return Math.max(0, Math.min(100, Math.round(v))); };
 
-  var seed = Math.floor(Math.random() * 1e9);
+  // Hạt giống quyết định điều kiện thị trường của cả ván (độ phù hợp, cạnh
+  // tranh, xu hướng từng quý). Cho phép đặt qua ?seed=… để cả lớp chơi trên
+  // cùng một bộ điều kiện – so sánh giữa các đội mới công bằng – và để bộ
+  // kiểm thử trong test/ lặp lại được ván chơi.
+  var seedParam = (location.search.match(/[?&]seed=(\d{1,9})(?:&|$)/) || [])[1];
+  var seed = seedParam ? Number(seedParam) : Math.floor(Math.random() * 1e9);
   function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
 
   var MKTS = [
@@ -746,6 +751,32 @@
       $('bp-play').classList.remove('hidden');
       stageObs();
     } catch (e) { window.bpStart(); }
+  };
+
+  /* Cửa sổ chỉ-đọc cho bộ kiểm thử tự động trong test/. Trả về bản sao nên
+   * kiểm thử không sửa được trạng thái thật, và không dòng nào của trò chơi
+   * phụ thuộc vào nó – gỡ đi trò chơi vẫn chạy y nguyên. */
+  window.bpTest = {
+    seed: function () { return seed; },
+    markets: function () { return MKTS.length; },
+    scores: function () { return scores(); },
+    ended: function () { return !$('bp-end').classList.contains('hidden'); },
+    // Toàn bộ gợi ý đang thoả điều kiện, kể cả những gợi ý không lọt vào hai ô
+    // hiển thị. Cho phép kiểm thử soi đúng một điều kiện thay vì dò trên màn hình.
+    advice: function () {
+      return ADVICE.map(function (f) { var a = f(); return a ? a[1] + ': ' + a[2] : null; })
+        .filter(function (x) { return x !== null; });
+    },
+    state: function () {
+      return {
+        q: S.q, firm: S.firm, cash: S.cash, rep: S.rep, capab: S.capab, resil: S.resil,
+        know: S.know.slice(), entered: S.entered.slice(), qin: S.qin.slice(),
+        profit: S.profit, susts: S.susts, adapt: S.adapt, lowQ: S.lowQ,
+        certBP: S.certBP, phase: S.phase, flags: JSON.parse(JSON.stringify(S.flags)),
+        sel: { prio: S.sel.prio, budget: S.sel.budget, enter: S.sel.enter,
+               enterMode: S.sel.enterMode, intel: S.sel.intel.slice() },
+      };
+    },
   };
   // Dàn nhân vật ở màn giới thiệu
   $('bp-cast').innerHTML = CAST.map(function (c) {
