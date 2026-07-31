@@ -318,6 +318,58 @@ Ngoài hồ sơ chính thức, nên chuẩn bị bộ chứng cứ sau. Khi có 
 
 ---
 
+# PHẦN E-bis · CÔNG BỐ CÔNG KHAI TRƯỚC KHI ĐĂNG KÝ
+
+Ở Việt Nam ít nhóm tác giả công bố sản phẩm trước khi nộp hồ sơ. Thói quen đó bắt nguồn từ **tư duy sáng chế** và bị áp dụng nhầm sang quyền tác giả. Bảng dưới phân định rõ.
+
+| Loại quyền | Công bố trước có hại không? | Áp dụng cho BizOn |
+|---|---|---|
+| **Sáng chế** | **Có** – công bố làm mất tính mới, không còn được cấp bằng | **Không liên quan** – phần mềm không được bảo hộ dưới danh nghĩa sáng chế (khoản 2 Điều 59) |
+| **Quyền tác giả** | **Không.** Quyền phát sinh tự động từ khi tác phẩm được định hình (Điều 6), không phụ thuộc công bố hay đăng ký | **Có lợi** – xem dưới |
+| **Nhãn hiệu** | **Có rủi ro thật** – Việt Nam theo nguyên tắc nộp đơn trước được quyền trước | **Đây là rủi ro duy nhất cần xử lý gấp** |
+
+## E-bis.1 · Vì sao kho GitHub công khai là tài sản, không phải rủi ro
+
+Kho `github.com/thuyhuongctu/BizOn` ở chế độ công khai từ **26/07/2026**, tới nay có **271 commit** đều mang dấu thời gian và tên người thực hiện.
+
+Nhóm tác giả giữ kín sản phẩm tới lúc nộp hồ sơ chỉ có **lời khai của chính mình** về thời điểm sáng tạo. Nhóm công bố sớm có thêm:
+
+- **Nhật ký có dấu thời gian do bên thứ ba lưu giữ** – GitHub, không phải nhóm tác giả, giữ bản ghi này
+- **Bản lưu độc lập** – web.archive.org lưu được nội dung trang theo từng mốc
+- **Truy vết từng bước sáng tạo** – không chỉ chứng minh «có tác phẩm vào ngày X» mà còn chứng minh **quá trình hình thành**, thứ rất khó ngụy tạo
+
+Khi tranh chấp, bên nào chứng minh được mốc thời gian sớm hơn bằng chứng cứ khách quan sẽ có lợi thế. **Công bố sớm làm hồ sơ mạnh lên.**
+
+## E-bis.2 · Công khai không có nghĩa là cho dùng miễn phí
+
+Kho mã đã có tệp `LICENSE` ghi rõ **«GIẤY PHÉP ĐỘC QUYỀN – PROPRIETARY LICENSE · Bảo lưu mọi quyền»**. Đây là điểm phải giữ: mã nguồn để công khai cho người đọc kiểm chứng, **không phải mã nguồn mở**. Hai khái niệm này khác nhau hoàn toàn và tệp `LICENSE` là thứ phân định.
+
+## E-bis.3 · ⚠️ Rủi ro thật: nhãn hiệu bị người khác nộp đơn trước
+
+**Việt Nam theo nguyên tắc «nộp đơn trước được quyền trước» (first-to-file), không phải «dùng trước được quyền trước».**
+
+Hệ quả cụ thể:
+
+- Tên **«BizOn»** đang hiển thị công khai trên GitHub và trên trang web chạy thật từ 26/07/2026
+- Bất kỳ ai nhìn thấy đều có thể nộp đơn đăng ký nhãn hiệu trước nhóm tác giả
+- Nếu điều đó xảy ra, **nhóm mất quyền dùng chính tên mình đặt ra**, dù đã dùng trước và có bằng chứng dùng trước
+
+Việc đã dùng trước chỉ giúp phản đối đơn của người khác trong một số trường hợp hẹp, thủ tục dài và tốn kém hơn nhiều so với nộp đơn sớm.
+
+**Đây chính là lý do trong [Phần G](#phần-g--trình-tự-thực-hiện-đề-xuất) nhãn hiệu xếp thứ tự 1, trước cả phần mềm** – không phải vì quan trọng hơn, mà vì đó là thứ duy nhất có thể **mất hẳn** do chậm trễ. Quyền tác giả thì không mất đi đâu cả, vì nó đã phát sinh tự động rồi.
+
+## E-bis.4 · Có nên chuyển kho sang riêng tư không?
+
+**Không.** Ba lý do:
+
+1. Kho đã công khai từ 26/07 – chuyển sang riêng tư bây giờ không xóa được việc đã công bố
+2. Chuyển sang riêng tư **làm mất bằng chứng công khai có ngày tháng**, thứ đang là điểm mạnh nhất của hồ sơ
+3. Không giải quyết được rủi ro nhãn hiệu – rủi ro đó chỉ giải quyết bằng cách **nộp đơn sớm**
+
+Việc nên làm là ngược lại: **giữ kho công khai và nộp đơn nhãn hiệu ngay**.
+
+---
+
 # PHẦN F · BA RỦI RO PHẢI XỬ LÝ TRƯỚC KHI NỘP
 
 ## F1 · ⚠️ Vấn đề tác giả là con người đối với phần có công cụ AI tham gia
