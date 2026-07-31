@@ -3838,6 +3838,14 @@
 [
 "Bản lời tiếng Anh của phần kết · 5:20 · dùng cho lớp quốc tế",
 "English-language version of the closing movement · 5:20 · for international classes"
+],
+[
+"«Brand Passport» – bản remix 2",
+"«Brand Passport» – remix 2"
+],
+[
+"Bản remix thứ hai dài 4:42 · dài nhất trong nhóm, hợp buổi chơi trọn 6 quý",
+"A second remix, 4:42 · the longest in the set, suited to a full six-quarter session"
 ]
 ]);
   var SPECIAL = [
