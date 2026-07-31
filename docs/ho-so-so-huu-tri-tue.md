@@ -206,9 +206,8 @@ Kho nhạc gồm **14 tác phẩm âm nhạc riêng biệt** với **34 bản th
 | `docs/huong-dan-giang-vien.md` | Hướng dẫn tổ chức buổi học |
 | `docs/design-system.md` | Quy tắc hệ thống thiết kế |
 | `docs/database-schema.md` · `docs/api-structure.md` | Kiến trúc dữ liệu |
-| Ma trận chuẩn đầu ra học tập (Bloom) | Đang nằm trong `hoc-thuat.html` – **nên tách ra thành tài liệu riêng** |
-| Rubric chấm thảo luận 4 mức | Cùng nguồn trên |
-| Bộ câu hỏi khảo sát trước – sau | Trong `khao-sat-online.html` |
+| `docs/chuan-dau-ra-va-rubric.md` | **Bộ công cụ thiết kế và đánh giá học tập** – ma trận chuẩn đầu ra 2 game, rubric 4 mức, hướng dẫn vận dụng, bản đồ đối chiếu chuẩn đầu ra học phần, giới hạn diễn giải, tài liệu tham khảo |
+| Bộ 30 câu khảo sát trước – sau | Trong `khao-sat-online.html` – nội dung đã mô tả trong tài liệu trên |
 
 **Đây là phần có giá trị học thuật cao nhất** – ma trận chuẩn đầu ra, rubric và bộ công cụ đo lường là sản phẩm nghiên cứu sư phạm, không phải phần mềm.
 
@@ -379,7 +378,6 @@ Như đã nêu ở Mục B3: cần lời đầy đủ của **cả 14 ca khúc**
 
 - [ ] Quyết định phương án xử lý vấn đề AI (Mục F1) – **nên hỏi luật sư trước**
 - [ ] Chép đủ **lời 14 ca khúc**
-- [ ] Tách **ma trận chuẩn đầu ra + rubric** thành tài liệu độc lập
 - [ ] Chuẩn bị bản in mã nguồn, **đã loại bỏ `food-truck.html`**
 - [ ] In bảng tạo hình nhân vật khổ A3
 
