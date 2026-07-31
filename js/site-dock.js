@@ -21,6 +21,8 @@
     ['Journey on the Golden Silt – remix «Mekong River»', 'mekong-river-remix.mp3'],
     ['«Mekong River» – bản thu lại', 'mekong-river-v2.mp3'],
     ["Je m'appelle Hương sans frontières (tiếng Việt)", 'huong-and-the-world.mp3'],
+    ["Je m'appelle Hương sans frontières (tiếng Anh)", 'huong-and-the-world-en.mp3'],
+    ["Je m'appelle Hương sans frontières (giọng nam)", 'huong-and-the-world-male.mp3'],
     ['Hương et le Monde (tiếng Pháp)', 'huong-et-le-monde.mp3'],
     ['Mon histoire', 'mon-histoire.mp3'],
     ['And The World Say Hello!', 'and-the-world-say-hello.mp3'],

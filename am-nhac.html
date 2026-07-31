@@ -22,6 +22,7 @@
   .glass-nav { background:rgba(3,51,55,.78); backdrop-filter:blur(14px); }
   .seek { -webkit-appearance:none; appearance:none; width:100%; height:8px; border-radius:999px; background:#dbe9f2; outline:none; }
   .seek::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:linear-gradient(160deg,#00c4ff,#006687); box-shadow:0 3px 6px rgba(0,102,135,.4); cursor:pointer; }
+  #album-view { scroll-margin-top:84px; } /* chừa chỗ cho thanh điều hướng dán trên đầu */
   .eq { display:inline-flex; gap:2px; align-items:flex-end; height:14px; }
   .eq span { width:3px; border-radius:2px; background:#e8762d; animation:eq 0.9s ease-in-out infinite; }
   .eq span:nth-child(2){ animation-delay:.2s } .eq span:nth-child(3){ animation-delay:.4s }
@@ -73,11 +74,17 @@
       <h1 class="font-display font-extrabold text-3xl sm:text-4xl">🎶 Kho Âm nhạc BizOn</h1>
       <p class="text-white/75 text-sm mt-3 max-w-2xl">Toàn bộ ca khúc gốc và giọng nói của vũ trụ BizOn Bật Nghiệp – sáng tác riêng cho game, thuộc bản quyền của nhóm tác giả.</p>
     </div>
-    <img src="assets/character/lumina-ao-dai-present.png" alt="Lumina giới thiệu kho nhạc" class="hidden sm:block w-36 h-36 rounded-3xl object-cover shadow-2xl shrink-0 border-2 border-white/20" style="object-position:50% 5%;background:rgba(255,255,255,.08)">
+    <img src="assets/character/advisors/lumina-nghe-nhac-ngoi-cut.png" alt="Lumina ngồi nghe nhạc" class="hidden sm:block w-40 h-40 object-contain shrink-0 drop-shadow-2xl">
   </div>
 </header>
 
 <main class="max-w-5xl mx-auto px-5 py-10">
+
+  <!-- BÌA TUYỂN TẬP -->
+  <figure class="clay-card overflow-hidden mb-10">
+    <img src="assets/illustrations/giai-dieu-bizon.jpg" alt="Bìa «Giai điệu BizOn» – Lumina trong tà áo dài trắng giữa vườn hoa đất sét" class="w-full block" width="1376" height="768" loading="lazy">
+    <figcaption class="px-5 py-3 text-[11px] text-deep-teal/55">🎨 Bìa tuyển tập «Giai điệu BizOn» – tranh minh họa đất sét 3D, thuộc bộ tác phẩm mỹ thuật ứng dụng của nhóm tác giả.</figcaption>
+  </figure>
 
   <!-- CA KHÚC GỐC -->
   <section class="mb-12">
@@ -95,26 +102,15 @@
 
   <!-- NGHE TRONG GAME -->
   <section class="mb-12">
-    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">🎮 Nhạc nào cho game nào?</h2>
-    <p class="text-sm text-deep-teal/55 mb-5">Kho nhạc đã đủ lớn để mỗi game có bản sắc âm nhạc riêng, nên các ca khúc được chia thành từng tuyển tập thay vì dùng chung một danh sách. Mỗi game chỉ xoay vòng trong tuyển tập của mình; muốn nghe trọn kho thì dùng thanh nhạc ⋯ ở góc trái màn hình.</p>
-    <div class="grid sm:grid-cols-2 gap-4">
-      <a href="game.html" class="clay-card p-5 hover:-translate-y-0.5 transition-transform">
-        <p class="text-2xl">🎮</p><h3 class="font-display font-extrabold text-deep-teal text-sm mt-1">Bật Nghiệp – game mô phỏng chính</h3>
-        <p class="text-[11px] text-deep-teal/55 mt-1"><b>8 bài · màu Việt Nam.</b> «Bật Nghiệp» · BizOn Theme · «Hương on Return» bản gốc và remix · «Vừa Đủ Để Bay Cao» · «Đội Phù Sa» bản gốc và hai bản remix.</p>
-      </a>
-      <a href="brand-passport.html" class="clay-card p-5 hover:-translate-y-0.5 transition-transform">
-        <p class="text-2xl">🛂</p><h3 class="font-display font-extrabold text-deep-teal text-sm mt-1">Hộ Chiếu Thương Hiệu</h3>
-        <p class="text-[11px] text-deep-teal/55 mt-1"><b>8 bài · màu quốc tế hóa.</b> «Brand Passport» bản gốc, bản phối và bản remix · «Stamps Beyond Borders» cả bốn bản · «Golden Silt Route».</p>
-      </a>
-      <a href="global.html" class="clay-card p-5 hover:-translate-y-0.5 transition-transform">
-        <p class="text-2xl">🌏</p><h3 class="font-display font-extrabold text-deep-teal text-sm mt-1">BizOn Go Global</h3>
-        <p class="text-[11px] text-deep-teal/55 mt-1"><b>9 bài · phù sa Mekong và đa ngôn ngữ.</b> «Journey on the Golden Silt» và các bản phối · «Mekong River» · «Mekong Compass» · «Je m'appelle Hương sans frontières» bản Việt, Anh, giọng nam và Pháp.</p>
-      </a>
-      <a href="games.html" class="clay-card p-5 hover:-translate-y-0.5 transition-transform">
-        <p class="text-2xl">🕹️</p><h3 class="font-display font-extrabold text-deep-teal text-sm mt-1">BizOn Arcade</h3>
-        <p class="text-[11px] text-deep-teal/55 mt-1"><b>6 bài · nhịp nhanh.</b> BizOn Theme · «And The World Say Hello!» · «Đội Phù Sa» remix · «Mon histoire» · «Vừa Đủ Để Bay Cao» · «Bật Nghiệp».</p>
-      </a>
+    <div class="flex items-start gap-4">
+      <div class="min-w-0 flex-1">
+        <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">🎮 Nhạc nào cho game nào?</h2>
+    <p class="text-sm text-deep-teal/55 mb-5">Kho nhạc đã đủ lớn để mỗi game có bản sắc âm nhạc riêng, nên các ca khúc được chia thành từng tuyển tập thay vì dùng chung một danh sách. Mỗi game chỉ xoay vòng trong tuyển tập của mình; muốn nghe trọn kho thì dùng thanh nhạc ⋯ ở góc trái màn hình. Bấm vào một tuyển tập để mở danh sách bài và nghe thử ngay tại đây.</p>
+      </div>
+      <img src="assets/character/advisors/lumina-nghe-nhac-dung-cut.png" alt="Lumina đứng nghe nhạc" class="hidden sm:block w-28 shrink-0 -mt-2" loading="lazy">
     </div>
+    <div id="albums" class="grid sm:grid-cols-2 gap-4"></div>
+    <div id="album-view" class="hidden mt-5"></div>
   </section>
 
   <p class="text-center text-xs text-deep-teal/40 mt-8">© 2026 Đỗ Thùy Hương &amp; Phan Anh Tú · BizOn Bật Nghiệp – Bảo lưu mọi quyền · <a href="thu-vien.html" class="font-bold text-primary">📚 Thư viện Sáng tạo</a> · <a href="index.html" class="font-bold text-primary">🏠 Trang chủ</a></p>
@@ -139,6 +135,7 @@ const GROUPS = [
     { t: 'Bản gốc – tiếng Việt', s: 'Bản thu tiếng Việt', f: 'assets/audio/huong-and-the-world.mp3', icon: '🌏' },
     { t: 'English version', s: 'Bản song ngữ Anh–Việt cho phát hành quốc tế · bản thu có lời', f: 'assets/audio/huong-and-the-world-en.mp3', icon: '🌍' },
     { t: 'Bản giọng nam', s: 'Bản phối giọng nam · lời tiếng Anh song ngữ', f: 'assets/audio/huong-and-the-world-male.mp3', icon: '🎤' },
+    { t: 'French version – «Hương et le Monde»', s: 'Bản lời tiếng Pháp · dùng cho tuyến Pháp ngữ của BizOn Go Global', f: 'assets/audio/huong-et-le-monde.mp3', icon: '🇫🇷' },
   ]},
   { name: '«Đội Phù Sa»', icon: '🌾', desc: 'Anthem đội chơi Đội Phù Sa · V-pop electronic 116 BPM · «Thất bại là phù sa – bồi thành bến thành tên»', tracks: [
     { t: 'Bản gốc', s: 'Bản thu có lời – Golden silt, we rise!', f: 'assets/audio/doi-phu-sa.mp3', icon: '🌾' },
@@ -167,8 +164,18 @@ const GROUPS = [
   { name: '«Mekong Compass»', icon: '🧭', desc: 'Ca khúc lấy cảm hứng dòng Mekong', tracks: [
     { t: 'Bản gốc', s: 'Bản thu có lời', f: 'assets/audio/mekong-compass.mp3', icon: '🧭' },
   ]},
+  { name: '«Mon histoire»', icon: '🇫🇷', desc: 'Ca khúc lời tiếng Pháp · nhịp nhanh, dùng trong BizOn Arcade', tracks: [
+    { t: 'Bản gốc', s: 'Bản thu có lời tiếng Pháp', f: 'assets/audio/mon-histoire.mp3', icon: '🇫🇷' },
+  ]},
+  { name: '«BizOn Theme»', icon: '🎼', desc: 'Nhạc hiệu instrumental của hệ sinh thái · dùng làm nền chung cho Bật Nghiệp và Arcade', tracks: [
+    { t: 'Bản gốc – instrumental', s: 'Bản phối không lời', f: 'assets/audio/bizon-theme.mp3', icon: '🎼' },
+  ]},
 ];
 const TRACKS = GROUPS.flatMap(g => g.tracks);
+/* Trong tuyển tập, nhãn kiểu «Bản gốc» không cho biết đó là bài nào → ghép thêm tên ca khúc */
+const GROUP_OF = new Map();
+GROUPS.forEach(g => g.tracks.forEach(t => GROUP_OF.set(t.f, g.name)));
+const fullTitle = tr => tr.t.indexOf('«') > -1 ? tr.t : GROUP_OF.get(tr.f) + ' – ' + tr.t;
 let cur = null, curIdx = -1;
 const fmt = s => isFinite(s) ? `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}` : '–:––';
 function trackRow(tr, i) {
@@ -198,7 +205,7 @@ function renderTracks() {
     </div>`).join('');
 }
 function playTrack(i) {
-  if (curIdx === i && cur) { if (cur.paused) cur.play().catch(() => {}); else cur.pause(); renderTracks(); return; }
+  if (curIdx === i && cur) { if (cur.paused) cur.play().catch(() => {}); else cur.pause(); refresh(); return; }
   if (cur) { cur.pause(); cur = null; }
   curIdx = i;
   cur = new Audio(TRACKS[i].f);
@@ -209,13 +216,131 @@ function playTrack(i) {
     if (c) c.textContent = fmt(cur.currentTime);
     if (sk && cur.duration) sk.value = cur.currentTime / cur.duration * 100;
   });
-  cur.addEventListener('ended', () => { curIdx = -1; cur = null; renderTracks(); });
-  cur.addEventListener('play', renderTracks);
-  cur.addEventListener('pause', renderTracks);
+  cur.addEventListener('ended', () => {
+    curIdx = -1; cur = null; refresh();
+    // Đang nghe trọn một tuyển tập thì tự sang bài kế
+    if (queue && queuePos > -1 && queuePos + 1 < queue.length) { queuePos++; playTrack(queue[queuePos]); }
+    else { queue = null; queuePos = -1; renderAlbumView(); }
+  });
+  cur.addEventListener('play', refresh);
+  cur.addEventListener('pause', refresh);
   cur.play().catch(() => {});
-  renderTracks();
+  refresh();
 }
+function refresh() { renderTracks(); renderAlbumView(); }
 function seekTrack(i, v) { if (curIdx === i && cur && cur.duration) cur.currentTime = v / 100 * cur.duration; }
+
+/* ===== Tuyển tập theo game (album) ===== */
+/* Danh sách bài của mỗi tuyển tập phải khớp đúng tuyển tập đang chạy trong game:
+   game.html → BGM_TRACKS · brand-passport.html → SOUNDTRACK
+   global.html → G_TRACKS · games.html → AR_TRACKS */
+let queue = null, queuePos = -1, album = null;
+const idxOf = f => TRACKS.findIndex(t => t.f === 'assets/audio/' + f);
+const COLLECTIONS = [
+  {
+    key: 'bat-nghiep', name: 'Bật Nghiệp', icon: '🎮', tone: 'Màu Việt Nam',
+    game: 'Game mô phỏng chính', url: 'game.html',
+    desc: 'Nhạc nền xoay vòng suốt 6 vòng chơi của game mô phỏng khởi nghiệp – giữ màu V-pop và tinh thần đội nhóm.',
+    files: ['bat-nghiep.mp3', 'bizon-theme.mp3', 'huong-on-return.mp3', 'huong-on-return-remix.mp3', 'vua-du-de-bay-cao.mp3', 'doi-phu-sa.mp3', 'doi-phu-sa-remix.mp3', 'doi-phu-sa-remix2.mp3'],
+  },
+  {
+    key: 'brand-passport', name: 'Hộ Chiếu Thương Hiệu', icon: '🛂', tone: 'Màu quốc tế hóa',
+    game: 'Game Hộ Chiếu Thương Hiệu', url: 'brand-passport.html',
+    desc: 'Tuyến nhạc của hành trình đưa thương hiệu ra khỏi biên giới – từ «Brand Passport» tới «Stamps Beyond Borders».',
+    files: ['brand-passport.mp3', 'brand-passport-v2.mp3', 'brand-passport-remix.mp3', 'stamps-beyond-borders.mp3', 'stamps-beyond-borders-v2.mp3', 'stamps-beyond-borders-v3.mp3', 'stamps-beyond-borders-extended.mp3', 'golden-silt-route.mp3'],
+  },
+  {
+    key: 'go-global', name: 'BizOn Go Global', icon: '🌏', tone: 'Phù sa Mekong và đa ngôn ngữ',
+    game: 'Bản đồ Go Global', url: 'global.html',
+    desc: 'Tuyển tập đa ngôn ngữ Việt – Anh – Pháp, lấy dòng Mekong làm mạch chính. Gồm trọn bộ «Je m\'appelle Hương sans frontières».',
+    files: ['journey-golden-silt.mp3', 'journey-golden-silt-remix.mp3', 'mekong-river-remix.mp3', 'mekong-river-v2.mp3', 'mekong-compass.mp3', 'huong-and-the-world.mp3', 'huong-and-the-world-en.mp3', 'huong-and-the-world-male.mp3', 'huong-et-le-monde.mp3'],
+  },
+  {
+    key: 'arcade', name: 'BizOn Arcade', icon: '🕹️', tone: 'Nhịp nhanh',
+    game: 'Khu mini-game', url: 'games.html',
+    desc: 'Các bài nhịp nhanh, hợp những mini-game đòi phản xạ – nghe ngắn, vào thẳng cao trào.',
+    files: ['bizon-theme.mp3', 'and-the-world-say-hello.mp3', 'doi-phu-sa-remix.mp3', 'mon-histoire.mp3', 'vua-du-de-bay-cao.mp3', 'bat-nghiep.mp3'],
+  },
+];
+function renderAlbums() {
+  document.getElementById('albums').innerHTML = COLLECTIONS.map(c => `
+    <button onclick="openAlbum('${c.key}')" class="clay-card p-5 text-left hover:-translate-y-0.5 transition-transform ${album === c.key ? 'ring-2 ring-primary' : ''}">
+      <div class="flex items-center justify-between gap-2">
+        <p class="text-2xl">${c.icon}</p>
+        <span class="shrink-0 text-[10px] font-extrabold px-2.5 py-1 rounded-full" style="background:rgba(0,102,135,.1);color:#006687">${c.files.length} bài</span>
+      </div>
+      <h3 class="font-display font-extrabold text-deep-teal text-sm mt-1">${c.name}</h3>
+      <p class="text-[11px] font-extrabold text-primary mt-1">${c.tone}</p>
+      <p class="text-[11px] text-deep-teal/55 mt-0.5">${c.desc}</p>
+      <p class="text-[11px] font-extrabold text-primary mt-2">${album === c.key ? 'Đang mở ▾' : 'Mở danh sách bài ▸'}</p>
+    </button>`).join('');
+}
+function openAlbum(key) {
+  album = album === key ? null : key;
+  renderAlbums(); renderAlbumView();
+  if (album) document.getElementById('album-view').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+function renderAlbumView() {
+  const box = document.getElementById('album-view');
+  if (!box) return;
+  const c = COLLECTIONS.find(x => x.key === album);
+  if (!c) { box.className = 'hidden mt-5'; box.innerHTML = ''; return; }
+  box.className = 'mt-5';
+  const idx = c.files.map(idxOf).filter(i => i > -1);
+  const playing = queue && curIdx > -1 && queue === queueOf(c);
+  box.innerHTML = `
+    <div class="clay-card overflow-hidden">
+      <div class="p-5 sm:p-6 text-white" style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%)">
+        <div class="flex items-start gap-4">
+          <p class="text-4xl shrink-0">${c.icon}</p>
+          <div class="min-w-0 flex-1">
+            <p class="text-[10px] font-extrabold uppercase tracking-wider" style="color:rgba(255,255,255,.6)">Tuyển tập</p>
+            <h3 class="font-display font-extrabold text-xl sm:text-2xl leading-tight">${c.name}</h3>
+            <p class="text-sm mt-1" style="color:rgba(255,255,255,.75)"><span>${c.files.length} bài</span> · <span>${c.tone}</span></p>
+          </div>
+          <button onclick="openAlbum('${c.key}')" class="shrink-0 w-9 h-9 rounded-full text-sm font-extrabold" style="background:rgba(255,255,255,.12);color:#fff" title="Đóng tuyển tập">✕</button>
+        </div>
+        <p class="text-sm mt-3" style="color:rgba(255,255,255,.75)">${c.desc}</p>
+        <div class="flex flex-wrap items-center gap-2.5 mt-4">
+          <button onclick="playAlbum('${c.key}')" class="clay-btn font-display font-extrabold text-xs px-5 py-2.5 rounded-full" style="background:#fff;color:#006687">${playing ? '⏸ Tạm dừng' : '▶ Phát cả tuyển tập'}</button>
+          <a href="${c.url}" class="font-display font-extrabold text-xs px-5 py-2.5 rounded-full" style="background:rgba(255,255,255,.14);color:#fff">${c.icon} ${c.game}</a>
+        </div>
+      </div>
+      <div class="p-4 sm:p-5">
+        ${idx.map((i, j) => albumRow(TRACKS[i], i, j)).join('')}
+      </div>
+      <div class="px-5 pb-5 grid sm:grid-cols-3 gap-3 text-[11px]">
+        <div class="clay-sunken rounded-2xl px-3 py-2"><p class="text-deep-teal/45 font-bold">Thể loại</p><p class="font-extrabold text-deep-teal">${c.tone}</p></div>
+        <div class="clay-sunken rounded-2xl px-3 py-2"><p class="text-deep-teal/45 font-bold">Dùng trong</p><p class="font-extrabold text-deep-teal">${c.game}</p></div>
+        <div class="clay-sunken rounded-2xl px-3 py-2"><p class="text-deep-teal/45 font-bold">Bản quyền</p><p class="font-extrabold text-deep-teal">© 2026 Đỗ Thùy Hương &amp; Phan Anh Tú</p></div>
+      </div>
+      <p class="px-5 pb-5 text-[10px] text-deep-teal/45">Nhạc và lời do nhóm tác giả sáng tác, phần hòa âm – thu âm có sử dụng công cụ hỗ trợ AI. Toàn bộ bản thu thuộc quyền của nhóm tác giả và chỉ dùng cho mục đích giáo dục, nghiên cứu.</p>
+    </div>`;
+}
+function albumRow(tr, i, j) {
+  const on = curIdx === i && cur && !cur.paused;
+  return `
+    <div class="flex items-center gap-3 py-2.5 ${j > 0 ? 'border-t border-deep-teal/10' : ''}">
+      <span class="w-6 shrink-0 text-[11px] font-extrabold text-deep-teal/35 text-center">${j + 1}</span>
+      <button onclick="playTrack(${i})" class="clay-btn shrink-0 w-10 h-10 rounded-full text-sm flex items-center justify-center" style="background:linear-gradient(160deg,#00c4ff,#006687);color:#fff">${on ? '⏸' : '▶'}</button>
+      <div class="min-w-0 flex-1">
+        <p class="font-display font-extrabold text-deep-teal text-xs leading-tight">${tr.icon} ${fullTitle(tr)}</p>
+        <p class="text-[10px] text-deep-teal/50 truncate">${tr.s}</p>
+      </div>
+      ${on ? '<span class="eq shrink-0"><span></span><span></span><span></span></span>' : ''}
+    </div>`;
+}
+function queueOf(c) { return c.files.map(idxOf).filter(i => i > -1); }
+function playAlbum(key) {
+  const c = COLLECTIONS.find(x => x.key === key);
+  if (!c) return;
+  const q = queueOf(c);
+  if (!q.length) return;
+  if (queue && curIdx > -1 && cur && !cur.paused && q.indexOf(curIdx) > -1) { cur.pause(); renderAlbumView(); return; }
+  queue = q; queuePos = 0;
+  playTrack(q[0]);
+  renderAlbumView();
+}
 
 /* ===== Giọng Lumina ===== */
 const VOICES = [
@@ -226,7 +351,7 @@ const VOICES = [
 ];
 let vAudio = null;
 function playVoice(i) {
-  if (cur && !cur.paused) { cur.pause(); renderTracks(); }
+  if (cur && !cur.paused) { cur.pause(); queue = null; queuePos = -1; refresh(); }
   if (vAudio) vAudio.pause();
   vAudio = new Audio(VOICES[i].f); vAudio.volume = 0.8; vAudio.play().catch(() => {});
 }
@@ -237,6 +362,7 @@ document.getElementById('voices').innerHTML = VOICES.map((v, i) => `
     <p class="text-[9px] text-deep-teal/45 mt-0.5">▶ Nghe thử</p>
   </button>`).join('');
 renderTracks();
+renderAlbums();
 </script>
 
 <p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2" style="color:rgba(100,116,125,.85)">✉️ Liên hệ · Contact: <a href="mailto:patu@ctu.edu.vn" style="color:inherit;text-decoration:underline">patu@ctu.edu.vn</a> · <a href="mailto:thuyhuongctu@gmail.com" style="color:inherit;text-decoration:underline">thuyhuongctu@gmail.com</a></p>
