@@ -17,6 +17,13 @@
   html { background:#f4faff; scroll-behavior:smooth; }
   body { font-family:'Manrope',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
   .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
+  /* Thẻ Kho Âm nhạc: từ sm trở lên ảnh cao bằng thẻ nên Lumina đứng trọn người.
+     Dưới sm khung chỉ cao 13rem mà ảnh là chân dung dọc, object-cover cắt ngang
+     bụng – nhìn như mất nửa người. Chuyển sang contain để giữ đủ dáng. */
+  @media (max-width: 639px) {
+    /* css/tw.css nạp sau khối này nên h-52 và object-cover thắng nếu không đánh dấu */
+    .music-lumina { height: 17rem !important; object-fit: contain !important; object-position: 50% 100% !important; }
+  }
   .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease; }
   .clay-btn:active { transform:translateY(2px); }
   .clay-btn-primary { background:linear-gradient(160deg,#00c4ff,#006687); border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.5), inset 0 -4px 0 rgba(0,0,0,.18); }
@@ -246,7 +253,7 @@
         <p class="text-xs text-deep-teal/55 mt-1.5">Ca khúc gốc, trình phát đầy đủ, lời bài hát và giọng Lumina AI.</p>
         <span class="clay-btn inline-block text-white font-display font-extrabold px-5 py-2.5 text-xs mt-4" style="background:linear-gradient(160deg,#00c4ff,#006687)">NGHE NGAY →</span>
       </div>
-      <img src="assets/character/lumina-ao-dai-present.png" alt="Lumina giới thiệu Kho Âm nhạc BizOn" class="w-full h-52 sm:h-full object-cover" style="object-position:50% 12%" loading="lazy">
+      <img src="assets/character/lumina-ao-dai-present.png" alt="Lumina giới thiệu Kho Âm nhạc BizOn" class="music-lumina w-full h-52 sm:h-full object-cover" style="object-position:50% 12%" loading="lazy">
     </a>
   </section>
 
