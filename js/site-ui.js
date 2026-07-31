@@ -1906,10 +1906,6 @@
 "🌾 Original (4 minutes)"
 ],
 [
-"🎓 Giảng viên & Nghiên cứu · Educators",
-"🎓 Educators & research"
-],
-[
 "🎓 Sinh viên chơi",
 "🎓 Students play"
 ],
@@ -2032,10 +2028,6 @@
 [
 "🧭 Bản gốc",
 "🧭 Original"
-],
-[
-"🧭 Khám phá · Explore",
-"🧭 Explore"
 ],
 [
 "🪁 Bản gốc (remastered)",
@@ -3846,6 +3838,34 @@
 [
 "Bản phối lại của phần kết tiếng Anh · 4:42 · gọn hơn bản gốc, hợp màn tổng kết",
 "A remix of the English closing movement · 4:42 · tighter than the original, suited to the wrap-up"
+],
+[
+"🎮 Trò chơi · Games",
+"🎮 Games"
+],
+[
+"🎨 Kho sáng tạo · Creative",
+"🎨 Creative library"
+],
+[
+"🎓 Giảng dạy · Educators",
+"🎓 Educators & research"
+],
+[
+"🏛️ Về BizOn · About",
+"🏛️ About BizOn"
+],
+[
+"Game Bật Nghiệp",
+"Bật Nghiệp game"
+],
+[
+"Phiếu khảo sát (bản in A4)",
+"Survey form (A4 print)"
+],
+[
+"Làm mới ứng dụng",
+"Refresh the app"
 ]
 ]);
   var SPECIAL = [
@@ -3874,7 +3894,7 @@
   }
 
   window.applyLang = function (lang) {
-    document.querySelectorAll('h1,h2,h3,h4,p,a,button,span,b,label,th,td,li,small').forEach(function (el) {
+    document.querySelectorAll('h1,h2,h3,h4,p,a,button,span,b,label,th,td,li,small,summary').forEach(function (el) {
       if (el.childElementCount) return;
       var vi = el.dataset.vi || el.textContent.trim();
       if (!EN.has(vi)) return;
