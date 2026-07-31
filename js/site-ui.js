@@ -3050,7 +3050,151 @@
 ["Lần cuối", "Last played"],
 ["Tuần 1 bạn chọn gì? Vì sao?", "What did you choose in week 1? Why?"],
 ["Bạn có đổi chiến lược sau khi nhận phản hồi thị trường không?", "Did you change strategy after market feedback?"],
-["Bài học nào áp dụng được cho khởi nghiệp thật?", "Which lessons carry over to real startups?"]
+["Bài học nào áp dụng được cho khởi nghiệp thật?", "Which lessons carry over to real startups?"],
+[
+"6 bài",
+"6 tracks"
+],
+[
+"8 bài",
+"8 tracks"
+],
+[
+"9 bài",
+"9 tracks"
+],
+[
+"Màu Việt Nam",
+"Vietnamese colour"
+],
+[
+"Màu quốc tế hóa",
+"Internationalisation colour"
+],
+[
+"Phù sa Mekong và đa ngôn ngữ",
+"Mekong silt, multilingual"
+],
+[
+"Nhịp nhanh",
+"Up-tempo"
+],
+[
+"Mở danh sách bài ▸",
+"Open the tracklist ▸"
+],
+[
+"Đang mở ▾",
+"Open ▾"
+],
+[
+"Tuyển tập",
+"Collection"
+],
+[
+"▶ Phát cả tuyển tập",
+"▶ Play the whole collection"
+],
+[
+"⏸ Tạm dừng",
+"⏸ Pause"
+],
+[
+"Thể loại",
+"Genre"
+],
+[
+"Dùng trong",
+"Used in"
+],
+[
+"Bản quyền",
+"Copyright"
+],
+[
+"🎮 Game mô phỏng chính",
+"🎮 Main simulation game"
+],
+[
+"🛂 Game Hộ Chiếu Thương Hiệu",
+"🛂 Brand Passport game"
+],
+[
+"🌏 Bản đồ Go Global",
+"🌏 Go Global map"
+],
+[
+"🕹️ Khu mini-game",
+"🕹️ Mini-game arcade"
+],
+[
+"Nhạc nền xoay vòng suốt 6 vòng chơi của game mô phỏng khởi nghiệp – giữ màu V-pop và tinh thần đội nhóm.",
+"Background music cycling through all six rounds of the start-up simulation – V-pop colour and team spirit throughout."
+],
+[
+"Tuyến nhạc của hành trình đưa thương hiệu ra khỏi biên giới – từ «Brand Passport» tới «Stamps Beyond Borders».",
+"The soundtrack of taking a brand beyond its borders – from «Brand Passport» to «Stamps Beyond Borders»."
+],
+[
+"Tuyển tập đa ngôn ngữ Việt – Anh – Pháp, lấy dòng Mekong làm mạch chính. Gồm trọn bộ «Je m'appelle Hương sans frontières».",
+"A Vietnamese–English–French collection running along the Mekong. Includes the complete «Je m'appelle Hương sans frontières» set."
+],
+[
+"Các bài nhịp nhanh, hợp những mini-game đòi phản xạ – nghe ngắn, vào thẳng cao trào.",
+"Up-tempo tracks for reflex mini-games – short, straight into the chorus."
+],
+[
+"Nhạc và lời do nhóm tác giả sáng tác, phần hòa âm – thu âm có sử dụng công cụ hỗ trợ AI. Toàn bộ bản thu thuộc quyền của nhóm tác giả và chỉ dùng cho mục đích giáo dục, nghiên cứu.",
+"Music and lyrics written by the authors; arrangement and recording were produced with AI-assisted tools. All recordings belong to the authors and are used for educational and research purposes only."
+],
+[
+"«Mon histoire»",
+"«Mon histoire»"
+],
+[
+"Ca khúc lời tiếng Pháp · nhịp nhanh, dùng trong BizOn Arcade",
+"French-language song · up-tempo, used in BizOn Arcade"
+],
+[
+"«BizOn Theme»",
+"«BizOn Theme»"
+],
+[
+"Nhạc hiệu instrumental của hệ sinh thái · dùng làm nền chung cho Bật Nghiệp và Arcade",
+"The ecosystem's instrumental signature · shared background for Bật Nghiệp and Arcade"
+],
+[
+"French version – «Hương et le Monde»",
+"French version – «Hương et le Monde»"
+],
+[
+"Bản lời tiếng Pháp · dùng cho tuyến Pháp ngữ của BizOn Go Global",
+"French-language version · used for the Francophone track of BizOn Go Global"
+],
+[
+"Bản thu có lời tiếng Pháp",
+"Recording with French lyrics"
+],
+[
+"Bản phối không lời",
+"Instrumental arrangement"
+],
+[
+"Game mô phỏng chính",
+"Main simulation game"
+],
+[
+"Game Hộ Chiếu Thương Hiệu",
+"Brand Passport game"
+],
+[
+"Bản đồ Go Global",
+"Go Global map"
+],
+[
+"Khu mini-game",
+"Mini-game arcade"
+]
 ]);
   var SPECIAL = [
     { page: 'food-truck', sel: 'header p.text-sm', en: "You are the founder of a street-food startup in <b>Bến Phù Sa</b> – a fictional river town inspired by Vietnam's Mekong Delta. Each week, pick <b>Method – Product – Location</b>. Goal: the highest total revenue after 5 weeks. The secret is to <b>test fast, then scale at the right moment</b>." },
