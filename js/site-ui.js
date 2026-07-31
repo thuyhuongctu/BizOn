@@ -1314,10 +1314,6 @@
 "Play now →"
 ],
 [
-"Chạy trên GitHub Pages, dùng ngay không tài khoản; dữ liệu mô phỏng công bố mở trên Zenodo.",
-"Runs on GitHub Pages, no account needed; simulation data published openly on Zenodo."
-],
-[
 "Chủ đề",
 "Theme"
 ],
@@ -1546,8 +1542,8 @@
 "Artwork for the Solar Panel item – ESG strategy in the game"
 ],
 [
-"Miễn phí & mã nguồn mở",
-"Free & open source"
+"Miễn phí cho lớp học & mã nguồn công khai",
+"Free for classrooms & source-available"
 ],
 [
 "Màn chào & chứng nhận hoàn thành",
@@ -3869,6 +3865,7 @@
 ]
 ]);
   var SPECIAL = [
+    { page: 'giai-phap', sel: '#gp-oss-note', en: "Free to use at the official URL for non-commercial teaching – no account needed. The source is published for academic transparency and verification; commercial exploitation rights remain with BizOn (see <a href=\"https://github.com/thuyhuongctu/BizOn/blob/main/LICENSE\" target=\"_blank\" rel=\"noopener\" class=\"underline font-bold\">LICENSE</a>)." },
     { page: 'food-truck', sel: 'header p.text-sm', en: "You are the founder of a street-food startup in <b>Bến Phù Sa</b> – a fictional river town inspired by Vietnam's Mekong Delta. Each week, pick <b>Method – Product – Location</b>. Goal: the highest total revenue after 5 weeks. The secret is to <b>test fast, then scale at the right moment</b>." },
     { page: 'food-truck', sel: '#ft-intro ul li:nth-child(1)', en: "🛵 <b>Mobile vending cart</b>: revenue <b>×3</b> – but product &amp; location are locked for the whole week. For when you already <i>know</i> the winning formula." },
     { page: 'food-truck', sel: '#ft-intro ul li:nth-child(2)', en: "🧺 <b>Street hawking</b>: ~1/3 the revenue – but you weave through every market lane and pick up <b>lots of market intel</b>. The experimenter's weapon." },
