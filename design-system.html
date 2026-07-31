@@ -152,28 +152,33 @@
       <span class="bz-stamp">Vietnam → World</span>
     </div>
 
-    <h3 class="bz-h3" style="margin-top:var(--s-6)">Thẻ sản phẩm</h3>
-    <p class="bz-muted" style="font-size:var(--t-sm)">Rê chuột lên thẻ: nâng 8px, biểu tượng nghiêng 3D, một vệt sáng quét qua trong 550ms.</p>
-    <div class="grid g3 bz-reveal bz-stagger" style="margin-top:var(--s-3)">
-      <a class="bz-card bz-card--product" href="game.html">
+    <h3 class="bz-h3" style="margin-top:var(--s-6)">Thẻ sản phẩm &amp; mô-típ âm thanh</h3>
+    <p class="bz-muted" style="font-size:var(--t-sm)">Rê chuột lên thẻ: nâng 8px, biểu tượng nghiêng 3D, một vệt sáng quét qua trong 550ms.
+      Bật công tắc bên dưới thì mỗi thẻ còn phát một câu nhạc 2,2 giây cắt từ chính ca khúc của màn đó.</p>
+    <div class="row" style="margin-top:var(--s-3)">
+      <button class="bz-btn bz-btn--ghost" type="button" data-motif-toggle aria-pressed="false">🔈 Mô-típ âm thanh: tắt</button>
+      <span class="bz-muted" style="font-size:var(--t-xs)">Mặc định tắt · tôn trọng lựa chọn nhạc chung của site · tự ẩn trên thiết bị cảm ứng</span>
+    </div>
+    <div class="grid g3 bz-reveal bz-stagger" style="margin-top:var(--s-4)">
+      <a class="bz-card bz-card--product" href="game.html" data-motif="core">
         <p class="bz-card__icon" style="font-size:2.4rem">🎮</p>
         <p class="bz-eyebrow" style="margin-top:.6rem">01 — BizOn Core</p>
         <h4 class="bz-h3" style="margin:.2rem 0 .4rem">Bật Nghiệp</h4>
         <p class="bz-muted" style="font-size:var(--t-sm)">Build the business.</p>
       </a>
-      <a class="bz-card bz-card--product bz-card--feature" href="brand-passport.html">
+      <a class="bz-card bz-card--product bz-card--feature" href="brand-passport.html" data-motif="passport">
         <p class="bz-card__icon" style="font-size:2.4rem">🛂</p>
         <p class="bz-eyebrow" style="margin-top:.6rem">02 — BizOn International</p>
         <h4 class="bz-h3" style="margin:.2rem 0 .4rem">Brand Passport</h4>
         <p class="bz-muted" style="font-size:var(--t-sm)">Take the brand across borders.</p>
       </a>
-      <a class="bz-card bz-card--product" href="global.html">
+      <a class="bz-card bz-card--product" href="global.html" data-motif="lab">
         <p class="bz-card__icon" style="font-size:2.4rem">🔬</p>
         <p class="bz-eyebrow" style="margin-top:.6rem">03 — BizOn Lab</p>
         <h4 class="bz-h3" style="margin:.2rem 0 .4rem">IE Lab</h4>
         <p class="bz-muted" style="font-size:var(--t-sm)">Experiment with internationalization.</p>
       </a>
-      <a class="bz-card bz-card--product" href="games.html">
+      <a class="bz-card bz-card--product" href="games.html" data-motif="arcade">
         <p class="bz-card__icon" style="font-size:2.4rem">🕹️</p>
         <p class="bz-eyebrow" style="margin-top:.6rem">04 — BizOn Arcade</p>
         <h4 class="bz-h3" style="margin:.2rem 0 .4rem">Arcade</h4>
@@ -253,6 +258,7 @@
 </footer>
 
 <script src="js/motion.js" defer></script>
+<script src="js/audio-motif.js" defer></script>
 <script>
   document.getElementById('theme').addEventListener('click', function () {
     var d = document.documentElement.dataset.theme === 'dark';
