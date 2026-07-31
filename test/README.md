@@ -1,8 +1,54 @@
 # Kiểm thử tự động
 
-Hiện có một bộ: `brand-passport.test.js` — cho game «Hộ Chiếu Thương Hiệu».
+| Bộ | Đối tượng | Cần gì | Thời gian |
+|---|---|---|---|
+| `engine.test.js` | `js/engine.js` – engine game mô phỏng chính | chỉ Node | vài giây |
+| `brand-passport.test.js` | game «Hộ Chiếu Thương Hiệu» | Node + Chromium + máy chủ tĩnh | vài phút |
 
-## Vì sao có thư mục này
+```bash
+node test/engine.test.js          # nhanh, chạy được mọi lúc
+node test/brand-passport.test.js  # cần dựng máy chủ trước, xem mục dưới
+```
+
+---
+
+## `engine.test.js` — engine game mô phỏng chính
+
+Đây là engine dùng để **chấm điểm sinh viên**. Một sai số ở đây không chỉ làm
+game khó chịu mà làm điểm số sai, và làm hỏng luôn tuyên bố *«engine xác định,
+kết quả tái lập được»* trong hồ sơ học thuật. Vì vậy bộ này đặt nặng hai thứ:
+tính tái lập và các đẳng thức kế toán.
+
+`js/engine.js` không đụng tới DOM — không `document`, không `window`, không
+`localStorage` — nên nạp thẳng vào Node qua `vm` được. Không cần trình duyệt,
+không cần máy chủ, chạy xong trong vài giây.
+
+23 phép thử, chia bốn nhóm:
+
+| Nhóm | Nội dung |
+|---|---|
+| Xác định & tái lập | cùng hạt giống + cùng quyết định ⇒ cùng dãy kết quả; bộ sinh số phụ thuộc hoàn toàn vào hạt giống |
+| Kế toán | số dư sau vòng = số dư trước + lợi nhuận ròng; doanh thu = số bán × giá; không bán quá hàng có; đơn mất = cầu − số bán |
+| Luật kinh doanh | nhân sự giới hạn sản lượng; giá lên cầu xuống; marketing nhiều thị phần cao; thị phần và chỉ số vận hành luôn trong khoảng cho phép |
+| Trạng thái & phần thưởng | khiên bảo hiểm che đúng một vòng; vay vốn và lãi; cắt giảm chi phí hết hiệu lực sau một vòng; nhiệm vụ chỉ nhận thưởng một lần; thành tựu không trùng lặp |
+
+### Bộ này đã bắt được một lỗi ngay lần chạy đầu
+
+`unlockAchievements()` được gọi **trước** dòng đặt `s.finished = true`, nên tại
+thời điểm chấm thành tựu thì cờ kết thúc vẫn là `false`. Hai thành tựu
+`A_FINISH` («Tốt nghiệp BizOn») và `A_CHAMP` («Vô địch BizOn») đều kiểm
+`s.finished`, nên **engine tự nó không bao giờ mở được hai thành tựu này**.
+
+Trong game thì người chơi vẫn nhận được — nhưng chỉ nhờ `js/app.js` gọi
+`unlockAchievements` lần thứ hai bên trong `recordConquest()`, một hàm mà tên
+gọi là về bản đồ chinh phục chứ không phải về thành tựu. Nghĩa là hành vi đúng
+đang phụ thuộc vào một lần gọi tình cờ ở nơi khác.
+
+Đã sửa: đặt cờ kết thúc trước khi chấm thành tựu, để engine tự đứng được.
+
+---
+
+## `brand-passport.test.js` — game «Hộ Chiếu Thương Hiệu»
 
 Cuối tháng 7/2026, một đợt rà soát tìm ra bốn lỗi trong `brand-passport.html`
 mà chơi tay rất khó bắt: mã còn sót logic **ba** thị trường của bản nháp cũ,
@@ -82,8 +128,8 @@ thị trường và việc so sánh kết quả giữa các đội mới công b
 thử không sửa được trạng thái thật. Không dòng nào của trò chơi phụ thuộc vào
 nó; gỡ đi trò chơi vẫn chạy y nguyên.
 
-## Còn thiếu
+## Ghi chú
 
-Bộ này mới phủ «Hộ Chiếu Thương Hiệu». Game mô phỏng chính (`js/engine.js`)
-chưa có kiểm thử — đó là phần đáng làm tiếp, vì nó mới là thứ dùng để chấm
-điểm sinh viên.
+Hai bộ hiện có phủ engine game chính và game «Hộ Chiếu Thương Hiệu». Phần
+chưa có kiểm thử: lớp giao diện trong `js/app.js`, các mini-game trong
+`games.html`, và luồng nộp bài về Supabase.
