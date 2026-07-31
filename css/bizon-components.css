@@ -1,0 +1,186 @@
+/* ===========================================================================
+   BizOn ACADEMIA 3D — lớp thành phần
+   Nạp sau bizon-tokens.css. Mọi giá trị đều lấy từ token, không viết cứng màu.
+   Tiền tố .bz- để không đụng tới .clay-* của giao diện cũ – hai hệ chạy song
+   song được trong lúc chuyển dần từng trang.
+   =========================================================================== */
+
+/* ============================== NÚT ============================== */
+.bz-btn {
+  --btn-bg: var(--navy-800);
+  --btn-fg: #fff;
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  font-family: var(--font-ui); font-weight: 700; font-size: .875rem;
+  padding: .8rem 1.4rem; border: 0; border-radius: var(--r-pill);
+  background: var(--btn-bg); color: var(--btn-fg);
+  cursor: pointer; text-decoration: none; white-space: nowrap;
+  box-shadow: var(--e-2);
+  transition: transform var(--m-micro) var(--ease-spring),
+              box-shadow var(--m-micro) var(--ease-out),
+              background-color var(--m-micro) var(--ease-out);
+}
+.bz-btn:hover  { transform: translateY(-2px); box-shadow: var(--e-3); }
+.bz-btn:active { transform: translateY(0); box-shadow: var(--e-1); }
+
+.bz-btn--ghost {
+  --btn-bg: transparent; --btn-fg: var(--ink);
+  box-shadow: inset 0 0 0 1.5px var(--hairline);
+}
+.bz-btn--ghost:hover { box-shadow: inset 0 0 0 1.5px var(--teal-600); }
+
+/* Chỉ dùng cho hành động dẫn tới Brand Passport – giữ vàng thật hiếm */
+.bz-btn--passport {
+  --btn-bg: transparent; --btn-fg: var(--ink);
+  box-shadow: inset 0 0 0 1.5px var(--champagne);
+}
+.bz-btn--passport:hover { box-shadow: inset 0 0 0 1.5px var(--champagne), var(--glow-gold); }
+
+.bz-btn--lg { font-size: .95rem; padding: 1rem 1.75rem; }
+
+/* ============================== HUY HIỆU / CHIP ============================== */
+.bz-badge {
+  display: inline-flex; align-items: center; gap: .45rem;
+  font-size: var(--t-xs); font-weight: 800;
+  letter-spacing: .04em; padding: .4rem .8rem;
+  border-radius: var(--r-pill);
+  background: var(--surface-2); color: var(--ink-2);
+}
+.bz-badge--gold { background: color-mix(in srgb, var(--champagne) 14%, transparent); color: var(--champagne-ink); }
+.bz-badge--live { background: color-mix(in srgb, var(--cyan-400) 15%, transparent); color: var(--teal-ink); }
+
+.bz-chip {
+  display: inline-block; font-size: var(--t-xs); font-weight: 700;
+  padding: .3rem .65rem; border-radius: var(--r-sm);
+  background: var(--surface-2); color: var(--ink-2);
+}
+
+/* ============================== THẺ ============================== */
+.bz-card {
+  background: var(--surface);
+  border-radius: var(--r-lg);
+  box-shadow: var(--e-2);
+  padding: var(--s-5);
+  position: relative; overflow: hidden;
+  transition: transform var(--m-ui) var(--ease-spring),
+              box-shadow var(--m-ui) var(--ease-out);
+}
+.bz-card--flat { box-shadow: none; border: 1px solid var(--hairline); }
+
+/* Thẻ sản phẩm: nâng lên + quét sáng (§8) */
+.bz-card--product { cursor: pointer; }
+.bz-card--product::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(105deg, transparent 38%,
+              color-mix(in srgb, var(--cyan-400) 16%, transparent) 50%, transparent 62%);
+  transform: translateX(-120%);
+  transition: transform 550ms var(--ease-out);
+}
+.bz-card--product:hover { transform: translateY(-8px); box-shadow: var(--e-4); }
+.bz-card--product:hover::after { transform: translateX(120%); }
+
+/* Biểu tượng 3D bên trong thẻ nghiêng theo (§8) */
+.bz-card__icon {
+  display: block; transform-style: preserve-3d;
+  transition: transform var(--m-ui) var(--ease-spring);
+}
+.bz-card--product:hover .bz-card__icon {
+  transform: perspective(600px) rotateX(-4deg) rotateY(7deg) scale(1.04);
+}
+
+/* Thẻ nổi bật nhất – dành cho Brand Passport */
+.bz-card--feature { box-shadow: var(--e-3), inset 0 0 0 1px color-mix(in srgb, var(--champagne) 30%, transparent); }
+.bz-card--feature:hover { box-shadow: var(--e-4), var(--glow-gold); }
+
+/* ============================== THẺ SỐ LIỆU ============================== */
+/* Chỉ điền số đã kiểm chứng. Chưa có bằng chứng thì dùng .bz-stat--pending. */
+.bz-stat { display: flex; flex-direction: column; gap: .2rem; }
+.bz-stat__value { font-family: var(--font-mono); font-size: 1.75rem; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
+.bz-stat__label { font-size: var(--t-sm); color: var(--ink-3); }
+.bz-stat--pending .bz-stat__value { font-family: var(--font-ui); font-size: 1.05rem; font-weight: 800; color: var(--ink-3); font-style: italic; }
+
+/* ============================== KÍNH MỜ ============================== */
+.bz-glass {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
+  backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
+  border: 1px solid var(--glass-br);
+  border-radius: var(--r-lg);
+}
+
+/* ============================== THANH ĐIỀU HƯỚNG ============================== */
+.bz-nav {
+  position: sticky; top: 0; z-index: var(--z-nav);
+  display: flex; align-items: center; flex-wrap: wrap;
+  gap: var(--s-3) var(--s-5);
+  padding: .9rem 0;
+  transition: padding var(--m-ui) var(--ease-out),
+              background-color var(--m-ui) var(--ease-out),
+              box-shadow var(--m-ui) var(--ease-out);
+}
+/* Nhóm liên kết: dưới 640px xuống hàng riêng và trượt ngang trong chính nó,
+   để thanh điều hướng không đẩy cả trang tràn sang phải. */
+.bz-nav__links { display: flex; align-items: center; gap: var(--s-5); }
+@media (max-width: 639px) {
+  .bz-nav { gap: var(--s-3); }
+  .bz-nav__links {
+    order: 3; width: 100%; gap: var(--s-4);
+    overflow-x: auto; scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2px;
+  }
+  .bz-nav__links::-webkit-scrollbar { display: none; }
+  .bz-nav__link { white-space: nowrap; }
+}
+/* .is-stuck do js/motion.js gắn khi cuộn quá 60px */
+.bz-nav.is-stuck {
+  padding: .55rem 0;
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
+  backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
+  box-shadow: 0 1px 0 var(--hairline), var(--e-1);
+}
+.bz-nav__link {
+  font-size: .875rem; font-weight: 700; color: var(--ink-2);
+  text-decoration: none; padding: .35rem 0; position: relative;
+  transition: color var(--m-micro) var(--ease-out);
+}
+.bz-nav__link::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px;
+  background: var(--teal-600); border-radius: 2px;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform var(--m-micro) var(--ease-out);
+}
+.bz-nav__link:hover { color: var(--ink); }
+.bz-nav__link:hover::after,
+.bz-nav__link[aria-current="page"]::after { transform: scaleX(1); }
+
+/* ============================== DẤU MỘC BRAND PASSPORT ============================== */
+.bz-stamp {
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--font-ui); font-size: var(--t-xs); font-weight: 800;
+  letter-spacing: .1em; text-transform: uppercase;
+  padding: .5rem .9rem; border-radius: var(--r-sm);
+  color: var(--champagne-ink);
+  border: 2px solid color-mix(in srgb, var(--champagne) 55%, transparent);
+  transform: rotate(-4deg);
+}
+
+/* ============================== TIÊU ĐIỂM BÀN PHÍM ============================== */
+/* Bắt buộc theo §21: mọi phần tử tương tác phải có tiêu điểm nhìn thấy rõ. */
+.bz a:focus-visible,
+.bz button:focus-visible,
+.bz [tabindex]:focus-visible,
+.bz-btn:focus-visible,
+.bz-card--product:focus-visible {
+  outline: 3px solid var(--cyan-400);
+  outline-offset: 3px;
+  border-radius: var(--r-sm);
+}
+
+/* Bỏ qua để tới nội dung chính – hiện ra khi dùng bàn phím */
+.bz-skip {
+  position: absolute; left: -9999px; top: 0; z-index: var(--z-modal);
+  background: var(--navy-800); color: #fff; padding: .75rem 1.25rem;
+  border-radius: 0 0 var(--r-md) 0; font-weight: 700;
+}
+.bz-skip:focus { left: 0; }
