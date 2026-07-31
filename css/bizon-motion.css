@@ -1,0 +1,125 @@
+/* ===========================================================================
+   BizOn ACADEMIA 3D — lớp chuyển động
+   Bốn mức nhịp (§19). Chuyển động phải phục vụ nội dung, không phải trang trí.
+
+     micro      120–180ms  nút, chip
+     ui         240–360ms  thẻ, menu
+     narrative  600–900ms  hiện dần khi cuộn, passport
+     cinematic  900–1600ms mở đầu hero, chuyển trang
+
+   Chỉ bốn thứ được phép chạy vô hạn: địa cầu, hạt nền, nhịp thở, trôi rất nhẹ.
+   Mọi thứ ở đây đều tắt sạch dưới prefers-reduced-motion (§21).
+   =========================================================================== */
+
+/* ============================== HIỆN DẦN KHI CUỘN ============================== */
+/* js/motion.js gắn .is-in khi phần tử vào khung nhìn. */
+.bz-reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity var(--m-narrative) var(--ease-out),
+              transform var(--m-narrative) var(--ease-spring);
+  will-change: opacity, transform;
+}
+.bz-reveal.is-in { opacity: 1; transform: none; }
+
+/* Hiện lần lượt – đặt trên phần tử cha, các con lệch nhau 80ms (§14) */
+.bz-stagger > * { transition-delay: calc(var(--i, 0) * 80ms); }
+
+/* ============================== NHỊP THỞ & TRÔI ============================== */
+@keyframes bz-breathe { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-4px) scale(1.006); } }
+@keyframes bz-drift   { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+@keyframes bz-spin    { to { transform: rotate(360deg); } }
+
+/* Nhân vật thở rất nhẹ. Hai nhân vật KHÔNG cùng nhịp (§4) – lệch pha bằng
+   --phase để không trông như hai con rối cùng dây. */
+.bz-breathe { animation: bz-breathe 7s var(--ease-inout) infinite; animation-delay: var(--phase, 0s); }
+.bz-drift   { animation: bz-drift 9s var(--ease-inout) infinite;   animation-delay: var(--phase, 0s); }
+
+/* Vành quỹ đạo quanh địa cầu */
+.bz-orbit { animation: bz-spin 42s linear infinite; transform-origin: 50% 50%; }
+.bz-orbit--slow { animation-duration: 78s; }
+.bz-orbit--rev  { animation-direction: reverse; }
+
+/* ============================== PARALLAX THEO CON TRỎ ============================== */
+/* js/motion.js đặt --mx và --my trong khoảng −1..1 trên phần tử cảnh.
+   Mỗi lớp nhân với biên độ riêng để thành năm tầng chiều sâu (§5).
+   Trên điện thoại KHÔNG chạy: js/motion.js chỉ gắn khi có con trỏ tinh. */
+.bz-par { transition: transform 220ms var(--ease-out); will-change: transform; }
+.bz-par--particles { transform: translate3d(calc(var(--mx, 0) * var(--par-particles)), calc(var(--my, 0) * var(--par-particles)), 0); }
+.bz-par--globe     { transform: translate3d(calc(var(--mx, 0) * var(--par-globe)),     calc(var(--my, 0) * var(--par-globe)),     0); }
+.bz-par--figure    { transform: translate3d(calc(var(--mx, 0) * var(--par-figure)),    calc(var(--my, 0) * var(--par-figure)),    0); }
+.bz-par--hologram  { transform: translate3d(calc(var(--mx, 0) * var(--par-hologram)),  calc(var(--my, 0) * var(--par-hologram)),  0); }
+.bz-par--passport  { transform: translate3d(calc(var(--mx, 0) * var(--par-passport)),  calc(var(--my, 0) * var(--par-passport)),  0); }
+
+/* Nghiêng theo con trỏ, tối đa 2–3° (§4) – không được hơn, dễ gây chóng mặt */
+.bz-tilt {
+  transform: perspective(900px)
+             rotateY(calc(var(--mx, 0) * 3deg))
+             rotateX(calc(var(--my, 0) * -2deg));
+  transition: transform 260ms var(--ease-out);
+  transform-style: preserve-3d;
+}
+/* Passport nghiêng rộng hơn một chút vì là vật thể chính (§7) */
+.bz-tilt--passport {
+  transform: perspective(900px)
+             rotateY(calc(var(--mx, 0) * 5deg))
+             rotateX(calc(var(--my, 0) * -5deg));
+}
+
+/* ============================== ĐỊA CẦU (Phase 1: thuần CSS) ============================== */
+.bz-globe { position: relative; display: grid; place-items: center; }
+.bz-globe__halo {
+  position: absolute; inset: -12%; border-radius: 50%;
+  background: radial-gradient(circle at 50% 45%,
+              color-mix(in srgb, var(--cyan-400) 26%, transparent) 0%,
+              transparent 62%);
+  filter: blur(6px); pointer-events: none;
+}
+.bz-globe__ring {
+  position: absolute; inset: 0; border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--cyan-400) 40%, transparent);
+}
+.bz-globe__ring--a { transform: rotateX(74deg); }
+.bz-globe__ring--b { transform: rotateX(74deg) rotateZ(58deg); }
+.bz-globe__ring--c { transform: rotateX(74deg) rotateZ(-58deg); }
+
+/* ============================== CHUYỂN TRANG SANG PASSPORT ============================== */
+/* §13: passport nổi lên, xoay về phía người xem, mở ra, rồi mờ dần sang trang.
+   js/motion.js gắn .is-opening rồi điều hướng sau khi hiệu ứng chạy xong. */
+@keyframes bz-passport-open {
+  0%   { transform: perspective(1000px) translateY(0) rotateY(0) scale(1); opacity: 1; }
+  35%  { transform: perspective(1000px) translateY(-28px) rotateY(-14deg) scale(1.08); }
+  70%  { transform: perspective(1000px) translateY(-14px) rotateY(4deg) scale(1.5); }
+  100% { transform: perspective(1000px) translateY(0) rotateY(0) scale(2.6); opacity: 0; }
+}
+.bz-passport.is-opening { animation: bz-passport-open var(--m-cinematic) var(--ease-inout) forwards; }
+
+/* ============================== ĐẾM SỐ ============================== */
+/* §14: chỉ chạy MỘT lần. js/motion.js gỡ .bz-count sau khi đếm xong. */
+.bz-count { font-variant-numeric: tabular-nums; }
+
+/* ===========================================================================
+   TÔN TRỌNG LỰA CHỌN GIẢM CHUYỂN ĐỘNG (§21)
+   Đây không phải tuỳ chọn: người bị rối loạn tiền đình có thể chóng mặt thật.
+   Tắt hết animation và parallax, nhưng vẫn hiện đủ nội dung.
+   =========================================================================== */
+/* Khi in: phần tử chưa cuộn tới vẫn ở opacity 0 nên sẽ ra giấy trắng.
+   Bắt buộc hiện hết. Quan trọng với BizOn vì giảng viên có in trang ra lớp. */
+@media print {
+  .bz-reveal { opacity: 1 !important; transform: none !important; }
+  .bz-breathe, .bz-drift, .bz-orbit { animation: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bz-reveal { opacity: 1; transform: none; transition: none; }
+  .bz-stagger > * { transition-delay: 0s; }
+  .bz-breathe, .bz-drift, .bz-orbit,
+  .bz-passport.is-opening { animation: none !important; }
+  .bz-par, .bz-par--particles, .bz-par--globe, .bz-par--figure,
+  .bz-par--hologram, .bz-par--passport,
+  .bz-tilt, .bz-tilt--passport { transform: none !important; transition: none !important; }
+  .bz-card--product::after { display: none; }
+  .bz-card--product:hover { transform: none; }
+  .bz-btn:hover, .bz-btn:active { transform: none; }
+  * { scroll-behavior: auto !important; }
+}
