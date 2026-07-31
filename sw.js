@@ -1,7 +1,7 @@
 /* BizOn Bật Nghiệp 2026 – Service Worker (offline app shell)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
 
-const CACHE = 'bizon-v184';
+const CACHE = 'bizon-v185';
 const SHELL = [
   './',
   './index.html',
@@ -95,6 +95,10 @@ const SHELL = [
   './assets/character/lumina-ao-dai-wave.png',
   './assets/character/lumina-ao-dai-present.png',
   './assets/character/lumina-office-present.png',
+  './assets/character/lumina-ao-dai-cheer.png',
+  './assets/character/lumina-ao-dai-thumbsup.png',
+  './assets/character/lumina-knit-thumbsup.png',
+  './assets/character/lumina-office-welcome.png',
   './assets/docs/sig-huong.png',
   './assets/docs/sig-tu.png',
   './assets/audio/huong-intro.mp3',
