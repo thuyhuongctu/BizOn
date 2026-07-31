@@ -27,6 +27,7 @@
     ['Mekong Compass', 'mekong-compass.mp3'],
     ['Đội Phù Sa', 'doi-phu-sa.mp3'],
     ['Đội Phù Sa (remix)', 'doi-phu-sa-remix.mp3'],
+    ['Đội Phù Sa (remix 2)', 'doi-phu-sa-remix2.mp3'],
     ['Brand Passport ⭐ (nhạc chủ đề Hộ Chiếu Thương Hiệu)', 'brand-passport.mp3'],
     ['Brand Passport – bản phối', 'brand-passport-v2.mp3'],
     ['Brand Passport – bản remix', 'brand-passport-remix.mp3'],

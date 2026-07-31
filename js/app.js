@@ -427,6 +427,7 @@ const BGM_TRACKS = [
   'assets/audio/vua-du-de-bay-cao.mp3',
   'assets/audio/doi-phu-sa.mp3',
   'assets/audio/doi-phu-sa-remix.mp3',
+  'assets/audio/doi-phu-sa-remix2.mp3',
 ];
 let bgm = null, bgmIdx = 0;
 function musicEnabled() { return localStorage.getItem('bizon-music') !== 'off'; }
