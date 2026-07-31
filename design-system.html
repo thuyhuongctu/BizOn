@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="vi">
+<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>BizOn ACADEMIA 3D – hệ thiết kế</title>
+<meta name="description" content="Trang tra cứu hệ thiết kế BizOn ACADEMIA 3D: màu, chữ, thành phần và nhịp chuyển động. Trang nội bộ dùng để duyệt giao diện trước khi áp lên các trang thật.">
+<script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="css/bizon-tokens.css">
+<link rel="stylesheet" href="css/bizon-components.css">
+<link rel="stylesheet" href="css/bizon-motion.css">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  .grid { display: grid; gap: var(--s-4); }
+  .g2 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .g3 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+  .g4 { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+  .sw { border-radius: var(--r-md); height: 84px; box-shadow: var(--e-1); }
+  .sw-name { font-size: var(--t-xs); font-weight: 800; margin-top: .5rem; }
+  .sw-hex { font-family: var(--font-mono); font-size: var(--t-xs); color: var(--ink-3); }
+  .row { display: flex; flex-wrap: wrap; gap: var(--s-3); align-items: center; }
+  .note { background: var(--surface-2); border-left: 3px solid var(--teal-600);
+          padding: var(--s-4); border-radius: 0 var(--r-md) var(--r-md) 0;
+          font-size: var(--t-sm); color: var(--ink-2); max-width: var(--measure); }
+  .note strong { color: var(--ink); }
+  .demo { background: var(--surface-2); border-radius: var(--r-md); padding: var(--s-5);
+          display: grid; place-items: center; min-height: 210px; }
+  h2 { margin: 0 0 var(--s-4); }
+  .sec + .sec { border-top: 1px solid var(--hairline); }
+</style>
+</head>
+<body class="bz">
+
+<a href="#main" class="bz-skip">Bỏ qua tới nội dung</a>
+
+<div class="bz-container">
+  <nav class="bz-nav" aria-label="Điều hướng hệ thiết kế">
+    <strong class="bz-display" style="font-size:1.35rem">BizOn</strong>
+    <span class="bz-badge bz-badge--live">ACADEMIA 3D</span>
+    <span style="flex:1"></span>
+    <div class="bz-nav__links">
+      <a class="bz-nav__link" href="#mau">Màu</a>
+      <a class="bz-nav__link" href="#chu">Chữ</a>
+      <a class="bz-nav__link" href="#thanh-phan">Thành phần</a>
+      <a class="bz-nav__link" href="#chuyen-dong">Chuyển động</a>
+    </div>
+    <button class="bz-btn bz-btn--ghost" id="theme" type="button">🌙 Đổi nền</button>
+  </nav>
+</div>
+
+<main id="main">
+
+<!-- ============ MỞ ĐẦU ============ -->
+<section class="bz-section sec">
+  <div class="bz-container">
+    <p class="bz-eyebrow bz-reveal">Trang nội bộ · không lập chỉ mục</p>
+    <h1 class="bz-display bz-h1 bz-reveal" style="margin:.4rem 0">BizOn ACADEMIA 3D</h1>
+    <p class="bz-lede bz-reveal">Đây là trang tra cứu hệ thiết kế, không phải trang giới thiệu sản phẩm.
+      Mọi màu, cỡ chữ và nhịp chuyển động dùng trên site đều lấy từ ba tệp
+      <code class="bz-num">bizon-tokens.css</code>, <code class="bz-num">bizon-components.css</code>,
+      <code class="bz-num">bizon-motion.css</code>. Sửa ở đây là sửa toàn site.</p>
+    <div class="note bz-reveal" style="margin-top:var(--s-5)">
+      <strong>Vì sao có trang này.</strong> Để duyệt phần nhìn <em>trước khi</em> áp lên trang thật.
+      Hệ mới dùng tiền tố <code class="bz-num">.bz-</code> nên chạy song song với giao diện
+      <code class="bz-num">.clay-</code> hiện có — chuyển dần từng trang được, không phải viết lại cả site.
+    </div>
+  </div>
+</section>
+
+<!-- ============ MÀU ============ -->
+<section id="mau" class="bz-section sec">
+  <div class="bz-container">
+    <p class="bz-eyebrow">01</p>
+    <h2 class="bz-display bz-h2">Màu</h2>
+    <p class="bz-lede">Nền tảng là navy → teal → cyan. Bớt cyan sáng so với bản cũ để trang bớt vẻ app khởi nghiệp.</p>
+
+    <div class="grid g4 bz-reveal bz-stagger" style="margin-top:var(--s-5)">
+      <div><div class="sw" style="background:var(--navy-950)"></div><p class="sw-name">navy-950</p><p class="sw-hex">#071D3A</p></div>
+      <div><div class="sw" style="background:var(--navy-800)"></div><p class="sw-name">navy-800</p><p class="sw-hex">#103A68</p></div>
+      <div><div class="sw" style="background:var(--teal-600)"></div><p class="sw-name">teal-600</p><p class="sw-hex">#078A96</p></div>
+      <div><div class="sw" style="background:var(--cyan-400)"></div><p class="sw-name">cyan-400</p><p class="sw-hex">#38C6DF</p></div>
+      <div><div class="sw" style="background:var(--pearl);box-shadow:inset 0 0 0 1px var(--hairline)"></div><p class="sw-name">pearl</p><p class="sw-hex">#F7FAFC</p></div>
+      <div><div class="sw" style="background:var(--paper);box-shadow:inset 0 0 0 1px var(--hairline)"></div><p class="sw-name">paper</p><p class="sw-hex">#FFFFFF</p></div>
+    </div>
+
+    <h3 class="bz-h3" style="margin-top:var(--s-6)">Nhấn cao cấp</h3>
+    <div class="row" style="margin-top:var(--s-3)">
+      <div style="width:150px"><div class="sw" style="background:var(--champagne)"></div><p class="sw-name">champagne</p><p class="sw-hex">#C6A76B</p></div>
+      <div class="note" style="flex:1;min-width:280px">
+        <strong>Dùng rất hạn chế.</strong> Chỉ cho dấu mộc Brand Passport, trạng thái đang chọn,
+        giải thưởng, viền premium và điểm nhấn nhỏ. Không bao giờ làm gradient vàng cả trang —
+        đó là ranh giới giữa «sang» và «loè loẹt».
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHỮ ============ -->
+<section id="chu" class="bz-section sec">
+  <div class="bz-container">
+    <p class="bz-eyebrow">02</p>
+    <h2 class="bz-display bz-h2">Chữ</h2>
+    <p class="bz-lede">Thay đổi quan trọng nhất: tiêu đề chuyển sang serif. Sans-serif toàn bộ là thứ làm
+      bản cũ trông giống app hơn giống một nền tảng học thuật.</p>
+
+    <div class="bz-card bz-reveal" style="margin-top:var(--s-5)">
+      <p class="bz-eyebrow">Tiêu đề hero — DM Serif Display</p>
+      <p class="bz-display bz-hero" style="margin:.5rem 0 0">Simulation-based<br>business learning<br><em>from Vietnam to the world.</em></p>
+      <p class="bz-lede" style="margin-top:var(--s-4)">Explainable simulations · Research-informed learning · AI-enhanced reflection</p>
+    </div>
+
+    <div class="grid g2" style="margin-top:var(--s-5)">
+      <div class="bz-card bz-card--flat">
+        <p class="bz-eyebrow">Giao diện &amp; nội dung — Manrope</p>
+        <p style="margin:.6rem 0 0">Chữ chạy dài luôn dùng Manrope. Dễ đọc ở cỡ nhỏ, có đủ độ đậm,
+          và là thứ giữ cho trang vẫn hiện đại chứ không thành sách giáo khoa.</p>
+      </div>
+      <div class="bz-card bz-card--flat">
+        <p class="bz-eyebrow">Số liệu — IBM Plex Mono</p>
+        <p class="bz-num" style="font-size:1.5rem;margin:.6rem 0 0">r = .31 · n = 40 · 6 vòng</p>
+        <p class="bz-muted" style="font-size:var(--t-sm);margin-top:.4rem">Chỉ dùng cho số và mã. Không dùng cho câu văn.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THÀNH PHẦN ============ -->
+<section id="thanh-phan" class="bz-section sec">
+  <div class="bz-container">
+    <p class="bz-eyebrow">03</p>
+    <h2 class="bz-display bz-h2">Thành phần</h2>
+
+    <h3 class="bz-h3" style="margin-top:var(--s-5)">Nút</h3>
+    <div class="row" style="margin-top:var(--s-3)">
+      <a class="bz-btn bz-btn--lg" href="#thanh-phan">Explore BizOn →</a>
+      <a class="bz-btn bz-btn--passport bz-btn--lg" href="#thanh-phan">Enter Brand Passport ↗</a>
+      <button class="bz-btn bz-btn--ghost" type="button">Nút phụ</button>
+    </div>
+
+    <h3 class="bz-h3" style="margin-top:var(--s-6)">Huy hiệu &amp; dấu mộc</h3>
+    <div class="row" style="margin-top:var(--s-3)">
+      <span class="bz-badge">🇻🇳 Designed in the Mekong Delta</span>
+      <span class="bz-badge bz-badge--live">Đang chạy</span>
+      <span class="bz-badge bz-badge--gold">★ Premium</span>
+      <span class="bz-stamp">Vietnam → World</span>
+    </div>
+
+    <h3 class="bz-h3" style="margin-top:var(--s-6)">Thẻ sản phẩm</h3>
+    <p class="bz-muted" style="font-size:var(--t-sm)">Rê chuột lên thẻ: nâng 8px, biểu tượng nghiêng 3D, một vệt sáng quét qua trong 550ms.</p>
+    <div class="grid g3 bz-reveal bz-stagger" style="margin-top:var(--s-3)">
+      <a class="bz-card bz-card--product" href="game.html">
+        <p class="bz-card__icon" style="font-size:2.4rem">🎮</p>
+        <p class="bz-eyebrow" style="margin-top:.6rem">01 — BizOn Core</p>
+        <h4 class="bz-h3" style="margin:.2rem 0 .4rem">Bật Nghiệp</h4>
+        <p class="bz-muted" style="font-size:var(--t-sm)">Build the business.</p>
+      </a>
+      <a class="bz-card bz-card--product bz-card--feature" href="brand-passport.html">
+        <p class="bz-card__icon" style="font-size:2.4rem">🛂</p>
+        <p class="bz-eyebrow" style="margin-top:.6rem">02 — BizOn International</p>
+        <h4 class="bz-h3" style="margin:.2rem 0 .4rem">Brand Passport</h4>
+        <p class="bz-muted" style="font-size:var(--t-sm)">Take the brand across borders.</p>
+      </a>
+      <a class="bz-card bz-card--product" href="global.html">
+        <p class="bz-card__icon" style="font-size:2.4rem">🔬</p>
+        <p class="bz-eyebrow" style="margin-top:.6rem">03 — BizOn Lab</p>
+        <h4 class="bz-h3" style="margin:.2rem 0 .4rem">IE Lab</h4>
+        <p class="bz-muted" style="font-size:var(--t-sm)">Experiment with internationalization.</p>
+      </a>
+      <a class="bz-card bz-card--product" href="games.html">
+        <p class="bz-card__icon" style="font-size:2.4rem">🕹️</p>
+        <p class="bz-eyebrow" style="margin-top:.6rem">04 — BizOn Arcade</p>
+        <h4 class="bz-h3" style="margin:.2rem 0 .4rem">Arcade</h4>
+        <p class="bz-muted" style="font-size:var(--t-sm)">Master one decision at a time.</p>
+      </a>
+    </div>
+
+    <h3 class="bz-h3" style="margin-top:var(--s-6)">Thẻ số liệu</h3>
+    <div class="note" style="margin:var(--s-3) 0">
+      <strong>Chỉ số đã kiểm chứng mới được điền.</strong> Chưa có bằng chứng thì dùng dạng «đang tiến hành»
+      bên phải, đừng bịa con số cho đẹp. Đây là ranh giới giữa một nền tảng học thuật và một trang quảng cáo.
+    </div>
+    <div class="grid g3">
+      <div class="bz-card bz-card--flat"><div class="bz-stat"><span class="bz-stat__value bz-count" data-to="40">0</span><span class="bz-stat__label">người học trong lớp thử nghiệm</span></div></div>
+      <div class="bz-card bz-card--flat"><div class="bz-stat"><span class="bz-stat__value">r = .31</span><span class="bz-stat__label">tương quan mô phỏng – tiểu luận</span></div></div>
+      <div class="bz-card bz-card--flat"><div class="bz-stat bz-stat--pending"><span class="bz-stat__value">Đang tiến hành</span><span class="bz-stat__label">chương trình thu thập bằng chứng</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CHUYỂN ĐỘNG ============ -->
+<section id="chuyen-dong" class="bz-section sec">
+  <div class="bz-container">
+    <p class="bz-eyebrow">04</p>
+    <h2 class="bz-display bz-h2">Chuyển động</h2>
+    <p class="bz-lede">Bốn mức nhịp. Chỉ bốn thứ được phép chạy vô hạn: địa cầu, hạt nền, nhịp thở và trôi rất nhẹ.</p>
+
+    <div class="grid g4 bz-reveal bz-stagger" style="margin-top:var(--s-5)">
+      <div class="bz-card bz-card--flat"><p class="bz-eyebrow">Micro</p><p class="bz-num" style="font-size:1.2rem">150ms</p><p class="bz-muted" style="font-size:var(--t-sm)">nút, chip</p></div>
+      <div class="bz-card bz-card--flat"><p class="bz-eyebrow">UI</p><p class="bz-num" style="font-size:1.2rem">300ms</p><p class="bz-muted" style="font-size:var(--t-sm)">thẻ, menu</p></div>
+      <div class="bz-card bz-card--flat"><p class="bz-eyebrow">Narrative</p><p class="bz-num" style="font-size:1.2rem">750ms</p><p class="bz-muted" style="font-size:var(--t-sm)">hiện dần khi cuộn</p></div>
+      <div class="bz-card bz-card--flat"><p class="bz-eyebrow">Cinematic</p><p class="bz-num" style="font-size:1.2rem">1100ms</p><p class="bz-muted" style="font-size:var(--t-sm)">mở đầu, chuyển trang</p></div>
+    </div>
+
+    <h3 class="bz-h3" style="margin-top:var(--s-6)">Địa cầu &amp; năm tầng chiều sâu</h3>
+    <p class="bz-muted" style="font-size:var(--t-sm)">Di chuột trong khung dưới. Trên điện thoại parallax tắt hoàn toàn, chỉ còn trôi nhẹ.</p>
+    <div class="demo bz-reveal" data-bz-scene style="margin-top:var(--s-3);position:relative;overflow:hidden">
+      <div class="bz-par bz-par--particles" style="position:absolute;inset:0;background:radial-gradient(circle at 22% 30%, color-mix(in srgb,var(--cyan-400) 22%,transparent) 0 2px, transparent 3px),radial-gradient(circle at 74% 62%, color-mix(in srgb,var(--cyan-400) 18%,transparent) 0 2px, transparent 3px),radial-gradient(circle at 55% 18%, color-mix(in srgb,var(--champagne) 22%,transparent) 0 2px, transparent 3px)"></div>
+      <div class="bz-globe bz-par bz-par--globe bz-drift" style="width:150px;height:150px">
+        <div class="bz-globe__halo"></div>
+        <div class="bz-globe__ring bz-globe__ring--a bz-orbit"></div>
+        <div class="bz-globe__ring bz-globe__ring--b bz-orbit bz-orbit--slow"></div>
+        <div class="bz-globe__ring bz-globe__ring--c bz-orbit bz-orbit--rev"></div>
+        <span style="font-size:3rem">🌏</span>
+      </div>
+      <div class="bz-glass bz-par bz-par--hologram" style="position:absolute;left:6%;top:14%;padding:.6rem .85rem">
+        <p class="bz-eyebrow" style="margin:0">Meta-analysis</p><p class="bz-num" style="margin:.15rem 0 0;font-size:.9rem">r = .31</p>
+      </div>
+      <div class="bz-glass bz-par bz-par--hologram" style="position:absolute;right:6%;bottom:16%;padding:.6rem .85rem">
+        <p class="bz-eyebrow" style="margin:0">Learning evidence</p><p class="bz-num" style="margin:.15rem 0 0;font-size:.9rem">Pre → Post</p>
+      </div>
+    </div>
+
+    <h3 class="bz-h3" style="margin-top:var(--s-6)">Mở Brand Passport</h3>
+    <p class="bz-muted" style="font-size:var(--t-sm)">Bấm nút để xem hiệu ứng chuyển cảnh 1100ms. Nếu hệ điều hành bật «giảm chuyển động» thì chuyển trang tức thì.</p>
+    <div class="demo" style="margin-top:var(--s-3)">
+      <div style="text-align:center">
+        <div class="bz-passport bz-tilt bz-tilt--passport" style="font-size:4.5rem;line-height:1">🛂</div>
+        <a class="bz-btn bz-btn--passport" href="brand-passport.html" data-bz-passport-link style="margin-top:var(--s-4)">Enter Brand Passport ↗</a>
+      </div>
+    </div>
+
+    <div class="note bz-reveal" style="margin-top:var(--s-5)">
+      <strong>Giảm chuyển động là bắt buộc, không phải tuỳ chọn.</strong> Người bị rối loạn tiền đình có thể
+      chóng mặt thật vì parallax. Toàn bộ hiệu ứng ở trên tắt sạch dưới
+      <code class="bz-num">prefers-reduced-motion: reduce</code>, nhưng nội dung vẫn hiện đủ.
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="bz-section" style="border-top:1px solid var(--hairline)">
+  <div class="bz-container">
+    <p class="bz-muted" style="font-size:var(--t-sm)">© 2026 BizOn Bật Nghiệp · Đỗ Thùy Hương &amp; Phan Anh Tú — trang nội bộ phục vụ duyệt thiết kế.</p>
+  </div>
+</footer>
+
+<script src="js/motion.js" defer></script>
+<script>
+  document.getElementById('theme').addEventListener('click', function () {
+    var d = document.documentElement.dataset.theme === 'dark';
+    document.documentElement.dataset.theme = d ? '' : 'dark';
+    try { localStorage.setItem('bizon-theme', d ? 'light' : 'dark'); } catch (e) {}
+  });
+</script>
+</body>
+</html>
