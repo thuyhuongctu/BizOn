@@ -2042,6 +2042,14 @@
 "🪁 Original (remastered)"
 ],
 [
+"Hương sans frontières (nam)",
+"Hương sans frontières (male vocals)"
+],
+[
+"Bản phối giọng nam · lời tiếng Anh",
+"Male-vocal mix · English lyrics"
+],
+[
 "🏙️ Bối cảnh & minh họa",
 "🏙️ Scenes & illustrations"
 ],
