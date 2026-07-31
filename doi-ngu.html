@@ -36,7 +36,11 @@
   .clay-btn { background:#f4faff; border-radius:9999px; box-shadow:6px 6px 12px #d1d9e0, -6px -6px 12px #ffffff; transition:all .2s cubic-bezier(.34,1.56,.64,1); border:1px solid rgba(255,255,255,.8); }
   .clay-btn:active { box-shadow:inset 4px 4px 8px #d1d9e0, inset -4px -4px 8px #ffffff; transform:scale(.96); }
   .clay-btn-primary { background:linear-gradient(145deg,#00c4ff,#0095c2); box-shadow:6px 6px 15px rgba(0,196,255,.3), -6px -6px 15px #ffffff; color:#fff; border:none; }
-  .glass-header { background:rgba(244,250,255,.82); backdrop-filter:blur(12px); border-bottom:1px solid rgba(255,255,255,.5); }
+  .glass-header { background:rgba(244,250,255,.82); backdrop-filter:blur(12px); border-bottom:1px solid rgba(255,255,255,.5); transition:height .2s ease, box-shadow .2s ease; }
+  /* Cuộn xuống thì thanh tiêu đề thấp lại, nhường màn hình cho nội dung */
+  .glass-header.shrunk { height:3rem; box-shadow:0 6px 18px -12px rgba(0,102,135,.5); }
+  .glass-header.shrunk .hdr-brand { font-size:.95rem; }
+  @media (prefers-reduced-motion: reduce) { .glass-header { transition:none; } }
   @keyframes float { 0%,100% { transform:translateY(0) rotate(0deg); } 50% { transform:translateY(-15px) rotate(1deg); } }
   .float-anim { animation:float 8s ease-in-out infinite; }
   .float-anim-delayed { animation:float 9s ease-in-out infinite 1s; }
@@ -102,9 +106,9 @@
 
 <div id="particles-container"></div>
 
-<header class="glass-header sticky top-0 w-full z-50 px-6 h-16 flex justify-between items-center">
+<header id="site-header" class="glass-header sticky top-0 w-full z-50 px-6 h-16 flex justify-between items-center">
   <a href="gioi-thieu.html" aria-label="Quay lại" class="p-2 -ml-2 rounded-full hover:bg-white/40 transition-colors text-deep-teal font-bold text-xl">←</a>
-  <h1 class="font-bold text-lg tracking-tight text-primary">Đội ngũ Sáng lập BizOn</h1>
+  <h1 class="hdr-brand font-bold text-lg tracking-tight text-primary transition-all">Đội ngũ Sáng lập BizOn</h1>
   <div class="flex items-center gap-1.5">
     <button id="theme-btn" onclick="toggleTheme()" class="w-9 h-9 rounded-full clay-btn text-base" title="Chế độ Sáng/Tối · Light/Dark mode">🌙</button>
     <button id="lang-btn" onclick="toggleLang()" class="h-9 px-2.5 rounded-full clay-btn text-[11px] font-extrabold text-primary" title="Tiếng Việt / English">EN</button>
@@ -115,7 +119,7 @@
 <main class="max-w-4xl mx-auto px-6 pt-10 relative z-10">
   <!-- Founders Hero -->
   <section class="mb-16">
-    <div class="grid grid-cols-2 gap-4 items-end mb-7 sm:mb-10 pt-9 sm:pt-14 relative">
+    <div class="grid grid-cols-2 gap-4 items-end mb-5 sm:mb-7 pt-6 sm:pt-10 relative">
       <span class="scene-spark" style="top:2%; left:8%">✨</span>
       <span class="scene-spark" style="top:10%; right:6%; animation-delay:-1.3s">✨</span>
       <div class="relative scene-enter-left">
@@ -167,7 +171,7 @@
           </div>
           <div class="rounded-2xl border-2 border-primary/15 p-3.5" style="background:rgba(0,102,135,.04)">
             <p class="text-[10px] font-extrabold uppercase tracking-widest text-primary mb-1">💻 <span class="tu-vi">Vai trò kỹ thuật</span><span class="tu-en hidden">Engineering</span></p>
-            <p class="text-[11.5px] font-semibold text-deep-teal/75 leading-snug"><span class="tu-vi">Thiết kế kiến trúc và trực tiếp phát triển các thành phần cốt lõi: engine mô phỏng, các game chiến lược, hạ tầng dữ liệu lớp học, bảng điều khiển giảng viên, ứng dụng PWA · TypeScript · JavaScript · Python · SQL · R</span><span class="tu-en hidden">Architecture design and hands-on development of core components: simulation engine, strategy games, classroom data infrastructure, instructor dashboard, PWA · TypeScript · JavaScript · Python · SQL · R</span></p>
+            <p class="text-[11.5px] font-semibold text-deep-teal/75 leading-snug"><span class="tu-vi">Thiết kế kiến trúc và trực tiếp phát triển các thành phần cốt lõi: engine mô phỏng, các game chiến lược, hạ tầng dữ liệu lớp học, bảng điều khiển giảng viên, ứng dụng PWA · JavaScript · HTML/CSS · SQL (Supabase) · Service Worker</span><span class="tu-en hidden">Architecture design and hands-on development of core components: simulation engine, strategy games, classroom data infrastructure, instructor dashboard, PWA · TypeScript · JavaScript · Python · SQL · R</span></p>
           </div>
           <div class="rounded-2xl border-2 border-primary/15 p-3.5" style="background:rgba(0,102,135,.04)">
             <p class="text-[10px] font-extrabold uppercase tracking-widest text-primary mb-1">🎨 <span class="tu-vi">Sáng tạo nội dung</span><span class="tu-en hidden">Creative</span></p>
@@ -339,6 +343,19 @@ setInterval(scenePlay, 3400);
     try { lang = localStorage.getItem('bizon-lang') || 'vi'; } catch (e) {}
     tuSwap(lang);
   });
+})();
+</script>
+<script>
+/* Thu gọn thanh tiêu đề khi cuộn – lấy lại chiều cao màn hình trên điện thoại */
+(function () {
+  var h = document.getElementById('site-header');
+  if (!h) return;
+  var tick = false;
+  addEventListener('scroll', function () {
+    if (tick) return;
+    tick = true;
+    requestAnimationFrame(function () { h.classList.toggle('shrunk', scrollY > 60); tick = false; });
+  }, { passive: true });
 })();
 </script>
 <script src="js/site-ui.js" defer></script>
