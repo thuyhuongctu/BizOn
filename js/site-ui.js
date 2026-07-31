@@ -1142,8 +1142,8 @@
 "6. Educational and non-political nature"
 ],
 [
-"7 bài · màu Việt Nam.",
-"7 tracks · Vietnamese colour."
+"8 bài · màu Việt Nam.",
+"8 tracks · Vietnamese colour."
 ],
 [
 "7 thị trường · entry mode",
@@ -2096,6 +2096,46 @@
 [
 "Áo hoodie và túi đeo chéo trên đường tới lớp",
 "Hoodie and a crossbody bag on the way to class"
+],
+[
+"Lumina – Ăn mừng",
+"Lumina – Celebrating"
+],
+[
+"Áo dài trắng, hai tay giơ cao – khoảnh khắc cả đội về đích",
+"White áo dài, both arms raised – the moment the team crosses the line"
+],
+[
+"Lumina – Làm tốt lắm",
+"Lumina – Well done"
+],
+[
+"Áo dài trắng huy hiệu cờ đỏ · giơ ngón cái khen quyết định hay",
+"White áo dài with the red flag badge · thumbs up for a good call"
+],
+[
+"Lumina – Áo len gile",
+"Lumina – Knit waistcoat"
+],
+[
+"Sơ mi trắng, gile dệt kim và đồng hồ thông minh – dáng giảng đường",
+"White shirt, knit waistcoat and a smartwatch – the lecture-hall look"
+],
+[
+"Lumina – Mời vào phòng họp",
+"Lumina – Welcome to the meeting"
+],
+[
+"Đầm công sở trắng · một tay chống hông, một tay mời",
+"White office dress · one hand on the hip, the other inviting you in"
+],
+[
+"Bản remix 2",
+"Remix 2"
+],
+[
+"Bản phối thứ hai dài 3:24 · nhịp dày hơn cho màn tổng kết",
+"Second remix, 3:24 · denser groove for the debrief"
 ],
 [
 "🏙️ Bối cảnh & minh họa",
