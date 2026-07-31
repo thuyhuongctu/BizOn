@@ -38,6 +38,8 @@
     ['Stamps Beyond Borders – bản phối 3:35', 'stamps-beyond-borders-v3.mp3'],
     ['Stamps Beyond Borders – bản mở rộng', 'stamps-beyond-borders-extended.mp3'],
     ['Golden Silt Route', 'golden-silt-route.mp3'],
+    ['Hộ Chiếu Thương Hiệu – Phần I: Từ dòng Mekong', 'ho-chieu-p1-tu-dong-mekong.mp3'],
+    ['Hộ Chiếu Thương Hiệu – Phần II: Qua Những Thị Trường', 'ho-chieu-p2-qua-nhung-thi-truong.mp3'],
   ];
 
   /* ---------- CSS ---------- */

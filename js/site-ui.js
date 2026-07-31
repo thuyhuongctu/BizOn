@@ -3782,6 +3782,34 @@
 [
 "Phù điêu đất sét · dòng sông sen lúc bình minh – ảnh chủ đạo game Hộ Chiếu Thương Hiệu",
 "Clay relief · a lotus river at dawn – the hero image of the Brand Passport game"
+],
+[
+"«Hộ Chiếu Thương Hiệu» – tổ khúc tiếng Việt",
+"«Brand Passport» – Vietnamese song cycle"
+],
+[
+"Tổ khúc ba phần bằng tiếng Việt kể trọn hành trình của game – hiện đã thu hai phần đầu",
+"A three-part Vietnamese song cycle telling the game's whole journey – the first two parts are recorded"
+],
+[
+"Phần I – «Từ dòng Mekong»",
+"Part I – «From the Mekong»"
+],
+[
+"Phần mở đầu tổ khúc · 3:56 · khởi hành từ bến sông quê",
+"Opening movement · 3:56 · setting out from the home wharf"
+],
+[
+"Phần II – «Qua Những Thị Trường»",
+"Part II – «Across the Markets»"
+],
+[
+"Phần giữa tổ khúc · 4:03 · sáu quý băng qua các thị trường xa",
+"Middle movement · 4:03 · six quarters crossing distant markets"
+],
+[
+"Tổ khúc tiếng Việt của Hộ Chiếu Thương Hiệu mới có hai trong ba phần.",
+"The Brand Passport Vietnamese song cycle has only two of its three parts."
 ]
 ]);
   var SPECIAL = [
