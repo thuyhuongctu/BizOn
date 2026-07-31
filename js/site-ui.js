@@ -3826,6 +3826,22 @@
 [
 "Phần giữa tổ khúc · 4:18 · sáu quý băng qua các thị trường xa",
 "Middle movement · 4:18 · six quarters crossing distant markets"
+],
+[
+"Phần III – bản remix",
+"Part III – remix"
+],
+[
+"Bản phối lại phần kết · 5:22 · nhịp dày hơn cho màn tổng kết ván chơi",
+"A remix of the closing movement · 5:22 · a denser beat for the end-of-session wrap-up"
+],
+[
+"Phần III – bản remix 2",
+"Part III – remix 2"
+],
+[
+"Bản phối thứ hai của phần kết · 5:21 · hòa âm khác",
+"A second remix of the closing movement · 5:21 · a different arrangement"
 ]
 ]);
   var SPECIAL = [
