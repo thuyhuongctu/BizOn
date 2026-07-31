@@ -16,6 +16,7 @@
       ['Hộ Chiếu Thương Hiệu', 'brand-passport.html'],
       ['Go Global', 'global.html'],
       ['Kho Âm nhạc', 'am-nhac.html'],
+      ['Hậu trường sản xuất nhạc', 'hau-truong.html'],
       ['Thư viện Sáng tạo', 'thu-vien.html'],
     ]],
     ['🎓 Giảng viên & Nghiên cứu · Educators', [
@@ -23,6 +24,7 @@
       ['Bảng điều khiển lớp', 'giang-vien.html'],
       ['Khảo sát trước–sau', 'khao-sat-online.html'],
       ['Học thuật & Model Cards', 'hoc-thuat.html'],
+      ['Thẻ mô tả Lumina AI', 'lumina.html'],
       ['Bằng chứng lớp học', 'bang-chung.html'],
       ['Giải pháp & gói triển khai', 'giai-phap.html'],
     ]],
