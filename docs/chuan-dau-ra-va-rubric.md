@@ -2,7 +2,7 @@
 ## Hệ sinh thái mô phỏng kinh doanh BizOn Bật Nghiệp
 
 **Tác giả:** Đỗ Thùy Hương · Phan Anh Tú
-**Phiên bản:** 1.0 · **Ngày lập:** 31/07/2026
+**Phiên bản:** 1.1 · **Ngày lập:** 31/07/2026
 **Loại tài liệu:** Tác phẩm viết – công cụ thiết kế sư phạm và đánh giá kết quả học tập
 
 > Tài liệu này tách ra từ trang `hoc-thuat.html` để dùng độc lập trong ba việc: (1) giảng viên thiết kế buổi học và chấm điểm, (2) hồ sơ kiểm định chương trình đào tạo, (3) hồ sơ đăng ký quyền tác giả loại hình tác phẩm viết.
@@ -15,6 +15,9 @@
 - [2 · Ma trận chuẩn đầu ra – Game mô phỏng chính](#2--ma-trận-chuẩn-đầu-ra--game-mô-phỏng-chính)
 - [3 · Ma trận chuẩn đầu ra – Hộ Chiếu Thương Hiệu](#3--ma-trận-chuẩn-đầu-ra--hộ-chiếu-thương-hiệu)
 - [4 · Rubric chấm thảo luận sau ván chơi](#4--rubric-chấm-thảo-luận-sau-ván-chơi)
+  - [4.1 · Rubric game mô phỏng chính](#41--rubric-game-mô-phỏng-chính--clo-a-đến-clo-e)
+  - [4.2 · Rubric Hộ Chiếu Thương Hiệu](#42--rubric-game-hộ-chiếu-thương-hiệu--bp-1-đến-bp-6)
+  - [4.5 · Sổ điểm mẫu](#45--sổ-điểm-mẫu)
 - [5 · Công cụ đo lường trước – sau](#5--công-cụ-đo-lường-trước--sau)
 - [6 · Hướng dẫn vận dụng](#6--hướng-dẫn-vận-dụng)
 - [7 · Giả định và giới hạn diễn giải](#7--giả-định-và-giới-hạn-diễn-giải)
@@ -91,7 +94,41 @@ BP-3 là chuẩn đầu ra **khó dạy nhất bằng phương pháp truyền th
 
 # 4 · Rubric chấm thảo luận sau ván chơi
 
-**Thang 4 mức** · Áp dụng cho buổi thảo luận sau khi hoàn thành ván chơi Hộ Chiếu Thương Hiệu
+Hai bộ rubric, cùng thang 4 mức, dùng cho hai game khác nhau. Cả hai đều **chấm phần lập luận, không chấm kết quả ván chơi**.
+
+---
+
+## 4.1 · Rubric game mô phỏng chính — CLO-A đến CLO-E
+
+> 🚧 **Bản nháp phiên bản 0.1 – chờ hai tác giả rà soát.** Rubric này do nhóm phát triển dựng từ các chỉ số mà engine thực sự ghi lại sau mỗi vòng chơi. Mức mô tả và ngưỡng phân biệt cần được người có chuyên môn sư phạm hiệu chỉnh, và phải chấm thử trước khi dùng chính thức.
+
+**Điểm khác biệt so với rubric Hộ Chiếu Thương Hiệu:** mỗi tiêu chí ở đây đều **neo vào một chỉ số cụ thể trong báo cáo cuối ván**, nên giảng viên có căn cứ số liệu để bảo vệ điểm đã cho, và người học biết trước mình cần dẫn chứng bằng gì.
+
+| Tiêu chí | 1 · Chưa đạt | 2 · Đạt | 3 · Khá | 4 · Xuất sắc |
+|---|---|---|---|---|
+| **A · Phân tích giá – marketing – cầu**<br>*(CLO-A, vai CMO)*<br>Chỉ số neo: `adEff`, `share`, `lostSales`, chi marketing | Kể lại đã đặt giá bao nhiêu, không giải thích | Nêu được quan hệ giá tăng → cầu giảm ở mức định tính | Dẫn số liệu hiệu quả quảng cáo và thị phần của ít nhất 2 vòng để giải thích một quyết định | Chỉ ra được vòng nào chi marketing kém hiệu quả và tính được ngưỡng chi hợp lý từ dữ liệu ván chơi |
+| **B · Quản trị dòng tiền và thanh khoản**<br>*(CLO-B, vai CFO)*<br>Chỉ số neo: `quickRatio`, `balance`, `roi`, lãi vay | Chỉ nhìn số dư cuối ván | Nhận ra có vòng thiếu tiền mặt | Truy được nguyên nhân thiếu hụt – tồn kho, lãi vay hay chi phí cố định | Đề xuất phương án cơ cấu vốn thay thế và ước lượng được tác động lên thanh khoản |
+| **C · Cân đối vận hành và ESG**<br>*(CLO-C, vai COO)*<br>Chỉ số neo: `oee`, `defect`, sản lượng trên công suất, khấu hao | Chỉ báo cáo sản lượng | Nhận ra chạy quá công suất làm giảm hiệu quả | Giải thích được quan hệ giữa OEE, tỷ lệ phế phẩm và chi phí đơn vị | Cân đối được ba ràng buộc công suất – nhân lực – năng lượng và lượng hóa đánh đổi |
+| **D · So sánh phương thức thâm nhập quốc tế**<br>*(CLO-D)*<br>Chỉ số neo: dữ liệu phần Go Global | Chọn theo cảm tính | Nêu được 1 tiêu chí so sánh | So sánh ít nhất 2 phương thức trên ba trục kiểm soát – lợi nhuận – rủi ro | Gắn lựa chọn với đặc điểm nguồn lực của chính doanh nghiệp mình trong ván |
+| **E · Hợp tác liên chức năng**<br>*(CLO-E, cả 5 vai)*<br>Chỉ số neo: Nhật ký đội, tần suất sửa quyết định, đánh giá đồng đẳng | Một người quyết tất cả | Có phân vai nhưng ai làm việc nấy | Nhật ký ghi được ít nhất một lần xung đột quan điểm và cách giải quyết | Chỉ ra được quyết định nào tốt lên nhờ tranh luận liên chức năng, có dẫn chứng trong nhật ký |
+
+### Vì sao neo vào chỉ số
+
+Engine ghi lại **hơn 20 chỉ số mỗi vòng chơi**, trong đó sáu chỉ số dùng làm neo cho rubric này đều xuất được ra tệp CSV từ bảng điều khiển giảng viên:
+
+| Chỉ số | Ý nghĩa | Báo cáo chứa nó |
+|---|---|---|
+| `adEff` | Hiệu quả quảng cáo trên mỗi đồng chi | Báo cáo thị trường |
+| `share` · `lostSales` | Thị phần và số đơn hụt do thiếu hàng | Báo cáo thị trường |
+| `quickRatio` | Chỉ số thanh khoản nhanh | Báo cáo dòng tiền |
+| `roi` | Tỷ suất sinh lời trên tổng chi phí | Báo cáo lãi lỗ |
+| `oee` · `defect` | Hiệu quả thiết bị tổng thể và tỷ lệ phế phẩm | Báo cáo vận hành |
+
+**Hệ quả thực tế:** giảng viên chấm mức 3 và mức 4 **bắt buộc phải yêu cầu người học trích số cụ thể**. Nếu người học không dẫn được số, cao nhất chỉ đạt mức 2. Đây là cách giữ cho rubric không trôi về cảm tính.
+
+---
+
+## 4.2 · Rubric game Hộ Chiếu Thương Hiệu — BP-1 đến BP-6
 
 | Tiêu chí | 1 · Chưa đạt | 2 · Đạt | 3 · Khá | 4 · Xuất sắc |
 |---|---|---|---|---|
@@ -100,7 +137,7 @@ BP-3 là chuẩn đầu ra **khó dạy nhất bằng phương pháp truyền th
 | **Phân tích dấu chân quyết định**<br>*(BP-5)* | Chỉ nhìn kết quả cuối ván | Nêu được 1 hệ quả dài hạn | Truy vết được chuỗi quyết định dẫn tới hệ quả | Đề xuất điểm can thiệp sớm nhất có thể đổi kết cục |
 | **Bài học chuyển giao**<br>*(BP-6)* | Không rút ra bài học | Bài học chung chung | Bài học gắn với tình huống cụ thể trong ván | Liên hệ được với doanh nghiệp Việt Nam thực tế, có ví dụ |
 
-## 4.1 · Cách quy đổi điểm
+## 4.3 · Cách quy đổi điểm
 
 Bốn tiêu chí có trọng số bằng nhau. Điểm rubric = trung bình cộng 4 tiêu chí, thang 1–4.
 
@@ -111,11 +148,39 @@ Bốn tiêu chí có trọng số bằng nhau. Điểm rubric = trung bình cộ
 | 1,5 – 2,4 | Đạt | 5,0 – 6,9 |
 | 1,0 – 1,4 | Chưa đạt | dưới 5,0 |
 
-## 4.2 · Lưu ý khi chấm
+## 4.4 · Lưu ý khi chấm
 
 - **Chấm phần lập luận, không chấm kết quả ván chơi.** Một đội thua nhưng phân tích được vì sao mình thua có thể đạt mức 4; một đội thắng nhờ may mắn mà không giải thích được có thể chỉ ở mức 2.
 - **Yêu cầu dẫn chứng bằng số liệu trong ván.** Từ mức 3 trở lên bắt buộc phải trích được con số cụ thể từ báo cáo hoặc dấu chân quyết định.
 - **Chấm theo đội hay theo cá nhân** tuỳ mục tiêu buổi học. Nếu chấm cá nhân, kết hợp với kết quả đánh giá đồng đẳng (CLO-E).
+
+## 4.5 · Sổ điểm mẫu
+
+In một bản cho mỗi đội. Cột «Dẫn chứng» là chỗ giảng viên ghi số liệu người học đã trích – **nếu ô này trống thì không cho quá mức 2**.
+
+**Đội: ……………………………  ·  Lớp: …………  ·  Ngày: …………**
+
+| Tiêu chí | 1 | 2 | 3 | 4 | Dẫn chứng người học trích |
+|---|:-:|:-:|:-:|:-:|---|
+| A · Phân tích giá – marketing – cầu | ☐ | ☐ | ☐ | ☐ | |
+| B · Quản trị dòng tiền và thanh khoản | ☐ | ☐ | ☐ | ☐ | |
+| C · Cân đối vận hành và ESG | ☐ | ☐ | ☐ | ☐ | |
+| D · So sánh phương thức thâm nhập | ☐ | ☐ | ☐ | ☐ | |
+| E · Hợp tác liên chức năng | ☐ | ☐ | ☐ | ☐ | |
+
+**Điểm rubric = tổng ÷ 5 = ………  ·  Quy đổi thang 10 = ………**
+
+Nhận xét cho đội:
+
+……………………………………………………………………………………………
+
+……………………………………………………………………………………………
+
+### Chuẩn bị trước buổi chấm
+
+1. Vào bảng điều khiển giảng viên, lọc theo mã lớp, **xuất tệp CSV** kết quả từng vòng của tất cả các đội
+2. In hoặc mở sẵn tệp CSV khi chấm để đối chiếu ngay số liệu người học trích – phát hiện được đội nói số không khớp dữ liệu
+3. Với tiêu chí E, thu **Nhật ký đội** do vai Thư ký ghi và phiếu đánh giá đồng đẳng trước khi vào buổi thảo luận
 
 ---
 
@@ -218,7 +283,7 @@ Ghi rõ để tài liệu không bị hiểu là đã hoàn chỉnh.
 
 | Hạng mục | Hiện trạng | Cần làm |
 |---|---|---|
-| **Rubric cho game mô phỏng chính** | Chưa có – mới có ma trận chuẩn đầu ra và bộ chỉ số quan sát | Soạn rubric 4 mức cho CLO-A đến CLO-E, theo cấu trúc của [Mục 4](#4--rubric-chấm-thảo-luận-sau-ván-chơi) |
+| **Rubric cho game mô phỏng chính** | **Đã có bản nháp v0.1** tại [Mục 4.1](#41--rubric-game-mô-phỏng-chính--clo-a-đến-clo-e) – dựng từ chỉ số engine ghi lại | Hai tác giả rà soát mức mô tả và ngưỡng phân biệt; chấm thử trên 2–3 đội trước khi dùng chính thức |
 | **Kiểm định bộ 30 câu trước – sau** | Đã soạn, chưa kiểm định | Chạy thử, tính Cronbach's alpha, phân tích độ phân biệt từng câu |
 | **Kiểm định độ tin cậy giữa giám khảo của rubric** | Chưa làm | Chấm song song trên cùng mẫu, tính hệ số đồng thuận |
 | **Bộ câu hỏi riêng cho kinh doanh quốc tế** | Chưa có | Soạn bộ đo riêng cho BP-1 đến BP-6 |
