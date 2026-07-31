@@ -3638,6 +3638,138 @@
 [
 "Toàn bộ kho nhạc do BizOn tự sản xuất, không thuê đơn vị bên ngoài. Nhóm tác giả giữ quyền quyết định ở mọi khâu; công cụ hỗ trợ AI chỉ thực hiện phần dựng âm thanh theo yêu cầu đã nêu ở trên.",
 "The entire music library is produced in-house by BizOn, with no outside contractor. The authors hold decision rights at every stage; AI-assisted tools only carry out the audio production described above."
+],
+[
+"Tất cả",
+"All"
+],
+[
+"tác phẩm mỹ thuật",
+"artworks"
+],
+[
+"bản thu",
+"recordings"
+],
+[
+"nhóm",
+"groups"
+],
+[
+"Lumina AI – Chắp tay cảm ơn",
+"Lumina AI – Hands together in thanks"
+],
+[
+"Áo dài trắng, tai nghe · dáng chào và cảm ơn cuối buổi chơi",
+"White áo dài with headphones · the greeting and thank-you at the end of a session"
+],
+[
+"Lumina AI – Có ý tưởng",
+"Lumina AI – An idea strikes"
+],
+[
+"Giơ ngón trỏ, tia sáng vàng · khoảnh khắc gợi ý chiến lược",
+"Index finger raised, golden sparkles · the moment a strategy is suggested"
+],
+[
+"Lumina AI – Vỗ tay chúc mừng",
+"Lumina AI – Applause"
+],
+[
+"Kim tuyến và sao vàng rơi quanh · đội chơi hoàn thành mục tiêu",
+"Confetti and gold stars falling · the team hits its target"
+],
+[
+"Lumina AI – Báo biến cố thị trường",
+"Lumina AI – Market event alert"
+],
+[
+"Bảng hologram biểu đồ giá · khoảnh khắc thị trường biến động bất ngờ",
+"Holographic price chart · the moment the market moves unexpectedly"
+],
+[
+"Lumina AI – Nghe nhạc (váy)",
+"Lumina AI – Listening (dress)"
+],
+[
+"Tạo hình Hậu trường sản xuất · trang phục thường, khuông nhạc cuộn quanh",
+"Production-notes artwork · everyday outfit, a stave curling around her"
+],
+[
+"Lumina AI – Nghe nhạc (vest)",
+"Lumina AI – Listening (suit)"
+],
+[
+"Tạo hình Thẻ mô tả hệ thống · trang phục công sở, khuông nhạc cuộn quanh",
+"System-card artwork · office outfit, a stave curling around her"
+],
+[
+"Lumina AI – Nghe nhạc (đứng)",
+"Lumina AI – Listening (standing)"
+],
+[
+"Tạo hình Kho Âm nhạc · áo dài trắng, tai nghe và nốt nhạc bay",
+"Music-library artwork · white áo dài, headphones and floating notes"
+],
+[
+"Lumina AI – Nghe nhạc (ngồi)",
+"Lumina AI – Listening (seated)"
+],
+[
+"Tạo hình Kho Âm nhạc · ngồi ghế đất sét, cánh hoa rơi quanh",
+"Music-library artwork · seated on a clay bench, petals drifting past"
+],
+[
+"🏭 Quy trình sản xuất tại BizOn",
+"🏭 The production process at BizOn"
+],
+[
+"Toàn bộ kho nhạc được làm trong nội bộ BizOn, không thuê đơn vị bên ngoài.",
+"The entire music library is made in-house at BizOn, with no outside contractor."
+],
+[
+"Sáng tác",
+"Composition"
+],
+[
+"Dựng bản thu và biên tập",
+"Recording and editing"
+],
+[
+"• Dựng hòa âm và giọng hát theo lời và ý đồ âm nhạc đã có",
+"• Building the arrangement and vocals from the existing lyrics and musical intent"
+],
+[
+"• Làm các bản phối lại từ bản gốc",
+"• Making remixes from the original"
+],
+[
+"• Nghe, chọn bản, chỉnh sửa, duyệt bản cuối",
+"• Listening, choosing takes, editing, approving the final cut"
+],
+[
+"Nhóm tác giả giữ quyền quyết định ở mọi khâu, từ ý tưởng ca khúc tới bản thu cuối cùng.",
+"The authors hold decision rights at every stage, from the song concept to the final recording."
+],
+[
+"3 · Hòa âm và dựng bản thu",
+"3 · Arrangement and recording"
+],
+[
+"Phần hòa âm và giọng hát được dựng từ lời và ý đồ âm nhạc đã định. Nhóm tác giả nghe, chọn bản, chỉnh sửa và lặp lại cho tới khi đạt.",
+"Arrangement and vocals are built from the settled lyrics and musical intent. The authors listen, choose takes, edit and iterate until it is right."
+],
+[
+"Kho nhạc của BizOn được làm ra thế nào và đi qua những bước nào. Trang này viết ra để phục vụ hồ sơ quyền tác giả – nên chỉ ghi những gì kiểm chứng được.",
+"How the BizOn music library was made and the steps it goes through. This page exists to support the copyright dossier – so it records only what can be verified."
+],
+[
+"Nhạc và lời do nhóm tác giả sáng tác, sản xuất tại BizOn. Toàn bộ bản thu thuộc quyền của nhóm tác giả và chỉ dùng cho mục đích giáo dục, nghiên cứu.",
+"Music and lyrics written by the authors, produced at BizOn. All recordings belong to the authors and are used for educational and research purposes only."
+],
+[
+"Lumina giới thiệu thư viện",
+"Lumina introducing the library"
 ]
 ]);
   var SPECIAL = [
