@@ -1058,6 +1058,998 @@
 "BizOn startup team"
 ],
 [
+"\"Kế hoạch cân bằng, có lãi ổn định. Trong game thật, biến cố thị trường mỗi vòng sẽ thử thách chiến lược này của bạn!\"",
+"\"A balanced plan with steady profit. In the real game, a market event each round will put this strategy to the test!\""
+],
+[
+"/giảng viên/năm",
+"/instructor/year"
+],
+[
+"/khoa/trường",
+"/faculty/school"
+],
+[
+"/lớp/học kỳ",
+"/class/semester"
+],
+[
+"1 bản",
+"1 recording"
+],
+[
+"1 · Chia đội & nhận vai",
+"1 · Form teams & assign roles"
+],
+[
+"1. Tóm tắt",
+"1. Summary"
+],
+[
+"15 tạo hình trên cùng khung chuẩn · tài liệu đăng ký quyền tác giả mỹ thuật ứng dụng · mã VN-BIZON-BP-CAST-001",
+"15 designs on one standard frame · applied fine art copyright filing document · ref. VN-BIZON-BP-CAST-001"
+],
+[
+"2 bản",
+"2 recordings"
+],
+[
+"2 · Chơi 6 vòng",
+"2 · Play 6 rounds"
+],
+[
+"2. Dữ liệu lưu trên thiết bị",
+"2. Data stays on your device"
+],
+[
+"3 bản",
+"3 recordings"
+],
+[
+"3 góc nhìn chuẩn (trước · nghiêng 45° · sau) · tài liệu đăng ký bản quyền mỹ thuật ứng dụng · mã VN-HƯƠNG-CLAY-001",
+"3 standard views (front · 45° · back) · applied fine art copyright filing document · ref. VN-HƯƠNG-CLAY-001"
+],
+[
+"3 · Sự kiện & cố vấn",
+"3 · Events & advisers"
+],
+[
+"3. Những gì chúng tôi KHÔNG làm",
+"3. What we do NOT do"
+],
+[
+"4 bản",
+"4 recordings"
+],
+[
+"4 · Tổng kết bằng dữ liệu",
+"4 · Debrief with the data"
+],
+[
+"4. Dịch vụ bên thứ ba",
+"4. Third-party services"
+],
+[
+"5. Trẻ em",
+"5. Children"
+],
+[
+"6 bài · nhịp nhanh.",
+"6 tracks · up-tempo."
+],
+[
+"6. Tính chất giáo dục & phi chính trị",
+"6. Educational and non-political nature"
+],
+[
+"7 bài · màu Việt Nam.",
+"7 tracks · Vietnamese colour."
+],
+[
+"7 thị trường · entry mode",
+"7 markets · entry modes"
+],
+[
+"7. Liên hệ",
+"7. Contact"
+],
+[
+"8 bài · màu quốc tế hóa.",
+"8 tracks · internationalisation colour."
+],
+[
+"8 bản",
+"8 recordings"
+],
+[
+"90 phút · 15 tuần · Đại hội Cổ đông",
+"90 minutes · 15 weeks · Shareholders' Meeting"
+],
+[
+"Alpha Corp (giá rẻ)",
+"Alpha Corp (low price)"
+],
+[
+"Avatar khung chat cố vấn",
+"Adviser chat avatar"
+],
+[
+"Beta Ltd (cân bằng)",
+"Beta Ltd (balanced)"
+],
+[
+"Biến cố thị trường bất ngờ và lời khuyên AI giữ nhịp thảo luận sôi nổi.",
+"Surprise market events and AI advice keep the discussion lively."
+],
+[
+"Bạn có thể xóa toàn bộ dữ liệu này bất cứ lúc nào bằng cách xóa dữ liệu trang web trong cài đặt trình duyệt, hoặc dùng nút «Chơi lại từ đầu» trong game.",
+"You can erase all of this data at any time by clearing site data in your browser settings, or with the «Start over» button in the game."
+],
+[
+"Bản chơi tự do luôn miễn phí. Các gói dưới đây dành cho triển khai có hỗ trợ trong khoa/trường/trung tâm đào tạo khởi nghiệp (giai đoạn pilot – giá dự kiến, liên hệ để chốt phạm vi).",
+"Free play is always free. The packages below are for supported rollouts in a faculty, school or entrepreneurship centre (pilot stage – indicative pricing, contact us to scope it)."
+],
+[
+"Bản phối dài 4:43 · hợp cho buổi học chạy trọn 6 quý",
+"Extended mix, 4:43 · fits a session running all 6 quarters"
+],
+[
+"Bản phối instrumental (bản thu có lời sắp ra mắt)",
+"Instrumental mix (vocal recording coming soon)"
+],
+[
+"Bản phối lại 2:56 · cùng lời, màu nhạc dày hơn",
+"Remixed, 2:56 · same lyrics, fuller sound"
+],
+[
+"Bản phối lại mới · hành trình Go Global gói trong một bài hát: entry mode, đường cong chữ U ngược, «bốn ba phần trăm – vừa đủ để bay cao»",
+"New remix · the Go Global journey in one song: entry modes, the inverted U-curve, «forty-three percent – just enough to fly high»"
+],
+[
+"Bản phối lại mở rộng",
+"Extended remix"
+],
+[
+"Bản phối lại – cùng lời, màu nhạc mới",
+"Remix – same lyrics, new colour"
+],
+[
+"Bản phối trung bình · hợp buổi học chạy 3 quý",
+"Mid-length mix · fits a session running 3 quarters"
+],
+[
+"Bản remix dài 3:48 · hợp làm nhạc nền chạy suốt buổi chơi",
+"Remix, 3:48 · good as background music for a whole session"
+],
+[
+"Bản thu có lời",
+"Vocal recording"
+],
+[
+"Bản thu có lời chính thức",
+"Official vocal recording"
+],
+[
+"Bản thu có lời – Golden silt, we rise!",
+"Vocal recording – Golden silt, we rise!"
+],
+[
+"Bản thu gốc có lời tiếng Anh · 3:03",
+"Original English vocal recording · 3:03"
+],
+[
+"Bản thu khác cùng độ dài 3:03 · hòa âm mới",
+"Alternate take, same 3:03 length · new arrangement"
+],
+[
+"Bản thu tiếng Việt",
+"Vietnamese recording"
+],
+[
+"Bảng điều khiển lớp",
+"Class dashboard"
+],
+[
+"Bấm «Soạn email» sẽ mở ứng dụng thư của bạn với nội dung điền sẵn – trang web không thu thập hay lưu trữ thông tin nào.",
+"«Compose email» opens your mail app with the message pre-filled – this website collects and stores nothing."
+],
+[
+"Bằng chứng ban đầu từ lớp học thật",
+"Early evidence from a real classroom"
+],
+[
+"Bằng chứng lớp học",
+"Classroom evidence"
+],
+[
+"Bộ nhận diện đất nặn 3D độc quyền, kho âm nhạc gốc đa ngôn ngữ (Việt · Anh · Pháp) và bộ quà tặng cài áo Bản đồ Việt Nam – tất cả do nhóm tự sản xuất.",
+"An original 3D clay identity, a multilingual catalogue of original music (Vietnamese · English · French) and the Vietnam Map lapel pin set – all produced in-house."
+],
+[
+"COO Bảo Ngọc · CFO Thu Hà · CEO Minh Long · CMO Lan Chi · Compliance Officer Gia Hân",
+"COO Bảo Ngọc · CFO Thu Hà · CEO Minh Long · CMO Lan Chi · Compliance Officer Gia Hân"
+],
+[
+"Ca khúc chủ đề game Việt Nam",
+"Theme song of the Vietnam game"
+],
+[
+"Ca khúc chủ đề game Việt Nam · V-pop electronic 112 BPM",
+"Theme song of the Vietnam game · V-pop electronic, 112 BPM"
+],
+[
+"Ca khúc mang đúng tên game · 2:52 · nhạc nền mặc định trong game",
+"The song that shares the game's name · 2:52 · default in-game music"
+],
+[
+"Ca khúc tiếng Việt về «đường cong ta học»",
+"Vietnamese song about «the curve we learn»"
+],
+[
+"Character Turnaround Sheet – hồ sơ tạo hình nhân vật",
+"Character Turnaround Sheet – character design record"
+],
+[
+"Chuyên gia khởi nghiệp, đổi mới sáng tạo và khởi nghiệp quốc tế – dẫn dắt định hướng học thuật, chuyển hóa nghiên cứu thành mô phỏng kinh doanh ứng dụng AI và học tập theo dự án.",
+"Specialist in entrepreneurship, innovation and international entrepreneurship – leads the academic direction, turning research into AI-enhanced business simulation and project-based learning."
+],
+[
+"Chuyển đổi Việt/Anh một chạm ngay trong game – phù hợp cả lớp học chương trình tiên tiến.",
+"One-tap Vietnamese/English switching inside the game – suitable for advanced-programme classes too."
+],
+[
+"Chính sách",
+"Policy"
+],
+[
+"Chính sách quyền riêng tư",
+"Privacy policy"
+],
+[
+"Chúng tôi luôn sẵn sàng lắng nghe – từ góp ý về trò chơi, đề xuất hợp tác giảng dạy, đến những ý tưởng sáng tạo mới.",
+"We are always glad to hear from you – feedback on the game, teaching partnerships, or new creative ideas."
+],
+[
+"Chơi ngay →",
+"Play now →"
+],
+[
+"Chạy trên GitHub Pages, dùng ngay không tài khoản; dữ liệu mô phỏng công bố mở trên Zenodo.",
+"Runs on GitHub Pages, no account needed; simulation data published openly on Zenodo."
+],
+[
+"Chủ đề",
+"Theme"
+],
+[
+"Các vị trí dưới đây là cộng tác theo dự án (không phải việc làm toàn thời gian). Ghi rõ vị trí quan tâm khi liên hệ nhé!",
+"The roles below are project-based collaborations, not full-time jobs. Please name the role you are interested in when you get in touch."
+],
+[
+"Cánh đồng năng lượng sạch",
+"Clean energy field"
+],
+[
+"Cố vấn chiến lược AI trong game",
+"AI strategy adviser in the game"
+],
+[
+"Cố vấn học thuật · xuất hiện ở khoảnh khắc then chốt",
+"Academic adviser · appears at the pivotal moments"
+],
+[
+"Cổng Giảng viên",
+"Instructor portal"
+],
+[
+"Cổng Người học",
+"Learner portal"
+],
+[
+"Cổng Tổ chức & Đối tác",
+"Institution & partner portal"
+],
+[
+"Cổng chào phát triển kinh tế & mũi tên vàng – hình sự kiện vòng chung kết",
+"Economic development gateway & golden arrow – final-round event artwork"
+],
+[
+"Delta Inc (cao cấp)",
+"Delta Inc (premium)"
+],
+[
+"Dáng giới thiệu · ảnh chủ đạo trang Kịch bản lớp học",
+"Presenting pose · lead image of the Classroom Scenario page"
+],
+[
+"Dùng thử miễn phí ngay hôm nay, hoặc liên hệ nhóm để được hướng dẫn triển khai cho môn học của bạn.",
+"Try it free today, or contact the team for help rolling it out in your course."
+],
+[
+"Dịch thuật & bản địa hóa",
+"Translation & localisation"
+],
+[
+"Dữ liệu & Bằng chứng",
+"Data & evidence"
+],
+[
+"Dự án",
+"Project"
+],
+[
+"Game mô phỏng điều hành doanh nghiệp linh vật đất sét: 6 vòng kinh doanh, 5 vai trò, sự kiện thị trường, đấu trường đối thủ và cố vấn AI. Ứng dụng web PWA, chơi được cả khi ngoại tuyến.",
+"A business management simulation with clay mascots: 6 business rounds, 5 roles, market events, a rival arena and an AI adviser. A PWA web app that also runs offline."
+],
+[
+"Giáo dục trước tiên",
+"Education first"
+],
+[
+"Giải pháp & gói triển khai",
+"Solutions & rollout packages"
+],
+[
+"Giải pháp EdTech",
+"EdTech solution"
+],
+[
+"Giảng viên & nhà trường",
+"Instructors & institutions"
+],
+[
+"Giảng viên thử nghiệm",
+"Pilot instructor"
+],
+[
+"Giờ nghiên cứu ở thư viện",
+"Research hours in the library"
+],
+[
+"Gói triển khai cho khoa/trường/trung tâm khởi nghiệp: Pilot Classroom, Instructor Pro, Institution Pass – kèm bằng chứng học thuật.",
+"Rollout packages for faculties, schools and entrepreneurship centres: Pilot Classroom, Instructor Pro, Institution Pass – with academic evidence."
+],
+[
+"Gặp cố vấn →",
+"Meet the adviser →"
+],
+[
+"Gửi email giới thiệu ngắn về bản thân và sản phẩm bạn từng làm (nếu có) – nhóm sẽ phản hồi sớm nhất có thể.",
+"Email us a short introduction about yourself and anything you have built – we will reply as soon as we can."
+],
+[
+"Hai tay giơ cao – khoảnh khắc cắm cờ thị trường mới",
+"Both hands raised – the moment a new market is claimed"
+],
+[
+"Hoạt động ngoại tuyến",
+"Works offline"
+],
+[
+"Hình sự kiện vòng 4 – thử thách quản trị rủi ro của COO & CFO",
+"Round 4 event artwork – a risk-management test for the COO & CFO"
+],
+[
+"Hệ thống game mô phỏng và mini-game của hệ sinh thái – từ chiến lược nhiều vòng đến phản xạ 30 giây.",
+"The ecosystem's simulation games and mini-games – from multi-round strategy to 30-second reflexes."
+],
+[
+"Họ và tên",
+"Full name"
+],
+[
+"Họa sĩ claymorphism 3D",
+"3D claymorphism artist"
+],
+[
+"Học thuật",
+"Academics"
+],
+[
+"Học thuật & Model Cards",
+"Academics & Model Cards"
+],
+[
+"Kho Âm nhạc",
+"Music library"
+],
+[
+"Khoa học mở",
+"Open science"
+],
+[
+"Khám phá →",
+"Explore →"
+],
+[
+"Không có quảng cáo, không có công cụ theo dõi (tracker) hay phân tích của bên thứ ba.",
+"No ads, no third-party trackers or analytics."
+],
+[
+"Không mua bán trong ứng dụng.",
+"No in-app purchases."
+],
+[
+"Không truy cập danh bạ, máy ảnh, micro hay bất kỳ quyền nhạy cảm nào của thiết bị.",
+"No access to contacts, camera, microphone or any sensitive device permission."
+],
+[
+"Không yêu cầu tài khoản, không thu thập họ tên, email, số điện thoại hay vị trí.",
+"No account required; we collect no name, email, phone number or location."
+],
+[
+"Khảo sát trước–sau",
+"Pre/post survey"
+],
+[
+"Khởi nghiệp quốc tế",
+"International entrepreneurship"
+],
+[
+"Khủng hoảng năng lượng",
+"Energy crisis"
+],
+[
+"Kịch bản lớp học",
+"Classroom scenario"
+],
+[
+"Kịch bản lớp học 40–60 sinh viên →",
+"Scenario for a class of 40–60 students →"
+],
+[
+"Kịch bản trọn gói cho lớp 40–60 sinh viên: buổi 90 phút hoặc giải đấu 15 tuần, kèm Rubric, bảng tổng sắp Excel và hướng dẫn chấm bài.",
+"A complete scenario for classes of 40–60 students: a 90-minute session or a 15-week league, with a rubric, an Excel standings sheet and grading guidance."
+],
+[
+"Kịch bản «Việt Nam 2026»",
+"The «Vietnam 2026» scenario"
+],
+[
+"Linh hoạt",
+"Flexible"
+],
+[
+"Liên hệ",
+"Contact"
+],
+[
+"Liên hệ →",
+"Contact →"
+],
+[
+"Logo «Bo» – bản nền tối",
+"The «Bo» logo – dark background version"
+],
+[
+"Là PWA nên vẫn chơi được khi mạng lớp học chập chờn – cài lên màn hình chính như ứng dụng.",
+"Being a PWA, it keeps working when classroom Wi-Fi is unreliable – install it to the home screen like an app."
+],
+[
+"Lập trình web (JavaScript)",
+"Web development (JavaScript)"
+],
+[
+"Lớp học & Giải đấu",
+"Classroom & league"
+],
+[
+"Lớp học mô phỏng hologram",
+"Holographic simulation classroom"
+],
+[
+"Ma trận chuẩn đầu ra & Model Cards",
+"Learning outcome matrix & Model Cards"
+],
+[
+"Minh họa vật phẩm Pin Mặt Trời – chiến lược ESG trong game",
+"Artwork for the Solar Panel item – ESG strategy in the game"
+],
+[
+"Miễn phí & mã nguồn mở",
+"Free & open source"
+],
+[
+"Màn chào & chứng nhận hoàn thành",
+"Welcome screen & certificate of completion"
+],
+[
+"Mã nguồn",
+"Source code"
+],
+[
+"Mô phỏng khởi nghiệp quốc tế: chọn 1 trong 7 thị trường, đàm phán với đối tác AI, quản trị ESG và rủi ro, rồi xuất nhật ký quyết định (CSV) cho giảng viên chấm và thảo luận.",
+"An international entrepreneurship simulation: pick 1 of 7 markets, negotiate with AI partners, manage ESG and risk, then export the decision log (CSV) for the instructor to grade and discuss."
+],
+[
+"Mô phỏng đưa sản phẩm Việt ra 7 thị trường thế giới: chọn phương thức thâm nhập, đàm phán AI, quản trị ESG – kèm phòng thí nghiệm số liệu IE Lab và xuất CSV cho nghiên cứu, giảng dạy.",
+"A simulation of taking Vietnamese products into 7 world markets: choose an entry mode, negotiate with AI, manage ESG – with the IE Lab data workbench and CSV export for research and teaching."
+],
+[
+"Mọi ý tưởng đều nặn được lại từ đầu. Sai thì bóp lại, nặn tiếp – thử nghiệm nhanh quan trọng hơn hoàn hảo ngay.",
+"Every idea can be moulded again from scratch. If it is wrong, squash it and remould – fast iteration matters more than being perfect straight away."
+],
+[
+"Mỗi vòng 5–7 phút; một ván trọn vẹn ≈ 30–45 phút, vừa một buổi học.",
+"5–7 minutes per round; a full game ≈ 30–45 minutes, the length of one class."
+],
+[
+"Mỗi đội 3–5 người: CEO, CFO, CMO, COO và Thư ký pháp chế.",
+"Teams of 3–5: CEO, CFO, CMO, COO and Compliance Officer."
+],
+[
+"Mở game ngay trên trình duyệt hoặc cài lên điện thoại như app thật (PWA) – hoàn toàn miễn phí, không cần tài khoản. Học trên lớp thì nhập Class ID do giảng viên cung cấp khi đăng nhập.",
+"Open the game in your browser or install it on your phone like a real app (PWA) – completely free, no account needed. For classroom use, enter the Class ID your instructor gives you when you log in."
+],
+[
+"Nghe nhạc →",
+"Listen →"
+],
+[
+"Người học là trung tâm. Mỗi tính năng phải trả lời được: «Điều này giúp sinh viên hiểu bài hơn thế nào?»",
+"The learner comes first. Every feature must answer: «How does this help students understand better?»"
+],
+[
+"Nhà nghiên cứu",
+"Researcher"
+],
+[
+"Nhóm luôn chào đón giảng viên, nhà nghiên cứu và cộng tác viên sáng tạo.",
+"We always welcome instructors, researchers and creative collaborators."
+],
+[
+"Nhạc nền game · instrumental",
+"In-game music · instrumental"
+],
+[
+"Nội dung",
+"Content"
+],
+[
+"Pháp · France",
+"France"
+],
+[
+"Phát triển tính năng game, tối ưu PWA và trải nghiệm di động. Biết Tailwind hoặc canvas là điểm cộng.",
+"Build game features and optimise the PWA and mobile experience. Tailwind or canvas experience is a plus."
+],
+[
+"Ra biển lớn →",
+"Go global →"
+],
+[
+"Ra quyết định dưới điều kiện không chắc chắn. Học kinh doanh bằng hậu quả của chính lựa chọn của bạn – nền tảng mô phỏng kinh doanh AI-enhanced với engine xác định, giải thích được.",
+"Decide under uncertainty. Learn business through the consequences of your own choices – an AI-enhanced business simulation platform with a deterministic, explainable engine."
+],
+[
+"Song ngữ Việt – Anh",
+"Vietnamese – English bilingual"
+],
+[
+"Song ngữ Việt–Anh",
+"Vietnamese–English bilingual"
+],
+[
+"Sơ mi thêu chữ LR, jeans & kính tròn – phiên bản đời thường",
+"LR-embroidered shirt, jeans & round glasses – the everyday version"
+],
+[
+"Sản phẩm chủ lực",
+"Flagship products"
+],
+[
+"Sản xuất âm nhạc",
+"Music production"
+],
+[
+"Số liệu thật",
+"Real data"
+],
+[
+"Thiết kế & quà tặng",
+"Design & merchandise"
+],
+[
+"Thư viện",
+"Library"
+],
+[
+"Thương hiệu & Âm nhạc",
+"Brand & music"
+],
+[
+"Thầy Tú bên laptop, sách mở và cà phê – nơi các Model Card ra đời",
+"Tú at his laptop with open books and coffee – where the Model Cards were written"
+],
+[
+"Toàn bộ dự án phát triển công khai trên GitHub – từ mã nguồn game, tài liệu hướng dẫn giảng viên đến quy trình phát hành từng phiên bản.",
+"The whole project is developed in the open on GitHub – game source, instructor documentation and the release process for every version."
+],
+[
+"Trò chơi vui nhưng mô hình phía sau nghiêm túc: mô phỏng định lượng, dữ liệu mở, kết quả tái lập được.",
+"The game is fun but the model behind it is serious: quantitative simulation, open data, checkable results."
+],
+[
+"Tuyển cộng tác viên",
+"Open collaborations"
+],
+[
+"Tùy chọn giao diện (chế độ sáng/tối, ngôn ngữ Việt/Anh) cũng lưu cục bộ.",
+"Interface preferences (light/dark mode, Vietnamese/English) are also stored locally."
+],
+[
+"Tạo hình nhân vật và bối cảnh đất nặn – đặc biệt đang cần 3 tạo hình con người cho các công ty đối thủ trong đấu trường.",
+"Clay character and scene design – we especially need 3 human designs for the rival companies in the arena."
+],
+[
+"Từ Việt Nam ra thế giới",
+"From Vietnam to the world"
+],
+[
+"Việt Nam",
+"Vietnam"
+],
+[
+"Vào game →",
+"Enter the game →"
+],
+[
+"Xem bản ghi DOI ↗",
+"View the DOI record ↗"
+],
+[
+"Xem các vị trí cộng tác →",
+"See open collaborations →"
+],
+[
+"Xem thư viện →",
+"Browse the library →"
+],
+[
+"Xuất CSV nhật ký quyết định (IE Lab) để chấm điểm và rút bài học.",
+"Export the decision log (IE Lab) as CSV for grading and debriefing."
+],
+[
+"Zenodo (trích dẫn học thuật)",
+"Zenodo (academic citation)"
+],
+[
+"chinh phục bản đồ Việt Nam",
+"conquering the map of Vietnam"
+],
+[
+"chiến lược quốc tế hóa & hiệu quả doanh nghiệp",
+"internationalisation strategy & firm performance"
+],
+[
+"chuẩn đầu ra · Model Cards",
+"learning outcomes · Model Cards"
+],
+[
+"claymorphism · nhạc gốc",
+"claymorphism · original music"
+],
+[
+"giảng dạy, học tập và nghiên cứu khoa học",
+"teaching, learning and scientific research"
+],
+[
+"không đại diện, không liên kết và không nhận tài trợ từ bất kỳ tổ chức chính trị nào",
+"does not represent, is not affiliated with and receives no funding from any political organisation"
+],
+[
+"kịch bản giả định",
+"hypothetical scenario"
+],
+[
+"localStorage của trình duyệt trên chính thiết bị của bạn",
+"your browser's localStorage, on your own device"
+],
+[
+"mỹ thuật ứng dụng",
+"applied fine art"
+],
+[
+"pre/post-test · pilot thật",
+"pre/post-test · real pilot"
+],
+[
+"tải trực tiếp về thiết bị của bạn",
+"downloaded straight to your device"
+],
+[
+"xem mục Truyền thông & báo chí",
+"see the Press & media section"
+],
+[
+"Áo dài trắng huy hiệu cờ đỏ · tà áo tung bay",
+"White áo dài with the red flag badge · panels flowing"
+],
+[
+"Áo len dệt tên dự án âm nhạc – cầu nối hai hệ sinh thái",
+"Knitted sweater bearing the music project's name – the bridge between two ecosystems"
+],
+[
+"Âm nhạc",
+"Music"
+],
+[
+"Âm nhạc gốc",
+"Original music"
+],
+[
+"Điều hành một doanh nghiệp.",
+"Run a business."
+],
+[
+"Điều hành xưởng linh vật đất sét qua 6 vòng kinh doanh: định giá, marketing, sản xuất, R&D, nhân sự và tài chính. Đội 3–5 người, mỗi ván ≈ 30–45 phút – vừa một buổi học.",
+"Run a clay-mascot workshop through 6 business rounds: pricing, marketing, production, R&D, staffing and finance. Teams of 3–5, about 30–45 minutes per game – the length of one class."
+],
+[
+"Đăng ký pilot →",
+"Register for a pilot →"
+],
+[
+"Đất sét trong tay",
+"Clay in your hands"
+],
+[
+"Đặt lịch demo →",
+"Book a demo →"
+],
+[
+"Đối tác sáng tạo",
+"Creative partner"
+],
+[
+"Ứng dụng web",
+"Web app"
+],
+[
+"• 1 lớp tối đa 60 sinh viên",
+"• 1 class, up to 60 students"
+],
+[
+"• Báo cáo tổng kết cuối pilot",
+"• Final report at the end of the pilot"
+],
+[
+"• Bộ công cụ giảng dạy đầy đủ + xuất dữ liệu",
+"• Full teaching toolkit + data export"
+],
+[
+"• Gói Research Edition: dữ liệu ẩn danh phục vụ nghiên cứu",
+"• Research Edition: anonymised data for research"
+],
+[
+"• Hỗ trợ trực tuyến trong buổi chơi",
+"• Live online support during the session"
+],
+[
+"• Không giới hạn lớp học",
+"• Unlimited classes"
+],
+[
+"• Kịch bản triển khai + Rubric + bảng tổng sắp",
+"• Rollout scenario + rubric + standings sheet"
+],
+[
+"• Kịch bản tùy biến theo học phần",
+"• Scenario tailored to your course"
+],
+[
+"• Thư viện giáo án & chứng nhận đội",
+"• Lesson-plan library & team certificates"
+],
+[
+"• Thương hiệu riêng của đơn vị",
+"• Your institution's own branding"
+],
+[
+"• Tất cả giảng viên trong đơn vị",
+"• All instructors in the institution"
+],
+[
+"• Đào tạo giảng viên & đồng hành triển khai",
+"• Instructor training & rollout support"
+],
+[
+"✉️ Gửi email cho nhóm",
+"✉️ Email the team"
+],
+[
+"✉️ Liên hệ",
+"✉️ Contact"
+],
+[
+"✉️ Liên hệ ngay",
+"✉️ Get in touch"
+],
+[
+"✉️ Liên hệ nhóm",
+"✉️ Contact the team"
+],
+[
+"⭐ Mã nguồn GitHub",
+"⭐ GitHub source"
+],
+[
+"🇻🇳 Tiếng Việt",
+"🇻🇳 Vietnamese"
+],
+[
+"🌏 Bản gốc – tiếng Việt",
+"🌏 Original – Vietnamese"
+],
+[
+"🌏 Hoặc chinh phục thị trường quốc tế – Go Global",
+"🌏 Or conquer international markets – Go Global"
+],
+[
+"🌏 Hệ sinh thái khởi nghiệp – từ Việt Nam vươn ra quốc tế",
+"🌏 A startup ecosystem – from Vietnam to the world"
+],
+[
+"🌏 Đồng hồ thế giới · World clocks",
+"🌏 World clocks"
+],
+[
+"🌟 Bản gốc ⭐",
+"🌟 Original ⭐"
+],
+[
+"🌾 Bản gốc",
+"🌾 Original"
+],
+[
+"🌾 Bản gốc (4 phút)",
+"🌾 Original (4 minutes)"
+],
+[
+"🎓 Giảng viên & Nghiên cứu · Educators",
+"🎓 Educators & research"
+],
+[
+"🎓 Sinh viên chơi",
+"🎓 Students play"
+],
+[
+"🎛️ Tiện ích · Quick controls",
+"🎛️ Quick controls"
+],
+[
+"🎤 Bản giọng nam",
+"🎤 Male vocal version"
+],
+[
+"🎨 Thư viện Sáng tạo & Cài áo Việt Nam",
+"🎨 Creative Library & Vietnam lapel pins"
+],
+[
+"🎮 Bắt đầu chơi",
+"🎮 Start playing"
+],
+[
+"🎮 CHƠI NGAY →",
+"🎮 PLAY NOW →"
+],
+[
+"🎮 Chơi thử ngay",
+"🎮 Try it now"
+],
+[
+"🎮 Nhạc nào cho game nào?",
+"🎮 Which music for which game?"
+],
+[
+"🏛️ Nhà trường nhân rộng",
+"🏛️ Institutions scale it up"
+],
+[
+"🐉 Bản gốc – instrumental",
+"🐉 Original – instrumental"
+],
+[
+"👋 Bản gốc",
+"👋 Original"
+],
+[
+"👥 Gặp đội ngũ hiện tại",
+"👥 Meet the current team"
+],
+[
+"👨‍🏫 Giảng viên chấm & phản hồi",
+"👨‍🏫 Instructors grade & give feedback"
+],
+[
+"📊 Bảng xếp hạng lớp thời gian thực",
+"📊 Real-time class leaderboard"
+],
+[
+"📊 Bằng chứng học tập",
+"📊 Learning evidence"
+],
+[
+"📊 Bằng chứng từ lớp học thật · ✉️ Đặt lịch pilot",
+"📊 Evidence from a real classroom · ✉️ Book a pilot"
+],
+[
+"📐 Chuẩn đầu ra & Model Cards",
+"📐 Learning outcomes & Model Cards"
+],
+[
+"📣 Chia sẻ · Share",
+"📣 Share"
+],
+[
+"📤 Kết quả tự nộp về hệ thống",
+"📤 Results submitted automatically"
+],
+[
+"📦 Bộ dữ liệu mở trên Zenodo",
+"📦 Open dataset on Zenodo"
+],
+[
+"📦 Gói triển khai cho tổ chức & đối tác",
+"📦 Rollout packages for institutions & partners"
+],
+[
+"📨 Soạn email",
+"📨 Compose email"
+],
+[
+"🔁 Bản remix",
+"🔁 Remix"
+],
+[
+"🔁 Bản remix (remastered)",
+"🔁 Remix (remastered)"
+],
+[
+"🔒 Chính sách Quyền riêng tư · Privacy Policy",
+"🔒 Privacy Policy"
+],
+[
+"🚀 Dự án",
+"🚀 Project"
+],
+[
+"🤝 Hợp tác cùng nhóm",
+"🤝 Partner with the team"
+],
+[
+"🤝 Tham gia nhóm",
+"🤝 Join the team"
+],
+[
+"🧑‍💻 Kho mã trên GitHub",
+"🧑‍💻 GitHub repository"
+],
+[
+"🧩 Giải pháp",
+"🧩 Solutions"
+],
+[
+"🧭 Bản gốc",
+"🧭 Original"
+],
+[
+"🧭 Khám phá · Explore",
+"🧭 Explore"
+],
+[
+"🪁 Bản gốc (remastered)",
+"🪁 Original (remastered)"
+],
+[
+"Hương sans frontières (nam)",
+"Hương sans frontières (male vocals)"
+],
+[
+"Bản phối giọng nam · lời tiếng Anh",
+"Male-vocal mix · English lyrics"
+],
+[
 "🏙️ Bối cảnh & minh họa",
 "🏙️ Scenes & illustrations"
 ],
