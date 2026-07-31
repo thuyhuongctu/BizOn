@@ -28,18 +28,29 @@
      Hai token, đừng dùng lẫn:
        --champagne      TRANG TRÍ (viền, nền, quầng sáng). Trên nền trắng chỉ đạt
                         tương phản 2,30 nên KHÔNG được dùng cho chữ.
-       --champagne-ink  CHỮ. Đạt 4,93 trên trắng và 4,70 trên nền trang → WCAG AA. */
+       --champagne-ink  CHỮ. Đạt 5,17 trên trắng · 4,93 nền trang · 4,66 nền chìm → AA cả ba. */
   --champagne: #C6A76B;
-  --champagne-ink: #856D40;
+  --champagne-ink: #816A3D;
 
   /* teal-600 dùng cho nhấn và chữ CỠ LỚN (4,13 trên trắng – chỉ đạt AA chữ lớn).
-     Chữ thường màu teal phải dùng --teal-ink (4,85 trên nền trang). */
-  --teal-ink: #067A85;
+     Chữ thường và liên kết màu teal phải dùng --teal-ink (5,04 trên nền trang). */
+  --teal-ink: #007785;
 
-  /* --- Dẫn xuất (đừng viết cứng ở nơi khác) --- */
-  --ink:        var(--navy-950);
-  --ink-2:      #24405F;                 /* chữ phụ */
-  --ink-3:      #5C7391;                 /* chú thích */
+  /* --- Thang mực: chữ càng nhẹ càng ngả về sắc thương hiệu ---
+     Dựng trong OKLCH (không gian đều về cảm nhận) nên hạ độ sáng là thực sự
+     hạ độ sáng, không kéo theo đổi sắc ngoài ý muốn.
+
+     Ý đồ: bảng cũ để cả ba mức mực ở sắc 252–256°, tức là một thang xám-navy
+     phẳng chẳng liên quan gì tới màu thương hiệu 206°. Thang mới cho sắc trôi
+     đều 251° → 227° → 206°: chữ chính vẫn là navy sâu và đầm, nhưng càng xuống
+     cấp phụ thì càng ngả về teal, nên cả trang như được nhuộm màu thương hiệu
+     thay vì dùng xám trung tính như mọi hệ thống khác.
+
+     Mọi giá trị đều dò bằng nhị phân để chạm đúng ngưỡng tương phản mong muốn
+     trên nền trang, không phải chọn bằng mắt. */
+  --ink:        #0E2135;   /* chữ chính · 15,56 trên nền trang · sắc 251° */
+  --ink-2:      #235366;   /* chữ phụ   ·  8,01 · sắc 227° – bắt đầu trôi */
+  --ink-3:      #337981;   /* chú thích ·  4,78 · sắc 206° – đúng sắc thương hiệu */
   --hairline:   rgba(7, 29, 58, .10);    /* đường kẻ mảnh */
   --surface:    var(--paper);
   --surface-2:  #EEF4F8;                 /* nền chìm, khối mã */
@@ -116,11 +127,14 @@ html[data-theme="dark"] {
   --paper:    #0D1B2E;
   --champagne:#D8BE87;
   --champagne-ink: #E2CC9E;   /* nền tối: vàng phải SÁNG hơn mới đủ tương phản */
-  --teal-ink: #4FC9D6;
+  --teal-ink: #59B8BE;   /* 7,44 trên nền thẻ tối */
 
-  --ink:      #E8F1F8;
-  --ink-2:    #B4C7DC;
-  --ink-3:    #8098B4;
+  /* Nền tối soi gương thang sáng: cùng ý đồ trôi sắc về teal, nhưng đi ngược
+     chiều độ sáng. Ngưỡng đặt cao hơn một chút vì chữ sáng trên nền tối trông
+     mảnh hơn thực tế (hiệu ứng nở quang học). */
+  --ink:      #E1F2F5;   /* 15,02 trên nền thẻ tối */
+  --ink-2:    #9CBBC2;   /*  8,49 */
+  --ink-3:    #6D999E;   /*  5,52 */
   --hairline: rgba(232,241,248,.13);
   --surface:  var(--paper);
   --surface-2:#132539;
