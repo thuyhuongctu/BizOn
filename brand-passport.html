@@ -56,6 +56,9 @@
   html[data-theme="dark"] .bp-opt.sel { border-color:#5cc4e6; background:rgba(92,196,230,.12); }
   html[data-theme="dark"] .bp-chip { background:rgba(92,196,230,.12); }
   html[data-theme="dark"] .bp-adv { border-color:rgba(92,196,230,.18); }
+  /* Ảnh chủ đạo là ảnh vuông; cắt bớt trời và lòng thuyền để tiêu đề không bị đẩy khỏi màn hình */
+  .bp-hero-img { height:280px; object-fit:cover; object-position:50% 36%; }
+  @media (min-width:640px) { .bp-hero-img { height:360px; } }
 </style>
 <link rel="stylesheet" href="css/tw.css">
 <meta property="og:type" content="website">
@@ -87,6 +90,9 @@
 <header class="pt-24 pb-8 text-white" style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%)">
   <div class="max-w-2xl mx-auto px-5">
     <p class="text-[11px] font-extrabold uppercase tracking-[.2em] text-clay-gold">BizOn Go Global · Mô phỏng chiến lược · 6 quý · Game gốc BizOn</p>
+    <figure class="mt-3 mb-4 rounded-3xl overflow-hidden shadow-2xl">
+      <img src="assets/illustrations/thuyen-sen-khoi-hanh.jpg" alt="Thuyền gỗ rời bến trên dòng sông sen lúc bình minh – khởi hành từ Vàm Thịnh ra thế giới" class="w-full block bp-hero-img" width="1024" height="1024" loading="lazy">
+    </figure>
     <h1 class="font-display font-extrabold text-3xl mt-2">🛂 Hộ Chiếu Thương Hiệu</h1>
     <p class="text-white/50 text-[11px] mt-1 font-bold tracking-wide">Brand Passport: From Vietnam to the World</p>
     <p class="text-white/75 text-sm mt-3">Tại thị trấn ven sông <b>Vàm Thịnh</b>, bạn tiếp quản <b>Mộc Nhiên</b> – thương hiệu mỹ phẩm thảo mộc có câu chuyện đẹp nhưng nguồn lực hạn chế. Nhiệm vụ: đưa thương hiệu Việt ra thế giới qua <b>6 quý kinh doanh</b>, trong màn <b>sương mù thông tin</b> và những đánh đổi không có đáp án đúng duy nhất.</p>
