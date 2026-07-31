@@ -3862,6 +3862,54 @@
 [
 "Làm mới ứng dụng",
 "Refresh the app"
+],
+[
+"🧭 Bắt đầu từ đâu?",
+"🧭 Where do I start?"
+],
+[
+"Học cách điều hành một doanh nghiệp. Sáu vòng trên bản đồ Việt Nam, năm vai trò lãnh đạo, ba đối thủ máy.",
+"Learn how to run a business. Six rounds across a map of Vietnam, five leadership roles, three AI rivals."
+],
+[
+"Bắt đầu ở đây →",
+"Start here →"
+],
+[
+"Học cách đưa doanh nghiệp ra nước ngoài. Sáu thị trường, sáu quý, quyết định trong sương mù thông tin.",
+"Learn how to take it abroad. Six markets, six quarters, decisions made in an information fog."
+],
+[
+"Chơi bản chiến lược →",
+"Play the strategy game →"
+],
+[
+"Thử nghiệm lý thuyết quốc tế hóa bằng số liệu mô phỏng: kéo mức FSTS, đổi năng lực số, xem đường cong phản ứng. Nằm trên trang BizOn Go Global.",
+"Explore internationalization theory with simulated data: drag the FSTS level, change digital capability, watch the response curves. Lives on the BizOn Go Global page."
+],
+[
+"Vào phòng thí nghiệm →",
+"Enter the lab →"
+],
+[
+"Luyện nhanh từng kỹ năng riêng lẻ: mini-game phản xạ, bài toán thăm dò – khai thác, đọc số liệu.",
+"Practise one specific skill fast: reflex mini-games, the explore–exploit problem, reading the numbers."
+],
+[
+"Xem tất cả trò chơi →",
+"See every game →"
+],
+[
+"🛂 Hoặc đưa thương hiệu Việt ra thế giới – Hộ Chiếu Thương Hiệu",
+"🛂 Or take a Vietnamese brand to the world – Brand Passport"
+],
+[
+"6 thị trường · sương mù thông tin",
+"6 markets · information fog"
+],
+[
+"BizOn Lab · IE Lab – phòng thí nghiệm quốc tế hóa",
+"BizOn Lab · IE Lab – the internationalization sandbox"
 ]
 ]);
   var SPECIAL = [
