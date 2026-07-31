@@ -20,8 +20,40 @@
   .clay-btn:active { transform:translateY(2px); }
   .clay-sunken { background:#e8f2f8; box-shadow:inset 3px 3px 8px rgba(0,102,135,.12), inset -3px -3px 8px rgba(255,255,255,.9); }
   .glass-nav { background:rgba(3,51,55,.78); backdrop-filter:blur(14px); }
-  .art-card { transition:transform .2s cubic-bezier(.34,1.56,.64,1); }
+  .art-card { transition:transform .2s cubic-bezier(.34,1.56,.64,1), opacity .2s ease; }
   .art-card:hover { transform:translateY(-5px) scale(1.02); }
+  .art-card img { transition:transform .35s cubic-bezier(.34,1.4,.64,1); }
+  .art-card:hover img { transform:scale(1.05); }
+  .art-card[hidden] { display:none !important; }
+  /* Ảnh mở được thì con trỏ phải cho biết điều đó */
+  .art-card img { cursor:zoom-in; }
+
+  /* Thanh lọc dán dưới thanh điều hướng */
+  .lib-bar { position:sticky; top:64px; z-index:40; margin:0 -20px 24px; padding:12px 20px;
+             background:rgba(244,250,255,.86); backdrop-filter:blur(12px);
+             border-bottom:1px solid rgba(0,102,135,.10); }
+  .chip { border-radius:999px; padding:6px 14px; font-size:12px; font-weight:800; white-space:nowrap;
+          background:#fff; color:#02555f; box-shadow:0 4px 12px -4px rgba(0,102,135,.25); transition:all .15s ease; }
+  .chip:hover { transform:translateY(-1px); }
+  .chip[aria-pressed="true"] { background:linear-gradient(160deg,#00c4ff,#006687); color:#fff; }
+  .lib-search { border:none; outline:none; background:transparent; font-size:13px; font-weight:600;
+                color:inherit; width:100%; }
+  .lib-search::placeholder { color:rgba(3,51,55,.38); }
+
+  /* Xem ảnh phóng to */
+  #lb { position:fixed; inset:0; z-index:120; display:none; align-items:center; justify-content:center;
+        background:rgba(2,20,24,.92); backdrop-filter:blur(6px); padding:24px; }
+  #lb.on { display:flex; }
+  #lb img { max-width:min(92vw,1100px); max-height:76vh; object-fit:contain;
+            border-radius:20px; box-shadow:0 30px 70px -20px rgba(0,0,0,.7); background:rgba(255,255,255,.04); }
+  #lb .lb-cap { color:#fff; text-align:center; margin-top:16px; max-width:min(92vw,760px); }
+  #lb button { position:absolute; background:rgba(255,255,255,.14); color:#fff; border-radius:999px;
+               width:48px; height:48px; font-size:20px; font-weight:800; }
+  #lb button:hover { background:rgba(255,255,255,.26); }
+  #lb-close { top:20px; right:20px; }
+  #lb-prev { left:20px; top:50%; transform:translateY(-50%); }
+  #lb-next { right:20px; top:50%; transform:translateY(-50%); }
+  @media (max-width:520px) { #lb-prev { left:8px } #lb-next { right:8px } #lb img { max-height:62vh } }
   /* ===== Chế độ tối ===== */
   :root { --dt: 3 51 55; }
   html[data-theme="dark"] { --dt: 214 236 240; background:#081a20; color-scheme:dark; }
@@ -62,13 +94,29 @@
 
 <!-- HERO -->
 <header class="pt-24 pb-8 text-white" style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%)">
-  <div class="max-w-5xl mx-auto px-5">
-    <h1 class="font-display font-extrabold text-3xl sm:text-4xl">📚 Thư viện Sáng tạo</h1>
-    <p class="text-white/75 text-sm mt-3 max-w-2xl">Toàn bộ tài sản sáng tạo của <b class="text-white">BizOn Bật Nghiệp</b> – tạo hình nhân vật đất nặn 3D, âm nhạc gốc, lời bài hát và sản phẩm quà tặng.</p>
+  <div class="max-w-5xl mx-auto px-5 flex items-center gap-6">
+    <div class="min-w-0 flex-1">
+      <h1 class="font-display font-extrabold text-3xl sm:text-4xl">📚 Thư viện Sáng tạo</h1>
+      <p class="text-white/75 text-sm mt-3 max-w-2xl">Toàn bộ tài sản sáng tạo của <b class="text-white">BizOn Bật Nghiệp</b> – tạo hình nhân vật đất nặn 3D, âm nhạc gốc, lời bài hát và sản phẩm quà tặng.</p>
+      <div id="lib-stats" class="flex flex-wrap gap-2.5 mt-5"></div>
+    </div>
+    <img src="assets/character/advisors/lumina-nghe-nhac-dung-cut.png" alt="Lumina giới thiệu thư viện" class="hidden md:block w-36 object-contain shrink-0 drop-shadow-2xl" loading="lazy">
   </div>
 </header>
 
 <main class="max-w-5xl mx-auto px-5 py-10">
+
+  <!-- THANH LỌC -->
+  <div class="lib-bar">
+    <div class="flex items-center gap-3">
+      <div class="clay-sunken rounded-full px-4 py-2.5 flex items-center gap-2 flex-1 min-w-0">
+        <span class="text-sm shrink-0">🔍</span>
+        <input id="lib-q" class="lib-search" type="search" placeholder="Tìm trong thư viện – tên nhân vật, bối cảnh, ca khúc…" autocomplete="off">
+      </div>
+      <span id="lib-count" class="shrink-0 text-[11px] font-extrabold text-deep-teal/45 whitespace-nowrap"></span>
+    </div>
+    <div id="lib-chips" class="flex gap-2 mt-2.5 overflow-x-auto pb-1"></div>
+  </div>
 
   <!-- TẠO HÌNH NHÂN VẬT -->
   <section class="mb-12">
@@ -176,6 +224,21 @@
   <p class="text-center text-xs text-deep-teal/40 mt-8">© 2026 Đỗ Thùy Hương &amp; Phan Anh Tú · BizOn Bật Nghiệp – Bảo lưu mọi quyền · <a href="index.html" class="font-bold text-primary">🏠 Trang chủ</a></p>
 </main>
 
+<!-- XEM ẢNH PHÓNG TO -->
+<div id="lb" role="dialog" aria-modal="true" aria-label="Xem ảnh phóng to">
+  <button id="lb-close" onclick="lbClose()" title="Đóng (Esc)">✕</button>
+  <button id="lb-prev" onclick="lbStep(-1)" title="Ảnh trước (←)">‹</button>
+  <button id="lb-next" onclick="lbStep(1)" title="Ảnh sau (→)">›</button>
+  <div class="flex flex-col items-center">
+    <img id="lb-img" alt="">
+    <div class="lb-cap">
+      <p id="lb-title" class="font-display font-extrabold text-lg"></p>
+      <p id="lb-desc" class="text-sm mt-1" style="color:rgba(255,255,255,.7)"></p>
+      <p id="lb-pos" class="text-[11px] font-extrabold mt-2" style="color:rgba(255,255,255,.45)"></p>
+    </div>
+  </div>
+</div>
+
 <script src="js/site-ui.js" defer></script>
 <script>
 /* Máy phát nhạc mini cho từng bài */
@@ -197,6 +260,10 @@ const BP_CAST = [
   ['advisors/lumina-nghe-nhac-ngoi-cut.png', 'Lumina AI – Nghe nhạc (ngồi)', 'Tạo hình Kho Âm nhạc · ngồi ghế đất sét, cánh hoa rơi quanh'],
   ['advisors/lumina-nghe-nhac-vay-cut.png', 'Lumina AI – Nghe nhạc (váy)', 'Tạo hình Hậu trường sản xuất · trang phục thường, khuông nhạc cuộn quanh'],
   ['advisors/lumina-nghe-nhac-vest-cut.png', 'Lumina AI – Nghe nhạc (vest)', 'Tạo hình Thẻ mô tả hệ thống · trang phục công sở, khuông nhạc cuộn quanh'],
+  ['advisors/lumina-chap-tay-cut.png', 'Lumina AI – Chắp tay cảm ơn', 'Áo dài trắng, tai nghe · dáng chào và cảm ơn cuối buổi chơi'],
+  ['advisors/lumina-y-tuong-cut.png', 'Lumina AI – Có ý tưởng', 'Giơ ngón trỏ, tia sáng vàng · khoảnh khắc gợi ý chiến lược'],
+  ['advisors/lumina-vo-tay-cut.png', 'Lumina AI – Vỗ tay chúc mừng', 'Kim tuyến và sao vàng rơi quanh · đội chơi hoàn thành mục tiêu'],
+  ['advisors/lumina-bien-co-thi-truong-cut.png', 'Lumina AI – Báo biến cố thị trường', 'Bảng hologram biểu đồ giá · khoảnh khắc thị trường biến động bất ngờ'],
   ['advisors/ba-sau-lanh-cut.png', 'Bà Sáu Lành', 'Nhà sáng lập · giữ hồn nghề, tay nâng hũ đặc sản gia truyền'],
   ['advisors/ba-sau-lanh-aodai-cut.png', 'Bà Sáu Lành – Áo dài', 'Lễ phục · giỏ quà quê trong đêm trao Hộ chiếu Thương hiệu'],
   ['advisors/minh-khang-cut.png', 'Minh Khang', 'Giám đốc tài chính · ly cà phê giữa hai phiên họp'],
@@ -250,5 +317,134 @@ libRender();
 <p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2 pb-6" style="color:rgba(100,116,125,.75)">🎓 Trang web chỉ phục vụ mục đích giáo dục và nghiên cứu, không đại diện cho bất kỳ tổ chức chính trị nào. Hình ảnh quốc kỳ, bản đồ chỉ mang ý nghĩa minh họa văn hóa – giáo dục. · This website serves educational and research purposes only and does not represent any political organization.</p>
 <script src="js/site-dock.js" defer></script>
 <script src="js/site-footer.js" defer></script>
+<script>
+/* ===== Thư viện: thống kê, lọc theo nhóm, tìm kiếm, xem ảnh phóng to ===== */
+(function () {
+  var main = document.querySelector('main');
+  var secs = [].slice.call(main.querySelectorAll('section'));
+
+  function titleOf(sec) {
+    var h = sec.querySelector('h2');
+    return h ? h.textContent.trim() : '';
+  }
+  function cardsOf(sec) { return [].slice.call(sec.querySelectorAll('.art-card')); }
+
+  /* --- Chip lọc: mỗi mục trong trang thành một chip --- */
+  var chips = document.getElementById('lib-chips');
+  var active = 'all';
+  function chipHtml(id, label, n) {
+    return '<button class="chip" data-sec="' + id + '" aria-pressed="' + (active === id) + '">' +
+           label + (n != null ? ' <span style="opacity:.6">' + n + '</span>' : '') + '</button>';
+  }
+  secs.forEach(function (sec, i) { sec.dataset.lib = 's' + i; });
+  function buildChips() {
+    var total = secs.reduce(function (a, s) { return a + cardsOf(s).length; }, 0);
+    chips.innerHTML = chipHtml('all', 'Tất cả', total) +
+      secs.map(function (sec) {
+        var n = cardsOf(sec).length;
+        return n ? chipHtml(sec.dataset.lib, titleOf(sec), n) : '';
+      }).join('');
+    [].forEach.call(chips.querySelectorAll('.chip'), function (b) {
+      b.onclick = function () { active = b.dataset.sec; buildChips(); apply(); };
+    });
+  }
+
+  /* --- Thống kê ở đầu trang --- */
+  function stat(icon, num, label) {
+    return '<span class="rounded-full px-3.5 py-1.5 text-[12px] font-extrabold" ' +
+           'style="background:rgba(255,255,255,.13);color:#fff">' + icon + ' ' + num +
+           ' <span style="opacity:.7;font-weight:600">' + label + '</span></span>';
+  }
+  function buildStats() {
+    var imgs = main.querySelectorAll('.art-card img').length;
+    var songs = (typeof LIB_TRACKS !== 'undefined' ? LIB_TRACKS.length : 0);
+    document.getElementById('lib-stats').innerHTML =
+      stat('🎨', imgs, 'tác phẩm mỹ thuật') + stat('🎵', songs, 'bản thu') +
+      stat('🗂️', secs.filter(function (x) { return cardsOf(x).length; }).length, 'nhóm');
+  }
+
+  /* --- Lọc và tìm kiếm --- */
+  var q = document.getElementById('lib-q');
+  var countEl = document.getElementById('lib-count');
+  var bo = function (t) { return (t || '').toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd'); };
+  function apply() {
+    var kw = bo(q.value.trim());
+    var shown = 0;
+    secs.forEach(function (sec) {
+      var cards = cardsOf(sec);
+      var secOn = active === 'all' || active === sec.dataset.lib;
+      var any = 0;
+      cards.forEach(function (c) {
+        var ok = secOn && (!kw || bo(c.textContent + ' ' + [].map.call(c.querySelectorAll('img'),
+                 function (i) { return i.alt; }).join(' ')).indexOf(kw) > -1);
+        c.hidden = !ok;
+        if (ok) any++;
+      });
+      shown += any;
+      // Mục không còn thẻ nào hợp lệ thì ẩn luôn cả tiêu đề cho đỡ rối
+      sec.hidden = cards.length > 0 && any === 0;
+    });
+    countEl.textContent = (kw || active !== 'all') ? shown + ' kết quả' : '';
+    buildLbList();
+  }
+  q.addEventListener('input', apply);
+
+  /* --- Xem ảnh phóng to --- */
+  var list = [], pos = 0;
+  var lb = document.getElementById('lb');
+  function buildLbList() {
+    list = [].slice.call(main.querySelectorAll('.art-card img')).filter(function (im) {
+      var c = im.closest('.art-card'), sec = im.closest('section');
+      return c && !c.hidden && !(sec && sec.hidden);
+    });
+  }
+  function capOf(im) {
+    var c = im.closest('.art-card');
+    var ps = c ? c.querySelectorAll('p') : [];
+    return { t: ps[0] ? ps[0].textContent.trim() : (im.alt || ''),
+             d: ps[1] ? ps[1].textContent.trim() : '' };
+  }
+  window.lbOpen = function (im) {
+    buildLbList();
+    pos = list.indexOf(im);
+    if (pos < 0) { list = [im]; pos = 0; }
+    lbShow();
+    lb.classList.add('on');
+    document.body.style.overflow = 'hidden';
+  };
+  function lbShow() {
+    var im = list[pos];
+    if (!im) return;
+    var c = capOf(im);
+    document.getElementById('lb-img').src = im.currentSrc || im.src;
+    document.getElementById('lb-img').alt = im.alt || c.t;
+    document.getElementById('lb-title').textContent = c.t;
+    document.getElementById('lb-desc').textContent = c.d;
+    document.getElementById('lb-pos').textContent = (pos + 1) + ' / ' + list.length;
+    var one = list.length < 2;
+    document.getElementById('lb-prev').style.display = one ? 'none' : '';
+    document.getElementById('lb-next').style.display = one ? 'none' : '';
+  }
+  window.lbStep = function (d) { pos = (pos + d + list.length) % list.length; lbShow(); };
+  window.lbClose = function () { lb.classList.remove('on'); document.body.style.overflow = ''; };
+  lb.addEventListener('click', function (e) { if (e.target === lb) lbClose(); });
+  document.addEventListener('keydown', function (e) {
+    if (!lb.classList.contains('on')) return;
+    if (e.key === 'Escape') lbClose();
+    if (e.key === 'ArrowLeft') lbStep(-1);
+    if (e.key === 'ArrowRight') lbStep(1);
+  });
+  main.addEventListener('click', function (e) {
+    var im = e.target.closest ? e.target.closest('.art-card img') : null;
+    if (!im) return;
+    if (e.target.closest('a')) return;   // thẻ liên kết vẫn phải đi tới trang đích
+    e.preventDefault();
+    lbOpen(im);
+  });
+
+  buildChips(); buildStats(); apply();
+})();
+</script>
 </body>
 </html>
