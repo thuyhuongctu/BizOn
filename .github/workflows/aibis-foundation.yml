@@ -10,6 +10,7 @@ on:
       - 'test/aibis-*.test.js'
       - 'js/backend-config.js'
       - 'supabase/migrations/*aibis*.sql'
+      - 'docs/AIBIS-*.md'
       - '.github/workflows/aibis-foundation.yml'
 
 permissions:
@@ -40,8 +41,14 @@ jobs:
       - name: Run AIBIS telemetry tests
         run: node test/aibis-telemetry.test.js
 
+      - name: Run AIBIS scripted validation
+        run: node test/aibis-validation.test.js
+
       - name: Syntax-check AIBIS browser modules
         run: |
           node --check js/aibis-adapter.js
           node --check js/aibis-diagnostics.js
+          node --check js/aibis-research-ui.js
+          node --check js/aibis-parity.js
+          node --check js/aibis-parameters.js
           node --check js/backend-config.js
