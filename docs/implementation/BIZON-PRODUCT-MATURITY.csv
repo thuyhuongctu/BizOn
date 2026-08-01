@@ -1,0 +1,32 @@
+module,owner,current_level,target_12m,target_2030,evidence_current,next_gate,blocking_risk
+Startup simulation engine,Product+Engineering,L3,L5,L5,Existing six-round engine deterministic rivals and tests,100-seed regression plus versioned state,Tight coupling between engine and UI
+Save resume and migration,Engineering,L2,L4,L5,LocalStorage progress exists,Versioned schema and recovery tests,Legacy saves may break
+Instructor class setup,Product+Engineering,L2,L4,L5,Class IDs and partial controls exist,Three-minute setup and ten-team pilot,Workflow fragmented across pages
+Instructor live control,Engineering,L2,L4,L5,Round lock and bonus audit exist,Pause reset event injection and audit coverage,Authorization model incomplete
+Instructor analytics,Research+Engineering,L1,L4,L5,Some team metrics and reports exist,Class dashboard and export validation,No unified event schema
+AIBIS core engine,Product+Research,L2,L4,L5,Experimental foundation branch exists,Reconcile branch and pass scripted scenario tests,Branch diverged from main
+AIBIS readiness model,Research,L2,L4,L5,Weighted concept and prototype code exist,Document and validate deterministic implementation,Weights are pedagogical not validated
+AIBIS market registry,Research+Product,L2,L4,L5,Seven-market prototype exists,Versioned parameter registry and model card,Country stereotyping and unsupported values
+AIBIS entry-mode registry,Research+Product,L2,L4,L5,Seven-mode prototype exists,Unit tests and theory mapping,Cost and control trade-offs need calibration
+AIBIS eight-round journey,Product+Engineering,L1,L4,L5,Four-quarter Go Global beta exists,State machine and resume tests,Scope expansion can destabilize beta
+Global shock engine,Research+Engineering,L2,L4,L5,Seeded events exist in current games,Documented shock library and calibration,Random shocks may dominate learning goals
+Negotiation resolver,Research+Engineering,L1,L3,L5,Negotiation UI concepts exist,Deterministic resolver separated from dialogue,LLM could improperly determine numeric results
+Lumina rule-based advisor,Product+Engineering,L3,L4,L5,What-If and role alerts exist,Formal response contract and fallback tests,Advisor logic is distributed
+Lumina generative coach,AI+Product,L1,L4,L5,Roadmap only,Structured modes validation and audit,Hallucination cost and provider dependency
+AI governance,AI+Research,L1,L4,L5,Human-centered principles documented,Provider prompt version fallback and evaluation logs,No enforced schema yet
+Research consent,Research+Legal,L2,L4,L5,Prototype consent module and participant sheet exist,Production workflow and withdrawal test,Legal text and retention owner incomplete
+Research telemetry,Research+Engineering,L2,L4,L5,Prototype telemetry and Supabase migration exist,Versioned event dictionary and consent gate,Production data governance incomplete
+Research export,Research+Engineering,L2,L4,L5,Prototype JSON CSV export exists,Data dictionary validation and anonymization test,Free text or IDs could leak
+Learning analytics,Research+Product,L1,L3,L5,Scattered outcomes and survey forms exist,Outcome model rubric and dashboard,Insufficient validated measures
+Accessibility,Design+Engineering,L3,L4,L5,Contrast font and keyboard improvements exist,Core-flow WCAG 2.2 AA audit,Dynamic game UI remains complex
+Performance,Engineering,L3,L4,L5,Measured LCP CLS and asset optimization exist,Remaining budget exceptions resolved or accepted,Large app script blocks game LCP
+PWA offline,Engineering,L3,L4,L5,Service worker and offline shell exist,Offline game flow and update recovery tests,Cache versioning can preserve stale assets
+Android TWA,Engineering+Commercial,L3,L4,L5,Packaging and store assets exist,Play Console internal test and policy review,Store account and release process incomplete
+Privacy and security,Legal+Engineering,L2,L4,L5,Privacy page no-ad policy and backend plans exist,Threat review secret isolation and incident process,Public repo and future APIs increase exposure
+Commercial licensing,Founder+Legal,L2,L4,L5,Proprietary license statement exists,Pilot contract pricing and institutional terms,Ownership and third-party asset records need review
+Onboarding and support,Commercial+Product,L1,L4,L5,Guides and contact page exist,Facilitator pack SLA and incident log,Founder support capacity limited
+Evidence and validation,Research,L2,L4,L5,Initial class evidence and survey forms exist,Predefined pilot with pre post and comparison,Single-class retrospective evidence
+Scenario Builder,Product+Engineering,L1,L2,L5,Concept only,PRD after paid pilot evidence,Premature platform complexity
+Multi-team live economy,Engineering,L1,L2,L5,Backend roadmap only,Architecture proof after stable Instructor Studio,Realtime cost synchronization and fairness
+Enterprise edition,Commercial,L1,L3,L5,Solutions and project pages exist,One facilitated paid workshop with report,Custom work may fragment core product
+Marketplace,Commercial+Engineering,L1,L1,L5,Concept only,Defer until creator demand and billing maturity,High moderation IP and support burden
