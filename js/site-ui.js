@@ -3935,6 +3935,34 @@
 "🎮 Vào chơi sáu vòng →",
 "🎮 Play the six rounds →"
 ],
+[
+"Miền Bắc",
+"Northern Vietnam"
+],
+[
+"Miền Trung",
+"Central Vietnam"
+],
+[
+"Tây Nguyên",
+"Central Highlands"
+],
+[
+"Nam Bộ",
+"Southern Vietnam"
+],
+[
+"Hoàng Sa",
+"Hoàng Sa"
+],
+[
+"Trường Sa",
+"Trường Sa"
+],
+[
+"Bản đồ đất sét ba chiều của Việt Nam chia theo vùng kinh tế, kèm hai quần đảo Hoàng Sa và Trường Sa ngoài khơi.",
+"Three-dimensional clay map of Vietnam divided by economic region, with the Hoàng Sa and Trường Sa archipelagos offshore."
+],
 ]);
   var SPECIAL = [
     { page: 'giai-phap', sel: '#gp-oss-note', en: "Free to use at the official URL for non-commercial teaching – no account needed. The source is published for academic transparency and verification; commercial exploitation rights remain with BizOn (see <a href=\"https://github.com/thuyhuongctu/BizOn/blob/main/LICENSE\" target=\"_blank\" rel=\"noopener\" class=\"underline font-bold\">LICENSE</a>)." },
