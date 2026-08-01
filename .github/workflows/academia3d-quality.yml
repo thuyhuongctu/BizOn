@@ -1,0 +1,98 @@
+name: Academia 3D quality checks
+
+on:
+  pull_request:
+    paths:
+      - 'academia3d-v2.html'
+      - 'css/**'
+      - 'js/**'
+      - 'assets/**'
+      - '.github/workflows/academia3d-quality.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Validate HTML
+        run: npx --yes html-validate@8.24.1 academia3d-v2.html
+
+      - name: Check local links and assets
+        run: |
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          from urllib.parse import urlparse
+
+          target = Path('academia3d-v2.html')
+          missing = []
+
+          class Parser(HTMLParser):
+              def handle_starttag(self, tag, attrs):
+                  attrs = dict(attrs)
+                  for key in ('href', 'src'):
+                      value = attrs.get(key)
+                      if not value or value.startswith(('#', 'mailto:', 'tel:', 'javascript:', 'data:')):
+                          continue
+                      parsed = urlparse(value)
+                      if parsed.scheme or parsed.netloc:
+                          continue
+                      local = Path(parsed.path)
+                      if not local.exists():
+                          missing.append(f'{tag}[{key}] -> {value}')
+
+          parser = Parser()
+          parser.feed(target.read_text(encoding='utf-8'))
+          if missing:
+              raise SystemExit('Missing local references:\n' + '\n'.join(missing))
+          print('All local links and assets referenced by academia3d-v2.html exist.')
+          PY
+
+      - name: Start local preview server
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/bizon-http.log 2>&1 &
+          echo $! > /tmp/bizon-http.pid
+          for i in {1..20}; do
+            curl --fail --silent http://127.0.0.1:4173/academia3d-v2.html > /dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/bizon-http.log
+          exit 1
+
+      - name: Lighthouse desktop audit
+        run: |
+          npx --yes @lhci/cli@0.14.0 collect \
+            --url=http://127.0.0.1:4173/academia3d-v2.html \
+            --numberOfRuns=1 \
+            --settings.chromeFlags='--headless --no-sandbox --disable-dev-shm-usage' \
+            --settings.preset=desktop
+          npx --yes @lhci/cli@0.14.0 assert \
+            --assertions.categories:performance='warn',0.75 \
+            --assertions.categories:accessibility='error',0.90 \
+            --assertions.categories:best-practices='error',0.90 \
+            --assertions.categories:seo='error',0.90
+
+      - name: Lighthouse mobile audit
+        run: |
+          rm -rf .lighthouseci
+          npx --yes @lhci/cli@0.14.0 collect \
+            --url=http://127.0.0.1:4173/academia3d-v2.html \
+            --numberOfRuns=1 \
+            --settings.chromeFlags='--headless --no-sandbox --disable-dev-shm-usage'
+          npx --yes @lhci/cli@0.14.0 assert \
+            --assertions.categories:performance='warn',0.65 \
+            --assertions.categories:accessibility='error',0.90 \
+            --assertions.categories:best-practices='error',0.90 \
+            --assertions.categories:seo='error',0.90
