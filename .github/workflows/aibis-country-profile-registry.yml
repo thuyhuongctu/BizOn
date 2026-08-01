@@ -1,0 +1,20 @@
+name: AIBIS Country Profile Registry
+on:
+  pull_request:
+    paths:
+      - 'js/aibis/country-profile-*.js'
+      - 'test/aibis-country-profile-registry.test.js'
+      - 'docs/architecture/AIBIS-COUNTRY-PROFILE-MODEL-CARD.md'
+      - '.github/workflows/aibis-country-profile-registry.yml'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: node --check js/aibis/country-profile-registry.js
+      - run: node --check js/aibis/country-profile-sources.js
+      - run: node --check js/aibis/country-profile-template.js
+      - run: node test/aibis-country-profile-registry.test.js
