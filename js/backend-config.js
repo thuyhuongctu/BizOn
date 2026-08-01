@@ -16,14 +16,15 @@ window.BIZON_BACKEND = {
   anonKey: 'sb_publishable_5FPpCma_dVUs05K4hvahzQ_Yeq0bLJt',
 };
 
-/* AIBIS foundation feature flags.
- * Shadow mode runs a deterministic AIBIS model beside the legacy Go Global
- * engine. It never changes visible scores and does not send research data.
+/* AIBIS private/staging feature flags.
+ * Shadow mode runs beside legacy Go Global and never changes visible scores.
+ * Telemetry remains OFF until consent UI, migration and pilot protocol pass.
  */
 window.BIZON_AIBIS = Object.freeze({
   enabled: true,
   shadowMode: true,
   uploadTelemetry: false,
+  diagnosticsByUrlOnly: true,
   engineVersion: '0.1.0'
 });
 
@@ -45,7 +46,12 @@ window.BIZON_AIBIS = Object.freeze({
 
   window.addEventListener('load', function () {
     loadScript('js/aibis-core.js')
+      .then(function () { return loadScript('js/aibis-telemetry.js'); })
       .then(function () { return loadScript('js/aibis-adapter.js'); })
+      .then(function () {
+        const debug = new URLSearchParams(window.location.search).get('debugAIBIS') === '1';
+        if (debug) return loadScript('js/aibis-diagnostics.js');
+      })
       .catch(function (error) {
         console.warn('[AIBIS] Foundation disabled:', error.message);
       });
