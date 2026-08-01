@@ -1,18 +1,61 @@
 {
   "id": "./",
-  "name": "BizOn Bật Nghiệp – Business Simulation Ecosystem",
+  "name": "BizOn – AI Business Simulation",
   "short_name": "BizOn",
-  "description": "BizOn – Bật Nghiệp: Trò chơi mô phỏng kinh doanh 3D phong cách đất sét dành cho đào tạo khởi nghiệp – hệ sinh thái gồm Bật Nghiệp, Go Global, Arcade với cố vấn AI Lumina.",
+  "description": "Nền tảng mô phỏng quyết định kinh doanh và quốc tế hóa có AI hỗ trợ, dành cho lớp học, nghiên cứu và đào tạo doanh nghiệp.",
   "lang": "vi",
-  "start_url": "./index.html",
+  "dir": "ltr",
+  "start_url": "./app-shell-preview.html?source=pwa",
   "scope": "./",
   "display": "standalone",
-  "orientation": "portrait",
-  "theme_color": "#006687",
-  "background_color": "#f4faff",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "any",
+  "theme_color": "#071a2d",
+  "background_color": "#071a2d",
+  "categories": ["education", "business", "productivity"],
+  "prefer_related_applications": false,
   "icons": [
     { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
     { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
     { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "AIBIS Entry Mode",
+      "short_name": "AIBIS",
+      "description": "Mở mô phỏng lựa chọn phương thức thâm nhập thị trường.",
+      "url": "./aibis-entry-mode-preview.html?source=shortcut",
+      "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "BizOn Bật Nghiệp",
+      "short_name": "Bật Nghiệp",
+      "description": "Mở mô phỏng quản trị doanh nghiệp.",
+      "url": "./game.html?source=shortcut",
+      "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Lớp học",
+      "short_name": "Classroom",
+      "description": "Mở không gian lớp học BizOn.",
+      "url": "./lop-hoc.html?source=shortcut",
+      "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "assets/illustrations/command-center.webp",
+      "sizes": "1200x675",
+      "type": "image/webp",
+      "form_factor": "wide",
+      "label": "BizOn AI Command Center"
+    },
+    {
+      "src": "assets/illustrations/logo-splash.webp",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "form_factor": "narrow",
+      "label": "BizOn mobile application"
+    }
   ]
 }
