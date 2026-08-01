@@ -1,0 +1,26 @@
+name: Web App Mobile Foundation
+
+on:
+  pull_request:
+    paths:
+      - 'app/**'
+      - 'css/app-shell.css'
+      - 'js/app-shell/**'
+      - '.well-known/assetlinks.template.json'
+      - 'test/web-app-mobile-foundation.test.js'
+      - 'docs/architecture/BIZON-WEB-APP-MOBILE-FOUNDATION.md'
+      - '.github/workflows/web-app-mobile-foundation.yml'
+  push:
+    branches: ['feat/web-app-mobile-foundation']
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: node --check js/app-shell/app-shell.js
+      - run: node --check app/sw.js
+      - run: node test/web-app-mobile-foundation.test.js
