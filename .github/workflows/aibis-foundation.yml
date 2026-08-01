@@ -9,6 +9,7 @@ on:
       - 'js/aibis-*.js'
       - 'test/aibis-*.test.js'
       - 'js/backend-config.js'
+      - 'supabase/migrations/*aibis*.sql'
       - '.github/workflows/aibis-foundation.yml'
 
 permissions:
@@ -33,8 +34,14 @@ jobs:
       - name: Run Brand Passport tests
         run: node test/brand-passport.test.js
 
-      - name: Run AIBIS foundation tests
+      - name: Run AIBIS core tests
         run: node test/aibis-core.test.js
 
-      - name: Syntax-check browser adapter
-        run: node --check js/aibis-adapter.js
+      - name: Run AIBIS telemetry tests
+        run: node test/aibis-telemetry.test.js
+
+      - name: Syntax-check AIBIS browser modules
+        run: |
+          node --check js/aibis-adapter.js
+          node --check js/aibis-diagnostics.js
+          node --check js/backend-config.js
