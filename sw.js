@@ -1,193 +1,133 @@
-/* BizOn Bật Nghiệp 2026 – Service Worker (offline app shell)
- * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
+/* BizOn Service Worker v3 – production PWA foundation
+ * Offline-first for the app shell; runtime caching for heavy assets.
+ * © 2026 Đỗ Thùy Hương & Phan Anh Tú. */
 
-const CACHE = 'bizon-v220';
-const SHELL = [
+const VERSION = 'v3.0.0';
+const PREFIX = 'bizon';
+const CACHES = {
+  shell: `${PREFIX}-shell-${VERSION}`,
+  pages: `${PREFIX}-pages-${VERSION}`,
+  assets: `${PREFIX}-assets-${VERSION}`,
+  media: `${PREFIX}-media-${VERSION}`
+};
+
+const APP_SHELL = [
   './',
   './index.html',
-  './game.html',
-  './thu-vien.html',
-  './am-nhac.html',
-  './lumina.html',
-  './hau-truong.html',
-  './assets/character/advisors/lumina-nghe-nhac-vay-cut.webp',
-  './assets/character/advisors/lumina-nghe-nhac-vest-cut.webp',
-  './assets/character/advisors/lumina-chap-tay-cut.webp',
-  './assets/character/advisors/lumina-y-tuong-cut.webp',
-  './assets/character/advisors/lumina-vo-tay-cut.webp',
-  './assets/character/advisors/lumina-bien-co-thi-truong-cut.webp',
-  './gioi-thieu.html',
-  './games.html',
-  './doi-ngu.html',
-  './global.html',
-  './giai-phap.html',
-  './lop-hoc.html',
-  './giang-vien.html',
-  './khao-sat-online.html',
-  './brand-passport.html',
-  './bang-chung.html',
-  './hoc-thuat.html',
-  './du-an.html',
-  './tuyen-dung.html',
-  './lien-he.html',
-  './chinh-sach.html',
-  './css/tw.css',
-  // Phông tự host. Nạp sẵn cả bảng khai báo lẫn hai tập ký tự mà trang tiếng Việt
-  // thật sự dùng, để lần mở offline vẫn đúng kiểu chữ chứ không rơi về phông hệ thống.
-  // Tập 'latin-ext' cố ý bỏ ngoài danh sách: hiếm khi cần, để dành băng thông cài đặt.
-  './css/bizon-fonts.css',
-  './assets/fonts/Manrope-var-vietnamese.woff2',
-  './assets/fonts/Manrope-var-latin.woff2',
-  './assets/fonts/PlusJakartaSans-var-vietnamese.woff2',
-  './assets/fonts/PlusJakartaSans-var-latin.woff2',
-  './js/engine.js',
-  './js/backend-config.js',
-  './js/backend.js',
-  './js/error-log.js',
-  './js/tutorial.js',
-  './js/site-dock.js',
-  './js/site-footer.js',
-  './js/app.js',
-  './js/site-ui.js',
-  './js/quiz-bank.js',
+  './app-shell-preview.html',
+  './offline.html',
   './manifest.webmanifest',
-  './assets/character/lumina-ao-dai.webp',
-  './assets/character/lumina-ao-dai-clap.webp',
-  './assets/character/lumina-ao-dai-alert.webp',
-  './assets/character/lumina-vest.webp',
-  './assets/character/lumina-vest-worried.webp',
-  './assets/character/lumina-vest-thumbsup.webp',
-  './assets/illustrations/hero-vietnam-2026.webp',
-  './assets/illustrations/arena-vietnam-map-v2.webp',
-  './assets/illustrations/giai-dieu-bizon.webp',
-  './assets/illustrations/thuyen-sen-khoi-hanh.webp',
-  './assets/character/advisors/lumina-nghe-nhac-dung-cut.webp',
-  './assets/character/advisors/lumina-nghe-nhac-ngoi-cut.webp',
-  './assets/illustrations/globe-trade.webp',
-  './assets/illustrations/command-center.webp',
-  './assets/illustrations/team-holo-meeting.webp',
-  './assets/illustrations/logo-splash.webp',
-  './assets/illustrations/login-clay.webp',
-  './assets/character/anh-tu-ao-dai-welcome-cut.webp',
-  './assets/character/anh-tu-ao-dai-explain-cut.webp',
-  './assets/character/anh-tu-ao-dai-point-cut.webp',
-  './assets/character/anh-tu-ao-dai-work-cut.webp',
-  './assets/character/anh-tu-ao-dai-cut.webp',
-  './assets/character/anh-tu-ao-dai-smile-cut.webp',
-  './assets/character/anh-tu-suit-green.webp',
-  './assets/character/advisors/ba-sau-lanh-cut.webp',
-  './assets/character/advisors/victor-lam-cut.webp',
-  './assets/character/advisors/lina-park-cut.webp',
-  './assets/character/advisors/ba-sau-lanh-aodai-cut.webp',
-  './assets/character/advisors/victor-lam-aodai-cut.webp',
-  './assets/character/advisors/lina-park-aodai-cut.webp',
-  './assets/character/advisors/minh-khang-aodai-cut.webp',
-  './assets/character/advisors/an-nhien-aodai-cut.webp',
-  './assets/character/advisors/lumina-aodai-cut.webp',
-  './assets/character/advisors/lumina-vest-cut.webp',
-  './assets/character/advisors/an-nhien-cut.webp',
-  './assets/character/advisors/minh-khang-cut.webp',
-  './assets/character/advisors/victor-lam-doithuong-cut.webp',
-  './assets/character/firms/moc-nhien-cut.webp',
-  './assets/character/firms/mekong-digital-doithuong-cut.webp',
-  './assets/character/firms/phu-sa-foods-cut.webp',
-  './assets/character/firms/lam-viet-cut.webp',
-  './assets/character/firms/mekong-digital-cut.webp',
-  './assets/character/firms/moc-nhien-aodai-cut.webp',
-  './assets/character/firms/phu-sa-foods-aodai-cut.webp',
-  './assets/character/firms/lam-viet-aodai-cut.webp',
-  // Bài chủ đề game Hộ Chiếu Thương Hiệu – nạp sẵn để mở offline vẫn có nhạc.
-  // 7,1MB: đây là mục nặng nhất trong danh sách, cân nhắc bỏ nếu muốn rút ngắn
-  // thời gian cài đặt (nhạc vẫn tải và lưu đệm ngay lần đầu người chơi bật).
-  './assets/audio/ho-chieu-p3-en-remix2.mp3',
-  './assets/character/rivals/alpha.webp',
-  './assets/character/rivals/mekong.webp',
-  './assets/character/rivals/star.webp',
-  './assets/character/team/lineup-cut.webp',
-  './assets/character/team/ceo-cut.webp',
-  './assets/character/team/cfo-cut.webp',
-  './assets/character/team/cmo-cut.webp',
-  './assets/character/team/coo-cut.webp',
-  './assets/character/team/sec-cut.webp',
-  './assets/character/anh-tu-ao-dai-welcome.webp',
-  './assets/character/anh-tu-ao-dai.webp',
-  './assets/character/anh-tu-ao-dai-smile.jpg',
-  './assets/character/anh-tu-ao-dai-explain.webp',
-  './assets/character/anh-tu-ao-dai-work.webp',
-  './assets/character/anh-tu-ao-dai-point.webp',
-  './assets/character/lumina-ao-dai-wave.webp',
-  './assets/character/lumina-ao-dai-present.webp',
-  './assets/character/lumina-office-present.webp',
-  './assets/character/lumina-ao-dai-cheer.webp',
-  './assets/character/lumina-ao-dai-thumbsup.webp',
-  './assets/character/lumina-office-welcome.webp',
-  './assets/docs/sig-huong.png',
-  './assets/docs/sig-tu.png',
-  './assets/audio/huong-intro.mp3',
+  './css/tw.css',
+  './css/bizon-fonts.css',
+  './css/app-shell-preview.css',
+  './js/site-ui.js',
+  './js/pwa/pwa-manager.js',
   './assets/icons/icon-192.png',
-  './assets/icons/icon-512.png',
+  './assets/icons/icon-512.png'
 ];
 
-self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
+const MAX_ENTRIES = {
+  pages: 24,
+  assets: 120,
+  media: 24
+};
+
+async function trimCache(name, maxEntries) {
+  const cache = await caches.open(name);
+  const keys = await cache.keys();
+  if (keys.length <= maxEntries) return;
+  await Promise.all(keys.slice(0, keys.length - maxEntries).map((key) => cache.delete(key)));
+}
+
+async function cachePut(cacheName, request, response, maxEntries) {
+  if (!response || !response.ok || response.status !== 200) return response;
+  const cache = await caches.open(cacheName);
+  await cache.put(request, response.clone());
+  if (maxEntries) await trimCache(cacheName, maxEntries);
+  return response;
+}
+
+async function networkFirst(request, cacheName, fallback) {
+  try {
+    const response = await fetch(request);
+    return await cachePut(cacheName, request, response, MAX_ENTRIES.pages);
+  } catch (_) {
+    return (await caches.match(request)) || (await caches.match(fallback));
+  }
+}
+
+async function staleWhileRevalidate(request, cacheName, maxEntries) {
+  const cached = await caches.match(request);
+  const network = fetch(request)
+    .then((response) => cachePut(cacheName, request, response, maxEntries))
+    .catch(() => null);
+  return cached || network || Response.error();
+}
+
+async function cacheFirst(request, cacheName, maxEntries) {
+  const cached = await caches.match(request);
+  if (cached) return cached;
+  try {
+    const response = await fetch(request);
+    return await cachePut(cacheName, request, response, maxEntries);
+  } catch (_) {
+    return Response.error();
+  }
+}
+
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHES.shell)
+      .then((cache) => cache.addAll(APP_SHELL))
+      .then(() => self.skipWaiting())
+  );
 });
 
-self.addEventListener('activate', e => {
-  e.waitUntil(
+self.addEventListener('activate', (event) => {
+  const keep = new Set(Object.values(CACHES));
+  event.waitUntil(
     caches.keys()
-      .then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
+      .then((keys) => Promise.all(keys.filter((key) => key.startsWith(`${PREFIX}-`) && !keep.has(key)).map((key) => caches.delete(key))))
       .then(() => self.clients.claim())
   );
 });
 
-// Chiến lược theo loại tài nguyên (không bao giờ trả index.html cho request không phải điều hướng):
-//  - Điều hướng HTML: network-first → cache trang đó → index.html (chỉ ở đây mới fallback index)
-//  - Ảnh: stale-while-revalidate (trả cache ngay, cập nhật nền)
-//  - Audio/video: cache-on-demand (không cache phản hồi 206 Range)
-//  - JS/CSS/font/còn lại: cache-first theo phiên bản CACHE, lỗi mạng thì báo lỗi thật
-//
-// QUY TẮC KHI SỬA NỘI DUNG MỘT TẤM ẢNH: phải ĐỔI TÊN TỆP, ví dụ thêm hậu tố
-// "-v2". Ảnh dùng stale-while-revalidate nên trình duyệt trả bản trong cache
-// trước rồi mới tải bản mới về dùng cho lần sau. Giữ nguyên tên thì người đã
-// từng mở trang vẫn thấy ảnh cũ, và tăng số CACHE ở trên cũng không cứu được:
-// service worker cũ còn phục vụ cho tới khi bản mới kích hoạt, chưa kể cache
-// HTTP của trình duyệt hoạt động độc lập. Tên mới là URL mới nên không thể
-// trúng bản đệm cũ. (Đổi tên tệp – không phải thêm ?v= – vì query string bị
-// một số proxy và trình duyệt bỏ qua khi đối chiếu cache.)
-function putIfOk(req, res) {
-  if (res && res.ok && res.status === 200) {
-    const copy = res.clone();
-    caches.open(CACHE).then(c => c.put(req, copy));
+self.addEventListener('message', (event) => {
+  if (event.data?.type === 'SKIP_WAITING') self.skipWaiting();
+  if (event.data?.type === 'GET_VERSION') {
+    event.source?.postMessage({ type: 'SW_VERSION', version: VERSION });
   }
-  return res;
-}
+});
 
-self.addEventListener('fetch', e => {
-  if (e.request.method !== 'GET') return;
-  const url = new URL(e.request.url);
-  if (url.origin !== self.location.origin) return; // CDN/fonts: để trình duyệt tự xử lý
+self.addEventListener('fetch', (event) => {
+  const request = event.request;
+  if (request.method !== 'GET') return;
 
-  if (e.request.mode === 'navigate') {
-    e.respondWith(
-      fetch(e.request).then(res => putIfOk(e.request, res))
-        .catch(() => caches.match(e.request).then(hit => hit || caches.match('./index.html')))
-    );
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) return;
+
+  if (request.mode === 'navigate') {
+    event.respondWith(networkFirst(request, CACHES.pages, './offline.html'));
     return;
   }
 
-  const dest = e.request.destination;
-  if (dest === 'image') {
-    e.respondWith(
-      caches.match(e.request).then(hit => {
-        const net = fetch(e.request).then(res => putIfOk(e.request, res)).catch(() => hit);
-        return hit || net;
-      })
-    );
+  const destination = request.destination;
+
+  if (destination === 'style' || destination === 'script' || destination === 'font') {
+    event.respondWith(staleWhileRevalidate(request, CACHES.assets, MAX_ENTRIES.assets));
     return;
   }
-  if (dest === 'audio' || dest === 'video') {
-    e.respondWith(caches.match(e.request).then(hit => hit || fetch(e.request).then(res => putIfOk(e.request, res))));
+
+  if (destination === 'image') {
+    event.respondWith(staleWhileRevalidate(request, CACHES.assets, MAX_ENTRIES.assets));
     return;
   }
-  e.respondWith(caches.match(e.request).then(hit => hit || fetch(e.request).then(res => putIfOk(e.request, res))));
+
+  if (destination === 'audio' || destination === 'video') {
+    if (request.headers.has('range')) return;
+    event.respondWith(cacheFirst(request, CACHES.media, MAX_ENTRIES.media));
+    return;
+  }
+
+  event.respondWith(staleWhileRevalidate(request, CACHES.assets, MAX_ENTRIES.assets));
 });
