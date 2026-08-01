@@ -48,6 +48,7 @@ window.BIZON_AIBIS = Object.freeze({
   window.addEventListener('load', function () {
     const params = new URLSearchParams(window.location.search);
     loadScript('js/aibis-core.js')
+      .then(function () { return loadScript('js/aibis-context.js'); })
       .then(function () { return loadScript('js/aibis-parameters.js'); })
       .then(function () { return loadScript('js/aibis-parity.js'); })
       .then(function () { return loadScript('js/aibis-telemetry.js'); })
