@@ -7,7 +7,7 @@
  *  3. Settings → API: chép "Project URL" và "anon public" key vào 2 dòng dưới
  *  4. Đổi enabled thành true, commit & đẩy lên như thường lệ
  *
- * Khi enabled=false (mặc định) game hoạt động y hệt hiện tại – hoàn toàn offline.
+ * Khi enabled=false game hoạt động y hệt hiện tại – hoàn toàn offline.
  * anon key là khóa CÔNG KHAI theo thiết kế của Supabase; không bao giờ dán
  * service_role key vào đây. */
 window.BIZON_BACKEND = {
@@ -15,3 +15,39 @@ window.BIZON_BACKEND = {
   url: 'https://ceytblfelodpnudomccn.supabase.co',
   anonKey: 'sb_publishable_5FPpCma_dVUs05K4hvahzQ_Yeq0bLJt',
 };
+
+/* AIBIS foundation feature flags.
+ * Shadow mode runs a deterministic AIBIS model beside the legacy Go Global
+ * engine. It never changes visible scores and does not send research data.
+ */
+window.BIZON_AIBIS = Object.freeze({
+  enabled: true,
+  shadowMode: true,
+  uploadTelemetry: false,
+  engineVersion: '0.1.0'
+});
+
+(function loadAIBISFoundation() {
+  const config = window.BIZON_AIBIS;
+  const isGlobalPage = /(?:^|\/)global\.html$/.test(window.location.pathname);
+  if (!config.enabled || !config.shadowMode || !isGlobalPage) return;
+
+  function loadScript(src) {
+    return new Promise(function (resolve, reject) {
+      const script = document.createElement('script');
+      script.src = src;
+      script.async = false;
+      script.onload = resolve;
+      script.onerror = function () { reject(new Error('Cannot load ' + src)); };
+      document.head.appendChild(script);
+    });
+  }
+
+  window.addEventListener('load', function () {
+    loadScript('js/aibis-core.js')
+      .then(function () { return loadScript('js/aibis-adapter.js'); })
+      .catch(function (error) {
+        console.warn('[AIBIS] Foundation disabled:', error.message);
+      });
+  }, { once: true });
+})();
