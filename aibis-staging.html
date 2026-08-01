@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>AIBIS Staging — BizOn</title>
+  <meta name="description" content="AIBIS — AI Business Internationalization Simulator, private staging build.">
+  <link rel="icon" href="assets/icons/icon-192.png">
+  <link rel="stylesheet" href="css/bizon-fonts.css">
+  <link rel="stylesheet" href="css/aibis-staging.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html"><img src="assets/icons/icon-192.png" alt="BizOn"><span>BizOn <b>AIBIS</b></span></a>
+    <div class="top-actions"><span class="badge">PRIVATE STAGING</span><button id="btn-reset" class="ghost">Đặt lại</button></div>
+  </header>
+
+  <main class="shell">
+    <section class="hero panel">
+      <div>
+        <p class="eyebrow">AI Business Internationalization Simulator</p>
+        <h1>Đưa doanh nghiệp Việt Nam ra thị trường quốc tế</h1>
+        <p>Chọn năng lực xuất phát, thị trường, phương thức thâm nhập và ra quyết định qua bốn vòng. Engine xác định kết quả; AI chỉ hỗ trợ giải thích và phản tư.</p>
+      </div>
+      <div class="hero-score"><span>Readiness</span><strong id="readiness-score">—</strong><small>/100</small></div>
+    </section>
+
+    <section class="grid-2">
+      <article class="panel">
+        <div class="section-head"><div><p class="step">BƯỚC 1</p><h2>Hồ sơ doanh nghiệp</h2></div><span id="profile-status" class="status">Chưa hoàn tất</span></div>
+        <div class="form-grid">
+          <label>Tài chính<input id="p-financial" type="range" min="0" max="100" value="60"><output>60</output></label>
+          <label>Quản trị<input id="p-managerial" type="range" min="0" max="100" value="58"><output>58</output></label>
+          <label>Công nghệ<input id="p-technology" type="range" min="0" max="100" value="65"><output>65</output></label>
+          <label>Kinh nghiệm quốc tế<input id="p-experience" type="range" min="0" max="100" value="45"><output>45</output></label>
+          <label>Khả năng mở rộng sản phẩm<input id="p-scalability" type="range" min="0" max="100" value="65"><output>65</output></label>
+          <label>Mạng lưới đối tác<input id="p-network" type="range" min="0" max="100" value="50"><output>50</output></label>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="section-head"><div><p class="step">BƯỚC 2</p><h2>Ngữ cảnh pilot</h2></div><span class="status info">Không định danh</span></div>
+        <div class="context-grid">
+          <label>Scenario seed<input id="ctx-seed" value="CTU-IB-2026-A"></label>
+          <label>Mã lớp<input id="ctx-class" value="IB01"></label>
+          <label>Mã đội<input id="ctx-team" value="T01"></label>
+        </div>
+        <label class="consent"><input id="ctx-consent" type="checkbox"><span>Tôi đồng ý lưu dữ liệu quyết định ẩn danh cho pilot nghiên cứu. Không lưu tên, email, nội dung chat hoặc lời giải trình tự do.</span></label>
+      </article>
+    </section>
+
+    <section class="panel">
+      <div class="section-head"><div><p class="step">BƯỚC 3</p><h2>Chọn thị trường</h2></div><span id="market-selected" class="status">Chưa chọn</span></div>
+      <div id="market-grid" class="cards"></div>
+    </section>
+
+    <section class="panel">
+      <div class="section-head"><div><p class="step">BƯỚC 4</p><h2>Phương thức thâm nhập</h2></div><span id="mode-selected" class="status">Chưa chọn</span></div>
+      <div id="mode-grid" class="cards modes"></div>
+    </section>
+
+    <section class="panel simulator">
+      <div class="section-head"><div><p class="step">BƯỚC 5</p><h2>Vòng quyết định</h2></div><span class="round-pill">Vòng <b id="round-number">1</b>/4</span></div>
+      <div id="event-box" class="event-box"></div>
+      <div class="decision-grid">
+        <label>Giá bán<input id="d-price" type="range" min="6" max="24" value="12"><output>12</output></label>
+        <label>Marketing<input id="d-marketing" type="range" min="0" max="100" value="50"><output>50</output></label>
+        <label>Bản địa hóa<input id="d-localization" type="range" min="0" max="100" value="50"><output>50</output></label>
+      </div>
+      <div class="actions"><button id="btn-commit" class="primary">Cam kết quyết định</button><button id="btn-export-json" class="ghost">Xuất JSON</button><button id="btn-export-csv" class="ghost">Xuất CSV</button></div>
+      <p id="app-message" class="message" aria-live="polite"></p>
+    </section>
+
+    <section class="kpi-grid">
+      <article class="kpi"><span>Doanh thu</span><strong id="kpi-revenue">0</strong><small>USD</small></article>
+      <article class="kpi"><span>Lợi nhuận</span><strong id="kpi-profit">0</strong><small>USD</small></article>
+      <article class="kpi"><span>Thị phần</span><strong id="kpi-share">0</strong><small>%</small></article>
+      <article class="kpi"><span>Rủi ro</span><strong id="kpi-risk">30</strong><small>/100</small></article>
+      <article class="kpi"><span>DOI</span><strong id="kpi-doi">0</strong><small>/100</small></article>
+      <article class="kpi"><span>Học hỏi quốc tế</span><strong id="kpi-learning">0</strong><small>/100</small></article>
+    </section>
+
+    <section class="grid-2">
+      <article class="panel"><div class="section-head"><div><p class="step">LUMINA</p><h2>Phản tư chiến lược</h2></div></div><div id="mentor-box" class="mentor">Hãy hoàn thiện hồ sơ, chọn thị trường và phương thức thâm nhập.</div></article>
+      <article class="panel"><div class="section-head"><div><p class="step">AUDIT TRAIL</p><h2>Lịch sử quyết định</h2></div></div><div id="decision-log" class="log"><p>Chưa có quyết định.</p></div></article>
+    </section>
+  </main>
+
+  <footer>© 2026 Đỗ Thùy Hương &amp; Phan Anh Tú · AIBIS private staging · Không dùng cho tư vấn đầu tư thực tế.</footer>
+
+  <script src="js/aibis-core.js"></script>
+  <script src="js/aibis-context.js"></script>
+  <script src="js/aibis-parameters.js"></script>
+  <script src="js/aibis-parity.js"></script>
+  <script src="js/aibis-staging-app.js"></script>
+</body>
+</html>
