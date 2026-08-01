@@ -84,16 +84,16 @@ function pickRole(id) {
 
 // ---------- Đội demo 5 nhân vật & 3 đối thủ đại diện ----------
 const DEMO_TEAM = [
-  { role: 'CEO', icon: '🧭', img: 'assets/character/team/ceo.jpg', name: 'Minh Long',  note: 'Nhà lãnh đạo tầm nhìn' },
+  { role: 'CEO', icon: '🧭', img: 'assets/character/team/ceo.webp', name: 'Minh Long',  note: 'Nhà lãnh đạo tầm nhìn' },
   { role: 'CFO', icon: '💰', img: 'assets/character/team/cfo.jpg', name: 'Thu Hà',     note: 'Chiến lược gia tài chính' },
-  { role: 'CMO', icon: '📣', img: 'assets/character/team/cmo.jpg', name: 'Lan Chi',    note: 'Phù thủy marketing' },
-  { role: 'COO', icon: '🏭', img: 'assets/character/team/coo.jpg', name: 'Bảo Ngọc',   note: 'Chuyên gia vận hành' },
-  { role: 'SEC', icon: '📝', img: 'assets/character/team/sec.jpg', name: 'Gia Hân',    note: 'Thư ký pháp chế' },
+  { role: 'CMO', icon: '📣', img: 'assets/character/team/cmo.webp', name: 'Lan Chi',    note: 'Phù thủy marketing' },
+  { role: 'COO', icon: '🏭', img: 'assets/character/team/coo.webp', name: 'Bảo Ngọc',   note: 'Chuyên gia vận hành' },
+  { role: 'SEC', icon: '📝', img: 'assets/character/team/sec.webp', name: 'Gia Hân',    note: 'Thư ký pháp chế' },
 ];
 const AI_OPPONENTS = [
-  { name: 'Alpha Dynamics', icon: '🐺', img: 'assets/character/rivals/alpha.png', accent: '#e8762d', motto: 'Tăng trưởng thần tốc, lấy số lượng đè lợi nhuận', weakness: 'Biên lợi nhuận cực mỏng, đốt vốn nhanh – dễ hụt hơi trong cuộc chiến dài hơi.', style: 'Giá rẻ tốc chiến',   play: 'Giá ~125k · marketing ~90tr mỗi vòng (dao động ±12%)', counter: 'Đừng đua giá tận đáy – giữ biên lợi nhuận, xây thương hiệu để giữ khách trung thành.' },
-  { name: 'Mekong Ventures', icon: '🐘', img: 'assets/character/rivals/mekong.png', accent: '#00a0c8', motto: 'Chậm mà chắc, bám rễ niềm tin địa phương', weakness: 'Trung thành với truyền thống nên phản ứng chậm trước biến động công nghệ và thị trường.', style: 'Cân bằng chắc chắn', play: 'Giá ~150k · marketing ~60tr – ổn định như đồng bằng', counter: 'Vượt mặt bằng R&D và biến cố: họ ít khi phản ứng nhanh với thị trường.' },
-  { name: 'Star Clay Co.',   icon: '🦚', img: 'assets/character/rivals/star.png', accent: '#5a32a3', motto: 'Sang trọng trong từng chi tiết, bán sự khan hiếm', weakness: 'Chi phí sản xuất thủ công cao – khó mở rộng quy mô nhanh, dễ nghẽn sản lượng.', style: 'Cao cấp thương hiệu', play: 'Giá ~195k · marketing ~75tr – đánh phân khúc sang', counter: 'Chiếm phân khúc phổ thông họ bỏ ngỏ, hoặc đấu trực diện bằng chất lượng + ESG.' },
+  { name: 'Alpha Dynamics', icon: '🐺', img: 'assets/character/rivals/alpha.webp', accent: '#e8762d', motto: 'Tăng trưởng thần tốc, lấy số lượng đè lợi nhuận', weakness: 'Biên lợi nhuận cực mỏng, đốt vốn nhanh – dễ hụt hơi trong cuộc chiến dài hơi.', style: 'Giá rẻ tốc chiến',   play: 'Giá ~125k · marketing ~90tr mỗi vòng (dao động ±12%)', counter: 'Đừng đua giá tận đáy – giữ biên lợi nhuận, xây thương hiệu để giữ khách trung thành.' },
+  { name: 'Mekong Ventures', icon: '🐘', img: 'assets/character/rivals/mekong.webp', accent: '#00a0c8', motto: 'Chậm mà chắc, bám rễ niềm tin địa phương', weakness: 'Trung thành với truyền thống nên phản ứng chậm trước biến động công nghệ và thị trường.', style: 'Cân bằng chắc chắn', play: 'Giá ~150k · marketing ~60tr – ổn định như đồng bằng', counter: 'Vượt mặt bằng R&D và biến cố: họ ít khi phản ứng nhanh với thị trường.' },
+  { name: 'Star Clay Co.',   icon: '🦚', img: 'assets/character/rivals/star.webp', accent: '#5a32a3', motto: 'Sang trọng trong từng chi tiết, bán sự khan hiếm', weakness: 'Chi phí sản xuất thủ công cao – khó mở rộng quy mô nhanh, dễ nghẽn sản lượng.', style: 'Cao cấp thương hiệu', play: 'Giá ~195k · marketing ~75tr – đánh phân khúc sang', counter: 'Chiếm phân khúc phổ thông họ bỏ ngỏ, hoặc đấu trực diện bằng chất lượng + ESG.' },
 ];
 
 function doLoginDemo() {
@@ -302,7 +302,7 @@ const MANUAL = {
     <div class="clay-card p-4 mb-3 flex gap-3.5 items-start"><span class="w-9 h-9 shrink-0 rounded-full font-display font-extrabold flex items-center justify-center text-white" style="background:#00c4ff; box-shadow:0 3px 0 #0095c2">${i + 1}</span>
       <div><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p><p class="text-[11px] font-semibold text-amber-700 mt-1">${tip}</p></div></div>`).join('')}` },
   lumina: { icon: '🤖', name: 'Cố vấn AI Lumina', html: `
-    <div class="clay-card p-4 mb-4 flex gap-3 items-center"><img src="assets/character/lumina-vest.png" alt="" class="w-12 h-12 rounded-full object-cover" style="object-position:50% 14%"><p class="text-xs text-deep-teal/75">Hương là trợ lý AI cá nhân của đội – trò chuyện được bằng giọng nói tiếng Việt trong tab Lumina.</p></div>
+    <div class="clay-card p-4 mb-4 flex gap-3 items-center"><img src="assets/character/lumina-vest.webp" alt="" class="w-12 h-12 rounded-full object-cover" style="object-position:50% 14%"><p class="text-xs text-deep-teal/75">Hương là trợ lý AI cá nhân của đội – trò chuyện được bằng giọng nói tiếng Việt trong tab Lumina.</p></div>
     ${[['📊 Phân tích dữ liệu', 'Kịch bản tối ưu theo mục tiêu tài chính; mô phỏng "Nếu – Thì" trước khi Commit (2 lượt/vòng).'],
        ['🔮 Dự đoán thị trường', 'Cảnh báo rủi ro (đỏ/cam) hoặc cơ hội (xanh ngọc) theo từng vai trò CFO · COO · CMO · SEC.'],
        ['🛟 Phòng ngừa khủng hoảng', 'Kịch bản ứng phó khi thị trường biến động mạnh; lời khuyên khẩn cấp khi thanh khoản đỏ.']].map(([t, d]) => `
@@ -553,7 +553,7 @@ function maybeShowEventIntro() {
       </div>
       ${bad ? `
       <div class="clay-raised p-3 mt-3 flex items-center gap-3">
-        <img src="assets/character/anh-tu-ao-dai-work-cut.png" alt="Tú Phan" class="w-11 h-11 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 6%;background:#dbeef7">
+        <img src="assets/character/anh-tu-ao-dai-work-cut.webp" alt="Tú Phan" class="w-11 h-11 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 6%;background:#dbeef7">
         <p class="text-xs text-deep-teal/80 italic">"Bình tĩnh phân tích số liệu trước khi hành động – khủng hoảng luôn ẩn chứa cơ hội cho đội có kỷ luật." – <b class="text-emerald-700">Tú Phan · Cố vấn học thuật</b></p>
       </div>` : ''}
       <button id="ev-cta" class="clay-button-primary w-full text-white font-display font-bold text-lg py-4 mt-6">${ev.cta ? ev.cta.label : '🎯 Nhập quyết định'}</button>
@@ -581,7 +581,7 @@ function showVictory(r) {
   div.innerHTML = `
     <div class="max-w-md mx-auto px-6 py-8 text-center">
       <div class="clay-card overflow-hidden mb-4">
-        <img src="assets/character/lumina-ao-dai-clap.png" alt="Lumina chúc mừng" class="w-full h-64 object-cover" style="object-position:50% 15%">
+        <img src="assets/character/lumina-ao-dai-clap.webp" alt="Lumina chúc mừng" class="w-full h-64 object-cover" style="object-position:50% 15%">
       </div>
       <div class="clay-card p-4 mb-4 text-left">
         <p class="text-sm text-deep-teal italic">"Thật tuyệt vời thưa ${S.profile.role}! Chiến dịch vừa qua đã tạo nên một cú hích lịch sử. Chúng ta chính thức dẫn đầu thị trường với những con số ấn tượng!"</p>
@@ -600,7 +600,7 @@ function showVictory(r) {
         <div class="clay-card p-4"><p class="text-2xl">😊</p><p class="font-display font-extrabold text-deep-teal">${satisfaction}/5</p><p class="text-[10px] text-deep-teal/50 font-semibold">Độ hài lòng thương hiệu</p></div>
       </div>
       <div class="clay-raised p-3 mb-4 flex items-center gap-3 text-left">
-        <img src="assets/character/anh-tu-ao-dai-smile-cut.png" alt="Tú Phan" class="w-12 h-12 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 5%;background:#dbeef7">
+        <img src="assets/character/anh-tu-ao-dai-smile-cut.webp" alt="Tú Phan" class="w-12 h-12 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 5%;background:#dbeef7">
         <p class="text-xs text-deep-teal/80 italic">"Xuất sắc! Đây là minh chứng cho một chiến lược được thực thi kỷ luật." – <b class="text-emerald-700">Tú Phan</b></p>
       </div>
       <button id="vic-report" class="clay-btn w-full bg-deep-teal text-white font-display font-bold py-4 mb-3">📊 XEM BÁO CÁO CHI TIẾT</button>
@@ -765,7 +765,7 @@ function renderMarket() {
   const loyaltyPct = S.brandLoyalty, adEffPct = Math.min(100, Math.round(S.adEff * 8));
   body.innerHTML = `
     <div class="clay-card p-4 mb-3 border-l-4 border-primary-container flex gap-3 items-start">
-      <img src="assets/character/lumina-vest.png" alt="Cố vấn Hương" class="w-14 h-14 rounded-2xl object-cover shadow-clay shrink-0" style="object-position:50% 10%">
+      <img src="assets/character/lumina-vest.webp" alt="Cố vấn Hương" class="w-14 h-14 rounded-2xl object-cover shadow-clay shrink-0" style="object-position:50% 10%">
       <div>
         <p class="font-display font-bold text-deep-teal text-sm">Cố vấn Hương <span class="text-[9px] bg-primary-container text-white font-extrabold px-1.5 py-0.5 rounded ml-1">LIVE</span></p>
         <p class="text-xs text-deep-teal/80 italic mt-1">"${ev.tone === 'warn' && ev.id === 'EV_PRICEWAR'
@@ -1062,15 +1062,15 @@ function teamSuggestions() {
       say: tight ? `Thanh khoản đang căng (quick ratio ${S.quickRatio.toFixed(2)}). Em đề xuất giảm R&D về ${cfoRd}tr, ưu tiên giữ tiền mặt – cần thì vay ngắn hạn thay vì cắt marketing sát sàn.`
                  : `Két sắt ổn (${Math.round(S.balance)}tr). Em đề xuất R&D ${cfoRd}tr – biến cố tốt thì đầu tư cho vòng sau, đừng để tiền nằm im.`,
       apply: { 'in-rd': cfoRd } },
-    { img: 'assets/character/team/cmo.jpg', name: 'Lan Chi · CMO', icon: '📣',
+    { img: 'assets/character/team/cmo.webp', name: 'Lan Chi · CMO', icon: '📣',
       say: priceWar ? `Đối thủ đang phá giá! Em đề xuất giá ${cmoPrice}k + marketing ${cmoMkt}tr – mình không đua tận đáy nhưng phải giữ độ phủ.`
                     : `Với thương hiệu hiện tại, em đề xuất giá ${cmoPrice}k và marketing ${cmoMkt}tr${boom ? ' – biến cố này là thời cơ vàng để bung!' : ' – đủ áp lực lên cả ba đối thủ.'}`,
       apply: { 'in-price': cmoPrice, 'in-mkt': cmoMkt } },
-    { img: 'assets/character/team/coo.jpg', name: 'Bảo Ngọc · COO', icon: '🏭',
+    { img: 'assets/character/team/coo.webp', name: 'Bảo Ngọc · COO', icon: '🏭',
       say: energy ? `Khủng hoảng năng lượng – em đề xuất hạ sản lượng về ${cooProd.toLocaleString('vi-VN')} sp và ${cooWorkers} nhân công, chạy máy quá tải lúc này là đốt tiền điện.`
                   : `Công suất máy ${S.machineCapacity.toLocaleString('vi-VN')} sp – em đề xuất sản xuất ${cooProd.toLocaleString('vi-VN')} sp với ${cooWorkers} nhân công, chừa ~12% đệm cho bảo trì.`,
       apply: { 'in-prod': cooProd, 'in-workers': cooWorkers } },
-    { img: 'assets/character/team/sec.jpg', name: 'Gia Hân · SEC', icon: '📝',
+    { img: 'assets/character/team/sec.webp', name: 'Gia Hân · SEC', icon: '📝',
       say: `Tóm tắt cuộc họp: biến cố vòng này là «${ev.name || '–'}». ${ev.icon || ''} ${tight ? 'Ưu tiên số 1 theo CFO: an toàn dòng tiền. ' : ''}Em đã ghi biên bản – cả đội thống nhất xong thì CEO bấm Commit nhé!` },
   ];
 }
@@ -1090,7 +1090,7 @@ function renderTeamMeeting() {
   if (!S.teamMembers || S.finished || S.committed) { box.innerHTML = ''; return; }
   const sug = teamSuggestions();
   box.innerHTML = `<div class="clay-card p-4">
-    <img src="assets/illustrations/team-holo-meeting.jpg" alt="Đội ngũ nòng cốt họp chiến lược quanh bàn điều hành hologram" class="w-full h-28 object-cover rounded-2xl mb-3" style="object-position:50% 32%" loading="lazy">
+    <img src="assets/illustrations/team-holo-meeting.webp" alt="Đội ngũ nòng cốt họp chiến lược quanh bàn điều hành hologram" class="w-full h-28 object-cover rounded-2xl mb-3" style="object-position:50% 32%" loading="lazy">
     <p class="font-display font-bold text-deep-teal text-sm mb-1">🗣️ Cuộc họp đội – vòng ${S.round}</p>
     <p class="text-[10px] text-deep-teal/50 mb-3">4 thành viên đề xuất theo vai trò. Bạn là ${S.profile.role} – quyền quyết định cuối cùng vẫn thuộc về bạn.</p>
     ${sug.map((m, i) => `
@@ -1189,11 +1189,11 @@ function commitDecisions() {
 /* ===== ⚔️ ĐẤU TRƯỜNG – các nhân vật ra sàn đấu giành thị phần sau mỗi Commit ===== */
 const RIVAL_ICONS = { aggressive: '🐺', balanced: '🐘', premium: '🦚' };
 /* Khi có tạo hình người đất sét cho 3 đối thủ: đặt ảnh vào assets/character/rivals/ và điền đường dẫn */
-const RIVAL_IMGS = { aggressive: 'assets/character/rivals/alpha.png', balanced: 'assets/character/rivals/mekong.png', premium: 'assets/character/rivals/star.png' };
+const RIVAL_IMGS = { aggressive: 'assets/character/rivals/alpha.webp', balanced: 'assets/character/rivals/mekong.webp', premium: 'assets/character/rivals/star.webp' };
 function showArena(r, done) {
   const stop = CONQUEST_STOPS[r.round - 1];
   const fighters = [
-    { name: S.profile.teamName, share: r.share, me: true, img: 'assets/character/team/ceo.jpg', pos: 'bottom' },
+    { name: S.profile.teamName, share: r.share, me: true, img: 'assets/character/team/ceo.webp', pos: 'bottom' },
     ...S.competitors.map((c, i) => ({ name: c.name, share: c.share || 25, icon: RIVAL_ICONS[c.style] || '🤖',
       img: RIVAL_IMGS[c.style], pos: ['top', 'left', 'right'][i] })),
   ];
@@ -1218,7 +1218,7 @@ function showArena(r, done) {
       <div class="relative mx-auto" style="width:min(96vw,376px); height:min(54vh,392px)">
         <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" style="height:100%; aspect-ratio:768/1376">
           <div class="w-full h-full" style="-webkit-mask-image:linear-gradient(to bottom, transparent 0, #000 3%, #000 97%, transparent 100%); mask-image:linear-gradient(to bottom, transparent 0, #000 3%, #000 97%, transparent 100%)">
-            <img src="assets/illustrations/arena-vietnam-map.png" alt="Bản đồ Việt Nam – sàn đấu giành thị phần" class="w-full h-full object-contain" style="-webkit-mask-image:linear-gradient(to right, transparent 0, #000 3%, #000 97%, transparent 100%); mask-image:linear-gradient(to right, transparent 0, #000 3%, #000 97%, transparent 100%)">
+            <img src="assets/illustrations/arena-vietnam-map.webp" alt="Bản đồ Việt Nam – sàn đấu giành thị phần" class="w-full h-full object-contain" style="-webkit-mask-image:linear-gradient(to right, transparent 0, #000 3%, #000 97%, transparent 100%); mask-image:linear-gradient(to right, transparent 0, #000 3%, #000 97%, transparent 100%)">
           </div>
           ${pin}
         </div>
@@ -1397,7 +1397,7 @@ function renderConquest() {
 
 // ---------- Giới thiệu game (Intro – hành trình chinh phục) ----------
 const INTRO_SLIDES = [
-  { icon: '🇻🇳', title: 'Việt Nam 2026', img: 'assets/illustrations/hero-vietnam-2026.png',
+  { icon: '🇻🇳', title: 'Việt Nam 2026', img: 'assets/illustrations/hero-vietnam-2026.webp',
     text: 'Nền kinh tế đang vươn mình "Hóa Rồng". Đội của bạn điều hành một công ty đồ chơi đất sét – khởi nghiệp từ Miền Tây, khát vọng mở rộng cả thị trường nội địa và quốc tế.' },
   { icon: '🏺', title: 'Doanh nghiệp & sản phẩm của bạn',
     text: 'Bạn điều hành một xưởng đồ chơi đất sét thủ công tại Cần Thơ, vốn khởi điểm 500 triệu ₫. Sản phẩm chủ lực: «Bộ linh vật đất sét Việt» – dòng quà tặng & đồ sưu tầm, giá tham chiếu 150.000₫/bộ. Tên doanh nghiệp chính là tên đội bạn đặt khi đăng nhập!' },
@@ -1502,7 +1502,7 @@ function runWhatIf(role) {
         <span class="text-deep-teal/60">${m.label}</span>
         <span class="font-bold ${m.bad ? 'text-red-600' : 'text-deep-teal'}">${m.value}</span></div>`).join('')}
       <div class="flex gap-2 items-start mt-2.5">
-        <img src="assets/character/lumina-vest.png" alt="Lumina" class="w-8 h-8 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 12%">
+        <img src="assets/character/lumina-vest.webp" alt="Lumina" class="w-8 h-8 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 12%">
         <p class="text-xs text-deep-teal/80 italic">"${r.msg}"</p>
       </div>
       <p class="text-[10px] text-deep-teal/40 mt-2 text-right">Còn ${Math.max(0, WHAT_IF_LIMIT - S.whatIfUsed)} lượt mô phỏng trong vòng này</p>
@@ -1632,7 +1632,7 @@ function pushLumina(advice) {
   const el = document.createElement('div');
   el.className = 'flex gap-3 items-start max-w-[92%]';
   el.innerHTML = `
-    <img src="assets/character/lumina-vest.png" alt="Lumina" class="w-9 h-9 shrink-0 rounded-full object-cover shadow-clay" style="object-position:50% 12%">
+    <img src="assets/character/lumina-vest.webp" alt="Lumina" class="w-9 h-9 shrink-0 rounded-full object-cover shadow-clay" style="object-position:50% 12%">
     <div class="clay-bubble-in p-4 flex-1">
       <span class="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full mb-1.5 risk-${advice.risk}">${riskLabel}</span>
       <p class="text-sm text-deep-teal">${advice.text}</p>
@@ -1848,7 +1848,7 @@ function renderCashReport(body) {
       </div>
     </div>
     <div class="clay-card p-4 bg-primary-container/10 flex gap-3 items-start">
-      <img src="assets/character/lumina-vest.png" alt="Mentor Hương" class="w-10 h-10 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 12%">
+      <img src="assets/character/lumina-vest.webp" alt="Mentor Hương" class="w-10 h-10 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 12%">
       <div><p class="font-display font-bold text-primary text-sm">Mentor Hương</p>
       <p class="text-xs text-deep-teal/80 italic mt-0.5">"${last.net >= 0
         ? 'Dòng tiền thuần dương – nền tảng tốt! Hãy cân nhắc tái đầu tư vào R&D hoặc nâng cấp dây chuyền để lãi kép ở các vòng sau.'
@@ -1884,7 +1884,7 @@ function renderRivalCostReport(body) {
 
   // --- Băng ghế tổng chi phí: 4 cột xếp từ thấp đến cao, đội bạn nổi bật ---
   const bench = [
-    { name: S.profile.teamName, cost: Math.round(myCost), me: true, img: 'assets/character/team/ceo.jpg' },
+    { name: S.profile.teamName, cost: Math.round(myCost), me: true, img: 'assets/character/team/ceo.webp' },
     ...rivals.map(x => ({ name: x.name, cost: x.cost, img: RIVAL_IMGS[x.style] })),
   ].sort((a, b) => a.cost - b.cost);
   const maxCost = Math.max(...bench.map(b => b.cost), 1);
@@ -1894,7 +1894,7 @@ function renderRivalCostReport(body) {
 
   // --- Marketing: chi thật của từng đối thủ vòng này ---
   const mktRows = [
-    { name: S.profile.teamName, mkt: last.marketing, me: true, img: 'assets/character/team/ceo.jpg' },
+    { name: S.profile.teamName, mkt: last.marketing, me: true, img: 'assets/character/team/ceo.webp' },
     ...rivals.map(x => ({ name: x.name, mkt: x.mkt, img: RIVAL_IMGS[x.style] })),
   ].sort((a, b) => b.mkt - a.mkt);
   const maxMkt = Math.max(...mktRows.map(m => m.mkt), 1);
@@ -2006,7 +2006,7 @@ function renderRivalCostReport(body) {
       </div>`).join('')}
     </div>
     <div class="clay-card p-4 bg-primary-container/10 flex gap-3 items-start">
-      <img src="assets/character/lumina-vest.png" alt="Mentor Hương" class="w-10 h-10 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 12%">
+      <img src="assets/character/lumina-vest.webp" alt="Mentor Hương" class="w-10 h-10 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 12%">
       <div><p class="font-display font-bold text-primary text-sm">Mentor Hương · Tình báo cạnh tranh</p>
       <p class="text-xs text-deep-teal/80 italic mt-0.5">"${insight}"</p></div>
     </div>`;
@@ -2035,7 +2035,7 @@ function renderSeasonReport(body) {
   }));
   const teamCostTotal = rounds.reduce((a, r) => a + r.revenue - r.netProfit, 0);
   const ranking = [
-    { name: S.profile.teamName, me: true, img: 'assets/character/team/ceo.jpg',
+    { name: S.profile.teamName, me: true, img: 'assets/character/team/ceo.webp',
       share: shareLast, growth, profit: Math.round(totalProfit),
       roi: Math.round(1000 * totalProfit / Math.max(1, teamCostTotal)) / 10 },
     ...Object.values(agg).map(a => ({ name: a.name, img: RIVAL_IMGS[a.style],
@@ -2154,7 +2154,7 @@ function renderSeasonReport(body) {
       </div>
     </div>` : ''}
     <div class="clay-card p-4 bg-primary-container/10 flex gap-3 items-start">
-      <img src="assets/character/lumina-vest-thumbsup.png" alt="Mentor Hương" class="w-10 h-10 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 10%">
+      <img src="assets/character/lumina-vest-thumbsup.webp" alt="Mentor Hương" class="w-10 h-10 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 10%">
       <div><p class="font-display font-bold text-primary text-sm">Mentor Hương · Tổng kết mùa giải</p>
       <p class="text-xs text-deep-teal/80 italic mt-0.5">"${verdict}"</p></div>
     </div>`;
@@ -2478,7 +2478,7 @@ function renderEnergyReport(body) {
       </div>`).join('')}
     <div class="clay-card p-4 mb-3 bg-primary-container/10">
       <div class="flex gap-3 items-start">
-        <img src="assets/character/lumina-vest.png" alt="Lumina" class="w-10 h-10 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 12%">
+        <img src="assets/character/lumina-vest.webp" alt="Lumina" class="w-10 h-10 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 12%">
         <div>
           <p class="text-sm"><span class="font-display font-extrabold lumina-name">Lumina AI</span> <span class="signature text-base text-deep-teal">Je m'appelle Hương</span></p>
           <p class="text-sm text-deep-teal/80 italic mt-1">"${worst.upgraded
@@ -3003,7 +3003,7 @@ function runAdvisorPro() {
   const riskClass = { low: 'risk-low', medium: 'risk-medium', high: 'risk-high' };
   $('ap-result').innerHTML = `
     <div class="clay-card p-4 mb-3 flex items-center gap-3">
-      <img src="assets/character/lumina-vest.png" alt="Lumina" class="w-10 h-10 rounded-full object-cover shadow-clay" style="object-position:50% 12%">
+      <img src="assets/character/lumina-vest.webp" alt="Lumina" class="w-10 h-10 rounded-full object-cover shadow-clay" style="object-position:50% 12%">
       <p class="text-sm text-deep-teal">Biên lợi nhuận hiện tại của bạn là <b>${r.marginPct}%</b> – ${r.healthy ? 'nền tảng tốt để mở rộng! 💪' : 'hơi mỏng, nên tối ưu chi phí trước khi tăng tốc. ⚠️'}</p>
     </div>
     ${r.scenarios.map(sc => `
