@@ -1,0 +1,21 @@
+name: AIBIS Entry Mode Engine
+on:
+  pull_request:
+    paths:
+      - 'js/aibis/entry-mode-engine.js'
+      - 'js/aibis/entry-mode-models.js'
+      - 'test/aibis-entry-mode-engine.test.js'
+      - 'docs/architecture/AIBIS-ENTRY-MODE-MODEL-CARD.md'
+  push:
+    branches: ['feat/aibis-entry-mode-engine']
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node --check js/aibis/entry-mode-engine.js
+      - run: node --check js/aibis/entry-mode-models.js
+      - run: node test/aibis-entry-mode-engine.test.js
