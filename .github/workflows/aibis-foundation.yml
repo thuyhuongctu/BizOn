@@ -38,6 +38,9 @@ jobs:
       - name: Run AIBIS core tests
         run: node test/aibis-core.test.js
 
+      - name: Run AIBIS context tests
+        run: node test/aibis-context.test.js
+
       - name: Run AIBIS telemetry tests
         run: node test/aibis-telemetry.test.js
 
@@ -46,6 +49,7 @@ jobs:
 
       - name: Syntax-check AIBIS browser modules
         run: |
+          node --check js/aibis-context.js
           node --check js/aibis-adapter.js
           node --check js/aibis-diagnostics.js
           node --check js/aibis-research-ui.js
