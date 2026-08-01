@@ -9,6 +9,12 @@
     try { return fn(); } catch (_) { return fallback; }
   }
 
+  function escapeHtml(text) {
+    return String(text).replace(/[&<>"']/g, function (ch) {
+      return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch];
+    });
+  }
+
   function render() {
     const shadow = window.BizOnAIBISShadow;
     if (!shadow) return;
@@ -29,7 +35,7 @@
       '<strong>AIBIS PRIVATE DIAGNOSTICS</strong>',
       '<button id="aibis-diag-close" type="button" style="background:#16343d;color:#fff;border:0;border-radius:8px;padding:4px 8px">×</button>',
       '</div>',
-      '<p style="opacity:.72;margin:6px 0">Không ảnh hưởng điểm hiển thị · không upload telemetry</p>',
+      '<p style="opacity:.72;margin:6px 0">Không ảnh hưởng điểm hiển thị · telemetry mặc định tắt</p>',
       '<pre style="white-space:pre-wrap;margin:0">' + escapeHtml(JSON.stringify({
         engine: state && state.engineVersion,
         seed: state && state.seed,
@@ -45,13 +51,7 @@
     document.getElementById('aibis-diag-close').addEventListener('click', function () { panel.remove(); });
   }
 
-  function escapeHtml(text) {
-    return String(text).replace(/[&<>"']/g, function (ch) {
-      return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch];
-    });
-  }
-
-  window.addEventListener('aibis:updated', render);
+  window.addEventListener('bizon:aibis-shadow-round', render);
   window.addEventListener('load', function () {
     let tries = 0;
     const timer = setInterval(function () {
