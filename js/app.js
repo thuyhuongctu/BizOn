@@ -1218,7 +1218,7 @@ function showArena(r, done) {
       <div class="relative mx-auto" style="width:min(96vw,376px); height:min(54vh,392px)">
         <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" style="height:100%; aspect-ratio:768/1376">
           <div class="w-full h-full" style="-webkit-mask-image:linear-gradient(to bottom, transparent 0, #000 3%, #000 97%, transparent 100%); mask-image:linear-gradient(to bottom, transparent 0, #000 3%, #000 97%, transparent 100%)">
-            <img src="assets/illustrations/arena-vietnam-map.webp" alt="Bản đồ Việt Nam – sàn đấu giành thị phần" class="w-full h-full object-contain" style="-webkit-mask-image:linear-gradient(to right, transparent 0, #000 3%, #000 97%, transparent 100%); mask-image:linear-gradient(to right, transparent 0, #000 3%, #000 97%, transparent 100%)">
+            <img src="assets/illustrations/arena-vietnam-map-v2.webp" alt="Bản đồ Việt Nam – sàn đấu giành thị phần" class="w-full h-full object-contain" style="-webkit-mask-image:linear-gradient(to right, transparent 0, #000 3%, #000 97%, transparent 100%); mask-image:linear-gradient(to right, transparent 0, #000 3%, #000 97%, transparent 100%)">
           </div>
           ${pin}
         </div>

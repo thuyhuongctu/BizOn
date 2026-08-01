@@ -1,7 +1,7 @@
 /* BizOn Bật Nghiệp 2026 – Service Worker (offline app shell)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
 
-const CACHE = 'bizon-v218';
+const CACHE = 'bizon-v219';
 const SHELL = [
   './',
   './index.html',
@@ -58,7 +58,7 @@ const SHELL = [
   './assets/character/lumina-vest-worried.webp',
   './assets/character/lumina-vest-thumbsup.webp',
   './assets/illustrations/hero-vietnam-2026.webp',
-  './assets/illustrations/arena-vietnam-map.webp',
+  './assets/illustrations/arena-vietnam-map-v2.webp',
   './assets/illustrations/giai-dieu-bizon.webp',
   './assets/illustrations/thuyen-sen-khoi-hanh.webp',
   './assets/character/advisors/lumina-nghe-nhac-dung-cut.webp',
@@ -142,6 +142,15 @@ self.addEventListener('activate', e => {
 //  - Ảnh: stale-while-revalidate (trả cache ngay, cập nhật nền)
 //  - Audio/video: cache-on-demand (không cache phản hồi 206 Range)
 //  - JS/CSS/font/còn lại: cache-first theo phiên bản CACHE, lỗi mạng thì báo lỗi thật
+//
+// QUY TẮC KHI SỬA NỘI DUNG MỘT TẤM ẢNH: phải ĐỔI TÊN TỆP, ví dụ thêm hậu tố
+// "-v2". Ảnh dùng stale-while-revalidate nên trình duyệt trả bản trong cache
+// trước rồi mới tải bản mới về dùng cho lần sau. Giữ nguyên tên thì người đã
+// từng mở trang vẫn thấy ảnh cũ, và tăng số CACHE ở trên cũng không cứu được:
+// service worker cũ còn phục vụ cho tới khi bản mới kích hoạt, chưa kể cache
+// HTTP của trình duyệt hoạt động độc lập. Tên mới là URL mới nên không thể
+// trúng bản đệm cũ. (Đổi tên tệp – không phải thêm ?v= – vì query string bị
+// một số proxy và trình duyệt bỏ qua khi đối chiếu cache.)
 function putIfOk(req, res) {
   if (res && res.ok && res.status === 200) {
     const copy = res.clone();
