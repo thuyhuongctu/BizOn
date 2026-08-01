@@ -16,6 +16,21 @@
      nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
 <link rel="stylesheet" href="css/bizon-fonts.css">
 <style>
+  /* Bản đồ vùng kinh tế: nhãn là chữ thật chồng lên ảnh chứ không nung vào ảnh,
+     nên nút VI/EN đổi được và trình đọc màn hình đọc được. Toạ độ tính theo phần
+     trăm khung nên nhãn bám đúng chỗ ở mọi khổ màn hình. Cỡ chữ theo cqw để nhãn
+     co giãn cùng ảnh thay vì cùng khổ màn hình. */
+  .vn-map { position:relative; container-type:inline-size; }
+  .vn-map__lb {
+    position:absolute; transform:translate(-50%,-50%); text-align:center;
+    font-family:'Manrope','Manrope Fallback',sans-serif; font-weight:800;
+    font-size:clamp(9px, 4.6cqw, 15px); line-height:1.15; color:#fff;
+    text-shadow:0 1px 3px rgba(0,0,0,.65), 0 0 10px rgba(0,0,0,.45);
+    pointer-events:none; white-space:nowrap;
+  }
+  .vn-map__lb--wide { white-space:normal; width:34cqw; }
+  .vn-map__lb--right { transform:translate(-100%,-50%); }
+  .vn-map__lb--sea { font-style:italic; letter-spacing:.01em; }
   html { background:#f4faff; scroll-behavior:smooth; }
   body { font-family:'Manrope', 'Manrope Fallback',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
   .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
@@ -208,10 +223,17 @@
     <h2 class="font-display font-extrabold text-deep-teal text-xl text-center">🗺️ Hành trình chinh phục Việt Nam</h2>
     <p class="text-xs text-deep-teal/55 text-center mt-1.5 max-w-2xl mx-auto">Sáu vòng, sáu vùng kinh tế. Thắng thị phần vòng nào thì cắm cờ doanh nghiệp lên vùng đó – từ Cần Thơ ngược ra Hà Nội. Đây đúng là tấm bản đồ hiện trong ván chơi.</p>
     <div class="grid sm:grid-cols-2 gap-6 items-center mt-5">
-      <figure class="max-w-xs w-full mx-auto">
+      <figure class="vn-map max-w-xs w-full mx-auto">
         <img src="assets/illustrations/arena-vietnam-map.webp" width="768" height="1376" loading="lazy" decoding="async"
              class="w-full h-auto rounded-2xl shadow-xl"
-             alt="Bản đồ đất sét ba chiều của Việt Nam: miền Bắc, miền Trung, Tây Nguyên, Nam Bộ và đồng bằng sông Cửu Long, kèm hai quần đảo Hoàng Sa và Trường Sa ngoài khơi.">
+             alt="Bản đồ đất sét ba chiều của Việt Nam chia theo vùng kinh tế, kèm hai quần đảo Hoàng Sa và Trường Sa ngoài khơi.">
+        <span class="vn-map__lb" style="left:73.3%; top:10.2%">Miền Bắc</span>
+        <span class="vn-map__lb vn-map__lb--sea" style="left:84.0%; top:28.9%">Hoàng Sa</span>
+        <span class="vn-map__lb" style="left:36.8%; top:40.0%">Miền Trung</span>
+        <span class="vn-map__lb" style="left:49.9%; top:61.4%">Tây Nguyên</span>
+        <span class="vn-map__lb vn-map__lb--wide" style="left:24.5%; top:74.3%">Đồng bằng sông Cửu Long</span>
+        <span class="vn-map__lb" style="left:60.0%; top:86.0%">Nam Bộ</span>
+        <span class="vn-map__lb vn-map__lb--sea vn-map__lb--right" style="left:97.0%; top:81.0%">Trường Sa</span>
       </figure>
       <ol class="space-y-2.5 text-sm">
         <li class="flex items-baseline gap-2"><b class="font-display font-extrabold text-primary shrink-0">V1</b><span class="font-bold text-deep-teal">Cần Thơ</span><span class="text-[10px] text-deep-teal/45 ml-auto text-right">Đồng bằng sông Cửu Long</span></li>
