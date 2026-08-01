@@ -57,9 +57,9 @@
   --backdrop:   var(--pearl);
 
   /* --- Chữ --- */
-  --font-display: 'DM Serif Display', Georgia, 'Times New Roman', serif;
-  --font-ui:      'Manrope', system-ui, -apple-system, sans-serif;
-  --font-mono:    'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-display: 'DM Serif Display', 'DM Serif Display Fallback', Georgia, 'Times New Roman', serif;
+  --font-ui:      'Manrope', 'Manrope Fallback', system-ui, -apple-system, sans-serif;
+  --font-mono:    'IBM Plex Mono', 'IBM Plex Mono Fallback', ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* Thang chữ – co giãn theo bề rộng, chặn hai đầu bằng clamp */
   --t-hero:  clamp(2.4rem, 1.1rem + 4.4vw, 4.6rem);

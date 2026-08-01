@@ -55,7 +55,7 @@
         ${below ? `top:${Math.min(innerHeight - 240, top + h + 14)}px` : `bottom:${Math.max(16, innerHeight - top + 14)}px`};
         width:min(92vw, 360px); padding:18px 18px 14px; z-index:1; text-align:left">
         <div style="display:flex; gap:10px; align-items:center; margin-bottom:6px">
-          <img src="assets/character/lumina-vest.png" alt="" style="width:38px; height:38px; border-radius:999px; object-fit:cover; object-position:50% 12%">
+          <img src="assets/character/lumina-vest.webp" alt="" style="width:38px; height:38px; border-radius:999px; object-fit:cover; object-position:50% 12%">
           <p class="font-display font-extrabold text-deep-teal" style="font-size:15px">${step.title}</p>
         </div>
         <p class="text-deep-teal/75" style="font-size:12.5px; line-height:1.55">${step.text}</p>

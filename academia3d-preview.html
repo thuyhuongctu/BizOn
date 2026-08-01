@@ -7,17 +7,14 @@
   <meta name="description" content="BizOn Academia 3D — premium academic homepage redesign preview for the BizOn business simulation ecosystem.">
   <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Phong nap khong chan hien thi: media="print" -> onload doi ve "all".
-     Neu Google Fonts cham hoac bi chan, trang van hien ngay bang phong du phong. -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap"></noscript>
-  <link rel="stylesheet" href="css/tw.css">
+<!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
+     nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
+<link rel="stylesheet" href="css/bizon-fonts.css">
+<link rel="stylesheet" href="css/tw.css">
   <link rel="stylesheet" href="css/bizon-academia3d.css">
   <style>
     *{box-sizing:border-box}
-    body{margin:0;font-family:Manrope,system-ui,sans-serif}
+    body{margin:0;font-family:Manrope, 'Manrope Fallback',system-ui,sans-serif}
     a{text-decoration:none;color:inherit}
     .page-shell{width:min(1180px,calc(100% - 32px));margin:0 auto}
     .nav-inner{min-height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;gap:18px}
@@ -39,14 +36,14 @@
     .product-link{display:inline-flex;margin-top:20px;font-size:.82rem;font-weight:800;color:var(--bizon-teal-600)}
     .academic-flow{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px;margin-top:28px;align-items:center}
     .flow-node{min-height:112px;padding:18px 12px;border:1px solid var(--bizon-border);border-radius:20px;background:rgba(255,255,255,.68);display:flex;flex-direction:column;justify-content:center;text-align:center;box-shadow:0 14px 38px rgba(7,29,58,.06)}
-    .flow-node strong{font-family:'DM Serif Display',Georgia,serif;font-size:1.08rem;color:var(--bizon-navy-950)}
+    .flow-node strong{font-family:'DM Serif Display', 'DM Serif Display Fallback',Georgia,serif;font-size:1.08rem;color:var(--bizon-navy-950)}
     .flow-node span{margin-top:5px;font-size:.68rem;line-height:1.45;color:rgba(7,29,58,.58)}
     .flow-arrow{text-align:center;color:var(--bizon-gold);font-weight:800}
     .profile-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:24px;align-items:stretch;margin-top:28px}
     .profile-card,.sound-card{border:1px solid var(--bizon-border);border-radius:28px;background:rgba(255,255,255,.66);box-shadow:0 18px 52px rgba(7,29,58,.08)}
     .profile-card{display:grid;grid-template-columns:170px 1fr;gap:24px;padding:22px}
     .profile-card img{width:170px;height:210px;object-fit:cover;object-position:50% 18%;border-radius:22px}
-    .profile-card h3{margin:4px 0 2px;font-family:'DM Serif Display',Georgia,serif;font-size:2rem;color:var(--bizon-navy-950)}
+    .profile-card h3{margin:4px 0 2px;font-family:'DM Serif Display', 'DM Serif Display Fallback',Georgia,serif;font-size:2rem;color:var(--bizon-navy-950)}
     .profile-card p{font-size:.88rem;line-height:1.65;color:rgba(7,29,58,.68)}
     .profile-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
     .profile-links a{padding:7px 9px;border-radius:999px;border:1px solid var(--bizon-border);font-size:.69rem;font-weight:800;background:rgba(255,255,255,.7)}
@@ -239,7 +236,7 @@
         </article>
         <aside class="sound-card">
           <span class="academia-eyebrow">Immersive learning layer</span>
-          <h3 style="font-family:'DM Serif Display',Georgia,serif;font-size:2rem;margin:8px 0;color:var(--bizon-navy-950)">Soundtrack for deeper learning.</h3>
+          <h3 style="font-family:'DM Serif Display', 'DM Serif Display Fallback',Georgia,serif;font-size:2rem;margin:8px 0;color:var(--bizon-navy-950)">Soundtrack for deeper learning.</h3>
           <p style="margin:0;color:rgba(7,29,58,.66);font-size:.88rem;line-height:1.6">Brand Passport OST · From the Mekong · Across the Markets · Vietnam to the World</p>
           <div class="wave" aria-hidden="true"></div>
           <a class="academia-btn academia-btn-secondary" href="am-nhac.html" style="align-self:flex-start">Open BizOn Soundtrack →</a>
