@@ -11,15 +11,12 @@
 <script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
 <script src="js/backend-config.js"></script>
 <script src="js/error-log.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Phong nap khong chan hien thi: media="print" -> onload doi ve "all".
-     Neu Google Fonts cham hoac bi chan, trang van hien ngay bang phong du phong. -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"></noscript>
+<!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
+     nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
+<link rel="stylesheet" href="css/bizon-fonts.css">
 <style>
   html { background:#f4faff; scroll-behavior:smooth; }
-  body { font-family:'Manrope',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
+  body { font-family:'Manrope', 'Manrope Fallback',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
   .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
   .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease; }
   .clay-btn:active { transform:translateY(2px); }
@@ -42,7 +39,7 @@
 <meta property="og:title" content="Tham gia nhóm – BizOn Bật Nghiệp">
 <meta property="og:description" content="Gia nhập nhóm khởi nghiệp BizOn: văn hóa làm việc, các vị trí cộng tác đang mở – lập trình web, họa sĩ claymorphism, sản xuất âm nhạc, giảng viên thử nghiệm và dịch thuật.">
 <meta property="og:url" content="https://thuyhuongctu.github.io/BizOn/tuyen-dung.html">
-<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/og/og-cover.jpg">
+<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/og/og-cover.webp">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -122,7 +119,7 @@
 
   <!-- CTA -->
   <section class="clay-card p-8 text-center">
-    <img src="assets/character/team/lineup.jpg" alt="Đội Demo Bật Nghiệp" class="w-full max-w-xl mx-auto rounded-2xl mb-5" loading="lazy">
+    <img src="assets/character/team/lineup.webp" alt="Đội Demo Bật Nghiệp" class="w-full max-w-xl mx-auto rounded-2xl mb-5" loading="lazy">
     <h2 class="font-display font-extrabold text-deep-teal text-2xl">Sẵn sàng tạo dấu ấn của bạn?</h2>
     <p class="text-sm text-deep-teal/60 mt-2 max-w-xl mx-auto">Gửi email giới thiệu ngắn về bản thân và sản phẩm bạn từng làm (nếu có) – nhóm sẽ phản hồi sớm nhất có thể.</p>
     <div class="flex flex-wrap justify-center gap-3 mt-5">

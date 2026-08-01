@@ -1758,10 +1758,6 @@
 "see the Press & media section"
 ],
 [
-"Áo dài trắng huy hiệu cờ đỏ · tà áo tung bay",
-"White áo dài with the red flag badge · panels flowing"
-],
-[
 "Áo len dệt tên dự án âm nhạc – cầu nối hai hệ sinh thái",
 "Knitted sweater bearing the music project's name – the bridge between two ecosystems"
 ],
@@ -2100,14 +2096,6 @@
 [
 "Áo dài trắng huy hiệu cờ đỏ · giơ ngón cái khen quyết định hay",
 "White áo dài with the red flag badge · thumbs up for a good call"
-],
-[
-"Lumina – Áo len gile",
-"Lumina – Knit waistcoat"
-],
-[
-"Sơ mi trắng, gile dệt kim và đồng hồ thông minh – dáng giảng đường",
-"White shirt, knit waistcoat and a smartwatch – the lecture-hall look"
 ],
 [
 "Lumina – Mời vào phòng họp",
@@ -3910,7 +3898,43 @@
 [
 "BizOn Lab · IE Lab – phòng thí nghiệm quốc tế hóa",
 "BizOn Lab · IE Lab – the internationalization sandbox"
-]
+],
+[
+"Sáu vòng, sáu vùng kinh tế. Thắng thị phần vòng nào thì cắm cờ doanh nghiệp lên vùng đó – từ Cần Thơ ngược ra Hà Nội. Đây đúng là tấm bản đồ hiện trong ván chơi.",
+"Six rounds, six economic regions. Win market share in a round and you plant your company flag on that region – from Cần Thơ north to Hà Nội. This is the very map that appears in the game."
+],
+[
+"Đồng bằng sông Cửu Long",
+"Mekong Delta"
+],
+[
+"Đông Nam Bộ",
+"Southeast region"
+],
+[
+"Duyên hải Nam Trung Bộ",
+"South Central Coast"
+],
+[
+"Duyên hải miền Trung",
+"Central Coast"
+],
+[
+"Bắc Trung Bộ",
+"North Central Coast"
+],
+[
+"Đồng bằng sông Hồng",
+"Red River Delta"
+],
+[
+"Quần đảo Hoàng Sa và Trường Sa thuộc chủ quyền Việt Nam. Cột cờ Lũng Cú (Hà Giang) là điểm cực Bắc.",
+"The Hoàng Sa and Trường Sa archipelagos are Vietnamese sovereign territory. The Lũng Cú flag tower (Hà Giang) marks the northernmost point."
+],
+[
+"🎮 Vào chơi sáu vòng →",
+"🎮 Play the six rounds →"
+],
 ]);
   var SPECIAL = [
     { page: 'giai-phap', sel: '#gp-oss-note', en: "Free to use at the official URL for non-commercial teaching – no account needed. The source is published for academic transparency and verification; commercial exploitation rights remain with BizOn (see <a href=\"https://github.com/thuyhuongctu/BizOn/blob/main/LICENSE\" target=\"_blank\" rel=\"noopener\" class=\"underline font-bold\">LICENSE</a>)." },

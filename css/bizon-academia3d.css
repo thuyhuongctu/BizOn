@@ -87,7 +87,7 @@ body.academia3d{
 
 .academia-display{
   margin-top:1.15rem;
-  font-family:"DM Serif Display","Cormorant Garamond",Georgia,serif;
+  font-family:"DM Serif Display", "DM Serif Display Fallback","Cormorant Garamond",Georgia,serif;
   font-size:clamp(3.15rem,6.4vw,6.7rem);
   line-height:.91;
   letter-spacing:-.035em;
@@ -279,14 +279,14 @@ body.academia3d{
 }
 .academia-product:hover::after{transform:translateX(320%) rotate(10deg)}
 .academia-product .product-index{font-size:.72rem;font-weight:800;letter-spacing:.12em;color:var(--bizon-gold)}
-.academia-product h3{margin:.8rem 0 .45rem;font-family:"DM Serif Display",Georgia,serif;font-size:1.48rem;color:var(--bizon-navy-950)}
+.academia-product h3{margin:.8rem 0 .45rem;font-family:"DM Serif Display", "DM Serif Display Fallback",Georgia,serif;font-size:1.48rem;color:var(--bizon-navy-950)}
 .academia-product p{margin:0;font-size:.9rem;line-height:1.55;color:rgba(7,29,58,.66)}
 
 .academia-section{
   padding:clamp(4rem,8vw,7rem) 0;
 }
 .academia-eyebrow{font-size:.75rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--bizon-teal-600)}
-.academia-title{margin:.55rem 0 0;font-family:"DM Serif Display",Georgia,serif;font-size:clamp(2.3rem,4.4vw,4.6rem);line-height:.98;color:var(--bizon-navy-950);text-wrap:balance}
+.academia-title{margin:.55rem 0 0;font-family:"DM Serif Display", "DM Serif Display Fallback",Georgia,serif;font-size:clamp(2.3rem,4.4vw,4.6rem);line-height:.98;color:var(--bizon-navy-950);text-wrap:balance}
 
 .academia-evidence-grid{
   display:grid;

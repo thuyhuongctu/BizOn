@@ -11,15 +11,12 @@
 <script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
 <script src="js/backend-config.js"></script>
 <script src="js/error-log.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Phong nap khong chan hien thi: media="print" -> onload doi ve "all".
-     Neu Google Fonts cham hoac bi chan, trang van hien ngay bang phong du phong. -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"></noscript>
+<!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
+     nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
+<link rel="stylesheet" href="css/bizon-fonts.css">
 <style>
   html { background:#f4faff; scroll-behavior:smooth; }
-  body { font-family:'Manrope',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
+  body { font-family:'Manrope', 'Manrope Fallback',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
   .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
   .clay-sunken { background:#e8f2f8; box-shadow:inset 3px 3px 8px rgba(0,102,135,.12), inset -3px -3px 8px rgba(255,255,255,.9); }
   .glass-nav { background:rgba(3,51,55,.78); backdrop-filter:blur(14px); }
@@ -43,7 +40,7 @@
 <meta property="og:title" content="Thẻ mô tả hệ thống – Cố vấn Lumina AI">
 <meta property="og:description" content="Lumina hoạt động bằng gì, dùng dữ liệu nào, giới hạn ra sao – công bố minh bạch phục vụ nghiên cứu giáo dục.">
 <meta property="og:url" content="https://thuyhuongctu.github.io/BizOn/lumina.html">
-<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/og/og-cover.jpg">
+<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/og/og-cover.webp">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -74,7 +71,7 @@
       <h1 class="font-display font-extrabold text-3xl sm:text-4xl mt-1">🤖 Cố vấn Lumina AI</h1>
       <p class="text-white/75 text-sm mt-3 max-w-2xl">Trang này công bố Lumina thực sự hoạt động bằng gì, đọc dữ liệu nào và có giới hạn ra sao. Chúng tôi công bố để người dạy, người học và người phản biện kiểm chứng được – chứ không mô tả Lumina mạnh hơn thực tế.</p>
     </div>
-    <img src="assets/character/advisors/lumina-nghe-nhac-vest-cut.png" alt="Lumina trong trang phục công sở" class="hidden sm:block w-36 object-contain shrink-0 drop-shadow-2xl" loading="lazy">
+    <img src="assets/character/advisors/lumina-nghe-nhac-vest-cut.webp" alt="Lumina trong trang phục công sở" class="hidden sm:block w-36 object-contain shrink-0 drop-shadow-2xl" loading="lazy">
   </div>
 </header>
 
