@@ -4023,6 +4023,30 @@
 "Bản phối thứ ba dài 4:15 · bản dài nhất của ca khúc",
 "Third remix, 4:15 · the longest cut of the song"
 ],
+[
+"Phần III tiếng Anh – bản remix 2 ⭐",
+"Part III in English – remix 2 ⭐"
+],
+[
+"Bản phối thứ hai của phần kết tiếng Anh · 5:33 · nhạc nền mặc định trong game Hộ Chiếu Thương Hiệu",
+"Second remix of the English closing part · 5:33 · default in-game music for Brand Passport"
+],
+[
+"«Brand Passport» – bản gốc",
+"«Brand Passport» – original"
+],
+[
+"Ca khúc mang đúng tên game · 2:52",
+"The song that shares the game's name · 2:52"
+],
+[
+"🎵 Bật nhạc chủ đề",
+"🎵 Play the theme music"
+],
+[
+"⏸️ Tạm dừng nhạc chủ đề",
+"⏸️ Pause the theme music"
+],
 ]);
   var SPECIAL = [
     { page: 'giai-phap', sel: '#gp-oss-note', en: "Free to use at the official URL for non-commercial teaching – no account needed. The source is published for academic transparency and verification; commercial exploitation rights remain with BizOn (see <a href=\"https://github.com/thuyhuongctu/BizOn/blob/main/LICENSE\" target=\"_blank\" rel=\"noopener\" class=\"underline font-bold\">LICENSE</a>)." },

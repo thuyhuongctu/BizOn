@@ -1,7 +1,7 @@
 /* BizOn Bật Nghiệp 2026 – Service Worker (offline app shell)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
 
-const CACHE = 'bizon-v219';
+const CACHE = 'bizon-v220';
 const SHELL = [
   './',
   './index.html',
@@ -96,7 +96,10 @@ const SHELL = [
   './assets/character/firms/moc-nhien-aodai-cut.webp',
   './assets/character/firms/phu-sa-foods-aodai-cut.webp',
   './assets/character/firms/lam-viet-aodai-cut.webp',
-  './assets/audio/brand-passport.mp3',
+  // Bài chủ đề game Hộ Chiếu Thương Hiệu – nạp sẵn để mở offline vẫn có nhạc.
+  // 7,1MB: đây là mục nặng nhất trong danh sách, cân nhắc bỏ nếu muốn rút ngắn
+  // thời gian cài đặt (nhạc vẫn tải và lưu đệm ngay lần đầu người chơi bật).
+  './assets/audio/ho-chieu-p3-en-remix2.mp3',
   './assets/character/rivals/alpha.webp',
   './assets/character/rivals/mekong.webp',
   './assets/character/rivals/star.webp',

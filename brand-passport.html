@@ -142,7 +142,7 @@
       <p>🤖 <b>Lumina AI</b> · Cố vấn AI Chiến lược (hóa thân «Je m'appelle Hương») – đọc tín hiệu thị trường và nhắc bạn điều dễ bỏ sót. <i>«Kiến tạo tương lai bằng trí tuệ nhân tạo và dữ liệu chuẩn xác.»</i></p>
     </div>
     <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-5 mb-1.5">🌊 Nhạc chủ đề</p>
-    <button id="bp-music" onclick="bpMusic()" class="clay-btn w-full bg-deep-teal text-white font-display font-extrabold py-3 text-sm">🎵 Bật «Brand Passport»</button>
+    <button id="bp-music" onclick="bpMusic()" class="clay-btn w-full bg-deep-teal text-white font-display font-extrabold py-3 text-sm">🎵 Bật nhạc chủ đề</button>
     <button id="bp-resume" onclick="bpResume()" class="clay-btn w-full bg-deep-teal text-white font-display font-extrabold py-3.5 mt-5 hidden">▶️ Tiếp tục ván đang dở</button>
     <button onclick="bpStart()" class="clay-btn w-full bg-clay-gold text-deep-teal font-display font-extrabold py-4 mt-3">🛫 Bắt đầu hành trình 6 quý</button>
   </section>
@@ -788,22 +788,26 @@
   }).join('');
 
   /* Nhạc chủ đề – dùng chung trình phát của dock để không có hai nguồn nhạc */
-  var THEME = 'brand-passport.mp3';
+  /* Bài chủ đề của game – bản này phát mặc định khi người chơi bật nhạc. */
+  var THEME = 'ho-chieu-p3-en-remix2.mp3';
   /* Tuyển tập riêng của game: chỉ xoay vòng trong nhóm ca khúc quốc tế hóa,
    * không lẫn nhạc của game Bật Nghiệp hay Arcade. */
   var SOUNDTRACK = [
+    'ho-chieu-p3-en-remix2.mp3',
     'brand-passport.mp3', 'brand-passport-v2.mp3', 'brand-passport-remix.mp3',
     'stamps-beyond-borders.mp3', 'stamps-beyond-borders-v2.mp3',
     'stamps-beyond-borders-v3.mp3', 'stamps-beyond-borders-extended.mp3',
     'golden-silt-route.mp3',
-    'ho-chieu-p1-tu-dong-mekong.mp3', 'ho-chieu-p2-qua-nhung-thi-truong.mp3',
+    'ho-chieu-p1-tu-dong-mekong.mp3',
+    'ho-chieu-p1-remix.mp3', 'ho-chieu-p1-remix2.mp3', 'ho-chieu-p1-remix3.mp3',
+    'ho-chieu-p2-qua-nhung-thi-truong.mp3', 'ho-chieu-p2-remix.mp3',
     'ho-chieu-p3-viet-nam-ra-the-gioi.mp3',
-    'ho-chieu-p3-remix.mp3', 'ho-chieu-p3-remix2.mp3',
+    'ho-chieu-p3-remix.mp3', 'ho-chieu-p3-remix2.mp3', 'ho-chieu-p3-remix3.mp3',
     'ho-chieu-p3-vietnam-to-the-world-en.mp3', 'ho-chieu-p3-en-remix.mp3',
   ];
   function musicBtnSync(on) {
     var b = $('bp-music');
-    if (b) b.textContent = on ? '⏸️ Tạm dừng nhạc chủ đề' : '🎵 Bật «Brand Passport»';
+    if (b) b.textContent = on ? '⏸️ Tạm dừng nhạc chủ đề' : '🎵 Bật nhạc chủ đề';
   }
   window.bpMusic = function () {
     var d = window.BizonDock;
