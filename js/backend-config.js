@@ -25,6 +25,7 @@ window.BIZON_AIBIS = Object.freeze({
   shadowMode: true,
   uploadTelemetry: false,
   diagnosticsByUrlOnly: true,
+  researchModeByUrlOnly: true,
   engineVersion: '0.1.0'
 });
 
@@ -45,12 +46,17 @@ window.BIZON_AIBIS = Object.freeze({
   }
 
   window.addEventListener('load', function () {
+    const params = new URLSearchParams(window.location.search);
     loadScript('js/aibis-core.js')
+      .then(function () { return loadScript('js/aibis-parameters.js'); })
+      .then(function () { return loadScript('js/aibis-parity.js'); })
       .then(function () { return loadScript('js/aibis-telemetry.js'); })
       .then(function () { return loadScript('js/aibis-adapter.js'); })
       .then(function () {
-        const debug = new URLSearchParams(window.location.search).get('debugAIBIS') === '1';
-        if (debug) return loadScript('js/aibis-diagnostics.js');
+        if (params.get('debugAIBIS') === '1') return loadScript('js/aibis-diagnostics.js');
+      })
+      .then(function () {
+        if (params.get('researchAIBIS') === '1') return loadScript('js/aibis-research-ui.js');
       })
       .catch(function (error) {
         console.warn('[AIBIS] Foundation disabled:', error.message);
