@@ -88,12 +88,18 @@ jobs:
                 await revealNodes.nth(index).scrollIntoViewIfNeeded();
                 await page.waitForTimeout(220);
               }
-              await page.evaluate(() => window.scrollTo(0, 0));
-              await page.waitForTimeout(300);
+              await page.evaluate(() => {
+                document.documentElement.style.scrollBehavior = 'auto';
+                if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
+                window.scrollTo(0, 0);
+              });
+              await page.waitForFunction(() => window.scrollY === 0);
+              await page.waitForTimeout(180);
 
               const state = await page.evaluate(() => ({
                 width: window.innerWidth,
                 scrollWidth: document.documentElement.scrollWidth,
+                scrollY: window.scrollY,
                 theme: document.documentElement.dataset.theme,
                 language: document.documentElement.lang,
                 heroVisible: Boolean(document.querySelector('.hero')),
@@ -103,6 +109,7 @@ jobs:
               }));
 
               if (state.scrollWidth > state.width + 1) errors.push(`Horizontal overflow: ${state.scrollWidth}px > ${state.width}px`);
+              if (state.scrollY !== 0) errors.push(`Screenshot did not reset to top: scrollY=${state.scrollY}`);
               if (state.theme !== scenario.theme) errors.push(`Theme mismatch: ${state.theme}`);
               if (state.language !== scenario.language) errors.push(`Language mismatch: ${state.language}`);
               if (!state.heroVisible || !state.globeVisible || !state.passportVisible) errors.push('Required hero elements are missing.');
