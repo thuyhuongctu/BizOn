@@ -1,0 +1,31 @@
+name: PWA App Foundation
+
+on:
+  pull_request:
+    paths:
+      - 'manifest.webmanifest'
+      - 'sw.js'
+      - 'offline.html'
+      - 'app-shell-preview.html'
+      - 'css/app-shell-preview.css'
+      - 'js/pwa/**'
+      - 'test/pwa-app-foundation.test.js'
+      - 'docs/architecture/PWA-APP-FOUNDATION.md'
+      - '.github/workflows/pwa-app-foundation.yml'
+  push:
+    branches: ['feat/pwa-app-foundation']
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Syntax checks
+        run: |
+          node --check sw.js
+          node --check js/pwa/pwa-manager.js
+      - name: PWA contract
+        run: node test/pwa-app-foundation.test.js
