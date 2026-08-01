@@ -1,0 +1,40 @@
+name: AIBIS Foundation
+
+on:
+  push:
+    branches:
+      - feat/aibis-foundation
+  pull_request:
+    paths:
+      - 'js/aibis-*.js'
+      - 'test/aibis-*.test.js'
+      - 'js/backend-config.js'
+      - '.github/workflows/aibis-foundation.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run existing engine tests
+        run: node test/engine.test.js
+
+      - name: Run Brand Passport tests
+        run: node test/brand-passport.test.js
+
+      - name: Run AIBIS foundation tests
+        run: node test/aibis-core.test.js
+
+      - name: Syntax-check browser adapter
+        run: node --check js/aibis-adapter.js
