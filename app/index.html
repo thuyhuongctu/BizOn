@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="vi" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#07141f">
+  <meta name="description" content="BizOn AI Business Simulation application shell">
+  <title>BizOn App — AI Business Simulation</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="../assets/icons/icon-192.png">
+  <link rel="stylesheet" href="../css/bizon-fonts.css">
+  <link rel="stylesheet" href="../css/app-shell.css">
+</head>
+<body>
+<a class="skip-link" href="#workspace">Bỏ qua điều hướng</a>
+<div class="app-shell">
+  <header class="topbar">
+    <a class="brand" href="../index.html" aria-label="BizOn home"><span class="brand-mark">B</span><span><strong>BIZON</strong><small>AI BUSINESS SIMULATION</small></span></a>
+    <div class="topbar-context"><span class="status-dot"></span><span>Demo workspace</span><span class="context-chip">Round 1/8</span></div>
+    <div class="topbar-actions"><button id="installBtn" hidden>Cài ứng dụng</button><button id="themeBtn" aria-label="Đổi giao diện">◐</button></div>
+  </header>
+
+  <nav class="sidebar" aria-label="Điều hướng chính">
+    <a class="nav-item active" href="#command-center">⌂ <span>Command Center</span></a>
+    <a class="nav-item" href="../game.html">◈ <span>Startup Lab</span></a>
+    <a class="nav-item" href="../global.html">◎ <span>AIBIS</span></a>
+    <a class="nav-item" href="../lop-hoc.html">◫ <span>Classroom</span></a>
+    <a class="nav-item" href="../giang-vien.html">▦ <span>Instructor Studio</span></a>
+    <a class="nav-item" href="#analytics">⌁ <span>Analytics</span></a>
+    <a class="nav-item" href="../lumina.html">✦ <span>Lumina AI</span></a>
+    <div class="sidebar-spacer"></div>
+    <a class="nav-item" href="../chinh-sach.html">⚙ <span>Settings & Privacy</span></a>
+  </nav>
+
+  <main id="workspace" class="workspace" tabindex="-1">
+    <section class="hero-panel" id="command-center">
+      <div><p class="eyebrow">BUSINESS DIGITAL TWIN</p><h1>AI Command Center</h1><p>Theo dõi doanh nghiệp, thị trường và quyết định quốc tế hóa trong một không gian thống nhất.</p></div>
+      <div class="sync-badge"><span class="status-dot"></span><strong id="networkLabel">Online</strong><small id="saveLabel">App shell ready</small></div>
+    </section>
+
+    <section class="kpi-grid" aria-label="Chỉ số mô phỏng">
+      <article class="kpi-card"><span>Revenue</span><strong>$1.42M</strong><small class="positive">▲ 8.4%</small></article>
+      <article class="kpi-card"><span>Profit</span><strong>$248K</strong><small class="positive">▲ 5.7%</small></article>
+      <article class="kpi-card"><span>Cash</span><strong>$712K</strong><small>Stable</small></article>
+      <article class="kpi-card"><span>Market share</span><strong>18.6%</strong><small class="positive">▲ 1.2 pt</small></article>
+      <article class="kpi-card"><span>Risk</span><strong>34/100</strong><small class="warning">Review FX</small></article>
+      <article class="kpi-card"><span>Reputation</span><strong>72/100</strong><small class="positive">Improving</small></article>
+    </section>
+
+    <section class="dashboard-grid">
+      <article class="panel world-panel">
+        <header><div><p class="eyebrow">GLOBAL MARKET</p><h2>Trade Network</h2></div><a href="../aibis-entry-mode-preview.html">Mở Entry Mode →</a></header>
+        <div class="map-stage" role="img" aria-label="Minh họa mạng lưới thương mại từ Việt Nam đến các thị trường quốc tế">
+          <div class="globe-orbit orbit-one"></div><div class="globe-orbit orbit-two"></div>
+          <div class="node node-vn">VN</div><div class="node node-jp">JP</div><div class="node node-eu">EU</div><div class="node node-us">US</div>
+          <svg viewBox="0 0 800 320" aria-hidden="true"><path d="M180 230 Q370 20 520 120"/><path d="M180 230 Q430 300 650 180"/><path d="M180 230 Q380 150 430 250"/></svg>
+        </div>
+        <div class="market-summary"><span>Japan <b>74 fit</b></span><span>EU <b>68 fit</b></span><span>USA <b>63 fit</b></span></div>
+      </article>
+
+      <aside class="panel lumina-panel">
+        <header><div><p class="eyebrow">AI COACH</p><h2>Lumina Insights</h2></div><span class="ai-label">Explain mode</span></header>
+        <div class="insight"><b>Điểm cần chú ý</b><p>Biên lợi nhuận tốt nhưng rủi ro tỷ giá tăng khi mở rộng sang Nhật Bản.</p></div>
+        <div class="insight"><b>Trade-off</b><p>Export nhanh và ít vốn; Joint Venture tăng học hỏi và embeddedness.</p></div>
+        <div class="insight"><b>Câu hỏi phản tư</b><p>Doanh nghiệp ưu tiên kiểm soát hay tốc độ thâm nhập trong 12 tháng đầu?</p></div>
+        <a class="primary-action" href="../aibis-entry-mode-preview.html">Mô phỏng entry mode</a>
+      </aside>
+
+      <article class="panel decision-panel" id="analytics">
+        <header><div><p class="eyebrow">DECISION TIMELINE</p><h2>Strategic Journey</h2></div><button type="button" id="demoDecisionBtn">Thêm quyết định mẫu</button></header>
+        <ol id="decisionTimeline" class="timeline">
+          <li><span>R0</span><div><b>Readiness assessment</b><small>Financial capacity 64 · Digital capability 72</small></div></li>
+          <li><span>R1</span><div><b>Japan shortlisted</b><small>Market attractiveness 74 · Institutional risk moderate</small></div></li>
+        </ol>
+      </article>
+
+      <article class="panel launch-panel">
+        <p class="eyebrow">QUICK LAUNCH</p><h2>Bắt đầu mô phỏng</h2>
+        <div class="launch-grid"><a href="../game.html"><b>Startup Lab</b><span>6 vòng quản trị doanh nghiệp</span></a><a href="../global.html"><b>AIBIS</b><span>Quốc tế hóa và entry mode</span></a><a href="../lop-hoc.html"><b>Classroom</b><span>Tham gia bằng mã lớp</span></a><a href="../giang-vien.html"><b>Instructor</b><span>Điều phối lớp học</span></a></div>
+      </article>
+    </section>
+  </main>
+
+  <aside class="mobile-nav" aria-label="Điều hướng di động"><a href="#command-center">Home</a><a href="../game.html">Startup</a><a href="../global.html">AIBIS</a><a href="../giang-vien.html">Teach</a></aside>
+</div>
+<script src="../js/app-shell/app-shell.js" defer></script>
+</body>
+</html>
