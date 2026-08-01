@@ -3963,6 +3963,66 @@
 "Bản đồ đất sét ba chiều của Việt Nam chia theo vùng kinh tế, kèm hai quần đảo Hoàng Sa và Trường Sa ngoài khơi.",
 "Three-dimensional clay map of Vietnam divided by economic region, with the Hoàng Sa and Trường Sa archipelagos offshore."
 ],
+[
+"«Việt Nam Trong Tim»",
+"«Việt Nam Trong Tim» (Vietnam in My Heart)"
+],
+[
+"Ca khúc tiếng Việt mới của kho nhạc BizOn",
+"A new Vietnamese-language song in the BizOn music library"
+],
+[
+"Bản thu có lời · 2:36",
+"Vocal recording · 2:36"
+],
+[
+"Phần I – bản remix",
+"Part I – remix"
+],
+[
+"Bản phối lại phần mở đầu · 3:51 · gọn hơn bản gốc",
+"Remix of the opening part · 3:51 · tighter than the original"
+],
+[
+"Phần I – bản remix 2",
+"Part I – remix 2"
+],
+[
+"Bản phối thứ hai của phần mở đầu · 4:07",
+"Second remix of the opening part · 4:07"
+],
+[
+"Phần I – bản remix 3",
+"Part I – remix 3"
+],
+[
+"Bản phối thứ ba của phần mở đầu · 4:18 · bản dài nhất",
+"Third remix of the opening part · 4:18 · the longest cut"
+],
+[
+"Phần II – bản remix",
+"Part II – remix"
+],
+[
+"Bản phối lại phần giữa · 4:04",
+"Remix of the middle part · 4:04"
+],
+[
+"Phần III – bản remix 3",
+"Part III – remix 3"
+],
+[
+"Bản phối thứ ba của phần kết · 5:02",
+"Third remix of the closing part · 5:02"
+],
+[
+"Bản remix 3",
+"Remix 3"
+],
+[
+"Bản phối thứ ba dài 4:15 · bản dài nhất của ca khúc",
+"Third remix, 4:15 · the longest cut of the song"
+],
 ]);
   var SPECIAL = [
     { page: 'giai-phap', sel: '#gp-oss-note', en: "Free to use at the official URL for non-commercial teaching – no account needed. The source is published for academic transparency and verification; commercial exploitation rights remain with BizOn (see <a href=\"https://github.com/thuyhuongctu/BizOn/blob/main/LICENSE\" target=\"_blank\" rel=\"noopener\" class=\"underline font-bold\">LICENSE</a>)." },
