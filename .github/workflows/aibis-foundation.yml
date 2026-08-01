@@ -6,6 +6,8 @@ on:
       - feat/aibis-foundation
   pull_request:
     paths:
+      - 'aibis-staging.html'
+      - 'css/aibis-staging.css'
       - 'js/aibis-*.js'
       - 'test/aibis-*.test.js'
       - 'js/backend-config.js'
@@ -47,6 +49,9 @@ jobs:
       - name: Run AIBIS scripted validation
         run: node test/aibis-validation.test.js
 
+      - name: Run AIBIS staging smoke test
+        run: node test/aibis-staging-smoke.test.js
+
       - name: Syntax-check AIBIS browser modules
         run: |
           node --check js/aibis-context.js
@@ -55,4 +60,5 @@ jobs:
           node --check js/aibis-research-ui.js
           node --check js/aibis-parity.js
           node --check js/aibis-parameters.js
+          node --check js/aibis-staging-app.js
           node --check js/backend-config.js
