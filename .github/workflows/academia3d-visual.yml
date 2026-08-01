@@ -81,7 +81,18 @@ jobs:
                 const current = document.documentElement.lang || 'vi';
                 if (current !== language) document.querySelector('#language')?.click();
               }, scenario);
-              await page.waitForTimeout(700);
+              await page.waitForTimeout(500);
+
+              await page.evaluate(async () => {
+                const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+                const step = Math.max(420, Math.floor(window.innerHeight * 0.72));
+                for (let y = 0; y < document.documentElement.scrollHeight; y += step) {
+                  window.scrollTo(0, y);
+                  await delay(120);
+                }
+                window.scrollTo(0, 0);
+                await delay(250);
+              });
 
               const state = await page.evaluate(() => ({
                 width: window.innerWidth,
@@ -90,7 +101,8 @@ jobs:
                 language: document.documentElement.lang,
                 heroVisible: Boolean(document.querySelector('.hero')),
                 globeVisible: Boolean(document.querySelector('#globe')),
-                passportVisible: Boolean(document.querySelector('[data-passport]'))
+                passportVisible: Boolean(document.querySelector('[data-passport]')),
+                hiddenRevealCount: document.querySelectorAll('.reveal:not(.visible)').length
               }));
 
               if (state.scrollWidth > state.width + 1) {
@@ -100,6 +112,9 @@ jobs:
               if (state.language !== scenario.language) errors.push(`Language mismatch: ${state.language}`);
               if (!state.heroVisible || !state.globeVisible || !state.passportVisible) {
                 errors.push('Required hero elements are missing.');
+              }
+              if (state.hiddenRevealCount > 0) {
+                errors.push(`${state.hiddenRevealCount} reveal sections remained hidden after scrolling.`);
               }
 
               await page.screenshot({
