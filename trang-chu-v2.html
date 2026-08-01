@@ -10,12 +10,9 @@
 <meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
 <script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
 <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Phong nap khong chan hien thi: media="print" -> onload doi ve "all".
-     Neu Google Fonts cham hoac bi chan, trang van hien ngay bang phong du phong. -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap"></noscript>
+<!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
+     nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
+<link rel="stylesheet" href="css/bizon-fonts.css">
 <link rel="stylesheet" href="css/bizon-tokens.css">
 <link rel="stylesheet" href="css/bizon-components.css">
 <link rel="stylesheet" href="css/bizon-motion.css">
@@ -153,10 +150,10 @@
       </div>
 
       <img class="figure figure--l bz-par bz-par--figure bz-breathe" style="--phase:0s"
-           src="assets/character/lumina-ao-dai-wave.png"
+           src="assets/character/lumina-ao-dai-wave.webp"
            alt="Lumina – Cố vấn học tập AI, nhân vật hư cấu của hệ sinh thái BizOn" loading="eager">
       <img class="figure figure--r bz-par bz-par--figure bz-breathe" style="--phase:2.4s"
-           src="assets/character/advisors/victor-lam-doithuong-cut.png"
+           src="assets/character/advisors/victor-lam-doithuong-cut.webp"
            alt="Victor Lâm – Cố vấn quốc tế hoá, nhân vật hư cấu trong game" loading="eager">
 
       <div class="passport bz-passport bz-par bz-par--passport bz-tilt bz-tilt--passport" aria-hidden="true">🛂</div>
@@ -277,7 +274,7 @@
     <div class="g g-2 bz-reveal bz-stagger">
       <div class="bz-card">
         <div class="founder">
-          <img class="founder__ph" src="assets/character/lumina-vest.png"
+          <img class="founder__ph" src="assets/character/lumina-vest.webp"
                alt="Đỗ Thùy Hương – thể hiện qua tạo hình nhân vật Lumina" loading="lazy">
           <div>
             <h3 class="bz-h3" style="margin:0">Đỗ Thùy Hương</h3>

@@ -15,15 +15,12 @@
 <script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
 <script src="js/backend-config.js"></script>
 <script src="js/error-log.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Phong nap khong chan hien thi: media="print" -> onload doi ve "all".
-     Neu Google Fonts cham hoac bi chan, trang van hien ngay bang phong du phong. -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"></noscript>
+<!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
+     nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
+<link rel="stylesheet" href="css/bizon-fonts.css">
 <style>
   html { background:#f4faff; }
-  body { font-family:'Manrope',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
+  body { font-family:'Manrope', 'Manrope Fallback',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
   .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
   .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease; }
   .clay-btn:active { transform:translateY(2px); }
@@ -72,7 +69,7 @@
 <meta property="og:title" content="Hộ Chiếu Thương Hiệu – BizOn Bật Nghiệp">
 <meta property="og:description" content="Brand Passport: From Vietnam to the World – mô phỏng chiến lược quốc tế hóa 6 quý: đưa thương hiệu Việt từ Vàm Thịnh ra thế giới, ra quyết định trong sương mù thông tin, thành công đo bằng 5 chiều.">
 <meta property="og:url" content="https://thuyhuongctu.github.io/BizOn/brand-passport.html">
-<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/og/og-cover.jpg">
+<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/og/og-cover.webp">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -96,7 +93,7 @@
   <div class="max-w-2xl mx-auto px-5">
     <p class="text-[11px] font-extrabold uppercase tracking-[.2em] text-clay-gold">BizOn Go Global · Mô phỏng chiến lược · 6 quý · Game gốc BizOn</p>
     <figure class="mt-3 mb-4 rounded-3xl overflow-hidden shadow-2xl">
-      <img src="assets/illustrations/thuyen-sen-khoi-hanh.jpg" alt="Thuyền gỗ rời bến trên dòng sông sen lúc bình minh – khởi hành từ Vàm Thịnh ra thế giới" class="w-full block bp-hero-img" width="1024" height="1024" loading="lazy">
+      <img src="assets/illustrations/thuyen-sen-khoi-hanh.webp" fetchpriority="high" decoding="async" alt="Thuyền gỗ rời bến trên dòng sông sen lúc bình minh – khởi hành từ Vàm Thịnh ra thế giới" class="w-full block bp-hero-img" width="1024" height="1024" loading="lazy">
     </figure>
     <h1 class="font-display font-extrabold text-3xl mt-2">🛂 Hộ Chiếu Thương Hiệu</h1>
     <p class="text-white/50 text-[11px] mt-1 font-bold tracking-wide">Brand Passport: From Vietnam to the World</p>
@@ -230,10 +227,10 @@
   ];
   // 4 doanh nghiệp – mỗi nhà một hành trình (concept mục 2)
   var FIRMS = [
-    { icon: '🧴', name: 'Mộc Nhiên', prod: 'Mỹ phẩm thảo mộc', adv: 'Câu chuyện thương hiệu mạnh', weak: 'Khó đạt tiêu chuẩn quốc tế', cash: 8, rep: 55, capab: 38, susts: 0, img: 'assets/character/firms/moc-nhien-cut.png' },
-    { icon: '🥫', name: 'Phù Sa Foods', prod: 'Thực phẩm chế biến', adv: 'Hương vị đặc trưng · hợp khách trẻ', weak: 'Chi phí bảo quản cao (+20% vận hành)', cash: 8, rep: 48, capab: 45, susts: 0, img: 'assets/character/firms/phu-sa-foods-cut.png' },
-    { icon: '👗', name: 'Lam Việt', prod: 'Thời trang bền vững', adv: 'Hồ sơ xanh sẵn có · hợp Lục Đảo', weak: 'Năng lực sản xuất hạn chế', cash: 8, rep: 50, capab: 32, susts: 1, img: 'assets/character/firms/lam-viet-cut.png' },
-    { icon: '💻', name: 'Mekong Digital', prod: 'Phần mềm quản trị', adv: 'Kênh số cực mạnh · biên lời cao', weak: 'Mù mờ pháp luật dữ liệu', cash: 7, rep: 46, capab: 48, susts: 0, img: 'assets/character/firms/mekong-digital-cut.png' },
+    { icon: '🧴', name: 'Mộc Nhiên', prod: 'Mỹ phẩm thảo mộc', adv: 'Câu chuyện thương hiệu mạnh', weak: 'Khó đạt tiêu chuẩn quốc tế', cash: 8, rep: 55, capab: 38, susts: 0, img: 'assets/character/firms/moc-nhien-cut.webp' },
+    { icon: '🥫', name: 'Phù Sa Foods', prod: 'Thực phẩm chế biến', adv: 'Hương vị đặc trưng · hợp khách trẻ', weak: 'Chi phí bảo quản cao (+20% vận hành)', cash: 8, rep: 48, capab: 45, susts: 0, img: 'assets/character/firms/phu-sa-foods-cut.webp' },
+    { icon: '👗', name: 'Lam Việt', prod: 'Thời trang bền vững', adv: 'Hồ sơ xanh sẵn có · hợp Lục Đảo', weak: 'Năng lực sản xuất hạn chế', cash: 8, rep: 50, capab: 32, susts: 1, img: 'assets/character/firms/lam-viet-cut.webp' },
+    { icon: '💻', name: 'Mekong Digital', prod: 'Phần mềm quản trị', adv: 'Kênh số cực mạnh · biên lời cao', weak: 'Mù mờ pháp luật dữ liệu', cash: 7, rep: 46, capab: 48, susts: 0, img: 'assets/character/firms/mekong-digital-cut.webp' },
   ];
   var MODES = [
     { id: 0, icon: '🛒', name: 'Nền tảng số', cost: 0.5, margin: 0.25, scale: 0.7, op: 0.25, note: 'cam kết thấp – vào nhanh, lời mỏng' },
@@ -381,12 +378,12 @@
   // Mỗi cố vấn hai tạo hình: áo dài dùng ở màn giới thiệu (bản sắc Việt),
   // trang phục công sở dùng trong ván (bối cảnh đàm phán quốc tế).
   var CAST = [
-    { name: 'Bà Sáu Lành', role: 'Nhà sáng lập', icon: '👵', gala: 'assets/character/advisors/ba-sau-lanh-aodai-cut.png', img: 'assets/character/advisors/ba-sau-lanh-cut.png' },
-    { name: 'Minh Khang', role: 'CFO', icon: '💰', gala: 'assets/character/advisors/minh-khang-aodai-cut.png', img: 'assets/character/advisors/minh-khang-cut.png' },
-    { name: 'An Nhiên', role: 'Chiến lược & Đổi mới', icon: '📣', gala: 'assets/character/advisors/an-nhien-aodai-cut.png', img: 'assets/character/advisors/an-nhien-cut.png' },
-    { name: 'Victor Lâm', role: 'Quốc tế hóa', icon: '🌍', gala: 'assets/character/advisors/victor-lam-aodai-cut.png', img: 'assets/character/advisors/victor-lam-cut.png' },
-    { name: 'Lina Park', role: 'Phân phối', icon: '🚢', gala: 'assets/character/advisors/lina-park-aodai-cut.png', img: 'assets/character/advisors/lina-park-cut.png' },
-    { name: 'Lumina AI', role: 'Cố vấn AI', icon: '🤖', gala: 'assets/character/advisors/lumina-aodai-cut.png', img: 'assets/character/advisors/lumina-vest-cut.png' },
+    { name: 'Bà Sáu Lành', role: 'Nhà sáng lập', icon: '👵', gala: 'assets/character/advisors/ba-sau-lanh-aodai-cut.webp', img: 'assets/character/advisors/ba-sau-lanh-cut.webp' },
+    { name: 'Minh Khang', role: 'CFO', icon: '💰', gala: 'assets/character/advisors/minh-khang-aodai-cut.webp', img: 'assets/character/advisors/minh-khang-cut.webp' },
+    { name: 'An Nhiên', role: 'Chiến lược & Đổi mới', icon: '📣', gala: 'assets/character/advisors/an-nhien-aodai-cut.webp', img: 'assets/character/advisors/an-nhien-cut.webp' },
+    { name: 'Victor Lâm', role: 'Quốc tế hóa', icon: '🌍', gala: 'assets/character/advisors/victor-lam-aodai-cut.webp', img: 'assets/character/advisors/victor-lam-cut.webp' },
+    { name: 'Lina Park', role: 'Phân phối', icon: '🚢', gala: 'assets/character/advisors/lina-park-aodai-cut.webp', img: 'assets/character/advisors/lina-park-cut.webp' },
+    { name: 'Lumina AI', role: 'Cố vấn AI', icon: '🤖', gala: 'assets/character/advisors/lumina-aodai-cut.webp', img: 'assets/character/advisors/lumina-vest-cut.webp' },
   ];
   var FACE = {};
   CAST.forEach(function (c) { FACE[c.name] = c.img || null; });

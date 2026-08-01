@@ -11,18 +11,15 @@
 <meta name="theme-color" content="#033337">
 <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
 <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Phong nap khong chan hien thi: media="print" -> onload doi ve "all".
-     Neu Google Fonts cham hoac bi chan, trang van hien ngay bang phong du phong. -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Dancing+Script:wght@600;700&display=swap"></noscript>
+<!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
+     nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
+<link rel="stylesheet" href="css/bizon-fonts.css">
 <script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
 <script src="js/backend-config.js"></script>
 <script src="js/error-log.js"></script>
 <style>
   html { background:#f4faff; }
-  body { font-family:'Manrope',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
+  body { font-family:'Manrope', 'Manrope Fallback',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
   /* Bản đồ Việt Nam chìm dưới trang */
   /* Bản đồ Việt Nam chìm – theo M-AIDA */
   #vn-map { position:fixed; top:50%; right:-2vw; transform:translateY(-50%); width:min(36vw,440px); z-index:-1; pointer-events:none; color:#006687; opacity:.10; }
@@ -54,7 +51,7 @@
   .music-pill.playing .mp-wave i { animation:mpwv .7s ease-in-out infinite alternate; }
   .music-pill.playing .mp-wave i:nth-child(2) { animation-delay:.15s; } .music-pill.playing .mp-wave i:nth-child(3) { animation-delay:.3s; }
   @keyframes mpwv { from { height:4px; } to { height:13px; } }
-  h1,h2,h3,h4,.font-display { font-family:'Plus Jakarta Sans',sans-serif; }
+  h1,h2,h3,h4,.font-display { font-family:'Plus Jakarta Sans', 'Plus Jakarta Sans Fallback',sans-serif; }
   .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
   .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease, box-shadow .12s ease; }
   .clay-btn:active { transform:translateY(2px); box-shadow:0 4px 10px -4px rgba(0,102,135,.3), inset 0 -2px 0 rgba(0,0,0,.12); }
@@ -138,7 +135,7 @@
 <meta property="og:title" content="BizOn Bật Nghiệp 2026 – Game Mô Phỏng Kinh Doanh 3D">
 <meta property="og:description" content="BizOn – Bật Nghiệp: Trò chơi mô phỏng kinh doanh 3D phong cách đất sét dành cho đào tạo khởi nghiệp. Điều hành công ty qua 6 vòng thị trường, đấu với 3 đối thủ AI cùng cố vấn Lumina. Chơi miễn phí trên web.">
 <meta property="og:url" content="https://thuyhuongctu.github.io/BizOn/gioi-thieu.html">
-<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/og/og-cover.jpg">
+<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/og/og-cover.webp">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -227,11 +224,11 @@
       <span class="scene-spark" style="bottom:16%; left:16%; animation-delay:-2.1s">⭐</span>
       <div class="relative scene-enter-left">
         <div id="bubble-tu" class="scene-bubble scene-bubble-l">Chào mừng đến BizOn! 🎓</div>
-        <img src="assets/character/anh-tu-ao-dai-welcome-cut.png" alt="Tú Phan" class="h-80 sm:h-[24rem] w-auto animate-float-slow drop-shadow-[0_25px_25px_rgba(0,0,0,.4)]" style="--rot:-2deg; animation-delay:-2.5s">
+        <img src="assets/character/anh-tu-ao-dai-welcome-cut.webp" fetchpriority="high" decoding="async" alt="Tú Phan" class="h-80 sm:h-[24rem] w-auto animate-float-slow drop-shadow-[0_25px_25px_rgba(0,0,0,.4)]" style="--rot:-2deg; animation-delay:-2.5s">
       </div>
       <div class="relative scene-enter-right">
         <div id="bubble-huong" class="scene-bubble scene-bubble-r">Xin chào! Mình là Hương AI 👋</div>
-        <img src="assets/character/lumina-ao-dai-wave.png" alt="Lumina AI – áo dài" class="h-80 sm:h-[24rem] w-auto animate-float drop-shadow-[0_35px_35px_rgba(0,0,0,.45)]" style="--rot:2deg">
+        <img src="assets/character/lumina-ao-dai-wave.webp" fetchpriority="high" decoding="async" alt="Lumina AI – áo dài" class="h-80 sm:h-[24rem] w-auto animate-float drop-shadow-[0_35px_35px_rgba(0,0,0,.45)]" style="--rot:2deg">
       </div>
     </div>
   </div>
@@ -318,7 +315,7 @@
       </div>
       <div class="shrink-0 relative">
         <span class="scene-spark" style="top:6%; right:2%">✨</span>
-        <img src="assets/character/lumina-office-present.png" alt="Lumina Vest Trắng – cố vấn chiến lược AI" class="h-72 sm:h-80 w-auto animate-float drop-shadow-[0_30px_30px_rgba(0,0,0,.45)]">
+        <img src="assets/character/lumina-office-present.webp" alt="Lumina Vest Trắng – cố vấn chiến lược AI" class="h-72 sm:h-80 w-auto animate-float drop-shadow-[0_30px_30px_rgba(0,0,0,.45)]">
       </div>
     </div>
   </div>
@@ -329,7 +326,7 @@
   <div class="blob w-80 h-80 bg-primary-container top-[-40px] right-[-80px]" style="opacity:.3"></div>
   <div class="max-w-6xl mx-auto px-5 grid lg:grid-cols-2 gap-12 items-center relative z-10">
     <div class="tilt-wrap reveal">
-      <img src="assets/illustrations/hero-vietnam-2026.png" alt="Việt Nam bứt phá 2026" class="tilt rounded-clay shadow-2xl w-full">
+      <img src="assets/illustrations/hero-vietnam-2026.webp" alt="Việt Nam bứt phá 2026" class="tilt rounded-clay shadow-2xl w-full">
     </div>
     <div>
       <p class="text-xs font-extrabold text-primary-container uppercase tracking-[.2em] reveal">Bối cảnh</p>
@@ -350,20 +347,20 @@
   <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-center mt-2 reveal">Gặp gỡ những người đồng hành</h2>
   <div class="grid sm:grid-cols-3 gap-6 mt-12 tilt-wrap">
     <div class="clay-card overflow-hidden tilt reveal">
-      <div class="bg-gradient-to-b from-primary-container/25 to-transparent pt-6 px-6"><img src="assets/character/lumina-ao-dai.png" alt="Lumina áo dài" class="tilt-pop mx-auto h-64 object-contain drop-shadow-xl"></div>
+      <div class="bg-gradient-to-b from-primary-container/25 to-transparent pt-6 px-6"><img src="assets/character/lumina-ao-dai.webp" alt="Lumina áo dài" class="tilt-pop mx-auto h-64 object-contain drop-shadow-xl"></div>
       <div class="p-5 text-center"><h3 class="font-display font-extrabold">Lumina Áo Dài</h3><p class="text-xs font-bold text-primary mt-0.5">Người dẫn chuyện</p><p class="text-xs text-deep-teal/60 mt-1">Chúc mừng chiến thắng và trao chứng nhận hoàn thành của bạn.</p></div>
     </div>
     <div class="clay-card overflow-hidden tilt reveal reveal-d1">
-      <div class="bg-gradient-to-b from-clay-gold/25 to-transparent pt-6 px-6"><img src="assets/character/lumina-office-present.png" alt="Lumina vest trắng" class="tilt-pop mx-auto h-64 object-contain drop-shadow-xl"></div>
+      <div class="bg-gradient-to-b from-clay-gold/25 to-transparent pt-6 px-6"><img src="assets/character/lumina-office-present.webp" alt="Lumina vest trắng" class="tilt-pop mx-auto h-64 object-contain drop-shadow-xl"></div>
       <div class="p-5 text-center"><h3 class="font-display font-extrabold">Lumina Vest Trắng</h3><p class="text-xs font-bold text-primary mt-0.5">Cố vấn chiến lược AI</p><p class="text-xs text-deep-teal/60 mt-1">Phân tích Nếu – Thì, cảnh báo rủi ro, đồng hành cùng cả 4 vai trò C-Suite.</p></div>
     </div>
     <div class="clay-card overflow-hidden tilt reveal reveal-d2">
-      <div class="bg-gradient-to-b from-emerald-200/40 to-transparent pt-6 px-6"><img src="assets/character/anh-tu-ao-dai-explain-cut.png" alt="Tú Phan" class="tilt-pop mx-auto h-64 object-contain drop-shadow-xl"></div>
+      <div class="bg-gradient-to-b from-emerald-200/40 to-transparent pt-6 px-6"><img src="assets/character/anh-tu-ao-dai-explain-cut.webp" alt="Tú Phan" class="tilt-pop mx-auto h-64 object-contain drop-shadow-xl"></div>
       <div class="p-5 text-center"><h3 class="font-display font-extrabold">Tú Phan</h3><p class="text-xs font-bold text-primary mt-0.5">Cố vấn học thuật</p><p class="text-xs text-deep-teal/60 mt-1">Xuất hiện ở những khoảnh khắc then chốt với lời khuyên quản trị kinh điển.</p></div>
     </div>
   </div>
   <div class="clay-card overflow-hidden tilt reveal reveal-d3 mt-6">
-    <img src="assets/illustrations/command-center.jpg" alt="Trung tâm Điều hành Doanh nghiệp với biểu đồ 3D, cúp vàng và la bàn chiến lược" class="w-full h-52 sm:h-72 object-cover" loading="lazy">
+    <img src="assets/illustrations/command-center.webp" alt="Trung tâm Điều hành Doanh nghiệp với biểu đồ 3D, cúp vàng và la bàn chiến lược" class="w-full h-52 sm:h-72 object-cover" loading="lazy">
     <div class="p-5 text-center">
       <h3 class="font-display font-extrabold">Trung tâm Điều hành Doanh nghiệp</h3>
       <p class="text-xs text-deep-teal/60 mt-1 max-w-2xl mx-auto">Nơi mọi quyết định hội tụ: biểu đồ thị phần, la bàn chiến lược và chiếc cúp dành cho đội thắng cuộc – quản trị dựa trên dữ liệu qua từng vòng chơi.</p>
@@ -392,7 +389,7 @@
         <input id="dm-prod" type="range" min="1000" max="6000" value="3000" step="100" class="w-full" oninput="demoSim()">
       </div>
       <div class="clay-sunken rounded-2xl p-3 mt-4 flex gap-2.5 items-start">
-        <img src="assets/character/lumina-vest.png" alt="Lumina" class="w-9 h-9 rounded-full object-cover shrink-0" style="object-position:50% 12%">
+        <img src="assets/character/lumina-vest.webp" alt="Lumina" class="w-9 h-9 rounded-full object-cover shrink-0" style="object-position:50% 12%">
         <p id="dm-lumina" class="text-[11px] text-deep-teal/80 italic"></p>
       </div>
     </div>
@@ -475,7 +472,7 @@
   <div class="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto tilt-wrap">
     <div class="clay-card !rounded-[2.5rem] p-8 text-center tilt reveal">
       <div class="w-40 h-40 mx-auto rounded-full overflow-hidden border-4 border-white shadow-xl bg-gradient-to-b from-primary-container/25 to-transparent">
-        <img src="assets/character/lumina-ao-dai-wave.png" alt="Lumina – Cố vấn học tập AI" class="tilt-pop w-full h-full object-cover" style="object-position:50% 8%">
+        <img src="assets/character/lumina-ao-dai-wave.webp" alt="Lumina – Cố vấn học tập AI" class="tilt-pop w-full h-full object-cover" style="object-position:50% 8%">
       </div>
       <h3 class="font-display font-extrabold text-xl text-primary mt-5">Đỗ Thùy Hương</h3>
       <p class="text-[10px] font-extrabold text-primary/70 uppercase tracking-[.18em] mt-1.5">Founder &amp; Project Lead</p>
@@ -489,7 +486,7 @@
     </div>
     <div class="clay-card !rounded-[2.5rem] p-8 text-center tilt reveal reveal-d1">
       <div class="w-40 h-40 mx-auto rounded-full overflow-hidden border-4 border-white shadow-xl bg-gradient-to-b from-emerald-200/40 to-transparent">
-        <img src="assets/character/anh-tu-ao-dai-welcome-cut.png" alt="Phan Anh Tú" class="tilt-pop w-full h-full object-cover" style="object-position:50% 10%">
+        <img src="assets/character/anh-tu-ao-dai-welcome-cut.webp" alt="Phan Anh Tú" class="tilt-pop w-full h-full object-cover" style="object-position:50% 10%">
       </div>
       <h3 class="font-display font-extrabold text-xl text-primary mt-5">PGS.TS. Phan Anh Tú</h3>
       <p class="text-[10px] font-extrabold text-primary/70 uppercase tracking-[.18em] mt-1.5">Co-founder &amp; Chief Academic Advisor</p>
@@ -540,7 +537,7 @@
   <div class="relative overflow-hidden rounded-clay text-white text-center p-10 sm:p-14 reveal" style="background:linear-gradient(135deg,#006687,#033337)">
     <div class="blob w-64 h-64 bg-primary-container top-[-40px] left-[-40px]" style="opacity:.35"></div>
     <div class="blob w-52 h-52 bg-clay-gold bottom-[-50px] right-[-30px]" style="opacity:.3; animation-delay:-6s"></div>
-    <img src="assets/illustrations/logo-splash.png" alt="BizOn" class="relative w-20 h-20 mx-auto rounded-2xl shadow-xl animate-float mb-5">
+    <img src="assets/illustrations/logo-splash.webp" alt="BizOn" class="relative w-20 h-20 mx-auto rounded-2xl shadow-xl animate-float mb-5">
     <h2 class="relative font-display font-extrabold text-3xl sm:text-4xl">Sẵn sàng "Bật Nghiệp"?</h2>
     <p class="relative text-white/75 text-sm mt-3 max-w-lg mx-auto">Lập đội, chọn vai trò CEO · CFO · COO · CMO và chinh phục TOP 1 thị phần Việt Nam 2026.</p>
     <a href="game.html" class="relative clay-btn-primary inline-block text-white font-display font-extrabold px-12 py-4 text-sm mt-7">🚀 VÀO GAME NGAY – MIỄN PHÍ</a>
@@ -579,11 +576,11 @@
 
 <!-- ===== AI TOUR GUIDE ===== -->
 <button class="guide-fab" id="guide-fab" aria-label="Hương AI dẫn đường" onclick="guideToggle()">
-  <img src="assets/character/lumina-ao-dai.png" alt="Lumina – Cố vấn học tập AI">
+  <img src="assets/character/lumina-ao-dai.webp" alt="Lumina – Cố vấn học tập AI">
 </button>
 <div class="guide-pop" id="guide-pop" role="dialog" aria-label="Hương AI dẫn đường">
   <div class="flex items-end gap-1.5">
-    <img src="assets/character/lumina-ao-dai-wave.png" alt="Lumina – Cố vấn học tập AI" class="h-48 w-auto shrink-0 drop-shadow-[0_16px_18px_rgba(0,0,0,.35)]">
+    <img src="assets/character/lumina-ao-dai-wave.webp" alt="Lumina – Cố vấn học tập AI" class="h-48 w-auto shrink-0 drop-shadow-[0_16px_18px_rgba(0,0,0,.35)]">
     <div class="clay-card guide-bubble p-4 mb-4 min-w-0">
       <p class="font-display font-extrabold text-deep-teal text-sm">Hương AI dẫn đường</p>
       <p id="guide-text" class="text-xs text-deep-teal/75 mt-1">Xin chào! Mình là Hương – hướng dẫn viên AI của BizOn Bật Nghiệp. Để mình dẫn bạn tham quan trò chơi nhé?</p>

@@ -11,15 +11,12 @@
 <script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
 <script src="js/backend-config.js"></script>
 <script src="js/error-log.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Phong nap khong chan hien thi: media="print" -> onload doi ve "all".
-     Neu Google Fonts cham hoac bi chan, trang van hien ngay bang phong du phong. -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"></noscript>
+<!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
+     nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
+<link rel="stylesheet" href="css/bizon-fonts.css">
 <style>
   html { background:#f4faff; scroll-behavior:smooth; }
-  body { font-family:'Manrope',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
+  body { font-family:'Manrope', 'Manrope Fallback',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
   .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
   .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease; }
   .clay-btn:active { transform:translateY(2px); }
@@ -54,7 +51,7 @@
 <meta property="og:title" content="Kịch bản lớp học 40–60 SV – BizOn Bật Nghiệp">
 <meta property="og:description" content="Kịch bản triển khai BizOn Bật Nghiệp trong lớp học 40–60 sinh viên: buổi chơi 90 phút và giải đấu cả học kỳ 15 tuần, chia đội 5 vai, câu hỏi thảo luận, rubric chấm điểm và xử lý sự cố nhanh. Song ngữ Việt–Anh.">
 <meta property="og:url" content="https://thuyhuongctu.github.io/BizOn/lop-hoc.html">
-<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/og/og-cover.jpg">
+<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/og/og-cover.webp">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -102,7 +99,7 @@
         </div>
       </div>
     </div>
-    <img src="assets/character/lumina-ao-dai-present.png" alt="Lumina áo dài trắng hướng dẫn lớp học" class="h-52 sm:h-64 w-auto mx-auto drop-shadow-2xl float-slow hidden sm:block">
+    <img src="assets/character/lumina-ao-dai-present.webp" alt="Lumina áo dài trắng hướng dẫn lớp học" class="h-52 sm:h-64 w-auto mx-auto drop-shadow-2xl float-slow hidden sm:block">
   </div>
 </header>
 
@@ -212,7 +209,7 @@
     <h2 class="font-display font-extrabold text-deep-teal text-xl mb-4">7 · Rubric chấm điểm một buổi (thang 10)</h2>
     <a href="assets/docs/BizOn-HuongDan-GV-ChamBai.docx" download class="clay-btn inline-block bg-primary text-white font-display font-extrabold px-5 py-2.5 text-xs mb-4 no-print">📥 Tải Hướng dẫn giảng viên chấm bài (Word – rubric chi tiết một buổi &amp; học kỳ)</a>
     <div class="flex items-center gap-4 mb-4 p-4 rounded-2xl" style="background:rgba(0,102,135,.05)">
-      <img src="assets/character/anh-tu-desk-laptop.jpg" alt="Thầy Tú chấm bài trên laptop" class="w-20 h-20 object-cover object-top rounded-2xl shrink-0" loading="lazy">
+      <img src="assets/character/anh-tu-desk-laptop.webp" alt="Thầy Tú chấm bài trên laptop" class="w-20 h-20 object-cover object-top rounded-2xl shrink-0" loading="lazy">
       <p class="text-xs text-deep-teal/70">Rubric dưới đây dùng kèm <b class="text-deep-teal">Hướng dẫn giảng viên chấm bài</b> – thầy/cô chấm ngay trong buổi bằng bảng xếp hạng cuối game và Nhật ký đội, không cần chờ sinh viên nộp bài riêng.</p>
     </div>
     <div class="kb-wrap"><table class="kb">
@@ -380,7 +377,7 @@
     <h2 class="font-display font-extrabold text-deep-teal text-xl mb-4">7 · Suggested single-session grading rubric (out of 10)</h2>
     <a href="assets/docs/BizOn-HuongDan-GV-ChamBai.docx" download class="clay-btn inline-block bg-primary text-white font-display font-extrabold px-5 py-2.5 text-xs mb-4 no-print">📥 Download the instructor grading guide (Word, Vietnamese – detailed session &amp; semester rubrics)</a>
     <div class="flex items-center gap-4 mb-4 p-4 rounded-2xl" style="background:rgba(0,102,135,.05)">
-      <img src="assets/character/anh-tu-desk-laptop.jpg" alt="Instructor grading on a laptop" class="w-20 h-20 object-cover object-top rounded-2xl shrink-0" loading="lazy">
+      <img src="assets/character/anh-tu-desk-laptop.webp" alt="Instructor grading on a laptop" class="w-20 h-20 object-cover object-top rounded-2xl shrink-0" loading="lazy">
       <p class="text-xs text-deep-teal/70">Use this rubric together with the <b class="text-deep-teal">instructor grading guide</b> – grade during the session itself from the final leaderboard and the in-game Team Journal, no separate submissions needed.</p>
     </div>
     <div class="kb-wrap"><table class="kb">
