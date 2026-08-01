@@ -1,0 +1,37 @@
+name: Core v2 shadow sync
+
+on:
+  pull_request:
+    paths:
+      - 'js/backend-config.js'
+      - 'js/core/**'
+      - 'test/shadow-sync.test.js'
+      - 'docs/architecture/CORE-V2-SHADOW-SYNC.md'
+      - '.github/workflows/core-v2-shadow-sync.yml'
+  push:
+    branches:
+      - feat/core-v2-shadow-sync
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Syntax checks
+        run: |
+          node --check js/backend-config.js
+          node --check js/core/game-state.js
+          node --check js/core/persistence.js
+          node --check js/core/legacy-state-adapter.js
+          node --check js/core/core-v2-bridge.js
+          node --check js/core/shadow-sync.js
+      - name: Contract tests
+        run: |
+          node test/core-state-seed.test.js
+          node test/persistence.test.js
+          node test/legacy-state-adapter.test.js
+          node test/core-v2-bridge.test.js
+          node test/shadow-sync.test.js
