@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="VietLens AI — quan sát tín hiệu Việt Nam, cảnh báo sớm và dự báo theo kịch bản.">
+  <title>VietLens AI — Vietnam Live Intelligence</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#overview"><span class="brand-mark">VL</span><span><b>VietLens AI</b><small>Observe Vietnam · Anticipate Change</small></span></a>
+  <nav aria-label="Điều hướng chính">
+    <a href="#overview">Tổng quan</a><a href="#signals">Tín hiệu</a><a href="#forecast">Dự báo</a><a href="#audit">Kiểm định</a>
+  </nav>
+  <div class="live"><i></i><span id="freshnessLabel">Đang khởi tạo</span></div>
+</header>
+<main>
+  <section class="hero" id="overview">
+    <div>
+      <p class="eyebrow">VIETNAM REAL-TIME INTELLIGENCE & FORESIGHT</p>
+      <h1>Quan sát tín hiệu.<br><span>Dự báo có kiểm chứng.</span></h1>
+      <p class="lead">Dashboard MVP kết hợp dữ liệu chính thức định kỳ, tín hiệu gần thời gian thực và mô phỏng kịch bản. Mọi kết quả đều hiển thị nguồn, độ mới, độ tin cậy và giới hạn.</p>
+      <div class="actions"><button id="refreshBtn">Làm mới tín hiệu</button><button class="ghost" id="exportBtn">Xuất báo cáo JSON</button></div>
+    </div>
+    <div class="pulse-card" aria-label="Chỉ số xung lực quốc gia">
+      <div class="pulse-ring"><strong id="pulseScore">--</strong><span>Vietnam Pulse</span></div>
+      <div class="pulse-grid"><div><small>Ổn định</small><b id="stabilityScore">--</b></div><div><small>Động lực</small><b id="momentumScore">--</b></div><div><small>Bất định</small><b id="uncertaintyScore">--</b></div></div>
+    </div>
+  </section>
+
+  <section class="kpis" id="kpiGrid" aria-label="Chỉ số nổi bật"></section>
+
+  <section class="layout" id="signals">
+    <article class="panel map-panel">
+      <header><div><p class="eyebrow">REGIONAL WATCH</p><h2>Bản đồ rủi ro Việt Nam</h2></div><select id="mapMetric" aria-label="Chỉ số bản đồ"><option value="risk">Rủi ro tổng hợp</option><option value="weather">Thời tiết</option><option value="trade">Thương mại</option><option value="logistics">Logistics</option></select></header>
+      <div class="vn-map" id="vnMap" role="img" aria-label="Bản đồ nhiệt Việt Nam dạng sơ đồ"></div>
+      <div class="legend"><span><i class="low"></i>Thấp</span><span><i class="mid"></i>Trung bình</span><span><i class="high"></i>Cao</span></div>
+    </article>
+    <article class="panel signal-panel">
+      <header><div><p class="eyebrow">SIGNAL ROOM</p><h2>Tín hiệu ưu tiên</h2></div><button class="mini" id="filterBtn">Chỉ cảnh báo</button></header>
+      <div id="signalList" class="signal-list"></div>
+    </article>
+  </section>
+
+  <section class="layout forecast-layout" id="forecast">
+    <article class="panel scenario-panel">
+      <header><div><p class="eyebrow">SCENARIO LAB</p><h2>Mô phỏng cú sốc</h2></div></header>
+      <div class="control-grid">
+        <label>Giá năng lượng <output id="energyOut">+10%</output><input id="energyShock" type="range" min="-20" max="50" value="10"></label>
+        <label>Tỷ giá <output id="fxOut">+3%</output><input id="fxShock" type="range" min="-10" max="20" value="3"></label>
+        <label>Chi phí logistics <output id="logisticsOut">+15%</output><input id="logisticsShock" type="range" min="-20" max="80" value="15"></label>
+        <label>Nhu cầu xuất khẩu <output id="demandOut">-5%</output><input id="demandShock" type="range" min="-40" max="40" value="-5"></label>
+      </div>
+      <button id="runScenarioBtn">Chạy mô phỏng</button>
+      <div id="scenarioResults" class="scenario-results"></div>
+    </article>
+    <article class="panel forecast-panel">
+      <header><div><p class="eyebrow">FORECAST ENSEMBLE</p><h2>Triển vọng 90 ngày</h2></div><span class="badge">MVP · Không phải tư vấn đầu tư</span></header>
+      <div id="forecastCards" class="forecast-cards"></div>
+      <div class="method-note"><b>Phương pháp:</b> baseline có trọng số + momentum + scenario modifiers. Mục tiêu MVP là kiểm tra kiến trúc, provenance và audit; chưa phải mô hình dự báo đã hiệu chỉnh.</div>
+    </article>
+  </section>
+
+  <section class="panel audit-panel" id="audit">
+    <header><div><p class="eyebrow">FORECAST AUDIT</p><h2>Minh bạch và khả năng kiểm định</h2></div></header>
+    <div class="audit-grid"><div><small>Phiên bản mô hình</small><b>vietlens-mvp-0.1.0</b></div><div><small>Thời điểm tạo</small><b id="generatedAt">--</b></div><div><small>Nguồn hoạt động</small><b id="sourceHealth">--</b></div><div><small>Khoảng trống dữ liệu</small><b id="dataGaps">--</b></div></div>
+    <div id="provenanceTable" class="table-wrap"></div>
+  </section>
+</main>
+<footer><p>VietLens AI MVP · Dữ liệu minh họa có ghi nguồn và độ trễ · Không sử dụng để ra quyết định tài chính, y tế hoặc pháp lý.</p></footer>
+<script src="./sample-data.js"></script>
+<script src="./app.js"></script>
+</body>
+</html>
