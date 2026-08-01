@@ -18,12 +18,20 @@ window.BIZON_BACKEND = {
 
 /* Core v2 internal integration.
  * Mặc định không tải và không thay đổi gameplay/save production.
- * Chỉ bật khi URL có ?coreV2=1. */
+ * Bật bridge bằng ?coreV2=1.
+ * Bật shadow sync bằng ?coreV2=1&shadowSync=1. */
 (function loadCoreV2BehindFlag() {
   'use strict';
   let enabled = false;
-  try { enabled = new URLSearchParams(window.location.search).get('coreV2') === '1'; }
-  catch (_) { enabled = false; }
+  let shadowEnabled = false;
+  try {
+    const params = new URLSearchParams(window.location.search);
+    enabled = params.get('coreV2') === '1';
+    shadowEnabled = enabled && params.get('shadowSync') === '1';
+  } catch (_) {
+    enabled = false;
+    shadowEnabled = false;
+  }
   if (!enabled || !document?.head) return;
 
   const scripts = [
@@ -32,12 +40,31 @@ window.BIZON_BACKEND = {
     'js/core/legacy-state-adapter.js',
     'js/core/core-v2-bridge.js'
   ];
+  if (shadowEnabled) scripts.push('js/core/shadow-sync.js');
+
+  function startCoreV2() {
+    try { window.BizOnCoreV2Bridge?.boot(); }
+    catch (error) { console.warn('[BizOn Core v2] bridge boot failed', error); }
+
+    if (!shadowEnabled || !window.BizOnShadowSync) return;
+    try {
+      const controller = window.BizOnShadowSync.createController({
+        storage: window.localStorage,
+        intervalMs: 2000,
+        persistShadow: true,
+        onError: (error) => console.warn('[BizOn Core v2] shadow sync error', error)
+      });
+      controller.start();
+      window.BIZON_CORE_V2_SHADOW = controller;
+    } catch (error) {
+      console.warn('[BizOn Core v2] shadow sync boot failed', error);
+    }
+  }
 
   function loadAt(index) {
     if (index >= scripts.length) {
-      const start = () => window.BizOnCoreV2Bridge?.boot();
-      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once: true });
-      else start();
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', startCoreV2, { once: true });
+      else startCoreV2();
       return;
     }
     const script = document.createElement('script');
