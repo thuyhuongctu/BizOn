@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>BizOn Academia 3D V2 — Interactive Preview</title>
+  <meta name="description" content="BizOn Academia 3D V2 — research-driven business simulation from Vietnam to the world.">
+  <meta name="theme-color" content="#f4f8fc">
+  <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="css/bizon-fonts.css">
+  <style>
+    :root{
+      --navy:#071d3a;--navy-2:#103a68;--teal:#078a96;--cyan:#38c6df;--gold:#c6a76b;
+      --bg:#f4f8fc;--paper:#fff;--glass:rgba(255,255,255,.72);--glass-strong:rgba(255,255,255,.88);
+      --text:#071d3a;--muted:rgba(7,29,58,.67);--border:rgba(16,58,104,.13);
+      --shadow:0 28px 90px rgba(7,29,58,.13);--soft-shadow:0 16px 50px rgba(7,29,58,.08);
+      --ease:cubic-bezier(.16,1,.3,1);--serif:'DM Serif Display','DM Serif Display Fallback',Georgia,serif;
+      --sans:Manrope,'Manrope Fallback',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    }
+    html[data-theme="dark"]{
+      --bg:#06131f;--paper:#0b2233;--glass:rgba(11,34,51,.76);--glass-strong:rgba(13,39,57,.9);
+      --text:#e8f4f7;--muted:rgba(220,239,244,.68);--border:rgba(126,197,221,.16);
+      --shadow:0 28px 90px rgba(0,0,0,.38);--soft-shadow:0 16px 50px rgba(0,0,0,.26);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;background:var(--bg)}
+    body{margin:0;min-height:100vh;overflow-x:hidden;background:
+      radial-gradient(circle at 82% 9%,rgba(56,198,223,.16),transparent 29rem),
+      radial-gradient(circle at 8% 33%,rgba(198,167,107,.09),transparent 24rem),var(--bg);
+      color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
+    .skip{position:fixed;left:12px;top:-80px;z-index:1000;padding:10px 14px;border-radius:12px;background:var(--navy);color:white;transition:top .2s}
+    .skip:focus{top:12px}
+    .shell{width:min(1180px,calc(100% - 32px));margin-inline:auto}
+    .ambient{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden}
+    .ambient::before,.ambient::after{content:"";position:absolute;border-radius:50%;filter:blur(4px);opacity:.45}
+    .ambient::before{width:420px;height:420px;right:-120px;top:20%;background:radial-gradient(circle,rgba(56,198,223,.25),transparent 68%)}
+    .ambient::after{width:360px;height:360px;left:-140px;bottom:8%;background:radial-gradient(circle,rgba(198,167,107,.18),transparent 68%)}
+    .nav{position:sticky;top:10px;z-index:70;width:min(1180px,calc(100% - 20px));margin:10px auto 0;border:1px solid var(--border);border-radius:22px;background:var(--glass);backdrop-filter:blur(22px) saturate(150%);-webkit-backdrop-filter:blur(22px) saturate(150%);box-shadow:0 12px 42px rgba(7,29,58,.07);transition:.3s var(--ease)}
+    .nav.scrolled{background:var(--glass-strong);box-shadow:0 18px 55px rgba(7,29,58,.14);transform:translateY(-2px)}
+    .nav-inner{min-height:66px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:850;white-space:nowrap}
+    .brand img{width:38px;height:38px;border-radius:12px;box-shadow:0 10px 24px rgba(7,29,58,.16)}
+    .brand small{display:block;font-size:.62rem;letter-spacing:.16em;color:var(--teal)}
+    .nav-links{display:flex;gap:22px;align-items:center;font-size:.82rem;font-weight:750;color:var(--muted)}
+    .nav-links a{position:relative;padding:9px 0}
+    .nav-links a::after{content:"";position:absolute;left:0;right:100%;bottom:4px;height:2px;background:linear-gradient(90deg,var(--teal),var(--cyan));transition:right .25s var(--ease)}
+    .nav-links a:hover::after{right:0}
+    .nav-actions{display:flex;align-items:center;gap:8px}
+    .icon-btn,.pill-btn{min-height:38px;border:1px solid var(--border);background:var(--glass-strong);color:var(--text);cursor:pointer;box-shadow:0 8px 22px rgba(7,29,58,.06)}
+    .icon-btn{width:38px;border-radius:50%;display:grid;place-items:center}
+    .pill-btn{border-radius:999px;padding:0 14px;font-size:.75rem;font-weight:850}
+    .primary{border-color:transparent;color:white;background:linear-gradient(135deg,var(--navy),var(--navy-2) 60%,var(--teal));box-shadow:0 14px 35px rgba(16,58,104,.24)}
+    .hero{min-height:700px;padding:clamp(4.5rem,8vw,7.5rem) 0 clamp(3rem,6vw,5rem);display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);align-items:center;gap:clamp(2rem,5vw,5rem)}
+    .copy{position:relative;z-index:4}
+    .kicker{display:inline-flex;align-items:center;gap:.5rem;padding:.5rem .78rem;border:1px solid var(--border);border-radius:999px;background:var(--glass);font-size:.74rem;font-weight:800;color:var(--navy-2)}
+    html[data-theme="dark"] .kicker{color:#b9e9f0}
+    h1{margin:1.1rem 0 0;font-family:var(--serif);font-weight:400;font-size:clamp(3.25rem,6.3vw,6.6rem);line-height:.92;letter-spacing:-.038em;text-wrap:balance}
+    h1 em{display:block;margin-top:.38rem;color:var(--teal);font-weight:400}
+    .lead{max-width:43rem;margin:1.45rem 0 0;font-size:clamp(1rem,1.5vw,1.15rem);line-height:1.76;color:var(--muted)}
+    .actions{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.7rem}
+    .cta{min-height:50px;padding:.86rem 1.2rem;border:1px solid var(--border);border-radius:16px;display:inline-flex;align-items:center;justify-content:center;gap:.55rem;font-size:.88rem;font-weight:850;background:var(--glass-strong);transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+    .cta:hover{transform:translateY(-3px);box-shadow:0 18px 38px rgba(7,29,58,.12)}
+    .trust{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
+    .trust span{padding:9px 11px;border:1px solid var(--border);border-radius:13px;background:var(--glass);font-size:.71rem;font-weight:780;color:var(--muted)}
+    .stage{position:relative;min-height:580px;perspective:1300px;transform-style:preserve-3d;isolation:isolate}
+    .stage::before{content:"";position:absolute;inset:8% 3% 5%;z-index:-1;border-radius:48%;background:radial-gradient(circle,rgba(56,198,223,.23),rgba(16,58,104,.06) 46%,transparent 72%)}
+    #globe{position:absolute;left:50%;top:47%;width:min(38vw,460px);aspect-ratio:1;transform:translate(-50%,-50%);filter:drop-shadow(0 35px 65px rgba(10,66,130,.28));z-index:1}
+    .pedestal{position:absolute;left:50%;top:75%;width:min(42vw,500px);height:95px;transform:translate(-50%,-50%);z-index:0;border-radius:50%;background:linear-gradient(180deg,rgba(132,220,242,.28),rgba(15,59,108,.18));box-shadow:inset 0 0 0 1px rgba(255,255,255,.45),0 28px 80px rgba(7,29,58,.2)}
+    .pedestal::before,.pedestal::after{content:"";position:absolute;inset:16px 9%;border-radius:50%;border:1px solid rgba(76,205,233,.38)}
+    .pedestal::after{inset:31px 19%;box-shadow:0 0 35px rgba(56,198,223,.35)}
+    [data-depth]{--sx:0px;--sy:0px;transition:transform .22s ease-out}
+    .insight{position:absolute;z-index:4;width:min(210px,36vw);padding:14px 15px;border:1px solid rgba(255,255,255,.58);border-radius:19px;background:linear-gradient(145deg,var(--glass-strong),rgba(191,232,245,.26));backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 22px 58px rgba(7,29,58,.14);transform:translate3d(var(--sx),var(--sy),30px)}
+    .insight strong{display:block;font-size:.69rem;letter-spacing:.11em;text-transform:uppercase;color:var(--teal)}
+    .insight span{display:block;margin-top:5px;font-size:.82rem;line-height:1.45;font-weight:750}
+    .insight.i1{left:-1%;top:10%}.insight.i2{right:-1%;top:9%}.insight.i3{left:1%;bottom:10%}.insight.i4{right:-2%;bottom:13%}
+    .avatar{position:absolute;z-index:5;width:164px;margin:0;overflow:hidden;border:1px solid rgba(255,255,255,.75);border-radius:28px;background:var(--glass);box-shadow:0 28px 68px rgba(7,29,58,.19);backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px)}
+    .avatar img{display:block;width:100%;height:238px;object-fit:cover;object-position:50% 16%}
+    .avatar figcaption{padding:9px 11px;font-size:.68rem;font-weight:850}
+    .avatar.a{left:21%;bottom:3%;transform:translate3d(var(--sx),var(--sy),55px) rotate(-3deg)}
+    .avatar.b{right:17%;bottom:2%;transform:translate3d(var(--sx),var(--sy),48px) rotate(3deg)}
+    .passport{position:absolute;z-index:7;left:44%;bottom:-1%;width:118px;height:164px;padding:14px;border:1px solid rgba(198,167,107,.58);border-radius:13px;color:#f2d7a4;background:linear-gradient(150deg,#0c4657,#062b3a 60%,#021b27);box-shadow:0 32px 65px rgba(7,29,58,.32);transform:translate3d(var(--sx),var(--sy),80px) rotate(-8deg);transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+    .passport:hover{transform:translate3d(var(--sx),calc(var(--sy) - 12px),90px) rotate(-2deg) scale(1.04);box-shadow:0 44px 95px rgba(7,29,58,.38)}
+    .passport strong{display:block;text-align:center;font-size:.69rem;letter-spacing:.12em}.passport b{display:grid;place-items:center;width:52px;height:52px;margin:31px auto 0;border:1px solid currentColor;border-radius:50%;font-family:Georgia,serif;font-size:1.65rem}
+    .section{padding:clamp(4rem,8vw,7rem) 0}
+    .eyebrow{font-size:.72rem;font-weight:850;letter-spacing:.14em;text-transform:uppercase;color:var(--teal)}
+    h2{max-width:820px;margin:.58rem 0 0;font-family:var(--serif);font-size:clamp(2.35rem,4.7vw,4.8rem);line-height:.98;font-weight:400;letter-spacing:-.025em;text-wrap:balance}
+    .products{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem;margin-top:2rem}
+    .product{--rx:0deg;--ry:0deg;position:relative;overflow:hidden;min-height:240px;padding:1.4rem;border:1px solid var(--border);border-radius:25px;background:var(--glass);box-shadow:var(--soft-shadow);transform:perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));transition:transform .22s ease-out,box-shadow .35s var(--ease),border-color .3s}
+    .product::before{content:"";position:absolute;width:150px;height:150px;right:-45px;bottom:-60px;border-radius:50%;background:radial-gradient(circle,var(--accent,rgba(56,198,223,.25)),transparent 68%)}
+    .product::after{content:"";position:absolute;inset:-45% 60% -45% -30%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.52),transparent);transform:translateX(-150%) rotate(9deg);transition:transform .7s var(--ease)}
+    .product:hover{box-shadow:0 28px 75px rgba(7,29,58,.14);border-color:rgba(56,198,223,.3)}.product:hover::after{transform:translateX(340%) rotate(9deg)}
+    .product .index{font-size:.67rem;font-weight:850;letter-spacing:.12em;color:var(--gold)}
+    .product .orb{width:54px;height:54px;margin:20px 0;border-radius:18px;background:linear-gradient(145deg,var(--accent-1,#50cde5),var(--accent-2,#174d91));box-shadow:inset 8px 8px 18px rgba(255,255,255,.25),0 16px 32px rgba(7,29,58,.18);transform:rotate(-11deg)}
+    .product h3{margin:0 0 .5rem;font-family:var(--serif);font-size:1.55rem;font-weight:400}.product p{margin:0;font-size:.87rem;line-height:1.6;color:var(--muted)}.product .go{display:inline-flex;margin-top:18px;font-size:.77rem;font-weight:850;color:var(--teal)}
+    .evidence{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:2rem}
+    .e-card{padding:1.45rem;border:1px solid var(--border);border-top:2px solid rgba(198,167,107,.7);border-radius:0 0 22px 22px;background:var(--glass);box-shadow:0 15px 45px rgba(7,29,58,.055)}
+    .e-card strong{display:block;margin:.6rem 0;font-size:1.03rem}.e-card p{margin:0;font-size:.88rem;line-height:1.65;color:var(--muted)}
+    .facts{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}.fact{padding:10px 13px;border:1px solid var(--border);border-radius:999px;background:var(--glass);font-size:.73rem;font-weight:800;color:var(--muted)}
+    .flow{display:grid;grid-template-columns:repeat(13,minmax(34px,1fr));gap:8px;align-items:center;margin-top:2rem;overflow-x:auto;padding:4px 2px 14px;scrollbar-width:thin}
+    .node{min-width:110px;min-height:112px;padding:15px 10px;border:1px solid var(--border);border-radius:19px;background:var(--glass);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-shadow:0 13px 38px rgba(7,29,58,.055)}
+    .node strong{font-family:var(--serif);font-size:1.04rem;font-weight:400}.node span{margin-top:5px;font-size:.65rem;line-height:1.45;color:var(--muted)}.arrow{text-align:center;color:var(--gold);font-weight:900}
+    .people{display:grid;grid-template-columns:1.2fr .8fr;gap:1rem;margin-top:2rem}
+    .people-card,.sound{border:1px solid var(--border);border-radius:28px;background:var(--glass);box-shadow:var(--soft-shadow)}
+    .people-card{padding:1.5rem}.person{display:grid;grid-template-columns:72px 1fr;gap:16px;align-items:start;padding:16px 0}.person+.person{border-top:1px solid var(--border)}
+    .monogram{width:72px;height:72px;border-radius:22px;display:grid;place-items:center;color:white;font-family:var(--serif);font-size:1.55rem;background:linear-gradient(145deg,var(--navy-2),var(--teal));box-shadow:0 16px 35px rgba(7,29,58,.18)}
+    .person h3{margin:1px 0 4px;font-family:var(--serif);font-size:1.5rem;font-weight:400}.person p{margin:0;font-size:.83rem;line-height:1.6;color:var(--muted)}
+    .links{display:flex;flex-wrap:wrap;gap:7px;margin-top:11px}.links a{padding:7px 9px;border:1px solid var(--border);border-radius:999px;background:var(--glass-strong);font-size:.66rem;font-weight:850}
+    .sound{padding:1.6rem;display:flex;flex-direction:column;justify-content:center}.sound h3{margin:7px 0;font-family:var(--serif);font-size:2rem;font-weight:400}.sound p{margin:0;color:var(--muted);font-size:.84rem;line-height:1.6}
+    .wave{height:72px;margin:16px 0;border-radius:12px;background:repeating-linear-gradient(90deg,rgba(16,58,104,.19) 0 2px,transparent 2px 7px);mask-image:linear-gradient(to bottom,transparent 8%,#000 35% 65%,transparent 92%);animation:wavePulse 2.7s ease-in-out infinite}
+    @keyframes wavePulse{50%{transform:scaleY(.72);opacity:.68}}
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .72s var(--ease),transform .72s var(--ease)}.reveal.visible{opacity:1;transform:none}
+    footer{padding:36px 0 55px;color:var(--muted);font-size:.74rem}.footer-grid{padding-top:24px;border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:18px}
+    .leaving body{opacity:.18;transform:scale(.996);transition:opacity .42s ease,transform .42s ease}
+    @media(max-width:980px){.nav-links{display:none}.hero{grid-template-columns:1fr;text-align:center;min-height:auto}.lead{margin-left:auto;margin-right:auto}.actions,.trust{justify-content:center}.stage{min-height:520px}.products{grid-template-columns:repeat(2,minmax(0,1fr))}.people{grid-template-columns:1fr}.insight.i1{left:5%}.insight.i2{right:5%}.insight.i3{left:7%}.insight.i4{right:7%}}
+    @media(max-width:640px){.shell{width:min(100% - 20px,1180px)}.nav{top:5px;margin-top:5px}.nav-inner{padding:0 10px}.brand small,.nav-actions .primary{display:none}.hero{padding-top:3.7rem;gap:.8rem}.kicker{font-size:.66rem}h1{font-size:clamp(2.8rem,14vw,4.2rem)}.stage{min-height:440px}.stage::before{inset:8% -8%}.insight{width:137px;padding:10px}.insight strong{font-size:.56rem}.insight span{font-size:.68rem}.insight.i1{left:0;top:5%}.insight.i2{right:0;top:6%}.insight.i3{left:0;bottom:10%}.insight.i4{right:0;bottom:11%}#globe{width:min(78vw,330px);top:46%}.pedestal{width:86vw;top:74%}.avatar{width:110px;border-radius:20px}.avatar img{height:154px}.avatar figcaption{font-size:.57rem;padding:7px}.avatar.a{left:8%;bottom:5%}.avatar.b{right:7%;bottom:4%}.passport{width:82px;height:114px;padding:8px;left:43%;bottom:1%}.passport strong{font-size:.5rem}.passport b{width:37px;height:37px;margin:18px auto 0;font-size:1.15rem}.products,.evidence{grid-template-columns:1fr}.product{min-height:210px}.flow{grid-template-columns:1fr;overflow:visible}.arrow{transform:rotate(90deg)}.node{min-width:0}.person{grid-template-columns:58px 1fr}.monogram{width:58px;height:58px;border-radius:18px}.footer-grid{flex-direction:column}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}.reveal{opacity:1;transform:none}.wave{animation:none}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="ambient" aria-hidden="true"></div>
+  <header class="nav" aria-label="Primary navigation">
+    <div class="nav-inner">
+      <a class="brand" href="index.html"><img src="assets/icons/icon-192.png" alt="BizOn"><span>BizOn<small>ACADEMIA 3D · V2</small></span></a>
+      <nav class="nav-links"><a href="game.html" data-vi="Trò chơi" data-en="Games">Trò chơi</a><a href="brand-passport.html">Brand Passport</a><a href="hoc-thuat.html" data-vi="Học thuật" data-en="Academic">Học thuật</a><a href="bang-chung.html" data-vi="Bằng chứng" data-en="Evidence">Bằng chứng</a><a href="giai-phap.html">Pilot</a><a href="doi-ngu.html" data-vi="Đội ngũ" data-en="About">Đội ngũ</a></nav>
+      <div class="nav-actions"><button class="icon-btn" id="theme" type="button" aria-label="Toggle dark mode">☾</button><button class="icon-btn" id="language" type="button" aria-label="Switch language">EN</button><a class="pill-btn primary" href="game.html" data-vi="Bắt đầu ↗" data-en="Launch ↗">Bắt đầu ↗</a></div>
+    </div>
+  </header>
+  <main id="main" class="shell">
+    <section class="hero">
+      <div class="copy reveal visible">
+        <span class="kicker" data-vi="🇻🇳 Thiết kế tại Đồng bằng sông Cửu Long · Vươn ra thế giới" data-en="🇻🇳 Designed in the Mekong Delta · Built for the World">🇻🇳 Thiết kế tại Đồng bằng sông Cửu Long · Vươn ra thế giới</span>
+        <h1><span data-vi="Học kinh doanh" data-en="Simulation-based">Học kinh doanh</span><br><span data-vi="qua mô phỏng" data-en="business learning">qua mô phỏng</span><em data-vi="từ Việt Nam ra thế giới." data-en="from Vietnam to the world.">từ Việt Nam ra thế giới.</em></h1>
+        <p class="lead" data-vi="Các mô phỏng kinh doanh có khả năng giải thích, được thiết kế cho học tập, nghiên cứu và quốc tế hóa — kết hợp engine xác định, phản tư có AI hỗ trợ và định hướng khoa học mở." data-en="Explainable business simulations for learning, research and internationalization — combining deterministic engines, AI-enhanced reflection and open-science practices.">Các mô phỏng kinh doanh có khả năng giải thích, được thiết kế cho học tập, nghiên cứu và quốc tế hóa — kết hợp engine xác định, phản tư có AI hỗ trợ và định hướng khoa học mở.</p>
+        <div class="actions"><a class="cta primary" href="game.html" data-vi="Khám phá BizOn →" data-en="Explore BizOn →">Khám phá BizOn →</a><a class="cta" data-passport href="brand-passport.html" data-vi="Vào Brand Passport ↗" data-en="Enter Brand Passport ↗">Vào Brand Passport ↗</a></div>
+        <div class="trust"><span data-vi="◉ Engine mô phỏng xác định" data-en="◉ Deterministic simulation engine">◉ Engine mô phỏng xác định</span><span data-vi="◇ 6 thị trường · 6 quý" data-en="◇ 6 markets · 6 quarters">◇ 6 thị trường · 6 quý</span><span data-vi="◎ Bằng chứng lớp học ban đầu" data-en="◎ Preliminary classroom evidence">◎ Bằng chứng lớp học ban đầu</span></div>
+      </div>
+      <div class="stage" id="stage" aria-label="Không gian tri thức 3D của BizOn">
+        <canvas id="globe" width="520" height="520" aria-label="Quả địa cầu 3D với các tuyến quốc tế hóa"></canvas><div class="pedestal" aria-hidden="true"></div>
+        <article class="insight i1" data-depth="1.5"><strong>Meta-analysis</strong><span data-vi="Bằng chứng → mô hình → mô phỏng" data-en="Evidence → model → simulation">Bằng chứng → mô hình → mô phỏng</span></article>
+        <article class="insight i2" data-depth="2"><strong data-vi="Bằng chứng học tập" data-en="Learning evidence">Bằng chứng học tập</strong><span data-vi="Quyết định · phản tư · kết quả" data-en="Decisions · reflection · outcomes">Quyết định · phản tư · kết quả</span></article>
+        <article class="insight i3" data-depth="2.5"><strong data-vi="Quốc tế hóa" data-en="Internationalization">Quốc tế hóa</strong><span>Market → entry → adaptation</span></article>
+        <article class="insight i4" data-depth="3"><strong>AI mentor</strong><span data-vi="Giải thích · chất vấn · phản tư" data-en="Explain · question · reflect">Giải thích · chất vấn · phản tư</span></article>
+        <figure class="avatar a" data-depth="2.8"><img src="assets/illustrations/lumina-holo-classroom.webp" alt="Lumina, cố vấn học tập AI của BizOn"><figcaption>Lumina · AI Learning Advisor</figcaption></figure>
+        <figure class="avatar b" data-depth="2.2"><img src="assets/illustrations/anh-tu-lecture-hall.webp" alt="Cố vấn chiến lược học thuật của BizOn"><figcaption>Academic Strategy Advisor</figcaption></figure>
+        <a class="passport" data-depth="3.7" data-passport href="brand-passport.html" aria-label="Enter Brand Passport"><strong>BRAND PASSPORT</strong><b>B</b></a>
+      </div>
+    </section>
+    <section class="section reveal" id="products"><span class="eyebrow" data-vi="Một hệ sinh thái · bốn cổng trải nghiệm" data-en="One ecosystem · four gateways">Một hệ sinh thái · bốn cổng trải nghiệm</span><h2 data-vi="Học kinh doanh bằng những quyết định có hệ quả." data-en="Learn business by making consequential decisions.">Học kinh doanh bằng những quyết định có hệ quả.</h2>
+      <div class="products">
+        <a class="product" data-tilt href="game.html" style="--accent:rgba(56,198,223,.32);--accent-1:#50d5eb;--accent-2:#174d91"><span class="index">01 · BIZON CORE</span><i class="orb" aria-hidden="true"></i><h3>Bật Nghiệp</h3><p data-vi="Xây dựng và điều hành doanh nghiệp qua các vòng quyết định chiến lược trong bối cảnh Việt Nam." data-en="Build and operate a business through multi-round strategic decisions in a Vietnamese context.">Xây dựng và điều hành doanh nghiệp qua các vòng quyết định chiến lược trong bối cảnh Việt Nam.</p><span class="go" data-vi="Điều hành doanh nghiệp →" data-en="Build the business →">Điều hành doanh nghiệp →</span></a>
+        <a class="product" data-tilt data-passport href="brand-passport.html" style="--accent:rgba(17,170,154,.3);--accent-1:#35c5af;--accent-2:#075667"><span class="index">02 · BIZON INTERNATIONAL</span><i class="orb" aria-hidden="true"></i><h3>Brand Passport</h3><p data-vi="Đưa thương hiệu Việt vượt biên giới bằng thông tin thị trường, entry mode, thích nghi và sức chống chịu." data-en="Take a Vietnamese brand across borders through market intelligence, entry strategy, adaptation and resilience.">Đưa thương hiệu Việt vượt biên giới bằng thông tin thị trường, entry mode, thích nghi và sức chống chịu.</p><span class="go" data-vi="Đưa thương hiệu ra thế giới →" data-en="Take the brand abroad →">Đưa thương hiệu ra thế giới →</span></a>
+        <a class="product" data-tilt href="global.html" style="--accent:rgba(105,92,210,.28);--accent-1:#8a78ed;--accent-2:#343683"><span class="index">03 · BIZON LAB</span><i class="orb" aria-hidden="true"></i><h3>IE Lab</h3><p data-vi="Thử nghiệm các giả định quốc tế hóa và quan sát cách biến chiến lược làm thay đổi kết quả." data-en="Experiment with internationalization assumptions and observe how strategic variables change outcomes.">Thử nghiệm các giả định quốc tế hóa và quan sát cách biến chiến lược làm thay đổi kết quả.</p><span class="go" data-vi="Khám phá mô hình →" data-en="Explore the model →">Khám phá mô hình →</span></a>
+        <a class="product" data-tilt href="games.html" style="--accent:rgba(220,149,61,.28);--accent-1:#e8b35f;--accent-2:#9b5827"><span class="index">04 · BIZON ARCADE</span><i class="orb" aria-hidden="true"></i><h3>Arcade</h3><p data-vi="Các mô phỏng ngắn, tập trung để luyện một kỹ năng hoặc một mẫu quyết định kinh doanh." data-en="Short, focused simulations for practicing one business skill or decision pattern at a time.">Các mô phỏng ngắn, tập trung để luyện một kỹ năng hoặc một mẫu quyết định kinh doanh.</p><span class="go" data-vi="Luyện một kỹ năng →" data-en="Practice a skill →">Luyện một kỹ năng →</span></a>
+      </div>
+    </section>
+    <section class="section reveal" id="evidence"><span class="eyebrow" data-vi="Bằng chứng trước quảng bá" data-en="Evidence before marketing">Bằng chứng trước quảng bá</span><h2 data-vi="Việc học có thể được quan sát và kiểm tra." data-en="Learning that can be examined.">Việc học có thể được quan sát và kiểm tra.</h2>
+      <div class="evidence"><article class="e-card"><span class="eyebrow">01</span><strong data-vi="Engine có khả năng giải thích" data-en="Explainable engine">Engine có khả năng giải thích</strong><p data-vi="Logic chấm điểm cốt lõi mang tính xác định để kết quả có thể được xem xét, thảo luận và tái lập." data-en="Core scoring remains deterministic so results can be inspected, discussed and reproduced.">Logic chấm điểm cốt lõi mang tính xác định để kết quả có thể được xem xét, thảo luận và tái lập.</p></article><article class="e-card"><span class="eyebrow">02</span><strong data-vi="Dấu vết quyết định" data-en="Observable decisions">Dấu vết quyết định</strong><p data-vi="Mỗi lựa chọn chiến lược để lại dữ liệu phục vụ debriefing, rubric, phản tư và phân tích lớp học." data-en="Strategic choices leave traces for debriefing, rubrics, reflection and classroom analysis.">Mỗi lựa chọn chiến lược để lại dữ liệu phục vụ debriefing, rubric, phản tư và phân tích lớp học.</p></article><article class="e-card"><span class="eyebrow">03</span><strong data-vi="Đo lường học tập" data-en="Learning evidence">Đo lường học tập</strong><p data-vi="Cơ chế game được liên kết với chuẩn đầu ra, đo lường trước–sau và các giới hạn được công bố." data-en="Game mechanics connect with learning outcomes, pre/post measures and documented limitations.">Cơ chế game được liên kết với chuẩn đầu ra, đo lường trước–sau và các giới hạn được công bố.</p></article></div>
+      <div class="facts"><span class="fact" data-vi="Pilot lớp học ban đầu: 40 người học" data-en="Preliminary classroom pilot: 40 learners">Pilot lớp học ban đầu: 40 người học</span><span class="fact" data-vi="Model cards và phương trình công khai" data-en="Published model cards and equations">Model cards và phương trình công khai</span><span class="fact" data-vi="AI diễn giải, không thay engine chấm điểm" data-en="AI interprets; it does not replace scoring">AI diễn giải, không thay engine chấm điểm</span></div>
+      <div class="actions"><a class="cta" href="hoc-thuat.html" data-vi="Xem khung học thuật →" data-en="View Academic Framework →">Xem khung học thuật →</a><a class="cta" href="bang-chung.html" data-vi="Xem bằng chứng →" data-en="View Evidence →">Xem bằng chứng →</a></div>
+    </section>
+    <section class="section reveal"><span class="eyebrow" data-vi="Từ nghiên cứu đến thiết kế học tập" data-en="Research → learning design">Từ nghiên cứu đến thiết kế học tập</span><h2 data-vi="Từ lý thuyết đến quyết định." data-en="From theory to decision.">Từ lý thuyết đến quyết định.</h2><div class="flow"><div class="node"><strong data-vi="Nghiên cứu" data-en="Research">Nghiên cứu</strong><span>IB · Entrepreneurship</span></div><div class="arrow">→</div><div class="node"><strong data-vi="Mô hình" data-en="Model">Mô hình</strong><span data-vi="Giả định và tham số" data-en="Assumptions & parameters">Giả định và tham số</span></div><div class="arrow">→</div><div class="node"><strong data-vi="Mô phỏng" data-en="Simulation">Mô phỏng</strong><span data-vi="Kịch bản có hệ quả" data-en="Consequential scenarios">Kịch bản có hệ quả</span></div><div class="arrow">→</div><div class="node"><strong data-vi="Quyết định" data-en="Decision">Quyết định</strong><span data-vi="Hành động và đánh đổi" data-en="Actions & trade-offs">Hành động và đánh đổi</span></div><div class="arrow">→</div><div class="node"><strong data-vi="Kết quả" data-en="Outcome">Kết quả</strong><span data-vi="Hệ quả giải thích được" data-en="Explainable consequences">Hệ quả giải thích được</span></div><div class="arrow">→</div><div class="node"><strong data-vi="Phản tư" data-en="Reflection">Phản tư</strong><span data-vi="AI hỗ trợ chất vấn" data-en="AI-enhanced questioning">AI hỗ trợ chất vấn</span></div><div class="arrow">→</div><div class="node"><strong data-vi="Bằng chứng" data-en="Evidence">Bằng chứng</strong><span data-vi="Sản phẩm học tập quan sát được" data-en="Observable learning artifacts">Sản phẩm học tập quan sát được</span></div></div></section>
+    <section class="section reveal"><span class="eyebrow" data-vi="Con người và bản sắc trí tuệ" data-en="People & intellectual identity">Con người và bản sắc trí tuệ</span><h2 data-vi="Dẫn dắt bởi nghiên cứu, bắt nguồn từ Việt Nam, hướng đến toàn cầu." data-en="Research-led, locally grounded, globally oriented.">Dẫn dắt bởi nghiên cứu, bắt nguồn từ Việt Nam, hướng đến toàn cầu.</h2><div class="people"><article class="people-card"><div class="person"><div class="monogram">TH</div><div><h3>Đỗ Thùy Hương</h3><p><strong>Founder & Project Lead · PhD Candidate in Business Administration, Can Tho University</strong></p><p data-vi="Nghiên cứu chiến lược quốc tế hóa, hiệu quả doanh nghiệp, meta-analysis, phương pháp định lượng và ứng dụng AI trong nghiên cứu quản trị." data-en="Research in internationalization strategy, firm performance, meta-analysis, quantitative methods and AI-assisted management research.">Nghiên cứu chiến lược quốc tế hóa, hiệu quả doanh nghiệp, meta-analysis, phương pháp định lượng và ứng dụng AI trong nghiên cứu quản trị.</p><div class="links"><a href="doi-ngu.html">Profile</a><a href="hoc-thuat.html">Academic</a><a href="https://github.com/thuyhuongctu/BizOn" target="_blank" rel="noopener">GitHub</a></div></div></div><div class="person"><div class="monogram" style="background:linear-gradient(145deg,#8b5325,#c6a76b)">AT</div><div><h3>PGS.TS. Phan Anh Tú</h3><p><strong>Co-founder & Chief Academic Advisor</strong></p><p data-vi="Định hướng học thuật, phản biện mô hình, thiết kế triển khai trong lớp học và bảo đảm sự gắn kết giữa mô phỏng với mục tiêu đào tạo." data-en="Academic direction, model review, classroom implementation design and alignment between simulations and learning outcomes.">Định hướng học thuật, phản biện mô hình, thiết kế triển khai trong lớp học và bảo đảm sự gắn kết giữa mô phỏng với mục tiêu đào tạo.</p></div></div></article><aside class="sound"><span class="eyebrow" data-vi="Lớp trải nghiệm nhập vai" data-en="Immersive learning layer">Lớp trải nghiệm nhập vai</span><h3 data-vi="Âm nhạc cho trải nghiệm học sâu hơn." data-en="Soundtrack for deeper learning.">Âm nhạc cho trải nghiệm học sâu hơn.</h3><p>Brand Passport OST · From the Mekong · Across the Markets · Vietnam to the World</p><div class="wave" aria-hidden="true"></div><a class="cta" href="am-nhac.html" style="align-self:flex-start" data-vi="Mở kho âm nhạc →" data-en="Open BizOn Soundtrack →">Mở kho âm nhạc →</a></aside></div></section>
+  </main>
+  <footer class="shell"><div class="footer-grid"><div><strong>BizOn Academia 3D V2</strong><br><span data-vi="Nền tảng mô phỏng kinh doanh định hướng nghiên cứu từ Việt Nam." data-en="Research-driven business simulation from Vietnam.">Nền tảng mô phỏng kinh doanh định hướng nghiên cứu từ Việt Nam.</span></div><div><a href="hoc-thuat.html">Academic</a> · <a href="bang-chung.html">Evidence</a> · <a href="chinh-sach.html">Privacy</a> · <a href="index.html" data-vi="Trang chủ hiện tại" data-en="Current homepage">Trang chủ hiện tại</a></div></div></footer>
+  <script>
+    (()=>{'use strict';const root=document.documentElement;const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;const fine=matchMedia('(pointer:fine)').matches;const nav=document.querySelector('.nav');
+      const setTheme=t=>{root.dataset.theme=t;localStorage.setItem('bizon-theme',t);document.querySelector('#theme').textContent=t==='dark'?'☀':'☾';document.querySelector('meta[name="theme-color"]').content=t==='dark'?'#06131f':'#f4f8fc'};
+      setTheme(localStorage.getItem('bizon-theme')||'light');document.querySelector('#theme').addEventListener('click',()=>setTheme(root.dataset.theme==='dark'?'light':'dark'));
+      let lang=localStorage.getItem('bizon-lang')||'vi';const setLang=l=>{lang=l;root.lang=l;document.querySelectorAll('[data-vi][data-en]').forEach(n=>n.textContent=n.dataset[l]);document.querySelector('#language').textContent=l==='vi'?'EN':'VI';localStorage.setItem('bizon-lang',l)};setLang(lang);document.querySelector('#language').addEventListener('click',()=>setLang(lang==='vi'?'en':'vi'));
+      const scroll=()=>nav.classList.toggle('scrolled',scrollY>56);scroll();addEventListener('scroll',scroll,{passive:true});
+      const reveals=[...document.querySelectorAll('.reveal')];if(reduce||!('IntersectionObserver'in window))reveals.forEach(n=>n.classList.add('visible'));else{const io=new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');o.unobserve(e.target)}}),{threshold:.14,rootMargin:'0px 0px -6%'});reveals.forEach(n=>io.observe(n))}
+      const stage=document.querySelector('#stage');if(stage&&fine&&!reduce){const ds=[...stage.querySelectorAll('[data-depth]')];let raf=0;const render=(x,y)=>ds.forEach(n=>{const d=Number(n.dataset.depth||1);n.style.setProperty('--sx',`${x*d*7}px`);n.style.setProperty('--sy',`${y*d*5}px`)});stage.addEventListener('pointermove',e=>{const r=stage.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>render(x,y))});stage.addEventListener('pointerleave',()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>render(0,0))})}
+      document.querySelectorAll('[data-tilt]').forEach(c=>{if(!fine||reduce)return;c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.setProperty('--rx',`${-y*5}deg`);c.style.setProperty('--ry',`${x*6}deg`)});c.addEventListener('pointerleave',()=>{c.style.setProperty('--rx','0deg');c.style.setProperty('--ry','0deg')})});
+      document.querySelectorAll('[data-passport]').forEach(a=>a.addEventListener('click',e=>{if(reduce)return;const href=a.getAttribute('href');if(!href)return;e.preventDefault();root.classList.add('leaving');setTimeout(()=>location.href=href,420)}));
+      const canvas=document.querySelector('#globe'),ctx=canvas.getContext('2d');let W=520,H=520,dpr=1,angle=0,last=performance.now();const pts=[];for(let lat=-75;lat<=75;lat+=10)for(let lon=-180;lon<180;lon+=10)pts.push([lat*Math.PI/180,lon*Math.PI/180]);const routes=[[10.8,106.7,35.7,139.7],[10.8,106.7,1.3,103.8],[10.8,106.7,51.5,-.1],[10.8,106.7,37.8,-122.4],[10.8,106.7,-33.9,151.2]];
+      function resize(){const r=canvas.getBoundingClientRect();dpr=Math.min(devicePixelRatio||1,1.7);W=Math.max(1,Math.round(r.width*dpr));H=Math.max(1,Math.round(r.height*dpr));if(canvas.width!==W||canvas.height!==H){canvas.width=W;canvas.height=H}}
+      const project=(lat,lon,a)=>{const x=Math.cos(lat)*Math.sin(lon+a),y=Math.sin(lat),z=Math.cos(lat)*Math.cos(lon+a);return{x,y,z}};
+      function draw(now){resize();const s=Math.min(W,H)*.43,cx=W/2,cy=H/2;ctx.clearRect(0,0,W,H);const g=ctx.createRadialGradient(cx-s*.25,cy-s*.3,s*.08,cx,cy,s*1.1);g.addColorStop(0,'rgba(151,235,250,.95)');g.addColorStop(.38,'rgba(35,139,204,.86)');g.addColorStop(1,'rgba(4,35,82,.94)');ctx.beginPath();ctx.arc(cx,cy,s,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();ctx.strokeStyle='rgba(175,239,251,.52)';ctx.lineWidth=1.2*dpr;ctx.stroke();
+        pts.forEach(([lat,lon])=>{const p=project(lat,lon,angle);if(p.z<-.12)return;const k=.82+.18*p.z;ctx.beginPath();ctx.arc(cx+p.x*s,cy-p.y*s,Math.max(.7*dpr,1.35*dpr*k),0,Math.PI*2);ctx.fillStyle=`rgba(225,249,255,${.18+.55*Math.max(0,p.z)})`;ctx.fill()});
+        routes.forEach((r,i)=>{const [la1,lo1,la2,lo2]=r.map(v=>v*Math.PI/180);ctx.beginPath();let started=false;for(let t=0;t<=1;t+=.035){const lat=la1+(la2-la1)*t+Math.sin(Math.PI*t)*.18,lon=lo1+(lo2-lo1)*t,p=project(lat,lon,angle);if(p.z<0){started=false;continue}const x=cx+p.x*s,y=cy-p.y*s;if(!started){ctx.moveTo(x,y);started=true}else ctx.lineTo(x,y)}ctx.strokeStyle=i%2?'rgba(247,211,146,.58)':'rgba(129,231,246,.62)';ctx.lineWidth=1.2*dpr;ctx.stroke()});
+        const dt=Math.min(40,now-last);last=now;if(!reduce)angle+=dt*.00008;if(!reduce)requestAnimationFrame(draw)}requestAnimationFrame(draw);
+    })();
+  </script>
+</body>
+</html>
