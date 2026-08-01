@@ -11,15 +11,12 @@
 <script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
 <script src="js/backend-config.js"></script>
 <script src="js/error-log.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Phong nap khong chan hien thi: media="print" -> onload doi ve "all".
-     Neu Google Fonts cham hoac bi chan, trang van hien ngay bang phong du phong. -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"></noscript>
+<!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
+     nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
+<link rel="stylesheet" href="css/bizon-fonts.css">
 <style>
   html { background:#f4faff; scroll-behavior:smooth; }
-  body { font-family:'Manrope',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
+  body { font-family:'Manrope', 'Manrope Fallback',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
   .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
   .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease; }
   .clay-btn:active { transform:translateY(2px); }
@@ -44,7 +41,7 @@
 <meta property="og:title" content="Liên hệ &amp; Hợp tác – BizOn Bật Nghiệp">
 <meta property="og:description" content="Liên hệ nhóm BizOn: hợp tác giảng dạy, nghiên cứu với DOI trích dẫn được, hoặc cộng tác sáng tạo âm nhạc và nghệ thuật claymorphism.">
 <meta property="og:url" content="https://thuyhuongctu.github.io/BizOn/lien-he.html">
-<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/og/og-cover.jpg">
+<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/og/og-cover.webp">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -76,7 +73,7 @@
       <h1 class="font-display font-extrabold text-3xl sm:text-4xl mt-2">Kết nối với nhóm BizOn</h1>
       <p class="text-white/75 text-sm mt-3 max-w-2xl">Chúng tôi luôn sẵn sàng lắng nghe – từ góp ý về trò chơi, đề xuất hợp tác giảng dạy, đến những ý tưởng sáng tạo mới.</p>
     </div>
-    <img src="assets/character/anh-tu-ao-dai-work-cut.png" alt="Tú Phan tại bàn làm việc" class="h-44 sm:h-56 w-auto mx-auto drop-shadow-2xl hidden sm:block">
+    <img src="assets/character/anh-tu-ao-dai-work-cut.webp" alt="Tú Phan tại bàn làm việc" class="h-44 sm:h-56 w-auto mx-auto drop-shadow-2xl hidden sm:block">
   </div>
 </header>
 

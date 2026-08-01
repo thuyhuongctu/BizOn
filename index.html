@@ -12,15 +12,12 @@
 <script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
 <script src="js/backend-config.js"></script>
 <script src="js/error-log.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Phong nap khong chan hien thi: media="print" -> onload doi ve "all".
-     Neu Google Fonts cham hoac bi chan, trang van hien ngay bang phong du phong. -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"></noscript>
+<!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
+     nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
+<link rel="stylesheet" href="css/bizon-fonts.css">
 <style>
   html { background:#f4faff; scroll-behavior:smooth; }
-  body { font-family:'Manrope',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
+  body { font-family:'Manrope', 'Manrope Fallback',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
   .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
   /* Thẻ Kho Âm nhạc: từ sm trở lên ảnh cao bằng thẻ nên Lumina đứng trọn người.
      Dưới sm khung chỉ cao 13rem mà ảnh là chân dung dọc, object-cover cắt ngang
@@ -65,7 +62,7 @@
 <meta property="og:title" content="BizOn Bật Nghiệp – Trang chủ">
 <meta property="og:description" content="BizOn – Bật Nghiệp: Trò chơi mô phỏng kinh doanh 3D phong cách đất sét dành cho đào tạo khởi nghiệp. Cổng vào hệ sinh thái: game chính, Arcade, BizOn Go Global, Kho Âm nhạc và Thư viện Sáng tạo.">
 <meta property="og:url" content="https://thuyhuongctu.github.io/BizOn/">
-<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/og/og-cover.jpg">
+<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/og/og-cover.webp">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -204,6 +201,31 @@
     </div>
   </section>
 
+
+  <!-- Hành trình chinh phục: chính bản đồ dùng trong ván chơi, đặt ở trang chủ để
+       người xem hình dung được lộ trình sáu vòng trước khi bấm vào chơi. -->
+  <section class="clay-card p-6 sm:p-8 mb-12">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl text-center">🗺️ Hành trình chinh phục Việt Nam</h2>
+    <p class="text-xs text-deep-teal/55 text-center mt-1.5 max-w-2xl mx-auto">Sáu vòng, sáu vùng kinh tế. Thắng thị phần vòng nào thì cắm cờ doanh nghiệp lên vùng đó – từ Cần Thơ ngược ra Hà Nội. Đây đúng là tấm bản đồ hiện trong ván chơi.</p>
+    <div class="grid sm:grid-cols-2 gap-6 items-center mt-5">
+      <figure class="max-w-xs w-full mx-auto">
+        <img src="assets/illustrations/arena-vietnam-map.webp" width="768" height="1376" loading="lazy" decoding="async"
+             class="w-full h-auto rounded-2xl shadow-xl"
+             alt="Bản đồ đất sét ba chiều của Việt Nam: miền Bắc, miền Trung, Tây Nguyên, Nam Bộ và đồng bằng sông Cửu Long, kèm hai quần đảo Hoàng Sa và Trường Sa ngoài khơi.">
+      </figure>
+      <ol class="space-y-2.5 text-sm">
+        <li class="flex items-baseline gap-2"><b class="font-display font-extrabold text-primary shrink-0">V1</b><span class="font-bold text-deep-teal">Cần Thơ</span><span class="text-[10px] text-deep-teal/45 ml-auto text-right">Đồng bằng sông Cửu Long</span></li>
+        <li class="flex items-baseline gap-2"><b class="font-display font-extrabold text-primary shrink-0">V2</b><span class="font-bold text-deep-teal">TP. Hồ Chí Minh</span><span class="text-[10px] text-deep-teal/45 ml-auto text-right">Đông Nam Bộ</span></li>
+        <li class="flex items-baseline gap-2"><b class="font-display font-extrabold text-primary shrink-0">V3</b><span class="font-bold text-deep-teal">Khánh Hòa</span><span class="text-[10px] text-deep-teal/45 ml-auto text-right">Duyên hải Nam Trung Bộ</span></li>
+        <li class="flex items-baseline gap-2"><b class="font-display font-extrabold text-primary shrink-0">V4</b><span class="font-bold text-deep-teal">Đà Nẵng</span><span class="text-[10px] text-deep-teal/45 ml-auto text-right">Duyên hải miền Trung</span></li>
+        <li class="flex items-baseline gap-2"><b class="font-display font-extrabold text-primary shrink-0">V5</b><span class="font-bold text-deep-teal">Thanh Hóa</span><span class="text-[10px] text-deep-teal/45 ml-auto text-right">Bắc Trung Bộ</span></li>
+        <li class="flex items-baseline gap-2"><b class="font-display font-extrabold text-primary shrink-0">V6</b><span class="font-bold text-deep-teal">Hà Nội</span><span class="text-[10px] text-deep-teal/45 ml-auto text-right">Đồng bằng sông Hồng</span></li>
+        <li class="pt-2 text-[10px] text-deep-teal/45 leading-relaxed border-t border-deep-teal/10">Quần đảo Hoàng Sa và Trường Sa thuộc chủ quyền Việt Nam. Cột cờ Lũng Cú (Hà Giang) là điểm cực Bắc.</li>
+      </ol>
+    </div>
+    <p class="text-center mt-6"><a href="game.html" class="clay-btn clay-btn-primary inline-block px-6 py-2.5 text-white font-extrabold text-sm">🎮 Vào chơi sáu vòng →</a></p>
+  </section>
+
   <!-- Bốn tầng sản phẩm: trả lời thẳng câu "tôi nên bắt đầu từ đâu?" -->
   <p class="text-[10px] font-extrabold uppercase tracking-widest text-deep-teal/50 mb-3">🧭 Bắt đầu từ đâu?</p>
   <section class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
@@ -267,7 +289,7 @@
         <p class="text-xs text-deep-teal/55 mt-1.5">Ca khúc gốc, trình phát đầy đủ, lời bài hát và giọng Lumina AI.</p>
         <span class="clay-btn inline-block text-white font-display font-extrabold px-5 py-2.5 text-xs mt-4" style="background:linear-gradient(160deg,#00c4ff,#006687)">NGHE NGAY →</span>
       </div>
-      <img src="assets/character/lumina-ao-dai-present.png" alt="Lumina giới thiệu Kho Âm nhạc BizOn" class="music-lumina w-full h-52 sm:h-full object-cover" style="object-position:50% 12%" loading="lazy">
+      <img src="assets/character/lumina-ao-dai-present.webp" alt="Lumina giới thiệu Kho Âm nhạc BizOn" class="music-lumina w-full h-52 sm:h-full object-cover" style="object-position:50% 12%" loading="lazy">
     </a>
   </section>
 
