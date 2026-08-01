@@ -1,0 +1,12 @@
+const assert=require('assert');
+const Engine=require('../js/aibis/entry-mode-engine.js');
+const Models=require('../js/aibis/entry-mode-models.js');
+const context={priorities:{control:70,speed:55,learning:80,capitalEfficiency:45,riskCompatibility:55,knowledgeProtection:75,localEmbeddedness:70,digitalScalability:55},firm:{financialCapacity:65,internationalExperience:50,digitalCapability:70},country:{institutionalDistance:65,culturalDistance:55,tariffPressure:20,logisticsQuality:85,ipProtection:80,opportunismRisk:35,localPartnerValue:78,networkImportance:70,marketSize:88,politicalRisk:20,digitalReadiness:94,crossBorderNetworkEffects:60,dataRegulationRisk:45}};
+assert.strictEqual(Models.modes.length,6);
+assert.strictEqual(new Set(Models.modes.map(x=>x.id)).size,6);
+Models.modes.forEach(m=>['control','speed','learning','capitalRequirement','risk','knowledgeProtection','localEmbeddedness','digitalScalability','evidenceConfidence'].forEach(k=>assert(m[k]>=0&&m[k]<=100,`${m.id}.${k}`)));
+const r1=Engine.rankModes(Models.modes,context);const r2=Engine.rankModes(Models.modes,context);assert.deepStrictEqual(r1,r2);assert.strictEqual(r1.length,6);assert(r1.every(x=>x.score>=0&&x.score<=100));assert(r1.every(x=>x.confidence>=50&&x.confidence<=90));
+const fdi=Models.modes.find(x=>x.id==='wholly_owned_fdi');const weak={...context,firm:{financialCapacity:20,internationalExperience:15,digitalCapability:30}};const score=Engine.scoreMode(fdi,weak);assert(score.explanation.cautions.length>=2);
+const digital=Models.modes.find(x=>x.id==='digital_entry');const lowDigital={...context,firm:{financialCapacity:65,internationalExperience:50,digitalCapability:20}};assert(Engine.scoreMode(digital,context).score>Engine.scoreMode(digital,lowDigital).score);
+const cmp=Engine.compareModes(Models.modes[0],Models.modes[2],context);assert.strictEqual(cmp.results.length,2);assert(cmp.difference>=0);
+console.log('AIBIS entry mode engine tests passed');
