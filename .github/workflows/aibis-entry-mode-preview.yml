@@ -1,0 +1,21 @@
+name: AIBIS Entry Mode Preview
+on:
+  pull_request:
+    paths:
+      - 'aibis-entry-mode-preview.html'
+      - 'css/aibis-entry-mode-preview.css'
+      - 'js/aibis/entry-mode-preview-*.js'
+      - 'test/aibis-entry-mode-preview.test.js'
+      - 'docs/architecture/AIBIS-ENTRY-MODE-PREVIEW.md'
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node --check js/aibis/entry-mode-preview-data.js
+      - run: node --check js/aibis/entry-mode-preview.js
+      - run: node test/aibis-entry-mode-preview.test.js
+      - run: test -s aibis-entry-mode-preview.html
