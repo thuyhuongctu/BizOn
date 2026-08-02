@@ -4,19 +4,19 @@
 > **Cách gửi:** thu từng câu thành 1 file MP3, đặt **đúng tên file** trong bảng, gửi lên chat – hệ thống sẽ nối vào đúng ngữ cảnh trong game.
 > Lưu ý: câu có chỗ trống `{…}` chứa số liệu động (ROI, OEE…) – khi thu, đọc câu mẫu với một con số bất kỳ hoặc bỏ qua câu đó (bản chữ vẫn hiển thị).
 
-Tổng cộng: **49 câu** trong 8 nhóm.
+Tổng cộng: **55 câu** trong 9 nhóm (52 câu trong các bảng dưới + 3 câu chào đăng nhập).
 
-**Đã thu:** 3 câu chào đăng nhập + 21 câu trong `assets/audio/voice/`.
+**Đã thu:** 3 câu chào đăng nhập + 21/52 câu trong `assets/audio/voice/`.
 
-**Trạng thái từng tệp** (so với mục «Bản đọc cho thu âm» ở cuối tài liệu):
-
-| Nhóm | Tệp | Tình trạng |
+| Nhóm | Số câu | Tệp |
 |---|---|---|
-| ✅ Đã thu lại đúng bản đọc | `adv-02`, `adv-03`, `adv-04`, `adv-05`, `adv-06`, `adv-07`, `adv-08`, `adv-10`, `adv-11`, `adv-12`, `adv-13`, `adv-14`, `adv-15`, `adv-17`, `kpi-01`, `kpi-02`, `kpi-03`, `risk-02` | sẵn sàng nối vào game |
-| ✅ Không chứa viết tắt | `adv-09`, `adv-16`, `risk-01` | bản thu đầu đã dùng được |
-| ⬜ Chưa thu | `chat-03`, `chat-04`, `chat-06`, `topic-01`, `topic-02`, `topic-03`, `topic-04`, `topic-05` | – |
+| ✅ Đã thu, đúng bản đọc | 18 | `adv-02`, `adv-03`, `adv-04`, `adv-05`, `adv-06`, `adv-07`, `adv-08`, `adv-10`, `adv-11`, `adv-12`, `adv-13`, `adv-14`, `adv-15`, `adv-17`, `kpi-01`, `kpi-02`, `kpi-03`, `risk-02` |
+| ✅ Đã thu, vốn không có viết tắt | 3 | `adv-09`, `adv-16`, `risk-01` |
+| ⬜ Chưa thu – **phải theo bản đọc** | 8 | `chat-03`, `chat-04`, `chat-06`, `topic-01`, `topic-02`, `topic-03`, `topic-04`, `topic-05` |
+| ⬜ Chưa thu – đọc nguyên văn | 23 | `adv-01`, `chat-01`, `chat-02`, `chat-05`, `chat-07`, `chat-08`, `topic-06`, `topic-07`, `quote-01`, `quote-02`, `quote-03`, `quote-04`, `quote-05`, `quote-06`, `glob-01`, `glob-02`, `glob-03`, `intro-01`, `intro-02`, `intro-03`, `intro-04`, `intro-05`, `intro-06` |
 
-> Còn **8/26** câu trong mục «Bản đọc cho thu âm» chưa có bản thu.
+> Còn **31/52** câu chưa thu. Trong đó 8 câu bắt buộc đọc theo mục
+> «Bản đọc cho thu âm» ở cuối tài liệu; 23 câu còn lại đọc nguyên văn.
 > Khi có bản mới, thay tệp cùng tên rồi mới nối vào game.
 
 ## Bộ não cố vấn theo vai trò (tab Cố vấn – thẻ CFO/CMO/COO/SEC)
@@ -110,6 +110,25 @@ Tổng cộng: **49 câu** trong 8 nhóm.
 
 ---
 *Sinh tự động từ mã nguồn `js/engine.js`, `js/app.js`, `global.html` – cập nhật khi lời thoại trong game thay đổi.*
+
+
+## Màn giới thiệu game (6 slide đầu ván) – chưa có trong danh sách cũ
+
+Sáu slide này hiện ra khi người chơi mở ván mới (`INTRO_SLIDES` trong `js/app.js`).
+Hiện **chỉ có chữ, chưa có giọng**, và trước nay chưa được liệt kê ở tài liệu này nên
+dễ bị bỏ quên. Ưu tiên thấp hơn nhóm cố vấn, nhưng có giọng thì phần mở đầu ấm hơn hẳn.
+
+⚠️ Slide 4 chứa **cả năm viết tắt vai trò trong một câu** – nếu thu thì phải đọc theo
+bảng tra cứu ở cuối tài liệu.
+
+| Tên file | Slide | Lời thoại |
+|---|---|---|
+| `voice/intro-01.mp3` | 🇻🇳 Việt Nam 2026 | Nền kinh tế đang vươn mình "Hóa Rồng". Đội của bạn điều hành một công ty đồ chơi đất sét – khởi nghiệp từ Miền Tây, khát vọng mở rộng cả thị trường nội địa và quốc tế. |
+| `voice/intro-02.mp3` | 🏺 Doanh nghiệp & sản phẩm của bạn | Bạn điều hành một xưởng đồ chơi đất sét thủ công tại Cần Thơ, vốn khởi điểm 500 triệu ₫. Sản phẩm chủ lực: «Bộ linh vật đất sét Việt» – dòng quà tặng & đồ sưu tầm, giá tham chiếu 150.000₫/bộ. Tên doanh nghiệp chính là tên đội bạn đặt khi đăng nhập! |
+| `voice/intro-03.mp3` | 🗺️ 6 vòng · 6 tỉnh thành | Mỗi vòng là một quý kinh doanh tại một tỉnh/thành trên bản đồ mới: Cần Thơ → TP. Hồ Chí Minh → Khánh Hòa → Đà Nẵng → Thanh Hóa → Hà Nội. Đội thắng vòng nào sẽ cắm cờ 🚩 lên tỉnh đó! ⏱️ Mỗi vòng 5–7 phút, cả ván ≈ 30–45 phút. |
+| `voice/intro-04.mp3` | 👥 Đội hình C-Suite | CEO chèo lái chiến lược, CFO giữ két sắt, CMO đánh chiếm thị trường, COO vận hành xưởng, SEC ghi biên bản – bên cạnh cố vấn Lumina AI và thầy Tú Phan. |
+| `voice/intro-05.mp3` | 🌏 Sau đó: ra biển lớn | Chinh phục xong Việt Nam? BizOn Go Global đang chờ – chọn 1 trong 7 thị trường quốc tế, đàm phán với đối tác bản địa và thử sức 4 phương thức thâm nhập. |
+| `voice/intro-06.mp3` | 🏆 Mục tiêu của bạn | Cắm nhiều cờ nhất, đạt TOP 1 thị phần Việt Nam và nhận chứng nhận hoàn thành. Sẵn sàng Bật Nghiệp? 🚀 |
 
 ---
 
