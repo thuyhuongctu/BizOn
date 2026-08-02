@@ -1,0 +1,29 @@
+{
+  "product": "BizOn",
+  "package_name": "vn.bizon.simulation",
+  "version_name": "1.0.0",
+  "version_code": 1,
+  "release_name": "1.0.0 Internal",
+  "track": "internal",
+  "application_type": "education",
+  "distribution": "free",
+  "min_sdk": 23,
+  "target_sdk": 36,
+  "start_url": "https://thuyhuongctu.github.io/BizOn/app/release.html",
+  "privacy_policy_url": "https://thuyhuongctu.github.io/BizOn/chinh-sach.html",
+  "support_url": "https://thuyhuongctu.github.io/BizOn/",
+  "release_notes_vi": "Phiên bản thử nghiệm đầu tiên của BizOn, gồm Startup Lab, Brand Passport, AIBIS và không gian hỗ trợ giảng dạy.",
+  "release_notes_en": "First internal release of BizOn with Startup Lab, Brand Passport, AIBIS, and teaching support tools.",
+  "data_profile": {
+    "core_local_use_available": true,
+    "brand_passport_remote_submission_enabled": false,
+    "advertising_sdk": false,
+    "native_sensitive_permissions": false
+  },
+  "signing": {
+    "upload_key_required_for_signed_aab": true,
+    "play_app_signing_sha256_required_for_first_aab": false,
+    "play_app_signing_sha256_required_for_verified_twa": true
+  },
+  "status": "release-candidate"
+}
