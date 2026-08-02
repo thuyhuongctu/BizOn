@@ -11,7 +11,7 @@ on:
       - 'test/android-twa-contract.test.js'
       - '.github/workflows/android-twa-build.yml'
   push:
-    branches: ['main', 'feat/web-app-release-v1']
+    branches: ['main', 'feat/web-app-release-v1', 'feat/google-play-release-readiness-v1']
     paths:
       - 'android/**'
       - 'app/**'
@@ -77,16 +77,16 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Install Android 35 SDK
+      - name: Install Android 16 API 36 SDK
         shell: bash
         run: |
           yes | sdkmanager --licenses >/dev/null || true
-          sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+          sdkmanager 'platforms;android-36' 'build-tools;35.0.0'
 
-      - name: Set up Gradle 8.9
+      - name: Set up Gradle 8.11.1
         uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: '8.9'
+          gradle-version: '8.11.1'
 
       - name: Build debug APK
         run: gradle -p android :app:assembleDebug --stacktrace
