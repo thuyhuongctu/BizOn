@@ -39,6 +39,26 @@
       path: 'assets/character/bizon-duo-phong-thu-cut.webp',
       viAlt: 'Đôi nhân vật BizOn biểu diễn trong phòng thu',
       enAlt: 'BizOn character duo performing in the studio'
+    },
+    vietnamJourneyMap: {
+      path: 'assets/illustrations/arena-vietnam-map-v2.webp',
+      viAlt: 'Bản đồ Việt Nam đất sét dùng cho hành trình mô phỏng BizOn',
+      enAlt: 'Clay-style Vietnam map used for the BizOn simulation journey'
+    },
+    vietnamStartupHero: {
+      path: 'assets/illustrations/hero-vietnam-2026.webp',
+      viAlt: 'Không gian Bật Nghiệp 2026 với bản sắc Việt Nam',
+      enAlt: 'BizOn Startup Lab 2026 scene with Vietnamese identity'
+    },
+    brandPassportCastSheet: {
+      path: 'assets/illustrations/cast-sheet-brand-passport.webp',
+      viAlt: 'Bộ nhân vật gốc của trò chơi Hộ Chiếu Thương Hiệu',
+      enAlt: 'Original character cast of the Brand Passport simulation'
+    },
+    bizonMusicCover: {
+      path: 'assets/illustrations/giai-dieu-bizon.webp',
+      viAlt: 'Ảnh bìa Giai điệu BizOn trong thư viện sáng tạo',
+      enAlt: 'BizOn Melodies cover artwork in the creative library'
     }
   });
 
@@ -110,6 +130,99 @@
     hero.insertAdjacentElement('afterend', section);
   }
 
+  function createModuleCard(module) {
+    const link = document.createElement('a');
+    link.className = 'bz-existing-module';
+    link.href = new URL(module.href, siteRoot).href;
+    link.dataset.module = module.id;
+    link.appendChild(createImage(module.asset));
+
+    const copy = document.createElement('div');
+    copy.className = 'bz-existing-module-copy';
+    copy.innerHTML = `
+      <span>${module.kicker[lang]}</span>
+      <h3>${module.title[lang]}</h3>
+      <p>${module.description[lang]}</p>
+      <strong>${lang === 'en' ? 'Open module →' : 'Mở mô-đun →'}</strong>`;
+    link.appendChild(copy);
+    return link;
+  }
+
+  function installEcosystemLibrary() {
+    const hero = document.querySelector('body.bizon-landing .bz-hero');
+    if (!hero || document.querySelector('[data-existing-ecosystem]')) return;
+
+    const modules = [
+      {
+        id: 'startup-lab',
+        asset: 'vietnamStartupHero',
+        href: 'game.html',
+        kicker: { vi: 'MÔ PHỎNG KHỞI NGHIỆP', en: 'STARTUP SIMULATION' },
+        title: { vi: 'Bật Nghiệp', en: 'Startup Lab' },
+        description: {
+          vi: 'Ra quyết định qua sáu vòng kinh doanh với dữ liệu, rủi ro và kết quả có thể truy vết.',
+          en: 'Make decisions across six business rounds with traceable data, risk and outcomes.'
+        }
+      },
+      {
+        id: 'vietnam-journey',
+        asset: 'vietnamJourneyMap',
+        href: 'global.html',
+        kicker: { vi: 'HÀNH TRÌNH VIỆT NAM', en: 'VIETNAM JOURNEY' },
+        title: { vi: 'Từ Mekong ra thế giới', en: 'From the Mekong to the world' },
+        description: {
+          vi: 'Theo dõi tuyến phát triển từ thị trường nội địa đến lựa chọn quốc tế hóa.',
+          en: 'Follow the path from domestic markets to internationalisation choices.'
+        }
+      },
+      {
+        id: 'brand-passport',
+        asset: 'brandPassportCastSheet',
+        href: 'app/brand-passport.html',
+        kicker: { vi: 'THƯƠNG HIỆU QUỐC TẾ', en: 'INTERNATIONAL BRANDING' },
+        title: { vi: 'Hộ Chiếu Thương Hiệu', en: 'Brand Passport' },
+        description: {
+          vi: 'Làm việc cùng bộ nhân vật gốc để lựa chọn thị trường, thích nghi và phương thức thâm nhập.',
+          en: 'Work with the original cast to choose markets, adaptation and entry modes.'
+        }
+      },
+      {
+        id: 'bizon-music',
+        asset: 'bizonMusicCover',
+        href: 'am-nhac.html',
+        kicker: { vi: 'THƯ VIỆN SÁNG TẠO', en: 'CREATIVE LIBRARY' },
+        title: { vi: 'Giai điệu BizOn', en: 'BizOn Music' },
+        description: {
+          vi: 'Khám phá các tuyển tập âm nhạc được gắn với từng trò chơi và hành trình học tập.',
+          en: 'Explore music collections linked to each simulation and learning journey.'
+        }
+      }
+    ];
+
+    const section = document.createElement('section');
+    section.className = 'bz-wrap bz-existing-ecosystem';
+    section.dataset.existingEcosystem = 'true';
+    section.setAttribute('aria-label', lang === 'en' ? 'Explore the BizOn ecosystem' : 'Khám phá hệ sinh thái BizOn');
+    section.innerHTML = `
+      <header class="bz-existing-ecosystem-head">
+        <div>
+          <span class="bz-existing-badge">${lang === 'en' ? 'Original BizOn assets' : 'Tài sản gốc BizOn'}</span>
+          <h2>${lang === 'en' ? 'Explore the connected simulation ecosystem' : 'Khám phá hệ sinh thái mô phỏng liên kết'}</h2>
+        </div>
+        <p>${lang === 'en'
+          ? 'Each module uses preserved BizOn artwork and links to the current working experience.'
+          : 'Mỗi mô-đun sử dụng hình ảnh BizOn đã được bảo tồn và dẫn tới trải nghiệm đang hoạt động.'}</p>
+      </header>`;
+
+    const grid = document.createElement('div');
+    grid.className = 'bz-existing-ecosystem-grid';
+    modules.forEach(module => grid.appendChild(createModuleCard(module)));
+    section.appendChild(grid);
+
+    const cast = document.querySelector('[data-existing-cast]');
+    (cast || hero).insertAdjacentElement('afterend', section);
+  }
+
   function installCommandCenterGuide() {
     const panel = document.querySelector('body.bizon-command .bz-ai-panel');
     if (!panel || panel.querySelector('[data-existing-guide]')) return;
@@ -148,6 +261,7 @@
   function install() {
     ensureStylesheet();
     installLandingCast();
+    installEcosystemLibrary();
     installCommandCenterGuide();
     installAibisGuide();
   }
