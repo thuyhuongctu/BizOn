@@ -45,3 +45,12 @@ jobs:
         env:
           BIZON_URL: http://127.0.0.1:8899
         run: node test/brand-passport-learning.test.js
+
+      - name: Upload visual QA
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: brand-passport-learning-qa
+          path: artifacts/
+          retention-days: 14
+          if-no-files-found: warn
