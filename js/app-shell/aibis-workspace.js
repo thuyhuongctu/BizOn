@@ -1,87 +1,93 @@
 (() => {
   'use strict';
 
-  const priorities = { control: 70, speed: 60, learning: 75, capital: 55, risk: 45 };
-  const market = [
-    ['Market attractiveness', 74], ['Institution quality', 82], ['Logistics', 88], ['Digital readiness', 91]
-  ];
-  const capabilities = [
-    ['Financial', 64], ['International', 48], ['Digital', 72], ['Product scale', 70], ['Network', 55], ['Management', 66]
-  ];
-  const modes = [
-    { id:'export', name:'Export', desc:'Nhanh, ít vốn, kiểm soát và học hỏi hạn chế.', control:25, speed:88, learning:35, capital:82, risk:78 },
-    { id:'licensing', name:'Licensing', desc:'Mở rộng nhanh nhưng tăng rủi ro tri thức và chất lượng.', control:20, speed:82, learning:38, capital:86, risk:65 },
-    { id:'joint-venture', name:'Joint Venture', desc:'Tăng embeddedness, học hỏi địa phương và chia sẻ rủi ro.', control:58, speed:55, learning:82, capital:52, risk:52 },
-    { id:'alliance', name:'Strategic Alliance', desc:'Linh hoạt, học hỏi cao, cam kết vốn trung bình.', control:45, speed:68, learning:80, capital:66, risk:60 },
-    { id:'fdi', name:'Wholly Owned FDI', desc:'Kiểm soát và bảo vệ tri thức cao, vốn và rủi ro lớn.', control:95, speed:25, learning:72, capital:18, risk:25 },
-    { id:'digital', name:'Digital Entry', desc:'Tốc độ và khả năng mở rộng số cao, phụ thuộc hệ sinh thái.', control:62, speed:92, learning:58, capital:78, risk:62 }
-  ];
-
-  const $ = (id) => document.getElementById(id);
-  let selectedId = 'joint-venture';
-
-  function fit(mode) {
-    const terms = [
-      100 - Math.abs(mode.control - priorities.control),
-      100 - Math.abs(mode.speed - priorities.speed),
-      100 - Math.abs(mode.learning - priorities.learning),
-      100 - Math.abs(mode.capital - priorities.capital),
-      100 - Math.abs(mode.risk - (100 - priorities.risk))
-    ];
-    const strategic = terms.reduce((a,b)=>a+b,0) / terms.length;
-    const japanFit = mode.id === 'joint-venture' ? 86 : mode.id === 'digital' ? 82 : mode.id === 'export' ? 76 : mode.id === 'fdi' ? 69 : 72;
-    const readinessFit = mode.id === 'fdi' ? 48 : mode.id === 'digital' ? 76 : mode.id === 'joint-venture' ? 71 : 68;
-    return Math.round((strategic * .55 + readinessFit * .25 + japanFit * .20) * 10) / 10;
+  const Engine = window.BizOnEntryModeEngine;
+  const Models = window.BizOnEntryModeModels;
+  const Profiles = window.BizOnCountryProfiles;
+  if (!Engine || !Models || !Profiles) {
+    document.getElementById('luminaRecommendation').innerHTML = '<h3>Model unavailable</h3><p>AIBIS vẫn mở được, nhưng scoring engine chưa tải thành công.</p>';
+    return;
   }
 
-  function renderMarket() {
-    $('marketMetrics').innerHTML = market.map(([label,value]) => `<div class="metric"><span>${label}</span><strong>${value}</strong></div>`).join('');
-    $('capabilityBars').innerHTML = capabilities.map(([label,value]) => `<div class="cap-row"><span>${label}</span><div class="bar"><i style="width:${value}%"></i></div><b>${value}</b></div>`).join('');
-  }
-
-  function renderPriorities() {
-    const labels = {control:'Control',speed:'Speed',learning:'Learning',capital:'Capital flexibility',risk:'Risk tolerance'};
-    $('priorityControls').innerHTML = Object.entries(priorities).map(([key,value]) => `<label>${labels[key]} <b id="${key}Value">${value}</b><input data-priority="${key}" type="range" min="0" max="100" value="${value}"></label>`).join('');
-    document.querySelectorAll('[data-priority]').forEach(input => input.addEventListener('input', (event) => {
-      const key = event.target.dataset.priority;
-      priorities[key] = Number(event.target.value);
-      $(`${key}Value`).textContent = event.target.value;
-      renderModes();
-    }));
-  }
-
-  function renderModes() {
-    const ranked = modes.map(mode => ({...mode, score:fit(mode)})).sort((a,b)=>b.score-a.score);
-    $('modeGrid').innerHTML = ranked.map(mode => `<article class="mode-card ${mode.id===selectedId?'selected':''}" data-mode="${mode.id}" tabindex="0" role="button" aria-pressed="${mode.id===selectedId}"><header><h3>${mode.name}</h3><b class="score">${mode.score}</b></header><p>${mode.desc}</p><div class="mini-stats"><span>C ${mode.control}</span><span>S ${mode.speed}</span><span>L ${mode.learning}</span></div></article>`).join('');
-    document.querySelectorAll('[data-mode]').forEach(card => {
-      const select = () => { selectedId = card.dataset.mode; renderModes(); };
-      card.addEventListener('click', select);
-      card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(); } });
-    });
-    renderRecommendation(ranked);
-  }
-
-  function renderRecommendation(ranked) {
-    const selected = ranked.find(m => m.id === selectedId) || ranked[0];
-    const top = ranked[0];
-    $('luminaRecommendation').innerHTML = `<h3>${top.name} currently ranks first</h3><p>Fit score <b>${top.score}</b>. ${top.desc}</p><ul><li>Ưu tiên học hỏi và kiểm soát được phản ánh trong điểm số.</li><li>Năng lực doanh nghiệp hiện chưa phù hợp với cam kết vốn rất cao.</li><li>Điểm là kết quả mô phỏng, không phải dự báo thành công thực tế.</li></ul><p><b>Your selection:</b> ${selected.name} · ${selected.score}</p>`;
-    $('compareMode').innerHTML = ranked.filter(m => m.id !== selected.id).map(m => `<option value="${m.id}">${m.name}</option>`).join('');
-    renderCounterfactual(ranked);
-  }
-
-  function renderCounterfactual(ranked) {
-    const selected = ranked.find(m => m.id === selectedId);
-    const other = ranked.find(m => m.id === $('compareMode').value) || ranked.find(m => m.id !== selectedId);
-    if (!selected || !other) return;
-    const diff = Math.round((selected.score - other.score) * 10) / 10;
-    $('counterfactualResult').innerHTML = `<b>${selected.name} ${diff >= 0 ? 'cao hơn' : 'thấp hơn'} ${Math.abs(diff)} điểm</b><br>${selected.name} nhấn mạnh control ${selected.control} và learning ${selected.learning}; ${other.name} nhấn mạnh speed ${other.speed} và capital flexibility ${other.capital}.`;
-  }
-
-  $('compareMode')?.addEventListener('change', () => renderModes());
-  $('resetPriorities')?.addEventListener('click', () => {
-    Object.assign(priorities, { control:70, speed:60, learning:75, capital:55, risk:45 });
-    renderPriorities(); renderModes();
+  const priorities = { control:70, speed:60, learning:75, capitalEfficiency:55, riskCompatibility:55, knowledgeProtection:60, localEmbeddedness:70, digitalScalability:65 };
+  const firm = { financialCapacity:64, internationalExperience:48, digitalCapability:72 };
+  const capabilities = [['Financial',64],['International',48],['Digital',72],['Product scale',70],['Network',55],['Management',66]];
+  const indicator = (value, sourceId, year, confidence, notes='Illustrative teaching value') => ({ value, rawValue:null, rawUnit:null, sourceId, sourceUrl:'', referenceYear:year, retrievedAt:'2026-08-02', freshness:'demo', confidence, license:'teaching-demo-only', notes });
+  const japanProfile = Profiles.createProfile({
+    profileVersion:'0.1.0-demo', iso2:'JP', name:'Japan', region:'East Asia', scenarioUse:'teaching-demo',
+    indicators:{
+      marketSize:indicator(86,'demo-market',2026,35), marketGrowth:indicator(42,'demo-market',2026,35), institutionQuality:indicator(82,'demo-institution',2026,35), politicalRisk:indicator(18,'demo-risk',2026,35), culturalDistance:indicator(62,'demo-bilateral-placeholder',2026,20,'Pairwise value; replace with bilateral module'), logisticsQuality:indicator(88,'demo-logistics',2026,35), tariffPressure:indicator(25,'demo-trade',2026,30), digitalReadiness:indicator(91,'demo-digital',2026,35), ipProtection:indicator(86,'demo-ip',2026,35), partnerEcosystem:indicator(78,'demo-partner',2026,30), dataRegulationRisk:indicator(52,'demo-data',2026,30), networkEffects:indicator(72,'demo-network',2026,30)
+    },
+    provenance:{ compiledAt:'2026-08-02', compiledBy:'BizOn demo', reviewStatus:'illustrative', limitations:['Not production data','Not investment advice','Cultural distance requires home-host calculation'] }
   });
 
+  const country = {
+    marketSize:japanProfile.indicators.marketSize.value,
+    politicalRisk:japanProfile.indicators.politicalRisk.value,
+    culturalDistance:japanProfile.indicators.culturalDistance.value,
+    institutionalDistance:45,
+    logisticsQuality:japanProfile.indicators.logisticsQuality.value,
+    tariffPressure:japanProfile.indicators.tariffPressure.value,
+    digitalReadiness:japanProfile.indicators.digitalReadiness.value,
+    ipProtection:japanProfile.indicators.ipProtection.value,
+    dataRegulationRisk:japanProfile.indicators.dataRegulationRisk.value,
+    crossBorderNetworkEffects:japanProfile.indicators.networkEffects.value,
+    localPartnerValue:japanProfile.indicators.partnerEcosystem.value,
+    networkImportance:japanProfile.indicators.networkEffects.value,
+    opportunismRisk:35
+  };
+
+  const $ = id => document.getElementById(id);
+  let selectedId = 'joint_venture';
+  let latestRanking = [];
+
+  function context(){ return { priorities, firm, country }; }
+  function marketRows(){ return [['Market attractiveness',74],['Institution quality',country.institutionQuality || 82],['Logistics',country.logisticsQuality],['Digital readiness',country.digitalReadiness]]; }
+
+  function renderMarket(){
+    $('marketMetrics').innerHTML = marketRows().map(([label,value]) => `<div class="metric"><span>${label}</span><strong>${value}</strong></div>`).join('');
+    $('capabilityBars').innerHTML = capabilities.map(([label,value]) => `<div class="cap-row"><span>${label}</span><div class="bar"><i style="width:${value}%"></i></div><b>${value}</b></div>`).join('');
+    $('readinessScore').textContent = Math.round(capabilities.reduce((sum,row)=>sum+row[1],0)/capabilities.length);
+  }
+
+  function renderPriorities(){
+    const visible = {control:'Control',speed:'Speed',learning:'Learning',capitalEfficiency:'Capital flexibility',riskCompatibility:'Risk tolerance'};
+    $('priorityControls').innerHTML = Object.entries(visible).map(([key,label]) => `<label>${label} <b id="${key}Value">${priorities[key]}</b><input data-priority="${key}" type="range" min="0" max="100" value="${priorities[key]}"></label>`).join('');
+    document.querySelectorAll('[data-priority]').forEach(input => input.addEventListener('input', event => { priorities[event.target.dataset.priority] = Number(event.target.value); $(`${event.target.dataset.priority}Value`).textContent = event.target.value; renderModes(); }));
+  }
+
+  function renderModes(){
+    latestRanking = Engine.rankModes(Models.modes, context());
+    $('modeGrid').innerHTML = latestRanking.map(result => {
+      const mode = Models.modes.find(item => item.id === result.modeId);
+      return `<article class="mode-card ${mode.id===selectedId?'selected':''}" data-mode="${mode.id}" tabindex="0" role="button" aria-pressed="${mode.id===selectedId}"><header><h3>${mode.label}</h3><b class="score">${result.score}</b></header><p>${mode.theories.join(' · ')}</p><div class="mini-stats"><span>C ${mode.control}</span><span>S ${mode.speed}</span><span>L ${mode.learning}</span><span>Conf ${result.confidence}</span></div></article>`;
+    }).join('');
+    document.querySelectorAll('[data-mode]').forEach(card => { const select=()=>{selectedId=card.dataset.mode;renderModes();}; card.addEventListener('click',select); card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();select();}}); });
+    renderRecommendation();
+  }
+
+  function renderRecommendation(){
+    const selected = latestRanking.find(item=>item.modeId===selectedId) || latestRanking[0];
+    const top = latestRanking[0];
+    const topMode = Models.modes.find(item=>item.id===top.modeId);
+    const selectedMode = Models.modes.find(item=>item.id===selected.modeId);
+    const strengths = top.explanation.strengths.length ? top.explanation.strengths : ['Không có lợi thế nổi trội theo ngưỡng hiện tại'];
+    const cautions = top.explanation.cautions.length ? top.explanation.cautions : ['Cần kiểm định bằng dữ liệu và chuyên gia'];
+    $('luminaRecommendation').innerHTML = `<h3>${topMode.label} currently ranks first</h3><p>Fit <b>${top.score}</b> · evidence confidence <b>${top.confidence}</b> · engine v${Engine.VERSION}</p><ul>${strengths.map(x=>`<li>✓ ${x}</li>`).join('')}${cautions.map(x=>`<li>! ${x}</li>`).join('')}</ul><p><b>Your selection:</b> ${selectedMode.label} · ${selected.score}</p><small>Profile confidence ${Profiles.profileConfidence(japanProfile)}/100 · status ${japanProfile.provenance.reviewStatus}</small>`;
+    $('compareMode').innerHTML = latestRanking.filter(item=>item.modeId!==selectedId).map(item=>{const mode=Models.modes.find(m=>m.id===item.modeId);return `<option value="${mode.id}">${mode.label}</option>`;}).join('');
+    renderCounterfactual();
+  }
+
+  function renderCounterfactual(){
+    const a = Models.modes.find(mode=>mode.id===selectedId);
+    const b = Models.modes.find(mode=>mode.id===$('compareMode').value) || Models.modes.find(mode=>mode.id!==selectedId);
+    if(!a||!b)return;
+    const comparison = Engine.compareModes(a,b,context());
+    const winner = comparison.winner ? Models.modes.find(mode=>mode.id===comparison.winner).label : 'Tie';
+    $('counterfactualResult').innerHTML = `<b>${winner} leads by ${comparison.difference} points</b><br>So sánh dùng cùng firm profile, country context, priorities và engine version.`;
+  }
+
+  $('compareMode')?.addEventListener('change', renderCounterfactual);
+  $('resetPriorities')?.addEventListener('click',()=>{Object.assign(priorities,{control:70,speed:60,learning:75,capitalEfficiency:55,riskCompatibility:55,knowledgeProtection:60,localEmbeddedness:70,digitalScalability:65});renderPriorities();renderModes();});
   renderMarket(); renderPriorities(); renderModes();
 })();
