@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bizon-app-shell-v4';
+const CACHE_NAME = 'bizon-app-shell-v5';
 const APP_SCOPE_PREFIX = '/BizOn/';
 const APP_SHELL = [
   './',
@@ -15,10 +15,16 @@ const APP_SHELL = [
   '../css/bizon-fonts.css',
   '../css/bizon-unified.css',
   '../css/bizon-unified-overrides.css',
+  '../css/bizon-existing-assets.css',
   '../js/app-shell/app-shell.js',
   '../js/app-shell/aibis-workspace.js',
   '../js/app-shell/unified-app.js',
+  '../js/app-shell/existing-assets.js',
   '../js/app-shell/update-manager.js',
+  '../assets/approved-existing-assets.json',
+  '../assets/illustrations/lumina-holo-classroom.webp',
+  '../assets/illustrations/anh-tu-lecture-hall.webp',
+  '../assets/character/lumina-office-present.webp',
   '../assets/icons/icon-192.png',
   '../assets/icons/icon-512.png'
 ];
