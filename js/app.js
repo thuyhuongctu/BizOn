@@ -439,17 +439,36 @@ const BGM_TRACKS = [
 ];
 let bgm = null, bgmIdx = 0;
 function musicEnabled() { return localStorage.getItem('bizon-music') !== 'off'; }
-function startMusic() {
-  if (!musicEnabled()) return;
+function ensureBgm(src) {
   if (!bgm) {
-    bgm = new Audio(BGM_TRACKS[0]); bgm.volume = 0.22;
+    bgm = new Audio(src || BGM_TRACKS[bgmIdx]); bgm.volume = 0.22;
     bgm.addEventListener('ended', () => {
       bgmIdx = (bgmIdx + 1) % BGM_TRACKS.length;
       bgm.src = BGM_TRACKS[bgmIdx];
       if (musicEnabled()) bgm.play().catch(() => {});
     });
   }
-  bgm.play().catch(() => {});
+  return bgm;
+}
+function startMusic() {
+  if (!musicEnabled()) return;
+  ensureBgm().play().catch(() => {});
+}
+// Kết ván thì chuyển sang bản remix dài nhất của ca khúc chủ đề, đúng lúc màn
+// hình mời người chơi ra Go Global. Chỉ đổi một lần mỗi lần mở trang, để xem
+// lại báo cáo không làm nhạc nhảy về đầu bài.
+let finaleThemePlayed = false;
+function playFinaleTheme() {
+  if (finaleThemePlayed || !musicEnabled()) return;
+  const src = 'assets/audio/bat-nghiep-mekong-sunfire-2.mp3';
+  const i = BGM_TRACKS.indexOf(src);
+  if (i < 0) return;
+  finaleThemePlayed = true;
+  bgmIdx = i;
+  const a = ensureBgm(src);
+  if (!a.src.endsWith(src)) { a.src = src; }
+  a.currentTime = 0;
+  a.play().catch(() => {});
 }
 function toggleMusic() {
   if (musicEnabled()) { localStorage.setItem('bizon-music', 'off'); if (bgm) bgm.pause(); }
@@ -2161,13 +2180,24 @@ function renderSeasonReport(body) {
         <div class="flex gap-2 justify-center mt-3"><button onclick="downloadCertificate('vi')" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-4 py-2 text-[11px]">📥 Tải chứng nhận</button><button onclick="downloadCertificate('en')" class="clay-btn bg-white text-primary border border-primary/25 font-display font-extrabold px-4 py-2 text-[11px]">📥 Certificate (EN)</button></div>
       </div>
     </div>` : ''}
+    ${S.finished ? `
+    <div class="clay-card p-5 mb-3 text-center overflow-hidden relative" style="background:linear-gradient(165deg,#033337 0%,#02444d 55%,#006687 100%)">
+      <img src="assets/illustrations/globe-trade.webp" alt="" aria-hidden="true" class="absolute -right-6 -bottom-6 w-32 opacity-25 pointer-events-none">
+      <p class="text-[10px] font-extrabold uppercase tracking-widest text-white/55 relative">Chặng tiếp theo</p>
+      <p class="font-display font-extrabold text-white text-lg mt-1 relative">Chinh phục xong Việt Nam.<br>Bạn có muốn ra biển lớn?</p>
+      <p class="text-[12px] text-white/70 mt-2 max-w-xs mx-auto relative">«BizOn Go Global» – chọn 1 trong 7 thị trường quốc tế, đàm phán với đối tác bản địa và thử sức 4 phương thức thâm nhập.</p>
+      <div class="flex gap-2 justify-center mt-4 relative">
+        <a href="global.html" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-5 py-2.5 text-xs">🌏 Ra biển lớn →</a>
+        <a href="brand-passport.html" class="clay-btn bg-white/10 border border-white/25 text-white font-display font-extrabold px-4 py-2.5 text-xs">🛂 Hộ Chiếu Thương Hiệu</a>
+      </div>
+    </div>` : ''}
     <div class="clay-card p-4 bg-primary-container/10 flex gap-3 items-start">
       <img src="assets/character/lumina-vest-thumbsup.webp" alt="Mentor Hương" class="w-10 h-10 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 10%">
       <div><p class="font-display font-bold text-primary text-sm">Mentor Hương · Tổng kết mùa giải</p>
       <p class="text-xs text-deep-teal/80 italic mt-0.5">"${verdict}"</p></div>
     </div>`;
   S._cert = { team: S.profile.teamName, classId: S.profile.classId || '', rank: myRank, champion, share: shareLast.toFixed(1), profit: Math.round(totalProfit), rounds: rounds.length };
-  if (S.finished) launchCelebration();
+  if (S.finished) { launchCelebration(); playFinaleTheme(); }
 }
 
 // ---------- Pháo hoa + confetti khi xem chứng nhận hoàn thành (thiết kế Stitch) ----------
