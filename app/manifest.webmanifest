@@ -2,23 +2,24 @@
   "id": "./release.html",
   "name": "BizOn — Mô phỏng quyết định kinh doanh",
   "short_name": "BizOn",
-  "description": "Nền tảng mô phỏng quyết định kinh doanh, quốc tế hóa doanh nghiệp và học tập dựa trên trải nghiệm.",
+  "description": "Nền tảng mô phỏng quyết định kinh doanh dành cho học tập, nghiên cứu và phát triển năng lực chiến lược.",
   "lang": "vi",
   "start_url": "./release.html",
   "scope": "./",
   "display": "standalone",
   "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
   "orientation": "any",
-  "theme_color": "#07141f",
-  "background_color": "#07141f",
+  "theme_color": "#030a14",
+  "background_color": "#030a14",
   "categories": ["education", "business", "productivity"],
   "icons": [
     {"src":"../assets/icons/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},
     {"src":"../assets/icons/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
   ],
   "shortcuts": [
+    {"name":"Command Center","short_name":"Command","url":"./command-center.html","icons":[{"src":"../assets/icons/icon-192.png","sizes":"192x192","type":"image/png"}]},
     {"name":"Startup Lab","short_name":"Startup","url":"../game.html","icons":[{"src":"../assets/icons/icon-192.png","sizes":"192x192","type":"image/png"}]},
     {"name":"Brand Passport","short_name":"Passport","url":"./brand-passport.html","icons":[{"src":"../assets/icons/icon-192.png","sizes":"192x192","type":"image/png"}]},
-    {"name":"AIBIS","short_name":"AIBIS","url":"./aibis.html","icons":[{"src":"../assets/icons/icon-192.png","sizes":"192x192","type":"image/png"}]}
+    {"name":"AIBIS Global","short_name":"AIBIS","url":"./aibis.html","icons":[{"src":"../assets/icons/icon-192.png","sizes":"192x192","type":"image/png"}]}
   ]
 }
