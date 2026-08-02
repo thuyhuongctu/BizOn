@@ -6,6 +6,7 @@
  */
 'use strict';
 
+const fs = require('fs');
 const BASE = process.env.BIZON_URL || 'http://127.0.0.1:8899';
 let chromium;
 try {
@@ -22,6 +23,7 @@ function check(condition, message) {
 }
 
 (async () => {
+  fs.mkdirSync('artifacts', { recursive: true });
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage({ viewport: { width: 1200, height: 900 } });
   const errors = [];
@@ -93,7 +95,12 @@ function check(condition, message) {
   check(/Decision/.test(traceText) && /Consequence/.test(traceText) && /Explanation/.test(traceText),
     'UI hiển thị chuỗi Decision → Consequence → Explanation');
 
+  await page.click('#lumina-toggle');
+  await page.waitForTimeout(450);
+  await page.screenshot({ path: 'artifacts/brand-passport-learning-desktop.png', fullPage: true });
+
   await page.setViewportSize({ width: 390, height: 844 });
+  await page.waitForTimeout(250);
   const mobile = await page.evaluate(() => ({
     width: innerWidth,
     scrollWidth: document.documentElement.scrollWidth,
@@ -101,6 +108,7 @@ function check(condition, message) {
   }));
   check(mobile.scrollWidth <= mobile.width + 1, 'Learning Edition không tràn ngang trên viewport Android');
   check(mobile.panelHeight <= 844, 'Lumina panel nằm trong chiều cao mobile');
+  await page.screenshot({ path: 'artifacts/brand-passport-learning-android.png', fullPage: true });
   check(errors.length === 0, `Không có lỗi JavaScript/console: ${errors.join(' | ')}`);
 
   await browser.close();
