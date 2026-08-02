@@ -4,8 +4,10 @@ on:
   pull_request:
     paths:
       - '.github/workflows/supabase-staging-gate.yml'
+      - 'scripts/release/bootstrap-supabase-staging-key.mjs'
       - 'scripts/release/verify-supabase-staging.mjs'
       - 'scripts/release/validate-supabase-staging-template.mjs'
+      - 'test/supabase-staging-key-bootstrap.test.js'
       - 'test/supabase-staging-gate.test.js'
       - 'config/supabase-staging.env.example'
       - 'docs/learning/BIZON_SUPABASE_STAGING_GATE_V1.md'
@@ -47,9 +49,11 @@ jobs:
 
       - name: Validate workflow, templates and verifier safety rules
         run: |
+          node --check scripts/release/bootstrap-supabase-staging-key.mjs
           node --check scripts/release/verify-supabase-staging.mjs
           node --check scripts/release/validate-supabase-staging-template.mjs
           node scripts/release/validate-supabase-staging-template.mjs
+          node test/supabase-staging-key-bootstrap.test.js
           node test/supabase-staging-gate.test.js
 
   staging-smoke:
@@ -86,6 +90,10 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install --yes postgresql-client
+
+      - name: Bootstrap staging instructor-key verifier
+        if: inputs.apply_migration == true
+        run: node scripts/release/bootstrap-supabase-staging-key.mjs
 
       - name: Verify protected Supabase staging project
         run: node scripts/release/verify-supabase-staging.mjs
