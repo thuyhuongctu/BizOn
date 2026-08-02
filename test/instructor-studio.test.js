@@ -28,13 +28,21 @@ for (const functionName of [
   assert.match(client, new RegExp(functionName));
 }
 
+assert.match(client, /rpc\('bizon_leaderboard'/);
+assert.match(client, /rpc\('bizon_feed'/);
+assert.match(client, /safeRpc\('bizon_bp_board'/);
+assert.match(client, /safeRpc\('bizon_bp_learning_traces'/);
+assert.match(client, /Không tải được dữ liệu lớp/);
+assert.match(client, /Không tải được khảo sát/);
+assert.match(client, /refreshWithStatus/);
+
 assert.match(client, /localStorage\.setItem\('bizon-instructor-class'/);
 assert.doesNotMatch(client, /localStorage\.setItem\([^\n]*key/i);
 assert.doesNotMatch(client, /localStorage\.setItem\([^\n]*instructorKey/i);
 assert.match(client, /state\.instructorKey = ''/);
 assert.match(client, /ai_scoring: false/);
 assert.match(client, /not automatically graded by AI/);
-assert.match(client, /setInterval\(refreshCore, 10000\)/);
+assert.match(client, /setInterval\(\(\) => refreshWithStatus\(\{ quiet: true \}\), 10000\)/);
 
 assert.match(css, /\.bi-layout/);
 assert.match(css, /@media \(max-width: 820px\)/);
