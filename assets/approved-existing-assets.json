@@ -48,6 +48,34 @@
       "allowed_pages": ["am-nhac.html", "index.html"],
       "vi_alt": "Đôi nhân vật BizOn biểu diễn trong phòng thu",
       "en_alt": "BizOn character duo performing in the studio"
+    },
+    "vietnam_journey_map": {
+      "path": "assets/illustrations/arena-vietnam-map-v2.webp",
+      "classification": "vietnam-map",
+      "allowed_pages": ["index.html", "app/release.html", "game.html", "global.html", "am-nhac.html"],
+      "vi_alt": "Bản đồ Việt Nam đất sét dùng cho hành trình mô phỏng BizOn",
+      "en_alt": "Clay-style Vietnam map used for the BizOn simulation journey"
+    },
+    "vietnam_startup_hero": {
+      "path": "assets/illustrations/hero-vietnam-2026.webp",
+      "classification": "startup-lab-scene",
+      "allowed_pages": ["index.html", "app/release.html", "game.html", "am-nhac.html"],
+      "vi_alt": "Không gian Bật Nghiệp 2026 với bản sắc Việt Nam",
+      "en_alt": "BizOn Startup Lab 2026 scene with Vietnamese identity"
+    },
+    "brand_passport_cast_sheet": {
+      "path": "assets/illustrations/cast-sheet-brand-passport.webp",
+      "classification": "brand-passport-cast-sheet",
+      "allowed_pages": ["app/release.html", "app/brand-passport.html", "brand-passport.html", "brand-passport-learning.html", "thu-vien.html", "am-nhac.html"],
+      "vi_alt": "Bộ nhân vật gốc của trò chơi Hộ Chiếu Thương Hiệu",
+      "en_alt": "Original character cast of the Brand Passport simulation"
+    },
+    "bizon_music_cover": {
+      "path": "assets/illustrations/giai-dieu-bizon.webp",
+      "classification": "music-cover",
+      "allowed_pages": ["app/release.html", "am-nhac.html", "index.html", "games.html"],
+      "vi_alt": "Ảnh bìa Giai điệu BizOn trong thư viện sáng tạo",
+      "en_alt": "BizOn Melodies cover artwork in the creative library"
     }
   }
 }
