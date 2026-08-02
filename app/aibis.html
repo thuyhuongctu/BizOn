@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#07141f">
-  <meta name="description" content="AIBIS internationalization decision workspace">
-  <title>AIBIS — BizOn App</title>
+  <meta name="description" content="AIBIS hỗ trợ so sánh thị trường và phương thức thâm nhập trong mô phỏng kinh doanh quốc tế.">
+  <title>AIBIS — BizOn</title>
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="../assets/icons/icon-192.png">
   <link rel="stylesheet" href="../css/bizon-fonts.css">
@@ -16,49 +16,49 @@
 <a class="skip-link" href="#aibisWorkspace">Bỏ qua điều hướng</a>
 <div class="aibis-app">
   <header class="aibis-topbar">
-    <a class="brand" href="./index.html"><span class="brand-mark">B</span><span><strong>BIZON</strong><small>AIBIS WORKSPACE</small></span></a>
-    <div class="journey" aria-label="Tiến trình AIBIS"><span class="done">0 Readiness</span><span class="active">1 Market</span><span>2 Entry</span><span>3 Localize</span><span>4 Negotiate</span><span>5 Shock</span><span>6 Scale</span><span>7 Capability</span><span>8 Board</span></div>
-    <div class="topbar-actions"><button id="installBtn" hidden>Cài app</button><button id="themeBtn" aria-label="Đổi giao diện">◐</button></div>
+    <a class="brand" href="./index.html"><span class="brand-mark">B</span><span><strong>BIZON</strong><small>KHÔNG GIAN AIBIS</small></span></a>
+    <div class="journey" aria-label="Tiến trình AIBIS"><span class="done">0 Sẵn sàng</span><span class="active">1 Thị trường</span><span>2 Thâm nhập</span><span>3 Thích nghi</span><span>4 Đàm phán</span><span>5 Cú sốc</span><span>6 Mở rộng</span><span>7 Năng lực</span><span>8 Hội đồng</span></div>
+    <div class="topbar-actions"><button id="installBtn" hidden>Cài ứng dụng</button><button id="themeBtn" aria-label="Đổi giao diện">◐</button></div>
   </header>
 
   <main id="aibisWorkspace" class="aibis-workspace" tabindex="-1">
     <section class="aibis-hero">
-      <div><p class="eyebrow">INTERNATIONAL BUSINESS DIGITAL TWIN</p><h1>Market & Entry Command Center</h1><p>So sánh thị trường, năng lực doanh nghiệp và phương thức thâm nhập bằng mô hình minh bạch, có giải thích và cảnh báo giới hạn.</p></div>
-      <div class="round-card"><small>Current mission</small><strong>Choose Japan entry mode</strong><span id="networkLabel">Online · evidence-informed demo</span></div>
+      <div><p class="eyebrow">MÔ PHỎNG KINH DOANH QUỐC TẾ</p><h1>Trung tâm quyết định thị trường</h1><p>So sánh thị trường, năng lực doanh nghiệp và phương thức thâm nhập bằng mô hình minh bạch, có giải thích và cảnh báo giới hạn.</p></div>
+      <div class="round-card"><small>Nhiệm vụ hiện tại</small><strong>Chọn phương thức vào thị trường Nhật Bản</strong><span id="networkLabel">Trực tuyến · mô hình giảng dạy minh bạch</span></div>
     </section>
 
     <section class="aibis-grid">
       <article class="aibis-panel map-panel">
-        <header><div><p class="eyebrow">GLOBAL MARKET MAP</p><h2>Vietnam → Japan</h2></div><span class="evidence-tag">Provenance-aware demo</span></header>
+        <header><div><p class="eyebrow">BẢN ĐỒ THỊ TRƯỜNG</p><h2>Việt Nam → Nhật Bản</h2></div><span class="evidence-tag">Có truy xuất nguồn</span></header>
         <div class="trade-map" role="img" aria-label="Mạng lưới thương mại minh họa Việt Nam đến Nhật Bản">
-          <div class="grid-lines"></div><div class="country vn"><b>VN</b><small>Home</small></div><div class="country jp"><b>JP</b><small>Target</small></div><div class="country sg"><b>SG</b><small>Hub</small></div>
+          <div class="grid-lines"></div><div class="country vn"><b>VN</b><small>Thị trường gốc</small></div><div class="country jp"><b>JP</b><small>Thị trường đích</small></div><div class="country sg"><b>SG</b><small>Trung chuyển</small></div>
           <svg viewBox="0 0 900 430" aria-hidden="true"><defs><linearGradient id="route" x1="0" x2="1"><stop stop-color="#20d7ff"/><stop offset="1" stop-color="#ff9c3a"/></linearGradient></defs><path class="route main" d="M175 320 Q440 55 695 125"/><path class="route secondary" d="M175 320 Q390 375 500 290"/><circle class="pulse" cx="695" cy="125" r="22"/></svg>
-          <div class="route-chip sea">Sea · demo</div><div class="route-chip digital">Digital · instant</div>
+          <div class="route-chip sea">Đường biển · minh họa</div><div class="route-chip digital">Kênh số · tức thời</div>
         </div>
         <div class="market-metrics" id="marketMetrics"></div>
       </article>
 
       <aside class="aibis-panel firm-panel">
-        <header><div><p class="eyebrow">FIRM READINESS</p><h2>Mekong Digital</h2></div><b id="readinessScore">—</b></header>
+        <header><div><p class="eyebrow">NĂNG LỰC DOANH NGHIỆP</p><h2>Mekong Digital</h2></div><b id="readinessScore">—</b></header>
         <div id="capabilityBars" class="capability-bars"></div>
-        <p class="model-note">Readiness hiện là dữ liệu giảng dạy minh họa; production sẽ lấy từ Firm Readiness Engine có version và audit trail.</p>
+        <p class="model-note">Các chỉ số hiện dùng cho hoạt động giảng dạy; mỗi phiên bản mô hình được lưu cùng nguồn dữ liệu và lịch sử thay đổi.</p>
       </aside>
 
       <article class="aibis-panel mode-panel">
-        <header><div><p class="eyebrow">ENTRY MODE LAB</p><h2>Compare six modes</h2></div><button id="resetPriorities" type="button">Reset priorities</button></header>
+        <header><div><p class="eyebrow">PHƯƠNG THỨC THÂM NHẬP</p><h2>So sánh sáu phương thức</h2></div><button id="resetPriorities" type="button">Đặt lại ưu tiên</button></header>
         <div class="priority-controls" id="priorityControls"></div><div class="mode-grid" id="modeGrid" aria-live="polite"></div>
       </article>
 
       <aside class="aibis-panel lumina-workspace">
-        <header><div><p class="eyebrow">LUMINA AI COACH</p><h2>Explainable recommendation</h2></div><span>Engine-derived</span></header>
+        <header><div><p class="eyebrow">LUMINA · GỢI Ý PHẢN TƯ</p><h2>Khuyến nghị có giải thích</h2></div><span>Từ mô hình</span></header>
         <div id="luminaRecommendation" class="lumina-card"></div>
-        <div class="counterfactual"><h3>Counterfactual</h3><label>Compare with <select id="compareMode"></select></label><div id="counterfactualResult"></div></div>
-        <p class="model-note">Fit score không phải xác suất thành công. Confidence phản ánh mức bằng chứng của model, không phải độ chắc chắn đầu tư.</p>
+        <div class="counterfactual"><h3>So sánh phương án</h3><label>Đối chiếu với <select id="compareMode"></select></label><div id="counterfactualResult"></div></div>
+        <p class="model-note">Điểm phù hợp không phải xác suất thành công. Mức bằng chứng phản ánh dữ liệu của mô hình, không phải độ chắc chắn của một quyết định đầu tư.</p>
       </aside>
     </section>
   </main>
 
-  <nav class="mobile-nav" aria-label="Điều hướng di động"><a href="./index.html">Home</a><a href="../game.html">Startup</a><a class="active" href="./aibis.html">AIBIS</a><a href="../giang-vien.html">Teach</a></nav>
+  <nav class="mobile-nav" aria-label="Điều hướng di động"><a href="./index.html">Trang chủ</a><a href="../game.html">Khởi nghiệp</a><a class="active" href="./aibis.html">AIBIS</a><a href="../giang-vien.html">Giảng viên</a></nav>
 </div>
 <script src="../js/app-shell/app-shell.js" defer></script>
 <script src="../js/aibis/country-profile-registry.js" defer></script>
