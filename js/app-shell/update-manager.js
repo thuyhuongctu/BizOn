@@ -2,10 +2,11 @@
   'use strict';
 
   const VERSION_URL = './version.json';
+  const CURRENT_BUILD = '2026.08.02.3';
   const DISMISSED_BUILD_KEY = 'bizon.dismissedWebBuild';
   const CHECK_INTERVAL_MS = 6 * 60 * 60 * 1000;
   const root = document.documentElement;
-  const currentBuild = root.dataset.bizonBuild || '0';
+  const currentBuild = CURRENT_BUILD;
   const card = document.getElementById('updateCard');
   const title = document.getElementById('updateTitle');
   const summary = document.getElementById('updateSummary');
@@ -13,6 +14,9 @@
   const laterButton = document.getElementById('updateLater');
   let availableVersion = null;
   let reloading = false;
+
+  // Keep the runtime DOM marker current without rewriting the large launcher HTML for every release slice.
+  root.dataset.bizonBuild = CURRENT_BUILD;
 
   function numericBuildParts(value) {
     return String(value)
