@@ -1,5 +1,5 @@
-// App shell V5 adds the approved existing-asset registry and preserved BizOn character artwork.
-const CACHE_NAME = 'bizon-app-shell-v5';
+// App shell V6 adds the approved BizOn ecosystem library and preserves original artwork offline.
+const CACHE_NAME = 'bizon-app-shell-v6';
 const APP_SCOPE_PREFIX = '/BizOn/';
 const APP_SHELL = [
   './',
@@ -26,6 +26,10 @@ const APP_SHELL = [
   '../assets/illustrations/lumina-holo-classroom.webp',
   '../assets/illustrations/anh-tu-lecture-hall.webp',
   '../assets/character/lumina-office-present.webp',
+  '../assets/illustrations/arena-vietnam-map-v2.webp',
+  '../assets/illustrations/hero-vietnam-2026.webp',
+  '../assets/illustrations/cast-sheet-brand-passport.webp',
+  '../assets/illustrations/giai-dieu-bizon.webp',
   '../assets/icons/icon-192.png',
   '../assets/icons/icon-512.png'
 ];
