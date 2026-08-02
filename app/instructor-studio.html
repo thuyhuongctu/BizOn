@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="vi" data-theme="dark" data-bizon-build="2026.08.02.3">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#030a14">
+  <meta name="robots" content="noindex">
+  <meta name="description" content="Instructor Studio của BizOn: theo dõi lớp học theo phạm vi mã lớp, xem kết quả mô phỏng, Decision Trace và khảo sát mà không chấm phản tư bằng AI.">
+  <title>Instructor Studio — BizOn</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="../assets/icons/icon-192.png">
+  <link rel="stylesheet" href="../css/bizon-fonts.css">
+  <link rel="stylesheet" href="../css/bizon-unified.css">
+  <link rel="stylesheet" href="../css/bizon-instructor-studio.css">
+  <script src="../js/backend-config.js"></script>
+</head>
+<body class="bizon-instructor-studio">
+<div class="bi-layout">
+  <aside class="bi-sidebar">
+    <a class="bi-brand" href="./release.html">
+      <img src="../assets/icons/icon-192.png" alt="BizOn">
+      <span><strong>BIZON</strong><small>INSTRUCTOR STUDIO</small></span>
+    </a>
+    <nav class="bi-nav" aria-label="Điều hướng Instructor Studio">
+      <a href="./command-center.html">⌂ Command Center</a>
+      <a href="../game.html">☆ Startup Lab</a>
+      <a href="./brand-passport.html">◇ Brand Passport</a>
+      <a href="./aibis.html">◎ AIBIS Global</a>
+      <a class="active" href="./instructor-studio.html">♙ Instructor Studio</a>
+      <a href="../lop-hoc.html">▤ Kịch bản lớp học</a>
+      <a href="../hoc-thuat.html">▥ Reports</a>
+      <a href="../chinh-sach.html">⚙ Quyền riêng tư</a>
+    </nav>
+    <div class="bi-sidebar-note">
+      <b>● Truy cập theo phạm vi lớp</b>
+      Dữ liệu chỉ được đọc sau khi giảng viên nhập đúng Mã lớp và Khóa giảng viên.
+    </div>
+  </aside>
+
+  <main class="bi-main">
+    <header class="bi-topbar">
+      <div>
+        <h1>Instructor Studio</h1>
+        <p>Classroom operations · Learning evidence · Research export</p>
+      </div>
+      <div class="bi-top-actions">
+        <span data-network-status>Trực tuyến</span>
+        <span id="bi-updated">Chưa kết nối</span>
+        <a class="bi-btn" href="../giang-vien.html">Dashboard cổ điển</a>
+      </div>
+    </header>
+
+    <section class="bi-hero" aria-labelledby="bi-title">
+      <div class="bi-hero-copy">
+        <span class="bi-eyebrow">CLASSROOM · DECISION TRACE · LEARNING ANALYTICS</span>
+        <h2 id="bi-title">Điều hành lớp mô phỏng bằng bằng chứng có thể truy vết.</h2>
+        <p>Instructor Studio tổng hợp kết quả Bật Nghiệp, Hộ Chiếu Thương Hiệu, dòng thời gian nộp bài, Decision Trace và khảo sát trước–sau. Engine xác định kết quả; Lumina chỉ hỗ trợ giải thích và phản tư.</p>
+        <div class="bi-hero-actions">
+          <a class="bi-btn primary" href="#bi-connect-panel">Kết nối lớp</a>
+          <a class="bi-btn secondary" href="../lop-hoc.html">Mở kịch bản giảng dạy</a>
+        </div>
+      </div>
+      <figure class="bi-mentor">
+        <img src="../assets/illustrations/anh-tu-lecture-hall.webp" alt="Tú Phan trong không gian giảng dạy và cố vấn học thuật" fetchpriority="high">
+        <figcaption class="bi-mentor-copy">
+          <b>Cố vấn học thuật</b>
+          <span>Giao diện hỗ trợ giảng viên ra quyết định sư phạm; không thay thế đánh giá chuyên môn.</span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="bi-guardrails" aria-label="Nguyên tắc vận hành">
+      <article class="bi-guardrail"><b>🔐 Khóa lớp không được lưu</b><span>Trang chỉ lưu Mã lớp để tiện nhập lại. Khóa giảng viên bị xóa khỏi bộ nhớ khi rời trang.</span></article>
+      <article class="bi-guardrail"><b>⚙ Kết quả từ engine xác định</b><span>Điểm, lợi nhuận, thị phần và kết quả vòng được lấy từ dữ liệu mô phỏng, không do Lumina thay đổi.</span></article>
+      <article class="bi-guardrail"><b>🧭 Không chấm phản tư bằng AI</b><span>Reflection và Decision Trace dành cho giảng viên xem xét; hệ thống không tự động xếp loại nội dung phản tư.</span></article>
+    </section>
+
+    <section class="bi-panel" id="bi-connect-panel">
+      <div class="bi-panel-head">
+        <div><h2>Kết nối lớp học</h2><p>Nhập đúng Mã lớp và Khóa giảng viên. Không gửi khóa qua email, ảnh chụp hoặc repository.</p></div>
+      </div>
+      <div class="bi-connect-grid">
+        <div class="bi-field">
+          <label for="bi-class-code">Mã lớp</label>
+          <input class="bi-input" id="bi-class-code" autocomplete="off" placeholder="VD: QTKD-2026-A">
+        </div>
+        <div class="bi-field">
+          <label for="bi-instructor-key">Khóa giảng viên</label>
+          <input class="bi-input" id="bi-instructor-key" type="password" autocomplete="off" placeholder="Nhập khóa quản trị lớp">
+        </div>
+        <button class="bi-btn primary" id="bi-connect" type="button">Theo dõi lớp</button>
+      </div>
+      <p class="bi-status" id="bi-status">Chưa kết nối. Không có dữ liệu lớp nào được tải trước khi bạn chủ động nhập thông tin.</p>
+    </section>
+
+    <section class="bi-hidden" id="bi-studio-content" aria-live="polite">
+      <div class="bi-summary-grid" aria-label="Tóm tắt lớp">
+        <article class="bi-summary"><small>ĐỘI ĐÃ NỘP</small><strong id="bi-team-count">0</strong></article>
+        <article class="bi-summary"><small>TỔNG LƯỢT NỘP</small><strong id="bi-submit-count">0</strong></article>
+        <article class="bi-summary"><small>BRAND PASSPORT</small><strong id="bi-bp-count">0</strong></article>
+        <article class="bi-summary"><small>DECISION TRACE</small><strong id="bi-trace-count">0</strong></article>
+      </div>
+
+      <section class="bi-panel">
+        <div class="bi-panel-head">
+          <div><h2>Lớp <span id="bi-class-label"></span></h2><p>Tự làm mới dữ liệu cốt lõi mỗi 10 giây. Khảo sát chỉ tải khi giảng viên yêu cầu.</p></div>
+          <div class="bi-panel-actions">
+            <button class="bi-btn" id="bi-refresh" type="button">Làm mới</button>
+            <button class="bi-btn" id="bi-export-leaderboard" type="button">Xuất bảng điểm CSV</button>
+          </div>
+        </div>
+        <div class="bi-tabs" role="tablist" aria-label="Không gian dữ liệu lớp">
+          <button class="bi-tab" role="tab" aria-selected="true" data-bi-tab="startup" type="button">Bật Nghiệp</button>
+          <button class="bi-tab" role="tab" aria-selected="false" data-bi-tab="passport" type="button">Brand Passport</button>
+          <button class="bi-tab" role="tab" aria-selected="false" data-bi-tab="traces" type="button">Decision Trace</button>
+          <button class="bi-tab" role="tab" aria-selected="false" data-bi-tab="survey" type="button">Khảo sát</button>
+        </div>
+      </section>
+
+      <section class="bi-panel" data-bi-panel="startup">
+        <div class="bi-panel-head">
+          <div><h2>Bảng xếp hạng Bật Nghiệp</h2><p>Xếp theo thị phần tại vòng cao nhất của mỗi đội; một đội chơi lại vòng sẽ tính lần nộp mới nhất.</p></div>
+        </div>
+        <div class="bi-table-wrap">
+          <table class="bi-table">
+            <thead><tr><th>#</th><th>Đội</th><th>Vòng</th><th>Thị phần</th><th>Lợi nhuận ròng</th><th>Doanh thu</th><th>Số dư</th><th>Lượt nộp</th><th>Nộp gần nhất</th></tr></thead>
+            <tbody id="bi-leaderboard-rows"><tr><td colspan="9" class="bi-empty">Đang chờ kết nối lớp.</td></tr></tbody>
+          </table>
+        </div>
+        <div class="bi-panel-head" style="margin-top:18px">
+          <div><h2>Dòng thời gian khóa vòng</h2><p>Theo dõi lượt nộp gần nhất để điều phối tiến độ ngay trong buổi học.</p></div>
+        </div>
+        <ul class="bi-feed" id="bi-feed"><li>Chưa có dữ liệu.</li></ul>
+      </section>
+
+      <section class="bi-panel bi-hidden" data-bi-panel="passport">
+        <div class="bi-panel-head">
+          <div><h2>Hộ Chiếu Thương Hiệu — kết quả lớp</h2><p>Mỗi người được hiển thị theo ván có điểm tổng cao nhất trong phạm vi Mã lớp.</p></div>
+        </div>
+        <div class="bi-table-wrap">
+          <table class="bi-table">
+            <thead><tr><th>#</th><th>Sinh viên</th><th>Doanh nghiệp</th><th>Điểm tổng</th><th>Lợi nhuận</th><th>Danh hiệu</th><th>Quý</th><th>Lượt chơi</th><th>Lần cuối</th></tr></thead>
+            <tbody id="bi-bp-rows"><tr><td colspan="9" class="bi-empty">Đang chờ kết nối lớp.</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="bi-panel bi-hidden" data-bi-panel="traces">
+        <div class="bi-panel-head">
+          <div><h2>Decision Trace & Reflection</h2><p>Chỉ hiển thị bản ghi còn trong thời hạn lưu giữ. Nội dung phản tư không được AI tự động chấm điểm.</p></div>
+          <div class="bi-panel-actions"><button class="bi-btn" id="bi-export-traces" type="button">Xuất JSON</button></div>
+        </div>
+        <div class="bi-table-wrap">
+          <table class="bi-table">
+            <thead><tr><th>#</th><th>Đội</th><th>Phiên</th><th>Quyết định</th><th>Phản tư</th><th>Quyết định cuối</th><th>Hết hạn</th><th>Cập nhật</th></tr></thead>
+            <tbody id="bi-trace-rows"><tr><td colspan="8" class="bi-empty">Đang chờ kết nối lớp.</td></tr></tbody>
+          </table>
+        </div>
+        <p class="bi-note">Bản xuất JSON giữ nguyên Decision Trace để phục vụ rà soát chuyên môn. Việc đánh giá nội dung phản tư thuộc trách nhiệm của giảng viên và quy trình nghiên cứu được phê duyệt.</p>
+      </section>
+
+      <section class="bi-panel bi-hidden" data-bi-panel="survey">
+        <div class="bi-panel-head">
+          <div><h2>Khảo sát trước–sau</h2><p>Tóm tắt mô tả nhanh theo lần nộp mới nhất. Phân tích công bố khoa học cần sử dụng dữ liệu thô và kiểm định phù hợp.</p></div>
+          <div class="bi-panel-actions">
+            <button class="bi-btn primary" id="bi-load-survey" type="button">Tải khảo sát</button>
+            <button class="bi-btn" id="bi-export-surveys" type="button">Xuất CSV</button>
+          </div>
+        </div>
+        <div class="bi-summary-grid">
+          <article class="bi-summary"><small>PHIẾU DUY NHẤT</small><strong id="bi-survey-total">0</strong></article>
+          <article class="bi-summary"><small>CẶP TRƯỚC–SAU</small><strong id="bi-survey-pairs">0</strong></article>
+          <article class="bi-summary"><small>BỘ KHỞI NGHIỆP</small><strong id="bi-survey-startup">0</strong></article>
+          <article class="bi-summary"><small>BỘ KD QUỐC TẾ</small><strong id="bi-survey-international">0</strong></article>
+        </div>
+        <p class="bi-note">Instructor Studio không suy diễn hiệu quả can thiệp chỉ từ chênh lệch mô tả. Khi dùng cho nghiên cứu, cần kiểm tra ghép cặp, dữ liệu thiếu, độ tin cậy thang đo và lựa chọn paired t-test hoặc Wilcoxon theo điều kiện dữ liệu.</p>
+      </section>
+    </section>
+  </main>
+</div>
+
+<nav class="bi-mobile-nav" aria-label="Điều hướng ứng dụng">
+  <a href="./release.html">Trang chủ</a>
+  <a href="./command-center.html">Điều hành</a>
+  <a href="../game.html">Startup</a>
+  <a href="./aibis.html">AIBIS</a>
+  <a class="active" href="./instructor-studio.html">Lớp học</a>
+</nav>
+<script src="../js/app-shell/unified-app.js" defer></script>
+<script src="../js/app-shell/instructor-studio.js" defer></script>
+</body>
+</html>
