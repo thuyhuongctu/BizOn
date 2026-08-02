@@ -31,8 +31,11 @@ assert.match(manager, /registration\.update\(\)/);
 assert.match(manager, /SKIP_WAITING/);
 assert.doesNotMatch(manager, /setTimeout\([^)]*location\.reload/);
 
-assert.match(worker, /bizon-app-shell-v3/);
+assert.match(worker, /bizon-app-shell-v4/);
 assert.match(worker, /\.\/version\.json/);
+assert.match(worker, /command-center\.html/);
+assert.match(worker, /bizon-unified\.css/);
+assert.match(worker, /unified-app\.js/);
 assert.match(worker, /update-manager\.js/);
 assert.match(worker, /endsWith\('\/app\/version\.json'\)/);
 assert.match(worker, /cache:\s*'no-store'/);
@@ -41,6 +44,7 @@ assert.match(worker, /staleWhileRevalidate\(event\.request\)/);
 assert.match(worker, /CLEAR_APP_CACHE/);
 
 execFileSync(process.execPath, ['--check', 'js/app-shell/update-manager.js'], { stdio: 'inherit' });
+execFileSync(process.execPath, ['--check', 'js/app-shell/unified-app.js'], { stdio: 'inherit' });
 execFileSync(process.execPath, ['--check', 'app/sw.js'], { stdio: 'inherit' });
 
 console.log('BizOn web update channel contract passed');
