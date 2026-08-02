@@ -52,9 +52,11 @@ jobs:
             curl --fail --silent http://127.0.0.1:8899/app/release.html -o /tmp/release.html && break
             sleep 1
           done
-          grep -q 'Brand Passport Learning' /tmp/release.html
+          grep -q 'Brand Passport' /tmp/release.html
+          grep -q 'Mô phỏng quyết định kinh doanh' /tmp/release.html
           curl --fail --silent http://127.0.0.1:8899/app/brand-passport.html -o /tmp/passport.html
           grep -q '../brand-passport-learning.html' /tmp/passport.html
+          grep -q 'Lưu trên thiết bị' /tmp/passport.html
           curl --fail --silent http://127.0.0.1:8899/app/manifest.webmanifest -o /tmp/bizon-manifest.json
           python3 - <<'PY'
           import json
@@ -64,6 +66,8 @@ jobs:
           assert manifest['start_url'] == './release.html'
           assert manifest['scope'] == './'
           assert manifest['display'] == 'standalone'
+          assert manifest['name'] == 'BizOn — Mô phỏng quyết định kinh doanh'
+          assert next(item for item in manifest['shortcuts'] if item['short_name'] == 'Startup')['url'] == '../game.html'
           assert next(item for item in manifest['shortcuts'] if item['short_name'] == 'Passport')['url'] == './brand-passport.html'
           print('Local PWA endpoints verified')
           PY
