@@ -31,60 +31,46 @@ Bản tin học thuật ngày 02/08/2026 cung cấp định hướng trực ti�
 - Export audit trail dạng JSON.
 - Lưu cục bộ bằng `localStorage`.
 - Bộ kiểm thử Playwright và GitHub Actions.
+- Pilot Gateway `brand-passport-learning-pilot.html` với local-only mặc định.
+- Opt-in gửi dữ liệu, deletion receipt và retention 180 ngày.
+- PostgreSQL contract test thực thi migration thật trong CI.
 
-### Pilot governance shell
-
-`brand-passport-learning-pilot.html` bọc Learning Edition bằng lớp kiểm soát dữ liệu riêng:
-
-- local-only vẫn là mặc định;
-- không có request ghi dữ liệu trước opt-in;
-- submit yêu cầu mã lớp + consent rõ ràng;
-- retention tối đa 180 ngày;
-- deletion receipt cho phép người học xóa sớm;
-- anon không có quyền đọc bảng trực tiếp;
-- giảng viên đọc theo mã lớp + instructor key;
-- reflection không dùng để AI tự động chấm điểm.
-
-Chi tiết: `docs/learning/BRAND_PASSPORT_DATA_GOVERNANCE_V1.md`.
-
-### Chưa triển khai
+### Chưa triển khai production
 
 - Không gọi LLM hoặc API AI bên ngoài.
 - Không tạo lời khuyên sinh tự do.
 - Không thay đổi score, cash, profit, event hoặc bất kỳ rule nào của engine.
-- Migration Supabase mới chỉ nằm trong PR; chưa được xem là hoạt động production cho đến khi được review và áp dụng vào project đúng.
-- Không có instructor dashboard trực quan hoặc cohort mode.
-- Không gắn Learning Edition/Pilot Shell vào navigation production.
+- Chưa áp migration trên Supabase staging thật.
+- Chưa gắn Learning Edition/Pilot Gateway vào navigation production.
+- Chưa có instructor dashboard cho Decision Trace.
+- Chưa có competitive cohort mode.
 
 ## 3. Kiến trúc
 
 ```text
-brand-passport-learning-pilot.html (optional governed pilot shell)
-  └─ brand-passport-learning.html (Learning Layer)
-       └─ brand-passport.html (deterministic game)
+brand-passport.html
+  deterministic game engine
+        ↓ read-only state
+brand-passport-learning.html
+  Coach · Critic · Reflection · Decision Trace
+        ↓ optional opt-in
+brand-passport-learning-pilot.html
+  consent · receipt · deletion · retention
+        ↓ governed RPC
+public.bp_learning_traces
 ```
 
-Luồng kết quả:
+Learning Layer đọc trạng thái qua:
 
 ```text
-Learner decision
-      ↓
-Deterministic engine
-      ↓
-Outcome snapshot + delta
-      ↓
-Rule-based Coach/Critic explanation
-      ↓
-Learner reflection
-      ↓
-Decision Trace + CLO mapping
+window.bpTest.state()
 ```
 
-Learning Layer không giữ tham chiếu đến biến nội bộ `S`; nó chỉ đọc bản sao từ `window.bpTest.state()` và bọc các hàm UI công khai để ghi thời điểm trước/sau.
+và bọc các hàm UI công khai để chụp snapshot trước/sau. Không có dòng mã nào trong Learning Layer sửa trực tiếp biến engine nội bộ.
 
 ## 4. Audit schema
 
-Audit cấp phiên:
+Audit package cấp session:
 
 ```json
 {
@@ -101,48 +87,27 @@ Audit cấp phiên:
 }
 ```
 
-Record cấp quý:
+Mỗi record cấp quý lưu:
 
-```json
-{
-  "record_id": "uuid",
-  "round": 1,
-  "decision": {
-    "priority": "Thu thập thông tin",
-    "budget": "Cân bằng",
-    "entry_market": "Hải Lam",
-    "entry_mode": "Nền tảng số",
-    "intelligence_source_ids": []
-  },
-  "coach_prompt": "...",
-  "critic_question": "...",
-  "student_reflection": "...",
-  "outcome_before_engine": {},
-  "outcome_after_engine": {},
-  "outcome_delta": {},
-  "consequence": "...",
-  "explanation": "...",
-  "learning_outcomes": [],
-  "engine_outcome_source": "deterministic",
-  "ai_changed_score": false,
-  "audit_timestamp": "ISO-8601"
-}
+```text
+record_id
+round
+Decision
+Coach prompt
+Critic question
+Student reflection
+Outcome before engine
+Outcome after engine
+Outcome delta
+Consequence
+Explanation
+Learning outcomes/CLO
+engine_outcome_source = deterministic
+ai_changed_score = false
+audit timestamp
 ```
 
-Payload server opt-in bổ sung:
-
-```json
-{
-  "data_governance": {
-    "storage_mode": "server-opt-in",
-    "consent_version": "bp-learning-consent-v1",
-    "retention_days": 180,
-    "right_to_delete": "deletion receipt token",
-    "instructor_access": "class code + instructor key",
-    "ai_scoring": false
-  }
-}
-```
+Outcome delta chỉ ghi nhận sự thay đổi giữa hai snapshot. Nó không tự động chứng minh quan hệ nhân quả.
 
 ## 5. Coach–Critic V1
 
@@ -157,73 +122,105 @@ V1 dùng luật rõ ràng, có thể kiểm tra:
 
 Đây là instructional prompts, không phải causal inference và không phải đáp án tối ưu.
 
-## 6. Mapping CLO
+## 6. Mapping CLO V1
 
-- **CLO 1:** đánh giá thị trường khi có quyết định entry market.
-- **CLO 2:** lựa chọn entry mode.
-- **CLO 3:** đánh giá thông tin khi đã mua intelligence source.
-- **CLO 5:** nhận diện path dependence.
-- **CLO 6:** giải thích quyết định đa tiêu chí và trade-off.
+| Quyết định | Learning outcome gợi ý |
+|---|---|
+| Ưu tiên chiến lược | BP-1, BP-4 |
+| Thu thập thông tin | BP-1, BP-2 |
+| Chọn thị trường | BP-2, BP-3 |
+| Chọn entry mode | BP-3, BP-4 |
+| Mức vận hành | BP-4, BP-5 |
+| Ứng phó biến cố | BP-4, BP-5, BP-6 |
+| Reflection | BP-6 |
 
-Mapping này cần cố vấn học thuật duyệt trước pilot chính thức.
+Mapping này cần cố vấn học thuật duyệt trước pilot chính thức. V1 không dùng mapping CLO để tự động cho điểm.
 
-## 7. Bảo vệ engine
+## 7. Data Governance
 
-Hai trường bắt buộc:
+Governance chi tiết nằm tại:
 
-```json
-{
-  "engine_outcome_source": "deterministic",
-  "ai_changed_score": false
-}
+```text
+docs/learning/BRAND_PASSPORT_DATA_GOVERNANCE_V1.md
+docs/learning/BRAND_PASSPORT_SUPABASE_STAGING_RUNBOOK.md
 ```
 
-Learning Layer không gọi hàm để chỉnh score và không ghi trở lại trạng thái game. Nếu về sau dùng LLM, LLM chỉ nhận bản sao outcome và không được có quyền gọi engine mutation APIs.
+Schema server canonical duy nhất:
+
+```text
+public.bp_learning_traces
+```
+
+Migration:
+
+```text
+supabase/migrations/20260802000000_bp_learning_traces.sql
+```
+
+Anonymous client không có quyền trực tiếp trên bảng; submit/delete/read-for-instructor chỉ đi qua RPC đã giới hạn. Purge chỉ dành cho `service_role`/quản trị viên.
 
 ## 8. Kiểm thử
 
-`test/brand-passport-learning.test.js` kiểm tra:
+### Browser integration
 
-- kết nối được deterministic game;
-- version/schema đúng;
-- Coach/Critic thay đổi theo lựa chọn;
+```text
+test/brand-passport-learning.test.js
+test/brand-passport-governance.test.js
+```
+
+Kiểm tra:
+
+- Learning Layer kết nối deterministic game;
 - một quý tạo đúng một record;
-- reflection, seed, team ID, snapshot, delta, CLO và timestamp đầy đủ;
-- `engine_outcome_source = deterministic`;
-- `ai_changed_score = false`;
-- không lỗi console;
-- không tràn ngang ở viewport Android.
+- Coach/Critic thay đổi theo trạng thái;
+- reflection và CLO được lưu;
+- không lỗi JavaScript;
+- không tràn ngang mobile;
+- local-only không gửi request;
+- chưa consent không gửi;
+- receipt và deletion flow đúng cấu trúc.
 
-`test/brand-passport-governance.test.js` kiểm tra:
+### PostgreSQL contract
 
-- local-only không phát sinh request;
-- thiếu consent thì submit bị chặn;
-- payload không gửi tên/email/điện thoại;
-- consent version và retention được khai báo;
-- deletion receipt được tạo ở client;
-- RPC delete dùng đúng trace ID và token;
-- RLS/RPC/retention có trong migration;
-- layout governance đạt ở desktop và Android.
+```text
+test/sql/bp_learning_bootstrap.sql
+test/sql/bp_learning_smoke.sql
+.github/workflows/brand-passport-supabase-sql.yml
+```
+
+Migration được thực thi trên PostgreSQL 16, không chỉ kiểm tra bằng biểu thức văn bản. Smoke test xác minh:
+
+- RLS và không có direct table privilege cho anon;
+- RPC execute grants;
+- consent không hợp lệ bị từ chối;
+- `ai_scoring=true` bị từ chối;
+- instructor key và class scope;
+- token sai không xóa;
+- token đúng xóa được;
+- retention purge xóa dữ liệu hết hạn;
+- không có migration version trùng hoặc schema cạnh tranh.
+
+CI PostgreSQL không thay thế kiểm thử trên Supabase staging thật.
 
 ## 9. Giới hạn V1
 
-- Prompt chỉ dùng tiếng Việt.
+- Prompt hiện ưu tiên tiếng Việt.
 - Rule-based support chưa phải adaptive model đã được kiểm định.
 - Delta trước/sau bao gồm cả quyết định và biến cố, nên không được diễn giải là tác động nhân quả riêng của quyết định.
-- Pilot Shell thêm một iframe ngoài để cô lập governance khỏi Learning Layer đã đạt QA; cần đánh giá lại kiến trúc trước production quy mô lớn.
+- Pilot Gateway thêm một iframe ngoài để cô lập governance khỏi Learning Layer đã đạt QA; cần đánh giá lại kiến trúc trước production quy mô lớn.
 - `localStorage` không phải kho nghiên cứu dài hạn.
 - Server storage chỉ được bật sau review migration, consent, data controller và purge schedule.
 
 ## 10. Cổng phát hành
 
-Trước khi đưa vào lớp học thật:
+PR phải tiếp tục ở trạng thái Draft cho đến khi:
 
-- duyệt học thuật Coach/Critic và CLO;
-- duyệt wording consent VI/EN;
-- xác định data controller/đầu mối hỗ trợ;
-- áp dụng và kiểm tra migration trên Supabase staging;
-- cấu hình purge job 180 ngày;
-- kiểm tra quyền đọc theo lớp;
-- kiểm tra Android thật và Safari/iOS;
-- chốt policy về retention, quyền xóa và xử lý mất deletion receipt;
-- không dùng reflection để AI tự động chấm điểm.
+- Coach/Critic và mapping CLO được duyệt;
+- consent VI/EN được duyệt;
+- xác định data controller và đầu mối vận hành;
+- migration được áp trên Supabase staging;
+- STG-01 đến STG-08 đạt;
+- Android thật và Safari/iOS đạt;
+- có quyết định go/no-go rõ ràng.
+
+Không thu dữ liệu sinh viên thật chỉ dựa trên việc CI đã đạt.
