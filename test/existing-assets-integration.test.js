@@ -40,6 +40,11 @@ for (const asset of assets) {
   assert.doesNotMatch(asset.path, /food[-_ ]?truck|generated|imagegen/i, `Excluded asset entered registry: ${asset.path}`);
 }
 
+assert.ok(
+  registry.assets.tu_phan_lecture_hall.allowed_pages.includes('app/instructor-studio.html'),
+  'Instructor Studio must be approved to use the existing Tú Phan lecture-hall scene.'
+);
+
 const integration = read('js/app-shell/existing-assets.js');
 assert.match(integration, /huongLuminaClassroom/);
 assert.match(integration, /tuPhanLectureHall/);
@@ -62,14 +67,18 @@ assert.match(integration, /Lumina không sửa điểm, tiền mặt, lợi nhu�
 const unifiedShell = read('js/app-shell/unified-app.js');
 const aibisShell = read('js/app-shell/app-shell.js');
 assert.match(unifiedShell, /existing-assets\.js/);
+assert.match(unifiedShell, /instructor-studio\.html/);
 assert.match(aibisShell, /existing-assets\.js/);
 
 const release = read('app/release.html');
 const command = read('app/command-center.html');
 const aibis = read('app/aibis.html');
+const instructor = read('app/instructor-studio.html');
 assert.match(release, /unified-app\.js/);
 assert.match(command, /unified-app\.js/);
 assert.match(aibis, /app-shell\.js/);
+assert.match(instructor, /anh-tu-lecture-hall\.webp/);
+assert.match(instructor, /bizon-instructor-studio\.css/);
 
 const music = read('am-nhac.html');
 assert.match(music, /arena-vietnam-map-v2\.webp/);
@@ -87,10 +96,12 @@ assert.match(stylesheet, /\.aibis-existing-guide/);
 assert.match(stylesheet, /@media \(max-width: 560px\)/);
 
 const sw = read('app/sw.js');
-assert.match(sw, /bizon-app-shell-v6/);
+assert.match(sw, /bizon-app-shell-v7/);
 for (const required of [
   '../css/bizon-existing-assets.css',
+  '../css/bizon-instructor-studio.css',
   '../js/app-shell/existing-assets.js',
+  '../js/app-shell/instructor-studio.js',
   '../assets/approved-existing-assets.json',
   '../assets/illustrations/lumina-holo-classroom.webp',
   '../assets/illustrations/anh-tu-lecture-hall.webp',
