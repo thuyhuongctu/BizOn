@@ -463,12 +463,16 @@ function playFinaleTheme() {
   const src = 'assets/audio/bat-nghiep-mekong-sunfire-2.mp3';
   const i = BGM_TRACKS.indexOf(src);
   if (i < 0) return;
-  finaleThemePlayed = true;
   bgmIdx = i;
   const a = ensureBgm(src);
-  if (!a.src.endsWith(src)) { a.src = src; }
-  a.currentTime = 0;
-  a.play().catch(() => {});
+  // Chỉ tua về đầu khi thật sự đổi bài. Nếu bản này đang phát sẵn thì để yên –
+  // tua lại giữa chừng nghe như nhạc bị giật.
+  if (!a.src.endsWith(src)) { a.src = src; a.currentTime = 0; }
+  finaleThemePlayed = true;
+  // Trình duyệt chặn phát tự động khi trang chưa nhận thao tác nào. Gặp trường
+  // hợp đó thì đánh dấu lại là chưa phát, để lần vẽ báo cáo sau còn thử lại;
+  // nếu nhạc đã chạy bằng đường khác thì giữ nguyên, đừng phát chồng.
+  a.play().catch(() => { if (a.paused) finaleThemePlayed = false; });
 }
 function toggleMusic() {
   if (musicEnabled()) { localStorage.setItem('bizon-music', 'off'); if (bgm) bgm.pause(); }
