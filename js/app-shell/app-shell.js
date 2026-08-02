@@ -1,5 +1,16 @@
 (() => {
   'use strict';
+
+  if (!document.querySelector('script[data-bizon-existing-assets]')) {
+    const existingAssets = document.createElement('script');
+    existingAssets.src = document.currentScript?.src
+      ? new URL('./existing-assets.js', document.currentScript.src).href
+      : '../js/app-shell/existing-assets.js';
+    existingAssets.defer = true;
+    existingAssets.dataset.bizonExistingAssets = 'true';
+    document.head.appendChild(existingAssets);
+  }
+
   const root = document.documentElement;
   const themeBtn = document.getElementById('themeBtn');
   const installBtn = document.getElementById('installBtn');
