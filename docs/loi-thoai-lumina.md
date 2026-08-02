@@ -4,7 +4,13 @@
 > **Cách gửi:** thu từng câu thành 1 file MP3, đặt **đúng tên file** trong bảng, gửi lên chat – hệ thống sẽ nối vào đúng ngữ cảnh trong game.
 > Lưu ý: câu có chỗ trống `{…}` chứa số liệu động (ROI, OEE…) – khi thu, đọc câu mẫu với một con số bất kỳ hoặc bỏ qua câu đó (bản chữ vẫn hiển thị).
 
-Tổng cộng: **49 câu** trong 8 nhóm. Đã có giọng: 3 câu chào đăng nhập.
+Tổng cộng: **49 câu** trong 8 nhóm.
+
+**Đã thu:** 3 câu chào đăng nhập + 15 câu trong `assets/audio/voice/` (`adv-08`, `adv-09`, `adv-10`, `adv-11`, `adv-12`, `adv-13`, `adv-14`, `adv-15`, `adv-16`, `adv-17`, `kpi-01`, `kpi-02`, `kpi-03`, `risk-01`, `risk-02`).
+
+> ⚠️ **15 tệp này CHƯA được nối vào game.** Bản thu hiện tại đọc sai các viết tắt
+> kiểu CMO, COO, OEE nên đang chờ bản thu lại theo mục «Bản đọc cho thu âm» ở cuối tài liệu.
+> Khi có bản mới, thay tệp cùng tên rồi mới nối vào game.
 
 ## Bộ não cố vấn theo vai trò (tab Cố vấn – thẻ CFO/CMO/COO/SEC)
 
@@ -97,3 +103,76 @@ Tổng cộng: **49 câu** trong 8 nhóm. Đã có giọng: 3 câu chào đăng 
 
 ---
 *Sinh tự động từ mã nguồn `js/engine.js`, `js/app.js`, `global.html` – cập nhật khi lời thoại trong game thay đổi.*
+
+---
+
+## 🗣️ Bản đọc cho thu âm – chỉ rõ chỗ phải đọc khác
+
+Giọng đọc tiếng Việt phát âm sai các viết tắt kiểu **CEO, CMO, COO, OEE, ROI**, và bỏ
+qua ký hiệu **₫**, **%**. Bảng dưới liệt kê **26 câu** có những chỗ đó.
+
+Cột *«Chỗ phải đổi»* nói rõ đổi cái gì thành cái gì. Cột *«Đọc như thế này»* là nguyên
+câu, với **phần in đậm chính là chỗ đọc khác đi** – nhìn là thấy ngay nó nằm ở đâu
+trong câu, không phải dò.
+
+> Ví dụ `risk-02`: chỗ duy nhất phải đổi là chữ **CEO** ngay sau «Thưa» ở đầu câu.
+
+**Chữ hiển thị trên màn hình KHÔNG đổi** – vẫn giữ CEO, CMO, ROI… vì đó là từ vựng
+kinh doanh người học cần làm quen. Chỉ phần đọc mới thay bằng tên đầy đủ.
+
+### Bảng tra cứu
+
+| Viết tắt / ký hiệu | Đọc thành |
+|---|---|
+| CEO | Giám đốc Điều hành |
+| CFO | Giám đốc Tài chính |
+| CMO | Giám đốc Marketing |
+| COO | Giám đốc Vận hành |
+| SEC | Thư ký |
+| OEE | hiệu suất thiết bị tổng thể |
+| ROI | tỷ suất lợi nhuận trên vốn đầu tư |
+| KPI | chỉ số hiệu quả |
+| ESG | môi trường – xã hội – quản trị |
+| R&D | nghiên cứu và phát triển |
+| Marketing Mix | phối thức marketing |
+| Marketing Boost | gói đẩy mạnh marketing |
+| R&D Upgrade | gói nâng cấp nghiên cứu và phát triển |
+| nút nhấn "Commit" | nút chốt quyết định |
+| tr₫ | triệu đồng |
+| ₫ | đồng |
+| % | phần trăm |
+| đối thủ B | đối thủ Bê |
+
+### 26 câu cần đọc khác
+
+| Tên file | Chỗ phải đổi | Đọc như thế này (phần in đậm là chỗ đổi) |
+|---|---|---|
+| `voice/adv-02.mp3` | `R&D` → **nghiên cứu và phát triển** | Đối thủ đang xâm chiếm phân khúc của chúng ta bằng giá rẻ. Chúng ta cần tăng ngân sách quảng cáo hoặc tung sản phẩm **nghiên cứu và phát triển** mới. |
+| `voice/adv-03.mp3` | `CMO` → **Giám đốc Marketing** | **Giám đốc Marketing** thân mến, chi phí tiếp thị của chúng ta đang quá cao nhưng không chuyển đổi thành doanh thu tương ứng. Hãy rà soát lại thông điệp chiến dịch. |
+| `voice/adv-04.mp3` | `COO` → **Giám đốc Vận hành** | Nhu cầu thị trường đang rất lớn nhưng chúng ta không có đủ hàng để bán. Hãy phối hợp với **Giám đốc Vận hành** để tăng sản lượng. |
+| `voice/adv-05.mp3` | `CMO` → **Giám đốc Marketing** · `5%` → **5 phần trăm** · `8%` → **8 phần trăm** · `đối thủ B` → **đối thủ Bê** | Thưa **Giám đốc Marketing**, **đối thủ Bê** vừa hạ giá 15 phần trăm và chiếm mất 8 phần trăm thị phần của chúng ta. Nếu không phản ứng trong vòng tới, chúng ta sẽ mất vị thế dẫn đầu. |
+| `voice/adv-06.mp3` | `CMO` → **Giám đốc Marketing** | Lượng hàng tồn kho đang quá lớn, gây lãng phí chi phí lưu kho. Hãy phối hợp với **Giám đốc Marketing** để đẩy mạnh tiêu thụ hoặc giảm sản lượng. |
+| `voice/adv-07.mp3` | `COO` → **Giám đốc Vận hành** | Thưa **Giám đốc Vận hành**, tôi nhận thấy tỷ lệ sản phẩm lỗi tăng mạnh. Nguyên nhân là do đội ngũ nhân sự mới chưa được đào tạo bài bản. Chúng ta nên đầu tư vào gói "Đào tạo chuyên sâu" để lấy lại phong độ. |
+| `voice/adv-08.mp3` | `COO` → **Giám đốc Vận hành** | **Giám đốc Vận hành** ơi, nhà máy đang chạy quá tải. Nếu không đầu tư mở rộng ngay, chúng ta sẽ bỏ lỡ cơ hội bán hàng ở vòng tới. |
+| `voice/adv-10.mp3` | `COO` → **Giám đốc Vận hành** · `OEE` → **hiệu suất thiết bị tổng thể** | Vận hành đang mượt mà, **Giám đốc Vận hành** ạ. Hãy duy trì bảo trì định kỳ và theo dõi **hiệu suất thiết bị tổng thể** để giữ phong độ nhé. |
+| `voice/adv-11.mp3` | `CEO` → **Giám đốc Điều hành** · `SEC` → **Thư ký** | **Thư ký** ơi, các bộ phận vẫn chưa thống nhất con số cuối cùng. Hãy nhắc **Giám đốc Điều hành** chốt quyết định ngay để tránh bị hệ thống tự động khóa! |
+| `voice/adv-12.mp3` | `SEC` → **Thư ký** | Dữ liệu lịch sử đang bị trống. **Thư ký** cần ghi chú lại các biến cố quan trọng để đội có cơ sở phân tích cho các vòng sau nhé. |
+| `voice/adv-13.mp3` | `CEO` → **Giám đốc Điều hành** · `SEC` → **Thư ký** · `nút nhấn "Commit"` → **nút chốt quyết định** | Tuyệt vời! Toàn đội đã sẵn sàng. **Thư ký** hãy kiểm tra lại lần cuối và báo cáo **Giám đốc Điều hành** thực hiện **nút chốt quyết định** thần thánh nhé. |
+| `voice/adv-14.mp3` | `CFO` → **Giám đốc Tài chính** · `tr₫` → **triệu đồng** | **Giám đốc Tài chính**, thanh khoản đang ở vùng đỏ! Tiền mặt chỉ còn {…}**triệu đồng**, vòng quay tồn kho lên tới {…} ngày. Hãy phê duyệt khoản vay khẩn cấp hoặc cắt giảm chi phí ngay – đừng để lỡ kỳ trả lương. |
+| `voice/adv-15.mp3` | `CFO` → **Giám đốc Tài chính** · `ROI` → **tỷ suất lợi nhuận trên vốn đầu tư** · `%` → **phần trăm** | **tỷ suất lợi nhuận trên vốn đầu tư** hiện tại ({…}**phần trăm**) đang cao hơn chi phí vốn vay ({…}**phần trăm**). Đây là thời điểm tốt để dùng đòn bẩy tài chính mở rộng sản xuất, **Giám đốc Tài chính** ạ. |
+| `voice/adv-17.mp3` | `CEO` → **Giám đốc Điều hành** · `COO` → **Giám đốc Vận hành** · `SEC` → **Thư ký** | Biến cố "{…}" vừa ập đến! **Thư ký** hãy nhanh chóng tổng hợp thông tin từ **Giám đốc Vận hành** về tình hình sản xuất và báo cáo cho **Giám đốc Điều hành** để điều chỉnh giá bán kịp thời. |
+| `voice/kpi-01.mp3` | `CFO` → **Giám đốc Tài chính** · `ROI` → **tỷ suất lợi nhuận trên vốn đầu tư** | Thật tuyệt vời, **Giám đốc Tài chính**! Chiến lược tối ưu cấu trúc vốn của bạn đã mang lại lợi nhuận kỷ lục (**tỷ suất lợi nhuận trên vốn đầu tư** |
+| `voice/kpi-02.mp3` | `CMO` → **Giám đốc Marketing** · `Marketing Mix` → **phối thức marketing** | Chúc mừng **Giám đốc Marketing**! Chiến dịch **phối thức marketing** của bạn đã đánh bại hoàn toàn đối thủ. Thương hiệu của đội hiện đang là lựa chọn số 1 của khách hàng! |
+| `voice/kpi-03.mp3` | `COO` → **Giám đốc Vận hành** · `OEE` → **hiệu suất thiết bị tổng thể** | **Giám đốc Vận hành** ơi, hiệu suất nhà máy đạt mức không tưởng (**hiệu suất thiết bị tổng thể** |
+| `voice/risk-02.mp3` | `CEO` → **Giám đốc Điều hành** | Thưa **Giám đốc Điều hành**, chúng ta đang đứng trước ngưỡng cửa phá sản kỹ thuật. Sự đánh đổi giữa tăng trưởng nóng và an toàn dòng tiền đang bị lệch pha – hãy họp khẩn cấp toàn đội và rà soát lại quyết định. |
+| `voice/chat-03.mp3` | `ROI` → **tỷ suất lợi nhuận trên vốn đầu tư** · `300tr₫` → **300 triệu đồng** · `15tr₫` → **15 triệu đồng** · `5%` → **5 phần trăm** | Đã giải ngân khoản vay 300 triệu đồng! Lưu ý: lãi 5 phần trăm/vòng (15 triệu đồng) sẽ trừ vào lợi nhuận mỗi vòng còn lại. Hãy dùng vốn hiệu quả để **tỷ suất lợi nhuận trên vốn đầu tư** vượt chi phí vốn nhé. |
+| `voice/chat-04.mp3` | `5%` → **5 phần trăm** | Đã kích hoạt phương án cắt giảm chi phí – chi phí cố định vòng sau giảm 15 phần trăm. Cẩn thận đừng cắt vào các khoản đầu tư dài hạn! |
+| `voice/chat-06.mp3` | `OEE` → **hiệu suất thiết bị tổng thể** · `3%` → **3 phần trăm** | Đã lên lịch bảo trì khẩn! **hiệu suất thiết bị tổng thể** sẽ cải thiện +3 phần trăm và tỷ lệ phế phẩm giảm ở vòng tới. 🔧 |
+| `voice/topic-01.mp3` | `₫` → **đồng** · `5%` → **5 phần trăm** | Vòng này là Chiến tranh giá – khách cực nhạy về giá. Nếu bạn giữ giá trên {…}k**đồng**, thị phần có thể rơi mạnh. Cân nhắc giảm 10–15 phần trăm và bù bằng sản lượng. |
+| `voice/topic-02.mp3` | `0%` → **0 phần trăm** | Vòng trước bạn hụt {…} đơn vì thiếu hàng – cầu đang vượt cung. Nếu tăng giá 5–10 phần trăm, lợi nhuận biên sẽ cải thiện mà thị phần giảm không đáng kể. |
+| `voice/topic-03.mp3` | `₫` → **đồng** · `0%` → **0 phần trăm** | Giá tham chiếu thị trường là {…}k**đồng**. Nếu giảm 10 phần trăm giá, mô hình dự báo thị phần tăng ~3–4 điểm nhưng biên lợi nhuận mỏng đi – chỉ nên làm khi sản lượng đủ lớn. |
+| `voice/topic-04.mp3` | `R&D Upgrade` → **gói nâng cấp nghiên cứu và phát triển** · `Marketing Boost` → **gói đẩy mạnh marketing** · `5%` → **5 phần trăm** · `%` → **phần trăm** | Nếu tăng ngân sách Marketing thêm 15 phần trăm, thị phần dự kiến đạt {…}**phần trăm** ở vòng sau.{…} Khuyến nghị: **gói đẩy mạnh marketing**, **gói nâng cấp nghiên cứu và phát triển**. |
+| `voice/topic-05.mp3` | `5%` → **5 phần trăm** | ⚠️ Cảnh báo đỏ: {…} – {…} Nếu không giữ ít nhất 15 phần trăm vốn dự phòng, đội có thể âm dòng tiền. Cân nhắc mua "Khiên bảo hiểm" trong Cửa hàng. |
+
+> Câu có `{…}`: đọc với một con số bất kỳ, ví dụ *"Tiền mặt chỉ còn 120 triệu đồng"*.
+> Hai mươi câu còn lại trong tài liệu không chứa viết tắt hay ký hiệu nào – đọc nguyên văn.
