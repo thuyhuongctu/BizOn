@@ -1,0 +1,120 @@
+name: Android TWA Build
+
+on:
+  pull_request:
+    paths:
+      - 'android/**'
+      - 'app/**'
+      - '.well-known/assetlinks.template.json'
+      - 'test/android-twa-contract.test.js'
+      - '.github/workflows/android-twa-build.yml'
+  push:
+    branches: ['feat/android-twa-build']
+    paths:
+      - 'android/**'
+      - 'app/**'
+      - '.well-known/assetlinks.template.json'
+      - 'test/android-twa-contract.test.js'
+      - '.github/workflows/android-twa-build.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build-debug-apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Validate Android and web contracts
+        run: node test/android-twa-contract.test.js
+
+      - name: Verify public PWA endpoints
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --silent --show-error \
+            --retry 12 --retry-delay 10 --retry-all-errors \
+            https://thuyhuongctu.github.io/BizOn/app/ \
+            -o /tmp/bizon-app.html
+          grep -qi 'BizOn' /tmp/bizon-app.html
+          curl --fail --location --silent --show-error \
+            --retry 12 --retry-delay 10 --retry-all-errors \
+            https://thuyhuongctu.github.io/BizOn/app/manifest.webmanifest \
+            -o /tmp/bizon-manifest.json
+          python - <<'PY'
+          import json
+          with open('/tmp/bizon-manifest.json', encoding='utf-8') as handle:
+              manifest = json.load(handle)
+          assert manifest['start_url'] == './index.html'
+          assert manifest['scope'] == './'
+          assert manifest['display'] == 'standalone'
+          print('Public PWA endpoints verified')
+          PY
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android 35 SDK
+        shell: bash
+        run: |
+          yes | sdkmanager --licenses >/dev/null || true
+          sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+
+      - name: Set up Gradle 8.9
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+
+      - name: Build debug APK
+        run: gradle -p android :app:assembleDebug --stacktrace
+
+      - name: Create debug verification bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p android-artifacts
+          cp android/app/build/outputs/apk/debug/app-debug.apk android-artifacts/BizOn-debug.apk
+          FINGERPRINT=$(keytool -list -v \
+            -alias androiddebugkey \
+            -keystore "$HOME/.android/debug.keystore" \
+            -storepass android \
+            -keypass android | awk -F': ' '/SHA256:/{print $2; exit}')
+          test -n "$FINGERPRINT"
+          DEBUG_FINGERPRINT="$FINGERPRINT" python - <<'PY'
+          import json, os
+          document = [{
+              'relation': ['delegate_permission/common.handle_all_urls'],
+              'target': {
+                  'namespace': 'android_app',
+                  'package_name': 'vn.bizon.simulation',
+                  'sha256_cert_fingerprints': [os.environ['DEBUG_FINGERPRINT']],
+              },
+          }]
+          with open('android-artifacts/assetlinks-debug.json', 'w', encoding='utf-8') as handle:
+              json.dump(document, handle, ensure_ascii=False, indent=2)
+              handle.write('\n')
+          PY
+          sha256sum android-artifacts/BizOn-debug.apk > android-artifacts/BizOn-debug.apk.sha256
+
+      - name: Upload debug APK and verification files
+        uses: actions/upload-artifact@v4
+        with:
+          name: bizon-android-debug
+          path: android-artifacts/
+          if-no-files-found: error
+          retention-days: 14
