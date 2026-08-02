@@ -18,8 +18,8 @@
 
   function updateNetwork() {
     const online = navigator.onLine;
-    if (networkLabel) networkLabel.textContent = online ? 'Online' : 'Offline';
-    if (saveLabel) saveLabel.textContent = online ? 'App shell ready' : 'Offline shell active';
+    if (networkLabel) networkLabel.textContent = online ? 'Trực tuyến' : 'Ngoại tuyến';
+    if (saveLabel) saveLabel.textContent = online ? 'Ứng dụng sẵn sàng' : 'Đang dùng bản ngoại tuyến';
   }
   addEventListener('online', updateNetwork);
   addEventListener('offline', updateNetwork);
@@ -43,7 +43,7 @@
 
   demoDecisionBtn?.addEventListener('click', () => {
     const item = document.createElement('li');
-    item.innerHTML = '<span>R2</span><div><b>Entry mode comparison</b><small>Export 76 · Joint Venture 79 · FDI 54</small></div>';
+    item.innerHTML = '<span>R2</span><div><b>So sánh phương thức thâm nhập</b><small>Xuất khẩu 76 · Liên doanh 79 · Đầu tư trực tiếp 54</small></div>';
     timeline?.appendChild(item);
     demoDecisionBtn.disabled = true;
     demoDecisionBtn.textContent = 'Đã thêm';
@@ -51,6 +51,6 @@
 
   if ('serviceWorker' in navigator) {
     addEventListener('load', () => navigator.serviceWorker.register('./sw.js', { scope: './' })
-      .catch(error => console.warn('[BizOn App] service worker unavailable', error)));
+      .catch(error => console.warn('[BizOn] Không thể đăng ký service worker', error)));
   }
 })();
