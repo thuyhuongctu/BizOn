@@ -1,3 +1,4 @@
+// App shell V5 adds the approved existing-asset registry and preserved BizOn character artwork.
 const CACHE_NAME = 'bizon-app-shell-v5';
 const APP_SCOPE_PREFIX = '/BizOn/';
 const APP_SHELL = [
