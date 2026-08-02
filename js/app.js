@@ -417,16 +417,18 @@ function showPremium() {
 }
 
 // ---------- Nhạc nền game «Bật Nghiệp» ----------
-// Tuyển tập riêng: ca khúc chủ đề Việt Nam + anthem đội chơi. Phần lớn nhạc quốc
-// tế hóa vẫn dành riêng cho Go Global và Hộ Chiếu Thương Hiệu, không trộn vào đây;
-// «Vươn ra thế giới» là ngoại lệ có chủ ý vì kể đúng chặng cuối của ván chơi.
+// Tuyển tập riêng: ca khúc chủ đề Việt Nam, anthem đội chơi, và tuyến ca khúc
+// «Je m'appelle Hương sans frontières» – tuyến này kể chặng vươn ra thế giới nên
+// hợp với phần cuối ván chơi. Nhạc của Hộ Chiếu Thương Hiệu vẫn để riêng bên
+// brand-passport.html, không trộn vào đây.
 const BGM_TRACKS = [
   'assets/audio/bat-nghiep-co-loi.mp3',   // ca khúc chủ đề, bản thu có lời
   'assets/audio/bat-nghiep-rap-symphony.mp3', // bản rap symphony
   'assets/audio/bat-nghiep-mekong-sunfire-2.mp3', // remix Mekong Sunfire – bản đề xuất
   'assets/audio/bat-nghiep-mekong-sunfire.mp3',
   'assets/audio/bat-nghiep.mp3',        // bản instrumental, ngắn hơn
-  'assets/audio/huong-vuon-ra-the-gioi.mp3', // ngoại lệ: xem ghi chú trên
+  'assets/audio/huong-vuon-ra-the-gioi.mp3',
+  'assets/audio/huong-sans-frontieres-2.mp3',
   'assets/audio/bizon-theme.mp3',
   'assets/audio/huong-on-return.mp3',
   'assets/audio/huong-on-return-remix.mp3',
