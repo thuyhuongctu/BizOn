@@ -28,20 +28,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Validate release inputs and required secrets
+      - name: Validate release inputs and required signing secrets
         shell: bash
         env:
           KEYSTORE_BASE64: ${{ secrets.BIZON_UPLOAD_KEYSTORE_BASE64 }}
           STORE_PASSWORD: ${{ secrets.BIZON_UPLOAD_STORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.BIZON_UPLOAD_KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.BIZON_UPLOAD_KEY_PASSWORD }}
-          PLAY_FINGERPRINT: ${{ secrets.PLAY_APP_SIGNING_SHA256 }}
         run: |
           set -euo pipefail
           [[ '${{ inputs.version_code }}' =~ ^[1-9][0-9]*$ ]] || { echo 'version_code must be a positive integer'; exit 1; }
           [[ '${{ inputs.version_name }}' =~ ^[0-9]+\.[0-9]+\.[0-9]+([-.][0-9A-Za-z.-]+)?$ ]] || { echo 'version_name must follow semantic-version form'; exit 1; }
-          for value in "$KEYSTORE_BASE64" "$STORE_PASSWORD" "$KEY_ALIAS" "$KEY_PASSWORD" "$PLAY_FINGERPRINT"; do
-            test -n "$value" || { echo 'A required google-play-release secret is missing'; exit 1; }
+          for value in "$KEYSTORE_BASE64" "$STORE_PASSWORD" "$KEY_ALIAS" "$KEY_PASSWORD"; do
+            test -n "$value" || { echo 'A required google-play-release signing secret is missing'; exit 1; }
           done
 
       - name: Set up Node.js
@@ -62,11 +61,19 @@ jobs:
           test -s "$RUNNER_TEMP/bizon-upload.jks"
           chmod 600 "$RUNNER_TEMP/bizon-upload.jks"
 
-      - name: Generate Play App Signing assetlinks candidate
+      - name: Generate Play App Signing assetlinks candidate when available
+        shell: bash
         env:
           PLAY_APP_SIGNING_SHA256: ${{ secrets.PLAY_APP_SIGNING_SHA256 }}
           ASSETLINKS_OUTPUT: release-artifacts/assetlinks.json
-        run: node scripts/release/generate-assetlinks.mjs
+        run: |
+          set -euo pipefail
+          mkdir -p release-artifacts
+          if [ -n "$PLAY_APP_SIGNING_SHA256" ]; then
+            node scripts/release/generate-assetlinks.mjs
+          else
+            printf '%s\n' 'PLAY_APP_SIGNING_SHA256 not configured; publish assetlinks only after retrieving the Play App Signing certificate.' > release-artifacts/assetlinks-status.txt
+          fi
 
       - name: Set up Java
         uses: actions/setup-java@v4
