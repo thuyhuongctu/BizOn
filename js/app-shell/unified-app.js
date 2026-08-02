@@ -1,6 +1,14 @@
 (() => {
   'use strict';
 
+  if (!document.querySelector('link[data-bizon-overrides]')) {
+    const overrides = document.createElement('link');
+    overrides.rel = 'stylesheet';
+    overrides.href = '../css/bizon-unified-overrides.css';
+    overrides.dataset.bizonOverrides = 'true';
+    document.head.appendChild(overrides);
+  }
+
   const installButton = document.querySelector('[data-install-app]');
   const networkNodes = document.querySelectorAll('[data-network-status]');
   const menuButton = document.querySelector('[data-mobile-menu]');
