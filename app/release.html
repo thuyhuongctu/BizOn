@@ -4,31 +4,52 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#07141f">
-  <meta name="description" content="BizOn Web App: mô phỏng doanh nghiệp, Brand Passport Learning, AIBIS và không gian giảng viên.">
-  <title>BizOn App</title>
+  <meta name="description" content="BizOn là nền tảng mô phỏng quyết định kinh doanh, quốc tế hóa doanh nghiệp và học tập dựa trên trải nghiệm.">
+  <title>BizOn — Mô phỏng quyết định kinh doanh</title>
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="../assets/icons/icon-192.png">
   <link rel="stylesheet" href="../css/bizon-fonts.css">
   <style>
-    :root{color-scheme:dark;--bg:#07141f;--panel:#0d2231;--line:rgba(255,255,255,.12);--cyan:#38c6df;--muted:#9fb1bf}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 85% 5%,rgba(56,198,223,.16),transparent 30%),var(--bg);color:#fff;font-family:Manrope,system-ui,sans-serif}.shell{width:min(1120px,calc(100% - 28px));margin:auto;padding:18px 0 90px}.top{display:flex;align-items:center;gap:12px}.logo{width:46px;height:46px;border-radius:15px}.top h1{margin:0;font-size:1.15rem}.top p{margin:3px 0 0;color:var(--muted);font-size:.72rem}.status{margin-left:auto;padding:7px 10px;border:1px solid rgba(56,198,223,.25);border-radius:999px;color:var(--cyan);font-size:.66rem;font-weight:800}.hero{margin-top:26px;padding:28px;border:1px solid var(--line);border-radius:28px;background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.025));box-shadow:0 24px 60px rgba(0,0,0,.25)}.hero small{color:var(--cyan);font-weight:900;letter-spacing:.1em}.hero h2{max-width:760px;margin:10px 0;font-size:clamp(2rem,7vw,4rem);line-height:1}.hero p{max-width:700px;color:var(--muted);line-height:1.65}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:18px}.card{display:flex;min-height:160px;padding:20px;border:1px solid var(--line);border-radius:22px;background:var(--panel);color:#fff;text-decoration:none;flex-direction:column;transition:transform .18s,border-color .18s}.card:hover,.card:focus-visible{transform:translateY(-3px);border-color:rgba(56,198,223,.55)}.card b{font-size:1.1rem}.card p{margin:8px 0;color:var(--muted);font-size:.78rem;line-height:1.55}.card span{margin-top:auto;color:var(--cyan);font-size:.72rem;font-weight:850}.guard{margin-top:18px;padding:14px 16px;border:1px solid rgba(56,198,223,.18);border-radius:17px;color:var(--muted);font-size:.7rem;line-height:1.55}.guard b{color:#fff}.bottom{position:fixed;z-index:4;left:50%;bottom:10px;transform:translateX(-50%);display:flex;width:min(560px,calc(100% - 20px));padding:7px;border:1px solid var(--line);border-radius:18px;background:rgba(7,20,31,.94);backdrop-filter:blur(18px)}.bottom a{flex:1;padding:10px 4px;text-align:center;color:var(--muted);text-decoration:none;font-size:.65rem;font-weight:800}.bottom a:first-child{color:var(--cyan)}@media(max-width:700px){.grid{grid-template-columns:1fr}.hero{padding:22px}.status{display:none}}@media(prefers-reduced-motion:reduce){.card{transition:none}}
+    :root{color-scheme:dark;--bg:#07141f;--panel:#0d2231;--line:rgba(255,255,255,.12);--cyan:#38c6df;--muted:#a9bbc7;--white:#fff}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 85% 5%,rgba(56,198,223,.16),transparent 30%),var(--bg);color:var(--white);font-family:Manrope,system-ui,sans-serif}.shell{width:min(1120px,calc(100% - 28px));margin:auto;padding:18px 0 94px}.top{display:flex;align-items:center;gap:12px}.logo{width:46px;height:46px;border-radius:15px}.top h1{margin:0;font-size:1.15rem;letter-spacing:.02em}.top p{margin:3px 0 0;color:var(--muted);font-size:.75rem}.top-actions{margin-left:auto;display:flex;align-items:center;gap:8px}.status,.install{padding:8px 11px;border:1px solid rgba(56,198,223,.28);border-radius:999px;background:rgba(56,198,223,.08);color:var(--cyan);font:800 .68rem/1 Manrope,system-ui,sans-serif}.install{cursor:pointer}.hero{margin-top:26px;padding:30px;border:1px solid var(--line);border-radius:28px;background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.025));box-shadow:0 24px 60px rgba(0,0,0,.25)}.hero small{color:var(--cyan);font-weight:900;letter-spacing:.1em}.hero h2{max-width:780px;margin:11px 0;font-size:clamp(2rem,7vw,4rem);line-height:1.04}.hero p{max-width:720px;color:var(--muted);line-height:1.7}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:18px}.card{display:flex;min-height:168px;padding:21px;border:1px solid var(--line);border-radius:22px;background:var(--panel);color:#fff;text-decoration:none;flex-direction:column;transition:transform .18s,border-color .18s,box-shadow .18s}.card:hover,.card:focus-visible{transform:translateY(-3px);border-color:rgba(56,198,223,.55);box-shadow:0 18px 38px rgba(0,0,0,.2)}.card b{font-size:1.12rem}.card p{margin:8px 0;color:var(--muted);font-size:.8rem;line-height:1.6}.card span{margin-top:auto;color:var(--cyan);font-size:.74rem;font-weight:850}.principle{display:flex;gap:12px;align-items:flex-start;margin-top:18px;padding:15px 16px;border:1px solid rgba(56,198,223,.18);border-radius:17px;color:var(--muted);font-size:.73rem;line-height:1.65}.principle strong{color:#fff}.principle a{color:var(--cyan);font-weight:800}.footer{margin-top:22px;display:flex;justify-content:space-between;gap:16px;color:var(--muted);font-size:.68rem}.footer a{color:var(--muted)}.bottom{position:fixed;z-index:4;left:50%;bottom:10px;transform:translateX(-50%);display:flex;width:min(560px,calc(100% - 20px));padding:7px;border:1px solid var(--line);border-radius:18px;background:rgba(7,20,31,.94);backdrop-filter:blur(18px)}.bottom a{flex:1;padding:10px 4px;text-align:center;color:var(--muted);text-decoration:none;font-size:.65rem;font-weight:800}.bottom a:first-child{color:var(--cyan)}@media(max-width:700px){.grid{grid-template-columns:1fr}.hero{padding:23px}.status{display:none}.footer{flex-direction:column}.top-actions{gap:6px}}@media(prefers-reduced-motion:reduce){.card{transition:none}}
   </style>
 </head>
 <body>
   <main class="shell">
-    <header class="top"><img class="logo" src="../assets/icons/icon-192.png" alt="BizOn"><div><h1>BizOn App</h1><p>AI Business Simulation · Web/PWA</p></div><span class="status" id="net">ONLINE</span></header>
-    <section class="hero"><small>DECISION → CONSEQUENCE → EXPLANATION</small><h2>Học kinh doanh bằng quyết định có thể kiểm chứng.</h2><p>Ứng dụng hợp nhất mô phỏng khởi nghiệp, quốc tế hóa doanh nghiệp, Lumina Coach–Critic–Reflection và không gian điều phối lớp học.</p></section>
-    <section class="grid" aria-label="Ứng dụng BizOn">
-      <a class="card" href="../game.html"><b>Startup Lab</b><p>Vận hành doanh nghiệp qua các vòng quyết định, sự kiện và đánh đổi nguồn lực.</p><span>Mở mô phỏng →</span></a>
-      <a class="card" href="./brand-passport.html"><b>Brand Passport Learning</b><p>Ra quyết định quốc tế hóa, ghi reflection và xem Decision Trace. Local-only mặc định.</p><span>Mở Learning Edition →</span></a>
-      <a class="card" href="./aibis.html"><b>AIBIS</b><p>So sánh entry mode bằng engine xác định, provenance và confidence tách biệt.</p><span>Mở AIBIS →</span></a>
-      <a class="card" href="../giang-vien.html"><b>Instructor Studio</b><p>Điều phối lớp, xem kết quả và chuẩn bị debrief sau mô phỏng.</p><span>Mở không gian giảng viên →</span></a>
+    <header class="top">
+      <img class="logo" src="../assets/icons/icon-192.png" alt="Biểu trưng BizOn">
+      <div><h1>BizOn</h1><p>Mô phỏng quyết định kinh doanh</p></div>
+      <div class="top-actions"><button class="install" id="installBtn" type="button" hidden>Cài ứng dụng</button><span class="status" id="net">SẴN SÀNG</span></div>
+    </header>
+
+    <section class="hero">
+      <small>QUYẾT ĐỊNH · HỆ QUẢ · PHẢN TƯ</small>
+      <h2>Học kinh doanh bằng những lựa chọn có thể giải thích.</h2>
+      <p>BizOn kết nối mô phỏng khởi nghiệp, chiến lược quốc tế hóa, phản tư sau quyết định và công cụ điều phối lớp học trong một không gian thống nhất.</p>
     </section>
-    <p class="guard"><b>Guardrail:</b> Lumina hỗ trợ giải thích và phản tư; không thay đổi điểm số. Chức năng gửi Decision Trace lên máy chủ vẫn bị khóa cho đến khi hoàn tất data controller, consent và Supabase staging.</p>
+
+    <section class="grid" aria-label="Các mô-đun BizOn">
+      <a class="card" href="../game.html"><b>Startup Lab</b><p>Vận hành doanh nghiệp qua nhiều vòng quyết định, sự kiện và đánh đổi nguồn lực.</p><span>Bắt đầu mô phỏng →</span></a>
+      <a class="card" href="./brand-passport.html"><b>Brand Passport</b><p>Thực hành quốc tế hóa doanh nghiệp, ghi lại lập luận và xem lại tiến trình quyết định. Dữ liệu được lưu trên thiết bị.</p><span>Mở Brand Passport →</span></a>
+      <a class="card" href="./aibis.html"><b>AIBIS</b><p>So sánh phương thức thâm nhập thị trường và xem cách từng tiêu chí ảnh hưởng đến kết quả.</p><span>Mở AIBIS →</span></a>
+      <a class="card" href="../giang-vien.html"><b>Không gian giảng viên</b><p>Tổ chức lớp học, theo dõi kết quả và chuẩn bị phiên thảo luận sau mô phỏng.</p><span>Mở không gian giảng viên →</span></a>
+    </section>
+
+    <div class="principle"><span aria-hidden="true">◆</span><div><strong>Nguyên tắc vận hành:</strong> kết quả được tạo bởi mô hình mô phỏng có quy tắc rõ ràng; Lumina hỗ trợ đặt câu hỏi và giải thích, không tự thay đổi điểm. <a href="../chinh-sach.html">Xem chính sách dữ liệu</a>.</div></div>
+
+    <footer class="footer"><span>© 2026 BizOn. Bảo lưu mọi quyền.</span><span><a href="../chinh-sach.html">Quyền riêng tư</a> · <a href="../hoc-thuat.html">Cơ sở học thuật</a></span></footer>
   </main>
-  <nav class="bottom" aria-label="Điều hướng ứng dụng"><a href="./release.html">Home</a><a href="../game.html">Startup</a><a href="./brand-passport.html">Passport</a><a href="./aibis.html">AIBIS</a><a href="../giang-vien.html">Teach</a></nav>
+
+  <nav class="bottom" aria-label="Điều hướng ứng dụng"><a href="./release.html">Trang chủ</a><a href="../game.html">Khởi nghiệp</a><a href="./brand-passport.html">Quốc tế</a><a href="./aibis.html">AIBIS</a><a href="../giang-vien.html">Giảng viên</a></nav>
   <script>
-    const net=document.getElementById('net');function state(){net.textContent=navigator.onLine?'ONLINE':'OFFLINE'}addEventListener('online',state);addEventListener('offline',state);state();
-    if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js',{scope:'./'}).catch(console.warn));
+    const net=document.getElementById('net');
+    const installBtn=document.getElementById('installBtn');
+    let deferredPrompt=null;
+    function networkState(){net.textContent=navigator.onLine?'SẴN SÀNG':'NGOẠI TUYẾN'}
+    addEventListener('online',networkState);addEventListener('offline',networkState);networkState();
+    addEventListener('beforeinstallprompt',event=>{event.preventDefault();deferredPrompt=event;installBtn.hidden=false});
+    installBtn.addEventListener('click',async()=>{if(!deferredPrompt)return;await deferredPrompt.prompt();deferredPrompt=null;installBtn.hidden=true});
+    addEventListener('appinstalled',()=>{deferredPrompt=null;installBtn.hidden=true});
+    if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js',{scope:'./'}).catch(()=>{}));
   </script>
 </body>
 </html>

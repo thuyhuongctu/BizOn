@@ -2,16 +2,35 @@ plugins {
     id 'com.android.application'
 }
 
+def releaseKeystorePath = System.getenv('BIZON_UPLOAD_KEYSTORE_PATH')
+def releaseStorePassword = System.getenv('BIZON_UPLOAD_STORE_PASSWORD')
+def releaseKeyAlias = System.getenv('BIZON_UPLOAD_KEY_ALIAS')
+def releaseKeyPassword = System.getenv('BIZON_UPLOAD_KEY_PASSWORD')
+def hasReleaseSigning = [releaseKeystorePath, releaseStorePassword, releaseKeyAlias, releaseKeyPassword].every { value -> value != null && !value.trim().isEmpty() }
+def releaseVersionCode = (System.getenv('BIZON_VERSION_CODE') ?: '1').toInteger()
+def releaseVersionName = System.getenv('BIZON_VERSION_NAME') ?: '0.1.0-alpha'
+
 android {
     namespace 'vn.bizon.simulation'
-    compileSdk 35
+    compileSdk 36
 
     defaultConfig {
         applicationId 'vn.bizon.simulation'
         minSdk 23
-        targetSdk 35
-        versionCode 1
-        versionName '0.1.0-alpha'
+        targetSdk 36
+        versionCode releaseVersionCode
+        versionName releaseVersionName
+    }
+
+    signingConfigs {
+        if (hasReleaseSigning) {
+            release {
+                storeFile file(releaseKeystorePath)
+                storePassword releaseStorePassword
+                keyAlias releaseKeyAlias
+                keyPassword releaseKeyPassword
+            }
+        }
     }
 
     buildTypes {
@@ -22,6 +41,9 @@ android {
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            if (hasReleaseSigning) {
+                signingConfig signingConfigs.release
+            }
         }
     }
 
