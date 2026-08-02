@@ -87,6 +87,14 @@
     });
   });
 
+  // Keep the installed Web/PWA experience inside the unified app shell.
+  // The legacy dashboard remains accessible from Instructor Studio for fallback and comparison.
+  if (!location.pathname.endsWith('/app/instructor-studio.html')) {
+    document.querySelectorAll('a[href="../giang-vien.html"], a[href="/BizOn/giang-vien.html"]').forEach(link => {
+      link.href = './instructor-studio.html';
+    });
+  }
+
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('./sw.js', { scope: './' }).catch(() => {});
