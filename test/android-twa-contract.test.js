@@ -10,13 +10,18 @@ const webManifest = JSON.parse(fs.readFileSync('app/manifest.webmanifest', 'utf8
 const assetlinksTemplate = JSON.parse(fs.readFileSync('.well-known/assetlinks.template.json', 'utf8'));
 
 assert.match(settings, /include ':app'/);
-assert.match(rootBuild, /com\.android\.application' version '8\.7\.3'/);
+assert.match(rootBuild, /com\.android\.application' version '8\.10\.1'/);
 assert.match(appBuild, /applicationId 'vn\.bizon\.simulation'/);
-assert.match(appBuild, /compileSdk 35/);
-assert.match(appBuild, /targetSdk 35/);
+assert.match(appBuild, /compileSdk 36/);
+assert.match(appBuild, /targetSdk 36/);
 assert.match(appBuild, /minSdk 23/);
 assert.match(appBuild, /androidbrowserhelper:2\.2\.0/);
-assert.doesNotMatch(appBuild, /storePassword|keyPassword|signingConfig\s+signingConfigs\.release/i);
+assert.match(appBuild, /BIZON_UPLOAD_KEYSTORE_PATH/);
+assert.match(appBuild, /BIZON_UPLOAD_STORE_PASSWORD/);
+assert.match(appBuild, /BIZON_UPLOAD_KEY_ALIAS/);
+assert.match(appBuild, /BIZON_UPLOAD_KEY_PASSWORD/);
+assert.doesNotMatch(appBuild, /storePassword\s+['"][^'"]+['"]/);
+assert.doesNotMatch(appBuild, /keyPassword\s+['"][^'"]+['"]/);
 
 assert.match(androidManifest, /com\.google\.androidbrowserhelper\.trusted\.LauncherActivity/);
 assert.match(androidManifest, /android:exported="true"/);
@@ -29,6 +34,8 @@ assert.equal(webManifest.id, './release.html');
 assert.equal(webManifest.start_url, './release.html');
 assert.equal(webManifest.scope, './');
 assert.equal(webManifest.display, 'standalone');
+assert.equal(webManifest.name, 'BizOn — Mô phỏng quyết định kinh doanh');
+assert.equal(webManifest.shortcuts.find(item => item.short_name === 'Startup').url, '../game.html');
 assert.equal(webManifest.shortcuts.find(item => item.short_name === 'Passport').url, './brand-passport.html');
 assert.equal(webManifest.shortcuts.find(item => item.short_name === 'AIBIS').url, './aibis.html');
 assert.equal(assetlinksTemplate[0].target.package_name, 'vn.bizon.simulation');
@@ -41,7 +48,8 @@ for (const path of ['app/release.html', 'app/brand-passport.html', 'brand-passpo
 
 const release = fs.readFileSync('app/release.html', 'utf8');
 assert.match(release, /\.\/brand-passport\.html/);
-assert.match(release, /Local-only/);
+assert.match(release, /Dữ liệu được lưu trên thiết bị/);
 assert.match(release, /serviceWorker\.register\('\.\/sw\.js'/);
+assert.doesNotMatch(release, /Teaching demo|AI Command Center|Local-only|placeholder|auto-generated/i);
 
-console.log('Android TWA release contract passed');
+console.log('Android TWA API 36 production-surface contract passed');
