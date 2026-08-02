@@ -1,0 +1,85 @@
+name: Android Internal RC Audit
+
+on:
+  pull_request:
+    paths:
+      - 'android/**'
+      - 'app/**'
+      - 'game.html'
+      - 'giang-vien.html'
+      - 'chinh-sach.html'
+      - 'js/brand-passport-pilot-policy.example.js'
+      - 'play-store/**'
+      - 'release/**'
+      - 'test/android-internal-rc-contract.test.js'
+      - '.github/workflows/android-internal-rc-audit.yml'
+      - '.github/workflows/android-production-aab.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit-release-candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Validate release candidate contract
+        run: node test/android-internal-rc-contract.test.js
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android 16 API 36 SDK
+        shell: bash
+        run: |
+          yes | sdkmanager --licenses >/dev/null || true
+          sdkmanager 'platforms;android-36' 'build-tools;35.0.0'
+
+      - name: Set up Gradle 8.11.1
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.11.1'
+
+      - name: Build unsigned release candidate bundle
+        env:
+          BIZON_VERSION_NAME: 1.0.0
+          BIZON_VERSION_CODE: 1
+        run: gradle -p android :app:bundleRelease --stacktrace
+
+      - name: Verify release candidate bundle structure
+        shell: bash
+        run: |
+          set -euo pipefail
+          AAB='android/app/build/outputs/bundle/release/app-release.aab'
+          test -s "$AAB"
+          unzip -t "$AAB" >/tmp/bizon-aab-unzip.txt
+          grep -q 'No errors detected' /tmp/bizon-aab-unzip.txt
+          mkdir -p release-candidate-artifacts
+          cp "$AAB" release-candidate-artifacts/BizOn-1.0.0-1-unsigned.aab
+          sha256sum release-candidate-artifacts/BizOn-1.0.0-1-unsigned.aab > release-candidate-artifacts/BizOn-1.0.0-1-unsigned.aab.sha256
+          cp release/bizon-1.0.0-internal.json release-candidate-artifacts/release-metadata.json
+          printf '%s\n' 'UNSIGNED AUDIT ARTIFACT — do not upload to Google Play. Use Android Production AAB after configuring the upload key.' > release-candidate-artifacts/README.txt
+
+      - name: Upload audited unsigned candidate
+        uses: actions/upload-artifact@v4
+        with:
+          name: bizon-1.0.0-internal-rc1-audit
+          path: release-candidate-artifacts/
+          retention-days: 14
+          if-no-files-found: error
