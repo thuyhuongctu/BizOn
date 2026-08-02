@@ -28,17 +28,23 @@ async function capture(name, viewport, deviceScaleFactor = 1) {
     return image && image.complete && image.naturalWidth > 0;
   });
 
-  const audit = await page.evaluate(() => ({
-    overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
-    bodyText: document.body.innerText,
-    mentorWidth: document.querySelector('.bi-mentor img')?.naturalWidth || 0,
-    keyStored: Object.keys(localStorage).some(key => /key|secret|instructor/i.test(key))
-  }));
+  const audit = await page.evaluate(() => {
+    const entries = Object.entries(localStorage);
+    return {
+      overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      bodyText: document.body.innerText,
+      mentorWidth: document.querySelector('.bi-mentor img')?.naturalWidth || 0,
+      secretStored: entries.some(([key, value]) =>
+        /secret|instructor[-_]?key|admin[-_]?key/i.test(key) ||
+        /BIZON-GV-|service[_-]?role/i.test(String(value))
+      )
+    };
+  });
 
   if (audit.overflow > 1) throw new Error(`${name}: horizontal overflow ${audit.overflow}px`);
   if (audit.mentorWidth < 1) throw new Error(`${name}: mentor image did not load`);
   if (/Food Truck|Gánh Hàng/i.test(audit.bodyText)) throw new Error(`${name}: excluded Food Truck surface is visible`);
-  if (audit.keyStored) throw new Error(`${name}: a key-like value was found in localStorage`);
+  if (audit.secretStored) throw new Error(`${name}: an instructor credential was found in localStorage`);
 
   await page.screenshot({ path: path.join(output, `${name}-connection.png`), fullPage: true });
 
