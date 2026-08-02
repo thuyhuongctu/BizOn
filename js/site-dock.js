@@ -13,6 +13,7 @@
   var PLAYLIST = [
     ['Hương on Return ⭐ (bài hát chính)', 'huong-on-return.mp3'],
     ['Hương on Return – remix (remastered)', 'huong-on-return-remix.mp3'],
+    ['Bật Nghiệp ⭐ (ca khúc chủ đề game · bản thu có lời)', 'bat-nghiep-co-loi.mp3'],
     ['Bật Nghiệp (instrumental · V-pop 112 BPM)', 'bat-nghiep.mp3'],
     ['BizOn Theme (instrumental)', 'bizon-theme.mp3'],
     ['Vừa Đủ Để Bay Cao', 'vua-du-de-bay-cao.mp3'],

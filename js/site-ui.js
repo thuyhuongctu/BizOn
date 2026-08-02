@@ -4047,6 +4047,26 @@
 "⏸️ Tạm dừng nhạc chủ đề",
 "⏸️ Pause the theme music"
 ],
+[
+"Bản thu có lời ⭐",
+"Vocal recording ⭐"
+],
+[
+"Ca khúc chủ đề game Bật Nghiệp · 3:23 · nhạc nền mở đầu trong game",
+"Theme song of the Bật Nghiệp game · 3:23 · the opening music in-game"
+],
+[
+"Bản instrumental",
+"Instrumental version"
+],
+[
+"Bản phối không lời · 1:20 · dùng xen giữa các vòng",
+"Instrumental cut · 1:20 · played between rounds"
+],
+[
+"Ca khúc chủ đề game Việt Nam · bản thu có lời",
+"Theme song of the Vietnam game · vocal recording"
+],
 ]);
   var SPECIAL = [
     { page: 'giai-phap', sel: '#gp-oss-note', en: "Free to use at the official URL for non-commercial teaching – no account needed. The source is published for academic transparency and verification; commercial exploitation rights remain with BizOn (see <a href=\"https://github.com/thuyhuongctu/BizOn/blob/main/LICENSE\" target=\"_blank\" rel=\"noopener\" class=\"underline font-bold\">LICENSE</a>)." },
