@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Brand Passport · Lumina Decision Lab</title>
+  <meta name="description" content="Prototype Coach–Critic–Reflection và Decision Trace cho Brand Passport, không thay đổi deterministic scoring engine.">
+  <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+  <link rel="stylesheet" href="css/bizon-fonts.css">
+  <style>
+    :root{
+      --navy:#071d3a;--navy2:#103a68;--teal:#078a96;--cyan:#38c6df;--gold:#c6a76b;
+      --bg:#edf5fa;--paper:#fff;--muted:rgba(7,29,58,.68);--line:rgba(16,58,104,.14);
+      --shadow:0 24px 70px rgba(7,29,58,.12);--serif:'DM Serif Display',Georgia,serif;
+      --sans:Manrope,system-ui,-apple-system,'Segoe UI',sans-serif;
+    }
+    *{box-sizing:border-box}
+    html{background:var(--bg);color:var(--navy);font-family:var(--sans)}
+    body{margin:0;min-height:100vh;background:radial-gradient(circle at 80% 0,rgba(56,198,223,.14),transparent 34rem),var(--bg)}
+    a{color:inherit;text-decoration:none}
+    button,textarea{font:inherit}
+    header{position:sticky;top:0;z-index:20;background:rgba(237,245,250,.86);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+    .top{max-width:1500px;margin:auto;min-height:66px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;align-items:center;gap:11px;font-weight:900}.brand img{width:40px;height:40px;border-radius:13px}.brand small{display:block;color:var(--teal);letter-spacing:.12em;font-size:.64rem}
+    .badge{padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:white;font-size:.72rem;font-weight:850;color:var(--muted)}
+    main{max-width:1500px;margin:auto;padding:18px;display:grid;grid-template-columns:minmax(0,1.55fr) minmax(330px,.75fr);gap:18px;align-items:start}
+    .game-shell,.panel{border:1px solid var(--line);border-radius:26px;background:rgba(255,255,255,.82);box-shadow:var(--shadow);overflow:hidden}
+    .game-head{padding:15px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:center}
+    .game-head strong{font-family:var(--serif);font-size:1.25rem;font-weight:400}.game-head span{font-size:.72rem;color:var(--muted)}
+    iframe{display:block;width:100%;height:calc(100vh - 122px);min-height:760px;border:0;background:#f4faff}
+    .sidebar{display:grid;gap:14px;position:sticky;top:84px;max-height:calc(100vh - 100px);overflow:auto;padding-right:2px}
+    .panel{padding:18px}.eyebrow{font-size:.68rem;text-transform:uppercase;letter-spacing:.14em;font-weight:900;color:var(--teal)}
+    h1,h2{font-family:var(--serif);font-weight:400}h1{font-size:2rem;line-height:1;margin:8px 0 10px}h2{font-size:1.3rem;margin:7px 0 10px}
+    p{line-height:1.6}.lead{font-size:.88rem;color:var(--muted);margin:0}.status{margin-top:13px;padding:10px 12px;border-radius:14px;background:rgba(7,138,150,.08);font-size:.78rem;font-weight:800}
+    .role{padding:13px 14px;border:1px solid var(--line);border-radius:17px;margin-top:10px;background:white}.role strong{display:block;font-size:.75rem;color:var(--teal);text-transform:uppercase;letter-spacing:.09em}.role p{margin:5px 0 0;font-size:.84rem}
+    textarea{width:100%;min-height:120px;padding:12px;border:1px solid var(--line);border-radius:15px;resize:vertical;color:var(--navy);background:white}
+    .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.btn{border:1px solid var(--line);border-radius:13px;padding:10px 12px;background:white;color:var(--navy);font-size:.78rem;font-weight:850;cursor:pointer}.btn.primary{border-color:transparent;background:linear-gradient(135deg,var(--navy),var(--navy2),var(--teal));color:white}.btn.danger{color:#8b2635}
+    .trace-head{display:flex;justify-content:space-between;gap:8px}.trace-head time{font-size:.68rem;color:var(--muted)}.trace-item{padding:12px 0;border-bottom:1px solid var(--line)}.trace-item:last-child{border-bottom:0}.trace-item p{margin:5px 0 0;font-size:.74rem;color:var(--muted)}blockquote{margin:8px 0 0;padding:9px 11px;border-left:3px solid var(--gold);background:rgba(198,167,107,.09);font-size:.78rem}.empty{font-size:.78rem;color:var(--muted)}
+    .governance{display:grid;gap:7px;margin-top:10px}.governance span{font-size:.73rem;padding:8px 10px;border-radius:12px;background:rgba(16,58,104,.06)}
+    @media(max-width:1050px){main{grid-template-columns:1fr}.sidebar{position:static;max-height:none;grid-template-columns:repeat(2,minmax(0,1fr))}.sidebar .panel:first-child,.sidebar .panel:last-child{grid-column:1/-1}iframe{height:760px}}
+    @media(max-width:680px){.badge{display:none}main{padding:10px}.sidebar{grid-template-columns:1fr}.sidebar .panel{grid-column:auto!important}.game-shell,.panel{border-radius:20px}iframe{height:72vh;min-height:620px}.top{padding:0 11px}.brand small{display:none}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="top">
+      <a class="brand" href="index.html"><img src="assets/icons/icon-192.png" alt="BizOn"><span>BizOn<small>LUMINA DECISION LAB · V1</small></span></a>
+      <span class="badge">Prototype · Không thay deterministic engine</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="game-shell" aria-label="Brand Passport simulation">
+      <div class="game-head"><div><strong>Brand Passport</strong><br><span>Game gốc chạy độc lập trong iframe cùng origin</span></div><a class="btn" href="brand-passport.html" target="_blank" rel="noopener">Mở riêng ↗</a></div>
+      <iframe id="bp-frame" src="brand-passport.html" title="Brand Passport simulation"></iframe>
+    </section>
+
+    <aside class="sidebar" aria-label="Lumina Coach Critic Reflection panel">
+      <section class="panel">
+        <span class="eyebrow">Adaptive instructional support</span>
+        <h1>Lumina Coach–Critic–Reflection</h1>
+        <p class="lead">Lumina quan sát trạng thái chỉ-đọc qua <code>bpTest</code>, tạo câu hỏi phản tư và lưu audit trail cục bộ. Lumina không ghi vào state và không thay đổi điểm số.</p>
+        <div id="lab-status" class="status" role="status">Đang khởi tạo Lab…</div>
+        <div class="governance">
+          <span>✓ Deterministic engine là nguồn kết quả duy nhất</span>
+          <span>✓ Người học giữ quyền quyết định</span>
+          <span>✓ AI chỉ coach, critic và prompt reflection</span>
+        </div>
+      </section>
+
+      <section class="panel">
+        <span class="eyebrow">Coach</span>
+        <div class="role"><strong>Gợi ý phân tích</strong><p id="coach-box">Đang chờ trạng thái mô phỏng…</p></div>
+        <div class="role"><strong>Critic question</strong><p id="critic-box">Lumina sẽ chất vấn trade-off thay vì đưa đáp án.</p></div>
+      </section>
+
+      <section class="panel">
+        <span class="eyebrow">Reflection</span>
+        <h2>Giải thích quyết định của bạn</h2>
+        <textarea id="reflection" placeholder="Tôi chọn phương án này vì… Rủi ro lớn nhất là… Bằng chứng khiến tôi thay đổi quyết định là…"></textarea>
+        <div class="actions"><button id="save-reflection" class="btn primary" type="button">Lưu phản tư</button></div>
+      </section>
+
+      <section class="panel">
+        <span class="eyebrow">Decision trace · <span id="trace-count">0</span> entries</span>
+        <h2>Audit timeline</h2>
+        <div id="trace-timeline"></div>
+        <div class="actions"><button id="export-trace" class="btn" type="button">Xuất JSON</button><button id="clear-trace" class="btn danger" type="button">Xóa trace</button></div>
+      </section>
+    </aside>
+  </main>
+  <script src="js/brand-passport-lumina-lab.js"></script>
+</body>
+</html>
