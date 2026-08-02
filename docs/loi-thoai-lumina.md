@@ -12,12 +12,11 @@ Tổng cộng: **49 câu** trong 8 nhóm.
 
 | Nhóm | Tệp | Tình trạng |
 |---|---|---|
-| ✅ Đã thu lại đúng bản đọc | `adv-02`, `adv-03`, `adv-04`, `adv-05`, `adv-06`, `adv-07`, `adv-08`, `adv-10`, `adv-11`, `adv-12`, `adv-13`, `adv-14`, `adv-15`, `adv-17` | sẵn sàng nối vào game |
+| ✅ Đã thu lại đúng bản đọc | `adv-02`, `adv-03`, `adv-04`, `adv-05`, `adv-06`, `adv-07`, `adv-08`, `adv-10`, `adv-11`, `adv-12`, `adv-13`, `adv-14`, `adv-15`, `adv-17`, `kpi-01`, `kpi-02`, `kpi-03`, `risk-02` | sẵn sàng nối vào game |
 | ✅ Không chứa viết tắt | `adv-09`, `adv-16`, `risk-01` | bản thu đầu đã dùng được |
-| ⚠️ Còn đọc sai viết tắt | `kpi-01`, `kpi-02`, `kpi-03`, `risk-02` | **chờ thu lại** – đừng nối vào game |
 | ⬜ Chưa thu | `chat-03`, `chat-04`, `chat-06`, `topic-01`, `topic-02`, `topic-03`, `topic-04`, `topic-05` | – |
 
-> Còn **12/26** câu trong mục «Bản đọc cho thu âm» chưa có bản thu đúng.
+> Còn **8/26** câu trong mục «Bản đọc cho thu âm» chưa có bản thu.
 > Khi có bản mới, thay tệp cùng tên rồi mới nối vào game.
 
 ## Bộ não cố vấn theo vai trò (tab Cố vấn – thẻ CFO/CMO/COO/SEC)
