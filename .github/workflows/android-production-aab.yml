@@ -1,0 +1,137 @@
+name: Android Production AAB
+
+on:
+  workflow_dispatch:
+    inputs:
+      version_name:
+        description: Semantic version shown to users, for example 1.0.0
+        required: true
+        type: string
+      version_code:
+        description: Monotonically increasing positive integer
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+env:
+  BIZON_PACKAGE_NAME: vn.bizon.simulation
+
+jobs:
+  build-signed-aab:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: google-play-release
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate release inputs and required secrets
+        shell: bash
+        env:
+          KEYSTORE_BASE64: ${{ secrets.BIZON_UPLOAD_KEYSTORE_BASE64 }}
+          STORE_PASSWORD: ${{ secrets.BIZON_UPLOAD_STORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.BIZON_UPLOAD_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.BIZON_UPLOAD_KEY_PASSWORD }}
+          PLAY_FINGERPRINT: ${{ secrets.PLAY_APP_SIGNING_SHA256 }}
+        run: |
+          set -euo pipefail
+          [[ '${{ inputs.version_code }}' =~ ^[1-9][0-9]*$ ]] || { echo 'version_code must be a positive integer'; exit 1; }
+          [[ '${{ inputs.version_name }}' =~ ^[0-9]+\.[0-9]+\.[0-9]+([-.][0-9A-Za-z.-]+)?$ ]] || { echo 'version_name must follow semantic-version form'; exit 1; }
+          for value in "$KEYSTORE_BASE64" "$STORE_PASSWORD" "$KEY_ALIAS" "$KEY_PASSWORD" "$PLAY_FINGERPRINT"; do
+            test -n "$value" || { echo 'A required google-play-release secret is missing'; exit 1; }
+          done
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Validate production release contract
+        run: node test/android-production-release-contract.test.js
+
+      - name: Decode upload keystore
+        shell: bash
+        env:
+          KEYSTORE_BASE64: ${{ secrets.BIZON_UPLOAD_KEYSTORE_BASE64 }}
+        run: |
+          set -euo pipefail
+          printf '%s' "$KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/bizon-upload.jks"
+          test -s "$RUNNER_TEMP/bizon-upload.jks"
+          chmod 600 "$RUNNER_TEMP/bizon-upload.jks"
+
+      - name: Generate Play App Signing assetlinks candidate
+        env:
+          PLAY_APP_SIGNING_SHA256: ${{ secrets.PLAY_APP_SIGNING_SHA256 }}
+          ASSETLINKS_OUTPUT: release-artifacts/assetlinks.json
+        run: node scripts/release/generate-assetlinks.mjs
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android 35 SDK
+        shell: bash
+        run: |
+          yes | sdkmanager --licenses >/dev/null || true
+          sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+
+      - name: Set up Gradle 8.9
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+
+      - name: Build signed production AAB
+        env:
+          BIZON_UPLOAD_KEYSTORE_PATH: ${{ runner.temp }}/bizon-upload.jks
+          BIZON_UPLOAD_STORE_PASSWORD: ${{ secrets.BIZON_UPLOAD_STORE_PASSWORD }}
+          BIZON_UPLOAD_KEY_ALIAS: ${{ secrets.BIZON_UPLOAD_KEY_ALIAS }}
+          BIZON_UPLOAD_KEY_PASSWORD: ${{ secrets.BIZON_UPLOAD_KEY_PASSWORD }}
+          BIZON_VERSION_NAME: ${{ inputs.version_name }}
+          BIZON_VERSION_CODE: ${{ inputs.version_code }}
+        run: gradle -p android :app:bundleRelease --stacktrace
+
+      - name: Verify and package release artifacts
+        shell: bash
+        env:
+          VERSION_NAME: ${{ inputs.version_name }}
+          VERSION_CODE: ${{ inputs.version_code }}
+        run: |
+          set -euo pipefail
+          AAB='android/app/build/outputs/bundle/release/app-release.aab'
+          test -s "$AAB"
+          jarsigner -verify -verbose -certs "$AAB" >/tmp/jarsigner.txt
+          grep -qi 'jar verified' /tmp/jarsigner.txt
+          mkdir -p release-artifacts
+          cp "$AAB" "release-artifacts/BizOn-${VERSION_NAME}-${VERSION_CODE}.aab"
+          sha256sum "release-artifacts/BizOn-${VERSION_NAME}-${VERSION_CODE}.aab" > "release-artifacts/BizOn-${VERSION_NAME}-${VERSION_CODE}.aab.sha256"
+          cat > release-artifacts/release-metadata.json <<JSON
+          {
+            "package_name": "vn.bizon.simulation",
+            "version_name": "${VERSION_NAME}",
+            "version_code": ${VERSION_CODE},
+            "start_url": "https://thuyhuongctu.github.io/BizOn/app/release.html",
+            "artifact_type": "signed Android App Bundle",
+            "distribution_gate": "Play Console internal testing"
+          }
+          JSON
+
+      - name: Upload signed AAB release bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: bizon-play-release-${{ inputs.version_name }}-${{ inputs.version_code }}
+          path: release-artifacts/
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Remove decoded keystore
+        if: always()
+        shell: bash
+        run: rm -f "$RUNNER_TEMP/bizon-upload.jks"
