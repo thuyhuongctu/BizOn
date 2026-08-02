@@ -250,7 +250,10 @@ async function captureFailure(name, viewport, deviceScaleFactor = 1) {
   if (audit.savedClass === 'FAILED-CLASS') throw new Error(`${name}: failed class code was persisted`);
 
   await page.screenshot({ path: path.join(output, `${name}-backend-error.png`), fullPage: true });
-  if (errors.length) throw new Error(`${name} console errors:\n${errors.join('\n')}`);
+  const unexpectedErrors = errors.filter(error => !/status of 503 \(Service Unavailable\)/i.test(error));
+  if (unexpectedErrors.length) {
+    throw new Error(`${name} unexpected console errors:\n${unexpectedErrors.join('\n')}`);
+  }
   await context.close();
 }
 
