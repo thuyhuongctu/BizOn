@@ -38,10 +38,11 @@
     .learning-ready .loading{opacity:0;visibility:hidden;pointer-events:none}
     .loading-card{max-width:340px;padding:25px;text-align:center;border:1px solid var(--line);border-radius:25px;background:rgba(255,255,255,.82);box-shadow:var(--shadow)}
     .loading-card img{width:66px;height:66px;border-radius:20px}.loading-card h1{margin:14px 0 5px;font-family:var(--serif);font-weight:400}.loading-card p{margin:0;color:var(--muted);font-size:.8rem;line-height:1.6}
-    .lumina-fab{position:absolute;right:18px;bottom:18px;z-index:25;min-height:54px;padding:0 18px;border:1px solid rgba(255,255,255,.65);border-radius:18px;background:linear-gradient(135deg,#082e53,#087c8b);color:white;font-weight:900;cursor:pointer;box-shadow:0 18px 45px rgba(7,29,58,.3)}
+    .lumina-fab{position:absolute;right:18px;bottom:18px;z-index:25;min-height:54px;padding:0 18px;border:1px solid rgba(255,255,255,.65);border-radius:18px;background:linear-gradient(135deg,#082e53,#087c8b);color:white;font-weight:900;cursor:pointer;box-shadow:0 18px 45px rgba(7,29,58,.3);transition:opacity .22s,transform .22s}
     .lumina-fab span{display:block;font-size:.62rem;font-weight:650;opacity:.8}
     .panel{position:absolute;z-index:24;top:12px;right:12px;bottom:12px;width:min(430px,calc(100% - 24px));display:grid;grid-template-rows:auto minmax(0,1fr);border:1px solid rgba(255,255,255,.72);border-radius:26px;background:rgba(249,252,253,.96);box-shadow:var(--shadow);backdrop-filter:blur(22px);transform:translateX(calc(100% + 40px));transition:transform .38s cubic-bezier(.16,1,.3,1);overflow:hidden}
     .panel.open{transform:translateX(0)}
+    .panel.open + .lumina-fab{opacity:0;pointer-events:none;transform:translateY(12px)}
     .panel-head{padding:16px 17px 14px;display:flex;align-items:flex-start;gap:12px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,rgba(56,198,223,.12),rgba(198,167,107,.08))}
     .lumina-mark{flex:0 0 44px;height:44px;display:grid;place-items:center;border-radius:16px;background:linear-gradient(145deg,#35c5d9,#0a5578);color:white;font-family:var(--serif);font-size:1.4rem;box-shadow:0 10px 28px rgba(7,138,150,.25)}
     .panel-head h2{margin:0;font-family:var(--serif);font-weight:400;font-size:1.2rem}.panel-head p{margin:4px 0 0;color:var(--muted);font-size:.68rem;line-height:1.45}
@@ -73,7 +74,7 @@
       .panel{top:auto;left:7px;right:7px;bottom:7px;width:auto;height:min(80vh,680px);border-radius:24px;transform:translateY(calc(100% + 30px))}.panel.open{transform:translateY(0)}
       .lumina-fab{right:12px;bottom:12px;min-height:50px;padding:0 15px}
     }
-    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.panel,.loading{transition:none!important}}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.panel,.loading,.lumina-fab{transition:none!important}}
   </style>
 </head>
 <body>
@@ -101,7 +102,6 @@
         </div>
       </div>
       <iframe id="bp-game" title="Brand Passport simulation game" src="about:blank"></iframe>
-      <button class="lumina-fab" id="lumina-fab" type="button" onclick="document.getElementById('lumina-toggle').click()">✨ Lumina<span>Coach · Critic · Reflection</span></button>
 
       <aside class="panel" id="lumina-panel" aria-hidden="true" aria-label="Lumina learning support panel">
         <div class="panel-head">
@@ -144,6 +144,7 @@
           <p class="ethics-note"><b>Quản trị dữ liệu:</b> bản V1 lưu audit trail trên thiết bị hiện tại bằng localStorage. Không gửi reflection lên máy chủ. Khi triển khai lớp học thật cần consent, chính sách lưu giữ, quyền xóa và phân quyền giảng viên.</p>
         </div>
       </aside>
+      <button class="lumina-fab" id="lumina-fab" type="button" onclick="document.getElementById('lumina-toggle').click()">✨ Lumina<span>Coach · Critic · Reflection</span></button>
     </main>
   </div>
   <script src="js/brand-passport-learning.js"></script>
