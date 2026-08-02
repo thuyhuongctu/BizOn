@@ -32,7 +32,6 @@
     ['Je m\'appelle Hương sans frontières (bản thu mới 2)', 'huong-sans-frontieres-2.mp3'],
     ['Vươn ra thế giới (bản 1)', 'huong-vuon-ra-the-gioi.mp3'],
     ['Vươn ra thế giới (bản 2)', 'huong-vuon-ra-the-gioi-2.mp3'],
-    ['Mon histoire', 'mon-histoire.mp3'],
     ['And The World Say Hello!', 'and-the-world-say-hello.mp3'],
     ['Mekong Compass', 'mekong-compass.mp3'],
     ['Đội Phù Sa', 'doi-phu-sa.mp3'],
