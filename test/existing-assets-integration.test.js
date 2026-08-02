@@ -16,8 +16,21 @@ assert.equal(registry.policy.preserve_originals, true);
 assert.equal(registry.policy.allow_generated_replacements, false);
 assert.equal(registry.policy.exclude_food_truck, true);
 
+const requiredRegistryKeys = [
+  'huong_lumina_classroom',
+  'tu_phan_lecture_hall',
+  'lumina_office_present',
+  'vietnam_journey_map',
+  'vietnam_startup_hero',
+  'brand_passport_cast_sheet',
+  'bizon_music_cover'
+];
+for (const key of requiredRegistryKeys) {
+  assert.ok(registry.assets[key], `Required approved asset is missing: ${key}`);
+}
+
 const assets = Object.values(registry.assets);
-assert.ok(assets.length >= 6, 'Expected at least six approved existing assets');
+assert.ok(assets.length >= 10, 'Expected at least ten approved existing assets');
 
 for (const asset of assets) {
   assert.ok(asset.path.startsWith('assets/'), `Asset must stay inside assets/: ${asset.path}`);
@@ -31,9 +44,19 @@ const integration = read('js/app-shell/existing-assets.js');
 assert.match(integration, /huongLuminaClassroom/);
 assert.match(integration, /tuPhanLectureHall/);
 assert.match(integration, /luminaOfficePresent/);
+assert.match(integration, /vietnamJourneyMap/);
+assert.match(integration, /vietnamStartupHero/);
+assert.match(integration, /brandPassportCastSheet/);
+assert.match(integration, /bizonMusicCover/);
 assert.match(integration, /installLandingCast/);
+assert.match(integration, /installEcosystemLibrary/);
 assert.match(integration, /installCommandCenterGuide/);
 assert.match(integration, /installAibisGuide/);
+assert.match(integration, /data-existing-ecosystem/);
+assert.match(integration, /game\.html/);
+assert.match(integration, /global\.html/);
+assert.match(integration, /app\/brand-passport\.html/);
+assert.match(integration, /am-nhac\.html/);
 assert.match(integration, /Lumina không sửa điểm, tiền mặt, lợi nhuận hoặc đầu ra engine/);
 
 const unifiedShell = read('js/app-shell/unified-app.js');
@@ -48,21 +71,34 @@ assert.match(release, /unified-app\.js/);
 assert.match(command, /unified-app\.js/);
 assert.match(aibis, /app-shell\.js/);
 
+const music = read('am-nhac.html');
+assert.match(music, /arena-vietnam-map-v2\.webp/);
+assert.match(music, /hero-vietnam-2026\.webp/);
+assert.match(music, /giai-dieu-bizon\.webp/);
+assert.match(music, /cast-sheet-brand-passport\.webp/);
+
 const stylesheet = read('css/bizon-existing-assets.css');
 assert.match(stylesheet, /\.bz-existing-cast/);
+assert.match(stylesheet, /\.bz-existing-ecosystem/);
+assert.match(stylesheet, /\.bz-existing-ecosystem-grid/);
+assert.match(stylesheet, /\.bz-existing-module/);
 assert.match(stylesheet, /\.bz-existing-guide/);
 assert.match(stylesheet, /\.aibis-existing-guide/);
 assert.match(stylesheet, /@media \(max-width: 560px\)/);
 
 const sw = read('app/sw.js');
-assert.match(sw, /bizon-app-shell-v5/);
+assert.match(sw, /bizon-app-shell-v6/);
 for (const required of [
   '../css/bizon-existing-assets.css',
   '../js/app-shell/existing-assets.js',
   '../assets/approved-existing-assets.json',
   '../assets/illustrations/lumina-holo-classroom.webp',
   '../assets/illustrations/anh-tu-lecture-hall.webp',
-  '../assets/character/lumina-office-present.webp'
+  '../assets/character/lumina-office-present.webp',
+  '../assets/illustrations/arena-vietnam-map-v2.webp',
+  '../assets/illustrations/hero-vietnam-2026.webp',
+  '../assets/illustrations/cast-sheet-brand-passport.webp',
+  '../assets/illustrations/giai-dieu-bizon.webp'
 ]) {
   assert.ok(sw.includes(required), `Service worker must cache ${required}`);
 }
