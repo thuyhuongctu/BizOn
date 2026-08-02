@@ -1,0 +1,89 @@
+name: Existing BizOn Asset Inventory
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'assets/**'
+      - 'index.html'
+      - 'app/**'
+      - 'game.html'
+      - 'games.html'
+      - 'lumina.html'
+      - 'brand-passport*.html'
+      - 'scripts/assets/inventory-existing-assets.mjs'
+      - 'docs/design/EXISTING_ASSET_USAGE_MAP_V1.md'
+      - '.github/workflows/existing-assets-inventory.yml'
+  pull_request:
+    paths:
+      - 'assets/**'
+      - 'index.html'
+      - 'app/**'
+      - 'game.html'
+      - 'games.html'
+      - 'lumina.html'
+      - 'brand-passport*.html'
+      - 'scripts/assets/inventory-existing-assets.mjs'
+      - 'docs/design/EXISTING_ASSET_USAGE_MAP_V1.md'
+      - '.github/workflows/existing-assets-inventory.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Build existing-asset manifest
+        run: node scripts/assets/inventory-existing-assets.mjs
+
+      - name: Validate preservation policy
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const manifest = JSON.parse(fs.readFileSync('docs/design/existing-assets.manifest.json', 'utf8'));
+          if (!manifest.assets.length) throw new Error('No image assets were found.');
+          if (manifest.assets.some((asset) => asset.source !== 'existing-repository-asset')) {
+            throw new Error('Manifest contains a non-existing-repository source.');
+          }
+          const required = [
+            'assets/illustrations/lumina-holo-classroom.webp',
+            'assets/illustrations/anh-tu-lecture-hall.webp'
+          ];
+          for (const assetPath of required) {
+            if (!manifest.assets.some((asset) => asset.path === assetPath)) {
+              throw new Error(`Required preserved asset is missing: ${assetPath}`);
+            }
+          }
+          console.log(manifest.totals);
+          NODE
+
+      - name: Reject excluded assets from priority public pages
+        shell: bash
+        run: |
+          priority_files=(index.html app/release.html app/command-center.html app/aibis.html game.html)
+          for file in "${priority_files[@]}"; do
+            [ -f "$file" ] || continue
+            if grep -Eiq 'food[-_ ]?truck|imagegen|generated[-_ ]?character' "$file"; then
+              echo "Excluded asset reference found in $file"
+              exit 1
+            fi
+          done
+
+      - name: Upload asset inventory
+        uses: actions/upload-artifact@v4
+        with:
+          name: bizon-existing-assets-manifest
+          path: docs/design/existing-assets.manifest.json
+          if-no-files-found: error
+          retention-days: 30
