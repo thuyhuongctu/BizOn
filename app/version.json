@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "web_version": "1.1.0",
-  "build_id": "2026.08.02.2",
-  "released_at": "2026-08-02T16:08:00+07:00",
+  "web_version": "1.2.0",
+  "build_id": "2026.08.02.3",
+  "released_at": "2026-08-02T23:48:00+07:00",
   "minimum_android_version": "1.0.0",
   "force_refresh": false,
-  "title": "Giao diện BizOn thống nhất",
-  "summary": "Trang giới thiệu, Command Center và AIBIS được đưa về cùng một hệ thống thiết kế responsive.",
+  "title": "Instructor Studio đã sẵn sàng",
+  "summary": "BizOn bổ sung không gian lớp học thống nhất để theo dõi kết quả, Decision Trace và khảo sát theo phạm vi Mã lớp.",
   "changes": [
-    "Thiết kế lại trang giới thiệu sản phẩm và mô tả trực quan vòng lặp trò chơi.",
-    "Bổ sung Command Center với dữ liệu phiên EcoFuture Team vòng 4/8.",
-    "Đồng bộ AIBIS Global với nhận diện và điều hướng mới.",
-    "Giữ nguyên engine, Decision Trace, dữ liệu cục bộ và cơ chế cập nhật có kiểm soát."
+    "Bổ sung Instructor Studio responsive cho desktop, tablet và điện thoại.",
+    "Kết nối leaderboard Bật Nghiệp, Brand Passport, Decision Trace và khảo sát bằng RPC theo phạm vi lớp.",
+    "Không lưu Khóa giảng viên và không tự động chấm nội dung phản tư bằng AI.",
+    "Thêm shortcut PWA và App Shell V7 để hỗ trợ truy cập từ ứng dụng Android."
   ]
 }
