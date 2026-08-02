@@ -14,13 +14,16 @@ assert.equal(typeof version.force_refresh, 'boolean');
 assert.ok(Array.isArray(version.changes) && version.changes.length >= 1);
 assert.ok(version.title.length > 0 && version.summary.length > 0);
 
-assert.match(release, new RegExp(`data-bizon-build="${version.build_id.replaceAll('.', '\\.') }"`));
+assert.match(release, /data-bizon-build="[^"]+"/);
 assert.match(release, /id="updateCard"[^>]*hidden/);
 assert.match(release, /id="updateNow"/);
 assert.match(release, /id="updateLater"/);
 assert.match(release, /js\/app-shell\/update-manager\.js/);
 assert.match(release, /aria-live="polite"/);
 
+const buildLiteral = version.build_id.replaceAll('.', '\\.');
+assert.match(manager, new RegExp(`const CURRENT_BUILD = '${buildLiteral}'`));
+assert.match(manager, /root\.dataset\.bizonBuild = CURRENT_BUILD/);
 assert.match(manager, /cache:\s*'no-store'/);
 assert.match(manager, /Cache-Control':\s*'no-cache'/);
 assert.match(manager, /isNewerBuild/);
