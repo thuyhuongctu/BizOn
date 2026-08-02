@@ -1,0 +1,57 @@
+name: Web App Update Channel
+
+on:
+  pull_request:
+    paths:
+      - 'app/release.html'
+      - 'app/sw.js'
+      - 'app/version.json'
+      - 'js/app-shell/update-manager.js'
+      - 'test/web-app-update-channel.test.js'
+      - '.github/workflows/web-app-update-channel.yml'
+      - 'docs/release/WEB_UPDATE_CHANNEL_V1.md'
+  push:
+    branches: ['main']
+    paths:
+      - 'app/release.html'
+      - 'app/sw.js'
+      - 'app/version.json'
+      - 'js/app-shell/update-manager.js'
+      - 'test/web-app-update-channel.test.js'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  update-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Validate update channel contract
+        run: node test/web-app-update-channel.test.js
+
+      - name: Verify application endpoints
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 4173 >/tmp/bizon-update-server.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID"' EXIT
+          for attempt in {1..20}; do
+            curl --fail --silent http://127.0.0.1:4173/app/release.html >/tmp/release.html && break
+            sleep 1
+          done
+          curl --fail --silent http://127.0.0.1:4173/app/version.json >/tmp/version.json
+          curl --fail --silent http://127.0.0.1:4173/js/app-shell/update-manager.js >/tmp/update-manager.js
+          grep -q 'data-bizon-build' /tmp/release.html
+          grep -q 'build_id' /tmp/version.json
+          grep -q 'checkForUpdate' /tmp/update-manager.js

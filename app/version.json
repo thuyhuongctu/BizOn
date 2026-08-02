@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "web_version": "1.0.0",
+  "build_id": "2026.08.02.1",
+  "released_at": "2026-08-02T15:15:00+07:00",
+  "minimum_android_version": "1.0.0",
+  "force_refresh": false,
+  "title": "BizOn đã sẵn sàng",
+  "summary": "Cải thiện cơ chế cập nhật giao diện và nội dung sau khi ứng dụng được phát hành.",
+  "changes": [
+    "Kiểm tra phiên bản web mà không dùng dữ liệu cache.",
+    "Thông báo rõ khi có giao diện hoặc nội dung mới.",
+    "Giữ quyền chủ động cập nhật cho người dùng."
+  ]
+}
