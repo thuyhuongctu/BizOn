@@ -34,6 +34,8 @@ assert.equal(webManifest.id, './release.html');
 assert.equal(webManifest.start_url, './release.html');
 assert.equal(webManifest.scope, './');
 assert.equal(webManifest.display, 'standalone');
+assert.equal(webManifest.name, 'BizOn — Mô phỏng quyết định kinh doanh');
+assert.equal(webManifest.shortcuts.find(item => item.short_name === 'Startup').url, '../game.html');
 assert.equal(webManifest.shortcuts.find(item => item.short_name === 'Passport').url, './brand-passport.html');
 assert.equal(webManifest.shortcuts.find(item => item.short_name === 'AIBIS').url, './aibis.html');
 assert.equal(assetlinksTemplate[0].target.package_name, 'vn.bizon.simulation');
@@ -46,7 +48,8 @@ for (const path of ['app/release.html', 'app/brand-passport.html', 'brand-passpo
 
 const release = fs.readFileSync('app/release.html', 'utf8');
 assert.match(release, /\.\/brand-passport\.html/);
-assert.match(release, /Local-only/);
+assert.match(release, /Dữ liệu được lưu trên thiết bị/);
 assert.match(release, /serviceWorker\.register\('\.\/sw\.js'/);
+assert.doesNotMatch(release, /Teaching demo|AI Command Center|Local-only|placeholder|auto-generated/i);
 
-console.log('Android TWA API 36 release contract passed');
+console.log('Android TWA API 36 production-surface contract passed');
