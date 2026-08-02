@@ -1,0 +1,30 @@
+name: Brand Passport Pilot Policy Contract
+
+on:
+  pull_request:
+    paths:
+      - 'docs/learning/BRAND_PASSPORT_CONSENT_VI_EN_V1.md'
+      - 'docs/learning/BRAND_PASSPORT_INSTRUCTIONAL_REVIEW_V1.md'
+      - 'js/brand-passport-pilot-policy.example.js'
+      - 'test/brand-passport-policy-contract.test.js'
+      - '.github/workflows/brand-passport-policy.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  policy-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Validate fail-closed policy and review documents
+        run: node test/brand-passport-policy-contract.test.js
