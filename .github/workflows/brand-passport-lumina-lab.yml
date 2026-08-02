@@ -1,0 +1,56 @@
+name: Brand Passport Lumina Lab checks
+
+on:
+  pull_request:
+    paths:
+      - 'brand-passport-lumina-lab.html'
+      - 'js/brand-passport-lumina-lab.js'
+      - 'docs/design/BRAND_PASSPORT_LUMINA_TRACE_V1.md'
+      - '.github/workflows/brand-passport-lumina-lab.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Validate JavaScript syntax
+        run: node --check js/brand-passport-lumina-lab.js
+
+      - name: Validate HTML
+        run: npx --yes html-validate@8.24.1 brand-passport-lumina-lab.html
+
+      - name: Check required local resources
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          required = [
+              'brand-passport.html',
+              'brand-passport-lumina-lab.html',
+              'js/brand-passport-lumina-lab.js',
+              'css/bizon-fonts.css',
+              'assets/icons/icon-192.png',
+          ]
+          missing = [item for item in required if not Path(item).exists()]
+          if missing:
+              raise SystemExit('Missing required resources: ' + ', '.join(missing))
+          print('All required resources exist.')
+          PY
+
+      - name: Smoke test same-origin Lab
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/lumina-lab.log 2>&1 &
+          for i in {1..20}; do
+            curl --fail --silent http://127.0.0.1:4173/brand-passport-lumina-lab.html >/dev/null && break
+            sleep 1
+          done
+          curl --fail --silent http://127.0.0.1:4173/brand-passport.html >/dev/null
