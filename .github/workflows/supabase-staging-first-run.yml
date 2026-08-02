@@ -1,0 +1,69 @@
+name: BizOn Supabase Staging First Run
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/supabase-staging-first-run.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  protected-first-run:
+    name: protected first staging migration and smoke test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: supabase-staging
+    concurrency:
+      group: bizon-supabase-staging
+      cancel-in-progress: false
+    env:
+      SUPABASE_STAGING_PROJECT_REF: ${{ vars.SUPABASE_STAGING_PROJECT_REF }}
+      SUPABASE_STAGING_URL: ${{ vars.SUPABASE_STAGING_URL }}
+      SUPABASE_STAGING_DATABASE_URL: ${{ secrets.SUPABASE_STAGING_DATABASE_URL }}
+      SUPABASE_STAGING_ANON_KEY: ${{ secrets.SUPABASE_STAGING_ANON_KEY }}
+      SUPABASE_STAGING_INSTRUCTOR_KEY: ${{ secrets.SUPABASE_STAGING_INSTRUCTOR_KEY }}
+      CONFIRM_PROJECT_REF: ${{ vars.SUPABASE_STAGING_PROJECT_REF }}
+      APPLY_MIGRATION: 'true'
+      RUN_RETENTION_PURGE: 'true'
+      BIZON_STAGING_REPORT_DIR: artifacts/supabase-staging
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install PostgreSQL client
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes postgresql-client
+
+      - name: Validate staging safety contracts
+        run: |
+          node --check scripts/release/bootstrap-supabase-staging-key.mjs
+          node --check scripts/release/verify-supabase-staging.mjs
+          node scripts/release/validate-supabase-staging-template.mjs
+          node test/supabase-staging-key-bootstrap.test.js
+          node test/supabase-staging-gate.test.js
+
+      - name: Bootstrap staging instructor-key verifier
+        run: node scripts/release/bootstrap-supabase-staging-key.mjs
+
+      - name: Apply canonical migration and run protected smoke suite
+        run: node scripts/release/verify-supabase-staging.mjs
+
+      - name: Upload sanitized staging report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bizon-supabase-staging-first-run-report
+          path: artifacts/supabase-staging
+          if-no-files-found: ignore
+          retention-days: 30
