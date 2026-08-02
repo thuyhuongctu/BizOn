@@ -4,6 +4,7 @@ const assert = require('assert');
 const entry = fs.readFileSync('app/index.html', 'utf8');
 const release = fs.readFileSync('app/release.html', 'utf8');
 const command = fs.readFileSync('app/command-center.html', 'utf8');
+const instructor = fs.readFileSync('app/instructor-studio.html', 'utf8');
 const passport = fs.readFileSync('app/brand-passport.html', 'utf8');
 const aibis = fs.readFileSync('app/aibis.html', 'utf8');
 const manifest = JSON.parse(fs.readFileSync('app/manifest.webmanifest', 'utf8'));
@@ -36,10 +37,18 @@ assert(passport.includes('../brand-passport-learning.html'));
 assert(passport.includes('href="./release.html"'));
 assert(passport.includes('Lưu trên thiết bị'));
 
+assert(instructor.includes('Instructor Studio'));
+assert(instructor.includes('bizon-instructor-studio.css'));
+assert(instructor.includes('instructor-studio.js'));
+assert(instructor.includes('Không chấm phản tư bằng AI'));
+assert(instructor.includes('bizon_bp_learning_traces')) === false;
+assert(!/Food Truck|Gánh Hàng/i.test(instructor));
+
 for (const forbidden of ['Teaching demo', 'AI Command Center', 'Local-only', 'Android build pipeline', 'placeholder', 'auto-generated']) {
   assert(!release.includes(forbidden), `Public launcher must not contain: ${forbidden}`);
   assert(!command.includes(forbidden), `Command Center must not contain: ${forbidden}`);
   assert(!passport.includes(forbidden), `Brand Passport route must not contain: ${forbidden}`);
+  assert(!instructor.includes(forbidden), `Instructor Studio must not contain: ${forbidden}`);
 }
 
 assert.strictEqual(manifest.id, './release.html');
@@ -52,18 +61,22 @@ assert.strictEqual(manifest.shortcuts.find(item => item.short_name === 'Command'
 assert.strictEqual(manifest.shortcuts.find(item => item.short_name === 'Startup').url, '../game.html');
 assert.strictEqual(manifest.shortcuts.find(item => item.short_name === 'Passport').url, './brand-passport.html');
 assert.strictEqual(manifest.shortcuts.find(item => item.short_name === 'AIBIS').url, './aibis.html');
+assert.strictEqual(manifest.shortcuts.find(item => item.short_name === 'Classroom').url, './instructor-studio.html');
 assert(Array.isArray(manifest.icons) && manifest.icons.length >= 2);
 
-assert(sw.includes("const CACHE_NAME = 'bizon-app-shell-v6'"));
+assert(sw.includes("const CACHE_NAME = 'bizon-app-shell-v7'"));
 assert(sw.includes("'./release.html'"));
 assert(sw.includes("'./command-center.html'"));
+assert(sw.includes("'./instructor-studio.html'"));
 assert(sw.includes("'./brand-passport.html'"));
 assert(sw.includes("'./version.json'"));
 assert(sw.includes("'./offline.html'"));
 assert(sw.includes("'../css/bizon-unified.css'"));
 assert(sw.includes("'../css/bizon-existing-assets.css'"));
+assert(sw.includes("'../css/bizon-instructor-studio.css'"));
 assert(sw.includes("'../js/app-shell/unified-app.js'"));
 assert(sw.includes("'../js/app-shell/existing-assets.js'"));
+assert(sw.includes("'../js/app-shell/instructor-studio.js'"));
 assert(sw.includes("'../assets/approved-existing-assets.json'"));
 assert(sw.includes("'../assets/illustrations/arena-vietnam-map-v2.webp'"));
 assert(sw.includes("'../assets/illustrations/hero-vietnam-2026.webp'"));
@@ -77,6 +90,7 @@ assert.strictEqual(approvedAssets.policy.source, 'existing-repository-assets-onl
 assert.strictEqual(approvedAssets.policy.allow_generated_replacements, false);
 assert.strictEqual(approvedAssets.policy.exclude_food_truck, true);
 assert(Object.keys(approvedAssets.assets).length >= 10);
+assert(approvedAssets.assets.tu_phan_lecture_hall.allowed_pages.includes('app/instructor-studio.html'));
 
 assert.match(version.build_id, /^\d{4}\.\d{2}\.\d{2}\.\d+$/);
 assert.strictEqual(assetlinks[0].target.package_name, 'vn.bizon.simulation');
