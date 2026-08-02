@@ -552,7 +552,7 @@ function maybeShowEventIntro() {
           </div>`).join('')}
       </div>
       <div class="flex items-end gap-3 mt-6">
-        <img src="assets/character/${ev.luminaImg || 'lumina-vest'}.png" alt="Je m'appelle Hương AI Advisor" class="w-28 shrink-0 rounded-2xl object-cover animate-float drop-shadow-xl" style="aspect-ratio:3/4; object-position:50% 8%">
+        <img src="assets/character/${ev.luminaImg || 'lumina-vest'}.webp" alt="Je m'appelle Hương AI Advisor" class="w-28 shrink-0 rounded-2xl object-cover animate-float drop-shadow-xl" style="aspect-ratio:3/4; object-position:50% 8%">
         <div class="relative clay-raised p-4 rounded-bl-none border-l-4 border-primary-container flex-1">
           <div class="speech-tail"></div>
           <p class="text-[10px] font-extrabold text-primary mb-1">JE M'APPELLE HƯƠNG · AI ADVISOR</p>
@@ -1465,7 +1465,7 @@ function renderAdvisorIntro() {
   const vol = S.finished ? 'low' : ev.tone === 'bad' ? 'high' : ev.tone === 'warn' ? 'medium' : 'low';
   $('vol-dot').className = 'w-3 h-3 rounded-full ' + { low: 'bg-emerald-500', medium: 'bg-amber-500', high: 'bg-red-600' }[vol];
   $('vol-text').textContent = 'MARKET VOLATILITY: ' + vol.toUpperCase();
-  $('advisor-hero').src = 'assets/character/' + (S.finished ? 'lumina-ao-dai-clap' : (ev.luminaImg || 'lumina-vest')) + '.png';
+  $('advisor-hero').src = 'assets/character/' + (S.finished ? 'lumina-ao-dai-clap' : (ev.luminaImg || 'lumina-vest')) + '.webp';
   renderRoleDeepdive();
   renderAdvisorHistory();
 }
@@ -1535,7 +1535,7 @@ function renderRoleDeepdive() {
           <span class="text-[9px] font-extrabold px-2 py-0.5 rounded-full ${badgeCls[b.status] || 'risk-low'} ${b.status === 'CRISIS' ? 'animate-pulse' : ''}">${b.badge}</span>
         </div>
         <div class="flex gap-2 items-start">
-          <img src="assets/character/${img}.png" alt="Hương" class="w-8 h-8 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 12%">
+          <img src="assets/character/${img}.webp" alt="Hương" class="w-8 h-8 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 12%">
           <p class="text-[11px] text-deep-teal/80 italic">"${b.dialogue}"</p>
         </div>
         ${b.actions ? `<div class="mt-2 space-y-1">${b.actions.map(a => `<p class="text-[10px] font-bold text-deep-teal/70">👉 ${a}</p>`).join('')}</div>` : ''}
