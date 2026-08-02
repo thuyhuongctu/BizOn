@@ -29,6 +29,10 @@ assert.match(verifier, /ai_scoring=true payload is rejected/);
 assert.match(verifier, /invalid consent version is rejected/);
 assert.match(verifier, /anonymous direct REST table read is denied/);
 assert.match(verifier, /deletion token is stored only as SHA-256/);
+assert.match(verifier, /deleted fixture is no longer returned/);
+assert.match(verifier, /fixtureIds\.push\(aiScoringFixtureId\)/);
+assert.match(verifier, /fixtureIds\.push\(invalidConsentFixtureId\)/);
+assert.match(verifier, /finally \{\s*await cleanupFixtures\(\)/s);
 assert.match(verifier, /secrets_in_report:\s*false/);
 assert.doesNotMatch(verifier, /console\.log\([^\n]*(anonKey|instructorKey|databaseUrl|deleteToken)/);
 
