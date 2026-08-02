@@ -40,9 +40,18 @@ assert.match(client, /localStorage\.setItem\('bizon-instructor-class'/);
 assert.doesNotMatch(client, /localStorage\.setItem\([^\n]*key/i);
 assert.doesNotMatch(client, /localStorage\.setItem\([^\n]*instructorKey/i);
 assert.match(client, /state\.instructorKey = ''/);
+assert.match(client, /clearCredentialInput/);
+assert.ok((client.match(/clearCredentialInput\(\)/g) || []).length >= 3, 'Credential input must be cleared after success, failure and pagehide.');
 assert.match(client, /ai_scoring: false/);
 assert.match(client, /not automatically graded by AI/);
 assert.match(client, /setInterval\(\(\) => refreshWithStatus\(\{ quiet: true \}\), 10000\)/);
+
+assert.match(client, /const csvCell = value =>/);
+assert.match(client, /\^\[\\t\\r\\n \]\*\[=\+\\-@\]/);
+assert.match(client, /csvCell\(row\.team_name\)/);
+assert.match(client, /csvCell\(row\.student_code\)/);
+assert.match(client, /csvCell\(row\.open_like\)/);
+assert.match(client, /csvCell\(row\.open_improve\)/);
 
 assert.match(css, /\.bi-layout/);
 assert.match(css, /@media \(max-width: 820px\)/);
