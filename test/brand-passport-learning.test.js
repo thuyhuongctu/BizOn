@@ -51,8 +51,6 @@ function check(condition, message) {
   check(readiness.readyClass && !/Không kết nối/.test(readiness.status), 'Giao diện xác nhận Learning Layer đã kết nối');
 
   await page.fill('#team-id', 'TEAM-04');
-  await page.fill('#reflection-text', 'Chúng tôi chọn kênh số để giới hạn vốn ban đầu; rủi ro là hiểu biết thị trường còn thấp.');
-
   await page.evaluate(() => {
     const game = document.getElementById('bp-game').contentWindow;
     game.bpFirm(0);
@@ -62,6 +60,7 @@ function check(condition, message) {
     game.bpPick('bud', 1);
     game.bpEnter(0, 0);
   });
+  await page.fill('#reflection-text', 'Chúng tôi chọn kênh số để giới hạn vốn ban đầu; rủi ro là hiểu biết thị trường còn thấp.');
 
   const prompt = await page.evaluate(() => window.BizOnLearning.getPrompt());
   check(prompt && /đánh đổi|phương thức thâm nhập/i.test(prompt.coach), 'Coach phản hồi theo quyết định thâm nhập');
