@@ -12,12 +12,12 @@ def releaseVersionName = System.getenv('BIZON_VERSION_NAME') ?: '0.1.0-alpha'
 
 android {
     namespace 'vn.bizon.simulation'
-    compileSdk 35
+    compileSdk 36
 
     defaultConfig {
         applicationId 'vn.bizon.simulation'
         minSdk 23
-        targetSdk 35
+        targetSdk 36
         versionCode releaseVersionCode
         versionName releaseVersionName
     }
