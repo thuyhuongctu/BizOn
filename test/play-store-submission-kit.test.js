@@ -46,7 +46,8 @@ for (const route of ['app/release.html', 'game.html', 'app/brand-passport.html',
   assert.match(capture, new RegExp(route.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
 }
 
-assert.match(capture, /width: 1080, height: 1920/);
+assert.match(capture, /width: 360, height: 640/);
+assert.match(capture, /deviceScaleFactor: 3/);
 assert.match(capture, /feature-graphic-1024x500\.png/);
 assert.match(capture, /app-icon-512\.png/);
 assert.match(capture, /alt-text-vi\.json/);
