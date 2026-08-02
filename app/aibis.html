@@ -1,24 +1,25 @@
 <!doctype html>
-<html lang="vi" data-theme="dark">
+<html lang="vi" data-theme="dark" data-bizon-build="2026.08.02.2">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#07141f">
+  <meta name="theme-color" content="#030a14">
   <meta name="description" content="AIBIS hỗ trợ so sánh thị trường và phương thức thâm nhập trong mô phỏng kinh doanh quốc tế.">
-  <title>AIBIS — BizOn</title>
+  <title>AIBIS Global — BizOn</title>
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="../assets/icons/icon-192.png">
   <link rel="stylesheet" href="../css/bizon-fonts.css">
   <link rel="stylesheet" href="../css/app-shell.css">
   <link rel="stylesheet" href="../css/aibis-app.css">
+  <link rel="stylesheet" href="../css/bizon-unified-overrides.css">
 </head>
 <body>
 <a class="skip-link" href="#aibisWorkspace">Bỏ qua điều hướng</a>
 <div class="aibis-app">
   <header class="aibis-topbar">
-    <a class="brand" href="./index.html"><span class="brand-mark">B</span><span><strong>BIZON</strong><small>KHÔNG GIAN AIBIS</small></span></a>
+    <a class="brand" href="./release.html"><span class="brand-mark">B</span><span><strong>BIZON</strong><small>AIBIS GLOBAL</small></span></a>
     <div class="journey" aria-label="Tiến trình AIBIS"><span class="done">0 Sẵn sàng</span><span class="active">1 Thị trường</span><span>2 Thâm nhập</span><span>3 Thích nghi</span><span>4 Đàm phán</span><span>5 Cú sốc</span><span>6 Mở rộng</span><span>7 Năng lực</span><span>8 Hội đồng</span></div>
-    <div class="topbar-actions"><button id="installBtn" hidden>Cài ứng dụng</button><button id="themeBtn" aria-label="Đổi giao diện">◐</button></div>
+    <div class="topbar-actions"><a class="context-chip" href="./command-center.html">Command Center</a><button id="installBtn" hidden>Cài ứng dụng</button><button id="themeBtn" aria-label="Đổi giao diện">◐</button></div>
   </header>
 
   <main id="aibisWorkspace" class="aibis-workspace" tabindex="-1">
@@ -32,7 +33,7 @@
         <header><div><p class="eyebrow">BẢN ĐỒ THỊ TRƯỜNG</p><h2>Việt Nam → Nhật Bản</h2></div><span class="evidence-tag">Có truy xuất nguồn</span></header>
         <div class="trade-map" role="img" aria-label="Mạng lưới thương mại minh họa Việt Nam đến Nhật Bản">
           <div class="grid-lines"></div><div class="country vn"><b>VN</b><small>Thị trường gốc</small></div><div class="country jp"><b>JP</b><small>Thị trường đích</small></div><div class="country sg"><b>SG</b><small>Trung chuyển</small></div>
-          <svg viewBox="0 0 900 430" aria-hidden="true"><defs><linearGradient id="route" x1="0" x2="1"><stop stop-color="#20d7ff"/><stop offset="1" stop-color="#ff9c3a"/></linearGradient></defs><path class="route main" d="M175 320 Q440 55 695 125"/><path class="route secondary" d="M175 320 Q390 375 500 290"/><circle class="pulse" cx="695" cy="125" r="22"/></svg>
+          <svg viewBox="0 0 900 430" aria-hidden="true"><defs><linearGradient id="route" x1="0" x2="1"><stop stop-color="#20d7ff"/><stop offset=".55" stop-color="#7656ff"/><stop offset="1" stop-color="#ff9c3a"/></linearGradient></defs><path class="route main" d="M175 320 Q440 55 695 125"/><path class="route secondary" d="M175 320 Q390 375 500 290"/><circle class="pulse" cx="695" cy="125" r="22"/></svg>
           <div class="route-chip sea">Đường biển · minh họa</div><div class="route-chip digital">Kênh số · tức thời</div>
         </div>
         <div class="market-metrics" id="marketMetrics"></div>
@@ -58,7 +59,7 @@
     </section>
   </main>
 
-  <nav class="mobile-nav" aria-label="Điều hướng di động"><a href="./index.html">Trang chủ</a><a href="../game.html">Khởi nghiệp</a><a class="active" href="./aibis.html">AIBIS</a><a href="../giang-vien.html">Giảng viên</a></nav>
+  <nav class="mobile-nav" aria-label="Điều hướng di động"><a href="./release.html">Trang chủ</a><a href="./command-center.html">Điều hành</a><a href="../game.html">Khởi nghiệp</a><a class="active" href="./aibis.html">AIBIS</a><a href="../giang-vien.html">Giảng viên</a></nav>
 </div>
 <script src="../js/app-shell/app-shell.js" defer></script>
 <script src="../js/aibis/country-profile-registry.js" defer></script>

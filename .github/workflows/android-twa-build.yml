@@ -7,8 +7,11 @@ on:
       - 'app/**'
       - 'brand-passport-learning.html'
       - 'js/brand-passport-learning.js'
+      - 'js/app-shell/unified-app.js'
+      - 'css/bizon-unified.css'
+      - 'css/bizon-unified-overrides.css'
       - '.well-known/assetlinks.template.json'
-      - 'test/android-twa-contract.test.js'
+      - 'test/android-twa-unified-contract.test.js'
       - '.github/workflows/android-twa-build.yml'
   push:
     branches: ['main', 'feat/web-app-release-v1', 'feat/google-play-release-readiness-v1']
@@ -17,8 +20,11 @@ on:
       - 'app/**'
       - 'brand-passport-learning.html'
       - 'js/brand-passport-learning.js'
+      - 'js/app-shell/unified-app.js'
+      - 'css/bizon-unified.css'
+      - 'css/bizon-unified-overrides.css'
       - '.well-known/assetlinks.template.json'
-      - 'test/android-twa-contract.test.js'
+      - 'test/android-twa-unified-contract.test.js'
       - '.github/workflows/android-twa-build.yml'
 
 permissions:
@@ -39,7 +45,7 @@ jobs:
           node-version: '24'
 
       - name: Validate Android and web contracts
-        run: node test/android-twa-contract.test.js
+        run: node test/android-twa-unified-contract.test.js
 
       - name: Verify local PWA endpoints
         shell: bash
@@ -53,7 +59,11 @@ jobs:
             sleep 1
           done
           grep -q 'Brand Passport' /tmp/release.html
-          grep -q 'Mô phỏng quyết định kinh doanh' /tmp/release.html
+          grep -q 'Mô phỏng kinh doanh cho' /tmp/release.html
+          grep -q 'Command Center' /tmp/release.html
+          curl --fail --silent http://127.0.0.1:8899/app/command-center.html -o /tmp/command.html
+          grep -q 'EcoFuture Team' /tmp/command.html
+          grep -q 'Decision Trace' /tmp/command.html
           curl --fail --silent http://127.0.0.1:8899/app/brand-passport.html -o /tmp/passport.html
           grep -q '../brand-passport-learning.html' /tmp/passport.html
           grep -q 'Lưu trên thiết bị' /tmp/passport.html
@@ -67,6 +77,7 @@ jobs:
           assert manifest['scope'] == './'
           assert manifest['display'] == 'standalone'
           assert manifest['name'] == 'BizOn — Mô phỏng quyết định kinh doanh'
+          assert next(item for item in manifest['shortcuts'] if item['short_name'] == 'Command')['url'] == './command-center.html'
           assert next(item for item in manifest['shortcuts'] if item['short_name'] == 'Startup')['url'] == '../game.html'
           assert next(item for item in manifest['shortcuts'] if item['short_name'] == 'Passport')['url'] == './brand-passport.html'
           print('Local PWA endpoints verified')
