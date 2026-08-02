@@ -423,6 +423,8 @@ function showPremium() {
 const BGM_TRACKS = [
   'assets/audio/bat-nghiep-co-loi.mp3',   // ca khúc chủ đề, bản thu có lời
   'assets/audio/bat-nghiep-rap-symphony.mp3', // bản rap symphony
+  'assets/audio/bat-nghiep-mekong-sunfire-2.mp3', // remix Mekong Sunfire – bản đề xuất
+  'assets/audio/bat-nghiep-mekong-sunfire.mp3',
   'assets/audio/bat-nghiep.mp3',        // bản instrumental, ngắn hơn
   'assets/audio/huong-vuon-ra-the-gioi.mp3', // ngoại lệ: xem ghi chú trên
   'assets/audio/bizon-theme.mp3',

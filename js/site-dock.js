@@ -15,6 +15,8 @@
     ['Hương on Return – remix (remastered)', 'huong-on-return-remix.mp3'],
     ['Bật Nghiệp ⭐ (ca khúc chủ đề game · bản thu có lời)', 'bat-nghiep-co-loi.mp3'],
     ['Bật Nghiệp – Rap Symphony', 'bat-nghiep-rap-symphony.mp3'],
+    ['Bật Nghiệp – Mekong Sunfire 2 🎧 (đề xuất nghe)', 'bat-nghiep-mekong-sunfire-2.mp3'],
+    ['Bật Nghiệp – Mekong Sunfire', 'bat-nghiep-mekong-sunfire.mp3'],
     ['Bật Nghiệp (instrumental · V-pop 112 BPM)', 'bat-nghiep.mp3'],
     ['BizOn Theme (instrumental)', 'bizon-theme.mp3'],
     ['Vừa Đủ Để Bay Cao', 'vua-du-de-bay-cao.mp3'],
