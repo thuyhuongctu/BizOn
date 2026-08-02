@@ -48,16 +48,12 @@
   .hub-card:hover { transform:translateY(-6px) scale(1.015); box-shadow:0 18px 40px -8px rgba(0,102,135,.18), inset 0 -4px 0 rgba(0,0,0,.05); }
   @keyframes float { 0%,100%{transform:translateY(0) rotate(var(--rot,0deg))} 50%{transform:translateY(-12px) rotate(var(--rot,0deg))} }
   .animate-float { animation:float 6s ease-in-out infinite; }
-  #vn-map { position:fixed; top:50%; right:-2vw; transform:translateY(-50%); width:min(36vw,440px); z-index:-1; pointer-events:none; color:#006687; opacity:.08; }
-  #vn-map svg { width:100%; height:auto; display:block; }
-  @media (max-width:820px) { #vn-map { right:-16vw; width:64vw; opacity:.05; } }
   /* ===== Chế độ tối ===== */
   :root { --dt: 3 51 55; }
   html[data-theme="dark"] { --dt: 214 236 240; background:#081a20; color-scheme:dark; }
   html[data-theme="dark"] body { color:#d6ecf0; }
   html[data-theme="dark"] .clay-card { background:#0e2a33; box-shadow:0 10px 30px -5px rgba(0,0,0,.45), inset 0 -4px 0 rgba(0,0,0,.3); }
   html[data-theme="dark"] .text-primary { color:#5cc4e6 !important; }
-  html[data-theme="dark"] #vn-map { color:#6fc4d8; }
   /* ===== Sơ đồ hệ sinh thái ===== */
   .eco-wrap { position:relative; height:430px; }
   .eco-ring { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:340px; height:340px; border:2px dashed rgba(0,102,135,.25); border-radius:50%; }
@@ -84,24 +80,7 @@
 </head>
 <body>
 <!-- Bản đồ Việt Nam chìm -->
-<div id="vn-map" aria-hidden="true"><svg viewBox="0 0 432 588" xmlns="http://www.w3.org/2000/svg">
-  <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
-    <polygon points="108.9,25.2 148.2,39.0 145.3,52.5 158.2,69.0 186.7,80.1 166.7,96.0 158.2,99.0 148.2,102.0 138.2,120.0 126.8,129.0 120.3,156.0 125.4,177.0 142.5,189.0 159.6,210.0 174.4,231.0 192.4,243.0 202.9,258.0 210.9,273.0 216.6,291.0 222.3,312.0 223.7,336.0 220.9,357.0 218.0,378.0 198.1,396.0 183.8,405.0 159.6,415.5 152.5,417.0 146.8,429.0 141.1,441.0 119.7,456.0 95.5,468.0 94.6,454.5 93.5,439.5 101.2,427.5 96.3,415.5 84.1,413.4 101.2,399.0 124.0,397.5 124.8,378.0 140.2,374.4 145.3,363.0 172.4,348.0 169.6,321.0 169.6,294.0 172.4,284.4 173.8,270.0 169.6,249.0 153.9,240.0 134.0,219.0 116.8,198.0 104.0,174.0 72.7,147.0 85.5,137.4 88.3,121.5 81.2,113.4 44.2,99.0 39.9,86.4 18.2,83.4 18.5,54.0 31.3,43.5 52.7,50.4 61.3,42.0 81.2,43.2 95.8,38.4 105.5,32.4 108.9,25.2"/>
-    <ellipse cx="71.2" cy="419.4" rx="4.5" ry="7"/>
-  </g>
-  <g fill="currentColor">
-    <circle cx="145.3" cy="465.6" r="1.8"/>
-    <g opacity=".95"><circle cx="287.8" cy="219.0" r="1.5"/><circle cx="299.2" cy="225.0" r="1.5"/><circle cx="307.8" cy="220.5" r="1.5"/><circle cx="319.2" cy="231.0" r="1.5"/><circle cx="299.2" cy="237.0" r="1.5"/><circle cx="290.7" cy="229.5" r="1.5"/><circle cx="312.1" cy="240.0" r="1.5"/></g>
-    <g opacity=".95"><circle cx="296.4" cy="384.0" r="1.4"/><circle cx="322.0" cy="402.0" r="1.4"/><circle cx="350.5" cy="393.0" r="1.4"/><circle cx="364.8" cy="414.0" r="1.4"/><circle cx="339.2" cy="432.0" r="1.4"/><circle cx="313.5" cy="438.0" r="1.4"/><circle cx="379.0" cy="429.0" r="1.4"/><circle cx="353.4" cy="462.0" r="1.4"/><circle cx="324.9" cy="474.0" r="1.4"/><circle cx="367.7" cy="489.0" r="1.4"/><circle cx="290.7" cy="420.0" r="1.4"/><circle cx="393.3" cy="447.0" r="1.4"/></g>
-  </g>
-  <g transform="translate(108.9,25.2)">
-    <line x1="0" y1="0" x2="0" y2="-22" stroke="#8a6a4f" stroke-width="1.6"/>
-    <rect x="0.8" y="-22" width="17" height="11" rx="1.2" fill="#da251d"/>
-    <path fill="#ffce00" d="M9.3 -19.9 10.3 -17.2 13.1 -17.2 10.8 -15.5 11.7 -12.8 9.3 -14.5 6.9 -12.8 7.8 -15.5 5.5 -17.2 8.3 -17.2Z"/>
-  </g>
-  <g transform="translate(122.0,425.1)"><path fill="#b3701a" d="M0 -7 1.9 -2.2 7 -2.2 2.9 0.9 4.4 5.8 0 2.8 -4.4 5.8 -2.9 0.9 -7 -2.2 -1.9 -2.2Z"/></g>
-  <g class="lh" transform="translate(302.1,228.0)"><path d="M-2.4 0 L-1.4 -7 H1.4 L2.4 0 Z" fill="none" stroke="currentColor" stroke-width="1"/><line x1="-2.6" y1="0" x2="2.6" y2="0" stroke="currentColor" stroke-width="1"/><rect x="-1.7" y="-9.2" width="3.4" height="2.2" rx="0.6" fill="none" stroke="currentColor" stroke-width="1"/><circle class="lh-light" cx="0" cy="-8.1" r="1.3" fill="#e8483f"/><circle class="lh-halo" cx="0" cy="-8.1" r="4.2" fill="none" stroke="#e8483f" stroke-width="1"/></g><g class="lh lh2" transform="translate(344.8,435.0)"><path d="M-2.4 0 L-1.4 -7 H1.4 L2.4 0 Z" fill="none" stroke="currentColor" stroke-width="1"/><line x1="-2.6" y1="0" x2="2.6" y2="0" stroke="currentColor" stroke-width="1"/><rect x="-1.7" y="-9.2" width="3.4" height="2.2" rx="0.6" fill="none" stroke="currentColor" stroke-width="1"/><circle class="lh-light" cx="0" cy="-8.1" r="1.3" fill="#e8483f"/><circle class="lh-halo" cx="0" cy="-8.1" r="4.2" fill="none" stroke="#e8483f" stroke-width="1"/></g><g class="lh lh3" transform="translate(71.2,419.4)"><path d="M-2.4 0 L-1.4 -7 H1.4 L2.4 0 Z" fill="none" stroke="currentColor" stroke-width="1"/><line x1="-2.6" y1="0" x2="2.6" y2="0" stroke="currentColor" stroke-width="1"/><rect x="-1.7" y="-9.2" width="3.4" height="2.2" rx="0.6" fill="none" stroke="currentColor" stroke-width="1"/><circle class="lh-light" cx="0" cy="-8.1" r="1.3" fill="#e8483f"/><circle class="lh-halo" cx="0" cy="-8.1" r="4.2" fill="none" stroke="#e8483f" stroke-width="1"/></g><g class="lh lh4" transform="translate(145.3,465.6)"><path d="M-2.4 0 L-1.4 -7 H1.4 L2.4 0 Z" fill="none" stroke="currentColor" stroke-width="1"/><line x1="-2.6" y1="0" x2="2.6" y2="0" stroke="currentColor" stroke-width="1"/><rect x="-1.7" y="-9.2" width="3.4" height="2.2" rx="0.6" fill="none" stroke="currentColor" stroke-width="1"/><circle class="lh-light" cx="0" cy="-8.1" r="1.3" fill="#e8483f"/><circle class="lh-halo" cx="0" cy="-8.1" r="4.2" fill="none" stroke="#e8483f" stroke-width="1"/></g>
-</svg></div>
+
 
 <!-- Thanh trên -->
 <header class="max-w-5xl mx-auto px-5 pt-6 flex items-center justify-between">
@@ -121,7 +100,7 @@
 
 <main class="max-w-5xl mx-auto px-5 pb-16">
   <!-- Chào mừng: hai nhà sáng lập hai bên -->
-  <section class="pt-10 pb-8">
+  <section id="tour-hero" class="pt-10 pb-8">
     <div class="grid grid-cols-1 sm:grid-cols-[auto_1fr_auto] gap-4 sm:gap-6 items-end text-center">
       <div class="hidden sm:block">
         <img src="assets/illustrations/lumina-holo-classroom.webp" alt="Lumina – Cố vấn học tập AI – đứng lớp mô phỏng kinh doanh" class="h-64 w-48 object-cover object-top rounded-3xl shadow-xl mx-auto">
@@ -149,7 +128,7 @@
   </section>
 
   <!-- 3 cổng chính: Người học · Giảng viên · Tổ chức -->
-  <section class="grid sm:grid-cols-3 gap-5 mb-10">
+  <section id="tour-cong" class="grid sm:grid-cols-3 gap-5 mb-10">
     <div class="clay-card hub-card p-6 flex flex-col" style="background:linear-gradient(150deg,#006687,#033337)">
       <p class="text-4xl">🎓</p>
       <h2 class="font-display font-extrabold text-xl mt-2" style="color:#fff">Cổng Người học</h2>
@@ -175,7 +154,7 @@
   </section>
 
   <!-- Sơ đồ hệ sinh thái -->
-  <section class="clay-card p-6 sm:p-8 mb-10 overflow-hidden">
+  <section id="tour-hesinhthai" class="clay-card p-6 sm:p-8 mb-10 overflow-hidden">
     <h2 class="font-display font-extrabold text-deep-teal text-xl text-center">🌏 Hệ sinh thái khởi nghiệp – từ Việt Nam vươn ra quốc tế</h2>
     <p class="text-xs text-deep-teal/55 text-center mt-1.5 max-w-2xl mx-auto">Khởi đầu từ xưởng đất sét Miền Tây, chinh phục bản đồ Việt Nam rồi vươn ra 7 thị trường thế giới – mọi cấu phần xoay quanh một engine mô phỏng xác định, từ ván chơi của sinh viên đến bằng chứng học tập cho nhà trường.</p>
 
@@ -219,7 +198,7 @@
 
   <!-- Hành trình chinh phục: chính bản đồ dùng trong ván chơi, đặt ở trang chủ để
        người xem hình dung được lộ trình sáu vòng trước khi bấm vào chơi. -->
-  <section class="clay-card p-6 sm:p-8 mb-12">
+  <section id="tour-bando" class="clay-card p-6 sm:p-8 mb-12">
     <h2 class="font-display font-extrabold text-deep-teal text-xl text-center">🗺️ Hành trình chinh phục Việt Nam</h2>
     <p class="text-xs text-deep-teal/55 text-center mt-1.5 max-w-2xl mx-auto">Sáu vòng, sáu vùng kinh tế. Thắng thị phần vòng nào thì cắm cờ doanh nghiệp lên vùng đó – từ Cần Thơ ngược ra Hà Nội. Đây đúng là tấm bản đồ hiện trong ván chơi.</p>
     <div class="grid sm:grid-cols-2 gap-6 items-center mt-5">
@@ -250,7 +229,7 @@
 
   <!-- Bốn tầng sản phẩm: trả lời thẳng câu "tôi nên bắt đầu từ đâu?" -->
   <p class="text-[10px] font-extrabold uppercase tracking-widest text-deep-teal/50 mb-3">🧭 Bắt đầu từ đâu?</p>
-  <section class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+  <section id="tour-game" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
     <a href="game.html" class="clay-card hub-card p-5 flex flex-col">
       <p class="text-3xl">🎮</p>
       <p class="text-[9px] font-extrabold uppercase tracking-widest text-deep-teal/40 mt-2">BizOn Core</p>
@@ -283,7 +262,7 @@
 
   <!-- Khám phá Vũ trụ BizOn -->
   <p class="text-[10px] font-extrabold uppercase tracking-widest text-deep-teal/50 mb-3">🌌 Khám phá Vũ trụ BizOn</p>
-  <section class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+  <section id="tour-thuvien" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
     <a href="thu-vien.html" class="clay-card hub-card p-6">
       <p class="text-4xl">📚</p>
       <h2 class="font-display font-extrabold text-deep-teal text-lg mt-2">Thư viện Sáng tạo</h2>
@@ -316,7 +295,7 @@
   </section>
 
   <!-- Nhóm khởi nghiệp BizOn -->
-  <section class="mt-10">
+  <section id="tour-doingu" class="mt-10">
     <p class="text-[10px] font-extrabold uppercase tracking-widest text-deep-teal/50 mb-3">Nhóm khởi nghiệp BizOn</p>
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
       <a href="giai-phap.html" class="clay-card hub-card p-5 text-center"><p class="text-3xl">🧩</p><p class="font-display font-extrabold text-deep-teal text-sm mt-2">Giải pháp</p><p class="text-[10px] text-deep-teal/50 mt-1">Bộ công cụ EdTech cho lớp học</p></a>
@@ -327,7 +306,7 @@
   </section>
 
   <!-- Liên kết hệ sinh thái ngoài -->
-  <section class="mt-10 clay-card p-6">
+  <section id="tour-jmh" class="mt-10 clay-card p-6">
     <p class="text-[10px] font-extrabold uppercase tracking-widest text-deep-teal/50 mb-3">Hệ sinh thái Je m'appelle Hương</p>
     <div class="flex flex-wrap gap-2.5">
       <a href="https://thuyhuongctu.github.io/M-AIDA/" target="_blank" rel="noopener" class="clay-btn bg-surface-bright text-primary text-xs font-bold px-5 py-2.5">🎼 Ứng dụng M-AIDA</a>
@@ -343,10 +322,45 @@
 </main>
 
 <script src="js/site-ui.js" defer></script>
+<script src="js/site-vnmap.js" defer></script>
 
 <p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2" style="color:rgba(100,116,125,.85)">✉️ Liên hệ · Contact: <a href="mailto:patu@ctu.edu.vn" style="color:inherit;text-decoration:underline">patu@ctu.edu.vn</a> · <a href="mailto:thuyhuongctu@gmail.com" style="color:inherit;text-decoration:underline">thuyhuongctu@gmail.com</a></p>
 <p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2 pb-6" style="color:rgba(100,116,125,.75)">🎓 Trang web chỉ phục vụ mục đích giáo dục và nghiên cứu, không đại diện cho bất kỳ tổ chức chính trị nào. Hình ảnh quốc kỳ, bản đồ chỉ mang ý nghĩa minh họa văn hóa – giáo dục. · This website serves educational and research purposes only and does not represent any political organization.</p>
 <script src="js/site-dock.js" defer></script>
 <script src="js/site-footer.js" defer></script>
+
+<!-- Kịch bản cho hướng dẫn viên AI trên màn hình (js/site-tour.js) -->
+<script>
+window.BIZON_TOUR_OPTS = {
+  art: 'assets/character/advisors/lumina-aodai-cut.webp',
+};
+window.BIZON_TOUR = [
+  { sel: '#tour-hero',
+    vi: 'Xin chào! Mình là Hương – hướng dẫn viên AI của BizOn Bật Nghiệp. Đây là hệ sinh thái mô phỏng kinh doanh do nghiên cứu sinh Đỗ Thùy Hương và Phó giáo sư Tiến sĩ Phan Anh Tú xây dựng. Bạn ra quyết định trong điều kiện không chắc chắn và học bằng chính hậu quả của lựa chọn đó.',
+    en: "Hello! I'm Huong, the AI guide for BizOn Bật Nghiệp. This is a business simulation ecosystem built by doctoral researcher Do Thuy Huong and Associate Professor Doctor Phan Anh Tu. You make decisions under uncertainty, and you learn from the consequences of your own choices." },
+  { sel: '#tour-cong',
+    vi: 'Ba lối vào tuỳ theo bạn là ai. Người học chơi thử mười phút hoặc vào ván sáu vòng đầy đủ. Giảng viên nhận kịch bản trọn gói cho lớp bốn mươi đến sáu mươi sinh viên, kèm rubric và bảng tổng hợp Excel. Tổ chức và đối tác thì có gói triển khai cho khoa, trường hay trung tâm khởi nghiệp.',
+    en: 'Three doors, depending on who you are. Learners get a ten-minute trial or a full six-round game. Instructors get a complete classroom script for forty to sixty students, with a rubric and an Excel summary sheet. Institutions and partners get a deployment package for a faculty, a school or a startup centre.' },
+  { sel: '#tour-hesinhthai',
+    vi: 'Mọi thứ xoay quanh một engine mô phỏng xác định – nghĩa là cùng một quyết định luôn cho cùng một kết quả, nên giảng viên chấm được và sinh viên tranh luận được. Từ engine đó toả ra game, hộ chiếu thương hiệu, lớp học, học thuật, thương hiệu và âm nhạc.',
+    en: 'Everything turns around one deterministic simulation engine, which means the same decision always produces the same result, so instructors can grade it and students can argue about it. From that engine come the game, the brand passport, the classroom, the academic layer, and the brand and music work.' },
+  { sel: '#tour-bando',
+    vi: 'Một ván gồm sáu vòng, mỗi vòng là một quý kinh doanh ở một vùng kinh tế: Cần Thơ, Thành phố Hồ Chí Minh, Khánh Hòa, Đà Nẵng, Thanh Hóa rồi Hà Nội. Thắng vòng nào, đội bạn cắm cờ lên tỉnh đó. Đây đúng là tấm bản đồ hiện trong ván chơi.',
+    en: 'A game runs six rounds. Each round is a business quarter in one economic region: Can Tho, Ho Chi Minh City, Khanh Hoa, Da Nang, Thanh Hoa, then Hanoi. Win a round and your team plants its flag on that province. This is the same map you will see inside the game.' },
+  { sel: '#tour-game',
+    vi: 'Bốn sản phẩm chơi được. Bật Nghiệp là ván chính chinh phục thị trường Việt Nam. Hộ Chiếu Thương Hiệu là bản chiến lược qua sáu thị trường trong sương mù thông tin. Còn có phòng thí nghiệm quốc tế hoá và trung tâm trò chơi nhỏ.',
+    en: 'Four playable products. Bật Nghiệp is the main game, conquering the Vietnamese market. The Brand Passport is a strategy variant across six markets under information fog. There is also an internationalisation lab and an arcade of smaller games.' },
+  { sel: '#tour-thuvien',
+    vi: 'Phần sáng tạo: thư viện hình ảnh ba chiều, kho nhạc gốc do chính tác giả sáng tác, và trang giới thiệu có bản chơi thử ngay trên trình duyệt.',
+    en: 'The creative side: a three-D illustration library, an original music collection written by the author herself, and an introduction page with a playable demo right in your browser.' },
+  { sel: '#tour-doingu',
+    vi: 'Đây là nhóm khởi nghiệp BizOn, danh mục dự án và các vị trí đang mở. Nếu bạn muốn hợp tác triển khai cho trường mình thì liên hệ ở phần này.',
+    en: 'This is the BizOn startup team, the project portfolio and the open positions. If you want to bring this to your own school, this is where to get in touch.' },
+  { sel: '#tour-jmh',
+    vi: 'Cuối cùng là hệ sinh thái Je m\'appelle Hương – gồm phần mềm nghiên cứu M-AIDA, thư viện sáng tạo và mã nguồn. Cảm ơn bạn đã nghe hết. Bấm Chơi ngay để bắt đầu Bật Nghiệp nhé!',
+    en: "Finally, the Je m'appelle Hương ecosystem: the M-AIDA research software, the creative library and the source code. Thank you for listening. Hit Play now to start Bật Nghiệp!" },
+];
+</script>
+<script src="js/site-tour.js" defer></script>
 </body>
 </html>

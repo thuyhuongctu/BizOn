@@ -107,6 +107,11 @@
         '<button class="bz-chip" id="bz-next" title="Bài kế tiếp">⏭️</button>') +
       '<button class="bz-chip" id="bz-theme" title="Sáng / Tối · Light / Dark">🌙</button>' +
       '<button class="bz-chip" id="bz-lang" title="Tiếng Việt / English" style="width:auto;padding:0 14px;font-size:12px;font-weight:800">EN</button>' +
+      /* Nút mở tour tham quan. Chỉ hiện ở trang có khai window.BIZON_TOUR – khai
+         báo đó nằm trong thẻ script nội tuyến nên luôn chạy trước tệp defer này.
+         Việc gắn sự kiện do js/site-tour.js lo. */
+      (window.BIZON_TOUR && window.BIZON_TOUR.length
+        ? '<button class="bz-chip" id="bz-tour" title="Hương AI dẫn tham quan trang này">🎧</button>' : '') +
     '</div>' +
     (IS_GAME ? '' : '<p id="bz-track" style="font-size:11px;font-weight:700;opacity:.55;margin:8px 2px 0;display:none">🎶</p>') +
     '<hr>' +

@@ -4,9 +4,13 @@
 > **Cách gửi:** thu từng câu thành 1 file MP3, đặt **đúng tên file** trong bảng, gửi lên chat – hệ thống sẽ nối vào đúng ngữ cảnh trong game.
 > Lưu ý: câu có chỗ trống `{…}` chứa số liệu động (ROI, OEE…) – khi thu, đọc câu mẫu với một con số bất kỳ hoặc bỏ qua câu đó (bản chữ vẫn hiển thị).
 
-Tổng cộng: **55 câu** trong 9 nhóm (52 câu trong các bảng dưới + 3 câu chào đăng nhập).
+Tổng cộng: **54 câu** trong 9 nhóm (51 câu trong các bảng dưới + 3 câu chào đăng nhập).
 
-**Đã thu:** 3 câu chào đăng nhập + 43/52 câu trong `assets/audio/voice/`.
+> `chat-01` đã bị loại khỏi danh sách thu: đó không phải một câu thoại mà là
+> khuôn định dạng `【vai trò】 nội dung` trong `js/app.js:1188` – cả hai phần đều
+> do máy điền, phần nội dung chính là các câu `adv-XX` đã có bản thu riêng.
+
+**Đã thu:** 3 câu chào đăng nhập + 43/51 câu trong `assets/audio/voice/`.
 
 | Nhóm | Số câu | Tệp |
 |---|---|---|
@@ -14,9 +18,10 @@ Tổng cộng: **55 câu** trong 9 nhóm (52 câu trong các bảng dưới + 3 
 | ✅ Đã thu, vốn không có viết tắt | 13 | `adv-09`, `adv-16`, `chat-02`, `quote-01`, `risk-01`, `topic-07`, `quote-02`, `quote-03`, `quote-04`, `quote-05`, `glob-01`, `glob-02`, `glob-03` |
 | ⚠️ Đã thu nhưng **nên thu lại** | 3 | `chat-05`, `topic-06`, `quote-06` – xem mục "Cần thu lại" bên dưới |
 | ⬜ Chưa thu – **phải theo bản đọc** | 5 | `chat-08`, `intro-02`, `intro-03`, `intro-04`, `intro-06` |
-| ⬜ Chưa thu – đọc nguyên văn | 4 | `adv-01`, `chat-01`, `intro-01`, `intro-05` |
+| ⬜ Chưa thu – đọc nguyên văn | 3 | `adv-01`, `intro-01`, `intro-05` |
 
-> Còn **9/52** câu chưa thu.
+> Còn **8/51** câu chưa thu.
+> Bản thoại tiếng Anh: [`loi-thoai-lumina-en.md`](loi-thoai-lumina-en.md).
 > Khi có bản mới, thay tệp cùng tên rồi mới nối vào game.
 
 ### ⚠️ Cần thu lại (3 câu)
@@ -72,7 +77,6 @@ thì giữ nguyên:
 
 | Tên file | Ngữ cảnh | Lời thoại |
 |---|---|---|
-| `voice/chat-01.mp3` | pushLumina | 【{…}】 {…} |
 | `voice/chat-02.mp3` | pushLumina | Xin chào, Je m'appelle Hương! 👋 Tôi là Lumina – cố vấn AI của đội {…}. Hãy chọn một câu hỏi bên dưới, tôi sẽ phân tích kịch bản "Nếu – Thì" cho bạn. |
 | `voice/chat-03.mp3` | pushLumina | Đã giải ngân khoản vay 300tr₫! Lưu ý: lãi 5%/vòng (15tr₫) sẽ trừ vào lợi nhuận mỗi vòng còn lại. Hãy dùng vốn hiệu quả để ROI vượt chi phí vốn nhé. |
 | `voice/chat-04.mp3` | pushLumina | Đã kích hoạt phương án cắt giảm chi phí – chi phí cố định vòng sau giảm 15%. Cẩn thận đừng cắt vào các khoản đầu tư dài hạn! |
