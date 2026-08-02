@@ -420,7 +420,8 @@ function showPremium() {
 // Tuyển tập riêng: ca khúc chủ đề Việt Nam + anthem đội chơi. Nhạc quốc tế hóa
 // dành cho Go Global và Hộ Chiếu Thương Hiệu, không trộn vào đây.
 const BGM_TRACKS = [
-  'assets/audio/bat-nghiep.mp3',
+  'assets/audio/bat-nghiep-co-loi.mp3',   // ca khúc chủ đề, bản thu có lời
+  'assets/audio/bat-nghiep.mp3',        // bản instrumental, ngắn hơn
   'assets/audio/bizon-theme.mp3',
   'assets/audio/huong-on-return.mp3',
   'assets/audio/huong-on-return-remix.mp3',
