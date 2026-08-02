@@ -417,11 +417,14 @@ function showPremium() {
 }
 
 // ---------- Nhạc nền game «Bật Nghiệp» ----------
-// Tuyển tập riêng: ca khúc chủ đề Việt Nam + anthem đội chơi. Nhạc quốc tế hóa
-// dành cho Go Global và Hộ Chiếu Thương Hiệu, không trộn vào đây.
+// Tuyển tập riêng: ca khúc chủ đề Việt Nam + anthem đội chơi. Phần lớn nhạc quốc
+// tế hóa vẫn dành riêng cho Go Global và Hộ Chiếu Thương Hiệu, không trộn vào đây;
+// «Vươn ra thế giới» là ngoại lệ có chủ ý vì kể đúng chặng cuối của ván chơi.
 const BGM_TRACKS = [
   'assets/audio/bat-nghiep-co-loi.mp3',   // ca khúc chủ đề, bản thu có lời
+  'assets/audio/bat-nghiep-rap-symphony.mp3', // bản rap symphony
   'assets/audio/bat-nghiep.mp3',        // bản instrumental, ngắn hơn
+  'assets/audio/huong-vuon-ra-the-gioi.mp3', // ngoại lệ: xem ghi chú trên
   'assets/audio/bizon-theme.mp3',
   'assets/audio/huong-on-return.mp3',
   'assets/audio/huong-on-return-remix.mp3',

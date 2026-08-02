@@ -4067,6 +4067,30 @@
 "Ca khúc chủ đề game Việt Nam · bản thu có lời",
 "Theme song of the Vietnam game · vocal recording"
 ],
+[
+"Bản Rap Symphony",
+"Rap Symphony version"
+],
+[
+"Bản phối rap kết hợp dàn dây · 3:48",
+"Rap arrangement with strings · 3:48"
+],
+[
+"«Vươn ra thế giới» – bản 1",
+"«Vươn ra thế giới» (Reaching the World) – take 1"
+],
+[
+"Ca khúc mới cùng tuyến · 2:47",
+"A new song in the same line · 2:47"
+],
+[
+"«Vươn ra thế giới» – bản 2",
+"«Vươn ra thế giới» (Reaching the World) – take 2"
+],
+[
+"Bản dựng thứ hai của cùng ca khúc · 2:47 · hòa âm khác",
+"Second take of the same song · 2:47 · different arrangement"
+],
 ]);
   var SPECIAL = [
     { page: 'giai-phap', sel: '#gp-oss-note', en: "Free to use at the official URL for non-commercial teaching – no account needed. The source is published for academic transparency and verification; commercial exploitation rights remain with BizOn (see <a href=\"https://github.com/thuyhuongctu/BizOn/blob/main/LICENSE\" target=\"_blank\" rel=\"noopener\" class=\"underline font-bold\">LICENSE</a>)." },

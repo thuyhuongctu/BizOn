@@ -159,6 +159,8 @@ const GROUPS = [
     { t: 'English version', s: 'Bản song ngữ Anh–Việt cho phát hành quốc tế · bản thu có lời', f: 'assets/audio/huong-and-the-world-en.mp3', icon: '🌍' },
     { t: 'Bản giọng nam', s: 'Bản phối giọng nam · lời tiếng Anh song ngữ', f: 'assets/audio/huong-and-the-world-male.mp3', icon: '🎤' },
     { t: 'French version – «Hương et le Monde»', s: 'Bản lời tiếng Pháp · dùng cho tuyến Pháp ngữ của BizOn Go Global', f: 'assets/audio/huong-et-le-monde.mp3', icon: '🇫🇷' },
+    { t: '«Vươn ra thế giới» – bản 1', s: 'Ca khúc mới cùng tuyến · 2:47', f: 'assets/audio/huong-vuon-ra-the-gioi.mp3', icon: '🌏' },
+    { t: '«Vươn ra thế giới» – bản 2', s: 'Bản dựng thứ hai của cùng ca khúc · 2:47 · hòa âm khác', f: 'assets/audio/huong-vuon-ra-the-gioi-2.mp3', icon: '🌏' },
   ]},
   { name: '«Đội Phù Sa»', art: 'assets/illustrations/thuyen-sen-khoi-hanh.webp', icon: '🌾', desc: 'Anthem đội chơi Đội Phù Sa · V-pop electronic 116 BPM · «Thất bại là phù sa – bồi thành bến thành tên»', tracks: [
     { t: 'Bản gốc', s: 'Bản thu có lời – Golden silt, we rise!', f: 'assets/audio/doi-phu-sa.mp3', icon: '🌾' },
@@ -193,6 +195,7 @@ const GROUPS = [
   ]},
   { name: '«Bật Nghiệp»', art: 'assets/illustrations/hero-vietnam-2026.webp', icon: '🐉', desc: 'Ca khúc chủ đề game Việt Nam · V-pop electronic 112 BPM', tracks: [
     { t: 'Bản thu có lời ⭐', s: 'Ca khúc chủ đề game Bật Nghiệp · 3:23 · nhạc nền mở đầu trong game', f: 'assets/audio/bat-nghiep-co-loi.mp3', icon: '🐉' },
+    { t: 'Bản Rap Symphony', s: 'Bản phối rap kết hợp dàn dây · 3:48', f: 'assets/audio/bat-nghiep-rap-symphony.mp3', icon: '🎤' },
     { t: 'Bản instrumental', s: 'Bản phối không lời · 1:20 · dùng xen giữa các vòng', f: 'assets/audio/bat-nghiep.mp3', icon: '🎼' },
   ]},
   { name: '«Việt Nam Trong Tim»', art: 'assets/character/bizon-duo-music.webp', icon: '🇻🇳', desc: 'Ca khúc tiếng Việt mới của kho nhạc BizOn', tracks: [
@@ -289,7 +292,7 @@ const COLLECTIONS = [
     key: 'bat-nghiep', art: 'assets/illustrations/hero-vietnam-2026.webp', name: 'Bật Nghiệp', icon: '🎮', tone: 'Màu Việt Nam',
     game: 'Game mô phỏng chính', url: 'game.html',
     desc: 'Nhạc nền xoay vòng suốt 6 vòng chơi của game mô phỏng khởi nghiệp – giữ màu V-pop và tinh thần đội nhóm.',
-    files: ['bat-nghiep-co-loi.mp3', 'bat-nghiep.mp3', 'bizon-theme.mp3', 'huong-on-return.mp3', 'huong-on-return-remix.mp3', 'vua-du-de-bay-cao.mp3', 'doi-phu-sa.mp3', 'doi-phu-sa-remix.mp3', 'doi-phu-sa-remix2.mp3'],
+    files: ['bat-nghiep-co-loi.mp3', 'bat-nghiep-rap-symphony.mp3', 'bat-nghiep.mp3', 'huong-vuon-ra-the-gioi.mp3', 'huong-vuon-ra-the-gioi-2.mp3', 'bizon-theme.mp3', 'huong-on-return.mp3', 'huong-on-return-remix.mp3', 'vua-du-de-bay-cao.mp3', 'doi-phu-sa.mp3', 'doi-phu-sa-remix.mp3', 'doi-phu-sa-remix2.mp3'],
   },
   {
     key: 'brand-passport', art: 'assets/illustrations/thuyen-sen-khoi-hanh.webp', name: 'Hộ Chiếu Thương Hiệu', icon: '🛂', tone: 'Màu quốc tế hóa',
@@ -308,7 +311,7 @@ const COLLECTIONS = [
     key: 'go-global', art: 'assets/illustrations/globe-trade.webp', name: 'BizOn Go Global', icon: '🌏', tone: 'Phù sa Mekong và đa ngôn ngữ',
     game: 'Bản đồ Go Global', url: 'global.html',
     desc: 'Tuyển tập đa ngôn ngữ Việt – Anh – Pháp, lấy dòng Mekong làm mạch chính. Gồm trọn bộ «Je m\'appelle Hương sans frontières».',
-    files: ['journey-golden-silt.mp3', 'journey-golden-silt-remix.mp3', 'mekong-river-remix.mp3', 'mekong-river-v2.mp3', 'mekong-compass.mp3', 'huong-and-the-world.mp3', 'huong-and-the-world-en.mp3', 'huong-and-the-world-male.mp3', 'huong-et-le-monde.mp3'],
+    files: ['journey-golden-silt.mp3', 'journey-golden-silt-remix.mp3', 'mekong-river-remix.mp3', 'mekong-river-v2.mp3', 'mekong-compass.mp3', 'huong-and-the-world.mp3', 'huong-and-the-world-en.mp3', 'huong-and-the-world-male.mp3', 'huong-et-le-monde.mp3', 'huong-vuon-ra-the-gioi.mp3', 'huong-vuon-ra-the-gioi-2.mp3'],
   },
   {
     key: 'arcade', art: 'assets/illustrations/giai-dieu-bizon.webp', name: 'BizOn Arcade', icon: '🕹️', tone: 'Nhịp nhanh',
