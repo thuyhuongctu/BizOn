@@ -10,13 +10,18 @@ const webManifest = JSON.parse(fs.readFileSync('app/manifest.webmanifest', 'utf8
 const assetlinksTemplate = JSON.parse(fs.readFileSync('.well-known/assetlinks.template.json', 'utf8'));
 
 assert.match(settings, /include ':app'/);
-assert.match(rootBuild, /com\.android\.application' version '8\.7\.3'/);
+assert.match(rootBuild, /com\.android\.application' version '8\.10\.1'/);
 assert.match(appBuild, /applicationId 'vn\.bizon\.simulation'/);
-assert.match(appBuild, /compileSdk 35/);
-assert.match(appBuild, /targetSdk 35/);
+assert.match(appBuild, /compileSdk 36/);
+assert.match(appBuild, /targetSdk 36/);
 assert.match(appBuild, /minSdk 23/);
 assert.match(appBuild, /androidbrowserhelper:2\.2\.0/);
-assert.doesNotMatch(appBuild, /storePassword|keyPassword|signingConfig\s+signingConfigs\.release/i);
+assert.match(appBuild, /BIZON_UPLOAD_KEYSTORE_PATH/);
+assert.match(appBuild, /BIZON_UPLOAD_STORE_PASSWORD/);
+assert.match(appBuild, /BIZON_UPLOAD_KEY_ALIAS/);
+assert.match(appBuild, /BIZON_UPLOAD_KEY_PASSWORD/);
+assert.doesNotMatch(appBuild, /storePassword\s+['"][^'"]+['"]/);
+assert.doesNotMatch(appBuild, /keyPassword\s+['"][^'"]+['"]/);
 
 assert.match(androidManifest, /com\.google\.androidbrowserhelper\.trusted\.LauncherActivity/);
 assert.match(androidManifest, /android:exported="true"/);
@@ -44,4 +49,4 @@ assert.match(release, /\.\/brand-passport\.html/);
 assert.match(release, /Local-only/);
 assert.match(release, /serviceWorker\.register\('\.\/sw\.js'/);
 
-console.log('Android TWA release contract passed');
+console.log('Android TWA API 36 release contract passed');
