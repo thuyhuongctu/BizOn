@@ -6,17 +6,30 @@
 
 Tổng cộng: **55 câu** trong 9 nhóm (52 câu trong các bảng dưới + 3 câu chào đăng nhập).
 
-**Đã thu:** 3 câu chào đăng nhập + 28/52 câu trong `assets/audio/voice/`.
+**Đã thu:** 3 câu chào đăng nhập + 43/52 câu trong `assets/audio/voice/`.
 
 | Nhóm | Số câu | Tệp |
 |---|---|---|
-| ✅ Đã thu, đúng bản đọc | 22 | `adv-02`, `adv-03`, `adv-04`, `adv-05`, `adv-06`, `adv-07`, `adv-08`, `adv-10`, `adv-11`, `adv-12`, `adv-13`, `adv-14`, `adv-15`, `adv-17`, `chat-03`, `chat-04`, `chat-06`, `chat-07`, `kpi-01`, `kpi-02`, `kpi-03`, `risk-02` |
-| ✅ Đã thu, vốn không có viết tắt | 6 | `adv-09`, `adv-16`, `chat-02`, `chat-05`, `quote-01`, `risk-01` |
-| ⬜ Chưa thu – **phải theo bản đọc** | 6 | `chat-08`, `topic-01`, `topic-02`, `topic-03`, `topic-04`, `topic-05` |
-| ⬜ Chưa thu – đọc nguyên văn | 18 | `adv-01`, `chat-01`, `topic-06`, `topic-07`, `quote-02`, `quote-03`, `quote-04`, `quote-05`, `quote-06`, `glob-01`, `glob-02`, `glob-03`, `intro-01`, `intro-02`, `intro-03`, `intro-04`, `intro-05`, `intro-06` |
+| ✅ Đã thu, đúng bản đọc | 27 | `adv-02`, `adv-03`, `adv-04`, `adv-05`, `adv-06`, `adv-07`, `adv-08`, `adv-10`, `adv-11`, `adv-12`, `adv-13`, `adv-14`, `adv-15`, `adv-17`, `chat-03`, `chat-04`, `chat-06`, `chat-07`, `kpi-01`, `kpi-02`, `kpi-03`, `risk-02`, `topic-01`, `topic-02`, `topic-03`, `topic-04`, `topic-05` |
+| ✅ Đã thu, vốn không có viết tắt | 13 | `adv-09`, `adv-16`, `chat-02`, `quote-01`, `risk-01`, `topic-07`, `quote-02`, `quote-03`, `quote-04`, `quote-05`, `glob-01`, `glob-02`, `glob-03` |
+| ⚠️ Đã thu nhưng **nên thu lại** | 3 | `chat-05`, `topic-06`, `quote-06` – xem mục "Cần thu lại" bên dưới |
+| ⬜ Chưa thu – **phải theo bản đọc** | 5 | `chat-08`, `intro-02`, `intro-03`, `intro-04`, `intro-06` |
+| ⬜ Chưa thu – đọc nguyên văn | 4 | `adv-01`, `chat-01`, `intro-01`, `intro-05` |
 
-> Còn **24/52** câu chưa thu.
+> Còn **9/52** câu chưa thu.
 > Khi có bản mới, thay tệp cùng tên rồi mới nối vào game.
+
+### ⚠️ Cần thu lại (3 câu)
+
+Ba câu này đã có bản thu, nhưng lúc thu **chưa có hướng dẫn đọc** cho từ tiếng Anh
+bên trong – bản đọc chỉ được bổ sung sau đó. Nghe lại, nếu đã đọc đúng tiếng Việt
+thì giữ nguyên:
+
+| Tệp | Chưa có hướng dẫn lúc thu |
+|---|---|
+| `chat-05` | `Branding Premium`, `Brand Loyalty` |
+| `topic-06` | `commit` (viết thường nên lần rà trước bỏ sót) |
+| `quote-06` | `commit` (viết thường nên lần rà trước bỏ sót) |
 
 ## Bộ não cố vấn theo vai trò (tab Cố vấn – thẻ CFO/CMO/COO/SEC)
 
@@ -169,11 +182,20 @@ kinh doanh người học cần làm quen. Chỉ phần đọc mới thay bằng
 | % | phần trăm |
 | đối thủ B | đối thủ Bê |
 | `ERR_AI_LIMIT_REACHED` | **không đọc** – đây là mã lỗi hiện trên màn hình, câu sau đã nói đủ ý |
-| Commit | chốt quyết định |
+| Commit / commit | chốt quyết định (viết hoa hay viết thường đều đọc như nhau) |
 | Branding Premium | gói thương hiệu cao cấp |
 | Brand Loyalty | độ trung thành thương hiệu |
+| TP. | Thành phố |
+| TOP 1 | tốp một |
+| → (mũi tên giữa các tỉnh) | rồi đến |
+| ≈ | khoảng |
+| & | và |
 
-### 28 câu cần đọc khác
+**Không cần đổi:** `AI` đọc như thường ngày ("ây-ai"); `BizOn`, `BizOn Go Global`,
+`Lumina`, `Bật Nghiệp` là tên riêng, đọc nguyên văn; câu tiếng Pháp
+*"Je m'appelle Hương"* trong `chat-02` là cố ý, giữ nguyên.
+
+### 34 câu cần đọc khác
 
 | Tên file | Chỗ phải đổi | Đọc như thế này (phần in đậm là chỗ đổi) |
 |---|---|---|
@@ -198,13 +220,19 @@ kinh doanh người học cần làm quen. Chỉ phần đọc mới thay bằng
 | `voice/chat-03.mp3` | `ROI` → **tỷ suất lợi nhuận trên vốn đầu tư** · `tr₫` → **triệu đồng** · `%` → **phần trăm** | Đã giải ngân khoản vay 300 **triệu đồng**! Lưu ý: lãi 5 **phần trăm**/vòng (15 **triệu đồng**) sẽ trừ vào lợi nhuận mỗi vòng còn lại. Hãy dùng vốn hiệu quả để **tỷ suất lợi nhuận trên vốn đầu tư** vượt chi phí vốn nhé. |
 | `voice/chat-04.mp3` | `%` → **phần trăm** | Đã kích hoạt phương án cắt giảm chi phí – chi phí cố định vòng sau giảm 15 **phần trăm**. Cẩn thận đừng cắt vào các khoản đầu tư dài hạn! |
 | `voice/chat-06.mp3` | `OEE` → **hiệu suất thiết bị tổng thể** · `%` → **phần trăm** | Đã lên lịch bảo trì khẩn! **hiệu suất thiết bị tổng thể** sẽ cải thiện +3 **phần trăm** và tỷ lệ phế phẩm giảm ở vòng tới. 🔧 |
-| `voice/chat-07.mp3` | `ERR_AI_LIMIT_REACHED` → **bỏ, không đọc** · `Commit` → **chốt quyết định** | Bạn đã dùng hết lượt tư vấn của vòng này. Lượt sẽ làm mới sau khi **chốt quyết định** quyết định nhé! |
-| `voice/chat-08.mp3` | `ERR_AI_LIMIT_REACHED` → **bỏ, không đọc** · `Commit` → **chốt quyết định** | Lumina đang bận! Bạn đã dùng hết lượt tư vấn của vòng này. Lượt hỏi sẽ được làm mới sau khi commit quyết định. |
+| `voice/chat-07.mp3` | `ERR_AI_LIMIT_REACHED` → **bỏ, không đọc** · `Commit quyết định` → **chốt quyết định** | Bạn đã dùng hết lượt tư vấn của vòng này. Lượt sẽ làm mới sau khi **chốt quyết định** nhé! |
+| `voice/chat-08.mp3` | `ERR_AI_LIMIT_REACHED` → **bỏ, không đọc** · `commit quyết định` → **chốt quyết định** | Lumina đang bận! Bạn đã dùng hết lượt tư vấn của vòng này. Lượt hỏi sẽ được làm mới sau khi **chốt quyết định**. |
 | `voice/topic-01.mp3` | `k₫` → **nghìn đồng** · `%` → **phần trăm** | Vòng này là Chiến tranh giá – khách cực nhạy về giá. Nếu bạn giữ giá trên {…} **nghìn đồng**, thị phần có thể rơi mạnh. Cân nhắc giảm 10–15 **phần trăm** và bù bằng sản lượng. |
 | `voice/topic-02.mp3` | `%` → **phần trăm** | Vòng trước bạn hụt {…} đơn vì thiếu hàng – cầu đang vượt cung. Nếu tăng giá 5–10 **phần trăm**, lợi nhuận biên sẽ cải thiện mà thị phần giảm không đáng kể. |
 | `voice/topic-03.mp3` | `k₫` → **nghìn đồng** · `%` → **phần trăm** | Giá tham chiếu thị trường là {…} **nghìn đồng**. Nếu giảm 10 **phần trăm** giá, mô hình dự báo thị phần tăng ~3–4 điểm nhưng biên lợi nhuận mỏng đi – chỉ nên làm khi sản lượng đủ lớn. |
 | `voice/topic-04.mp3` | `R&D Upgrade` → **gói nâng cấp nghiên cứu và phát triển** · `Marketing Boost` → **gói đẩy mạnh marketing** · `%` → **phần trăm** | Nếu tăng ngân sách Marketing thêm 15 **phần trăm**, thị phần dự kiến đạt {…} **phần trăm** ở vòng sau.{…} Khuyến nghị: **gói đẩy mạnh marketing**, **gói nâng cấp nghiên cứu và phát triển**. |
 | `voice/topic-05.mp3` | `%` → **phần trăm** | ⚠️ Cảnh báo đỏ: {…} – {…} Nếu không giữ ít nhất 15 **phần trăm** vốn dự phòng, đội có thể âm dòng tiền. Cân nhắc mua "Khiên bảo hiểm" trong Cửa hàng. |
+| `voice/topic-06.mp3` | `commit` → **chốt quyết định** | Rủi ro chính vòng này: {…}. {…} Hãy điều chỉnh cơ cấu chi phí trước khi **chốt quyết định**. |
+| `voice/quote-06.mp3` | `commit` → **chốt quyết định** | Đừng sợ **chốt quyết định** sai – hãy sợ việc không rút ra được bài học nào. |
+| `voice/intro-02.mp3` | `₫` → **đồng** · `150.000₫` → **150 nghìn đồng** · `&` → **và** | Bạn điều hành một xưởng đồ chơi đất sét thủ công tại Cần Thơ, vốn khởi điểm 500 triệu **đồng**. Sản phẩm chủ lực: «Bộ linh vật đất sét Việt» – dòng quà tặng **và** đồ sưu tầm, giá tham chiếu **150 nghìn đồng** một bộ. Tên doanh nghiệp chính là tên đội bạn đặt khi đăng nhập! |
+| `voice/intro-03.mp3` | `TP.` → **Thành phố** · `→` → **rồi đến** · `≈` → **khoảng** | Mỗi vòng là một quý kinh doanh tại một tỉnh/thành trên bản đồ mới: Cần Thơ **rồi đến Thành phố** Hồ Chí Minh **rồi đến** Khánh Hòa **rồi đến** Đà Nẵng **rồi đến** Thanh Hóa **rồi đến** Hà Nội. Đội thắng vòng nào sẽ cắm cờ lên tỉnh đó! Mỗi vòng 5–7 phút, cả ván **khoảng** 30–45 phút. |
+| `voice/intro-04.mp3` | `CEO` → **Giám đốc Điều hành** · `CFO` → **Giám đốc Tài chính** · `CMO` → **Giám đốc Marketing** · `COO` → **Giám đốc Vận hành** · `SEC` → **Thư ký** | **Giám đốc Điều hành** chèo lái chiến lược, **Giám đốc Tài chính** giữ két sắt, **Giám đốc Marketing** đánh chiếm thị trường, **Giám đốc Vận hành** vận hành xưởng, **Thư ký** ghi biên bản – bên cạnh cố vấn Lumina AI và thầy Tú Phan. |
+| `voice/intro-06.mp3` | `TOP 1` → **tốp một** | Cắm nhiều cờ nhất, đạt **tốp một** thị phần Việt Nam và nhận chứng nhận hoàn thành. Sẵn sàng Bật Nghiệp? |
 
 > Câu có `{…}`: đọc với một con số bất kỳ, ví dụ *"Tiền mặt chỉ còn 120 triệu đồng"*.
 > Hai mươi câu còn lại trong tài liệu không chứa viết tắt hay ký hiệu nào – đọc nguyên văn.
