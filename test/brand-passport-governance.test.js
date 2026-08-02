@@ -114,7 +114,7 @@ function check(condition, message) {
   check(requests.deleteBody.p_delete_token === body.p_delete_token, 'RPC xóa dùng đúng deletion token');
 
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.click('#data-open');
+  await page.evaluate(() => window.BizOnGovernance.open(true));
   const mobile = await page.evaluate(() => ({
     width: innerWidth,
     scrollWidth: document.documentElement.scrollWidth,
