@@ -1,0 +1,53 @@
+{
+  "schema": "bizon-approved-existing-assets-v1",
+  "policy": {
+    "source": "existing-repository-assets-only",
+    "preserve_originals": true,
+    "allow_generated_replacements": false,
+    "exclude_food_truck": true
+  },
+  "assets": {
+    "huong_lumina_classroom": {
+      "path": "assets/illustrations/lumina-holo-classroom.webp",
+      "classification": "founder-lumina-scene",
+      "allowed_pages": ["index.html", "app/release.html", "giang-vien.html", "lumina.html"],
+      "vi_alt": "Hương trong vai Lumina hướng dẫn lớp học mô phỏng kinh doanh",
+      "en_alt": "Hương as Lumina guiding a business simulation classroom"
+    },
+    "tu_phan_lecture_hall": {
+      "path": "assets/illustrations/anh-tu-lecture-hall.webp",
+      "classification": "academic-advisor-scene",
+      "allowed_pages": ["index.html", "app/release.html", "giang-vien.html", "gioi-thieu.html"],
+      "vi_alt": "Tú Phan trong không gian giảng dạy và cố vấn học thuật",
+      "en_alt": "Tú Phan in an academic teaching and advisory setting"
+    },
+    "lumina_office_present": {
+      "path": "assets/character/lumina-office-present.webp",
+      "classification": "lumina-advisor-character",
+      "allowed_pages": ["app/command-center.html", "app/aibis.html", "lumina.html", "brand-passport-learning.html"],
+      "vi_alt": "Lumina trình bày gợi ý phản tư cho người học",
+      "en_alt": "Lumina presenting reflective guidance to the learner"
+    },
+    "lumina_ao_dai": {
+      "path": "assets/character/lumina-ao-dai.webp",
+      "classification": "lumina-vietnamese-character",
+      "allowed_pages": ["game.html", "lumina.html", "gioi-thieu.html", "thu-vien.html"],
+      "vi_alt": "Lumina trong trang phục áo dài trắng của hệ sinh thái BizOn",
+      "en_alt": "Lumina in the white ao dai of the BizOn ecosystem"
+    },
+    "bizon_music_studio": {
+      "path": "assets/illustrations/phong-thu-bizon.webp",
+      "classification": "music-studio-scene",
+      "allowed_pages": ["am-nhac.html", "index.html"],
+      "vi_alt": "Không gian phòng thu âm nhạc BizOn",
+      "en_alt": "BizOn music studio environment"
+    },
+    "bizon_music_duo": {
+      "path": "assets/character/bizon-duo-phong-thu-cut.webp",
+      "classification": "music-duo-character",
+      "allowed_pages": ["am-nhac.html", "index.html"],
+      "vi_alt": "Đôi nhân vật BizOn biểu diễn trong phòng thu",
+      "en_alt": "BizOn character duo performing in the studio"
+    }
+  }
+}
