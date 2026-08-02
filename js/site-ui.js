@@ -4091,6 +4091,22 @@
 "Bản dựng thứ hai của cùng ca khúc · 2:47 · hòa âm khác",
 "Second take of the same song · 2:47 · different arrangement"
 ],
+[
+"Remix «Mekong Sunfire 2» 🎧",
+"«Mekong Sunfire 2» remix 🎧"
+],
+[
+"Đề xuất nghe · 3:23 · bản dài hơn trong hai bản Mekong Sunfire",
+"Recommended listen · 3:23 · the longer of the two Mekong Sunfire cuts"
+],
+[
+"Remix «Mekong Sunfire»",
+"«Mekong Sunfire» remix"
+],
+[
+"Bản phối Mekong Sunfire · 3:18",
+"Mekong Sunfire arrangement · 3:18"
+],
 ]);
   var SPECIAL = [
     { page: 'giai-phap', sel: '#gp-oss-note', en: "Free to use at the official URL for non-commercial teaching – no account needed. The source is published for academic transparency and verification; commercial exploitation rights remain with BizOn (see <a href=\"https://github.com/thuyhuongctu/BizOn/blob/main/LICENSE\" target=\"_blank\" rel=\"noopener\" class=\"underline font-bold\">LICENSE</a>)." },
