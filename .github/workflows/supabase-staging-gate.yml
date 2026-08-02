@@ -1,0 +1,95 @@
+name: BizOn Supabase Staging Gate
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/supabase-staging-gate.yml'
+      - 'scripts/release/verify-supabase-staging.mjs'
+      - 'test/supabase-staging-gate.test.js'
+      - 'docs/learning/BIZON_SUPABASE_STAGING_GATE_V1.md'
+      - 'supabase/migrations/20260802000000_bp_learning_traces.sql'
+  workflow_dispatch:
+    inputs:
+      confirm_project_ref:
+        description: 'Type the protected Supabase staging project ref exactly.'
+        required: true
+        type: string
+      apply_migration:
+        description: 'Apply the canonical Learning Trace migration before smoke tests.'
+        required: true
+        default: false
+        type: boolean
+      run_retention_purge:
+        description: 'Create an expired fixture and verify administrator purge.'
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  staging-contract:
+    name: staging safety contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Validate workflow and verifier safety rules
+        run: |
+          node --check scripts/release/verify-supabase-staging.mjs
+          node test/supabase-staging-gate.test.js
+
+  staging-smoke:
+    name: protected staging migration and smoke test
+    if: github.event_name == 'workflow_dispatch'
+    needs: staging-contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: supabase-staging
+    concurrency:
+      group: bizon-supabase-staging
+      cancel-in-progress: false
+    env:
+      SUPABASE_STAGING_PROJECT_REF: ${{ vars.SUPABASE_STAGING_PROJECT_REF }}
+      SUPABASE_STAGING_URL: ${{ vars.SUPABASE_STAGING_URL }}
+      SUPABASE_STAGING_DATABASE_URL: ${{ secrets.SUPABASE_STAGING_DATABASE_URL }}
+      SUPABASE_STAGING_ANON_KEY: ${{ secrets.SUPABASE_STAGING_ANON_KEY }}
+      SUPABASE_STAGING_INSTRUCTOR_KEY: ${{ secrets.SUPABASE_STAGING_INSTRUCTOR_KEY }}
+      CONFIRM_PROJECT_REF: ${{ inputs.confirm_project_ref }}
+      APPLY_MIGRATION: ${{ inputs.apply_migration }}
+      RUN_RETENTION_PURGE: ${{ inputs.run_retention_purge }}
+      BIZON_STAGING_REPORT_DIR: artifacts/supabase-staging
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install PostgreSQL client
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes postgresql-client
+
+      - name: Verify protected Supabase staging project
+        run: node scripts/release/verify-supabase-staging.mjs
+
+      - name: Upload sanitized staging report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bizon-supabase-staging-report
+          path: artifacts/supabase-staging
+          if-no-files-found: ignore
+          retention-days: 30
