@@ -138,7 +138,10 @@ async function captureFunctional(name, viewport, deviceScaleFactor = 1) {
   await page.fill('#bi-class-code', 'QA-CLASS');
   await page.fill('#bi-instructor-key', 'QA-INSTRUCTOR-SECRET');
   await page.click('#bi-connect');
-  await page.waitForFunction(() => document.querySelector('#bi-status')?.textContent.includes('Đang theo dõi lớp'));
+  await page.waitForFunction(() => {
+    const status = document.querySelector('#bi-status');
+    return status?.dataset.state === 'success' && status.textContent.includes('lớp QA-CLASS');
+  });
 
   if (!await page.locator('#bi-leaderboard-rows').innerText().then(text => text.includes('EcoFuture Team'))) {
     throw new Error(`${name}: leaderboard fixture did not render`);
