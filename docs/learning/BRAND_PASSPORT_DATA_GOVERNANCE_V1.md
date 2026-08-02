@@ -19,177 +19,112 @@ Tài liệu này là đặc tả kỹ thuật–quản trị của pilot, không
 
 ## 2. Hai chế độ dữ liệu
 
-### Local-only — mặc định
+### Local-only
 
-- Decision Trace và reflection lưu trong `localStorage` trên thiết bị hiện tại.
-- Không có request ghi dữ liệu lên Supabase.
+- Là chế độ mặc định.
+- Decision Trace và reflection chỉ lưu trên thiết bị người học.
+- Không yêu cầu mã lớp.
+- Không gọi API gửi dữ liệu.
 - Người học vẫn sử dụng đầy đủ Coach–Critic–Reflection.
-- Người học có thể xuất audit JSON hoặc xóa trace cục bộ.
 
-### Server opt-in
+### Classroom/pilot opt-in
 
-Chỉ kích hoạt khi đồng thời có:
+Chỉ kích hoạt sau khi người học:
 
-- ít nhất một Decision Trace hoàn tất;
-- mã lớp hợp lệ;
-- checkbox consent được đánh dấu;
-- hành động bấm **Gửi trace về lớp**.
+- nhập mã lớp;
+- chủ động đánh dấu consent;
+- bấm gửi trace;
+- nhận biên nhận xóa.
 
-Không được suy diễn việc mở trang, chơi game hoặc nhập reflection là consent gửi dữ liệu.
+Consent học tập và consent nghiên cứu phải tách riêng. Không đồng ý nghiên cứu không được làm mất quyền tham gia hoạt động lớp học.
 
-## 3. Dữ liệu được gửi
+## 3. Dữ liệu tối thiểu
 
-| Trường | Mục đích |
-|---|---|
-| `class_code` | Định tuyến dữ liệu về đúng lớp |
-| `team_alias` | Bí danh/mã nhóm, không yêu cầu tên thật |
-| `session_id` | Liên kết các lần cập nhật của cùng phiên |
-| `game_seed` | Tái lập điều kiện kịch bản |
-| `schema_version` | Kiểm soát cấu trúc audit |
-| `learning_layer_version` | Truy vết phiên bản phần mềm |
-| `consent_version`, `consented_at` | Chứng minh phiên bản thông báo và thời điểm opt-in |
-| `trace_json` | Decision, consequence, explanation, reflection, CLO và audit metadata |
-| `client_ts` | Hỗ trợ đối chiếu thời gian client/server |
+### Session
 
-Không thu trong V1:
+- session_id;
+- class_code;
+- team_id hoặc bí danh;
+- game_seed;
+- consent_version;
+- consent_scope;
+- consented_at;
+- retention_until;
+- learning_layer_version;
+- engine_source.
 
-- họ tên bắt buộc;
-- email;
+### Decision record
+
+- round;
+- decision_json;
+- outcome_before_json;
+- outcome_after_json;
+- outcome_delta_json;
+- coach_text;
+- critic_text;
+- student_reflection;
+- learning_outcomes;
+- `engine_outcome_source = deterministic`;
+- `ai_changed_score = false`;
+- audit_timestamp;
+- schema_version.
+
+## 4. Không thu thập
+
+- họ tên đầy đủ;
+- email cá nhân;
 - số điện thoại;
-- vị trí chính xác;
-- danh bạ;
-- dữ liệu sinh trắc học;
-- nội dung ngoài phạm vi Learning Edition.
+- địa chỉ;
+- ngày sinh;
+- dữ liệu sức khỏe;
+- dữ liệu chính trị, tôn giáo hoặc sinh trắc học;
+- nội dung ngoài mục tiêu học tập đã công bố.
 
-## 4. Mục đích sử dụng
+## 5. Consent scopes
 
-Dữ liệu pilot chỉ nên được sử dụng cho các mục đích đã thông báo và được phê duyệt, ví dụ:
+### classroom_learning
 
-- debrief trong lớp;
-- đánh giá cách người học giải thích trade-off;
-- kiểm tra tính khả dụng của Learning Edition;
-- nghiên cứu giáo dục đã có protocol/consent phù hợp.
+Dữ liệu được dùng để giảng viên phản hồi, debrief và đánh giá quá trình học tập trong lớp đã chỉ định.
 
-Không dùng reflection để:
+### research_optional
 
-- AI tự động cho điểm cuối cùng;
-- suy luận đặc điểm nhạy cảm;
-- quảng cáo cá nhân hóa;
-- chia sẻ cho bên thứ ba ngoài phạm vi được thông báo.
-
-## 5. Consent
-
-Consent V1 có mã:
-
-```text
-bp-learning-consent-v1
-```
-
-Thông báo trong giao diện phải nêu rõ:
-
-- gửi dữ liệu là tự nguyện;
-- không gửi vẫn chơi được;
-- loại dữ liệu dự kiến gửi;
-- thời hạn lưu tối đa 180 ngày;
-- quyền xóa bằng biên nhận;
-- reflection không dùng để AI chấm điểm.
-
-Nếu mục đích, dữ liệu, retention hoặc đối tượng truy cập thay đổi, phải tăng phiên bản consent và yêu cầu consent lại.
+Consent nghiên cứu phải tách riêng, có thông tin nghiên cứu cụ thể, cơ sở đạo đức và quyền rút lui. Không chọn vẫn được tham gia hoạt động lớp học.
 
 ## 6. Retention
 
-- Mỗi bản ghi có `retention_until = created_at + 180 days`.
-- Cập nhật trace không kéo dài thời hạn lưu ban đầu.
-- RPC `bizon_purge_expired_learning_traces()` xóa vật lý dữ liệu hết hạn.
-- Production cần cấu hình cron/service-role gọi purge định kỳ.
-- Không được coi việc có trường `retention_until` là đủ nếu chưa có lịch purge hoạt động.
+- Pilot UI công bố: 180 ngày.
+- Giới hạn kỹ thuật tối đa: 365 ngày.
+- Hết hạn phải xóa session và toàn bộ decision records liên quan bằng cascade.
+- Cần cấu hình Supabase Cron hoặc scheduler được phê duyệt.
 
 ## 7. Quyền xóa
 
-Khi gửi lần đầu, client tạo:
-
-- `trace_id` — mã bản ghi;
-- `delete_token` — khóa bí mật 256-bit.
-
-Server chỉ lưu SHA-256 của token. Client tạo **deletion receipt JSON** chứa token gốc.
-
-Xóa sớm qua RPC:
-
-```text
-bizon_delete_learning_trace(trace_id, delete_token)
-```
-
-Ai giữ đúng biên nhận có thể xóa bản ghi nhưng không thể đọc dữ liệu bằng biên nhận đó.
-
-### Cảnh báo vận hành
-
-- Không ghi deletion token vào `trace_json`.
-- Không log token ở analytics hoặc error reporting.
-- Người học cần tải/giữ biên nhận nếu muốn xóa từ thiết bị khác.
-- Nếu mất biên nhận, quy trình hỗ trợ thủ công phải được đơn vị pilot quy định trước.
+Người học nhận một deletion token ngẫu nhiên. Chỉ hash của token được lưu trên server. Yêu cầu xóa phải xác minh token bằng hàm security-definer; không cho anonymous client xóa tùy ý theo session_id.
 
 ## 8. Phân quyền
 
-### Người học/anon
+| Vai trò | Insert | Read | Update | Delete |
+|---|---:|---:|---:|---:|
+| Anonymous learner | Có, qua policy/RPC giới hạn | Không | Không | Chỉ qua RPC có deletion token |
+| Instructor | Không trực tiếp | Qua RPC + khóa lớp | Không trực tiếp | Không |
+| Service role | Có | Có | Có | Có, cho retention và yêu cầu hợp lệ |
 
-Được:
+## 9. Migration
 
-- gọi RPC submit khi payload hợp lệ và có consent;
-- cập nhật đúng `trace_id` khi cung cấp đúng deletion token;
-- xóa đúng bản ghi khi cung cấp đúng deletion token.
+- `20260802000000_bp_learning_traces.sql`: schema trace pilot hiện có.
+- `20260802010000_bp_learning_governance.sql`: lớp session, record và deletion governance bổ sung.
 
-Không được:
+Mỗi migration phải có version timestamp duy nhất. Không dùng hai file cùng tiền tố thời gian vì Supabase có thể coi chúng là cùng một migration version.
 
-- `SELECT` trực tiếp bảng;
-- liệt kê bản ghi;
-- đọc trace của nhóm khác;
-- sửa/xóa khi không có token.
+## 10. Cổng phát hành
 
-### Giảng viên
+Không bật gửi dữ liệu thật trước khi hoàn tất:
 
-Giảng viên đọc qua:
-
-```text
-bizon_bp_learning_traces(class_code, instructor_key)
-```
-
-RPC chỉ trả dữ liệu khi `bizon_check_key(instructor_key)` hợp lệ và mã lớp khớp.
-
-### Service role
-
-Chỉ dùng ở môi trường server để:
-
-- purge dữ liệu hết hạn;
-- backup/incident response theo quy trình được phê duyệt.
-
-Không đưa service-role key vào JavaScript hoặc repository công khai.
-
-## 9. Ràng buộc kỹ thuật
-
-Server từ chối payload nếu:
-
-- mã lớp không hợp lệ;
-- consent version sai hoặc thiếu thời điểm consent;
-- không có `records` dạng mảng;
-- số record ngoài 1–6 quý;
-- payload vượt 250 KB;
-- trace không khai báo `data_governance.ai_scoring = false`;
-- deletion token quá ngắn;
-- cập nhật `trace_id` hiện có nhưng token không khớp.
-
-Bảng bật RLS và không cấp quyền trực tiếp cho `anon`/`authenticated`; client chỉ thao tác qua RPC `SECURITY DEFINER` đã giới hạn.
-
-## 10. Checklist trước lớp thật
-
-- [ ] Protocol/purpose được phê duyệt bởi đơn vị phụ trách.
-- [ ] Consent wording VI/EN được duyệt.
-- [ ] Xác định data controller và đầu mối liên hệ.
-- [ ] Cấu hình migration trên Supabase staging.
-- [ ] Kiểm thử thật submit, cập nhật cùng trace ID và deletion receipt.
-- [ ] Kiểm tra instructor key và phân lớp.
-- [ ] Cấu hình purge job định kỳ và diễn tập purge.
-- [ ] Kiểm tra Android thật, Safari/iOS và mạng yếu.
-- [ ] Không có service-role key trong client.
-- [ ] Có quy trình xử lý khi người học mất deletion receipt.
-- [ ] Chốt thời điểm đóng pilot và xuất báo cáo tổng hợp.
-- [ ] Chỉ sau các bước trên mới cân nhắc gắn Pilot Shell vào navigation production.
+- duyệt consent VI/EN;
+- xác định data controller;
+- xác định retention owner và lịch xóa;
+- kiểm thử RLS/RPC trên Supabase staging;
+- kiểm thử deletion receipt từ thiết bị khác;
+- kiểm thử instructor access chỉ giới hạn đúng class_code;
+- đánh giá bảo mật khóa giảng viên;
+- phê duyệt nghiên cứu nếu dữ liệu được dùng ngoài hoạt động dạy học.
