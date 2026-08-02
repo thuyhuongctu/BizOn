@@ -15,6 +15,8 @@ Mục tiêu là tạo cơ chế thu nhận Decision Trace phục vụ giảng d�
 
 Tài liệu này là đặc tả kỹ thuật–quản trị của pilot, không thay thế phê duyệt đạo đức nghiên cứu, quy định của cơ sở đào tạo hoặc tư vấn pháp lý.
 
+> **Trạng thái hiện tại:** migration và client opt-in mới nằm trong Draft PR. Không xem đây là hệ thống thu dữ liệu production cho đến khi migration được review, áp dụng trên staging, kiểm thử submit/delete/purge và có phê duyệt triển khai.
+
 ## 2. Hai chế độ dữ liệu
 
 ### Local-only — mặc định
@@ -182,11 +184,12 @@ Bảng bật RLS và không cấp quyền trực tiếp cho `anon`/`authenticate
 - [ ] Protocol/purpose được phê duyệt bởi đơn vị phụ trách.
 - [ ] Consent wording VI/EN được duyệt.
 - [ ] Xác định data controller và đầu mối liên hệ.
-- [ ] Cấu hình migration trên đúng Supabase project.
+- [ ] Cấu hình migration trên Supabase staging.
+- [ ] Kiểm thử thật submit, cập nhật cùng trace ID và deletion receipt.
 - [ ] Kiểm tra instructor key và phân lớp.
-- [ ] Cấu hình purge job định kỳ.
-- [ ] Diễn tập submit, update, delete và purge.
+- [ ] Cấu hình purge job định kỳ và diễn tập purge.
 - [ ] Kiểm tra Android thật, Safari/iOS và mạng yếu.
 - [ ] Không có service-role key trong client.
 - [ ] Có quy trình xử lý khi người học mất deletion receipt.
 - [ ] Chốt thời điểm đóng pilot và xuất báo cáo tổng hợp.
+- [ ] Chỉ sau các bước trên mới cân nhắc gắn Pilot Shell vào navigation production.
