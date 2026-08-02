@@ -23,15 +23,25 @@ assert.match(androidManifest, /android:exported="true"/);
 assert.match(androidManifest, /android\.support\.customtabs\.trusted\.DEFAULT_URL/);
 assert.match(androidManifest, /android:host="thuyhuongctu\.github\.io"/);
 assert.match(androidManifest, /android:pathPrefix="\/BizOn\/"/);
-assert.match(strings, /https:\/\/thuyhuongctu\.github\.io\/BizOn\/app\//);
+assert.match(strings, /https:\/\/thuyhuongctu\.github\.io\/BizOn\/app\/release\.html/);
 
-assert.equal(webManifest.id, '../');
-assert.equal(webManifest.start_url, './index.html');
-assert.equal(webManifest.scope, '../');
+assert.equal(webManifest.id, './release.html');
+assert.equal(webManifest.start_url, './release.html');
+assert.equal(webManifest.scope, './');
 assert.equal(webManifest.display, 'standalone');
+assert.equal(webManifest.shortcuts.find(item => item.short_name === 'Passport').url, './brand-passport.html');
 assert.equal(webManifest.shortcuts.find(item => item.short_name === 'AIBIS').url, './aibis.html');
 assert.equal(assetlinksTemplate[0].target.package_name, 'vn.bizon.simulation');
 assert.deepEqual(assetlinksTemplate[0].target.sha256_cert_fingerprints, ['REPLACE_WITH_PLAY_APP_SIGNING_SHA256']);
 assert.equal(fs.existsSync('.well-known/assetlinks.json'), false, 'Do not publish assetlinks.json with a fake fingerprint');
 
-console.log('Android TWA contract passed');
+for (const path of ['app/release.html', 'app/brand-passport.html', 'brand-passport-learning.html']) {
+  assert.equal(fs.existsSync(path), true, `${path} must exist`);
+}
+
+const release = fs.readFileSync('app/release.html', 'utf8');
+assert.match(release, /\.\/brand-passport\.html/);
+assert.match(release, /Local-only/);
+assert.match(release, /serviceWorker\.register\('\.\/sw\.js'/);
+
+console.log('Android TWA release contract passed');
