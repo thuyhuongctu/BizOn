@@ -12,17 +12,29 @@
 5. Keep deterministic simulation, model cards, research evidence, and Zenodo metadata independent from visual presentation changes.
 6. Every public image must have meaningful Vietnamese and English alternative text where the page is bilingual.
 
-## 2. Confirmed preserved inventory
+## 2. Confirmed repository inventory
 
-The repository IP inventory records:
+The automated manifest generated from the current repository records **122 image assets**:
 
-- 93 character images across six grouped folders;
-- 21 illustration and background assets;
-- 3 brand-icon assets;
-- 2 merchandise images;
-- character sheets `VN-BIZON-BP-CAST-001` and `VN-HƯƠNG-CLAY-001`;
-- a consistent claymorphism design system;
-- 21 Brand Passport character assets standardized to 760 × 1100 px.
+| Classification | Count |
+|---|---:|
+| Character library | 53 |
+| Lumina | 25 |
+| Tú Phan | 19 |
+| Other illustrations | 13 |
+| Brand assets | 5 |
+| Vietnam-map assets | 4 |
+| Music assets | 2 |
+| Game / character-sheet asset | 1 |
+
+The current scan found one exact duplicate group:
+
+- `assets/character/anh-tu-ao-dai-cut.webp`
+- `assets/character/anh-tu-ao-dai-smile-cut.webp`
+
+Both files remain preserved until usage references and IP records are reviewed. No original is deleted automatically.
+
+The repository IP inventory additionally records the character sheets `VN-BIZON-BP-CAST-001` and `VN-HƯƠNG-CLAY-001`, a consistent claymorphism design system, and 21 Brand Passport character assets standardized to 760 × 1100 px.
 
 ## 3. Priority assets and placements
 
@@ -30,15 +42,16 @@ The repository IP inventory records:
 |---|---|---|---|
 | `assets/illustrations/lumina-holo-classroom.webp` | Homepage founder/Lumina panel | Classroom and Lumina introduction | Preserve framing; use responsive `object-position`; do not redraw |
 | `assets/illustrations/anh-tu-lecture-hall.webp` | Homepage academic-advisor panel | Instructor Studio and About | Preserve identity and existing scene |
-| Lumina white-áo-dài character family | Lumina advisor, learning prompts, music and creative library | Empty states and onboarding | Use original poses; select by context rather than creating new poses |
-| Tú Phan white-áo-dài family | Academic advisor and instructor guidance | Institutional/partner pages | Preserve the eight known pose assets: welcome-cut, cheer, open-arms, point, present, tablet, think, welcome |
-| `assets/illustrations/arena-vietnam-map.png` | Bật Nghiệp domestic simulation | Homepage journey and Mekong Compass | Keep bilingual HTML label overlays outside the image |
-| `assets/illustrations/giai-dieu-bizon.jpg` | BizOn Music / Giai điệu BizOn | Explore Universe | Preserve existing cover and Lumina depiction |
-| Brand Passport cast assets | Brand Passport gameplay and cast library | Character library | Keep 760 × 1100 standard and shared baseline |
-| Game Bật Nghiệp scene assets | Main six-round simulation | Homepage product explanation | Use screenshots/scenes only when they reflect current gameplay |
-| AIBIS / Go Global assets | International-market simulation | Command Center and Store screenshots | Use project data and current engine outputs; avoid illustrative numbers presented as real-world claims |
-| Vietnam journey / regional map assets | Homepage ecosystem and domestic journey | About and academic context | Preserve Vietnamese/English overlays at all call sites |
-| Music duo and studio assets | BizOn Music | Creative Library | Keep as secondary Explore Universe content |
+| `assets/character/lumina-office-present.webp` | Command Center and AIBIS reflection guidance | Brand Passport learning layer | Keep Lumina visually separate from deterministic engine outcomes |
+| `assets/character/lumina-ao-dai.webp` and pose family | Startup Lab, Lumina pages and Vietnamese identity | Onboarding and character library | Select an existing pose by context; do not create replacement poses |
+| Tú Phan áo-dài family | Academic advisor and instructor guidance | Institutional/partner pages | Preserve the existing explain, point, smile, welcome and work variants |
+| `assets/illustrations/arena-vietnam-map-v2.webp` | Bật Nghiệp domestic simulation | Homepage journey and Mekong Compass | Keep bilingual HTML label overlays outside the image |
+| `assets/illustrations/giai-dieu-bizon.webp` | BizOn Music / Giai điệu BizOn | Explore Universe | Preserve existing cover and Lumina depiction |
+| `assets/illustrations/phong-thu-bizon.webp` | BizOn Music studio section | Creative Library | Preserve the original scene |
+| `assets/character/bizon-duo-phong-thu-cut.webp` | Music duo / authorship scene | Creative Library | Preserve the cut-out source and transparent edges |
+| `assets/illustrations/cast-sheet-brand-passport.webp` | Brand Passport character library | IP evidence and documentation | Preserve the character-sheet relationship and identifiers |
+| Team role assets under `assets/character/team/` | Startup Lab roles and collaboration | Command Center | Distinguish the legal-secretary role from the four C-Suite roles |
+| AIBIS / global-market assets | International-market simulation | Command Center and Store screenshots | Use current project data and engine outputs; avoid presenting illustrative values as real-world claims |
 
 ## 4. Page-by-page mapping
 
@@ -48,24 +61,24 @@ The repository IP inventory records:
 - Hero right: existing Tú Phan lecture-hall scene.
 - Main portals: Learner, Instructor, Organisation/Partner.
 - Ecosystem section: existing clay globe and module illustrations.
-- Vietnam journey: existing 3D Vietnam map.
+- Vietnam journey: `arena-vietnam-map-v2.webp`.
 - Product proof: current screenshots from Bật Nghiệp, AIBIS, Brand Passport, and Instructor Studio.
 
 ### Web/PWA landing (`app/release.html`)
 
-- Use compact derived variants from the same preserved homepage asset families.
+- Use the existing Hương/Lumina and Tú Phan scenes through the approved asset registry.
 - Do not duplicate full-resolution source files unnecessarily.
 - Keep Command Center and AIBIS screenshots tied to current build data.
 
 ### Command Center (`app/command-center.html`)
 
-- Lumina character: existing advisor asset or cropped existing scene.
-- Team/role portraits: existing role library only.
-- World map remains an interface visualization, not a substitute character illustration.
+- Use `lumina-office-present.webp` for reflection guidance.
+- Team/role portraits must come from the existing role library.
+- World-map interface visualization does not replace the character library.
 
 ### AIBIS (`app/aibis.html`)
 
-- Use existing market and globalisation visuals.
+- Use the existing Lumina advisor image only to support interpretation.
 - Keep country and entry-mode data sourced from the project registry and deterministic engine.
 - Do not add decorative images that obscure decision criteria.
 
@@ -82,13 +95,13 @@ The repository IP inventory records:
 
 ### Classroom / Instructor Studio
 
-- Use Tú Phan white-áo-dài assets for academic guidance.
+- Use existing Tú Phan áo-dài assets for academic guidance.
 - Use existing Lumina assets only for learning support and reflection prompts.
 - Do not imply that AI automatically grades students.
 
 ### Music and Creative Library
 
-- Preserve `giai-dieu-bizon.jpg` and the existing duo/studio images.
+- Preserve `giai-dieu-bizon.webp`, `phong-thu-bizon.webp` and `bizon-duo-phong-thu-cut.webp`.
 - Keep Arcade, Music, Character Library, and Merchandise in the secondary Explore Universe area.
 
 ## 5. Web optimization policy
@@ -138,10 +151,10 @@ Every mapped asset should eventually have:
 - Screenshots with unverified external branding or data.
 - Any asset whose ownership or licence is unclear.
 
-## 8. Next implementation slice
+## 8. Implementation sequence
 
-1. Enumerate repository image paths into a machine-readable manifest.
-2. Match existing assets to this page map.
+1. Generate and review the machine-readable repository manifest.
+2. Maintain an approved registry for public and app surfaces.
 3. Identify duplicates and unused files without deleting originals.
 4. Generate only technical derivatives from approved existing assets.
 5. Update homepage and app-shell references through a reviewable PR.
