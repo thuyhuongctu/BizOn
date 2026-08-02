@@ -1,0 +1,23 @@
+name: AIBIS App Workspace
+
+on:
+  pull_request:
+    paths:
+      - 'app/aibis.html'
+      - 'css/aibis-app.css'
+      - 'js/app-shell/aibis-workspace.js'
+      - 'test/aibis-app-workspace.test.js'
+      - '.github/workflows/aibis-app-workspace.yml'
+  push:
+    branches: ['feat/web-app-mobile-foundation']
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: node --check js/app-shell/aibis-workspace.js
+      - run: node test/aibis-app-workspace.test.js
