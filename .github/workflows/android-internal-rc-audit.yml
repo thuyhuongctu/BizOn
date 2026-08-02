@@ -12,6 +12,8 @@ on:
       - 'play-store/**'
       - 'release/**'
       - 'test/android-internal-rc-contract.test.js'
+      - 'test/android-production-release-contract.test.js'
+      - 'test/web-app-mobile-foundation.test.js'
       - '.github/workflows/android-internal-rc-audit.yml'
       - '.github/workflows/android-production-aab.yml'
   workflow_dispatch:
@@ -35,6 +37,12 @@ jobs:
 
       - name: Validate release candidate contract
         run: node test/android-internal-rc-contract.test.js
+
+      - name: Validate production signing contract
+        run: node test/android-production-release-contract.test.js
+
+      - name: Validate Web and PWA foundation contract
+        run: node test/web-app-mobile-foundation.test.js
 
       - name: Set up Java
         uses: actions/setup-java@v4
