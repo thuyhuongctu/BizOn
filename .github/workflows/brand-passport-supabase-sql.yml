@@ -1,0 +1,79 @@
+name: Brand Passport Supabase SQL
+
+on:
+  pull_request:
+    paths:
+      - 'supabase/migrations/**'
+      - 'test/sql/**'
+      - '.github/workflows/brand-passport-supabase-sql.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  postgres-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: bizon_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d bizon_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/bizon_test
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install PostgreSQL client
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes postgresql-client
+
+      - name: Reject duplicate migration versions
+        shell: bash
+        run: |
+          set -euo pipefail
+          versions="$(find supabase/migrations -maxdepth 1 -type f -printf '%f\n' \
+            | sed -nE 's/^([0-9]{14}).*/\1/p' \
+            | sort)"
+          duplicates="$(printf '%s\n' "$versions" | sed '/^$/d' | uniq -d)"
+          if [[ -n "$duplicates" ]]; then
+            echo "Duplicate Supabase migration versions:"
+            echo "$duplicates"
+            exit 1
+          fi
+
+      - name: Bootstrap Supabase roles and instructor-key contract
+        run: psql "$DATABASE_URL" -f test/sql/bp_learning_bootstrap.sql
+
+      - name: Execute canonical learning-trace migration
+        run: psql "$DATABASE_URL" -f supabase/migrations/20260802000000_bp_learning_traces.sql
+
+      - name: Run RLS RPC deletion and retention smoke tests
+        run: psql "$DATABASE_URL" -f test/sql/bp_learning_smoke.sql
+
+      - name: Verify one canonical Brand Passport learning schema
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -R --line-number --include='*.sql' \
+            -E 'create table if not exists (public\.)?bp_learning_(sessions|records|deletion_requests)' \
+            supabase/migrations; then
+            echo 'Competing Brand Passport learning schema detected.'
+            exit 1
+          fi
+          grep -q 'create table if not exists public.bp_learning_traces' \
+            supabase/migrations/20260802000000_bp_learning_traces.sql
