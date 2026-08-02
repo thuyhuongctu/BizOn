@@ -1,8 +1,9 @@
-const CACHE_NAME = 'bizon-app-shell-v3';
+const CACHE_NAME = 'bizon-app-shell-v4';
 const APP_SCOPE_PREFIX = '/BizOn/';
 const APP_SHELL = [
   './',
   './release.html',
+  './command-center.html',
   './index.html',
   './brand-passport.html',
   './aibis.html',
@@ -12,8 +13,11 @@ const APP_SHELL = [
   '../css/app-shell.css',
   '../css/aibis-app.css',
   '../css/bizon-fonts.css',
+  '../css/bizon-unified.css',
+  '../css/bizon-unified-overrides.css',
   '../js/app-shell/app-shell.js',
   '../js/app-shell/aibis-workspace.js',
+  '../js/app-shell/unified-app.js',
   '../js/app-shell/update-manager.js',
   '../assets/icons/icon-192.png',
   '../assets/icons/icon-512.png'

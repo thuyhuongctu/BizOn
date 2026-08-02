@@ -1,15 +1,16 @@
 {
   "schema_version": 1,
-  "web_version": "1.0.0",
-  "build_id": "2026.08.02.1",
-  "released_at": "2026-08-02T15:15:00+07:00",
+  "web_version": "1.1.0",
+  "build_id": "2026.08.02.2",
+  "released_at": "2026-08-02T16:08:00+07:00",
   "minimum_android_version": "1.0.0",
   "force_refresh": false,
-  "title": "BizOn đã sẵn sàng",
-  "summary": "Cải thiện cơ chế cập nhật giao diện và nội dung sau khi ứng dụng được phát hành.",
+  "title": "Giao diện BizOn thống nhất",
+  "summary": "Trang giới thiệu, Command Center và AIBIS được đưa về cùng một hệ thống thiết kế responsive.",
   "changes": [
-    "Kiểm tra phiên bản web mà không dùng dữ liệu cache.",
-    "Thông báo rõ khi có giao diện hoặc nội dung mới.",
-    "Giữ quyền chủ động cập nhật cho người dùng."
+    "Thiết kế lại trang giới thiệu sản phẩm và mô tả trực quan vòng lặp trò chơi.",
+    "Bổ sung Command Center với dữ liệu phiên EcoFuture Team vòng 4/8.",
+    "Đồng bộ AIBIS Global với nhận diện và điều hướng mới.",
+    "Giữ nguyên engine, Decision Trace, dữ liệu cục bộ và cơ chế cập nhật có kiểm soát."
   ]
 }
