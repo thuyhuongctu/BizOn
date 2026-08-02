@@ -12,7 +12,12 @@ on:
       - 'games.html'
       - 'lumina.html'
       - 'brand-passport*.html'
+      - 'css/bizon-existing-assets.css'
+      - 'js/app-shell/existing-assets.js'
+      - 'js/app-shell/unified-app.js'
+      - 'js/app-shell/app-shell.js'
       - 'scripts/assets/inventory-existing-assets.mjs'
+      - 'test/existing-assets-integration.test.js'
       - 'docs/design/EXISTING_ASSET_USAGE_MAP_V1.md'
       - '.github/workflows/existing-assets-inventory.yml'
   pull_request:
@@ -24,7 +29,12 @@ on:
       - 'games.html'
       - 'lumina.html'
       - 'brand-passport*.html'
+      - 'css/bizon-existing-assets.css'
+      - 'js/app-shell/existing-assets.js'
+      - 'js/app-shell/unified-app.js'
+      - 'js/app-shell/app-shell.js'
       - 'scripts/assets/inventory-existing-assets.mjs'
+      - 'test/existing-assets-integration.test.js'
       - 'docs/design/EXISTING_ASSET_USAGE_MAP_V1.md'
       - '.github/workflows/existing-assets-inventory.yml'
 
@@ -46,26 +56,26 @@ jobs:
       - name: Build existing-asset manifest
         run: node scripts/assets/inventory-existing-assets.mjs
 
+      - name: Validate integration contract
+        run: node test/existing-assets-integration.test.js
+
       - name: Validate preservation policy
         shell: bash
         run: |
           node <<'NODE'
           const fs = require('fs');
           const manifest = JSON.parse(fs.readFileSync('docs/design/existing-assets.manifest.json', 'utf8'));
+          const approved = JSON.parse(fs.readFileSync('assets/approved-existing-assets.json', 'utf8'));
           if (!manifest.assets.length) throw new Error('No image assets were found.');
           if (manifest.assets.some((asset) => asset.source !== 'existing-repository-asset')) {
             throw new Error('Manifest contains a non-existing-repository source.');
           }
-          const required = [
-            'assets/illustrations/lumina-holo-classroom.webp',
-            'assets/illustrations/anh-tu-lecture-hall.webp'
-          ];
-          for (const assetPath of required) {
-            if (!manifest.assets.some((asset) => asset.path === assetPath)) {
-              throw new Error(`Required preserved asset is missing: ${assetPath}`);
+          for (const item of Object.values(approved.assets)) {
+            if (!manifest.assets.some((asset) => asset.path === item.path)) {
+              throw new Error(`Approved asset is absent from generated manifest: ${item.path}`);
             }
           }
-          console.log(manifest.totals);
+          console.log({ manifest: manifest.totals, approved: Object.keys(approved.assets).length });
           NODE
 
       - name: Reject excluded assets from priority public pages
@@ -84,6 +94,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: bizon-existing-assets-manifest
-          path: docs/design/existing-assets.manifest.json
+          path: |
+            docs/design/existing-assets.manifest.json
+            assets/approved-existing-assets.json
           if-no-files-found: error
           retention-days: 30
