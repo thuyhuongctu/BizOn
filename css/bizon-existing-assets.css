@@ -1,0 +1,189 @@
+/* Existing BizOn visual assets only. Original source artwork is preserved. */
+
+.bz-existing-cast {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.bz-existing-person {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(150px, 0.7fr) minmax(0, 1fr);
+  min-height: 270px;
+  overflow: hidden;
+  border: 1px solid var(--bz-line, rgba(106, 163, 255, 0.16));
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 15% 15%, rgba(35, 200, 255, 0.14), transparent 34%),
+    linear-gradient(145deg, rgba(13, 30, 54, 0.94), rgba(5, 13, 27, 0.96));
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.24);
+}
+
+.bz-existing-person[data-role="academic"] {
+  background:
+    radial-gradient(circle at 15% 15%, rgba(255, 157, 61, 0.13), transparent 34%),
+    linear-gradient(145deg, rgba(31, 28, 37, 0.94), rgba(7, 13, 25, 0.96));
+}
+
+.bz-existing-person img {
+  width: 100%;
+  height: 100%;
+  min-height: 270px;
+  object-fit: cover;
+  object-position: center top;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.bz-existing-person-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 9px;
+  padding: 24px;
+}
+
+.bz-existing-person-copy small {
+  color: var(--bz-muted, #8ea1bb);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.bz-existing-person-copy h2,
+.bz-existing-person-copy h3 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(1.2rem, 2.1vw, 1.75rem);
+}
+
+.bz-existing-person-copy p {
+  margin: 0;
+  color: var(--bz-muted, #9baac0);
+  font-size: 0.85rem;
+  line-height: 1.65;
+}
+
+.bz-existing-badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 28px;
+  padding: 5px 10px;
+  border: 1px solid rgba(35, 200, 255, 0.22);
+  border-radius: 999px;
+  color: var(--bz-cyan, #23c8ff);
+  background: rgba(35, 200, 255, 0.08);
+  font-size: 0.67rem;
+  font-weight: 750;
+}
+
+.bz-existing-guide {
+  display: grid;
+  grid-template-columns: 82px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  margin: 0 0 16px;
+  padding: 10px;
+  border: 1px solid rgba(35, 200, 255, 0.18);
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(35, 200, 255, 0.09), rgba(118, 86, 255, 0.08));
+}
+
+.bz-existing-guide img {
+  width: 82px;
+  height: 104px;
+  object-fit: contain;
+  object-position: center bottom;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.bz-existing-guide figcaption {
+  color: var(--bz-muted, #9baac0);
+  font-size: 0.69rem;
+  line-height: 1.55;
+}
+
+.bz-existing-guide figcaption strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #fff;
+  font-size: 0.83rem;
+}
+
+.aibis-existing-guide {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  margin: 0 0 14px;
+  padding: 10px 12px;
+  border: 1px solid rgba(32, 215, 255, 0.18);
+  border-radius: 16px;
+  background: linear-gradient(145deg, rgba(32, 215, 255, 0.08), rgba(118, 86, 255, 0.06));
+}
+
+.aibis-existing-guide img {
+  width: 92px;
+  height: 120px;
+  object-fit: contain;
+  object-position: center bottom;
+  border-radius: 12px;
+}
+
+.aibis-existing-guide p {
+  margin: 0;
+  color: var(--muted, #9aacc2);
+  font-size: 0.72rem;
+  line-height: 1.6;
+}
+
+.aibis-existing-guide strong {
+  display: block;
+  margin-bottom: 5px;
+  color: #fff;
+  font-size: 0.84rem;
+}
+
+@media (max-width: 860px) {
+  .bz-existing-cast {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .bz-existing-person {
+    grid-template-columns: 1fr;
+  }
+
+  .bz-existing-person img {
+    height: 240px;
+    min-height: 240px;
+  }
+
+  .bz-existing-person-copy {
+    padding: 18px;
+  }
+
+  .bz-existing-guide,
+  .aibis-existing-guide {
+    grid-template-columns: 68px minmax(0, 1fr);
+  }
+
+  .bz-existing-guide img,
+  .aibis-existing-guide img {
+    width: 68px;
+    height: 88px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bz-existing-person,
+  .bz-existing-guide,
+  .aibis-existing-guide {
+    scroll-behavior: auto;
+  }
+}
