@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.BizOn" parent="android:style/Theme.Material.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:statusBarColor">@color/bizon_navy</item>
+        <item name="android:navigationBarColor">@color/bizon_navy</item>
+        <item name="android:colorAccent">@color/bizon_cyan</item>
+        <item name="android:windowBackground">@color/bizon_navy</item>
+    </style>
+
+    <style name="Theme.BizOn.Launcher" parent="android:style/Theme.Translucent.NoTitleBar">
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:statusBarColor">@color/bizon_navy</item>
+        <item name="android:navigationBarColor">@color/bizon_navy</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+</resources>
