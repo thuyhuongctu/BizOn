@@ -42,12 +42,13 @@ function check(condition, message) {
     version: window.BizOnLearning.version,
     schema: window.BizOnLearning.schema,
     status: document.getElementById('learning-status').textContent,
+    readyClass: document.documentElement.classList.contains('learning-ready'),
     iframeReady: Boolean(document.getElementById('bp-game').contentWindow.bpTest),
   }));
   check(/^bp-learning-v1\./.test(readiness.version), 'Learning Layer công bố version V1');
   check(readiness.schema === 'bizon.learning.trace.v1', 'Audit schema đúng phiên bản');
   check(readiness.iframeReady, 'Deterministic game engine vẫn truy cập được');
-  check(/Đã kết nối/.test(readiness.status), 'Giao diện báo đã kết nối');
+  check(readiness.readyClass && !/Không kết nối/.test(readiness.status), 'Giao diện xác nhận Learning Layer đã kết nối');
 
   await page.fill('#team-id', 'TEAM-04');
   await page.fill('#reflection-text', 'Chúng tôi chọn kênh số để giới hạn vốn ban đầu; rủi ro là hiểu biết thị trường còn thấp.');
