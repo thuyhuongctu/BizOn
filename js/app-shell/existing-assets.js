@@ -55,13 +55,14 @@
     document.head.appendChild(link);
   }
 
-  function createImage(key, className = '') {
+  function createImage(key, options = {}) {
     const image = document.createElement('img');
     image.src = assetUrl(key);
     image.alt = altFor(key);
     image.decoding = 'async';
-    image.loading = 'lazy';
-    image.className = className;
+    image.loading = options.loading || 'lazy';
+    if (options.fetchPriority) image.fetchPriority = options.fetchPriority;
+    image.className = options.className || '';
     image.dataset.existingAsset = key;
     return image;
   }
@@ -80,7 +81,7 @@
     const huong = document.createElement('article');
     huong.className = 'bz-existing-person';
     huong.dataset.role = 'learning';
-    huong.appendChild(createImage('huongLuminaClassroom'));
+    huong.appendChild(createImage('huongLuminaClassroom', { loading: 'eager', fetchPriority: 'high' }));
     huong.insertAdjacentHTML('beforeend', `
       <div class="bz-existing-person-copy">
         <span class="bz-existing-badge">Hương · Lumina</span>
@@ -94,7 +95,7 @@
     const tu = document.createElement('article');
     tu.className = 'bz-existing-person';
     tu.dataset.role = 'academic';
-    tu.appendChild(createImage('tuPhanLectureHall'));
+    tu.appendChild(createImage('tuPhanLectureHall', { loading: 'eager', fetchPriority: 'high' }));
     tu.insertAdjacentHTML('beforeend', `
       <div class="bz-existing-person-copy">
         <span class="bz-existing-badge">Tú Phan</span>
