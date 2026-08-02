@@ -85,7 +85,7 @@
           <td>${fmtNumber(row.submissions)}</td>
           <td>${fmtDateTime(row.last_submit)}</td>
         </tr>`).join('')
-      : '<tr><td colspan="9" class="bi-empty">Chưa có đội nào nộp kết quả hoặc khóa giảng viên chưa hợp lệ.</td></tr>';
+      : '<tr><td colspan="9" class="bi-empty">Chưa có đội nào nộp kết quả hoặc Mã lớp/Khóa giảng viên chưa đúng.</td></tr>';
   }
 
   function renderFeed() {
@@ -93,7 +93,7 @@
     if (!list) return;
     list.innerHTML = state.feed.length
       ? state.feed.map(item => `<li><strong>${fmtDateTime(item.created_at)}</strong> · Đội <b>${escapeHtml(item.team_name)}</b> khóa vòng ${Number(item.round_number || 0)} · lợi nhuận ${fmtNumber(item.net_profit)} ₫ · thị phần ${fmtPercent(item.share)}</li>`).join('')
-      : '<li>Chưa có lượt khóa vòng nào trong lớp này.</li>';
+      : '<li>Chưa có lượt khóa vòng nào; hãy kiểm tra lại Mã lớp và Khóa giảng viên nếu lớp đã nộp bài.</li>';
   }
 
   function renderBrandPassport() {
@@ -111,7 +111,7 @@
           <td>${fmtNumber(row.plays)}</td>
           <td>${fmtDateTime(row.last_play)}</td>
         </tr>`).join('')
-      : '<tr><td colspan="9" class="bi-empty">Chưa có kết quả Hộ Chiếu Thương Hiệu được nộp.</td></tr>';
+      : '<tr><td colspan="9" class="bi-empty">Chưa có kết quả Hộ Chiếu Thương Hiệu hoặc migration của mô-đun này chưa được áp dụng.</td></tr>';
   }
 
   function traceSummary(trace) {
@@ -140,7 +140,7 @@
             <td>${fmtDateTime(row.updated_at)}</td>
           </tr>`;
         }).join('')
-      : '<tr><td colspan="8" class="bi-empty">Chưa có Decision Trace còn trong thời hạn lưu giữ.</td></tr>';
+      : '<tr><td colspan="8" class="bi-empty">Chưa có Decision Trace còn trong thời hạn lưu giữ hoặc migration chưa được áp dụng.</td></tr>';
   }
 
   function renderSurveySummary() {
@@ -175,14 +175,21 @@
 
   async function refreshCore() {
     if (!state.classCode || !state.instructorKey) return;
-    const [leaderboard, feed, brandPassport, traces] = await Promise.all([
-      safeRpc('bizon_leaderboard', scopedArgs()),
-      safeRpc('bizon_feed', scopedArgs({ p_limit: 30 })),
+
+    // Leaderboard and feed are required. Network/backend errors must be visible to the instructor.
+    const [leaderboardResult, feedResult] = await Promise.all([
+      rpc('bizon_leaderboard', scopedArgs()),
+      rpc('bizon_feed', scopedArgs({ p_limit: 30 }))
+    ]);
+
+    // Brand Passport and Learning Trace are optional until their migrations are applied.
+    const [brandPassport, traces] = await Promise.all([
       safeRpc('bizon_bp_board', scopedArgs()),
       safeRpc('bizon_bp_learning_traces', scopedArgs())
     ]);
-    state.leaderboard = leaderboard;
-    state.feed = feed;
+
+    state.leaderboard = Array.isArray(leaderboardResult) ? leaderboardResult : [];
+    state.feed = Array.isArray(feedResult) ? feedResult : [];
     state.brandPassport = brandPassport;
     state.learningTraces = traces;
     renderLeaderboard();
@@ -192,6 +199,19 @@
     renderSummary();
     const updated = $('bi-updated');
     if (updated) updated.textContent = `Cập nhật ${new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}`;
+  }
+
+  async function refreshWithStatus({ quiet = false } = {}) {
+    try {
+      await refreshCore();
+      if (!quiet) {
+        setStatus(`Đã nhận phản hồi cho lớp ${state.classCode}. Nếu bảng trống, hãy kiểm tra lại Mã lớp và Khóa giảng viên.`, 'success');
+      }
+      return true;
+    } catch (error) {
+      setStatus(`Không tải được dữ liệu lớp (${error.message}). Hãy kiểm tra mạng, cấu hình backend và thử lại.`, 'error');
+      return false;
+    }
   }
 
   async function connect() {
@@ -206,12 +226,18 @@
     state.instructorKey = instructorKey;
     try { localStorage.setItem('bizon-instructor-class', classCode); } catch (_) {}
     $('bi-class-label').textContent = classCode;
-    $('bi-studio-content').classList.remove('bi-hidden');
     setStatus(`Đang kết nối lớp ${classCode}…`);
-    await refreshCore();
-    setStatus(`Đang theo dõi lớp ${classCode}. Khóa giảng viên chỉ giữ trong bộ nhớ của phiên hiện tại.`, 'success');
+
+    const connected = await refreshWithStatus();
+    if (!connected) {
+      $('bi-studio-content').classList.add('bi-hidden');
+      clearInterval(state.timer);
+      return;
+    }
+
+    $('bi-studio-content').classList.remove('bi-hidden');
     clearInterval(state.timer);
-    state.timer = setInterval(refreshCore, 10000);
+    state.timer = setInterval(() => refreshWithStatus({ quiet: true }), 10000);
   }
 
   async function loadSurveys() {
@@ -220,9 +246,14 @@
       return;
     }
     setStatus('Đang tải dữ liệu khảo sát…');
-    state.surveys = await safeRpc('bizon_survey_export', scopedArgs());
-    renderSurveySummary();
-    setStatus(`Đã tải ${state.surveys.length} phiếu khảo sát. Các chỉ số chỉ là mô tả nhanh, không phải kết luận nghiên cứu.`, 'success');
+    try {
+      const rows = await rpc('bizon_survey_export', scopedArgs());
+      state.surveys = Array.isArray(rows) ? rows : [];
+      renderSurveySummary();
+      setStatus(`Đã tải ${state.surveys.length} phiếu khảo sát. Các chỉ số chỉ là mô tả nhanh, không phải kết luận nghiên cứu.`, 'success');
+    } catch (error) {
+      setStatus(`Không tải được khảo sát (${error.message}). Kiểm tra migration và cấu hình backend.`, 'error');
+    }
   }
 
   function download(name, content, type) {
@@ -289,7 +320,7 @@
     } catch (_) {}
 
     $('bi-connect')?.addEventListener('click', connect);
-    $('bi-refresh')?.addEventListener('click', refreshCore);
+    $('bi-refresh')?.addEventListener('click', () => refreshWithStatus());
     $('bi-load-survey')?.addEventListener('click', loadSurveys);
     $('bi-export-leaderboard')?.addEventListener('click', exportLeaderboard);
     $('bi-export-traces')?.addEventListener('click', exportTraces);
