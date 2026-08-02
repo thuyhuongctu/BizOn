@@ -1,0 +1,31 @@
+name: Privacy and Play Readiness
+
+on:
+  pull_request:
+    paths:
+      - 'chinh-sach.html'
+      - 'android/app/src/main/AndroidManifest.xml'
+      - 'docs/release/GOOGLE_PLAY_DATA_SAFETY_DRAFT.md'
+      - 'test/privacy-play-readiness.test.js'
+      - '.github/workflows/privacy-play-readiness.yml'
+  push:
+    branches: ['main']
+    paths:
+      - 'chinh-sach.html'
+      - 'android/app/src/main/AndroidManifest.xml'
+      - 'docs/release/GOOGLE_PLAY_DATA_SAFETY_DRAFT.md'
+      - 'test/privacy-play-readiness.test.js'
+      - '.github/workflows/privacy-play-readiness.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  disclosure-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: node test/privacy-play-readiness.test.js
