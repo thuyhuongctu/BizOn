@@ -11,8 +11,8 @@ const browser = await chromium.launch({ headless: true });
 
 async function capturePhone(name, route, options = {}) {
   const context = await browser.newContext({
-    viewport: { width: 1080, height: 1920 },
-    deviceScaleFactor: 1,
+    viewport: { width: 360, height: 640 },
+    deviceScaleFactor: 3,
     isMobile: true,
     hasTouch: true,
     locale: 'vi-VN',
@@ -30,6 +30,7 @@ async function capturePhone(name, route, options = {}) {
     if (!frame) throw new Error(`Expected frame not found: ${options.waitForFrame}`);
     await frame.waitForLoadState('domcontentloaded');
   }
+  if (typeof options.prepare === 'function') await options.prepare(page);
   await page.waitForTimeout(1200);
   await page.screenshot({ path: path.join(phoneDir, `${name}.png`), fullPage: false });
   await context.close();
@@ -52,8 +53,8 @@ fs.copyFileSync('play-store/listing/vi-VN.md', path.join(outDir, 'listing-vi-VN.
 fs.copyFileSync('play-store/listing/en-US.md', path.join(outDir, 'listing-en-US.md'));
 
 const altText = {
-  '01-bizon-home.png': 'Màn hình chính BizOn với bốn mô-đun học tập và nguyên tắc vận hành.',
-  '02-startup-lab.png': 'Startup Lab cho phép người học vận hành doanh nghiệp qua các vòng quyết định.',
+  '01-bizon-home.png': 'Màn hình chính BizOn với các mô-đun học tập và nguyên tắc vận hành.',
+  '02-startup-lab.png': 'Startup Lab cho phép người học thiết lập doanh nghiệp và bắt đầu mô phỏng.',
   '03-brand-passport.png': 'Brand Passport hỗ trợ quyết định quốc tế hóa và xem lại tiến trình lập luận.',
   '04-aibis.png': 'AIBIS so sánh các phương thức thâm nhập thị trường theo ưu tiên chiến lược.',
   'feature-graphic-1024x500.png': 'BizOn — học kinh doanh bằng những lựa chọn có thể giải thích.'
