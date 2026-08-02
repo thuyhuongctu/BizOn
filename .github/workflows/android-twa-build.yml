@@ -54,9 +54,11 @@ jobs:
           import json
           with open('/tmp/bizon-manifest.json', encoding='utf-8') as handle:
               manifest = json.load(handle)
+          assert manifest['id'] == '../'
           assert manifest['start_url'] == './index.html'
-          assert manifest['scope'] == './'
+          assert manifest['scope'] == '../'
           assert manifest['display'] == 'standalone'
+          assert next(item for item in manifest['shortcuts'] if item['short_name'] == 'AIBIS')['url'] == './aibis.html'
           print('Public PWA endpoints verified')
           PY
 
