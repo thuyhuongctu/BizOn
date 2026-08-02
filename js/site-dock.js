@@ -28,6 +28,8 @@
     ["Je m'appelle Hương sans frontières (tiếng Anh)", 'huong-and-the-world-en.mp3'],
     ["Je m'appelle Hương sans frontières (giọng nam)", 'huong-and-the-world-male.mp3'],
     ['Hương et le Monde (tiếng Pháp)', 'huong-et-le-monde.mp3'],
+    ['Je m\'appelle Hương sans frontières (bản thu mới 1)', 'huong-sans-frontieres.mp3'],
+    ['Je m\'appelle Hương sans frontières (bản thu mới 2)', 'huong-sans-frontieres-2.mp3'],
     ['Vươn ra thế giới (bản 1)', 'huong-vuon-ra-the-gioi.mp3'],
     ['Vươn ra thế giới (bản 2)', 'huong-vuon-ra-the-gioi-2.mp3'],
     ['Mon histoire', 'mon-histoire.mp3'],

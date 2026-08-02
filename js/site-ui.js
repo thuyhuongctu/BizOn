@@ -4107,6 +4107,22 @@
 "Bản phối Mekong Sunfire · 3:18",
 "Mekong Sunfire arrangement · 3:18"
 ],
+[
+"Bản thu mới – bản 1",
+"New recording – take 1"
+],
+[
+"Bản dựng lại của chính ca khúc tiêu đề · 2:39",
+"A fresh take of the title song itself · 2:39"
+],
+[
+"Bản thu mới – bản 2",
+"New recording – take 2"
+],
+[
+"Bản dựng thứ hai · 2:54 · dài hơn, hòa âm khác",
+"Second take · 2:54 · longer, different arrangement"
+],
 ]);
   var SPECIAL = [
     { page: 'giai-phap', sel: '#gp-oss-note', en: "Free to use at the official URL for non-commercial teaching – no account needed. The source is published for academic transparency and verification; commercial exploitation rights remain with BizOn (see <a href=\"https://github.com/thuyhuongctu/BizOn/blob/main/LICENSE\" target=\"_blank\" rel=\"noopener\" class=\"underline font-bold\">LICENSE</a>)." },
