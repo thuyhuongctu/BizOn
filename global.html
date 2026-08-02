@@ -369,7 +369,7 @@ function renderRivalsGlobal() {
   box.innerHTML = you + MARKETS.map(m => {
     const r = RIVAL_CEOS[m.id];
     return `<div class="clay-card overflow-hidden">
-      <div class="h-40 flex items-end justify-center" style="background:linear-gradient(180deg,#e8f4fa 0%,#cfe4ef 100%)"><img src="assets/character/rivals-global/${m.id}-cut.png" alt="CEO ${m.ai}" class="h-36 w-auto drop-shadow-lg" loading="lazy"></div>
+      <div class="h-40 flex items-end justify-center" style="background:linear-gradient(180deg,#e8f4fa 0%,#cfe4ef 100%)"><img src="assets/character/rivals-global/${m.id}-cut.webp" alt="CEO ${m.ai}" class="h-36 w-auto drop-shadow-lg" loading="lazy"></div>
       <div class="p-3">
         <p class="font-display font-extrabold text-deep-teal text-xs">${m.ai} ${m.flag}</p>
         <p class="text-[10px] text-deep-teal/50">CEO ${r.ceo} · ${m.hub}</p>
@@ -507,7 +507,7 @@ function pickMode(id) {
   sec.classList.remove('hidden'); sec.classList.add('fade-up');
   document.getElementById('sec-result').classList.add('hidden');
   const rc = RIVAL_CEOS[G.market.id];
-  document.getElementById('play-sub').innerHTML = `<img src="assets/character/rivals-global/${G.market.id}.jpg" alt="CEO ${G.market.ai}" class="inline-block w-8 h-8 rounded-full object-cover mr-1 align-middle border border-white/40" style="object-position:50% 8%"> ${G.mode.icon} ${G.mode.name} tại ${G.market.flag} ${G.market.name} – đối thủ bản địa: <b>${G.market.ai}</b> (CEO ${rc.ceo}). Vốn ban đầu ${G.mode.cost0}k USD đã chi.`;
+  document.getElementById('play-sub').innerHTML = `<img src="assets/character/rivals-global/${G.market.id}.webp" alt="CEO ${G.market.ai}" class="inline-block w-8 h-8 rounded-full object-cover mr-1 align-middle border border-white/40" style="object-position:50% 8%"> ${G.mode.icon} ${G.mode.name} tại ${G.market.flag} ${G.market.name} – đối thủ bản địa: <b>${G.market.ai}</b> (CEO ${rc.ceo}). Vốn ban đầu ${G.mode.cost0}k USD đã chi.`;
   G.negoAdj = 1; G.negoStance = null; G.negoTxt = ''; renderNego();
   paintQuarter(); gUpdate();
   sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -747,7 +747,7 @@ function gFinish() {
           ? `Đàm phán kiểu ép giá ở thị trường trọng chữ «${style}» thì khó bền – các bạn còn phải học nhiều về ${G.market.name}.`
           : `Nỗ lực đáng nể, nhưng sân nhà ${G.market.hub} không dễ chia. Hẹn quý sau – nếu các bạn dám quay lại.`);
       return `<div class="clay-sunken rounded-2xl p-4 mt-3 text-left flex items-start gap-3">
-        <img src="assets/character/rivals-global/${G.market.id}.jpg" alt="CEO ${G.market.ai}" class="w-12 h-12 rounded-full object-cover shrink-0 border-2 border-white shadow" style="object-position:50% 8%">
+        <img src="assets/character/rivals-global/${G.market.id}.webp" alt="CEO ${G.market.ai}" class="w-12 h-12 rounded-full object-cover shrink-0 border-2 border-white shadow" style="object-position:50% 8%">
         <div class="min-w-0">
           <p class="text-[9px] font-extrabold uppercase text-deep-teal/45">Phản hồi từ đối tác bản địa · CEO ${rc.ceo} – ${G.market.ai}</p>
           <p class="text-[11px] text-deep-teal/80 italic mt-1 leading-relaxed">"${q}"</p>
