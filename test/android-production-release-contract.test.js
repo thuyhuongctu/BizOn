@@ -2,12 +2,16 @@ const fs = require('node:fs');
 const assert = require('node:assert/strict');
 const { execFileSync } = require('node:child_process');
 
+const rootGradle = fs.readFileSync('android/build.gradle', 'utf8');
 const gradle = fs.readFileSync('android/app/build.gradle', 'utf8');
 const workflow = fs.readFileSync('.github/workflows/android-production-aab.yml', 'utf8');
 const generator = fs.readFileSync('scripts/release/generate-assetlinks.mjs', 'utf8');
 const privacy = fs.readFileSync('chinh-sach.html', 'utf8');
 
+assert.match(rootGradle, /com\.android\.application' version '8\.10\.1'/);
 assert.match(gradle, /applicationId 'vn\.bizon\.simulation'/);
+assert.match(gradle, /compileSdk 36/);
+assert.match(gradle, /targetSdk 36/);
 assert.match(gradle, /BIZON_UPLOAD_KEYSTORE_PATH/);
 assert.match(gradle, /BIZON_UPLOAD_STORE_PASSWORD/);
 assert.match(gradle, /BIZON_UPLOAD_KEY_ALIAS/);
@@ -21,6 +25,8 @@ assert.match(workflow, /workflow_dispatch:/);
 assert.match(workflow, /environment: google-play-release/);
 assert.match(workflow, /BIZON_UPLOAD_KEYSTORE_BASE64/);
 assert.match(workflow, /PLAY_APP_SIGNING_SHA256/);
+assert.match(workflow, /platforms;android-36/);
+assert.match(workflow, /gradle-version: '8\.11\.1'/);
 assert.match(workflow, /:app:bundleRelease/);
 assert.match(workflow, /jarsigner -verify/);
 assert.match(workflow, /Remove decoded keystore/);
@@ -49,4 +55,4 @@ assert.equal(assetlinks[0].target.package_name, 'vn.bizon.simulation');
 assert.equal(assetlinks[0].target.sha256_cert_fingerprints[0], Array(32).fill('AA').join(':'));
 fs.rmSync('release-artifacts', { recursive: true, force: true });
 
-console.log('Android production release contract passed');
+console.log('Android production API 36 release contract passed');
