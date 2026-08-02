@@ -41,7 +41,7 @@ assert(instructor.includes('Instructor Studio'));
 assert(instructor.includes('bizon-instructor-studio.css'));
 assert(instructor.includes('instructor-studio.js'));
 assert(instructor.includes('Không chấm phản tư bằng AI'));
-assert(instructor.includes('bizon_bp_learning_traces')) === false;
+assert(!instructor.includes('bizon_bp_learning_traces'));
 assert(!/Food Truck|Gánh Hàng/i.test(instructor));
 
 for (const forbidden of ['Teaching demo', 'AI Command Center', 'Local-only', 'Android build pipeline', 'placeholder', 'auto-generated']) {
