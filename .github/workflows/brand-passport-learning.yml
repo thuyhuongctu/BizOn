@@ -1,0 +1,47 @@
+name: Brand Passport Learning Edition
+
+on:
+  pull_request:
+    paths:
+      - 'brand-passport-learning.html'
+      - 'js/brand-passport-learning.js'
+      - 'test/brand-passport-learning.test.js'
+      - 'docs/learning/**'
+      - '.github/workflows/brand-passport-learning.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  learning-trace:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install Playwright
+        run: |
+          npm install --no-save playwright@1.54.1
+          npx playwright install --with-deps chromium
+
+      - name: Start static server
+        run: |
+          python3 -m http.server 8899 --bind 127.0.0.1 > /tmp/bizon-learning.log 2>&1 &
+          for i in {1..30}; do
+            curl --fail --silent http://127.0.0.1:8899/brand-passport-learning.html > /dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/bizon-learning.log
+          exit 1
+
+      - name: Run Learning Edition integration tests
+        env:
+          BIZON_URL: http://127.0.0.1:8899
+        run: node test/brand-passport-learning.test.js
