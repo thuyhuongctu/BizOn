@@ -1,0 +1,57 @@
+name: Brand Passport Pilot Governance
+
+on:
+  pull_request:
+    paths:
+      - 'brand-passport-learning-pilot.html'
+      - 'js/brand-passport-governance.js'
+      - 'test/brand-passport-governance.test.js'
+      - 'docs/learning/BRAND_PASSPORT_DATA_GOVERNANCE_V1.md'
+      - 'supabase/migrations/20260802000000_bp_learning_traces.sql'
+      - '.github/workflows/brand-passport-governance.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  governance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install Playwright
+        run: |
+          npm install --no-save playwright@1.54.1
+          npx playwright install --with-deps chromium
+
+      - name: Start static server
+        run: |
+          python3 -m http.server 8899 --bind 127.0.0.1 > /tmp/bizon-governance.log 2>&1 &
+          for i in {1..30}; do
+            curl --fail --silent http://127.0.0.1:8899/brand-passport-learning-pilot.html > /dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/bizon-governance.log
+          exit 1
+
+      - name: Run governance integration tests
+        env:
+          BIZON_URL: http://127.0.0.1:8899
+          BIZON_QA_DIR: governance-qa
+        run: node test/brand-passport-governance.test.js
+
+      - name: Upload governance QA
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: brand-passport-governance-qa
+          path: governance-qa/
+          retention-days: 14
