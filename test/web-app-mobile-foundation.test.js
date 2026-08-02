@@ -44,10 +44,15 @@ assert(instructor.includes('Không chấm phản tư bằng AI'));
 assert(!instructor.includes('bizon_bp_learning_traces'));
 assert(!/Food Truck|Gánh Hàng/i.test(instructor));
 
-for (const forbidden of ['Teaching demo', 'AI Command Center', 'Local-only', 'Android build pipeline', 'placeholder', 'auto-generated']) {
+const publicForbidden = ['Teaching demo', 'AI Command Center', 'Local-only', 'Android build pipeline', 'placeholder', 'auto-generated'];
+for (const forbidden of publicForbidden) {
   assert(!release.includes(forbidden), `Public launcher must not contain: ${forbidden}`);
   assert(!command.includes(forbidden), `Command Center must not contain: ${forbidden}`);
   assert(!passport.includes(forbidden), `Brand Passport route must not contain: ${forbidden}`);
+}
+
+// Instructor Studio contains valid HTML input placeholder attributes, so only draft/product labels are forbidden here.
+for (const forbidden of ['Teaching demo', 'AI Command Center', 'Local-only', 'Android build pipeline', 'auto-generated']) {
   assert(!instructor.includes(forbidden), `Instructor Studio must not contain: ${forbidden}`);
 }
 
