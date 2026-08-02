@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="vi" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#07141f">
+  <meta name="description" content="AIBIS internationalization decision workspace">
+  <title>AIBIS — BizOn App</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="../assets/icons/icon-192.png">
+  <link rel="stylesheet" href="../css/bizon-fonts.css">
+  <link rel="stylesheet" href="../css/app-shell.css">
+  <link rel="stylesheet" href="../css/aibis-app.css">
+</head>
+<body>
+<a class="skip-link" href="#aibisWorkspace">Bỏ qua điều hướng</a>
+<div class="aibis-app">
+  <header class="aibis-topbar">
+    <a class="brand" href="./index.html"><span class="brand-mark">B</span><span><strong>BIZON</strong><small>AIBIS WORKSPACE</small></span></a>
+    <div class="journey" aria-label="Tiến trình AIBIS"><span class="done">0 Readiness</span><span class="active">1 Market</span><span>2 Entry</span><span>3 Localize</span><span>4 Negotiate</span><span>5 Shock</span><span>6 Scale</span><span>7 Capability</span><span>8 Board</span></div>
+    <div class="topbar-actions"><button id="installBtn" hidden>Cài app</button><button id="themeBtn" aria-label="Đổi giao diện">◐</button></div>
+  </header>
+
+  <main id="aibisWorkspace" class="aibis-workspace" tabindex="-1">
+    <section class="aibis-hero">
+      <div><p class="eyebrow">INTERNATIONAL BUSINESS DIGITAL TWIN</p><h1>Market & Entry Command Center</h1><p>So sánh thị trường, năng lực doanh nghiệp và phương thức thâm nhập bằng mô hình minh bạch, có giải thích và cảnh báo giới hạn.</p></div>
+      <div class="round-card"><small>Current mission</small><strong>Choose Japan entry mode</strong><span id="networkLabel">Online · demo data</span></div>
+    </section>
+
+    <section class="aibis-grid">
+      <article class="aibis-panel map-panel">
+        <header><div><p class="eyebrow">GLOBAL MARKET MAP</p><h2>Vietnam → Japan</h2></div><span class="evidence-tag">Illustrative profile</span></header>
+        <div class="trade-map" role="img" aria-label="Mạng lưới thương mại minh họa Việt Nam đến Nhật Bản">
+          <div class="grid-lines"></div>
+          <div class="country vn"><b>VN</b><small>Home</small></div>
+          <div class="country jp"><b>JP</b><small>Target</small></div>
+          <div class="country sg"><b>SG</b><small>Hub</small></div>
+          <svg viewBox="0 0 900 430" aria-hidden="true">
+            <defs><linearGradient id="route" x1="0" x2="1"><stop stop-color="#20d7ff"/><stop offset="1" stop-color="#ff9c3a"/></linearGradient></defs>
+            <path class="route main" d="M175 320 Q440 55 695 125"/>
+            <path class="route secondary" d="M175 320 Q390 375 500 290"/>
+            <circle class="pulse" cx="695" cy="125" r="22"/>
+          </svg>
+          <div class="route-chip sea">Sea · 9 days</div><div class="route-chip digital">Digital · instant</div>
+        </div>
+        <div class="market-metrics" id="marketMetrics"></div>
+      </article>
+
+      <aside class="aibis-panel firm-panel">
+        <header><div><p class="eyebrow">FIRM READINESS</p><h2>Mekong Digital</h2></div><b id="readinessScore">67</b></header>
+        <div id="capabilityBars" class="capability-bars"></div>
+        <p class="model-note">Các điểm readiness là dữ liệu demo; phiên bản production sẽ lấy từ Firm Readiness Engine có version và provenance.</p>
+      </aside>
+
+      <article class="aibis-panel mode-panel">
+        <header><div><p class="eyebrow">ENTRY MODE LAB</p><h2>Compare six modes</h2></div><button id="resetPriorities" type="button">Reset priorities</button></header>
+        <div class="priority-controls" id="priorityControls"></div>
+        <div class="mode-grid" id="modeGrid" aria-live="polite"></div>
+      </article>
+
+      <aside class="aibis-panel lumina-workspace">
+        <header><div><p class="eyebrow">LUMINA AI COACH</p><h2>Explainable recommendation</h2></div><span>Explain mode</span></header>
+        <div id="luminaRecommendation" class="lumina-card"></div>
+        <div class="counterfactual"><h3>Counterfactual</h3><label>Compare with <select id="compareMode"></select></label><div id="counterfactualResult"></div></div>
+        <p class="model-note">Lumina giải thích kết quả từ scoring engine; AI không thay đổi điểm hoặc quyết định thay người học.</p>
+      </aside>
+    </section>
+  </main>
+
+  <nav class="mobile-nav" aria-label="Điều hướng di động"><a href="./index.html">Home</a><a href="../game.html">Startup</a><a class="active" href="./aibis.html">AIBIS</a><a href="../giang-vien.html">Teach</a></nav>
+</div>
+<script src="../js/app-shell/app-shell.js" defer></script>
+<script src="../js/app-shell/aibis-workspace.js" defer></script>
+</body>
+</html>
