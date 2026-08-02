@@ -31,11 +31,23 @@
     }
   };
 
+  // Prevent spreadsheet applications from interpreting untrusted text as formulas.
+  const csvCell = value => {
+    let text = String(value ?? '').replace(/\r?\n/g, ' ');
+    if (/^[\t\r\n ]*[=+\-@]/.test(text)) text = `'${text}`;
+    return `"${text.replace(/"/g, '""')}"`;
+  };
+
   const setStatus = (message, type = 'neutral') => {
     const node = $('bi-status');
     if (!node) return;
     node.textContent = message;
     node.dataset.state = type;
+  };
+
+  const clearCredentialInput = () => {
+    const input = $('bi-instructor-key');
+    if (input) input.value = '';
   };
 
   async function rpc(functionName, args) {
@@ -224,17 +236,20 @@
 
     state.classCode = classCode;
     state.instructorKey = instructorKey;
-    try { localStorage.setItem('bizon-instructor-class', classCode); } catch (_) {}
     $('bi-class-label').textContent = classCode;
     setStatus(`Đang kết nối lớp ${classCode}…`);
 
     const connected = await refreshWithStatus();
     if (!connected) {
+      state.instructorKey = '';
+      clearCredentialInput();
       $('bi-studio-content').classList.add('bi-hidden');
       clearInterval(state.timer);
       return;
     }
 
+    try { localStorage.setItem('bizon-instructor-class', classCode); } catch (_) {}
+    clearCredentialInput();
     $('bi-studio-content').classList.remove('bi-hidden');
     clearInterval(state.timer);
     state.timer = setInterval(() => refreshWithStatus({ quiet: true }), 10000);
@@ -268,14 +283,14 @@
     const header = 'hang,doi,vong_cao_nhat,thi_phan_pct,loi_nhuan_rong,doanh_thu,so_du,luot_nop,nop_gan_nhat\n';
     const rows = state.leaderboard.map((row, index) => [
       index + 1,
-      `"${String(row.team_name || '').replace(/"/g, '""')}"`,
+      csvCell(row.team_name),
       row.best_round,
       row.share,
       row.net_profit,
       row.revenue,
       row.balance,
       row.submissions,
-      row.last_submit
+      csvCell(row.last_submit)
     ].join(',')).join('\n');
     download(`bizon-leaderboard-${state.classCode || 'class'}.csv`, `\ufeff${header}${rows}`, 'text/csv;charset=utf-8');
   }
@@ -297,11 +312,18 @@
       setStatus('Chưa có dữ liệu khảo sát trong phiên. Bấm “Tải khảo sát” trước.', 'error');
       return;
     }
-    const quote = value => `"${String(value ?? '').replace(/"/g, '""').replace(/\r?\n/g, ' ')}"`;
     const header = 'bo_cau_hoi,phieu,ma_sv,vai_tro,so_vong,diem_A,diem_gioi_thieu,thich_nhat,can_cai_thien,nop_luc\n';
     const rows = state.surveys.map(row => [
-      row.instrument || 'batnghiep', row.phase, row.student_code, row.role || '', row.rounds_played || '', row.score_a ?? '',
-      row.nps ?? '', quote(row.open_like), quote(row.open_improve), row.created_at
+      csvCell(row.instrument || 'batnghiep'),
+      csvCell(row.phase),
+      csvCell(row.student_code),
+      csvCell(row.role || ''),
+      row.rounds_played || '',
+      row.score_a ?? '',
+      row.nps ?? '',
+      csvCell(row.open_like),
+      csvCell(row.open_improve),
+      csvCell(row.created_at)
     ].join(',')).join('\n');
     download(`bizon-survey-${state.classCode || 'class'}.csv`, `\ufeff${header}${rows}`, 'text/csv;charset=utf-8');
   }
@@ -331,6 +353,6 @@
   window.addEventListener('pagehide', () => {
     clearInterval(state.timer);
     state.instructorKey = '';
-    if ($('bi-instructor-key')) $('bi-instructor-key').value = '';
+    clearCredentialInput();
   });
 })();
