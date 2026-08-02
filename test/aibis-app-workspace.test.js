@@ -25,10 +25,13 @@ const expectedIds = [
 assert.deepEqual(models.modes.map(mode => mode.id), expectedIds);
 assert.equal(new Set(models.modes.map(mode => mode.id)).size, 6);
 
-const modelScript = html.indexOf('../js/aibis/entry-mode-models.js');
-const profileScript = html.indexOf('../js/aibis/country-profile-registry.js');
-const engineScript = html.indexOf('../js/aibis/entry-mode-engine.js');
-const workspaceScript = html.indexOf('../js/app-shell/aibis-workspace.js');
+function scriptIndex(fragment) {
+  return html.search(new RegExp(`(?:\\.\\./)?${fragment.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&')}`));
+}
+const modelScript = scriptIndex('js/aibis/entry-mode-models.js');
+const profileScript = scriptIndex('js/aibis/country-profile-registry.js');
+const engineScript = scriptIndex('js/aibis/entry-mode-engine.js');
+const workspaceScript = scriptIndex('js/app-shell/aibis-workspace.js');
 assert(modelScript >= 0 && profileScript >= 0 && engineScript >= 0 && workspaceScript >= 0);
 assert(modelScript < workspaceScript && profileScript < workspaceScript && engineScript < workspaceScript);
 
