@@ -69,7 +69,8 @@ jobs:
     env:
       SUPABASE_STAGING_PROJECT_REF: ${{ vars.SUPABASE_STAGING_PROJECT_REF }}
       SUPABASE_STAGING_URL: ${{ vars.SUPABASE_STAGING_URL }}
-      SUPABASE_STAGING_DATABASE_URL: ${{ secrets.SUPABASE_STAGING_DATABASE_URL }}
+      SUPABASE_STAGING_DATABASE_INPUT: ${{ secrets.SUPABASE_STAGING_DATABASE_URL }}
+      SUPABASE_STAGING_DB_PASSWORD: ${{ secrets.SUPABASE_STAGING_DB_PASSWORD }}
       SUPABASE_STAGING_ANON_KEY: ${{ secrets.SUPABASE_STAGING_ANON_KEY }}
       SUPABASE_STAGING_INSTRUCTOR_KEY: ${{ secrets.SUPABASE_STAGING_INSTRUCTOR_KEY }}
       CONFIRM_PROJECT_REF: ${{ inputs.confirm_project_ref }}
@@ -90,6 +91,25 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install --yes postgresql-client
+
+      - name: Normalize protected staging database URL
+        shell: bash
+        run: |
+          set -euo pipefail
+          INPUT="${SUPABASE_STAGING_DB_PASSWORD:-${SUPABASE_STAGING_DATABASE_INPUT:-}}"
+          if [[ -z "$INPUT" ]]; then
+            echo 'Missing SUPABASE_STAGING_DATABASE_URL or SUPABASE_STAGING_DB_PASSWORD.' >&2
+            exit 1
+          fi
+          echo "::add-mask::$INPUT"
+          if [[ "$INPUT" == postgres://* || "$INPUT" == postgresql://* ]]; then
+            DATABASE_URL="$INPUT"
+          else
+            ENCODED_PASSWORD="$(SUPABASE_STAGING_DB_PASSWORD="$INPUT" node -e 'process.stdout.write(encodeURIComponent(process.env.SUPABASE_STAGING_DB_PASSWORD))')"
+            DATABASE_URL="postgresql://postgres.${SUPABASE_STAGING_PROJECT_REF}:${ENCODED_PASSWORD}@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres?sslmode=require"
+          fi
+          echo "::add-mask::$DATABASE_URL"
+          printf 'SUPABASE_STAGING_DATABASE_URL=%s\n' "$DATABASE_URL" >> "$GITHUB_ENV"
 
       - name: Bootstrap staging instructor-key verifier
         if: inputs.apply_migration == true
