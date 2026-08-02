@@ -1,0 +1,27 @@
+name: AIBIS App Engine Integration
+
+on:
+  pull_request:
+    paths:
+      - 'app/aibis.html'
+      - 'js/aibis/**'
+      - 'js/app-shell/aibis-workspace.js'
+      - 'test/aibis-app-engine-integration.test.js'
+      - 'docs/architecture/AIBIS-APP-ENGINE-INTEGRATION.md'
+      - '.github/workflows/aibis-app-engine-integration.yml'
+  push:
+    branches: ['feat/aibis-app-engine-integration']
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: node --check js/aibis/country-profile-registry.js
+      - run: node --check js/aibis/entry-mode-models.js
+      - run: node --check js/aibis/entry-mode-engine.js
+      - run: node --check js/app-shell/aibis-workspace.js
+      - run: node test/aibis-app-engine-integration.test.js
