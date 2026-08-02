@@ -1,0 +1,37 @@
+name: Android Production Release Contract
+
+on:
+  pull_request:
+    paths:
+      - 'android/**'
+      - 'scripts/release/**'
+      - 'test/android-production-release-contract.test.js'
+      - '.github/workflows/android-production-aab.yml'
+      - '.github/workflows/android-production-release-contract.yml'
+      - 'chinh-sach.html'
+  push:
+    branches: ['main', 'feat/google-play-release-readiness-v1']
+    paths:
+      - 'android/**'
+      - 'scripts/release/**'
+      - 'test/android-production-release-contract.test.js'
+      - '.github/workflows/android-production-aab.yml'
+      - '.github/workflows/android-production-release-contract.yml'
+      - 'chinh-sach.html'
+
+permissions:
+  contents: read
+
+jobs:
+  release-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Validate release pipeline and policy
+        run: node test/android-production-release-contract.test.js
