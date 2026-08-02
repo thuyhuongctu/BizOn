@@ -5,8 +5,11 @@ on:
     paths:
       - '.github/workflows/supabase-staging-gate.yml'
       - 'scripts/release/verify-supabase-staging.mjs'
+      - 'scripts/release/validate-supabase-staging-template.mjs'
       - 'test/supabase-staging-gate.test.js'
+      - 'config/supabase-staging.env.example'
       - 'docs/learning/BIZON_SUPABASE_STAGING_GATE_V1.md'
+      - 'docs/learning/SUPABASE_STAGING_OPERATOR_CHECKLIST_V1.md'
       - 'supabase/migrations/20260802000000_bp_learning_traces.sql'
   workflow_dispatch:
     inputs:
@@ -42,9 +45,11 @@ jobs:
         with:
           node-version: 24
 
-      - name: Validate workflow and verifier safety rules
+      - name: Validate workflow, templates and verifier safety rules
         run: |
           node --check scripts/release/verify-supabase-staging.mjs
+          node --check scripts/release/validate-supabase-staging-template.mjs
+          node scripts/release/validate-supabase-staging-template.mjs
           node test/supabase-staging-gate.test.js
 
   staging-smoke:
