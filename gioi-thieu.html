@@ -22,24 +22,6 @@
   body { font-family:'Manrope', 'Manrope Fallback',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
   /* Bản đồ Việt Nam chìm dưới trang */
   /* Bản đồ Việt Nam chìm – theo M-AIDA */
-  #vn-map { position:fixed; top:50%; right:-2vw; transform:translateY(-50%); width:min(36vw,440px); z-index:-1; pointer-events:none; color:#006687; opacity:.10; }
-  #vn-map svg { width:100%; height:auto; display:block; }
-  #vn-map .lh-light { animation:vnlh-blink 1.8s ease-in-out infinite; }
-  #vn-map .lh-halo { opacity:0; animation:vnlh-halo 1.8s ease-in-out infinite; }
-  #vn-map .lh2 .lh-light,#vn-map .lh2 .lh-halo { animation-delay:.45s; }
-  #vn-map .lh3 .lh-light,#vn-map .lh3 .lh-halo { animation-delay:.9s; }
-  #vn-map .lh4 .lh-light,#vn-map .lh4 .lh-halo { animation-delay:1.35s; }
-  @keyframes vnlh-blink { 0%,100%{opacity:.35} 50%{opacity:1} }
-  @keyframes vnlh-halo { 0%,100%{opacity:0} 50%{opacity:.7} }
-  @media (max-width:820px) { #vn-map { right:-16vw; width:64vw; opacity:.07; } }
-  /* AI tour guide (theo mẫu M-AIDA mini-guide) */
-  .guide-fab { position:fixed; left:16px; bottom:16px; z-index:70; width:62px; height:62px; border-radius:50%; padding:0; border:3px solid #fda127; background:#033337; cursor:pointer; overflow:hidden; box-shadow:0 12px 30px -10px rgba(0,0,0,.55); }
-  .guide-fab img { width:100%; height:150%; object-fit:cover; object-position:top center; display:block; pointer-events:none; }
-  .guide-fab::after { content:''; position:absolute; right:3px; bottom:3px; width:12px; height:12px; border-radius:50%; background:#22c55e; border:2px solid #033337; }
-  .guide-pop { position:fixed; left:10px; bottom:88px; z-index:70; width:min(94vw, 420px); display:none; }
-  .guide-pop.show { display:block; animation:fadeUp .25s ease; }
-  .guide-bubble { position:relative; }
-  .guide-bubble::after { content:''; position:absolute; left:-7px; bottom:30px; width:14px; height:14px; transform:rotate(45deg); background:inherit; border-radius:3px; }
   /* Trình phát nhạc nổi */
   .music-pill { position:fixed; right:16px; bottom:16px; z-index:70; display:flex; align-items:center; gap:.55rem; padding:.45rem .7rem .45rem .5rem; border-radius:999px; background:rgba(3,51,55,.92); color:#fff; box-shadow:0 10px 30px -10px rgba(0,0,0,.6); backdrop-filter:blur(10px); max-width:min(72vw,300px); }
   .music-pill .mp-btn { width:36px; height:36px; border-radius:50%; background:#e8762d; color:#fff; border:0; cursor:pointer; font-size:1rem; box-shadow:0 3px 0 #b3541a; flex:none; }
@@ -126,7 +108,6 @@
   html[data-theme="dark"] .bg-white { background-color:#0e2a33 !important; }
   html[data-theme="dark"] .bg-white\/70 { background-color:rgba(10,34,42,.72) !important; }
   html[data-theme="dark"] .text-primary { color:#5cc4e6 !important; }
-  html[data-theme="dark"] #vn-map { color:#6fc4d8; }
 </style>
 <link rel="stylesheet" href="css/tw.css">
 <meta property="og:type" content="website">
@@ -144,24 +125,7 @@
 <div id="scroll-progress"></div>
 
 <!-- Bản đồ Việt Nam chìm dưới trang (theo M-AIDA) -->
-<div id="vn-map" aria-hidden="true"><svg viewBox="0 0 432 588" xmlns="http://www.w3.org/2000/svg">
-  <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
-    <polygon points="108.9,25.2 148.2,39.0 145.3,52.5 158.2,69.0 186.7,80.1 166.7,96.0 158.2,99.0 148.2,102.0 138.2,120.0 126.8,129.0 120.3,156.0 125.4,177.0 142.5,189.0 159.6,210.0 174.4,231.0 192.4,243.0 202.9,258.0 210.9,273.0 216.6,291.0 222.3,312.0 223.7,336.0 220.9,357.0 218.0,378.0 198.1,396.0 183.8,405.0 159.6,415.5 152.5,417.0 146.8,429.0 141.1,441.0 119.7,456.0 95.5,468.0 94.6,454.5 93.5,439.5 101.2,427.5 96.3,415.5 84.1,413.4 101.2,399.0 124.0,397.5 124.8,378.0 140.2,374.4 145.3,363.0 172.4,348.0 169.6,321.0 169.6,294.0 172.4,284.4 173.8,270.0 169.6,249.0 153.9,240.0 134.0,219.0 116.8,198.0 104.0,174.0 72.7,147.0 85.5,137.4 88.3,121.5 81.2,113.4 44.2,99.0 39.9,86.4 18.2,83.4 18.5,54.0 31.3,43.5 52.7,50.4 61.3,42.0 81.2,43.2 95.8,38.4 105.5,32.4 108.9,25.2"/>
-    <ellipse cx="71.2" cy="419.4" rx="4.5" ry="7"/>
-  </g>
-  <g fill="currentColor">
-    <circle cx="145.3" cy="465.6" r="1.8"/>
-    <g opacity=".95"><circle cx="287.8" cy="219.0" r="1.5"/><circle cx="299.2" cy="225.0" r="1.5"/><circle cx="307.8" cy="220.5" r="1.5"/><circle cx="319.2" cy="231.0" r="1.5"/><circle cx="299.2" cy="237.0" r="1.5"/><circle cx="290.7" cy="229.5" r="1.5"/><circle cx="312.1" cy="240.0" r="1.5"/></g>
-    <g opacity=".95"><circle cx="296.4" cy="384.0" r="1.4"/><circle cx="322.0" cy="402.0" r="1.4"/><circle cx="350.5" cy="393.0" r="1.4"/><circle cx="364.8" cy="414.0" r="1.4"/><circle cx="339.2" cy="432.0" r="1.4"/><circle cx="313.5" cy="438.0" r="1.4"/><circle cx="379.0" cy="429.0" r="1.4"/><circle cx="353.4" cy="462.0" r="1.4"/><circle cx="324.9" cy="474.0" r="1.4"/><circle cx="367.7" cy="489.0" r="1.4"/><circle cx="290.7" cy="420.0" r="1.4"/><circle cx="393.3" cy="447.0" r="1.4"/></g>
-  </g>
-  <g transform="translate(108.9,25.2)">
-    <line x1="0" y1="0" x2="0" y2="-22" stroke="#8a6a4f" stroke-width="1.6"/>
-    <rect x="0.8" y="-22" width="17" height="11" rx="1.2" fill="#da251d"/>
-    <path fill="#ffce00" d="M9.3 -19.9 10.3 -17.2 13.1 -17.2 10.8 -15.5 11.7 -12.8 9.3 -14.5 6.9 -12.8 7.8 -15.5 5.5 -17.2 8.3 -17.2Z"/>
-  </g>
-  <g transform="translate(122.0,425.1)"><path fill="#b3701a" d="M0 -7 1.9 -2.2 7 -2.2 2.9 0.9 4.4 5.8 0 2.8 -4.4 5.8 -2.9 0.9 -7 -2.2 -1.9 -2.2Z"/></g>
-  <g class="lh" transform="translate(302.1,228.0)"><path d="M-2.4 0 L-1.4 -7 H1.4 L2.4 0 Z" fill="none" stroke="currentColor" stroke-width="1"/><line x1="-2.6" y1="0" x2="2.6" y2="0" stroke="currentColor" stroke-width="1"/><rect x="-1.7" y="-9.2" width="3.4" height="2.2" rx="0.6" fill="none" stroke="currentColor" stroke-width="1"/><circle class="lh-light" cx="0" cy="-8.1" r="1.3" fill="#e8483f"/><circle class="lh-halo" cx="0" cy="-8.1" r="4.2" fill="none" stroke="#e8483f" stroke-width="1"/></g><g class="lh lh2" transform="translate(344.8,435.0)"><path d="M-2.4 0 L-1.4 -7 H1.4 L2.4 0 Z" fill="none" stroke="currentColor" stroke-width="1"/><line x1="-2.6" y1="0" x2="2.6" y2="0" stroke="currentColor" stroke-width="1"/><rect x="-1.7" y="-9.2" width="3.4" height="2.2" rx="0.6" fill="none" stroke="currentColor" stroke-width="1"/><circle class="lh-light" cx="0" cy="-8.1" r="1.3" fill="#e8483f"/><circle class="lh-halo" cx="0" cy="-8.1" r="4.2" fill="none" stroke="#e8483f" stroke-width="1"/></g><g class="lh lh3" transform="translate(71.2,419.4)"><path d="M-2.4 0 L-1.4 -7 H1.4 L2.4 0 Z" fill="none" stroke="currentColor" stroke-width="1"/><line x1="-2.6" y1="0" x2="2.6" y2="0" stroke="currentColor" stroke-width="1"/><rect x="-1.7" y="-9.2" width="3.4" height="2.2" rx="0.6" fill="none" stroke="currentColor" stroke-width="1"/><circle class="lh-light" cx="0" cy="-8.1" r="1.3" fill="#e8483f"/><circle class="lh-halo" cx="0" cy="-8.1" r="4.2" fill="none" stroke="#e8483f" stroke-width="1"/></g><g class="lh lh4" transform="translate(145.3,465.6)"><path d="M-2.4 0 L-1.4 -7 H1.4 L2.4 0 Z" fill="none" stroke="currentColor" stroke-width="1"/><line x1="-2.6" y1="0" x2="2.6" y2="0" stroke="currentColor" stroke-width="1"/><rect x="-1.7" y="-9.2" width="3.4" height="2.2" rx="0.6" fill="none" stroke="currentColor" stroke-width="1"/><circle class="lh-light" cx="0" cy="-8.1" r="1.3" fill="#e8483f"/><circle class="lh-halo" cx="0" cy="-8.1" r="4.2" fill="none" stroke="#e8483f" stroke-width="1"/></g>
-</svg></div>
+
 
 <!-- ===== NAV ===== -->
 <nav class="glass-nav fixed top-0 inset-x-0 z-50 text-white">
@@ -574,24 +538,6 @@
   </div>
 </footer>
 
-<!-- ===== AI TOUR GUIDE ===== -->
-<button class="guide-fab" id="guide-fab" aria-label="Hương AI dẫn đường" onclick="guideToggle()">
-  <img src="assets/character/lumina-ao-dai.webp" alt="Lumina – Cố vấn học tập AI">
-</button>
-<div class="guide-pop" id="guide-pop" role="dialog" aria-label="Hương AI dẫn đường">
-  <div class="flex items-end gap-1.5">
-    <img src="assets/character/lumina-ao-dai-wave.webp" alt="Lumina – Cố vấn học tập AI" class="h-48 w-auto shrink-0 drop-shadow-[0_16px_18px_rgba(0,0,0,.35)]">
-    <div class="clay-card guide-bubble p-4 mb-4 min-w-0">
-      <p class="font-display font-extrabold text-deep-teal text-sm">Hương AI dẫn đường</p>
-      <p id="guide-text" class="text-xs text-deep-teal/75 mt-1">Xin chào! Mình là Hương – hướng dẫn viên AI của BizOn Bật Nghiệp. Để mình dẫn bạn tham quan trò chơi nhé?</p>
-      <div class="flex gap-2 mt-3">
-        <button onclick="guideNext()" id="guide-next" class="clay-btn flex-1 bg-primary text-white text-xs font-bold py-2.5">▶️ Bắt đầu tour</button>
-        <button onclick="guideEnd()" class="clay-btn bg-white text-deep-teal text-xs font-bold px-3 py-2.5">Đóng</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- ===== TRÌNH PHÁT NHẠC ===== -->
 <div class="music-pill" id="music-pill">
   <button class="mp-btn" id="mp-btn" onclick="mpToggle()" aria-label="Phát nhạc">▶</button>
@@ -709,71 +655,32 @@ function demoSim() {
 }
 demoSim();
 
-/* ================= AI TOUR GUIDE ================= */
-const TOUR = [
-  { sel: '#top',        vi: 'Đây là BizOn Bật Nghiệp - game mô phỏng kinh doanh đất nặn 3D. Bạn sẽ điều hành một công ty qua 6 vòng thị trường Việt Nam 2026!',
-                        en: "This is BizOn Bật Nghiệp - a 3D clay business-simulation game. You'll run a company through 6 rounds across the Vietnam 2026 market!" },
-  { sel: '#stats',      vi: '6 vòng thị trường, 4 vai trò C-Suite, 7 báo cáo quản trị chuẩn giáo trình và hơn 15 thành tựu đang chờ bạn chinh phục.',
-                        en: 'Six market rounds, four C-Suite roles, seven textbook-standard management reports and over 15 achievements are waiting for you.' },
-  { sel: '#features',   vi: 'Mỗi vòng bạn quyết định giá bán, sản lượng, marketing, R&D, nhân sự và nguồn vốn - thị trường với 3 đối thủ AI sẽ phản ứng ngay.',
-                        en: 'Each round you set price, production, marketing, R&D, staffing and funding - and a market with 3 AI rivals reacts instantly.' },
-  { sel: '#demo',       vi: 'Chơi thử ngay tại đây! Kéo 3 thanh quyết định và xem thị phần, doanh thu, lợi nhuận thay đổi theo thời gian thực.',
-                        en: 'Try it right here! Drag the three decision sliders and watch market share, revenue and profit change in real time.' },
-  { sel: '#characters', vi: 'Đồng hành cùng bạn có mình - Lumina AI, và Tú Phan, cố vấn học thuật của dự án.',
-                        en: "By your side you'll have me - Lumina AI - and Tu Phan, the project's academic advisor." },
-  { sel: '#minigames',  vi: 'Ba mini-game khởi nghiệp: Trắc nghiệm, Đoán Giá Thị Trường và Bắt Vốn Vàng - không cần đăng nhập.',
-                        en: 'Three startup mini-games: the Quiz, Guess the Market Price, and Catch the Golden Capital - no sign-in needed.' },
-  { sel: '#team',       vi: 'BizOn được sáng lập bởi Đỗ Thùy Hương và Phan Anh Tú. Giờ thì... bấm CHƠI NGAY để bắt đầu hành trình Bật Nghiệp nhé! 🚀',
-                        en: 'BizOn was founded by Do Thuy Huong and Phan Anh Tu. Now... hit PLAY NOW and start your Bật Nghiệp journey! 🚀' },
+/* ===== Hướng dẫn viên AI: kịch bản riêng của trang này ===== */
+/* Phần khung, giọng đọc và nút bấm nằm ở tệp dùng chung site-tour.js. */
+window.BIZON_TOUR_OPTS = { art: 'assets/character/lumina-ao-dai-wave.webp' };
+window.BIZON_TOUR = [
+  { sel: '#top',
+    vi: 'Đây là BizOn Bật Nghiệp - game mô phỏng kinh doanh đất nặn 3D. Bạn sẽ điều hành một công ty qua 6 vòng thị trường Việt Nam 2026!',
+    en: "This is BizOn Bật Nghiệp - a 3D clay business-simulation game. You'll run a company through 6 rounds across the Vietnam 2026 market!" },
+  { sel: '#stats',
+    vi: '6 vòng thị trường, 4 vai trò C-Suite, 7 báo cáo quản trị chuẩn giáo trình và hơn 15 thành tựu đang chờ bạn chinh phục.',
+    en: 'Six market rounds, four C-Suite roles, seven textbook-standard management reports and over 15 achievements are waiting for you.' },
+  { sel: '#features',
+    vi: 'Mỗi vòng bạn quyết định giá bán, sản lượng, marketing, R&D, nhân sự và nguồn vốn - thị trường với 3 đối thủ AI sẽ phản ứng ngay.',
+    en: 'Each round you set price, production, marketing, R&D, staffing and funding - and a market with 3 AI rivals reacts instantly.' },
+  { sel: '#demo',
+    vi: 'Chơi thử ngay tại đây! Kéo 3 thanh quyết định và xem thị phần, doanh thu, lợi nhuận thay đổi theo thời gian thực.',
+    en: 'Try it right here! Drag the three decision sliders and watch market share, revenue and profit change in real time.' },
+  { sel: '#characters',
+    vi: 'Đồng hành cùng bạn có mình - Lumina AI, và Tú Phan, cố vấn học thuật của dự án.',
+    en: "By your side you'll have me - Lumina AI - and Tu Phan, the project's academic advisor." },
+  { sel: '#minigames',
+    vi: 'Ba mini-game khởi nghiệp: Trắc nghiệm, Đoán Giá Thị Trường và Bắt Vốn Vàng - không cần đăng nhập.',
+    en: 'Three startup mini-games: the Quiz, Guess the Market Price, and Catch the Golden Capital - no sign-in needed.' },
+  { sel: '#team',
+    vi: 'BizOn được sáng lập bởi Đỗ Thùy Hương và Phan Anh Tú. Giờ thì... bấm CHƠI NGAY để bắt đầu hành trình Bật Nghiệp nhé! 🚀',
+    en: 'BizOn was founded by Do Thuy Huong and Phan Anh Tu. Now... hit PLAY NOW and start your Bật Nghiệp journey! 🚀' },
 ];
-const GUIDE_GREET = {
-  vi: 'Xin chào! Mình là Hương - hướng dẫn viên AI của BizOn Bật Nghiệp. Để mình dẫn bạn tham quan trò chơi nhé?',
-  en: "Hi there! I'm Huong - your AI tour guide for BizOn Bật Nghiệp. Shall I show you around the game?",
-};
-const GUIDE_BTN = {
-  vi: { start: '▶️ Bắt đầu tour', next: n => `▶️ Tiếp (${n}/${TOUR.length})`, end: '🏁 Kết thúc tour' },
-  en: { start: '▶️ Start the tour', next: n => `▶️ Next (${n}/${TOUR.length})`, end: '🏁 Finish the tour' },
-};
-function guideLang() { try { return localStorage.getItem('bizon-lang') === 'en' ? 'en' : 'vi'; } catch (e) { return 'vi'; } }
-let tourIdx = -1;
-function guideSpeak(text) {
-  try {
-    speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    const pref = guideLang() === 'en' ? 'en' : 'vi';
-    u.lang = pref === 'en' ? 'en-US' : 'vi-VN'; u.rate = 1.02;
-    const v = speechSynthesis.getVoices().find(v => v.lang && v.lang.toLowerCase().startsWith(pref));
-    if (v) u.voice = v;
-    speechSynthesis.speak(u);
-  } catch (e) {}
-}
-function guideToggle() {
-  const pop = document.getElementById('guide-pop');
-  if (pop.classList.contains('show')) { guideEnd(); return; }
-  const L = guideLang();
-  document.getElementById('guide-text').textContent = GUIDE_GREET[L];
-  document.getElementById('guide-next').textContent = GUIDE_BTN[L].start;
-  pop.classList.add('show');
-  if (tourIdx < 0) { playHuongIntro(); }
-}
-function guideNext() {
-  tourIdx++;
-  if (tourIdx >= TOUR.length) { guideEnd(); return; }
-  const step = TOUR[tourIdx];
-  const L = guideLang();
-  document.querySelector(step.sel).scrollIntoView({ behavior: 'smooth', block: 'start' });
-  document.getElementById('guide-text').textContent = step[L];
-  document.getElementById('guide-next').textContent = tourIdx === TOUR.length - 1 ? GUIDE_BTN[L].end : GUIDE_BTN[L].next(tourIdx + 1);
-  guideSpeak(step[L]);
-}
-function guideEnd() {
-  document.getElementById('guide-pop').classList.remove('show');
-  const Le = guideLang();
-  document.getElementById('guide-text').textContent = GUIDE_GREET[Le];
-  document.getElementById('guide-next').textContent = GUIDE_BTN[Le].start;
-  tourIdx = -1;
-  try { speechSynthesis.cancel(); } catch (e) {}
-}
 
 /* ================= TRÌNH PHÁT NHẠC (bài hát của Đỗ Thùy Hương) ================= */
 const MP_TRACKS = [
@@ -977,10 +884,12 @@ document.addEventListener('keydown', e => {
 });
 </script>
 <script src="js/site-ui.js" defer></script>
+<script src="js/site-vnmap.js" defer></script>
 
 <p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2" style="color:rgba(100,116,125,.85)">✉️ Liên hệ · Contact: <a href="mailto:patu@ctu.edu.vn" style="color:inherit;text-decoration:underline">patu@ctu.edu.vn</a> · <a href="mailto:thuyhuongctu@gmail.com" style="color:inherit;text-decoration:underline">thuyhuongctu@gmail.com</a></p>
 <p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2 pb-6" style="color:rgba(100,116,125,.75)">🎓 Trang web chỉ phục vụ mục đích giáo dục và nghiên cứu, không đại diện cho bất kỳ tổ chức chính trị nào. Hình ảnh quốc kỳ, bản đồ chỉ mang ý nghĩa minh họa văn hóa – giáo dục. · This website serves educational and research purposes only and does not represent any political organization.</p>
 <script src="js/site-dock.js" defer></script>
+<script src="js/site-tour.js" defer></script>
 <script src="js/site-footer.js" defer></script>
 </body>
 </html>
