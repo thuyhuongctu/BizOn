@@ -21,7 +21,7 @@ Số liệu đếm trực tiếp từ kho mã, không ước lượng.
 | Tranh minh họa & bối cảnh | 21 tệp | |
 | Biểu tượng thương hiệu | 3 tệp | |
 | Ảnh sản phẩm quà tặng | 2 tệp | Cài áo lapel pin |
-| Bản thu âm nhạc | 34 bản | Thuộc 14 tác phẩm âm nhạc |
+| Bản thu âm nhạc | 33 bản | Thuộc 13 tác phẩm âm nhạc |
 | Tệp giọng nói nhân vật | 4 tệp | Giọng cố vấn Lumina |
 | Tài liệu kỹ thuật & giảng dạy | 9 tài liệu | Định dạng Markdown |
 | Lịch sử phát triển | 271 commit | 26/07/2026 → 31/07/2026 |
@@ -144,7 +144,7 @@ Khai đúng phần của mình **làm hồ sơ mạnh hơn**, không yếu đi �
 
 ### Cách nộp: 14 tác phẩm, có thể gộp thành một đơn tuyển tập
 
-Kho nhạc gồm **14 tác phẩm âm nhạc riêng biệt** với **34 bản thu**. Có hai cách:
+Kho nhạc gồm **13 tác phẩm âm nhạc riêng biệt** với **33 bản thu**. Có hai cách:
 
 - **Cách 1 – Một đơn tuyển tập:** tên tác phẩm «Tuyển tập ca khúc BizOn Bật Nghiệp» gồm 14 ca khúc. Rẻ hơn, nhanh hơn, nhưng giấy chứng nhận chỉ ghi tên tuyển tập.
 - **Cách 2 – 14 đơn riêng:** mỗi ca khúc một giấy chứng nhận. Tốn phí gấp 14 lần nhưng bảo vệ từng bài mạnh hơn khi có tranh chấp riêng lẻ.
@@ -168,9 +168,9 @@ Kho nhạc gồm **14 tác phẩm âm nhạc riêng biệt** với **34 bản th
 | 11 | «Bật Nghiệp» | 1 | Instrumental |
 | 12 | «Vừa Đủ Để Bay Cao» | 1 | Việt |
 | 13 | «And The World Say Hello!» | 1 | Anh |
-| 14 | «Mekong Compass» · «Mon histoire» · «BizOn Theme» | 3 | Anh · Pháp · Instrumental |
+| 14 | «Mekong Compass» · «BizOn Theme» | 2 | Anh · Instrumental |
 
-*(Ba bài ở dòng 14 nên tách thành ba tác phẩm riêng khi khai chi tiết – gộp ở đây chỉ để bảng gọn.)*
+*(Hai bài ở dòng 14 nên tách thành hai tác phẩm riêng khi khai chi tiết – gộp ở đây chỉ để bảng gọn.)*
 
 ### Hồ sơ nộp
 

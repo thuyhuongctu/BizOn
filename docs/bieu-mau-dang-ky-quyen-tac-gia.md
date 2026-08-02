@@ -250,7 +250,7 @@ Giống Tác phẩm 1.
 
 ### Tên tác phẩm
 
-> **Tuyển tập ca khúc BizOn Bật Nghiệp** — 14 ca khúc, 34 bản thu
+> **Tuyển tập ca khúc BizOn Bật Nghiệp** — 13 ca khúc, 33 bản thu
 
 ### Mục đích
 
@@ -258,7 +258,7 @@ Tạo nhạc nền và nhạc chủ đề riêng cho từng màn chơi trong h�
 
 Lý do có nhiều bản thu cho cùng một ca khúc: buổi học ba quý và buổi chạy trọn sáu quý cần độ dài nhạc khác nhau; lớp tiếng Việt, lớp quốc tế và tuyến Pháp ngữ cần bản lời khác nhau; màn tổng kết cần nhịp dày hơn màn mở đầu.
 
-### Nội dung — danh mục 14 ca khúc
+### Nội dung — danh mục 13 ca khúc
 
 | # | Tên ca khúc | Bản thu | Ngôn ngữ lời | Gắn với |
 |---|---|:-:|---|---|
@@ -275,10 +275,10 @@ Lý do có nhiều bản thu cho cùng một ca khúc: buổi học ba quý và 
 | 11 | Bật Nghiệp | 1 | Không lời | Game mô phỏng chính |
 | 12 | Vừa Đủ Để Bay Cao | 1 | Việt | Game mô phỏng chính |
 | 13 | And The World Say Hello! | 1 | Anh | BizOn Arcade |
-| 14 | Mekong Compass · Mon histoire · BizOn Theme | 3 | Anh · Pháp · không lời | Nhiều game |
-| | **Tổng cộng** | **34** | | |
+| 14 | Mekong Compass · BizOn Theme | 2 | Anh · không lời | Nhiều game |
+| | **Tổng cộng** | **33** | | |
 
-*Dòng 14 gồm ba ca khúc riêng biệt, khi khai chi tiết nên tách thành ba dòng.*
+*Dòng 14 gồm hai ca khúc riêng biệt, khi khai chi tiết nên tách thành hai dòng.*
 
 ### Ý nghĩa
 
@@ -296,7 +296,7 @@ Giống Tác phẩm 1.
 
 | Hạng mục | Nội dung |
 |---|---|
-| **Bản in giấy** | **Lời bài hát của cả 14 ca khúc** — hoặc bản ký âm nếu có |
+| **Bản in giấy** | **Lời bài hát của cả 13 ca khúc** — hoặc bản ký âm nếu có |
 | **02 đĩa** | 34 tệp âm thanh |
 
 > 🚧 **Việc phải làm trước khi nộp đơn này.** Cục yêu cầu **bản nhạc hoặc lời bài hát trên giấy**, không nhận riêng tệp âm thanh. Tài liệu `docs/loi-bai-hat.md` hiện mới có lời đầy đủ của **2 trong 14 ca khúc**. Phải chép đủ 12 bài còn lại.

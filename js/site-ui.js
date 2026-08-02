@@ -3120,10 +3120,6 @@
 "Up-tempo tracks for reflex mini-games – short, straight into the chorus."
 ],
 [
-"«Mon histoire»",
-"«Mon histoire»"
-],
-[
 "Ca khúc lời tiếng Pháp · nhịp nhanh, dùng trong BizOn Arcade",
 "French-language song · up-tempo, used in BizOn Arcade"
 ],
