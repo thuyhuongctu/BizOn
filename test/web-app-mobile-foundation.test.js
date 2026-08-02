@@ -9,9 +9,15 @@ const assetlinks = JSON.parse(fs.readFileSync('.well-known/assetlinks.template.j
 assert(html.includes('AI Command Center'));
 assert(html.includes('./manifest.webmanifest'));
 assert(html.includes('../js/app-shell/app-shell.js'));
+assert(html.includes('href="./aibis.html"'));
+assert(!html.includes('href="../global.html"'));
+assert(!html.includes('$1.42M'));
+assert(!html.includes('$248K'));
+assert.strictEqual(manifest.id, '../');
 assert.strictEqual(manifest.start_url, './index.html');
-assert.strictEqual(manifest.scope, './');
+assert.strictEqual(manifest.scope, '../');
 assert.strictEqual(manifest.display, 'standalone');
+assert.strictEqual(manifest.shortcuts.find(item => item.short_name === 'AIBIS').url, './aibis.html');
 assert(Array.isArray(manifest.icons) && manifest.icons.length >= 2);
 assert(sw.includes("const CACHE_NAME = 'bizon-app-shell-v1'"));
 assert(sw.includes("'./offline.html'"));

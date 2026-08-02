@@ -1,11 +1,11 @@
 {
-  "id": "./",
+  "id": "../",
   "name": "BizOn — AI Business Simulation",
   "short_name": "BizOn App",
   "description": "Nền tảng mô phỏng quyết định kinh doanh và quốc tế hóa doanh nghiệp.",
   "lang": "vi",
   "start_url": "./index.html",
-  "scope": "./",
+  "scope": "../",
   "display": "standalone",
   "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
   "orientation": "any",
@@ -18,7 +18,7 @@
   ],
   "shortcuts": [
     {"name":"Startup Lab","short_name":"Startup","url":"../game.html","icons":[{"src":"../assets/icons/icon-192.png","sizes":"192x192"}]},
-    {"name":"AIBIS","short_name":"AIBIS","url":"../global.html","icons":[{"src":"../assets/icons/icon-192.png","sizes":"192x192"}]},
+    {"name":"AIBIS","short_name":"AIBIS","url":"./aibis.html","icons":[{"src":"../assets/icons/icon-192.png","sizes":"192x192"}]},
     {"name":"Instructor Studio","short_name":"Instructor","url":"../giang-vien.html","icons":[{"src":"../assets/icons/icon-192.png","sizes":"192x192"}]}
   ]
 }
