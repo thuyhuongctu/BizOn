@@ -88,26 +88,31 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p android-artifacts
-          cp android/app/build/outputs/apk/debug/app-debug.apk android-artifacts/BizOn-debug.apk
-          FINGERPRINT=$(keytool -list -v \
-            -alias androiddebugkey \
-            -keystore "$HOME/.android/debug.keystore" \
-            -storepass android \
-            -keypass android | awk -F': ' '/SHA256:/{print $2; exit}')
-          test -n "$FINGERPRINT"
-          DEBUG_FINGERPRINT="$FINGERPRINT" python - <<'PY'
+          APK='android/app/build/outputs/apk/debug/app-debug.apk'
+          cp "$APK" android-artifacts/BizOn-debug.apk
+          DIGEST=$("$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --print-certs "$APK" \
+            | sed -n 's/^Signer #1 certificate SHA-256 digest: //p' \
+            | head -n 1)
+          test -n "$DIGEST"
+          DEBUG_DIGEST="$DIGEST" python - <<'PY'
           import json, os
+          raw = os.environ['DEBUG_DIGEST'].replace(':', '').strip().upper()
+          if len(raw) != 64 or any(char not in '0123456789ABCDEF' for char in raw):
+              raise SystemExit('Invalid SHA-256 certificate digest')
+          fingerprint = ':'.join(raw[index:index + 2] for index in range(0, 64, 2))
           document = [{
               'relation': ['delegate_permission/common.handle_all_urls'],
               'target': {
                   'namespace': 'android_app',
                   'package_name': 'vn.bizon.simulation',
-                  'sha256_cert_fingerprints': [os.environ['DEBUG_FINGERPRINT']],
+                  'sha256_cert_fingerprints': [fingerprint],
               },
           }]
           with open('android-artifacts/assetlinks-debug.json', 'w', encoding='utf-8') as handle:
               json.dump(document, handle, ensure_ascii=False, indent=2)
               handle.write('\n')
+          with open('android-artifacts/debug-certificate-sha256.txt', 'w', encoding='utf-8') as handle:
+              handle.write(fingerprint + '\n')
           PY
           sha256sum android-artifacts/BizOn-debug.apk > android-artifacts/BizOn-debug.apk.sha256
 
