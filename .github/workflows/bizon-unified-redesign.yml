@@ -1,0 +1,74 @@
+name: BizOn Unified Redesign
+
+on:
+  pull_request:
+    paths:
+      - 'app/release.html'
+      - 'app/command-center.html'
+      - 'app/aibis.html'
+      - 'app/manifest.webmanifest'
+      - 'app/sw.js'
+      - 'app/version.json'
+      - 'css/bizon-unified.css'
+      - 'css/bizon-unified-overrides.css'
+      - 'js/app-shell/unified-app.js'
+      - 'scripts/release/capture-unified-redesign.mjs'
+      - 'test/bizon-unified-redesign.test.js'
+      - 'test/web-app-mobile-foundation.test.js'
+      - 'test/web-app-update-channel.test.js'
+      - '.github/workflows/bizon-unified-redesign.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  unified-redesign:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Validate redesign and existing contracts
+        run: |
+          node test/bizon-unified-redesign.test.js
+          node test/web-app-mobile-foundation.test.js
+          node test/web-app-update-channel.test.js
+
+      - name: Install Chromium
+        run: |
+          npm install --no-save playwright@1.54.1
+          npx playwright install --with-deps chromium
+
+      - name: Start local application server
+        shell: bash
+        run: |
+          python3 -m http.server 8899 --bind 127.0.0.1 >/tmp/bizon-unified.log 2>&1 &
+          for attempt in {1..30}; do
+            curl --fail --silent http://127.0.0.1:8899/app/release.html >/dev/null && \
+            curl --fail --silent http://127.0.0.1:8899/app/command-center.html >/dev/null && \
+            curl --fail --silent http://127.0.0.1:8899/app/aibis.html >/dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/bizon-unified.log
+          exit 1
+
+      - name: Capture desktop and mobile QA
+        env:
+          BIZON_URL: http://127.0.0.1:8899
+          BIZON_QA_OUTPUT: artifacts/unified-redesign
+        run: node scripts/release/capture-unified-redesign.mjs
+
+      - name: Upload visual QA
+        uses: actions/upload-artifact@v4
+        with:
+          name: bizon-unified-redesign-qa
+          path: artifacts/unified-redesign/
+          if-no-files-found: error
+          retention-days: 30
