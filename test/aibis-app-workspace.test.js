@@ -6,7 +6,10 @@ const css = fs.readFileSync('css/aibis-app.css', 'utf8');
 const workspace = fs.readFileSync('js/app-shell/aibis-workspace.js', 'utf8');
 const models = require('../js/aibis/entry-mode-models.js');
 
-assert.match(html, /International Business Digital Twin/i);
+assert.match(html, /MÔ PHỎNG KINH DOANH QUỐC TẾ/i);
+assert.match(html, /Trung tâm quyết định thị trường/i);
+assert.match(html, /Có truy xuất nguồn/i);
+assert.doesNotMatch(html, /Provenance-aware demo|Current mission|Choose Japan entry mode/i);
 assert.match(html, /id="modeGrid"/);
 assert.match(html, /id="priorityControls"/);
 assert.match(html, /id="luminaRecommendation"/);
