@@ -54,7 +54,7 @@ assert.strictEqual(manifest.shortcuts.find(item => item.short_name === 'Passport
 assert.strictEqual(manifest.shortcuts.find(item => item.short_name === 'AIBIS').url, './aibis.html');
 assert(Array.isArray(manifest.icons) && manifest.icons.length >= 2);
 
-assert(sw.includes("const CACHE_NAME = 'bizon-app-shell-v5'"));
+assert(sw.includes("const CACHE_NAME = 'bizon-app-shell-v6'"));
 assert(sw.includes("'./release.html'"));
 assert(sw.includes("'./command-center.html'"));
 assert(sw.includes("'./brand-passport.html'"));
@@ -65,6 +65,10 @@ assert(sw.includes("'../css/bizon-existing-assets.css'"));
 assert(sw.includes("'../js/app-shell/unified-app.js'"));
 assert(sw.includes("'../js/app-shell/existing-assets.js'"));
 assert(sw.includes("'../assets/approved-existing-assets.json'"));
+assert(sw.includes("'../assets/illustrations/arena-vietnam-map-v2.webp'"));
+assert(sw.includes("'../assets/illustrations/hero-vietnam-2026.webp'"));
+assert(sw.includes("'../assets/illustrations/cast-sheet-brand-passport.webp'"));
+assert(sw.includes("'../assets/illustrations/giai-dieu-bizon.webp'"));
 assert(sw.includes('networkFirst'));
 assert(sw.includes('staleWhileRevalidate'));
 assert(!sw.includes('.mp3'));
@@ -72,7 +76,7 @@ assert(!sw.includes('.mp3'));
 assert.strictEqual(approvedAssets.policy.source, 'existing-repository-assets-only');
 assert.strictEqual(approvedAssets.policy.allow_generated_replacements, false);
 assert.strictEqual(approvedAssets.policy.exclude_food_truck, true);
-assert(Object.keys(approvedAssets.assets).length >= 6);
+assert(Object.keys(approvedAssets.assets).length >= 10);
 
 assert.match(version.build_id, /^\d{4}\.\d{2}\.\d{2}\.\d+$/);
 assert.strictEqual(assetlinks[0].target.package_name, 'vn.bizon.simulation');
