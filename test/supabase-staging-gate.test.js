@@ -4,7 +4,10 @@ const assert = require('node:assert/strict');
 const read = file => fs.readFileSync(file, 'utf8');
 const workflow = read('.github/workflows/supabase-staging-gate.yml');
 const verifier = read('scripts/release/verify-supabase-staging.mjs');
+const templateValidator = read('scripts/release/validate-supabase-staging-template.mjs');
+const template = read('config/supabase-staging.env.example');
 const runbook = read('docs/learning/BIZON_SUPABASE_STAGING_GATE_V1.md');
+const operatorChecklist = read('docs/learning/SUPABASE_STAGING_OPERATOR_CHECKLIST_V1.md');
 const backend = read('js/backend-config.js');
 
 assert.match(workflow, /workflow_dispatch:/);
@@ -14,6 +17,7 @@ assert.match(workflow, /SUPABASE_STAGING_PROJECT_REF/);
 assert.match(workflow, /SUPABASE_STAGING_DATABASE_URL/);
 assert.match(workflow, /SUPABASE_STAGING_ANON_KEY/);
 assert.match(workflow, /SUPABASE_STAGING_INSTRUCTOR_KEY/);
+assert.match(workflow, /validate-supabase-staging-template\.mjs/);
 assert.doesNotMatch(workflow, /SERVICE_ROLE_KEY|service_role_key/);
 assert.match(workflow, /actions\/upload-artifact@v4/);
 
@@ -36,12 +40,30 @@ assert.match(verifier, /finally \{\s*await cleanupFixtures\(\)/s);
 assert.match(verifier, /secrets_in_report:\s*false/);
 assert.doesNotMatch(verifier, /console\.log\([^\n]*(anonKey|instructorKey|databaseUrl|deleteToken)/);
 
+assert.match(templateValidator, /PRODUCTION_PROJECT_REF/);
+assert.match(templateValidator, /replace-with-staging-project-ref/);
+assert.match(templateValidator, /APPLY_MIGRATION/);
+assert.match(templateValidator, /RUN_RETENTION_PURGE/);
+assert.match(template, /SUPABASE_STAGING_PROJECT_REF=replace-with-staging-project-ref/);
+assert.match(template, /SUPABASE_STAGING_URL=https:\/\/replace-with-staging-project-ref\.supabase\.co/);
+assert.match(template, /SUPABASE_STAGING_DATABASE_URL=.*REPLACE_DATABASE_PASSWORD/);
+assert.match(template, /SUPABASE_STAGING_ANON_KEY=REPLACE_WITH_STAGING_ANON_KEY/);
+assert.match(template, /SUPABASE_STAGING_INSTRUCTOR_KEY=REPLACE_WITH_UNIQUE_STAGING_INSTRUCTOR_KEY/);
+assert.doesNotMatch(template, /ceytblfelodpnudomccn/);
+
 assert.match(runbook, /không dùng project production/i);
 assert.match(runbook, /supabase-staging/);
 assert.match(runbook, /required reviewer/i);
 assert.match(runbook, /APPLY_MIGRATION=false/);
 assert.match(runbook, /không chứa service_role/i);
 assert.match(runbook, /dữ liệu giả lập/i);
+
+assert.match(operatorChecklist, /bizon-staging/);
+assert.match(operatorChecklist, /Settings → Environments → New environment → supabase-staging/);
+assert.match(operatorChecklist, /required reviewer/i);
+assert.match(operatorChecklist, /Không tạo hoặc lưu `service_role` key/i);
+assert.match(operatorChecklist, /Remote staging gate đạt/i);
+assert.match(operatorChecklist, /Giữ \*\*No-Go\*\*/i);
 
 const productionUrl = backend.match(/https:\/\/([a-z0-9]+)\.supabase\.co/i)?.[1];
 assert.equal(productionUrl, 'ceytblfelodpnudomccn');
