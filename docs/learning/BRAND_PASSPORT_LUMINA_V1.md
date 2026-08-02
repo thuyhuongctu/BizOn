@@ -32,71 +32,59 @@ Bản tin học thuật ngày 02/08/2026 cung cấp định hướng trực ti�
 - Lưu cục bộ bằng `localStorage`.
 - Bộ kiểm thử Playwright và GitHub Actions.
 
+### Pilot governance shell
+
+`brand-passport-learning-pilot.html` bọc Learning Edition bằng lớp kiểm soát dữ liệu riêng:
+
+- local-only vẫn là mặc định;
+- không có request ghi dữ liệu trước opt-in;
+- submit yêu cầu mã lớp + consent rõ ràng;
+- retention tối đa 180 ngày;
+- deletion receipt cho phép người học xóa sớm;
+- anon không có quyền đọc bảng trực tiếp;
+- giảng viên đọc theo mã lớp + instructor key;
+- reflection không dùng để AI tự động chấm điểm.
+
+Chi tiết: `docs/learning/BRAND_PASSPORT_DATA_GOVERNANCE_V1.md`.
+
 ### Chưa triển khai
 
 - Không gọi LLM hoặc API AI bên ngoài.
 - Không tạo lời khuyên sinh tự do.
 - Không thay đổi score, cash, profit, event hoặc bất kỳ rule nào của engine.
-- Không gửi reflection lên Supabase.
-- Chưa có instructor dashboard.
-- Chưa có competitive cohort mode.
-- Chưa có consent flow cho pilot nghiên cứu thật.
+- Migration Supabase mới chỉ nằm trong PR; chưa được xem là hoạt động production cho đến khi được review và áp dụng vào project đúng.
+- Không có instructor dashboard trực quan hoặc cohort mode.
+- Không gắn Learning Edition/Pilot Shell vào navigation production.
 
 ## 3. Kiến trúc
 
 ```text
-brand-passport-learning.html
-        │
-        ├── iframe: brand-passport.html
-        │       └── deterministic engine + window.bpTest (read-only)
-        │
-        └── js/brand-passport-learning.js
-                ├── observe public UI functions
-                ├── read state snapshot
-                ├── Coach rules
-                ├── Critic rules
-                ├── learner reflection
-                ├── consequence delta
-                ├── explanation + CLO mapping
-                └── local audit JSON
+brand-passport-learning-pilot.html (optional governed pilot shell)
+  └─ brand-passport-learning.html (Learning Layer)
+       └─ brand-passport.html (deterministic game)
 ```
 
-Learning Layer không truy cập trực tiếp biến nội bộ `S`. Nó chỉ dùng cửa sổ kiểm thử chỉ-đọc `window.bpTest.state()` đã có trong game và các hàm công khai như `bpPick`, `bpEnter`, `bpCommit`, `bpEv`.
+Luồng kết quả:
 
-## 4. Coach–Critic–Reflection
+```text
+Learner decision
+      ↓
+Deterministic engine
+      ↓
+Outcome snapshot + delta
+      ↓
+Rule-based Coach/Critic explanation
+      ↓
+Learner reflection
+      ↓
+Decision Trace + CLO mapping
+```
 
-### Coach
+Learning Layer không giữ tham chiếu đến biến nội bộ `S`; nó chỉ đọc bản sao từ `window.bpTest.state()` và bọc các hàm UI công khai để ghi thời điểm trước/sau.
 
-Coach giúp người học xác định khung phân tích:
+## 4. Audit schema
 
-- mục tiêu chiến lược của quý;
-- đánh đổi giữa kiểm soát, vốn và tính chính danh địa phương;
-- thanh khoản và mức hiểu biết thị trường;
-- lý do nên hoặc chưa nên mở thị trường mới.
-
-### Critic
-
-Critic không phán quyết đúng/sai. Nó chất vấn:
-
-- rủi ro thanh khoản;
-- chất lượng bằng chứng thị trường;
-- phụ thuộc đối tác;
-- yêu cầu vốn và năng lực vận hành;
-- giới hạn của kênh số;
-- bằng chứng có thể bác bỏ lựa chọn hiện tại.
-
-### Reflection
-
-Người học được yêu cầu tự ghi:
-
-- lý do lựa chọn;
-- bằng chứng đã sử dụng;
-- rủi ro lớn nhất;
-- điều kiện khiến quyết định có thể sai.
-
-V1 không bắt buộc nhập reflection để tiếp tục game nhằm tránh thay đổi hành vi engine và UX gốc. Pilot nghiên cứu có thể bật điều kiện tối thiểu sau khi protocol, consent và rubric được duyệt.
-
-## 5. Audit schema
+Audit cấp phiên:
 
 ```json
 {
@@ -109,94 +97,133 @@ V1 không bắt buộc nhập reflection để tiếp tục game nhằm tránh t
   "ai_mode": "rule-based instructional prototype; no LLM scoring",
   "created_at": "ISO-8601",
   "updated_at": "ISO-8601",
-  "records": [
-    {
-      "record_id": "uuid",
-      "round": 1,
-      "decision": {
-        "priority_id": 0,
-        "priority": "Thu thập thông tin",
-        "budget_id": 1,
-        "budget": "Cân bằng",
-        "entry_market_id": 0,
-        "entry_market": "Hải Lam",
-        "entry_mode_id": 0,
-        "entry_mode": "Nền tảng số",
-        "intelligence_source_ids": []
-      },
-      "coach_prompt": "...",
-      "critic_question": "...",
-      "student_reflection": "...",
-      "outcome_before_engine": {},
-      "outcome_after_engine": {},
-      "outcome_delta": {},
-      "consequence": "...",
-      "explanation": "...",
-      "learning_outcomes": [],
-      "engine_outcome_source": "deterministic",
-      "ai_changed_score": false,
-      "audit_timestamp": "ISO-8601"
-    }
-  ]
+  "records": []
 }
 ```
 
-## 6. Giới hạn diễn giải
+Record cấp quý:
 
-`outcome_delta` được tính giữa snapshot trước khi chốt quý và snapshot sau khi engine xử lý quyết định cùng biến cố. Vì vậy:
+```json
+{
+  "record_id": "uuid",
+  "round": 1,
+  "decision": {
+    "priority": "Thu thập thông tin",
+    "budget": "Cân bằng",
+    "entry_market": "Hải Lam",
+    "entry_mode": "Nền tảng số",
+    "intelligence_source_ids": []
+  },
+  "coach_prompt": "...",
+  "critic_question": "...",
+  "student_reflection": "...",
+  "outcome_before_engine": {},
+  "outcome_after_engine": {},
+  "outcome_delta": {},
+  "consequence": "...",
+  "explanation": "...",
+  "learning_outcomes": [],
+  "engine_outcome_source": "deterministic",
+  "ai_changed_score": false,
+  "audit_timestamp": "ISO-8601"
+}
+```
 
-- không được diễn giải delta là tác động nhân quả riêng của một lựa chọn;
-- biến cố quý có thể đồng thời làm thay đổi kết quả;
-- explanation V1 chỉ mô tả logic và trade-off, không tự nhận là causal explanation;
-- AI không thay đổi bất kỳ giá trị chấm điểm nào.
+Payload server opt-in bổ sung:
 
-## 7. Dữ liệu, đạo đức và quyền riêng tư
+```json
+{
+  "data_governance": {
+    "storage_mode": "server-opt-in",
+    "consent_version": "bp-learning-consent-v1",
+    "retention_days": 180,
+    "right_to_delete": "deletion receipt token",
+    "instructor_access": "class code + instructor key",
+    "ai_scoring": false
+  }
+}
+```
 
-V1 lưu dữ liệu trên thiết bị hiện tại. Trước pilot lớp học hoặc nghiên cứu cần bổ sung:
+## 5. Coach–Critic V1
 
-- thông báo và consent;
-- mục đích sử dụng dữ liệu;
-- thời hạn lưu giữ;
-- quyền truy cập, xuất và xóa;
-- mã hóa định danh nhóm/sinh viên;
-- phân quyền giảng viên;
-- quy trình xử lý withdrawal;
-- versioning protocol và rubric.
+V1 dùng luật rõ ràng, có thể kiểm tra:
 
-Không nên thu tên thật khi mã nhóm hoặc mã nghiên cứu đã đủ mục đích.
+- chưa chọn ưu tiên → Coach yêu cầu xác định mục tiêu quý;
+- chọn thị trường khi knowledge < 35 → Critic hỏi về bằng chứng yếu;
+- cash < 2 → Critic ưu tiên rủi ro mất thanh khoản;
+- đối tác địa phương → hỏi về phụ thuộc và kiểm soát thương hiệu;
+- xuất khẩu trực tiếp → hỏi về vốn và năng lực vận hành;
+- nền tảng số → hỏi về adaptation/chứng nhận chưa được giải quyết.
 
-## 8. Tiêu chí nghiệm thu V1
+Đây là instructional prompts, không phải causal inference và không phải đáp án tối ưu.
 
-- Learning Layer kết nối được với game.
-- Engine gốc vẫn truy cập và chạy bình thường.
-- Một quý tạo đúng một decision trace hoàn tất.
-- Trace có snapshot trước/sau, reflection, CLO và timestamp.
-- `engine_outcome_source = deterministic`.
-- `ai_changed_score = false`.
-- Không lỗi JavaScript.
-- Không tràn ngang ở viewport Android 390 × 844.
+## 6. Mapping CLO
 
-## 9. Lộ trình tiếp theo
+- **CLO 1:** đánh giá thị trường khi có quyết định entry market.
+- **CLO 2:** lựa chọn entry mode.
+- **CLO 3:** đánh giá thông tin khi đã mua intelligence source.
+- **CLO 5:** nhận diện path dependence.
+- **CLO 6:** giải thích quyết định đa tiêu chí và trade-off.
 
-### V1.1
+Mapping này cần cố vấn học thuật duyệt trước pilot chính thức.
 
-- Nút truy cập Learning Edition từ homepage/Brand Passport sau khi UX được duyệt.
-- Song ngữ VI/EN cho Learning Layer.
-- Rubric reflection 4 mức.
-- Market Intelligence Ledger.
-- Path-dependence replay.
+## 7. Bảo vệ engine
 
-### V2
+Hai trường bắt buộc:
 
-- Supabase schema cho consented audit records.
-- Instructor debrief dashboard.
-- Cohort/team management.
-- So sánh decision paths giữa các nhóm.
+```json
+{
+  "engine_outcome_source": "deterministic",
+  "ai_changed_score": false
+}
+```
 
-### V3
+Learning Layer không gọi hàm để chỉnh score và không ghi trở lại trạng thái game. Nếu về sau dùng LLM, LLM chỉ nhận bản sao outcome và không được có quyền gọi engine mutation APIs.
 
-- LLM explanation service tách biệt hoàn toàn với engine.
-- Prompt/version registry.
-- Guardrails, citations và uncertainty labels.
-- Adaptive support theo self-regulation signals.
-- A/B hoặc quasi-experimental pilot về perceived usefulness, engagement và learning outcomes.
+## 8. Kiểm thử
+
+`test/brand-passport-learning.test.js` kiểm tra:
+
+- kết nối được deterministic game;
+- version/schema đúng;
+- Coach/Critic thay đổi theo lựa chọn;
+- một quý tạo đúng một record;
+- reflection, seed, team ID, snapshot, delta, CLO và timestamp đầy đủ;
+- `engine_outcome_source = deterministic`;
+- `ai_changed_score = false`;
+- không lỗi console;
+- không tràn ngang ở viewport Android.
+
+`test/brand-passport-governance.test.js` kiểm tra:
+
+- local-only không phát sinh request;
+- thiếu consent thì submit bị chặn;
+- payload không gửi tên/email/điện thoại;
+- consent version và retention được khai báo;
+- deletion receipt được tạo ở client;
+- RPC delete dùng đúng trace ID và token;
+- RLS/RPC/retention có trong migration;
+- layout governance đạt ở desktop và Android.
+
+## 9. Giới hạn V1
+
+- Prompt chỉ dùng tiếng Việt.
+- Rule-based support chưa phải adaptive model đã được kiểm định.
+- Delta trước/sau bao gồm cả quyết định và biến cố, nên không được diễn giải là tác động nhân quả riêng của quyết định.
+- Pilot Shell thêm một iframe ngoài để cô lập governance khỏi Learning Layer đã đạt QA; cần đánh giá lại kiến trúc trước production quy mô lớn.
+- `localStorage` không phải kho nghiên cứu dài hạn.
+- Server storage chỉ được bật sau review migration, consent, data controller và purge schedule.
+
+## 10. Cổng phát hành
+
+Trước khi đưa vào lớp học thật:
+
+- duyệt học thuật Coach/Critic và CLO;
+- duyệt wording consent VI/EN;
+- xác định data controller/đầu mối hỗ trợ;
+- áp dụng và kiểm tra migration trên Supabase staging;
+- cấu hình purge job 180 ngày;
+- kiểm tra quyền đọc theo lớp;
+- kiểm tra Android thật và Safari/iOS;
+- chốt policy về retention, quyền xóa và xử lý mất deletion receipt;
+- không dùng reflection để AI tự động chấm điểm.
