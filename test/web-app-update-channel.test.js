@@ -31,13 +31,16 @@ assert.match(manager, /registration\.update\(\)/);
 assert.match(manager, /SKIP_WAITING/);
 assert.doesNotMatch(manager, /setTimeout\([^)]*location\.reload/);
 
-assert.match(worker, /bizon-app-shell-v6/);
+assert.match(worker, /bizon-app-shell-v7/);
 assert.match(worker, /\.\/version\.json/);
 assert.match(worker, /command-center\.html/);
+assert.match(worker, /instructor-studio\.html/);
 assert.match(worker, /bizon-unified\.css/);
 assert.match(worker, /bizon-existing-assets\.css/);
+assert.match(worker, /bizon-instructor-studio\.css/);
 assert.match(worker, /unified-app\.js/);
 assert.match(worker, /existing-assets\.js/);
+assert.match(worker, /instructor-studio\.js/);
 assert.match(worker, /approved-existing-assets\.json/);
 assert.match(worker, /arena-vietnam-map-v2\.webp/);
 assert.match(worker, /hero-vietnam-2026\.webp/);
@@ -53,6 +56,7 @@ assert.match(worker, /CLEAR_APP_CACHE/);
 execFileSync(process.execPath, ['--check', 'js/app-shell/update-manager.js'], { stdio: 'inherit' });
 execFileSync(process.execPath, ['--check', 'js/app-shell/unified-app.js'], { stdio: 'inherit' });
 execFileSync(process.execPath, ['--check', 'js/app-shell/existing-assets.js'], { stdio: 'inherit' });
+execFileSync(process.execPath, ['--check', 'js/app-shell/instructor-studio.js'], { stdio: 'inherit' });
 execFileSync(process.execPath, ['--check', 'app/sw.js'], { stdio: 'inherit' });
 
 console.log('BizOn web update channel contract passed');
