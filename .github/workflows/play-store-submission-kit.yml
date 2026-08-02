@@ -1,0 +1,104 @@
+name: Play Store Submission Kit
+
+on:
+  pull_request:
+    paths:
+      - 'play-store/**'
+      - 'scripts/release/capture-play-store-assets.mjs'
+      - 'test/play-store-submission-kit.test.js'
+      - 'app/**'
+      - 'game.html'
+      - 'brand-passport-learning.html'
+      - 'assets/icons/icon-512.png'
+      - 'docs/release/GOOGLE_PLAY_DATA_SAFETY_DRAFT.md'
+      - '.github/workflows/play-store-submission-kit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  submission-kit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Validate listing and release contracts
+        run: node test/play-store-submission-kit.test.js
+
+      - name: Install browser runtime
+        run: |
+          npm install --no-save playwright@1.54.1
+          npx playwright install --with-deps chromium
+
+      - name: Start application server
+        shell: bash
+        run: |
+          python3 -m http.server 8899 --bind 127.0.0.1 >/tmp/bizon-play-store.log 2>&1 &
+          for attempt in {1..30}; do
+            curl --fail --silent http://127.0.0.1:8899/app/release.html >/dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/bizon-play-store.log
+          exit 1
+
+      - name: Capture Play Store assets
+        env:
+          BIZON_URL: http://127.0.0.1:8899
+          PLAY_STORE_OUTPUT: artifacts/play-store
+        run: node scripts/release/capture-play-store-assets.mjs
+
+      - name: Verify image dimensions and package contents
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import pathlib, struct
+
+          def png_size(path):
+              data = pathlib.Path(path).read_bytes()
+              if data[:8] != b'\x89PNG\r\n\x1a\n':
+                  raise SystemExit(f'{path} is not a PNG file')
+              return struct.unpack('>II', data[16:24])
+
+          root = pathlib.Path('artifacts/play-store')
+          expected = {
+              root / 'feature-graphic-1024x500.png': (1024, 500),
+              root / 'app-icon-512.png': (512, 512),
+          }
+          for index, name in enumerate([
+              '01-bizon-home.png',
+              '02-startup-lab.png',
+              '03-brand-passport.png',
+              '04-aibis.png',
+          ], start=1):
+              expected[root / 'phone' / name] = (1080, 1920)
+
+          for path, dimensions in expected.items():
+              if not path.exists():
+                  raise SystemExit(f'Missing asset: {path}')
+              actual = png_size(path)
+              if actual != dimensions:
+                  raise SystemExit(f'{path}: expected {dimensions}, got {actual}')
+
+          for required in ['alt-text-vi.json', 'listing-vi-VN.md', 'listing-en-US.md']:
+              if not (root / required).exists():
+                  raise SystemExit(f'Missing file: {required}')
+
+          print('Play Store asset dimensions and package contents verified')
+          PY
+
+      - name: Upload submission package
+        uses: actions/upload-artifact@v4
+        with:
+          name: bizon-play-store-submission-kit
+          path: artifacts/play-store/
+          if-no-files-found: error
+          retention-days: 30
