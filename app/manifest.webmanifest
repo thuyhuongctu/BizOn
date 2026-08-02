@@ -1,11 +1,11 @@
 {
-  "id": "../",
+  "id": "./release.html",
   "name": "BizOn — AI Business Simulation",
   "short_name": "BizOn App",
-  "description": "Nền tảng mô phỏng quyết định kinh doanh và quốc tế hóa doanh nghiệp.",
+  "description": "Nền tảng mô phỏng quyết định kinh doanh, quốc tế hóa doanh nghiệp và học tập có Decision Trace.",
   "lang": "vi",
-  "start_url": "./index.html",
-  "scope": "../",
+  "start_url": "./release.html",
+  "scope": "./",
   "display": "standalone",
   "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
   "orientation": "any",
@@ -17,8 +17,8 @@
     {"src":"../assets/icons/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
   ],
   "shortcuts": [
-    {"name":"Startup Lab","short_name":"Startup","url":"../game.html","icons":[{"src":"../assets/icons/icon-192.png","sizes":"192x192"}]},
-    {"name":"AIBIS","short_name":"AIBIS","url":"./aibis.html","icons":[{"src":"../assets/icons/icon-192.png","sizes":"192x192"}]},
-    {"name":"Instructor Studio","short_name":"Instructor","url":"../giang-vien.html","icons":[{"src":"../assets/icons/icon-192.png","sizes":"192x192"}]}
+    {"name":"Brand Passport Learning","short_name":"Passport","url":"./brand-passport.html","icons":[{"src":"../assets/icons/icon-192.png","sizes":"192x192","type":"image/png"}]},
+    {"name":"AIBIS","short_name":"AIBIS","url":"./aibis.html","icons":[{"src":"../assets/icons/icon-192.png","sizes":"192x192","type":"image/png"}]},
+    {"name":"BizOn Command Center","short_name":"Command","url":"./index.html","icons":[{"src":"../assets/icons/icon-192.png","sizes":"192x192","type":"image/png"}]}
   ]
 }

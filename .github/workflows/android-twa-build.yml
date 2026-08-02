@@ -5,14 +5,18 @@ on:
     paths:
       - 'android/**'
       - 'app/**'
+      - 'brand-passport-learning.html'
+      - 'js/brand-passport-learning.js'
       - '.well-known/assetlinks.template.json'
       - 'test/android-twa-contract.test.js'
       - '.github/workflows/android-twa-build.yml'
   push:
-    branches: ['feat/android-twa-build']
+    branches: ['main', 'feat/web-app-release-v1']
     paths:
       - 'android/**'
       - 'app/**'
+      - 'brand-passport-learning.html'
+      - 'js/brand-passport-learning.js'
       - '.well-known/assetlinks.template.json'
       - 'test/android-twa-contract.test.js'
       - '.github/workflows/android-twa-build.yml'
@@ -23,7 +27,7 @@ permissions:
 jobs:
   build-debug-apk:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 30
 
     steps:
       - name: Checkout repository
@@ -37,29 +41,31 @@ jobs:
       - name: Validate Android and web contracts
         run: node test/android-twa-contract.test.js
 
-      - name: Verify public PWA endpoints
+      - name: Verify local PWA endpoints
         shell: bash
         run: |
           set -euo pipefail
-          curl --fail --location --silent --show-error \
-            --retry 12 --retry-delay 10 --retry-all-errors \
-            https://thuyhuongctu.github.io/BizOn/app/ \
-            -o /tmp/bizon-app.html
-          grep -qi 'BizOn' /tmp/bizon-app.html
-          curl --fail --location --silent --show-error \
-            --retry 12 --retry-delay 10 --retry-all-errors \
-            https://thuyhuongctu.github.io/BizOn/app/manifest.webmanifest \
-            -o /tmp/bizon-manifest.json
-          python - <<'PY'
+          python3 -m http.server 8899 --directory . >/tmp/bizon-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID || true' EXIT
+          for attempt in {1..20}; do
+            curl --fail --silent http://127.0.0.1:8899/app/release.html -o /tmp/release.html && break
+            sleep 1
+          done
+          grep -q 'Brand Passport Learning' /tmp/release.html
+          curl --fail --silent http://127.0.0.1:8899/app/brand-passport.html -o /tmp/passport.html
+          grep -q '../brand-passport-learning.html' /tmp/passport.html
+          curl --fail --silent http://127.0.0.1:8899/app/manifest.webmanifest -o /tmp/bizon-manifest.json
+          python3 - <<'PY'
           import json
           with open('/tmp/bizon-manifest.json', encoding='utf-8') as handle:
               manifest = json.load(handle)
-          assert manifest['id'] == '../'
-          assert manifest['start_url'] == './index.html'
-          assert manifest['scope'] == '../'
+          assert manifest['id'] == './release.html'
+          assert manifest['start_url'] == './release.html'
+          assert manifest['scope'] == './'
           assert manifest['display'] == 'standalone'
-          assert next(item for item in manifest['shortcuts'] if item['short_name'] == 'AIBIS')['url'] == './aibis.html'
-          print('Public PWA endpoints verified')
+          assert next(item for item in manifest['shortcuts'] if item['short_name'] == 'Passport')['url'] == './brand-passport.html'
+          print('Local PWA endpoints verified')
           PY
 
       - name: Set up Java
@@ -96,7 +102,7 @@ jobs:
             | sed -n 's/^Signer #1 certificate SHA-256 digest: //p' \
             | head -n 1)
           test -n "$DIGEST"
-          DEBUG_DIGEST="$DIGEST" python - <<'PY'
+          DEBUG_DIGEST="$DIGEST" python3 - <<'PY'
           import json, os
           raw = os.environ['DEBUG_DIGEST'].replace(':', '').strip().upper()
           if len(raw) != 64 or any(char not in '0123456789ABCDEF' for char in raw):
