@@ -236,13 +236,23 @@ async function main() {
   const correctRead = await rpc('bizon_bp_learning_traces', { p_class_code: fixtureClassCode, p_key: instructorKey });
   ensure(Array.isArray(correctRead.data) && correctRead.data.some(row => (row.trace_id || row.id) === fixture.id), 'correct class and key return only scoped fixture', 'Instructor RPC did not return the expected fixture.');
 
+  const aiScoringFixtureId = randomUUID();
+  fixtureIds.push(aiScoringFixtureId);
   await rpc('bizon_submit_learning_trace', makePayload({
-    id: randomUUID(), classCode: fixtureClassCode, deleteToken: randomBytes(32).toString('hex'), aiScoring: true
+    id: aiScoringFixtureId,
+    classCode: fixtureClassCode,
+    deleteToken: randomBytes(32).toString('hex'),
+    aiScoring: true
   }), { expectOk: false });
   record('ai_scoring=true payload is rejected');
 
+  const invalidConsentFixtureId = randomUUID();
+  fixtureIds.push(invalidConsentFixtureId);
   await rpc('bizon_submit_learning_trace', makePayload({
-    id: randomUUID(), classCode: fixtureClassCode, deleteToken: randomBytes(32).toString('hex'), consentVersion: 'invalid-consent'
+    id: invalidConsentFixtureId,
+    classCode: fixtureClassCode,
+    deleteToken: randomBytes(32).toString('hex'),
+    consentVersion: 'invalid-consent'
   }), { expectOk: false });
   record('invalid consent version is rejected');
 
@@ -251,6 +261,9 @@ async function main() {
 
   const correctDelete = await rpc('bizon_delete_learning_trace', { p_trace_id: fixture.id, p_delete_token: fixture.deleteToken });
   ensure(correctDelete.data === true, 'correct deletion token deletes fixture', 'Correct deletion token did not delete the fixture.');
+
+  const afterDelete = await rpc('bizon_bp_learning_traces', { p_class_code: fixtureClassCode, p_key: instructorKey });
+  ensure(Array.isArray(afterDelete.data) && !afterDelete.data.some(row => (row.trace_id || row.id) === fixture.id), 'deleted fixture is no longer returned', 'Deleted fixture remained visible through the instructor RPC.');
   fixtureIds = fixtureIds.filter(id => id !== fixture.id);
 
   if (parseBoolean(process.env.RUN_RETENTION_PURGE)) {
