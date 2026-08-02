@@ -1,88 +1,22 @@
 <!doctype html>
-<html lang="vi" data-theme="dark">
+<html lang="vi">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#07141f">
-  <meta name="description" content="BizOn AI Business Simulation application shell">
-  <title>BizOn App — AI Business Simulation</title>
+  <meta http-equiv="refresh" content="0;url=./release.html">
+  <meta name="robots" content="noindex,follow">
+  <title>BizOn</title>
+  <link rel="canonical" href="./release.html">
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="../assets/icons/icon-192.png">
-  <link rel="stylesheet" href="../css/bizon-fonts.css">
-  <link rel="stylesheet" href="../css/app-shell.css">
+  <style>
+    body{margin:0;min-height:100vh;display:grid;place-items:center;background:#07141f;color:#fff;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+    a{color:#77d8e8;font-weight:750}
+  </style>
 </head>
 <body>
-<a class="skip-link" href="#workspace">Bỏ qua điều hướng</a>
-<div class="app-shell">
-  <header class="topbar">
-    <a class="brand" href="../index.html" aria-label="BizOn home"><span class="brand-mark">B</span><span><strong>BIZON</strong><small>AI BUSINESS SIMULATION</small></span></a>
-    <div class="topbar-context"><span class="status-dot"></span><span>Teaching demo</span><span class="context-chip">Local-first</span></div>
-    <div class="topbar-actions"><button id="installBtn" hidden>Cài ứng dụng</button><button id="themeBtn" aria-label="Đổi giao diện">◐</button></div>
-  </header>
-
-  <nav class="sidebar" aria-label="Điều hướng chính">
-    <a class="nav-item active" href="#command-center">⌂ <span>Command Center</span></a>
-    <a class="nav-item" href="../game.html">◈ <span>Startup Lab</span></a>
-    <a class="nav-item" href="./aibis.html">◎ <span>AIBIS</span></a>
-    <a class="nav-item" href="../lop-hoc.html">◫ <span>Classroom</span></a>
-    <a class="nav-item" href="../giang-vien.html">▦ <span>Instructor Studio</span></a>
-    <a class="nav-item" href="#analytics">⌁ <span>Decision Trace</span></a>
-    <a class="nav-item" href="../lumina.html">✦ <span>Lumina AI</span></a>
-    <div class="sidebar-spacer"></div>
-    <a class="nav-item" href="../chinh-sach.html">⚙ <span>Settings & Privacy</span></a>
-  </nav>
-
-  <main id="workspace" class="workspace" tabindex="-1">
-    <section class="hero-panel" id="command-center">
-      <div><p class="eyebrow">BUSINESS DIGITAL TWIN</p><h1>AI Command Center</h1><p>Truy cập các mô phỏng doanh nghiệp, AIBIS và không gian lớp học từ một ứng dụng web thống nhất.</p></div>
-      <div class="sync-badge"><span class="status-dot"></span><strong id="networkLabel">Online</strong><small id="saveLabel">No live company data</small></div>
-    </section>
-
-    <section class="kpi-grid" aria-label="Trạng thái ứng dụng">
-      <article class="kpi-card"><span>Workspace</span><strong>Demo</strong><small>Không phải dữ liệu doanh nghiệp thật</small></article>
-      <article class="kpi-card"><span>Scoring</span><strong>Deterministic</strong><small>Engine tạo kết quả</small></article>
-      <article class="kpi-card"><span>AI role</span><strong>Explain</strong><small>Không thay đổi điểm</small></article>
-      <article class="kpi-card"><span>Storage</span><strong>Local-first</strong><small>Không tự gửi dữ liệu</small></article>
-      <article class="kpi-card"><span>Evidence</span><strong>Versioned</strong><small>Confidence tách khỏi fit</small></article>
-      <article class="kpi-card"><span>Release</span><strong>Web/PWA</strong><small>Android build pipeline</small></article>
-    </section>
-
-    <section class="dashboard-grid">
-      <article class="panel world-panel">
-        <header><div><p class="eyebrow">GLOBAL MARKET</p><h2>Trade Network</h2></div><a href="./aibis.html">Mở AIBIS →</a></header>
-        <div class="map-stage" role="img" aria-label="Minh họa mạng lưới thương mại từ Việt Nam đến các thị trường quốc tế">
-          <div class="globe-orbit orbit-one"></div><div class="globe-orbit orbit-two"></div>
-          <div class="node node-vn">VN</div><div class="node node-jp">JP</div><div class="node node-eu">EU</div><div class="node node-us">US</div>
-          <svg viewBox="0 0 800 320" aria-hidden="true"><path d="M180 230 Q370 20 520 120"/><path d="M180 230 Q430 300 650 180"/><path d="M180 230 Q380 150 430 250"/></svg>
-        </div>
-        <div class="market-summary"><span>Market profile <b>Demo</b></span><span>Engine <b>Versioned</b></span><span>Provenance <b>Visible</b></span></div>
-      </article>
-
-      <aside class="panel lumina-panel">
-        <header><div><p class="eyebrow">AI COACH</p><h2>Lumina Insights</h2></div><span class="ai-label">Explain mode</span></header>
-        <div class="insight"><b>Coach</b><p>Đặt câu hỏi để người học xác định mục tiêu và bằng chứng trước khi quyết định.</p></div>
-        <div class="insight"><b>Critic</b><p>Kiểm tra trade-off về kiểm soát, tốc độ, vốn, học hỏi và rủi ro.</p></div>
-        <div class="insight"><b>Guardrail</b><p>Engine xác định vẫn là nguồn duy nhất tạo điểm và hệ quả mô phỏng.</p></div>
-        <a class="primary-action" href="./aibis.html">Mô phỏng entry mode</a>
-      </aside>
-
-      <article class="panel decision-panel" id="analytics">
-        <header><div><p class="eyebrow">DECISION TIMELINE</p><h2>Strategic Journey</h2></div><button type="button" id="demoDecisionBtn">Thêm quyết định mẫu</button></header>
-        <ol id="decisionTimeline" class="timeline">
-          <li><span>R0</span><div><b>Readiness assessment</b><small>Giá trị hiện tại chỉ là input giảng dạy minh họa.</small></div></li>
-          <li><span>R1</span><div><b>Market and entry analysis</b><small>Fit score được tách khỏi evidence confidence.</small></div></li>
-        </ol>
-      </article>
-
-      <article class="panel launch-panel">
-        <p class="eyebrow">QUICK LAUNCH</p><h2>Bắt đầu mô phỏng</h2>
-        <div class="launch-grid"><a href="../game.html"><b>Startup Lab</b><span>Mô phỏng quản trị doanh nghiệp</span></a><a href="./aibis.html"><b>AIBIS</b><span>Quốc tế hóa và entry mode</span></a><a href="../lop-hoc.html"><b>Classroom</b><span>Tham gia bằng mã lớp</span></a><a href="../giang-vien.html"><b>Instructor</b><span>Điều phối lớp học</span></a></div>
-      </article>
-    </section>
-  </main>
-
-  <aside class="mobile-nav" aria-label="Điều hướng di động"><a href="#command-center">Home</a><a href="../game.html">Startup</a><a href="./aibis.html">AIBIS</a><a href="../giang-vien.html">Teach</a></aside>
-</div>
-<script src="../js/app-shell/app-shell.js" defer></script>
+  <p>Đang mở BizOn… <a href="./release.html">Tiếp tục</a></p>
+  <script>location.replace('./release.html');</script>
 </body>
 </html>
