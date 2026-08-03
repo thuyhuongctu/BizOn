@@ -15,6 +15,7 @@ const required = name => {
 };
 
 const parseBoolean = value => /^(1|true|yes)$/i.test(String(value || ''));
+const isTrue = value => /^(t|true|1)$/i.test(String(value || '').trim());
 const sqlLiteral = value => `'${String(value).replace(/'/g, "''")}'`;
 const startedAt = new Date();
 const tests = [];
@@ -279,11 +280,20 @@ async function main() {
 
   const dependency = managementScalar("select coalesce(to_regprocedure('public.bizon_check_key(text)')::text, '') as value;");
   ensure(Boolean(dependency), 'instructor-key dependency exists', 'public.bizon_check_key(text) is missing on staging.');
-  ensure(['true', 't'].includes(managementScalar("select (to_regclass('public.bp_learning_traces') is not null) as value;")), 'canonical trace table exists', 'public.bp_learning_traces is missing.');
-  ensure(['true', 't'].includes(managementScalar("select relrowsecurity as value from pg_class where oid='public.bp_learning_traces'::regclass;")), 'row level security is enabled', 'RLS is not enabled on public.bp_learning_traces.');
+  ensure(isTrue(managementScalar("select (to_regclass('public.bp_learning_traces') is not null) as value;")), 'canonical trace table exists', 'public.bp_learning_traces is missing.');
+  ensure(isTrue(managementScalar("select relrowsecurity as value from pg_class where oid='public.bp_learning_traces'::regclass;")), 'row level security is enabled', 'RLS is not enabled on public.bp_learning_traces.');
   ensure(managementScalar("select count(*)::text as value from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='public' and p.proname in ('bizon_submit_learning_trace','bizon_delete_learning_trace','bizon_bp_learning_traces','bizon_purge_expired_learning_traces');") === '4', 'all four governed RPCs exist', 'One or more governed RPCs are missing.');
   ensure(managementScalar("select count(*)::text as value from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname='public' and c.relname in ('bp_learning_sessions','bp_learning_records','bp_learning_deletion_requests');") === '0', 'no competing learning schema exists', 'Competing Brand Passport learning tables were found.');
-  ensure(managementScalar("select concat_ws('|',has_table_privilege('anon','public.bp_learning_traces','SELECT'),has_table_privilege('anon','public.bp_learning_traces','INSERT'),has_table_privilege('anon','public.bp_learning_traces','UPDATE'),has_table_privilege('anon','public.bp_learning_traces','DELETE')) as value;") === 'false|false|false|false', 'anon has no direct table privileges', 'Anonymous role has a direct table privilege.');
+
+  const anonPrivilegesBlocked = managementScalar(`
+    select not (
+      has_table_privilege('anon','public.bp_learning_traces','SELECT')
+      or has_table_privilege('anon','public.bp_learning_traces','INSERT')
+      or has_table_privilege('anon','public.bp_learning_traces','UPDATE')
+      or has_table_privilege('anon','public.bp_learning_traces','DELETE')
+    ) as value;
+  `);
+  ensure(isTrue(anonPrivilegesBlocked), 'anon has no direct table privileges', 'Anonymous role has a direct table privilege.');
 
   const directRead = await request('/rest/v1/bp_learning_traces?select=id&limit=1', { method: 'GET' });
   ensure(!directRead.response.ok, 'anonymous direct REST table read is denied', `Direct table read returned HTTP ${directRead.response.status}.`);
@@ -291,8 +301,16 @@ async function main() {
   fixtureClassCode = `BP_STG_${Date.now().toString(36).toUpperCase()}`.slice(0, 40);
   const fixture = await submitFixture(fixtureClassCode);
 
-  const hashCheck = managementScalar(`select concat_ws('|', char_length(delete_token_hash), delete_token_hash ~ '^[0-9a-f]{64}$', delete_token_hash <> ${sqlLiteral(fixture.deleteToken)}) as value from public.bp_learning_traces where id=${sqlLiteral(fixture.id)}::uuid;`);
-  ensure(hashCheck === '64|true|true', 'deletion token is stored only as SHA-256', `Unexpected token hash verification result: ${hashCheck}`);
+  const hashValid = managementScalar(`
+    select (
+      char_length(delete_token_hash) = 64
+      and delete_token_hash ~ '^[0-9a-f]{64}$'
+      and delete_token_hash <> ${sqlLiteral(fixture.deleteToken)}
+    ) as value
+    from public.bp_learning_traces
+    where id=${sqlLiteral(fixture.id)}::uuid;
+  `);
+  ensure(isTrue(hashValid), 'deletion token is stored only as SHA-256', 'Deletion token was not stored as a non-plaintext 64-character SHA-256 value.');
 
   const wrongKey = await rpc('bizon_bp_learning_traces', { p_class_code: fixtureClassCode, p_key: 'WRONG-STAGING-KEY' });
   ensure(Array.isArray(wrongKey.data) && wrongKey.data.length === 0, 'wrong instructor key returns no rows', 'Wrong instructor key returned learning traces.');
