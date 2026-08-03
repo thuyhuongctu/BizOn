@@ -130,7 +130,7 @@
 <!-- ===== NAV ===== -->
 
 <!-- ===== HERO ===== -->
-<header id="top" class="relative min-h-[100svh] flex items-center overflow-hidden text-white" style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%)">
+<header id="top" data-net-hero class="relative min-h-[100svh] flex items-center overflow-hidden text-white" style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%)">
   <div class="blob w-96 h-96 bg-primary-container top-[-80px] left-[-100px]"></div>
   <div class="blob w-80 h-80 bg-clay-gold bottom-[-60px] right-[-60px]" style="animation-delay:-8s"></div>
   <div class="blob w-64 h-64 bg-clay-orange top-1/3 right-1/4" style="animation-delay:-4s; opacity:.25"></div>
@@ -863,6 +863,7 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight') cState.x = Math.min(cv.width - 16, cState.x + 24);
 });
 </script>
+<script src="js/site-nethero.js" defer></script>
 <script src="js/site-ui.js" defer></script>
 <script src="js/site-vnmap.js" defer></script>
 
