@@ -88,11 +88,35 @@
   });
 
   // Keep the installed Web/PWA experience inside the unified app shell.
-  // The legacy dashboard remains accessible from Instructor Studio for fallback and comparison.
   if (!location.pathname.endsWith('/app/instructor-studio.html')) {
     document.querySelectorAll('a[href="../giang-vien.html"], a[href="/BizOn/giang-vien.html"]').forEach(link => {
       link.href = './instructor-studio.html';
     });
+  }
+
+  // Expose the 2030 portfolio map consistently across current app surfaces.
+  if (!location.pathname.endsWith('/app/blueprint-2030.html')) {
+    const installBlueprintLink = (container, className = '') => {
+      if (!container || container.querySelector('[data-blueprint-2030]')) return;
+      const link = document.createElement('a');
+      link.href = './blueprint-2030.html';
+      link.textContent = 'Tầm nhìn 2030';
+      link.dataset.blueprint2030 = 'true';
+      if (className) link.className = className;
+      container.appendChild(link);
+    };
+    installBlueprintLink(document.querySelector('.bz-topbar .bz-nav'));
+    installBlueprintLink(document.querySelector('[data-mobile-panel] nav'), 'bz-btn ghost');
+
+    const moduleGrid = document.querySelector('body.bizon-landing .bz-modules');
+    if (moduleGrid && !moduleGrid.querySelector('[data-blueprint-2030]')) {
+      const card = document.createElement('a');
+      card.className = 'bz-card bz-module';
+      card.href = './blueprint-2030.html';
+      card.dataset.blueprint2030 = 'true';
+      card.innerHTML = '<span class="bz-icon">∞</span><h3>BizOn 2030</h3><p>Xem bản đồ thống nhất của sản phẩm hiện tại, Core v2, AIBIS và mười trụ cột quốc tế.</p><span>Mở Blueprint →</span>';
+      moduleGrid.appendChild(card);
+    }
   }
 
   if ('serviceWorker' in navigator) {
