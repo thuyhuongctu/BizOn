@@ -8,5 +8,10 @@ const modes=[
 {id:'wholly_owned_fdi',label:'Wholly Owned FDI',control:95,speed:25,learning:72,capitalRequirement:95,risk:82,knowledgeProtection:95,localEmbeddedness:72,digitalScalability:35,minFinancialCapacity:88,minInternationalExperience:72,minDigitalCapability:40,evidenceConfidence:86,theories:['TCE','OLI','Institutional'],countryFit:c=>55+(c.marketSize||50)*.25+(c.ipProtection||50)*.15-(c.politicalRisk||50)*.3},
 {id:'digital_entry',label:'Digital Entry',control:62,speed:92,learning:58,capitalRequirement:28,risk:42,knowledgeProtection:58,localEmbeddedness:30,digitalScalability:98,minFinancialCapacity:25,minInternationalExperience:25,minDigitalCapability:75,evidenceConfidence:58,theories:['Digital internationalization','Internalization'],countryFit:c=>45+(c.digitalReadiness||50)*.35+(c.crossBorderNetworkEffects||50)*.2-(c.dataRegulationRisk||50)*.25}
 ];
-const evidence={version:'2026-08-02',status:'simulation-calibration-required',principles:[{claim:'Entry mode entails a control–resource commitment trade-off.',source:refs.TCE},{claim:'Antecedents and outcomes vary across contexts; no mode is universally superior.',source:refs.META},{claim:'Institutional distance effects are heterogeneous and moderated.',source:refs.INST},{claim:'Digital entry requires separate treatment for platform, ecosystem and virtual-presence mechanisms.',source:refs.DIGITAL}]};
+const evidence={version:'2026-08-02',status:'simulation-calibration-required',principles:[
+{claim:'Entry mode entails a control–resource commitment trade-off.',source:refs.TCE},
+{claim:'Antecedents and outcomes vary across contexts; no mode is universally superior.',source:refs.META},
+{claim:'Institutional distance effects are heterogeneous and moderated.',source:refs.INST},
+{claim:'Digital entry requires separate treatment for platform, ecosystem and virtual-presence mechanisms.',source:refs.DIGITAL}
+]};
 return Object.freeze({modes,evidence,refs});});

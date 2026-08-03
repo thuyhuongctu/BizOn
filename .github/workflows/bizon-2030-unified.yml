@@ -1,0 +1,66 @@
+name: BizOn 2030 Unified Platform
+
+on:
+  pull_request:
+    paths:
+      - 'app/blueprint-2030.html'
+      - 'css/bizon-blueprint-2030.css'
+      - 'aibis-entry-mode-preview.html'
+      - 'css/aibis-entry-mode-preview.css'
+      - 'js/aibis/**'
+      - 'js/core/shadow-sync.js'
+      - 'js/backend-config.js'
+      - 'js/app-shell/unified-app.js'
+      - 'test/bizon-2030-unified.test.js'
+      - 'test/shadow-sync.test.js'
+      - '.github/workflows/bizon-2030-unified.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'app/blueprint-2030.html'
+      - 'css/bizon-blueprint-2030.css'
+      - 'aibis-entry-mode-preview.html'
+      - 'css/aibis-entry-mode-preview.css'
+      - 'js/aibis/**'
+      - 'js/core/shadow-sync.js'
+      - 'js/backend-config.js'
+      - 'js/app-shell/unified-app.js'
+      - 'test/bizon-2030-unified.test.js'
+      - 'test/shadow-sync.test.js'
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Syntax checks
+        run: |
+          node --check js/backend-config.js
+          node --check js/app-shell/unified-app.js
+          node --check js/core/shadow-sync.js
+          node --check js/aibis/entry-mode-engine.js
+          node --check js/aibis/entry-mode-models.js
+          node --check js/aibis/country-profile-registry.js
+          node --check js/aibis/country-profile-sources.js
+          node --check js/aibis/country-profile-template.js
+      - name: Core and platform contracts
+        run: |
+          node test/core-state-seed.test.js
+          node test/persistence.test.js
+          node test/legacy-state-adapter.test.js
+          node test/core-v2-bridge.test.js
+          node test/shadow-sync.test.js
+          node test/bizon-2030-unified.test.js
+      - name: Public asset and route checks
+        run: |
+          test -s app/blueprint-2030.html
+          test -s css/bizon-blueprint-2030.css
+          test -s aibis-entry-mode-preview.html
+          test -s assets/illustrations/arena-vietnam-map-v2.webp
