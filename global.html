@@ -31,6 +31,29 @@
   @keyframes vnPulse { 0%,100%{transform:scale(1);opacity:.85} 50%{transform:scale(1.25);opacity:1} }
   .route { stroke-dasharray:6 7; animation:routeFlow 1.2s linear infinite; }
   @keyframes routeFlow { to { stroke-dashoffset:-13; } }
+  /* ===== Bản đồ mạng lưới thương mại toàn cầu – phong cách trung tâm điều hành ===== */
+  #world-map { border-radius:22px; overflow:hidden; box-shadow:0 20px 44px -20px rgba(3,18,38,.6); }
+  #world-map svg { display:block; width:100%; height:auto; background:radial-gradient(125% 150% at 50% 0%,#0d3350 0%,#071f33 46%,#030d18 100%); }
+  .gnet-grid { stroke:rgba(120,200,235,.07); stroke-width:1; }
+  .gnet-land { fill:rgba(92,196,230,.05); stroke:rgba(120,206,236,.32); stroke-width:1.3; stroke-linejoin:round; }
+  .gnet-dot { fill:rgba(130,214,244,.34); }
+  .gnet-arc { fill:none; stroke:url(#gnetArc); stroke-width:1.5; stroke-linecap:round; opacity:.5; }
+  .gnet-arc.sel { stroke:url(#gnetArcSel); stroke-width:3; opacity:1; }
+  .gnet-spark { fill:#ffd88a; }
+  .gnet-node { cursor:pointer; }
+  .gnet-node .halo { fill:rgba(92,196,230,.16); transition:r .2s ease; }
+  .gnet-node .core { fill:#a8e7ff; stroke:#f0ffff; stroke-width:1.4; }
+  .gnet-node:hover .halo { r:20; }
+  .gnet-node:hover .core { fill:#ffd88a; }
+  .gnet-node.sel .core { fill:#ffce7a; stroke:#fff4dc; }
+  .gnet-node.sel .halo { fill:rgba(253,161,39,.26); }
+  .gnet-lbl { fill:#d3eefc; font-weight:800; font-family:Manrope,system-ui,sans-serif; }
+  .gnet-node.sel .gnet-lbl { fill:#ffe6b8; }
+  .gnet-hub-ring { fill:none; stroke:#ffce7a; stroke-width:1.5; }
+  @keyframes gnetPing { 0%{transform:scale(.55);opacity:.85} 100%{transform:scale(2.7);opacity:0} }
+  .gnet-ping { transform-box:fill-box; transform-origin:center; animation:gnetPing 2.6s ease-out infinite; }
+  .gnet-ping.p2 { animation-delay:1.3s; }
+  @media (prefers-reduced-motion:reduce) { .gnet-ping { animation:none; opacity:.28 } }
   input[type=range] { -webkit-appearance:none; height:10px; border-radius:999px; background:#dbe9f2; outline:none; }
   input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:26px; height:26px; border-radius:50%; background:linear-gradient(160deg,#00c4ff,#006687); box-shadow:0 4px 8px rgba(0,102,135,.4), inset 0 -3px 0 rgba(0,0,0,.15); cursor:pointer; }
   @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none} }
@@ -416,34 +439,97 @@ function profRender() {
 function profPick(k, id) { PROFILE[k] = id; try { localStorage.setItem('bizon-global-profile', JSON.stringify(PROFILE)); } catch (e) {} profRender(); if (G.mode && !G.done) gUpdate(); }
 const gFlags = (() => { try { return JSON.parse(localStorage.getItem('bizon-global-flags') || '[]'); } catch (e) { return []; } })();
 
-function renderWorldMap() {
+/* Đường bờ lục địa vẽ mượt bằng bezier (khung xấp xỉ tương đương equirectangular,
+   giữ toạ độ để các thị trường vẫn nằm đúng châu lục). */
+const GNET_LAND = [
+  /* Bắc Mỹ */ 'M112,74 C96,52 150,42 205,50 C252,56 300,56 294,92 C289,122 250,146 236,172 C229,188 212,182 206,162 C196,150 150,150 132,120 C114,96 122,88 112,74 Z',
+  /* Nam Mỹ */ 'M252,220 C286,214 305,246 297,286 C291,326 268,384 254,392 C244,398 240,360 236,330 C229,296 216,260 231,236 C239,225 246,221 252,220 Z',
+  /* Châu Âu */ 'M472,82 C456,70 502,58 542,62 C578,66 590,90 576,110 C560,134 520,140 500,128 C480,118 484,92 472,82 Z',
+  /* Châu Phi */ 'M502,170 C542,160 590,168 592,202 C594,236 560,256 548,290 C538,320 514,334 500,320 C486,306 500,286 492,266 C482,240 456,214 466,190 C473,176 490,172 502,170 Z',
+  /* Châu Á */ 'M592,122 C586,80 642,55 722,50 C812,45 900,62 902,100 C904,134 862,150 822,150 C860,166 850,206 800,216 C760,226 700,216 680,200 C660,188 660,206 640,200 C610,192 597,162 592,122 Z',
+  /* Châu Úc */ 'M822,302 C862,290 916,294 922,320 C928,348 890,362 850,358 C818,354 800,336 811,316 C814,309 818,305 822,302 Z',
+];
+const VN_HUB = { x: 755, y: 215 };
+/* Đường cong nối hub → thị trường, nhấc lên như tuyến bay */
+function gArc(x2, y2) {
+  const x1 = VN_HUB.x, y1 = VN_HUB.y;
+  const mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
+  const lift = Math.min(150, Math.hypot(x2 - x1, y2 - y1) * 0.34);
+  return `M${x1},${y1} Q${mx},${(my - lift).toFixed(1)} ${x2},${y2}`;
+}
+/* Lưới chấm phủ trên đất liền (dựng một lần) */
+function gnetDots() {
+  let d = '';
+  for (let x = 14; x < 948; x += 15)
+    for (let y = 24; y < 406; y += 15)
+      d += `<circle class="gnet-dot" cx="${x}" cy="${y}" r="1.25"/>`;
+  return d;
+}
+function wmBaseSVG() {
+  const grid =
+    Array.from({ length: 9 }, (_, i) => `<line class="gnet-grid" x1="0" y1="${46 + i * 44}" x2="1000" y2="${46 + i * 44}"/>`).join('') +
+    Array.from({ length: 11 }, (_, i) => `<line class="gnet-grid" x1="${i * 100}" y1="0" x2="${i * 100}" y2="420"/>`).join('');
+  const isles = '<circle class="gnet-land" cx="795" cy="272" r="5"/><circle class="gnet-land" cx="815" cy="282" r="4"/><circle class="gnet-land" cx="838" cy="276" r="4"/>';
+  const land = GNET_LAND.map(p => `<path class="gnet-land" d="${p}"/>`).join('') + isles;
+  const clip = GNET_LAND.map(p => `<path d="${p}"/>`).join('') +
+    '<circle cx="795" cy="272" r="5"/><circle cx="815" cy="282" r="4"/><circle cx="838" cy="276" r="4"/>';
+  return `
+  <svg viewBox="0 0 1000 420" aria-label="Bản đồ mạng lưới thương mại toàn cầu BizOn Go Global">
+    <defs>
+      <linearGradient id="gnetArc" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#5cc4e6" stop-opacity="0"/><stop offset=".5" stop-color="#7fd4ee"/><stop offset="1" stop-color="#ffce7a"/>
+      </linearGradient>
+      <linearGradient id="gnetArcSel" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#ffce7a" stop-opacity=".2"/><stop offset="1" stop-color="#ffb347"/>
+      </linearGradient>
+      <clipPath id="gnetLand">${clip}</clipPath>
+    </defs>
+    <g>${grid}</g>
+    <g>${land}</g>
+    <g clip-path="url(#gnetLand)">${gnetDots()}</g>
+    <g id="gnet-dyn"></g>
+  </svg>`;
+}
+function wmDynSVG() {
   const sel = G.market;
-  const pins = MARKETS.map(m => {
-    const won = gFlags.includes(m.id);
-    return `<g class="market-pin${sel && sel.id === m.id ? ' sel' : ''}" onclick="pickMarket('${m.id}')">
-      <circle cx="${m.x}" cy="${m.y}" r="14" fill="#fff" stroke="#006687" stroke-width="2.5"/>
-      <text x="${m.x}" y="${m.y + 5}" text-anchor="middle" font-size="15">${m.flag}</text>
-      ${won ? `<text x="${m.x + 9}" y="${m.y - 12}" font-size="17">🚩</text>` : ''}
-      <text x="${m.x}" y="${m.y + 30}" text-anchor="middle" font-size="12" font-weight="800" fill="currentColor" opacity=".75">${m.name}</text>
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const arcs = MARKETS.map((m, i) => {
+    const p = gArc(m.x, m.y);
+    const on = sel && sel.id === m.id;
+    const spark = reduce ? '' :
+      `<circle class="gnet-spark" r="${on ? 3.4 : 2.4}"><animateMotion dur="${(2.2 + i * 0.18).toFixed(2)}s" begin="${(i * 0.3).toFixed(2)}s" repeatCount="indefinite" path="${p}"/></circle>`;
+    return `<path class="gnet-arc${on ? ' sel' : ''}" d="${p}"/>${spark}`;
+  }).join('');
+  const nodes = MARKETS.map(m => {
+    const on = sel && sel.id === m.id, won = gFlags.includes(m.id);
+    return `<g class="gnet-node${on ? ' sel' : ''}" role="button" tabindex="0" aria-label="${m.name} – ${m.hub}"
+        onclick="pickMarket('${m.id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();pickMarket('${m.id}')}">
+      <circle class="halo" cx="${m.x}" cy="${m.y}" r="15"/>
+      <circle class="core" cx="${m.x}" cy="${m.y}" r="5"/>
+      <text x="${m.x}" y="${m.y - 12}" text-anchor="middle" font-size="14">${m.flag}</text>
+      ${won ? `<text x="${m.x + 12}" y="${m.y - 12}" font-size="15">🚩</text>` : ''}
+      <text class="gnet-lbl" x="${m.x}" y="${m.y + 26}" text-anchor="middle" font-size="12">${m.name}</text>
     </g>`;
   }).join('');
-  const routes = sel ? `<path class="route" d="M755,215 Q${(755 + sel.x) / 2},${Math.min(215, sel.y) - 60} ${sel.x},${sel.y}" fill="none" stroke="#e8762d" stroke-width="3" stroke-linecap="round"/>` : '';
-  document.getElementById('world-map').innerHTML = `
-  <svg viewBox="0 0 1000 420" class="w-full h-auto text-deep-teal" aria-label="Bản đồ thế giới BizOn Go Global">
-    <g fill="rgba(0,102,135,.10)" stroke="rgba(0,102,135,.35)" stroke-width="2" stroke-linejoin="round">
-      <polygon points="70,55 175,38 300,55 295,105 255,150 215,195 165,160 105,125 65,95"/>
-      <polygon points="225,225 285,215 305,290 268,395 235,330 215,265"/>
-      <polygon points="448,72 560,55 585,115 545,148 470,135 445,100"/>
-      <polygon points="452,168 565,158 595,240 545,330 485,285 450,215"/>
-      <polygon points="585,55 780,42 900,75 905,165 830,225 745,235 655,205 590,140"/>
-      <polygon points="800,295 905,285 925,355 835,372"/>
-      <circle cx="795" cy="272" r="5"/><circle cx="815" cy="282" r="4"/><circle cx="838" cy="276" r="4"/>
-    </g>
-    ${routes}
-    <g class="vn-pulse"><circle cx="755" cy="215" r="9" fill="#da251d"/><text x="755" y="220" text-anchor="middle" font-size="10" fill="#ffce00">★</text></g>
-    <text x="755" y="200" text-anchor="middle" font-size="12" font-weight="800" fill="#da251d">Việt Nam</text>
-    ${pins}
-  </svg>`;
+  const pings = reduce ? '' :
+    `<circle class="gnet-ping" cx="${VN_HUB.x}" cy="${VN_HUB.y}" r="10" fill="none" stroke="#ffce7a" stroke-width="1.6"/>
+     <circle class="gnet-ping p2" cx="${VN_HUB.x}" cy="${VN_HUB.y}" r="10" fill="none" stroke="#ffce7a" stroke-width="1.6"/>`;
+  const hub = `<g>
+      ${pings}
+      <circle class="gnet-hub-ring" cx="${VN_HUB.x}" cy="${VN_HUB.y}" r="12"/>
+      <circle cx="${VN_HUB.x}" cy="${VN_HUB.y}" r="7" fill="#da251d"/>
+      <text x="${VN_HUB.x}" y="${VN_HUB.y + 4}" text-anchor="middle" font-size="10" fill="#ffce00">★</text>
+      <text x="${VN_HUB.x}" y="${VN_HUB.y - 18}" text-anchor="middle" font-size="12" font-weight="800" fill="#ffd88a">Việt Nam</text>
+    </g>`;
+  return arcs + hub + nodes;
+}
+function renderWorldMap() {
+  const host = document.getElementById('world-map');
+  if (!host) return;
+  if (!renderWorldMap._base) { host.innerHTML = wmBaseSVG(); renderWorldMap._base = true; }
+  const dyn = document.getElementById('gnet-dyn');
+  if (dyn) dyn.innerHTML = wmDynSVG();
+  const sel = G.market;
   document.getElementById('market-cards').innerHTML = MARKETS.map(m => `
     <button onclick="pickMarket('${m.id}')" class="clay-sunken rounded-2xl p-3 text-left transition-all ${sel && sel.id === m.id ? 'ring-2 ring-clay-orange' : ''}">
       <p class="text-lg">${m.flag} ${gFlags.includes(m.id) ? '🚩' : ''}</p>
