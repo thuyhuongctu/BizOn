@@ -56,12 +56,32 @@ jobs:
             exit 1
           fi
           echo "::add-mask::$INPUT"
-          if [[ "$INPUT" == postgres://* || "$INPUT" == postgresql://* ]]; then
-            DATABASE_URL="$INPUT"
-          else
-            ENCODED_PASSWORD="$(SUPABASE_STAGING_DB_PASSWORD="$INPUT" node -e 'process.stdout.write(encodeURIComponent(process.env.SUPABASE_STAGING_DB_PASSWORD))')"
-            DATABASE_URL="postgresql://postgres.${SUPABASE_STAGING_PROJECT_REF}:${ENCODED_PASSWORD}@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres?sslmode=require"
-          fi
+          DATABASE_URL="$(DATABASE_INPUT="$INPUT" PROJECT_REF="$SUPABASE_STAGING_PROJECT_REF" node <<'NODE'
+          const raw = String(process.env.DATABASE_INPUT || '').trim();
+          const projectRef = String(process.env.PROJECT_REF || '').trim();
+          if (!raw || !projectRef) throw new Error('Missing protected staging database input or project ref.');
+
+          let password = raw;
+          if (/^postgres(?:ql)?:\/\//i.test(raw)) {
+            const parsed = new URL(raw);
+            const identity = `${parsed.hostname}|${decodeURIComponent(parsed.username)}`;
+            if (identity.includes(projectRef)) {
+              process.stdout.write(raw);
+              process.exit(0);
+            }
+            password = decodeURIComponent(parsed.password || '');
+          }
+
+          if (!password) {
+            throw new Error('The supplied database value does not contain a usable staging password.');
+          }
+
+          const encodedPassword = encodeURIComponent(password);
+          process.stdout.write(
+            `postgresql://postgres.${projectRef}:${encodedPassword}@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres?sslmode=require`
+          );
+          NODE
+          )"
           echo "::add-mask::$DATABASE_URL"
           printf 'SUPABASE_STAGING_DATABASE_URL=%s\n' "$DATABASE_URL" >> "$GITHUB_ENV"
 
