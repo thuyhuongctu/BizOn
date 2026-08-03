@@ -1,0 +1,35 @@
+name: Core State and Seed
+
+on:
+  push:
+    branches:
+      - refactor/core-state-seed
+    paths:
+      - 'js/core/**'
+      - 'test/core-state-seed.test.js'
+      - 'docs/architecture/CORE-STATE-SEED.md'
+      - '.github/workflows/core-state-seed.yml'
+  pull_request:
+    paths:
+      - 'js/core/**'
+      - 'test/core-state-seed.test.js'
+      - 'docs/architecture/CORE-STATE-SEED.md'
+      - '.github/workflows/core-state-seed.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Syntax check
+        run: |
+          node --check js/core/game-state.js
+          node --check js/core/seed-engine.js
+      - name: Contract tests
+        run: node test/core-state-seed.test.js
