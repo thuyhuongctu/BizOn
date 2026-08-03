@@ -1,0 +1,68 @@
+name: BizOn IP Evidence Manifest
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'scripts/release/build-ip-evidence-manifest.mjs'
+      - 'docs/ip/**'
+      - '.github/workflows/ip-evidence-manifest.yml'
+  pull_request:
+    paths:
+      - 'scripts/release/build-ip-evidence-manifest.mjs'
+      - 'docs/ip/**'
+      - '.github/workflows/ip-evidence-manifest.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  evidence:
+    name: build copyright and trademark evidence inventory
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository with history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Validate evidence builder
+        run: node --check scripts/release/build-ip-evidence-manifest.mjs
+
+      - name: Build reproducible IP evidence bundle
+        env:
+          BIZON_IP_EVIDENCE_DIR: artifacts/ip-evidence
+        run: node scripts/release/build-ip-evidence-manifest.mjs
+
+      - name: Verify manifest contains no obvious secret paths
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const manifest = JSON.parse(fs.readFileSync('artifacts/ip-evidence/bizon-ip-evidence-manifest.json', 'utf8'));
+          const forbidden = manifest.files.filter(item => /(^|\/)\.env($|\.)|credential|private[-_]?key|keystore|\.jks$/i.test(item.path));
+          if (forbidden.length) {
+            console.error(forbidden.map(item => item.path).join('\n'));
+            process.exit(1);
+          }
+          if (!manifest.commit_sha || !Array.isArray(manifest.files) || manifest.files.length === 0) process.exit(1);
+          console.log(`Validated ${manifest.files.length} evidence records.`);
+          NODE
+
+      - name: Write evidence summary
+        run: cat artifacts/ip-evidence/README.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload sanitized IP evidence bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: bizon-ip-evidence-${{ github.sha }}
+          path: artifacts/ip-evidence/
+          if-no-files-found: error
+          retention-days: 90
