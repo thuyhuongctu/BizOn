@@ -1,0 +1,147 @@
+name: Academia 3D visual QA
+
+on:
+  pull_request:
+    paths:
+      - 'academia3d-v2.html'
+      - '.github/workflows/academia3d-visual.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  screenshots:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install Playwright
+        run: |
+          npm install --no-save playwright@1.54.1
+          npx playwright install --with-deps chromium
+
+      - name: Start preview server
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/bizon-visual.log 2>&1 &
+          for i in {1..20}; do
+            curl --fail --silent http://127.0.0.1:4173/academia3d-v2.html > /dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/bizon-visual.log
+          exit 1
+
+      - name: Capture desktop and Android states
+        run: |
+          mkdir -p visual-qa
+          node <<'NODE'
+          const { chromium } = require('playwright');
+          const fs = require('fs');
+
+          (async () => {
+            const url = 'http://127.0.0.1:4173/academia3d-v2.html';
+            const scenarios = [
+              { name: 'desktop-light-vi', viewport: { width: 1440, height: 1000 }, theme: 'light', language: 'vi' },
+              { name: 'desktop-dark-vi', viewport: { width: 1440, height: 1000 }, theme: 'dark', language: 'vi' },
+              { name: 'desktop-light-en', viewport: { width: 1440, height: 1000 }, theme: 'light', language: 'en' },
+              { name: 'android-light-vi', viewport: { width: 390, height: 844 }, theme: 'light', language: 'vi', mobile: true },
+              { name: 'android-dark-vi', viewport: { width: 390, height: 844 }, theme: 'dark', language: 'vi', mobile: true },
+              { name: 'android-light-en', viewport: { width: 390, height: 844 }, theme: 'light', language: 'en', mobile: true },
+              { name: 'android-reduced-motion', viewport: { width: 390, height: 844 }, theme: 'light', language: 'vi', mobile: true, reducedMotion: 'reduce' }
+            ];
+
+            const browser = await chromium.launch({ headless: true });
+            const report = [];
+
+            for (const scenario of scenarios) {
+              const context = await browser.newContext({
+                viewport: scenario.viewport,
+                deviceScaleFactor: 1,
+                isMobile: Boolean(scenario.mobile),
+                hasTouch: Boolean(scenario.mobile),
+                reducedMotion: scenario.reducedMotion || 'no-preference'
+              });
+              const page = await context.newPage();
+              const errors = [];
+              page.on('pageerror', error => errors.push(String(error)));
+              page.on('console', message => {
+                if (message.type() === 'error') errors.push(message.text());
+              });
+
+              await page.goto(url, { waitUntil: 'networkidle' });
+              await page.evaluate(({ theme, language }) => {
+                document.documentElement.dataset.theme = theme;
+                const current = document.documentElement.lang || 'vi';
+                if (current !== language) document.querySelector('#language')?.click();
+              }, scenario);
+              await page.waitForTimeout(400);
+
+              const revealNodes = page.locator('.reveal');
+              for (let index = 0; index < await revealNodes.count(); index += 1) {
+                await revealNodes.nth(index).scrollIntoViewIfNeeded();
+                await page.waitForTimeout(220);
+              }
+              await page.evaluate(() => {
+                document.documentElement.style.scrollBehavior = 'auto';
+                if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
+                window.scrollTo(0, 0);
+              });
+              await page.waitForFunction(() => window.scrollY === 0);
+              await page.waitForTimeout(180);
+
+              const state = await page.evaluate(() => ({
+                width: window.innerWidth,
+                scrollWidth: document.documentElement.scrollWidth,
+                scrollY: window.scrollY,
+                theme: document.documentElement.dataset.theme,
+                language: document.documentElement.lang,
+                heroVisible: Boolean(document.querySelector('.hero')),
+                globeVisible: Boolean(document.querySelector('#globe')),
+                passportVisible: Boolean(document.querySelector('[data-passport]')),
+                hiddenRevealCount: document.querySelectorAll('.reveal:not(.visible)').length
+              }));
+
+              if (state.scrollWidth > state.width + 1) errors.push(`Horizontal overflow: ${state.scrollWidth}px > ${state.width}px`);
+              if (state.scrollY !== 0) errors.push(`Screenshot did not reset to top: scrollY=${state.scrollY}`);
+              if (state.theme !== scenario.theme) errors.push(`Theme mismatch: ${state.theme}`);
+              if (state.language !== scenario.language) errors.push(`Language mismatch: ${state.language}`);
+              if (!state.heroVisible || !state.globeVisible || !state.passportVisible) errors.push('Required hero elements are missing.');
+              if (state.hiddenRevealCount > 0) errors.push(`${state.hiddenRevealCount} reveal sections remained hidden after scrolling.`);
+
+              await page.screenshot({
+                path: `visual-qa/${scenario.name}.png`,
+                fullPage: true,
+                animations: 'disabled'
+              });
+              report.push({ scenario: scenario.name, ...state, errors });
+              await context.close();
+            }
+
+            await browser.close();
+            fs.writeFileSync('visual-qa/report.json', JSON.stringify(report, null, 2));
+            const failures = report.flatMap(item => item.errors.map(error => `${item.scenario}: ${error}`));
+            if (failures.length) {
+              console.error(failures.join('\n'));
+              process.exit(1);
+            }
+            console.log('All visual QA scenarios passed.');
+          })().catch(error => {
+            console.error(error);
+            process.exit(1);
+          });
+          NODE
+
+      - name: Upload visual QA artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: academia3d-visual-qa
+          path: visual-qa/
+          retention-days: 14
