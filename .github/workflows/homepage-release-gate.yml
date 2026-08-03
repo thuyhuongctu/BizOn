@@ -1,0 +1,113 @@
+name: BizOn Homepage Release Gate
+
+on:
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'academia3d-v2.html'
+      - 'classic-home.html'
+      - 'assets/**'
+      - 'css/**'
+      - '.github/workflows/homepage-release-gate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  homepage-release:
+    name: validate new homepage and rollback route
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Validate release identity and rollback contract
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const crypto = require('node:crypto');
+          const hash = file => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+          const required = ['index.html', 'academia3d-v2.html', 'classic-home.html'];
+          for (const file of required) {
+            if (!fs.existsSync(file)) throw new Error(`Missing required homepage file: ${file}`);
+          }
+          if (hash('index.html') !== hash('academia3d-v2.html')) {
+            throw new Error('Production index must match the independently QA-validated Academia 3D V2 artifact.');
+          }
+          const classic = fs.readFileSync('classic-home.html', 'utf8');
+          if (!/BizOn Bật Nghiệp – Trang chủ/.test(classic)) throw new Error('Classic homepage rollback identity is missing.');
+          const index = fs.readFileSync('index.html', 'utf8');
+          for (const marker of ['id="globe"', 'data-passport', 'prefers-reduced-motion', 'aria-label']) {
+            if (!index.includes(marker)) throw new Error(`Academia homepage marker missing: ${marker}`);
+          }
+          console.log('Homepage promotion and rollback contract passed.');
+          NODE
+
+      - name: Validate HTML
+        run: npx --yes html-validate@8.24.1 index.html academia3d-v2.html classic-home.html
+
+      - name: Check local links and assets
+        run: |
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          from urllib.parse import urlparse
+
+          targets = [Path('index.html'), Path('academia3d-v2.html'), Path('classic-home.html')]
+          missing = []
+
+          class Parser(HTMLParser):
+              def __init__(self, source):
+                  super().__init__()
+                  self.source = source
+              def handle_starttag(self, tag, attrs):
+                  attrs = dict(attrs)
+                  for key in ('href', 'src'):
+                      value = attrs.get(key)
+                      if not value or value.startswith(('#', 'mailto:', 'tel:', 'javascript:', 'data:')):
+                          continue
+                      parsed = urlparse(value)
+                      if parsed.scheme or parsed.netloc:
+                          continue
+                      local = Path(parsed.path)
+                      if not local.exists():
+                          missing.append(f'{self.source}: {tag}[{key}] -> {value}')
+
+          for target in targets:
+              parser = Parser(target)
+              parser.feed(target.read_text(encoding='utf-8'))
+
+          if missing:
+              raise SystemExit('Missing local references:\n' + '\n'.join(missing))
+          print('All homepage and rollback references exist.')
+          PY
+
+      - name: Start local server
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/bizon-homepage.log 2>&1 &
+          for attempt in {1..30}; do
+            curl --fail --silent http://127.0.0.1:4173/ >/dev/null && \
+            curl --fail --silent http://127.0.0.1:4173/classic-home.html >/dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/bizon-homepage.log
+          exit 1
+
+      - name: Lighthouse release audit
+        run: |
+          npx --yes @lhci/cli@0.14.0 collect \
+            --url=http://127.0.0.1:4173/ \
+            --numberOfRuns=1 \
+            --settings.chromeFlags='--headless --no-sandbox --disable-dev-shm-usage'
+          npx --yes @lhci/cli@0.14.0 assert \
+            --assertions.categories:performance='warn',0.65 \
+            --assertions.categories:accessibility='error',0.90 \
+            --assertions.categories:best-practices='error',0.90 \
+            --assertions.categories:seo='error',0.90
