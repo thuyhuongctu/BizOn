@@ -8,6 +8,10 @@ This directory is a clean preview port of the original `feat/vietlens-mvp` work 
 
 VietLens remains a separate product identity from BizOn and M-AIDA. This preview must not be treated as permission to reuse restricted M-AIDA code, data, credentials or research materials. The production/commercial implementation should use a separate repository, database, API configuration and provenance ledger.
 
+## Technical documentation
+
+- Detailed current/runtime and target-production mechanism: [`docs/vietlens/VIETLENS-OPERATING-MECHANISM-V1.md`](../docs/vietlens/VIETLENS-OPERATING-MECHANISM-V1.md)
+
 ## Run locally
 
 ```bash
