@@ -11,6 +11,7 @@ on:
       - 'js/core/shadow-sync.js'
       - 'js/backend-config.js'
       - 'js/app-shell/unified-app.js'
+      - 'scripts/release/capture-bizon-2030.mjs'
       - 'test/bizon-2030-unified.test.js'
       - 'test/shadow-sync.test.js'
       - '.github/workflows/bizon-2030-unified.yml'
@@ -25,6 +26,7 @@ on:
       - 'js/core/shadow-sync.js'
       - 'js/backend-config.js'
       - 'js/app-shell/unified-app.js'
+      - 'scripts/release/capture-bizon-2030.mjs'
       - 'test/bizon-2030-unified.test.js'
       - 'test/shadow-sync.test.js'
 
@@ -32,9 +34,9 @@ permissions:
   contents: read
 
 jobs:
-  contract:
+  contract-and-visual:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -50,6 +52,7 @@ jobs:
           node --check js/aibis/country-profile-registry.js
           node --check js/aibis/country-profile-sources.js
           node --check js/aibis/country-profile-template.js
+          node --check scripts/release/capture-bizon-2030.mjs
       - name: Core and platform contracts
         run: |
           node test/core-state-seed.test.js
@@ -64,3 +67,30 @@ jobs:
           test -s css/bizon-blueprint-2030.css
           test -s aibis-entry-mode-preview.html
           test -s assets/illustrations/arena-vietnam-map-v2.webp
+      - name: Install Chromium
+        run: |
+          npm install --no-save playwright@1.54.1
+          npx playwright install --with-deps chromium
+      - name: Start local server
+        shell: bash
+        run: |
+          python3 -m http.server 8899 --bind 127.0.0.1 >/tmp/bizon-2030.log 2>&1 &
+          for attempt in {1..30}; do
+            curl --fail --silent http://127.0.0.1:8899/app/blueprint-2030.html >/dev/null && \
+            curl --fail --silent http://127.0.0.1:8899/aibis-entry-mode-preview.html >/dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/bizon-2030.log
+          exit 1
+      - name: Capture desktop and mobile visual QA
+        env:
+          BIZON_URL: http://127.0.0.1:8899
+          BIZON_QA_OUTPUT: artifacts/bizon-2030
+        run: node scripts/release/capture-bizon-2030.mjs
+      - name: Upload visual QA
+        uses: actions/upload-artifact@v4
+        with:
+          name: bizon-2030-unified-qa
+          path: artifacts/bizon-2030/
+          if-no-files-found: error
+          retention-days: 30
