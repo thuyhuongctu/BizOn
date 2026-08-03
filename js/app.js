@@ -109,7 +109,7 @@ function doLoginDemo() {
 /* Hồ sơ doanh nghiệp – tên công ty (= tên đội) + sản phẩm chủ lực */
 const COMPANY_INFO = {
   product: 'Bộ linh vật đất sét Việt', segment: 'Quà tặng & đồ sưu tầm',
-  factory: 'Xưởng thủ công Cần Thơ', capital: 'Vốn khởi điểm 500tr₫', refPrice: 'Giá tham chiếu 150.000₫/bộ',
+  factory: 'Xưởng thủ công Cần Thơ', capital: 'Vốn ban đầu 500tr₫', refPrice: 'Giá bán đề xuất 150.000₫/bộ',
 };
 function renderCompanyCard() {
   const box = $('company-card');
@@ -118,7 +118,7 @@ function renderCompanyCard() {
     <div class="flex items-center gap-3 mb-2.5">
       <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-clay-orange to-clay-gold flex items-center justify-center text-2xl shadow-clay shrink-0">🏺</div>
       <div class="min-w-0">
-        <p class="text-[9px] font-extrabold text-deep-teal/45 uppercase tracking-wide">Doanh nghiệp của bạn</p>
+        <p class="text-[9px] font-extrabold text-deep-teal/45 uppercase tracking-wide">Doanh nghiệp</p>
         <h3 class="font-display font-extrabold text-deep-teal text-lg truncate">${S.profile.teamName}</h3>
       </div>
     </div>
@@ -327,13 +327,13 @@ const MANUAL = {
     <div class="clay-card p-4 mb-3"><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p></div>`).join('')}` },
   glossary: { icon: '📚', name: 'Thuật ngữ dễ hiểu', html: `
     <p class="text-sm text-deep-teal/75 mb-4">Các thuật ngữ hay gặp trong game, giải thích bằng một câu:</p>
-    ${[['Thị phần', 'Miếng bánh khách hàng của bạn – trong 12.000 sp cầu thị trường mỗi vòng, bạn bán được bao nhiêu %.'],
-       ['Giá tham chiếu (150k)', 'Mức giá "chuẩn" thị trường – bán rẻ hơn thì hút khách, đắt hơn thì mất khách (mức độ theo độ co giãn giá 1.8).'],
+    ${[['Thị phần (%)', 'Miếng bánh khách hàng của bạn – trong 12.000 sp cầu thị trường mỗi chu kỳ, bạn bán được bao nhiêu %.'],
+       ['Giá bán đề xuất (150k)', 'Mức giá "chuẩn" thị trường – bán rẻ hơn thì hút khách, đắt hơn thì mất khách (mức độ theo độ co giãn giá 1.8).'],
        ['Biên lợi nhuận', 'Tiền lời trên mỗi sản phẩm = giá bán − chi phí (~60k/sp). Giá 150k → lời ~90k/sp trước chi phí cố định.'],
        ['Hòa vốn (CVP)', 'Số sản phẩm phải bán để bù hết chi phí cố định + marketing + R&D. Bán ít hơn mức này là lỗ.'],
        ['OEE', 'Điểm sức khỏe dây chuyền (0–100%): máy chạy đều, ít hỏng, ít phế phẩm. Dưới 60% là báo động.'],
        ['Quick Ratio', 'Khả năng trả nợ ngay bằng tiền mặt – dưới 1.0 nghĩa là chi kế hoạch đang vượt tiền trong két.'],
-       ['Thương hiệu (Brand)', 'Uy tín tích lũy qua các vòng – nhân sức hút của bạn, đặc biệt vòng 6 (trọng số ×1.5).'],
+       ['Điểm thương hiệu (Brand Score)', 'Uy tín tích lũy qua các chu kỳ – nhân sức hút của bạn, đặc biệt chu kỳ 6 (trọng số ×1.5).'],
        ['Khấu hao', 'Máy móc "mòn" theo công suất – đầu tư càng lớn, chi phí cố định mỗi vòng càng cao.']].map(([t, d]) => `
     <div class="clay-card p-4 mb-2.5"><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p></div>`).join('')}` },
   trouble: { icon: '🔧', name: 'Xử lý sự cố', html: `
@@ -908,7 +908,7 @@ function renderJournal() {
             <span class="text-[10px] font-extrabold px-2.5 py-1 rounded-full bg-deep-teal text-white">ĐANG DIỄN RA</span>
             <span class="text-[11px] font-bold text-deep-teal/50">V${S.round}/6</span>
           </div>
-          <p class="font-display font-bold text-deep-teal">Vòng ${S.round}: ${ev.name.replace('Biến cố: ', '')}</p>
+          <p class="font-display font-bold text-deep-teal">Chu kỳ ${S.round}: ${ev.name}</p>
           <div class="clay-sunken rounded-2xl p-3 mt-2">
             <p class="text-[10px] font-bold text-deep-teal/50 uppercase">Trạng thái</p>
             <p class="text-sm font-bold text-primary">${S.committed ? 'Đã commit – chờ kết quả' : 'Đang thảo luận quyết định'}</p>
@@ -927,7 +927,7 @@ function renderJournal() {
             <span class="text-[10px] font-extrabold px-2.5 py-1 rounded-full clay-sunken text-deep-teal/70">HOÀN THÀNH</span>
             <span class="text-[11px] font-bold text-deep-teal/50">V${r.round}/6</span>
           </div>
-          <p class="font-display font-bold text-deep-teal">Vòng ${r.round}: ${r.event.name.replace('Biến cố: ', '')}</p>
+          <p class="font-display font-bold text-deep-teal">Chu kỳ ${r.round}: ${r.event.name}</p>
           <div class="clay-sunken rounded-2xl p-3 mt-2">
             <p class="text-[10px] font-bold text-deep-teal/50 uppercase">Quyết định then chốt</p>
             <p class="text-sm font-bold text-primary">Giá bán: ${r.decisions.price.toLocaleString('vi-VN')}k₫ (${priceDelta >= 0 ? '+' : ''}${priceDelta}% so với ĐT) · R&D ${r.rd}tr₫</p>
@@ -963,7 +963,7 @@ function renderDashboard() {
   const trial = $('dash-trial');
   if (trial) trial.classList.toggle('hidden', !isTrial());
   $('dash-status').textContent = S.finished ? '🏁 Đã hoàn thành mô phỏng!'
-    : S.committed ? 'Đã khóa – chờ kết quả' : 'Đang chờ quyết định';
+    : S.committed ? 'Đã khóa – chờ kết quả' : 'Đang ra quyết định';
   $('round-dots').innerHTML = Array.from({ length: ROUNDS_TOTAL }, (_, i) => {
     const done = i < S.history.length;
     const cur = i + 1 === S.round && !S.finished;
@@ -976,7 +976,7 @@ function renderDashboard() {
     banner.className = 'clay-card p-4 mb-4 border-2 ' +
       (ev.tone === 'bad' ? 'border-orange-300 animate-shake' : ev.tone === 'warn' ? 'border-amber-200' : 'border-primary-container/40');
     banner.innerHTML = `${ev.img ? `<img src="${ev.img}" alt="${ev.name}" class="w-full h-32 object-cover rounded-2xl mb-3" loading="lazy">` : ''}<div class="flex gap-3 items-start"><span class="text-2xl">${ev.icon}</span>
-      <div><p class="font-display font-bold text-deep-teal text-sm">Biến cố vòng ${S.round}: ${ev.name}</p>
+      <div><p class="font-display font-bold text-deep-teal text-sm">Sự kiện thị trường · Chu kỳ ${S.round}: ${ev.name}</p>
       <p class="text-xs text-deep-teal/70 mt-0.5">${ev.desc}</p></div></div>`;
   } else banner.classList.add('hidden');
 
@@ -1328,7 +1328,7 @@ function showRoundResult(r) {
         <div class="bg-surface-bright rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Doanh thu</p><p class="font-display font-bold text-deep-teal">${money(r.revenue)}</p></div>
         <div class="bg-surface-bright rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Lợi nhuận ròng</p><p class="font-display font-bold ${ok ? 'text-emerald-600' : 'text-orange-600'}">${money(r.netProfit)}</p></div>
         <div class="bg-surface-bright rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Đã bán</p><p class="font-display font-bold text-deep-teal">${r.sold.toLocaleString('vi-VN')} sp</p></div>
-        <div class="bg-surface-bright rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Thị phần</p><p class="font-display font-bold text-deep-teal">${r.share.toFixed(1)}%</p></div>
+        <div class="bg-surface-bright rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Thị phần (%)</p><p class="font-display font-bold text-deep-teal">${r.share.toFixed(1)}%</p></div>
       </div>
       <div class="clay-sunken rounded-2xl p-3 mt-3 text-left"><p class="text-[10px] font-extrabold text-deep-teal/50 uppercase mb-0.5">💡 Vì sao?</p><p class="text-[11px] text-deep-teal/75">${explainRound(r)}</p></div>
       <p class="mt-3 text-xs font-bold text-primary">+${r.xpGain} XP</p>
@@ -2160,7 +2160,7 @@ function renderSeasonReport(body) {
         <p class="text-[11px] text-deep-teal/70 mt-2.5 max-w-xs mx-auto">đã hoàn thành trọn vẹn ${rounds.length} vòng mô phỏng kinh doanh <b>«BizOn Bật Nghiệp»</b>${champion ? ' với ngôi vị Quán quân sàn đấu' : ''}</p>
         <div class="grid grid-cols-3 gap-2 mt-3.5">
           <div class="clay-sunken rounded-2xl p-2"><p class="text-[9px] uppercase font-bold text-deep-teal/50">Hạng chung cuộc</p><p class="font-display font-extrabold text-primary text-base">${champion ? '👑 #1' : '#' + myRank}/4</p></div>
-          <div class="clay-sunken rounded-2xl p-2"><p class="text-[9px] uppercase font-bold text-deep-teal/50">Thị phần</p><p class="font-display font-extrabold text-primary text-base">${shareLast.toFixed(1)}%</p></div>
+          <div class="clay-sunken rounded-2xl p-2"><p class="text-[9px] uppercase font-bold text-deep-teal/50">Thị phần (%)</p><p class="font-display font-extrabold text-primary text-base">${shareLast.toFixed(1)}%</p></div>
           <div class="clay-sunken rounded-2xl p-2"><p class="text-[9px] uppercase font-bold text-deep-teal/50">Lợi nhuận</p><p class="font-display font-extrabold ${totalProfit >= 0 ? 'text-primary' : 'text-orange-600'} text-base">${money(Math.round(totalProfit))}</p></div>
         </div>
         <div class="flex items-end justify-between gap-2 mt-5">
