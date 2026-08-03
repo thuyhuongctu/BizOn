@@ -219,8 +219,8 @@
         <div class="flex justify-between items-center">
           <div>
             <p class="text-white/70 text-xs font-semibold uppercase tracking-wide">Trung tâm điều hành</p>
-            <h2 class="font-display text-2xl font-extrabold text-white">Vòng <span id="dash-round">1</span>/6</h2>
-            <p id="dash-status" class="text-primary-container text-sm font-bold mt-1">Đang chờ quyết định</p>
+            <h2 class="font-display text-2xl font-extrabold text-white">Chu kỳ kinh doanh <span id="dash-round">1</span>/6</h2>
+            <p id="dash-status" class="text-primary-container text-sm font-bold mt-1">Đang ra quyết định</p>
             <p id="dash-trial" class="hidden text-[10px] font-extrabold mt-1.5 inline-block px-2 py-0.5 rounded-full" style="background:rgba(253,161,39,.22); color:#ffd79a" title="Nhập Mã lớp của giảng viên để kết quả vào bảng xếp hạng lớp và được cấp chứng nhận">🧪 Chơi thử · kết quả không gửi về lớp</p>
           </div>
           <div class="flex gap-1.5" id="round-dots"></div>
@@ -229,20 +229,20 @@
       <div class="grid grid-cols-3 gap-3 mb-4">
         <div class="clay-card p-4 text-center">
           <p class="text-2xl">💵</p><p id="m-cash" class="font-display font-extrabold text-deep-teal text-sm mt-1">–</p>
-          <p class="text-[10px] text-deep-teal/50 font-semibold uppercase">Dòng tiền</p>
+          <p class="text-[10px] text-deep-teal/50 font-semibold uppercase">Số dư tiền mặt</p>
         </div>
         <div class="clay-card p-4 text-center">
           <p class="text-2xl">📊</p><p id="m-share" class="font-display font-extrabold text-deep-teal text-sm mt-1">–</p>
-          <p class="text-[10px] text-deep-teal/50 font-semibold uppercase">Thị phần</p>
+          <p class="text-[10px] text-deep-teal/50 font-semibold uppercase">Thị phần (%)</p>
         </div>
         <div class="clay-card p-4 text-center">
           <p class="text-2xl">⭐</p><p id="m-brand" class="font-display font-extrabold text-deep-teal text-sm mt-1">–</p>
-          <p class="text-[10px] text-deep-teal/50 font-semibold uppercase">Thương hiệu</p>
+          <p class="text-[10px] text-deep-teal/50 font-semibold uppercase">Điểm thương hiệu</p>
         </div>
       </div>
       <div class="clay-card p-5 mb-4">
         <div class="flex items-center justify-between mb-1">
-          <h3 class="font-display font-bold text-deep-teal">🗺️ Hành trình chinh phục Việt Nam</h3>
+          <h3 class="font-display font-bold text-deep-teal">🗺️ Lộ trình mở rộng thị trường</h3>
           <span id="cq-count" class="text-[10px] font-extrabold text-primary shrink-0">🚩 0/6</span>
         </div>
         <p class="text-[11px] text-deep-teal/50 mb-3">Thắng mỗi vòng để cắm cờ công ty – từ Cần Thơ tới Thủ đô Hà Nội.</p>
@@ -287,8 +287,8 @@
 
     <!-- ========== DECISIONS ========== -->
     <section id="tab-decisions" class="screen">
-      <h2 class="font-display text-xl font-extrabold text-deep-teal mb-1">Quyết định kinh doanh</h2>
-      <p class="text-sm text-deep-teal/60 mb-4">Vòng <span class="dec-round">1</span>/6 · Thống nhất với cả đội trước khi khóa!</p>
+      <h2 class="font-display text-xl font-extrabold text-deep-teal mb-1">Ra quyết định kinh doanh</h2>
+      <p class="text-sm text-deep-teal/60 mb-4">Chu kỳ <span class="dec-round">1</span>/6 · Thống nhất với cả đội trước khi khóa!</p>
       <div class="clay-card p-4 mb-3 border-2 border-clay-gold/50">
         <p class="font-bold text-sm text-deep-teal">🎯 Cách thắng vòng này</p>
         <p class="text-[11px] text-deep-teal/65 mt-1">Đạt <b>thị phần cao nhất</b> so với 3 đối thủ để cắm cờ 🚩 lên bản đồ – và giữ <b>lợi nhuận dương</b>. Kéo các thanh trượt bên dưới, ô «Dự báo thị phần» sẽ báo ngay bạn đang thắng hay thua.</p>
@@ -304,7 +304,7 @@
       <div class="clay-card p-5 mb-3">
         <div class="flex justify-between mb-1"><label class="font-bold text-sm text-deep-teal">💲 Giá bán / sản phẩm</label><span id="v-price" class="font-display font-bold text-primary">150.000₫</span></div>
         <input id="in-price" aria-label="Giá bán mỗi sản phẩm, nghìn đồng" type="range" min="80" max="300" step="5" value="150" class="w-full" oninput="syncDecisionLabels()">
-        <p class="text-[11px] text-deep-teal/50 mt-1">Giá cao → biên lợi nhuận tốt nhưng mất khách. Giá tham chiếu thị trường: 150.000₫</p>
+        <p class="text-[11px] text-deep-teal/50 mt-1">Giá cao → biên lợi nhuận tốt nhưng mất khách. Giá bán đề xuất thị trường: 150.000₫</p>
       </div>
       <div class="clay-card p-5 mb-3">
         <div class="flex justify-between mb-1"><label class="font-bold text-sm text-deep-teal">📣 Ngân sách Marketing</label><span id="v-mkt" class="font-display font-bold text-primary">50tr₫</span></div>
@@ -409,7 +409,7 @@
         </div>
       <div class="clay-card p-4 mb-4">
         <p class="font-bold text-sm text-deep-teal mb-1">🔮 Mô phỏng "Nếu – Thì" trước khi Commit</p>
-        <p class="text-[11px] text-deep-teal/60 mb-3">Lumina chạy thử kịch bản với thông số bạn đang chọn (<span id="whatif-quota">2</span> lượt/vòng).</p>
+        <p class="text-[11px] text-deep-teal/60 mb-3">Lumina chạy thử kịch bản với thông số bạn đang chọn (<span id="whatif-quota">2</span> lượt/chu kỳ).</p>
         <div class="grid grid-cols-2 gap-2">
           <button onclick="runWhatIf('CEO')" class="clay-button-secondary text-primary text-xs font-bold py-2.5">🧭 Chiến lược (CEO)</button>
           <button onclick="runWhatIf('CFO')" class="clay-button-secondary text-primary text-xs font-bold py-2.5">💰 Tài chính (CFO)</button>
@@ -461,7 +461,7 @@
       <div id="advisor-chat" class="space-y-3 mb-4"></div>
       <div class="clay-card p-4 mb-4">
         <div class="flex items-center justify-between mb-2">
-          <p class="font-bold text-sm text-deep-teal">Hỏi Lumina (<span id="ai-quota">3</span> lượt/vòng)</p>
+          <p class="font-bold text-sm text-deep-teal">Hỏi Lumina (<span id="ai-quota">3</span> lượt/chu kỳ)</p>
           <div class="flex items-center gap-1.5 clay-input rounded-full p-1">
             <button id="voice-female" onclick="setVoiceGender('female')" class="px-3 py-1 rounded-full text-[11px] font-bold bg-white shadow-md text-primary">👩 Nữ</button>
             <button id="voice-male" onclick="setVoiceGender('male')" class="px-3 py-1 rounded-full text-[11px] font-bold text-deep-teal/50">👨 Nam</button>
@@ -494,7 +494,7 @@
 
     <!-- ========== REPORTS ========== -->
     <section id="tab-reports" class="screen">
-      <h2 class="font-display text-xl font-extrabold text-deep-teal mb-4">Báo cáo & Phân tích</h2>
+      <h2 class="font-display text-xl font-extrabold text-deep-teal mb-4">Báo cáo kết quả & Phân tích</h2>
       <div class="flex gap-2 mb-4 overflow-x-auto pb-1">
         <button data-rep="pnl" class="rep-tab clay-btn bg-primary text-white text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('pnl')">P&L</button>
         <button data-rep="cash" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('cash')">Dòng tiền</button>
@@ -672,7 +672,7 @@
       </div>
       <div class="grid grid-cols-2 gap-3 mb-5">
         <div class="clay-card p-4 text-center"><p id="pf-profit" class="font-display font-extrabold text-primary">0₫</p><p class="text-[10px] text-deep-teal/50 font-semibold uppercase mt-1">Tổng lợi nhuận</p></div>
-        <div class="clay-card p-4 text-center"><p id="pf-rounds" class="font-display font-extrabold text-primary">0/6</p><p class="text-[10px] text-deep-teal/50 font-semibold uppercase mt-1">Vòng hoàn thành</p></div>
+        <div class="clay-card p-4 text-center"><p id="pf-rounds" class="font-display font-extrabold text-primary">0/6</p><p class="text-[10px] text-deep-teal/50 font-semibold uppercase mt-1">Chu kỳ hoàn thành</p></div>
       </div>
       <h3 class="font-display font-bold text-deep-teal mb-3">👥 Đội ngũ sáng lập BizOn</h3>
       <div class="grid grid-cols-2 gap-3">
@@ -727,12 +727,12 @@
       <button class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="home" onclick="showTab('home')">
         <span class="nav-ico flex items-center justify-center">
           <svg class="clay-ico w-6 h-6" viewBox="0 0 24 24"><defs><linearGradient id="gNavHome" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00c4ff"/><stop offset="1" stop-color="#006687"/></linearGradient></defs><path d="M12 3.1 3.7 9.9c-.4.3-.6.8-.6 1.2v8c0 1 .8 1.8 1.8 1.8h4.3v-4.7c0-1.5 1.3-2.8 2.8-2.8s2.8 1.3 2.8 2.8v4.7h4.3c1 0 1.8-.8 1.8-1.8v-8c0-.5-.2-.9-.6-1.2L12 3.1z" fill="url(#gNavHome)"/><ellipse cx="12" cy="6.6" rx="4" ry="1.3" fill="#fff" opacity=".3"/></svg>
-        </span><span class="text-[10px] font-bold">Trang chủ</span>
+        </span><span class="text-[10px] font-bold">Tổng quan</span>
       </button>
       <button class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="decisions" onclick="showTab('decisions')">
         <span class="nav-ico flex items-center justify-center">
           <svg class="clay-ico w-6 h-6" viewBox="0 0 24 24"><defs><linearGradient id="gNavTarget" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00c4ff"/><stop offset="1" stop-color="#006687"/></linearGradient></defs><circle cx="12" cy="12" r="9.2" fill="url(#gNavTarget)"/><circle cx="12" cy="12" r="5.8" fill="#f4faff"/><circle cx="12" cy="12" r="2.8" fill="url(#gNavTarget)"/><ellipse cx="9.4" cy="7.4" rx="3.4" ry="1.5" fill="#fff" opacity=".35" transform="rotate(-25 9.4 7.4)"/></svg>
-        </span><span class="text-[10px] font-bold">Quyết định</span>
+        </span><span class="text-[10px] font-bold">Ra quyết định</span>
       </button>
       <button class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="advisor" onclick="showTab('advisor')">
         <span class="nav-ico flex items-center justify-center">

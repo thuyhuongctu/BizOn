@@ -89,7 +89,7 @@
       ? state.leaderboard.map((row, index) => `<tr>
           <td><strong>${medals[index] || index + 1}</strong></td>
           <td><strong>${escapeHtml(row.team_name)}</strong></td>
-          <td>Vòng ${Number(row.best_round || 0)}/6</td>
+          <td>Chu kỳ ${Number(row.best_round || 0)}/6</td>
           <td><strong>${fmtPercent(row.share)}</strong></td>
           <td>${fmtNumber(row.net_profit)} ₫</td>
           <td>${fmtNumber(row.revenue)} ₫</td>
