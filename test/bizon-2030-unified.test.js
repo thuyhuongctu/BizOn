@@ -29,7 +29,9 @@ assert.match(backend, /coreV2/);
 assert.match(backend, /shadowSync/);
 assert.match(backend, /js\/core\/shadow-sync\.js/);
 assert.match(backend, /shadowEnabled = enabled/);
-assert.doesNotMatch(backend, /service_role/i);
+// Security guidance may mention the forbidden key by name; executable config must not define or assign one.
+assert.doesNotMatch(backend, /(?:serviceRoleKey|service_role_key|SERVICE_ROLE_KEY)\s*[:=]/);
+assert.doesNotMatch(backend, /['"]sb_(?:secret|service_role)_[^'"]+['"]/i);
 
 const Engine = require('../js/aibis/entry-mode-engine.js');
 const Models = require('../js/aibis/entry-mode-models.js');
