@@ -1,0 +1,21 @@
+legacy_field,target_field,rule,status
+profile.classId|profile.classCode,session.classId,first non-empty text,implemented
+profile.teamId|profile.teamName,session.teamId,first non-empty text,implemented
+profile.teamName,metadata.legacyTeamName,text copy,implemented
+profile.role,metadata.legacyRole,text copy,implemented
+round,game.currentRound,integer clamped 0-6,implemented
+balance,company.cash,finite number fallback 500,implemented
+history[-1].revenue,company.revenue,finite number fallback 0,implemented
+history[-1].netProfit|profit,company.profit,finite number fallback 0,implemented
+history[-1].share|marketShare,company.marketShare,finite number bounded by GameState,implemented
+brandLoyalty,company.reputation,finite number bounded by GameState,implemented
+risk,company.risk,finite number bounded by GameState,implemented
+history,outcomes,deep copy,implemented
+grantLog,instructorActions,deep copy,implemented
+advisorHistory|aiHistory,aiInteractions,concatenate deep copies,implemented
+eventHistory|events,events,first available array,implemented
+decisions,decisions,deep copy when present,implemented
+roundLocked,metadata.legacyRoundLocked,boolean,implemented
+achievements|conquest|rewardsOwned|aiAskedTotal,metadata.legacySummary,count only,implemented
+competitors,none,not mapped until stable contract,deferred
+loan|oee|defect|roi|energyLines,none,not mapped until domain model expands,deferred
