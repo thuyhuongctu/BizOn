@@ -154,7 +154,7 @@ Rà soát giao diện hiện tại phát hiện **các dấu hiệu của chủ 
 | **Logo GitHub** dạng hình vẽ nhúng thẳng trong trang | `index.html` · `gioi-thieu.html` · `global.html` · `games.html` | Che hoặc cắt bỏ khỏi ảnh chụp |
 | Nút chia sẻ **Facebook · X · GitHub** trong thanh tiện ích | Toàn bộ trang | Đóng thanh tiện ích trước khi chụp |
 | Chữ **GitHub** trong đường dẫn hiển thị | 22 vị trí | Cắt bỏ khỏi ảnh, hoặc chụp phần không chứa |
-| Chữ **Zenodo · ORCID · Google Scholar · ResearchGate** | Trang Đội ngũ | Không chụp mục Hồ sơ học thuật |
+| Chữ **Zenodo · ORCID · OSF** | Trang Đội ngũ | Không chụp mục Hồ sơ học thuật |
 | Chữ **Supabase** | Trang Đội ngũ, tài liệu kỹ thuật | Không chụp phần liệt kê công nghệ |
 | Chữ **Harvard Business Publishing · Forio** | `food-truck.html` | **Không chụp trang này** — xem Cảnh báo 2 |
 
