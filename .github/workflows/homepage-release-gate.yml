@@ -63,7 +63,7 @@ jobs:
               pass
 
           source = Path('classic-home.html').read_text(encoding='utf-8')
-          if '<!DOCTYPE html>' not in source[:100].upper():
+          if '<!DOCTYPE HTML>' not in source[:100].upper():
               raise SystemExit('Classic rollback is missing the HTML doctype.')
           if '</html>' not in source.lower():
               raise SystemExit('Classic rollback is missing the closing html element.')
