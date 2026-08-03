@@ -1,0 +1,72 @@
+name: BizOn Instructor Studio
+
+on:
+  pull_request:
+    paths:
+      - 'app/instructor-studio.html'
+      - 'app/manifest.webmanifest'
+      - 'app/sw.js'
+      - 'assets/approved-existing-assets.json'
+      - 'css/bizon-instructor-studio.css'
+      - 'js/app-shell/instructor-studio.js'
+      - 'js/app-shell/unified-app.js'
+      - 'scripts/release/capture-instructor-studio.mjs'
+      - 'test/instructor-studio.test.js'
+      - 'test/existing-assets-integration.test.js'
+      - 'test/web-app-mobile-foundation.test.js'
+      - 'test/web-app-update-channel.test.js'
+      - '.github/workflows/instructor-studio.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  instructor-studio:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Validate Instructor Studio contracts
+        run: |
+          node test/instructor-studio.test.js
+          node test/existing-assets-integration.test.js
+          node test/web-app-mobile-foundation.test.js
+          node test/web-app-update-channel.test.js
+
+      - name: Install Chromium
+        run: |
+          npm install --no-save playwright@1.54.1
+          npx playwright install --with-deps chromium
+
+      - name: Start local application server
+        shell: bash
+        run: |
+          python3 -m http.server 8899 --bind 127.0.0.1 >/tmp/bizon-instructor.log 2>&1 &
+          for attempt in {1..30}; do
+            curl --fail --silent http://127.0.0.1:8899/app/instructor-studio.html >/dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/bizon-instructor.log
+          exit 1
+
+      - name: Capture desktop and mobile QA
+        env:
+          BIZON_URL: http://127.0.0.1:8899
+          BIZON_QA_OUTPUT: artifacts/instructor-studio
+        run: node scripts/release/capture-instructor-studio.mjs
+
+      - name: Upload Instructor Studio QA
+        uses: actions/upload-artifact@v4
+        with:
+          name: bizon-instructor-studio-qa
+          path: artifacts/instructor-studio/
+          if-no-files-found: error
+          retention-days: 30
