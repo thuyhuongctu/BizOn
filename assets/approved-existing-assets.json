@@ -10,14 +10,14 @@
     "huong_lumina_classroom": {
       "path": "assets/illustrations/lumina-holo-classroom.webp",
       "classification": "founder-lumina-scene",
-      "allowed_pages": ["index.html", "app/release.html", "giang-vien.html", "lumina.html"],
+      "allowed_pages": ["index.html", "app/release.html", "giang-vien.html", "app/instructor-studio.html", "lumina.html"],
       "vi_alt": "Hương trong vai Lumina hướng dẫn lớp học mô phỏng kinh doanh",
       "en_alt": "Hương as Lumina guiding a business simulation classroom"
     },
     "tu_phan_lecture_hall": {
       "path": "assets/illustrations/anh-tu-lecture-hall.webp",
       "classification": "academic-advisor-scene",
-      "allowed_pages": ["index.html", "app/release.html", "giang-vien.html", "gioi-thieu.html"],
+      "allowed_pages": ["index.html", "app/release.html", "giang-vien.html", "app/instructor-studio.html", "gioi-thieu.html"],
       "vi_alt": "Tú Phan trong không gian giảng dạy và cố vấn học thuật",
       "en_alt": "Tú Phan in an academic teaching and advisory setting"
     },
