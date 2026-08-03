@@ -44,6 +44,13 @@
     var ctx = cv.getContext('2d');
     var W = 0, H = 0, dpr = 1, nodes = [], signals = [], raf = 0, running = false;
     var LINK = 130;
+    // Bảng màu: mặc định cho nền TỐI (chữ trắng). data-net-hero="light" dùng cho
+    // nền SÁNG (ví dụ #particles-container trang Đội ngũ) – đường và chấm sẫm hơn
+    // để nổi trên nền trắng.
+    var light = (host.getAttribute('data-net-hero') || '') === 'light';
+    var C = light
+      ? { line: '0,102,135', dot: 'rgba(0,102,135,.5)', sig: '#fda127', lineMax: 0.24 }
+      : { line: '130,214,244', dot: 'rgba(184,231,250,.72)', sig: '#ffce7a', lineMax: 0.32 };
 
     function build() {
       var count = Math.max(16, Math.min(44, Math.round(W * H / 17000)));
@@ -82,7 +89,7 @@
           var dx = nodes[a].x - nodes[b].x, dy = nodes[a].y - nodes[b].y;
           var d = Math.sqrt(dx * dx + dy * dy);
           if (d < LINK) {
-            ctx.strokeStyle = 'rgba(130,214,244,' + ((1 - d / LINK) * 0.32).toFixed(3) + ')';
+            ctx.strokeStyle = 'rgba(' + C.line + ',' + ((1 - d / LINK) * C.lineMax).toFixed(3) + ')';
             ctx.lineWidth = 1;
             ctx.beginPath(); ctx.moveTo(nodes[a].x, nodes[a].y); ctx.lineTo(nodes[b].x, nodes[b].y); ctx.stroke();
           }
@@ -91,7 +98,7 @@
       for (i = 0; i < nodes.length; i++) {
         n = nodes[i];
         ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, 6.2832);
-        ctx.fillStyle = 'rgba(184,231,250,.72)'; ctx.fill();
+        ctx.fillStyle = C.dot; ctx.fill();
       }
       if (move) {
         if (signals.length < 3 && Math.random() < 0.03) {
@@ -102,7 +109,7 @@
           var g = signals[i]; g.t += 0.02;
           if (g.t >= 1) { signals.splice(i, 1); continue; }
           var px = g.s.x + (g.e.x - g.s.x) * g.t, py = g.s.y + (g.e.y - g.s.y) * g.t;
-          ctx.beginPath(); ctx.arc(px, py, 2.1, 0, 6.2832); ctx.fillStyle = '#ffce7a'; ctx.fill();
+          ctx.beginPath(); ctx.arc(px, py, 2.1, 0, 6.2832); ctx.fillStyle = C.sig; ctx.fill();
         }
       }
     }
