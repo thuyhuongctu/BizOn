@@ -67,8 +67,8 @@ jobs:
       group: bizon-supabase-staging
       cancel-in-progress: false
     env:
-      SUPABASE_STAGING_PROJECT_REF: kdpjlbqvdlnsthrmchm
-      SUPABASE_STAGING_URL: https://kdpjlbqvdlnsthrmchm.supabase.co
+      SUPABASE_STAGING_PROJECT_REF: kdpjlbqvdlnstfhrmchm
+      SUPABASE_STAGING_URL: https://kdpjlbqvdlnstfhrmchm.supabase.co
       SUPABASE_STAGING_DATABASE_INPUT: ${{ secrets.SUPABASE_STAGING_DATABASE_URL }}
       SUPABASE_STAGING_DB_PASSWORD: ${{ secrets.SUPABASE_STAGING_DB_PASSWORD }}
       SUPABASE_STAGING_ANON_KEY: ${{ secrets.SUPABASE_STAGING_ANON_KEY }}

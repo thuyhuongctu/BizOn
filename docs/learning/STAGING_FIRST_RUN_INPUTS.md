@@ -8,7 +8,7 @@ Open **Actions → BizOn Supabase Staging Gate → Run workflow** on branch `mai
 
 Inputs:
 
-- `confirm_project_ref`: `kdpjlbqvdlnsthrmchm`
+- `confirm_project_ref`: `kdpjlbqvdlnstfhrmchm`
 - `apply_migration`: `true`
 - `run_retention_purge`: `true`
 
@@ -25,7 +25,7 @@ Expected checks include production-ref blocking, staging URL/database matching, 
 
 After the first run passes, run again with:
 
-- `confirm_project_ref`: `kdpjlbqvdlnsthrmchm`
+- `confirm_project_ref`: `kdpjlbqvdlnstfhrmchm`
 - `apply_migration`: `false`
 - `run_retention_purge`: `true`
 
