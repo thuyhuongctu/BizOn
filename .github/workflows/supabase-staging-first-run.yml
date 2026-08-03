@@ -1,5 +1,5 @@
-# BizOn protected staging gate v4 — canonical app_secrets bootstrap
-name: BizOn Supabase Staging First Run
+# BizOn staging CI v5 — automatic staging only; production remains gated
+name: BizOn Supabase Staging CI
 
 on:
   push:
@@ -9,19 +9,23 @@ on:
       - '.github/workflows/supabase-staging-first-run.yml'
       - 'scripts/release/bootstrap-supabase-staging-key.mjs'
       - 'scripts/release/verify-supabase-staging.mjs'
+      - 'scripts/release/validate-supabase-staging-template.mjs'
       - 'test/supabase-staging-key-bootstrap.test.js'
       - 'test/supabase-staging-gate.test.js'
-      - 'supabase/migrations/20260802000000_bp_learning_traces.sql'
+      - 'supabase/migrations/**'
+  schedule:
+    # 02:30 Asia/Ho_Chi_Minh (UTC+7); GitHub schedules may start a few minutes late.
+    - cron: '30 19 * * *'
   workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  protected-first-run:
-    name: protected first staging migration and smoke test
+  staging-ci:
+    name: staging migration and protected smoke test
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     environment: supabase-staging
     concurrency:
       group: bizon-supabase-staging
@@ -34,7 +38,7 @@ jobs:
       SUPABASE_STAGING_ANON_KEY: ${{ secrets.SUPABASE_STAGING_ANON_KEY }}
       SUPABASE_STAGING_INSTRUCTOR_KEY: ${{ secrets.SUPABASE_STAGING_INSTRUCTOR_KEY }}
       CONFIRM_PROJECT_REF: kdpjlbqvdlnsthrmchm
-      APPLY_MIGRATION: 'true'
+      APPLY_MIGRATION: ${{ github.event_name == 'schedule' && 'false' || 'true' }}
       RUN_RETENTION_PURGE: 'true'
       BIZON_STAGING_REPORT_DIR: artifacts/supabase-staging
 
@@ -100,16 +104,31 @@ jobs:
           node test/supabase-staging-gate.test.js
 
       - name: Bootstrap staging instructor-key verifier
+        if: env.APPLY_MIGRATION == 'true'
         run: node scripts/release/bootstrap-supabase-staging-key.mjs
 
-      - name: Apply canonical migration and run protected smoke suite
+      - name: Apply migration and run staging smoke suite
         run: node scripts/release/verify-supabase-staging.mjs
+
+      - name: Write staging summary
+        if: always()
+        shell: bash
+        run: |
+          {
+            echo '## BizOn Supabase Staging CI'
+            echo
+            echo "- Event: \`${GITHUB_EVENT_NAME}\`"
+            echo "- Project: \`${SUPABASE_STAGING_PROJECT_REF}\`"
+            echo "- Apply migration: \`${APPLY_MIGRATION}\`"
+            echo "- Retention purge: \`${RUN_RETENTION_PURGE}\`"
+            echo '- Production project: blocked by safety contracts'
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload sanitized staging report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: bizon-supabase-staging-first-run-report
+          name: bizon-supabase-staging-ci-report
           path: artifacts/supabase-staging
           if-no-files-found: ignore
           retention-days: 30
