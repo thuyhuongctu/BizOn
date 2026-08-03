@@ -20,6 +20,7 @@
     {"name":"Command Center","short_name":"Command","url":"./command-center.html","icons":[{"src":"../assets/icons/icon-192.png","sizes":"192x192","type":"image/png"}]},
     {"name":"Startup Lab","short_name":"Startup","url":"../game.html","icons":[{"src":"../assets/icons/icon-192.png","sizes":"192x192","type":"image/png"}]},
     {"name":"Brand Passport","short_name":"Passport","url":"./brand-passport.html","icons":[{"src":"../assets/icons/icon-192.png","sizes":"192x192","type":"image/png"}]},
-    {"name":"AIBIS Global","short_name":"AIBIS","url":"./aibis.html","icons":[{"src":"../assets/icons/icon-192.png","sizes":"192x192","type":"image/png"}]}
+    {"name":"AIBIS Global","short_name":"AIBIS","url":"./aibis.html","icons":[{"src":"../assets/icons/icon-192.png","sizes":"192x192","type":"image/png"}]},
+    {"name":"Instructor Studio","short_name":"Classroom","url":"./instructor-studio.html","icons":[{"src":"../assets/icons/icon-192.png","sizes":"192x192","type":"image/png"}]}
   ]
 }
