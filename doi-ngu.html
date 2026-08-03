@@ -76,7 +76,7 @@
 <!-- Bản đồ Việt Nam chìm dưới trang (theo M-AIDA) -->
 
 
-<div id="particles-container"></div>
+<div id="particles-container" data-net-hero="light"></div>
 
 
 <main class="max-w-4xl mx-auto px-6 pt-10 relative z-10">
@@ -248,33 +248,17 @@
 </main>
 
 <script>
-function initParticles() {
-  const container = document.getElementById('particles-container');
-  const colors = ['#00c4ff', '#006687', '#ffffff'];
-  for (let i = 0; i < 20; i++) {
-    const p = document.createElement('div');
-    p.className = 'particle';
-    const size = Math.random() * 10 + 4;
-    p.style.width = size + 'px';
-    p.style.height = size + 'px';
-    p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-    p.style.left = Math.random() * 100 + '%';
-    p.style.top = Math.random() * 100 + '%';
-    p.animate([
-      { transform: 'translate(0,0)', opacity: 0 },
-      { transform: `translate(${Math.random() * 40 - 20}px, ${Math.random() * -60 - 20}px)`, opacity: .3, offset: .5 },
-      { transform: `translate(${Math.random() * 80 - 40}px, ${Math.random() * -120 - 40}px)`, opacity: 0 },
-    ], { duration: (Math.random() * 10 + 10) * 1000, iterations: Infinity, easing: 'ease-in-out' });
-    container.appendChild(p);
-  }
-}
+/* Nền hạt trôi cũ (các chấm div rời rạc) nay thay bằng mạng lưới nối động dùng
+   chung js/site-nethero.js với bảng màu "light" – #particles-container mang
+   thuộc tính data-net-hero="light". Nhờ vậy Đội ngũ đồng nhất phong cách mạng
+   lưới với các trang nội dung khác mà vẫn hợp nền sáng. */
 function initScrollReveal() {
   const cards = document.querySelectorAll('.reveal-card');
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }), { threshold: .15 });
   cards.forEach(c => io.observe(c));
   setTimeout(() => cards.forEach(c => { if (c.getBoundingClientRect().top < innerHeight) c.classList.add('visible'); }), 100);
 }
-document.addEventListener('DOMContentLoaded', () => { initParticles(); initScrollReveal(); });
+document.addEventListener('DOMContentLoaded', () => { initScrollReveal(); });
 
 // Hoạt cảnh hội thoại giữa 2 nhà sáng lập
 const SCENE_SCRIPT = [
@@ -329,6 +313,7 @@ setInterval(scenePlay, 3400);
   }, { passive: true });
 })();
 </script>
+<script src="js/site-nethero.js" defer></script>
 <script src="js/site-ui.js" defer></script>
 <script src="js/site-vnmap.js" defer></script>
 
