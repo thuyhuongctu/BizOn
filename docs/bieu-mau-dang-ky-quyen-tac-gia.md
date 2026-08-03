@@ -154,8 +154,9 @@ Rà soát giao diện hiện tại phát hiện **các dấu hiệu của chủ 
 | **Logo GitHub** dạng hình vẽ nhúng thẳng trong trang | `index.html` · `gioi-thieu.html` · `global.html` · `games.html` | Che hoặc cắt bỏ khỏi ảnh chụp |
 | Nút chia sẻ **Facebook · X · GitHub** trong thanh tiện ích | Toàn bộ trang | Đóng thanh tiện ích trước khi chụp |
 | Chữ **GitHub** trong đường dẫn hiển thị | 22 vị trí | Cắt bỏ khỏi ảnh, hoặc chụp phần không chứa |
-| Chữ **Zenodo · ORCID · OSF** | Trang Đội ngũ | Không chụp mục Hồ sơ học thuật |
-| Chữ **Supabase** | Trang Đội ngũ, tài liệu kỹ thuật | Không chụp phần liệt kê công nghệ |
+| Chữ **ORCID · OSF** | `doi-ngu.html` · `gioi-thieu.html` · `trang-chu-v2.html` | Không chụp mục Hồ sơ học thuật |
+| Chữ **Zenodo** | 6 trang: ba trang trên, thêm `classic-home.html` · `du-an.html` · `lien-he.html` | Không chụp phần trích dẫn và DOI |
+| Chữ **Supabase** | `doi-ngu.html` · `chinh-sach.html` · `giang-vien.html`, và tài liệu kỹ thuật | Không chụp phần liệt kê công nghệ |
 | Chữ **Harvard Business Publishing · Forio** | `food-truck.html` | **Không chụp trang này** — xem Cảnh báo 2 |
 
 **Cách làm gọn nhất:** chụp ảnh giao diện các màn hình **bên trong game** (màn đăng nhập, bảng điều khiển, màn quyết định, báo cáo, kết quả cuối ván) — những màn này không chứa dấu hiệu bên thứ ba. Tránh chụp trang chủ và trang Đội ngũ.
