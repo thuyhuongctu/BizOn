@@ -1,0 +1,29 @@
+name: Legacy state adapter
+
+on:
+  pull_request:
+    paths:
+      - 'js/core/game-state.js'
+      - 'js/core/legacy-state-adapter.js'
+      - 'test/legacy-state-adapter.test.js'
+      - 'docs/architecture/LEGACY-STATE-INVENTORY.md'
+      - '.github/workflows/legacy-state-adapter.yml'
+  push:
+    branches:
+      - 'feat/legacy-state-adapter'
+    paths:
+      - 'js/core/game-state.js'
+      - 'js/core/legacy-state-adapter.js'
+      - 'test/legacy-state-adapter.test.js'
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: node --check js/core/legacy-state-adapter.js
+      - run: node test/core-state-seed.test.js
+      - run: node test/legacy-state-adapter.test.js
