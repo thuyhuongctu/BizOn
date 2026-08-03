@@ -1,4 +1,4 @@
-# BizOn staging CI v7 — automatic project and pooler discovery; production remains gated
+# BizOn staging CI v7.1 — automatic project and pooler discovery; production remains gated
 name: BizOn Supabase Staging CI
 
 on:
@@ -72,7 +72,7 @@ jobs:
           fi
           echo "::add-mask::$INPUT"
 
-          RESOLUTION="$(
+          mapfile -t RESOLUTION < <(
             DATABASE_INPUT="$INPUT" \
             PROJECT_NAME="$SUPABASE_STAGING_PROJECT_NAME" \
             PROJECT_REF_HINT="${SUPABASE_STAGING_PROJECT_REF_HINT:-}" \
@@ -87,7 +87,8 @@ jobs:
           const normalize = value => String(value || '')
             .trim()
             .toLowerCase()
-            .replace(/[^a-z0-9]+/g, '-')</n            .replace(/^-+|-+$/g, '');
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '');
 
           const headers = {
             Authorization: `Bearer ${accessToken}`,
@@ -131,7 +132,9 @@ jobs:
             { headers }
           );
           if (!poolerResponse.ok) {
-            const text = (await poolerResponse.text()).slice(0, 300).replace(/[^a-zA-Z0-9 ._:-]/g, ' ');
+            const text = (await poolerResponse.text())
+              .slice(0, 300)
+              .replace(/[^a-zA-Z0-9 ._:-]/g, ' ');
             throw new Error(`Supabase pooler discovery failed with HTTP ${poolerResponse.status}: ${text}`);
           }
           const poolerPayload = await poolerResponse.json();
@@ -141,7 +144,7 @@ jobs:
           const template = String(primary?.connection_string || primary?.connectionString || '').trim();
           if (!template) throw new Error('Supabase did not return a pooler connection string for staging.');
 
-          const passwordTokenPattern = /\[(?:YOUR-)?PASSWORD\]|%5B(?:YOUR-)?PASSWORD%5D/ig;
+          const passwordTokenPattern = /\[(?:YOUR[-_])?PASSWORD\]|%5B(?:YOUR[-_])?PASSWORD%5D/ig;
           const withPassword = passwordTokenPattern.test(template)
             ? template.replace(passwordTokenPattern, encodeURIComponent(password))
             : template;
@@ -152,24 +155,19 @@ jobs:
           resolved.pathname = '/postgres';
           resolved.searchParams.set('sslmode', 'require');
 
-          const output = {
-            projectRef,
-            projectUrl: `https://${projectRef}.supabase.co`,
-            databaseUrl: resolved.toString()
-          };
-          process.stdout.write(Buffer.from(JSON.stringify(output), 'utf8').toString('base64'));
+          process.stdout.write(`${projectRef}\n`);
+          process.stdout.write(`https://${projectRef}.supabase.co\n`);
+          process.stdout.write(`${resolved.toString()}\n`);
           NODE
-          )"
+          )
 
-          export RESOLUTION
-          eval "$(node <<'NODE'
-          const payload = JSON.parse(Buffer.from(process.env.RESOLUTION, 'base64').toString('utf8'));
-          const quote = value => `'${String(value).replace(/'/g, `'\\''`)}'`;
-          process.stdout.write(`RESOLVED_PROJECT_REF=${quote(payload.projectRef)}\n`);
-          process.stdout.write(`RESOLVED_PROJECT_URL=${quote(payload.projectUrl)}\n`);
-          process.stdout.write(`RESOLVED_DATABASE_URL=${quote(payload.databaseUrl)}\n`);
-          NODE
-          )"
+          if [[ ${#RESOLUTION[@]} -ne 3 ]]; then
+            echo 'Automatic staging resolution returned an unexpected result.' >&2
+            exit 1
+          fi
+          RESOLVED_PROJECT_REF="${RESOLUTION[0]}"
+          RESOLVED_PROJECT_URL="${RESOLUTION[1]}"
+          RESOLVED_DATABASE_URL="${RESOLUTION[2]}"
 
           echo "::add-mask::$RESOLVED_DATABASE_URL"
           {
