@@ -77,6 +77,22 @@ const result = spawnSync('psql', ['-X', '--set', 'ON_ERROR_STOP=1'], {
 });
 
 if (result.status !== 0) {
+  const diagnostic = `${result.stderr || ''}\n${result.stdout || ''}`.toLowerCase();
+  if (diagnostic.includes('password authentication failed')) {
+    throw new Error('Staging database authentication failed. Update the staging database password secret.');
+  }
+  if (
+    diagnostic.includes('could not translate host name') ||
+    diagnostic.includes('connection timed out') ||
+    diagnostic.includes('timeout expired') ||
+    diagnostic.includes('connection refused') ||
+    diagnostic.includes('network is unreachable')
+  ) {
+    throw new Error('Unable to reach the protected staging Session Pooler. Check the staging region and pooler availability.');
+  }
+  if (diagnostic.includes('no pg_hba.conf entry') || diagnostic.includes('ssl')) {
+    throw new Error('The protected staging database rejected the SSL connection. Confirm Session Pooler port 5432 with sslmode=require.');
+  }
   throw new Error('Unable to bootstrap public.bizon_check_key(text) on the protected staging project.');
 }
 
