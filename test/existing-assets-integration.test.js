@@ -87,7 +87,7 @@ assert.match(stylesheet, /\.aibis-existing-guide/);
 assert.match(stylesheet, /@media \(max-width: 560px\)/);
 
 const sw = read('app/sw.js');
-assert.match(sw, /bizon-app-shell-v6/);
+assert.match(sw, /bizon-app-shell-v7/);
 for (const required of [
   '../css/bizon-existing-assets.css',
   '../js/app-shell/existing-assets.js',
