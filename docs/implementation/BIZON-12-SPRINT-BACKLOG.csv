@@ -1,0 +1,49 @@
+sprint,workstream,epic,task_id,task,priority,dependency,deliverable,acceptance_criteria,maturity_from,maturity_to
+S01,WS1,Baseline audit,S01-01,Inventory production pages and core scripts,P0,,Architecture inventory,All production pages scripts tests and service-worker dependencies listed,L2,L3
+S01,WS1,Branch reconciliation,S01-02,Reconcile feat/aibis-foundation with current main,P0,S01-01,Updated experimental branch,Branch contains latest main commits and no unresolved conflict,L2,L3
+S01,WS1,CI baseline,S01-03,Run current engine Brand Passport and page smoke tests,P0,S01-01,Baseline test report,All existing test outcomes recorded with failures assigned,L3,L3
+S01,Governance,Scope freeze,S01-04,Freeze non-core feature expansion until pilot gate,P0,,Scope decision record,New work maps to Startup AIBIS Instructor or required quality,L1,L2
+S02,WS1,Canonical state,S02-01,Define versioned GameState schema,P0,S01-01,GameState specification,Schema covers session class team seed round company decisions outcomes and version,L2,L3
+S02,WS1,Seed utility,S02-02,Extract deterministic seed generation,P0,S02-01,Seed module,Same input produces same random sequence across tests,L3,L4
+S02,WS1,Engine version,S02-03,Attach engine version to saves exports and results,P0,S02-01,Version module,Every result and export identifies engine version,L2,L4
+S02,WS1,Scoring boundaries,S02-04,Add boundary and NaN tests for all KPIs,P0,S02-01,Automated tests,No tested decision path produces NaN Infinity or invalid range,L2,L4
+S03,WS1,Persistence,S03-01,Implement autosave after committed decisions,P0,S02-01,Autosave service,Reload restores latest committed state,L2,L4
+S03,WS1,Resume,S03-02,Implement resume flow and session summary,P0,S03-01,Resume UI,User resumes correct round KPIs and selected mode,L2,L4
+S03,WS1,Migration,S03-03,Implement state migrations between schema versions,P0,S02-03,Migration registry,Old supported saves migrate without data loss,L1,L3
+S03,WS1,Recovery,S03-04,Handle corrupted or partial local storage,P0,S03-01,Recovery flow,Corrupted state shows recovery options and never blank screen,L1,L4
+S04,WS1,Full-game QA,S04-01,Run 100 deterministic six-round simulations,P0,S02-04,Simulation report,100 seeds complete without uncaught error or invalid KPI,L3,L4
+S04,WS1,Mobile QA,S04-02,Test completion at 390px and common mobile browsers,P0,S03-02,Mobile QA report,At least 90 percent scripted mobile flows complete,L2,L4
+S04,WS1,Accessibility,S04-03,Keyboard and focus audit for core game flow,P0,S03-02,Accessibility report,Core decisions operable by keyboard with visible focus,L2,L4
+S04,WS1,Performance,S04-04,Confirm LCP CLS and page weight budgets,P1,S01-03,Performance report,Core pilot pages meet documented budgets or have approved exception,L3,L4
+S05,WS2,Class setup,S05-01,Create class ID and team ID workflow,P0,S02-01,Class setup module,Instructor creates class and teams without code edits,L2,L4
+S05,WS2,Shared seed,S05-02,Create instructor shared-seed generator,P0,S05-01,Seed generator,All team links carry the same validated seed and class context,L2,L4
+S05,WS2,Mode control,S05-03,Configure Basic Advanced and AI modes per class,P1,S05-01,Class configuration,Selected modes are enforced and exported,L1,L3
+S05,WS2,Onboarding,S05-04,Create three-minute instructor quick-start flow,P0,S05-01,Quick-start guide,A new instructor can configure a class in under three minutes,L2,L4
+S06,WS2,Round control,S06-01,Implement lock unlock and pause controls,P0,S05-01,Round control module,Teams cannot advance when locked and resume correctly when opened,L2,L4
+S06,WS2,Audit,S06-02,Create immutable instructor action log,P0,S06-01,Audit log,Every bonus reset lock and event injection records actor target value and time,L2,L4
+S06,WS2,Exports,S06-03,Create result decision and class-summary exports,P0,S05-01,CSV and JSON exports,Exports validate against data dictionary and exclude unnecessary identifiers,L2,L4
+S06,WS2,Dashboard,S06-04,Create class status table for at least ten teams,P1,S05-01,Instructor dashboard,Instructor sees round completion status and key KPIs for ten teams,L1,L3
+S07,WS3,Readiness,S07-01,Implement Internationalization Readiness Index,P0,S02-01,Readiness module,Weighted score is deterministic documented and unit-tested,L2,L4
+S07,WS3,Markets,S07-02,Create versioned seven-market parameter registry,P0,S07-01,Market registry,Each market has growth risk tariff culture logistics digital and ESG fields,L2,L4
+S07,WS3,Entry modes,S07-03,Create seven-entry-mode parameter registry,P0,S07-01,Entry-mode registry,Commitment control flexibility learning and risk are documented and tested,L2,L4
+S07,WS3,Theory cards,S07-04,Map approved theories to decisions,P1,S07-02,Theory-card library,Cards include citation learning purpose and permitted claims,L1,L3
+S08,WS3,Journey,S08-01,Implement eight-round AIBIS state machine,P0,S07-03,AIBIS journey,All eight rounds transition legally and support resume,L2,L4
+S08,WS3,Shocks,S08-02,Implement seeded global shock engine,P0,S08-01,Shock module,Same seed produces same shock sequence and impact,L2,L4
+S08,WS3,Negotiation,S08-03,Implement deterministic negotiation resolver,P1,S08-01,Negotiation resolver,Dialogue layer cannot directly alter numerical resolution,L1,L3
+S08,WS3,Board review,S08-04,Generate final multi-KPI board review,P1,S08-01,Board report,Report explains trade-offs and engine version without unsupported claims,L1,L3
+S09,WS5,Consent,S09-01,Implement participant information and explicit consent,P0,S05-01,Consent flow,Research upload remains disabled without active consent,L2,L4
+S09,WS5,Telemetry,S09-02,Implement decision and AI-use event schema,P0,S09-01,Telemetry module,All fields are defined versioned and exclude free text by default,L2,L4
+S09,WS5,Withdrawal,S09-03,Implement withdrawal request workflow,P0,S09-01,Withdrawal process,Participant can request withdrawal using documented session identifiers,L2,L4
+S09,WS5,Research export,S09-04,Create anonymized research JSON and CSV export,P0,S09-02,Research export,Export matches data dictionary and contains no direct identifier,L2,L4
+S10,WS4,AI contract,S10-01,Define Lumina structured request and response schemas,P0,S07-04,AI contract,Responses validate and invalid output is rejected safely,L2,L3
+S10,WS4,AI modes,S10-02,Implement Off Explain Socratic Advanced modes,P0,S10-01,Lumina mode controller,Class-level mode is enforced in UI and audit,L2,L4
+S10,WS4,Fallback,S10-03,Implement rule-based and no-AI fallback,P0,S10-01,Fallback service,Game remains fully usable during provider failure,L2,L4
+S10,WS4,AI audit,S10-04,Record provider model prompt latency and fallback,P1,S10-01,AI audit log,Every AI request has trace metadata without storing secrets,L1,L4
+S11,WS5,Pilot instruments,S11-01,Finalize pre-test post-test and reflection rubric,P0,S09-04,Pilot instrument pack,Each measure maps to a learning outcome and analysis variable,L2,L4
+S11,WS6,Facilitator pack,S11-02,Create session plan debrief and troubleshooting guide,P0,S06-04,Facilitator pack,A lecturer can deliver the pilot without developer support,L2,L4
+S11,WS6,Commercial pack,S11-03,Create pilot scope pricing license and support terms,P0,S11-02,Commercial pilot pack,Offer clearly states included service limits data terms and price,L1,L3
+S11,WS5,Analysis plan,S11-04,Predefine pilot analysis and reporting plan,P1,S11-01,Analysis plan,Outcomes exclusions and comparisons are specified before analysis,L1,L3
+S12,All,Technical pilot,S12-01,Run no-data technical pilot,P0,S04-01;S06-04;S08-01;S10-03,Technical pilot report,All critical flows complete and defects are triaged,L3,L4
+S12,WS3,Calibration,S12-02,Review market by entry-mode outcome matrix,P0,S12-01,Calibration report,No dominant strategy exists without documented pedagogical reason,L2,L4
+S12,Governance,Go-no-go,S12-03,Apply release gates and record decision,P0,S12-01;S12-02,Go-no-go memo,Every P0 gate is pass or formally deferred with owner and date,L2,L4
+S12,WS6,Paid pilot readiness,S12-04,Prepare first supported paid pilot,P0,S12-03,Pilot release candidate,Onboarding support privacy license and rollback are operational,L2,L4
