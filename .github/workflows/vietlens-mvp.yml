@@ -1,0 +1,35 @@
+name: VietLens MVP
+
+on:
+  push:
+    branches:
+      - main
+      - integration/vietlens-clean-preview-v1
+    paths:
+      - 'vietlens/**'
+      - 'test/vietlens-*.test.js'
+      - '.github/workflows/vietlens-mvp.yml'
+  pull_request:
+    paths:
+      - 'vietlens/**'
+      - 'test/vietlens-*.test.js'
+      - '.github/workflows/vietlens-mvp.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: JavaScript syntax
+        run: |
+          node --check vietlens/sample-data.js
+          node --check vietlens/app.js
+      - name: Static smoke tests
+        run: node test/vietlens-smoke.test.js
