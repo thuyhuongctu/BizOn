@@ -22,13 +22,13 @@ const MARKET_EVENTS = [
     impacts: [{ icon: '📈', label: 'Nhu cầu thị trường', value: 'Chuẩn', dir: 'flat' }, { icon: '⚙️', label: 'Chi phí vận hành', value: 'Ổn định', dir: 'flat' }],
     luminaImg: 'lumina-vest-thumbsup', luminaMsg: 'Chào cả đội! Vòng đầu là lúc thiết lập nền tảng. CEO hãy thống nhất chiến lược giá, SEC nhớ ghi chép lại các quyết định nhé!',
     cta: { label: '🎯 Nhập quyết định ngay', tab: 'decisions' } },
-  { id: 'EV_GOLDEN', round: 2, tone: 'good', icon: '🌟', name: 'Biến cố: Cơ Hội Vàng', tag: 'BIẾN CỐ ĐẶC BIỆT',
+  { id: 'EV_GOLDEN', round: 2, tone: 'good', icon: '🌟', name: 'Cơ Hội Vàng', tag: 'SỰ KIỆN ĐẶC BIỆT',
     desc: 'Chính phủ vừa công bố gói kích cầu kinh tế và miễn thuế xuất khẩu. Đây là thời cơ để bứt phá doanh thu trên thị trường quốc tế.',
     demand: 1.35, costMul: 1.0, rdBoost: 1.5,
     impacts: [{ icon: '🧾', label: 'Thuế xuất khẩu', value: '0%', dir: 'down-good' }, { icon: '📦', label: 'Nhu cầu dự kiến', value: '+35%', dir: 'up' }],
     luminaImg: 'lumina-ao-dai-clap', luminaMsg: 'Thật tuyệt vời! CFO hãy rà soát lại ngân sách đầu tư, còn COO hãy chuẩn bị tăng công suất để đáp ứng làn sóng đơn hàng mới này nhé!',
     cta: { label: '🏭 Tăng công suất ngay', tab: 'decisions' } },
-  { id: 'EV_PRICEWAR', round: 3, tone: 'warn', icon: '⚔️', name: 'Biến cố: Chiến Tranh Giá', tag: 'CẢNH BÁO THỊ TRƯỜNG',
+  { id: 'EV_PRICEWAR', round: 3, tone: 'warn', icon: '⚔️', name: 'Cạnh Tranh Về Giá', tag: 'CẢNH BÁO THỊ TRƯỜNG',
     desc: 'Đối thủ giảm giá 15% điện rộng tại kênh Modern Trade – khách hàng cực nhạy cảm về giá trong vòng này.',
     demand: 1.0, costMul: 1.0, elasticityMul: 1.4,
     impacts: [{ icon: '🏷️', label: 'Giá đối thủ (kênh MT)', value: '-15%', dir: 'down' }, { icon: '💔', label: 'Độ nhạy giá của khách', value: 'CAO', dir: 'up-bad' }],
@@ -152,7 +152,7 @@ function whatIfSimulate(s, role, d) {
       role, type: 'FINANCIAL_STRESS_TEST', title: '💰 Stress test tài chính (CFO)',
       status: qrDanger ? 'INSOLVENCY_RISK' : leverageOK ? 'SAFE_AND_EFFICIENT' : 'CAPITAL_EROSION',
       metrics: [
-        { label: 'Dòng tiền cuối vòng (dự báo)', value: Math.round(projCash) + 'tr₫', bad: projCash < 100 },
+        { label: 'Số dư cuối chu kỳ (dự báo)', value: Math.round(projCash) + 'tr₫', bad: projCash < 100 },
         { label: 'Quick Ratio dự báo', value: projQuickRatio + (qrDanger ? ' ⚠️' : ''), bad: qrDanger },
         { label: 'ROI giả định vs lãi vay ' + LOAN_INTEREST_RATE + '%', value: roiHyp + '%', bad: !leverageOK },
       ],
@@ -243,7 +243,7 @@ function cmoBrain(s) {
     actions: ['Kích hoạt Branding Premium', 'Tăng R&D để tái định vị thương hiệu'],
   };
   if (shareDrop > 5) return {
-    status: 'RED', badge: 'ĐỎ · NGUY CẤP', metric: `Thị phần giảm ${shareDrop}% so với vòng trước`,
+    status: 'RED', badge: 'ĐỎ · NGUY CẤP', metric: `Thị phần giảm ${shareDrop}% so với chu kỳ trước`,
     dialogue: 'Đối thủ đang xâm chiếm phân khúc của chúng ta bằng giá rẻ. Chúng ta cần tăng ngân sách quảng cáo hoặc tung sản phẩm R&D mới.',
     actions: ['Tăng ngân sách Marketing vòng tới', 'Mua Marketing Boost trong Cửa hàng'],
   };
@@ -329,7 +329,7 @@ function cooBrain(s) {
 function secBrain(s) {
   const ev = currentEvent(s);
   if (!s.finished && ev.tone === 'bad' && !s.committed) return {
-    status: 'RED', badge: 'ĐỎ · ĐIỀU PHỐI KHẨN', metric: `Biến cố "${ev.name}" đang diễn ra`,
+    status: 'RED', badge: 'ĐỎ · ĐIỀU PHỐI KHẨN', metric: `Sự kiện thị trường "${ev.name}" đang diễn ra`,
     dialogue: `Biến cố "${ev.name}" vừa ập đến! SEC hãy nhanh chóng tổng hợp thông tin từ COO về tình hình sản xuất và báo cáo cho CEO để điều chỉnh giá bán kịp thời.`,
     actions: ['Kích hoạt họp khẩn cấp toàn đội', 'Cập nhật mục tiêu vòng theo tình hình mới'],
   };
