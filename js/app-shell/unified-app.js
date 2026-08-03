@@ -19,6 +19,41 @@
     document.head.appendChild(overrides);
   }
 
+  // ---- Thanh điều hướng dựng từ sổ đăng ký chung (route-registry.js) ----
+  // Chỉ dựng lại NỘI DUNG các thanh có sẵn; giữ nguyên lớp vỏ của trang
+  // (bz-side-nav / bi-nav, bz-mobile-nav / bi-mobile-nav) để không đụng layout.
+  const renderNav = () => {
+    const R = window.BIZON_ROUTES;
+    if (!R) return;
+    const fileOf = href => (href || '').split('/').pop().split('?')[0].split('#')[0];
+    const here = fileOf(location.pathname) || 'index.html';
+    const cur = a => (fileOf(a.href) === here ? ' class="active"' : '');
+    const sideItem = a => '<a' + cur(a) + ' href="' + a.href + '">' + a.icon + ' ' + a.label + '</a>';
+    const mobItem = a => '<a' + cur(a) + ' href="' + a.href + '">' + a.label + '</a>';
+
+    // Thanh bên mô-đun (desktop) – Command Center dùng bz-side-nav, Instructor
+    // Studio dùng bi-nav; cả hai nhận cùng markup <a>GLYPH Nhãn</a>.
+    const side = document.querySelector('.bz-side-nav, .bi-nav');
+    if (side) {
+      side.innerHTML = R.primary.map(sideItem).join('') +
+        (R.secondary || []).map(sideItem).join('');
+    }
+
+    // Thanh dưới (mobile) – dựng lại nếu có; Blueprint chưa có thì bổ sung.
+    const mobItems = R.mobile.map(mobItem).join('');
+    let mob = document.querySelector('.bz-mobile-nav, .bi-mobile-nav');
+    if (mob) {
+      mob.innerHTML = mobItems;
+    } else if (document.body.classList.contains('bizon-blueprint')) {
+      mob = document.createElement('nav');
+      mob.className = 'bz-mobile-nav';
+      mob.setAttribute('aria-label', 'Điều hướng ứng dụng');
+      mob.innerHTML = mobItems;
+      document.body.appendChild(mob);
+    }
+  };
+  renderNav();
+
   const installButton = document.querySelector('[data-install-app]');
   const networkNodes = document.querySelectorAll('[data-network-status]');
   const menuButton = document.querySelector('[data-mobile-menu]');
