@@ -29,7 +29,6 @@ assert.match(backend, /coreV2/);
 assert.match(backend, /shadowSync/);
 assert.match(backend, /js\/core\/shadow-sync\.js/);
 assert.match(backend, /shadowEnabled = enabled/);
-// Security guidance may mention the forbidden key by name; executable config must not define or assign one.
 assert.doesNotMatch(backend, /(?:serviceRoleKey|service_role_key|SERVICE_ROLE_KEY)\s*[:=]/);
 assert.doesNotMatch(backend, /['"]sb_(?:secret|service_role)_[^'"]+['"]/i);
 
@@ -47,7 +46,10 @@ assert.ok(ranking.every(item => item.confidence >= 0 && item.confidence <= 100))
 const Registry = require('../js/aibis/country-profile-registry.js');
 const Template = require('../js/aibis/country-profile-template.js');
 const empty = Template.createEmptyCountryProfile({ iso2: 'JP', name: 'Japan', region: 'East Asia' });
-assert.equal(Registry.validateProfile(empty).valid, false);
+assert.equal(Registry.validateProfile(empty).valid, true, 'The empty template is a schema-valid scaffold.');
+const scaffold = Registry.createProfile(empty);
+assert.equal(Registry.profileConfidence(scaffold), 0, 'An unpopulated scaffold must have zero confidence.');
+assert.ok(Registry.staleness(scaffold).every(item => item.status === 'unknown'));
 assert.equal(Registry.DIMENSIONS.length, 12);
 
 console.log('BizOn 2030 unified platform contract passed.');
