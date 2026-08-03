@@ -1,10 +1,11 @@
-// App shell V6 adds the approved BizOn ecosystem library and preserves original artwork offline.
-const CACHE_NAME = 'bizon-app-shell-v6';
+// App shell V7 adds the scoped Instructor Studio while preserving approved BizOn artwork offline.
+const CACHE_NAME = 'bizon-app-shell-v7';
 const APP_SCOPE_PREFIX = '/BizOn/';
 const APP_SHELL = [
   './',
   './release.html',
   './command-center.html',
+  './instructor-studio.html',
   './index.html',
   './brand-passport.html',
   './aibis.html',
@@ -17,10 +18,13 @@ const APP_SHELL = [
   '../css/bizon-unified.css',
   '../css/bizon-unified-overrides.css',
   '../css/bizon-existing-assets.css',
+  '../css/bizon-instructor-studio.css',
+  '../js/backend-config.js',
   '../js/app-shell/app-shell.js',
   '../js/app-shell/aibis-workspace.js',
   '../js/app-shell/unified-app.js',
   '../js/app-shell/existing-assets.js',
+  '../js/app-shell/instructor-studio.js',
   '../js/app-shell/update-manager.js',
   '../assets/approved-existing-assets.json',
   '../assets/illustrations/lumina-holo-classroom.webp',
