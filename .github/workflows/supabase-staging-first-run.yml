@@ -1,4 +1,4 @@
-# BizOn protected staging gate v3 — fixed staging identity and sanitized diagnostics
+# BizOn protected staging gate v4 — canonical app_secrets bootstrap
 name: BizOn Supabase Staging First Run
 
 on:
@@ -7,6 +7,11 @@ on:
       - main
     paths:
       - '.github/workflows/supabase-staging-first-run.yml'
+      - 'scripts/release/bootstrap-supabase-staging-key.mjs'
+      - 'scripts/release/verify-supabase-staging.mjs'
+      - 'test/supabase-staging-key-bootstrap.test.js'
+      - 'test/supabase-staging-gate.test.js'
+      - 'supabase/migrations/20260802000000_bp_learning_traces.sql'
   workflow_dispatch:
 
 permissions:
