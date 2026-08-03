@@ -59,10 +59,10 @@
     $('stabilityScore').textContent = stability;
     $('momentumScore').textContent = momentum;
     $('uncertaintyScore').textContent = uncertainty;
-    $('freshnessLabel').textContent = `Cập nhật ${state.refreshedAt.toLocaleTimeString('vi-VN', {
+    $('freshnessLabel').textContent = `Kết xuất lúc ${state.refreshedAt.toLocaleTimeString('vi-VN', {
       hour: '2-digit',
       minute: '2-digit'
-    })}`;
+    })} · dữ liệu mẫu ${new Date(data.generatedAt).toLocaleDateString('vi-VN')}`;
   }
 
   function renderKpis() {
