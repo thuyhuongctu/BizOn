@@ -52,18 +52,22 @@ assert.strictEqual(manifest.shortcuts.find(item => item.short_name === 'Command'
 assert.strictEqual(manifest.shortcuts.find(item => item.short_name === 'Startup').url, '../game.html');
 assert.strictEqual(manifest.shortcuts.find(item => item.short_name === 'Passport').url, './brand-passport.html');
 assert.strictEqual(manifest.shortcuts.find(item => item.short_name === 'AIBIS').url, './aibis.html');
+assert.strictEqual(manifest.shortcuts.find(item => item.short_name === 'Classroom').url, './instructor-studio.html');
 assert(Array.isArray(manifest.icons) && manifest.icons.length >= 2);
 
-assert(sw.includes("const CACHE_NAME = 'bizon-app-shell-v6'"));
+assert(sw.includes("const CACHE_NAME = 'bizon-app-shell-v7'"));
 assert(sw.includes("'./release.html'"));
 assert(sw.includes("'./command-center.html'"));
+assert(sw.includes("'./instructor-studio.html'"));
 assert(sw.includes("'./brand-passport.html'"));
 assert(sw.includes("'./version.json'"));
 assert(sw.includes("'./offline.html'"));
 assert(sw.includes("'../css/bizon-unified.css'"));
 assert(sw.includes("'../css/bizon-existing-assets.css'"));
+assert(sw.includes("'../css/bizon-instructor-studio.css'"));
 assert(sw.includes("'../js/app-shell/unified-app.js'"));
 assert(sw.includes("'../js/app-shell/existing-assets.js'"));
+assert(sw.includes("'../js/app-shell/instructor-studio.js'"));
 assert(sw.includes("'../assets/approved-existing-assets.json'"));
 assert(sw.includes("'../assets/illustrations/arena-vietnam-map-v2.webp'"));
 assert(sw.includes("'../assets/illustrations/hero-vietnam-2026.webp'"));
