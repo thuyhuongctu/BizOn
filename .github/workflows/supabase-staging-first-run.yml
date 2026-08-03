@@ -1,3 +1,4 @@
+# BizOn protected staging gate v2 — normalized pooler URL and sanitized diagnostics
 name: BizOn Supabase Staging First Run
 
 on:
