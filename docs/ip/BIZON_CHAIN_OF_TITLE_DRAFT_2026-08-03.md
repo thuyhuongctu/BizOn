@@ -1,38 +1,44 @@
 # BizOn — Dự thảo Chain of Title và phân định đóng góp
 
 **Ngày ghi nhận:** 03/08/2026  
-**Trạng thái:** Dự thảo nội bộ để đối chiếu, ký xác nhận và làm việc với CTU.  
+**Trạng thái:** Dự thảo nội bộ để hai đồng chủ sở hữu đối chiếu và ký xác nhận.  
 **Issue theo dõi:** #305
 
 ## 1. Quyết định đã được chủ dự án xác nhận
 
-1. **Chủ sở hữu quyền tài sản dự kiến của BizOn:** đồng sở hữu giữa:
+1. **Đồng chủ sở hữu quyền tài sản của BizOn:**
    - **Đỗ Thùy Hương**;
    - **Phan Anh Tú**.
 2. **Đóng góp cốt lõi của Phan Anh Tú:** học thuật, chuyên môn, phản biện và định hướng mô hình/triển khai giáo dục.
-3. **Đóng góp cốt lõi của Đỗ Thùy Hương:** hình thành và điều phối dự án, phát triển sản phẩm và dự kiến là tác giả phần mã nguồn.
-4. **Tác giả mã nguồn:** dự kiến ghi **Đỗ Thùy Hương**, nhưng chỉ chốt sau khi hoàn tất kiểm tra Git history, mã do bên thứ ba/công cụ hỗ trợ và đóng góp của cộng tác viên.
+3. **Đóng góp cốt lõi của Đỗ Thùy Hương:** hình thành, phát triển, tích hợp và điều phối dự án; dự kiến là tác giả phần mã nguồn.
+4. **Tác giả mã nguồn:** dự kiến ghi **Đỗ Thùy Hương**, nhưng chỉ chốt sau khi hoàn tất kiểm tra Git history, mã bên thứ ba/công cụ hỗ trợ và đóng góp của cộng tác viên.
+5. **CTU không phải chủ thể của dự án:** không đầu tư tài sản, không giao nhiệm vụ, không tài trợ, không sở hữu hoặc nhận chuyển giao quyền đối với BizOn theo xác nhận của chủ dự án.
+6. **Người trực tiếp nộp hồ sơ/đại diện thực hiện thủ tục:** **Phan Anh Tú**.
 
-## 2. Những nội dung không được tự suy diễn
+## 2. Phân biệt bắt buộc trong hồ sơ
 
-- Chưa có quyết định về **tỷ lệ đồng sở hữu**; không mặc nhiên ghi 50/50.
-- Chưa kết luận CTU không có quyền hoặc lợi ích liên quan.
+- **Người trực tiếp nộp hồ sơ/đại diện thủ tục:** Phan Anh Tú.
+- **Chủ sở hữu quyền tác giả:** Đỗ Thùy Hương và Phan Anh Tú.
+- **Tác giả chương trình máy tính:** dự kiến Đỗ Thùy Hương, chờ hoàn tất kiểm tra chứng cứ mã nguồn.
+- **Tác giả/đóng góp học thuật:** Phan Anh Tú đối với phần trực tiếp sáng tạo; bổ sung Đỗ Thùy Hương theo từng tài liệu hoặc mô-đun do Hương trực tiếp biên soạn.
+- Việc Phan Anh Tú nộp hồ sơ không làm thay đổi đồng sở hữu và không làm người nộp trở thành chủ sở hữu duy nhất.
+- Chưa có quyết định về **tỷ lệ đồng sở hữu**; không mặc nhiên ghi 50/50 nếu chưa có thỏa thuận ký.
 - Đồng sở hữu quyền tài sản không đồng nghĩa hai người đều là đồng tác giả của mọi dòng mã, mọi hình ảnh hoặc mọi tài liệu.
 - Đóng góp học thuật/chuyên môn không tự động được ghi là tác giả mã nguồn nếu không trực tiếp sáng tạo phần thể hiện của chương trình máy tính.
-- Không ghi bất kỳ tài sản bên thứ ba hoặc đầu ra chỉ do công cụ tự động tạo ra là sáng tạo nguyên gốc của hai đồng sở hữu nếu chưa có bằng chứng đóng góp sáng tạo của con người.
+- Tài sản bên thứ ba và đầu ra chỉ do công cụ tự động tạo ra không được kê khai là sáng tạo nguyên gốc nếu chưa có bằng chứng đóng góp sáng tạo của con người.
 
-## 3. Ma trận tác giả — đóng góp — chủ sở hữu dự kiến
+## 3. Ma trận tác giả — đóng góp — chủ sở hữu — người nộp
 
-| Nhóm tài sản | Tác giả/người sáng tạo dự kiến | Vai trò của Phan Anh Tú | Vai trò của Đỗ Thùy Hương | Chủ sở hữu quyền tài sản dự kiến | Bằng chứng cần hoàn tất |
+| Nhóm tài sản | Tác giả/người sáng tạo dự kiến | Vai trò của Phan Anh Tú | Vai trò của Đỗ Thùy Hương | Chủ sở hữu quyền tài sản | Người nộp/đại diện |
 |---|---|---|---|---|---|
-| Mã nguồn chương trình máy tính | **Đỗ Thùy Hương — dự kiến** | Cung cấp yêu cầu học thuật/chuyên môn; không mặc nhiên là tác giả code | Thiết kế, triển khai, tích hợp, điều phối phát triển | Đỗ Thùy Hương & Phan Anh Tú | Git log, commit map, bảng loại trừ thư viện/mã bên thứ ba, cam đoan tác giả |
-| Mô hình học thuật và cơ sở chuyên môn | **Phan Anh Tú** đối với phần trực tiếp xây dựng/phản biện; bổ sung Hương theo nội dung thực tế | Định hướng học thuật, phản biện mô hình, mục tiêu đào tạo và triển khai lớp học | Chuyển hóa nghiên cứu thành sản phẩm, cấu trúc hệ thống và nội dung do Hương trực tiếp soạn | Đỗ Thùy Hương & Phan Anh Tú | Bản thảo, ghi chú phản biện, email/biên bản, lịch sử chỉnh sửa |
-| Luật chơi, tình huống, rubric, model card | Xác định theo từng tài liệu | Chuyên môn, chuẩn đầu ra, phản biện và hiệu chỉnh | Biên soạn, cấu trúc hóa, tích hợp vào phần mềm | Đỗ Thùy Hương & Phan Anh Tú | Bảng tài liệu–tác giả, file nguồn, lịch sử phiên bản |
-| Giao diện Academia 3D/clay design | Chưa chốt theo từng thành phần | Phản biện học thuật và phù hợp giáo dục nếu có | Định hướng và tích hợp thiết kế; xác định phần trực tiếp sáng tạo | Đỗ Thùy Hương & Phan Anh Tú, trừ phần bên thứ ba | Screen sheet, file nguồn, nhật ký chỉnh sửa, nguồn asset/AI |
-| Logo và nhận diện BizOn | Chưa chốt | Cố vấn học thuật/thương hiệu nếu có | Chủ trì phát triển và lựa chọn phương án nếu có chứng cứ | Đỗ Thùy Hương & Phan Anh Tú, trừ phần bên thứ ba | File vector/source, phương án thiết kế, ngày tạo, người chỉnh sửa |
-| Lumina, Hương AI, Tú Phan và dàn nhân vật | Chưa chốt theo từng character sheet | Đóng góp hình tượng/chuyên môn liên quan nhân vật Tú Phan nếu có | Chủ trì xây dựng và tích hợp hệ nhân vật | Đỗ Thùy Hương & Phan Anh Tú, trừ phần bên thứ ba | Character sheet, prompt log, bản nháp, chỉnh sửa của con người, quyền hình ảnh |
-| Âm nhạc, lời ca, giọng và bản ghi | Tách riêng theo từng ca khúc/bản ghi | Xác định theo phần đóng góp thực tế | Xác định theo phần đóng góp thực tế | Theo thỏa thuận riêng của từng tác phẩm/bản ghi | Master, lyric sheet, melody source, điều khoản AI/voice, giấy đồng ý |
-| Nhãn hiệu `BIZON` và `BIZON BẬT NGHIỆP` | Không áp dụng khái niệm tác giả như quyền tác giả | Đồng chủ thể dự kiến hoặc theo thỏa thuận đại diện | Đồng chủ thể dự kiến hoặc theo thỏa thuận đại diện | Chưa chốt cách đứng tên đơn | Tra cứu, danh mục Nice, quyết định một hay hai chủ đơn, thỏa thuận sử dụng |
+| Mã nguồn chương trình máy tính | **Đỗ Thùy Hương — dự kiến** | Yêu cầu học thuật/chuyên môn; không mặc nhiên là tác giả code | Thiết kế, triển khai, tích hợp, điều phối phát triển | Đỗ Thùy Hương & Phan Anh Tú | Phan Anh Tú |
+| Mô hình học thuật và cơ sở chuyên môn | **Phan Anh Tú** đối với phần trực tiếp xây dựng/phản biện; bổ sung Hương theo nội dung thực tế | Định hướng học thuật, phản biện mô hình, mục tiêu đào tạo và triển khai lớp học | Chuyển hóa nghiên cứu thành sản phẩm, cấu trúc hệ thống và nội dung do Hương trực tiếp soạn | Đỗ Thùy Hương & Phan Anh Tú | Phan Anh Tú |
+| Luật chơi, tình huống, rubric, model card | Xác định theo từng tài liệu | Chuyên môn, chuẩn đầu ra, phản biện và hiệu chỉnh | Biên soạn, cấu trúc hóa, tích hợp vào phần mềm | Đỗ Thùy Hương & Phan Anh Tú | Phan Anh Tú |
+| Giao diện Academia 3D/clay design | Chốt theo từng thành phần | Phản biện học thuật và phù hợp giáo dục nếu có | Định hướng và tích hợp thiết kế; xác định phần trực tiếp sáng tạo | Đỗ Thùy Hương & Phan Anh Tú, trừ phần bên thứ ba | Phan Anh Tú |
+| Logo và nhận diện BizOn | Chốt theo từng tài sản | Cố vấn học thuật/thương hiệu nếu có | Chủ trì phát triển và lựa chọn phương án nếu có chứng cứ | Đỗ Thùy Hương & Phan Anh Tú, trừ phần bên thứ ba | Phan Anh Tú |
+| Lumina, Hương AI, Tú Phan và dàn nhân vật | Chốt theo từng character sheet | Đóng góp hình tượng/chuyên môn liên quan nhân vật Tú Phan nếu có | Chủ trì xây dựng và tích hợp hệ nhân vật | Đỗ Thùy Hương & Phan Anh Tú, trừ phần bên thứ ba | Phan Anh Tú |
+| Âm nhạc, lời ca, giọng và bản ghi | Tách riêng theo từng ca khúc/bản ghi | Xác định theo phần đóng góp thực tế | Xác định theo phần đóng góp thực tế | Theo thỏa thuận riêng của từng tác phẩm/bản ghi | Phan Anh Tú hoặc người được hai bên thống nhất |
+| Nhãn hiệu `BIZON` và `BIZON BẬT NGHIỆP` | Không áp dụng khái niệm tác giả như quyền tác giả | Đồng chủ thể dự kiến và trực tiếp thực hiện thủ tục | Đồng chủ thể dự kiến | Đỗ Thùy Hương & Phan Anh Tú nếu muốn đồng sở hữu nhãn hiệu | Phan Anh Tú |
 
 ## 4. Cách ghi dự kiến trong hồ sơ chương trình máy tính
 
@@ -48,45 +54,68 @@ Tỷ lệ quyền, quyền khai thác, cấp phép, chuyển giao, đăng ký v�
 
 Phan Anh Tú được ghi nhận ở phần đóng góp học thuật–chuyên môn và có thể là tác giả của các tài liệu/mô hình do thầy trực tiếp sáng tạo, nhưng không tự động ghi là đồng tác giả mã nguồn nếu không trực tiếp sáng tạo code hoặc phần thể hiện thuộc chương trình.
 
-### 4.3. Đóng góp học thuật–chuyên môn
+### 4.3. Người nộp hồ sơ
+
+> **Phan Anh Tú — người trực tiếp nộp hồ sơ/đại diện thực hiện thủ tục đăng ký.**
+
+Khi hồ sơ yêu cầu, Đỗ Thùy Hương ký văn bản đồng ý hoặc ủy quyền để Phan Anh Tú thay mặt hai đồng chủ sở hữu thực hiện thủ tục. Văn bản này không làm thay đổi quyền đồng sở hữu.
+
+### 4.4. Đóng góp học thuật–chuyên môn
 
 > **Phan Anh Tú: định hướng học thuật, chuyên môn, phản biện mô hình, thiết kế triển khai lớp học và liên kết mô phỏng với mục tiêu đào tạo.**
 
 > **Đỗ Thùy Hương: hình thành và điều phối dự án, chuyển hóa khung nghiên cứu thành sản phẩm, phát triển và tích hợp hệ thống, biên soạn các nội dung do Hương trực tiếp thực hiện.**
 
-## 5. Thỏa thuận đồng sở hữu cần bao gồm
+## 5. Cách ghi dự kiến đối với nhãn hiệu
 
-- tên đầy đủ, thông tin định danh và địa chỉ của hai bên;
+Nếu mục tiêu là quyền đối với `BIZON` và `BIZON BẬT NGHIỆP` thuộc cả hai người:
+
+- mục **chủ đơn/chủ sở hữu dự kiến** ghi **Đỗ Thùy Hương và Phan Anh Tú**;
+- **Phan Anh Tú** là người trực tiếp thực hiện thủ tục hoặc đầu mối liên hệ;
+- không ghi riêng Phan Anh Tú ở mục chủ đơn chỉ vì thầy là người đi nộp, trừ khi hai bên chủ động quyết định nhãn hiệu chỉ thuộc Phan Anh Tú.
+
+## 6. Xác nhận về CTU
+
+Theo quyết định của chủ dự án:
+
+- CTU không đầu tư tiền, thiết bị, phần mềm, tài sản trí tuệ hoặc nhân lực được giao riêng cho BizOn;
+- BizOn không phải nhiệm vụ, đề tài, sản phẩm đặt hàng hoặc sản phẩm được CTU tài trợ;
+- CTU không phải tác giả, đồng tác giả, chủ sở hữu, đồng chủ sở hữu, bên nhận chuyển giao hoặc người nộp đơn;
+- hồ sơ không yêu cầu chữ ký, xác nhận hoặc chấp thuận của CTU, trừ khi sau này xuất hiện tài liệu pháp lý mới chứng minh điều ngược lại.
+
+## 7. Thỏa thuận đồng sở hữu cần bao gồm
+
+- thông tin định danh và địa chỉ của hai bên;
 - danh mục tài sản thuộc phạm vi đồng sở hữu;
 - tỷ lệ quyền hoặc nguyên tắc phân chia lợi ích;
-- quyền đứng tên đăng ký và đại diện làm việc với cơ quan nhà nước/CTU;
+- ghi rõ Phan Anh Tú là người trực tiếp nộp hồ sơ/đại diện làm thủ tục;
+- phạm vi văn bản đồng ý hoặc ủy quyền của Đỗ Thùy Hương;
 - quyền công bố, thương mại hóa, cấp phép, chuyển giao và sửa đổi;
 - cơ chế phê duyệt khi phát hành phiên bản mới;
 - quản lý tên miền, GitHub, kho mã, tài khoản cửa hàng ứng dụng và khóa ký;
-- xử lý tài sản do AI/cộng tác viên/nhà cung cấp tạo;
+- xử lý tài sản do AI, cộng tác viên hoặc nhà cung cấp tạo;
 - cơ chế giải quyết bất đồng và chấm dứt hợp tác;
-- chữ ký của Đỗ Thùy Hương, Phan Anh Tú và xác nhận của CTU nếu cần.
+- chữ ký của Đỗ Thùy Hương và Phan Anh Tú.
 
-## 6. Công việc phải hoàn tất trước khi nộp
+## 8. Công việc phải hoàn tất trước khi nộp
 
 - [ ] Xuất Git history và lập bảng commit–tệp–người thực hiện cho phần mã nguồn.
 - [ ] Tách thư viện, framework, font, stock asset và dịch vụ bên thứ ba.
 - [ ] Lập bảng từng tài liệu học thuật để xác định tác giả thực tế.
 - [ ] Xác định tỷ lệ đồng sở hữu hoặc cơ chế phân chia lợi ích.
-- [ ] Có văn bản CTU về phạm vi quyền/lợi ích của trường.
 - [ ] Ký thỏa thuận đồng sở hữu giữa Đỗ Thùy Hương và Phan Anh Tú.
-- [ ] Chốt chủ thể đứng tên đơn nhãn hiệu.
+- [ ] Ký văn bản đồng ý/ủy quyền cho Phan Anh Tú nộp hồ sơ khi cần.
+- [ ] Chốt hai đồng chủ đơn nhãn hiệu hay một chủ đơn duy nhất.
 - [ ] Lập hồ sơ nguồn gốc cho AI-assisted assets, hình ảnh, giọng và âm nhạc.
 - [ ] Đối chiếu tờ khai và biểu mẫu hiện hành tại đúng ngày nộp.
 
-## 7. Bảng ký xác nhận dự kiến
+## 9. Bảng ký xác nhận dự kiến
 
 | Chủ thể | Nội dung xác nhận | Ngày | Chữ ký |
 |---|---|---|---|
-| Đỗ Thùy Hương | Đồng chủ sở hữu; xác nhận vai trò phát triển/điều phối và phạm vi mã nguồn do mình sáng tạo |  |  |
-| Phan Anh Tú | Đồng chủ sở hữu; xác nhận phạm vi đóng góp học thuật, chuyên môn và các tài liệu trực tiếp sáng tạo |  |  |
-| Đại diện CTU, nếu cần | Xác nhận phạm vi nhiệm vụ, nguồn lực, quyền/lợi ích hoặc đồng ý đăng ký |  |  |
+| Đỗ Thùy Hương | Đồng chủ sở hữu; xác nhận vai trò phát triển/điều phối, phạm vi mã nguồn do mình sáng tạo và đồng ý để Phan Anh Tú thực hiện thủ tục |  |  |
+| Phan Anh Tú | Đồng chủ sở hữu; xác nhận phạm vi đóng góp học thuật, chuyên môn, tài liệu trực tiếp sáng tạo và vai trò người nộp hồ sơ/đại diện |  |  |
 
 ---
 
-**Lưu ý:** Tài liệu này là dự thảo quản trị chain of title. Bản dùng để nộp phải được hai đồng sở hữu ký, đối chiếu với chứng cứ kỹ thuật và rà soát theo yêu cầu của CTU/cơ quan tiếp nhận.
+**Lưu ý:** Tài liệu này là dự thảo quản trị chain of title. Bản dùng để nộp phải được hai đồng chủ sở hữu ký và đối chiếu với chứng cứ kỹ thuật, biểu mẫu hiện hành và yêu cầu của cơ quan tiếp nhận.
