@@ -97,6 +97,20 @@
     'html[data-theme="dark"] #bz-footer .bzf-col{border-bottom-color:rgba(92,196,230,.13)}' +
     'html[data-theme="dark"] #bz-footer ul a,html[data-theme="dark"] #bz-footer .bzf-meta a,' +
       'html[data-theme="dark"] #bz-footer .bzf-legal a,html[data-theme="dark"] #bz-footer .bzf-accent{color:#5cc4e6}' +
+    /* --- chuyển sản phẩm trong hệ sinh thái (chỉ điều hướng, không dùng chung dữ liệu) --- */
+    '#bz-footer .bzf-eco{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 18px;' +
+      'margin-top:24px;padding:14px 16px;border:1px solid rgba(0,102,135,.14);border-radius:14px;background:rgba(0,102,135,.05)}' +
+    '#bz-footer .bzf-eco-label{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;opacity:.7}' +
+    '#bz-footer .bzf-eco-label b{color:#006687}' +
+    '#bz-footer .bzf-eco-links{display:flex;flex-wrap:wrap;gap:8px}' +
+    '#bz-footer .bzf-eco-links a{font-size:12px;font-weight:800;text-decoration:none;padding:6px 12px;border-radius:999px;' +
+      'background:#fff;border:1px solid rgba(0,102,135,.18);color:#006687}' +
+    '#bz-footer .bzf-eco-links a:hover{background:#006687;color:#fff}' +
+    '#bz-footer .bzf-eco-links a.bzf-eco-cur{background:#006687;color:#fff;border-color:#006687}' +
+    'html[data-theme="dark"] #bz-footer .bzf-eco{border-color:rgba(92,196,230,.16);background:rgba(92,196,230,.05)}' +
+    'html[data-theme="dark"] #bz-footer .bzf-eco-label b{color:#5cc4e6}' +
+    'html[data-theme="dark"] #bz-footer .bzf-eco-links a{background:#0e2a33;border-color:rgba(92,196,230,.2);color:#5cc4e6}' +
+    'html[data-theme="dark"] #bz-footer .bzf-eco-links a.bzf-eco-cur{background:#5cc4e6;color:#04222a;border-color:#5cc4e6}' +
     '@media print{#bz-footer{display:none !important}}';
   document.head.appendChild(css);
 
@@ -121,6 +135,14 @@
           '</div>' +
         '</div>' +
         '<div class="bzf-grid">' + cols + '</div>' +
+        '<div class="bzf-eco">' +
+          '<span class="bzf-eco-label">Hệ sinh thái · <b>Je m\'appelle Hương</b></span>' +
+          '<span class="bzf-eco-links">' +
+            '<a class="bzf-eco-cur" href="index.html" aria-current="true">BizOn</a>' +
+            '<a href="vietlens/gioi-thieu.html">VietLens AI</a>' +
+            '<a href="https://thuyhuongctu.github.io/M-AIDA/" target="_blank" rel="noopener">M-AIDA ↗</a>' +
+          '</span>' +
+        '</div>' +
         '<p class="bzf-cite">Cite (APA 7): Do, T. H., &amp; Phan, A. T. (2026). <i>BizOn Bật Nghiệp: A claymorphism business-simulation ecosystem for entrepreneurship education</i> [Computer software]. https://doi.org/10.5281/zenodo.21592241</p>' +
         '<div class="bzf-tail" id="bzf-tail"></div>' +
         '<div class="bzf-legal">' +
