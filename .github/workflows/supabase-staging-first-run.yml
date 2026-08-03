@@ -1,4 +1,4 @@
-# BizOn protected staging gate v2 — normalized pooler URL and sanitized diagnostics
+# BizOn protected staging gate v3 — fixed staging identity and sanitized diagnostics
 name: BizOn Supabase Staging First Run
 
 on:
@@ -22,13 +22,13 @@ jobs:
       group: bizon-supabase-staging
       cancel-in-progress: false
     env:
-      SUPABASE_STAGING_PROJECT_REF: ${{ vars.SUPABASE_STAGING_PROJECT_REF }}
-      SUPABASE_STAGING_URL: ${{ vars.SUPABASE_STAGING_URL }}
+      SUPABASE_STAGING_PROJECT_REF: kdpjlbqvdlnsthrmchm
+      SUPABASE_STAGING_URL: https://kdpjlbqvdlnsthrmchm.supabase.co
       SUPABASE_STAGING_DATABASE_INPUT: ${{ secrets.SUPABASE_STAGING_DATABASE_URL }}
       SUPABASE_STAGING_DB_PASSWORD: ${{ secrets.SUPABASE_STAGING_DB_PASSWORD }}
       SUPABASE_STAGING_ANON_KEY: ${{ secrets.SUPABASE_STAGING_ANON_KEY }}
       SUPABASE_STAGING_INSTRUCTOR_KEY: ${{ secrets.SUPABASE_STAGING_INSTRUCTOR_KEY }}
-      CONFIRM_PROJECT_REF: ${{ vars.SUPABASE_STAGING_PROJECT_REF }}
+      CONFIRM_PROJECT_REF: kdpjlbqvdlnsthrmchm
       APPLY_MIGRATION: 'true'
       RUN_RETENTION_PURGE: 'true'
       BIZON_STAGING_REPORT_DIR: artifacts/supabase-staging
