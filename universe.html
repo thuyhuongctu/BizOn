@@ -120,6 +120,50 @@ svg.delta{width:100%;height:auto;display:block;overflow:visible}
 .cta .btn-solid{background:var(--glow);color:var(--deep)}
 .cta-in{position:relative;z-index:3}
 
+/* HỆ SINH THÁI: đầu vào → buổi học sống (cảm hứng DeepMind, màu jade) */
+.synth{background:var(--deep);color:#F2F5F1;position:relative;overflow:hidden}
+.synth .mesh{opacity:.5}
+.synth-in{position:relative;z-index:3}
+.synth .tag{color:rgba(242,245,241,.5)}
+.synth h2{color:#F2F5F1}
+.synth .lede{color:rgba(242,245,241,.66)}
+.inputs{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-top:clamp(24px,3.4vw,40px)}
+.inp{border:1px solid rgba(127,217,190,.24);background:linear-gradient(158deg,rgba(127,217,190,.13),rgba(15,92,78,.04));border-radius:16px;padding:16px 16px 18px;transition:border-color .25s,transform .25s}
+.inp:hover{border-color:rgba(127,217,190,.5);transform:translateY(-2px)}
+.inp .ic{font-size:1.3rem;display:block;margin-bottom:.7rem}
+.inp .k{font-weight:600;font-size:.92rem;display:block}
+.inp .s{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(127,217,190,.72);margin-top:.32rem;display:block}
+.arrow-note{text-align:center;margin:clamp(20px,2.6vw,30px) 0;font-family:var(--mono);font-size:.7rem;letter-spacing:.05em;color:rgba(127,217,190,.72)}
+
+/* REEL — "video" phát nhạc, không cần ffmpeg */
+.reel{position:relative;border-radius:20px;overflow:hidden;border:1px solid rgba(127,217,190,.3);box-shadow:0 0 0 1px rgba(127,217,190,.08),0 24px 60px -22px rgba(0,0,0,.6);max-width:960px;margin:0 auto}
+.reel .stage{aspect-ratio:16/9;background:radial-gradient(130% 120% at 30% 12%,#123f38,#08120f 84%);position:relative;overflow:hidden}
+.scene{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:clamp(24px,4vw,56px);opacity:0;transform:translateY(14px);transition:opacity .6s var(--ease),transform .6s var(--ease);pointer-events:none}
+.scene.on{opacity:1;transform:none}
+.scene .ch{font-family:var(--mono);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--glow);margin-bottom:1rem}
+.scene .big{font-size:clamp(1.5rem,3.4vw,2.6rem);font-weight:800;letter-spacing:-.03em;line-height:1.08;max-width:20ch}
+.scene .sub{color:rgba(242,245,241,.66);margin-top:1rem;max-width:40ch;font-size:clamp(.9rem,1.3vw,1.05rem)}
+.rungs-anim{display:flex;flex-direction:column;gap:12px;margin-top:.4rem}
+.rungs-anim .r{border-left:2px solid rgba(127,217,190,.5);padding:6px 0 6px 16px}
+.rungs-anim .r .n{font-family:var(--mono);font-size:.58rem;letter-spacing:.16em;color:var(--glow)}
+.rungs-anim .r .t{font-weight:700;font-size:clamp(1rem,1.8vw,1.35rem)}
+.metrics{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:.4rem;max-width:560px}
+.metric .v{font-size:clamp(1.4rem,3vw,2.2rem);font-weight:800;color:var(--glow);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.metric .l{font-family:var(--mono);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(242,245,241,.5);margin-top:.2rem}
+.reel .eqline{font-family:var(--mono);font-size:clamp(.7rem,1.1vw,.85rem);color:rgba(242,245,241,.7);margin-top:1rem}
+.reel .eqline em{font-style:normal;color:var(--glow)}
+/* controls + tiến trình */
+.reel .bar2{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(127,217,190,.14)}
+.reel .bar2 i{display:block;height:100%;width:0;background:var(--glow)}
+.reel .ctrl{position:absolute;right:14px;bottom:14px;display:flex;gap:8px}
+.reel .ctrl button{width:40px;height:40px;border-radius:50%;border:1px solid rgba(127,217,190,.4);background:rgba(8,18,15,.55);color:var(--glow);cursor:pointer;font-size:.95rem;display:grid;place-items:center;backdrop-filter:blur(6px)}
+.reel .cap{position:absolute;left:16px;bottom:16px;font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;color:rgba(242,245,241,.7)}
+.reel .cover{position:absolute;inset:0;display:grid;place-items:center;background:rgba(8,18,15,.35);cursor:pointer;z-index:4;border:none;width:100%;font:inherit;color:inherit;text-align:center}
+.reel .cover .big-play{width:70px;height:70px;border-radius:50%;border:1px solid rgba(127,217,190,.6);background:rgba(127,217,190,.16);display:grid;place-items:center;font-size:1.3rem;color:var(--glow)}
+.reel .cover .lbl{position:absolute;bottom:26px;font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(242,245,241,.75)}
+.reel.playing .cover{display:none}
+@media(max-width:820px){.inputs{grid-template-columns:1fr 1fr}.metrics{grid-template-columns:1fr 1fr}}
+
 @media(max-width:900px){
   .lgrid{grid-template-columns:1fr}
   .lvis{position:static;order:-1;aspect-ratio:4/3}
@@ -222,6 +266,76 @@ svg.delta{width:100%;height:auto;display:block;overflow:visible}
 
         <text x="66" y="324" class="d-cap">ĐỒNG BẰNG SÔNG CỬU LONG</text>
       </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HỆ SINH THÁI: đầu vào → buổi học sống (cảm hứng DeepMind) ═══ -->
+<section class="synth">
+  <div class="mesh" aria-hidden="true"></div>
+  <div class="shell synth-in">
+    <div class="head rv">
+      <p class="tag" data-vi="Hệ sinh thái" data-en="The ecosystem">Hệ sinh thái</p>
+      <h2 data-vi="Nhiều đầu vào, một buổi học sống" data-en="Many inputs, one live class">Nhiều đầu vào, một buổi học sống</h2>
+      <p class="lede" data-vi="Quyết định của người học, dữ liệu có xuất xứ, engine tất định và kịch bản lớp — engine lõi gộp lại thành một buổi học mà giảng viên chấm được." data-en="Learner decisions, sourced data, a deterministic engine and the class scenario — the core engine weaves them into a session an instructor can grade.">Quyết định của người học, dữ liệu có xuất xứ, engine tất định và kịch bản lớp — engine lõi gộp lại thành một buổi học mà giảng viên chấm được.</p>
+    </div>
+    <div class="inputs rv">
+      <div class="inp"><span class="ic" aria-hidden="true">🎯</span><span class="k" data-vi="Quyết định người học" data-en="Learner decisions">Quyết định người học</span><span class="s" data-vi="Đầu vào" data-en="Input">Đầu vào</span></div>
+      <div class="inp"><span class="ic" aria-hidden="true">📊</span><span class="k" data-vi="Dữ liệu VietLens" data-en="VietLens data">Dữ liệu VietLens</span><span class="s" data-vi="Có xuất xứ" data-en="With provenance">Có xuất xứ</span></div>
+      <div class="inp"><span class="ic" aria-hidden="true">⚙️</span><span class="k" data-vi="Engine lõi tất định" data-en="Deterministic core">Engine lõi tất định</span><span class="s" data-vi="Không ngẫu nhiên" data-en="No randomness">Không ngẫu nhiên</span></div>
+      <div class="inp"><span class="ic" aria-hidden="true">📋</span><span class="k" data-vi="Kịch bản lớp" data-en="Class scenario">Kịch bản lớp</span><span class="s" data-vi="Gắn phiên bản" data-en="Versioned">Gắn phiên bản</span></div>
+    </div>
+    <p class="arrow-note rv" data-vi="Bốn đầu vào → engine lõi → một buổi học sống" data-en="Four inputs → core engine → one live class">Bốn đầu vào → engine lõi → một buổi học sống</p>
+
+    <div class="reel rv" id="reel">
+      <div class="stage">
+        <audio id="reel-audio" src="assets/audio/brand-passport-remix-25.mp3" preload="none"></audio>
+
+        <div class="scene" data-a="0" data-b="14">
+          <p class="ch">Chương 1 · Vấn đề</p>
+          <h3 class="big" data-vi="Dạy ra quyết định — nhưng chưa có cách đo nó." data-en="We teach decision-making — but can't measure it.">Dạy ra quyết định — nhưng chưa có cách đo nó.</h3>
+          <p class="sub" data-vi="Giảng dạy khởi nghiệp thiếu công cụ đánh giá năng lực ra quyết định của người học." data-en="Entrepreneurship teaching lacks a tool to assess a learner's decision-making.">Giảng dạy khởi nghiệp thiếu công cụ đánh giá năng lực ra quyết định của người học.</p>
+        </div>
+
+        <div class="scene" data-a="14" data-b="40">
+          <p class="ch">Chương 2 · Ba bậc</p>
+          <h3 class="big" data-vi="Một dòng chảy, ba bậc." data-en="One current, three tiers.">Một dòng chảy, ba bậc.</h3>
+          <div class="rungs-anim">
+            <div class="r"><span class="n">BẬC 1</span> <span class="t" data-vi="Bến Phù Sa · chính danh hoá" data-en="Bến Phù Sa · formalisation">Bến Phù Sa · chính danh hoá</span></div>
+            <div class="r"><span class="n">BẬC 2A</span> <span class="t" data-vi="Bật Nghiệp · trong nước" data-en="Bật Nghiệp · domestic">Bật Nghiệp · trong nước</span></div>
+            <div class="r"><span class="n">BẬC 2B</span> <span class="t" data-vi="Hộ chiếu · quốc tế" data-en="Brand Passport · international">Hộ chiếu · quốc tế</span></div>
+          </div>
+        </div>
+
+        <div class="scene" data-a="40" data-b="66">
+          <p class="ch">Chương 3 · Một vòng chơi</p>
+          <h3 class="big" data-vi="Quyết định → hệ quả → lý do." data-en="Decision → consequence → cause.">Quyết định → hệ quả → lý do.</h3>
+          <div class="metrics">
+            <div class="metric"><div class="v" id="m-price">—</div><div class="l" data-vi="Giá bán" data-en="Price">Giá bán</div></div>
+            <div class="metric"><div class="v" id="m-share">—</div><div class="l" data-vi="Thị phần" data-en="Share">Thị phần</div></div>
+            <div class="metric"><div class="v" id="m-profit">—</div><div class="l" data-vi="Lợi nhuận" data-en="Profit">Lợi nhuận</div></div>
+          </div>
+          <p class="eqline">thị phần = <em>0,20</em> × (giá / <em>150</em>)^<em>−1,8</em> × kênh + <em>0,15</em> × thương hiệu</p>
+        </div>
+
+        <div class="scene" data-a="66" data-b="90">
+          <p class="ch">Chương 4 · Cho giảng viên</p>
+          <h3 class="big" data-vi="Chấm lập luận, không chấm may rủi." data-en="Grade reasoning, not luck.">Chấm lập luận, không chấm may rủi.</h3>
+          <p class="sub" data-vi="Thử một buổi với lớp của thầy cô." data-en="Try one session with your class.">Thử một buổi với lớp của thầy cô.</p>
+          <p class="eqline">thuyhuongctu.github.io/BizOn</p>
+        </div>
+
+        <div class="bar2"><i id="reel-bar"></i></div>
+        <span class="cap">BizOn · giới thiệu</span>
+        <div class="ctrl">
+          <button id="reel-mute" type="button" aria-label="Tắt hoặc mở tiếng">🔊</button>
+          <button id="reel-pause" type="button" aria-label="Tạm dừng hoặc phát">⏸</button>
+        </div>
+        <button class="cover" id="reel-cover" type="button" aria-label="Phát video giới thiệu, có nhạc">
+          <span class="big-play" aria-hidden="true">▶</span>
+          <span class="lbl" data-vi="Bấm để phát · có nhạc" data-en="Tap to play · with sound">Bấm để phát · có nhạc</span>
+        </button>
+      </div>
     </div>
   </div>
 </section>
@@ -454,6 +568,40 @@ svg.delta{width:100%;height:auto;display:block;overflow:visible}
   }, { threshold: .55, rootMargin: '-18% 0px -28% 0px' });
   rungs.forEach(function (r) { lio.observe(r); });
   setStep(1);
+})();
+
+/* Reel giới thiệu: phát nhạc BizOn + timeline cảnh (không cần ffmpeg) */
+(function () {
+  var reel = document.getElementById('reel'); if (!reel) return;
+  var audio = document.getElementById('reel-audio');
+  var cover = document.getElementById('reel-cover');
+  var bar = document.getElementById('reel-bar');
+  var scenes = [].slice.call(reel.querySelectorAll('.scene'));
+  var mp = document.getElementById('m-price'), ms = document.getElementById('m-share'), mpr = document.getElementById('m-profit');
+  var END = 88, raf;
+  function fmt(n) { return n.toLocaleString('vi-VN'); }
+  function frame() {
+    var t = audio.currentTime;
+    if (t >= END) { stop(); return; }
+    scenes.forEach(function (s) { s.classList.toggle('on', t >= +s.dataset.a && t < +s.dataset.b); });
+    bar.style.width = (t / END * 100) + '%';
+    if (t >= 40 && t < 66 && mp) {
+      var p = Math.min(1, (t - 40) / 8);
+      var price = Math.round(168 - 48 * p);
+      var share = Math.max(.02, Math.min(.62, .20 * Math.pow(price / 150, -1.8) + .15 * .46));
+      var sold = Math.round(share * 6000), rev = sold * price / 1000, profit = rev - (1900 * 96 / 1000 + 46 + 22 + 40);
+      mp.textContent = fmt(price) + 'k'; ms.textContent = (share * 100).toFixed(1) + '%';
+      mpr.textContent = (profit >= 0 ? '' : '−') + fmt(Math.abs(Math.round(profit))) + 'tr';
+    }
+    if (t > END - 3) audio.volume = Math.max(0, (END - t) / 3);
+    raf = requestAnimationFrame(frame);
+  }
+  function start() { reel.classList.add('playing'); audio.volume = 1; audio.currentTime = 0; var pr = audio.play(); if (pr && pr.catch) pr.catch(function(){}); raf = requestAnimationFrame(frame); }
+  function stop() { cancelAnimationFrame(raf); audio.pause(); try { audio.currentTime = 0; } catch (e) {} reel.classList.remove('playing'); scenes.forEach(function (s) { s.classList.remove('on'); }); bar.style.width = '0'; }
+  cover.addEventListener('click', start);
+  document.getElementById('reel-mute').addEventListener('click', function () { audio.muted = !audio.muted; this.textContent = audio.muted ? '🔇' : '🔊'; });
+  document.getElementById('reel-pause').addEventListener('click', function () { if (audio.paused) { audio.play(); this.textContent = '⏸'; } else { audio.pause(); this.textContent = '▶'; } });
+  audio.addEventListener('ended', stop);
 })();
 </script>
 </body>
