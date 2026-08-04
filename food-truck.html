@@ -139,6 +139,28 @@
     </div>
   </section>
 
+  <!-- MÀN NGHI LỄ: LỄ CÚNG BÀ CẬU (giữa mùa) -->
+  <section id="ft-ritual" class="hidden">
+    <div class="clay-card p-7 text-center mb-4">
+      <p class="text-5xl">🕯️</p>
+      <h2 class="font-display font-extrabold text-deep-teal text-2xl mt-2">Rằm giữa mùa – Lễ cúng Bà Cậu</h2>
+      <p class="text-sm opacity-75 mt-3 max-w-md mx-auto">Theo tục thương hồ miền Tây, vào ngày <b>16 và 29 âm lịch</b>, chủ ghe dọn mâm cúng trước <b>mũi ghe</b> tạ ơn <b>Bà Cậu</b> – vị thần che chở người đi sông – cầu buôn may bán đắt, đi lại bình an.</p>
+      <div class="mt-4 rounded-xl border border-deep-teal/20 bg-deep-teal/5 p-4 text-sm text-left max-w-md mx-auto">
+        <p class="font-display font-extrabold text-deep-teal mb-1">🛶 Mâm cúng trước mũi ghe</p>
+        <p>🦆 Vịt luộc <i>(cúng vịt chứ không cúng gà – vịt bơi giỏi, tượng trưng đi sông thuận buồm)</i> · 🍚 ba chén cháo · 🍵 bình trà · 🍶 bình rượu · 🍬 bánh ngọt.</p>
+      </div>
+      <div class="mt-5 rounded-xl border-2 border-clay-gold/40 p-4 text-left max-w-md mx-auto">
+        <p class="font-display font-extrabold text-deep-teal">🪷 Lời khấn của người bán ngay thật</p>
+        <p class="text-sm opacity-80 mt-1">Người xưa tin Bà Cậu <b>trừng phạt kẻ mua gian bán lận</b>. Trước khi đi tiếp: tuần qua bạn có <b>cân đủ, niêm yết giá thật</b> với khách không?</p>
+        <div class="flex gap-3 mt-3">
+          <button onclick="ftRitualNext(true)" class="clay-btn flex-1 bg-deep-teal text-white font-display font-extrabold py-3">🕯️ Có – tôi bán thật</button>
+          <button onclick="ftRitualNext(false)" class="clay-btn flex-1 bg-clay-gold text-deep-teal font-display font-extrabold py-3">🤔 Tôi sẽ giữ mình hơn</button>
+        </div>
+      </div>
+      <p class="text-[11px] opacity-50 mt-4">Nghi lễ chỉ để suy ngẫm – <b>không cộng hay trừ điểm</b>. Nguồn: tục cúng ghe miền Tây (thờ Bà Cậu, cúng vịt, ngày 16 &amp; 29 âm lịch).</p>
+    </div>
+  </section>
+
   <!-- MÀN KẾT THÚC -->
   <section id="ft-end" class="hidden">
     <div class="clay-card p-7 text-center mb-4">
@@ -232,7 +254,7 @@
     st.plan = [s1, s2, s1, s2, s1]; st.mult = [3, 3, 3, 3, 3];
   })();
 
-  var S = { week: 0, total: 0, team: 0, cap: 0, sel: { m: null, menu: null, loc: null }, log: [] };
+  var S = { week: 0, total: 0, team: 0, cap: 0, sel: { m: null, menu: null, loc: null }, log: [], ritualDone: false };
   var $ = function (id) { return document.getElementById(id); };
   var f1 = function (v) { return (Math.round(v * 10) / 10).toLocaleString('vi-VN', { maximumFractionDigits: 1 }); };
 
@@ -361,6 +383,7 @@
       var rev = D[menu][loc] * W[w][loc] * mult * adj * share(count[loc]);
       S.total += rev;
       var icon = m === 0 ? '⛵' : '🧺';
+      var isBest = bestAt(loc) === menu;
       var clash = count[loc] - 1;
       var notes = [];
       if (menu === 0 && W[w][loc] >= 1.05) notes.push('🥖 phục vụ nhanh – hốt trọn tuần cao điểm +15%');
@@ -369,6 +392,10 @@
       if (clash > 0) notes.push('⚡ đụng độ ' + clash + ' đối thủ – chia nhau khách!');
       addLog(w + 1, icon + ' Bán ' + MENUS[menu][0] + ' ' + MENUS[menu][1] + ' tại ' + LOCS[loc][0] + ' ' + LOCS[loc][1] + ' → <b>' + f1(rev) + ' triệu ₫</b>' +
         (notes.length ? ' <i>(' + notes.join(' · ') + ')</i>' : ''));
+      // Điềm thương hồ – flavor tất định ánh xạ từ tín hiệu đã tính, không đổi điểm
+      addLog(w + 1, isBest
+        ? '🐕 <i>Điềm thương hồ:</i> có con chó lội ngang trước mũi ghe – người xưa tin là điềm buôn may bán đắt.'
+        : '🐍 <i>Điềm thương hồ:</i> một con rắn lội ngang sông – điềm nhắc cẩn trọng, tuần tới nên dò kỹ hơn.');
       if (m === 1) {
         // Gánh hàng rong: nghe ngóng được nhiều – món tốt nhất tại chỗ + so sánh 2 địa điểm
         var b = bestAt(loc);
@@ -379,7 +406,6 @@
           addLog(w + 1, '🗣️ <i>Tin vỉa hè:</i> tuần tới khu <b>' + LOCS[hot][1] + '</b> có vẻ sẽ đông hơn ' + LOCS[hot === l1 ? l2 : l1][1] + '.');
         }
       } else {
-        var isBest = bestAt(loc) === menu;
         addLog(w + 1, '⛵ <i>Cảm nhận:</i> ' + (isBest ? 'món của bạn đang là "vua" ở khu này! 👑' : 'hình như khách ở đây thèm một món khác…'));
       }
     }
@@ -396,6 +422,25 @@
 
     S.week++;
     if (S.week >= 5) return ftEnd();
+    // Rằm giữa mùa: Lễ cúng Bà Cậu (một lần, nhịp cố định – không đổi doanh thu/điểm)
+    if (S.week === 2 && !S.ritualDone) { S.ritualDone = true; return showRitual(); }
+    render();
+  };
+
+  function showRitual() {
+    $('ft-play').classList.add('hidden');
+    $('ft-ritual').classList.remove('hidden');
+    window.scrollTo(0, 0);
+  }
+  // Ghi vào nhật ký đội – KHÔNG tính điểm
+  window.ftRitualNext = function (honest) {
+    S.log.unshift('<li><b>🪷 Lễ cúng Bà Cậu:</b> ' + (honest
+      ? 'bạn tự nhận đã bán ngay thật – theo tục, Bà Cậu phù hộ đường buôn.'
+      : 'bạn tự nhắc mình cân đủ, niêm yết giá thật ở những tuần tới.') +
+      ' <i>(ghi nhật ký – không tính điểm)</i></li>');
+    $('ft-log').innerHTML = S.log.join('');
+    $('ft-ritual').classList.add('hidden');
+    $('ft-play').classList.remove('hidden');
     render();
   };
 
