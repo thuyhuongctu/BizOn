@@ -158,6 +158,8 @@ small { color: var(--muted); }
 .kpis article { padding: 18px; border-radius: 18px; }
 .kpis b { display: block; margin-top: 5px; font-size: 27px; }
 .kpis em { display: block; margin-top: 8px; color: var(--muted); font-size: 10px; font-style: normal; }
+/* Nhãn nguồn–thời gian: chính nó là sản phẩm, nên tô nhấn nhẹ thay vì để mờ như chú thích. */
+.kpis em.prov { color: var(--cyan); font-weight: 500; letter-spacing: .01em; }
 .delta.up { color: var(--green); }
 .delta.down { color: var(--red); }
 .delta.flat { color: var(--amber); }

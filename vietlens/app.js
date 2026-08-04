@@ -59,19 +59,19 @@
     $('stabilityScore').textContent = stability;
     $('momentumScore').textContent = momentum;
     $('uncertaintyScore').textContent = uncertainty;
-    $('freshnessLabel').textContent = `Kết xuất lúc ${state.refreshedAt.toLocaleTimeString('vi-VN', {
-      hour: '2-digit',
-      minute: '2-digit'
-    })} · dữ liệu mẫu ${new Date(data.generatedAt).toLocaleDateString('vi-VN')}`;
+    // Định vị chiều-sâu/xuất-xứ: nhãn là KỲ DỮ LIỆU, không phải "kết xuất lúc mấy giờ".
+    $('freshnessLabel').textContent = `Kỳ dữ liệu: ${data.period} · ${data.cadence}`;
   }
 
   function renderKpis() {
-    $('kpiGrid').innerHTML = data.indicators.map((indicator) => `
-      <article>
+    // Quy tắc một dòng: không có xuất xứ thì không lên bảng.
+    const sourced = data.indicators.filter((indicator) => indicator.source);
+    $('kpiGrid').innerHTML = sourced.map((indicator) => `
+      <article title="Phương pháp: ${indicator.method} — Giới hạn: ${indicator.limitation}">
         <small>${indicator.label}</small>
         <b>${indicator.display}</b>
         <span class="delta ${indicator.direction}">${indicator.delta >= 0 ? '+' : ''}${indicator.delta}% · tin cậy ${Math.round(indicator.confidence * 100)}%</span>
-        <em>${indicator.official ? 'Nguồn chính thức/định kỳ' : 'Proxy công khai'} · ${formatFreshness(indicator.freshnessMinutes)}</em>
+        <em class="prov">${indicator.period} · ${indicator.source}${indicator.official ? '' : ' · proxy'}</em>
       </article>
     `).join('');
   }
@@ -100,17 +100,11 @@
         <div class="meta">
           <span>${signal.domain}</span>
           <span>${signal.sourceCount} nguồn</span>
-          <span>${Math.round(signal.confidence * 100)}% confidence</span>
-          <span>${formatFreshness(signal.freshnessMinutes)}</span>
+          <span>${Math.round(signal.confidence * 100)}% tin cậy</span>
+          <span>${signal.period}</span>
         </div>
       </article>
     `).join('');
-  }
-
-  function formatFreshness(minutes) {
-    if (minutes < 60) return `${minutes} phút`;
-    if (minutes < 1440) return `${Math.round(minutes / 60)} giờ`;
-    return `${Math.round(minutes / 1440)} ngày`;
   }
 
   function baselineForecast() {
@@ -186,9 +180,9 @@
     $('dataGaps').textContent = `${data.provenance.filter((item) => item.status !== 'available').length} nhóm`;
     $('provenanceTable').innerHTML = `
       <table>
-        <thead><tr><th>Nguồn</th><th>Lĩnh vực</th><th>Loại</th><th>Trạng thái</th><th>Độ trễ</th></tr></thead>
+        <thead><tr><th>Nguồn</th><th>Lĩnh vực</th><th>Loại</th><th>Trạng thái</th><th>Độ trễ</th><th>Quyền tái phân phối</th></tr></thead>
         <tbody>${data.provenance.map((item) => `
-          <tr><td>${item.source}</td><td>${item.domain}</td><td>${item.type}</td><td>${item.status}</td><td>${item.lag}</td></tr>
+          <tr><td>${item.source}</td><td>${item.domain}</td><td>${item.type}</td><td>${item.status}</td><td>${item.lag}</td><td>${item.redistribution || '—'}</td></tr>
         `).join('')}</tbody>
       </table>
     `;
@@ -206,9 +200,13 @@
       forecast: baselineForecast(),
       scenario: state.scenario,
       provenance: data.provenance,
+      period: data.period,
+      cadence: data.cadence,
+      positioning: 'Depth and provenance, not velocity — every indicator carries source, period, method and limitation.',
       limitations: [
         'Sample/proxy data',
         'No calibrated probabilistic forecast',
+        'Redistribution rights per source must be verified before API/paid release',
         'Not financial, legal, medical, emergency or public-policy advice'
       ]
     };
