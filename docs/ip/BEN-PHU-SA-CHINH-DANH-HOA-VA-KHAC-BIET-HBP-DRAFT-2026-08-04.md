@@ -1,5 +1,12 @@
 # Bến Phù Sa — Hồ sơ khác biệt hoá & tái khung ghi công (DRAFT · chờ chị duyệt)
 
+> **CẬP NHẬT 2026-08-04:** Chủ sở hữu đã trả lời câu hỏi §1 → **Nhánh A: KHÔNG tham khảo
+> HBP** (chỉ nghe mô tả rồi tự dựng cơ chế), và muốn để Bến Phù Sa là **game độc lập**.
+> Ghi công phái sinh đã được sửa cho đúng sự thật (xem §3 Nhánh A) trong `food-truck.html`
+> và `js/site-ui.js`. **Chưa gỡ nhãn "không phát hành"** — đang chờ quyết định vị trí
+> (chơi trước Bật Nghiệp hay không).
+
+
 > **Trạng thái:** BẢN NHÁP để NCS. Đỗ Thùy Hương duyệt. **Chưa gỡ nhãn "không phát
 > hành", chưa đổi bất kỳ chữ nào trên `food-truck.html`.** Tài liệu này chỉ là phân
 > tích + đề xuất. Không có thay đổi sản phẩm nào đi kèm.
