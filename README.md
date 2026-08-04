@@ -111,7 +111,7 @@ If you use BizOn in teaching or research, please cite:
 
 Registration dossiers (copyright, trademark) and the commercialization strategy are managed in the authors' private document repository.
 
-Third-party components: Tailwind CSS (MIT), Google Fonts Plus Jakarta Sans & Manrope (OFL 1.1) – their original licenses apply.
+Fonts are **self-hosted** (no CDN) as static `.woff2` files under `assets/fonts/` — Plus Jakarta Sans, Manrope, IBM Plex Mono, DM Serif Display and Be Vietnam Pro, all under the **SIL Open Font License 1.1**; the OFL applies to those font files. Tailwind CSS (MIT) provides the utility layer. No runtime third-party font or script dependency is loaded from a CDN.
 
 ## 🛣️ Roadmap
 
