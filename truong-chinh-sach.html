@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BizOn — Chính sách dữ liệu &amp; Sở hữu trí tuệ</title>
+<meta name="description" content="Chính sách dữ liệu thể chế của BizOn: dữ liệu thuộc về lớp, không quảng cáo, không bán dữ liệu; đồng thuận tách mục đích mặc định tắt; không lưu danh tính; sở hữu trí tuệ và giấy phép độc quyền. Nói thẳng cả câu hỏi pháp lý còn mở.">
+<meta name="theme-color" content="#FFFFFF">
+<!-- Trang THANH GHI THỂ CHẾ (chính sách dữ liệu & SHTT), cặp với truong.html. Nạp
+     tokens-institutional.css (KHÔNG nạp tokens-clay.css). Bộ chữ TỰ LƯU TRỮ trong assets/fonts.
+     KHÁC với chinh-sach.html (bản quyền riêng tư cho Google Play, trang đất sét trong app) —
+     trang này là chính sách thể chế cho trưởng khoa/hội đồng/bộ phận mua sắm. -->
+<link rel="icon" type="image/svg+xml" href="assets/brand/bizon-favicon.svg">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BizOn — Chính sách dữ liệu &amp; Sở hữu trí tuệ">
+<meta property="og:description" content="Dữ liệu thuộc về lớp · đồng thuận tách mục đích mặc định tắt · không lưu danh tính · giấy phép độc quyền. Trường Đại học Cần Thơ.">
+<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/brand/og-truong.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="css/bizon-institutional-fonts.css">
+<link rel="stylesheet" href="css/tokens-institutional.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.6;-webkit-font-smoothing:antialiased}
+.shell{max-width:var(--max);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+.h-xl{font-size:clamp(2.4rem,5.6vw,4.6rem);font-weight:800;line-height:1.02;letter-spacing:-.036em}
+.h-lg{font-size:clamp(1.9rem,3.8vw,3.1rem);font-weight:700;line-height:1.06;letter-spacing:-.03em}
+.h-md{font-size:clamp(1.25rem,2vw,1.6rem);font-weight:600;line-height:1.18;letter-spacing:-.018em}
+.h-sm{font-size:1.02rem;font-weight:600;letter-spacing:-.01em;line-height:1.32}
+.tag{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3)}
+.body-lg{font-size:clamp(1.02rem,1.35vw,1.18rem);color:var(--ink-2);max-width:60ch}
+.body{font-size:.94rem;color:var(--ink-2)}
+.body-sm{font-size:.86rem;color:var(--ink-2)}
+.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.88);backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color .3s}
+.nav.stuck{border-bottom-color:var(--rule)}
+.nav-in{display:flex;align-items:center;gap:32px;height:66px}
+.brand{display:inline-flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.03em;font-size:1.14rem;text-decoration:none}
+.brand img{width:26px;height:26px}
+.brand span{color:var(--jade)}
+.nav-links{display:flex;gap:26px;margin-left:auto;align-items:center}
+.nav-links a{text-decoration:none;font-size:.875rem;color:var(--ink-2);transition:color .2s}
+.nav-links a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:.5rem;font-size:.875rem;font-weight:500;text-decoration:none;padding:.62rem 1.15rem;border-radius:2px;transition:background .2s,color .2s,border-color .2s}
+.btn-solid{background:var(--jade);color:#fff}
+.btn-solid:hover{background:#0B4A3F}
+.btn-line{border:1px solid var(--rule);color:var(--ink)}
+.btn-line:hover{border-color:var(--ink)}
+.nav-toggle{display:none}
+.hero{padding-top:clamp(48px,6vw,88px);padding-bottom:clamp(34px,4vw,54px)}
+.hero .tag{margin-bottom:1.5rem}
+.hero h1{margin-bottom:1.4rem;max-width:16ch}
+.hero h1 em{font-style:normal;color:var(--jade)}
+.crumb{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:2rem}
+.crumb a{text-decoration:none;color:var(--ink-3)}
+.crumb a:hover{color:var(--jade)}
+.claims{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.claims-in{display:grid;grid-template-columns:repeat(3,1fr)}
+.claim{padding:34px 30px 32px;border-left:1px solid var(--rule)}
+.claim:first-child{border-left:none;padding-left:0}
+.claim:last-child{padding-right:0}
+.claim .h-sm{margin:.7rem 0 .5rem}
+.claim .src{font-family:var(--mono);font-size:.68rem;color:var(--jade);letter-spacing:.05em;margin-top:.9rem;display:block}
+.sec{padding-top:clamp(56px,7vw,104px);padding-bottom:clamp(56px,7vw,104px)}
+.sec-band{background:var(--band)}
+.sec-head{max-width:62ch;margin-bottom:clamp(30px,4vw,52px)}
+.sec-head .tag{margin-bottom:1.1rem}
+.sec-head .body-lg{margin-top:1.1rem}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,64px);align-items:start}
+.principles{list-style:none;counter-reset:p;margin-top:.4rem}
+.principles li{padding:20px 0;border-top:1px solid var(--rule);display:grid;grid-template-columns:44px 1fr;gap:18px;align-items:start}
+.principles li:last-child{border-bottom:1px solid var(--rule)}
+.principles li::before{counter-increment:p;content:counter(p,decimal-leading-zero);font-family:var(--mono);font-size:.78rem;color:var(--jade);font-weight:500;padding-top:.2rem}
+.principles h3{font-size:1rem;font-weight:600;letter-spacing:-.01em;margin-bottom:.3rem}
+.principles p{font-size:.9rem;color:var(--ink-2);max-width:60ch}
+.spec{list-style:none}
+.spec li{padding:16px 0;border-top:1px solid var(--rule);display:grid;grid-template-columns:170px 1fr;gap:18px;align-items:baseline}
+.spec li:last-child{border-bottom:1px solid var(--rule)}
+.spec .k{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.spec .v{font-size:.9rem;color:var(--ink)}
+.spec .v em{font-style:normal;color:var(--jade);font-weight:500}
+.spec .v a{color:var(--jade);text-decoration:none}
+.spec .v a:hover{text-decoration:underline}
+.note{border-left:2px solid var(--jade);padding-left:20px;font-size:.92rem;color:var(--ink-2);margin-top:1.8rem;max-width:64ch}
+.note b{color:var(--ink);font-weight:600}
+.open{list-style:none;margin-top:1.4rem}
+.open li{padding:16px 0;border-top:1px solid var(--rule);font-size:.9rem;color:var(--ink-2);display:grid;grid-template-columns:26px 1fr;gap:14px}
+.open li:last-child{border-bottom:1px solid var(--rule)}
+.open li b{font-family:var(--mono);font-size:.72rem;color:var(--silt);font-weight:500;padding-top:.12rem}
+.cta{background:var(--ink);color:#fff}
+.cta .h-lg{margin-bottom:1.2rem}
+.cta .body-lg{color:rgba(255,255,255,.66)}
+.cta .btn-line{border-color:rgba(255,255,255,.28);color:#fff}
+.cta .btn-line:hover{border-color:#fff}
+.cta .btn-solid{background:#fff;color:var(--ink)}
+.cta .btn-solid:hover{background:#E3EDE9}
+.cta-in{display:flex;gap:14px;margin-top:2.2rem;flex-wrap:wrap}
+.foot{border-top:1px solid var(--rule);padding:44px 0 56px}
+.foot-in{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:flex-start}
+.foot .tag{margin-bottom:.6rem}
+.foot-links{display:flex;gap:22px;flex-wrap:wrap}
+.foot-links a{font-size:.85rem;color:var(--ink-2);text-decoration:none}
+.foot-links a:hover{color:var(--ink)}
+.rv{opacity:0;transform:translateY(14px);transition:opacity .6s cubic-bezier(.2,.7,.3,1),transform .6s cubic-bezier(.2,.7,.3,1)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+:focus-visible{outline:2px solid var(--jade);outline-offset:3px}
+@media(max-width:960px){
+  .split{grid-template-columns:1fr}
+  .claims-in{grid-template-columns:1fr}
+  .claim{border-left:none;border-top:1px solid var(--rule);padding-left:0;padding-right:0}
+  .claim:first-child{border-top:none}
+  .spec li{grid-template-columns:1fr;gap:5px}
+  .nav-links{display:none}
+  .nav-links.open{display:flex;position:absolute;top:66px;left:0;right:0;background:#fff;flex-direction:column;gap:0;padding:8px var(--pad) 20px;border-bottom:1px solid var(--rule)}
+  .nav-links.open a{padding:12px 0;border-bottom:1px solid var(--rule);width:100%}
+  .nav-toggle{display:inline-flex;margin-left:auto;background:none;border:1px solid var(--rule);border-radius:2px;padding:.5rem .8rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;cursor:pointer;text-transform:uppercase}
+}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="shell nav-in">
+    <a class="brand" href="truong.html"><img src="assets/brand/bizon-favicon.svg" alt="">Biz<span>On</span></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">Menu</button>
+    <nav class="nav-links" id="navLinks" aria-label="Điều hướng chính">
+      <a href="#nguyen-tac">Nguyên tắc</a>
+      <a href="#dong-thuan">Đồng thuận</a>
+      <a href="#shtt">Sở hữu trí tuệ</a>
+      <a href="#con-mo">Câu hỏi mở</a>
+      <a href="truong-hoc-thuat.html">Học thuật</a>
+      <a class="btn btn-solid" href="mailto:thuyhuongctu@gmail.com?subject=BizOn%20-%20H%E1%BB%8Fi%20v%E1%BB%81%20ch%C3%ADnh%20s%C3%A1ch%20d%E1%BB%AF%20li%E1%BB%87u">Hỏi về chính sách</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="shell hero">
+  <p class="crumb"><a href="truong.html">BizOn</a> · Chính sách dữ liệu</p>
+  <p class="tag">Trường Đại học Cần Thơ · Chính sách</p>
+  <h1 class="h-xl">Dữ liệu thuộc về lớp — <em>nói thẳng</em>.</h1>
+  <p class="body-lg">Chính sách này dành cho trưởng khoa, hội đồng và bộ phận mua sắm: BizOn không quảng cáo, không bán dữ liệu, không lưu danh tính; luồng thu dữ liệu nghiên cứu mặc định tắt. Trang cũng nêu thẳng những câu hỏi pháp lý còn mở, thay vì hứa điều phần mềm không làm được.</p>
+</section>
+
+<section class="claims">
+  <div class="shell claims-in">
+    <div class="claim rv">
+      <span class="tag">01 · Không khai thác</span>
+      <h3 class="h-sm">Không quảng cáo, không bán dữ liệu</h3>
+      <p class="body-sm">Không có quảng cáo trong sản phẩm và không bán dữ liệu người học. Dữ liệu học tập chỉ rời máy khi người dùng chủ động nộp.</p>
+      <span class="src">local-first · opt-in</span>
+    </div>
+    <div class="claim rv">
+      <span class="tag">02 · Không danh tính</span>
+      <h3 class="h-sm">Mã đội đã băm, không PII</h3>
+      <p class="body-sm">Nhật ký quyết định chỉ chứa mã đội đã băm; bộ lọc chặn tên và email lọt vào. Không lưu họ tên, email hay số điện thoại người học.</p>
+      <span class="src">team_id băm · chặn PII</span>
+    </div>
+    <div class="claim rv">
+      <span class="tag">03 · Đồng thuận</span>
+      <h3 class="h-sm">Hai mục đích, mặc định tắt</h3>
+      <p class="body-sm">Nghiên cứu và cải tiến sản phẩm là hai ô đồng ý tách riêng, cả hai mặc định tắt cho tới khi có phiếu được phê duyệt.</p>
+      <span class="src">research · product · OFF</span>
+    </div>
+  </div>
+</section>
+
+<section class="shell sec" id="nguyen-tac">
+  <div class="sec-head rv">
+    <p class="tag">Nguyên tắc dữ liệu</p>
+    <h2 class="h-lg">Sáu nguyên tắc, không ngoại lệ</h2>
+    <p class="body-lg">Đây là các ràng buộc cứng mà thiết kế hệ thống tuân theo, không phải lời hứa marketing. Chúng nhất quán với khung quản trị dữ liệu của bản pilot học tập.</p>
+  </div>
+  <ul class="principles rv">
+    <li><div><h3>Cục bộ là mặc định</h3><p>Tiến trình lưu trên máy người dùng. Dữ liệu chỉ gửi đi khi người học chủ động opt-in, không tự động.</p></div></li>
+    <li><div><h3>Không yêu cầu danh tính</h3><p>Không đòi họ tên, email hay số điện thoại. Mã đội được băm; bộ lọc chặn danh tính lọt vào nhật ký.</p></div></li>
+    <li><div><h3>Thời hạn lưu rõ ràng</h3><p>Dữ liệu có thời hạn lưu và cơ chế xóa sớm ở tầng lưu trữ, thay vì giữ vô thời hạn.</p></div></li>
+    <li><div><h3>Không dùng AI tự chấm</h3><p>Phần thảo luận/nghiền ngẫm của người học không được dùng để một mô hình ngôn ngữ tự động chấm điểm.</p></div></li>
+    <li><div><h3>Engine xác định là nguồn kết quả</h3><p>Mọi kết quả mô phỏng đến từ engine xác định — nguồn duy nhất — nên tái lập và giải thích được.</p></div></li>
+    <li><div><h3>Không quảng cáo, không bán dữ liệu</h3><p>Không có quảng cáo trong sản phẩm; dữ liệu người học không phải hàng hóa.</p></div></li>
+  </ul>
+  <p class="note">Chi tiết kỹ thuật–quản trị nằm trong khung quản trị dữ liệu của bản pilot (<b>docs/learning/</b>). Trang này là bản tóm tắt chính sách; nó không thay thế phê duyệt đạo đức nghiên cứu, quy định của cơ sở đào tạo hay tư vấn pháp lý.</p>
+</section>
+
+<section class="sec sec-band" id="dong-thuan">
+  <div class="shell">
+    <div class="sec-head rv">
+      <p class="tag">Đồng thuận &amp; quyền rút lui</p>
+      <h2 class="h-lg">Tách mục đích, nói thẳng giới hạn</h2>
+      <p class="body-lg">Khung đồng thuận tách “nghiên cứu học thuật” và “cải tiến sản phẩm” thành hai ô đồng ý riêng, mặc định tắt. Quyền rút lui được nêu đúng giới hạn kỹ thuật của nó, không hứa quá.</p>
+    </div>
+    <div class="split rv">
+      <div>
+        <ul class="spec">
+          <li><span class="k">Hai ô riêng</span><span class="v"><em>research</em> và <em>product</em> đồng ý độc lập; không gộp một ô.</span></li>
+          <li><span class="k">Mặc định tắt</span><span class="v">Chỉ ghi khi có phiếu tương ứng được phê duyệt.</span></li>
+          <li><span class="k">Rút lui</span><span class="v">Chặn mọi lần ghi và ước lượng <em>về sau</em>.</span></li>
+          <li><span class="k">Giới hạn</span><span class="v">Không gỡ được phần đã gộp vào tham số cụm đã tính trước đó.</span></li>
+        </ul>
+      </div>
+      <div>
+        <p class="body">Nhật ký quyết định là hợp đồng dữ liệu dùng chung cho cả chấm điểm và (khi có đồng thuận) nghiên cứu — nhưng chấm điểm không cần biết ai đã đồng ý, vì điểm chạy trên ảnh chụp đóng băng và nhật ký chỉ chứa mã băm.</p>
+        <p class="note"><b>Phiếu phải nói đúng giới hạn rút lui.</b> Rút lui chỉ ngăn được các lần ước lượng sau; hứa “xóa sạch mọi dấu vết” là hứa điều mã không làm được. Chi tiết ở <a href="truong-hoc-thuat.html#dong-thuan" style="color:var(--jade)">trang nền tảng học thuật</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="shell sec" id="shtt">
+  <div class="sec-head rv">
+    <p class="tag">Sở hữu trí tuệ &amp; giấy phép</p>
+    <h2 class="h-lg">Độc quyền, miễn phí cho lớp học</h2>
+    <p class="body-lg">Mã nguồn, thuật toán engine mô phỏng, thiết kế nhân vật (Lumina, Tú Phan, Đội Demo), thư viện nhạc gốc và tên gọi cùng nhận diện BizOn thuộc về nhóm tác giả. Nội dung dưới đây tóm theo tệp <em>LICENSE</em> và mục bản quyền của README.</p>
+  </div>
+  <div class="split rv">
+    <div>
+      <ul class="spec">
+        <li><span class="k">Loại giấy phép</span><span class="v">Phần mềm <em>độc quyền</em> — xem tệp LICENSE.</span></li>
+        <li><span class="k">Miễn phí</span><span class="v">Cho giảng dạy phi thương mại tại URL chính thức; in được phiếu khảo sát kèm theo, không cần xin phép.</span></li>
+        <li><span class="k">Cần giấy phép viết</span><span class="v">Sao chép, tái triển khai nơi khác, trích tách nhân vật/nhạc, hoặc mọi dùng có thu phí.</span></li>
+        <li><span class="k">Liên hệ</span><span class="v"><a href="mailto:thuyhuongctu@gmail.com">thuyhuongctu@gmail.com</a></span></li>
+      </ul>
+    </div>
+    <div>
+      <p class="body">Hồ sơ đăng ký (quyền tác giả, nhãn hiệu) và chiến lược thương mại hóa được quản lý trong kho tài liệu riêng của nhóm tác giả.</p>
+      <p class="note"><b>Phông chữ tự lưu trữ.</b> Các tệp <em>.woff2</em> dưới <em>assets/fonts/</em> theo Giấy phép Phông mở SIL 1.1; OFL chỉ áp cho các tệp phông đó. Không nạp phông hay mã bên thứ ba từ CDN khi chạy.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec-band" id="con-mo">
+  <div class="shell">
+    <div class="sec-head rv">
+      <p class="tag">Câu hỏi pháp lý còn mở</p>
+      <h2 class="h-lg">Điều chúng tôi chưa trả lời thay luật sư</h2>
+      <p class="body-lg">Một chính sách trung thực phải phân biệt điều phần mềm quyết được và điều chỉ người quyết được. Các mục dưới đây là điểm chặn <em>pháp lý</em>, không phải điểm chặn kỹ thuật — thuộc về luật sư và hội đồng đạo đức.</p>
+    </div>
+    <ul class="open rv">
+      <li><b>01</b><span><b>Ai sở hữu dữ liệu người học khi sản phẩm được bán hoặc cấp phép cho trường khác?</b> Cần điều khoản chuyển giao quyền kiểm soát dữ liệu (data controller) trong hợp đồng — chưa có lời giải sạch, chờ luật sư.</span></li>
+      <li><b>02</b><span><b>Câu chữ chính xác của hai ô đồng ý</b> và phiếu song ngữ có hiệu lực — thuộc hội đồng đạo đức duyệt, không do phần mềm tự đặt.</span></li>
+      <li><b>03</b><span><b>Xung đột vai trò giảng viên kiêm nhà nghiên cứu</b>: quy trình tách người thu đồng thuận khỏi người chấm điểm cần hội đồng phê duyệt, ngoài phần đã xử lý bằng thiết kế (băm + chấm trên ảnh chụp).</span></li>
+      <li><b>04</b><span><b>Thời hạn lưu và lịch xóa cụ thể</b> cho dữ liệu thô — cần chốt theo quy định cơ sở đào tạo và tư vấn pháp lý.</span></li>
+    </ul>
+    <p class="note">Cho tới khi bốn mục trên được duyệt, luồng thu dữ liệu nghiên cứu vẫn <b>tắt theo mặc định</b>: hạ tầng ghi đã sẵn sàng nhưng không ghi dữ liệu thật.</p>
+  </div>
+</section>
+
+<section class="sec cta" id="lien-he">
+  <div class="shell">
+    <h2 class="h-lg">Hỏi về chính sách dữ liệu</h2>
+    <p class="body-lg">Chúng tôi sẵn sàng gửi khung quản trị dữ liệu, bản thảo khung đồng thuận và tệp giấy phép để bộ phận pháp chế và hội đồng của trường rà soát trước khi triển khai.</p>
+    <div class="cta-in">
+      <a class="btn btn-solid" href="mailto:thuyhuongctu@gmail.com?subject=BizOn%20-%20H%E1%BB%8Fi%20v%E1%BB%81%20ch%C3%ADnh%20s%C3%A1ch%20d%E1%BB%AF%20li%E1%BB%87u">Gửi câu hỏi qua email</a>
+      <a class="btn btn-line" href="truong-hoc-thuat.html">Xem nền tảng học thuật</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="shell foot-in">
+    <div>
+      <p class="tag">BizOn</p>
+      <p class="body-sm">Mô phỏng kinh doanh cho lớp học đại học.<br>Trường Đại học Cần Thơ · © 2026 Đỗ Thùy Hương &amp; Phan Anh Tú.</p>
+    </div>
+    <div class="foot-links">
+      <a href="truong.html">Trang chủ</a>
+      <a href="#nguyen-tac">Nguyên tắc</a>
+      <a href="#shtt">Sở hữu trí tuệ</a>
+      <a href="truong-hoc-thuat.html">Học thuật</a>
+      <a href="mailto:thuyhuongctu@gmail.com">Liên hệ</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+const onScroll = () => nav.classList.toggle('stuck', window.scrollY > 8);
+onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+const toggle = document.getElementById('navToggle');
+const links = document.getElementById('navLinks');
+toggle.addEventListener('click', () => {
+  const open = links.classList.toggle('open');
+  toggle.setAttribute('aria-expanded', String(open));
+});
+links.addEventListener('click', e => {
+  if (e.target.tagName === 'A') { links.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); }
+});
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+}, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
