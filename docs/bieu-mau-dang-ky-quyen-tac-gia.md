@@ -102,7 +102,7 @@ Phần mềm chạy trên trình duyệt theo kiến trúc ứng dụng web ti�
 | Số CCCD · ngày cấp · nơi cấp | `[…]` |
 | Địa chỉ thường trú | `[…]` |
 | Điện thoại | `[…]` |
-| Email | huongdt@vlute.edu.vn |
+| Email | thuyhuongctu@gmail.com |
 
 **Tác giả thứ hai**
 
