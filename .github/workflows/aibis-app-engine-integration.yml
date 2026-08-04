@@ -23,9 +23,11 @@ jobs:
           node-version: '24'
       - run: node --check js/aibis/country-profile-registry.js
       - run: node --check js/aibis/country-role-view.js
+      - run: node --check js/aibis/anchor-profiles.js
       - run: node --check js/aibis/entry-mode-models.js
       - run: node --check js/aibis/entry-mode-engine.js
       - run: node --check js/app-shell/aibis-workspace.js
       - run: node test/aibis-app-engine-integration.test.js
       - run: node test/aibis-app-workspace.test.js
       - run: node test/country-role-view.test.js
+      - run: node test/anchor-profiles.test.js
