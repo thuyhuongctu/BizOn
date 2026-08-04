@@ -1,24 +1,37 @@
-/* BizOn — Token THANH GHI THỂ CHẾ
+/* BizOn — Token THANH GHI THỂ CHẾ (Design System v1.0)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.
  *
- * Dùng cho: trang chủ, giới thiệu, học thuật, giá, chính sách, tài liệu giảng viên,
- * bản in nộp hồ sơ — nơi nói với trưởng khoa/hội đồng, cần uy tín và mạch lạc.
+ * Dùng cho: universe, trang chủ, giới thiệu, học thuật, giá, chính sách, tài liệu giảng
+ * viên, Instructor Studio, bản in nộp hồ sơ — nơi nói với trưởng khoa/hội đồng, cần uy tín.
  * KHÔNG trộn với tokens-clay.css: hai thanh ghi tách riêng để không rò vào nhau.
  * Trang nào nạp tệp nào là quyết định có ý thức — ghi rõ ở đầu tệp HTML.
  * Bộ chữ tự lưu trữ (không CDN): css/bizon-institutional-fonts.css.
+ *
+ * TƯƠNG PHẢN (nền trắng): mỗi màu ghi tỷ lệ + mức đạt. KHÔNG dùng màu "chỉ trang trí"
+ * làm chữ nội dung. Nguồn chuẩn: BizOn Design System v1.0.
  */
 :root {
-  --paper: #FFFFFF;   /* nền chính */
-  --band: #F1F4F1;    /* dải phân đoạn, ánh xanh rất nhạt */
-  --ink: #0E1512;     /* chữ chính, đen ngả lục */
-  --ink-2: #5C6862;   /* chữ phụ */
-  --ink-3: #98A29C;   /* nhãn, chú thích */
-  --jade: #0F5C4E;    /* nhấn chính, dùng tiết chế (không xanh dương công nghệ) */
-  --jade-soft: #E3EDE9;
-  --silt: #B5601F;    /* nhấn phụ — chỉ dùng cho số liệu, không dùng cho nút */
-  --rule: #E2E6E2;    /* đường kẻ */
+  --paper: #FFFFFF;     /* nền chính */
+  --band: #F1F4F1;      /* dải phân đoạn, nền bảng, khối trích dẫn */
+  --band-2: #E7ECE6;    /* lớp nền sâu hơn, phân tầng */
+  --ink: #0E1512;       /* chữ chính, tiêu đề — 18,1:1 · AAA */
+  --ink-2: #5C6862;     /* chữ phụ, nội dung dài — 5,8:1 · AA */
+  --ink-3: #98A29C;     /* CHỈ nhãn mono + viền — 2,8:1 · trang trí, KHÔNG dùng cho chữ nội dung */
+  --rule: #E2E6E2;      /* đường kẻ */
+  --jade: #0F5C4E;      /* nhấn chính: nút, liên kết, số mục — 7,9:1 · AAA */
+  --jade-dark: #0B4A3F; /* hover của nút chính */
+  --jade-soft: #E3EDE9; /* nền nhãn trạng thái, vùng nhấn nhẹ */
+  --silt: #A8541C;      /* nhấn phụ cho CHỮ/số cần chú ý — 5,0:1 · AA (đã làm sẫm từ #B5601F) */
+  --silt-deco: #B5601F; /* CHỈ viền/biểu tượng không chứa chữ — 3:1, không dùng làm chữ */
+  --gold: #8A6715;      /* nhãn dữ liệu, trạng thái "gần xong" — 5,2:1 · AA (đã làm sẫm từ #9A7318) */
+  --lotus: #96395A;     /* CHỈ cảnh báo nghiêm trọng, hiếm — 6,4:1 · AA */
   --sans: "Be Vietnam Pro", system-ui, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, monospace;
+  /* thang khoảng cách bốn điểm */
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px;
+  --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px; --s9: 96px;
+  --radius: 2px;        /* bo góc thể chế — đối lập có chủ ý với đất sét */
+  --ease: cubic-bezier(.2, .7, .3, 1);
   --pad: clamp(20px, 5vw, 64px);
   --max: 1280px;
 }
