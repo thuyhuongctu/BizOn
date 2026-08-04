@@ -1,0 +1,93 @@
+/* ═══════════════════════════════════════════════════════════════
+   BizOn — VỎ DÙNG CHUNG (shell.css)
+   Token, kiểu chữ, thanh điều hướng, nút, chân trang, hiệu ứng cuộn.
+   Trích từ trang đích; mọi trang thể chế nạp file này để khỏi nhân bản.
+   Font tự lưu trữ: nạp kèm css/bizon-institutional-fonts.css.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ══════════ TOKENS ══════════ */
+:root{
+  --paper:#FFFFFF; --band:#F1F4F1; --band-2:#E7ECE6;
+  --ink:#0E1512; --ink-2:#5C6862; --ink-3:#98A29C; --rule:#E2E6E2;
+  --jade:#0F5C4E; --jade-dark:#0B4A3F; --jade-soft:#E3EDE9;
+  --silt:#A8541C; --gold:#8A6715; --on-jade:#FFFFFF;
+  --deep:#08120F; --deep-2:#0E1D19; --glow:#7FD9BE;
+  --sans:"Be Vietnam Pro",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.2,.7,.3,1);
+  --pad:clamp(20px,4vw,56px);
+  --max:1200px;
+}
+[data-theme="dark"]{
+  --paper:#08120F; --band:#0E1D19; --band-2:#152925;
+  --ink:#F2F5F1; --ink-2:#A3B0AA; --ink-3:#66736D; --rule:#1E322D;
+  --jade:#54BFA2; --jade-dark:#7FD9BE; --jade-soft:#12302A; --on-jade:#08120F;
+  --silt:#E09258; --gold:#D6AC4A;
+}
+
+/* ══════════ RESET + BASE ══════════ */
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.62;font-size:15.5px;-webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background-color .35s,color .35s}
+.shell{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--jade);outline-offset:3px}
+
+/* ══════════ TYPE ══════════ */
+h1{font-size:clamp(2.5rem,6.6vw,5.4rem);font-weight:800;letter-spacing:-.042em;line-height:.97}
+h2{font-size:clamp(1.7rem,3.7vw,2.9rem);font-weight:800;letter-spacing:-.034em;line-height:1.06}
+h3{font-size:1.06rem;font-weight:600;letter-spacing:-.014em;line-height:1.3}
+.tag{font-family:var(--mono);font-size:.66rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3)}
+.lede{font-size:clamp(1rem,1.35vw,1.14rem);color:var(--ink-2);max-width:58ch;font-weight:300}
+.body{font-size:.9rem;color:var(--ink-2)}
+
+/* ══════════ SECTION LAYOUT ══════════ */
+section{padding:clamp(58px,7.6vw,110px) 0}
+.band{background:var(--band)}
+.head{margin-bottom:clamp(30px,4.2vw,52px)}
+.head .tag{margin-bottom:1rem}
+.head .lede{margin-top:1rem}
+
+/* ══════════ PROGRESS + NAV ══════════ */
+.prog{position:fixed;top:0;left:0;height:2px;background:var(--jade);width:0;z-index:100;transition:width .12s linear}
+.nav{position:sticky;top:0;z-index:60;backdrop-filter:blur(16px);background:color-mix(in srgb,var(--paper) 84%,transparent);border-bottom:1px solid transparent;transition:border-color .3s}
+.nav.stuck{border-bottom-color:var(--rule)}
+.nav-in{display:flex;align-items:center;gap:12px;height:66px}
+.wm{display:inline-flex;align-items:center;gap:.62rem;text-decoration:none;margin-right:auto}
+.wm-txt{display:inline-flex;align-items:center;font-weight:800;letter-spacing:-.046em;font-size:1.2rem;line-height:1}
+.wm-mark{margin:0 .015em}
+.wm-sub{font-family:var(--mono);font-size:.58rem;letter-spacing:.2em;color:var(--ink-3);text-transform:uppercase;border-left:1px solid var(--rule);padding-left:.62rem}
+.tgl{display:inline-flex;border:1px solid var(--rule);border-radius:2px;overflow:hidden}
+.tgl button{font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;padding:.4rem .56rem;background:none;border:none;color:var(--ink-3);cursor:pointer;transition:background .18s,color .18s}
+.tgl button[aria-pressed="true"]{background:var(--jade);color:var(--on-jade)}
+.ico{width:32px;height:32px;border:1px solid var(--rule);border-radius:2px;background:none;color:var(--ink-2);cursor:pointer;display:grid;place-items:center;font-size:.88rem;transition:border-color .18s,color .18s}
+.ico:hover{border-color:var(--ink);color:var(--ink)}
+
+/* ══════════ BUTTONS ══════════ */
+.btn{display:inline-flex;align-items:center;gap:.5rem;font-size:.87rem;font-weight:500;text-decoration:none;padding:.66rem 1.2rem;border-radius:2px;border:1px solid transparent;transition:background .22s,border-color .22s,transform .22s,gap .22s;white-space:nowrap}
+.btn-solid{background:var(--jade);color:var(--on-jade)}
+.btn-solid:hover{background:var(--jade-dark);transform:translateY(-1px)}
+.btn-line{border-color:var(--rule);color:var(--ink)}
+.btn-line:hover{border-color:var(--ink)}
+.btn-sm{padding:.44rem .82rem;font-size:.8rem}
+
+/* ══════════ REVEAL ON SCROLL ══════════ */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rv.in{opacity:1;transform:none}
+
+/* ══════════ FOOTER ══════════ */
+footer{border-top:1px solid var(--rule);padding:36px 0 52px}
+.fgrid{display:flex;justify-content:space-between;gap:22px;flex-wrap:wrap;align-items:flex-start}
+.fgrid .tag{margin-bottom:.5rem}
+.flinks{display:flex;gap:20px;flex-wrap:wrap;font-size:.84rem}
+.flinks a{color:var(--ink-2);text-decoration:none}
+.flinks a:hover{color:var(--ink)}
+
+/* ══════════ REDUCED MOTION ══════════ */
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important;transition:none !important}
+  .rv{opacity:1;transform:none}
+}
+
+@media(max-width:900px){
+  .wm-sub{display:none}
+}
