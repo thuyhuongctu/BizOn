@@ -1,0 +1,634 @@
+{
+  "schema": "bizon-instructor-class-v1",
+  "cohort": "2026A-KT330H (mẫu)",
+  "nameById": {
+    "h_be9d1893": "Đội Sen",
+    "h_49d55b2c": "Đội Lúa",
+    "h_fe65b1e8": "Đội Mai",
+    "h_fd043e6a": "Đội Trúc"
+  },
+  "entries": [
+    {
+      "decision_id": "d-1-0",
+      "session_id": "s",
+      "cohort_id": "2026A-KT330H",
+      "team_id": "h_be9d1893",
+      "pillar": "ho-chieu",
+      "role": "host_inbound",
+      "round": 1,
+      "scenario_pack": "vn-out-jp-2026a",
+      "snapshot_hash": "pending",
+      "decision": {
+        "gia": 150,
+        "san_luong": 1000
+      },
+      "timestamp": "2026-08-04T09:00:00Z",
+      "consent_version": "v1",
+      "consent_purposes": [
+        "research"
+      ]
+    },
+    {
+      "decision_id": "d-1-1",
+      "session_id": "s",
+      "cohort_id": "2026A-KT330H",
+      "team_id": "h_49d55b2c",
+      "pillar": "ho-chieu",
+      "role": "host_inbound",
+      "round": 1,
+      "scenario_pack": "vn-out-jp-2026a",
+      "snapshot_hash": "pending",
+      "decision": {
+        "gia": 170,
+        "san_luong": 900
+      },
+      "timestamp": "2026-08-04T09:00:00Z",
+      "consent_version": "v1",
+      "consent_purposes": [
+        "research"
+      ]
+    },
+    {
+      "decision_id": "d-1-2",
+      "session_id": "s",
+      "cohort_id": "2026A-KT330H",
+      "team_id": "h_fe65b1e8",
+      "pillar": "ho-chieu",
+      "role": "host_inbound",
+      "round": 1,
+      "scenario_pack": "vn-out-jp-2026a",
+      "snapshot_hash": "pending",
+      "decision": {
+        "gia": 135,
+        "san_luong": 1200
+      },
+      "timestamp": "2026-08-04T09:00:00Z",
+      "consent_version": "v1",
+      "consent_purposes": [
+        "research"
+      ]
+    },
+    {
+      "decision_id": "d-1-3",
+      "session_id": "s",
+      "cohort_id": "2026A-KT330H",
+      "team_id": "h_fd043e6a",
+      "pillar": "ho-chieu",
+      "role": "host_inbound",
+      "round": 1,
+      "scenario_pack": "vn-out-jp-2026a",
+      "snapshot_hash": "pending",
+      "decision": {
+        "gia": 158,
+        "san_luong": 980
+      },
+      "timestamp": "2026-08-04T09:00:00Z",
+      "consent_version": "v1",
+      "consent_purposes": [
+        "research"
+      ]
+    },
+    {
+      "decision_id": "d-2-0",
+      "session_id": "s",
+      "cohort_id": "2026A-KT330H",
+      "team_id": "h_be9d1893",
+      "pillar": "ho-chieu",
+      "role": "host_inbound",
+      "round": 2,
+      "scenario_pack": "vn-out-jp-2026a",
+      "snapshot_hash": "pending",
+      "decision": {
+        "gia": 148,
+        "san_luong": 1050
+      },
+      "timestamp": "2026-08-04T09:00:00Z",
+      "consent_version": "v1",
+      "consent_purposes": [
+        "research"
+      ]
+    },
+    {
+      "decision_id": "d-2-1",
+      "session_id": "s",
+      "cohort_id": "2026A-KT330H",
+      "team_id": "h_49d55b2c",
+      "pillar": "ho-chieu",
+      "role": "host_inbound",
+      "round": 2,
+      "scenario_pack": "vn-out-jp-2026a",
+      "snapshot_hash": "pending",
+      "decision": {
+        "gia": 165,
+        "san_luong": 950
+      },
+      "timestamp": "2026-08-04T09:00:00Z",
+      "consent_version": "v1",
+      "consent_purposes": [
+        "research"
+      ]
+    },
+    {
+      "decision_id": "d-2-2",
+      "session_id": "s",
+      "cohort_id": "2026A-KT330H",
+      "team_id": "h_fe65b1e8",
+      "pillar": "ho-chieu",
+      "role": "host_inbound",
+      "round": 2,
+      "scenario_pack": "vn-out-jp-2026a",
+      "snapshot_hash": "pending",
+      "decision": {
+        "gia": 140,
+        "san_luong": 1150
+      },
+      "timestamp": "2026-08-04T09:00:00Z",
+      "consent_version": "v1",
+      "consent_purposes": [
+        "research"
+      ]
+    },
+    {
+      "decision_id": "d-2-3",
+      "session_id": "s",
+      "cohort_id": "2026A-KT330H",
+      "team_id": "h_fd043e6a",
+      "pillar": "ho-chieu",
+      "role": "host_inbound",
+      "round": 2,
+      "scenario_pack": "vn-out-jp-2026a",
+      "snapshot_hash": "pending",
+      "decision": {
+        "gia": 155,
+        "san_luong": 1000
+      },
+      "timestamp": "2026-08-04T09:00:00Z",
+      "consent_version": "v1",
+      "consent_purposes": [
+        "research"
+      ]
+    },
+    {
+      "decision_id": "d-3-0",
+      "session_id": "s",
+      "cohort_id": "2026A-KT330H",
+      "team_id": "h_be9d1893",
+      "pillar": "ho-chieu",
+      "role": "host_inbound",
+      "round": 3,
+      "scenario_pack": "vn-out-jp-2026a",
+      "snapshot_hash": "pending",
+      "decision": {
+        "gia": 152,
+        "san_luong": 1020
+      },
+      "timestamp": "2026-08-04T09:00:00Z",
+      "consent_version": "v1",
+      "consent_purposes": [
+        "research"
+      ]
+    },
+    {
+      "decision_id": "d-3-1",
+      "session_id": "s",
+      "cohort_id": "2026A-KT330H",
+      "team_id": "h_49d55b2c",
+      "pillar": "ho-chieu",
+      "role": "host_inbound",
+      "round": 3,
+      "scenario_pack": "vn-out-jp-2026a",
+      "snapshot_hash": "pending",
+      "decision": {
+        "gia": 160,
+        "san_luong": 1000
+      },
+      "timestamp": "2026-08-04T09:00:00Z",
+      "consent_version": "v1",
+      "consent_purposes": [
+        "research"
+      ]
+    },
+    {
+      "decision_id": "d-3-2",
+      "session_id": "s",
+      "cohort_id": "2026A-KT330H",
+      "team_id": "h_fe65b1e8",
+      "pillar": "ho-chieu",
+      "role": "host_inbound",
+      "round": 3,
+      "scenario_pack": "vn-out-jp-2026a",
+      "snapshot_hash": "pending",
+      "decision": {
+        "gia": 138,
+        "san_luong": 1180
+      },
+      "timestamp": "2026-08-04T09:00:00Z",
+      "consent_version": "v1",
+      "consent_purposes": [
+        "research"
+      ]
+    },
+    {
+      "decision_id": "d-3-3",
+      "session_id": "s",
+      "cohort_id": "2026A-KT330H",
+      "team_id": "h_fd043e6a",
+      "pillar": "ho-chieu",
+      "role": "host_inbound",
+      "round": 3,
+      "scenario_pack": "vn-out-jp-2026a",
+      "snapshot_hash": "pending",
+      "decision": {
+        "gia": 150,
+        "san_luong": 1030
+      },
+      "timestamp": "2026-08-04T09:00:00Z",
+      "consent_version": "v1",
+      "consent_purposes": [
+        "research"
+      ]
+    },
+    {
+      "decision_id": "d-4-0",
+      "session_id": "s",
+      "cohort_id": "2026A-KT330H",
+      "team_id": "h_be9d1893",
+      "pillar": "ho-chieu",
+      "role": "host_inbound",
+      "round": 4,
+      "scenario_pack": "vn-out-jp-2026a",
+      "snapshot_hash": "pending",
+      "decision": {
+        "gia": 150,
+        "san_luong": 1040
+      },
+      "timestamp": "2026-08-04T09:00:00Z",
+      "consent_version": "v1",
+      "consent_purposes": [
+        "research"
+      ]
+    },
+    {
+      "decision_id": "d-4-1",
+      "session_id": "s",
+      "cohort_id": "2026A-KT330H",
+      "team_id": "h_49d55b2c",
+      "pillar": "ho-chieu",
+      "role": "host_inbound",
+      "round": 4,
+      "scenario_pack": "vn-out-jp-2026a",
+      "snapshot_hash": "pending",
+      "decision": {
+        "gia": 158,
+        "san_luong": 1010
+      },
+      "timestamp": "2026-08-04T09:00:00Z",
+      "consent_version": "v1",
+      "consent_purposes": [
+        "research"
+      ]
+    },
+    {
+      "decision_id": "d-4-2",
+      "session_id": "s",
+      "cohort_id": "2026A-KT330H",
+      "team_id": "h_fe65b1e8",
+      "pillar": "ho-chieu",
+      "role": "host_inbound",
+      "round": 4,
+      "scenario_pack": "vn-out-jp-2026a",
+      "snapshot_hash": "pending",
+      "decision": {
+        "gia": 142,
+        "san_luong": 1120
+      },
+      "timestamp": "2026-08-04T09:00:00Z",
+      "consent_version": "v1",
+      "consent_purposes": [
+        "research"
+      ]
+    },
+    {
+      "decision_id": "d-4-3",
+      "session_id": "s",
+      "cohort_id": "2026A-KT330H",
+      "team_id": "h_fd043e6a",
+      "pillar": "ho-chieu",
+      "role": "host_inbound",
+      "round": 4,
+      "scenario_pack": "vn-out-jp-2026a",
+      "snapshot_hash": "pending",
+      "decision": {
+        "gia": 149,
+        "san_luong": 1035
+      },
+      "timestamp": "2026-08-04T09:00:00Z",
+      "consent_version": "v1",
+      "consent_purposes": [
+        "research"
+      ]
+    }
+  ],
+  "snapshots": [
+    {
+      "round": 1,
+      "scenario_pack": "vn-out-jp-2026a",
+      "entries": [
+        {
+          "decision_id": "d",
+          "session_id": "s",
+          "cohort_id": "2026A-KT330H",
+          "team_id": "h_be9d1893",
+          "pillar": "ho-chieu",
+          "role": "host_inbound",
+          "round": 1,
+          "scenario_pack": "vn-out-jp-2026a",
+          "snapshot_hash": "pending",
+          "decision": {
+            "gia": 150,
+            "san_luong": 1000
+          },
+          "timestamp": "2026-08-04T09:00:00Z",
+          "consent_version": "v1"
+        },
+        {
+          "decision_id": "d",
+          "session_id": "s",
+          "cohort_id": "2026A-KT330H",
+          "team_id": "h_49d55b2c",
+          "pillar": "ho-chieu",
+          "role": "host_inbound",
+          "round": 1,
+          "scenario_pack": "vn-out-jp-2026a",
+          "snapshot_hash": "pending",
+          "decision": {
+            "gia": 170,
+            "san_luong": 900
+          },
+          "timestamp": "2026-08-04T09:00:00Z",
+          "consent_version": "v1"
+        },
+        {
+          "decision_id": "d",
+          "session_id": "s",
+          "cohort_id": "2026A-KT330H",
+          "team_id": "h_fe65b1e8",
+          "pillar": "ho-chieu",
+          "role": "host_inbound",
+          "round": 1,
+          "scenario_pack": "vn-out-jp-2026a",
+          "snapshot_hash": "pending",
+          "decision": {
+            "gia": 135,
+            "san_luong": 1200
+          },
+          "timestamp": "2026-08-04T09:00:00Z",
+          "consent_version": "v1"
+        },
+        {
+          "decision_id": "d",
+          "session_id": "s",
+          "cohort_id": "2026A-KT330H",
+          "team_id": "h_fd043e6a",
+          "pillar": "ho-chieu",
+          "role": "host_inbound",
+          "round": 1,
+          "scenario_pack": "vn-out-jp-2026a",
+          "snapshot_hash": "pending",
+          "decision": {
+            "gia": 158,
+            "san_luong": 980
+          },
+          "timestamp": "2026-08-04T09:00:00Z",
+          "consent_version": "v1"
+        }
+      ],
+      "snapshot_hash": "fnv1a:ee5258e1"
+    },
+    {
+      "round": 2,
+      "scenario_pack": "vn-out-jp-2026a",
+      "entries": [
+        {
+          "decision_id": "d",
+          "session_id": "s",
+          "cohort_id": "2026A-KT330H",
+          "team_id": "h_be9d1893",
+          "pillar": "ho-chieu",
+          "role": "host_inbound",
+          "round": 2,
+          "scenario_pack": "vn-out-jp-2026a",
+          "snapshot_hash": "pending",
+          "decision": {
+            "gia": 148,
+            "san_luong": 1050
+          },
+          "timestamp": "2026-08-04T09:00:00Z",
+          "consent_version": "v1"
+        },
+        {
+          "decision_id": "d",
+          "session_id": "s",
+          "cohort_id": "2026A-KT330H",
+          "team_id": "h_49d55b2c",
+          "pillar": "ho-chieu",
+          "role": "host_inbound",
+          "round": 2,
+          "scenario_pack": "vn-out-jp-2026a",
+          "snapshot_hash": "pending",
+          "decision": {
+            "gia": 165,
+            "san_luong": 950
+          },
+          "timestamp": "2026-08-04T09:00:00Z",
+          "consent_version": "v1"
+        },
+        {
+          "decision_id": "d",
+          "session_id": "s",
+          "cohort_id": "2026A-KT330H",
+          "team_id": "h_fe65b1e8",
+          "pillar": "ho-chieu",
+          "role": "host_inbound",
+          "round": 2,
+          "scenario_pack": "vn-out-jp-2026a",
+          "snapshot_hash": "pending",
+          "decision": {
+            "gia": 140,
+            "san_luong": 1150
+          },
+          "timestamp": "2026-08-04T09:00:00Z",
+          "consent_version": "v1"
+        },
+        {
+          "decision_id": "d",
+          "session_id": "s",
+          "cohort_id": "2026A-KT330H",
+          "team_id": "h_fd043e6a",
+          "pillar": "ho-chieu",
+          "role": "host_inbound",
+          "round": 2,
+          "scenario_pack": "vn-out-jp-2026a",
+          "snapshot_hash": "pending",
+          "decision": {
+            "gia": 155,
+            "san_luong": 1000
+          },
+          "timestamp": "2026-08-04T09:00:00Z",
+          "consent_version": "v1"
+        }
+      ],
+      "snapshot_hash": "fnv1a:5fd27d5c"
+    },
+    {
+      "round": 3,
+      "scenario_pack": "vn-out-jp-2026a",
+      "entries": [
+        {
+          "decision_id": "d",
+          "session_id": "s",
+          "cohort_id": "2026A-KT330H",
+          "team_id": "h_be9d1893",
+          "pillar": "ho-chieu",
+          "role": "host_inbound",
+          "round": 3,
+          "scenario_pack": "vn-out-jp-2026a",
+          "snapshot_hash": "pending",
+          "decision": {
+            "gia": 152,
+            "san_luong": 1020
+          },
+          "timestamp": "2026-08-04T09:00:00Z",
+          "consent_version": "v1"
+        },
+        {
+          "decision_id": "d",
+          "session_id": "s",
+          "cohort_id": "2026A-KT330H",
+          "team_id": "h_49d55b2c",
+          "pillar": "ho-chieu",
+          "role": "host_inbound",
+          "round": 3,
+          "scenario_pack": "vn-out-jp-2026a",
+          "snapshot_hash": "pending",
+          "decision": {
+            "gia": 160,
+            "san_luong": 1000
+          },
+          "timestamp": "2026-08-04T09:00:00Z",
+          "consent_version": "v1"
+        },
+        {
+          "decision_id": "d",
+          "session_id": "s",
+          "cohort_id": "2026A-KT330H",
+          "team_id": "h_fe65b1e8",
+          "pillar": "ho-chieu",
+          "role": "host_inbound",
+          "round": 3,
+          "scenario_pack": "vn-out-jp-2026a",
+          "snapshot_hash": "pending",
+          "decision": {
+            "gia": 138,
+            "san_luong": 1180
+          },
+          "timestamp": "2026-08-04T09:00:00Z",
+          "consent_version": "v1"
+        },
+        {
+          "decision_id": "d",
+          "session_id": "s",
+          "cohort_id": "2026A-KT330H",
+          "team_id": "h_fd043e6a",
+          "pillar": "ho-chieu",
+          "role": "host_inbound",
+          "round": 3,
+          "scenario_pack": "vn-out-jp-2026a",
+          "snapshot_hash": "pending",
+          "decision": {
+            "gia": 150,
+            "san_luong": 1030
+          },
+          "timestamp": "2026-08-04T09:00:00Z",
+          "consent_version": "v1"
+        }
+      ],
+      "snapshot_hash": "fnv1a:148099b1"
+    },
+    {
+      "round": 4,
+      "scenario_pack": "vn-out-jp-2026a",
+      "entries": [
+        {
+          "decision_id": "d",
+          "session_id": "s",
+          "cohort_id": "2026A-KT330H",
+          "team_id": "h_be9d1893",
+          "pillar": "ho-chieu",
+          "role": "host_inbound",
+          "round": 4,
+          "scenario_pack": "vn-out-jp-2026a",
+          "snapshot_hash": "pending",
+          "decision": {
+            "gia": 150,
+            "san_luong": 1040
+          },
+          "timestamp": "2026-08-04T09:00:00Z",
+          "consent_version": "v1"
+        },
+        {
+          "decision_id": "d",
+          "session_id": "s",
+          "cohort_id": "2026A-KT330H",
+          "team_id": "h_49d55b2c",
+          "pillar": "ho-chieu",
+          "role": "host_inbound",
+          "round": 4,
+          "scenario_pack": "vn-out-jp-2026a",
+          "snapshot_hash": "pending",
+          "decision": {
+            "gia": 158,
+            "san_luong": 1010
+          },
+          "timestamp": "2026-08-04T09:00:00Z",
+          "consent_version": "v1"
+        },
+        {
+          "decision_id": "d",
+          "session_id": "s",
+          "cohort_id": "2026A-KT330H",
+          "team_id": "h_fe65b1e8",
+          "pillar": "ho-chieu",
+          "role": "host_inbound",
+          "round": 4,
+          "scenario_pack": "vn-out-jp-2026a",
+          "snapshot_hash": "pending",
+          "decision": {
+            "gia": 142,
+            "san_luong": 1120
+          },
+          "timestamp": "2026-08-04T09:00:00Z",
+          "consent_version": "v1"
+        },
+        {
+          "decision_id": "d",
+          "session_id": "s",
+          "cohort_id": "2026A-KT330H",
+          "team_id": "h_fd043e6a",
+          "pillar": "ho-chieu",
+          "role": "host_inbound",
+          "round": 4,
+          "scenario_pack": "vn-out-jp-2026a",
+          "snapshot_hash": "pending",
+          "decision": {
+            "gia": 149,
+            "san_luong": 1035
+          },
+          "timestamp": "2026-08-04T09:00:00Z",
+          "consent_version": "v1"
+        }
+      ],
+      "snapshot_hash": "fnv1a:ddf2c9c4"
+    }
+  ]
+}
