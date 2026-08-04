@@ -1,6 +1,6 @@
 # VietLens AI MVP
 
-**Vietnam near-real-time intelligence, early-warning and conditional foresight dashboard.**
+**Vietnam business-data product built on depth and provenance — not velocity.** Quarterly, source-first indicators for the Mekong Delta and Vietnam: every figure carries its source, period, collection method and stated limitation.
 
 ## Repository status
 
@@ -26,15 +26,32 @@ http://localhost:8000/vietlens/
 
 No build step, API key or backend is required for this MVP.
 
-## Current capabilities
+## Positioning: depth and provenance, not velocity
+
+VietLens deliberately inverts the real-time "monitor" model. Its value is **structural depth with verifiable origin**, on a **quarterly** cadence, for a narrow-and-deep scope (Vietnam and the Mekong Delta). What Vietnamese users lack is not numbers but **numbers with a checkable origin** — so the source-and-period label *is* the product, not a technical detail.
+
+**One-line rule: no provenance, no board.** A single unsourced indicator undermines the credibility of a hundred sourced ones — `app.js` filters out any indicator missing a `source`.
+
+### Scope discipline
+
+- **In scope:** provincial/regional economic indicators (quarterly), core agri value chains (rice, shrimp, pangasius, fruit), trade by product & market, FDI by province & sector, provincial institutional environment. Each indicator carries source, period, method and limitation.
+- **Out of scope (even when tempting):** real-time news, minute-level prices, unreviewed model-generated forecasts, and any indicator that cannot name its source.
+
+### Three-tier build (gate discipline)
+
+1. **Tier 1 — data layer, no UI.** Structured indicators with provenance, exported as JSON. This is infrastructure the two game pillars already depend on, and evidence the research needs — *not* a third product.
+2. **Tier 2 — read dashboard.** Free, no sign-up. Ships after the two pillars pass their commercialization gate.
+3. **Tier 3 — API & paid tiers.** Only after Tier 2 has real users and per-source redistribution rights are cleared.
+
+## Current capabilities (preview)
 
 - Vietnam Pulse composite.
-- Six economic, trade, weather, finance, logistics and consumer indicators.
+- Provenance-first indicators: trade-by-commodity, rice & shrimp value chains, retail demand, FDI, provincial institution (PCI), quarterly FX, logistics and energy cost indices — each with source, period, method and limitation.
 - Regional risk schematic.
-- Prioritized Signal Room with confidence, source count and freshness.
-- 90-day scenario ensemble.
+- Quarterly Signal Room with confidence, source count and data period.
+- 90-day scenario ensemble (labelled MVP; not investment advice).
 - Shock simulator for energy, FX, logistics and export demand.
-- Source provenance and data-gap table.
+- Source ledger with status, lag and **redistribution-rights** column.
 - Downloadable JSON report.
 
 ## Important limitation
@@ -81,4 +98,6 @@ Dashboard, alerts and forecast audit
 
 ## Safety and positioning
 
-VietLens should be described as a **near-real-time monitoring, early-warning and conditional scenario platform**, not as a system that predicts everything with certainty. It must not be used as the sole basis for financial, medical, legal, emergency or public-policy decisions.
+VietLens should be described as a **depth-and-provenance Vietnam business-data product** (with an MVP conditional-scenario lab), not as a real-time monitor or a system that predicts everything with certainty. It must not be used as the sole basis for financial, medical, legal, emergency or public-policy decisions.
+
+**Biggest operational risk — redistribution rights.** Many statistical sources allow viewing but restrict redistribution, especially over an API or paid tier. Per-source terms must be checked *before* an indicator enters the board, not after a customer appears. Maintenance is a permanent commitment: even a quarterly cadence is four releases a year, forever, and needs a named owner.
