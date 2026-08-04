@@ -35,9 +35,11 @@ gộp vào đây, hoặc lưu trữ (đổi tiền tố), hoặc xóa sau khi đ
 
 | Hạng mục | Giá trị |
 |---|---|
-| Nhánh mặc định hiện tại | `[ĐIỀN: ví dụ main]` |
-| Nhánh đích đã chọn | `[ĐIỀN]` |
-| Lý do chọn | `[ĐIỀN ngắn gọn]` |
+| Nhánh mặc định hiện tại | `main` (bản đang chạy / deploy GitHub Pages) |
+| Nhánh đích đã chọn | `develop` (tạo ngày 2026-08-04 từ `main` tại `78f0021`) |
+| Lý do chọn | Quy ước tích hợp chuẩn: `main` là bản phát hành ổn định, `develop` là nơi mọi việc mới hợp nhất vào trước khi lên `main`. Nhánh tính năng rẽ từ `develop`, PR quay về `develop`. |
+
+> Nhánh `develop` được tạo bằng thao tác **chỉ thêm** (`git branch develop origin/main` + push), KHÔNG đụng nhánh cũ nào. Mục A1 (sao lưu gương) và A3 (phân loại 56 nhánh) vẫn là việc của chủ dự án và chưa thực hiện — tạo nhánh đích không thay thế hai mục đó.
 
 ## A3. Phân loại 56 nhánh (điền tay, quyết định của chủ dự án)
 
