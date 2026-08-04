@@ -1,0 +1,22 @@
+/* BizOn — Token THANH GHI ĐẤT SÉT
+ * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.
+ *
+ * Dùng cho: bên trong hai trụ trò chơi, Arcade, và mọi màn hình người học tương tác
+ * trực tiếp — nơi nói với sinh viên, cần thân thiện, khuyến khích thử sai.
+ * KHÔNG trộn với tokens-institutional.css. Bảng màu khớp css/tw.css (nguồn đất sét hiện có).
+ * Lưu ý: các trang trò chơi hiện tại đã dựng bằng ngôn ngữ đất sét — token này gom lại
+ * để trang MỚI theo thanh ghi đất sét dùng chung, KHÔNG sửa trang game đang chạy.
+ */
+:root {
+  --clay-bg: #f4faff;         /* nền sáng đất sét */
+  --clay-surface: #ffffff;
+  --clay-primary: #006687;    /* xanh mòng két chủ đạo */
+  --clay-gold: #fda127;       /* vàng đất sét */
+  --clay-orange: #e8762d;
+  --clay-deep-teal: #033337;
+  --clay-ink: #081a20;        /* nền tối đất sét */
+  --clay-ink-2: #0e2a33;
+  --clay-radius: 20px;        /* bo góc mềm đặc trưng đất sét */
+  --clay-shadow: 0 6px 14px rgba(120, 90, 60, .12), inset 0 1px 0 rgba(255, 255, 255, .9);
+  --clay-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+}

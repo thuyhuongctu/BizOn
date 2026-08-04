@@ -1,0 +1,24 @@
+/* BizOn — Token THANH GHI THỂ CHẾ
+ * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.
+ *
+ * Dùng cho: trang chủ, giới thiệu, học thuật, giá, chính sách, tài liệu giảng viên,
+ * bản in nộp hồ sơ — nơi nói với trưởng khoa/hội đồng, cần uy tín và mạch lạc.
+ * KHÔNG trộn với tokens-clay.css: hai thanh ghi tách riêng để không rò vào nhau.
+ * Trang nào nạp tệp nào là quyết định có ý thức — ghi rõ ở đầu tệp HTML.
+ * Bộ chữ tự lưu trữ (không CDN): css/bizon-institutional-fonts.css.
+ */
+:root {
+  --paper: #FFFFFF;   /* nền chính */
+  --band: #F1F4F1;    /* dải phân đoạn, ánh xanh rất nhạt */
+  --ink: #0E1512;     /* chữ chính, đen ngả lục */
+  --ink-2: #5C6862;   /* chữ phụ */
+  --ink-3: #98A29C;   /* nhãn, chú thích */
+  --jade: #0F5C4E;    /* nhấn chính, dùng tiết chế (không xanh dương công nghệ) */
+  --jade-soft: #E3EDE9;
+  --silt: #B5601F;    /* nhấn phụ — chỉ dùng cho số liệu, không dùng cho nút */
+  --rule: #E2E6E2;    /* đường kẻ */
+  --sans: "Be Vietnam Pro", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --pad: clamp(20px, 5vw, 64px);
+  --max: 1280px;
+}
