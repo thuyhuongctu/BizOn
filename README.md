@@ -14,7 +14,9 @@
 |---|---|
 | **Authors** | **Do Thuy Huong** (Founder & Creative Lead) · **Phan Anh Tu** (Co-founder & Academic Advisor) |
 | **Affiliation** | Can Tho University (CTU), Vietnam |
+| **Start here** | 🪐 [Universe BizOn – ecosystem map](https://thuyhuongctu.github.io/BizOn/universe.html) (the landing page: one engine core, many worlds) |
 | **Play now** | 🎮 [Game](https://thuyhuongctu.github.io/BizOn/) · 🌐 [Landing page](https://thuyhuongctu.github.io/BizOn/gioi-thieu.html) · 🕹️ [Arcade](https://thuyhuongctu.github.io/BizOn/games.html) · 🌏 [BizOn Go Global](https://thuyhuongctu.github.io/BizOn/global.html) |
+| **For faculty** | 🏛️ [Institutional site](https://thuyhuongctu.github.io/BizOn/truong.html) · [Academic foundations](https://thuyhuongctu.github.io/BizOn/truong-hoc-thuat.html) · [For instructors](https://thuyhuongctu.github.io/BizOn/truong-giang-vien.html) · [Data policy](https://thuyhuongctu.github.io/BizOn/truong-chinh-sach.html) |
 | **Contact** | thuyhuongctu@gmail.com |
 | **Archive & DOI** | Zenodo concept DOI: [10.5281/zenodo.21592241](https://doi.org/10.5281/zenodo.21592241) – every release is permanently archived |
 
@@ -36,6 +38,32 @@
 | [`khao-sat.html`](https://thuyhuongctu.github.io/BizOn/khao-sat.html) | Printable pre/post classroom survey forms |
 
 Every page supports **light/dark mode**, a **Vietnamese–English bilingual interface**, and **background music** from the project's original soundtrack (lyrics in [`docs/loi-bai-hat.md`](docs/loi-bai-hat.md)).
+
+## 🏛️ Institutional site & landing page
+
+BizOn ships in **two design registers**, and the boundary is the screen frame: outside the frame is the **institutional register** (restrained, Be Vietnam Pro / jade — for deans and review boards); inside the game frame is the **clay register** (friendly, encourages trial and error — for students). The two never mix. The institutional register is a self-contained set of pages, all self-hosting their fonts (no CDN):
+
+| Page | Content |
+|---|---|
+| [`universe.html`](https://thuyhuongctu.github.io/BizOn/universe.html) | **Universe BizOn – the landing page.** One-glance ecosystem map: a deterministic engine core with the two pillars and subsystems (AIBIS · Lumina · VietLens · living market) orbiting it, over one shared infrastructure layer |
+| [`truong.html`](https://thuyhuongctu.github.io/BizOn/truong.html) | Institutional home – two pillars, the design-register principle, an overview for a department head |
+| [`truong-gioi-thieu.html`](https://thuyhuongctu.github.io/BizOn/truong-gioi-thieu.html) | About the project – the problem it addresses, the ecosystem, provenance (DOI · CITATION.cff · ORCID), the author team |
+| [`truong-hoc-thuat.html`](https://thuyhuongctu.github.io/BizOn/truong-hoc-thuat.html) | Academic foundations – Model Cards, the reproducibility contract (frozen snapshots), strategy-diversity health metric, two-purpose consent, and known limitations |
+| [`truong-giang-vien.html`](https://thuyhuongctu.github.io/BizOn/truong-giang-vien.html) | For instructors – four-step class flow, the four-level rubric (grades *reasoning*, not win/lose), CLO/BP learning-outcome matrix, engine-logged anchor metrics |
+| [`truong-chinh-sach.html`](https://thuyhuongctu.github.io/BizOn/truong-chinh-sach.html) | Data policy & IP – six hard data principles, the consent gate (default **off**), license terms, and the open legal questions left to counsel |
+
+## 🧪 Academic engine layer
+
+Under the games sits a small, deterministic, test-covered engine layer that makes results reproducible and gradable. **No language model runs in the scored loop** — behavioral profiles are deterministic response functions.
+
+| Module | Role |
+|---|---|
+| [`js/decision-log.js`](js/decision-log.js) | The single **decision-log schema** (shared data contract) with a **two-purpose consent gate** (`research` / `product`, both default off), hashed `team_id`, PII guard, and a withdrawal API whose technical limits are stated plainly |
+| [`js/aibis/country-role-view.js`](js/aibis/country-role-view.js) | `roleOf(country, viewer)` — labels are relations, never stored on the country |
+| [`js/aibis/anchor-profiles.js`](js/aibis/anchor-profiles.js) | Designer-written strategy prototypes + a permanent anti-degeneration reserve; a Simpson diversity index as a market-health metric |
+| [`js/aibis/round-swap.js`](js/aibis/round-swap.js) | Frozen co-cohort snapshots with a hash — grading runs on the frozen snapshot, not live state (the reproducibility contract) |
+
+Contracts are guarded by Node tests (`test/decision-log.test.js`, `test/round-swap.test.js`, `test/anchor-profiles.test.js`, `test/country-role-view.test.js`) run in CI. The consent framework's technical scaffold is implemented, but the **data-collection flow stays off by default** until a consent form is approved — the legal/ethics questions (including *who owns learner data when the product is licensed to another school*) are documented for counsel and the ethics board, not answered in code. See [`docs/BRANCH-POLICY.md`](docs/BRANCH-POLICY.md) and [`docs/learning/CONSENT-FRAMEWORK-DRAFT-V1.md`](docs/learning/CONSENT-FRAMEWORK-DRAFT-V1.md).
 
 ## 🎮 Key features
 
