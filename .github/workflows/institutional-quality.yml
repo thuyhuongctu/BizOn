@@ -14,6 +14,7 @@ on:
       - 'truong-giang-vien.html'
       - 'truong-gioi-thieu.html'
       - 'truong-chinh-sach.html'
+      - 'instructor-grading.html'
       - 'css/tokens-institutional.css'
       - 'css/bizon-institutional-fonts.css'
       - '.htmlvalidate-institutional.json'
@@ -45,4 +46,5 @@ jobs:
             truong-hoc-thuat.html \
             truong-giang-vien.html \
             truong-gioi-thieu.html \
-            truong-chinh-sach.html
+            truong-chinh-sach.html \
+            instructor-grading.html
