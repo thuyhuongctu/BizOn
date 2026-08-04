@@ -24,11 +24,19 @@ Mã định danh công bố (DOI): 10.5281/zenodo.21592241
    (Công ước Berne, Hiệp định TRIPS).
 
 2. QUYỀN ĐƯỢC PHÉP (không cần xin phép trước)
-   - Chơi và sử dụng ứng dụng tại địa chỉ chính thức
-     https://thuyhuongctu.github.io/BizOn/ ;
-   - Giảng viên và cơ sở giáo dục sử dụng ứng dụng tại địa chỉ chính thức
-     cho hoạt động GIẢNG DẠY PHI THƯƠNG MẠI (không thu phí riêng cho việc
-     dùng phần mềm), kể cả in bộ phiếu khảo sát kèm theo;
+   - Cá nhân chơi và trải nghiệm ứng dụng tại địa chỉ chính thức
+     https://thuyhuongctu.github.io/BizOn/ cho mục đích cá nhân,
+     phi thương mại;
+   - BizOn Arcade và trò chơi bậc 1 (Gánh hàng rong): sử dụng tại địa chỉ
+     chính thức, kể cả trong giảng dạy — MIỄN PHÍ VĨNH VIỄN;
+   - Hai trụ mô phỏng (khởi nghiệp trong nước và kinh doanh quốc tế —
+     BizOn GO GlObal) dùng trong GIẢNG DẠY PHI THƯƠNG MẠI tại địa chỉ
+     chính thức:
+       * Trường Đại học Cần Thơ: miễn phí;
+       * Cơ sở giáo dục khác: miễn phí MỘT (01) học kỳ dùng thử; tiếp tục
+         sử dụng sau học kỳ dùng thử cần giấy phép bằng văn bản (mục 5);
+   - In bộ phiếu khảo sát kèm theo trong phạm vi giảng dạy được phép
+     nêu trên;
    - Đọc mã nguồn cho mục đích học tập, tham khảo cá nhân;
    - Trích dẫn học thuật kèm ghi công tác giả và DOI nêu trên;
    - Chụp ảnh màn hình, quay video giới thiệu/đánh giá có ghi rõ nguồn.
@@ -40,6 +48,9 @@ Mã định danh công bố (DOI): 10.5281/zenodo.21592241
      mô phỏng dưới bất kỳ hình thức nào;
    - Tách riêng để sử dụng: hình ảnh nhân vật, âm nhạc, ca từ, tài sản
      đồ họa hoặc thương hiệu BizOn;
+   - Cơ sở giáo dục (ngoài Trường Đại học Cần Thơ) tiếp tục sử dụng hai
+     trụ mô phỏng sau học kỳ dùng thử, hoặc sử dụng Instructor Studio,
+     khi chưa có giấy phép bằng văn bản (mục 5);
    - Sử dụng trong sản phẩm, dịch vụ hoặc hoạt động đào tạo CÓ THU PHÍ
      cho việc dùng phần mềm (cần hợp đồng cấp phép — xem mục 5);
    - Dùng nội dung kho này làm dữ liệu huấn luyện hệ thống AI thương mại.
@@ -67,10 +78,15 @@ BizOn Bật Nghiệp — Business Simulation Game Ecosystem
 Copyright © 2026 Do Thuy Huong and Phan Anh Tu. All rights reserved.
 Publication identifier (DOI): 10.5281/zenodo.21592241
 
-PERMITTED without prior permission: playing the app at its official URL
-(https://thuyhuongctu.github.io/BizOn/); use by instructors and educational
-institutions for NON-COMMERCIAL classroom teaching (no fee charged for the
-software itself), including printing the bundled survey forms; reading the
+PERMITTED without prior permission: individual, non-commercial play at the
+official URL (https://thuyhuongctu.github.io/BizOn/); BizOn Arcade and the
+tier-1 game (Gánh hàng rong / Street Vendor) — free FOREVER at the official
+URL, including classroom use; the two simulation pillars (domestic
+entrepreneurship and international business — BizOn GO GlObal) for
+NON-COMMERCIAL classroom teaching at the official URL: free for Can Tho
+University, and free for ONE trial semester at other institutions (continued
+use afterwards requires a written licence — see section 5); printing the
+bundled survey forms within the permitted teaching uses above; reading the
 source for personal learning; academic citation with attribution and the DOI
 above; screenshots and review videos with credit.
 
@@ -78,8 +94,11 @@ PROHIBITED without prior written permission: copying, redistributing, or
 re-deploying the source in whole or in part at any other domain/repository;
 modifying, creating derivative works, or exploiting the simulation engine;
 extracting the character designs, music, lyrics, artwork, or the BizOn brand
-for separate use; any use in paid products, services, or fee-charging
-training; using this repository as training data for commercial AI systems.
+for separate use; continued institutional use of the two simulation pillars
+beyond the trial semester (institutions other than Can Tho University), or
+use of Instructor Studio, without a written licence; any use in paid
+products, services, or fee-charging training; using this repository as
+training data for commercial AI systems.
 
 Third-party components (Tailwind CSS — MIT; Google Fonts — OFL 1.1) remain
 under their respective licenses.
