@@ -122,6 +122,9 @@ a{color:inherit}
 :focus-visible{outline:2px solid var(--jade);outline-offset:3px}
 .em-jade{font-style:normal;color:var(--jade);font-weight:500}
 .note a{color:var(--jade);text-decoration:none}.note a:hover{text-decoration:underline}
+.hero-cta{display:flex;gap:12px;margin-top:1.9rem;flex-wrap:wrap}
+.pillar .play{margin-top:1.5rem;font-weight:600;font-size:.9rem;color:var(--jade);text-decoration:none;display:inline-flex;gap:.4rem;align-items:center;transition:gap .2s}
+.pillar .play:hover{gap:.7rem}
 @media(max-width:960px){
   .split,.pillars{grid-template-columns:1fr}
   .orbits{grid-template-columns:1fr}
@@ -146,7 +149,8 @@ a{color:inherit}
       <a href="#he-con">Hệ con</a>
       <a href="#ha-tang">Hạ tầng</a>
       <a href="#ban-do">Bản đồ</a>
-      <a class="btn btn-solid" href="truong.html">Trang chủ thể chế</a>
+      <a href="truong.html">Trang thể chế</a>
+      <a class="btn btn-solid" href="index.html">Vào game →</a>
     </nav>
   </div>
 </header>
@@ -157,6 +161,11 @@ a{color:inherit}
   <p class="tag">Trường Đại học Cần Thơ · Toàn cảnh hệ sinh thái</p>
   <h1 class="h-xl">Vũ trụ BizOn: một engine lõi, <em>nhiều thế giới</em>.</h1>
   <p class="body-lg">Cả hệ sinh thái xoay quanh một engine xác định duy nhất. Hai trụ mô phỏng và các hệ con — AIBIS, Lumina, VietLens, thị trường động, Arcade — là những thế giới quay quanh lõi đó, chia chung một lớp hạ tầng: nhật ký quyết định, ảnh chụp đóng băng, khung đồng thuận và hai thanh ghi thiết kế.</p>
+  <div class="hero-cta">
+    <a class="btn btn-solid" href="index.html">Vào game — Bật Nghiệp →</a>
+    <a class="btn btn-line" href="global.html">BizOn Go Global</a>
+    <a class="btn btn-line" href="games.html">Arcade</a>
+  </div>
   <div class="map-wrap rv">
     <svg viewBox="0 0 760 500" role="img" aria-label="Bản đồ vũ trụ BizOn: engine lõi ở trung tâm, sáu thế giới quay quanh, trên một dải hạ tầng dùng chung">
       <!-- đường nối từ lõi ra các nút -->
@@ -231,11 +240,13 @@ a{color:inherit}
         <span class="pillar-no">TRỤ I</span>
         <h3 class="h-md">BizOn Bật Nghiệp</h3>
         <p class="body">Khởi nghiệp trong bối cảnh Việt Nam qua sáu chu kỳ quyết định. Dành cho học phần khởi nghiệp — người học bắt đầu từ thị trường mình đã hiểu.</p>
+        <a class="play" href="index.html">Vào bản chơi Bật Nghiệp →</a>
       </article>
       <article class="pillar">
         <span class="pillar-no">TRỤ II</span>
         <h3 class="h-md">Hộ chiếu Thương hiệu</h3>
         <p class="body">Đưa doanh nghiệp qua biên giới: chọn thị trường và phương thức thâm nhập, đối mặt rủi ro tỷ giá và khác biệt thể chế. Dành cho học phần kinh doanh quốc tế.</p>
+        <a class="play" href="global.html">Vào BizOn Go Global →</a>
       </article>
     </div>
   </div>
