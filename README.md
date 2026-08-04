@@ -135,7 +135,7 @@ If you use BizOn in teaching or research, please cite:
 
 **Proprietary software** – see [`LICENSE`](LICENSE). The source code, the simulation-engine algorithms, the character designs (**Lumina**, **Tú Phan**, the Demo Team), the original music library, and the **BizOn** name and identity belong to the authors **Do Thuy Huong & Phan Anh Tu**.
 
-✅ **Free for non-commercial classroom teaching** at the official URL – instructors may use the app and print the bundled survey forms with no permission needed. ❌ Copying, re-deploying the source elsewhere, extracting characters/music, or any fee-charging use requires a **written non-exclusive license** – contact thuyhuongctu@gmail.com.
+✅ **Free tiers (scope-limited).** The **BizOn Arcade** and the **Level-1 game** (*Gánh hàng rong* / Street Vendor) are free to use at the official URL, indefinitely. The **two pillars** — *Bật Nghiệp* and *Hộ chiếu Thương hiệu* — are free for **Can Tho University**, and free for a **single trial semester** at any other institution. ❌ **Beyond those tiers** — continued use of the two pillars at other institutions, the **Instructor Studio**, copying or re-deploying the source, extracting characters/music, or any fee-charging use — requires a **written license**. Contact thuyhuongctu@gmail.com. This scope-limited grant replaces the earlier blanket "free for non-commercial classroom teaching" statement.
 
 Registration dossiers (copyright, trademark) and the commercialization strategy are managed in the authors' private document repository.
 
