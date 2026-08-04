@@ -1,276 +1,259 @@
 <!DOCTYPE html>
-<html lang="vi">
+<!-- THANH GHI: THỂ CHẾ (giới thiệu dự án). Vỏ dùng chung: assets/css/shell.css + assets/js/shell.js.
+     Trang trong: nền sáng, hero nhỏ, KHÔNG dòng chảy châu thổ. Sơ đồ hệ sinh thái TĨNH (không animate).
+     Số liệu bối cảnh: chỉ nêu con số khi có nguồn + năm; chưa có nguồn thì viết định tính.
+     Nguồn gốc/ORCID/DOI lấy đúng theo CITATION.cff, không bịa dữ liệu về người thật. -->
+<html lang="vi" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BizOn — Giới thiệu: hệ sinh thái mô phỏng cho lớp học đại học</title>
-<meta name="description" content="BizOn là hệ sinh thái mô phỏng kinh doanh cho lớp học đại học Việt Nam: engine xác định, hai trụ trong nước và quốc tế, hai thanh ghi thiết kế. Có mã định danh số, tệp trích dẫn và ORCID của nhóm tác giả.">
+<title>BizOn — Giới thiệu: vì sao có dự án và ai đứng sau</title>
+<meta name="description" content="Vì sao BizOn tồn tại: giảng dạy thiếu công cụ đánh giá năng lực ra quyết định, phần mềm quốc tế đắt và sai bối cảnh, mô hình hộp đen không chấm được lập luận. Sơ đồ ba bậc, dòng thời gian xuất xứ BizArena → BSS → SIMULATION-GAMEs → BizOn, và nhóm tác giả kèm ORCID.">
 <meta name="theme-color" content="#FFFFFF">
-<!-- Trang THANH GHI THỂ CHẾ (giới thiệu dự án), cặp với truong.html. Nạp tokens-institutional.css
-     (KHÔNG nạp tokens-clay.css). Bộ chữ TỰ LƯU TRỮ trong assets/fonts (không CDN). Thông tin nguồn
-     gốc/trích dẫn/ORCID lấy đúng theo CITATION.cff và README — không bịa thêm dữ liệu về người thật. -->
 <link rel="icon" type="image/svg+xml" href="assets/brand/bizon-favicon.svg">
 <meta property="og:type" content="website">
-<meta property="og:title" content="BizOn — Giới thiệu">
-<meta property="og:description" content="Hệ sinh thái mô phỏng kinh doanh cho lớp học đại học: engine xác định, hai trụ, hai thanh ghi thiết kế. Trường Đại học Cần Thơ.">
+<meta property="og:title" content="BizOn — Giới thiệu dự án">
+<meta property="og:description" content="Vì sao có BizOn, và ai đứng sau. Sơ đồ ba bậc, dòng thời gian xuất xứ, nhóm tác giả kèm ORCID và trích dẫn APA + DOI.">
 <meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/brand/og-truong.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="css/bizon-institutional-fonts.css">
-<link rel="stylesheet" href="css/tokens-institutional.css">
+<link rel="stylesheet" href="assets/css/shell.css">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.6;-webkit-font-smoothing:antialiased}
-.shell{max-width:var(--max);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
-img,svg{display:block;max-width:100%}
-a{color:inherit}
-.h-xl{font-size:clamp(2.4rem,5.6vw,4.6rem);font-weight:800;line-height:1.02;letter-spacing:-.036em}
-.h-lg{font-size:clamp(1.9rem,3.8vw,3.1rem);font-weight:700;line-height:1.06;letter-spacing:-.03em}
-.h-md{font-size:clamp(1.25rem,2vw,1.6rem);font-weight:600;line-height:1.18;letter-spacing:-.018em}
-.h-sm{font-size:1.02rem;font-weight:600;letter-spacing:-.01em;line-height:1.32}
-.tag{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3)}
-.body-lg{font-size:clamp(1.02rem,1.35vw,1.18rem);color:var(--ink-2);max-width:60ch}
-.body{font-size:.94rem;color:var(--ink-2)}
-.body-sm{font-size:.86rem;color:var(--ink-2)}
-.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.88);backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color .3s}
-.nav.stuck{border-bottom-color:var(--rule)}
-.nav-in{display:flex;align-items:center;gap:32px;height:66px}
-.brand{display:inline-flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.03em;font-size:1.14rem;text-decoration:none}
-.brand img{width:26px;height:26px}
-.brand span{color:var(--jade)}
-.nav-links{display:flex;gap:26px;margin-left:auto;align-items:center}
-.nav-links a{text-decoration:none;font-size:.875rem;color:var(--ink-2);transition:color .2s}
-.nav-links a:hover{color:var(--ink)}
-.btn{display:inline-flex;align-items:center;gap:.5rem;font-size:.875rem;font-weight:500;text-decoration:none;padding:.62rem 1.15rem;border-radius:2px;transition:background .2s,color .2s,border-color .2s}
-.btn-solid{background:var(--jade);color:#fff}
-.btn-solid:hover{background:#0B4A3F}
-.btn-line{border:1px solid var(--rule);color:var(--ink)}
-.btn-line:hover{border-color:var(--ink)}
-.nav-toggle{display:none}
-.hero{padding-top:clamp(48px,6vw,88px);padding-bottom:clamp(34px,4vw,54px)}
-.hero .tag{margin-bottom:1.5rem}
-.hero h1{margin-bottom:1.4rem;max-width:17ch}
-.hero h1 em{font-style:normal;color:var(--jade)}
-.crumb{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:2rem}
-.crumb a{text-decoration:none;color:var(--ink-3)}
-.crumb a:hover{color:var(--jade)}
-.claims{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
-.claims-in{display:grid;grid-template-columns:repeat(3,1fr)}
-.claim{padding:34px 30px 32px;border-left:1px solid var(--rule)}
-.claim:first-child{border-left:none;padding-left:0}
-.claim:last-child{padding-right:0}
-.claim .h-sm{margin:.7rem 0 .5rem}
-.claim .src{font-family:var(--mono);font-size:.68rem;color:var(--jade);letter-spacing:.05em;margin-top:.9rem;display:block}
-.sec{padding-top:clamp(56px,7vw,104px);padding-bottom:clamp(56px,7vw,104px)}
-.sec-band{background:var(--band)}
-.sec-head{max-width:62ch;margin-bottom:clamp(30px,4vw,52px)}
-.sec-head .tag{margin-bottom:1.1rem}
-.sec-head .body-lg{margin-top:1.1rem}
-.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,64px);align-items:start}
+/* ═══════════ RIÊNG TRANG GIỚI THIỆU ═══════════ */
+.hero-sm{padding:clamp(46px,7vw,88px) 0 clamp(30px,4.4vw,48px);border-bottom:1px solid var(--rule)}
+.hero-sm h1{font-size:clamp(2rem,4.6vw,3.4rem)}
+.hero-sm h1 em{font-style:normal;color:var(--jade)}
+.hero-sm .lede{margin-top:1.1rem}
+
 .prose p{max-width:64ch;margin-bottom:1.1rem}
 .prose p:last-child{margin-bottom:0}
 .prose em{font-style:normal;color:var(--jade);font-weight:500}
-.pillars{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule)}
-.pillar{background:var(--paper);padding:clamp(28px,3.4vw,44px);display:flex;flex-direction:column}
-.pillar-no{font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;color:var(--jade);margin-bottom:1.4rem}
-.pillar h3{margin-bottom:.9rem}
-.reg-list{list-style:none;margin-top:1.4rem}
-.reg-list li{padding:15px 0;border-top:1px solid var(--rule);display:grid;grid-template-columns:118px 1fr;gap:18px;font-size:.9rem}
-.reg-list li b{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--jade);font-weight:500;padding-top:.2rem}
+
+.ctx{display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(24px,4vw,52px);align-items:start}
+.ctx .qual{border-left:3px solid var(--jade);padding-left:18px;font-size:.95rem;color:var(--ink-2)}
+.ctx .qual b{color:var(--ink);font-weight:600}
+.ctx .src-note{font-family:var(--mono);font-size:.72rem;color:var(--ink-2);margin-top:1rem}
+
+/* Sơ đồ ba bậc — tĩnh */
+.ladder3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.rung{background:var(--paper);padding:clamp(22px,2.8vw,32px);display:flex;flex-direction:column}
+.rung .lvl{font-family:var(--mono);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(--jade);margin-bottom:.9rem}
+.rung h3{margin-bottom:.6rem}
+.rung .body{font-size:.9rem}
+.rung .seq{margin-top:auto;padding-top:1.1rem;font-family:var(--mono);font-size:.68rem;color:var(--ink-2)}
+.infra{margin-top:1px;background:var(--band);border:1px solid var(--rule);border-top:none;padding:20px clamp(20px,2.6vw,30px);display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:baseline}
+.infra .k{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--jade)}
+.infra .v{font-size:.9rem;color:var(--ink-2)}
+.reg-line{margin-top:clamp(26px,3.4vw,44px)}
+.reg-line h3{margin-bottom:.7rem}
+.reg-list{list-style:none;margin-top:1.2rem}
+.reg-list li{padding:14px 0;border-top:1px solid var(--rule);display:grid;grid-template-columns:120px 1fr;gap:18px;font-size:.9rem}
+.reg-list li b{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--jade);font-weight:500;padding-top:.15rem}
 .reg-list li span{color:var(--ink-2)}
-.spec{list-style:none}
-.spec li{padding:16px 0;border-top:1px solid var(--rule);display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:baseline}
-.spec li:last-child{border-bottom:1px solid var(--rule)}
-.spec .k{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
-.spec .v{font-size:.9rem;color:var(--ink)}
-.spec .v a{color:var(--jade);text-decoration:none}
-.spec .v a:hover{text-decoration:underline}
+
+/* Dòng thời gian xuất xứ */
+.timeline{list-style:none;position:relative;margin-top:.5rem}
+.timeline::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:var(--rule)}
+.tl-item{position:relative;padding-left:38px;padding-bottom:clamp(22px,2.6vw,32px)}
+.tl-item:last-child{padding-bottom:0}
+.tl-item::before{content:"";position:absolute;left:2px;top:4px;width:14px;height:14px;border-radius:50%;background:var(--paper);border:3px solid var(--jade)}
+.tl-item .yr{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;color:var(--jade);display:block;margin-bottom:.3rem}
+.tl-item h3{font-size:1.05rem;margin-bottom:.35rem}
+.tl-item .body{font-size:.9rem;max-width:60ch}
+.tl-note{border-left:3px solid var(--jade);padding-left:18px;margin-top:clamp(22px,3vw,34px);font-size:.92rem;color:var(--ink-2);max-width:66ch}
+.tl-note b{color:var(--ink);font-weight:600}
+
+/* Tác giả */
 .people{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule)}
-.person{background:var(--paper);padding:30px 28px 30px}
-.person .role{font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--jade);margin-bottom:.9rem;display:block}
+.person{background:var(--paper);padding:30px 28px}
+.person .role{font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--jade);margin-bottom:.9rem;display:block}
 .person h3{margin-bottom:.3rem}
-.person .aff{font-size:.85rem;color:var(--ink-3);margin-bottom:1rem}
+.person .aff{font-size:.85rem;color:var(--ink-2);margin-bottom:1rem}
 .person .links{display:flex;gap:16px;flex-wrap:wrap;font-size:.8rem}
 .person .links a{font-family:var(--mono);color:var(--ink-2);text-decoration:none;letter-spacing:.02em}
 .person .links a:hover{color:var(--jade)}
-.note{border-left:2px solid var(--jade);padding-left:20px;font-size:.92rem;color:var(--ink-2);margin-top:1.8rem;max-width:64ch}
-.note b{color:var(--ink);font-weight:600}
-.cta{background:var(--ink);color:#fff}
-.cta .h-lg{margin-bottom:1.2rem}
-.cta .body-lg{color:rgba(255,255,255,.66)}
-.cta .btn-line{border-color:rgba(255,255,255,.28);color:#fff}
-.cta .btn-line:hover{border-color:#fff}
-.cta .btn-solid{background:#fff;color:var(--ink)}
-.cta .btn-solid:hover{background:#E3EDE9}
-.cta-in{display:flex;gap:14px;margin-top:2.2rem;flex-wrap:wrap}
-.foot{border-top:1px solid var(--rule);padding:44px 0 56px}
-.foot-in{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:flex-start}
-.foot .tag{margin-bottom:.6rem}
-.foot-links{display:flex;gap:22px;flex-wrap:wrap}
-.foot-links a{font-size:.85rem;color:var(--ink-2);text-decoration:none}
-.foot-links a:hover{color:var(--ink)}
-.rv{opacity:0;transform:translateY(14px);transition:opacity .6s cubic-bezier(.2,.7,.3,1),transform .6s cubic-bezier(.2,.7,.3,1)}
-.rv.in{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
-:focus-visible{outline:2px solid var(--jade);outline-offset:3px}
-.mt-band{margin-top:clamp(30px,4vw,48px)}.mt-08{margin-top:.8rem}.mw64{max-width:64ch}
-.em-jade{font-style:normal;color:var(--jade);font-weight:500}
-.cite{border-left-color:var(--rule);font-family:var(--mono);font-size:.82rem;color:var(--ink)}
-.cite em{font-style:italic;color:var(--ink-2)}
-.note a{color:var(--jade);text-decoration:none}.note a:hover{text-decoration:underline}
-@media(max-width:960px){
-  .split,.pillars,.people{grid-template-columns:1fr}
-  .claims-in{grid-template-columns:1fr}
-  .claim{border-left:none;border-top:1px solid var(--rule);padding-left:0;padding-right:0}
-  .claim:first-child{border-top:none}
-  .spec li,.reg-list li{grid-template-columns:1fr;gap:5px}
-  .nav-links{display:none}
-  .nav-links.open{display:flex;position:absolute;top:66px;left:0;right:0;background:#fff;flex-direction:column;gap:0;padding:8px var(--pad) 20px;border-bottom:1px solid var(--rule)}
-  .nav-links.open a{padding:12px 0;border-bottom:1px solid var(--rule);width:100%}
-  .nav-toggle{display:inline-flex;margin-left:auto;background:none;border:1px solid var(--rule);border-radius:2px;padding:.5rem .8rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;cursor:pointer;text-transform:uppercase}
+
+/* Trích dẫn */
+.cite-box{border:1px solid var(--rule);background:var(--band);padding:clamp(20px,2.6vw,28px)}
+.cite-box .apa{font-family:var(--mono);font-size:.84rem;line-height:1.65;color:var(--ink)}
+.cite-box .apa em{font-style:italic;color:var(--ink-2)}
+.cite-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:1.2rem;align-items:center}
+.cite-actions .ok{font-family:var(--mono);font-size:.72rem;color:var(--jade);opacity:0;transition:opacity .2s}
+.cite-actions .ok.show{opacity:1}
+.cite-meta{list-style:none;margin-top:1.4rem}
+.cite-meta li{padding:13px 0;border-top:1px solid var(--rule);display:grid;grid-template-columns:140px 1fr;gap:16px;align-items:baseline;font-size:.88rem}
+.cite-meta .k{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.cite-meta .v a{color:var(--jade);text-decoration:none}
+.cite-meta .v a:hover{text-decoration:underline}
+
+@media(max-width:860px){
+  .ctx,.people{grid-template-columns:1fr}
+  .ladder3{grid-template-columns:1fr}
+  .infra,.reg-list li,.cite-meta li{grid-template-columns:1fr;gap:6px}
 }
 </style>
 </head>
 <body>
 
+<div class="prog" id="prog"></div>
+
 <header class="nav" id="nav">
   <div class="shell nav-in">
-    <a class="brand" href="universe.html"><img src="assets/brand/bizon-favicon.svg" alt="">Biz<span>On</span></a>
-    <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">Menu</button>
-    <nav class="nav-links" id="navLinks" aria-label="Điều hướng chính">
-      <a href="universe.html">Vũ trụ</a>
-      <a href="#van-de">Vấn đề</a>
-      <a href="#he-sinh-thai">Hệ sinh thái</a>
-      <a href="#nguon-goc">Nguồn gốc</a>
-      <a href="#tac-gia">Tác giả</a>
-      <a href="truong-hoc-thuat.html">Học thuật</a>
-      <a class="btn btn-solid" href="mailto:thuyhuongctu@gmail.com?subject=BizOn%20-%20T%C3%ACm%20hi%E1%BB%83u%20d%E1%BB%B1%20%C3%A1n">Liên hệ</a>
-    </nav>
+    <a class="wm" href="universe.html">
+      <span class="wm-txt">Biz<svg class="wm-mark" width="0.98em" height="1em" viewBox="0 0 98 100" aria-hidden="true"><ellipse cx="49" cy="58" rx="40" ry="34" fill="none" stroke="currentColor" stroke-width="15"/><circle cx="63" cy="58" r="11" fill="var(--jade)"/></svg>n</span>
+      <span class="wm-sub">Bật Nghiệp</span>
+    </a>
+    <div class="tgl" role="group" aria-label="Ngôn ngữ">
+      <button id="bvi" type="button" aria-pressed="true">VI</button>
+      <button id="ben" type="button" aria-pressed="false">EN</button>
+    </div>
+    <button class="ico" id="bth" type="button" aria-pressed="false" aria-label="Đổi giao diện sáng / tối"><span id="thi" aria-hidden="true">☾</span></button>
+    <a class="btn btn-solid btn-sm" href="truong-hoc-thuat.html" data-vi="Học thuật" data-en="Academic">Học thuật</a>
   </div>
 </header>
 
 <main id="top">
 
-<section class="shell hero">
-  <p class="crumb"><a href="truong.html">BizOn</a> · Giới thiệu</p>
-  <p class="tag">Trường Đại học Cần Thơ · Giới thiệu dự án</p>
-  <h1 class="h-xl">Một hệ sinh thái mô phỏng, dựng cho <em>lớp học đại học Việt Nam</em>.</h1>
-  <p class="body-lg">BizOn là hệ sinh thái mô phỏng kinh doanh cho đào tạo bậc đại học: một engine xác định đứng dưới hai trụ — khởi nghiệp trong nước và kinh doanh quốc tế — với tham số công bố công khai và chuẩn đầu ra gắn thang Bloom. Trang này giới thiệu vấn đề mà dự án giải quyết, cách hệ sinh thái được tổ chức, và nguồn gốc học thuật của nó.</p>
-</section>
-
-<section class="claims">
-  <div class="shell claims-in">
-    <div class="claim rv">
-      <span class="tag">01 · Vấn đề</span>
-      <h3 class="h-sm">Bối cảnh Việt Nam, giải thích được</h3>
-      <p class="body-sm">Nhiều mô phỏng kinh doanh mang bối cảnh nước ngoài và vận hành như hộp đen. BizOn bắt đầu từ thị trường sinh viên đã hiểu và công bố cả tham số lẫn giới hạn.</p>
-      <span class="src">xác định · tham số công khai</span>
-    </div>
-    <div class="claim rv">
-      <span class="tag">02 · Cách làm</span>
-      <h3 class="h-sm">Một engine, hai trụ</h3>
-      <p class="body-sm">Hai trò chơi độc lập, mua rời được, chia chung một engine và một lớp hạ tầng lớp học. Chơi trong nước trước rồi ra quốc tế là trình tự khuyến nghị, không bắt buộc.</p>
-      <span class="src">Bật Nghiệp · Hộ chiếu Thương hiệu</span>
-    </div>
-    <div class="claim rv">
-      <span class="tag">03 · Nguồn gốc</span>
-      <h3 class="h-sm">Trích dẫn được</h3>
-      <p class="body-sm">Bản lưu trữ có mã định danh số, tệp trích dẫn chuẩn và ORCID của nhóm tác giả. Mỗi phiên bản được lưu trữ vĩnh viễn.</p>
-      <span class="src">DOI · CITATION.cff · ORCID</span>
-    </div>
-  </div>
-</section>
-
-<section class="shell sec" id="van-de">
-  <div class="sec-head rv">
-    <p class="tag">Vấn đề</p>
-    <h2 class="h-lg">Vì sao dựng một mô phỏng mới</h2>
-  </div>
-  <div class="prose body rv">
-    <p>Các công cụ mô phỏng kinh doanh phổ biến thường được thiết kế cho bối cảnh thị trường nước ngoài, khiến sinh viên Việt Nam phải dành phần lớn sức chú ý để <em>đoán bối cảnh</em> thay vì rèn lập luận kinh doanh. Nhiều công cụ lại vận hành như hộp đen: kết quả xuất hiện mà không truy được vì sao, nên giảng viên khó chấm phần lập luận và dễ rơi vào chấm may rủi.</p>
-    <p>BizOn chọn hướng ngược lại. Trò chơi bắt đầu từ thị trường mà sinh viên đã quen, để toàn bộ sức chú ý dồn vào quyết định. Engine <em>xác định</em>: cùng một chuỗi quyết định luôn cho cùng một kết quả, nên người học truy được vì sao thị phần thay đổi và giảng viên chấm được lập luận. Mỗi mô hình đi kèm một Model Card công bố biến số, phương trình, giả định và cả những gì mô hình không làm được.</p>
-    <p>Đây là một dự án học thuật, không phải một sản phẩm giải trí gắn nhãn giáo dục: tiêu chí phát hành là một giảng viên ngoài nhóm phát triển chạy trọn một buổi mà không cần ai kèm, và bằng chứng hiệu quả học tập được trình bày đúng mức độ hiện có — kể cả khi đó là bằng chứng hồi cứu chưa có nhóm đối chứng.</p>
-  </div>
-</section>
-
-<section class="sec sec-band" id="he-sinh-thai">
+<!-- ═══ HERO NHỎ ═══ -->
+<section class="hero-sm">
   <div class="shell">
-    <div class="sec-head rv">
-      <p class="tag">Hệ sinh thái</p>
-      <h2 class="h-lg">Hai trụ trên một engine dùng chung</h2>
-      <p class="body-lg">Mỗi trụ là một câu chuyện riêng và đứng độc lập. Bên dưới, chúng chia chung một engine mô phỏng và một lớp hạ tầng lớp học: mã lớp, rubric, dấu vết học tập và giao diện song ngữ.</p>
+    <p class="tag" data-vi="Giới thiệu dự án" data-en="About the project">Giới thiệu dự án</p>
+    <h1 data-vi="Vì sao có BizOn" data-en="Why BizOn exists">Vì sao có <em>BizOn</em></h1>
+    <p class="lede" data-vi="BizOn là một hệ sinh thái mô phỏng kinh doanh dựng cho lớp học đại học Việt Nam: một engine xác định đứng dưới ba bậc chơi và một lớp hạ tầng lớp học dùng chung. Trang này kể vấn đề mà dự án giải quyết, cách hệ sinh thái được tổ chức, xuất xứ học thuật của nó, và ai đứng sau." data-en="BizOn is a business-simulation ecosystem built for Vietnamese university classrooms: a deterministic engine under three tiers of play and one shared classroom layer. This page explains the problem it addresses, how the ecosystem is organised, its academic provenance, and who is behind it.">BizOn là một hệ sinh thái mô phỏng kinh doanh dựng cho lớp học đại học Việt Nam: một engine xác định đứng dưới ba bậc chơi và một lớp hạ tầng lớp học dùng chung. Trang này kể vấn đề mà dự án giải quyết, cách hệ sinh thái được tổ chức, xuất xứ học thuật của nó, và ai đứng sau.</p>
+  </div>
+</section>
+
+<!-- ═══ VẤN ĐỀ ═══ -->
+<section id="van-de">
+  <div class="shell">
+    <div class="head rv">
+      <p class="tag" data-vi="Vấn đề" data-en="The problem">Vấn đề</p>
+      <h2 data-vi="Ba khoảng trống khi dạy ra quyết định kinh doanh" data-en="Three gaps in teaching business decision-making">Ba khoảng trống khi dạy ra quyết định kinh doanh</h2>
     </div>
-    <div class="pillars rv">
-      <article class="pillar">
-        <span class="pillar-no">TRỤ I</span>
-        <h3 class="h-md">BizOn Bật Nghiệp</h3>
-        <p class="body">Khởi nghiệp trong bối cảnh Việt Nam qua sáu chu kỳ quyết định: định giá, ước lượng cầu, cơ cấu chi phí và dòng tiền. Dành cho học phần khởi nghiệp — người học bắt đầu từ thị trường mình đã hiểu.</p>
+    <div class="prose body rv">
+      <p data-vi="Thứ nhất, giảng dạy thiếu công cụ đánh giá năng lực ra quyết định. Bài kiểm tra viết đo được kiến thức, nhưng khó đo được một chuỗi lựa chọn dưới ràng buộc — định giá, ước lượng cầu, cân đối dòng tiền — nơi mỗi quyết định ràng vào quyết định trước. Giảng viên cần một nơi mà lập luận của sinh viên để lại dấu vết chấm được." data-en="First, teaching lacks tools to assess decision-making ability. Written exams measure knowledge, but struggle to measure a sequence of choices under constraint — pricing, demand estimation, cash-flow balancing — where each decision binds on the last. Instructors need a place where a student's reasoning leaves a gradable trace.">Thứ nhất, giảng dạy thiếu công cụ đánh giá <em>năng lực ra quyết định</em>. Bài kiểm tra viết đo được kiến thức, nhưng khó đo được một chuỗi lựa chọn dưới ràng buộc — định giá, ước lượng cầu, cân đối dòng tiền — nơi mỗi quyết định ràng vào quyết định trước. Giảng viên cần một nơi mà lập luận của sinh viên để lại dấu vết chấm được.</p>
+      <p data-vi="Thứ hai, phần mềm mô phỏng quốc tế thường đắt và hiệu chỉnh sai bối cảnh. Sinh viên phải dành phần lớn sức chú ý để đoán một thị trường nước ngoài xa lạ, thay vì rèn lập luận kinh doanh. Chi phí bản quyền theo đầu người lại khiến nhiều lớp không tiếp cận được." data-en="Second, international simulation software is often expensive and mis-calibrated for local context. Students spend most of their attention guessing an unfamiliar foreign market instead of practising business reasoning. Per-seat licensing also puts many classes out of reach.">Thứ hai, phần mềm mô phỏng quốc tế thường <em>đắt và hiệu chỉnh sai bối cảnh</em>. Sinh viên phải dành phần lớn sức chú ý để đoán một thị trường nước ngoài xa lạ, thay vì rèn lập luận kinh doanh. Chi phí bản quyền theo đầu người lại khiến nhiều lớp không tiếp cận được.</p>
+      <p data-vi="Thứ ba, mô hình hộp đen thì không chấm được lập luận. Khi kết quả xuất hiện mà không truy được vì sao, giảng viên khó phân biệt một quyết định giỏi với một cú may. BizOn chọn hướng ngược lại: engine xác định — cùng một chuỗi quyết định luôn cho cùng một kết quả — và mỗi mô hình đi kèm một Model Card công bố biến số, phương trình, giả định và cả những gì mô hình không làm được." data-en="Third, black-box models cannot grade reasoning. When an outcome appears with no traceable cause, instructors cannot tell a good decision from a lucky one. BizOn takes the opposite path: a deterministic engine — the same sequence of decisions always yields the same outcome — and every model ships with a Model Card publishing its variables, equations, assumptions, and what it does not do.">Thứ ba, <em>mô hình hộp đen thì không chấm được lập luận</em>. Khi kết quả xuất hiện mà không truy được vì sao, giảng viên khó phân biệt một quyết định giỏi với một cú may. BizOn chọn hướng ngược lại: engine xác định — cùng một chuỗi quyết định luôn cho cùng một kết quả — và mỗi mô hình đi kèm một Model Card công bố biến số, phương trình, giả định và cả những gì mô hình không làm được.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ BỐI CẢNH VÙNG ═══ -->
+<section class="band" id="boi-canh">
+  <div class="shell">
+    <div class="head rv">
+      <p class="tag" data-vi="Bối cảnh vùng" data-en="Regional context">Bối cảnh vùng</p>
+      <h2 data-vi="Khoảng cách giữa thể chế địa phương và sức bật doanh nghiệp" data-en="The gap between local institutions and enterprise capacity">Khoảng cách giữa thể chế địa phương và sức bật doanh nghiệp</h2>
+    </div>
+    <div class="ctx rv">
+      <p class="qual" data-vi="Đồng bằng sông Cửu Long có mật độ khởi sự kinh doanh và văn hoá thương hồ lâu đời, nhưng năng lực quản trị bài bản của khu vực doanh nghiệp nhỏ vẫn còn khoảng cách so với tiềm năng. Một công cụ đào tạo ra quyết định, đặt trong đúng bối cảnh vùng, là cách thu hẹp khoảng cách đó ngay từ giảng đường." data-en="The Mekong Delta has a deep density of small enterprise and a long floating-market trading culture, yet the formal management capacity of its small-business sector still lags its potential. A decision-training tool, set in the region's own context, is a way to close that gap from the classroom onward.">Đồng bằng sông Cửu Long có mật độ khởi sự kinh doanh và văn hoá thương hồ lâu đời, nhưng <b>năng lực quản trị bài bản của khu vực doanh nghiệp nhỏ vẫn còn khoảng cách so với tiềm năng</b>. Một công cụ đào tạo ra quyết định, đặt trong đúng bối cảnh vùng, là cách thu hẹp khoảng cách đó ngay từ giảng đường.</p>
+      <div>
+        <p class="body" data-vi="Vì trang này hướng tới hội đồng khoa học, chúng tôi không nêu con số nào chưa có nguồn công bố và năm rõ ràng. Khi bổ sung số liệu về xếp hạng thể chế địa phương hay mật độ doanh nghiệp, mỗi con số sẽ đi kèm nguồn và mốc thời gian, đúng nguyên tắc dữ liệu VietLens." data-en="Because this page addresses a scholarly audience, we cite no figure that lacks a published source and clear year. When indicators on local institutional ranking or enterprise density are added, each number will carry its source and date, following the VietLens data principle.">Vì trang này hướng tới hội đồng khoa học, chúng tôi <b>không nêu con số nào chưa có nguồn công bố và năm rõ ràng</b>. Khi bổ sung số liệu về xếp hạng thể chế địa phương hay mật độ doanh nghiệp, mỗi con số sẽ đi kèm nguồn và mốc thời gian, đúng nguyên tắc dữ liệu VietLens.</p>
+        <p class="src-note" data-vi="→ Nguyên tắc: không có xuất xứ thì không lên bảng. Xem trang Học thuật, mục VietLens." data-en="→ Principle: no provenance, no place on the board. See the Academic page, VietLens section.">→ Nguyên tắc: không có xuất xứ thì không lên bảng. Xem trang Học thuật, mục VietLens.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HỆ SINH THÁI — SƠ ĐỒ TĨNH BA BẬC ═══ -->
+<section id="he-sinh-thai">
+  <div class="shell">
+    <div class="head rv">
+      <p class="tag" data-vi="Hệ sinh thái" data-en="Ecosystem">Hệ sinh thái</p>
+      <h2 data-vi="Ba bậc chơi trên một engine dùng chung" data-en="Three tiers of play on one shared engine">Ba bậc chơi trên một engine dùng chung</h2>
+      <p class="lede" data-vi="Mỗi bậc là một trò chơi đứng độc lập, mua rời được. Chơi bậc trước là trình tự khuyến nghị, không bắt buộc. Bên dưới, cả ba chia chung một engine xác định và một lớp hạ tầng lớp học." data-en="Each tier is an independent game, buyable on its own. Playing the earlier tier first is a recommended sequence, not a requirement. Underneath, all three share one deterministic engine and one classroom layer.">Mỗi bậc là một trò chơi đứng độc lập, mua rời được. Chơi bậc trước là trình tự khuyến nghị, không bắt buộc. Bên dưới, cả ba chia chung một engine xác định và một lớp hạ tầng lớp học.</p>
+    </div>
+    <div class="ladder3 rv">
+      <article class="rung">
+        <span class="lvl">Bậc 1</span>
+        <h3 class="h-md" data-vi="Bến Phù Sa" data-en="Silt Wharf">Bến Phù Sa</h3>
+        <p class="body" data-vi="Buôn bán trên ghe hàng bông ở chợ nổi: nhập hàng, định giá, đọc dòng khách. Bậc nhập môn, đưa người học vào đúng bối cảnh đồng bằng trước khi tính chuyện lớn." data-en="Trading from a produce boat at the floating market: sourcing, pricing, reading the flow of customers. An entry tier that grounds the learner in the delta before anything bigger.">Buôn bán trên ghe hàng bông ở chợ nổi: nhập hàng, định giá, đọc dòng khách. Bậc nhập môn, đưa người học vào đúng bối cảnh đồng bằng trước khi tính chuyện lớn.</p>
+        <span class="seq" data-vi="Chơi trước →" data-en="Play first →">Chơi trước →</span>
       </article>
-      <article class="pillar">
-        <span class="pillar-no">TRỤ II</span>
-        <h3 class="h-md">Hộ chiếu Thương hiệu</h3>
-        <p class="body">Đưa doanh nghiệp qua biên giới: chọn thị trường, chọn phương thức thâm nhập, đối mặt rủi ro tỷ giá và khác biệt thể chế. Dành cho học phần đầu tư nước ngoài và thương mại quốc tế; dùng được cho lớp quốc tế nhờ song ngữ.</p>
+      <article class="rung">
+        <span class="lvl">Bậc 2A</span>
+        <h3 class="h-md" data-vi="BizOn Bật Nghiệp" data-en="BizOn Bật Nghiệp">BizOn Bật Nghiệp</h3>
+        <p class="body" data-vi="Khởi nghiệp trong bối cảnh Việt Nam qua sáu chu kỳ quyết định: định giá, ước lượng cầu, cơ cấu chi phí và dòng tiền. Dành cho học phần khởi nghiệp." data-en="Startup in a Vietnamese context across six decision cycles: pricing, demand estimation, cost structure and cash flow. For the entrepreneurship course.">Khởi nghiệp trong bối cảnh Việt Nam qua sáu chu kỳ quyết định: định giá, ước lượng cầu, cơ cấu chi phí và dòng tiền. Dành cho học phần khởi nghiệp.</p>
+        <span class="seq" data-vi="Trụ trong nước" data-en="Domestic pillar">Trụ trong nước</span>
+      </article>
+      <article class="rung">
+        <span class="lvl">Bậc 2B</span>
+        <h3 class="h-md" data-vi="Hộ chiếu Thương hiệu" data-en="Brand Passport">Hộ chiếu Thương hiệu</h3>
+        <p class="body" data-vi="Đưa doanh nghiệp qua biên giới: chọn thị trường, chọn phương thức thâm nhập, đối mặt rủi ro tỷ giá và khác biệt thể chế. Dành cho học phần đầu tư nước ngoài; dùng được cho lớp quốc tế nhờ song ngữ." data-en="Taking a business across borders: choosing markets and entry modes, facing FX risk and institutional difference. For the foreign-investment course; usable in international classes thanks to bilingual UI.">Đưa doanh nghiệp qua biên giới: chọn thị trường, chọn phương thức thâm nhập, đối mặt rủi ro tỷ giá và khác biệt thể chế. Dành cho học phần đầu tư nước ngoài; dùng được cho lớp quốc tế nhờ song ngữ.</p>
+        <span class="seq" data-vi="Trụ quốc tế" data-en="International pillar">Trụ quốc tế</span>
       </article>
     </div>
-    <div class="rv mt-band">
-      <h3 class="h-md">Hai thanh ghi thiết kế, một hệ thống</h3>
-      <p class="body mw64 mt-08">Ranh giới thiết kế nằm ở khung màn hình: bên ngoài khung là <em class="em-jade">thanh ghi thể chế</em> nói với trưởng khoa và hội đồng — chừng mực, mạch lạc; bên trong khung là <em class="em-jade">thanh ghi đất sét</em> nói với sinh viên — thân thiện, khuyến khích thử sai. Hai thanh ghi tách riêng để không rò vào nhau.</p>
+    <div class="infra rv">
+      <span class="k" data-vi="Hạ tầng chung" data-en="Shared layer">Hạ tầng chung</span>
+      <span class="v" data-vi="Engine mô phỏng xác định · mã lớp và nhật ký quyết định · rubric và chuẩn đầu ra gắn thang Bloom · dấu vết học tập · giao diện song ngữ. Một lần dựng, cả ba bậc dùng chung." data-en="Deterministic simulation engine · class codes and decision logs · rubric and Bloom-aligned outcomes · learning traces · bilingual UI. Built once, shared by all three tiers.">Engine mô phỏng xác định · mã lớp và nhật ký quyết định · rubric và chuẩn đầu ra gắn thang Bloom · dấu vết học tập · giao diện song ngữ. Một lần dựng, cả ba bậc dùng chung.</span>
+    </div>
+    <div class="reg-line rv">
+      <h3 class="h-md" data-vi="Hai thanh ghi thiết kế, một hệ thống" data-en="Two design registers, one system">Hai thanh ghi thiết kế, một hệ thống</h3>
+      <p class="body mw64" data-vi="Ranh giới thiết kế nằm ở khung màn hình: bên ngoài khung là thanh ghi thể chế nói với trưởng khoa và hội đồng — chừng mực, mạch lạc; bên trong khung là thanh ghi đất sét nói với sinh viên — thân thiện, khuyến khích thử sai. Hai thanh ghi tách riêng để không rò vào nhau." data-en="The design boundary is the screen frame: outside it, the institutional register speaks to deans and committees — measured, coherent; inside it, the clay register speaks to students — warm, forgiving of trial and error. The two are kept separate so neither bleeds into the other.">Ranh giới thiết kế nằm ở khung màn hình: bên ngoài khung là <em class="em-jade">thanh ghi thể chế</em> nói với trưởng khoa và hội đồng — chừng mực, mạch lạc; bên trong khung là <em class="em-jade">thanh ghi đất sét</em> nói với sinh viên — thân thiện, khuyến khích thử sai. Hai thanh ghi tách riêng để không rò vào nhau.</p>
       <ul class="reg-list">
-        <li><b>Thể chế</b><span>Trang chủ, giới thiệu, học thuật, tài liệu giảng viên, bản in nộp hồ sơ.</span></li>
-        <li><b>Đất sét</b><span>Bên trong hai trụ, Arcade, và mọi màn hình người học tương tác trực tiếp.</span></li>
-        <li><b>Giao thoa</b><span>Ảnh chụp trò chơi trên trang thể chế luôn đặt trong khung viền mảnh, không tràn ra nền trang.</span></li>
+        <li><b data-vi="Thể chế" data-en="Institutional">Thể chế</b><span data-vi="Trang chủ, giới thiệu, học thuật, tài liệu giảng viên, bản in nộp hồ sơ." data-en="Home, about, academic, instructor docs, print-for-submission pages.">Trang chủ, giới thiệu, học thuật, tài liệu giảng viên, bản in nộp hồ sơ.</span></li>
+        <li><b data-vi="Đất sét" data-en="Clay">Đất sét</b><span data-vi="Bên trong ba bậc chơi và mọi màn hình người học tương tác trực tiếp." data-en="Inside the three tiers and every screen a learner interacts with directly.">Bên trong ba bậc chơi và mọi màn hình người học tương tác trực tiếp.</span></li>
+        <li><b data-vi="Giao thoa" data-en="Interface">Giao thoa</b><span data-vi="Ảnh chụp trò chơi trên trang thể chế luôn đặt trong khung viền mảnh, không tràn ra nền trang." data-en="Game screenshots on institutional pages always sit inside a thin frame, never bleeding onto the page background.">Ảnh chụp trò chơi trên trang thể chế luôn đặt trong khung viền mảnh, không tràn ra nền trang.</span></li>
       </ul>
     </div>
   </div>
 </section>
 
-<section class="shell sec" id="nguon-goc">
-  <div class="sec-head rv">
-    <p class="tag">Nguồn gốc &amp; trích dẫn</p>
-    <h2 class="h-lg">Lưu trữ, trích dẫn, giấy phép</h2>
-    <p class="body-lg">Dự án được lưu trữ để trích dẫn học thuật: mỗi phiên bản có bản lưu vĩnh viễn kèm mã định danh số, và nhóm tác giả có ORCID. Thông tin dưới đây lấy đúng theo tệp trích dẫn máy đọc <em>CITATION.cff</em> của kho.</p>
-  </div>
-  <div class="split rv">
-    <div>
-      <ul class="spec">
-        <li><span class="k">Mã DOI</span><span class="v"><a href="https://doi.org/10.5281/zenodo.21592241">10.5281/zenodo.21592241</a> — DOI khái niệm cho mọi phiên bản</span></li>
-        <li><span class="k">Lưu trữ</span><span class="v">Zenodo — mỗi bản phát hành được lưu trữ vĩnh viễn với DOI riêng</span></li>
-        <li><span class="k">Trích dẫn</span><span class="v">Tệp <em>CITATION.cff</em>; GitHub hiện nút “Cite this repository”</span></li>
-        <li><span class="k">Giấy phép</span><span class="v">Độc quyền — lưu trữ mở để trích dẫn, không cấp quyền tái sử dụng</span></li>
-        <li><span class="k">Đơn vị</span><span class="v">Trường Đại học Cần Thơ (Can Tho University)</span></li>
-      </ul>
-    </div>
-    <div>
-      <p class="body">Trích dẫn khuyến nghị:</p>
-      <p class="note cite">Do, T. H., &amp; Phan, A. T. (2026). <em>BizOn Bật Nghiệp: A 3D claymorphism business-simulation game for entrepreneurship education</em> [Computer software]. Can Tho University. https://doi.org/10.5281/zenodo.21592241</p>
-      <p class="note"><b>Minh bạch giới hạn.</b> Giới hạn của từng mô hình được công bố cùng mô hình trong Model Card, và trạng thái bằng chứng học tập được nêu đúng mức ở <a href="truong-hoc-thuat.html">trang nền tảng học thuật</a>.</p>
-    </div>
-  </div>
-</section>
-
-<section class="sec sec-band" id="tac-gia">
+<!-- ═══ NGUỒN GỐC — DÒNG THỜI GIAN XUẤT XỨ ═══ -->
+<section class="band" id="nguon-goc">
   <div class="shell">
-    <div class="sec-head rv">
-      <p class="tag">Tác giả</p>
-      <h2 class="h-lg">Nhóm tác giả</h2>
-      <p class="body-lg">Vai trò dưới đây nêu theo hồ sơ dự án đã công bố. Mã ORCID lấy đúng theo tệp <em>CITATION.cff</em>.</p>
+    <div class="head rv">
+      <p class="tag" data-vi="Nguồn gốc" data-en="Provenance">Nguồn gốc</p>
+      <h2 data-vi="Bốn giai đoạn: từ BizArena đến BizOn" data-en="Four stages: from BizArena to BizOn">Bốn giai đoạn: từ BizArena đến BizOn</h2>
+      <p class="lede" data-vi="Dòng thời gian này vừa là câu chuyện, vừa là chứng cứ xuất xứ: BizOn không xuất hiện một lần, mà lớn dần qua bốn kho công khai, mỗi bước để lại dấu vết kiểm chứng được." data-en="This timeline is both the story and the evidence of origin: BizOn did not appear at once, but grew across four public repositories, each step leaving a verifiable trace.">Dòng thời gian này vừa là câu chuyện, vừa là chứng cứ xuất xứ: BizOn không xuất hiện một lần, mà lớn dần qua bốn kho công khai, mỗi bước để lại dấu vết kiểm chứng được.</p>
+    </div>
+    <ol class="timeline rv">
+      <li class="tl-item">
+        <span class="yr" data-vi="Giai đoạn 1" data-en="Stage 1">Giai đoạn 1</span>
+        <h3 data-vi="BizArena — nguyên mẫu vòng chơi" data-en="BizArena — the play-loop prototype">BizArena — nguyên mẫu vòng chơi</h3>
+        <p class="body" data-vi="Nguyên mẫu đầu tiên: một vòng chơi ra quyết định kinh doanh, thử nghiệm ý tưởng dùng mô phỏng để dạy lập luận thay vì thuộc lòng." data-en="The first prototype: a business-decision play loop, testing the idea of teaching reasoning through simulation rather than memorisation.">Nguyên mẫu đầu tiên: một vòng chơi ra quyết định kinh doanh, thử nghiệm ý tưởng dùng mô phỏng để dạy lập luận thay vì thuộc lòng.</p>
+      </li>
+      <li class="tl-item">
+        <span class="yr" data-vi="Giai đoạn 2" data-en="Stage 2">Giai đoạn 2</span>
+        <h3 data-vi="BSS — bộ khung mô phỏng" data-en="BSS — the simulation scaffold">BSS — bộ khung mô phỏng</h3>
+        <p class="body" data-vi="Business Simulation System: tách engine ra khỏi giao diện, đặt nền cho một lõi mô phỏng có thể tái dùng cho nhiều kịch bản." data-en="Business Simulation System: separating the engine from the interface, laying the ground for a reusable simulation core across scenarios.">Business Simulation System: tách engine ra khỏi giao diện, đặt nền cho một lõi mô phỏng có thể tái dùng cho nhiều kịch bản.</p>
+      </li>
+      <li class="tl-item">
+        <span class="yr" data-vi="Giai đoạn 3" data-en="Stage 3">Giai đoạn 3</span>
+        <h3 data-vi="SIMULATION-GAMEs — kịch bản và dòng thời gian xuất xứ" data-en="SIMULATION-GAMEs — scenarios and provenance timeline">SIMULATION-GAMEs — kịch bản và dòng thời gian xuất xứ</h3>
+        <p class="body" data-vi="Mở rộng thành nhiều trò chơi kịch bản, kèm dòng thời gian xuất xứ được ghi lại công khai — bước đầu biến câu chuyện phát triển thành chứng cứ." data-en="Expanding into several scenario games, with a publicly recorded provenance timeline — the first step turning the development story into evidence.">Mở rộng thành nhiều trò chơi kịch bản, kèm dòng thời gian xuất xứ được ghi lại công khai — bước đầu biến câu chuyện phát triển thành chứng cứ.</p>
+      </li>
+      <li class="tl-item">
+        <span class="yr" data-vi="Giai đoạn 4 · hiện tại" data-en="Stage 4 · current">Giai đoạn 4 · hiện tại</span>
+        <h3 data-vi="BizOn — hệ sinh thái thể chế hoá" data-en="BizOn — the institutionalised ecosystem">BizOn — hệ sinh thái thể chế hoá</h3>
+        <p class="body" data-vi="Hợp nhất thành hệ sinh thái hiện tại: ba bậc chơi trên một engine xác định, hai thanh ghi thiết kế, tài liệu học thuật và tài liệu giảng viên, cùng bản lưu trữ có DOI để trích dẫn." data-en="Consolidated into today's ecosystem: three tiers on one deterministic engine, two design registers, academic and instructor documentation, and a DOI-archived release for citation.">Hợp nhất thành hệ sinh thái hiện tại: ba bậc chơi trên một engine xác định, hai thanh ghi thiết kế, tài liệu học thuật và tài liệu giảng viên, cùng bản lưu trữ có DOI để trích dẫn.</p>
+      </li>
+    </ol>
+    <p class="tl-note" data-vi="Vì mỗi giai đoạn là một kho công khai có lịch sử commit, dòng thời gian này kiểm chứng được từ bên ngoài — không phải một tuyên bố về xuất xứ mà là một dấu vết để lần theo." data-en="Because each stage is a public repository with commit history, this timeline is externally verifiable — not a claim about origin but a trail to follow."><b>Vì mỗi giai đoạn là một kho công khai có lịch sử commit</b>, dòng thời gian này kiểm chứng được từ bên ngoài — không phải một tuyên bố về xuất xứ mà là một dấu vết để lần theo.</p>
+  </div>
+</section>
+
+<!-- ═══ TÁC GIẢ ═══ -->
+<section id="tac-gia">
+  <div class="shell">
+    <div class="head rv">
+      <p class="tag" data-vi="Tác giả" data-en="Authors">Tác giả</p>
+      <h2 data-vi="Ai đứng sau dự án" data-en="Who is behind the project">Ai đứng sau dự án</h2>
+      <p class="lede" data-vi="Vai trò dưới đây nêu theo hồ sơ dự án đã công bố. Mã ORCID lấy đúng theo tệp trích dẫn máy đọc CITATION.cff của kho." data-en="The roles below follow the published project record. ORCID identifiers are taken directly from the repository's machine-readable CITATION.cff.">Vai trò dưới đây nêu theo hồ sơ dự án đã công bố. Mã ORCID lấy đúng theo tệp trích dẫn máy đọc <em class="em-jade">CITATION.cff</em> của kho.</p>
     </div>
     <div class="people rv">
       <div class="person">
-        <span class="role">Chủ nhiệm &amp; phụ trách sáng tạo</span>
+        <span class="role" data-vi="Chủ nhiệm &amp; phụ trách sáng tạo" data-en="Lead &amp; creative director">Chủ nhiệm &amp; phụ trách sáng tạo</span>
         <h3 class="h-md">NCS. Đỗ Thùy Hương</h3>
-        <p class="aff">Trường Đại học Cần Thơ · thiết kế trò chơi, hiện thân nhân vật cố vấn Lumina</p>
+        <p class="aff" data-vi="Trường Đại học Cần Thơ · thiết kế trò chơi, hiện thân nhân vật cố vấn Lumina" data-en="Can Tho University · game design, embodiment of the advisor character Lumina">Trường Đại học Cần Thơ · thiết kế trò chơi, hiện thân nhân vật cố vấn Lumina</p>
         <p class="links">
           <a href="https://orcid.org/0000-0002-7711-2487">ORCID 0000-0002-7711-2487</a>
           <a href="mailto:thuyhuongctu@gmail.com">thuyhuongctu@gmail.com</a>
         </p>
       </div>
       <div class="person">
-        <span class="role">Đồng sáng lập &amp; Cố vấn học thuật</span>
+        <span class="role" data-vi="Đồng sáng lập &amp; Cố vấn học thuật" data-en="Co-founder &amp; academic advisor">Đồng sáng lập &amp; Cố vấn học thuật</span>
         <h3 class="h-md">PGS.TS. Phan Anh Tú</h3>
-        <p class="aff">Trường Đại học Cần Thơ · giám sát học thuật, chuyên môn quản trị kinh doanh</p>
+        <p class="aff" data-vi="Trường Đại học Cần Thơ · giám sát học thuật, chuyên môn quản trị kinh doanh" data-en="Can Tho University · academic supervision, business-administration expertise">Trường Đại học Cần Thơ · giám sát học thuật, chuyên môn quản trị kinh doanh</p>
         <p class="links">
           <a href="https://orcid.org/0000-0003-0667-3137">ORCID 0000-0003-0667-3137</a>
           <a href="mailto:patu@ctu.edu.vn">patu@ctu.edu.vn</a>
@@ -280,52 +263,83 @@ a{color:inherit}
   </div>
 </section>
 
-<section class="sec cta" id="lien-he">
+<!-- ═══ TRÍCH DẪN ═══ -->
+<section class="band" id="trich-dan">
   <div class="shell">
-    <h2 class="h-lg">Tìm hiểu thêm về dự án</h2>
-    <p class="body-lg">Chúng tôi sẵn sàng trình bày hệ sinh thái, chia sẻ Model Card và tài liệu học thuật, và bàn cách đưa BizOn vào học phần của thầy cô.</p>
-    <div class="cta-in">
-      <a class="btn btn-solid" href="mailto:thuyhuongctu@gmail.com?subject=BizOn%20-%20T%C3%ACm%20hi%E1%BB%83u%20d%E1%BB%B1%20%C3%A1n">Liên hệ qua email</a>
-      <a class="btn btn-line" href="truong-giang-vien.html">Trang cho giảng viên</a>
+    <div class="head rv">
+      <p class="tag" data-vi="Trích dẫn" data-en="Citation">Trích dẫn</p>
+      <h2 data-vi="Lưu trữ để trích dẫn học thuật" data-en="Archived for academic citation">Lưu trữ để trích dẫn học thuật</h2>
+      <p class="lede" data-vi="Mỗi phiên bản có bản lưu vĩnh viễn kèm mã định danh số. Trích dẫn khuyến nghị theo APA:" data-en="Each version has a permanent archive with a digital identifier. Recommended APA citation:">Mỗi phiên bản có bản lưu vĩnh viễn kèm mã định danh số. Trích dẫn khuyến nghị theo APA:</p>
+    </div>
+    <div class="cite-box rv">
+      <p class="apa" id="apa" data-vi="Do, T. H., &amp; Phan, A. T. (2026). BizOn Bật Nghiệp: A 3D claymorphism business-simulation game for entrepreneurship education [Computer software]. Can Tho University. https://doi.org/10.5281/zenodo.21592241" data-en="Do, T. H., &amp; Phan, A. T. (2026). BizOn Bật Nghiệp: A 3D claymorphism business-simulation game for entrepreneurship education [Computer software]. Can Tho University. https://doi.org/10.5281/zenodo.21592241">Do, T. H., &amp; Phan, A. T. (2026). <em>BizOn Bật Nghiệp: A 3D claymorphism business-simulation game for entrepreneurship education</em> [Computer software]. Can Tho University. https://doi.org/10.5281/zenodo.21592241</p>
+      <div class="cite-actions">
+        <button type="button" class="btn btn-line btn-sm" id="copyCite" data-vi="Sao chép trích dẫn" data-en="Copy citation">Sao chép trích dẫn</button>
+        <span class="ok" id="copyOk" role="status" aria-live="polite" data-vi="Đã sao chép" data-en="Copied">Đã sao chép</span>
+      </div>
+      <ul class="cite-meta">
+        <li><span class="k" data-vi="Mã DOI" data-en="DOI">Mã DOI</span><span class="v"><a href="https://doi.org/10.5281/zenodo.21592241">10.5281/zenodo.21592241</a> <span data-vi="— DOI khái niệm cho mọi phiên bản" data-en="— concept DOI for all versions">— DOI khái niệm cho mọi phiên bản</span></span></li>
+        <li><span class="k" data-vi="Lưu trữ" data-en="Archive">Lưu trữ</span><span class="v" data-vi="Zenodo — mỗi bản phát hành được lưu trữ vĩnh viễn với DOI riêng" data-en="Zenodo — each release permanently archived with its own DOI">Zenodo — mỗi bản phát hành được lưu trữ vĩnh viễn với DOI riêng</span></li>
+        <li><span class="k" data-vi="Tệp trích dẫn" data-en="Citation file">Tệp trích dẫn</span><span class="v" data-vi="CITATION.cff — GitHub hiện nút “Cite this repository”" data-en="CITATION.cff — GitHub shows a “Cite this repository” button">CITATION.cff — GitHub hiện nút “Cite this repository”</span></li>
+        <li><span class="k" data-vi="Giấy phép" data-en="Licence">Giấy phép</span><span class="v" data-vi="Độc quyền — lưu trữ mở để trích dẫn, không cấp quyền tái sử dụng" data-en="Proprietary — open-archived for citation, no reuse rights granted">Độc quyền — lưu trữ mở để trích dẫn, không cấp quyền tái sử dụng</span></li>
+        <li><span class="k" data-vi="Đơn vị" data-en="Institution">Đơn vị</span><span class="v">Trường Đại học Cần Thơ (Can Tho University)</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section id="lien-he">
+  <div class="shell">
+    <div class="head rv">
+      <p class="tag" data-vi="Liên hệ" data-en="Contact">Liên hệ</p>
+      <h2 data-vi="Tìm hiểu thêm về dự án" data-en="Learn more about the project">Tìm hiểu thêm về dự án</h2>
+      <p class="lede" data-vi="Chúng tôi sẵn sàng trình bày hệ sinh thái, chia sẻ Model Card và tài liệu học thuật, và bàn cách đưa BizOn vào học phần của thầy cô." data-en="We are glad to present the ecosystem, share the Model Card and academic materials, and discuss bringing BizOn into your course.">Chúng tôi sẵn sàng trình bày hệ sinh thái, chia sẻ Model Card và tài liệu học thuật, và bàn cách đưa BizOn vào học phần của thầy cô.</p>
+    </div>
+    <div class="btn-row rv">
+      <a class="btn btn-solid" href="mailto:thuyhuongctu@gmail.com?subject=BizOn%20-%20T%C3%ACm%20hi%E1%BB%83u%20d%E1%BB%B1%20%C3%A1n" data-vi="Liên hệ qua email" data-en="Contact by email">Liên hệ qua email</a>
+      <a class="btn btn-line" href="truong-giang-vien.html" data-vi="Trang cho giảng viên" data-en="Instructor page">Trang cho giảng viên</a>
     </div>
   </div>
 </section>
 
 </main>
 
-<footer class="foot">
-  <div class="shell foot-in">
+<footer>
+  <div class="shell fgrid">
     <div>
       <p class="tag">BizOn</p>
-      <p class="body-sm">Mô phỏng kinh doanh cho lớp học đại học.<br>Trường Đại học Cần Thơ · © 2026 Đỗ Thùy Hương &amp; Phan Anh Tú.</p>
+      <p class="body" data-vi="Mô phỏng kinh doanh cho lớp học đại học.<br>Đại học Cần Thơ · Trường Kinh tế." data-en="Business simulation for university classrooms.<br>Can Tho University · School of Economics.">Mô phỏng kinh doanh cho lớp học đại học.<br>Đại học Cần Thơ · Trường Kinh tế.</p>
     </div>
-    <div class="foot-links">
-      <a href="truong.html">Trang chủ</a>
-      <a href="#he-sinh-thai">Hệ sinh thái</a>
-      <a href="#nguon-goc">Nguồn gốc</a>
-      <a href="truong-hoc-thuat.html">Học thuật</a>
-      <a href="mailto:thuyhuongctu@gmail.com">Liên hệ</a>
-    </div>
+    <nav class="flinks" aria-label="Chân trang">
+      <a href="universe.html" data-vi="Vũ trụ" data-en="Universe">Vũ trụ</a>
+      <a href="truong.html" data-vi="Trang chủ" data-en="Home">Trang chủ</a>
+      <a href="truong-hoc-thuat.html" data-vi="Học thuật" data-en="Academic">Học thuật</a>
+      <a href="truong-giang-vien.html" data-vi="Giảng viên" data-en="Instructors">Giảng viên</a>
+    </nav>
   </div>
 </footer>
 
+<script src="assets/js/shell.js"></script>
 <script>
-const nav = document.getElementById('nav');
-const onScroll = () => nav.classList.toggle('stuck', window.scrollY > 8);
-onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
-const toggle = document.getElementById('navToggle');
-const links = document.getElementById('navLinks');
-toggle.addEventListener('click', () => {
-  const open = links.classList.toggle('open');
-  toggle.setAttribute('aria-expanded', String(open));
-});
-links.addEventListener('click', e => {
-  if (e.target.tagName === 'A') { links.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); }
-});
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
-}, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
-document.querySelectorAll('.rv').forEach(el => io.observe(el));
+(function(){
+  var btn = document.getElementById('copyCite');
+  var ok = document.getElementById('copyOk');
+  var apa = document.getElementById('apa');
+  if (!btn || !apa) return;
+  btn.addEventListener('click', function(){
+    var text = apa.textContent.trim();
+    var done = function(){ ok.classList.add('show'); setTimeout(function(){ ok.classList.remove('show'); }, 1800); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done).catch(done);
+    } else {
+      var r = document.createRange(); r.selectNode(apa);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      try { document.execCommand('copy'); } catch(e){}
+      s.removeAllRanges(); done();
+    }
+  });
+})();
 </script>
 </body>
 </html>
