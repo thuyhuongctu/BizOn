@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BizOn — Cho giảng viên: mở lớp, rubric, chuẩn đầu ra</title>
+<meta name="description" content="Con đường áp dụng BizOn cho giảng viên: mở lớp trong bốn bước, rubric bốn mức chấm lập luận, ma trận chuẩn đầu ra theo thang Bloom, chỉ số lấy tự động từ ván chơi, chạy offline trên điện thoại.">
+<meta name="theme-color" content="#FFFFFF">
+<!-- Trang THANH GHI THỂ CHẾ (cho giảng viên), cặp với truong.html. Nạp tokens-institutional.css
+     (KHÔNG nạp tokens-clay.css). Bộ chữ TỰ LƯU TRỮ trong assets/fonts (không CDN). KHÁC với
+     giang-vien.html (trang đất sét trong app) — trang này là bản thể chế cho trưởng khoa/giảng viên. -->
+<link rel="icon" type="image/svg+xml" href="assets/brand/bizon-favicon.svg">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BizOn — Cho giảng viên">
+<meta property="og:description" content="Mở lớp trong bốn bước · rubric bốn mức chấm lập luận · chuẩn đầu ra gắn thang Bloom · chỉ số lấy tự động từ ván chơi. Trường Đại học Cần Thơ.">
+<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/brand/og-truong.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="css/bizon-institutional-fonts.css">
+<link rel="stylesheet" href="css/tokens-institutional.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.6;-webkit-font-smoothing:antialiased}
+.shell{max-width:var(--max);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+.h-xl{font-size:clamp(2.4rem,5.6vw,4.6rem);font-weight:800;line-height:1.02;letter-spacing:-.036em}
+.h-lg{font-size:clamp(1.9rem,3.8vw,3.1rem);font-weight:700;line-height:1.06;letter-spacing:-.03em}
+.h-md{font-size:clamp(1.25rem,2vw,1.6rem);font-weight:600;line-height:1.18;letter-spacing:-.018em}
+.h-sm{font-size:1.02rem;font-weight:600;letter-spacing:-.01em;line-height:1.32}
+.tag{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3)}
+.body-lg{font-size:clamp(1.02rem,1.35vw,1.18rem);color:var(--ink-2);max-width:60ch}
+.body{font-size:.94rem;color:var(--ink-2)}
+.body-sm{font-size:.86rem;color:var(--ink-2)}
+.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.88);backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color .3s}
+.nav.stuck{border-bottom-color:var(--rule)}
+.nav-in{display:flex;align-items:center;gap:32px;height:66px}
+.brand{display:inline-flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.03em;font-size:1.14rem;text-decoration:none}
+.brand img{width:26px;height:26px}
+.brand span{color:var(--jade)}
+.nav-links{display:flex;gap:26px;margin-left:auto;align-items:center}
+.nav-links a{text-decoration:none;font-size:.875rem;color:var(--ink-2);transition:color .2s}
+.nav-links a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:.5rem;font-size:.875rem;font-weight:500;text-decoration:none;padding:.62rem 1.15rem;border-radius:2px;transition:background .2s,color .2s,border-color .2s}
+.btn-solid{background:var(--jade);color:#fff}
+.btn-solid:hover{background:#0B4A3F}
+.btn-line{border:1px solid var(--rule);color:var(--ink)}
+.btn-line:hover{border-color:var(--ink)}
+.nav-toggle{display:none}
+.hero{padding-top:clamp(48px,6vw,88px);padding-bottom:clamp(34px,4vw,54px)}
+.hero .tag{margin-bottom:1.5rem}
+.hero h1{margin-bottom:1.4rem;max-width:16ch}
+.hero h1 em{font-style:normal;color:var(--jade)}
+.crumb{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:2rem}
+.crumb a{text-decoration:none;color:var(--ink-3)}
+.crumb a:hover{color:var(--jade)}
+.claims{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.claims-in{display:grid;grid-template-columns:repeat(3,1fr)}
+.claim{padding:34px 30px 32px;border-left:1px solid var(--rule)}
+.claim:first-child{border-left:none;padding-left:0}
+.claim:last-child{padding-right:0}
+.claim .h-sm{margin:.7rem 0 .5rem}
+.claim .src{font-family:var(--mono);font-size:.68rem;color:var(--jade);letter-spacing:.05em;margin-top:.9rem;display:block}
+.sec{padding-top:clamp(56px,7vw,104px);padding-bottom:clamp(56px,7vw,104px)}
+.sec-band{background:var(--band)}
+.sec-head{max-width:62ch;margin-bottom:clamp(30px,4vw,52px)}
+.sec-head .tag{margin-bottom:1.1rem}
+.sec-head .body-lg{margin-top:1.1rem}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.step{background:var(--paper);padding:28px 24px 30px;display:flex;flex-direction:column}
+.step .num{font-family:var(--mono);font-size:1.6rem;font-weight:700;color:var(--jade);letter-spacing:-.02em;margin-bottom:1rem;line-height:1}
+.step h3{margin-bottom:.5rem}
+.step .code{font-family:var(--mono);font-size:.72rem;color:var(--ink-3);margin-top:auto;padding-top:1rem;letter-spacing:.02em}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,64px);align-items:start}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--rule);margin-top:1.4rem}
+table.tbl{border-collapse:collapse;width:100%;min-width:560px;font-size:.86rem}
+table.tbl th,table.tbl td{text-align:left;padding:12px 15px;border-bottom:1px solid var(--rule);vertical-align:top}
+table.tbl thead th{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:500;background:var(--band)}
+table.tbl tbody tr:last-child td{border-bottom:none}
+table.tbl .mk{font-family:var(--mono);font-size:.74rem;color:var(--jade);font-weight:500;white-space:nowrap}
+table.tbl .bl{font-family:var(--mono);font-size:.7rem;color:var(--ink-3);white-space:nowrap}
+.scale{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:1.4rem}
+.scale div{background:var(--paper);padding:16px 16px 18px}
+.scale .lv{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;color:var(--jade);margin-bottom:.4rem;display:block}
+.scale .lv b{color:var(--ink)}
+.scale p{font-size:.82rem;color:var(--ink-2)}
+.spec{list-style:none}
+.spec li{padding:16px 0;border-top:1px solid var(--rule);display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:baseline}
+.spec li:last-child{border-bottom:1px solid var(--rule)}
+.spec .k{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.spec .v{font-size:.9rem;color:var(--ink)}
+.spec .v em{font-style:normal;color:var(--jade);font-weight:500}
+.note{border-left:2px solid var(--jade);padding-left:20px;font-size:.92rem;color:var(--ink-2);margin-top:1.8rem;max-width:64ch}
+.note b{color:var(--ink);font-weight:600}
+.flag{border-left:2px solid var(--silt);padding-left:20px;font-size:.9rem;color:var(--ink-2);margin-top:1.6rem;max-width:64ch}
+.flag b{color:var(--silt);font-weight:600}
+.buy{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.buy div{background:var(--paper);padding:26px 24px 28px}
+.buy .k{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--jade);margin-bottom:.8rem;display:block}
+.buy h3{margin-bottom:.5rem}
+.cta{background:var(--ink);color:#fff}
+.cta .h-lg{margin-bottom:1.2rem}
+.cta .body-lg{color:rgba(255,255,255,.66)}
+.cta .btn-line{border-color:rgba(255,255,255,.28);color:#fff}
+.cta .btn-line:hover{border-color:#fff}
+.cta .btn-solid{background:#fff;color:var(--ink)}
+.cta .btn-solid:hover{background:#E3EDE9}
+.cta-in{display:flex;gap:14px;margin-top:2.2rem;flex-wrap:wrap}
+.foot{border-top:1px solid var(--rule);padding:44px 0 56px}
+.foot-in{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:flex-start}
+.foot .tag{margin-bottom:.6rem}
+.foot-links{display:flex;gap:22px;flex-wrap:wrap}
+.foot-links a{font-size:.85rem;color:var(--ink-2);text-decoration:none}
+.foot-links a:hover{color:var(--ink)}
+.rv{opacity:0;transform:translateY(14px);transition:opacity .6s cubic-bezier(.2,.7,.3,1),transform .6s cubic-bezier(.2,.7,.3,1)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+:focus-visible{outline:2px solid var(--jade);outline-offset:3px}
+@media(max-width:960px){
+  .split{grid-template-columns:1fr}
+  .steps,.buy{grid-template-columns:1fr}
+  .scale{grid-template-columns:1fr 1fr}
+  .claims-in{grid-template-columns:1fr}
+  .claim{border-left:none;border-top:1px solid var(--rule);padding-left:0;padding-right:0}
+  .claim:first-child{border-top:none}
+  .spec li{grid-template-columns:1fr;gap:5px}
+  .nav-links{display:none}
+  .nav-links.open{display:flex;position:absolute;top:66px;left:0;right:0;background:#fff;flex-direction:column;gap:0;padding:8px var(--pad) 20px;border-bottom:1px solid var(--rule)}
+  .nav-links.open a{padding:12px 0;border-bottom:1px solid var(--rule);width:100%}
+  .nav-toggle{display:inline-flex;margin-left:auto;background:none;border:1px solid var(--rule);border-radius:2px;padding:.5rem .8rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;cursor:pointer;text-transform:uppercase}
+}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="shell nav-in">
+    <a class="brand" href="truong.html"><img src="assets/brand/bizon-favicon.svg" alt="">Biz<span>On</span></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">Menu</button>
+    <nav class="nav-links" id="navLinks" aria-label="Điều hướng chính">
+      <a href="truong.html#tru">Hai trụ</a>
+      <a href="#quy-trinh">Mở lớp</a>
+      <a href="#rubric">Rubric &amp; CĐR</a>
+      <a href="#ky-thuat">Điều kiện</a>
+      <a href="truong-hoc-thuat.html">Học thuật</a>
+      <a class="btn btn-solid" href="mailto:thuyhuongctu@gmail.com?subject=BizOn%20-%20M%E1%BB%9F%20t%C3%A0i%20kho%E1%BA%A3n%20gi%E1%BA%A3ng%20vi%C3%AAn">Mở tài khoản</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="shell hero">
+  <p class="crumb"><a href="truong.html">BizOn</a> · Cho giảng viên</p>
+  <p class="tag">Trường Đại học Cần Thơ · Hướng dẫn giảng viên</p>
+  <h1 class="h-xl">Mở lớp mà không cần <em>gọi hỗ trợ</em>.</h1>
+  <p class="body-lg">Tiêu chí phát hành của chúng tôi là một giảng viên ngoài nhóm phát triển chạy trọn một buổi mà không cần ai kèm. Trang này là những gì thầy cô cần để làm đúng điều đó: quy trình mở lớp, rubric bốn mức, ma trận chuẩn đầu ra và các chỉ số engine ghi tự động để chấm.</p>
+</section>
+
+<section class="claims">
+  <div class="shell claims-in">
+    <div class="claim rv">
+      <span class="tag">01 · Vận hành</span>
+      <h3 class="h-sm">Chạy offline trên điện thoại</h3>
+      <p class="body-sm">Sau lần tải đầu, ứng dụng chạy ngoại tuyến trên điện thoại của sinh viên. Không cần phòng máy, không cần mạng ổn định suốt buổi.</p>
+      <span class="src">PWA · offline sau lần tải đầu</span>
+    </div>
+    <div class="claim rv">
+      <span class="tag">02 · Dữ liệu chấm</span>
+      <h3 class="h-sm">Chỉ số lấy tự động từ ván</h3>
+      <p class="body-sm">Cả năm chỉ số chuẩn đầu ra đều lấy tự động từ dữ liệu ván chơi, không phụ thuộc cảm nhận chủ quan. Bảng điều khiển xuất CSV để chấm.</p>
+      <span class="src">adEff · share · quickRatio · roi · OEE</span>
+    </div>
+    <div class="claim rv">
+      <span class="tag">03 · Nguyên tắc</span>
+      <h3 class="h-sm">Chấm lập luận, không chấm thắng thua</h3>
+      <p class="body-sm">Rubric chấm phần lập luận sau ván, không chấm kết quả thắng thua. Đội thua vẫn có thể đạt điểm cao nếu giải thích được quyết định bằng số liệu.</p>
+      <span class="src">rubric 4 mức · neo vào chỉ số</span>
+    </div>
+  </div>
+</section>
+
+<section class="shell sec" id="quy-trinh">
+  <div class="sec-head rv">
+    <p class="tag">Một buổi lên lớp</p>
+    <h2 class="h-lg">Bốn bước, một buổi học</h2>
+    <p class="body-lg">Một ván đầy đủ sáu chu kỳ gọn trong một buổi. Thầy cô mở lớp, phát mã, để sinh viên tự chơi theo đội, khóa từng vòng khi cần thảo luận, rồi xuất dữ liệu để chấm.</p>
+  </div>
+  <div class="steps rv">
+    <div class="step"><span class="num">1</span><h3 class="h-sm">Tạo lớp &amp; mã lớp</h3><p class="body-sm">Mở một lớp mới, đặt mã lớp theo học phần. Không cần cài đặt, không cần tài khoản sinh viên.</p><span class="code">mã lớp: 2026A-KT330H</span></div>
+    <div class="step"><span class="num">2</span><h3 class="h-sm">Sinh viên vào theo đội</h3><p class="body-sm">Sinh viên mở link trên điện thoại, nhập mã lớp, lập đội. Mỗi đội nhận năm vai C-Suite.</p><span class="code">CEO · CFO · CMO · COO · SEC</span></div>
+    <div class="step"><span class="num">3</span><h3 class="h-sm">Sáu chu kỳ, khóa vòng</h3><p class="body-sm">Các đội ra quyết định qua sáu chu kỳ. Giảng viên khóa vòng để dừng lại thảo luận trước khi sang vòng sau.</p><span class="code">khóa vòng · thảo luận</span></div>
+    <div class="step"><span class="num">4</span><h3 class="h-sm">Xuất CSV để chấm</h3><p class="body-sm">Cuối buổi, xuất quyết định từng đội theo vòng và các chỉ số neo ra tệp CSV, dùng thẳng với rubric.</p><span class="code">báo cáo lớp · .csv</span></div>
+  </div>
+  <p class="note" style="margin-top:2rem">Hướng dẫn vận hành chi tiết nằm trong sổ tay giảng viên đi kèm (<b>docs/huong-dan-giang-vien.md</b>); trang này tóm tắt để thầy cô quyết định trước khi mở lớp.</p>
+</section>
+
+<section class="sec sec-band" id="rubric">
+  <div class="shell">
+    <div class="sec-head rv">
+      <p class="tag">Đánh giá</p>
+      <h2 class="h-lg">Rubric bốn mức, gắn chuẩn đầu ra</h2>
+      <p class="body-lg">Hai bộ rubric cùng thang bốn mức cho hai trò chơi. Cả hai đều chấm phần lập luận sau ván, và mỗi tiêu chí <em>neo vào một chỉ số cụ thể</em> trong báo cáo cuối ván — nên giảng viên có căn cứ số liệu để bảo vệ điểm, người học biết trước cần dẫn chứng bằng gì.</p>
+    </div>
+
+    <div class="rv">
+      <h3 class="h-md">Ma trận chuẩn đầu ra — trụ trong nước (CLO-A → CLO-E)</h3>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th scope="col">Mã</th><th scope="col">Cơ chế mô phỏng</th><th scope="col">Bloom</th><th scope="col">Sau khi chơi và thảo luận, sinh viên có thể…</th></tr></thead>
+          <tbody>
+            <tr><td class="mk">CLO-A</td><td>Giá &amp; Marketing (CMO)</td><td class="bl">Analyze</td><td>Phân tích quan hệ giữa độ co giãn giá, chi phí tiếp thị và tổng cầu thị trường.</td></tr>
+            <tr><td class="mk">CLO-B</td><td>Quản trị dòng tiền (CFO)</td><td class="bl">Evaluate</td><td>Tối ưu vốn lưu động, đòn bẩy tài chính và thanh khoản ngắn hạn.</td></tr>
+            <tr><td class="mk">CLO-C</td><td>Quản trị vận hành (COO)</td><td class="bl">Apply</td><td>Cân đối năng lực sản xuất, khấu hao, bảo trì và mục tiêu năng lượng ESG.</td></tr>
+            <tr><td class="mk">CLO-D</td><td>Hộ chiếu Thương hiệu</td><td class="bl">Evaluate</td><td>So sánh rủi ro, chi phí và mức kiểm soát giữa các phương thức thâm nhập quốc tế.</td></tr>
+            <tr><td class="mk">CLO-E</td><td>Hợp tác C-Suite (5 vai)</td><td class="bl">Create / Apply</td><td>Thực hành giao tiếp liên chức năng và ra quyết định dưới áp lực thời gian.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="body-sm" style="margin-top:.9rem">Trụ quốc tế có bộ chuẩn đầu ra riêng <span class="tag" style="color:var(--jade)">BP-1 → BP-6</span> cho sáu quý kinh doanh, ánh xạ tương tự sang thang Bloom.</p>
+    </div>
+
+    <div class="rv" style="margin-top:clamp(34px,4vw,52px)">
+      <h3 class="h-md">Thang bốn mức</h3>
+      <div class="scale">
+        <div><span class="lv"><b>1 · Chưa đạt</b></span><p>Kể lại đã làm gì, chưa giải thích được quyết định.</p></div>
+        <div><span class="lv"><b>2 · Đạt</b></span><p>Nêu được quan hệ ở mức định tính (giá tăng → cầu giảm).</p></div>
+        <div><span class="lv"><b>3 · Khá</b></span><p>Dẫn số liệu của ít nhất hai vòng để giải thích một quyết định.</p></div>
+        <div><span class="lv"><b>4 · Xuất sắc</b></span><p>Chỉ ra vòng kém hiệu quả và tính được ngưỡng hợp lý từ dữ liệu ván.</p></div>
+      </div>
+      <p class="flag"><b>Trạng thái: bản nháp v0.1.</b> Rubric do nhóm phát triển dựng từ các chỉ số engine thực sự ghi lại. Mức mô tả và ngưỡng phân biệt cần người có chuyên môn sư phạm hiệu chỉnh và chấm thử trước khi dùng chính thức — chúng tôi công bố cả trạng thái này, không trình bày như bản hoàn chỉnh.</p>
+    </div>
+  </div>
+</section>
+
+<section class="shell sec" id="chi-so">
+  <div class="sec-head rv">
+    <p class="tag">Căn cứ chấm</p>
+    <h2 class="h-lg">Chỉ số neo — lấy tự động, không cảm tính</h2>
+    <p class="body-lg">Mỗi tiêu chí rubric neo vào một chỉ số mà engine ghi lại sau mỗi vòng. Vì thế điểm số có căn cứ số liệu, và hai lần chấm cùng một bài cho cùng kết quả — nhờ chấm trên ảnh chụp đóng băng.</p>
+  </div>
+  <div class="split rv">
+    <div>
+      <ul class="spec">
+        <li><span class="k">CLO-A · CMO</span><span class="v"><em>adEff</em>, share, lostSales, chi marketing</span></li>
+        <li><span class="k">CLO-B · CFO</span><span class="v"><em>quickRatio</em>, balance, roi, lãi vay</span></li>
+        <li><span class="k">CLO-C · COO</span><span class="v">sản lượng/công suất, khấu hao, <em>OEE</em></span></li>
+        <li><span class="k">CLO-D · quốc tế</span><span class="v">điểm rủi ro quốc gia, biên lợi nhuận xuất khẩu</span></li>
+        <li><span class="k">CLO-E · đội</span><span class="v">tần suất chỉnh quyết định, nhật ký đội</span></li>
+      </ul>
+    </div>
+    <div>
+      <p class="body">Các chỉ số này xuất ra CSV từ bảng điều khiển lớp, kèm quyết định từng đội theo vòng — đúng lược đồ nhật ký quyết định dùng chung cho cả chấm điểm và (khi có đồng thuận) nghiên cứu.</p>
+      <p class="note"><b>Chấm trên ảnh chụp đóng băng.</b> Điểm số chạy trên trạng thái đã khóa của vòng, không chạy trên trạng thái lớp đang sống — nên tái lập được. Chi tiết ở <a href="truong-hoc-thuat.html#tai-lap" style="color:var(--jade)">trang nền tảng học thuật</a>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec-band" id="ky-thuat">
+  <div class="shell">
+    <div class="sec-head rv">
+      <p class="tag">Điều kiện kỹ thuật</p>
+      <h2 class="h-lg">Những gì lớp cần — và không cần</h2>
+    </div>
+    <div class="split rv">
+      <div>
+        <ul class="spec">
+          <li><span class="k">Thiết bị</span><span class="v">Điện thoại của sinh viên; <em>không</em> cần phòng máy.</span></li>
+          <li><span class="k">Mạng</span><span class="v">Chỉ cần cho lần tải đầu; sau đó chạy offline.</span></li>
+          <li><span class="k">Ngôn ngữ</span><span class="v">Song ngữ Việt–Anh, cùng một chất giọng.</span></li>
+          <li><span class="k">Cài đặt</span><span class="v">Không cài app store; mở bằng link, thêm vào màn hình chính nếu muốn.</span></li>
+        </ul>
+      </div>
+      <div>
+        <p class="body">Thiết kế để chạy được trong điều kiện lớp học thật ở Việt Nam: mạng trường có thể yếu, sinh viên dùng điện thoại nhiều cấu hình. Vì vậy ứng dụng ưu tiên hoạt động ngoại tuyến và nhẹ, thay vì đòi hạ tầng phòng lab.</p>
+        <p class="note"><b>Dữ liệu thuộc về lớp.</b> Không quảng cáo, không bán dữ liệu. Dữ liệu học tập chỉ rời máy khi người dùng chủ động nộp, và luồng thu dữ liệu nghiên cứu <b>mặc định tắt</b> cho tới khi có phiếu đồng thuận được phê duyệt — xem <a href="truong-hoc-thuat.html#dong-thuan" style="color:var(--jade)">khung đồng thuận</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="shell sec" id="mua">
+  <div class="sec-head rv">
+    <p class="tag">Cách sở hữu</p>
+    <h2 class="h-lg">Mua rời hoặc theo gói</h2>
+    <p class="body-lg">Mỗi trụ đứng độc lập. Khoa dạy học phần nào mua trụ tương ứng; gói đôi cho khoa dạy cả hai.</p>
+  </div>
+  <div class="buy rv">
+    <div><span class="k">Trụ I</span><h3 class="h-sm">Bật Nghiệp</h3><p class="body-sm">Cho học phần khởi nghiệp trong nước. Sáu chu kỳ, rubric CLO-A → CLO-E.</p></div>
+    <div><span class="k">Trụ II</span><h3 class="h-sm">Hộ chiếu Thương hiệu</h3><p class="body-sm">Cho học phần đầu tư nước ngoài, thương mại quốc tế. Rubric BP-1 → BP-6.</p></div>
+    <div><span class="k">Gói đôi</span><h3 class="h-sm">Cả hai trụ</h3><p class="body-sm">Cho khoa dạy cả khởi nghiệp và kinh doanh quốc tế, dùng chung một bảng điều khiển.</p></div>
+  </div>
+</section>
+
+<section class="sec cta" id="lien-he">
+  <div class="shell">
+    <h2 class="h-lg">Mở tài khoản giảng viên</h2>
+    <p class="body-lg">Chúng tôi mở tài khoản, gửi sổ tay và rubric, và đồng hành buổi đầu tiên. Sau buổi đó thầy cô tự chạy được.</p>
+    <div class="cta-in">
+      <a class="btn btn-solid" href="mailto:thuyhuongctu@gmail.com?subject=BizOn%20-%20M%E1%BB%9F%20t%C3%A0i%20kho%E1%BA%A3n%20gi%E1%BA%A3ng%20vi%C3%AAn">Gửi yêu cầu qua email</a>
+      <a class="btn btn-line" href="truong-hoc-thuat.html">Xem nền tảng học thuật</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="shell foot-in">
+    <div>
+      <p class="tag">BizOn</p>
+      <p class="body-sm">Mô phỏng kinh doanh cho lớp học đại học.<br>Trường Đại học Cần Thơ · © 2026 Đỗ Thùy Hương &amp; Phan Anh Tú.</p>
+    </div>
+    <div class="foot-links">
+      <a href="truong.html">Trang chủ</a>
+      <a href="#quy-trinh">Mở lớp</a>
+      <a href="#rubric">Rubric &amp; CĐR</a>
+      <a href="truong-hoc-thuat.html">Học thuật</a>
+      <a href="mailto:thuyhuongctu@gmail.com">Liên hệ</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+const onScroll = () => nav.classList.toggle('stuck', window.scrollY > 8);
+onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+const toggle = document.getElementById('navToggle');
+const links = document.getElementById('navLinks');
+toggle.addEventListener('click', () => {
+  const open = links.classList.toggle('open');
+  toggle.setAttribute('aria-expanded', String(open));
+});
+links.addEventListener('click', e => {
+  if (e.target.tagName === 'A') { links.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); }
+});
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+}, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
