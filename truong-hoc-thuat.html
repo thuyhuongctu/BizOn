@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BizOn — Nền tảng học thuật: Model Card, tái lập, đồng thuận</title>
+<meta name="description" content="Cơ sở học thuật của BizOn: mỗi mô hình đi kèm Model Card, kết quả tái lập được từ ảnh chụp đóng băng, dữ liệu có nguồn và kỳ, đồng thuận tách mục đích. Công bố cả giới hạn, không chỉ kết quả.">
+<meta name="theme-color" content="#FFFFFF">
+<!-- Trang THANH GHI THỂ CHẾ (nền tảng học thuật), cặp với truong.html. Nạp tokens-institutional.css
+     (KHÔNG nạp tokens-clay.css). Bộ chữ TỰ LƯU TRỮ trong assets/fonts (không CDN) qua
+     css/bizon-institutional-fonts.css. Dùng lại đúng hệ thống thiết kế của truong.html để hai
+     trang là một hệ. Lưu ý: KHÁC với hoc-thuat.html (trang đất sét trong app) — trang này là bản
+     thể chế cho trưởng khoa/hội đồng. -->
+<link rel="icon" type="image/svg+xml" href="assets/brand/bizon-favicon.svg">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BizOn — Nền tảng học thuật">
+<meta property="og:description" content="Model Card cho từng mô hình · kết quả tái lập từ ảnh chụp đóng băng · dữ liệu có nguồn và kỳ · đồng thuận tách mục đích. Trường Đại học Cần Thơ.">
+<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/brand/og-truong.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="css/bizon-institutional-fonts.css">
+<link rel="stylesheet" href="css/tokens-institutional.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.6;-webkit-font-smoothing:antialiased}
+.shell{max-width:var(--max);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+.h-xl{font-size:clamp(2.4rem,5.6vw,4.6rem);font-weight:800;line-height:1.02;letter-spacing:-.036em}
+.h-lg{font-size:clamp(1.9rem,3.8vw,3.1rem);font-weight:700;line-height:1.06;letter-spacing:-.03em}
+.h-md{font-size:clamp(1.25rem,2vw,1.6rem);font-weight:600;line-height:1.18;letter-spacing:-.018em}
+.h-sm{font-size:1.02rem;font-weight:600;letter-spacing:-.01em;line-height:1.32}
+.tag{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3)}
+.body-lg{font-size:clamp(1.02rem,1.35vw,1.18rem);color:var(--ink-2);max-width:60ch}
+.body{font-size:.94rem;color:var(--ink-2)}
+.body-sm{font-size:.86rem;color:var(--ink-2)}
+.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.88);backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color .3s}
+.nav.stuck{border-bottom-color:var(--rule)}
+.nav-in{display:flex;align-items:center;gap:32px;height:66px}
+.brand{display:inline-flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.03em;font-size:1.14rem;text-decoration:none}
+.brand img{width:26px;height:26px}
+.brand span{color:var(--jade)}
+.nav-links{display:flex;gap:26px;margin-left:auto;align-items:center}
+.nav-links a{text-decoration:none;font-size:.875rem;color:var(--ink-2);transition:color .2s}
+.nav-links a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:.5rem;font-size:.875rem;font-weight:500;text-decoration:none;padding:.62rem 1.15rem;border-radius:2px;transition:background .2s,color .2s,border-color .2s}
+.btn-solid{background:var(--jade);color:#fff}
+.btn-solid:hover{background:#0B4A3F}
+.btn-line{border:1px solid var(--rule);color:var(--ink)}
+.btn-line:hover{border-color:var(--ink)}
+.nav-toggle{display:none}
+.hero{padding-top:clamp(48px,6vw,88px);padding-bottom:clamp(34px,4vw,54px)}
+.hero .tag{margin-bottom:1.5rem}
+.hero h1{margin-bottom:1.4rem;max-width:18ch}
+.hero h1 em{font-style:normal;color:var(--jade)}
+.crumb{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:2rem}
+.crumb a{text-decoration:none;color:var(--ink-3)}
+.crumb a:hover{color:var(--jade)}
+.claims{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.claims-in{display:grid;grid-template-columns:repeat(3,1fr)}
+.claim{padding:34px 30px 32px;border-left:1px solid var(--rule)}
+.claim:first-child{border-left:none;padding-left:0}
+.claim:last-child{padding-right:0}
+.claim .h-sm{margin:.7rem 0 .5rem}
+.claim .src{font-family:var(--mono);font-size:.68rem;color:var(--jade);letter-spacing:.05em;margin-top:.9rem;display:block}
+.sec{padding-top:clamp(56px,7vw,104px);padding-bottom:clamp(56px,7vw,104px)}
+.sec-band{background:var(--band)}
+.sec-head{max-width:62ch;margin-bottom:clamp(30px,4vw,52px)}
+.sec-head .tag{margin-bottom:1.1rem}
+.sec-head .body-lg{margin-top:1.1rem}
+.split{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,5vw,72px);align-items:start}
+.spec{list-style:none}
+.spec li{padding:16px 0;border-top:1px solid var(--rule);display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:baseline}
+.spec li:last-child{border-bottom:1px solid var(--rule)}
+.spec .k{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.spec .v{font-size:.9rem;color:var(--ink)}
+.spec .v em{font-style:normal;color:var(--jade);font-weight:500}
+.fgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.fcell{background:var(--paper);padding:30px 28px 28px}
+.fcell .num{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;color:var(--jade);margin-bottom:1.1rem;display:block}
+.fcell .h-sm{margin-bottom:.55rem}
+.fcell .code{font-family:var(--mono);font-size:.72rem;color:var(--ink-3);margin-top:1rem;display:block;letter-spacing:.02em}
+.note{border-left:2px solid var(--jade);padding-left:20px;font-size:.92rem;color:var(--ink-2);margin-top:1.8rem;max-width:64ch}
+.note b{color:var(--ink);font-weight:600}
+.lim{list-style:none;margin-top:1.4rem}
+.lim li{padding:16px 0;border-top:1px solid var(--rule);font-size:.9rem;color:var(--ink-2);display:grid;grid-template-columns:26px 1fr;gap:14px}
+.lim li:last-child{border-bottom:1px solid var(--rule)}
+.lim li b{font-family:var(--mono);font-size:.72rem;color:var(--silt);font-weight:500;padding-top:.12rem}
+.gate{margin-top:1.6rem;border:1px solid var(--rule);background:var(--paper);padding:20px 22px;font-size:.86rem;color:var(--ink-2)}
+.gate b{display:block;font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--jade);margin-bottom:.6rem}
+.cta{background:var(--ink);color:#fff}
+.cta .h-lg{margin-bottom:1.2rem}
+.cta .body-lg{color:rgba(255,255,255,.66)}
+.cta .btn-line{border-color:rgba(255,255,255,.28);color:#fff}
+.cta .btn-line:hover{border-color:#fff}
+.cta .btn-solid{background:#fff;color:var(--ink)}
+.cta .btn-solid:hover{background:#E3EDE9}
+.cta-in{display:flex;gap:14px;margin-top:2.2rem;flex-wrap:wrap}
+.foot{border-top:1px solid var(--rule);padding:44px 0 56px}
+.foot-in{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:flex-start}
+.foot .tag{margin-bottom:.6rem}
+.foot-links{display:flex;gap:22px;flex-wrap:wrap}
+.foot-links a{font-size:.85rem;color:var(--ink-2);text-decoration:none}
+.foot-links a:hover{color:var(--ink)}
+.rv{opacity:0;transform:translateY(14px);transition:opacity .6s cubic-bezier(.2,.7,.3,1),transform .6s cubic-bezier(.2,.7,.3,1)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+:focus-visible{outline:2px solid var(--jade);outline-offset:3px}
+@media(max-width:960px){
+  .split{grid-template-columns:1fr}
+  .fgrid,.claims-in{grid-template-columns:1fr}
+  .claim{border-left:none;border-top:1px solid var(--rule);padding-left:0;padding-right:0}
+  .claim:first-child{border-top:none}
+  .spec li{grid-template-columns:1fr;gap:5px}
+  .nav-links{display:none}
+  .nav-links.open{display:flex;position:absolute;top:66px;left:0;right:0;background:#fff;flex-direction:column;gap:0;padding:8px var(--pad) 20px;border-bottom:1px solid var(--rule)}
+  .nav-links.open a{padding:12px 0;border-bottom:1px solid var(--rule);width:100%}
+  .nav-toggle{display:inline-flex;margin-left:auto;background:none;border:1px solid var(--rule);border-radius:2px;padding:.5rem .8rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;cursor:pointer;text-transform:uppercase}
+}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="shell nav-in">
+    <a class="brand" href="truong.html"><img src="assets/brand/bizon-favicon.svg" alt="">Biz<span>On</span></a>
+    <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">Menu</button>
+    <nav class="nav-links" id="navLinks" aria-label="Điều hướng chính">
+      <a href="truong.html#tru">Hai trụ</a>
+      <a href="#model-card">Model Card</a>
+      <a href="#tai-lap">Tái lập</a>
+      <a href="#nguon">Nguồn dữ liệu</a>
+      <a href="#dong-thuan">Đồng thuận</a>
+      <a class="btn btn-solid" href="mailto:thuyhuongctu@gmail.com?subject=BizOn%20-%20Xin%20b%E1%BB%99%20t%C3%A0i%20li%E1%BB%87u%20h%E1%BB%8Dc%20thu%E1%BA%ADt">Xin bộ tài liệu</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="shell hero">
+  <p class="crumb"><a href="truong.html">BizOn</a> · Nền tảng học thuật</p>
+  <p class="tag">Trường Đại học Cần Thơ · Cơ sở học thuật</p>
+  <h1 class="h-xl">Công bố cả giới hạn, <em>không chỉ kết quả</em>.</h1>
+  <p class="body-lg">Mỗi mô hình trong BizOn đi kèm một Model Card nêu biến số, phương trình, giả định và những gì mô hình <em>không</em> làm được. Kết quả chấm điểm chạy trên ảnh chụp đóng băng nên tái lập được. Dữ liệu nền có nguồn và kỳ. Đồng thuận tách theo mục đích. Trang này là bản trình bày dành cho trưởng khoa và hội đồng thẩm định.</p>
+</section>
+
+<section class="claims">
+  <div class="shell claims-in">
+    <div class="claim rv">
+      <span class="tag">01 · Tái lập</span>
+      <h3 class="h-sm">Cùng đầu vào, cùng kết quả</h3>
+      <p class="body-sm">Engine xác định. Điểm chạy trên ảnh chụp đóng băng kèm mã băm, nên hai lần chấm cùng một bài luôn ra một số — không trôi theo trạng thái lớp đang chạy.</p>
+      <span class="src">snapshot_hash · fnv1a</span>
+    </div>
+    <div class="claim rv">
+      <span class="tag">02 · Nguồn</span>
+      <h3 class="h-sm">Mỗi chỉ số có nguồn và kỳ</h3>
+      <p class="body-sm">Lớp phủ dữ liệu VietLens chỉ hiển thị chỉ số có ghi rõ nguồn và kỳ tham chiếu. Chỉ số thiếu xuất xứ bị ẩn thay vì hiển thị như sự thật.</p>
+      <span class="src">source · period · bắt buộc</span>
+    </div>
+    <div class="claim rv">
+      <span class="tag">03 · Đồng thuận</span>
+      <h3 class="h-sm">Hai mục đích, hai ô riêng</h3>
+      <p class="body-sm">Nghiên cứu và cải tiến sản phẩm là hai ô đồng ý tách biệt, mặc định tắt. Không lưu danh tính: mã đội đã băm, không tên, không email.</p>
+      <span class="src">research · product · mặc định OFF</span>
+    </div>
+  </div>
+</section>
+
+<section class="shell sec" id="model-card">
+  <div class="sec-head rv">
+    <p class="tag">Minh bạch mô hình</p>
+    <h2 class="h-lg">Model Card đi kèm từng mô hình</h2>
+    <p class="body-lg">Một mô hình được coi là công bố được khi có Model Card. Giá trị hiệu chỉnh cụ thể theo bối cảnh đồng bằng giữ như bí quyết kỹ thuật, nhưng <em>cấu trúc, giả định và giới hạn</em> thì công khai — để người đọc học thuật đánh giá được lập luận, không phải tin vào hộp đen.</p>
+  </div>
+  <div class="split rv">
+    <div>
+      <p class="body">Mỗi thẻ trả lời sáu câu, theo đúng thứ tự dưới đây. Câu cuối — “không làm được gì” — là câu chúng tôi coi trọng nhất, vì nó ngăn việc dùng mô hình ngoài phạm vi nó chịu trách nhiệm.</p>
+      <p class="note"><b>Không có mô hình ngôn ngữ trong vòng chấm điểm.</b> Hồ sơ phản ứng của đối thủ mô phỏng là hàm xác định (tuyến tính từng khúc) trên quyết định của người chơi, không phải mô hình ngôn ngữ. Điều này giữ cho kết quả tái lập được và giải thích được đến từng tham số.</p>
+    </div>
+    <ul class="spec">
+      <li><span class="k">Biến số</span><span class="v">Đầu vào người học điều khiển và biến trạng thái thị trường, đặt tên rõ.</span></li>
+      <li><span class="k">Phương trình</span><span class="v">Quan hệ giữa quyết định và kết quả, dạng <em>xác định</em>.</span></li>
+      <li><span class="k">Giả định</span><span class="v">Điều kiện mô hình coi là đúng; nêu bằng lời, không giấu.</span></li>
+      <li><span class="k">Hiệu chỉnh</span><span class="v">Mô tả cách hiệu chỉnh theo bối cảnh; giá trị cụ thể giữ kín.</span></li>
+      <li><span class="k">Phạm vi</span><span class="v">Học phần và tình huống mô hình dùng đúng.</span></li>
+      <li><span class="k">Không làm được</span><span class="v"><em>Ranh giới</em> — nơi mô hình không còn đáng tin.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec sec-band" id="tai-lap">
+  <div class="shell">
+    <div class="sec-head rv">
+      <p class="tag">Hợp đồng tái lập</p>
+      <h2 class="h-lg">Chấm trên ảnh chụp đóng băng</h2>
+      <p class="body-lg">Vào đầu mỗi vòng, trạng thái đối-đoàn-hệ được <em>đóng băng</em> thành một ảnh chụp độc lập kèm mã băm. Điểm số và phần phát lại đều chạy trên ảnh chụp này, không chạy trên trạng thái lớp đang sống. Nhờ vậy, một bài nộp được chấm hôm nay và chấm lại tuần sau cho cùng một kết quả.</p>
+    </div>
+    <div class="fgrid rv">
+      <div class="fcell"><span class="num">01</span><h3 class="h-sm">Đóng băng độc lập</h3><p class="body-sm">Ảnh chụp là bản sao sâu — sửa trạng thái sống sau đó không làm đổi ảnh chụp đã khóa.</p><span class="code">freezeSnapshot()</span></div>
+      <div class="fcell"><span class="num">02</span><h3 class="h-sm">Mã băm định danh</h3><p class="body-sm">Mỗi ảnh chụp mang một mã băm; cùng gói tình huống, cùng ảnh chụp, cùng quyết định thì ra kết quả giống hệt.</p><span class="code">snapshot_hash: fnv1a:…</span></div>
+      <div class="fcell"><span class="num">03</span><h3 class="h-sm">Chấm trên bản khóa</h3><p class="body-sm">Thêm đối thủ hay đổi giá ở trạng thái sống không ảnh hưởng điểm của vòng đã đóng băng.</p><span class="code">settleRound(snap, …)</span></div>
+      <div class="fcell"><span class="num">04</span><h3 class="h-sm">Cùng lược đồ nhật ký</h3><p class="body-sm">Mỗi mục ảnh chụp là một bản ghi hợp lệ theo đúng lược đồ nhật ký quyết định — không dựng cấu trúc riêng.</p><span class="code">decision-log · FIELD_KEYS</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="shell sec" id="da-dang">
+  <div class="sec-head rv">
+    <p class="tag">Sức khỏe mô phỏng</p>
+    <h2 class="h-lg">Chống thoái hóa chiến lược</h2>
+    <p class="body-lg">Một thị trường mô phỏng dễ “sập” về một chiến lược duy nhất khi mọi tác nhân bắt chước nhau. BizOn giữ một tập <em>hồ sơ neo</em> do người thiết kế soạn tay làm nguyên mẫu chiến lược, cùng một phần dự trữ cố định để khởi động nguội và chống thoái hóa.</p>
+  </div>
+  <div class="split rv">
+    <div>
+      <ul class="spec">
+        <li><span class="k">Hồ sơ neo</span><span class="v">Nguyên mẫu chiến lược soạn tay, mỗi hồ sơ một hàm phản ứng xác định.</span></li>
+        <li><span class="k">Dự trữ</span><span class="v">Một phần dân số luôn giữ ở hồ sơ neo — <em>không</em> bị thay hết bởi hành vi bắt chước.</span></li>
+        <li><span class="k">Chỉ số sức khỏe</span><span class="v">Chỉ số đa dạng kiểu Simpson đo mức phong phú chiến lược của thị trường.</span></li>
+        <li><span class="k">Khởi động nguội</span><span class="v">Khi chưa có dữ liệu người chơi, hồ sơ neo đóng vai dân số ban đầu.</span></li>
+      </ul>
+    </div>
+    <div>
+      <p class="body">Điểm mấu chốt về học thuật: các hồ sơ này là <em>hàm phản ứng xác định</em>, không phải mô hình ngôn ngữ chạy trong vòng lặp. Chúng dựng được, kiểm thử được, và giải thích được — phù hợp cho một công cụ dùng để chấm điểm.</p>
+      <p class="note">Chỉ số đa dạng là <b>thước đo sức khỏe</b>, không phải điểm của người học. Nó cảnh báo giảng viên khi thị trường mô phỏng đang mất sự đa dạng, để điều chỉnh tình huống — chứ không dùng để xếp loại sinh viên.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec-band" id="nguon">
+  <div class="shell">
+    <div class="sec-head rv">
+      <p class="tag">Kỷ luật dữ liệu</p>
+      <h2 class="h-lg">Không có nguồn thì không hiển thị</h2>
+      <p class="body-lg">Lớp phủ dữ liệu VietLens áp một kỷ luật đơn giản: mỗi chỉ số phải ghi rõ <em>nguồn</em> và <em>kỳ tham chiếu</em>, nếu không thì ẩn. Không kéo dữ liệu từ thư viện ngoài, không có API hay máy chủ ẩn — những tầng cần hạ tầng đó đang tắt cho tới khi có cơ sở phù hợp.</p>
+    </div>
+    <div class="split rv">
+      <div>
+        <ul class="spec">
+          <li><span class="k">Bắt buộc</span><span class="v">Mỗi chỉ số kèm <em>source</em> và <em>period</em>; thiếu là bị ẩn.</span></li>
+          <li><span class="k">Không thư viện ngoài</span><span class="v">Thị trường động dựng từ kho quyết định của người chơi, không nhập dữ liệu ngoài.</span></li>
+          <li><span class="k">Tầng cao tắt</span><span class="v">Các tầng cần API hay máy chủ đang tắt — không có kênh dữ liệu ẩn.</span></li>
+        </ul>
+      </div>
+      <div>
+        <p class="body">Cách này chấp nhận hiển thị ít chỉ số hơn để đổi lấy điều quan trọng hơn với một sản phẩm học thuật: mỗi con số trên màn hình đều truy được về xuất xứ. Một chỉ số “đẹp” mà không nói được lấy từ đâu thì không có chỗ.</p>
+        <p class="note">Đây là lựa chọn có chủ ý, không phải thiếu sót. <b>Ẩn còn hơn bịa</b> — với công cụ dạy học, một số liệu không nguồn gây hại nhiều hơn là bỏ trống.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="shell sec" id="dong-thuan">
+  <div class="sec-head rv">
+    <p class="tag">Đồng thuận &amp; quyền dữ liệu</p>
+    <h2 class="h-lg">Hai mục đích, hai ô đồng ý riêng</h2>
+    <p class="body-lg">Gộp “nghiên cứu học thuật” và “cải tiến sản phẩm” vào một ô là ép buộc gián tiếp. BizOn tách đôi: hai ô đồng ý độc lập, mỗi ô một phiên bản phiếu, <em>mặc định cả hai tắt</em>. Hạ tầng ghi đã sẵn sàng nhưng không ghi dữ liệu thật cho tới khi có phiếu được phê duyệt.</p>
+  </div>
+  <div class="split rv">
+    <div>
+      <ul class="spec">
+        <li><span class="k">Tách mục đích</span><span class="v">research và product là hai ô riêng; chỉ ghi cho <em>giao</em> của mục đích đội đồng ý và mục đích đang bật.</span></li>
+        <li><span class="k">Không danh tính</span><span class="v">Mã đội đã băm; bộ lọc chặn tên, email lọt vào nhật ký.</span></li>
+        <li><span class="k">Rút lui</span><span class="v">Chặn mọi lần ghi và ước lượng <em>về sau</em> cho đội đã rút.</span></li>
+        <li><span class="k">Mặc định</span><span class="v">Cả hai mục đích <em>tắt</em> cho tới khi có phiếu tương ứng.</span></li>
+      </ul>
+      <div class="gate">
+        <b>Giới hạn kỹ thuật nói thẳng trong phiếu</b>
+        Rút lui chỉ ngăn được các lần ước lượng sau. Phần dữ liệu đã gộp vào tham số cụm trước đó không gỡ ra được. Phiếu đồng thuận phải mô tả đúng giới hạn này — không hứa “xóa sạch mọi dấu vết”.
+      </div>
+    </div>
+    <div>
+      <p class="body">Xung đột vai trò giảng-viên-kiêm-nhà-nghiên-cứu được xử lý bằng thiết kế: vì nhật ký chỉ chứa mã băm và điểm chạy trên ảnh chụp đóng băng, giảng viên chấm bài mà không cần biết đội nào đã đồng ý tham gia nghiên cứu.</p>
+      <p class="note"><b>Trạng thái: bản thảo.</b> Phần kỹ thuật của khung đồng thuận đã được hiện thực trong mã. Phần pháp lý và chính sách — câu chữ phiếu, ai sở hữu dữ liệu khi sản phẩm được cấp phép cho trường khác — do chủ dự án, luật sư và hội đồng đạo đức quyết, không do phần mềm tự trả lời.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec-band" id="gioi-han">
+  <div class="shell">
+    <div class="sec-head rv">
+      <p class="tag">Giới hạn đã biết</p>
+      <h2 class="h-lg">Những gì chúng tôi chưa khẳng định</h2>
+      <p class="body-lg">Một trang học thuật trung thực phải nói rõ ranh giới của chính nó. Dưới đây là những điều BizOn <em>chưa</em> tuyên bố — để hội đồng thẩm định đọc được đúng mức độ bằng chứng hiện có.</p>
+    </div>
+    <ul class="lim rv">
+      <li><b>01</b><span>Bằng chứng hiệu quả học tập hiện có mang tính hồi cứu và <b>chưa có nhóm đối chứng</b>. Thiết kế có phân nhóm ngẫu nhiên đang được chuẩn bị; kế hoạch phân tích sẽ công bố trước khi thu dữ liệu.</span></li>
+      <li><b>02</b><span>Khung đồng thuận đang ở trạng thái <b>bản thảo</b>. Cả hai mục đích thu dữ liệu vẫn tắt cho tới khi có phê duyệt đạo đức và tư vấn pháp lý.</span></li>
+      <li><b>03</b><span>Câu hỏi <b>ai sở hữu dữ liệu người học khi sản phẩm được bán cho trường khác</b> là điểm chặn pháp lý chưa có lời giải sạch — cần điều khoản chuyển giao quyền kiểm soát dữ liệu do luật sư soạn.</span></li>
+      <li><b>04</b><span>Giá trị hiệu chỉnh cụ thể theo bối cảnh đồng bằng <b>không công bố</b>; chỉ công bố cấu trúc, giả định và giới hạn. Đây là ranh giới giữa minh bạch học thuật và bí quyết kỹ thuật.</span></li>
+      <li><b>05</b><span>Quyền rút lui có <b>giới hạn kỹ thuật</b>: chỉ chặn các lần ước lượng về sau, không gỡ được phần đã gộp vào tham số cụm đã tính trước đó.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec cta" id="lien-he">
+  <div class="shell">
+    <h2 class="h-lg">Xin bộ tài liệu học thuật</h2>
+    <p class="body-lg">Chúng tôi gửi Model Card, rubric bốn mức, ma trận chuẩn đầu ra theo thang Bloom và bản thảo khung đồng thuận để hội đồng thẩm định đọc trước khi quyết định dùng thử.</p>
+    <div class="cta-in">
+      <a class="btn btn-solid" href="mailto:thuyhuongctu@gmail.com?subject=BizOn%20-%20Xin%20b%E1%BB%99%20t%C3%A0i%20li%E1%BB%87u%20h%E1%BB%8Dc%20thu%E1%BA%ADt">Gửi yêu cầu qua email</a>
+      <a class="btn btn-line" href="truong.html#tru">Xem hai trụ sản phẩm</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="shell foot-in">
+    <div>
+      <p class="tag">BizOn</p>
+      <p class="body-sm">Mô phỏng kinh doanh cho lớp học đại học.<br>Trường Đại học Cần Thơ · © 2026 Đỗ Thùy Hương &amp; Phan Anh Tú.</p>
+    </div>
+    <div class="foot-links">
+      <a href="truong.html">Trang chủ</a>
+      <a href="#model-card">Model Card</a>
+      <a href="#tai-lap">Tái lập</a>
+      <a href="#dong-thuan">Đồng thuận</a>
+      <a href="mailto:thuyhuongctu@gmail.com">Liên hệ</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+const onScroll = () => nav.classList.toggle('stuck', window.scrollY > 8);
+onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+const toggle = document.getElementById('navToggle');
+const links = document.getElementById('navLinks');
+toggle.addEventListener('click', () => {
+  const open = links.classList.toggle('open');
+  toggle.setAttribute('aria-expanded', String(open));
+});
+links.addEventListener('click', e => {
+  if (e.target.tagName === 'A') { links.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); }
+});
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+}, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
