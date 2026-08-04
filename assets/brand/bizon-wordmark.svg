@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 96" role="img" aria-label="BizOn">
+  <!-- Chữ dùng currentColor để đổi màu theo ngữ cảnh (một màu cho dấu/khắc);
+       chấm công tắc mặc định màu jade. Đổi .sw thành currentColor cho bản đơn sắc. -->
+  <style>
+    .lt { font-family: "Be Vietnam Pro", system-ui, sans-serif; font-weight: 800; letter-spacing: -0.045em; fill: currentColor; }
+    .sw { fill: #0F5C4E; }
+  </style>
+  <text class="lt" x="0" y="72" font-size="86">Biz</text>
+  <g transform="translate(150 0)">
+    <ellipse cx="42" cy="46" rx="34" ry="29" fill="none" stroke="currentColor" stroke-width="13"/>
+    <circle class="sw" cx="55" cy="46" r="10"/>
+  </g>
+  <text class="lt" x="200" y="72" font-size="86">n</text>
+</svg>
