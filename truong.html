@@ -1,383 +1,230 @@
 <!DOCTYPE html>
-<html lang="vi">
+<!-- THANH GHI: THỂ CHẾ (trang chủ thể chế). Vỏ dùng chung: assets/css/shell.css + assets/js/shell.js.
+     Trang trong: nền sáng, hero nhỏ, KHÔNG dòng chảy châu thổ (chữ ký chỉ ở trang đích). -->
+<html lang="vi" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BizOn — Mô phỏng kinh doanh cho lớp học đại học</title>
-<meta name="description" content="Hai trò chơi mô phỏng cho lớp học đại học: khởi nghiệp trong nước và kinh doanh quốc tế. Engine xác định, tham số công khai, chuẩn đầu ra gắn thang Bloom.">
+<meta name="description" content="Ba bậc mô phỏng kinh doanh cho lớp học đại học: chính danh hoá, doanh nghiệp trong nước, ra quốc tế. Engine xác định, tham số công bố, chấm được lập luận. Trường Đại học Cần Thơ.">
 <meta name="theme-color" content="#FFFFFF">
-<!-- Trang chủ THANH GHI THỂ CHẾ. Nạp tokens-institutional.css (không nạp tokens-clay.css).
-     Bộ chữ TỰ LƯU TRỮ trong assets/fonts (không CDN) qua css/bizon-institutional-fonts.css. -->
 <link rel="icon" type="image/svg+xml" href="assets/brand/bizon-favicon.svg">
 <meta property="og:type" content="website">
 <meta property="og:title" content="BizOn — Mô phỏng kinh doanh cho lớp học đại học">
-<meta property="og:description" content="Engine xác định, tham số công khai, chuẩn đầu ra gắn thang Bloom. Trường Đại học Cần Thơ.">
+<meta property="og:description" content="Sản phẩm giảng dạy nghiêm túc, có bằng chứng, dùng được trong học phần. Trường Đại học Cần Thơ · Trường Kinh tế.">
 <meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/brand/og-truong.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="css/bizon-institutional-fonts.css">
-<link rel="stylesheet" href="css/tokens-institutional.css">
+<link rel="stylesheet" href="assets/css/shell.css">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.6;-webkit-font-smoothing:antialiased}
-.shell{max-width:var(--max);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
-img,svg{display:block;max-width:100%}
-a{color:inherit}
-.h-xl{font-size:clamp(2.6rem,6.4vw,5.4rem);font-weight:800;line-height:.99;letter-spacing:-.038em}
-.h-lg{font-size:clamp(1.9rem,3.8vw,3.1rem);font-weight:700;line-height:1.06;letter-spacing:-.03em}
-.h-md{font-size:clamp(1.25rem,2vw,1.6rem);font-weight:600;line-height:1.18;letter-spacing:-.018em}
-.h-sm{font-size:1.02rem;font-weight:600;letter-spacing:-.01em;line-height:1.32}
-.tag{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3)}
-.body-lg{font-size:clamp(1.02rem,1.35vw,1.18rem);color:var(--ink-2);max-width:56ch}
-.body{font-size:.94rem;color:var(--ink-2)}
-.body-sm{font-size:.86rem;color:var(--ink-2)}
-.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.88);backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color .3s}
-.nav.stuck{border-bottom-color:var(--rule)}
-.nav-in{display:flex;align-items:center;gap:32px;height:66px}
-.brand{display:inline-flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.03em;font-size:1.14rem;text-decoration:none}
-.brand img{width:26px;height:26px}
-.brand span{color:var(--jade)}
-.nav-links{display:flex;gap:26px;margin-left:auto;align-items:center}
-.nav-links a{text-decoration:none;font-size:.875rem;color:var(--ink-2);transition:color .2s}
-.nav-links a:hover{color:var(--ink)}
-.btn{display:inline-flex;align-items:center;gap:.5rem;font-size:.875rem;font-weight:500;text-decoration:none;padding:.62rem 1.15rem;border-radius:2px;transition:background .2s,color .2s,border-color .2s}
-.btn-solid{background:var(--jade);color:#fff}
-.btn-solid:hover{background:#0B4A3F}
-.btn-line{border:1px solid var(--rule);color:var(--ink)}
-.btn-line:hover{border-color:var(--ink)}
-.nav-toggle{display:none}
-.hero{padding-top:clamp(52px,7vw,96px);padding-bottom:clamp(40px,5vw,64px)}
-.hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(28px,5vw,72px);align-items:center}
-.hero .tag{margin-bottom:1.6rem}
-.hero h1{margin-bottom:1.5rem}
-.hero h1 em{font-style:normal;color:var(--jade)}
-.hero-cta{display:flex;gap:12px;margin-top:2.1rem;flex-wrap:wrap}
-.figure{border:1px solid var(--rule);background:var(--band);aspect-ratio:1/.86;display:grid;place-items:center;padding:22px}
-.figure svg{width:100%;height:auto}
-.dl{fill:none;stroke:var(--jade);stroke-width:1.25;stroke-linecap:round}
-.dl-faint{stroke:var(--ink-3);stroke-width:1}
-.dnode{fill:var(--jade)}
-.dcap{font-family:var(--mono);font-size:9px;fill:var(--ink-3);letter-spacing:.13em;text-transform:uppercase}
-.dname{font-family:var(--sans);font-size:11.5px;font-weight:500;fill:var(--ink)}
-@media (prefers-reduced-motion:no-preference){
-  .dl{stroke-dasharray:1000;stroke-dashoffset:1000;animation:draw 1.5s cubic-bezier(.4,0,.2,1) forwards}
-  .dl:nth-of-type(2){animation-delay:.12s} .dl:nth-of-type(3){animation-delay:.24s}
-  @keyframes draw{to{stroke-dashoffset:0}}
-}
-.claims{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
-.claims-in{display:grid;grid-template-columns:repeat(3,1fr)}
-.claim{padding:34px 30px 32px;border-left:1px solid var(--rule)}
-.claim:first-child{border-left:none;padding-left:0}
-.claim:last-child{padding-right:0}
-.claim .h-sm{margin:.7rem 0 .5rem}
-.claim .src{font-family:var(--mono);font-size:.68rem;color:var(--jade);letter-spacing:.05em;margin-top:.9rem;display:block}
-.sec{padding-top:clamp(64px,8vw,116px);padding-bottom:clamp(64px,8vw,116px)}
-.sec-band{background:var(--band)}
-.sec-head{max-width:60ch;margin-bottom:clamp(34px,4.5vw,58px)}
-.sec-head .tag{margin-bottom:1.1rem}
-.sec-head .body-lg{margin-top:1.1rem}
-.pillars{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule)}
-.pillar{background:var(--paper);padding:clamp(28px,3.4vw,46px);display:flex;flex-direction:column}
-.pillar-no{font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;color:var(--jade);margin-bottom:1.4rem}
-.pillar h3{margin-bottom:.9rem}
-.pillar .body{flex:1}
-.pillar-meta{margin-top:1.8rem;padding-top:1.3rem;border-top:1px solid var(--rule);display:flex;flex-direction:column;gap:.5rem}
-.meta-row{display:flex;gap:14px;font-size:.82rem}
-.meta-row dt{font-family:var(--mono);font-size:.68rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);min-width:92px;padding-top:.15rem}
-.meta-row dd{color:var(--ink-2)}
-.reg{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(28px,5vw,64px);align-items:center}
-.screen{border:1px solid var(--rule);background:var(--paper);padding:10px;box-shadow:0 1px 2px rgba(14,21,18,.04)}
-.screen-bar{display:flex;align-items:center;gap:6px;padding:0 4px 10px}
-.screen-bar i{width:7px;height:7px;border-radius:50%;background:var(--rule);display:block}
-.screen-bar b{margin-left:auto;font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;color:var(--ink-3);font-weight:400;text-transform:uppercase}
-.clay{border-radius:20px;padding:30px 26px;background:linear-gradient(155deg,#FDF0E2,#EDE4F5 55%,#DDF0EA);min-height:230px;display:flex;flex-direction:column;justify-content:center;gap:14px}
-.clay-card{background:rgba(255,255,255,.72);border-radius:16px;padding:15px 17px;box-shadow:0 6px 14px rgba(120,90,60,.09), inset 0 1px 0 rgba(255,255,255,.9)}
-.clay-card strong{display:block;font-size:.94rem;font-weight:600;margin-bottom:.25rem;letter-spacing:-.01em}
-.clay-card span{font-size:.8rem;color:var(--ink-2)}
-.clay-pills{display:flex;gap:8px;flex-wrap:wrap}
-.clay-pill{background:rgba(255,255,255,.8);border-radius:100px;padding:.4rem .85rem;font-size:.76rem;font-weight:500;box-shadow:0 4px 9px rgba(120,90,60,.09)}
-.rule-list{list-style:none;margin-top:1.6rem}
-.rule-list li{padding:15px 0;border-top:1px solid var(--rule);display:grid;grid-template-columns:118px 1fr;gap:18px;font-size:.9rem}
-.rule-list li b{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--jade);font-weight:500;padding-top:.2rem}
-.rule-list li span{color:var(--ink-2)}
-.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule)}
-.fcell{background:var(--paper);padding:30px 26px 28px}
-.fcell .num{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;color:var(--ink-3);margin-bottom:1.1rem;display:block}
-.fcell .h-sm{margin-bottom:.55rem}
-.acad{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,72px)}
-.creds{list-style:none}
-.creds li{padding:17px 0;border-top:1px solid var(--rule);display:flex;gap:16px;align-items:baseline}
-.creds li:last-child{border-bottom:1px solid var(--rule)}
-.creds .k{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);min-width:132px}
-.creds .v{font-size:.9rem;color:var(--ink)}
-.note{border-left:2px solid var(--jade);padding-left:20px;font-size:.92rem;color:var(--ink-2);margin-top:2rem}
-.cta{background:var(--ink);color:#fff}
-.cta .h-lg{margin-bottom:1.2rem}
-.cta .body-lg{color:rgba(255,255,255,.66)}
-.cta .btn-line{border-color:rgba(255,255,255,.28);color:#fff}
-.cta .btn-line:hover{border-color:#fff}
-.cta .btn-solid{background:#fff;color:var(--ink)}
-.cta .btn-solid:hover{background:#E3EDE9}
-.cta-in{display:flex;gap:14px;margin-top:2.2rem;flex-wrap:wrap}
-.foot{border-top:1px solid var(--rule);padding:44px 0 56px}
-.foot-in{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:flex-start}
-.foot .tag{margin-bottom:.6rem}
-.foot-links{display:flex;gap:22px;flex-wrap:wrap}
-.foot-links a{font-size:.85rem;color:var(--ink-2);text-decoration:none}
-.foot-links a:hover{color:var(--ink)}
-.rv{opacity:0;transform:translateY(14px);transition:opacity .6s cubic-bezier(.2,.7,.3,1),transform .6s cubic-bezier(.2,.7,.3,1)}
-.rv.in{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
-:focus-visible{outline:2px solid var(--jade);outline-offset:3px}
-.mt-11{margin-top:1.1rem}.mt-18{margin-top:1.8rem}.mt-20{margin-top:2rem}
-@media(max-width:960px){
-  .hero-grid,.reg,.acad{grid-template-columns:1fr}
-  .reg .screen{order:-1}
-  .pillars,.claims-in,.fgrid{grid-template-columns:1fr}
-  .claim{border-left:none;border-top:1px solid var(--rule);padding-left:0;padding-right:0}
-  .claim:first-child{border-top:none}
-  .nav-links{display:none}
-  .nav-links.open{display:flex;position:absolute;top:66px;left:0;right:0;background:#fff;flex-direction:column;gap:0;padding:8px var(--pad) 20px;border-bottom:1px solid var(--rule)}
-  .nav-links.open a{padding:12px 0;border-bottom:1px solid var(--rule);width:100%}
-  .nav-toggle{display:inline-flex;margin-left:auto;background:none;border:1px solid var(--rule);border-radius:2px;padding:.5rem .8rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;cursor:pointer;text-transform:uppercase}
-  .rule-list li{grid-template-columns:1fr;gap:6px}
-}
+/* ═══════════ RIÊNG TRANG CHỦ THỂ CHẾ ═══════════ */
+.hero-sm{padding:clamp(46px,7vw,88px) 0 clamp(30px,4.4vw,48px);border-bottom:1px solid var(--rule)}
+.hero-sm h1{font-size:clamp(2rem,4.6vw,3.4rem)}
+.hero-sm .lede{margin-top:1.1rem}
+.hero-sm .hero-cta{display:flex;gap:11px;margin-top:1.8rem;flex-wrap:wrap}
+
+.affirm{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.aff{background:var(--paper);padding:26px 24px}
+.aff h3{margin-bottom:.5rem}
+.aff .src{font-family:var(--mono);font-size:.64rem;color:var(--jade);letter-spacing:.03em;margin-top:.8rem;display:block}
+
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.tier{border:1px solid var(--rule);padding:26px 24px;background:var(--band)}
+.tier .no{font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;color:var(--jade);display:block;margin-bottom:.65rem}
+.tier h3{font-size:1.18rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.45rem}
+
+.audience{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.aud{border:1px solid var(--rule);padding:26px 24px;background:var(--paper)}
+.aud .k{font-family:var(--mono);font-size:.62rem;letter-spacing:.15em;color:var(--ink-2);text-transform:uppercase;margin-bottom:.7rem;display:block}
+.aud .path{margin-top:.85rem;font-weight:600;color:var(--jade)}
+
+.deep{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.dl{background:var(--paper);padding:26px 24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:background .2s}
+.dl:hover{background:var(--band)}
+.dl h3{margin-bottom:.4rem}
+.dl .go{margin-top:.9rem;color:var(--jade);font-size:.83rem;font-weight:500;display:inline-flex;gap:.4rem;transition:gap .2s}
+.dl:hover .go{gap:.72rem}
+
+.cta2{background:var(--jade);color:var(--on-jade)}
+.cta2 h2,.cta2 .lede{color:var(--on-jade)}
+.cta2 .lede{opacity:.86;margin-top:1.1rem}
+.cta2 .hero-cta{display:flex;gap:11px;margin-top:1.7rem;flex-wrap:wrap}
+.cta2 .btn-solid{background:var(--on-jade);color:var(--jade)}
+.cta2 .btn-solid:hover{background:var(--band)}
+.cta2 .btn-line{border-color:rgba(255,255,255,.34);color:var(--on-jade)}
+.cta2 .btn-line:hover{border-color:var(--on-jade)}
+
+@media(max-width:820px){.affirm,.tiers,.audience,.deep{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
+<div class="prog" id="prog"></div>
+
 <header class="nav" id="nav">
   <div class="shell nav-in">
-    <a class="brand" href="universe.html"><img src="assets/brand/bizon-favicon.svg" alt="">Biz<span>On</span></a>
-    <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">Menu</button>
-    <nav class="nav-links" id="navLinks" aria-label="Điều hướng chính">
-      <a href="universe.html">Vũ trụ</a>
-      <a href="truong-gioi-thieu.html">Giới thiệu</a>
-      <a href="truong-giang-vien.html">Cho giảng viên</a>
-      <a href="truong-hoc-thuat.html">Học thuật</a>
-      <a class="btn btn-solid" href="mailto:thuyhuongctu@gmail.com?subject=BizOn%20-%20D%C3%B9ng%20th%E1%BB%AD%20cho%20l%E1%BB%9Bp">Đề nghị dùng thử</a>
-    </nav>
+    <a class="wm" href="universe.html">
+      <span class="wm-txt">Biz<svg class="wm-mark" width="0.98em" height="1em" viewBox="0 0 98 100" aria-hidden="true"><ellipse cx="49" cy="58" rx="40" ry="34" fill="none" stroke="currentColor" stroke-width="15"/><circle cx="63" cy="58" r="11" fill="var(--jade)"/></svg>n</span>
+      <span class="wm-sub">Bật Nghiệp</span>
+    </a>
+    <div class="tgl" role="group" aria-label="Ngôn ngữ">
+      <button id="bvi" type="button" aria-pressed="true">VI</button>
+      <button id="ben" type="button" aria-pressed="false">EN</button>
+    </div>
+    <button class="ico" id="bth" type="button" aria-pressed="false" aria-label="Đổi giao diện sáng / tối"><span id="thi" aria-hidden="true">☾</span></button>
+    <a class="btn btn-solid btn-sm" href="truong-giang-vien.html" data-vi="Cho giảng viên" data-en="For instructors">Cho giảng viên</a>
   </div>
 </header>
 
 <main id="top">
 
-<section class="shell hero">
-  <div class="hero-grid">
-    <div>
-      <p class="tag">Trường Đại học Cần Thơ · Mô phỏng kinh doanh</p>
-      <h1 class="h-xl">Quyết định kinh doanh, <em>giải thích được</em> đến từng tham số.</h1>
-      <p class="body-lg">Hai trò chơi mô phỏng dành cho lớp học đại học — một về khởi nghiệp trong nước, một về kinh doanh quốc tế. Engine xác định, tham số công bố công khai, chuẩn đầu ra gắn với thang Bloom.</p>
+<!-- ═══ HERO NHỎ ═══ -->
+<section class="hero-sm">
+  <div class="shell">
+    <p class="tag" data-vi="Đại học Cần Thơ · Trường Kinh tế" data-en="Can Tho University · School of Economics">Đại học Cần Thơ · Trường Kinh tế</p>
+    <h1 data-vi="Mô phỏng kinh doanh cho lớp học đại học" data-en="Business simulation for the university classroom">Mô phỏng kinh doanh cho lớp học đại học</h1>
+    <p class="lede" data-vi="Ba bậc quyết định — từ chính danh hoá đến doanh nghiệp trong nước rồi ra quốc tế. Kết quả xác định, tham số công bố, và điều quan trọng nhất: chấm được lập luận của người học, không chấm may rủi." data-en="Three tiers of decisions — from formalisation to a domestic firm, then across borders. Deterministic outcomes, published parameters, and above all: you grade the learner's reasoning, not luck.">Ba bậc quyết định — từ chính danh hoá đến doanh nghiệp trong nước rồi ra quốc tế. Kết quả xác định, tham số công bố, và điều quan trọng nhất: chấm được lập luận của người học, không chấm may rủi.</p>
+    <div class="hero-cta">
+      <a class="btn btn-solid" href="truong-giang-vien.html" data-vi="Cho giảng viên →" data-en="For instructors →">Cho giảng viên →</a>
+      <a class="btn btn-line" href="truong-hoc-thuat.html" data-vi="Nền tảng học thuật" data-en="Academic foundation">Nền tảng học thuật</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ DẢI KHẲNG ĐỊNH ═══ -->
+<section>
+  <div class="shell">
+    <div class="affirm rv">
+      <div class="aff">
+        <h3 data-vi="Xác định, không ngẫu nhiên" data-en="Deterministic, not random">Xác định, không ngẫu nhiên</h3>
+        <p class="body" data-vi="Cùng một chuỗi quyết định luôn cho cùng một kết quả — nên giảng viên chấm được lập luận, người học truy được nguyên nhân." data-en="The same sequence always yields the same outcome — so instructors grade reasoning and learners trace causes.">Cùng một chuỗi quyết định luôn cho cùng một kết quả — nên giảng viên chấm được lập luận, người học truy được nguyên nhân.</p>
+        <span class="src" data-vi="Model Card công bố phương trình" data-en="Model Cards publish the equations">Model Card công bố phương trình</span>
+      </div>
+      <div class="aff">
+        <h3 data-vi="Đã triển khai trong học phần đại học" data-en="Used in a university course">Đã triển khai trong học phần đại học</h3>
+        <p class="body" data-vi="Đã đưa vào buổi học thật ở bậc đại học. Bằng chứng hiện có mang tính hồi cứu — chúng tôi nói rõ điều đó, không thổi phồng." data-en="Already run in real undergraduate sessions. Current evidence is retrospective — we say so plainly, without overclaiming.">Đã đưa vào buổi học thật ở bậc đại học. Bằng chứng hiện có mang tính hồi cứu — chúng tôi nói rõ điều đó, không thổi phồng.</p>
+        <span class="src" data-vi="Giới hạn nêu trên trang học thuật" data-en="Limitations stated on the academic page">Giới hạn nêu trên trang học thuật</span>
+      </div>
+      <div class="aff">
+        <h3 data-vi="Trích dẫn được" data-en="Citable">Trích dẫn được</h3>
+        <p class="body" data-vi="Bản lưu trữ có mã định danh số, tệp trích dẫn chuẩn máy đọc, và định danh nghiên cứu của nhóm tác giả." data-en="An archived record with a DOI, a machine-readable citation file, and researcher identifiers for the authors.">Bản lưu trữ có mã định danh số, tệp trích dẫn chuẩn máy đọc, và định danh nghiên cứu của nhóm tác giả.</p>
+        <span class="src">DOI · CITATION.cff · ORCID</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ BA BẬC ═══ -->
+<section class="band">
+  <div class="shell">
+    <div class="head rv">
+      <p class="tag" data-vi="Sản phẩm" data-en="The product">Sản phẩm</p>
+      <h2 data-vi="Ba bậc, một engine" data-en="Three tiers, one engine">Ba bậc, một engine</h2>
+    </div>
+    <div class="tiers rv">
+      <div class="tier">
+        <span class="no">BẬC 1</span>
+        <h3 data-vi="Bến Phù Sa" data-en="Bến Phù Sa">Bến Phù Sa</h3>
+        <p class="body" data-vi="Chính danh hoá: ở lại phi chính thức hay bước lên đăng ký. Bậc nhập môn, chơi trước." data-en="Formalisation: stay informal or step up and register. The entry rung, played first.">Chính danh hoá: ở lại phi chính thức hay bước lên đăng ký. Bậc nhập môn, chơi trước.</p>
+      </div>
+      <div class="tier">
+        <span class="no">BẬC 2A</span>
+        <h3 data-vi="Bật Nghiệp" data-en="Bật Nghiệp">Bật Nghiệp</h3>
+        <p class="body" data-vi="Doanh nghiệp trong nước, sáu vòng: định giá, ước lượng cầu, cơ cấu chi phí, dòng tiền." data-en="A domestic firm over six rounds: pricing, demand estimation, cost structure, cash flow.">Doanh nghiệp trong nước, sáu vòng: định giá, ước lượng cầu, cơ cấu chi phí, dòng tiền.</p>
+      </div>
+      <div class="tier">
+        <span class="no">BẬC 2B</span>
+        <h3 data-vi="Hộ chiếu Thương hiệu" data-en="Brand Passport">Hộ chiếu Thương hiệu</h3>
+        <p class="body" data-vi="Kinh doanh quốc tế: nửa lớp đi ra, nửa kia đi vào, rồi hoán vai để hiểu cả hai phía." data-en="International business: half the class goes out, half comes in, then roles swap to see both sides.">Kinh doanh quốc tế: nửa lớp đi ra, nửa kia đi vào, rồi hoán vai để hiểu cả hai phía.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CHO AI ═══ -->
+<section>
+  <div class="shell">
+    <div class="head rv">
+      <p class="tag" data-vi="Dùng ở đâu" data-en="Where it fits">Dùng ở đâu</p>
+      <h2 data-vi="Gắn vào học phần nào" data-en="Which course it fits">Gắn vào học phần nào</h2>
+    </div>
+    <div class="audience rv">
+      <div class="aud">
+        <span class="k" data-vi="Khoa dạy khởi nghiệp" data-en="Entrepreneurship faculty">Khoa dạy khởi nghiệp</span>
+        <p class="body" data-vi="Bắt đầu từ chính danh hoá, rồi điều hành một doanh nghiệp trong thị trường quen thuộc — trọn mạch khởi nghiệp trong nước." data-en="Start from formalisation, then run a firm in a familiar market — the full domestic startup arc.">Bắt đầu từ chính danh hoá, rồi điều hành một doanh nghiệp trong thị trường quen thuộc — trọn mạch khởi nghiệp trong nước.</p>
+        <p class="path" data-vi="Bậc 1 + Bậc 2A" data-en="Tier 1 + Tier 2A">Bậc 1 + Bậc 2A</p>
+      </div>
+      <div class="aud">
+        <span class="k" data-vi="Khoa dạy kinh doanh quốc tế" data-en="International business faculty">Khoa dạy kinh doanh quốc tế</span>
+        <p class="body" data-vi="Bắt đầu từ chính danh hoá, rồi qua biên giới với vai người đi ra và người đi vào — trọn mạch thâm nhập thị trường." data-en="Start from formalisation, then cross borders as both entrant and incumbent — the full market-entry arc.">Bắt đầu từ chính danh hoá, rồi qua biên giới với vai người đi ra và người đi vào — trọn mạch thâm nhập thị trường.</p>
+        <p class="path" data-vi="Bậc 1 + Bậc 2B" data-en="Tier 1 + Tier 2B">Bậc 1 + Bậc 2B</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ BỐN LIÊN KẾT SÂU ═══ -->
+<section class="band">
+  <div class="shell">
+    <div class="head rv">
+      <p class="tag" data-vi="Tìm hiểu thêm" data-en="Go deeper">Tìm hiểu thêm</p>
+      <h2 data-vi="Bốn câu hỏi người mua hay hỏi" data-en="Four questions buyers ask">Bốn câu hỏi người mua hay hỏi</h2>
+    </div>
+    <div class="deep rv">
+      <a class="dl" href="truong-giang-vien.html">
+        <h3 data-vi="Tôi dùng trong lớp thế nào?" data-en="How do I run it in class?">Tôi dùng trong lớp thế nào?</h3>
+        <p class="body" data-vi="Năm bước mở lớp, bộ công cụ tải sẵn, và cách chấm — chạy được mà không cần gọi hỗ trợ." data-en="Five steps to open a class, ready-to-download toolkit, and how grading works — run it without calling support.">Năm bước mở lớp, bộ công cụ tải sẵn, và cách chấm — chạy được mà không cần gọi hỗ trợ.</p>
+        <span class="go" data-vi="Cho giảng viên →" data-en="For instructors →">Cho giảng viên →</span>
+      </a>
+      <a class="dl" href="truong-hoc-thuat.html">
+        <h3 data-vi="Có chịu được chất vấn không?" data-en="Does it survive scrutiny?">Có chịu được chất vấn không?</h3>
+        <p class="body" data-vi="Model Card, hợp đồng tái lập, chuẩn đầu ra — và công bố cả những gì mô hình không làm được." data-en="Model Cards, a reproducibility contract, learning outcomes — and what the model cannot do.">Model Card, hợp đồng tái lập, chuẩn đầu ra — và công bố cả những gì mô hình không làm được.</p>
+        <span class="go" data-vi="Nền tảng học thuật →" data-en="Academic foundation →">Nền tảng học thuật →</span>
+      </a>
+      <a class="dl" href="truong-gioi-thieu.html">
+        <h3 data-vi="Ai đứng sau, vì sao có?" data-en="Who's behind it, and why?">Ai đứng sau, vì sao có?</h3>
+        <p class="body" data-vi="Vấn đề dự án giải, bối cảnh vùng, dòng thời gian xuất xứ và nhóm tác giả." data-en="The problem it solves, the regional context, the provenance timeline and the authors.">Vấn đề dự án giải, bối cảnh vùng, dòng thời gian xuất xứ và nhóm tác giả.</p>
+        <span class="go" data-vi="Giới thiệu dự án →" data-en="About the project →">Giới thiệu dự án →</span>
+      </a>
+      <a class="dl" href="truong-chinh-sach.html">
+        <h3 data-vi="Dữ liệu sinh viên đi đâu?" data-en="Where does student data go?">Dữ liệu sinh viên đi đâu?</h3>
+        <p class="body" data-vi="Không quảng cáo, không bán dữ liệu; đồng thuận hai mục đích tách riêng; và giới hạn quyền rút lui nói trước." data-en="No ads, no data sales; two separate consent purposes; and the limits of withdrawal stated upfront.">Không quảng cáo, không bán dữ liệu; đồng thuận hai mục đích tách riêng; và giới hạn quyền rút lui nói trước.</p>
+        <span class="go" data-vi="Chính sách dữ liệu →" data-en="Data policy →">Chính sách dữ liệu →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="cta2">
+  <div class="shell">
+    <div class="rv">
+      <h2 data-vi="Thử một buổi với lớp của thầy cô" data-en="Try one session with your class">Thử một buổi với lớp của thầy cô</h2>
+      <p class="lede" data-vi="Chúng tôi mở tài khoản giảng viên, gửi sổ tay và rubric, và đồng hành buổi đầu tiên. Sau buổi đó thầy cô tự chạy được — không cần phòng máy, chạy trên điện thoại sinh viên." data-en="We open an instructor account, send the handbook and rubric, and join the first session. After that you run it yourself — no computer lab, works on students' phones.">Chúng tôi mở tài khoản giảng viên, gửi sổ tay và rubric, và đồng hành buổi đầu tiên. Sau buổi đó thầy cô tự chạy được — không cần phòng máy, chạy trên điện thoại sinh viên.</p>
       <div class="hero-cta">
-        <a class="btn btn-solid" href="#tru">Xem hai trụ</a>
-        <a class="btn btn-line" href="truong-hoc-thuat.html">Tài liệu học thuật</a>
+        <a class="btn btn-solid" href="truong-giang-vien.html" data-vi="Đăng ký buổi thử →" data-en="Book a session →">Đăng ký buổi thử →</a>
+        <a class="btn btn-line" href="truong-giang-vien.html" data-vi="Tài liệu cho giảng viên" data-en="Instructor materials">Tài liệu cho giảng viên</a>
       </div>
-    </div>
-    <div class="figure">
-      <svg viewBox="0 0 400 344" role="img" aria-label="Sơ đồ: một engine lõi chia thành hai trụ mô phỏng và lớp hạ tầng dùng chung">
-        <text x="200" y="20" text-anchor="middle" class="dcap">Engine lõi</text>
-        <circle cx="200" cy="38" r="3.5" class="dnode"/>
-        <path class="dl" d="M200,42 C200,96 108,104 108,158"/>
-        <path class="dl" d="M200,42 C200,96 292,104 292,158"/>
-        <path class="dl dl-faint" d="M200,42 L200,158"/>
-        <circle cx="108" cy="162" r="3.5" class="dnode"/>
-        <circle cx="292" cy="162" r="3.5" class="dnode"/>
-        <circle cx="200" cy="162" r="2.5" fill="#98A29C"/>
-        <text x="108" y="184" text-anchor="middle" class="dname">Bật Nghiệp</text>
-        <text x="108" y="198" text-anchor="middle" class="dcap">Trong nước</text>
-        <text x="292" y="184" text-anchor="middle" class="dname">Hộ chiếu</text>
-        <text x="292" y="198" text-anchor="middle" class="dcap">Quốc tế</text>
-        <text x="200" y="184" text-anchor="middle" class="dcap">Dữ liệu</text>
-        <line x1="40" y1="244" x2="360" y2="244" stroke="#E2E6E2" stroke-width="1"/>
-        <text x="40" y="236" class="dcap">Hạ tầng dùng chung</text>
-        <text x="40" y="266" class="dname">Lớp học · Rubric · Dấu vết học tập · Song ngữ</text>
-        <text x="40" y="292" class="dcap">Cửa ra</text>
-        <text x="40" y="312" class="dname">Lớp học Việt Nam → Thị trường quốc tế</text>
-      </svg>
-    </div>
-  </div>
-</section>
-
-<section class="claims">
-  <div class="shell claims-in">
-    <div class="claim rv">
-      <span class="tag">01 · Mô hình</span>
-      <h3 class="h-sm">Xác định, không ngẫu nhiên</h3>
-      <p class="body-sm">Cùng một chuỗi quyết định luôn cho cùng một kết quả. Người học truy được vì sao thị phần thay đổi, giảng viên chấm được lập luận thay vì chấm may rủi.</p>
-      <span class="src">Model Card công bố biến số và phương trình</span>
-    </div>
-    <div class="claim rv">
-      <span class="tag">02 · Lớp học</span>
-      <h3 class="h-sm">Đã chạy trong lớp thật</h3>
-      <p class="body-sm">Triển khai trong học phần khởi nghiệp và học phần đầu tư nước ngoài, kèm rubric bốn mức và ma trận chuẩn đầu ra.</p>
-      <span class="src">Sổ tay giảng viên và bộ đề đi kèm</span>
-    </div>
-    <div class="claim rv">
-      <span class="tag">03 · Học thuật</span>
-      <h3 class="h-sm">Trích dẫn được</h3>
-      <p class="body-sm">Bản lưu trữ có mã định danh số, tệp trích dẫn chuẩn và định danh nghiên cứu của nhóm tác giả. Giới hạn của mô hình được công bố cùng mô hình.</p>
-      <span class="src">DOI · CITATION.cff · ORCID</span>
-    </div>
-  </div>
-</section>
-
-<section class="shell sec" id="tru">
-  <div class="sec-head rv">
-    <p class="tag">Sản phẩm</p>
-    <h2 class="h-lg">Hai trụ, hai câu chuyện, một trình tự</h2>
-    <p class="body-lg">Mỗi trụ đứng độc lập và mua rời được. Chơi trụ trong nước trước rồi ra quốc tế là trình tự được khuyến nghị, nhưng không bắt buộc — đó cũng chính là biến mà nghiên cứu của chúng tôi đang đo.</p>
-  </div>
-  <div class="pillars rv">
-    <article class="pillar">
-      <span class="pillar-no">TRỤ I</span>
-      <h3 class="h-md">BizOn Bật Nghiệp</h3>
-      <p class="body">Khởi nghiệp trong bối cảnh Việt Nam qua sáu chu kỳ quyết định: định giá, ước lượng cầu, cơ cấu chi phí và dòng tiền. Người học bắt đầu từ thị trường mình đã hiểu, nên toàn bộ sức chú ý dồn vào lập luận thay vì vào việc đoán bối cảnh.</p>
-      <dl class="pillar-meta">
-        <div class="meta-row"><dt>Học phần</dt><dd>Khởi nghiệp</dd></div>
-        <div class="meta-row"><dt>Thời lượng</dt><dd>Sáu chu kỳ, chia được theo buổi</dd></div>
-        <div class="meta-row"><dt>Đánh giá</dt><dd>Rubric bốn mức, xuất báo cáo lớp</dd></div>
-      </dl>
-    </article>
-    <article class="pillar">
-      <span class="pillar-no">TRỤ II</span>
-      <h3 class="h-md">Hộ chiếu Thương hiệu</h3>
-      <p class="body">Đưa doanh nghiệp qua biên giới: chọn thị trường, chọn phương thức thâm nhập, đối mặt rủi ro tỷ giá và khác biệt thể chế. Một câu chuyện riêng chứ không phải phần tiếp theo — người chưa chơi trụ I vẫn vào được.</p>
-      <dl class="pillar-meta">
-        <div class="meta-row"><dt>Học phần</dt><dd>Đầu tư nước ngoài, thương mại</dd></div>
-        <div class="meta-row"><dt>Bộ máy</dt><dd>Phương thức thâm nhập trên kho hồ sơ quốc gia</dd></div>
-        <div class="meta-row"><dt>Ngôn ngữ</dt><dd>Song ngữ, dùng được cho lớp quốc tế</dd></div>
-      </dl>
-    </article>
-  </div>
-</section>
-
-<section class="sec sec-band" id="thiet-ke">
-  <div class="shell">
-    <div class="sec-head rv">
-      <p class="tag">Nguyên tắc thiết kế</p>
-      <h2 class="h-lg">Hai thanh ghi, một hệ thống</h2>
-      <p class="body-lg">Trang thông tin nói với trưởng khoa và hội đồng thẩm định, nên giữ chừng mực. Trò chơi nói với sinh viên, nên giữ ngôn ngữ tạo hình đất sét. Ranh giới nằm ở khung màn hình: bên ngoài khung là thể chế, bên trong khung là đất sét.</p>
-    </div>
-    <div class="reg rv">
-      <div>
-        <ul class="rule-list">
-          <li><b>Thể chế</b><span>Trang chủ, giới thiệu, học thuật, giá, chính sách, tài liệu giảng viên, bản in nộp hồ sơ.</span></li>
-          <li><b>Đất sét</b><span>Bên trong hai trụ, Arcade, và mọi màn hình người học tương tác trực tiếp.</span></li>
-          <li><b>Giao thoa</b><span>Ảnh chụp và bản nhúng của trò chơi trên trang thể chế — luôn đặt trong khung viền mảnh, không tràn ra nền trang.</span></li>
-          <li><b>Không bao giờ</b><span>Nút bo tròn kiểu đất sét, bóng đổ mềm hay nền pastel trên trang thể chế. Và ngược lại, không dùng bảng biểu khô cứng bên trong trò chơi.</span></li>
-        </ul>
-      </div>
-      <div class="screen">
-        <div class="screen-bar"><i></i><i></i><i></i><b>Bên trong trò chơi</b></div>
-        <div class="clay">
-          <div class="clay-card">
-            <strong>Chu kỳ 3 · Định giá</strong>
-            <span>Giá bán đề xuất 168.000₫ · dự báo thị phần 24%</span>
-          </div>
-          <div class="clay-pills">
-            <span class="clay-pill">Giữ giá</span>
-            <span class="clay-pill">Giảm 10%</span>
-            <span class="clay-pill">Tăng 15%</span>
-          </div>
-          <div class="clay-card">
-            <strong>Lumina gợi ý</strong>
-            <span>Cầu đang co giãn mạnh. Thử một mức giảm nhỏ trước khi cam kết cả chu kỳ.</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="shell sec" id="giang-vien">
-  <div class="sec-head rv">
-    <p class="tag">Cho giảng viên</p>
-    <h2 class="h-lg">Mở lớp mà không cần gọi hỗ trợ</h2>
-    <p class="body-lg">Tiêu chí phát hành của chúng tôi là một giảng viên ngoài nhóm phát triển chạy trọn một buổi mà không cần ai kèm. Trước khi đạt được điều đó, chúng tôi không gọi một mô-đun là đã xong.</p>
-  </div>
-  <div class="fgrid rv">
-    <div class="fcell"><span class="num">01</span><h3 class="h-sm">Bảng điều khiển lớp</h3><p class="body-sm">Mở lớp, theo dõi tiến độ theo nhóm, xem quyết định của từng đội theo chu kỳ, xuất báo cáo cuối buổi.</p></div>
-    <div class="fcell"><span class="num">02</span><h3 class="h-sm">Rubric và chuẩn đầu ra</h3><p class="body-sm">Rubric bốn mức đi kèm ma trận chuẩn đầu ra theo thang Bloom, dùng thẳng được cho đề cương học phần.</p></div>
-    <div class="fcell"><span class="num">03</span><h3 class="h-sm">Chạy được khi mạng yếu</h3><p class="body-sm">Hoạt động ngoại tuyến sau lần tải đầu, chạy trên điện thoại của sinh viên, không cần phòng máy.</p></div>
-    <div class="fcell"><span class="num">04</span><h3 class="h-sm">Song ngữ thật</h3><p class="body-sm">Tiếng Việt và tiếng Anh đều là bản gốc, cùng một chất giọng. Dùng được cho lớp trong nước và lớp quốc tế.</p></div>
-    <div class="fcell"><span class="num">05</span><h3 class="h-sm">Dữ liệu thuộc về lớp</h3><p class="body-sm">Không quảng cáo, không bán dữ liệu. Dữ liệu học tập chỉ rời máy khi người dùng chủ động nộp.</p></div>
-    <div class="fcell"><span class="num">06</span><h3 class="h-sm">Mua rời hoặc theo gói</h3><p class="body-sm">Khoa chỉ dạy khởi nghiệp mua trụ I. Khoa dạy kinh doanh quốc tế mua trụ II. Gói đôi cho cả hai.</p></div>
-  </div>
-  <p class="mt-20"><a class="btn btn-line" href="truong-giang-vien.html">Trang cho giảng viên đầy đủ →</a></p>
-</section>
-
-<section class="sec sec-band" id="hoc-thuat">
-  <div class="shell">
-    <div class="acad">
-      <div class="rv">
-        <p class="tag">Học thuật</p>
-        <h2 class="h-lg mt-11">Công bố cả giới hạn, không chỉ kết quả</h2>
-        <p class="body-lg mt-11">Mỗi mô hình đi kèm một Model Card nêu biến số, phương trình, giả định và những gì mô hình <em>không</em> làm được. Tham số hiệu chỉnh theo bối cảnh đồng bằng được mô tả bằng giả định, còn giá trị cụ thể thì giữ như bí quyết kỹ thuật.</p>
-        <p class="note">Bằng chứng hiệu quả học tập hiện có mang tính hồi cứu và chưa có nhóm đối chứng. Một thiết kế thực nghiệm có phân nhóm ngẫu nhiên đang được chuẩn bị cho học kỳ tới, và chúng tôi sẽ công bố kế hoạch phân tích trước khi thu dữ liệu.</p>
-        <p class="mt-18"><a class="btn btn-line" href="truong-hoc-thuat.html">Xem nền tảng học thuật đầy đủ →</a></p>
-      </div>
-      <div class="rv">
-        <ul class="creds">
-          <li><span class="k">Lưu trữ</span><span class="v">Bản ghi có mã định danh số, cập nhật theo phiên bản</span></li>
-          <li><span class="k">Trích dẫn</span><span class="v">Tệp CITATION.cff kèm định danh nghiên cứu của nhóm tác giả</span></li>
-          <li><span class="k">Minh bạch</span><span class="v">Model Card cho từng mô hình, công bố cùng sản phẩm</span></li>
-          <li><span class="k">Sư phạm</span><span class="v">Ma trận chuẩn đầu ra theo thang Bloom, rubric bốn mức</span></li>
-          <li><span class="k">Giấy phép</span><span class="v">Độc quyền. Lưu trữ mở để trích dẫn, không cấp quyền tái sử dụng</span></li>
-          <li><span class="k">Đơn vị</span><span class="v">Nhóm nghiên cứu tại Trường Đại học Cần Thơ</span></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="sec cta" id="lien-he">
-  <div class="shell">
-    <h2 class="h-lg">Thử một buổi với lớp của thầy cô</h2>
-    <p class="body-lg">Chúng tôi mở tài khoản giảng viên, gửi sổ tay và rubric, và đồng hành buổi đầu tiên. Sau buổi đó thầy cô tự chạy được.</p>
-    <div class="cta-in">
-      <a class="btn btn-solid" href="mailto:thuyhuongctu@gmail.com?subject=BizOn%20-%20%C4%90%C4%83ng%20k%C3%BD%20bu%E1%BB%95i%20th%E1%BB%AD">Đăng ký buổi thử</a>
-      <a class="btn btn-line" href="truong-hoc-thuat.html">Tải tài liệu học thuật</a>
     </div>
   </div>
 </section>
 
 </main>
 
-<footer class="foot">
-  <div class="shell foot-in">
+<footer>
+  <div class="shell fgrid">
     <div>
       <p class="tag">BizOn</p>
-      <p class="body-sm">Mô phỏng kinh doanh cho lớp học đại học.<br>Trường Đại học Cần Thơ · © 2026 Đỗ Thùy Hương &amp; Phan Anh Tú.</p>
+      <p class="body" data-vi="Mô phỏng kinh doanh cho lớp học đại học.<br>Đại học Cần Thơ · Trường Kinh tế." data-en="Business simulation for university classrooms.<br>Can Tho University · School of Economics.">Mô phỏng kinh doanh cho lớp học đại học.<br>Đại học Cần Thơ · Trường Kinh tế.</p>
     </div>
-    <div class="foot-links">
-      <a href="truong-gioi-thieu.html">Giới thiệu</a>
-      <a href="truong-giang-vien.html">Cho giảng viên</a>
-      <a href="truong-hoc-thuat.html">Học thuật</a>
-      <a href="truong-chinh-sach.html">Chính sách dữ liệu</a>
-      <a href="mailto:thuyhuongctu@gmail.com">Liên hệ</a>
-    </div>
+    <nav class="flinks" aria-label="Chân trang">
+      <a href="universe.html" data-vi="Vũ trụ" data-en="Universe">Vũ trụ</a>
+      <a href="truong-hoc-thuat.html" data-vi="Học thuật" data-en="Academic">Học thuật</a>
+      <a href="truong-giang-vien.html" data-vi="Giảng viên" data-en="Instructors">Giảng viên</a>
+      <a href="truong-chinh-sach.html" data-vi="Chính sách" data-en="Policy">Chính sách</a>
+    </nav>
   </div>
 </footer>
 
-<script>
-const nav = document.getElementById('nav');
-const onScroll = () => nav.classList.toggle('stuck', window.scrollY > 8);
-onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
-const toggle = document.getElementById('navToggle');
-const links = document.getElementById('navLinks');
-toggle.addEventListener('click', () => {
-  const open = links.classList.toggle('open');
-  toggle.setAttribute('aria-expanded', String(open));
-});
-links.addEventListener('click', e => {
-  if (e.target.tagName === 'A') { links.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); }
-});
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
-}, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
-document.querySelectorAll('.rv').forEach(el => io.observe(el));
-</script>
+<script src="assets/js/shell.js"></script>
 </body>
 </html>
