@@ -42,6 +42,10 @@ Sinh video riêng cho mỗi người chơi (kiểu Gemini/Veo trong vòng chơi)
 
 3. **Nhân vật biến đổi theo quyết định** — mệt mỏi khi lỗ liên tiếp, chỉnh tề khi thắng. Bốn trạng thái là đủ, không cần nhiều.
 
+## Cập nhật — quy tắc màu: đôi mắt ghe (2026-08-04)
+
+Sau khi soi bốn mockup bậc 1, quy tắc màu được chốt lại: **giữ ĐỎ cho đôi mắt ghe, VÀNG hổ phách cho đèn dầu, còn lại đen trắng. Bỏ màu xanh trên áo.** Áo xanh là lựa chọn tuỳ tiện; cặp mắt đỏ-trắng vẽ trên mũi ghe là biểu tượng có nghĩa (ghe "nhìn thấy đường", tránh thuỷ quái) và là tín hiệu chỉ đồng bằng mới có. Kèm theo: **cây bẹo bắt buộc** ở cảnh bến sông; **cấm** biển hiệu chữ Hán / neon / mặt tiền phố thị; **loại** hướng pastel farm-game. Chi tiết và prompt đã sửa: xem `prompt-sinh-video-thu-vien-clip.md`.
+
 ## Ngôn ngữ hình ảnh: đổi noir Hollywood sang noir đồng bằng
 
 Hẻm mưa, đèn đường, noir đen trắng là **từ vựng Hollywood** — đẹp nhưng không phải của dự án.
