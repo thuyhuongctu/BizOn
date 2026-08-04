@@ -38,9 +38,14 @@
     { key: 'state_before', required: false, kind: 'object' },
     { key: 'result_after', required: false, kind: 'object' },
     { key: 'timestamp', required: true, kind: 'iso' },
-    { key: 'consent_version', required: true, kind: 'string' }// phiên bản phiếu đồng thuận — bắt buộc
+    { key: 'consent_version', required: true, kind: 'string' },// phiên bản phiếu đồng thuận — bắt buộc
+    { key: 'consent_purposes', required: false, kind: 'array' }// tập mục đích được cấp phép cho bản ghi (research/product)
   ];
   var FIELD_KEYS = FIELDS.map(function (f) { return f.key; });
+
+  // Hai mục đích TÁCH RIÊNG (bộ mở khóa hai điểm chặn, Phần B2): nghiên cứu học thuật
+  // và cải tiến sản phẩm là hai bản chất khác nhau — gộp một ô là ép buộc gián tiếp.
+  var PURPOSES = ['research', 'product'];
 
   // Băm định danh đội — placeholder FNV-1a (xác định, đồng bộ, đa nền). SẢN XUẤT nên
   // thay bằng SHA-256 kèm salt. Điểm cốt lõi: log KHÔNG bao giờ chứa tên/email thật.
@@ -67,6 +72,7 @@
       if (v === undefined || v === null) return;
       if (f.kind === 'enum' && f.values.indexOf(v) < 0) throw new Error('Giá trị không hợp lệ cho ' + f.key + ': ' + v);
       if (f.kind === 'int' && !Number.isInteger(v)) throw new Error(f.key + ' phải là số nguyên');
+      if (f.kind === 'array' && !Array.isArray(v)) throw new Error(f.key + ' phải là mảng');
       if (f.kind === 'hashed' && looksLikePII(v)) throw new Error('team_id phải là bản băm, không được chứa danh tính thật');
     });
     // Chặn PII lọt vào mọi trường chuỗi cấp cao.
@@ -83,28 +89,56 @@
     return validate(rec);
   }
 
-  // Đường ghi có CỔNG ĐỒNG THUẬN. Mặc định TẮT: record() bỏ qua, không giữ gì.
+  // Đường ghi có CỔNG ĐỒNG THUẬN HAI MỤC ĐÍCH. Mặc định cả hai TẮT: record() bỏ qua.
   function DecisionLog(config) {
     config = config || {};
-    this.consentEnabled = config.consentEnabled === true; // MẶC ĐỊNH TẮT
-    this.consentVersion = config.consentVersion || null;
+    // Mỗi mục đích một cờ + phiên bản riêng — TÁCH RIÊNG, không gộp (Phần B2).
+    this.consent = {};
+    PURPOSES.forEach(function (p) {
+      var c = (config.consent && config.consent[p]) || {};
+      this.consent[p] = { enabled: c.enabled === true, version: c.version || null };
+    }, this);
     this.sink = typeof config.sink === 'function' ? config.sink : null; // kho bền cắm ngoài (không localStorage)
     this._buffer = [];
+    this._withdrawn = {}; // team_id -> true
   }
-  // Bật ghi khi đã có phiếu đồng thuận (không viết lại code — chỉ bật cờ + đặt phiên bản).
-  DecisionLog.prototype.enableConsent = function (version) {
-    if (!version) throw new Error('Bật đồng thuận phải kèm phiên bản phiếu (consent_version)');
-    this.consentEnabled = true; this.consentVersion = version;
+  // Bật MỘT mục đích khi đã có phiếu đồng thuận + phê duyệt đạo đức (chỉ bật cờ, không viết lại).
+  DecisionLog.prototype.enablePurpose = function (purpose, version) {
+    if (PURPOSES.indexOf(purpose) < 0) throw new Error('Mục đích không hợp lệ: ' + purpose);
+    if (!version) throw new Error('Bật mục đích phải kèm phiên bản phiếu đồng thuận');
+    this.consent[purpose] = { enabled: true, version: version };
   };
+  DecisionLog.prototype.activePurposes = function () {
+    return PURPOSES.filter(function (p) { return this.consent[p].enabled; }, this);
+  };
+  // Rút lui: ngừng dùng dữ liệu đội trong các lần ghi/ước lượng SAU. KHÔNG gỡ được phần
+  // đã gộp vào tham số cụm trước đó — giới hạn này phải nói thẳng trong phiếu (Phần B3).
+  DecisionLog.prototype.withdraw = function (teamId) { this._withdrawn[teamId] = true; };
+  DecisionLog.prototype.isWithdrawn = function (teamId) { return this._withdrawn[teamId] === true; };
   DecisionLog.prototype.record = function (fields, opts) {
-    if (!this.consentEnabled) return { recorded: false, reason: 'consent_off' }; // discard — không giữ gì
     opts = opts || {};
-    var rec = createRecord(Object.assign({}, fields, { consent_version: this.consentVersion }), opts);
+    if (this.isWithdrawn(fields.team_id)) return { recorded: false, reason: 'withdrawn' };
+    // Ghi cho GIAO của (mục đích đội đã đồng ý) ∩ (mục đích đang bật). Rỗng -> bỏ qua.
+    var consented = opts.consentedPurposes || [];
+    var active = this.activePurposes();
+    var allowed = consented.filter(function (p) { return active.indexOf(p) >= 0; });
+    if (!allowed.length) return { recorded: false, reason: 'no_active_consent' };
+    var version = this.consent[allowed[0]].version;
+    var rec = createRecord(Object.assign({}, fields, { consent_version: version, consent_purposes: allowed.slice() }), opts);
     this._buffer.push(rec);
-    if (this.sink) this.sink(rec); // kho bền tương lai; nay mặc định null
+    if (this.sink) this.sink(rec);
     return { recorded: true, record: rec };
   };
-  DecisionLog.prototype.entries = function () { return this._buffer.slice(); };
+  // entries({purpose, excludeWithdrawn}) — lọc theo mục đích cấp phép và loại đội đã rút lui.
+  DecisionLog.prototype.entries = function (opts) {
+    opts = opts || {};
+    var self = this;
+    return this._buffer.filter(function (r) {
+      if (opts.purpose && (!r.consent_purposes || r.consent_purposes.indexOf(opts.purpose) < 0)) return false;
+      if (opts.excludeWithdrawn && self.isWithdrawn(r.team_id)) return false;
+      return true;
+    });
+  };
   DecisionLog.prototype.clear = function () { this._buffer = []; };
 
   // Xuất CSV — cột theo lược đồ, KHÔNG chứa danh tính (chỉ team_id đã băm).
@@ -123,6 +157,7 @@
   return Object.freeze({
     FIELDS: FIELDS,
     FIELD_KEYS: FIELD_KEYS,
+    PURPOSES: PURPOSES,
     hashTeamId: hashTeamId,
     createRecord: createRecord,
     validate: validate,
