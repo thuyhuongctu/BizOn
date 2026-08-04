@@ -48,6 +48,9 @@ svg.delta{width:100%;height:auto;display:block;overflow:visible}
 .flow{fill:none;stroke-width:2.5;stroke-linecap:round;stroke-dasharray:38 250}
 .d-lab{font-family:var(--sans);font-size:12.5px;font-weight:600;fill:rgba(242,245,241,.92)}
 .d-cap{font-family:var(--mono);font-size:8px;fill:rgba(242,245,241,.4);letter-spacing:.16em}
+.sea{fill:rgba(127,217,190,.055)}
+.coast{fill:none;stroke:rgba(127,217,190,.32);stroke-width:1.5;stroke-dasharray:2 4}
+.land{fill:rgba(242,245,241,.022)}
 @media (prefers-reduced-motion:no-preference){
   .flow{animation:drift 17s linear infinite}
   .flow.f2{animation-duration:20s;animation-delay:-5s}
@@ -81,9 +84,10 @@ svg.delta{width:100%;height:auto;display:block;overflow:visible}
 .cast{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .card3d{border:1px solid var(--rule);background:var(--band);overflow:hidden;transition:transform .25s var(--ease)}
 .card3d:hover{transform:translateY(-4px)}
-.card3d .slot{aspect-ratio:3/4;background:linear-gradient(165deg, var(--band-2), var(--band));display:grid;place-items:center;position:relative;border-bottom:1px solid var(--rule)}
-.card3d .slot img{width:100%;height:100%;object-fit:cover;object-position:50% 12%}
-.card3d .slot span{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;color:var(--ink-3);text-transform:uppercase;text-align:center;padding:0 20px;line-height:1.7}
+.card3d .slot{aspect-ratio:3/4;background:radial-gradient(125% 82% at 50% 4%, #17453b, #0b2621 90%);position:relative;overflow:hidden;border-bottom:1px solid var(--rule)}
+.card3d .slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:50% 100%}
+.card3d .slot .glyph{position:absolute;inset:0;display:grid;place-items:center;padding:30px}
+.card3d .slot .glyph svg{width:100%;height:auto;max-width:150px}
 .card3d .meta{padding:18px 18px 20px}
 .card3d .role{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--jade);display:block;margin-bottom:.5rem}
 
@@ -166,40 +170,57 @@ svg.delta{width:100%;height:auto;display:block;overflow:visible}
     </div>
 
     <div class="flowwrap">
-      <svg class="delta" viewBox="0 0 1200 280" role="img" aria-label="Dòng chảy từ engine lõi qua ba bậc tới thị trường">
-        <text x="52" y="128" class="d-cap">NGUỒN</text>
-        <text x="52" y="148" class="d-lab">Engine lõi</text>
-        <circle cx="58" cy="180" r="6" fill="var(--glow)"/>
+      <svg class="delta" viewBox="0 0 1200 340" role="img" aria-label="Châu thổ sông Cửu Long: engine lõi chảy qua ba bậc rồi ra Biển Đông — thị trường quốc tế">
+        <!-- Biển Đông + bờ biển -->
+        <path class="sea" d="M1050,16 C1064,60 1040,102 1054,146 C1066,184 1044,228 1056,270 C1062,296 1052,314 1050,332 L1200,332 L1200,16 Z"/>
+        <path class="coast" d="M1050,16 C1064,60 1040,102 1054,146 C1066,184 1044,228 1056,270 C1062,296 1052,314 1050,332"/>
 
-        <path class="bed" d="M64,180 C230,180 250,64 400,64"/>
-        <path class="bed" d="M64,180 C230,180 250,158 400,158"/>
-        <path class="bed" d="M64,180 C230,180 250,246 400,246"/>
-        <path class="flow"    stroke="var(--glow)" d="M64,180 C230,180 250,64 400,64"/>
-        <path class="flow f2" stroke="var(--glow)" d="M64,180 C230,180 250,158 400,158"/>
-        <path class="flow f3" stroke="#E09258"     d="M64,180 C230,180 250,246 400,246"/>
+        <!-- lòng sông -->
+        <path class="bed" d="M66,176 C170,176 240,176 300,176"/>
+        <path class="bed" d="M300,176 C352,176 362,86 400,84"/>
+        <path class="bed" d="M300,176 C352,176 372,174 400,174"/>
+        <path class="bed" d="M300,176 C352,176 362,262 400,264"/>
+        <path class="bed" d="M400,84 C560,80 648,98 764,94 C884,90 972,76 1050,72"/>
+        <path class="bed" d="M400,174 C560,174 700,176 844,174 C944,173 992,174 1050,174"/>
+        <path class="bed" d="M400,264 C560,268 660,252 782,258 C902,264 980,270 1050,272"/>
+        <!-- phân lưu (cửu long) -->
+        <path class="bed" d="M902,94 C962,90 1002,60 1050,46"/>
+        <path class="bed" d="M936,174 C994,174 1014,142 1050,132"/>
+        <path class="bed" d="M936,174 C994,174 1014,204 1050,214"/>
+        <path class="bed" d="M902,258 C962,262 1002,290 1050,302"/>
 
-        <path class="bed" d="M400,64 C640,64 660,158 900,158"/>
-        <path class="bed" d="M400,158 C640,158 700,158 900,158"/>
-        <path class="bed" d="M400,246 C640,246 660,158 900,158"/>
-        <path class="flow f2" stroke="rgba(127,217,190,.6)" d="M400,64 C640,64 660,158 900,158"/>
-        <path class="flow"    stroke="rgba(127,217,190,.6)" d="M400,158 C640,158 700,158 900,158"/>
-        <path class="flow f3" stroke="rgba(224,146,88,.55)" d="M400,246 C640,246 660,158 900,158"/>
+        <!-- dòng chảy sống -->
+        <path class="flow"    stroke="var(--glow)" d="M66,176 C170,176 240,176 300,176"/>
+        <path class="flow f2" stroke="var(--glow)" d="M300,176 C352,176 362,86 400,84 C560,80 648,98 764,94 C884,90 972,76 1050,72"/>
+        <path class="flow"    stroke="rgba(127,217,190,.7)" d="M300,176 C352,176 372,174 400,174 C560,174 700,176 844,174 C944,173 992,174 1050,174"/>
+        <path class="flow f3" stroke="#E09258" d="M300,176 C352,176 362,262 400,264 C560,268 660,252 782,258 C902,264 980,270 1050,272"/>
 
-        <circle cx="400" cy="246" r="5.5" fill="#E09258"/>
-        <text x="418" y="240" class="d-cap">BẬC 1</text>
-        <text x="418" y="260" class="d-lab">Bến Phù Sa · chính danh hoá</text>
+        <!-- nguồn -->
+        <circle cx="60" cy="176" r="6" fill="var(--glow)"/>
+        <text x="30" y="150" class="d-cap">NGUỒN</text>
+        <text x="30" y="164" class="d-lab">Engine lõi</text>
 
-        <circle cx="400" cy="158" r="5.5" fill="var(--glow)"/>
-        <text x="418" y="152" class="d-cap">BẬC 2A</text>
-        <text x="418" y="172" class="d-lab">Bật Nghiệp · trong nước</text>
+        <!-- bậc 2B -->
+        <circle cx="400" cy="84" r="5.5" fill="var(--glow)"/>
+        <text x="416" y="60" class="d-cap">BẬC 2B</text>
+        <text x="416" y="74" class="d-lab">Hộ chiếu · quốc tế</text>
 
-        <circle cx="400" cy="64" r="5.5" fill="var(--glow)"/>
-        <text x="418" y="58" class="d-cap">BẬC 2B</text>
-        <text x="418" y="78" class="d-lab">Hộ chiếu · quốc tế</text>
+        <!-- bậc 2A -->
+        <circle cx="400" cy="174" r="5.5" fill="var(--glow)"/>
+        <text x="416" y="150" class="d-cap">BẬC 2A</text>
+        <text x="416" y="164" class="d-lab">Bật Nghiệp · trong nước</text>
 
-        <circle cx="906" cy="158" r="7" fill="var(--glow)"/>
-        <text x="926" y="152" class="d-cap">CỬA RA</text>
-        <text x="926" y="172" class="d-lab">Lớp học Việt Nam → thị trường quốc tế</text>
+        <!-- bậc 1 -->
+        <circle cx="400" cy="264" r="5.5" fill="#E09258"/>
+        <text x="416" y="288" class="d-cap">BẬC 1</text>
+        <text x="416" y="302" class="d-lab">Bến Phù Sa · chính danh hoá</text>
+
+        <!-- cửa ra -->
+        <circle cx="1050" cy="174" r="7" fill="var(--glow)"/>
+        <text x="1034" y="150" class="d-cap" text-anchor="end">CỬA RA · BIỂN ĐÔNG</text>
+        <text x="1034" y="164" class="d-lab" text-anchor="end">Thị trường quốc tế</text>
+
+        <text x="66" y="324" class="d-cap">ĐỒNG BẰNG SÔNG CỬU LONG</text>
       </svg>
     </div>
   </div>
@@ -280,7 +301,7 @@ svg.delta{width:100%;height:auto;display:block;overflow:visible}
         </div>
       </article>
       <article class="card3d">
-        <div class="slot"><img src="assets/character/anh-tu-ao-dai.webp" alt="PGS.TS Phan Anh Tú — cố vấn học thuật, mặc áo dài" loading="lazy"></div>
+        <div class="slot"><img src="assets/character/anh-tu-ao-dai-cut.webp" alt="PGS.TS Phan Anh Tú — cố vấn học thuật, mặc áo dài" loading="lazy"></div>
         <div class="meta">
           <span class="role" data-vi="Cố vấn học thuật" data-en="Academic advisor">Cố vấn học thuật</span>
           <h3 data-vi="Tú Phan" data-en="Tú Phan">Tú Phan</h3>
@@ -288,7 +309,14 @@ svg.delta{width:100%;height:auto;display:block;overflow:visible}
         </div>
       </article>
       <article class="card3d">
-        <div class="slot"><span data-vi="Chèn ảnh thẻ Hộ chiếu Thương hiệu<br>tỷ lệ 3:4" data-en="Insert Brand Passport card render<br>3:4 ratio">Chèn ảnh thẻ Hộ chiếu Thương hiệu<br>tỷ lệ 3:4</span></div>
+        <div class="slot"><div class="glyph"><svg viewBox="0 0 120 152" role="img" aria-label="Thẻ Hộ chiếu Thương hiệu">
+          <rect x="16" y="12" width="88" height="128" rx="9" fill="none" stroke="var(--glow)" stroke-width="2"/>
+          <ellipse cx="60" cy="56" rx="25" ry="20" fill="none" stroke="var(--glow)" stroke-width="4"/>
+          <circle cx="69" cy="56" r="6.5" fill="var(--glow)"/>
+          <line x1="36" y1="98" x2="84" y2="98" stroke="var(--glow)" stroke-width="2" opacity=".55"/>
+          <line x1="36" y1="110" x2="84" y2="110" stroke="var(--glow)" stroke-width="2" opacity=".38"/>
+          <line x1="36" y1="122" x2="70" y2="122" stroke="var(--glow)" stroke-width="2" opacity=".24"/>
+        </svg></div></div>
         <div class="meta">
           <span class="role" data-vi="Vật phẩm xuyên bậc" data-en="Cross-tier artefact">Vật phẩm xuyên bậc</span>
           <h3 data-vi="Hộ chiếu" data-en="The passport">Hộ chiếu</h3>
