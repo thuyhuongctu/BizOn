@@ -118,6 +118,9 @@ table.tbl .bl{font-family:var(--mono);font-size:.7rem;color:var(--ink-3);white-s
 .rv.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
 :focus-visible{outline:2px solid var(--jade);outline-offset:3px}
+.mt-09{margin-top:.9rem}.mt-20{margin-top:2rem}.mt-band{margin-top:clamp(34px,4vw,52px)}
+.tag-jade{color:var(--jade)}
+.note a{color:var(--jade);text-decoration:none}.note a:hover{text-decoration:underline}
 @media(max-width:960px){
   .split{grid-template-columns:1fr}
   .steps,.buy{grid-template-columns:1fr}
@@ -195,7 +198,7 @@ table.tbl .bl{font-family:var(--mono);font-size:.7rem;color:var(--ink-3);white-s
     <div class="step"><span class="num">3</span><h3 class="h-sm">Sáu chu kỳ, khóa vòng</h3><p class="body-sm">Các đội ra quyết định qua sáu chu kỳ. Giảng viên khóa vòng để dừng lại thảo luận trước khi sang vòng sau.</p><span class="code">khóa vòng · thảo luận</span></div>
     <div class="step"><span class="num">4</span><h3 class="h-sm">Xuất CSV để chấm</h3><p class="body-sm">Cuối buổi, xuất quyết định từng đội theo vòng và các chỉ số neo ra tệp CSV, dùng thẳng với rubric.</p><span class="code">báo cáo lớp · .csv</span></div>
   </div>
-  <p class="note" style="margin-top:2rem">Hướng dẫn vận hành chi tiết nằm trong sổ tay giảng viên đi kèm (<b>docs/huong-dan-giang-vien.md</b>); trang này tóm tắt để thầy cô quyết định trước khi mở lớp.</p>
+  <p class="note mt-20">Hướng dẫn vận hành chi tiết nằm trong sổ tay giảng viên đi kèm (<b>docs/huong-dan-giang-vien.md</b>); trang này tóm tắt để thầy cô quyết định trước khi mở lớp.</p>
 </section>
 
 <section class="sec sec-band" id="rubric">
@@ -220,10 +223,10 @@ table.tbl .bl{font-family:var(--mono);font-size:.7rem;color:var(--ink-3);white-s
           </tbody>
         </table>
       </div>
-      <p class="body-sm" style="margin-top:.9rem">Trụ quốc tế có bộ chuẩn đầu ra riêng <span class="tag" style="color:var(--jade)">BP-1 → BP-6</span> cho sáu quý kinh doanh, ánh xạ tương tự sang thang Bloom.</p>
+      <p class="body-sm mt-09">Trụ quốc tế có bộ chuẩn đầu ra riêng <span class="tag tag-jade">BP-1 → BP-6</span> cho sáu quý kinh doanh, ánh xạ tương tự sang thang Bloom.</p>
     </div>
 
-    <div class="rv" style="margin-top:clamp(34px,4vw,52px)">
+    <div class="rv mt-band">
       <h3 class="h-md">Thang bốn mức</h3>
       <div class="scale">
         <div><span class="lv"><b>1 · Chưa đạt</b></span><p>Kể lại đã làm gì, chưa giải thích được quyết định.</p></div>
@@ -254,7 +257,7 @@ table.tbl .bl{font-family:var(--mono);font-size:.7rem;color:var(--ink-3);white-s
     </div>
     <div>
       <p class="body">Các chỉ số này xuất ra CSV từ bảng điều khiển lớp, kèm quyết định từng đội theo vòng — đúng lược đồ nhật ký quyết định dùng chung cho cả chấm điểm và (khi có đồng thuận) nghiên cứu.</p>
-      <p class="note"><b>Chấm trên ảnh chụp đóng băng.</b> Điểm số chạy trên trạng thái đã khóa của vòng, không chạy trên trạng thái lớp đang sống — nên tái lập được. Chi tiết ở <a href="truong-hoc-thuat.html#tai-lap" style="color:var(--jade)">trang nền tảng học thuật</a>.</p>
+      <p class="note"><b>Chấm trên ảnh chụp đóng băng.</b> Điểm số chạy trên trạng thái đã khóa của vòng, không chạy trên trạng thái lớp đang sống — nên tái lập được. Chi tiết ở <a href="truong-hoc-thuat.html#tai-lap">trang nền tảng học thuật</a>.</p>
     </div>
   </div>
 </section>
@@ -276,7 +279,7 @@ table.tbl .bl{font-family:var(--mono);font-size:.7rem;color:var(--ink-3);white-s
       </div>
       <div>
         <p class="body">Thiết kế để chạy được trong điều kiện lớp học thật ở Việt Nam: mạng trường có thể yếu, sinh viên dùng điện thoại nhiều cấu hình. Vì vậy ứng dụng ưu tiên hoạt động ngoại tuyến và nhẹ, thay vì đòi hạ tầng phòng lab.</p>
-        <p class="note"><b>Dữ liệu thuộc về lớp.</b> Không quảng cáo, không bán dữ liệu. Dữ liệu học tập chỉ rời máy khi người dùng chủ động nộp, và luồng thu dữ liệu nghiên cứu <b>mặc định tắt</b> cho tới khi có phiếu đồng thuận được phê duyệt — xem <a href="truong-hoc-thuat.html#dong-thuan" style="color:var(--jade)">khung đồng thuận</a>.</p>
+        <p class="note"><b>Dữ liệu thuộc về lớp.</b> Không quảng cáo, không bán dữ liệu. Dữ liệu học tập chỉ rời máy khi người dùng chủ động nộp, và luồng thu dữ liệu nghiên cứu <b>mặc định tắt</b> cho tới khi có phiếu đồng thuận được phê duyệt — xem <a href="truong-hoc-thuat.html#dong-thuan">khung đồng thuận</a>.</p>
       </div>
     </div>
   </div>
