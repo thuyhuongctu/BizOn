@@ -1,0 +1,48 @@
+name: BizOn Institutional Quality
+
+# Cổng chất lượng cho THANH GHI THỂ CHẾ (Bước 8, Design System v1.0).
+# Chạy html-validate với cấu hình NGHIÊM (.htmlvalidate-institutional.json) trên các trang
+# thể chế — bật lại no-inline-style + aria-label-misuse, những quy tắc bị tắt ở cấu hình gốc
+# vì trang game academia3d-v2.html (khóa byte, không sửa được) vi phạm. Trang thể chế thì đạt.
+
+on:
+  pull_request:
+    paths:
+      - 'universe.html'
+      - 'truong.html'
+      - 'truong-hoc-thuat.html'
+      - 'truong-giang-vien.html'
+      - 'truong-gioi-thieu.html'
+      - 'truong-chinh-sach.html'
+      - 'css/tokens-institutional.css'
+      - 'css/bizon-institutional-fonts.css'
+      - '.htmlvalidate-institutional.json'
+      - '.github/workflows/institutional-quality.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  institutional-quality:
+    name: strict html-validate for the institutional register
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Validate institutional pages strictly (no inline style, correct aria-label)
+        run: |
+          npx --yes html-validate@8.24.1 --config .htmlvalidate-institutional.json \
+            universe.html \
+            truong.html \
+            truong-hoc-thuat.html \
+            truong-giang-vien.html \
+            truong-gioi-thieu.html \
+            truong-chinh-sach.html
