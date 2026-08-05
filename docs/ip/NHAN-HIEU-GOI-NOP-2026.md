@@ -102,9 +102,9 @@ phiên bản hiện hành và để đại diện SHCN chuẩn hoá.
 ## 5 · Tài liệu kèm theo tờ khai
 
 - [ ] Tờ khai theo mẫu hiện hành của Cục Sở hữu trí tuệ
-- [ ] Mẫu nhãn hiệu — **bản màu** và **bản đen trắng** (xem cột specimen ở §1)
+- [ ] **Mẫu nhãn hiệu** — bản màu và bản đen trắng: in từ [`logo/mau-nhan-8x8.html`](../../logo/mau-nhan-8x8.html) (mỗi ô 80×80mm, in ra PDF/giấy rồi cắt/dán vào tờ khai)
 - [ ] Chứng từ nộp phí, lệ phí
-- [ ] Giấy uỷ quyền — nếu nộp qua tổ chức đại diện
+- [ ] **Giấy uỷ quyền** — nếu nộp qua tổ chức đại diện: mẫu điền sẵn tại [`NHAN-HIEU-GIAY-UY-QUYEN-MAU.md`](./NHAN-HIEU-GIAY-UY-QUYEN-MAU.md)
 - [ ] Tài liệu chứng minh quyền ưu tiên — nếu có
 
 > Kích thước mẫu nhãn in trong đơn: kiểm tra quy định hiện hành của cơ quan tiếp
