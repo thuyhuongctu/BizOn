@@ -1,303 +1,278 @@
 <!DOCTYPE html>
-<html lang="vi">
+<!-- THANH GHI: THỂ CHẾ (chính sách dữ liệu & SHTT). Vỏ dùng chung: assets/css/shell.css + assets/js/shell.js.
+     CẨN TRỌNG: KHÔNG đổi URL, KHÔNG chuyển hướng. Giữ nguyên nội dung chính sách, chỉ đổi trình bày.
+     Trang riêng biệt với chinh-sach.html (chính sách quyền riêng tư Google Play) — KHÔNG đụng tệp đó. -->
+<html lang="vi" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BizOn — Chính sách dữ liệu &amp; Sở hữu trí tuệ</title>
-<meta name="description" content="Chính sách dữ liệu thể chế của BizOn: dữ liệu thuộc về lớp, không quảng cáo, không bán dữ liệu; đồng thuận tách mục đích mặc định tắt; không lưu danh tính; sở hữu trí tuệ và giấy phép độc quyền. Nói thẳng cả câu hỏi pháp lý còn mở.">
+<meta name="description" content="Dữ liệu thuộc về lớp học: không quảng cáo, không bán dữ liệu, không lưu danh tính, luồng thu nghiên cứu mặc định tắt. Sáu nguyên tắc, thu gì/không thu gì, đồng thuận hai mục đích tách riêng, giới hạn quyền rút lui nói thẳng, phạm vi sở hữu trí tuệ và các câu hỏi pháp lý còn mở.">
 <meta name="theme-color" content="#FFFFFF">
-<!-- Trang THANH GHI THỂ CHẾ (chính sách dữ liệu & SHTT), cặp với truong.html. Nạp
-     tokens-institutional.css (KHÔNG nạp tokens-clay.css). Bộ chữ TỰ LƯU TRỮ trong assets/fonts.
-     KHÁC với chinh-sach.html (bản quyền riêng tư cho Google Play, trang đất sét trong app) —
-     trang này là chính sách thể chế cho trưởng khoa/hội đồng/bộ phận mua sắm. -->
 <link rel="icon" type="image/svg+xml" href="assets/brand/bizon-favicon.svg">
-<meta property="og:type" content="article">
-<meta property="og:title" content="BizOn — Chính sách dữ liệu &amp; Sở hữu trí tuệ">
-<meta property="og:description" content="Dữ liệu thuộc về lớp · đồng thuận tách mục đích mặc định tắt · không lưu danh tính · giấy phép độc quyền. Trường Đại học Cần Thơ.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="BizOn — Chính sách dữ liệu &amp; SHTT">
+<meta property="og:description" content="Dữ liệu thuộc về lớp — nói thẳng. Không quảng cáo, không bán dữ liệu, đồng thuận hai mục đích tách riêng, và các câu hỏi pháp lý còn mở.">
 <meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/brand/og-truong.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="css/bizon-institutional-fonts.css">
-<link rel="stylesheet" href="css/tokens-institutional.css">
+<link rel="stylesheet" href="assets/css/shell.css">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.6;-webkit-font-smoothing:antialiased}
-.shell{max-width:var(--max);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
-img,svg{display:block;max-width:100%}
-a{color:inherit}
-.h-xl{font-size:clamp(2.4rem,5.6vw,4.6rem);font-weight:800;line-height:1.02;letter-spacing:-.036em}
-.h-lg{font-size:clamp(1.9rem,3.8vw,3.1rem);font-weight:700;line-height:1.06;letter-spacing:-.03em}
-.h-md{font-size:clamp(1.25rem,2vw,1.6rem);font-weight:600;line-height:1.18;letter-spacing:-.018em}
-.h-sm{font-size:1.02rem;font-weight:600;letter-spacing:-.01em;line-height:1.32}
-.tag{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3)}
-.body-lg{font-size:clamp(1.02rem,1.35vw,1.18rem);color:var(--ink-2);max-width:60ch}
-.body{font-size:.94rem;color:var(--ink-2)}
-.body-sm{font-size:.86rem;color:var(--ink-2)}
-.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.88);backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color .3s}
-.nav.stuck{border-bottom-color:var(--rule)}
-.nav-in{display:flex;align-items:center;gap:32px;height:66px}
-.brand{display:inline-flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.03em;font-size:1.14rem;text-decoration:none}
-.brand img{width:26px;height:26px}
-.brand span{color:var(--jade)}
-.nav-links{display:flex;gap:26px;margin-left:auto;align-items:center}
-.nav-links a{text-decoration:none;font-size:.875rem;color:var(--ink-2);transition:color .2s}
-.nav-links a:hover{color:var(--ink)}
-.btn{display:inline-flex;align-items:center;gap:.5rem;font-size:.875rem;font-weight:500;text-decoration:none;padding:.62rem 1.15rem;border-radius:2px;transition:background .2s,color .2s,border-color .2s}
-.btn-solid{background:var(--jade);color:#fff}
-.btn-solid:hover{background:#0B4A3F}
-.btn-line{border:1px solid var(--rule);color:var(--ink)}
-.btn-line:hover{border-color:var(--ink)}
-.nav-toggle{display:none}
-.hero{padding-top:clamp(48px,6vw,88px);padding-bottom:clamp(34px,4vw,54px)}
-.hero .tag{margin-bottom:1.5rem}
-.hero h1{margin-bottom:1.4rem;max-width:16ch}
-.hero h1 em{font-style:normal;color:var(--jade)}
-.crumb{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:2rem}
-.crumb a{text-decoration:none;color:var(--ink-3)}
-.crumb a:hover{color:var(--jade)}
-.claims{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
-.claims-in{display:grid;grid-template-columns:repeat(3,1fr)}
-.claim{padding:34px 30px 32px;border-left:1px solid var(--rule)}
-.claim:first-child{border-left:none;padding-left:0}
-.claim:last-child{padding-right:0}
-.claim .h-sm{margin:.7rem 0 .5rem}
-.claim .src{font-family:var(--mono);font-size:.68rem;color:var(--jade);letter-spacing:.05em;margin-top:.9rem;display:block}
-.sec{padding-top:clamp(56px,7vw,104px);padding-bottom:clamp(56px,7vw,104px)}
-.sec-band{background:var(--band)}
-.sec-head{max-width:62ch;margin-bottom:clamp(30px,4vw,52px)}
-.sec-head .tag{margin-bottom:1.1rem}
-.sec-head .body-lg{margin-top:1.1rem}
-.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,64px);align-items:start}
-.principles{list-style:none;counter-reset:p;margin-top:.4rem}
-.principles li{padding:20px 0;border-top:1px solid var(--rule);display:grid;grid-template-columns:44px 1fr;gap:18px;align-items:start}
-.principles li:last-child{border-bottom:1px solid var(--rule)}
-.principles li::before{counter-increment:p;content:counter(p,decimal-leading-zero);font-family:var(--mono);font-size:.78rem;color:var(--jade);font-weight:500;padding-top:.2rem}
-.principles h3{font-size:1rem;font-weight:600;letter-spacing:-.01em;margin-bottom:.3rem}
-.principles p{font-size:.9rem;color:var(--ink-2);max-width:60ch}
+/* ═══════════ RIÊNG TRANG CHÍNH SÁCH ═══════════ */
+.hero-sm{padding:clamp(46px,7vw,88px) 0 clamp(28px,4vw,44px);border-bottom:1px solid var(--rule)}
+.hero-sm h1{font-size:clamp(2rem,4.6vw,3.4rem)}
+.hero-sm h1 em{font-style:normal;color:var(--jade)}
+.hero-sm .lede{margin-top:1.1rem}
+
+.principles{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.principle{background:var(--paper);padding:22px 20px}
+.principle .no{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;color:var(--jade);display:block;margin-bottom:.55rem}
+.principle h3{font-size:1rem;margin-bottom:.4rem}
+.principle .body{font-size:.88rem}
+
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.col{background:var(--paper);padding:clamp(22px,2.6vw,30px)}
+.col .ct{font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:1rem}
+.col.yes .ct{color:var(--jade)}
+.col.no .ct{color:var(--silt)}
+.col ul{list-style:none;display:grid;gap:.7rem}
+.col li{display:grid;grid-template-columns:20px 1fr;gap:10px;align-items:baseline;font-size:.9rem}
+.col.yes li .m{color:var(--jade);font-weight:700}
+.col.no li .m{color:var(--silt);font-weight:700}
+
+.consent{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2.4vw,24px)}
+.cbox{border:1px solid var(--rule);padding:clamp(20px,2.4vw,26px);background:var(--paper)}
+.cbox .off{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--silt);margin-bottom:.9rem}
+.cbox .sw{width:30px;height:17px;border-radius:9px;background:color-mix(in srgb,var(--silt) 30%,var(--band));position:relative;flex:none}
+.cbox .sw::after{content:"";position:absolute;top:2px;left:2px;width:13px;height:13px;border-radius:50%;background:var(--paper);box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.cbox h3{margin-bottom:.45rem}
+.cbox .body{font-size:.9rem}
+.consent-note{border-left:3px solid var(--jade);padding-left:18px;margin-top:clamp(18px,2.4vw,26px);font-size:.92rem;color:var(--ink-2);max-width:70ch}
+.consent-note b{color:var(--ink);font-weight:600}
+
+.limits{border:2px solid var(--silt);background:color-mix(in srgb,var(--silt) 6%,var(--paper));padding:clamp(22px,3vw,32px)}
+.limits h3{color:var(--silt);margin-bottom:.6rem}
+.limits .body{font-size:.95rem;max-width:72ch}
+.limits .body b{color:var(--ink);font-weight:600}
+
 .spec{list-style:none}
-.spec li{padding:16px 0;border-top:1px solid var(--rule);display:grid;grid-template-columns:170px 1fr;gap:18px;align-items:baseline}
+.spec li{padding:15px 0;border-top:1px solid var(--rule);display:grid;grid-template-columns:170px 1fr;gap:18px;align-items:baseline}
 .spec li:last-child{border-bottom:1px solid var(--rule)}
-.spec .k{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.spec .k{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
 .spec .v{font-size:.9rem;color:var(--ink)}
-.spec .v em{font-style:normal;color:var(--jade);font-weight:500}
 .spec .v a{color:var(--jade);text-decoration:none}
 .spec .v a:hover{text-decoration:underline}
-.note{border-left:2px solid var(--jade);padding-left:20px;font-size:.92rem;color:var(--ink-2);margin-top:1.8rem;max-width:64ch}
-.note b{color:var(--ink);font-weight:600}
-.open{list-style:none;margin-top:1.4rem}
-.open li{padding:16px 0;border-top:1px solid var(--rule);font-size:.9rem;color:var(--ink-2);display:grid;grid-template-columns:26px 1fr;gap:14px}
-.open li:last-child{border-bottom:1px solid var(--rule)}
-.open li b{font-family:var(--mono);font-size:.72rem;color:var(--silt);font-weight:500;padding-top:.12rem}
-.cta{background:var(--ink);color:#fff}
-.cta .h-lg{margin-bottom:1.2rem}
-.cta .body-lg{color:rgba(255,255,255,.66)}
-.cta .btn-line{border-color:rgba(255,255,255,.28);color:#fff}
-.cta .btn-line:hover{border-color:#fff}
-.cta .btn-solid{background:#fff;color:var(--ink)}
-.cta .btn-solid:hover{background:#E3EDE9}
-.cta-in{display:flex;gap:14px;margin-top:2.2rem;flex-wrap:wrap}
-.foot{border-top:1px solid var(--rule);padding:44px 0 56px}
-.foot-in{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:flex-start}
-.foot .tag{margin-bottom:.6rem}
-.foot-links{display:flex;gap:22px;flex-wrap:wrap}
-.foot-links a{font-size:.85rem;color:var(--ink-2);text-decoration:none}
-.foot-links a:hover{color:var(--ink)}
-.rv{opacity:0;transform:translateY(14px);transition:opacity .6s cubic-bezier(.2,.7,.3,1),transform .6s cubic-bezier(.2,.7,.3,1)}
-.rv.in{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
-:focus-visible{outline:2px solid var(--jade);outline-offset:3px}
-.note a{color:var(--jade);text-decoration:none}.note a:hover{text-decoration:underline}
-@media(max-width:960px){
-  .split{grid-template-columns:1fr}
-  .claims-in{grid-template-columns:1fr}
-  .claim{border-left:none;border-top:1px solid var(--rule);padding-left:0;padding-right:0}
-  .claim:first-child{border-top:none}
+.spec .v em{font-style:normal;color:var(--jade);font-weight:500}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,52px);align-items:start}
+.split .note{border-left:3px solid var(--rule);padding-left:18px;font-size:.9rem;color:var(--ink-2);margin-top:1.2rem}
+.split .note b{color:var(--ink);font-weight:600}
+.split .note a{color:var(--jade);text-decoration:none}
+
+.open{list-style:none;display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.open li{background:var(--paper);padding:18px 20px;display:grid;grid-template-columns:34px 1fr;gap:14px;align-items:baseline;font-size:.92rem}
+.open li b.n{font-family:var(--mono);font-size:.8rem;color:var(--jade)}
+.open li b{color:var(--ink);font-weight:600}
+
+@media(max-width:820px){
+  .principles{grid-template-columns:1fr}
+  .cols2,.consent,.split{grid-template-columns:1fr}
   .spec li{grid-template-columns:1fr;gap:5px}
-  .nav-links{display:none}
-  .nav-links.open{display:flex;position:absolute;top:66px;left:0;right:0;background:#fff;flex-direction:column;gap:0;padding:8px var(--pad) 20px;border-bottom:1px solid var(--rule)}
-  .nav-links.open a{padding:12px 0;border-bottom:1px solid var(--rule);width:100%}
-  .nav-toggle{display:inline-flex;margin-left:auto;background:none;border:1px solid var(--rule);border-radius:2px;padding:.5rem .8rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;cursor:pointer;text-transform:uppercase}
 }
 </style>
 </head>
 <body>
 
+<div class="prog" id="prog"></div>
+
 <header class="nav" id="nav">
   <div class="shell nav-in">
-    <a class="brand" href="universe.html"><img src="assets/brand/bizon-favicon.svg" alt="">Biz<span>On</span></a>
-    <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">Menu</button>
-    <nav class="nav-links" id="navLinks" aria-label="Điều hướng chính">
-      <a href="universe.html">Vũ trụ</a>
-      <a href="#nguyen-tac">Nguyên tắc</a>
-      <a href="#dong-thuan">Đồng thuận</a>
-      <a href="#shtt">Sở hữu trí tuệ</a>
-      <a href="#con-mo">Câu hỏi mở</a>
-      <a href="truong-hoc-thuat.html">Học thuật</a>
-      <a class="btn btn-solid" href="mailto:thuyhuongctu@gmail.com?subject=BizOn%20-%20H%E1%BB%8Fi%20v%E1%BB%81%20ch%C3%ADnh%20s%C3%A1ch%20d%E1%BB%AF%20li%E1%BB%87u">Hỏi về chính sách</a>
-    </nav>
+    <a class="wm" href="universe.html">
+      <span class="wm-txt">Biz<svg class="wm-mark" width="0.98em" height="1em" viewBox="0 0 98 100" aria-hidden="true"><ellipse cx="49" cy="58" rx="40" ry="34" fill="none" stroke="currentColor" stroke-width="15"/><circle cx="63" cy="58" r="11" fill="var(--jade)"/></svg>n</span>
+      <span class="wm-sub">Bật Nghiệp</span>
+    </a>
+    <div class="tgl" role="group" aria-label="Ngôn ngữ">
+      <button id="bvi" type="button" aria-pressed="true">VI</button>
+      <button id="ben" type="button" aria-pressed="false">EN</button>
+    </div>
+    <button class="ico" id="bth" type="button" aria-pressed="false" aria-label="Đổi giao diện sáng / tối"><span id="thi" aria-hidden="true">☾</span></button>
+    <a class="btn btn-solid btn-sm" href="truong-hoc-thuat.html" data-vi="Học thuật" data-en="Academic">Học thuật</a>
   </div>
 </header>
 
 <main id="top">
 
-<section class="shell hero">
-  <p class="crumb"><a href="truong.html">BizOn</a> · Chính sách dữ liệu</p>
-  <p class="tag">Trường Đại học Cần Thơ · Chính sách</p>
-  <h1 class="h-xl">Dữ liệu thuộc về lớp — <em>nói thẳng</em>.</h1>
-  <p class="body-lg">Chính sách này dành cho trưởng khoa, hội đồng và bộ phận mua sắm: BizOn không quảng cáo, không bán dữ liệu, không lưu danh tính; luồng thu dữ liệu nghiên cứu mặc định tắt. Trang cũng nêu thẳng những câu hỏi pháp lý còn mở, thay vì hứa điều phần mềm không làm được.</p>
-</section>
-
-<section class="claims">
-  <div class="shell claims-in">
-    <div class="claim rv">
-      <span class="tag">01 · Không khai thác</span>
-      <h3 class="h-sm">Không quảng cáo, không bán dữ liệu</h3>
-      <p class="body-sm">Không có quảng cáo trong sản phẩm và không bán dữ liệu người học. Dữ liệu học tập chỉ rời máy khi người dùng chủ động nộp.</p>
-      <span class="src">local-first · opt-in</span>
-    </div>
-    <div class="claim rv">
-      <span class="tag">02 · Không danh tính</span>
-      <h3 class="h-sm">Mã đội đã băm, không PII</h3>
-      <p class="body-sm">Nhật ký quyết định chỉ chứa mã đội đã băm; bộ lọc chặn tên và email lọt vào. Không lưu họ tên, email hay số điện thoại người học.</p>
-      <span class="src">team_id băm · chặn PII</span>
-    </div>
-    <div class="claim rv">
-      <span class="tag">03 · Đồng thuận</span>
-      <h3 class="h-sm">Hai mục đích, mặc định tắt</h3>
-      <p class="body-sm">Nghiên cứu và cải tiến sản phẩm là hai ô đồng ý tách riêng, cả hai mặc định tắt cho tới khi có phiếu được phê duyệt.</p>
-      <span class="src">research · product · OFF</span>
-    </div>
-  </div>
-</section>
-
-<section class="shell sec" id="nguyen-tac">
-  <div class="sec-head rv">
-    <p class="tag">Nguyên tắc dữ liệu</p>
-    <h2 class="h-lg">Sáu nguyên tắc, không ngoại lệ</h2>
-    <p class="body-lg">Đây là các ràng buộc cứng mà thiết kế hệ thống tuân theo, không phải lời hứa marketing. Chúng nhất quán với khung quản trị dữ liệu của bản pilot học tập.</p>
-  </div>
-  <ul class="principles rv">
-    <li><div><h3>Cục bộ là mặc định</h3><p>Tiến trình lưu trên máy người dùng. Dữ liệu chỉ gửi đi khi người học chủ động opt-in, không tự động.</p></div></li>
-    <li><div><h3>Không yêu cầu danh tính</h3><p>Không đòi họ tên, email hay số điện thoại. Mã đội được băm; bộ lọc chặn danh tính lọt vào nhật ký.</p></div></li>
-    <li><div><h3>Thời hạn lưu rõ ràng</h3><p>Dữ liệu có thời hạn lưu và cơ chế xóa sớm ở tầng lưu trữ, thay vì giữ vô thời hạn.</p></div></li>
-    <li><div><h3>Không dùng AI tự chấm</h3><p>Phần thảo luận/nghiền ngẫm của người học không được dùng để một mô hình ngôn ngữ tự động chấm điểm.</p></div></li>
-    <li><div><h3>Engine xác định là nguồn kết quả</h3><p>Mọi kết quả mô phỏng đến từ engine xác định — nguồn duy nhất — nên tái lập và giải thích được.</p></div></li>
-    <li><div><h3>Không quảng cáo, không bán dữ liệu</h3><p>Không có quảng cáo trong sản phẩm; dữ liệu người học không phải hàng hóa.</p></div></li>
-  </ul>
-  <p class="note">Chi tiết kỹ thuật–quản trị nằm trong khung quản trị dữ liệu của bản pilot (<b>docs/learning/</b>). Trang này là bản tóm tắt chính sách; nó không thay thế phê duyệt đạo đức nghiên cứu, quy định của cơ sở đào tạo hay tư vấn pháp lý.</p>
-</section>
-
-<section class="sec sec-band" id="dong-thuan">
+<!-- ═══ HERO NHỎ ═══ -->
+<section class="hero-sm">
   <div class="shell">
-    <div class="sec-head rv">
-      <p class="tag">Đồng thuận &amp; quyền rút lui</p>
-      <h2 class="h-lg">Tách mục đích, nói thẳng giới hạn</h2>
-      <p class="body-lg">Khung đồng thuận tách “nghiên cứu học thuật” và “cải tiến sản phẩm” thành hai ô đồng ý riêng, mặc định tắt. Quyền rút lui được nêu đúng giới hạn kỹ thuật của nó, không hứa quá.</p>
+    <p class="tag" data-vi="Chính sách dữ liệu &amp; SHTT" data-en="Data policy &amp; IP">Chính sách dữ liệu &amp; SHTT</p>
+    <h1 data-vi="Dữ liệu thuộc về lớp — nói thẳng" data-en="The data belongs to the class — plainly">Dữ liệu thuộc về lớp — <em>nói thẳng</em></h1>
+    <p class="lede" data-vi="Chính sách này dành cho trưởng khoa, hội đồng và bộ phận mua sắm: BizOn không quảng cáo, không bán dữ liệu, không lưu danh tính; luồng thu dữ liệu nghiên cứu mặc định tắt. Trang cũng nêu thẳng những câu hỏi pháp lý còn mở, thay vì hứa điều phần mềm không làm được." data-en="This policy is for deans, committees and procurement: BizOn runs no ads, sells no data, stores no identity; the research-data flow is off by default. It also states plainly the open legal questions, rather than promising what the software cannot do.">Chính sách này dành cho trưởng khoa, hội đồng và bộ phận mua sắm: BizOn không quảng cáo, không bán dữ liệu, không lưu danh tính; luồng thu dữ liệu nghiên cứu mặc định tắt. Trang cũng nêu thẳng những câu hỏi pháp lý còn mở, thay vì hứa điều phần mềm không làm được.</p>
+  </div>
+</section>
+
+<!-- ═══ SÁU NGUYÊN TẮC ═══ -->
+<section id="nguyen-tac">
+  <div class="shell">
+    <div class="head rv">
+      <p class="tag" data-vi="Nguyên tắc dữ liệu" data-en="Data principles">Nguyên tắc dữ liệu</p>
+      <h2 data-vi="Sáu nguyên tắc, không ngoại lệ" data-en="Six principles, no exceptions">Sáu nguyên tắc, không ngoại lệ</h2>
+      <p class="lede" data-vi="Đây là các ràng buộc cứng mà thiết kế hệ thống tuân theo, không phải lời hứa marketing. Chúng nhất quán với khung quản trị dữ liệu của bản pilot học tập." data-en="These are hard constraints the system design obeys, not marketing promises. They are consistent with the learning pilot's data-governance framework.">Đây là các ràng buộc cứng mà thiết kế hệ thống tuân theo, không phải lời hứa marketing. Chúng nhất quán với khung quản trị dữ liệu của bản pilot học tập.</p>
+    </div>
+    <div class="principles rv">
+      <div class="principle"><span class="no">01</span><h3 data-vi="Cục bộ là mặc định" data-en="Local-first by default">Cục bộ là mặc định</h3><p class="body" data-vi="Tiến trình lưu trên máy người dùng. Dữ liệu chỉ gửi đi khi người học chủ động opt-in, không tự động." data-en="Progress is stored on the user's device. Data is sent only when the learner opts in, never automatically.">Tiến trình lưu trên máy người dùng. Dữ liệu chỉ gửi đi khi người học chủ động opt-in, không tự động.</p></div>
+      <div class="principle"><span class="no">02</span><h3 data-vi="Không yêu cầu danh tính" data-en="No identity required">Không yêu cầu danh tính</h3><p class="body" data-vi="Không đòi họ tên, email hay số điện thoại. Mã đội được băm; bộ lọc chặn danh tính lọt vào nhật ký." data-en="No name, email or phone required. Team codes are hashed; a filter blocks identity from entering the log.">Không đòi họ tên, email hay số điện thoại. Mã đội được băm; bộ lọc chặn danh tính lọt vào nhật ký.</p></div>
+      <div class="principle"><span class="no">03</span><h3 data-vi="Thời hạn lưu rõ ràng" data-en="Clear retention window">Thời hạn lưu rõ ràng</h3><p class="body" data-vi="Dữ liệu có thời hạn lưu và cơ chế xóa sớm ở tầng lưu trữ, thay vì giữ vô thời hạn." data-en="Data has a retention window and an early-deletion mechanism at the storage layer, rather than being kept indefinitely.">Dữ liệu có thời hạn lưu và cơ chế xóa sớm ở tầng lưu trữ, thay vì giữ vô thời hạn.</p></div>
+      <div class="principle"><span class="no">04</span><h3 data-vi="Không dùng AI tự chấm" data-en="No AI auto-grading">Không dùng AI tự chấm</h3><p class="body" data-vi="Phần thảo luận/nghiền ngẫm của người học không được dùng để một mô hình ngôn ngữ tự động chấm điểm." data-en="Learner discussion/reflection is not used for a language model to auto-grade.">Phần thảo luận/nghiền ngẫm của người học không được dùng để một mô hình ngôn ngữ tự động chấm điểm.</p></div>
+      <div class="principle"><span class="no">05</span><h3 data-vi="Engine xác định là nguồn kết quả" data-en="Deterministic engine is the source">Engine xác định là nguồn kết quả</h3><p class="body" data-vi="Mọi kết quả mô phỏng đến từ engine xác định — nguồn duy nhất — nên tái lập và giải thích được." data-en="All simulation outcomes come from the deterministic engine — the single source — so they are reproducible and explainable.">Mọi kết quả mô phỏng đến từ engine xác định — nguồn duy nhất — nên tái lập và giải thích được.</p></div>
+      <div class="principle"><span class="no">06</span><h3 data-vi="Không quảng cáo, không bán dữ liệu" data-en="No ads, no data sales">Không quảng cáo, không bán dữ liệu</h3><p class="body" data-vi="Không có quảng cáo trong sản phẩm; dữ liệu người học không phải hàng hóa." data-en="No ads in the product; learner data is not a commodity.">Không có quảng cáo trong sản phẩm; dữ liệu người học không phải hàng hóa.</p></div>
+    </div>
+    <p class="body rv" data-vi="Chi tiết kỹ thuật–quản trị nằm trong khung quản trị dữ liệu của bản pilot (docs/learning/). Trang này là bản tóm tắt chính sách; nó không thay thế phê duyệt đạo đức nghiên cứu, quy định của cơ sở đào tạo hay tư vấn pháp lý." data-en="Technical-governance detail lives in the pilot's data-governance framework (docs/learning/). This page is a policy summary; it does not replace research-ethics approval, institutional regulations or legal counsel.">Chi tiết kỹ thuật–quản trị nằm trong khung quản trị dữ liệu của bản pilot (<b>docs/learning/</b>). Trang này là bản tóm tắt chính sách; nó không thay thế phê duyệt đạo đức nghiên cứu, quy định của cơ sở đào tạo hay tư vấn pháp lý.</p>
+  </div>
+</section>
+
+<!-- ═══ THU GÌ / KHÔNG THU GÌ ═══ -->
+<section class="band" id="thu-gi">
+  <div class="shell">
+    <div class="head rv">
+      <p class="tag" data-vi="Minh bạch thu thập" data-en="Collection transparency">Minh bạch thu thập</p>
+      <h2 data-vi="Thu gì, không thu gì" data-en="What we collect, what we don't">Thu gì, không thu gì</h2>
+    </div>
+    <div class="cols2 rv">
+      <div class="col yes">
+        <span class="ct" data-vi="Có thu (khi được đồng thuận)" data-en="Collected (with consent)">Có thu (khi được đồng thuận)</span>
+        <ul>
+          <li><span class="m">+</span><span data-vi="Mã đội đã băm — không truy ngược ra cá nhân." data-en="Hashed team code — not traceable to an individual.">Mã đội đã băm — không truy ngược ra cá nhân.</span></li>
+          <li><span class="m">+</span><span data-vi="Nhật ký chuỗi quyết định của đội trong ván." data-en="The team's decision-sequence log within a game.">Nhật ký chuỗi quyết định của đội trong ván.</span></li>
+          <li><span class="m">+</span><span data-vi="Ảnh chụp trạng thái đóng băng mỗi vòng (để chấm và tái lập)." data-en="Frozen state snapshots per round (for grading and reproduction).">Ảnh chụp trạng thái đóng băng mỗi vòng (để chấm và tái lập).</span></li>
+          <li><span class="m">+</span><span data-vi="Mã băm của lượt chơi để kiểm tra tái lập." data-en="A play-through hash to verify reproduction.">Mã băm của lượt chơi để kiểm tra tái lập.</span></li>
+        </ul>
+      </div>
+      <div class="col no">
+        <span class="ct" data-vi="Không bao giờ thu" data-en="Never collected">Không bao giờ thu</span>
+        <ul>
+          <li><span class="m">−</span><span data-vi="Họ tên, email, số điện thoại — mọi thông tin định danh (PII)." data-en="Name, email, phone — any personally identifiable information (PII).">Họ tên, email, số điện thoại — mọi thông tin định danh (PII).</span></li>
+          <li><span class="m">−</span><span data-vi="Dữ liệu theo dõi quảng cáo hay mã định danh thiết bị để tiếp thị." data-en="Ad-tracking data or device identifiers for marketing.">Dữ liệu theo dõi quảng cáo hay mã định danh thiết bị để tiếp thị.</span></li>
+          <li><span class="m">−</span><span data-vi="Vị trí, sinh trắc học, danh bạ, hay quyền truy cập ngoài nhu cầu." data-en="Location, biometrics, contacts, or permissions beyond need.">Vị trí, sinh trắc học, danh bạ, hay quyền truy cập ngoài nhu cầu.</span></li>
+          <li><span class="m">−</span><span data-vi="Phần nghiền ngẫm của người học để một AI tự chấm." data-en="Learner reflections for an AI to auto-grade.">Phần nghiền ngẫm của người học để một AI tự chấm.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ĐỒNG THUẬN HAI MỤC ĐÍCH ═══ -->
+<section id="dong-thuan">
+  <div class="shell">
+    <div class="head rv">
+      <p class="tag" data-vi="Đồng thuận" data-en="Consent">Đồng thuận</p>
+      <h2 data-vi="Hai mục đích, hai ô riêng" data-en="Two purposes, two separate boxes">Hai mục đích, hai ô riêng</h2>
+      <p class="lede" data-vi="“Nghiên cứu học thuật” và “cải tiến sản phẩm” là hai ô đồng ý tách riêng, cả hai mặc định tắt. Từ chối một ô — hoặc cả hai — vẫn dùng được đầy đủ sản phẩm." data-en="“Academic research” and “product improvement” are two separate consent boxes, both off by default. Declining one — or both — still lets you use the full product.">“Nghiên cứu học thuật” và “cải tiến sản phẩm” là hai ô đồng ý tách riêng, cả hai mặc định tắt. Từ chối một ô — hoặc cả hai — vẫn dùng được đầy đủ sản phẩm.</p>
+    </div>
+    <div class="consent rv">
+      <div class="cbox">
+        <span class="off"><span class="sw" aria-hidden="true"></span><span data-vi="Mặc định TẮT" data-en="OFF by default">Mặc định TẮT</span></span>
+        <h3 class="h-md" data-vi="Nghiên cứu học thuật" data-en="Academic research">Nghiên cứu học thuật</h3>
+        <p class="body" data-vi="Chỉ ghi khi có phiếu nghiên cứu được hội đồng đạo đức phê duyệt. Dùng nhật ký đã băm để nghiên cứu hiệu quả học tập." data-en="Recorded only under an ethics-committee-approved research form. Uses hashed logs to study learning effectiveness.">Chỉ ghi khi có phiếu nghiên cứu được hội đồng đạo đức phê duyệt. Dùng nhật ký đã băm để nghiên cứu hiệu quả học tập.</p>
+      </div>
+      <div class="cbox">
+        <span class="off"><span class="sw" aria-hidden="true"></span><span data-vi="Mặc định TẮT" data-en="OFF by default">Mặc định TẮT</span></span>
+        <h3 class="h-md" data-vi="Cải tiến sản phẩm" data-en="Product improvement">Cải tiến sản phẩm</h3>
+        <p class="body" data-vi="Chỉ ghi khi người dùng bật riêng ô này. Dùng dữ liệu đã băm để sửa lỗi và cải thiện trải nghiệm." data-en="Recorded only when the user turns on this box separately. Uses hashed data to fix bugs and improve the experience.">Chỉ ghi khi người dùng bật riêng ô này. Dùng dữ liệu đã băm để sửa lỗi và cải thiện trải nghiệm.</p>
+      </div>
+    </div>
+    <p class="consent-note rv" data-vi="Nhật ký quyết định là hợp đồng dữ liệu dùng chung cho cả chấm điểm và (khi có đồng thuận) nghiên cứu — nhưng chấm điểm không cần biết ai đã đồng ý, vì điểm chạy trên ảnh chụp đóng băng và nhật ký chỉ chứa mã băm." data-en="The decision log is a shared data contract for both grading and (with consent) research — but grading need not know who consented, since scoring runs on frozen snapshots and the log holds only hashes."><b>Chấm điểm không phụ thuộc đồng thuận.</b> Nhật ký quyết định là hợp đồng dữ liệu dùng chung cho cả chấm điểm và (khi có đồng thuận) nghiên cứu — nhưng chấm điểm không cần biết ai đã đồng ý, vì điểm chạy trên ảnh chụp đóng băng và nhật ký chỉ chứa mã băm.</p>
+  </div>
+</section>
+
+<!-- ═══ GIỚI HẠN QUYỀN RÚT LUI ═══ -->
+<section class="band" id="rut-lui">
+  <div class="shell">
+    <div class="head rv">
+      <p class="tag" data-vi="Quyền rút lui" data-en="Right to withdraw">Quyền rút lui</p>
+      <h2 data-vi="Nói trước giới hạn, không giấu" data-en="State the limit upfront, hide nothing">Nói trước giới hạn, không giấu</h2>
+    </div>
+    <div class="limits rv">
+      <h3 data-vi="Rút lui chỉ chặn được về sau" data-en="Withdrawal only blocks what comes after">Rút lui chỉ chặn được về sau</h3>
+      <p class="body" data-vi="Rút lui chặn mọi lần ghi và ước lượng về sau. Nhưng khi dữ liệu đã được gộp thành tham số cụm đã tính trước đó, phần đóng góp riêng lẻ không tách ra được nữa. Chúng tôi nói điều này trước, không giấu: hứa “xóa sạch mọi dấu vết” là hứa điều mã không làm được." data-en="Withdrawal blocks all future recording and estimation. But once data has been aggregated into previously computed cluster parameters, an individual contribution can no longer be separated out. We say this upfront, hiding nothing: promising to “erase every trace” is promising what the code cannot do."><b>Rút lui chặn mọi lần ghi và ước lượng về sau.</b> Nhưng khi dữ liệu đã được gộp thành <b>tham số cụm</b> đã tính trước đó, phần đóng góp riêng lẻ không tách ra được nữa. Chúng tôi nói điều này trước, không giấu: hứa “xóa sạch mọi dấu vết” là hứa điều mã không làm được.</p>
+      <p class="body" data-vi="Phiếu đồng thuận phải nói đúng giới hạn này. Chi tiết kỹ thuật ở trang nền tảng học thuật." data-en="The consent form must state this limit accurately. Technical detail is on the academic foundation page.">Phiếu đồng thuận phải nói đúng giới hạn này. Chi tiết kỹ thuật ở <a href="truong-hoc-thuat.html#chuan-dau-ra">trang nền tảng học thuật</a>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SỞ HỮU TRÍ TUỆ ═══ -->
+<section id="shtt">
+  <div class="shell">
+    <div class="head rv">
+      <p class="tag" data-vi="Sở hữu trí tuệ &amp; giấy phép" data-en="Intellectual property &amp; licence">Sở hữu trí tuệ &amp; giấy phép</p>
+      <h2 data-vi="Độc quyền, miễn phí cho lớp học" data-en="Proprietary, free for the classroom">Độc quyền, miễn phí cho lớp học</h2>
+      <p class="lede" data-vi="Mã nguồn, thuật toán engine mô phỏng, thiết kế nhân vật (Lumina, Tú Phan, Đội Demo), thư viện nhạc gốc và tên gọi cùng nhận diện BizOn thuộc về nhóm tác giả. Nội dung dưới đây tóm theo tệp LICENSE và mục bản quyền của README." data-en="Source code, the simulation-engine algorithms, character designs (Lumina, Tú Phan, the Demo Team), the original music library, and the BizOn name and identity belong to the authors. The below summarises the LICENSE file and the README's copyright section.">Mã nguồn, thuật toán engine mô phỏng, thiết kế nhân vật (Lumina, Tú Phan, Đội Demo), thư viện nhạc gốc và tên gọi cùng nhận diện BizOn thuộc về nhóm tác giả. Nội dung dưới đây tóm theo tệp <em>LICENSE</em> và mục bản quyền của README.</p>
     </div>
     <div class="split rv">
       <div>
         <ul class="spec">
-          <li><span class="k">Hai ô riêng</span><span class="v"><em>research</em> và <em>product</em> đồng ý độc lập; không gộp một ô.</span></li>
-          <li><span class="k">Mặc định tắt</span><span class="v">Chỉ ghi khi có phiếu tương ứng được phê duyệt.</span></li>
-          <li><span class="k">Rút lui</span><span class="v">Chặn mọi lần ghi và ước lượng <em>về sau</em>.</span></li>
-          <li><span class="k">Giới hạn</span><span class="v">Không gỡ được phần đã gộp vào tham số cụm đã tính trước đó.</span></li>
+          <li><span class="k" data-vi="Loại giấy phép" data-en="Licence type">Loại giấy phép</span><span class="v" data-vi="Phần mềm độc quyền — xem tệp LICENSE." data-en="Proprietary software — see the LICENSE file.">Phần mềm <em>độc quyền</em> — xem tệp LICENSE.</span></li>
+          <li><span class="k" data-vi="Miễn phí (giới hạn)" data-en="Free (limited)">Miễn phí (giới hạn)</span><span class="v" data-vi="Arcade và game bậc 1 (Gánh hàng rong): miễn phí vĩnh viễn. Hai trụ: miễn phí cho ĐH Cần Thơ và một học kỳ dùng thử ở nơi khác." data-en="Arcade and the tier-1 game (street vendor): free forever. The two pillars: free for Can Tho University and one trial semester elsewhere.">Arcade và game bậc 1 (Gánh hàng rong): miễn phí vĩnh viễn. Hai trụ: miễn phí cho ĐH Cần Thơ và một học kỳ dùng thử ở nơi khác.</span></li>
+          <li><span class="k" data-vi="Cần giấy phép viết" data-en="Written licence needed">Cần giấy phép viết</span><span class="v" data-vi="Dùng tiếp hai trụ ở nơi khác, Instructor Studio, sao chép/tái triển khai, trích tách nhân vật/nhạc, hoặc mọi dùng có thu phí." data-en="Continued use of the two pillars elsewhere, Instructor Studio, copying/redeployment, extracting characters/music, or any paid use.">Dùng tiếp hai trụ ở nơi khác, Instructor Studio, sao chép/tái triển khai, trích tách nhân vật/nhạc, hoặc mọi dùng có thu phí.</span></li>
+          <li><span class="k" data-vi="Liên hệ cấp phép" data-en="Licensing contact">Liên hệ cấp phép</span><span class="v"><a href="mailto:thuyhuongctu@gmail.com">thuyhuongctu@gmail.com</a></span></li>
         </ul>
       </div>
       <div>
-        <p class="body">Nhật ký quyết định là hợp đồng dữ liệu dùng chung cho cả chấm điểm và (khi có đồng thuận) nghiên cứu — nhưng chấm điểm không cần biết ai đã đồng ý, vì điểm chạy trên ảnh chụp đóng băng và nhật ký chỉ chứa mã băm.</p>
-        <p class="note"><b>Phiếu phải nói đúng giới hạn rút lui.</b> Rút lui chỉ ngăn được các lần ước lượng sau; hứa “xóa sạch mọi dấu vết” là hứa điều mã không làm được. Chi tiết ở <a href="truong-hoc-thuat.html#dong-thuan">trang nền tảng học thuật</a>.</p>
+        <p class="body" data-vi="Hồ sơ đăng ký (quyền tác giả, nhãn hiệu) và chiến lược thương mại hóa được quản lý trong kho tài liệu riêng của nhóm tác giả." data-en="Registration records (copyright, trademark) and the commercialisation strategy are managed in the authors' own document repository.">Hồ sơ đăng ký (quyền tác giả, nhãn hiệu) và chiến lược thương mại hóa được quản lý trong kho tài liệu riêng của nhóm tác giả.</p>
+        <p class="note" data-vi="Phông chữ tự lưu trữ. Các tệp .woff2 dưới assets/fonts/ theo Giấy phép Phông mở SIL 1.1; OFL chỉ áp cho các tệp phông đó. Không nạp phông hay mã bên thứ ba từ CDN khi chạy." data-en="Self-hosted fonts. The .woff2 files under assets/fonts/ are under the SIL Open Font License 1.1; the OFL applies only to those font files. No third-party fonts or code are loaded from a CDN at runtime."><b>Phông chữ tự lưu trữ.</b> Các tệp <em>.woff2</em> dưới <em>assets/fonts/</em> theo Giấy phép Phông mở SIL 1.1; OFL chỉ áp cho các tệp phông đó. Không nạp phông hay mã bên thứ ba từ CDN khi chạy.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="shell sec" id="shtt">
-  <div class="sec-head rv">
-    <p class="tag">Sở hữu trí tuệ &amp; giấy phép</p>
-    <h2 class="h-lg">Độc quyền, miễn phí cho lớp học</h2>
-    <p class="body-lg">Mã nguồn, thuật toán engine mô phỏng, thiết kế nhân vật (Lumina, Tú Phan, Đội Demo), thư viện nhạc gốc và tên gọi cùng nhận diện BizOn thuộc về nhóm tác giả. Nội dung dưới đây tóm theo tệp <em>LICENSE</em> và mục bản quyền của README.</p>
-  </div>
-  <div class="split rv">
-    <div>
-      <ul class="spec">
-        <li><span class="k">Loại giấy phép</span><span class="v">Phần mềm <em>độc quyền</em> — xem tệp LICENSE.</span></li>
-        <li><span class="k">Miễn phí (giới hạn)</span><span class="v">Arcade và game bậc 1 (Gánh hàng rong): miễn phí vĩnh viễn. Hai trụ: miễn phí cho ĐH Cần Thơ và một học kỳ dùng thử ở nơi khác.</span></li>
-        <li><span class="k">Cần giấy phép viết</span><span class="v">Dùng tiếp hai trụ ở nơi khác, Instructor Studio, sao chép/tái triển khai, trích tách nhân vật/nhạc, hoặc mọi dùng có thu phí.</span></li>
-        <li><span class="k">Liên hệ</span><span class="v"><a href="mailto:thuyhuongctu@gmail.com">thuyhuongctu@gmail.com</a></span></li>
-      </ul>
-    </div>
-    <div>
-      <p class="body">Hồ sơ đăng ký (quyền tác giả, nhãn hiệu) và chiến lược thương mại hóa được quản lý trong kho tài liệu riêng của nhóm tác giả.</p>
-      <p class="note"><b>Phông chữ tự lưu trữ.</b> Các tệp <em>.woff2</em> dưới <em>assets/fonts/</em> theo Giấy phép Phông mở SIL 1.1; OFL chỉ áp cho các tệp phông đó. Không nạp phông hay mã bên thứ ba từ CDN khi chạy.</p>
-    </div>
-  </div>
-</section>
-
-<section class="sec sec-band" id="con-mo">
+<!-- ═══ CÂU HỎI PHÁP LÝ CÒN MỞ ═══ -->
+<section class="band" id="con-mo">
   <div class="shell">
-    <div class="sec-head rv">
-      <p class="tag">Câu hỏi pháp lý còn mở</p>
-      <h2 class="h-lg">Điều chúng tôi chưa trả lời thay luật sư</h2>
-      <p class="body-lg">Một chính sách trung thực phải phân biệt điều phần mềm quyết được và điều chỉ người quyết được. Các mục dưới đây là điểm chặn <em>pháp lý</em>, không phải điểm chặn kỹ thuật — thuộc về luật sư và hội đồng đạo đức.</p>
+    <div class="head rv">
+      <p class="tag" data-vi="Câu hỏi pháp lý còn mở" data-en="Open legal questions">Câu hỏi pháp lý còn mở</p>
+      <h2 data-vi="Điều chúng tôi chưa trả lời thay luật sư" data-en="What we don't answer in a lawyer's place">Điều chúng tôi chưa trả lời thay luật sư</h2>
+      <p class="lede" data-vi="Một chính sách trung thực phải phân biệt điều phần mềm quyết được và điều chỉ người quyết được. Các mục dưới đây là điểm chặn pháp lý, không phải điểm chặn kỹ thuật — thuộc về luật sư và hội đồng đạo đức." data-en="An honest policy must separate what software can decide from what only people can. The items below are legal blockers, not technical ones — for lawyers and the ethics committee.">Một chính sách trung thực phải phân biệt điều phần mềm quyết được và điều chỉ người quyết được. Các mục dưới đây là điểm chặn <em class="em-jade">pháp lý</em>, không phải điểm chặn kỹ thuật — thuộc về luật sư và hội đồng đạo đức.</p>
     </div>
     <ul class="open rv">
-      <li><b>01</b><span><b>Ai sở hữu dữ liệu người học khi sản phẩm được bán hoặc cấp phép cho trường khác?</b> Cần điều khoản chuyển giao quyền kiểm soát dữ liệu (data controller) trong hợp đồng — chưa có lời giải sạch, chờ luật sư.</span></li>
-      <li><b>02</b><span><b>Câu chữ chính xác của hai ô đồng ý</b> và phiếu song ngữ có hiệu lực — thuộc hội đồng đạo đức duyệt, không do phần mềm tự đặt.</span></li>
-      <li><b>03</b><span><b>Xung đột vai trò giảng viên kiêm nhà nghiên cứu</b>: quy trình tách người thu đồng thuận khỏi người chấm điểm cần hội đồng phê duyệt, ngoài phần đã xử lý bằng thiết kế (băm + chấm trên ảnh chụp).</span></li>
-      <li><b>04</b><span><b>Thời hạn lưu và lịch xóa cụ thể</b> cho dữ liệu thô — cần chốt theo quy định cơ sở đào tạo và tư vấn pháp lý.</span></li>
+      <li><b class="n">01</b><span><b data-vi="Ai sở hữu dữ liệu người học khi sản phẩm được bán hoặc cấp phép cho trường khác?" data-en="Who owns learner data when the product is sold or licensed to another school?">Ai sở hữu dữ liệu người học khi sản phẩm được bán hoặc cấp phép cho trường khác?</b> <span data-vi="Cần điều khoản chuyển giao quyền kiểm soát dữ liệu (data controller) trong hợp đồng — chưa có lời giải sạch, chờ luật sư." data-en="A data-controller transfer clause is needed in the contract — no clean answer yet, pending a lawyer.">Cần điều khoản chuyển giao quyền kiểm soát dữ liệu (data controller) trong hợp đồng — chưa có lời giải sạch, chờ luật sư.</span></span></li>
+      <li><b class="n">02</b><span><b data-vi="Câu chữ chính xác của hai ô đồng ý" data-en="The exact wording of the two consent boxes">Câu chữ chính xác của hai ô đồng ý</b> <span data-vi="và phiếu song ngữ có hiệu lực — thuộc hội đồng đạo đức duyệt, không do phần mềm tự đặt." data-en="and a valid bilingual form — for the ethics committee to approve, not for the software to set.">và phiếu song ngữ có hiệu lực — thuộc hội đồng đạo đức duyệt, không do phần mềm tự đặt.</span></span></li>
+      <li><b class="n">03</b><span><b data-vi="Xung đột vai trò giảng viên kiêm nhà nghiên cứu" data-en="The instructor-as-researcher role conflict">Xung đột vai trò giảng viên kiêm nhà nghiên cứu</b><span data-vi=": quy trình tách người thu đồng thuận khỏi người chấm điểm cần hội đồng phê duyệt, ngoài phần đã xử lý bằng thiết kế (băm + chấm trên ảnh chụp)." data-en=": a process separating who collects consent from who grades needs committee approval, beyond what design already handles (hashing + grading on snapshots).">: quy trình tách người thu đồng thuận khỏi người chấm điểm cần hội đồng phê duyệt, ngoài phần đã xử lý bằng thiết kế (băm + chấm trên ảnh chụp).</span></span></li>
+      <li><b class="n">04</b><span><b data-vi="Thời hạn lưu và lịch xóa cụ thể" data-en="Specific retention window and deletion schedule">Thời hạn lưu và lịch xóa cụ thể</b> <span data-vi="cho dữ liệu thô — cần chốt theo quy định cơ sở đào tạo và tư vấn pháp lý." data-en="for raw data — to be settled per institutional regulation and legal counsel.">cho dữ liệu thô — cần chốt theo quy định cơ sở đào tạo và tư vấn pháp lý.</span></span></li>
     </ul>
-    <p class="note">Cho tới khi bốn mục trên được duyệt, luồng thu dữ liệu nghiên cứu vẫn <b>tắt theo mặc định</b>: hạ tầng ghi đã sẵn sàng nhưng không ghi dữ liệu thật.</p>
+    <p class="consent-note rv" data-vi="Cho tới khi bốn mục trên được duyệt, luồng thu dữ liệu nghiên cứu vẫn tắt theo mặc định: hạ tầng ghi đã sẵn sàng nhưng không ghi dữ liệu thật." data-en="Until the four items above are approved, the research-data flow stays off by default: the recording infrastructure is ready but records no real data."><b>Cho tới khi bốn mục trên được duyệt,</b> luồng thu dữ liệu nghiên cứu vẫn tắt theo mặc định: hạ tầng ghi đã sẵn sàng nhưng không ghi dữ liệu thật.</p>
   </div>
 </section>
 
-<section class="sec cta" id="lien-he">
+<!-- ═══ CTA ═══ -->
+<section id="lien-he">
   <div class="shell">
-    <h2 class="h-lg">Hỏi về chính sách dữ liệu</h2>
-    <p class="body-lg">Chúng tôi sẵn sàng gửi khung quản trị dữ liệu, bản thảo khung đồng thuận và tệp giấy phép để bộ phận pháp chế và hội đồng của trường rà soát trước khi triển khai.</p>
-    <div class="cta-in">
-      <a class="btn btn-solid" href="mailto:thuyhuongctu@gmail.com?subject=BizOn%20-%20H%E1%BB%8Fi%20v%E1%BB%81%20ch%C3%ADnh%20s%C3%A1ch%20d%E1%BB%AF%20li%E1%BB%87u">Gửi câu hỏi qua email</a>
-      <a class="btn btn-line" href="truong-hoc-thuat.html">Xem nền tảng học thuật</a>
+    <div class="head rv">
+      <p class="tag" data-vi="Liên hệ" data-en="Contact">Liên hệ</p>
+      <h2 data-vi="Hỏi về chính sách dữ liệu" data-en="Ask about the data policy">Hỏi về chính sách dữ liệu</h2>
+      <p class="lede" data-vi="Chúng tôi sẵn sàng gửi khung quản trị dữ liệu, bản thảo khung đồng thuận và tệp giấy phép để bộ phận pháp chế và hội đồng của trường rà soát trước khi triển khai." data-en="We are glad to send the data-governance framework, the draft consent framework and the licence file for your legal team and committee to review before deployment.">Chúng tôi sẵn sàng gửi khung quản trị dữ liệu, bản thảo khung đồng thuận và tệp giấy phép để bộ phận pháp chế và hội đồng của trường rà soát trước khi triển khai.</p>
+    </div>
+    <div class="btn-row rv">
+      <a class="btn btn-solid" href="mailto:thuyhuongctu@gmail.com?subject=BizOn%20-%20H%E1%BB%8Fi%20v%E1%BB%81%20ch%C3%ADnh%20s%C3%A1ch%20d%E1%BB%AF%20li%E1%BB%87u" data-vi="Gửi câu hỏi qua email" data-en="Email a question">Gửi câu hỏi qua email</a>
+      <a class="btn btn-line" href="truong-hoc-thuat.html" data-vi="Xem nền tảng học thuật" data-en="Academic foundation">Xem nền tảng học thuật</a>
     </div>
   </div>
 </section>
 
 </main>
 
-<footer class="foot">
-  <div class="shell foot-in">
+<footer>
+  <div class="shell fgrid">
     <div>
       <p class="tag">BizOn</p>
-      <p class="body-sm">Mô phỏng kinh doanh cho lớp học đại học.<br>Trường Đại học Cần Thơ · © 2026 Đỗ Thùy Hương &amp; Phan Anh Tú.</p>
+      <p class="body" data-vi="Mô phỏng kinh doanh cho lớp học đại học.<br>Đại học Cần Thơ · Trường Kinh tế." data-en="Business simulation for university classrooms.<br>Can Tho University · School of Economics.">Mô phỏng kinh doanh cho lớp học đại học.<br>Đại học Cần Thơ · Trường Kinh tế.</p>
     </div>
-    <div class="foot-links">
-      <a href="truong.html">Trang chủ</a>
-      <a href="#nguyen-tac">Nguyên tắc</a>
-      <a href="#shtt">Sở hữu trí tuệ</a>
-      <a href="truong-hoc-thuat.html">Học thuật</a>
-      <a href="mailto:thuyhuongctu@gmail.com">Liên hệ</a>
-    </div>
+    <nav class="flinks" aria-label="Chân trang">
+      <a href="universe.html" data-vi="Vũ trụ" data-en="Universe">Vũ trụ</a>
+      <a href="truong.html" data-vi="Trang chủ" data-en="Home">Trang chủ</a>
+      <a href="truong-hoc-thuat.html" data-vi="Học thuật" data-en="Academic">Học thuật</a>
+      <a href="truong-giang-vien.html" data-vi="Giảng viên" data-en="Instructors">Giảng viên</a>
+    </nav>
   </div>
 </footer>
 
-<script>
-const nav = document.getElementById('nav');
-const onScroll = () => nav.classList.toggle('stuck', window.scrollY > 8);
-onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
-const toggle = document.getElementById('navToggle');
-const links = document.getElementById('navLinks');
-toggle.addEventListener('click', () => {
-  const open = links.classList.toggle('open');
-  toggle.setAttribute('aria-expanded', String(open));
-});
-links.addEventListener('click', e => {
-  if (e.target.tagName === 'A') { links.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); }
-});
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
-}, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
-document.querySelectorAll('.rv').forEach(el => io.observe(el));
-</script>
+<script src="assets/js/shell.js"></script>
 </body>
 </html>
