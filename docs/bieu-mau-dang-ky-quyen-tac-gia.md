@@ -157,15 +157,17 @@ Rà soát giao diện hiện tại phát hiện **các dấu hiệu của chủ 
 | Chữ **ORCID · OSF** | `doi-ngu.html` · `gioi-thieu.html` | Không chụp mục Hồ sơ học thuật |
 | Chữ **Zenodo** | 5 trang: hai trang trên, thêm `classic-home.html` · `du-an.html` · `lien-he.html` | Không chụp phần trích dẫn và DOI |
 | Chữ **Supabase** | `doi-ngu.html` · `chinh-sach.html` · `giang-vien.html`, và tài liệu kỹ thuật | Không chụp phần liệt kê công nghệ |
-| Chữ **Harvard Business Publishing · Forio** | `food-truck.html` | **Không chụp trang này** — xem Cảnh báo 2 |
+| ~~Chữ **Harvard Business Publishing · Forio**~~ | ~~`food-truck.html`~~ | **ĐÃ THAY THẾ 05/08/2026** — trang không chứa dấu hiệu HBP/Forio; xem Cảnh báo 2 |
 
 **Cách làm gọn nhất:** chụp ảnh giao diện các màn hình **bên trong game** (màn đăng nhập, bảng điều khiển, màn quyết định, báo cáo, kết quả cuối ván) — những màn này không chứa dấu hiệu bên thứ ba. Tránh chụp trang chủ và trang Đội ngũ.
 
-### ⚠️ Cảnh báo 2 — Phải loại tệp `food-truck.html`
+### Cảnh báo 2 — ĐÃ THAY THẾ 05/08/2026 (Bến Phù Sa là tác phẩm độc lập)
 
-Trang này là phương án bản địa hóa xây dựng dựa trên cấu trúc mô phỏng **«The Food Truck Challenge»** của Michael A. Roberto — Harvard Business Publishing · Forio. Đây là **tác phẩm phái sinh** từ tác phẩm của bên thứ ba.
+> **Cập nhật:** Theo *Thuyết minh phân định tài sản trí tuệ* (05/08/2026), bậc 1 **«Bến Phù Sa» là tác phẩm ĐỘC LẬP** (Nhóm B — tài sản có trước, đăng ký được), KHÔNG phải phái sinh. Trang trò chơi **không chứa dấu hiệu HBP/Forio nào** (đã kiểm). Tệp đã đổi tên `food-truck.html → ben-phu-sa.html`; URL cũ chuyển hướng. **Không còn phải loại khỏi đĩa/bản in.** Cần luật sư SHTT xác nhận trước khi nộp.
 
-**Phải loại khỏi cả đĩa nộp lẫn bản in mã nguồn.** Đăng ký quyền tác giả cho phần này là khai báo sai sự thật, có thể dẫn tới hủy giấy chứng nhận.
+<sub>— Cảnh báo cũ, ĐÃ THAY THẾ (giữ để truy vết) —</sub>
+
+~~Trang này là phương án bản địa hóa xây dựng dựa trên cấu trúc mô phỏng **«The Food Truck Challenge»** của Michael A. Roberto — Harvard Business Publishing · Forio. Đây là tác phẩm phái sinh từ tác phẩm của bên thứ ba. Phải loại khỏi cả đĩa nộp lẫn bản in mã nguồn.~~
 
 ### Gợi ý chọn 15–20 trang mã nguồn để in
 
@@ -373,7 +375,7 @@ Giống Tác phẩm 1.
 |---|---|---|
 | 8 | Chụp ảnh giao diện **đã loại bỏ dấu hiệu bên thứ ba** | Chụp màn hình bên trong game, tránh trang chủ và trang Đội ngũ |
 | 9 | In 15–20 trang mã nguồn theo danh sách gợi ý | Ưu tiên `js/engine.js` |
-| 10 | **Loại tệp `food-truck.html`** khỏi đĩa và bản in | Bắt buộc |
+| 10 | ~~**Loại tệp `food-truck.html`** khỏi đĩa và bản in~~ | **ĐÃ THAY THẾ 05/08/2026** — Bến Phù Sa là tác phẩm độc lập (Nhóm B), giữ lại; xem Cảnh báo 2 |
 | 11 | Ghi 02 đĩa cho mỗi hồ sơ — 8 đĩa tổng cộng | Ghi nhãn: tên tác phẩm, tác giả, ngày |
 | 12 | Xuất nhật ký 271 phiên bản ra PDF làm phụ lục | Chứng cứ mốc thời gian |
 
