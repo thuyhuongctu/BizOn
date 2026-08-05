@@ -192,6 +192,9 @@
 
 </main>
 
+<!-- AIBIS: engine tất định chọn phương thức thâm nhập (dùng chung với app/aibis). Nạp trước mã game. -->
+<script src="js/aibis/entry-mode-models.js"></script>
+<script src="js/aibis/entry-mode-engine.js"></script>
 <script>
 (function () {
   var $ = function (id) { return document.getElementById(id); };
@@ -265,6 +268,32 @@
     foot: [], flags: {}, usedEv: [], phase: 'obs',
     sel: { prio: null, budget: 1, enter: null, enterMode: null, intel: [] },
   };
+  // ── AIBIS: gợi ý phương thức thâm nhập bằng engine tất định (tham khảo · số liệu minh hoạ) ──
+  // Ánh xạ 3 phương thức của game sang 6 phương thức chuẩn của AIBIS.
+  var AIBIS_MAP = { 0: 'digital_entry', 1: 'export', 2: 'joint_venture' };
+  // Hồ sơ quốc gia MINH HOẠ theo trait mỗi thị trường (0..100) — chưa phải số liệu thật.
+  var AIBIS_CTX = {
+    0: { digitalReadiness: 85, crossBorderNetworkEffects: 72, dataRegulationRisk: 45, institutionalDistance: 35, culturalDistance: 30, logisticsQuality: 70, tariffPressure: 30, ipProtection: 55, opportunismRisk: 45, localPartnerValue: 45, networkImportance: 50, marketSize: 60, politicalRisk: 35 },
+    1: { digitalReadiness: 55, institutionalDistance: 72, culturalDistance: 55, logisticsQuality: 78, tariffPressure: 35, ipProtection: 82, opportunismRisk: 28, localPartnerValue: 52, networkImportance: 52, marketSize: 55, politicalRisk: 28, dataRegulationRisk: 40, crossBorderNetworkEffects: 40 },
+    2: { digitalReadiness: 66, institutionalDistance: 45, culturalDistance: 45, logisticsQuality: 60, tariffPressure: 42, ipProtection: 50, opportunismRisk: 52, localPartnerValue: 62, networkImportance: 62, marketSize: 72, politicalRisk: 42, dataRegulationRisk: 45, crossBorderNetworkEffects: 55 },
+    3: { digitalReadiness: 60, institutionalDistance: 60, culturalDistance: 50, logisticsQuality: 66, tariffPressure: 34, ipProtection: 72, opportunismRisk: 32, localPartnerValue: 66, networkImportance: 56, marketSize: 50, politicalRisk: 28, dataRegulationRisk: 40, crossBorderNetworkEffects: 45 },
+    4: { digitalReadiness: 60, institutionalDistance: 66, culturalDistance: 72, logisticsQuality: 78, tariffPressure: 30, ipProtection: 82, opportunismRisk: 28, localPartnerValue: 82, networkImportance: 76, marketSize: 60, politicalRisk: 24, dataRegulationRisk: 40, crossBorderNetworkEffects: 45 },
+    5: { digitalReadiness: 60, institutionalDistance: 50, culturalDistance: 45, logisticsQuality: 86, tariffPressure: 46, ipProtection: 60, opportunismRisk: 46, localPartnerValue: 55, networkImportance: 66, marketSize: 76, politicalRisk: 46, dataRegulationRisk: 45, crossBorderNetworkEffects: 55 }
+  };
+  function aibisFit(m) {
+    var E = window.BizOnEntryModeEngine, MO = window.BizOnEntryModeModels;
+    if (!E || !MO || !AIBIS_CTX[m]) return null;
+    var f = FIRMS[S.firm] || FIRMS[0] || {};
+    var ctx = { country: AIBIS_CTX[m], firm: { financialCapacity: Math.min(100, (f.cash || 8) * 10), internationalExperience: 45, digitalCapability: f.capab || 45 } };
+    var out = {};
+    MODES.forEach(function (md) {
+      var model = null;
+      for (var i = 0; i < MO.modes.length; i++) { if (MO.modes[i].id === AIBIS_MAP[md.id]) { model = MO.modes[i]; break; } }
+      if (model) { try { out[md.id] = Math.round(E.scoreMode(model, ctx).score); } catch (e) { } }
+    });
+    return out;
+  }
+
   function F() { return FIRMS[S.firm]; }
 
   /* ================= 24 SỰ KIỆN ================= */
@@ -500,10 +529,12 @@
         return '<button class="bp-opt" data-g="prio" data-i="' + i + '" onclick="bpPick(\'prio\',' + i + ')">' + p.icon + ' ' + p.name + '<small>' + p.note + '</small></button>';
       }).join('') + '</div>' +
       '<p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-4 mb-1.5">2 · Thâm nhập thị trường mới (tùy chọn – tối đa 1 thị trường/quý)</p>' +
+      '<p class="text-[10px] opacity-55 mb-1.5">🧭 <b>AIBIS</b> (engine tất định) chấm mức phù hợp 0–100 cho mỗi phương thức theo hồ sơ thị trường &amp; doanh nghiệp — <i>tham khảo, số liệu minh hoạ</i>.</p>' +
       (notIn.length ? '<div class="space-y-2">' + notIn.map(function (m) {
+        var _fit = aibisFit(m);
         return '<div class="text-[12px] font-bold mt-1">' + MKTS[m].icon + ' ' + MKTS[m].name + ' <span class="opacity-55 font-semibold">(tri thức ' + clamp(S.know[m]) + '/100 – ' + MKTS[m].trait + ')</span></div>' +
           '<div class="grid sm:grid-cols-3 gap-2">' + MODES.map(function (md) {
-            return '<button class="bp-opt" data-g="ent" data-m="' + m + '" data-md="' + md.id + '" onclick="bpEnter(' + m + ',' + md.id + ')">' + md.icon + ' ' + md.name + '<small>vốn ' + f1(md.cost) + ' tỷ · ' + md.note + '</small></button>';
+            return '<button class="bp-opt" data-g="ent" data-m="' + m + '" data-md="' + md.id + '" onclick="bpEnter(' + m + ',' + md.id + ')">' + md.icon + ' ' + md.name + '<small>vốn ' + f1(md.cost) + ' tỷ · ' + md.note + '</small>' + (_fit && _fit[md.id] != null ? '<span style="display:block;margin-top:3px;font-family:ui-monospace,monospace;font-size:10px;font-weight:800;color:#0F5C4E">AIBIS ' + _fit[md.id] + ' · phù hợp</span>' : '') + '</button>';
           }).join('') + '</div>';
       }).join('') + '</div>' : '<p class="text-[12px] opacity-60">Bạn đã hiện diện ở cả ' + MKTS.length + ' thị trường.</p>') +
       '<p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-4 mb-1.5">3 · Mức vận hành</p>' +
