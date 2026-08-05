@@ -636,5 +636,17 @@ function arMusic() {
 <script src="js/site-dock.js" defer></script>
 <script src="js/site-footer.js" defer></script>
 <script src="js/site-nav.js" defer></script>
+<!-- Lối nhỏ về Vũ trụ (ngôn ngữ đất sét) — không phải thanh nav thể chế -->
+<a class="vutru-goc" href="universe.html" aria-label="Về Vũ trụ BizOn">
+  <span class="vg-o" aria-hidden="true"></span><span>Vũ trụ</span>
+</a>
+<style>
+.vutru-goc{position:fixed;left:14px;bottom:14px;z-index:9999;display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:16px;background:#fff;color:#033337;text-decoration:none;font-family:'Manrope','Manrope Fallback',system-ui,sans-serif;font-weight:700;font-size:.82rem;box-shadow:0 8px 22px -6px rgba(0,102,135,.25),inset 0 -3px 0 rgba(0,0,0,.06);border:1px solid rgba(3,51,55,.08);transition:transform .18s ease,box-shadow .18s ease}
+.vutru-goc:hover{transform:translateY(-2px);box-shadow:0 12px 28px -6px rgba(0,102,135,.32),inset 0 -3px 0 rgba(0,0,0,.06)}
+.vutru-goc:focus-visible{outline:2px solid #0F5C4E;outline-offset:3px}
+.vutru-goc .vg-o{width:16px;height:16px;border-radius:50%;background:#0F5C4E;box-shadow:inset -4px 0 0 -1px #7FD9BE}
+@media(max-width:520px){.vutru-goc{left:10px;bottom:10px;padding:7px 11px;font-size:.76rem}}
+@media print{.vutru-goc{display:none}}
+</style>
 </body>
 </html>
