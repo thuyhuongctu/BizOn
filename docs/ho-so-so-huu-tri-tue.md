@@ -278,15 +278,25 @@ Nếu «BizOn» đơn thuần bị vướng, **«BizOn Bật Nghiệp»** dạng
 
 # PHẦN D · KHÔNG ĐĂNG KÝ / PHẢI LOẠI TRỪ
 
-## D1 · «Gánh Hàng Khởi Nghiệp: Bến Phù Sa» – TUYỆT ĐỐI KHÔNG ĐƯA VÀO HỒ SƠ
+## D1 · Bến Phù Sa (bậc 1) — ĐÃ ĐỊNH VỊ LẠI LÀ TÁC PHẨM ĐỘC LẬP
 
-Trang `food-truck.html` là **phương án bản địa hóa phục vụ giảng dạy, xây dựng dựa trên cấu trúc mô phỏng «The Food Truck Challenge»** của Michael A. Roberto – Harvard Business Publishing · Forio.
+> **CẬP NHẬT 05/08/2026 — thay thế nội dung mục này.** Theo *Thuyết minh phân định tài sản trí tuệ* (bản 05/08/2026), bậc 1 **«Bến Phù Sa» là tác phẩm ĐỘC LẬP**, hình thành trước đề tài bằng nguồn lực cá nhân → thuộc **Nhóm B (quyền tác giả đối với tài sản có trước) và đăng ký được**, KHÔNG phải tác phẩm phái sinh.
+>
+> - Bài học của bậc 1 là **chính danh hoá** (đánh đổi giữa hoạt động phi chính thức và chính danh hoá) — khác hẳn «The Food Truck Challenge».
+> - Trang trò chơi **không chứa bất kỳ dấu hiệu hay dòng ghi công nào của Harvard Business Publishing · Forio** (đã kiểm: không có chuỗi "Harvard/Forio/Food Truck Challenge/Roberto"). Liên tưởng cũ chỉ nằm ở **tên tệp**.
+> - Tệp đã đổi tên `food-truck.html → ben-phu-sa.html` để loại bỏ liên tưởng đó; URL cũ chuyển hướng sang bản mới.
+> - **Hướng dẫn "loại khỏi bản in" bên dưới không còn áp dụng** — giữ lại làm hồ sơ lịch sử.
+>
+> Nội dung pháp lý cần luật sư SHTT xác nhận trước khi nộp hồ sơ.
 
-- Đây là **tác phẩm phái sinh** từ tác phẩm của bên thứ ba
-- Đăng ký quyền tác giả cho nó sẽ là **khai báo sai sự thật**, có thể dẫn tới hủy giấy chứng nhận và trách nhiệm pháp lý
-- Trang này đã được ghi rõ «Nguyên mẫu nghiên cứu – không phát hành, đã rút khỏi danh mục game của BizOn»
+<sub>— Nội dung lịch sử, ĐÃ THAY THẾ (giữ để truy vết) —</sub>
 
-**Khi in mã nguồn nộp Cục, phải loại bỏ tệp `food-truck.html` khỏi bản in và khỏi đĩa.**
+Trước đây tệp `food-truck.html` (tên cũ) từng được ghi chú là **phương án bản địa hóa dựng dựa trên cấu trúc mô phỏng «The Food Truck Challenge»** của Michael A. Roberto – Harvard Business Publishing · Forio, với các lưu ý:
+
+- ~~Đây là **tác phẩm phái sinh** từ tác phẩm của bên thứ ba~~
+- ~~Đăng ký quyền tác giả cho nó sẽ là **khai báo sai sự thật**~~
+- ~~Trang này đã được ghi rõ «Nguyên mẫu nghiên cứu – không phát hành»~~
+- ~~**Khi in mã nguồn nộp Cục, phải loại bỏ tệp `food-truck.html`**~~
 
 ## D2 · Không đăng ký sáng chế cho phần mềm
 
@@ -430,7 +440,7 @@ Như đã nêu ở Mục B3: cần lời đầy đủ của **cả 14 ca khúc**
 
 - [ ] Quyết định phương án xử lý vấn đề AI (Mục F1) – **nên hỏi luật sư trước**
 - [ ] Chép đủ **lời 14 ca khúc**
-- [ ] Chuẩn bị bản in mã nguồn, **đã loại bỏ `food-truck.html`**
+- [ ] Chuẩn bị bản in mã nguồn — *lưu ý:* `ben-phu-sa.html` nay là tài sản độc lập (Nhóm B), **không** loại; hướng dẫn loại `food-truck.html` cũ đã thay thế (xem D1)
 - [ ] In bảng tạo hình nhân vật khổ A3
 
 ## Giai đoạn 3 – Nộp hồ sơ
