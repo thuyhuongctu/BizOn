@@ -1,161 +1,186 @@
 <!DOCTYPE html>
-<html lang="vi">
+<!-- THANH GHI: THỂ CHẾ (Instructor Studio — công cụ, mật độ cao). Vỏ dùng chung: assets/css/shell.css + assets/js/shell.js.
+     ĐÂY LÀ CÔNG CỤ, không phải trang thông tin: hero tối giản, vào việc ngay, ít khoảng trắng.
+     Chấm chạy CỤC BỘ trên máy qua js/instructor-gradebook.js + các module UMD. Không backend.
+     GIỮ NGUYÊN các module và ID chức năng; chỉ đổi vỏ trình bày, thêm lọc/sắp xếp/in. -->
+<html lang="vi" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BizOn — Instructor Studio: chấm trên ảnh chụp đóng băng (Bước 3)</title>
-<meta name="description" content="Giao diện chấm điểm cho giảng viên: đọc nhật ký quyết định theo lược đồ chuẩn, chấm trên ảnh chụp đóng băng nên tái lập, xuất sổ điểm CSV. Không AI tự chấm — chỉ cấp chỉ số neo làm bằng chứng.">
+<title>BizOn — Sổ điểm: chấm trên ảnh chụp đóng băng</title>
+<meta name="description" content="Công cụ sổ điểm cho giảng viên: nạp nhật ký quyết định, chấm trên ảnh chụp đóng băng nên tái lập, lọc và sắp xếp theo lớp/vòng, xuất CSV và bản in. Không AI tự chấm — chỉ cấp chỉ số neo làm bằng chứng.">
 <meta name="theme-color" content="#FFFFFF">
-<!-- Trang THANH GHI THỂ CHẾ (Instructor Studio — giảng viên là người dùng chuyên nghiệp).
-     Nạp tokens-institutional.css (KHÔNG nạp tokens-clay.css). Bộ chữ TỰ LƯU TRỮ (không CDN).
-     Chấm chạy hoàn toàn CỤC BỘ trên máy: nạp nhật ký .json, chấm trên ảnh chụp đóng băng bằng
-     js/instructor-gradebook.js. Không backend, không localStorage cho dữ liệu bền. -->
 <link rel="icon" type="image/svg+xml" href="assets/brand/bizon-favicon.svg">
 <link rel="stylesheet" href="css/bizon-institutional-fonts.css">
-<link rel="stylesheet" href="css/tokens-institutional.css">
+<link rel="stylesheet" href="assets/css/shell.css">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.6;-webkit-font-smoothing:antialiased}
-.shell{max-width:var(--max);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
-a{color:inherit}
-.h-xl{font-size:clamp(2rem,4.6vw,3.3rem);font-weight:800;line-height:1.03;letter-spacing:-.035em}
-.h-lg{font-size:clamp(1.5rem,3vw,2.1rem);font-weight:700;line-height:1.1;letter-spacing:-.028em}
-.h-sm{font-size:1.02rem;font-weight:600;letter-spacing:-.01em}
-.tag{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3)}
-.body{font-size:.94rem;color:var(--ink-2)}
-.body-sm{font-size:.86rem;color:var(--ink-2)}
-.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
-.nav-in{display:flex;align-items:center;gap:24px;height:62px}
-.brand{display:inline-flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.03em;font-size:1.1rem;text-decoration:none}
-.brand img{width:24px;height:24px}
-.brand span{color:var(--jade)}
-.nav-links{display:flex;gap:22px;margin-left:auto;align-items:center}
-.nav-links a{text-decoration:none;font-size:.86rem;color:var(--ink-2)}
-.nav-links a:hover{color:var(--ink)}
-.wrap{padding-top:clamp(28px,4vw,44px);padding-bottom:clamp(48px,7vw,88px)}
-.crumb{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:1.4rem}
-.crumb a{text-decoration:none;color:var(--ink-3)}
-.crumb a:hover{color:var(--jade)}
-h1{margin-bottom:1rem}
-.lede{font-size:1.02rem;color:var(--ink-2);max-width:64ch;margin-bottom:1.6rem}
-.banner{border-left:3px solid var(--silt);background:var(--band);padding:14px 18px;font-size:.9rem;color:var(--ink-2);margin-bottom:1.8rem;max-width:80ch}
-.banner b{color:var(--silt)}
-.controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding:18px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);margin-bottom:1.6rem}
-.btn{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--sans);font-size:.875rem;font-weight:500;text-decoration:none;padding:.62rem 1.15rem;border-radius:var(--radius,2px);border:1px solid transparent;cursor:pointer;background:transparent;color:inherit}
-.btn-solid{background:var(--jade);color:#fff}
-.btn-solid:hover{background:var(--jade-dark)}
-.btn-line{border-color:var(--rule);color:var(--ink)}
-.btn-line:hover{border-color:var(--ink)}
-.file-label{display:inline-flex;align-items:center;gap:.5rem;font-size:.875rem;font-weight:500;padding:.62rem 1.15rem;border:1px solid var(--rule);border-radius:var(--radius,2px);cursor:pointer;color:var(--ink)}
+/* ═══════════ RIÊNG SỔ ĐIỂM — CÔNG CỤ, MẬT ĐỘ CAO ═══════════ */
+.yb{background:color-mix(in srgb,var(--gold) 30%,var(--paper));border-bottom:1px solid color-mix(in srgb,var(--gold) 55%,var(--rule))}
+.yb-in{display:flex;gap:10px;align-items:baseline;padding:9px 0;font-size:.84rem;color:var(--ink)}
+.yb .k{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:#8a6a12;flex:none}
+.yb b{font-weight:600}
+
+.tool{padding:clamp(20px,2.6vw,30px) 0 clamp(30px,4vw,48px)}
+.tool .crumb{font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:.7rem}
+.tool .crumb a{color:var(--ink-3);text-decoration:none}
+.tool h1{font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:.5rem}
+.tool .lede{font-size:.95rem;color:var(--ink-2);max-width:70ch;margin-bottom:1.4rem}
+
+.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:14px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);margin-bottom:1.2rem}
+.file-label{display:inline-flex;align-items:center;gap:.5rem;font-size:.86rem;font-weight:500;padding:.55rem 1rem;border:1px solid var(--rule);border-radius:2px;cursor:pointer;color:var(--ink)}
 .file-label:hover{border-color:var(--ink)}
 .file-label input{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}
 .file-label:focus-within{outline:2px solid var(--jade);outline-offset:3px}
-.status{font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;color:var(--ink-3)}
+.sel{display:inline-flex;align-items:center;gap:7px;font-size:.82rem;color:var(--ink-2)}
+.sel select{font-family:var(--sans);font-size:.82rem;padding:.5rem .6rem;border:1px solid var(--rule);border-radius:2px;background:var(--paper);color:var(--ink);cursor:pointer}
+.sel select:focus-visible{outline:2px solid var(--jade);outline-offset:2px}
+.status{font-family:var(--mono);font-size:.72rem;letter-spacing:.03em;color:var(--ink-3);margin-left:auto}
 .status[data-state="ok"]{color:var(--jade)}
 .status[data-state="err"]{color:var(--silt)}
-.meta-row{display:flex;gap:22px;flex-wrap:wrap;margin-bottom:1.4rem}
-.meta-row div{font-size:.86rem;color:var(--ink-2)}
-.meta-row b{display:block;font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:.2rem}
-.tbl-wrap{overflow-x:auto;border:1px solid var(--rule);margin-bottom:2rem}
-table{border-collapse:collapse;width:100%;min-width:640px;font-size:.86rem}
-th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--rule);vertical-align:top}
-thead th{font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:500;background:var(--band)}
-tbody tr:last-child td{border-bottom:none}
+
+.meta-row{display:flex;gap:26px;flex-wrap:wrap;margin-bottom:1rem}
+.meta-row div{font-size:.84rem;color:var(--ink-2)}
+.meta-row b{display:block;font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:.15rem}
+
+.tbl-wrap{overflow-x:auto;border:1px solid var(--rule);margin-bottom:1.8rem}
+table#gradebook{border-collapse:collapse;width:100%;min-width:680px;font-size:.85rem}
+table#gradebook th,table#gradebook td{text-align:left;padding:9px 13px;border-bottom:1px solid var(--rule);vertical-align:top}
+table#gradebook thead th{font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:500;background:var(--band);position:sticky;top:0}
+table#gradebook thead th.sortable{cursor:pointer;user-select:none}
+table#gradebook thead th.sortable:hover{color:var(--jade)}
+table#gradebook thead th .ar{opacity:.4;margin-left:.3rem}
+table#gradebook thead th[aria-sort="ascending"] .ar,table#gradebook thead th[aria-sort="descending"] .ar{opacity:1;color:var(--jade)}
+table#gradebook tbody tr:last-child td{border-bottom:none}
 .team-head td{background:var(--band-2);font-weight:600;color:var(--ink)}
-.mono{font-family:var(--mono);font-size:.78rem}
+.mono{font-family:var(--mono);font-size:.76rem}
 .share{font-family:var(--mono);font-weight:500;color:var(--jade)}
-.hashcell{font-family:var(--mono);font-size:.7rem;color:var(--ink-3)}
-.sec{margin-top:2.4rem}
-.sec h2{margin-bottom:1rem}
+.hashcell{font-family:var(--mono);font-size:.68rem;color:var(--ink-3)}
+tr[hidden]{display:none}
+
+.sec{margin-top:2rem}
+.sec .tag{font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--jade)}
+.sec h2{font-size:clamp(1.3rem,2.2vw,1.7rem);margin:.4rem 0 1rem}
 .scale{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule)}
-.scale div{background:var(--paper);padding:15px 16px}
-.scale .lv{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;color:var(--jade);margin-bottom:.4rem;display:block}
+.scale div{background:var(--paper);padding:14px 15px}
+.scale .lv{font-family:var(--mono);font-size:.66rem;letter-spacing:.05em;color:var(--jade);margin-bottom:.35rem;display:block}
 .scale .lv b{color:var(--ink)}
-.scale p{font-size:.82rem;color:var(--ink-2)}
-.note{border-left:2px solid var(--jade);padding-left:20px;font-size:.9rem;color:var(--ink-2);margin-top:1.4rem;max-width:72ch}
-.note b{color:var(--ink)}
-.foot{border-top:1px solid var(--rule);padding:34px 0 48px;margin-top:3rem}
-.foot p{font-size:.84rem;color:var(--ink-2)}
-:focus-visible{outline:2px solid var(--jade);outline-offset:3px}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-@media(max-width:760px){.scale{grid-template-columns:1fr 1fr}}
+.scale p{font-size:.8rem;color:var(--ink-2)}
+.note{border-left:3px solid var(--jade);padding-left:18px;font-size:.88rem;color:var(--ink-2);margin-top:1.2rem;max-width:74ch}
+.note b{color:var(--ink);font-weight:600}
+.note a{color:var(--jade);text-decoration:none}
+.note a:hover{text-decoration:underline}
+
+@media(max-width:760px){.scale{grid-template-columns:1fr 1fr}.status{margin-left:0;width:100%}}
+@media print{
+  .prog,.nav,.controls,.foot-print-hide,footer{display:none!important}
+  .yb{background:none;border:none}
+  body{color:#000}
+  .tbl-wrap{overflow:visible;border:1px solid #999}
+  table#gradebook thead th{position:static}
+}
 </style>
 </head>
 <body>
 
-<header class="nav">
+<div class="prog" id="prog"></div>
+
+<header class="nav" id="nav">
   <div class="shell nav-in">
-    <a class="brand" href="universe.html"><img src="assets/brand/bizon-favicon.svg" alt="">Biz<span>On</span></a>
-    <nav class="nav-links" aria-label="Điều hướng chính">
-      <a href="truong-giang-vien.html">Cho giảng viên</a>
-      <a href="truong-hoc-thuat.html#tai-lap">Tái lập</a>
-      <a href="universe.html">Vũ trụ</a>
-    </nav>
+    <a class="wm" href="universe.html">
+      <span class="wm-txt">Biz<svg class="wm-mark" width="0.98em" height="1em" viewBox="0 0 98 100" aria-hidden="true"><ellipse cx="49" cy="58" rx="40" ry="34" fill="none" stroke="currentColor" stroke-width="15"/><circle cx="63" cy="58" r="11" fill="var(--jade)"/></svg>n</span>
+      <span class="wm-sub">Bật Nghiệp</span>
+    </a>
+    <div class="tgl" role="group" aria-label="Ngôn ngữ">
+      <button id="bvi" type="button" aria-pressed="true">VI</button>
+      <button id="ben" type="button" aria-pressed="false">EN</button>
+    </div>
+    <button class="ico" id="bth" type="button" aria-pressed="false" aria-label="Đổi giao diện sáng / tối"><span id="thi" aria-hidden="true">☾</span></button>
+    <a class="btn btn-solid btn-sm" href="truong-giang-vien.html" data-vi="Cho giảng viên" data-en="For instructors">Cho giảng viên</a>
   </div>
 </header>
 
-<main class="shell wrap">
-  <p class="crumb"><a href="universe.html">BizOn</a> · Instructor Studio</p>
-  <h1 class="h-xl">Chấm trên ảnh chụp đóng băng</h1>
-  <p class="lede">Giao diện chấm điểm đọc <strong>đúng lược đồ nhật ký quyết định</strong> (Bước 1) và tính chỉ số neo <strong>tái lập</strong> bằng cách chấm mỗi quyết định <strong>trên ảnh chụp đóng băng</strong> của vòng đó (Bước 4). Chạy hoàn toàn cục bộ trên máy — không cần mạng, không backend.</p>
-
-  <div class="banner" role="note">
-    <b>Bản dựng giao diện — chưa nghiệm thu.</b> Bước 3 chỉ được coi là xong khi một giảng viên ngoài nhóm phát triển chạy trọn một buổi mà không cần hỏi ai. Trang này là công cụ để tiến tới điều đó, không phải xác nhận đã đạt.
+<!-- ═══ DẢI TRẠNG THÁI VÀNG ═══ -->
+<div class="yb" role="note">
+  <div class="shell yb-in">
+    <span class="k" data-vi="Trạng thái" data-en="Status">Trạng thái</span>
+    <span data-vi="Chưa nghiệm thu — đang thử nghiệm với giảng viên. Bước 3 chỉ xong khi một giảng viên ngoài nhóm chạy trọn một buổi mà không cần hỏi ai." data-en="Not yet accepted — in trial with instructors. Step 3 is done only when an instructor outside the team runs a full session without asking anyone."><b data-vi="Chưa nghiệm thu" data-en="Not yet accepted">Chưa nghiệm thu</b> — đang thử nghiệm với giảng viên. Bước 3 chỉ xong khi một giảng viên ngoài nhóm chạy trọn một buổi mà không cần hỏi ai.</span>
   </div>
+</div>
 
+<main class="shell tool" id="top">
+  <p class="crumb"><a href="universe.html">BizOn</a> · <span data-vi="Sổ điểm" data-en="Gradebook">Sổ điểm</span></p>
+  <h1 data-vi="Chấm trên ảnh chụp đóng băng" data-en="Grade on the frozen snapshot">Chấm trên ảnh chụp đóng băng</h1>
+  <p class="lede" data-vi="Công cụ đọc đúng lược đồ nhật ký quyết định và tính chỉ số neo tái lập bằng cách chấm mỗi quyết định trên ảnh chụp đóng băng của vòng đó. Chạy hoàn toàn cục bộ — không mạng, không backend." data-en="The tool reads the decision-log schema and computes a reproducible anchor metric by grading each decision on that round's frozen snapshot. Runs entirely locally — no network, no backend.">Công cụ đọc đúng lược đồ nhật ký quyết định và tính chỉ số neo tái lập bằng cách chấm mỗi quyết định trên ảnh chụp đóng băng của vòng đó. Chạy hoàn toàn cục bộ — không mạng, không backend.</p>
+
+  <!-- ═══ THANH CÔNG CỤ ═══ -->
   <div class="controls">
-    <button type="button" id="demo-btn" class="btn btn-solid">Dùng dữ liệu mẫu</button>
-    <label class="file-label">Nạp nhật ký lớp (.json)
+    <button type="button" id="demo-btn" class="btn btn-solid btn-sm" data-vi="Dùng dữ liệu mẫu" data-en="Use sample data">Dùng dữ liệu mẫu</button>
+    <label class="file-label"><span data-vi="Nạp nhật ký (.json)" data-en="Load log (.json)">Nạp nhật ký (.json)</span>
       <input type="file" id="file-input" accept="application/json,.json">
     </label>
-    <button type="button" id="export-btn" class="btn btn-line">Xuất sổ điểm CSV</button>
-    <span class="status" id="status" role="status" aria-live="polite">Chưa nạp dữ liệu.</span>
+    <span class="sel"><label for="cohort-filter" data-vi="Lớp" data-en="Class">Lớp</label>
+      <select id="cohort-filter" aria-label="Chọn lớp"><option value="*" data-vi="Tất cả lớp" data-en="All classes">Tất cả lớp</option></select>
+    </span>
+    <span class="sel"><label for="round-filter" data-vi="Vòng" data-en="Round">Vòng</label>
+      <select id="round-filter" aria-label="Chọn vòng"><option value="*" data-vi="Tất cả vòng" data-en="All rounds">Tất cả vòng</option></select>
+    </span>
+    <button type="button" id="export-btn" class="btn btn-line btn-sm" data-vi="Xuất CSV" data-en="Export CSV">Xuất CSV</button>
+    <button type="button" id="print-btn" class="btn btn-line btn-sm" data-vi="In báo cáo" data-en="Print report">In báo cáo</button>
+    <span class="status" id="status" role="status" aria-live="polite" data-vi="Chưa nạp dữ liệu." data-en="No data loaded.">Chưa nạp dữ liệu.</span>
   </div>
 
   <div class="meta-row" id="meta" hidden>
-    <div><b>Chấm trên</b><span id="m-graded">—</span></div>
-    <div><b>Tự chấm rubric</b><span id="m-auto">—</span></div>
-    <div><b>Số đội</b><span id="m-teams">—</span></div>
-    <div><b>Bỏ qua (thiếu ảnh chụp)</b><span id="m-skip">—</span></div>
+    <div><b data-vi="Chấm trên" data-en="Graded on">Chấm trên</b><span id="m-graded">—</span></div>
+    <div><b data-vi="Tự chấm rubric" data-en="Auto-grades rubric">Tự chấm rubric</b><span id="m-auto">—</span></div>
+    <div><b data-vi="Số đội" data-en="Teams">Số đội</b><span id="m-teams">—</span></div>
+    <div><b data-vi="Bỏ qua (thiếu ảnh chụp)" data-en="Skipped (no snapshot)">Bỏ qua (thiếu ảnh chụp)</b><span id="m-skip">—</span></div>
   </div>
 
   <div class="tbl-wrap">
     <table id="gradebook">
       <thead>
         <tr>
-          <th scope="col">Đội / Vòng</th>
-          <th scope="col">Quyết định</th>
-          <th scope="col">Chỉ số neo (thị phần)</th>
-          <th scope="col">Mã ảnh chụp</th>
-          <th scope="col">Mục đích cấp phép</th>
+          <th scope="col" class="sortable" data-sort="round" aria-sort="none" data-vi="Đội / Vòng" data-en="Team / Round">Đội / Vòng <span class="ar" aria-hidden="true">↕</span></th>
+          <th scope="col" data-vi="Quyết định" data-en="Decision">Quyết định</th>
+          <th scope="col" class="sortable" data-sort="share" aria-sort="none" data-vi="Chỉ số neo (thị phần)" data-en="Anchor (market share)">Chỉ số neo (thị phần) <span class="ar" aria-hidden="true">↕</span></th>
+          <th scope="col" data-vi="Mã ảnh chụp" data-en="Snapshot hash">Mã ảnh chụp</th>
+          <th scope="col" data-vi="Mục đích cấp phép" data-en="Consent purpose">Mục đích cấp phép</th>
         </tr>
       </thead>
       <tbody id="gb-body">
-        <tr><td colspan="5" class="body-sm">Bấm “Dùng dữ liệu mẫu” để xem một lớp mẫu, hoặc nạp tệp nhật ký .json của lớp.</td></tr>
+        <tr><td colspan="5" class="body" data-vi="Bấm “Dùng dữ liệu mẫu” để xem một lớp mẫu, hoặc nạp tệp nhật ký .json của lớp." data-en="Click “Use sample data” to see a sample class, or load a class .json log.">Bấm “Dùng dữ liệu mẫu” để xem một lớp mẫu, hoặc nạp tệp nhật ký .json của lớp.</td></tr>
       </tbody>
     </table>
   </div>
 
-  <section class="sec">
-    <p class="tag">Rubric bốn mức</p>
-    <h2 class="h-lg">Chấm lập luận — không chấm thắng thua</h2>
+  <section class="sec foot-print-hide">
+    <p class="tag" data-vi="Rubric bốn mức" data-en="Four-level rubric">Rubric bốn mức</p>
+    <h2 data-vi="Chấm lập luận — không chấm thắng thua" data-en="Grade reasoning — not winning">Chấm lập luận — không chấm thắng thua</h2>
     <div class="scale">
-      <div><span class="lv"><b>1 · Chưa đạt</b></span><p>Kể lại đã làm gì, chưa giải thích được quyết định.</p></div>
-      <div><span class="lv"><b>2 · Đạt</b></span><p>Nêu được quan hệ ở mức định tính (giá tăng → cầu giảm).</p></div>
-      <div><span class="lv"><b>3 · Khá</b></span><p>Dẫn số liệu ít nhất hai vòng để giải thích một quyết định.</p></div>
-      <div><span class="lv"><b>4 · Xuất sắc</b></span><p>Chỉ ra vòng kém hiệu quả và tính được ngưỡng hợp lý từ dữ liệu ván.</p></div>
+      <div><span class="lv"><b data-vi="1 · Chưa đạt" data-en="1 · Not yet">1 · Chưa đạt</b></span><p data-vi="Kể lại đã làm gì, chưa giải thích được quyết định." data-en="Recounts what was done, without explaining the decision.">Kể lại đã làm gì, chưa giải thích được quyết định.</p></div>
+      <div><span class="lv"><b data-vi="2 · Đạt" data-en="2 · Pass">2 · Đạt</b></span><p data-vi="Nêu được quan hệ ở mức định tính (giá tăng → cầu giảm)." data-en="States the relationship qualitatively (price up → demand down).">Nêu được quan hệ ở mức định tính (giá tăng → cầu giảm).</p></div>
+      <div><span class="lv"><b data-vi="3 · Khá" data-en="3 · Good">3 · Khá</b></span><p data-vi="Dẫn số liệu ít nhất hai vòng để giải thích một quyết định." data-en="Cites data from at least two rounds to explain a decision.">Dẫn số liệu ít nhất hai vòng để giải thích một quyết định.</p></div>
+      <div><span class="lv"><b data-vi="4 · Xuất sắc" data-en="4 · Excellent">4 · Xuất sắc</b></span><p data-vi="Chỉ ra vòng kém hiệu quả và tính được ngưỡng hợp lý từ dữ liệu ván." data-en="Identifies the weak round and derives a sensible threshold from game data.">Chỉ ra vòng kém hiệu quả và tính được ngưỡng hợp lý từ dữ liệu ván.</p></div>
     </div>
-    <p class="note"><b>Công cụ KHÔNG tự chấm rubric.</b> Chỉ số neo ở bảng trên là <em>bằng chứng số</em> tái lập để giảng viên chấm phần <em>lập luận</em> của người học — đúng nguyên tắc “không dùng AI tự chấm”. Điểm rubric do giảng viên đặt, dựa trên bằng chứng đó. Chi tiết chuẩn đầu ra ở <a href="truong-giang-vien.html#rubric">trang cho giảng viên</a>.</p>
+    <p class="note" data-vi="Công cụ KHÔNG tự chấm rubric và KHÔNG gợi ý mức nào. Chỉ số neo ở bảng trên là bằng chứng số tái lập để giảng viên chấm phần lập luận của người học — đúng nguyên tắc “không dùng AI tự chấm”. Điểm rubric do giảng viên đặt. Chi tiết chuẩn đầu ra ở trang cho giảng viên." data-en="The tool does NOT auto-grade the rubric and suggests NO level. The anchor metric above is reproducible numeric evidence for the instructor to grade the learner's reasoning — per the “no AI auto-grading” principle. The rubric score is set by the instructor. Outcome detail is on the instructor page."><b>Công cụ KHÔNG tự chấm rubric và KHÔNG gợi ý mức nào.</b> Chỉ số neo ở bảng trên là <em>bằng chứng số</em> tái lập để giảng viên chấm phần <em>lập luận</em> của người học. Điểm rubric do giảng viên đặt, dựa trên bằng chứng đó. Chi tiết chuẩn đầu ra ở <a href="truong-giang-vien.html#rubric">trang cho giảng viên</a>.</p>
   </section>
 </main>
 
-<footer class="foot">
-  <div class="shell">
-    <p>BizOn Instructor Studio · Chấm cục bộ trên ảnh chụp đóng băng · Trường Đại học Cần Thơ · © 2026 Đỗ Thùy Hương &amp; Phan Anh Tú.</p>
+<footer>
+  <div class="shell fgrid">
+    <div>
+      <p class="tag">BizOn</p>
+      <p class="body" data-vi="Sổ điểm chấm cục bộ trên ảnh chụp đóng băng.<br>Đại học Cần Thơ · Trường Kinh tế." data-en="A gradebook scoring locally on frozen snapshots.<br>Can Tho University · School of Economics.">Sổ điểm chấm cục bộ trên ảnh chụp đóng băng.<br>Đại học Cần Thơ · Trường Kinh tế.</p>
+    </div>
+    <nav class="flinks" aria-label="Chân trang">
+      <a href="universe.html" data-vi="Vũ trụ" data-en="Universe">Vũ trụ</a>
+      <a href="truong-giang-vien.html" data-vi="Giảng viên" data-en="Instructors">Giảng viên</a>
+      <a href="truong-hoc-thuat.html" data-vi="Học thuật" data-en="Academic">Học thuật</a>
+    </nav>
   </div>
 </footer>
 
+<script src="assets/js/shell.js"></script>
 <script src="js/decision-log.js"></script>
 <script src="js/aibis/country-role-view.js"></script>
 <script src="js/aibis/anchor-profiles.js"></script>
@@ -166,11 +191,13 @@ tbody tr:last-child td{border-bottom:none}
   'use strict';
   var DL = window.BizOnDecisionLog, RS = window.BizOnRoundSwap, GB = window.BizOnInstructorGradebook;
   var $ = function (id) { return document.getElementById(id); };
-  var state = { gb: null, nameById: {} };
+  var state = { gb: null, nameById: {}, cohort: '' };
   var NOW = '2026-08-04T09:00:00Z';
 
-  function setStatus(msg, kind) {
-    var n = $('status'); n.textContent = msg; n.dataset.state = kind || '';
+  function t(vi, en){ return (document.documentElement.lang === 'en') ? en : vi; }
+  function setStatus(vi, en, kind) {
+    var n = $('status'); n.dataset.vi = vi; n.dataset.en = en || vi;
+    n.textContent = t(vi, en || vi); n.dataset.state = kind || '';
   }
   function pct(x) { return (x * 100).toFixed(1) + '%'; }
   function shortHash(h) { return String(h || '').replace(/^fnv1a:/, '') || '—'; }
@@ -189,8 +216,7 @@ tbody tr:last-child td{border-bottom:none}
     }, over || {});
   }
 
-  // Dựng một lớp mẫu: 3 đội × 3 vòng. Mỗi vòng đóng băng một ảnh chụp từ quyết định
-  // của cả ba đội, rồi chấm từng đội TRÊN ảnh chụp đó (tái lập).
+  // Lớp mẫu: 3 đội × 3 vòng. Mỗi vòng đóng băng một ảnh chụp rồi chấm từng đội TRÊN ảnh chụp đó.
   function buildDemo() {
     var teams = ['Đội Sen', 'Đội Lúa', 'Đội Mai'].map(function (nm) {
       return { name: nm, id: DL.hashTeamId(nm) };
@@ -212,39 +238,110 @@ tbody tr:last-child td{border-bottom:none}
         })));
       });
     }
-    return { entries: entries, snapshots: snapshots, nameById: nameById };
+    return { entries: entries, snapshots: snapshots, nameById: nameById, cohort: '2026A-KT330H' };
   }
 
-  function render(gb, nameById) {
-    state.gb = gb; state.nameById = nameById || {};
+  function fillFilters(gb, cohort) {
+    // Vòng
+    var rounds = {};
+    gb.teams.forEach(function (t) { (t.rounds || []).forEach(function (rd) { rounds[rd.round] = true; }); });
+    var rf = $('round-filter');
+    rf.querySelectorAll('option:not([value="*"])').forEach(function (o) { o.remove(); });
+    Object.keys(rounds).map(Number).sort(function (a, b) { return a - b; }).forEach(function (r) {
+      var o = document.createElement('option'); o.value = String(r);
+      o.textContent = t('Vòng ' + r, 'Round ' + r); o.dataset.vi = 'Vòng ' + r; o.dataset.en = 'Round ' + r;
+      rf.appendChild(o);
+    });
+    // Lớp
+    var cf = $('cohort-filter');
+    cf.querySelectorAll('option:not([value="*"])').forEach(function (o) { o.remove(); });
+    if (cohort) { var oc = document.createElement('option'); oc.value = cohort; oc.textContent = cohort; cf.appendChild(oc); cf.value = cohort; }
+  }
+
+  function render(gb, nameById, cohort) {
+    state.gb = gb; state.nameById = nameById || {}; state.cohort = cohort || '';
     $('meta').hidden = false;
-    $('m-graded').textContent = gb.graded_on === 'frozen_snapshot' ? 'ảnh chụp đóng băng' : gb.graded_on;
-    $('m-auto').textContent = gb.auto_rubric ? 'có' : 'KHÔNG (chỉ cấp bằng chứng)';
+    $('m-graded').textContent = gb.graded_on === 'frozen_snapshot' ? t('ảnh chụp đóng băng', 'frozen snapshot') : gb.graded_on;
+    $('m-auto').textContent = gb.auto_rubric ? t('có', 'yes') : t('KHÔNG (chỉ cấp bằng chứng)', 'NO (evidence only)');
     $('m-teams').textContent = String(gb.teams.length);
     $('m-skip').textContent = String(gb.skipped_no_snapshot || 0);
 
     var rows = [];
-    gb.teams.forEach(function (t) {
-      var nm = state.nameById[t.team_id] || t.team_id;
-      rows.push('<tr class="team-head"><td colspan="5">' + esc(nm) + ' · <span class="mono">' + esc(t.team_id) + '</span></td></tr>');
-      t.rounds.forEach(function (rd) {
+    gb.teams.forEach(function (tm) {
+      var nm = state.nameById[tm.team_id] || tm.team_id;
+      rows.push('<tr class="team-head" data-team="' + esc(tm.team_id) + '" data-cohort="' + esc(cohort || '') + '"><td colspan="5">' + esc(nm) + ' · <span class="mono">' + esc(tm.team_id) + '</span></td></tr>');
+      (tm.rounds || []).forEach(function (rd) {
         var d = rd.decision || {};
-        var dec = 'giá ' + esc(d.gia) + ' · SL ' + esc(d.san_luong);
-        rows.push('<tr><td class="mono">Vòng ' + esc(rd.round) + '</td><td>' + dec +
+        var dec = t('giá ', 'price ') + esc(d.gia) + ' · ' + t('SL ', 'qty ') + esc(d.san_luong);
+        rows.push('<tr class="gb-round" data-team="' + esc(tm.team_id) + '" data-round="' + esc(rd.round) + '" data-share="' + Number(rd.share || 0) + '">' +
+          '<td class="mono">' + t('Vòng ', 'Round ') + esc(rd.round) + '</td><td>' + dec +
           '</td><td class="share">' + pct(rd.share) + '</td><td class="hashcell">' + esc(shortHash(rd.snapshot_hash)) +
           '</td><td class="mono">' + esc((rd.consent_purposes || []).join(' · ') || '—') + '</td></tr>');
       });
     });
-    if (!rows.length) rows.push('<tr><td colspan="5" class="body-sm">Không có bản ghi chấm được (thiếu ảnh chụp cho các vòng?).</td></tr>');
+    if (!rows.length) rows.push('<tr><td colspan="5" class="body">' + t('Không có bản ghi chấm được (thiếu ảnh chụp?).', 'No gradable records (missing snapshots?).') + '</td></tr>');
     $('gb-body').innerHTML = rows.join('');
+    fillFilters(gb, cohort);
+    applyFilters();
+  }
+
+  // ── Lọc theo lớp + vòng ──
+  function applyFilters() {
+    var rv = $('round-filter').value, cv = $('cohort-filter').value;
+    var body = $('gb-body');
+    var groups = body.querySelectorAll('tr.team-head');
+    groups.forEach(function (head) {
+      var cohortOk = (cv === '*') || (head.dataset.cohort === cv);
+      var anyVisible = false;
+      var row = head.nextElementSibling;
+      while (row && !row.classList.contains('team-head')) {
+        if (row.classList.contains('gb-round')) {
+          var roundOk = (rv === '*') || (row.dataset.round === rv);
+          var show = cohortOk && roundOk;
+          row.hidden = !show;
+          if (show) anyVisible = true;
+        }
+        row = row.nextElementSibling;
+      }
+      head.hidden = !(cohortOk && anyVisible);
+    });
+  }
+
+  // ── Sắp xếp round-rows trong từng nhóm đội ──
+  var sortState = { key: null, dir: 1 };
+  function sortBy(key, th) {
+    sortState.dir = (sortState.key === key) ? -sortState.dir : 1;
+    sortState.key = key;
+    document.querySelectorAll('#gradebook thead th.sortable').forEach(function (h) { h.setAttribute('aria-sort', 'none'); });
+    th.setAttribute('aria-sort', sortState.dir === 1 ? 'ascending' : 'descending');
+    var body = $('gb-body');
+    var heads = Array.prototype.slice.call(body.querySelectorAll('tr.team-head'));
+    heads.forEach(function (head) {
+      var group = [];
+      var row = head.nextElementSibling;
+      while (row && !row.classList.contains('team-head')) {
+        if (row.classList.contains('gb-round')) group.push(row);
+        row = row.nextElementSibling;
+      }
+      group.sort(function (a, b) {
+        var av = key === 'share' ? Number(a.dataset.share) : Number(a.dataset.round);
+        var bv = key === 'share' ? Number(b.dataset.share) : Number(b.dataset.round);
+        return (av - bv) * sortState.dir;
+      });
+      group.forEach(function (r) { head.parentNode.insertBefore(r, null); }); // detach order
+      // re-insert right after head, in sorted order
+      var anchor = head;
+      group.forEach(function (r) { anchor.parentNode.insertBefore(r, anchor.nextSibling); anchor = r; });
+    });
+    applyFilters();
   }
 
   function loadDemo() {
     try {
       var d = buildDemo();
-      render(GB.buildGradebook(d.entries, d.snapshots), d.nameById);
-      setStatus('Đã dựng lớp mẫu: 3 đội × 3 vòng, chấm trên ảnh chụp đóng băng.', 'ok');
-    } catch (e) { setStatus('Lỗi dựng dữ liệu mẫu: ' + e.message, 'err'); }
+      render(GB.buildGradebook(d.entries, d.snapshots), d.nameById, d.cohort);
+      setStatus('Đã dựng lớp mẫu: 3 đội × 3 vòng, chấm trên ảnh chụp đóng băng.', 'Sample class built: 3 teams × 3 rounds, graded on frozen snapshots.', 'ok');
+    } catch (e) { setStatus('Lỗi dựng dữ liệu mẫu: ' + e.message, 'Sample build error: ' + e.message, 'err'); }
   }
 
   function loadFile(file) {
@@ -254,18 +351,19 @@ tbody tr:last-child td{border-bottom:none}
         var data = JSON.parse(reader.result);
         var entries = data.entries || [];
         var snapshots = data.snapshots || [];
-        if (!Array.isArray(entries) || !Array.isArray(snapshots)) throw new Error('tệp phải có mảng "entries" và "snapshots"');
+        if (!Array.isArray(entries) || !Array.isArray(snapshots)) throw new Error(t('tệp phải có mảng "entries" và "snapshots"', 'file must have "entries" and "snapshots" arrays'));
         var nameById = data.nameById || {};
-        render(GB.buildGradebook(entries, snapshots), nameById);
-        setStatus('Đã nạp ' + entries.length + ' bản ghi, ' + snapshots.length + ' ảnh chụp.', 'ok');
-      } catch (e) { setStatus('Không đọc được tệp: ' + e.message, 'err'); }
+        var cohort = (entries[0] && entries[0].cohort_id) || data.cohort_id || '';
+        render(GB.buildGradebook(entries, snapshots), nameById, cohort);
+        setStatus('Đã nạp ' + entries.length + ' bản ghi, ' + snapshots.length + ' ảnh chụp.', 'Loaded ' + entries.length + ' records, ' + snapshots.length + ' snapshots.', 'ok');
+      } catch (e) { setStatus('Không đọc được tệp: ' + e.message, 'Could not read file: ' + e.message, 'err'); }
     };
-    reader.onerror = function () { setStatus('Không đọc được tệp.', 'err'); };
+    reader.onerror = function () { setStatus('Không đọc được tệp.', 'Could not read file.', 'err'); };
     reader.readAsText(file);
   }
 
   function exportCSV() {
-    if (!state.gb) { setStatus('Chưa có sổ điểm để xuất. Nạp dữ liệu trước.', 'err'); return; }
+    if (!state.gb) { setStatus('Chưa có sổ điểm để xuất. Nạp dữ liệu trước.', 'No gradebook to export. Load data first.', 'err'); return; }
     try {
       var csv = GB.toGradebookCSV(state.gb);
       var blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
@@ -274,14 +372,25 @@ tbody tr:last-child td{border-bottom:none}
       a.download = 'bizon-so-diem.csv';
       a.click();
       URL.revokeObjectURL(a.href);
-      setStatus('Đã xuất sổ điểm CSV (mã đội đã băm, không danh tính).', 'ok');
-    } catch (e) { setStatus('Lỗi xuất CSV: ' + e.message, 'err'); }
+      setStatus('Đã xuất sổ điểm CSV (mã đội đã băm, không danh tính).', 'Exported gradebook CSV (hashed team ids, no identity).', 'ok');
+    } catch (e) { setStatus('Lỗi xuất CSV: ' + e.message, 'CSV export error: ' + e.message, 'err'); }
+  }
+
+  function printReport() {
+    if (!state.gb) { setStatus('Chưa có sổ điểm để in. Nạp dữ liệu trước.', 'No gradebook to print. Load data first.', 'err'); return; }
+    window.print();
   }
 
   $('demo-btn').addEventListener('click', loadDemo);
   $('export-btn').addEventListener('click', exportCSV);
+  $('print-btn').addEventListener('click', printReport);
+  $('round-filter').addEventListener('change', applyFilters);
+  $('cohort-filter').addEventListener('change', applyFilters);
   $('file-input').addEventListener('change', function (e) {
     if (e.target.files && e.target.files[0]) loadFile(e.target.files[0]);
+  });
+  document.querySelectorAll('#gradebook thead th.sortable').forEach(function (th) {
+    th.addEventListener('click', function () { sortBy(th.dataset.sort, th); });
   });
 })();
 </script>
