@@ -31,7 +31,7 @@ Ba **dấu hiệu hình đơn** ("Hình công tắc", §1.1) nay **đã có bả
 | BizOn + hình (kết hợp) | Kết hợp | `bizon-logo-mau-2400.png` · `-den-trang-2400.png` | PNG 2400px dùng làm mẫu được; SVG chữ chờ thiết kế |
 
 - **Việc bắt buộc TRƯỚC tiên** (hồ sơ §0.1): *tra cứu khả năng đăng ký nhãn hiệu* — làm trước mọi việc khác, kể cả trước khi in tài liệu có logo. Thành tố "Biz" mang tính mô tả → phải tra trùng.
-- Nội dung tờ khai (chủ đơn, mô tả, danh mục Nice 9/41/42) đã có sẵn trong `bohososhtt.html` Phần 2.
+- **Gói nộp đơn đầy đủ** (chủ đơn, mô tả, danh mục Nice 9/41/42, mẫu nhãn theo từng dấu hiệu, thứ tự nộp): [`docs/ip/NHAN-HIEU-GOI-NOP-2026.md`](../docs/ip/NHAN-HIEU-GOI-NOP-2026.md) — gom từ `bohososhtt.html` Phần 2.
 
 ## Còn thiếu: SVG phần CHỮ
 
