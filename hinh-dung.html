@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<!-- THANH GHI: THỂ CHẾ (trình bày hình dung). Vỏ dùng chung: assets/css/shell.css + assets/js/shell.js.
+     Ảnh game đặt trong KHUNG VIỀN MẢNH (luật giao thoa) — không tràn ra nền trang.
+     Ảnh là HÌNH DUNG (concept art) sinh bằng công cụ tạo ảnh, dùng nội bộ chốt hướng — KHÔNG phải sản phẩm cuối. -->
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BizOn — Hình dung: ba bậc kể bằng hình</title>
+<meta name="description" content="Hình dung concept ba bậc của hệ sinh thái BizOn: Bến Phù Sa (đôi mắt ghe, cây bẹo), thang phù hiệu Gánh hàng rong → CEO, phố thị, và cửa khẩu → Hộ chiếu Thương hiệu. Ảnh là concept art, chưa phải sản phẩm cuối.">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="icon" type="image/svg+xml" href="assets/brand/bizon-favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="BizOn — Hình dung ba bậc">
+<meta property="og:description" content="Ba bậc của hệ sinh thái kể bằng hình: đôi mắt ghe, thang phù hiệu, quyết định đánh đổi, hộ chiếu thương hiệu. Concept art.">
+<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/brand/og-truong.png">
+<link rel="stylesheet" href="css/bizon-institutional-fonts.css">
+<link rel="stylesheet" href="assets/css/shell.css">
+<style>
+/* ═══════════ RIÊNG TRANG HÌNH DUNG ═══════════ */
+.hero-sm{padding:clamp(46px,7vw,88px) 0 clamp(28px,4vw,44px);border-bottom:1px solid var(--rule)}
+.hero-sm h1{font-size:clamp(2rem,4.6vw,3.4rem)}
+.hero-sm h1 em{font-style:normal;color:var(--jade)}
+.hero-sm .lede{margin-top:1.1rem}
+
+.disc{background:color-mix(in srgb,var(--gold) 12%,var(--paper));border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.disc-in{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:baseline;padding:18px 0}
+.disc .k{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--jade)}
+.disc .v{font-size:.9rem;color:var(--ink-2);max-width:80ch}
+.disc .v b{color:var(--ink);font-weight:600}
+
+.tier .head .rung{font-family:var(--mono);font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--jade)}
+.gal{display:grid;gap:clamp(18px,2.4vw,28px)}
+.gal.two{grid-template-columns:1fr 1fr}
+figure.shot{margin:0;border:1px solid var(--rule);background:var(--band);overflow:hidden}
+figure.shot img{width:100%;height:auto;display:block;border-bottom:1px solid var(--rule)}
+figure.shot figcaption{padding:14px 16px;font-size:.86rem;color:var(--ink-2)}
+figure.shot figcaption b{color:var(--ink);font-weight:600}
+figure.shot .ctag{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--jade);display:block;margin-bottom:.4rem}
+.tier .body{max-width:64ch}
+.tier .body em{font-style:normal;color:var(--jade);font-weight:500}
+
+.spine{border-left:3px solid var(--jade);padding-left:18px;max-width:70ch}
+.spine b{color:var(--ink);font-weight:600}
+
+@media(max-width:760px){.gal.two{grid-template-columns:1fr}.disc-in{grid-template-columns:1fr;gap:6px}}
+</style>
+</head>
+<body>
+
+<div class="prog" id="prog"></div>
+
+<header class="nav" id="nav">
+  <div class="shell nav-in">
+    <a class="wm" href="universe.html">
+      <span class="wm-txt">Biz<svg class="wm-mark" width="0.98em" height="1em" viewBox="0 0 98 100" aria-hidden="true"><ellipse cx="49" cy="58" rx="40" ry="34" fill="none" stroke="currentColor" stroke-width="15"/><circle cx="63" cy="58" r="11" fill="var(--jade)"/></svg>n</span>
+      <span class="wm-sub">Bật Nghiệp</span>
+    </a>
+    <div class="tgl" role="group" aria-label="Ngôn ngữ">
+      <button id="bvi" type="button" aria-pressed="true">VI</button>
+      <button id="ben" type="button" aria-pressed="false">EN</button>
+    </div>
+    <button class="ico" id="bth" type="button" aria-pressed="false" aria-label="Đổi giao diện sáng / tối"><span id="thi" aria-hidden="true">☾</span></button>
+    <a class="btn btn-solid btn-sm" href="universe.html" data-vi="Vũ trụ" data-en="Universe">Vũ trụ</a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ═══ HERO NHỎ ═══ -->
+<section class="hero-sm">
+  <div class="shell">
+    <p class="tag" data-vi="Hình dung" data-en="The vision">Hình dung</p>
+    <h1 data-vi="Ba bậc, kể bằng hình" data-en="Three tiers, told in images">Ba bậc, kể bằng <em>hình</em></h1>
+    <p class="lede" data-vi="Từ ghe hàng bông trên chợ nổi đến hộ chiếu thương hiệu ra thế giới — đây là hướng hình ảnh của hệ sinh thái, dựng bằng ngôn ngữ đất sét thủ công. Mỗi bậc giữ một tín hiệu bản địa riêng." data-en="From a produce boat at the floating market to a brand passport onto the world stage — this is the ecosystem's visual direction, built in a handmade clay language. Each tier keeps its own local signature.">Từ ghe hàng bông trên chợ nổi đến hộ chiếu thương hiệu ra thế giới — đây là hướng hình ảnh của hệ sinh thái, dựng bằng ngôn ngữ đất sét thủ công. Mỗi bậc giữ một tín hiệu bản địa riêng.</p>
+  </div>
+</section>
+
+<!-- ═══ MINH BẠCH: CONCEPT ART ═══ -->
+<section class="disc">
+  <div class="shell disc-in">
+    <span class="k" data-vi="Lưu ý" data-en="Note">Lưu ý</span>
+    <span class="v" data-vi="Những hình dưới đây là HÌNH DUNG (concept art) do nhóm dựng thử bằng công cụ tạo ảnh, để chốt hướng thiết kế. Đây chưa phải giao diện sản phẩm cuối, và các con số trên hình chỉ là minh hoạ. Theo luật giao thoa, ảnh game luôn đặt trong khung viền mảnh, không tràn ra nền trang thể chế." data-en="The images below are concept art the team generated to settle the design direction. They are not the final product UI, and any numbers shown are illustrative only. Per the interface rule, game imagery always sits inside a thin frame, never bleeding onto the institutional page.">Những hình dưới đây là <b>hình dung (concept art)</b> do nhóm dựng thử bằng công cụ tạo ảnh, để chốt hướng thiết kế. Đây <b>chưa phải giao diện sản phẩm cuối</b>, và các con số trên hình chỉ là minh hoạ. Theo luật giao thoa, ảnh game luôn đặt trong khung viền mảnh, không tràn ra nền trang thể chế.</span>
+  </div>
+</section>
+
+<!-- ═══ BẬC 1 — BẾN PHÙ SA ═══ -->
+<section class="tier" id="bac-1">
+  <div class="shell">
+    <div class="head rv">
+      <p class="rung" data-vi="Bậc 1 · Bến Phù Sa" data-en="Tier 1 · Silt Wharf">Bậc 1 · Bến Phù Sa</p>
+      <h2 data-vi="Hai tín hiệu chỉ đồng bằng mới có" data-en="Two signatures only the delta has">Hai tín hiệu chỉ đồng bằng mới có</h2>
+      <p class="lede" data-vi="Noir đen trắng, nhưng chừa lại hai màu có nghĩa: đỏ cho đôi mắt ghe, vàng cho đèn dầu. Và cây bẹo — cột tre cắm mũi ghe treo nông sản — là cách ghe hàng bông rao hàng, cũng là bài học đầu tiên của người học." data-en="Black-and-white noir, but keeping two meaningful colours: red for the painted boat eyes, amber for the oil lamp. And the bẹo pole — bamboo at the bow hung with produce — is how a Mekong boat advertises, and the learner's first lesson.">Noir đen trắng, nhưng chừa lại hai màu có nghĩa: <em>đỏ cho đôi mắt ghe, vàng cho đèn dầu</em>. Và cây bẹo — cột tre cắm mũi ghe treo nông sản — là cách ghe hàng bông rao hàng, cũng là bài học đầu tiên của người học.</p>
+    </div>
+    <div class="gal two rv">
+      <figure class="shot">
+        <img src="assets/concept/ben-song-cay-beo.jpg" alt="Hình dung claymation noir: một người đàn ông đất sét ngồi trên ghe gỗ đêm mưa, mũi ghe dựng cây bẹo cao treo dứa và nông sản, đèn dầu toả sáng ấm." loading="lazy">
+        <figcaption><span class="ctag" data-vi="Concept" data-en="Concept">Concept</span><span data-vi="Cây bẹo dựng ở mũi ghe — treo dứa, bầu, củ cải — cách rao hàng của thương hồ. Bài học nhập môn của bậc 1." data-en="The bẹo pole at the bow — pineapples, gourds, radishes — the floating trader's way of advertising. Tier 1's entry lesson."><b>Cây bẹo</b> dựng ở mũi ghe — treo dứa, bầu, củ cải — cách rao hàng của thương hồ. Bài học nhập môn của bậc 1.</span></figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="assets/concept/ben-song-mat-ghe.jpg" alt="Hình dung claymation noir đen trắng: chiếc ghe với đôi mắt vẽ đỏ-trắng ở mũi giữ nguyên màu, đèn dầu vàng, người đàn ông đất sét ngồi mệt mỏi trong mưa." loading="lazy">
+        <figcaption><span class="ctag" data-vi="Concept" data-en="Concept">Concept</span><span data-vi="Đôi mắt ghe đỏ-trắng giữ nguyên màu giữa khung đen trắng — biểu tượng để ghe “nhìn thấy đường”. Tín hiệu bản địa mạnh nhất của hướng hình." data-en="Red-and-white boat eyes keep their colour in the monochrome frame — painted so the boat can “see its way”. The strongest local signature of the whole look."><b>Đôi mắt ghe</b> đỏ-trắng giữ nguyên màu giữa khung đen trắng — biểu tượng để ghe “nhìn thấy đường”. Tín hiệu bản địa mạnh nhất của hướng hình.</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ NHÂN VẬT & THANG PHÙ HIỆU ═══ -->
+<section class="tier band" id="nhan-vat">
+  <div class="shell">
+    <div class="head rv">
+      <p class="rung" data-vi="Nhân vật" data-en="Character">Nhân vật</p>
+      <h2 data-vi="Người chơi thấy mình lên bậc" data-en="The player sees themselves rise">Người chơi thấy mình lên bậc</h2>
+      <p class="lede" data-vi="Cùng một nhân vật đất sét, thăng tiến qua bốn bậc — và phù hiệu đổi ngay trên ngực áo, không cần bảng số." data-en="One clay character, advancing through four ranks — and the badge changes right on the chest, no scoreboard needed.">Cùng một nhân vật đất sét, thăng tiến qua bốn bậc — và phù hiệu đổi ngay trên ngực áo, không cần bảng số.</p>
+    </div>
+    <div class="gal rv">
+      <figure class="shot">
+        <img src="assets/concept/thang-phu-hieu.jpg" alt="Hình dung đất sét: bốn bậc tiến hoá nhân vật — Gánh hàng rong (huy hiệu xe đẩy đồng), Chủ hộ (nhà bạc), Giám đốc (bánh răng vàng), CEO (địa cầu bạc)." loading="lazy">
+        <figcaption><span class="ctag" data-vi="Concept" data-en="Concept">Concept</span><span data-vi="Thang phù hiệu: Gánh hàng rong → Chủ hộ → Giám đốc → CEO. Áo rách thành vest, xe đẩy thành cao ốc." data-en="The badge ladder: street vendor → shop owner → director → CEO. Ragged clothes become a suit, a cart becomes a tower."><b>Thang phù hiệu:</b> Gánh hàng rong → Chủ hộ → Giám đốc → CEO. Áo rách thành vest, xe đẩy thành cao ốc.</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ BẬC 2A — PHỐ THỊ ═══ -->
+<section class="tier" id="bac-2a">
+  <div class="shell">
+    <div class="head rv">
+      <p class="rung" data-vi="Bậc 2a · Phố thị" data-en="Tier 2a · Town">Bậc 2a · Phố thị</p>
+      <h2 data-vi="Từ ghe lên cửa hàng" data-en="From boat to shop">Từ ghe lên cửa hàng</h2>
+      <p class="lede" data-vi="Bước vào BizOn Bật Nghiệp: mở cửa hàng trong bối cảnh phố thị Việt Nam, quản lý vốn, danh tiếng và từng quyết định giá." data-en="Entering BizOn Bật Nghiệp: opening a shop in a Vietnamese town, managing capital, reputation and each pricing decision.">Bước vào BizOn Bật Nghiệp: mở cửa hàng trong bối cảnh phố thị Việt Nam, quản lý vốn, danh tiếng và từng quyết định giá.</p>
+    </div>
+    <div class="gal rv">
+      <figure class="shot">
+        <img src="assets/concept/cua-hang-bat-nghiep.jpg" alt="Hình dung đất sét ấm: màn hình chủ 'Cửa hàng Bật Nghiệp' với cửa tiệm đất sét, các chỉ số Vốn / Danh tiếng / Trạng thái, nhân vật đeo phù hiệu CEO." loading="lazy">
+        <figcaption><span class="ctag" data-vi="Concept" data-en="Concept">Concept</span><span data-vi="Màn hình chủ giữ đúng thanh ghi đất sét, tiếng Việt, và phù hiệu CEO nối vào thang bậc. Các con số chỉ là minh hoạ." data-en="The home screen holds the clay register, Vietnamese, and a CEO badge tied to the ladder. Numbers are illustrative only."><b>Cửa hàng Bật Nghiệp</b> — thanh ghi đất sét, tiếng Việt, phù hiệu CEO nối vào thang bậc. Con số chỉ là minh hoạ.</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ BẬC 2B — CỬA KHẨU → HỘ CHIẾU ═══ -->
+<section class="tier band" id="bac-2b">
+  <div class="shell">
+    <div class="head rv">
+      <p class="rung" data-vi="Bậc 2b · Cửa khẩu → Hộ chiếu Thương hiệu" data-en="Tier 2b · Border → Brand Passport">Bậc 2b · Cửa khẩu → Hộ chiếu Thương hiệu</p>
+      <h2 data-vi="Ra thế giới bằng những quyết định đánh đổi" data-en="Onto the world through trade-off decisions">Ra thế giới bằng những quyết định đánh đổi</h2>
+      <p class="lede" data-vi="Đưa doanh nghiệp qua biên giới: chọn thị trường, cân rủi ro. Động từ lõi là đánh đổi — an toàn hàng hoá hay kịp tiến độ — chứ không phải chinh phục." data-en="Taking a business across borders: choosing markets, weighing risk. The core verb is trade-off — cargo safety versus delivery time — not conquest.">Đưa doanh nghiệp qua biên giới: chọn thị trường, cân rủi ro. Động từ lõi là <em>đánh đổi</em> — an toàn hàng hoá hay kịp tiến độ — chứ không phải chinh phục.</p>
+    </div>
+    <div class="gal two rv">
+      <figure class="shot">
+        <img src="assets/concept/cua-khau-bao-rui-ro.jpg" alt="Hình dung đất sét noir: bản đồ thế giới với cơn 'Bão Rủi Ro', tàu hàng qua vùng nguy hiểm, câu hỏi thuê tàu hộ tống hay mạo hiểm vượt qua, hai thanh đánh đổi An toàn hàng và Kịp tiến độ." loading="lazy">
+        <figcaption><span class="ctag" data-vi="Concept" data-en="Concept">Concept</span><span data-vi="“Bão Rủi Ro”: một quyết định thật — thuê tàu hộ tống hay mạo hiểm vượt qua — với hai thanh đánh đổi An toàn ↔ Tiến độ. Đây là bậc 2b làm đúng." data-en="“Risk Storm”: a real decision — hire an escort or risk the crossing — with two trade-off meters, safety ↔ schedule. This is tier 2b done right."><b>Bão Rủi Ro</b> — thuê tàu hộ tống hay mạo hiểm vượt qua, hai thanh đánh đổi An toàn ↔ Tiến độ. Bậc 2b làm đúng.</span></figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="assets/concept/ho-chieu-thuong-hieu.jpg" alt="Hình dung đất sét: một đội ngũ đa dạng đứng trên quả địa cầu với dải băng 'Vietnam to the world!', bên cạnh đồng xu BizOn Brand Passport." loading="lazy">
+        <figcaption><span class="ctag" data-vi="Concept" data-en="Concept">Concept</span><span data-vi="Hộ chiếu Thương hiệu: đích đến của trụ quốc tế — “Vietnam to the world”. Thành công là đưa được thương hiệu ra ngoài, không phải hạ gục ai." data-en="Brand Passport: the international pillar's destination — “Vietnam to the world”. Success is taking a brand outward, not defeating anyone."><b>Hộ chiếu Thương hiệu</b> — đích đến trụ quốc tế: “Vietnam to the world”. Thành công là đưa thương hiệu ra ngoài.</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ XƯƠNG SỐNG ═══ -->
+<section id="xuong-song">
+  <div class="shell">
+    <div class="head rv">
+      <p class="tag" data-vi="Xương sống" data-en="The spine">Xương sống</p>
+      <h2 data-vi="Đẹp, nhưng luôn là mô phỏng ra quyết định" data-en="Beautiful, but always a decision simulation">Đẹp, nhưng luôn là mô phỏng ra quyết định</h2>
+    </div>
+    <p class="spine rv" data-vi="Giữ đất sét, giữ nhân vật, giữ mọi con số có thật — thị phần, giá đối thủ, dòng tiền, rủi ro. Nhưng động từ lõi của mọi màn hình luôn là quyết định và đánh đổi, không phải chiếm hay thống trị. Đó là ranh giới giữa một công cụ dạy học và một game giải trí gắn nhãn giáo dục." data-en="Keep the clay, keep the character, keep every real number — market share, rival pricing, cash flow, risk. But the core verb of every screen is always decide and trade off, never conquer or dominate. That is the line between a teaching tool and entertainment wearing an educational label.">Giữ đất sét, giữ nhân vật, giữ mọi con số có thật — thị phần, giá đối thủ, dòng tiền, rủi ro. Nhưng động từ lõi của mọi màn hình luôn là <b>quyết định và đánh đổi</b>, không phải chiếm hay thống trị. Đó là ranh giới giữa một công cụ dạy học và một game giải trí gắn nhãn giáo dục.</p>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="band" id="quay-lai">
+  <div class="shell">
+    <div class="head rv">
+      <p class="tag" data-vi="Tiếp theo" data-en="Next">Tiếp theo</p>
+      <h2 data-vi="Xem toàn hệ sinh thái" data-en="See the whole ecosystem">Xem toàn hệ sinh thái</h2>
+    </div>
+    <div class="btn-row rv">
+      <a class="btn btn-solid" href="universe.html" data-vi="Về Vũ trụ" data-en="To the Universe">Về Vũ trụ</a>
+      <a class="btn btn-line" href="truong-gioi-thieu.html" data-vi="Giới thiệu dự án" data-en="About the project">Giới thiệu dự án</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="shell fgrid">
+    <div>
+      <p class="tag">BizOn</p>
+      <p class="body" data-vi="Mô phỏng kinh doanh cho lớp học đại học.<br>Đại học Cần Thơ · Trường Kinh tế." data-en="Business simulation for university classrooms.<br>Can Tho University · School of Economics.">Mô phỏng kinh doanh cho lớp học đại học.<br>Đại học Cần Thơ · Trường Kinh tế.</p>
+    </div>
+    <nav class="flinks" aria-label="Chân trang">
+      <a href="universe.html" data-vi="Vũ trụ" data-en="Universe">Vũ trụ</a>
+      <a href="truong.html" data-vi="Trang chủ" data-en="Home">Trang chủ</a>
+      <a href="truong-gioi-thieu.html" data-vi="Giới thiệu" data-en="About">Giới thiệu</a>
+      <a href="truong-hoc-thuat.html" data-vi="Học thuật" data-en="Academic">Học thuật</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="assets/js/shell.js"></script>
+</body>
+</html>
