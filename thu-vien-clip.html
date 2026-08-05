@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<!-- THANH GHI: THỂ CHẾ (thư viện sản xuất clip). Vỏ dùng chung: assets/css/shell.css + assets/js/shell.js.
+     Trang production/critique: mỗi bản dựng có trạng thái + ghi CẢ cái sai. Ảnh trong khung viền mảnh (giao thoa).
+     Ảnh là bản dựng thử (concept), chưa phải clip cuối. Khác với thu-vien.html (Thư viện Sáng tạo). -->
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BizOn — Thư viện clip: dựng, và ghi cả cái sai</title>
+<meta name="description" content="Bảng theo dõi sản xuất thư viện clip noir đất sét: mỗi bản dựng kèm trạng thái và ghi chú đạt/phải-sửa, ba quy tắc màu và bối cảnh đã chốt thành chuẩn, và bảng 12 clip theo tiến độ. Ghi cả cái sai để không lặp lại.">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="icon" type="image/svg+xml" href="assets/brand/bizon-favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="BizOn — Thư viện clip">
+<meta property="og:description" content="Dựng, và ghi cả cái sai: bảng theo dõi sản xuất clip noir đất sét với trạng thái từng bản dựng và ba quy tắc đã chốt.">
+<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/brand/og-truong.png">
+<link rel="stylesheet" href="css/bizon-institutional-fonts.css">
+<link rel="stylesheet" href="assets/css/shell.css">
+<style>
+/* ═══════════ RIÊNG TRANG THƯ VIỆN CLIP ═══════════ */
+.hero-sm{padding:clamp(46px,7vw,88px) 0 clamp(28px,4vw,44px);border-bottom:1px solid var(--rule)}
+.hero-sm h1{font-size:clamp(2rem,4.6vw,3.4rem)}
+.hero-sm h1 em{font-style:normal;color:var(--jade)}
+.hero-sm .lede{margin-top:1.1rem}
+
+figure.frame{margin:0;border:1px solid var(--rule);background:var(--band);overflow:hidden}
+figure.frame img{width:100%;height:auto;display:block;border-bottom:1px solid var(--rule)}
+figure.frame figcaption{padding:14px 16px;font-size:.86rem;color:var(--ink-2)}
+figure.frame figcaption b{color:var(--ink);font-weight:600}
+
+.rules{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.rule{background:var(--paper);padding:24px 22px}
+.rule .no{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;color:var(--jade);display:block;margin-bottom:.6rem}
+.rule h3{font-size:1.02rem;margin-bottom:.5rem}
+.rule .body{font-size:.9rem}
+.rule .swatch{display:inline-flex;gap:6px;margin-top:.8rem}
+.rule .sw{width:16px;height:16px;border-radius:50%;border:1px solid var(--rule)}
+.sw-red{background:#D0312D}.sw-amber{background:#E4B23C}.sw-bw{background:linear-gradient(135deg,#111 50%,#eee 50%)}
+
+.builds{display:grid;gap:clamp(20px,2.6vw,30px)}
+.build{border:1px solid var(--rule);display:grid;grid-template-columns:minmax(0,1.1fr) 1fr}
+.build .pic{border-right:1px solid var(--rule);background:var(--band)}
+.build .pic img{width:100%;height:100%;object-fit:cover;display:block}
+.build .info{padding:clamp(20px,2.4vw,28px)}
+.badge{display:inline-block;font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border-radius:2px;margin-bottom:.9rem}
+.b-ref{background:color-mix(in srgb,var(--jade) 16%,transparent);color:var(--jade)}
+.b-key{background:color-mix(in srgb,var(--gold) 22%,transparent);color:#8a6a12}
+.b-mood{background:color-mix(in srgb,var(--silt) 18%,transparent);color:var(--silt)}
+.build h3{margin-bottom:.2rem}
+.build .sub{font-size:.82rem;color:var(--ink-2);margin-bottom:1rem}
+.crit{list-style:none;display:grid;gap:.5rem;font-size:.88rem}
+.crit li{display:grid;grid-template-columns:20px 1fr;gap:8px;align-items:baseline}
+.crit .ok{color:var(--jade);font-weight:700}
+.crit .no{color:var(--silt);font-weight:700}
+
+.tbl-wrap{overflow-x:auto;border:1px solid var(--rule)}
+table.grid12{border-collapse:collapse;width:100%;min-width:620px;font-size:.86rem}
+table.grid12 th,table.grid12 td{padding:12px 14px;border-bottom:1px solid var(--rule);border-right:1px solid var(--rule);text-align:center}
+table.grid12 thead th{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);background:var(--band)}
+table.grid12 tbody th{text-align:left;font-weight:600;background:var(--band)}
+table.grid12 tr td:last-child,table.grid12 tr th:last-child{border-right:none}
+table.grid12 tbody tr:last-child td,table.grid12 tbody tr:last-child th{border-bottom:none}
+.st{font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:2px}
+.st-draft{background:color-mix(in srgb,var(--gold) 22%,transparent);color:#8a6a12}
+.st-todo{background:color-mix(in srgb,var(--ink) 8%,transparent);color:var(--ink-3)}
+
+.next{border-left:3px solid var(--jade);padding-left:18px;max-width:70ch}
+.next b{color:var(--ink);font-weight:600}
+
+@media(max-width:820px){.rules{grid-template-columns:1fr}.build{grid-template-columns:1fr}.build .pic{border-right:none;border-bottom:1px solid var(--rule)}}
+</style>
+</head>
+<body>
+
+<div class="prog" id="prog"></div>
+
+<header class="nav" id="nav">
+  <div class="shell nav-in">
+    <a class="wm" href="universe.html">
+      <span class="wm-txt">Biz<svg class="wm-mark" width="0.98em" height="1em" viewBox="0 0 98 100" aria-hidden="true"><ellipse cx="49" cy="58" rx="40" ry="34" fill="none" stroke="currentColor" stroke-width="15"/><circle cx="63" cy="58" r="11" fill="var(--jade)"/></svg>n</span>
+      <span class="wm-sub">Bật Nghiệp</span>
+    </a>
+    <div class="tgl" role="group" aria-label="Ngôn ngữ">
+      <button id="bvi" type="button" aria-pressed="true">VI</button>
+      <button id="ben" type="button" aria-pressed="false">EN</button>
+    </div>
+    <button class="ico" id="bth" type="button" aria-pressed="false" aria-label="Đổi giao diện sáng / tối"><span id="thi" aria-hidden="true">☾</span></button>
+    <a class="btn btn-solid btn-sm" href="hinh-dung.html" data-vi="Hình dung" data-en="The vision">Hình dung</a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ═══ HERO NHỎ ═══ -->
+<section class="hero-sm">
+  <div class="shell">
+    <p class="tag" data-vi="Thư viện clip · sản xuất" data-en="Clip library · production">Thư viện clip · sản xuất</p>
+    <h1 data-vi="Dựng, và ghi cả cái sai" data-en="Build it, and record the mistakes too">Dựng, và ghi cả <em>cái sai</em></h1>
+    <p class="lede" data-vi="Đây là bảng theo dõi sản xuất thư viện clip noir đất sét — không phải một gallery khoe hình. Mỗi bản dựng kèm trạng thái và ghi chú: cái gì đạt, cái gì phải sửa. Một thư viện sáng tạo chỉ có ích khi nó ngăn được việc lặp lại lỗi cũ." data-en="This is a production board for the clay-noir clip library — not a showcase. Every build carries a status and notes: what passes, what must be fixed. A creative library only helps if it stops old mistakes from repeating.">Đây là bảng theo dõi sản xuất thư viện clip noir đất sét — không phải một gallery khoe hình. Mỗi bản dựng kèm trạng thái và ghi chú: cái gì đạt, cái gì phải sửa. Một thư viện sáng tạo chỉ có ích khi nó ngăn được việc lặp lại lỗi cũ.</p>
+  </div>
+</section>
+
+<!-- ═══ SƠ ĐỒ BA BƯỚC ═══ -->
+<section id="ba-buoc">
+  <div class="shell">
+    <div class="head rv">
+      <p class="tag" data-vi="Cung bậc thương hiệu" data-en="Brand arc">Cung bậc thương hiệu</p>
+      <h2 data-vi="Cây bẹo → Biển hiệu → Hộ chiếu thương hiệu" data-en="Bamboo pole → Shop sign → Brand passport">Cây bẹo → Biển hiệu → Hộ chiếu thương hiệu</h2>
+    </div>
+    <figure class="frame rv">
+      <img src="assets/thu-vien/ba-buoc-thuong-hieu.jpg" alt="Sơ đồ ba bước đất sét: Cây Bẹo (Bamboo Pole) — ghe hàng bông, nhận diện địa phương; Biển Hiệu (Shop Sign) — cửa tiệm phố thị, khẳng định hiện diện; Hộ Chiếu Thương Hiệu (Brand Passport) — cảng biển toàn cầu, nhận diện chuyên nghiệp mở rộng." loading="lazy">
+      <figcaption data-vi="Ba cách một thương hiệu tự giới thiệu, theo ba giai đoạn: cây bẹo (nhận diện địa phương) → biển hiệu (khẳng định hiện diện) → hộ chiếu thương hiệu (nhận diện chuyên nghiệp, mở rộng được). Cùng một nhân vật, cùng một hành trình." data-en="Three ways a brand introduces itself across three stages: bamboo pole (local recognition) → shop sign (establishing presence) → brand passport (a professional, scalable identity). One character, one journey.">Ba cách một thương hiệu tự giới thiệu, theo ba giai đoạn: <b>cây bẹo</b> (nhận diện địa phương) → <b>biển hiệu</b> (khẳng định hiện diện) → <b>hộ chiếu thương hiệu</b> (nhận diện chuyên nghiệp, mở rộng được). Cùng một nhân vật, cùng một hành trình.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ═══ BA QUY TẮC ĐÃ CHỐT ═══ -->
+<section class="band" id="quy-tac">
+  <div class="shell">
+    <div class="head rv">
+      <p class="tag" data-vi="Chuẩn" data-en="The standard">Chuẩn</p>
+      <h2 data-vi="Ba quy tắc đã chốt" data-en="Three rules, locked">Ba quy tắc đã chốt</h2>
+    </div>
+    <div class="rules rv">
+      <div class="rule">
+        <span class="no">01 · <span data-vi="Màu" data-en="Colour">Màu</span></span>
+        <h3 data-vi="Đen trắng, chừa hai màu" data-en="Monochrome, keeping two colours">Đen trắng, chừa hai màu</h3>
+        <p class="body" data-vi="Đỏ-trắng của đôi mắt ghe, vàng của đèn dầu. Bỏ xanh trên áo — áo xanh là lựa chọn tuỳ tiện, mắt ghe là biểu tượng có nghĩa." data-en="Red-and-white for the boat eyes, amber for the oil lamp. Drop the blue on the shirt — blue is arbitrary, the boat eyes are a meaningful symbol.">Đỏ-trắng của đôi mắt ghe, vàng của đèn dầu. Bỏ xanh trên áo — áo xanh là lựa chọn tuỳ tiện, mắt ghe là biểu tượng có nghĩa.</p>
+        <span class="swatch" aria-hidden="true"><span class="sw sw-red"></span><span class="sw sw-amber"></span><span class="sw sw-bw"></span></span>
+      </div>
+      <div class="rule">
+        <span class="no">02 · <span data-vi="Từ vựng" data-en="Vocabulary">Từ vựng</span></span>
+        <h3 data-vi="Từ vựng đồng bằng" data-en="A delta vocabulary">Từ vựng đồng bằng</h3>
+        <p class="body" data-vi="Ghe gỗ, cây bẹo, đèn dầu, dừa nước. Không hẻm gạch, không neon, không biển chữ Hán." data-en="Wooden boat, bamboo bẹo pole, oil lamp, nipa palm. No brick alley, no neon, no Chinese signage.">Ghe gỗ, cây bẹo, đèn dầu, dừa nước. Không hẻm gạch, không neon, không biển chữ Hán.</p>
+      </div>
+      <div class="rule">
+        <span class="no">03 · <span data-vi="Chữ" data-en="Text">Chữ</span></span>
+        <h3 data-vi="Không chữ trong khung hình" data-en="No text in the frame">Không chữ trong khung hình</h3>
+        <p class="body" data-vi="Phù hiệu, tên đội, chức danh, mã CAM — tất cả là lớp phủ HTML đè lên video, để đổi ngôn ngữ và dịch được." data-en="Badges, team names, titles, CAM codes — all are HTML overlays on top of the video, so they can switch language and be translated.">Phù hiệu, tên đội, chức danh, mã CAM — tất cả là lớp phủ HTML đè lên video, để đổi ngôn ngữ và dịch được.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CÁC BẢN DỰNG ═══ -->
+<section id="ban-dung">
+  <div class="shell">
+    <div class="head rv">
+      <p class="tag" data-vi="Các bản dựng" data-en="The builds">Các bản dựng</p>
+      <h2 data-vi="Từng bản: đạt gì, sai gì" data-en="Each build: what passes, what fails">Từng bản: đạt gì, sai gì</h2>
+    </div>
+    <div class="builds">
+
+      <article class="build rv">
+        <div class="pic"><img src="assets/thu-vien/ghe-beo-cang.jpg" alt="Bản dựng noir: người đàn ông đất sét ngồi xổm trên ghe đêm mưa, mũi ghe dựng cây bẹo cao treo dứa và bắp cải, đèn dầu vàng, biểu cảm gằn. Có chữ CAM 1 REC 00:05:12 in trong ảnh." loading="lazy"></div>
+        <div class="info">
+          <span class="badge b-ref" data-vi="Bản tham chiếu" data-en="Reference build">Bản tham chiếu</span>
+          <h3 data-vi="Ghe bẹo · cây bẹo" data-en="Bẹo boat · the pole">Ghe bẹo · cây bẹo</h3>
+          <p class="sub" data-vi="Bến sông · biểu cảm “căng”" data-en="Riverside · “tense” expression">Bến sông · biểu cảm “căng”</p>
+          <ul class="crit">
+            <li><span class="ok">✓</span><span data-vi="Cây bẹo dựng đúng ở mũi ghe — dứa, bắp cải treo trên sào tre." data-en="The bẹo pole is correct at the bow — pineapples and cabbages tied to the bamboo.">Cây bẹo dựng đúng ở mũi ghe — dứa, bắp cải treo trên sào tre.</span></li>
+            <li><span class="ok">✓</span><span data-vi="Đèn dầu ấm, mưa noir, từ vựng đồng bằng — đúng chuẩn 02." data-en="Warm oil lamp, noir rain, delta vocabulary — meets rule 02.">Đèn dầu ấm, mưa noir, từ vựng đồng bằng — đúng chuẩn 02.</span></li>
+            <li><span class="no">✕</span><span data-vi="Thiếu đôi mắt ghe — mất tín hiệu bản địa mạnh nhất." data-en="Missing the boat eyes — losing the strongest local signature.">Thiếu đôi mắt ghe — mất tín hiệu bản địa mạnh nhất.</span></li>
+            <li><span class="no">✕</span><span data-vi="Chữ “CAM 1” nằm trong ảnh — phải là lớp phủ (chuẩn 03)." data-en="“CAM 1” is baked into the image — must be an overlay (rule 03).">Chữ “CAM 1” nằm trong ảnh — phải là lớp phủ (chuẩn 03).</span></li>
+            <li><span class="no">✕</span><span data-vi="Biểu cảm gằn quá — “căng” nên là ghì, nén, không phải nhe răng." data-en="Expression too harsh — “tense” should be gripped and held, not a snarl.">Biểu cảm gằn quá — “căng” nên là ghì, nén, không phải nhe răng.</span></li>
+            <li><span class="no">✕</span><span data-vi="Áo còn xanh — bỏ theo chuẩn 01." data-en="Shirt is still blue — drop it per rule 01.">Áo còn xanh — bỏ theo chuẩn 01.</span></li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="build rv">
+        <div class="pic"><img src="assets/thu-vien/ghe-beo-mat-ghe.jpg" alt="Bản dựng noir đen trắng: chiếc ghe với đôi mắt vẽ đỏ-trắng-xanh ở mũi giữ nguyên màu, đèn dầu vàng, người đàn ông đất sét ngồi tựa má mệt mỏi. Có chữ CAM 4 REC in trong ảnh." loading="lazy"></div>
+        <div class="info">
+          <span class="badge b-key" data-vi="Bước ngoặt" data-en="Breakthrough">Bước ngoặt</span>
+          <h3 data-vi="Ghe bẹo · đôi mắt ghe" data-en="Bẹo boat · the boat eyes">Ghe bẹo · đôi mắt ghe</h3>
+          <p class="sub" data-vi="Bến sông · phát hiện lớn nhất" data-en="Riverside · the biggest find">Bến sông · phát hiện lớn nhất</p>
+          <ul class="crit">
+            <li><span class="ok">✓</span><span data-vi="Đôi mắt ghe đỏ-trắng giữ nguyên màu giữa khung đen trắng — đúng trọng tâm chuẩn 01. Đây là bản khoá màu." data-en="Red-and-white boat eyes keep their colour in the monochrome frame — the heart of rule 01. This is the colour-locking build.">Đôi mắt ghe đỏ-trắng giữ nguyên màu giữa khung đen trắng — đúng trọng tâm chuẩn 01. Đây là bản khoá màu.</span></li>
+            <li><span class="ok">✓</span><span data-vi="Đèn dầu vàng đặt gần mắt ghe — hai màu chừa lại nằm cạnh nhau, cân đối." data-en="The amber lamp sits near the eyes — the two kept colours balance beside each other.">Đèn dầu vàng đặt gần mắt ghe — hai màu chừa lại nằm cạnh nhau, cân đối.</span></li>
+            <li><span class="no">✕</span><span data-vi="Chữ “CAM 4” nằm trong ảnh — phải là lớp phủ (chuẩn 03)." data-en="“CAM 4” is baked into the image — must be an overlay (rule 03).">Chữ “CAM 4” nằm trong ảnh — phải là lớp phủ (chuẩn 03).</span></li>
+            <li><span class="no">✕</span><span data-vi="Chưa thấy cây bẹo trong khung — bản sau nên ghép mắt ghe + cây bẹo." data-en="No bẹo pole in frame — a later build should combine boat eyes + bẹo pole.">Chưa thấy cây bẹo trong khung — bản sau nên ghép mắt ghe + cây bẹo.</span></li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="build rv">
+        <div class="pic"><img src="assets/thu-vien/ben-song-kiet.jpg" alt="Bản dựng noir: người đàn ông đất sét áo ba lỗ xanh ngồi trên ghế đẩu bên quầy hàng vỉa hè, đèn đường vàng, mưa đêm, mặt nước phản chiếu, dáng cúi kiệt sức." loading="lazy"></div>
+        <div class="info">
+          <span class="badge b-mood" data-vi="Mood đạt" data-en="Mood locked">Mood đạt</span>
+          <h3 data-vi="Bến sông · kiệt" data-en="Riverside · exhausted">Bến sông · kiệt</h3>
+          <p class="sub" data-vi="Bến sông · biểu cảm “kiệt”" data-en="Riverside · “exhausted” expression">Bến sông · biểu cảm “kiệt”</p>
+          <ul class="crit">
+            <li><span class="ok">✓</span><span data-vi="Cô độc, đèn dầu, mưa, mặt nước phản chiếu — biểu cảm “kiệt” rất mạnh. Đây là bản khoá cảm xúc." data-en="Solitude, oil lamp, rain, reflective water — the “exhausted” beat lands hard. This is the emotion-locking build.">Cô độc, đèn dầu, mưa, mặt nước phản chiếu — biểu cảm “kiệt” rất mạnh. Đây là bản khoá cảm xúc.</span></li>
+            <li><span class="no">✕</span><span data-vi="Áo xanh — bỏ theo chuẩn 01, chuyển hẳn về đen trắng." data-en="Blue shirt — drop it per rule 01, go fully monochrome.">Áo xanh — bỏ theo chuẩn 01, chuyển hẳn về đen trắng.</span></li>
+            <li><span class="no">✕</span><span data-vi="Cảnh quán vỉa hè, không có ghe → không có mắt ghe. Dùng đúng cho biểu cảm “kiệt” ở bến, không dùng làm cảnh trên ghe." data-en="A street-stall scene with no boat → no boat eyes. Use it for the riverside “exhausted” beat, not as an on-boat shot.">Cảnh quán vỉa hè, không có ghe → không có mắt ghe. Dùng đúng cho biểu cảm “kiệt” ở bến, không dùng làm cảnh trên ghe.</span></li>
+          </ul>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ BẢNG 12 CLIP ═══ -->
+<section class="band" id="tien-do">
+  <div class="shell">
+    <div class="head rv">
+      <p class="tag" data-vi="Tiến độ" data-en="Progress">Tiến độ</p>
+      <h2 data-vi="Bảng 12 clip" data-en="The 12-clip grid">Bảng 12 clip</h2>
+      <p class="lede" data-vi="Ba bối cảnh × bốn biểu cảm. Mới hai ô có bản nháp — cả hai đều ở bến sông. Còn lại chưa dựng." data-en="Three settings × four expressions. Only two cells have drafts — both at the riverside. The rest are not built yet.">Ba bối cảnh × bốn biểu cảm. Mới hai ô có bản nháp — cả hai đều ở bến sông. Còn lại chưa dựng.</p>
+    </div>
+    <div class="tbl-wrap rv">
+      <table class="grid12">
+        <thead>
+          <tr>
+            <th scope="col" data-vi="Bối cảnh \ Biểu cảm" data-en="Setting \ Expression">Bối cảnh \ Biểu cảm</th>
+            <th scope="col" data-vi="Vững" data-en="Steady">Vững</th>
+            <th scope="col" data-vi="Cân nhắc" data-en="Weighing">Cân nhắc</th>
+            <th scope="col" data-vi="Căng" data-en="Tense">Căng</th>
+            <th scope="col" data-vi="Kiệt" data-en="Exhausted">Kiệt</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row" data-vi="Bến sông · bậc 1" data-en="Riverside · tier 1">Bến sông · bậc 1</th>
+            <td><span class="st st-todo" data-vi="Chưa" data-en="Todo">Chưa</span></td>
+            <td><span class="st st-todo" data-vi="Chưa" data-en="Todo">Chưa</span></td>
+            <td><span class="st st-draft" data-vi="Nháp" data-en="Draft">Nháp</span></td>
+            <td><span class="st st-draft" data-vi="Nháp" data-en="Draft">Nháp</span></td>
+          </tr>
+          <tr>
+            <th scope="row" data-vi="Phố thị · bậc 2a" data-en="Town · tier 2a">Phố thị · bậc 2a</th>
+            <td><span class="st st-todo" data-vi="Chưa" data-en="Todo">Chưa</span></td>
+            <td><span class="st st-todo" data-vi="Chưa" data-en="Todo">Chưa</span></td>
+            <td><span class="st st-todo" data-vi="Chưa" data-en="Todo">Chưa</span></td>
+            <td><span class="st st-todo" data-vi="Chưa" data-en="Todo">Chưa</span></td>
+          </tr>
+          <tr>
+            <th scope="row" data-vi="Cửa khẩu · bậc 2b" data-en="Border · tier 2b">Cửa khẩu · bậc 2b</th>
+            <td><span class="st st-todo" data-vi="Chưa" data-en="Todo">Chưa</span></td>
+            <td><span class="st st-todo" data-vi="Chưa" data-en="Todo">Chưa</span></td>
+            <td><span class="st st-todo" data-vi="Chưa" data-en="Todo">Chưa</span></td>
+            <td><span class="st st-todo" data-vi="Chưa" data-en="Todo">Chưa</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ VIỆC TIẾP THEO ═══ -->
+<section id="tiep-theo">
+  <div class="shell">
+    <div class="head rv">
+      <p class="tag" data-vi="Việc tiếp theo" data-en="Next step">Việc tiếp theo</p>
+      <h2 data-vi="Một phép thử, không phải mười một clip" data-en="One test, not eleven clips">Một phép thử, không phải mười một clip</h2>
+    </div>
+    <p class="next rv" data-vi="Trước khi dựng cả bảng, làm một phép thử: dựng 5 giây động từ bản tham chiếu, nén xuống dưới 700 KB, và xem cơn mưa còn giữ được không khi nén. Nếu mưa sống sót và dung lượng đạt, mới nhân ra mười một clip còn lại." data-en="Before building the whole grid, run one test: render 5 seconds of motion from the reference build, compress under 700 KB, and see whether the rain survives compression. If the rain holds and the size lands, only then scale to the remaining eleven clips."><b>Trước khi dựng cả bảng, làm một phép thử:</b> dựng 5 giây động từ bản tham chiếu, nén xuống dưới 700 KB, và xem cơn mưa còn giữ được không khi nén. Nếu mưa sống sót và dung lượng đạt, mới nhân ra mười một clip còn lại.</p>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="band" id="lien-ket">
+  <div class="shell">
+    <div class="head rv">
+      <p class="tag" data-vi="Liên quan" data-en="Related">Liên quan</p>
+      <h2 data-vi="Xem hướng hình và toàn hệ sinh thái" data-en="See the vision and the whole ecosystem">Xem hướng hình và toàn hệ sinh thái</h2>
+    </div>
+    <div class="btn-row rv">
+      <a class="btn btn-solid" href="hinh-dung.html" data-vi="Trang Hình dung" data-en="The vision page">Trang Hình dung</a>
+      <a class="btn btn-line" href="universe.html" data-vi="Về Vũ trụ" data-en="To the Universe">Về Vũ trụ</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="shell fgrid">
+    <div>
+      <p class="tag">BizOn</p>
+      <p class="body" data-vi="Mô phỏng kinh doanh cho lớp học đại học.<br>Đại học Cần Thơ · Trường Kinh tế." data-en="Business simulation for university classrooms.<br>Can Tho University · School of Economics.">Mô phỏng kinh doanh cho lớp học đại học.<br>Đại học Cần Thơ · Trường Kinh tế.</p>
+    </div>
+    <nav class="flinks" aria-label="Chân trang">
+      <a href="universe.html" data-vi="Vũ trụ" data-en="Universe">Vũ trụ</a>
+      <a href="hinh-dung.html" data-vi="Hình dung" data-en="Vision">Hình dung</a>
+      <a href="truong.html" data-vi="Trang chủ" data-en="Home">Trang chủ</a>
+      <a href="truong-hoc-thuat.html" data-vi="Học thuật" data-en="Academic">Học thuật</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="assets/js/shell.js"></script>
+</body>
+</html>
