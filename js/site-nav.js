@@ -31,7 +31,7 @@
       ['BizOn Arcade', 'games.html'],
       ['Hộ Chiếu Thương Hiệu', 'brand-passport.html'],
       ['Go Global', 'global.html'],
-      ['Gánh Hàng Khởi Nghiệp', 'food-truck.html'],
+      ['Gánh Hàng Khởi Nghiệp', 'ben-phu-sa.html'],
     ]],
     ['🎨 Sáng tạo', [
       ['Kho Âm nhạc', 'am-nhac.html'],
