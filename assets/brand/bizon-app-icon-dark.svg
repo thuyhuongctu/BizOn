@@ -1,6 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="BizOn">
-  <!-- Biến thể tối: nền ink, vòng trắng, chấm bật màu vàng (gold) làm điểm nhấn. -->
-  <rect width="100" height="100" rx="22" fill="#0E1512"/>
-  <ellipse cx="47" cy="50" rx="30" ry="25" fill="none" stroke="#FFFFFF" stroke-width="13"/>
-  <circle cx="60" cy="50" r="10" fill="#E4B23C"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" aria-label="BizOn" role="img" viewBox="0 0 100 100"><rect width="100" height="100" fill="#0E1512" rx="22"/><ellipse cx="47" cy="50" fill="none" stroke="#FFF" stroke-width="13" rx="30" ry="25"/><circle cx="60" cy="50" r="10" fill="#E4B23C"/></svg>
