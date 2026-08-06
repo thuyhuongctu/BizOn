@@ -37,6 +37,10 @@
       var t = el.getAttribute('data-' + l);
       if (t) el.innerHTML = t;
     });
+    document.querySelectorAll('[data-alt-vi]').forEach(function (el) {
+      var a = el.getAttribute('data-alt-' + l);
+      if (a) el.setAttribute('alt', a);
+    });
   };
   if (bvi) bvi.onclick = function () { window.setLang('vi'); };
   if (ben) ben.onclick = function () { window.setLang('en'); };
