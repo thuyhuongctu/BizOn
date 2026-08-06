@@ -26,6 +26,12 @@
 
   // Cùng bộ liên kết với chân trang (js/site-footer.js) – nguồn duy nhất.
   var GROUPS = [
+    ['🌌 Vũ trụ', [
+      ['Bản đồ Vũ trụ', 'universe.html'],
+      ['Trường (thể chế)', 'truong.html'],
+      ['Nền tảng học thuật', 'truong-hoc-thuat.html'],
+      ['Sổ điểm giảng viên', 'instructor-grading.html'],
+    ]],
     ['🎮 Trò chơi', [
       ['Game Bật Nghiệp', 'game.html'],
       ['BizOn Arcade', 'games.html'],
