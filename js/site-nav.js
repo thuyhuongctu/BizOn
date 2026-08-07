@@ -112,6 +112,18 @@
     'html[data-theme="dark"] #bz-sheet a{color:#d6ecf0}',
     '#bz-sheet a[aria-current="page"]{background:#e8762d;color:#fff}',
 
+    /* Sợi nhấn chung: cửa "Vũ trụ" khoác màu jade thể chế (base clay giữ nguyên) */
+    '#bz-nav .bz-grp-hub>button{color:#0F5C4E}',
+    '#bz-nav .bz-grp-hub>button::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#0F5C4E;margin-right:6px;vertical-align:1px}',
+    '#bz-nav .bz-grp-hub>button:hover,#bz-nav .bz-grp-hub.open>button{background:rgba(15,92,78,.10)}',
+    '#bz-nav .bz-grp-hub .bz-menu a:hover{background:rgba(15,92,78,.10);color:#0F5C4E}',
+    'html[data-theme="dark"] #bz-nav .bz-grp-hub>button{color:#7FD9BE}',
+    'html[data-theme="dark"] #bz-nav .bz-grp-hub>button::before{background:#7FD9BE}',
+    'html[data-theme="dark"] #bz-nav .bz-grp-hub>button:hover,html[data-theme="dark"] #bz-nav .bz-grp-hub.open>button{background:rgba(127,217,190,.14)}',
+    'html[data-theme="dark"] #bz-nav .bz-grp-hub .bz-menu a:hover{background:rgba(127,217,190,.14);color:#7FD9BE}',
+    '#bz-sheet h3.bz-hub{color:#0F5C4E}',
+    '#bz-sheet h3.bz-hub::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#0F5C4E;margin-right:6px;vertical-align:1px}',
+    'html[data-theme="dark"] #bz-sheet h3.bz-hub,html[data-theme="dark"] #bz-sheet h3.bz-hub::before{color:#7FD9BE;background:#7FD9BE}',
     '@media (max-width:860px){#bz-nav .bz-groups{display:none}#bz-nav .bz-burger{display:block}}',
     '@media print{#bz-nav,#bz-sheet{display:none}}',
     '@media (prefers-reduced-motion:reduce){#bz-nav{backdrop-filter:none}}'
@@ -123,10 +135,11 @@
     var st = document.createElement('style'); st.textContent = CSS; document.head.appendChild(st);
 
     var groupsHtml = GROUPS.map(function (g) {
+      var hub = g[0].indexOf('Vũ trụ') !== -1 ? ' bz-grp-hub' : '';
       var items = g[1].map(function (l) {
         return '<a href="' + l[1] + '"' + cur(l[1]) + '>' + l[0] + '</a>';
       }).join('');
-      return '<div class="bz-grp"><button type="button">' + g[0] + '</button>' +
+      return '<div class="bz-grp' + hub + '"><button type="button">' + g[0] + '</button>' +
         '<div class="bz-menu">' + items + '</div></div>';
     }).join('');
 
@@ -146,7 +159,8 @@
     var sheet = document.createElement('div');
     sheet.id = 'bz-sheet';
     sheet.innerHTML = GROUPS.map(function (g) {
-      return '<h3>' + g[0] + '</h3>' + g[1].map(function (l) {
+      var h = g[0].indexOf('Vũ trụ') !== -1 ? ' class="bz-hub"' : '';
+      return '<h3' + h + '>' + g[0] + '</h3>' + g[1].map(function (l) {
         return '<a href="' + l[1] + '"' + cur(l[1]) + '>' + l[0] + '</a>';
       }).join('');
     }).join('');
