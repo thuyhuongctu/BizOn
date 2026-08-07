@@ -117,6 +117,10 @@
     'html[data-theme="dark"] #bz-footer .bzf-eco-label b{color:#5cc4e6}' +
     'html[data-theme="dark"] #bz-footer .bzf-eco-links a{background:#0e2a33;border-color:rgba(92,196,230,.2);color:#5cc4e6}' +
     'html[data-theme="dark"] #bz-footer .bzf-eco-links a.bzf-eco-cur{background:#5cc4e6;color:#04222a;border-color:#5cc4e6}' +
+    /* Sợi nhấn chung: cột "Vũ trụ" khoác jade thể chế (base clay giữ nguyên) */
+    '#bz-footer .bzf-col-hub>summary{color:#0F5C4E}' +
+    '#bz-footer .bzf-col-hub ul a{color:#0F5C4E}' +
+    'html[data-theme="dark"] #bz-footer .bzf-col-hub>summary,html[data-theme="dark"] #bz-footer .bzf-col-hub ul a{color:#7FD9BE}' +
     '@media print{#bz-footer{display:none !important}}';
   document.head.appendChild(css);
 
@@ -124,7 +128,8 @@
     var f = document.createElement('footer');
     f.id = 'bz-footer';
     var cols = COLS.map(function (c) {
-      return '<details class="bzf-col"><summary>' + c[0] + '</summary><ul>' +
+      var hub = c[0].indexOf('Vũ trụ') !== -1 ? ' bzf-col-hub' : '';
+      return '<details class="bzf-col' + hub + '"><summary>' + c[0] + '</summary><ul>' +
         c[1].map(function (l) { return '<li><a href="' + l[1] + '">' + l[0] + '</a></li>'; }).join('') +
         '</ul></details>';
     }).join('');
