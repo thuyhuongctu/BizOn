@@ -109,7 +109,8 @@
     <div class="grid grid-cols-2 gap-2" id="ft-teams"></div>
     <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-4 mb-1.5">Chọn thuyền trưởng</p>
     <div class="grid grid-cols-5 gap-2" id="ft-avatars"></div>
-    <button onclick="ftStart()" class="clay-btn w-full bg-clay-gold text-deep-teal font-display font-extrabold py-4 mt-5">🚀 Bắt đầu 5 tuần kinh doanh</button>
+    <button id="ft-music" onclick="ftMusic()" class="clay-btn w-full bg-deep-teal text-white font-display font-extrabold py-3 text-sm mt-4">🎵 Bật nhạc chủ đề «Đội Phù Sa»</button>
+    <button onclick="ftStart()" class="clay-btn w-full bg-clay-gold text-deep-teal font-display font-extrabold py-4 mt-3">🚀 Bắt đầu 5 tuần kinh doanh</button>
   </section>
 
   <!-- MÀN CHƠI -->
@@ -530,6 +531,33 @@
 </script>
 <script src="js/site-ui.js" defer></script>
 <script src="js/site-vnmap.js" defer></script>
+<script>
+/* Nhạc chủ đề game Bến Phù Sa — anthem «Đội Phù Sa» (xoay vòng trong nhóm ca khúc
+ * của đội, không lẫn nhạc game khác). Dùng chung dock toàn site (site-dock.js). */
+(function () {
+  var THEME = 'doi-phu-sa.mp3';
+  var SOUNDTRACK = ['doi-phu-sa.mp3', 'doi-phu-sa-remix.mp3', 'doi-phu-sa-remix2.mp3', 'doi-phu-sa-remix3.mp3'];
+  function sync(on) {
+    var b = document.getElementById('ft-music');
+    if (b) b.textContent = on ? '⏸️ Tạm dừng nhạc «Đội Phù Sa»' : '🎵 Bật nhạc chủ đề «Đội Phù Sa»';
+  }
+  window.ftMusic = function () {
+    var d = window.BizonDock; if (!d) return;
+    if (d.scope) d.scope(SOUNDTRACK, 'Đội Phù Sa');
+    if (d.isPlaying()) { d.pause(); sync(false); try { localStorage.setItem('bizon-ft-music', '0'); } catch (e) {} }
+    else { d.play(THEME); sync(true); try { localStorage.setItem('bizon-ft-music', '1'); } catch (e) {} }
+  };
+  // Bấm "Bắt đầu" là cử chỉ người dùng hợp lệ → nối lại nhạc nếu trước đó đã bật
+  document.addEventListener('click', function (e) {
+    var t = e.target && e.target.closest ? e.target.closest('button') : null;
+    if (!t || t.id === 'ft-music') return;
+    if (!/ftStart\(\)/.test(t.getAttribute('onclick') || '')) return;
+    try { if (localStorage.getItem('bizon-ft-music') !== '1') return; } catch (e2) { return; }
+    var d = window.BizonDock;
+    if (d && !d.isPlaying()) { if (d.scope) d.scope(SOUNDTRACK, 'Đội Phù Sa'); d.play(THEME); sync(true); }
+  });
+})();
+</script>
 <script src="js/site-dock.js" defer></script>
 <script src="js/site-footer.js" defer></script>
 <script src="js/site-nav.js" defer></script>
