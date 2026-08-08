@@ -167,7 +167,10 @@
         <input id="gm" type="range" min="0" max="120" value="40" class="w-full mb-4" oninput="gUpdate()">
         <label class="block text-xs font-bold text-deep-teal mb-1">🎨 Bản địa hóa sản phẩm (nghìn USD/quý) – <span id="gl-val" class="text-primary">25</span></label>
         <input id="gl" type="range" min="0" max="100" value="25" class="w-full mb-2" oninput="gUpdate()">
-        <p id="g-lumina" class="text-[11px] text-deep-teal/70 italic mt-2 min-h-[2rem]"></p>
+        <div class="flex gap-1.5 items-start mt-2">
+          <p id="g-lumina" class="text-[11px] text-deep-teal/70 italic min-h-[2rem]"></p>
+          <button id="g-lumina-voice" onclick="gVoice(this.dataset.clip)" class="hidden shrink-0 text-primary text-sm leading-none" aria-label="Nghe giọng Lumina" title="Nghe giọng Lumina">🔊</button>
+        </div>
         <button onclick="gCommit()" class="clay-btn-primary clay-btn w-full text-white font-display font-extrabold py-3.5 mt-3">Chốt quý này 🚀</button>
       </div>
       <div class="clay-card p-5">
@@ -676,10 +679,25 @@ function gUpdate() {
   document.getElementById('g-doi').textContent = r.doi;
   document.getElementById('g-rep').textContent = r.rep;
   document.getElementById('g-learn').textContent = r.learn;
-  const hint = r.share < 35 ? 'Lumina: thị phần đang yếu – cân nhắc giảm giá hoặc tăng bản địa hóa cho hợp văn hóa bản địa.'
-    : r.profit < 0 ? 'Lumina: đang lỗ quý này – kiểm soát ngân sách hoặc chấp nhận đầu tư giai đoạn thâm nhập.'
-    : 'Lumina: cân bằng tốt! Kỷ nguyên số thưởng cho ai dám đầu tư marketing số đúng lúc. ✨';
+  let hintClip;
+  const hint = r.share < 35 ? (hintClip = 'glob-01', 'Lumina: thị phần đang yếu – cân nhắc giảm giá hoặc tăng bản địa hóa cho hợp văn hóa bản địa.')
+    : r.profit < 0 ? (hintClip = 'glob-02', 'Lumina: đang lỗ quý này – kiểm soát ngân sách hoặc chấp nhận đầu tư giai đoạn thâm nhập.')
+    : (hintClip = 'glob-03', 'Lumina: cân bằng tốt! Kỷ nguyên số thưởng cho ai dám đầu tư marketing số đúng lúc. ✨');
   document.getElementById('g-lumina').textContent = hint;
+  const vb = document.getElementById('g-lumina-voice');
+  if (vb) { vb.dataset.clip = hintClip; vb.classList.remove('hidden'); }
+}
+
+// Giọng Lumina thu sẵn cho gợi ý Go Global – phát theo yêu cầu (bấm 🔊)
+let gVoiceEl = null;
+function gVoice(clip) {
+  if (!clip) return;
+  try {
+    if (gVoiceEl) gVoiceEl.pause();
+    gVoiceEl = new Audio('assets/audio/voice/' + clip + '.mp3');
+    gVoiceEl.volume = 0.95;
+    gVoiceEl.play().catch(() => {});
+  } catch (e) {}
 }
 
 function gCommit() {
