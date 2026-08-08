@@ -223,7 +223,10 @@
       { img: 'assets/character/team/coo-cut.webp', name: 'Bảo Ngọc', role: 'COO' },
       { img: 'assets/character/team/sec-cut.webp', name: 'Gia Hân', role: 'Thư ký' },
     ] },
-    { name: 'Đội Phù Sa', icon: '🌾', locked: 'Đang tạo hình nhân vật – sắp ra mắt!', members: [] },
+    { name: 'Đội Phù Sa', icon: '🌾', members: [
+      { img: 'assets/character/phu-sa/huong-cut.webp', name: 'Hương', role: 'Nhà sáng lập' },
+      { img: 'assets/character/phu-sa/tu-cut.webp', name: 'Thầy Tú', role: 'Người đồng hành' },
+    ] },
   ];
   function TEAM() { return TEAMS[S.team].members; }
   // 3 đối thủ AI của hệ sinh thái BizOn – mỗi "nhà" một tính cách kinh doanh
@@ -297,6 +300,8 @@
   window.ftTeam = function (i) { S.team = i; S.cap = 0; renderTeams(); renderAvatars(); };
 
   function renderAvatars() {
+    // Lưới thuyền trưởng co giãn theo số thành viên (Đội Demo 5 · Đội sáng lập 2)
+    $('ft-avatars').style.gridTemplateColumns = 'repeat(' + Math.min(TEAM().length, 5) + ', minmax(0,1fr))';
     $('ft-avatars').innerHTML = TEAM().map(function (t, i) {
       return '<button class="ft-ava' + (i === S.cap ? ' sel' : '') + '" onclick="ftCap(' + i + ')">' +
         '<img src="' + t.img + '" alt="' + t.name + '" loading="lazy"><span style="display:block;margin-top:4px">' + t.name + '</span>' +
