@@ -244,22 +244,22 @@ function cmoBrain(s) {
   };
   if (shareDrop > 5) return {
     status: 'RED', badge: 'ĐỎ · NGUY CẤP', metric: `Thị phần giảm ${shareDrop}% so với chu kỳ trước`,
-    dialogue: 'Đối thủ đang xâm chiếm phân khúc của chúng ta bằng giá rẻ. Chúng ta cần tăng ngân sách quảng cáo hoặc tung sản phẩm R&D mới.',
+    clip: 'adv-02', dialogue: 'Đối thủ đang xâm chiếm phân khúc của chúng ta bằng giá rẻ. Chúng ta cần tăng ngân sách quảng cáo hoặc tung sản phẩm R&D mới.',
     actions: ['Tăng ngân sách Marketing vòng tới', 'Mua Marketing Boost trong Cửa hàng'],
   };
   if (mroi !== null && mroi < 3) return {
     status: 'YELLOW', badge: 'VÀNG · RỦI RO', metric: `Doanh thu / CP Marketing = ${mroi} < 3.0`,
-    dialogue: 'CMO thân mến, chi phí tiếp thị của chúng ta đang quá cao nhưng không chuyển đổi thành doanh thu tương ứng. Hãy rà soát lại thông điệp chiến dịch.',
+    clip: 'adv-03', dialogue: 'CMO thân mến, chi phí tiếp thị của chúng ta đang quá cao nhưng không chuyển đổi thành doanh thu tương ứng. Hãy rà soát lại thông điệp chiến dịch.',
     actions: ['Giảm ngân sách Marketing 15%', 'Rà soát lại thông điệp chiến dịch'],
   };
   if (demandMet < 90) return {
     status: 'GREEN', badge: 'XANH · CƠ HỘI', metric: `Đáp ứng nhu cầu chỉ ${demandMet}% (mất ${last.lostSales} đơn)`,
-    dialogue: 'Nhu cầu thị trường đang rất lớn nhưng chúng ta không có đủ hàng để bán. Hãy phối hợp với COO để tăng sản lượng.',
+    clip: 'adv-04', dialogue: 'Nhu cầu thị trường đang rất lớn nhưng chúng ta không có đủ hàng để bán. Hãy phối hợp với COO để tăng sản lượng.',
     actions: ['Tăng sản lượng + thuê thêm nhân công', 'Nâng cấp dây chuyền sản xuất'],
   };
   if (ev.id === 'EV_PRICEWAR' && !s.finished) return {
     status: 'RED', badge: 'ĐỎ · PRICE WAR', metric: 'Đối thủ B hạ giá 15% tại Modern Trade',
-    dialogue: 'Thưa CMO, đối thủ B vừa hạ giá 15% và chiếm mất 8% thị phần của chúng ta. Nếu không phản ứng trong vòng tới, chúng ta sẽ mất vị thế dẫn đầu.',
+    clip: 'adv-05', dialogue: 'Thưa CMO, đối thủ B vừa hạ giá 15% và chiếm mất 8% thị phần của chúng ta. Nếu không phản ứng trong vòng tới, chúng ta sẽ mất vị thế dẫn đầu.',
     actions: ["Triển khai gói 'Marketing Boost' giữ chân khách trung thành", 'Cải tiến bao bì (R&D) tăng giá trị cảm nhận – đừng đua giảm giá'],
   };
   return {
@@ -278,17 +278,17 @@ function cfoBrain(s) {
   if (s.quickRatio < 1) return {
     status: 'CRISIS', badge: 'ĐỎ · KHỦNG HOẢNG THANH KHOẢN', invDays,
     metric: `Quick Ratio ${s.quickRatio.toFixed(2)} < 1.00`,
-    dialogue: `CFO, thanh khoản đang ở vùng đỏ! Tiền mặt chỉ còn ${Math.round(s.balance)}tr₫, vòng quay tồn kho lên tới ${invDays} ngày. Hãy phê duyệt khoản vay khẩn cấp hoặc cắt giảm chi phí ngay – đừng để lỡ kỳ trả lương.`,
+    clip: 'adv-14', dialogue: `CFO, thanh khoản đang ở vùng đỏ! Tiền mặt chỉ còn ${Math.round(s.balance)}tr₫, vòng quay tồn kho lên tới ${invDays} ngày. Hãy phê duyệt khoản vay khẩn cấp hoặc cắt giảm chi phí ngay – đừng để lỡ kỳ trả lương.`,
   };
   if (s.roi >= LOAN_INTEREST_RATE && s.loan === 0) return {
     status: 'LEVERAGE', badge: 'XANH · ĐÒN BẨY HIỆU QUẢ', invDays,
     metric: `ROI ${s.roi}% > chi phí vốn ${LOAN_INTEREST_RATE}%`,
-    dialogue: `ROI hiện tại (${s.roi}%) đang cao hơn chi phí vốn vay (${LOAN_INTEREST_RATE}%). Đây là thời điểm tốt để dùng đòn bẩy tài chính mở rộng sản xuất, CFO ạ.`,
+    clip: 'adv-15', dialogue: `ROI hiện tại (${s.roi}%) đang cao hơn chi phí vốn vay (${LOAN_INTEREST_RATE}%). Đây là thời điểm tốt để dùng đòn bẩy tài chính mở rộng sản xuất, CFO ạ.`,
   };
   return {
     status: 'SAFE', badge: 'XANH · AN TOÀN', invDays,
     metric: `Quick Ratio ${s.quickRatio.toFixed(2)} ≥ 1.00`,
-    dialogue: `Thanh khoản ổn định, vòng quay tồn kho ${invDays} ngày trong ngưỡng an toàn. Hãy duy trì kỷ luật chi tiêu và theo dõi dòng tiền từng vòng nhé.`,
+    clip: 'adv-16', dialogue: `Thanh khoản ổn định, vòng quay tồn kho ${invDays} ngày trong ngưỡng an toàn. Hãy duy trì kỷ luật chi tiêu và theo dõi dòng tiền từng vòng nhé.`,
   };
 }
 
@@ -300,27 +300,27 @@ function cooBrain(s) {
   const invRatio = last && last.demandUnits > 0 ? s.inventory / last.demandUnits : 0;
   if (invRatio > 0.4) return {
     status: 'RED', badge: 'ĐỎ · NGUY CẤP', metric: `Tồn kho / Nhu cầu = ${Math.round(invRatio * 100)}% > 40%`,
-    dialogue: 'Lượng hàng tồn kho đang quá lớn, gây lãng phí chi phí lưu kho. Hãy phối hợp với CMO để đẩy mạnh tiêu thụ hoặc giảm sản lượng.',
+    clip: 'adv-06', dialogue: 'Lượng hàng tồn kho đang quá lớn, gây lãng phí chi phí lưu kho. Hãy phối hợp với CMO để đẩy mạnh tiêu thụ hoặc giảm sản lượng.',
     actions: ['Giảm sản lượng vòng tới', 'Phối hợp CMO đẩy tiêu thụ'],
   };
   if (last && prev && last.defect > prev.defect * 1.12) return {
     status: 'YELLOW', badge: 'VÀNG · RỦI RO', metric: `Phế phẩm tăng ${Math.round((last.defect / prev.defect - 1) * 100)}% so với vòng trước`,
-    dialogue: 'Thưa COO, tôi nhận thấy tỷ lệ sản phẩm lỗi tăng mạnh. Nguyên nhân là do đội ngũ nhân sự mới chưa được đào tạo bài bản. Chúng ta nên đầu tư vào gói "Đào tạo chuyên sâu" để lấy lại phong độ.',
+    clip: 'adv-07', dialogue: 'Thưa COO, tôi nhận thấy tỷ lệ sản phẩm lỗi tăng mạnh. Nguyên nhân là do đội ngũ nhân sự mới chưa được đào tạo bài bản. Chúng ta nên đầu tư vào gói "Đào tạo chuyên sâu" để lấy lại phong độ.',
     actions: ['Tăng ngân sách đào tạo trong thẻ Nhân sự', 'Giữ chân kỹ sư lành nghề'],
   };
   if (capUse > 0.95) return {
     status: 'YELLOW', badge: 'VÀNG · RỦI RO', metric: `Sản lượng / Công suất = ${Math.round(capUse * 100)}% > 95%`,
-    dialogue: 'COO ơi, nhà máy đang chạy quá tải. Nếu không đầu tư mở rộng ngay, chúng ta sẽ bỏ lỡ cơ hội bán hàng ở vòng tới.',
+    clip: 'adv-08', dialogue: 'COO ơi, nhà máy đang chạy quá tải. Nếu không đầu tư mở rộng ngay, chúng ta sẽ bỏ lỡ cơ hội bán hàng ở vòng tới.',
     actions: ['Nâng cấp dây chuyền sản xuất', 'Thuê thêm nhân công'],
   };
   if (last && last.lostSales > 0) return {
     status: 'GREEN', badge: 'XANH · CƠ HỘI', metric: `Thiếu ${last.lostSales.toLocaleString('vi-VN')} sp so với nhu cầu`,
-    dialogue: 'Thị trường đang "khát" hàng nhưng chúng ta không đủ năng lực cung ứng. Đây là lúc để kích hoạt tăng ca hoặc mở rộng công suất.',
+    clip: 'adv-09', dialogue: 'Thị trường đang "khát" hàng nhưng chúng ta không đủ năng lực cung ứng. Đây là lúc để kích hoạt tăng ca hoặc mở rộng công suất.',
     actions: ['Tăng sản lượng + nhân công vòng tới', 'Đàm phán kỳ hạn 60 ngày để kích cầu'],
   };
   return {
     status: 'SAFE', badge: 'XANH · ỔN ĐỊNH', metric: 'Cung – cầu đang cân bằng',
-    dialogue: 'Vận hành đang mượt mà, COO ạ. Hãy duy trì bảo trì định kỳ và theo dõi OEE để giữ phong độ nhé.',
+    clip: 'adv-10', dialogue: 'Vận hành đang mượt mà, COO ạ. Hãy duy trì bảo trì định kỳ và theo dõi OEE để giữ phong độ nhé.',
     actions: ['Bảo trì định kỳ', 'Theo dõi OEE mỗi vòng'],
   };
 }
@@ -330,22 +330,22 @@ function secBrain(s) {
   const ev = currentEvent(s);
   if (!s.finished && ev.tone === 'bad' && !s.committed) return {
     status: 'RED', badge: 'ĐỎ · ĐIỀU PHỐI KHẨN', metric: `Sự kiện thị trường "${ev.name}" đang diễn ra`,
-    dialogue: `Biến cố "${ev.name}" vừa ập đến! SEC hãy nhanh chóng tổng hợp thông tin từ COO về tình hình sản xuất và báo cáo cho CEO để điều chỉnh giá bán kịp thời.`,
+    clip: 'adv-17', dialogue: `Biến cố "${ev.name}" vừa ập đến! SEC hãy nhanh chóng tổng hợp thông tin từ COO về tình hình sản xuất và báo cáo cho CEO để điều chỉnh giá bán kịp thời.`,
     actions: ['Kích hoạt họp khẩn cấp toàn đội', 'Cập nhật mục tiêu vòng theo tình hình mới'],
   };
   if (!s.finished && !s.committed) return {
     status: 'YELLOW', badge: 'VÀNG · TIẾN ĐỘ', metric: `Vòng ${s.round} chưa chốt quyết định`,
-    dialogue: 'SEC ơi, các bộ phận vẫn chưa thống nhất con số cuối cùng. Hãy nhắc CEO chốt quyết định ngay để tránh bị hệ thống tự động khóa!',
+    clip: 'adv-11', dialogue: 'SEC ơi, các bộ phận vẫn chưa thống nhất con số cuối cùng. Hãy nhắc CEO chốt quyết định ngay để tránh bị hệ thống tự động khóa!',
     actions: ['Rà soát bảng quyết định với từng vai trò', 'Nhắc CEO nhấn Commit'],
   };
   if ((s.advisorHistory || []).length === 0) return {
     status: 'YELLOW', badge: 'VÀNG · TRI THỨC', metric: 'Nhật ký cố vấn đang trống',
-    dialogue: 'Dữ liệu lịch sử đang bị trống. SEC cần ghi chú lại các biến cố quan trọng để đội có cơ sở phân tích cho các vòng sau nhé.',
+    clip: 'adv-12', dialogue: 'Dữ liệu lịch sử đang bị trống. SEC cần ghi chú lại các biến cố quan trọng để đội có cơ sở phân tích cho các vòng sau nhé.',
     actions: ['Hỏi Lumina để lưu phân tích vào SEC log', 'Ghi chép Nhật ký đội'],
   };
   return {
     status: 'GREEN', badge: 'XANH · SẴN SÀNG', metric: 'Toàn đội đã chốt phần việc',
-    dialogue: 'Tuyệt vời! Toàn đội đã sẵn sàng. SEC hãy kiểm tra lại lần cuối và báo cáo CEO thực hiện nút nhấn "Commit" thần thánh nhé.',
+    clip: 'adv-13', dialogue: 'Tuyệt vời! Toàn đội đã sẵn sàng. SEC hãy kiểm tra lại lần cuối và báo cáo CEO thực hiện nút nhấn "Commit" thần thánh nhé.',
     actions: ['Kiểm tra lần cuối bảng quyết định', 'Lưu biên bản vào Nhật ký đội'],
   };
 }
@@ -362,20 +362,20 @@ function kpiCongrats(s, r) {
   const top1 = r.share >= Math.max(...s.competitors.map(c => c.share || 0), 0);
   const out = [];
   if (r.roi > 30) out.push({ role: 'CFO', risk: 'low',
-    text: 'Thật tuyệt vời, CFO! Chiến lược tối ưu cấu trúc vốn của bạn đã mang lại lợi nhuận kỷ lục (ROI ' + r.roi + '%). Dòng tiền đang cực kỳ dồi dào để chúng ta tái đầu tư mở rộng!' });
+    clip: 'kpi-01', text: 'Thật tuyệt vời, CFO! Chiến lược tối ưu cấu trúc vốn của bạn đã mang lại lợi nhuận kỷ lục (ROI ' + r.roi + '%). Dòng tiền đang cực kỳ dồi dào để chúng ta tái đầu tư mở rộng!' });
   if (shareGain > 5 || (top1 && r.share >= 30)) out.push({ role: 'CMO', risk: 'low',
-    text: 'Chúc mừng CMO! Chiến dịch Marketing Mix của bạn đã đánh bại hoàn toàn đối thủ. Thương hiệu của đội hiện đang là lựa chọn số 1 của khách hàng!' });
+    clip: 'kpi-02', text: 'Chúc mừng CMO! Chiến dịch Marketing Mix của bạn đã đánh bại hoàn toàn đối thủ. Thương hiệu của đội hiện đang là lựa chọn số 1 của khách hàng!' });
   if (r.oee >= 95 && r.defect < 1) out.push({ role: 'COO', risk: 'low',
-    text: 'COO ơi, hiệu suất nhà máy đạt mức không tưởng (OEE ' + r.oee + '%, phế phẩm ' + r.defect + '%)! Bảo trì dự phòng và đào tạo công nhân đã giúp dây chuyền chạy mượt tuyệt đối.' });
+    clip: 'kpi-03', text: 'COO ơi, hiệu suất nhà máy đạt mức không tưởng (OEE ' + r.oee + '%, phế phẩm ' + r.defect + '%)! Bảo trì dự phòng và đào tạo công nhân đã giúp dây chuyền chạy mượt tuyệt đối.' });
   return out;
 }
 
 function riskAlerts(s, r) {
   const out = [];
   if (r.oee < 60 || r.defect > 7) out.push({ role: 'COO', risk: 'high',
-    text: 'Dây chuyền sản xuất đang kêu cứu! Tỷ lệ phế phẩm quá cao sẽ bào mòn lợi nhuận gộp. Đừng ép máy móc chạy quá tải mà bỏ qua bảo trì – hãy bảo trì định kỳ và đào tạo nhân sự kỹ thuật.' });
+    clip: 'risk-01', text: 'Dây chuyền sản xuất đang kêu cứu! Tỷ lệ phế phẩm quá cao sẽ bào mòn lợi nhuận gộp. Đừng ép máy móc chạy quá tải mà bỏ qua bảo trì – hãy bảo trì định kỳ và đào tạo nhân sự kỹ thuật.' });
   if (r.decisions && r.decisions.production > s.machineCapacity * 0.9 && s.quickRatio < 1) out.push({ role: 'CEO', risk: 'high',
-    text: 'Thưa CEO, chúng ta đang đứng trước ngưỡng cửa phá sản kỹ thuật. Sự đánh đổi giữa tăng trưởng nóng và an toàn dòng tiền đang bị lệch pha – hãy họp khẩn cấp toàn đội và rà soát lại quyết định.' });
+    clip: 'risk-02', text: 'Thưa CEO, chúng ta đang đứng trước ngưỡng cửa phá sản kỹ thuật. Sự đánh đổi giữa tăng trưởng nóng và an toàn dòng tiền đang bị lệch pha – hãy họp khẩn cấp toàn đội và rà soát lại quyết định.' });
   return out;
 }
 
@@ -676,17 +676,17 @@ function luminaAdvice(s, topic) {
   const fmt = n => n.toLocaleString('vi-VN');
 
   if (topic === 'pricing') {
-    if (ev.elasticityMul) return { risk: 'high', text: `Vòng này là Chiến tranh giá – khách cực nhạy về giá. Nếu bạn giữ giá trên ${fmt(REF_PRICE)}k₫, thị phần có thể rơi mạnh. Cân nhắc giảm 10–15% và bù bằng sản lượng.` };
-    if (last && last.lostSales > 0) return { risk: 'low', text: `Vòng trước bạn hụt ${fmt(last.lostSales)} đơn vì thiếu hàng – cầu đang vượt cung. Nếu tăng giá 5–10%, lợi nhuận biên sẽ cải thiện mà thị phần giảm không đáng kể.` };
-    return { risk: 'medium', text: `Giá tham chiếu thị trường là ${fmt(REF_PRICE)}k₫. Nếu giảm 10% giá, mô hình dự báo thị phần tăng ~3–4 điểm nhưng biên lợi nhuận mỏng đi – chỉ nên làm khi sản lượng đủ lớn.` };
+    if (ev.elasticityMul) return { risk: 'high', clip: 'topic-01', text: `Vòng này là Chiến tranh giá – khách cực nhạy về giá. Nếu bạn giữ giá trên ${fmt(REF_PRICE)}k₫, thị phần có thể rơi mạnh. Cân nhắc giảm 10–15% và bù bằng sản lượng.` };
+    if (last && last.lostSales > 0) return { risk: 'low', clip: 'topic-02', text: `Vòng trước bạn hụt ${fmt(last.lostSales)} đơn vì thiếu hàng – cầu đang vượt cung. Nếu tăng giá 5–10%, lợi nhuận biên sẽ cải thiện mà thị phần giảm không đáng kể.` };
+    return { risk: 'medium', clip: 'topic-03', text: `Giá tham chiếu thị trường là ${fmt(REF_PRICE)}k₫. Nếu giảm 10% giá, mô hình dự báo thị phần tăng ~3–4 điểm nhưng biên lợi nhuận mỏng đi – chỉ nên làm khi sản lượng đủ lớn.` };
   }
   if (topic === 'marketing') {
     const boost = ev.mktBoost ? ` Đặc biệt vòng này hiệu quả marketing được cộng hưởng ${Math.round((ev.mktBoost - 1) * 100)}% nhờ ${ev.name}!` : '';
     const shareNow = last ? last.share.toFixed(1) : '25.0';
-    return { risk: 'low', text: `Nếu tăng ngân sách Marketing thêm 15%, thị phần dự kiến đạt ${(parseFloat(shareNow) + 2.5).toFixed(1)}% ở vòng sau.${boost} Khuyến nghị: Marketing Boost, R&D Upgrade.` };
+    return { risk: 'low', clip: 'topic-04', text: `Nếu tăng ngân sách Marketing thêm 15%, thị phần dự kiến đạt ${(parseFloat(shareNow) + 2.5).toFixed(1)}% ở vòng sau.${boost} Khuyến nghị: Marketing Boost, R&D Upgrade.` };
   }
   // risk
-  if (ev.tone === 'bad') return { risk: 'high', text: `⚠️ Cảnh báo đỏ: ${ev.name} – ${ev.desc} Nếu không giữ ít nhất 15% vốn dự phòng, đội có thể âm dòng tiền. Cân nhắc mua "Khiên bảo hiểm" trong Cửa hàng.` };
-  if (ev.tone === 'warn') return { risk: 'medium', text: `Rủi ro chính vòng này: ${ev.name}. ${ev.desc} Hãy điều chỉnh cơ cấu chi phí trước khi commit.` };
-  return { risk: 'low', text: `Cơ hội xanh ngọc: ${ev.name}. ${ev.desc} Đây là lúc mạnh dạn đầu tư để bứt phá thị phần.` };
+  if (ev.tone === 'bad') return { risk: 'high', clip: 'topic-05', text: `⚠️ Cảnh báo đỏ: ${ev.name} – ${ev.desc} Nếu không giữ ít nhất 15% vốn dự phòng, đội có thể âm dòng tiền. Cân nhắc mua "Khiên bảo hiểm" trong Cửa hàng.` };
+  if (ev.tone === 'warn') return { risk: 'medium', clip: 'topic-06', text: `Rủi ro chính vòng này: ${ev.name}. ${ev.desc} Hãy điều chỉnh cơ cấu chi phí trước khi commit.` };
+  return { risk: 'low', clip: 'topic-07', text: `Cơ hội xanh ngọc: ${ev.name}. ${ev.desc} Đây là lúc mạnh dạn đầu tư để bứt phá thị phần.` };
 }

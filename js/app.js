@@ -645,13 +645,37 @@ function showVictory(r) {
 
 // ---------- Navigation ----------
 // ---------- Clip giọng Lumina (Bizon_1/Bizon_2 do tác giả thu) ----------
-let advisorHelloPlayed = false;
 function playClip(src, vol = 0.9) {
   try { const au = new Audio(src); au.volume = vol; au.play().catch(() => {}); } catch (e) {}
 }
 
+// ---------- Giọng Lumina thu sẵn (assets/audio/voice/*.mp3) ----------
+// Câu thoại Lumina có bản thu người thật → ưu tiên hơn giọng máy (TTS). Phát nối
+// tiếp qua một hàng đợi để nhiều câu (VD kết quả vòng) không chồng tiếng lên nhau.
+let luminaVoiceEl = null, luminaVoiceQueue = [], voiceBusy = false;
+function playVoice(clip) {
+  if (!clip || !voiceEnabled) return false;          // tôn trọng nút 🔊 Bật/Tắt như TTS
+  luminaVoiceQueue.push('assets/audio/voice/' + clip + '.mp3');
+  if (!voiceBusy) drainVoiceQueue();
+  return true;
+}
+function drainVoiceQueue() {
+  const src = luminaVoiceQueue.shift();
+  if (!src) { voiceBusy = false; return; }
+  voiceBusy = true;
+  try {
+    if ('speechSynthesis' in window) speechSynthesis.cancel();  // đừng để TTS đè lên giọng thu
+    luminaVoiceEl = new Audio(src);
+    luminaVoiceEl.volume = 0.95;
+    luminaVoiceEl.onended = drainVoiceQueue;
+    luminaVoiceEl.onerror = drainVoiceQueue;
+    luminaVoiceEl.play().catch(drainVoiceQueue);
+  } catch (e) { drainVoiceQueue(); }
+}
+
 function showTab(tab) {
-  if (tab === 'advisor' && !advisorHelloPlayed) { advisorHelloPlayed = true; playClip('assets/audio/lumina-advisor-hello.mp3'); }
+  // Lời chào cố vấn nay do bản thu chat-02 (renderAdvisorIntro) đọc bằng giọng thật,
+  // nên không phát clip chào cũ (lumina-advisor-hello.mp3) để tránh chào hai lần.
   document.querySelectorAll('main .screen').forEach(s => s.classList.remove('active'));
   $('tab-' + tab).classList.add('active');
   document.querySelectorAll('.nav-item').forEach(b =>
@@ -886,12 +910,12 @@ function journalLesson(r) {
 }
 
 const JOURNAL_QUOTES = [
-  { text: 'Mục tiêu không phải là đánh bại đối thủ, mà là làm cho họ trở nên không còn quan trọng.', by: 'Lumina AI', color: 'text-primary' },
-  { text: 'Mọi báo cáo tài chính đều là một câu chuyện, hãy đảm bảo đội của bạn đang viết một chương thành công.', by: 'SEC', color: 'text-red-600' },
-  { text: 'Dữ liệu cho ta biết quá khứ, quyết định hôm nay viết nên tương lai.', by: 'Tú Phan', color: 'text-emerald-700' },
-  { text: 'Khủng hoảng là bài kiểm tra tốt nhất cho năng lực quản trị dòng tiền.', by: 'Lumina AI', color: 'text-primary' },
-  { text: 'Thị phần mua được bằng tiền, nhưng lòng trung thành phải xây bằng giá trị.', by: 'Tú Phan', color: 'text-emerald-700' },
-  { text: 'Đừng sợ commit sai – hãy sợ việc không rút ra được bài học nào.', by: 'SEC', color: 'text-red-600' },
+  { clip: 'quote-01', text: 'Mục tiêu không phải là đánh bại đối thủ, mà là làm cho họ trở nên không còn quan trọng.', by: 'Lumina AI', color: 'text-primary' },
+  { clip: 'quote-02', text: 'Mọi báo cáo tài chính đều là một câu chuyện, hãy đảm bảo đội của bạn đang viết một chương thành công.', by: 'SEC', color: 'text-red-600' },
+  { clip: 'quote-03', text: 'Dữ liệu cho ta biết quá khứ, quyết định hôm nay viết nên tương lai.', by: 'Tú Phan', color: 'text-emerald-700' },
+  { clip: 'quote-04', text: 'Khủng hoảng là bài kiểm tra tốt nhất cho năng lực quản trị dòng tiền.', by: 'Lumina AI', color: 'text-primary' },
+  { clip: 'quote-05', text: 'Thị phần mua được bằng tiền, nhưng lòng trung thành phải xây bằng giá trị.', by: 'Tú Phan', color: 'text-emerald-700' },
+  { clip: 'quote-06', text: 'Đừng sợ commit sai – hãy sợ việc không rút ra được bài học nào.', by: 'SEC', color: 'text-red-600' },
 ];
 
 function renderJournal() {
@@ -937,6 +961,7 @@ function renderJournal() {
           <div class="border-t border-surface-bright mt-2.5 pt-2.5 flex gap-2 items-start">
             <span class="text-base">💬</span>
             <p class="text-xs text-deep-teal/70 italic">"${q.text}" – <b class="${q.color}">${q.by}</b></p>
+            ${q.clip ? `<button onclick="playVoice('${q.clip}')" aria-label="Nghe câu trích dẫn" title="Nghe câu trích dẫn" class="shrink-0 text-primary text-sm leading-none">🔊</button>` : ''}
           </div>
         </div>
       </div>`);
@@ -1208,7 +1233,7 @@ function commitDecisions() {
     if (report.netProfit > 0) createConfetti();
     // Kịch bản Stitch: chúc mừng KPI xuất sắc + cảnh báo rủi ro theo vai trò
     const notes = kpiCongrats(S, report).concat(riskAlerts(S, report));
-    notes.forEach(m => pushLumina({ risk: m.risk, text: `【${m.role}】 ${m.text}` }));
+    notes.forEach(m => pushLumina({ risk: m.risk, clip: m.clip, text: `【${m.role}】 ${m.text}` }));
     if (notes.some(m => m.risk === 'low')) createConfetti();
     showArena(report, () => showRoundResult(report));
     // Thăng cấp → màn chúc mừng toàn trang (sau khi bảng kết quả hiện)
@@ -1481,7 +1506,7 @@ function renderAdvisorIntro() {
   const quota = AI_QUOTA_PER_ROUND + (hasSkill(S, 'SK_AI1') ? 2 : 0) - S.aiUsed;
   $('ai-quota').textContent = Math.max(0, quota);
   if (!$('advisor-chat').childElementCount) {
-    pushLumina({ risk: 'low', log: false, text: `Xin chào, Je m'appelle Hương! 👋 Tôi là Lumina – cố vấn AI của đội ${S.profile.teamName}. Hãy chọn một câu hỏi bên dưới, tôi sẽ phân tích kịch bản "Nếu – Thì" cho bạn.` });
+    pushLumina({ risk: 'low', log: false, clip: 'chat-02', text: `Xin chào, Je m'appelle Hương! 👋 Tôi là Lumina – cố vấn AI của đội ${S.profile.teamName}. Hãy chọn một câu hỏi bên dưới, tôi sẽ phân tích kịch bản "Nếu – Thì" cho bạn.` });
   }
   // Badge biến động thị trường + ảnh cảm xúc theo biến cố hiện tại
   const ev = currentEvent(S);
@@ -1560,6 +1585,7 @@ function renderRoleDeepdive() {
         <div class="flex gap-2 items-start">
           <img src="assets/character/${img}.webp" alt="Hương" class="w-8 h-8 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 12%">
           <p class="text-[11px] text-deep-teal/80 italic">"${b.dialogue}"</p>
+          ${b.clip ? `<button onclick="playVoice('${b.clip}')" aria-label="Nghe giọng Lumina" title="Nghe giọng Lumina" class="shrink-0 text-primary text-sm leading-none mt-0.5">🔊</button>` : ''}
         </div>
         ${b.actions ? `<div class="mt-2 space-y-1">${b.actions.map(a => `<p class="text-[10px] font-bold text-deep-teal/70">👉 ${a}</p>`).join('')}</div>` : ''}
       </div>`;
@@ -1632,23 +1658,23 @@ function renderRoleDeepdive() {
 function doApproveLoan() {
   if (!approveLoan(S)) return;
   save(); renderAll(); createConfetti();
-  pushLumina({ risk: 'medium', text: 'Đã giải ngân khoản vay 300tr₫! Lưu ý: lãi 5%/vòng (15tr₫) sẽ trừ vào lợi nhuận mỗi vòng còn lại. Hãy dùng vốn hiệu quả để ROI vượt chi phí vốn nhé.' });
+  pushLumina({ risk: 'medium', clip: 'chat-03', text: 'Đã giải ngân khoản vay 300tr₫! Lưu ý: lãi 5%/vòng (15tr₫) sẽ trừ vào lợi nhuận mỗi vòng còn lại. Hãy dùng vốn hiệu quả để ROI vượt chi phí vốn nhé.' });
 }
 function doCutCosts() {
   if (!cutCosts(S)) return;
   save(); renderAll();
-  pushLumina({ risk: 'low', text: 'Đã kích hoạt phương án cắt giảm chi phí – chi phí cố định vòng sau giảm 15%. Cẩn thận đừng cắt vào các khoản đầu tư dài hạn!' });
+  pushLumina({ risk: 'low', clip: 'chat-04', text: 'Đã kích hoạt phương án cắt giảm chi phí – chi phí cố định vòng sau giảm 15%. Cẩn thận đừng cắt vào các khoản đầu tư dài hạn!' });
 }
 function doBrandingPremium() {
   if (!brandingPremium(S)) { alert('ERR_INSUFFICIENT_FUNDS – Cần 120tr₫ để kích hoạt Branding Premium.'); return; }
   save(); renderAll(); createConfetti();
-  pushLumina({ risk: 'low', text: 'Branding Premium đã kích hoạt! Giá trị thương hiệu tăng – thị phần và Brand Loyalty sẽ cải thiện từ vòng sau. 🎉' });
+  pushLumina({ risk: 'low', clip: 'chat-05', text: 'Branding Premium đã kích hoạt! Giá trị thương hiệu tăng – thị phần và Brand Loyalty sẽ cải thiện từ vòng sau. 🎉' });
 }
 function showReportFromAdvisor() { currentReport = 'energy'; showTab('reports'); }
 function doMaintainFromAdvisor() {
   if (!doMaintenance(S)) { alert('ERR_INSUFFICIENT_FUNDS – Cần 60tr₫ trong ví để bảo trì.'); return; }
   save(); renderAll();
-  pushLumina({ risk: 'low', text: 'Đã lên lịch bảo trì khẩn! OEE sẽ cải thiện +3% và tỷ lệ phế phẩm giảm ở vòng tới. 🔧' });
+  pushLumina({ risk: 'low', clip: 'chat-06', text: 'Đã lên lịch bảo trì khẩn! OEE sẽ cải thiện +3% và tỷ lệ phế phẩm giảm ở vòng tới. 🔧' });
 }
 
 function pushLumina(advice) {
@@ -1670,7 +1696,8 @@ function pushLumina(advice) {
     </div>`;
   $('advisor-chat').appendChild(el);
   el.scrollIntoView({ behavior: 'smooth', block: 'end' });
-  speakLumina(advice.text);
+  if (advice.clip) playVoice(advice.clip);   // có bản thu → dùng giọng thật
+  else speakLumina(advice.text);             // chưa thu → giọng máy dự phòng
 }
 
 function pushUserMsg(text) {
@@ -1765,7 +1792,7 @@ function sendChat() {
   if (!reply.free) {
     const quota = AI_QUOTA_PER_ROUND + (hasSkill(S, 'SK_AI1') ? 2 : 0);
     if (S.aiUsed >= quota) {
-      pushLumina({ risk: 'medium', log: false, text: 'ERR_AI_LIMIT_REACHED – Bạn đã dùng hết lượt tư vấn của vòng này. Lượt sẽ làm mới sau khi Commit quyết định nhé!' });
+      pushLumina({ risk: 'medium', log: false, clip: 'chat-07', text: 'ERR_AI_LIMIT_REACHED – Bạn đã dùng hết lượt tư vấn của vòng này. Lượt sẽ làm mới sau khi Commit quyết định nhé!' });
       return;
     }
     S.aiUsed++; S.aiAskedTotal++; save(); renderAdvisorIntro();
