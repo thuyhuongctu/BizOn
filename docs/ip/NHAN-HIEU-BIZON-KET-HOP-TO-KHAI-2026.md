@@ -44,13 +44,9 @@ gây nhầm lẫn thì mất 18–30 tháng rồi bị từ chối.
 ### 1.2. Mẫu nhãn hiệu
 - **Dấu hiệu:** chữ **BizOn** kết hợp **hình công tắc** (chữ "O" là hình công tắc).
 - **Loại nhãn:** nhãn **kết hợp** (chữ + hình).
-- **Mẫu in nộp kèm — nộp cả hai bản:**
-  - **Bản màu:** `logo/bizon-logo-mau-2400.png`
-  - **Bản đen trắng:** `logo/bizon-logo-den-trang-2400.png`
-  - *(In ô 8×8cm từ `logo/mau-nhan-8x8.html` — ô 1 & ô 2.)*
-- **Màu sắc yêu cầu bảo hộ:** *chọn một hướng* —
-  - **(a) Có yêu cầu bảo hộ màu:** chữ + viền bầu dục **đen ngả lục**; hình tròn **xanh lục sẫm (#0F5C4E)**. Bảo hộ đúng bộ màu.
-  - **(b) Không yêu cầu bảo hộ màu (nộp đen trắng):** bảo hộ **rộng hơn về màu** (áp mọi màu thể hiện). *Thường khuyến nghị hướng (b) nếu muốn linh hoạt màu.*
+- **Mẫu in nộp kèm:** ✅ **theo hướng (b) đã chọn — nộp bản ĐEN TRẮNG** `logo/bizon-logo-den-trang-2400.png` (in ô 8×8cm từ `logo/mau-nhan-8x8.html`). Bản màu `logo/bizon-logo-mau-2400.png` chỉ lưu tham khảo, **không nộp làm mẫu nhãn**.
+- **Màu sắc yêu cầu bảo hộ:** ✅ **ĐÃ CHỌN hướng (b) — KHÔNG yêu cầu bảo hộ màu (nộp đen trắng)** → bảo hộ **rộng hơn về màu** (áp mọi màu thể hiện), linh hoạt đổi màu nhận diện về sau.
+  - ~~(a) Có yêu cầu bảo hộ màu (đen ngả lục + hình tròn #0F5C4E) — **không chọn**.~~
 
 > **Ghi chú kỹ thuật mẫu nhãn:** phần chữ "BizOn" hiện dùng **PNG 2400px** làm mẫu
 > (kiểu chữ riêng, chưa vector hoá — dùng mẫu in kích thước cố định là được). Khi có
@@ -65,8 +61,8 @@ gây nhầm lẫn thì mất 18–30 tháng rồi bị từ chối.
 > viền dày**, bên trong là **hình tròn đặc đặt lệch về bên phải** — mô phỏng một
 > **công tắc ở vị trí bật**.
 >
-> **Màu (bản màu):** chữ và viền bầu dục màu đen ngả lục; hình tròn bên trong màu
-> xanh lục sẫm (#0F5C4E).
+> **Màu:** *(chỉ mô tả tham khảo — đã chọn hướng (b): nộp đen trắng, **KHÔNG** yêu cầu
+> bảo hộ màu)* — bản màu gốc: chữ và viền bầu dục đen ngả lục; hình tròn xanh lục sẫm (#0F5C4E).
 >
 > **Ý nghĩa:** hình công tắc ở vị trí bật thể hiện đồng thời **"On"** (tiếng Anh) và
 > **"Bật"** (tiếng Việt) — cùng chỉ hành động khởi động.
@@ -89,7 +85,7 @@ gây nhầm lẫn thì mất 18–30 tháng rồi bị từ chối.
 ## 2 · Tài liệu kèm theo (checklist nộp)
 
 - [ ] **Tờ khai** theo mẫu hiện hành của Cục Sở hữu trí tuệ (điền theo Mục 1)
-- [ ] **Mẫu nhãn** — bản màu `bizon-logo-mau-2400.png` + bản đen trắng `bizon-logo-den-trang-2400.png` (in từ `logo/mau-nhan-8x8.html`)
+- [ ] **Mẫu nhãn** — ✅ (b) đã chọn: **bản đen trắng** `bizon-logo-den-trang-2400.png` (in ô 8×8cm từ `logo/mau-nhan-8x8.html`)
 - [ ] **Chứng từ nộp phí, lệ phí** (Mục 3)
 - [ ] **Giấy uỷ quyền** — nếu nộp qua đại diện · mẫu: [`NHAN-HIEU-GIAY-UY-QUYEN-MAU.md`](./NHAN-HIEU-GIAY-UY-QUYEN-MAU.md)
 - [ ] **Tài liệu chứng minh quyền ưu tiên** — nếu có
