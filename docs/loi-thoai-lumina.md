@@ -14,9 +14,9 @@ Tổng cộng: **54 câu** trong 9 nhóm (51 câu trong các bảng dưới + 3 
 
 | Nhóm | Số câu | Tệp |
 |---|---|---|
-| ✅ Đã thu, đúng bản đọc | 27 | `adv-02`, `adv-03`, `adv-04`, `adv-05`, `adv-06`, `adv-07`, `adv-08`, `adv-10`, `adv-11`, `adv-12`, `adv-13`, `adv-14`, `adv-15`, `adv-17`, `chat-03`, `chat-04`, `chat-06`, `chat-07`, `kpi-01`, `kpi-02`, `kpi-03`, `risk-02`, `topic-01`, `topic-02`, `topic-03`, `topic-04`, `topic-05` |
+| ✅ Đã thu, đúng bản đọc | 26 | `adv-02`, `adv-03`, `adv-04`, `adv-06`, `adv-07`, `adv-08`, `adv-10`, `adv-11`, `adv-12`, `adv-13`, `adv-14`, `adv-15`, `adv-17`, `chat-03`, `chat-04`, `chat-06`, `chat-07`, `kpi-01`, `kpi-02`, `kpi-03`, `risk-02`, `topic-01`, `topic-02`, `topic-03`, `topic-04`, `topic-05` |
 | ✅ Đã thu, vốn không có viết tắt | 13 | `adv-09`, `adv-16`, `chat-02`, `quote-01`, `risk-01`, `topic-07`, `quote-02`, `quote-03`, `quote-04`, `quote-05`, `glob-01`, `glob-02`, `glob-03` |
-| ⚠️ Đã thu nhưng **nên thu lại** | 3 | `chat-05`, `topic-06`, `quote-06` – xem mục "Cần thu lại" bên dưới |
+| ⚠️ Đã thu nhưng **nên thu lại** | 4 | `chat-05`, `topic-06`, `quote-06`, `adv-05` – xem mục "Cần thu lại" bên dưới |
 | ⬜ Chưa thu – **phải theo bản đọc** | 5 | `chat-08`, `intro-02`, `intro-03`, `intro-04`, `intro-06` |
 | ⬜ Chưa thu – đọc nguyên văn | 3 | `adv-01`, `intro-01`, `intro-05` |
 
@@ -24,27 +24,29 @@ Tổng cộng: **54 câu** trong 9 nhóm (51 câu trong các bảng dưới + 3 
 > Bản thoại tiếng Anh: [`loi-thoai-lumina-en.md`](loi-thoai-lumina-en.md).
 > Khi có bản mới, thay tệp cùng tên rồi mới nối vào game.
 
-### ⚠️ Cần thu lại (3 câu)
+### ⚠️ Cần thu lại (4 câu)
 
-Ba câu này đã có bản thu, nhưng lúc thu **chưa có hướng dẫn đọc** cho từ tiếng Anh
+Ba câu đầu đã có bản thu nhưng lúc thu **chưa có hướng dẫn đọc** cho từ tiếng Anh
 bên trong – bản đọc chỉ được bổ sung sau đó. Nghe lại, nếu đã đọc đúng tiếng Việt
-thì giữ nguyên:
+thì giữ nguyên. Câu `adv-05` thì **lời thoại đã đổi** (bỏ nhãn mơ hồ "đối thủ B" cho
+khớp với 3 đối thủ có tên trong game) nên **bản thu cũ không còn khớp chữ** – bắt buộc thu lại:
 
-| Tệp | Chưa có hướng dẫn lúc thu |
+| Tệp | Lý do thu lại |
 |---|---|
-| `chat-05` | `Branding Premium`, `Brand Loyalty` |
-| `topic-06` | `commit` (viết thường nên lần rà trước bỏ sót) |
-| `quote-06` | `commit` (viết thường nên lần rà trước bỏ sót) |
+| `chat-05` | Lúc thu chưa có hướng dẫn: `Branding Premium`, `Brand Loyalty` |
+| `topic-06` | Lúc thu chưa có hướng dẫn: `commit` (viết thường nên lần rà trước bỏ sót) |
+| `quote-06` | Lúc thu chưa có hướng dẫn: `commit` (viết thường nên lần rà trước bỏ sót) |
+| `adv-05` | **Lời đã đổi** "đối thủ B" → "một đối thủ" (2026-08-11) – bản thu cũ đọc "đối thủ Bê", không khớp chữ mới |
 
 ## Bộ não cố vấn theo vai trò (tab Cố vấn – thẻ CFO/CMO/COO/SEC)
 
 | Tên file | Ngữ cảnh | Lời thoại |
 |---|---|---|
-| `voice/adv-01.mp3` | dialogue | Khách hàng đang dần rời bỏ chúng ta để sang đối thủ. Chúng ta cần một chiến dịch tái định vị thương hiệu ngay lập tức. |
+| `voice/adv-01.mp3` | dialogue | Khách hàng đang dần rời bỏ chúng ta để sang đối thủ — dấu hiệu thương hiệu đang mất sức hút. Cân nhắc một chiến dịch tái định vị trước khi mất thêm thị phần. |
 | `voice/adv-02.mp3` | dialogue | Đối thủ đang xâm chiếm phân khúc của chúng ta bằng giá rẻ. Chúng ta cần tăng ngân sách quảng cáo hoặc tung sản phẩm R&D mới. |
 | `voice/adv-03.mp3` | dialogue | CMO thân mến, chi phí tiếp thị của chúng ta đang quá cao nhưng không chuyển đổi thành doanh thu tương ứng. Hãy rà soát lại thông điệp chiến dịch. |
 | `voice/adv-04.mp3` | dialogue | Nhu cầu thị trường đang rất lớn nhưng chúng ta không có đủ hàng để bán. Hãy phối hợp với COO để tăng sản lượng. |
-| `voice/adv-05.mp3` | dialogue | Thưa CMO, đối thủ B vừa hạ giá 15% và chiếm mất 8% thị phần của chúng ta. Nếu không phản ứng trong vòng tới, chúng ta sẽ mất vị thế dẫn đầu. |
+| `voice/adv-05.mp3` | dialogue | Thưa CMO, một đối thủ vừa hạ giá 15% và chiếm mất 8% thị phần của chúng ta. Nếu không phản ứng trong vòng tới, chúng ta sẽ mất vị thế dẫn đầu. |
 | `voice/adv-06.mp3` | dialogue | Lượng hàng tồn kho đang quá lớn, gây lãng phí chi phí lưu kho. Hãy phối hợp với CMO để đẩy mạnh tiêu thụ hoặc giảm sản lượng. |
 | `voice/adv-07.mp3` | dialogue | Thưa COO, tôi nhận thấy tỷ lệ sản phẩm lỗi tăng mạnh. Nguyên nhân là do đội ngũ nhân sự mới chưa được đào tạo bài bản. Chúng ta nên đầu tư vào gói "Đào tạo chuyên sâu" để lấy lại phong độ. |
 | `voice/adv-08.mp3` | dialogue | COO ơi, nhà máy đang chạy quá tải. Nếu không đầu tư mở rộng ngay, chúng ta sẽ bỏ lỡ cơ hội bán hàng ở vòng tới. |
@@ -184,7 +186,6 @@ kinh doanh người học cần làm quen. Chỉ phần đọc mới thay bằng
 | k₫ | nghìn đồng |
 | ₫ | đồng |
 | % | phần trăm |
-| đối thủ B | đối thủ Bê |
 | `ERR_AI_LIMIT_REACHED` | **không đọc** – đây là mã lỗi hiện trên màn hình, câu sau đã nói đủ ý |
 | Commit / commit | chốt quyết định (viết hoa hay viết thường đều đọc như nhau) |
 | Branding Premium | gói thương hiệu cao cấp |
@@ -206,7 +207,7 @@ kinh doanh người học cần làm quen. Chỉ phần đọc mới thay bằng
 | `voice/adv-02.mp3` | `R&D` → **nghiên cứu và phát triển** | Đối thủ đang xâm chiếm phân khúc của chúng ta bằng giá rẻ. Chúng ta cần tăng ngân sách quảng cáo hoặc tung sản phẩm **nghiên cứu và phát triển** mới. |
 | `voice/adv-03.mp3` | `CMO` → **Giám đốc Marketing** | **Giám đốc Marketing** thân mến, chi phí tiếp thị của chúng ta đang quá cao nhưng không chuyển đổi thành doanh thu tương ứng. Hãy rà soát lại thông điệp chiến dịch. |
 | `voice/adv-04.mp3` | `COO` → **Giám đốc Vận hành** | Nhu cầu thị trường đang rất lớn nhưng chúng ta không có đủ hàng để bán. Hãy phối hợp với **Giám đốc Vận hành** để tăng sản lượng. |
-| `voice/adv-05.mp3` | `CMO` → **Giám đốc Marketing** · `đối thủ B` → **đối thủ Bê** · `%` → **phần trăm** | Thưa **Giám đốc Marketing**, **đối thủ Bê** vừa hạ giá 15 **phần trăm** và chiếm mất 8 **phần trăm** thị phần của chúng ta. Nếu không phản ứng trong vòng tới, chúng ta sẽ mất vị thế dẫn đầu. |
+| `voice/adv-05.mp3` | `CMO` → **Giám đốc Marketing** · `%` → **phần trăm** | Thưa **Giám đốc Marketing**, một đối thủ vừa hạ giá 15 **phần trăm** và chiếm mất 8 **phần trăm** thị phần của chúng ta. Nếu không phản ứng trong vòng tới, chúng ta sẽ mất vị thế dẫn đầu. |
 | `voice/adv-06.mp3` | `CMO` → **Giám đốc Marketing** | Lượng hàng tồn kho đang quá lớn, gây lãng phí chi phí lưu kho. Hãy phối hợp với **Giám đốc Marketing** để đẩy mạnh tiêu thụ hoặc giảm sản lượng. |
 | `voice/adv-07.mp3` | `COO` → **Giám đốc Vận hành** | Thưa **Giám đốc Vận hành**, tôi nhận thấy tỷ lệ sản phẩm lỗi tăng mạnh. Nguyên nhân là do đội ngũ nhân sự mới chưa được đào tạo bài bản. Chúng ta nên đầu tư vào gói "Đào tạo chuyên sâu" để lấy lại phong độ. |
 | `voice/adv-08.mp3` | `COO` → **Giám đốc Vận hành** | **Giám đốc Vận hành** ơi, nhà máy đang chạy quá tải. Nếu không đầu tư mở rộng ngay, chúng ta sẽ bỏ lỡ cơ hội bán hàng ở vòng tới. |
