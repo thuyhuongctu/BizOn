@@ -239,7 +239,7 @@ function cmoBrain(s) {
 
   if (s.brandLoyalty < 60) return {
     status: 'RED', badge: 'ĐỎ · NGUY CẤP', metric: `Brand Loyalty ${s.brandLoyalty}% < ngưỡng 60%`,
-    dialogue: 'Khách hàng đang dần rời bỏ chúng ta để sang đối thủ. Chúng ta cần một chiến dịch tái định vị thương hiệu ngay lập tức.',
+    dialogue: 'Khách hàng đang dần rời bỏ chúng ta để sang đối thủ — dấu hiệu thương hiệu đang mất sức hút. Cân nhắc một chiến dịch tái định vị trước khi mất thêm thị phần.',
     actions: ['Kích hoạt Branding Premium', 'Tăng R&D để tái định vị thương hiệu'],
   };
   if (shareDrop > 5) return {
@@ -258,8 +258,8 @@ function cmoBrain(s) {
     actions: ['Tăng sản lượng + thuê thêm nhân công', 'Nâng cấp dây chuyền sản xuất'],
   };
   if (ev.id === 'EV_PRICEWAR' && !s.finished) return {
-    status: 'RED', badge: 'ĐỎ · PRICE WAR', metric: 'Đối thủ B hạ giá 15% tại Modern Trade',
-    clip: 'adv-05', dialogue: 'Thưa CMO, đối thủ B vừa hạ giá 15% và chiếm mất 8% thị phần của chúng ta. Nếu không phản ứng trong vòng tới, chúng ta sẽ mất vị thế dẫn đầu.',
+    status: 'RED', badge: 'ĐỎ · PRICE WAR', metric: 'Một đối thủ hạ giá 15% tại Modern Trade',
+    clip: 'adv-05', dialogue: 'Thưa CMO, một đối thủ vừa hạ giá 15% và chiếm mất 8% thị phần của chúng ta. Nếu không phản ứng trong vòng tới, chúng ta sẽ mất vị thế dẫn đầu.',
     actions: ["Triển khai gói 'Marketing Boost' giữ chân khách trung thành", 'Cải tiến bao bì (R&D) tăng giá trị cảm nhận – đừng đua giảm giá'],
   };
   return {
