@@ -34,7 +34,6 @@ Nên bảng tra bên dưới ngắn hơn nhiều.
 | `ERR_AI_LIMIT_REACHED` | **bỏ, không đọc** | Mã lỗi hiện trên màn hình; câu sau đã nói đủ ý. |
 | `R&D` | **R and D** | |
 | `%` | **percent** | |
-| `đối thủ B` → competitor B | **competitor B** đọc rõ chữ "B" | |
 | Số trong ngoặc `{…}` | đọc một con số bất kỳ | Chỗ trống điền số liệu động. |
 
 **Không đổi:** CEO, CFO, CMO, COO, ROI, OEE, KPI, ESG, Marketing Mix,
@@ -54,11 +53,11 @@ Lumina, Tú Phan, Đỗ Thùy Hương.** Riêng `BizOn`, `BizOn Go Global`,
 
 | File | Line |
 |---|---|
-| `voice/en/adv-01.mp3` | Customers are steadily drifting away to our competitors. We need a brand repositioning campaign immediately. |
+| `voice/en/adv-01.mp3` | Customers are steadily drifting away to our competitors — a sign our brand is losing its pull. Consider a repositioning campaign before we lose more market share. |
 | `voice/en/adv-02.mp3` | Rivals are taking over our segment with cheap prices. We need to raise the advertising budget, or launch a new **R and D** product. |
 | `voice/en/adv-03.mp3` | Dear CMO, our marketing spend is far too high but it isn't converting into matching revenue. Let's review the campaign message. |
 | `voice/en/adv-04.mp3` | Market demand is very strong but we don't have enough stock to sell. Please coordinate with the COO to raise output. |
-| `voice/en/adv-05.mp3` | CMO, **competitor B** has just cut prices by fifteen **percent** and taken eight **percent** of our market share. If we don't respond next round, we will lose our leading position. |
+| `voice/en/adv-05.mp3` | CMO, a competitor has just cut prices by fifteen **percent** and taken eight **percent** of our market share. If we don't respond next round, we will lose our leading position. |
 | `voice/en/adv-06.mp3` | Inventory is piling up and wasting storage costs. Please work with the CMO to push sales, or cut production. |
 | `voice/en/adv-07.mp3` | COO, I'm seeing a sharp rise in the defect rate. The cause is that our new staff haven't been properly trained. We should invest in the "Advanced Training" package to get back on form. |
 | `voice/en/adv-08.mp3` | COO, the factory is running over capacity. If we don't invest in expansion now, we'll miss the sales window next round. |
