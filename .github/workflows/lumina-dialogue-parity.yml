@@ -1,0 +1,40 @@
+name: Lumina dialogue parity
+
+# Giữ hai bản thoại Lumina song song (VI/EN) khỏi trôi lệch nhau:
+#   - parity ID: tập ID thoại hai file phải trùng khít.
+#   - chống trôi nội dung: sửa một bản mà quên bản kia trong cùng PR → chặn.
+# Không phụ thuộc reviewer bên thứ ba.
+
+on:
+  pull_request:
+    paths:
+      - 'docs/loi-thoai-lumina.md'
+      - 'docs/loi-thoai-lumina-en.md'
+      - 'scripts/lumina-parity-check.mjs'
+      - '.github/workflows/lumina-dialogue-parity.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  parity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # cần lịch sử để đối chiếu với nhánh base
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Run Lumina parity check
+        env:
+          # Trong PR: đối chiếu với commit gốc của nhánh base (bật tầng chống trôi).
+          # workflow_dispatch: không có base → chỉ kiểm parity ID.
+          PARITY_BASE: ${{ github.event.pull_request.base.sha }}
+        run: node scripts/lumina-parity-check.mjs
