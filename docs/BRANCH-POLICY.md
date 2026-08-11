@@ -36,10 +36,12 @@ gộp vào đây, hoặc lưu trữ (đổi tiền tố), hoặc xóa sau khi đ
 | Hạng mục | Giá trị |
 |---|---|
 | Nhánh mặc định hiện tại | `main` (bản đang chạy / deploy GitHub Pages) |
-| Nhánh đích đã chọn | `develop` (tạo ngày 2026-08-04 từ `main` tại `78f0021`) |
-| Lý do chọn | Quy ước tích hợp chuẩn: `main` là bản phát hành ổn định, `develop` là nơi mọi việc mới hợp nhất vào trước khi lên `main`. Nhánh tính năng rẽ từ `develop`, PR quay về `develop`. |
+| Nhánh đích đã chọn | **`main`** — vừa tích hợp vừa phát hành (deploy GitHub Pages). Nhánh tính năng rẽ từ `main`, PR quay về `main`. |
+| Lý do chọn | **Cập nhật 2026-08-11.** Thực tế nhiều tuần cho thấy `main` mới là nhánh đích thật: nhánh `develop` (tạo 2026-08-04 từ `main` tại `78f0021`) đến 2026-08-11 vẫn **đi sau `main` 54 commit và 0 commit đi trước** — chưa từng có việc nào hợp nhất vào nó; mọi PR (kể cả #399, #400) đều nhắm `main`, và không có gì hỏng. Khi tài liệu lệch với thực tế đang chạy tốt thì **sửa tài liệu, không bẻ thực tế**: chọn `main` làm nhánh đích duy nhất, tránh chi phí đồng bộ và rủi ro của việc hồi sinh một nhánh không dùng. |
 
-> Nhánh `develop` được tạo bằng thao tác **chỉ thêm** (`git branch develop origin/main` + push), KHÔNG đụng nhánh cũ nào. Mục A1 (sao lưu gương) và A3 (phân loại 56 nhánh) vẫn là việc của chủ dự án và chưa thực hiện — tạo nhánh đích không thay thế hai mục đó.
+> **`develop` — NGỪNG DÙNG (2026-08-11).** Giữ lại nhánh (không xóa) để không mất tham chiếu lịch sử, nhưng **không hợp nhất việc mới vào `develop`**. Nếu về sau cần một luồng tích hợp riêng, sẽ mở lại bằng quyết định có ghi chép mới — không mặc nhiên dùng lại `develop` cũ.
+>
+> Mục A1 (sao lưu gương) và A3 (phân loại nhánh tồn dư) vẫn là việc của chủ dự án.
 
 ## A3. Phân loại 56 nhánh (điền tay, quyết định của chủ dự án)
 
@@ -61,10 +63,20 @@ Với mỗi nhánh, chọn MỘT hành động. Không tự động hóa — đ�
 
 ## A5. Cổng bảo vệ nhánh đích (thiết lập trên GitHub)
 
-- [ ] Bật bảo vệ nhánh cho `[NHÁNH ĐÍCH]`.
+- [ ] Bật bảo vệ nhánh cho `main` (nhánh đích).
 - [ ] Yêu cầu PR trước khi hợp nhất; cấm đẩy thẳng.
 - [ ] Yêu cầu các kiểm thử CI hiện có xanh (xem `.github/workflows/`).
 - [ ] Yêu cầu ít nhất một lượt duyệt (nếu có đồng tác giả).
+
+## A6. Lịch sử quyết định nhánh đích
+
+| Ngày | Quyết định | Ghi chú |
+|---|---|---|
+| 2026-08-04 | Ban đầu chọn `develop` làm nhánh đích | Theo quy ước tích hợp chuẩn (Bước 0); tạo `develop` từ `main` tại `78f0021`. |
+| 2026-08-11 | **Đổi nhánh đích sang `main`; `develop` ngừng dùng** | Thực tế: `develop` chưa từng được hợp nhất (sau `main` 54 commit, 0 đi trước); mọi việc chạy trên `main` không lỗi. Cập nhật tài liệu cho khớp thực tế. |
+
+*Các luật khác giữ nguyên: mọi thay đổi qua Pull Request có kiểm thử; xóa nhánh sau khi
+gộp; giữ số nhánh mở ở mức thấp.*
 
 ---
 
