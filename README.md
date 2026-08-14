@@ -22,6 +22,19 @@
 
 ---
 
+## 🎬 Intro video · Video giới thiệu
+
+<video src="https://raw.githubusercontent.com/thuyhuongctu/BizOn/main/assets/video/bizon-intro.mp4" controls muted playsinline poster="https://raw.githubusercontent.com/thuyhuongctu/BizOn/main/assets/video/bizon-intro-poster.jpg" width="720"></video>
+
+> ▶️ If the player above doesn't load, watch the reel on **[Universe BizOn](https://thuyhuongctu.github.io/BizOn/universe.html)** or [download the MP4](assets/video/bizon-intro.mp4).
+>
+> ℹ️ **This reel is an AI-generated illustration, not real classroom footage.**
+> *Video là hình ảnh minh hoạ do AI dựng, không phải cảnh quay thực tế trên lớp học.*
+
+[![BizOn intro reel](assets/video/bizon-intro-poster.jpg)](https://thuyhuongctu.github.io/BizOn/universe.html)
+
+---
+
 ## 🗺️ Ecosystem
 
 | Page | Content |
