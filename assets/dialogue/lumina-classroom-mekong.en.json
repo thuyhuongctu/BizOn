@@ -1,0 +1,95 @@
+{
+  "_meta": {
+    "package": "hk1-2026-classroom-demo",
+    "language": "en",
+    "note": "Seed file for Claude Code to convert into the repo dialogue schema. Every ID must exist in the VI file in the same commit (parity rule).",
+    "principles": [
+      "Lumina only explains trade-offs and prompts reflection",
+      "Never gives an optimal answer, never reveals hidden parameters",
+      "Never changes simulation state, never comments on grades"
+    ],
+    "schema": "lumina.session-dialogue.v1",
+    "fields": "id, speaker, trigger, session_scope, vars, text",
+    "scope_note": "No per-session scope mechanism in the engine yet; session_scope is carried as a tag (classroom | mekong) — cls-* load for every class, mks-* only for the Mekong session.",
+    "parity_rule": "Seed file for Claude Code to convert into the repo dialogue schema. Every ID must exist in the VI file in the same commit (parity rule)."
+  },
+  "dialogues": [
+    {
+      "id": "cls-wel-01",
+      "speaker": "lumina",
+      "trigger": "session_start",
+      "session_scope": "classroom",
+      "vars": [
+        "ten_nhom"
+      ],
+      "text": "Welcome, {ten_nhom}! I'm Lumina. There's no ready-made right answer today — only your team's decisions and how the market answers back. Ready?"
+    },
+    {
+      "id": "cls-wel-02",
+      "speaker": "lumina",
+      "trigger": "before_first_confirm",
+      "session_scope": "classroom",
+      "vars": [],
+      "text": "A small tip: before you confirm, try saying the reason for your decision out loud in one sentence. If you can't say it yet, maybe don't press it yet."
+    },
+    {
+      "id": "cls-res-01",
+      "speaker": "lumina",
+      "trigger": "round_result",
+      "session_scope": "classroom",
+      "vars": [
+        "ten_nhom",
+        "ket_qua"
+      ],
+      "text": "This round, {ten_nhom}'s revenue {ket_qua}. I won't say which decision was wrong — but look back: what did your team expect that didn't happen?"
+    },
+    {
+      "id": "cls-tro-01",
+      "speaker": "lumina",
+      "trigger": "pricing_decision_open",
+      "session_scope": "classroom",
+      "vars": [],
+      "text": "Cutting price brings more customers but thins your profit per unit; holding price does the opposite. Neither choice is free — what is your team prioritizing?"
+    },
+    {
+      "id": "cls-fail-01",
+      "speaker": "lumina",
+      "trigger": "negative_cashflow",
+      "session_scope": "classroom",
+      "vars": [],
+      "text": "Negative cash flow isn't the end — in real life it costs dearly; here it only costs one round. What would your team change on the next try?"
+    },
+    {
+      "id": "cls-ref-01",
+      "speaker": "lumina",
+      "trigger": "session_end",
+      "session_scope": "classroom",
+      "vars": [],
+      "text": "Before you leave: one decision you're proudest of, one you'd redo. Put them in your reflection — that's today's real score."
+    },
+    {
+      "id": "mks-wel-01",
+      "speaker": "lumina",
+      "trigger": "session_start",
+      "session_scope": "mekong",
+      "vars": [],
+      "text": "Welcome, founders! Your product already exists — today we let it enter a simulated market and see how much pressure your plan can take."
+    },
+    {
+      "id": "mks-tro-01",
+      "speaker": "lumina",
+      "trigger": "segment_decision_open",
+      "session_scope": "mekong",
+      "vars": [],
+      "text": "A niche pays more but stays small; the mass market is wide but fiercely contested. The game won't choose for you — it only shows you the price of each path."
+    },
+    {
+      "id": "mks-ref-01",
+      "speaker": "lumina",
+      "trigger": "session_end",
+      "session_scope": "mekong",
+      "vars": [],
+      "text": "Where did the final round differ from your original plan? That's the question worth taking home to your real product."
+    }
+  ]
+}
