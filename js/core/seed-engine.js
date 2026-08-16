@@ -19,6 +19,13 @@
     return parts.filter(Boolean).join(':') || 'BIZON:DEMO';
   }
 
+  // Seed KHÓA THEO LỚP: bỏ teamId để MỌI nhóm trong cùng mã lớp chạy CÙNG kịch bản
+  // thị trường (buổi 3–4 so sánh công bằng). Chèn 'COHORT' để không trùng seed cá nhân.
+  function createCohortSeed(classId, scenarioId, engineVersion = '2.0.0-alpha.1') {
+    const parts = [classId, 'COHORT', scenarioId, engineVersion].map(normalizePart);
+    return parts.filter(Boolean).join(':') || 'BIZON:DEMO';
+  }
+
   function hashString(input) {
     let hash = 2166136261;
     const value = String(input);
@@ -77,6 +84,7 @@
   return Object.freeze({
     normalizePart,
     createSeed,
+    createCohortSeed,
     hashString,
     randomFromSeed,
     number,
