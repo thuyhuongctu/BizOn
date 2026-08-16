@@ -30,9 +30,9 @@ const liveRecords = [rec({ team_id: 'h_p', decision: { gia: 140, san_luong: 1100
                      rec({ team_id: 'h_q', decision: { gia: 170, san_luong: 900 } })];
 const snap = RS.freezeSnapshot(3, liveRecords, { scenarioPack: 'vn-out-jp-2026a' });
 // Mỗi mục ảnh chụp là bản ghi hợp lệ theo lược đồ nhật ký (không cấu trúc riêng).
-snap.entries.forEach(e => DL.FIELD_KEYS.forEach(k => {
-  if (['state_before', 'result_after', 'consent_purposes'].includes(k)) return; // không bắt buộc
-  assert.ok(e[k] !== undefined, 'mục ảnh chụp thiếu trường lược đồ: ' + k);
+snap.entries.forEach(e => DL.FIELDS.forEach(f => {
+  if (!f.required) return; // trường không bắt buộc (state_before, result_after, consent_purposes, session_tag…) không cần có trong ảnh chụp
+  assert.ok(e[f.key] !== undefined, 'mục ảnh chụp thiếu trường lược đồ: ' + f.key);
 }));
 assert.ok(/^fnv1a:/.test(snap.snapshot_hash), 'ảnh chụp có mã băm');
 
