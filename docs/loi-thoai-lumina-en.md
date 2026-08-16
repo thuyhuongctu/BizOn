@@ -156,3 +156,29 @@ màn đăng nhập – sẽ bổ sung khi chốt.
 - Ước tính tổng thời lượng: **khoảng 7 tới 8 phút** cho cả 51 câu.
 - Chưa nối vào game. Việc nối chờ đủ cả hai ngôn ngữ, để nút VI/EN đổi giọng
   cùng lúc với đổi chữ, tránh tình trạng nửa tiếng Việt nửa tiếng Anh.
+
+---
+
+## Bộ thoại lớp học & Viện Mekong (cls-* / mks-*)
+> Gói **học kỳ demo KT330H** + **buổi Viện Mekong 09/2026**. Nguyên tắc: Lumina chỉ giải thích trade-off và gợi phản tư — **không** đưa đáp án tối ưu, **không** tiết lộ tham số ẩn, **không** đổi trạng thái mô phỏng, **không** bình luận điểm số.
+>
+> Dữ liệu máy đọc: [`assets/dialogue/lumina-classroom-mekong.en.json`](../assets/dialogue/lumina-classroom-mekong.en.json). Mọi ID phải có **đồng thời** ở bản VI và EN trong **cùng một commit** (quy tắc parity). `session_scope` mang dạng tag: `cls-*` nạp cho mọi lớp, `mks-*` chỉ nạp cho phiên Mekong. Biến trong `{…}` do engine điền.
+
+### Bộ thoại lớp học (session_scope: classroom)
+
+| ID | trigger | vars | Lời thoại |
+|---|---|---|---|
+| `cls-wel-01` | `session_start` | ten_nhom | Welcome, {ten_nhom}! I'm Lumina. There's no ready-made right answer today — only your team's decisions and how the market answers back. Ready? |
+| `cls-wel-02` | `before_first_confirm` | — | A small tip: before you confirm, try saying the reason for your decision out loud in one sentence. If you can't say it yet, maybe don't press it yet. |
+| `cls-res-01` | `round_result` | ten_nhom·ket_qua | This round, {ten_nhom}'s revenue {ket_qua}. I won't say which decision was wrong — but look back: what did your team expect that didn't happen? |
+| `cls-tro-01` | `pricing_decision_open` | — | Cutting price brings more customers but thins your profit per unit; holding price does the opposite. Neither choice is free — what is your team prioritizing? |
+| `cls-fail-01` | `negative_cashflow` | — | Negative cash flow isn't the end — in real life it costs dearly; here it only costs one round. What would your team change on the next try? |
+| `cls-ref-01` | `session_end` | — | Before you leave: one decision you're proudest of, one you'd redo. Put them in your reflection — that's today's real score. |
+
+### Bộ thoại buổi Viện Mekong (session_scope: mekong)
+
+| ID | trigger | vars | Lời thoại |
+|---|---|---|---|
+| `mks-wel-01` | `session_start` | — | Welcome, founders! Your product already exists — today we let it enter a simulated market and see how much pressure your plan can take. |
+| `mks-tro-01` | `segment_decision_open` | — | A niche pays more but stays small; the mass market is wide but fiercely contested. The game won't choose for you — it only shows you the price of each path. |
+| `mks-ref-01` | `session_end` | — | Where did the final round differ from your original plan? That's the question worth taking home to your real product. |
