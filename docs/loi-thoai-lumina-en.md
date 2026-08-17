@@ -162,7 +162,7 @@ màn đăng nhập – sẽ bổ sung khi chốt.
 ## Bộ thoại lớp học & Viện Mekong (cls-* / mks-*)
 > Gói **học kỳ demo KT330H** + **buổi Viện Mekong 09/2026**. Nguyên tắc: Lumina chỉ giải thích trade-off và gợi phản tư — **không** đưa đáp án tối ưu, **không** tiết lộ tham số ẩn, **không** đổi trạng thái mô phỏng, **không** bình luận điểm số.
 >
-> Dữ liệu máy đọc: [`assets/dialogue/lumina-classroom-mekong.en.json`](../assets/dialogue/lumina-classroom-mekong.en.json). Mọi ID phải có **đồng thời** ở bản VI và EN trong **cùng một commit** (quy tắc parity). `session_scope` mang dạng tag: `cls-*` nạp cho mọi lớp, `mks-*` chỉ nạp cho phiên Mekong. Biến trong `{…}` do engine điền.
+> Dữ liệu máy đọc: [`assets/dialogue/lumina-classroom-mekong.en.json`](../assets/dialogue/lumina-classroom-mekong.en.json). Mọi ID phải có **đồng thời** ở bản VI và EN trong **cùng một commit** (quy tắc parity). `session_scope` **hiện chỉ là nhãn phân loại — KHÔNG có cơ chế cưỡng chế phạm vi** ở tầng engine (đừng hiểu là ranh giới thật): `cls-*` dự kiến nạp cho mọi lớp, `mks-*` chỉ cho phiên Mekong, việc nạp đúng do phía gọi bảo đảm. Biến trong `{…}` do engine điền.
 
 ### Bộ thoại lớp học (session_scope: classroom)
 

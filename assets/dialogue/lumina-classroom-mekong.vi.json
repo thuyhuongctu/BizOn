@@ -10,7 +10,7 @@
     ],
     "schema": "lumina.session-dialogue.v1",
     "fields": "id, speaker, trigger, session_scope, vars, text",
-    "scope_note": "Chưa có cơ chế scope theo phiên trong engine; session_scope được mang theo dạng tag (classroom | mekong) — cls-* nạp cho mọi lớp, mks-* chỉ nạp cho phiên Mekong.",
+    "scope_note": "CHỈ là nhãn phân loại — KHÔNG có cơ chế cưỡng chế phạm vi nào ở tầng engine. Đừng hiểu 'classroom'/'mekong' là ranh giới thật: cls-* dự kiến nạp cho mọi lớp, mks-* chỉ cho phiên Mekong, nhưng việc nạp đúng do phía gọi tự bảo đảm.",
     "parity_rule": "File hạt giống cho Claude Code chuyển vào đúng schema hội thoại của repo. Mọi ID phải tồn tại đồng thời trong file EN cùng commit (quy tắc parity)."
   },
   "dialogues": [

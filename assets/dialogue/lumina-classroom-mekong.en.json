@@ -10,7 +10,7 @@
     ],
     "schema": "lumina.session-dialogue.v1",
     "fields": "id, speaker, trigger, session_scope, vars, text",
-    "scope_note": "No per-session scope mechanism in the engine yet; session_scope is carried as a tag (classroom | mekong) — cls-* load for every class, mks-* only for the Mekong session.",
+    "scope_note": "Only a classifying tag — there is NO scope-enforcement mechanism in the engine. Do not read 'classroom'/'mekong' as a real boundary: cls-* are intended for every class, mks-* only for the Mekong session, but correct loading is the caller's responsibility.",
     "parity_rule": "Seed file for Claude Code to convert into the repo dialogue schema. Every ID must exist in the VI file in the same commit (parity rule)."
   },
   "dialogues": [
