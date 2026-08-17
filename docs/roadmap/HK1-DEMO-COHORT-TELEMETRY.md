@@ -15,9 +15,10 @@
 
 ## Bổ sung trong PR này (nhỏ, có test)
 
-1. **`session_tag`** — trường tự do gắn mỗi phiên (vd `kt330-l01-b1`, `mekong-2609`),
+1. **`session_tag`** — trường tự do gắn mỗi phiên (vd `kt330-l01-b1`, `mekong-20260926`),
    lưu kèm telemetry, **không** bắt buộc, **không** chứa danh tính (chặn bởi bộ lọc PII sẵn có).
-   Tự động có trong CSV xuất ra.
+   Tự động có trong CSV xuất ra. Ngày trong tag dùng **`YYYYMMDD`** (không dùng `DDMM` — thiếu
+   năm sẽ trùng khóa sau 12 tháng).
 2. **Khóa seed theo lớp** — `Seed.createCohortSeed(classId, scenarioId, ver)`: bỏ `teamId`
    để **mọi nhóm cùng mã lớp chạy CÙNG kịch bản thị trường** (buổi 3–4 so sánh công bằng).
 3. **Preset vòng rút gọn** — `js/demo-presets.js`: `demo-basic` (mở 3 biến: giá · sản lượng ·
@@ -31,8 +32,12 @@ Test: `test/hk1-demo-config.test.js` (chạy `node --test`).
 ## Ràng buộc riêng tư (giữ nguyên)
 
 - **Không** lưu họ tên/email trong bảng phân tích — chỉ `team_id` đã băm.
+- **Đây là bí danh hoá (pseudonymized), KHÔNG phải ẩn danh (anonymous).** Băm `team_id`
+  không biến dữ liệu thành vô danh: với 6–8 đội một lớp, giảng viên vẫn biết đội nào là đội nào.
+  Trong code và tài liệu dùng đúng chữ **pseudonymized**; không mô tả là "anonymous/ẩn danh"
+  ở bất kỳ đâu. (Mô tả trong phiếu đồng thuận do chủ dự án tự chỉnh.)
 - Ghi thật chỉ diễn ra khi **bật cờ đồng thuận** (đang tắt); trước đó `record()` bỏ qua.
-- `session_tag` phải là chuỗi kỹ thuật (vd `kt330-l01-b1`), không nhét danh tính.
+- `session_tag` phải là chuỗi kỹ thuật (vd `kt330-l01-b1`, `mekong-20260926`), không nhét danh tính.
 
 ## Chưa làm trong PR này — tách issue riêng
 
@@ -44,4 +49,4 @@ Test: `test/hk1-demo-config.test.js` (chạy `node --test`).
 
 - Tên khóa biến quyết định trong `demo-presets.js` (`gia`, `san_luong`, `marketing`, …) cần
   khớp đúng khóa engine đang dùng khi nối vào phần hiển thị biến — hiện là hợp đồng đề xuất.
-- Quy ước đặt `session_tag` cho từng lớp/buổi (đề xuất: `kt330-l<NN>-b<N>`, `mekong-<DDMM>`).
+- Quy ước đặt `session_tag` cho từng lớp/buổi (đề xuất: `kt330-l<NN>-b<N>`, `mekong-<YYYYMMDD>`).
