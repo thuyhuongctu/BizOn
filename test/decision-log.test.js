@@ -72,7 +72,7 @@ assert.throws(() => DL.createRecord({ decision_id: 'x' }), /Thiếu trường b�
 
 // 8) KHÔNG lưu danh tính: team_id thô (tên/email) bị chặn; bản băm được nhận.
 assert.throws(() => DL.createRecord(sampleFields({ team_id: 'Đỗ Thùy Hương' })), /băm|định danh/);
-assert.throws(() => DL.createRecord(sampleFields({ team_id: 'huong@vlute.edu.vn' })), /băm|định danh/);
+assert.throws(() => DL.createRecord(sampleFields({ team_id: 'huong@example.edu.vn' })), /băm|định danh/);
 assert.ok(DL.createRecord(sampleFields()), 'team_id đã băm thì hợp lệ');
 
 // 9) enum kiểm soát: role/pillar sai -> lỗi; consent_purposes phải là mảng.
