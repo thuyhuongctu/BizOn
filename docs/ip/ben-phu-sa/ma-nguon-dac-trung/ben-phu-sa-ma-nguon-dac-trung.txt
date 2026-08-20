@@ -14,10 +14,18 @@ PHẠM VI BẢN TRÍCH
       • Hạ tầng DÙNG CHUNG với các trang khác: js/site-ui.js, js/site-vnmap.js,
         js/site-dock.js, js/site-footer.js, js/site-nav.js, js/backend-config.js,
         js/error-log.js  → thuộc khung website chung, không phải tác phẩm Bến Phù Sa.
-      • Không có bất kỳ đoạn mã nào liên quan IB-CI trong tệp này (đã rà: không tìm thấy).
+      • Không đưa phần liên quan IB-CI vào bản trích.
+        → HƯƠNG TỰ XÁC MINH (không lấy khẳng định của công cụ AI làm bằng):
+          grep -ni "IB-CI\|IBCI\|ib_ci" ben-phu-sa-ma-nguon-dac-trung.txt   (kỳ vọng: 0 dòng)
   Ghi chú: khối "Nộp kết quả cho giảng viên" (INSERT-only vào bảng ft_results) có
   tham chiếu tới cấu hình backend dùng chung (window.BIZON_BACKEND); giữ lại ở đây vì
   logic nộp là của Bến Phù Sa, nhưng cấu hình kết nối nằm ở tệp hạ tầng đã loại trừ.
+
+  ⚠ ĐÃ LƯỢC HẰNG SỐ CÂN BẰNG (đáp án game) khỏi bản trích công khai — giữ cấu trúc mã,
+    ẩn giá trị: dải nhu cầu D, dải hệ số tuần W, hằng số phạt trong share(n), các hệ số
+    điều chỉnh trong menuAdj, và kế hoạch 5 tuần cụ thể của 3 AI đối thủ. Chỗ lược đánh
+    dấu ‹ĐÃ LƯỢC›. Bản đầy đủ nằm trong ben-phu-sa.html — Hương đối chiếu để duyệt phần
+    lược. Lý do: in các tham số này ra hồ sơ công khai là công bố đáp án của trò chơi.
 
 ════════════════════════════════════════════════════════════════════════════
 PHẦN 1 — GIAO DIỆN GAME (CSS đặc trưng .ft-*)   [ben-phu-sa.html, dòng 22–56]
@@ -240,25 +248,18 @@ PHẦN 3 — ENGINE MÔ PHỎNG KINH TẾ (JavaScript)   [ben-phu-sa.html, dòng
   var seed = Math.floor(Math.random() * 1e9);
   function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
 
-  // Nhu cầu thật ẩn: D[menu][loc] (triệu ₫ cơ sở cho Gánh hàng rong) 1.0–3.4
-  var D = MENUS.map(function () { return LOCS.map(function () { return 1 + rnd() * 2.4; }); });
-  // Hệ số tuần theo địa điểm 0.8–1.25
-  var W = [0, 1, 2, 3, 4].map(function () { return LOCS.map(function () { return 0.8 + rnd() * 0.45; }); });
+  // Nhu cầu thật ẩn D[menu][loc] sinh ngẫu nhiên có seed (dải hằng số ‹ĐÃ LƯỢC›)
+  var D = MENUS.map(function () { return LOCS.map(function () { return /*‹ĐÃ LƯỢC: cận + biên độ›*/; }); });
+  // Hệ số tuần theo địa điểm (dải hằng số ‹ĐÃ LƯỢC›)
+  var W = [0, 1, 2, 3, 4].map(function () { return LOCS.map(function () { return /*‹ĐÃ LƯỢC›*/; }); });
 
   // Kế hoạch 5 tuần của từng đối thủ – sinh SAU D/W từ cùng seed nên mỗi ván mỗi khác
   RIVALS.forEach(function (r) { r.menu = Math.floor(rnd() * 3); r.total = 0; });
   (function () {
-    var a = RIVALS[0], mk = RIVALS[1], st = RIVALS[2];
-    // Alpha 🐺: xe đẩy dò 2 tuần ngẫu nhiên, rồi ghe hàng bông bám khu tốt nhất cho món của nó
-    var ba = 0; for (var l = 1; l < 6; l++) if (D[a.menu][l] > D[a.menu][ba]) ba = l;
-    a.plan = [Math.floor(rnd() * 6), Math.floor(rnd() * 6), ba, ba, ba];
-    a.mult = [1, 1, 3, 3, 3];
-    // Mekong 🐘: chọn một khu "quê nhà" rồi cắm ghe hàng bông ở đó cả ván
-    var home = Math.floor(rnd() * 6);
-    mk.plan = [home, home, home, home, home]; mk.mult = [3, 3, 3, 3, 3];
-    // Star 🦚: ghe hàng bông luân phiên giữa hai khu ruột
-    var s1 = Math.floor(rnd() * 6), s2 = (s1 + 1 + Math.floor(rnd() * 5)) % 6;
-    st.plan = [s1, s2, s1, s2, s1]; st.mult = [3, 3, 3, 3, 3];
+    // ‹ĐÃ LƯỢC khỏi bản nộp›: chiến lược 5 tuần cụ thể (plan + mult) của 3 AI đối thủ.
+    // Mỗi đối thủ một mô-típ riêng — dò rồi bám khu tốt nhất / cắm một "quê nhà" cả ván /
+    // luân phiên hai khu ruột — đều sinh từ cùng seed với D, W. Hằng số plan/mult là
+    // đáp án chiến lược nên không in vào hồ sơ công khai (bản đầy đủ ở ben-phu-sa.html).
   })();
 
   var S = { week: 0, total: 0, team: 0, cap: 0, sel: { m: null, menu: null, loc: null }, log: [], ritualDone: false };
@@ -272,19 +273,18 @@ PHẦN 3 — ENGINE MÔ PHỎNG KINH TẾ (JavaScript)   [ben-phu-sa.html, dòng
     return [bm, bl];
   }
 
-  // Đụng độ địa điểm: n người bán cùng khu thì mỗi người chỉ giữ được 1/(1+0.4(n−1)) lượng khách
-  function share(n) { return 1 / (1 + 0.4 * (n - 1)); }
+  // Đụng độ địa điểm: n người bán cùng khu thì mỗi người chỉ giữ một phần khách
+  // (hằng số phạt đụng độ ‹ĐÃ LƯỢC› — công thức dạng 1/(1+k(n−1)))
+  function share(n) { return /*‹ĐÃ LƯỢC hằng số k›*/ 1 / n; }
 
   // Cá tính món hàng – 3 mô hình vận hành khác nhau (đề xuất của PGS.TS. Phan Anh Tú):
-  //  🥖 bánh mì phục vụ nhanh: +15% ở tuần cao điểm (W ≥ 1.05) – hốt trọn dòng khách đông
-  //  🍧 chè bưởi cần bảo quản: 25% khả năng hao hụt nguyên liệu −12% (chỉ áp cho người chơi)
-  //  ☕ cà phê phin biên lời cao +18%, nhưng pha chậm nên tuần cao điểm chỉ hưởng một phần (−7%)
+  //  🥖 bánh mì phục vụ nhanh: cộng doanh thu ở tuần cao điểm – hốt dòng khách đông
+  //  🍧 chè bưởi cần bảo quản: có khả năng hao hụt nguyên liệu (chỉ áp cho người chơi)
+  //  ☕ cà phê phin biên lời cao, nhưng pha chậm nên tuần cao điểm chỉ hưởng một phần
+  //  ‹Các hệ số điều chỉnh cụ thể ĐÃ LƯỢC — là đáp án cân bằng game›
   function menuAdj(menu, w, loc, allowRisk) {
-    var f = 1;
-    if (menu === 0 && W[w][loc] >= 1.05) f *= 1.15;
-    if (menu === 1 && allowRisk && rnd() < 0.25) f *= 0.88;
-    if (menu === 2) { f *= 1.18; if (W[w][loc] >= 1.05) f *= 0.93; }
-    return f;
+    // ‹ĐÃ LƯỢC›: công thức nhân theo món × cao điểm (W) × rủi ro — giữ cấu trúc, ẩn hằng số.
+    return 1;
   }
 
   function renderTeams() {
