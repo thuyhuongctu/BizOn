@@ -54,3 +54,16 @@ Ba biến thể biểu tượng công tắc cho tên mới **Bật Nghiệp** �
 Bộ nhận diện đầy đủ (wordmark, hệ màu, kiểu chữ, quy tắc dùng, quyết định đặt tên, lưu ý nhãn hiệu): [`docs/brand/bat-nghiep-nhan-dien.md`](../docs/brand/bat-nghiep-nhan-dien.md).
 
 > **Chưa** đổi tên hàng loạt trên các trang HTML. Việc đó chờ chốt hướng đặt tên (thay hẳn vs song ngữ) — xem §7 tài liệu nhận diện.
+
+### Biểu tượng ứng dụng (app icon / favicon)
+
+Bản biểu tượng đóng khung vuông bo góc, dựng sẵn cho cửa hàng ứng dụng và favicon — công tắc trắng trên nền đặc, đọc rõ ở cỡ nhỏ (32px).
+
+| Tệp | Nền | Dùng khi |
+|---|---|---|
+| `bat-nghiep-app-icon.svg` | Mực `#0E2135`, chấm lục ngọc `#3FBE9E` | Biểu tượng chính — CH Play / App Store · favicon |
+| `bat-nghiep-app-icon-jade.svg` | Lục ngọc `#0F5C4E`, chấm ngọc trai | Biến thể nền lục ngọc — dùng khi cần tách nền tối |
+
+Cả hai là SVG vuông `512×512`, bo góc `rx=112` (đúng tỷ lệ mặt nạ iOS/Android). Khi triển khai, xuất PNG các cỡ chuẩn (512/192/180/32) từ tệp SVG — xem [`docs/brand/ap-dung-nhan-dien.md`](../docs/brand/ap-dung-nhan-dien.md).
+
+> **Chưa** thay favicon/biểu tượng đang chạy trên sản phẩm. Việc đó chờ chốt hướng đặt tên và mẫu logo (xem tài liệu áp dụng).
