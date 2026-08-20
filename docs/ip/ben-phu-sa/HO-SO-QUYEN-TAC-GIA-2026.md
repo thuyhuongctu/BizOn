@@ -72,8 +72,11 @@
 Theo nguyên tắc *không dựa vào khẳng định của công cụ AI cho hồ sơ công khai*, hai điểm sau **Hương tự chạy lệnh xác minh**, không lấy kết quả công cụ báo làm bằng:
 
 1. **IB-CI = 0 trong bản trích mã.** Chạy: `grep -ni "IB-CI\|IBCI\|ib_ci" docs/ip/ben-phu-sa/ma-nguon-dac-trung/*.txt`. Kỳ vọng: 0 dòng. Nếu ra >0 → gỡ khỏi bản trích trước khi nộp.
-2. **Không in tham số ẩn (đáp án game) ra hồ sơ.** ⚠️ **Đính chính khẳng định trước:** kiểm lại cho thấy bản trích *có* chứa nội dung tiết lộ chiến lược — **luật chia khách `share(n)=1/(1+0.4(n−1))`**, **cá tính món hàng** (`+15%` / `25%→−12%` / `+18%→−7%`), **dải nhu cầu** `1.0–3.4` và **hệ số tuần** `0.8–1.25`, cùng **kế hoạch 5 tuần của 3 AI đối thủ**. (Bảng nhu cầu `D` thì sinh ngẫu nhiên mỗi ván nên không có đáp án cố định.) Các hằng số này **cũng đang công khai trong `ben-phu-sa.html`**, nhưng in vào hồ sơ là *chính thức hoá* việc công bố đáp án.
-   - **Khuyến nghị:** ở bản nộp, **lược các hằng số tinh chỉnh** (thay bằng chú thích trung tính) mà vẫn giữ *cấu trúc mã* — đủ chứng minh quyền tác giả, không cần in hằng số cân bằng. Bản trích trong repo đã áp dụng cách này (xem đầu tệp `ma-nguon-dac-trung/…txt`, mục "ĐÃ LƯỢC"); Hương đối chiếu lại với `ben-phu-sa.html` để duyệt phần lược.
+2. **Không in tham số ẩn (đáp án game) ra hồ sơ.** ⚠️ **Đính chính khẳng định trước:** kiểm lại cho thấy bản trích *có* chứa nội dung tiết lộ chiến lược — **luật chia khách `share(n)=1/(1+0.4(n−1))`**, **cá tính món hàng** (`+15%` / `25%→−12%` / `+18%→−7%`), **dải nhu cầu** `1.0–3.4` và **hệ số tuần** `0.8–1.25`, cùng **kế hoạch 5 tuần của 3 AI đối thủ**. (Bảng nhu cầu `D` thì sinh ngẫu nhiên mỗi ván nên không có đáp án cố định.) Các hằng số này **cũng đang công khai trong `ben-phu-sa.html`** (bản web) rồi.
+   - **Hai bản, hai chế độ (đừng lẫn):**
+     - **Bản trong repo (công khai):** lược hằng số là **đúng** — đã áp dụng (xem đầu tệp `ma-nguon-dac-trung/…txt`, mục "ĐÃ LƯỢC"). Repo ai cũng đọc được nên không in đáp án ra đây.
+     - **Bản in nộp Cục Bản quyền (KHÔNG công bố ra công chúng):** hồ sơ nộp cho cơ quan nhà nước, không phát hành ra công chúng → **rủi ro lộ đáp án gần như bằng 0**. Ngược lại, nộp mã **đã bị lược** có thể bị xem là **bản trích không phản ánh đúng tác phẩm**. Vì vậy bản nộp nhiều khả năng nên dùng **mã đầy đủ** (lấy trực tiếp từ `ben-phu-sa.html`), *không* dùng bản lược của repo.
+     - **Hỏi luật sư trước khi in nộp:** bản trích mã nộp kèm **có được phép lược phần bí mật kinh doanh** (hằng số cân bằng) hay không. Có xác nhận rồi mới chốt: bản nộp là mã đầy đủ hay mã lược.
 
 ---
 
