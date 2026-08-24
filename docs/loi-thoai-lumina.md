@@ -241,3 +241,29 @@ kinh doanh người học cần làm quen. Chỉ phần đọc mới thay bằng
 
 > Câu có `{…}`: đọc với một con số bất kỳ, ví dụ *"Tiền mặt chỉ còn 120 triệu đồng"*.
 > Hai mươi câu còn lại trong tài liệu không chứa viết tắt hay ký hiệu nào – đọc nguyên văn.
+
+---
+
+## Bộ thoại lớp học & Viện Mekong (cls-* / mks-*)
+> Gói **học kỳ demo KT330H** + **buổi Viện Mekong 09/2026**. Nguyên tắc: Lumina chỉ giải thích trade-off và gợi phản tư — **không** đưa đáp án tối ưu, **không** tiết lộ tham số ẩn, **không** đổi trạng thái mô phỏng, **không** bình luận điểm số.
+>
+> Dữ liệu máy đọc: [`assets/dialogue/lumina-classroom-mekong.vi.json`](../assets/dialogue/lumina-classroom-mekong.vi.json). Mọi ID phải có **đồng thời** ở bản VI và EN trong **cùng một commit** (quy tắc parity). `session_scope` **hiện chỉ là nhãn phân loại — KHÔNG có cơ chế cưỡng chế phạm vi** ở tầng engine (đừng hiểu là ranh giới thật): `cls-*` dự kiến nạp cho mọi lớp, `mks-*` chỉ cho phiên Mekong, việc nạp đúng do phía gọi bảo đảm. Biến trong `{…}` do engine điền.
+
+### Bộ thoại lớp học (session_scope: classroom)
+
+| ID | trigger | vars | Lời thoại |
+|---|---|---|---|
+| `cls-wel-01` | `session_start` | ten_nhom | Chào mừng {ten_nhom}! Mình là Lumina. Hôm nay không có đáp án đúng sẵn — chỉ có quyết định của nhóm và những gì thị trường trả lời. Sẵn sàng chưa? |
+| `cls-wel-02` | `before_first_confirm` | — | Mẹo nhỏ: trước khi bấm xác nhận, cả nhóm thử nói to lý do của quyết định trong một câu. Nếu chưa nói được, có lẽ chưa nên bấm. |
+| `cls-res-01` | `round_result` | ten_nhom·ket_qua | Vòng này doanh thu của {ten_nhom} {ket_qua}. Mình không nói quyết định nào sai — nhưng hãy nhìn lại: điều gì nhóm kỳ vọng đã không xảy ra? |
+| `cls-tro-01` | `pricing_decision_open` | — | Giảm giá sẽ kéo thêm khách nhưng bào mỏng lợi nhuận mỗi đơn vị; giữ giá thì ngược lại. Không có lựa chọn nào miễn phí — nhóm đang ưu tiên điều gì? |
+| `cls-fail-01` | `negative_cashflow` | — | Dòng tiền âm không phải dấu chấm hết — ngoài đời nó rất đắt, còn ở đây nó chỉ tốn một vòng chơi. Nhóm muốn thử lại với thay đổi nào? |
+| `cls-ref-01` | `session_end` | — | Trước khi rời phòng: một quyết định nhóm tự hào nhất, một quyết định muốn làm lại. Viết vào phản tư nhé — đó mới là điểm số thật của hôm nay. |
+
+### Bộ thoại buổi Viện Mekong (session_scope: mekong)
+
+| ID | trigger | vars | Lời thoại |
+|---|---|---|---|
+| `mks-wel-01` | `session_start` | — | Chào mừng các nhà sáng lập! Sản phẩm của bạn đã có thật — hôm nay chúng ta cho nó bước vào một thị trường mô phỏng để xem kế hoạch chịu được sức ép đến đâu. |
+| `mks-tro-01` | `segment_decision_open` | — | Thị trường ngách trả giá cao nhưng nhỏ; thị trường đại chúng rộng nhưng cạnh tranh gắt. Game không chọn thay bạn — nó chỉ cho bạn thấy cái giá của từng con đường. |
+| `mks-ref-01` | `session_end` | — | Kết quả vòng cuối khác kế hoạch ban đầu của nhóm ở điểm nào? Đó chính là câu hỏi đáng mang về cho sản phẩm thật. |
