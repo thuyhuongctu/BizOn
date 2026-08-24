@@ -22,10 +22,12 @@
 
 ## 2. Ngày hoàn thành tác phẩm
 
-Ngày: **……… (Hương điền sau khi tự xác nhận)**
-Gắn với commit: **……… (Hương điền — chạy `git log`, không dùng số công cụ AI báo)**
+Ngày: **08/08/2026**
+Gắn với commit: **`b387b3b61e6868f7fb78c41c80cec9eb965871a0`** (#396 "mở khoá Đội Phù Sa 2 người")
 
-*Tham khảo — chưa phải bằng cuối cùng:* commit `b387b3b61e6868f7fb78c41c80cec9eb965871a0` (#396, 08/08/2026) là commit gần nhất sửa `ben-phu-sa.html`, đã xác nhận có trên `main` GitHub. Điều kiện bắt buộc trước khi chốt: Hương **tự chơi thử một lượt thật** (đủ 5 tuần ra kết quả) để xác nhận `v1.0` chơi được đầu-cuối.
+✅ Hương đã tự xác nhận hash/ngày qua trang "History for ben-phu-sa.html" trên GitHub.
+
+⚠️ **Còn thiếu trước khi chốt:** Hương **tự chơi thử một lượt thật** (đủ 5 tuần ra kết quả) để xác nhận `v1.0` chơi được đầu-cuối — điều kiện riêng, độc lập với việc xác nhận hash.
 
 ---
 
