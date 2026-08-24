@@ -32,7 +32,7 @@
 | Mục | Nội dung |
 |---|---|
 | **1. Tên tác phẩm** | PHẦN MỀM TRÒ CHƠI MÔ PHỎNG THỊ TRƯỜNG "BẾN PHÙ SA" (bản `v1.0`).<br>Tên tiếng Anh (nếu luật sư yêu cầu): *Ben Phu Sa — An Explore-Exploit Street-Market Simulation Game*.<br>Nên đăng ký loại hình **"chương trình máy tính"**. Muốn bảo hộ thêm phần mỹ thuật (nhân vật, bối cảnh đất sét/xuồng ghe) có thể cân nhắc đăng ký bổ sung **"tác phẩm mỹ thuật ứng dụng"** cho bộ hình ảnh — hỏi luật sư về chi phí. |
-| **2. Ngày hoàn thành** | Ngày: **……… (Hương điền)** · Gắn với commit: **……… (Hương điền)**.<br>*Quy tắc bắt buộc:* Hương tự chạy `git log` trên máy mình, chọn commit đánh dấu phiên bản `v1.0` chơi được đầu-cuối, ghi hash đầy đủ + ngày commit. **Ngày hoàn thành khai không được sớm hơn ngày commit đó.** Nếu game chưa "hoàn chỉnh chơi được đầu-cuối", chỉ đăng ký phiên bản hiện có (ghi rõ `v1.0`) hoặc lùi ngày nộp. |
+| **2. Ngày hoàn thành** | Ngày: **08/08/2026** · Gắn với commit: **`b387b3b61e6868f7fb78c41c80cec9eb965871a0`** (#396 "mở khoá Đội Phù Sa 2 người" — commit gần nhất sửa `ben-phu-sa.html`, xác nhận có trên `main` GitHub).<br>*Quy tắc bắt buộc:* Hương tự chạy `git log` trên máy mình, chọn commit đánh dấu phiên bản `v1.0` chơi được đầu-cuối, ghi hash đầy đủ + ngày commit. **Ngày hoàn thành khai không được sớm hơn ngày commit đó.** Nếu game chưa "hoàn chỉnh chơi được đầu-cuối", chỉ đăng ký phiên bản hiện có (ghi rõ `v1.0`) hoặc lùi ngày nộp.<br>⚠️ **Hash/ngày trên do công cụ AI điền sẵn để tiện — Hương vẫn phải tự chạy `git log` xác nhận lại trước khi nộp**, không lấy số này làm bằng cuối cùng. |
 | **3. Ngày công bố / nơi công bố** | Nếu Bến Phù Sa đã hiển thị công khai (ai cũng vào chơi được): khai **ngày đưa lên bản public đầu tiên + URL**. Hương xác minh ngày bằng lịch sử deploy/commit của `ben-phu-sa.html`, không ước lượng.<br>Nếu mới chạy trong lớp hoặc bản QA nội bộ: khai **"chưa công bố"**. Khai sai mục này ảnh hưởng hiệu lực giấy chứng nhận — không chắc thì hỏi luật sư. |
 | **4. Thông tin tác giả** | Đồng tác giả 1: **Đỗ Thùy Hương** — CCCD: ……… *(Hương điền)*.<br>Đồng tác giả 2: **Phan Anh Tú** — CCCD: ……… *(Hương điền)*.<br>Kèm bản sao y chứng thực CCCD của cả hai. Bốn trường cá nhân (ngày sinh, CCCD, địa chỉ, SĐT) thu thập một lần dùng cho cả bản quyền lẫn nhãn hiệu. **Không đưa lên repo.** |
 | **5. Thông tin chủ sở hữu** | Chủ sở hữu là **hai cá nhân đồng sở hữu** (không phải công ty), theo cấu trúc khuyến nghị cho viên chức: đồng sở hữu cá nhân + hợp đồng li-xăng khi khai thác thương mại. Không cần Giấy chứng nhận đăng ký kinh doanh.<br>**Tỷ lệ sở hữu** khai trong hồ sơ phải khớp thỏa thuận đồng sở hữu đã ký — **phải chốt trước khi nộp.** |
@@ -94,7 +94,7 @@ Không sửa trực tiếp `universe.html` trong PR này — đổi qua pipeline
 ### Việc cần Hương làm ngay
 - [ ] Tự chơi thử một lượt `v1.0` (đủ 5 tuần ra kết quả) để xác nhận điều kiện hướng (a).
 - [ ] Điền bốn trường cá nhân (cả hai đồng tác giả) + chuẩn bị bản sao y CCCD *(không đưa lên repo)*.
-- [ ] Chạy `git log`, chọn commit phiên bản `v1.0`, ghi hash + ngày.
+- [ ] Chạy `git log`, chọn commit phiên bản `v1.0`, ghi hash + ngày *(đã điền tạm `b387b3b…` / 08/08/2026 ở mục A.2 — Hương tự chạy lại `git log` xác nhận trước khi chốt)*.
 - [ ] Tự chạy hai lệnh ở §Tự-xác-minh; duyệt phần lược hằng số trong bản trích.
 - [ ] Gửi Thầy Tú câu cần chốt: **tỷ lệ sở hữu** (nhãn hiệu bàn ở kênh riêng ngoài repo).
 - [ ] Hỏi luật sư: định dạng đĩa/USB; cách khai hình ảnh AI tạo.
