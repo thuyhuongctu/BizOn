@@ -6,7 +6,8 @@ Thư mục gom tài liệu chuẩn bị đăng ký **quyền tác giả** cho ga
 
 | Tệp / thư mục | Nội dung |
 |---|---|
-| [`HO-SO-QUYEN-TAC-GIA-2026.md`](HO-SO-QUYEN-TAC-GIA-2026.md) | Hồ sơ chính: 6 mục khai bản quyền, bản mô tả `v1.0` (đã khớp build — hướng (a)), trình tự tách game, rủi ro, việc cần làm. Có **§Tự-xác-minh** và **§Copy-cong-khai**. |
+| [`HO-SO-QUYEN-TAC-GIA-2026.md`](HO-SO-QUYEN-TAC-GIA-2026.md) | Hồ sơ làm việc: 6 mục khai bản quyền + lý do/quyết định/rủi ro, trình tự tách game, việc cần làm. Có **§Tự-xác-minh** và **§Copy-cong-khai**. |
+| [`HO-SO-NOP-2026.md`](HO-SO-NOP-2026.md) | **Bản nộp sạch** — đúng thứ tự 6 mục checklist luật sư, không kèm phần lý do/quyết định nội bộ. Dùng bản này để in/điền khi nộp thật. |
 | [`RA-SOAT-METADATA.md`](RA-SOAT-METADATA.md) | Rà soát title/og của `ben-phu-sa.html` (khớp tên tác phẩm đăng ký) + ghi nhận độ vênh copy công khai ở `universe.html`. |
 | [`ma-nguon-dac-trung/`](ma-nguon-dac-trung/) | Bản trích mã nguồn đặc trưng để in kèm (engine riêng của Bến Phù Sa; đã loại hạ tầng dùng chung). **Đã lược các hằng số cân bằng (đáp án game)** — xem đầu tệp. |
 | [`anh-giao-dien/`](anh-giao-dien/) | Ảnh giao diện ba màn hình chính (mở đầu · vòng quyết định · kết quả). Ảnh chụp máy tính, chưa cắt thanh điều hướng/chân trang dùng chung — khi nộp nên cắt gọn về đúng khung game. |
