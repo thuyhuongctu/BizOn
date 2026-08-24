@@ -97,7 +97,7 @@ Không sửa trực tiếp `universe.html` trong PR này — đổi qua pipeline
 - [x] Tự chơi thử một lượt `v1.0` (đủ 5 tuần ra kết quả) để xác nhận điều kiện hướng (a) — **đã xác nhận 24/08/2026**.
 - [ ] Điền bốn trường cá nhân (cả hai đồng tác giả) + chuẩn bị bản sao y CCCD *(không đưa lên repo)*.
 - [x] Hash + ngày: **`b387b3b…` / 08/08/2026** — Hương đã tự xác nhận qua GitHub "History for ben-phu-sa.html".
-- [ ] Tự chạy hai lệnh ở §Tự-xác-minh; duyệt phần lược hằng số trong bản trích.
+- [x] Grep IB-CI = 0 dòng thực (chỉ 2 dòng ghi chú về việc loại trừ) — đã chạy lại, kết quả đúng như kỳ vọng. Duyệt phần lược hằng số: đã đối chiếu `share(n)`, `D`, `W`, `menuAdj` trong bản trích khớp đúng cấu trúc bản đầy đủ ở `ben-phu-sa.html` (chỉ ẩn giá trị). ⚠️ Hương vẫn nên tự chạy lại lệnh grep một lần trên máy/session của mình trước khi nộp, theo đúng nguyên tắc không lấy kết quả AI báo làm bằng cuối cùng.
 - [ ] Xác nhận với luật sư cách khai mục A.3 (chưa công bố chính thức, dù kỹ thuật đã live trên GitHub Pages).
 - [x] Tỷ lệ sở hữu: **50% / 50%** — Hương đã xác nhận. Còn lại: gửi Thầy Tú để đồng ý + **ký thỏa thuận đồng sở hữu** (hiện mới là bản nháp) trước khi nộp.
 - [ ] Hỏi luật sư: định dạng đĩa/USB; cách khai hình ảnh AI tạo.
