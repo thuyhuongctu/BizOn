@@ -27,7 +27,7 @@ Gắn với commit: **`b387b3b61e6868f7fb78c41c80cec9eb965871a0`** (#396 "mở k
 
 ✅ Hương đã tự xác nhận hash/ngày qua trang "History for ben-phu-sa.html" trên GitHub.
 
-⚠️ **Còn thiếu trước khi chốt:** Hương **tự chơi thử một lượt thật** (đủ 5 tuần ra kết quả) để xác nhận `v1.0` chơi được đầu-cuối — điều kiện riêng, độc lập với việc xác nhận hash.
+✅ Hương đã tự chơi thử một lượt thật (đủ 5 tuần, ra bảng kết quả hoàn chỉnh) — xác nhận 24/08/2026. Điều kiện `v1.0` chơi được đầu-cuối đã thoả.
 
 ---
 

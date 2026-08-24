@@ -13,6 +13,8 @@
 **1. Khớp mô tả ↔ build — đã chọn hướng (a).** Bản build đang chạy (`ben-phu-sa.html`) là game **thăm dò–khai thác thị trường** (Phương thức × Món × Địa điểm, 5 tuần), *không* phải cơ chế chính thức hoá hộ kinh doanh (đăng ký/vay/thu giữ). Nhóm đã xác nhận qua mã + ảnh giao diện. **Quyết định: đăng ký bản build hiện tại như `v1.0`, dùng bản mô tả đã hiệu chỉnh ở Phần B.** Lý do chiến lược: hồ sơ bản quyền có *ngày hoàn thành sớm* là bằng chứng mốc thời gian cho vấn đề xung đột lợi ích MekSim; chờ hoàn thiện cơ chế chính thức hoá sẽ lùi mốc đó vô thời hạn. Phiên bản chính thức hoá về sau đăng ký bổ sung như `v2` hoặc **tác phẩm phái sinh**.
 
 > **Điều kiện của hướng (a) — Hương tự xác nhận:** game `v1.0` phải **chơi được đầu-cuối thật sự** (đủ 5 tuần → ra bảng kết quả hoàn chỉnh). Hương **tự chơi thử một lượt** để xác nhận trước khi chốt ngày hoàn thành. Công cụ AI không xác nhận thay điểm này.
+>
+> ✅ **Đã xác nhận — 24/08/2026:** Hương tự chơi thử đầu-cuối, đủ 5 tuần, ra bảng kết quả hoàn chỉnh. Điều kiện hướng (a) đã thoả. *(Lưu ý: đây là ngày Hương xác nhận điều kiện chơi được — khác với "Ngày hoàn thành tác phẩm" ở mục A.2, vẫn giữ nguyên `08/08/2026` theo ngày commit, không đổi theo ngày xác nhận này.)*
 
 **2. Vênh ở trang công khai — cần sửa qua pipeline QA → promote.** Bản mô tả Phần B (bản gốc của nhóm) được viết dựa trên *chính phần giới thiệu công khai* — hiện nằm ở **`universe.html` dòng 319**: *"Ở lại phi chính thức hay bước lên chính danh. Đăng ký hay không, vay nóng hay vay ngân hàng, chịu rủi ro thu giữ hàng…"*. Đây là **mô tả một game chưa tồn tại**. Dù chọn hướng nào, copy công khai này cũng phải sửa cho khớp build. Đề xuất copy thay thế ở cuối tài liệu (§Copy-cong-khai). **Không sửa trực tiếp trang public** — đổi qua pipeline QA → promote như mọi thay đổi trang công khai.
 
@@ -92,7 +94,7 @@ Không sửa trực tiếp `universe.html` trong PR này — đổi qua pipeline
 ---
 
 ### Việc cần Hương làm ngay
-- [ ] Tự chơi thử một lượt `v1.0` (đủ 5 tuần ra kết quả) để xác nhận điều kiện hướng (a).
+- [x] Tự chơi thử một lượt `v1.0` (đủ 5 tuần ra kết quả) để xác nhận điều kiện hướng (a) — **đã xác nhận 24/08/2026**.
 - [ ] Điền bốn trường cá nhân (cả hai đồng tác giả) + chuẩn bị bản sao y CCCD *(không đưa lên repo)*.
 - [x] Hash + ngày: **`b387b3b…` / 08/08/2026** — Hương đã tự xác nhận qua GitHub "History for ben-phu-sa.html".
 - [ ] Tự chạy hai lệnh ở §Tự-xác-minh; duyệt phần lược hằng số trong bản trích.
