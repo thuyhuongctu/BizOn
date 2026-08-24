@@ -57,7 +57,7 @@ Game chưa được công bố/quảng bá ra công chúng như một sản ph�
 
 Chủ sở hữu: **hai cá nhân đồng sở hữu** (Đỗ Thùy Hương + Phan Anh Tú), không phải công ty — không cần Giấy chứng nhận đăng ký kinh doanh.
 
-**Tỷ lệ sở hữu:** ……… / ……… *(chưa chốt — phải khớp với Thỏa thuận đồng sở hữu đã ký trước khi nộp; xem `../BIZON_DRAFT_COOWNERSHIP_AGREEMENT_HUONG_TU_2026-08-03.md`)*
+**Tỷ lệ sở hữu:** 50% / 50% (Đỗ Thùy Hương / Phan Anh Tú) — Hương đã xác nhận. ⚠️ Vẫn phải khớp với Thỏa thuận đồng sở hữu **đã ký** trước khi nộp (chưa ký — xem `../BIZON_DRAFT_COOWNERSHIP_AGREEMENT_HUONG_TU_2026-08-03.md`).
 
 ---
 
