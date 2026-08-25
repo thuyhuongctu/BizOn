@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!-- TRANG CHUYỂN HƯỚNG — không phải trò chơi.
+     Tên tệp cũ 'food-truck.html' được đổi thành 'ben-phu-sa.html' (đúng bối cảnh ghe bẹo chợ nổi,
+     không trùng khái niệm 'The Food Truck Challenge'). Giữ URL cũ để không gãy đường dẫn đã lưu.
+     canonical trỏ về bản mới · noindex,follow để công cụ tìm kiếm bỏ trang này, theo link sang bản mới. -->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bến Phù Sa — đã chuyển địa chỉ</title>
+<meta name="robots" content="noindex,follow">
+<link rel="canonical" href="https://thuyhuongctu.github.io/BizOn/ben-phu-sa.html">
+<meta http-equiv="refresh" content="0; url=ben-phu-sa.html">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<style>
+  html,body{height:100%}
+  body{margin:0;display:grid;place-items:center;background:#f4faff;color:#033337;
+    font-family:system-ui,-apple-system,"Manrope",sans-serif;text-align:center;padding:24px}
+  .card{max-width:30rem;background:#fff;border-radius:24px;padding:34px 30px;
+    box-shadow:0 10px 30px -5px rgba(0,102,135,.12), inset 0 -4px 0 rgba(0,0,0,.05)}
+  h1{font-size:1.3rem;margin:0 0 .6rem}
+  p{font-size:.95rem;color:#0a5a63;margin:0 0 1.2rem;line-height:1.6}
+  a.go{display:inline-flex;align-items:center;gap:8px;background:#0F5C4E;color:#fff;
+    text-decoration:none;font-weight:700;padding:11px 18px;border-radius:14px}
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>🛶 Trang đã chuyển sang <b>Bến Phù Sa</b></h1>
+    <p>Trò chơi bậc 1 nay ở địa chỉ mới. Trình duyệt sẽ tự chuyển sau giây lát — nếu không, bấm nút dưới đây.</p>
+    <a class="go" href="ben-phu-sa.html">Vào Bến Phù Sa →</a>
+  </div>
+  <script>location.replace('ben-phu-sa.html');</script>
+</body>
+</html>
