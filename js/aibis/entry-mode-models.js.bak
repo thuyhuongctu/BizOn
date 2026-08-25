@@ -1,0 +1,17 @@
+(function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.BizOnEntryModeModels=api;})(typeof globalThis!=='undefined'?globalThis:this,function(){'use strict';
+const refs={TCE:'Anderson & Gatignon (1986); Zhao, Luo, & Suh (2004)',META:'Wan et al. (2023)',INST:'Zhang et al. (2022)',DIGITAL:'Brouthers et al. (2022); Gong, He, & Lengler (2024)'};
+const modes=[
+{id:'export',label:'Export',control:25,speed:88,learning:35,capitalRequirement:20,risk:28,knowledgeProtection:55,localEmbeddedness:20,digitalScalability:45,minFinancialCapacity:20,minInternationalExperience:20,minDigitalCapability:10,evidenceConfidence:80,theories:['TCE','Uppsala'],countryFit:c=>70-(c.tariffPressure||0)*.25+(c.logisticsQuality||50)*.2},
+{id:'licensing',label:'Licensing',control:20,speed:82,learning:38,capitalRequirement:18,risk:35,knowledgeProtection:20,localEmbeddedness:45,digitalScalability:55,minFinancialCapacity:15,minInternationalExperience:25,minDigitalCapability:15,evidenceConfidence:72,theories:['TCE','RBV'],countryFit:c=>65+(c.ipProtection||50)*.2-(c.opportunismRisk||50)*.25},
+{id:'joint_venture',label:'Joint Venture',control:58,speed:55,learning:82,capitalRequirement:62,risk:55,knowledgeProtection:45,localEmbeddedness:90,digitalScalability:45,minFinancialCapacity:55,minInternationalExperience:45,minDigitalCapability:25,evidenceConfidence:84,theories:['TCE','Institutional','RBV'],countryFit:c=>55+(c.institutionalDistance||0)*.25+(c.localPartnerValue||50)*.25},
+{id:'strategic_alliance',label:'Strategic Alliance',control:45,speed:68,learning:80,capitalRequirement:40,risk:48,knowledgeProtection:40,localEmbeddedness:78,digitalScalability:65,minFinancialCapacity:35,minInternationalExperience:40,minDigitalCapability:35,evidenceConfidence:75,theories:['RBV','Network'],countryFit:c=>60+(c.localPartnerValue||50)*.25+(c.networkImportance||50)*.15},
+{id:'wholly_owned_fdi',label:'Wholly Owned FDI',control:95,speed:25,learning:72,capitalRequirement:95,risk:82,knowledgeProtection:95,localEmbeddedness:72,digitalScalability:35,minFinancialCapacity:88,minInternationalExperience:72,minDigitalCapability:40,evidenceConfidence:86,theories:['TCE','OLI','Institutional'],countryFit:c=>55+(c.marketSize||50)*.25+(c.ipProtection||50)*.15-(c.politicalRisk||50)*.3},
+{id:'digital_entry',label:'Digital Entry',control:62,speed:92,learning:58,capitalRequirement:28,risk:42,knowledgeProtection:58,localEmbeddedness:30,digitalScalability:98,minFinancialCapacity:25,minInternationalExperience:25,minDigitalCapability:75,evidenceConfidence:58,theories:['Digital internationalization','Internalization'],countryFit:c=>45+(c.digitalReadiness||50)*.35+(c.crossBorderNetworkEffects||50)*.2-(c.dataRegulationRisk||50)*.25}
+];
+const evidence={version:'2026-08-02',status:'simulation-calibration-required',principles:[
+{claim:'Entry mode entails a control–resource commitment trade-off.',source:refs.TCE},
+{claim:'Antecedents and outcomes vary across contexts; no mode is universally superior.',source:refs.META},
+{claim:'Institutional distance effects are heterogeneous and moderated.',source:refs.INST},
+{claim:'Digital entry requires separate treatment for platform, ecosystem and virtual-presence mechanisms.',source:refs.DIGITAL}
+]};
+return Object.freeze({modes,evidence,refs});});

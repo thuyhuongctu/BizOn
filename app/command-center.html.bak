@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="vi" data-theme="dark" data-bizon-build="2026.08.02.2">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#030a14">
+  <meta name="description" content="Command Center của BizOn tổng hợp hiệu quả, rủi ro, thị trường và tiến trình quyết định của phiên mô phỏng.">
+  <title>Command Center — BizOn</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="../assets/icons/icon-192.png">
+  <link rel="stylesheet" href="../css/bizon-fonts.css">
+  <link rel="stylesheet" href="../css/bizon-unified.css">
+</head>
+<body class="bizon-command">
+<div class="bz-command-layout">
+  <aside class="bz-sidebar">
+    <a class="bz-brand" href="./release.html"><img src="../assets/icons/icon-192.png" alt="BizOn"><span><strong>BIZON</strong><small>BUSINESS SIMULATION</small></span></a>
+    <nav class="bz-side-nav" aria-label="Mô-đun BizOn">
+      <a class="active" href="./command-center.html">⌂ Command Center</a>
+      <a href="../game.html">☆ Startup Lab</a>
+      <a href="./brand-passport.html">◇ Brand Passport</a>
+      <a href="./aibis.html">◎ AIBIS Global</a>
+      <a href="../giang-vien.html">♙ Classroom</a>
+      <a href="#analytics">▥ Analytics</a>
+      <a href="../hoc-thuat.html">▤ Reports</a>
+      <a href="../lumina.html">✦ Lumina</a>
+      <a href="../chinh-sach.html">⚙ Settings</a>
+    </nav>
+    <div class="bz-side-foot">
+      <div class="bz-status-card"><b><span style="color:var(--bz-green)">●</span> System Status</b>All systems operational</div>
+      <div class="bz-status-card"><b>◇ Engine v2.0.0</b>Deterministic simulation core</div>
+    </div>
+  </aside>
+
+  <main class="bz-command-main">
+    <header class="bz-command-top">
+      <a class="bz-brand bz-mobile-head" href="./release.html"><img src="../assets/icons/icon-192.png" alt="BizOn"><strong>BIZON</strong></a>
+      <div class="bz-context">
+        <div><small>Workspace</small><strong>EcoFuture Team⌄</strong></div>
+        <div><small>Scenario</small><strong>AIBIS Global Expansion⌄</strong></div>
+        <div><small>Round</small><strong>4 / 8</strong></div>
+        <div><small>Date</small><strong>May 27, 2026</strong></div>
+      </div>
+      <div class="bz-command-actions"><span data-network-status style="color:var(--bz-green);font-size:.68rem">Trực tuyến</span><a class="bz-btn ghost" href="./release.html">Trang giới thiệu</a></div>
+    </header>
+
+    <section class="bz-kpi-row" aria-label="Chỉ số hiệu quả">
+      <article class="bz-kpi"><small>REVENUE</small><strong>$12.45M</strong><span class="bz-trend">↑ 8.4%</span></article>
+      <article class="bz-kpi"><small>PROFIT</small><strong>$2.31M</strong><span class="bz-trend">↑ 12.7%</span></article>
+      <article class="bz-kpi"><small>CASH</small><strong>$4.28M</strong><span class="bz-trend">↑ 5.3%</span></article>
+      <article class="bz-kpi"><small>MARKET SHARE</small><strong>18.6%</strong><span class="bz-trend">↑ 1.8pp</span></article>
+      <article class="bz-kpi"><small>RISK LEVEL</small><strong>Medium</strong><span style="color:var(--bz-orange);font-size:.62rem">42 / 100</span></article>
+      <article class="bz-kpi"><small>REPUTATION</small><strong>82 / 100</strong><span class="bz-trend">↑ 3</span></article>
+    </section>
+
+    <section class="bz-command-grid">
+      <article class="bz-card bz-map-panel">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px"><div><span class="bz-pill">GLOBAL OPERATIONS & MARKET INTELLIGENCE</span><h1 style="font-size:1.1rem;margin:8px 0 0">Mạng lưới thương mại và cơ hội thị trường</h1></div><div class="bz-chip"><i>3D</i>Trade Flow</div></div>
+        <div class="bz-world">
+          <div class="bz-world-grid"></div>
+          <svg viewBox="0 0 1000 520" aria-label="Bản đồ luồng thương mại mô phỏng">
+            <defs><linearGradient id="bzRouteCommand" x1="0" x2="1"><stop stop-color="#23c8ff"/><stop offset=".55" stop-color="#7656ff"/><stop offset="1" stop-color="#ff9d3d"/></linearGradient></defs>
+            <path class="continent" d="M70 180l48-41 78-9 40 25 52-8 35 32-29 35-50 2-28 48-49 25-24-43-57-20zM270 330l43-34 39 15 16 55-21 77-38 30-18-48-30-41zM430 150l58-35 73 4 38 25 85 1 52 35-12 37-59 12-37 35-68-12-45 23-53-27-23-43zM590 305l45-18 58 22 20 52-32 55-58 18-35-46zM740 315l65-27 87 24 34 45-25 52-95 7-42-46z"/>
+            <path class="route" style="stroke:url(#bzRouteCommand)" d="M164 205Q330 60 498 165Q650 270 832 178"/><path class="route orange" d="M164 205Q410 385 784 359"/><path class="route" style="stroke:url(#bzRouteCommand)" d="M315 365Q540 160 832 178"/><path class="route orange" d="M498 165Q650 80 900 340"/><path class="route" style="stroke:url(#bzRouteCommand)" d="M315 365Q650 470 900 340"/>
+            <circle class="node" cx="164" cy="205" r="5"/><circle class="node" cx="315" cy="365" r="5"/><circle class="node" cx="498" cy="165" r="5"/><circle class="node hot" cx="832" cy="178" r="6"/><circle class="node" cx="784" cy="359" r="5"/><circle class="node hot" cx="900" cy="340" r="5"/>
+          </svg>
+          <div class="bz-world-card london"><b>Japan</b><small>Market Attractiveness</small><strong>74 / 100</strong></div>
+          <div class="bz-world-card tokyo"><b>Singapore</b><small>Attractiveness</small><strong>86 · Risk Low</strong></div>
+          <div class="bz-world-card saopaulo"><b>São Paulo</b><small>Demand Index</small><strong>High</strong></div>
+          <div class="bz-world-card sydney"><b>Sydney</b><small>Supply Chain</small><strong>Optimal</strong></div>
+        </div>
+      </article>
+
+      <aside class="bz-card bz-ai-panel">
+        <span class="bz-pill">LUMINA COACH</span><h2>Hello CEO! 👋</h2><p>Các gợi ý dưới đây được trình bày từ trạng thái mô phỏng vòng 4. Lumina không thay đổi điểm hoặc kết quả engine.</p>
+        <h3 style="font-size:.74rem;color:var(--bz-cyan)">Key Insights</h3>
+        <div class="bz-insight">Dòng tiền có thể chịu áp lực ở vòng tiếp theo nếu sản lượng không đổi.</div>
+        <div class="bz-insight">Nhật Bản có tiềm năng cao nhưng cần thích nghi chất lượng và quan hệ thị trường.</div>
+        <div class="bz-insight">Điểm ESG tăng 5 điểm sau quyết định gần nhất.</div>
+        <h3 style="font-size:.74rem;color:var(--bz-cyan);margin-top:18px">Recommended Actions</h3>
+        <div class="bz-insight">Rà soát kế hoạch sản xuất và giới hạn tiền mặt.</div>
+        <div class="bz-insight">So sánh Export, Alliance và Digital Entry trong AIBIS.</div>
+        <a class="bz-btn primary" href="../lumina.html" style="width:100%;margin-top:14px">Hỏi Lumina</a>
+      </aside>
+    </section>
+
+    <section class="bz-lower-grid" id="analytics">
+      <article class="bz-card bz-mini-panel"><h3>ATTENTION QUEUE <span style="color:var(--bz-red)">3</span></h3><div class="bz-alert"><i style="background:var(--bz-red)"></i><div><b>Cash Flow Warning</b><br><span style="color:var(--bz-muted)">Cash may turn negative at Round 5</span></div></div><div class="bz-alert"><i style="background:var(--bz-green)"></i><div><b>Market Opportunity: Japan</b><br><span style="color:var(--bz-muted)">Attractiveness is high</span></div></div><div class="bz-alert"><i></i><div><b>Risk Alert</b><br><span style="color:var(--bz-muted)">Energy price volatility increases</span></div></div></article>
+
+      <article class="bz-card bz-mini-panel"><h3>PERFORMANCE OVERVIEW</h3><div class="bz-chart" role="img" aria-label="Biểu đồ hiệu quả từ vòng 1 đến vòng 8"><svg viewBox="0 0 500 150" preserveAspectRatio="none"><polyline stroke="#23c8ff" points="0,110 70,88 140,50 210,66 280,43 350,51 430,40 500,24"/><polyline stroke="#35d39a" points="0,120 70,105 140,95 210,110 280,95 350,118 430,80 500,42"/><polyline stroke="#b05cff" points="0,105 70,92 140,80 210,73 280,55 350,52 430,50 500,44"/><polyline stroke="#ff9d3d" points="0,135 70,116 140,90 210,82 280,70 350,67 430,64 500,94"/></svg></div><div style="display:flex;gap:12px;margin-top:10px;color:var(--bz-muted);font-size:.6rem"><span style="color:#23c8ff">● Revenue</span><span style="color:#35d39a">● Profit</span><span style="color:#b05cff">● Cash</span><span style="color:#ff9d3d">● Market Share</span></div></article>
+
+      <article class="bz-card bz-mini-panel"><h3>DECISION TIMELINE</h3><div class="bz-timeline"><div><b>Round 1</b><span>Market Research</span><span style="color:var(--bz-green)">✓</span></div><div><b>Round 2</b><span>Product & Pricing</span><span style="color:var(--bz-green)">✓</span></div><div><b>Round 3</b><span>Marketing & Sales</span><span style="color:var(--bz-green)">✓</span></div><div style="border:1px solid var(--bz-line-strong)"><b>Round 4</b><span>Operations Optimization</span><span style="color:var(--bz-cyan)">Now</span></div><div><b>Round 5</b><span>Global Market Entry</span><span>○</span></div></div></article>
+
+      <article class="bz-card bz-mini-panel"><h3>TEAM & LEARNING</h3><div class="bz-team"><span class="bz-avatar">EH</span><span class="bz-avatar">GR</span><span class="bz-avatar">FW</span><span class="bz-avatar">BO</span></div><div class="bz-learning"><div class="bz-ring"><b>83%</b></div><div style="font-size:.65rem;color:var(--bz-muted);line-height:1.9">Engagement <b style="float:right;color:#fff">91%</b><br>Decision Quality <b style="float:right;color:#fff">78%</b><br>Collaboration <b style="float:right;color:#fff">85%</b><br>Knowledge Gain <b style="float:right;color:#fff">83%</b></div></div><a href="../giang-vien.html" style="display:block;margin-top:10px;color:var(--bz-cyan);font-size:.65rem">Go to Classroom →</a></article>
+    </section>
+
+    <section class="bz-card" style="margin-top:10px;padding:13px;display:grid;grid-template-columns:repeat(5,1fr);gap:8px">
+      <div class="bz-status-card"><b>Explainable AI</b>Every recommendation comes with reasoning.</div><div class="bz-status-card"><b>Deterministic Engine</b>Reproducible simulation results.</div><div class="bz-status-card"><b>Decision Trace</b>Track choices and downstream consequences.</div><div class="bz-status-card"><b>Classroom Ready</b>Export data for teaching and assessment.</div><div class="bz-status-card"><b>Web & PWA Access</b>Browser, desktop, tablet and Android.</div>
+    </section>
+  </main>
+</div>
+<nav class="bz-mobile-nav" aria-label="Điều hướng ứng dụng"><a href="./release.html">Trang chủ</a><a class="active" href="./command-center.html">Điều hành</a><a href="../game.html">Startup</a><a href="./aibis.html">AIBIS</a><a href="../giang-vien.html">Lớp học</a></nav>
+<script src="../js/app-shell/route-registry.js" defer></script>
+<script src="../js/app-shell/unified-app.js" defer></script>
+</body>
+</html>

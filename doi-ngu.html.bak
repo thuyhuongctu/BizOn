@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
+<html lang="vi" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Đội ngũ Sáng lập BizOn</title>
+<meta name="author" content="Đỗ Thùy Hương, Phan Anh Tú">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
+<meta name="description" content="Đội ngũ Sáng lập BizOn – Đỗ Thùy Hương (Founder & Project Lead, Nghiên cứu sinh Tiến sĩ QTKD, ĐH Cần Thơ, nghiên cứu quốc tế hóa & meta-analysis) và PGS.TS. Phan Anh Tú (Co-founder & Chief Academic Advisor). Sứ mệnh & Tầm nhìn 2026.">
+<meta name="theme-color" content="#f4faff">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
+     nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
+<link rel="stylesheet" href="css/bizon-fonts.css">
+<script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<script src="js/backend-config.js"></script>
+<script src="js/error-log.js"></script>
+<style>
+  html { background:#f4faff; }
+  body { font-family:'Plus Jakarta Sans', 'Plus Jakarta Sans Fallback',sans-serif; background:transparent; color:#161c20; overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+  /* Bản đồ Việt Nam chìm – theo M-AIDA */
+
+  .clay-card { background:#f4faff; border-radius:2rem; box-shadow:12px 12px 24px #d1d9e0, -12px -12px 24px #ffffff; border:1px solid rgba(255,255,255,.6); }
+  .clay-inner { box-shadow:inset 4px 4px 8px #d1d9e0, inset -4px -4px 8px #ffffff; }
+  .clay-btn { background:#f4faff; border-radius:9999px; box-shadow:6px 6px 12px #d1d9e0, -6px -6px 12px #ffffff; transition:all .2s cubic-bezier(.34,1.56,.64,1); border:1px solid rgba(255,255,255,.8); }
+  .clay-btn:active { box-shadow:inset 4px 4px 8px #d1d9e0, inset -4px -4px 8px #ffffff; transform:scale(.96); }
+  .clay-btn-primary { background:linear-gradient(145deg,#00c4ff,#0095c2); box-shadow:6px 6px 15px rgba(0,196,255,.3), -6px -6px 15px #ffffff; color:#fff; border:none; }
+  .glass-header { background:rgba(244,250,255,.82); backdrop-filter:blur(12px); border-bottom:1px solid rgba(255,255,255,.5); transition:height .2s ease, box-shadow .2s ease; }
+  /* Cuộn xuống thì thanh tiêu đề thấp lại, nhường màn hình cho nội dung */
+  .glass-header.shrunk { height:3rem; box-shadow:0 6px 18px -12px rgba(0,102,135,.5); }
+  .glass-header.shrunk .hdr-brand { font-size:.95rem; }
+  @media (prefers-reduced-motion: reduce) { .glass-header { transition:none; } }
+  @keyframes float { 0%,100% { transform:translateY(0) rotate(0deg); } 50% { transform:translateY(-15px) rotate(1deg); } }
+  .float-anim { animation:float 8s ease-in-out infinite; }
+  .float-anim-delayed { animation:float 9s ease-in-out infinite 1s; }
+  .reveal-card { opacity:0; transform:translateY(20px); transition:all .8s cubic-bezier(.16,1,.3,1); }
+  .reveal-card.visible { opacity:1; transform:translateY(0); }
+  #particles-container { position:fixed; inset:0; pointer-events:none; z-index:0; }
+  .particle { position:absolute; border-radius:50%; opacity:.3; }
+  .profile-mesh { background:radial-gradient(circle at 50% 50%, rgba(0,196,255,.12) 0%, transparent 70%); }
+  @keyframes sceneInL { from { opacity:0; transform:translateX(-70px); } 70% { transform:translateX(8px); } to { opacity:1; transform:translateX(0); } }
+  @keyframes sceneInR { from { opacity:0; transform:translateX(70px); } 70% { transform:translateX(-8px); } to { opacity:1; transform:translateX(0); } }
+  .scene-enter-left { animation:sceneInL 1s cubic-bezier(.22,1,.36,1) both .2s; }
+  .scene-enter-right { animation:sceneInR 1s cubic-bezier(.22,1,.36,1) both .45s; }
+  .scene-bubble { position:absolute; top:-3.2rem; left:50%; transform:translate(-50%,8px) scale(.92); z-index:5; width:max-content; max-width:14rem; background:#fff; color:#033337; font-size:12px; font-weight:700; padding:.55rem .9rem; border-radius:18px; border-bottom-left-radius:4px; box-shadow:0 10px 24px -8px rgba(0,102,135,.35); opacity:0; transition:opacity .4s ease, transform .4s cubic-bezier(.34,1.56,.64,1); pointer-events:none; }
+  .scene-bubble.show { opacity:1; transform:translate(-50%,0) scale(1); }
+  .scene-bubble::after { content:''; position:absolute; left:18px; bottom:-7px; width:14px; height:14px; background:#fff; clip-path:polygon(0 0, 100% 0, 30% 100%); }
+  @keyframes twinkle { 0%,100% { opacity:.25; transform:scale(.8); } 50% { opacity:1; transform:scale(1.15); } }
+  .scene-spark { position:absolute; font-size:1.2rem; animation:twinkle 2.6s ease-in-out infinite; pointer-events:none; }
+
+  /* ===== Chế độ tối ===== */
+  :root { --dt: 3 51 55; }
+  html[data-theme="dark"] { --dt: 214 236 240; background:#081a20; color-scheme:dark; }
+  html[data-theme="dark"] body { color:#d6ecf0; }
+  html[data-theme="dark"] .clay-card { background:#0e2a33; box-shadow:12px 12px 24px #05141a, -12px -12px 24px #123540; border-color:rgba(255,255,255,.06); }
+  html[data-theme="dark"] .clay-btn { background:#0e2a33; box-shadow:6px 6px 12px #05141a, -6px -6px 12px #123540; border-color:rgba(255,255,255,.08); }
+  html[data-theme="dark"] .clay-btn:active { box-shadow:inset 4px 4px 8px #05141a, inset -4px -4px 8px #123540; }
+  html[data-theme="dark"] .glass-header { background:rgba(8,26,32,.88); border-bottom-color:rgba(255,255,255,.06); }
+  html[data-theme="dark"] .bg-white\/40 { background-color:rgba(14,42,51,.55) !important; }
+  html[data-theme="dark"] .text-primary { color:#5cc4e6 !important; }
+</style>
+<link rel="stylesheet" href="css/tw.css">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BizOn Bật Nghiệp">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:title" content="Đội ngũ Sáng lập BizOn">
+<meta property="og:description" content="Đội ngũ Sáng lập BizOn – Đỗ Thùy Hương (Founder & Project Lead, Nghiên cứu sinh Tiến sĩ QTKD, ĐH Cần Thơ, nghiên cứu quốc tế hóa & meta-analysis) và PGS.TS. Phan Anh Tú (Co-founder & Chief Academic Advisor). Sứ mệnh & Tầm nhìn 2026.">
+<meta property="og:url" content="https://thuyhuongctu.github.io/BizOn/doi-ngu.html">
+<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/og/og-cover.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body class="min-h-screen pb-20">
+<!-- Bản đồ Việt Nam chìm dưới trang (theo M-AIDA) -->
+
+
+<div id="particles-container" data-net-hero="light"></div>
+
+
+<main class="max-w-4xl mx-auto px-6 pt-10 relative z-10">
+  <!-- Founders Hero -->
+  <section class="mb-16">
+    <div class="grid grid-cols-2 gap-4 items-end mb-5 sm:mb-7 pt-6 sm:pt-10 relative">
+      <span class="scene-spark" style="top:2%; left:8%">✨</span>
+      <span class="scene-spark" style="top:10%; right:6%; animation-delay:-1.3s">✨</span>
+      <div class="relative scene-enter-left">
+        <div class="profile-mesh absolute inset-0 -z-10 scale-150"></div>
+        <div id="bubble-huong" class="scene-bubble">Rất vui được gặp bạn! 👋</div>
+        <div class="float-anim">
+          <img src="assets/character/lumina-ao-dai-wave.webp" alt="Đỗ Thùy Hương – thể hiện qua tạo hình nhân vật Lumina" class="h-64 sm:h-96 w-auto mx-auto drop-shadow-2xl">
+        </div>
+      </div>
+      <div class="relative scene-enter-right">
+        <div class="profile-mesh absolute inset-0 -z-10 scale-150 rotate-180"></div>
+        <div id="bubble-tu" class="scene-bubble">Chào mừng đến với BizOn! 🎓</div>
+        <div class="float-anim-delayed">
+          <img src="assets/character/anh-tu-ao-dai-welcome-cut.webp" alt="Phan Anh Tú" class="h-64 sm:h-96 w-auto mx-auto drop-shadow-2xl">
+        </div>
+      </div>
+    </div>
+
+    <!-- Biographies -->
+    <div class="space-y-8">
+      <div class="reveal-card clay-card p-8">
+        <div class="flex items-center gap-4 mb-4">
+          <div class="w-12 h-12 clay-card clay-inner rounded-full flex items-center justify-center text-primary text-xl font-extrabold">H</div>
+          <div>
+            <h2 class="text-2xl font-bold text-primary leading-tight">Đỗ Thùy Hương</h2>
+            <p class="text-sm font-semibold uppercase tracking-widest text-deep-teal/60">Founder &amp; Project Lead</p>
+            <p class="text-xs font-bold text-deep-teal/55 mt-0.5"><span class="tu-vi">Nghiên cứu sinh Tiến sĩ Quản trị kinh doanh · Đại học Cần Thơ 🇻🇳</span><span class="tu-en hidden">PhD Candidate in Business Administration · Can Tho University 🇻🇳</span></p>
+          </div>
+        </div>
+
+        <div class="tu-vi leading-relaxed mb-4 text-deep-teal/85 space-y-2.5">
+          <p>Đỗ Thùy Hương là nghiên cứu sinh Tiến sĩ Quản trị kinh doanh tại Đại học Cần Thơ, đồng thời là <b>người sáng lập, chủ nhiệm dự án và tác giả phát triển chính</b> của hệ sinh thái BizOn.</p>
+          <p>Hướng nghiên cứu của cô tập trung vào mối quan hệ giữa <b>chiến lược quốc tế hóa và hiệu quả doanh nghiệp</b>, với chuyên môn về phân tích tổng hợp, nghiên cứu định lượng và ứng dụng AI trong nghiên cứu khoa học quản trị.</p>
+          <p>Tại BizOn, cô chuyển hóa kiến thức và phát hiện nghiên cứu thành các <b>engine mô phỏng có khả năng giải thích</b>, thiết kế trải nghiệm học tập dựa trên quyết định, hệ thống dữ liệu lớp học và công cụ đánh giá phục vụ giảng dạy và nghiên cứu giáo dục.</p>
+        </div>
+        <div class="tu-en hidden leading-relaxed mb-4 text-deep-teal/85 space-y-2.5">
+          <p>Do Thuy Huong is a PhD candidate in Business Administration at Can Tho University and the <b>founder, project lead and principal developer</b> of the BizOn ecosystem.</p>
+          <p>Her research focuses on the relationship between <b>internationalization strategy and firm performance</b>, with expertise in meta-analysis, quantitative research and AI-assisted research in management science.</p>
+          <p>At BizOn she translates research knowledge and findings into <b>explainable simulation engines</b>, decision-based learning experiences, classroom data systems and assessment instruments for teaching and educational research.</p>
+        </div>
+        <p class="leading-relaxed mb-5 italic border-l-4 border-primary-container pl-4 text-deep-teal/85">
+          <span class="tu-vi">«BizOn được xây dựng để chuyển hóa kiến thức quản trị thành những trải nghiệm ra quyết định chân thực, có thể quan sát, giải thích và đánh giá – qua đó giúp người học hiểu doanh nghiệp bằng hành động, không chỉ bằng lý thuyết.»</span><span class="tu-en hidden">"BizOn exists to turn management knowledge into authentic decision-making experiences that can be observed, explained and assessed – so learners come to understand enterprise through action, not theory alone."</span>
+        </p>
+
+        <div class="grid sm:grid-cols-3 gap-3 mb-5">
+          <div class="rounded-2xl border-2 border-primary/15 p-3.5" style="background:rgba(0,102,135,.04)">
+            <p class="text-[10px] font-extrabold uppercase tracking-widest text-primary mb-1">🔬 <span class="tu-vi">Hướng nghiên cứu</span><span class="tu-en hidden">Research</span></p>
+            <p class="text-[11.5px] font-semibold text-deep-teal/75 leading-snug"><span class="tu-vi">Chiến lược quốc tế hóa · Hiệu quả doanh nghiệp · Phân tích tổng hợp · Nghiên cứu định lượng · AI hỗ trợ nghiên cứu · Thị trường mới nổi</span><span class="tu-en hidden">Internationalization strategy · Firm performance · Meta-analysis · Quantitative research · AI-assisted research · Emerging markets</span></p>
+          </div>
+          <div class="rounded-2xl border-2 border-primary/15 p-3.5" style="background:rgba(0,102,135,.04)">
+            <p class="text-[10px] font-extrabold uppercase tracking-widest text-primary mb-1">💻 <span class="tu-vi">Vai trò kỹ thuật</span><span class="tu-en hidden">Engineering</span></p>
+            <p class="text-[11.5px] font-semibold text-deep-teal/75 leading-snug"><span class="tu-vi">Thiết kế kiến trúc và trực tiếp phát triển các thành phần cốt lõi: engine mô phỏng, các game chiến lược, hạ tầng dữ liệu lớp học, bảng điều khiển giảng viên, ứng dụng PWA · JavaScript · HTML/CSS · SQL (Supabase) · Service Worker</span><span class="tu-en hidden">Architecture design and hands-on development of core components: simulation engine, strategy games, classroom data infrastructure, instructor dashboard, PWA · TypeScript · JavaScript · Python · SQL · R</span></p>
+          </div>
+          <div class="rounded-2xl border-2 border-primary/15 p-3.5" style="background:rgba(0,102,135,.04)">
+            <p class="text-[10px] font-extrabold uppercase tracking-widest text-primary mb-1">🎨 <span class="tu-vi">Sáng tạo nội dung</span><span class="tu-en hidden">Creative</span></p>
+            <p class="text-[11.5px] font-semibold text-deep-teal/75 leading-snug"><span class="tu-vi">Phát triển nhận diện claymorphism · thiết kế nhân vật và trải nghiệm cố vấn <b>Lumina AI</b> · biên soạn lời, xây dựng concept và định hướng sản xuất kho nhạc số nguyên bản của hệ sinh thái</span><span class="tu-en hidden">Claymorphism identity · character and advisor-experience design for <b>Lumina AI</b> · lyrics, concept and production direction for the ecosystem's original digital music library</span></p>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border-2 border-primary/20 p-4 mb-5" style="background:rgba(0,102,135,.05)">
+          <p class="text-[10px] font-extrabold uppercase tracking-widest text-primary mb-2">🔗 <span class="tu-vi">Hồ sơ học thuật &amp; khoa học mở</span><span class="tu-en hidden">Academic profiles &amp; open science</span></p>
+          <div class="flex flex-wrap gap-2" data-people-chips data-person="huong" data-variant="full" data-accent="primary" data-fields="orcid,osf,zenodo,github"></div>
+          <p class="text-[10.5px] text-deep-teal/55 mt-2.5"><span class="tu-vi">Mã nguồn, tài liệu kỹ thuật và các phiên bản nghiên cứu được công bố có chọn lọc trên GitHub, đồng thời lưu trữ dài hạn qua Zenodo khi phù hợp. BizOn theo đuổi các nguyên tắc <b>khoa học mở</b>: minh bạch phương pháp, khả năng kiểm tra, khả năng tái sử dụng và khả năng giải thích kết quả mô phỏng.</span><span class="tu-en hidden">Source code, technical documentation and research releases are published selectively on GitHub and archived long-term via Zenodo where appropriate. BizOn follows <b>open-science</b> principles: methodological transparency, verifiability, reusability and explainability of simulation results.</span></p>
+        </div>
+
+        <p class="text-[10.5px] text-deep-teal/55 mb-5"><span class="tu-vi"><b>Về tạo hình:</b> Lumina là nhân vật do Đỗ Thùy Hương thiết kế, vừa đóng vai cố vấn học tập AI trong game vừa là hình đại diện của chị trong hệ sinh thái. Đây là tạo hình 3D, không phải ảnh chụp.</span><span class="tu-en hidden"><b>About the character:</b> Lumina was designed by Do Thuy Huong. She plays the AI learning advisor inside the games and also serves as Huong's avatar across the ecosystem. This is a 3D character render, not a photograph.</span></p>
+        <div class="rounded-2xl border-2 border-primary/20 p-4 mb-5" style="background:rgba(0,102,135,.03)">
+          <p class="text-[10px] font-extrabold uppercase tracking-widest text-primary mb-1.5">🚀 <span class="tu-vi">Dự án song hành</span><span class="tu-en hidden">Parallel project</span></p>
+          <p class="text-sm font-bold text-deep-teal leading-snug">M-AIDA <span class="text-[10px] font-extrabold text-deep-teal/50">· TypeScript · React · Python</span></p>
+          <p class="text-xs text-deep-teal/65 mt-1"><span class="tu-vi">M-AIDA là dự án song hành tập trung vào phân tích nghiên cứu, quản trị dữ liệu và ứng dụng AI. Một số thành phần kỹ thuật dùng chung – gồm kiến trúc dữ liệu, giao diện tiện ích và hệ thống đa ngôn ngữ – được kế thừa hoặc tái sử dụng có kiểm soát trong BizOn.</span><span class="tu-en hidden">M-AIDA is a parallel project focused on research analytics, data management and AI applications. Several shared technical components – data architecture, the utility dock and the multilingual system – are inherited or reused in BizOn under controlled conditions.</span></p>
+        </div>
+
+        <div class="flex flex-wrap gap-2">
+          <span class="px-3 py-1 bg-primary-container/10 text-primary text-xs font-bold rounded-full">International Business Research</span>
+          <span class="px-3 py-1 bg-primary-container/10 text-primary text-xs font-bold rounded-full">Meta-analysis</span>
+          <span class="px-3 py-1 bg-primary-container/10 text-primary text-xs font-bold rounded-full">Simulation-based Learning</span>
+          <span class="px-3 py-1 bg-primary-container/10 text-primary text-xs font-bold rounded-full">Full-stack Product Development</span>
+          <span class="px-3 py-1 bg-primary-container/10 text-primary text-xs font-bold rounded-full">AI-assisted Research</span>
+          <span class="px-3 py-1 bg-primary-container/10 text-primary text-xs font-bold rounded-full">Open Science</span>
+          <span class="px-3 py-1 bg-primary-container/10 text-primary text-xs font-bold rounded-full">Lumina AI: Character &amp; Content Design</span>
+        </div>
+      </div>
+
+      <div class="reveal-card clay-card p-8" style="transition-delay:200ms">
+        <div class="flex items-center gap-4 mb-4">
+          <div class="w-12 h-12 clay-card clay-inner rounded-full flex items-center justify-center text-tertiary text-xl">🎓</div>
+          <div>
+            <h2 class="text-2xl font-bold text-deep-teal leading-tight"><span class="tu-vi">PGS.TS. Phan Anh Tú</span><span class="tu-en hidden">Assoc. Prof. Phan Anh Tú, Ph.D.</span></h2>
+            <p class="text-sm font-semibold uppercase tracking-widest text-deep-teal/60">Co-founder &amp; Chief Academic Advisor</p>
+          </div>
+        </div>
+        <p class="tu-vi leading-relaxed mb-4 text-deep-teal/85">
+          PGS.TS. Phan Anh Tú là giảng viên, nhà nghiên cứu và cố vấn chuyên sâu về <b>khởi nghiệp, đổi mới sáng tạo, tạo lập doanh nghiệp và khởi nghiệp quốc tế</b>. Tại BizOn, ông dẫn dắt định hướng học thuật, chuyển hóa nghiên cứu thành các <b>mô phỏng kinh doanh ứng dụng AI</b> và trải nghiệm <b>học tập theo dự án</b>. Mỗi kịch bản được thiết kế để người học nhận diện cơ hội, kiểm chứng mô hình kinh doanh, phân tích rủi ro và <b>ra quyết định dựa trên dữ liệu</b> trong môi trường cạnh tranh toàn cầu. Mục tiêu là biến tri thức thành năng lực kiến tạo những dự án kinh doanh <b>khả thi, có thể mở rộng và tạo giá trị bền vững</b>.
+        </p>
+        <p class="tu-en hidden leading-relaxed mb-4 text-deep-teal/85">
+          Assoc. Prof. Phan Anh Tú, Ph.D. is an educator, researcher, and venture advisor specializing in <b>entrepreneurship, innovation, venture creation, and international entrepreneurship</b>. At BizOn, he leads the academic direction by translating research into <b>AI-enabled business simulations</b> and <b>project-based learning experiences</b>. Each scenario is designed to help learners recognize opportunities, validate business models, assess entrepreneurial risks, and make <b>data-driven decisions</b> in global markets. His mission is to transform knowledge into the capability to build <b>viable, scalable, and sustainable ventures</b>.
+        </p>
+        <p class="leading-relaxed mb-6 italic border-l-4 border-tertiary/40 pl-4 font-semibold text-deep-teal/80">
+          <span class="tu-vi">«Biến tri thức thành quyết định. Biến ý tưởng thành doanh nghiệp.»</span><span class="tu-en hidden">«Turning knowledge into decisions–and ideas into ventures.»</span>
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <span class="px-3 py-1 bg-tertiary/10 text-tertiary text-xs font-bold rounded-full">Academic Leadership</span>
+          <span class="px-3 py-1 bg-tertiary/10 text-tertiary text-xs font-bold rounded-full">International Entrepreneurship</span>
+          <span class="px-3 py-1 bg-tertiary/10 text-tertiary text-xs font-bold rounded-full">Data-Driven Venture Learning</span>
+        </div>
+        <div class="mt-6 rounded-2xl border-2 border-tertiary/20 p-4" style="background:rgba(136,82,0,.04)">
+          <p class="text-[10px] font-extrabold uppercase tracking-widest text-tertiary mb-2">🔗 <span class="tu-vi">Hồ sơ học thuật</span><span class="tu-en hidden">Academic profile</span></p>
+          <div class="flex flex-wrap gap-2" data-people-chips data-person="tu" data-variant="full" data-accent="tertiary" data-fields="orcid,osf,zenodo"></div>
+          <p class="text-[10.5px] text-deep-teal/55 mt-2.5"><span class="tu-vi">Đồng tác giả của BizOn Bật Nghiệp – mã ORCID trên đây trùng khớp với danh sách tác giả trong <b>CITATION.cff</b> và bản ghi Zenodo của dự án.</span><span class="tu-en hidden">Co-author of BizOn Bật Nghiệp – this ORCID iD matches the author list in the project's <b>CITATION.cff</b> and Zenodo record.</span></p>
+        </div>
+        <div class="mt-6 rounded-2xl border-2 border-tertiary/20 p-4" style="background:rgba(136,82,0,.04)">
+          <p class="text-[10px] font-extrabold uppercase tracking-widest text-tertiary mb-1.5">📰 <span class="tu-vi">Trên báo chí</span><span class="tu-en hidden">In the press</span></p>
+          <p class="text-sm font-bold text-deep-teal leading-snug"><span class="tu-vi">«Đổi mới sáng tạo ở Cần Thơ: Điểm sáng và khoảng trống phát triển»</span><span class="tu-en hidden">"Innovation in Can Tho: bright spots and development gaps"</span></p>
+          <p class="text-xs text-deep-teal/60 mt-1"><span class="tu-vi">Tạp chí <b>Một Thế Giới</b> phỏng vấn PGS.TS. Phan Anh Tú về Chỉ số đổi mới sáng tạo (PII) của Cần Thơ và mô hình «Ba nhà» – 30/07/2026.</span><span class="tu-en hidden"><b>Mot The Gioi</b> magazine interviews Assoc. Prof. Phan Anh Tú on Can Tho's Provincial Innovation Index and the "Triple Helix" network – Jul 30, 2026.</span></p>
+          <p class="text-xs italic text-deep-teal/70 mt-2 border-l-2 border-tertiary/30 pl-3"><span class="tu-vi">"Hệ thống viện, trường không thiếu năng lực tạo tri thức mới, nhưng khu vực doanh nghiệp… lại thiếu năng lực hấp thụ và chuyển hóa tri thức đó thành năng suất."</span><span class="tu-en hidden">"Universities and institutes do not lack the capacity to create new knowledge – what is missing is the enterprise sector's capacity to absorb it and turn it into productivity."</span></p>
+          <a href="https://1thegioi.vn/doi-moi-sang-tao-o-can-tho-diem-sang-va-khoang-trong-phat-trien-255702.html" target="_blank" rel="noopener" class="inline-block text-xs font-extrabold text-tertiary mt-2.5"><span class="tu-vi">Đọc bài trên 1thegioi.vn →</span><span class="tu-en hidden">Read on 1thegioi.vn →</span></a>
+          <div class="border-t border-tertiary/15 mt-3 pt-3">
+            <p class="text-sm font-bold text-deep-teal leading-snug"><span class="tu-vi">«Thay vì "đi Bình Dương" thì tạo dòng di cư mới về miền Tây được không?»</span><span class="tu-en hidden">"Instead of 'going to Binh Duong', can we create a new migration flow back to the Mekong Delta?"</span></p>
+            <p class="text-xs text-deep-teal/60 mt-1"><span class="tu-vi"><b>Tuổi Trẻ Online</b> (PV Chí Quốc) tiếp nối chủ đề – 05/08/2026: di cư là kết quả cân bằng của một thị trường lao động thiếu cầu, vùng «không thiếu người tài, mà thiếu chỗ để dùng người tài»; điểm nghẽn nằm ở khu vực doanh nghiệp, không phải thể chế hay đào tạo.</span><span class="tu-en hidden"><b>Tuoi Tre Online</b> (rep. Chi Quoc) continues the theme – Aug 5, 2026: out-migration is the equilibrium of a demand-short labour market; the region "does not lack talent, it lacks places to use talent"; the bottleneck is the enterprise sector, not institutions or training.</span></p>
+            <a href="https://tuoitre.vn/thay-vi-di-binh-duong-thi-tao-dong-di-cu-moi-ve-mien-tay-duoc-khong-100260805154121768.htm" target="_blank" rel="noopener" class="inline-block text-xs font-extrabold text-tertiary mt-1.5"><span class="tu-vi">Đọc bài trên tuoitre.vn →</span><span class="tu-en hidden">Read on tuoitre.vn →</span></a>
+          </div>
+          <div class="border-t border-tertiary/15 mt-3 pt-3">
+            <p class="text-sm font-bold text-deep-teal leading-snug"><span class="tu-vi">«Đổi mới sáng tạo có thể tạo ra dòng di cư mới về Đồng bằng sông Cửu Long»</span><span class="tu-en hidden">"Innovation could create a new migration flow back to the Mekong Delta"</span></p>
+            <p class="text-xs text-deep-teal/60 mt-1"><span class="tu-vi"><b>Tuổi Trẻ Online</b> đưa tin phần trình bày tại hội thảo của Sở KH&amp;CN TP Cần Thơ – 27/07/2026.</span><span class="tu-en hidden"><b>Tuoi Tre Online</b> covers his presentation at the Can Tho Department of Science &amp; Technology workshop – Jul 27, 2026.</span></p>
+            <a href="https://tuoitre.vn/doi-moi-sang-tao-co-the-tao-ra-dong-di-cu-moi-ve-dong-bang-song-cuu-long-100260727183852615.htm" target="_blank" rel="noopener" class="inline-block text-xs font-extrabold text-tertiary mt-1.5"><span class="tu-vi">Đọc bài trên tuoitre.vn →</span><span class="tu-en hidden">Read on tuoitre.vn →</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission & Vision -->
+  <section class="mb-16">
+    <h3 class="text-xl font-bold mb-8 text-center text-deep-teal">Sứ mệnh & Tầm nhìn 2026</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="reveal-card clay-card p-6 flex flex-col gap-4">
+        <div class="w-10 h-10 clay-card rounded-xl flex items-center justify-center text-xl">🚀</div>
+        <h4 class="font-bold text-lg">Sứ mệnh</h4>
+        <p class="text-sm text-deep-teal/65">Dân chủ hóa giáo dục quản trị thông qua công nghệ Gamification và AI vượt trội.</p>
+      </div>
+      <div class="reveal-card clay-card p-6 flex flex-col gap-4">
+        <div class="w-10 h-10 clay-card rounded-xl flex items-center justify-center text-xl">👁️</div>
+        <h4 class="font-bold text-lg">Tầm nhìn 2026</h4>
+        <p class="text-sm text-deep-teal/65">Trở thành nền tảng mô phỏng kinh doanh số 1 tại Đông Nam Á cho thế hệ trẻ.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Actions -->
+  <section class="flex flex-col gap-4 mt-20">
+    <a class="clay-btn clay-btn-primary h-14 flex items-center justify-center gap-3 font-bold" href="mailto:patu@ctu.edu.vn,thuyhuongctu@gmail.com">✉️ Liên hệ hợp tác</a>
+    <div class="grid grid-cols-2 gap-3">
+      <a class="clay-btn h-14 flex items-center justify-center gap-2 font-bold text-primary" href="gioi-thieu.html">🌐 Website</a>
+      <a class="clay-btn h-14 flex items-center justify-center gap-2 font-bold text-deep-teal" href="games.html">🕹️ Arcade</a>
+    </div>
+    <p class="text-center text-xs mt-12"><a href="https://github.com/thuyhuongctu/BizOn/tree/main" target="_blank" rel="noopener" class="font-bold text-primary hover:underline">⭐ GitHub BizOn</a> · <a href="https://thuyhuongctu.github.io/M-AIDA/" target="_blank" rel="noopener" class="font-bold text-primary hover:underline">🌏 Trang M-AIDA</a></p>
+    <p class="text-center text-xs text-deep-teal/50 mt-12">© 2026 Đỗ Thùy Hương & Phan Anh Tú · BizOn Bật Nghiệp – Bảo lưu mọi quyền.</p>
+  </section>
+</main>
+
+<script>
+/* Nền hạt trôi cũ (các chấm div rời rạc) nay thay bằng mạng lưới nối động dùng
+   chung js/site-nethero.js với bảng màu "light" – #particles-container mang
+   thuộc tính data-net-hero="light". Nhờ vậy Đội ngũ đồng nhất phong cách mạng
+   lưới với các trang nội dung khác mà vẫn hợp nền sáng. */
+function initScrollReveal() {
+  const cards = document.querySelectorAll('.reveal-card');
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }), { threshold: .15 });
+  cards.forEach(c => io.observe(c));
+  setTimeout(() => cards.forEach(c => { if (c.getBoundingClientRect().top < innerHeight) c.classList.add('visible'); }), 100);
+}
+document.addEventListener('DOMContentLoaded', () => { initScrollReveal(); });
+
+// Hoạt cảnh hội thoại giữa 2 nhà sáng lập
+const SCENE_SCRIPT = [
+  ['huong', 'Rất vui được gặp bạn! 👋'],
+  ['tu', 'Chào mừng đến với BizOn! 🎓'],
+  ['huong', 'Chúng tôi xây BizOn để ai cũng học được quản trị.'],
+  ['tu', 'Mọi kịch bản đều đạt chuẩn học thuật cao nhất!'],
+  ['huong', 'Gamification + AI = học mà chơi thật sự 🚀'],
+  ['tu', 'Hẹn gặp bạn trong lớp học Bật Nghiệp nhé!'],
+];
+let sceneIdx = 0;
+function scenePlay() {
+  const bh = document.getElementById('bubble-huong'), bt = document.getElementById('bubble-tu');
+  if (!bh || !bt) return;
+  const [who, line] = SCENE_SCRIPT[sceneIdx % SCENE_SCRIPT.length];
+  const active = who === 'huong' ? bh : bt, other = who === 'huong' ? bt : bh;
+  other.classList.remove('show');
+  active.textContent = line;
+  active.classList.add('show');
+  sceneIdx++;
+}
+setTimeout(scenePlay, 1300);
+setInterval(scenePlay, 3400);
+</script>
+<script>
+/* Hồ sơ PGS.TS. Phan Anh Tú song ngữ: hoán đổi .tu-vi / .tu-en theo nút EN/VI dùng chung của site */
+(function () {
+  function tuSwap(lang) {
+    var en = lang === 'en';
+    document.querySelectorAll('.tu-vi').forEach(function (el) { el.classList.toggle('hidden', en); });
+    document.querySelectorAll('.tu-en').forEach(function (el) { el.classList.toggle('hidden', !en); });
+  }
+  document.addEventListener('DOMContentLoaded', function () {
+    var orig = window.applyLang;
+    if (orig) window.applyLang = function (lang) { orig(lang); tuSwap(lang); };
+    var lang = 'vi';
+    try { lang = localStorage.getItem('bizon-lang') || 'vi'; } catch (e) {}
+    tuSwap(lang);
+  });
+})();
+</script>
+<script>
+/* Thu gọn thanh tiêu đề khi cuộn – lấy lại chiều cao màn hình trên điện thoại */
+(function () {
+  var h = document.getElementById('site-header');
+  if (!h) return;
+  var tick = false;
+  addEventListener('scroll', function () {
+    if (tick) return;
+    tick = true;
+    requestAnimationFrame(function () { h.classList.toggle('shrunk', scrollY > 60); tick = false; });
+  }, { passive: true });
+})();
+</script>
+<script src="js/site-nethero.js" defer></script>
+<script src="js/site-people.js" defer></script>
+<script src="js/site-ui.js" defer></script>
+<script src="js/site-vnmap.js" defer></script>
+
+<p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2" style="color:rgba(100,116,125,.85)">✉️ Liên hệ · Contact: <a href="mailto:patu@ctu.edu.vn" style="color:inherit;text-decoration:underline">patu@ctu.edu.vn</a> · <a href="mailto:thuyhuongctu@gmail.com" style="color:inherit;text-decoration:underline">thuyhuongctu@gmail.com</a></p>
+<p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2 pb-6" style="color:rgba(100,116,125,.75)">🎓 Trang web chỉ phục vụ mục đích giáo dục và nghiên cứu, không đại diện cho bất kỳ tổ chức chính trị nào. Hình ảnh quốc kỳ, bản đồ chỉ mang ý nghĩa minh họa văn hóa – giáo dục. · This website serves educational and research purposes only and does not represent any political organization.</p>
+<script src="js/site-dock.js" defer></script>
+<script src="js/site-footer.js" defer></script>
+<script src="js/site-nav.js" defer></script>
+</body>
+</html>

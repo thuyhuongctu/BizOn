@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="vi" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#030a14">
+  <meta name="description" content="Bản đồ trực quan BizOn International Blueprint 2030 và trạng thái các mô-đun sản phẩm.">
+  <title>BizOn 2030 — International Blueprint Platform Map</title>
+  <link rel="icon" href="../assets/icons/icon-192.png">
+  <link rel="stylesheet" href="../css/bizon-fonts.css">
+  <link rel="stylesheet" href="../css/bizon-unified.css">
+  <link rel="stylesheet" href="../css/bizon-blueprint-2030.css">
+</head>
+<body class="bizon-blueprint">
+  <header class="bz-topbar">
+    <div class="bz-wrap">
+      <a class="bz-brand" href="./release.html" aria-label="BizOn — Trang chủ nền tảng">
+        <img src="../assets/icons/icon-192.png" alt="Biểu trưng BizOn">
+        <span><strong>BIZON</strong><small>INTERNATIONAL BLUEPRINT 2030</small></span>
+      </a>
+      <nav class="bz-nav" aria-label="Điều hướng Blueprint">
+        <a href="#now">Hiện trạng</a><a href="#architecture">Kiến trúc</a><a href="#roadmap">Lộ trình</a><a href="./command-center.html">Command Center</a>
+      </nav>
+      <div class="bz-actions"><a class="bz-btn ghost" href="./release.html">← Nền tảng</a><a class="bz-btn primary" href="../index.html">Trang chủ</a></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="bz-wrap blueprint-hero">
+      <div class="blueprint-copy">
+        <span class="bz-pill">AI BUSINESS DECISION INTELLIGENCE PLATFORM</span>
+        <h1>Từ hệ sinh thái mô phỏng hiện tại đến <span class="bz-gradient">BizOn International 2030.</span></h1>
+        <p>Bản đồ này hợp nhất các năng lực đang chạy, mô-đun thử nghiệm có kiểm soát và tầm nhìn dài hạn thành một kiến trúc sản phẩm thống nhất. Engine xác định tiếp tục tạo kết quả; AI chỉ hỗ trợ giải thích, phản tư và xây dựng tình huống.</p>
+        <div class="blueprint-metrics" aria-label="Tổng quan Blueprint">
+          <div><strong>10</strong><span>trụ cột 2030</span></div><div><strong>3</strong><span>lớp phát triển</span></div><div><strong>1</strong><span>design system</span></div><div><strong>0</strong><span>thay đổi production data</span></div>
+        </div>
+        <div class="bz-cta"><a class="bz-btn primary" href="#architecture">Xem toàn bộ kiến trúc →</a><a class="bz-btn ghost" href="../aibis-entry-mode-preview.html">Mở AIBIS Entry Mode Preview</a></div>
+      </div>
+      <figure class="blueprint-visual">
+        <img src="../assets/illustrations/arena-vietnam-map-v2.webp" alt="Bản đồ Việt Nam đất sét trong hệ sinh thái BizOn">
+        <figcaption><strong>Vietnam-rooted · International-ready</strong><span>Từ Mekong, lớp học và doanh nghiệp Việt Nam đến các thị trường toàn cầu.</span></figcaption>
+      </figure>
+    </section>
+
+    <section class="bz-wrap bz-section" id="now">
+      <div class="bz-section-head"><div><span class="bz-pill">CURRENT PRODUCT SURFACE</span><h2>Những gì có thể xem và sử dụng ngay</h2></div><p>Các đường dẫn dưới đây dùng mã nguồn hiện tại trên cùng design system. Trạng thái “Experimental” không thay thế gameplay hoặc dữ liệu production.</p></div>
+      <div class="blueprint-live-grid">
+        <a class="bz-card blueprint-live" href="../index.html"><span>LIVE</span><h3>Academia 3D Homepage</h3><p>Cổng công khai sáng tạo, học thuật và dùng kho ảnh gốc BizOn.</p><strong>Mở trang chủ →</strong></a>
+        <a class="bz-card blueprint-live" href="./command-center.html"><span>LIVE</span><h3>Command Center</h3><p>Không gian tổng hợp quyết định, KPI, rủi ro và Lumina.</p><strong>Mở trung tâm →</strong></a>
+        <a class="bz-card blueprint-live" href="../game.html"><span>LIVE</span><h3>Bật Nghiệp / Startup Lab</h3><p>Mô phỏng vận hành doanh nghiệp theo vòng với engine xác định.</p><strong>Mở trò chơi →</strong></a>
+        <a class="bz-card blueprint-live" href="./brand-passport.html"><span>LIVE</span><h3>Brand Passport</h3><p>Quốc tế hóa thương hiệu, Decision Trace và phản tư.</p><strong>Mở mô-đun →</strong></a>
+        <a class="bz-card blueprint-live" href="./instructor-studio.html"><span>QA READY</span><h3>Instructor Studio</h3><p>Điều phối lớp và đọc dữ liệu trong phạm vi được cấp quyền.</p><strong>Mở studio →</strong></a>
+        <a class="bz-card blueprint-live experimental" href="../index.html?coreV2=1"><span>EXPERIMENTAL</span><h3>Core v2 Inspector</h3><p>GameState, persistence và migration copy-only sau feature flag.</p><strong>Mở nội bộ →</strong></a>
+      </div>
+    </section>
+
+    <section class="bz-wrap bz-section" id="architecture">
+      <div class="bz-section-head"><div><span class="bz-pill">TEN STRATEGIC PILLARS</span><h2>Kiến trúc BizOn Next (v4.0)</h2></div><p>Mười trụ cột được chuyển từ tầm nhìn 2030 thành portfolio có trạng thái, ranh giới kỹ thuật và đường dẫn kiểm chứng.</p></div>
+      <div class="blueprint-grid">
+        <article class="bz-card blueprint-card active"><b>01</b><span class="status live">FOUNDATION</span><h3>Business Digital Twin</h3><p>Mô hình doanh nghiệp, khách hàng, đối thủ, ngân hàng, logistics, chính phủ, nhà đầu tư, ESG, AI và chuỗi cung ứng.</p><ul><li>Core v2 GameState</li><li>Deterministic seed</li><li>Versioned persistence</li></ul></article>
+        <article class="bz-card blueprint-card"><b>02</b><span class="status planned">PLANNED</span><h3>AI Multi-Agent Economy</h3><p>AI CEO, CFO, Marketing và Supply Chain cạnh tranh trong nền kinh tế mô phỏng; người chơi giữ vai trò CEO và phê duyệt quyết định.</p><ul><li>Agent roles</li><li>Action contracts</li><li>Human override</li></ul></article>
+        <article class="bz-card blueprint-card active"><b>03</b><span class="status preview">PREVIEW</span><h3>Global Market Engine</h3><p>Hồ sơ quốc gia có provenance, độ mới, confidence và kiểm soát giấy phép cho GDP, FX, thể chế, logistics, tariff và digital readiness.</p><a href="../aibis-entry-mode-preview.html">Xem Entry Mode Preview →</a></article>
+        <article class="bz-card blueprint-card"><b>04</b><span class="status planned">PLANNED</span><h3>Scenario Generator</h3><p>Giảng viên chọn quốc gia, cú sốc, độ khó và chuẩn đầu ra; AI hỗ trợ tạo bản nháp nhưng scenario phải qua phê duyệt.</p><ul><li>No-code builder</li><li>Rubric linkage</li><li>Version control</li></ul></article>
+        <article class="bz-card blueprint-card active"><b>05</b><span class="status live">IN PROGRESS</span><h3>Learning Intelligence</h3><p>Phân tích tiến trình, Decision Trace và phản tư mà không biến Lumina thành công cụ chấm điểm tự động.</p><a href="./instructor-studio.html">Xem Instructor Studio →</a></article>
+        <article class="bz-card blueprint-card"><b>06</b><span class="status planned">PLANNED</span><h3>Research Laboratory</h3><p>Xuất dữ liệu có governance cho R, Python, SEM, machine learning và nghiên cứu giáo dục dựa trên mô phỏng.</p><ul><li>Consent</li><li>Data dictionary</li><li>Reproducible export</li></ul></article>
+        <article class="bz-card blueprint-card"><b>07</b><span class="status planned">PLANNED</span><h3>Enterprise Edition</h3><p>Chuyển case thật thành digital twin dùng cho workshop, training và assessment có ranh giới dữ liệu doanh nghiệp.</p><ul><li>Private cases</li><li>Tenant isolation</li><li>Facilitated debrief</li></ul></article>
+        <article class="bz-card blueprint-card"><b>08</b><span class="status planned">PLANNED</span><h3>Marketplace</h3><p>Không gian phân phối game, scenario, rubric, teaching case và parameter library với quyền tác giả rõ ràng.</p><ul><li>Creator contracts</li><li>Review workflow</li><li>Revenue share</li></ul></article>
+        <article class="bz-card blueprint-card active"><b>09</b><span class="status live">FOUNDATION</span><h3>Cloud Platform</h3><p>Web, PWA và Android TWA dùng một codebase, hỗ trợ nhiều lớp và lộ trình nhiều trường, nhiều quốc gia.</p><a href="./release.html">Xem Web/PWA surface →</a></article>
+        <article class="bz-card blueprint-card"><b>10</b><span class="status planned">GOVERNED LINK</span><h3>AI Research Hub</h3><p>BizOn liên kết M-AIDA qua Evidence Package, Theory Card và Parameter Library; không chia sẻ source hoặc dữ liệu hạn chế.</p><ul><li>Evidence package</li><li>Theory cards</li><li>Parameter provenance</li></ul></article>
+      </div>
+    </section>
+
+    <section class="bz-wrap bz-section" id="roadmap">
+      <article class="bz-card blueprint-roadmap">
+        <div class="bz-section-head"><div><span class="bz-pill">DELIVERY ROADMAP</span><h2>Ba lớp triển khai để tránh “xây quá lớn trước khi chạy được”</h2></div><p>Mỗi lớp chỉ được nâng trạng thái khi contract, visual QA, governance và kiểm thử thiết bị đạt.</p></div>
+        <ol>
+          <li><strong>Layer A · Product Surface</strong><span>Academia 3D, Command Center, game, Brand Passport, Instructor Studio và giao diện thống nhất.</span></li>
+          <li><strong>Layer B · Decision Core</strong><span>Core v2, persistence, legacy adapter, shadow parity, AIBIS engine và country registry.</span></li>
+          <li><strong>Layer C · International Platform</strong><span>Scenario Builder, learning intelligence, research lab, enterprise, marketplace và multi-agent economy.</span></li>
+        </ol>
+      </article>
+    </section>
+  </main>
+
+  <footer class="blueprint-footer"><div class="bz-wrap"><strong>BizOn International Blueprint 2030</strong><span>Trạng thái mô-đun phản ánh repository tại thời điểm phát hành trang này; không phải cam kết rằng toàn bộ tầm nhìn đã được triển khai.</span></div></footer>
+  <script src="../js/app-shell/route-registry.js" defer></script>
+  <script src="../js/app-shell/unified-app.js" defer></script>
+</body>
+</html>

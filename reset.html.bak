@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Làm mới BizOn – cập nhật phiên bản mới nhất</title>
+<meta name="robots" content="noindex">
+<style>
+  body { margin:0; font-family:'Segoe UI',system-ui,sans-serif; min-height:100vh; display:flex; align-items:center; justify-content:center;
+         background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%); color:#fff; text-align:center; }
+  .card { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); border-radius:24px; padding:36px 28px; max-width:340px; margin:20px;
+          box-shadow:0 20px 50px rgba(0,0,0,.3); }
+  .spin { width:46px; height:46px; border-radius:50%; border:5px solid rgba(255,255,255,.2); border-top-color:#fda127; margin:0 auto 18px;
+          animation:sp 0.9s linear infinite; }
+  @keyframes sp { to { transform:rotate(360deg); } }
+  h1 { font-size:19px; margin:0 0 8px; }
+  p { font-size:13px; color:rgba(255,255,255,.75); margin:0; line-height:1.6; }
+  #st { font-weight:700; color:#fda127; margin-top:10px; }
+</style>
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script src="js/backend-config.js"></script>
+<script src="js/error-log.js"></script>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BizOn Bật Nghiệp">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:title" content="Làm mới BizOn – cập nhật phiên bản mới nhất">
+<meta property="og:description" content="BizOn Bật Nghiệp – hệ sinh thái mô phỏng kinh doanh 3D phong cách đất nặn cho đào tạo khởi nghiệp, phát triển bởi NCS. Đỗ Thùy Hương & PGS.TS. Phan Anh Tú.">
+<meta property="og:url" content="https://thuyhuongctu.github.io/BizOn/reset.html">
+<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/og/og-cover.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+<div class="card">
+  <div class="spin"></div>
+  <h1>🔄 Đang làm mới BizOn…</h1>
+  <p>Đang dọn bộ nhớ phiên bản cũ và tải bản mới nhất. Tiến trình chơi của bạn được giữ nguyên.</p>
+  <p id="st">Bắt đầu…</p>
+</div>
+<script>
+(async function () {
+  var st = document.getElementById('st');
+  try {
+    if ('serviceWorker' in navigator) {
+      st.textContent = 'Gỡ bộ đệm ngoại tuyến cũ…';
+      var regs = await navigator.serviceWorker.getRegistrations();
+      for (var i = 0; i < regs.length; i++) { try { await regs[i].unregister(); } catch (e) {} }
+    }
+    if (window.caches && caches.keys) {
+      st.textContent = 'Xóa dữ liệu phiên bản cũ…';
+      var keys = await caches.keys();
+      for (var j = 0; j < keys.length; j++) { try { await caches.delete(keys[j]); } catch (e) {} }
+    }
+    st.textContent = 'Xong! Đang mở bản mới nhất…';
+  } catch (e) {
+    st.textContent = 'Đang mở bản mới nhất…';
+  }
+  setTimeout(function () { location.replace('index.html?fresh=' + Date.now()); }, 900);
+})();
+</script>
+<p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2 pb-4" style="color:rgba(100,116,125,.85)">✉️ Liên hệ · Contact: <a href="mailto:patu@ctu.edu.vn" style="color:inherit;text-decoration:underline">patu@ctu.edu.vn</a> · <a href="mailto:thuyhuongctu@gmail.com" style="color:inherit;text-decoration:underline">thuyhuongctu@gmail.com</a></p>
+<script src="js/site-ui.js" defer></script>
+<script src="js/site-vnmap.js" defer></script>
+<script src="js/site-dock.js" defer></script>
+<script src="js/site-footer.js" defer></script>
+<script src="js/site-nav.js" defer></script>
+</body>
+</html>
