@@ -102,6 +102,7 @@ Không sửa trực tiếp `universe.html` trong PR này — đổi qua pipeline
 - [x] Tỷ lệ sở hữu: **50% / 50%** — cả hai đồng tác giả đã thống nhất. Còn lại: **ký thỏa thuận đồng sở hữu bằng văn bản** (hiện mới là bản nháp) trước khi nộp.
 - [ ] Hỏi luật sư: định dạng đĩa/USB; cách khai hình ảnh AI tạo.
 - [ ] Định tuyến sửa copy `universe.html` qua QA → promote.
+- [ ] **Tìm đúng mẫu Tờ khai cho "chương trình máy tính"** — bản Hương gửi (`Mẫu số 01`, Thông tư 08/2026/TT-BVHTTDL) chỉ dùng cho tác phẩm dạng chữ viết (văn học/khoa học/bài giảng/báo chí...), không có lựa chọn "chương trình máy tính" ở mục loại hình. Bộ 14 mẫu của thông tư này có mẫu riêng cho phần mềm — cần tìm đúng mẫu đó trước khi điền.
 
 ---
 
