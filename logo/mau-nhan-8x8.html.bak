@@ -1,0 +1,112 @@
+<!--
+  Bản kê mẫu nhãn — in kèm tờ khai đăng ký nhãn hiệu.
+  Mở bằng trình duyệt → Ctrl/Cmd+P → "Save as PDF" hoặc in trực tiếp (khổ A4).
+  Mỗi ô mẫu nhãn = 80×80mm (kích thước tối đa cho phép); nhãn được canh vừa
+  trong ô, không cần lấp đầy. Đây KHÔNG phải tư vấn pháp lý — kiểm tra lại quy
+  định kích thước hiện hành của cơ quan tiếp nhận trước khi nộp.
+-->
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Bản kê mẫu nhãn 8×8cm — BizOn</title>
+<style>
+  :root { --ink:#11150F; --rule:#c9cabf; --muted:#5b5f52; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #f2f1ea; color: var(--ink);
+    font-family: -apple-system, "Segoe UI", Roboto, "Be Vietnam Pro", system-ui, sans-serif; }
+  .sheet { width: 210mm; min-height: 297mm; margin: 0 auto; padding: 16mm 14mm;
+    background: #fff; }
+  h1 { font-size: 15pt; margin: 0 0 2mm; }
+  .sub { color: var(--muted); font-size: 9.5pt; margin: 0 0 8mm; line-height: 1.5; }
+  .grid { display: flex; flex-wrap: wrap; gap: 10mm; }
+  .cell { width: 80mm; }
+  .box { width: 80mm; height: 80mm; border: 0.4mm solid var(--ink);
+    display: flex; align-items: center; justify-content: center; padding: 5mm;
+    background: #fff; }
+  .box.dark { background: #11150F; }
+  .box img { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .box svg { width: 46mm; height: auto; }
+  .cap { font-size: 9pt; margin-top: 3mm; line-height: 1.5; }
+  .cap b { font-size: 10pt; }
+  .meta { margin-top: 10mm; border-top: 0.3mm solid var(--rule); padding-top: 5mm;
+    font-size: 9.5pt; line-height: 1.9; }
+  .meta .row span { display: inline-block; min-width: 42mm; color: var(--muted); }
+  .fill { border-bottom: 0.2mm dotted #9a9c8f; min-width: 60mm; display: inline-block; }
+  .note { margin-top: 8mm; font-size: 8.5pt; color: var(--muted); line-height: 1.6; }
+  @media print {
+    html, body { background: #fff; }
+    .sheet { width: auto; min-height: auto; margin: 0; padding: 0; }
+    @page { size: A4; margin: 14mm; }
+    .cell { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <h1>Bản kê mẫu nhãn — đăng ký nhãn hiệu</h1>
+  <p class="sub">
+    Chủ đơn: <b>Đỗ Thùy Hương</b> &amp; <b>Phan Anh Tú</b> (đồng sở hữu) · Cần Thơ.
+    Mỗi ô = 80×80&nbsp;mm (kích thước tối đa). Cắt/dán ô tương ứng vào tờ khai,
+    hoặc in cả trang kèm hồ sơ. Nhóm Nice và mô tả xem
+    <i>NHAN-HIEU-GOI-NOP-2026.md</i>.
+  </p>
+
+  <div class="grid">
+
+    <div class="cell">
+      <div class="box"><img src="bizon-logo-mau-2400.png" alt="BizOn logo bản màu"></div>
+      <p class="cap"><b>1 · BizOn + hình công tắc — bản màu</b><br>
+        Nhãn kết hợp (chữ + hình). Nhóm 9 · 41 · 42.</p>
+    </div>
+
+    <div class="cell">
+      <div class="box"><img src="bizon-logo-den-trang-2400.png" alt="BizOn logo đen trắng"></div>
+      <p class="cap"><b>2 · BizOn + hình công tắc — bản đen trắng</b><br>
+        Bản đen trắng của nhãn kết hợp. Nhóm 9 · 41 · 42.</p>
+    </div>
+
+    <div class="cell">
+      <div class="box">
+        <!-- Hình công tắc — vector, bản màu -->
+        <svg viewBox="0 0 98 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Hình công tắc bản màu">
+          <ellipse cx="47" cy="50" rx="36" ry="30" fill="none" stroke="#11150F" stroke-width="16"/>
+          <circle cx="62" cy="50" r="12" fill="#0F5C4E"/>
+        </svg>
+      </div>
+      <p class="cap"><b>3 · Hình công tắc (biểu tượng đơn) — bản màu</b><br>
+        Nhãn hình. Nhóm 9 · 41 · 42.</p>
+    </div>
+
+    <div class="cell">
+      <div class="box">
+        <!-- Hình công tắc — vector, đen trắng -->
+        <svg viewBox="0 0 98 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Hình công tắc bản đen trắng">
+          <ellipse cx="47" cy="50" rx="36" ry="30" fill="none" stroke="#000000" stroke-width="16"/>
+          <circle cx="62" cy="50" r="12" fill="#000000"/>
+        </svg>
+      </div>
+      <p class="cap"><b>4 · Hình công tắc — bản đen trắng</b><br>
+        Bản đen trắng của nhãn hình. Nhóm 9 · 41 · 42.</p>
+    </div>
+
+  </div>
+
+  <div class="meta">
+    <div class="row"><span>Tên nhãn hiệu:</span> <span class="fill">&nbsp;</span></div>
+    <div class="row"><span>Loại nhãn:</span> chữ · hình · kết hợp <span class="fill">&nbsp;</span></div>
+    <div class="row"><span>Nhóm sản phẩm/dịch vụ:</span> <span class="fill">&nbsp;</span></div>
+    <div class="row"><span>Màu sắc yêu cầu bảo hộ:</span> <span class="fill">&nbsp;</span></div>
+    <div class="row"><span>Số đơn / ngày nộp:</span> <span class="fill">&nbsp;</span></div>
+  </div>
+
+  <p class="note">
+    Nhãn chữ thuần (<b>Bật Nghiệp</b>, <b>BizOn</b>, <b>Hộ chiếu Thương hiệu</b>,
+    <b>Bến Phù Sa</b>) thường trình bày bằng chữ tiêu chuẩn ngay trong tờ khai,
+    không cần ô mẫu ảnh — trừ khi muốn bảo hộ kiểu chữ cách điệu. Nhãn kết hợp
+    hiện dùng ảnh PNG 2400px; khi có SVG phần chữ gốc sẽ thay bằng bản vector.
+  </p>
+</div>
+</body>
+</html>

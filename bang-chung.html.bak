@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Bằng chứng ban đầu – Lớp học thật với BizOn/BizArena</title>
+<meta name="description" content="Kết quả tổng hợp ẩn danh từ lớp học phần đã triển khai mô phỏng kinh doanh BizArena (tiền thân của BizOn): xu hướng điểm qua 3 vòng chơi, tương quan với bài tiểu luận, và kế hoạch pilot có kiểm soát kế tiếp.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<script src="js/backend-config.js"></script>
+<script src="js/error-log.js"></script>
+<!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
+     nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
+<link rel="stylesheet" href="css/bizon-fonts.css">
+<style>
+  html { background:#f4faff; scroll-behavior:smooth; }
+  body { font-family:'Manrope', 'Manrope Fallback',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
+  .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
+  .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease; }
+  .clay-btn:active { transform:translateY(2px); }
+  .glass-nav { background:rgba(3,51,55,.78); backdrop-filter:blur(14px); }
+  table.kb { width:100%; border-collapse:separate; border-spacing:0; font-size:13px; }
+  table.kb th { background:rgba(0,102,135,.08); color:inherit; font-weight:800; text-align:left; padding:9px 12px; }
+  table.kb td { padding:9px 12px; border-top:1px solid rgba(0,102,135,.1); vertical-align:top; }
+  table.kb th:first-child { border-top-left-radius:14px; } table.kb th:last-child { border-top-right-radius:14px; }
+  .kb-wrap { overflow-x:auto; border-radius:14px; }
+  .stat { font-family:'Plus Jakarta Sans', 'Plus Jakarta Sans Fallback',sans-serif; font-weight:800; }
+  .bar { height:14px; border-radius:999px; background:linear-gradient(90deg,#00c4ff,#006687); }
+  :root { --dt: 3 51 55; }
+  html[data-theme="dark"] { --dt: 214 236 240; background:#081a20; color-scheme:dark; }
+  html[data-theme="dark"] body { color:#d6ecf0; }
+  html[data-theme="dark"] .clay-card { background:#0e2a33; box-shadow:0 10px 30px -5px rgba(0,0,0,.45), inset 0 -4px 0 rgba(0,0,0,.3); }
+  html[data-theme="dark"] .glass-nav { background:rgba(2,20,24,.85); }
+  html[data-theme="dark"] .text-primary { color:#5cc4e6 !important; }
+  html[data-theme="dark"] table.kb th { background:rgba(92,196,230,.12); }
+  html[data-theme="dark"] table.kb td { border-top-color:rgba(92,196,230,.15); }
+  @media print { nav, .no-print { display:none !important; } body { color:#000; } .clay-card { box-shadow:none; border:1px solid #ccc; break-inside:avoid; } header { background:#fff !important; color:#000 !important; padding-top:0 !important; } header p, header h1 { color:#000 !important; } }
+</style>
+<link rel="stylesheet" href="css/tw.css">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BizOn Bật Nghiệp">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:title" content="Bằng chứng ban đầu – Lớp học thật với BizOn/BizArena">
+<meta property="og:description" content="Kết quả tổng hợp ẩn danh từ lớp học phần đã triển khai mô phỏng kinh doanh BizArena (tiền thân của BizOn): xu hướng điểm qua 3 vòng chơi, tương quan với bài tiểu luận, và kế hoạch pilot có kiểm soát kế tiếp.">
+<meta property="og:url" content="https://thuyhuongctu.github.io/BizOn/bang-chung.html">
+<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/og/og-cover.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+
+
+<header class="pt-24 pb-10 text-white" data-net-hero style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%);position:relative;overflow:hidden">
+  <div class="max-w-5xl mx-auto px-5">
+    <p class="text-[11px] font-extrabold uppercase tracking-[.2em] text-clay-gold">Dành cho tổ chức &amp; đối tác · Evidence</p>
+    <h1 class="font-display font-extrabold text-3xl sm:text-4xl mt-2">Bằng chứng ban đầu từ lớp học thật</h1>
+    <p class="text-white/75 text-sm mt-3 max-w-2xl">Kết quả tổng hợp <b>ẩn danh</b> từ một học phần đại học đã triển khai trọn vẹn mô hình mô phỏng BizArena – tiền thân trực tiếp của BizOn – gồm chuỗi vòng chơi mô phỏng, sự kiện «Đại hội Cổ đông &amp; Pitch xin vốn» và bài tiểu luận doanh nghiệp.</p>
+    <button onclick="window.print()" class="clay-btn bg-white/10 border border-white/25 text-white font-display font-bold px-6 py-3 text-sm mt-5 no-print">🖨️ In trang</button>
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-5 py-10">
+
+  <section class="clay-card p-6 sm:p-7 mb-6">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">1 · Bối cảnh triển khai</h2>
+    <div class="kb-wrap"><table class="kb">
+      <tr><th>Hạng mục</th><th>Thông tin</th></tr>
+      <tr><td>Học phần</td><td>«Mô phỏng tình huống trong kinh doanh» (3 tín chỉ) – một trường đại học tại Đồng bằng sông Cửu Long, học kỳ 2 năm học 2025–2026</td></tr>
+      <tr><td>Giảng viên</td><td>NCS. Đỗ Thùy Hương – đồng sáng lập BizOn</td></tr>
+      <tr><td>Quy mô phân tích</td><td>40 sinh viên có đủ điểm toàn bộ cấu phần</td></tr>
+      <tr><td>Mô hình lớp học</td><td>Đội 5 vai (CEO–CFO–CMO–COO) · sự kiện «Đại hội Cổ đông &amp; Pitch xin vốn» 150 phút – vốn được cấp trở thành két khởi điểm · chuỗi vòng mô phỏng BizArena (3 vòng tính điểm quá trình) · bài tiểu luận doanh nghiệp nhóm làm điểm kết thúc học phần</td></tr>
+      <tr><td>Công cụ</td><td>BizArena – mô phỏng 6 vòng, 5 đội, quyết định giá / sản lượng / marketing, biến cố ngẫu nhiên; là phiên bản tiền thân được nâng cấp thành BizOn hiện nay</td></tr>
+    </table></div>
+  </section>
+
+  <section class="clay-card p-6 sm:p-7 mb-6">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">2 · Kết quả tổng hợp (ẩn danh, n = 40)</h2>
+    <p class="text-sm text-deep-teal/70 mb-4">Điểm quá trình QT1–QT3 chấm theo ba vòng chơi mô phỏng; KTHP là bài tiểu luận doanh nghiệp của mỗi nhóm.</p>
+    <div class="grid sm:grid-cols-3 gap-4 mb-5">
+      <div class="clay-card p-5 text-center" style="box-shadow:none;background:rgba(0,102,135,.05)">
+        <p class="stat text-3xl text-primary">+0,90</p>
+        <p class="text-[11px] text-deep-teal/60 mt-1 font-bold">điểm tăng từ vòng 1 đến vòng 3<br>(8,31 → 8,62 → 9,21)</p>
+      </div>
+      <div class="clay-card p-5 text-center" style="box-shadow:none;background:rgba(0,102,135,.05)">
+        <p class="stat text-3xl text-primary">r ≈ 0,31</p>
+        <p class="text-[11px] text-deep-teal/60 mt-1 font-bold">tương quan thuận giữa điểm chơi mô phỏng và điểm tiểu luận doanh nghiệp</p>
+      </div>
+      <div class="clay-card p-5 text-center" style="box-shadow:none;background:rgba(0,102,135,.05)">
+        <p class="stat text-3xl text-primary">98%</p>
+        <p class="text-[11px] text-deep-teal/60 mt-1 font-bold">sinh viên đạt điểm học phần ≥ 8,0</p>
+      </div>
+    </div>
+    <div class="kb-wrap"><table class="kb">
+      <tr><th>Thành phần</th><th>Trung bình</th><th>Độ lệch chuẩn</th><th>Trực quan</th></tr>
+      <tr><td>Vòng chơi 1 (QT1)</td><td>8,31</td><td>0,48</td><td><div class="bar" style="width:69%"></div></td></tr>
+      <tr><td>Vòng chơi 2 (QT2)</td><td>8,62</td><td>0,54</td><td><div class="bar" style="width:77%"></div></td></tr>
+      <tr><td>Vòng chơi 3 (QT3)</td><td>9,21</td><td>0,71</td><td><div class="bar" style="width:92%"></div></td></tr>
+      <tr><td>Tiểu luận doanh nghiệp (KTHP)</td><td>8,49</td><td>0,47</td><td><div class="bar" style="width:73%"></div></td></tr>
+    </table></div>
+    <p class="text-xs text-deep-teal/60 mt-3">Xu hướng điểm tăng đều qua các vòng nhất quán với chu trình học qua trải nghiệm «quyết định → quan sát hậu quả → điều chỉnh» mà nền tảng được thiết kế để tạo ra.</p>
+  </section>
+
+  <section class="clay-card p-6 sm:p-7 mb-6">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">3 · Giới hạn của bằng chứng – nói thẳng</h2>
+    <ul class="space-y-2 text-sm text-deep-teal/80">
+      <li class="flex gap-2.5"><span>⚠️</span><span><b>Hồi cứu, không có pre-test:</b> chưa tách được hiệu ứng của mô phỏng khỏi hiệu ứng luyện tập và giảng dạy nói chung.</span></li>
+      <li class="flex gap-2.5"><span>⚠️</span><span><b>Điểm số không thuần đo học tập:</b> điểm quá trình phản ánh cả tiêu chí tham gia và làm việc nhóm; phân bố dồn trần (độ lệch chuẩn nhỏ) làm hệ số tương quan bị nén.</span></li>
+      <li class="flex gap-2.5"><span>⚠️</span><span><b>Một lớp, một giảng viên</b> (đồng thời là đồng tác giả nền tảng) – cần lặp lại ở lớp và người dạy khác.</span></li>
+      <li class="flex gap-2.5"><span>✅</span><span><b>Bước kế tiếp đã chuẩn bị xong:</b> các lớp pilot tiếp theo dùng bộ <a class="font-bold text-primary" href="khao-sat.html">pre-test/post-test 15 câu</a> khớp ma trận chuẩn đầu ra, đo Δ kiến thức và Δ tự tin theo từng cụm – thiết kế trước–sau có mốc so sánh.</span></li>
+    </ul>
+  </section>
+
+  <section class="clay-card p-6 sm:p-7 mb-6">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">4 · Hai học phần kế tiếp đã có kế hoạch tích hợp</h2>
+    <div class="kb-wrap"><table class="kb">
+      <tr><th>Học phần</th><th>Trường</th><th>Vai trò của BizOn</th></tr>
+      <tr><td>KT330H – Entrepreneurship</td><td>ĐH Cần Thơ</td><td>Simulation thứ 2 trong cấu phần «Simulation Games 10%»; nối workshop hòa vốn Excel tuần 8; pre/post-test tuần 2 và 11</td></tr>
+      <tr><td>KT301H – FDI, Trade &amp; Geography (CLC)</td><td>ĐH Cần Thơ</td><td>Go Global cho chương Entry Modes; slide «mô phỏng đối chiếu» trong thuyết trình case; giảng dạy song ngữ</td></tr>
+    </table></div>
+  </section>
+
+  <section class="clay-card p-6 sm:p-7 mb-6">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">5 · Truyền thông &amp; báo chí</h2>
+    <p class="text-xs text-deep-teal/55 mb-4">Các lần đội ngũ sáng lập BizOn xuất hiện trên báo chí với tư cách chuyên gia – minh chứng cho nền tảng học thuật đứng sau dự án.</p>
+    <div class="rounded-2xl border-2 border-primary/15 p-4 sm:p-5">
+      <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+        <span class="text-[10px] font-extrabold uppercase tracking-widest text-primary">Tạp chí Một Thế Giới · 30/07/2026</span>
+      </div>
+      <p class="font-display font-extrabold text-deep-teal mt-1.5">«Đổi mới sáng tạo ở Cần Thơ: Điểm sáng và khoảng trống phát triển»</p>
+      <p class="text-sm text-deep-teal/70 mt-1.5">Phỏng vấn <b>PGS.TS. Phan Anh Tú</b> – đồng sáng lập BizOn, Phó hiệu trưởng Trường Kinh tế (ĐH Cần Thơ) – về nghịch lý Chỉ số đổi mới sáng tạo (PII) 2025 của Cần Thơ: thể chế hạng 4/34 nhưng trình độ phát triển doanh nghiệp chỉ hạng 29/34, và đề xuất mạng lưới «Ba nhà» (nhà nước – nhà trường – doanh nghiệp) với ĐH Cần Thơ làm hạt nhân trung chuyển tri thức.</p>
+      <a href="https://1thegioi.vn/doi-moi-sang-tao-o-can-tho-diem-sang-va-khoang-trong-phat-trien-255702.html" target="_blank" rel="noopener" class="inline-block text-xs font-extrabold text-primary mt-2.5">Đọc toàn văn trên 1thegioi.vn →</a>
+    </div>
+    <div class="rounded-2xl border-2 border-primary/15 p-4 sm:p-5 mt-4">
+      <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+        <span class="text-[10px] font-extrabold uppercase tracking-widest text-primary">Tuổi Trẻ Online · 05/08/2026</span>
+      </div>
+      <p class="font-display font-extrabold text-deep-teal mt-1.5">«Thay vì "đi Bình Dương" thì tạo dòng di cư mới về miền Tây được không?»</p>
+      <p class="text-sm text-deep-teal/70 mt-1.5">Tiếp nối loạt bài về xuất cư ĐBSCL: di cư được nhìn như <i>«kết quả cân bằng của một thị trường lao động thiếu cầu – vùng không thiếu người tài, mà thiếu chỗ để dùng người tài»</i>. Bài dẫn <b>ba nghiên cứu độc lập</b> cùng chỉ về một điểm nghẽn nằm ở <b>khu vực doanh nghiệp</b> (không phải thể chế hay khâu đào tạo) – nên đổi mới sáng tạo để có thêm nhiều doanh nghiệp là mấu chốt, đúng luận điểm nền tảng của BizOn.</p>
+      <a href="https://tuoitre.vn/thay-vi-di-binh-duong-thi-tao-dong-di-cu-moi-ve-mien-tay-duoc-khong-100260805154121768.htm" target="_blank" rel="noopener" class="inline-block text-xs font-extrabold text-primary mt-2.5">Đọc toàn văn trên tuoitre.vn →</a>
+    </div>
+    <div class="rounded-2xl border-2 border-primary/15 p-4 sm:p-5 mt-4">
+      <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+        <span class="text-[10px] font-extrabold uppercase tracking-widest text-primary">Tuổi Trẻ Online · 27/07/2026</span>
+      </div>
+      <p class="font-display font-extrabold text-deep-teal mt-1.5">«Đổi mới sáng tạo có thể tạo ra dòng di cư mới về Đồng bằng sông Cửu Long»</p>
+      <p class="text-sm text-deep-teal/70 mt-1.5">Đưa tin phần trình bày của <b>PGS.TS. Phan Anh Tú</b> tại hội thảo «Giải pháp thúc đẩy nâng cao chỉ số đổi mới sáng tạo TP Cần Thơ» (Sở KH&amp;CN Cần Thơ): tình trạng xuất cư của ĐBSCL, tỉ lệ cử nhân làm đúng chuyên môn giảm 86% → 74%, và kỳ vọng <i>«với đổi mới sáng tạo có thể tạo ra dòng di cư mới từ các thành phố lớn về nông thôn bằng cách khởi nghiệp đổi mới sáng tạo»</i>.</p>
+      <a href="https://tuoitre.vn/doi-moi-sang-tao-co-the-tao-ra-dong-di-cu-moi-ve-dong-bang-song-cuu-long-100260727183852615.htm" target="_blank" rel="noopener" class="inline-block text-xs font-extrabold text-primary mt-2.5">Đọc toàn văn trên tuoitre.vn →</a>
+    </div>
+    <p class="text-[10px] text-deep-teal/40 mt-3">Các bài viết thuộc bản quyền của tòa soạn tương ứng (Tạp chí Một Thế Giới – PV Văn Kim Khanh; Tuổi Trẻ Online – PV Chí Quốc); BizOn chỉ dẫn nguồn và trích lược, không đăng lại toàn văn.</p>
+  </section>
+
+  <section class="clay-card p-8 text-center no-print">
+    <h2 class="font-display font-extrabold text-deep-teal text-2xl">Muốn chạy pilot tại đơn vị của bạn?</h2>
+    <p class="text-sm text-deep-teal/60 mt-2 max-w-xl mx-auto">Bộ công cụ triển khai trọn gói đã sẵn sàng: kịch bản buổi học &amp; giải đấu, rubric, phiếu đo lường trước–sau và hệ thống ghi nhận kết quả tập trung.</p>
+    <div class="flex flex-wrap justify-center gap-3 mt-5">
+      <a href="giai-phap.html" class="clay-btn bg-primary text-white font-display font-extrabold px-7 py-3.5 text-sm">🧩 Xem gói triển khai</a>
+      <a href="lien-he.html" class="clay-btn bg-white text-primary border border-primary/20 font-display font-bold px-7 py-3.5 text-sm">✉️ Đặt lịch demo / pilot</a>
+    </div>
+    <p class="text-[11px] text-deep-teal/45 mt-5">© 2026 Đỗ Thùy Hương &amp; PGS.TS. Phan Anh Tú – BizOn Bật Nghiệp · Số liệu tổng hợp ẩn danh, không chứa thông tin định danh sinh viên</p>
+  </section>
+
+</main>
+<script src="js/site-nethero.js" defer></script>
+<script src="js/site-ui.js" defer></script>
+<script src="js/site-vnmap.js" defer></script>
+
+<p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2" style="color:rgba(100,116,125,.85)">✉️ Liên hệ · Contact: <a href="mailto:patu@ctu.edu.vn" style="color:inherit;text-decoration:underline">patu@ctu.edu.vn</a> · <a href="mailto:thuyhuongctu@gmail.com" style="color:inherit;text-decoration:underline">thuyhuongctu@gmail.com</a></p>
+<p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2 pb-6" style="color:rgba(100,116,125,.75)">🎓 Trang web chỉ phục vụ mục đích giáo dục và nghiên cứu, không đại diện cho bất kỳ tổ chức chính trị nào. Hình ảnh quốc kỳ, bản đồ chỉ mang ý nghĩa minh họa văn hóa – giáo dục. · This website serves educational and research purposes only and does not represent any political organization.</p>
+<script src="js/site-dock.js" defer></script>
+<script src="js/site-footer.js" defer></script>
+<script src="js/site-nav.js" defer></script>
+</body>
+</html>

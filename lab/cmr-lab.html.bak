@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CMR Lab</title>
+<!-- Phông tự host (không Google Fonts CDN) để chạy offline & hợp CSP như phần
+     còn lại của BizOn. Plus Jakarta Sans (chữ chính, đủ tiếng Việt), IBM Plex
+     Mono (số/nhãn). Slot 'Instrument Serif' dùng Plus Jakarta để giữ tiếng Việt
+     trọn vẹn (DM Serif không có bộ ký tự tiếng Việt). -->
+<style>
+@font-face{font-family:'Plus Jakarta Sans';font-weight:400 800;font-display:swap;src:url(../assets/fonts/PlusJakartaSans-var-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
+@font-face{font-family:'Plus Jakarta Sans';font-weight:400 800;font-display:swap;src:url(../assets/fonts/PlusJakartaSans-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2122,U+2212}
+@font-face{font-family:'JetBrains Mono';font-weight:400 500;font-display:swap;src:url(../assets/fonts/IBMPlexMono-400-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
+@font-face{font-family:'JetBrains Mono';font-weight:400 500;font-display:swap;src:url(../assets/fonts/IBMPlexMono-400-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2122,U+2212}
+@font-face{font-family:'JetBrains Mono';font-weight:600 700;font-display:swap;src:url(../assets/fonts/IBMPlexMono-600-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
+@font-face{font-family:'JetBrains Mono';font-weight:600 700;font-display:swap;src:url(../assets/fonts/IBMPlexMono-600-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2122,U+2212}
+@font-face{font-family:'Instrument Serif';font-weight:400;font-style:italic;font-display:swap;src:url(../assets/fonts/PlusJakartaSans-var-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
+@font-face{font-family:'Instrument Serif';font-weight:400;font-style:italic;font-display:swap;src:url(../assets/fonts/PlusJakartaSans-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2122,U+2212}
+</style>
+
+<style>
+:root {
+  --bg-0:#0A0E1A; --bg-1:#0F1420; --bg-2:#151B2C; --bg-3:#1C2438; --bg-elev:#1F2942;
+  --border:rgba(255,255,255,0.06); --border-strong:rgba(255,255,255,0.12);
+  --text-0:#FFFFFF; --text-1:#E5E7EB; --text-2:#9CA3AF; --text-3:#6B7280; --text-4:#4B5563;
+  --primary:#6366F1; --primary-glow:#818CF8;
+  --success:#10B981; --success-glow:#34D399;
+  --warning:#F59E0B; --warning-glow:#FBBF24;
+  --danger:#EF4444; --danger-glow:#F87171;
+  --g1:#06B6D4; --g2:#10B981; --g3:#F59E0B; --g4:#8B5CF6; --g5:#EC4899;
+  --font-display:'Plus Jakarta Sans',sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+  --font-serif:'Instrument Serif',serif;
+}
+[data-theme="light"]{
+  --bg-0:#FAFAFA;--bg-1:#FFFFFF;--bg-2:#F4F4F5;--bg-3:#E4E4E7;--bg-elev:#FFFFFF;
+  --border:rgba(0,0,0,0.06);--border-strong:rgba(0,0,0,0.12);
+  --text-0:#09090B;--text-1:#18181B;--text-2:#52525B;--text-3:#71717A;--text-4:#A1A1AA;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font-display);background:var(--bg-0);color:var(--text-1);line-height:1.5;overflow-x:hidden;min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 20% 0%,rgba(99,102,241,0.10),transparent 50%),radial-gradient(ellipse 60% 50% at 80% 100%,rgba(236,72,153,0.06),transparent 50%);pointer-events:none;z-index:0;}
+[data-theme="light"] body::before{opacity:0;}
+.app{position:relative;z-index:2;min-height:100vh;max-width:1600px;margin:0 auto;padding:24px;}
+
+/* TOPBAR */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;background:var(--bg-1);border:1px solid var(--border);border-radius:20px;margin-bottom:28px;backdrop-filter:blur(20px);position:sticky;top:16px;z-index:10;}
+.brand{display:flex;align-items:center;gap:14px;}
+.logo{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--g3) 0%,var(--g5) 100%);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(236,72,153,0.25);position:relative;overflow:hidden;}
+.logo::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.2),transparent);}
+.logo svg{width:24px;height:24px;color:white;position:relative;z-index:1;}
+.brand h1{font-size:20px;font-weight:700;letter-spacing:-0.02em;color:var(--text-0);line-height:1.1;}
+.brand .tagline{font-size:12px;color:var(--text-3);margin-top:2px;}
+.topbar-controls{display:flex;align-items:center;gap:12px;}
+.lang-toggle{display:flex;background:var(--bg-2);border:1px solid var(--border-strong);border-radius:100px;padding:3px;}
+.lang-btn{padding:6px 14px;border:none;background:transparent;color:var(--text-3);font-family:var(--font-mono);font-size:11px;font-weight:600;border-radius:100px;cursor:pointer;letter-spacing:0.05em;}
+.lang-btn.active{background:var(--primary);color:white;}
+.icon-btn{width:38px;height:38px;border-radius:10px;background:var(--bg-2);border:1px solid var(--border-strong);color:var(--text-1);cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.icon-btn:hover{background:var(--bg-3);}
+.icon-btn svg{width:18px;height:18px;}
+
+/* HERO */
+.hero{margin-bottom:28px;}
+.hero-title{font-size:36px;font-weight:800;letter-spacing:-0.03em;color:var(--text-0);line-height:1.05;}
+.hero-title .accent{font-family:var(--font-serif);font-style:italic;font-weight:400;background:linear-gradient(135deg,var(--warning),var(--g5));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.hero-subtitle{font-size:15px;color:var(--text-2);margin-top:10px;max-width:720px;}
+
+/* TEAM SELECTOR */
+.team-selector{background:var(--bg-1);border:1px solid var(--border);border-radius:20px;padding:24px;margin-bottom:28px;text-align:center;}
+.team-selector h2{font-size:16px;font-weight:700;color:var(--text-0);margin-bottom:6px;letter-spacing:-0.01em;}
+.team-selector .subtitle{font-size:13px;color:var(--text-3);margin-bottom:22px;}
+.team-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;}
+.team-card{background:var(--bg-2);border:2px solid var(--border-strong);border-radius:16px;padding:20px 14px;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden;}
+.team-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--team-color);opacity:0.6;}
+.team-card:hover{transform:translateY(-2px);border-color:var(--team-color);}
+.team-card:hover::before{opacity:1;}
+.team-card.active{background:var(--bg-3);border-color:var(--team-color);box-shadow:0 0 0 4px rgba(99,102,241,0.1),0 8px 24px rgba(0,0,0,0.4);}
+.team-card.active::before{opacity:1;height:4px;}
+.team-card .team-id{font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--team-color);letter-spacing:0.1em;margin-bottom:8px;}
+.team-card .team-name{font-size:14px;font-weight:700;color:var(--text-0);margin-bottom:10px;min-height:36px;line-height:1.25;}
+.team-card .team-stats{display:flex;justify-content:space-between;align-items:center;font-family:var(--font-mono);font-size:11px;color:var(--text-3);}
+.level-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 7px;background:rgba(245,158,11,0.15);color:var(--warning-glow);border-radius:100px;font-weight:700;}
+
+/* GAMIFICATION BAR */
+.gami-bar{display:grid;grid-template-columns:1fr 2fr 1fr;gap:16px;background:linear-gradient(135deg,var(--bg-1) 0%,var(--bg-2) 100%);border:1px solid var(--border-strong);border-radius:16px;padding:20px 24px;margin-bottom:20px;position:relative;overflow:hidden;}
+.gami-bar::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--warning),transparent);}
+.level-box{display:flex;align-items:center;gap:14px;}
+.level-circle{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--warning),var(--g5));display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:white;box-shadow:0 4px 16px rgba(245,158,11,0.4);position:relative;}
+.level-circle::after{content:'LVL';position:absolute;top:-8px;font-size:8px;font-weight:700;color:var(--text-3);letter-spacing:0.1em;}
+.level-team{font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:0.1em;margin-bottom:4px;}
+.level-name{font-size:14px;font-weight:700;color:var(--text-0);}
+.xp-box{display:flex;flex-direction:column;justify-content:center;}
+.xp-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;}
+.xp-label{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.08em;font-weight:600;}
+.xp-value{font-family:var(--font-mono);font-size:14px;font-weight:700;color:var(--text-0);}
+.xp-bar{height:10px;background:var(--bg-3);border-radius:100px;overflow:hidden;}
+.xp-fill{height:100%;background:linear-gradient(90deg,var(--warning),var(--g5));border-radius:100px;transition:width 0.8s cubic-bezier(0.16,1,0.3,1);position:relative;box-shadow:0 0 12px rgba(245,158,11,0.4);}
+.xp-fill::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent);animation:shimmer 2.5s linear infinite;}
+@keyframes shimmer{0%{transform:translateX(-100%);}100%{transform:translateX(100%);}}
+.xp-next{font-size:10px;color:var(--text-3);font-family:var(--font-mono);margin-top:6px;}
+.badges-box{display:flex;flex-direction:column;}
+.badges-label{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.08em;font-weight:600;margin-bottom:8px;}
+.badges-grid{display:flex;gap:6px;flex-wrap:wrap;}
+.badge{width:38px;height:38px;border-radius:10px;background:var(--bg-3);border:2px solid var(--border-strong);display:flex;align-items:center;justify-content:center;font-size:18px;transition:all 0.2s;opacity:0.3;filter:grayscale(1);}
+.badge.earned{opacity:1;filter:none;border-color:var(--warning);box-shadow:0 0 12px rgba(255,215,0,0.3);}
+.badge.earned:hover{transform:translateY(-2px) scale(1.1);}
+
+/* MAIN GRID */
+.main-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.card{background:var(--bg-1);border:1px solid var(--border);border-radius:16px;padding:24px;box-shadow:0 1px 0 rgba(255,255,255,0.04) inset,0 8px 24px rgba(0,0,0,0.4);}
+.card-title{display:flex;align-items:center;gap:10px;margin-bottom:18px;}
+.card-title h2{font-size:16px;font-weight:700;color:var(--text-0);letter-spacing:-0.01em;}
+.card-title-icon{width:32px;height:32px;border-radius:6px;background:rgba(99,102,241,0.1);color:var(--primary-glow);display:flex;align-items:center;justify-content:center;}
+.card-title-icon svg{width:16px;height:16px;}
+.card-title .tag{margin-left:auto;padding:4px 10px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);border-radius:100px;color:var(--warning-glow);font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:0.08em;}
+
+/* FORM */
+.field{margin-bottom:16px;}
+.field-label{display:block;font-size:11px;font-weight:600;color:var(--text-3);margin-bottom:6px;letter-spacing:0.05em;text-transform:uppercase;}
+.field-input{width:100%;padding:12px 14px;background:var(--bg-2);border:1px solid var(--border-strong);border-radius:10px;color:var(--text-0);font-family:var(--font-mono);font-size:16px;font-weight:600;transition:all 0.15s;}
+.field-input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(99,102,241,0.15);}
+.field-input::placeholder{color:var(--text-4);font-weight:400;}
+.field-hint{font-size:11px;color:var(--text-3);margin-top:4px;}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 18px;border:none;border-radius:10px;font-family:var(--font-display);font-size:13px;font-weight:600;cursor:pointer;transition:all 0.15s;}
+.btn svg{width:16px;height:16px;}
+.btn-primary{background:var(--primary);color:white;box-shadow:0 4px 12px rgba(99,102,241,0.3);}
+.btn-primary:hover{background:var(--primary-glow);transform:translateY(-1px);}
+
+/* CUP */
+.cup-visual{text-align:center;padding:30px 20px;background:linear-gradient(180deg,var(--bg-2) 0%,var(--bg-1) 100%);border-radius:16px;border:1px solid var(--border);margin-bottom:20px;}
+.cup-label{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:18px;font-weight:600;}
+.cup-container{position:relative;height:220px;display:flex;align-items:flex-end;justify-content:center;margin-bottom:16px;}
+.cup{width:140px;height:200px;background:var(--bg-3);border-radius:0 0 24px 24px;border:3px solid var(--border-strong);position:relative;overflow:hidden;display:flex;flex-direction:column-reverse;}
+.cup::before{content:'';position:absolute;top:-3px;left:-15px;right:-15px;height:12px;background:var(--bg-3);border:3px solid var(--border-strong);border-radius:6px;}
+.cup-handle{position:absolute;right:-28px;top:30px;width:28px;height:50px;border:3px solid var(--border-strong);border-left:none;border-radius:0 30px 30px 0;}
+.cup-fill-vc{width:100%;background:linear-gradient(180deg,#6B7280,#4B5563);transition:height 0.6s;display:flex;align-items:center;justify-content:center;}
+.cup-fill-cm{width:100%;background:linear-gradient(180deg,#EF4444,#DC2626);transition:height 0.6s;display:flex;align-items:center;justify-content:center;position:relative;}
+.cup-fill-cm::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.5),transparent);animation:shimmer 3s linear infinite;}
+.cup-fill-label{font-family:var(--font-mono);font-size:11px;font-weight:700;color:white;text-shadow:0 1px 2px rgba(0,0,0,0.5);}
+.cup-legend{display:flex;gap:20px;justify-content:center;margin-top:14px;}
+.legend-item{display:flex;align-items:center;gap:8px;font-size:12px;}
+.legend-dot{width:12px;height:12px;border-radius:3px;}
+.legend-dot.red{background:#EF4444;}
+.legend-dot.gray{background:#6B7280;}
+
+/* RESULTS */
+.results-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;}
+.result-card{background:var(--bg-2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;text-align:center;}
+.result-card .result-label{font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.08em;font-weight:600;margin-bottom:6px;}
+.result-card .result-value{font-family:var(--font-mono);font-size:22px;font-weight:800;color:var(--text-0);letter-spacing:-0.02em;font-variant-numeric:tabular-nums;}
+.result-card .result-unit{font-size:11px;color:var(--text-3);font-family:var(--font-mono);margin-top:2px;}
+.result-card.cm{border-top:2px solid #EF4444;}
+.result-card.cmr{border-top:2px solid #F59E0B;}
+.result-card.bep{border-top:2px solid #10B981;}
+.result-value.positive{color:var(--success-glow);}
+.result-value.negative{color:var(--danger-glow);}
+
+/* LEVERAGE */
+.leverage-section{margin-top:24px;background:var(--bg-2);border-radius:10px;padding:18px;border:1px solid var(--border);}
+.leverage-title{font-size:13px;font-weight:700;color:var(--text-0);margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;}
+.leverage-bar{height:32px;background:linear-gradient(90deg,var(--success) 0%,var(--warning) 50%,var(--danger) 100%);border-radius:6px;position:relative;margin-bottom:8px;overflow:hidden;}
+.leverage-marker{position:absolute;top:-4px;width:4px;height:40px;background:var(--text-0);border-radius:2px;box-shadow:0 0 12px rgba(255,255,255,0.6);transition:left 0.6s;transform:translateX(-50%);}
+.leverage-labels{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:10px;color:var(--text-3);}
+.leverage-verdict{margin-top:12px;padding:12px 14px;border-radius:6px;font-size:13px;line-height:1.5;border:1px solid;}
+.leverage-verdict.safe{background:rgba(16,185,129,0.08);border-color:rgba(16,185,129,0.25);color:var(--success-glow);}
+.leverage-verdict.balanced{background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.25);color:var(--warning-glow);}
+.leverage-verdict.risky{background:rgba(239,68,68,0.08);border-color:rgba(239,68,68,0.25);color:var(--danger-glow);}
+
+/* LENSES */
+.lens-card{background:var(--bg-2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px;border-left:3px solid var(--lens-color);display:flex;gap:14px;align-items:flex-start;}
+.lens-icon{width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;background:rgba(99,102,241,0.1);color:var(--lens-color);flex-shrink:0;}
+.lens-icon svg{width:16px;height:16px;}
+.lens-content{flex:1;}
+.lens-name{font-size:11px;font-weight:700;color:var(--lens-color);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;}
+.lens-text{font-size:13px;color:var(--text-1);line-height:1.5;}
+
+/* CHALLENGES */
+.challenge-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg-2);border-radius:10px;margin-bottom:8px;border:1px solid var(--border);}
+.challenge-item.completed{background:rgba(16,185,129,0.06);border-color:rgba(16,185,129,0.2);}
+.challenge-check{width:24px;height:24px;border-radius:50%;border:2px solid var(--border-strong);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.challenge-check svg{width:14px;height:14px;color:white;display:none;}
+.challenge-item.completed .challenge-check{background:var(--success);border-color:var(--success);}
+.challenge-item.completed .challenge-check svg{display:block;}
+.challenge-text{flex:1;font-size:13px;color:var(--text-1);}
+.challenge-item.completed .challenge-text{text-decoration:line-through;color:var(--text-3);}
+.challenge-xp{font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--warning-glow);padding:3px 8px;background:rgba(245,158,11,0.1);border-radius:100px;}
+.challenge-item.completed .challenge-xp{color:var(--success-glow);background:rgba(16,185,129,0.1);}
+
+/* LEADERBOARD */
+.leaderboard-card{background:var(--bg-1);border:1px solid var(--border);border-radius:16px;padding:24px;margin-top:24px;}
+.lb-row{display:grid;grid-template-columns:40px 50px 1fr 80px 100px 80px;align-items:center;gap:14px;padding:12px 14px;background:var(--bg-2);border-radius:10px;margin-bottom:8px;border:1px solid var(--border);}
+.lb-row.rank-1{background:linear-gradient(90deg,rgba(255,215,0,0.1),transparent);border-color:rgba(255,215,0,0.3);}
+.lb-row.rank-2{background:linear-gradient(90deg,rgba(192,192,192,0.08),transparent);border-color:rgba(192,192,192,0.2);}
+.lb-row.rank-3{background:linear-gradient(90deg,rgba(205,127,50,0.08),transparent);border-color:rgba(205,127,50,0.2);}
+.lb-rank{font-size:18px;font-weight:800;color:var(--text-0);text-align:center;}
+.lb-medal{font-size:22px;text-align:center;}
+.lb-team-id{font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:0.1em;}
+.lb-team-name{font-size:13px;font-weight:600;color:var(--text-0);margin-top:2px;}
+.lb-level{font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--warning-glow);text-align:center;}
+.lb-xp{font-family:var(--font-mono);font-size:14px;font-weight:700;color:var(--text-0);text-align:right;font-variant-numeric:tabular-nums;}
+.lb-badges-count{font-family:var(--font-mono);font-size:12px;color:var(--text-2);text-align:center;}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,14,26,0.7);backdrop-filter:blur(12px);z-index:100;align-items:center;justify-content:center;}
+.modal-overlay.active{display:flex;}
+.modal{background:var(--bg-1);border:1px solid var(--border-strong);border-radius:20px;padding:32px;max-width:480px;width:92%;text-align:center;animation:modalIn 0.4s cubic-bezier(0.16,1,0.3,1);}
+@keyframes modalIn{from{opacity:0;transform:translateY(20px) scale(0.92);}to{opacity:1;transform:translateY(0) scale(1);}}
+.modal-icon{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--warning),var(--g5));display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:40px;box-shadow:0 8px 24px rgba(245,158,11,0.4);animation:bounce 0.6s ease-out;}
+@keyframes bounce{0%,100%{transform:scale(1);}30%{transform:scale(1.15);}60%{transform:scale(0.95);}}
+.modal h2{font-size:22px;font-weight:800;color:var(--text-0);letter-spacing:-0.02em;margin-bottom:8px;}
+.modal-subtitle{font-size:14px;color:var(--text-2);margin-bottom:20px;}
+.modal-xp-gain{font-family:var(--font-mono);font-size:32px;font-weight:800;background:linear-gradient(135deg,var(--warning),var(--g5));-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:24px;}
+
+/* TOAST */
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--bg-elev);border:1px solid var(--border-strong);border-radius:16px;padding:14px 22px;display:flex;align-items:center;gap:12px;box-shadow:0 12px 32px rgba(0,0,0,0.5);z-index:200;opacity:0;transition:all 0.3s;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.toast-icon{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--warning),var(--g5));display:flex;align-items:center;justify-content:center;font-size:16px;}
+.toast-text{font-size:13px;color:var(--text-1);font-weight:600;}
+.toast-xp{font-family:var(--font-mono);font-weight:800;color:var(--warning-glow);}
+
+/* FOOTER */
+.app-footer{margin-top:48px;padding:24px 0 16px;border-top:1px solid var(--border);text-align:center;}
+.footer-text{font-family:var(--font-mono);font-size:11px;font-weight:500;color:var(--text-3);letter-spacing:0.08em;display:inline-flex;align-items:center;gap:8px;}
+.footer-text .divider{color:var(--text-4);opacity:0.6;}
+.footer-text .accent-name{background:linear-gradient(135deg,var(--primary-glow),var(--g5));-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:700;}
+
+@media(max-width:1100px){.main-grid{grid-template-columns:1fr;}.team-grid{grid-template-columns:repeat(3,1fr);}.gami-bar{grid-template-columns:1fr;gap:16px;}}
+@media(max-width:700px){.team-grid{grid-template-columns:1fr 1fr;}.topbar{flex-direction:column;gap:12px;}}
+::-webkit-scrollbar{width:10px;height:10px;}::-webkit-scrollbar-track{background:var(--bg-1);}::-webkit-scrollbar-thumb{background:var(--bg-3);border-radius:100px;border:2px solid var(--bg-1);}
+</style>
+</head>
+<body data-theme="dark">
+
+<div class="app">
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 8h1a4 4 0 0 1 0 8h-1"/>
+          <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"/>
+          <line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/>
+        </svg>
+      </div>
+      <div>
+        <h1>CMR Lab</h1>
+        <div class="tagline" data-i18n="tagline">Workshop CM &amp; CMR</div>
+      </div>
+    </div>
+    <div class="topbar-controls">
+      <a class="icon-btn" href="../lop-hoc.html" title="Về Kịch bản lớp học BizOn" style="width:auto;padding:0 12px;text-decoration:none;font-weight:700;font-size:12px;gap:6px;font-family:var(--font-display)">← Kịch bản lớp học</a>
+      <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="vi">VI</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+      </div>
+      <button class="icon-btn" onclick="toggleTheme()" title="Toggle theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M5 5l1.4 1.4M17.6 17.6L19 19M2 12h2M20 12h2M5 19l1.4-1.4M17.6 6.4L19 5"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h1 class="hero-title"><span data-i18n="hero1">Làm chủ</span> <span class="accent" data-i18n="hero2">túi đỏ</span></h1>
+    <p class="hero-subtitle" data-i18n="hero_sub">Chọn nhóm của bạn, nhập Giá bán &amp; Biến phí, và khám phá câu chuyện Số dư đảm phí. Mỗi khám phá = XP.</p>
+  </div>
+
+  <div class="team-selector">
+    <h2 data-i18n="select_team">Chọn nhóm của bạn</h2>
+    <div class="subtitle" data-i18n="select_sub">Mỗi nhóm có tiến độ, XP và huy hiệu riêng.</div>
+    <div class="team-grid" id="teamGrid"></div>
+  </div>
+
+  <div class="gami-bar" id="gamiBar" style="display:none;">
+    <div class="level-box">
+      <div class="level-circle" id="levelCircle">1</div>
+      <div>
+        <div class="level-team" id="levelTeam">TEAM 01</div>
+        <div class="level-name" id="levelName">Apprentice</div>
+      </div>
+    </div>
+    <div class="xp-box">
+      <div class="xp-header">
+        <div class="xp-label" data-i18n="xp_progress">Điểm kinh nghiệm</div>
+        <div class="xp-value" id="xpValue">0 / 100 XP</div>
+      </div>
+      <div class="xp-bar"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
+      <div class="xp-next" id="xpNext"></div>
+    </div>
+    <div class="badges-box">
+      <div class="badges-label" data-i18n="badges_earned">Huy hiệu đạt được</div>
+      <div class="badges-grid" id="badgesGrid"></div>
+    </div>
+  </div>
+
+  <div class="main-grid" id="mainGrid" style="display:none;">
+    <div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-title-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/></svg></div>
+          <h2 data-i18n="card_input">Số liệu doanh nghiệp</h2>
+          <div class="tag" data-i18n="step_1">Bước 1</div>
+        </div>
+        <div class="field">
+          <label class="field-label" data-i18n="field_company">Tên DN / Sản phẩm</label>
+          <input type="text" class="field-input" id="companyName" placeholder="Quán Café Mộc" style="font-family:var(--font-display);font-weight:500;">
+        </div>
+        <div class="field">
+          <label class="field-label" data-i18n="field_price">Giá bán P (đ/SP)</label>
+          <input type="number" class="field-input" id="priceInput" placeholder="35000" oninput="recalculate()">
+          <div class="field-hint" data-i18n="hint_price">VD: 35.000đ cho 1 ly cà phê</div>
+        </div>
+        <div class="field">
+          <label class="field-label" data-i18n="field_vc">Biến phí v (đ/SP)</label>
+          <input type="number" class="field-input" id="vcInput" placeholder="12000" oninput="recalculate()">
+          <div class="field-hint" data-i18n="hint_vc">Chi phí trực tiếp 1 SP (nguyên liệu, ly, ống hút)</div>
+        </div>
+        <div class="field">
+          <label class="field-label" data-i18n="field_fc">Định phí FC (đ/tháng)</label>
+          <input type="number" class="field-input" id="fcInput" placeholder="30000000" oninput="recalculate()">
+          <div class="field-hint" data-i18n="hint_fc">Thuê, lương, khấu hao... (mỗi tháng)</div>
+        </div>
+        <button class="btn btn-primary" onclick="submitInput()" style="width:100%;margin-top:8px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <span data-i18n="btn_submit">Tính toán &amp; Nhận XP</span>
+        </button>
+      </div>
+
+      <div class="card" style="margin-top:20px;">
+        <div class="card-title">
+          <div class="card-title-icon" style="background:rgba(239,68,68,0.1);color:var(--danger-glow);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v6a9 9 0 0 0 18 0z"/></svg>
+          </div>
+          <h2 data-i18n="card_cup">Túi đỏ - hình ảnh hóa</h2>
+        </div>
+        <div class="cup-visual">
+          <div class="cup-label" data-i18n="cup_label">Bán 1 SP = ?</div>
+          <div class="cup-container">
+            <div class="cup">
+              <div class="cup-fill-vc" id="cupVC" style="height:0%"><span class="cup-fill-label" id="cupVCLabel"></span></div>
+              <div class="cup-fill-cm" id="cupCM" style="height:0%"><span class="cup-fill-label" id="cupCMLabel"></span></div>
+              <div class="cup-handle"></div>
+            </div>
+          </div>
+          <div class="cup-legend">
+            <div class="legend-item"><div class="legend-dot red"></div><span data-i18n="legend_cm">CM (Túi đỏ → trả FC, rồi lãi)</span></div>
+            <div class="legend-item"><div class="legend-dot gray"></div><span data-i18n="legend_vc">Biến phí (mất ngay)</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-title-icon" style="background:rgba(245,158,11,0.1);color:var(--warning-glow);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 16l4-7 4 4 5-9"/></svg></div>
+          <h2 data-i18n="card_results">Chỉ số tính được</h2>
+          <div class="tag" data-i18n="step_2">Bước 2</div>
+        </div>
+        <div class="results-grid">
+          <div class="result-card cm">
+            <div class="result-label" data-i18n="metric_cm">CM đơn vị</div>
+            <div class="result-value" id="resultCM">—</div>
+            <div class="result-unit" data-i18n="unit_vnd_per">đ/SP</div>
+          </div>
+          <div class="result-card cmr">
+            <div class="result-label" data-i18n="metric_cmr">CMR</div>
+            <div class="result-value" id="resultCMR">—</div>
+            <div class="result-unit">%</div>
+          </div>
+          <div class="result-card bep">
+            <div class="result-label" data-i18n="metric_bep">BEP (Q*)</div>
+            <div class="result-value" id="resultBEP">—</div>
+            <div class="result-unit" data-i18n="unit_per_month">SP/tháng</div>
+          </div>
+        </div>
+        <div class="leverage-section">
+          <div class="leverage-title">
+            <span data-i18n="leverage_title">Vị trí đòn bẩy</span>
+            <span id="leverageStatus" style="font-family:var(--font-mono);font-size:11px;color:var(--text-3);">—</span>
+          </div>
+          <div class="leverage-bar"><div class="leverage-marker" id="leverageMarker" style="left:50%;"></div></div>
+          <div class="leverage-labels">
+            <span data-i18n="lev_safe">AN TOÀN (CMR &lt;40%)</span>
+            <span data-i18n="lev_balanced">CÂN BẰNG</span>
+            <span data-i18n="lev_risky">MONG MANH (CMR &gt;70%)</span>
+          </div>
+          <div class="leverage-verdict" id="leverageVerdict" style="display:none;"></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:20px;">
+        <div class="card-title">
+          <div class="card-title-icon" style="background:rgba(139,92,246,0.1);color:var(--g4);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+          <h2><span data-i18n="card_lenses_1">Bốn</span> <span style="font-family:var(--font-serif);font-style:italic;color:var(--primary-glow);" data-i18n="card_lenses_2">lăng kính</span></h2>
+          <div class="tag" data-i18n="step_3">Bước 3</div>
+        </div>
+        <div id="lensesContainer">
+          <div class="lens-card" style="--lens-color:var(--g1)">
+            <div class="lens-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11H5a2 2 0 0 0-2 2v7h6m4-9V7a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v13h-6m-4 0h4m-4 0H9m6 0h2"/></svg></div>
+            <div class="lens-content">
+              <div class="lens-name" data-i18n="lens_acc_name">Lăng kính Kế toán</div>
+              <div class="lens-text" id="lens1" data-i18n="lens_default">Nhập số liệu để mở khóa.</div>
+            </div>
+          </div>
+          <div class="lens-card" style="--lens-color:var(--g2)">
+            <div class="lens-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+            <div class="lens-content">
+              <div class="lens-name" data-i18n="lens_biz_name">Lăng kính Kinh doanh</div>
+              <div class="lens-text" id="lens2" data-i18n="lens_default">Nhập số liệu để mở khóa.</div>
+            </div>
+          </div>
+          <div class="lens-card" style="--lens-color:var(--g3)">
+            <div class="lens-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+            <div class="lens-content">
+              <div class="lens-name" data-i18n="lens_risk_name">Lăng kính Rủi ro</div>
+              <div class="lens-text" id="lens3" data-i18n="lens_default">Nhập số liệu để mở khóa.</div>
+            </div>
+          </div>
+          <div class="lens-card" style="--lens-color:var(--g5)">
+            <div class="lens-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <div class="lens-content">
+              <div class="lens-name" data-i18n="lens_strat_name">Lăng kính Chiến lược</div>
+              <div class="lens-text" id="lens4" data-i18n="lens_default">Nhập số liệu để mở khóa.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:20px;">
+        <div class="card-title">
+          <div class="card-title-icon" style="background:rgba(245,158,11,0.1);color:var(--warning-glow);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <h2 data-i18n="card_challenges">Thử thách</h2>
+          <div class="tag" data-i18n="step_4">Bước 4</div>
+        </div>
+        <div id="challengesList"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="leaderboard-card" id="leaderboardCard" style="display:none;">
+    <div class="card-title">
+      <div class="card-title-icon" style="background:rgba(255,215,0,0.1);color:#FFD700;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></div>
+      <h2 data-i18n="leaderboard">Bảng xếp hạng lớp</h2>
+    </div>
+    <div id="leaderboardList"></div>
+  </div>
+
+  <footer class="app-footer">
+    <div class="footer-text">
+      <span>©2026</span>
+      <span class="divider">|</span>
+      <span class="accent-name">PhD Candidate Do Thuy Huong</span>
+    </div>
+  </footer>
+</div>
+
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-icon" id="modalIcon">🏆</div>
+    <h2 id="modalTitle">Level Up!</h2>
+    <div class="modal-subtitle" id="modalSubtitle">You've unlocked a new level</div>
+    <div class="modal-xp-gain" id="modalXP">+50 XP</div>
+    <button class="btn btn-primary" onclick="closeModal()" style="margin:0 auto;"><span data-i18n="btn_continue">Tiếp tục</span></button>
+  </div>
+</div>
+
+<div class="toast" id="toast">
+  <div class="toast-icon" id="toastIcon">⭐</div>
+  <div class="toast-text" id="toastText">Hoàn thành!</div>
+  <div class="toast-xp" id="toastXP">+10 XP</div>
+</div>
+
+<script>
+const TRANSLATIONS = {
+  vi: {
+    tagline:"Workshop CM & CMR",
+    hero1:"Làm chủ", hero2:"túi đỏ",
+    hero_sub:"Chọn nhóm của bạn, nhập Giá bán & Biến phí, và khám phá câu chuyện Số dư đảm phí. Mỗi khám phá = XP.",
+    select_team:"Chọn nhóm của bạn",
+    select_sub:"Mỗi nhóm có tiến độ, XP và huy hiệu riêng.",
+    card_input:"Số liệu doanh nghiệp", step_1:"Bước 1", step_2:"Bước 2", step_3:"Bước 3", step_4:"Bước 4",
+    field_company:"Tên DN / Sản phẩm",
+    field_price:"Giá bán P (đ/SP)",
+    field_vc:"Biến phí v (đ/SP)",
+    field_fc:"Định phí FC (đ/tháng)",
+    hint_price:"VD: 35.000đ cho 1 ly cà phê",
+    hint_vc:"Chi phí trực tiếp 1 SP (nguyên liệu, ly, ống hút)",
+    hint_fc:"Thuê, lương, khấu hao... (mỗi tháng)",
+    btn_submit:"Tính toán & Nhận XP",
+    card_cup:"Túi đỏ - hình ảnh hóa",
+    cup_label:"Bán 1 SP = ?",
+    legend_cm:"CM (Túi đỏ → trả FC, rồi lãi)",
+    legend_vc:"Biến phí (mất ngay)",
+    card_results:"Chỉ số tính được",
+    metric_cm:"CM đơn vị", metric_cmr:"CMR", metric_bep:"BEP (Q*)",
+    unit_vnd_per:"đ/SP", unit_per_month:"SP/tháng",
+    leverage_title:"Vị trí đòn bẩy",
+    lev_safe:"AN TOÀN (CMR <40%)", lev_balanced:"CÂN BẰNG", lev_risky:"MONG MANH (CMR >70%)",
+    card_lenses_1:"Bốn", card_lenses_2:"lăng kính",
+    lens_acc_name:"Lăng kính Kế toán",
+    lens_biz_name:"Lăng kính Kinh doanh",
+    lens_risk_name:"Lăng kính Rủi ro",
+    lens_strat_name:"Lăng kính Chiến lược",
+    lens_default:"Nhập số liệu để mở khóa.",
+    card_challenges:"Thử thách",
+    leaderboard:"Bảng xếp hạng lớp",
+    xp_progress:"Điểm kinh nghiệm",
+    badges_earned:"Huy hiệu đạt được",
+    btn_continue:"Tiếp tục",
+    lvl_1:"Người học việc", lvl_2:"Nhà phân tích", lvl_3:"Chiến lược gia", lvl_4:"Giám đốc", lvl_5:"Master Founder",
+    lens_acc_tpl:"Cứ 100đ doanh thu, %s đ vào Số dư đảm phí (trả Định phí trước, rồi mới ra lãi).",
+    lens_biz_tpl:"Trong %s đ khách trả, %s đ chảy vào 'túi đỏ' để trả mặt bằng và lương; %s đ còn lại là biến phí.",
+    lens_risk_tpl:"Nếu doanh thu sụt 100đ, lợi nhuận giảm %s đ (biến phí cũng giảm theo).",
+    lens_strat_tpl:"Đẩy mạnh doanh thu là đòn bẩy hiệu quả nhất — mỗi SP bán thêm tạo %s đ đòn bẩy.",
+    verdict_safe:"Vị trí an toàn — CMR %s%%. Rủi ro thấp nhưng tăng trưởng chậm. Phù hợp thị trường ổn định.",
+    verdict_balanced:"CMR khoẻ ở mức %s%%. Cân bằng tăng trưởng & sức bền. Hầu hết F&B nhắm vùng này.",
+    verdict_risky:"Đòn bẩy cao — CMR %s%%. Cực mạnh khi tăng trưởng, doanh thu giảm 10%% là lợi nhuận bay nhanh. Thường gặp ở SaaS.",
+    level_up:"LÊN CẤP!", level_up_sub:"Bạn đã đạt %s",
+    ch1:"Nhập Giá bán & Biến phí để xem CM",
+    ch2:"Đặt Giá > 2× Biến phí (chiến lược CMR cao)",
+    ch3:"Đạt CMR từ 40% đến 70% (vùng cân bằng)",
+    ch4:"Nhập Định phí & tính BEP",
+    ch5:"Đạt BEP dưới 1.500 SP/tháng",
+    ch6:"Đạt CMR trên 80% (đòn bẩy cực mạnh)",
+    badge_first:"Bước đầu", badge_cm:"Mở khóa túi đỏ", badge_safe:"Vận hành an toàn",
+    badge_bal:"Cân bằng lực lượng", badge_ext:"Đòn bẩy cực mạnh",
+    badge_bep:"BEP Master", badge_eff:"Vận hành tinh gọn", badge_lens:"Đủ 4 lăng kính",
+    invalid_input:"Hãy nhập Giá bán & Biến phí hợp lệ.",
+  },
+  en: {
+    tagline:"Workshop CM & CMR",
+    hero1:"Master your", hero2:"red bag",
+    hero_sub:"Pick your team, input Price & Variable Cost, and unlock the Contribution Margin story. Each discovery = XP.",
+    select_team:"Select your team",
+    select_sub:"Each team has its own progress, XP, and badges.",
+    card_input:"Business Input", step_1:"Step 1", step_2:"Step 2", step_3:"Step 3", step_4:"Step 4",
+    field_company:"Company / Product Name",
+    field_price:"Selling Price P (VND/unit)",
+    field_vc:"Variable Cost v (VND/unit)",
+    field_fc:"Fixed Cost FC (VND/month)",
+    hint_price:"e.g., 35,000đ for a cup of coffee",
+    hint_vc:"Direct cost per unit (ingredients, cup, straw)",
+    hint_fc:"Rent, salary, depreciation... (per month)",
+    btn_submit:"Compute & Earn XP",
+    card_cup:"The Red Bag Visualization",
+    cup_label:"1 unit sold = ?",
+    legend_cm:"CM (Red Bag → covers FC, then profit)",
+    legend_vc:"Variable Cost (gone immediately)",
+    card_results:"Computed Metrics",
+    metric_cm:"CM Unit", metric_cmr:"CMR", metric_bep:"BEP (Q*)",
+    unit_vnd_per:"VND/unit", unit_per_month:"units/month",
+    leverage_title:"Leverage Position",
+    lev_safe:"SAFE (CMR <40%)", lev_balanced:"BALANCED", lev_risky:"FRAGILE (CMR >70%)",
+    card_lenses_1:"Four", card_lenses_2:"lenses",
+    lens_acc_name:"Accounting Lens",
+    lens_biz_name:"Business Lens",
+    lens_risk_name:"Risk Lens",
+    lens_strat_name:"Strategic Lens",
+    lens_default:"Input numbers to unlock.",
+    card_challenges:"Challenges",
+    leaderboard:"Class Leaderboard",
+    xp_progress:"Experience Points",
+    badges_earned:"Badges Earned",
+    btn_continue:"Continue",
+    lvl_1:"Apprentice", lvl_2:"Analyst", lvl_3:"Strategist", lvl_4:"Director", lvl_5:"Master Founder",
+    lens_acc_tpl:"For every 100đ of revenue, %s đ become Contribution Margin (covers FC first, then Profit).",
+    lens_biz_tpl:"Out of %s đ paid, %s đ go to the 'red bag' for rent and salaries; %s đ is direct cost.",
+    lens_risk_tpl:"If revenue drops by 100đ, profit drops by %s đ (variable costs drop too).",
+    lens_strat_tpl:"Pushing revenue is the most efficient lever — each unit sold adds %s đ leverage.",
+    verdict_safe:"Conservative — CMR %s%%. Low risk but slow growth. Best for stable, mature markets.",
+    verdict_balanced:"Healthy CMR at %s%%. Good balance between growth and resilience. Most F&B targets this.",
+    verdict_risky:"High leverage — CMR %s%%. Massive upside, but 10%% revenue drop wipes profit. Common in SaaS.",
+    level_up:"LEVEL UP!", level_up_sub:"You've reached %s",
+    ch1:"Input Price & Variable Cost to see your CM",
+    ch2:"Set Price > 2x Variable Cost (high CMR strategy)",
+    ch3:"Achieve CMR between 40% and 70% (balanced zone)",
+    ch4:"Set Fixed Cost & compute BEP",
+    ch5:"Reach a BEP under 1,500 units/month",
+    ch6:"Reach CMR above 80% (extreme leverage)",
+    badge_first:"First Steps", badge_cm:"Red Bag Revealed", badge_safe:"Safe Operator",
+    badge_bal:"Balanced Force", badge_ext:"High Voltage",
+    badge_bep:"BEP Master", badge_eff:"Lean Operator", badge_lens:"All Lenses",
+    invalid_input:"Please enter valid Price and Variable Cost.",
+  },
+};
+
+let currentLang = 'vi';
+
+function t(key, ...args) {
+  let str = TRANSLATIONS[currentLang][key] || key;
+  args.forEach(a => { str = str.replace('%s', a); });
+  return str;
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('cmrlab_lang', lang);
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (TRANSLATIONS[lang][key]) el.textContent = TRANSLATIONS[lang][key];
+  });
+  renderTeamGrid();
+  if (state.currentTeam !== null) {
+    renderGamiBar();
+    renderChallenges();
+    recalculate();
+  }
+  renderLeaderboard();
+}
+
+function toggleTheme() {
+  const next = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  document.body.setAttribute('data-theme', next);
+  localStorage.setItem('cmrlab_theme', next);
+}
+
+const STORAGE_KEY = "cmrlab_state_v1";
+const TEAMS = [
+  { id: 'T01', color: '#06B6D4' },
+  { id: 'T02', color: '#10B981' },
+  { id: 'T03', color: '#F59E0B' },
+  { id: 'T04', color: '#8B5CF6' },
+  { id: 'T05', color: '#EC4899' },
+];
+
+const LEVELS = [
+  { lvl: 1, xpNeeded: 0, nameKey: 'lvl_1' },
+  { lvl: 2, xpNeeded: 100, nameKey: 'lvl_2' },
+  { lvl: 3, xpNeeded: 250, nameKey: 'lvl_3' },
+  { lvl: 4, xpNeeded: 450, nameKey: 'lvl_4' },
+  { lvl: 5, xpNeeded: 700, nameKey: 'lvl_5' },
+];
+
+const BADGES = [
+  { id: 'first_input', icon: '🎯', titleKey: 'badge_first', xp: 20 },
+  { id: 'cm_revealed', icon: '🔴', titleKey: 'badge_cm', xp: 20 },
+  { id: 'leverage_safe', icon: '🛡️', titleKey: 'badge_safe', xp: 30 },
+  { id: 'leverage_balanced', icon: '⚖️', titleKey: 'badge_bal', xp: 30 },
+  { id: 'leverage_extreme', icon: '⚡', titleKey: 'badge_ext', xp: 40 },
+  { id: 'bep_master', icon: '🎓', titleKey: 'badge_bep', xp: 30 },
+  { id: 'bep_efficient', icon: '🚀', titleKey: 'badge_eff', xp: 40 },
+  { id: 'all_lenses', icon: '🔍', titleKey: 'badge_lens', xp: 50 },
+];
+
+const CHALLENGES = [
+  { id: 'ch1', xp: 20, check: s => s.price > 0 && s.vc >= 0 },
+  { id: 'ch2', xp: 30, check: s => s.price > 2 * s.vc && s.vc > 0 },
+  { id: 'ch3', xp: 40, check: s => s.cmr >= 0.4 && s.cmr <= 0.7 },
+  { id: 'ch4', xp: 30, check: s => s.fc > 0 && s.bep > 0 && isFinite(s.bep) },
+  { id: 'ch5', xp: 40, check: s => s.bep > 0 && s.bep < 1500 && isFinite(s.bep) },
+  { id: 'ch6', xp: 50, check: s => s.cmr > 0.8 },
+];
+
+let state = {
+  currentTeam: null,
+  teams: {
+    T01: { company: '', price: 0, vc: 0, fc: 0, xp: 0, badges: [], completedChallenges: [] },
+    T02: { company: '', price: 0, vc: 0, fc: 0, xp: 0, badges: [], completedChallenges: [] },
+    T03: { company: '', price: 0, vc: 0, fc: 0, xp: 0, badges: [], completedChallenges: [] },
+    T04: { company: '', price: 0, vc: 0, fc: 0, xp: 0, badges: [], completedChallenges: [] },
+    T05: { company: '', price: 0, vc: 0, fc: 0, xp: 0, badges: [], completedChallenges: [] },
+  },
+};
+
+function saveState() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+function loadState() {
+  const data = localStorage.getItem(STORAGE_KEY);
+  if (data) { try { state = JSON.parse(data); } catch(e){} }
+}
+
+function getLevel(xp) { let lvl = LEVELS[0]; for (const l of LEVELS) if (xp >= l.xpNeeded) lvl = l; return lvl; }
+function getNextLevel(xp) { for (const l of LEVELS) if (l.xpNeeded > xp) return l; return null; }
+function getCurrentTeam() { return state.currentTeam ? state.teams[state.currentTeam] : null; }
+
+function renderTeamGrid() {
+  document.getElementById('teamGrid').innerHTML = TEAMS.map(tpl => {
+    const team = state.teams[tpl.id];
+    const lvl = getLevel(team.xp);
+    return `
+      <div class="team-card ${state.currentTeam === tpl.id ? 'active' : ''}" style="--team-color:${tpl.color}" onclick="selectTeam('${tpl.id}')">
+        <div class="team-id">${tpl.id}</div>
+        <div class="team-name">${team.company || '—'}</div>
+        <div class="team-stats">
+          <span>${team.xp} XP</span>
+          <span class="level-badge">⭐ ${lvl.lvl}</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function selectTeam(id) {
+  state.currentTeam = id;
+  saveState();
+  renderTeamGrid();
+  document.getElementById('gamiBar').style.display = 'grid';
+  document.getElementById('mainGrid').style.display = 'grid';
+  document.getElementById('leaderboardCard').style.display = 'block';
+  const team = state.teams[id];
+  document.getElementById('companyName').value = team.company || '';
+  document.getElementById('priceInput').value = team.price || '';
+  document.getElementById('vcInput').value = team.vc || '';
+  document.getElementById('fcInput').value = team.fc || '';
+  renderGamiBar();
+  renderChallenges();
+  recalculate();
+  renderLeaderboard();
+}
+
+function renderGamiBar() {
+  const team = getCurrentTeam();
+  if (!team) return;
+  const tpl = TEAMS.find(t => t.id === state.currentTeam);
+  const lvl = getLevel(team.xp);
+  const nextLvl = getNextLevel(team.xp);
+  document.getElementById('levelCircle').textContent = lvl.lvl;
+  const teamLabel = document.getElementById('levelTeam');
+  teamLabel.textContent = `TEAM ${state.currentTeam.replace('T', '')}`;
+  teamLabel.style.color = tpl.color;
+  document.getElementById('levelName').textContent = t(lvl.nameKey);
+  if (nextLvl) {
+    const progress = ((team.xp - lvl.xpNeeded) / (nextLvl.xpNeeded - lvl.xpNeeded)) * 100;
+    document.getElementById('xpFill').style.width = `${Math.min(progress, 100)}%`;
+    document.getElementById('xpValue').textContent = `${team.xp} / ${nextLvl.xpNeeded} XP`;
+    document.getElementById('xpNext').textContent = `${nextLvl.xpNeeded - team.xp} XP → ${t(nextLvl.nameKey)}`;
+  } else {
+    document.getElementById('xpFill').style.width = '100%';
+    document.getElementById('xpValue').textContent = `${team.xp} XP (MAX)`;
+    document.getElementById('xpNext').textContent = '🏆 Max level';
+  }
+  document.getElementById('badgesGrid').innerHTML = BADGES.map(badge => {
+    const earned = team.badges.includes(badge.id);
+    return `<div class="badge ${earned ? 'earned' : ''}" title="${t(badge.titleKey)}">${badge.icon}</div>`;
+  }).join('');
+}
+
+function recalculate() {
+  const team = getCurrentTeam();
+  if (!team) return;
+  const price = parseFloat(document.getElementById('priceInput').value) || 0;
+  const vc = parseFloat(document.getElementById('vcInput').value) || 0;
+  const fc = parseFloat(document.getElementById('fcInput').value) || 0;
+  const cm = price - vc;
+  const cmr = price > 0 ? cm / price : 0;
+  const bep = cm > 0 ? Math.ceil(fc / cm) : Infinity;
+
+  const rCM = document.getElementById('resultCM');
+  rCM.textContent = (price > 0 || vc > 0) ? cm.toLocaleString() : '—';
+  rCM.classList.toggle('negative', cm < 0);
+  rCM.classList.toggle('positive', cm > 0);
+
+  const rCMR = document.getElementById('resultCMR');
+  rCMR.textContent = price > 0 ? (cmr * 100).toFixed(1) : '—';
+  rCMR.classList.toggle('negative', cmr < 0);
+  rCMR.classList.toggle('positive', cmr > 0);
+
+  const rBEP = document.getElementById('resultBEP');
+  if (cm > 0 && fc > 0) {
+    rBEP.textContent = bep.toLocaleString();
+    rBEP.classList.add('positive');
+  } else {
+    rBEP.textContent = '—';
+    rBEP.classList.remove('positive');
+  }
+
+  if (price > 0 && vc >= 0) {
+    const vcPct = Math.min((vc / price) * 100, 100);
+    const cmPct = Math.max(0, 100 - vcPct);
+    document.getElementById('cupVC').style.height = `${vcPct}%`;
+    document.getElementById('cupCM').style.height = `${cmPct}%`;
+    document.getElementById('cupVCLabel').textContent = vcPct >= 15 ? `${vc.toLocaleString()}đ` : '';
+    document.getElementById('cupCMLabel').textContent = cmPct >= 15 ? `${cm.toLocaleString()}đ` : '';
+  } else {
+    document.getElementById('cupVC').style.height = '0%';
+    document.getElementById('cupCM').style.height = '0%';
+    document.getElementById('cupVCLabel').textContent = '';
+    document.getElementById('cupCMLabel').textContent = '';
+  }
+
+  const cmrCapped = Math.max(0, Math.min(cmr, 1));
+  document.getElementById('leverageMarker').style.left = `${cmrCapped * 100}%`;
+  const lvStatus = document.getElementById('leverageStatus');
+  const lvVerdict = document.getElementById('leverageVerdict');
+  if (price > 0 && vc >= 0) {
+    const cmrPct = (cmr * 100).toFixed(0);
+    lvStatus.textContent = `CMR ${cmrPct}%`;
+    lvVerdict.style.display = 'block';
+    if (cmr < 0.4) { lvVerdict.className = 'leverage-verdict safe'; lvVerdict.textContent = t('verdict_safe', cmrPct); }
+    else if (cmr < 0.7) { lvVerdict.className = 'leverage-verdict balanced'; lvVerdict.textContent = t('verdict_balanced', cmrPct); }
+    else { lvVerdict.className = 'leverage-verdict risky'; lvVerdict.textContent = t('verdict_risky', cmrPct); }
+  } else {
+    lvStatus.textContent = '—';
+    lvVerdict.style.display = 'none';
+  }
+
+  if (price > 0 && vc >= 0) {
+    const cmrPct = (cmr * 100).toFixed(1);
+    document.getElementById('lens1').textContent = t('lens_acc_tpl', cmrPct);
+    document.getElementById('lens2').textContent = t('lens_biz_tpl', price.toLocaleString(), cm.toLocaleString(), vc.toLocaleString());
+    document.getElementById('lens3').textContent = t('lens_risk_tpl', cmrPct);
+    document.getElementById('lens4').textContent = t('lens_strat_tpl', cm.toLocaleString());
+  } else {
+    ['lens1','lens2','lens3','lens4'].forEach(id => document.getElementById(id).textContent = t('lens_default'));
+  }
+}
+
+function submitInput() {
+  const team = getCurrentTeam();
+  if (!team) return;
+  const price = parseFloat(document.getElementById('priceInput').value) || 0;
+  const vc = parseFloat(document.getElementById('vcInput').value) || 0;
+  const fc = parseFloat(document.getElementById('fcInput').value) || 0;
+  const company = document.getElementById('companyName').value;
+
+  if (price <= 0 || vc < 0) {
+    showToast('⚠️', t('invalid_input'), 0);
+    return;
+  }
+
+  team.company = company;
+  team.price = price;
+  team.vc = vc;
+  team.fc = fc;
+
+  const cm = price - vc;
+  const cmr = price > 0 ? cm / price : 0;
+  const bep = cm > 0 && fc > 0 ? Math.ceil(fc / cm) : 0;
+  const checkState = { price, vc, fc, cm, cmr, bep };
+
+  const oldLvl = getLevel(team.xp).lvl;
+  let totalXP = 0;
+  const newAchievements = [];
+
+  // Challenges
+  CHALLENGES.forEach(ch => {
+    if (!team.completedChallenges.includes(ch.id) && ch.check(checkState)) {
+      team.completedChallenges.push(ch.id);
+      team.xp += ch.xp;
+      totalXP += ch.xp;
+      newAchievements.push({ icon: '⭐', text: t(ch.id), xp: ch.xp });
+    }
+  });
+
+  // Badges
+  const badgeChecks = [
+    { id: 'first_input', cond: price > 0 && vc >= 0 },
+    { id: 'cm_revealed', cond: cm > 0 },
+    { id: 'leverage_safe', cond: cmr > 0 && cmr < 0.4 },
+    { id: 'leverage_balanced', cond: cmr >= 0.4 && cmr <= 0.7 },
+    { id: 'leverage_extreme', cond: cmr > 0.8 },
+    { id: 'bep_master', cond: bep > 0 && isFinite(bep) },
+    { id: 'bep_efficient', cond: bep > 0 && bep < 1500 && isFinite(bep) },
+    { id: 'all_lenses', cond: price > 0 && vc >= 0 && fc > 0 },
+  ];
+
+  badgeChecks.forEach(({ id, cond }) => {
+    if (cond && !team.badges.includes(id)) {
+      const badge = BADGES.find(b => b.id === id);
+      team.badges.push(id);
+      team.xp += badge.xp;
+      totalXP += badge.xp;
+      newAchievements.push({ icon: badge.icon, text: t(badge.titleKey), xp: badge.xp });
+    }
+  });
+
+  saveState();
+  renderTeamGrid();
+  renderGamiBar();
+  renderChallenges();
+  renderLeaderboard();
+  recalculate();
+
+  const newLvl = getLevel(team.xp).lvl;
+  if (newLvl > oldLvl) {
+    showLevelUp(newLvl, totalXP);
+  } else if (newAchievements.length > 0) {
+    let i = 0;
+    const showNext = () => {
+      if (i < newAchievements.length) {
+        const a = newAchievements[i];
+        showToast(a.icon, a.text, a.xp);
+        i++;
+        setTimeout(showNext, 1800);
+      }
+    };
+    showNext();
+  }
+}
+
+function renderChallenges() {
+  const team = getCurrentTeam();
+  if (!team) return;
+  document.getElementById('challengesList').innerHTML = CHALLENGES.map(ch => {
+    const done = team.completedChallenges.includes(ch.id);
+    return `
+      <div class="challenge-item ${done ? 'completed' : ''}">
+        <div class="challenge-check">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="challenge-text">${t(ch.id)}</div>
+        <div class="challenge-xp">+${ch.xp} XP</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderLeaderboard() {
+  const sorted = TEAMS.map(tpl => ({ tpl, team: state.teams[tpl.id] })).sort((a,b) => b.team.xp - a.team.xp);
+  document.getElementById('leaderboardList').innerHTML = sorted.map((item, i) => {
+    const { tpl, team } = item;
+    const lvl = getLevel(team.xp);
+    const medal = ['🥇','🥈','🥉','',''][i];
+    return `
+      <div class="lb-row rank-${i+1}">
+        <div class="lb-rank">${i+1}</div>
+        <div class="lb-medal">${medal}</div>
+        <div>
+          <div class="lb-team-id" style="color:${tpl.color}">${tpl.id}</div>
+          <div class="lb-team-name">${team.company || '—'}</div>
+        </div>
+        <div class="lb-level">⭐ ${lvl.lvl}</div>
+        <div class="lb-xp">${team.xp} XP</div>
+        <div class="lb-badges-count">🏅 ${team.badges.length}/${BADGES.length}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function showToast(icon, text, xp) {
+  document.getElementById('toastIcon').textContent = icon;
+  document.getElementById('toastText').textContent = text;
+  document.getElementById('toastXP').textContent = xp > 0 ? `+${xp} XP` : '';
+  const el = document.getElementById('toast');
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 1600);
+}
+
+function showLevelUp(newLvl, xp) {
+  const lvl = LEVELS.find(l => l.lvl === newLvl);
+  document.getElementById('modalIcon').textContent = '🏆';
+  document.getElementById('modalTitle').textContent = t('level_up');
+  document.getElementById('modalSubtitle').textContent = t('level_up_sub', t(lvl.nameKey));
+  document.getElementById('modalXP').textContent = `+${xp} XP`;
+  document.getElementById('modal').classList.add('active');
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('active');
+}
+
+// INIT
+window.addEventListener('DOMContentLoaded', () => {
+  const theme = localStorage.getItem('cmrlab_theme') || 'dark';
+  document.body.setAttribute('data-theme', theme);
+  const lang = localStorage.getItem('cmrlab_lang') || 'vi';
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.addEventListener('click', () => setLang(b.dataset.lang));
+  });
+  loadState();
+  setLang(lang);
+});
+</script>
+<!-- Lối nhỏ về Vũ trụ (ngôn ngữ đất sét) — không phải thanh nav thể chế -->
+<a class="vutru-goc" href="../universe.html" aria-label="Về Vũ trụ BizOn">
+  <span class="vg-o" aria-hidden="true"></span><span>Vũ trụ</span>
+</a>
+<style>
+.vutru-goc{position:fixed;left:14px;bottom:14px;z-index:9999;display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:16px;background:#fff;color:#033337;text-decoration:none;font-family:'Manrope','Manrope Fallback',system-ui,sans-serif;font-weight:700;font-size:.82rem;box-shadow:0 8px 22px -6px rgba(0,102,135,.25),inset 0 -3px 0 rgba(0,0,0,.06);border:1px solid rgba(3,51,55,.08);transition:transform .18s ease,box-shadow .18s ease}
+.vutru-goc:hover{transform:translateY(-2px);box-shadow:0 12px 28px -6px rgba(0,102,135,.32),inset 0 -3px 0 rgba(0,0,0,.06)}
+.vutru-goc:focus-visible{outline:2px solid #0F5C4E;outline-offset:3px}
+.vutru-goc .vg-o{width:16px;height:16px;border-radius:50%;background:#0F5C4E;box-shadow:inset -4px 0 0 -1px #7FD9BE}
+@media(max-width:520px){.vutru-goc{left:10px;bottom:10px;padding:7px 11px;font-size:.76rem}}
+@media print{.vutru-goc{display:none}}
+</style>
+</body>
+</html>
