@@ -72,7 +72,7 @@ Chủ sở hữu: **hai cá nhân đồng sở hữu** (Đỗ Thùy Hương + Ph
 - `02-vong-quyet-dinh.png` — vòng quyết định
 - `03-ket-qua.png` — màn kết quả
 
-⚠️ Trước khi in: cắt gọn về đúng khung game (ảnh gốc chụp máy tính, còn dính thanh điều hướng/chân trang dùng chung của site).
+✅ Cả 3 ảnh đã cắt gọn đúng khung game (24/08/2026) — không còn thanh điều hướng/chân trang/nút "Vũ trụ" dùng chung của site.
 
 **(c) Mã nguồn in 15–20 trang:** bản trích đặc trưng — xem [`ma-nguon-dac-trung/ben-phu-sa-ma-nguon-dac-trung.txt`](ma-nguon-dac-trung/ben-phu-sa-ma-nguon-dac-trung.txt) (536 dòng, chỉ gồm engine riêng của Bến Phù Sa, đã loại hạ tầng dùng chung).
 
