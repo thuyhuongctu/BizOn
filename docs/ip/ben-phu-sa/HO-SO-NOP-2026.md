@@ -74,6 +74,8 @@ Chủ sở hữu: **hai cá nhân đồng sở hữu** (Đỗ Thùy Hương + Ph
 
 ✅ Cả 3 ảnh đã cắt gọn đúng khung game (24/08/2026) — không còn thanh điều hướng/chân trang/nút "Vũ trụ" dùng chung của site.
 
+✅ Đã gộp thành bản in [`anh-giao-dien/ben-phu-sa-giao-dien-chuong-trinh.pdf`](anh-giao-dien/ben-phu-sa-giao-dien-chuong-trinh.pdf) (24/08/2026) — 3 trang khổ A4, mỗi trang một ảnh kèm chú thích "Hình N." và số trang, sẵn sàng in nộp.
+
 **(c) Mã nguồn in 15–20 trang:** bản trích đặc trưng — xem [`ma-nguon-dac-trung/ben-phu-sa-ma-nguon-dac-trung.txt`](ma-nguon-dac-trung/ben-phu-sa-ma-nguon-dac-trung.txt) (536 dòng, chỉ gồm engine riêng của Bến Phù Sa, đã loại hạ tầng dùng chung).
 
 ⚠️ **Quyết định cần luật sư xác nhận trước khi in:** bản trích trong repo đã **lược các hằng số cân bằng** (đáp án game — luật chia khách, cá tính món hàng, dải nhu cầu, kế hoạch AI đối thủ) vì đây là bản công khai. Bản **nộp cho Cục Bản quyền** (không công bố ra công chúng) nhiều khả năng nên dùng **mã đầy đủ** (lấy trực tiếp từ `ben-phu-sa.html`) thay vì bản đã lược — hỏi luật sư xác nhận trước khi in.

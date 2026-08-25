@@ -10,7 +10,7 @@ Thư mục gom tài liệu chuẩn bị đăng ký **quyền tác giả** cho ga
 | [`HO-SO-NOP-2026.md`](HO-SO-NOP-2026.md) | **Bản nộp sạch** — đúng thứ tự 6 mục checklist luật sư, không kèm phần lý do/quyết định nội bộ. Dùng bản này để in/điền khi nộp thật. |
 | [`RA-SOAT-METADATA.md`](RA-SOAT-METADATA.md) | Rà soát title/og của `ben-phu-sa.html` (khớp tên tác phẩm đăng ký) + ghi nhận độ vênh copy công khai ở `universe.html`. |
 | [`ma-nguon-dac-trung/`](ma-nguon-dac-trung/) | Bản trích mã nguồn đặc trưng để in kèm (engine riêng của Bến Phù Sa; đã loại hạ tầng dùng chung). **Đã lược các hằng số cân bằng (đáp án game)** — xem đầu tệp. |
-| [`anh-giao-dien/`](anh-giao-dien/) | Ảnh giao diện ba màn hình chính (mở đầu · vòng quyết định · kết quả). Đã cắt gọn về đúng khung game (24/08/2026) — không còn thanh điều hướng/chân trang/nút "Vũ trụ" dùng chung. |
+| [`anh-giao-dien/`](anh-giao-dien/) | Ảnh giao diện ba màn hình chính (mở đầu · vòng quyết định · kết quả). Đã cắt gọn về đúng khung game (24/08/2026) — không còn thanh điều hướng/chân trang/nút "Vũ trụ" dùng chung. Kèm [`ben-phu-sa-giao-dien-chuong-trinh.pdf`](anh-giao-dien/ben-phu-sa-giao-dien-chuong-trinh.pdf) — bản in gộp 3 trang (mỗi ảnh một trang + chú thích + số trang) để in kèm hồ sơ theo mục 6(b). |
 
 ## Cần lưu ý
 - **Không đưa dữ liệu cá nhân** (CCCD, ngày sinh, địa chỉ, SĐT) vào bất kỳ tệp nào ở đây — repo công khai.
