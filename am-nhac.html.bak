@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Kho Âm nhạc BizOn – BizOn Bật Nghiệp</title>
+<meta name="description" content="Kho Âm nhạc BizOn: toàn bộ ca khúc gốc của hệ sinh thái BizOn Bật Nghiệp – Bật Nghiệp, Hương sans frontières, BizOn Theme – và giọng nói Lumina AI.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<script src="js/backend-config.js"></script>
+<script src="js/error-log.js"></script>
+<!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
+     nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
+<link rel="stylesheet" href="css/bizon-fonts.css">
+<style>
+  html { background:#f4faff; scroll-behavior:smooth; }
+  body { font-family:'Manrope', 'Manrope Fallback',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
+  .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
+  .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease; }
+  .clay-btn:active { transform:translateY(2px); }
+  .clay-sunken { background:#e8f2f8; box-shadow:inset 3px 3px 8px rgba(0,102,135,.12), inset -3px -3px 8px rgba(255,255,255,.9); }
+  .glass-nav { background:rgba(3,51,55,.78); backdrop-filter:blur(14px); }
+  .seek { -webkit-appearance:none; appearance:none; width:100%; height:8px; border-radius:999px; background:#dbe9f2; outline:none; }
+  .seek::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:linear-gradient(160deg,#00c4ff,#006687); box-shadow:0 3px 6px rgba(0,102,135,.4); cursor:pointer; }
+  /* Bìa tuyển tập: tên đặt bằng chữ thật để luôn viết đúng «BizOn» và dịch được sang tiếng Anh */
+  .bia-wrap { position:relative; }
+  .bia-wrap::after { content:''; position:absolute; inset:auto 0 0 0; height:52%;
+    background:linear-gradient(to top, rgba(60,32,40,.62), rgba(60,32,40,.22) 45%, transparent); }
+  .bia-title { position:absolute; left:0; right:0; bottom:0; z-index:2; padding:0 20px 18px; text-align:center; }
+  .bia-title span { font-family:'Plus Jakarta Sans', 'Plus Jakarta Sans Fallback',sans-serif; font-weight:800; color:#fff;
+    font-size:clamp(26px,4.6vw,54px); letter-spacing:-.01em; line-height:1.1;
+    text-shadow:0 3px 18px rgba(40,18,24,.55), 0 1px 3px rgba(40,18,24,.5); }
+  #album-view { scroll-margin-top:84px; } /* chừa chỗ cho thanh điều hướng dán trên đầu */
+  /* Ảnh bìa ca khúc: khung vuông cố định để mọi thẻ cao bằng nhau dù ảnh gốc khác tỉ lệ */
+  .song-art { width:72px; height:72px; border-radius:18px; object-fit:cover; object-position:50% 22%;
+              background:#e8f2f8; box-shadow:0 6px 16px -4px rgba(0,102,135,.28); }
+  .album-art { width:96px; height:96px; border-radius:22px; object-fit:cover; object-position:50% 22%;
+               background:rgba(255,255,255,.12); box-shadow:0 10px 26px -6px rgba(0,0,0,.4); }
+  /* Ảnh nhân vật đã tách nền: để nguyên dáng trong khung, không cắt xén */
+  .song-art.is-char, .album-art.is-char { object-fit:contain; object-position:50% 50%; padding:4px;
+    background:linear-gradient(160deg,#eaf4fa,#d8eaf5); }
+  .album-art.is-char { background:rgba(255,255,255,.14); }
+  @media (max-width:420px) { .song-art { width:56px; height:56px; border-radius:14px; } }
+  .eq { display:inline-flex; gap:2px; align-items:flex-end; height:14px; }
+  .eq span { width:3px; border-radius:2px; background:#e8762d; animation:eq 0.9s ease-in-out infinite; }
+  .eq span:nth-child(2){ animation-delay:.2s } .eq span:nth-child(3){ animation-delay:.4s }
+  @keyframes eq { 0%,100%{height:4px} 50%{height:14px} }
+  /* ===== Chế độ tối ===== */
+  :root { --dt: 3 51 55; }
+  html[data-theme="dark"] { --dt: 214 236 240; background:#081a20; color-scheme:dark; }
+  html[data-theme="dark"] body { color:#d6ecf0; }
+  html[data-theme="dark"] .clay-card { background:#0e2a33; box-shadow:0 10px 30px -5px rgba(0,0,0,.45), inset 0 -4px 0 rgba(0,0,0,.3); }
+  html[data-theme="dark"] .clay-sunken { background:#0a222a; box-shadow:inset 3px 3px 8px rgba(0,0,0,.5), inset -3px -3px 8px rgba(255,255,255,.03); }
+  html[data-theme="dark"] .glass-nav { background:rgba(2,20,24,.85); }
+  html[data-theme="dark"] .text-primary { color:#5cc4e6 !important; }
+  html[data-theme="dark"] .seek { background:#123540; }
+</style>
+<link rel="stylesheet" href="css/tw.css">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BizOn Bật Nghiệp">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:title" content="Kho Âm nhạc BizOn – BizOn Bật Nghiệp">
+<meta property="og:description" content="Kho Âm nhạc BizOn: toàn bộ ca khúc gốc của hệ sinh thái BizOn Bật Nghiệp – Bật Nghiệp, Hương sans frontières, BizOn Theme – và giọng nói Lumina AI.">
+<meta property="og:url" content="https://thuyhuongctu.github.io/BizOn/am-nhac.html">
+<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/og/og-cover.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+
+
+<!-- HERO -->
+<header class="pt-24 pb-8 text-white" style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%)">
+  <div class="max-w-5xl mx-auto px-5 flex items-center gap-6">
+    <div class="min-w-0">
+      <h1 class="font-display font-extrabold text-3xl sm:text-4xl">🎶 Kho Âm nhạc BizOn</h1>
+      <p class="text-white/75 text-sm mt-3 max-w-2xl">Toàn bộ ca khúc gốc và giọng nói của vũ trụ BizOn Bật Nghiệp – sáng tác riêng cho game, thuộc bản quyền của nhóm tác giả.</p>
+    </div>
+    <img src="assets/character/bizon-duo-phong-thu-cut.webp" alt="Hai nhà sáng lập BizOn ngồi hai bên bàn phòng thu, cùng nhìn một dải sóng âm nổi trên không" class="hidden sm:block w-52 h-36 object-contain shrink-0 drop-shadow-2xl" width="734" height="628">
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-5 py-10">
+
+  <!-- BÌA TUYỂN TẬP -->
+  <figure class="clay-card overflow-hidden mb-10">
+    <div class="bia-wrap">
+      <img src="assets/illustrations/giai-dieu-bizon.webp" alt="Bìa «Giai điệu BizOn» – Lumina trong tà áo dài trắng giữa vườn hoa đất sét" class="w-full block" width="1376" height="588" loading="lazy">
+      <figcaption class="bia-title"><span>Giai điệu BizOn</span></figcaption>
+    </div>
+    <figcaption class="px-5 py-3 text-[11px] text-deep-teal/55">🎨 Bìa tuyển tập «Giai điệu BizOn» – tranh minh họa đất sét 3D, thuộc bộ tác phẩm mỹ thuật ứng dụng của nhóm tác giả. Xem <a href="hau-truong.html" class="font-bold text-primary">🎚️ hậu trường sản xuất kho nhạc</a>.</figcaption>
+  </figure>
+
+  <!-- HAI TRANH MINH HỌA CỦA KHO NHẠC -->
+  <div class="grid sm:grid-cols-2 gap-5 mb-10">
+    <figure class="clay-card overflow-hidden">
+      <img src="assets/illustrations/bizon-music-studio.webp" alt="Áp phích «BIZON MUSIC – Learn. Create. Perform.»: hai bạn trẻ đất sét biểu diễn trên sàn gỗ, một người hát micro, một người ôm ghi-ta, quanh phòng là đàn phím, trống, loa và đĩa than" class="w-full block" width="828" height="842" loading="lazy" decoding="async">
+      <figcaption class="px-5 py-3 text-[11px] text-deep-teal/55">🎤 Áp phích «BizOn Music – Learn. Create. Perform.» – hình hiệu của kho nhạc, cũng là bìa nhạc hiệu «BizOn Theme».</figcaption>
+    </figure>
+    <figure class="clay-card overflow-hidden flex flex-col">
+      <div class="flex-1 flex items-end justify-center pt-6 px-5" style="background:linear-gradient(170deg,#e8f2f8 0%,#d3e9f2 100%)">
+        <img src="assets/character/bizon-duo-music.webp" alt="Hai nhân vật đất sét của BizOn: một người mặc áo hoodie Bizon đeo tai nghe, một người ôm ghi-ta gỗ" class="h-64 w-auto object-contain" width="623" height="835" loading="lazy" decoding="async">
+      </div>
+      <figcaption class="px-5 py-3 text-[11px] text-deep-teal/55">🎸 Bộ đôi âm nhạc BizOn – hai nhân vật đại diện cho kho nhạc, xuất hiện trong các bìa tuyển tập.</figcaption>
+    </figure>
+  </div>
+
+  <!-- CA KHÚC GỐC -->
+  <section class="mb-12">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-5">💿 Ca khúc gốc</h2>
+    <div id="tracks" class="space-y-4"></div>
+    <p class="text-xs text-deep-teal/50 mt-4">📝 Lời đầy đủ hai ca khúc (bản full ~3:30, chia phân đoạn 30 giây): <a href="https://github.com/thuyhuongctu/BizOn/blob/main/docs/loi-bai-hat.md" target="_blank" rel="noopener" class="font-bold text-primary">docs/loi-bai-hat.md</a></p>
+  </section>
+
+  <!-- GIỌNG LUMINA -->
+  <section class="mb-12">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">🎙️ Giọng Lumina AI</h2>
+    <p class="text-sm text-deep-teal/55 mb-5">Các đoạn giọng nói tiếng Việt của cố vấn Lumina đang dùng trong game – danh sách 49 câu thoại đầy đủ tại <a href="https://github.com/thuyhuongctu/BizOn/blob/main/docs/loi-thoai-lumina.md" target="_blank" rel="noopener" class="font-bold text-primary">loi-thoai-lumina.md</a>.</p>
+    <div id="voices" class="grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
+  </section>
+
+  <!-- NGHE TRONG GAME -->
+  <section class="mb-12">
+    <div class="flex items-start gap-4">
+      <div class="min-w-0 flex-1">
+        <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">🎮 Nhạc nào cho game nào?</h2>
+    <p class="text-sm text-deep-teal/55 mb-5">Kho nhạc đã đủ lớn để mỗi game có bản sắc âm nhạc riêng, nên các ca khúc được chia thành từng tuyển tập thay vì dùng chung một danh sách. Mỗi game chỉ xoay vòng trong tuyển tập của mình; muốn nghe trọn kho thì dùng thanh nhạc ⋯ ở góc trái màn hình. Bấm vào một tuyển tập để mở danh sách bài và nghe thử ngay tại đây.</p>
+      </div>
+      <img src="assets/character/advisors/lumina-nghe-nhac-dung-cut.webp" alt="Lumina đứng nghe nhạc" class="hidden sm:block w-28 shrink-0 -mt-2" loading="lazy">
+    </div>
+    <div id="albums" class="grid sm:grid-cols-2 gap-4"></div>
+    <div id="album-view" class="hidden mt-5"></div>
+  </section>
+
+  <p class="text-center text-xs text-deep-teal/40 mt-8">© 2026 Đỗ Thùy Hương &amp; Phan Anh Tú · BizOn Bật Nghiệp – Bảo lưu mọi quyền · <a href="thu-vien.html" class="font-bold text-primary">📚 Thư viện Sáng tạo</a> · <a href="index.html" class="font-bold text-primary">🏠 Trang chủ</a></p>
+</main>
+
+<script src="js/site-ui.js" defer></script>
+<script src="js/site-vnmap.js" defer></script>
+<script>
+/* ===== Trình phát ca khúc (một bài phát tại một thời điểm) ===== */
+/* Các ca khúc gom theo nhóm: bản gốc đứng đầu, các bản remix/bản phối xếp sau */
+const GROUPS = [
+  { name: '«Hương on Return»', art: 'assets/illustrations/turnaround-huong.webp', icon: '🌟', desc: 'Bài hát chính của BizOn', tracks: [
+    { t: 'Bản gốc ⭐', s: 'Bản thu có lời', f: 'assets/audio/huong-on-return.mp3', icon: '🌟' },
+    { t: 'Bản remix (remastered)', s: 'Bản phối lại mới · hành trình Go Global gói trong một bài hát: entry mode, đường cong chữ U ngược, «bốn ba phần trăm – vừa đủ để bay cao»', f: 'assets/audio/huong-on-return-remix.mp3', icon: '🔁' },
+  ]},
+  { name: '«Journey on the Golden Silt»', art: 'assets/illustrations/globe-trade.webp', icon: '🌾', desc: 'Global electro-pop đa ngôn ngữ Anh–Pháp–Việt · từ phù sa Mekong ra thế giới', tracks: [
+    { t: 'Bản gốc (4 phút)', s: 'Bản thu có lời chính thức', f: 'assets/audio/journey-golden-silt.mp3', icon: '🌾' },
+    { t: 'Bản remix', s: 'Bản phối lại mở rộng', f: 'assets/audio/journey-golden-silt-remix.mp3', icon: '🔁' },
+    { t: 'Bản remix «Mekong River»', s: 'Bản phối lại theo chủ đề dòng sông Mekong · 3:58', f: 'assets/audio/mekong-river-remix.mp3', icon: '🌊' },
+    { t: '«Mekong River» – bản thu lại', s: 'Bản phối gọn hơn 3:38 · cùng chủ đề dòng sông Mekong', f: 'assets/audio/mekong-river-v2.mp3', icon: '🌊' },
+  ]},
+  { name: "«Je m'appelle Hương sans frontières»", art: 'assets/character/advisors/lumina-nghe-nhac-ngoi-cut.webp', icon: '🌏', desc: 'Ca khúc BizOn Go Global · International pop 118 BPM', tracks: [
+    { t: 'Bản gốc – tiếng Việt', s: 'Bản thu tiếng Việt', f: 'assets/audio/huong-and-the-world.mp3', icon: '🌏' },
+    { t: 'Bản thu mới – bản 1', s: 'Bản dựng lại của chính ca khúc tiêu đề · 2:39', f: 'assets/audio/huong-sans-frontieres.mp3', icon: '🌏' },
+    { t: 'Bản thu mới – bản 2', s: 'Bản dựng thứ hai · 2:54 · dài hơn, hòa âm khác', f: 'assets/audio/huong-sans-frontieres-2.mp3', icon: '🌏' },
+    { t: 'English version', s: 'Bản song ngữ Anh–Việt cho phát hành quốc tế · bản thu có lời', f: 'assets/audio/huong-and-the-world-en.mp3', icon: '🌍' },
+    { t: 'Bản giọng nam', s: 'Bản phối giọng nam · lời tiếng Anh song ngữ', f: 'assets/audio/huong-and-the-world-male.mp3', icon: '🎤' },
+    { t: 'French version – «Hương et le Monde»', s: 'Bản lời tiếng Pháp · dùng cho tuyến Pháp ngữ của BizOn Go Global', f: 'assets/audio/huong-et-le-monde.mp3', icon: '🇫🇷' },
+    { t: '«Vươn ra thế giới» – bản 1', s: 'Ca khúc mới cùng tuyến · 2:47', f: 'assets/audio/huong-vuon-ra-the-gioi.mp3', icon: '🌏' },
+    { t: '«Vươn ra thế giới» – bản 2', s: 'Bản dựng thứ hai của cùng ca khúc · 2:47 · hòa âm khác', f: 'assets/audio/huong-vuon-ra-the-gioi-2.mp3', icon: '🌏' },
+  ]},
+  { name: '«Đội Phù Sa»', art: 'assets/illustrations/thuyen-sen-khoi-hanh.webp', icon: '🌾', desc: 'Anthem đội chơi Đội Phù Sa · V-pop electronic 116 BPM · «Thất bại là phù sa – bồi thành bến thành tên»', tracks: [
+    { t: 'Bản gốc', s: 'Bản thu có lời – Golden silt, we rise!', f: 'assets/audio/doi-phu-sa.mp3', icon: '🌾' },
+    { t: 'Bản remix', s: 'Bản phối lại – cùng lời, màu nhạc mới', f: 'assets/audio/doi-phu-sa-remix.mp3', icon: '🔁' },
+    { t: 'Bản remix 2', s: 'Bản phối thứ hai dài 3:24 · nhịp dày hơn cho màn tổng kết', f: 'assets/audio/doi-phu-sa-remix2.mp3', icon: '🔁' },
+    { t: 'Bản remix 3', s: 'Bản phối thứ ba dài 4:15 · bản dài nhất của ca khúc', f: 'assets/audio/doi-phu-sa-remix3.mp3', icon: '🔁' },
+  ]},
+  { name: '«Hộ Chiếu Thương Hiệu»', art: 'assets/illustrations/cast-sheet-brand-passport.webp', icon: '🛂', desc: 'Nhạc chủ đề game Hộ Chiếu Thương Hiệu (BizOn Go Global) · từ cửa sông Vàm Thịnh ra biển lớn', tracks: [
+    { t: '«Brand Passport» – bản gốc', s: 'Ca khúc mang đúng tên game · 2:52', f: 'assets/audio/brand-passport.mp3', icon: '🛂' },
+    { t: '«Brand Passport» – bản phối', s: 'Bản phối lại 2:56 · cùng lời, màu nhạc dày hơn', f: 'assets/audio/brand-passport-v2.mp3', icon: '🔁' },
+    { t: '«Brand Passport» – bản remix', s: 'Bản remix dài 3:48 · hợp làm nhạc nền chạy suốt buổi chơi', f: 'assets/audio/brand-passport-remix.mp3', icon: '🔁' },
+    { t: '«Brand Passport» – bản remix mở rộng 5:01 🎧', s: 'Bản remix dài nhất 5:01 · phủ trọn buổi chơi không lặp lại', f: 'assets/audio/brand-passport-remix-25.mp3', icon: '🔁' },
+    { t: '«Stamps Beyond Borders» – bản gốc ⭐', s: 'Bản thu gốc có lời tiếng Anh · 3:03', f: 'assets/audio/stamps-beyond-borders.mp3', icon: '🌊' },
+    { t: '«Stamps Beyond Borders» – bản thu lại', s: 'Bản thu khác cùng độ dài 3:03 · hòa âm mới', f: 'assets/audio/stamps-beyond-borders-v2.mp3', icon: '🌊' },
+    { t: '«Stamps Beyond Borders» – bản phối 3:35', s: 'Bản phối trung bình · hợp buổi học chạy 3 quý', f: 'assets/audio/stamps-beyond-borders-v3.mp3', icon: '🔁' },
+    { t: '«Stamps Beyond Borders» – bản mở rộng', s: 'Bản phối dài 4:43 · hợp cho buổi học chạy trọn 6 quý', f: 'assets/audio/stamps-beyond-borders-extended.mp3', icon: '🔁' },
+    { t: '«Golden Silt Route»', s: 'Ca khúc mới của game · con đường phù sa vàng nối Mekong ra thế giới', f: 'assets/audio/golden-silt-route.mp3', icon: '🚢' },
+  ]},
+  { name: '«Hộ Chiếu Thương Hiệu» – tổ khúc ba phần', art: 'assets/illustrations/thuyen-sen-khoi-hanh.webp', icon: '🇻🇳', desc: 'Tổ khúc kể trọn hành trình của game – từ bến sông quê ra tới thế giới · lời tiếng Việt, phần kết có thêm bản tiếng Anh', tracks: [
+    { t: 'Phần I – «Từ dòng Mekong»', s: 'Phần mở đầu tổ khúc · 3:56 · khởi hành từ bến sông quê', f: 'assets/audio/ho-chieu-p1-tu-dong-mekong.mp3', icon: '🌊' },
+    { t: 'Phần I – bản remix', s: 'Bản phối lại phần mở đầu · 3:51 · gọn hơn bản gốc', f: 'assets/audio/ho-chieu-p1-remix.mp3', icon: '🔁' },
+    { t: 'Phần I – bản remix 2', s: 'Bản phối thứ hai của phần mở đầu · 4:07', f: 'assets/audio/ho-chieu-p1-remix2.mp3', icon: '🔁' },
+    { t: 'Phần I – bản remix 3', s: 'Bản phối thứ ba của phần mở đầu · 4:18 · bản dài nhất', f: 'assets/audio/ho-chieu-p1-remix3.mp3', icon: '🔁' },
+    { t: 'Phần II – «Qua Những Thị Trường»', s: 'Phần giữa tổ khúc · 4:18 · sáu quý băng qua các thị trường xa', f: 'assets/audio/ho-chieu-p2-qua-nhung-thi-truong.mp3', icon: '🛂' },
+    { t: 'Phần II – bản remix', s: 'Bản phối lại phần giữa · 4:04', f: 'assets/audio/ho-chieu-p2-remix.mp3', icon: '🔁' },
+    { t: 'Phần III – «Việt Nam ra thế giới»', s: 'Phần kết tổ khúc · 5:09 · thương hiệu Việt đứng được trên bản đồ thế giới', f: 'assets/audio/ho-chieu-p3-viet-nam-ra-the-gioi.mp3', icon: '🌏' },
+    { t: 'Phần III – bản remix', s: 'Bản phối lại phần kết · 5:22 · nhịp dày hơn cho màn tổng kết ván chơi', f: 'assets/audio/ho-chieu-p3-remix.mp3', icon: '🔁' },
+    { t: 'Phần III – bản remix 2', s: 'Bản phối thứ hai của phần kết · 5:21 · hòa âm khác', f: 'assets/audio/ho-chieu-p3-remix2.mp3', icon: '🔁' },
+    { t: 'Phần III – bản remix 3', s: 'Bản phối thứ ba của phần kết · 5:02', f: 'assets/audio/ho-chieu-p3-remix3.mp3', icon: '🔁' },
+    { t: 'Phần III – «Vietnam to the World» (lời tiếng Anh)', s: 'Bản lời tiếng Anh của phần kết · 5:20 · dùng cho lớp quốc tế', f: 'assets/audio/ho-chieu-p3-vietnam-to-the-world-en.mp3', icon: '🌍' },
+    { t: 'Phần III tiếng Anh – bản remix', s: 'Bản phối lại của phần kết tiếng Anh · 4:42 · gọn hơn bản gốc, hợp màn tổng kết', f: 'assets/audio/ho-chieu-p3-en-remix.mp3', icon: '🔁' },
+    { t: 'Phần III tiếng Anh – bản remix 2 ⭐', s: 'Bản phối thứ hai của phần kết tiếng Anh · 5:33 · nhạc nền mặc định trong game Hộ Chiếu Thương Hiệu', f: 'assets/audio/ho-chieu-p3-en-remix2.mp3', icon: '🛂' },
+  ]},
+  { name: '«Bật Nghiệp»', art: 'assets/illustrations/hero-vietnam-2026.webp', icon: '🐉', desc: 'Ca khúc chủ đề game Việt Nam · V-pop electronic 112 BPM', tracks: [
+    { t: 'Bản thu có lời ⭐', s: 'Ca khúc chủ đề game Bật Nghiệp · 3:23 · nhạc nền mở đầu trong game', f: 'assets/audio/bat-nghiep-co-loi.mp3', icon: '🐉' },
+    { t: 'Bản Rap Symphony', s: 'Bản phối rap kết hợp dàn dây · 3:48', f: 'assets/audio/bat-nghiep-rap-symphony.mp3', icon: '🎤' },
+    { t: 'Remix «Mekong Sunfire 2» 🎧', s: 'Đề xuất nghe · 3:23 · bản dài hơn trong hai bản Mekong Sunfire', f: 'assets/audio/bat-nghiep-mekong-sunfire-2.mp3', icon: '🔥' },
+    { t: 'Remix «Mekong Sunfire»', s: 'Bản phối Mekong Sunfire · 3:18', f: 'assets/audio/bat-nghiep-mekong-sunfire.mp3', icon: '🔥' },
+    { t: 'Bản instrumental', s: 'Bản phối không lời · 1:20 · dùng xen giữa các vòng', f: 'assets/audio/bat-nghiep.mp3', icon: '🎼' },
+  ]},
+  { name: '«Việt Nam Trong Tim»', art: 'assets/character/bizon-duo-music.webp', icon: '🇻🇳', desc: 'Ca khúc tiếng Việt mới của kho nhạc BizOn', tracks: [
+    { t: 'Bản gốc', s: 'Bản thu có lời · 2:36', f: 'assets/audio/viet-nam-trong-tim.mp3', icon: '🇻🇳' },
+  ]},
+  { name: '«Vừa Đủ Để Bay Cao»', art: 'assets/illustrations/event-vietnam-2026.webp', icon: '🪁', desc: 'Ca khúc tiếng Việt về «đường cong ta học»', tracks: [
+    { t: 'Bản gốc (remastered)', s: 'Bản thu có lời', f: 'assets/audio/vua-du-de-bay-cao.mp3', icon: '🪁' },
+  ]},
+  { name: '«And The World Say Hello!»', art: 'assets/character/advisors/lumina-nghe-nhac-dung-cut.webp', icon: '👋', desc: "Ca khúc của hệ sinh thái Je m'appelle Hương", tracks: [
+    { t: 'Bản gốc', s: 'Bản thu có lời', f: 'assets/audio/and-the-world-say-hello.mp3', icon: '👋' },
+  ]},
+  { name: '«Mekong Compass»', art: 'assets/illustrations/arena-vietnam-map-v2.webp', icon: '🧭', desc: 'Ca khúc lấy cảm hứng dòng Mekong', tracks: [
+    { t: 'Bản gốc', s: 'Bản thu có lời', f: 'assets/audio/mekong-compass.mp3', icon: '🧭' },
+  ]},
+  { name: '«BizOn Theme»', art: 'assets/illustrations/bizon-music-studio.webp', icon: '🎼', desc: 'Nhạc hiệu instrumental của hệ sinh thái · dùng làm nền chung cho Bật Nghiệp và Arcade', tracks: [
+    { t: 'Bản gốc – instrumental', s: 'Bản phối không lời', f: 'assets/audio/bizon-theme.mp3', icon: '🎼' },
+  ]},
+];
+const TRACKS = GROUPS.flatMap(g => g.tracks);
+/* Trong tuyển tập, nhãn kiểu «Bản gốc» không cho biết đó là bài nào → ghép thêm tên ca khúc */
+const GROUP_OF = new Map();
+GROUPS.forEach(g => g.tracks.forEach(t => GROUP_OF.set(t.f, g.name)));
+const fullTitle = tr => tr.t.indexOf('«') > -1 ? tr.t : GROUP_OF.get(tr.f) + ' – ' + tr.t;
+let cur = null, curIdx = -1;
+const fmt = s => isFinite(s) ? `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}` : '–:––';
+function trackRow(tr, i) {
+  return `
+    <div class="flex items-center gap-4 py-3 ${i > 0 ? 'border-t border-deep-teal/10' : ''}">
+      <button onclick="playTrack(${TRACKS.indexOf(tr)})" class="clay-btn shrink-0 w-12 h-12 rounded-full text-xl flex items-center justify-center" style="background:linear-gradient(160deg,#00c4ff,#006687);color:#fff">${curIdx === TRACKS.indexOf(tr) && cur && !cur.paused ? '⏸' : '▶'}</button>
+      <div class="min-w-0 flex-1">
+        <p class="font-display font-extrabold text-deep-teal text-sm truncate">${tr.icon} ${tr.t} ${curIdx === TRACKS.indexOf(tr) && cur && !cur.paused ? '<span class="eq ml-1"><span></span><span></span><span></span></span>' : ''}</p>
+        <p class="text-[10px] text-deep-teal/50 mt-0.5">${tr.s}</p>
+        <div class="flex items-center gap-2 mt-2">
+          <span id="t-cur-${TRACKS.indexOf(tr)}" class="text-[10px] font-bold text-deep-teal/50 w-8">–:––</span>
+          <input id="t-seek-${TRACKS.indexOf(tr)}" type="range" min="0" max="100" value="0" class="seek flex-1" oninput="seekTrack(${TRACKS.indexOf(tr)}, this.value)">
+          <span id="t-dur-${TRACKS.indexOf(tr)}" class="text-[10px] font-bold text-deep-teal/50 w-8">–:––</span>
+        </div>
+      </div>
+    </div>`;
+}
+function renderTracks() {
+  document.getElementById('tracks').innerHTML = GROUPS.map(g => `
+    <div class="clay-card p-4 sm:p-5">
+      <div class="flex items-start gap-4 mb-2">
+        ${g.art ? `<img src="${g.art}" alt="Ảnh bìa ${g.name}" class="song-art ${g.art.indexOf('/character/') > -1 ? 'is-char' : ''} shrink-0" loading="lazy">` : ''}
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center justify-between gap-2">
+            <h3 class="font-display font-extrabold text-deep-teal text-base truncate">${g.icon} ${g.name}</h3>
+            <span class="shrink-0 text-[10px] font-extrabold px-2.5 py-1 rounded-full" style="background:rgba(0,102,135,.1);color:#006687">${g.tracks.length} bản</span>
+          </div>
+          <p class="text-[10px] text-deep-teal/50 mt-1">${g.desc}</p>
+        </div>
+      </div>
+      ${g.tracks.map((tr, j) => trackRow(tr, j)).join('')}
+    </div>`).join('');
+}
+function playTrack(i) {
+  if (curIdx === i && cur) { if (cur.paused) cur.play().catch(() => {}); else cur.pause(); refresh(); return; }
+  if (cur) { cur.pause(); cur = null; }
+  curIdx = i;
+  cur = new Audio(TRACKS[i].f);
+  cur.volume = 0.6;
+  cur.addEventListener('loadedmetadata', () => { const d = document.getElementById('t-dur-' + i); if (d) d.textContent = fmt(cur.duration); });
+  cur.addEventListener('timeupdate', () => {
+    const c = document.getElementById('t-cur-' + i), sk = document.getElementById('t-seek-' + i);
+    if (c) c.textContent = fmt(cur.currentTime);
+    if (sk && cur.duration) sk.value = cur.currentTime / cur.duration * 100;
+  });
+  cur.addEventListener('ended', () => {
+    curIdx = -1; cur = null; refresh();
+    // Đang nghe trọn một tuyển tập thì tự sang bài kế
+    if (queue && queuePos > -1 && queuePos + 1 < queue.length) { queuePos++; playTrack(queue[queuePos]); }
+    else { queue = null; queuePos = -1; renderAlbumView(); }
+  });
+  cur.addEventListener('play', refresh);
+  cur.addEventListener('pause', refresh);
+  cur.play().catch(() => {});
+  refresh();
+}
+function refresh() { renderTracks(); renderAlbumView(); }
+function seekTrack(i, v) { if (curIdx === i && cur && cur.duration) cur.currentTime = v / 100 * cur.duration; }
+
+/* ===== Tuyển tập theo game (album) ===== */
+/* Danh sách bài của mỗi tuyển tập phải khớp đúng tuyển tập đang chạy trong game:
+   game.html → BGM_TRACKS · brand-passport.html → SOUNDTRACK
+   global.html → G_TRACKS · games.html → AR_TRACKS */
+let queue = null, queuePos = -1, album = null;
+const idxOf = f => TRACKS.findIndex(t => t.f === 'assets/audio/' + f);
+const COLLECTIONS = [
+  {
+    key: 'bat-nghiep', art: 'assets/illustrations/hero-vietnam-2026.webp', name: 'Bật Nghiệp', icon: '🎮', tone: 'Màu Việt Nam',
+    game: 'Game mô phỏng chính', url: 'game.html',
+    desc: 'Nhạc nền xoay vòng suốt 6 vòng chơi của game mô phỏng khởi nghiệp – giữ màu V-pop và tinh thần đội nhóm.',
+    files: ['bat-nghiep-co-loi.mp3', 'bat-nghiep-rap-symphony.mp3', 'bat-nghiep-mekong-sunfire-2.mp3', 'bat-nghiep-mekong-sunfire.mp3', 'bat-nghiep.mp3', 'huong-vuon-ra-the-gioi.mp3', 'huong-vuon-ra-the-gioi-2.mp3', 'bizon-theme.mp3', 'huong-on-return.mp3', 'huong-on-return-remix.mp3', 'vua-du-de-bay-cao.mp3', 'doi-phu-sa.mp3', 'doi-phu-sa-remix.mp3', 'doi-phu-sa-remix2.mp3'],
+  },
+  {
+    key: 'brand-passport', art: 'assets/illustrations/thuyen-sen-khoi-hanh.webp', name: 'Hộ Chiếu Thương Hiệu', icon: '🛂', tone: 'Màu quốc tế hóa',
+    game: 'Game Hộ Chiếu Thương Hiệu', url: 'brand-passport.html',
+    desc: 'Tuyến nhạc của hành trình đưa thương hiệu ra khỏi biên giới – từ «Brand Passport» tới «Stamps Beyond Borders».',
+    files: ['brand-passport.mp3', 'brand-passport-v2.mp3', 'brand-passport-remix.mp3', 'brand-passport-remix-25.mp3', 'stamps-beyond-borders.mp3', 'stamps-beyond-borders-v2.mp3', 'stamps-beyond-borders-v3.mp3', 'stamps-beyond-borders-extended.mp3', 'golden-silt-route.mp3',
+      'ho-chieu-p1-tu-dong-mekong.mp3', 'ho-chieu-p2-qua-nhung-thi-truong.mp3',
+      'ho-chieu-p3-viet-nam-ra-the-gioi.mp3', 'ho-chieu-p3-remix.mp3',
+      'ho-chieu-p3-remix2.mp3',
+      'ho-chieu-p3-vietnam-to-the-world-en.mp3', 'ho-chieu-p3-en-remix2.mp3',
+      'ho-chieu-p1-remix.mp3', 'ho-chieu-p1-remix2.mp3', 'ho-chieu-p1-remix3.mp3',
+      'ho-chieu-p2-remix.mp3', 'ho-chieu-p3-remix3.mp3',
+      'ho-chieu-p3-en-remix.mp3'],
+  },
+  {
+    key: 'go-global', art: 'assets/illustrations/globe-trade.webp', name: 'BizOn Go Global', icon: '🌏', tone: 'Phù sa Mekong và đa ngôn ngữ',
+    game: 'Bản đồ Go Global', url: 'global.html',
+    desc: 'Tuyển tập đa ngôn ngữ Việt – Anh – Pháp, lấy dòng Mekong làm mạch chính. Gồm trọn bộ «Je m\'appelle Hương sans frontières».',
+    files: ['journey-golden-silt.mp3', 'journey-golden-silt-remix.mp3', 'mekong-river-remix.mp3', 'mekong-river-v2.mp3', 'mekong-compass.mp3', 'huong-and-the-world.mp3', 'huong-and-the-world-en.mp3', 'huong-and-the-world-male.mp3', 'huong-et-le-monde.mp3', 'huong-sans-frontieres.mp3', 'huong-sans-frontieres-2.mp3', 'huong-vuon-ra-the-gioi.mp3', 'huong-vuon-ra-the-gioi-2.mp3'],
+  },
+  {
+    key: 'arcade', art: 'assets/illustrations/giai-dieu-bizon.webp', name: 'BizOn Arcade', icon: '🕹️', tone: 'Nhịp nhanh',
+    game: 'Khu mini-game', url: 'games.html',
+    desc: 'Các bài nhịp nhanh, hợp những mini-game đòi phản xạ – nghe ngắn, vào thẳng cao trào.',
+    files: ['bizon-theme.mp3', 'and-the-world-say-hello.mp3', 'doi-phu-sa-remix.mp3', 'vua-du-de-bay-cao.mp3', 'bat-nghiep.mp3'],
+  },
+];
+function renderAlbums() {
+  document.getElementById('albums').innerHTML = COLLECTIONS.map(c => `
+    <button onclick="openAlbum('${c.key}')" class="clay-card p-5 text-left hover:-translate-y-0.5 transition-transform ${album === c.key ? 'ring-2 ring-primary' : ''}">
+      <div class="flex items-start gap-3">
+        <img src="${c.art}" alt="Ảnh bìa ${c.name}" class="song-art ${c.art.indexOf('/character/') > -1 ? 'is-char' : ''} shrink-0" loading="lazy">
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center justify-between gap-2">
+            <p class="text-xl">${c.icon}</p>
+            <span class="shrink-0 text-[10px] font-extrabold px-2.5 py-1 rounded-full" style="background:rgba(0,102,135,.1);color:#006687">${c.files.length} bài</span>
+          </div>
+          <h3 class="font-display font-extrabold text-deep-teal text-sm mt-0.5">${c.name}</h3>
+        </div>
+      </div>
+      <p class="text-[11px] font-extrabold text-primary mt-1">${c.tone}</p>
+      <p class="text-[11px] text-deep-teal/55 mt-0.5">${c.desc}</p>
+      <p class="text-[11px] font-extrabold text-primary mt-2">${album === c.key ? 'Đang mở ▾' : 'Mở danh sách bài ▸'}</p>
+    </button>`).join('');
+}
+function openAlbum(key) {
+  album = album === key ? null : key;
+  renderAlbums(); renderAlbumView();
+  if (album) document.getElementById('album-view').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+function renderAlbumView() {
+  const box = document.getElementById('album-view');
+  if (!box) return;
+  const c = COLLECTIONS.find(x => x.key === album);
+  if (!c) { box.className = 'hidden mt-5'; box.innerHTML = ''; return; }
+  box.className = 'mt-5';
+  const idx = c.files.map(idxOf).filter(i => i > -1);
+  const playing = queue && curIdx > -1 && queue === queueOf(c);
+  box.innerHTML = `
+    <div class="clay-card overflow-hidden">
+      <div class="p-5 sm:p-6 text-white" style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%)">
+        <div class="flex items-start gap-4">
+          <img src="${c.art}" alt="Ảnh bìa tuyển tập ${c.name}" class="album-art ${c.art.indexOf('/character/') > -1 ? 'is-char' : ''} shrink-0" loading="lazy">
+          <div class="min-w-0 flex-1">
+            <p class="text-[10px] font-extrabold uppercase tracking-wider" style="color:rgba(255,255,255,.6)">Tuyển tập</p>
+            <h3 class="font-display font-extrabold text-xl sm:text-2xl leading-tight">${c.name}</h3>
+            <p class="text-sm mt-1" style="color:rgba(255,255,255,.75)"><span>${c.files.length} bài</span> · <span>${c.tone}</span></p>
+          </div>
+          <button onclick="openAlbum('${c.key}')" class="shrink-0 w-9 h-9 rounded-full text-sm font-extrabold" style="background:rgba(255,255,255,.12);color:#fff" title="Đóng tuyển tập">✕</button>
+        </div>
+        <p class="text-sm mt-3" style="color:rgba(255,255,255,.75)">${c.desc}</p>
+        <div class="flex flex-wrap items-center gap-2.5 mt-4">
+          <button onclick="playAlbum('${c.key}')" class="clay-btn font-display font-extrabold text-xs px-5 py-2.5 rounded-full" style="background:#fff;color:#006687">${playing ? '⏸ Tạm dừng' : '▶ Phát cả tuyển tập'}</button>
+          <a href="${c.url}" class="font-display font-extrabold text-xs px-5 py-2.5 rounded-full" style="background:rgba(255,255,255,.14);color:#fff">${c.icon} ${c.game}</a>
+        </div>
+      </div>
+      <div class="p-4 sm:p-5">
+        ${idx.map((i, j) => albumRow(TRACKS[i], i, j)).join('')}
+      </div>
+      <div class="px-5 pb-5 grid sm:grid-cols-3 gap-3 text-[11px]">
+        <div class="clay-sunken rounded-2xl px-3 py-2"><p class="text-deep-teal/45 font-bold">Thể loại</p><p class="font-extrabold text-deep-teal">${c.tone}</p></div>
+        <div class="clay-sunken rounded-2xl px-3 py-2"><p class="text-deep-teal/45 font-bold">Dùng trong</p><p class="font-extrabold text-deep-teal">${c.game}</p></div>
+        <div class="clay-sunken rounded-2xl px-3 py-2"><p class="text-deep-teal/45 font-bold">Bản quyền</p><p class="font-extrabold text-deep-teal">© 2026 Đỗ Thùy Hương &amp; Phan Anh Tú</p></div>
+      </div>
+      <p class="px-5 pb-5 text-[10px] text-deep-teal/45">Nhạc và lời do nhóm tác giả sáng tác, sản xuất tại BizOn. Toàn bộ bản thu thuộc quyền của nhóm tác giả và chỉ dùng cho mục đích giáo dục, nghiên cứu.</p>
+    </div>`;
+}
+function albumRow(tr, i, j) {
+  const on = curIdx === i && cur && !cur.paused;
+  return `
+    <div class="flex items-center gap-3 py-2.5 ${j > 0 ? 'border-t border-deep-teal/10' : ''}">
+      <span class="w-6 shrink-0 text-[11px] font-extrabold text-deep-teal/35 text-center">${j + 1}</span>
+      <button onclick="playTrack(${i})" class="clay-btn shrink-0 w-10 h-10 rounded-full text-sm flex items-center justify-center" style="background:linear-gradient(160deg,#00c4ff,#006687);color:#fff">${on ? '⏸' : '▶'}</button>
+      <div class="min-w-0 flex-1">
+        <p class="font-display font-extrabold text-deep-teal text-xs leading-tight">${tr.icon} ${fullTitle(tr)}</p>
+        <p class="text-[10px] text-deep-teal/50 truncate">${tr.s}</p>
+      </div>
+      ${on ? '<span class="eq shrink-0"><span></span><span></span><span></span></span>' : ''}
+    </div>`;
+}
+function queueOf(c) { return c.files.map(idxOf).filter(i => i > -1); }
+function playAlbum(key) {
+  const c = COLLECTIONS.find(x => x.key === key);
+  if (!c) return;
+  const q = queueOf(c);
+  if (!q.length) return;
+  if (queue && curIdx > -1 && cur && !cur.paused && q.indexOf(curIdx) > -1) { cur.pause(); renderAlbumView(); return; }
+  queue = q; queuePos = 0;
+  playTrack(q[0]);
+  renderAlbumView();
+}
+
+/* ===== Giọng Lumina ===== */
+const VOICES = [
+  { t: 'Lời chào Hương', f: 'assets/audio/huong-intro.mp3', icon: '👋' },
+  { t: 'Cố vấn xin chào', f: 'assets/audio/lumina-advisor-hello.mp3', icon: '💬' },
+  { t: 'Kết quả vòng chơi', f: 'assets/audio/lumina-round-result.mp3', icon: '📊' },
+  { t: 'Chúc mừng chiến thắng', f: 'assets/audio/lumina-victory.mp3', icon: '🏆' },
+];
+let vAudio = null;
+function playVoice(i) {
+  if (cur && !cur.paused) { cur.pause(); queue = null; queuePos = -1; refresh(); }
+  if (vAudio) vAudio.pause();
+  vAudio = new Audio(VOICES[i].f); vAudio.volume = 0.8; vAudio.play().catch(() => {});
+}
+document.getElementById('voices').innerHTML = VOICES.map((v, i) => `
+  <button onclick="playVoice(${i})" class="clay-card p-4 text-center hover:-translate-y-0.5 transition-transform">
+    <p class="text-2xl">${v.icon}</p>
+    <p class="text-[11px] font-extrabold text-deep-teal mt-1.5">${v.t}</p>
+    <p class="text-[9px] text-deep-teal/45 mt-0.5">▶ Nghe thử</p>
+  </button>`).join('');
+renderTracks();
+renderAlbums();
+</script>
+
+<p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2" style="color:rgba(100,116,125,.85)">✉️ Liên hệ · Contact: <a href="mailto:patu@ctu.edu.vn" style="color:inherit;text-decoration:underline">patu@ctu.edu.vn</a> · <a href="mailto:thuyhuongctu@gmail.com" style="color:inherit;text-decoration:underline">thuyhuongctu@gmail.com</a></p>
+<p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2 pb-6" style="color:rgba(100,116,125,.75)">🎓 Trang web chỉ phục vụ mục đích giáo dục và nghiên cứu, không đại diện cho bất kỳ tổ chức chính trị nào. Hình ảnh quốc kỳ, bản đồ chỉ mang ý nghĩa minh họa văn hóa – giáo dục. · This website serves educational and research purposes only and does not represent any political organization.</p>
+<script src="js/site-dock.js" defer></script>
+<script src="js/site-footer.js" defer></script>
+<script src="js/site-nav.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Thư viện Sáng tạo – BizOn Bật Nghiệp</title>
+<meta name="description" content="Thư viện Sáng tạo BizOn: tạo hình nhân vật 3D claymorphism, âm nhạc gốc, lời bài hát và sản phẩm quà tặng của BizOn Bật Nghiệp.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<script src="js/backend-config.js"></script>
+<script src="js/error-log.js"></script>
+<!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
+     nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
+<link rel="stylesheet" href="css/bizon-fonts.css">
+<style>
+  html { background:#f4faff; scroll-behavior:smooth; }
+  body { font-family:'Manrope', 'Manrope Fallback',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
+  .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
+  .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease; }
+  .clay-btn:active { transform:translateY(2px); }
+  .clay-sunken { background:#e8f2f8; box-shadow:inset 3px 3px 8px rgba(0,102,135,.12), inset -3px -3px 8px rgba(255,255,255,.9); }
+  .glass-nav { background:rgba(3,51,55,.78); backdrop-filter:blur(14px); }
+  .art-card { transition:transform .2s cubic-bezier(.34,1.56,.64,1), opacity .2s ease; }
+  .art-card:hover { transform:translateY(-5px) scale(1.02); }
+  .art-card img { transition:transform .35s cubic-bezier(.34,1.4,.64,1); }
+  .art-card:hover img { transform:scale(1.05); }
+  .art-card[hidden] { display:none !important; }
+  /* Ảnh mở được thì con trỏ phải cho biết điều đó */
+  .art-card img { cursor:zoom-in; }
+
+  /* Thanh lọc dán dưới thanh điều hướng */
+  .lib-bar { position:sticky; top:64px; z-index:40; margin:0 -20px 24px; padding:12px 20px;
+             background:rgba(244,250,255,.86); backdrop-filter:blur(12px);
+             border-bottom:1px solid rgba(0,102,135,.10); }
+  .chip { border-radius:999px; padding:6px 14px; font-size:12px; font-weight:800; white-space:nowrap;
+          background:#fff; color:#02555f; box-shadow:0 4px 12px -4px rgba(0,102,135,.25); transition:all .15s ease; }
+  .chip:hover { transform:translateY(-1px); }
+  .chip[aria-pressed="true"] { background:linear-gradient(160deg,#00c4ff,#006687); color:#fff; }
+  .lib-search { border:none; outline:none; background:transparent; font-size:13px; font-weight:600;
+                color:inherit; width:100%; }
+  .lib-search::placeholder { color:rgba(3,51,55,.38); }
+
+  /* Xem ảnh phóng to */
+  #lb { position:fixed; inset:0; z-index:120; display:none; align-items:center; justify-content:center;
+        background:rgba(2,20,24,.92); backdrop-filter:blur(6px); padding:24px; }
+  #lb.on { display:flex; }
+  #lb img { max-width:min(92vw,1100px); max-height:76vh; object-fit:contain;
+            border-radius:20px; box-shadow:0 30px 70px -20px rgba(0,0,0,.7); background:rgba(255,255,255,.04); }
+  #lb .lb-cap { color:#fff; text-align:center; margin-top:16px; max-width:min(92vw,760px); }
+  #lb button { position:absolute; background:rgba(255,255,255,.14); color:#fff; border-radius:999px;
+               width:48px; height:48px; font-size:20px; font-weight:800; }
+  #lb button:hover { background:rgba(255,255,255,.26); }
+  #lb-close { top:20px; right:20px; }
+  #lb-prev { left:20px; top:50%; transform:translateY(-50%); }
+  #lb-next { right:20px; top:50%; transform:translateY(-50%); }
+  @media (max-width:520px) { #lb-prev { left:8px } #lb-next { right:8px } #lb img { max-height:62vh } }
+  /* ===== Chế độ tối ===== */
+  :root { --dt: 3 51 55; }
+  html[data-theme="dark"] { --dt: 214 236 240; background:#081a20; color-scheme:dark; }
+  html[data-theme="dark"] body { color:#d6ecf0; }
+  html[data-theme="dark"] .clay-card { background:#0e2a33; box-shadow:0 10px 30px -5px rgba(0,0,0,.45), inset 0 -4px 0 rgba(0,0,0,.3); }
+  html[data-theme="dark"] .clay-sunken { background:#0a222a; box-shadow:inset 3px 3px 8px rgba(0,0,0,.5), inset -3px -3px 8px rgba(255,255,255,.03); }
+  html[data-theme="dark"] .glass-nav { background:rgba(2,20,24,.85); }
+  html[data-theme="dark"] .text-primary { color:#5cc4e6 !important; }
+</style>
+<link rel="stylesheet" href="css/tw.css">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BizOn Bật Nghiệp">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:title" content="Thư viện Sáng tạo – BizOn Bật Nghiệp">
+<meta property="og:description" content="Thư viện Sáng tạo BizOn: tạo hình nhân vật 3D claymorphism, âm nhạc gốc, lời bài hát và sản phẩm quà tặng của BizOn Bật Nghiệp.">
+<meta property="og:url" content="https://thuyhuongctu.github.io/BizOn/thu-vien.html">
+<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/og/og-cover.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+
+
+<!-- HERO -->
+<header class="pt-24 pb-8 text-white" style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%)">
+  <div class="max-w-5xl mx-auto px-5 flex items-center gap-6">
+    <div class="min-w-0 flex-1">
+      <h1 class="font-display font-extrabold text-3xl sm:text-4xl">📚 Thư viện Sáng tạo</h1>
+      <p class="text-white/75 text-sm mt-3 max-w-2xl">Toàn bộ tài sản sáng tạo của <b class="text-white">BizOn Bật Nghiệp</b> – tạo hình nhân vật đất nặn 3D, âm nhạc gốc, lời bài hát và sản phẩm quà tặng.</p>
+      <div id="lib-stats" class="flex flex-wrap gap-2.5 mt-5"></div>
+    </div>
+    <img src="assets/character/advisors/lumina-nghe-nhac-dung-cut.webp" alt="Lumina giới thiệu thư viện" class="hidden md:block w-36 object-contain shrink-0 drop-shadow-2xl" loading="lazy">
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-5 py-10">
+
+  <!-- THANH LỌC -->
+  <div class="lib-bar">
+    <div class="flex items-center gap-3">
+      <div class="clay-sunken rounded-full px-4 py-2.5 flex items-center gap-2 flex-1 min-w-0">
+        <span class="text-sm shrink-0">🔍</span>
+        <input id="lib-q" class="lib-search" type="search" placeholder="Tìm trong thư viện – tên nhân vật, bối cảnh, ca khúc…" autocomplete="off">
+      </div>
+      <span id="lib-count" class="shrink-0 text-[11px] font-extrabold text-deep-teal/45 whitespace-nowrap"></span>
+    </div>
+    <div id="lib-chips" class="flex gap-2 mt-2.5 overflow-x-auto pb-1"></div>
+  </div>
+
+  <!-- TẠO HÌNH NHÂN VẬT -->
+  <section class="mb-12">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-5">🎨 Tạo hình nhân vật</h2>
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+      <div class="clay-card art-card p-4 text-center"><div class="h-48 flex items-end justify-center bg-gradient-to-b from-primary-container/20 to-transparent rounded-2xl"><img src="assets/character/lumina-ao-dai-wave.webp" alt="Lumina Áo Dài" class="h-44 w-auto drop-shadow-xl"></div><p class="font-display font-extrabold text-deep-teal text-sm mt-3">Lumina Áo Dài</p><p class="text-[10px] text-deep-teal/50">Cố vấn học tập AI trong game · cũng là hình đại diện của Đỗ Thùy Hương</p></div>
+      <div class="clay-card art-card p-4 text-center"><div class="h-48 flex items-end justify-center bg-gradient-to-b from-clay-gold/20 to-transparent rounded-2xl"><img src="assets/character/lumina-office-present.webp" alt="Lumina Vest Trắng" class="h-44 w-auto drop-shadow-xl"></div><p class="font-display font-extrabold text-deep-teal text-sm mt-3">Lumina Vest Trắng</p><p class="text-[10px] text-deep-teal/50">Cố vấn chiến lược AI trong game</p></div>
+      <div class="clay-card art-card p-4 text-center"><div class="h-48 flex items-end justify-center bg-gradient-to-b from-emerald-200/30 to-transparent rounded-2xl"><img src="assets/character/anh-tu-ao-dai-welcome-cut.webp" alt="Tú Phan" class="h-44 w-auto drop-shadow-xl"></div><p class="font-display font-extrabold text-deep-teal text-sm mt-3">Tú Phan</p><p class="text-[10px] text-deep-teal/50">Cố vấn học thuật · xuất hiện ở khoảnh khắc then chốt</p></div>
+      <div class="clay-card art-card p-4 text-center"><div class="h-48 flex items-end justify-center bg-gradient-to-b from-primary/10 to-transparent rounded-2xl"><img src="assets/character/lumina-vest.webp" alt="Lumina Vest – bản gốc" class="h-44 w-auto drop-shadow-xl object-contain"></div><p class="font-display font-extrabold text-deep-teal text-sm mt-3">Lumina Vest – bản gốc</p><p class="text-[10px] text-deep-teal/50">Avatar khung chat cố vấn</p></div>
+      <div class="clay-card art-card p-4 text-center"><div class="h-48 flex items-end justify-center bg-gradient-to-b from-primary-container/15 to-transparent rounded-2xl"><img src="assets/character/lumina-ao-dai.webp" alt="Lumina Áo Dài – bản gốc" class="h-44 w-auto drop-shadow-xl object-contain"></div><p class="font-display font-extrabold text-deep-teal text-sm mt-3">Lumina Áo Dài – bản gốc</p><p class="text-[10px] text-deep-teal/50">Màn chào &amp; chứng nhận hoàn thành</p></div>
+      <div class="clay-card art-card p-4 text-center"><div class="h-48 flex items-end justify-center bg-gradient-to-b from-rose-100/40 to-transparent rounded-2xl"><img src="assets/character/lumina-ao-dai-present.webp" alt="Lumina áo dài trắng thuyết trình" class="h-44 w-auto drop-shadow-xl object-contain"></div><p class="font-display font-extrabold text-deep-teal text-sm mt-3">Lumina – Người dẫn chương trình</p><p class="text-[10px] text-deep-teal/50">Dáng giới thiệu · ảnh chủ đạo trang Kịch bản lớp học</p></div>
+      <div class="clay-card art-card p-4 text-center"><div class="h-48 flex items-end justify-center bg-gradient-to-b from-red-100/40 to-transparent rounded-2xl"><img src="assets/character/anh-tu-ao-dai-cut.webp" alt="Tú Phan áo dài trắng" class="h-44 w-auto drop-shadow-xl object-contain"></div><p class="font-display font-extrabold text-deep-teal text-sm mt-3">Tú Phan – Áo dài trắng</p><p class="text-[10px] text-deep-teal/50">Trang phục lễ nghi · đeo cài áo Bản đồ Việt Nam</p></div>
+      <div class="clay-card art-card p-4 text-center"><div class="h-48 flex items-end justify-center bg-gradient-to-b from-amber-100/40 to-transparent rounded-2xl"><img src="assets/character/anh-tu-ao-dai-smile-cut.webp" alt="Tú Phan áo dài cười" class="h-44 w-auto drop-shadow-xl object-contain"></div><p class="font-display font-extrabold text-deep-teal text-sm mt-3">Tú Phan – Nụ cười chiến thắng</p><p class="text-[10px] text-deep-teal/50">Áo dài trắng &amp; cài áo Việt Nam · phiên bản tươi vui</p></div>
+      <div class="clay-card art-card p-4 text-center"><div class="h-48 flex items-end justify-center bg-gradient-to-b from-lime-100/40 to-transparent rounded-2xl"><img src="assets/character/anh-tu-ao-dai-point-cut.webp" alt="Tú Phan chỉ tay hướng dẫn" class="h-44 w-auto drop-shadow-xl object-contain"></div><p class="font-display font-extrabold text-deep-teal text-sm mt-3">Tú Phan – Hướng dẫn</p><p class="text-[10px] text-deep-teal/50">Chỉ tay giới thiệu bảng số liệu &amp; luật chơi</p></div>
+      <div class="clay-card art-card p-4 text-center"><div class="h-48 flex items-end justify-center bg-gradient-to-b from-violet-100/40 to-transparent rounded-2xl"><img src="assets/character/anh-tu-ao-dai-explain-cut.webp" alt="Tú Phan giảng giải" class="h-44 w-auto drop-shadow-xl object-contain"></div><p class="font-display font-extrabold text-deep-teal text-sm mt-3">Tú Phan – Giảng giải</p><p class="text-[10px] text-deep-teal/50">Đưa tay diễn giải khái niệm kinh doanh</p></div>
+      <div class="clay-card art-card p-4 text-center"><div class="h-48 flex items-end justify-center bg-gradient-to-b from-stone-100/60 to-transparent rounded-2xl"><img src="assets/character/anh-tu-ao-dai-work-cut.webp" alt="Tú Phan làm việc với laptop" class="h-44 w-auto drop-shadow-xl object-contain"></div><p class="font-display font-extrabold text-deep-teal text-sm mt-3">Tú Phan – Bàn làm việc</p><p class="text-[10px] text-deep-teal/50">Phân tích dữ liệu mô phỏng trên laptop</p></div>
+      <div class="clay-card art-card p-4 text-center"><div class="h-48 flex items-end justify-center bg-gradient-to-b from-green-100/50 to-transparent rounded-2xl"><img src="assets/character/anh-tu-suit-green.webp" alt="Tú Phan vest xanh rêu dang tay" class="h-44 w-auto drop-shadow-xl object-contain"></div><p class="font-display font-extrabold text-deep-teal text-sm mt-3">Tú Phan – Vest xanh rêu</p><p class="text-[10px] text-deep-teal/50">Dang tay chào đón · cài áo Bản đồ Việt Nam trên ve áo</p></div>
+      <div class="clay-card art-card p-4 text-center"><div class="h-48 flex items-end justify-center rounded-2xl overflow-hidden"><img src="assets/character/lumina-cheer.webp" alt="Lumina ăn mừng chiến thắng" class="h-48 w-auto object-contain" loading="lazy"></div><p class="font-display font-extrabold text-deep-teal text-sm mt-3">Lumina – Ăn mừng chiến thắng</p><p class="text-[10px] text-deep-teal/50">Hai tay giơ cao – khoảnh khắc cắm cờ thị trường mới</p></div>
+      <div class="clay-card art-card p-4 text-center"><div class="h-48 flex items-end justify-center bg-gradient-to-b from-indigo-100/40 to-transparent rounded-2xl"><img src="assets/character/lumina-casual.webp" alt="Lumina đời thường – sơ mi và jeans" class="h-44 w-auto drop-shadow-xl object-contain" loading="lazy"></div><p class="font-display font-extrabold text-deep-teal text-sm mt-3">Lumina – Ngày thường</p><p class="text-[10px] text-deep-teal/50">Sơ mi thêu chữ LR, jeans &amp; kính tròn – phiên bản đời thường</p></div>
+      <div class="clay-card art-card p-4 text-center"><div class="h-48 flex items-end justify-center rounded-2xl overflow-hidden"><img src="assets/character/lumina-sweater-huong.webp" alt="Lumina áo len Je m'appelle Hương" class="h-48 w-auto object-contain" loading="lazy"></div><p class="font-display font-extrabold text-deep-teal text-sm mt-3">Lumina – «Je m'appelle Hương»</p><p class="text-[10px] text-deep-teal/50">Áo len dệt tên dự án âm nhạc – cầu nối hai hệ sinh thái</p></div>
+      <div class="clay-card art-card p-4 text-center"><div class="h-48 flex items-end justify-center bg-gradient-to-b from-amber-100/40 to-transparent rounded-2xl"><img src="assets/character/lumina-ao-dai-cheer.webp" alt="Lumina áo dài ăn mừng" class="h-44 w-auto drop-shadow-xl object-contain" loading="lazy"></div><p class="font-display font-extrabold text-deep-teal text-sm mt-3">Lumina – Ăn mừng</p><p class="text-[10px] text-deep-teal/50">Áo dài trắng, hai tay giơ cao – khoảnh khắc cả đội về đích</p></div>
+      <div class="clay-card art-card p-4 text-center"><div class="h-48 flex items-end justify-center bg-gradient-to-b from-emerald-100/40 to-transparent rounded-2xl"><img src="assets/character/lumina-ao-dai-thumbsup.webp" alt="Lumina áo dài giơ ngón cái" class="h-44 w-auto drop-shadow-xl object-contain" loading="lazy"></div><p class="font-display font-extrabold text-deep-teal text-sm mt-3">Lumina – Làm tốt lắm</p><p class="text-[10px] text-deep-teal/50">Áo dài trắng huy hiệu cờ đỏ · giơ ngón cái khen quyết định hay</p></div>
+      <div class="clay-card art-card p-4 text-center"><div class="h-48 flex items-end justify-center bg-gradient-to-b from-sky-100/40 to-transparent rounded-2xl"><img src="assets/character/lumina-office-welcome.webp" alt="Lumina đầm trắng mời gọi" class="h-44 w-auto drop-shadow-xl object-contain" loading="lazy"></div><p class="font-display font-extrabold text-deep-teal text-sm mt-3">Lumina – Mời vào phòng họp</p><p class="text-[10px] text-deep-teal/50">Đầm công sở trắng · một tay chống hông, một tay mời</p></div>
+      <div class="clay-card art-card p-4 text-center"><div class="h-48 flex items-end justify-center bg-gradient-to-b from-orange-100/50 to-transparent rounded-2xl"><img src="assets/character/rivals/alpha.webp" alt="CEO Alpha Dynamics" class="h-44 w-auto drop-shadow-xl object-contain"></div><p class="font-display font-extrabold text-deep-teal text-sm mt-3">🐺 CEO Alpha Dynamics</p><p class="text-[10px] text-deep-teal/50">Đối thủ AI · giá rẻ tốc chiến, khoanh tay thách thức</p></div>
+      <div class="clay-card art-card p-4 text-center"><div class="h-48 flex items-end justify-center bg-gradient-to-b from-cyan-100/50 to-transparent rounded-2xl"><img src="assets/character/rivals/mekong.webp" alt="CEO Mekong Ventures" class="h-44 w-auto drop-shadow-xl object-contain"></div><p class="font-display font-extrabold text-deep-teal text-sm mt-3">🐘 CEO Mekong Ventures</p><p class="text-[10px] text-deep-teal/50">Đối thủ AI · cân bằng chắc chắn như đồng bằng</p></div>
+      <div class="clay-card art-card p-4 text-center"><div class="h-48 flex items-end justify-center bg-gradient-to-b from-purple-100/50 to-transparent rounded-2xl"><img src="assets/character/rivals/star.webp" alt="CEO Star Clay Co." class="h-44 w-auto drop-shadow-xl object-contain"></div><p class="font-display font-extrabold text-deep-teal text-sm mt-3">🦚 CEO Star Clay Co.</p><p class="text-[10px] text-deep-teal/50">Đối thủ AI · cao cấp thương hiệu, tay nâng cúp RIVAL</p></div>
+    </div>
+    <div class="clay-card art-card p-4 mt-4">
+      <img src="assets/character/team/lineup-cut.webp" alt="Đội Demo 5 nhân vật đất sét" class="w-full max-w-2xl mx-auto drop-shadow-xl" loading="lazy">
+      <p class="font-display font-extrabold text-deep-teal text-sm mt-3 text-center">Đội Demo Bật Nghiệp – 5 thành viên đất nặn</p>
+      <p class="text-[10px] text-deep-teal/50 text-center mt-0.5">COO Bảo Ngọc · CFO Thu Hà · CEO Minh Long · CMO Lan Chi · Thư ký pháp chế Gia Hân</p>
+    </div>
+    <div class="clay-card art-card p-4 mt-4">
+      <img src="assets/illustrations/turnaround-huong.webp" alt="Bảng turnaround nhân vật Hương – mặt trước, nghiêng 45° và mặt sau" class="w-full max-w-2xl mx-auto rounded-xl" loading="lazy">
+      <p class="font-display font-extrabold text-deep-teal text-sm mt-3 text-center">Character Turnaround Sheet – hồ sơ tạo hình nhân vật</p>
+      <p class="text-[10px] text-deep-teal/50 text-center mt-0.5">3 góc nhìn chuẩn (trước · nghiêng 45° · sau) · tài liệu đăng ký bản quyền mỹ thuật ứng dụng · mã VN-HƯƠNG-CLAY-001</p>
+    </div>
+  </section>
+
+  <!-- DÀN NHÂN VẬT HỘ CHIẾU THƯƠNG HIỆU -->
+  <section class="mb-12">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">🛂 Dàn nhân vật «Hộ Chiếu Thương Hiệu»</h2>
+    <p class="text-sm text-deep-teal/55 mb-5">Bộ 21 tạo hình đất nặn 3D của game <a href="brand-passport.html" class="font-bold text-primary">Hộ Chiếu Thương Hiệu</a> – 6 cố vấn đồng hành và 4 doanh nghiệp Việt, phần lớn nhân vật có cả bản thường và bản lễ phục áo dài.</p>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4" id="bp-cast-lib"></div>
+    <div class="clay-card art-card p-4 mt-4">
+      <img src="assets/illustrations/cast-sheet-brand-passport.webp" alt="Bảng tạo hình 15 nhân vật game Hộ Chiếu Thương Hiệu" class="w-full rounded-xl" loading="lazy">
+      <p class="font-display font-extrabold text-deep-teal text-sm mt-3 text-center">Character Sheet – Bảng tạo hình «Hộ Chiếu Thương Hiệu»</p>
+      <p class="text-[10px] text-deep-teal/50 text-center mt-0.5">21 tạo hình trên cùng khung chuẩn · tài liệu đăng ký quyền tác giả mỹ thuật ứng dụng · mã VN-BIZON-BP-CAST-001</p>
+    </div>
+    <p class="text-[11px] text-deep-teal/50 mt-4">📐 Cả 21 tệp dựng trên cùng khung chuẩn <b>760 × 1100 px</b>, chiều cao nhân vật thống nhất và cùng một đường chân, nền trong suốt – dùng làm bộ ảnh gốc cho hồ sơ đăng ký quyền tác giả loại hình <b>mỹ thuật ứng dụng</b>.</p>
+  </section>
+
+  <!-- BỐI CẢNH & MINH HỌA -->
+  <section class="mb-12">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-5">🏙️ Bối cảnh &amp; minh họa</h2>
+    <div class="grid sm:grid-cols-3 gap-4">
+      <div class="clay-card art-card overflow-hidden"><img src="assets/illustrations/thuyen-sen-khoi-hanh.webp" alt="Thuyền sen rời bến lúc bình minh" class="w-full h-44 object-cover" style="object-position:50% 42%" loading="lazy"><div class="p-4"><p class="font-display font-extrabold text-deep-teal text-sm">Thuyền rời bến Vàm Thịnh</p><p class="text-[10px] text-deep-teal/50 mt-0.5">Phù điêu đất sét · dòng sông sen lúc bình minh – ảnh chủ đạo game Hộ Chiếu Thương Hiệu</p></div></div>
+      <div class="clay-card art-card overflow-hidden"><img src="assets/illustrations/command-center.webp" alt="Trung tâm Điều hành Doanh nghiệp" class="w-full h-44 object-cover" loading="lazy"><div class="p-4"><p class="font-display font-extrabold text-deep-teal text-sm">Trung tâm Điều hành Doanh nghiệp</p><p class="text-[10px] text-deep-teal/50 mt-0.5">Biểu đồ 3D, la bàn vàng &amp; cúp chiến thắng – quản trị dựa trên dữ liệu</p></div></div>
+      <div class="clay-card art-card overflow-hidden"><img src="assets/illustrations/team-holo-meeting.webp" alt="Đội ngũ họp chiến lược quanh bàn hologram" class="w-full h-44 object-cover" style="object-position:50% 30%" loading="lazy"><div class="p-4"><p class="font-display font-extrabold text-deep-teal text-sm">Bàn họp chiến lược hologram</p><p class="text-[10px] text-deep-teal/50 mt-0.5">5 vai trò nòng cốt thảo luận quanh biểu đồ Gantt – như trong Cuộc họp đội mỗi vòng</p></div></div>
+      <div class="clay-card art-card overflow-hidden"><div class="h-44 flex items-center justify-center bg-gradient-to-b from-primary/10 to-transparent"><img src="assets/illustrations/globe-trade.webp" alt="Địa cầu đất sét kết nối Việt Nam ra thế giới" class="h-40 w-auto drop-shadow-xl" loading="lazy"></div><div class="p-4"><p class="font-display font-extrabold text-deep-teal text-sm">Vươn ra biển lớn</p><p class="text-[10px] text-deep-teal/50 mt-0.5">Các tuyến bay &amp; tàu hàng tỏa ra từ ghim Việt Nam – tinh thần BizOn Go Global</p></div></div>
+      <div class="clay-card art-card overflow-hidden"><img src="assets/illustrations/event-vietnam-2026.webp" alt="Kịch bản Việt Nam 2026 – phát triển kinh tế" class="w-full h-44 object-cover" loading="lazy"><div class="p-4"><p class="font-display font-extrabold text-deep-teal text-sm">Kịch bản «Việt Nam 2026»</p><p class="text-[10px] text-deep-teal/50 mt-0.5">Cổng chào phát triển kinh tế &amp; mũi tên vàng – hình sự kiện vòng chung kết</p></div></div>
+      <div class="clay-card art-card overflow-hidden"><img src="assets/illustrations/solar-farm.webp" alt="Cánh đồng pin mặt trời đất sét" class="w-full h-44 object-cover" loading="lazy"><div class="p-4"><p class="font-display font-extrabold text-deep-teal text-sm">Cánh đồng năng lượng sạch</p><p class="text-[10px] text-deep-teal/50 mt-0.5">Minh họa vật phẩm Pin Mặt Trời – chiến lược ESG trong game</p></div></div>
+      <div class="clay-card art-card overflow-hidden"><img src="assets/illustrations/event-energy-crisis.webp" alt="Địa cầu khủng hoảng năng lượng" class="w-full h-44 object-cover" loading="lazy"><div class="p-4"><p class="font-display font-extrabold text-deep-teal text-sm">Khủng hoảng năng lượng</p><p class="text-[10px] text-deep-teal/50 mt-0.5">Hình sự kiện vòng 4 – thử thách quản trị rủi ro của COO &amp; CFO</p></div></div>
+      <div class="clay-card art-card overflow-hidden"><img src="assets/illustrations/logo-bizon-dark.webp" alt="Logo BizOn Bật Nghiệp phiên bản nền tối" class="w-full h-44 object-cover" loading="lazy"><div class="p-4"><p class="font-display font-extrabold text-deep-teal text-sm">Logo «Bo» – bản nền tối</p><p class="text-[10px] text-deep-teal/50 mt-0.5">Nhận diện thương hiệu BizOn Bật Nghiệp · đất sét cam trên nền navy</p></div></div>
+      <div class="clay-card art-card overflow-hidden"><img src="assets/illustrations/lumina-holo-classroom.webp" alt="Lumina đứng lớp mô phỏng hologram" class="w-full h-44 object-cover" style="object-position:50% 20%" loading="lazy"><div class="p-4"><p class="font-display font-extrabold text-deep-teal text-sm">Lớp học mô phỏng hologram</p><p class="text-[10px] text-deep-teal/50 mt-0.5">Lumina điều phối buổi chơi trước dashboard dữ liệu – ảnh chủ đạo trang chủ</p></div></div>
+      <div class="clay-card art-card overflow-hidden"><img src="assets/illustrations/anh-tu-lecture-hall.webp" alt="Thầy Tú trên giảng đường" class="w-full h-44 object-cover" style="object-position:50% 18%" loading="lazy"><div class="p-4"><p class="font-display font-extrabold text-deep-teal text-sm">Giảng đường BizOn</p><p class="text-[10px] text-deep-teal/50 mt-0.5">PGS.TS. Phan Anh Tú giữa hai bục giảng &amp; biểu đồ tăng trưởng – ảnh chủ đạo trang chủ</p></div></div>
+      <div class="clay-card art-card overflow-hidden"><img src="assets/illustrations/anh-tu-library-study.webp" alt="Thầy Tú nghiên cứu tại thư viện" class="w-full h-44 object-cover" style="object-position:50% 22%" loading="lazy"><div class="p-4"><p class="font-display font-extrabold text-deep-teal text-sm">Giờ nghiên cứu ở thư viện</p><p class="text-[10px] text-deep-teal/50 mt-0.5">Thầy Tú bên laptop, sách mở và cà phê – nơi các Model Card ra đời</p></div></div>
+    </div>
+  </section>
+
+  <!-- ÂM NHẠC -->
+  <section class="mb-12">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-5">🎵 Âm nhạc gốc</h2>
+    <div class="grid sm:grid-cols-3 gap-4" id="music-cards"></div>
+    <p class="text-xs text-deep-teal/50 mt-4">🎶 Trình phát đầy đủ, lời bài hát và giọng Lumina: <a href="am-nhac.html" class="font-bold text-primary">Kho Âm nhạc BizOn →</a></p>
+  </section>
+
+  <!-- SẢN PHẨM & QUÀ TẶNG -->
+  <section class="mb-12">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">🧷 Sản phẩm &amp; Quà tặng</h2>
+    <p class="text-sm text-deep-teal/55 mb-5">Bộ cài áo (lapel pin) chính thức của BizOn – quà tặng cho đội vô địch và vật phẩm nhận diện thương hiệu.</p>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div class="clay-card art-card p-4 text-center"><div class="rounded-2xl" style="background:linear-gradient(160deg,#fdf6ec,#f3e4c8)"><img src="assets/merch/pin-vietnam.webp" alt="Cài áo bản đồ Việt Nam" class="w-full" loading="lazy"></div><p class="font-display font-extrabold text-deep-teal text-sm mt-3">Cài áo Bản đồ Việt Nam</p><p class="text-[10px] text-deep-teal/50">Men đỏ viền vàng, sao vàng Lũng Cú – biểu tượng hành trình chinh phục 6 vòng chơi</p></div>
+      <div class="clay-card art-card p-4 text-center"><div class="rounded-2xl" style="background:linear-gradient(160deg,#fdf6ec,#f3e4c8)"><img src="assets/merch/pin-set.webp" alt="Bộ cài áo Sao đỏ, +84, VIETNAM" class="w-full" loading="lazy"></div><p class="font-display font-extrabold text-deep-teal text-sm mt-3">Bộ ba Sao đỏ · +84 · VIETNAM</p><p class="text-[10px] text-deep-teal/50">Bộ pin BizOn Go Global – mang mã vùng +84 ra thế giới</p></div>
+      <div class="clay-card art-card p-4 text-center"><img src="assets/character/anh-tu-pin.webp" alt="Tú Phan đeo cài áo bản đồ Việt Nam" class="w-full rounded-2xl" loading="lazy"><p class="font-display font-extrabold text-deep-teal text-sm mt-3">Tú Phan với cài áo Việt Nam</p><p class="text-[10px] text-deep-teal/50">Cố vấn học thuật đeo cài áo bản đồ Việt Nam trên ve áo vest</p></div>
+    </div>
+  </section>
+
+  <!-- LIÊN KẾT BIZON -->
+  <section class="mb-12">
+    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-5">🔗 Khám phá thêm</h2>
+    <div class="grid sm:grid-cols-2 gap-4">
+      <a href="am-nhac.html" class="clay-card art-card p-6 flex items-center gap-4">
+        <p class="text-4xl shrink-0">🎶</p>
+        <div><h3 class="font-display font-extrabold text-deep-teal">Kho Âm nhạc BizOn</h3><p class="text-xs text-deep-teal/55 mt-1">Toàn bộ ca khúc gốc và giọng Lumina của riêng BizOn – trình phát đầy đủ.</p></div>
+      </a>
+      <a href="doi-ngu.html" class="clay-card art-card p-6 flex items-center gap-4">
+        <p class="text-4xl shrink-0">👥</p>
+        <div><h3 class="font-display font-extrabold text-deep-teal">Đội ngũ sáng lập</h3><p class="text-xs text-deep-teal/55 mt-1">Đỗ Thùy Hương &amp; Phan Anh Tú – sứ mệnh và tầm nhìn 2026.</p></div>
+      </a>
+    </div>
+  </section>
+
+  <p class="text-center text-xs text-deep-teal/40 mt-8">© 2026 Đỗ Thùy Hương &amp; Phan Anh Tú · BizOn Bật Nghiệp – Bảo lưu mọi quyền · <a href="index.html" class="font-bold text-primary">🏠 Trang chủ</a></p>
+</main>
+
+<!-- XEM ẢNH PHÓNG TO -->
+<div id="lb" role="dialog" aria-modal="true" aria-label="Xem ảnh phóng to">
+  <button id="lb-close" onclick="lbClose()" title="Đóng (Esc)">✕</button>
+  <button id="lb-prev" onclick="lbStep(-1)" title="Ảnh trước (←)">‹</button>
+  <button id="lb-next" onclick="lbStep(1)" title="Ảnh sau (→)">›</button>
+  <div class="flex flex-col items-center">
+    <img id="lb-img" alt="">
+    <div class="lb-cap">
+      <p id="lb-title" class="font-display font-extrabold text-lg"></p>
+      <p id="lb-desc" class="text-sm mt-1" style="color:rgba(255,255,255,.7)"></p>
+      <p id="lb-pos" class="text-[11px] font-extrabold mt-2" style="color:rgba(255,255,255,.45)"></p>
+    </div>
+  </div>
+</div>
+
+<script src="js/site-ui.js" defer></script>
+<script src="js/site-vnmap.js" defer></script>
+<script>
+/* Máy phát nhạc mini cho từng bài */
+const LIB_TRACKS = [
+  { t: 'Hương on Return ⭐', s: 'Bài hát chính của BizOn · bản thu có lời', f: 'assets/audio/huong-on-return.mp3' },
+  { t: 'Vừa Đủ Để Bay Cao', s: 'Ca khúc tiếng Việt · bản thu có lời', f: 'assets/audio/vua-du-de-bay-cao.mp3' },
+  { t: 'BizOn Theme', s: 'Nhạc nền game · instrumental', f: 'assets/audio/bizon-theme.mp3' },
+  { t: 'Bật Nghiệp', s: 'Ca khúc chủ đề game Việt Nam · bản thu có lời', f: 'assets/audio/bat-nghiep-co-loi.mp3' },
+  { t: "Hương sans frontières", s: 'Ca khúc BizOn Go Global · bản tiếng Việt', f: 'assets/audio/huong-and-the-world.mp3' },
+  { t: "Hương sans frontières (EN)", s: 'Bản song ngữ Anh–Việt · phát hành quốc tế', f: 'assets/audio/huong-and-the-world-en.mp3' },
+  { t: "Hương sans frontières (nam)", s: 'Bản phối giọng nam · lời tiếng Anh', f: 'assets/audio/huong-and-the-world-male.mp3' },
+  { t: "Hương et le Monde (FR)", s: 'Phiên bản tiếng Pháp · bản thu có lời', f: 'assets/audio/huong-et-le-monde.mp3' },
+];
+/* Dàn nhân vật game Hộ Chiếu Thương Hiệu – cùng khung 760×1100 nên hiển thị bằng nhau */
+const BP_CAST = [
+  ['advisors/lumina-vest-cut.webp', 'Lumina AI', 'Cố vấn AI · người dẫn chuyện suốt sáu quý chơi'],
+  ['advisors/lumina-aodai-cut.webp', 'Lumina AI – Áo dài', 'Lễ phục · màn chào và đêm trao Hộ chiếu Thương hiệu'],
+  ['advisors/lumina-nghe-nhac-dung-cut.webp', 'Lumina AI – Nghe nhạc (đứng)', 'Tạo hình Kho Âm nhạc · áo dài trắng, tai nghe và nốt nhạc bay'],
+  ['advisors/lumina-nghe-nhac-ngoi-cut.webp', 'Lumina AI – Nghe nhạc (ngồi)', 'Tạo hình Kho Âm nhạc · ngồi ghế đất sét, cánh hoa rơi quanh'],
+  ['advisors/lumina-chap-tay-cut.webp', 'Lumina AI – Chắp tay cảm ơn', 'Áo dài trắng, tai nghe · dáng chào và cảm ơn cuối buổi chơi'],
+  ['advisors/lumina-y-tuong-cut.webp', 'Lumina AI – Có ý tưởng', 'Giơ ngón trỏ, tia sáng vàng · khoảnh khắc gợi ý chiến lược'],
+  ['advisors/lumina-vo-tay-cut.webp', 'Lumina AI – Vỗ tay chúc mừng', 'Kim tuyến và sao vàng rơi quanh · đội chơi hoàn thành mục tiêu'],
+  ['advisors/lumina-bien-co-thi-truong-cut.webp', 'Lumina AI – Báo biến cố thị trường', 'Bảng hologram biểu đồ giá · khoảnh khắc thị trường biến động bất ngờ'],
+  ['advisors/ba-sau-lanh-cut.webp', 'Bà Sáu Lành', 'Nhà sáng lập · giữ hồn nghề, tay nâng hũ đặc sản gia truyền'],
+  ['advisors/ba-sau-lanh-aodai-cut.webp', 'Bà Sáu Lành – Áo dài', 'Lễ phục · giỏ quà quê trong đêm trao Hộ chiếu Thương hiệu'],
+  ['advisors/minh-khang-cut.webp', 'Minh Khang', 'Giám đốc tài chính · ly cà phê giữa hai phiên họp'],
+  ['advisors/minh-khang-aodai-cut.webp', 'Minh Khang – Áo dài', 'Lễ phục · đọc dòng tiền trên bảng số liệu'],
+  ['advisors/an-nhien-cut.webp', 'An Nhiên', 'Chiến lược &amp; đổi mới · bảng số liệu thị trường trong tay'],
+  ['advisors/an-nhien-aodai-cut.webp', 'An Nhiên – Áo dài', 'Lễ phục · dựng câu chuyện thương hiệu'],
+  ['advisors/victor-lam-cut.webp', 'Victor Lâm', 'Cố vấn quốc tế hóa · ôm tập báo cáo thị trường'],
+  ['advisors/victor-lam-doithuong-cut.webp', 'Victor Lâm – Đời thường', 'Áo khoác len và huy hiệu địa cầu trên ngực'],
+  ['advisors/victor-lam-aodai-cut.webp', 'Victor Lâm – Áo dài', 'Lễ phục · hộp hồ sơ thị trường xuất khẩu'],
+  ['advisors/lina-park-cut.webp', 'Lina Park', 'Cố vấn phân phối · bút chỉ và bản đồ tuyến hàng'],
+  ['advisors/lina-park-aodai-cut.webp', 'Lina Park – Áo dài', 'Lễ phục · bản vẽ tuyến phân phối cuộn trong tay'],
+  ['firms/moc-nhien-cut.webp', 'Mộc Nhiên', 'Mỹ phẩm thảo mộc · ôm chậu thảo mộc nguyên liệu'],
+  ['firms/moc-nhien-aodai-cut.webp', 'Mộc Nhiên – Áo dài', 'Lễ phục · câu chuyện thương hiệu là thế mạnh'],
+  ['firms/phu-sa-foods-cut.webp', 'Phù Sa Foods', 'Thực phẩm chế biến · khay hũ đặc sản miền Tây'],
+  ['firms/phu-sa-foods-aodai-cut.webp', 'Phù Sa Foods – Áo dài', 'Lễ phục · mâm món ăn giới thiệu tại hội chợ'],
+  ['firms/lam-viet-cut.webp', 'Lam Việt', 'Thời trang bền vững · vải chàm nhuộm tay và khung dệt'],
+  ['firms/lam-viet-aodai-cut.webp', 'Lam Việt – Áo dài', 'Lễ phục · áo dài thêu hoa, tay nâng mẫu vải chàm'],
+  ['firms/mekong-digital-cut.webp', 'Mekong Digital', 'Phần mềm quản trị · kênh số mạnh, biên lời cao'],
+  ['firms/mekong-digital-doithuong-cut.webp', 'Mekong Digital – Đời thường', 'Áo hoodie và túi đeo chéo trên đường tới lớp'],
+];
+
+document.getElementById('bp-cast-lib').innerHTML = BP_CAST.map(([f, n, s]) => `
+  <div class="clay-card art-card p-3 text-center">
+    <div class="h-40 flex items-end justify-center bg-gradient-to-b from-primary-container/15 to-transparent rounded-2xl">
+      <img src="assets/character/${f}" alt="${n}" class="h-36 w-auto drop-shadow-xl object-contain" loading="lazy">
+    </div>
+    <p class="font-display font-extrabold text-deep-teal text-sm mt-2">${n}</p>
+    <p class="text-[10px] text-deep-teal/50 leading-tight mt-0.5">${s}</p>
+  </div>`).join('');
+
+let libAudio = null, libIdx = -1;
+function libPlay(i) {
+  if (libIdx === i && libAudio && !libAudio.paused) { libAudio.pause(); libIdx = -1; libRender(); return; }
+  if (libAudio) libAudio.pause();
+  libAudio = new Audio(LIB_TRACKS[i].f); libAudio.volume = 0.5; libAudio.play().catch(() => {});
+  libAudio.addEventListener('ended', () => { libIdx = -1; libRender(); });
+  libIdx = i; libRender();
+}
+function libRender() {
+  document.getElementById('music-cards').innerHTML = LIB_TRACKS.map((tr, i) => `
+    <button onclick="libPlay(${i})" class="clay-card art-card p-5 text-left w-full">
+      <p class="text-3xl">${libIdx === i ? '⏸️' : '▶️'}</p>
+      <p class="font-display font-extrabold text-deep-teal text-sm mt-2">${tr.t}</p>
+      <p class="text-[10px] text-deep-teal/50 mt-0.5">${tr.s}</p>
+    </button>`).join('');
+}
+libRender();
+</script>
+
+<p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2" style="color:rgba(100,116,125,.85)">✉️ Liên hệ · Contact: <a href="mailto:patu@ctu.edu.vn" style="color:inherit;text-decoration:underline">patu@ctu.edu.vn</a> · <a href="mailto:thuyhuongctu@gmail.com" style="color:inherit;text-decoration:underline">thuyhuongctu@gmail.com</a></p>
+<p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2 pb-6" style="color:rgba(100,116,125,.75)">🎓 Trang web chỉ phục vụ mục đích giáo dục và nghiên cứu, không đại diện cho bất kỳ tổ chức chính trị nào. Hình ảnh quốc kỳ, bản đồ chỉ mang ý nghĩa minh họa văn hóa – giáo dục. · This website serves educational and research purposes only and does not represent any political organization.</p>
+<script src="js/site-dock.js" defer></script>
+<script src="js/site-footer.js" defer></script>
+<script src="js/site-nav.js" defer></script>
+<script>
+/* ===== Thư viện: thống kê, lọc theo nhóm, tìm kiếm, xem ảnh phóng to ===== */
+(function () {
+  var main = document.querySelector('main');
+  var secs = [].slice.call(main.querySelectorAll('section'));
+
+  function titleOf(sec) {
+    var h = sec.querySelector('h2');
+    return h ? h.textContent.trim() : '';
+  }
+  function cardsOf(sec) { return [].slice.call(sec.querySelectorAll('.art-card')); }
+
+  /* --- Chip lọc: mỗi mục trong trang thành một chip --- */
+  var chips = document.getElementById('lib-chips');
+  var active = 'all';
+  function chipHtml(id, label, n) {
+    return '<button class="chip" data-sec="' + id + '" aria-pressed="' + (active === id) + '">' +
+           label + (n != null ? ' <span style="opacity:.6">' + n + '</span>' : '') + '</button>';
+  }
+  secs.forEach(function (sec, i) { sec.dataset.lib = 's' + i; });
+  function buildChips() {
+    var total = secs.reduce(function (a, s) { return a + cardsOf(s).length; }, 0);
+    chips.innerHTML = chipHtml('all', 'Tất cả', total) +
+      secs.map(function (sec) {
+        var n = cardsOf(sec).length;
+        return n ? chipHtml(sec.dataset.lib, titleOf(sec), n) : '';
+      }).join('');
+    [].forEach.call(chips.querySelectorAll('.chip'), function (b) {
+      b.onclick = function () { active = b.dataset.sec; buildChips(); apply(); };
+    });
+  }
+
+  /* --- Thống kê ở đầu trang --- */
+  function stat(icon, num, label) {
+    return '<span class="rounded-full px-3.5 py-1.5 text-[12px] font-extrabold" ' +
+           'style="background:rgba(255,255,255,.13);color:#fff">' + icon + ' ' + num +
+           ' <span style="opacity:.7;font-weight:600">' + label + '</span></span>';
+  }
+  function buildStats() {
+    var imgs = main.querySelectorAll('.art-card img').length;
+    var songs = (typeof LIB_TRACKS !== 'undefined' ? LIB_TRACKS.length : 0);
+    document.getElementById('lib-stats').innerHTML =
+      stat('🎨', imgs, 'tác phẩm mỹ thuật') + stat('🎵', songs, 'bản thu') +
+      stat('🗂️', secs.filter(function (x) { return cardsOf(x).length; }).length, 'nhóm');
+  }
+
+  /* --- Lọc và tìm kiếm --- */
+  var q = document.getElementById('lib-q');
+  var countEl = document.getElementById('lib-count');
+  var bo = function (t) { return (t || '').toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd'); };
+  function apply() {
+    var kw = bo(q.value.trim());
+    var shown = 0;
+    secs.forEach(function (sec) {
+      var cards = cardsOf(sec);
+      var secOn = active === 'all' || active === sec.dataset.lib;
+      var any = 0;
+      cards.forEach(function (c) {
+        var ok = secOn && (!kw || bo(c.textContent + ' ' + [].map.call(c.querySelectorAll('img'),
+                 function (i) { return i.alt; }).join(' ')).indexOf(kw) > -1);
+        c.hidden = !ok;
+        if (ok) any++;
+      });
+      shown += any;
+      // Mục không còn thẻ nào hợp lệ thì ẩn luôn cả tiêu đề cho đỡ rối
+      sec.hidden = cards.length > 0 && any === 0;
+    });
+    countEl.textContent = (kw || active !== 'all') ? shown + ' kết quả' : '';
+    buildLbList();
+  }
+  q.addEventListener('input', apply);
+
+  /* --- Xem ảnh phóng to --- */
+  var list = [], pos = 0;
+  var lb = document.getElementById('lb');
+  function buildLbList() {
+    list = [].slice.call(main.querySelectorAll('.art-card img')).filter(function (im) {
+      var c = im.closest('.art-card'), sec = im.closest('section');
+      return c && !c.hidden && !(sec && sec.hidden);
+    });
+  }
+  function capOf(im) {
+    var c = im.closest('.art-card');
+    var ps = c ? c.querySelectorAll('p') : [];
+    return { t: ps[0] ? ps[0].textContent.trim() : (im.alt || ''),
+             d: ps[1] ? ps[1].textContent.trim() : '' };
+  }
+  window.lbOpen = function (im) {
+    buildLbList();
+    pos = list.indexOf(im);
+    if (pos < 0) { list = [im]; pos = 0; }
+    lbShow();
+    lb.classList.add('on');
+    document.body.style.overflow = 'hidden';
+  };
+  function lbShow() {
+    var im = list[pos];
+    if (!im) return;
+    var c = capOf(im);
+    document.getElementById('lb-img').src = im.currentSrc || im.src;
+    document.getElementById('lb-img').alt = im.alt || c.t;
+    document.getElementById('lb-title').textContent = c.t;
+    document.getElementById('lb-desc').textContent = c.d;
+    document.getElementById('lb-pos').textContent = (pos + 1) + ' / ' + list.length;
+    var one = list.length < 2;
+    document.getElementById('lb-prev').style.display = one ? 'none' : '';
+    document.getElementById('lb-next').style.display = one ? 'none' : '';
+  }
+  window.lbStep = function (d) { pos = (pos + d + list.length) % list.length; lbShow(); };
+  window.lbClose = function () { lb.classList.remove('on'); document.body.style.overflow = ''; };
+  lb.addEventListener('click', function (e) { if (e.target === lb) lbClose(); });
+  document.addEventListener('keydown', function (e) {
+    if (!lb.classList.contains('on')) return;
+    if (e.key === 'Escape') lbClose();
+    if (e.key === 'ArrowLeft') lbStep(-1);
+    if (e.key === 'ArrowRight') lbStep(1);
+  });
+  main.addEventListener('click', function (e) {
+    var im = e.target.closest ? e.target.closest('.art-card img') : null;
+    if (!im) return;
+    if (e.target.closest('a')) return;   // thẻ liên kết vẫn phải đi tới trang đích
+    e.preventDefault();
+    lbOpen(im);
+  });
+
+  buildChips(); buildStats(); apply();
+})();
+</script>
+</body>
+</html>

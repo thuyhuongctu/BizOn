@@ -366,7 +366,7 @@
         r.nps ?? '', clean(r.open_like), clean(r.open_improve), r.created_at,
       ].join(',')).join('\n');
       const a = document.createElement('a');
-      a.href = URL.createObjectURL(new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' }));
+      a.href = URL.createObjectURL(new Blob(['' + csv], { type: 'text/csv;charset=utf-8' }));
       a.download = 'bizon-khao-sat-' + klass + '.csv';
       a.click();
       URL.revokeObjectURL(a.href);
@@ -382,7 +382,7 @@
       [i + 1, '"' + String(r.team_name).replace(/"/g, '""') + '"', r.best_round, r.share, r.net_profit, r.revenue, r.balance, r.submissions, r.last_submit].join(',')
     ).join('\n');
     const a = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' }));
+    a.href = URL.createObjectURL(new Blob(['' + csv], { type: 'text/csv;charset=utf-8' }));
     a.download = 'bizon-bang-xep-hang-' + ($('gv-class').value.trim() || 'lop') + '.csv';
     a.click();
     URL.revokeObjectURL(a.href);

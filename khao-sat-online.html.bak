@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Khảo sát online lớp thử nghiệm – BizOn Bật Nghiệp</title>
+<meta name="description" content="Bản online của phiếu khảo sát trước–sau BizOn: làm ngay trên điện thoại, tự chấm điểm và nộp về hệ thống nghiên cứu. Ẩn danh qua mã tự đặt.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<script src="js/backend-config.js"></script>
+<script src="js/error-log.js"></script>
+<!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
+     nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
+<link rel="stylesheet" href="css/bizon-fonts.css">
+<style>
+  html { background:#f4faff; }
+  body { font-family:'Manrope', 'Manrope Fallback',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
+  .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
+  .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease; }
+  .clay-btn:active { transform:translateY(2px); }
+  .glass-nav { background:rgba(3,51,55,.78); backdrop-filter:blur(14px); }
+  .gv-input { width:100%; border-radius:16px; border:2px solid rgba(0,102,135,.18); background:#fff; padding:11px 14px; font-weight:700; font-size:14px; color:inherit; outline:none; }
+  .gv-input:focus { border-color:#006687; }
+  .ks-opt { display:flex; gap:10px; align-items:flex-start; border:2px solid rgba(0,102,135,.14); border-radius:14px; padding:10px 12px; margin-top:8px; cursor:pointer; font-size:13.5px; font-weight:600; transition:border-color .12s, background .12s; }
+  .ks-opt:has(input:checked) { border-color:#006687; background:rgba(0,102,135,.07); }
+  .ks-opt input { margin-top:3px; accent-color:#006687; }
+  .likert-row { display:grid; grid-template-columns:1fr repeat(5, 40px); gap:6px; align-items:center; padding:9px 0; border-top:1px solid rgba(0,102,135,.1); font-size:13px; font-weight:600; }
+  .likert-row input { accent-color:#006687; width:18px; height:18px; justify-self:center; }
+  .miss { outline:3px solid #e8762d; outline-offset:4px; border-radius:14px; }
+  :root { --dt: 3 51 55; }
+  html[data-theme="dark"] { --dt: 214 236 240; background:#081a20; color-scheme:dark; }
+  html[data-theme="dark"] body { color:#d6ecf0; }
+  html[data-theme="dark"] .clay-card { background:#0e2a33; box-shadow:0 10px 30px -5px rgba(0,0,0,.45), inset 0 -4px 0 rgba(0,0,0,.3); }
+  html[data-theme="dark"] .glass-nav { background:rgba(2,20,24,.85); }
+  html[data-theme="dark"] .gv-input { background:#0b222a; border-color:rgba(92,196,230,.25); }
+  html[data-theme="dark"] .ks-opt { border-color:rgba(92,196,230,.2); }
+  html[data-theme="dark"] .ks-opt:has(input:checked) { border-color:#5cc4e6; background:rgba(92,196,230,.1); }
+  html[data-theme="dark"] .likert-row { border-top-color:rgba(92,196,230,.15); }
+</style>
+<link rel="stylesheet" href="css/tw.css">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BizOn Bật Nghiệp">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:title" content="Khảo sát online lớp thử nghiệm – BizOn Bật Nghiệp">
+<meta property="og:description" content="Bản online của phiếu khảo sát trước–sau BizOn: làm ngay trên điện thoại, tự chấm điểm và nộp về hệ thống nghiên cứu. Ẩn danh qua mã tự đặt.">
+<meta property="og:url" content="https://thuyhuongctu.github.io/BizOn/khao-sat-online.html">
+<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/og/og-cover.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+
+
+<header class="pt-24 pb-8 text-white" data-net-hero style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%);position:relative;overflow:hidden">
+  <div class="max-w-3xl mx-auto px-5">
+    <p class="text-[11px] font-extrabold uppercase tracking-[.2em] text-clay-gold">Lớp thử nghiệm · Ẩn danh</p>
+    <h1 class="font-display font-extrabold text-3xl mt-2">Khảo sát trước–sau BizOn</h1>
+    <p class="text-white/75 text-sm mt-3">Phiếu <b>ẩn danh</b>, chỉ phục vụ cải tiến trò chơi và nghiên cứu giáo dục. Không có câu trả lời «đúng để lấy điểm» – hãy trả lời trung thực theo hiểu biết hiện tại của bạn.</p>
+  </div>
+</header>
+
+<main class="max-w-3xl mx-auto px-5 py-8">
+
+  <!-- BƯỚC 0: thông tin chung -->
+  <section id="ks-form" class="space-y-6">
+    <div class="clay-card p-6">
+      <h2 class="font-display font-extrabold text-deep-teal text-lg mb-4">📋 Thông tin phiếu</h2>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div class="sm:col-span-2">
+          <label class="block text-xs font-extrabold mb-1.5 opacity-70">Bộ câu hỏi (theo game lớp bạn sử dụng)</label>
+          <div class="grid grid-cols-2 gap-2">
+            <label class="ks-opt !mt-0 justify-center"><input type="radio" name="instr" value="batnghiep" checked onchange="ksInstr()"> 🚀 Khởi nghiệp (Bật Nghiệp)</label>
+            <label class="ks-opt !mt-0 justify-center"><input type="radio" name="instr" value="quocte" onchange="ksInstr()"> 🛂 KD quốc tế (Hộ Chiếu Thương Hiệu)</label>
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-extrabold mb-1.5 opacity-70">Bạn đang làm phiếu nào?</label>
+          <div class="grid grid-cols-2 gap-2">
+            <label class="ks-opt !mt-0 justify-center"><input type="radio" name="phase" value="pre" checked onchange="ksPhase()"> Phiếu TRƯỚC</label>
+            <label class="ks-opt !mt-0 justify-center"><input type="radio" name="phase" value="post" onchange="ksPhase()"> Phiếu SAU</label>
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-extrabold mb-1.5 opacity-70" for="ks-code">Mã tự đặt – 2 chữ cái + 2 số (nhớ dùng lại ở phiếu sau)</label>
+          <input id="ks-code" class="gv-input uppercase" placeholder="VD: HT25" maxlength="4" autocomplete="off">
+        </div>
+        <div>
+          <label class="block text-xs font-extrabold mb-1.5 opacity-70" for="ks-class">Mã lớp học (giảng viên phát)</label>
+          <input id="ks-class" class="gv-input" placeholder="VD: QTKD-2026-A" autocomplete="off">
+        </div>
+        <div id="ks-post-meta" class="hidden grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-extrabold mb-1.5 opacity-70" for="ks-role">Vai trò trong đội</label>
+            <select id="ks-role" class="gv-input"><option value="">– chọn –</option><option>CEO</option><option>CFO</option><option>CMO</option><option>COO</option><option>Thư ký</option></select>
+          </div>
+          <div>
+            <label class="block text-xs font-extrabold mb-1.5 opacity-70" for="ks-rounds">Số vòng đã chơi</label>
+            <select id="ks-rounds" class="gv-input"><option value="">–</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="clay-card p-6">
+      <h2 class="font-display font-extrabold text-deep-teal text-lg mb-1">🧠 Phần A – Kiến thức kinh doanh</h2>
+      <p class="text-xs opacity-60 font-semibold mb-4">Chọn một đáp án mỗi câu (15 câu).</p>
+      <div id="ks-a"></div>
+    </div>
+
+    <div class="clay-card p-6">
+      <h2 class="font-display font-extrabold text-deep-teal text-lg mb-1">💪 Phần B – Mức độ tự tin</h2>
+      <p class="text-xs opacity-60 font-semibold mb-2">1 = hoàn toàn không tự tin · 5 = rất tự tin</p>
+      <div class="grid grid-cols-[1fr_repeat(5,40px)] gap-1.5 text-[11px] font-extrabold opacity-60 text-center"><span></span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+      <div id="ks-b"></div>
+    </div>
+
+    <div id="ks-c-card" class="clay-card p-6 hidden">
+      <h2 class="font-display font-extrabold text-deep-teal text-lg mb-1">🎮 Phần C – Trải nghiệm với BizOn</h2>
+      <p class="text-xs opacity-60 font-semibold mb-2">1 = hoàn toàn không đồng ý · 5 = hoàn toàn đồng ý</p>
+      <div class="grid grid-cols-[1fr_repeat(5,40px)] gap-1.5 text-[11px] font-extrabold opacity-60 text-center"><span></span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+      <div id="ks-c"></div>
+      <div class="mt-5">
+        <label class="block text-sm font-extrabold mb-1.5" for="ks-nps">Trên thang 0–10, bạn sẵn lòng giới thiệu BizOn cho bạn học khác ở mức nào?</label>
+        <input id="ks-nps" type="range" min="0" max="10" value="5" class="w-full" oninput="document.getElementById('ks-nps-v').textContent=this.value" style="accent-color:#006687">
+        <p class="text-center font-display font-extrabold text-2xl text-primary mt-1" id="ks-nps-v">5</p>
+      </div>
+      <div class="mt-4">
+        <label class="block text-sm font-extrabold mb-1.5" for="ks-like">Điều bạn thích nhất ở BizOn?</label>
+        <textarea id="ks-like" class="gv-input" rows="2"></textarea>
+      </div>
+      <div class="mt-4">
+        <label class="block text-sm font-extrabold mb-1.5" for="ks-improve">Điều gì còn khó hiểu hoặc cần cải thiện?</label>
+        <textarea id="ks-improve" class="gv-input" rows="2"></textarea>
+      </div>
+    </div>
+
+    <div class="clay-card p-6 text-center">
+      <p id="ks-status" class="text-sm font-bold opacity-70 mb-4">Kiểm tra kỹ rồi bấm nộp – mỗi phiếu chỉ nộp một lần.</p>
+      <button onclick="ksSubmit()" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-10 py-4 text-base">📨 Nộp phiếu</button>
+    </div>
+  </section>
+
+  <!-- MÀN HÌNH XONG -->
+  <section id="ks-done" class="hidden clay-card p-8 text-center">
+    <p class="text-5xl">🎉</p>
+    <h2 class="font-display font-extrabold text-deep-teal text-2xl mt-3">Đã ghi nhận phiếu của bạn!</h2>
+    <p class="text-sm font-semibold opacity-70 mt-2" id="ks-done-note">Cảm ơn bạn đã tham gia nghiên cứu. Phiếu được lưu ẩn danh theo mã tự đặt.</p>
+    <a href="index.html" class="clay-btn inline-block bg-primary text-white font-display font-extrabold px-8 py-3 text-sm mt-6">🏠 Về trang chủ BizOn</a>
+  </section>
+
+</main>
+
+<script>
+(function () {
+  // ===== Ngân hàng câu hỏi (đồng bộ với phiếu in khao-sat.html) =====
+  const QA = [
+    { q: '«Điểm hòa vốn» của một doanh nghiệp là mức sản lượng mà:', o: ['Doanh thu bằng tổng chi phí', 'Lợi nhuận đạt cao nhất', 'Doanh thu bằng chi phí marketing', 'Hàng tồn kho bằng 0'] },
+    { q: 'Khi giá bán tăng lên (các yếu tố khác giữ nguyên), lượng khách mua thường sẽ:', o: ['Tăng theo', 'Giảm xuống', 'Không đổi', 'Không thể dự đoán'] },
+    { q: 'Chi phí nào sau đây là chi phí biến đổi?', o: ['Tiền thuê xưởng hằng tháng', 'Nguyên liệu đất sét theo số sản phẩm làm ra', 'Khấu hao máy móc', 'Phí đăng ký thương hiệu'] },
+    { q: 'Khi đối thủ đột ngột giảm giá rất sâu, phản ứng nào thường rủi ro nhất cho doanh nghiệp nhỏ?', o: ['Giữ giá, tăng chất lượng và thương hiệu', 'Đua giảm giá xuống thấp hơn đối thủ bằng mọi giá', 'Tập trung vào nhóm khách hàng trung thành', 'Tăng nhẹ marketing để giữ độ phủ'] },
+    { q: 'Chỉ số thanh khoản nhanh (quick ratio) cho biết:', o: ['Doanh nghiệp lãi bao nhiêu mỗi sản phẩm', 'Khả năng trả các khoản nợ ngắn hạn', 'Thị phần so với đối thủ', 'Tốc độ tăng trưởng doanh thu'] },
+    { q: 'Sản xuất nhiều hơn hẳn lượng bán được sẽ trực tiếp dẫn đến:', o: ['Thị phần tăng ngay lập tức', 'Tồn kho tăng và vốn bị đọng', 'Chi phí cố định giảm', 'Giá bán tự động tăng'] },
+    { q: 'Tăng ngân sách marketing luôn làm tăng lợi nhuận. Nhận định này:', o: ['Đúng trong mọi trường hợp', 'Sai – vượt một ngưỡng, chi thêm có thể không bù lại được doanh thu tăng thêm', 'Đúng nếu đối thủ không làm marketing', 'Sai vì marketing không ảnh hưởng doanh thu'] },
+    { q: 'Phương thức thâm nhập thị trường nước ngoài cần ít vốn đầu tư ban đầu nhất thường là:', o: ['Xây nhà máy mới ở nước ngoài (FDI)', 'Liên doanh với đối tác bản địa', 'Xuất khẩu qua nhà phân phối', 'Mua lại một công ty bản địa'] },
+    { q: 'Một phân khúc thị trường đáng để nhắm tới cần điều kiện nào?', o: ['Càng đông người càng tốt, bất kể hành vi', 'Đo lường được, đủ lớn, tiếp cận được và doanh nghiệp phục vụ được', 'Chỉ cần giá rẻ hơn đối thủ', 'Do người sáng lập tự cảm nhận'] },
+    { q: 'Chỉ số OEE trong sản xuất đo điều gì?', o: ['Mức độ hài lòng của nhân viên', 'Hiệu quả thiết bị tổng thể: máy sẵn sàng, chạy đủ tốc độ và ít phế phẩm', 'Doanh thu trên mỗi máy', 'Số ca làm việc mỗi tuần'] },
+    { q: 'Kế hoạch sản xuất vượt quá năng lực đội ngũ nhân công hiện có thì điều gì xảy ra trước tiên?', o: ['Sản lượng thực tế thấp hơn kế hoạch', 'Giá bán tự động tăng', 'Thị phần tăng ngay', 'Chi phí lương giảm'] },
+    { q: 'Khung CAGE đo «khoảng cách» giữa hai quốc gia trên những mặt nào?', o: ['Văn hóa – Hành chính – Địa lý – Kinh tế', 'Giá – Chất lượng – Tốc độ – Số lượng', 'Vốn – Lao động – Đất đai – Công nghệ', 'Ngôn ngữ – Tôn giáo – Ẩm thực – Khí hậu'] },
+    { q: 'Liên doanh với đối tác bản địa đặc biệt hữu ích khi nào?', o: ['Khi muốn toàn quyền kiểm soát hoạt động', 'Khi cần kiến thức và quan hệ bản địa, và có cách quản trị xung đột với đối tác', 'Khi doanh nghiệp thừa vốn', 'Khi thị trường không có đối thủ'] },
+    { q: 'Ba chiến lược cạnh tranh tổng quát theo Porter là:', o: ['Dẫn đầu về chi phí – Khác biệt hóa – Tập trung', 'Quảng cáo – Khuyến mãi – Bán hàng', 'Nội địa – Xuất khẩu – FDI', 'Online – Offline – Đa kênh'] },
+    { q: 'Vì sao một quyết định kinh doanh quan trọng nên được xem xét từ nhiều góc nhìn (chiến lược, tài chính, marketing, vận hành, pháp lý)?', o: ['Để trông có vẻ chuyên nghiệp hơn', 'Mỗi góc nhìn phát hiện một loại tác động và rủi ro khác nhau của cùng quyết định', 'Vì luật yêu cầu', 'Để cuộc họp kéo dài hơn'] },
+  ];
+  const KEY = ['a','b','b','b','b','b','b','c','b','b','a','a','b','a','b']; // đáp án chuẩn (đã in công khai trên phiếu giấy)
+  const OUTCOMES = { // cụm 3 câu ↔ 5 chuẩn đầu ra (hoc-thuat.html)
+    marketing: [2, 7, 9], taichinh: [1, 3, 5], vanhanh: [6, 10, 11], kdqt: [8, 12, 13], chienluoc: [4, 14, 15],
+  };
+
+  // ===== Bộ câu hỏi 2 – Kinh doanh quốc tế (Hộ Chiếu Thương Hiệu, CLO BP-1..BP-6) =====
+  const QA_IB = [
+    { q: 'Với doanh nghiệp nhỏ nguồn lực hạn chế, tiêu chí quan trọng nhất khi chọn thị trường quốc tế ĐẦU TIÊN là:', o: ['Thị trường có quy mô lớn nhất thế giới', 'Mức phù hợp giữa sản phẩm với nhu cầu và năng lực đáp ứng hiện có của doanh nghiệp', 'Nơi có nhiều đối thủ nhất để học hỏi', 'Nơi gần Việt Nam nhất về địa lý'] },
+    { q: '«Khoảng cách thể chế» giữa hai quốc gia thể hiện rõ nhất qua:', o: ['Chênh lệch múi giờ', 'Khác biệt về quy định, tiêu chuẩn, chứng nhận và thủ tục pháp lý', 'Khác biệt tiền tệ', 'Khoảng cách đường bay'] },
+    { q: 'Thị trường tăng trưởng nhanh nhưng xu hướng đổi liên tục phù hợp nhất với doanh nghiệp:', o: ['Chậm thay đổi sản phẩm', 'Thích ứng nhanh, vòng đời sản phẩm ngắn', 'Có chi phí cố định rất lớn', 'Chỉ bán đúng một sản phẩm không đổi'] },
+    { q: 'Xếp các phương thức thâm nhập theo mức CAM KẾT nguồn lực tăng dần:', o: ['Đầu tư trực tiếp < xuất khẩu < nền tảng số', 'Nền tảng số < xuất khẩu trực tiếp < liên doanh/đầu tư trực tiếp', 'Xuất khẩu < nền tảng số < cấp phép', 'Mọi phương thức cam kết như nhau'] },
+    { q: 'Ưu điểm chính của thâm nhập qua đối tác phân phối địa phương là:', o: ['Toàn quyền kiểm soát mọi hoạt động', 'Tận dụng mạng lưới và hiểu biết bản địa của đối tác', 'Loại bỏ hoàn toàn rủi ro', 'Luôn có biên lợi nhuận cao nhất'] },
+    { q: 'Chọn mức cam kết cao (như tự lập đơn vị kinh doanh ở nước ngoài) thường đổi lấy:', o: ['Kiểm soát và lợi nhuận tiềm năng cao hơn, kèm rủi ro cao hơn', 'Rủi ro thấp hơn mọi phương thức khác', 'Không cần vốn ban đầu', 'Được miễn mọi quy định sở tại'] },
+    { q: 'Dữ liệu «lượt quan tâm trên mạng xã hội» cần được đọc thận trọng vì:', o: ['Loại dữ liệu này luôn sai', 'Mức quan tâm không đồng nghĩa với sức mua và hành vi chi trả thật', 'Thu thập nó là bất hợp pháp', 'Chỉ người trẻ mới dùng mạng xã hội'] },
+    { q: 'Thông tin thị trường do một đối tác đang muốn bán dịch vụ phân phối cho bạn cung cấp có nguy cơ:', o: ['Thiên lệch theo lợi ích của chính họ', 'Chính xác tuyệt đối vì họ ở bản địa', 'Vô giá trị hoàn toàn', 'Đáng tin vì miễn phí'] },
+    { q: 'Cách đáng tin cậy nhất để ước lượng nhu cầu thật TRƯỚC khi đầu tư lớn là:', o: ['Hỏi ý kiến bạn bè, người quen', 'Thử nghiệm bán hàng ở quy mô nhỏ và đo số liệu thực', 'Xem quảng cáo của đối thủ', 'Tin vào cảm nhận của người sáng lập'] },
+    { q: 'Đánh đổi «chuẩn hóa – thích nghi» trong quốc tế hóa là cân nhắc giữa:', o: ['Tiết kiệm chi phí nhờ quy mô và mức phù hợp với từng địa phương', 'Giá bán và chất lượng', 'Bán online và bán offline', 'Thị trường nội địa và xuất khẩu'] },
+    { q: 'Khi thị trường mục tiêu yêu cầu chứng nhận bắt buộc, việc bỏ qua nó thường dẫn đến:', o: ['Không ảnh hưởng gì', 'Doanh thu bị giới hạn mạnh hoặc bị chặn bán', 'Được hưởng ưu đãi thuế', 'Uy tín tự động tăng'] },
+    { q: 'Giữ nguyên công thức lõi nhưng đổi bao bì và thông điệp truyền thông theo thị trường là chiến lược:', o: ['Thích nghi một phần (adaptation có chọn lọc)', 'Chuẩn hóa hoàn toàn', 'Rút khỏi thị trường', 'Nhượng quyền thương mại'] },
+    { q: 'Doanh nghiệp xuất khẩu có thể phòng ngừa rủi ro tỷ giá bằng cách:', o: ['Hợp đồng kỳ hạn / khóa tỷ giá trước', 'Không làm gì và hy vọng', 'Ngừng xuất khẩu hoàn toàn', 'Tăng giá bán liên tục theo tỷ giá'] },
+    { q: '«Tăng trưởng nghẽn cổ chai» xảy ra khi:', o: ['Doanh số tăng nhanh hơn năng lực sản xuất, giao hàng và kiểm soát chất lượng', 'Không có khách hàng nào', 'Giá bán quá cao so với đối thủ', 'Thuế nhập khẩu tăng'] },
+    { q: 'Vì sao KHÔNG nên đánh giá thành công quốc tế hóa chỉ bằng doanh thu?', o: ['Vì doanh thu là con số vô nghĩa', 'Vì tăng trưởng nóng có thể làm cạn vốn, mất uy tín, mất đối tác và thiếu bền vững', 'Vì kế toán quốc tế quá phức tạp', 'Vì nhà đầu tư không quan tâm doanh thu'] },
+  ];
+  const KEY_IB = ['b','b','b','b','b','a','b','a','b','a','b','a','a','a','b'];
+  const OUTCOMES_IB = { // cụm 3 câu ↔ CLO BP-1..BP-6 (hoc-thuat.html mục 4.1)
+    thitruong: [1, 2, 3], thamnhap: [4, 5, 6], nguontin: [7, 8, 9], thichnghi: [10, 11, 12], ruiro: [13, 14, 15],
+  };
+  const LIKERT_B_IB = [
+    'Tôi tự tin so sánh và lựa chọn thị trường quốc tế phù hợp cho một doanh nghiệp nhỏ.',
+    'Tôi tự tin chọn phương thức thâm nhập tương xứng với nguồn lực hiện có.',
+    'Tôi đánh giá được độ tin cậy và độ thiên lệch của một nguồn thông tin thị trường.',
+    'Tôi tự tin đàm phán các điều khoản cơ bản với một đối tác phân phối.',
+    'Tôi hiểu vai trò của chứng nhận, tiêu chuẩn và tuân thủ khi vào thị trường khó tính.',
+    'Tôi nhận diện được các rủi ro quốc tế chính (tỷ giá, chuỗi cung ứng, thể chế).',
+    'Tôi cân nhắc được giữa chuẩn hóa toàn cầu và thích nghi địa phương cho một sản phẩm.',
+    'Tôi ra được quyết định theo nhiều tiêu chí (lợi nhuận, uy tín, bền vững) thay vì chỉ doanh thu.',
+  ];
+
+  const LIKERT_B = [
+    'Tôi tự tin định giá cho một sản phẩm mới.',
+    'Tôi tự tin lập ngân sách marketing phù hợp với mục tiêu.',
+    'Tôi đọc hiểu được báo cáo lãi/lỗ và dòng tiền cơ bản.',
+    'Tôi tự tin ra quyết định khi thông tin không đầy đủ.',
+    'Tôi phối hợp hiệu quả với các vai trò khác trong một đội kinh doanh.',
+    'Tôi ước tính được điểm hòa vốn cho một kế hoạch kinh doanh đơn giản.',
+    'Tôi so sánh được ưu, nhược điểm các phương thức thâm nhập thị trường nước ngoài.',
+    'Tôi rút được bài học từ kết quả một vòng kinh doanh để điều chỉnh quyết định vòng sau.',
+  ];
+  const LIKERT_C = [
+    'Buổi học với BizOn cuốn hút tôi hơn buổi học thông thường.',
+    'Việc «làm thử» giúp tôi hiểu khái niệm kinh doanh dễ hơn nghe giảng.',
+    'Cuộc họp đội và gợi ý của cố vấn AI giúp tôi biết cần làm gì.',
+    'Phần giải thích «Vì sao?» sau mỗi vòng giúp tôi rút ra bài học.',
+    'Tôi muốn tiếp tục dùng BizOn trong các buổi học sau.',
+  ];
+
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+  // ===== Hai bộ câu hỏi – chọn theo game lớp sử dụng =====
+  const BANKS = {
+    batnghiep: { qa: QA, key: KEY, out: OUTCOMES, likb: LIKERT_B },
+    quocte: { qa: QA_IB, key: KEY_IB, out: OUTCOMES_IB, likb: LIKERT_B_IB },
+  };
+  const curInstr = () => document.querySelector('input[name="instr"]:checked').value;
+
+  // ===== Render =====
+  const likertRows = (arr, name) => arr.map((s, i) => `
+    <div class="likert-row" id="${name}-${i + 1}"><span>${i + 1}. ${esc(s)}</span>${[1,2,3,4,5].map(v => `<input type="radio" name="${name}${i + 1}" value="${v}">`).join('')}</div>`).join('');
+  function renderBank() {
+    const B = BANKS[curInstr()];
+    $('ks-a').innerHTML = B.qa.map((item, i) => `
+      <div class="mt-5" id="qa-${i + 1}">
+        <p class="text-sm font-extrabold">${i + 1}. ${esc(item.q)}</p>
+        ${item.o.map((opt, j) => `<label class="ks-opt"><input type="radio" name="a${i + 1}" value="${'abcd'[j]}"> ${'abcd'[j]}. ${esc(opt)}</label>`).join('')}
+      </div>`).join('');
+    $('ks-b').innerHTML = likertRows(B.likb, 'b');
+  }
+  window.ksInstr = renderBank; // đổi bộ câu hỏi là vẽ lại phần A + B (đáp án được làm mới)
+  // Cho phép game dẫn thẳng tới đúng bộ: khao-sat-online.html?bo=quocte
+  try { if (new URLSearchParams(location.search).get('bo') === 'quocte') document.querySelector('input[name="instr"][value="quocte"]').checked = true; } catch (e) {}
+  renderBank();
+  $('ks-c').innerHTML = likertRows(LIKERT_C, 'c');
+
+  window.ksPhase = function () {
+    const post = document.querySelector('input[name="phase"]:checked').value === 'post';
+    $('ks-post-meta').classList.toggle('hidden', !post);
+    $('ks-c-card').classList.toggle('hidden', !post);
+  };
+
+  const val = name => { const el = document.querySelector(`input[name="${name}"]:checked`); return el ? el.value : null; };
+
+  // ===== Hàng đợi nộp (như backend.js: mất mạng vẫn không mất phiếu) =====
+  const QKEY = 'bizon-survey-queue';
+  const cfg = () => window.BIZON_BACKEND || {};
+  const on = () => cfg().enabled && cfg().url && !cfg().url.includes('YOUR-PROJECT');
+  const readQ = () => { try { return JSON.parse(localStorage.getItem(QKEY) || '[]'); } catch (e) { return []; } };
+  const writeQ = q => { try { localStorage.setItem(QKEY, JSON.stringify(q.slice(-40))); } catch (e) {} };
+  async function post(row) {
+    const c = cfg();
+    const res = await fetch(c.url.replace(/\/$/, '') + '/rest/v1/survey_responses', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', apikey: c.anonKey, Authorization: 'Bearer ' + c.anonKey, Prefer: 'return=minimal' },
+      body: JSON.stringify(row),
+    });
+    if (!res.ok && res.status !== 409) throw new Error('HTTP ' + res.status);
+  }
+  let busy = false;
+  async function flush() {
+    if (busy || !on() || !navigator.onLine) return;
+    busy = true;
+    try {
+      const q = readQ();
+      if (!q.length) return;
+      const rest = [];
+      for (const row of q) { try { await post(row); } catch (e) { rest.push(row); } }
+      writeQ(rest.concat(readQ().slice(q.length)));
+    } finally { busy = false; }
+  }
+  window.addEventListener('online', flush);
+  document.addEventListener('DOMContentLoaded', flush);
+
+  window.ksSubmit = function () {
+    document.querySelectorAll('.miss').forEach(el => el.classList.remove('miss'));
+    const phase = document.querySelector('input[name="phase"]:checked').value;
+    const code = $('ks-code').value.trim().toUpperCase();
+    const klass = $('ks-class').value.trim();
+    const missing = [];
+    if (!/^[A-Z]{2}[0-9]{2}$/.test(code)) missing.push($('ks-code'));
+    if (!klass) missing.push($('ks-class'));
+    const answers = {};
+    for (let i = 1; i <= 15; i++) { const v = val('a' + i); if (!v) missing.push($('qa-' + i)); else answers[i] = v; }
+    const likB = [];
+    for (let i = 1; i <= 8; i++) { const v = val('b' + i); if (!v) missing.push($('b-' + i)); else likB.push(Number(v)); }
+    let likC = null, nps = null;
+    if (phase === 'post') {
+      likC = [];
+      for (let i = 1; i <= 5; i++) { const v = val('c' + i); if (!v) missing.push($('c-' + i)); else likC.push(Number(v)); }
+      nps = Number($('ks-nps').value);
+    }
+    if (missing.length) {
+      missing.forEach(el => el && el.classList.add('miss'));
+      $('ks-status').textContent = '⚠️ Còn ' + missing.length + ' mục chưa điền (viền cam) – vui lòng hoàn thành hết.';
+      missing[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    // Chặn nộp trùng trên cùng thiết bị (theo từng bộ câu hỏi)
+    const instr = curInstr();
+    const B = BANKS[instr];
+    const dupKey = 'bizon-survey-sent-' + instr + '-' + phase + '-' + klass + '-' + code;
+    try {
+      if (localStorage.getItem(dupKey)) { $('ks-status').textContent = '⚠️ Thiết bị này đã nộp ' + (phase === 'pre' ? 'phiếu trước' : 'phiếu sau') + ' (bộ ' + (instr === 'quocte' ? 'KD quốc tế' : 'Khởi nghiệp') + ') với mã ' + code + ' rồi.'; return; }
+    } catch (e) {}
+    // Chấm điểm tự động theo bộ câu hỏi đang chọn
+    let score = 0;
+    const byOutcome = {};
+    for (const [k, qs] of Object.entries(B.out)) byOutcome[k] = qs.reduce((s, q) => s + (answers[q] === B.key[q - 1] ? 1 : 0), 0);
+    for (let i = 1; i <= 15; i++) if (answers[i] === B.key[i - 1]) score++;
+    const row = {
+      instrument: instr,
+      phase: phase, class_code: klass, student_code: code,
+      role: phase === 'post' ? ($('ks-role').value || null) : null,
+      rounds_played: phase === 'post' ? (Number($('ks-rounds').value) || null) : null,
+      answers_a: answers, score_a: score, score_by_outcome: byOutcome,
+      likert_b: likB, likert_c: likC, nps: nps,
+      open_like: phase === 'post' ? $('ks-like').value.trim().slice(0, 1000) || null : null,
+      open_improve: phase === 'post' ? $('ks-improve').value.trim().slice(0, 1000) || null : null,
+      client_ts: new Date().toISOString(),
+    };
+    const q = readQ(); q.push(row); writeQ(q); flush();
+    try { localStorage.setItem(dupKey, '1'); } catch (e) {}
+    $('ks-form').classList.add('hidden');
+    $('ks-done').classList.remove('hidden');
+    $('ks-done-note').textContent = 'Cảm ơn bạn! Phiếu ' + (phase === 'pre' ? 'TRƯỚC' : 'SAU') + ' – mã ' + code + ', lớp ' + klass + ' đã được ghi nhận ẩn danh.' + (navigator.onLine ? '' : ' (Đang chờ mạng – phiếu sẽ tự gửi khi có kết nối, đừng xóa dữ liệu trình duyệt.)');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+})();
+</script>
+<script src="js/site-nethero.js" defer></script>
+<script src="js/site-ui.js" defer></script>
+<script src="js/site-vnmap.js" defer></script>
+<p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2" style="color:rgba(100,116,125,.85)">✉️ Liên hệ · Contact: <a href="mailto:patu@ctu.edu.vn" style="color:inherit;text-decoration:underline">patu@ctu.edu.vn</a> · <a href="mailto:thuyhuongctu@gmail.com" style="color:inherit;text-decoration:underline">thuyhuongctu@gmail.com</a></p>
+<p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2 pb-6" style="color:rgba(100,116,125,.75)">🎓 Trang web chỉ phục vụ mục đích giáo dục và nghiên cứu, không đại diện, không liên kết và không nhận tài trợ từ bất kỳ tổ chức chính trị nào. · This website serves educational and research purposes only and is not affiliated with any political organization.</p>
+<script src="js/site-dock.js" defer></script>
+<script src="js/site-footer.js" defer></script>
+<script src="js/site-nav.js" defer></script>
+</body>
+</html>

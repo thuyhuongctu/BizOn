@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Bảng điều khiển Giảng viên – BizOn Bật Nghiệp</title>
+<link rel="canonical" href="https://thuyhuongctu.github.io/BizOn/truong-giang-vien.html">
+<meta name="description" content="Bảng xếp hạng thời gian thực cho lớp học BizOn: giảng viên nhập Mã lớp và Khóa giảng viên để theo dõi các đội nộp kết quả từng vòng ngay trong buổi học, kèm xuất CSV chấm điểm.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<script src="js/backend-config.js"></script>
+<script src="js/error-log.js"></script>
+<!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
+     nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
+<link rel="stylesheet" href="css/bizon-fonts.css">
+<style>
+  html { background:#f4faff; }
+  body { font-family:'Manrope', 'Manrope Fallback',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
+  .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
+  .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease; }
+  .clay-btn:active { transform:translateY(2px); }
+  .glass-nav { background:rgba(3,51,55,.78); backdrop-filter:blur(14px); }
+  .gv-input { width:100%; border-radius:16px; border:2px solid rgba(0,102,135,.18); background:#fff; padding:11px 14px; font-weight:700; font-size:14px; color:inherit; outline:none; }
+  .gv-input:focus { border-color:#006687; }
+  table.kb { width:100%; border-collapse:separate; border-spacing:0; font-size:13px; }
+  table.kb th { background:rgba(0,102,135,.08); font-weight:800; text-align:left; padding:9px 12px; white-space:nowrap; }
+  table.kb td { padding:9px 12px; border-top:1px solid rgba(0,102,135,.1); }
+  table.kb th:first-child { border-top-left-radius:14px; } table.kb th:last-child { border-top-right-radius:14px; }
+  .kb-wrap { overflow-x:auto; border-radius:14px; }
+  .pulse-dot { animation:gvpulse 1.6s ease-in-out infinite; }
+  @keyframes gvpulse { 0%,100%{opacity:1} 50%{opacity:.25} }
+  :root { --dt: 3 51 55; }
+  html[data-theme="dark"] { --dt: 214 236 240; background:#081a20; color-scheme:dark; }
+  html[data-theme="dark"] body { color:#d6ecf0; }
+  html[data-theme="dark"] .clay-card { background:#0e2a33; box-shadow:0 10px 30px -5px rgba(0,0,0,.45), inset 0 -4px 0 rgba(0,0,0,.3); }
+  html[data-theme="dark"] .glass-nav { background:rgba(2,20,24,.85); }
+  html[data-theme="dark"] .gv-input { background:#0b222a; border-color:rgba(92,196,230,.25); }
+  html[data-theme="dark"] table.kb th { background:rgba(92,196,230,.12); }
+  html[data-theme="dark"] table.kb td { border-top-color:rgba(92,196,230,.15); }
+</style>
+<link rel="stylesheet" href="css/tw.css">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="BizOn Bật Nghiệp">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:title" content="Bảng điều khiển Giảng viên – BizOn Bật Nghiệp">
+<meta property="og:description" content="Bảng xếp hạng thời gian thực cho lớp học BizOn: giảng viên nhập Mã lớp và Khóa giảng viên để theo dõi các đội nộp kết quả từng vòng ngay trong buổi học, kèm xuất CSV chấm điểm.">
+<meta property="og:url" content="https://thuyhuongctu.github.io/BizOn/giang-vien.html">
+<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/og/og-cover.webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+<a href="truong-giang-vien.html" style="display:block;background:#f4ece0;color:#02444d;text-align:center;padding:.6rem 1rem;font:600 14px/1.4 system-ui,-apple-system,sans-serif;text-decoration:none;border-bottom:2px solid #02444d">Bảng điều khiển này là bản cũ. Xem bản thể chế cho giảng viên → <u>Trường BizOn · Giảng viên</u></a>
+
+
+<header class="pt-24 pb-8 text-white" style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%)">
+  <div class="max-w-5xl mx-auto px-5">
+    <p class="text-[11px] font-extrabold uppercase tracking-[.2em] text-clay-gold">Dành cho giảng viên · Pilot Classroom</p>
+    <h1 class="font-display font-extrabold text-3xl sm:text-4xl mt-2">Bảng điều khiển lớp học</h1>
+    <p class="text-white/75 text-sm mt-3 max-w-2xl">Theo dõi các đội nộp kết quả <b>ngay trong buổi học</b>: bảng xếp hạng tự làm mới mỗi 10 giây, dòng thời gian từng lượt khóa vòng, và xuất CSV để chấm điểm. Dữ liệu chỉ mở bằng <b>Khóa giảng viên</b> – sinh viên không xem được của nhau.</p>
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-5 py-8">
+
+  <section class="clay-card p-6 sm:p-7 mb-6">
+    <h2 class="font-display font-extrabold text-deep-teal text-lg mb-4">🔑 Kết nối lớp</h2>
+    <div class="grid sm:grid-cols-[1fr_1fr_auto] gap-3 items-end">
+      <div>
+        <label class="block text-xs font-extrabold mb-1.5 opacity-70" for="gv-class">Mã lớp học (sinh viên nhập khi đăng nhập game)</label>
+        <input id="gv-class" class="gv-input" placeholder="VD: QTKD-2026-A" autocomplete="off">
+      </div>
+      <div>
+        <label class="block text-xs font-extrabold mb-1.5 opacity-70" for="gv-key">Khóa giảng viên</label>
+        <input id="gv-key" class="gv-input" type="password" placeholder="Khóa trong app_secrets" autocomplete="off">
+      </div>
+      <button onclick="gvConnect()" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-6 py-3 text-sm whitespace-nowrap">📡 Theo dõi lớp</button>
+    </div>
+    <p id="gv-status" class="text-xs font-bold mt-3 opacity-70">Chưa kết nối. Nhập Mã lớp + Khóa giảng viên rồi bấm "Theo dõi lớp".</p>
+  </section>
+
+  <section id="gv-board" class="hidden">
+    <div class="clay-card p-6 sm:p-7 mb-6">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+        <h2 class="font-display font-extrabold text-deep-teal text-lg">🏆 Bảng xếp hạng – <span id="gv-class-label"></span></h2>
+        <div class="flex items-center gap-3">
+          <span class="text-[11px] font-extrabold opacity-60"><span class="pulse-dot inline-block">🟢</span> Tự làm mới 10s · <span id="gv-updated">–</span></span>
+          <button onclick="gvExportCsv()" class="clay-btn bg-primary text-white font-display font-extrabold px-4 py-2 text-xs">⬇️ Xuất CSV</button>
+          <button onclick="gvExportSurvey()" class="clay-btn bg-deep-teal text-white font-display font-extrabold px-4 py-2 text-xs" title="Tải toàn bộ phiếu khảo sát trước–sau của lớp (khao-sat-online.html)">📋 CSV khảo sát</button>
+        </div>
+      </div>
+      <div class="kb-wrap">
+        <table class="kb">
+          <thead><tr>
+            <th>#</th><th>Đội</th><th>Vòng</th><th>Thị phần</th><th>Lợi nhuận ròng</th><th>Doanh thu</th><th>Số dư</th><th>Lượt nộp</th><th>Nộp gần nhất</th>
+          </tr></thead>
+          <tbody id="gv-rows"><tr><td colspan="9" class="text-center opacity-60 py-6">Đang tải…</td></tr></tbody>
+        </table>
+      </div>
+      <p class="text-[11px] opacity-60 mt-3">Xếp theo thị phần của vòng cao nhất mỗi đội. Một đội chơi lại vòng sẽ tính lần nộp mới nhất.</p>
+    </div>
+
+    <div class="clay-card p-6 sm:p-7 mb-6">
+      <h2 class="font-display font-extrabold text-deep-teal text-lg mb-4">⏱️ Dòng thời gian nộp bài</h2>
+      <ul id="gv-feed" class="space-y-2 text-sm font-semibold"><li class="opacity-60">Đang tải…</li></ul>
+    </div>
+
+    <div class="clay-card p-6 sm:p-7 mb-6">
+      <h2 class="font-display font-extrabold text-deep-teal text-lg mb-2">🛂 Hộ Chiếu Thương Hiệu – kết quả lớp</h2>
+      <p class="text-[11px] opacity-60 mb-3">Sinh viên nộp từ màn kết thúc của game (cùng Mã lớp). Mỗi người tính ván có điểm tổng cao nhất – điểm 5 chiều: lợi nhuận, uy tín, năng lực, thích ứng, bền vững.</p>
+      <div class="kb-wrap">
+        <table class="kb">
+          <thead><tr>
+            <th>#</th><th>Sinh viên</th><th>Doanh nghiệp</th><th>Điểm tổng</th><th>Lợi nhuận</th><th>Danh hiệu</th><th>Quý</th><th>Lượt chơi</th><th>Lần cuối</th>
+          </tr></thead>
+          <tbody id="gv-bp-rows"><tr><td colspan="9" class="text-center opacity-60 py-6">Chưa có lượt chơi nào được nộp.</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="clay-card p-6 sm:p-7 mb-6">
+      <h2 class="font-display font-extrabold text-deep-teal text-lg mb-2">🧺 Gánh Hàng Khởi Nghiệp – kết quả lớp</h2>
+      <p class="text-[11px] opacity-60 mb-3">Sinh viên nộp từ màn kết thúc của game (cùng Mã lớp). Mỗi người tính ván có hiệu suất cao nhất; hạng là thứ hạng so với 3 đối thủ AI trong ván đó.</p>
+      <div class="kb-wrap">
+        <table class="kb">
+          <thead><tr>
+            <th>#</th><th>Sinh viên</th><th>Đội</th><th>Hiệu suất</th><th>Doanh thu</th><th>Hạng trong ván</th><th>Lượt chơi</th><th>Lần cuối</th>
+          </tr></thead>
+          <tbody id="gv-ft-rows"><tr><td colspan="8" class="text-center opacity-60 py-6">Chưa có lượt chơi nào được nộp.</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="clay-card p-6 sm:p-7 mb-6">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-2">
+        <h2 class="font-display font-extrabold text-deep-teal text-lg">📊 Phân tích khảo sát trước–sau</h2>
+        <button onclick="gvAnalyzeSurvey()" class="clay-btn bg-primary text-white font-display font-extrabold px-4 py-2 text-xs">🔬 Phân tích ngay</button>
+      </div>
+      <p class="text-[11px] opacity-60 mb-3">Ghép cặp phiếu trước–sau theo mã tự đặt (lấy lần nộp mới nhất mỗi phiếu) và tính sẵn các chỉ số nghiên cứu. Muốn dữ liệu thô đầy đủ thì dùng nút "CSV khảo sát" ở trên.</p>
+      <div id="gv-survey-out" class="text-sm"><p class="opacity-60">Bấm "Phân tích ngay" sau khi lớp đã nộp phiếu.</p></div>
+    </div>
+  </section>
+
+  <section class="clay-card p-6 sm:p-7 mb-6">
+    <h2 class="font-display font-extrabold text-deep-teal text-lg mb-3">❓ Hướng dẫn nhanh</h2>
+    <ol class="list-decimal ml-5 space-y-1.5 text-sm">
+      <li>Phát cho lớp một <b>Mã lớp</b> tự đặt (VD: <code class="font-bold">QTKD-2026-A</code>) – sinh viên nhập mã này ở màn đăng nhập game.</li>
+      <li>Nhập cùng Mã lớp đó + <b>Khóa giảng viên</b> vào ô trên. Khóa nằm trong bảng <code class="font-bold">app_secrets</code> trên Supabase (mặc định <code class="font-bold">BIZON-GV-2026</code> – nên đổi ngay theo hướng dẫn trong <code class="font-bold">supabase/migrations/20260730000000_instructor_dashboard.sql</code>).</li>
+      <li>Chiếu trang này lên máy chiếu: mỗi khi một đội khóa vòng, bảng xếp hạng tự cập nhật trong vòng 10 giây.</li>
+      <li>Cuối buổi bấm <b>Xuất CSV</b> để tải bảng điểm về chấm (mở được bằng Excel).</li>
+    </ol>
+  </section>
+
+</main>
+
+<script>
+(function () {
+  const cfg = () => window.BIZON_BACKEND || {};
+  let timer = null, lastRows = [];
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const fmtN = v => v == null ? '–' : Number(v).toLocaleString('vi-VN');
+  const fmtPct = v => v == null ? '–' : (Number(v).toFixed(1) + '%');
+  const fmtT = ts => { try { return new Date(ts).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }); } catch (e) { return ''; } };
+
+  async function rpc(fn, args) {
+    const c = cfg();
+    const res = await fetch(c.url.replace(/\/$/, '') + '/rest/v1/rpc/' + fn, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', apikey: c.anonKey, Authorization: 'Bearer ' + c.anonKey },
+      body: JSON.stringify(args),
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    return res.json();
+  }
+
+  async function refresh() {
+    const klass = $('gv-class').value.trim(), key = $('gv-key').value.trim();
+    if (!klass || !key) return;
+    try {
+      const [board, feed] = await Promise.all([
+        rpc('bizon_leaderboard', { p_class_code: klass, p_key: key }),
+        rpc('bizon_feed', { p_class_code: klass, p_key: key, p_limit: 30 }),
+      ]);
+      lastRows = board;
+      const medals = ['🥇', '🥈', '🥉'];
+      $('gv-rows').innerHTML = board.length
+        ? board.map((r, i) => `<tr>
+            <td class="font-extrabold">${medals[i] || (i + 1)}</td>
+            <td class="font-extrabold">${esc(r.team_name)}</td>
+            <td>Vòng ${r.best_round}/6</td>
+            <td class="font-extrabold">${fmtPct(r.share)}</td>
+            <td>${fmtN(r.net_profit)} ₫</td>
+            <td>${fmtN(r.revenue)} ₫</td>
+            <td>${fmtN(r.balance)} ₫</td>
+            <td>${r.submissions}</td>
+            <td>${fmtT(r.last_submit)}</td>
+          </tr>`).join('')
+        : '<tr><td colspan="9" class="text-center opacity-60 py-6">Chưa có đội nào nộp kết quả – hoặc Khóa giảng viên chưa đúng.</td></tr>';
+      $('gv-feed').innerHTML = feed.length
+        ? feed.map(f => `<li>⏱️ <b>${fmtT(f.created_at)}</b> – đội <b>${esc(f.team_name)}</b> khóa <b>vòng ${f.round_number}</b> · lợi nhuận ${fmtN(f.net_profit)} ₫ · thị phần ${fmtPct(f.share)}</li>`).join('')
+        : '<li class="opacity-60">Chưa có lượt nộp nào.</li>';
+      $('gv-updated').textContent = 'cập nhật ' + fmtT(Date.now());
+      $('gv-status').textContent = '✅ Đang theo dõi lớp ' + klass + '.';
+    } catch (e) {
+      $('gv-status').textContent = '⚠️ Không tải được dữ liệu (' + e.message + ') – kiểm tra mạng hoặc cấu hình backend.';
+    }
+    // Bảng Gánh Hàng Khởi Nghiệp – tách try/catch riêng: migration chưa chạy thì
+    // các bảng chính vẫn hiển thị bình thường.
+    try {
+      const ft = await rpc('bizon_ft_board', { p_class_code: klass, p_key: key });
+      const rankIco = ['🏆', '🥈', '🥉', '4️⃣'];
+      $('gv-ft-rows').innerHTML = ft.length
+        ? ft.map((r, i) => `<tr>
+            <td class="font-extrabold">${['🥇', '🥈', '🥉'][i] || (i + 1)}</td>
+            <td class="font-extrabold">${esc(r.player_name)}</td>
+            <td>${esc(r.team_name)}</td>
+            <td class="font-extrabold">${r.best_eff}%</td>
+            <td>${fmtN(r.best_revenue)} triệu ₫</td>
+            <td>${rankIco[r.best_rank - 1] || r.best_rank} #${r.best_rank}/4</td>
+            <td>${r.plays}</td>
+            <td>${fmtT(r.last_play)}</td>
+          </tr>`).join('')
+        : '<tr><td colspan="8" class="text-center opacity-60 py-6">Chưa có lượt chơi nào được nộp.</td></tr>';
+    } catch (e) { /* giữ nguyên bảng – không chặn phần còn lại của dashboard */ }
+    try {
+      const bp = await rpc('bizon_bp_board', { p_class_code: klass, p_key: key });
+      $('gv-bp-rows').innerHTML = bp.length
+        ? bp.map((r, i) => `<tr>
+            <td class="font-extrabold">${['🥇', '🥈', '🥉'][i] || (i + 1)}</td>
+            <td class="font-extrabold">${esc(r.player_name)}</td>
+            <td>${esc(r.company)}</td>
+            <td class="font-extrabold">${r.best_score}/100</td>
+            <td>${fmtN(r.best_profit)} tỷ ₫</td>
+            <td>${esc(r.best_title || '–')}</td>
+            <td>${r.quarters}/6</td>
+            <td>${r.plays}</td>
+            <td>${fmtT(r.last_play)}</td>
+          </tr>`).join('')
+        : '<tr><td colspan="9" class="text-center opacity-60 py-6">Chưa có lượt chơi nào được nộp.</td></tr>';
+    } catch (e) { /* migration chưa chạy – không chặn dashboard */ }
+  }
+
+  window.gvConnect = function () {
+    const klass = $('gv-class').value.trim(), key = $('gv-key').value.trim();
+    if (!klass || !key) { $('gv-status').textContent = '⚠️ Cần nhập cả Mã lớp và Khóa giảng viên.'; return; }
+    try { localStorage.setItem('bizon-gv', JSON.stringify({ klass })); } catch (e) {}
+    $('gv-board').classList.remove('hidden');
+    $('gv-class-label').textContent = klass;
+    clearInterval(timer);
+    refresh();
+    timer = setInterval(refresh, 10000);
+  };
+
+  // ===== Phân tích khảo sát trước–sau ngay trên trang =====
+  const mean = a => a.length ? a.reduce((s, x) => s + x, 0) / a.length : null;
+  const sd = a => { if (a.length < 2) return null; const m = mean(a); return Math.sqrt(a.reduce((s, x) => s + (x - m) ** 2, 0) / (a.length - 1)); };
+  const f1 = v => v == null ? '–' : (Math.round(v * 100) / 100).toLocaleString('vi-VN', { maximumFractionDigits: 2 });
+  const sign = v => v == null ? '–' : (v > 0 ? '+' : '') + f1(v);
+
+  window.gvAnalyzeSurvey = async function () {
+    const klass = $('gv-class').value.trim(), key = $('gv-key').value.trim();
+    const out = $('gv-survey-out');
+    if (!klass || !key) { out.innerHTML = '<p class="font-bold">⚠️ Nhập Mã lớp và Khóa giảng viên ở trên rồi bấm lại.</p>'; return; }
+    out.innerHTML = '<p class="opacity-60">Đang tải và tính toán…</p>';
+    let rows;
+    try { rows = await rpc('bizon_survey_export', { p_class_code: klass, p_key: key }); }
+    catch (e) { out.innerHTML = '<p class="font-bold">⚠️ Không tải được dữ liệu (' + esc(e.message) + ').</p>'; return; }
+    if (!rows.length) { out.innerHTML = '<p class="font-bold">ℹ️ Lớp ' + esc(klass) + ' chưa có phiếu nào (hoặc khóa chưa đúng).</p>'; return; }
+
+    // Tách theo bộ câu hỏi (Khởi nghiệp / KD quốc tế) rồi phân tích riêng từng bộ
+    const groups = {};
+    for (const r of rows) {
+      const g = r.instrument || 'batnghiep';
+      (groups[g] = groups[g] || []).push(r);
+    }
+    const INSTR_LABELS = { batnghiep: '🚀 Bộ Khởi nghiệp (Bật Nghiệp)', quocte: '🛂 Bộ Kinh doanh quốc tế (Hộ Chiếu Thương Hiệu)' };
+    out.innerHTML = Object.entries(groups).map(([g, rs]) =>
+      '<h3 class="font-display font-extrabold text-deep-teal text-sm mt-4 mb-2">' + (INSTR_LABELS[g] || g) + ' – ' + rs.length + ' phiếu</h3>' + analyzeGroup(rs, g)
+    ).join('');
+    $('gv-status').textContent = '✅ Đã phân tích ' + rows.length + ' phiếu khảo sát của lớp ' + klass + '.';
+  };
+
+  function analyzeGroup(rows, instr) {
+    // Lấy lần nộp mới nhất của mỗi (mã sinh viên, loại phiếu)
+    const latest = {};
+    for (const r of rows) {
+      const k = r.student_code + '|' + r.phase;
+      if (!latest[k] || r.created_at > latest[k].created_at) latest[k] = r;
+    }
+    const pre = {}, post = {};
+    Object.values(latest).forEach(r => { (r.phase === 'pre' ? pre : post)[r.student_code] = r; });
+    const preArr = Object.values(pre), postArr = Object.values(post);
+    const pairs = Object.keys(pre).filter(c => post[c]).map(c => ({ p: pre[c], q: post[c] }));
+
+    // Δ kiến thức (điểm A /15) trên các cặp ghép được + cỡ ảnh hưởng Cohen's d
+    const dA = pairs.map(x => x.q.score_a - x.p.score_a);
+    const dAmean = mean(dA), dAsd = sd(dA);
+    const cohend = (dAmean != null && dAsd) ? dAmean / dAsd : null;
+    // Δ tự tin (trung bình 8 câu B, thang 1–5)
+    const avgB = r => mean((r.likert_b || []).map(Number));
+    const dB = pairs.map(x => avgB(x.q) - avgB(x.p));
+    // Δ theo 5 cụm chuẩn đầu ra (0–3 mỗi cụm) – nhãn theo bộ câu hỏi
+    const OUT_LABELS = instr === 'quocte'
+      ? { thitruong: 'Chọn thị trường (BP-1)', thamnhap: 'Phương thức thâm nhập (BP-2)', nguontin: 'Đánh giá nguồn tin (BP-3)', thichnghi: 'Thích nghi & thể chế (BP-4)', ruiro: 'Rủi ro & đa tiêu chí (BP-5/6)' }
+      : { marketing: 'Giá & marketing', taichinh: 'Tài chính', vanhanh: 'Vận hành', kdqt: 'KD quốc tế', chienluoc: 'Chiến lược' };
+    const outRows = Object.entries(OUT_LABELS).map(([k, label]) => {
+      const ds = pairs.filter(x => x.p.score_by_outcome && x.q.score_by_outcome)
+        .map(x => (x.q.score_by_outcome[k] ?? 0) - (x.p.score_by_outcome[k] ?? 0));
+      const pm = mean(pairs.map(x => x.p.score_by_outcome ? (x.p.score_by_outcome[k] ?? 0) : null).filter(v => v != null));
+      const qm = mean(pairs.map(x => x.q.score_by_outcome ? (x.q.score_by_outcome[k] ?? 0) : null).filter(v => v != null));
+      return { label, pm, qm, d: mean(ds) };
+    });
+    // Trải nghiệm (C) + NPS trên phiếu sau
+    const cAll = postArr.map(r => mean((r.likert_c || []).map(Number))).filter(v => v != null);
+    const npsArr = postArr.map(r => r.nps).filter(v => v != null);
+    const npsHi = npsArr.length ? (npsArr.filter(v => v >= 9).length / npsArr.length * 100) : null;
+
+    const stat = (label, val, note) => `<div class="clay-card !shadow-none border border-primary/15 p-4 text-center">
+      <p class="font-display font-extrabold text-2xl text-primary">${val}</p>
+      <p class="text-[11px] font-extrabold mt-0.5">${label}</p>${note ? `<p class="text-[10px] opacity-55 mt-0.5">${note}</p>` : ''}</div>`;
+
+    return `
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+        ${stat('Phiếu trước', preArr.length, '')}
+        ${stat('Phiếu sau', postArr.length, '')}
+        ${stat('Cặp ghép được', pairs.length, 'theo mã tự đặt')}
+        ${stat('Điểm giới thiệu TB', npsArr.length ? f1(mean(npsArr)) + '/10' : '–', npsHi != null ? f1(npsHi) + '% chấm ≥ 9' : '')}
+      </div>
+      <div class="grid sm:grid-cols-3 gap-3 mb-4">
+        ${stat('Δ Kiến thức', pairs.length ? sign(dAmean) + ' câu' : '–', pairs.length ? `${f1(mean(pairs.map(x => x.p.score_a)))} → ${f1(mean(pairs.map(x => x.q.score_a)))} /15 đúng` : 'cần cặp trước–sau')}
+        ${stat("Cohen's d", cohend != null ? f1(cohend) : '–', cohend != null ? (Math.abs(cohend) >= 0.8 ? 'ảnh hưởng lớn' : Math.abs(cohend) >= 0.5 ? 'ảnh hưởng vừa' : Math.abs(cohend) >= 0.2 ? 'ảnh hưởng nhỏ' : 'chưa rõ ảnh hưởng') : 'cần ≥ 2 cặp')}
+        ${stat('Δ Tự tin', pairs.length ? sign(mean(dB)) + ' /5' : '–', pairs.length ? `${f1(mean(pairs.map(x => avgB(x.p))))} → ${f1(mean(pairs.map(x => avgB(x.q))))} trên thang 5` : 'cần cặp trước–sau')}
+      </div>
+      <div class="kb-wrap mb-3">
+        <table class="kb">
+          <thead><tr><th>Chuẩn đầu ra (cụm 3 câu)</th><th>Trước /3</th><th>Sau /3</th><th>Δ</th></tr></thead>
+          <tbody>${outRows.map(r => `<tr><td class="font-bold">${r.label}</td><td>${f1(r.pm)}</td><td>${f1(r.qm)}</td><td class="font-extrabold">${sign(r.d)}</td></tr>`).join('')}</tbody>
+        </table>
+      </div>
+      <p class="text-[11px] opacity-60">Mức tham gia (Phần C, thang 5): <b>${cAll.length ? f1(mean(cAll)) : '–'}</b> · ${npsArr.length} phiếu sau có điểm giới thiệu. Δ tính trên ${pairs.length} cặp ghép; sinh viên nộp nhiều lần chỉ tính lần mới nhất. Số liệu phục vụ tham khảo nhanh sau buổi học – phân tích công bố khoa học nên dùng CSV thô với kiểm định phù hợp (paired t-test / Wilcoxon).</p>`;
+  }
+
+  window.gvExportSurvey = async function () {
+    const klass = $('gv-class').value.trim(), key = $('gv-key').value.trim();
+    if (!klass || !key) { $('gv-status').textContent = '⚠️ Cần nhập Mã lớp và Khóa giảng viên trước.'; return; }
+    try {
+      const rows = await rpc('bizon_survey_export', { p_class_code: klass, p_key: key });
+      if (!rows.length) { $('gv-status').textContent = 'ℹ️ Lớp ' + klass + ' chưa có phiếu khảo sát nào (hoặc khóa chưa đúng).'; return; }
+      const oc = r => (r.score_by_outcome || {});
+      const lk = (a, i) => (Array.isArray(a) && a[i] != null) ? a[i] : '';
+      const clean = s => '"' + String(s == null ? '' : s).replace(/"/g, '""').replace(/\r?\n/g, ' ') + '"';
+      const head = 'bo_cau_hoi,phieu,ma_sv,vai_tro,so_vong,diem_A,marketing,tai_chinh,van_hanh,kdqt,chien_luoc,' +
+        'thi_truong,tham_nhap,nguon_tin,thich_nghi,rui_ro,' +
+        'B1,B2,B3,B4,B5,B6,B7,B8,C1,C2,C3,C4,C5,diem_gioi_thieu,thich_nhat,can_cai_thien,nop_luc\n';
+      const csv = head + rows.map(r => [
+        r.instrument || 'batnghiep', r.phase, r.student_code, r.role || '', r.rounds_played || '', r.score_a,
+        oc(r).marketing ?? '', oc(r).taichinh ?? '', oc(r).vanhanh ?? '', oc(r).kdqt ?? '', oc(r).chienluoc ?? '',
+        oc(r).thitruong ?? '', oc(r).thamnhap ?? '', oc(r).nguontin ?? '', oc(r).thichnghi ?? '', oc(r).ruiro ?? '',
+        lk(r.likert_b,0), lk(r.likert_b,1), lk(r.likert_b,2), lk(r.likert_b,3), lk(r.likert_b,4), lk(r.likert_b,5), lk(r.likert_b,6), lk(r.likert_b,7),
+        lk(r.likert_c,0), lk(r.likert_c,1), lk(r.likert_c,2), lk(r.likert_c,3), lk(r.likert_c,4),
+        r.nps ?? '', clean(r.open_like), clean(r.open_improve), r.created_at,
+      ].join(',')).join('\n');
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' }));
+      a.download = 'bizon-khao-sat-' + klass + '.csv';
+      a.click();
+      URL.revokeObjectURL(a.href);
+      $('gv-status').textContent = '✅ Đã tải ' + rows.length + ' phiếu khảo sát của lớp ' + klass + '.';
+    } catch (e) {
+      $('gv-status').textContent = '⚠️ Không tải được khảo sát (' + e.message + ').';
+    }
+  };
+
+  window.gvExportCsv = function () {
+    const head = 'hang,doi,vong_cao_nhat,thi_phan_pct,loi_nhuan_rong,doanh_thu,so_du,luot_nop,nop_gan_nhat\n';
+    const csv = head + lastRows.map((r, i) =>
+      [i + 1, '"' + String(r.team_name).replace(/"/g, '""') + '"', r.best_round, r.share, r.net_profit, r.revenue, r.balance, r.submissions, r.last_submit].join(',')
+    ).join('\n');
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' }));
+    a.download = 'bizon-bang-xep-hang-' + ($('gv-class').value.trim() || 'lop') + '.csv';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  };
+
+  try {
+    const saved = JSON.parse(localStorage.getItem('bizon-gv') || 'null');
+    if (saved && saved.klass) $('gv-class').value = saved.klass;
+  } catch (e) {}
+})();
+</script>
+<script src="js/site-ui.js" defer></script>
+<script src="js/site-vnmap.js" defer></script>
+<p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2" style="color:rgba(100,116,125,.85)">✉️ Liên hệ · Contact: <a href="mailto:patu@ctu.edu.vn" style="color:inherit;text-decoration:underline">patu@ctu.edu.vn</a> · <a href="mailto:thuyhuongctu@gmail.com" style="color:inherit;text-decoration:underline">thuyhuongctu@gmail.com</a></p>
+<p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2 pb-6" style="color:rgba(100,116,125,.75)">🎓 Trang web chỉ phục vụ mục đích giáo dục và nghiên cứu, không đại diện, không liên kết và không nhận tài trợ từ bất kỳ tổ chức chính trị nào. · This website serves educational and research purposes only and is not affiliated with any political organization.</p>
+<script src="js/site-dock.js" defer></script>
+<script src="js/site-footer.js" defer></script>
+<script src="js/site-nav.js" defer></script>
+</body>
+</html>
