@@ -662,8 +662,17 @@ function showVictory(r) {
 
 // ---------- Navigation ----------
 // ---------- Clip giọng Lumina (Bizon_1/Bizon_2 do tác giả thu) ----------
+// Chung 1 "kênh" phát – bấm liên tiếp (VD kết quả vòng rồi vòng thắng lợi ngay
+// sau đó) sẽ cắt clip cũ thay vì chồng tiếng lên nhau.
+let activeClip = null;
 function playClip(src, vol = 0.9) {
-  try { const au = new Audio(src); au.volume = vol; au.play().catch(() => {}); } catch (e) {}
+  try {
+    if (activeClip) { activeClip.pause(); activeClip.currentTime = 0; }
+    const au = new Audio(src);
+    au.volume = vol;
+    activeClip = au;
+    au.play().catch(() => {});
+  } catch (e) {}
 }
 
 // ---------- Giọng Lumina thu sẵn (assets/audio/voice/*.mp3) ----------
