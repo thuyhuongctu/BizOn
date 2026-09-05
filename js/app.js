@@ -10,23 +10,29 @@ const money = m => (m >= 1000 || m <= -1000)
   ? (m / 1000).toLocaleString('vi-VN', { maximumFractionDigits: 2 }) + ' tỷ₫'
   : Math.round(m).toLocaleString('vi-VN') + 'tr₫';
 
-function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(S)); }
+function save() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(S));
+  if (window.BizonBackend) BizonBackend.syncTeamState(S);
+}
+// migration cho save cũ (local hoặc tải từ máy chủ) thiếu trường mới
+function applyStateDefaults(s) {
+  if (!s) return s;
+  s.missionsClaimed ??= []; s.aiAskedTotal ??= 0; s.itemsBought ??= 0;
+  s.minigameBest ??= 0; s.minigamePlays ??= 0; s.roundLocked ??= false; s.grantLog ??= [];
+  s.minigamePoints ??= 0; s.rewardsOwned ??= []; s.rewardEquipped ??= null;
+  s.oee ??= 85; s.defect ??= 2.0; s.brandLoyalty ??= 65; s.adEff ??= 0;
+  s.quickRatio ??= 1.0; s.roi ??= 0; s.energyLines ??= [2100, 4850, 1470];
+  s.lineUpgraded ??= [false, false, false]; s.maintBonus ??= 0; s.maintenanceLog ??= [];
+  s.loan ??= 0; s.costCutter ??= false; s.peakShare ??= 0; s.eventShownRound ??= 0;
+  s.whatIfUsed ??= 0; s.advisorHistory ??= [];
+  s.whatIfTotal ??= 0; s.suggestionsApplied ??= 0; s.achShown ??= (s.achievements || []).slice();
+  s.conquest ??= []; s.aiHistory ??= []; s.teamMembers ??= null;
+  return s;
+}
 function load() {
   try {
     const s = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    if (s) { // migration cho save cũ thiếu trường mới
-      s.missionsClaimed ??= []; s.aiAskedTotal ??= 0; s.itemsBought ??= 0;
-      s.minigameBest ??= 0; s.minigamePlays ??= 0; s.roundLocked ??= false; s.grantLog ??= [];
-      s.minigamePoints ??= 0; s.rewardsOwned ??= []; s.rewardEquipped ??= null;
-      s.oee ??= 85; s.defect ??= 2.0; s.brandLoyalty ??= 65; s.adEff ??= 0;
-      s.quickRatio ??= 1.0; s.roi ??= 0; s.energyLines ??= [2100, 4850, 1470];
-      s.lineUpgraded ??= [false, false, false]; s.maintBonus ??= 0; s.maintenanceLog ??= [];
-      s.loan ??= 0; s.costCutter ??= false; s.peakShare ??= 0; s.eventShownRound ??= 0;
-      s.whatIfUsed ??= 0; s.advisorHistory ??= [];
-      s.whatIfTotal ??= 0; s.suggestionsApplied ??= 0; s.achShown ??= (s.achievements || []).slice();
-      s.conquest ??= []; s.aiHistory ??= []; s.teamMembers ??= null;
-    }
-    return s;
+    return s ? applyStateDefaults(s) : s;
   } catch { return null; }
 }
 
@@ -96,12 +102,12 @@ const AI_OPPONENTS = [
   { name: 'Star Clay Co.',   icon: '🦚', img: 'assets/character/rivals/star.webp', accent: '#5a32a3', motto: 'Sang trọng trong từng chi tiết, bán sự khan hiếm', weakness: 'Chi phí sản xuất thủ công cao – khó mở rộng quy mô nhanh, dễ nghẽn sản lượng.', style: 'Cao cấp thương hiệu', play: 'Giá ~195k · marketing ~75tr – đánh phân khúc sang', counter: 'Chiếm phân khúc phổ thông họ bỏ ngỏ, hoặc đấu trực diện bằng chất lượng + ESG.' },
 ];
 
-function doLoginDemo() {
+async function doLoginDemo() {
   $('login-email').value = 'demo@bizon.vn';
   $('login-team').value = 'Đội Demo Rồng Xanh';
   $('login-class').value = 'DEMO-2026';
   pickedRole = 'CEO';
-  doLogin();
+  await doLogin();
   S.teamMembers = DEMO_TEAM;
   save(); renderAll();
 }
@@ -203,11 +209,22 @@ function showRivalDetail(i) {
   document.body.appendChild(div);
 }
 
-function doLogin() {
+async function doLogin() {
   const email = $('login-email').value.trim() || 'sinhvien@bizon.vn';
   const team = $('login-team').value.trim() || 'Đội Claymorphism';
   const classId = $('login-class').value.trim();
-  S = newGameState({ email, teamName: team, role: pickedRole, classId });
+
+  // Đội đã có Mã lớp: thử tải lại tiến trình từ máy chủ trước — để đổi
+  // sang máy khác ở phòng máy dùng chung vẫn tiếp tục đúng chỗ đang chơi
+  // dở, thay vì bị ghi đè bằng ván mới.
+  let restored = null;
+  if (classId && window.BizonBackend) {
+    try {
+      const saved = await BizonBackend.loadTeamState(classId, team);
+      if (saved && saved.state_json) restored = applyStateDefaults(saved.state_json);
+    } catch (e) { /* im lặng – bắt đầu ván mới nếu không tải được */ }
+  }
+  S = restored || newGameState({ email, teamName: team, role: pickedRole, classId });
   save();
   $('screen-login').classList.remove('active');
   enterApp();
