@@ -13,13 +13,14 @@
   if (window.BizonTour) return;
 
   var STYLE = [
-    '.bztour-fab{width:46px;height:46px;border-radius:999px;border:0;cursor:pointer;',
-    'position:fixed;left:16px;bottom:96px;z-index:75;font-size:18px;',
+    '.bztour-fab{width:52px;height:52px;border-radius:999px;border:2px solid var(--color-card);cursor:pointer;',
+    'position:fixed;left:16px;bottom:96px;z-index:75;padding:0;overflow:hidden;',
     'display:inline-flex;align-items:center;justify-content:center;',
     'background:var(--color-primary);color:var(--color-primary-foreground);',
     'box-shadow:0 10px 24px -8px rgba(0,0,0,.5);transition:transform .12s ease}',
     '.bztour-fab:hover{transform:translateY(-1px)}',
-    '.bztour-fab[aria-pressed="true"]{background:var(--color-terracotta);color:#fff}',
+    '.bztour-fab[aria-pressed="true"]{border-color:var(--color-terracotta)}',
+    '.bztour-fab img{width:100%;height:100%;object-fit:cover;object-position:50% 2%}',
 
     '.bztour{position:fixed;left:0;right:0;bottom:0;z-index:80;display:none;',
     'align-items:flex-end;gap:.25rem;padding:0 12px 92px;pointer-events:none}',
@@ -99,12 +100,14 @@
   var steps = [], opts = {}, idx = -1, running = false, timer = null;
   var el = {}, spotted = null;
 
+  function luminaArt() { return opts.art || 'characters/lumina-ao-dai-wave.webp'; }
+
   function build() {
     var st = document.createElement('style');
     st.textContent = STYLE;
     document.head.appendChild(st);
 
-    var art = opts.art || 'characters/lumina-ao-dai-wave.webp';
+    var art = luminaArt();
     var wrap = document.createElement('div');
     wrap.className = 'bztour';
     wrap.setAttribute('role', 'dialog');
@@ -268,7 +271,11 @@
     var b = document.createElement('button');
     b.type = 'button';
     b.className = 'bztour-fab';
-    b.textContent = '🎧';
+    var portrait = document.createElement('img');
+    portrait.src = luminaArt();
+    portrait.alt = '';
+    portrait.setAttribute('aria-hidden', 'true');
+    b.appendChild(portrait);
     document.body.appendChild(b);
     b.id = 'tour-btn';
     b.title = L.launch;
