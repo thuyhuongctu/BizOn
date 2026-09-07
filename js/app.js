@@ -511,7 +511,7 @@ const HUONG_CUES = [
   [0.03, 0.87, 'Bonjour à tous!'],
   [1.25, 2.01, "Je m'appelle Huong."],
   [2.39, 3.17, 'Xin chào mọi người!'],
-  [3.53, 4.17, 'Tôi là Huong.'],
+  [3.53, 11.2, 'Tôi là Huong.'],
 ];
 let huongAudio = null;
 function playHuongIntro() {
@@ -1502,6 +1502,15 @@ function showIntro() {
 }
 
 // ---------- Lumina Advisor ----------
+// Mỗi ảnh Lumina có bố cục nhân vật khác nhau (tóc/tay dang ra ở vị trí khác nhau) nên
+// object-position cố định 1 mức sẽ cắt mất đỉnh đầu ở một số ảnh – tra theo từng ảnh để luôn thấy trọn khuôn mặt + chỏm tóc.
+const LUMINA_HERO_POS = {
+  'lumina-vest': '50% 8%',
+  'lumina-vest-thumbsup': '50% 8%',
+  'lumina-vest-worried': '50% 8%',
+  'lumina-ao-dai-clap': '50% 8%',
+  'lumina-ao-dai-alert': '50% 0%',
+};
 function renderAdvisorIntro() {
   const quota = AI_QUOTA_PER_ROUND + (hasSkill(S, 'SK_AI1') ? 2 : 0) - S.aiUsed;
   $('ai-quota').textContent = Math.max(0, quota);
@@ -1513,7 +1522,10 @@ function renderAdvisorIntro() {
   const vol = S.finished ? 'low' : ev.tone === 'bad' ? 'high' : ev.tone === 'warn' ? 'medium' : 'low';
   $('vol-dot').className = 'w-3 h-3 rounded-full ' + { low: 'bg-emerald-500', medium: 'bg-amber-500', high: 'bg-red-600' }[vol];
   $('vol-text').textContent = 'MARKET VOLATILITY: ' + vol.toUpperCase();
-  $('advisor-hero').src = 'assets/character/' + (S.finished ? 'lumina-ao-dai-clap' : (ev.luminaImg || 'lumina-vest')) + '.webp';
+  const heroKey = S.finished ? 'lumina-ao-dai-clap' : (ev.luminaImg || 'lumina-vest');
+  const heroImg = $('advisor-hero');
+  heroImg.src = 'assets/character/' + heroKey + '.webp';
+  heroImg.style.objectPosition = LUMINA_HERO_POS[heroKey] || '50% 8%';
   renderRoleDeepdive();
   renderAdvisorHistory();
 }
