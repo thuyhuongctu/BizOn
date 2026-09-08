@@ -155,6 +155,10 @@
   <div class="min-h-screen flex flex-col justify-center px-6 py-10 max-w-md sm:max-w-lg mx-auto">
     <div class="clay-card overflow-hidden p-0 mb-0">
       <img src="assets/illustrations/game/diem-no-bat-nghiep.webp" alt="Điểm nổ Bật Nghiệp — hành trình BizOn từ Cần Thơ ra thế giới" class="w-full" style="display:block">
+      <div class="relative" style="background:linear-gradient(160deg,#0c4657,#062b3a 60%,#021b27)">
+        <canvas id="clay3d-canvas" style="width:100%;height:220px;display:block;touch-action:none;cursor:grab" aria-label="Linh vật đất sét 3D BizOn – kéo để xoay"></canvas>
+        <p class="absolute bottom-2 left-0 right-0 text-center text-[10px] font-bold text-white/70">🧪 Thử nghiệm · Kéo để xoay linh vật đất sét 3D</p>
+      </div>
       <div class="p-8 pt-5">
       <div class="flex items-start justify-between gap-3">
         <h2 class="font-display text-2xl font-extrabold text-deep-teal">Chào mừng trở lại!</h2>
@@ -767,5 +771,6 @@
 // Đăng ký service worker + tự làm mới khi có bản mới: dùng chung toàn site trong js/site-ui.js
 </script>
 <script src="js/site-dock.js" defer></script>
+<script type="module" src="js/clay3d.js"></script>
 </body>
 </html>
