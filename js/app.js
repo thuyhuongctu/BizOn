@@ -612,8 +612,8 @@ function maybeShowEventIntro() {
       </div>
       ${bad ? `
       <div class="clay-raised p-3 mt-3 flex items-center gap-3">
-        <img src="assets/character/anh-tu-ao-dai-work-cut.webp" alt="Tú Phan" class="w-11 h-11 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 6%;background:#dbeef7">
-        <p class="text-xs text-deep-teal/80 italic">"Bình tĩnh phân tích số liệu trước khi hành động – khủng hoảng luôn ẩn chứa cơ hội cho đội có kỷ luật." – <b class="text-emerald-700">Tú Phan · Cố vấn học thuật</b></p>
+        <img src="assets/character/anh-tu-ao-dai-work-cut.webp" alt="Phan Anh Tú" class="w-11 h-11 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 6%;background:#dbeef7">
+        <p class="text-xs text-deep-teal/80 italic">"Bình tĩnh phân tích số liệu trước khi hành động – khủng hoảng luôn ẩn chứa cơ hội cho đội có kỷ luật." – <b class="text-emerald-700">Phan Anh Tú · Cố vấn học thuật</b></p>
       </div>` : ''}
       <button id="ev-cta" class="clay-button-primary w-full text-white font-display font-bold text-lg py-4 mt-6">${ev.cta ? ev.cta.label : '🎯 Nhập quyết định'}</button>
       <button id="ev-close" class="clay-button-secondary w-full text-primary font-display font-bold py-4 mt-3">Về Trung tâm điều hành</button>
@@ -659,8 +659,8 @@ function showVictory(r) {
         <div class="clay-card p-4"><p class="text-2xl">😊</p><p class="font-display font-extrabold text-deep-teal">${satisfaction}/5</p><p class="text-[10px] text-deep-teal/50 font-semibold">Độ hài lòng thương hiệu</p></div>
       </div>
       <div class="clay-raised p-3 mb-4 flex items-center gap-3 text-left">
-        <img src="assets/character/anh-tu-ao-dai-smile-cut.webp" alt="Tú Phan" class="w-12 h-12 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 5%;background:#dbeef7">
-        <p class="text-xs text-deep-teal/80 italic">"Xuất sắc! Đây là minh chứng cho một chiến lược được thực thi kỷ luật." – <b class="text-emerald-700">Tú Phan</b></p>
+        <img src="assets/character/anh-tu-ao-dai-smile-cut.webp" alt="Phan Anh Tú" class="w-12 h-12 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 5%;background:#dbeef7">
+        <p class="text-xs text-deep-teal/80 italic">"Xuất sắc! Đây là minh chứng cho một chiến lược được thực thi kỷ luật." – <b class="text-emerald-700">Phan Anh Tú</b></p>
       </div>
       <button id="vic-report" class="clay-btn w-full bg-deep-teal text-white font-display font-bold py-4 mb-3">📊 XEM BÁO CÁO CHI TIẾT</button>
       <button id="vic-next" class="clay-btn w-full bg-white text-deep-teal font-display font-bold py-4">LẬP KẾ HOẠCH TIẾP THEO</button>
@@ -940,9 +940,9 @@ function journalLesson(r) {
 const JOURNAL_QUOTES = [
   { clip: 'quote-01', text: 'Mục tiêu không phải là đánh bại đối thủ, mà là làm cho họ trở nên không còn quan trọng.', by: 'Lumina AI', color: 'text-primary' },
   { clip: 'quote-02', text: 'Mọi báo cáo tài chính đều là một câu chuyện, hãy đảm bảo đội của bạn đang viết một chương thành công.', by: 'SEC', color: 'text-red-600' },
-  { clip: 'quote-03', text: 'Dữ liệu cho ta biết quá khứ, quyết định hôm nay viết nên tương lai.', by: 'Tú Phan', color: 'text-emerald-700' },
+  { clip: 'quote-03', text: 'Dữ liệu cho ta biết quá khứ, quyết định hôm nay viết nên tương lai.', by: 'Phan Anh Tú', color: 'text-emerald-700' },
   { clip: 'quote-04', text: 'Khủng hoảng là bài kiểm tra tốt nhất cho năng lực quản trị dòng tiền.', by: 'Lumina AI', color: 'text-primary' },
-  { clip: 'quote-05', text: 'Thị phần mua được bằng tiền, nhưng lòng trung thành phải xây bằng giá trị.', by: 'Tú Phan', color: 'text-emerald-700' },
+  { clip: 'quote-05', text: 'Thị phần mua được bằng tiền, nhưng lòng trung thành phải xây bằng giá trị.', by: 'Phan Anh Tú', color: 'text-emerald-700' },
   { clip: 'quote-06', text: 'Đừng sợ commit sai – hãy sợ việc không rút ra được bài học nào.', by: 'SEC', color: 'text-red-600' },
 ];
 
@@ -1488,7 +1488,7 @@ const INTRO_SLIDES = [
   { icon: '🗺️', title: '6 vòng · 6 tỉnh thành', img: 'assets/illustrations/game/mekong-capital.webp',
     text: 'Mỗi vòng là một quý kinh doanh tại một tỉnh/thành trên bản đồ mới: Cần Thơ → TP. Hồ Chí Minh → Khánh Hòa → Đà Nẵng → Thanh Hóa → Hà Nội. Đội thắng vòng nào sẽ cắm cờ 🚩 lên tỉnh đó! ⏱️ Mỗi vòng 5–7 phút, cả ván ≈ 30–45 phút.' },
   { icon: '👥', title: 'Đội hình C-Suite', img: 'assets/illustrations/game/team-portrait.webp', 
-    text: 'CEO chèo lái chiến lược, CFO giữ két sắt, CMO đánh chiếm thị trường, COO vận hành xưởng, SEC ghi biên bản – bên cạnh cố vấn Lumina AI và thầy Tú Phan.' },
+    text: 'CEO chèo lái chiến lược, CFO giữ két sắt, CMO đánh chiếm thị trường, COO vận hành xưởng, SEC ghi biên bản – bên cạnh cố vấn Lumina AI và thầy Phan Anh Tú.' },
   { icon: '🌏', title: 'Sau đó: ra biển lớn', img: 'assets/illustrations/game/globe-walk.webp',
     text: 'Chinh phục xong Việt Nam? BizOn Go Global đang chờ – chọn 1 trong 7 thị trường quốc tế, đàm phán với đối tác bản địa và thử sức 4 phương thức thâm nhập.' },
   { icon: '🏆', title: 'Mục tiêu của bạn', img: 'assets/illustrations/game/conquest-spiral.webp',
