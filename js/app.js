@@ -301,6 +301,7 @@ const MANUAL = {
       <p class="text-xs text-deep-teal/60 mt-1">${p}</p><p class="text-xs font-semibold text-emerald-700 mt-1">${c}</p></div>`).join('')}
     <p class="text-[11px] text-deep-teal/50 mt-2">📌 Giảng viên: hành vi AI là tất định (cùng seed đội → cùng kết quả), tiện chấm điểm & so sánh giữa các đội. Chi tiết trong tài liệu giảng viên trên GitHub.</p>` },
   roles: { icon: '👥', name: 'Vai trò & Đội ngũ', html: `
+    <img src="assets/illustrations/game/boardroom-lumina.webp" alt="Đội C-suite họp cùng cố vấn Lumina" class="w-full h-36 object-cover rounded-2xl mb-4">
     <p class="text-sm text-deep-teal/75 mb-4">Sự phối hợp giữa 5 vị trí cốt lõi là chìa khóa thành công:</p>
     ${[['CEO', 'Quyết định', 'Định hướng chiến lược, duyệt ngân sách cuối cùng và chốt hạ quyết định.', '🤝 Làm việc chặt với CFO trước khi chốt số.'],
        ['CFO', 'Tài chính', 'Quản lý dòng tiền, phân bổ vốn, phân tích lỗ lãi và nguồn vốn vay.', '🔄 Cấp ngân sách cho CMO & COO.'],
@@ -333,6 +334,7 @@ const MANUAL = {
        ['🛟 Phòng ngừa khủng hoảng', 'Kịch bản ứng phó khi thị trường biến động mạnh; lời khuyên khẩn cấp khi thanh khoản đỏ.']].map(([t, d]) => `
     <div class="clay-card p-4 mb-3"><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p></div>`).join('')}` },
   tips: { icon: '💡', name: 'Mẹo & Thủ thuật', html: `
+    <img src="assets/illustrations/game/sen-shield.webp" alt="Lumina dựng khiên sen bảo vệ đội khi thị trường biến động" class="w-full h-36 object-cover rounded-2xl mb-4">
     ${[['👑 Chiến thuật CEO', 'Luôn tham khảo CFO trước khi chốt số. Một quyết định đầu tư lớn thiếu kiểm soát chi phí có thể dẫn đến phá sản.'],
        ['🏭 Tối ưu sản xuất', 'Đừng mở rộng quá nhanh – kiểm tra báo cáo khấu hao và bảo trì máy móc đúng lúc.'],
        ['📣 Chiếm lĩnh thị trường', 'Dùng Lumina AI dự báo xu hướng trước khi tung chiến dịch Marketing lớn.'],
@@ -1481,15 +1483,15 @@ function renderConquest() {
 const INTRO_SLIDES = [
   { icon: '🇻🇳', title: 'Việt Nam 2026', img: 'assets/illustrations/game/river-worldmap.webp',
     text: 'Nền kinh tế đang vươn mình "Hóa Rồng". Đội của bạn điều hành một công ty đồ chơi đất sét – khởi nghiệp từ Miền Tây, khát vọng mở rộng cả thị trường nội địa và quốc tế.' },
-  { icon: '🏺', title: 'Doanh nghiệp & sản phẩm của bạn', img: 'assets/illustrations/game/team-table.webp',
+  { icon: '🏺', title: 'Doanh nghiệp & sản phẩm của bạn', img: 'assets/illustrations/game/workshop-lumina.webp',
     text: 'Bạn điều hành một xưởng đồ chơi đất sét thủ công tại Cần Thơ, vốn khởi điểm 500 triệu ₫. Sản phẩm chủ lực: «Bộ linh vật đất sét Việt» – dòng quà tặng & đồ sưu tầm, giá tham chiếu 150.000₫/bộ. Tên doanh nghiệp chính là tên đội bạn đặt khi đăng nhập!' },
-  { icon: '🗺️', title: '6 vòng · 6 tỉnh thành', img: 'assets/illustrations/game/paths-compass.webp',
+  { icon: '🗺️', title: '6 vòng · 6 tỉnh thành', img: 'assets/illustrations/game/mekong-capital.webp',
     text: 'Mỗi vòng là một quý kinh doanh tại một tỉnh/thành trên bản đồ mới: Cần Thơ → TP. Hồ Chí Minh → Khánh Hòa → Đà Nẵng → Thanh Hóa → Hà Nội. Đội thắng vòng nào sẽ cắm cờ 🚩 lên tỉnh đó! ⏱️ Mỗi vòng 5–7 phút, cả ván ≈ 30–45 phút.' },
   { icon: '👥', title: 'Đội hình C-Suite', img: 'assets/illustrations/game/team-portrait.webp', 
     text: 'CEO chèo lái chiến lược, CFO giữ két sắt, CMO đánh chiếm thị trường, COO vận hành xưởng, SEC ghi biên bản – bên cạnh cố vấn Lumina AI và thầy Tú Phan.' },
   { icon: '🌏', title: 'Sau đó: ra biển lớn', img: 'assets/illustrations/game/globe-walk.webp',
     text: 'Chinh phục xong Việt Nam? BizOn Go Global đang chờ – chọn 1 trong 7 thị trường quốc tế, đàm phán với đối tác bản địa và thử sức 4 phương thức thâm nhập.' },
-  { icon: '🏆', title: 'Mục tiêu của bạn', img: 'assets/illustrations/game/celebrate-shop.webp',
+  { icon: '🏆', title: 'Mục tiêu của bạn', img: 'assets/illustrations/game/conquest-spiral.webp',
     text: 'Cắm nhiều cờ nhất, đạt TOP 1 thị phần Việt Nam và nhận chứng nhận hoàn thành. Sẵn sàng Bật Nghiệp? 🚀' },
 ];
 
@@ -2152,6 +2154,7 @@ function renderSeasonReport(body) {
       : `Mùa giải lỗ ${money(Math.abs(Math.round(totalProfit)))} – nhưng đó là bài học đắt giá nhất của khởi nghiệp. Mở tab 🕵️ Chi phí đối thủ xem họ chi thế nào, rồi chơi lại mùa mới: người thắng là người đứng dậy nhanh nhất!`;
 
   body.innerHTML = `
+    ${S.finished ? `<div class="clay-card overflow-hidden mb-3"><img src="assets/illustrations/game/celebrate-win.webp" alt="Đội BizOn ăn mừng hoàn thành ván mô phỏng" class="w-full" style="display:block"></div>` : ''}
     <div class="clay-card p-5 mb-3 text-center text-white" style="background:linear-gradient(135deg,#0e3d4d 0%,#006687 100%)">
       <p class="text-[11px] font-bold text-white/60 uppercase tracking-wider">🏁 ${S.finished ? 'Báo cáo Tổng kết mùa giải' : 'Tổng kết tạm thời – sau vòng ' + last.round + '/' + ROUNDS_TOTAL}</p>
       <p class="font-display font-extrabold text-3xl mt-1">${champion && S.finished ? '👑 VÔ ĐỊCH SÀN ĐẤU' : 'Hạng ' + myRank + '/4 toàn sàn'}</p>
