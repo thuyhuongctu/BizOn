@@ -285,6 +285,7 @@ function showLevelUp(level) {
 // ---------- Sổ tay hướng dẫn (User Manual – thiết kế Stitch) ----------
 const MANUAL = {
   start: { icon: '🚀', name: 'Bắt đầu', html: `
+    <img src="assets/illustrations/game/team-portrait.webp" alt="Đội ngũ đất sét BizOn" class="w-full h-36 object-cover rounded-2xl mb-4">
     <p class="text-sm text-deep-teal/75 mb-4">Chào mừng bạn đến với BizOn – môi trường mô phỏng kinh doanh 3D. ⏱️ Thời lượng: cả ván 6 vòng ≈ 30–45 phút (mỗi vòng 5–7 phút gồm đọc biến cố, họp đội, chốt quyết định và xem đấu trường); bản Go Global 4 quý ≈ 10–15 phút. Ba bước thiết lập:</p>
     ${[['1', 'Lập đội & chọn vai trò', 'Đăng nhập với tên đội (cũng là tên doanh nghiệp của bạn), Class ID (nếu học trên lớp) và chọn vai trò CEO · CFO · CMO · COO · SEC. Doanh nghiệp là xưởng đồ chơi đất sét – sản phẩm chủ lực «Bộ linh vật đất sét Việt».'],
        ['2', 'Nhận vốn khởi điểm', 'Mỗi đội bắt đầu với 500tr₫ vốn giảng viên cấp. Giữ ít nhất 15% dự phòng cho biến cố!'],
@@ -309,6 +310,7 @@ const MANUAL = {
     <div class="clay-card p-4 mb-3"><div class="flex items-center gap-2 mb-1"><p class="font-display font-extrabold text-primary">${r}</p><span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full risk-low">${tag}</span></div>
       <p class="text-xs text-deep-teal/70">${d}</p><p class="text-[11px] font-bold text-deep-teal/50 mt-1.5">${i}</p></div>`).join('')}` },
   rounds: { icon: '🎮', name: 'Cách chơi theo vòng', html: `
+    <img src="assets/illustrations/game/table-model.webp" alt="Đội phân tích mô hình kinh doanh quanh bàn" class="w-full h-36 object-cover rounded-2xl mb-4">
     <p class="text-sm text-deep-teal/75 mb-4">Mỗi vòng là một chu trình 6 bước:</p>
     ${[['Phân tích báo cáo', 'Đánh giá tài chính, thị phần từ vòng trước.', '💡 Chú ý dòng tiền và hàng tồn kho.'],
        ['Thảo luận đội', 'Thống nhất chiến lược dựa trên dữ liệu.', '💡 Phân công vai trò rõ ràng.'],
@@ -317,8 +319,14 @@ const MANUAL = {
        ['Đối phó biến cố', 'Price War, khủng hoảng năng lượng, chuỗi cung ứng…', '💡 Luôn giữ dự phòng tiền mặt.'],
        ['Tổng kết', 'Xem xếp hạng, rút kinh nghiệm cho vòng sau.', '💡 SEC ghi chép bài học vào Nhật ký đội.']].map(([t, d, tip], i) => `
     <div class="clay-card p-4 mb-3 flex gap-3.5 items-start"><span class="w-9 h-9 shrink-0 rounded-full font-display font-extrabold flex items-center justify-center text-white" style="background:#00c4ff; box-shadow:0 3px 0 #0095c2">${i + 1}</span>
-      <div><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p><p class="text-[11px] font-semibold text-amber-700 mt-1">${tip}</p></div></div>`).join('')}` },
+      <div><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p><p class="text-[11px] font-semibold text-amber-700 mt-1">${tip}</p></div></div>`).join('')}
+    <div class="clay-card p-4 mb-2 border-2 border-clay-gold/50">
+      <p class="font-bold text-sm text-deep-teal">📐 Ví dụ một vòng mẫu (minh họa)</p>
+      <p class="text-xs text-deep-teal/70 mt-1 leading-relaxed">Đặt <b>giá 150.000₫</b> (bằng giá tham chiếu), <b>marketing 60 triệu₫</b>, <b>sản lượng 4.000 bộ</b>. Mỗi bộ lời ~<b>90.000₫</b> trước chi phí cố định (giá 150k − chi phí biến đổi ~60k). Cả thị trường cầu ~<b>12.000 bộ/vòng</b> chia cho bạn và 3 đối thủ AI — nếu sức hút ngang mức trung bình, thị phần ~<b>25%</b> (~3.000 bộ), doanh thu ~<b>450 triệu₫</b>, gộp lãi ~<b>270 triệu₫</b> trước chi phí cố định + marketing.</p>
+      <p class="text-xs font-semibold text-emerald-700 mt-1.5">🚩 Muốn cắm cờ: cần thị phần cao nhất trong 4 đội — thử hạ giá về ~140k <i>hoặc</i> tăng marketing, nhưng luôn giữ lãi dương và ≥15% tiền dự phòng.</p>
+    </div>` },
   lumina: { icon: '🤖', name: 'Cố vấn AI Lumina', html: `
+    <img src="assets/illustrations/game/lumina-vortex.webp" alt="Lumina AI đồng hành cùng đội" class="w-full h-36 object-cover rounded-2xl mb-4">
     <div class="clay-card p-4 mb-4 flex gap-3 items-center"><img src="assets/character/lumina-vest.webp" alt="" class="w-12 h-12 rounded-full object-cover" style="object-position:50% 14%"><p class="text-xs text-deep-teal/75">Hương là trợ lý AI cá nhân của đội – trò chuyện được bằng giọng nói tiếng Việt trong tab Lumina.</p></div>
     ${[['📊 Phân tích dữ liệu', 'Kịch bản tối ưu theo mục tiêu tài chính; mô phỏng "Nếu – Thì" trước khi Commit (2 lượt/vòng).'],
        ['🔮 Dự đoán thị trường', 'Cảnh báo rủi ro (đỏ/cam) hoặc cơ hội (xanh ngọc) theo từng vai trò CFO · COO · CMO · SEC.'],
@@ -336,6 +344,7 @@ const MANUAL = {
        'Điều chỉnh giá linh hoạt theo độ nhạy của thị trường – đừng giữ nguyên giá cả 6 vòng.'].map(t => `
     <div class="clay-sunken rounded-2xl p-3 mb-2 flex gap-2 items-start"><span class="text-primary font-bold">✓</span><p class="text-xs text-deep-teal/75">${t}</p></div>`).join('')}` },
   world: { icon: '🌏', name: 'Hệ sinh thái BizOn', html: `
+    <img src="assets/illustrations/game/bridge-music.webp" alt="Đội bước qua cầu ra thế giới" class="w-full h-36 object-cover rounded-2xl mb-4">
     <p class="text-sm text-deep-teal/75 mb-4">BizOn không chỉ có 6 vòng trong nước – cả một hệ sinh thái đang chờ bạn:</p>
     ${[['🗺️ Bản đồ chinh phục', 'Mỗi vòng thắng thị phần là một lá cờ 🚩 cắm lên bản đồ Việt Nam – từ Cần Thơ tới cột cờ Lũng Cú, kèm hai quần đảo Hoàng Sa & Trường Sa.'],
        ['🌏 BizOn Go Global', 'Ra biển lớn: khai hồ sơ doanh nghiệp, chọn 1 trong 7 thị trường, đàm phán với đối tác bản địa, chọn phương thức thâm nhập (Export · Licensing · Liên doanh · FDI) và kinh doanh 4 quý. Có IE Lab mô phỏng số liệu và nút xuất nhật ký CSV để nộp giảng viên.'],
@@ -528,7 +537,7 @@ const HUONG_CUES = [
   [0.03, 0.87, 'Bonjour à tous!'],
   [1.25, 2.01, "Je m'appelle Huong."],
   [2.39, 3.17, 'Xin chào mọi người!'],
-  [3.53, 4.17, 'Tôi là Huong.'],
+  [3.53, 11.2, 'Tôi là Huong.'],
 ];
 let huongAudio = null;
 function playHuongIntro() {
@@ -1470,17 +1479,17 @@ function renderConquest() {
 
 // ---------- Giới thiệu game (Intro – hành trình chinh phục) ----------
 const INTRO_SLIDES = [
-  { icon: '🇻🇳', title: 'Việt Nam 2026', img: 'assets/illustrations/hero-vietnam-2026.webp',
+  { icon: '🇻🇳', title: 'Việt Nam 2026', img: 'assets/illustrations/game/river-worldmap.webp',
     text: 'Nền kinh tế đang vươn mình "Hóa Rồng". Đội của bạn điều hành một công ty đồ chơi đất sét – khởi nghiệp từ Miền Tây, khát vọng mở rộng cả thị trường nội địa và quốc tế.' },
-  { icon: '🏺', title: 'Doanh nghiệp & sản phẩm của bạn',
+  { icon: '🏺', title: 'Doanh nghiệp & sản phẩm của bạn', img: 'assets/illustrations/game/team-table.webp',
     text: 'Bạn điều hành một xưởng đồ chơi đất sét thủ công tại Cần Thơ, vốn khởi điểm 500 triệu ₫. Sản phẩm chủ lực: «Bộ linh vật đất sét Việt» – dòng quà tặng & đồ sưu tầm, giá tham chiếu 150.000₫/bộ. Tên doanh nghiệp chính là tên đội bạn đặt khi đăng nhập!' },
-  { icon: '🗺️', title: '6 vòng · 6 tỉnh thành',
+  { icon: '🗺️', title: '6 vòng · 6 tỉnh thành', img: 'assets/illustrations/game/paths-compass.webp',
     text: 'Mỗi vòng là một quý kinh doanh tại một tỉnh/thành trên bản đồ mới: Cần Thơ → TP. Hồ Chí Minh → Khánh Hòa → Đà Nẵng → Thanh Hóa → Hà Nội. Đội thắng vòng nào sẽ cắm cờ 🚩 lên tỉnh đó! ⏱️ Mỗi vòng 5–7 phút, cả ván ≈ 30–45 phút.' },
-  { icon: '👥', title: 'Đội hình C-Suite', 
+  { icon: '👥', title: 'Đội hình C-Suite', img: 'assets/illustrations/game/team-portrait.webp', 
     text: 'CEO chèo lái chiến lược, CFO giữ két sắt, CMO đánh chiếm thị trường, COO vận hành xưởng, SEC ghi biên bản – bên cạnh cố vấn Lumina AI và thầy Tú Phan.' },
-  { icon: '🌏', title: 'Sau đó: ra biển lớn',
+  { icon: '🌏', title: 'Sau đó: ra biển lớn', img: 'assets/illustrations/game/globe-walk.webp',
     text: 'Chinh phục xong Việt Nam? BizOn Go Global đang chờ – chọn 1 trong 7 thị trường quốc tế, đàm phán với đối tác bản địa và thử sức 4 phương thức thâm nhập.' },
-  { icon: '🏆', title: 'Mục tiêu của bạn',
+  { icon: '🏆', title: 'Mục tiêu của bạn', img: 'assets/illustrations/game/celebrate-shop.webp',
     text: 'Cắm nhiều cờ nhất, đạt TOP 1 thị phần Việt Nam và nhận chứng nhận hoàn thành. Sẵn sàng Bật Nghiệp? 🚀' },
 ];
 
@@ -1519,6 +1528,15 @@ function showIntro() {
 }
 
 // ---------- Lumina Advisor ----------
+// Mỗi ảnh Lumina có bố cục nhân vật khác nhau (tóc/tay dang ra ở vị trí khác nhau) nên
+// object-position cố định 1 mức sẽ cắt mất đỉnh đầu ở một số ảnh – tra theo từng ảnh để luôn thấy trọn khuôn mặt + chỏm tóc.
+const LUMINA_HERO_POS = {
+  'lumina-vest': '50% 8%',
+  'lumina-vest-thumbsup': '50% 8%',
+  'lumina-vest-worried': '50% 8%',
+  'lumina-ao-dai-clap': '50% 8%',
+  'lumina-ao-dai-alert': '50% 0%',
+};
 function renderAdvisorIntro() {
   const quota = AI_QUOTA_PER_ROUND + (hasSkill(S, 'SK_AI1') ? 2 : 0) - S.aiUsed;
   $('ai-quota').textContent = Math.max(0, quota);
@@ -1530,7 +1548,10 @@ function renderAdvisorIntro() {
   const vol = S.finished ? 'low' : ev.tone === 'bad' ? 'high' : ev.tone === 'warn' ? 'medium' : 'low';
   $('vol-dot').className = 'w-3 h-3 rounded-full ' + { low: 'bg-emerald-500', medium: 'bg-amber-500', high: 'bg-red-600' }[vol];
   $('vol-text').textContent = 'MARKET VOLATILITY: ' + vol.toUpperCase();
-  $('advisor-hero').src = 'assets/character/' + (S.finished ? 'lumina-ao-dai-clap' : (ev.luminaImg || 'lumina-vest')) + '.webp';
+  const heroKey = S.finished ? 'lumina-ao-dai-clap' : (ev.luminaImg || 'lumina-vest');
+  const heroImg = $('advisor-hero');
+  heroImg.src = 'assets/character/' + heroKey + '.webp';
+  heroImg.style.objectPosition = LUMINA_HERO_POS[heroKey] || '50% 8%';
   renderRoleDeepdive();
   renderAdvisorHistory();
 }
