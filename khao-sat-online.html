@@ -67,6 +67,22 @@
 
   <!-- BƯỚC 0: thông tin chung -->
   <section id="ks-form" class="space-y-6">
+    <!-- BƯỚC 0: Đồng thuận tham gia (bắt buộc trước khi nộp) -->
+    <div class="clay-card p-6" id="ks-consent-card">
+      <h2 class="font-display font-extrabold text-deep-teal text-lg mb-1">🔒 Đồng thuận tham gia khảo sát</h2>
+      <p class="text-xs opacity-70 font-semibold mb-3">Vui lòng đọc kỹ trước khi trả lời.</p>
+      <ul class="text-[13px] font-semibold leading-relaxed" style="list-style:disc;padding-left:20px">
+        <li class="mb-1.5">Khảo sát nhằm cải tiến trò chơi giáo dục BizOn và phục vụ nghiên cứu khoa học về dạy–học; <b>không dùng để lấy điểm</b>.</li>
+        <li class="mb-1.5">Tham gia <b>hoàn toàn tự nguyện</b>; bạn có thể dừng bất cứ lúc nào mà không ảnh hưởng đến điểm số hay kết quả học tập.</li>
+        <li class="mb-1.5">Phiếu được thu thập <b>ẩn danh</b> qua mã tự đặt – không thu thập họ tên hay thông tin định danh cá nhân.</li>
+        <li>Dữ liệu ẩn danh có thể được dùng để phân tích và công bố khoa học.</li>
+      </ul>
+      <label class="ks-opt mt-4" id="ks-consent-opt" style="font-weight:800">
+        <input type="checkbox" id="ks-consent-chk">
+        <span>Đáp viên đã đọc, hiểu và <b>đồng thuận trả lời câu hỏi</b> của khảo sát này.</span>
+      </label>
+    </div>
+
     <div class="clay-card p-6">
       <h2 class="font-display font-extrabold text-deep-teal text-lg mb-4">📋 Thông tin phiếu</h2>
       <div class="grid sm:grid-cols-2 gap-4">
@@ -302,6 +318,7 @@
     const code = $('ks-code').value.trim().toUpperCase();
     const klass = $('ks-class').value.trim();
     const missing = [];
+    if (!$('ks-consent-chk').checked) missing.push($('ks-consent-opt'));
     if (!/^[A-Z]{2}[0-9]{2}$/.test(code)) missing.push($('ks-code'));
     if (!klass) missing.push($('ks-class'));
     const answers = {};

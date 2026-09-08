@@ -19,6 +19,8 @@
     primary: [
       { id: 'command',   icon: '⌂', label: 'Command Center',   href: './command-center.html' },
       { id: 'startup',   icon: '☆', label: 'Startup Lab',      href: '../game.html' },
+      { id: 'cmrlab',    icon: '◧', label: 'CMR Lab',          href: '../lab/cmr-lab.html' },
+      { id: 'cvpstudio', icon: '◭', label: 'CVP Studio',       href: '../lab/cvp-studio.html' },
       { id: 'brand',     icon: '◇', label: 'Brand Passport',   href: './brand-passport.html' },
       { id: 'aibis',     icon: '◎', label: 'AIBIS Global',     href: './aibis.html' },
       { id: 'classroom', icon: '♙', label: 'Instructor Studio', href: './instructor-studio.html' },

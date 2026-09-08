@@ -28,6 +28,11 @@
   .open-line { border-bottom: 1px dotted #888; height: 20px; margin: 6px 0; }
   .badge { display: inline-block; background: #006687; color: #fff; font-size: 10px; font-weight: 700; padding: 2px 10px; border-radius: 999px; letter-spacing: .08em; }
   .instructor { background: #f2f7fa; border: 1.5px dashed #006687; border-radius: 8px; padding: 10px 12px; margin-top: 12px; font-size: 11.5px; }
+  .consent { border: 1.5px solid #006687; border-radius: 8px; padding: 9px 12px; margin: 8px 0 10px; background: #f7fbfd; font-size: 11.5px; }
+  .consent h3 { color: #006687; margin: 0 0 4px; font-size: 12px; }
+  .consent ul { margin: 0 0 6px 18px; }
+  .consent li { margin: 2px 0; }
+  .consent .declare { display: block; font-weight: 700; margin-top: 4px; }
   .foot { font-size: 10px; color: #789; margin-top: 10px; text-align: center; }
   .toolbar { max-width: 210mm; margin: 14px auto 0; display: flex; gap: 10px; }
   .toolbar button, .toolbar a { background: #006687; color: #fff; border: 0; border-radius: 999px; padding: 9px 20px; font-weight: 700; font-size: 13px; cursor: pointer; text-decoration: none; }
@@ -64,6 +69,17 @@
   <span class="badge">PHIẾU TRƯỚC – phát trước khi chơi</span>
   <h1>Khảo sát lớp thử nghiệm BizOn Bật Nghiệp</h1>
   <p class="note">Phiếu ẩn danh, chỉ phục vụ cải tiến trò chơi và nghiên cứu giáo dục. Không có câu trả lời «đúng để lấy điểm» – hãy trả lời trung thực theo hiểu biết hiện tại của bạn.</p>
+
+  <div class="consent">
+    <h3>Đồng thuận tham gia khảo sát</h3>
+    <ul>
+      <li>Khảo sát nhằm cải tiến trò chơi giáo dục BizOn và phục vụ nghiên cứu khoa học về dạy–học; không dùng để lấy điểm.</li>
+      <li>Tham gia hoàn toàn tự nguyện; đáp viên có thể dừng bất cứ lúc nào mà không ảnh hưởng đến kết quả học tập.</li>
+      <li>Phiếu ẩn danh qua mã tự đặt, không thu thập họ tên hay thông tin định danh; dữ liệu ẩn danh có thể được dùng cho phân tích và công bố khoa học.</li>
+    </ul>
+    <label class="declare"><span class="box"></span> Đáp viên đã đọc, hiểu và đồng thuận trả lời câu hỏi của khảo sát này.</label>
+  </div>
+
   <div class="meta">
     <p>Mã tự đặt (2 chữ cái + 2 số bất kỳ, nhớ dùng lại ở phiếu sau): <span></span></p>
     <p>Lớp/Nhóm: <span></span></p>
@@ -214,6 +230,11 @@
   <span class="badge" style="background:#e8762d">PHIẾU SAU – phát ngay sau buổi chơi</span>
   <h1>Khảo sát lớp thử nghiệm BizOn Bật Nghiệp</h1>
   <p class="note">Dùng đúng <b>mã tự đặt</b> như phiếu trước để ghép cặp kết quả (vẫn ẩn danh).</p>
+
+  <div class="consent">
+    <label class="declare"><span class="box"></span> Đáp viên đã đọc, hiểu và đồng thuận trả lời câu hỏi của khảo sát này (phiếu ẩn danh, tự nguyện, phục vụ nghiên cứu giáo dục).</label>
+  </div>
+
   <div class="meta">
     <p>Mã tự đặt (giống phiếu trước): <span></span></p>
     <p>Vai trò trong đội (CEO/CFO/CMO/COO/Thư ký): <span></span></p>
@@ -296,7 +317,7 @@
 
   <div class="instructor">
     <h3>Ghi chú đạo đức nghiên cứu</h3>
-    <p>Phiếu ẩn danh qua mã tự đặt, không thu thập họ tên hay thông tin định danh. Nếu dùng dữ liệu cho công bố khoa học, cần thông báo mục đích cho sinh viên và tuân thủ quy định đạo đức nghiên cứu của trường.</p>
+    <p>Phiếu ẩn danh qua mã tự đặt, không thu thập họ tên hay thông tin định danh. Mỗi phiếu (trước và sau) đều có ô <b>đồng thuận tham gia</b> để đáp viên xác nhận trước khi trả lời; giữ ẩn danh nên không yêu cầu chữ ký. Bản online (khao-sat-online.html) bắt buộc tick đồng thuận mới nộp được. Nếu dùng dữ liệu cho công bố khoa học, cần thông báo mục đích cho sinh viên và tuân thủ quy định đạo đức nghiên cứu của trường.</p>
   </div>
 
   <p class="foot">BizOn Bật Nghiệp · Bộ phiếu pre-test/post-test chuẩn hóa v2.0 – 15 câu ↔ 5 chuẩn đầu ra · © 2026 Đỗ Thùy Hương &amp; Phan Anh Tú</p>

@@ -66,6 +66,8 @@ Không bên nào được đơn phương chuyển nhượng phần quyền chung
 | Bên B | Phan Anh Tú | Đồng chủ sở hữu; cố vấn học thuật và chuyên môn |  |  |
 | Xác nhận/ý kiến | Đại diện CTU có thẩm quyền | Xác nhận phạm vi quyền/lợi ích của CTU |  |  |
 
+> **Trạng thái (24/08/2026):** Phan Anh Tú đã xác nhận **ý định đồng ý** ký thỏa thuận này, cùng tỷ lệ 50/50 áp dụng cho phần Bến Phù Sa. Đây **chưa phải chữ ký chính thức** — bảng trên vẫn để trống cho tới khi ký thật. Các điều kiện hiệu lực đầy đủ ở mục 6 và 6 phụ lục bắt buộc ở mục 10 vẫn chưa hoàn tất.
+
 ## 10. Phụ lục bắt buộc trước khi ký
 
 1. Ma trận tác giả–tài sản–chủ sở hữu–tỷ lệ.
