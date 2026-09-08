@@ -1,11 +1,13 @@
 /* BizOn Bật Nghiệp 2026 – Service Worker (offline app shell)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
 
-const CACHE = 'bizon-v246';
+const CACHE = 'bizon-v247';
 const SHELL = [
   './',
   './index.html',
   './game.html',
+  './lab/cmr-lab.html',
+  './lab/cvp-studio.html',
   './thu-vien.html',
   './am-nhac.html',
   './lumina.html',
@@ -62,6 +64,16 @@ const SHELL = [
   './assets/character/lumina-vest-thumbsup.webp',
   './assets/illustrations/hero-vietnam-2026.webp',
   './assets/illustrations/arena-vietnam-map-v2.webp',
+  // Bộ ảnh đất sét dùng cho màn Giới thiệu + Sổ tay hướng dẫn của game
+  './assets/illustrations/game/river-worldmap.webp',
+  './assets/illustrations/game/team-table.webp',
+  './assets/illustrations/game/paths-compass.webp',
+  './assets/illustrations/game/team-portrait.webp',
+  './assets/illustrations/game/globe-walk.webp',
+  './assets/illustrations/game/celebrate-shop.webp',
+  './assets/illustrations/game/table-model.webp',
+  './assets/illustrations/game/lumina-vortex.webp',
+  './assets/illustrations/game/bridge-music.webp',
   './assets/illustrations/giai-dieu-bizon.webp',
   './assets/illustrations/thuyen-sen-khoi-hanh.webp',
   './assets/character/advisors/lumina-nghe-nhac-dung-cut.webp',
