@@ -59,6 +59,16 @@
       path: 'assets/illustrations/giai-dieu-bizon.webp',
       viAlt: 'Ảnh bìa Giai điệu BizOn trong thư viện sáng tạo',
       enAlt: 'BizOn Melodies cover artwork in the creative library'
+    },
+    cmrLabScene: {
+      path: 'assets/illustrations/command-center.webp',
+      viAlt: 'Phòng lab phân tích số dư đảm phí (CMR) của BizOn',
+      enAlt: 'BizOn contribution-margin (CMR) analysis lab'
+    },
+    cvpStudioScene: {
+      path: 'assets/illustrations/team-holo-meeting.webp',
+      viAlt: 'Xưởng mô hình điểm hòa vốn CVP của BizOn',
+      enAlt: 'BizOn CVP break-even modelling studio'
     }
   });
 
@@ -162,6 +172,28 @@
         description: {
           vi: 'Ra quyết định qua sáu vòng kinh doanh với dữ liệu, rủi ro và kết quả có thể truy vết.',
           en: 'Make decisions across six business rounds with traceable data, risk and outcomes.'
+        }
+      },
+      {
+        id: 'cmr-lab',
+        asset: 'cmrLabScene',
+        href: 'lab/cmr-lab.html',
+        kicker: { vi: 'PHÒNG LAB TÀI CHÍNH', en: 'FINANCE LAB' },
+        title: { vi: 'CMR Lab · Số dư đảm phí', en: 'CMR Lab · Contribution Margin' },
+        description: {
+          vi: 'Hiểu «túi đỏ» số dư đảm phí: giá, chi phí biến đổi và phần đóng góp của mỗi sản phẩm bán ra – nền tảng để chơi Bật Nghiệp tốt hơn.',
+          en: 'Master contribution margin — price, variable cost and what each unit contributes — to play Startup Lab better.'
+        }
+      },
+      {
+        id: 'cvp-studio',
+        asset: 'cvpStudioScene',
+        href: 'lab/cvp-studio.html',
+        kicker: { vi: 'XƯỞNG MÔ HÌNH CVP', en: 'CVP STUDIO' },
+        title: { vi: 'CVP Studio · Điểm hòa vốn', en: 'CVP Studio · Break-even' },
+        description: {
+          vi: 'Thử nghiệm quan hệ Chi phí – Sản lượng – Lợi nhuận và tìm điểm hòa vốn cho một kế hoạch kinh doanh.',
+          en: 'Explore the Cost–Volume–Profit relationship and find the break-even point for a business plan.'
         }
       },
       {
