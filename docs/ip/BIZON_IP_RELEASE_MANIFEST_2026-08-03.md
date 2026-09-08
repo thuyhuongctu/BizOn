@@ -129,8 +129,8 @@ Theo dõi quyết định pháp lý tại issue #305 và `docs/ip/BIZON_CHAIN_OF
 ## 6. Thứ tự triển khai đề xuất
 
 1. Ký thỏa thuận đồng sở hữu giữa Đỗ Thùy Hương và Phan Anh Tú.
-2. Ghi rõ Phan Anh Tú là người trực tiếp nộp hồ sơ/đại diện thủ tục.
-3. Ký văn bản đồng ý hoặc ủy quyền của Đỗ Thùy Hương khi biểu mẫu hoặc cơ quan tiếp nhận yêu cầu.
+2. Chọn tổ chức đại diện sở hữu trí tuệ chuyên nghiệp thực hiện thủ tục nộp.
+3. Ký Giấy ủy quyền cho tổ chức đại diện, có chữ ký của cả Đỗ Thùy Hương và Phan Anh Tú.
 4. Hoàn tất kiểm tra tác giả mã nguồn và bảng loại trừ mã bên thứ ba.
 5. Đóng băng release commit/branch và tạo gói SHA-256.
 6. Nộp chương trình máy tính với bản in/trích mã và bản điện tử khớp manifest.
@@ -181,7 +181,7 @@ Manifest là chứng cứ kỹ thuật về nội dung, mã băm và thời đi�
 - mốc release và gói SHA-256 đã đóng băng;
 - homepage mới, rollback, Instructor Studio và staging đều đạt QA;
 - danh sách tác giả/chủ sở hữu đã được ký;
-- thỏa thuận ghi rõ Phan Anh Tú là người nộp hồ sơ/đại diện thủ tục;
+- đã chọn tổ chức đại diện và có Giấy ủy quyền do cả hai đồng sở hữu ký;
 - tài sản AI-assisted, nhạc, giọng và thành phần bên thứ ba có hồ sơ nguồn gốc;
 - tờ khai đúng mẫu hiện hành tại ngày nộp;
 - website không tuyên bố đã có văn bằng trước khi được cấp.
