@@ -33,7 +33,7 @@ Snapshot branch chỉ dùng để bảo toàn cây mã nguồn của bản phát
 ### 3.1. Quyết định đã xác nhận
 
 - **Đồng chủ sở hữu quyền tài sản:** Đỗ Thùy Hương và Phan Anh Tú.
-- **Người trực tiếp nộp hồ sơ/đại diện thực hiện thủ tục:** Phan Anh Tú.
+- **Người trực tiếp nộp hồ sơ/đại diện thực hiện thủ tục:** cả hai đồng sở hữu **ủy quyền cho một tổ chức đại diện sở hữu trí tuệ chuyên nghiệp** thực hiện thủ tục nộp (thay cho phương án trước đó là Phan Anh Tú tự nộp). Tên tổ chức đại diện cụ thể: [chưa chọn — cần điền trước khi ký Giấy ủy quyền].
 - **Tác giả chương trình máy tính:** dự kiến Đỗ Thùy Hương, chờ hoàn tất kiểm tra Git history và loại trừ mã bên thứ ba/cộng tác viên.
 - **Đóng góp học thuật–chuyên môn:** Phan Anh Tú đối với phần trực tiếp sáng tạo; bổ sung Đỗ Thùy Hương theo từng tài liệu hoặc mô-đun do Hương trực tiếp biên soạn.
 - **CTU không phải chủ thể của dự án:** không đầu tư tài sản, không giao nhiệm vụ, không tài trợ, không sở hữu hoặc nhận chuyển giao quyền đối với BizOn theo xác nhận của chủ dự án.
@@ -41,11 +41,10 @@ Snapshot branch chỉ dùng để bảo toàn cây mã nguồn của bản phát
 
 ### 3.2. Nguyên tắc ghi hồ sơ
 
-- Việc Phan Anh Tú nộp hồ sơ không làm thay đổi đồng sở hữu và không làm người nộp trở thành chủ sở hữu duy nhất.
-- Đối với quyền tác giả, hồ sơ phải tách rõ `tác giả`, `chủ sở hữu` và `người nộp hồ sơ/đại diện`.
-- Đối với nhãn hiệu, nếu muốn quyền nhãn hiệu thuộc cả hai người thì phải ghi **Đỗ Thùy Hương và Phan Anh Tú là đồng chủ đơn**; Phan Anh Tú là người trực tiếp thực hiện thủ tục hoặc đầu mối liên hệ.
-- Không ghi riêng Phan Anh Tú ở mục chủ đơn nhãn hiệu chỉ vì thầy là người đi nộp, trừ khi hai bên chủ động quyết định nhãn hiệu chỉ thuộc Phan Anh Tú.
-- Khi cơ quan tiếp nhận hoặc biểu mẫu yêu cầu, Đỗ Thùy Hương ký văn bản đồng ý hoặc ủy quyền cho Phan Anh Tú thực hiện thủ tục.
+- Việc ủy quyền cho tổ chức đại diện không làm thay đổi đồng sở hữu và không làm tổ chức đại diện trở thành chủ sở hữu.
+- Đối với quyền tác giả, hồ sơ phải tách rõ `tác giả`, `chủ sở hữu` và `người nộp hồ sơ/đại diện` (ở đây là tổ chức đại diện, không phải một trong hai đồng sở hữu).
+- Đối với nhãn hiệu, nếu muốn quyền nhãn hiệu thuộc cả hai người thì phải ghi **Đỗ Thùy Hương và Phan Anh Tú là đồng chủ đơn**; tổ chức đại diện là bên trực tiếp thực hiện thủ tục.
+- Giấy ủy quyền cho tổ chức đại diện phải do **cả hai đồng sở hữu cùng ký** (không phải một bên ủy quyền cho bên kia) — xem `docs/ho-so-so-huu-tri-tue.md` mục về "Giấy ủy quyền" (chỉ bắt buộc khi nộp qua tổ chức đại diện, nay áp dụng).
 
 ## 4. Nhóm tài sản đề nghị xử lý
 
@@ -117,7 +116,7 @@ Danh mục hàng hóa/dịch vụ phải được phân nhóm theo Bảng phân 
 |---|---|---|
 | Ai là tác giả từng phần mã nguồn? | Git history, commit map, bảng phân công, cam đoan | Chưa chốt toàn bộ |
 | Ai là chủ sở hữu quyền tài sản? | Thỏa thuận đồng sở hữu giữa Đỗ Thùy Hương và Phan Anh Tú | Cần ký |
-| Ai trực tiếp nộp hồ sơ? | Quyết định và văn bản đồng ý/ủy quyền khi cần | **Phan Anh Tú — đã xác nhận** |
+| Ai trực tiếp nộp hồ sơ? | Giấy ủy quyền cho tổ chức đại diện, ký bởi cả hai đồng sở hữu | **Ủy quyền cho tổ chức đại diện — đã xác nhận, cần chọn tổ chức + ký giấy ủy quyền** |
 | CTU có quyền hoặc lợi ích nào không? | Xác nhận nội bộ của chủ dự án; rà lại nếu xuất hiện tài liệu mới | **Không — đã xác nhận** |
 | Tỷ lệ của Đỗ Thùy Hương và Phan Anh Tú? | Biên bản/thỏa thuận | Cần ký |
 | Tài sản do cộng tác viên tạo? | Hợp đồng chuyển giao hoặc giấy phép sử dụng | Cần kiểm kê |
