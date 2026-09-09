@@ -20,7 +20,7 @@
   };
 
   /* ---------- Song ngữ Việt / Anh ---------- */
-  var EN = new Map([["Hệ thống game mô phỏng và mini-game của BizOn Bật Nghiệp – từ chiến lược nhiều vòng đến phản xạ 30 giây. Chọn và chơi ngay!","BizOn Bật Nghiệp's simulation games and mini-games – from multi-round strategy to 30-second reflexes. Pick one and play now!"],
+  var EN = new Map([["Hệ thống game mô phỏng và mini-game của BizOn Bật Nghiệp – từ chiến lược nhiều vòng đến phản xạ 30 giây. Chọn và chơi ngay!","BizOn Bật Nghiệp's simulation games and mini-games – from multi-round strategy to 30-second reflexes. Pick one and play now!"],["BizOn xây dựng bộ công cụ học qua chơi cho môn khởi nghiệp và kinh doanh quốc tế – chạy hoàn toàn trên trình duyệt, miễn phí, không cần cài đặt.","BizOn builds a learn-through-play toolkit for entrepreneurship and international business – runs entirely in the browser, free, no install required."],["Mọi thứ dưới đây đều đang chạy thật và dùng được ngay – do nhóm BizOn tự thiết kế, lập trình và sản xuất.","Everything below is live and ready to use right now – designed, coded and produced by the BizOn team."],
 [
 "Tính năng",
 "Features"
