@@ -4119,6 +4119,612 @@
 "Bản dựng thứ hai · 2:54 · dài hơn, hòa âm khác",
 "Second take · 2:54 · longer, different arrangement"
 ],
+
+/* ===== BizOn game shell (game.html) - static UI strings ===== */
+[
+"đang chờ đồng hành cùng đội của bạn.",
+"is here to guide your team."
+],
+[
+"Tên đội – cũng là tên doanh nghiệp của bạn",
+"Team name – also your company's name"
+],
+[
+"(tùy chọn)",
+"(optional)"
+],
+[
+"Bỏ trống vẫn chơi được trọn 6 vòng ở chế độ",
+"Leave it blank and you can still play all 6 rounds in"
+],
+[
+"chơi thử",
+"trial mode"
+],
+[
+". Có Mã lớp thì kết quả mới vào bảng xếp hạng lớp và được cấp giấy chứng nhận.",
+". Add a Class ID and your results count toward the class leaderboard and earn a certificate."
+],
+[
+"Chu kỳ kinh doanh",
+"Business round"
+],
+[
+"🧪 Chơi thử · kết quả không gửi về lớp",
+"🧪 Trial mode · results are not sent to your class"
+],
+[
+"Số dư tiền mặt",
+"Cash balance"
+],
+[
+"Thị phần (%)",
+"Market share (%)"
+],
+[
+"Điểm thương hiệu",
+"Brand score"
+],
+[
+"🗺️ Lộ trình mở rộng thị trường",
+"🗺️ Market expansion route"
+],
+[
+"Xin chào! Hãy vào mục Cố vấn để nhận gợi ý chiến thuật nhé.",
+"Hi! Head to the Advisor tab for tactical tips."
+],
+[
+"Hướng dẫn",
+"Guide"
+],
+[
+"Ra quyết định kinh doanh",
+"Make your business decisions"
+],
+[
+"Chu kỳ",
+"Round"
+],
+[
+"/6 · Thống nhất với cả đội trước khi khóa!",
+"/6 · Align with your whole team before locking in!"
+],
+[
+"🎯 Cách thắng vòng này",
+"🎯 How to win this round"
+],
+[
+"Đạt",
+"Reach"
+],
+[
+"thị phần cao nhất",
+"the highest market share"
+],
+[
+"so với 3 đối thủ để cắm cờ 🚩 lên bản đồ – và giữ",
+"among the 3 rivals to plant your flag 🚩 on the map – while keeping"
+],
+[
+"lợi nhuận dương",
+"positive profit"
+],
+[
+". Kéo các thanh trượt bên dưới, ô «Dự báo thị phần» sẽ báo ngay bạn đang thắng hay thua.",
+". Drag the sliders below – the «Market Share Forecast» box tells you instantly whether you're winning or losing."
+],
+[
+"CMO – Phù thủy marketing",
+"CMO – Marketing Wizard"
+],
+[
+"Đề xuất giá bán và ngân sách marketing, đọc dự báo thị phần",
+"Proposes price and marketing budget, reads the market-share forecast"
+],
+[
+"💲 Giá bán / sản phẩm",
+"💲 Price / product"
+],
+[
+"Giá cao → biên lợi nhuận tốt nhưng mất khách. Giá bán đề xuất thị trường: 150.000₫",
+"Higher price → better margin but fewer customers. Suggested market price: 150,000₫"
+],
+[
+"Marketing kéo thêm khách về phía bạn – nhưng chi quá tay sẽ ăn hết lãi. Đối thủ chi 55–90tr/vòng.",
+"Marketing pulls more customers your way – but overspending eats your profit. Rivals spend 55–90m/round."
+],
+[
+"🚩 Dự báo Thị phần – bạn có cắm được cờ?",
+"🚩 Market Share Forecast – can you plant the flag?"
+],
+[
+"Ước tính theo thông số đang nhập, so với 3 đối thủ AI",
+"Estimated from your current inputs, versus the 3 AI rivals"
+],
+[
+"COO – Chuyên gia vận hành",
+"COO – Operations Expert"
+],
+[
+"Chốt sản lượng, nhân sự, đào tạo; canh năng suất và chi phí",
+"Sets production volume, staffing, and training; watches productivity and cost"
+],
+[
+"🏭 Sản lượng sản xuất",
+"🏭 Production volume"
+],
+[
+"Chi phí sản xuất: 60.000₫/sp + khấu hao máy móc theo công suất.",
+"Production cost: 60,000₫/unit + equipment depreciation based on capacity."
+],
+[
+"👥 Quản trị Nhân sự",
+"👥 HR Management"
+],
+[
+"Số lượng nhân viên",
+"Number of employees"
+],
+[
+"45 người",
+"45 people"
+],
+[
+"Lương 1tr₫/người/vòng · Năng lực: 70 sp/người – thiếu người sẽ giảm OEE.",
+"Wage 1m₫/person/round · Capacity: 70 units/person – understaffing lowers OEE."
+],
+[
+"Ngân sách đào tạo / người",
+"Training budget / person"
+],
+[
+"Đào tạo tăng OEE (tối đa +5%) và giảm phế phẩm.",
+"Training raises OEE (up to +5%) and reduces defects."
+],
+[
+"CFO – Chiến lược gia tài chính",
+"CFO – Finance Strategist"
+],
+[
+"Chọn nguồn vốn, kỳ hạn thanh toán, đầu tư R&D; theo dõi dòng tiền",
+"Chooses funding source, payment terms, R&D investment; monitors cash flow"
+],
+[
+"🏦 Quản trị Tài chính",
+"🏦 Financial Management"
+],
+[
+"Cơ cấu nguồn vốn",
+"Funding structure"
+],
+[
+"💼 Vốn tự có",
+"💼 Equity"
+],
+[
+"🏦 Vay ngân hàng",
+"🏦 Bank loan"
+],
+[
+"Vay ngân hàng: được chi vượt ví, lãi suất 8.5%/vòng trên phần thấu chi.",
+"Bank loan: lets you overspend your balance, at 8.5%/round interest on the overdraft."
+],
+[
+"Kỳ hạn thanh toán cho khách",
+"Customer payment term"
+],
+[
+"🔬 Đầu tư R&D",
+"🔬 R&D investment"
+],
+[
+"R&D tích lũy giúp giảm giá thành và tăng giá trị thương hiệu.",
+"Cumulative R&D lowers unit cost and boosts brand value."
+],
+[
+"📊 Dự báo Dòng tiền",
+"📊 Cash Flow Forecast"
+],
+[
+"Ước tính theo thông số đang nhập (CVP)",
+"Estimated from your current inputs (CVP)"
+],
+[
+"Dòng tiền vào",
+"Cash inflow"
+],
+[
+"Dòng tiền ra",
+"Cash outflow"
+],
+[
+"SEC – Thư ký pháp chế",
+"SEC – Legal Secretary"
+],
+[
+"Ghi nhật ký đội, đọc biến cố thị trường, giữ kỷ luật thời gian",
+"Logs the team journal, reads market events, keeps the team on schedule"
+],
+[
+"Trước khi CEO khóa quyết định: kiểm tra",
+"Before the CEO locks in decisions: check"
+],
+[
+"biến cố thị trường",
+"the market event"
+],
+[
+"vòng này trên Bảng điều khiển và ghi lại lý do chọn phương án của đội – tư liệu quý nhất cho bài trình bày cuối buổi.",
+"for this round on the Dashboard, and log why the team chose its approach – the most valuable material for the end-of-session presentation."
+],
+[
+"📔 Mở Nhật ký đội",
+"📔 Open Team Journal"
+],
+[
+"⚡ Xem biến cố vòng này",
+"⚡ View this round's event"
+],
+[
+"CEO – Nhà lãnh đạo tầm nhìn",
+"CEO – Visionary Leader"
+],
+[
+"Điều phối họp đội, chạy thử kịch bản, chốt và khóa quyết định",
+"Coordinates the team meeting, test-runs scenarios, finalizes and locks decisions"
+],
+[
+"🔮 Mô phỏng \"Nếu – Thì\" trước khi Commit",
+"🔮 \"What-If\" simulation before Commit"
+],
+[
+"Lumina chạy thử kịch bản với thông số bạn đang chọn (",
+"Lumina test-runs a scenario with your current inputs ("
+],
+[
+"lượt/chu kỳ).",
+"uses/round)."
+],
+[
+"🧭 Chiến lược (CEO)",
+"🧭 Strategy (CEO)"
+],
+[
+"💰 Tài chính (CFO)",
+"💰 Finance (CFO)"
+],
+[
+"🔒 Commit – Khóa quyết định",
+"🔒 Commit – Lock in decisions"
+],
+[
+"Sau khi commit, quyết định được đưa vào hàng chờ mô phỏng và không thể sửa (ERR_ROUND_LOCKED).",
+"Once committed, decisions go into the simulation queue and can't be edited (ERR_ROUND_LOCKED)."
+],
+[
+"Engine mô phỏng đang xử lý…",
+"Simulation engine processing…"
+],
+[
+"Đối thủ đang ra quyết định của họ",
+"Rivals are making their decisions"
+],
+[
+"Online · Cố vấn chiến lược",
+"Online · Strategy advisor"
+],
+[
+"Hỏi Lumina (",
+"Ask Lumina ("
+],
+[
+"lượt/chu kỳ)",
+"uses/round)"
+],
+[
+"👩 Nữ",
+"👩 Female"
+],
+[
+"🔊 Bật",
+"🔊 On"
+],
+[
+"💲 Nếu tôi thay đổi giá bán thì sao?",
+"💲 What if I change the price?"
+],
+[
+"📣 Nếu tăng ngân sách Marketing 15%?",
+"📣 What if I raise the Marketing budget 15%?"
+],
+[
+"⚠️ Rủi ro lớn nhất vòng này là gì?",
+"⚠️ What's the biggest risk this round?"
+],
+[
+"Hương đang nói...",
+"Hương is speaking..."
+],
+[
+"🔎 Phân tích chuyên sâu theo vai trò",
+"🔎 In-depth analysis by role"
+],
+[
+"🗂️ Bộ nhớ doanh nghiệp",
+"🗂️ Company memory"
+],
+[
+"· SEC ghi chép",
+"· logged by SEC"
+],
+[
+"Báo cáo kết quả & Phân tích",
+"Results & Analysis Reports"
+],
+[
+"CVP & Chi phí",
+"CVP & Costs"
+],
+[
+"🕵️ Chi phí đối thủ",
+"🕵️ Rival Costs"
+],
+[
+"🏁 Tổng kết",
+"🏁 Summary"
+],
+[
+"👥 Nhân sự",
+"👥 HR"
+],
+[
+"Khấu hao",
+"Depreciation"
+],
+[
+"⚡ Năng lượng",
+"⚡ Energy"
+],
+[
+"Dùng ví ảo của đội để mua vật phẩm tăng lực.",
+"Use your team's virtual wallet to buy power-up items."
+],
+[
+"🎒 Kho đồ của đội",
+"🎒 Team inventory"
+],
+[
+"Vật phẩm",
+"Items"
+],
+[
+"Bản thiết kế",
+"Blueprints"
+],
+[
+"Chọn một vật phẩm",
+"Select an item"
+],
+[
+"Chạm vào một vật phẩm trong kho để xem chi tiết và sử dụng sức mạnh của nó.",
+"Tap an item in your inventory to see details and use its power."
+],
+[
+"Sử dụng 🚀",
+"Use 🚀"
+],
+[
+"Cây kỹ năng",
+"Skill Tree"
+],
+[
+"Mở khóa bằng XP tích lũy từ kết quả kinh doanh.",
+"Unlock with XP earned from your business results."
+],
+[
+"🏆 Bảng xếp hạng",
+"🏆 Leaderboard"
+],
+[
+"🎖️ Thành tựu",
+"🎖️ Achievements"
+],
+[
+"Chứng chỉ hoàn thành",
+"Certificate of Completion"
+],
+[
+"Chứng nhận đội",
+"This certifies that team"
+],
+[
+"đã hoàn thành 6 vòng mô phỏng kinh doanh BizOn Bật Nghiệp 2026.",
+"has completed all 6 rounds of the BizOn Bật Nghiệp 2026 business simulation."
+],
+[
+"📋 Nhiệm vụ",
+"📋 Missions"
+],
+[
+"Hoàn thành nhiệm vụ để nhận thưởng tiền ảo và XP.",
+"Complete missions to earn virtual cash and XP."
+],
+[
+"Băng chuyền xưởng đất sét! Chạm đúng món hàng được đặt để đóng gói. Mỗi vòng chơi được 3 lượt.",
+"The clay-workshop conveyor belt! Tap the item that's on order to pack it. You get 3 attempts per round."
+],
+[
+"Đơn hàng cần đóng gói",
+"Order to pack"
+],
+[
+"Điểm",
+"Score"
+],
+[
+"Giây",
+"Seconds"
+],
+[
+"▶️ Bắt đầu (lượt",
+"▶️ Start (attempt"
+],
+[
+"🏅 Điểm cao nhất:",
+"🏅 Best score:"
+],
+[
+"Thưởng: 2tr₫/điểm (tối đa 60tr₫/lượt)",
+"Reward: 2m₫/point (up to 60m₫/attempt)"
+],
+[
+"🎁 Đổi thưởng (",
+"🎁 Redeem rewards ("
+],
+[
+"điểm)",
+"points)"
+],
+[
+"🏆 Xếp hạng",
+"🏆 Leaderboard"
+],
+[
+"📖 Tài liệu dành cho giảng viên / người quản lý",
+"📖 Documentation for instructors / administrators"
+],
+[
+"Toàn bộ luật chơi, hành vi 3 đối thủ AI, công thức thị trường, bản đồ chinh phục và gợi ý tổ chức lớp học được ghi trong",
+"All game rules, the 3 AI rivals' behavior, market formulas, the conquest map, and classroom facilitation tips are documented in the"
+],
+[
+"Hướng dẫn giảng viên",
+"Instructor Guide"
+],
+[
+"⭐ Mở tài liệu trên GitHub →",
+"⭐ Open the doc on GitHub →"
+],
+[
+"🧑‍🏫 Màn hình Giảng viên",
+"🧑‍🏫 Instructor Screen"
+],
+[
+"Quản lý lớp học: cấp vốn cho đội, khóa vòng chơi khi hết giờ thảo luận.",
+"Manage your class: grant funding to teams, lock the round when discussion time is up."
+],
+[
+"🔒 Khóa vòng hiện tại",
+"🔒 Lock the current round"
+],
+[
+"Đội sẽ không commit được (ERR_ROUND_LOCKED)",
+"Teams won't be able to commit (ERR_ROUND_LOCKED)"
+],
+[
+"Khóa",
+"Lock"
+],
+[
+"Danh sách đội",
+"Team list"
+],
+[
+"Nhật ký cấp vốn",
+"Funding log"
+],
+[
+"Chưa có giao dịch nào.",
+"No transactions yet."
+],
+[
+"Nhập số liệu kinh doanh thực → nhận kịch bản \"Nếu – Thì\"",
+"Enter real business figures → get a \"What-If\" scenario"
+],
+[
+"💵 Doanh thu / tháng (triệu ₫)",
+"💵 Revenue / month (million ₫)"
+],
+[
+"🧾 Tổng chi phí / tháng (triệu ₫)",
+"🧾 Total cost / month (million ₫)"
+],
+[
+"📣 Ngân sách marketing / tháng (triệu ₫)",
+"📣 Marketing budget / month (million ₫)"
+],
+[
+"🎯 Mục tiêu tăng trưởng (%/quý)",
+"🎯 Growth target (%/quarter)"
+],
+[
+"🔮 Phân tích kịch bản",
+"🔮 Analyze scenario"
+],
+[
+"📡 Thị trường sống",
+"📡 Live Market Pulse"
+],
+[
+"Nhịp đập thị trường thời gian thực: đối thủ, tiếng nói khách hàng và xu hướng.",
+"Real-time market pulse: rivals, customer voices, and trends."
+],
+[
+"📔 Nhật ký đội",
+"📔 Team Journal"
+],
+[
+"Timeline hành trình 6 vòng: quyết định then chốt, kết quả và bài học kinh nghiệm – do SEC ghi chép.",
+"Timeline of the 6-round journey: key decisions, results, and lessons learned – logged by SEC."
+],
+[
+"Tiến độ cấp",
+"Level progress"
+],
+[
+"Tổng lợi nhuận",
+"Total profit"
+],
+[
+"Chu kỳ hoàn thành",
+"Rounds completed"
+],
+[
+"👥 Đội ngũ sáng lập BizOn",
+"👥 BizOn Founding Team"
+],
+[
+"Tác giả & Thiết kế",
+"Author & Design"
+],
+[
+"Đồng sáng lập · Cố vấn học thuật",
+"Co-founder · Academic Advisor"
+],
+[
+"Đội ngũ C-Suite",
+"The C-Suite Team"
+],
+[
+"5 vai trò điều hành đồng hành cùng bạn trong mô phỏng",
+"5 executive roles accompanying you through the simulation"
+],
+[
+"GIẢNG VIÊN",
+"INSTRUCTOR"
+],
+[
+"BizOn Bật Nghiệp 2026 · v1.1.0 · © 2026 Đỗ Thùy Hương & Phan Anh Tú – Bảo lưu mọi quyền · Chỉ phục vụ giáo dục, không đại diện cho tổ chức chính trị nào · ✉️ patu@ctu.edu.vn · thuyhuongctu@gmail.com",
+"BizOn Bật Nghiệp 2026 · v1.1.0 · © 2026 Đỗ Thùy Hương & Phan Anh Tú – All rights reserved · For educational use only, not affiliated with any political organization · ✉️ patu@ctu.edu.vn · thuyhuongctu@gmail.com"
+],
+[
+"Tổng quan",
+"Overview"
+],
+[
+"Ra quyết định",
+"Decisions"
+],
 ]);
   var SPECIAL = [
     { page: 'giai-phap', sel: '#gp-oss-note', en: "Free to use at the official URL for non-commercial teaching – no account needed. The source is published for academic transparency and verification; commercial exploitation rights remain with BizOn (see <a href=\"https://github.com/thuyhuongctu/BizOn/blob/main/LICENSE\" target=\"_blank\" rel=\"noopener\" class=\"underline font-bold\">LICENSE</a>)." },
@@ -4166,6 +4772,7 @@
     document.documentElement.lang = lang === 'en' ? 'en' : 'vi';
     langBtnSync(lang);
     try { localStorage.setItem('bizon-lang', lang); } catch (e) {}
+    try { window.dispatchEvent(new CustomEvent('bizon:langchange', { detail: { lang: lang } })); } catch (e) {}
   };
   window.toggleLang = function () {
     var next = 'en';
