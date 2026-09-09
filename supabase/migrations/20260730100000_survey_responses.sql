@@ -53,11 +53,14 @@ returns table (
 language sql security definer stable
 set search_path = public
 as $$
+  with auth as materialized (
+    select bizon_check_key_gate(p_key) as ok
+  )
   select sr.phase, sr.student_code, sr.role, sr.rounds_played,
          sr.score_a, sr.score_by_outcome, sr.likert_b, sr.likert_c,
          sr.nps, sr.open_like, sr.open_improve, sr.created_at
-  from survey_responses sr
-  where bizon_check_key(p_key) and sr.class_code = p_class_code
+  from survey_responses sr, auth
+  where auth.ok and sr.class_code = p_class_code
   order by sr.student_code, sr.phase desc, sr.created_at;
 $$;
 
