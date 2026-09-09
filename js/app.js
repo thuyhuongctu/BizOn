@@ -6,6 +6,12 @@ let S = null;
 
 // ---------- Helpers ----------
 const $ = id => document.getElementById(id);
+// Inline bilingual helper: T(vietnamese, english) — reads the site-wide lang toggle.
+// Pure localization layer: 'vi' branch must stay byte-identical to the original text.
+function currentLang() {
+  try { return localStorage.getItem('bizon-lang') || 'vi'; } catch (e) { return 'vi'; }
+}
+function T(vi, en) { return currentLang() === 'en' ? en : vi; }
 const money = m => (m >= 1000 || m <= -1000)
   ? (m / 1000).toLocaleString('vi-VN', { maximumFractionDigits: 2 }) + ' tỷ₫'
   : Math.round(m).toLocaleString('vi-VN') + 'tr₫';
@@ -51,24 +57,47 @@ function createConfetti() {
 }
 
 // ---------- Boot: Splash → Login/App ----------
-const ROLES = [
-  { id: 'CEO', icon: '🧭', title: 'Nhà lãnh đạo tầm nhìn',   desc: 'Chèo lái chiến lược, chốt hạ mọi quyết định' },
-  { id: 'CFO', icon: '💰', title: 'Chiến lược gia tài chính', desc: 'Giữ két sắt, cân đối dòng tiền & gọi vốn' },
-  { id: 'CMO', icon: '📣', title: 'Phù thủy marketing',       desc: 'Đánh chiếm thị phần bằng thương hiệu' },
-  { id: 'COO', icon: '🏭', title: 'Chuyên gia vận hành',      desc: 'Tối ưu xưởng, OEE & chất lượng sản phẩm' },
-  { id: 'SEC', icon: '📝', title: 'Thư ký pháp chế',          desc: 'Biên bản minh bạch, tuân thủ & hồ sơ đội' },
-];
+function ROLES_LIST() { return [
+  { id: 'CEO', icon: '🧭', title: T('Nhà lãnh đạo tầm nhìn', 'Visionary Leader'),   desc: T('Chèo lái chiến lược, chốt hạ mọi quyết định', 'Steers strategy, makes the final call') },
+  { id: 'CFO', icon: '💰', title: T('Chiến lược gia tài chính', 'Finance Strategist'), desc: T('Giữ két sắt, cân đối dòng tiền & gọi vốn', 'Guards the cash box, balances cash flow & raises capital') },
+  { id: 'CMO', icon: '📣', title: T('Phù thủy marketing', 'Marketing Wizard'),       desc: T('Đánh chiếm thị phần bằng thương hiệu', 'Wins market share through branding') },
+  { id: 'COO', icon: '🏭', title: T('Chuyên gia vận hành', 'Operations Expert'),      desc: T('Tối ưu xưởng, OEE & chất lượng sản phẩm', 'Optimizes the factory, OEE & product quality') },
+  { id: 'SEC', icon: '📝', title: T('Thư ký pháp chế', 'Legal Secretary'),        desc: T('Biên bản minh bạch, tuân thủ & hồ sơ đội', 'Transparent minutes, compliance & team records') },
+]; }
 let pickedRole = 'CEO';
 
-window.addEventListener('DOMContentLoaded', () => {
-  $('role-picker').innerHTML = ROLES.map(r => `
+function renderRolePicker() {
+  const rp = $('role-picker');
+  if (!rp) return;
+  rp.innerHTML = ROLES_LIST().map(r => `
     <button type="button" data-role="${r.id}" onclick="pickRole('${r.id}')"
-      class="role-chip clay-card !rounded-3xl p-4 text-center ${r.id === 'CEO' ? 'sel ring-2 ring-primary-container' : ''}">
+      class="role-chip clay-card !rounded-3xl p-4 text-center ${r.id === pickedRole ? 'sel ring-2 ring-primary-container' : ''}">
       <div class="text-5xl leading-none">${r.icon}</div>
       <div class="font-display font-extrabold text-deep-teal text-sm mt-2">${r.id}</div>
       <div class="text-[10px] font-bold text-primary leading-tight">${r.title}</div>
       <div class="text-[9px] text-deep-teal/50 mt-1 leading-snug">${r.desc}</div>
     </button>`).join('');
+}
+
+// Vài chuỗi tiếng Việt sống trong thuộc tính (placeholder/option), applyLang() ở
+// site-ui.js chỉ đổi textContent nên không chạm tới – tự đồng bộ ở đây.
+function applyGameStaticText() {
+  const setPh = (id, vi, en) => { const el = $(id); if (el) el.placeholder = T(vi, en); };
+  setPh('login-email', 'sinhvien@truong.edu.vn', 'student@university.edu');
+  setPh('login-team', 'VD: Rồng Xanh Corp', 'e.g. Blue Dragon Corp');
+  setPh('login-class', 'VD: QTKD-2026-A', 'e.g. BUS-2026-A');
+  setPh('chat-input', 'Trò chuyện với Hương...', 'Chat with Hương...');
+  const term = $('in-term');
+  if (term && term.options.length >= 3) {
+    term.options[0].textContent = T('30 ngày (Tiêu chuẩn)', '30 days (Standard)');
+    term.options[1].textContent = T('60 ngày – cầu +4%, chi phí +2%', '60 days – demand +4%, cost +2%');
+    term.options[2].textContent = T('90 ngày – cầu +8%, chi phí +5%', '90 days – demand +8%, cost +5%');
+  }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  renderRolePicker();
+  applyGameStaticText();
 
   setTimeout(() => {
     $('screen-splash').classList.remove('active');
@@ -76,6 +105,19 @@ window.addEventListener('DOMContentLoaded', () => {
     if (saved && saved.profile) { S = saved; enterApp(); }
     else $('screen-login').classList.add('active');
   }, 1600);
+});
+
+// Đổi ngôn ngữ ngay trong game: applyLang() (site-ui.js) chỉ biết đổi text tĩnh,
+// nên phát sự kiện này để app.js tự render lại toàn bộ nội dung động (Bảng điều
+// khiển, Quyết định, Cố vấn, biến cố đang mở, v.v.) mà không cần tải lại trang.
+window.addEventListener('bizon:langchange', () => {
+  renderRolePicker();
+  applyGameStaticText();
+  if (S) {
+    renderAll();
+    const activeTab = document.querySelector('main .screen.active');
+    if (activeTab && activeTab.id === 'tab-reports') showReport(currentReport);
+  }
 });
 
 function pickRole(id) {
@@ -89,48 +131,67 @@ function pickRole(id) {
 }
 
 // ---------- Đội demo 5 nhân vật & 3 đối thủ đại diện ----------
-const DEMO_TEAM = [
-  { role: 'CEO', icon: '🧭', img: 'assets/character/team/ceo.webp', name: 'Minh Long',  note: 'Nhà lãnh đạo tầm nhìn' },
-  { role: 'CFO', icon: '💰', img: 'assets/character/team/cfo.jpg', name: 'Thu Hà',     note: 'Chiến lược gia tài chính' },
-  { role: 'CMO', icon: '📣', img: 'assets/character/team/cmo.webp', name: 'Lan Chi',    note: 'Phù thủy marketing' },
-  { role: 'COO', icon: '🏭', img: 'assets/character/team/coo.webp', name: 'Bảo Ngọc',   note: 'Chuyên gia vận hành' },
-  { role: 'SEC', icon: '📝', img: 'assets/character/team/sec.webp', name: 'Gia Hân',    note: 'Thư ký pháp chế' },
-];
-const AI_OPPONENTS = [
-  { name: 'Alpha Dynamics', icon: '🐺', img: 'assets/character/rivals/alpha.webp', accent: '#e8762d', motto: 'Tăng trưởng thần tốc, lấy số lượng đè lợi nhuận', weakness: 'Biên lợi nhuận cực mỏng, đốt vốn nhanh – dễ hụt hơi trong cuộc chiến dài hơi.', style: 'Giá rẻ tốc chiến',   play: 'Giá ~125k · marketing ~90tr mỗi vòng (dao động ±12%)', counter: 'Đừng đua giá tận đáy – giữ biên lợi nhuận, xây thương hiệu để giữ khách trung thành.' },
-  { name: 'Mekong Ventures', icon: '🐘', img: 'assets/character/rivals/mekong.webp', accent: '#00a0c8', motto: 'Chậm mà chắc, bám rễ niềm tin địa phương', weakness: 'Trung thành với truyền thống nên phản ứng chậm trước biến động công nghệ và thị trường.', style: 'Cân bằng chắc chắn', play: 'Giá ~150k · marketing ~60tr – ổn định như đồng bằng', counter: 'Vượt mặt bằng R&D và biến cố: họ ít khi phản ứng nhanh với thị trường.' },
-  { name: 'Star Clay Co.',   icon: '🦚', img: 'assets/character/rivals/star.webp', accent: '#5a32a3', motto: 'Sang trọng trong từng chi tiết, bán sự khan hiếm', weakness: 'Chi phí sản xuất thủ công cao – khó mở rộng quy mô nhanh, dễ nghẽn sản lượng.', style: 'Cao cấp thương hiệu', play: 'Giá ~195k · marketing ~75tr – đánh phân khúc sang', counter: 'Chiếm phân khúc phổ thông họ bỏ ngỏ, hoặc đấu trực diện bằng chất lượng + ESG.' },
-];
+function DEMO_TEAM_LIST() { return [
+  { role: 'CEO', icon: '🧭', img: 'assets/character/team/ceo.webp', name: 'Minh Long',  note: T('Nhà lãnh đạo tầm nhìn', 'Visionary Leader') },
+  { role: 'CFO', icon: '💰', img: 'assets/character/team/cfo.jpg', name: 'Thu Hà',     note: T('Chiến lược gia tài chính', 'Finance Strategist') },
+  { role: 'CMO', icon: '📣', img: 'assets/character/team/cmo.webp', name: 'Lan Chi',    note: T('Phù thủy marketing', 'Marketing Wizard') },
+  { role: 'COO', icon: '🏭', img: 'assets/character/team/coo.webp', name: 'Bảo Ngọc',   note: T('Chuyên gia vận hành', 'Operations Expert') },
+  { role: 'SEC', icon: '📝', img: 'assets/character/team/sec.webp', name: 'Gia Hân',    note: T('Thư ký pháp chế', 'Legal Secretary') },
+]; }
+const DEMO_TEAM = DEMO_TEAM_LIST();
+function AI_OPPONENTS_LIST() { return [
+  { name: 'Alpha Dynamics', icon: '🐺', img: 'assets/character/rivals/alpha.webp', accent: '#e8762d',
+    motto: T('Tăng trưởng thần tốc, lấy số lượng đè lợi nhuận', 'Blitz growth – volume over margin'),
+    weakness: T('Biên lợi nhuận cực mỏng, đốt vốn nhanh – dễ hụt hơi trong cuộc chiến dài hơi.', 'Razor-thin margins and fast cash burn – runs out of steam in a long fight.'),
+    style: T('Giá rẻ tốc chiến', 'Budget blitz'),
+    play: T('Giá ~125k · marketing ~90tr mỗi vòng (dao động ±12%)', 'Price ~125k · marketing ~90m/round (±12% variance)'),
+    counter: T('Đừng đua giá tận đáy – giữ biên lợi nhuận, xây thương hiệu để giữ khách trung thành.', "Don't race them to the bottom on price – protect your margin and build brand loyalty instead.") },
+  { name: 'Mekong Ventures', icon: '🐘', img: 'assets/character/rivals/mekong.webp', accent: '#00a0c8',
+    motto: T('Chậm mà chắc, bám rễ niềm tin địa phương', 'Slow and steady, rooted in local trust'),
+    weakness: T('Trung thành với truyền thống nên phản ứng chậm trước biến động công nghệ và thị trường.', 'Wedded to tradition, so it reacts slowly to tech and market shifts.'),
+    style: T('Cân bằng chắc chắn', 'Steady balance'),
+    play: T('Giá ~150k · marketing ~60tr – ổn định như đồng bằng', 'Price ~150k · marketing ~60m – steady as the delta'),
+    counter: T('Vượt mặt bằng R&D và biến cố: họ ít khi phản ứng nhanh với thị trường.', 'Outpace them on R&D and market events – they rarely respond quickly.') },
+  { name: 'Star Clay Co.',   icon: '🦚', img: 'assets/character/rivals/star.webp', accent: '#5a32a3',
+    motto: T('Sang trọng trong từng chi tiết, bán sự khan hiếm', 'Luxury in every detail, selling scarcity'),
+    weakness: T('Chi phí sản xuất thủ công cao – khó mở rộng quy mô nhanh, dễ nghẽn sản lượng.', 'High handcrafted production cost – hard to scale fast, prone to output bottlenecks.'),
+    style: T('Cao cấp thương hiệu', 'Premium brand'),
+    play: T('Giá ~195k · marketing ~75tr – đánh phân khúc sang', 'Price ~195k · marketing ~75m – targets the upscale segment'),
+    counter: T('Chiếm phân khúc phổ thông họ bỏ ngỏ, hoặc đấu trực diện bằng chất lượng + ESG.', 'Take the mass-market segment they leave open, or challenge them head-on with quality + ESG.') },
+]; }
+const AI_OPPONENTS = AI_OPPONENTS_LIST();
 
 async function doLoginDemo() {
   $('login-email').value = 'demo@bizon.vn';
-  $('login-team').value = 'Đội Demo Rồng Xanh';
+  $('login-team').value = T('Đội Demo Rồng Xanh', 'Blue Dragon Demo Team');
   $('login-class').value = 'DEMO-2026';
   pickedRole = 'CEO';
   await doLogin();
-  S.teamMembers = DEMO_TEAM;
+  S.teamMembers = DEMO_TEAM_LIST();
   save(); renderAll();
 }
 
 /* Hồ sơ doanh nghiệp – tên công ty (= tên đội) + sản phẩm chủ lực */
-const COMPANY_INFO = {
-  product: 'Bộ linh vật đất sét Việt', segment: 'Quà tặng & đồ sưu tầm',
-  factory: 'Xưởng thủ công Cần Thơ', capital: 'Vốn ban đầu 500tr₫', refPrice: 'Giá bán đề xuất 150.000₫/bộ',
-};
+function COMPANY_INFO_DATA() { return {
+  product: T('Bộ linh vật đất sét Việt', 'Vietnamese Clay Mascot Set'), segment: T('Quà tặng & đồ sưu tầm', 'Gifts & collectibles'),
+  factory: T('Xưởng thủ công Cần Thơ', 'Cần Thơ artisan workshop'), capital: T('Vốn ban đầu 500tr₫', 'Starting capital 500m₫'), refPrice: T('Giá bán đề xuất 150.000₫/bộ', 'Suggested price 150,000₫/set'),
+}; }
+const COMPANY_INFO = COMPANY_INFO_DATA();
 function renderCompanyCard() {
   const box = $('company-card');
   if (!box) return;
+  const CI = COMPANY_INFO_DATA();
   box.innerHTML = `<div class="clay-card p-5 mb-4">
     <div class="flex items-center gap-3 mb-2.5">
       <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-clay-orange to-clay-gold flex items-center justify-center text-2xl shadow-clay shrink-0">🏺</div>
       <div class="min-w-0">
-        <p class="text-[9px] font-extrabold text-deep-teal/45 uppercase tracking-wide">Doanh nghiệp</p>
+        <p class="text-[9px] font-extrabold text-deep-teal/45 uppercase tracking-wide">${T('Doanh nghiệp', 'Company')}</p>
         <h3 class="font-display font-extrabold text-deep-teal text-lg truncate">${S.profile.teamName}</h3>
       </div>
     </div>
-    <p class="text-xs text-deep-teal/65 mb-2.5">Xưởng đồ chơi đất sét thủ công khởi nghiệp từ Miền Tây – sản phẩm chủ lực: <b class="text-deep-teal">«${COMPANY_INFO.product}»</b>, dòng ${COMPANY_INFO.segment.toLowerCase()} mang hồn Việt.</p>
+    <p class="text-xs text-deep-teal/65 mb-2.5">${T(`Xưởng đồ chơi đất sét thủ công khởi nghiệp từ Miền Tây – sản phẩm chủ lực: <b class="text-deep-teal">«${CI.product}»</b>, dòng ${CI.segment.toLowerCase()} mang hồn Việt.`, `A handcrafted clay-toy startup from Vietnam's Mekong Delta – flagship product: <b class="text-deep-teal">«${CI.product}»</b>, a ${CI.segment.toLowerCase()} line with Vietnamese soul.`)}</p>
     <div class="flex flex-wrap gap-1.5">
-      ${[['🏺', COMPANY_INFO.product], ['🎯', COMPANY_INFO.segment], ['💲', COMPANY_INFO.refPrice], ['🏭', COMPANY_INFO.factory], ['💰', COMPANY_INFO.capital]].map(([i, t]) => `
+      ${[['🏺', CI.product], ['🎯', CI.segment], ['💲', CI.refPrice], ['🏭', CI.factory], ['💰', CI.capital]].map(([i, t]) => `
       <span class="clay-sunken rounded-full px-2.5 py-1 text-[10px] font-bold text-deep-teal/70">${i} ${t}</span>`).join('')}
     </div>
   </div>`;
@@ -140,15 +201,16 @@ function renderTeamCard() {
   const box = $('team-card');
   if (!box) return;
   if (!S.teamMembers) { box.innerHTML = ''; return; }
+  const demoTeam = DEMO_TEAM_LIST();
   box.innerHTML = `<div class="clay-card p-5 mb-4">
-    <h3 class="font-display font-bold text-deep-teal mb-3">👥 Đội hình của bạn <span class="text-[10px] font-extrabold text-primary">DEMO</span></h3>
-    <div class="grid grid-cols-5 gap-2 text-center">${S.teamMembers.map(m => { const img = m.img || (DEMO_TEAM.find(d => d.role === m.role) || {}).img; return `
+    <h3 class="font-display font-bold text-deep-teal mb-3">${T('👥 Đội hình của bạn', '👥 Your lineup')} <span class="text-[10px] font-extrabold text-primary">DEMO</span></h3>
+    <div class="grid grid-cols-5 gap-2 text-center">${S.teamMembers.map(m => { const img = m.img || (demoTeam.find(d => d.role === m.role) || {}).img; return `
       <div class="clay-sunken rounded-2xl p-2 ${m.role === S.profile.role ? 'ring-2 ring-primary-container' : ''}">
         ${img ? `<img src="${img}" alt="${m.role}" class="h-16 w-full object-contain rounded-xl" onerror="this.outerHTML='<p class=\\'text-2xl\\'>${m.icon}</p>'">` : `<p class="text-2xl">${m.icon}</p>`}
         <p class="text-[10px] font-extrabold text-deep-teal mt-0.5">${m.role}</p>
         <p class="text-[9px] text-deep-teal/55 leading-tight">${m.name}</p>
       </div>`; }).join('')}</div>
-    <p class="text-[10px] text-deep-teal/45 mt-2.5">Bạn đang cầm vai ${S.profile.role} – các thành viên còn lại do đội thảo luận ngoài đời (chế độ lớp học).</p>
+    <p class="text-[10px] text-deep-teal/45 mt-2.5">${T(`Bạn đang cầm vai ${S.profile.role} – các thành viên còn lại do đội thảo luận ngoài đời (chế độ lớp học).`, `You're playing the ${S.profile.role} role – the rest of the team discusses in person (classroom mode).`)}</p>
   </div>`;
 }
 
@@ -156,10 +218,11 @@ function renderOpponents() {
   const box = $('opponents-card');
   if (!box) return;
   const shares = S.competitors.map(c => (c.share || 25));
+  const opponents = AI_OPPONENTS_LIST();
   box.innerHTML = `<div class="clay-card p-5 mb-4">
-    <h3 class="font-display font-bold text-deep-teal mb-1">⚔️ 3 đối thủ AI của bạn</h3>
-    <p class="text-[10px] text-deep-teal/45 mb-3">Mỗi vòng họ tự định giá & chi marketing theo tính cách – xem Sổ tay 📖 mục "Đối thủ AI" để biết cách khắc chế.</p>
-    ${AI_OPPONENTS.map((o, i) => `
+    <h3 class="font-display font-bold text-deep-teal mb-1">${T('⚔️ 3 đối thủ AI của bạn', '⚔️ Your 3 AI rivals')}</h3>
+    <p class="text-[10px] text-deep-teal/45 mb-3">${T('Mỗi vòng họ tự định giá & chi marketing theo tính cách – xem Sổ tay 📖 mục "Đối thủ AI" để biết cách khắc chế.', 'Each round they set price & marketing spend by personality – see the Handbook 📖 "AI Rivals" section for counter-strategies.')}</p>
+    ${opponents.map((o, i) => `
       <button onclick="showRivalDetail(${i})" class="w-full text-left py-2 ${i < 2 ? 'border-b border-surface-bright' : ''}">
         <div class="flex items-center gap-3">
           <img src="${o.img}" alt="${o.name}" class="w-10 h-10 rounded-full object-cover object-top shadow-clay shrink-0" style="background:${o.accent}22">
@@ -173,13 +236,13 @@ function renderOpponents() {
           <div class="h-full rounded-full transition-all duration-700" style="width:${Math.min(100, shares[i]).toFixed(0)}%; background:${o.accent}"></div>
         </div>
       </button>`).join('')}
-    <p class="text-[10px] text-deep-teal/40 mt-2">👆 Chạm vào một đối thủ để xem hồ sơ tình báo</p>
+    <p class="text-[10px] text-deep-teal/40 mt-2">${T('👆 Chạm vào một đối thủ để xem hồ sơ tình báo', '👆 Tap a rival to see their intel profile')}</p>
   </div>`;
 }
 
 /* Hồ sơ tình báo đối thủ – chân dung, chiến lược, điểm yếu và cách khắc chế */
 function showRivalDetail(i) {
-  const o = AI_OPPONENTS[i];
+  const o = AI_OPPONENTS_LIST()[i];
   if (!o) return;
   const share = S && S.competitors && S.competitors[i] ? (S.competitors[i].share || 25) : 25;
   const div = document.createElement('div');
@@ -194,14 +257,14 @@ function showRivalDetail(i) {
         <h3 class="font-display font-extrabold text-deep-teal text-lg">${o.name}</h3>
         <p class="text-[11px] italic text-deep-teal/55 mt-0.5">«${o.motto}»</p>
         <div class="flex items-center gap-2 mt-3">
-          <span class="text-[10px] font-extrabold uppercase text-deep-teal/50 shrink-0">Thị phần hiện tại</span>
+          <span class="text-[10px] font-extrabold uppercase text-deep-teal/50 shrink-0">${T('Thị phần hiện tại', 'Current market share')}</span>
           <div class="h-2 flex-1 rounded-full bg-surface-bright overflow-hidden"><div class="h-full rounded-full" style="width:${Math.min(100, share).toFixed(0)}%; background:${o.accent}"></div></div>
           <span class="text-xs font-display font-extrabold text-deep-teal shrink-0">${share.toFixed(0)}%</span>
         </div>
-        <div class="clay-sunken rounded-2xl p-3 mt-3"><p class="text-[10px] font-extrabold text-deep-teal/50 uppercase mb-0.5">📈 Cách họ chơi</p><p class="text-[11px] text-deep-teal/75">${o.play}</p></div>
-        <div class="clay-sunken rounded-2xl p-3 mt-2"><p class="text-[10px] font-extrabold text-orange-600 uppercase mb-0.5">⚠️ Điểm yếu chí mạng</p><p class="text-[11px] text-deep-teal/75">${o.weakness}</p></div>
-        <div class="clay-sunken rounded-2xl p-3 mt-2"><p class="text-[10px] font-extrabold text-primary uppercase mb-0.5">💡 Lumina khuyên cách khắc chế</p><p class="text-[11px] text-deep-teal/75">${o.counter}</p></div>
-        <button class="clay-btn w-full bg-primary text-white font-display font-bold py-3 mt-4">Đã nắm tình báo – quay lại</button>
+        <div class="clay-sunken rounded-2xl p-3 mt-3"><p class="text-[10px] font-extrabold text-deep-teal/50 uppercase mb-0.5">${T('📈 Cách họ chơi', '📈 How they play')}</p><p class="text-[11px] text-deep-teal/75">${o.play}</p></div>
+        <div class="clay-sunken rounded-2xl p-3 mt-2"><p class="text-[10px] font-extrabold text-orange-600 uppercase mb-0.5">${T('⚠️ Điểm yếu chí mạng', '⚠️ Fatal weakness')}</p><p class="text-[11px] text-deep-teal/75">${o.weakness}</p></div>
+        <div class="clay-sunken rounded-2xl p-3 mt-2"><p class="text-[10px] font-extrabold text-primary uppercase mb-0.5">${T('💡 Lumina khuyên cách khắc chế', '💡 Lumina\'s counter-strategy tip')}</p><p class="text-[11px] text-deep-teal/75">${o.counter}</p></div>
+        <button class="clay-btn w-full bg-primary text-white font-display font-bold py-3 mt-4">${T('Đã nắm tình báo – quay lại', 'Got it – back')}</button>
       </div>
     </div>`;
   div.querySelector('button').onclick = () => div.remove();
@@ -211,7 +274,7 @@ function showRivalDetail(i) {
 
 async function doLogin() {
   const email = $('login-email').value.trim() || 'sinhvien@bizon.vn';
-  const team = $('login-team').value.trim() || 'Đội Claymorphism';
+  const team = $('login-team').value.trim() || T('Đội Claymorphism', 'Team Claymorphism');
   const classId = $('login-class').value.trim();
 
   // Đội đã có Mã lớp: thử tải lại tiến trình từ máy chủ trước — để đổi
@@ -235,20 +298,21 @@ async function doLogin() {
 }
 
 // ---------- Màn hình loading toàn trang khi xử lý vòng (thiết kế Stitch) ----------
-const SIM_STEPS = [
-  'Đang tổng hợp quyết định của đội...',
-  'Thị trường đang phản ứng...',
-  '3 đối thủ AI đang ra quyết định...',
-  'Đang lập báo cáo tài chính...',
-];
+function SIM_STEPS_LIST() { return [
+  T('Đang tổng hợp quyết định của đội...', "Compiling your team's decisions..."),
+  T('Thị trường đang phản ứng...', 'The market is reacting...'),
+  T('3 đối thủ AI đang ra quyết định...', '3 AI rivals are making their decisions...'),
+  T('Đang lập báo cáo tài chính...', 'Building financial reports...'),
+]; }
 function showSimLoading() {
+  const SIM_STEPS = SIM_STEPS_LIST();
   const div = document.createElement('div');
   div.id = 'sim-loading';
   div.className = 'fixed inset-0 z-[60] flex flex-col items-center justify-center text-center px-8';
   div.style.background = 'linear-gradient(160deg,#02191c 0%,#033337 60%,#02444d 100%)';
   div.innerHTML = `
     <img src="assets/icons/icon-192.png" alt="" class="w-24 h-24 rounded-3xl animate-pulse-logo" style="filter:drop-shadow(0 0 28px rgba(0,196,255,.75))">
-    <h2 class="font-display font-extrabold text-2xl text-white mt-8 leading-tight">Đang chuẩn bị<br><span style="color:#7fe3ff; text-shadow:0 0 18px rgba(0,196,255,.6)">Dashboard của bạn...</span></h2>
+    <h2 class="font-display font-extrabold text-2xl text-white mt-8 leading-tight">${T('Đang chuẩn bị<br><span style="color:#7fe3ff; text-shadow:0 0 18px rgba(0,196,255,.6)">Dashboard của bạn...</span>', 'Preparing<br><span style="color:#7fe3ff; text-shadow:0 0 18px rgba(0,196,255,.6)">your Dashboard...</span>')}</h2>
     <div class="w-full max-w-xs h-2.5 rounded-full mt-7 overflow-hidden" style="background:rgba(255,255,255,.15)">
       <div id="sim-bar" class="h-full rounded-full" style="width:4%; background:linear-gradient(90deg,#00c4ff,#7fe3ff); box-shadow:0 0 12px rgba(0,196,255,.8); transition:width .25s"></div>
     </div>
@@ -273,9 +337,9 @@ function showLevelUp(level) {
   div.style.background = 'radial-gradient(circle at 50% 30%, rgba(253,161,39,.2), transparent 48%), linear-gradient(160deg,#0b1420,#033337)';
   div.innerHTML = `
     <p class="text-8xl animate-float" style="filter:drop-shadow(0 0 34px rgba(253,161,39,.85))">🏆</p>
-    <h2 class="font-display font-extrabold text-3xl text-white mt-8 leading-tight">Tuyệt vời! Đội đạt<br><span style="color:#fda127; text-shadow:0 0 20px rgba(253,161,39,.6)">Cấp ${level}</span></h2>
-    <p class="text-white/60 text-sm mt-3 max-w-xs">Bạn đã mở khóa thêm sức mạnh mới. Hãy trải nghiệm ngay để nâng cao hiệu quả điều hành của đội.</p>
-    <button id="lvl-close" class="clay-btn font-display font-extrabold text-white text-sm px-12 py-4 mt-9" style="background:linear-gradient(90deg,#00a2d8,#fda127)">Bắt đầu ngay</button>`;
+    <h2 class="font-display font-extrabold text-3xl text-white mt-8 leading-tight">${T(`Tuyệt vời! Đội đạt<br><span style="color:#fda127; text-shadow:0 0 20px rgba(253,161,39,.6)">Cấp ${level}</span>`, `Great job! Your team reached<br><span style="color:#fda127; text-shadow:0 0 20px rgba(253,161,39,.6)">Level ${level}</span>`)}</h2>
+    <p class="text-white/60 text-sm mt-3 max-w-xs">${T('Bạn đã mở khóa thêm sức mạnh mới. Hãy trải nghiệm ngay để nâng cao hiệu quả điều hành của đội.', "You've unlocked new power. Put it to use now to run your team even better.")}</p>
+    <button id="lvl-close" class="clay-btn font-display font-extrabold text-white text-sm px-12 py-4 mt-9" style="background:linear-gradient(90deg,#00a2d8,#fda127)">${T('Bắt đầu ngay', 'Get started')}</button>`;
   document.body.appendChild(div);
   createConfetti();
   playEventSting('good');
@@ -590,7 +654,7 @@ function maybeShowEventIntro() {
   div.innerHTML = `
     <div class="max-w-md mx-auto px-6 py-8 ${ev.shake ? 'animate-shake' : ''}">
       <div class="text-center">
-        <span class="inline-flex items-center gap-1.5 text-[11px] font-extrabold px-4 py-1.5 rounded-full ${tagCls}">● ${ev.tag || 'BIẾN CỐ THỊ TRƯỜNG'}</span>
+        <span class="inline-flex items-center gap-1.5 text-[11px] font-extrabold px-4 py-1.5 rounded-full ${tagCls}">● ${ev.tag || T('BIẾN CỐ THỊ TRƯỜNG', 'MARKET EVENT')}</span>
         <h1 class="font-display text-3xl font-extrabold ${titleCls} uppercase mt-3 leading-tight">${ev.name}</h1>
         <p class="text-sm text-deep-teal/70 mt-2 max-w-sm mx-auto">${ev.desc}</p>
       </div>
@@ -613,10 +677,10 @@ function maybeShowEventIntro() {
       ${bad ? `
       <div class="clay-raised p-3 mt-3 flex items-center gap-3">
         <img src="assets/character/anh-tu-ao-dai-work-cut.webp" alt="Phan Anh Tú" class="w-11 h-11 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 6%;background:#dbeef7">
-        <p class="text-xs text-deep-teal/80 italic">"Bình tĩnh phân tích số liệu trước khi hành động – khủng hoảng luôn ẩn chứa cơ hội cho đội có kỷ luật." – <b class="text-emerald-700">Phan Anh Tú · Cố vấn học thuật</b></p>
+        <p class="text-xs text-deep-teal/80 italic">${T('"Bình tĩnh phân tích số liệu trước khi hành động – khủng hoảng luôn ẩn chứa cơ hội cho đội có kỷ luật." – <b class="text-emerald-700">Phan Anh Tú · Cố vấn học thuật</b>', '"Stay calm and read the data before acting – every crisis hides an opportunity for a disciplined team." – <b class="text-emerald-700">Phan Anh Tú · Academic Advisor</b>')}</p>
       </div>` : ''}
-      <button id="ev-cta" class="clay-button-primary w-full text-white font-display font-bold text-lg py-4 mt-6">${ev.cta ? ev.cta.label : '🎯 Nhập quyết định'}</button>
-      <button id="ev-close" class="clay-button-secondary w-full text-primary font-display font-bold py-4 mt-3">Về Trung tâm điều hành</button>
+      <button id="ev-cta" class="clay-button-primary w-full text-white font-display font-bold text-lg py-4 mt-6">${ev.cta ? ev.cta.label : T('🎯 Nhập quyết định', '🎯 Enter decisions')}</button>
+      <button id="ev-close" class="clay-button-secondary w-full text-primary font-display font-bold py-4 mt-3">${T('Về Trung tâm điều hành', 'Back to Command Center')}</button>
     </div>`;
   div.querySelector('#ev-cta').onclick = () => {
     div.remove();
@@ -643,27 +707,27 @@ function showVictory(r) {
         <img src="assets/character/lumina-ao-dai-clap.webp" alt="Lumina chúc mừng" class="w-full h-64 object-cover" style="object-position:50% 15%">
       </div>
       <div class="clay-card p-4 mb-4 text-left">
-        <p class="text-sm text-deep-teal italic">"Thật tuyệt vời thưa ${S.profile.role}! Chiến dịch vừa qua đã tạo nên một cú hích lịch sử. Chúng ta chính thức dẫn đầu thị trường với những con số ấn tượng!"</p>
+        <p class="text-sm text-deep-teal italic">${T(`"Thật tuyệt vời thưa ${S.profile.role}! Chiến dịch vừa qua đã tạo nên một cú hích lịch sử. Chúng ta chính thức dẫn đầu thị trường với những con số ấn tượng!"`, `"Wonderful work, ${S.profile.role}! That last campaign was a historic breakthrough. We're now officially leading the market with impressive numbers!"`)}</p>
       </div>
-      <span class="inline-block bg-primary-container/25 text-primary text-[11px] font-extrabold px-3 py-1.5 rounded-full">🎊 CHÚC MỪNG CHIẾN THẮNG</span>
-      <h2 class="font-display font-extrabold text-deep-teal text-xl mt-1 mb-3">Thị Phần Đạt Đỉnh Mới!</h2>
+      <span class="inline-block bg-primary-container/25 text-primary text-[11px] font-extrabold px-3 py-1.5 rounded-full">${T('🎊 CHÚC MỪNG CHIẾN THẮNG', '🎊 CONGRATULATIONS ON THE WIN')}</span>
+      <h2 class="font-display font-extrabold text-deep-teal text-xl mt-1 mb-3">${T('Thị Phần Đạt Đỉnh Mới!', 'New Market Share Peak!')}</h2>
       <div class="clay-card p-5 mb-3 relative">
         <span class="absolute -top-2 right-4 bg-primary-container text-deep-teal text-[11px] font-extrabold px-3 py-1.5 rounded-full shadow-clay">TOP 1 MARKET</span>
         <p class="text-[10px] uppercase font-bold text-deep-teal/50 tracking-widest">Market Share</p>
         <p class="font-display font-extrabold text-deep-teal text-5xl">${r.share.toFixed(1)}<span class="text-2xl">%</span></p>
         <div class="h-3 rounded-full bg-surface-bright overflow-hidden mt-3"><div class="h-full bg-gradient-to-r from-primary to-primary-container rounded-full" style="width:${Math.min(100, r.share * 2)}%"></div></div>
-        <p class="text-xs text-deep-teal/60 mt-2">Tăng trưởng ${growth}% so với vòng trước.</p>
+        <p class="text-xs text-deep-teal/60 mt-2">${T(`Tăng trưởng ${growth}% so với vòng trước.`, `Grew ${growth}% versus the previous round.`)}</p>
       </div>
       <div class="grid grid-cols-2 gap-3 mb-4">
-        <div class="clay-card p-4"><p class="text-2xl">📈</p><p class="font-display font-extrabold text-deep-teal">+${r.adEff}%</p><p class="text-[10px] text-deep-teal/50 font-semibold">Hiệu quả quảng cáo</p></div>
-        <div class="clay-card p-4"><p class="text-2xl">😊</p><p class="font-display font-extrabold text-deep-teal">${satisfaction}/5</p><p class="text-[10px] text-deep-teal/50 font-semibold">Độ hài lòng thương hiệu</p></div>
+        <div class="clay-card p-4"><p class="text-2xl">📈</p><p class="font-display font-extrabold text-deep-teal">+${r.adEff}%</p><p class="text-[10px] text-deep-teal/50 font-semibold">${T('Hiệu quả quảng cáo', 'Ad effectiveness')}</p></div>
+        <div class="clay-card p-4"><p class="text-2xl">😊</p><p class="font-display font-extrabold text-deep-teal">${satisfaction}/5</p><p class="text-[10px] text-deep-teal/50 font-semibold">${T('Độ hài lòng thương hiệu', 'Brand satisfaction')}</p></div>
       </div>
       <div class="clay-raised p-3 mb-4 flex items-center gap-3 text-left">
         <img src="assets/character/anh-tu-ao-dai-smile-cut.webp" alt="Phan Anh Tú" class="w-12 h-12 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 5%;background:#dbeef7">
-        <p class="text-xs text-deep-teal/80 italic">"Xuất sắc! Đây là minh chứng cho một chiến lược được thực thi kỷ luật." – <b class="text-emerald-700">Phan Anh Tú</b></p>
+        <p class="text-xs text-deep-teal/80 italic">${T('"Xuất sắc! Đây là minh chứng cho một chiến lược được thực thi kỷ luật." – <b class="text-emerald-700">Phan Anh Tú</b>', '"Excellent! This is proof of a disciplined, well-executed strategy." – <b class="text-emerald-700">Phan Anh Tú</b>')}</p>
       </div>
-      <button id="vic-report" class="clay-btn w-full bg-deep-teal text-white font-display font-bold py-4 mb-3">📊 XEM BÁO CÁO CHI TIẾT</button>
-      <button id="vic-next" class="clay-btn w-full bg-white text-deep-teal font-display font-bold py-4">LẬP KẾ HOẠCH TIẾP THEO</button>
+      <button id="vic-report" class="clay-btn w-full bg-deep-teal text-white font-display font-bold py-4 mb-3">${T('📊 XEM BÁO CÁO CHI TIẾT', '📊 VIEW DETAILED REPORT')}</button>
+      <button id="vic-next" class="clay-btn w-full bg-white text-deep-teal font-display font-bold py-4">${T('LẬP KẾ HOẠCH TIẾP THEO', 'PLAN THE NEXT ROUND')}</button>
     </div>`;
   div.querySelector('#vic-report').onclick = () => { div.remove(); showTab('reports'); };
   div.querySelector('#vic-next').onclick = () => { div.remove(); showTab('home'); maybeShowEventIntro(); };
