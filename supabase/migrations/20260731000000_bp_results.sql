@@ -32,6 +32,10 @@ create policy "sinh vien chi duoc nop ket qua ho chieu"
 
 -- KHÔNG tạo policy SELECT/UPDATE/DELETE cho anon → mặc định bị chặn.
 
+-- ⚠️ Cùng cơ chế "tự giác" như round_submissions (xem ghi chú đầy đủ ở
+-- 20260729000000_bizon_pilot.sql) – ai cũng có thể nộp thẳng kết quả bịa
+-- qua REST API, không bắt buộc phải chơi thật.
+
 -- Tổng hợp cho giảng viên: ván điểm cao nhất của mỗi (sinh viên, doanh nghiệp)
 create or replace function bizon_bp_board(p_class_code text, p_key text)
 returns table (
@@ -47,9 +51,11 @@ returns table (
 language sql security definer stable
 set search_path = public
 as $$
-  with g as (
-    select b.* from bp_results b
-    where bizon_check_key(p_key) and b.class_code = p_class_code
+  with auth as materialized (
+    select bizon_check_key_gate(p_key) as ok
+  ), g as (
+    select b.* from bp_results b, auth
+    where auth.ok and b.class_code = p_class_code
   ), best as (
     select distinct on (coalesce(g.player_name, '(ẩn danh)'), g.company)
       coalesce(g.player_name, '(ẩn danh)') as player_name,
