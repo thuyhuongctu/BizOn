@@ -1472,7 +1472,7 @@ function showRoundResult(r) {
         if (!fresh.length) return '';
         S.achShown.push(...fresh); save();
         return fresh.map(id => {
-          const a = ACHIEVEMENTS.find(x => x.id === id);
+          const a = ACHIEVEMENTS_LIST().find(x => x.id === id);
           return a ? `<p class="mt-1.5 text-xs font-extrabold text-clay-gold bg-deep-teal/90 rounded-full py-1.5 px-3 inline-block">${T(`🎖️ Mở khóa thành tựu: ${a.icon} ${a.name}`, `🎖️ Achievement unlocked: ${a.icon} ${a.name}`)}</p>` : '';
         }).join('<br>');
       })()}
@@ -2238,7 +2238,7 @@ function renderSeasonReport(body) {
   const maxRev = Math.max(...rounds.map(r => r.revenue), 1);
   const target = i => rounds[0].revenue * Math.pow(1.08, i);   // mục tiêu: tăng 8%/vòng từ vòng 1
 
-  const achUnlocked = (S.achievements || []).map(id => ACHIEVEMENTS.find(a => a.id === id)).filter(Boolean);
+  const achUnlocked = (S.achievements || []).map(id => ACHIEVEMENTS_LIST().find(a => a.id === id)).filter(Boolean);
   const verdict = champion
     ? `Mùa giải trong mơ! Đội dẫn đầu thị phần chung cuộc với ${shareLast.toFixed(1)}% – vượt cả 3 tập đoàn AI${totalProfit > 0 ? `, kèm lợi nhuận tích lũy ${money(Math.round(totalProfit))}` : `. Lợi nhuận còn âm ${money(Math.abs(Math.round(totalProfit)))}, nhưng vị thế thị trường chính là bàn đạp cho mùa sau`}. Hãy chụp lại báo cáo này làm kỷ niệm nhé!`
     : totalProfit > 0
@@ -2292,7 +2292,7 @@ function renderSeasonReport(body) {
     </div>
     ${achUnlocked.length ? `
     <div class="clay-card p-5 mb-3">
-      <h3 class="font-display font-bold text-deep-teal text-sm mb-3">🎖️ Thành tựu chủ chốt (${achUnlocked.length}/${ACHIEVEMENTS.length})</h3>
+      <h3 class="font-display font-bold text-deep-teal text-sm mb-3">🎖️ Thành tựu chủ chốt (${achUnlocked.length}/${ACHIEVEMENTS_LIST().length})</h3>
       <div class="grid grid-cols-2 gap-2">
         ${achUnlocked.slice(0, 6).map(a => `
         <div class="clay-sunken rounded-2xl p-2.5 flex items-center gap-2">
@@ -2711,7 +2711,7 @@ function doMaintain() {
 // ---------- Shop & Inventory ----------
 function renderShop() {
   const mul = skillEffect(S, 'shopMul', 1);
-  $('shop-list').innerHTML = SHOP_ITEMS.map(it => {
+  $('shop-list').innerHTML = SHOP_ITEMS_LIST().map(it => {
     const price = Math.round(it.price * mul);
     return `<div class="clay-card p-4 flex items-center gap-3">
       ${it.img ? `<img src="${it.img}" alt="${it.name}" class="w-14 h-14 rounded-2xl object-cover shrink-0">` : `<span class="text-3xl">${it.icon}</span>`}
@@ -2741,35 +2741,35 @@ function renderInventory() {
   const list = $('inventory-list');
   if (!list) return;
   let owned = Object.entries(S.items).filter(([, q]) => q > 0);
-  if (invFilter === 'blueprint') owned = owned.filter(([id]) => SHOP_ITEMS.find(x => x.id === id).type === 'blueprint');
-  if (invFilter === 'item') owned = owned.filter(([id]) => SHOP_ITEMS.find(x => x.id === id).type !== 'blueprint');
+  if (invFilter === 'blueprint') owned = owned.filter(([id]) => SHOP_ITEMS_LIST().find(x => x.id === id).type === 'blueprint');
+  if (invFilter === 'item') owned = owned.filter(([id]) => SHOP_ITEMS_LIST().find(x => x.id === id).type !== 'blueprint');
   list.innerHTML = owned.length ? owned.map(([id, q]) => {
-    const it = SHOP_ITEMS.find(x => x.id === id);
+    const it = SHOP_ITEMS_LIST().find(x => x.id === id);
     const active = S.activeBoosts.includes(id);
     return `<button onclick="selectInvItem('${id}')" class="clay-card p-4 flex flex-col items-center text-center ${invSelected === id ? 'ring-2 ring-primary-container' : ''}">
       <div class="item-icon-container w-full aspect-square flex items-center justify-center mb-2">
         <span class="text-4xl animate-float">${it.icon}</span>
       </div>
       <p class="font-bold text-xs text-deep-teal line-clamp-1">${it.name}</p>
-      <span class="text-primary font-bold text-[11px] mt-0.5">×${q}${active ? ' · ĐÃ BẬT' : ''}</span>
+      <span class="text-primary font-bold text-[11px] mt-0.5">×${q}${active ? T(' · ĐÃ BẬT', ' · ACTIVE') : ''}</span>
     </button>`;
-  }).join('') : '<p class="text-sm text-deep-teal/50 col-span-2">Chưa có vật phẩm nào trong mục này.</p>';
+  }).join('') : `<p class="text-sm text-deep-teal/50 col-span-2">${T('Chưa có vật phẩm nào trong mục này.', 'No items in this category yet.')}</p>`;
   renderInvDetail();
 }
 
 function selectInvItem(id) { invSelected = id; renderInventory(); }
 
 function renderInvDetail() {
-  const it = invSelected ? SHOP_ITEMS.find(x => x.id === invSelected) : null;
+  const it = invSelected ? SHOP_ITEMS_LIST().find(x => x.id === invSelected) : null;
   const q = it ? (S.items[invSelected] || 0) : 0;
   const useBtn = $('invd-use');
   if (!it || q <= 0) {
     $('invd-icon').textContent = '🎒';
-    $('invd-name').textContent = 'Chọn một vật phẩm';
+    $('invd-name').textContent = T('Chọn một vật phẩm', 'Select an item');
     $('invd-count').textContent = '--';
-    $('invd-desc').textContent = 'Chạm vào một vật phẩm trong kho để xem chi tiết và sử dụng sức mạnh của nó.';
+    $('invd-desc').textContent = T('Chạm vào một vật phẩm trong kho để xem chi tiết và sử dụng sức mạnh của nó.', "Tap an item in your inventory to see details and use its power.");
     useBtn.disabled = true; useBtn.classList.add('opacity-50');
-    useBtn.textContent = 'Sử dụng 🚀';
+    useBtn.textContent = T('Sử dụng 🚀', 'Use 🚀');
     return;
   }
   const isBlueprint = it.type === 'blueprint';
@@ -2777,16 +2777,16 @@ function renderInvDetail() {
   $('invd-icon').textContent = it.icon;
   $('invd-name').textContent = it.name;
   $('invd-count').textContent = '×' + q;
-  $('invd-desc').textContent = it.desc + (isBlueprint ? ' (Bản thiết kế – hiệu lực vĩnh viễn.)' : active ? ' (Đang bật – sẽ áp dụng ở vòng kế tiếp.)' : '');
+  $('invd-desc').textContent = it.desc + (isBlueprint ? T(' (Bản thiết kế – hiệu lực vĩnh viễn.)', ' (Blueprint – permanent effect.)') : active ? T(' (Đang bật – sẽ áp dụng ở vòng kế tiếp.)', ' (Active – will apply next round.)') : '');
   useBtn.disabled = isBlueprint;
   useBtn.classList.toggle('opacity-50', isBlueprint);
-  useBtn.textContent = isBlueprint ? 'Hiệu lực vĩnh viễn ✅' : active ? 'Tắt kích hoạt' : 'Sử dụng 🚀';
+  useBtn.textContent = isBlueprint ? T('Hiệu lực vĩnh viễn ✅', 'Permanent effect ✅') : active ? T('Tắt kích hoạt', 'Deactivate') : T('Sử dụng 🚀', 'Use 🚀');
   useBtn.onclick = (e) => {
     if (isBlueprint) return;
     const wasActive = active;
     toggleBoost(it.id);
     itemSparkles(e.clientX, e.clientY);
-    itemToast(wasActive ? 'Đã tắt kích hoạt vật phẩm' : '✨ Vật phẩm đã được kích hoạt!');
+    itemToast(wasActive ? T('Đã tắt kích hoạt vật phẩm', 'Item deactivated') : T('✨ Vật phẩm đã được kích hoạt!', '✨ Item activated!'));
     renderInventory();
   };
 }
@@ -2815,10 +2815,10 @@ function itemToast(text) {
 }
 
 function buyItem(id) {
-  const it = SHOP_ITEMS.find(x => x.id === id);
-  if (!it) { alert('ERR_ITEM_NOT_FOUND – Vật phẩm không tồn tại.'); return; }
+  const it = SHOP_ITEMS_LIST().find(x => x.id === id);
+  if (!it) { alert(T('ERR_ITEM_NOT_FOUND – Vật phẩm không tồn tại.', 'ERR_ITEM_NOT_FOUND – Item does not exist.')); return; }
   const price = Math.round(it.price * skillEffect(S, 'shopMul', 1));
-  if (S.balance < price) { alert('ERR_INSUFFICIENT_FUNDS – Ví ảo của đội không đủ ' + price + 'tr₫.'); return; }
+  if (S.balance < price) { alert(T('ERR_INSUFFICIENT_FUNDS – Ví ảo của đội không đủ ' + price + 'tr₫.', "ERR_INSUFFICIENT_FUNDS – Your team's wallet doesn't have " + price + 'm₫.')); return; }
   S.balance -= price;
   S.items[id] = (S.items[id] || 0) + 1;
   S.itemsBought++;
@@ -2830,7 +2830,7 @@ function toggleBoost(id) {
   if (i >= 0) S.activeBoosts.splice(i, 1);
   else {
     S.activeBoosts.push(id);
-    if ((S.items[id] || 0) > 0 && SHOP_ITEMS.find(x => x.id === id).type === 'consumable') S.items[id]--;
+    if ((S.items[id] || 0) > 0 && SHOP_ITEMS_LIST().find(x => x.id === id).type === 'consumable') S.items[id]--;
   }
   save(); renderShop();
 }
@@ -2839,10 +2839,10 @@ function toggleBoost(id) {
 function renderSkills() {
   const avail = S.xp - S.spentXp;
   $('skill-tree').innerHTML = `<div class="clay-card p-4 mb-1 flex justify-between items-center">
-      <span class="font-bold text-sm text-deep-teal">XP khả dụng</span>
+      <span class="font-bold text-sm text-deep-teal">${T('XP khả dụng', 'Available XP')}</span>
       <span class="font-display font-extrabold text-primary">${avail.toLocaleString('vi-VN')} XP</span>
     </div>` +
-    SKILLS.map(sk => {
+    SKILLS_LIST().map(sk => {
       const owned = hasSkill(S, sk.id);
       const affordable = avail >= sk.cost;
       return `<div class="clay-card p-4 flex items-center gap-3 ${owned ? 'border-2 border-primary-container/60' : !affordable ? 'skill-locked' : ''}">
@@ -2856,8 +2856,8 @@ function renderSkills() {
 }
 
 function unlockSkill(id) {
-  const sk = SKILLS.find(x => x.id === id);
-  if (S.xp - S.spentXp < sk.cost) { alert('Chưa đủ XP – hãy hoàn thành thêm vòng chơi!'); return; }
+  const sk = SKILLS_LIST().find(x => x.id === id);
+  if (S.xp - S.spentXp < sk.cost) { alert(T('Chưa đủ XP – hãy hoàn thành thêm vòng chơi!', 'Not enough XP yet – complete more rounds!')); return; }
   S.spentXp += sk.cost;
   S.skills.push(id);
   save(); renderAll(); createConfetti();
@@ -2868,7 +2868,7 @@ function renderLeaderboard() {
   const totalProfit = S.history.reduce((a, r) => a + r.netProfit, 0);
   const lastShare = S.history.length ? S.history[S.history.length - 1].share : 25;
   const all = [
-    { name: S.profile.teamName + ' (Bạn)', profit: totalProfit, share: lastShare, me: true },
+    { name: S.profile.teamName + T(' (Bạn)', ' (You)'), profit: totalProfit, share: lastShare, me: true },
     ...S.competitors.map(c => ({ name: c.name, profit: c.profit, share: c.share })),
   ].sort((a, b) => b.profit - a.profit);
   const medals = ['🥇', '🥈', '🥉', '4️⃣'];
@@ -2876,14 +2876,14 @@ function renderLeaderboard() {
     <div class="clay-card p-4 flex items-center gap-3 ${t.me ? 'border-2 border-primary-container' : ''}">
       <span class="text-2xl">${medals[i]}</span>
       <div class="flex-1"><p class="font-display font-bold text-deep-teal text-sm">${t.name}</p>
-        <p class="text-[11px] text-deep-teal/50">Thị phần ${t.share.toFixed(1)}%</p></div>
+        <p class="text-[11px] text-deep-teal/50">${T(`Thị phần ${t.share.toFixed(1)}%`, `Market share ${t.share.toFixed(1)}%`)}</p></div>
       <span class="font-display font-bold ${t.profit >= 0 ? 'text-primary' : 'text-orange-600'}">${money(t.profit)}</span>
     </div>`).join('');
 }
 
 // ---------- Achievements & Certificate ----------
 function renderAchievements() {
-  $('ach-list').innerHTML = ACHIEVEMENTS.map(a => {
+  $('ach-list').innerHTML = ACHIEVEMENTS_LIST().map(a => {
     const got = S.achievements.includes(a.id);
     return `<div class="clay-card p-4 text-center ${got ? '' : 'skill-locked'}">
       <p class="text-3xl">${a.icon}</p>
@@ -2895,18 +2895,19 @@ function renderAchievements() {
     $('certificate-box').classList.remove('hidden');
     $('cert-team').textContent = S.profile.teamName;
     const total = S.history.reduce((a, r) => a + r.netProfit, 0);
-    $('cert-result').textContent = `Tổng lợi nhuận: ${money(total)} · ${S.xp.toLocaleString('vi-VN')} XP · ${S.achievements.length}/${ACHIEVEMENTS.length} thành tựu`;
+    $('cert-result').textContent = T(`Tổng lợi nhuận: ${money(total)} · ${S.xp.toLocaleString('vi-VN')} XP · ${S.achievements.length}/${ACHIEVEMENTS_LIST().length} thành tựu`,
+      `Total profit: ${money(total)} · ${S.xp.toLocaleString('en-US')} XP · ${S.achievements.length}/${ACHIEVEMENTS_LIST().length} achievements`);
   }
 }
 
 // ---------- Profile & Settings ----------
 function renderProfile() {
   $('pf-name').textContent = S.profile.teamName;
-  $('pf-email').textContent = S.profile.email + (S.profile.classId ? ' · Lớp ' + S.profile.classId : '');
-  $('pf-role').textContent = { CEO: '🧭 CEO – Quyết định', CFO: '💰 CFO – Tài chính', CMO: '📣 CMO – Thị trường', COO: '🏭 COO – Vận hành', SEC: '📝 SEC – Thư ký' }[S.profile.role];
+  $('pf-email').textContent = S.profile.email + (S.profile.classId ? T(' · Lớp ', ' · Class ') + S.profile.classId : '');
+  $('pf-role').textContent = { CEO: T('🧭 CEO – Quyết định', '🧭 CEO – Decisions'), CFO: T('💰 CFO – Tài chính', '💰 CFO – Finance'), CMO: T('📣 CMO – Thị trường', '📣 CMO – Market'), COO: T('🏭 COO – Vận hành', '🏭 COO – Operations'), SEC: T('📝 SEC – Thư ký', '📝 SEC – Secretary') }[S.profile.role];
   const level = 1 + Math.floor(S.xp / XP_PER_LEVEL);
   $('pf-level').textContent = level;
-  const TIERS = ['Khởi nghiệp', 'Trưởng nhóm', 'Quản lý', 'Giám đốc', 'Executive', 'Chủ tịch'];
+  const TIERS = T('Khởi nghiệp,Trưởng nhóm,Quản lý,Giám đốc,Executive,Chủ tịch', 'Founder,Team Lead,Manager,Director,Executive,Chairperson').split(',');
   $('pf-tier').textContent = '🏅 Tier ' + Math.min(level, 6) + ' · ' + TIERS[Math.min(level - 1, TIERS.length - 1)];
   $('pf-xp').textContent = S.xp.toLocaleString('vi-VN') + ' XP';
   $('pf-xpbar').style.width = (S.xp % XP_PER_LEVEL) + '%';
@@ -2915,18 +2916,18 @@ function renderProfile() {
 }
 
 function resetGame() {
-  if (!confirm('Xóa toàn bộ tiến trình và chơi lại từ đầu?')) return;
+  if (!confirm(T('Xóa toàn bộ tiến trình và chơi lại từ đầu?', 'Erase all progress and start over?'))) return;
   localStorage.removeItem(STORAGE_KEY);
   location.reload();
 }
 
 // ---------- Missions ----------
 function renderMissions() {
-  const readyCount = MISSIONS.filter(m => missionStatus(S, m) === 'ready').length;
+  const readyCount = MISSIONS_LIST().filter(m => missionStatus(S, m) === 'ready').length;
   const badge = $('missions-badge');
   badge.classList.toggle('hidden', readyCount === 0);
   badge.textContent = readyCount;
-  $('missions-list').innerHTML = MISSIONS.map(m => {
+  $('missions-list').innerHTML = MISSIONS_LIST().map(m => {
     const st = missionStatus(S, m);
     return `<div class="clay-card p-4 flex items-center gap-3 ${st === 'pending' ? 'opacity-70' : ''} ${st === 'claimed' ? 'border-2 border-primary-container/40' : ''}">
       <span class="text-3xl">${m.icon}</span>
@@ -2936,7 +2937,7 @@ function renderMissions() {
         <p class="text-[11px] font-bold text-primary mt-0.5">🎁 ${m.rewardMoney}tr₫ + ${m.rewardXp} XP</p>
       </div>
       ${st === 'claimed' ? '<span class="text-xl">✅</span>'
-        : st === 'ready' ? `<button onclick="doClaimMission('${m.id}')" class="clay-btn bg-primary text-white text-xs font-bold px-3 py-2 shrink-0">Nhận</button>`
+        : st === 'ready' ? `<button onclick="doClaimMission('${m.id}')" class="clay-btn bg-primary text-white text-xs font-bold px-3 py-2 shrink-0">${T('Nhận', 'Claim')}</button>`
         : '<span class="text-lg opacity-40">🔒</span>'}
     </div>`;
   }).join('');
