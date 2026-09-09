@@ -22,14 +22,25 @@ nghiên cứu. Khi chưa bật, game hoạt động y hệt hiện tại.
    (bảng giám sát lỗi tự động – trang web tự báo lỗi JavaScript về đây
    để nhóm phát triển sửa sớm, sinh viên không cần báo cáo thủ công).
 4. Làm tương tự với tệp `supabase/migrations/20260730000000_instructor_dashboard.sql`
-   (bảng xếp hạng thời gian thực cho trang `giang-vien.html` – kèm
-   **Khóa giảng viên**, mặc định `BIZON-GV-2026`, **nên đổi ngay**:
-   `update app_secrets set value = 'KHOA-MOI' where name = 'instructor_key';`).
+   (bảng xếp hạng thời gian thực cho trang `giang-vien.html` – tệp này
+   tự sinh một **Khóa giảng viên** ngẫu nhiên riêng cho project của cô,
+   không có giá trị mặc định cố định nào trong mã nguồn). Xem khóa vừa
+   sinh (chỉ chạy trong SQL Editor, không lộ qua REST API):
+   `select value from app_secrets where name = 'instructor_key';`
+   Muốn đổi sang khóa riêng dễ nhớ hơn:
+   `update app_secrets set value = 'KHOA-MOI-CUA-CO' where name = 'instructor_key';`
 5. Thấy `Success` là xong – sang **Table Editor** sẽ thấy các bảng
    `round_submissions`, `client_errors` và `app_secrets`.
 
 > 💡 Nếu đã bật tích hợp GitHub (Supabase ↔ repo BizOn) thì các tệp
 > migration tự áp dụng mỗi khi nhánh `main` thay đổi – không cần dán tay.
+
+> ⚠️ **Kết quả nộp là dữ liệu tự khai báo, không phải bằng chứng đã chơi
+> thật.** Bất kỳ ai cũng có thể gọi thẳng REST API để nộp một kết quả tự
+> bịa mà không cần chơi qua game – mã băm SHA-256 kèm theo chỉ giúp phát
+> hiện sửa tay SAU khi đã nộp, không xác thực được là đã chơi thật. Nếu
+> dùng điểm này để chấm điểm chính thức, nên coi ngang hàng bài tập về
+> nhà tự nộp (tin tưởng sinh viên), không phải bài thi có giám sát.
 
 ## Bảng điều khiển Giảng viên (giang-vien.html)
 
