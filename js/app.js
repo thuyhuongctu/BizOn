@@ -873,16 +873,17 @@ function renderMarket() {
   // Live ticker từ trạng thái game
   const ticker = [
     `🔴 ${ev.name}: ${ev.desc}`,
-    `🔵 Alpha Dynamics duy trì chiến lược giá rẻ – theo dõi biên lợi nhuận của họ`,
-    `🟢 Brand Loyalty của đội bạn: ${S.brandLoyalty}% ${S.brandLoyalty >= 70 ? '(khách hàng gắn bó!)' : '(cần đầu tư thương hiệu)'}`,
-    `🟡 Star Clay Co. đẩy mạnh phân khúc cao cấp – cơ hội ở phân khúc phổ thông`,
-    S.loan > 0 ? `🏦 Đội đang có khoản vay ${S.loan}tr₫ – lãi trừ mỗi vòng` : `💰 Ví đội: ${money(S.balance)} – chưa dùng đòn bẩy`,
+    T('🔵 Alpha Dynamics duy trì chiến lược giá rẻ – theo dõi biên lợi nhuận của họ', "🔵 Alpha Dynamics keeps its budget-price strategy – watch their margin"),
+    T(`🟢 Brand Loyalty của đội bạn: ${S.brandLoyalty}% ${S.brandLoyalty >= 70 ? '(khách hàng gắn bó!)' : '(cần đầu tư thương hiệu)'}`,
+      `🟢 Your team's Brand Loyalty: ${S.brandLoyalty}% ${S.brandLoyalty >= 70 ? '(customers are loyal!)' : '(needs brand investment)'}`),
+    T('🟡 Star Clay Co. đẩy mạnh phân khúc cao cấp – cơ hội ở phân khúc phổ thông', '🟡 Star Clay Co. is pushing the premium segment – an opening in the mass market'),
+    S.loan > 0 ? T(`🏦 Đội đang có khoản vay ${S.loan}tr₫ – lãi trừ mỗi vòng`, `🏦 The team has a ${S.loan}m₫ loan – interest deducted every round`) : T(`💰 Ví đội: ${money(S.balance)} – chưa dùng đòn bẩy`, `💰 Team wallet: ${money(S.balance)} – no leverage used yet`),
   ];
   $('market-ticker').innerHTML = '<span class="mx-6">' + ticker.join('</span><span class="mx-6">') + '</span>';
 
   // Thị phần: bạn vs 3 đối thủ
   const teams = [
-    { name: 'BẠN', share, me: true },
+    { name: T('BẠN', 'YOU'), share, me: true },
     ...S.competitors.map(c => ({ name: c.name.split(' ')[0].toUpperCase(), share: c.share })),
   ];
   const maxShare = Math.max(...teams.map(t => t.share), 1);
@@ -891,16 +892,16 @@ function renderMarket() {
   const priceHigh = lastD.price > REF_PRICE * 1.15;
   const voices = [
     S.brandLoyalty >= 70
-      ? { tag: 'KHÁCH TRUNG THÀNH', text: 'Yêu quyết định đầu tư chất lượng của BizOn! Rất hợp bản sắc thương hiệu.', s: 'positive' }
-      : { tag: 'KHÁCH HÀNG MỚI', text: 'Sản phẩm ổn nhưng thương hiệu chưa đủ thuyết phục mình gắn bó lâu dài.', s: 'neutral' },
+      ? { tag: T('KHÁCH TRUNG THÀNH', 'LOYAL CUSTOMER'), text: T('Yêu quyết định đầu tư chất lượng của BizOn! Rất hợp bản sắc thương hiệu.', "Love BizOn's investment in quality! Really fits the brand identity."), s: 'positive' }
+      : { tag: T('KHÁCH HÀNG MỚI', 'NEW CUSTOMER'), text: T('Sản phẩm ổn nhưng thương hiệu chưa đủ thuyết phục mình gắn bó lâu dài.', "The product's fine, but the brand hasn't convinced me to stick around long-term."), s: 'neutral' },
     priceHigh
-      ? { tag: 'KHÁCH NHẠY GIÁ', text: `Giá ${lastD.price.toLocaleString('vi-VN')}k hơi chát so với túi tiền... đang ngó sang đối thủ. 📉`, s: 'negative' }
-      : { tag: 'KHÁCH NHẠY GIÁ', text: 'Mức giá hiện tại khá hợp lý so với chất lượng nhận được!', s: 'positive' },
+      ? { tag: T('KHÁCH NHẠY GIÁ', 'PRICE-SENSITIVE CUSTOMER'), text: T(`Giá ${lastD.price.toLocaleString('vi-VN')}k hơi chát so với túi tiền... đang ngó sang đối thủ. 📉`, `${lastD.price.toLocaleString('en-US')}k is a bit steep for my wallet... eyeing a rival. 📉`), s: 'negative' }
+      : { tag: T('KHÁCH NHẠY GIÁ', 'PRICE-SENSITIVE CUSTOMER'), text: T('Mức giá hiện tại khá hợp lý so với chất lượng nhận được!', "The current price feels fair for the quality I'm getting!"), s: 'positive' },
     ev.id === 'EV_PRICEWAR'
-      ? { tag: 'GIỚI PHÂN TÍCH', text: 'Đối thủ vừa giảm giá sâu. Thị trường chờ phản ứng của BizOn trong 48 giờ tới.', s: 'alert' }
-      : { tag: 'GIỚI PHÂN TÍCH', text: `R&D tích lũy ${Math.round(S.rdCumulative)}tr₫ – nền tảng đổi mới của BizOn đang được chú ý.`, s: 'neutral' },
+      ? { tag: T('GIỚI PHÂN TÍCH', 'ANALYSTS'), text: T('Đối thủ vừa giảm giá sâu. Thị trường chờ phản ứng của BizOn trong 48 giờ tới.', "A rival just made a deep price cut. The market is waiting for BizOn's response in the next 48 hours."), s: 'alert' }
+      : { tag: T('GIỚI PHÂN TÍCH', 'ANALYSTS'), text: T(`R&D tích lũy ${Math.round(S.rdCumulative)}tr₫ – nền tảng đổi mới của BizOn đang được chú ý.`, `Cumulative R&D of ${Math.round(S.rdCumulative)}m₫ – BizOn's innovation base is getting noticed.`), s: 'neutral' },
   ];
-  const sChip = { positive: '<span class="text-[9px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">TÍCH CỰC</span>', neutral: '<span class="text-[9px] font-bold text-deep-teal/60 bg-surface-bright px-2 py-0.5 rounded-full">TRUNG LẬP</span>', negative: '<span class="text-[9px] font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded-full">TIÊU CỰC</span>', alert: '<span class="text-[9px] font-bold text-white bg-red-500 px-2 py-0.5 rounded-full">⚠️ CẠNH TRANH</span>' };
+  const sChip = { positive: `<span class="text-[9px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">${T('TÍCH CỰC', 'POSITIVE')}</span>`, neutral: `<span class="text-[9px] font-bold text-deep-teal/60 bg-surface-bright px-2 py-0.5 rounded-full">${T('TRUNG LẬP', 'NEUTRAL')}</span>`, negative: `<span class="text-[9px] font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded-full">${T('TIÊU CỰC', 'NEGATIVE')}</span>`, alert: `<span class="text-[9px] font-bold text-white bg-red-500 px-2 py-0.5 rounded-full">${T('⚠️ CẠNH TRANH', '⚠️ COMPETITIVE')}</span>` };
 
   // Radar xu hướng: Chất lượng / Giá / Bền vững / Tốc độ (0..90 bán kính)
   const rQ = 30 + Math.min(60, S.brand * 40);
@@ -914,16 +915,19 @@ function renderMarket() {
     <div class="clay-card p-4 mb-3 border-l-4 border-primary-container flex gap-3 items-start">
       <img src="assets/character/lumina-vest.webp" alt="Cố vấn Hương" class="w-14 h-14 rounded-2xl object-cover shadow-clay shrink-0" style="object-position:50% 10%">
       <div>
-        <p class="font-display font-bold text-deep-teal text-sm">Cố vấn Hương <span class="text-[9px] bg-primary-container text-white font-extrabold px-1.5 py-0.5 rounded ml-1">LIVE</span></p>
+        <p class="font-display font-bold text-deep-teal text-sm">${T('Cố vấn Hương', 'Advisor Hương')} <span class="text-[9px] bg-primary-container text-white font-extrabold px-1.5 py-0.5 rounded ml-1">LIVE</span></p>
         <p class="text-xs text-deep-teal/80 italic mt-1">"${ev.tone === 'warn' && ev.id === 'EV_PRICEWAR'
-          ? 'Nghe kỹ này: cú giảm giá của đối thủ là một cái bẫy – họ đang đốt vốn. Giữ vững vị thế và tập trung vào phân khúc Premium. Chất lượng sẽ bền hơn sự tuyệt vọng của họ.'
+          ? T('Nghe kỹ này: cú giảm giá của đối thủ là một cái bẫy – họ đang đốt vốn. Giữ vững vị thế và tập trung vào phân khúc Premium. Chất lượng sẽ bền hơn sự tuyệt vọng của họ.',
+              "Listen closely: that rival price cut is a trap – they're burning capital. Hold your ground and focus on the Premium segment. Quality will outlast their desperation.")
           : ev.tone === 'bad'
-          ? 'Thị trường đang thở gấp. Ưu tiên phòng thủ dòng tiền, quan sát nhất cử nhất động của đối thủ trước khi phản công.'
-          : 'Thị trường đang thở đều. Đây là lúc quan sát điểm yếu của đối thủ và chuẩn bị nước đi chiếm thị phần kế tiếp.'}"</p>
+          ? T('Thị trường đang thở gấp. Ưu tiên phòng thủ dòng tiền, quan sát nhất cử nhất động của đối thủ trước khi phản công.',
+              "The market is breathing hard. Prioritize defending cash flow, and watch every rival move before you counter-attack.")
+          : T('Thị trường đang thở đều. Đây là lúc quan sát điểm yếu của đối thủ và chuẩn bị nước đi chiếm thị phần kế tiếp.',
+              "The market is breathing steady. This is the time to spot rival weaknesses and prepare your next move to gain share.")}"</p>
       </div>
     </div>
     <div class="clay-card p-5 mb-3">
-      <h3 class="font-display font-bold text-deep-teal text-sm mb-4">📊 Thị phần thời gian thực</h3>
+      <h3 class="font-display font-bold text-deep-teal text-sm mb-4">${T('📊 Thị phần thời gian thực', '📊 Real-time market share')}</h3>
       <div class="clay-sunken rounded-2xl p-4 flex items-end justify-around h-48">
         ${teams.map(t => `
           <div class="flex flex-col items-center gap-2 h-full justify-end">
@@ -935,7 +939,7 @@ function renderMarket() {
     </div>
     <div class="clay-card p-5 mb-3">
       <div class="flex justify-between items-center mb-3">
-        <h3 class="font-display font-bold text-deep-teal text-sm">💬 Tiếng nói khách hàng</h3>
+        <h3 class="font-display font-bold text-deep-teal text-sm">${T('💬 Tiếng nói khách hàng', '💬 Voice of the customer')}</h3>
         <span class="text-[10px] font-bold text-primary bg-primary-container/20 px-2 py-1 rounded-full">Social Pulse</span>
       </div>
       ${voices.map((v, i) => `
@@ -946,20 +950,20 @@ function renderMarket() {
         </div>`).join('')}
     </div>
     <div class="clay-card p-5 mb-3">
-      <h3 class="font-display font-bold text-deep-teal text-sm mb-2">🎯 Radar xu hướng</h3>
+      <h3 class="font-display font-bold text-deep-teal text-sm mb-2">${T('🎯 Radar xu hướng', '🎯 Trend radar')}</h3>
       <div class="flex items-center gap-3">
         <svg viewBox="0 0 200 200" class="w-36 h-36 shrink-0">
           <circle class="spider-grid" cx="100" cy="100" r="30"/><circle class="spider-grid" cx="100" cy="100" r="60"/><circle class="spider-grid" cx="100" cy="100" r="90"/>
           <line class="spider-grid" x1="100" y1="10" x2="100" y2="190"/><line class="spider-grid" x1="10" y1="100" x2="190" y2="100"/>
           <polygon points="${radarPts}" fill="rgba(0,196,255,.3)" stroke="#006687" stroke-width="2"/>
-          <text x="100" y="8" text-anchor="middle" font-size="10" font-weight="700" fill="#006687">CHẤT LƯỢNG</text>
-          <text x="196" y="104" text-anchor="end" font-size="10" font-weight="700" fill="#006687">GIÁ</text>
-          <text x="100" y="199" text-anchor="middle" font-size="10" font-weight="700" fill="#006687">BỀN VỮNG</text>
-          <text x="4" y="104" font-size="10" font-weight="700" fill="#006687">TỐC ĐỘ</text>
+          <text x="100" y="8" text-anchor="middle" font-size="10" font-weight="700" fill="#006687">${T('CHẤT LƯỢNG', 'QUALITY')}</text>
+          <text x="196" y="104" text-anchor="end" font-size="10" font-weight="700" fill="#006687">${T('GIÁ', 'PRICE')}</text>
+          <text x="100" y="199" text-anchor="middle" font-size="10" font-weight="700" fill="#006687">${T('BỀN VỮNG', 'SUSTAINABILITY')}</text>
+          <text x="4" y="104" font-size="10" font-weight="700" fill="#006687">${T('TỐC ĐỘ', 'SPEED')}</text>
         </svg>
         <div class="flex-1 space-y-2">
-          <div class="clay-sunken rounded-xl p-3 flex justify-between text-xs"><span class="text-deep-teal/70">Quan tâm sản phẩm xanh</span><b class="text-primary">+12.4%</b></div>
-          <div class="clay-sunken rounded-xl p-3 flex justify-between text-xs"><span class="text-deep-teal/70">Độ nhạy cảm về giá</span><b class="${ev.elasticityMul ? 'text-red-600' : 'text-deep-teal'}">${ev.elasticityMul ? '+18.0%' : '+4.2%'}</b></div>
+          <div class="clay-sunken rounded-xl p-3 flex justify-between text-xs"><span class="text-deep-teal/70">${T('Quan tâm sản phẩm xanh', 'Interest in green products')}</span><b class="text-primary">+12.4%</b></div>
+          <div class="clay-sunken rounded-xl p-3 flex justify-between text-xs"><span class="text-deep-teal/70">${T('Độ nhạy cảm về giá', 'Price sensitivity')}</span><b class="${ev.elasticityMul ? 'text-red-600' : 'text-deep-teal'}">${ev.elasticityMul ? '+18.0%' : '+4.2%'}</b></div>
         </div>
       </div>
     </div>
@@ -967,17 +971,17 @@ function renderMarket() {
       <div class="clay-card p-4">
         <div class="flex justify-between items-center mb-2"><p class="font-bold text-xs text-deep-teal">Brand Loyalty</p><span class="text-[10px] font-bold text-primary">${loyaltyPct}%</span></div>
         <div class="h-3 clay-sunken rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-primary to-primary-container rounded-full" style="width:${loyaltyPct}%"></div></div>
-        <p class="text-[9px] text-deep-teal/50 mt-1.5 font-bold">MỤC TIÊU: 85%</p>
+        <p class="text-[9px] text-deep-teal/50 mt-1.5 font-bold">${T('MỤC TIÊU', 'TARGET')}: 85%</p>
       </div>
       <div class="clay-card p-4">
-        <div class="flex justify-between items-center mb-2"><p class="font-bold text-xs text-deep-teal">Hiệu quả quảng cáo</p><span class="text-[10px] font-bold ${adEffPct >= 60 ? 'text-primary' : 'text-red-600'}">${adEffPct}%</span></div>
+        <div class="flex justify-between items-center mb-2"><p class="font-bold text-xs text-deep-teal">${T('Hiệu quả quảng cáo', 'Ad effectiveness')}</p><span class="text-[10px] font-bold ${adEffPct >= 60 ? 'text-primary' : 'text-red-600'}">${adEffPct}%</span></div>
         <div class="h-3 clay-sunken rounded-full overflow-hidden"><div class="h-full bg-gradient-to-r from-primary to-primary-container rounded-full" style="width:${adEffPct}%"></div></div>
-        <p class="text-[9px] text-deep-teal/50 mt-1.5 font-bold">MỤC TIÊU: 60%</p>
+        <p class="text-[9px] text-deep-teal/50 mt-1.5 font-bold">${T('MỤC TIÊU', 'TARGET')}: 60%</p>
       </div>
     </div>
     <div class="clay-card p-5">
-      <h3 class="font-display font-bold text-deep-teal text-sm">Sẵn sàng can thiệp?</h3>
-      <p class="text-xs text-deep-teal/60 mb-3">Điều chỉnh chiến lược dựa trên nhịp đập thị trường hiện tại.</p>
+      <h3 class="font-display font-bold text-deep-teal text-sm">${T('Sẵn sàng can thiệp?', 'Ready to step in?')}</h3>
+      <p class="text-xs text-deep-teal/60 mb-3">${T('Điều chỉnh chiến lược dựa trên nhịp đập thị trường hiện tại.', "Adjust your strategy based on the market's current pulse.")}</p>
       <div class="grid grid-cols-2 gap-2">
         <button onclick="showTab('decisions')" class="clay-button-primary text-white text-xs font-extrabold py-3 tracking-wider" style="background:linear-gradient(135deg,#00c4ff,#006687)">🚀 DEPLOY CAMPAIGN</button>
         <button onclick="showTab('decisions')" class="clay-button-secondary text-primary text-xs font-extrabold py-3 tracking-wider">💲 REVISE PRICING</button>
@@ -989,26 +993,30 @@ function renderMarket() {
 function journalLesson(r) {
   const parts = [];
   if (r.netProfit < 0) {
-    const costs = [['giá vốn sản xuất', r.cogs], ['marketing', r.marketing], ['chi phí cố định', r.fixed], ['khấu hao', r.depreciation]];
+    const costs = [[T('giá vốn sản xuất', 'production cost'), r.cogs], ['marketing', r.marketing], [T('chi phí cố định', 'fixed cost'), r.fixed], [T('khấu hao', 'depreciation'), r.depreciation]];
     costs.sort((a, b) => b[1] - a[1]);
-    parts.push(`Lỗ ${money(Math.abs(r.netProfit))} – khoản chi lớn nhất là ${costs[0][0]} (${money(costs[0][1])}). Cần cân đối lại cơ cấu chi phí.`);
+    parts.push(T(`Lỗ ${money(Math.abs(r.netProfit))} – khoản chi lớn nhất là ${costs[0][0]} (${money(costs[0][1])}). Cần cân đối lại cơ cấu chi phí.`,
+      `Loss of ${money(Math.abs(r.netProfit))} – the largest expense was ${costs[0][0]} (${money(costs[0][1])}). The cost structure needs rebalancing.`));
   } else {
-    parts.push(`Lãi ${money(r.netProfit)} với biên lợi nhuận ${Math.round(100 * r.netProfit / Math.max(1, r.revenue))}%.`);
+    parts.push(T(`Lãi ${money(r.netProfit)} với biên lợi nhuận ${Math.round(100 * r.netProfit / Math.max(1, r.revenue))}%.`,
+      `Profit of ${money(r.netProfit)} with a ${Math.round(100 * r.netProfit / Math.max(1, r.revenue))}% margin.`));
   }
-  if (r.lostSales > 200) parts.push(`Hụt ${r.lostSales.toLocaleString('vi-VN')} đơn vì thiếu hàng – cầu vượt cung, nên tăng sản lượng.`);
-  if (r.inventory > 400) parts.push(`Tồn kho ${r.inventory.toLocaleString('vi-VN')} sp do dự báo sai nhu cầu – chi phí lưu kho tăng.`);
-  if (r.oee && r.oee < 80) parts.push(`OEE giảm còn ${r.oee}% – cần bảo trì/nâng cấp dây chuyền.`);
+  if (r.lostSales > 200) parts.push(T(`Hụt ${r.lostSales.toLocaleString('vi-VN')} đơn vì thiếu hàng – cầu vượt cung, nên tăng sản lượng.`,
+    `Missed ${r.lostSales.toLocaleString('en-US')} orders from a stockout – demand outran supply, so raise production.`));
+  if (r.inventory > 400) parts.push(T(`Tồn kho ${r.inventory.toLocaleString('vi-VN')} sp do dự báo sai nhu cầu – chi phí lưu kho tăng.`,
+    `Inventory of ${r.inventory.toLocaleString('en-US')} units from a demand-forecast miss – holding costs are rising.`));
+  if (r.oee && r.oee < 80) parts.push(T(`OEE giảm còn ${r.oee}% – cần bảo trì/nâng cấp dây chuyền.`, `OEE dropped to ${r.oee}% – the line needs maintenance/upgrading.`));
   return parts.join(' ');
 }
 
-const JOURNAL_QUOTES = [
-  { clip: 'quote-01', text: 'Mục tiêu không phải là đánh bại đối thủ, mà là làm cho họ trở nên không còn quan trọng.', by: 'Lumina AI', color: 'text-primary' },
-  { clip: 'quote-02', text: 'Mọi báo cáo tài chính đều là một câu chuyện, hãy đảm bảo đội của bạn đang viết một chương thành công.', by: 'SEC', color: 'text-red-600' },
-  { clip: 'quote-03', text: 'Dữ liệu cho ta biết quá khứ, quyết định hôm nay viết nên tương lai.', by: 'Phan Anh Tú', color: 'text-emerald-700' },
-  { clip: 'quote-04', text: 'Khủng hoảng là bài kiểm tra tốt nhất cho năng lực quản trị dòng tiền.', by: 'Lumina AI', color: 'text-primary' },
-  { clip: 'quote-05', text: 'Thị phần mua được bằng tiền, nhưng lòng trung thành phải xây bằng giá trị.', by: 'Phan Anh Tú', color: 'text-emerald-700' },
-  { clip: 'quote-06', text: 'Đừng sợ commit sai – hãy sợ việc không rút ra được bài học nào.', by: 'SEC', color: 'text-red-600' },
-];
+function JOURNAL_QUOTES_LIST() { return [
+  { clip: 'quote-01', text: T('Mục tiêu không phải là đánh bại đối thủ, mà là làm cho họ trở nên không còn quan trọng.', 'The goal is not to beat your rivals, but to make them irrelevant.'), by: 'Lumina AI', color: 'text-primary' },
+  { clip: 'quote-02', text: T('Mọi báo cáo tài chính đều là một câu chuyện, hãy đảm bảo đội của bạn đang viết một chương thành công.', "Every financial report is a story — make sure your team is writing a successful chapter."), by: 'SEC', color: 'text-red-600' },
+  { clip: 'quote-03', text: T('Dữ liệu cho ta biết quá khứ, quyết định hôm nay viết nên tương lai.', "Data tells us the past; today's decisions write the future."), by: 'Phan Anh Tú', color: 'text-emerald-700' },
+  { clip: 'quote-04', text: T('Khủng hoảng là bài kiểm tra tốt nhất cho năng lực quản trị dòng tiền.', 'A crisis is the best test of cash-flow management skill.'), by: 'Lumina AI', color: 'text-primary' },
+  { clip: 'quote-05', text: T('Thị phần mua được bằng tiền, nhưng lòng trung thành phải xây bằng giá trị.', 'Market share can be bought with money, but loyalty must be built with value.'), by: 'Phan Anh Tú', color: 'text-emerald-700' },
+  { clip: 'quote-06', text: T('Đừng sợ commit sai – hãy sợ việc không rút ra được bài học nào.', "Don't fear committing to the wrong call — fear learning nothing from it."), by: 'SEC', color: 'text-red-600' },
+]; }
 
 function renderJournal() {
   const list = $('journal-list');
@@ -1021,17 +1029,18 @@ function renderJournal() {
         <span class="absolute -left-[22px] top-5 w-3.5 h-3.5 rounded-full bg-primary shadow-clay"></span>
         <div class="clay-raised p-4">
           <div class="flex justify-between items-start mb-1">
-            <span class="text-[10px] font-extrabold px-2.5 py-1 rounded-full bg-deep-teal text-white">ĐANG DIỄN RA</span>
+            <span class="text-[10px] font-extrabold px-2.5 py-1 rounded-full bg-deep-teal text-white">${T('ĐANG DIỄN RA', 'IN PROGRESS')}</span>
             <span class="text-[11px] font-bold text-deep-teal/50">V${S.round}/6</span>
           </div>
-          <p class="font-display font-bold text-deep-teal">Chu kỳ ${S.round}: ${ev.name}</p>
+          <p class="font-display font-bold text-deep-teal">${T(`Chu kỳ ${S.round}: ${ev.name}`, `Round ${S.round}: ${ev.name}`)}</p>
           <div class="clay-sunken rounded-2xl p-3 mt-2">
-            <p class="text-[10px] font-bold text-deep-teal/50 uppercase">Trạng thái</p>
-            <p class="text-sm font-bold text-primary">${S.committed ? 'Đã commit – chờ kết quả' : 'Đang thảo luận quyết định'}</p>
+            <p class="text-[10px] font-bold text-deep-teal/50 uppercase">${T('Trạng thái', 'Status')}</p>
+            <p class="text-sm font-bold text-primary">${S.committed ? T('Đã commit – chờ kết quả', 'Committed – awaiting results') : T('Đang thảo luận quyết định', 'Discussing decisions')}</p>
           </div>
         </div>
       </div>`);
   }
+  const JOURNAL_QUOTES = JOURNAL_QUOTES_LIST();
   [...S.history].reverse().forEach(r => {
     const q = JOURNAL_QUOTES[(r.round - 1) % JOURNAL_QUOTES.length];
     const priceDelta = Math.round(100 * (r.decisions.price - REF_PRICE) / REF_PRICE);
@@ -1040,26 +1049,26 @@ function renderJournal() {
         <span class="absolute -left-[22px] top-5 w-3.5 h-3.5 rounded-full ${r.netProfit >= 0 ? 'bg-primary-container' : 'bg-orange-400'} shadow-clay"></span>
         <div class="clay-raised p-4">
           <div class="flex justify-between items-start mb-1">
-            <span class="text-[10px] font-extrabold px-2.5 py-1 rounded-full clay-sunken text-deep-teal/70">HOÀN THÀNH</span>
+            <span class="text-[10px] font-extrabold px-2.5 py-1 rounded-full clay-sunken text-deep-teal/70">${T('HOÀN THÀNH', 'DONE')}</span>
             <span class="text-[11px] font-bold text-deep-teal/50">V${r.round}/6</span>
           </div>
-          <p class="font-display font-bold text-deep-teal">Chu kỳ ${r.round}: ${r.event.name}</p>
+          <p class="font-display font-bold text-deep-teal">${T(`Chu kỳ ${r.round}: ${r.event.name}`, `Round ${r.round}: ${r.event.name}`)}</p>
           <div class="clay-sunken rounded-2xl p-3 mt-2">
-            <p class="text-[10px] font-bold text-deep-teal/50 uppercase">Quyết định then chốt</p>
-            <p class="text-sm font-bold text-primary">Giá bán: ${r.decisions.price.toLocaleString('vi-VN')}k₫ (${priceDelta >= 0 ? '+' : ''}${priceDelta}% so với ĐT) · R&D ${r.rd}tr₫</p>
+            <p class="text-[10px] font-bold text-deep-teal/50 uppercase">${T('Quyết định then chốt', 'Key decision')}</p>
+            <p class="text-sm font-bold text-primary">${T(`Giá bán: ${r.decisions.price.toLocaleString('vi-VN')}k₫ (${priceDelta >= 0 ? '+' : ''}${priceDelta}% so với ĐT) · R&D ${r.rd}tr₫`, `Price: ${r.decisions.price.toLocaleString('en-US')}k₫ (${priceDelta >= 0 ? '+' : ''}${priceDelta}% vs reference) · R&D ${r.rd}m₫`)}</p>
           </div>
-          <p class="text-[10px] font-bold text-deep-teal/50 uppercase mt-2.5">Kết quả & bài học</p>
+          <p class="text-[10px] font-bold text-deep-teal/50 uppercase mt-2.5">${T('Kết quả & bài học', 'Results & lessons')}</p>
           <p class="text-sm text-deep-teal/80">${journalLesson(r)}</p>
           <div class="border-t border-surface-bright mt-2.5 pt-2.5 flex gap-2 items-start">
             <span class="text-base">💬</span>
             <p class="text-xs text-deep-teal/70 italic">"${q.text}" – <b class="${q.color}">${q.by}</b></p>
-            ${q.clip ? `<button onclick="playVoice('${q.clip}')" aria-label="Nghe câu trích dẫn" title="Nghe câu trích dẫn" class="shrink-0 text-primary text-sm leading-none">🔊</button>` : ''}
+            ${q.clip ? `<button onclick="playVoice('${q.clip}')" aria-label="${T('Nghe câu trích dẫn', 'Listen to the quote')}" title="${T('Nghe câu trích dẫn', 'Listen to the quote')}" class="shrink-0 text-primary text-sm leading-none">🔊</button>` : ''}
           </div>
         </div>
       </div>`);
   });
   list.innerHTML = '<div class="absolute left-2 top-2 bottom-2 w-0.5 bg-primary/15 rounded-full"></div>' +
-    (entries.length ? entries.join('') : '<p class="text-sm text-deep-teal/50">Hành trình sẽ được ghi lại tại đây sau vòng đầu tiên.</p>');
+    (entries.length ? entries.join('') : `<p class="text-sm text-deep-teal/50">${T('Hành trình sẽ được ghi lại tại đây sau vòng đầu tiên.', 'Your journey will be logged here after the first round.')}</p>`);
 }
 
 function renderHeader() {
@@ -1165,7 +1174,7 @@ function renderMarketForecast() {
   const el = $('mf-share');
   if (!el || !S) return;
   const d = currentDecisionInput();
-  const ev = currentEvent(S) || MARKET_EVENTS[1];
+  const ev = currentEvent(S) || MARKET_EVENTS_LIST()[1];
   const last = S.history[S.history.length - 1];
   const lastShare = last ? last.share : 25;
   const elasticity = PRICE_ELASTICITY * (ev.elasticityMul || 1);
