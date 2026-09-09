@@ -478,15 +478,15 @@ function showPremium() {
     <div class="min-h-full flex flex-col items-center justify-center text-center px-8 py-12">
       <p class="text-7xl animate-float" style="filter:drop-shadow(0 0 30px rgba(253,161,39,.85))">👑</p>
       <h2 class="font-display font-extrabold text-3xl text-white mt-6">BizOn <span style="color:#fda127">Premium</span></h2>
-      <p class="text-white/60 text-sm mt-2 max-w-xs">Dành cho giảng viên & trường học – mở khóa toàn bộ sức mạnh quản trị lớp học.</p>
+      <p class="text-white/60 text-sm mt-2 max-w-xs">${T('Dành cho giảng viên & trường học – mở khóa toàn bộ sức mạnh quản trị lớp học.', 'For instructors & schools – unlock the full power of classroom management.')}</p>
       <div class="w-full max-w-sm text-left mt-7 space-y-2.5">
-        ${['🏫 Lớp học không giới hạn số đội', '📊 Xuất báo cáo tổng kết & chứng chỉ PDF', '🎛️ Chế độ giảng viên nâng cao (khóa vòng, cấp vốn, biến cố tùy chỉnh)', '📈 Bảng phân tích hiệu suất từng thành viên', '🤝 Hỗ trợ ưu tiên & tùy biến thương hiệu trường'].map(f => `
+        ${[T('🏫 Lớp học không giới hạn số đội', '🏫 Unlimited teams per class'), T('📊 Xuất báo cáo tổng kết & chứng chỉ PDF', '📊 Export summary reports & PDF certificates'), T('🎛️ Chế độ giảng viên nâng cao (khóa vòng, cấp vốn, biến cố tùy chỉnh)', '🎛️ Advanced instructor mode (lock rounds, grant funds, custom events)'), T('📈 Bảng phân tích hiệu suất từng thành viên', '📈 Per-member performance analytics'), T('🤝 Hỗ trợ ưu tiên & tùy biến thương hiệu trường', "🤝 Priority support & your school's branding")].map(f => `
         <div class="clay-card p-3.5 flex items-center gap-3 text-sm font-semibold text-deep-teal">${f}</div>`).join('')}
       </div>
       ${requested
-        ? `<div class="clay-card p-4 mt-7 max-w-sm flex items-center gap-3"><p class="text-3xl">✅</p><p class="text-sm text-deep-teal font-semibold text-left">Yêu cầu đã gửi! Quản trị viên sẽ phê duyệt và cấp quyền cho tài khoản của bạn.</p></div>`
-        : `<button id="prem-req" class="clay-btn font-display font-extrabold text-white text-sm px-12 py-4 mt-8" style="background:linear-gradient(90deg,#fda127,#e8762d)">👑 Gửi yêu cầu nâng cấp</button>`}
-      <button id="prem-close" class="text-white/50 text-xs font-bold mt-5 underline">Đóng</button>
+        ? `<div class="clay-card p-4 mt-7 max-w-sm flex items-center gap-3"><p class="text-3xl">✅</p><p class="text-sm text-deep-teal font-semibold text-left">${T('Yêu cầu đã gửi! Quản trị viên sẽ phê duyệt và cấp quyền cho tài khoản của bạn.', "Request sent! An administrator will approve and grant access to your account.")}</p></div>`
+        : `<button id="prem-req" class="clay-btn font-display font-extrabold text-white text-sm px-12 py-4 mt-8" style="background:linear-gradient(90deg,#fda127,#e8762d)">${T('👑 Gửi yêu cầu nâng cấp', '👑 Send upgrade request')}</button>`}
+      <button id="prem-close" class="text-white/50 text-xs font-bold mt-5 underline">${T('Đóng', 'Close')}</button>
     </div>`;
   document.body.appendChild(div);
   div.querySelector('#prem-close').addEventListener('click', () => div.remove());
@@ -501,9 +501,9 @@ function showPremium() {
     ok.style.background = 'radial-gradient(circle at 50% 30%, rgba(253,161,39,.2), transparent 48%), linear-gradient(160deg,#0b1420,#033337)';
     ok.innerHTML = `
       <p class="text-8xl animate-float" style="filter:drop-shadow(0 0 34px rgba(253,161,39,.85))">🏆</p>
-      <h2 class="font-display font-extrabold text-3xl text-white mt-8 leading-tight">Tuyệt vời! Yêu cầu<br><span style="color:#fda127">đã được gửi</span></h2>
-      <p class="text-white/60 text-sm mt-3 max-w-xs">Quản trị viên sẽ phê duyệt và cấp quyền Premium cho bạn. Trong lúc chờ, hãy tiếp tục chinh phục TOP 1 thị phần nhé!</p>
-      <button class="clay-btn font-display font-extrabold text-white text-sm px-12 py-4 mt-9" style="background:linear-gradient(90deg,#00a2d8,#fda127)" onclick="this.parentElement.remove()">Bắt đầu ngay</button>`;
+      <h2 class="font-display font-extrabold text-3xl text-white mt-8 leading-tight">${T('Tuyệt vời! Yêu cầu<br><span style="color:#fda127">đã được gửi</span>', 'Great! Your request<br><span style="color:#fda127">has been sent</span>')}</h2>
+      <p class="text-white/60 text-sm mt-3 max-w-xs">${T('Quản trị viên sẽ phê duyệt và cấp quyền Premium cho bạn. Trong lúc chờ, hãy tiếp tục chinh phục TOP 1 thị phần nhé!', 'An administrator will approve and grant you Premium access. While you wait, keep pushing for the #1 market share!')}</p>
+      <button class="clay-btn font-display font-extrabold text-white text-sm px-12 py-4 mt-9" style="background:linear-gradient(90deg,#00a2d8,#fda127)" onclick="this.parentElement.remove()">${T('Bắt đầu ngay', 'Get started')}</button>`;
     document.body.appendChild(ok);
   });
 }
@@ -1073,7 +1073,7 @@ function renderJournal() {
 
 function renderHeader() {
   $('hdr-team').textContent = S.profile.teamName;
-  const eqR = MG_REWARDS.find(r => r.id === S.rewardEquipped);
+  const eqR = MG_REWARDS_LIST().find(r => r.id === S.rewardEquipped);
   $('hdr-level').textContent = 'Lv.' + (1 + Math.floor((S.xp - S.spentXp < 0 ? 0 : S.xp) / XP_PER_LEVEL)) + (eqR ? ' ' + eqR.icon : '');
   $('hdr-xp').textContent = S.xp.toLocaleString('vi-VN') + ' XP';
   $('hdr-balance').textContent = money(S.balance);
@@ -1880,7 +1880,7 @@ function toggleVoice() {
   voiceEnabled = !voiceEnabled;
   localStorage.setItem('bizon-voice', voiceEnabled ? 'on' : 'off');
   if (!voiceEnabled) speechSynthesis.cancel();
-  $('voice-toggle').textContent = voiceEnabled ? '🔊 Bật' : '🔇 Tắt';
+  $('voice-toggle').textContent = voiceEnabled ? T('🔊 Bật', '🔊 On') : T('🔇 Tắt', '🔇 Off');
   $('voice-toggle').classList.toggle('bg-primary-container/30', voiceEnabled);
 }
 
@@ -1894,10 +1894,10 @@ function setVoiceGender(g) {
 
 function toggleMic() {
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SR) { alert('Trình duyệt này chưa hỗ trợ nhận giọng nói – hãy dùng Chrome trên Android hoặc máy tính.'); return; }
+  if (!SR) { alert(T('Trình duyệt này chưa hỗ trợ nhận giọng nói – hãy dùng Chrome trên Android hoặc máy tính.', 'This browser does not support voice recognition – use Chrome on Android or desktop.')); return; }
   if (recognizing) { recognition.stop(); return; }
   recognition = new SR();
-  recognition.lang = 'vi-VN';
+  recognition.lang = T('vi-VN', 'en-US');
   recognition.interimResults = false;
   recognition.onstart = () => { recognizing = true; $('mic-btn').classList.add('bg-red-100', 'animate-pulse'); };
   recognition.onend = () => { recognizing = false; $('mic-btn').classList.remove('bg-red-100', 'animate-pulse'); };
@@ -1911,14 +1911,18 @@ function toggleMic() {
 
 function chatRespond(text) {
   const t = text.toLowerCase();
-  if (/xin chào|chào|hello|hi |^hi$/.test(t)) return { risk: 'low', free: true, text: `Chào bạn! Tôi là Hương – cố vấn AI của đội ${S.profile.teamName}. Bạn có thể hỏi tôi về giá bán, marketing, rủi ro, vốn vay hay vận hành nhé!` };
+  if (/xin chào|chào|hello|hi |^hi$|^hey/.test(t)) return { risk: 'low', free: true, text: T(`Chào bạn! Tôi là Hương – cố vấn AI của đội ${S.profile.teamName}. Bạn có thể hỏi tôi về giá bán, marketing, rủi ro, vốn vay hay vận hành nhé!`,
+    `Hi there! I'm Hương – the AI advisor for team ${S.profile.teamName}. You can ask me about pricing, marketing, risk, loans, or operations!`) };
   if (/giá|price/.test(t)) return luminaAdvice(S, 'pricing');
-  if (/marketing|quảng cáo|truyền thông/.test(t)) return luminaAdvice(S, 'marketing');
-  if (/vay|vốn|thanh khoản|tiền mặt|dòng tiền/.test(t)) return { risk: S.quickRatio < 1 ? 'high' : 'low', text: `Tình hình tài chính: ví còn ${money(S.balance)}, khả năng thanh toán nhanh ${S.quickRatio.toFixed(2)}${S.quickRatio < 1.1 ? ' – dưới ngưỡng an toàn 1.1, nên cân nhắc khoản vay đệm' : ' – an toàn'}. ROI hiện tại ${S.roi}%.` };
-  if (/oee|máy|bảo trì|dây chuyền|vận hành|sản xuất/.test(t)) return { risk: S.oee < 80 ? 'medium' : 'low', text: `Vận hành: OEE ${S.oee}% (mục tiêu 85%), phế phẩm ${S.defect}%. ${S.oee < 85 ? 'Tôi khuyên COO nên bảo trì ngay hoặc nâng cấp dây chuyền tiêu thụ điện cao nhất trong báo cáo ⚡ Năng lượng.' : 'Nhà máy đang vận hành ổn định!'}` };
-  if (/thị phần|đối thủ|cạnh tranh/.test(t)) {
+  if (/marketing|quảng cáo|truyền thông|advertis/.test(t)) return luminaAdvice(S, 'marketing');
+  if (/vay|vốn|thanh khoản|tiền mặt|dòng tiền|loan|cash|liquidity/.test(t)) return { risk: S.quickRatio < 1 ? 'high' : 'low', text: T(`Tình hình tài chính: ví còn ${money(S.balance)}, khả năng thanh toán nhanh ${S.quickRatio.toFixed(2)}${S.quickRatio < 1.1 ? ' – dưới ngưỡng an toàn 1.1, nên cân nhắc khoản vay đệm' : ' – an toàn'}. ROI hiện tại ${S.roi}%.`,
+    `Financial status: wallet at ${money(S.balance)}, quick ratio ${S.quickRatio.toFixed(2)}${S.quickRatio < 1.1 ? ' – below the 1.1 safety threshold, consider a buffer loan' : ' – safe'}. Current ROI ${S.roi}%.`) };
+  if (/oee|máy|bảo trì|dây chuyền|vận hành|sản xuất|maintenance|production|factory/.test(t)) return { risk: S.oee < 80 ? 'medium' : 'low', text: T(`Vận hành: OEE ${S.oee}% (mục tiêu 85%), phế phẩm ${S.defect}%. ${S.oee < 85 ? 'Tôi khuyên COO nên bảo trì ngay hoặc nâng cấp dây chuyền tiêu thụ điện cao nhất trong báo cáo ⚡ Năng lượng.' : 'Nhà máy đang vận hành ổn định!'}`,
+    `Operations: OEE ${S.oee}% (target 85%), defect rate ${S.defect}%. ${S.oee < 85 ? "I'd suggest the COO run maintenance now or upgrade the highest-consuming line in the ⚡ Energy report." : 'The factory is running smoothly!'}`) };
+  if (/thị phần|đối thủ|cạnh tranh|market share|rival|competit/.test(t)) {
     const last = S.history[S.history.length - 1];
-    return { risk: 'low', text: `Thị phần hiện tại ${(last ? last.share : 25).toFixed(1)}%, Brand Loyalty ${S.brandLoyalty}%. Ba đối thủ: Alpha Dynamics (giá rẻ), Mekong Ventures (cân bằng), Star Clay Co. (cao cấp). Muốn phân tích sâu hơn hãy xem thẻ CMO bên dưới nhé!` };
+    return { risk: 'low', text: T(`Thị phần hiện tại ${(last ? last.share : 25).toFixed(1)}%, Brand Loyalty ${S.brandLoyalty}%. Ba đối thủ: Alpha Dynamics (giá rẻ), Mekong Ventures (cân bằng), Star Clay Co. (cao cấp). Muốn phân tích sâu hơn hãy xem thẻ CMO bên dưới nhé!`,
+      `Current market share ${(last ? last.share : 25).toFixed(1)}%, Brand Loyalty ${S.brandLoyalty}%. Three rivals: Alpha Dynamics (budget), Mekong Ventures (balanced), Star Clay Co. (premium). For a deeper analysis, check the CMO card below!`) };
   }
   return luminaAdvice(S, 'risk');
 }
@@ -1933,7 +1937,7 @@ function sendChat() {
   if (!reply.free) {
     const quota = AI_QUOTA_PER_ROUND + (hasSkill(S, 'SK_AI1') ? 2 : 0);
     if (S.aiUsed >= quota) {
-      pushLumina({ risk: 'medium', log: false, clip: 'chat-07', text: 'ERR_AI_LIMIT_REACHED – Bạn đã dùng hết lượt tư vấn của vòng này. Lượt sẽ làm mới sau khi Commit quyết định nhé!' });
+      pushLumina({ risk: 'medium', log: false, clip: 'chat-07', text: T('ERR_AI_LIMIT_REACHED – Bạn đã dùng hết lượt tư vấn của vòng này. Lượt sẽ làm mới sau khi Commit quyết định nhé!', "ERR_AI_LIMIT_REACHED – You've used all your advisor turns this round. It resets after you Commit your decisions!") });
       return;
     }
     S.aiUsed++; S.aiAskedTotal++; save(); renderAdvisorIntro();
@@ -1944,7 +1948,7 @@ function sendChat() {
 function askLumina(topic) {
   const quota = AI_QUOTA_PER_ROUND + (hasSkill(S, 'SK_AI1') ? 2 : 0);
   if (S.aiUsed >= quota) {
-    pushLumina({ risk: 'medium', text: 'ERR_AI_LIMIT_REACHED – Lumina đang bận! Bạn đã dùng hết lượt tư vấn của vòng này. Lượt hỏi sẽ được làm mới sau khi commit quyết định.' });
+    pushLumina({ risk: 'medium', text: T('ERR_AI_LIMIT_REACHED – Lumina đang bận! Bạn đã dùng hết lượt tư vấn của vòng này. Lượt hỏi sẽ được làm mới sau khi commit quyết định.', "ERR_AI_LIMIT_REACHED – Lumina is busy! You've used all your advisor turns this round. Your quota refreshes after you commit decisions.") });
     return;
   }
   S.aiUsed++;
@@ -2416,7 +2420,7 @@ function loadSigImg(src) {
 }
 
 async function downloadCertificate(lang = 'vi') {
-  if (isTrial()) { itemToast('Ván chơi thử chưa được cấp chứng nhận – cần Mã lớp của giảng viên.'); return; }
+  if (isTrial()) { itemToast(T('Ván chơi thử chưa được cấp chứng nhận – cần Mã lớp của giảng viên.', "Trial sessions don't get a certificate – you need a Class ID from your instructor.")); return; }
   const c = S._cert;
   if (!c) return;
   const EN = lang === 'en';
@@ -2980,7 +2984,7 @@ function renderMinigame() {
   const out = (S.minigamePlays || 0) >= 3;
   btn.disabled = out || !!mg;
   btn.classList.toggle('opacity-50', out);
-  if (out) btn.innerHTML = '⏳ Hết lượt – commit vòng mới để chơi tiếp';
+  if (out) btn.innerHTML = T('⏳ Hết lượt – commit vòng mới để chơi tiếp', '⏳ Out of attempts – commit a new round to play again');
 }
 
 function startMinigame() {
@@ -3036,20 +3040,20 @@ function endMinigame() {
   mg = null;
   save(); renderAll();
   if (reward > 0) createConfetti();
-  $('mg-start').innerHTML = `🎉 +${reward}tr₫! Chơi lại (lượt ${Math.min(3, S.minigamePlays + 1)}/3)`;
+  $('mg-start').innerHTML = T(`🎉 +${reward}tr₫! Chơi lại (lượt ${Math.min(3, S.minigamePlays + 1)}/3)`, `🎉 +${reward}m₫! Play again (attempt ${Math.min(3, S.minigamePlays + 1)}/3)`);
   if (S.minigamePlays < 3) { $('mg-start').disabled = false; $('mg-start').classList.remove('opacity-50'); }
 }
 
 // ---------- Clay Reward Shop + Xếp hạng mini-game (thiết kế Stitch) ----------
-const MG_REWARDS = [
-  { id: 'R_HAT',    icon: '🥳', name: 'Mũ tiệc sắc màu',        cost: 300 },
-  { id: 'R_TIE',    icon: '👔', name: 'Cà vạt đất nặn',          cost: 500 },
-  { id: 'R_CASE',   icon: '💼', name: 'Cặp táp đất sét mini',    cost: 800 },
-  { id: 'R_MKT',    icon: '📈', name: 'Huy hiệu Marketing Boost', cost: 1000, lockLevel: 5 },
-  { id: 'R_PLANT',  icon: '🪴', name: 'Chậu cây để bàn cao cấp', cost: 1200 },
-  { id: 'R_LUNCH',  icon: '🍱', name: 'Voucher ăn trưa cả đội',  cost: 1500 },
-  { id: 'R_MYSTERY', icon: '🎁', name: 'Hộp quà bí ẩn',          cost: 2000, lockMissions: 5 },
-];
+function MG_REWARDS_LIST() { return [
+  { id: 'R_HAT',    icon: '🥳', name: T('Mũ tiệc sắc màu', 'Colorful Party Hat'),        cost: 300 },
+  { id: 'R_TIE',    icon: '👔', name: T('Cà vạt đất nặn', 'Clay Necktie'),          cost: 500 },
+  { id: 'R_CASE',   icon: '💼', name: T('Cặp táp đất sét mini', 'Mini Clay Briefcase'),    cost: 800 },
+  { id: 'R_MKT',    icon: '📈', name: T('Huy hiệu Marketing Boost', 'Marketing Boost Badge'), cost: 1000, lockLevel: 5 },
+  { id: 'R_PLANT',  icon: '🪴', name: T('Chậu cây để bàn cao cấp', 'Premium Desk Plant'), cost: 1200 },
+  { id: 'R_LUNCH',  icon: '🍱', name: T('Voucher ăn trưa cả đội', 'Team Lunch Voucher'),  cost: 1500 },
+  { id: 'R_MYSTERY', icon: '🎁', name: T('Hộp quà bí ẩn', 'Mystery Gift Box'),          cost: 2000, lockMissions: 5 },
+]; }
 function showRewardShop() {
   const old = document.getElementById('rshop-overlay'); if (old) old.remove();
   const lvl = 1 + Math.floor(S.xp / XP_PER_LEVEL);
@@ -3061,7 +3065,7 @@ function showRewardShop() {
     <div class="max-w-md mx-auto px-5 py-6 pb-24">
       <div class="flex justify-between items-center mb-5">
         <button onclick="document.getElementById('rshop-overlay').remove()" class="clay-btn bg-white w-9 h-9 rounded-full text-deep-teal font-bold">←</button>
-        <button onclick="showMgLeaderboard()" class="clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2">🏆 Xếp hạng</button>
+        <button onclick="showMgLeaderboard()" class="clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2">${T('🏆 Xếp hạng', '🏆 Leaderboard')}</button>
       </div>
       <div class="text-center mb-6">
         <div class="clay-card inline-flex items-center gap-3 px-6 py-3">
@@ -3069,13 +3073,13 @@ function showRewardShop() {
           <div class="text-left"><p class="font-display font-extrabold text-primary text-2xl leading-none">${(S.minigamePoints || 0).toLocaleString('vi-VN')}</p><p class="text-[10px] font-extrabold text-deep-teal/50 uppercase">Points</p></div>
         </div>
         <h2 class="font-display font-extrabold text-deep-teal text-xl mt-4">🏺 Clay Reward Shop</h2>
-        <p class="text-xs text-deep-teal/60 mt-1">Đổi điểm Clay Factory lấy quà lưu niệm cho đội (điểm ×10 mỗi lượt chơi).</p>
+        <p class="text-xs text-deep-teal/60 mt-1">${T('Đổi điểm Clay Factory lấy quà lưu niệm cho đội (điểm ×10 mỗi lượt chơi).', 'Trade Clay Factory points for team souvenirs (points ×10 per play).')}</p>
       </div>
       <div class="grid grid-cols-2 gap-3">
-        ${MG_REWARDS.map(r => {
+        ${MG_REWARDS_LIST().map(r => {
           const owned = S.rewardsOwned.includes(r.id);
           const locked = (r.lockLevel && lvl < r.lockLevel) || (r.lockMissions && claimed < r.lockMissions);
-          const lockText = r.lockLevel ? `Khóa – Đạt cấp ${r.lockLevel}` : r.lockMissions ? `Khóa – Nhận ${r.lockMissions} nhiệm vụ` : '';
+          const lockText = r.lockLevel ? T(`Khóa – Đạt cấp ${r.lockLevel}`, `Locked – Reach level ${r.lockLevel}`) : r.lockMissions ? T(`Khóa – Nhận ${r.lockMissions} nhiệm vụ`, `Locked – Claim ${r.lockMissions} missions`) : '';
           const equipped = S.rewardEquipped === r.id;
           return `<div class="clay-card p-4 text-center ${locked ? 'opacity-70' : ''} ${equipped ? 'ring-2 ring-primary-container' : ''}">
             <p class="text-4xl mb-2 ${locked ? 'grayscale' : 'animate-float'}">${locked ? '🔒' : r.icon}</p>
@@ -3083,8 +3087,8 @@ function showRewardShop() {
             ${locked
               ? `<p class="text-[10px] font-bold text-deep-teal/50 mt-2">${lockText}</p>`
               : owned
-                ? `<button onclick="equipReward('${r.id}')" class="clay-btn w-full ${equipped ? 'bg-surface-bright text-deep-teal/50' : 'bg-white text-deep-teal'} text-xs font-bold py-2 mt-2">${equipped ? '✓ Đang đeo' : 'Đeo'}</button>`
-                : `<p class="font-display font-extrabold text-primary text-sm mt-1">${r.cost.toLocaleString('vi-VN')} điểm</p>
+                ? `<button onclick="equipReward('${r.id}')" class="clay-btn w-full ${equipped ? 'bg-surface-bright text-deep-teal/50' : 'bg-white text-deep-teal'} text-xs font-bold py-2 mt-2">${equipped ? T('✓ Đang đeo', '✓ Equipped') : T('Đeo', 'Equip')}</button>`
+                : `<p class="font-display font-extrabold text-primary text-sm mt-1">${T(`${r.cost.toLocaleString('vi-VN')} điểm`, `${r.cost.toLocaleString('en-US')} points`)}</p>
                    <button onclick="redeemReward('${r.id}', event)" class="clay-btn w-full ${S.minigamePoints >= r.cost ? 'bg-emerald-500 text-white' : 'bg-surface-bright text-deep-teal/40'} text-xs font-bold py-2 mt-2">Redeem</button>`}
           </div>`;
         }).join('')}
@@ -3093,9 +3097,9 @@ function showRewardShop() {
   document.body.appendChild(div);
 }
 function redeemReward(id, e) {
-  const r = MG_REWARDS.find(x => x.id === id);
+  const r = MG_REWARDS_LIST().find(x => x.id === id);
   if (!r || S.rewardsOwned.includes(id)) return;
-  if ((S.minigamePoints || 0) < r.cost) { itemToast('Chưa đủ điểm – chơi thêm Clay Factory nhé!'); return; }
+  if ((S.minigamePoints || 0) < r.cost) { itemToast(T('Chưa đủ điểm – chơi thêm Clay Factory nhé!', 'Not enough points – play more Clay Factory!')); return; }
   S.minigamePoints -= r.cost;
   S.rewardsOwned.push(id);
   save();
@@ -3107,12 +3111,12 @@ function showUnboxing(r) {
   div.className = 'fixed inset-0 z-[75] flex flex-col items-center justify-center text-center px-8';
   div.style.background = 'radial-gradient(circle at 50% 34%, rgba(0,196,255,.18), transparent 50%), linear-gradient(160deg,#0b1420,#033337)';
   div.innerHTML = `
-    <h2 class="font-display font-extrabold text-3xl text-white leading-tight">Mở khóa<br><span style="color:#fda127; text-shadow:0 0 20px rgba(253,161,39,.6)">phần thưởng mới!</span></h2>
+    <h2 class="font-display font-extrabold text-3xl text-white leading-tight">${T('Mở khóa<br><span style="color:#fda127; text-shadow:0 0 20px rgba(253,161,39,.6)">phần thưởng mới!</span>', 'Unlocked<br><span style="color:#fda127; text-shadow:0 0 20px rgba(253,161,39,.6)">a new reward!</span>')}</h2>
     <p class="text-8xl mt-8 animate-float" style="filter:drop-shadow(0 0 30px rgba(0,196,255,.7))">${r.icon}</p>
     <p class="font-display font-extrabold text-white text-xl mt-6">${r.name}</p>
     <div class="flex gap-3 mt-9">
-      <button id="unbox-wear" class="clay-btn font-display font-extrabold text-white text-sm px-8 py-3.5" style="background:linear-gradient(90deg,#00a2d8,#00c4ff)">Đeo ngay</button>
-      <button id="unbox-back" class="clay-btn bg-white text-deep-teal font-display font-extrabold text-sm px-8 py-3.5">Về cửa hàng</button>
+      <button id="unbox-wear" class="clay-btn font-display font-extrabold text-white text-sm px-8 py-3.5" style="background:linear-gradient(90deg,#00a2d8,#00c4ff)">${T('Đeo ngay', 'Equip now')}</button>
+      <button id="unbox-back" class="clay-btn bg-white text-deep-teal font-display font-extrabold text-sm px-8 py-3.5">${T('Về cửa hàng', 'Back to shop')}</button>
     </div>`;
   document.body.appendChild(div);
   createConfetti(); playEventSting('good');
@@ -3132,7 +3136,7 @@ function showMgLeaderboard() {
     { name: 'Chris', team: 'Star Clay Co.', score: 21 }, { name: 'David', team: 'Team Rocket', score: 18 },
     { name: 'Emily', team: 'Clay Masters', score: 15 }, { name: 'Frank', team: 'The Sculptors', score: 12 },
   ];
-  const you = { name: S.profile.teamName, team: 'Đội của bạn', score: S.minigameBest || 0, you: true };
+  const you = { name: S.profile.teamName, team: T('Đội của bạn', 'Your team'), score: S.minigameBest || 0, you: true };
   const all = AI.concat([you]).sort((a, b) => b.score - a.score);
   const rank = all.indexOf(you) + 1;
   const podium = all.slice(0, 3);
@@ -3145,7 +3149,7 @@ function showMgLeaderboard() {
     <div class="max-w-md mx-auto px-5 py-6 pb-24">
       <div class="flex justify-between items-center mb-6">
         <button onclick="document.getElementById('mglb-overlay').remove()" class="clay-btn bg-white w-9 h-9 rounded-full text-deep-teal font-bold">←</button>
-        <p class="font-display font-extrabold text-deep-teal">🏆 Xếp hạng Clay Factory</p>
+        <p class="font-display font-extrabold text-deep-teal">${T('🏆 Xếp hạng Clay Factory', '🏆 Clay Factory Leaderboard')}</p>
         <span class="w-9"></span>
       </div>
       <div class="flex items-end justify-center gap-2 mb-6">
@@ -3157,7 +3161,7 @@ function showMgLeaderboard() {
             <p class="font-bold text-[11px] text-deep-teal truncate">${p.you ? '⭐ ' : ''}${p.name}</p>
             <div class="clay-card ${h} mt-1.5 flex flex-col items-center justify-center ${p.you ? 'ring-2 ring-primary-container' : ''}">
               <p class="font-display font-extrabold ${real === 0 ? 'text-clay-gold text-2xl' : 'text-deep-teal text-xl'}" style="${real === 0 ? 'color:#fda127' : ''}">${real + 1}</p>
-              <p class="text-[10px] font-bold text-deep-teal/50">${p.score} điểm</p>
+              <p class="text-[10px] font-bold text-deep-teal/50">${T(`${p.score} điểm`, `${p.score} pts`)}</p>
             </div>
           </div>`;
         }).join('')}
@@ -3171,10 +3175,10 @@ function showMgLeaderboard() {
         </div>`).join('')}
       </div>
       <div class="clay-card p-4 mt-5 flex items-center justify-between" style="background:linear-gradient(90deg,#e8762d,#fda127)">
-        <p class="font-display font-extrabold text-white text-sm">Hạng của bạn: #${rank}</p>
-        <p class="font-display font-extrabold text-white">${you.score} điểm</p>
+        <p class="font-display font-extrabold text-white text-sm">${T(`Hạng của bạn: #${rank}`, `Your rank: #${rank}`)}</p>
+        <p class="font-display font-extrabold text-white">${T(`${you.score} điểm`, `${you.score} pts`)}</p>
       </div>
-      <p class="text-[10px] text-deep-teal/40 text-center mt-3">So tài cùng 6 đội AI – phá kỷ lục điểm Clay Factory để leo hạng!</p>
+      <p class="text-[10px] text-deep-teal/40 text-center mt-3">${T('So tài cùng 6 đội AI – phá kỷ lục điểm Clay Factory để leo hạng!', 'Compete against 6 AI teams – beat your Clay Factory high score to climb the ranks!')}</p>
     </div>`;
   document.body.appendChild(div);
 }
@@ -3182,11 +3186,11 @@ function showMgLeaderboard() {
 // ---------- Instructor ----------
 function renderInstructor() {
   const lockBtn = $('btn-lock');
-  lockBtn.textContent = S.roundLocked ? '🔓 Mở khóa' : '🔒 Khóa';
+  lockBtn.textContent = S.roundLocked ? T('🔓 Mở khóa', '🔓 Unlock') : T('🔒 Khóa', '🔒 Lock');
   lockBtn.classList.toggle('bg-orange-100', S.roundLocked);
   const totalProfit = S.history.reduce((a, r) => a + r.netProfit, 0);
   const teams = [
-    { id: 'YOU', name: S.profile.teamName + ' (đội của lớp)', balance: S.balance, profit: totalProfit, real: true },
+    { id: 'YOU', name: S.profile.teamName + T(' (đội của lớp)', " (the class's team)"), balance: S.balance, profit: totalProfit, real: true },
     ...S.competitors.map((c, i) => ({ id: 'AI' + i, name: c.name + ' (AI)', balance: null, profit: c.profit })),
   ];
   $('ins-teams').innerHTML = teams.map(t => `
@@ -3194,13 +3198,13 @@ function renderInstructor() {
       <span class="text-2xl">${t.real ? '🏢' : '🤖'}</span>
       <div class="flex-1">
         <p class="font-bold text-sm text-deep-teal">${t.name}</p>
-        <p class="text-[11px] text-deep-teal/60">Lợi nhuận lũy kế: ${money(t.profit)}${t.balance != null ? ' · Ví: ' + money(t.balance) : ''}</p>
+        <p class="text-[11px] text-deep-teal/60">${T('Lợi nhuận lũy kế:', 'Cumulative profit:')} ${money(t.profit)}${t.balance != null ? T(' · Ví: ', ' · Wallet: ') + money(t.balance) : ''}</p>
       </div>
       ${t.real ? `<button onclick="grantFunds(100)" class="clay-btn bg-primary text-white text-xs font-bold px-3 py-2 shrink-0">+100tr₫</button>` : ''}
     </div>`).join('');
   $('ins-log').innerHTML = (S.grantLog || []).length
-    ? S.grantLog.slice(-8).reverse().map(g => `<p>💸 Cấp <b>${g.amount}tr₫</b> cho ${g.team} – vòng ${g.round}</p>`).join('')
-    : '<p class="text-deep-teal/40">Chưa có giao dịch nào.</p>';
+    ? S.grantLog.slice(-8).reverse().map(g => `<p>${T(`💸 Cấp <b>${g.amount}tr₫</b> cho ${g.team} – vòng ${g.round}`, `💸 Granted <b>${g.amount}m₫</b> to ${g.team} – round ${g.round}`)}</p>`).join('')
+    : `<p class="text-deep-teal/40">${T('Chưa có giao dịch nào.', 'No transactions yet.')}</p>`;
 }
 
 function toggleRoundLock() {
@@ -3223,12 +3227,13 @@ function runAdvisorPro() {
     growthTarget: +$('ap-growth').value || 0,
   };
   const r = advisorProScenarios(inp);
-  const riskLabel = { low: '🟢 Rủi ro thấp', medium: '🟡 Rủi ro vừa', high: '🔴 Rủi ro cao' };
+  const riskLabel = { low: T('🟢 Rủi ro thấp', '🟢 Low risk'), medium: T('🟡 Rủi ro vừa', '🟡 Medium risk'), high: T('🔴 Rủi ro cao', '🔴 High risk') };
   const riskClass = { low: 'risk-low', medium: 'risk-medium', high: 'risk-high' };
   $('ap-result').innerHTML = `
     <div class="clay-card p-4 mb-3 flex items-center gap-3">
       <img src="assets/character/lumina-vest.webp" alt="Lumina" class="w-10 h-10 rounded-full object-cover shadow-clay" style="object-position:50% 12%">
-      <p class="text-sm text-deep-teal">Biên lợi nhuận hiện tại của bạn là <b>${r.marginPct}%</b> – ${r.healthy ? 'nền tảng tốt để mở rộng! 💪' : 'hơi mỏng, nên tối ưu chi phí trước khi tăng tốc. ⚠️'}</p>
+      <p class="text-sm text-deep-teal">${T(`Biên lợi nhuận hiện tại của bạn là <b>${r.marginPct}%</b> – ${r.healthy ? 'nền tảng tốt để mở rộng! 💪' : 'hơi mỏng, nên tối ưu chi phí trước khi tăng tốc. ⚠️'}`,
+        `Your current margin is <b>${r.marginPct}%</b> – ${r.healthy ? 'a solid base to expand on! 💪' : 'a bit thin, optimize costs before accelerating. ⚠️'}`)}</p>
     </div>
     ${r.scenarios.map(sc => `
       <div class="clay-card p-4 mb-3">
@@ -3236,9 +3241,12 @@ function runAdvisorPro() {
           <p class="font-display font-bold text-deep-teal">${sc.label}</p>
           <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${riskClass[sc.risk]}">${riskLabel[sc.risk]}</span>
         </div>
-        <p class="text-sm text-deep-teal/80"><b>Nếu</b> điều chỉnh ngân sách marketing thành <b>${sc.newMkt}tr₫/tháng</b>,
+        <p class="text-sm text-deep-teal/80">${T(`<b>Nếu</b> điều chỉnh ngân sách marketing thành <b>${sc.newMkt}tr₫/tháng</b>,
         <b>thì</b> tăng trưởng dự kiến đạt <b>${sc.growth}%/quý</b> – doanh thu ~<b>${sc.newRevenue}tr₫</b>,
-        lợi nhuận ~<b class="${sc.newProfit >= 0 ? 'text-emerald-600' : 'text-orange-600'}">${sc.newProfit}tr₫/tháng</b>.</p>
+        lợi nhuận ~<b class="${sc.newProfit >= 0 ? 'text-emerald-600' : 'text-orange-600'}">${sc.newProfit}tr₫/tháng</b>.`,
+        `<b>If</b> you adjust the marketing budget to <b>${sc.newMkt}m₫/month</b>,
+        <b>then</b> projected growth reaches <b>${sc.growth}%/quarter</b> – revenue ~<b>${sc.newRevenue}m₫</b>,
+        profit ~<b class="${sc.newProfit >= 0 ? 'text-emerald-600' : 'text-orange-600'}">${sc.newProfit}m₫/month</b>.`)}</p>
       </div>`).join('')}
-    <p class="text-[11px] text-deep-teal/40 text-center mb-4">Mô hình dự báo đơn giản hóa cho mục đích học tập – không phải tư vấn tài chính.</p>`;
+    <p class="text-[11px] text-deep-teal/40 text-center mb-4">${T('Mô hình dự báo đơn giản hóa cho mục đích học tập – không phải tư vấn tài chính.', 'A simplified forecasting model for educational purposes – not financial advice.')}</p>`;
 }
