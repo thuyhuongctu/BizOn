@@ -1502,9 +1502,10 @@ function showRoundResult(r) {
 
 
 // ---------- Bản đồ chinh phục Việt Nam (theo tỉnh thành mới sau sáp nhập) ----------
-const VN_OUTLINE = '108.9,25.2 148.2,39.0 145.3,52.5 158.2,69.0 186.7,80.1 166.7,96.0 158.2,99.0 148.2,102.0 138.2,120.0 126.8,129.0 120.3,156.0 125.4,177.0 142.5,189.0 159.6,210.0 174.4,231.0 192.4,243.0 202.9,258.0 210.9,273.0 216.6,291.0 222.3,312.0 223.7,336.0 220.9,357.0 218.0,378.0 198.1,396.0 183.8,405.0 159.6,415.5 152.5,417.0 146.8,429.0 141.1,441.0 119.7,456.0 95.5,468.0 94.6,454.5 93.5,439.5 101.2,427.5 96.3,415.5 84.1,413.4 101.2,399.0 124.0,397.5 124.8,378.0 140.2,374.4 145.3,363.0 172.4,348.0 169.6,321.0 169.6,294.0 172.4,284.4 173.8,270.0 169.6,249.0 153.9,240.0 134.0,219.0 116.8,198.0 104.0,174.0 72.7,147.0 85.5,137.4 88.3,121.5 81.2,113.4 44.2,99.0 39.9,86.4 18.2,83.4 18.5,54.0 31.3,43.5 52.7,50.4 61.3,42.0 81.2,43.2 95.8,38.4 105.5,32.4 108.9,25.2';
-/* x,y: toạ độ trên bản đồ SVG của thẻ Chinh phục.
- * fx,fy: toạ độ tỉ lệ 0–1 trên ảnh bản đồ đất nặn dùng làm sàn Đấu trường. */
+/* x,y: toạ độ cũ dùng cho bản đồ SVG phẳng trước đây (nay không còn dùng,
+ * giữ lại phòng cần đối chiếu) – thẻ Chinh phục và màn Đấu trường (showArena)
+ * nay đều dùng chung ảnh bản đồ đất nặn 3D arena-vietnam-map-v2.webp, ghim
+ * theo fx,fy: toạ độ tỉ lệ 0–1 trên ảnh đó. */
 const CONQUEST_STOPS = [
   { name: 'Cần Thơ',          x: 108, y: 449, fx: .43, fy: .830, zone: 'Đồng bằng sông Cửu Long' },
   { name: 'TP. Hồ Chí Minh',  x: 150, y: 406, fx: .56, fy: .735, zone: 'Đông Nam Bộ' },
@@ -1531,35 +1532,22 @@ function renderConquest() {
   const cnt = $('cq-count');
   if (cnt) cnt.textContent = `🚩 ${wins}/${ROUNDS_TOTAL}`;
 
-  const journey = CONQUEST_STOPS.map((st, i) => `${i ? 'L' : 'M'}${st.x},${st.y}`).join(' ');
+  // Cùng ảnh bản đồ đất nặn 3D dùng ở màn Đấu trường (showArena), ghim theo
+  // tỉ lệ fx/fy đã có sẵn cho từng tỉnh dừng chân, để hai nơi nhất quán.
   const marks = CONQUEST_STOPS.map((st, i) => {
     const c = cq[i];
     const cur = !S.finished && i === Math.min(S.round, ROUNDS_TOTAL) - 1;
-    let m = `<circle cx="${st.x}" cy="${st.y}" r="6" fill="${c ? (c.win ? '#e8762d' : '#93a8ae') : 'rgba(0,102,135,.12)'}" stroke="#006687" stroke-width="2.5"${cur ? ' class="cq-pulse"' : ''}/>`;
-    if (c) m += `<text x="${st.x + 3}" y="${st.y - 9}" font-size="26">${c.win ? '🚩' : '🏴'}</text>`;
-    return m;
+    const bg = c ? (c.win ? 'bg-clay-orange' : 'bg-[#93a8ae]') : 'bg-white/70';
+    const icon = c ? (c.win ? '🚩' : '🏴') : '';
+    return `<div class="absolute" style="left:${st.fx * 100}%; top:${st.fy * 100}%; transform:translate(-50%,-50%); z-index:5">
+      <span class="flex items-center justify-center w-4 h-4 rounded-full border-2 border-white ${bg}${cur ? ' cq-pulse' : ''}" style="box-shadow:0 1px 4px rgba(0,0,0,.35)">${icon ? `<span style="font-size:9px; line-height:1">${icon}</span>` : ''}</span>
+    </div>`;
   }).join('');
-  box.innerHTML = `<svg viewBox="0 0 372 512" class="w-full h-auto" aria-label="Bản đồ chinh phục Việt Nam – Hoàng Sa & Trường Sa là của Việt Nam">
-    <g transform="scale(.85) translate(4,10)">
-      <polygon points="${VN_OUTLINE}" fill="rgba(0,102,135,.07)" stroke="#006687" stroke-width="2.4" stroke-linejoin="round"/>
-      <g transform="translate(108.9,25.2)">
-        <line x1="0" y1="0" x2="0" y2="-27" stroke="#8a6a4f" stroke-width="2.6"/>
-        <rect x="1" y="-27" width="21" height="13.5" rx="1.5" fill="#da251d"/>
-        <path fill="#ffce00" d="M11.5 -24.4 12.8 -21.1 16.2 -21.1 13.4 -19 14.5 -15.7 11.5 -17.8 8.5 -15.7 9.6 -19 6.8 -21.1 10.2 -21.1Z"/>
-      </g>
-      <text x="130" y="12" font-size="13" font-weight="800" fill="#006687" opacity=".75">Lũng Cú</text>
-      <g fill="#006687" opacity=".9">
-        <circle cx="287.8" cy="219" r="2.3"/><circle cx="299.2" cy="225" r="2.3"/><circle cx="307.8" cy="220.5" r="2.3"/><circle cx="319.2" cy="231" r="2.3"/><circle cx="299.2" cy="237" r="2.3"/><circle cx="290.7" cy="229.5" r="2.3"/><circle cx="312.1" cy="240" r="2.3"/>
-      </g>
-      <text x="304" y="208" font-size="13.5" font-weight="800" fill="#006687" opacity=".8" text-anchor="middle">Hoàng Sa</text>
-      <g fill="#006687" opacity=".9">
-        <circle cx="296.4" cy="384" r="2.1"/><circle cx="322" cy="402" r="2.1"/><circle cx="350.5" cy="393" r="2.1"/><circle cx="364.8" cy="414" r="2.1"/><circle cx="339.2" cy="432" r="2.1"/><circle cx="313.5" cy="438" r="2.1"/><circle cx="379" cy="429" r="2.1"/><circle cx="353.4" cy="462" r="2.1"/><circle cx="324.9" cy="474" r="2.1"/><circle cx="367.7" cy="489" r="2.1"/><circle cx="290.7" cy="420" r="2.1"/><circle cx="393.3" cy="447" r="2.1"/>
-      </g>
-      <text x="345" y="374" font-size="13.5" font-weight="800" fill="#006687" opacity=".8" text-anchor="middle">Trường Sa</text>
-      <path d="${journey}" fill="none" stroke="#e8762d" stroke-width="2" stroke-dasharray="5 6" stroke-linecap="round" opacity=".55"/>
+  box.innerHTML = `
+    <div class="relative w-full mx-auto rounded-2xl overflow-hidden shadow-clay" style="aspect-ratio:768/1376">
+      <img src="assets/illustrations/arena-vietnam-map-v2.webp" alt="Bản đồ chinh phục Việt Nam đất sét 3D – Hoàng Sa & Trường Sa là của Việt Nam" class="w-full h-full object-contain" style="background:#062b3a">
       ${marks}
-    </g>
-  </svg>`;
+    </div>`;
 
   const list = $('conquest-list');
   if (list) list.innerHTML = CONQUEST_STOPS.map((st, i) => {
