@@ -2221,7 +2221,7 @@ function renderRivalCostReport(body) {
 // ---------- 🏁 Tổng kết mùa giải – báo cáo năm kiểu Stitch: hero, xếp hạng, thành tựu ----------
 function renderSeasonReport(body) {
   if (!S.history.length) {
-    body.innerHTML = '<div class="clay-card p-8 text-center text-sm text-deep-teal/50">Chưa có dữ liệu – hãy hoàn thành vòng đầu tiên!</div>';
+    body.innerHTML = `<div class="clay-card p-8 text-center text-sm text-deep-teal/50">${T('Chưa có dữ liệu – hãy hoàn thành vòng đầu tiên!', 'No data yet – complete the first round!')}</div>`;
     return;
   }
   const rounds = S.history;
@@ -2256,43 +2256,46 @@ function renderSeasonReport(body) {
 
   const achUnlocked = (S.achievements || []).map(id => ACHIEVEMENTS_LIST().find(a => a.id === id)).filter(Boolean);
   const verdict = champion
-    ? `Mùa giải trong mơ! Đội dẫn đầu thị phần chung cuộc với ${shareLast.toFixed(1)}% – vượt cả 3 tập đoàn AI${totalProfit > 0 ? `, kèm lợi nhuận tích lũy ${money(Math.round(totalProfit))}` : `. Lợi nhuận còn âm ${money(Math.abs(Math.round(totalProfit)))}, nhưng vị thế thị trường chính là bàn đạp cho mùa sau`}. Hãy chụp lại báo cáo này làm kỷ niệm nhé!`
+    ? T(`Mùa giải trong mơ! Đội dẫn đầu thị phần chung cuộc với ${shareLast.toFixed(1)}% – vượt cả 3 tập đoàn AI${totalProfit > 0 ? `, kèm lợi nhuận tích lũy ${money(Math.round(totalProfit))}` : `. Lợi nhuận còn âm ${money(Math.abs(Math.round(totalProfit)))}, nhưng vị thế thị trường chính là bàn đạp cho mùa sau`}. Hãy chụp lại báo cáo này làm kỷ niệm nhé!`,
+        `A dream season! Your team leads final market share at ${shareLast.toFixed(1)}% – beating all 3 AI rivals${totalProfit > 0 ? `, with cumulative profit of ${money(Math.round(totalProfit))}` : `. Profit is still negative at ${money(Math.abs(Math.round(totalProfit)))}, but this market position is a springboard for next season`}. Screenshot this report as a keepsake!`)
     : totalProfit > 0
-      ? `Kết thúc mùa ở hạng ${myRank}/4 với lợi nhuận dương ${money(Math.round(totalProfit))} – nền tảng rất tốt. Khoảng cách với ${ranking[0].name} nằm ở ${growth < 5 ? 'tốc độ chiếm thị phần: hãy mạnh tay marketing sớm hơn ở mùa sau' : 'biên lợi nhuận: xem lại cấu trúc chi phí tab CVP'}.`
-      : `Mùa giải lỗ ${money(Math.abs(Math.round(totalProfit)))} – nhưng đó là bài học đắt giá nhất của khởi nghiệp. Mở tab 🕵️ Chi phí đối thủ xem họ chi thế nào, rồi chơi lại mùa mới: người thắng là người đứng dậy nhanh nhất!`;
+      ? T(`Kết thúc mùa ở hạng ${myRank}/4 với lợi nhuận dương ${money(Math.round(totalProfit))} – nền tảng rất tốt. Khoảng cách với ${ranking[0].name} nằm ở ${growth < 5 ? 'tốc độ chiếm thị phần: hãy mạnh tay marketing sớm hơn ở mùa sau' : 'biên lợi nhuận: xem lại cấu trúc chi phí tab CVP'}.`,
+          `Finished the season at rank ${myRank}/4 with a positive profit of ${money(Math.round(totalProfit))} – a solid foundation. The gap with ${ranking[0].name} is in ${growth < 5 ? 'market-share pace: push marketing harder earlier next season' : 'profit margin: revisit your cost structure in the CVP tab'}.`)
+      : T(`Mùa giải lỗ ${money(Math.abs(Math.round(totalProfit)))} – nhưng đó là bài học đắt giá nhất của khởi nghiệp. Mở tab 🕵️ Chi phí đối thủ xem họ chi thế nào, rồi chơi lại mùa mới: người thắng là người đứng dậy nhanh nhất!`,
+          `A season loss of ${money(Math.abs(Math.round(totalProfit)))} – but that's the most valuable lesson in entrepreneurship. Open the 🕵️ Rival Costs tab to see how they spend, then play a new season: the winner is whoever gets back up the fastest!`);
 
   body.innerHTML = `
     ${S.finished ? `<div class="clay-card overflow-hidden mb-3"><img src="assets/illustrations/game/celebrate-win.webp" alt="Đội BizOn ăn mừng hoàn thành ván mô phỏng" class="w-full" style="display:block"></div>` : ''}
     <div class="clay-card p-5 mb-3 text-center text-white" style="background:linear-gradient(135deg,#0e3d4d 0%,#006687 100%)">
-      <p class="text-[11px] font-bold text-white/60 uppercase tracking-wider">🏁 ${S.finished ? 'Báo cáo Tổng kết mùa giải' : 'Tổng kết tạm thời – sau vòng ' + last.round + '/' + ROUNDS_TOTAL}</p>
-      <p class="font-display font-extrabold text-3xl mt-1">${champion && S.finished ? '👑 VÔ ĐỊCH SÀN ĐẤU' : 'Hạng ' + myRank + '/4 toàn sàn'}</p>
-      <p class="text-xs text-white/70 mt-0.5">${S.profile.teamName} · ${rounds.length} vòng thi đấu</p>
+      <p class="text-[11px] font-bold text-white/60 uppercase tracking-wider">🏁 ${S.finished ? T('Báo cáo Tổng kết mùa giải', 'Season Summary Report') : T(`Tổng kết tạm thời – sau vòng ${last.round}/${ROUNDS_TOTAL}`, `Interim summary – after round ${last.round}/${ROUNDS_TOTAL}`)}</p>
+      <p class="font-display font-extrabold text-3xl mt-1">${champion && S.finished ? T('👑 VÔ ĐỊCH SÀN ĐẤU', '👑 ARENA CHAMPION') : T(`Hạng ${myRank}/4 toàn sàn`, `Rank ${myRank}/4 overall`)}</p>
+      <p class="text-xs text-white/70 mt-0.5">${S.profile.teamName} · ${T(`${rounds.length} vòng thi đấu`, `${rounds.length} rounds played`)}</p>
       <div class="grid grid-cols-3 gap-2 mt-4 text-left">
-        <div class="bg-white/10 rounded-2xl p-2.5"><p class="text-[9px] uppercase font-bold text-white/50">Tổng doanh thu</p><p class="font-display font-extrabold text-sm">${money(Math.round(totalRev))}</p></div>
-        <div class="bg-white/10 rounded-2xl p-2.5"><p class="text-[9px] uppercase font-bold text-white/50">Lợi nhuận tích lũy</p><p class="font-display font-extrabold text-sm ${totalProfit >= 0 ? 'text-clay-gold' : 'text-orange-300'}">${money(Math.round(totalProfit))}</p></div>
-        <div class="bg-white/10 rounded-2xl p-2.5"><p class="text-[9px] uppercase font-bold text-white/50">Uy tín thương hiệu</p><p class="font-display font-extrabold text-sm">${brandScore}/10</p></div>
+        <div class="bg-white/10 rounded-2xl p-2.5"><p class="text-[9px] uppercase font-bold text-white/50">${T('Tổng doanh thu', 'Total revenue')}</p><p class="font-display font-extrabold text-sm">${money(Math.round(totalRev))}</p></div>
+        <div class="bg-white/10 rounded-2xl p-2.5"><p class="text-[9px] uppercase font-bold text-white/50">${T('Lợi nhuận tích lũy', 'Cumulative profit')}</p><p class="font-display font-extrabold text-sm ${totalProfit >= 0 ? 'text-clay-gold' : 'text-orange-300'}">${money(Math.round(totalProfit))}</p></div>
+        <div class="bg-white/10 rounded-2xl p-2.5"><p class="text-[9px] uppercase font-bold text-white/50">${T('Uy tín thương hiệu', 'Brand reputation')}</p><p class="font-display font-extrabold text-sm">${brandScore}/10</p></div>
       </div>
     </div>
     <div class="clay-card p-5 mb-3">
-      <h3 class="font-display font-bold text-deep-teal text-sm mb-1">🏆 Bảng xếp hạng chung cuộc</h3>
-      <p class="text-[11px] text-deep-teal/55 mb-3">Xếp theo thị phần chung cuộc – thước đo chiến thắng của sàn đấu · tăng trưởng = thay đổi so với vòng 1</p>
+      <h3 class="font-display font-bold text-deep-teal text-sm mb-1">${T('🏆 Bảng xếp hạng chung cuộc', '🏆 Final Leaderboard')}</h3>
+      <p class="text-[11px] text-deep-teal/55 mb-3">${T('Xếp theo thị phần chung cuộc – thước đo chiến thắng của sàn đấu · tăng trưởng = thay đổi so với vòng 1', "Ranked by final market share – the arena's measure of victory · growth = change since round 1")}</p>
       ${ranking.map((x, i) => `
       <div class="flex items-center gap-2.5 py-2 border-b border-surface-bright last:border-0 ${x.me ? 'bg-clay-gold/10 rounded-xl px-2 -mx-2' : ''}">
         <span class="w-6 text-center text-base">${['🥇', '🥈', '🥉', '4️⃣'][i]}</span>
         ${x.img ? `<img src="${x.img}" class="w-8 h-8 rounded-full object-cover object-top border ${x.me ? 'border-clay-gold' : 'border-surface-bright'}">` : ''}
         <div class="flex-1 min-w-0">
           <p class="text-xs font-extrabold ${x.me ? 'text-primary' : 'text-deep-teal/80'} truncate">${x.me ? '🏺 ' : ''}${x.name}</p>
-          <p class="text-[10px] text-deep-teal/50 font-semibold">Thị phần ${x.share.toFixed(1)}% · <span class="${x.growth >= 0 ? 'text-emerald-600' : 'text-orange-600'}">${x.growth >= 0 ? '▲' : '▼'} ${Math.abs(x.growth)} điểm</span></p>
+          <p class="text-[10px] text-deep-teal/50 font-semibold">${T('Thị phần', 'Market share')} ${x.share.toFixed(1)}% · <span class="${x.growth >= 0 ? 'text-emerald-600' : 'text-orange-600'}">${x.growth >= 0 ? '▲' : '▼'} ${T(`${Math.abs(x.growth)} điểm`, `${Math.abs(x.growth)} pts`)}</span></p>
         </div>
         <div class="text-right shrink-0">
           <p class="text-xs font-display font-extrabold ${x.profit >= 0 ? 'text-deep-teal' : 'text-orange-600'}">${money(x.profit)}</p>
           <p class="text-[10px] font-bold text-deep-teal/50">ROI ${x.roi}%</p>
         </div>
       </div>`).join('')}
-      <p class="text-[10px] text-deep-teal/45 font-semibold mt-2">💡 Lợi nhuận đối thủ AI trông cao vì họ không gánh chi phí nhân sự, đào tạo và R&D như đội thật – xem tab 🕵️ Chi phí đối thủ để hiểu cấu trúc chi của họ.</p>
+      <p class="text-[10px] text-deep-teal/45 font-semibold mt-2">${T('💡 Lợi nhuận đối thủ AI trông cao vì họ không gánh chi phí nhân sự, đào tạo và R&D như đội thật – xem tab 🕵️ Chi phí đối thủ để hiểu cấu trúc chi của họ.', "💡 AI rivals' profit looks high because they don't carry staffing, training, and R&D costs like a real team – see the 🕵️ Rival Costs tab to understand their cost structure.")}</p>
     </div>
     <div class="clay-card p-5 mb-3">
-      <h3 class="font-display font-bold text-deep-teal text-sm mb-3">📊 Doanh thu thực tế vs Mục tiêu (+8%/vòng)</h3>
+      <h3 class="font-display font-bold text-deep-teal text-sm mb-3">${T('📊 Doanh thu thực tế vs Mục tiêu (+8%/vòng)', '📊 Actual revenue vs Target (+8%/round)')}</h3>
       <div class="flex items-end gap-2 h-32">
         ${rounds.map((r, i) => `
         <div class="flex-1 h-full flex items-end justify-center gap-0.5">
@@ -2302,13 +2305,13 @@ function renderSeasonReport(body) {
       </div>
       <div class="flex gap-2 mt-1">${rounds.map(r => `<p class="flex-1 text-center text-[10px] font-bold text-deep-teal/60">V${r.round}</p>`).join('')}</div>
       <div class="flex items-center gap-4 mt-2 justify-center">
-        <span class="flex items-center gap-1 text-[10px] font-bold text-deep-teal/60"><span class="w-2.5 h-2.5 rounded-full bg-primary inline-block"></span> Thực tế</span>
-        <span class="flex items-center gap-1 text-[10px] font-bold text-deep-teal/60"><span class="w-2.5 h-2.5 rounded-full bg-slate-300 inline-block"></span> Mục tiêu</span>
+        <span class="flex items-center gap-1 text-[10px] font-bold text-deep-teal/60"><span class="w-2.5 h-2.5 rounded-full bg-primary inline-block"></span> ${T('Thực tế', 'Actual')}</span>
+        <span class="flex items-center gap-1 text-[10px] font-bold text-deep-teal/60"><span class="w-2.5 h-2.5 rounded-full bg-slate-300 inline-block"></span> ${T('Mục tiêu', 'Target')}</span>
       </div>
     </div>
     ${achUnlocked.length ? `
     <div class="clay-card p-5 mb-3">
-      <h3 class="font-display font-bold text-deep-teal text-sm mb-3">🎖️ Thành tựu chủ chốt (${achUnlocked.length}/${ACHIEVEMENTS_LIST().length})</h3>
+      <h3 class="font-display font-bold text-deep-teal text-sm mb-3">${T(`🎖️ Thành tựu chủ chốt (${achUnlocked.length}/${ACHIEVEMENTS_LIST().length})`, `🎖️ Key achievements (${achUnlocked.length}/${ACHIEVEMENTS_LIST().length})`)}</h3>
       <div class="grid grid-cols-2 gap-2">
         ${achUnlocked.slice(0, 6).map(a => `
         <div class="clay-sunken rounded-2xl p-2.5 flex items-center gap-2">
@@ -2320,24 +2323,25 @@ function renderSeasonReport(body) {
     ${S.finished && isTrial() ? `
     <div class="clay-card p-5 mb-3 text-center border-2 border-dashed border-clay-gold/50">
       <p class="text-3xl">🎓</p>
-      <p class="font-display font-extrabold text-deep-teal text-sm mt-1">Giấy chứng nhận dành cho ván có Mã lớp</p>
-      <p class="text-xs text-deep-teal/60 mt-1.5 max-w-xs mx-auto">Bạn vừa hoàn thành ván <b>chơi thử</b> nên chưa được cấp chứng nhận. Xin Mã lớp từ giảng viên rồi chơi lại một ván – kết quả sẽ vào bảng xếp hạng lớp và chứng nhận được cấp kèm tên lớp.</p>
-      <a href="lop-hoc.html" class="clay-btn inline-block bg-clay-gold text-deep-teal font-display font-extrabold px-4 py-2 text-[11px] mt-3">📘 Cách tổ chức lớp học</a>
+      <p class="font-display font-extrabold text-deep-teal text-sm mt-1">${T('Giấy chứng nhận dành cho ván có Mã lớp', 'Certificates are for sessions with a Class ID')}</p>
+      <p class="text-xs text-deep-teal/60 mt-1.5 max-w-xs mx-auto">${T('Bạn vừa hoàn thành ván <b>chơi thử</b> nên chưa được cấp chứng nhận. Xin Mã lớp từ giảng viên rồi chơi lại một ván – kết quả sẽ vào bảng xếp hạng lớp và chứng nhận được cấp kèm tên lớp.',
+        "You just completed a <b>trial</b> session, so no certificate is issued. Get a Class ID from your instructor and play again – results will count toward the class leaderboard and the certificate will include the class name.")}</p>
+      <a href="lop-hoc.html" class="clay-btn inline-block bg-clay-gold text-deep-teal font-display font-extrabold px-4 py-2 text-[11px] mt-3">${T('📘 Cách tổ chức lớp học', '📘 How to set up a class')}</a>
     </div>` : ''}
     ${S.finished && !isTrial() ? `
     <style>@keyframes fwExplode{to{transform:translate(var(--tx),var(--ty)) scale(0);opacity:0}}</style>
     <div class="clay-card p-1.5 mb-3">
       <div class="rounded-[20px] p-5 text-center relative overflow-hidden" style="background:linear-gradient(180deg,#fffdf6,#f4faff);border:3px solid rgba(253,161,39,.55);box-shadow:inset 0 0 0 1px rgba(0,102,135,.18)">
-        <p class="text-[10px] font-extrabold uppercase tracking-widest text-deep-teal/50">🎓 Giấy chứng nhận hoàn thành</p>
+        <p class="text-[10px] font-extrabold uppercase tracking-widest text-deep-teal/50">${T('🎓 Giấy chứng nhận hoàn thành', '🎓 Certificate of Completion')}</p>
         <p class="font-display font-extrabold text-deep-teal text-lg leading-tight mt-0.5">CERTIFICATE OF COMPLETION</p>
-        <p class="text-[11px] text-deep-teal/60 mt-3 italic">Trao cho</p>
+        <p class="text-[11px] text-deep-teal/60 mt-3 italic">${T('Trao cho', 'Awarded to')}</p>
         <p class="font-display font-extrabold text-primary text-2xl mt-0.5 px-6 pb-1.5 border-b-2 border-clay-gold/40 inline-block">${S.profile.teamName}</p>
-        ${S.profile.classId ? `<p class="text-[10px] font-extrabold text-deep-teal/60 mt-1.5">Lớp / Mã lớp: ${S.profile.classId}</p>` : ''}
-        <p class="text-[11px] text-deep-teal/70 mt-2.5 max-w-xs mx-auto">đã hoàn thành trọn vẹn ${rounds.length} vòng mô phỏng kinh doanh <b>«BizOn Bật Nghiệp»</b>${champion ? ' với ngôi vị Quán quân sàn đấu' : ''}</p>
+        ${S.profile.classId ? `<p class="text-[10px] font-extrabold text-deep-teal/60 mt-1.5">${T('Lớp / Mã lớp', 'Class / Class ID')}: ${S.profile.classId}</p>` : ''}
+        <p class="text-[11px] text-deep-teal/70 mt-2.5 max-w-xs mx-auto">${T(`đã hoàn thành trọn vẹn ${rounds.length} vòng mô phỏng kinh doanh <b>«BizOn Bật Nghiệp»</b>${champion ? ' với ngôi vị Quán quân sàn đấu' : ''}`, `has fully completed ${rounds.length} rounds of the <b>«BizOn Bật Nghiệp»</b> business simulation${champion ? ' as Arena Champion' : ''}`)}</p>
         <div class="grid grid-cols-3 gap-2 mt-3.5">
-          <div class="clay-sunken rounded-2xl p-2"><p class="text-[9px] uppercase font-bold text-deep-teal/50">Hạng chung cuộc</p><p class="font-display font-extrabold text-primary text-base">${champion ? '👑 #1' : '#' + myRank}/4</p></div>
-          <div class="clay-sunken rounded-2xl p-2"><p class="text-[9px] uppercase font-bold text-deep-teal/50">Thị phần (%)</p><p class="font-display font-extrabold text-primary text-base">${shareLast.toFixed(1)}%</p></div>
-          <div class="clay-sunken rounded-2xl p-2"><p class="text-[9px] uppercase font-bold text-deep-teal/50">Lợi nhuận</p><p class="font-display font-extrabold ${totalProfit >= 0 ? 'text-primary' : 'text-orange-600'} text-base">${money(Math.round(totalProfit))}</p></div>
+          <div class="clay-sunken rounded-2xl p-2"><p class="text-[9px] uppercase font-bold text-deep-teal/50">${T('Hạng chung cuộc', 'Final rank')}</p><p class="font-display font-extrabold text-primary text-base">${champion ? '👑 #1' : '#' + myRank}/4</p></div>
+          <div class="clay-sunken rounded-2xl p-2"><p class="text-[9px] uppercase font-bold text-deep-teal/50">${T('Thị phần (%)', 'Market share (%)')}</p><p class="font-display font-extrabold text-primary text-base">${shareLast.toFixed(1)}%</p></div>
+          <div class="clay-sunken rounded-2xl p-2"><p class="text-[9px] uppercase font-bold text-deep-teal/50">${T('Lợi nhuận', 'Profit')}</p><p class="font-display font-extrabold ${totalProfit >= 0 ? 'text-primary' : 'text-orange-600'} text-base">${money(Math.round(totalProfit))}</p></div>
         </div>
         <div class="flex items-end justify-between gap-2 mt-5">
           <div class="text-center flex-1">
@@ -2356,24 +2360,24 @@ function renderSeasonReport(body) {
             <p class="text-[8px] text-deep-teal/50 font-bold">Co-founder &amp; Chief Academic Advisor</p>
           </div>
         </div>
-        <p class="text-[9px] text-deep-teal/45 font-bold mt-3">Cấp ngày ${new Date().toLocaleDateString('vi-VN')} · thuyhuongctu.github.io/BizOn</p>
+        <p class="text-[9px] text-deep-teal/45 font-bold mt-3">${T(`Cấp ngày ${new Date().toLocaleDateString('vi-VN')}`, `Issued ${new Date().toLocaleDateString('en-US')}`)} · thuyhuongctu.github.io/BizOn</p>
         <div class="flex gap-2 justify-center mt-3"><button onclick="downloadCertificate('vi')" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-4 py-2 text-[11px]">📥 Tải chứng nhận</button><button onclick="downloadCertificate('en')" class="clay-btn bg-white text-primary border border-primary/25 font-display font-extrabold px-4 py-2 text-[11px]">📥 Certificate (EN)</button></div>
       </div>
     </div>` : ''}
     ${S.finished ? `
     <div class="clay-card p-5 mb-3 text-center overflow-hidden relative" style="background:linear-gradient(165deg,#033337 0%,#02444d 55%,#006687 100%)">
       <img src="assets/illustrations/globe-trade.webp" alt="" aria-hidden="true" class="absolute -right-6 -bottom-6 w-32 opacity-25 pointer-events-none">
-      <p class="text-[10px] font-extrabold uppercase tracking-widest text-white/55 relative">Chặng tiếp theo</p>
-      <p class="font-display font-extrabold text-white text-lg mt-1 relative">Chinh phục xong Việt Nam.<br>Bạn có muốn ra biển lớn?</p>
-      <p class="text-[12px] text-white/70 mt-2 max-w-xs mx-auto relative">«BizOn Go Global» – chọn 1 trong 7 thị trường quốc tế, đàm phán với đối tác bản địa và thử sức 4 phương thức thâm nhập.</p>
+      <p class="text-[10px] font-extrabold uppercase tracking-widest text-white/55 relative">${T('Chặng tiếp theo', 'Next stop')}</p>
+      <p class="font-display font-extrabold text-white text-lg mt-1 relative">${T('Chinh phục xong Việt Nam.<br>Bạn có muốn ra biển lớn?', 'Vietnam conquered.<br>Ready for the open seas?')}</p>
+      <p class="text-[12px] text-white/70 mt-2 max-w-xs mx-auto relative">${T('«BizOn Go Global» – chọn 1 trong 7 thị trường quốc tế, đàm phán với đối tác bản địa và thử sức 4 phương thức thâm nhập.', '«BizOn Go Global» – pick 1 of 7 international markets, negotiate with local partners, and try 4 market-entry modes.')}</p>
       <div class="flex gap-2 justify-center mt-4 relative">
-        <a href="global.html" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-5 py-2.5 text-xs">🌏 Ra biển lớn →</a>
-        <a href="brand-passport.html" class="clay-btn bg-white/10 border border-white/25 text-white font-display font-extrabold px-4 py-2.5 text-xs">🛂 Hộ Chiếu Thương Hiệu</a>
+        <a href="global.html" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-5 py-2.5 text-xs">${T('🌏 Ra biển lớn →', '🌏 Go global →')}</a>
+        <a href="brand-passport.html" class="clay-btn bg-white/10 border border-white/25 text-white font-display font-extrabold px-4 py-2.5 text-xs">${T('🛂 Hộ Chiếu Thương Hiệu', '🛂 Brand Passport')}</a>
       </div>
     </div>` : ''}
     <div class="clay-card p-4 bg-primary-container/10 flex gap-3 items-start">
       <img src="assets/character/lumina-vest-thumbsup.webp" alt="Mentor Hương" class="w-10 h-10 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 10%">
-      <div><p class="font-display font-bold text-primary text-sm">Mentor Hương · Tổng kết mùa giải</p>
+      <div><p class="font-display font-bold text-primary text-sm">${T('Mentor Hương · Tổng kết mùa giải', 'Mentor Hương · Season Wrap-Up')}</p>
       <p class="text-xs text-deep-teal/80 italic mt-0.5">"${verdict}"</p></div>
     </div>`;
   S._cert = { team: S.profile.teamName, classId: S.profile.classId || '', rank: myRank, champion, share: shareLast.toFixed(1), profit: Math.round(totalProfit), rounds: rounds.length };
