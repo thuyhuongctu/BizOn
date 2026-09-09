@@ -4134,6 +4134,10 @@
 "(optional)"
 ],
 [
+"Mã lớp học – Class ID",
+"Class ID"
+],
+[
 "Bỏ trống vẫn chơi được trọn 6 vòng ở chế độ",
 "Leave it blank and you can still play all 6 rounds in"
 ],
