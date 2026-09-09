@@ -179,10 +179,13 @@ security definer
 stable
 set search_path = public
 as $$
+  with auth as materialized (
+    select public.bizon_check_key_gate(p_key) as ok
+  )
   select t.id, t.team_alias, t.session_id, t.game_seed, t.trace_json,
          t.consented_at, t.retention_until, t.updated_at
-  from public.bp_learning_traces t
-  where public.bizon_check_key(p_key)
+  from public.bp_learning_traces t, auth
+  where auth.ok
     and t.class_code = upper(trim(p_class_code))
     and t.retention_until > now()
   order by t.updated_at desc;

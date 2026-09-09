@@ -103,7 +103,25 @@
 
   /* Lưu & tải lại tiến trình theo đội (cross-device) – để đội đổi máy ở
    * phòng máy dùng chung vẫn tiếp tục đúng chỗ đang chơi dở. Cùng điều
-   * kiện với submitRound: chỉ đội có Mã lớp mới đồng bộ lên máy chủ. */
+   * kiện với submitRound: chỉ đội có Mã lớp mới đồng bộ lên máy chủ.
+   *
+   * Chống đội khác đoán (class_code, team_name) để đọc/ghi đè tiến trình
+   * đội mình: mỗi đội tự sinh 1 token ngẫu nhiên lưu trong localStorage
+   * ngay lần lưu đầu tiên, sau đó bắt buộc gửi kèm token này cho cả đọc
+   * lẫn ghi. Server chỉ giữ bản băm SHA-256 của token (xem migration
+   * team_saves.sql), không giữ token gốc. */
+  function saveToken(classCode, teamName) {
+    const k = 'bizon-save-token:' + classCode + ':' + teamName;
+    try {
+      let t = localStorage.getItem(k);
+      if (!t) {
+        t = [...crypto.getRandomValues(new Uint8Array(24))].map(b => b.toString(16).padStart(2, '0')).join('');
+        localStorage.setItem(k, t);
+      }
+      return t;
+    } catch (e) { return null; }
+  }
+
   function teamKey(S) {
     const classCode = ((S.profile && S.profile.classId) || '').trim();
     const teamName = ((S.profile && S.profile.teamName) || '').trim();
@@ -119,7 +137,7 @@
     const key = teamKey(S);
     if (!key) return;
     try {
-      await rpc('upsert_team_save', { p_class_code: key.classCode, p_team_name: key.teamName, p_state: S });
+      await rpc('upsert_team_save', { p_class_code: key.classCode, p_team_name: key.teamName, p_state: S, p_token: saveToken(key.classCode, key.teamName) });
     } catch (e) { /* im lặng – thử lại ở lần lưu tiếp theo */ }
   }
 
@@ -143,7 +161,7 @@
     const team = String(teamName || '').trim();
     if (!classCode || !team || classCode === 'DEMO-2026') return null;
     try {
-      const rows = await rpc('get_team_save', { p_class_code: classCode, p_team_name: team });
+      const rows = await rpc('get_team_save', { p_class_code: classCode, p_team_name: team, p_token: saveToken(classCode, team) });
       return Array.isArray(rows) && rows.length ? rows[0] : null; // {state_json, updated_at}
     } catch (e) { return null; }
   }
@@ -159,7 +177,7 @@
           const c = cfg();
           navigator.sendBeacon(
             c.url.replace(/\/$/, '') + '/rest/v1/rpc/upsert_team_save?apikey=' + encodeURIComponent(c.anonKey),
-            new Blob([JSON.stringify({ p_class_code: key.classCode, p_team_name: key.teamName, p_state: pendingState })], { type: 'application/json' }),
+            new Blob([JSON.stringify({ p_class_code: key.classCode, p_team_name: key.teamName, p_state: pendingState, p_token: saveToken(key.classCode, key.teamName) })], { type: 'application/json' }),
           );
         } catch (e) { /* im lặng */ }
       }

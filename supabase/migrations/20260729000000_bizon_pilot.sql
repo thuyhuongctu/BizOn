@@ -31,6 +31,15 @@ create policy "sinh vien chi duoc nop ket qua"
 
 -- KHÔNG tạo policy SELECT/UPDATE/DELETE cho anon → mặc định bị chặn.
 
+-- ⚠️ Cơ chế "tự giác": ai cũng có thể gọi thẳng REST API để nộp một
+-- result_json tự bịa (không thật sự chơi qua game) – result_hash chỉ là
+-- SHA-256 tính trên máy sinh viên, không phải chữ ký có khóa bí mật nên
+-- không chống được việc này, chỉ giúp phát hiện SỬA TAY sau khi đã nộp.
+-- Nếu điểm số ở đây dùng để tính điểm chính thức, giảng viên nên coi đây
+-- là dữ liệu tự khai báo (như bài tập về nhà), không phải bằng chứng đã
+-- chơi thật. Muốn chống giả mạo triệt để cần server tự chấm lại (dựng
+-- lại engine mô phỏng phía server) – ngoài phạm vi bản pilot mỏng này.
+
 -- Ghi chú vận hành:
 --  • Một đội chơi lại vòng sẽ tạo dòng nộp mới – khi chấm lấy dòng
 --    created_at mới nhất của mỗi (class_code, team_name, round_number).
