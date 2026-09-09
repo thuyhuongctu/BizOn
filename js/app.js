@@ -118,6 +118,8 @@ window.addEventListener('bizon:langchange', () => {
     const activeTab = document.querySelector('main .screen.active');
     if (activeTab && activeTab.id === 'tab-reports') showReport(currentReport);
   }
+  const openManual = document.getElementById('manual-overlay');
+  if (openManual) showManual(openManual.dataset.sec || undefined);
 });
 
 function pickRole(id) {
@@ -347,109 +349,111 @@ function showLevelUp(level) {
 }
 
 // ---------- Sổ tay hướng dẫn (User Manual – thiết kế Stitch) ----------
-const MANUAL = {
-  start: { icon: '🚀', name: 'Bắt đầu', html: `
-    <img src="assets/illustrations/game/team-portrait.webp" alt="Đội ngũ đất sét BizOn" class="w-full h-36 object-cover rounded-2xl mb-4">
-    <p class="text-sm text-deep-teal/75 mb-4">Chào mừng bạn đến với BizOn – môi trường mô phỏng kinh doanh 3D. ⏱️ Thời lượng: cả ván 6 vòng ≈ 30–45 phút (mỗi vòng 5–7 phút gồm đọc biến cố, họp đội, chốt quyết định và xem đấu trường); bản Go Global 4 quý ≈ 10–15 phút. Ba bước thiết lập:</p>
-    ${[['1', 'Lập đội & chọn vai trò', 'Đăng nhập với tên đội (cũng là tên doanh nghiệp của bạn), Class ID (nếu học trên lớp) và chọn vai trò CEO · CFO · CMO · COO · SEC. Doanh nghiệp là xưởng đồ chơi đất sét – sản phẩm chủ lực «Bộ linh vật đất sét Việt».'],
-       ['2', 'Nhận vốn khởi điểm', 'Mỗi đội bắt đầu với 500tr₫ vốn giảng viên cấp. Giữ ít nhất 15% dự phòng cho biến cố!'],
-       ['3', 'Vào vòng 1', 'Đọc biến cố thị trường, hỏi Lumina AI, rồi vào Quyết định để chốt kế hoạch đầu tiên.']].map(([n, t, d]) => `
+function MANUAL() { return {
+  start: { icon: '🚀', name: T('Bắt đầu', 'Getting Started'), html: `
+    <img src="assets/illustrations/game/team-portrait.webp" alt="${T('Đội ngũ đất sét BizOn', 'The BizOn clay-style team')}" class="w-full h-36 object-cover rounded-2xl mb-4">
+    <p class="text-sm text-deep-teal/75 mb-4">${T('Chào mừng bạn đến với BizOn – môi trường mô phỏng kinh doanh 3D. ⏱️ Thời lượng: cả ván 6 vòng ≈ 30–45 phút (mỗi vòng 5–7 phút gồm đọc biến cố, họp đội, chốt quyết định và xem đấu trường); bản Go Global 4 quý ≈ 10–15 phút. Ba bước thiết lập:', 'Welcome to BizOn – a 3D business simulation. ⏱️ Duration: a full 6-round match ≈ 30–45 minutes (5–7 minutes per round: read the event, team huddle, lock in decisions, watch the arena); the 4-quarter Go Global version ≈ 10–15 minutes. Three setup steps:')}</p>
+    ${[['1', T('Lập đội & chọn vai trò', 'Form your team & pick a role'), T('Đăng nhập với tên đội (cũng là tên doanh nghiệp của bạn), Class ID (nếu học trên lớp) và chọn vai trò CEO · CFO · CMO · COO · SEC. Doanh nghiệp là xưởng đồ chơi đất sét – sản phẩm chủ lực «Bộ linh vật đất sét Việt».', 'Sign in with your team name (also your company name), a Class ID if you\'re in a class, and pick a role: CEO · CFO · CMO · COO · SEC. Your company is a handcraft clay-toy workshop – flagship product: the "Vietnamese Clay Mascot Set".')],
+       ['2', T('Nhận vốn khởi điểm', 'Get your starting capital'), T('Mỗi đội bắt đầu với 500tr₫ vốn giảng viên cấp. Giữ ít nhất 15% dự phòng cho biến cố!', 'Every team starts with 500m₫ in instructor-issued capital. Keep at least 15% in reserve for events!')],
+       ['3', T('Vào vòng 1', 'Enter Round 1'), T('Đọc biến cố thị trường, hỏi Lumina AI, rồi vào Quyết định để chốt kế hoạch đầu tiên.', 'Read the market event, ask Lumina AI, then go to Decisions to lock in your first plan.')]].map(([n, t, d]) => `
     <div class="clay-card p-4 mb-3 flex gap-3.5 items-start"><span class="w-9 h-9 shrink-0 rounded-full bg-primary-container/30 text-primary font-display font-extrabold flex items-center justify-center">${n}</span>
       <div><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p></div></div>`).join('')}` },
-  ai: { icon: '⚔️', name: 'Đối thủ AI', html: `
-    <p class="text-sm text-deep-teal/75 mb-4">Ba đối thủ AI mô phỏng ba chiến lược kinh điển. Mỗi vòng, chúng tự định giá và chi marketing quanh mức đặc trưng (dao động ±12%), rồi cạnh tranh giành thị phần bằng đúng công thức sức hút của bạn: giá thấp hơn giá tham chiếu, marketing hiệu quả và thương hiệu tích lũy.</p>
-    ${[['🐺 Alpha Dynamics', 'Giá rẻ tốc chiến', 'Giá ~125k · marketing ~90tr. Mạnh khi thị trường nhạy giá (biến cố Price War càng lợi cho họ).', 'Khắc chế: đừng đua xuống đáy – giữ biên, xây Brand Loyalty ≥70% để khách không rời đi.'],
-       ['🐘 Mekong Ventures', 'Cân bằng chắc chắn', 'Giá ~150k · marketing ~60tr. Ổn định, ít bứt phá, ít sai lầm.', 'Khắc chế: tận dụng biến cố tốt (Cơ Hội Vàng, Hóa Rồng) – họ không tăng tốc theo thị trường.'],
-       ['🦚 Star Clay Co.', 'Cao cấp thương hiệu', 'Giá ~195k · marketing ~75tr. Hưởng lợi lớn ở vòng 6 khi thương hiệu được nhân trọng số ×1.5.', 'Khắc chế: chiếm phân khúc phổ thông, hoặc đầu tư R&D + ESG để đấu trực diện phân khúc sang.']].map(([n, s2, p, c]) => `
+  ai: { icon: '⚔️', name: T('Đối thủ AI', 'AI Rivals'), html: `
+    <p class="text-sm text-deep-teal/75 mb-4">${T('Ba đối thủ AI mô phỏng ba chiến lược kinh điển. Mỗi vòng, chúng tự định giá và chi marketing quanh mức đặc trưng (dao động ±12%), rồi cạnh tranh giành thị phần bằng đúng công thức sức hút của bạn: giá thấp hơn giá tham chiếu, marketing hiệu quả và thương hiệu tích lũy.', 'Three AI rivals model three classic strategies. Each round they set their own price and marketing spend around a characteristic level (±12% variance), then compete for market share using the exact same attractiveness formula as you: price below the reference price, effective marketing, and accumulated brand.')}</p>
+    ${[['🐺 Alpha Dynamics', T('Giá rẻ tốc chiến', 'Fast, cheap and aggressive'), T('Giá ~125k · marketing ~90tr. Mạnh khi thị trường nhạy giá (biến cố Price War càng lợi cho họ).', 'Price ~125k · marketing ~90m. Strong when the market is price-sensitive (a Price War event favors them even more).'), T('Khắc chế: đừng đua xuống đáy – giữ biên, xây Brand Loyalty ≥70% để khách không rời đi.', 'Counter: don\'t race to the bottom – protect your margin, build Brand Loyalty ≥70% so customers stay.')],
+       ['🐘 Mekong Ventures', T('Cân bằng chắc chắn', 'Steady and balanced'), T('Giá ~150k · marketing ~60tr. Ổn định, ít bứt phá, ít sai lầm.', 'Price ~150k · marketing ~60m. Stable, rarely surges, rarely makes mistakes.'), T('Khắc chế: tận dụng biến cố tốt (Cơ Hội Vàng, Hóa Rồng) – họ không tăng tốc theo thị trường.', 'Counter: capitalize on good events (Golden Opportunity, Dragon Ascension) – they don\'t accelerate with the market.')],
+       ['🦚 Star Clay Co.', T('Cao cấp thương hiệu', 'Premium and brand-led'), T('Giá ~195k · marketing ~75tr. Hưởng lợi lớn ở vòng 6 khi thương hiệu được nhân trọng số ×1.5.', 'Price ~195k · marketing ~75m. Gains the most in round 6, when brand gets a ×1.5 weight multiplier.'), T('Khắc chế: chiếm phân khúc phổ thông, hoặc đầu tư R&D + ESG để đấu trực diện phân khúc sang.', 'Counter: capture the mass-market segment, or invest in R&D + ESG to compete head-on in the premium segment.')]].map(([n, s2, p, c]) => `
     <div class="clay-card p-4 mb-3"><p class="font-bold text-sm text-deep-teal">${n} <span class="text-primary">· ${s2}</span></p>
       <p class="text-xs text-deep-teal/60 mt-1">${p}</p><p class="text-xs font-semibold text-emerald-700 mt-1">${c}</p></div>`).join('')}
-    <p class="text-[11px] text-deep-teal/50 mt-2">📌 Giảng viên: hành vi AI là tất định (cùng seed đội → cùng kết quả), tiện chấm điểm & so sánh giữa các đội. Chi tiết trong tài liệu giảng viên trên GitHub.</p>` },
-  roles: { icon: '👥', name: 'Vai trò & Đội ngũ', html: `
-    <img src="assets/illustrations/game/boardroom-lumina.webp" alt="Đội C-suite họp cùng cố vấn Lumina" class="w-full h-36 object-cover rounded-2xl mb-4">
-    <p class="text-sm text-deep-teal/75 mb-4">Sự phối hợp giữa 5 vị trí cốt lõi là chìa khóa thành công:</p>
-    ${[['CEO', 'Quyết định', 'Định hướng chiến lược, duyệt ngân sách cuối cùng và chốt hạ quyết định.', '🤝 Làm việc chặt với CFO trước khi chốt số.'],
-       ['CFO', 'Tài chính', 'Quản lý dòng tiền, phân bổ vốn, phân tích lỗ lãi và nguồn vốn vay.', '🔄 Cấp ngân sách cho CMO & COO.'],
-       ['CMO', 'Thị trường', 'Quảng cáo, nghiên cứu đối thủ, định giá và giành thị phần.', '📈 Đẩy doanh số, báo cáo cho CEO.'],
-       ['COO', 'Vận hành', 'Tối ưu sản xuất, quản lý tồn kho, bảo trì và nhân công.', '📦 Đồng bộ sản lượng với CMO.'],
-       ['SEC', 'Thư ký', 'Ghi chép, nhắc thời hạn, quản trị thông tin và điều phối toàn đội.', '🔔 Điều phối toàn bộ team.']].map(([r, tag, d, i]) => `
+    <p class="text-[11px] text-deep-teal/50 mt-2">${T('📌 Giảng viên: hành vi AI là tất định (cùng seed đội → cùng kết quả), tiện chấm điểm & so sánh giữa các đội. Chi tiết trong tài liệu giảng viên trên GitHub.', '📌 For instructors: AI behavior is deterministic (same team seed → same outcome), which makes grading and cross-team comparison easy. Details in the instructor documentation on GitHub.')}</p>` },
+  roles: { icon: '👥', name: T('Vai trò & Đội ngũ', 'Roles & Team'), html: `
+    <img src="assets/illustrations/game/boardroom-lumina.webp" alt="${T('Đội C-suite họp cùng cố vấn Lumina', 'The C-suite team meeting with advisor Lumina')}" class="w-full h-36 object-cover rounded-2xl mb-4">
+    <p class="text-sm text-deep-teal/75 mb-4">${T('Sự phối hợp giữa 5 vị trí cốt lõi là chìa khóa thành công:', 'Coordination across the 5 core roles is the key to success:')}</p>
+    ${[['CEO', T('Quyết định', 'Decisions'), T('Định hướng chiến lược, duyệt ngân sách cuối cùng và chốt hạ quyết định.', 'Sets strategic direction, gives final budget approval, and locks in the decision.'), T('🤝 Làm việc chặt với CFO trước khi chốt số.', '🤝 Works closely with the CFO before finalizing numbers.')],
+       ['CFO', T('Tài chính', 'Finance'), T('Quản lý dòng tiền, phân bổ vốn, phân tích lỗ lãi và nguồn vốn vay.', 'Manages cash flow, allocates capital, analyzes P&L, and handles borrowing.'), T('🔄 Cấp ngân sách cho CMO & COO.', '🔄 Allocates budget to the CMO & COO.')],
+       ['CMO', T('Thị trường', 'Marketing'), T('Quảng cáo, nghiên cứu đối thủ, định giá và giành thị phần.', 'Advertising, competitor research, pricing, and winning market share.'), T('📈 Đẩy doanh số, báo cáo cho CEO.', '📈 Drives sales, reports to the CEO.')],
+       ['COO', T('Vận hành', 'Operations'), T('Tối ưu sản xuất, quản lý tồn kho, bảo trì và nhân công.', 'Optimizes production, manages inventory, maintenance, and staffing.'), T('📦 Đồng bộ sản lượng với CMO.', '📦 Syncs output with the CMO.')],
+       ['SEC', T('Thư ký', 'Secretary'), T('Ghi chép, nhắc thời hạn, quản trị thông tin và điều phối toàn đội.', 'Keeps minutes, tracks deadlines, manages information, and coordinates the whole team.'), T('🔔 Điều phối toàn bộ team.', '🔔 Coordinates the entire team.')]].map(([r, tag, d, i]) => `
     <div class="clay-card p-4 mb-3"><div class="flex items-center gap-2 mb-1"><p class="font-display font-extrabold text-primary">${r}</p><span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full risk-low">${tag}</span></div>
       <p class="text-xs text-deep-teal/70">${d}</p><p class="text-[11px] font-bold text-deep-teal/50 mt-1.5">${i}</p></div>`).join('')}` },
-  rounds: { icon: '🎮', name: 'Cách chơi theo vòng', html: `
-    <img src="assets/illustrations/game/table-model.webp" alt="Đội phân tích mô hình kinh doanh quanh bàn" class="w-full h-36 object-cover rounded-2xl mb-4">
-    <p class="text-sm text-deep-teal/75 mb-4">Mỗi vòng là một chu trình 6 bước:</p>
-    ${[['Phân tích báo cáo', 'Đánh giá tài chính, thị phần từ vòng trước.', '💡 Chú ý dòng tiền và hàng tồn kho.'],
-       ['Thảo luận đội', 'Thống nhất chiến lược dựa trên dữ liệu.', '💡 Phân công vai trò rõ ràng.'],
-       ['Nhập quyết định', 'Giá bán, Marketing, Sản lượng, R&D, Nhân sự, Nguồn vốn.', '⚠️ Kiểm tra kỹ số liệu trước khi Commit.'],
-       ['Theo dõi kết quả', 'Hệ thống mô phỏng và trả kết quả tức thì.', '💡 So sánh dự báo với thực tế.'],
-       ['Đối phó biến cố', 'Price War, khủng hoảng năng lượng, chuỗi cung ứng…', '💡 Luôn giữ dự phòng tiền mặt.'],
-       ['Tổng kết', 'Xem xếp hạng, rút kinh nghiệm cho vòng sau.', '💡 SEC ghi chép bài học vào Nhật ký đội.']].map(([t, d, tip], i) => `
+  rounds: { icon: '🎮', name: T('Cách chơi theo vòng', 'How a Round Works'), html: `
+    <img src="assets/illustrations/game/table-model.webp" alt="${T('Đội phân tích mô hình kinh doanh quanh bàn', 'The team analyzing a business model around the table')}" class="w-full h-36 object-cover rounded-2xl mb-4">
+    <p class="text-sm text-deep-teal/75 mb-4">${T('Mỗi vòng là một chu trình 6 bước:', 'Each round is a 6-step cycle:')}</p>
+    ${[[T('Phân tích báo cáo', 'Review the report'), T('Đánh giá tài chính, thị phần từ vòng trước.', 'Assess finances and market share from the previous round.'), T('💡 Chú ý dòng tiền và hàng tồn kho.', '💡 Watch cash flow and inventory.')],
+       [T('Thảo luận đội', 'Team huddle'), T('Thống nhất chiến lược dựa trên dữ liệu.', 'Agree on a strategy based on the data.'), T('💡 Phân công vai trò rõ ràng.', '💡 Assign roles clearly.')],
+       [T('Nhập quyết định', 'Enter decisions'), T('Giá bán, Marketing, Sản lượng, R&D, Nhân sự, Nguồn vốn.', 'Price, Marketing, Production, R&D, Staffing, Funding.'), T('⚠️ Kiểm tra kỹ số liệu trước khi Commit.', '⚠️ Double-check the numbers before committing.')],
+       [T('Theo dõi kết quả', 'Watch the outcome'), T('Hệ thống mô phỏng và trả kết quả tức thì.', 'The engine simulates and returns results instantly.'), T('💡 So sánh dự báo với thực tế.', '💡 Compare the forecast with what actually happened.')],
+       [T('Đối phó biến cố', 'Handle the event'), T('Price War, khủng hoảng năng lượng, chuỗi cung ứng…', 'Price War, energy crisis, supply chain…'), T('💡 Luôn giữ dự phòng tiền mặt.', '💡 Always keep a cash reserve.')],
+       [T('Tổng kết', 'Wrap up'), T('Xem xếp hạng, rút kinh nghiệm cho vòng sau.', 'Check the leaderboard, learn for the next round.'), T('💡 SEC ghi chép bài học vào Nhật ký đội.', '💡 The SEC logs lessons in the Team Journal.')]].map(([t, d, tip], i) => `
     <div class="clay-card p-4 mb-3 flex gap-3.5 items-start"><span class="w-9 h-9 shrink-0 rounded-full font-display font-extrabold flex items-center justify-center text-white" style="background:#00c4ff; box-shadow:0 3px 0 #0095c2">${i + 1}</span>
       <div><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p><p class="text-[11px] font-semibold text-amber-700 mt-1">${tip}</p></div></div>`).join('')}
     <div class="clay-card p-4 mb-2 border-2 border-clay-gold/50">
-      <p class="font-bold text-sm text-deep-teal">📐 Ví dụ một vòng mẫu (minh họa)</p>
-      <p class="text-xs text-deep-teal/70 mt-1 leading-relaxed">Đặt <b>giá 150.000₫</b> (bằng giá tham chiếu), <b>marketing 60 triệu₫</b>, <b>sản lượng 4.000 bộ</b>. Mỗi bộ lời ~<b>90.000₫</b> trước chi phí cố định (giá 150k − chi phí biến đổi ~60k). Cả thị trường cầu ~<b>12.000 bộ/vòng</b> chia cho bạn và 3 đối thủ AI — nếu sức hút ngang mức trung bình, thị phần ~<b>25%</b> (~3.000 bộ), doanh thu ~<b>450 triệu₫</b>, gộp lãi ~<b>270 triệu₫</b> trước chi phí cố định + marketing.</p>
-      <p class="text-xs font-semibold text-emerald-700 mt-1.5">🚩 Muốn cắm cờ: cần thị phần cao nhất trong 4 đội — thử hạ giá về ~140k <i>hoặc</i> tăng marketing, nhưng luôn giữ lãi dương và ≥15% tiền dự phòng.</p>
+      <p class="font-bold text-sm text-deep-teal">${T('📐 Ví dụ một vòng mẫu (minh họa)', '📐 A worked example round (illustrative)')}</p>
+      <p class="text-xs text-deep-teal/70 mt-1 leading-relaxed">${T('Đặt <b>giá 150.000₫</b> (bằng giá tham chiếu), <b>marketing 60 triệu₫</b>, <b>sản lượng 4.000 bộ</b>. Mỗi bộ lời ~<b>90.000₫</b> trước chi phí cố định (giá 150k − chi phí biến đổi ~60k). Cả thị trường cầu ~<b>12.000 bộ/vòng</b> chia cho bạn và 3 đối thủ AI — nếu sức hút ngang mức trung bình, thị phần ~<b>25%</b> (~3.000 bộ), doanh thu ~<b>450 triệu₫</b>, gộp lãi ~<b>270 triệu₫</b> trước chi phí cố định + marketing.', 'Set <b>price at 150,000₫</b> (equal to the reference price), <b>marketing at 60 million₫</b>, <b>production at 4,000 units</b>. Each unit earns ~<b>90,000₫</b> before fixed costs (price 150k − variable cost ~60k). Total market demand is ~<b>12,000 units/round</b>, split between you and 3 AI rivals — at average attractiveness, that\'s ~<b>25% share</b> (~3,000 units), revenue ~<b>450 million₫</b>, gross profit ~<b>270 million₫</b> before fixed costs + marketing.')}</p>
+      <p class="text-xs font-semibold text-emerald-700 mt-1.5">${T('🚩 Muốn cắm cờ: cần thị phần cao nhất trong 4 đội — thử hạ giá về ~140k <i>hoặc</i> tăng marketing, nhưng luôn giữ lãi dương và ≥15% tiền dự phòng.', '🚩 To claim the flag: you need the highest share among the 4 teams — try dropping price to ~140k <i>or</i> raising marketing, but always keep profit positive and ≥15% cash in reserve.')}</p>
     </div>` },
-  lumina: { icon: '🤖', name: 'Cố vấn AI Lumina', html: `
-    <img src="assets/illustrations/game/lumina-vortex.webp" alt="Lumina AI đồng hành cùng đội" class="w-full h-36 object-cover rounded-2xl mb-4">
-    <div class="clay-card p-4 mb-4 flex gap-3 items-center"><img src="assets/character/lumina-vest.webp" alt="" class="w-12 h-12 rounded-full object-cover" style="object-position:50% 14%"><p class="text-xs text-deep-teal/75">Hương là trợ lý AI cá nhân của đội – trò chuyện được bằng giọng nói tiếng Việt trong tab Lumina.</p></div>
-    ${[['📊 Phân tích dữ liệu', 'Kịch bản tối ưu theo mục tiêu tài chính; mô phỏng "Nếu – Thì" trước khi Commit (2 lượt/vòng).'],
-       ['🔮 Dự đoán thị trường', 'Cảnh báo rủi ro (đỏ/cam) hoặc cơ hội (xanh ngọc) theo từng vai trò CFO · COO · CMO · SEC.'],
-       ['🛟 Phòng ngừa khủng hoảng', 'Kịch bản ứng phó khi thị trường biến động mạnh; lời khuyên khẩn cấp khi thanh khoản đỏ.']].map(([t, d]) => `
+  lumina: { icon: '🤖', name: T('Cố vấn AI Lumina', 'Lumina AI Advisor'), html: `
+    <img src="assets/illustrations/game/lumina-vortex.webp" alt="${T('Lumina AI đồng hành cùng đội', 'Lumina AI accompanying the team')}" class="w-full h-36 object-cover rounded-2xl mb-4">
+    <div class="clay-card p-4 mb-4 flex gap-3 items-center"><img src="assets/character/lumina-vest.webp" alt="" class="w-12 h-12 rounded-full object-cover" style="object-position:50% 14%"><p class="text-xs text-deep-teal/75">${T('Hương là trợ lý AI cá nhân của đội – trò chuyện được bằng giọng nói tiếng Việt trong tab Lumina.', 'Hương is your team\'s personal AI assistant – you can talk to her by voice in Vietnamese in the Lumina tab.')}</p></div>
+    ${[[T('📊 Phân tích dữ liệu', '📊 Data analysis'), T('Kịch bản tối ưu theo mục tiêu tài chính; mô phỏng "Nếu – Thì" trước khi Commit (2 lượt/vòng).', 'Optimal scenarios tailored to your financial goals; "What-If" simulations before you Commit (2 uses/round).')],
+       [T('🔮 Dự đoán thị trường', '🔮 Market forecasting'), T('Cảnh báo rủi ro (đỏ/cam) hoặc cơ hội (xanh ngọc) theo từng vai trò CFO · COO · CMO · SEC.', 'Risk warnings (red/amber) or opportunities (teal) tailored to each role: CFO · COO · CMO · SEC.')],
+       [T('🛟 Phòng ngừa khủng hoảng', '🛟 Crisis preparedness'), T('Kịch bản ứng phó khi thị trường biến động mạnh; lời khuyên khẩn cấp khi thanh khoản đỏ.', 'Response playbooks for sharp market swings; emergency advice when liquidity turns red.')]].map(([t, d]) => `
     <div class="clay-card p-4 mb-3"><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p></div>`).join('')}` },
-  tips: { icon: '💡', name: 'Mẹo & Thủ thuật', html: `
-    <img src="assets/illustrations/game/sen-shield.webp" alt="Lumina dựng khiên sen bảo vệ đội khi thị trường biến động" class="w-full h-36 object-cover rounded-2xl mb-4">
-    ${[['👑 Chiến thuật CEO', 'Luôn tham khảo CFO trước khi chốt số. Một quyết định đầu tư lớn thiếu kiểm soát chi phí có thể dẫn đến phá sản.'],
-       ['🏭 Tối ưu sản xuất', 'Đừng mở rộng quá nhanh – kiểm tra báo cáo khấu hao và bảo trì máy móc đúng lúc.'],
-       ['📣 Chiếm lĩnh thị trường', 'Dùng Lumina AI dự báo xu hướng trước khi tung chiến dịch Marketing lớn.'],
-       ['🛡️ Quản lý rủi ro', 'Giữ ít nhất 15% vốn dự phòng. Không bao giờ đầu tư hết tiền mặt vào một vòng.']].map(([t, d]) => `
+  tips: { icon: '💡', name: T('Mẹo & Thủ thuật', 'Tips & Tricks'), html: `
+    <img src="assets/illustrations/game/sen-shield.webp" alt="${T('Lumina dựng khiên sen bảo vệ đội khi thị trường biến động', 'Lumina raising a lotus shield to protect the team when the market turns volatile')}" class="w-full h-36 object-cover rounded-2xl mb-4">
+    ${[[T('👑 Chiến thuật CEO', '👑 CEO tactics'), T('Luôn tham khảo CFO trước khi chốt số. Một quyết định đầu tư lớn thiếu kiểm soát chi phí có thể dẫn đến phá sản.', 'Always check with the CFO before finalizing numbers. A large investment decision without cost control can lead to bankruptcy.')],
+       [T('🏭 Tối ưu sản xuất', '🏭 Production optimization'), T('Đừng mở rộng quá nhanh – kiểm tra báo cáo khấu hao và bảo trì máy móc đúng lúc.', 'Don\'t expand too fast – check depreciation reports and maintain machinery on time.')],
+       [T('📣 Chiếm lĩnh thị trường', '📣 Winning the market'), T('Dùng Lumina AI dự báo xu hướng trước khi tung chiến dịch Marketing lớn.', 'Use Lumina AI to forecast trends before launching a big Marketing campaign.')],
+       [T('🛡️ Quản lý rủi ro', '🛡️ Risk management'), T('Giữ ít nhất 15% vốn dự phòng. Không bao giờ đầu tư hết tiền mặt vào một vòng.', 'Keep at least 15% of capital in reserve. Never invest all your cash in a single round.')]].map(([t, d]) => `
     <div class="clay-card p-4 mb-3"><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p></div>`).join('')}
     <p class="font-display font-extrabold text-deep-teal text-sm mt-5 mb-2">⚡ Quick Wins</p>
-    ${['Dành 5 phút đầu vòng đọc bản tin Thị trường sống – nó chứa manh mối về đối thủ.',
-       'Pin Mặt Trời hoàn vốn ~2 vòng và kháng khủng hoảng năng lượng vòng 4.',
-       'Điều chỉnh giá linh hoạt theo độ nhạy của thị trường – đừng giữ nguyên giá cả 6 vòng.'].map(t => `
+    ${[T('Dành 5 phút đầu vòng đọc bản tin Thị trường sống – nó chứa manh mối về đối thủ.', 'Spend the first 5 minutes of a round reading the Market Pulse feed – it holds clues about your rivals.'),
+       T('Pin Mặt Trời hoàn vốn ~2 vòng và kháng khủng hoảng năng lượng vòng 4.', 'Solar Panels pay back in ~2 rounds and cushion the round-4 energy crisis.'),
+       T('Điều chỉnh giá linh hoạt theo độ nhạy của thị trường – đừng giữ nguyên giá cả 6 vòng.', 'Adjust price flexibly to match market sensitivity – don\'t hold the same price for all 6 rounds.')].map(t => `
     <div class="clay-sunken rounded-2xl p-3 mb-2 flex gap-2 items-start"><span class="text-primary font-bold">✓</span><p class="text-xs text-deep-teal/75">${t}</p></div>`).join('')}` },
-  world: { icon: '🌏', name: 'Hệ sinh thái BizOn', html: `
-    <img src="assets/illustrations/game/bridge-music.webp" alt="Đội bước qua cầu ra thế giới" class="w-full h-36 object-cover rounded-2xl mb-4">
-    <p class="text-sm text-deep-teal/75 mb-4">BizOn không chỉ có 6 vòng trong nước – cả một hệ sinh thái đang chờ bạn:</p>
-    ${[['🗺️ Bản đồ chinh phục', 'Mỗi vòng thắng thị phần là một lá cờ 🚩 cắm lên bản đồ Việt Nam – từ Cần Thơ tới cột cờ Lũng Cú, kèm hai quần đảo Hoàng Sa & Trường Sa.'],
-       ['🌏 BizOn Go Global', 'Ra biển lớn: khai hồ sơ doanh nghiệp, chọn 1 trong 7 thị trường, đàm phán với đối tác bản địa, chọn phương thức thâm nhập (Export · Licensing · Liên doanh · FDI) và kinh doanh 4 quý. Có IE Lab mô phỏng số liệu và nút xuất nhật ký CSV để nộp giảng viên.'],
-       ['🕹️ BizOn Arcade', 'Các mini-game phản xạ 30–60 giây: Clay Factory Frenzy, Trắc nghiệm Khởi nghiệp, Đoán Giá, Bắt Vốn Vàng.'],
-       ['📚 Thư viện & 🎶 Kho Âm nhạc', 'Tạo hình nhân vật, sản phẩm cài áo, và toàn bộ ca khúc gốc với trình phát đầy đủ – mở từ Cài đặt hoặc Trang chủ.']].map(([t, d]) => `
+  world: { icon: '🌏', name: T('Hệ sinh thái BizOn', 'The BizOn Ecosystem'), html: `
+    <img src="assets/illustrations/game/bridge-music.webp" alt="${T('Đội bước qua cầu ra thế giới', 'The team crossing a bridge to the world')}" class="w-full h-36 object-cover rounded-2xl mb-4">
+    <p class="text-sm text-deep-teal/75 mb-4">${T('BizOn không chỉ có 6 vòng trong nước – cả một hệ sinh thái đang chờ bạn:', 'BizOn is more than 6 domestic rounds – a whole ecosystem is waiting for you:')}</p>
+    ${[[T('🗺️ Bản đồ chinh phục', '🗺️ Conquest map'), T('Mỗi vòng thắng thị phần là một lá cờ 🚩 cắm lên bản đồ Việt Nam – từ Cần Thơ tới cột cờ Lũng Cú, kèm hai quần đảo Hoàng Sa & Trường Sa.', 'Every round you win market share plants a flag 🚩 on the map of Vietnam – from Cần Thơ to the Lũng Cú flagpole, including the Hoàng Sa & Trường Sa archipelagos.')],
+       [T('🌏 BizOn Go Global', '🌏 BizOn Go Global'), T('Ra biển lớn: khai hồ sơ doanh nghiệp, chọn 1 trong 7 thị trường, đàm phán với đối tác bản địa, chọn phương thức thâm nhập (Export · Licensing · Liên doanh · FDI) và kinh doanh 4 quý. Có IE Lab mô phỏng số liệu và nút xuất nhật ký CSV để nộp giảng viên.', 'Head out to the wider world: file your company profile, pick 1 of 7 markets, negotiate with a local partner, choose an entry mode (Export · Licensing · Joint Venture · FDI), and run 4 quarters of business. Includes an IE Lab for number-crunching and a CSV log export to submit to your instructor.')],
+       [T('🕹️ BizOn Arcade', '🕹️ BizOn Arcade'), T('Các mini-game phản xạ 30–60 giây: Clay Factory Frenzy, Trắc nghiệm Khởi nghiệp, Đoán Giá, Bắt Vốn Vàng.', '30–60 second reflex mini-games: Clay Factory Frenzy, Entrepreneurship Quiz, Guess the Price, Catch the Golden Capital.')],
+       [T('📚 Thư viện & 🎶 Kho Âm nhạc', '📚 Library & 🎶 Music Vault'), T('Tạo hình nhân vật, sản phẩm cài áo, và toàn bộ ca khúc gốc với trình phát đầy đủ – mở từ Cài đặt hoặc Trang chủ.', 'Character art, product lineup, and the full original soundtrack with a full player – open from Settings or the Home page.')]].map(([t, d]) => `
     <div class="clay-card p-4 mb-3"><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p></div>`).join('')}` },
-  glossary: { icon: '📚', name: 'Thuật ngữ dễ hiểu', html: `
-    <p class="text-sm text-deep-teal/75 mb-4">Các thuật ngữ hay gặp trong game, giải thích bằng một câu:</p>
-    ${[['Thị phần (%)', 'Miếng bánh khách hàng của bạn – trong 12.000 sp cầu thị trường mỗi chu kỳ, bạn bán được bao nhiêu %.'],
-       ['Giá bán đề xuất (150k)', 'Mức giá "chuẩn" thị trường – bán rẻ hơn thì hút khách, đắt hơn thì mất khách (mức độ theo độ co giãn giá 1.8).'],
-       ['Biên lợi nhuận', 'Tiền lời trên mỗi sản phẩm = giá bán − chi phí (~60k/sp). Giá 150k → lời ~90k/sp trước chi phí cố định.'],
-       ['Hòa vốn (CVP)', 'Số sản phẩm phải bán để bù hết chi phí cố định + marketing + R&D. Bán ít hơn mức này là lỗ.'],
-       ['OEE', 'Điểm sức khỏe dây chuyền (0–100%): máy chạy đều, ít hỏng, ít phế phẩm. Dưới 60% là báo động.'],
-       ['Quick Ratio', 'Khả năng trả nợ ngay bằng tiền mặt – dưới 1.0 nghĩa là chi kế hoạch đang vượt tiền trong két.'],
-       ['Điểm thương hiệu (Brand Score)', 'Uy tín tích lũy qua các chu kỳ – nhân sức hút của bạn, đặc biệt chu kỳ 6 (trọng số ×1.5).'],
-       ['Khấu hao', 'Máy móc "mòn" theo công suất – đầu tư càng lớn, chi phí cố định mỗi vòng càng cao.']].map(([t, d]) => `
+  glossary: { icon: '📚', name: T('Thuật ngữ dễ hiểu', 'Plain-Language Glossary'), html: `
+    <p class="text-sm text-deep-teal/75 mb-4">${T('Các thuật ngữ hay gặp trong game, giải thích bằng một câu:', 'Common in-game terms, explained in one sentence:')}</p>
+    ${[[T('Thị phần (%)', 'Market Share (%)'), T('Miếng bánh khách hàng của bạn – trong 12.000 sp cầu thị trường mỗi chu kỳ, bạn bán được bao nhiêu %.', 'Your slice of the customer pie – out of 12,000 units of market demand each cycle, what % you sell.')],
+       [T('Giá bán đề xuất (150k)', 'Reference Price (150k)'), T('Mức giá "chuẩn" thị trường – bán rẻ hơn thì hút khách, đắt hơn thì mất khách (mức độ theo độ co giãn giá 1.8).', 'The market\'s "standard" price – price below it to attract customers, above it and you lose them (governed by a price elasticity of 1.8).')],
+       [T('Biên lợi nhuận', 'Profit Margin'), T('Tiền lời trên mỗi sản phẩm = giá bán − chi phí (~60k/sp). Giá 150k → lời ~90k/sp trước chi phí cố định.', 'Profit per unit = price − cost (~60k/unit). At a 150k price → ~90k/unit profit before fixed costs.')],
+       [T('Hòa vốn (CVP)', 'Break-even (CVP)'), T('Số sản phẩm phải bán để bù hết chi phí cố định + marketing + R&D. Bán ít hơn mức này là lỗ.', 'The number of units you must sell to cover fixed costs + marketing + R&D. Sell fewer than this and you\'re losing money.')],
+       ['OEE', T('Điểm sức khỏe dây chuyền (0–100%): máy chạy đều, ít hỏng, ít phế phẩm. Dưới 60% là báo động.', 'Your production line\'s health score (0–100%): smooth uptime, few breakdowns, low scrap. Below 60% is a red flag.')],
+       ['Quick Ratio', T('Khả năng trả nợ ngay bằng tiền mặt – dưới 1.0 nghĩa là chi kế hoạch đang vượt tiền trong két.', 'Your ability to pay short-term debts with cash on hand right now – below 1.0 means planned spending is outrunning cash in the vault.')],
+       [T('Điểm thương hiệu (Brand Score)', 'Brand Score'), T('Uy tín tích lũy qua các chu kỳ – nhân sức hút của bạn, đặc biệt chu kỳ 6 (trọng số ×1.5).', 'Reputation accumulated across cycles – multiplies your attractiveness, especially in cycle 6 (×1.5 weight).')],
+       [T('Khấu hao', 'Depreciation'), T('Máy móc "mòn" theo công suất – đầu tư càng lớn, chi phí cố định mỗi vòng càng cao.', 'Machinery "wears down" with output – the bigger the investment, the higher your fixed cost each round.')]].map(([t, d]) => `
     <div class="clay-card p-4 mb-2.5"><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p></div>`).join('')}` },
-  trouble: { icon: '🔧', name: 'Xử lý sự cố', html: `
-    ${[['📶 Kiểm tra mạng', 'BizOn chạy offline sau lần tải đầu (PWA) – nhưng lần đầu cần Wi-Fi hoặc 4G/5G ổn định.'],
-       ['🔄 Làm mới ứng dụng', 'Đóng hoàn toàn và mở lại BizOn. Nếu đã cài lên màn hình chính, đóng hẳn app để nhận bản cập nhật mới.'],
-       ['🧹 Xóa dữ liệu cũ', 'Nếu giao diện hiển thị lạ sau bản cập nhật: Cài đặt → Chơi lại từ đầu (Reset) – lưu ý sẽ mất tiến trình.'],
-       ['🐞 Liên hệ hỗ trợ', 'Dùng nút "Gửi báo cáo lỗi" trong Cài đặt nếu vấn đề tiếp diễn.']].map(([t, d]) => `
+  trouble: { icon: '🔧', name: T('Xử lý sự cố', 'Troubleshooting'), html: `
+    ${[[T('📶 Kiểm tra mạng', '📶 Check your connection'), T('BizOn chạy offline sau lần tải đầu (PWA) – nhưng lần đầu cần Wi-Fi hoặc 4G/5G ổn định.', 'BizOn runs offline after the first load (PWA) – but the first load needs stable Wi-Fi or 4G/5G.')],
+       [T('🔄 Làm mới ứng dụng', '🔄 Refresh the app'), T('Đóng hoàn toàn và mở lại BizOn. Nếu đã cài lên màn hình chính, đóng hẳn app để nhận bản cập nhật mới.', 'Fully close and reopen BizOn. If it\'s installed on your home screen, close the app completely to get the latest update.')],
+       [T('🧹 Xóa dữ liệu cũ', '🧹 Clear old data'), T('Nếu giao diện hiển thị lạ sau bản cập nhật: Cài đặt → Chơi lại từ đầu (Reset) – lưu ý sẽ mất tiến trình.', 'If the UI looks wrong after an update: Settings → Start Over (Reset) – note this will erase your progress.')],
+       [T('🐞 Liên hệ hỗ trợ', '🐞 Contact support'), T('Dùng nút "Gửi báo cáo lỗi" trong Cài đặt nếu vấn đề tiếp diễn.', 'Use the "Send bug report" button in Settings if the problem persists.')]].map(([t, d]) => `
     <div class="clay-card p-4 mb-3"><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p></div>`).join('')}` },
-};
+}; }
 function showManual(sec) {
   const old = document.getElementById('manual-overlay');
   if (old) old.remove();
   const div = document.createElement('div');
   div.id = 'manual-overlay';
+  div.dataset.sec = sec || '';
   div.className = 'fixed inset-0 z-[65] bg-surface-bright overflow-y-auto';
-  const body = sec && MANUAL[sec]
-    ? `<button onclick="showManual()" class="clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 mb-4">← Sổ tay</button>
-       <h2 class="font-display font-extrabold text-deep-teal text-2xl mb-4">${MANUAL[sec].icon} ${MANUAL[sec].name}</h2>${MANUAL[sec].html}`
+  const manual = MANUAL();
+  const body = sec && manual[sec]
+    ? `<button onclick="showManual()" class="clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 mb-4">${T('← Sổ tay', '← Handbook')}</button>
+       <h2 class="font-display font-extrabold text-deep-teal text-2xl mb-4">${manual[sec].icon} ${manual[sec].name}</h2>${manual[sec].html}`
     : `<div class="text-center mb-6">
-         <h2 class="font-display font-extrabold text-primary text-2xl">📖 Sổ tay hướng dẫn</h2>
-         <p class="text-sm text-deep-teal/60 mt-1">Mọi thứ bạn cần để vận hành BizOn mượt mà.</p>
+         <h2 class="font-display font-extrabold text-primary text-2xl">${T('📖 Sổ tay hướng dẫn', '📖 User Manual')}</h2>
+         <p class="text-sm text-deep-teal/60 mt-1">${T('Mọi thứ bạn cần để vận hành BizOn mượt mà.', 'Everything you need to run BizOn smoothly.')}</p>
        </div>
        <div class="grid grid-cols-2 gap-3">
-         ${Object.entries(MANUAL).map(([k, m]) => `
+         ${Object.entries(manual).map(([k, m]) => `
          <button onclick="showManual('${k}')" class="clay-card p-4 text-left">
            <span class="w-12 h-12 clay-sunken rounded-full flex items-center justify-center text-2xl mb-3">${m.icon}</span>
            <p class="font-display font-bold text-primary text-sm">${m.name}</p>
