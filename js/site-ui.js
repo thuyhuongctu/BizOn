@@ -20,7 +20,7 @@
   };
 
   /* ---------- Song ngữ Việt / Anh ---------- */
-  var EN = new Map([
+  var EN = new Map([["Hệ thống game mô phỏng và mini-game của BizOn Bật Nghiệp – từ chiến lược nhiều vòng đến phản xạ 30 giây. Chọn và chơi ngay!","BizOn Bật Nghiệp's simulation games and mini-games – from multi-round strategy to 30-second reflexes. Pick one and play now!"],
 [
 "Tính năng",
 "Features"
