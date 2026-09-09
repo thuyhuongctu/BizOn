@@ -803,19 +803,19 @@ function renderMonitor() {
   if (!H.length) {
     box.innerHTML = `<div class="rounded-clay p-5 text-center" style="background:#0d1117;color:#8fa89f;font-family:ui-monospace,Menlo,Consolas,monospace">
       <p style="font-size:11px;letter-spacing:.14em">📊 BIZON MONITOR</p>
-      <p style="font-size:11px;margin-top:8px;opacity:.7">Hoàn thành vòng 1 để kích hoạt bảng theo dõi thị trường.</p></div>`;
+      <p style="font-size:11px;margin-top:8px;opacity:.7">${T('Hoàn thành vòng 1 để kích hoạt bảng theo dõi thị trường.', 'Complete round 1 to activate the market monitor.')}</p></div>`;
     return;
   }
   const metrics = [
-    { name: 'Thị phần',      tag: 'THỊ PHẦN',   s: H.map(r => r.share),        fmt: v => v.toFixed(1) + '%' },
-    { name: 'Doanh thu',     tag: 'DOANH THU',  s: H.map(r => r.revenue),      fmt: v => money(v) },
-    { name: 'Lợi nhuận',     tag: 'LỢI NHUẬN',  s: H.map(r => r.netProfit),    fmt: v => money(v) },
-    { name: 'Ví đội',        tag: 'DÒNG TIỀN',  s: H.map(r => r.balance),      fmt: v => money(v) },
-    { name: 'OEE xưởng',     tag: 'VẬN HÀNH',   s: H.map(r => r.oee),          fmt: v => v + '%' },
-    { name: 'Brand Loyalty', tag: 'THƯƠNG HIỆU', s: H.map(r => r.brandLoyalty), fmt: v => v + '%' },
+    { name: T('Thị phần', 'Market Share'),      tag: T('THỊ PHẦN', 'MARKET SHARE'),   s: H.map(r => r.share),        fmt: v => v.toFixed(1) + '%' },
+    { name: T('Doanh thu', 'Revenue'),     tag: T('DOANH THU', 'REVENUE'),  s: H.map(r => r.revenue),      fmt: v => money(v) },
+    { name: T('Lợi nhuận', 'Profit'),     tag: T('LỢI NHUẬN', 'PROFIT'),  s: H.map(r => r.netProfit),    fmt: v => money(v) },
+    { name: T('Ví đội', 'Team Wallet'),        tag: T('DÒNG TIỀN', 'CASH FLOW'),  s: H.map(r => r.balance),      fmt: v => money(v) },
+    { name: T('OEE xưởng', 'Factory OEE'),     tag: T('VẬN HÀNH', 'OPERATIONS'),   s: H.map(r => r.oee),          fmt: v => v + '%' },
+    { name: 'Brand Loyalty', tag: T('THƯƠNG HIỆU', 'BRAND'), s: H.map(r => r.brandLoyalty), fmt: v => v + '%' },
   ];
   (S.aiHistory || []).length && COMPETITORS.forEach((c, i) => {
-    metrics.push({ name: c.name, tag: 'ĐỐI THỦ AI', s: (S.aiHistory || []).map(snap => (snap[i] || {}).share || 0), fmt: v => v.toFixed(1) + '%' });
+    metrics.push({ name: c.name, tag: T('ĐỐI THỦ AI', 'AI RIVAL'), s: (S.aiHistory || []).map(snap => (snap[i] || {}).share || 0), fmt: v => v.toFixed(1) + '%' });
   });
 
   const pct = m => {
@@ -849,12 +849,12 @@ function renderMonitor() {
   box.innerHTML = `<div class="rounded-clay p-4" style="background:#0d1117;color:#dce8e2;font-family:ui-monospace,Menlo,Consolas,monospace;box-shadow:0 10px 30px -5px rgba(0,0,0,.35)">
     <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1f2b33;padding-bottom:8px">
       <p style="font-size:11px;letter-spacing:.18em;font-weight:700">📊 BIZON MONITOR</p>
-      <p style="font-size:9px;letter-spacing:.14em;color:#8fa89f">VÒNG ${H.length}/6</p>
+      <p style="font-size:9px;letter-spacing:.14em;color:#8fa89f">${T('VÒNG', 'ROUND')} ${H.length}/6</p>
     </div>
     <div style="display:flex;gap:8px;margin:12px 0 4px">
-      ${chip('TĂNG', `${ups}/${rated.length || withPct.length}`, '#34d399')}
-      ${chip('MẠNH NHẤT', best ? `${best.name} +${best.chg.toFixed(1)}%` : '–', '#34d399')}
-      ${chip('YẾU NHẤT', worst ? `${worst.name} ${worst.chg.toFixed(1)}%` : '–', '#f87171')}
+      ${chip(T('TĂNG', 'UP'), `${ups}/${rated.length || withPct.length}`, '#34d399')}
+      ${chip(T('MẠNH NHẤT', 'STRONGEST'), best ? `${best.name} +${best.chg.toFixed(1)}%` : '–', '#34d399')}
+      ${chip(T('YẾU NHẤT', 'WEAKEST'), worst ? `${worst.name} ${worst.chg.toFixed(1)}%` : '–', '#f87171')}
     </div>
     ${rows}
   </div>`;
@@ -2513,8 +2513,8 @@ function renderCvpReport(body) {
   const contribution = Math.max(0.001, (d.price - unitCost) / 1000);
   const bePrice = last ? Math.round(unitCost + 1000 * (last.fixed + last.wageCost + (last.trainingCost || 0) + last.marketing + last.rd) / Math.max(1, last.sold)) : null;
   // Phân loại chi phí cố định vs biến đổi (vòng gần nhất)
-  const fixedCosts = last ? [['Chi phí cố định', last.fixed], ['Khấu hao', last.depreciation], ['Lương nhân sự', last.wageCost || 0], ['Đào tạo', last.trainingCost || 0]] : [];
-  const varCosts = last ? [['Giá vốn (COGS)', last.cogs], ['Marketing', last.marketing], ['R&D', last.rd], ['Lưu kho + lãi vay', (last.holding || 0) + (last.loanInterest || 0) + (last.creditInterest || 0)]] : [];
+  const fixedCosts = last ? [[T('Chi phí cố định', 'Fixed cost'), last.fixed], [T('Khấu hao', 'Depreciation'), last.depreciation], [T('Lương nhân sự', 'Wages'), last.wageCost || 0], [T('Đào tạo', 'Training'), last.trainingCost || 0]] : [];
+  const varCosts = last ? [[T('Giá vốn (COGS)', 'COGS'), last.cogs], ['Marketing', last.marketing], ['R&D', last.rd], [T('Lưu kho + lãi vay', 'Holding + interest'), (last.holding || 0) + (last.loanInterest || 0) + (last.creditInterest || 0)]] : [];
   const totalF = fixedCosts.reduce((a, x) => a + x[1], 0), totalV = varCosts.reduce((a, x) => a + x[1], 0);
   const costBar = (label, val, total, color) => `
     <div class="flex items-center gap-2 text-xs py-1">
@@ -2524,24 +2524,24 @@ function renderCvpReport(body) {
     </div>`;
   body.innerHTML = `
     <div class="clay-card p-5 mb-3">
-      <h3 class="font-display font-bold text-deep-teal text-sm mb-3">📐 Phân tích Điểm hòa vốn (CVP)</h3>
+      <h3 class="font-display font-bold text-deep-teal text-sm mb-3">${T('📐 Phân tích Điểm hòa vốn (CVP)', '📐 Break-Even Analysis (CVP)')}</h3>
       <div class="grid grid-cols-2 gap-3">
-        <div class="clay-sunken rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Sản lượng hòa vốn</p><p class="font-display font-extrabold text-primary text-lg">${fc.breakEven.toLocaleString('vi-VN')} sp</p></div>
-        <div class="clay-sunken rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Giá hòa vốn</p><p class="font-display font-extrabold text-primary text-lg">${bePrice ? bePrice.toLocaleString('vi-VN') + 'k₫' : '–'}</p></div>
-        <div class="clay-sunken rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Lãi góp / đơn vị</p><p class="font-display font-extrabold text-deep-teal text-lg">${Math.round(contribution * 1000)}k₫</p></div>
-        <div class="clay-sunken rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">Bán dự kiến vòng này</p><p class="font-display font-extrabold ${fc.estSold >= fc.breakEven ? 'text-emerald-600' : 'text-red-600'} text-lg">${fc.estSold.toLocaleString('vi-VN')} sp</p></div>
+        <div class="clay-sunken rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">${T('Sản lượng hòa vốn', 'Break-even volume')}</p><p class="font-display font-extrabold text-primary text-lg">${fc.breakEven.toLocaleString('vi-VN')} ${T('sp', 'units')}</p></div>
+        <div class="clay-sunken rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">${T('Giá hòa vốn', 'Break-even price')}</p><p class="font-display font-extrabold text-primary text-lg">${bePrice ? bePrice.toLocaleString('vi-VN') + 'k₫' : '–'}</p></div>
+        <div class="clay-sunken rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">${T('Lãi góp / đơn vị', 'Contribution / unit')}</p><p class="font-display font-extrabold text-deep-teal text-lg">${Math.round(contribution * 1000)}k₫</p></div>
+        <div class="clay-sunken rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">${T('Bán dự kiến vòng này', 'Expected sales this round')}</p><p class="font-display font-extrabold ${fc.estSold >= fc.breakEven ? 'text-emerald-600' : 'text-red-600'} text-lg">${fc.estSold.toLocaleString('vi-VN')} ${T('sp', 'units')}</p></div>
       </div>
     </div>
     ${last ? `
     <div class="clay-card p-5 mb-3">
-      <h3 class="font-display font-bold text-deep-teal text-sm mb-3">🧾 Cấu trúc chi phí – Vòng ${last.round}</h3>
-      <p class="text-[11px] font-bold text-deep-teal/60 uppercase mb-1">Chi phí cố định (${Math.round(totalF)}tr₫)</p>
+      <h3 class="font-display font-bold text-deep-teal text-sm mb-3">${T(`🧾 Cấu trúc chi phí – Vòng ${last.round}`, `🧾 Cost structure – Round ${last.round}`)}</h3>
+      <p class="text-[11px] font-bold text-deep-teal/60 uppercase mb-1">${T(`Chi phí cố định (${Math.round(totalF)}tr₫)`, `Fixed costs (${Math.round(totalF)}m₫)`)}</p>
       ${fixedCosts.map(x => costBar(x[0], x[1], totalF + totalV, 'bg-primary')).join('')}
-      <p class="text-[11px] font-bold text-deep-teal/60 uppercase mb-1 mt-3">Chi phí biến đổi (${Math.round(totalV)}tr₫)</p>
+      <p class="text-[11px] font-bold text-deep-teal/60 uppercase mb-1 mt-3">${T(`Chi phí biến đổi (${Math.round(totalV)}tr₫)`, `Variable costs (${Math.round(totalV)}m₫)`)}</p>
       ${varCosts.map(x => costBar(x[0], x[1], totalF + totalV, 'bg-primary-container')).join('')}
     </div>
     <div class="clay-card p-5">
-      <h3 class="font-display font-bold text-deep-teal text-sm mb-3">💹 Lợi nhuận gộp theo vòng</h3>
+      <h3 class="font-display font-bold text-deep-teal text-sm mb-3">${T('💹 Lợi nhuận gộp theo vòng', '💹 Gross profit by round')}</h3>
       ${S.history.map(r => {
         const gross = r.revenue - r.cogs;
         const marginPct = Math.round(100 * gross / Math.max(1, r.revenue));
@@ -2553,7 +2553,7 @@ function renderCvpReport(body) {
       }).join('')}
     </div>
     <div class="clay-card p-5 mt-3">
-      <h3 class="font-display font-bold text-deep-teal text-sm mb-3">📈 Tỷ suất sinh lời – Vòng ${last.round}</h3>
+      <h3 class="font-display font-bold text-deep-teal text-sm mb-3">${T(`📈 Tỷ suất sinh lời – Vòng ${last.round}`, `📈 Profitability ratios – Round ${last.round}`)}</h3>
       ${(() => {
         const gross = last.revenue - last.cogs;
         const opex = last.marketing + last.rd + last.fixed + (last.wageCost || 0) + (last.trainingCost || 0) + (last.holding || 0);
@@ -2571,51 +2571,52 @@ function renderCvpReport(body) {
           <p class="font-display font-extrabold ${v >= 0 ? 'text-primary' : 'text-red-600'} text-xl">${v}%</p>
           <p class="text-[9px] text-deep-teal/50 font-semibold">${note}</p></div>`;
         return `
-        <p class="text-[11px] font-bold text-deep-teal/60 uppercase mb-1">Biểu đồ lợi nhuận (Gộp → Hoạt động → Ròng)</p>
+        <p class="text-[11px] font-bold text-deep-teal/60 uppercase mb-1">${T('Biểu đồ lợi nhuận (Gộp → Hoạt động → Ròng)', 'Profit waterfall (Gross → Operating → Net)')}</p>
         <div class="flex items-end gap-6 h-28 mb-1 px-2">${wf(gross, 'bg-slate-300')}${wf(operating, 'bg-primary-container')}${wf(net, net >= 0 ? 'bg-primary' : 'bg-red-400')}</div>
         <div class="flex gap-6 px-2 mb-4 text-center">
-          <p class="flex-1 text-[10px] font-bold text-deep-teal/60">Gộp<br>${money(gross)}</p>
-          <p class="flex-1 text-[10px] font-bold text-deep-teal/60">HĐ<br>${money(operating)}</p>
-          <p class="flex-1 text-[10px] font-bold ${net >= 0 ? 'text-primary' : 'text-red-600'}">Ròng<br>${money(net)}</p>
+          <p class="flex-1 text-[10px] font-bold text-deep-teal/60">${T('Gộp', 'Gross')}<br>${money(gross)}</p>
+          <p class="flex-1 text-[10px] font-bold text-deep-teal/60">${T('HĐ', 'Oper.')}<br>${money(operating)}</p>
+          <p class="flex-1 text-[10px] font-bold ${net >= 0 ? 'text-primary' : 'text-red-600'}">${T('Ròng', 'Net')}<br>${money(net)}</p>
         </div>
         <div class="grid grid-cols-2 gap-2.5">
-          ${card('ROS', ros, 'Lợi nhuận / Doanh thu')}
-          ${card('ROE', roe, 'Lợi nhuận / Vốn CSH')}
-          ${card('ROA', roa, 'Lợi nhuận / Tài sản')}
-          ${card('OPERATING', operM, 'Biên LN hoạt động')}
+          ${card('ROS', ros, T('Lợi nhuận / Doanh thu', 'Profit / Revenue'))}
+          ${card('ROE', roe, T('Lợi nhuận / Vốn CSH', 'Profit / Equity'))}
+          ${card('ROA', roa, T('Lợi nhuận / Tài sản', 'Profit / Assets'))}
+          ${card('OPERATING', operM, T('Biên LN hoạt động', 'Operating margin'))}
         </div>
         <div class="clay-sunken rounded-2xl p-3 mt-2.5 flex items-center gap-2">
           <span class="text-lg">${ros >= 12 ? '🏆' : '📉'}</span>
-          <p class="text-[11px] text-deep-teal/70">Net Profit Margin <b class="${ros >= 12 ? 'text-emerald-700' : 'text-red-600'}">${ros}%</b> – ${ros >= 12 ? 'cao hơn' : 'thấp hơn'} trung bình ngành (12%). Biên gộp: <b>${grossM}%</b>.</p>
+          <p class="text-[11px] text-deep-teal/70">${T(`Net Profit Margin <b class="${ros >= 12 ? 'text-emerald-700' : 'text-red-600'}">${ros}%</b> – ${ros >= 12 ? 'cao hơn' : 'thấp hơn'} trung bình ngành (12%). Biên gộp: <b>${grossM}%</b>.`,
+            `Net Profit Margin <b class="${ros >= 12 ? 'text-emerald-700' : 'text-red-600'}">${ros}%</b> – ${ros >= 12 ? 'above' : 'below'} the industry average (12%). Gross margin: <b>${grossM}%</b>.`)}</p>
         </div>`;
       })()}
-    </div>` : '<div class="clay-card p-8 text-center text-sm text-deep-teal/50">Hoàn thành vòng đầu để xem cấu trúc chi phí và lợi nhuận gộp.</div>'}`;
+    </div>` : `<div class="clay-card p-8 text-center text-sm text-deep-teal/50">${T('Hoàn thành vòng đầu để xem cấu trúc chi phí và lợi nhuận gộp.', 'Complete the first round to see cost structure and gross profit.')}</div>`}`;
 }
 
 // ---------- Báo cáo Nhân sự ----------
 function renderHrReport(body) {
   if (!S.history.length) {
-    body.innerHTML = '<div class="clay-card p-8 text-center text-sm text-deep-teal/50">Chưa có dữ liệu nhân sự – hãy hoàn thành vòng đầu tiên!</div>';
+    body.innerHTML = `<div class="clay-card p-8 text-center text-sm text-deep-teal/50">${T('Chưa có dữ liệu nhân sự – hãy hoàn thành vòng đầu tiên!', 'No HR data yet – complete the first round!')}</div>`;
     return;
   }
   const last = S.history[S.history.length - 1];
   const productivity = Math.round(last.sold / Math.max(1, last.workers || 45));
   body.innerHTML = `
     <div class="grid grid-cols-2 gap-3 mb-3">
-      <div class="clay-card p-4 text-center"><p class="text-2xl">👥</p><p class="font-display font-extrabold text-deep-teal">${last.workers || 45}</p><p class="text-[10px] text-deep-teal/50 font-semibold uppercase">Nhân viên</p></div>
-      <div class="clay-card p-4 text-center"><p class="text-2xl">⚡</p><p class="font-display font-extrabold text-primary">${productivity} sp</p><p class="text-[10px] text-deep-teal/50 font-semibold uppercase">Năng suất/người</p></div>
-      <div class="clay-card p-4 text-center"><p class="text-2xl">💰</p><p class="font-display font-extrabold text-deep-teal">${money(last.wageCost || 0)}</p><p class="text-[10px] text-deep-teal/50 font-semibold uppercase">Quỹ lương/vòng</p></div>
-      <div class="clay-card p-4 text-center"><p class="text-2xl">🎓</p><p class="font-display font-extrabold text-deep-teal">${money(last.trainingCost || 0)}</p><p class="text-[10px] text-deep-teal/50 font-semibold uppercase">Đào tạo/vòng</p></div>
+      <div class="clay-card p-4 text-center"><p class="text-2xl">👥</p><p class="font-display font-extrabold text-deep-teal">${last.workers || 45}</p><p class="text-[10px] text-deep-teal/50 font-semibold uppercase">${T('Nhân viên', 'Employees')}</p></div>
+      <div class="clay-card p-4 text-center"><p class="text-2xl">⚡</p><p class="font-display font-extrabold text-primary">${productivity} ${T('sp', 'units')}</p><p class="text-[10px] text-deep-teal/50 font-semibold uppercase">${T('Năng suất/người', 'Output/person')}</p></div>
+      <div class="clay-card p-4 text-center"><p class="text-2xl">💰</p><p class="font-display font-extrabold text-deep-teal">${money(last.wageCost || 0)}</p><p class="text-[10px] text-deep-teal/50 font-semibold uppercase">${T('Quỹ lương/vòng', 'Payroll/round')}</p></div>
+      <div class="clay-card p-4 text-center"><p class="text-2xl">🎓</p><p class="font-display font-extrabold text-deep-teal">${money(last.trainingCost || 0)}</p><p class="text-[10px] text-deep-teal/50 font-semibold uppercase">${T('Đào tạo/vòng', 'Training/round')}</p></div>
     </div>
     <div class="clay-card p-5">
-      <h3 class="font-display font-bold text-deep-teal text-sm mb-3">Lịch sử nhân sự & hiệu suất</h3>
+      <h3 class="font-display font-bold text-deep-teal text-sm mb-3">${T('Lịch sử nhân sự & hiệu suất', 'HR & performance history')}</h3>
       ${S.history.map(r => `
         <div class="flex justify-between items-center text-xs py-2 border-b border-surface-bright last:border-0">
           <span class="font-bold text-deep-teal">V${r.round}</span>
-          <span class="text-deep-teal/70">${r.workers || 45} người · lương ${Math.round(r.wageCost || 0)}tr · đào tạo ${Math.round(r.trainingCost || 0)}tr</span>
+          <span class="text-deep-teal/70">${T(`${r.workers || 45} người · lương ${Math.round(r.wageCost || 0)}tr · đào tạo ${Math.round(r.trainingCost || 0)}tr`, `${r.workers || 45} people · wages ${Math.round(r.wageCost || 0)}m · training ${Math.round(r.trainingCost || 0)}m`)}</span>
           <span class="font-bold ${r.oee >= 85 ? 'text-emerald-600' : 'text-amber-600'}">OEE ${r.oee}%</span>
         </div>`).join('')}
-      <p class="text-[11px] text-deep-teal/50 mt-3">💡 Đào tạo tăng OEE (tối đa +5%); sản xuất vượt năng lực nhân sự (70 sp/người) sẽ kéo OEE xuống.</p>
+      <p class="text-[11px] text-deep-teal/50 mt-3">${T('💡 Đào tạo tăng OEE (tối đa +5%); sản xuất vượt năng lực nhân sự (70 sp/người) sẽ kéo OEE xuống.', '💡 Training raises OEE (up to +5%); producing beyond staff capacity (70 units/person) drags OEE down.')}</p>
     </div>`;
 }
 
@@ -2630,20 +2631,20 @@ function renderBmcReport(body) {
       <p class="text-[11px] text-deep-teal/80 leading-relaxed">${content}</p>
     </div>`;
   body.innerHTML = `
-    <p class="text-[11px] text-deep-teal/50 mb-3">Business Model Canvas của đội ${S.profile.teamName} – cập nhật theo dữ liệu vòng ${Math.min(S.round, ROUNDS_TOTAL)}.</p>
+    <p class="text-[11px] text-deep-teal/50 mb-3">${T(`Business Model Canvas của đội ${S.profile.teamName} – cập nhật theo dữ liệu vòng ${Math.min(S.round, ROUNDS_TOTAL)}.`, `Business Model Canvas for team ${S.profile.teamName} – updated with round ${Math.min(S.round, ROUNDS_TOTAL)} data.`)}</p>
     <div class="grid grid-cols-2 gap-3">
-      ${block('Phân khúc khách hàng', '🎯', `Thị trường đại chúng ${share}% thị phần; khách nhạy giá ${currentEvent(S).elasticityMul ? 'CAO (chiến tranh giá!)' : 'trung bình'}.`)}
-      ${block('Giá trị cốt lõi', '💎', `Sản phẩm giá ${(last ? last.decisions.price : 150).toLocaleString('vi-VN')}k₫, thương hiệu hạng ${S.brand >= 1.2 ? 'A' : 'B+'}, R&D tích lũy ${Math.round(S.rdCumulative)}tr₫.`)}
-      ${block('Kênh phân phối', '🚚', `Kênh Modern Trade + trực tuyến; tỷ lệ đáp ứng đơn ${currentEvent(S).fulfillMul ? '85% (khủng hoảng cung ứng)' : '100%'}.`)}
-      ${block('Quan hệ khách hàng', '❤️', `Brand Loyalty ${S.brandLoyalty}%; độ hài lòng ${Math.min(5, S.brandLoyalty / 19).toFixed(1)}/5.`)}
-      ${block('Dòng doanh thu', '💵', `Bán sản phẩm: ${money(totalRev)} lũy kế; giá bán là đòn bẩy chính.`)}
-      ${block('Nguồn lực chính', '🏭', `${last ? (last.workers || 45) : 45} nhân sự, công suất máy ${S.machineCapacity.toLocaleString('vi-VN')} sp, OEE ${S.oee}%.`)}
-      ${block('Hoạt động chính', '⚙️', `Sản xuất ${last ? last.decisions.production.toLocaleString('vi-VN') : '–'} sp/vòng, marketing, R&D, tối ưu năng lượng.`)}
-      ${block('Đối tác chính', '🤝', `Ngân hàng (tín dụng 8.5%/vòng), nhà cung ứng linh kiện, ${(S.grantLog || []).length ? 'Giảng viên cấp vốn' : 'lớp học BizOn'}.`)}
+      ${block(T('Phân khúc khách hàng', 'Customer Segments'), '🎯', T(`Thị trường đại chúng ${share}% thị phần; khách nhạy giá ${currentEvent(S).elasticityMul ? 'CAO (chiến tranh giá!)' : 'trung bình'}.`, `Mass market at ${share}% share; price sensitivity ${currentEvent(S).elasticityMul ? 'HIGH (price war!)' : 'average'}.`))}
+      ${block(T('Giá trị cốt lõi', 'Value Propositions'), '💎', T(`Sản phẩm giá ${(last ? last.decisions.price : 150).toLocaleString('vi-VN')}k₫, thương hiệu hạng ${S.brand >= 1.2 ? 'A' : 'B+'}, R&D tích lũy ${Math.round(S.rdCumulative)}tr₫.`, `Product priced ${(last ? last.decisions.price : 150).toLocaleString('en-US')}k₫, brand grade ${S.brand >= 1.2 ? 'A' : 'B+'}, cumulative R&D ${Math.round(S.rdCumulative)}m₫.`))}
+      ${block(T('Kênh phân phối', 'Channels'), '🚚', T(`Kênh Modern Trade + trực tuyến; tỷ lệ đáp ứng đơn ${currentEvent(S).fulfillMul ? '85% (khủng hoảng cung ứng)' : '100%'}.`, `Modern Trade + online channels; order fulfillment rate ${currentEvent(S).fulfillMul ? '85% (supply chain crisis)' : '100%'}.`))}
+      ${block(T('Quan hệ khách hàng', 'Customer Relationships'), '❤️', T(`Brand Loyalty ${S.brandLoyalty}%; độ hài lòng ${Math.min(5, S.brandLoyalty / 19).toFixed(1)}/5.`, `Brand Loyalty ${S.brandLoyalty}%; satisfaction ${Math.min(5, S.brandLoyalty / 19).toFixed(1)}/5.`))}
+      ${block(T('Dòng doanh thu', 'Revenue Streams'), '💵', T(`Bán sản phẩm: ${money(totalRev)} lũy kế; giá bán là đòn bẩy chính.`, `Product sales: ${money(totalRev)} cumulative; price is the main lever.`))}
+      ${block(T('Nguồn lực chính', 'Key Resources'), '🏭', T(`${last ? (last.workers || 45) : 45} nhân sự, công suất máy ${S.machineCapacity.toLocaleString('vi-VN')} sp, OEE ${S.oee}%.`, `${last ? (last.workers || 45) : 45} staff, machine capacity ${S.machineCapacity.toLocaleString('en-US')} units, OEE ${S.oee}%.`))}
+      ${block(T('Hoạt động chính', 'Key Activities'), '⚙️', T(`Sản xuất ${last ? last.decisions.production.toLocaleString('vi-VN') : '–'} sp/vòng, marketing, R&D, tối ưu năng lượng.`, `Producing ${last ? last.decisions.production.toLocaleString('en-US') : '–'} units/round, marketing, R&D, energy optimization.`))}
+      ${block(T('Đối tác chính', 'Key Partners'), '🤝', T(`Ngân hàng (tín dụng 8.5%/vòng), nhà cung ứng linh kiện, ${(S.grantLog || []).length ? 'Giảng viên cấp vốn' : 'lớp học BizOn'}.`, `Bank (8.5%/round credit), parts suppliers, ${(S.grantLog || []).length ? 'instructor-funded grants' : 'the BizOn classroom'}.`))}
     </div>
     <div class="clay-card p-3.5 mt-3">
-      <p class="text-[10px] font-extrabold text-primary uppercase mb-1">🧾 Cơ cấu chi phí</p>
-      <p class="text-[11px] text-deep-teal/80">${last ? `Biến đổi: COGS ${Math.round(last.cogs)}tr + Marketing ${last.marketing}tr + R&D ${last.rd}tr · Cố định: ${Math.round(last.fixed)}tr + khấu hao ${Math.round(last.depreciation)}tr + lương ${Math.round(last.wageCost || 0)}tr` : 'Hoàn thành vòng đầu để xem dữ liệu.'}</p>
+      <p class="text-[10px] font-extrabold text-primary uppercase mb-1">${T('🧾 Cơ cấu chi phí', '🧾 Cost Structure')}</p>
+      <p class="text-[11px] text-deep-teal/80">${last ? T(`Biến đổi: COGS ${Math.round(last.cogs)}tr + Marketing ${last.marketing}tr + R&D ${last.rd}tr · Cố định: ${Math.round(last.fixed)}tr + khấu hao ${Math.round(last.depreciation)}tr + lương ${Math.round(last.wageCost || 0)}tr`, `Variable: COGS ${Math.round(last.cogs)}m + Marketing ${last.marketing}m + R&D ${last.rd}m · Fixed: ${Math.round(last.fixed)}m + depreciation ${Math.round(last.depreciation)}m + wages ${Math.round(last.wageCost || 0)}m`) : T('Hoàn thành vòng đầu để xem dữ liệu.', 'Complete the first round to see data.')}</p>
     </div>`;
 }
 
@@ -2651,7 +2652,7 @@ function renderBmcReport(body) {
 function renderEnergyReport(body) {
   const er = energyReport(S);
   const over = er.overloadPct > 100;
-  const statusChip = { ok: '<span class="text-[10px] font-bold px-2 py-0.5 rounded-full risk-low">Hiệu quả</span>', warn: '<span class="text-[10px] font-bold px-2 py-0.5 rounded-full risk-medium">Cảnh báo</span>', bad: '<span class="text-[10px] font-bold px-2 py-0.5 rounded-full risk-high">Nguy cấp</span>' };
+  const statusChip = { ok: `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full risk-low">${T('Hiệu quả', 'Efficient')}</span>`, warn: `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full risk-medium">${T('Cảnh báo', 'Warning')}</span>`, bad: `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full risk-high">${T('Nguy cấp', 'Critical')}</span>` };
   const barColor = { ok: 'bg-primary', warn: 'bg-amber-500', bad: 'bg-red-500' };
   const maxKwh = Math.max(...er.lines.map(l => l.kwh), 1);
   const worst = er.lines.reduce((a, b) => (b.kwh > a.kwh ? b : a));
@@ -2662,8 +2663,8 @@ function renderEnergyReport(body) {
     <div class="clay-card p-4 mb-4 flex items-center gap-4 ${hasSolar ? '' : 'opacity-90'}">
       <p class="text-3xl">☀️</p>
       <div class="flex-1">
-        <p class="font-display font-bold text-deep-teal text-sm">Pin Mặt Trời ${hasSolar ? '<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full risk-low align-middle">ĐANG HOẠT ĐỘNG</span>' : '<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full risk-medium align-middle">CHƯA LẮP</span>'}</p>
-        <p class="text-[11px] text-deep-teal/60">${hasSolar ? 'Tự chủ nguồn điện: -15% chi phí cố định, kháng khủng hoảng năng lượng.' : 'Lắp đặt trong Cửa hàng (150tr₫) để giảm 15% OPEX và tăng 20 điểm ESG. Hoàn vốn ~2 vòng.'}</p>
+        <p class="font-display font-bold text-deep-teal text-sm">${T('Pin Mặt Trời', 'Solar Panels')} ${hasSolar ? `<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full risk-low align-middle">${T('ĐANG HOẠT ĐỘNG', 'ACTIVE')}</span>` : `<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full risk-medium align-middle">${T('CHƯA LẮP', 'NOT INSTALLED')}</span>`}</p>
+        <p class="text-[11px] text-deep-teal/60">${hasSolar ? T('Tự chủ nguồn điện: -15% chi phí cố định, kháng khủng hoảng năng lượng.', 'Self-sufficient power: -15% fixed cost, resistant to energy crises.') : T('Lắp đặt trong Cửa hàng (150tr₫) để giảm 15% OPEX và tăng 20 điểm ESG. Hoàn vốn ~2 vòng.', 'Install it in the Shop (150m₫) to cut OPEX 15% and gain 20 ESG points. Pays back in ~2 rounds.')}</p>
       </div>
       <div class="text-center shrink-0">
         <p class="font-display font-extrabold ${esgScore(S) >= 70 ? 'text-emerald-600' : 'text-deep-teal'} text-2xl">${esgScore(S)}</p>
@@ -2671,28 +2672,28 @@ function renderEnergyReport(body) {
       </div>
     </div>
     <div class="clay-card p-5 mb-4 text-center">
-      <h3 class="font-display font-extrabold text-deep-teal text-lg">Tổng mức tiêu thụ</h3>
-      <p class="text-xs text-deep-teal/60 mb-3">Sản lượng tiêu thụ hiện tại so với mục tiêu.</p>
-      ${over ? '<span class="inline-block risk-high text-xs font-bold px-3 py-1.5 rounded-full mb-3">⚠️ Vượt Mức Tiêu Thụ</span>' : '<span class="inline-block risk-low text-xs font-bold px-3 py-1.5 rounded-full mb-3">✅ Trong ngưỡng an toàn</span>'}
+      <h3 class="font-display font-extrabold text-deep-teal text-lg">${T('Tổng mức tiêu thụ', 'Total consumption')}</h3>
+      <p class="text-xs text-deep-teal/60 mb-3">${T('Sản lượng tiêu thụ hiện tại so với mục tiêu.', 'Current consumption versus the target.')}</p>
+      ${over ? `<span class="inline-block risk-high text-xs font-bold px-3 py-1.5 rounded-full mb-3">${T('⚠️ Vượt Mức Tiêu Thụ', '⚠️ Over Consumption')}</span>` : `<span class="inline-block risk-low text-xs font-bold px-3 py-1.5 rounded-full mb-3">${T('✅ Trong ngưỡng an toàn', '✅ Within safe range')}</span>`}
       <p class="font-display font-extrabold ${over ? 'text-red-600' : 'text-primary'} text-4xl">${er.total.toLocaleString('vi-VN')} <span class="text-base">kWh</span></p>
-      <p class="text-xs text-deep-teal/60 mb-4">Mục tiêu: <b>${er.target.toLocaleString('vi-VN')} kWh</b></p>
+      <p class="text-xs text-deep-teal/60 mb-4">${T('Mục tiêu', 'Target')}: <b>${er.target.toLocaleString('vi-VN')} kWh</b></p>
       <div class="w-36 h-36 mx-auto rounded-full flex items-center justify-center" style="background:conic-gradient(${over ? '#dc2626' : '#006687'} ${ringDeg}deg, #e5f2f8 0deg)">
         <div class="w-28 h-28 rounded-full bg-white flex flex-col items-center justify-center">
           <span class="font-display font-extrabold ${over ? 'text-red-600' : 'text-primary'} text-2xl">${er.overloadPct}%</span>
-          <span class="text-[9px] font-bold text-deep-teal/50 uppercase">${over ? 'Quá tải' : 'Công suất'}</span>
+          <span class="text-[9px] font-bold text-deep-teal/50 uppercase">${over ? T('Quá tải', 'Overloaded') : T('Công suất', 'Capacity')}</span>
         </div>
       </div>
     </div>
     <div class="flex justify-between items-center mb-2">
-      <h3 class="font-display font-bold text-deep-teal">Chi tiết dây chuyền</h3>
-      <span class="text-[11px] text-deep-teal/50">Cập nhật theo vòng ${Math.min(S.round, ROUNDS_TOTAL)}</span>
+      <h3 class="font-display font-bold text-deep-teal">${T('Chi tiết dây chuyền', 'Line details')}</h3>
+      <span class="text-[11px] text-deep-teal/50">${T(`Cập nhật theo vòng ${Math.min(S.round, ROUNDS_TOTAL)}`, `Updated for round ${Math.min(S.round, ROUNDS_TOTAL)}`)}</span>
     </div>
     ${er.lines.map((l, i) => `
       <div class="clay-card p-4 mb-3 ${l.status === 'bad' ? 'border-2 border-red-200' : ''}">
         <div class="flex items-center gap-3">
           <span class="text-2xl">${['🦾', '🏭', '🔩'][i]}</span>
           <div class="flex-1">
-            <p class="font-bold text-sm text-deep-teal">${l.name} ${l.upgraded ? '<span class="text-[9px] bg-primary-container/30 text-primary font-bold px-1.5 py-0.5 rounded-full">ĐÃ NÂNG CẤP</span>' : ''}</p>
+            <p class="font-bold text-sm text-deep-teal">${l.name} ${l.upgraded ? `<span class="text-[9px] bg-primary-container/30 text-primary font-bold px-1.5 py-0.5 rounded-full">${T('ĐÃ NÂNG CẤP', 'UPGRADED')}</span>` : ''}</p>
             <div class="h-2 rounded-full bg-surface-bright overflow-hidden mt-1.5"><div class="h-full ${barColor[l.status]} rounded-full" style="width:${Math.round(100 * l.kwh / maxKwh)}%"></div></div>
           </div>
           <div class="text-right"><p class="font-display font-bold ${l.status === 'bad' ? 'text-red-600' : 'text-primary'} text-sm">${l.kwh.toLocaleString('vi-VN')} kWh</p>${statusChip[l.status]}</div>
@@ -2704,27 +2705,27 @@ function renderEnergyReport(body) {
         <div>
           <p class="text-sm"><span class="font-display font-extrabold lumina-name">Lumina AI</span> <span class="signature text-base text-deep-teal">Je m'appelle Hương</span></p>
           <p class="text-sm text-deep-teal/80 italic mt-1">"${worst.upgraded
-            ? 'Các dây chuyền đã vận hành tối ưu. Duy trì bảo trì định kỳ để giữ OEE ổn định nhé!'
-            : `${worst.name} đang tiêu thụ năng lượng nhiều hơn 40% do máy móc đã cũ. Việc nâng cấp sẽ giúp giảm đáng kể chi phí vận hành (OPEX).`}"</p>
-          <p class="text-xs font-bold text-primary mt-2">💡 Tiềm năng tiết kiệm: ${Math.round(worst.kwh * 0.4 / 100) * 10}tr₫/vòng</p>
+            ? T('Các dây chuyền đã vận hành tối ưu. Duy trì bảo trì định kỳ để giữ OEE ổn định nhé!', 'All lines are running optimally. Keep up routine maintenance to hold OEE steady!')
+            : T(`${worst.name} đang tiêu thụ năng lượng nhiều hơn 40% do máy móc đã cũ. Việc nâng cấp sẽ giúp giảm đáng kể chi phí vận hành (OPEX).`, `${worst.name} is consuming 40% more energy due to aging equipment. Upgrading it will significantly cut operating cost (OPEX).`)}"</p>
+          <p class="text-xs font-bold text-primary mt-2">${T(`💡 Tiềm năng tiết kiệm: ${Math.round(worst.kwh * 0.4 / 100) * 10}tr₫/vòng`, `💡 Potential savings: ${Math.round(worst.kwh * 0.4 / 100) * 10}m₫/round`)}</p>
         </div>
       </div>
     </div>
-    <button onclick="doOptimizeLine(${worstIdx})" class="clay-btn w-full bg-deep-teal text-white font-display font-bold py-4 mb-3 ${worst.upgraded ? 'opacity-50' : ''}" ${worst.upgraded ? 'disabled' : ''}>⚡ Tối ưu ${worst.name} (150tr₫)</button>
-    <button onclick="doMaintain()" class="clay-btn w-full bg-white text-deep-teal font-display font-bold py-4 mb-4">🕓 Bảo trì ngay (60tr₫)</button>
-    <h3 class="font-display font-bold text-deep-teal mb-2">Lịch sử bảo trì</h3>
+    <button onclick="doOptimizeLine(${worstIdx})" class="clay-btn w-full bg-deep-teal text-white font-display font-bold py-4 mb-3 ${worst.upgraded ? 'opacity-50' : ''}" ${worst.upgraded ? 'disabled' : ''}>${T(`⚡ Tối ưu ${worst.name} (150tr₫)`, `⚡ Optimize ${worst.name} (150m₫)`)}</button>
+    <button onclick="doMaintain()" class="clay-btn w-full bg-white text-deep-teal font-display font-bold py-4 mb-4">${T('🕓 Bảo trì ngay (60tr₫)', '🕓 Maintain now (60m₫)')}</button>
+    <h3 class="font-display font-bold text-deep-teal mb-2">${T('Lịch sử bảo trì', 'Maintenance history')}</h3>
     <div class="clay-card p-4 text-sm text-deep-teal/70 space-y-1.5">
-      ${(S.maintenanceLog || []).length ? S.maintenanceLog.slice(-6).reverse().map(m => `<p>🔧 V${m.round}: ${m.text}</p>`).join('') : '<p class="text-deep-teal/40">Chưa có hoạt động bảo trì nào.</p>'}
+      ${(S.maintenanceLog || []).length ? S.maintenanceLog.slice(-6).reverse().map(m => `<p>🔧 V${m.round}: ${m.text}</p>`).join('') : `<p class="text-deep-teal/40">${T('Chưa có hoạt động bảo trì nào.', 'No maintenance activity yet.')}</p>`}
     </div>`;
 }
 
 function doOptimizeLine(idx) {
-  if (!optimizeLine(S, idx)) { alert('ERR_INSUFFICIENT_FUNDS – Cần 150tr₫ trong ví để nâng cấp dây chuyền.'); return; }
+  if (!optimizeLine(S, idx)) { alert(T('ERR_INSUFFICIENT_FUNDS – Cần 150tr₫ trong ví để nâng cấp dây chuyền.', 'ERR_INSUFFICIENT_FUNDS – You need 150m₫ in your wallet to upgrade the line.')); return; }
   save(); renderAll(); showReport('energy'); createConfetti();
 }
 
 function doMaintain() {
-  if (!doMaintenance(S)) { alert('ERR_INSUFFICIENT_FUNDS – Cần 60tr₫ trong ví để bảo trì.'); return; }
+  if (!doMaintenance(S)) { alert(T('ERR_INSUFFICIENT_FUNDS – Cần 60tr₫ trong ví để bảo trì.', 'ERR_INSUFFICIENT_FUNDS – You need 60m₫ in your wallet for maintenance.')); return; }
   save(); renderAll(); showReport('energy');
 }
 

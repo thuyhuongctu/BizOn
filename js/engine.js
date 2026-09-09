@@ -474,7 +474,7 @@ function energyReport(s) {
     let kwh = Math.round(base * factor * evMul);
     if (s.lineUpgraded[i]) kwh = Math.round(kwh * 0.6);
     const status = kwh > 4000 ? 'bad' : kwh > 2200 ? 'warn' : 'ok';
-    return { name: 'Dây chuyền ' + (i + 1), kwh, status, upgraded: s.lineUpgraded[i] };
+    return { name: T('Dây chuyền ', 'Line ') + (i + 1), kwh, status, upgraded: s.lineUpgraded[i] };
   });
   const total = lines.reduce((a, l) => a + l.kwh, 0);
   const target = 7000;
