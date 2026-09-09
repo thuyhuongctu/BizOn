@@ -353,7 +353,14 @@
       if (!rows.length) { $('gv-status').textContent = 'ℹ️ Lớp ' + klass + ' chưa có phiếu khảo sát nào (hoặc khóa chưa đúng).'; return; }
       const oc = r => (r.score_by_outcome || {});
       const lk = (a, i) => (Array.isArray(a) && a[i] != null) ? a[i] : '';
-      const clean = s => '"' + String(s == null ? '' : s).replace(/"/g, '""').replace(/\r?\n/g, ' ') + '"';
+      // Chặn formula injection (CSV/Excel): văn bản do sinh viên tự nhập (open_like/
+      // open_improve) mà bắt đầu bằng = + - @ sẽ bị Excel/Sheets hiểu là công thức khi
+      // giảng viên mở file – thêm nháy đơn phía trước để ép về dạng chữ thuần.
+      const clean = s => {
+        let text = String(s == null ? '' : s).replace(/\r?\n/g, ' ');
+        if (/^[\t\r\n ]*[=+\-@]/.test(text)) text = `'${text}`;
+        return '"' + text.replace(/"/g, '""') + '"';
+      };
       const head = 'bo_cau_hoi,phieu,ma_sv,vai_tro,so_vong,diem_A,marketing,tai_chinh,van_hanh,kdqt,chien_luoc,' +
         'thi_truong,tham_nhap,nguon_tin,thich_nghi,rui_ro,' +
         'B1,B2,B3,B4,B5,B6,B7,B8,C1,C2,C3,C4,C5,diem_gioi_thieu,thich_nhat,can_cai_thien,nop_luc\n';
