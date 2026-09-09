@@ -43,6 +43,14 @@ alter table team_saves enable row level security;
 -- Không tạo policy SELECT/INSERT/UPDATE cho anon trên bảng này —
 -- mọi truy cập đi qua 2 hàm bên dưới.
 
+-- QUAN TRỌNG: thêm tham số p_token vào 1 hàm cùng tên là tạo ra một HÀM
+-- OVERLOAD MỚI trong Postgres (khác nhau ở số lượng/kiểu tham số), KHÔNG
+-- thay thế hàm cũ – "create or replace" chỉ thay khi chữ ký khớp y hệt.
+-- Phải xóa tường minh 2 chữ ký cũ (không có p_token), nếu không bản cũ
+-- vẫn còn được cấp quyền cho anon và ai cũng gọi thẳng bỏ qua token.
+drop function if exists get_team_save(text, text);
+drop function if exists upsert_team_save(text, text, jsonb);
+
 create or replace function get_team_save(p_class_code text, p_team_name text, p_token text default null)
 returns table(state_json jsonb, updated_at timestamptz)
 language plpgsql
