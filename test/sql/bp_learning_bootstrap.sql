@@ -25,3 +25,15 @@ stable
 as $$
   select p_key = 'TEST-INSTRUCTOR-KEY';
 $$;
+
+-- Rate-limited RPCs (added by 20260730000000_instructor_dashboard.sql) call
+-- bizon_check_key_gate() instead of bizon_check_key() directly. This test
+-- database has no key_check_attempts table or lockout logic, so stub the
+-- gate with the same test-key contract.
+create or replace function public.bizon_check_key_gate(p_key text)
+returns boolean
+language sql
+stable
+as $$
+  select p_key = 'TEST-INSTRUCTOR-KEY';
+$$;
