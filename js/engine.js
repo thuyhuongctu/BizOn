@@ -440,6 +440,8 @@ function newGameState(profile) {
     achievements: [],
     finished: false,
     seed: 12345,
+    difficulty: 'normal',                     // easy | normal | hard (cố định cho bản tính điểm)
+    autoDiff: 1.0,                             // hệ số thích ứng — chỉ dùng khi chơi thử
     missionsClaimed: [],
     aiAskedTotal: 0,
     itemsBought: 0,
@@ -548,6 +550,18 @@ const UNITS_PER_WORKER = 70;      // năng lực sản xuất mỗi nhân viên
 const CREDIT_INTEREST = 0.085;    // lãi vay ngân hàng 8.5%/vòng cho phần thấu chi
 
 /** Chạy mô phỏng 1 vòng với quyết định của người chơi. */
+// ===== Độ khó =====
+// Hệ số nhân sức hấp dẫn của đối thủ. "normal" = 1.0 → hành vi Y HỆT trước đây
+// (không regression cho bản tính điểm vốn mặc định normal).
+const DIFFICULTY_MUL = { easy: 0.82, normal: 1.0, hard: 1.20 };
+function isGradedState(s) { return !!(((s && s.profile && s.profile.classId) || '').toString().trim()); }
+// Bản có Mã lớp (tính điểm): mức CỐ ĐỊNH theo s.difficulty → mọi đội cùng lớp
+// gặp cùng độ khó, bảo toàn tính so sánh/công bằng. Chơi thử: hệ số thích ứng.
+function difficultyMul(s) {
+  if (isGradedState(s)) return DIFFICULTY_MUL[s.difficulty] || 1.0;
+  return clampNum(s.autoDiff || 1.0, 0.78, 1.32);
+}
+
 function simulateRound(s, d) {
   d.workers ??= 45; d.training ??= 0; d.funding ??= 'equity'; d.paymentTerm ??= 30;
   const term = PAYMENT_TERMS[d.paymentTerm] || PAYMENT_TERMS[30];
@@ -566,13 +580,14 @@ function simulateRound(s, d) {
   const brandPow = evEff.brandPow || 1;   // cột mốc thu nhập trung bình cao: trọng số thương hiệu ×1.5
   const playerAttr = Math.pow(REF_PRICE / d.price, elasticity) * (1 + Math.sqrt(mktEff) / 18) * Math.pow(s.brand, brandPow);
 
+  const diffMul = difficultyMul(s);   // độ khó: ×1.0 ở mức Thường (không đổi hành vi)
   const compDecisions = s.competitors.map(c => {
     const jitter = 0.9 + rng(s) * 0.25;
     let price = REF_PRICE, mkt = 55;
     if (c.style === 'aggressive') { price = 125 * jitter; mkt = 90 * jitter; }
     if (c.style === 'balanced')   { price = 150 * jitter; mkt = 60 * jitter; }
     if (c.style === 'premium')    { price = 195 * jitter; mkt = 75 * jitter; }
-    const attr = Math.pow(REF_PRICE / price, elasticity) * (1 + Math.sqrt(mkt) / 18) * Math.pow(c.brand, brandPow);
+    const attr = Math.pow(REF_PRICE / price, elasticity) * (1 + Math.sqrt(mkt) / 18) * Math.pow(c.brand, brandPow) * diffMul;
     return { c, price, mkt, attr };
   });
 
@@ -654,6 +669,15 @@ function simulateRound(s, d) {
   s.roi = Math.round(1000 * netProfit / Math.max(1, totalCost)) / 10;
   const isNewPeak = share >= 30 && share > s.peakShare && netProfit > 0;
   if (share > s.peakShare) s.peakShare = share;
+
+  // Chơi thử: tự điều chỉnh độ khó cho vòng sau theo phong độ (KHÔNG áp dụng cho
+  // bản tính điểm — ở đó difficultyMul dùng mức cố định, bỏ qua autoDiff).
+  if (!isGradedState(s)) {
+    let a = s.autoDiff || 1.0;
+    if (share > 42) a += 0.06;        // đang áp đảo → đối thủ mạnh lên
+    else if (share < 18) a -= 0.06;   // đang đuối → đối thủ nhẹ đi
+    s.autoDiff = clampNum(Math.round(a * 100) / 100, 0.78, 1.32);
+  }
 
   const report = {
     round: s.round, event: ev, shielded,

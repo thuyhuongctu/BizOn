@@ -730,6 +730,17 @@
         <div class="p-5 flex items-center justify-between"><span class="font-bold text-sm text-deep-teal">🎵 Nhạc nền (Mekong Sunfire)</span><input id="music-toggle" type="checkbox" onchange="toggleMusic()" class="w-5 h-5 accent-primary"></div>
         <div class="p-5 flex items-center justify-between"><span class="font-bold text-sm text-deep-teal">🌙 Chế độ tối (Dark mode)</span><input id="theme-toggle-check" type="checkbox" onchange="toggleTheme()" class="w-5 h-5 accent-primary"></div>
         <div class="p-5 flex items-center justify-between"><span class="font-bold text-sm text-deep-teal">🌐 Giao diện tiếng Anh (English)</span><input id="lang-toggle-check" type="checkbox" onchange="toggleLang()" class="w-5 h-5 accent-primary"></div>
+        <div class="p-5">
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-bold text-sm text-deep-teal">🎚️ Độ khó đối thủ</span>
+            <div class="clay-sunken rounded-full p-1 flex gap-1">
+              <button id="diff-easy" onclick="setDifficulty('easy')" class="px-3 py-1 rounded-full text-[11px] font-bold text-deep-teal/60">Dễ</button>
+              <button id="diff-normal" onclick="setDifficulty('normal')" class="px-3 py-1 rounded-full text-[11px] font-bold text-deep-teal/60">Thường</button>
+              <button id="diff-hard" onclick="setDifficulty('hard')" class="px-3 py-1 rounded-full text-[11px] font-bold text-deep-teal/60">Khó</button>
+            </div>
+          </div>
+          <p id="diff-note" class="text-[11px] text-deep-teal/55 leading-snug"></p>
+        </div>
         <div class="p-5"><button onclick="showIntro()" class="font-bold text-sm text-deep-teal w-full text-left">🎬 Giới thiệu game (Intro)</button></div>
         <div class="p-5"><button onclick="showManual()" class="font-bold text-sm text-deep-teal w-full text-left">📖 Sổ tay hướng dẫn (User Manual)</button></div>
         <div class="p-5"><button onclick="showTab('instructor')" class="font-bold text-sm text-deep-teal w-full text-left">🧑‍🏫 Màn hình Giảng viên trong game <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full align-middle" style="background:#fff4d6;color:#946200">GV</span></button></div>
