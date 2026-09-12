@@ -266,23 +266,42 @@
         </div>
         <button onclick="showTab('advisor')" class="clay-btn bg-primary-container/30 text-primary font-bold px-3 py-2 text-xs">Hỏi</button>
       </div>
-      <h3 class="font-display font-bold text-deep-teal mb-3">Truy cập nhanh</h3>
+      <h3 class="font-display font-bold text-deep-teal mb-3">Tiện ích</h3>
       <div class="grid grid-cols-4 gap-3 mb-4">
-        <button onclick="showTab('missions')" class="clay-card p-3 text-center relative"><span id="missions-badge" class="hidden absolute -top-1 -right-1 w-5 h-5 rounded-full bg-orange-500 text-white text-[10px] font-bold flex items-center justify-center"></span><p class="text-2xl">📋</p><p class="text-[10px] font-bold text-deep-teal mt-1">Nhiệm vụ</p></button>
-        <button onclick="showTab('minigame')" class="clay-card p-3 text-center"><p class="text-2xl">🏭</p><p class="text-[10px] font-bold text-deep-teal mt-1">Mini-game</p></button>
         <button onclick="showManual()" class="clay-card p-3 text-center"><p class="text-2xl">📖</p><p class="text-[10px] font-bold text-deep-teal mt-1">Sổ tay</p></button>
-        <button onclick="showTab('skills')" class="clay-card p-3 text-center"><p class="text-2xl">🌳</p><p class="text-[10px] font-bold text-deep-teal mt-1">Kỹ năng</p></button>
-        <button onclick="showTab('leaderboard')" class="clay-card p-3 text-center"><p class="text-2xl">🏆</p><p class="text-[10px] font-bold text-deep-teal mt-1">Xếp hạng</p></button>
-        <button onclick="showTab('achievements')" class="clay-card p-3 text-center"><p class="text-2xl">🎖️</p><p class="text-[10px] font-bold text-deep-teal mt-1">Thành tựu</p></button>
-        <button onclick="showTab('advisorpro')" class="clay-card p-3 text-center"><p class="text-2xl">📈</p><p class="text-[10px] font-bold text-deep-teal mt-1">Advisor Pro</p></button>
-        <button onclick="showTab('instructor')" class="clay-card p-3 text-center"><p class="text-2xl">🧑‍🏫</p><p class="text-[10px] font-bold text-deep-teal mt-1">Giảng viên</p></button>
-        <button onclick="showTab('market')" class="clay-card p-3 text-center"><p class="text-2xl">📡</p><p class="text-[10px] font-bold text-deep-teal mt-1">Thị trường sống</p></button>
-        <button onclick="showTab('journal')" class="clay-card p-3 text-center"><p class="text-2xl">📔</p><p class="text-[10px] font-bold text-deep-teal mt-1">Nhật ký đội</p></button>
-        <button onclick="showTab('settings')" class="clay-card p-3 text-center"><p class="text-2xl">⚙️</p><p class="text-[10px] font-bold text-deep-teal mt-1">Cài đặt</p></button>
-        <button onclick="showIntro()" class="clay-card p-3 text-center"><p class="text-2xl">🎬</p><p class="text-[10px] font-bold text-deep-teal mt-1">Giới thiệu</p></button>
         <button onclick="BizonTour.start()" class="clay-card p-3 text-center"><p class="text-2xl">❓</p><p class="text-[10px] font-bold text-deep-teal mt-1">Hướng dẫn</p></button>
+        <button onclick="showIntro()" class="clay-card p-3 text-center"><p class="text-2xl">🎬</p><p class="text-[10px] font-bold text-deep-teal mt-1">Giới thiệu</p></button>
+        <button onclick="showTab('settings')" class="clay-card p-3 text-center"><p class="text-2xl">⚙️</p><p class="text-[10px] font-bold text-deep-teal mt-1">Cài đặt</p></button>
       </div>
       <button id="btn-go-decisions" onclick="showTab('decisions')" class="clay-btn w-full bg-primary text-white font-display font-bold py-4">Nhập quyết định vòng này ➜</button>
+    </section>
+
+    <!-- ========== JOURNEY (Hành trình) ========== -->
+    <section id="tab-journey" class="screen">
+      <h2 class="font-display text-xl font-extrabold text-deep-teal mb-1">🗺️ Hành trình</h2>
+      <p class="text-sm text-deep-teal/60 mb-4">Nhật ký, thành tích và tiến bộ của đội qua 6 vòng – tất cả ở một nơi.</p>
+
+      <h3 class="font-display font-bold text-deep-teal mb-2">Tiến bộ &amp; thành tích</h3>
+      <button onclick="showTab('journal')" class="clay-card w-full p-4 mb-3 flex items-center gap-4 text-left">
+        <span class="w-12 h-12 shrink-0 rounded-clay flex items-center justify-center text-2xl" style="background:rgba(0,102,135,.1)">📔</span>
+        <div class="flex-1 min-w-0"><p class="font-display font-bold text-deep-teal text-sm">Nhật ký đội</p><p class="text-[11px] text-deep-teal/55">Timeline quyết định &amp; bài học do SEC ghi – tư liệu cho bài trình bày cuối kỳ</p></div>
+        <span class="text-primary text-lg shrink-0">➜</span>
+      </button>
+      <div class="grid grid-cols-3 gap-3 mb-5">
+        <button onclick="showTab('achievements')" class="clay-card p-4 text-center"><p class="text-2xl">🎖️</p><p class="text-[10px] font-bold text-deep-teal mt-1">Thành tựu &amp; Chứng chỉ</p></button>
+        <button onclick="showTab('leaderboard')" class="clay-card p-4 text-center"><p class="text-2xl">🏆</p><p class="text-[10px] font-bold text-deep-teal mt-1">Xếp hạng</p></button>
+        <button onclick="showTab('missions')" class="clay-card p-4 text-center relative"><span id="missions-badge" class="hidden absolute top-1 right-1 w-5 h-5 rounded-full bg-orange-500 text-white text-[10px] font-bold flex items-center justify-center"></span><p class="text-2xl">📋</p><p class="text-[10px] font-bold text-deep-teal mt-1">Nhiệm vụ</p></button>
+      </div>
+
+      <div class="flex items-center gap-2 mb-2">
+        <h3 class="font-display font-bold text-deep-teal">🎮 Giải trí</h3>
+        <span class="text-[10px] text-deep-teal/45 font-semibold">· tuỳ chọn, không tính điểm</span>
+      </div>
+      <div class="grid grid-cols-3 gap-3">
+        <button onclick="showTab('shop')" class="clay-card p-4 text-center"><p class="text-2xl">🛍️</p><p class="text-[10px] font-bold text-deep-teal mt-1">Cửa hàng</p></button>
+        <button onclick="showTab('minigame')" class="clay-card p-4 text-center"><p class="text-2xl">🏭</p><p class="text-[10px] font-bold text-deep-teal mt-1">Mini-game</p></button>
+        <button onclick="showTab('skills')" class="clay-card p-4 text-center"><p class="text-2xl">🌳</p><p class="text-[10px] font-bold text-deep-teal mt-1">Cây kỹ năng</p></button>
+      </div>
     </section>
 
     <!-- ========== DECISIONS ========== -->
@@ -458,6 +477,11 @@
           </div>
         </div>
       </div>
+      <button onclick="showTab('advisorpro')" class="clay-card w-full p-4 mb-4 flex items-center gap-3 text-left">
+        <span class="w-10 h-10 shrink-0 rounded-clay flex items-center justify-center text-xl" style="background:rgba(0,196,255,.15)">📈</span>
+        <div class="flex-1 min-w-0"><p class="font-display font-bold text-deep-teal text-sm">Lumina Advisor Pro</p><p class="text-[11px] text-deep-teal/55">Nhập số liệu kinh doanh thật → nhận kịch bản "Nếu – Thì"</p></div>
+        <span class="text-primary text-lg shrink-0">➜</span>
+      </button>
       <div id="advisor-chat" class="space-y-3 mb-4"></div>
       <div class="clay-card p-4 mb-4">
         <div class="flex items-center justify-between mb-2">
@@ -494,7 +518,12 @@
 
     <!-- ========== REPORTS ========== -->
     <section id="tab-reports" class="screen">
-      <h2 class="font-display text-xl font-extrabold text-deep-teal mb-4">Báo cáo kết quả & Phân tích</h2>
+      <h2 class="font-display text-xl font-extrabold text-deep-teal mb-2">Báo cáo kết quả & Phân tích</h2>
+      <button onclick="showTab('market')" class="clay-card w-full p-3 mb-4 flex items-center gap-3 text-left">
+        <span class="w-9 h-9 shrink-0 rounded-xl flex items-center justify-center text-lg" style="background:rgba(0,102,135,.1)">📡</span>
+        <div class="flex-1 min-w-0"><p class="font-display font-bold text-deep-teal text-sm">Thị trường sống <span class="text-[9px] font-extrabold text-red-500 align-middle">● LIVE</span></p><p class="text-[11px] text-deep-teal/55">Nhịp đập thị trường, đối thủ &amp; xu hướng thời gian thực</p></div>
+        <span class="text-primary text-lg shrink-0">➜</span>
+      </button>
       <div class="flex gap-2 mb-4 overflow-x-auto pb-1">
         <button data-rep="pnl" class="rep-tab clay-btn bg-primary text-white text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('pnl')">P&L</button>
         <button data-rep="cash" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('cash')">Dòng tiền</button>
@@ -613,6 +642,7 @@
 
     <!-- ========== LUMINA ADVISOR PRO ========== -->
     <section id="tab-advisorpro" class="screen">
+      <button onclick="showTab('advisor')" class="text-xs font-bold text-primary mb-3">← Lumina</button>
       <div class="flex items-center gap-3 mb-4">
         <img src="assets/character/lumina-vest.webp" alt="Lumina" class="w-12 h-12 rounded-clay object-cover shadow-clay" style="object-position:50% 12%">
         <div>
@@ -702,6 +732,8 @@
         <div class="p-5 flex items-center justify-between"><span class="font-bold text-sm text-deep-teal">🌐 Giao diện tiếng Anh (English)</span><input id="lang-toggle-check" type="checkbox" onchange="toggleLang()" class="w-5 h-5 accent-primary"></div>
         <div class="p-5"><button onclick="showIntro()" class="font-bold text-sm text-deep-teal w-full text-left">🎬 Giới thiệu game (Intro)</button></div>
         <div class="p-5"><button onclick="showManual()" class="font-bold text-sm text-deep-teal w-full text-left">📖 Sổ tay hướng dẫn (User Manual)</button></div>
+        <div class="p-5"><button onclick="showTab('instructor')" class="font-bold text-sm text-deep-teal w-full text-left">🧑‍🏫 Màn hình Giảng viên trong game <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full align-middle" style="background:#fff4d6;color:#946200">GV</span></button></div>
+        <div class="p-5"><a href="instructor-grading.html" class="font-bold text-sm text-primary block">📝 Chấm điểm &amp; quản lý lớp (màn GV riêng)</a></div>
         <div class="p-5"><button onclick="showPremium()" class="font-bold text-sm text-deep-teal w-full text-left">👑 BizOn Premium <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full align-middle" style="background:#fff4d6;color:#946200">GIẢNG VIÊN</span></button></div>
         <div class="p-5"><a href="gioi-thieu.html" class="font-bold text-sm text-primary block">🌐 Trang giới thiệu</a></div>
         <div class="p-5"><a href="games.html" class="font-bold text-sm text-primary block">🕹️ BizOn Arcade (trung tâm trò chơi)</a></div>
@@ -748,10 +780,10 @@
           <svg class="clay-ico w-6 h-6" viewBox="0 0 24 24"><defs><linearGradient id="gNavChart" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00c4ff"/><stop offset="1" stop-color="#006687"/></linearGradient></defs><rect x="3.2" y="12.5" width="4.6" height="8.3" rx="2.3" fill="url(#gNavChart)"/><rect x="9.7" y="7.5" width="4.6" height="13.3" rx="2.3" fill="url(#gNavChart)"/><rect x="16.2" y="3.2" width="4.6" height="17.6" rx="2.3" fill="url(#gNavChart)"/><ellipse cx="18.5" cy="4.8" rx="1.7" ry=".8" fill="#fff" opacity=".35"/></svg>
         </span><span class="text-[10px] font-bold">Báo cáo</span>
       </button>
-      <button class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="shop" onclick="showTab('shop')">
+      <button class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="journey" onclick="showTab('journey')">
         <span class="nav-ico flex items-center justify-center">
-          <svg class="clay-ico w-6 h-6" viewBox="0 0 24 24"><defs><linearGradient id="gNavBag" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00c4ff"/><stop offset="1" stop-color="#006687"/></linearGradient></defs><path d="M5.4 8.2h13.2c.9 0 1.6.7 1.5 1.6l-.9 9.4a2.2 2.2 0 0 1-2.2 2H7a2.2 2.2 0 0 1-2.2-2l-.9-9.4c-.1-.9.6-1.6 1.5-1.6z" fill="url(#gNavBag)"/><path d="M8.6 10.2V7.1a3.4 3.4 0 1 1 6.8 0v3.1" fill="none" stroke="#033337" stroke-width="1.7" stroke-linecap="round" opacity=".55"/><ellipse cx="9.6" cy="11.3" rx="2.6" ry="1.1" fill="#fff" opacity=".3" transform="rotate(-18 9.6 11.3)"/></svg>
-        </span><span class="text-[10px] font-bold">Cửa hàng</span>
+          <svg class="clay-ico w-6 h-6" viewBox="0 0 24 24"><defs><linearGradient id="gNavFlag" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00c4ff"/><stop offset="1" stop-color="#006687"/></linearGradient></defs><path d="M6 3.2c0-.7.6-1.2 1.2-1.2.6 0 1.1.5 1.1 1.2V21a1 1 0 0 1-2 0V3.2z" fill="url(#gNavFlag)"/><path d="M8.3 4.1c3-.1 4.4 1.9 7.1 1.9 1.3 0 2.4-.4 3.2-.9.6-.4 1.4 0 1.4.8v6.3c0 .4-.2.7-.5.9-.9.6-2.2 1.1-3.8 1.1-2.7 0-4.1-2-7.1-1.9V4.1z" fill="url(#gNavFlag)"/><ellipse cx="12" cy="6.4" rx="2.6" ry="1" fill="#fff" opacity=".3"/></svg>
+        </span><span class="text-[10px] font-bold">Hành trình</span>
       </button>
     </div>
   </nav>
