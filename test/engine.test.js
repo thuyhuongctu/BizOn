@@ -49,7 +49,7 @@ const near = (a, b, tol, msg) => {
 };
 
 /* ---------- tiện ích ---------- */
-const PROFILE = { email: 'test@vlute.edu.vn', teamName: 'Đội Kiểm Thử', role: 'CEO' };
+const PROFILE = { email: 'test@example.edu.vn', teamName: 'Đội Kiểm Thử', role: 'CEO' };
 const newGame = () => E.newGameState(PROFILE);
 const DEC = (over = {}) => Object.assign({
   price: 150, production: 2000, marketing: 50, rd: 30,
