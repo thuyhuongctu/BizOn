@@ -33,6 +33,7 @@ function applyStateDefaults(s) {
   s.whatIfUsed ??= 0; s.advisorHistory ??= [];
   s.whatIfTotal ??= 0; s.suggestionsApplied ??= 0; s.achShown ??= (s.achievements || []).slice();
   s.conquest ??= []; s.aiHistory ??= []; s.teamMembers ??= null;
+  s.difficulty ??= 'normal'; s.autoDiff ??= 1.0;
   return s;
 }
 function load() {
@@ -40,6 +41,42 @@ function load() {
     const s = JSON.parse(localStorage.getItem(STORAGE_KEY));
     return s ? applyStateDefaults(s) : s;
   } catch { return null; }
+}
+
+// ---------- Độ khó ----------
+// Bản tính điểm (có Mã lớp): chỉ cho đổi TRƯỚC khi có kết quả vòng 1 để giữ
+// công bằng giữa các đội. Chơi thử: đổi lúc nào cũng được (còn tự thích ứng).
+function setDifficulty(level) {
+  if (!S || !['easy', 'normal', 'hard'].includes(level)) return;
+  if (!isTrial() && S.history.length > 0) {
+    alert(T('Bản tính điểm đã bắt đầu — không thể đổi độ khó giữa chừng (giữ công bằng giữa các đội).',
+            'Graded session already started — difficulty cannot change midway (to keep teams comparable).'));
+    syncDifficultyUI();
+    return;
+  }
+  S.difficulty = level;
+  try { localStorage.setItem('bizon-difficulty', level); } catch (e) {}
+  save();
+  syncDifficultyUI();
+}
+function syncDifficultyUI() {
+  if (!S) return;
+  ['easy', 'normal', 'hard'].forEach(lv => {
+    const b = $('diff-' + lv);
+    if (!b) return;
+    const on = S.difficulty === lv;
+    b.classList.toggle('bg-primary', on);
+    b.classList.toggle('text-white', on);
+    b.classList.toggle('text-deep-teal/60', !on);
+  });
+  const note = $('diff-note');
+  if (note) {
+    note.textContent = isTrial()
+      ? T('Chơi thử: độ khó còn tự điều chỉnh theo phong độ của bạn.',
+          'Trial: difficulty also auto-adjusts to your performance.')
+      : T('Bản tính điểm: mức cố định cả ván để các đội cùng lớp công bằng.',
+          'Graded: fixed for the whole game so classmates stay comparable.');
+  }
 }
 
 function createConfetti() {
@@ -290,6 +327,8 @@ async function doLogin() {
     } catch (e) { /* im lặng – bắt đầu ván mới nếu không tải được */ }
   }
   S = restored || newGameState({ email, teamName: team, role: pickedRole, classId });
+  // Ván mới: lấy mức khó ưu tiên đã lưu (ván khôi phục giữ mức đã lưu trong save).
+  if (!restored) { try { S.difficulty = localStorage.getItem('bizon-difficulty') || 'normal'; } catch (e) {} }
   save();
   $('screen-login').classList.remove('active');
   enterApp();
@@ -518,6 +557,8 @@ function showPremium() {
 // hợp với phần cuối ván chơi. Nhạc của Hộ Chiếu Thương Hiệu vẫn để riêng bên
 // brand-passport.html, không trộn vào đây.
 const BGM_TRACKS = [
+  'assets/audio/bat-nghiep-mekong-sunfire-rise.mp3', // BÀI CHÍNH khi mở game — Mekong Sunfire · Rise With The River
+  'assets/audio/huong-and-the-world-en.mp3', // Hương & The World (bản tiếng Anh)
   'assets/audio/bat-nghiep-co-loi.mp3',   // ca khúc chủ đề, bản thu có lời
   'assets/audio/bat-nghiep-rap-symphony.mp3', // bản rap symphony
   'assets/audio/bat-nghiep-mekong-sunfire-2.mp3', // remix Mekong Sunfire – bản đề xuất
@@ -779,6 +820,7 @@ function showTab(tab) {
   window.scrollTo({ top: 0 });
   renderAll();
   if (tab === 'reports') showReport(currentReport);
+  if (tab === 'leaderboard') fetchClassLeaderboard();
 }
 
 // ---------- Renderers ----------
@@ -789,6 +831,7 @@ function renderAll() {
   renderMissions(); renderMinigame(); renderInstructor(); renderJournal(); renderMarket();
   renderCompanyCard(); renderConquest(); renderTeamCard(); renderOpponents();
   const mt = $('music-toggle'); if (mt) mt.checked = musicEnabled();
+  syncDifficultyUI();
 }
 
 // ---------- BizOn Monitor (bảng theo dõi thị trường kiểu terminal) ----------
@@ -2881,21 +2924,62 @@ function unlockSkill(id) {
 }
 
 // ---------- Leaderboard ----------
+// classLB: dữ liệu xếp hạng lớp trực tiếp đã nạp từ backend (null = chưa có).
+let classLB = null, classLBBusy = false;
+
+// Chỉ nạp ở bản có Mã lớp (không phải chơi thử). Nạp xong thì vẽ lại.
+async function fetchClassLeaderboard() {
+  if (!S || isTrial() || classLBBusy) return;
+  if (!window.BizonBackend || !BizonBackend.classLeaderboard) return;
+  classLBBusy = true;
+  try {
+    const rows = await BizonBackend.classLeaderboard(S.profile.classId);
+    if (Array.isArray(rows)) { classLB = rows; renderLeaderboard(); }
+  } catch (e) { /* im lặng — giữ chế độ cục bộ */ }
+  finally { classLBBusy = false; }
+}
+
 function renderLeaderboard() {
   const totalProfit = S.history.reduce((a, r) => a + r.netProfit, 0);
   const lastShare = S.history.length ? S.history[S.history.length - 1].share : 25;
-  const all = [
-    { name: S.profile.teamName + T(' (Bạn)', ' (You)'), profit: totalProfit, share: lastShare, me: true },
-    ...S.competitors.map(c => ({ name: c.name, profit: c.profit, share: c.share })),
-  ].sort((a, b) => b.profit - a.profit);
-  const medals = ['🥇', '🥈', '🥉', '4️⃣'];
-  $('lb-list').innerHTML = all.map((t, i) => `
+  const graded = !isTrial();
+  const live = graded && Array.isArray(classLB) && classLB.length > 0;
+  let all, note;
+
+  if (live) {
+    all = classLB.map(r => ({
+      name: r.team_name + (r.team_name === S.profile.teamName ? T(' (Bạn)', ' (You)') : ''),
+      profit: Number(r.total_profit) || 0,
+      share: Number(r.last_share) || 0,
+      me: r.team_name === S.profile.teamName,
+    }));
+    // Đảm bảo đội của mình luôn có mặt (kể cả khi server chưa kịp cập nhật).
+    if (!all.some(t => t.me)) {
+      all.push({ name: S.profile.teamName + T(' (Bạn)', ' (You)'), profit: totalProfit, share: lastShare, me: true });
+    }
+    all.sort((a, b) => b.profit - a.profit);
+    note = T('🟢 Trực tiếp · các đội cùng lớp ' + S.profile.classId, '🟢 Live · teams in class ' + S.profile.classId);
+  } else {
+    // Chơi thử / chưa có dữ liệu lớp: so với 3 đối thủ AI (như trước).
+    all = [
+      { name: S.profile.teamName + T(' (Bạn)', ' (You)'), profit: totalProfit, share: lastShare, me: true },
+      ...S.competitors.map(c => ({ name: c.name, profit: c.profit, share: c.share })),
+    ].sort((a, b) => b.profit - a.profit);
+    note = graded
+      ? T('Đang tải bảng xếp hạng lớp…', 'Loading class leaderboard…')
+      : T('🧪 Chơi thử · so với 3 đối thủ AI (nhập Mã lớp để đua với các đội trong lớp)', '🧪 Trial · vs 3 AI rivals (enter a Class ID to compete with classmates)');
+  }
+
+  const medal = i => (i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `<span class="text-deep-teal/50 font-display font-bold">#${i + 1}</span>`);
+  const rows = all.map((t, i) => `
     <div class="clay-card p-4 flex items-center gap-3 ${t.me ? 'border-2 border-primary-container' : ''}">
-      <span class="text-2xl">${medals[i]}</span>
-      <div class="flex-1"><p class="font-display font-bold text-deep-teal text-sm">${t.name}</p>
+      <span class="text-2xl w-7 text-center">${medal(i)}</span>
+      <div class="flex-1 min-w-0"><p class="font-display font-bold text-deep-teal text-sm truncate">${t.name}</p>
         <p class="text-[11px] text-deep-teal/50">${T(`Thị phần ${t.share.toFixed(1)}%`, `Market share ${t.share.toFixed(1)}%`)}</p></div>
       <span class="font-display font-bold ${t.profit >= 0 ? 'text-primary' : 'text-orange-600'}">${money(t.profit)}</span>
     </div>`).join('');
+  $('lb-list').innerHTML =
+    `<p class="text-[11px] font-semibold text-deep-teal/60 mb-2">${note}</p>` + rows;
 }
 
 // ---------- Achievements & Certificate ----------

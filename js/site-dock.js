@@ -165,6 +165,15 @@
     /* Nhạc nền – playlist nối tiếp toàn bộ ca khúc, hết danh sách tự quay lại
      * từ đầu; chỉ phát khi người dùng bấm (đúng chính sách autoplay) */
     var audio = null, trackIdx = 0;
+    /* Bài mở đầu riêng cho trang: trang khai window.BIZON_DOCK_SONG = 'tên.mp3'
+     * (tên tệp trong PLAYLIST) thì nút nhạc mở ra đúng bài đó thay vì track 0.
+     * Không khai thì giữ mặc định. Vẫn đúng chính sách autoplay – chỉ phát khi bấm. */
+    try {
+      if (window.BIZON_DOCK_SONG) {
+        var _si = PLAYLIST.findIndex(function (t) { return t[1] === window.BIZON_DOCK_SONG; });
+        if (_si >= 0) trackIdx = _si;
+      }
+    } catch (e) {}
     /* scope = tuyển tập riêng của một game (mảng chỉ số trong PLAYLIST).
      * null = nghe trọn kho. Nhờ vậy mỗi game có nhạc nền riêng mà vẫn dùng
      * chung một trình phát duy nhất. */

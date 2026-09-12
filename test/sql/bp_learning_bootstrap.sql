@@ -26,14 +26,15 @@ as $$
   select p_key = 'TEST-INSTRUCTOR-KEY';
 $$;
 
--- Rate-limited RPCs (added by 20260730000000_instructor_dashboard.sql) call
--- bizon_check_key_gate() instead of bizon_check_key() directly. This test
--- database has no key_check_attempts table or lockout logic, so stub the
--- gate with the same test-key contract.
+-- Các migration production kiểm khóa instructor QUA cổng có giới hạn
+-- bizon_check_key_gate() (định nghĩa ở 20260730000000_instructor_dashboard.sql,
+-- bọc bizon_check_key kèm chống dò khóa). Job CI chỉ áp một phần migration nên
+-- hàm cổng này chưa tồn tại; cung cấp bản tối giản uỷ thác cho bizon_check_key
+-- (không mô phỏng khóa) để các migration gọi *_gate được thực thi đúng hợp đồng.
 create or replace function public.bizon_check_key_gate(p_key text)
 returns boolean
 language sql
 stable
 as $$
-  select p_key = 'TEST-INSTRUCTOR-KEY';
+  select public.bizon_check_key(p_key);
 $$;
