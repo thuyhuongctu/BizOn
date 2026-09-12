@@ -518,8 +518,8 @@ function showPremium() {
 // hợp với phần cuối ván chơi. Nhạc của Hộ Chiếu Thương Hiệu vẫn để riêng bên
 // brand-passport.html, không trộn vào đây.
 const BGM_TRACKS = [
-  'assets/audio/huong-and-the-world-en.mp3', // BÀI CHÍNH khi mở game — Hương & The World (bản tiếng Anh)
-  'assets/audio/bat-nghiep-mekong-sunfire-rise.mp3', // Mekong Sunfire · Rise With The River
+  'assets/audio/bat-nghiep-mekong-sunfire-rise.mp3', // BÀI CHÍNH khi mở game — Mekong Sunfire · Rise With The River
+  'assets/audio/huong-and-the-world-en.mp3', // Hương & The World (bản tiếng Anh)
   'assets/audio/bat-nghiep-co-loi.mp3',   // ca khúc chủ đề, bản thu có lời
   'assets/audio/bat-nghiep-rap-symphony.mp3', // bản rap symphony
   'assets/audio/bat-nghiep-mekong-sunfire-2.mp3', // remix Mekong Sunfire – bản đề xuất
