@@ -166,6 +166,19 @@
     } catch (e) { return null; }
   }
 
+  // Bảng xếp hạng lớp trực tiếp: trả về các đội cùng Mã lớp với tổng hợp KPI.
+  // Chỉ đọc, không token; dựa vào RPC bizon_class_leaderboard (chỉ trả tổng hợp
+  // không nhạy cảm). Trả null nếu offline, không có lớp, hoặc RPC chưa triển khai.
+  async function classLeaderboard(classId) {
+    if (!on()) return null;
+    const classCode = String(classId || '').trim();
+    if (!classCode || classCode === 'DEMO-2026') return null;
+    try {
+      const rows = await rpc('bizon_class_leaderboard', { p_class_code: classCode });
+      return Array.isArray(rows) ? rows : null;
+    } catch (e) { return null; }
+  }
+
   window.addEventListener('online', flush);
   document.addEventListener('DOMContentLoaded', flush);
   // Best-effort: gửi nốt bản lưu đang chờ nếu người chơi đóng tab trước khi hết giờ debounce.
@@ -183,5 +196,5 @@
       }
     }
   });
-  window.BizonBackend = { submitRound, flush, syncTeamState, loadTeamState };
+  window.BizonBackend = { submitRound, flush, syncTeamState, loadTeamState, classLeaderboard };
 })();
