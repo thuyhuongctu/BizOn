@@ -38,3 +38,32 @@ Ba **dấu hiệu hình đơn** ("Hình công tắc", §1.1) nay **đã có bả
 Phần **chữ "BizOn"** dùng kiểu chữ riêng nên **không vector hoá ngược từ PNG** (mất nét). Bản `bizon-logo-mau.svg` / `bizon-logo-den-trang.svg` (chữ + hình) cần lấy **SVG gốc từ khâu thiết kế**. Trong lúc chờ, **PNG 2400px** dùng làm mẫu nhãn cho tờ khai được (mẫu in ở kích thước cố định).
 
 > Lưu ý: `assets/brand/` chứa bộ wordmark/app-icon SVG của giao diện web (thiết kế cũ, đơn giản hơn). Bộ trong `logo/` mới là bộ nhận diện chính thức cho hồ sơ.
+
+---
+
+## Bộ Bật Nghiệp (đổi tên BizOn → Bật Nghiệp)
+
+Ba biến thể biểu tượng công tắc cho tên mới **Bật Nghiệp** — hình học kế thừa nguyên vẹn từ bộ BizOn ở trên (chỉ đổi tên tệp), để giữ liên tục vốn thương hiệu.
+
+| Tệp | Biến thể | Dùng khi |
+|---|---|---|
+| `bat-nghiep-bieu-tuong-mau.svg` | **Màu** — viền mực `#0E2135`, chấm lục ngọc `#0F5C4E` | Nền sáng · bản màu chính |
+| `bat-nghiep-bieu-tuong-den-trang.svg` | **Đơn sắc** — một màu mực | Tờ khai nhãn hiệu · in một màu |
+| `bat-nghiep-bieu-tuong-am-ban.svg` | **Âm bản** — viền ngọc trai, chấm champagne `#D8BE87` | Nền tối · slide, bìa |
+
+Bộ nhận diện đầy đủ (wordmark, hệ màu, kiểu chữ, quy tắc dùng, quyết định đặt tên, lưu ý nhãn hiệu): [`docs/brand/bat-nghiep-nhan-dien.md`](../docs/brand/bat-nghiep-nhan-dien.md).
+
+> **Chưa** đổi tên hàng loạt trên các trang HTML. Việc đó chờ chốt hướng đặt tên (thay hẳn vs song ngữ) — xem §7 tài liệu nhận diện.
+
+### Biểu tượng ứng dụng (app icon / favicon)
+
+Bản biểu tượng đóng khung vuông bo góc, dựng sẵn cho cửa hàng ứng dụng và favicon — công tắc trắng trên nền đặc, đọc rõ ở cỡ nhỏ (32px).
+
+| Tệp | Nền | Dùng khi |
+|---|---|---|
+| `bat-nghiep-app-icon.svg` | Mực `#0E2135`, chấm lục ngọc `#3FBE9E` | Biểu tượng chính — CH Play / App Store · favicon |
+| `bat-nghiep-app-icon-jade.svg` | Lục ngọc `#0F5C4E`, chấm ngọc trai | Biến thể nền lục ngọc — dùng khi cần tách nền tối |
+
+Cả hai là SVG vuông `512×512`, bo góc `rx=112` (đúng tỷ lệ mặt nạ iOS/Android). Khi triển khai, xuất PNG các cỡ chuẩn (512/192/180/32) từ tệp SVG — xem [`docs/brand/ap-dung-nhan-dien.md`](../docs/brand/ap-dung-nhan-dien.md).
+
+> **Chưa** thay favicon/biểu tượng đang chạy trên sản phẩm. Việc đó chờ chốt hướng đặt tên và mẫu logo (xem tài liệu áp dụng).

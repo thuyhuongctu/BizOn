@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="App icon Bật Nghiệp — công tắc bật">
+  <rect width="512" height="512" rx="112" fill="#0E2135"/>
+  <g transform="translate(256 256) scale(2.35) translate(-49 -50)">
+    <ellipse cx="47" cy="50" rx="36" ry="30" fill="none" stroke="#FFFFFF" stroke-width="16"/>
+    <circle cx="62" cy="50" r="12" fill="#3FBE9E"/>
+  </g>
+</svg>
