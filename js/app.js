@@ -33,6 +33,7 @@ function applyStateDefaults(s) {
   s.whatIfUsed ??= 0; s.advisorHistory ??= [];
   s.whatIfTotal ??= 0; s.suggestionsApplied ??= 0; s.achShown ??= (s.achievements || []).slice();
   s.conquest ??= []; s.aiHistory ??= []; s.teamMembers ??= null;
+  s.difficulty ??= 'normal'; s.autoDiff ??= 1.0;
   return s;
 }
 function load() {
@@ -40,6 +41,42 @@ function load() {
     const s = JSON.parse(localStorage.getItem(STORAGE_KEY));
     return s ? applyStateDefaults(s) : s;
   } catch { return null; }
+}
+
+// ---------- Độ khó ----------
+// Bản tính điểm (có Mã lớp): chỉ cho đổi TRƯỚC khi có kết quả vòng 1 để giữ
+// công bằng giữa các đội. Chơi thử: đổi lúc nào cũng được (còn tự thích ứng).
+function setDifficulty(level) {
+  if (!S || !['easy', 'normal', 'hard'].includes(level)) return;
+  if (!isTrial() && S.history.length > 0) {
+    alert(T('Bản tính điểm đã bắt đầu — không thể đổi độ khó giữa chừng (giữ công bằng giữa các đội).',
+            'Graded session already started — difficulty cannot change midway (to keep teams comparable).'));
+    syncDifficultyUI();
+    return;
+  }
+  S.difficulty = level;
+  try { localStorage.setItem('bizon-difficulty', level); } catch (e) {}
+  save();
+  syncDifficultyUI();
+}
+function syncDifficultyUI() {
+  if (!S) return;
+  ['easy', 'normal', 'hard'].forEach(lv => {
+    const b = $('diff-' + lv);
+    if (!b) return;
+    const on = S.difficulty === lv;
+    b.classList.toggle('bg-primary', on);
+    b.classList.toggle('text-white', on);
+    b.classList.toggle('text-deep-teal/60', !on);
+  });
+  const note = $('diff-note');
+  if (note) {
+    note.textContent = isTrial()
+      ? T('Chơi thử: độ khó còn tự điều chỉnh theo phong độ của bạn.',
+          'Trial: difficulty also auto-adjusts to your performance.')
+      : T('Bản tính điểm: mức cố định cả ván để các đội cùng lớp công bằng.',
+          'Graded: fixed for the whole game so classmates stay comparable.');
+  }
 }
 
 function createConfetti() {
@@ -290,6 +327,8 @@ async function doLogin() {
     } catch (e) { /* im lặng – bắt đầu ván mới nếu không tải được */ }
   }
   S = restored || newGameState({ email, teamName: team, role: pickedRole, classId });
+  // Ván mới: lấy mức khó ưu tiên đã lưu (ván khôi phục giữ mức đã lưu trong save).
+  if (!restored) { try { S.difficulty = localStorage.getItem('bizon-difficulty') || 'normal'; } catch (e) {} }
   save();
   $('screen-login').classList.remove('active');
   enterApp();
@@ -791,6 +830,7 @@ function renderAll() {
   renderMissions(); renderMinigame(); renderInstructor(); renderJournal(); renderMarket();
   renderCompanyCard(); renderConquest(); renderTeamCard(); renderOpponents();
   const mt = $('music-toggle'); if (mt) mt.checked = musicEnabled();
+  syncDifficultyUI();
 }
 
 // ---------- BizOn Monitor (bảng theo dõi thị trường kiểu terminal) ----------
