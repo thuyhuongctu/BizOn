@@ -28,6 +28,7 @@
     { key: 'decision_id', required: true, kind: 'id' },
     { key: 'session_id', required: true, kind: 'id' },
     { key: 'cohort_id', required: true, kind: 'string' },   // ví dụ '2026A-KT330H' (mã lớp, không phải danh tính cá nhân)
+    { key: 'session_tag', required: false, kind: 'string' },// nhãn phiên tự do (vd 'kt330-l01-b1', 'mekong-2609') — KHÔNG chứa danh tính
     { key: 'team_id', required: true, kind: 'hashed' },      // BẮT BUỘC băm — không lưu danh tính
     { key: 'pillar', required: true, kind: 'enum', values: ['bat-nghiep', 'ho-chieu'] },
     { key: 'role', required: true, kind: 'enum', values: ['home_outbound', 'host_inbound'] },
@@ -154,6 +155,22 @@
     return [head].concat(rows).join('\n');
   }
 
+  // Gom bản ghi theo mã lớp (cohort_id) — dữ liệu cho view tổng hợp của giảng viên.
+  // Trả về { cohort_id: [record, ...] }. Không đụng danh tính (chỉ team_id đã băm).
+  function groupByCohort(entries) {
+    var out = {};
+    (entries || []).forEach(function (r) {
+      var k = r && r.cohort_id ? String(r.cohort_id) : '(khong-ma-lop)';
+      (out[k] || (out[k] = [])).push(r);
+    });
+    return out;
+  }
+  // Lọc bản ghi của một phiên theo nhãn phiên (session_tag), vd 'kt330-l01-b1'.
+  function filterBySessionTag(entries, tag) {
+    return (entries || []).filter(function (r) { return r && r.session_tag === tag; });
+  }
+  DecisionLog.prototype.entriesByCohort = function (opts) { return groupByCohort(this.entries(opts)); };
+
   return Object.freeze({
     FIELDS: FIELDS,
     FIELD_KEYS: FIELD_KEYS,
@@ -162,6 +179,8 @@
     createRecord: createRecord,
     validate: validate,
     DecisionLog: DecisionLog,
-    toCSV: toCSV
+    toCSV: toCSV,
+    groupByCohort: groupByCohort,
+    filterBySessionTag: filterBySessionTag
   });
 });
