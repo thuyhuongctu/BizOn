@@ -120,7 +120,6 @@
       const data = await authRequest('signup', { email, password });
       if (data.access_token) {
         applyAuthResponse(data, email);
-        clearPasswordInput();
         showClassBlock();
         setStatus('Đã tạo tài khoản và đăng nhập. Nhập Mã lớp để đăng ký lớp của bạn.', 'success');
       } else {
@@ -128,6 +127,8 @@
       }
     } catch (error) {
       setStatus(`Không tạo được tài khoản (${error.message}).`, 'error');
+    } finally {
+      clearPasswordInput();
     }
   }
 
@@ -142,7 +143,6 @@
     try {
       const data = await authRequest('token?grant_type=password', { email, password });
       applyAuthResponse(data, email);
-      clearPasswordInput();
       showClassBlock();
       setStatus('Đã đăng nhập. Nhập Mã lớp để đăng ký hoặc theo dõi lớp của bạn.', 'success');
       try {
@@ -151,6 +151,8 @@
       } catch (_) {}
     } catch (error) {
       setStatus(`Không đăng nhập được (${error.message}).`, 'error');
+    } finally {
+      clearPasswordInput();
     }
   }
 
@@ -524,5 +526,6 @@
 
   window.addEventListener('pagehide', () => {
     clearInterval(state.timer);
+    clearPasswordInput();
   });
 })();
