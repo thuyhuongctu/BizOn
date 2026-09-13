@@ -77,20 +77,41 @@
 
     <section class="bi-panel" id="bi-connect-panel">
       <div class="bi-panel-head">
-        <div><h2>Kết nối lớp học</h2><p>Nhập đúng Mã lớp và Khóa giảng viên. Không gửi khóa qua email, ảnh chụp hoặc repository.</p></div>
+        <div><h2>Đăng nhập giảng viên</h2><p>Mỗi giảng viên có tài khoản riêng. Mã lớp thuộc về người đăng ký đầu tiên — giảng viên khác không đọc được lớp của bạn.</p></div>
       </div>
-      <div class="bi-connect-grid">
-        <div class="bi-field">
-          <label for="bi-class-code">Mã lớp</label>
-          <input class="bi-input" id="bi-class-code" autocomplete="off" placeholder="VD: QTKD-2026-A">
+
+      <div id="bi-auth-block">
+        <div class="bi-connect-grid" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto auto">
+          <div class="bi-field">
+            <label for="bi-email">Email</label>
+            <input class="bi-input" id="bi-email" type="email" autocomplete="username" placeholder="ban@truong.edu.vn">
+          </div>
+          <div class="bi-field">
+            <label for="bi-password">Mật khẩu</label>
+            <input class="bi-input" id="bi-password" type="password" autocomplete="current-password" placeholder="Tối thiểu 8 ký tự">
+          </div>
+          <button class="bi-btn secondary" id="bi-signup" type="button">Đăng ký tài khoản</button>
+          <button class="bi-btn primary" id="bi-signin" type="button">Đăng nhập</button>
         </div>
-        <div class="bi-field">
-          <label for="bi-instructor-key">Khóa giảng viên</label>
-          <input class="bi-input" id="bi-instructor-key" type="password" autocomplete="off" placeholder="Nhập khóa quản trị lớp">
-        </div>
-        <button class="bi-btn primary" id="bi-connect" type="button">Theo dõi lớp</button>
       </div>
-      <p class="bi-status" id="bi-status">Chưa kết nối. Không có dữ liệu lớp nào được tải trước khi bạn chủ động nhập thông tin.</p>
+
+      <div id="bi-class-block" class="bi-hidden" style="margin-top:14px">
+        <p class="bi-status" style="margin:0 0 10px" id="bi-account-line"></p>
+        <div class="bi-connect-grid" style="grid-template-columns:minmax(0,1fr) auto">
+          <div class="bi-field">
+            <label for="bi-class-code">Mã lớp</label>
+            <input class="bi-input" id="bi-class-code" autocomplete="off" placeholder="VD: QTKD-2026-A">
+          </div>
+          <button class="bi-btn primary" id="bi-connect" type="button">Đăng ký &amp; theo dõi lớp</button>
+        </div>
+      </div>
+
+      <p class="bi-status" id="bi-status">Chưa đăng nhập. Không có dữ liệu lớp nào được tải trước khi bạn chủ động đăng nhập.</p>
+
+      <p style="margin-top:14px;padding-top:14px;border-top:1px solid var(--bi-line)">
+        <button class="bi-btn" id="bi-demo" type="button">👀 Xem thử — không cần đăng nhập</button>
+        <span class="bi-status" style="display:inline;margin-left:8px">Mở bảng xếp hạng mẫu (lớp DEMO-2026), không đụng dữ liệu lớp thật.</span>
+      </p>
     </section>
 
     <section class="bi-hidden" id="bi-studio-content" aria-live="polite">
