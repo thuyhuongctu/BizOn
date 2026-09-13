@@ -90,16 +90,15 @@
     .avatar{position:absolute;z-index:5;width:164px;margin:0;overflow:hidden;border:1px solid rgba(255,255,255,.75);border-radius:28px;background:var(--glass);box-shadow:0 28px 68px rgba(3,51,55,.19);backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px)}
     .avatar img{display:block;width:100%;height:238px;object-fit:cover;object-position:50% 16%}
     .avatar figcaption{padding:9px 11px;font-size:.68rem;font-weight:850}
-    .avatar.a{left:21%;bottom:3%;transform:translate3d(var(--sx),var(--sy),55px) rotate(-3deg)}
-    .avatar.b{right:17%;bottom:2%;transform:translate3d(var(--sx),var(--sy),48px) rotate(3deg)}
-    /* Hai nhân vật "3D động": đu nhẹ + xoay trục đứng có phối cảnh, cho chuyển
-       động 3D thấy được cả trên di động (nơi hiệu ứng parallax theo chuột tắt).
-       Chỉ hoạt hoạ trên thẻ ảnh bên trong để không đụng --sx/--sy của parallax. */
-    .stage .avatar img{transform-origin:50% 60%;animation:bzAvSwing 7s ease-in-out infinite;will-change:transform}
-    .stage .avatar.b img{animation:bzAvSwing2 8.4s ease-in-out infinite}
-    @keyframes bzAvSwing{0%,100%{transform:perspective(680px) rotateY(-10deg) translateY(0)}50%{transform:perspective(680px) rotateY(10deg) translateY(-9px)}}
-    @keyframes bzAvSwing2{0%,100%{transform:perspective(680px) rotateY(9deg) translateY(0)}50%{transform:perspective(680px) rotateY(-9deg) translateY(-12px)}}
-    @media(prefers-reduced-motion:reduce){.stage .avatar img{animation:none;transform:none}}
+    /* Hai nhân vật "3D động": cả tấm thẻ (khung + ảnh) đu lên xuống và xoay trục
+       đứng trong không gian phối cảnh của .stage — ảnh không tách khỏi khung, thấy
+       rõ chuyển động 3D trên MỌI thiết bị (kể cả di động, nơi parallax theo chuột
+       tắt). Hoạt hoạ thay cho parallax trên riêng hai nhân vật nên không cần --sx/--sy. */
+    .avatar.a{left:21%;bottom:3%;transform:translate3d(0,0,55px) rotate(-3deg);animation:bzAvA 6s ease-in-out infinite;will-change:transform}
+    .avatar.b{right:17%;bottom:2%;transform:translate3d(0,0,48px) rotate(3deg);animation:bzAvB 7s ease-in-out infinite;will-change:transform}
+    @keyframes bzAvA{0%,100%{transform:translate3d(0,0,55px) rotateY(-11deg) rotate(-3deg)}50%{transform:translate3d(0,-13px,55px) rotateY(11deg) rotate(-3deg)}}
+    @keyframes bzAvB{0%,100%{transform:translate3d(0,0,48px) rotateY(10deg) rotate(3deg)}50%{transform:translate3d(0,-16px,48px) rotateY(-10deg) rotate(3deg)}}
+    @media(prefers-reduced-motion:reduce){.avatar.a,.avatar.b{animation:none}}
     .passport{position:absolute;z-index:7;left:44%;bottom:-1%;width:118px;height:164px;padding:14px;border:1px solid rgba(253,161,39,.58);border-radius:13px;color:#f2d7a4;background:linear-gradient(150deg,#0c4657,#062b3a 60%,#021b27);box-shadow:0 32px 65px rgba(3,51,55,.32);transform:translate3d(var(--sx),var(--sy),80px) rotate(-8deg);transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
     .passport:hover{transform:translate3d(var(--sx),calc(var(--sy) - 12px),90px) rotate(-2deg) scale(1.04);box-shadow:0 44px 95px rgba(3,51,55,.38)}
     .passport strong{display:block;text-align:center;font-size:.69rem;letter-spacing:.12em}.passport b{display:grid;place-items:center;width:52px;height:52px;margin:31px auto 0;border:1px solid currentColor;border-radius:50%;font-family:Georgia,serif;font-size:1.65rem}
@@ -134,7 +133,7 @@
     footer{padding:36px 0 55px;color:var(--muted);font-size:.74rem}.footer-grid{padding-top:24px;border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:18px}
     .leaving body{opacity:.18;transform:scale(.996);transition:opacity .42s ease,transform .42s ease}
     @media(max-width:980px){.nav-links{display:none}.hero{grid-template-columns:1fr;text-align:center;min-height:auto}.lead{margin-left:auto;margin-right:auto}.actions,.trust{justify-content:center}.stage{min-height:520px}.products{grid-template-columns:repeat(2,minmax(0,1fr))}.people{grid-template-columns:1fr}.insight.i1{left:5%}.insight.i2{right:5%}.insight.i3{left:7%}.insight.i4{right:7%}}
-    @media(max-width:640px){.shell{width:min(100% - 20px,1180px)}.nav{top:5px;margin-top:5px}.nav-inner{padding:0 10px}.brand small,.nav-actions .primary{display:none}.hero{padding-top:3.7rem;gap:.8rem}.kicker{font-size:.66rem}h1{font-size:clamp(2.8rem,14vw,4.2rem)}.stage{min-height:440px}.stage::before{inset:8% -8%}.insight{width:137px;padding:10px}.insight strong{font-size:.56rem}.insight span{font-size:.68rem}.insight.i1{left:0;top:5%}.insight.i2{right:0;top:6%}.insight.i3{left:0;bottom:10%}.insight.i4{right:0;bottom:11%}#globe{width:min(78vw,330px);top:46%}.pedestal{width:86vw;top:74%}.avatar{width:110px;border-radius:20px}.avatar img{height:154px}.avatar figcaption{font-size:.57rem;padding:7px}.avatar.a{left:8%;bottom:5%}.avatar.b{right:7%;bottom:4%}.passport{width:82px;height:114px;padding:8px;left:43%;bottom:1%}.passport strong{font-size:.5rem}.passport b{width:37px;height:37px;margin:18px auto 0;font-size:1.15rem}.products,.evidence{grid-template-columns:1fr}.product{min-height:210px}.flow{grid-template-columns:1fr;overflow:visible}.arrow{transform:rotate(90deg)}.node{min-width:0}.person{grid-template-columns:58px 1fr}.monogram{width:58px;height:58px;border-radius:18px}.footer-grid{flex-direction:column}}
+    @media(max-width:640px){.shell{width:min(100% - 20px,1180px)}.nav{top:5px;margin-top:5px}.nav-inner{padding:0 10px}.brand small,.nav-actions .primary{display:none}.hero{padding-top:3.7rem;gap:.8rem}.kicker{font-size:.66rem}h1{font-size:clamp(2.8rem,14vw,4.2rem)}.stage{min-height:440px}.stage::before{inset:8% -8%}.insight{width:137px;padding:10px}.insight strong{font-size:.56rem}.insight span{font-size:.68rem}.insight.i1{left:0;top:5%}.insight.i2{right:0;top:6%}.insight.i3,.insight.i4{display:none}#globe{width:min(78vw,330px);top:46%}.pedestal{width:86vw;top:74%}.avatar{width:110px;border-radius:20px}.avatar img{height:154px}.avatar figcaption{font-size:.57rem;padding:7px}.avatar.a{left:8%;bottom:5%}.avatar.b{right:7%;bottom:4%}.passport{width:82px;height:114px;padding:8px;left:43%;bottom:1%}.passport strong{font-size:.5rem}.passport b{width:37px;height:37px;margin:18px auto 0;font-size:1.15rem}.products,.evidence{grid-template-columns:1fr}.product{min-height:210px}.flow{grid-template-columns:1fr;overflow:visible}.arrow{transform:rotate(90deg)}.node{min-width:0}.person{grid-template-columns:58px 1fr}.monogram{width:58px;height:58px;border-radius:18px}.footer-grid{flex-direction:column}}
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}.reveal{opacity:1;transform:none}.wave{animation:none}}
   </style>
 </head>
