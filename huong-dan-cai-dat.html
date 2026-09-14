@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<!-- Hướng dẫn cài đặt BizOn & EnQuiz cho sinh viên — © 2026 Đỗ Thùy Hương & Phan Anh Tú -->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Hướng dẫn cài đặt ứng dụng học tập — BizOn &amp; EnQuiz</title>
+<meta name="description" content="Hướng dẫn sinh viên cài đặt và sử dụng hai ứng dụng học tập BizOn và EnQuiz trên điện thoại — cài trực tiếp từ web, dùng được ngay, hoạt động ngoại tuyến.">
+<meta name="theme-color" content="#03464e">
+<meta name="robots" content="noindex">
+<style>
+:root{
+  --ink:#10242a;--muted:#5a727a;--line:rgba(16,36,42,.12);--paper:#ffffff;--bg:#eef6f8;
+  --teal:#006687;--teal-deep:#033337;--gold:#c98f1f;
+  --navy:#101a3e;--pink:#c53f86;--sky:#1f93c2;
+  --ok:#0e7c5a;--radius:18px;
+}
+*{box-sizing:border-box}
+html{background:var(--bg);scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;color:var(--ink);background:transparent;
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
+  line-height:1.6;font-size:16px}
+.wrap{max-width:780px;margin:0 auto;padding:0 18px 64px}
+a{color:var(--teal);font-weight:650}
+h1,h2,h3{line-height:1.25;text-wrap:balance}
+
+/* Header */
+header.hero{background:linear-gradient(150deg,#033337 0%,#02515c 48%,#101a3e 100%);color:#fff;
+  padding:38px 0 30px;border-bottom:3px solid var(--gold)}
+header.hero .wrap{padding-bottom:0}
+.eyebrow{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+  background:rgba(255,255,255,.16);padding:5px 11px;border-radius:999px;margin-bottom:14px}
+header.hero h1{margin:.1rem 0 .5rem;font-size:1.7rem;font-weight:850}
+header.hero p{margin:0;color:rgba(255,255,255,.86);font-size:.98rem;max-width:60ch}
+header.hero .who{margin-top:12px;font-size:.86rem;color:rgba(255,255,255,.78)}
+
+/* Quick banner */
+.fastest{display:flex;gap:12px;align-items:flex-start;background:#eafaf3;border:1px solid #b7e6d1;
+  border-left:5px solid var(--ok);border-radius:14px;padding:14px 16px;margin:22px 0 6px}
+.fastest .ic{font-size:1.4rem;line-height:1}
+.fastest b{color:#0a5c43}
+.fastest p{margin:.15rem 0 0;font-size:.9rem;color:#2c5347}
+
+/* App cards */
+.apps{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0 8px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px;box-shadow:0 10px 30px rgba(3,51,55,.07);display:flex;flex-direction:column}
+.card.bizon{border-top:5px solid var(--teal)}
+.card.enquiz{border-top:5px solid var(--pink)}
+.card h3{margin:.1rem 0 .1rem;font-size:1.18rem}
+.card .tag{font-size:.74rem;font-weight:750;letter-spacing:.03em;text-transform:uppercase}
+.card.bizon .tag{color:var(--teal)}
+.card.enquiz .tag{color:var(--pink)}
+.card .desc{font-size:.86rem;color:var(--muted);margin:.35rem 0 .8rem;min-height:2.6em}
+.qr{background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px;width:132px;height:132px;
+  margin:2px auto 10px;display:block}
+.qr img{width:100%;height:100%;display:block;image-rendering:pixelated}
+.linkline{font-size:.78rem;color:var(--muted);text-align:center;word-break:break-all;margin:0 0 12px}
+.btn{display:block;text-align:center;text-decoration:none;font-weight:800;font-size:.95rem;
+  padding:12px 14px;border-radius:12px;color:#fff;margin-top:auto}
+.card.bizon .btn{background:var(--teal)}
+.card.enquiz .btn{background:var(--pink)}
+.btn:active{transform:translateY(1px)}
+
+/* Sections */
+section{margin-top:30px}
+h2.sec{font-size:1.16rem;font-weight:850;margin:0 0 4px;display:flex;align-items:center;gap:9px}
+h2.sec .n{flex:0 0 30px;width:30px;height:30px;border-radius:50%;background:var(--teal);color:#fff;
+  font-size:.95rem;display:grid;place-items:center;font-weight:800}
+.sub{color:var(--muted);font-size:.9rem;margin:.15rem 0 14px 39px}
+
+.os{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0}
+.os h4{margin:0 0 10px;font-size:1rem;display:flex;align-items:center;gap:8px}
+ol.steps{margin:0;padding-left:0;list-style:none;counter-reset:s}
+ol.steps li{counter-increment:s;position:relative;padding:7px 0 7px 40px;font-size:.92rem;border-top:1px dashed var(--line)}
+ol.steps li:first-child{border-top:0}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:8px;width:26px;height:26px;border-radius:50%;
+  background:#e7f1f4;color:var(--teal-deep);font-weight:800;font-size:.82rem;display:grid;place-items:center}
+kbd{background:#eef1f2;border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:1px 7px;
+  font-size:.85em;font-weight:700;font-family:inherit;white-space:nowrap}
+
+/* Class code */
+.codebox{background:#fbf4e6;border:1px solid #ecd9a7;border-left:5px solid var(--gold);border-radius:14px;padding:16px 18px}
+.codes{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0 6px}
+.code{flex:1 1 130px;background:#fff;border:2px dashed var(--gold);border-radius:12px;padding:12px;text-align:center}
+.code .lbl{font-size:.72rem;color:#8a6a1c;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.code .v{font-size:1.5rem;font-weight:900;letter-spacing:.06em;color:#7a5a12;font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace}
+
+.note{background:#eef6f8;border:1px solid var(--line);border-radius:12px;padding:12px 15px;font-size:.86rem;color:var(--muted)}
+.note b{color:var(--ink)}
+ul.tick{list-style:none;padding-left:0;margin:10px 0}
+ul.tick li{padding:5px 0 5px 28px;position:relative;font-size:.9rem}
+ul.tick li::before{content:"✓";position:absolute;left:0;top:5px;color:var(--ok);font-weight:900}
+
+.play{display:flex;gap:12px;align-items:flex-start;background:#f4f0fb;border:1px solid #dfd2f0;
+  border-left:5px solid #6c4bb6;border-radius:14px;padding:14px 16px}
+.play .ic{font-size:1.4rem}
+.play p{margin:.15rem 0 0;font-size:.88rem;color:#4a3c69}
+.play b{color:#3d2f5c}
+
+footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:.82rem}
+footer a{color:var(--teal)}
+
+@media(max-width:560px){
+  .apps{grid-template-columns:1fr}
+  header.hero h1{font-size:1.42rem}
+  .sub{margin-left:0}
+}
+@media(prefers-color-scheme:dark){
+  :root{--ink:#e4eef1;--muted:#a7c0c7;--line:rgba(228,238,241,.15);--paper:#0f2830;--bg:#081a20}
+  html{background:var(--bg)}
+  .fastest{background:#0d2a22;border-color:#1c5843}
+  .fastest p{color:#a9d8c6}.fastest b{color:#7fe0bb}
+  .os h4,.card h3,h1,h2,h3{color:var(--ink)}
+  ol.steps li::before{background:#0c3a44;color:#bfe6ee}
+  kbd{background:#12303a;color:#dfeef2}
+  .codebox{background:#2a2413;border-color:#5a4a1f}
+  .code{background:#141b20}.code .v{color:#e9cf82}.code .lbl{color:#cdb772}
+  .note{background:#0c2530}
+  .play{background:#1c1730;border-color:#3a2f57}.play p{color:#c9bce6}.play b{color:#e2d8f5}
+}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Ứng dụng học tập</span>
+    <h1>Hướng dẫn cài đặt BizOn &amp; EnQuiz</h1>
+    <p>Hai ứng dụng học tập chạy trực tiếp trên điện thoại — <b>miễn phí, không cần tài khoản, dùng được cả khi không có mạng</b>.</p>
+    <div class="who">Dành cho sinh viên lớp <b>KT330H</b> và <b>KT338</b> · Giảng viên: PGS.TS. Phan Anh Tú &amp; PhD Candidate Đỗ Thùy Hương</div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="fastest">
+    <div class="ic">⚡</div>
+    <div><b>Cách nhanh nhất (dùng được ngay):</b>
+      <p>Mở đường link của mỗi ứng dụng bằng trình duyệt trên điện thoại rồi chọn “Thêm vào Màn hình chính”. Ứng dụng sẽ nằm ở màn hình chính giống một app bình thường — không cần vào CH Play.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="apps">
+      <div class="card bizon">
+        <span class="tag">Mô phỏng kinh doanh</span>
+        <h3>BizOn — Bật Nghiệp</h3>
+        <div class="desc">Trò chơi mô phỏng khởi sự &amp; điều hành doanh nghiệp: ra quyết định qua từng vòng, ghi lại lý do và cùng thảo luận trong lớp.</div>
+        <span class="qr"><img alt="Mã QR mở BizOn" src="data:image/png;base64,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"></span>
+        <div class="linkline">thuyhuongctu.github.io/BizOn</div>
+        <a class="btn" href="https://thuyhuongctu.github.io/BizOn/">Mở BizOn →</a>
+      </div>
+      <div class="card enquiz">
+        <span class="tag">Ôn thi trắc nghiệm</span>
+        <h3>EnQuiz — Khởi sự doanh nghiệp</h3>
+        <div class="desc">Ôn thi trắc nghiệm môn Khởi sự doanh nghiệp: 300 câu có giải thích, thi thử bấm giờ, tự luyện lại câu sai — chạy hoàn toàn ngoại tuyến.</div>
+        <span class="qr"><img alt="Mã QR mở EnQuiz" src="data:image/png;base64,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"></span>
+        <div class="linkline">thuyhuongctu.github.io/EnQuiz</div>
+        <a class="btn" href="https://thuyhuongctu.github.io/EnQuiz/">Mở EnQuiz →</a>
+      </div>
+    </div>
+    <p class="note" style="margin-top:6px">Dùng camera điện thoại quét mã <b>QR</b> ở trên, hoặc gõ đúng đường link để mở. Nên mở bằng <b>Chrome</b> (Android) hoặc <b>Safari</b> (iPhone).</p>
+  </section>
+
+  <section>
+    <h2 class="sec"><span class="n">1</span> Cài đặt lên điện thoại</h2>
+    <p class="sub">Làm lần lượt cho <b>từng</b> ứng dụng (BizOn và EnQuiz).</p>
+
+    <div class="os">
+      <h4>📱 Điện thoại Android</h4>
+      <ol class="steps">
+        <li>Mở đường link ứng dụng bằng <b>Chrome</b> (quét QR hoặc gõ link ở trên).</li>
+        <li>Bấm nút menu <kbd>⋮</kbd> ở góc trên bên phải.</li>
+        <li>Chọn <kbd>Thêm vào Màn hình chính</kbd> (hoặc <kbd>Cài đặt ứng dụng</kbd>), rồi xác nhận <kbd>Thêm</kbd>.</li>
+        <li>Biểu tượng ứng dụng xuất hiện ở màn hình chính — mở lên là dùng như một app.</li>
+      </ol>
+    </div>
+
+    <div class="os">
+      <h4>🍎 iPhone / iPad</h4>
+      <ol class="steps">
+        <li>Mở đường link ứng dụng bằng <b>Safari</b>.</li>
+        <li>Bấm nút <b>Chia sẻ</b> <kbd>⬆︎</kbd> ở thanh dưới màn hình.</li>
+        <li>Kéo xuống chọn <kbd>Thêm vào MH chính</kbd> (Add to Home Screen), rồi bấm <kbd>Thêm</kbd>.</li>
+        <li>Mở ứng dụng từ màn hình chính như bình thường.</li>
+      </ol>
+    </div>
+    <p class="note">💻 <b>Trên máy tính</b> cũng dùng được: chỉ cần mở đường link bằng trình duyệt, không cần cài gì thêm.</p>
+  </section>
+
+  <section>
+    <h2 class="sec"><span class="n">2</span> Nhập mã lớp (chỉ với BizOn)</h2>
+    <p class="sub">Khi giảng viên yêu cầu nộp kết quả hoạt động trong lớp qua BizOn.</p>
+    <div class="codebox">
+      <p style="margin:.1rem 0 .2rem;font-size:.92rem">Trong BizOn, ở màn hình có chức năng lớp học / nộp kết quả, hãy nhập <b>đúng mã lớp của bạn</b>:</p>
+      <div class="codes">
+        <div class="code"><div class="lbl">Lớp</div><div class="v">KT330H</div></div>
+        <div class="code"><div class="lbl">Lớp</div><div class="v">KT338</div></div>
+      </div>
+      <p style="margin:.4rem 0 0;font-size:.82rem;color:#8a6a1c">Nhập sai mã lớp thì kết quả sẽ không vào đúng lớp của bạn. EnQuiz là app tự ôn nên <b>không</b> cần mã lớp.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec"><span class="n">3</span> Trên Google Play?</h2>
+    <div class="play">
+      <div class="ic">▶️</div>
+      <div><b>Sắp có trên Google Play</b> (đang trong giai đoạn thử nghiệm).
+        <p>Trong lúc chờ, hãy <b>cài trực tiếp từ web</b> như hướng dẫn ở trên — cách này dùng được ngay, đầy đủ tính năng và luôn là bản mới nhất. Khi bản Google Play sẵn sàng, giảng viên sẽ gửi đường link riêng.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec"><span class="n">4</span> Những điều nên biết</h2>
+    <ul class="tick">
+      <li>Cả hai ứng dụng <b>miễn phí</b>, <b>không quảng cáo</b> và <b>không cần đăng nhập/tài khoản</b>.</li>
+      <li>Sau lần mở đầu có mạng, ứng dụng chạy được <b>ngoại tuyến</b> (không cần Internet).</li>
+      <li>Tiến trình học lưu <b>ngay trên máy của bạn</b>; ứng dụng không tự thu thập thông tin cá nhân.</li>
+      <li>Muốn cập nhật bản mới: mở ứng dụng khi <b>có mạng</b> và tải lại trang một lần.</li>
+    </ul>
+    <p class="note"><b>Không thấy nút “Thêm vào Màn hình chính”?</b> Hãy đảm bảo đang mở bằng Chrome (Android) hoặc Safari (iPhone), không phải trình duyệt trong Facebook/Zalo. Bạn vẫn có thể dùng ứng dụng ngay trong trình duyệt mà không cần cài.</p>
+  </section>
+
+  <footer>
+    <p>Hỗ trợ: <a href="mailto:thuyhuongctu@gmail.com">thuyhuongctu@gmail.com</a> · <a href="mailto:patu@ctu.edu.vn">patu@ctu.edu.vn</a></p>
+    <p>© 2026 Đỗ Thùy Hương &amp; Phan Anh Tú · BizOn &amp; EnQuiz · Tài liệu phục vụ học tập</p>
+  </footer>
+
+</div>
+</body>
+</html>
