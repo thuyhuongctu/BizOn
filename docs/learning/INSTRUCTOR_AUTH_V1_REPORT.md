@@ -107,19 +107,32 @@ Số dòng dữ liệu mẫu DEMO-2026:                12
   khóa dùng chung cũ — đã cập nhật lại để khớp luồng mới, chạy lại toàn bộ,
   đều đạt.
 
-## 5. Rollout an toàn — CHƯA đổi gì cho người dùng cũ
+## 5. Rollout an toàn — CẬP NHẬT 2026-09-14: đã khóa đường cũ
+
+> **Cập nhật:** Bạn đã xác nhận khóa đường cũ. Đã áp dụng
+> `supabase/migrations/20260914010000_revoke_legacy_instructor_key_rpcs.sql`
+> lên production. Nội dung mục này dưới đây mô tả trạng thái TRƯỚC khi khóa,
+> giữ lại để biết lý do đã có giai đoạn chạy song song.
 
 Đường cũ (`giang-vien.html` — "Dashboard cổ điển", dùng Mã lớp + Khóa
-giảng viên chung) **vẫn hoạt động y nguyên**, chưa tắt. Hai đường chạy song
-song. Việc này cố ý: tránh trường hợp bạn hoặc Phan Anh Tú đang dùng
-Dashboard cổ điển giữa chừng buổi học mà bị khóa đột ngột.
+giảng viên chung) **đã ngừng hoạt động** — `bizon_leaderboard`, `bizon_feed`,
+`bizon_ft_board`, `bizon_bp_board`, `bizon_survey_export`,
+`bizon_bp_learning_traces` bị thu hồi quyền `EXECUTE` khỏi `anon`,
+`authenticated`, và `public` (5/6 hàm còn giữ quyền `EXECUTE` mặc định cấp
+cho `PUBLIC` lúc tạo hàm — phải revoke thêm khỏi `public` mới chặn hẳn, xem
+migration để biết chi tiết). Trang `giang-vien.html` đã được sửa lại thành
+thông báo ngừng dùng, trỏ sang `app/instructor-studio.html`.
 
-**Việc còn lại, cố ý CHƯA làm:** thu hồi quyền gọi 5 hàm cũ dùng khóa chung
-(`bizon_leaderboard`, `bizon_feed`, `bizon_bp_board`,
-`bizon_bp_learning_traces`, `bizon_survey_export`) khỏi `anon`/
-`authenticated`. Chỉ nên làm việc này **sau khi** bạn xác nhận luồng mới
-chạy ổn với một lớp thật. Câu lệnh đã ghi sẵn trong migration, chỉ cần một
-migration nhỏ tiếp theo khi bạn đồng ý.
+Trước đó hai đường chạy song song có chủ đích, để tránh trường hợp bạn hoặc
+Phan Anh Tú đang dùng Dashboard cổ điển giữa chừng buổi học mà bị khóa đột
+ngột. Đã kiểm tra không có lớp nào đang hoạt động (dữ liệu `round_submissions`
+gần nhất cách hơn 3 ngày, không khớp mã lớp thật KT330H-M01/M02) trước khi
+khóa.
+
+**Việc còn lại nếu bạn/Phan Anh Tú đã từng dùng Dashboard cổ điển cho lớp
+thật:** phải đăng ký tài khoản + `bizon_claim_class()` đúng mã lớp đó trong
+Instructor Studio để xem lại được — dữ liệu cũ trong `round_submissions` v.v.
+vẫn còn nguyên, chỉ đường đọc đổi.
 
 ## 6. Cách dùng ngay bây giờ
 
