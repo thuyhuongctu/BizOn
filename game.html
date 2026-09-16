@@ -189,6 +189,47 @@
       </div>
       <p class="text-sm text-deep-teal/60 mb-2"><span class="font-display font-extrabold lumina-name">Lumina AI</span> – <span class="signature text-lg text-deep-teal">Je m'appelle Hương</span> <span>đang chờ đồng hành cùng đội của bạn.</span></p>
       <p class="text-[11px] font-bold text-deep-teal/55 mb-6">⏱️ Một ván 6 vòng ≈ 30–45 phút (mỗi vòng 5–7 phút) – vừa một buổi học. Chơi thử nhanh với Đội Demo: ~10 phút cho 2 vòng đầu.</p>
+
+      <!-- Đăng nhập sinh viên thật (thử nghiệm) — chỉ hiện khi mở link kèm ?studentAuth=1,
+           js/student-auth.js tự bỏ qua nếu không có cờ này. Chưa nối vào luồng mặc định. -->
+      <div id="student-auth-panel" class="hidden clay-card p-5 mb-5" style="border:2px solid #006687">
+        <p class="text-[11px] font-extrabold uppercase tracking-wider mb-3" style="color:#006687">🔒 Đăng nhập sinh viên thật (thử nghiệm)</p>
+        <div id="sa-auth-block">
+          <label class="block text-xs font-bold text-deep-teal mb-1">Email trường (@student.ctu.edu.vn)</label>
+          <input id="sa-email" type="email" placeholder="23017163@student.ctu.edu.vn" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-3 py-2.5 mb-2.5 text-sm outline-none focus:border-primary-container">
+          <label class="block text-xs font-bold text-deep-teal mb-1">Mật khẩu (≥ 8 ký tự)</label>
+          <input id="sa-password" type="password" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-3 py-2.5 mb-3 text-sm outline-none focus:border-primary-container">
+          <div class="flex gap-2">
+            <button id="sa-signup" type="button" class="flex-1 clay-button-secondary text-deep-teal/80 font-display font-bold py-2.5 text-sm rounded-clay">Đăng ký</button>
+            <button id="sa-signin" type="button" class="flex-1 clay-button-secondary text-deep-teal/80 font-display font-bold py-2.5 text-sm rounded-clay">Đăng nhập</button>
+          </div>
+        </div>
+        <div id="sa-team-block" class="hidden">
+          <p id="sa-account-line" class="text-[11px] text-deep-teal/60 mb-2"></p>
+          <label class="block text-xs font-bold text-deep-teal mb-1">Mã lớp</label>
+          <input id="sa-class" type="text" placeholder="VD: KT330H-M01" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-3 py-2.5 mb-2.5 text-sm outline-none focus:border-primary-container">
+          <label class="block text-xs font-bold text-deep-teal mb-1">Tên đội</label>
+          <input id="sa-team" type="text" placeholder="VD: Rồng Xanh Corp" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-3 py-2.5 mb-2.5 text-sm outline-none focus:border-primary-container">
+          <label class="block text-xs font-bold text-deep-teal mb-1">Vai trò</label>
+          <select id="sa-role" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-3 py-2.5 mb-3 text-sm outline-none focus:border-primary-container">
+            <option value="CEO">CEO</option><option value="CFO">CFO</option><option value="CMO">CMO</option><option value="COO">COO</option><option value="SEC">SEC (Thư ký)</option>
+          </select>
+          <div class="flex gap-2 mb-3">
+            <button id="sa-join" type="button" class="flex-1 clay-button-secondary text-deep-teal/80 font-display font-bold py-2.5 text-sm rounded-clay">Tham gia đội</button>
+            <button id="sa-signout" type="button" class="clay-button-secondary text-deep-teal/60 font-display font-bold py-2.5 px-3 text-sm rounded-clay">Đăng xuất</button>
+          </div>
+          <p id="sa-team-label" class="text-[11px] font-bold text-deep-teal/70 mb-2"></p>
+          <div id="sa-save-block" class="hidden">
+            <div class="flex gap-2 mb-2">
+              <button id="sa-load" type="button" class="flex-1 clay-button-secondary text-deep-teal/80 font-display font-bold py-2 text-xs rounded-clay">Tải tiến trình</button>
+              <button id="sa-save" type="button" class="flex-1 clay-button-secondary text-deep-teal/80 font-display font-bold py-2 text-xs rounded-clay">Lưu thử</button>
+            </div>
+            <pre id="sa-save-out" class="text-[10px] bg-surface-bright rounded-clay p-2 overflow-auto max-h-24"></pre>
+          </div>
+        </div>
+        <p id="sa-status" class="text-[11px] font-bold mt-2 opacity-70"></p>
+      </div>
+
       <label class="block text-sm font-bold text-deep-teal mb-1">Email</label>
       <input id="login-email" type="email" placeholder="sinhvien@truong.edu.vn" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 mb-4 outline-none focus:border-primary-container">
       <label class="block text-sm font-bold text-deep-teal mb-1">Tên đội – cũng là tên doanh nghiệp của bạn</label>
@@ -829,6 +870,7 @@
 <script src="js/engine.js"></script>
 <script src="js/backend.js"></script>
 <script src="js/app.js"></script>
+<script src="js/student-auth.js"></script>
 <script src="js/tutorial.js"></script>
 <script>
 // Đăng ký service worker + tự làm mới khi có bản mới: dùng chung toàn site trong js/site-ui.js

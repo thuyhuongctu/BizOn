@@ -18,30 +18,41 @@ assert.match(html, /instructor-studio\.js/);
 assert.doesNotMatch(html, /Food Truck|Gánh Hàng|bizon_ft_board/i);
 assert.doesNotMatch(client, /bizon_ft_board/i);
 
+assert.doesNotMatch(html, /bi-instructor-key/);
+assert.doesNotMatch(client, /bi-instructor-key/);
+for (const requiredId of ['bi-email', 'bi-password', 'bi-signup', 'bi-signin', 'bi-class-block', 'bi-demo', 'bi-account-line']) {
+  assert.ok(html.includes(`id="${requiredId}"`), `Missing per-instructor auth element: ${requiredId}`);
+}
+
 for (const functionName of [
-  'bizon_leaderboard',
-  'bizon_feed',
-  'bizon_bp_board',
-  'bizon_bp_learning_traces',
-  'bizon_survey_export'
+  'bizon_leaderboard_v2',
+  'bizon_feed_v2',
+  'bizon_bp_board_v2',
+  'bizon_bp_learning_traces_v2',
+  'bizon_survey_export_v2',
+  'bizon_claim_class',
+  'bizon_demo_leaderboard',
+  'bizon_demo_feed'
 ]) {
   assert.match(client, new RegExp(functionName));
 }
 
-assert.match(client, /rpc\('bizon_leaderboard'/);
-assert.match(client, /rpc\('bizon_feed'/);
-assert.match(client, /safeRpc\('bizon_bp_board'/);
-assert.match(client, /safeRpc\('bizon_bp_learning_traces'/);
+assert.match(client, /rpc\('bizon_leaderboard_v2'/);
+assert.match(client, /rpc\('bizon_feed_v2'/);
+assert.match(client, /safeRpc\('bizon_bp_board_v2'/);
+assert.match(client, /safeRpc\('bizon_bp_learning_traces_v2'/);
 assert.match(client, /Không tải được dữ liệu lớp/);
 assert.match(client, /Không tải được khảo sát/);
 assert.match(client, /refreshWithStatus/);
 
 assert.match(client, /localStorage\.setItem\('bizon-instructor-class'/);
-assert.doesNotMatch(client, /localStorage\.setItem\([^\n]*key/i);
+assert.doesNotMatch(client, /localStorage\.setItem\([^\n]*password/i);
+assert.doesNotMatch(client, /localStorage\.setItem\([^\n]*accessToken/i);
 assert.doesNotMatch(client, /localStorage\.setItem\([^\n]*instructorKey/i);
-assert.match(client, /state\.instructorKey = ''/);
-assert.match(client, /clearCredentialInput/);
-assert.ok((client.match(/clearCredentialInput\(\)/g) || []).length >= 3, 'Credential input must be cleared after success, failure and pagehide.');
+assert.match(client, /sessionStorage\.setItem\(SESSION_KEY/);
+assert.doesNotMatch(client, /localStorage\.setItem\(SESSION_KEY/);
+assert.match(client, /clearPasswordInput/);
+assert.ok((client.match(/clearPasswordInput\(\)/g) || []).length >= 3, 'Password input must be cleared after sign-up, sign-in, and pagehide (whichever paths call it).');
 assert.match(client, /ai_scoring: false/);
 assert.match(client, /not automatically graded by AI/);
 assert.match(client, /setInterval\(\(\) => refreshWithStatus\(\{ quiet: true \}\), 10000\)/);

@@ -15,7 +15,7 @@ Mục tiêu là tạo cơ chế thu nhận Decision Trace phục vụ giảng d�
 
 Tài liệu này là đặc tả kỹ thuật–quản trị của pilot, không thay thế phê duyệt đạo đức nghiên cứu, quy định của cơ sở đào tạo hoặc tư vấn pháp lý.
 
-> **Trạng thái hiện tại:** client opt-in, migration và kiểm thử PostgreSQL đã nằm trong Draft PR. Chưa xem đây là hệ thống thu dữ liệu production cho đến khi migration được áp trên staging, kiểm thử RLS/RPC thật và có phê duyệt triển khai.
+> **Trạng thái hiện tại:** migration `bp_learning_traces` đã áp trên production Supabase (không chỉ staging), nhưng RPC `bizon_submit_learning_trace` đang bị **khóa cứng** bằng `revoke execute ... from anon, authenticated` (xem `supabase/migrations/20260910000000_bp_learning_pilot_lock.sql`) cho tới khi đủ điều kiện Mục 4/11/12: xác định data controller, có consent instrument thật (phiếu giấy cho SV <18, form/consent trong app cho SV ≥18), và kiểm thử staging đạt. Trang `brand-passport-learning-pilot.html` cũng chưa được gắn vào navigation của site. Chỉ mở lại quyền EXECUTE khi có quyết định go/no-go được ghi nhận.
 
 ## 2. Kiến trúc dữ liệu chuẩn
 
