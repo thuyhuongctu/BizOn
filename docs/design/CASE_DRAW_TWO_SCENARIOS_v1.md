@@ -1,10 +1,11 @@
-# Bốc thăm 2 Trường hợp — thiết kế nội dung v1 (CHƯA nối code)
+# Bốc thăm 2 Trường hợp — thiết kế v1 + đã nối code (thử nghiệm, tắt mặc định)
 
 **Ngày:** 2026-09-16
-**Trạng thái:** Chỉ thiết kế/viết nội dung. Chưa sửa `game.html`, `js/app.js`, `js/engine.js`.
-Mùa 1 (KT330H-M01/M02) đang chơi dở Vòng 1–2 tuần này — không đụng gì tới game
-đang chạy cho tới khi Hương duyệt nội dung dưới đây và quyết định thời điểm áp
-dụng (việc nối code là một bước riêng, làm sau khi có go-ahead).
+**Trạng thái:** Đã nối code, gated sau `?caseDraw=1` — game.html mặc định (không
+có cờ) hành vi giữ nguyên 100%, đã kiểm chứng bằng Playwright (xem mục 8). Mùa 1
+(KT330H-M01/M02) đang chơi dở Vòng 1–2 tuần này hoàn toàn không bị ảnh hưởng dù
+chưa/đã nối code, vì mặc định tắt. Việc BẬT thật cho một lớp (bỏ cờ, thành hành
+vi mặc định) vẫn là quyết định riêng, chưa làm — xem mục 6.
 
 ## 1. Vấn đề cần giải quyết
 
@@ -220,16 +221,19 @@ cta (vi/en): 🐉 Bứt phá về đích / 🐉 Sprint to the finish
 100% khớp — điểm số 2 trường hợp không lệch nhau vì lý do cơ học, chỉ lệch
 vì năng lực ra quyết định thật của từng đội.
 
-## 6. Việc CHƯA làm (để chị duyệt trước)
+## 6. Việc CHƯA làm
 
-1. Nối `EV_*_B` này vào `js/engine.js` (thêm hàm `MARKET_EVENTS_LIST_B()`
-   song song, không sửa hàm A hiện có).
-2. Thêm bước "bốc thăm" ở Vòng 0 (`game.html` + `js/app.js`), dùng
-   `BizOnSeedEngine.pick` để chọn A/B theo `classId:teamId`.
-3. Lưu `S.caseId` vào state đội, đổi `currentEvent(s)` để đọc đúng danh sách
-   theo `caseId`.
-4. Quyết định thời điểm áp dụng (Mùa 2 tuần 6, hay lớp/học kỳ sau) — **chị
-   chưa chốt, để sau**.
+1. ~~Nối `EV_*_B` vào `js/engine.js`~~ — **Xong**: `MARKET_EVENTS_LIST_B()`
+   thêm song song, không sửa `MARKET_EVENTS_LIST()` hiện có.
+2. ~~Thêm bước "bốc thăm" ở Vòng 0~~ — **Xong**: `maybeShowCaseDraw()` trong
+   `js/app.js`, dùng `BizOnSeedEngine.pick` (nạp qua `js/core/seed-engine.js`,
+   thêm 1 dòng `<script>` vào `game.html`) chọn A/B theo `classId:teamName`.
+3. ~~Lưu `S.caseId`, đổi `currentEvent(s)`~~ — **Xong**: `newGameState()` thêm
+   `caseId: 'A'` (mặc định) + `caseDrawn: false`; `currentEvent()` đọc đúng
+   danh sách theo `s.caseId`.
+4. **Quyết định thời điểm BẬT THẬT** (bỏ cờ `?caseDraw=1`, thành mặc định cho
+   một lớp) — **chị chưa chốt, để sau**. Code hiện tại an toàn để nằm im trong
+   `main` bất kể chốt lúc nào, vì tắt theo mặc định (xem mục 8).
 
 ## 7. Ý tưởng "kịch tính hơn" khác — không cần đợi cơ chế 2 trường hợp
 
@@ -240,3 +244,44 @@ Ghi lại để cân nhắc riêng, không phụ thuộc việc trên:
   (dùng đúng 3 cái tên trong `COMPETITORS`, `js/engine.js:85-89`), theo style
   từng đối thủ (aggressive/balanced/premium) — không cần đổi luật, chỉ thêm
   flavor text.
+
+## 8. Đã nối code thế nào — và đã kiểm chứng ra sao
+
+**File đã sửa** (commit riêng, xem lịch sử git):
+- `js/engine.js` — thêm `MARKET_EVENTS_LIST_B()` (nguyên văn nội dung mục 4);
+  `newGameState()` thêm `caseId: 'A'`, `caseDrawn: false`; `currentEvent(s)`
+  đổi 1 dòng để đọc đúng danh sách theo `s.caseId`.
+- `game.html` — thêm `<script src="js/core/seed-engine.js"></script>` (trước
+  `js/app.js`) để nạp bộ hạt giống đã có sẵn nhưng chưa ai dùng.
+- `js/app.js` — `applyStateDefaults()` thêm 2 dòng mặc định cho save cũ;
+  `doLogin()` thêm đoạn bốc `S.caseId` (chỉ khi `!restored` — ván mới — và có
+  `?caseDraw=1`); thêm `caseDrawFlagOn()`, `CASE_INFO_LIST()`,
+  `maybeShowCaseDraw()`; `enterApp()` đổi 1 dòng để gọi
+  `maybeShowCaseDraw(() => maybeShowEventIntro())` thay vì gọi thẳng
+  `maybeShowEventIntro()`.
+
+**Nguyên tắc an toàn:** mọi đường mới đều rẽ nhánh trên `caseDrawFlagOn()`
+(đọc `?caseDraw=1` trên URL, giống hệt cách `?coreV2=1`/`?studentAuth=1` đã
+làm trước đó) hoặc trên `s.caseId === 'B'` — cả hai đều mặc định "tắt"/`'A'`.
+Không có cờ trên URL, không có ván nào (mới hay cũ) đổi hành vi, kể cả 1 ký
+tự hiển thị.
+
+**Đã kiểm chứng bằng Playwright** (chạy `game.html` qua `python3 -m
+http.server`, chặn gọi Supabase thật vì sandbox không cho ra ngoài):
+1. **Không có `?caseDraw=1`:** không hiện màn bốc thăm; `S.caseId` = `'A'`;
+   Vòng 1 hiện đúng "Thị trường ổn định" (nội dung gốc, không đổi 1 ký tự);
+   0 lỗi console — xác nhận game mặc định giữ nguyên 100%.
+2. **Có `?caseDraw=1`:** bốc thăm ra `'B'` cho một đội thử; màn bốc thăm hiện
+   đúng tiêu đề "Trường hợp B · Sóng Ngoại Nhập"; sau khi bấm qua, Vòng 1 hiện
+   đúng nội dung Trường hợp B ("Thị trường ổn định — nhưng có tin đồn"); 0 lỗi
+   console.
+3. Kiểm tra riêng bộ bốc thăm (`js/core/seed-engine.js`) bằng Node: cùng
+   `classId:teamId` luôn ra cùng 1 kết quả (không thể "bốc lại" bằng refresh);
+   thử với danh sách đội thật của KT330H-M01 (7 đội) và M02 (8 đội) đều ra
+   được cả hai trường hợp trong lớp, không lệch hẳn về một phía.
+
+**Giới hạn:** chưa thử trên trình duyệt thật kết nối Supabase thật (cùng hạn
+chế đã ghi ở các báo cáo trước — sandbox chặn gọi thẳng `supabase.co`); và
+chưa có ai chơi thử một lượt Trường hợp B trọn 6 vòng để tự cảm nhận độ khó
+có thực sự cân bằng với A hay không (số trên giấy khớp nhau, nhưng cảm nhận
+"kịch tính" là chủ quan — nên tự chơi thử trước khi bật cho lớp thật).

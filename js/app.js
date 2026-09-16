@@ -34,6 +34,7 @@ function applyStateDefaults(s) {
   s.whatIfTotal ??= 0; s.suggestionsApplied ??= 0; s.achShown ??= (s.achievements || []).slice();
   s.conquest ??= []; s.aiHistory ??= []; s.teamMembers ??= null;
   s.difficulty ??= 'normal'; s.autoDiff ??= 1.0;
+  s.caseId ??= 'A'; s.caseDrawn ??= false;
   return s;
 }
 function load() {
@@ -329,6 +330,15 @@ async function doLogin() {
   S = restored || newGameState({ email, teamName: team, role: pickedRole, classId });
   // Ván mới: lấy mức khó ưu tiên đã lưu (ván khôi phục giữ mức đã lưu trong save).
   if (!restored) { try { S.difficulty = localStorage.getItem('bizon-difficulty') || 'normal'; } catch (e) {} }
+  // Ván mới + cờ thử nghiệm ?caseDraw=1: bốc thăm Trường hợp A/B, xác định
+  // (không đổi khi refresh) theo classId:teamName. Mặc định KHÔNG bật — mọi
+  // ván không có cờ này giữ nguyên Trường hợp A như trước giờ.
+  if (!restored && caseDrawFlagOn() && window.BizOnSeedEngine) {
+    try {
+      const seed = BizOnSeedEngine.createSeed(classId || 'TRIAL', team, 'case-draw');
+      S.caseId = BizOnSeedEngine.pick(seed, 'case', ['A', 'B']);
+    } catch (e) { /* giữ mặc định 'A' nếu có lỗi */ }
+  }
   save();
   $('screen-login').classList.remove('active');
   enterApp();
@@ -678,7 +688,43 @@ function playHuongIntro() {
 function enterApp() {
   $('app-shell').classList.remove('hidden');
   showTab('home');
-  maybeShowEventIntro();
+  maybeShowCaseDraw(() => maybeShowEventIntro());
+}
+
+// ---------- Bốc thăm Trường hợp đầu mùa (thử nghiệm, gated ?caseDraw=1) ----------
+// Mặc định KHÔNG bật: không có ?caseDraw=1 trên URL thì hàm này chỉ gọi thẳng
+// onDone() — game.html giữ nguyên hành vi hiện tại 100%. Thiết kế đầy đủ (2
+// trường hợp, nguyên tắc công bằng số liệu) ở docs/design/CASE_DRAW_TWO_SCENARIOS_v1.md.
+function caseDrawFlagOn() {
+  try { return new URLSearchParams(window.location.search).get('caseDraw') === '1'; }
+  catch (e) { return false; }
+}
+function CASE_INFO_LIST() {
+  return {
+    A: { name: T('Trường hợp A · Giữ Sân Nhà', 'Case A · Hold the Home Turf'), img: 'lumina-vest-thumbsup',
+      desc: T('Một mùa cạnh tranh với các đối thủ nội địa quen thuộc — thị trường vẫn còn nhiều dư địa để bứt phá.', 'A season competing against familiar domestic rivals — plenty of room to break out.') },
+    B: { name: T('Trường hợp B · Sóng Ngoại Nhập', 'Case B · The Import Wave'), img: 'lumina-ao-dai-alert',
+      desc: T('Star Clay Co., đối thủ ngoại cao cấp, sẽ gia nhập và thử thách đội bạn suốt mùa.', 'Star Clay Co., a premium foreign rival, enters and challenges your team all season.') },
+  };
+}
+function maybeShowCaseDraw(onDone) {
+  if (!S || !caseDrawFlagOn() || S.caseDrawn || S.round !== 1 || (S.history && S.history.length)) { onDone(); return; }
+  S.caseDrawn = true;
+  save();
+  const info = CASE_INFO_LIST()[S.caseId] || CASE_INFO_LIST().A;
+  playEventSting('good');
+  const div = document.createElement('div');
+  div.className = 'fixed inset-0 z-50 bg-surface-bright overflow-y-auto';
+  div.innerHTML = `
+    <div class="max-w-md mx-auto px-6 py-8 text-center">
+      <span class="inline-flex items-center gap-1.5 text-[11px] font-extrabold px-4 py-1.5 rounded-full bg-primary-container/25 text-primary">● ${T('BỐC THĂM ĐẦU MÙA', 'SEASON DRAW')}</span>
+      <h1 class="font-display text-3xl font-extrabold text-deep-teal uppercase mt-3 leading-tight">${info.name}</h1>
+      <p class="text-sm text-deep-teal/70 mt-2 max-w-sm mx-auto">${info.desc}</p>
+      <img src="assets/character/${info.img}.webp" alt="Je m'appelle Hương AI Advisor" class="w-28 mx-auto mt-6 rounded-2xl object-cover animate-float drop-shadow-xl" style="aspect-ratio:3/4; object-position:50% 8%">
+      <button id="case-draw-cta" class="clay-button-primary w-full text-white font-display font-bold text-lg py-4 mt-8">${T('🎲 Vào Vòng 1', '🎲 Enter Round 1')}</button>
+    </div>`;
+  div.querySelector('#case-draw-cta').onclick = () => { div.remove(); onDone(); };
+  document.body.appendChild(div);
 }
 
 // ---------- Biến cố toàn màn hình (theo thiết kế Stitch) ----------
