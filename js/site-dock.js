@@ -45,7 +45,6 @@
     ['Brand Passport – bản remix mở rộng (5:01) 🎧', 'brand-passport-remix-25.mp3'],
     ['Stamps Beyond Borders', 'stamps-beyond-borders.mp3'],
     ['Stamps Beyond Borders – bản thu lại', 'stamps-beyond-borders-v2.mp3'],
-    ['Stamps Beyond Borders – bản phối 3:35', 'stamps-beyond-borders-v3.mp3'],
     ['Stamps Beyond Borders – bản mở rộng', 'stamps-beyond-borders-extended.mp3'],
     ['Golden Silt Route', 'golden-silt-route.mp3'],
     ['Hộ Chiếu Thương Hiệu – Phần I: Từ dòng Mekong', 'ho-chieu-p1-tu-dong-mekong.mp3'],

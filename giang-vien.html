@@ -61,26 +61,33 @@
   <div class="max-w-5xl mx-auto px-5">
     <p class="text-[11px] font-extrabold uppercase tracking-[.2em] text-clay-gold">Dành cho giảng viên · Pilot Classroom</p>
     <h1 class="font-display font-extrabold text-3xl sm:text-4xl mt-2">Bảng điều khiển lớp học</h1>
-    <p class="text-white/75 text-sm mt-3 max-w-2xl">Theo dõi các đội nộp kết quả <b>ngay trong buổi học</b>: bảng xếp hạng tự làm mới mỗi 10 giây, dòng thời gian từng lượt khóa vòng, và xuất CSV để chấm điểm. Dữ liệu chỉ mở bằng <b>Khóa giảng viên</b> – sinh viên không xem được của nhau.</p>
+    <p class="text-white/75 text-sm mt-3 max-w-2xl">Theo dõi các đội nộp kết quả <b>ngay trong buổi học</b>: bảng xếp hạng tự làm mới mỗi 10 giây, dòng thời gian từng lượt khóa vòng, và xuất CSV để chấm điểm.</p>
   </div>
 </header>
 
 <main class="max-w-5xl mx-auto px-5 py-8">
 
-  <section class="clay-card p-6 sm:p-7 mb-6">
-    <h2 class="font-display font-extrabold text-deep-teal text-lg mb-4">🔑 Kết nối lớp</h2>
+  <section class="clay-card p-6 sm:p-7 mb-6" style="border:2px solid #c0392b">
+    <h2 class="font-display font-extrabold text-lg mb-2" style="color:#c0392b">🔒 Đã ngừng dùng Khóa giảng viên chung</h2>
+    <p class="text-sm leading-relaxed mb-4">Trang này từng dùng một <b>Khóa giảng viên dùng chung cho mọi người</b> — ai biết khóa đọc được dữ liệu của <b>mọi lớp</b>, không chỉ lớp của mình. Để mỗi giảng viên chỉ xem được lớp của chính mình, khóa dùng chung đã bị thu hồi quyền truy cập ở phía máy chủ — ô nhập bên dưới sẽ không còn tải được dữ liệu nữa.</p>
+    <p class="text-sm leading-relaxed mb-4">Hãy dùng <b>Instructor Studio</b> — đăng nhập bằng tài khoản email/mật khẩu riêng của bạn, đăng ký mã lớp một lần, rồi chỉ bạn xem được lớp đó.</p>
+    <a href="app/instructor-studio.html#bi-connect-panel" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-6 py-3 text-sm inline-block">🔑 Mở Instructor Studio →</a>
+  </section>
+
+  <section class="clay-card p-6 sm:p-7 mb-6" style="opacity:.55">
+    <h2 class="font-display font-extrabold text-deep-teal text-lg mb-4">🔑 Kết nối lớp (bản cũ — đã khóa)</h2>
     <div class="grid sm:grid-cols-[1fr_1fr_auto] gap-3 items-end">
       <div>
         <label class="block text-xs font-extrabold mb-1.5 opacity-70" for="gv-class">Mã lớp học (sinh viên nhập khi đăng nhập game)</label>
-        <input id="gv-class" class="gv-input" placeholder="VD: QTKD-2026-A" autocomplete="off">
+        <input id="gv-class" class="gv-input" placeholder="VD: QTKD-2026-A" autocomplete="off" disabled>
       </div>
       <div>
         <label class="block text-xs font-extrabold mb-1.5 opacity-70" for="gv-key">Khóa giảng viên</label>
-        <input id="gv-key" class="gv-input" type="password" placeholder="Khóa trong app_secrets" autocomplete="off">
+        <input id="gv-key" class="gv-input" type="password" placeholder="Đã ngừng dùng" autocomplete="off" disabled>
       </div>
-      <button onclick="gvConnect()" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-6 py-3 text-sm whitespace-nowrap">📡 Theo dõi lớp</button>
+      <button onclick="gvConnect()" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-6 py-3 text-sm whitespace-nowrap" disabled style="opacity:.6;cursor:not-allowed">📡 Theo dõi lớp</button>
     </div>
-    <p id="gv-status" class="text-xs font-bold mt-3 opacity-70">Chưa kết nối. Nhập Mã lớp + Khóa giảng viên rồi bấm "Theo dõi lớp".</p>
+    <p id="gv-status" class="text-xs font-bold mt-3 opacity-70">Đã ngừng dùng — dùng Instructor Studio ở trên.</p>
   </section>
 
   <section id="gv-board" class="hidden">
@@ -146,11 +153,12 @@
   </section>
 
   <section class="clay-card p-6 sm:p-7 mb-6">
-    <h2 class="font-display font-extrabold text-deep-teal text-lg mb-3">❓ Hướng dẫn nhanh</h2>
+    <h2 class="font-display font-extrabold text-deep-teal text-lg mb-3">❓ Hướng dẫn nhanh (Instructor Studio)</h2>
     <ol class="list-decimal ml-5 space-y-1.5 text-sm">
+      <li>Mở <a href="app/instructor-studio.html#bi-connect-panel" class="underline font-bold">Instructor Studio</a>, đăng ký tài khoản email + mật khẩu riêng (một lần).</li>
       <li>Phát cho lớp một <b>Mã lớp</b> tự đặt (VD: <code class="font-bold">QTKD-2026-A</code>) – sinh viên nhập mã này ở màn đăng nhập game.</li>
-      <li>Nhập cùng Mã lớp đó + <b>Khóa giảng viên</b> vào ô trên. Khóa nằm trong bảng <code class="font-bold">app_secrets</code> trên Supabase (mặc định <code class="font-bold">BIZON-GV-2026</code> – nên đổi ngay theo hướng dẫn trong <code class="font-bold">supabase/migrations/20260730000000_instructor_dashboard.sql</code>).</li>
-      <li>Chiếu trang này lên máy chiếu: mỗi khi một đội khóa vòng, bảng xếp hạng tự cập nhật trong vòng 10 giây.</li>
+      <li>Trong Instructor Studio, nhập đúng Mã lớp đó và bấm "Đăng ký & theo dõi lớp" — chỉ bạn xem được lớp này.</li>
+      <li>Chiếu trang lên máy chiếu: mỗi khi một đội khóa vòng, bảng xếp hạng tự cập nhật trong vòng 10 giây.</li>
       <li>Cuối buổi bấm <b>Xuất CSV</b> để tải bảng điểm về chấm (mở được bằng Excel).</li>
     </ol>
   </section>
