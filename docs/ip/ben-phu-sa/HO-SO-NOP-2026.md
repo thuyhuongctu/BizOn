@@ -33,11 +33,13 @@ Gắn với commit: **`b387b3b61e6868f7fb78c41c80cec9eb965871a0`** (#396 "mở k
 
 ## 3. Ngày công bố / nơi công bố (nếu có)
 
-**Khai: "Chưa công bố."**
+**Khai dự kiến trước đây: "Chưa công bố."** — ⚠️ **CẦN RÀ LẠI, có khả năng không còn đúng (phát hiện 17/09/2026).**
 
-Game chưa được công bố/quảng bá ra công chúng như một sản phẩm độc lập — vẫn nằm trong hệ sinh thái nội bộ BizOn.
+Lý do ban đầu (08/09/2026) coi là "chưa công bố": game chỉ truy cập được về mặt kỹ thuật qua GitHub Pages, chưa được quảng bá ra công chúng như một sản phẩm độc lập.
 
-⚠️ *Lưu ý cho luật sư trước khi khai chính thức:* `ben-phu-sa.html` có thể truy cập được về mặt kỹ thuật tại `https://thuyhuongctu.github.io/BizOn/ben-phu-sa.html` (repo GitHub công khai, GitHub Pages tự deploy mỗi lần push `main`, không có `robots.txt` chặn). Cần xác nhận ranh giới giữa "triển khai nội bộ chưa quảng bá" và "đã công bố theo luật SHTT" trước khi khai mục này là chính thức.
+⚠️ **Nhưng chính trong cùng đợt commit đó (PR #416, cùng ngày 08/09/2026), Bến Phù Sa đã được thêm làm nút CTA chính trên trang chủ công khai** (`index.html`: "🛶 Bắt đầu với Bến Phù Sa →", đặt cạnh nút "Khám phá BizOn →"). Bến Phù Sa còn được gắn nhãn **"BẬC 1 · BẮT ĐẦU Ở ĐÂY"** ở trang trung tâm trò chơi (`games.html`) từ sớm hơn — 05/08/2026. Hai điều này đối lập trực tiếp với luận điểm "chưa quảng bá ra công chúng, vẫn nội bộ": game hiện là **điểm khởi đầu được giới thiệu công khai** của cả hệ sinh thái, không còn "GitHub Pages truy cập được về mặt kỹ thuật nhưng không ai biết tới" nữa.
+
+⚠️ *Lưu ý cho luật sư trước khi khai chính thức:* cần đánh giá lại xem có nên khai "Đã công bố" thay vì "Chưa công bố", và nếu vậy thì lấy ngày nào làm ngày công bố (05/08/2026 khi lên Arcade Bậc 1, hay 08/09/2026 khi lên trang chủ). Đây không còn thuần là câu hỏi kỹ thuật (`robots.txt`, GitHub Pages) như ghi chú cũ — mà là một thực tế quảng bá rõ ràng, nên **hỏi luật sư trước khi nộp**, đừng giữ nguyên khai "chưa công bố" chỉ vì hồ sơ cũ đã ghi vậy.
 
 ---
 
@@ -73,6 +75,8 @@ Chủ sở hữu: **hai cá nhân đồng sở hữu** (Đỗ Thùy Hương + Ph
 - `03-ket-qua.png` — màn kết quả
 
 ✅ Cả 3 ảnh đã cắt gọn đúng khung game (24/08/2026) — không còn thanh điều hướng/chân trang/nút "Vũ trụ" dùng chung của site.
+
+⚠️ **Cần chụp lại `01-man-mo-dau.png` trước khi in (phát hiện 17/09/2026):** màn mở đầu hiển thị dòng "Định hướng sư phạm: PGS.TS. Phan Anh Tú" — nhưng từ 13/09/2026 (Thầy Tú lên Giáo sư), trang thật đã đổi thành "GS.TS. Phan Anh Tú" (#453). Ảnh chụp 24/08/2026 vẫn còn học hàm cũ, không khớp giao diện hiện tại. Chụp lại ảnh này (và gộp lại PDF) trước khi nộp.
 
 ✅ Đã gộp thành bản in [`anh-giao-dien/ben-phu-sa-giao-dien-chuong-trinh.pdf`](anh-giao-dien/ben-phu-sa-giao-dien-chuong-trinh.pdf) (24/08/2026) — 3 trang khổ A4, mỗi trang một ảnh kèm chú thích "Hình N." và số trang, sẵn sàng in nộp.
 

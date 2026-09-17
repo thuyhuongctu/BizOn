@@ -35,12 +35,18 @@ Các quyết định sau cần có văn bản chấp thuận của cả hai bên
 
 Đỗ Thùy Hương được giao quản trị kỹ thuật hằng ngày đối với repository, website, CI/CD và bản phát hành, nhưng không được đơn phương chuyển nhượng quyền tài sản chung.
 
-## 6. CTU và quyền của bên thứ ba
+## 6. Cơ quan công tác của hai bên và quyền của bên thứ ba
+
+> **ĐÃ SỬA 17/09/2026:** mục này trước chỉ nhắc tới CTU (nơi Phan Anh Tú công tác),
+> chưa nhắc tới VLUTE (Trường Đại học Sư phạm Kỹ thuật Vĩnh Long — nơi Đỗ Thùy Hương
+> công tác). Hồ sơ quyền tác giả EnQuiz (`CAM_KET_TAC_GIA.md` trong repo
+> `thuyhuongctu/enquiz`) đã xác định rủi ro VLUTE tương đương rủi ro CTU — cả hai đều
+> cần xử lý ở đây, không chỉ một bên.
 
 Thỏa thuận chỉ có hiệu lực đầy đủ sau khi:
 
-- CTU xác nhận bằng văn bản phạm vi quyền/lợi ích của trường;
-- các hợp đồng lao động, nhiệm vụ, đề tài và quy chế SHTT có liên quan được rà soát;
+- CTU (nơi Phan Anh Tú công tác) xác nhận bằng văn bản phạm vi quyền/lợi ích của trường **và** VLUTE (nơi Đỗ Thùy Hương công tác) xác nhận tương tự — hoặc, nếu hai bên quyết định không xin văn bản xác nhận (như đã quyết định cho hồ sơ EnQuiz), thay bằng bản cam đoan cá nhân chi tiết của từng người theo đúng mẫu đã dùng cho EnQuiz;
+- các hợp đồng lao động, nhiệm vụ, đề tài và quy chế SHTT có liên quan **tại cả hai cơ quan** được rà soát;
 - tài sản bên thứ ba, mã nguồn mở, stock asset, font, dịch vụ AI và nhà cung cấp được loại trừ hoặc ghi giấy phép;
 - cộng tác viên ký chuyển giao hoặc cấp phép phù hợp, nếu có.
 
