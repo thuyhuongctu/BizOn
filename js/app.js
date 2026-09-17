@@ -1712,12 +1712,22 @@ const LUMINA_HERO_POS = {
   'lumina-ao-dai-clap': '50% 8%',
   'lumina-ao-dai-alert': '50% 0%',
 };
+let advisorGreetingSpoken = false;
 function renderAdvisorIntro() {
   const quota = AI_QUOTA_PER_ROUND + (hasSkill(S, 'SK_AI1') ? 2 : 0) - S.aiUsed;
   $('ai-quota').textContent = Math.max(0, quota);
+  // renderAll() (gọi từ mọi showTab(), kể cả 'home' lúc mới đăng nhập) render luôn
+  // bong bóng chào này ở hậu trường — tách riêng việc tạo bong bóng (1 lần, câm
+  // tiếng) khỏi việc phát giọng chat-02 (chỉ khi tab Cố vấn thật sự đang mở, và
+  // cũng chỉ 1 lần), nếu không sẽ chồng tiếng với huong-intro.mp3 (doLogin) lúc
+  // đăng nhập, hoặc không bao giờ phát được vì bong bóng đã có sẵn từ trước.
   if (!$('advisor-chat').childElementCount) {
-    pushLumina({ risk: 'low', log: false, clip: 'chat-02', text: T(`Xin chào, Je m'appelle Hương! 👋 Tôi là Lumina – cố vấn AI của đội ${S.profile.teamName}. Hãy chọn một câu hỏi bên dưới, tôi sẽ phân tích kịch bản "Nếu – Thì" cho bạn.`,
+    pushLumina({ risk: 'low', log: false, clip: 'chat-02', mute: true, text: T(`Xin chào, Je m'appelle Hương! 👋 Tôi là Lumina – cố vấn AI của đội ${S.profile.teamName}. Hãy chọn một câu hỏi bên dưới, tôi sẽ phân tích kịch bản "Nếu – Thì" cho bạn.`,
       `Hi, Je m'appelle Hương! 👋 I'm Lumina – the AI advisor for team ${S.profile.teamName}. Pick a question below and I'll walk you through a "What-If" scenario.`) });
+  }
+  if (!advisorGreetingSpoken && $('tab-advisor')?.classList.contains('active')) {
+    advisorGreetingSpoken = true;
+    playVoice('chat-02');
   }
   // Badge biến động thị trường + ảnh cảm xúc theo biến cố hiện tại
   const ev = currentEvent(S);
@@ -1915,8 +1925,9 @@ function pushLumina(advice) {
     </div>`;
   $('advisor-chat').appendChild(el);
   el.scrollIntoView({ behavior: 'smooth', block: 'end' });
-  if (advice.clip) playVoice(advice.clip);   // có bản thu → dùng giọng thật
-  else speakLumina(advice.text);             // chưa thu → giọng máy dự phòng
+  if (advice.mute) { /* câm tiếng có chủ đích — xem renderAdvisorIntro() */ }
+  else if (advice.clip) playVoice(advice.clip);   // có bản thu → dùng giọng thật
+  else speakLumina(advice.text);                  // chưa thu → giọng máy dự phòng
 }
 
 function pushUserMsg(text) {
