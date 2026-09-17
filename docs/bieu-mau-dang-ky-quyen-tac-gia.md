@@ -54,7 +54,9 @@ Phần mềm chạy trên trình duyệt theo kiến trúc ứng dụng web ti�
 
 7. **Cơ chế song ngữ Việt – Anh** — từ điển đối chiếu và cơ chế chuyển ngữ tại chỗ, không cần tải lại trang.
 
-8. **Ba game chiến lược trong cùng hệ sinh thái** — Hộ Chiếu Thương Hiệu (mô phỏng quốc tế hóa doanh nghiệp qua sáu quý), BizOn Go Global (bản đồ thâm nhập thị trường quốc tế), BizOn Arcade (các trò rèn phản xạ ra quyết định).
+~~8. **Ba game chiến lược trong cùng hệ sinh thái** — Hộ Chiếu Thương Hiệu (mô phỏng quốc tế hóa doanh nghiệp qua sáu quý), BizOn Go Global (bản đồ thâm nhập thị trường quốc tế), BizOn Arcade (các trò rèn phản xạ ra quyết định).~~
+
+> **ĐÃ THAY ĐỔI 17/09/2026:** theo quyết định của hai tác giả, **Hộ Chiếu Thương Hiệu tách thành hồ sơ chương trình máy tính riêng**, không còn gộp vào Tác phẩm 1. Mục 8 ở trên **không còn áp dụng** khi khai Tờ khai cho Tác phẩm 1 — xem bản mô tả riêng ở [`ip/HO-CHIEU-THUONG-HIEU-MO-TA-TAC-PHAM-DRAFT-2026-09-17.md`](ip/HO-CHIEU-THUONG-HIEU-MO-TA-TAC-PHAM-DRAFT-2026-09-17.md). BizOn Go Global và BizOn Arcade chưa có hồ sơ riêng — cần quyết định tương tự trước khi khai Tác phẩm 1 (giữ trong hồ sơ chính hay tách riêng).
 
 **Ngôn ngữ lập trình:** JavaScript · HTML · CSS · SQL
 **Quy mô phần do nhóm tác giả tạo lập:** 8.469 dòng JavaScript, 9.503 dòng HTML
@@ -69,9 +71,11 @@ Phần mềm chạy trên trình duyệt theo kiến trúc ứng dụng web ti�
 
 ## ② Ngày hoàn thành tác phẩm
 
-> `[…/…/2026]`
->
-> *Gợi ý: có thể lấy ngày commit cuối cùng của bản hoàn chỉnh. Bản kiểm kê này tính đến ngày **31/07/2026**.*
+> **17/09/2026** — chốt theo quyết định của hai tác giả cùng ngày, coi đây là bản
+> đăng ký tính đến các thay đổi gần nhất (rút thăm 2 tình huống mùa giải, linh vật
+> Lumina tương tác, sửa lỗi âm thanh chào mừng). Bản kiểm kê tài sản gốc của tài liệu
+> này soạn ngày 31/07/2026 — phần mô tả nội dung ở mục ① vẫn đúng cho game chính (chưa
+> tính Hộ Chiếu Thương Hiệu, xem ghi chú "ĐÃ THAY ĐỔI 17/09/2026" ở trên).
 
 ---
 
