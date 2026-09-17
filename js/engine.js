@@ -65,6 +65,63 @@ function MARKET_EVENTS_LIST() { return [
     cta: { label: T('🐉 Bứt phá về đích', '🐉 Sprint to the finish'), tab: 'decisions' } },
 ]; }
 
+/* Trường hợp B — "Sóng Ngoại Nhập" (thiết kế: docs/design/CASE_DRAW_TWO_SCENARIOS_v1.md).
+ * Mọi trường ảnh hưởng điểm (demand, costMul, elasticityMul, rdBoost, oeeHit,
+ * fulfillMul, wageMul, brandPow, mktBoost) GIỐNG HỆT MARKET_EVENTS_LIST() theo
+ * từng vòng — chỉ khác câu chuyện/tên/lời Lumina, để bảng tổng sắp công bằng
+ * dù đội bốc trúng trường hợp nào. Chỉ được đọc khi s.caseId === 'B' (mặc định
+ * 'A' cho mọi ván mới/ván cũ — xem newGameState() và currentEvent()). */
+function MARKET_EVENTS_LIST_B() { return [
+  null,
+  { id: 'EV_STABLE_B', round: 1, tone: 'good', icon: '🌤️', name: T('Thị trường ổn định — nhưng có tin đồn', 'Stable Market — But a Rumor Is Spreading'), tag: T('VÒNG KHỞI ĐỘNG', 'KICKOFF ROUND'),
+    desc: T('Vòng khởi động – nhu cầu thị trường ở mức chuẩn. Nhưng có tin đồn Star Clay Co., hãng đất sét cao cấp từ nước ngoài, đang âm thầm khảo sát thị trường Việt Nam.',
+      'The kickoff round – market demand at baseline. But rumor has it Star Clay Co., a premium overseas clay brand, is quietly scouting the Vietnamese market.'), demand: 1.0, costMul: 1.0,
+    impacts: [{ icon: '📈', label: T('Nhu cầu thị trường', 'Market demand'), value: T('Chuẩn', 'Baseline'), dir: 'flat' }, { icon: '👀', label: T('Tín hiệu đối thủ ngoại', 'Foreign rival signal'), value: T('Tin đồn', 'Rumor'), dir: 'flat' }],
+    luminaImg: 'lumina-vest-thumbsup', luminaMsg: T('Chào cả đội! Vòng đầu vẫn là lúc xây nền tảng — nhưng nghe đâu Star Clay Co. đang để mắt tới Việt Nam. Cứ vững vàng, đội mình xây móng cho chắc trước đã!',
+      "Hi team! The first round is still about building the foundation — but word is Star Clay Co. has its eye on Vietnam. Stay steady, let's build a solid base first!"),
+    cta: { label: T('🎯 Nhập quyết định ngay', '🎯 Enter decisions now'), tab: 'decisions' } },
+  { id: 'EV_GOLDEN_B', round: 2, tone: 'good', icon: '🌟', name: T('Làn Sóng Hội Nhập', 'The Integration Wave'), tag: T('SỰ KIỆN ĐẶC BIỆT', 'SPECIAL EVENT'),
+    desc: T('Hiệp định thương mại tự do mới vừa có hiệu lực, thuế nhập khẩu nguyên liệu giảm mạnh. Đồng thời, Star Clay Co. chính thức tuyên bố gia nhập thị trường Việt Nam với chiến dịch ra mắt rầm rộ — cơ hội và thách thức đến cùng lúc.',
+      'A new free-trade agreement just took effect, slashing import tariffs on raw materials. At the same time, Star Clay Co. officially announces its entry into Vietnam with a loud launch campaign — opportunity and threat arrive together.'),
+    demand: 1.35, costMul: 1.0, rdBoost: 1.5,
+    impacts: [{ icon: '🧾', label: T('Thuế nhập nguyên liệu', 'Material import tariff'), value: '-35%', dir: 'down-good' }, { icon: '🌊', label: T('Đối thủ ngoại', 'Foreign rival'), value: T('Chính thức gia nhập', 'Officially enters'), dir: 'up-bad' }],
+    luminaImg: 'lumina-ao-dai-clap', luminaMsg: T('Cơ hội lớn đây! FTA giúp CFO tiết kiệm chi phí nguyên liệu đáng kể. Nhưng đừng lơ là — Star Clay Co. vừa tuyên bố vào cuộc, CMO nên chuẩn bị tinh thần cho vòng sau!',
+      "Big opportunity! The FTA saves the CFO real money on materials. But don't get comfortable — Star Clay Co. just announced its entry, CMO should brace for next round!"),
+    cta: { label: T('🏭 Tăng công suất ngay', '🏭 Ramp up capacity now'), tab: 'decisions' } },
+  { id: 'EV_PRICEWAR_B', round: 3, tone: 'warn', icon: '⚔️', name: T('Ra Mắt Rầm Rộ', 'The Big Launch'), tag: T('CẢNH BÁO THỊ TRƯỜNG', 'MARKET WARNING'),
+    desc: T('Star Clay Co. tung chiến dịch ra mắt: định vị cao cấp nhưng giá mở màn thấp bất ngờ để giành thị phần nhanh – khách hàng cực nhạy cảm về giá trong vòng này.',
+      "Star Clay Co. launches its campaign: premium positioning but a surprisingly low opening price to grab share fast – customers are extremely price-sensitive this round."),
+    demand: 1.0, costMul: 1.0, elasticityMul: 1.4,
+    impacts: [{ icon: '🏷️', label: T('Giá ra mắt của Star Clay Co.', 'Star Clay Co. launch price'), value: '-15%', dir: 'down' }, { icon: '💔', label: T('Độ nhạy giá của khách', 'Customer price sensitivity'), value: T('CAO', 'HIGH'), dir: 'up-bad' }],
+    luminaImg: 'lumina-vest-worried', luminaMsg: T('Thưa CMO, Star Clay Co. vừa châm ngòi chiến tranh giá ngay từ màn ra mắt! Ta có 2 lối đi: Bundling hoặc tăng Value-Added – đừng lao vào giảm giá sâu kẻo mất biên lợi nhuận.',
+      "CMO, Star Clay Co. just sparked a price war right at launch! We have 2 paths: a Bundling tactic or adding more Value-Added – don't dive into deep discounts or we'll lose our margin."),
+    cta: { label: T('🤖 Xem giải pháp từ Lumina', '🤖 See Lumina\'s solution'), tab: 'advisor' } },
+  { id: 'EV_RECESSION_B', round: 4, tone: 'bad', icon: '💱', name: T('Khủng Hoảng Tỷ Giá', 'Currency Crisis'), tag: T('CẢNH BÁO KHẨN CẤP', 'URGENT WARNING'),
+    desc: T('Đồng nội tệ mất giá mạnh trong lúc Star Clay Co. đổ tiền quảng cáo áp đảo toàn ngành. Chi phí nhập nguyên liệu leo thang, sức mua chung suy giảm.',
+      'The local currency drops sharply just as Star Clay Co. floods the industry with ad spend. Import material costs climb, overall purchasing power falls.'),
+    demand: 0.7, costMul: 1.3, shake: true, oeeHit: 10,
+    impacts: [{ icon: '📈', label: T('Chi phí nguyên liệu nhập', 'Import material cost'), value: '+30%', dir: 'up-bad' }, { icon: '🏭', label: T('Hiệu suất (OEE)', 'Efficiency (OEE)'), value: '-10%', dir: 'down' }],
+    luminaImg: 'lumina-ao-dai-alert', luminaMsg: T('Cảnh báo khẩn cấp! Tỷ giá biến động mạnh đúng lúc đối thủ ngoại đang mạnh tay nhất. COO hãy rà soát lịch chạy máy, CFO cần dự phòng thêm vốn ngay!',
+      'Urgent warning! The exchange rate is swinging hard right when the foreign rival is spending hardest. COO, review the machine schedule, and CFO, set aside extra reserve capital right away!'),
+    cta: { label: T('⚡ Tối ưu năng lượng ngay', '⚡ Optimize energy now'), tab: 'reports', report: 'energy' } },
+  { id: 'EV_SUPPLY_B', round: 5, tone: 'bad', icon: '🚚', name: T('Cảng Tắc Nghẽn Vì Hàng Ngoại', 'Port Congestion from the Import Surge'), tag: T('CẢNH BÁO KHẨN CẤP', 'URGENT WARNING'),
+    desc: T('Làn sóng hàng nhập khẩu – trong đó có lô hàng lớn của Star Clay Co. – khiến cảng biển quá tải nghiêm trọng, dây chuyền sản xuất của BizOn bị đình trệ theo.',
+      "The import surge – including a large Star Clay Co. shipment – overwhelms the seaport, stalling BizOn's production line along with it."),
+    demand: 1.0, costMul: 1.25, fulfillMul: 0.85, shake: true,
+    impacts: [{ icon: '💰', label: T('Giá thành đơn vị', 'Unit cost'), value: '+25%', dir: 'up-bad' }, { icon: '📦', label: T('Tỷ lệ đáp ứng đơn hàng', 'Order fulfillment rate'), value: '-15%', dir: 'down' }],
+    luminaImg: 'lumina-ao-dai-alert', luminaMsg: T('Thưa CEO, tình hình rất khẩn cấp! Cảng tắc nghẽn vì làn sóng hàng ngoại nhập, dây chuyền của ta bị vạ lây. Cần quyết định ngay: tăng ngân sách vận chuyển hay đàm phán lại thời gian giao hàng?',
+      'CEO, this is extremely urgent! Port congestion from the import surge is dragging our line down with it. We need to decide now: raise the shipping budget or renegotiate delivery times?'),
+    cta: { label: T('👥 Họp khẩn cấp toàn đội', '👥 Emergency team meeting'), tab: 'decisions' } },
+  { id: 'EV_MILESTONE_B', round: 6, tone: 'good', icon: '🏮', name: T('Người Việt Ưu Tiên Hàng Việt', 'Vietnamese Consumers Come Home'), tag: T('VÒNG CHUNG KẾT · KỊCH BẢN GIẢ ĐỊNH', 'FINAL ROUND · HYPOTHETICAL SCENARIO'),
+    desc: T('Kịch bản giả định: sau một mùa cạnh tranh khốc liệt với hàng ngoại, người tiêu dùng dần quay về ủng hộ những thương hiệu nội địa đã chứng minh được chất lượng suốt mùa qua – tầng lớp trung lưu mở rộng, ít nhạy cảm về giá, ưu tiên thương hiệu đáng tin. (Tham số minh họa, không phải số liệu thống kê thực.)',
+      'A hypothetical scenario: after a season of fierce competition with imports, consumers gradually return to domestic brands that proved their quality all season – the middle class expands, less price-sensitive, favoring trusted brands. (Illustrative simulation parameters, not real statistics.)'),
+    demand: 1.25, costMul: 1.0, elasticityMul: 0.85, wageMul: 1.1, brandPow: 1.5, mktBoost: 1.2,
+    impacts: [{ icon: '🇻🇳', label: T('Niềm tin hàng nội địa', 'Trust in domestic brands'), value: '+25%', dir: 'up' }, { icon: '🏷️', label: T('Độ nhạy giá của khách', 'Customer price sensitivity'), value: '-15%', dir: 'down-good' }, { icon: '👷', label: T('Chi phí nhân công', 'Labor cost'), value: '+10%', dir: 'up-bad' }, { icon: '✨', label: T('Trọng số thương hiệu', 'Brand weight'), value: '×1.5', dir: 'up' }],
+    luminaImg: 'lumina-ao-dai-clap', luminaMsg: T('Vòng chung kết, thưa đội ngũ điều hành! Sau một mùa đối đầu với Star Clay Co., người tiêu dùng đã chọn đứng về phía những thương hiệu nội địa bản lĩnh như đội mình. Đây là cơ hội vàng để CMO nâng tầm thương hiệu thành dòng Premium và CEO mở rộng quy mô phục vụ làn sóng tin dùng mới!',
+      'The final round, executive team! After a season facing off against Star Clay Co., consumers have chosen to stand behind resilient domestic brands like yours. This is a golden chance for the CMO to elevate the brand into a Premium line and for the CEO to scale up for this new wave of loyal customers!'),
+    cta: { label: T('🐉 Bứt phá về đích', '🐉 Sprint to the finish'), tab: 'decisions' } },
+]; }
+
 function SHOP_ITEMS_LIST() { return [
   { id: 'SOLAR_01',     icon: '☀️', name: T('Pin Mặt Trời', 'Solar Panels'),   type: 'blueprint',  price: 150, img: 'assets/illustrations/solar-farm.webp', desc: T('Tự chủ nguồn điện: -15% chi phí cố định vĩnh viễn, +20 điểm ESG, giảm nửa tác động OEE khi khủng hoảng năng lượng. Hoàn vốn ~2 vòng.', 'Self-sufficient power: -15% fixed cost permanently, +20 ESG points, halves the OEE hit during an energy crisis. Pays back in ~2 rounds.') },
   { id: 'MKT_BOOST_01', icon: '📣', name: T('Marketing Boost', 'Marketing Boost'), type: 'booster',    price: 80,  desc: T('+30% hiệu quả marketing trong vòng kế tiếp.', '+30% marketing effectiveness next round.') },
@@ -440,6 +497,10 @@ function newGameState(profile) {
     achievements: [],
     finished: false,
     seed: 12345,
+    // 'A' | 'B' — bốc thăm ngay khi bắt đầu ván mới (xem doLogin() trong
+    // js/app.js); ván khôi phục từ tiến trình cũ giữ nguyên. Xem currentEvent().
+    caseId: 'A',
+    caseDrawn: false,   // đã hiện màn bốc thăm cho ván này chưa (chỉ hiện 1 lần)
     difficulty: 'normal',                     // easy | normal | hard (cố định cho bản tính điểm)
     autoDiff: 1.0,                             // hệ số thích ứng — chỉ dùng khi chơi thử
     missionsClaimed: [],
@@ -536,7 +597,7 @@ function skillEffect(s, key, def) {
     .reduce((acc, sk) => acc * sk.effect[key], def);
 }
 
-function currentEvent(s) { return MARKET_EVENTS_LIST()[s.round]; }
+function currentEvent(s) { return (s.caseId === 'B' ? MARKET_EVENTS_LIST_B() : MARKET_EVENTS_LIST())[s.round]; }
 
 /* Kỳ hạn thanh toán (theo màn hình Quyết định nâng cao):
  * cho khách trả chậm → cầu tăng nhưng chi phí vốn tăng */
