@@ -1,11 +1,13 @@
-# Bốc thăm 2 Trường hợp — thiết kế v1 + đã nối code (thử nghiệm, tắt mặc định)
+# Bốc thăm 2 Trường hợp — đã BẬT THẬT (mặc định cho mọi ván mới)
 
-**Ngày:** 2026-09-16
-**Trạng thái:** Đã nối code, gated sau `?caseDraw=1` — game.html mặc định (không
-có cờ) hành vi giữ nguyên 100%, đã kiểm chứng bằng Playwright (xem mục 8). Mùa 1
-(KT330H-M01/M02) đang chơi dở Vòng 1–2 tuần này hoàn toàn không bị ảnh hưởng dù
-chưa/đã nối code, vì mặc định tắt. Việc BẬT thật cho một lớp (bỏ cờ, thành hành
-vi mặc định) vẫn là quyết định riêng, chưa làm — xem mục 6.
+**Ngày:** 2026-09-16–17
+**Trạng thái:** Đã bật thật — Hương xác nhận chưa lớp nào chơi lấy điểm mùa
+nào (Vòng 1–2 tuần này chỉ là chơi thử/làm quen), nên không còn rủi ro công
+bằng điểm số. Mọi ván **mới** (SV chưa từng lưu tiến trình cho `classId:teamName`
+đó) từ giờ tự động bốc thăm Trường hợp A/B ở Vòng 1. Đội **đã có** tiến trình
+lưu (đã chơi Vòng 1–2 tuần này) không bị đụng vào — tải lại đúng dữ liệu cũ,
+không bốc lại, tiếp tục y như trước. Đã kiểm chứng bằng Playwright (mục 8),
+gồm cả một lỗi thật phát hiện và sửa lúc kiểm thử (mục 9).
 
 ## 1. Vấn đề cần giải quyết
 
@@ -231,9 +233,11 @@ vì năng lực ra quyết định thật của từng đội.
 3. ~~Lưu `S.caseId`, đổi `currentEvent(s)`~~ — **Xong**: `newGameState()` thêm
    `caseId: 'A'` (mặc định) + `caseDrawn: false`; `currentEvent()` đọc đúng
    danh sách theo `s.caseId`.
-4. **Quyết định thời điểm BẬT THẬT** (bỏ cờ `?caseDraw=1`, thành mặc định cho
-   một lớp) — **chị chưa chốt, để sau**. Code hiện tại an toàn để nằm im trong
-   `main` bất kể chốt lúc nào, vì tắt theo mặc định (xem mục 8).
+4. ~~Quyết định thời điểm BẬT THẬT~~ — **Xong (17/9/2026)**: Hương xác nhận
+   chưa lớp nào chơi lấy điểm mùa nào, nên bật ngay — bỏ cờ `?caseDraw=1`,
+   bốc thăm thành mặc định cho mọi ván mới. Xem mục 9 cho lỗi thật phát hiện
+   lúc kiểm thử bước này (tour hướng dẫn `js/tutorial.js` từng có thể đè lên
+   màn bốc thăm) và cách đã sửa.
 
 ## 7. Ý tưởng "kịch tính hơn" khác — không cần đợi cơ chế 2 trường hợp
 
@@ -245,7 +249,11 @@ Ghi lại để cân nhắc riêng, không phụ thuộc việc trên:
   từng đối thủ (aggressive/balanced/premium) — không cần đổi luật, chỉ thêm
   flavor text.
 
-## 8. Đã nối code thế nào — và đã kiểm chứng ra sao
+## 8. Đã nối code thế nào (bản đầu, gated) — và đã kiểm chứng ra sao
+
+*Ghi lại nguyên trạng bản đầu (16/9) để có lịch sử — xem mục 9 cho những gì
+đổi tiếp khi bật thật ngày 17/9 (bỏ cờ `?caseDraw=1`, sửa 1 lỗi thật mới
+phát hiện).*
 
 **File đã sửa** (commit riêng, xem lịch sử git):
 - `js/engine.js` — thêm `MARKET_EVENTS_LIST_B()` (nguyên văn nội dung mục 4);
@@ -285,3 +293,34 @@ chế đã ghi ở các báo cáo trước — sandbox chặn gọi thẳng `sup
 chưa có ai chơi thử một lượt Trường hợp B trọn 6 vòng để tự cảm nhận độ khó
 có thực sự cân bằng với A hay không (số trên giấy khớp nhau, nhưng cảm nhận
 "kịch tính" là chủ quan — nên tự chơi thử trước khi bật cho lớp thật).
+
+## 9. Bật thật (17/9/2026) — bỏ cờ, và 1 lỗi thật phát hiện + sửa lúc kiểm thử
+
+Hương xác nhận buổi Tuần 2 chỉ là chơi thử/làm quen, chưa lớp nào chơi lấy
+điểm mùa nào — nên không còn lý do giữ cờ. Đổi:
+- `js/app.js` — bỏ điều kiện `caseDrawFlagOn()` ở cả hai chỗ dùng (gán
+  `S.caseId` trong `doLogin()`, và điều kiện hiện màn hình trong
+  `maybeShowCaseDraw()`); xóa hẳn hàm `caseDrawFlagOn()` (không còn ai gọi).
+  Giờ **mọi ván mới** (đội chưa từng lưu tiến trình cho đúng
+  `classId:teamName`) tự động bốc thăm — không cần `?caseDraw=1` nữa. Đội
+  **đã có** tiến trình lưu vẫn không bị đụng (nhánh `!restored` giữ nguyên).
+- `js/engine.js` — sửa lại chú thích ở `caseId` cho khớp (không còn nhắc cờ).
+
+**Lỗi thật phát hiện lúc kiểm thử lại bằng Playwright (không có cờ nữa):**
+tour hướng dẫn tự động cho người chơi mới (`js/tutorial.js`, `autoStart()`)
+chỉ đợi màn "Giới thiệu" (`#intro-next`) và màn biến cố (`#ev-close`) đóng lại
+rồi mới tự bật lên — **không biết gì về màn bốc thăm mới** (`#case-draw-cta`).
+Kết quả: với người chơi lần đầu, tour có thể tự bật đè lên ngay trên màn bốc
+thăm, chặn hẳn nút "Vào Vòng 1" (xác nhận bằng `document.elementFromPoint` —
+một `<div>` toàn màn hình, `z-index:90`, `pointer-events:auto` của tour nằm
+trên màn bốc thăm `z-index:50`). Đây là lỗi thật, không phải lỗi giả lập —
+sẽ xảy ra với SV thật lần đầu vào game. Sửa bằng cách thêm đúng 1 điều kiện
+vào `autoStart()`: đợi thêm cả khi `#case-draw-cta` đang mở, giống hệt cách
+nó đã đợi màn biến cố.
+
+**Kiểm chứng lại bằng Playwright** (không còn `?caseDraw=1` trong URL nào cả,
+3 đội tên khác nhau, hồ sơ trình duyệt sạch mỗi lần):
+- Cả 3 lượt đều tự hiện màn bốc thăm mặc định (không cần cờ); bốc ra đúng cả
+  A lẫn B (không lệch cứng về 1 bên); sau khi bấm qua, Vòng 1 hiện đúng nội
+  dung khớp với trường hợp đã bốc; 0 lỗi console ở cả 3 lượt sau khi sửa lỗi
+  tour ở trên (trước khi sửa, cả 3 lượt đều bị chặn nút bốc thăm bởi tour).

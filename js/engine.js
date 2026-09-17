@@ -497,8 +497,8 @@ function newGameState(profile) {
     achievements: [],
     finished: false,
     seed: 12345,
-    // 'A' (mặc định, không đổi hành vi hiện có) | 'B' — chỉ đổi khi bốc thăm
-    // qua ?caseDraw=1 (xem doLogin() trong js/app.js). Xem currentEvent().
+    // 'A' | 'B' — bốc thăm ngay khi bắt đầu ván mới (xem doLogin() trong
+    // js/app.js); ván khôi phục từ tiến trình cũ giữ nguyên. Xem currentEvent().
     caseId: 'A',
     caseDrawn: false,   // đã hiện màn bốc thăm cho ván này chưa (chỉ hiện 1 lần)
     difficulty: 'normal',                     // easy | normal | hard (cố định cho bản tính điểm)

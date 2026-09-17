@@ -330,10 +330,10 @@ async function doLogin() {
   S = restored || newGameState({ email, teamName: team, role: pickedRole, classId });
   // Ván mới: lấy mức khó ưu tiên đã lưu (ván khôi phục giữ mức đã lưu trong save).
   if (!restored) { try { S.difficulty = localStorage.getItem('bizon-difficulty') || 'normal'; } catch (e) {} }
-  // Ván mới + cờ thử nghiệm ?caseDraw=1: bốc thăm Trường hợp A/B, xác định
-  // (không đổi khi refresh) theo classId:teamName. Mặc định KHÔNG bật — mọi
-  // ván không có cờ này giữ nguyên Trường hợp A như trước giờ.
-  if (!restored && caseDrawFlagOn() && window.BizOnSeedEngine) {
+  // Ván mới: bốc thăm Trường hợp A/B, xác định (không đổi khi refresh) theo
+  // classId:teamName. Đội đã có tiến trình lưu (restored) không bị đụng vào —
+  // giữ nguyên caseId cũ, không bốc lại.
+  if (!restored && window.BizOnSeedEngine) {
     try {
       const seed = BizOnSeedEngine.createSeed(classId || 'TRIAL', team, 'case-draw');
       S.caseId = BizOnSeedEngine.pick(seed, 'case', ['A', 'B']);
@@ -691,14 +691,11 @@ function enterApp() {
   maybeShowCaseDraw(() => maybeShowEventIntro());
 }
 
-// ---------- Bốc thăm Trường hợp đầu mùa (thử nghiệm, gated ?caseDraw=1) ----------
-// Mặc định KHÔNG bật: không có ?caseDraw=1 trên URL thì hàm này chỉ gọi thẳng
-// onDone() — game.html giữ nguyên hành vi hiện tại 100%. Thiết kế đầy đủ (2
-// trường hợp, nguyên tắc công bằng số liệu) ở docs/design/CASE_DRAW_TWO_SCENARIOS_v1.md.
-function caseDrawFlagOn() {
-  try { return new URLSearchParams(window.location.search).get('caseDraw') === '1'; }
-  catch (e) { return false; }
-}
+// ---------- Bốc thăm Trường hợp đầu mùa ----------
+// Mỗi đội bốc 1 trong 2 Trường hợp (A/B) ngay khi bắt đầu ván mới — xác định
+// theo classId:teamName (không đổi khi refresh). Đội đã có tiến trình lưu
+// không bị đụng vào (xem doLogin()). Thiết kế đầy đủ (nguyên tắc công bằng
+// số liệu giữa 2 trường hợp) ở docs/design/CASE_DRAW_TWO_SCENARIOS_v1.md.
 function CASE_INFO_LIST() {
   return {
     A: { name: T('Trường hợp A · Giữ Sân Nhà', 'Case A · Hold the Home Turf'), img: 'lumina-vest-thumbsup',
@@ -708,7 +705,7 @@ function CASE_INFO_LIST() {
   };
 }
 function maybeShowCaseDraw(onDone) {
-  if (!S || !caseDrawFlagOn() || S.caseDrawn || S.round !== 1 || (S.history && S.history.length)) { onDone(); return; }
+  if (!S || S.caseDrawn || S.round !== 1 || (S.history && S.history.length)) { onDone(); return; }
   S.caseDrawn = true;
   save();
   const info = CASE_INFO_LIST()[S.caseId] || CASE_INFO_LIST().A;
