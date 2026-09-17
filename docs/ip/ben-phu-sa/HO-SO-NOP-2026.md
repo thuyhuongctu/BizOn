@@ -76,7 +76,9 @@ Chủ sở hữu: **hai cá nhân đồng sở hữu** (Đỗ Thùy Hương + Ph
 
 ✅ Cả 3 ảnh đã cắt gọn đúng khung game (24/08/2026) — không còn thanh điều hướng/chân trang/nút "Vũ trụ" dùng chung của site.
 
-⚠️ **Cần chụp lại `01-man-mo-dau.png` trước khi in (phát hiện 17/09/2026):** màn mở đầu hiển thị dòng "Định hướng sư phạm: PGS.TS. Phan Anh Tú" — nhưng từ 13/09/2026 (Thầy Tú lên Giáo sư), trang thật đã đổi thành "GS.TS. Phan Anh Tú" (#453). Ảnh chụp 24/08/2026 vẫn còn học hàm cũ, không khớp giao diện hiện tại. Chụp lại ảnh này (và gộp lại PDF) trước khi nộp.
+~~⚠️ Cần chụp lại `01-man-mo-dau.png` trước khi in — màn mở đầu hiển thị học hàm cũ, không khớp giao diện hiện tại.~~
+
+**ĐÍNH CHÍNH 17/09/2026:** phát hiện ban đầu (dựa trên PR #453, "Thầy Tú lên Giáo sư") **sai** — Thầy Tú **chưa** lên Giáo sư, vẫn là Phó Giáo sư. PR #453 tự nó ghi sai học hàm; đã phục hồi lại "PGS.TS. Phan Anh Tú" trên toàn bộ 11 trang bị ảnh hưởng (kể cả `ben-phu-sa.html`). Ảnh `01-man-mo-dau.png` (chụp 24/08/2026, ghi "PGS.TS.") **vẫn đúng**, không cần chụp lại vì lý do này.
 
 ✅ Đã gộp thành bản in [`anh-giao-dien/ben-phu-sa-giao-dien-chuong-trinh.pdf`](anh-giao-dien/ben-phu-sa-giao-dien-chuong-trinh.pdf) (24/08/2026) — 3 trang khổ A4, mỗi trang một ảnh kèm chú thích "Hình N." và số trang, sẵn sàng in nộp.
 
