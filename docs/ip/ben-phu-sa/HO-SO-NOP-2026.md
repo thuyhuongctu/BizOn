@@ -33,13 +33,24 @@ Gắn với commit: **`b387b3b61e6868f7fb78c41c80cec9eb965871a0`** (#396 "mở k
 
 ## 3. Ngày công bố / nơi công bố (nếu có)
 
-**Khai dự kiến trước đây: "Chưa công bố."** — ⚠️ **CẦN RÀ LẠI, có khả năng không còn đúng (phát hiện 17/09/2026).**
+**Khai dự kiến trước đây: "Chưa công bố."** — ⚠️ **KHÔNG CÒN ĐÚNG (rà lại GitHub lần 2, 18/09/2026).**
 
 Lý do ban đầu (08/09/2026) coi là "chưa công bố": game chỉ truy cập được về mặt kỹ thuật qua GitHub Pages, chưa được quảng bá ra công chúng như một sản phẩm độc lập.
 
-⚠️ **Nhưng chính trong cùng đợt commit đó (PR #416, cùng ngày 08/09/2026), Bến Phù Sa đã được thêm làm nút CTA chính trên trang chủ công khai** (`index.html`: "🛶 Bắt đầu với Bến Phù Sa →", đặt cạnh nút "Khám phá BizOn →"). Bến Phù Sa còn được gắn nhãn **"BẬC 1 · BẮT ĐẦU Ở ĐÂY"** ở trang trung tâm trò chơi (`games.html`) từ sớm hơn — 05/08/2026. Hai điều này đối lập trực tiếp với luận điểm "chưa quảng bá ra công chúng, vẫn nội bộ": game hiện là **điểm khởi đầu được giới thiệu công khai** của cả hệ sinh thái, không còn "GitHub Pages truy cập được về mặt kỹ thuật nhưng không ai biết tới" nữa.
+⚠️ **Rà lại lần 1 (17/09/2026)** đã phát hiện: cùng PR #416 (08/09/2026) viết dòng "chưa công bố" cũng chính là PR thêm Bến Phù Sa làm nút CTA chính trên trang chủ ("🛶 Bắt đầu với Bến Phù Sa →"); và game đã được gắn nhãn "BẬC 1 · BẮT ĐẦU Ở ĐÂY" ở `games.html` từ sớm hơn — 05/08/2026.
 
-⚠️ *Lưu ý cho luật sư trước khi khai chính thức:* cần đánh giá lại xem có nên khai "Đã công bố" thay vì "Chưa công bố", và nếu vậy thì lấy ngày nào làm ngày công bố (05/08/2026 khi lên Arcade Bậc 1, hay 08/09/2026 khi lên trang chủ). Đây không còn thuần là câu hỏi kỹ thuật (`robots.txt`, GitHub Pages) như ghi chú cũ — mà là một thực tế quảng bá rõ ràng, nên **hỏi luật sư trước khi nộp**, đừng giữ nguyên khai "chưa công bố" chỉ vì hồ sơ cũ đã ghi vậy.
+⚠️⚠️ **Rà lại lần 2 (18/09/2026) đi xa hơn về quá khứ, phát hiện việc quảng bá thật ra bắt đầu sớm hơn nhiều — ngay từ ngày ra đời của game:**
+
+- **30/07/2026, commit `fb36c2c`** (game đầu tiên, lúc đó tên "Food Truck Challenge"): cùng một commit đã (1) thêm thẻ game mới vào `games.html` với nhãn **"MỚI · CHIẾN LƯỢC 5 TUẦN"**, (2) thêm **liên kết ở chân trang dùng chung toàn site** (`js/site-footer.js` — vẫn còn liên kết này tới hôm nay, dưới tên "Gánh Hàng Khởi Nghiệp"), và (3) thêm **thẻ Open Graph** (`og:title`, `og:description`...) — tức là được chuẩn bị sẵn cho chia sẻ mạng xã hội. Đây không phải "lên web nhưng chưa ai biết" — đây là commit **chủ động đưa game vào điều hướng công khai của toàn bộ trang** ngay từ đầu.
+- Kèm theo commit "Deploy BizOn Bật Nghiệp ..." xuất hiện **ngay sau mỗi commit nội dung** kể từ đó — xác nhận site tự động triển khai lên GitHub Pages liên tục, không có khoảng dừng.
+- **Lưu ý phụ, không phải điểm chặn nhưng nên biết:** bản 30/07–05/08/2026 có tên "Food Truck Challenge", công khai ghi là mô phỏng theo *The Food Truck Challenge* của Harvard Business Publishing/Forio (Michael A. Roberto) — một mối lo về **tác phẩm phái sinh**. Commit `ead6e2d` (05/08/2026) đổi tên, đổi biểu tượng và tách bản sắc khỏi hình ảnh "food truck", nhưng chính commit đó vẫn ghi "giữ nguyên... dòng ghi công HBP «The Food Truck Challenge» (công bố nguồn học thuật, **bắt buộc giữ**)" tại thời điểm đó. Dòng ghi công này **không còn trong `ben-phu-sa.html` hiện tại** (đã kiểm tra 18/09/2026, `grep` không ra kết quả) — nhưng việc nó từng tồn tại, từng được coi là "bắt buộc giữ", rồi sau đó biến mất, là chi tiết luật sư nên biết khi đánh giá "tác phẩm độc lập" hay "tác phẩm phái sinh đã chỉnh sửa".
+
+⚠️ *Lưu ý cho luật sư trước khi khai chính thức:* với các chứng cứ trên, **"Đã công bố" gần như chắc chắn đúng hơn "Chưa công bố"**. Ba mốc ngày ứng với ba mức độ quảng bá khác nhau, từ sớm nhất tới muộn nhất:
+1. **30/07/2026** — lần đầu vào điều hướng công khai toàn site (chân trang + thẻ Arcade "MỚI" + OG tags), nhưng lúc đó vẫn mang tên/ghi công "Food Truck Challenge" (giai đoạn còn vướng câu hỏi phái sinh).
+2. **05/08/2026** — đổi tên, đổi biểu tượng, gắn nhãn "Bậc 1 · Bắt đầu ở đây" — thời điểm được xem là "tác phẩm nguyên bản" theo quyết định nội bộ, và cũng là mốc quảng bá rõ ràng.
+3. **08/09/2026** — thêm CTA trang chủ chính, quảng bá mạnh nhất.
+
+Không tự chọn ngày nào trong 3 mốc trên khi nộp — cần luật sư xác nhận cả (a) có tính giai đoạn 30/07–05/08 là "công bố của chính tác phẩm này" hay không (do tên/ghi công lúc đó khác), và (b) chọn ngày công bố chính thức trong 3 mốc.
 
 ---
 
