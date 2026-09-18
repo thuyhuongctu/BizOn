@@ -54,6 +54,10 @@ Không tự chọn ngày nào trong 3 mốc trên khi nộp — cần luật sư
 
 ---
 
+**✅ CHỐT 18/09/2026:** Hương chọn **05/08/2026** làm ngày công bố chính thức (mốc #2 ở trên — thời điểm tác phẩm mang tên/hình ảnh "Bến Phù Sa" hiện tại, tránh giai đoạn 30/07–05/08 còn vướng ghi công HBP/Forio). Đã điền vào file "1. Tờ khai" trong gói nộp. Đây là lựa chọn của chủ sở hữu, không phải xác nhận của luật sư — vẫn nên cho luật sư xem qua trước khi ký chính thức nếu có thể, nhưng không còn là điều kiện chặn để gửi hồ sơ.
+
+---
+
 ## 4. Thông tin tác giả
 
 | | Đồng tác giả 1 | Đồng tác giả 2 |
