@@ -1659,7 +1659,7 @@ function INTRO_SLIDES_LIST() { return [
             'Each round is a business quarter in one province on the new map: Cần Thơ → Hồ Chí Minh City → Khánh Hòa → Đà Nẵng → Thanh Hóa → Hà Nội. Whichever team wins a round plants its flag 🚩 there! ⏱️ Each round takes 5-7 minutes, the full match ≈ 30-45 minutes.') },
   { icon: '👥', title: T('Đội hình C-Suite', 'Your C-Suite lineup'), img: 'assets/illustrations/game/team-portrait.webp',
     text: T('CEO chèo lái chiến lược, CFO giữ két sắt, CMO đánh chiếm thị trường, COO vận hành xưởng, SEC ghi biên bản – bên cạnh cố vấn Lumina AI và thầy Phan Anh Tú.',
-            "CEO steers strategy, CFO guards the cash box, CMO wins the market, COO runs the workshop, SEC keeps the minutes – alongside advisor Lumina AI and Prof. Phan Anh Tú.") },
+            "CEO steers strategy, CFO guards the cash box, CMO wins the market, COO runs the workshop, SEC keeps the minutes – alongside advisor Lumina AI and Assoc. Prof. Phan Anh Tú.") },
   { icon: '🌏', title: T('Sau đó: ra biển lớn', 'What comes next: going global'), img: 'assets/illustrations/game/globe-walk.webp',
     text: T('Chinh phục xong Việt Nam? BizOn Go Global đang chờ – chọn 1 trong 7 thị trường quốc tế, đàm phán với đối tác bản địa và thử sức 4 phương thức thâm nhập.',
             'Conquered Vietnam? BizOn Go Global is waiting – pick 1 of 7 international markets, negotiate with local partners, and try 4 market-entry modes.') },

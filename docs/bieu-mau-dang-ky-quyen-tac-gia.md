@@ -56,7 +56,12 @@ Phần mềm chạy trên trình duyệt theo kiến trúc ứng dụng web ti�
 
 ~~8. **Ba game chiến lược trong cùng hệ sinh thái** — Hộ Chiếu Thương Hiệu (mô phỏng quốc tế hóa doanh nghiệp qua sáu quý), BizOn Go Global (bản đồ thâm nhập thị trường quốc tế), BizOn Arcade (các trò rèn phản xạ ra quyết định).~~
 
-> **ĐÃ THAY ĐỔI 17/09/2026:** theo quyết định của hai tác giả, **Hộ Chiếu Thương Hiệu tách thành hồ sơ chương trình máy tính riêng**, không còn gộp vào Tác phẩm 1. Mục 8 ở trên **không còn áp dụng** khi khai Tờ khai cho Tác phẩm 1 — xem bản mô tả riêng ở [`ip/HO-CHIEU-THUONG-HIEU-MO-TA-TAC-PHAM-DRAFT-2026-09-17.md`](ip/HO-CHIEU-THUONG-HIEU-MO-TA-TAC-PHAM-DRAFT-2026-09-17.md). BizOn Go Global và BizOn Arcade chưa có hồ sơ riêng — cần quyết định tương tự trước khi khai Tác phẩm 1 (giữ trong hồ sơ chính hay tách riêng).
+> **ĐÃ THAY ĐỔI 17/09/2026:** theo quyết định của hai tác giả, **cả ba game/công cụ ở mục 8 đều tách thành hồ sơ chương trình máy tính riêng**, không còn gộp vào Tác phẩm 1:
+> - Hộ Chiếu Thương Hiệu → [`ip/HO-CHIEU-THUONG-HIEU-MO-TA-TAC-PHAM-DRAFT-2026-09-17.md`](ip/HO-CHIEU-THUONG-HIEU-MO-TA-TAC-PHAM-DRAFT-2026-09-17.md)
+> - BizOn Go Global → [`ip/BIZON-GO-GLOBAL-MO-TA-TAC-PHAM-DRAFT-2026-09-17.md`](ip/BIZON-GO-GLOBAL-MO-TA-TAC-PHAM-DRAFT-2026-09-17.md)
+> - BizOn Arcade → [`ip/BIZON-ARCADE-MO-TA-TAC-PHAM-DRAFT-2026-09-17.md`](ip/BIZON-ARCADE-MO-TA-TAC-PHAM-DRAFT-2026-09-17.md)
+>
+> Mục 8 ở trên **không còn áp dụng** khi khai Tờ khai cho Tác phẩm 1 — nội dung Tác phẩm 1 giờ chỉ còn mục ①–⑦ (game mô phỏng kinh doanh chính, 6 chu kỳ). Ba hồ sơ mới đều có ngày hoàn thành/công bố còn để trống, chờ hai tác giả tự chốt qua GitHub History.
 
 **Ngôn ngữ lập trình:** JavaScript · HTML · CSS · SQL
 **Quy mô phần do nhóm tác giả tạo lập:** 8.469 dòng JavaScript, 9.503 dòng HTML
@@ -177,13 +182,18 @@ Rà soát giao diện hiện tại phát hiện **các dấu hiệu của chủ 
 
 Yêu cầu chỉ 15–20 trang, trong khi kho có gần 18.000 dòng. Nên chọn phần **thể hiện rõ nhất tính sáng tạo riêng**, không nên in phần giao diện lặp lại:
 
+> **ĐÃ SỬA 17/09/2026:** `js/quiz-bank.js` bị liệt nhầm vào danh sách này — tệp đó chỉ
+> `games.html` (nay là hồ sơ "BizOn Arcade" riêng) nạp và dùng, `game.html` (Bật Nghiệp)
+> không dùng tới. Đã bỏ khỏi bảng dưới. Bảng này soạn 31/07/2026 và **chưa cập nhật
+> theo các tính năng thêm sau đó** (rút thăm 2 tình huống, linh vật Lumina...) — nên rà
+> lại số dòng/tệp đại diện trước khi in thật, đừng dùng nguyên bảng này.
+
 | Ưu tiên | Tệp | Nội dung | Số dòng | Ước tính trang |
 |---|---|---|:-:|:-:|
 | 1 | `js/engine.js` | Toàn bộ engine mô phỏng — công thức tính doanh thu, thị phần, dòng tiền, chỉ số OEE, bộ luật cố vấn | 688 | 13 |
 | 2 | `sw.js` | Cơ chế chạy ngoại tuyến | 174 | 4 |
-| 3 | `js/quiz-bank.js` | Ngân hàng câu hỏi kiểm tra | 117 | 3 |
-| 4 | `js/backend.js` | Cơ chế ghi nhận dữ liệu lớp học | 91 | 2 |
-| | **Tổng** | | **1.070** | **20 trang** |
+| 3 | `js/backend.js` | Cơ chế ghi nhận dữ liệu lớp học | 91 | 2 |
+| | **Tổng** | | **953** | **17 trang** |
 
 *Ước tính theo 55 dòng một trang, khổ A4, cỡ chữ 10.*
 
