@@ -22,12 +22,14 @@
 
 ## 2. Ngày hoàn thành tác phẩm
 
-Ngày: **08/08/2026**
-Gắn với commit: **`b387b3b61e6868f7fb78c41c80cec9eb965871a0`** (#396 "mở khoá Đội Phù Sa 2 người")
+> **✅ SỬA 19/09/2026:** ngày hoàn thành trước đây ghi 08/08/2026 (commit `b387b3b`) — **sau** ngày công bố đã chốt ở mục 3 (05/08/2026), một mâu thuẫn logic (không thể công bố trước khi hoàn thành). Hương chọn đổi ngày hoàn thành về **05/08/2026** để khớp với ngày công bố, thay vì đẩy ngày công bố muộn hơn. Đã điền vào "1. Tờ khai" và "2. Bản cam đoan" trong gói nộp.
+
+Ngày: **05/08/2026**
+Gắn với commit: **`ead6e2d`** (#357 "Bến Phù Sa: xác lập tác phẩm nguyên bản (sửa ghi công HBP) + hồ sơ IP") — cùng ngày và cùng cơ sở với ngày công bố ở mục 3.
 
 ✅ Hương đã tự xác nhận hash/ngày qua trang "History for ben-phu-sa.html" trên GitHub.
 
-✅ Hương đã tự chơi thử một lượt thật (đủ 5 tuần, ra bảng kết quả hoàn chỉnh) — xác nhận 24/08/2026. Điều kiện `v1.0` chơi được đầu-cuối đã thoả.
+⚠️ **Lưu ý cho luật sư:** commit `b387b3b` (08/08/2026, #396 "mở khoá Đội Phù Sa 2 người") và lần chơi thử đầu-cuối xác nhận `v1.0` chạy trọn 5 tuần (24/08/2026) đều **sau** ngày hoàn thành mới chọn — đây là các thay đổi/kiểm thử bổ sung sau mốc 05/08, không phải bằng chứng phủ nhận việc tác phẩm đã ở dạng hoàn thiện tại 05/08. Nên cho luật sư xem qua nếu có thể trước khi ký chính thức.
 
 ---
 
