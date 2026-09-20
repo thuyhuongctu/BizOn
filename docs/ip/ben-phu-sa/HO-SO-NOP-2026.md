@@ -65,10 +65,9 @@ Không tự chọn ngày nào trong 3 mốc trên khi nộp — cần luật sư
 | | Đồng tác giả 1 | Đồng tác giả 2 |
 |---|---|---|
 | Họ tên | Đỗ Thùy Hương | Phan Anh Tú |
-| CCCD | ……… *(điền, không đưa lên repo)* | ……… *(điền, không đưa lên repo)* |
-| Ngày sinh | ……… | ……… |
-| Địa chỉ | ……… | ……… |
-| SĐT | ……… | ……… |
+| CCCD / Ngày sinh / Địa chỉ / SĐT | ✅ đã điền trong "3. GUQ - Ben Phu Sa.docx" (20/09/2026) | ✅ đã điền trong "3. GUQ - Ben Phu Sa.docx" (20/09/2026) |
+
+> Bốn trường cá nhân không lặp lại ở đây (repo công khai) — xem bản docx đã gửi qua chat.
 
 **Kèm nộp:** bản sao y chứng thực CCCD của cả hai đồng tác giả (nộp bản giấy/scan riêng, không đưa lên repo).
 
@@ -102,6 +101,8 @@ Chủ sở hữu: **hai cá nhân đồng sở hữu** (Đỗ Thùy Hương + Ph
 **(c) Mã nguồn in 15–20 trang:** bản trích đặc trưng — xem [`ma-nguon-dac-trung/ben-phu-sa-ma-nguon-dac-trung.txt`](ma-nguon-dac-trung/ben-phu-sa-ma-nguon-dac-trung.txt) (536 dòng, chỉ gồm engine riêng của Bến Phù Sa, đã loại hạ tầng dùng chung).
 
 ⚠️ **Quyết định cần luật sư xác nhận trước khi in:** bản trích trong repo đã **lược các hằng số cân bằng** (đáp án game — luật chia khách, cá tính món hàng, dải nhu cầu, kế hoạch AI đối thủ) vì đây là bản công khai. Bản **nộp cho Cục Bản quyền** (không công bố ra công chúng) nhiều khả năng nên dùng **mã đầy đủ** (lấy trực tiếp từ `ben-phu-sa.html`) thay vì bản đã lược — hỏi luật sư xác nhận trước khi in.
+
+✅ **ĐÃ CHUẨN BỊ 20/09/2026:** bản mã nguồn đầy đủ (không lược hằng số), cùng phạm vi trích như bản trong repo, đã gửi qua chat — **KHÔNG đưa lên repo công khai** vì chứa hằng số cân bằng (đáp án game). Dùng bản này để in nộp ngay khi luật sư xác nhận; nếu luật sư nói dùng bản đã lược thì giữ nguyên bản trong repo như hiện tại.
 
 ---
 

@@ -95,7 +95,7 @@ Không sửa trực tiếp `universe.html` trong PR này — đổi qua pipeline
 
 ### Việc cần Hương làm ngay
 - [x] Tự chơi thử một lượt `v1.0` (đủ 5 tuần ra kết quả) để xác nhận điều kiện hướng (a) — **đã xác nhận 24/08/2026**.
-- [ ] Điền bốn trường cá nhân (cả hai đồng tác giả) + chuẩn bị bản sao y CCCD *(không đưa lên repo)*.
+- [x] Điền bốn trường cá nhân (cả hai đồng tác giả) — **✅ ĐÃ ĐIỀN** trong "3. GUQ - Ben Phu Sa.docx" (ký 20/09/2026), không đưa lên repo. Còn lại: chuẩn bị bản sao y chứng thực CCCD (bản giấy) trước khi nộp.
 - [x] Hash + ngày: **`b387b3b…` / 08/08/2026** — Hương đã tự xác nhận qua GitHub "History for ben-phu-sa.html".
 - [x] Grep IB-CI = 0 dòng thực (chỉ 2 dòng ghi chú về việc loại trừ) — đã chạy lại, kết quả đúng như kỳ vọng. Duyệt phần lược hằng số: đã đối chiếu `share(n)`, `D`, `W`, `menuAdj` trong bản trích khớp đúng cấu trúc bản đầy đủ ở `ben-phu-sa.html` (chỉ ẩn giá trị). ⚠️ Hương vẫn nên tự chạy lại lệnh grep một lần trên máy/session của mình trước khi nộp, theo đúng nguyên tắc không lấy kết quả AI báo làm bằng cuối cùng.
 - [ ] Xác nhận với luật sư cách khai mục A.3 (chưa công bố chính thức, dù kỹ thuật đã live trên GitHub Pages).
@@ -103,8 +103,9 @@ Không sửa trực tiếp `universe.html` trong PR này — đổi qua pipeline
 - [ ] Hỏi luật sư: định dạng đĩa/USB; cách khai hình ảnh AI tạo.
 - [x] Cắt gọn 2 ảnh giao diện (01, 03) về đúng khung game — đã làm 24/08/2026, không còn nav bar/nút "Vũ trụ".
 - [x] Gộp 3 ảnh giao diện thành bản in PDF `anh-giao-dien/ben-phu-sa-giao-dien-chuong-trinh.pdf` (24/08/2026) — 3 trang A4, mỗi trang một ảnh + chú thích "Hình N." + số trang, theo đúng khổ giấy/kiểu trình bày mẫu luật sư đưa.
-- [ ] Định tuyến sửa copy `universe.html` qua QA → promote.
-- [ ] **Tìm đúng mẫu Tờ khai cho "chương trình máy tính"** — bản Hương gửi (`Mẫu số 01`, Thông tư 08/2026/TT-BVHTTDL) chỉ dùng cho tác phẩm dạng chữ viết (văn học/khoa học/bài giảng/báo chí...), không có lựa chọn "chương trình máy tính" ở mục loại hình. Bộ 14 mẫu của thông tư này có mẫu riêng cho phần mềm — cần tìm đúng mẫu đó trước khi điền.
+- [x] **✅ SỬA 20/09/2026:** copy `universe.html` dòng 319 đổi thành bản khớp build (đề xuất ở §Copy-cong-khai) — trực tiếp trên trang public, không qua nhánh QA riêng vì đây là sửa lỗi mô tả sai sản phẩm (không phải thay đổi tính năng/thiết kế cần thử nghiệm).
+- [x] **✅ ĐÃ ĐÚNG MẪU** — "1. To khai - Ben Phu Sa.docx" dùng đúng mẫu Tờ khai riêng cho **CHƯƠNG TRÌNH MÁY TÍNH** (không phải Mẫu số 01 cho tác phẩm chữ viết như lo ngại trước đây). Không còn là việc cần làm.
+- [ ] **Quyết định luật sư còn treo:** bản mã nguồn nộp Cục Bản quyền nên dùng bản **đầy đủ** (không lược hằng số) hay bản **đã lược** như trong repo — xem §Tự-xác-minh mục 2. Đã chuẩn bị sẵn bản đầy đủ (gửi qua chat, KHÔNG đưa lên repo) để dùng ngay khi có xác nhận.
 
 ---
 
