@@ -151,8 +151,8 @@ Phần mềm chạy trên trình duyệt theo kiến trúc ứng dụng web ti�
 | Hạng mục | Yêu cầu | Trạng thái |
 |---|---|---|
 | Đĩa chạy chương trình | **02 đĩa** | `[cần ghi]` |
-| Giao diện chương trình in ra giấy | Đã loại bỏ logo, hình ảnh của chủ thể khác | ⚠️ **xem cảnh báo dưới** |
-| Mã nguồn in ra giấy | **Khoảng 15–20 trang** | `[cần chọn phần in]` |
+| Giao diện chương trình in ra giấy | Đã loại bỏ logo, hình ảnh của chủ thể khác | ✅ **ĐÃ LÀM 20/09/2026** — 6 ảnh + bản in PDF, xem [`ip/bat-nghiep/anh-giao-dien/`](ip/bat-nghiep/anh-giao-dien/); ⚠️ xem cảnh báo dưới |
+| Mã nguồn in ra giấy | **Khoảng 15–20 trang** | ✅ **ĐÃ LÀM 20/09/2026** — `js/engine.js` + `js/backend.js`, 1.026 dòng ≈ 19 trang, xem [`ip/bat-nghiep/ma-nguon-dac-trung/`](ip/bat-nghiep/ma-nguon-dac-trung/) |
 
 ### ⚠️ Cảnh báo 1 — Ảnh giao diện phải loại bỏ dấu hiệu của bên thứ ba
 
