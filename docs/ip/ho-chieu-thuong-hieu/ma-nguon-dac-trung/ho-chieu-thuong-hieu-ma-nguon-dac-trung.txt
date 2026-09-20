@@ -35,11 +35,7 @@ PHẠM VI BẢN TRÍCH
   đối chiếu lại, không phải "đáp án" cần giấu; giữ nguyên, không lược — giống cách xử lý
   đã áp dụng cho hồ sơ "Bật Nghiệp".
 
-════════════════════════════════════════════════════════════════════════════
-
-──────────────────────────────────────────────────────────────────────────────
 TỆP: js/aibis/entry-mode-models.js  (17 dòng)
-──────────────────────────────────────────────────────────────────────────────
 
 (function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.BizOnEntryModeModels=api;})(typeof globalThis!=='undefined'?globalThis:this,function(){'use strict';
 const refs={TCE:'Anderson & Gatignon (1986); Zhao, Luo, & Suh (2004)',META:'Wan et al. (2023)',INST:'Zhang et al. (2022)',DIGITAL:'Brouthers et al. (2022); Gong, He, & Lengler (2024)'};
@@ -59,10 +55,7 @@ const evidence={version:'2026-08-02',status:'simulation-calibration-required',pr
 ]};
 return Object.freeze({modes,evidence,refs});});
 
-
-──────────────────────────────────────────────────────────────────────────────
 TỆP: js/aibis/entry-mode-engine.js  (20 dòng)
-──────────────────────────────────────────────────────────────────────────────
 
 (function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.BizOnEntryModeEngine=api;})(typeof globalThis!=='undefined'?globalThis:this,function(){'use strict';
 const VERSION='0.1.0';
@@ -85,10 +78,7 @@ function rankModes(modes,context){return modes.map(m=>scoreMode(m,context)).sort
 function compareModes(a,b,context){const sa=scoreMode(a,context),sb=scoreMode(b,context);return {winner:sa.score===sb.score?null:(sa.score>sb.score?a.id:b.id),difference:Number(Math.abs(sa.score-sb.score).toFixed(2)),results:[sa,sb]};}
 return Object.freeze({VERSION,DIMENSIONS,clamp,normalizeWeights,scoreMode,rankModes,compareModes});});
 
-
-──────────────────────────────────────────────────────────────────────────────
 TỆP: brand-passport.html — khối <script> chính (dòng 199–849, 652 dòng)
-──────────────────────────────────────────────────────────────────────────────
 
 (function () {
   var $ = function (id) { return document.getElementById(id); };
@@ -742,6 +732,4 @@ TỆP: brand-passport.html — khối <script> chính (dòng 199–849, 652 dòn
   try { if (localStorage.getItem('bizon-bp-save')) $('bp-resume').classList.remove('hidden'); } catch (e) {}
 })();
 
-
-══════════════════════════════════════════════════════════════════════════════
 TỔNG: 745 dòng — ước tính 14 trang (55 dòng/trang, A4, cỡ chữ 10)
