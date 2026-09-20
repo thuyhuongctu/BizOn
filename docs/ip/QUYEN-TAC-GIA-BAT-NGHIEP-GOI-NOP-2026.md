@@ -41,10 +41,22 @@ Vì vậy, trước khi nộp:
 
 ### Danh mục tài sản nộp kèm (bản sao tác phẩm) — hiện trạng
 
+> **✅ SỬA 20/09/2026:** dòng "Nhân vật" trước đây ghi 32 tệp, chỉ đếm ảnh nằm
+> trực tiếp trong `assets/character/` (Lumina, Tú Phan) — **bỏ sót các thư mục con**
+> `firms/` (doanh nghiệp), `rivals/` + `rivals-global/` (đối thủ), `team/` (đội chơi
+> mẫu), `phu-sa/`, dù mô tả cột bên đã nhắc tới "đối thủ". Đếm lại đầy đủ: **95 tệp**.
+
 | Nhóm | Tệp/đường dẫn | Số lượng |
 |---|---|---|
 | Logo & biểu tượng chính thức | `logo/` (3 biến thể logo PNG-2400, 3 SVG biểu tượng, PNG-1024) | 7 |
-| Nhân vật (Lumina, Tú Phan, đối thủ…) | `assets/character/` (webp/png) | 32 |
+| Nhân vật cố vấn & Lumina | `assets/character/` (trực tiếp, webp/png) | 33 |
+| Đội chơi mẫu | `assets/character/team/` | 15 |
+| Doanh nghiệp trong game | `assets/character/firms/` | 8 |
+| Cố vấn (ban cố vấn Hộ Chiếu) | `assets/character/advisors/` | 19 |
+| Đối thủ quốc tế | `assets/character/rivals-global/` | 14 |
+| Đối thủ trong nước | `assets/character/rivals/` | 3 |
+| Nhân vật Bến Phù Sa | `assets/character/phu-sa/` | 3 |
+| **— Tổng nhân vật —** | | **95** |
 | Concept art bối cảnh (đất sét noir) | `assets/concept/` | 9 |
 | Thư viện hình bối cảnh | `assets/thu-vien/` | 4 |
 | Minh hoạ hệ thống | `assets/illustrations/` | 23 |
@@ -75,25 +87,34 @@ Vì vậy, trước khi nộp:
 **Loại hình:** Âm nhạc · **Phí nhà nước:** 100.000 đ.
 **Mô tả chuẩn:** xem `bieu-mau-dang-ky-quyen-tac-gia.md` — Tác phẩm 3.
 
-### Danh mục ca khúc (nhóm từ `assets/audio/` — hiện có **101 tệp mp3**)
+### Danh mục ca khúc — **12 ca khúc gốc chính thức** (nguồn: `am-nhac.html`, mảng `GROUPS`)
 
-Tệp gồm **bản gốc + bản phối/ngôn ngữ/biến thể**. Đăng ký theo **ca khúc gốc**
-(phần nhạc + phần lời); bản remix/song ngữ là **phái sinh của cùng tác phẩm**.
+> **✅ SỬA 20/09/2026:** danh sách trước đây ("cần chốt, khoảng 6–8 bài") tự đoán từ
+> tên tệp thô trong `assets/audio/` — không cần thiết, vì `am-nhac.html` (trang thư
+> viện nhạc công khai của site) **đã tự phân nhóm sẵn** ca khúc gốc và các bản
+> remix/song ngữ đi kèm. Dùng thẳng nhóm này làm danh mục đăng ký, khỏi phải đoán lại.
+> Đăng ký theo **ca khúc gốc** (phần nhạc + phần lời); bản remix/song ngữ/bản dịch là
+> **bản phối/biến thể của cùng tác phẩm**, không đăng ký riêng.
 
-| # | Ca khúc (tác phẩm gốc) | Biến thể/tệp tiêu biểu |
-|---|---|---|
-| 1 | **BizOn Theme** | `bizon-theme.mp3` |
-| 2 | **Bật Nghiệp** (nhạc hiệu game) | `bat-nghiep.mp3`, `-co-loi`, `-mekong-sunfire(-2)`, `-rap-symphony` |
-| 3 | **Đời Phù Sa** | `doi-phu-sa.mp3` + `-remix`, `-remix2/3` |
-| 4 | **Hương và Thế giới** (đa ngữ) | `huong-and-the-world(.en/-male)`, `huong-et-le-monde`, `huong-sans-frontieres(-2)`, `huong-vuon-ra-the-gioi(-2)`, `huong-intro`, `huong-on-return(-remix)` |
-| 5 | **Hộ Chiếu Thương Hiệu** (tổ khúc 3 phần) | `ho-chieu-p1/p2/p3…` (remix, EN), `brand-passport…`, `stamps-beyond-borders…` |
-| 6 | **Mekong · Golden Silt** | `mekong-compass`, `mekong-river(-v2/-remix)`, `golden-silt-route`, `journey-golden-silt(-remix)` |
-| 7 | Ca khúc khác | `viet-nam-trong-tim`, `vua-du-de-bay-cao`, `and-the-world-say-hello` |
-| — | **Motif ngắn** (nhạc nền màn) | `assets/audio/motif/` (arcade, core, lab, passport) |
-| — | **Giọng cố vấn Lumina** (lời nói, không phải ca khúc) | `assets/audio/voice/` (adv-*), `lumina-advisor-hello/round-result/victory` |
+| # | Ca khúc gốc | Số bản thu (gốc + remix/ngôn ngữ) |
+|---|---|:-:|
+| 1 | «Hương on Return» | 2 |
+| 2 | «Journey on the Golden Silt» | 4 |
+| 3 | «Je m'appelle Hương sans frontières» | 8 |
+| 4 | «Đội Phù Sa» | 4 |
+| 5 | «Hộ Chiếu Thương Hiệu» | 8 |
+| 6 | «Hộ Chiếu Thương Hiệu» – tổ khúc ba phần | 13 |
+| 7 | «Bật Nghiệp» | 5 |
+| 8 | «Việt Nam Trong Tim» | 1 |
+| 9 | «Vừa Đủ Để Bay Cao» | 1 |
+| 10 | «And The World Say Hello!» | 1 |
+| 11 | «Mekong Compass» | 1 |
+| 12 | «BizOn Theme» | 1 |
+| | **Tổng** | **49 bản thu / 12 ca khúc gốc** |
 
-> *Cần chốt danh sách ca khúc gốc chính thức (khoảng 6–8 bài) — bảng trên là bản
-> nhóm sơ bộ, hai tác giả rà lại tên và số bài trước khi nộp.*
+**Không tính vào danh mục ca khúc** (khác loại hình, hoặc không phải "ca khúc"):
+- **Giọng cố vấn Lumina** (`lumina-advisor-hello/round-result/victory.mp3` + `assets/audio/voice/`) — lời thoại nói, không phải bài hát; thuộc **Tác phẩm 4 (tác phẩm viết)**, không thuộc Tác phẩm 3.
+- **Motif ngắn nền màn** (`assets/audio/motif/`) — nhạc nền lặp ngắn, không phải ca khúc hoàn chỉnh; cân nhắc riêng với luật sư nếu cần đăng ký bổ sung.
 
 ### Điểm cần khai rõ (âm nhạc) — quan trọng
 - **Phần lời** do người viết → **rõ ràng được bảo hộ** (nếu Hương/Tú là tác giả lời).

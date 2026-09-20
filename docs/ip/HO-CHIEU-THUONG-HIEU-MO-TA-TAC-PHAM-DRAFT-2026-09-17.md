@@ -69,23 +69,19 @@ theo (điền theo hướng dẫn chung).
 
 ## 3. Ngày hoàn thành tác phẩm
 
-> `[…/…/2026]` — **cần Cô và Thầy tự chốt**, không dùng ngày AI đề xuất làm bằng cuối.
->
-> Gợi ý đối chiếu (tự xác nhận lại qua trang "History" của từng tệp trên GitHub, theo
-> đúng cách đã làm với Bến Phù Sa):
-> - Game ra mắt (nội dung game chính, 4 doanh nghiệp, 6 thị trường, đủ luật chơi):
->   commit `e4a1ed0`, 30/07/2026.
-> - Thay đổi kỹ thuật gần nhất trong mã nguồn game (nối engine AIBIS tất định): commit
->   `d43dfa1`, 05/08/2026.
-> - Thay đổi gần nhất chạm vào trang (chỉ đổi nhạc nền, không đổi luật chơi/engine):
->   commit `78598b2`, 13/09/2026.
+> **✅ CHỐT 20/09/2026:** **05/08/2026** — commit `d43dfa1` ("nối engine tất định
+> AIBIS vào game Hộ chiếu"), thời điểm chức năng chính hoàn thiện. Không dùng ngày ra
+> mắt đầu tiên (30/07, `e4a1ed0` — lúc đó chưa có engine tất định) hay ngày sửa nhạc
+> nền gần nhất (13/09, `78598b2` — không phải thay đổi chức năng). Khớp cách chọn đã
+> dùng cho Bến Phù Sa (ưu tiên mốc hoàn thiện chức năng, không lấy mốc ra mắt sớm nhất
+> hay chỉnh sửa vặt muộn nhất).
 
 ## 4. Ngày công bố và nơi công bố
 
 | Mục | Nội dung |
 |---|---|
 | Đã công bố | Có |
-| Ngày công bố | *(khớp với Ngày hoàn thành đã chốt ở mục 3, theo đúng cách ba hồ sơ kia đã khai)* |
+| Ngày công bố | **05/08/2026** (khớp Ngày hoàn thành ở mục 3) |
 | Hình thức công bố | Đăng tải công khai trên mạng Internet |
 | Nơi công bố | `https://thuyhuongctu.github.io/BizOn/brand-passport.html` |
 | Quốc gia công bố | Việt Nam |
