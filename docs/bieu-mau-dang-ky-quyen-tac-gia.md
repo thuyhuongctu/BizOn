@@ -151,8 +151,8 @@ Phần mềm chạy trên trình duyệt theo kiến trúc ứng dụng web ti�
 | Hạng mục | Yêu cầu | Trạng thái |
 |---|---|---|
 | Đĩa chạy chương trình | **02 đĩa** | `[cần ghi]` |
-| Giao diện chương trình in ra giấy | Đã loại bỏ logo, hình ảnh của chủ thể khác | ⚠️ **xem cảnh báo dưới** |
-| Mã nguồn in ra giấy | **Khoảng 15–20 trang** | `[cần chọn phần in]` |
+| Giao diện chương trình in ra giấy | Đã loại bỏ logo, hình ảnh của chủ thể khác | ✅ **ĐÃ LÀM 20/09/2026** — 6 ảnh + bản in PDF, xem [`ip/bat-nghiep/anh-giao-dien/`](ip/bat-nghiep/anh-giao-dien/); ⚠️ xem cảnh báo dưới |
+| Mã nguồn in ra giấy | **Khoảng 15–20 trang** | ✅ **ĐÃ LÀM 20/09/2026** — `js/engine.js` + `js/backend.js`, 1.026 dòng ≈ 19 trang, xem [`ip/bat-nghiep/ma-nguon-dac-trung/`](ip/bat-nghiep/ma-nguon-dac-trung/) |
 
 ### ⚠️ Cảnh báo 1 — Ảnh giao diện phải loại bỏ dấu hiệu của bên thứ ba
 
@@ -387,8 +387,8 @@ Giống Tác phẩm 1.
 
 | # | Việc | Ghi chú |
 |---|---|---|
-| 8 | Chụp ảnh giao diện **đã loại bỏ dấu hiệu bên thứ ba** | Chụp màn hình bên trong game, tránh trang chủ và trang Đội ngũ |
-| 9 | In 15–20 trang mã nguồn theo danh sách gợi ý | Ưu tiên `js/engine.js` |
+| 8 | ~~Chụp ảnh giao diện **đã loại bỏ dấu hiệu bên thứ ba**~~ | **✅ ĐÃ LÀM 20/09/2026** — 6 màn hình trong game (đăng nhập · trung tâm điều hành · quyết định · đấu trường kết quả · báo cáo vòng · sự kiện & cố vấn), không trang chủ/Đội ngũ nên không dính dấu hiệu bên thứ ba. Xem [`ip/bat-nghiep/anh-giao-dien/`](ip/bat-nghiep/anh-giao-dien/) |
+| 9 | ~~In 15–20 trang mã nguồn theo danh sách gợi ý~~ | **✅ ĐÃ LÀM 20/09/2026** — `js/engine.js` (824 dòng, toàn bộ) + `js/backend.js` (200 dòng, toàn bộ) = 1.026 dòng ≈ 19 trang; bỏ `sw.js` để vừa trần 20 trang (bảng gợi ý cũ ở trên dùng số dòng cũ, đã lỗi thời). Xem [`ip/bat-nghiep/ma-nguon-dac-trung/`](ip/bat-nghiep/ma-nguon-dac-trung/) |
 | 10 | ~~**Loại tệp `food-truck.html`** khỏi đĩa và bản in~~ | **ĐÃ THAY THẾ 05/08/2026** — Bến Phù Sa là tác phẩm độc lập (Nhóm B), giữ lại; xem Cảnh báo 2 |
 | 11 | Ghi 02 đĩa cho mỗi hồ sơ — 8 đĩa tổng cộng | Ghi nhãn: tên tác phẩm, tác giả, ngày |
 | 12 | Xuất nhật ký 271 phiên bản ra PDF làm phụ lục | Chứng cứ mốc thời gian |
