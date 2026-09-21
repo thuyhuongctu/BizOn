@@ -34,7 +34,7 @@
 | Mục | Nội dung |
 |---|---|
 | **1. Tên tác phẩm** | PHẦN MỀM TRÒ CHƠI MÔ PHỎNG THỊ TRƯỜNG "BẾN PHÙ SA" (bản `v1.0`).<br>Tên tiếng Anh (nếu luật sư yêu cầu): *Ben Phu Sa — An Explore-Exploit Street-Market Simulation Game*.<br>Nên đăng ký loại hình **"chương trình máy tính"**. Muốn bảo hộ thêm phần mỹ thuật (nhân vật, bối cảnh đất sét/xuồng ghe) có thể cân nhắc đăng ký bổ sung **"tác phẩm mỹ thuật ứng dụng"** cho bộ hình ảnh — hỏi luật sư về chi phí. |
-| **2. Ngày hoàn thành** | Ngày: **08/08/2026** · Gắn với commit: **`b387b3b61e6868f7fb78c41c80cec9eb965871a0`** (#396 "mở khoá Đội Phù Sa 2 người" — commit gần nhất sửa `ben-phu-sa.html`).<br>✅ **Hash/ngày đã được Hương tự xác nhận** — xem trực tiếp trang "History for ben-phu-sa.html" trên GitHub (`https://github.com/thuyhuongctu/BizOn/commits/main/ben-phu-sa.html`): commit gần nhất là #396 (08/08/2026), lịch sử file dừng ở #377 (05/08/2026, đổi tên `food-truck.html`→`ben-phu-sa.html`) — khớp đúng số AI báo cáo. Không còn là số "AI điền tạm" nữa.<br>⚠️ **Vẫn còn thiếu điều kiện khác của hướng (a):** Hương phải **tự chơi thử một lượt thật** (đủ 5 tuần ra bảng kết quả hoàn chỉnh) trước khi chốt — đây là điểm riêng, xác nhận hash không thay thế được. |
+| **2. Ngày hoàn thành** | ✅ **SỬA 19/09/2026 (xem `HO-SO-NOP-2026.md` mục 2):** Ngày: **05/08/2026** · Gắn với commit: **`ead6e2d`** (#357 "xác lập tác phẩm nguyên bản, sửa ghi công, lập hồ sơ SHTT") — đổi từ 08/08/2026 (`b387b3b`) về khớp ngày công bố đã chốt ở mục 3, tránh mâu thuẫn logic công bố trước khi hoàn thành.<br>✅ Hương đã tự xác nhận hash/ngày qua trang "History for ben-phu-sa.html" trên GitHub.<br>⚠️ **Lưu ý cho luật sư:** `b387b3b` (08/08/2026) và 3 commit phát hiện thêm khi rà lại 21/09/2026 — `df50e27` (12/09, thêm nhạc nền trang khác), `8c28f93` (13/09, đổi nhãn học hàm), `56f6f2b` (20/09, sửa lại nhãn học hàm) — đều là thay đổi/kiểm thử bổ sung **sau** mốc 05/08, không chạm engine/nội dung game, không phải bằng chứng phủ nhận tác phẩm đã hoàn thiện tại 05/08. Toàn bộ 23 commit sửa `ben-phu-sa.html`/`food-truck.html` (từ `fb36c2c` 30/07/2026) — xem Phụ lục dòng thời gian trong hồ sơ nộp. |
 | **3. Ngày công bố / nơi công bố** | **Hương xác nhận: chưa công bố chính thức** — game vẫn nằm trong hệ sinh thái nội bộ BizOn, chưa được công bố/quảng bá ra công chúng như một sản phẩm độc lập. Khai mục này là **"chưa công bố"**.<br>⚠️ **Lưu ý kỹ thuật cần luật sư xác nhận cách khai:** `ben-phu-sa.html` **có thể truy cập được về mặt kỹ thuật** tại `https://thuyhuongctu.github.io/BizOn/ben-phu-sa.html` — repo GitHub công khai, GitHub Pages tự động deploy mỗi lần push lên `main` (từ commit đầu tiên tạo file, 04/08/2026, dưới tên `food-truck.html`), không có `robots.txt` chặn index, không có tường xác thực. Trang được dẫn link "Vào chơi →" từ `universe.html`. Luật Sở hữu trí tuệ định nghĩa "công bố" là hành vi *đưa tác phẩm đến công chúng*, không chỉ là khả năng kỹ thuật truy cập được — nhưng ranh giới giữa "triển khai nội bộ chưa quảng bá" và "đã công bố" nên hỏi luật sư xác nhận trước khi khai, để tránh khai sai ảnh hưởng hiệu lực giấy chứng nhận. |
 | **4. Thông tin tác giả** | Đồng tác giả 1: **Đỗ Thùy Hương** — CCCD: ……… *(Hương điền)*.<br>Đồng tác giả 2: **Phan Anh Tú** — CCCD: ……… *(Hương điền)*.<br>Kèm bản sao y chứng thực CCCD của cả hai. Bốn trường cá nhân (ngày sinh, CCCD, địa chỉ, SĐT) thu thập một lần dùng cho cả bản quyền lẫn nhãn hiệu. **Không đưa lên repo.** |
 | **5. Thông tin chủ sở hữu** | Chủ sở hữu là **hai cá nhân đồng sở hữu** (không phải công ty), theo cấu trúc khuyến nghị cho viên chức: đồng sở hữu cá nhân + hợp đồng li-xăng khi khai thác thương mại. Không cần Giấy chứng nhận đăng ký kinh doanh.<br>**Tỷ lệ sở hữu: 50% / 50%** (Đỗ Thùy Hương / Phan Anh Tú) — **cả hai đồng tác giả đã trao đổi và thống nhất**, không còn là xác nhận một chiều. ⚠️ Vẫn phải khớp với thỏa thuận đồng sở hữu **đã ký bằng văn bản** — thỏa thuận hiện mới ở dạng nháp, **chưa ký**, phải ký chính thức trước khi nộp. |
@@ -96,7 +96,7 @@ Không sửa trực tiếp `universe.html` trong PR này — đổi qua pipeline
 ### Việc cần Hương làm ngay
 - [x] Tự chơi thử một lượt `v1.0` (đủ 5 tuần ra kết quả) để xác nhận điều kiện hướng (a) — **đã xác nhận 24/08/2026**.
 - [x] Điền bốn trường cá nhân (cả hai đồng tác giả) — **✅ ĐÃ ĐIỀN** trong "3. GUQ - Ben Phu Sa.docx" (ký 20/09/2026), không đưa lên repo. Còn lại: chuẩn bị bản sao y chứng thực CCCD (bản giấy) trước khi nộp.
-- [x] Hash + ngày: **`b387b3b…` / 08/08/2026** — Hương đã tự xác nhận qua GitHub "History for ben-phu-sa.html".
+- [x] Hash + ngày: **`ead6e2d` / 05/08/2026** (đổi từ `b387b3b`/08/08/2026, chốt 19/09/2026 để khớp ngày công bố) — Hương đã tự xác nhận qua GitHub "History for ben-phu-sa.html".
 - [x] Grep IB-CI = 0 dòng thực (chỉ 2 dòng ghi chú về việc loại trừ) — đã chạy lại, kết quả đúng như kỳ vọng. Duyệt phần lược hằng số: đã đối chiếu `share(n)`, `D`, `W`, `menuAdj` trong bản trích khớp đúng cấu trúc bản đầy đủ ở `ben-phu-sa.html` (chỉ ẩn giá trị). ⚠️ Hương vẫn nên tự chạy lại lệnh grep một lần trên máy/session của mình trước khi nộp, theo đúng nguyên tắc không lấy kết quả AI báo làm bằng cuối cùng.
 - [ ] Xác nhận với luật sư cách khai mục A.3 (chưa công bố chính thức, dù kỹ thuật đã live trên GitHub Pages).
 - [x] Tỷ lệ sở hữu: **50% / 50%** — cả hai đồng tác giả đã thống nhất. Còn lại: **ký thỏa thuận đồng sở hữu bằng văn bản** (hiện mới là bản nháp) trước khi nộp.
@@ -110,6 +110,40 @@ Không sửa trực tiếp `universe.html` trong PR này — đổi qua pipeline
 ---
 
 *Nguồn: hai file Word "Bến Phù Sa — Hồ sơ bản quyền và nhãn hiệu" và "Thông tin cần để soạn hồ sơ bản quyền tác giả" (nhóm cung cấp, 20/08/2026). Tài liệu này là bản làm việc để đối chiếu và version-hoá; không phải tư vấn pháp lý — các điểm pháp lý do luật sư SHTT xác nhận.*
+
+---
+
+## Phụ lục — Toàn bộ commit sửa `food-truck.html`/`ben-phu-sa.html` (rà lại 21/09/2026)
+
+23 commit, cùng một tài khoản `Je m'appelle Huong <thuyhuongctu@gmail.com>`. Ngày hoàn thành chốt = dòng in đậm.
+
+| # | Ngày | Commit | Nội dung |
+|---|---|---|---|
+| 1 | 30/07/2026 | `fb36c2c` | Game mới «Food Truck Challenge» — bản đầu tiên, theo Quick Start Guide của PGS.TS. Phan Anh Tú |
+| 2 | 30/07/2026 | `faaacbd` | Tạo hình nhân vật đội chơi + 3 đối thủ AI |
+| 3 | 30/07/2026 | `cf99819` | Bộ chọn đội, mở đường cho Đội Phù Sa |
+| 4 | 30/07/2026 | `96e640c` | Bản dịch tiếng Anh trọn trang |
+| 5 | 30/07/2026 | `a9c3ab7` | Việt hóa thành «Gánh Hàng Khởi Nghiệp» |
+| 6 | 30/07/2026 | `45d6c98` | Nối vào chuỗi nghiên cứu: nộp kết quả + bảng giảng viên |
+| 7 | 30/07/2026 | `6834f6c` | Chuẩn hóa theo góp ý, ghi nhãn bản địa hóa trung thực |
+| 8 | 30/07/2026 | `e4a1ed0` | (hạ tầng dùng chung — Hộ Chiếu Thương Hiệu ra mắt, chạm file này) |
+| 9 | 30/07/2026 | `44e6bd4` | (hạ tầng dùng chung — bỏ dấu gạch dài toàn dự án) |
+| 10 | 01/08/2026 | `e7132e3` | (hạ tầng dùng chung — chuyển ảnh sang WebP) |
+| 11 | 01/08/2026 | `df7f1aa` | (hạ tầng dùng chung — tự host phông, bản đồ hành trình) |
+| 12 | 02/08/2026 | `5901efc` | (hạ tầng dùng chung — hướng dẫn viên AI, bản đồ chìm toàn site) |
+| 13 | 03/08/2026 | `66fde13` | (hạ tầng dùng chung — thanh điều hướng dùng chung) |
+| 14 | 05/08/2026 | `bf357ba` | Bến Phù Sa: ghe hàng bông + chiều sâu văn hóa thương hồ |
+| **15** | **05/08/2026** | **`ead6e2d`** | **Xác lập tác phẩm nguyên bản, sửa ghi công, lập hồ sơ SHTT — NGÀY HOÀN THÀNH + NGÀY CÔNG BỐ** |
+| 16 | 05/08/2026 | `e4e8c14` | Un-pause, đưa lên làm Bậc 1 |
+| 17 | 05/08/2026 | `dca3754` | Lối nhỏ "Vũ trụ" ở góc trang |
+| 18 | 05/08/2026 | `6dc9022` | Đổi tên `food-truck.html` → `ben-phu-sa.html` |
+| 19 | 08/08/2026 | `b48033e` | Hero chợ nổi + nhân vật đôi Phù Sa + nhạc chủ đề |
+| 20 | 08/08/2026 | `b387b3b` | Mở khóa "Đội Phù Sa" dạng đội sáng lập 2 người |
+| 21 | 12/09/2026 | `df50e27` | (hạ tầng dùng chung — thêm 1 bản nhạc nền) |
+| 22 | 13/09/2026 | `8c28f93` | (hạ tầng dùng chung — đổi nhãn học hàm Phan Anh Tú) |
+| 23 | 20/09/2026 | `56f6f2b` | (hạ tầng dùng chung — sửa lại nhãn học hàm; cũng là commit điền tạm mục A.2 lần đầu) |
+
+Commit #8–13 và #21–23 chỉ chạm hạ tầng/nội dung dùng chung toàn site (nav, WebP, phông, nhạc, nhãn học hàm) khi các trang khác được sửa — không phải nội dung riêng của Bến Phù Sa. Giai đoạn #1–13 (30/07–03/08, tên "Food Truck Challenge"/"Gánh Hàng Khởi Nghiệp") cố tình **không** dùng làm ngày hoàn thành/công bố vì còn ghi công Harvard Business Publishing — xem `HO-SO-NOP-2026.md` mục 3.
 
 ---
 
