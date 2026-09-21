@@ -30,6 +30,13 @@ Gắn với commit: **`ead6e2d`** (#357 "Bến Phù Sa: xác lập tác phẩm n
 ✅ Hương đã tự xác nhận hash/ngày qua trang "History for ben-phu-sa.html" trên GitHub.
 
 ⚠️ **Lưu ý cho luật sư:** commit `b387b3b` (08/08/2026, #396 "mở khoá Đội Phù Sa 2 người") và lần chơi thử đầu-cuối xác nhận `v1.0` chạy trọn 5 tuần (24/08/2026) đều **sau** ngày hoàn thành mới chọn — đây là các thay đổi/kiểm thử bổ sung sau mốc 05/08, không phải bằng chứng phủ nhận việc tác phẩm đã ở dạng hoàn thiện tại 05/08. Nên cho luật sư xem qua nếu có thể trước khi ký chính thức.
+>
+> **✅ RÀ LẠI 21/09/2026:** đối chiếu lại `git log -- ben-phu-sa.html` phát hiện thêm 3 commit sau `b387b3b`, cũng thuộc diện "thay đổi bổ sung sau mốc 05/08" nêu trên — không đổi ngày hoàn thành:
+> - `df50e27` (12/09/2026) — thêm một bản nhạc nền cho các trang còn thiếu nhạc.
+> - `8c28f93` (13/09/2026) — đổi nhãn học hàm Phan Anh Tú trong 1 dòng comment + 1 dòng credit (PGS.TS. → GS.TS., theo tin thầy lên chức danh mới lúc đó).
+> - `56f6f2b` (20/09/2026) — sửa lại nhãn học hàm về đúng "PGS.TS." (tin trước đó sai, thầy chưa lên Giáo sư) — đây cũng là commit đã điền tạm mục 2 này lần đầu.
+>
+> Không có commit nào trong 3 commit trên chạm vào engine/nội dung game mô tả ở mục 1. Danh sách đầy đủ các commit sửa `ben-phu-sa.html`/`food-truck.html` (23 commit, từ `fb36c2c` 30/07/2026 đến `56f6f2b` 20/09/2026) — xem `HO-SO-QUYEN-TAC-GIA-2026.md`.
 
 ---
 
