@@ -97,6 +97,16 @@ chủ sở hữu quyền tác giả, tỷ lệ đồng sở hữu theo đúng t�
 Giống ba hồ sơ kia — CÔNG TY CỔ PHẦN SỞ HỮU CÔNG NGHIỆP INVESTIP (nếu vẫn dùng INVESTIP
 làm hồ sơ này).
 
+## 6. Tác phẩm nộp kèm
+
+> **✅ ĐÃ LÀM 20/09/2026** — xem [`ho-chieu-thuong-hieu/`](ho-chieu-thuong-hieu/), cùng khuôn mẫu đã dùng cho Bến Phù Sa và Bật Nghiệp.
+
+| Hạng mục | Yêu cầu | Trạng thái |
+|---|---|---|
+| Đĩa chạy chương trình | 02 đĩa | `[cần ghi]` — Hương tự ghi trước khi nộp |
+| Giao diện chương trình in ra giấy | Đã loại bỏ logo, hình ảnh của chủ thể khác | ✅ 5 ảnh + bản in PDF, xem [`ho-chieu-thuong-hieu/anh-giao-dien/`](ho-chieu-thuong-hieu/anh-giao-dien/) |
+| Mã nguồn in ra giấy | Khoảng 15–20 trang | ✅ `entry-mode-models.js` + `entry-mode-engine.js` + khối `<script>` chính của `brand-passport.html`, 745 dòng ≈ 14 trang, xem [`ho-chieu-thuong-hieu/ma-nguon-dac-trung/`](ho-chieu-thuong-hieu/ma-nguon-dac-trung/) |
+
 ---
 
 ## ⚠️ Lưu ý khi gửi INVESTIP lên Tờ khai chính thức

@@ -30,11 +30,7 @@ PHẠM VI BẢN TRÍCH
   định (cùng đầu vào luôn cho cùng kết quả), không phải "đáp án" cần giấu như
   các game thăm dò-khai thác có dữ liệu ẩn ngẫu nhiên; giữ nguyên, không lược.
 
-════════════════════════════════════════════════════════════════════════════
-
-──────────────────────────────────────────────────────────────────────────────
 TỆP: js/engine.js  (825 dòng)
-──────────────────────────────────────────────────────────────────────────────
 
 /* BizOn Bật Nghiệp 2026 – Engine mô phỏng 6 vòng (client-side)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.
@@ -861,10 +857,7 @@ function luminaAdvice(s, topic) {
     `A golden-green opportunity: ${ev.name}. ${ev.desc} This is the time to invest boldly and break out on market share.`) };
 }
 
-
-──────────────────────────────────────────────────────────────────────────────
 TỆP: js/backend.js  (201 dòng)
-──────────────────────────────────────────────────────────────────────────────
 
 /* BizOn – Nộp kết quả vòng chơi lên backend mỏng (Supabase)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú.
@@ -1067,6 +1060,4 @@ TỆP: js/backend.js  (201 dòng)
   window.BizonBackend = { submitRound, flush, syncTeamState, loadTeamState, classLeaderboard };
 })();
 
-
-══════════════════════════════════════════════════════════════════════════════
 TỔNG: 1026 dòng — ước tính 19 trang (55 dòng/trang, A4, cỡ chữ 10)
