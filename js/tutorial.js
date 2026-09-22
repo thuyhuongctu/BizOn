@@ -11,7 +11,7 @@
     { tab: 'home', sel: '#dash-round', card: true,
       title: '🎯 Trung tâm điều hành', text: 'Đây là vòng hiện tại của đội. Một ván có <b>6 vòng</b>, mỗi vòng ≈ 5–7 phút: xem tình hình → quyết định → khóa vòng → đọc kết quả.' },
     { tab: 'home', sel: '#m-cash', grid: true,
-      title: '📊 Ba chỉ số sống còn', text: '<b>Dòng tiền</b> – hết tiền là nguy; <b>Thị phần</b> – cao nhất lớp thì cắm cờ 🚩; <b>Thương hiệu</b> – giữ khách quay lại. Ba số này đổi sau mỗi vòng.' },
+      title: '📊 Ba chỉ số sống còn', text: '<b>Dòng tiền</b> – hết tiền là nguy; <b>Thị phần</b> – cao nhất lớp <i>và có lãi</i> thì cắm cờ 🚩 (cao nhất mà lỗ thì chưa tính!); <b>Thương hiệu</b> – giữ khách quay lại. Ba số này đổi sau mỗi vòng.' },
     { tab: 'home', sel: '#dash-lumina', card: true,
       title: '🤖 Lumina – cố vấn AI của đội', text: 'Bí thì hỏi Lumina! Cô ấy phân tích kịch bản «Nếu – Thì» trước khi bạn chốt. Mỗi vòng có số lượt hỏi giới hạn nên hãy dùng khôn ngoan.' },
     { tab: 'home', sel: '#btn-go-decisions',
