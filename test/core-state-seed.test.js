@@ -39,6 +39,16 @@ const Seed = require('../js/core/seed-engine.js');
   assert.equal(seed, 'IB-01:T-01:PILOT-A:2.0.0-ALPHA.1');
 })();
 
+// Cùng 1 đội gõ tên có dấu/không dấu, hoa/thường khác nhau (rất phổ biến
+// khi mỗi thành viên tự gõ trên điện thoại riêng) phải luôn ra cùng 1 seed
+// — nếu không, đội sẽ bốc thăm Trường hợp A/B lệch nhau giữa các thành
+// viên (lỗi thật đã xảy ra, xem docs/design/CASE_DRAW_TWO_SCENARIOS_v1.md).
+(function testTeamNameDiacriticInsensitive() {
+  const variants = ['Đội Rồng Vàng', 'doi rong vang', 'DOI RONG VANG', '  Đội rồng vàng  '];
+  const seeds = variants.map((v) => Seed.createSeed('KT330H-M01', v, 'case-draw'));
+  seeds.forEach((s) => assert.equal(s, seeds[0]));
+})();
+
 (function testDeterminism() {
   const a = Seed.randomFromSeed('SAME', 'round-1');
   const b = Seed.randomFromSeed('SAME', 'round-1');

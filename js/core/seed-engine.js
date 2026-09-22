@@ -5,8 +5,20 @@
 })(typeof globalThis !== 'undefined' ? globalThis : this, function () {
   'use strict';
 
-  function normalizePart(value) {
+  // Bỏ dấu tiếng Việt trước khi so khớp/tính seed, để "Đội Rồng Vàng" và
+  // "doi rong vang" (thiếu dấu, gõ trên điện thoại khác nhau) luôn chuẩn
+  // hóa về cùng 1 chuỗi — tránh trường hợp thành viên cùng đội bốc thăm
+  // Trường hợp A/B khác nhau chỉ vì gõ tên đội không giống hệt nhau.
+  function stripDiacritics(value) {
     return String(value ?? '')
+      .normalize('NFD')
+      .replace(/[̀-ͯ]/g, '')
+      .replace(/đ/g, 'd')
+      .replace(/Đ/g, 'D');
+  }
+
+  function normalizePart(value) {
+    return stripDiacritics(value)
       .trim()
       .toUpperCase()
       .replace(/[^A-Z0-9._-]+/g, '-')
