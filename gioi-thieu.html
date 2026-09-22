@@ -353,6 +353,41 @@
   </div>
 </section>
 
+<!-- ===== VIDEO HƯỚNG DẪN CHƠI ===== -->
+<section id="how-to-play-video" class="max-w-4xl mx-auto px-5 py-20">
+  <p class="text-center text-xs font-extrabold text-primary uppercase tracking-[.2em] reveal">Xem trước khi chơi</p>
+  <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-center mt-2 reveal">📺 Video hướng dẫn chơi</h2>
+  <p class="text-center text-deep-teal/60 text-sm mt-2 mb-8 reveal">Đăng nhập → bốc thăm → đọc biến cố → ra quyết định → Đấu trường → kết quả – quay từ game thật qua 2 vòng minh họa (~47 giây).</p>
+  <div class="flex justify-center gap-2 mb-5 reveal">
+    <button id="htp-btn-vi" onclick="htpSwitch('vi')" class="clay-btn-primary text-white font-display font-extrabold px-5 py-2 text-sm">🇻🇳 Tiếng Việt</button>
+    <button id="htp-btn-en" onclick="htpSwitch('en')" class="clay-btn bg-white text-deep-teal font-display font-extrabold px-5 py-2 text-sm">🇬🇧 English</button>
+  </div>
+  <div class="clay-card p-3 reveal reveal-d1">
+    <video id="htp-video-vi" controls preload="none" playsinline poster="assets/video/bizon-huong-dan-choi-vi-poster.jpg" class="w-full rounded-2xl block mx-auto" style="max-height:70vh">
+      <source src="assets/video/bizon-huong-dan-choi-vi.mp4" type="video/mp4">
+    </video>
+    <video id="htp-video-en" controls preload="none" playsinline poster="assets/video/bizon-huong-dan-choi-en-poster.jpg" class="w-full rounded-2xl mx-auto hidden" style="max-height:70vh">
+      <source src="assets/video/bizon-huong-dan-choi-en.mp4" type="video/mp4">
+    </video>
+    <p class="text-[10px] text-deep-teal/40 mt-3 text-center">Có phụ đề chữ + nhạc nền gốc «BizOn Theme» – bản có giọng thuyết minh sẽ được cập nhật sau.</p>
+  </div>
+</section>
+<script>
+  function htpSwitch(lang) {
+    const vi = document.getElementById('htp-video-vi'), en = document.getElementById('htp-video-en');
+    const bvi = document.getElementById('htp-btn-vi'), ben = document.getElementById('htp-btn-en');
+    const on = 'clay-btn-primary text-white font-display font-extrabold px-5 py-2 text-sm';
+    const off = 'clay-btn bg-white text-deep-teal font-display font-extrabold px-5 py-2 text-sm';
+    if (lang === 'vi') {
+      vi.classList.remove('hidden'); en.classList.add('hidden'); en.pause();
+      bvi.className = on; ben.className = off;
+    } else {
+      en.classList.remove('hidden'); vi.classList.add('hidden'); vi.pause();
+      ben.className = on; bvi.className = off;
+    }
+  }
+</script>
+
 <!-- ===== MINI-GAMES ===== -->
 <section id="minigames" class="bg-white/70 py-20">
   <div class="max-w-6xl mx-auto px-5">
