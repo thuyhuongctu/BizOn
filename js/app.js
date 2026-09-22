@@ -2979,19 +2979,16 @@ function unlockSkill(id) {
 
 // ---------- Leaderboard ----------
 // classLB: dữ liệu xếp hạng lớp trực tiếp đã nạp từ backend (null = chưa có).
-let classLB = null, classLBBusy = false;
+let classLB = null;
 
-// Chỉ nạp ở bản có Mã lớp (không phải chơi thử). Nạp xong thì vẽ lại.
-async function fetchClassLeaderboard() {
-  if (!S || isTrial() || classLBBusy) return;
-  if (!window.BizonBackend || !BizonBackend.classLeaderboard) return;
-  classLBBusy = true;
-  try {
-    const rows = await BizonBackend.classLeaderboard(S.profile.classId);
-    if (Array.isArray(rows)) { classLB = rows; renderLeaderboard(); }
-  } catch (e) { /* im lặng — giữ chế độ cục bộ */ }
-  finally { classLBBusy = false; }
-}
+// TẮT (22/9/2026): sinh viên lớp KT330H-M01 phản ánh xem được thứ hạng/lợi
+// nhuận của các đội khác cùng lớp giữa mùa giải qua tab này — ảnh hưởng tâm
+// lý và có thể tác động cách chơi. Khóa lại: không gọi API chéo đội nữa,
+// renderLeaderboard() chỉ còn hiện kết quả của chính đội mình. Không xóa
+// BizonBackend.classLeaderboard/RPC bizon_class_leaderboard ở backend.js —
+// không có trang nào khác gọi tới, giữ lại phòng khi cần bật lại có kiểm soát
+// (ví dụ chỉ hiện sau khi kết thúc mùa giải).
+async function fetchClassLeaderboard() { /* đã tắt — xem ghi chú trên */ }
 
 function renderLeaderboard() {
   const totalProfit = S.history.reduce((a, r) => a + r.netProfit, 0);
@@ -3013,15 +3010,18 @@ function renderLeaderboard() {
     }
     all.sort((a, b) => b.profit - a.profit);
     note = T('🟢 Trực tiếp · các đội cùng lớp ' + S.profile.classId, '🟢 Live · teams in class ' + S.profile.classId);
+  } else if (graded) {
+    // Đã vào lớp thật nhưng bảng xếp hạng chéo đội đang khóa (xem ghi chú ở
+    // fetchClassLeaderboard) — chỉ hiện kết quả của chính đội mình.
+    all = [{ name: S.profile.teamName + T(' (Bạn)', ' (You)'), profit: totalProfit, share: lastShare, me: true }];
+    note = T('🔒 Bảng xếp hạng chéo đội đang tạm khóa — chỉ hiện kết quả của đội bạn', '🔒 Cross-team leaderboard is temporarily locked — showing only your team’s results');
   } else {
-    // Chơi thử / chưa có dữ liệu lớp: so với 3 đối thủ AI (như trước).
+    // Chơi thử: so với 3 đối thủ AI (như trước).
     all = [
       { name: S.profile.teamName + T(' (Bạn)', ' (You)'), profit: totalProfit, share: lastShare, me: true },
       ...S.competitors.map(c => ({ name: c.name, profit: c.profit, share: c.share })),
     ].sort((a, b) => b.profit - a.profit);
-    note = graded
-      ? T('Đang tải bảng xếp hạng lớp…', 'Loading class leaderboard…')
-      : T('🧪 Chơi thử · so với 3 đối thủ AI (nhập Mã lớp để đua với các đội trong lớp)', '🧪 Trial · vs 3 AI rivals (enter a Class ID to compete with classmates)');
+    note = T('🧪 Chơi thử · so với 3 đối thủ AI (nhập Mã lớp để đua với các đội trong lớp)', '🧪 Trial · vs 3 AI rivals (enter a Class ID to compete with classmates)');
   }
 
   const medal = i => (i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `<span class="text-deep-teal/50 font-display font-bold">#${i + 1}</span>`);
