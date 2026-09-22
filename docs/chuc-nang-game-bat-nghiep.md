@@ -67,7 +67,7 @@ Mỗi trong **6 vòng** (mỗi vòng ≈ 1 quý kinh doanh, 5–7 phút) đi qua
 2. **Ra quyết định** (tab Decisions) – 4–7 slider theo vai trò, có dự báo thị phần & dòng tiền sống, có thể hỏi "Nếu – Thì" (tối đa 2 lượt/vòng) và nghe gợi ý Cuộc họp đội trước khi chốt.
 3. **Commit (khóa quyết định)** – không thể sửa sau khi khóa; nếu giảng viên đã khóa vòng (`toggleRoundLock`) thì bị chặn.
 4. **Engine mô phỏng xử lý** (~2.3 giây, có màn loading) – tính thị phần, doanh thu, chi phí, các chỉ số vận hành, đồng thời 3 đối thủ AI cũng ra quyết định của họ.
-5. **Đấu trường** (`showArena`) – 4 công ty (bạn + 3 AI) hiện trên bản đồ Việt Nam, thanh thị phần chạy hoạt hình, ai cao nhất "thắng vòng" và cắm cờ 🚩 lên tỉnh/thành tương ứng trên **bản đồ chinh phục** (Cần Thơ → TP.HCM → Khánh Hòa → Đà Nẵng → Thanh Hóa → Hà Nội).
+5. **Đấu trường** (`showArena`) – 4 công ty (bạn + 3 AI) hiện trên bản đồ Việt Nam, thanh thị phần chạy hoạt hình. Cắm cờ 🚩 lên tỉnh/thành tương ứng trên **bản đồ chinh phục** (Cần Thơ → TP.HCM → Khánh Hòa → Đà Nẵng → Thanh Hóa → Hà Nội) cần **thị phần cao nhất VÀ có lãi** vòng đó (`recordConquest`) – thị phần cao nhất mà lỗ chỉ hiện cảnh báo ⚠️, chưa cắm được cờ (tránh mẹo phá giá tối đa để "thắng" trong khi âm vốn).
 6. **Kết quả vòng** – modal tổng kết số liệu + thành tựu/nhiệm vụ mới mở; nếu đạt đỉnh mới (thị phần ≥30% và có lãi) → màn `showVictory`; nếu lên cấp → `showLevelUp`.
 7. Vòng 6 kết thúc → tự chuyển sang báo cáo "🏁 Tổng kết mùa giải" + pháo hoa + nhạc nền đổi sang bản remix chủ đề.
 

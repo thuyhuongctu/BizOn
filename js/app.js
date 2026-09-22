@@ -463,7 +463,7 @@ function MANUAL() { return {
   world: { icon: '🌏', name: T('Hệ sinh thái BizOn', 'The BizOn Ecosystem'), html: `
     <img src="assets/illustrations/game/bridge-music.webp" alt="${T('Đội bước qua cầu ra thế giới', 'The team crossing a bridge to the world')}" class="w-full h-36 object-cover rounded-2xl mb-4">
     <p class="text-sm text-deep-teal/75 mb-4">${T('BizOn không chỉ có 6 vòng trong nước – cả một hệ sinh thái đang chờ bạn:', 'BizOn is more than 6 domestic rounds – a whole ecosystem is waiting for you:')}</p>
-    ${[[T('🗺️ Bản đồ chinh phục', '🗺️ Conquest map'), T('Mỗi vòng thắng thị phần là một lá cờ 🚩 cắm lên bản đồ Việt Nam – từ Cần Thơ tới cột cờ Lũng Cú, kèm hai quần đảo Hoàng Sa & Trường Sa.', 'Every round you win market share plants a flag 🚩 on the map of Vietnam – from Cần Thơ to the Lũng Cú flagpole, including the Hoàng Sa & Trường Sa archipelagos.')],
+    ${[[T('🗺️ Bản đồ chinh phục', '🗺️ Conquest map'), T('Thị phần cao nhất VÀ có lãi vòng đó mới cắm được một lá cờ 🚩 lên bản đồ Việt Nam – từ Cần Thơ tới cột cờ Lũng Cú, kèm hai quần đảo Hoàng Sa & Trường Sa.', 'Top market share AND a profit that round plants a flag 🚩 on the map of Vietnam – from Cần Thơ to the Lũng Cú flagpole, including the Hoàng Sa & Trường Sa archipelagos.')],
        [T('🌏 BizOn Go Global', '🌏 BizOn Go Global'), T('Ra biển lớn: khai hồ sơ doanh nghiệp, chọn 1 trong 7 thị trường, đàm phán với đối tác bản địa, chọn phương thức thâm nhập (Export · Licensing · Liên doanh · FDI) và kinh doanh 4 quý. Có IE Lab mô phỏng số liệu và nút xuất nhật ký CSV để nộp giảng viên.', 'Head out to the wider world: file your company profile, pick 1 of 7 markets, negotiate with a local partner, choose an entry mode (Export · Licensing · Joint Venture · FDI), and run 4 quarters of business. Includes an IE Lab for number-crunching and a CSV log export to submit to your instructor.')],
        [T('🕹️ BizOn Arcade', '🕹️ BizOn Arcade'), T('Các mini-game phản xạ 30–60 giây: Clay Factory Frenzy, Trắc nghiệm Khởi nghiệp, Đoán Giá, Bắt Vốn Vàng.', '30–60 second reflex mini-games: Clay Factory Frenzy, Entrepreneurship Quiz, Guess the Price, Catch the Golden Capital.')],
        [T('📚 Thư viện & 🎶 Kho Âm nhạc', '📚 Library & 🎶 Music Vault'), T('Tạo hình nhân vật, sản phẩm cài áo, và toàn bộ ca khúc gốc với trình phát đầy đủ – mở từ Cài đặt hoặc Trang chủ.', 'Character art, product lineup, and the full original soundtrack with a full player – open from Settings or the Home page.')]].map(([t, d]) => `
@@ -1505,15 +1505,21 @@ function showArena(r, done) {
       requestAnimationFrame(step);
     });
   });
-  const win = r.share >= max - 0.01;
+  // Đọc lại đúng kết quả đã chốt ở recordConquest() (thị phần cao nhất VÀ có
+  // lãi) thay vì tự tính lại chỉ theo thị phần – tránh màn Đấu trường nói
+  // "thắng" trong khi bản đồ chinh phục/kết quả vòng lại nói "thua".
+  const cqRound = (S.conquest || [])[r.round - 1];
+  const win = !!(cqRound && cqRound.win);
+  const hasTopShare = !!(cqRound && cqRound.hasTopShare);
   const winIdx = fighters.findIndex(f => f.share === max);
   setTimeout(() => {
     const pod = div.querySelector(`[data-pod="${winIdx}"] div`);
     if (pod) { pod.classList.add('ring-4', 'ring-clay-gold'); pod.insertAdjacentHTML('beforebegin', '<p class="text-lg" style="animation:fadeUp .4s ease">👑</p>'); }
-    const vs = div.querySelector('#arena-vs'); if (vs) vs.textContent = win ? '🚩' : '🏴';
+    const vs = div.querySelector('#arena-vs'); if (vs) vs.textContent = win ? '🚩' : hasTopShare ? '⚠️' : '🏴';
     const v = div.querySelector('#arena-verdict');
     v.textContent = win ? T(`🚩 ${S.profile.teamName} thắng sàn đấu${stop ? ' – cắm cờ tại ' + stop.name : ''}!`, `🚩 ${S.profile.teamName} wins the arena${stop ? ' – flag planted at ' + stop.name : ''}!`)
-                        : T(`🏴 ${fighters[winIdx].name} giữ vị trí số 1 vòng này…`, `🏴 ${fighters[winIdx].name} holds #1 this round…`);
+      : hasTopShare ? T(`⚠️ Thị phần cao nhất nhưng vòng này lỗ – cần có lãi mới cắm được cờ!`, `⚠️ Top market share, but this round posted a loss – you need to be profitable to plant the flag!`)
+      : T(`🏴 ${fighters[winIdx].name} giữ vị trí số 1 vòng này…`, `🏴 ${fighters[winIdx].name} holds #1 this round…`);
     v.style.opacity = 1; v.classList.add(win ? 'text-clay-gold' : 'text-white/80');
     if (win) createConfetti();
     const btn = div.querySelector('#arena-next');
@@ -1548,6 +1554,8 @@ function showRoundResult(r) {
   const cqStop = CONQUEST_STOPS[r.round - 1];
   const cqLine = cq && cqStop ? (cq.win
     ? `<p class="mt-1 text-xs font-bold text-emerald-600">${T(`🚩 Đội bạn cắm cờ tại ${cqStop.name}!`, `🚩 Your team planted the flag at ${cqStop.name}!`)}</p>`
+    : cq.hasTopShare
+    ? `<p class="mt-1 text-xs font-bold text-amber-600">${T(`⚠️ Thị phần cao nhất nhưng vòng này lỗ nên chưa cắm được cờ – ${cqStop.name} tạm về tay ${cq.winner}.`, `⚠️ Top market share, but a loss this round means no flag yet – ${cqStop.name} goes to ${cq.winner} for now.`)}</p>`
     : `<p class="mt-1 text-xs font-bold text-orange-600">${T(`🏴 ${cq.winner} chiếm ${cqStop.name} vòng này`, `🏴 ${cq.winner} took ${cqStop.name} this round`)}</p>`) : '';
   const div = document.createElement('div');
   div.className = 'fixed inset-0 z-50 bg-deep-teal/50 backdrop-blur-sm flex items-center justify-center p-6';
@@ -1603,8 +1611,13 @@ const CONQUEST_STOPS = [
 
 function recordConquest(report) {
   const best = S.competitors.reduce((acc, c) => ((c.share || 0) > (acc.share || 0) ? c : acc), { share: 0, name: 'AI' });
-  const win = report.share >= (best.share || 0);
-  (S.conquest ??= []).push({ round: report.round, win, winner: win ? S.profile.teamName : best.name });
+  // Cắm cờ cần thị phần cao nhất VÀ có lãi vòng đó – không chỉ thị phần. Trước
+  // đây chỉ so thị phần nên phá giá tối đa + marketing kịch trần luôn thắng cờ
+  // dù lỗ nặng, biến "chinh phục bản đồ" thành một mẹo 2 thanh trượt tách rời
+  // khỏi mọi kiến thức tài chính/vận hành mà game định dạy.
+  const hasTopShare = report.share >= (best.share || 0);
+  const win = hasTopShare && report.netProfit > 0;
+  (S.conquest ??= []).push({ round: report.round, win, hasTopShare, winner: win ? S.profile.teamName : best.name });
   (S.aiHistory ??= []).push(S.competitors.map(c => ({ name: c.name, share: Math.round((c.share || 0) * 10) / 10 })));
   unlockAchievements(S, report);
   return win;
@@ -1639,7 +1652,9 @@ function renderConquest() {
   if (list) list.innerHTML = CONQUEST_STOPS.map((st, i) => {
     const c = cq[i];
     const status = c
-      ? (c.win ? `<b class="text-emerald-600">🚩 ${c.winner}</b>` : `<b class="text-deep-teal/45">🏴 ${c.winner}</b>`)
+      ? (c.win ? `<b class="text-emerald-600">🚩 ${c.winner}</b>`
+        : c.hasTopShare ? `<b class="text-amber-600" title="${T('Thị phần cao nhất nhưng lỗ vòng đó', 'Top share that round, but a loss')}">⚠️ ${c.winner}</b>`
+        : `<b class="text-deep-teal/45">🏴 ${c.winner}</b>`)
       : (!S.finished && i === cq.length ? `<b class="text-primary">${T('⚔️ đang tranh', '⚔️ in contest')}</b>` : '<span class="text-deep-teal/35">⏳</span>');
     // Nhãn vòng phải luôn đọc được; tên đội thắng mới là phần được phép cắt bớt
     return `<p class="flex justify-between items-baseline gap-2"><span class="font-bold text-deep-teal/70 shrink-0">V${i + 1} · ${st.name}</span><span class="min-w-0 truncate text-right">${status}</span></p>`;
@@ -1655,8 +1670,8 @@ function INTRO_SLIDES_LIST() { return [
     text: T('Bạn điều hành một xưởng đồ chơi đất sét thủ công tại Cần Thơ, vốn khởi điểm 500 triệu ₫. Sản phẩm chủ lực: «Bộ linh vật đất sét Việt» – dòng quà tặng & đồ sưu tầm, giá tham chiếu 150.000₫/bộ. Tên doanh nghiệp chính là tên đội bạn đặt khi đăng nhập!',
             "You run a handcrafted clay-toy workshop in Cần Thơ, starting with 500 million ₫ in capital. Flagship product: the «Vietnamese Clay Mascot Set» – a gifts & collectibles line, reference price 150,000₫/set. Your company's name is the team name you entered at login!") },
   { icon: '🗺️', title: T('6 vòng · 6 tỉnh thành', '6 rounds · 6 provinces'), img: 'assets/illustrations/game/mekong-capital.webp',
-    text: T('Mỗi vòng là một quý kinh doanh tại một tỉnh/thành trên bản đồ mới: Cần Thơ → TP. Hồ Chí Minh → Khánh Hòa → Đà Nẵng → Thanh Hóa → Hà Nội. Đội thắng vòng nào sẽ cắm cờ 🚩 lên tỉnh đó! ⏱️ Mỗi vòng 5–7 phút, cả ván ≈ 30–45 phút.',
-            'Each round is a business quarter in one province on the new map: Cần Thơ → Hồ Chí Minh City → Khánh Hòa → Đà Nẵng → Thanh Hóa → Hà Nội. Whichever team wins a round plants its flag 🚩 there! ⏱️ Each round takes 5-7 minutes, the full match ≈ 30-45 minutes.') },
+    text: T('Mỗi vòng là một quý kinh doanh tại một tỉnh/thành trên bản đồ mới: Cần Thơ → TP. Hồ Chí Minh → Khánh Hòa → Đà Nẵng → Thanh Hóa → Hà Nội. Thị phần cao nhất VÀ có lãi vòng đó mới cắm được cờ 🚩 lên tỉnh đó – thị phần cao nhất mà lỗ thì chưa tính! ⏱️ Mỗi vòng 5–7 phút, cả ván ≈ 30–45 phút.',
+            'Each round is a business quarter in one province on the new map: Cần Thơ → Hồ Chí Minh City → Khánh Hòa → Đà Nẵng → Thanh Hóa → Hà Nội. You need the top market share AND a profit that round to plant your flag 🚩 there – top share with a loss doesn\'t count! ⏱️ Each round takes 5-7 minutes, the full match ≈ 30-45 minutes.') },
   { icon: '👥', title: T('Đội hình C-Suite', 'Your C-Suite lineup'), img: 'assets/illustrations/game/team-portrait.webp',
     text: T('CEO chèo lái chiến lược, CFO giữ két sắt, CMO đánh chiếm thị trường, COO vận hành xưởng, SEC ghi biên bản – bên cạnh cố vấn Lumina AI và thầy Phan Anh Tú.',
             "CEO steers strategy, CFO guards the cash box, CMO wins the market, COO runs the workshop, SEC keeps the minutes – alongside advisor Lumina AI and Assoc. Prof. Phan Anh Tú.") },
