@@ -40,7 +40,7 @@ Mỗi vòng, 3 đối thủ AI tự quyết định **giá** và **marketing** q
 
 ## 4. Sáu vòng chơi = Hành trình chinh phục Việt Nam
 
-Mỗi vòng gắn với một tỉnh/thành (bản đồ mới sau sáp nhập). **Đội thắng thị phần vòng đó** (≥ đối thủ AI cao nhất) cắm cờ 🚩; thua thì AI cắm cờ 🏴:
+Mỗi vòng gắn với một tỉnh/thành (bản đồ mới sau sáp nhập). **Đội có thị phần cao nhất vòng đó (≥ đối thủ AI cao nhất) VÀ có lãi** cắm cờ 🚩; thị phần cao nhất mà lỗ thì chỉ hiện cảnh báo ⚠️ (chưa cắm được cờ) – tránh việc phá giá/đổ hết ngân sách marketing để "thắng thị phần" trong khi âm vốn; thua cả hai điều kiện thì AI cắm cờ 🏴:
 
 Vòng 1 **Cần Thơ** → 2 **TP. Hồ Chí Minh** → 3 **Khánh Hòa** → 4 **Đà Nẵng** → 5 **Thanh Hóa** → 6 **Hà Nội**
 

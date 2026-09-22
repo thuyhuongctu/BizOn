@@ -39,7 +39,7 @@
 
 | Page | Content |
 |---|---|
-| [`index.html`](https://thuyhuongctu.github.io/BizOn/) | **Main game** – a 6-round conquest across the map of Vietnam (Cần Thơ → Hà Nội); win a round's market share to plant your flag 🚩; the map features the Lũng Cú flag tower and the Hoàng Sa & Trường Sa archipelagos |
+| [`index.html`](https://thuyhuongctu.github.io/BizOn/) | **Main game** – a 6-round conquest across the map of Vietnam (Cần Thơ → Hà Nội); win a round's market share *and* turn a profit to plant your flag 🚩; the map features the Lũng Cú flag tower and the Hoàng Sa & Trường Sa archipelagos |
 | [`gioi-thieu.html`](https://thuyhuongctu.github.io/BizOn/gioi-thieu.html) | International-style landing page: interactive demo, 5 leadership roles, the 6-round journey, mini-games, an AI tour guide, FAQ, instructor section |
 | [`games.html`](https://thuyhuongctu.github.io/BizOn/games.html) | **BizOn Arcade** – 8 games in the ecosystem |
 | [`global.html`](https://thuyhuongctu.github.io/BizOn/global.html) | **BizOn Go Global** (beta) – from Vietnam to the world: pick a market and an entry mode (Export · Licensing · Joint Venture · Greenfield FDI), with a live World Market board and the **IE Lab** (International Entrepreneurship, data simulation) |
