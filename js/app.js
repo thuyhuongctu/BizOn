@@ -717,7 +717,7 @@ function maybeShowCaseDraw(onDone) {
       <span class="inline-flex items-center gap-1.5 text-[11px] font-extrabold px-4 py-1.5 rounded-full bg-primary-container/25 text-primary">● ${T('BỐC THĂM ĐẦU MÙA', 'SEASON DRAW')}</span>
       <h1 class="font-display text-3xl font-extrabold text-deep-teal uppercase mt-3 leading-tight">${info.name}</h1>
       <p class="text-sm text-deep-teal/70 mt-2 max-w-sm mx-auto">${info.desc}</p>
-      <img src="assets/character/${info.img}.webp" alt="Je m'appelle Hương AI Advisor" class="w-28 mx-auto mt-6 rounded-2xl object-cover animate-float drop-shadow-xl" style="aspect-ratio:3/4; object-position:50% 8%">
+      <img src="assets/character/${info.img}.webp" onerror="this.onerror=null;this.src='assets/character/lumina-vest.webp'" alt="Je m'appelle Hương AI Advisor" class="w-28 mx-auto mt-6 rounded-2xl object-cover animate-float drop-shadow-xl" style="aspect-ratio:3/4; object-position:50% 8%">
       <button id="case-draw-cta" class="clay-button-primary w-full text-white font-display font-bold text-lg py-4 mt-8">${T('🎲 Vào Vòng 1', '🎲 Enter Round 1')}</button>
     </div>`;
   div.querySelector('#case-draw-cta').onclick = () => { div.remove(); onDone(); };
@@ -755,7 +755,7 @@ function maybeShowEventIntro() {
           </div>`).join('')}
       </div>
       <div class="flex items-end gap-3 mt-6">
-        <img src="assets/character/${ev.luminaImg || 'lumina-vest'}.webp" alt="Je m'appelle Hương AI Advisor" class="w-28 shrink-0 rounded-2xl object-cover animate-float drop-shadow-xl" style="aspect-ratio:3/4; object-position:50% 8%">
+        <img src="assets/character/${ev.luminaImg || 'lumina-vest'}.webp" onerror="this.onerror=null;this.src='assets/character/lumina-vest.webp'" alt="Je m'appelle Hương AI Advisor" class="w-28 shrink-0 rounded-2xl object-cover animate-float drop-shadow-xl" style="aspect-ratio:3/4; object-position:50% 8%">
         <div class="relative clay-raised p-4 rounded-bl-none border-l-4 border-primary-container flex-1">
           <div class="speech-tail"></div>
           <p class="text-[10px] font-extrabold text-primary mb-1">JE M'APPELLE HƯƠNG · AI ADVISOR</p>
@@ -1737,6 +1737,9 @@ function renderAdvisorIntro() {
   // (nhãn cố định tiếng Anh theo thiết kế gốc – giữ nguyên ở cả hai ngôn ngữ)
   const heroKey = S.finished ? 'lumina-ao-dai-clap' : (ev.luminaImg || 'lumina-vest');
   const heroImg = $('advisor-hero');
+  // Nếu ảnh theo biến cố lỡ 404/lỗi mạng, quay về ảnh mặc định đã cache sẵn trong sw.js
+  // thay vì để trống trắng xóa (không được để trắng ô ảnh cố vấn).
+  heroImg.onerror = () => { heroImg.onerror = null; heroImg.src = 'assets/character/lumina-vest.webp'; heroImg.style.objectPosition = '50% 8%'; };
   heroImg.src = 'assets/character/' + heroKey + '.webp';
   heroImg.style.objectPosition = LUMINA_HERO_POS[heroKey] || '50% 8%';
   renderRoleDeepdive();
@@ -1808,7 +1811,7 @@ function renderRoleDeepdive() {
           <span class="text-[9px] font-extrabold px-2 py-0.5 rounded-full ${badgeCls[b.status] || 'risk-low'} ${b.status === 'CRISIS' ? 'animate-pulse' : ''}">${b.badge}</span>
         </div>
         <div class="flex gap-2 items-start">
-          <img src="assets/character/${img}.webp" alt="Hương" class="w-8 h-8 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 12%">
+          <img src="assets/character/${img}.webp" onerror="this.onerror=null;this.src='assets/character/lumina-vest.webp'" alt="Hương" class="w-8 h-8 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 12%">
           <p class="text-[11px] text-deep-teal/80 italic">"${b.dialogue}"</p>
           ${b.clip ? `<button onclick="playVoice('${b.clip}')" aria-label="${T('Nghe giọng Lumina', "Listen to Lumina's voice")}" title="${T('Nghe giọng Lumina', "Listen to Lumina's voice")}" class="shrink-0 text-primary text-sm leading-none mt-0.5">🔊</button>` : ''}
         </div>
