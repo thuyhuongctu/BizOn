@@ -400,6 +400,10 @@ function showLevelUp(level) {
 // ---------- Sổ tay hướng dẫn (User Manual – thiết kế Stitch) ----------
 function MANUAL() { return {
   start: { icon: '🚀', name: T('Bắt đầu', 'Getting Started'), html: `
+    <video controls preload="none" playsinline poster="${T('assets/video/bizon-huong-dan-choi-vi-poster.jpg', 'assets/video/bizon-huong-dan-choi-en-poster.jpg')}" class="w-full rounded-2xl mb-4">
+      <source src="${T('assets/video/bizon-huong-dan-choi-vi.mp4', 'assets/video/bizon-huong-dan-choi-en.mp4')}" type="video/mp4">
+    </video>
+    <p class="text-xs text-deep-teal/50 -mt-2 mb-4">${T('📺 Video hướng dẫn chơi (~47 giây, 2 vòng minh họa).', '📺 How-to-play video (~47 seconds, 2 rounds shown).')}</p>
     <img src="assets/illustrations/game/team-portrait.webp" alt="${T('Đội ngũ đất sét BizOn', 'The BizOn clay-style team')}" class="w-full h-36 object-cover rounded-2xl mb-4">
     <p class="text-sm text-deep-teal/75 mb-4">${T('Chào mừng bạn đến với BizOn – môi trường mô phỏng kinh doanh 3D. ⏱️ Thời lượng: cả ván 6 vòng ≈ 30–45 phút (mỗi vòng 5–7 phút gồm đọc biến cố, họp đội, chốt quyết định và xem đấu trường); bản Go Global 4 quý ≈ 10–15 phút. Ba bước thiết lập:', 'Welcome to BizOn – a 3D business simulation. ⏱️ Duration: a full 6-round match ≈ 30–45 minutes (5–7 minutes per round: read the event, team huddle, lock in decisions, watch the arena); the 4-quarter Go Global version ≈ 10–15 minutes. Three setup steps:')}</p>
     ${[['1', T('Lập đội & chọn vai trò', 'Form your team & pick a role'), T('Đăng nhập với tên đội (cũng là tên doanh nghiệp của bạn), Class ID (nếu học trên lớp) và chọn vai trò CEO · CFO · CMO · COO · SEC. Doanh nghiệp là xưởng đồ chơi đất sét – sản phẩm chủ lực «Bộ linh vật đất sét Việt».', 'Sign in with your team name (also your company name), a Class ID if you\'re in a class, and pick a role: CEO · CFO · CMO · COO · SEC. Your company is a handcraft clay-toy workshop – flagship product: the "Vietnamese Clay Mascot Set".')],
