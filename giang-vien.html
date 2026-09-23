@@ -117,14 +117,63 @@
     </div>
 
     <div class="clay-card p-6 sm:p-7 mb-6">
-      <h2 class="font-display font-extrabold text-deep-teal text-lg mb-2">🛂 Hộ Chiếu Thương Hiệu – kết quả lớp</h2>
-      <p class="text-[11px] opacity-60 mb-3">Sinh viên nộp từ màn kết thúc của game (cùng Mã lớp). Mỗi người tính ván có điểm tổng cao nhất – điểm 5 chiều: lợi nhuận, uy tín, năng lực, thích ứng, bền vững.</p>
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-2">
+        <h2 class="font-display font-extrabold text-deep-teal text-lg">🛂 Hộ Chiếu Thương Hiệu – kết quả lớp</h2>
+        <button onclick="gvExportBpCsv()" class="clay-btn bg-primary text-white font-display font-extrabold px-4 py-2 text-xs">⬇️ Xuất CSV chấm điểm Hộ Chiếu Thương Hiệu</button>
+      </div>
+      <p class="text-[11px] opacity-60 mb-3">Sinh viên nộp từ màn kết thúc của game (cùng Mã lớp). Mỗi người tính ván có điểm tổng cao nhất – điểm 5 chiều: lợi nhuận, uy tín, năng lực, thích ứng, bền vững. Giảng viên chấm 4 tiêu chí rubric + thảo luận cuối ván (mỗi mục 1–4) ngay trong bảng; cột <b>Tổng /10</b> tự tính theo công thức 40% điểm game + 40% rubric + 20% thảo luận. Công cụ <b>KHÔNG tự chấm và KHÔNG gợi ý mức nào</b> — điểm rubric/thảo luận do giảng viên tự đặt, lưu cục bộ ngay trên trình duyệt này (không gửi lên máy chủ, không có sẵn ở máy khác).</p>
+      <details class="mb-3" style="border:2px solid rgba(0,102,135,.15);border-radius:16px;padding:10px 14px">
+        <summary class="text-xs font-extrabold cursor-pointer" style="color:#006687">ℹ️ Bảng tiêu chí rubric (bấm để xem 4 mức mỗi tiêu chí)</summary>
+        <div class="text-[11px] leading-relaxed mt-3 space-y-3">
+          <div>
+            <p class="font-extrabold mb-1">TC1 · Lập luận chọn thị trường & phương thức / Market & entry-mode reasoning</p>
+            <ul class="ml-4 list-disc space-y-0.5">
+              <li><b>1 Chưa đạt/Not yet:</b> Kể lại lựa chọn, không nêu lý do / Recounts the choice, no reason given</li>
+              <li><b>2 Đạt/Pass:</b> Nêu được 1 lý do phù hợp / States one relevant reason</li>
+              <li><b>3 Khá/Good:</b> So sánh ≥2 phương án bằng dữ liệu trong ván / Compares ≥2 options using in-game data</li>
+              <li><b>4 Xuất sắc/Excellent:</b> Gắn lựa chọn với khung lý thuyết – mức cam kết, khoảng cách thể chế / Ties the choice to theory – commitment level, institutional distance</li>
+            </ul>
+          </div>
+          <div>
+            <p class="font-extrabold mb-1">TC2 · Đánh giá nguồn thông tin / Source evaluation</p>
+            <ul class="ml-4 list-disc space-y-0.5">
+              <li><b>1:</b> Tin mọi nguồn như nhau / Trusts every source equally</li>
+              <li><b>2:</b> Nhận ra có nguồn không đáng tin / Recognizes an unreliable source</li>
+              <li><b>3:</b> Chỉ ra đúng nguồn thiên lệch và giải thích vì sao / Correctly identifies the biased source and explains why</li>
+              <li><b>4:</b> Đề xuất chiến lược kết hợp nguồn theo cân đối chi phí–độ tin cậy / Proposes a source-mix strategy balancing cost and reliability</li>
+            </ul>
+          </div>
+          <div>
+            <p class="font-extrabold mb-1">TC3 · Phân tích dấu chân quyết định / Decision-footprint analysis</p>
+            <ul class="ml-4 list-disc space-y-0.5">
+              <li><b>1:</b> Chỉ nhìn kết quả cuối ván / Looks only at the final outcome</li>
+              <li><b>2:</b> Nêu được 1 hệ quả dài hạn / Names one long-term consequence</li>
+              <li><b>3:</b> Truy vết được chuỗi quyết định dẫn tới hệ quả / Traces the decision chain leading to it</li>
+              <li><b>4:</b> Đề xuất điểm can thiệp sớm nhất có thể đổi kết cục / Proposes the earliest point that could have changed the outcome</li>
+            </ul>
+          </div>
+          <div>
+            <p class="font-extrabold mb-1">TC4 · Bài học chuyển giao / Transferable lesson</p>
+            <ul class="ml-4 list-disc space-y-0.5">
+              <li><b>1:</b> Không rút ra bài học / Draws no lesson</li>
+              <li><b>2:</b> Bài học chung chung / Generic lesson</li>
+              <li><b>3:</b> Bài học gắn với tình huống cụ thể trong ván / Lesson tied to a specific in-game situation</li>
+              <li><b>4:</b> Liên hệ được với doanh nghiệp Việt Nam thực tế, có ví dụ / Connects to a real Vietnamese business, with an example</li>
+            </ul>
+          </div>
+          <div>
+            <p class="font-extrabold mb-1">Thảo luận & bài học cuối ván / Debrief & lessons</p>
+            <p>Giảng viên chọn 1 mức 1–4 cho việc sinh viên có trích dẫn bằng chứng cụ thể từ ván chơi của chính mình khi trả lời 4 câu thảo luận ở màn kết thúc game hay không.</p>
+          </div>
+          <p class="opacity-70">Công thức: <code>Tổng/10 = 0.4×(điểm game/10) + 0.4×band(TB 4 tiêu chí) + 0.2×band(thảo luận)</code>, band() quy đổi tuyến tính theo mốc: 3.5–4.0 → 9.0–10.0 · 2.5–3.4 → 7.0–8.9 · 1.5–2.4 → 5.0–6.9 · 1.0–1.4 → 0–4.9. Chưa chọn đủ 5 mục thì cột Tổng để trống ("–").</p>
+        </div>
+      </details>
       <div class="kb-wrap">
         <table class="kb">
           <thead><tr>
-            <th>#</th><th>Sinh viên</th><th>Doanh nghiệp</th><th>Điểm tổng</th><th>Lợi nhuận</th><th>Danh hiệu</th><th>Quý</th><th>Lượt chơi</th><th>Lần cuối</th>
+            <th>#</th><th>Sinh viên</th><th>Doanh nghiệp</th><th>Điểm tổng</th><th>Lợi nhuận</th><th>Danh hiệu</th><th>Quý</th><th>Lượt chơi</th><th>Lần cuối</th><th title="Lập luận chọn thị trường & phương thức / Market & entry-mode reasoning">TC1</th><th title="Đánh giá nguồn thông tin / Source evaluation">TC2</th><th title="Phân tích dấu chân quyết định / Decision-footprint analysis">TC3</th><th title="Bài học chuyển giao / Transferable lesson">TC4</th><th title="Thảo luận & bài học cuối ván / Debrief & lessons">Thảo luận</th><th title="0.4×điểm game + 0.4×band(TB rubric) + 0.2×band(thảo luận)">Tổng /10</th>
           </tr></thead>
-          <tbody id="gv-bp-rows"><tr><td colspan="9" class="text-center opacity-60 py-6">Chưa có lượt chơi nào được nộp.</td></tr></tbody>
+          <tbody id="gv-bp-rows"><tr><td colspan="15" class="text-center opacity-60 py-6">Chưa có lượt chơi nào được nộp.</td></tr></tbody>
         </table>
       </div>
     </div>
@@ -168,12 +217,112 @@
 <script>
 (function () {
   const cfg = () => window.BIZON_BACKEND || {};
-  let timer = null, lastRows = [];
+  let timer = null, lastRows = [], lastBpRows = [];
   const $ = id => document.getElementById(id);
   const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const fmtN = v => v == null ? '–' : Number(v).toLocaleString('vi-VN');
   const fmtPct = v => v == null ? '–' : (Number(v).toFixed(1) + '%');
   const fmtT = ts => { try { return new Date(ts).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }); } catch (e) { return ''; } };
+
+  // ===== Chấm điểm rubric Hộ Chiếu Thương Hiệu (lưu cục bộ, không backend) =====
+  // band(x): quy đổi tuyến tính mức rubric 1–4 sang thang điểm 0–10 theo mốc đã công bố.
+  function bpBand(x) {
+    x = Math.max(1, Math.min(4, Number(x)));
+    const segs = [
+      { x0: 1.0, x1: 1.4, y0: 0, y1: 4.9 },
+      { x0: 1.5, x1: 2.4, y0: 5.0, y1: 6.9 },
+      { x0: 2.5, x1: 3.4, y0: 7.0, y1: 8.9 },
+      { x0: 3.5, x1: 4.0, y0: 9.0, y1: 10.0 },
+    ];
+    for (const s of segs) {
+      if (x <= s.x1 + 1e-9) {
+        const xx = Math.max(x, s.x0);
+        return s.y0 + (s.y1 - s.y0) * (xx - s.x0) / (s.x1 - s.x0);
+      }
+    }
+    return segs[segs.length - 1].y1;
+  }
+
+  function bpTotal10(bestScore, entry) {
+    if (!entry) return null;
+    const { r1, r2, r3, r4, d } = entry;
+    if ([r1, r2, r3, r4, d].some(v => v === undefined || v === null || v === '')) return null;
+    const rubricAvg = (Number(r1) + Number(r2) + Number(r3) + Number(r4)) / 4;
+    return 0.4 * (Number(bestScore) / 10) + 0.4 * bpBand(rubricAvg) + 0.2 * bpBand(Number(d));
+  }
+
+  const bpRubricLsKey = klass => 'bizon-gv-bp-rubric:' + klass;
+  function loadBpRubricStore(klass) {
+    try { return JSON.parse(localStorage.getItem(bpRubricLsKey(klass)) || '{}') || {}; } catch (e) { return {}; }
+  }
+  function saveBpRubricStore(klass, store) {
+    try { localStorage.setItem(bpRubricLsKey(klass), JSON.stringify(store)); } catch (e) {}
+  }
+
+  function bpSelect(field, rowKey, val) {
+    const opts = [1, 2, 3, 4].map(v => `<option value="${v}"${String(val) === String(v) ? ' selected' : ''}>${v}</option>`).join('');
+    return `<select class="gv-input" style="padding:5px 6px;font-size:12px;font-weight:800;width:auto;min-width:48px" data-field="${field}" data-key="${esc(rowKey)}" onchange="gvBpChange(this)"><option value=""${val ? '' : ' selected'}>–</option>${opts}</select>`;
+  }
+
+  function renderBpRow(r, i, store) {
+    const key = r.player_name + '|' + r.company;
+    const entry = store[key] || {};
+    const total = bpTotal10(r.best_score, entry);
+    return `<tr data-best="${r.best_score}">
+        <td class="font-extrabold">${['🥇', '🥈', '🥉'][i] || (i + 1)}</td>
+        <td class="font-extrabold">${esc(r.player_name)}</td>
+        <td>${esc(r.company)}</td>
+        <td class="font-extrabold">${r.best_score}/100</td>
+        <td>${fmtN(r.best_profit)} tỷ ₫</td>
+        <td>${esc(r.best_title || '–')}</td>
+        <td>${r.quarters}/6</td>
+        <td>${r.plays}</td>
+        <td>${fmtT(r.last_play)}</td>
+        <td>${bpSelect('r1', key, entry.r1)}</td>
+        <td>${bpSelect('r2', key, entry.r2)}</td>
+        <td>${bpSelect('r3', key, entry.r3)}</td>
+        <td>${bpSelect('r4', key, entry.r4)}</td>
+        <td>${bpSelect('d', key, entry.d)}</td>
+        <td class="font-extrabold gv-bp-total">${total == null ? '–' : total.toFixed(1) + '/10'}</td>
+      </tr>`;
+  }
+
+  window.gvBpChange = function (sel) {
+    const klass = $('gv-class').value.trim();
+    const key = sel.dataset.key, field = sel.dataset.field;
+    const store = loadBpRubricStore(klass);
+    const entry = store[key] || {};
+    if (sel.value === '') delete entry[field]; else entry[field] = Number(sel.value);
+    store[key] = entry;
+    saveBpRubricStore(klass, store);
+    const tr = sel.closest('tr');
+    const total = bpTotal10(tr.dataset.best, entry);
+    const totalCell = tr.querySelector('.gv-bp-total');
+    if (totalCell) totalCell.textContent = total == null ? '–' : total.toFixed(1) + '/10';
+  };
+
+  window.gvExportBpCsv = function () {
+    const klass = $('gv-class').value.trim();
+    const store = loadBpRubricStore(klass);
+    const head = 'sinh_vien,doanh_nghiep,diem_game_100,tieu_chi_1,tieu_chi_2,tieu_chi_3,tieu_chi_4,thao_luan,tong_10\n';
+    const csv = head + lastBpRows.map(r => {
+      const key = r.player_name + '|' + r.company;
+      const e = store[key] || {};
+      const total = bpTotal10(r.best_score, e);
+      return [
+        '"' + String(r.player_name).replace(/"/g, '""') + '"',
+        '"' + String(r.company).replace(/"/g, '""') + '"',
+        r.best_score,
+        e.r1 ?? '', e.r2 ?? '', e.r3 ?? '', e.r4 ?? '', e.d ?? '',
+        total == null ? '' : total.toFixed(1),
+      ].join(',');
+    }).join('\n');
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' }));
+    a.download = 'bizon-cham-diem-ho-chieu-thuong-hieu-' + (klass || 'lop') + '.csv';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  };
 
   async function rpc(fn, args) {
     const c = cfg();
@@ -237,19 +386,11 @@
     } catch (e) { /* giữ nguyên bảng – không chặn phần còn lại của dashboard */ }
     try {
       const bp = await rpc('bizon_bp_board', { p_class_code: klass, p_key: key });
+      lastBpRows = bp;
+      const bpStore = loadBpRubricStore(klass);
       $('gv-bp-rows').innerHTML = bp.length
-        ? bp.map((r, i) => `<tr>
-            <td class="font-extrabold">${['🥇', '🥈', '🥉'][i] || (i + 1)}</td>
-            <td class="font-extrabold">${esc(r.player_name)}</td>
-            <td>${esc(r.company)}</td>
-            <td class="font-extrabold">${r.best_score}/100</td>
-            <td>${fmtN(r.best_profit)} tỷ ₫</td>
-            <td>${esc(r.best_title || '–')}</td>
-            <td>${r.quarters}/6</td>
-            <td>${r.plays}</td>
-            <td>${fmtT(r.last_play)}</td>
-          </tr>`).join('')
-        : '<tr><td colspan="9" class="text-center opacity-60 py-6">Chưa có lượt chơi nào được nộp.</td></tr>';
+        ? bp.map((r, i) => renderBpRow(r, i, bpStore)).join('')
+        : '<tr><td colspan="15" class="text-center opacity-60 py-6">Chưa có lượt chơi nào được nộp.</td></tr>';
     } catch (e) { /* migration chưa chạy – không chặn dashboard */ }
   }
 
