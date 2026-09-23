@@ -2,7 +2,7 @@
 ## Hệ sinh thái mô phỏng kinh doanh BizOn Bật Nghiệp
 
 **Tác giả:** Đỗ Thùy Hương · Phan Anh Tú
-**Phiên bản:** 1.2 · **Ngày lập:** 31/07/2026 · **Cập nhật gần nhất:** 23/09/2026 (thêm cơ cấu điểm học phần song ngữ cho Hộ Chiếu Thương Hiệu, dùng cho lớp quốc tế)
+**Phiên bản:** 1.3 · **Ngày lập:** 31/07/2026 · **Cập nhật gần nhất:** 23/09/2026 (thêm cơ cấu điểm học phần cho cả game chính – Bật Nghiệp và Hộ Chiếu Thương Hiệu, bản song ngữ cho Hộ Chiếu Thương Hiệu dùng cho lớp quốc tế)
 **Loại tài liệu:** Tác phẩm viết – công cụ thiết kế sư phạm và đánh giá kết quả học tập
 
 > Tài liệu này tách ra từ trang `hoc-thuat.html` để dùng độc lập trong ba việc: (1) giảng viên thiết kế buổi học và chấm điểm, (2) hồ sơ kiểm định chương trình đào tạo, (3) hồ sơ đăng ký quyền tác giả loại hình tác phẩm viết.
@@ -125,6 +125,66 @@ Engine ghi lại **hơn 20 chỉ số mỗi vòng chơi**, trong đó sáu chỉ
 | `oee` · `defect` | Hiệu quả thiết bị tổng thể và tỷ lệ phế phẩm | Báo cáo vận hành |
 
 **Hệ quả thực tế:** giảng viên chấm mức 3 và mức 4 **bắt buộc phải yêu cầu người học trích số cụ thể**. Nếu người học không dẫn được số, cao nhất chỉ đạt mức 2. Đây là cách giữ cho rubric không trôi về cảm tính.
+
+### Cơ cấu điểm học phần
+
+`docs/huong-dan-giang-vien.md` từng nêu "Chấm điểm gợi ý: 40% lợi nhuận lũy kế · 30% số cờ chinh phục · 15% chất lượng thảo luận vai trò · 15% bài học rút ra". Quyết định 23/09/2026: gộp 2 tiêu chí 15% cuối ("thảo luận vai trò" + "bài học rút ra") thành **1 tiêu chí duy nhất, vẫn giữ 15% nội bộ** — phần 15% dư ra được phân bổ lại tỷ lệ cho 2 mục tự động còn lại để tổng vẫn bằng 100%:
+
+| Thành phần | Trọng số | Nguồn |
+|---|:-:|---|
+| Lợi nhuận lũy kế | **45%** | Tự động – báo cáo P&L cuối ván |
+| Số cờ chinh phục (thắng thị phần vòng **và** có lãi) | **35%** | Tự động – Bản đồ chinh phục |
+| Hợp tác vai trò & Bài học rút ra | **20%** | Giảng viên chấm – rubric bên dưới |
+
+> 🚧 45/35/20 là 40/30/15 gốc, làm tròn lại sau khi phân bổ đều phần 15% dư (tỷ lệ 40:30 giữa hai mục tự động) — có thể chỉnh lại nếu không phù hợp với lớp cụ thể.
+
+**Rubric tiêu chí "Hợp tác vai trò & Bài học rút ra" (20%)** — chia 2 nhánh nội bộ: Nhánh A – thảo luận vai trò xuyên suốt 6 vòng (60% × 20% = 12%) và Nhánh B – bài học rút ra cuối ván (40% × 20% = 8%).
+
+*Nhánh A · Thảo luận vai trò — chấm theo từng vòng:*
+
+| Vòng | Bản đồ | Đạt (✓) nếu |
+|---|---|---|
+| 1 | Cần Thơ | ≥4/5 vai có ý kiến ghi lại trong Nhật ký |
+| 2 | TP.HCM | Nhật ký ghi ≥1 ý kiến trái chiều về biến cố "Cơ Hội Vàng" |
+| 3 | Khánh Hòa | Số lần sửa quyết định trước Commit ≥2 (phản ứng Price War) |
+| 4 | Đà Nẵng | Nhật ký nêu được vai COO đề xuất gì (khủng hoảng năng lượng) |
+| 5 | Thanh Hóa | Nhật ký ghi rõ ai đề xuất, ai phản đối (siết tín dụng) |
+| 6 | Hà Nội | Nhật ký có đoạn tổng kết tranh luận, nêu quyết định cuối và ai nhượng bộ |
+
+| Số vòng đạt ✓ (trên 6) | Mức | Điểm |
+|---|---|---|
+| 0–1 | Chưa đạt | 1 |
+| 2–3 | Đạt | 2 |
+| 4–5 | Khá | 3 |
+| 6, và ≥1 vòng chỉ ra quyết định thay đổi tốt lên rõ rệt nhờ tranh luận (có số liệu trước/sau) | Xuất sắc | 4 |
+
+*Nhánh B · Bài học rút ra cuối ván (chấm 1 lần):*
+
+| Mức | Mô tả | Điểm |
+|---|---|---|
+| Chưa đạt | Không rút bài học, hoặc chỉ chép lại kết quả | 1 |
+| Đạt | Bài học chung chung, không gắn dữ liệu ván chơi cụ thể | 2 |
+| Khá | Bài học gắn với 1 tình huống cụ thể — trích được vòng nào, quyết định gì, giải thích nguyên nhân–kết quả | 3 |
+| Xuất sắc | Như mức Khá, cộng liên hệ được với doanh nghiệp Việt Nam thực tế và nêu điều sẽ làm khác nếu chơi lại | 4 |
+
+**Quy đổi:** Điểm tiêu chí (1–4) = 0,6 × Nhánh A + 0,4 × Nhánh B → quy đổi thang 10 theo bảng ở [§4.3](#43--cách-quy-đổi-điểm) → đóng góp vào tổng học phần = (điểm thang 10 ÷ 10) × 20%.
+
+### Sổ điểm mẫu — Bật Nghiệp
+
+**Đội: ……………………………  ·  Lớp: …………  ·  Ngày: …………**
+
+| Vòng | 1 | 2 | 3 | 4 | 5 | 6 |
+|---|:-:|:-:|:-:|:-:|:-:|:-:|
+| Nhánh A – đạt ✓? | ☐ | ☐ | ☐ | ☐ | ☐ | ☐ |
+
+| Thành phần | Điểm | Trọng số | Quy đổi /10 |
+|---|:-:|:-:|:-:|
+| Lợi nhuận lũy kế | …… | 45% | …… |
+| Số cờ chinh phục | …/6 | 35% | …… |
+| Nhánh A (…/4) × 0,6 + Nhánh B (…/4) × 0,4 = …/4 | | 20% | …… |
+| **Điểm học phần** | | **100%** | **…… /10** |
+
+> 🚧 Bản nháp đầu tiên — chưa chấm thử thực tế, xem [Mục 9](#9--phần-còn-phát-triển).
 
 ---
 
@@ -326,7 +386,7 @@ Ghi rõ để tài liệu không bị hiểu là đã hoàn chỉnh.
 
 | Hạng mục | Hiện trạng | Cần làm |
 |---|---|---|
-| **Rubric cho game mô phỏng chính** | **Đã có bản nháp v0.1** tại [Mục 4.1](#41--rubric-game-mô-phỏng-chính--clo-a-đến-clo-e) – dựng từ chỉ số engine ghi lại | Hai tác giả rà soát mức mô tả và ngưỡng phân biệt; chấm thử trên 2–3 đội trước khi dùng chính thức |
+| **Rubric cho game mô phỏng chính** | **Đã có bản nháp v0.1** tại [Mục 4.1](#41--rubric-game-mô-phỏng-chính--clo-a-đến-clo-e), nay kèm cơ cấu điểm học phần 45/35/20 – dựng từ chỉ số engine ghi lại | Hai tác giả rà soát mức mô tả và ngưỡng phân biệt; chấm thử trên 2–3 đội trước khi dùng chính thức; xác nhận lại trọng số 45/35/20 (đang là suy ra từ 40/30/15 gốc, chưa hỏi lại tác giả) |
 | **Kiểm định bộ 30 câu trước – sau** | Đã soạn, chưa kiểm định | Chạy thử, tính Cronbach's alpha, phân tích độ phân biệt từng câu |
 | **Kiểm định độ tin cậy giữa giám khảo của rubric** | Chưa làm | Chấm song song trên cùng mẫu, tính hệ số đồng thuận |
 | **Bộ câu hỏi riêng cho kinh doanh quốc tế** | Chưa có | Soạn bộ đo riêng cho BP-1 đến BP-6 |
