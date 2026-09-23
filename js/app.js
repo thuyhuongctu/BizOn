@@ -2460,7 +2460,11 @@ function renderSeasonReport(body) {
         </div>
         <div class="flex items-end justify-between gap-2 mt-5">
           <div class="text-center flex-1">
-            <img src="assets/docs/sig-huong.png" alt="Chữ ký Đỗ Thùy Hương" class="h-11 w-auto mx-auto">
+            <div class="flex items-end justify-center gap-1.5">
+              <img src="assets/docs/sig-huong-old.png" alt="Chữ ký Đỗ Thùy Hương (mẫu cũ)" class="w-14 h-8 object-contain">
+              <img src="assets/docs/sig-huong.png" alt="Chữ ký Đỗ Thùy Hương (mẫu mới)" class="w-14 h-8 object-contain">
+            </div>
+            <p class="text-[7px] text-deep-teal/35 font-bold uppercase tracking-wide mt-0.5">${T('cũ · mới', 'old · new')}</p>
             <div class="h-px bg-deep-teal/20 my-1 mx-2"></div>
             <p class="text-[9px] font-extrabold text-deep-teal leading-tight">NCS. Đỗ Thùy Hương</p>
             <p class="text-[8px] text-deep-teal/50 font-bold">Founder &amp; Project Lead</p>
@@ -2469,7 +2473,11 @@ function renderSeasonReport(body) {
             <div class="text-center leading-none"><p class="text-[7px] font-extrabold text-clay-orange uppercase">Official</p><p class="text-[10px] font-display font-extrabold text-clay-orange">BizOn</p><p class="text-[8px]">✓</p></div>
           </div>
           <div class="text-center flex-1">
-            <img src="assets/docs/sig-tu.png" alt="Chữ ký Phan Anh Tú" class="h-10 w-auto mx-auto mt-1">
+            <div class="flex items-end justify-center gap-1.5">
+              <img src="assets/docs/sig-tu-old.png" alt="Chữ ký Phan Anh Tú (mẫu cũ)" class="w-14 h-7 object-contain">
+              <img src="assets/docs/sig-tu.png" alt="Chữ ký Phan Anh Tú (mẫu mới)" class="w-14 h-7 object-contain">
+            </div>
+            <p class="text-[7px] text-deep-teal/35 font-bold uppercase tracking-wide mt-0.5">${T('cũ · mới', 'old · new')}</p>
             <div class="h-px bg-deep-teal/20 my-1 mx-2"></div>
             <p class="text-[9px] font-extrabold text-deep-teal leading-tight">PGS.TS. Phan Anh Tú</p>
             <p class="text-[8px] text-deep-teal/50 font-bold">Co-founder &amp; Chief Academic Advisor</p>
@@ -2552,7 +2560,11 @@ async function downloadCertificate(lang = 'vi') {
     sig1: 'NCS. Đỗ Thùy Hương', sig2: 'PGS.TS. Phan Anh Tú',
     date: `Cấp ngày ${new Date().toLocaleDateString('vi-VN')} · thuyhuongctu.github.io/BizOn`,
   };
-  const [sigH, sigT] = await Promise.all([loadSigImg('assets/docs/sig-huong.png'), loadSigImg('assets/docs/sig-tu.png')]);
+  const [sigH, sigT, sigHOld, sigTOld] = await Promise.all([
+    loadSigImg('assets/docs/sig-huong.png'), loadSigImg('assets/docs/sig-tu.png'),
+    loadSigImg('assets/docs/sig-huong-old.png'), loadSigImg('assets/docs/sig-tu-old.png'),
+  ]);
+  const oldNewLabel = EN ? 'old · new' : 'cũ · mới';
   const cv = document.createElement('canvas');
   cv.width = 1400; cv.height = 990;
   const g = cv.getContext('2d');
@@ -2589,21 +2601,28 @@ async function downloadCertificate(lang = 'vi') {
     g.fillStyle = c.profit < 0 && i === 2 ? '#c2410c' : '#006687';
     g.font = '800 38px "Plus Jakarta Sans", sans-serif'; g.fillText(v, x, 605);
   });
-  const sign = (x, sig, name, line1, line2) => {
-    if (sig) {
-      const h = 120, w = sig.width * h / sig.height;
-      g.drawImage(sig, x - w / 2, 775 - h, w, h);
+  const sign = (x, sigOld, sigNew, name, line1, line2) => {
+    if (sigOld || sigNew) {
+      const boxW = 165, boxH = 78;
+      const drawOne = (im, cx) => {
+        if (!im) return;
+        let w = boxW, h = im.height * w / im.width;
+        if (h > boxH) { h = boxH; w = im.width * h / im.height; }
+        g.drawImage(im, cx - w / 2, 768 - h, w, h);
+      };
+      drawOne(sigOld, x - 95); drawOne(sigNew, x + 95);
+      g.fillStyle = 'rgba(3,51,55,.4)'; g.font = 'italic 12px Manrope, sans-serif'; g.fillText(oldNewLabel, x, 780);
     } else {
       g.fillStyle = '#006687'; g.font = 'italic 44px "Segoe Script", "Brush Script MT", cursive';
       g.fillText(name, x, 760);
     }
     g.strokeStyle = 'rgba(3,51,55,.25)'; g.lineWidth = 2;
-    g.beginPath(); g.moveTo(x - 190, 785); g.lineTo(x + 190, 785); g.stroke();
+    g.beginPath(); g.moveTo(x - 190, 788); g.lineTo(x + 190, 788); g.stroke();
     g.fillStyle = '#033337'; g.font = '800 24px "Plus Jakarta Sans", sans-serif'; g.fillText(line1, x, 820);
     g.fillStyle = '#5b6b72'; g.font = 'bold 19px Manrope, sans-serif'; g.fillText(line2, x, 850);
   };
-  sign(340, sigH, 'Đỗ Thùy Hương', L.sig1, 'Founder & Project Lead');
-  sign(1060, sigT, 'Phan Anh Tú', L.sig2, 'Co-founder & Chief Academic Advisor');
+  sign(340, sigHOld, sigH, 'Đỗ Thùy Hương', L.sig1, 'Founder & Project Lead');
+  sign(1060, sigTOld, sigT, 'Phan Anh Tú', L.sig2, 'Co-founder & Chief Academic Advisor');
   g.save(); g.translate(700, 790); g.rotate(0.2);
   g.strokeStyle = '#fda127'; g.lineWidth = 4; g.setLineDash([10, 7]);
   g.beginPath(); g.arc(0, 0, 62, 0, Math.PI * 2); g.stroke(); g.setLineDash([]);
