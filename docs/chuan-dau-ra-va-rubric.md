@@ -2,7 +2,7 @@
 ## Hệ sinh thái mô phỏng kinh doanh BizOn Bật Nghiệp
 
 **Tác giả:** Đỗ Thùy Hương · Phan Anh Tú
-**Phiên bản:** 1.1 · **Ngày lập:** 31/07/2026
+**Phiên bản:** 1.2 · **Ngày lập:** 31/07/2026 · **Cập nhật gần nhất:** 23/09/2026 (thêm cơ cấu điểm học phần song ngữ cho Hộ Chiếu Thương Hiệu, dùng cho lớp quốc tế)
 **Loại tài liệu:** Tác phẩm viết – công cụ thiết kế sư phạm và đánh giá kết quả học tập
 
 > Tài liệu này tách ra từ trang `hoc-thuat.html` để dùng độc lập trong ba việc: (1) giảng viên thiết kế buổi học và chấm điểm, (2) hồ sơ kiểm định chương trình đào tạo, (3) hồ sơ đăng ký quyền tác giả loại hình tác phẩm viết.
@@ -130,12 +130,55 @@ Engine ghi lại **hơn 20 chỉ số mỗi vòng chơi**, trong đó sáu chỉ
 
 ## 4.2 · Rubric game Hộ Chiếu Thương Hiệu — BP-1 đến BP-6
 
-| Tiêu chí | 1 · Chưa đạt | 2 · Đạt | 3 · Khá | 4 · Xuất sắc |
+| Tiêu chí / Criterion | 1 · Chưa đạt / Not yet | 2 · Đạt / Pass | 3 · Khá / Good | 4 · Xuất sắc / Excellent |
 |---|---|---|---|---|
-| **Lập luận chọn thị trường và phương thức**<br>*(BP-1, BP-2)* | Kể lại lựa chọn, không nêu lý do | Nêu được 1 lý do phù hợp | So sánh ít nhất 2 phương án bằng dữ liệu trong ván | Gắn lựa chọn với khung lý thuyết – mức cam kết, khoảng cách thể chế |
-| **Đánh giá nguồn thông tin**<br>*(BP-3)* | Tin mọi nguồn như nhau | Nhận ra có nguồn không đáng tin | Chỉ ra đúng nguồn thiên lệch và giải thích vì sao | Đề xuất chiến lược kết hợp nguồn theo cân đối chi phí – độ tin cậy |
-| **Phân tích dấu chân quyết định**<br>*(BP-5)* | Chỉ nhìn kết quả cuối ván | Nêu được 1 hệ quả dài hạn | Truy vết được chuỗi quyết định dẫn tới hệ quả | Đề xuất điểm can thiệp sớm nhất có thể đổi kết cục |
-| **Bài học chuyển giao**<br>*(BP-6)* | Không rút ra bài học | Bài học chung chung | Bài học gắn với tình huống cụ thể trong ván | Liên hệ được với doanh nghiệp Việt Nam thực tế, có ví dụ |
+| **Lập luận chọn thị trường và phương thức** / *Market & entry-mode reasoning*<br>*(BP-1, BP-2)* | Kể lại lựa chọn, không nêu lý do / Recounts the choice, no reason given | Nêu được 1 lý do phù hợp / States one relevant reason | So sánh ít nhất 2 phương án bằng dữ liệu trong ván / Compares ≥2 options using in-game data | Gắn lựa chọn với khung lý thuyết – mức cam kết, khoảng cách thể chế / Ties the choice to theory – commitment level, institutional distance |
+| **Đánh giá nguồn thông tin** / *Source evaluation*<br>*(BP-3)* | Tin mọi nguồn như nhau / Trusts every source equally | Nhận ra có nguồn không đáng tin / Recognizes an unreliable source | Chỉ ra đúng nguồn thiên lệch và giải thích vì sao / Correctly identifies the biased source and explains why | Đề xuất chiến lược kết hợp nguồn theo cân đối chi phí – độ tin cậy / Proposes a source-mix strategy balancing cost and reliability |
+| **Phân tích dấu chân quyết định** / *Decision-footprint analysis*<br>*(BP-5)* | Chỉ nhìn kết quả cuối ván / Looks only at the final outcome | Nêu được 1 hệ quả dài hạn / Names one long-term consequence | Truy vết được chuỗi quyết định dẫn tới hệ quả / Traces the decision chain leading to it | Đề xuất điểm can thiệp sớm nhất có thể đổi kết cục / Proposes the earliest point that could have changed the outcome |
+| **Bài học chuyển giao** / *Transferable lesson*<br>*(BP-6)* | Không rút ra bài học / Draws no lesson | Bài học chung chung / Generic lesson | Bài học gắn với tình huống cụ thể trong ván / Lesson tied to a specific in-game situation | Liên hệ được với doanh nghiệp Việt Nam thực tế, có ví dụ / Connects to a real Vietnamese business, with an example |
+
+### Cơ cấu điểm học phần cho lớp quốc tế / Course-grade structure for international classes
+
+> Bổ sung theo nhu cầu thực tế: PGS.TS. Phan Anh Tú dùng Hộ Chiếu Thương Hiệu dạy học phần có sinh viên trao đổi quốc tế (song ngữ Việt–Anh). Bảng dưới gắn rubric ở trên vào một công thức điểm học phần cụ thể. / Added for a real teaching need: PGS.TS. Phan Anh Tú uses Brand Passport to teach a course with international exchange students (bilingual VI–EN). The table below ties the rubric above to a concrete course-grade formula.
+
+**Công thức / Formula** (thang điểm 10 / out of 10):
+
+```
+Điểm học phần = 40% × (điểm game tự động ÷ 10)
+              + 40% × band(TB 4 tiêu chí rubric ở trên)
+              + 20% × band(điểm thảo luận cuối ván)
+
+Course grade  = 40% × (auto game score ÷ 10)
+              + 40% × band(mean of the 4 rubric criteria above)
+              + 20% × band(end-of-game debrief score)
+```
+
+| Thành phần / Component | Trọng số / Weight | Nguồn / Source |
+|---|:-:|---|
+| Điểm game tự động / Auto game score | **40%** | Điểm tổng 0–100 game tự tính cuối ván: 30% Lợi nhuận + 20% Uy tín + 20% Năng lực + 15% Thích ứng + 15% Bền vững / The game's own 0–100 total at game-end: 30% Profit + 20% Reputation + 20% Capability + 15% Adaptation + 15% Sustainability |
+| Rubric lập luận BP-1→BP-6 / Reasoning rubric | **40%** | Trung bình cộng 4 tiêu chí ở trên, giảng viên chấm dựa trên «Dấu chân quyết định» cuối ván / Mean of the 4 criteria above, instructor-graded from the end-of-game "decision footprint" |
+| Thảo luận & bài học cuối ván / Debrief & lessons | **20%** | 1 điểm thang 1–4 dựa trên 4 câu hỏi tổng kết ở màn kết thúc game / One 1–4 score based on the game's 4 end-screen wrap-up questions |
+
+`band(x)` dùng đúng bảng quy đổi ở [§4.3](#43--cách-quy-đổi-điểm) ngay dưới đây, nội suy tuyến tính trong từng khoảng (ví dụ x=3,0 → 7,9/10). / `band(x)` uses the exact conversion bands in [§4.3](#43--cách-quy-đổi-điểm) right below, linearly interpolated within each band (e.g. x=3.0 → 7.9/10).
+
+> 🚧 Cơ cấu trọng số 40/40/20 là đề xuất ban đầu, chưa chấm thử thực tế — điều chỉnh sau buổi thí điểm đầu tiên (dự kiến 01/10/2026, lớp FDI, thầy Phan Anh Tú). / The 40/40/20 weighting is an initial proposal, not yet field-tested — expect to adjust after the first pilot session (planned 2026-10-01, FDI class, Prof. Phan Anh Tú).
+
+### Sổ điểm mẫu — Hộ Chiếu Thương Hiệu / Sample scoring sheet — Brand Passport
+
+**Sinh viên / Student: ……………… · Doanh nghiệp / Firm: ……………… · Lớp / Class: ……………… · Ngày / Date: ………**
+
+| Thành phần / Component | Điểm / Score | Trọng số / Weight | Quy đổi /10 / Out of 10 |
+|---|:-:|:-:|:-:|
+| Điểm game tự động / Auto game score | …… /100 | 40% | …… |
+| Lập luận chọn thị trường & phương thức / Market & entry-mode reasoning | ☐1 ☐2 ☐3 ☐4 | ↓ | |
+| Đánh giá nguồn thông tin / Source evaluation | ☐1 ☐2 ☐3 ☐4 | ↓ | |
+| Phân tích dấu chân quyết định / Decision-footprint analysis | ☐1 ☐2 ☐3 ☐4 | ↓ | |
+| Bài học chuyển giao / Transferable lesson | ☐1 ☐2 ☐3 ☐4 | ↓ | |
+| → TB rubric / Rubric mean | …… /4 | 40% | …… |
+| Thảo luận cuối ván / Debrief | ☐1 ☐2 ☐3 ☐4 | 20% | …… |
+| **Điểm học phần / Course grade** | | **100%** | **…… /10** |
+
+Nhận xét / Comments: ……………………………………………………………………………………………
 
 ## 4.3 · Cách quy đổi điểm
 
@@ -287,7 +330,8 @@ Ghi rõ để tài liệu không bị hiểu là đã hoàn chỉnh.
 | **Kiểm định bộ 30 câu trước – sau** | Đã soạn, chưa kiểm định | Chạy thử, tính Cronbach's alpha, phân tích độ phân biệt từng câu |
 | **Kiểm định độ tin cậy giữa giám khảo của rubric** | Chưa làm | Chấm song song trên cùng mẫu, tính hệ số đồng thuận |
 | **Bộ câu hỏi riêng cho kinh doanh quốc tế** | Chưa có | Soạn bộ đo riêng cho BP-1 đến BP-6 |
-| **Bản tiếng Anh của rubric** | Chưa có | Cần dịch có đối dịch ngược nếu dùng cho lớp quốc tế |
+| **Bản tiếng Anh của rubric** | §4.2 (Hộ Chiếu Thương Hiệu) đã có bản song ngữ, kèm cơ cấu điểm học phần 40/40/20 | §4.1 (game mô phỏng chính) vẫn chỉ có tiếng Việt – cần dịch có đối dịch ngược nếu dùng chính thức cho lớp quốc tế |
+| **Cơ cấu điểm học phần Hộ Chiếu Thương Hiệu (song ngữ)** | Bản nháp đầu tiên tại [§4.2](#42--rubric-game-hộ-chiếu-thương-hiệu--bp-1-đến-bp-6) – chưa chấm thử thực tế | Chấm thử ở buổi thí điểm 01/10/2026 (lớp FDI, thầy Phan Anh Tú), điều chỉnh trọng số 40/40/20 nếu cần |
 
 ---
 
