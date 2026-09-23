@@ -4729,6 +4729,82 @@
 "Ra quyết định",
 "Decisions"
 ],
+[
+"BizOn Go Global · Mô phỏng chiến lược · 6 quý · Game gốc BizOn",
+"BizOn Go Global · Strategy Simulation · 6 Quarters · An Original BizOn Game"
+],
+[
+"💡 «Không có một con đường quốc tế hóa phù hợp với mọi doanh nghiệp.» · Các thị trường trong game là giả tưởng · Kịch bản, dữ liệu, thuật toán và nhân vật do BizOn tự thiết kế từ đầu.",
+"💡 «There is no single internationalization path that fits every business.» · The markets in this game are fictional · Scenario, data, algorithms and characters are all designed by BizOn from scratch."
+],
+[
+"🏢 Chọn doanh nghiệp của bạn",
+"🏢 Choose your company"
+],
+[
+"Mỗi doanh nghiệp một hành trình và hệ rủi ro khác nhau – không có lựa chọn \"mạnh nhất\".",
+"Each company has a different journey and risk profile – there's no single \"strongest\" choice."
+],
+[
+"🌏 Sáu cánh cửa ra thế giới (quốc gia giả tưởng)",
+"🌏 Six doors to the world (fictional countries)"
+],
+[
+"Công thức điểm – công khai từ quý 1",
+"Scoring formula – public from quarter 1"
+],
+[
+"Điểm tổng = 30% Lợi nhuận + 20% Uy tín + 20% Năng lực + 15% Thích ứng + 15% Bền vững",
+"Total score = 30% Profit + 20% Reputation + 20% Capability + 15% Adaptation + 15% Sustainability"
+],
+[
+"Doanh thu cao nhất chưa chắc thắng – tăng trưởng nóng làm cạn vốn, mất đối tác hoặc vi phạm quy định sẽ trả giá.",
+"Highest revenue doesn't guarantee a win – overheated growth that drains cash, loses partners, or breaks regulations comes at a cost."
+],
+[
+"🧑‍💼 Ban cố vấn (quan điểm khác nhau – hãy tự đánh giá lập luận)",
+"🧑‍💼 Advisory board (different viewpoints – judge the arguments yourself)"
+],
+[
+"🌊 Nhạc chủ đề",
+"🌊 Theme music"
+],
+[
+"«Hộ Chiếu Thương Hiệu – Phần III» · bản remix 2, lời tiếng Anh · 5:33",
+"«Brand Passport – Part III» · remix 2, English lyrics · 5:33"
+],
+[
+"▶️ Tiếp tục ván đang dở",
+"▶️ Continue your game in progress"
+],
+[
+"🛫 Bắt đầu hành trình 6 quý",
+"🛫 Start your 6-quarter journey"
+],
+[
+"🕹️ Arcade",
+"🕹️ Arcade"
+],
+[
+"Bạn tin nguồn thông tin nào nhất? Nguồn nào đã đánh lừa bạn?",
+"Which information source do you trust most? Which one misled you?"
+],
+[
+"Vì sao bạn chọn phương thức thâm nhập đó – và nếu chơi lại, bạn có đổi không?",
+"Why did you choose that entry mode – and if you replayed, would you change it?"
+],
+[
+"Quyết định nào tạo hệ quả dài nhất trong «dấu chân» của bạn?",
+"Which decision left the longest-lasting mark on your «footprint»?"
+],
+[
+"Hai nhóm cùng nguồn lực ban đầu – vì sao kết quả có thể khác nhau hoàn toàn?",
+"Two teams with the same starting resources – why can their results turn out completely different?"
+],
+[
+"📋 Làm khảo sát sau buổi học (bộ Kinh doanh quốc tế) →",
+"📋 Take the post-class survey (International Business set) →"
+],
 ]);
   var SPECIAL = [
     { page: 'giai-phap', sel: '#gp-oss-note', en: "Free to use at the official URL for non-commercial teaching – no account needed. The source is published for academic transparency and verification; commercial exploitation rights remain with BizOn (see <a href=\"https://github.com/thuyhuongctu/BizOn/blob/main/LICENSE\" target=\"_blank\" rel=\"noopener\" class=\"underline font-bold\">LICENSE</a>)." },
@@ -4745,7 +4821,26 @@
     { page: 'giang-vien', sel: 'header p.max-w-2xl', en: "Watch teams submit results <b>live during class</b>: the leaderboard refreshes every 10 seconds, a timeline logs every locked round, and CSV export makes grading easy. Data opens only with the <b>Instructor key</b> – students cannot see each other's data." },
     { page: 'khao-sat-online', sel: 'header .max-w-3xl p', en: "An <b>anonymous</b> survey used only to improve the game and for educational research. There are no answers that earn grades – please answer honestly based on what you know right now." },
     { sel: '#top h1', en: "Build your<br><span class=\"hero-grad\">business</span> empire" },
-    { sel: '#top .max-w-6xl > div > p.mt-5', en: "Run your company through <b class=\"text-white\">6 fierce market rounds</b> – pricing, production, marketing, fundraising – outsmarting 3 AI rivals with advisor <b class=\"lumina-name font-display\">Lumina AI</b> <span class=\"signature text-lg text-white\">Je m'appelle Hương</span> at your side. All inside a one-of-a-kind 3D clay world." }
+    { sel: '#top .max-w-6xl > div > p.mt-5', en: "Run your company through <b class=\"text-white\">6 fierce market rounds</b> – pricing, production, marketing, fundraising – outsmarting 3 AI rivals with advisor <b class=\"lumina-name font-display\">Lumina AI</b> <span class=\"signature text-lg text-white\">Je m'appelle Hương</span> at your side. All inside a one-of-a-kind 3D clay world." },
+    { page: 'brand-passport', sel: '#bp-hero-mission', en: "In the riverside town of <b>Vàm Thịnh</b>, you take over <b>Mộc Nhiên</b> – an herbal cosmetics brand with a beautiful story but limited resources. Your mission: take a Vietnamese brand global over <b>6 business quarters</b>, through a <b>fog of information</b> and trade-offs with no single right answer." },
+    { page: 'brand-passport', sel: '#bp-hero-music-note', en: "🛂 Theme music: <a href=\"am-nhac.html\" class=\"underline font-bold text-clay-gold\">«Brand Passport – Part III» (remix 2, English lyrics)</a> – plays by default when you turn on music; the game's playlist also includes «Brand Passport», «Stamps Beyond Borders» and «Golden Silt Route», accessible from the ⋯ button in the corner." },
+    { page: 'brand-passport', sel: '#bp-mkt-list p:nth-child(1)', en: "🌐 <b>Hải Lam</b> – a developed digital market: fast entry, very high online competition." },
+    { page: 'brand-passport', sel: '#bp-mkt-list p:nth-child(2)', en: "🏔️ <b>Bắc Phong</b> – strict standards: high prices and prestige, heavy compliance costs." },
+    { page: 'brand-passport', sel: '#bp-mkt-list p:nth-child(3)', en: "🌅 <b>Kim Sa</b> – young consumers: fast growth, trends keep shifting." },
+    { page: 'brand-passport', sel: '#bp-mkt-list p:nth-child(4)', en: "🏝️ <b>Lục Đảo</b> – environment-first: favors sustainable brands, demands traceability." },
+    { page: 'brand-passport', sel: '#bp-mkt-list p:nth-child(5)', en: "🌸 <b>Nhật Quang</b> – long-term relationships: loyal partners, trust builds slowly." },
+    { page: 'brand-passport', sel: '#bp-mkt-list p:nth-child(6)', en: "⚓ <b>Tân Cảng</b> – regional hub: a gateway to many markets, high operating costs." },
+    { page: 'brand-passport', sel: '#bp-rules-list li:nth-child(1)', en: "🌫️ <b>Market fog</b>: each market's real profile is hidden – buy intel from 6 sources with different costs, accuracy and <b>bias</b>, then judge their reliability yourself." },
+    { page: 'brand-passport', sel: '#bp-rules-list li:nth-child(2)', en: "🚪 <b>3 entry modes</b>: digital platform (low commitment) · direct export (balanced) · local partner (borrowed network, partner-dependent)." },
+    { page: 'brand-passport', sel: '#bp-rules-list li:nth-child(3)', en: "🧭 Each quarter: read the signals → pick a priority → decide on entry &amp; operating stance → handle an event → take the lesson." },
+    { page: 'brand-passport', sel: '#bp-rules-list li:nth-child(4)', en: "👣 <b>Decision footprint</b>: constant discounting, ignoring complaints, breaking commitments… all leave consequences in later quarters." },
+    { page: 'brand-passport', sel: '#bp-rules-list li:nth-child(5)', en: "⚠️ You can <b>lose early</b>: running out of cash for 2 quarters in a row, or reputation collapsing into crisis." },
+    { page: 'brand-passport', sel: '#bp-advisor-bios p:nth-child(1)', en: "👵 <b>Bà Sáu Lành</b> · Founder &amp; Heritage Expert – protects the brand's Vietnamese identity. <i>«Preserve core values in the digital age.»</i>" },
+    { page: 'brand-passport', sel: '#bp-advisor-bios p:nth-child(2)', en: "💰 <b>Minh Khang</b> · CFO – prioritizes cash flow and risk control." },
+    { page: 'brand-passport', sel: '#bp-advisor-bios p:nth-child(3)', en: "📣 <b>An Nhiên</b> · Strategy &amp; Innovation Advisor – reads trends and builds customer community. <i>«Energy is contagious. When you believe in the vision, a community forms around you.»</i>" },
+    { page: 'brand-passport', sel: '#bp-advisor-bios p:nth-child(4)', en: "🌍 <b>Victor Lâm</b> · Global Strategy Expert, speaks by the data but isn't always right. <i>«Broaden your vision, conquer every limit.»</i>" },
+    { page: 'brand-passport', sel: '#bp-advisor-bios p:nth-child(5)', en: "🤖 <b>Lumina AI</b> · AI Strategy Advisor (avatar «Je m'appelle Hương») – reads market signals and flags what's easy to miss. <i>«Building the future with artificial intelligence and precise data.»</i>" },
+    { page: 'brand-passport', sel: '#bp-lesson', en: "💡 Core lesson: internationalization isn't about picking the «best market» but choosing <b>a level of commitment that matches your current capability</b>, then raising it as your market knowledge deepens." }
   ];
 
   function langBtnSync(lang) {
