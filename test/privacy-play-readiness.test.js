@@ -14,7 +14,8 @@ assert.match(policy, /Supabase/);
 assert.match(policy, /Internet access only|quyền Internet/i);
 assert.match(policy, /patu@ctu\.edu\.vn/);
 assert.match(policy, /thuyhuongctu@gmail\.com/);
-assert.match(policy, /02\/08\/2026|August 2, 2026/);
+assert.match(policy, /24\/09\/2026|September 24, 2026/);
+assert.match(policy, /user-agent|chẩn đoán|diagnostic|crash log/i);
 assert.doesNotMatch(policy, /không bao giờ được gửi đi đâu|never transmitted anywhere/i);
 assert.doesNotMatch(policy, /Google Fonts/);
 
