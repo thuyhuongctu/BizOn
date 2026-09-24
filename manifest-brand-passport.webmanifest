@@ -1,0 +1,18 @@
+{
+  "id": "./brand-passport.html",
+  "name": "Hộ Chiếu Thương Hiệu – Brand Passport",
+  "short_name": "Hộ Chiếu TH",
+  "description": "Hộ Chiếu Thương Hiệu / Brand Passport: mô phỏng chiến lược quốc tế hóa doanh nghiệp 6 quý – đưa thương hiệu Việt ra thế giới trong màn sương mù thông tin. Game độc lập trong hệ sinh thái BizOn.",
+  "lang": "vi",
+  "start_url": "./brand-passport.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#006687",
+  "background_color": "#f4faff",
+  "icons": [
+    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
