@@ -83,6 +83,10 @@ jobs:
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          # Không cài gói 'tools' cũ (Google đã gỡ) → tránh lỗi
+          # "Failed to find package 'tools'". cmdline-tools do action tự cài.
+          packages: 'platform-tools'
 
       - name: Install Android 16 API 36 SDK
         shell: bash
