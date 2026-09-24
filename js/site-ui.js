@@ -4782,6 +4782,18 @@
 "🛫 Start your 6-quarter journey"
 ],
 [
+"🗺️ Nhật ký hành trình",
+"🗺️ Journey log"
+],
+[
+"Hộ chiếu còn trắng – hãy đóng dấu mộc đầu tiên.",
+"Your passport is still blank – earn your first stamp."
+],
+[
+"Kết quả",
+"Results"
+],
+[
 "🕹️ Arcade",
 "🕹️ Arcade"
 ],
