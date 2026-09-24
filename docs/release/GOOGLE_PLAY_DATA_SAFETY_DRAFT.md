@@ -108,3 +108,40 @@ For the lowest-risk internal test:
 3. instruct testers to use aliases rather than legal names;
 4. use the public Privacy Policy URL above;
 5. treat the Data Safety form as collecting optional app-activity/user-generated data for classroom functionality unless the first Android release disables all server submission routes.
+
+## 9. Code reconciliation & first-release decisions (2026-09-24)
+
+Rà mã build thực tế bổ sung hai luồng dữ liệu và chốt hướng xử lý cho bản
+internal-testing đầu tiên:
+
+### 9.1 Student login (email + password) — DISABLED for first build
+- `js/student-auth.js` collects an `@student.ctu.edu.vn` email + password via
+  Supabase Auth, wired only on `game.html`.
+- It is **flag-gated** (`?studentAuth=1`) and hidden by default — the module
+  returns immediately without the flag, and the panel starts `hidden`.
+- For the first Play release the `<script src="js/student-auth.js">` include in
+  `game.html` is **commented out**, so the feature cannot activate even with the
+  flag. → **Do NOT declare Personal info: Email / Account** for this build.
+- Re-enable later only after account-deletion and consent operations exist; then
+  update this worksheet, the Privacy Policy, and the Data Safety declaration.
+
+### 9.2 Automatic error logs (client_errors) — KEPT, declare Diagnostics
+- `js/error-log.js` (loaded on ~22 pages) auto-sends on JavaScript errors, when
+  the backend is enabled, to `client_errors`: error message, source, line/col,
+  stack, app version, **user-agent**, viewport, timestamp. No name/email/phone;
+  write-only.
+- This is **automatic** collection → in Data Safety declare **App info and
+  performance → Crash logs** (and Diagnostics), purpose *App functionality /
+  Diagnostics*, not user-initiated.
+- Disclosed in Privacy Policy §5 (VI + EN), updated 2026-09-24.
+
+### 9.3 Net Data Safety answer for the first build
+- **Data collected? Yes** — optional classroom submission (app activity /
+  user-generated content) + automatic crash logs/diagnostics.
+- **Personal info (Email/Account)? No** — student login disabled for this build.
+- **Encrypted in transit? Yes** (HTTPS). **Shared/sold? No** (GitHub Pages +
+  Supabase are processors). **Ads/Analytics SDK? None.**
+- Retention & deletion: see Privacy Policy §7; keep a deletion contact operative
+  (patu@ctu.edu.vn / thuyhuongctu@gmail.com) and define retention windows for
+  round_submissions, bp_results, team_saves, client_errors before leaving
+  internal testing.
