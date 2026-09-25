@@ -4782,8 +4782,96 @@
 "🛫 Start your 6-quarter journey"
 ],
 [
+"🗺️ Nhật ký hành trình",
+"🗺️ Journey log"
+],
+[
+"Hộ chiếu còn trắng – hãy đóng dấu mộc đầu tiên.",
+"Your passport is still blank – earn your first stamp."
+],
+[
+"Kết quả",
+"Results"
+],
+[
 "🕹️ Arcade",
 "🕹️ Arcade"
+],
+[
+"🌌 Vũ trụ",
+"🌌 Universe"
+],
+[
+"🌌 Vũ trụ · Hub",
+"🌌 Universe · Hub"
+],
+[
+"Bản đồ Vũ trụ",
+"Universe Map"
+],
+[
+"Trường (thể chế)",
+"The School (institution)"
+],
+[
+"Nền tảng học thuật",
+"Academic Platform"
+],
+[
+"Sổ điểm giảng viên",
+"Instructor Gradebook"
+],
+[
+"🎮 Trò chơi",
+"🎮 Games"
+],
+[
+"🎮 Trò chơi · Games",
+"🎮 Games"
+],
+[
+"🎨 Sáng tạo",
+"🎨 Creative"
+],
+[
+"🎨 Kho sáng tạo · Creative",
+"🎨 Creative"
+],
+[
+"Hậu trường kho nhạc",
+"Behind the Music"
+],
+[
+"Hậu trường sản xuất nhạc",
+"Behind the Scenes: Music Production"
+],
+[
+"🎓 Giảng dạy",
+"🎓 Educators"
+],
+[
+"🎓 Giảng dạy · Educators",
+"🎓 Educators"
+],
+[
+"Phiếu khảo sát (bản in A4)",
+"Survey Sheet (A4 printable)"
+],
+[
+"🏛️ Về BizOn",
+"🏛️ About BizOn"
+],
+[
+"🏛️ Về BizOn · About",
+"🏛️ About BizOn"
+],
+[
+"Giải pháp & triển khai",
+"Solutions & Deployment"
+],
+[
+"Giải pháp & gói triển khai",
+"Solutions & Deployment Plans"
 ],
 [
 "Bạn tin nguồn thông tin nào nhất? Nguồn nào đã đánh lừa bạn?",
@@ -4820,6 +4908,7 @@
     { page: 'ben-phu-sa', sel: '#ft-end ol + p + p', en: "📰 True story: Croatian founder <b>Matko Kmezic</b> runs the «Viet Drip» phin-coffee cart with low plastic stools, Vietnamese-sidewalk style, in Amsterdam – selling just 3–4 cups a day at first, patiently explaining robusta to every customer, until people started queueing. Exactly this game's lesson: test small, learn fast, scale at the right time. <a href=\"https://znews.vn/xe-ca-phe-phin-ghe-nhua-do-kieu-viet-o-ha-lan-post1672015.html\" target=\"_blank\" rel=\"noopener\" class=\"underline font-bold\">Znews, Jul 26, 2026 →</a>" },
     { page: 'giang-vien', sel: 'header p.max-w-2xl', en: "Watch teams submit results <b>live during class</b>: the leaderboard refreshes every 10 seconds, a timeline logs every locked round, and CSV export makes grading easy. Data opens only with the <b>Instructor key</b> – students cannot see each other's data." },
     { page: 'khao-sat-online', sel: 'header .max-w-3xl p', en: "An <b>anonymous</b> survey used only to improve the game and for educational research. There are no answers that earn grades – please answer honestly based on what you know right now." },
+    { sel: '.bzf-eco-label', en: "Ecosystem · <b>Je m'appelle Hương</b>" },
     { sel: '#top h1', en: "Build your<br><span class=\"hero-grad\">business</span> empire" },
     { sel: '#top .max-w-6xl > div > p.mt-5', en: "Run your company through <b class=\"text-white\">6 fierce market rounds</b> – pricing, production, marketing, fundraising – outsmarting 3 AI rivals with advisor <b class=\"lumina-name font-display\">Lumina AI</b> <span class=\"signature text-lg text-white\">Je m'appelle Hương</span> at your side. All inside a one-of-a-kind 3D clay world." },
     { page: 'brand-passport', sel: '#bp-hero-mission', en: "In the riverside town of <b>Vàm Thịnh</b>, you take over <b>Mộc Nhiên</b> – an herbal cosmetics brand with a beautiful story but limited resources. Your mission: take a Vietnamese brand global over <b>6 business quarters</b>, through a <b>fog of information</b> and trade-offs with no single right answer." },
