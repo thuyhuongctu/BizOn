@@ -391,12 +391,19 @@
 
   <p class="text-center text-xs font-extrabold text-primary uppercase tracking-[.2em] reveal mt-14">Bậc 1 · Bắt đầu ở đây</p>
   <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-center mt-2 reveal">🍡 Gánh Hàng Khởi Nghiệp: Bến Phù Sa</h2>
-  <p class="text-center text-deep-teal/60 text-sm mt-2 mb-8 reveal">Quay từ game thật, đi hết cả 5 tuần: chọn đội &amp; thuyền trưởng → mỗi tuần chọn Phương thức – Món hàng – Địa điểm → Lễ cúng Bà Cậu giữa ván → màn tổng kết &amp; bảng xếp hạng (~53 giây, tiếng Việt).</p>
+  <p class="text-center text-deep-teal/60 text-sm mt-2 mb-8 reveal">Quay từ game thật, đi hết cả 5 tuần: chọn đội &amp; thuyền trưởng → mỗi tuần chọn Phương thức – Món hàng – Địa điểm → Lễ cúng Bà Cậu giữa ván → màn tổng kết &amp; bảng xếp hạng (~53–63 giây).</p>
+  <div class="flex justify-center gap-2 mb-5 reveal">
+    <button id="htp-bps-btn-vi" onclick="htpBpsSwitch('vi')" class="clay-btn-primary text-white font-display font-extrabold px-5 py-2 text-sm">🇻🇳 Tiếng Việt</button>
+    <button id="htp-bps-btn-en" onclick="htpBpsSwitch('en')" class="clay-btn bg-white text-deep-teal font-display font-extrabold px-5 py-2 text-sm">🇬🇧 English</button>
+  </div>
   <div class="clay-card p-3 reveal reveal-d1">
-    <video id="htp-bps-video" controls preload="none" playsinline poster="assets/video/bps-huong-dan-choi-vi-poster.jpg" class="w-full rounded-2xl block mx-auto" style="max-height:70vh">
+    <video id="htp-bps-video-vi" controls preload="none" playsinline poster="assets/video/bps-huong-dan-choi-vi-poster.jpg" class="w-full rounded-2xl block mx-auto" style="max-height:70vh">
       <source src="assets/video/bps-huong-dan-choi-vi.mp4" type="video/mp4">
     </video>
-    <p class="text-[10px] text-deep-teal/40 mt-3 text-center">Có phụ đề chữ đốt sẵn + nhạc chủ đề «Đội Phù Sa». Game này hiện chỉ có tiếng Việt.</p>
+    <video id="htp-bps-video-en" controls preload="none" playsinline poster="assets/video/bps-huong-dan-choi-en-poster.jpg" class="w-full rounded-2xl mx-auto hidden" style="max-height:70vh">
+      <source src="assets/video/bps-huong-dan-choi-en.mp4" type="video/mp4">
+    </video>
+    <p class="text-[10px] text-deep-teal/40 mt-3 text-center">Có phụ đề chữ đốt sẵn + nhạc chủ đề «Đội Phù Sa» – game giờ đã song ngữ VI/EN, bấm nút ⋯ góc trái trong game để đổi ngôn ngữ.</p>
   </div>
 </section>
 <script>
@@ -416,6 +423,19 @@
   function htpBpSwitch(lang) {
     const vi = document.getElementById('htp-bp-video-vi'), en = document.getElementById('htp-bp-video-en');
     const bvi = document.getElementById('htp-bp-btn-vi'), ben = document.getElementById('htp-bp-btn-en');
+    const on = 'clay-btn-primary text-white font-display font-extrabold px-5 py-2 text-sm';
+    const off = 'clay-btn bg-white text-deep-teal font-display font-extrabold px-5 py-2 text-sm';
+    if (lang === 'vi') {
+      vi.classList.remove('hidden'); en.classList.add('hidden'); en.pause();
+      bvi.className = on; ben.className = off;
+    } else {
+      en.classList.remove('hidden'); vi.classList.add('hidden'); vi.pause();
+      ben.className = on; bvi.className = off;
+    }
+  }
+  function htpBpsSwitch(lang) {
+    const vi = document.getElementById('htp-bps-video-vi'), en = document.getElementById('htp-bps-video-en');
+    const bvi = document.getElementById('htp-bps-btn-vi'), ben = document.getElementById('htp-bps-btn-en');
     const on = 'clay-btn-primary text-white font-display font-extrabold px-5 py-2 text-sm';
     const off = 'clay-btn bg-white text-deep-teal font-display font-extrabold px-5 py-2 text-sm';
     if (lang === 'vi') {
