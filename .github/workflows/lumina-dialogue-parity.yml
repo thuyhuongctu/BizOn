@@ -10,6 +10,8 @@ on:
     paths:
       - 'docs/loi-thoai-lumina.md'
       - 'docs/loi-thoai-lumina-en.md'
+      - 'assets/dialogue/lumina-classroom-mekong.vi.json'
+      - 'assets/dialogue/lumina-classroom-mekong.en.json'
       - 'scripts/lumina-parity-check.mjs'
       - '.github/workflows/lumina-dialogue-parity.yml'
   workflow_dispatch:
