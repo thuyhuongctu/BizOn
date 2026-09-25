@@ -100,11 +100,21 @@
   <section id="bp-howto" class="clay-card p-5 mb-6">
     <p class="text-center text-[11px] font-extrabold text-primary uppercase tracking-[.2em]" data-en="Watch before you play">📺 Xem trước khi chơi</p>
     <h2 class="font-display font-extrabold text-deep-teal text-lg text-center mt-1 mb-3" data-en="How-to-play video">Video hướng dẫn chơi</h2>
-    <video id="bp-video-vi" controls preload="none" playsinline poster="assets/video/bp-huong-dan-choi-vi-poster.jpg" class="w-full rounded-2xl block mx-auto" style="max-height:70vh">
+    <div class="flex justify-center gap-2 mb-3">
+      <button id="bp-video-len-short" onclick="bpVideoLen('short')" class="clay-btn bg-deep-teal text-white font-display font-extrabold px-4 py-1.5 text-xs" data-en="🎬 Quick (~40s)">🎬 Ngắn (~40 giây)</button>
+      <button id="bp-video-len-full" onclick="bpVideoLen('full')" class="clay-btn bg-white text-deep-teal border border-deep-teal/20 font-display font-extrabold px-4 py-1.5 text-xs" data-en="📖 Detailed – all 6 quarters (~95s)">📖 Chi tiết – đủ 6 quý (~95 giây)</button>
+    </div>
+    <video id="bp-video-short-vi" controls preload="none" playsinline poster="assets/video/bp-huong-dan-choi-vi-poster.jpg" class="w-full rounded-2xl block mx-auto" style="max-height:70vh">
       <source src="assets/video/bp-huong-dan-choi-vi.mp4" type="video/mp4">
     </video>
-    <video id="bp-video-en" controls preload="none" playsinline poster="assets/video/bp-huong-dan-choi-en-poster.jpg" class="w-full rounded-2xl mx-auto hidden" style="max-height:70vh">
+    <video id="bp-video-short-en" controls preload="none" playsinline poster="assets/video/bp-huong-dan-choi-en-poster.jpg" class="w-full rounded-2xl mx-auto hidden" style="max-height:70vh">
       <source src="assets/video/bp-huong-dan-choi-en.mp4" type="video/mp4">
+    </video>
+    <video id="bp-video-full-vi" controls preload="none" playsinline poster="assets/video/bp-huong-dan-chi-tiet-vi-poster.jpg" class="w-full rounded-2xl mx-auto hidden" style="max-height:70vh">
+      <source src="assets/video/bp-huong-dan-chi-tiet-vi.mp4" type="video/mp4">
+    </video>
+    <video id="bp-video-full-en" controls preload="none" playsinline poster="assets/video/bp-huong-dan-chi-tiet-en-poster.jpg" class="w-full rounded-2xl mx-auto hidden" style="max-height:70vh">
+      <source src="assets/video/bp-huong-dan-chi-tiet-en.mp4" type="video/mp4">
     </video>
     <p class="text-[10px] text-deep-teal/40 mt-3 text-center" data-en="Burned-in captions + original background music – switch language from the ⋯ button top-left to switch the video too.">Có phụ đề chữ đốt sẵn + nhạc nền gốc – đổi ngôn ngữ bằng nút ⋯ góc trái sẽ đổi luôn video.</p>
   </section>
@@ -988,15 +998,37 @@
       if (el.getAttribute('data-vi-ph') === null) el.setAttribute('data-vi-ph', el.placeholder || '');
       el.placeholder = en ? el.getAttribute('data-en-ph') : el.getAttribute('data-vi-ph');
     });
-    var vv = $('bp-video-vi'), ve = $('bp-video-en');
-    if (vv && ve) {
-      if (en) { ve.classList.remove('hidden'); vv.classList.add('hidden'); vv.pause(); }
-      else { vv.classList.remove('hidden'); ve.classList.add('hidden'); ve.pause(); }
-    }
+    syncBpVideo();
+  }
+
+  // Video hướng dẫn có 2 chiều độc lập: ngôn ngữ (theo T()/isEN() chung của
+  // trang) và độ dài (bản ngắn ~40s mặc định, hoặc bản chi tiết đủ 6 quý
+  // ~95s – nhớ lựa chọn qua localStorage để không phải chọn lại mỗi lần ghé).
+  function bpVideoLen(len) {
+    try { localStorage.setItem('bizon-bp-video-len', len); } catch (e) {}
+    syncBpVideo();
+  }
+  window.bpVideoLen = bpVideoLen;
+  function syncBpVideo() {
+    var en = isEN();
+    var len = 'short';
+    try { len = localStorage.getItem('bizon-bp-video-len') || 'short'; } catch (e) {}
+    ['short-vi', 'short-en', 'full-vi', 'full-en'].forEach(function (key) {
+      var el = $('bp-video-' + key);
+      if (!el) return;
+      var wantLen = key.indexOf('full') === 0 ? 'full' : 'short';
+      var wantLang = key.indexOf('-en') !== -1 ? 'en' : 'vi';
+      var show = wantLen === len && wantLang === (en ? 'en' : 'vi');
+      if (show) el.classList.remove('hidden'); else { el.classList.add('hidden'); el.pause(); }
+    });
+    var onCls = 'clay-btn bg-deep-teal text-white font-display font-extrabold px-4 py-1.5 text-xs';
+    var offCls = 'clay-btn bg-white text-deep-teal border border-deep-teal/20 font-display font-extrabold px-4 py-1.5 text-xs';
+    var bs = $('bp-video-len-short'), bf = $('bp-video-len-full');
+    if (bs && bf) { bs.className = len === 'short' ? onCls : offCls; bf.className = len === 'full' ? onCls : offCls; }
   }
 
   renderFirms();
-  applyStatic(); // trạng thái ban đầu (nếu người dùng đã chọn EN từ trước)
+  applyStatic(); // trạng thái ban đầu (nếu người dùng đã chọn EN từ trước) - cũng tự gọi syncBpVideo()
   try { if (localStorage.getItem('bizon-bp-save')) $('bp-resume').classList.remove('hidden'); } catch (e) {}
 
   // Đổi ngôn ngữ ngay trong game: applyLang() (site-ui.js) chỉ dịch chữ tĩnh
