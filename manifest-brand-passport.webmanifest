@@ -1,8 +1,8 @@
 {
   "id": "./brand-passport.html",
-  "name": "Hộ Chiếu Thương Hiệu – Brand Passport",
-  "short_name": "Hộ Chiếu TH",
-  "description": "Hộ Chiếu Thương Hiệu / Brand Passport: mô phỏng chiến lược quốc tế hóa doanh nghiệp 6 quý – đưa thương hiệu Việt ra thế giới trong màn sương mù thông tin. Game độc lập trong hệ sinh thái BizOn.",
+  "name": "Brand Passport – Hộ Chiếu Thương Hiệu",
+  "short_name": "Brand Passport",
+  "description": "Brand Passport – Hộ Chiếu Thương Hiệu: mô phỏng chiến lược quốc tế hóa doanh nghiệp 6 quý – đưa thương hiệu Việt ra thế giới trong màn sương mù thông tin. Game độc lập trong hệ sinh thái BizOn.",
   "lang": "vi",
   "start_url": "./brand-passport.html",
   "scope": "./",
