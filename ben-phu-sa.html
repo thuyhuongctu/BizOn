@@ -14,6 +14,12 @@
 <meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
 <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
 <script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<script>
+  // Song ngữ toàn trang: dùng chung cùng khoá 'bizon-lang' với site-ui.js và
+  // brand-passport.html, để nút đổi ngôn ngữ ở menu chung (⋯) áp dụng luôn ở đây.
+  function isEN() { try { return (localStorage.getItem('bizon-lang') || 'vi') === 'en'; } catch (e) { return false; } }
+  function T(vi, en) { return isEN() ? en : vi; }
+</script>
 <script src="js/backend-config.js"></script>
 <script src="js/error-log.js"></script>
 <!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
@@ -71,13 +77,13 @@
 
 <header class="pt-24 pb-8 text-white relative overflow-hidden" style="background:linear-gradient(160deg,rgba(3,51,55,.92) 0%,rgba(2,68,77,.82) 52%,rgba(0,102,135,.66) 100%), url('assets/scene/ben-phu-sa/cho-noi-ngay.webp') center/cover">
   <div class="max-w-2xl mx-auto px-5 relative z-10">
-    <p class="text-[11px] font-extrabold uppercase tracking-[.2em] text-clay-gold">🧺 Bậc 1 · Bắt đầu ở đây</p>
-    <p class="text-[10px] font-bold text-white/60 mt-1">Game nhập môn của bậc thang BizOn — làm quen thị trường trước khi lên <a href="game.html" class="underline text-clay-gold">Bậc 2 · Bật Nghiệp →</a></p>
-    <h1 class="font-display font-extrabold text-3xl mt-2">🧺 Gánh Hàng Khởi Nghiệp: Bến Phù Sa</h1>
+    <p class="text-[11px] font-extrabold uppercase tracking-[.2em] text-clay-gold" data-en="🧺 Tier 1 · Start here">🧺 Bậc 1 · Bắt đầu ở đây</p>
+    <p class="text-[10px] font-bold text-white/60 mt-1" data-en-html="Introductory game of the BizOn tier ladder — get a feel for the market before moving up to &lt;a href=&quot;game.html&quot; class=&quot;underline text-clay-gold&quot;&gt;Tier 2 · Bật Nghiệp →&lt;/a&gt;">Game nhập môn của bậc thang BizOn — làm quen thị trường trước khi lên <a href="game.html" class="underline text-clay-gold">Bậc 2 · Bật Nghiệp →</a></p>
+    <h1 class="font-display font-extrabold text-3xl mt-2" data-en="🧺 Entrepreneurial Street Vendor: Bến Phù Sa">🧺 Gánh Hàng Khởi Nghiệp: Bến Phù Sa</h1>
     <p class="text-white/50 text-[11px] mt-1 font-bold tracking-wide">Entrepreneurial Street Vendor: Ben Phu Sa</p>
-    <p class="text-white/75 text-sm mt-3">Bạn là nhà sáng lập startup ẩm thực đường phố ở <b>Bến Phù Sa</b> – thị trấn giả tưởng lấy cảm hứng từ miền Tây sông nước. Mỗi tuần chọn <b>Phương thức – Món hàng – Địa điểm</b>. Mục tiêu: tổng doanh thu cao nhất sau 5 tuần. Bí quyết nằm ở việc <b>thử nghiệm nhanh rồi nhân rộng đúng lúc</b>.</p>
-    <p class="text-white/55 text-[11px] mt-3">💡 Trò chơi giảng dạy phi thương mại do BizOn tự phát triển. Cơ chế «thử nghiệm nhanh rồi nhân rộng đúng lúc» là mô-típ sư phạm phổ biến trong đào tạo khởi nghiệp; bối cảnh Bến Phù Sa, nhân vật, dữ liệu, giao diện và lời thoại đều là nguyên bản. Không dựa trên và không sử dụng tài liệu, số liệu hay cấu trúc của bất kỳ mô phỏng thương mại nào. Định hướng sư phạm: PGS.TS. Phan Anh Tú (Trường Kinh tế, ĐH Cần Thơ).</p>
-    <p class="text-white/55 text-[11px] mt-2">🌾 Bến Phù Sa là thị trấn giả tưởng, lấy cảm hứng từ văn hóa chợ nổi miền Tây – tiêu biểu là <b>Chợ nổi Cái Răng</b> (Cần Thơ), di sản văn hóa phi vật thể quốc gia (2016). Tham khảo: Nguyễn Trần Quỳnh Châu &amp; Nguyễn Thị Bé Ba, «Overview of Floating Markets in the Mekong Delta and Cai Rang Floating Market», ICoISSEE-5 (2025), Trường ĐH Cần Thơ.</p>
+    <p class="text-white/75 text-sm mt-3" data-en-html="You're the founder of a street-food startup in &lt;b&gt;Bến Phù Sa&lt;/b&gt; – a fictional town inspired by the river country of Vietnam's Mekong Delta. Each week, choose &lt;b&gt;Method – Product – Location&lt;/b&gt;. Goal: the highest total revenue after 5 weeks. The trick is knowing when to &lt;b&gt;test cheap and fast, then scale at the right moment&lt;/b&gt;.">Bạn là nhà sáng lập startup ẩm thực đường phố ở <b>Bến Phù Sa</b> – thị trấn giả tưởng lấy cảm hứng từ miền Tây sông nước. Mỗi tuần chọn <b>Phương thức – Món hàng – Địa điểm</b>. Mục tiêu: tổng doanh thu cao nhất sau 5 tuần. Bí quyết nằm ở việc <b>thử nghiệm nhanh rồi nhân rộng đúng lúc</b>.</p>
+    <p class="text-white/55 text-[11px] mt-3" data-en="💡 A non-commercial teaching game built in-house by BizOn. The «test cheap and fast, then scale at the right moment» mechanic is a common pedagogical motif in entrepreneurship education; the Bến Phù Sa setting, characters, data, interface and dialogue are all original. Not based on and does not use the material, figures or structure of any commercial simulation. Pedagogical direction: Assoc. Prof. Dr. Phan Anh Tú (School of Economics, Can Tho University).">💡 Trò chơi giảng dạy phi thương mại do BizOn tự phát triển. Cơ chế «thử nghiệm nhanh rồi nhân rộng đúng lúc» là mô-típ sư phạm phổ biến trong đào tạo khởi nghiệp; bối cảnh Bến Phù Sa, nhân vật, dữ liệu, giao diện và lời thoại đều là nguyên bản. Không dựa trên và không sử dụng tài liệu, số liệu hay cấu trúc của bất kỳ mô phỏng thương mại nào. Định hướng sư phạm: PGS.TS. Phan Anh Tú (Trường Kinh tế, ĐH Cần Thơ).</p>
+    <p class="text-white/55 text-[11px] mt-2" data-en-html="🌾 Bến Phù Sa is a fictional town inspired by the floating-market culture of Vietnam's Mekong Delta – best known through &lt;b&gt;Cái Răng Floating Market&lt;/b&gt; (Cần Thơ), a national intangible cultural heritage (2016). Reference: Nguyễn Trần Quỳnh Châu &amp; Nguyễn Thị Bé Ba, «Overview of Floating Markets in the Mekong Delta and Cai Rang Floating Market», ICoISSEE-5 (2025), Can Tho University.">🌾 Bến Phù Sa là thị trấn giả tưởng, lấy cảm hứng từ văn hóa chợ nổi miền Tây – tiêu biểu là <b>Chợ nổi Cái Răng</b> (Cần Thơ), di sản văn hóa phi vật thể quốc gia (2016). Tham khảo: Nguyễn Trần Quỳnh Châu &amp; Nguyễn Thị Bé Ba, «Overview of Floating Markets in the Mekong Delta and Cai Rang Floating Market», ICoISSEE-5 (2025), Trường ĐH Cần Thơ.</p>
   </div>
   <img src="assets/character/phu-sa/doi-phu-sa-ghe.webp" alt="Đôi thương hồ miền Tây chở ghe hàng bông đầy trái cây – nhân vật Bến Phù Sa" class="hidden sm:block absolute right-1 bottom-0 w-72 max-w-[42%] pointer-events-none select-none z-0" style="filter:drop-shadow(0 10px 22px rgba(0,0,0,.4))" loading="lazy">
 </header>
@@ -86,31 +92,31 @@
 
   <!-- MÀN GIỚI THIỆU -->
   <section id="ft-intro" class="clay-card p-6">
-    <h2 class="font-display font-extrabold text-deep-teal text-lg mb-3">📜 Luật chơi</h2>
+    <h2 class="font-display font-extrabold text-deep-teal text-lg mb-3" data-en="📜 Rules of play">📜 Luật chơi</h2>
     <ul class="space-y-2 text-sm">
-      <li>⛵ <b>Ghe hàng bông</b>: doanh thu <b>×3</b> – nhưng chốt cứng món hàng &amp; địa điểm cả tuần. Dành cho lúc bạn đã <i>biết</i> công thức thắng.</li>
-      <li>🧺 <b>Gánh hàng rong</b>: doanh thu ~1/3 – nhưng len lỏi khắp ngõ chợ nên nghe ngóng được <b>rất nhiều thông tin thị trường</b>. Vũ khí của người thử nghiệm.</li>
-      <li>📋 <b>Khảo sát chợ</b>: mất trọn tuần không bán hàng, nhận về <b>dữ liệu lịch sử</b> (đúng hướng nhưng có thể lỗi thời).</li>
-      <li>🎯 Nhu cầu thật của từng cặp <b>Món hàng × Địa điểm</b> là ẩn số – mỗi ván mỗi khác. Quan sát sau từng tuần là manh mối quý nhất.</li>
-      <li>🧾 Mỗi món một mô hình vận hành: 🥖 <b>bánh mì</b> phục vụ nhanh (hưởng thêm tuần cao điểm) · 🍧 <b>chè bưởi</b> cần bảo quản (thi thoảng hao hụt) · ☕ <b>cà phê phin</b> biên lời cao nhưng pha chậm.</li>
-      <li>⚔️ <b>3 đối thủ AI</b> – Alpha Dynamics 🐺, Mekong Ventures 🐘, Star Clay Co. 🦚 – cũng buôn bán khắp Bến Phù Sa. Đụng cùng địa điểm là <b>chia nhau khách</b>!</li>
+      <li data-en-html="⛵ &lt;b&gt;Trading boat&lt;/b&gt;: revenue &lt;b&gt;×3&lt;/b&gt; – but locks in the product &amp; location for the whole week. For when you already &lt;i&gt;know&lt;/i&gt; the winning formula.">⛵ <b>Ghe hàng bông</b>: doanh thu <b>×3</b> – nhưng chốt cứng món hàng &amp; địa điểm cả tuần. Dành cho lúc bạn đã <i>biết</i> công thức thắng.</li>
+      <li data-en-html="🧺 &lt;b&gt;Street cart&lt;/b&gt;: revenue ~1/3 – but weaves through every market alley, so you pick up &lt;b&gt;a lot of market intel&lt;/b&gt;. The experimenter's weapon.">🧺 <b>Gánh hàng rong</b>: doanh thu ~1/3 – nhưng len lỏi khắp ngõ chợ nên nghe ngóng được <b>rất nhiều thông tin thị trường</b>. Vũ khí của người thử nghiệm.</li>
+      <li data-en-html="📋 &lt;b&gt;Market survey&lt;/b&gt;: no sales for the whole week, but you get &lt;b&gt;historical data&lt;/b&gt; (points the right way but may be stale).">📋 <b>Khảo sát chợ</b>: mất trọn tuần không bán hàng, nhận về <b>dữ liệu lịch sử</b> (đúng hướng nhưng có thể lỗi thời).</li>
+      <li data-en-html="🎯 The real demand for each &lt;b&gt;Product × Location&lt;/b&gt; pair is hidden – different every run. Observing after each week is your most valuable clue.">🎯 Nhu cầu thật của từng cặp <b>Món hàng × Địa điểm</b> là ẩn số – mỗi ván mỗi khác. Quan sát sau từng tuần là manh mối quý nhất.</li>
+      <li data-en-html="🧾 Each product has its own operating model: 🥖 &lt;b&gt;bánh mì&lt;/b&gt; is fast to serve (extra boost in peak weeks) · 🍧 &lt;b&gt;chè bưởi&lt;/b&gt; (pomelo dessert) needs careful storage (occasional spoilage) · ☕ &lt;b&gt;cà phê phin&lt;/b&gt; (drip coffee) has a high margin but brews slowly.">🧾 Mỗi món một mô hình vận hành: 🥖 <b>bánh mì</b> phục vụ nhanh (hưởng thêm tuần cao điểm) · 🍧 <b>chè bưởi</b> cần bảo quản (thi thoảng hao hụt) · ☕ <b>cà phê phin</b> biên lời cao nhưng pha chậm.</li>
+      <li data-en-html="⚔️ &lt;b&gt;3 AI competitors&lt;/b&gt; – Alpha Dynamics 🐺, Mekong Ventures 🐘, Star Clay Co. 🦚 – are also trading all over Bến Phù Sa. Hitting the same location means &lt;b&gt;splitting the customers&lt;/b&gt;!">⚔️ <b>3 đối thủ AI</b> – Alpha Dynamics 🐺, Mekong Ventures 🐘, Star Clay Co. 🦚 – cũng buôn bán khắp Bến Phù Sa. Đụng cùng địa điểm là <b>chia nhau khách</b>!</li>
     </ul>
     <details class="mt-4 text-sm rounded-xl border border-deep-teal/20 bg-deep-teal/5 p-4">
-      <summary class="font-display font-extrabold text-deep-teal cursor-pointer">🛶 Góc văn hóa thương hồ (miền Tây sông nước)</summary>
+      <summary class="font-display font-extrabold text-deep-teal cursor-pointer" data-en="🛶 A corner of river-trader culture (Mekong Delta)">🛶 Góc văn hóa thương hồ (miền Tây sông nước)</summary>
       <ul class="space-y-2 mt-3">
-        <li><b>Cây bẹo</b> – «treo gì bán nấy»: ghe cắm cây sào tre treo mẫu hàng để quảng cáo không lời. Chọn <b>Món hàng</b> trong game chính là «treo lên cây bẹo».</li>
-        <li><b>«Bán mà không treo»</b>: <b>ghe hàng bông</b> bán đồ ăn – thức uống nóng thì không treo lên sào, người ta nhận ra nhau bằng khói bếp và tiếng khua nước.</li>
-        <li><b>Bát – cạy</b>: luật né nhau trên sông (hô «bát» tránh phải, «cạy» tránh trái – <i>Gia Định thành thông chí</i>, Trịnh Hoài Đức). Trong game, «đụng cùng địa điểm là chia nhau khách» chính là lúc cần bát–cạy.</li>
-        <li><b>Mắt ghe</b>: dân thương hồ vẽ đôi mắt trước mũi ghe để «nhìn đường», trấn thủy quái – niềm tin gắn với tục thờ «Bà Cậu» của người đi sông.</li>
+        <li data-en-html="&lt;b&gt;Cây bẹo&lt;/b&gt; (the &quot;bẹo&quot; pole) – &quot;hang what you sell&quot;: boats plant a bamboo pole hung with a sample of their goods as silent advertising. Choosing a &lt;b&gt;Product&lt;/b&gt; in the game is literally &quot;hanging it on the bẹo pole&quot;."><b>Cây bẹo</b> – «treo gì bán nấy»: ghe cắm cây sào tre treo mẫu hàng để quảng cáo không lời. Chọn <b>Món hàng</b> trong game chính là «treo lên cây bẹo».</li>
+        <li data-en-html="&quot;Selling without hanging anything&quot;: a &lt;b&gt;trading boat&lt;/b&gt; selling food or hot drinks doesn't hang anything on its pole – people recognize it by the smoke from its stove and the sound of the paddle."><b>«Bán mà không treo»</b>: <b>ghe hàng bông</b> bán đồ ăn – thức uống nóng thì không treo lên sào, người ta nhận ra nhau bằng khói bếp và tiếng khua nước.</li>
+        <li data-en-html="&lt;b&gt;Bát – cạy&lt;/b&gt;: the river's own right-of-way rule (call &quot;bát&quot; to pass right, &quot;cạy&quot; to pass left – &lt;i&gt;Gia Định thành thông chí&lt;/i&gt;, Trịnh Hoài Đức). In the game, &quot;hitting the same location splits the customers&quot; is exactly when you'd need a bát–cạy call."><b>Bát – cạy</b>: luật né nhau trên sông (hô «bát» tránh phải, «cạy» tránh trái – <i>Gia Định thành thông chí</i>, Trịnh Hoài Đức). Trong game, «đụng cùng địa điểm là chia nhau khách» chính là lúc cần bát–cạy.</li>
+        <li data-en-html="&lt;b&gt;Mắt ghe&lt;/b&gt; (boat eyes): river traders paint a pair of eyes on the bow to &quot;see the way ahead&quot; and ward off water spirits – a belief tied to the &quot;Bà Cậu&quot; worship of river-goers."><b>Mắt ghe</b>: dân thương hồ vẽ đôi mắt trước mũi ghe để «nhìn đường», trấn thủy quái – niềm tin gắn với tục thờ «Bà Cậu» của người đi sông.</li>
       </ul>
     </details>
-    <p class="text-xs font-semibold opacity-70 mt-4 italic text-center">«Từ một gánh hàng nhỏ, bạn có thể xây dựng nên một thương hiệu lớn – nếu biết quan sát thị trường, thấu hiểu khách hàng và ra quyết định đúng lúc.»</p>
-    <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-5 mb-1.5">Chọn đội của bạn</p>
+    <p class="text-xs font-semibold opacity-70 mt-4 italic text-center" data-en="«From one small cart, you can build a big brand – if you know how to watch the market, understand your customers, and decide at the right moment.»">«Từ một gánh hàng nhỏ, bạn có thể xây dựng nên một thương hiệu lớn – nếu biết quan sát thị trường, thấu hiểu khách hàng và ra quyết định đúng lúc.»</p>
+    <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-5 mb-1.5" data-en="Choose your team">Chọn đội của bạn</p>
     <div class="grid grid-cols-2 gap-2" id="ft-teams"></div>
-    <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-4 mb-1.5">Chọn thuyền trưởng</p>
+    <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-4 mb-1.5" data-en="Choose your captain">Chọn thuyền trưởng</p>
     <div class="grid grid-cols-5 gap-2" id="ft-avatars"></div>
-    <button id="ft-music" onclick="ftMusic()" class="clay-btn w-full bg-deep-teal text-white font-display font-extrabold py-3 text-sm mt-4">🎵 Bật nhạc chủ đề «Đội Phù Sa»</button>
-    <button onclick="ftStart()" class="clay-btn w-full bg-clay-gold text-deep-teal font-display font-extrabold py-4 mt-3">🚀 Bắt đầu 5 tuần kinh doanh</button>
+    <button id="ft-music" onclick="ftMusic()" class="clay-btn w-full bg-deep-teal text-white font-display font-extrabold py-3 text-sm mt-4" data-en="🎵 Play theme song «Đội Phù Sa»">🎵 Bật nhạc chủ đề «Đội Phù Sa»</button>
+    <button onclick="ftStart()" class="clay-btn w-full bg-clay-gold text-deep-teal font-display font-extrabold py-4 mt-3" data-en="🚀 Start the 5-week venture">🚀 Bắt đầu 5 tuần kinh doanh</button>
   </section>
 
   <!-- MÀN CHƠI -->
@@ -118,27 +124,27 @@
     <div class="clay-card p-5 mb-4">
       <div class="flex items-center justify-between">
         <div class="flex gap-2" id="ft-weekdots"></div>
-        <p class="text-sm font-extrabold">💰 <span id="ft-total">0</span> <span>triệu ₫</span></p>
+        <p class="text-sm font-extrabold">💰 <span id="ft-total">0</span> <span data-en="mn ₫">triệu ₫</span></p>
       </div>
       <div class="flex flex-wrap gap-x-4 gap-y-1 mt-3 text-[11px] font-bold opacity-70" id="ft-scores"></div>
     </div>
 
     <div class="clay-card p-6 mb-4">
-      <h2 class="font-display font-extrabold text-deep-teal text-base mb-3"><span>Tuần</span> <span id="ft-week">1</span>/5 – <span>chọn 3 quyết định</span></h2>
-      <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mb-1.5">1 · Phương thức</p>
+      <h2 class="font-display font-extrabold text-deep-teal text-base mb-3"><span data-en="Week">Tuần</span> <span id="ft-week">1</span>/5 – <span data-en="choose 3 decisions">chọn 3 quyết định</span></h2>
+      <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mb-1.5" data-en="1 · Method">1 · Phương thức</p>
       <div class="grid grid-cols-3 gap-2" id="ft-methods"></div>
-      <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mb-1.5 mt-4">2 · Món hàng</p>
+      <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mb-1.5 mt-4" data-en="2 · Product">2 · Món hàng</p>
       <div class="grid grid-cols-3 gap-2" id="ft-menus"></div>
-      <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mb-1.5 mt-4">3 · Địa điểm</p>
+      <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mb-1.5 mt-4" data-en="3 · Location">3 · Địa điểm</p>
       <div class="grid grid-cols-3 gap-2" id="ft-locs"></div>
-      <button id="ft-commit" onclick="ftCommit()" class="clay-btn w-full bg-primary text-white font-display font-extrabold py-3.5 mt-5">🔒 Chốt tuần này</button>
+      <button id="ft-commit" onclick="ftCommit()" class="clay-btn w-full bg-primary text-white font-display font-extrabold py-3.5 mt-5" data-en="🔒 Lock in this week">🔒 Chốt tuần này</button>
       <p id="ft-hint" class="text-xs font-semibold opacity-60 mt-2 text-center"></p>
     </div>
 
     <div class="clay-card p-6">
-      <h2 class="font-display font-extrabold text-deep-teal text-base mb-1">🔎 Quan sát thị trường</h2>
-      <p class="text-[11px] opacity-55 font-semibold">Thông tin thu được sau mỗi tuần – manh mối quan trọng nhất của bạn.</p>
-      <ul id="ft-log" class="ft-log"><li class="opacity-50">Chưa có dữ liệu – hãy chốt tuần đầu tiên.</li></ul>
+      <h2 class="font-display font-extrabold text-deep-teal text-base mb-1" data-en="🔎 Watch the market">🔎 Quan sát thị trường</h2>
+      <p class="text-[11px] opacity-55 font-semibold" data-en="Intel you gather after each week – your most important clue.">Thông tin thu được sau mỗi tuần – manh mối quan trọng nhất của bạn.</p>
+      <ul id="ft-log" class="ft-log"><li class="opacity-50" data-en="No data yet – lock in your first week.">Chưa có dữ liệu – hãy chốt tuần đầu tiên.</li></ul>
     </div>
   </section>
 
@@ -146,21 +152,21 @@
   <section id="ft-ritual" class="hidden">
     <div class="clay-card p-7 text-center mb-4">
       <p class="text-5xl">🕯️</p>
-      <h2 class="font-display font-extrabold text-deep-teal text-2xl mt-2">Rằm giữa mùa – Lễ cúng Bà Cậu</h2>
-      <p class="text-sm opacity-75 mt-3 max-w-md mx-auto">Theo tục thương hồ miền Tây, vào ngày <b>16 và 29 âm lịch</b>, chủ ghe dọn mâm cúng trước <b>mũi ghe</b> tạ ơn <b>Bà Cậu</b> – vị thần che chở người đi sông – cầu buôn may bán đắt, đi lại bình an.</p>
+      <h2 class="font-display font-extrabold text-deep-teal text-2xl mt-2" data-en="Mid-season full moon – the Bà Cậu offering">Rằm giữa mùa – Lễ cúng Bà Cậu</h2>
+      <p class="text-sm opacity-75 mt-3 max-w-md mx-auto" data-en-html="By Mekong Delta river-trader custom, on the &lt;b&gt;16th and 29th of the lunar month&lt;/b&gt;, boat owners lay an offering at the &lt;b&gt;bow&lt;/b&gt; to thank &lt;b&gt;Bà Cậu&lt;/b&gt; – the deity who protects river-goers – praying for good trade and safe travel.">Theo tục thương hồ miền Tây, vào ngày <b>16 và 29 âm lịch</b>, chủ ghe dọn mâm cúng trước <b>mũi ghe</b> tạ ơn <b>Bà Cậu</b> – vị thần che chở người đi sông – cầu buôn may bán đắt, đi lại bình an.</p>
       <div class="mt-4 rounded-xl border border-deep-teal/20 bg-deep-teal/5 p-4 text-sm text-left max-w-md mx-auto">
-        <p class="font-display font-extrabold text-deep-teal mb-1">🛶 Mâm cúng trước mũi ghe</p>
-        <p>🦆 Vịt luộc <i>(cúng vịt chứ không cúng gà – vịt bơi giỏi, tượng trưng đi sông thuận buồm)</i> · 🍚 ba chén cháo · 🍵 bình trà · 🍶 bình rượu · 🍬 bánh ngọt.</p>
+        <p class="font-display font-extrabold text-deep-teal mb-1" data-en="🛶 The offering tray at the bow">🛶 Mâm cúng trước mũi ghe</p>
+        <p data-en-html="🦆 Boiled duck &lt;i&gt;(duck, never chicken – ducks swim well, symbolizing smooth sailing)&lt;/i&gt; · 🍚 three bowls of rice porridge · 🍵 a pot of tea · 🍶 a jug of rice wine · 🍬 sweet cakes.">🦆 Vịt luộc <i>(cúng vịt chứ không cúng gà – vịt bơi giỏi, tượng trưng đi sông thuận buồm)</i> · 🍚 ba chén cháo · 🍵 bình trà · 🍶 bình rượu · 🍬 bánh ngọt.</p>
       </div>
       <div class="mt-5 rounded-xl border-2 border-clay-gold/40 p-4 text-left max-w-md mx-auto">
-        <p class="font-display font-extrabold text-deep-teal">🪷 Lời khấn của người bán ngay thật</p>
-        <p class="text-sm opacity-80 mt-1">Người xưa tin Bà Cậu <b>trừng phạt kẻ mua gian bán lận</b>. Trước khi đi tiếp: tuần qua bạn có <b>cân đủ, niêm yết giá thật</b> với khách không?</p>
+        <p class="font-display font-extrabold text-deep-teal" data-en="🪷 An honest seller's vow">🪷 Lời khấn của người bán ngay thật</p>
+        <p class="text-sm opacity-80 mt-1" data-en-html="The old belief holds that Bà Cậu &lt;b&gt;punishes cheating buyers and sellers&lt;/b&gt;. Before moving on: this past week, did you &lt;b&gt;weigh fairly and post honest prices&lt;/b&gt; for your customers?">Người xưa tin Bà Cậu <b>trừng phạt kẻ mua gian bán lận</b>. Trước khi đi tiếp: tuần qua bạn có <b>cân đủ, niêm yết giá thật</b> với khách không?</p>
         <div class="flex gap-3 mt-3">
-          <button onclick="ftRitualNext(true)" class="clay-btn flex-1 bg-deep-teal text-white font-display font-extrabold py-3">🕯️ Có – tôi bán thật</button>
-          <button onclick="ftRitualNext(false)" class="clay-btn flex-1 bg-clay-gold text-deep-teal font-display font-extrabold py-3">🤔 Tôi sẽ giữ mình hơn</button>
+          <button onclick="ftRitualNext(true)" class="clay-btn flex-1 bg-deep-teal text-white font-display font-extrabold py-3" data-en="🕯️ Yes – I sold honestly">🕯️ Có – tôi bán thật</button>
+          <button onclick="ftRitualNext(false)" class="clay-btn flex-1 bg-clay-gold text-deep-teal font-display font-extrabold py-3" data-en="🤔 I'll be more careful">🤔 Tôi sẽ giữ mình hơn</button>
         </div>
       </div>
-      <p class="text-[11px] opacity-50 mt-4">Nghi lễ chỉ để suy ngẫm – <b>không cộng hay trừ điểm</b>. Nguồn: tục cúng ghe miền Tây (thờ Bà Cậu, cúng vịt, ngày 16 &amp; 29 âm lịch).</p>
+      <p class="text-[11px] opacity-50 mt-4" data-en-html="This ritual is only for reflection – &lt;b&gt;no points added or subtracted&lt;/b&gt;. Source: Mekong Delta river-boat offering custom (Bà Cậu worship, duck offering, 16th &amp; 29th lunar days).">Nghi lễ chỉ để suy ngẫm – <b>không cộng hay trừ điểm</b>. Nguồn: tục cúng ghe miền Tây (thờ Bà Cậu, cúng vịt, ngày 16 &amp; 29 âm lịch).</p>
     </div>
   </section>
 
@@ -169,35 +175,35 @@
     <div class="clay-card p-7 text-center mb-4">
       <p class="text-5xl" id="ft-medal">🏆</p>
       <h2 class="font-display font-extrabold text-deep-teal text-2xl mt-2" id="ft-title">Kết quả</h2>
-      <p class="font-display font-extrabold text-primary text-4xl mt-3"><span id="ft-final">0</span> <span>triệu ₫</span></p>
+      <p class="font-display font-extrabold text-primary text-4xl mt-3"><span id="ft-final">0</span> <span data-en="mn ₫">triệu ₫</span></p>
       <p class="text-sm font-semibold opacity-70 mt-1.5" id="ft-eff"></p>
       <div class="mt-4 space-y-2 text-left" id="ft-board"></div>
       <p class="text-xs opacity-60 mt-3" id="ft-reveal"></p>
       <div class="mt-5 text-left hidden" id="ft-submit-box">
-        <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mb-1.5">📡 Nộp kết quả cho giảng viên (tùy chọn)</p>
+        <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mb-1.5" data-en="📡 Submit your result to the instructor (optional)">📡 Nộp kết quả cho giảng viên (tùy chọn)</p>
         <div class="flex flex-col sm:flex-row gap-2">
-          <input id="ft-class" placeholder="Mã lớp (VD: QTKD-2026-A)" class="flex-1 border-2 rounded-xl px-3 py-2.5 text-sm font-semibold" style="border-color:rgba(0,102,135,.25);background:transparent;color:inherit">
-          <input id="ft-name" placeholder="Tên của bạn" class="flex-1 border-2 rounded-xl px-3 py-2.5 text-sm font-semibold" style="border-color:rgba(0,102,135,.25);background:transparent;color:inherit">
-          <button id="ft-send" onclick="ftSubmit()" class="clay-btn bg-deep-teal text-white font-display font-extrabold px-5 py-2.5 text-sm shrink-0">Nộp</button>
+          <input id="ft-class" placeholder="Mã lớp (VD: QTKD-2026-A)" data-en-ph="Class code (e.g. QTKD-2026-A)" class="flex-1 border-2 rounded-xl px-3 py-2.5 text-sm font-semibold" style="border-color:rgba(0,102,135,.25);background:transparent;color:inherit">
+          <input id="ft-name" placeholder="Tên của bạn" data-en-ph="Your name" class="flex-1 border-2 rounded-xl px-3 py-2.5 text-sm font-semibold" style="border-color:rgba(0,102,135,.25);background:transparent;color:inherit">
+          <button id="ft-send" onclick="ftSubmit()" class="clay-btn bg-deep-teal text-white font-display font-extrabold px-5 py-2.5 text-sm shrink-0" data-en="Submit">Nộp</button>
         </div>
         <p id="ft-send-msg" class="text-[11px] font-semibold opacity-60 mt-1.5"></p>
       </div>
-      <a href="game.html" class="clay-btn w-full bg-deep-teal text-white font-display font-extrabold py-3.5 flex items-center justify-center mt-5">🏢 Lên Bậc 2 → Bật Nghiệp</a>
+      <a href="game.html" class="clay-btn w-full bg-deep-teal text-white font-display font-extrabold py-3.5 flex items-center justify-center mt-5" data-en="🏢 Move up to Tier 2 → Bật Nghiệp">🏢 Lên Bậc 2 → Bật Nghiệp</a>
       <div class="flex gap-3 mt-3">
-        <button onclick="location.reload()" class="clay-btn flex-1 bg-clay-gold text-deep-teal font-display font-extrabold py-3.5">🔄 Chơi lại</button>
+        <button onclick="location.reload()" class="clay-btn flex-1 bg-clay-gold text-deep-teal font-display font-extrabold py-3.5" data-en="🔄 Play again">🔄 Chơi lại</button>
         <a href="games.html" class="clay-btn flex-1 bg-primary text-white font-display font-extrabold py-3.5 flex items-center justify-center">🕹️ Arcade</a>
       </div>
     </div>
     <div class="clay-card p-6">
-      <h3 class="font-display font-extrabold text-deep-teal text-base mb-2">🎓 Câu hỏi tổng kết (thảo luận cùng lớp)</h3>
+      <h3 class="font-display font-extrabold text-deep-teal text-base mb-2" data-en="🎓 Debrief questions (discuss with the class)">🎓 Câu hỏi tổng kết (thảo luận cùng lớp)</h3>
       <ol class="list-decimal ml-5 space-y-1.5 text-sm">
-        <li>Tuần 1 bạn chọn gì? Vì sao?</li>
-        <li>Bạn có đổi chiến lược sau khi nhận phản hồi thị trường không?</li>
-        <li>Bạn cân bằng thế nào giữa <b>học hỏi</b> (gánh hàng rong) và <b>nhân rộng</b> (ghe hàng bông)?</li>
-        <li>Bài học nào áp dụng được cho khởi nghiệp thật?</li>
+        <li data-en="What did you choose in week 1? Why?">Tuần 1 bạn chọn gì? Vì sao?</li>
+        <li data-en="Did you change strategy after getting market feedback?">Bạn có đổi chiến lược sau khi nhận phản hồi thị trường không?</li>
+        <li data-en-html="How did you balance &lt;b&gt;learning&lt;/b&gt; (street cart) against &lt;b&gt;scaling&lt;/b&gt; (trading boat)?">Bạn cân bằng thế nào giữa <b>học hỏi</b> (gánh hàng rong) và <b>nhân rộng</b> (ghe hàng bông)?</li>
+        <li data-en="Which lesson applies to a real startup?">Bài học nào áp dụng được cho khởi nghiệp thật?</li>
       </ol>
-      <p class="text-xs opacity-60 mt-3">💡 Bài học lõi: <b>thử nghiệm rẻ và nhanh trước</b> (prototyping bằng gánh hàng rong), khi tín hiệu đủ rõ mới <b>đặt cược lớn</b> (ghe hàng bông). Dữ liệu lịch sử chỉ mang tính định hướng – quan sát trực tiếp mới là vàng.</p>
-      <p class="text-xs opacity-60 mt-2">📰 Chuyện thật ngoài đời: chàng trai Croatia <b>Matko Kmezic</b> mở xe cà phê phin «Viet Drip» với ghế nhựa thấp kiểu vỉa hè Việt giữa Amsterdam – những ngày đầu chỉ bán được 3–4 ly/ngày, anh kiên trì giải thích vị robusta cho từng vị khách, rồi người ta bắt đầu xếp hàng. Đúng bài học của game: thử nhỏ, học nhanh, nhân rộng đúng lúc. <a href="https://znews.vn/xe-ca-phe-phin-ghe-nhua-do-kieu-viet-o-ha-lan-post1672015.html" target="_blank" rel="noopener" class="underline font-bold">Znews, 26/7/2026 →</a></p>
+      <p class="text-xs opacity-60 mt-3" data-en-html="💡 Core lesson: &lt;b&gt;test cheap and fast first&lt;/b&gt; (prototyping with the street cart), then &lt;b&gt;bet big&lt;/b&gt; once the signal is clear enough (trading boat). Historical data only points a direction – direct observation is the real gold.">💡 Bài học lõi: <b>thử nghiệm rẻ và nhanh trước</b> (prototyping bằng gánh hàng rong), khi tín hiệu đủ rõ mới <b>đặt cược lớn</b> (ghe hàng bông). Dữ liệu lịch sử chỉ mang tính định hướng – quan sát trực tiếp mới là vàng.</p>
+      <p class="text-xs opacity-60 mt-2" data-en-html="📰 A true story: Croatian expat &lt;b&gt;Matko Kmezic&lt;/b&gt; opened a «Viet Drip» phin-coffee cart with low Vietnamese-style street stools in Amsterdam – in the early days he sold only 3–4 cups a day, patiently explaining the robusta flavor to every customer, until people started lining up. The exact lesson of this game: test small, learn fast, scale at the right moment. &lt;a href=&quot;https://znews.vn/xe-ca-phe-phin-ghe-nhua-do-kieu-viet-o-ha-lan-post1672015.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot; class=&quot;underline font-bold&quot;&gt;Znews, 26/7/2026 →&lt;/a&gt;">📰 Chuyện thật ngoài đời: chàng trai Croatia <b>Matko Kmezic</b> mở xe cà phê phin «Viet Drip» với ghế nhựa thấp kiểu vỉa hè Việt giữa Amsterdam – những ngày đầu chỉ bán được 3–4 ly/ngày, anh kiên trì giải thích vị robusta cho từng vị khách, rồi người ta bắt đầu xếp hàng. Đúng bài học của game: thử nhỏ, học nhanh, nhân rộng đúng lúc. <a href="https://znews.vn/xe-ca-phe-phin-ghe-nhua-do-kieu-viet-o-ha-lan-post1672015.html" target="_blank" rel="noopener" class="underline font-bold">Znews, 26/7/2026 →</a></p>
     </div>
   </section>
 
@@ -206,35 +212,56 @@
 <script>
 (function () {
   var METHODS = [
-    { id: 'truck', icon: '⛵', name: 'Ghe hàng bông', sub: 'Doanh thu ×3' },
-    { id: 'cart', icon: '🧺', name: 'Gánh hàng rong', sub: 'Doanh thu ×1 · nhiều tin' },
-    { id: 'research', icon: '📋', name: 'Khảo sát chợ', sub: 'Không bán · dữ liệu cũ' },
+    { id: 'truck', icon: '⛵', name: 'Ghe hàng bông', sub: 'Doanh thu ×3', nameEn: 'Trading boat', subEn: 'Revenue ×3' },
+    { id: 'cart', icon: '🧺', name: 'Gánh hàng rong', sub: 'Doanh thu ×1 · nhiều tin', nameEn: 'Street cart', subEn: 'Revenue ×1 · lots of intel' },
+    { id: 'research', icon: '📋', name: 'Khảo sát chợ', sub: 'Không bán · dữ liệu cũ', nameEn: 'Market survey', subEn: 'No sales · old data' },
   ];
+  function mdName(i) { return T(METHODS[i].name, METHODS[i].nameEn); }
+  function mdSub(i) { return T(METHODS[i].sub, METHODS[i].subEn); }
   // Mỗi món một mô hình vận hành (xem menuAdj); mỗi địa điểm một chân dung khách
-  var MENUS = [['🥖', 'Bánh mì', 'Phục vụ nhanh'], ['🍧', 'Chè bưởi', 'Cần bảo quản'], ['☕', 'Cà phê phin', 'Biên lời cao · chậm']];
-  var LOCS = [['🛶', 'Chợ nổi', 'du khách sáng sớm'], ['⛴️', 'Bến phà', 'khách vãng lai'], ['🎓', 'Làng đại học', 'sinh viên'], ['🌳', 'Công viên bờ sông', 'gia đình cuối tuần'], ['🏭', 'Khu công nghiệp', 'công nhân tan ca'], ['🌙', 'Chợ đêm', 'giới trẻ về đêm']];
+  // Hàng: [icon, tên VI, mô tả VI, tên EN, mô tả EN]
+  var MENUS = [
+    ['🥖', 'Bánh mì', 'Phục vụ nhanh', 'Bánh mì', 'Fast to serve'],
+    ['🍧', 'Chè bưởi', 'Cần bảo quản', 'Chè bưởi (pomelo dessert)', 'Needs careful storage'],
+    ['☕', 'Cà phê phin', 'Biên lời cao · chậm', 'Cà phê phin (drip coffee)', 'High margin · slow'],
+  ];
+  var LOCS = [
+    ['🛶', 'Chợ nổi', 'du khách sáng sớm', 'Floating market', 'early-morning tourists'],
+    ['⛴️', 'Bến phà', 'khách vãng lai', 'Ferry pier', 'passers-by'],
+    ['🎓', 'Làng đại học', 'sinh viên', 'University town', 'students'],
+    ['🌳', 'Công viên bờ sông', 'gia đình cuối tuần', 'Riverside park', 'weekend families'],
+    ['🏭', 'Khu công nghiệp', 'công nhân tan ca', 'Industrial zone', 'workers off-shift'],
+    ['🌙', 'Chợ đêm', 'giới trẻ về đêm', 'Night market', 'young crowds at night'],
+  ];
+  function mName(i) { return T(MENUS[i][1], MENUS[i][3]); }
+  function mSub(i) { return T(MENUS[i][2], MENUS[i][4]); }
+  function lName(i) { return T(LOCS[i][1], LOCS[i][3]); }
+  function lSub(i) { return T(LOCS[i][2], LOCS[i][4]); }
 
   // Các đội chơi – cùng chất liệu đất nặn của hệ sinh thái; đội mới mở khóa khi có tạo hình
   var TEAMS = [
-    { name: 'Đội Demo Rồng Xanh', icon: '🐉', members: [
-      { img: 'assets/character/team/ceo-cut.webp', name: 'Minh Long', role: 'CEO' },
-      { img: 'assets/character/team/cfo-cut.webp', name: 'Thu Hà', role: 'CFO' },
-      { img: 'assets/character/team/cmo-cut.webp', name: 'Lan Chi', role: 'CMO' },
-      { img: 'assets/character/team/coo-cut.webp', name: 'Bảo Ngọc', role: 'COO' },
-      { img: 'assets/character/team/sec-cut.webp', name: 'Gia Hân', role: 'Thư ký' },
+    { name: 'Đội Demo Rồng Xanh', nameEn: 'Blue Dragon Demo Team', icon: '🐉', members: [
+      { img: 'assets/character/team/ceo-cut.webp', name: 'Minh Long', role: 'CEO', roleEn: 'CEO' },
+      { img: 'assets/character/team/cfo-cut.webp', name: 'Thu Hà', role: 'CFO', roleEn: 'CFO' },
+      { img: 'assets/character/team/cmo-cut.webp', name: 'Lan Chi', role: 'CMO', roleEn: 'CMO' },
+      { img: 'assets/character/team/coo-cut.webp', name: 'Bảo Ngọc', role: 'COO', roleEn: 'COO' },
+      { img: 'assets/character/team/sec-cut.webp', name: 'Gia Hân', role: 'Thư ký', roleEn: 'Secretary' },
     ] },
-    { name: 'Đội Phù Sa', icon: '🌾', members: [
-      { img: 'assets/character/phu-sa/huong-cut.webp', name: 'Hương', role: 'Nhà sáng lập' },
-      { img: 'assets/character/phu-sa/tu-cut.webp', name: 'Thầy Tú', role: 'Người đồng hành' },
+    { name: 'Đội Phù Sa', nameEn: 'Phù Sa Team', icon: '🌾', members: [
+      { img: 'assets/character/phu-sa/huong-cut.webp', name: 'Hương', role: 'Nhà sáng lập', roleEn: 'Founder' },
+      { img: 'assets/character/phu-sa/tu-cut.webp', name: 'Thầy Tú', role: 'Người đồng hành', roleEn: 'Co-founder' },
     ] },
   ];
+  function tmName(i) { return T(TEAMS[i].name, TEAMS[i].nameEn); }
+  function mRole(member) { return T(member.role, member.roleEn); }
   function TEAM() { return TEAMS[S.team].members; }
   // 3 đối thủ AI của hệ sinh thái BizOn – mỗi "nhà" một tính cách kinh doanh
   var RIVALS = [
-    { name: 'Alpha Dynamics', icon: '🐺', img: 'assets/character/rivals/alpha.webp', style: 'tốc chiến: dò 2 tuần rồi dồn lực' },
-    { name: 'Mekong Ventures', icon: '🐘', img: 'assets/character/rivals/mekong.webp', style: 'chậm mà chắc: bám trụ một khu' },
-    { name: 'Star Clay Co.', icon: '🦚', img: 'assets/character/rivals/star.webp', style: 'thương hiệu: luân phiên hai khu' },
+    { name: 'Alpha Dynamics', icon: '🐺', img: 'assets/character/rivals/alpha.webp', style: 'tốc chiến: dò 2 tuần rồi dồn lực', styleEn: 'fast mover: scouts 2 weeks then goes all-in' },
+    { name: 'Mekong Ventures', icon: '🐘', img: 'assets/character/rivals/mekong.webp', style: 'chậm mà chắc: bám trụ một khu', styleEn: 'slow and steady: sticks to one zone' },
+    { name: 'Star Clay Co.', icon: '🦚', img: 'assets/character/rivals/star.webp', style: 'thương hiệu: luân phiên hai khu', styleEn: 'brand builder: rotates between two zones' },
   ];
+  function rStyle(r) { return T(r.style, r.styleEn); }
 
   // RNG có seed để mỗi ván một thị trường riêng nhưng nhất quán trong ván
   var seed = Math.floor(Math.random() * 1e9);
@@ -263,7 +290,9 @@
 
   var S = { week: 0, total: 0, team: 0, cap: 0, sel: { m: null, menu: null, loc: null }, log: [], ritualDone: false };
   var $ = function (id) { return document.getElementById(id); };
-  var f1 = function (v) { return (Math.round(v * 10) / 10).toLocaleString('vi-VN', { maximumFractionDigits: 1 }); };
+  var f1 = function (v) { return (Math.round(v * 10) / 10).toLocaleString(isEN() ? 'en-US' : 'vi-VN', { maximumFractionDigits: 1 }); };
+  var MU = function () { return T('triệu ₫', 'mn ₫'); }; // đơn vị tiền đầy đủ
+  var MS = function () { return T('tr₫', 'mn₫'); }; // đơn vị tiền rút gọn (bảng xếp hạng)
 
   function bestAt(loc) { var b = 0; for (var m = 1; m < 3; m++) if (D[m][loc] > D[b][loc]) b = m; return b; }
   function bestCombo() {
@@ -290,11 +319,11 @@
   function renderTeams() {
     $('ft-teams').innerHTML = TEAMS.map(function (t, i) {
       if (t.locked) {
-        return '<button class="ft-opt" disabled title="' + t.locked + '"><span>' + t.icon + ' ' + t.name + '</span>' +
+        return '<button class="ft-opt" disabled title="' + t.locked + '"><span>' + t.icon + ' ' + tmName(i) + '</span>' +
           '<br><span style="font-size:9px;opacity:.6">🔒 ' + t.locked + '</span></button>';
       }
-      return '<button class="ft-opt' + (i === S.team ? ' sel' : '') + '" onclick="ftTeam(' + i + ')"><span>' + t.icon + ' ' + t.name + '</span>' +
-        '<br><span style="font-size:9px;opacity:.6">' + t.members.length + ' thành viên</span></button>';
+      return '<button class="ft-opt' + (i === S.team ? ' sel' : '') + '" onclick="ftTeam(' + i + ')"><span>' + t.icon + ' ' + tmName(i) + '</span>' +
+        '<br><span style="font-size:9px;opacity:.6">' + t.members.length + ' ' + T('thành viên', 'members') + '</span></button>';
     }).join('');
   }
   window.ftTeam = function (i) { S.team = i; S.cap = 0; renderTeams(); renderAvatars(); };
@@ -305,18 +334,18 @@
     $('ft-avatars').innerHTML = TEAM().map(function (t, i) {
       return '<button class="ft-ava' + (i === S.cap ? ' sel' : '') + '" onclick="ftCap(' + i + ')">' +
         '<img src="' + t.img + '" alt="' + t.name + '" loading="lazy"><span style="display:block;margin-top:4px">' + t.name + '</span>' +
-        '<span style="display:block;font-size:9px;opacity:.55">' + t.role + '</span></button>';
+        '<span style="display:block;font-size:9px;opacity:.55">' + mRole(t) + '</span></button>';
     }).join('');
   }
   window.ftCap = function (i) { S.cap = i; renderAvatars(); };
 
   function renderScores() {
-    var chips = [{ img: TEAM()[S.cap].img, label: TEAMS[S.team].icon + ' Đội bạn', total: S.total, me: true }].concat(RIVALS.map(function (r) {
+    var chips = [{ img: TEAM()[S.cap].img, label: TEAMS[S.team].icon + ' ' + T('Đội bạn', 'Your team'), total: S.total, me: true }].concat(RIVALS.map(function (r) {
       return { img: r.img, label: r.icon + ' ' + r.name.split(' ')[0], total: r.total };
     }));
     $('ft-scores').innerHTML = chips.map(function (c) {
       return '<span class="ft-chip' + (c.me ? '" style="color:#fda127' : '') + '"><img src="' + c.img + '" alt="">' +
-        c.label + ' · ' + f1(c.total) + ' tr</span>';
+        c.label + ' · ' + f1(c.total) + ' ' + T('tr', 'mn') + '</span>';
     }).join('');
   }
 
@@ -330,18 +359,25 @@
     return '<button class="ft-opt" data-g="' + group + '" data-i="' + idx + '" onclick="ftPick(\'' + group + '\',' + idx + ')">' + html + '</button>';
   }
 
-  function render() {
+  // Vẽ lại nhãn của màn quyết định (đầu tuần + 3 nhóm lựa chọn + điểm số) mà
+  // KHÔNG đụng tới S.sel – dùng cả lúc sang tuần mới lẫn lúc đổi ngôn ngữ giữa
+  // chừng một tuần đang chọn dở, để không làm mất lựa chọn hiện tại.
+  function renderOptions() {
     $('ft-week').textContent = S.week + 1;
     $('ft-total').textContent = f1(S.total);
     $('ft-weekdots').innerHTML = [0, 1, 2, 3, 4].map(function (i) {
       return '<div class="ft-week-dot ' + (i < S.week ? 'done' : i === S.week ? 'cur' : '') + '">' + (i + 1) + '</div>';
     }).join('');
     $('ft-methods').innerHTML = METHODS.map(function (m, i) {
-      return optBtn('m', i, '<span class="big">' + m.icon + '</span><span>' + m.name + '</span><br><span style="font-size:10px;opacity:.6">' + m.sub + '</span>');
+      return optBtn('m', i, '<span class="big">' + m.icon + '</span><span>' + mdName(i) + '</span><br><span style="font-size:10px;opacity:.6">' + mdSub(i) + '</span>');
     }).join('');
-    $('ft-menus').innerHTML = MENUS.map(function (m, i) { return optBtn('menu', i, '<span class="big">' + m[0] + '</span><span>' + m[1] + '</span><br><span style="font-size:9px;opacity:.6">' + m[2] + '</span>'); }).join('');
-    $('ft-locs').innerHTML = LOCS.map(function (l, i) { return optBtn('loc', i, '<span class="big">' + l[0] + '</span><span>' + l[1] + '</span><br><span style="font-size:9px;opacity:.6">' + l[2] + '</span>'); }).join('');
+    $('ft-menus').innerHTML = MENUS.map(function (m, i) { return optBtn('menu', i, '<span class="big">' + m[0] + '</span><span>' + mName(i) + '</span><br><span style="font-size:9px;opacity:.6">' + mSub(i) + '</span>'); }).join('');
+    $('ft-locs').innerHTML = LOCS.map(function (l, i) { return optBtn('loc', i, '<span class="big">' + l[0] + '</span><span>' + lName(i) + '</span><br><span style="font-size:9px;opacity:.6">' + lSub(i) + '</span>'); }).join('');
     renderScores();
+  }
+
+  function render() {
+    renderOptions();
     S.sel = { m: null, menu: null, loc: null };
     syncSel();
   }
@@ -361,12 +397,12 @@
     var ready = S.sel.m !== null && (research || (S.sel.menu !== null && S.sel.loc !== null));
     $('ft-commit').disabled = !ready;
     $('ft-commit').style.opacity = ready ? 1 : 0.5;
-    $('ft-hint').textContent = research ? 'Tuần này bạn dừng bán để mua dữ liệu lịch sử.' :
-      (ready ? '' : 'Chọn đủ Phương thức + Món hàng + Địa điểm để chốt.');
+    $('ft-hint').textContent = research ? T('Tuần này bạn dừng bán để mua dữ liệu lịch sử.', "This week you pause sales to buy historical data.") :
+      (ready ? '' : T('Chọn đủ Phương thức + Món hàng + Địa điểm để chốt.', 'Pick a Method + Product + Location to lock in.'));
   }
 
   function addLog(week, html) {
-    S.log.unshift('<li><b>Tuần ' + week + ':</b> ' + html + '</li>');
+    S.log.unshift('<li><b>' + T('Tuần ' + week, 'Week ' + week) + ':</b> ' + html + '</li>');
     $('ft-log').innerHTML = S.log.join('');
   }
 
@@ -385,7 +421,10 @@
       var noisy = rnd() < 0.2;
       var rm = noisy ? (bc[0] + 1) % 3 : bc[0];
       var rl = noisy ? (bc[1] + 1 + Math.floor(rnd() * 5)) % 6 : bc[1];
-      addLog(w + 1, '📋 Sổ ghi chép của tiểu thương: mùa trước, ' + MENUS[rm][0] + ' <b>' + MENUS[rm][1] + '</b> bán chạy nhất, khu <b>' + LOCS[rl][1] + '</b> đông khách nhất. <i>(dữ liệu cũ – chỉ mang tính tham khảo)</i>');
+      addLog(w + 1, T(
+        '📋 Sổ ghi chép của tiểu thương: mùa trước, ' + MENUS[rm][0] + ' <b>' + mName(rm) + '</b> bán chạy nhất, khu <b>' + lName(rl) + '</b> đông khách nhất. <i>(dữ liệu cũ – chỉ mang tính tham khảo)</i>',
+        "📋 The trader's old ledger: last season, " + MENUS[rm][0] + ' <b>' + mName(rm) + '</b> sold best, and <b>' + lName(rl) + '</b> was the busiest spot. <i>(old data – for reference only)</i>'
+      ));
     } else {
       var mult = m === 0 ? 3 : 1;
       var adj = menuAdj(menu, w, loc, true);
@@ -395,27 +434,35 @@
       var isBest = bestAt(loc) === menu;
       var clash = count[loc] - 1;
       var notes = [];
-      if (menu === 0 && W[w][loc] >= 1.05) notes.push('🥖 phục vụ nhanh – hốt trọn tuần cao điểm +15%');
-      if (menu === 1 && adj < 1) notes.push('🍧 hao hụt bảo quản −12%');
-      if (menu === 2) notes.push(W[w][loc] >= 1.05 ? '☕ biên lời cao +18%, nhưng pha chậm lỡ bớt khách cao điểm' : '☕ biên lời cao +18%');
-      if (clash > 0) notes.push('⚡ đụng độ ' + clash + ' đối thủ – chia nhau khách!');
-      addLog(w + 1, icon + ' Bán ' + MENUS[menu][0] + ' ' + MENUS[menu][1] + ' tại ' + LOCS[loc][0] + ' ' + LOCS[loc][1] + ' → <b>' + f1(rev) + ' triệu ₫</b>' +
-        (notes.length ? ' <i>(' + notes.join(' · ') + ')</i>' : ''));
+      if (menu === 0 && W[w][loc] >= 1.05) notes.push(T('🥖 phục vụ nhanh – hốt trọn tuần cao điểm +15%', '🥖 fast service – rides the peak week in full +15%'));
+      if (menu === 1 && adj < 1) notes.push(T('🍧 hao hụt bảo quản −12%', '🍧 storage spoilage −12%'));
+      if (menu === 2) notes.push(W[w][loc] >= 1.05 ? T('☕ biên lời cao +18%, nhưng pha chậm lỡ bớt khách cao điểm', '☕ high margin +18%, but slow brewing misses some peak-week customers') : T('☕ biên lời cao +18%', '☕ high margin +18%'));
+      if (clash > 0) notes.push(T('⚡ đụng độ ' + clash + ' đối thủ – chia nhau khách!', '⚡ clashed with ' + clash + ' rival(s) – splitting the customers!'));
+      addLog(w + 1, T(
+        icon + ' Bán ' + MENUS[menu][0] + ' ' + mName(menu) + ' tại ' + LOCS[loc][0] + ' ' + lName(loc) + ' → <b>' + f1(rev) + ' ' + MU() + '</b>' + (notes.length ? ' <i>(' + notes.join(' · ') + ')</i>' : ''),
+        icon + ' Sold ' + MENUS[menu][0] + ' ' + mName(menu) + ' at ' + LOCS[loc][0] + ' ' + lName(loc) + ' → <b>' + f1(rev) + ' ' + MU() + '</b>' + (notes.length ? ' <i>(' + notes.join(' · ') + ')</i>' : '')
+      ));
       // Điềm thương hồ – flavor tất định ánh xạ từ tín hiệu đã tính, không đổi điểm
       addLog(w + 1, isBest
-        ? '🐕 <i>Điềm thương hồ:</i> có con chó lội ngang trước mũi ghe – người xưa tin là điềm buôn may bán đắt.'
-        : '🐍 <i>Điềm thương hồ:</i> một con rắn lội ngang sông – điềm nhắc cẩn trọng, tuần tới nên dò kỹ hơn.');
+        ? T('🐕 <i>Điềm thương hồ:</i> có con chó lội ngang trước mũi ghe – người xưa tin là điềm buôn may bán đắt.', '🐕 <i>River omen:</i> a dog wades across in front of your bow – the old belief says that means good trade ahead.')
+        : T('🐍 <i>Điềm thương hồ:</i> một con rắn lội ngang sông – điềm nhắc cẩn trọng, tuần tới nên dò kỹ hơn.', '🐍 <i>River omen:</i> a snake swims across the river – a reminder to be careful and scout more closely next week.'));
       if (m === 1) {
         // Gánh hàng rong: nghe ngóng được nhiều – món tốt nhất tại chỗ + so sánh 2 địa điểm
         var b = bestAt(loc);
-        addLog(w + 1, '🧺 <i>Nghe ngóng:</i> tại ' + LOCS[loc][1] + ', khách hỏi <b>' + MENUS[b][1] + '</b> nhiều nhất.');
+        addLog(w + 1, T(
+          '🧺 <i>Nghe ngóng:</i> tại ' + lName(loc) + ', khách hỏi <b>' + mName(b) + '</b> nhiều nhất.',
+          '🧺 <i>Word on the street:</i> at ' + lName(loc) + ', customers ask for <b>' + mName(b) + '</b> the most.'
+        ));
         if (w < 4) {
           var l1 = Math.floor(rnd() * 6), l2 = (l1 + 1 + Math.floor(rnd() * 5)) % 6;
           var hot = W[w + 1][l1] >= W[w + 1][l2] ? l1 : l2;
-          addLog(w + 1, '🗣️ <i>Tin vỉa hè:</i> tuần tới khu <b>' + LOCS[hot][1] + '</b> có vẻ sẽ đông hơn ' + LOCS[hot === l1 ? l2 : l1][1] + '.');
+          addLog(w + 1, T(
+            '🗣️ <i>Tin vỉa hè:</i> tuần tới khu <b>' + lName(hot) + '</b> có vẻ sẽ đông hơn ' + lName(hot === l1 ? l2 : l1) + '.',
+            '🗣️ <i>Street talk:</i> next week, <b>' + lName(hot) + '</b> looks set to be busier than ' + lName(hot === l1 ? l2 : l1) + '.'
+          ));
         }
       } else {
-        addLog(w + 1, '⛵ <i>Cảm nhận:</i> ' + (isBest ? 'món của bạn đang là "vua" ở khu này! 👑' : 'hình như khách ở đây thèm một món khác…'));
+        addLog(w + 1, '⛵ <i>' + T('Cảm nhận', 'Gut feeling') + ':</i> ' + (isBest ? T('món của bạn đang là "vua" ở khu này! 👑', 'your product is the "king" of this spot right now! 👑') : T('hình như khách ở đây thèm một món khác…', 'customers here seem to be craving something else…')));
       }
     }
 
@@ -424,9 +471,9 @@
       var rl2 = r.plan[w];
       r.total += D[r.menu][rl2] * W[w][rl2] * r.mult[w] * menuAdj(r.menu, w, rl2, false) * share(count[rl2]);
     });
-    addLog(w + 1, '⚔️ <i>Đối thủ tuần này:</i> ' + RIVALS.map(function (r) {
+    addLog(w + 1, '⚔️ <i>' + T('Đối thủ tuần này', "This week's rivals") + ':</i> ' + RIVALS.map(function (r) {
       var rl2 = r.plan[w];
-      return r.icon + ' ' + LOCS[rl2][1] + (m !== 2 && rl2 === loc ? ' ⚡' : '');
+      return r.icon + ' ' + lName(rl2) + (m !== 2 && rl2 === loc ? ' ⚡' : '');
     }).join(' · '));
 
     S.week++;
@@ -443,10 +490,10 @@
   }
   // Ghi vào nhật ký đội – KHÔNG tính điểm
   window.ftRitualNext = function (honest) {
-    S.log.unshift('<li><b>🪷 Lễ cúng Bà Cậu:</b> ' + (honest
-      ? 'bạn tự nhận đã bán ngay thật – theo tục, Bà Cậu phù hộ đường buôn.'
-      : 'bạn tự nhắc mình cân đủ, niêm yết giá thật ở những tuần tới.') +
-      ' <i>(ghi nhật ký – không tính điểm)</i></li>');
+    S.log.unshift('<li><b>🪷 ' + T('Lễ cúng Bà Cậu', 'The Bà Cậu offering') + ':</b> ' + (honest
+      ? T('bạn tự nhận đã bán ngay thật – theo tục, Bà Cậu phù hộ đường buôn.', 'you affirm you sold honestly – by custom, Bà Cậu blesses your trade route.')
+      : T('bạn tự nhắc mình cân đủ, niêm yết giá thật ở những tuần tới.', 'you remind yourself to weigh fairly and post honest prices in the weeks ahead.')) +
+      ' <i>(' + T('ghi nhật ký – không tính điểm', 'logged in your journal – no points affected') + ')</i></li>');
     $('ft-log').innerHTML = S.log.join('');
     $('ft-ritual').classList.add('hidden');
     $('ft-play').classList.remove('hidden');
@@ -461,27 +508,30 @@
     for (var w = 0; w < 5; w++) maxRev += D[bc[0]][bc[1]] * W[w][bc[1]] * 3;
     var eff = Math.min(100, Math.round(S.total / maxRev * 100));
     $('ft-final').textContent = f1(S.total);
-    $('ft-eff').textContent = 'Hiệu suất ' + eff + '% so với kịch bản hoàn hảo (' + f1(maxRev) + ' triệu ₫).';
+    $('ft-eff').textContent = T('Hiệu suất ' + eff + '% so với kịch bản hoàn hảo (' + f1(maxRev) + ' triệu ₫).', 'Efficiency ' + eff + '% versus the perfect-play scenario (' + f1(maxRev) + ' mn ₫).');
 
     // Bảng xếp hạng 4 đội – thứ hạng quyết định danh hiệu
-    var rows = [{ img: TEAM()[S.cap].img, name: TEAMS[S.team].icon + ' ' + TEAMS[S.team].name + ' – thuyền trưởng ' + TEAM()[S.cap].name, total: S.total, me: true }]
-      .concat(RIVALS.map(function (r) { return { img: r.img, name: r.icon + ' ' + r.name + ' <span style="font-weight:600;opacity:.55;font-size:11px">(' + r.style + ')</span>', total: r.total }; }));
+    var rows = [{ img: TEAM()[S.cap].img, name: TEAMS[S.team].icon + ' ' + tmName(S.team) + ' – ' + T('thuyền trưởng', 'captain') + ' ' + TEAM()[S.cap].name, total: S.total, me: true }]
+      .concat(RIVALS.map(function (r) { return { img: r.img, name: r.icon + ' ' + r.name + ' <span style="font-weight:600;opacity:.55;font-size:11px">(' + rStyle(r) + ')</span>', total: r.total }; }));
     rows.sort(function (a, b) { return b.total - a.total; });
     var rank = rows.findIndex(function (r) { return r.me; });
     var MEDALS = ['🥇', '🥈', '🥉', '4️⃣'];
     $('ft-board').innerHTML = rows.map(function (r, i) {
       return '<div class="ft-row' + (r.me ? ' me' : '') + '">' + MEDALS[i] + ' <img src="' + r.img + '" alt="">' +
-        '<span>' + r.name + '</span><b style="margin-left:auto;white-space:nowrap">' + f1(r.total) + ' tr₫</b></div>';
+        '<span>' + r.name + '</span><b style="margin-left:auto;white-space:nowrap">' + f1(r.total) + ' ' + MS() + '</b></div>';
     }).join('');
 
-    var crown = rank === 0 ? ['🏆', 'Vô địch Bến Phù Sa!'] :
-      rank === 1 ? ['🥈', 'Á quân Bến Phù Sa – sát nút!'] :
-      rank === 2 ? ['🥉', 'Hạng 3 – thị trường khốc liệt'] : ['🌱', 'Về chót… nhưng bài học là thật'];
+    var crown = rank === 0 ? ['🏆', T('Vô địch Bến Phù Sa!', 'Champion of Bến Phù Sa!')] :
+      rank === 1 ? ['🥈', T('Á quân Bến Phù Sa – sát nút!', 'Runner-up at Bến Phù Sa – so close!')] :
+      rank === 2 ? ['🥉', T('Hạng 3 – thị trường khốc liệt', '3rd place – a brutal market')] : ['🌱', T('Về chót… nhưng bài học là thật', 'Last place… but the lesson is real')];
     $('ft-medal').textContent = crown[0];
     $('ft-title').textContent = crown[1];
     S.result = { eff: eff, rank: rank + 1 };
     initSubmit();
-    $('ft-reveal').innerHTML = '🔍 Đáp án của ván này: cặp thắng là ' + MENUS[bc[0]][0] + ' <b>' + MENUS[bc[0]][1] + '</b> × ' + LOCS[bc[1]][0] + ' <b>' + LOCS[bc[1]][1] + '</b>. Chiến lược tham chiếu: gánh hàng rong tuần 1–2 để dò, ghe hàng bông tuần 3–5 với cặp tốt nhất – và né khu đông đối thủ khi doanh thu gốc ngang nhau.';
+    $('ft-reveal').innerHTML = T(
+      '🔍 Đáp án của ván này: cặp thắng là ' + MENUS[bc[0]][0] + ' <b>' + mName(bc[0]) + '</b> × ' + LOCS[bc[1]][0] + ' <b>' + lName(bc[1]) + '</b>. Chiến lược tham chiếu: gánh hàng rong tuần 1–2 để dò, ghe hàng bông tuần 3–5 với cặp tốt nhất – và né khu đông đối thủ khi doanh thu gốc ngang nhau.',
+      '🔍 This run\'s answer key: the winning pair was ' + MENUS[bc[0]][0] + ' <b>' + mName(bc[0]) + '</b> × ' + LOCS[bc[1]][0] + ' <b>' + lName(bc[1]) + '</b>. Reference strategy: street cart in weeks 1–2 to scout, trading boat in weeks 3–5 with the best pair – and avoid crowded spots when base revenue is close.'
+    );
   }
 
   // ===== Nộp kết quả cho giảng viên (tùy chọn) – bảng ft_results, INSERT-only =====
@@ -500,11 +550,11 @@
   window.ftSubmit = async function () {
     var klass = $('ft-class').value.trim(), name = $('ft-name').value.trim();
     var msg = $('ft-send-msg'), btn = $('ft-send');
-    if (!klass) { msg.textContent = 'Nhập Mã lớp trước đã nhé.'; return; }
+    if (!klass) { msg.textContent = T('Nhập Mã lớp trước đã nhé.', 'Enter a class code first.'); return; }
     if (!S.result) return;
     try { localStorage.setItem('bizon-ft-class', klass); localStorage.setItem('bizon-ft-name', name); } catch (e) {}
     btn.disabled = true; btn.style.opacity = 0.5;
-    msg.textContent = 'Đang gửi…';
+    msg.textContent = T('Đang gửi…', 'Sending…');
     try {
       var c = bcfg();
       var res = await fetch(c.url.replace(/\/$/, '') + '/rest/v1/ft_results', {
@@ -513,7 +563,7 @@
         body: JSON.stringify({
           class_code: klass,
           player_name: name || null,
-          team_name: TEAMS[S.team].name + ' – ' + TEAM()[S.cap].name,
+          team_name: tmName(S.team) + ' – ' + TEAM()[S.cap].name,
           total_revenue: Math.round(S.total * 10) / 10,
           efficiency: S.result.eff,
           final_rank: S.result.rank,
@@ -523,13 +573,44 @@
         }),
       });
       if (!res.ok) throw new Error('HTTP ' + res.status);
-      msg.textContent = '✅ Đã nộp! Kết quả đã hiện trên bảng của giảng viên.';
+      msg.textContent = T('✅ Đã nộp! Kết quả đã hiện trên bảng của giảng viên.', "✅ Submitted! Your result now shows on the instructor's dashboard.");
     } catch (e) {
       btn.disabled = false; btn.style.opacity = 1;
-      msg.textContent = '⚠️ Chưa gửi được – kiểm tra mạng rồi thử lại.';
+      msg.textContent = T('⚠️ Chưa gửi được – kiểm tra mạng rồi thử lại.', "⚠️ Couldn't send – check your connection and try again.");
     }
   };
 
+  // Song ngữ cho chữ TĨNH của trang (tự chứa trong game): hoán đổi theo thuộc
+  // tính data-en / data-en-html / data-en-ph, lưu bản gốc VI để đổi qua lại.
+  function applyStatic() {
+    var en = isEN();
+    document.querySelectorAll('[data-en]').forEach(function (el) {
+      if (el.getAttribute('data-vi-txt') === null) el.setAttribute('data-vi-txt', el.textContent);
+      el.textContent = en ? el.getAttribute('data-en') : el.getAttribute('data-vi-txt');
+    });
+    document.querySelectorAll('[data-en-html]').forEach(function (el) {
+      if (el.getAttribute('data-vi-html') === null) el.setAttribute('data-vi-html', el.innerHTML);
+      el.innerHTML = en ? el.getAttribute('data-en-html') : el.getAttribute('data-vi-html');
+    });
+    document.querySelectorAll('[data-en-ph]').forEach(function (el) {
+      if (el.getAttribute('data-vi-ph') === null) el.setAttribute('data-vi-ph', el.placeholder || '');
+      el.placeholder = en ? el.getAttribute('data-en-ph') : el.getAttribute('data-vi-ph');
+    });
+  }
+
+  // Đổi ngôn ngữ ngay trong game: applyLang() (site-ui.js) chỉ dịch chữ tĩnh
+  // của trang, nên ta tự vẽ lại đúng phần nội dung động đang hiển thị – KHÔNG
+  // được rút số ngẫu nhiên mới hay đặt lại lựa chọn của người chơi, để ván
+  // đang chơi không bị lệch đi chỉ vì đổi ngôn ngữ. Nhật ký đã ghi giữ nguyên
+  // ngôn ngữ lúc ghi (không dịch ngược).
+  window.addEventListener('bizon:langchange', function () {
+    applyStatic();
+    if (!$('ft-intro').classList.contains('hidden')) { renderTeams(); renderAvatars(); }
+    if (!$('ft-play').classList.contains('hidden')) { renderOptions(); syncSel(); }
+    if (!$('ft-end').classList.contains('hidden')) { ftEnd(); }
+  });
+
+  applyStatic(); // trạng thái ban đầu (nếu người dùng đã chọn EN từ trước)
   renderTeams();
   renderAvatars();
 })();
@@ -544,7 +625,7 @@
   var SOUNDTRACK = ['doi-phu-sa.mp3', 'doi-phu-sa-remix.mp3', 'doi-phu-sa-remix2.mp3', 'doi-phu-sa-remix3.mp3'];
   function sync(on) {
     var b = document.getElementById('ft-music');
-    if (b) b.textContent = on ? '⏸️ Tạm dừng nhạc «Đội Phù Sa»' : '🎵 Bật nhạc chủ đề «Đội Phù Sa»';
+    if (b) b.textContent = on ? T('⏸️ Tạm dừng nhạc «Đội Phù Sa»', '⏸️ Pause the «Đội Phù Sa» theme') : T('🎵 Bật nhạc chủ đề «Đội Phù Sa»', '🎵 Play theme song «Đội Phù Sa»');
   }
   window.ftMusic = function () {
     var d = window.BizonDock; if (!d) return;
