@@ -371,11 +371,41 @@
     </video>
     <p class="text-[10px] text-deep-teal/40 mt-3 text-center">Có phụ đề chữ + nhạc nền gốc «BizOn Theme» – bản có giọng thuyết minh sẽ được cập nhật sau.</p>
   </div>
+
+  <p class="text-center text-xs font-extrabold text-primary uppercase tracking-[.2em] reveal mt-14">Xem trước khi chơi</p>
+  <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-center mt-2 reveal">🛂 Hộ Chiếu Thương Hiệu</h2>
+  <p class="text-center text-deep-teal/60 text-sm mt-2 mb-8 reveal">Chọn doanh nghiệp → quan sát tín hiệu thị trường → quyết định thâm nhập &amp; vận hành → xử lý sự kiện → xem kết quả quý – quay từ game thật qua 2 quý minh họa (~41 giây).</p>
+  <div class="flex justify-center gap-2 mb-5 reveal">
+    <button id="htp-bp-btn-vi" onclick="htpBpSwitch('vi')" class="clay-btn-primary text-white font-display font-extrabold px-5 py-2 text-sm">🇻🇳 Tiếng Việt</button>
+    <button id="htp-bp-btn-en" onclick="htpBpSwitch('en')" class="clay-btn bg-white text-deep-teal font-display font-extrabold px-5 py-2 text-sm">🇬🇧 English</button>
+  </div>
+  <div class="clay-card p-3 reveal reveal-d1">
+    <video id="htp-bp-video-vi" controls preload="none" playsinline poster="assets/video/bp-huong-dan-choi-vi-poster.jpg" class="w-full rounded-2xl block mx-auto" style="max-height:70vh">
+      <source src="assets/video/bp-huong-dan-choi-vi.mp4" type="video/mp4">
+    </video>
+    <video id="htp-bp-video-en" controls preload="none" playsinline poster="assets/video/bp-huong-dan-choi-en-poster.jpg" class="w-full rounded-2xl mx-auto hidden" style="max-height:70vh">
+      <source src="assets/video/bp-huong-dan-choi-en.mp4" type="video/mp4">
+    </video>
+    <p class="text-[10px] text-deep-teal/40 mt-3 text-center">Có phụ đề chữ đốt sẵn + nhạc nền gốc tổ khúc «Hộ Chiếu Thương Hiệu».</p>
+  </div>
 </section>
 <script>
   function htpSwitch(lang) {
     const vi = document.getElementById('htp-video-vi'), en = document.getElementById('htp-video-en');
     const bvi = document.getElementById('htp-btn-vi'), ben = document.getElementById('htp-btn-en');
+    const on = 'clay-btn-primary text-white font-display font-extrabold px-5 py-2 text-sm';
+    const off = 'clay-btn bg-white text-deep-teal font-display font-extrabold px-5 py-2 text-sm';
+    if (lang === 'vi') {
+      vi.classList.remove('hidden'); en.classList.add('hidden'); en.pause();
+      bvi.className = on; ben.className = off;
+    } else {
+      en.classList.remove('hidden'); vi.classList.add('hidden'); vi.pause();
+      ben.className = on; bvi.className = off;
+    }
+  }
+  function htpBpSwitch(lang) {
+    const vi = document.getElementById('htp-bp-video-vi'), en = document.getElementById('htp-bp-video-en');
+    const bvi = document.getElementById('htp-bp-btn-vi'), ben = document.getElementById('htp-bp-btn-en');
     const on = 'clay-btn-primary text-white font-display font-extrabold px-5 py-2 text-sm';
     const off = 'clay-btn bg-white text-deep-teal font-display font-extrabold px-5 py-2 text-sm';
     if (lang === 'vi') {
