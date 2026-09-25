@@ -19,6 +19,7 @@
     ]],
     ['🎮 Trò chơi · Games', [
       ['Game Bật Nghiệp', 'game.html'],
+      ['Hướng dẫn chơi', 'huong-dan.html'],
       ['BizOn Arcade', 'games.html'],
       ['Hộ Chiếu Thương Hiệu', 'brand-passport.html'],
       ['Go Global', 'global.html'],
