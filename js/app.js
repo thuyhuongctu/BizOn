@@ -1725,10 +1725,10 @@ function showIntro() {
 // Mỗi ảnh Lumina có bố cục nhân vật khác nhau (tóc/tay dang ra ở vị trí khác nhau) nên
 // object-position cố định 1 mức sẽ cắt mất đỉnh đầu ở một số ảnh – tra theo từng ảnh để luôn thấy trọn khuôn mặt + chỏm tóc.
 const LUMINA_HERO_POS = {
-  'lumina-vest': '50% 8%',
+  'lumina-vest': '50% 2%',
   'lumina-vest-thumbsup': '50% 8%',
   'lumina-vest-worried': '50% 8%',
-  'lumina-ao-dai-clap': '50% 8%',
+  'lumina-ao-dai-clap': '50% 2%',
   'lumina-ao-dai-alert': '50% 0%',
 };
 let advisorGreetingSpoken = false;
@@ -1758,9 +1758,9 @@ function renderAdvisorIntro() {
   const heroImg = $('advisor-hero');
   // Nếu ảnh theo biến cố lỡ 404/lỗi mạng, quay về ảnh mặc định đã cache sẵn trong sw.js
   // thay vì để trống trắng xóa (không được để trắng ô ảnh cố vấn).
-  heroImg.onerror = () => { heroImg.onerror = null; heroImg.src = 'assets/character/lumina-vest.webp'; heroImg.style.objectPosition = '50% 8%'; };
+  heroImg.onerror = () => { heroImg.onerror = null; heroImg.src = 'assets/character/lumina-vest.webp'; heroImg.style.objectPosition = '50% 2%'; };
   heroImg.src = 'assets/character/' + heroKey + '.webp';
-  heroImg.style.objectPosition = LUMINA_HERO_POS[heroKey] || '50% 8%';
+  heroImg.style.objectPosition = LUMINA_HERO_POS[heroKey] || '50% 2%';
   renderRoleDeepdive();
   renderAdvisorHistory();
 }
