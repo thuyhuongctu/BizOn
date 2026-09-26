@@ -3840,6 +3840,10 @@
 "Bật Nghiệp game"
 ],
 [
+"Hướng dẫn chơi",
+"How to play"
+],
+[
 "Phiếu khảo sát (bản in A4)",
 "Survey form (A4 print)"
 ],
