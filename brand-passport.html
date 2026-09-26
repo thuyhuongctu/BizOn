@@ -365,9 +365,12 @@
     { icon: '💻', name: 'Mekong Digital', prod: 'Phần mềm quản trị', prodEn: 'Management software', adv: 'Kênh số cực mạnh · biên lời cao', advEn: 'Very strong digital channel · high margins', weak: 'Mù mờ pháp luật dữ liệu', weakEn: 'Shaky on data regulations', cash: 7, rep: 46, capab: 48, susts: 0, img: 'assets/character/firms/mekong-digital-cut.webp' },
   ];
   var MODES = [
-    { id: 0, icon: '🛒', name: 'Nền tảng số', nameEn: 'Digital platform', cost: 0.5, margin: 0.25, scale: 0.7, op: 0.25, note: 'cam kết thấp – vào nhanh, lời mỏng', noteEn: 'low commitment – fast entry, thin margins' },
-    { id: 1, icon: '🚢', name: 'Xuất khẩu trực tiếp', nameEn: 'Direct export', cost: 1.2, margin: 0.35, scale: 1.0, op: 0.5, note: 'cam kết vừa – kiểm soát tốt hơn', noteEn: 'moderate commitment – better control' },
-    { id: 2, icon: '🤝', name: 'Đối tác địa phương', nameEn: 'Local partner', cost: 0.8, margin: 0.28, scale: 1.3, op: 0.35, note: 'mượn mạng lưới – phụ thuộc đối tác', noteEn: 'borrowed network – dependent on the partner' },
+    { id: 0, icon: '🛒', name: 'Nền tảng số', nameEn: 'Digital platform', cost: 0.5, margin: 0.25, scale: 0.7, op: 0.25, note: 'cam kết thấp – vào nhanh, lời mỏng', noteEn: 'low commitment – fast entry, thin margins',
+      ship: 'giao qua nền tảng số, không cần kho ngoại quan', shipEn: 'delivered via the digital platform, no bonded warehouse needed' },
+    { id: 1, icon: '🚢', name: 'Xuất khẩu trực tiếp', nameEn: 'Direct export', cost: 1.2, margin: 0.35, scale: 1.0, op: 0.5, note: 'cam kết vừa – kiểm soát tốt hơn', noteEn: 'moderate commitment – better control',
+      ship: 'hàng rời cảng Việt Nam, đi thẳng tới kho khách', shipEn: "cargo leaves a Vietnamese port and ships straight to the customer's warehouse" },
+    { id: 2, icon: '🤝', name: 'Đối tác địa phương', nameEn: 'Local partner', cost: 0.8, margin: 0.28, scale: 1.3, op: 0.35, note: 'mượn mạng lưới – phụ thuộc đối tác', noteEn: 'borrowed network – dependent on the partner',
+      ship: 'nhập kho đối tác địa phương rồi phân phối tiếp', shipEn: "stocked at the local partner's warehouse, then distributed onward" },
   ];
   var SOURCES = [
     { icon: '📊', name: 'Báo cáo ngành', nameEn: 'Industry report', cost: 0.3, know: 18, note: 'trung tính nhưng hơi cũ', noteEn: 'neutral but a bit dated' },
@@ -429,7 +432,8 @@
     q: 0, firm: 0, cash: 8, rep: 50, capab: 40, resil: 50,
     know: [10, 10, 10, 10, 10, 10, 10], entered: [null, null, null, null, null, null, null],
     qin: [0, 0, 0, 0, 0, 0, 0], certBP: false, items: {}, shopOpen: false,
-    profit: 0, susts: 0, adapt: 0, lowQ: 0, rival: { rev: 0 },
+    cust: [60, 60, 60, 60, 60, 60, 60],
+    profit: 0, susts: 0, adapt: 0, lowQ: 0, rival: { rev: 0, in: [], qin: [] },
     foot: [], flags: {}, usedEv: [], phase: 'obs',
     sel: { prio: null, budget: 1, enter: null, enterMode: null, intel: [] },
   };
@@ -844,7 +848,8 @@
       '<p class="text-[10px] opacity-55 mb-1.5">' + T('🧭 <b>AIBIS</b> (engine tất định) chấm mức phù hợp 0–100 cho mỗi phương thức theo hồ sơ thị trường &amp; doanh nghiệp (<i>tham khảo, số liệu minh hoạ</i>).', '🧭 <b>AIBIS</b> (a deterministic engine) scores each entry mode 0–100 based on the market &amp; company profile (<i>for reference, illustrative figures</i>).') + '</p>' +
       (notIn.length ? '<div class="space-y-2">' + notIn.map(function (m) {
         var _fit = aibisFit(m);
-        return '<div class="text-[12px] font-bold mt-1">' + MKTS[m].icon + ' ' + MKTS[m].name + ' <span class="opacity-55 font-semibold">(' + T('tri thức', 'knowledge') + ' ' + clamp(S.know[m]) + '/100 – ' + T(MKTS[m].trait, MKTS[m].traitEn) + ')</span></div>' +
+        return '<div class="text-[12px] font-bold mt-1">' + MKTS[m].icon + ' ' + MKTS[m].name + ' <span class="opacity-55 font-semibold">(' + T('tri thức', 'knowledge') + ' ' + clamp(S.know[m]) + '/100 – ' + T(MKTS[m].trait, MKTS[m].traitEn) + ')</span>' +
+          (S.rival.in.indexOf(m) >= 0 ? ' <span class="bp-chip" style="font-size:9.5px; padding:2px 7px">' + RIVAL.icon + ' ' + T('đối thủ đã có mặt', 'rival already here') + '</span>' : '') + '</div>' +
           '<div class="grid sm:grid-cols-3 gap-2">' + MODES.map(function (md) {
             return '<button class="bp-opt" data-g="ent" data-m="' + m + '" data-md="' + md.id + '" onclick="bpEnter(' + m + ',' + md.id + ')">' + md.icon + ' ' + T(md.name, md.nameEn) + '<small>' + T('vốn', 'capital') + ' ' + f1(md.cost) + TY() + ' · ' + T(md.note, md.noteEn) + '</small>' + (_fit && _fit[md.id] != null ? '<span style="display:block;margin-top:3px;font-family:ui-monospace,monospace;font-size:10px;font-weight:800;color:#0F5C4E">AIBIS ' + _fit[md.id] + ' · ' + T('phù hợp', 'fit') + '</span>' : '') + '</button>';
           }).join('') + '</div>';
@@ -880,8 +885,15 @@
     var md = MODES[mode];
     var base = 1.2 * H[m].fit * md.scale * H[m].trend[S.q] / H[m].comp;
     base *= (0.8 + S.rep / 250) * (0.8 + S.capab / 250);
+    base *= 0.7 + S.cust[m] / 100 * 0.6;
+    var rivalShare = 0;
+    if (S.rival.in.indexOf(m) >= 0) {
+      var rAttr = rivalAttr(m);
+      rivalShare = rAttr / (base + rAttr);
+      base *= base / (base + rAttr);
+    }
     var unc = S.know[m] >= 50 ? 0.15 : S.know[m] >= 25 ? 0.32 : 0.55;
-    return { lo: Math.max(0, base * (1 - unc)), hi: base * (1 + unc), comp: H[m].comp };
+    return { lo: Math.max(0, base * (1 - unc)), hi: base * (1 + unc), comp: H[m].comp, rivalShare: rivalShare };
   }
   function syncDec() {
     document.querySelectorAll('[data-g="prio"]').forEach(function (b) { b.classList.toggle('sel', Number(b.dataset.i) === S.sel.prio); });
@@ -895,9 +907,10 @@
       if (S.sel.enter !== null) {
         var fr = forecastRange(S.sel.enter, S.sel.enterMode);
         var compTxt = fr.comp >= 1.3 ? T('cạnh tranh cao', 'high competition') : fr.comp <= 0.85 ? T('cạnh tranh dịu', 'light competition') : T('cạnh tranh vừa', 'moderate competition');
+        var rivalTxt = fr.rivalShare > 0.03 ? T(' · 🐉 ' + RIVAL.name + ' đang giữ khoảng ' + Math.round(fr.rivalShare * 100) + '% thị phần ở đây', ' · 🐉 ' + RIVAL.name + ' currently holds about ' + Math.round(fr.rivalShare * 100) + '% of the share here') : '';
         note.innerHTML = T(
-          'Sẽ thâm nhập ' + MKTS[S.sel.enter].name + ' bằng ' + MODES[S.sel.enterMode].name + ' (vốn ' + f1(MODES[S.sel.enterMode].cost) + ' tỷ).<br>🔮 <b>Dự báo Lumina:</b> doanh thu quý ước ' + f1(fr.lo) + '–' + f1(fr.hi) + ' tỷ ₫ · ' + compTxt + '.',
-          'Will enter ' + MKTS[S.sel.enter].name + ' via ' + MODES[S.sel.enterMode].nameEn + ' (capital ' + f1(MODES[S.sel.enterMode].cost) + ' bn).<br>🔮 <b>Lumina forecast:</b> estimated quarterly revenue ' + f1(fr.lo) + '–' + f1(fr.hi) + ' bn ₫ · ' + compTxt + '.'
+          'Sẽ thâm nhập ' + MKTS[S.sel.enter].name + ' bằng ' + MODES[S.sel.enterMode].name + ' (vốn ' + f1(MODES[S.sel.enterMode].cost) + ' tỷ).<br>🔮 <b>Dự báo Lumina:</b> doanh thu quý ước ' + f1(fr.lo) + '–' + f1(fr.hi) + ' tỷ ₫ · ' + compTxt + rivalTxt + '.',
+          'Will enter ' + MKTS[S.sel.enter].name + ' via ' + MODES[S.sel.enterMode].nameEn + ' (capital ' + f1(MODES[S.sel.enterMode].cost) + ' bn).<br>🔮 <b>Lumina forecast:</b> estimated quarterly revenue ' + f1(fr.lo) + '–' + f1(fr.hi) + ' bn ₫ · ' + compTxt + rivalTxt + '.'
         );
       } else {
         note.textContent = T('Chọn Ưu tiên và Mức vận hành để chốt.', 'Pick a Priority and an Operating stance to lock in.');
@@ -990,7 +1003,9 @@
   // dùng chung cho nhật ký và bảng "Kết quả quý", để vẽ lại được song ngữ.
   function fmtQLines(data, loanPaid) {
     var body = data.length ? data.map(function (d) {
-      return MKTS[d.m].icon + ' ' + MKTS[d.m].name + ': ' + T('doanh thu', 'revenue') + ' ' + f1(d.rev) + TY() + ' → ' + T('lợi nhuận', 'profit') + ' ' + f1(d.pf) + TY();
+      var mode = MODES[S.entered[d.m]];
+      return MKTS[d.m].icon + ' ' + MKTS[d.m].name + ': ' + T('doanh thu', 'revenue') + ' ' + f1(d.rev) + TY() + ' → ' + T('lợi nhuận', 'profit') + ' ' + f1(d.pf) + TY() +
+        '<br><span style="opacity:.6; font-size:.95em">' + mode.icon + ' ' + T(mode.ship, mode.shipEn) + ' · 😊 ' + T('hài lòng KH', 'customer satisfaction') + ' ' + clamp(S.cust[d.m]) + '/100</span>';
     }).join('<br>') : T('Chưa hiện diện thị trường nào – quý này không có doanh thu quốc tế.', "You haven't entered any market yet – no international revenue this quarter.");
     return body + (loanPaid ? '<br>' + T('🏦 Trả lãi vay ngắn hạn 0,3 tỷ.', '🏦 Paid 0.3 bn in short-term loan interest.') : '');
   }
@@ -1038,18 +1053,44 @@
       '<div class="flex flex-wrap gap-1.5 mt-2">' + chips + '</div>' + rivalLine + '</div>';
   }
 
-  // Đối thủ ảo tăng tốc mỗi quý dựa trên độ cạnh tranh trung bình (H[].comp)
-  // của các thị trường người chơi đang có mặt (hoặc trung bình toàn bộ 7 thị
-  // trường nếu chưa vào đâu cả, để họ vẫn "chạy" kể cả khi người chơi đứng
-  // yên). KHÔNG dùng chung công thức doanh thu với người chơi (không đọc
-  // S.rep/S.capab…) – chỉ là con số minh họa tạo cảm giác luôn có người chạy
-  // đua cùng, không phải một chỉ số được chấm điểm.
-  var RIVAL_BASE = 0.5, RIVAL_VAR = 0.3;
-  function rivalStep() {
-    var mkts = entMkts();
-    var pool = mkts.length ? mkts : MKTS.map(function (_, m) { return m; });
-    var compAvg = pool.reduce(function (s, m) { return s + H[m].comp; }, 0) / pool.length;
-    S.rival.rev = Math.max(0, S.rival.rev + RIVAL_BASE * compAvg + (rivalRnd() - 0.5) * RIVAL_VAR * 2);
+  // Đối thủ ảo cạnh tranh THỊ PHẦN THẬT với người chơi, không còn là 2 công
+  // thức doanh thu chạy song song độc lập. Ở mỗi thị trường cả hai cùng có
+  // mặt: "miếng bánh" = đúng doanh thu người chơi tính theo công thức đầy đủ
+  // bên dưới (rep/capab/budget/hồ sơ doanh nghiệp/vật phẩm…) NHƯ THỂ không
+  // có đối thủ – rồi bị chia theo tỉ lệ độ mạnh tương đối giữa 2 bên. Vắng
+  // đối thủ ở thị trường nào thì share = 100% về người chơi, công thức thị
+  // trường đó giữ nguyên hành vi như trước khi có cơ chế này.
+  var RIVAL_ATTR_BASE = 0.4, RIVAL_RAMP = 0.15;
+  function rivalAttr(m) {
+    var qn = S.rival.qin[m] || 0;
+    return RIVAL_ATTR_BASE * H[m].fit * H[m].trend[S.q] / H[m].comp * (1 + RIVAL_RAMP * qn);
+  }
+  // Đối thủ có mở thêm 1 thị trường mới trong quý này không – xác suất tăng
+  // dần theo quý. Dùng rnd() CHÍNH (không phải rivalRnd()) vì từ nay đây là
+  // một quyết định có ảnh hưởng cơ học thật tới thị phần, không còn thuần
+  // tường thuật – chấp nhận việc này làm lệch chuỗi ngẫu nhiên so với các
+  // ván ?seed=… trước đây (đã thống nhất, video hướng dẫn sẽ quay lại sau).
+  function rivalEnterStep() {
+    var notIn = MKTS.map(function (_, m) { return m; }).filter(function (m) { return S.rival.in.indexOf(m) < 0; });
+    if (notIn.length && rnd() < 0.22 + S.q * 0.05) {
+      var pick = notIn[Math.floor(rnd() * notIn.length)];
+      S.rival.in.push(pick);
+      return pick;
+    }
+    return null;
+  }
+  // Tiếng nói khách hàng: 1 câu ngắn phản ứng theo tình hình quý vừa qua –
+  // thuần tường thuật, chọn quote qua rivalRnd() (không phải rnd() chính) để
+  // không xáo trộn thứ tự sự kiện/thị trường vốn đã seed theo rnd().
+  function customerVoice(budgetIdx, qProfit) {
+    var pool = [];
+    if (S.flags.priceWar) pool.push(T('🗣️ "Dạo này thấy giá đổi liên tục, không biết có nên chờ đợt sau không."', '🗣️ "Prices keep shifting lately, not sure if I should wait for the next round."'));
+    if (budgetIdx === 2) pool.push(T('🗣️ "Thấy quảng cáo nhiều hẳn quý này, tò mò thử xem sao."', '🗣️ "Seeing a lot more ads this quarter, curious enough to try it."'));
+    if (budgetIdx === 0) pool.push(T('🗣️ "Ít thấy nhắc tới thương hiệu này hơn trước, chắc đang giữ sức?"', "🗣️ \"Hearing about this brand less than before, maybe they're holding back?\""));
+    if (qProfit > 1) pool.push(T('🗣️ "Bạn bè mình cũng bắt đầu dùng thử rồi, chắc đang lên."', '🗣️ "My friends are starting to try it too, must be on the rise."'));
+    if (qProfit < 0) pool.push(T('🗣️ "Không thấy hàng về đều như trước, hơi ngại đặt tiếp."', '🗣️ "Restocks feel less steady than before, a bit hesitant to reorder."'));
+    if (!pool.length) pool.push(T('🗣️ "Vẫn ổn, chưa có gì đặc biệt để kể."', '🗣️ "Still fine, nothing special to report."'));
+    return pool[Math.floor(rivalRnd() * pool.length)];
   }
 
   function settle(evOut) {
@@ -1057,12 +1098,18 @@
     var bud = BUDGETS[S.sel.budget];
     if (bud.resil) S.resil += bud.resil;
     var wave = S.flags.wave || 1; S.flags.wave = null;
-    var qProfit = 0, qLinesData = [], mktNotes = [];
+    // Đối thủ: quyết định mở thêm thị trường + cộng thêm 1 quý thâm niên cho
+    // MỌI thị trường đang có mặt TRƯỚC khi tính doanh thu quý này – cùng quy
+    // ước với S.qin[] của người chơi (tăng trước, dùng ngay trong quý).
+    var rivalEntered = rivalEnterStep();
+    S.rival.in.forEach(function (m) { S.rival.qin[m] = (S.rival.qin[m] || 0) + 1; });
+    var qProfit = 0, qLinesData = [], mktNotes = [], qRivalRev = 0;
     entMkts().forEach(function (m) {
       var mode = MODES[S.entered[m]];
       S.qin[m]++;
       var rev = 1.2 * H[m].fit * mode.scale * H[m].trend[S.q] / H[m].comp;
       rev *= (0.8 + S.rep / 250) * (0.8 + S.capab / 250) * bud.rev * wave;
+      rev *= 0.7 + S.cust[m] / 100 * 0.6; // khách hàng hài lòng/trung thành: 0,7x–1,3x doanh thu
       if (S.sel.prio === 1) rev *= 1.15;
       if (m === 0 && S.entered[m] === 0) rev *= 1.25;           // Hải Lam thưởng kênh số
       if (m === 1 && !S.certBP) rev *= 0.45;                    // Bắc Phong thiếu chứng nhận
@@ -1075,6 +1122,17 @@
       if (S.firm === 2) { rev *= 0.92; if (m === 3) rev *= 1.35; } // Lam Việt: sản xuất hạn chế, Lục Đảo yêu
       if (S.firm === 3 && S.entered[m] === 0) rev *= 1.35;      // Mekong Digital cực mạnh kênh số
       if (S.items.NETWORK && S.entered[m] === 2) rev *= 1.10;   // Vật phẩm Mạng lưới đối tác (vĩnh viễn)
+      // Đối thủ có mặt ở thị trường này thì "miếng bánh" (= đúng rev vừa tính,
+      // như thể không có đối thủ) bị chia theo tỉ lệ độ mạnh tương đối. Vắng
+      // đối thủ: share = 100% về người chơi, rev giữ nguyên như trước đây.
+      var rivalRevHere = 0;
+      if (S.rival.in.indexOf(m) >= 0) {
+        var rAttr = rivalAttr(m);
+        var shareP = rev / (rev + rAttr);
+        rivalRevHere = rev * (1 - shareP);
+        rev = rev * shareP;
+      }
+      qRivalRev += rivalRevHere;
       var margin = mode.margin - (S.flags.priceWar || 0) * 0.03 - (S.flags.bigDeal && m === 1 ? 0.08 : 0);
       if (S.firm === 3) margin += 0.05;                          // phần mềm biên lời cao
       if (S.flags.bigDeal && m === 1) rev *= 1.5;
@@ -1085,6 +1143,9 @@
       qProfit += pf;
       qLinesData.push({ m: m, rev: rev, pf: pf });
       S.know[m] = clamp(S.know[m] + 6); // bán hàng cũng là học
+      // Hài lòng/trung thành khách hàng: xây bằng ưu tiên "Xây thương hiệu",
+      // hao mòn khi giảm giá theo đối thủ (price war), nhích theo lãi/lỗ quý.
+      S.cust[m] = clamp(S.cust[m] + (S.sel.prio === 2 ? 2 : 0) + (S.flags.priceWar ? -3 : 0) + (pf > 1 ? 1 : pf < 0.2 ? -1 : 0));
       if (m === 4 && S.qin[m] >= 2) S.resil += 1;               // đối tác Nhật Quang trung thành
       // Thị trường động: đối thủ địa phương phản ứng lại kết quả thật của bạn
       // – thắng lớn ở một thị trường khiến cạnh tranh (H[m].comp) tăng dần
@@ -1101,8 +1162,17 @@
         '📉 ' + MKTS[m].name + ': doanh thu yếu khiến đối thủ bớt để ý – cạnh tranh dịu đi một chút.',
         '📉 ' + MKTS[m].name + ": weak revenue means competitors pay less attention – competition eases a little."
       ));
+      if (rivalRevHere > 0.05) mktNotes.push(T(
+        '🐉 ' + MKTS[m].name + ': ' + RIVAL.name + ' giành mất ' + f1(rivalRevHere) + TY() + ' doanh thu ở đây quý này.',
+        '🐉 ' + MKTS[m].name + ': ' + RIVAL.name + ' captured ' + f1(rivalRevHere) + TY() + ' of revenue here this quarter.'
+      ));
     });
-    rivalStep();
+    // Thị trường đối thủ có mặt nhưng người chơi chưa vào – không có ai để
+    // chia sẻ, đối thủ hưởng trọn "sức mạnh" của họ ở đó.
+    S.rival.in.forEach(function (m) {
+      if (S.entered[m] === null) qRivalRev += rivalAttr(m);
+    });
+    S.rival.rev += qRivalRev;
     if (S.sel.prio === 1) S.resil -= 3;
     var loanPaid = false;
     if (S.flags.loan) { S.cash -= 0.3; S.flags.loan = false; loanPaid = true; }
@@ -1115,6 +1185,11 @@
     addLog(RIVAL.icon + ' <b>' + RIVAL.name + ':</b> ' + (S.profit >= S.rival.rev ?
       T('vẫn bám đuổi phía sau bạn, doanh thu ước ' + f1(S.rival.rev) + TY() + '.', 'still chasing behind you, estimated revenue ' + f1(S.rival.rev) + TY() + '.') :
       T('đang dẫn trước bạn, doanh thu ước ' + f1(S.rival.rev) + TY() + ' – tăng tốc thôi!', 'currently ahead of you, estimated revenue ' + f1(S.rival.rev) + TY() + ' – time to pick up the pace!')));
+    if (rivalEntered !== null) addLog(RIVAL.icon + ' ' + T(
+      RIVAL.name + ' vừa mở rộng vào <b>' + MKTS[rivalEntered].name + '</b> – cạnh tranh ở đó sẽ gắt hơn từ giờ.',
+      RIVAL.name + ' just expanded into <b>' + MKTS[rivalEntered].name + '</b> – competition there just got tougher.'
+    ));
+    addLog(customerVoice(S.sel.budget, qProfit));
     save();
     // Thua sớm?
     if (S.lowQ >= 2) return bpEnd('cash', evOut);
