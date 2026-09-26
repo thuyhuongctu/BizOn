@@ -105,16 +105,16 @@
       <button id="bp-video-len-full" onclick="bpVideoLen('full')" class="clay-btn bg-white text-deep-teal border border-deep-teal/20 font-display font-extrabold px-4 py-1.5 text-xs" data-en="📖 Detailed – all 6 quarters (~95s)">📖 Chi tiết – đủ 6 quý (~95 giây)</button>
     </div>
     <video id="bp-video-short-vi" controls preload="none" playsinline poster="assets/video/bp-huong-dan-choi-vi-poster.jpg" class="w-full rounded-2xl block mx-auto" style="max-height:70vh">
-      <source src="assets/video/bp-huong-dan-choi-vi.mp4" type="video/mp4">
+      <source src="assets/video/bp-huong-dan-choi-vi-v2.mp4" type="video/mp4">
     </video>
     <video id="bp-video-short-en" controls preload="none" playsinline poster="assets/video/bp-huong-dan-choi-en-poster.jpg" class="w-full rounded-2xl mx-auto hidden" style="max-height:70vh">
-      <source src="assets/video/bp-huong-dan-choi-en.mp4" type="video/mp4">
+      <source src="assets/video/bp-huong-dan-choi-en-v2.mp4" type="video/mp4">
     </video>
     <video id="bp-video-full-vi" controls preload="none" playsinline poster="assets/video/bp-huong-dan-chi-tiet-vi-poster.jpg" class="w-full rounded-2xl mx-auto hidden" style="max-height:70vh">
-      <source src="assets/video/bp-huong-dan-chi-tiet-vi.mp4" type="video/mp4">
+      <source src="assets/video/bp-huong-dan-chi-tiet-vi-v2.mp4" type="video/mp4">
     </video>
     <video id="bp-video-full-en" controls preload="none" playsinline poster="assets/video/bp-huong-dan-chi-tiet-en-poster.jpg" class="w-full rounded-2xl mx-auto hidden" style="max-height:70vh">
-      <source src="assets/video/bp-huong-dan-chi-tiet-en.mp4" type="video/mp4">
+      <source src="assets/video/bp-huong-dan-chi-tiet-en-v2.mp4" type="video/mp4">
     </video>
     <p class="text-[10px] text-deep-teal/40 mt-3 text-center" data-en="Burned-in captions + original background music – switch language from the ⋯ button top-left to switch the video too.">Có phụ đề chữ đốt sẵn + nhạc nền gốc – đổi ngôn ngữ bằng nút ⋯ góc trái sẽ đổi luôn video.</p>
   </section>
@@ -681,8 +681,8 @@
       '<h2 class="font-display font-extrabold text-deep-teal text-base mb-1">' + T('Quý', 'Quarter') + ' ' + (S.q + 1) + '/6 – 👁️ ' + T('Quan sát &amp; Tình báo', 'Observe &amp; Intelligence') + '</h2>' +
       signals().map(function (s) { return '<p class="text-[12.5px] mt-2">' + s + '</p>'; }).join('') +
       '<div class="mt-3 space-y-2">' + advs.map(function (a) { return '<div class="bp-adv">' + faceHtml(a[1], a[0]) + '<div><p class="who">' + a[1] + '</p><p>' + a[2] + '</p></div></div>'; }).join('') + '</div>' +
-      (preDrawnEv ? '<div class="bp-adv mt-2">' + faceHtml('Lumina AI', '🤖') + '<div><p class="who">Lumina AI</p><p>' + T('🔮 Dự báo: sự kiện quý sau thuộc nhóm ' + preDrawnEv.cat + ' — «' + preDrawnEv.t + '».', "🔮 Forecast: next quarter's event falls under " + preDrawnEv.cat + ' — «' + preDrawnEv.tEn + '».') + '</p></div></div>' :
-        preDrawnMissionAhead ? '<div class="bp-adv mt-2">' + faceHtml('Lumina AI', '🤖') + '<div><p class="who">Lumina AI</p><p>' + T('🔮 Dự báo: quý sau là mốc đặc biệt — một NHIỆM VỤ lớn, không phải sự kiện thường.', '🔮 Forecast: next quarter is a special milestone — a major MISSION, not a regular event.') + '</p></div></div>' : '') +
+      (preDrawnEv ? '<div class="bp-adv mt-2">' + faceHtml('Lumina AI', '🤖') + '<div><p class="who">Lumina AI</p><p>' + T('🔮 Dự báo: sự kiện quý sau thuộc nhóm ' + preDrawnEv.cat + ', «' + preDrawnEv.t + '».', "🔮 Forecast: next quarter's event falls under " + preDrawnEv.cat + ', «' + preDrawnEv.tEn + '».') + '</p></div></div>' :
+        preDrawnMissionAhead ? '<div class="bp-adv mt-2">' + faceHtml('Lumina AI', '🤖') + '<div><p class="who">Lumina AI</p><p>' + T('🔮 Dự báo: quý sau là mốc đặc biệt, một NHIỆM VỤ lớn chứ không phải sự kiện thường.', '🔮 Forecast: next quarter is a special milestone, a major MISSION rather than a regular event.') + '</p></div></div>' : '') +
       '<p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-4 mb-1.5">' + T('Mua thông tin thị trường (tối đa 2 nguồn/quý)', 'Buy market intel (max 2 sources/quarter)') + '</p>' +
       '<div class="grid sm:grid-cols-2 gap-2">' + SOURCES.map(function (s, i) {
         return '<button class="bp-opt" data-src="' + i + '" onclick="bpIntel(' + i + ')">' + s.icon + ' ' + T(s.name, s.nameEn) + ' – ' + f1(s.cost * discount) + TY() + '<small>+' + s.know + ' ' + T('tri thức', 'knowledge') + ' · ' + T(s.note, s.noteEn) + '</small></button>';
@@ -726,7 +726,7 @@
         return '<button class="bp-opt" data-g="prio" data-i="' + i + '" onclick="bpPick(\'prio\',' + i + ')">' + p.icon + ' ' + T(p.name, p.nameEn) + '<small>' + T(p.note, p.noteEn) + '</small></button>';
       }).join('') + '</div>' +
       '<p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-4 mb-1.5">' + T('2 · Thâm nhập thị trường mới (tùy chọn – tối đa 1 thị trường/quý)', '2 · Enter a new market (optional – max 1 market/quarter)') + '</p>' +
-      '<p class="text-[10px] opacity-55 mb-1.5">' + T('🧭 <b>AIBIS</b> (engine tất định) chấm mức phù hợp 0–100 cho mỗi phương thức theo hồ sơ thị trường &amp; doanh nghiệp — <i>tham khảo, số liệu minh hoạ</i>.', '🧭 <b>AIBIS</b> (a deterministic engine) scores each entry mode 0–100 based on the market &amp; company profile — <i>for reference, illustrative figures</i>.') + '</p>' +
+      '<p class="text-[10px] opacity-55 mb-1.5">' + T('🧭 <b>AIBIS</b> (engine tất định) chấm mức phù hợp 0–100 cho mỗi phương thức theo hồ sơ thị trường &amp; doanh nghiệp (<i>tham khảo, số liệu minh hoạ</i>).', '🧭 <b>AIBIS</b> (a deterministic engine) scores each entry mode 0–100 based on the market &amp; company profile (<i>for reference, illustrative figures</i>).') + '</p>' +
       (notIn.length ? '<div class="space-y-2">' + notIn.map(function (m) {
         var _fit = aibisFit(m);
         return '<div class="text-[12px] font-bold mt-1">' + MKTS[m].icon + ' ' + MKTS[m].name + ' <span class="opacity-55 font-semibold">(' + T('tri thức', 'knowledge') + ' ' + clamp(S.know[m]) + '/100 – ' + T(MKTS[m].trait, MKTS[m].traitEn) + ')</span></div>' +
