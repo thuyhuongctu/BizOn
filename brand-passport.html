@@ -29,7 +29,8 @@
   .clay-btn:active { transform:translateY(2px); }
   .glass-nav { background:rgba(3,51,55,.78); backdrop-filter:blur(14px); }
   .bp-opt { border:2px solid rgba(0,102,135,.16); border-radius:16px; padding:10px 12px; text-align:left; cursor:pointer; font-weight:700; font-size:12.5px; transition:all .12s; background:transparent; color:inherit; width:100%; }
-  .bp-opt.sel { border-color:#006687; background:rgba(0,102,135,.08); box-shadow:0 4px 12px -4px rgba(0,102,135,.35); }
+  .bp-opt:active { transform:scale(.97); }
+  .bp-opt.sel { border-color:#006687; background:rgba(0,102,135,.08); box-shadow:0 4px 12px -4px rgba(0,102,135,.35); animation:bpPop .28s ease; }
   .bp-opt:disabled { opacity:.4; cursor:not-allowed; }
   .bp-opt small { display:block; font-size:10px; opacity:.6; font-weight:600; margin-top:2px; }
   .bp-chip { display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:800; padding:4px 10px; border-radius:999px; background:rgba(0,102,135,.08); }
@@ -64,6 +65,17 @@
   /* Ảnh chủ đạo là ảnh vuông; cắt bớt trời và lòng thuyền để tiêu đề không bị đẩy khỏi màn hình */
   .bp-hero-img { height:280px; object-fit:cover; object-position:50% 36%; }
   @media (min-width:640px) { .bp-hero-img { height:360px; } }
+  /* Hiệu ứng nhẹ cho cảm giác "game" thay vì "form khảo sát" – chuyển màn,
+     chọn phương án, và ăn mừng khi có tin vui. Không thêm ảnh minh họa mới. */
+  @keyframes bpPop { 0% { transform:scale(.94); } 60% { transform:scale(1.02); } 100% { transform:scale(1); } }
+  @keyframes bpFadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+  .bp-fade { animation:bpFadeIn .32s ease; }
+  .confetti-piece { position:fixed; top:-16px; width:10px; height:14px; border-radius:3px; z-index:100; pointer-events:none; animation:confettiFall linear forwards; }
+  @keyframes confettiFall { to { transform:translateY(105vh) rotate(720deg); opacity:.9; } }
+  /* 2.3.3 / 2.2.2 – tôn trọng tuỳ chọn giảm chuyển động của người chơi */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
+  }
 </style>
 <link rel="stylesheet" href="css/tw.css">
 <meta property="og:type" content="website">
@@ -275,6 +287,49 @@
   // Số theo ngôn ngữ: vi dùng dấu phẩy thập phân, en dùng dấu chấm.
   var f1 = function (v) { return (Math.round(v * 10) / 10).toLocaleString(isEN() ? 'en-US' : 'vi-VN', { maximumFractionDigits: 1 }); };
   var clamp = function (v) { return Math.max(0, Math.min(100, Math.round(v))); };
+  var reduceMotion = (function () { try { return matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; } })();
+  // Đếm chạy thay vì nhảy thẳng số – chỉ dùng cho vài con số nổi bật (tiền
+  // mặt, điểm cuối), không áp cho cả khối chip HUD vì khối đó vẽ lại toàn bộ
+  // bằng innerHTML mỗi lần, không có node ổn định để đếm chạy mượt.
+  function animateNum(el, to, fmt) {
+    if (!el) return;
+    if (reduceMotion) { el.textContent = fmt(to); return; }
+    var from = parseFloat((el.textContent || '0').replace(',', '.')) || 0;
+    if (Math.abs(to - from) < 0.05) { el.textContent = fmt(to); return; }
+    var start = null, dur = 450;
+    function step(ts) {
+      if (start === null) start = ts;
+      var p = Math.min(1, (ts - start) / dur);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = fmt(from + (to - from) * eased);
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  // Vẽ lại nội dung 1 khối vẫn có sẵn hiệu ứng chuyển màn (thay vì nhảy khựng) –
+  // remove rồi add lại class để buộc trình duyệt khởi động lại animation.
+  function fadeIn(id) {
+    if (reduceMotion) return;
+    var el = $(id);
+    if (!el) return;
+    el.classList.remove('bp-fade');
+    void el.offsetWidth;
+    el.classList.add('bp-fade');
+  }
+  function createConfetti() {
+    if (reduceMotion) return;
+    var colors = ['#006687', '#00c4ff', '#fda127', '#e85d75', '#7bd389'];
+    for (var i = 0; i < 60; i++) {
+      var p = document.createElement('div');
+      p.className = 'confetti-piece';
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.background = colors[i % colors.length];
+      p.style.animationDuration = (1.8 + Math.random() * 1.6) + 's';
+      p.style.animationDelay = (Math.random() * 0.4) + 's';
+      document.body.appendChild(p);
+      setTimeout(function (el) { return function () { el.remove(); }; }(p), 4000);
+    }
+  }
   // Trợ giúp song ngữ nội tuyến – giống hệt quy ước của app.js: nhánh 'vi'
   // luôn giữ nguyên byte, chỉ thêm bản tiếng Anh song song.
   function T(vi, en) { return isEN() ? en : vi; }
@@ -542,7 +597,7 @@
 
   /* ================= VÒNG LẶP ================= */
   function hud() {
-    $('bp-cash').textContent = f1(S.cash);
+    animateNum($('bp-cash'), S.cash, f1);
     var kAvg = Math.round(kAvgAll());
     $('bp-hud').innerHTML =
       '<span class="bp-chip">⭐ ' + T('Uy tín', 'Reputation') + ' ' + clamp(S.rep) + '</span>' +
@@ -744,6 +799,7 @@
       '<p id="bp-intel-note" class="text-[11px] opacity-60 mt-1.5">' + T('Chọn nguồn rồi chọn thị trường muốn tìm hiểu. Có thể bỏ qua nếu muốn tiết kiệm.', 'Pick a source, then pick the market you want to research. You can skip this to save cash.') + '</p>' +
       '<button onclick="bpToDecide()" class="clay-btn w-full bg-primary text-white font-display font-extrabold py-3.5 mt-4">➡️ ' + T('Sang bước Quyết định', 'Move to the Decision step') + '</button>';
     hud();
+    fadeIn('bp-stage');
     if (window.BPTour) BPTour.autoObs(S.q);
   }
 
@@ -802,6 +858,7 @@
       '<p class="text-[11px] opacity-60 mt-2 text-center" id="bp-dec-note">' + T('Chọn Ưu tiên và Mức vận hành để chốt.', 'Pick a Priority and an Operating stance to lock in.') + '</p>';
     syncDec();
     hud();
+    fadeIn('bp-stage');
     if (window.BPTour) BPTour.autoDecide(S.q);
   }
 
@@ -906,6 +963,7 @@
       }).join('') + '</div>' +
       '<div id="bp-evt-post"></div>';
     hud();
+    fadeIn('bp-stage');
     if (evtPostCache) renderEvtPost();
   }
 
@@ -949,6 +1007,7 @@
       (evtPostCache.delta ? recapHtml(evtPostCache.qDone, evtPostCache.delta) : '') +
       '<div class="mt-4 p-3.5 rounded-2xl text-[12.5px]" style="background:rgba(0,102,135,.06)"><b>🧾 ' + T('Chi tiết theo thị trường', 'Market breakdown') + ':</b><br>' + fmtQLines(evtPostCache.data, false) + '</div>' +
       '<button onclick="bpNext()" class="clay-btn w-full bg-clay-gold text-deep-teal font-display font-extrabold py-3.5 mt-4">📅 ' + T('Sang quý', 'Go to quarter') + ' ' + (evtPostCache.qDone + 1) + '</button>';
+    fadeIn('bp-evt-post');
   }
   // "Thẻ tóm tắt quý": dịch mức thay đổi RÒNG cả quý (ưu tiên + thâm nhập +
   // sự kiện + doanh thu, xem qSnapshot) thành 1 câu nhận định + vài chip số
@@ -1079,6 +1138,7 @@
       resil: S.resil - qSnapshot.resil, susts: S.susts - qSnapshot.susts, profit: S.profit - qSnapshot.profit,
       rivalRev: S.rival.rev - qSnapshot.rivalRev,
     } : null };
+    if (evtPostCache.delta && evtPostCache.delta.profit >= 1) createConfetti();
     renderEvtPost();
     hud();
   }
@@ -1101,13 +1161,14 @@
   // reason: null (kết thúc bình thường) · 'cash' (cạn tiền 2 quý) · 'rep' (uy tín khủng hoảng).
   // lastEvOut giữ nguyên câu kết quả lựa chọn cuối cùng (đã chốt ngôn ngữ lúc
   // bấm) – chỉ phần khung câu (nhãn, câu dẫn) được dịch lại khi vẽ lại màn.
-  var endReason = null, lastEvOut = '';
+  var endReason = null, lastEvOut = '', endCelebrated = false;
   function bpEnd(reason, evOut) {
     localStorage.removeItem('bizon-bp-save');
     $('bp-play').classList.add('hidden');
     $('bp-end').classList.remove('hidden');
     endReason = reason;
     if (evOut !== undefined) lastEvOut = evOut;
+    fadeIn('bp-end');
     renderResultsScreen();
   }
   // Vẽ lại toàn bộ màn Kết thúc từ trạng thái hiện có (endReason/lastEvOut +
@@ -1115,7 +1176,7 @@
   // ngôn ngữ trên màn hình này.
   function renderResultsScreen() {
     var sc = scores();
-    $('bp-total').textContent = sc.total;
+    animateNum($('bp-total'), sc.total, function (v) { return Math.round(v); });
     var rows = [
       [T('💹 Lợi nhuận (30%)', '💹 Profit (30%)'), sc.p],
       [T('⭐ Uy tín (20%)', '⭐ Reputation (20%)'), sc.r],
@@ -1144,6 +1205,7 @@
       var bestKey = ['p', 'r', 's', 'a'].sort(function (x, y) { return sc[y] - sc[x]; })[0];
       var best = MEDALS[bestKey];
       var supreme = sc.total >= 72 && sc.p >= 60 && sc.r >= 60 && sc.c >= 60 && sc.a >= 60 && sc.s >= 60;
+      if (!endCelebrated && (supreme || S.profit >= S.rival.rev)) { endCelebrated = true; createConfetti(); }
       $('bp-medal').textContent = supreme ? '🏆' : best.icon;
       $('bp-title').textContent = supreme ? T('Thương hiệu Việt vươn khơi', 'A Vietnamese Brand Sets Sail') : T(best.title, best.titleEn);
       $('bp-sub').textContent = supreme ? T('Cân bằng cả 5 chiều – danh hiệu cao nhất của Hộ Chiếu Thương Hiệu.', "Balanced across all 5 dimensions – Brand Passport's highest title.") :
