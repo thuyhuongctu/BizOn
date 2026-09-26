@@ -168,7 +168,10 @@
     <div class="clay-card p-5 mb-4">
       <div class="flex items-center justify-between flex-wrap gap-2">
         <div class="flex gap-1.5" id="bp-qdots"></div>
-        <p class="text-sm font-extrabold" data-en-html="💼 <span id=&quot;bp-cash&quot;>0</span> bn ₫">💼 <span id="bp-cash">0</span> tỷ ₫</p>
+        <div class="flex items-center gap-2">
+          <button onclick="bpTourReplay()" class="text-[11px] font-bold text-deep-teal/50" title="Hướng dẫn" data-en="❓ Guide">❓ Hướng dẫn</button>
+          <p class="text-sm font-extrabold" data-en-html="💼 <span id=&quot;bp-cash&quot;>0</span> bn ₫">💼 <span id="bp-cash">0</span> tỷ ₫</p>
+        </div>
       </div>
       <div class="flex flex-wrap gap-1.5 mt-3" id="bp-hud"></div>
     </div>
@@ -700,17 +703,18 @@
     var discount = 1;
     $('bp-stage').innerHTML =
       '<h2 class="font-display font-extrabold text-deep-teal text-base mb-1">' + T('Quý', 'Quarter') + ' ' + (S.q + 1) + '/6 – 👁️ ' + T('Quan sát &amp; Tình báo', 'Observe &amp; Intelligence') + '</h2>' +
-      signals().map(function (s) { return '<p class="text-[12.5px] mt-2">' + s + '</p>'; }).join('') +
+      '<div id="bp-signals">' + signals().map(function (s) { return '<p class="text-[12.5px] mt-2">' + s + '</p>'; }).join('') + '</div>' +
       '<div class="mt-3 space-y-2">' + advs.map(function (a) { return '<div class="bp-adv">' + faceHtml(a[1], a[0]) + '<div><p class="who">' + a[1] + '</p><p>' + a[2] + '</p></div></div>'; }).join('') + '</div>' +
       (preDrawnEv ? '<div class="bp-adv mt-2">' + faceHtml('Lumina AI', '🤖') + '<div><p class="who">Lumina AI</p><p>' + T('🔮 Dự báo: sự kiện quý sau thuộc nhóm ' + preDrawnEv.cat + ', «' + preDrawnEv.t + '».', "🔮 Forecast: next quarter's event falls under " + preDrawnEv.cat + ', «' + preDrawnEv.tEn + '».') + '</p></div></div>' :
         preDrawnMissionAhead ? '<div class="bp-adv mt-2">' + faceHtml('Lumina AI', '🤖') + '<div><p class="who">Lumina AI</p><p>' + T('🔮 Dự báo: quý sau là mốc đặc biệt, một NHIỆM VỤ lớn chứ không phải sự kiện thường.', '🔮 Forecast: next quarter is a special milestone, a major MISSION rather than a regular event.') + '</p></div></div>' : '') +
       '<p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-4 mb-1.5">' + T('Mua thông tin thị trường (tối đa 2 nguồn/quý)', 'Buy market intel (max 2 sources/quarter)') + '</p>' +
-      '<div class="grid sm:grid-cols-2 gap-2">' + SOURCES.map(function (s, i) {
+      '<div class="grid sm:grid-cols-2 gap-2" id="bp-intel-grid">' + SOURCES.map(function (s, i) {
         return '<button class="bp-opt" data-src="' + i + '" onclick="bpIntel(' + i + ')">' + s.icon + ' ' + T(s.name, s.nameEn) + ' – ' + f1(s.cost * discount) + TY() + '<small>+' + s.know + ' ' + T('tri thức', 'knowledge') + ' · ' + T(s.note, s.noteEn) + '</small></button>';
       }).join('') + '</div>' +
       '<p id="bp-intel-note" class="text-[11px] opacity-60 mt-1.5">' + T('Chọn nguồn rồi chọn thị trường muốn tìm hiểu. Có thể bỏ qua nếu muốn tiết kiệm.', 'Pick a source, then pick the market you want to research. You can skip this to save cash.') + '</p>' +
       '<button onclick="bpToDecide()" class="clay-btn w-full bg-primary text-white font-display font-extrabold py-3.5 mt-4">➡️ ' + T('Sang bước Quyết định', 'Move to the Decision step') + '</button>';
     hud();
+    if (window.BPTour) BPTour.autoObs(S.q);
   }
 
   window.bpIntel = function (i) {
@@ -737,15 +741,19 @@
 
   window.bpToDecide = function () { stageDecide(); };
 
+  window.bpTourReplay = function () { if (window.BPTour) BPTour.replay(S.phase); };
+
   function stageDecide() {
     S.phase = 'dec';
     var notIn = MKTS.map(function (_, m) { return m; }).filter(function (m) { return S.entered[m] === null; });
     $('bp-stage').innerHTML =
       '<h2 class="font-display font-extrabold text-deep-teal text-base mb-1">' + T('Quý', 'Quarter') + ' ' + (S.q + 1) + '/6 – 🧭 ' + T('Quyết định', 'Decision') + '</h2>' +
+      '<div id="bp-prio-section">' +
       '<p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-3 mb-1.5">' + T('1 · Ưu tiên của quý', '1 · Priority for the quarter') + '</p>' +
       '<div class="grid sm:grid-cols-2 gap-2">' + PRIOS.map(function (p, i) {
         return '<button class="bp-opt" data-g="prio" data-i="' + i + '" onclick="bpPick(\'prio\',' + i + ')">' + p.icon + ' ' + T(p.name, p.nameEn) + '<small>' + T(p.note, p.noteEn) + '</small></button>';
-      }).join('') + '</div>' +
+      }).join('') + '</div></div>' +
+      '<div id="bp-enter-section">' +
       '<p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-4 mb-1.5">' + T('2 · Thâm nhập thị trường mới (tùy chọn – tối đa 1 thị trường/quý)', '2 · Enter a new market (optional – max 1 market/quarter)') + '</p>' +
       '<p class="text-[10px] opacity-55 mb-1.5">' + T('🧭 <b>AIBIS</b> (engine tất định) chấm mức phù hợp 0–100 cho mỗi phương thức theo hồ sơ thị trường &amp; doanh nghiệp (<i>tham khảo, số liệu minh hoạ</i>).', '🧭 <b>AIBIS</b> (a deterministic engine) scores each entry mode 0–100 based on the market &amp; company profile (<i>for reference, illustrative figures</i>).') + '</p>' +
       (notIn.length ? '<div class="space-y-2">' + notIn.map(function (m) {
@@ -754,15 +762,17 @@
           '<div class="grid sm:grid-cols-3 gap-2">' + MODES.map(function (md) {
             return '<button class="bp-opt" data-g="ent" data-m="' + m + '" data-md="' + md.id + '" onclick="bpEnter(' + m + ',' + md.id + ')">' + md.icon + ' ' + T(md.name, md.nameEn) + '<small>' + T('vốn', 'capital') + ' ' + f1(md.cost) + TY() + ' · ' + T(md.note, md.noteEn) + '</small>' + (_fit && _fit[md.id] != null ? '<span style="display:block;margin-top:3px;font-family:ui-monospace,monospace;font-size:10px;font-weight:800;color:#0F5C4E">AIBIS ' + _fit[md.id] + ' · ' + T('phù hợp', 'fit') + '</span>' : '') + '</button>';
           }).join('') + '</div>';
-      }).join('') + '</div>' : '<p class="text-[12px] opacity-60">' + T('Bạn đã hiện diện ở cả ' + MKTS.length + ' thị trường.', 'You are already present in all ' + MKTS.length + ' markets.') + '</p>') +
+      }).join('') + '</div>' : '<p class="text-[12px] opacity-60">' + T('Bạn đã hiện diện ở cả ' + MKTS.length + ' thị trường.', 'You are already present in all ' + MKTS.length + ' markets.') + '</p>') + '</div>' +
+      '<div id="bp-budget-section">' +
       '<p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-4 mb-1.5">' + T('3 · Mức vận hành', '3 · Operating stance') + '</p>' +
       '<div class="grid grid-cols-3 gap-2">' + BUDGETS.map(function (b, i) {
         return '<button class="bp-opt" data-g="bud" data-i="' + i + '" onclick="bpPick(\'bud\',' + i + ')" style="text-align:center">' + b.icon + ' ' + T(b.name, b.nameEn) + '</button>';
-      }).join('') + '</div>' +
+      }).join('') + '</div></div>' +
       '<button id="bp-commit" onclick="bpCommit()" class="clay-btn w-full bg-primary text-white font-display font-extrabold py-3.5 mt-4" disabled style="opacity:.5">🔒 ' + T('Chốt quý này', 'Lock in this quarter') + '</button>' +
       '<p class="text-[11px] opacity-60 mt-2 text-center" id="bp-dec-note">' + T('Chọn Ưu tiên và Mức vận hành để chốt.', 'Pick a Priority and an Operating stance to lock in.') + '</p>';
     syncDec();
     hud();
+    if (window.BPTour) BPTour.autoDecide(S.q);
   }
 
   window.bpPick = function (g, i) {
@@ -1409,6 +1419,7 @@
   });
 })();
 </script>
+<script src="js/bp-tutorial.js"></script>
 <script src="js/site-ui.js" defer></script>
 <script src="js/site-vnmap.js" defer></script>
 <script src="js/site-dock.js" defer></script>
