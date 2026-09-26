@@ -365,9 +365,12 @@
     { icon: '💻', name: 'Mekong Digital', prod: 'Phần mềm quản trị', prodEn: 'Management software', adv: 'Kênh số cực mạnh · biên lời cao', advEn: 'Very strong digital channel · high margins', weak: 'Mù mờ pháp luật dữ liệu', weakEn: 'Shaky on data regulations', cash: 7, rep: 46, capab: 48, susts: 0, img: 'assets/character/firms/mekong-digital-cut.webp' },
   ];
   var MODES = [
-    { id: 0, icon: '🛒', name: 'Nền tảng số', nameEn: 'Digital platform', cost: 0.5, margin: 0.25, scale: 0.7, op: 0.25, note: 'cam kết thấp – vào nhanh, lời mỏng', noteEn: 'low commitment – fast entry, thin margins' },
-    { id: 1, icon: '🚢', name: 'Xuất khẩu trực tiếp', nameEn: 'Direct export', cost: 1.2, margin: 0.35, scale: 1.0, op: 0.5, note: 'cam kết vừa – kiểm soát tốt hơn', noteEn: 'moderate commitment – better control' },
-    { id: 2, icon: '🤝', name: 'Đối tác địa phương', nameEn: 'Local partner', cost: 0.8, margin: 0.28, scale: 1.3, op: 0.35, note: 'mượn mạng lưới – phụ thuộc đối tác', noteEn: 'borrowed network – dependent on the partner' },
+    { id: 0, icon: '🛒', name: 'Nền tảng số', nameEn: 'Digital platform', cost: 0.5, margin: 0.25, scale: 0.7, op: 0.25, note: 'cam kết thấp – vào nhanh, lời mỏng', noteEn: 'low commitment – fast entry, thin margins',
+      ship: 'giao qua nền tảng số, không cần kho ngoại quan', shipEn: 'delivered via the digital platform, no bonded warehouse needed' },
+    { id: 1, icon: '🚢', name: 'Xuất khẩu trực tiếp', nameEn: 'Direct export', cost: 1.2, margin: 0.35, scale: 1.0, op: 0.5, note: 'cam kết vừa – kiểm soát tốt hơn', noteEn: 'moderate commitment – better control',
+      ship: 'hàng rời cảng Việt Nam, đi thẳng tới kho khách', shipEn: "cargo leaves a Vietnamese port and ships straight to the customer's warehouse" },
+    { id: 2, icon: '🤝', name: 'Đối tác địa phương', nameEn: 'Local partner', cost: 0.8, margin: 0.28, scale: 1.3, op: 0.35, note: 'mượn mạng lưới – phụ thuộc đối tác', noteEn: 'borrowed network – dependent on the partner',
+      ship: 'nhập kho đối tác địa phương rồi phân phối tiếp', shipEn: "stocked at the local partner's warehouse, then distributed onward" },
   ];
   var SOURCES = [
     { icon: '📊', name: 'Báo cáo ngành', nameEn: 'Industry report', cost: 0.3, know: 18, note: 'trung tính nhưng hơi cũ', noteEn: 'neutral but a bit dated' },
@@ -429,7 +432,7 @@
     q: 0, firm: 0, cash: 8, rep: 50, capab: 40, resil: 50,
     know: [10, 10, 10, 10, 10, 10, 10], entered: [null, null, null, null, null, null, null],
     qin: [0, 0, 0, 0, 0, 0, 0], certBP: false, items: {}, shopOpen: false,
-    profit: 0, susts: 0, adapt: 0, lowQ: 0, rival: { rev: 0 },
+    profit: 0, susts: 0, adapt: 0, lowQ: 0, rival: { rev: 0, in: [] },
     foot: [], flags: {}, usedEv: [], phase: 'obs',
     sel: { prio: null, budget: 1, enter: null, enterMode: null, intel: [] },
   };
@@ -844,7 +847,8 @@
       '<p class="text-[10px] opacity-55 mb-1.5">' + T('🧭 <b>AIBIS</b> (engine tất định) chấm mức phù hợp 0–100 cho mỗi phương thức theo hồ sơ thị trường &amp; doanh nghiệp (<i>tham khảo, số liệu minh hoạ</i>).', '🧭 <b>AIBIS</b> (a deterministic engine) scores each entry mode 0–100 based on the market &amp; company profile (<i>for reference, illustrative figures</i>).') + '</p>' +
       (notIn.length ? '<div class="space-y-2">' + notIn.map(function (m) {
         var _fit = aibisFit(m);
-        return '<div class="text-[12px] font-bold mt-1">' + MKTS[m].icon + ' ' + MKTS[m].name + ' <span class="opacity-55 font-semibold">(' + T('tri thức', 'knowledge') + ' ' + clamp(S.know[m]) + '/100 – ' + T(MKTS[m].trait, MKTS[m].traitEn) + ')</span></div>' +
+        return '<div class="text-[12px] font-bold mt-1">' + MKTS[m].icon + ' ' + MKTS[m].name + ' <span class="opacity-55 font-semibold">(' + T('tri thức', 'knowledge') + ' ' + clamp(S.know[m]) + '/100 – ' + T(MKTS[m].trait, MKTS[m].traitEn) + ')</span>' +
+          (S.rival.in.indexOf(m) >= 0 ? ' <span class="bp-chip" style="font-size:9.5px; padding:2px 7px">' + RIVAL.icon + ' ' + T('đối thủ đã có mặt', 'rival already here') + '</span>' : '') + '</div>' +
           '<div class="grid sm:grid-cols-3 gap-2">' + MODES.map(function (md) {
             return '<button class="bp-opt" data-g="ent" data-m="' + m + '" data-md="' + md.id + '" onclick="bpEnter(' + m + ',' + md.id + ')">' + md.icon + ' ' + T(md.name, md.nameEn) + '<small>' + T('vốn', 'capital') + ' ' + f1(md.cost) + TY() + ' · ' + T(md.note, md.noteEn) + '</small>' + (_fit && _fit[md.id] != null ? '<span style="display:block;margin-top:3px;font-family:ui-monospace,monospace;font-size:10px;font-weight:800;color:#0F5C4E">AIBIS ' + _fit[md.id] + ' · ' + T('phù hợp', 'fit') + '</span>' : '') + '</button>';
           }).join('') + '</div>';
@@ -990,7 +994,9 @@
   // dùng chung cho nhật ký và bảng "Kết quả quý", để vẽ lại được song ngữ.
   function fmtQLines(data, loanPaid) {
     var body = data.length ? data.map(function (d) {
-      return MKTS[d.m].icon + ' ' + MKTS[d.m].name + ': ' + T('doanh thu', 'revenue') + ' ' + f1(d.rev) + TY() + ' → ' + T('lợi nhuận', 'profit') + ' ' + f1(d.pf) + TY();
+      var mode = MODES[S.entered[d.m]];
+      return MKTS[d.m].icon + ' ' + MKTS[d.m].name + ': ' + T('doanh thu', 'revenue') + ' ' + f1(d.rev) + TY() + ' → ' + T('lợi nhuận', 'profit') + ' ' + f1(d.pf) + TY() +
+        '<br><span style="opacity:.6; font-size:.95em">' + mode.icon + ' ' + T(mode.ship, mode.shipEn) + '</span>';
     }).join('<br>') : T('Chưa hiện diện thị trường nào – quý này không có doanh thu quốc tế.', "You haven't entered any market yet – no international revenue this quarter.");
     return body + (loanPaid ? '<br>' + T('🏦 Trả lãi vay ngắn hạn 0,3 tỷ.', '🏦 Paid 0.3 bn in short-term loan interest.') : '');
   }
@@ -1050,6 +1056,30 @@
     var pool = mkts.length ? mkts : MKTS.map(function (_, m) { return m; });
     var compAvg = pool.reduce(function (s, m) { return s + H[m].comp; }, 0) / pool.length;
     S.rival.rev = Math.max(0, S.rival.rev + RIVAL_BASE * compAvg + (rivalRnd() - 0.5) * RIVAL_VAR * 2);
+    // Hiện diện cụ thể theo thị trường – thuần tường thuật (không đọc/ghi
+    // vào H[m] hay công thức doanh thu người chơi), chỉ để đối thủ cảm giác
+    // như đang thật sự mở rộng vào từng thị trường cụ thể, không chỉ là 1
+    // con số chạy đua vô hình trong HUD. Xác suất tăng dần theo quý.
+    var notIn = MKTS.map(function (_, m) { return m; }).filter(function (m) { return S.rival.in.indexOf(m) < 0; });
+    if (notIn.length && rivalRnd() < 0.22 + S.q * 0.05) {
+      var pick = notIn[Math.floor(rivalRnd() * notIn.length)];
+      S.rival.in.push(pick);
+      return pick;
+    }
+    return null;
+  }
+  // Tiếng nói khách hàng: 1 câu ngắn phản ứng theo tình hình quý vừa qua –
+  // thuần tường thuật, chọn quote qua rivalRnd() (không phải rnd() chính) để
+  // không xáo trộn thứ tự sự kiện/thị trường vốn đã seed theo rnd().
+  function customerVoice(budgetIdx, qProfit) {
+    var pool = [];
+    if (S.flags.priceWar) pool.push(T('🗣️ "Dạo này thấy giá đổi liên tục, không biết có nên chờ đợt sau không."', '🗣️ "Prices keep shifting lately, not sure if I should wait for the next round."'));
+    if (budgetIdx === 2) pool.push(T('🗣️ "Thấy quảng cáo nhiều hẳn quý này, tò mò thử xem sao."', '🗣️ "Seeing a lot more ads this quarter, curious enough to try it."'));
+    if (budgetIdx === 0) pool.push(T('🗣️ "Ít thấy nhắc tới thương hiệu này hơn trước, chắc đang giữ sức?"', "🗣️ \"Hearing about this brand less than before, maybe they're holding back?\""));
+    if (qProfit > 1) pool.push(T('🗣️ "Bạn bè mình cũng bắt đầu dùng thử rồi, chắc đang lên."', '🗣️ "My friends are starting to try it too, must be on the rise."'));
+    if (qProfit < 0) pool.push(T('🗣️ "Không thấy hàng về đều như trước, hơi ngại đặt tiếp."', '🗣️ "Restocks feel less steady than before, a bit hesitant to reorder."'));
+    if (!pool.length) pool.push(T('🗣️ "Vẫn ổn, chưa có gì đặc biệt để kể."', '🗣️ "Still fine, nothing special to report."'));
+    return pool[Math.floor(rivalRnd() * pool.length)];
   }
 
   function settle(evOut) {
@@ -1102,7 +1132,7 @@
         '📉 ' + MKTS[m].name + ": weak revenue means competitors pay less attention – competition eases a little."
       ));
     });
-    rivalStep();
+    var rivalEntered = rivalStep();
     if (S.sel.prio === 1) S.resil -= 3;
     var loanPaid = false;
     if (S.flags.loan) { S.cash -= 0.3; S.flags.loan = false; loanPaid = true; }
@@ -1115,6 +1145,11 @@
     addLog(RIVAL.icon + ' <b>' + RIVAL.name + ':</b> ' + (S.profit >= S.rival.rev ?
       T('vẫn bám đuổi phía sau bạn, doanh thu ước ' + f1(S.rival.rev) + TY() + '.', 'still chasing behind you, estimated revenue ' + f1(S.rival.rev) + TY() + '.') :
       T('đang dẫn trước bạn, doanh thu ước ' + f1(S.rival.rev) + TY() + ' – tăng tốc thôi!', 'currently ahead of you, estimated revenue ' + f1(S.rival.rev) + TY() + ' – time to pick up the pace!')));
+    if (rivalEntered !== null) addLog(RIVAL.icon + ' ' + T(
+      RIVAL.name + ' vừa mở rộng vào <b>' + MKTS[rivalEntered].name + '</b> – cạnh tranh ở đó sẽ gắt hơn từ giờ.',
+      RIVAL.name + ' just expanded into <b>' + MKTS[rivalEntered].name + '</b> – competition there just got tougher.'
+    ));
+    addLog(customerVoice(S.sel.budget, qProfit));
     save();
     // Thua sớm?
     if (S.lowQ >= 2) return bpEnd('cash', evOut);
