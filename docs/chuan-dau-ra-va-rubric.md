@@ -79,7 +79,7 @@ Ký hiệu: **BP-1** đến **BP-6** · Game mô phỏng quốc tế hóa doanh 
 
 | Mã | Chuẩn đầu ra – sau khi chơi và thảo luận, sinh viên có thể… | Bloom | Cơ chế game tương ứng |
 |---|---|---|---|
-| **BP-1** | So sánh và lựa chọn thị trường quốc tế dựa trên đặc điểm cầu, thể chế và cạnh tranh | Phân tích | 6 thị trường giả tưởng với hồ sơ ẩn khác nhau |
+| **BP-1** | So sánh và lựa chọn thị trường quốc tế dựa trên đặc điểm cầu, thể chế và cạnh tranh | Phân tích | 7 thị trường giả tưởng với hồ sơ ẩn khác nhau |
 | **BP-2** | Giải thích quan hệ giữa mức cam kết của phương thức thâm nhập với kiểm soát, lợi nhuận và rủi ro | Hiểu / Vận dụng | 3 phương thức: nền tảng số · xuất khẩu trực tiếp · đối tác địa phương |
 | **BP-3** | Đánh giá độ tin cậy và độ thiên lệch của các nguồn thông tin thị trường trước khi ra quyết định | Đánh giá | Sương mù thị trường + 6 nguồn tin có chi phí, độ chính xác và thiên lệch riêng |
 | **BP-4** | Phân tích đánh đổi chuẩn hóa – thích nghi và tuân thủ thể chế khi vào thị trường khó tính | Phân tích | Chứng nhận Bắc Phong · hồ sơ bền vững Lục Đảo · sự kiện thể chế |
