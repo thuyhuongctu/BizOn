@@ -1,7 +1,7 @@
 /* BizOn Bật Nghiệp 2026 – Service Worker (offline app shell)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
 
-const CACHE = 'bizon-v288';
+const CACHE = 'bizon-v289';
 const SHELL = [
   './',
   './index.html',
@@ -137,6 +137,18 @@ const SHELL = [
   './assets/character/rivals/alpha.webp',
   './assets/character/rivals/mekong.webp',
   './assets/character/rivals/star.webp',
+  './assets/character/firms/kim-long-rival-cut.webp',
+  './assets/illustrations/game/mkt-hai-lam.webp',
+  './assets/illustrations/game/mkt-bac-phong.webp',
+  './assets/illustrations/game/mkt-kim-sa.webp',
+  './assets/illustrations/game/mkt-luc-dao.webp',
+  './assets/illustrations/game/mkt-nhat-quang.webp',
+  './assets/illustrations/game/mkt-tan-cang.webp',
+  './assets/illustrations/game/mkt-hoa-son.webp',
+  './assets/illustrations/game/evtcat-market.webp',
+  './assets/illustrations/game/evtcat-institutional.webp',
+  './assets/illustrations/game/evtcat-internal.webp',
+  './assets/illustrations/game/evtcat-crisis.webp',
   './assets/character/team/lineup-cut.webp',
   './assets/character/team/csuite-lineup.webp',
   './assets/character/team/ceo-cut.webp',
