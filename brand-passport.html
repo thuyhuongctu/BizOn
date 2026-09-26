@@ -422,7 +422,9 @@
     { id: 'tax', cat: '🧾', t: 'Thuế nhập khẩu tăng', tEn: 'Import tax increases', need: anyEnt, d: function () { return T('Mức thuế mới ăn vào biên lợi nhuận của bạn.', 'The new tax rate eats into your profit margin.'); }, ch: [
       { l: '💰 Chịu thuế, giữ giá bán', lEn: '💰 Absorb the tax, keep the price', fx: function () { S.flags.wave = 0.87; return T('Lợi nhuận quý −13%, thị phần giữ nguyên.', 'Quarterly profit −13%, market share unchanged.'); } },
       { l: '🏷️ Tăng giá bán tương ứng', lEn: '🏷️ Raise the price to match', fx: function () { S.flags.wave = 0.93; if (rnd() < 0.4) { S.rep -= 3; return T('Một phần khách phản ứng với giá mới – uy tín −3.', 'Some customers push back on the new price – reputation −3.'); } return T('Khách chấp nhận mức giá mới – thương hiệu đủ mạnh.', 'Customers accept the new price – your brand is strong enough.'); } }] },
-    { id: 'cert', cat: '✅', t: 'Yêu cầu chứng nhận mới tại Bắc Phong', tEn: 'A new certification requirement in Bắc Phong', d: function () { return T('Bắc Phong áp chuẩn kiểm định mới cho mỹ phẩm thảo mộc.', 'Bắc Phong imposes new inspection standards for herbal cosmetics.'); }, ch: [
+    // need: !certBP – nếu đã có chứng nhận rồi (kể cả mua qua Cửa hàng vật
+    // phẩm) thì bỏ qua sự kiện này, tránh bắt trả tiền lần hai cho việc đã có.
+    { id: 'cert', cat: '✅', t: 'Yêu cầu chứng nhận mới tại Bắc Phong', tEn: 'A new certification requirement in Bắc Phong', need: function () { return !S.certBP; }, d: function () { return T('Bắc Phong áp chuẩn kiểm định mới cho mỹ phẩm thảo mộc.', 'Bắc Phong imposes new inspection standards for herbal cosmetics.'); }, ch: [
       { l: '🎖️ Đầu tư chứng nhận (0,9 tỷ)', lEn: '🎖️ Invest in certification (0.9 bn)', fx: function () { S.cash -= 0.9; S.certBP = true; S.capab += 4; return T('Mộc Nhiên đạt chuẩn Bắc Phong – mở khóa trọn tiềm năng thị trường này, năng lực +4.', "Mộc Nhiên meets the Bắc Phong standard – this market's full potential unlocks, capability +4."); } },
       { l: '🕰️ Trì hoãn', lEn: '🕰️ Delay', fx: function () { return S.entered[1] !== null ? T('Doanh thu Bắc Phong sẽ bị giới hạn cho tới khi có chứng nhận.', 'Bắc Phong revenue will stay capped until you get certified.') : T('Chưa ảnh hưởng ngay – nhưng cánh cửa Bắc Phong vẫn khép hờ.', 'No impact yet – but the Bắc Phong door stays only half open.'); } }] },
     { id: 'data', cat: '🔐', t: 'Siết bảo vệ dữ liệu người dùng', tEn: 'Tighter user data protection', d: function () { return T('Quy định mới về dữ liệu khách hàng trên kênh số.', 'A new regulation on customer data on digital channels.'); }, ch: [
@@ -551,27 +553,39 @@
     $('bp-shop-caret').textContent = S.shopOpen ? '▴' : '▾';
     if (S.shopOpen) renderShop();
   };
+  // Blueprint đã có hiệu lực thì không cho mua lại – mua thêm không cộng dồn
+  // tác dụng, chỉ tốn tiền oan. CERT_FT xét theo S.certBP (có thể đã đạt qua
+  // sự kiện 'cert' hoặc NHIỆM VỤ, không chỉ qua cửa hàng) chứ không phải theo
+  // số lượng đã mua.
+  function blueprintOwned(id) {
+    if (id === 'CERT_FT') return S.certBP;
+    return (S.items[id] || 0) > 0;
+  }
   function renderShop() {
     var listEl = $('bp-shop-list');
     if (!listEl) return;
     listEl.innerHTML = SHOP_ITEMS.map(function (it) {
-      var afford = S.cash >= it.price;
+      var owned = it.type === 'blueprint' && blueprintOwned(it.id);
+      var afford = S.cash >= it.price && !owned;
       return '<div class="bp-opt" style="display:flex;align-items:center;gap:10px;cursor:default">' +
         '<span style="font-size:22px">' + it.icon + '</span>' +
         '<span style="flex:1"><b>' + T(it.name, it.nameEn) + '</b>' + (it.type === 'blueprint' ? ' <span class="opacity-50" style="font-size:10px">(' + T('vĩnh viễn', 'permanent') + ')</span>' : '') +
         '<small>' + T(it.desc, it.descEn) + '</small></span>' +
-        '<button onclick="bpBuyItem(\'' + it.id + '\')" class="clay-btn bg-primary text-white text-xs font-bold px-3 py-2 shrink-0"' + (afford ? '' : ' disabled style="opacity:.4"') + '>' + f1(it.price) + TY() + '</button>' +
+        (owned ? '<span class="text-[10px] font-bold opacity-50 shrink-0">✅ ' + T('Đã có', 'Owned') + '</span>' :
+          '<button onclick="bpBuyItem(\'' + it.id + '\')" class="clay-btn bg-primary text-white text-xs font-bold px-3 py-2 shrink-0"' + (afford ? '' : ' disabled style="opacity:.4"') + '>' + f1(it.price) + TY() + '</button>') +
         '</div>';
     }).join('');
     var owned = Object.keys(S.items).filter(function (id) { return S.items[id] > 0; });
     var invEl = $('bp-inv-list');
     invEl.innerHTML = owned.length ? owned.map(function (id) {
       var it = shopItem(id);
-      var canUse = it.type === 'consumable' && !(id === 'SHIELD' && S.flags.shield);
+      var forecastPending = S.flags.forecastPeek || !!preDrawnEv || preDrawnMissionAhead;
+      var canUse = it.type === 'consumable' && !(id === 'SHIELD' && S.flags.shield) && !(id === 'FORECAST' && forecastPending);
       return '<div class="bp-opt" style="display:flex;align-items:center;gap:10px;cursor:default">' +
         '<span style="font-size:20px">' + it.icon + '</span>' +
         '<span style="flex:1"><b>' + T(it.name, it.nameEn) + '</b> ×' + S.items[id] +
-        (id === 'SHIELD' && S.flags.shield ? '<small>' + T('Đã kích hoạt – chờ chặn sự kiện kế tiếp', 'Active – waiting to block the next event') + '</small>' : '') + '</span>' +
+        (id === 'SHIELD' && S.flags.shield ? '<small>' + T('Đã kích hoạt – chờ chặn sự kiện kế tiếp', 'Active – waiting to block the next event') + '</small>' : '') +
+        (id === 'FORECAST' && forecastPending ? '<small>' + T('Đang chờ tiết lộ ở quý sau', 'Waiting to reveal next quarter') + '</small>' : '') + '</span>' +
         (it.type === 'blueprint' ? '<span class="text-[10px] font-bold opacity-50">✅ ' + T('Đang áp dụng', 'In effect') + '</span>' :
           '<button onclick="bpUseItem(\'' + id + '\')" class="clay-btn bg-clay-gold text-deep-teal text-xs font-bold px-3 py-2 shrink-0"' + (canUse ? '' : ' disabled style="opacity:.4"') + '>' + T('Dùng', 'Use') + '</button>') +
         '</div>';
@@ -581,6 +595,7 @@
   window.bpBuyItem = function (id) {
     var it = shopItem(id);
     if (!it || S.cash < it.price) return;
+    if (it.type === 'blueprint' && blueprintOwned(id)) return;
     S.cash -= it.price;
     S.items[id] = (S.items[id] || 0) + 1;
     if (id === 'CERT_FT') { S.certBP = true; addLog(T('🎖️ Mua <b>Chứng nhận nhanh Bắc Phong</b> – đạt chuẩn Bắc Phong ngay lập tức.', '🎖️ Bought <b>Bắc Phong Fast-Track Certification</b> – instantly meets the Bắc Phong standard.')); }
@@ -598,6 +613,9 @@
       S.items[id]--; S.rep = clamp(S.rep + 8);
       addLog(T('📣 Dùng Gói PR khủng hoảng – uy tín +8.', '📣 Used the Crisis PR Kit – reputation +8.'));
     } else if (id === 'FORECAST') {
+      // Đã có 1 dự báo đang chờ dùng (chưa sang quý mới để lộ ra) thì đừng
+      // tiêu thêm vật phẩm – dùng thêm không rút thêm được dự báo nào khác.
+      if (S.flags.forecastPeek || preDrawnEv || preDrawnMissionAhead) return;
       S.items[id]--; S.flags.forecastPeek = true;
       addLog(T('🔮 Dùng Gói dữ liệu Lumina – Lumina sẽ tiết lộ trước thể loại sự kiện quý sau.', "🔮 Used the Lumina Data Pack – Lumina will reveal next quarter's event category in advance."));
     } else if (id === 'SCOUT') {
@@ -1030,11 +1048,14 @@
     $('bp-footprint').innerHTML = S.foot.length ?
       '<p class="font-extrabold text-[11px] uppercase tracking-wide opacity-55 mb-1">👣 ' + T('Dấu chân quyết định của bạn', 'Your decision footprint') + '</p>' +
       S.foot.map(function (t) { return '<p>• ' + t + '</p>'; }).join('') : '';
-    renderCertBox(sc, endReason === null ? ($('bp-title') ? $('bp-title').textContent : '') : '');
     window.__bpFinal = { sc: sc, fail: endReason !== null, title: $('bp-title').textContent };
     var elClass = $('bp-class'); if (elClass) elClass.placeholder = T('Mã lớp (VD: QTKD-2026-A)', 'Class code (e.g. QTKD-2026-A)');
     var elName = $('bp-name'); if (elName) elName.placeholder = T('Tên của bạn', 'Your name');
+    // initSubmit() TRƯỚC renderCertBox(): điền sẵn tên đã lưu (nếu có) vào
+    // ô #bp-name, để chứng chỉ hiện đúng tên ngay từ lần vẽ đầu tiên thay vì
+    // phải đợi người chơi đổi ngôn ngữ mới thấy tên được điền.
     initSubmit();
+    renderCertBox(sc, endReason === null ? ($('bp-title') ? $('bp-title').textContent : '') : '');
   }
 
   /* ================= CHỨNG CHỈ HOÀN THÀNH ================= */
@@ -1349,6 +1370,17 @@
   renderFirms();
   applyStatic(); // trạng thái ban đầu (nếu người dùng đã chọn EN từ trước) - cũng tự gọi syncBpVideo()
   try { if (localStorage.getItem('bizon-bp-save')) $('bp-resume').classList.remove('hidden'); } catch (e) {}
+
+  // Tên trên chứng chỉ cập nhật ngay khi gõ vào ô #bp-name, để khớp với tên
+  // sẽ dùng lúc tải PNG (bpDownloadCert() đọc trực tiếp giá trị ô này lúc
+  // bấm) – tránh cảnh xem trước hiện một tên, tải về lại ra tên khác.
+  document.addEventListener('input', function (e) {
+    if (!e.target || e.target.id !== 'bp-name') return;
+    var certName = $('bp-cert-name'), certBox = $('bp-cert-box');
+    if (certName && certBox && !certBox.classList.contains('hidden')) {
+      certName.textContent = e.target.value.trim() || T('Nhà điều hành ' + F().name, F().name + ' Operator');
+    }
+  });
 
   // Đổi ngôn ngữ ngay trong game: applyLang() (site-ui.js) chỉ dịch chữ tĩnh
   // của trang, nên ta tự vẽ lại đúng phần nội dung động đang hiển thị – KHÔNG
