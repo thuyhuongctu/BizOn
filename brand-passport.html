@@ -365,12 +365,17 @@
     { icon: '💻', name: 'Mekong Digital', prod: 'Phần mềm quản trị', prodEn: 'Management software', adv: 'Kênh số cực mạnh · biên lời cao', advEn: 'Very strong digital channel · high margins', weak: 'Mù mờ pháp luật dữ liệu', weakEn: 'Shaky on data regulations', cash: 7, rep: 46, capab: 48, susts: 0, img: 'assets/character/firms/mekong-digital-cut.webp' },
   ];
   var MODES = [
-    { id: 0, icon: '🛒', name: 'Nền tảng số', nameEn: 'Digital platform', cost: 0.5, margin: 0.25, scale: 0.7, op: 0.25, note: 'cam kết thấp – vào nhanh, lời mỏng', noteEn: 'low commitment – fast entry, thin margins',
-      ship: 'giao qua nền tảng số, không cần kho ngoại quan', shipEn: 'delivered via the digital platform, no bonded warehouse needed' },
-    { id: 1, icon: '🚢', name: 'Xuất khẩu trực tiếp', nameEn: 'Direct export', cost: 1.2, margin: 0.35, scale: 1.0, op: 0.5, note: 'cam kết vừa – kiểm soát tốt hơn', noteEn: 'moderate commitment – better control',
-      ship: 'hàng rời cảng Việt Nam, đi thẳng tới kho khách', shipEn: "cargo leaves a Vietnamese port and ships straight to the customer's warehouse" },
-    { id: 2, icon: '🤝', name: 'Đối tác địa phương', nameEn: 'Local partner', cost: 0.8, margin: 0.28, scale: 1.3, op: 0.35, note: 'mượn mạng lưới – phụ thuộc đối tác', noteEn: 'borrowed network – dependent on the partner',
-      ship: 'nhập kho đối tác địa phương rồi phân phối tiếp', shipEn: "stocked at the local partner's warehouse, then distributed onward" },
+    { id: 0, icon: '🛒', name: 'Nền tảng số', nameEn: 'Digital platform', cost: 0.5, margin: 0.25, scale: 0.7, op: 0.25, note: 'cam kết thấp – vào nhanh, lời mỏng', noteEn: 'low commitment – fast entry, thin margins' },
+    { id: 1, icon: '🚢', name: 'Xuất khẩu trực tiếp', nameEn: 'Direct export', cost: 1.2, margin: 0.35, scale: 1.0, op: 0.5, note: 'cam kết vừa – kiểm soát tốt hơn', noteEn: 'moderate commitment – better control' },
+    { id: 2, icon: '🤝', name: 'Đối tác địa phương', nameEn: 'Local partner', cost: 0.8, margin: 0.28, scale: 1.3, op: 0.35, note: 'mượn mạng lưới – phụ thuộc đối tác', noteEn: 'borrowed network – dependent on the partner' },
+  ];
+  // Vận tải: lựa chọn/rủi ro RIÊNG, tách khỏi giá vốn cố định của MODES ở
+  // trên – chọn 1 lần khi thâm nhập 1 thị trường, áp dụng mọi quý sau đó.
+  // Đường biển rẻ hơn nhưng mỗi quý có rủi ro chậm hàng (mất nửa doanh thu
+  // quý đó); hỏa tốc đắt hơn nhưng hiếm khi chậm.
+  var SHIP_MODES = [
+    { id: 0, icon: '🚤', name: 'Đường biển', nameEn: 'Sea freight', opMul: 0.8, risk: 0.16, note: 'rẻ hơn – mỗi quý có rủi ro chậm hàng', noteEn: 'cheaper – carries a delay risk each quarter' },
+    { id: 1, icon: '✈️', name: 'Hỏa tốc', nameEn: 'Express freight', opMul: 1.3, risk: 0.03, note: 'đắt hơn – hiếm khi chậm hàng', noteEn: 'pricier – rarely delayed' },
   ];
   var SOURCES = [
     { icon: '📊', name: 'Báo cáo ngành', nameEn: 'Industry report', cost: 0.3, know: 18, note: 'trung tính nhưng hơi cũ', noteEn: 'neutral but a bit dated' },
@@ -431,11 +436,12 @@
   var S = {
     q: 0, firm: 0, cash: 8, rep: 50, capab: 40, resil: 50,
     know: [10, 10, 10, 10, 10, 10, 10], entered: [null, null, null, null, null, null, null],
+    ship: [null, null, null, null, null, null, null],
     qin: [0, 0, 0, 0, 0, 0, 0], certBP: false, items: {}, shopOpen: false,
     cust: [60, 60, 60, 60, 60, 60, 60],
     profit: 0, susts: 0, adapt: 0, lowQ: 0, rival: { rev: 0, in: [], qin: [] },
     foot: [], flags: {}, usedEv: [], phase: 'obs',
-    sel: { prio: null, budget: 1, enter: null, enterMode: null, intel: [] },
+    sel: { prio: null, budget: 1, enter: null, enterMode: null, shipMode: null, intel: [] },
   };
   // ── AIBIS: gợi ý phương thức thâm nhập bằng engine tất định (tham khảo · số liệu minh hoạ) ──
   // Ánh xạ 3 phương thức của game sang 6 phương thức chuẩn của AIBIS.
@@ -558,11 +564,11 @@
       return T('Nhà phân phối lớn nhất Bắc Phong đề nghị đưa Mộc Nhiên vào <b>500 cửa hàng</b>, đổi lại: độc quyền 3 năm, giảm giá buôn 25%, đổi toàn bộ bao bì, bạn chịu phí chứng nhận và giao lô đầu trong 60 ngày. <b>Lina Park 🚢:</b> «Mạng lưới của tôi là cánh cửa nhanh nhất – nhưng cửa nào cũng có giá của nó.»',
         "Bắc Phong's biggest distributor offers to place Mộc Nhiên in <b>500 stores</b>, in exchange for: 3-year exclusivity, a 25% wholesale discount, a full packaging redesign, you covering certification fees, and delivering the first batch within 60 days. <b>Lina Park 🚢:</b> «My network is the fastest door in – but every door has its price.»");
     }, ch: [
-      { l: '✍️ Chấp nhận toàn bộ đề nghị', lEn: '✍️ Accept the offer in full', fx: function () { if (S.capab >= 55 && S.cash >= 2) { S.cash -= 2; S.entered[1] = 2; S.certBP = true; S.flags.bigDeal = true; S.foot.push(T('Ký độc quyền 3 năm với nhà phân phối Bắc Phong', 'Signed a 3-year exclusivity deal with the Bắc Phong distributor')); return T('Bạn đủ lực giao lô đầu đúng hạn – Bắc Phong mở toang, nhưng biên lời mỏng và bị khóa độc quyền.', "You have the capacity to deliver the first batch on time – Bắc Phong opens wide, but margins are thin and you're locked into exclusivity."); } S.cash -= 1; S.rep -= 10; return T('Năng lực chưa đủ giao 500 cửa hàng trong 60 ngày – vỡ cam kết, uy tín −10. Cam kết lớn cần nội lực lớn.', 'Not enough capability to deliver 500 stores in 60 days – you break the commitment, reputation −10. Big commitments need real capability.'); } },
+      { l: '✍️ Chấp nhận toàn bộ đề nghị', lEn: '✍️ Accept the offer in full', fx: function () { if (S.capab >= 55 && S.cash >= 2) { S.cash -= 2; S.entered[1] = 2; S.ship[1] = 1; S.certBP = true; S.flags.bigDeal = true; S.foot.push(T('Ký độc quyền 3 năm với nhà phân phối Bắc Phong', 'Signed a 3-year exclusivity deal with the Bắc Phong distributor')); return T('Bạn đủ lực giao lô đầu đúng hạn – Bắc Phong mở toang, nhưng biên lời mỏng và bị khóa độc quyền.', "You have the capacity to deliver the first batch on time – Bắc Phong opens wide, but margins are thin and you're locked into exclusivity."); } S.cash -= 1; S.rep -= 10; return T('Năng lực chưa đủ giao 500 cửa hàng trong 60 ngày – vỡ cam kết, uy tín −10. Cam kết lớn cần nội lực lớn.', 'Not enough capability to deliver 500 stores in 60 days – you break the commitment, reputation −10. Big commitments need real capability.'); } },
       { l: '🙅 Từ chối vì rủi ro quá cao', lEn: '🙅 Decline – too risky', fx: function () { S.resil += 3; return T('Bạn giữ thế chủ động – đôi khi «không» là quyết định chiến lược nhất.', 'You stay in control – sometimes «no» is the most strategic decision.'); } },
-      { l: '🕊️ Đàm phán rút độc quyền còn 1 năm', lEn: '🕊️ Negotiate exclusivity down to 1 year', fx: function () { if (S.rep >= 55 || S.know[1] >= 60) { S.entered[1] = S.entered[1] === null ? 2 : S.entered[1]; S.certBP = true; S.cash -= 1.2; S.adapt += 2; S.foot.push(T('Đàm phán thành công điều khoản Bắc Phong', 'Successfully renegotiated the Bắc Phong terms')); return T('Uy tín và hiểu biết thị trường cho bạn thế mạnh trên bàn đàm phán – hợp đồng công bằng hơn nhiều, thích ứng +2.', 'Your reputation and market knowledge give you leverage at the table – a much fairer deal, adaptation +2.'); } return T('Bạn chưa đủ uy tín hoặc dữ liệu để mặc cả – Lina lịch sự rút lời đề nghị.', "You don't have enough reputation or data to negotiate – Lina politely withdraws the offer."); } },
+      { l: '🕊️ Đàm phán rút độc quyền còn 1 năm', lEn: '🕊️ Negotiate exclusivity down to 1 year', fx: function () { if (S.rep >= 55 || S.know[1] >= 60) { if (S.entered[1] === null) { S.entered[1] = 2; S.ship[1] = 0; } S.certBP = true; S.cash -= 1.2; S.adapt += 2; S.foot.push(T('Đàm phán thành công điều khoản Bắc Phong', 'Successfully renegotiated the Bắc Phong terms')); return T('Uy tín và hiểu biết thị trường cho bạn thế mạnh trên bàn đàm phán – hợp đồng công bằng hơn nhiều, thích ứng +2.', 'Your reputation and market knowledge give you leverage at the table – a much fairer deal, adaptation +2.'); } return T('Bạn chưa đủ uy tín hoặc dữ liệu để mặc cả – Lina lịch sự rút lời đề nghị.', "You don't have enough reputation or data to negotiate – Lina politely withdraws the offer."); } },
       { l: '🧪 Đề xuất thử nghiệm 50 cửa hàng trước (0,5 tỷ)', lEn: '🧪 Propose a 50-store pilot first (0.5 bn)', fx: function () { S.cash -= 0.5; S.know[1] = clamp(S.know[1] + 25); S.adapt += 1; S.flags.pilot = true; return T('Lô thử cho bạn dữ liệu thật về Bắc Phong – tri thức +25, giữ được quyền lựa chọn.', 'The pilot batch gives you real data on Bắc Phong – knowledge +25, and you keep your options open.'); } },
-      { l: '🔎 Cảm ơn, và đi tìm đối tác nhỏ hơn', lEn: '🔎 Thank them, and look for a smaller partner', fx: function () { if (S.entered[1] === null) { S.entered[1] = 2; S.cash -= 0.8; } S.foot.push(T('Chọn đối tác vừa tầm thay vì hợp đồng lớn nhất', 'Chose a right-sized partner over the biggest deal')); return T('Đối tác nhỏ hơn, điều khoản dễ thở hơn – chậm mà chắc.', 'A smaller partner, easier terms – slow but steady.'); } },
+      { l: '🔎 Cảm ơn, và đi tìm đối tác nhỏ hơn', lEn: '🔎 Thank them, and look for a smaller partner', fx: function () { if (S.entered[1] === null) { S.entered[1] = 2; S.ship[1] = 0; S.cash -= 0.8; } S.foot.push(T('Chọn đối tác vừa tầm thay vì hợp đồng lớn nhất', 'Chose a right-sized partner over the biggest deal')); return T('Đối tác nhỏ hơn, điều khoản dễ thở hơn – chậm mà chắc.', 'A smaller partner, easier terms – slow but steady.'); } },
     ] };
 
   // Tạo hình cố vấn – có ảnh thì dùng ảnh, chưa có thì dùng biểu tượng (đang bổ sung dần)
@@ -782,7 +788,7 @@
   }
 
   function stageObs() {
-    S.phase = 'obs'; S.sel = { prio: null, budget: 1, enter: null, enterMode: null, intel: [] };
+    S.phase = 'obs'; S.sel = { prio: null, budget: 1, enter: null, enterMode: null, shipMode: null, intel: [] };
     sigCache = null; evtPostCache = null; // quý mới – tín hiệu và bảng kết quả quý trước không còn hiệu lực
     renderObsScreen();
   }
@@ -853,7 +859,8 @@
           '<div class="grid sm:grid-cols-3 gap-2">' + MODES.map(function (md) {
             return '<button class="bp-opt" data-g="ent" data-m="' + m + '" data-md="' + md.id + '" onclick="bpEnter(' + m + ',' + md.id + ')">' + md.icon + ' ' + T(md.name, md.nameEn) + '<small>' + T('vốn', 'capital') + ' ' + f1(md.cost) + TY() + ' · ' + T(md.note, md.noteEn) + '</small>' + (_fit && _fit[md.id] != null ? '<span style="display:block;margin-top:3px;font-family:ui-monospace,monospace;font-size:10px;font-weight:800;color:#0F5C4E">AIBIS ' + _fit[md.id] + ' · ' + T('phù hợp', 'fit') + '</span>' : '') + '</button>';
           }).join('') + '</div>';
-      }).join('') + '</div>' : '<p class="text-[12px] opacity-60">' + T('Bạn đã hiện diện ở cả ' + MKTS.length + ' thị trường.', 'You are already present in all ' + MKTS.length + ' markets.') + '</p>') + '</div>' +
+      }).join('') + '</div>' : '<p class="text-[12px] opacity-60">' + T('Bạn đã hiện diện ở cả ' + MKTS.length + ' thị trường.', 'You are already present in all ' + MKTS.length + ' markets.') + '</p>') +
+      '<div id="bp-ship-section"></div></div>' +
       '<div id="bp-budget-section">' +
       '<p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-4 mb-1.5">' + T('3 · Mức vận hành', '3 · Operating stance') + '</p>' +
       '<div class="grid grid-cols-3 gap-2">' + BUDGETS.map(function (b, i) {
@@ -875,8 +882,10 @@
   window.bpEnter = function (m, md) {
     if (S.sel.enter === m && S.sel.enterMode === md) { S.sel.enter = null; S.sel.enterMode = null; }
     else { S.sel.enter = m; S.sel.enterMode = md; }
+    S.sel.shipMode = null; // đổi thị trường/phương thức thì chọn lại vận chuyển
     syncDec();
   };
+  window.bpShip = function (sm) { S.sel.shipMode = sm; syncDec(); };
   // Dự báo Lumina: ước tính doanh thu quý cho cặp thị trường × phương thức
   // đang chọn, từ đúng công thức settle() dùng (không rút rnd() mới) – dải
   // rộng hay hẹp tùy tri thức đã có, phản ánh đúng tinh thần "sương mù thị
@@ -895,11 +904,25 @@
     var unc = S.know[m] >= 50 ? 0.15 : S.know[m] >= 25 ? 0.32 : 0.55;
     return { lo: Math.max(0, base * (1 - unc)), hi: base * (1 + unc), comp: H[m].comp, rivalShare: rivalShare };
   }
+  // Khối chọn vận chuyển chỉ nên hiện SAU khi đã chọn thị trường+phương thức
+  // – vẽ lại riêng khối này mỗi lần syncDec() chạy (thay vì chỉ toggle class
+  // như các nhóm nút khác) vì nó xuất hiện/biến mất tùy S.sel.enter đổi hay
+  // không, không phải một tập nút cố định có sẵn từ đầu.
+  function renderShipPicker() {
+    var el = $('bp-ship-section');
+    if (!el) return;
+    el.innerHTML = S.sel.enter === null ? '' :
+      '<p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-3 mb-1.5">' + T('🚚 Vận chuyển hàng đi ' + MKTS[S.sel.enter].name, '🚚 Shipping to ' + MKTS[S.sel.enter].name) + '</p>' +
+      '<div class="grid grid-cols-2 gap-2">' + SHIP_MODES.map(function (sm) {
+        return '<button class="bp-opt' + (sm.id === S.sel.shipMode ? ' sel' : '') + '" data-g="ship" data-i="' + sm.id + '" onclick="bpShip(' + sm.id + ')">' + sm.icon + ' ' + T(sm.name, sm.nameEn) + '<small>' + T(sm.note, sm.noteEn) + '</small></button>';
+      }).join('') + '</div>';
+  }
   function syncDec() {
+    renderShipPicker();
     document.querySelectorAll('[data-g="prio"]').forEach(function (b) { b.classList.toggle('sel', Number(b.dataset.i) === S.sel.prio); });
     document.querySelectorAll('[data-g="bud"]').forEach(function (b) { b.classList.toggle('sel', Number(b.dataset.i) === S.sel.budget); });
     document.querySelectorAll('[data-g="ent"]').forEach(function (b) { b.classList.toggle('sel', Number(b.dataset.m) === S.sel.enter && Number(b.dataset.md) === S.sel.enterMode); });
-    var ready = S.sel.prio !== null;
+    var ready = S.sel.prio !== null && (S.sel.enter === null || S.sel.shipMode != null);
     var btn = $('bp-commit');
     if (btn) { btn.disabled = !ready; btn.style.opacity = ready ? 1 : 0.5; }
     var note = $('bp-dec-note');
@@ -908,9 +931,11 @@
         var fr = forecastRange(S.sel.enter, S.sel.enterMode);
         var compTxt = fr.comp >= 1.3 ? T('cạnh tranh cao', 'high competition') : fr.comp <= 0.85 ? T('cạnh tranh dịu', 'light competition') : T('cạnh tranh vừa', 'moderate competition');
         var rivalTxt = fr.rivalShare > 0.03 ? T(' · 🐉 ' + RIVAL.name + ' đang giữ khoảng ' + Math.round(fr.rivalShare * 100) + '% thị phần ở đây', ' · 🐉 ' + RIVAL.name + ' currently holds about ' + Math.round(fr.rivalShare * 100) + '% of the share here') : '';
+        var shipTxt = S.sel.shipMode == null ? T('<br>🚚 Chọn thêm cách vận chuyển bên dưới để chốt được quý này.', '<br>🚚 Pick a shipping method below to lock in this quarter.') :
+          T('<br>🚚 ' + SHIP_MODES[S.sel.shipMode].name + ': rủi ro chậm hàng mỗi quý ~' + Math.round(SHIP_MODES[S.sel.shipMode].risk * 100) + '%.', '<br>🚚 ' + SHIP_MODES[S.sel.shipMode].nameEn + ': ~' + Math.round(SHIP_MODES[S.sel.shipMode].risk * 100) + '% chance of delay each quarter.');
         note.innerHTML = T(
-          'Sẽ thâm nhập ' + MKTS[S.sel.enter].name + ' bằng ' + MODES[S.sel.enterMode].name + ' (vốn ' + f1(MODES[S.sel.enterMode].cost) + ' tỷ).<br>🔮 <b>Dự báo Lumina:</b> doanh thu quý ước ' + f1(fr.lo) + '–' + f1(fr.hi) + ' tỷ ₫ · ' + compTxt + rivalTxt + '.',
-          'Will enter ' + MKTS[S.sel.enter].name + ' via ' + MODES[S.sel.enterMode].nameEn + ' (capital ' + f1(MODES[S.sel.enterMode].cost) + ' bn).<br>🔮 <b>Lumina forecast:</b> estimated quarterly revenue ' + f1(fr.lo) + '–' + f1(fr.hi) + ' bn ₫ · ' + compTxt + rivalTxt + '.'
+          'Sẽ thâm nhập ' + MKTS[S.sel.enter].name + ' bằng ' + MODES[S.sel.enterMode].name + ' (vốn ' + f1(MODES[S.sel.enterMode].cost) + ' tỷ).<br>🔮 <b>Dự báo Lumina:</b> doanh thu quý ước ' + f1(fr.lo) + '–' + f1(fr.hi) + ' tỷ ₫ · ' + compTxt + rivalTxt + '.' + shipTxt,
+          'Will enter ' + MKTS[S.sel.enter].name + ' via ' + MODES[S.sel.enterMode].nameEn + ' (capital ' + f1(MODES[S.sel.enterMode].cost) + ' bn).<br>🔮 <b>Lumina forecast:</b> estimated quarterly revenue ' + f1(fr.lo) + '–' + f1(fr.hi) + ' bn ₫ · ' + compTxt + rivalTxt + '.' + shipTxt
         );
       } else {
         note.textContent = T('Chọn Ưu tiên và Mức vận hành để chốt.', 'Pick a Priority and an Operating stance to lock in.');
@@ -932,9 +957,11 @@
     if (S.sel.enter !== null && S.cash >= MODES[S.sel.enterMode].cost) {
       S.cash -= MODES[S.sel.enterMode].cost;
       S.entered[S.sel.enter] = S.sel.enterMode;
+      S.ship[S.sel.enter] = S.sel.shipMode == null ? 0 : S.sel.shipMode; // phòng khi bấm được dù nút đang khóa
+      var pickedShip = SHIP_MODES[S.ship[S.sel.enter]];
       addLog(T(
-        '🚪 Thâm nhập <b>' + MKTS[S.sel.enter].name + '</b> bằng ' + MODES[S.sel.enterMode].icon + ' ' + MODES[S.sel.enterMode].name + '.',
-        '🚪 Entered <b>' + MKTS[S.sel.enter].name + '</b> via ' + MODES[S.sel.enterMode].icon + ' ' + MODES[S.sel.enterMode].nameEn + '.'
+        '🚪 Thâm nhập <b>' + MKTS[S.sel.enter].name + '</b> bằng ' + MODES[S.sel.enterMode].icon + ' ' + MODES[S.sel.enterMode].name + ', vận chuyển bằng ' + pickedShip.icon + ' ' + pickedShip.name + '.',
+        '🚪 Entered <b>' + MKTS[S.sel.enter].name + '</b> via ' + MODES[S.sel.enterMode].icon + ' ' + MODES[S.sel.enterMode].nameEn + ', shipping by ' + pickedShip.icon + ' ' + pickedShip.nameEn + '.'
       ));
     }
     stageEvent();
@@ -1003,9 +1030,10 @@
   // dùng chung cho nhật ký và bảng "Kết quả quý", để vẽ lại được song ngữ.
   function fmtQLines(data, loanPaid) {
     var body = data.length ? data.map(function (d) {
-      var mode = MODES[S.entered[d.m]];
+      var ship = SHIP_MODES[S.ship[d.m]];
       return MKTS[d.m].icon + ' ' + MKTS[d.m].name + ': ' + T('doanh thu', 'revenue') + ' ' + f1(d.rev) + TY() + ' → ' + T('lợi nhuận', 'profit') + ' ' + f1(d.pf) + TY() +
-        '<br><span style="opacity:.6; font-size:.95em">' + mode.icon + ' ' + T(mode.ship, mode.shipEn) + ' · 😊 ' + T('hài lòng KH', 'customer satisfaction') + ' ' + clamp(S.cust[d.m]) + '/100</span>';
+        '<br><span style="opacity:.6; font-size:.95em">' + ship.icon + ' ' + T(ship.name, ship.nameEn) + (d.delayed ? ' · ⚠️ ' + T('chậm hàng quý này', 'delayed this quarter') : '') +
+        ' · 😊 ' + T('hài lòng KH', 'customer satisfaction') + ' ' + clamp(S.cust[d.m]) + '/100</span>';
     }).join('<br>') : T('Chưa hiện diện thị trường nào – quý này không có doanh thu quốc tế.', "You haven't entered any market yet – no international revenue this quarter.");
     return body + (loanPaid ? '<br>' + T('🏦 Trả lãi vay ngắn hạn 0,3 tỷ.', '🏦 Paid 0.3 bn in short-term loan interest.') : '');
   }
@@ -1138,10 +1166,16 @@
       if (S.flags.bigDeal && m === 1) rev *= 1.5;
       if (S.flags.dropPartner && S.entered[m] === 2) { rev *= 0.7; }
       if (S.flags.copyLoss) rev *= 0.93;
-      var op = mode.op * bud.op * (S.firm === 1 ? 1.2 : 1) * (m === 5 ? 1.4 : 1);
+      // Vận tải: lựa chọn/rủi ro riêng (SHIP_MODES) – đường biển rẻ hơn qua
+      // opMul nhưng có rủi ro chậm hàng thật mỗi quý (rnd() chính, không
+      // phải rivalRnd(), vì đây là hệ quả cơ học thật lên doanh thu).
+      var ship = SHIP_MODES[S.ship[m]];
+      var delayed = rnd() < ship.risk;
+      if (delayed) rev *= 0.5;
+      var op = mode.op * bud.op * (S.firm === 1 ? 1.2 : 1) * (m === 5 ? 1.4 : 1) * ship.opMul;
       var pf = rev * Math.max(0.08, margin) - op;
       qProfit += pf;
-      qLinesData.push({ m: m, rev: rev, pf: pf });
+      qLinesData.push({ m: m, rev: rev, pf: pf, delayed: delayed });
       S.know[m] = clamp(S.know[m] + 6); // bán hàng cũng là học
       // Hài lòng/trung thành khách hàng: xây bằng ưu tiên "Xây thương hiệu",
       // hao mòn khi giảm giá theo đối thủ (price war), nhích theo lãi/lỗ quý.
@@ -1165,6 +1199,10 @@
       if (rivalRevHere > 0.05) mktNotes.push(T(
         '🐉 ' + MKTS[m].name + ': ' + RIVAL.name + ' giành mất ' + f1(rivalRevHere) + TY() + ' doanh thu ở đây quý này.',
         '🐉 ' + MKTS[m].name + ': ' + RIVAL.name + ' captured ' + f1(rivalRevHere) + TY() + ' of revenue here this quarter.'
+      ));
+      if (delayed) mktNotes.push(T(
+        '🚚 ' + MKTS[m].name + ': lô hàng chậm trên đường ' + ship.name.toLowerCase() + ' – doanh thu quý này giảm mạnh.',
+        '🚚 ' + MKTS[m].name + ': the shipment was delayed via ' + ship.nameEn.toLowerCase() + ' – revenue this quarter took a big hit.'
       ));
     });
     // Thị trường đối thủ có mặt nhưng người chơi chưa vào – không có ai để
