@@ -44,6 +44,8 @@
   .bp-adv .who { font-weight:800; font-size:11px; opacity:.65; }
   .bp-adv .face { width:52px; flex-shrink:0; display:flex; align-items:flex-start; justify-content:center; font-size:22px; }
   .bp-adv .face img { width:52px; height:auto; object-fit:contain; filter:drop-shadow(0 3px 6px rgba(0,102,135,.18)); }
+  .bp-badge { width:18px; height:18px; object-fit:cover; border-radius:6px; vertical-align:-4px; margin-right:3px; }
+  .bp-evt-banner { width:100%; height:96px; object-fit:cover; border-radius:14px; margin-bottom:10px; display:block; }
   .bp-cast { display:flex; gap:8px; align-items:flex-end; flex-wrap:wrap; }
   .bp-cast figure { width:92px; text-align:center; margin:0; }
   .bp-cast img { width:100%; height:auto; }
@@ -349,13 +351,13 @@
   function rivalRnd() { rivalSeed = (rivalSeed * 9301 + 49297) % 233280; return rivalSeed / 233280; }
 
   var MKTS = [
-    { id: 0, key: 'hl', icon: '🌐', name: 'Hải Lam', trait: 'thị trường số – cạnh tranh online cao', traitEn: 'digital market – high online competition' },
-    { id: 1, key: 'bp', icon: '🏔️', name: 'Bắc Phong', trait: 'tiêu chuẩn nghiêm ngặt – cần chứng nhận', traitEn: 'strict standards – certification required' },
-    { id: 2, key: 'ks', icon: '🌅', name: 'Kim Sa', trait: 'khách trẻ – xu hướng đổi nhanh', traitEn: 'young customers – trends shift fast' },
-    { id: 3, key: 'ld', icon: '🏝️', name: 'Lục Đảo', trait: 'ưu tiên môi trường – cần hồ sơ bền vững', traitEn: 'environment-first – needs a sustainability record' },
-    { id: 4, key: 'nq', icon: '🌸', name: 'Nhật Quang', trait: 'lòng tin xây chậm – đối tác trung thành', traitEn: 'trust builds slowly – loyal partners' },
-    { id: 5, key: 'tc', icon: '⚓', name: 'Tân Cảng', trait: 'cửa ngõ khu vực – vận hành đắt đỏ', traitEn: 'regional gateway – expensive to operate' },
-    { id: 6, key: 'hs', icon: '🌋', name: 'Hỏa Sơn', trait: 'dân số trẻ, số hóa nhanh – thị trường phân mảnh theo vùng đảo, cần đối tác địa phương mới phủ được hết', traitEn: 'young, fast-digitalizing population – fragmented across island regions, needs a local partner to reach full coverage' },
+    { id: 0, key: 'hl', icon: '🌐', name: 'Hải Lam', trait: 'thị trường số – cạnh tranh online cao', traitEn: 'digital market – high online competition', img: 'assets/illustrations/game/mkt-hai-lam.webp' },
+    { id: 1, key: 'bp', icon: '🏔️', name: 'Bắc Phong', trait: 'tiêu chuẩn nghiêm ngặt – cần chứng nhận', traitEn: 'strict standards – certification required', img: 'assets/illustrations/game/mkt-bac-phong.webp' },
+    { id: 2, key: 'ks', icon: '🌅', name: 'Kim Sa', trait: 'khách trẻ – xu hướng đổi nhanh', traitEn: 'young customers – trends shift fast', img: 'assets/illustrations/game/mkt-kim-sa.webp' },
+    { id: 3, key: 'ld', icon: '🏝️', name: 'Lục Đảo', trait: 'ưu tiên môi trường – cần hồ sơ bền vững', traitEn: 'environment-first – needs a sustainability record', img: 'assets/illustrations/game/mkt-luc-dao.webp' },
+    { id: 4, key: 'nq', icon: '🌸', name: 'Nhật Quang', trait: 'lòng tin xây chậm – đối tác trung thành', traitEn: 'trust builds slowly – loyal partners', img: 'assets/illustrations/game/mkt-nhat-quang.webp' },
+    { id: 5, key: 'tc', icon: '⚓', name: 'Tân Cảng', trait: 'cửa ngõ khu vực – vận hành đắt đỏ', traitEn: 'regional gateway – expensive to operate', img: 'assets/illustrations/game/mkt-tan-cang.webp' },
+    { id: 6, key: 'hs', icon: '🌋', name: 'Hỏa Sơn', trait: 'dân số trẻ, số hóa nhanh – thị trường phân mảnh theo vùng đảo, cần đối tác địa phương mới phủ được hết', traitEn: 'young, fast-digitalizing population – fragmented across island regions, needs a local partner to reach full coverage', img: 'assets/illustrations/game/mkt-hoa-son.webp' },
   ];
   // 4 doanh nghiệp – mỗi nhà một hành trình (concept mục 2)
   var FIRMS = [
@@ -421,7 +423,7 @@
   // Đối thủ ảo: một thương hiệu Việt khác cũng đang chạy đua vào đúng 7 thị
   // trường này, để người chơi luôn thấy có ai đó để so kè – tên riêng giữ
   // nguyên ở cả 2 ngôn ngữ, giống quy ước "Star Clay Co." ở Bật Nghiệp.
-  var RIVAL = { name: 'Kim Long Exports', icon: '🐉' };
+  var RIVAL = { name: 'Kim Long Exports', icon: '🐉', img: 'assets/character/firms/kim-long-rival-cut.webp' };
 
   // Hồ sơ ẩn của thị trường – sinh từ seed, mỗi ván mỗi khác
   var H = MKTS.map(function () {
@@ -559,6 +561,24 @@
       { l: '🤝 Hứa tăng tốc doanh số ngay', lEn: '🤝 Promise to accelerate sales right away', fx: function () { S.flags.wave = 1.1; S.resil -= 5; S.foot.push(T('Hứa với hội đồng chỉ tiêu ngắn hạn', 'Promised the board a short-term target')); return T('Cả công ty tăng tốc (+10% quý này) nhưng căng như dây đàn – chống chịu −5.', 'The whole company speeds up (+10% this quarter) but is stretched thin – resilience −5.'); } }] },
   ];
 
+  // Ảnh minh họa theo NHÓM sự kiện (thay vì từng sự kiện riêng lẻ – 23 sự
+  // kiện là quá nhiều để vẽ riêng từng cái) – khớp đúng 4 nhóm đã chia sẵn
+  // trong mảng EVENTS ở trên (Thị trường / Thể chế / Nội bộ / Khủng hoảng).
+  // NHIỆM VỤ không có id nên EVT_CAT[ev.id] trả về undefined – không hiện
+  // banner, vì màn NHIỆM VỤ đã có chân dung Lina Park riêng.
+  var EVT_CAT = {
+    trend: 'market', pricewar: 'market', green: 'market', celeb: 'market', subst: 'market', fx: 'market',
+    reg: 'institutional', tax: 'institutional', cert: 'institutional', data: 'institutional', greenlaw: 'institutional', port: 'institutional',
+    talent: 'internal', supplier: 'internal', defect: 'internal', cashflow: 'internal', conflict: 'internal', training: 'internal',
+    review: 'crisis', held: 'crisis', devalue: 'crisis', betray: 'crisis', copy: 'crisis', board: 'crisis',
+  };
+  var EVT_CAT_IMG = {
+    market: 'assets/illustrations/game/evtcat-market.webp',
+    institutional: 'assets/illustrations/game/evtcat-institutional.webp',
+    internal: 'assets/illustrations/game/evtcat-internal.webp',
+    crisis: 'assets/illustrations/game/evtcat-crisis.webp',
+  };
+
   // Nhiệm vụ đàm phán «Cánh cửa Bắc Phong» – kích hoạt một lần ở quý 4
   var MISSION = { cat: '🚪', t: 'NHIỆM VỤ · Cánh cửa Bắc Phong', tEn: 'MISSION · The Bắc Phong Door', d: function () {
       return T('Nhà phân phối lớn nhất Bắc Phong đề nghị đưa Mộc Nhiên vào <b>500 cửa hàng</b>, đổi lại: độc quyền 3 năm, giảm giá buôn 25%, đổi toàn bộ bao bì, bạn chịu phí chứng nhận và giao lô đầu trong 60 ngày. <b>Lina Park 🚢:</b> «Mạng lưới của tôi là cánh cửa nhanh nhất – nhưng cửa nào cũng có giá của nó.»',
@@ -587,6 +607,15 @@
   function faceHtml(name, icon) {
     return FACE[name] ? '<span class="face"><img src="' + FACE[name] + '" alt="' + name + '" loading="lazy"></span>'
       : '<span class="face">' + icon + '</span>';
+  }
+  // Huy hiệu nhỏ inline (thị trường/đối thủ) – dùng ở danh sách thị trường,
+  // bảng doanh thu theo quý và thanh đua "bạn vs đối thủ", thay cho emoji
+  // trần khi đã có ảnh minh họa.
+  function mktBadge(m) {
+    return MKTS[m].img ? '<img src="' + MKTS[m].img + '" alt="" class="bp-badge" loading="lazy">' : MKTS[m].icon + ' ';
+  }
+  function rivalBadge() {
+    return RIVAL.img ? '<img src="' + RIVAL.img + '" alt="" class="bp-badge" loading="lazy">' : RIVAL.icon + ' ';
   }
 
   var ADVICE = [
@@ -634,7 +663,7 @@
       '<div class="flex-1 h-2 rounded-full bg-deep-teal/10 overflow-hidden"><div class="h-full bg-primary" style="width:' + Math.max(4, mine / max * 100) + '%"></div></div>' +
       '<span class="w-16 text-right shrink-0">' + f1(mine) + TY() + '</span></div>' +
       '<div class="flex items-center gap-2 text-[11px] font-bold mt-1">' +
-      '<span class="w-16 shrink-0">' + RIVAL.icon + ' ' + T('Đối thủ', 'Rival') + '</span>' +
+      '<span class="w-16 shrink-0">' + rivalBadge() + T('Đối thủ', 'Rival') + '</span>' +
       '<div class="flex-1 h-2 rounded-full bg-deep-teal/10 overflow-hidden"><div class="h-full bg-clay-gold" style="width:' + Math.max(4, theirs / max * 100) + '%"></div></div>' +
       '<span class="w-16 text-right shrink-0">' + f1(theirs) + TY() + '</span></div>';
   }
@@ -854,7 +883,7 @@
       '<p class="text-[10px] opacity-55 mb-1.5">' + T('🧭 <b>AIBIS</b> (engine tất định) chấm mức phù hợp 0–100 cho mỗi phương thức theo hồ sơ thị trường &amp; doanh nghiệp (<i>tham khảo, số liệu minh hoạ</i>).', '🧭 <b>AIBIS</b> (a deterministic engine) scores each entry mode 0–100 based on the market &amp; company profile (<i>for reference, illustrative figures</i>).') + '</p>' +
       (notIn.length ? '<div class="space-y-2">' + notIn.map(function (m) {
         var _fit = aibisFit(m);
-        return '<div class="text-[12px] font-bold mt-1">' + MKTS[m].icon + ' ' + MKTS[m].name + ' <span class="opacity-55 font-semibold">(' + T('tri thức', 'knowledge') + ' ' + clamp(S.know[m]) + '/100 – ' + T(MKTS[m].trait, MKTS[m].traitEn) + ')</span>' +
+        return '<div class="text-[12px] font-bold mt-1">' + mktBadge(m) + MKTS[m].name + ' <span class="opacity-55 font-semibold">(' + T('tri thức', 'knowledge') + ' ' + clamp(S.know[m]) + '/100 – ' + T(MKTS[m].trait, MKTS[m].traitEn) + ')</span>' +
           (S.rival.in.indexOf(m) >= 0 ? ' <span class="bp-chip" style="font-size:9.5px; padding:2px 7px">' + RIVAL.icon + ' ' + T('đối thủ đã có mặt', 'rival already here') + '</span>' : '') + '</div>' +
           '<div class="grid sm:grid-cols-3 gap-2">' + MODES.map(function (md) {
             return '<button class="bp-opt" data-g="ent" data-m="' + m + '" data-md="' + md.id + '" onclick="bpEnter(' + m + ',' + md.id + ')">' + md.icon + ' ' + T(md.name, md.nameEn) + '<small>' + T('vốn', 'capital') + ' ' + f1(md.cost) + TY() + ' · ' + T(md.note, md.noteEn) + '</small>' + (_fit && _fit[md.id] != null ? '<span style="display:block;margin-top:3px;font-family:ui-monospace,monospace;font-size:10px;font-weight:800;color:#0F5C4E">AIBIS ' + _fit[md.id] + ' · ' + T('phù hợp', 'fit') + '</span>' : '') + '</button>';
@@ -995,7 +1024,9 @@
   function renderEventScreen() {
     var ev = window.__bpEv;
     if (!ev) return;
+    var catImg = EVT_CAT_IMG[EVT_CAT[ev.id]];
     $('bp-stage').innerHTML =
+      (catImg ? '<img src="' + catImg + '" alt="" class="bp-evt-banner" loading="lazy">' : '') +
       '<h2 class="font-display font-extrabold text-deep-teal text-base mb-1">' + T('Quý', 'Quarter') + ' ' + (evQ + 1) + '/6 – ' + ev.cat + ' ' + T(ev.t, ev.tEn) + '</h2>' +
       '<p class="text-[13px] mt-2">' + ev.d() + '</p>' +
       '<div class="space-y-2 mt-4">' + ev.ch.map(function (c, i) {
@@ -1031,7 +1062,7 @@
   function fmtQLines(data, loanPaid) {
     var body = data.length ? data.map(function (d) {
       var ship = SHIP_MODES[S.ship[d.m]];
-      return MKTS[d.m].icon + ' ' + MKTS[d.m].name + ': ' + T('doanh thu', 'revenue') + ' ' + f1(d.rev) + TY() + ' → ' + T('lợi nhuận', 'profit') + ' ' + f1(d.pf) + TY() +
+      return mktBadge(d.m) + MKTS[d.m].name + ': ' + T('doanh thu', 'revenue') + ' ' + f1(d.rev) + TY() + ' → ' + T('lợi nhuận', 'profit') + ' ' + f1(d.pf) + TY() +
         '<br><span style="opacity:.6; font-size:.95em">' + ship.icon + ' ' + T(ship.name, ship.nameEn) + (d.delayed ? ' · ⚠️ ' + T('chậm hàng quý này', 'delayed this quarter') : '') +
         ' · 😊 ' + T('hài lòng KH', 'customer satisfaction') + ' ' + clamp(S.cust[d.m]) + '/100</span>';
     }).join('<br>') : T('Chưa hiện diện thị trường nào – quý này không có doanh thu quốc tế.', "You haven't entered any market yet – no international revenue this quarter.");
@@ -1072,7 +1103,7 @@
       deltaChip('🛡️', T('Chống chịu', 'Resilience'), d.resil, ''),
     ].join('');
     var rivalLine = Math.round(d.rivalRev * 10) === 0 ? '' :
-      '<p class="text-[11px] opacity-60 mt-2">' + RIVAL.icon + ' ' + T(
+      '<p class="text-[11px] opacity-60 mt-2">' + rivalBadge() + T(
         RIVAL.name + ' tăng ' + f1(d.rivalRev) + TY() + ' quý này – ' + (S.profit >= S.rival.rev ? 'bạn vẫn đang dẫn trước.' : 'bạn đang bị dẫn, tăng tốc thôi!'),
         RIVAL.name + ' grew ' + f1(d.rivalRev) + TY() + ' this quarter – ' + (S.profit >= S.rival.rev ? "you're still ahead." : 'you are behind, time to pick up the pace!')
       ) + '</p>';
