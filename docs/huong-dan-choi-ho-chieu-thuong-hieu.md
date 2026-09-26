@@ -9,7 +9,7 @@
 
 ## 1 · Tổng quan
 
-Hộ Chiếu Thương Hiệu là game mô phỏng chiến lược **quốc tế hóa doanh nghiệp** qua **6 quý kinh doanh**. Người chơi tiếp quản một trong 4 doanh nghiệp Việt Nam, đưa thương hiệu ra 6 thị trường giả tưởng trong điều kiện **"sương mù thông tin"** — không có dữ liệu đầy đủ, phải tự mua tin, tự đánh giá độ tin cậy và ra quyết định trong điều kiện bất định, giống thực tế kinh doanh quốc tế.
+Hộ Chiếu Thương Hiệu là game mô phỏng chiến lược **quốc tế hóa doanh nghiệp** qua **6 quý kinh doanh**. Người chơi tiếp quản một trong 4 doanh nghiệp Việt Nam, đưa thương hiệu ra 7 thị trường giả tưởng trong điều kiện **"sương mù thông tin"**: không có dữ liệu đầy đủ, phải tự mua tin, tự đánh giá độ tin cậy và ra quyết định trong điều kiện bất định, giống thực tế kinh doanh quốc tế.
 
 Đây là game độc lập trong hệ sinh thái BizOn, dùng cho học phần Kinh doanh quốc tế / Khởi sự doanh nghiệp quốc tế hóa. Không cần đăng nhập, chơi ngay trên trình duyệt, dữ liệu lưu cục bộ trên máy người chơi.
 
@@ -24,7 +24,7 @@ Hộ Chiếu Thương Hiệu là game mô phỏng chiến lược **quốc tế 
 
 Không có lựa chọn "mạnh nhất" — mỗi doanh nghiệp một hành trình và hệ rủi ro riêng.
 
-### 6 thị trường (quốc gia giả tưởng)
+### 7 thị trường (quốc gia giả tưởng)
 
 | Thị trường | Đặc điểm |
 |---|---|
@@ -34,6 +34,7 @@ Không có lựa chọn "mạnh nhất" — mỗi doanh nghiệp một hành tr�
 | 🏝️ Lục Đảo | Ưu tiên môi trường — cần hồ sơ bền vững + truy xuất nguồn gốc |
 | 🌸 Nhật Quang | Lòng tin xây chậm — đối tác trung thành, doanh thu tăng dần theo số quý gắn bó |
 | ⚓ Tân Cảng | Trung tâm khu vực — cửa ngõ nhiều thị trường, chi phí vận hành cao nhưng quy mô lớn |
+| 🌋 Hỏa Sơn | Dân số trẻ, số hóa nhanh, thị trường phân mảnh theo vùng đảo, **cần Đối tác địa phương** mới phủ được hết |
 
 ### 3 phương thức thâm nhập (mỗi thị trường chọn 1 khi thâm nhập)
 
@@ -60,7 +61,7 @@ Mỗi quý trong 6 quý lặp lại đúng 4 bước. Nắm được vòng lặp
 Ba lựa chọn trong cùng một màn hình, bấm "🔒 Chốt quý này" khi xong:
 
 1. **1 ưu tiên của quý** (bắt buộc): Thăm dò thị trường (giảm 50% giá mua tin) · Tăng doanh số (+15% doanh thu, −3 chống chịu) · Xây thương hiệu (−0,5 tỷ, +6 uy tín) · Nâng cấp năng lực (−0,8 tỷ, +8 năng lực) · Củng cố nội lực (+8 chống chịu, −20% chi phí vận hành).
-2. **Thâm nhập thị trường mới** (tùy chọn, tối đa 1 thị trường/quý): chọn 1 trong 6 thị trường chưa vào × 1 trong 3 phương thức. Có chỉ số **AIBIS** tham khảo (0–100, engine tất định) gợi ý mức phù hợp của từng phương thức theo hồ sơ thị trường — chỉ mang tính minh họa, không thay quyết định của người chơi.
+2. **Thâm nhập thị trường mới** (tùy chọn, tối đa 1 thị trường/quý): chọn 1 trong 7 thị trường chưa vào × 1 trong 3 phương thức. Có chỉ số **AIBIS** tham khảo (0–100, engine tất định) gợi ý mức phù hợp của từng phương thức theo hồ sơ thị trường, chỉ mang tính minh họa, không thay quyết định của người chơi.
 3. **1 mức vận hành**: Tiết kiệm · Cân bằng · Dồn lực (doanh thu cao hơn nhưng chi phí và rủi ro tăng theo).
 
 ### Bước 3 · ⚡ Xử lý sự kiện

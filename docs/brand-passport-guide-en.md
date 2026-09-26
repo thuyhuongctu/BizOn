@@ -10,7 +10,7 @@
 
 ## 1 · Overview
 
-Brand Passport is a strategy simulation about **internationalizing a business**, played over **6 business quarters**. Each player takes over one of 4 Vietnamese companies and expands the brand into 6 fictional markets under conditions of **"information fog"**: no complete data is given upfront, so players must buy intelligence, judge how reliable each source is, and decide under uncertainty, much like real international business.
+Brand Passport is a strategy simulation about **internationalizing a business**, played over **6 business quarters**. Each player takes over one of 4 Vietnamese companies and expands the brand into 7 fictional markets under conditions of **"information fog"**: no complete data is given upfront, so players must buy intelligence, judge how reliable each source is, and decide under uncertainty, much like real international business.
 
 It is a standalone game in the BizOn ecosystem, built for International Business or Entrepreneurial Internationalization coursework. No login is required, it runs directly in the browser, and all progress is saved locally on the player's device.
 
@@ -25,7 +25,7 @@ It is a standalone game in the BizOn ecosystem, built for International Business
 
 There is no single "strongest" pick. Each company carries its own path and its own risk profile.
 
-### 6 markets (fictional countries)
+### 7 markets (fictional countries)
 
 | Market | Character |
 |---|---|
@@ -35,6 +35,7 @@ There is no single "strongest" pick. Each company carries its own path and its o
 | 🏝️ Lục Đảo | Environment-first buyers, needs a sustainability record plus traceability |
 | 🌸 Nhật Quang | Trust builds slowly, loyal partners, revenue grows the longer a company stays |
 | ⚓ Tân Cảng | Regional gateway, a hub into several markets, high operating cost but large scale |
+| 🌋 Hỏa Sơn | Young, fast-digitalizing population, fragmented across island regions, **needs a Local partner** to reach full coverage |
 
 ### 3 entry modes (pick one per market on entry)
 
@@ -62,7 +63,7 @@ Each of the 6 quarters repeats the same 4 steps. Understanding this loop is unde
 Three choices on one screen, then click "🔒 Lock in this quarter":
 
 1. **1 priority for the quarter** (required): Scout the market (intel prices −50% this quarter) · Push sales (+15% revenue, resilience −3) · Build the brand (spend 0.5 bn, reputation +6) · Upgrade capability (spend 0.8 bn, capability +8) · Strengthen resilience (resilience +8, operating cost −20%).
-2. **Enter a new market** (optional, max 1 market per quarter): pick 1 of the 6 not-yet-entered markets × 1 of the 3 entry modes. An **AIBIS** score (0–100, a deterministic engine) is shown for reference, suggesting how well each mode fits that market's profile. It is illustrative only, never a substitute for the player's own judgment. A live **Lumina forecast** (see §3) also shows an estimated revenue range for the selected market and mode before the player commits.
+2. **Enter a new market** (optional, max 1 market per quarter): pick 1 of the 7 not-yet-entered markets × 1 of the 3 entry modes. An **AIBIS** score (0–100, a deterministic engine) is shown for reference, suggesting how well each mode fits that market's profile. It is illustrative only, never a substitute for the player's own judgment. A live **Lumina forecast** (see §3) also shows an estimated revenue range for the selected market and mode before the player commits.
 3. **1 operating stance**: Frugal · Balanced · All-in (higher revenue but rising cost and risk).
 
 ### Step 3 · ⚡ Handle the event

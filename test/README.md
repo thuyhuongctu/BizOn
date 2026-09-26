@@ -78,9 +78,9 @@ Kết quả in ra dạng:
 
 ```
 ✓ Ván chơi lặp lại được khi truyền ?seed= (1240ms)
-✓ Bản đồ có đủ sáu thị trường, trạng thái khởi tạo đủ sáu ô (890ms)
+✓ Bản đồ có đủ bảy thị trường, trạng thái khởi tạo đủ bảy ô (890ms)
 ...
-10/10 phép thử đạt
+11/11 phép thử đạt
 ```
 
 Mã thoát khác 0 nếu có phép thử trượt, nên dùng được trong CI.
@@ -103,8 +103,8 @@ BIZON_CHROME=/usr/bin/chromium node test/brand-passport.test.js
 | Phép thử | Khoá lại điều gì |
 |---|---|
 | Ván chơi lặp lại được với `?seed=` | Nền tảng để mọi phép thử khác có kết quả ổn định |
-| Bản đồ đủ sáu thị trường | `MKTS`, `S.know`, `S.entered`, `S.qin` đều dài 6 |
-| Tri thức tính trên cả sáu thị trường | **Hồi quy** cho lỗi `hud()` cũ — thử lần lượt thị trường 0, 3, 4, 5 |
+| Bản đồ đủ bảy thị trường | `MKTS`, `S.know`, `S.entered`, `S.qin` đều dài 7 |
+| Tri thức tính trên cả bảy thị trường | **Hồi quy** cho lỗi `hud()` cũ, thử lần lượt thị trường 0, 3, 4, 5, 6 |
 | Gợi ý «bay trong sương mù» | **Hồi quy** — điều kiện cũ chỉ đọc `know[0..2]` |
 | Vào thị trường trừ đúng vốn | Ba phương thức: 0,5 · 1,2 · 0,8 tỷ, ghi đúng ô |
 | Mỗi quý tối đa một thị trường | Luật cốt lõi của trò chơi |

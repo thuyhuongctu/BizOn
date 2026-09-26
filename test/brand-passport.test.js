@@ -111,20 +111,22 @@ test('Ván chơi lặp lại được khi truyền ?seed=', async browser => {
   await a.close(); await b.close(); await c.close();
 });
 
-test('Bản đồ có đủ sáu thị trường, trạng thái khởi tạo đủ sáu ô', async browser => {
+test('Bản đồ có đủ bảy thị trường, trạng thái khởi tạo đủ bảy ô', async browser => {
   const p = await newGame(browser);
-  eq(await p.evaluate(() => window.bpTest.markets()), 6, 'MKTS có 6 thị trường');
+  eq(await p.evaluate(() => window.bpTest.markets()), 7, 'MKTS có 7 thị trường');
   const s = await st(p);
-  eq(s.know.length, 6, 'S.know có 6 ô');
-  eq(s.entered.length, 6, 'S.entered có 6 ô');
-  eq(s.qin.length, 6, 'S.qin có 6 ô');
-  eq(s.entered, [null, null, null, null, null, null], 'đầu ván chưa vào thị trường nào');
+  eq(s.know.length, 7, 'S.know có 7 ô');
+  eq(s.entered.length, 7, 'S.entered có 7 ô');
+  eq(s.qin.length, 7, 'S.qin có 7 ô');
+  eq(s.entered, [null, null, null, null, null, null, null], 'đầu ván chưa vào thị trường nào');
   await p.close();
 });
 
-test('Tri thức tính trên toàn bộ sáu thị trường, không chỉ ba thị trường đầu', async browser => {
+test('Tri thức tính trên toàn bộ bảy thị trường, không chỉ ba thị trường đầu', async browser => {
   // Đây là hồi quy cho lỗi hud() cũ: know[3..5] bị bỏ ra ngoài công thức.
-  for (const m of [0, 3, 4, 5]) {
+  // Thị trường 6 (Hỏa Sơn) được thêm vào danh sách kiểm để xác nhận thị
+  // trường mới cũng được tính đúng vào trung bình, không chỉ né được lỗi cũ.
+  for (const m of [0, 3, 4, 5, 6]) {
     const p = await newGame(browser, { intelMarket: m });
     const before = await p.evaluate(() => {
       const t = document.getElementById('bp-hud').textContent.match(/Tri thức\s*(\d+)/);
@@ -139,7 +141,7 @@ test('Tri thức tính trên toàn bộ sáu thị trường, không chỉ ba th
     });
     eq(before, 10, `thị trường ${m}: tri thức ban đầu là 10`);
     eq(s.know[m], 45, `thị trường ${m}: know[${m}] tăng 10 -> 45`);
-    eq(after, 16, `thị trường ${m}: chỉ số 📚 trên HUD đổi 10 -> 16 (trung bình cả 6)`);
+    eq(after, 15, `thị trường ${m}: chỉ số 📚 trên HUD đổi 10 -> 15 (trung bình cả 7)`);
     await p.close();
   }
 });
@@ -153,7 +155,7 @@ test('Gợi ý «bay trong sương mù» tắt khi đã hiểu rõ một thị t
     window.bpTest.advice().some(a => /bay trong sương mù/.test(a)));
 
   const p = await newGame(browser, { intelMarket: 5 }); // Tân Cảng – thị trường thứ 6
-  check(await fogOf(p), 'đầu ván, khi cả sáu thị trường đều mù, gợi ý có hiện');
+  check(await fogOf(p), 'đầu ván, khi cả bảy thị trường đều mù, gợi ý có hiện');
 
   await p.evaluate(() => window.bpIntel(4)); // +35
   await p.waitForTimeout(300);
