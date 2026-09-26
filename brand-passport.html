@@ -174,6 +174,7 @@
         </div>
       </div>
       <div class="flex flex-wrap gap-1.5 mt-3" id="bp-hud"></div>
+      <div class="mt-3" id="bp-rival-race"></div>
     </div>
 
     <div class="clay-card p-5 mb-4" id="bp-shop-card">
@@ -205,6 +206,7 @@
       <p class="font-display font-extrabold text-primary text-4xl mt-3"><span id="bp-total">0</span>/100</p>
       <p class="text-sm font-semibold opacity-70 mt-1" id="bp-sub"></p>
       <div class="mt-5 space-y-2.5 text-left" id="bp-breakdown"></div>
+      <div class="mt-4 text-left" id="bp-rival-final"></div>
       <div class="mt-4 text-left text-[12px] opacity-70" id="bp-footprint"></div>
       <div class="mt-5 hidden" id="bp-cert-box">
         <div class="rounded-[20px] p-5 text-center relative overflow-hidden" style="background:linear-gradient(180deg,#fffdf6,#f4faff);border:3px solid rgba(253,161,39,.55);box-shadow:inset 0 0 0 1px rgba(0,102,135,.18)">
@@ -285,6 +287,11 @@
   var seedParam = (location.search.match(/[?&]seed=(\d{1,9})(?:&|$)/) || [])[1];
   var seed = seedParam ? Number(seedParam) : Math.floor(Math.random() * 1e9);
   function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+  // PRNG lệch pha riêng cho đối thủ ảo (xem RIVAL bên dưới) – tách khỏi rnd()
+  // chính để sau này chỉnh nhịp độ đối thủ không làm xáo trộn thứ tự sự kiện/
+  // thị trường vốn đã seed theo rnd() (ảnh hưởng tới tính lặp lại của ?seed=…).
+  var rivalSeed = (seed + 7919) % 233280;
+  function rivalRnd() { rivalSeed = (rivalSeed * 9301 + 49297) % 233280; return rivalSeed / 233280; }
 
   var MKTS = [
     { id: 0, key: 'hl', icon: '🌐', name: 'Hải Lam', trait: 'thị trường số – cạnh tranh online cao', traitEn: 'digital market – high online competition' },
@@ -348,6 +355,11 @@
   ];
   function shopItem(id) { for (var i = 0; i < SHOP_ITEMS.length; i++) if (SHOP_ITEMS[i].id === id) return SHOP_ITEMS[i]; return null; }
 
+  // Đối thủ ảo: một thương hiệu Việt khác cũng đang chạy đua vào đúng 7 thị
+  // trường này, để người chơi luôn thấy có ai đó để so kè – tên riêng giữ
+  // nguyên ở cả 2 ngôn ngữ, giống quy ước "Star Clay Co." ở Bật Nghiệp.
+  var RIVAL = { name: 'Kim Long Exports', icon: '🐉' };
+
   // Hồ sơ ẩn của thị trường – sinh từ seed, mỗi ván mỗi khác
   var H = MKTS.map(function () {
     return { fit: 0.7 + rnd() * 0.7, comp: 0.85 + rnd() * 0.3, trend: [] };
@@ -362,7 +374,7 @@
     q: 0, firm: 0, cash: 8, rep: 50, capab: 40, resil: 50,
     know: [10, 10, 10, 10, 10, 10, 10], entered: [null, null, null, null, null, null, null],
     qin: [0, 0, 0, 0, 0, 0, 0], certBP: false, items: {}, shopOpen: false,
-    profit: 0, susts: 0, adapt: 0, lowQ: 0,
+    profit: 0, susts: 0, adapt: 0, lowQ: 0, rival: { rev: 0 },
     foot: [], flags: {}, usedEv: [], phase: 'obs',
     sel: { prio: null, budget: 1, enter: null, enterMode: null, intel: [] },
   };
@@ -542,6 +554,24 @@
     $('bp-qdots').innerHTML = [0, 1, 2, 3, 4, 5].map(function (i) {
       return '<div class="bp-q-dot ' + (i < S.q ? 'done' : i === S.q ? 'cur' : '') + '">Q' + (i + 1) + '</div>';
     }).join('');
+    var rivalRace = $('bp-rival-race');
+    if (rivalRace) rivalRace.innerHTML = raceHtml(S.profit, S.rival.rev);
+  }
+  // Thanh so sánh minh họa "bạn vs đối thủ ảo" – dùng chung cho HUD trong ván
+  // và màn Kết thúc. mine/theirs tính theo 2 đơn vị khác nhau (lợi nhuận tích
+  // lũy của bạn vs doanh thu ước tính của đối thủ) nên chỉ mang tính tường
+  // thuật, không phải một chỉ số được chấm điểm – ghi rõ để không gây hiểu lầm.
+  function raceHtml(mine, theirs) {
+    var max = Math.max(mine, theirs, 1);
+    return '<p class="text-[10px] font-extrabold uppercase tracking-wide opacity-50 mb-1.5">🆚 ' + T('Đường đua thương hiệu (minh họa)', 'Brand race (illustrative)') + '</p>' +
+      '<div class="flex items-center gap-2 text-[11px] font-bold">' +
+      '<span class="w-16 shrink-0">🏢 ' + T('Bạn', 'You') + '</span>' +
+      '<div class="flex-1 h-2 rounded-full bg-deep-teal/10 overflow-hidden"><div class="h-full bg-primary" style="width:' + Math.max(4, mine / max * 100) + '%"></div></div>' +
+      '<span class="w-16 text-right shrink-0">' + f1(mine) + TY() + '</span></div>' +
+      '<div class="flex items-center gap-2 text-[11px] font-bold mt-1">' +
+      '<span class="w-16 shrink-0">' + RIVAL.icon + ' ' + T('Đối thủ', 'Rival') + '</span>' +
+      '<div class="flex-1 h-2 rounded-full bg-deep-teal/10 overflow-hidden"><div class="h-full bg-clay-gold" style="width:' + Math.max(4, theirs / max * 100) + '%"></div></div>' +
+      '<span class="w-16 text-right shrink-0">' + f1(theirs) + TY() + '</span></div>';
   }
 
   function addLog(html) {
@@ -915,6 +945,20 @@
       '<button onclick="bpNext()" class="clay-btn w-full bg-clay-gold text-deep-teal font-display font-extrabold py-3.5 mt-4">📅 ' + T('Sang quý', 'Go to quarter') + ' ' + (evtPostCache.qDone + 1) + '</button>';
   }
 
+  // Đối thủ ảo tăng tốc mỗi quý dựa trên độ cạnh tranh trung bình (H[].comp)
+  // của các thị trường người chơi đang có mặt (hoặc trung bình toàn bộ 7 thị
+  // trường nếu chưa vào đâu cả, để họ vẫn "chạy" kể cả khi người chơi đứng
+  // yên). KHÔNG dùng chung công thức doanh thu với người chơi (không đọc
+  // S.rep/S.capab…) – chỉ là con số minh họa tạo cảm giác luôn có người chạy
+  // đua cùng, không phải một chỉ số được chấm điểm.
+  var RIVAL_BASE = 0.5, RIVAL_VAR = 0.3;
+  function rivalStep() {
+    var mkts = entMkts();
+    var pool = mkts.length ? mkts : MKTS.map(function (_, m) { return m; });
+    var compAvg = pool.reduce(function (s, m) { return s + H[m].comp; }, 0) / pool.length;
+    S.rival.rev = Math.max(0, S.rival.rev + RIVAL_BASE * compAvg + (rivalRnd() - 0.5) * RIVAL_VAR * 2);
+  }
+
   function settle(evOut) {
     // Doanh thu quý cho từng thị trường đang hiện diện
     var bud = BUDGETS[S.sel.budget];
@@ -965,6 +1009,7 @@
         '📉 ' + MKTS[m].name + ": weak revenue means competitors pay less attention – competition eases a little."
       ));
     });
+    rivalStep();
     if (S.sel.prio === 1) S.resil -= 3;
     var loanPaid = false;
     if (S.flags.loan) { S.cash -= 0.3; S.flags.loan = false; loanPaid = true; }
@@ -974,6 +1019,9 @@
     var report = fmtQLines(qLinesData, loanPaid);
     addLog('🧾 <b>' + T('Kết quả quý', 'Quarter results') + ':</b><br>' + report + '<br>💼 ' + T('Tiền mặt', 'Cash') + ': <b>' + f1(S.cash) + TY() + '</b>.');
     if (mktNotes.length) addLog(mktNotes.join('<br>'));
+    addLog(RIVAL.icon + ' <b>' + RIVAL.name + ':</b> ' + (S.profit >= S.rival.rev ?
+      T('vẫn bám đuổi phía sau bạn, doanh thu ước ' + f1(S.rival.rev) + TY() + '.', 'still chasing behind you, estimated revenue ' + f1(S.rival.rev) + TY() + '.') :
+      T('đang dẫn trước bạn, doanh thu ước ' + f1(S.rival.rev) + TY() + ' – tăng tốc thôi!', 'currently ahead of you, estimated revenue ' + f1(S.rival.rev) + TY() + ' – time to pick up the pace!')));
     save();
     // Thua sớm?
     if (S.lowQ >= 2) return bpEnd('cash', evOut);
@@ -1040,6 +1088,10 @@
     $('bp-breakdown').innerHTML = rows.map(function (r) {
       return '<div><div class="flex justify-between text-[12px] font-bold"><span>' + r[0] + '</span><span>' + r[1] + '</span></div><div class="bp-bar mt-1"><i style="width:' + r[1] + '%"></i></div></div>';
     }).join('');
+    $('bp-rival-final').innerHTML = raceHtml(S.profit, S.rival.rev) +
+      '<p class="text-[11px] opacity-60 mt-2">' + (S.profit >= S.rival.rev ?
+        T('🏆 Bạn đã vượt qua ' + RIVAL.name + ' trong cuộc đua doanh thu 6 quý.', '🏆 You outpaced ' + RIVAL.name + ' in the 6-quarter revenue race.') :
+        T('🐉 ' + RIVAL.name + ' đã về đích trước – thử lại để soán ngôi.', '🐉 ' + RIVAL.name + ' finished ahead – try again to take the lead.')) + '</p>';
     if (endReason === 'cash') {
       $('bp-medal').textContent = '💸';
       $('bp-title').textContent = T('Mất khả năng thanh toán', 'Loss of Solvency');
