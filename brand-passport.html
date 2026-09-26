@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Brand Passport – Hộ Chiếu Thương Hiệu</title>
-<meta name="description" content="Brand Passport: From Vietnam to the World – mô phỏng chiến lược quốc tế hóa 6 quý: đưa thương hiệu Việt từ thị trấn Vàm Thịnh ra sáu thị trường giả tưởng, ra quyết định trong sương mù thông tin, cân bằng lợi nhuận – uy tín – năng lực – thích ứng – bền vững.">
+<meta name="description" content="Brand Passport: From Vietnam to the World – mô phỏng chiến lược quốc tế hóa 6 quý: đưa thương hiệu Việt từ thị trấn Vàm Thịnh ra bảy thị trường giả tưởng, ra quyết định trong sương mù thông tin, cân bằng lợi nhuận – uy tín – năng lực – thích ứng – bền vững.">
 <meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
 <meta name="theme-color" content="#006687">
 <link rel="manifest" href="manifest-brand-passport.webmanifest">
@@ -124,7 +124,7 @@
     <h2 class="font-display font-extrabold text-deep-teal text-lg mb-2" data-en="🏢 Choose your company">🏢 Chọn doanh nghiệp của bạn</h2>
     <p class="text-[11px] opacity-60 mb-2" data-en="Each company has its own journey and risk profile – there is no &quot;strongest&quot; choice.">Mỗi doanh nghiệp một hành trình và hệ rủi ro khác nhau – không có lựa chọn "mạnh nhất".</p>
     <div class="grid sm:grid-cols-2 gap-2" id="bp-firms"></div>
-    <h3 class="font-display font-extrabold text-deep-teal text-sm mt-5 mb-2" data-en="🌏 Six gateways to the world (fictional countries)">🌏 Sáu cánh cửa ra thế giới (quốc gia giả tưởng)</h3>
+    <h3 class="font-display font-extrabold text-deep-teal text-sm mt-5 mb-2" data-en="🌏 Seven gateways to the world (fictional countries)">🌏 Bảy cánh cửa ra thế giới (quốc gia giả tưởng)</h3>
     <div id="bp-mkt-list" class="space-y-1.5 text-[12px]">
       <p data-en-html="🌐 <b>Hải Lam</b> – advanced digital market: fast entry, very high online competition.">🌐 <b>Hải Lam</b> – thị trường số phát triển: vào nhanh, cạnh tranh trực tuyến rất cao.</p>
       <p data-en-html="🏔️ <b>Bắc Phong</b> – strict standards: high prices and reputation, heavy compliance cost.">🏔️ <b>Bắc Phong</b> – tiêu chuẩn nghiêm ngặt: giá và uy tín cao, chi phí tuân thủ lớn.</p>
@@ -132,6 +132,7 @@
       <p data-en-html="🏝️ <b>Lục Đảo</b> – eco-first: suits sustainable brands, demands traceability.">🏝️ <b>Lục Đảo</b> – ưu tiên môi trường: hợp thương hiệu bền vững, đòi truy xuất nguồn gốc.</p>
       <p data-en-html="🌸 <b>Nhật Quang</b> – long-term relationships: loyal partners, trust builds slowly.">🌸 <b>Nhật Quang</b> – quan hệ dài hạn: đối tác trung thành, xây lòng tin chậm.</p>
       <p data-en-html="⚓ <b>Tân Cảng</b> – regional hub: gateway to many markets, high operating cost.">⚓ <b>Tân Cảng</b> – trung tâm khu vực: cửa ngõ nhiều thị trường, chi phí vận hành cao.</p>
+      <p data-en-html="🌋 <b>Hỏa Sơn</b> – young, digital-first population: fragmented across island regions, needs a local partner for full reach.">🌋 <b>Hỏa Sơn</b> – dân số trẻ, số hóa nhanh: thị trường phân mảnh theo vùng đảo, cần đối tác địa phương mới phủ hết.</p>
     </div>
     <h3 class="font-display font-extrabold text-deep-teal text-sm mt-5 mb-2" data-en="📜 Rules of play">📜 Luật chơi</h3>
     <ul id="bp-rules-list" class="space-y-1.5 text-[12.5px]">
@@ -289,6 +290,7 @@
     { id: 3, key: 'ld', icon: '🏝️', name: 'Lục Đảo', trait: 'ưu tiên môi trường – cần hồ sơ bền vững', traitEn: 'environment-first – needs a sustainability record' },
     { id: 4, key: 'nq', icon: '🌸', name: 'Nhật Quang', trait: 'lòng tin xây chậm – đối tác trung thành', traitEn: 'trust builds slowly – loyal partners' },
     { id: 5, key: 'tc', icon: '⚓', name: 'Tân Cảng', trait: 'cửa ngõ khu vực – vận hành đắt đỏ', traitEn: 'regional gateway – expensive to operate' },
+    { id: 6, key: 'hs', icon: '🌋', name: 'Hỏa Sơn', trait: 'dân số trẻ, số hóa nhanh – thị trường phân mảnh theo vùng đảo, cần đối tác địa phương mới phủ được hết', traitEn: 'young, fast-digitalizing population – fragmented across island regions, needs a local partner to reach full coverage' },
   ];
   // 4 doanh nghiệp – mỗi nhà một hành trình (concept mục 2)
   var FIRMS = [
@@ -348,15 +350,15 @@
     return { fit: 0.7 + rnd() * 0.7, comp: 0.85 + rnd() * 0.3, trend: [] };
   });
   // Biên độ dao động theo tính cách thị trường: Nhật Quang êm, Kim Sa dữ dội
-  var VARS = [0.3, 0.2, 0.6, 0.25, 0.12, 0.3];
-  for (var q0 = 0; q0 < 6; q0++) for (var m0 = 0; m0 < 6; m0++) {
+  var VARS = [0.3, 0.2, 0.6, 0.25, 0.12, 0.3, 0.35];
+  for (var q0 = 0; q0 < 6; q0++) for (var m0 = 0; m0 < MKTS.length; m0++) {
     H[m0].trend.push(1 - VARS[m0] / 2 + rnd() * VARS[m0] + (m0 === 2 ? -0.05 : 0));
   }
 
   var S = {
     q: 0, firm: 0, cash: 8, rep: 50, capab: 40, resil: 50,
-    know: [10, 10, 10, 10, 10, 10], entered: [null, null, null, null, null, null],
-    qin: [0, 0, 0, 0, 0, 0], certBP: false, items: {}, shopOpen: false,
+    know: [10, 10, 10, 10, 10, 10, 10], entered: [null, null, null, null, null, null, null],
+    qin: [0, 0, 0, 0, 0, 0, 0], certBP: false, items: {}, shopOpen: false,
     profit: 0, susts: 0, adapt: 0, lowQ: 0,
     foot: [], flags: {}, usedEv: [], phase: 'obs',
     sel: { prio: null, budget: 1, enter: null, enterMode: null, intel: [] },
@@ -371,7 +373,8 @@
     2: { digitalReadiness: 66, institutionalDistance: 45, culturalDistance: 45, logisticsQuality: 60, tariffPressure: 42, ipProtection: 50, opportunismRisk: 52, localPartnerValue: 62, networkImportance: 62, marketSize: 72, politicalRisk: 42, dataRegulationRisk: 45, crossBorderNetworkEffects: 55 },
     3: { digitalReadiness: 60, institutionalDistance: 60, culturalDistance: 50, logisticsQuality: 66, tariffPressure: 34, ipProtection: 72, opportunismRisk: 32, localPartnerValue: 66, networkImportance: 56, marketSize: 50, politicalRisk: 28, dataRegulationRisk: 40, crossBorderNetworkEffects: 45 },
     4: { digitalReadiness: 60, institutionalDistance: 66, culturalDistance: 72, logisticsQuality: 78, tariffPressure: 30, ipProtection: 82, opportunismRisk: 28, localPartnerValue: 82, networkImportance: 76, marketSize: 60, politicalRisk: 24, dataRegulationRisk: 40, crossBorderNetworkEffects: 45 },
-    5: { digitalReadiness: 60, institutionalDistance: 50, culturalDistance: 45, logisticsQuality: 86, tariffPressure: 46, ipProtection: 60, opportunismRisk: 46, localPartnerValue: 55, networkImportance: 66, marketSize: 76, politicalRisk: 46, dataRegulationRisk: 45, crossBorderNetworkEffects: 55 }
+    5: { digitalReadiness: 60, institutionalDistance: 50, culturalDistance: 45, logisticsQuality: 86, tariffPressure: 46, ipProtection: 60, opportunismRisk: 46, localPartnerValue: 55, networkImportance: 66, marketSize: 76, politicalRisk: 46, dataRegulationRisk: 45, crossBorderNetworkEffects: 55 },
+    6: { digitalReadiness: 78, crossBorderNetworkEffects: 65, dataRegulationRisk: 42, institutionalDistance: 58, culturalDistance: 52, logisticsQuality: 42, tariffPressure: 38, ipProtection: 48, opportunismRisk: 42, localPartnerValue: 80, networkImportance: 78, marketSize: 82, politicalRisk: 38 }
   };
   function aibisFit(m) {
     var E = window.BizOnEntryModeEngine, MO = window.BizOnEntryModeModels;
@@ -621,7 +624,7 @@
     } else if (id === 'SCOUT') {
       var pick = prompt(T('Điều tra thị trường nào?\n', 'Scout which market?\n') + MKTS.map(function (m, j) { return (j + 1) + ' = ' + m.name; }).join(' · '));
       var m = parseInt(pick, 10) - 1;
-      if (!(m >= 0 && m <= 5)) return;
+      if (!(m >= 0 && m < MKTS.length)) return;
       S.items[id]--; S.know[m] = 100;
       var real = H[m].fit;
       addLog(T('🕵️ Điều tra viên bí mật xác nhận độ phù hợp thật tại ' + MKTS[m].name + ': <b>' + (real >= 1.1 ? 'CAO' : real >= 0.9 ? 'KHÁ' : 'THẤP') + '</b>.',
@@ -661,10 +664,10 @@
   // và stageEvent() dùng lại thay vì rút sự kiện mới (không lệch chuỗi rnd()).
   var preDrawnEv = null, preDrawnMissionAhead = false;
   function rollSignals() {
-    var m = Math.floor(rnd() * 6);
+    var m = Math.floor(rnd() * MKTS.length);
     var up = H[m].trend[S.q] >= 1.02;
     var lie = rnd() < 0.3;
-    var m2 = Math.floor(rnd() * 6);
+    var m2 = Math.floor(rnd() * MKTS.length);
     sigCache = { m: m, up: up, lie: lie, m2: m2 };
   }
   function signals() {
@@ -715,7 +718,7 @@
     var src = SOURCES[i];
     var pick = prompt(T('Dùng «' + src.name + '» cho thị trường nào?\n', 'Use «' + src.nameEn + '» for which market?\n') + MKTS.map(function (m, j) { return (j + 1) + ' = ' + m.name; }).join(' · '));
     var m = parseInt(pick, 10) - 1;
-    if (!(m >= 0 && m <= 5)) return;
+    if (!(m >= 0 && m < MKTS.length)) return;
     var cost = src.cost * (S.sel.prio === 0 ? 0.5 : 1);
     if (S.cash < cost) { $('bp-intel-note').textContent = T('Không đủ tiền cho nguồn này.', "You don't have enough cash for this source."); return; }
     S.cash -= cost;
@@ -736,7 +739,7 @@
 
   function stageDecide() {
     S.phase = 'dec';
-    var notIn = [0, 1, 2, 3, 4, 5].filter(function (m) { return S.entered[m] === null; });
+    var notIn = MKTS.map(function (_, m) { return m; }).filter(function (m) { return S.entered[m] === null; });
     $('bp-stage').innerHTML =
       '<h2 class="font-display font-extrabold text-deep-teal text-base mb-1">' + T('Quý', 'Quarter') + ' ' + (S.q + 1) + '/6 – 🧭 ' + T('Quyết định', 'Decision') + '</h2>' +
       '<p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-3 mb-1.5">' + T('1 · Ưu tiên của quý', '1 · Priority for the quarter') + '</p>' +
@@ -919,6 +922,7 @@
       if (m === 3 && S.susts < 2) rev *= 0.6;                   // Lục Đảo đòi hồ sơ bền vững + truy xuất
       if (m === 4) rev *= Math.min(1.15, 0.55 + 0.15 * S.qin[m]); // Nhật Quang: lòng tin xây dần
       if (m === 5) rev *= 1.2;                                  // Tân Cảng: quy mô cửa ngõ
+      if (m === 6 && S.entered[m] !== 2) rev *= 0.65;           // Hỏa Sơn: phân mảnh theo đảo, cần Đối tác địa phương mới phủ hết
       // Cá tính doanh nghiệp
       if (S.firm === 1) { if (m === 2) rev *= 1.15; }           // Phù Sa Foods hợp khách trẻ Kim Sa
       if (S.firm === 2) { rev *= 0.92; if (m === 3) rev *= 1.35; } // Lam Việt: sản xuất hạn chế, Lục Đảo yêu
