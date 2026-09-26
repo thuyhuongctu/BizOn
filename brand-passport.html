@@ -848,8 +848,13 @@
     }
   }
 
+  // Ảnh chụp trạng thái đúng lúc chốt quý (trước cả hiệu ứng Ưu tiên, thâm
+  // nhập thị trường, sự kiện lẫn doanh thu) – để settle() tính được mức thay
+  // đổi RÒNG của cả quý cho "Thẻ tóm tắt quý", không chỉ riêng phần doanh thu.
+  var qSnapshot = null;
   window.bpCommit = function () {
     if (S.sel.prio === null) return;
+    qSnapshot = { cash: S.cash, rep: S.rep, capab: S.capab, resil: S.resil, susts: S.susts, profit: S.profit, rivalRev: S.rival.rev };
     var p = S.sel.prio;
     if (p === 2) { S.cash -= 0.5; S.rep += 6; addLog(T('✨ Đầu tư thương hiệu – uy tín +6.', '✨ Invested in the brand – reputation +6.')); }
     if (p === 3) { S.cash -= 0.8; S.capab += 8; addLog(T('🏭 Nâng cấp năng lực +8.', '🏭 Upgraded capability +8.')); }
@@ -941,8 +946,37 @@
     var el = $('bp-evt-post');
     if (!el || !evtPostCache) return;
     el.innerHTML =
-      '<div class="mt-4 p-3.5 rounded-2xl text-[12.5px]" style="background:rgba(0,102,135,.06)"><b>🧾 ' + T('Kết quả quý', 'Quarter') + ' ' + evtPostCache.qDone + ':</b><br>' + fmtQLines(evtPostCache.data, false) + '</div>' +
+      (evtPostCache.delta ? recapHtml(evtPostCache.qDone, evtPostCache.delta) : '') +
+      '<div class="mt-4 p-3.5 rounded-2xl text-[12.5px]" style="background:rgba(0,102,135,.06)"><b>🧾 ' + T('Chi tiết theo thị trường', 'Market breakdown') + ':</b><br>' + fmtQLines(evtPostCache.data, false) + '</div>' +
       '<button onclick="bpNext()" class="clay-btn w-full bg-clay-gold text-deep-teal font-display font-extrabold py-3.5 mt-4">📅 ' + T('Sang quý', 'Go to quarter') + ' ' + (evtPostCache.qDone + 1) + '</button>';
+  }
+  // "Thẻ tóm tắt quý": dịch mức thay đổi RÒNG cả quý (ưu tiên + thâm nhập +
+  // sự kiện + doanh thu, xem qSnapshot) thành 1 câu nhận định + vài chip số
+  // liệu, thay vì để người chơi tự suy ra ý nghĩa từ bảng doanh thu thô.
+  function deltaChip(icon, label, val, unit) {
+    if (Math.round(val * 10) === 0) return ''; // gần như không đổi thì khỏi chiếm chỗ
+    var pos = val > 0;
+    return '<span class="bp-chip" style="color:' + (pos ? '#0F5C4E' : '#B23A2E') + '">' + icon + ' ' + label + ' ' + (pos ? '+' : '') + f1(val) + (unit || '') + '</span>';
+  }
+  function recapHtml(qDone, d) {
+    var verdict = d.profit >= 1 ? T('🎉 Quý bứt phá!', '🎉 Breakout quarter!') :
+      d.profit >= 0 ? T('📈 Quý ổn định', '📈 Steady quarter') :
+      T('📉 Quý khó khăn', '📉 Tough quarter');
+    var chips = [
+      deltaChip('💹', T('LN quý', 'Quarter profit'), d.profit, TY()),
+      deltaChip('💼', T('Tiền mặt', 'Cash'), d.cash, TY()),
+      deltaChip('⭐', T('Uy tín', 'Reputation'), d.rep, ''),
+      deltaChip('🏭', T('Năng lực', 'Capability'), d.capab, ''),
+      deltaChip('🛡️', T('Chống chịu', 'Resilience'), d.resil, ''),
+    ].join('');
+    var rivalLine = Math.round(d.rivalRev * 10) === 0 ? '' :
+      '<p class="text-[11px] opacity-60 mt-2">' + RIVAL.icon + ' ' + T(
+        RIVAL.name + ' tăng ' + f1(d.rivalRev) + TY() + ' quý này – ' + (S.profit >= S.rival.rev ? 'bạn vẫn đang dẫn trước.' : 'bạn đang bị dẫn, tăng tốc thôi!'),
+        RIVAL.name + ' grew ' + f1(d.rivalRev) + TY() + ' this quarter – ' + (S.profit >= S.rival.rev ? "you're still ahead." : 'you are behind, time to pick up the pace!')
+      ) + '</p>';
+    return '<div class="mt-4 p-3.5 rounded-2xl" style="background:rgba(253,161,39,.08); border:1px solid rgba(253,161,39,.25)">' +
+      '<p class="font-display font-extrabold text-deep-teal text-sm">' + T('🎬 Tóm tắt quý ' + qDone, '🎬 Quarter ' + qDone + ' summary') + ' – ' + verdict + '</p>' +
+      '<div class="flex flex-wrap gap-1.5 mt-2">' + chips + '</div>' + rivalLine + '</div>';
   }
 
   // Đối thủ ảo tăng tốc mỗi quý dựa trên độ cạnh tranh trung bình (H[].comp)
@@ -1040,7 +1074,11 @@
         S.usedEv.push(preDrawnEv.id);
       }
     }
-    evtPostCache = { qDone: S.q, data: qLinesData };
+    evtPostCache = { qDone: S.q, data: qLinesData, delta: qSnapshot ? {
+      cash: S.cash - qSnapshot.cash, rep: S.rep - qSnapshot.rep, capab: S.capab - qSnapshot.capab,
+      resil: S.resil - qSnapshot.resil, susts: S.susts - qSnapshot.susts, profit: S.profit - qSnapshot.profit,
+      rivalRev: S.rival.rev - qSnapshot.rivalRev,
+    } : null };
     renderEvtPost();
     hud();
   }
