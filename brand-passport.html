@@ -172,6 +172,19 @@
       <div class="flex flex-wrap gap-1.5 mt-3" id="bp-hud"></div>
     </div>
 
+    <div class="clay-card p-5 mb-4" id="bp-shop-card">
+      <button onclick="bpToggleShop()" class="w-full flex items-center justify-between" id="bp-shop-toggle">
+        <span class="font-display font-extrabold text-deep-teal text-sm">🛍️ <span data-en="Item Shop">Cửa hàng vật phẩm</span></span>
+        <span class="text-xs font-bold opacity-60" id="bp-shop-caret">▾</span>
+      </button>
+      <div id="bp-shop-panel" class="hidden mt-4">
+        <p class="text-[11px] opacity-60 mb-3" data-en="Spend your cash on hand for an edge – optional, not required to finish the game.">Dùng tiền mặt đang có để mua lợi thế – không bắt buộc để hoàn thành game.</p>
+        <div id="bp-shop-list" class="space-y-2"></div>
+        <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-4 mb-1.5">🎒 <span data-en="Your items">Vật phẩm đang có</span></p>
+        <div id="bp-inv-list" class="space-y-2"></div>
+      </div>
+    </div>
+
     <div class="clay-card p-6 mb-4" id="bp-stage"></div>
 
     <div class="clay-card p-6">
@@ -189,6 +202,34 @@
       <p class="text-sm font-semibold opacity-70 mt-1" id="bp-sub"></p>
       <div class="mt-5 space-y-2.5 text-left" id="bp-breakdown"></div>
       <div class="mt-4 text-left text-[12px] opacity-70" id="bp-footprint"></div>
+      <div class="mt-5 hidden" id="bp-cert-box">
+        <div class="rounded-[20px] p-5 text-center relative overflow-hidden" style="background:linear-gradient(180deg,#fffdf6,#f4faff);border:3px solid rgba(253,161,39,.55);box-shadow:inset 0 0 0 1px rgba(0,102,135,.18)">
+          <p class="text-[10px] font-extrabold uppercase tracking-widest text-deep-teal/50" data-en="🎓 Certificate of Completion">🎓 Giấy chứng nhận hoàn thành</p>
+          <p class="font-display font-extrabold text-deep-teal text-lg leading-tight mt-0.5">CERTIFICATE OF COMPLETION</p>
+          <p class="text-[11px] text-deep-teal/60 mt-3 italic" data-en="Awarded to">Trao cho</p>
+          <p id="bp-cert-name" class="font-display font-extrabold text-primary text-2xl mt-0.5 px-6 pb-1.5 border-b-2 border-clay-gold/40 inline-block">–</p>
+          <p id="bp-cert-desc" class="text-[11px] text-deep-teal/70 mt-2.5 max-w-xs mx-auto"></p>
+          <div class="flex items-end justify-between gap-2 mt-5">
+            <div class="text-center flex-1">
+              <img src="assets/docs/sig-huong.png" alt="Chữ ký Đỗ Thùy Hương" class="h-11 w-auto mx-auto">
+              <div class="h-px bg-deep-teal/20 my-1 mx-2"></div>
+              <p class="text-[9px] font-extrabold text-deep-teal leading-tight">NCS. Đỗ Thùy Hương</p>
+              <p class="text-[8px] text-deep-teal/50 font-bold">Founder &amp; Project Lead</p>
+            </div>
+            <div class="w-16 h-16 shrink-0 rounded-full border-2 border-dashed border-clay-gold flex items-center justify-center rotate-12" style="background:rgba(253,161,39,.12)">
+              <div class="text-center leading-none"><p class="text-[7px] font-extrabold text-clay-orange uppercase">Official</p><p class="text-[10px] font-display font-extrabold text-clay-orange">BizOn</p><p class="text-[8px]">✓</p></div>
+            </div>
+            <div class="text-center flex-1">
+              <img src="assets/docs/sig-tu.png" alt="Chữ ký Phan Anh Tú" class="h-10 w-auto mx-auto mt-1">
+              <div class="h-px bg-deep-teal/20 my-1 mx-2"></div>
+              <p class="text-[9px] font-extrabold text-deep-teal leading-tight">PGS.TS. Phan Anh Tú</p>
+              <p class="text-[8px] text-deep-teal/50 font-bold">Co-founder &amp; Chief Academic Advisor</p>
+            </div>
+          </div>
+          <p id="bp-cert-date" class="text-[9px] text-deep-teal/45 font-bold mt-3"></p>
+          <button onclick="bpDownloadCert()" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-4 py-2 text-[11px] mt-3" data-en="📥 Download certificate">📥 Tải chứng chỉ</button>
+        </div>
+      </div>
       <div class="mt-5 text-left hidden" id="bp-submit-box">
         <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mb-1.5" data-en="📡 Submit your result to the instructor (optional)">📡 Nộp kết quả cho giảng viên (tùy chọn)</p>
         <div class="flex flex-col sm:flex-row gap-2">
@@ -282,6 +323,26 @@
     { icon: '🔥', name: 'Dồn lực', nameEn: 'All-in', rev: 1.15, op: 1.4, resil: -2 },
   ];
 
+  // Cửa hàng vật phẩm – dùng thẳng tiền mặt tỷ ₫ của công ty (không thêm ví
+  // ảo song song, để không phức tạp hóa game vốn được thiết kế chơi nhanh).
+  // 'blueprint': hiệu lực vĩnh viễn ngay khi mua. 'consumable': mua vào kho,
+  // bấm "Dùng" mới kích hoạt (SCOUT/PR/FORECAST) hoặc bật cờ chờ dùng (SHIELD).
+  var SHOP_ITEMS = [
+    { id: 'SCOUT', icon: '🕵️', type: 'consumable', price: 0.4, name: 'Điều tra viên bí mật', nameEn: 'Mystery Shopper',
+      desc: 'Tiết lộ ngay độ phù hợp thật của 1 thị trường bạn chọn – không cần mua nguồn tin.', descEn: 'Instantly reveals the true fit of one market you pick – no intel source needed.' },
+    { id: 'SHIELD', icon: '🛡️', type: 'consumable', price: 0.6, name: 'Bảo hiểm rủi ro', nameEn: 'Risk Insurance',
+      desc: 'Vô hiệu hóa tác động tiêu cực của sự kiện thị trường kế tiếp.', descEn: 'Cancels the negative impact of the next market event.' },
+    { id: 'PR', icon: '📣', type: 'consumable', price: 0.5, name: 'Gói PR khủng hoảng', nameEn: 'Crisis PR Kit',
+      desc: 'Dùng ngay: uy tín +8 tức thì.', descEn: 'Use now: reputation +8 instantly.' },
+    { id: 'FORECAST', icon: '🔮', type: 'consumable', price: 0.4, name: 'Gói dữ liệu Lumina', nameEn: 'Lumina Data Pack',
+      desc: 'Dùng ngay: Lumina tiết lộ trước thể loại sự kiện của quý sau.', descEn: "Use now: Lumina reveals next quarter's event category in advance." },
+    { id: 'CERT_FT', icon: '🎖️', type: 'blueprint', price: 1.0, name: 'Chứng nhận nhanh Bắc Phong', nameEn: 'Bắc Phong Fast-Track Certification',
+      desc: 'Vĩnh viễn: đạt luôn chuẩn Bắc Phong mà không cần chờ sự kiện.', descEn: 'Permanent: instantly meet the Bắc Phong standard without waiting for the event.' },
+    { id: 'NETWORK', icon: '🤝', type: 'blueprint', price: 0.8, name: 'Mạng lưới đối tác', nameEn: 'Partner Network',
+      desc: 'Vĩnh viễn: +10% doanh thu ở các thị trường thâm nhập bằng Đối tác địa phương.', descEn: 'Permanent: +10% revenue in markets entered via Local partner.' },
+  ];
+  function shopItem(id) { for (var i = 0; i < SHOP_ITEMS.length; i++) if (SHOP_ITEMS[i].id === id) return SHOP_ITEMS[i]; return null; }
+
   // Hồ sơ ẩn của thị trường – sinh từ seed, mỗi ván mỗi khác
   var H = MKTS.map(function () {
     return { fit: 0.7 + rnd() * 0.7, comp: 0.85 + rnd() * 0.3, trend: [] };
@@ -295,7 +356,7 @@
   var S = {
     q: 0, firm: 0, cash: 8, rep: 50, capab: 40, resil: 50,
     know: [10, 10, 10, 10, 10, 10], entered: [null, null, null, null, null, null],
-    qin: [0, 0, 0, 0, 0, 0], certBP: false,
+    qin: [0, 0, 0, 0, 0, 0], certBP: false, items: {}, shopOpen: false,
     profit: 0, susts: 0, adapt: 0, lowQ: 0,
     foot: [], flags: {}, usedEv: [], phase: 'obs',
     sel: { prio: null, budget: 1, enter: null, enterMode: null, intel: [] },
@@ -483,6 +544,74 @@
     log.insertBefore(li, log.firstChild);
   }
 
+  /* ================= CỬA HÀNG VẬT PHẨM ================= */
+  window.bpToggleShop = function () {
+    S.shopOpen = !S.shopOpen;
+    $('bp-shop-panel').classList.toggle('hidden', !S.shopOpen);
+    $('bp-shop-caret').textContent = S.shopOpen ? '▴' : '▾';
+    if (S.shopOpen) renderShop();
+  };
+  function renderShop() {
+    var listEl = $('bp-shop-list');
+    if (!listEl) return;
+    listEl.innerHTML = SHOP_ITEMS.map(function (it) {
+      var afford = S.cash >= it.price;
+      return '<div class="bp-opt" style="display:flex;align-items:center;gap:10px;cursor:default">' +
+        '<span style="font-size:22px">' + it.icon + '</span>' +
+        '<span style="flex:1"><b>' + T(it.name, it.nameEn) + '</b>' + (it.type === 'blueprint' ? ' <span class="opacity-50" style="font-size:10px">(' + T('vĩnh viễn', 'permanent') + ')</span>' : '') +
+        '<small>' + T(it.desc, it.descEn) + '</small></span>' +
+        '<button onclick="bpBuyItem(\'' + it.id + '\')" class="clay-btn bg-primary text-white text-xs font-bold px-3 py-2 shrink-0"' + (afford ? '' : ' disabled style="opacity:.4"') + '>' + f1(it.price) + TY() + '</button>' +
+        '</div>';
+    }).join('');
+    var owned = Object.keys(S.items).filter(function (id) { return S.items[id] > 0; });
+    var invEl = $('bp-inv-list');
+    invEl.innerHTML = owned.length ? owned.map(function (id) {
+      var it = shopItem(id);
+      var canUse = it.type === 'consumable' && !(id === 'SHIELD' && S.flags.shield);
+      return '<div class="bp-opt" style="display:flex;align-items:center;gap:10px;cursor:default">' +
+        '<span style="font-size:20px">' + it.icon + '</span>' +
+        '<span style="flex:1"><b>' + T(it.name, it.nameEn) + '</b> ×' + S.items[id] +
+        (id === 'SHIELD' && S.flags.shield ? '<small>' + T('Đã kích hoạt – chờ chặn sự kiện kế tiếp', 'Active – waiting to block the next event') + '</small>' : '') + '</span>' +
+        (it.type === 'blueprint' ? '<span class="text-[10px] font-bold opacity-50">✅ ' + T('Đang áp dụng', 'In effect') + '</span>' :
+          '<button onclick="bpUseItem(\'' + id + '\')" class="clay-btn bg-clay-gold text-deep-teal text-xs font-bold px-3 py-2 shrink-0"' + (canUse ? '' : ' disabled style="opacity:.4"') + '>' + T('Dùng', 'Use') + '</button>') +
+        '</div>';
+    }).join('') : '<p class="text-[11px] opacity-50">' + T('Chưa có vật phẩm nào.', 'No items yet.') + '</p>';
+  }
+
+  window.bpBuyItem = function (id) {
+    var it = shopItem(id);
+    if (!it || S.cash < it.price) return;
+    S.cash -= it.price;
+    S.items[id] = (S.items[id] || 0) + 1;
+    if (id === 'CERT_FT') { S.certBP = true; addLog(T('🎖️ Mua <b>Chứng nhận nhanh Bắc Phong</b> – đạt chuẩn Bắc Phong ngay lập tức.', '🎖️ Bought <b>Bắc Phong Fast-Track Certification</b> – instantly meets the Bắc Phong standard.')); }
+    else addLog(T('🛍️ Mua <b>' + it.name + '</b> (' + f1(it.price) + TY() + ').', '🛍️ Bought <b>' + it.nameEn + '</b> (' + f1(it.price) + TY() + ').'));
+    hud(); renderShop();
+  };
+
+  window.bpUseItem = function (id) {
+    if (!S.items[id]) return;
+    if (id === 'SHIELD') {
+      if (S.flags.shield) return;
+      S.items[id]--; S.flags.shield = true;
+      addLog(T('🛡️ Kích hoạt Bảo hiểm rủi ro – sự kiện thị trường kế tiếp sẽ không gây thiệt hại.', '🛡️ Activated Risk Insurance – the next market event will not cause harm.'));
+    } else if (id === 'PR') {
+      S.items[id]--; S.rep = clamp(S.rep + 8);
+      addLog(T('📣 Dùng Gói PR khủng hoảng – uy tín +8.', '📣 Used the Crisis PR Kit – reputation +8.'));
+    } else if (id === 'FORECAST') {
+      S.items[id]--; S.flags.forecastPeek = true;
+      addLog(T('🔮 Dùng Gói dữ liệu Lumina – Lumina sẽ tiết lộ trước thể loại sự kiện quý sau.', "🔮 Used the Lumina Data Pack – Lumina will reveal next quarter's event category in advance."));
+    } else if (id === 'SCOUT') {
+      var pick = prompt(T('Điều tra thị trường nào?\n', 'Scout which market?\n') + MKTS.map(function (m, j) { return (j + 1) + ' = ' + m.name; }).join(' · '));
+      var m = parseInt(pick, 10) - 1;
+      if (!(m >= 0 && m <= 5)) return;
+      S.items[id]--; S.know[m] = 100;
+      var real = H[m].fit;
+      addLog(T('🕵️ Điều tra viên bí mật xác nhận độ phù hợp thật tại ' + MKTS[m].name + ': <b>' + (real >= 1.1 ? 'CAO' : real >= 0.9 ? 'KHÁ' : 'THẤP') + '</b>.',
+               '🕵️ The Mystery Shopper confirms the true fit in ' + MKTS[m].name + ': <b>' + (real >= 1.1 ? 'HIGH' : real >= 0.9 ? 'FAIR' : 'LOW') + '</b>.'));
+    }
+    hud(); renderShop();
+  };
+
   function renderFirms() {
     var el = $('bp-firms');
     if (!el) return;
@@ -509,6 +638,10 @@
   // khi bước sang màn Quan sát – langchange chỉ cần vẽ lại từ cache này, không
   // được gọi lại rnd() (sẽ làm lệch toàn bộ chuỗi ngẫu nhiên phía sau).
   var sigCache = null;
+  // Vật phẩm FORECAST (Gói dữ liệu Lumina): rút trước sự kiện quý sau ngay khi
+  // quý hiện tại kết thúc (settle()), giữ ở đây để renderObsScreen() hiển thị
+  // và stageEvent() dùng lại thay vì rút sự kiện mới (không lệch chuỗi rnd()).
+  var preDrawnEv = null, preDrawnMissionAhead = false;
   function rollSignals() {
     var m = Math.floor(rnd() * 6);
     var up = H[m].trend[S.q] >= 1.02;
@@ -548,6 +681,8 @@
       '<h2 class="font-display font-extrabold text-deep-teal text-base mb-1">' + T('Quý', 'Quarter') + ' ' + (S.q + 1) + '/6 – 👁️ ' + T('Quan sát &amp; Tình báo', 'Observe &amp; Intelligence') + '</h2>' +
       signals().map(function (s) { return '<p class="text-[12.5px] mt-2">' + s + '</p>'; }).join('') +
       '<div class="mt-3 space-y-2">' + advs.map(function (a) { return '<div class="bp-adv">' + faceHtml(a[1], a[0]) + '<div><p class="who">' + a[1] + '</p><p>' + a[2] + '</p></div></div>'; }).join('') + '</div>' +
+      (preDrawnEv ? '<div class="bp-adv mt-2">' + faceHtml('Lumina AI', '🤖') + '<div><p class="who">Lumina AI</p><p>' + T('🔮 Dự báo: sự kiện quý sau thuộc nhóm ' + preDrawnEv.cat + ' — «' + preDrawnEv.t + '».', "🔮 Forecast: next quarter's event falls under " + preDrawnEv.cat + ' — «' + preDrawnEv.tEn + '».') + '</p></div></div>' :
+        preDrawnMissionAhead ? '<div class="bp-adv mt-2">' + faceHtml('Lumina AI', '🤖') + '<div><p class="who">Lumina AI</p><p>' + T('🔮 Dự báo: quý sau là mốc đặc biệt — một NHIỆM VỤ lớn, không phải sự kiện thường.', '🔮 Forecast: next quarter is a special milestone — a major MISSION, not a regular event.') + '</p></div></div>' : '') +
       '<p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-4 mb-1.5">' + T('Mua thông tin thị trường (tối đa 2 nguồn/quý)', 'Buy market intel (max 2 sources/quarter)') + '</p>' +
       '<div class="grid sm:grid-cols-2 gap-2">' + SOURCES.map(function (s, i) {
         return '<button class="bp-opt" data-src="' + i + '" onclick="bpIntel(' + i + ')">' + s.icon + ' ' + T(s.name, s.nameEn) + ' – ' + f1(s.cost * discount) + TY() + '<small>+' + s.know + ' ' + T('tri thức', 'knowledge') + ' · ' + T(s.note, s.noteEn) + '</small></button>';
@@ -619,6 +754,17 @@
     else { S.sel.enter = m; S.sel.enterMode = md; }
     syncDec();
   };
+  // Dự báo Lumina: ước tính doanh thu quý cho cặp thị trường × phương thức
+  // đang chọn, từ đúng công thức settle() dùng (không rút rnd() mới) – dải
+  // rộng hay hẹp tùy tri thức đã có, phản ánh đúng tinh thần "sương mù thị
+  // trường" thay vì đưa ra một con số chắc chắn.
+  function forecastRange(m, mode) {
+    var md = MODES[mode];
+    var base = 1.2 * H[m].fit * md.scale * H[m].trend[S.q] / H[m].comp;
+    base *= (0.8 + S.rep / 250) * (0.8 + S.capab / 250);
+    var unc = S.know[m] >= 50 ? 0.15 : S.know[m] >= 25 ? 0.32 : 0.55;
+    return { lo: Math.max(0, base * (1 - unc)), hi: base * (1 + unc), comp: H[m].comp };
+  }
   function syncDec() {
     document.querySelectorAll('[data-g="prio"]').forEach(function (b) { b.classList.toggle('sel', Number(b.dataset.i) === S.sel.prio); });
     document.querySelectorAll('[data-g="bud"]').forEach(function (b) { b.classList.toggle('sel', Number(b.dataset.i) === S.sel.budget); });
@@ -627,10 +773,18 @@
     var btn = $('bp-commit');
     if (btn) { btn.disabled = !ready; btn.style.opacity = ready ? 1 : 0.5; }
     var note = $('bp-dec-note');
-    if (note && S.sel.enter !== null) note.textContent = T(
-      'Sẽ thâm nhập ' + MKTS[S.sel.enter].name + ' bằng ' + MODES[S.sel.enterMode].name + ' (vốn ' + f1(MODES[S.sel.enterMode].cost) + ' tỷ).',
-      'Will enter ' + MKTS[S.sel.enter].name + ' via ' + MODES[S.sel.enterMode].nameEn + ' (capital ' + f1(MODES[S.sel.enterMode].cost) + ' bn).'
-    );
+    if (note) {
+      if (S.sel.enter !== null) {
+        var fr = forecastRange(S.sel.enter, S.sel.enterMode);
+        var compTxt = fr.comp >= 1.3 ? T('cạnh tranh cao', 'high competition') : fr.comp <= 0.85 ? T('cạnh tranh dịu', 'light competition') : T('cạnh tranh vừa', 'moderate competition');
+        note.innerHTML = T(
+          'Sẽ thâm nhập ' + MKTS[S.sel.enter].name + ' bằng ' + MODES[S.sel.enterMode].name + ' (vốn ' + f1(MODES[S.sel.enterMode].cost) + ' tỷ).<br>🔮 <b>Dự báo Lumina:</b> doanh thu quý ước ' + f1(fr.lo) + '–' + f1(fr.hi) + ' tỷ ₫ · ' + compTxt + '.',
+          'Will enter ' + MKTS[S.sel.enter].name + ' via ' + MODES[S.sel.enterMode].nameEn + ' (capital ' + f1(MODES[S.sel.enterMode].cost) + ' bn).<br>🔮 <b>Lumina forecast:</b> estimated quarterly revenue ' + f1(fr.lo) + '–' + f1(fr.hi) + ' bn ₫ · ' + compTxt + '.'
+        );
+      } else {
+        note.textContent = T('Chọn Ưu tiên và Mức vận hành để chốt.', 'Pick a Priority and an Operating stance to lock in.');
+      }
+    }
   }
 
   window.bpCommit = function () {
@@ -653,7 +807,9 @@
   function stageEvent() {
     S.phase = 'evt';
     var ev;
+    preDrawnMissionAhead = false;
     if (S.q === 3 && !S.flags.missionDone) { ev = MISSION; S.flags.missionDone = true; }
+    else if (preDrawnEv) { ev = preDrawnEv; preDrawnEv = null; }
     else {
       var pool = EVENTS.filter(function (e) { return S.usedEv.indexOf(e.id) < 0 && (!e.need || e.need()); });
       if (!pool.length) pool = EVENTS.filter(function (e) { return !e.need || e.need(); });
@@ -688,7 +844,20 @@
   }
 
   window.bpEv = function (i) {
+    // Bảo hiểm rủi ro (vật phẩm SHIELD): chặn phần thiệt hại của sự kiện kế
+    // tiếp – chụp số liệu trước/sau, khôi phục lại bất kỳ chỉ số nào bị giảm.
+    // Nhiều sự kiện không trừ thẳng vào cash/rep... mà đặt S.flags.wave < 1
+    // (hệ số nhân doanh thu quý sau) – phải chặn cả trường hợp này, nếu không
+    // bảo hiểm sẽ vô tác dụng với phần lớn sự kiện "giảm doanh thu quý".
+    var shielded = !!S.flags.shield;
+    var before = shielded ? { cash: S.cash, rep: S.rep, capab: S.capab, resil: S.resil, adapt: S.adapt, susts: S.susts } : null;
     var out = window.__bpEv.ch[i].fx();
+    if (shielded) {
+      ['cash', 'rep', 'capab', 'resil', 'adapt', 'susts'].forEach(function (k) { if (S[k] < before[k]) S[k] = before[k]; });
+      if (S.flags.wave && S.flags.wave < 1) S.flags.wave = 1;
+      S.flags.shield = false;
+      out += ' <i>' + T('(🛡️ Bảo hiểm rủi ro đã chặn phần thiệt hại)', '(🛡️ Risk Insurance blocked the negative impact)') + '</i>';
+    }
     addLog(window.__bpEv.cat + ' ' + T(window.__bpEv.t, window.__bpEv.tEn) + ' → ' + out);
     settle(out);
   };
@@ -720,7 +889,7 @@
     var bud = BUDGETS[S.sel.budget];
     if (bud.resil) S.resil += bud.resil;
     var wave = S.flags.wave || 1; S.flags.wave = null;
-    var qProfit = 0, qLinesData = [];
+    var qProfit = 0, qLinesData = [], mktNotes = [];
     entMkts().forEach(function (m) {
       var mode = MODES[S.entered[m]];
       S.qin[m]++;
@@ -736,6 +905,7 @@
       if (S.firm === 1) { if (m === 2) rev *= 1.15; }           // Phù Sa Foods hợp khách trẻ Kim Sa
       if (S.firm === 2) { rev *= 0.92; if (m === 3) rev *= 1.35; } // Lam Việt: sản xuất hạn chế, Lục Đảo yêu
       if (S.firm === 3 && S.entered[m] === 0) rev *= 1.35;      // Mekong Digital cực mạnh kênh số
+      if (S.items.NETWORK && S.entered[m] === 2) rev *= 1.10;   // Vật phẩm Mạng lưới đối tác (vĩnh viễn)
       var margin = mode.margin - (S.flags.priceWar || 0) * 0.03 - (S.flags.bigDeal && m === 1 ? 0.08 : 0);
       if (S.firm === 3) margin += 0.05;                          // phần mềm biên lời cao
       if (S.flags.bigDeal && m === 1) rev *= 1.5;
@@ -747,6 +917,21 @@
       qLinesData.push({ m: m, rev: rev, pf: pf });
       S.know[m] = clamp(S.know[m] + 6); // bán hàng cũng là học
       if (m === 4 && S.qin[m] >= 2) S.resil += 1;               // đối tác Nhật Quang trung thành
+      // Thị trường động: đối thủ địa phương phản ứng lại kết quả thật của bạn
+      // – thắng lớn ở một thị trường khiến cạnh tranh (H[m].comp) tăng dần
+      // cho các quý sau; hụt hơi thì cạnh tranh lơi ra. Đây KHÔNG phải kịch
+      // bản cố định từ đầu ván – nó phản hồi trực tiếp lựa chọn của người chơi.
+      var compBefore = H[m].comp;
+      if (pf > 1.0) H[m].comp = Math.min(1.8, H[m].comp + 0.08);
+      else if (pf < 0.2) H[m].comp = Math.max(0.7, H[m].comp - 0.05);
+      if (H[m].comp > compBefore + 0.001) mktNotes.push(T(
+        '📈 ' + MKTS[m].name + ': bạn đang thắng lớn – đối thủ địa phương bắt đầu phản ứng, cạnh tranh tăng từ quý sau.',
+        '📈 ' + MKTS[m].name + ": you're winning big – local competitors start reacting, competition rises from next quarter."
+      ));
+      else if (H[m].comp < compBefore - 0.001) mktNotes.push(T(
+        '📉 ' + MKTS[m].name + ': doanh thu yếu khiến đối thủ bớt để ý – cạnh tranh dịu đi một chút.',
+        '📉 ' + MKTS[m].name + ": weak revenue means competitors pay less attention – competition eases a little."
+      ));
     });
     if (S.sel.prio === 1) S.resil -= 3;
     var loanPaid = false;
@@ -756,12 +941,25 @@
     S.lowQ = S.cash < 0 ? S.lowQ + 1 : 0;
     var report = fmtQLines(qLinesData, loanPaid);
     addLog('🧾 <b>' + T('Kết quả quý', 'Quarter results') + ':</b><br>' + report + '<br>💼 ' + T('Tiền mặt', 'Cash') + ': <b>' + f1(S.cash) + TY() + '</b>.');
+    if (mktNotes.length) addLog(mktNotes.join('<br>'));
     save();
     // Thua sớm?
     if (S.lowQ >= 2) return bpEnd('cash', evOut);
     if (S.rep < 15) return bpEnd('rep');
     S.q++;
     if (S.q >= 6) return bpEnd(null);
+    // Vật phẩm FORECAST đã dùng: rút trước sự kiện của quý sắp mở, để hiển thị
+    // ở màn Quan sát kế tiếp và dùng lại nguyên vẹn trong stageEvent().
+    if (S.flags.forecastPeek) {
+      S.flags.forecastPeek = false;
+      if (S.q === 3 && !S.flags.missionDone) { preDrawnMissionAhead = true; }
+      else {
+        var poolF = EVENTS.filter(function (e) { return S.usedEv.indexOf(e.id) < 0 && (!e.need || e.need()); });
+        if (!poolF.length) poolF = EVENTS.filter(function (e) { return !e.need || e.need(); });
+        preDrawnEv = poolF[Math.floor(rnd() * poolF.length)];
+        S.usedEv.push(preDrawnEv.id);
+      }
+    }
     evtPostCache = { qDone: S.q, data: qLinesData };
     renderEvtPost();
     hud();
@@ -832,11 +1030,131 @@
     $('bp-footprint').innerHTML = S.foot.length ?
       '<p class="font-extrabold text-[11px] uppercase tracking-wide opacity-55 mb-1">👣 ' + T('Dấu chân quyết định của bạn', 'Your decision footprint') + '</p>' +
       S.foot.map(function (t) { return '<p>• ' + t + '</p>'; }).join('') : '';
+    renderCertBox(sc, endReason === null ? ($('bp-title') ? $('bp-title').textContent : '') : '');
     window.__bpFinal = { sc: sc, fail: endReason !== null, title: $('bp-title').textContent };
     var elClass = $('bp-class'); if (elClass) elClass.placeholder = T('Mã lớp (VD: QTKD-2026-A)', 'Class code (e.g. QTKD-2026-A)');
     var elName = $('bp-name'); if (elName) elName.placeholder = T('Tên của bạn', 'Your name');
     initSubmit();
   }
+
+  /* ================= CHỨNG CHỈ HOÀN THÀNH ================= */
+  // Chỉ hiện khi kết thúc trọn vẹn 6 quý (không phải thua sớm vì cạn tiền/uy tín).
+  function renderCertBox(sc, titleText) {
+    var box = $('bp-cert-box');
+    if (!box) return;
+    if (endReason !== null) { box.classList.add('hidden'); return; }
+    box.classList.remove('hidden');
+    var learner = ($('bp-name') && $('bp-name').value.trim()) || T('Nhà điều hành ' + F().name, F().name + ' Operator');
+    $('bp-cert-name').textContent = learner;
+    $('bp-cert-desc').innerHTML = T(
+      'đã hoàn thành trọn vẹn 6 quý mô phỏng <b>«Hộ Chiếu Thương Hiệu»</b> cùng thương hiệu <b>' + F().name + '</b>, đạt <b>' + sc.total + '/100</b> điểm – ' + titleText + '.',
+      'has fully completed all 6 quarters of the <b>«Brand Passport»</b> simulation with the <b>' + F().name + '</b> brand, scoring <b>' + sc.total + '/100</b> – ' + titleText + '.'
+    );
+    $('bp-cert-date').textContent = T('Cấp ngày ' + new Date().toLocaleDateString('vi-VN'), 'Issued ' + new Date().toLocaleDateString('en-US')) + ' · thuyhuongctu.github.io/BizOn';
+  }
+
+  function loadSigImg(src) {
+    return new Promise(function (res) {
+      var im = new Image();
+      im.onload = function () { res(im); };
+      im.onerror = function () { res(null); }; // thiếu ảnh chữ ký → rơi về chữ ký kiểu chữ viết
+      im.src = src;
+    });
+  }
+  function wrapCanvasText(g, text, x, y, maxWidth, lineHeight) {
+    var words = text.split(' '), line = '', lines = [];
+    for (var n = 0; n < words.length; n++) {
+      var test = line + words[n] + ' ';
+      if (g.measureText(test).width > maxWidth && n > 0) { lines.push(line); line = words[n] + ' '; }
+      else line = test;
+    }
+    lines.push(line);
+    lines.forEach(function (l, i) { g.fillText(l.trim(), x, y + i * lineHeight); });
+  }
+
+  // Xuất chứng chỉ hoàn thành ra ảnh PNG (vẽ canvas, chạy ngoại tuyến) – cùng
+  // khuôn mẫu với giấy chứng nhận của game.html, đổi nội dung cho Brand Passport.
+  window.bpDownloadCert = async function () {
+    var sc = scores();
+    var learner = ($('bp-name') && $('bp-name').value.trim()) || T('Nhà điều hành ' + F().name, F().name + ' Operator');
+    var titleText = $('bp-title') ? $('bp-title').textContent : '';
+    var EN = isEN();
+    var L = EN ? {
+      small: '🎓 BIZON BUSINESS SIMULATION ECOSYSTEM', to: 'Awarded to',
+      desc: 'has fully completed all 6 quarters of the «Brand Passport» simulation with the ' + F().name + ' brand',
+      stats: ['TOTAL SCORE', 'TITLE', 'CUMULATIVE PROFIT'],
+      sig1: 'PhD Candidate Do Thuy Huong', sig2: 'Assoc. Prof. Phan Anh Tu, Ph.D.',
+      date: 'Issued ' + new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) + ' · thuyhuongctu.github.io/BizOn',
+    } : {
+      small: '🎓 GIẤY CHỨNG NHẬN HOÀN THÀNH', to: 'Trao cho',
+      desc: 'đã hoàn thành trọn vẹn 6 quý mô phỏng «Hộ Chiếu Thương Hiệu» cùng thương hiệu ' + F().name,
+      stats: ['ĐIỂM TỔNG', 'DANH HIỆU', 'LỢI NHUẬN TÍCH LŨY'],
+      sig1: 'NCS. Đỗ Thùy Hương', sig2: 'PGS.TS. Phan Anh Tú',
+      date: 'Cấp ngày ' + new Date().toLocaleDateString('vi-VN') + ' · thuyhuongctu.github.io/BizOn',
+    };
+    var imgs = await Promise.all([loadSigImg('assets/docs/sig-huong.png'), loadSigImg('assets/docs/sig-tu.png')]);
+    var sigH = imgs[0], sigT = imgs[1];
+    var cv = document.createElement('canvas');
+    cv.width = 1400; cv.height = 990;
+    var g = cv.getContext('2d');
+    var grad = g.createLinearGradient(0, 0, 0, 990);
+    grad.addColorStop(0, '#fffdf6'); grad.addColorStop(1, '#f4faff');
+    g.fillStyle = grad; g.fillRect(0, 0, 1400, 990);
+    g.strokeStyle = '#fda127'; g.lineWidth = 8; g.strokeRect(34, 34, 1332, 922);
+    g.strokeStyle = 'rgba(0,102,135,.35)'; g.lineWidth = 2; g.strokeRect(52, 52, 1296, 886);
+    g.textAlign = 'center'; g.fillStyle = '#5b6b72';
+    g.font = 'bold 26px "Plus Jakarta Sans", sans-serif';
+    g.fillText(L.small, 700, 130);
+    g.fillStyle = '#033337'; g.font = '800 58px "Plus Jakarta Sans", sans-serif';
+    g.fillText('CERTIFICATE OF COMPLETION', 700, 200);
+    g.fillStyle = '#5b6b72'; g.font = 'italic 28px Georgia, serif';
+    g.fillText(L.to, 700, 280);
+    g.fillStyle = '#006687'; g.font = '800 60px "Plus Jakarta Sans", sans-serif';
+    g.fillText(learner, 700, 360);
+    g.strokeStyle = 'rgba(253,161,39,.6)'; g.lineWidth = 3;
+    g.beginPath(); g.moveTo(420, 385); g.lineTo(980, 385); g.stroke();
+    g.fillStyle = '#3d484f'; g.font = '24px Manrope, sans-serif';
+    wrapCanvasText(g, L.desc, 700, 430, 1100, 32);
+    var stats = [[sc.total + '/100', L.stats[0]], [titleText, L.stats[1]], [f1(S.profit) + (EN ? ' bn ₫' : ' tỷ ₫'), L.stats[2]]];
+    stats.forEach(function (pair, i) {
+      var v = pair[0], l = pair[1];
+      var x = 350 + i * 350;
+      g.fillStyle = 'rgba(0,102,135,.06)';
+      g.beginPath(); g.roundRect(x - 150, 530, 300, 110, 22); g.fill();
+      g.fillStyle = '#5b6b72'; g.font = 'bold 15px "Hanken Grotesk", sans-serif'; g.fillText(l, x, 565);
+      var fs = 28; g.font = '800 ' + fs + 'px "Plus Jakarta Sans", sans-serif';
+      while (g.measureText(v).width > 280 && fs > 14) { fs -= 2; g.font = '800 ' + fs + 'px "Plus Jakarta Sans", sans-serif'; }
+      g.fillStyle = '#006687'; g.fillText(v, x, 615);
+    });
+    function sign(x, sig, name, line1, line2) {
+      if (sig) {
+        var h = 120, w = sig.width * h / sig.height;
+        g.drawImage(sig, x - w / 2, 775 - h, w, h);
+      } else {
+        g.fillStyle = '#006687'; g.font = 'italic 44px "Segoe Script", "Brush Script MT", cursive';
+        g.fillText(name, x, 760);
+      }
+      g.strokeStyle = 'rgba(3,51,55,.25)'; g.lineWidth = 2;
+      g.beginPath(); g.moveTo(x - 190, 785); g.lineTo(x + 190, 785); g.stroke();
+      g.fillStyle = '#033337'; g.font = '800 24px "Plus Jakarta Sans", sans-serif'; g.fillText(line1, x, 820);
+      g.fillStyle = '#5b6b72'; g.font = 'bold 19px Manrope, sans-serif'; g.fillText(line2, x, 850);
+    }
+    sign(340, sigH, 'Đỗ Thùy Hương', L.sig1, 'Founder & Project Lead');
+    sign(1060, sigT, 'Phan Anh Tú', L.sig2, 'Co-founder & Chief Academic Advisor');
+    g.save(); g.translate(700, 790); g.rotate(0.2);
+    g.strokeStyle = '#fda127'; g.lineWidth = 4; g.setLineDash([10, 7]);
+    g.beginPath(); g.arc(0, 0, 62, 0, Math.PI * 2); g.stroke(); g.setLineDash([]);
+    g.fillStyle = 'rgba(253,161,39,.14)'; g.beginPath(); g.arc(0, 0, 56, 0, Math.PI * 2); g.fill();
+    g.fillStyle = '#e8762d'; g.font = 'bold 15px "Hanken Grotesk", sans-serif'; g.fillText('OFFICIAL', 0, -12);
+    g.font = '800 24px "Plus Jakarta Sans", sans-serif'; g.fillText('BizOn', 0, 14);
+    g.font = '18px sans-serif'; g.fillText('✓', 0, 38); g.restore();
+    g.fillStyle = '#8a979e'; g.font = 'bold 19px Manrope, sans-serif';
+    g.fillText(L.date, 700, 920);
+    var a = document.createElement('a');
+    a.download = 'BizOn-BrandPassport-' + learner.replace(/[^\p{L}\p{N}]+/gu, '-') + '.png';
+    a.href = cv.toDataURL('image/png');
+    a.click();
+  };
 
   /* ===== Nộp kết quả cho giảng viên – bảng bp_results, INSERT-only ===== */
   var bcfg = function () { return window.BIZON_BACKEND || {}; };
@@ -912,6 +1230,7 @@
       $('bp-intro').classList.add('hidden');
       $('bp-play').classList.remove('hidden');
       stageObs();
+      if (S.shopOpen) { $('bp-shop-panel').classList.remove('hidden'); $('bp-shop-caret').textContent = '▴'; renderShop(); }
     } catch (e) { window.bpStart(); }
   };
 
@@ -1046,6 +1365,7 @@
       else if (S.phase === 'dec') stageDecide();
       else if (S.phase === 'evt') renderEventScreen();
       else hud();
+      if (S.shopOpen) renderShop();
     }
     if (!$('bp-end').classList.contains('hidden')) {
       renderResultsScreen();
