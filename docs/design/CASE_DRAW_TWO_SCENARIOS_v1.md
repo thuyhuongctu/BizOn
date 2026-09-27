@@ -324,3 +324,47 @@ nó đã đợi màn biến cố.
   A lẫn B (không lệch cứng về 1 bên); sau khi bấm qua, Vòng 1 hiện đúng nội
   dung khớp với trường hợp đã bốc; 0 lỗi console ở cả 3 lượt sau khi sửa lỗi
   tour ở trên (trước khi sửa, cả 3 lượt đều bị chặn nút bốc thăm bởi tour).
+
+## 10. Trường hợp C – "Sóng Livestream Giá Rẻ" (thêm sau, 27/9/2026)
+
+Thêm trường hợp thứ 3 để tăng đa dạng khi chơi lại nhiều mùa, theo đúng
+nguyên tắc công bằng ở mục 2: mọi trường ảnh hưởng điểm (`demand`, `costMul`,
+`elasticityMul`, `rdBoost`, `oeeHit`, `fulfillMul`, `wageMul`, `brandPow`,
+`mktBoost`) GIỐNG HỆT A/B theo từng vòng – chỉ khác câu chuyện, tên gọi, lời
+Lumina, icon, giống hệt cách B đã làm với A.
+
+**Mạch truyện:** đối thủ xuyên suốt là **Alpha Dynamics** (đã có sẵn trong
+`COMPETITORS`, `js/engine.js`, style `aggressive` – đúng chất "phá giá",
+không cần thêm đối thủ mới vào engine) đẩy mạnh bán hàng livestream giá sốc
+mỗi tối: Vòng 1 mới chỉ là tin đồn thử nghiệm → Vòng 2 làn sóng miễn phí vận
+chuyển + livestream chính thức ra mắt → Vòng 3 chiến tranh giá ngay trên sóng
+→ Vòng 4 khủng hoảng cước vận chuyển vì quá tải mùa sale → Vòng 5 kho hàng
+trung chuyển quá tải → Vòng 6 (giả định) khách hàng mệt mỏi với "đua giá",
+quay về ủng hộ thương hiệu có câu chuyện thật.
+
+**File đã sửa:**
+- `js/engine.js` – thêm `MARKET_EVENTS_LIST_C()` (song song `MARKET_EVENTS_LIST_B()`,
+  không sửa A/B hiện có); `currentEvent(s)` thêm nhánh đọc theo `s.caseId === 'C'`.
+- `js/app.js` – `CASE_INFO_LIST()` thêm mục `C`; danh sách bốc thăm
+  `BizOnSeedEngine.pick(seed, 'case', [...])` thêm `'C'`.
+
+**Bảng đối chiếu công bằng A ↔ B ↔ C:**
+
+| Vòng | demand | costMul | khác |
+|---|---|---|---|
+| 1 | 1.0 = 1.0 = 1.0 | 1.0 = 1.0 = 1.0 | – |
+| 2 | 1.35 = 1.35 = 1.35 | 1.0 = 1.0 = 1.0 | rdBoost 1.5 = 1.5 = 1.5 |
+| 3 | 1.0 = 1.0 = 1.0 | 1.0 = 1.0 = 1.0 | elasticityMul 1.4 = 1.4 = 1.4 |
+| 4 | 0.7 = 0.7 = 0.7 | 1.3 = 1.3 = 1.3 | oeeHit 10 = 10 = 10, shake = shake = shake |
+| 5 | 1.0 = 1.0 = 1.0 | 1.25 = 1.25 = 1.25 | fulfillMul .85 = .85 = .85, shake = shake = shake |
+| 6 | 1.25 = 1.25 = 1.25 | 1.0 = 1.0 = 1.0 | elasticityMul .85=.85=.85, wageMul 1.1=1.1=1.1, brandPow 1.5=1.5=1.5, mktBoost 1.2=1.2=1.2 |
+
+100% khớp cả 3 trường hợp – bốc trúng trường hợp nào cũng không ảnh hưởng cơ
+học tới điểm số.
+
+**Đã kiểm chứng bằng Playwright:** ép `S.caseId = 'C'` rồi `renderAll()` lần
+lượt ở cả 6 vòng, xác nhận `#event-banner` hiện đúng tên/mô tả riêng của
+Trường hợp C ở từng vòng (không lẫn nội dung A/B); kiểm tra `CASE_INFO_LIST().C`
+trả về đúng tên/mô tả; 0 lỗi console. Chưa thử một lượt chơi trọn 6 vòng thật
+bằng Trường hợp C để tự cảm nhận độ khó (số trên giấy khớp A/B/C, nhưng cảm
+nhận "kịch tính" là chủ quan như đã lưu ý ở mục 8).
