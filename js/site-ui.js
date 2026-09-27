@@ -1266,8 +1266,8 @@
 "An original 3D clay identity, a multilingual catalogue of original music (Vietnamese · English · French) and the Vietnam Map lapel pin set – all produced in-house."
 ],
 [
-"COO Bảo Ngọc · CFO Thu Hà · CEO Minh Long · CMO Lan Chi · Compliance Officer Gia Hân",
-"COO Bảo Ngọc · CFO Thu Hà · CEO Minh Long · CMO Lan Chi · Compliance Officer Gia Hân"
+"COO Bảo Ngọc · CFO Thu Hà · CEO Minh Long · CMO Mạnh Chi · Compliance Officer Gia Hân",
+"COO Bảo Ngọc · CFO Thu Hà · CEO Minh Long · CMO Mạnh Chi · Compliance Officer Gia Hân"
 ],
 [
 "Ca khúc chủ đề game Việt Nam",
@@ -2670,8 +2670,8 @@
 "The Bật Nghiệp demo team – 5 clay members"
 ],
 [
-"COO Bảo Ngọc · CFO Thu Hà · CEO Minh Long · CMO Lan Chi · Thư ký pháp chế Gia Hân",
-"COO Bảo Ngọc · CFO Thu Hà · CEO Minh Long · CMO Lan Chi · Compliance Officer Gia Hân"
+"COO Bảo Ngọc · CFO Thu Hà · CEO Minh Long · CMO Mạnh Chi · Thư ký pháp chế Gia Hân",
+"COO Bảo Ngọc · CFO Thu Hà · CEO Minh Long · CMO Mạnh Chi · Compliance Officer Gia Hân"
 ],
 [
 "🌉 Hệ sinh thái Je m'appelle Hương",
