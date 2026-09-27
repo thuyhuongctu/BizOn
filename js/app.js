@@ -1545,6 +1545,15 @@ function explainRound(r) {
   if (r.event && r.event.tone === 'bad' && !r.shielded) causes.push(T(`biến cố «${r.event.name}» ép chi phí/nhu cầu`, `the «${r.event.name}» event squeezed cost/demand`));
   if (d.price > REF_PRICE * 1.25) causes.push(T(`giá ${d.price}k cao hơn hẳn tham chiếu 150k nên mất khách nhạy giá`, `price ${d.price}k is well above the 150k reference, losing price-sensitive customers`));
   if (d.price < REF_PRICE * 0.8) causes.push(T(`giá ${d.price}k rất thấp kéo khách nhưng bào mỏng biên lãi`, `price ${d.price}k is very low – it pulls in customers but thins the margin`));
+  // Đối thủ AI giờ đọc lại đúng vòng trước để phản ứng theo cá tính riêng
+  // (xem simulateRound, js/engine.js) – nêu rõ lý do để người chơi hiểu vì
+  // sao thị trường đổi khác thay vì tưởng chỉ là nhiễu ngẫu nhiên.
+  const aggRival = (S.competitors || []).find(c => c.style === 'aggressive');
+  const balRival = (S.competitors || []).find(c => c.style === 'balanced');
+  const premRival = (S.competitors || []).find(c => c.style === 'premium');
+  if (prev && prev.decisions && prev.decisions.price < REF_PRICE * 0.85 && aggRival) causes.push(T(`${aggRival.name} vừa hạ giá trả đũa vì đội bạn phá giá sâu vòng trước`, `${aggRival.name} just cut its price in retaliation for your deep discount last round`));
+  if (prev && prev.share > 35 && balRival) causes.push(T(`${balRival.name} bám đuổi bằng cách giảm giá và tăng marketing vì đang thua thị phần rõ rệt`, `${balRival.name} is catching up by cutting price and raising marketing after falling clearly behind on share`));
+  if (prev && prev.brandLoyalty > 65 && premRival) causes.push(T(`${premRival.name} tăng marketing để bảo vệ phân khúc cao cấp trước thương hiệu đang mạnh lên của đội bạn`, `${premRival.name} raised marketing to defend its premium segment against your team's growing brand`));
   if (r.sold < d.production * 0.85) causes.push(T(`sản xuất ${(d.production || 0).toLocaleString('vi-VN')} sp nhưng chỉ bán ${r.sold.toLocaleString('vi-VN')} – tồn kho chôn vốn`, `produced ${(d.production || 0).toLocaleString('en-US')} units but only sold ${r.sold.toLocaleString('en-US')} – excess inventory ties up cash`));
   if ((d.marketing || 0) < 40) causes.push(T('marketing dưới mặt bằng đối thủ (55–90tr) nên độ phủ yếu', "marketing is below the rivals' range (55-90m), so reach is weak"));
   const head = dShare >= 1 ? T(`Thị phần tăng ${dShare.toFixed(1)} điểm`, `Market share rose ${dShare.toFixed(1)} points`) : dShare <= -1 ? T(`Thị phần giảm ${Math.abs(dShare).toFixed(1)} điểm`, `Market share dropped ${Math.abs(dShare).toFixed(1)} points`) : T('Thị phần đi ngang', 'Market share held steady');
