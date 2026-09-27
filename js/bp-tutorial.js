@@ -120,10 +120,13 @@
     overlay = document.createElement('div');
     overlay.style.cssText = 'position:fixed; inset:0; z-index:90; background:transparent;';
     document.body.appendChild(overlay);
-    addEventListener('resize', function () { if (overlay && idx >= 0) paint(); });
     go(0);
   }
 
+  // Gắn đúng 1 lần cho cả trang (giống bizon:langchange ngay dưới) – run() có
+  // thể gọi lại nhiều lần (nút "❓ Hướng dẫn" qua replay()), gắn addEventListener
+  // trong đó sẽ cộng dồn listener resize không bao giờ gỡ.
+  addEventListener('resize', function () { if (overlay && idx >= 0) paint(); });
   // Đổi ngôn ngữ ngay giữa tour (hiếm khi xảy ra, nhưng vẽ lại ngay cho khớp
   // quy ước của trang: không giữ lại chữ đã dịch sẵn từ trước khi đổi).
   addEventListener('bizon:langchange', function () { if (overlay && idx >= 0) paint(); });

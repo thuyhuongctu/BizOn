@@ -97,9 +97,13 @@
     overlay.style.cssText = 'position:fixed; inset:0; z-index:90;';
     overlay.style.background = 'transparent';
     document.body.appendChild(overlay);
-    addEventListener('resize', () => { if (overlay && idx >= 0) paint(); });
     go(0);
   }
+  // Gắn đúng 1 lần cho cả trang – start() có thể gọi lại nhiều lần (nút "❓
+  // Hướng dẫn"), gắn addEventListener trong đó sẽ cộng dồn listener resize
+  // không bao giờ gỡ. Điều kiện overlay && idx >= 0 đã tự lo việc chỉ vẽ lại
+  // khi tour đang thật sự mở.
+  addEventListener('resize', () => { if (overlay && idx >= 0) paint(); });
 
   // Tự khởi động cho người chơi mới: đợi vào app xong và màn Giới thiệu
   // (slide 🎬) đóng lại rồi mới dẫn tour – tối đa chờ 90 giây.
