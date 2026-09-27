@@ -877,6 +877,7 @@ function renderAll() {
   renderShop(); renderSkills(); renderLeaderboard(); renderAchievements(); renderProfile();
   renderMissions(); renderMinigame(); renderInstructor(); renderJournal(); renderMarket();
   renderCompanyCard(); renderConquest(); renderTeamCard(); renderOpponents();
+  if (window.OfficeRounds) OfficeRounds.render();
   const mt = $('music-toggle'); if (mt) mt.checked = musicEnabled();
   syncDifficultyUI();
 }
@@ -1587,13 +1588,17 @@ function showRoundResult(r) {
           return a ? `<p class="mt-1.5 text-xs font-extrabold text-clay-gold bg-deep-teal/90 rounded-full py-1.5 px-3 inline-block">${T(`🎖️ Mở khóa thành tựu: ${a.icon} ${a.name}`, `🎖️ Achievement unlocked: ${a.icon} ${a.name}`)}</p>` : '';
         }).join('<br>');
       })()}
-      <button class="clay-btn w-full bg-primary text-white font-display font-bold py-3 mt-4">${T('Tiếp tục', 'Continue')}</button>
+      <button class="clay-btn w-full bg-primary text-white font-display font-bold py-3 mt-4">${T('Xác nhận & tiếp tục 🚩', 'Confirm & continue 🚩')}</button>
     </div>`;
-  div.querySelector('button').onclick = () => {
+  const proceed = () => {
     div.remove(); renderAll();
     if (S.finished) { currentReport = 'season'; showTab('reports'); createConfetti(); }
     else if (r.isNewPeak) showVictory(r);
     else maybeShowEventIntro();
+  };
+  div.querySelector('button').onclick = () => {
+    if (window.OfficeRounds) OfficeRounds.showFlagScene(r, proceed);
+    else proceed();
   };
   document.body.appendChild(div);
 }
