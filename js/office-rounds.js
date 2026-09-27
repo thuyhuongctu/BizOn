@@ -42,6 +42,10 @@
     return Math.min(S.round, total()) - 1;
   }
 
+  function isComplete() {
+    return flaggedCount() >= total();
+  }
+
   var CARD_HTML =
     '<div class="clay-card p-5 mb-4">' +
       '<div class="flex items-center justify-between mb-1">' +
@@ -80,8 +84,9 @@
         '<rect width="100" height="179" fill="#dcece3"></rect>' +
         '<polyline points="' + pathPts + '" fill="none" stroke="#0f8f6b" stroke-width="1.6" stroke-dasharray="3.2 2.6" stroke-linecap="round" opacity=".65"></polyline>' +
       '</svg>' + dots;
+    box.classList.toggle('office-map-complete', isComplete());
     var cnt = $('office-flag-count');
-    if (cnt) cnt.textContent = '🚩 ' + flaggedCount() + '/' + total();
+    if (cnt) cnt.textContent = (isComplete() ? '🏅 ' : '🚩 ') + flaggedCount() + '/' + total();
   }
 
   function render() {
@@ -107,6 +112,30 @@
       '</div></div>';
   }
 
+  var BADGE_SEEN_KEY = 'bizon-office-badge-seen';
+
+  // Huy hiệu "chiến tích" – khác với tiêu đề "Hoàn thành hành trình!" ở cảnh
+  // cắm cờ (chỉ hiện đúng lúc vừa xong vòng 6): huy hiệu này hiện MỌI LẦN mở
+  // lại Hành trình BizOn sau khi đã cắm đủ cờ, như một vật treo cố định
+  // trong văn phòng chứ không phải một thông báo nhất thời.
+  function badgeHtml() {
+    if (!isComplete()) return '';
+    return '<div class="clay-sunken rounded-2xl p-4 text-center mb-3">' +
+      '<p class="text-4xl">🏅</p>' +
+      '<p class="font-display font-extrabold text-deep-teal text-sm mt-1">' + T('Đã chinh phục cả ' + total() + ' tỉnh thành!', 'Conquered all ' + total() + ' provinces!') + '</p>' +
+      '<p class="text-[11px] text-deep-teal/55">' + T('Huân chương hành trình – treo lên tường văn phòng của đội.', "The journey's medal, hung on the team's office wall.") + '</p>' +
+    '</div>';
+  }
+
+  function maybeCelebrateBadge() {
+    if (!isComplete()) return;
+    var seen = false;
+    try { seen = !!localStorage.getItem(BADGE_SEEN_KEY); } catch (e) {}
+    if (seen) return;
+    try { localStorage.setItem(BADGE_SEEN_KEY, '1'); } catch (e) {}
+    if (typeof createConfetti === 'function') createConfetti();
+  }
+
   function openJourneyCard() {
     if (!S) return;
     var st = stops();
@@ -116,12 +145,14 @@
       '<div class="clay-card max-w-sm w-full p-6 max-h-[85vh] overflow-y-auto">' +
         '<h3 class="font-display font-extrabold text-deep-teal text-lg mb-1">🗺️ ' + T('Hành trình BizOn', 'The BizOn Journey') + '</h3>' +
         '<p class="text-xs text-deep-teal/55 mb-3">' + T('Cần Thơ đến Hà Nội, mỗi vòng một điểm dừng.', 'Cần Thơ to Hà Nội, one stop per round.') + '</p>' +
+        badgeHtml() +
         st.map(journeyRow).join('') +
         '<button class="clay-btn w-full bg-primary text-white font-display font-bold py-3 mt-4">' + T('Đóng', 'Close') + '</button>' +
       '</div>';
     div.querySelector('button').onclick = function () { div.remove(); };
     div.addEventListener('click', function (e) { if (e.target === div) div.remove(); });
     document.body.appendChild(div);
+    maybeCelebrateBadge();
   }
 
   // Gọi từ showRoundResult (app.js) sau khi bấm "Xác nhận & tiếp tục 🚩" –
