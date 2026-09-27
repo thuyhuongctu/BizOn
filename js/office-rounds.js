@@ -94,6 +94,23 @@
     renderMap();
   }
 
+  // Bản đồ chinh phục thật (S.conquest, recordConquest trong app.js) khắt khe
+  // hơn hẳn: chỉ đội có thị phần cao nhất VÀ có lãi vòng đó mới thật sự giữ
+  // tỉnh, còn không thì tỉnh "tạm về tay" đối thủ AI. Hành trình BizOn ở đây
+  // vẫn giữ cờ động viên (cắm dù thắng hay thua) làm chỉ số chính – dòng này
+  // chỉ CHÚ THÍCH THÊM ai đang thực sự giữ tỉnh theo luật cạnh tranh, không
+  // đổi cách tính cờ/tiến độ đã có.
+  function conquestNote(i) {
+    var cq = (S.conquest || [])[i];
+    if (!cq) return '';
+    var text = cq.win
+      ? T('🚩 Thực tế: đội bạn đang giữ tỉnh này', '🚩 In reality: your team holds this province')
+      : cq.hasTopShare
+      ? T('⚠️ Thực tế: thị phần cao nhất nhưng lỗ vòng đó – tạm về tay ' + cq.winner, '⚠️ In reality: top share but a loss that round – held for now by ' + cq.winner)
+      : T('🏴 Thực tế: ' + cq.winner + ' đang giữ tỉnh này', '🏴 In reality: ' + cq.winner + ' holds this province');
+    return '<p class="text-[10px] text-deep-teal/40 mt-0.5">' + text + '</p>';
+  }
+
   function journeyRow(st, i) {
     var flagged = isCityFlagged(i);
     var isCur = !S.finished && i === currentCityIndex();
@@ -109,6 +126,7 @@
       '<div class="flex-1 min-w-0">' +
         '<p class="font-bold text-sm text-deep-teal">' + T('Vòng ', 'Round ') + (i + 1) + ' · ' + st.name + '</p>' +
         '<p class="text-[11px] text-deep-teal/55">' + detail + '</p>' +
+        conquestNote(i) +
       '</div></div>';
   }
 
