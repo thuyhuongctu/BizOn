@@ -710,12 +710,23 @@ function simulateRound(s, d) {
   // aggressive trả đũa phá giá, balanced bám đuổi khi đang thua thị phần,
   // premium chỉ tăng marketing khi thương hiệu đối thủ đã đủ mạnh để đe dọa
   // phân khúc cao cấp (không cạnh tranh giá, giữ đúng chất "không phá giá").
+  //
+  // Mức giá/marketing nền (trước jitter/phản ứng) từng được cân theo cảm tính
+  // (125/90, 150/60, 195/75) khiến aggressive mạnh hơn hẳn 2 đối thủ còn lại
+  // ở sức hút thị trường nền (~36% thị phần so với ~24%/~16%, tính cả người
+  // chơi ở mức quyết định mặc định). Đã cân lại: aggressive bớt phá giá cực
+  // đoan (130 thay vì 125, marketing 85 thay vì 90), premium hạ giá bớt phần
+  // "quá xa tầm với" (180 thay vì 195) và tăng marketing bù lại (85 thay vì
+  // 75) – vẫn giữ đúng cá tính rẻ nhất/đắt nhất/ở giữa, nhưng khoảng cách thị
+  // phần nền giữa 3 phong cách thu hẹp còn ~33%/~24%/~19% (spread ~15 điểm %
+  // thay vì ~20 điểm % trước đó). Đồng bộ với RIVAL_STYLE_BASE và các đoạn mô
+  // tả đối thủ trong js/app.js.
   const prevReport = s.history[s.history.length - 1];
   const compDecisions = s.competitors.map(c => {
     const jitter = 0.9 + rng(s) * 0.25;
     let price = REF_PRICE, mkt = 55;
     if (c.style === 'aggressive') {
-      price = 125 * jitter; mkt = 90 * jitter;
+      price = 130 * jitter; mkt = 85 * jitter;
       if (prevReport && prevReport.decisions.price < REF_PRICE * 0.85) price *= 0.92;
     }
     if (c.style === 'balanced') {
@@ -723,7 +734,7 @@ function simulateRound(s, d) {
       if (prevReport && prevReport.share > 35) { price *= 0.95; mkt *= 1.08; }
     }
     if (c.style === 'premium') {
-      price = 195 * jitter; mkt = 75 * jitter;
+      price = 180 * jitter; mkt = 85 * jitter;
       if (prevReport && prevReport.brandLoyalty > 65) mkt *= 1.15;
     }
     const attr = Math.pow(REF_PRICE / price, elasticity) * (1 + Math.sqrt(mkt) / 18) * Math.pow(c.brand, brandPow) * diffMul;
