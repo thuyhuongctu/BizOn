@@ -174,7 +174,7 @@ function pickRole(id) {
 function DEMO_TEAM_LIST() { return [
   { role: 'CEO', icon: '🧭', img: 'assets/character/team/ceo.webp', name: 'Minh Long',  note: T('Nhà lãnh đạo tầm nhìn', 'Visionary Leader') },
   { role: 'CFO', icon: '💰', img: 'assets/character/team/cfo.jpg', name: 'Thu Hà',     note: T('Chiến lược gia tài chính', 'Finance Strategist') },
-  { role: 'CMO', icon: '📣', img: 'assets/character/team/cmo.webp', name: 'Lan Chi',    note: T('Phù thủy marketing', 'Marketing Wizard') },
+  { role: 'CMO', icon: '📣', img: 'assets/character/team/cmo.webp', name: 'Mạnh Chi',   note: T('Phù thủy marketing', 'Marketing Wizard') },
   { role: 'COO', icon: '🏭', img: 'assets/character/team/coo.webp', name: 'Bảo Ngọc',   note: T('Chuyên gia vận hành', 'Operations Expert') },
   { role: 'SEC', icon: '📝', img: 'assets/character/team/sec.webp', name: 'Gia Hân',    note: T('Thư ký pháp chế', 'Legal Secretary') },
 ]; }
@@ -1289,8 +1289,8 @@ function renderMarketForecast() {
                        `✅ <b>You're winning!</b> Estimated above the rival average (~${rivalAvg.toFixed(0)}%/team) and profitable – hold this and you'll plant the flag 🚩.`)
                    : T(`🟡 Thị phần đủ thắng (~ đối thủ ${rivalAvg.toFixed(0)}%/đội) nhưng <b>đang lỗ</b> – tăng giá nhẹ hoặc bớt chi để có lãi, vì thắng vòng cần cả hai.`,
                        `🟡 Share is enough to win (~rivals ${rivalAvg.toFixed(0)}%/team) but you're <b>losing money</b> – raise price slightly or cut spend to turn a profit, since winning the round needs both.`))
-    : T(`🔻 Chưa đủ – mỗi đối thủ đang giữ ~${rivalAvg.toFixed(0)}%. Gợi ý: <b>giảm giá gần 150k</b> hoặc <b>tăng marketing</b> để kéo khách (xem đề xuất của Lan Chi ở Cuộc họp đội).`,
-        `🔻 Not enough yet – each rival holds ~${rivalAvg.toFixed(0)}%. Tip: <b>lower price toward 150k</b> or <b>raise marketing</b> to win customers (see Lan Chi's suggestion in the Team Meeting).`);
+    : T(`🔻 Chưa đủ – mỗi đối thủ đang giữ ~${rivalAvg.toFixed(0)}%. Gợi ý: <b>giảm giá gần 150k</b> hoặc <b>tăng marketing</b> để kéo khách (xem đề xuất của Mạnh Chi ở Cuộc họp đội).`,
+        `🔻 Not enough yet – each rival holds ~${rivalAvg.toFixed(0)}%. Tip: <b>lower price toward 150k</b> or <b>raise marketing</b> to win customers (see Mạnh Chi's suggestion in the Team Meeting).`);
 }
 
 /* ===== CUỘC HỌP ĐỘI – 4 thành viên demo đề xuất theo vai, tất định theo seed + vòng ===== */
@@ -1320,7 +1320,7 @@ function teamSuggestions() {
                  : T(`Két sắt ổn (${Math.round(S.balance)}tr). Em đề xuất R&D ${cfoRd}tr – biến cố tốt thì đầu tư cho vòng sau, đừng để tiền nằm im.`,
                      `The cash box looks healthy (${Math.round(S.balance)}m). I suggest R&D of ${cfoRd}m – with a good event on our side, let's invest for next round instead of sitting on cash.`),
       apply: { 'in-rd': cfoRd } },
-    { img: 'assets/character/team/cmo.webp', name: 'Lan Chi · CMO', icon: '📣',
+    { img: 'assets/character/team/cmo.webp', name: 'Mạnh Chi · CMO', icon: '📣',
       say: priceWar ? T(`Đối thủ đang phá giá! Em đề xuất giá ${cmoPrice}k + marketing ${cmoMkt}tr – mình không đua tận đáy nhưng phải giữ độ phủ.`,
                         `A rival is undercutting on price! I suggest price ${cmoPrice}k + marketing ${cmoMkt}m – we won't race to the bottom, but we need to keep our reach.`)
                     : T(`Với thương hiệu hiện tại, em đề xuất giá ${cmoPrice}k và marketing ${cmoMkt}tr${boom ? ' – biến cố này là thời cơ vàng để bung!' : ' – đủ áp lực lên cả ba đối thủ.'}`,
