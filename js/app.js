@@ -15,6 +15,10 @@ function T(vi, en) { return currentLang() === 'en' ? en : vi; }
 const money = m => (m >= 1000 || m <= -1000)
   ? (m / 1000).toLocaleString('vi-VN', { maximumFractionDigits: 2 }) + ' tỷ₫'
   : Math.round(m).toLocaleString('vi-VN') + 'tr₫';
+// Dùng khi chèn dữ liệu người dùng tự đặt (ví dụ tên đội) thẳng vào template
+// HTML – khác với pushUserMsg()/EN map vốn chỉ xử lý chữ do BizOn viết sẵn.
+// Không dùng cho advice.text của pushLumina(): chuỗi đó có <b>/<i> cố ý.
+const escapeHtml = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
 function save() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(S));
@@ -227,7 +231,7 @@ function renderCompanyCard() {
       <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-clay-orange to-clay-gold flex items-center justify-center text-2xl shadow-clay shrink-0">🏺</div>
       <div class="min-w-0">
         <p class="text-[9px] font-extrabold text-deep-teal/45 uppercase tracking-wide">${T('Doanh nghiệp', 'Company')}</p>
-        <h3 class="font-display font-extrabold text-deep-teal text-lg truncate">${S.profile.teamName}</h3>
+        <h3 class="font-display font-extrabold text-deep-teal text-lg truncate">${escapeHtml(S.profile.teamName)}</h3>
       </div>
     </div>
     <p class="text-xs text-deep-teal/65 mb-2.5">${T(`Xưởng đồ chơi đất sét thủ công khởi nghiệp từ Miền Tây – sản phẩm chủ lực: <b class="text-deep-teal">«${CI.product}»</b>, dòng ${CI.segment.toLowerCase()} mang hồn Việt.`, `A handcrafted clay-toy startup from Vietnam's Mekong Delta – flagship product: <b class="text-deep-teal">«${CI.product}»</b>, a ${CI.segment.toLowerCase()} line with Vietnamese soul.`)}</p>
@@ -852,14 +856,19 @@ function drainVoiceQueue() {
   const src = luminaVoiceQueue.shift();
   if (!src) { voiceBusy = false; return; }
   voiceBusy = true;
+  // onended/onerror/play().catch() có thể cùng bắn cho một lần phát lỗi (ví dụ
+  // trình duyệt chặn autoplay) – chốt "done" để chỉ thật sự sang bài kế tiếp
+  // đúng 1 lần, tránh bỏ sót hoặc chồng 2 clip trong hàng đợi.
+  let done = false;
+  const next = () => { if (done) return; done = true; drainVoiceQueue(); };
   try {
     if ('speechSynthesis' in window) speechSynthesis.cancel();  // đừng để TTS đè lên giọng thu
     luminaVoiceEl = new Audio(src);
     luminaVoiceEl.volume = 0.95;
-    luminaVoiceEl.onended = drainVoiceQueue;
-    luminaVoiceEl.onerror = drainVoiceQueue;
-    luminaVoiceEl.play().catch(drainVoiceQueue);
-  } catch (e) { drainVoiceQueue(); }
+    luminaVoiceEl.onended = next;
+    luminaVoiceEl.onerror = next;
+    luminaVoiceEl.play().catch(next);
+  } catch (e) { next(); }
 }
 
 function showTab(tab) {
@@ -1376,26 +1385,8 @@ function renderTeamMeeting() {
   </div>`;
 }
 
-/* Chế độ Cơ bản/Nâng cao: vòng 1–2 gấp gọn các quyết định nâng cao (giá trị mặc định vẫn hợp lý) */
-let advTouched = false;
-function toggleAdvDecisions() {
-  advTouched = true;
-  const box = $('adv-decisions'), btn = $('adv-toggle');
-  const hide = !box.classList.contains('hidden');
-  box.classList.toggle('hidden', hide);
-  if (btn) btn.textContent = hide ? T('⚙️ Quyết định nâng cao (R&D · Tài chính · Nhân sự) ▾', '⚙️ Advanced decisions (R&D · Finance · HR) ▾') : T('⚙️ Thu gọn quyết định nâng cao ▴', '⚙️ Collapse advanced decisions ▴');
-}
-function syncAdvDecisions() {
-  const box = $('adv-decisions'), btn = $('adv-toggle');
-  if (!box || advTouched) return;
-  const hide = S.round <= 2;
-  box.classList.toggle('hidden', hide);
-  if (btn) btn.textContent = hide ? T('⚙️ Quyết định nâng cao (R&D · Tài chính · Nhân sự) ▾', '⚙️ Advanced decisions (R&D · Finance · HR) ▾') : T('⚙️ Thu gọn quyết định nâng cao ▴', '⚙️ Collapse advanced decisions ▴');
-}
-
 function renderDecisions() {
   document.querySelectorAll('.dec-round').forEach(e => e.textContent = Math.min(S.round, ROUNDS_TOTAL));
-  syncAdvDecisions();
   syncDecisionLabels();
   renderTeamMeeting();
   const wq = $('whatif-quota');
@@ -1760,8 +1751,8 @@ function renderAdvisorIntro() {
   // cũng chỉ 1 lần), nếu không sẽ chồng tiếng với huong-intro.mp3 (doLogin) lúc
   // đăng nhập, hoặc không bao giờ phát được vì bong bóng đã có sẵn từ trước.
   if (!$('advisor-chat').childElementCount) {
-    pushLumina({ risk: 'low', log: false, clip: 'chat-02', mute: true, text: T(`Xin chào, Je m'appelle Hương! 👋 Tôi là Lumina – cố vấn AI của đội ${S.profile.teamName}. Hãy chọn một câu hỏi bên dưới, tôi sẽ phân tích kịch bản "Nếu – Thì" cho bạn.`,
-      `Hi, Je m'appelle Hương! 👋 I'm Lumina – the AI advisor for team ${S.profile.teamName}. Pick a question below and I'll walk you through a "What-If" scenario.`) });
+    pushLumina({ risk: 'low', log: false, clip: 'chat-02', mute: true, text: T(`Xin chào, Je m'appelle Hương! 👋 Tôi là Lumina – cố vấn AI của đội ${escapeHtml(S.profile.teamName)}. Hãy chọn một câu hỏi bên dưới, tôi sẽ phân tích kịch bản "Nếu – Thì" cho bạn.`,
+      `Hi, Je m'appelle Hương! 👋 I'm Lumina – the AI advisor for team ${escapeHtml(S.profile.teamName)}. Pick a question below and I'll walk you through a "What-If" scenario.`) });
   }
   if (!advisorGreetingSpoken && $('tab-advisor')?.classList.contains('active')) {
     advisorGreetingSpoken = true;
@@ -2041,8 +2032,8 @@ function toggleMic() {
 
 function chatRespond(text) {
   const t = text.toLowerCase();
-  if (/xin chào|chào|hello|hi |^hi$|^hey/.test(t)) return { risk: 'low', free: true, text: T(`Chào bạn! Tôi là Hương – cố vấn AI của đội ${S.profile.teamName}. Bạn có thể hỏi tôi về giá bán, marketing, rủi ro, vốn vay hay vận hành nhé!`,
-    `Hi there! I'm Hương – the AI advisor for team ${S.profile.teamName}. You can ask me about pricing, marketing, risk, loans, or operations!`) };
+  if (/xin chào|chào|hello|hi |^hi$|^hey/.test(t)) return { risk: 'low', free: true, text: T(`Chào bạn! Tôi là Hương – cố vấn AI của đội ${escapeHtml(S.profile.teamName)}. Bạn có thể hỏi tôi về giá bán, marketing, rủi ro, vốn vay hay vận hành nhé!`,
+    `Hi there! I'm Hương – the AI advisor for team ${escapeHtml(S.profile.teamName)}. You can ask me about pricing, marketing, risk, loans, or operations!`) };
   if (/giá|price/.test(t)) return luminaAdvice(S, 'pricing');
   if (/marketing|quảng cáo|truyền thông|advertis/.test(t)) return luminaAdvice(S, 'marketing');
   if (/vay|vốn|thanh khoản|tiền mặt|dòng tiền|loan|cash|liquidity/.test(t)) return { risk: S.quickRatio < 1 ? 'high' : 'low', text: T(`Tình hình tài chính: ví còn ${money(S.balance)}, khả năng thanh toán nhanh ${S.quickRatio.toFixed(2)}${S.quickRatio < 1.1 ? ' – dưới ngưỡng an toàn 1.1, nên cân nhắc khoản vay đệm' : ' – an toàn'}. ROI hiện tại ${S.roi}%.`,
@@ -2403,7 +2394,7 @@ function renderSeasonReport(body) {
     <div class="clay-card p-5 mb-3 text-center text-white" style="background:linear-gradient(135deg,#0e3d4d 0%,#006687 100%)">
       <p class="text-[11px] font-bold text-white/60 uppercase tracking-wider">🏁 ${S.finished ? T('Báo cáo Tổng kết mùa giải', 'Season Summary Report') : T(`Tổng kết tạm thời – sau vòng ${last.round}/${ROUNDS_TOTAL}`, `Interim summary – after round ${last.round}/${ROUNDS_TOTAL}`)}</p>
       <p class="font-display font-extrabold text-3xl mt-1">${champion && S.finished ? T('👑 VÔ ĐỊCH SÀN ĐẤU', '👑 ARENA CHAMPION') : T(`Hạng ${myRank}/4 toàn sàn`, `Rank ${myRank}/4 overall`)}</p>
-      <p class="text-xs text-white/70 mt-0.5">${S.profile.teamName} · ${T(`${rounds.length} vòng thi đấu`, `${rounds.length} rounds played`)}</p>
+      <p class="text-xs text-white/70 mt-0.5">${escapeHtml(S.profile.teamName)} · ${T(`${rounds.length} vòng thi đấu`, `${rounds.length} rounds played`)}</p>
       <div class="grid grid-cols-3 gap-2 mt-4 text-left">
         <div class="bg-white/10 rounded-2xl p-2.5"><p class="text-[9px] uppercase font-bold text-white/50">${T('Tổng doanh thu', 'Total revenue')}</p><p class="font-display font-extrabold text-sm">${money(Math.round(totalRev))}</p></div>
         <div class="bg-white/10 rounded-2xl p-2.5"><p class="text-[9px] uppercase font-bold text-white/50">${T('Lợi nhuận tích lũy', 'Cumulative profit')}</p><p class="font-display font-extrabold text-sm ${totalProfit >= 0 ? 'text-clay-gold' : 'text-orange-300'}">${money(Math.round(totalProfit))}</p></div>
@@ -2469,7 +2460,7 @@ function renderSeasonReport(body) {
         <p class="text-[10px] font-extrabold uppercase tracking-widest text-deep-teal/50">${T('🎓 Giấy chứng nhận hoàn thành', '🎓 Certificate of Completion')}</p>
         <p class="font-display font-extrabold text-deep-teal text-lg leading-tight mt-0.5">CERTIFICATE OF COMPLETION</p>
         <p class="text-[11px] text-deep-teal/60 mt-3 italic">${T('Trao cho', 'Awarded to')}</p>
-        <p class="font-display font-extrabold text-primary text-2xl mt-0.5 px-6 pb-1.5 border-b-2 border-clay-gold/40 inline-block">${S.profile.teamName}</p>
+        <p class="font-display font-extrabold text-primary text-2xl mt-0.5 px-6 pb-1.5 border-b-2 border-clay-gold/40 inline-block">${escapeHtml(S.profile.teamName)}</p>
         ${S.profile.classId ? `<p class="text-[10px] font-extrabold text-deep-teal/60 mt-1.5">${T('Lớp / Mã lớp', 'Class / Class ID')}: ${S.profile.classId}</p>` : ''}
         <p class="text-[11px] text-deep-teal/70 mt-2.5 max-w-xs mx-auto">${T(`đã hoàn thành trọn vẹn ${rounds.length} vòng mô phỏng kinh doanh <b>«BizOn Bật Nghiệp»</b>${champion ? ' với ngôi vị Quán quân sàn đấu' : ''}`, `has fully completed ${rounds.length} rounds of the <b>«BizOn Bật Nghiệp»</b> business simulation${champion ? ' as Arena Champion' : ''}`)}</p>
         <div class="grid grid-cols-3 gap-2 mt-3.5">
@@ -2765,7 +2756,7 @@ function renderBmcReport(body) {
       <p class="text-[11px] text-deep-teal/80 leading-relaxed">${content}</p>
     </div>`;
   body.innerHTML = `
-    <p class="text-[11px] text-deep-teal/50 mb-3">${T(`Business Model Canvas của đội ${S.profile.teamName} – cập nhật theo dữ liệu vòng ${Math.min(S.round, ROUNDS_TOTAL)}.`, `Business Model Canvas for team ${S.profile.teamName} – updated with round ${Math.min(S.round, ROUNDS_TOTAL)} data.`)}</p>
+    <p class="text-[11px] text-deep-teal/50 mb-3">${T(`Business Model Canvas của đội ${escapeHtml(S.profile.teamName)} – cập nhật theo dữ liệu vòng ${Math.min(S.round, ROUNDS_TOTAL)}.`, `Business Model Canvas for team ${escapeHtml(S.profile.teamName)} – updated with round ${Math.min(S.round, ROUNDS_TOTAL)} data.`)}</p>
     <div class="grid grid-cols-2 gap-3">
       ${block(T('Phân khúc khách hàng', 'Customer Segments'), '🎯', T(`Thị trường đại chúng ${share}% thị phần; khách nhạy giá ${currentEvent(S).elasticityMul ? 'CAO (chiến tranh giá!)' : 'trung bình'}.`, `Mass market at ${share}% share; price sensitivity ${currentEvent(S).elasticityMul ? 'HIGH (price war!)' : 'average'}.`))}
       ${block(T('Giá trị cốt lõi', 'Value Propositions'), '💎', T(`Sản phẩm giá ${(last ? last.decisions.price : 150).toLocaleString('vi-VN')}k₫, thương hiệu hạng ${S.brand >= 1.2 ? 'A' : 'B+'}, R&D tích lũy ${Math.round(S.rdCumulative)}tr₫.`, `Product priced ${(last ? last.decisions.price : 150).toLocaleString('en-US')}k₫, brand grade ${S.brand >= 1.2 ? 'A' : 'B+'}, cumulative R&D ${Math.round(S.rdCumulative)}m₫.`))}
