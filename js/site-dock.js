@@ -188,9 +188,10 @@
       trackEl.style.display = 'block';
       trackEl.textContent = '🎶 ' + pos + '/' + L.length + ' · ' + PLAYLIST[trackIdx][0] + (scopeName ? ' · ' + scopeName : '');
     }
-    function playTrack(i) {
-      var L = list();
-      trackIdx = L[((i % L.length) + L.length) % L.length];
+    // gi = chỉ số TOÀN CỤC trong PLAYLIST (khác playTrack(i), i là vị trí
+    // trong danh sách con hiện hành – xem chú thích ở playTrack bên dưới).
+    function playGlobal(gi) {
+      trackIdx = gi;
       if (!audio) {
         audio = new Audio();
         audio.volume = 0.55;
@@ -202,6 +203,13 @@
       musicBtn.classList.add('on');
       musicBtn.title = 'Tắt nhạc';
       showTrack();
+    }
+    // i = vị trí trong danh sách con hiện hành (list()), có vòng lại đầu/cuối –
+    // dùng cho next()/nút bấm điều hướng, KHÔNG dùng cho BizonDock.play(file)
+    // (file đó cần phát đúng bài yêu cầu, không phải "vị trí thứ i trong scope").
+    function playTrack(i) {
+      var L = list();
+      playGlobal(L[((i % L.length) + L.length) % L.length]);
     }
     function next() { playTrack(list().indexOf(trackIdx) + 1); }
     if (musicBtn) {
@@ -224,7 +232,7 @@
       play: function (file) {
         var i = PLAYLIST.findIndex(function (t) { return t[1] === file; });
         if (i < 0) return false;
-        playTrack(i);
+        playGlobal(i);
         return true;
       },
       pause: function () {
