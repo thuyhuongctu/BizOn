@@ -12,6 +12,10 @@
  * chưa có sprite sheet nhiều khung hình) bằng cách nhấp nhô + nghiêng nhẹ
  * + co giãn (squash & stretch) theo nhịp bước khi đang di chuyển, không
  * cần thêm ảnh mới. Tắt hoàn toàn khi prefers-reduced-motion.
+ * v0.4: thêm 3 hoạt động khác ngoài đi lại + cửa: máy hát (bật/tắt nhạc
+ * nền BizOn Theme), NPC thứ hai (Thầy Tú – cố vấn học thuật, hội thoại
+ * riêng), và bảng thông tin giới thiệu Sảnh. Tổng quát hoá hệ hội thoại
+ * để dùng chung cho nhiều nhân vật/nội dung khác nhau thay vì chỉ Lumina.
  *
  * Nhân vật người chơi, NPC và các cửa đều là sprite luôn quay mặt về camera
  * (kiểu "búp bê giấy" đứng trong khung cảnh 3D) – khớp tinh thần đất nặn/cắt
@@ -35,7 +39,15 @@
   var NPC_DIST = 2.3;
   var DOOR_DIST = 2.6;
   var DOOR_RADIUS = BOUNDS - 1.1;
+  var EXTRA_RADIUS = 4.6;
+  var EXTRA_DIST = 2.4;
   var NPC_POS = new THREE.Vector3(0, 0.95, -3.4);
+  // Góc giữa các cửa (xen kẽ, bán kính nhỏ hơn) cho 3 hoạt động phụ – tránh
+  // chồng lấn với NPC Lumina (nằm cùng hướng cửa 0) và các cửa.
+  var JUKEBOX_ANGLE = deg(-54);
+  var TU_ANGLE = deg(234); // KHÔNG dùng 90° – trùng hướng xuất phát của người chơi (0,0,4.4)
+  var BOARD_ANGLE = deg(162);
+  function deg(d) { return d * Math.PI / 180; }
 
   // Hoạt hình đi bộ giả lập trên sprite tĩnh: tần số bước, biên độ nhấp
   // nhô/nghiêng/co giãn. playerBob/Tilt/Squash là giá trị hiện tại, luôn
@@ -48,12 +60,38 @@
   var walkPhase = 0;
   var playerBob = 0, playerTilt = 0, playerSquash = 0;
 
-  var DIALOGUE = [
-    ['Lumina AI', 'Chào bạn! Mình là Lumina – người dẫn đường ở Sảnh BizOn. 👋'],
-    ['Lumina AI', 'Đây là hub 3D nối tới mọi trò chơi trong vũ trụ Bật Nghiệp.'],
-    ['Lumina AI', 'Đi tới gần một cánh cửa quanh sân rồi nhấn E (hoặc chạm nút) để bước sang game đó.'],
-    ['Lumina AI', 'Trong lúc chờ khám phá hết, bạn có thể ghé chơi luôn Hộ Chiếu Thương Hiệu nhé!'],
-  ];
+  // Mỗi mục là một cuộc hội thoại độc lập: avatar hiện trong hộp thoại, các
+  // dòng thoại, và nút CTA tùy chọn ở dòng cuối (null = chỉ có nút đóng).
+  var DIALOGUES = {
+    lumina: {
+      avatar: 'assets/character/lumina-ao-dai-wave.webp',
+      lines: [
+        ['Lumina AI', 'Chào bạn! Mình là Lumina – người dẫn đường ở Sảnh BizOn. 👋'],
+        ['Lumina AI', 'Đây là hub 3D nối tới mọi trò chơi trong vũ trụ Bật Nghiệp.'],
+        ['Lumina AI', 'Đi tới gần một cánh cửa quanh sân rồi nhấn E (hoặc chạm nút) để bước sang game đó.'],
+        ['Lumina AI', 'Trong lúc chờ khám phá hết, bạn có thể ghé chơi luôn Hộ Chiếu Thương Hiệu nhé!'],
+      ],
+      cta: { label: '🛂 Vào chơi Hộ Chiếu Thương Hiệu', href: 'brand-passport.html' },
+    },
+    tu: {
+      avatar: 'assets/character/anh-tu-ao-dai-explain-cut.webp',
+      lines: [
+        ['PGS.TS. Phan Anh Tú', 'Chào bạn! Thầy là Tú – cố vấn học thuật của BizOn Bật Nghiệp. 📚'],
+        ['PGS.TS. Phan Anh Tú', 'Mỗi ván Hộ Chiếu Thương Hiệu hay Bến Phù Sa đều dựng trên mô hình kinh tế thật, không chỉ là trò chơi.'],
+        ['PGS.TS. Phan Anh Tú', 'Nếu muốn tìm hiểu sâu hơn về phương pháp giảng dạy đứng sau, ghé Nền tảng học thuật nhé!'],
+      ],
+      cta: { label: '🎓 Xem Nền tảng học thuật', href: 'truong-hoc-thuat.html' },
+    },
+    board: {
+      avatar: 'assets/icons/icon-192.png',
+      lines: [
+        ['📋 Bảng thông tin', 'Sảnh 3D là hub thử nghiệm kết nối tới mọi trò chơi trong vũ trụ BizOn Bật Nghiệp.'],
+        ['📋 Bảng thông tin', '5 game hiện có: Hộ Chiếu Thương Hiệu, Game Bật Nghiệp, BizOn Arcade, Go Global, Gánh Hàng Khởi Nghiệp.'],
+        ['📋 Bảng thông tin', 'Toàn bộ chạy thẳng trong trình duyệt bằng three.js, không cần cài đặt gì cả.'],
+      ],
+      cta: null,
+    },
+  };
 
   // 5 game hiện có trong vũ trụ Bật Nghiệp – cùng bộ liên kết với nhóm
   // "🎮 Trò chơi" ở site-nav.js/site-footer.js, xếp đều quanh sân.
@@ -70,7 +108,7 @@
   var keys = {};
   var joyVec = { x: 0, y: 0 };
   var joyActive = false, joyId = null, joyBase, joyKnob;
-  var promptEl, interactBtn, dlgEl, dlgName, dlgText, dlgNextBtn, dlgCtaBtn;
+  var promptEl, interactBtn, dlgEl, dlgName, dlgText, dlgNextBtn, dlgCtaBtn, dlgAvatar;
   var dlgIdx = -1;
   var clock;
   var interactables = [];
@@ -93,9 +131,10 @@
     return [words.slice(0, mid).join(' '), words.slice(mid).join(' ')];
   }
 
-  // Biển "cửa" vào từng game: mái vòm màu riêng + icon lớn + nhãn tên game,
-  // vẽ hết vào một canvas texture duy nhất cho gọn (không cần model 3D).
-  function makeDoorTexture(icon, label, color) {
+  // Biển hiệu dùng chung cho cửa vào game lẫn các vật thể tương tác khác
+  // (máy hát, bảng thông tin): mái vòm màu riêng + icon lớn + nhãn, vẽ hết
+  // vào một canvas texture duy nhất cho gọn (không cần model 3D).
+  function makeSignTexture(icon, label, color) {
     var c = document.createElement('canvas');
     c.width = 220; c.height = 300;
     var ctx = c.getContext('2d');
@@ -137,7 +176,7 @@
   function buildDoors() {
     GAMES.forEach(function (g, i) {
       var angle = (i / GAMES.length) * Math.PI * 2 - Math.PI / 2;
-      var spr = makeSprite(makeDoorTexture(g.icon, g.label, g.color), 2.0, 2.7);
+      var spr = makeSprite(makeSignTexture(g.icon, g.label, g.color), 2.0, 2.7);
       spr.position.set(Math.cos(angle) * DOOR_RADIUS, 0, Math.sin(angle) * DOOR_RADIUS);
       scene.add(spr);
       interactables.push({
@@ -151,6 +190,63 @@
           setTimeout(function () { location.href = g.url; }, 420);
         },
       });
+    });
+  }
+
+  var jukeboxAudio = null, musicPlaying = false, jukeboxInteractable = null;
+
+  function toggleMusic() {
+    if (!jukeboxAudio) {
+      jukeboxAudio = new Audio('assets/audio/bizon-theme.mp3');
+      jukeboxAudio.loop = true;
+      jukeboxAudio.volume = 0.45;
+    }
+    if (musicPlaying) { jukeboxAudio.pause(); } else { jukeboxAudio.play().catch(function () {}); }
+    musicPlaying = !musicPlaying;
+    jukeboxInteractable.buttonLabel = musicPlaying ? '⏸️ Tắt nhạc nền' : '🎵 Bật nhạc nền';
+    jukeboxInteractable.promptAction = musicPlaying ? 'tắt nhạc nền' : 'bật nhạc nền';
+  }
+
+  var tuNpc, tuBob = 0;
+
+  // 3 hoạt động phụ ngoài đi lại + cửa: máy hát, NPC thứ hai (Thầy Tú),
+  // bảng thông tin. Đặt ở bán kính nhỏ hơn cửa, xen giữa các góc cửa.
+  function buildExtras() {
+    var jukeboxPos = new THREE.Vector3(Math.cos(JUKEBOX_ANGLE) * EXTRA_RADIUS, 0, Math.sin(JUKEBOX_ANGLE) * EXTRA_RADIUS);
+    var jukeboxSpr = makeSprite(makeSignTexture('🎵', 'Máy hát', '#e85d75'), 1.7, 2.3);
+    jukeboxSpr.position.copy(jukeboxPos);
+    scene.add(jukeboxSpr);
+    jukeboxInteractable = {
+      pos: jukeboxSpr.position,
+      dist: EXTRA_DIST,
+      promptAction: 'bật nhạc nền',
+      buttonLabel: '🎵 Bật nhạc nền',
+      activate: toggleMusic,
+    };
+    interactables.push(jukeboxInteractable);
+
+    var tuPos = new THREE.Vector3(Math.cos(TU_ANGLE) * EXTRA_RADIUS, 0.95, Math.sin(TU_ANGLE) * EXTRA_RADIUS);
+    tuNpc = makeSprite(new THREE.TextureLoader().load(DIALOGUES.tu.avatar), 1.3, 2.6);
+    tuNpc.position.copy(tuPos);
+    scene.add(tuNpc);
+    interactables.push({
+      pos: tuNpc.position,
+      dist: NPC_DIST,
+      promptAction: 'trò chuyện với Thầy Tú',
+      buttonLabel: '🗨️ Nói chuyện',
+      activate: function () { openDialogueWith('tu'); },
+    });
+
+    var boardPos = new THREE.Vector3(Math.cos(BOARD_ANGLE) * EXTRA_RADIUS, 0, Math.sin(BOARD_ANGLE) * EXTRA_RADIUS);
+    var boardSpr = makeSprite(makeSignTexture('📋', 'Bảng thông tin', '#0f5c4e'), 1.7, 2.3);
+    boardSpr.position.copy(boardPos);
+    scene.add(boardSpr);
+    interactables.push({
+      pos: boardSpr.position,
+      dist: EXTRA_DIST,
+      promptAction: 'đọc bảng thông tin',
+      buttonLabel: '📋 Đọc bảng tin',
+      activate: function () { openDialogueWith('board'); },
     });
   }
 
@@ -188,6 +284,7 @@
     dlgText = document.getElementById('hub3d-dlg-text');
     dlgNextBtn = document.getElementById('hub3d-dlg-next');
     dlgCtaBtn = document.getElementById('hub3d-dlg-cta');
+    dlgAvatar = document.getElementById('hub3d-dlg-avatar');
     joyBase = document.getElementById('hub3d-joy-base');
     joyKnob = document.getElementById('hub3d-joy-knob');
     clock = new THREE.Clock();
@@ -236,9 +333,10 @@
       dist: NPC_DIST,
       promptAction: 'trò chuyện với Lumina',
       buttonLabel: '🗨️ Nói chuyện',
-      activate: openDialogue,
+      activate: function () { openDialogueWith('lumina'); },
     });
     buildDoors();
+    buildExtras();
 
     updateCamera();
 
@@ -296,25 +394,33 @@
     joyBase.addEventListener('pointercancel', release);
   }
 
+  var activeDialogue = null;
+
   function dlgOpen() { return dlgIdx >= 0; }
 
-  function openDialogue() {
+  function openDialogueWith(key) {
+    activeDialogue = DIALOGUES[key];
     dlgIdx = 0;
+    dlgAvatar.src = activeDialogue.avatar;
+    if (activeDialogue.cta) {
+      dlgCtaBtn.href = activeDialogue.cta.href;
+      dlgCtaBtn.textContent = activeDialogue.cta.label;
+    }
     renderDialogue();
     dlgEl.classList.add('on');
   }
   function advanceDialogue() {
     dlgIdx++;
-    if (dlgIdx >= DIALOGUE.length) { closeDialogue(); return; }
+    if (dlgIdx >= activeDialogue.lines.length) { closeDialogue(); return; }
     renderDialogue();
   }
   function renderDialogue() {
-    var line = DIALOGUE[dlgIdx];
+    var line = activeDialogue.lines[dlgIdx];
     dlgName.textContent = line[0];
     dlgText.textContent = line[1];
-    var last = dlgIdx === DIALOGUE.length - 1;
+    var last = dlgIdx === activeDialogue.lines.length - 1;
     dlgNextBtn.hidden = last;
-    dlgCtaBtn.hidden = !last;
+    dlgCtaBtn.hidden = !(last && activeDialogue.cta);
   }
   function closeDialogue() {
     dlgIdx = -1;
@@ -374,6 +480,8 @@
     if (!reduceMotion) {
       npcBob += dt;
       npc.position.y = NPC_POS.y + Math.sin(npcBob * 1.6) * 0.05;
+      tuBob += dt;
+      tuNpc.position.y = 0.95 + Math.sin(tuBob * 1.6 + Math.PI) * 0.05;
 
       // Hoạt hình đi bộ giả lập: nhấp nhô + nghiêng + co giãn theo nhịp bước
       // khi đang di chuyển, ease mượt về trạng thái đứng yên khi dừng lại.
