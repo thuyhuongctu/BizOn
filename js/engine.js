@@ -122,6 +122,65 @@ function MARKET_EVENTS_LIST_B() { return [
     cta: { label: T('🐉 Bứt phá về đích', '🐉 Sprint to the finish'), tab: 'decisions' } },
 ]; }
 
+/* Trường hợp C – "Sóng Livestream Giá Rẻ" (thiết kế: docs/design/CASE_DRAW_TWO_SCENARIOS_v1.md,
+ * mục "Trường hợp C"). Cùng nguyên tắc công bằng như B: mọi trường ảnh hưởng
+ * điểm GIỐNG HỆT MARKET_EVENTS_LIST() theo từng vòng – chỉ khác câu
+ * chuyện/tên/lời Lumina/icon. Đối thủ xuyên suốt là Alpha Dynamics (đã có sẵn
+ * trong COMPETITORS, style 'aggressive') đẩy mạnh bán hàng livestream giá sốc,
+ * thay vì Star Clay Co. (hàng ngoại cao cấp) ở Trường hợp B. Chỉ được đọc khi
+ * s.caseId === 'C' (mặc định 'A' cho mọi ván mới/ván cũ – xem newGameState()
+ * và currentEvent()). */
+function MARKET_EVENTS_LIST_C() { return [
+  null,
+  { id: 'EV_STABLE_C', round: 1, tone: 'good', icon: '🌤️', name: T('Thị trường ổn định – nhưng có traction lạ trên mạng', 'Stable Market – But Odd Traction Online'), tag: T('VÒNG KHỞI ĐỘNG', 'KICKOFF ROUND'),
+    desc: T('Vòng khởi động – nhu cầu thị trường ở mức chuẩn. Nhưng có tin Alpha Dynamics vừa mở kênh livestream bán hàng riêng, thu hút vài nghìn lượt xem thử nghiệm.',
+      'The kickoff round – market demand at baseline. But word is Alpha Dynamics just launched its own livestream sales channel, drawing a few thousand test viewers.'), demand: 1.0, costMul: 1.0,
+    impacts: [{ icon: '📈', label: T('Nhu cầu thị trường', 'Market demand'), value: T('Chuẩn', 'Baseline'), dir: 'flat' }, { icon: '📱', label: T('Tín hiệu đối thủ mới', 'New rival signal'), value: T('Đang thử nghiệm', 'Testing the waters'), dir: 'flat' }],
+    luminaImg: 'lumina-vest-thumbsup', luminaMsg: T('Chào cả đội! Vòng đầu vẫn là lúc xây nền tảng – nhưng nghe đâu Alpha Dynamics đang thử nghiệm bán hàng qua livestream. Cứ vững vàng, đội mình xây móng cho chắc trước đã!',
+      "Hi team! The first round is still about building the foundation – but word is Alpha Dynamics is testing livestream sales. Stay steady, let's build a solid base first!"),
+    cta: { label: T('🎯 Nhập quyết định ngay', '🎯 Enter decisions now'), tab: 'decisions' } },
+  { id: 'EV_GOLDEN_C', round: 2, tone: 'good', icon: '🌟', name: T('Làn Sóng Miễn Phí Vận Chuyển', 'The Free-Shipping Wave'), tag: T('SỰ KIỆN ĐẶC BIỆT', 'SPECIAL EVENT'),
+    desc: T('Một nền tảng thương mại điện tử lớn vừa miễn phí vận chuyển toàn quốc cho ngành hàng thủ công mỹ nghệ. Đồng thời, Alpha Dynamics chính thức tung chiến dịch livestream giá sốc mỗi tối, thu hút lượng lớn người xem.',
+      'A major e-commerce platform just went nationwide free-shipping for the handicrafts category. At the same time, Alpha Dynamics officially launches nightly shock-price livestreams, drawing huge crowds.'),
+    demand: 1.35, costMul: 1.0, rdBoost: 1.5,
+    impacts: [{ icon: '🚚', label: T('Phí vận chuyển', 'Shipping fee'), value: T('Miễn phí', 'Free'), dir: 'down-good' }, { icon: '📱', label: T('Đối thủ mới', 'New rival'), value: T('Livestream mỗi tối', 'Nightly livestreams'), dir: 'up-bad' }],
+    luminaImg: 'lumina-ao-dai-clap', luminaMsg: T('Cơ hội lớn đây! Miễn phí vận chuyển giúp mở rộng thị trường online đáng kể. Nhưng đừng lơ là – Alpha Dynamics vừa tung chiến dịch livestream giá sốc, CMO nên chuẩn bị tinh thần cho vòng sau!',
+      "Big opportunity! Free shipping opens up the online market significantly. But don't get comfortable – Alpha Dynamics just launched its shock-price livestreams, CMO should brace for next round!"),
+    cta: { label: T('🏭 Tăng công suất ngay', '🏭 Ramp up capacity now'), tab: 'decisions' } },
+  { id: 'EV_PRICEWAR_C', round: 3, tone: 'warn', icon: '⚔️', name: T('Giá Sốc Mỗi Đêm', 'Nightly Shock Prices'), tag: T('CẢNH BÁO THỊ TRƯỜNG', 'MARKET WARNING'),
+    desc: T('Alpha Dynamics giảm giá kịch sàn ngay trên sóng livestream, kèm minigame tặng quà liên tục để giữ chân người xem – khách hàng cực nhạy cảm về giá trong vòng này.',
+      'Alpha Dynamics slashes prices to the floor live on stream, with back-to-back giveaway games to keep viewers watching – customers are extremely price-sensitive this round.'),
+    demand: 1.0, costMul: 1.0, elasticityMul: 1.4,
+    impacts: [{ icon: '🏷️', label: T('Giá livestream của Alpha Dynamics', 'Alpha Dynamics livestream price'), value: '-15%', dir: 'down' }, { icon: '💔', label: T('Độ nhạy giá của khách', 'Customer price sensitivity'), value: T('CAO', 'HIGH'), dir: 'up-bad' }],
+    luminaImg: 'lumina-vest-worried', luminaMsg: T('Thưa CMO, Alpha Dynamics vừa châm ngòi chiến tranh giá ngay trên sóng livestream! Ta có 2 lối đi: Bundling hoặc tăng Value-Added – đừng lao vào giảm giá sâu kẻo mất biên lợi nhuận.',
+      "CMO, Alpha Dynamics just sparked a price war right on livestream! We have 2 paths: a Bundling tactic or adding more Value-Added – don't dive into deep discounts or we'll lose our margin."),
+    cta: { label: T('🤖 Xem giải pháp từ Lumina', '🤖 See Lumina\'s solution'), tab: 'advisor' } },
+  { id: 'EV_RECESSION_C', round: 4, tone: 'bad', icon: '🚛', name: T('Khủng Hoảng Cước Vận Chuyển', 'Freight Cost Crisis'), tag: T('CẢNH BÁO KHẨN CẤP', 'URGENT WARNING'),
+    desc: T('Giá cước vận chuyển nội địa tăng vọt vì quá tải đơn hàng mùa livestream giảm giá toàn ngành. Chi phí vận hành xưởng tăng theo, nhu cầu chung co lại vì người mua chờ đợt sale tiếp theo.',
+      "Domestic freight costs spike as couriers are overwhelmed by the industry-wide livestream discount season. Workshop operating costs rise while overall demand cools as buyers wait for the next sale."),
+    demand: 0.7, costMul: 1.3, shake: true, oeeHit: 10,
+    impacts: [{ icon: '📈', label: T('Chi phí vận hành', 'Operating cost'), value: '+30%', dir: 'up-bad' }, { icon: '🏭', label: T('Hiệu suất (OEE)', 'Efficiency (OEE)'), value: '-10%', dir: 'down' }],
+    luminaImg: 'lumina-ao-dai-alert', luminaMsg: T('Cảnh báo khẩn cấp! Cước vận chuyển nội địa tăng vọt vì quá tải mùa sale. COO hãy rà soát lịch chạy máy, còn CFO cần dự phòng thêm vốn ngay nhé!',
+      'Urgent warning! Domestic freight costs have spiked from sale-season overload. COO, review the machine schedule, and CFO, set aside extra reserve capital right away!'),
+    cta: { label: T('⚡ Tối ưu năng lượng ngay', '⚡ Optimize energy now'), tab: 'reports', report: 'energy' } },
+  { id: 'EV_SUPPLY_C', round: 5, tone: 'bad', icon: '📦', name: T('Kho Hàng Quá Tải', 'Warehouse Overload'), tag: T('CẢNH BÁO KHẨN CẤP', 'URGENT WARNING'),
+    desc: T('Các kho hàng trung chuyển thương mại điện tử quá tải vì lượng đơn khổng lồ từ mùa livestream giảm giá, khiến dây chuyền giao nhận của BizOn bị đình trệ theo.',
+      "E-commerce fulfillment warehouses are overloaded by the massive order volume from the livestream discount season, stalling BizOn's delivery pipeline along with it."),
+    demand: 1.0, costMul: 1.25, fulfillMul: 0.85, shake: true,
+    impacts: [{ icon: '💰', label: T('Giá thành đơn vị', 'Unit cost'), value: '+25%', dir: 'up-bad' }, { icon: '📦', label: T('Tỷ lệ đáp ứng đơn hàng', 'Order fulfillment rate'), value: '-15%', dir: 'down' }],
+    luminaImg: 'lumina-ao-dai-alert', luminaMsg: T('Thưa CEO, tình hình rất khẩn cấp! Kho hàng trung chuyển quá tải vì mùa sale livestream, đơn của ta bị kẹt theo. Cần quyết định ngay: tăng ngân sách vận chuyển hay đàm phán lại thời gian giao hàng?',
+      'CEO, this is extremely urgent! Fulfillment warehouses are overloaded from the livestream sale season, and our orders are stuck in the backlog. We need to decide now: raise the shipping budget or renegotiate delivery times?'),
+    cta: { label: T('👥 Họp khẩn cấp toàn đội', '👥 Emergency team meeting'), tab: 'decisions' } },
+  { id: 'EV_MILESTONE_C', round: 6, tone: 'good', icon: '🏺', name: T('Thương Hiệu Thật Lên Ngôi', 'Authentic Brands Rise'), tag: T('VÒNG CHUNG KẾT · KỊCH BẢN GIẢ ĐỊNH', 'FINAL ROUND · HYPOTHETICAL SCENARIO'),
+    desc: T('Kịch bản giả định: sau một mùa "đua giá" trên sóng livestream, người tiêu dùng dần mệt mỏi với các cú giảm giá liên tục và quay sang tìm những thương hiệu có câu chuyện thật, chất lượng ổn định – tầng lớp trung lưu mở rộng, ít nhạy cảm về giá, ưu tiên thương hiệu đáng tin. (Tham số minh họa, không phải số liệu thống kê thực.)',
+      'A hypothetical scenario: after a season of livestream "price races", consumers grow tired of endless discount stunts and turn to brands with a real story and consistent quality – the middle class expands, less price-sensitive, favoring trusted brands. (Illustrative simulation parameters, not real statistics.)'),
+    demand: 1.25, costMul: 1.0, elasticityMul: 0.85, wageMul: 1.1, brandPow: 1.5, mktBoost: 1.2,
+    impacts: [{ icon: '🎯', label: T('Niềm tin thương hiệu thật', 'Trust in authentic brands'), value: '+25%', dir: 'up' }, { icon: '🏷️', label: T('Độ nhạy giá của khách', 'Customer price sensitivity'), value: '-15%', dir: 'down-good' }, { icon: '👷', label: T('Chi phí nhân công', 'Labor cost'), value: '+10%', dir: 'up-bad' }, { icon: '✨', label: T('Trọng số thương hiệu', 'Brand weight'), value: '×1.5', dir: 'up' }],
+    luminaImg: 'lumina-ao-dai-clap', luminaMsg: T('Vòng chung kết, thưa đội ngũ điều hành! Sau một mùa "đua giá" với Alpha Dynamics trên sóng livestream, khách hàng đã bắt đầu quay về tìm những thương hiệu có câu chuyện thật như đội mình. Đây là cơ hội vàng để CMO nâng tầm thương hiệu thành dòng Premium và CEO mở rộng quy mô phục vụ làn sóng tin dùng mới!',
+      'The final round, executive team! After a season racing against Alpha Dynamics on livestream, customers are turning back to brands with a real story like yours. This is a golden chance for the CMO to elevate the brand into a Premium line and for the CEO to scale up for this new wave of loyal customers!'),
+    cta: { label: T('🐉 Bứt phá về đích', '🐉 Sprint to the finish'), tab: 'decisions' } },
+]; }
+
 function SHOP_ITEMS_LIST() { return [
   { id: 'SOLAR_01',     icon: '☀️', name: T('Pin Mặt Trời', 'Solar Panels'),   type: 'blueprint',  price: 150, img: 'assets/illustrations/solar-farm.webp', desc: T('Tự chủ nguồn điện: -15% chi phí cố định vĩnh viễn, +20 điểm ESG, giảm nửa tác động OEE khi khủng hoảng năng lượng. Hoàn vốn ~2 vòng.', 'Self-sufficient power: -15% fixed cost permanently, +20 ESG points, halves the OEE hit during an energy crisis. Pays back in ~2 rounds.') },
   { id: 'MKT_BOOST_01', icon: '📣', name: T('Marketing Boost', 'Marketing Boost'), type: 'booster',    price: 80,  desc: T('+30% hiệu quả marketing trong vòng kế tiếp.', '+30% marketing effectiveness next round.') },
@@ -597,7 +656,10 @@ function skillEffect(s, key, def) {
     .reduce((acc, sk) => acc * sk.effect[key], def);
 }
 
-function currentEvent(s) { return (s.caseId === 'B' ? MARKET_EVENTS_LIST_B() : MARKET_EVENTS_LIST())[s.round]; }
+function currentEvent(s) {
+  const list = s.caseId === 'B' ? MARKET_EVENTS_LIST_B() : s.caseId === 'C' ? MARKET_EVENTS_LIST_C() : MARKET_EVENTS_LIST();
+  return list[s.round];
+}
 
 /* Kỳ hạn thanh toán (theo màn hình Quyết định nâng cao):
  * cho khách trả chậm → cầu tăng nhưng chi phí vốn tăng */
