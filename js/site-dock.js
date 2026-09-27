@@ -17,6 +17,7 @@
     ['Bật Nghiệp – Rap Symphony', 'bat-nghiep-rap-symphony.mp3'],
     ['Bật Nghiệp – Mekong Sunfire 2 🎧 (đề xuất nghe)', 'bat-nghiep-mekong-sunfire-2.mp3'],
     ['Bật Nghiệp – Mekong Sunfire', 'bat-nghiep-mekong-sunfire.mp3'],
+    ['Bật Nghiệp – Mekong Sunfire Rise 🌅 (bản dài nhất · 4:45)', 'bat-nghiep-mekong-sunfire-rise.mp3'],
     ['Bật Nghiệp (instrumental · V-pop 112 BPM)', 'bat-nghiep.mp3'],
     ['BizOn Theme (instrumental)', 'bizon-theme.mp3'],
     ['Vừa Đủ Để Bay Cao', 'vua-du-de-bay-cao.mp3'],
