@@ -16,6 +16,8 @@
  * nền BizOn Theme), NPC thứ hai (Thầy Tú – cố vấn học thuật, hội thoại
  * riêng), và bảng thông tin giới thiệu Sảnh. Tổng quát hoá hệ hội thoại
  * để dùng chung cho nhiều nhân vật/nội dung khác nhau thay vì chỉ Lumina.
+ * v0.5: thêm bảng thành tích – ghi nhớ (localStorage) những game đã ghé
+ * qua cửa nào, tạo động lực khám phá đủ cả 5 game trong vũ trụ Bật Nghiệp.
  *
  * Nhân vật người chơi, NPC và các cửa đều là sprite luôn quay mặt về camera
  * (kiểu "búp bê giấy" đứng trong khung cảnh 3D) – khớp tinh thần đất nặn/cắt
@@ -47,6 +49,9 @@
   var JUKEBOX_ANGLE = deg(-54);
   var TU_ANGLE = deg(234); // KHÔNG dùng 90° – trùng hướng xuất phát của người chơi (0,0,4.4)
   var BOARD_ANGLE = deg(162);
+  // Khe hở 72° còn lại duy nhất không kề góc xuất phát (90°) là giữa cửa
+  // cuối (342°) và cửa đầu (54°, vòng qua 0°) – chia đôi ra 18° cho vừa.
+  var PROGRESS_ANGLE = deg(18);
   function deg(d) { return d * Math.PI / 180; }
 
   // Hoạt hình đi bộ giả lập trên sprite tĩnh: tần số bước, biên độ nhấp
@@ -173,6 +178,18 @@
     return spr;
   }
 
+  var VISITED_KEY = 'bizon-hub3d-visited';
+
+  function getVisited() {
+    try { return JSON.parse(localStorage.getItem(VISITED_KEY) || '[]'); } catch (e) { return []; }
+  }
+  function markVisited(url) {
+    try {
+      var v = getVisited();
+      if (v.indexOf(url) === -1) { v.push(url); localStorage.setItem(VISITED_KEY, JSON.stringify(v)); }
+    } catch (e) {}
+  }
+
   function buildDoors() {
     GAMES.forEach(function (g, i) {
       var angle = (i / GAMES.length) * Math.PI * 2 - Math.PI / 2;
@@ -185,7 +202,10 @@
         promptAction: 'vào ' + g.label.toLowerCase(),
         buttonLabel: '🚪 Vào ' + g.label,
         // Chuyển cảnh mờ dần rồi mới điều hướng, thay vì nhảy trang đột ngột.
+        // Ghi nhận đã ghé qua game này trước khi rời trang, để Bảng thành
+        // tích còn dữ liệu đọc lại ở lần quay về Sảnh sau.
         activate: function () {
+          markVisited(g.url);
           fadeEl.classList.add('on');
           setTimeout(function () { location.href = g.url; }, 420);
         },
@@ -247,6 +267,18 @@
       promptAction: 'đọc bảng thông tin',
       buttonLabel: '📋 Đọc bảng tin',
       activate: function () { openDialogueWith('board'); },
+    });
+
+    var progressPos = new THREE.Vector3(Math.cos(PROGRESS_ANGLE) * EXTRA_RADIUS, 0, Math.sin(PROGRESS_ANGLE) * EXTRA_RADIUS);
+    var progressSpr = makeSprite(makeSignTexture('🏆', 'Bảng thành tích', '#b8860b'), 1.7, 2.3);
+    progressSpr.position.copy(progressPos);
+    scene.add(progressSpr);
+    interactables.push({
+      pos: progressSpr.position,
+      dist: EXTRA_DIST,
+      promptAction: 'xem bảng thành tích',
+      buttonLabel: '🏆 Xem thành tích',
+      activate: function () { openDialogueWith('progress'); },
     });
   }
 
@@ -398,8 +430,25 @@
 
   function dlgOpen() { return dlgIdx >= 0; }
 
+  // Không phải hội thoại tĩnh như DIALOGUES – nội dung dựng lại mỗi lần mở
+  // dựa trên GAMES đã ghé (đọc từ localStorage), nên không khai báo sẵn.
+  function buildProgressDialogue() {
+    var visited = getVisited();
+    var count = 0;
+    var lines = GAMES.map(function (g) {
+      var done = visited.indexOf(g.url) !== -1;
+      if (done) count++;
+      return [g.icon + ' ' + g.label, done ? 'Đã ghé qua ✅' : 'Chưa ghé qua'];
+    });
+    lines.unshift(['🏆 Bảng thành tích', 'Bạn đã ghé qua ' + count + '/' + GAMES.length + ' game trong vũ trụ BizOn.']);
+    if (count === GAMES.length) {
+      lines.push(['🏆 Bảng thành tích', 'Xuất sắc! Bạn đã khám phá đủ cả 5 game rồi. 🎉']);
+    }
+    return { avatar: 'assets/icons/icon-192.png', lines: lines, cta: null };
+  }
+
   function openDialogueWith(key) {
-    activeDialogue = DIALOGUES[key];
+    activeDialogue = key === 'progress' ? buildProgressDialogue() : DIALOGUES[key];
     dlgIdx = 0;
     dlgAvatar.src = activeDialogue.avatar;
     if (activeDialogue.cta) {
