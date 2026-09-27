@@ -4956,8 +4956,16 @@
   window.applyLang = function (lang) {
     document.querySelectorAll('h1,h2,h3,h4,p,a,button,span,b,label,th,td,li,small,summary').forEach(function (el) {
       if (el.childElementCount) return;
-      var vi = el.dataset.vi || el.textContent.trim();
-      if (!EN.has(vi)) return;
+      var cur = el.textContent.trim();
+      var vi = el.dataset.vi;
+      // Nếu nội dung hiện tại không còn khớp với bản vi/en đã chụp lần
+      // trước, nghĩa là code khác vừa ghi đè bằng nội dung ĐỘNG (ví dụ lời
+      // khuyên Lumina ở Trang chủ, tên/mô tả vật phẩm vừa chọn trong Kho đồ)
+      // – phải coi nội dung hiện tại là nguồn mới thay vì cứ bám bản chụp
+      // cũ, nếu không watchRerenders() sẽ tự ghi đè nội dung động đó trở về
+      // chữ tĩnh ban đầu ~150ms sau mỗi lần render (chỉ lộ rõ ở chế độ EN).
+      if (!vi || (cur !== vi && cur !== EN.get(vi))) vi = cur;
+      if (!EN.has(vi)) { delete el.dataset.vi; return; }
       el.dataset.vi = vi;
       var want = lang === 'en' ? EN.get(vi) : vi;
       if (el.textContent !== want) el.textContent = want;
