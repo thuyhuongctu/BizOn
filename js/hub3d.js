@@ -5,6 +5,9 @@
  * khiển ảo trên di động), một NPC (Lumina) có thể bắt chuyện.
  * v0.1: thêm 5 "cửa" quanh sân dẫn thẳng sang từng game trong vũ trụ Bật
  * Nghiệp – biến sảnh từ một phòng demo thành một hub thật sự.
+ * v0.2: thay hình đặt chỗ vẽ bằng canvas bằng tạo hình đất nặn thật (chọn
+ * 1 trong 2 đại diện áo dài, nhớ lựa chọn qua localStorage), và thêm hiệu
+ * ứng mờ dần khi bước qua cửa thay vì điều hướng đột ngột.
  *
  * Nhân vật người chơi, NPC và các cửa đều là sprite luôn quay mặt về camera
  * (kiểu "búp bê giấy" đứng trong khung cảnh 3D) – khớp tinh thần đất nặn/cắt
@@ -75,21 +78,6 @@
     return [words.slice(0, mid).join(' '), words.slice(mid).join(' ')];
   }
 
-  // Placeholder cho nhân vật người chơi: vẽ trực tiếp lên canvas thay vì cần
-  // thêm tệp ảnh mới – dễ thay bằng tạo hình đất nặn thật khi có sau này.
-  function makePlaceholderTexture(fill) {
-    var c = document.createElement('canvas');
-    c.width = 128; c.height = 256;
-    var ctx = c.getContext('2d');
-    ctx.fillStyle = fill;
-    ctx.beginPath(); ctx.arc(64, 54, 38, 0, Math.PI * 2); ctx.fill();
-    roundRect(ctx, 26, 92, 76, 148, 30); ctx.fill();
-    ctx.strokeStyle = 'rgba(255,255,255,.9)'; ctx.lineWidth = 5;
-    ctx.beginPath(); ctx.arc(64, 54, 38, 0, Math.PI * 2); ctx.stroke();
-    roundRect(ctx, 26, 92, 76, 148, 30); ctx.stroke();
-    return new THREE.CanvasTexture(c);
-  }
-
   // Biển "cửa" vào từng game: mái vòm màu riêng + icon lớn + nhãn tên game,
   // vẽ hết vào một canvas texture duy nhất cho gọn (không cần model 3D).
   function makeDoorTexture(icon, label, color) {
@@ -142,12 +130,40 @@
         dist: DOOR_DIST,
         promptAction: 'vào ' + g.label.toLowerCase(),
         buttonLabel: '🚪 Vào ' + g.label,
-        activate: function () { location.href = g.url; },
+        // Chuyển cảnh mờ dần rồi mới điều hướng, thay vì nhảy trang đột ngột.
+        activate: function () {
+          fadeEl.classList.add('on');
+          setTimeout(function () { location.href = g.url; }, 420);
+        },
       });
     });
   }
 
-  function init() {
+  var AVATAR_KEY = 'bizon-hub3d-avatar';
+  var fadeEl, charSelectEl;
+
+  function bootstrap() {
+    fadeEl = document.getElementById('hub3d-fade');
+    charSelectEl = document.getElementById('hub3d-charselect');
+    var stored = null;
+    try { stored = localStorage.getItem(AVATAR_KEY); } catch (e) {}
+    if (stored) {
+      charSelectEl.classList.add('off');
+      startScene(stored);
+      return;
+    }
+    ['hub3d-pick-nam', 'hub3d-pick-nu'].forEach(function (id) {
+      var btn = document.getElementById(id);
+      btn.addEventListener('click', function () {
+        var tex = btn.dataset.tex;
+        try { localStorage.setItem(AVATAR_KEY, tex); } catch (e) {}
+        charSelectEl.classList.add('off');
+        startScene(tex);
+      });
+    });
+  }
+
+  function startScene(avatarTexPath) {
     canvas = document.getElementById('hub3d-canvas');
     if (!canvas) return;
     promptEl = document.getElementById('hub3d-prompt');
@@ -192,7 +208,7 @@
     ring.position.y = 0.01;
     scene.add(ring);
 
-    player = makeSprite(makePlaceholderTexture('#006687'), 1.15, 2.15);
+    player = makeSprite(new THREE.TextureLoader().load(avatarTexPath), 1.3, 2.6);
     player.position.set(0, 0, 4.4);
     scene.add(player);
 
@@ -355,6 +371,6 @@
     renderer.render(scene, camera);
   }
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-  else init();
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bootstrap);
+  else bootstrap();
 })();
