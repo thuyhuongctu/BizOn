@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>🏺 Xưởng Gốm 3D (bí mật) – BizOn Bật Nghiệp</title>
+<meta name="description" content="Một góc trưng bày nhỏ, không nằm trong hành trình chính: mô hình 3D xưởng gốm chạy thẳng trong trình duyệt bằng three.js.">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<script src="js/backend-config.js"></script>
+<script src="js/error-log.js"></script>
+<link rel="stylesheet" href="css/bizon-fonts.css">
+<style>
+  html,body{margin:0;height:100%;background:#f3eee6;font-family:'Manrope','Manrope Fallback',sans-serif;color:#033337;overflow:hidden}
+  a{color:#006687}
+  three-d-stage{position:fixed;inset:0}
+  #cap{position:fixed;left:16px;top:16px;z-index:5;background:rgba(255,255,255,.88);backdrop-filter:blur(6px);border-radius:18px;padding:10px 16px;box-shadow:0 10px 30px -5px rgba(0,102,135,.18);max-width:min(320px,70vw)}
+  #cap b{display:block;font-size:14px;font-weight:800}
+  #cap span{display:block;font-size:11px;color:rgba(3,51,55,.6);margin-top:2px;line-height:1.4}
+  #back{position:fixed;left:16px;bottom:16px;z-index:5;display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.88);backdrop-filter:blur(6px);border-radius:999px;padding:8px 14px;font-size:12px;font-weight:800;text-decoration:none;box-shadow:0 8px 20px -6px rgba(0,102,135,.25)}
+  html[data-theme="dark"] body{background:#1b1712}
+  html[data-theme="dark"] #cap,html[data-theme="dark"] #back{background:rgba(14,42,51,.88);color:#d6ecf0}
+  html[data-theme="dark"] #cap span{color:rgba(214,236,240,.6)}
+</style>
+</head>
+<body>
+
+<three-d-stage name="bizon-clay-factory" background="#f3eee6" autorotate></three-d-stage>
+<div id="cap"><b>🏺 Xưởng Gốm 3D</b><span>Trứng phục sinh nhỏ, ngoài lề hành trình chính – kéo để xoay, lăn chuột/chụm 2 ngón để phóng to.</span></div>
+<a id="back" href="hub-3d.html">← Về Sảnh 3D</a>
+
+<script src="js/vendor/three.min.js"></script>
+<script src="js/three-d-stage.js"></script>
+<script>
+(function () {
+  'use strict';
+  var stage = document.querySelector('three-d-stage');
+  stage.ready.then(function (ctx) {
+    var THREE = ctx.THREE;
+
+    var mat = function (name, color, roughness, metalness) {
+      return Object.assign(new THREE.MeshStandardMaterial({ color: color, roughness: roughness === undefined ? 0.85 : roughness, metalness: metalness || 0 }), { name: name });
+    };
+    var M = {
+      teal: mat('clay_teal', 0x1a7d9e),
+      cream: mat('clay_cream', 0xf1e4cc),
+      orange: mat('clay_sunset', 0xf08a3c),
+      kraft: mat('clay_kraft', 0xc99a62),
+      dark: mat('clay_charcoal', 0x3a3f47, 0.7),
+      red: mat('clay_flag_red', 0xd9443a),
+      steel: mat('steel', 0xb9c2cc, 0.45, 0.3)
+    };
+
+    var g = new THREE.Group(); g.name = 'BizOn_ClayFactory';
+    function add(name, geo, m, x, y, z, parent) {
+      x = x || 0; y = y || 0; z = z || 0; parent = parent || g;
+      var mesh = new THREE.Mesh(geo, m); mesh.name = name;
+      mesh.position.set(x, y, z); mesh.castShadow = mesh.receiveShadow = true;
+      parent.add(mesh); return mesh;
+    }
+    function rbox(w, h, d, r, seg) {
+      seg = seg || 4;
+      r = Math.min(r, w / 2, h / 2, d / 2) - 1e-4;
+      var s = new THREE.Shape(), x = -w / 2 + r, y = -h / 2 + r, iw = w - 2 * r, ih = h - 2 * r;
+      s.moveTo(x, y - r); s.lineTo(x + iw, y - r);
+      s.quadraticCurveTo(x + iw + r, y - r, x + iw + r, y);
+      s.lineTo(x + iw + r, y + ih); s.quadraticCurveTo(x + iw + r, y + ih + r, x + iw, y + ih + r);
+      s.lineTo(x, y + ih + r); s.quadraticCurveTo(x - r, y + ih + r, x - r, y + ih);
+      s.lineTo(x - r, y); s.quadraticCurveTo(x - r, y - r, x, y - r);
+      var geo = new THREE.ExtrudeGeometry(s, { depth: d - 2 * r, bevelEnabled: true, bevelThickness: r, bevelSize: r * 0.999, bevelSegments: seg, curveSegments: seg * 2 });
+      geo.translate(0, 0, -(d - 2 * r) / 2); geo.computeVertexNormals(); return geo;
+    }
+
+    // Bệ nền
+    add('base', rbox(1.2, 0.06, 0.7, 0.03), M.teal, 0, 0.03, 0);
+    add('base_top', rbox(1.14, 0.012, 0.64, 0.006), M.cream, 0, 0.066, 0);
+    var FLOOR = 0.072;
+
+    // Băng chuyền
+    var conv = new THREE.Group(); conv.name = 'conveyor'; g.add(conv);
+    var BELT_Y = FLOOR + 0.16, BELT_L = 0.78, BELT_X = 0.12;
+    add('conveyor_frame_front', rbox(BELT_L + 0.04, 0.05, 0.02, 0.008), M.orange, BELT_X, BELT_Y - 0.01, 0.1, conv);
+    add('conveyor_frame_back', rbox(BELT_L + 0.04, 0.05, 0.02, 0.008), M.orange, BELT_X, BELT_Y - 0.01, -0.1, conv);
+    add('belt', rbox(BELT_L, 0.03, 0.18, 0.014), M.dark, BELT_X, BELT_Y, 0, conv);
+    for (var i = 0; i < 9; i++) {
+      var r = add('roller_' + i, new THREE.CylinderGeometry(0.012, 0.012, 0.2, 20), M.steel,
+        BELT_X - BELT_L / 2 + 0.03 + i * (BELT_L - 0.06) / 8, BELT_Y - 0.03, 0, conv);
+      r.rotation.x = Math.PI / 2;
+    }
+    [-0.34, 0, 0.34].forEach(function (lx) {
+      [0.1, -0.1].forEach(function (lz) {
+        add('leg', rbox(0.03, BELT_Y - FLOOR - 0.03, 0.03, 0.01), M.teal, BELT_X + lx, FLOOR + (BELT_Y - FLOOR - 0.03) / 2, lz, conv);
+      });
+    });
+    var TOP = BELT_Y + 0.015;
+
+    // Thùng hàng trên băng chuyền
+    function crate(name, x, s, rot) {
+      var c = new THREE.Group(); c.name = name; c.position.set(x, TOP + s / 2 + 0.001, 0); c.rotation.y = rot; g.add(c);
+      add(name + '_box', rbox(s, s, s, s * 0.14), M.kraft, 0, 0, 0, c);
+      add(name + '_tape', rbox(s * 0.22, 0.006, s * 1.004, 0.003), M.cream, 0, s / 2 - 0.001, 0, c);
+      add(name + '_label', rbox(s * 0.4, s * 0.3, 0.004, 0.002), M.teal, 0, -s * 0.05, s / 2 + 0.001, c);
+      return c;
+    }
+    crate('crate_a', 0.36, 0.1, 0.1);
+    crate('crate_b', 0.2, 0.085, -0.15);
+
+    // Chậu gốm (mặt hàng chính)
+    var potProfile = [[0, 0], [0.022, 0], [0.03, 0.012], [0.036, 0.035], [0.033, 0.058], [0.02, 0.075], [0.017, 0.085], [0.024, 0.092], [0.022, 0.097], [0.014, 0.094]].map(function (p) { return new THREE.Vector2(p[0], p[1]); });
+    var potGeo = new THREE.LatheGeometry(potProfile, 40);
+    add('clay_pot_a', potGeo, M.orange, -0.02, TOP + 0.001, 0.02);
+    var potB = add('clay_pot_b', potGeo, M.orange, -0.14, TOP + 0.001, -0.03); potB.scale.setScalar(0.85);
+    var ring = add('clay_pot_ring', new THREE.TorusGeometry(0.035, 0.004, 12, 40), M.cream, -0.02, TOP + 0.036, 0.02); ring.rotation.x = Math.PI / 2;
+
+    // Vòm đóng gói trên băng chuyền
+    var arch = new THREE.Group(); arch.name = 'packing_arch'; arch.position.x = 0.08; g.add(arch);
+    var AH = 0.2;
+    add('arch_post_front', rbox(0.04, TOP + AH - FLOOR, 0.04, 0.012), M.teal, 0, FLOOR + (TOP + AH - FLOOR) / 2, 0.14, arch);
+    add('arch_post_back', rbox(0.04, TOP + AH - FLOOR, 0.04, 0.012), M.teal, 0, FLOOR + (TOP + AH - FLOOR) / 2, -0.14, arch);
+    add('arch_beam', rbox(0.08, 0.06, 0.34, 0.02), M.teal, 0, TOP + AH, 0, arch);
+    add('arch_lamp', new THREE.SphereGeometry(0.018, 24, 16), M.orange, 0, TOP + AH + 0.04, 0, arch);
+    add('arch_nozzle', new THREE.CylinderGeometry(0.012, 0.02, 0.04, 24), M.steel, 0, TOP + AH - 0.05, 0, arch);
+
+    // Toà nhà xưởng
+    var fac = new THREE.Group(); fac.name = 'factory'; fac.position.set(-0.4, FLOOR, 0); g.add(fac);
+    var FW = 0.3, FH = 0.26, FD = 0.4;
+    add('factory_body', rbox(FW, FH, FD, 0.025), M.cream, 0, FH / 2, 0, fac);
+    for (var t = 0; t < 3; t++) {
+      var shape = new THREE.Shape(); shape.moveTo(0, 0); shape.lineTo(FD / 3, 0); shape.lineTo(0, 0.08); shape.closePath();
+      var geo2 = new THREE.ExtrudeGeometry(shape, { depth: FW - 0.02, bevelEnabled: true, bevelThickness: 0.006, bevelSize: 0.006, bevelSegments: 2 });
+      var tooth = add('roof_tooth_' + t, geo2, M.teal, (FW - 0.02) / 2, FH - 0.004, -FD / 2 + t * FD / 3, fac);
+      tooth.rotation.y = -Math.PI / 2;
+    }
+    add('factory_door', rbox(0.004, 0.12, 0.2, 0.002), M.dark, FW / 2 + 0.001, 0.07, 0, fac);
+    [-0.12, 0.12].forEach(function (z) { add('factory_window', rbox(0.004, 0.05, 0.06, 0.002), M.orange, FW / 2 + 0.001, 0.19, z, fac); });
+    [-0.08, 0.08].forEach(function (x) { add('factory_window_side', rbox(0.06, 0.05, 0.004, 0.002), M.orange, x, 0.16, FD / 2 + 0.001, fac); });
+    add('factory_sign', rbox(0.004, 0.05, 0.22, 0.01), M.teal, FW / 2 + 0.002, FH - 0.035, 0, fac);
+    // Ống khói + khói đất sét
+    add('chimney', new THREE.CylinderGeometry(0.03, 0.036, 0.22, 32), M.orange, -0.08, FH + 0.11, -0.12, fac);
+    var cap = add('chimney_cap', new THREE.TorusGeometry(0.032, 0.008, 12, 32), M.dark, -0.08, FH + 0.22, -0.12, fac); cap.rotation.x = Math.PI / 2;
+    [[0, 0.27, 0.03], [0.03, 0.32, 0.024], [0.07, 0.36, 0.018]].forEach(function (s, idx) {
+      add('smoke_' + idx, new THREE.SphereGeometry(s[2], 24, 16), M.cream, -0.08 + s[0], FH + s[1] - 0.02, -0.12, fac);
+    });
+    // Cờ
+    add('flag_pole', new THREE.CylinderGeometry(0.004, 0.004, 0.2, 12), M.steel, 0.08, FH + 0.1, 0.14, fac);
+    add('flag_knob', new THREE.SphereGeometry(0.008, 16, 12), M.orange, 0.08, FH + 0.2, 0.14, fac);
+    var flagShape = new THREE.Shape(); flagShape.moveTo(0, 0); flagShape.lineTo(0.09, -0.028); flagShape.lineTo(0, -0.056); flagShape.closePath();
+    add('flag', new THREE.ExtrudeGeometry(flagShape, { depth: 0.004, bevelEnabled: false }), M.red, 0.084, FH + 0.19, 0.138, fac);
+
+    // Chồng thùng đã đóng gói xong
+    crate('crate_stack_1', 0.5, 0.09, 0).position.set(0.48, FLOOR + 0.046, -0.22);
+    crate('crate_stack_2', 0.5, 0.09, 0.3).position.set(0.38, FLOOR + 0.046, -0.24);
+    crate('crate_stack_3', 0.5, 0.08, -0.2).position.set(0.43, FLOOR + 0.092 + 0.041, -0.23);
+    // Thùng đất sét thô
+    add('clay_bin', new THREE.CylinderGeometry(0.06, 0.05, 0.08, 36), M.teal, -0.12, FLOOR + 0.04, 0.23);
+    var lump = add('clay_lump', new THREE.SphereGeometry(0.055, 32, 20, 0, Math.PI * 2, 0, Math.PI / 2), M.orange, -0.12, FLOOR + 0.078, 0.23); lump.scale.y = 0.6;
+
+    stage.setObject(g);
+  });
+})();
+</script>
+</body>
+</html>
