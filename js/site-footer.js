@@ -24,6 +24,7 @@
       ['Hộ Chiếu Thương Hiệu', 'brand-passport.html'],
       ['Go Global', 'global.html'],
       ['Gánh Hàng Khởi Nghiệp', 'ben-phu-sa.html'],
+      ['🧪 Sảnh 3D (thử nghiệm)', 'hub-3d.html'],
     ]],
     ['🎨 Kho sáng tạo · Creative', [
       ['Kho Âm nhạc', 'am-nhac.html'],
