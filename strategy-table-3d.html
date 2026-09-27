@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>🪑 Bàn Họp Chiến Lược 3D (bí mật) – BizOn Bật Nghiệp</title>
+<meta name="description" content="Một góc trưng bày nhỏ, không nằm trong hành trình chính: mô hình 3D bàn họp chiến lược 5 chỗ ngồi, chạy thẳng trong trình duyệt bằng three.js.">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<script src="js/backend-config.js"></script>
+<script src="js/error-log.js"></script>
+<link rel="stylesheet" href="css/bizon-fonts.css">
+<style>
+  html,body{margin:0;height:100%;background:#f3eee6;font-family:'Manrope','Manrope Fallback',sans-serif;color:#033337;overflow:hidden}
+  a{color:#006687}
+  three-d-stage{position:fixed;inset:0}
+  #cap{position:fixed;left:16px;top:16px;z-index:5;background:rgba(255,255,255,.88);backdrop-filter:blur(6px);border-radius:18px;padding:10px 16px;box-shadow:0 10px 30px -5px rgba(0,102,135,.18);max-width:min(320px,70vw)}
+  #cap b{display:block;font-size:14px;font-weight:800}
+  #cap span{display:block;font-size:11px;color:rgba(3,51,55,.6);margin-top:2px;line-height:1.4}
+  #back{position:fixed;left:16px;bottom:16px;z-index:5;display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.88);backdrop-filter:blur(6px);border-radius:999px;padding:8px 14px;font-size:12px;font-weight:800;text-decoration:none;box-shadow:0 8px 20px -6px rgba(0,102,135,.25)}
+  html[data-theme="dark"] body{background:#1b1712}
+  html[data-theme="dark"] #cap,html[data-theme="dark"] #back{background:rgba(14,42,51,.88);color:#d6ecf0}
+  html[data-theme="dark"] #cap span{color:rgba(214,236,240,.6)}
+</style>
+</head>
+<body>
+
+<three-d-stage name="bizon-strategy-table" background="#f3eee6" autorotate></three-d-stage>
+<div id="cap"><b>🪑 Bàn Họp Chiến Lược 3D</b><span>Trứng phục sinh nhỏ, ngoài lề hành trình chính – kéo để xoay, lăn chuột/chụm 2 ngón để phóng to.</span></div>
+<a id="back" href="hub-3d.html">← Về Sảnh 3D</a>
+
+<script src="js/vendor/three.min.js"></script>
+<script src="js/three-d-stage.js"></script>
+<script>
+(function () {
+  'use strict';
+  var stage = document.querySelector('three-d-stage');
+  stage.ready.then(function (ctx) {
+    var THREE = ctx.THREE;
+
+    var mat = function (name, color, roughness, metalness) {
+      return Object.assign(new THREE.MeshStandardMaterial({ color: color, roughness: roughness === undefined ? 0.85 : roughness, metalness: metalness || 0 }), { name: name });
+    };
+    var M = {
+      teal: mat('clay_teal', 0x0f7596),
+      cream: mat('clay_cream', 0xf2e6d0),
+      orange: mat('clay_sunset', 0xf08a3c),
+      gold: mat('clay_gold', 0xf4c152),
+      dark: mat('clay_charcoal', 0x353a42, 0.7)
+    };
+
+    var g = new THREE.Group(); g.name = 'BizOn_StrategyTable';
+    function add(name, geo, m, x, y, z, parent) {
+      x = x || 0; y = y || 0; z = z || 0; parent = parent || g;
+      var mesh = new THREE.Mesh(geo, m); mesh.name = name;
+      mesh.position.set(x, y, z); mesh.castShadow = mesh.receiveShadow = true;
+      parent.add(mesh); return mesh;
+    }
+    function rrShape(w, h, r) {
+      var s = new THREE.Shape(), x = -w / 2, y = -h / 2;
+      s.moveTo(x + r, y); s.lineTo(x + w - r, y); s.quadraticCurveTo(x + w, y, x + w, y + r);
+      s.lineTo(x + w, y + h - r); s.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      s.lineTo(x + r, y + h); s.quadraticCurveTo(x, y + h, x, y + h - r);
+      s.lineTo(x, y + r); s.quadraticCurveTo(x, y, x + r, y); return s;
+    }
+    // rounded box, bevelled on every edge (dáng đất sét mềm)
+    function rbox(w, h, d, r, seg) {
+      seg = seg || 4;
+      r = Math.min(r, w / 2, h / 2, d / 2) * 0.999;
+      var geo = new THREE.ExtrudeGeometry(rrShape(w - 2 * r, h - 2 * r, Math.min(w, h) * 0.001 + 1e-5), {
+        depth: Math.max(d - 2 * r, 1e-4), bevelEnabled: true, bevelThickness: r, bevelSize: r, bevelSegments: seg, curveSegments: 2
+      });
+      geo.translate(0, 0, -(d - 2 * r) / 2); geo.computeVertexNormals(); return geo;
+    }
+    // tấm phẳng viền bo tròn kiểu "sân vận động" (nằm trên mặt XZ, cao theo Y)
+    function slab(w, d, r, h, bev) {
+      var geo = new THREE.ExtrudeGeometry(rrShape(w - 2 * bev, d - 2 * bev, r - bev), {
+        depth: h - 2 * bev, bevelEnabled: true, bevelThickness: bev, bevelSize: bev, bevelSegments: 5, curveSegments: 24
+      });
+      geo.rotateX(-Math.PI / 2); geo.translate(0, bev, 0); geo.computeVertexNormals(); return geo;
+    }
+
+    // ---- Thảm sàn (làm bệ để in 3D được)
+    add('rug', slab(3.0, 2.1, 0.5, 0.03, 0.012), M.cream, 0, 0, 0);
+    var F = 0.03;
+
+    // ---- Bàn họp
+    var TL = 1.9, TW = 0.95, TH = 0.75;
+    var table = new THREE.Group(); table.name = 'table'; g.add(table);
+    add('table_top', slab(TL, TW, TW / 2, 0.06, 0.022), M.teal, 0, F + TH - 0.06, 0, table);
+    add('table_top_inlay', slab(TL - 0.16, TW - 0.16, (TW - 0.16) / 2, 0.006, 0.002), M.cream, 0, F + TH - 0.001, 0, table);
+    [-0.55, 0.55].forEach(function (x) {
+      add('table_pedestal', new THREE.CylinderGeometry(0.07, 0.09, TH - 0.1, 36), M.orange, x, F + 0.04 + (TH - 0.1) / 2, 0, table);
+      add('table_foot', slab(0.22, 0.6, 0.11, 0.05, 0.018), M.orange, x, F, 0, table);
+    });
+    var TOP = F + TH + 0.005;
+
+    // ---- Cụm dữ liệu ở giữa bàn
+    var hub = new THREE.Group(); hub.name = 'data_hub'; g.add(hub);
+    add('hub_plinth', slab(0.9, 0.36, 0.18, 0.03, 0.01), M.dark, 0, TOP, 0, hub);
+    var HT = TOP + 0.03;
+    // biểu đồ cột: doanh thu tăng dần
+    [0.07, 0.11, 0.09, 0.16, 0.22].forEach(function (h, i) {
+      add('bar_' + (i + 1), rbox(0.05, h, 0.05, 0.012), i === 4 ? M.orange : M.gold, -0.36 + i * 0.065, HT + h / 2, 0.02, hub);
+    });
+    // đường xu hướng có mũi tên
+    var pts = [[-0.37, 0.11], [-0.3, 0.15], [-0.24, 0.13], [-0.17, 0.2], [-0.1, 0.27]].map(function (p) { return new THREE.Vector3(p[0], HT + p[1], -0.06); });
+    var curve = new THREE.CatmullRomCurve3(pts);
+    add('trend_line', new THREE.TubeGeometry(curve, 48, 0.008, 12, false), M.teal, 0, 0, 0, hub);
+    var head = add('trend_arrow', new THREE.ConeGeometry(0.022, 0.05, 24), M.teal, pts[4].x + 0.01, pts[4].y + 0.015, -0.06, hub);
+    head.rotation.z = -Math.atan2(0.07, 0.07) + 0.15;
+    [0, 3].forEach(function (i) {
+      add('trend_post_' + i, new THREE.CylinderGeometry(0.004, 0.004, pts[i].y - HT, 10), M.dark, pts[i].x, HT + (pts[i].y - HT) / 2, -0.06, hub);
+    });
+    // biểu đồ tròn: thị phần
+    var pie = new THREE.Group(); pie.name = 'pie_chart'; pie.position.set(0.12, HT, 0); hub.add(pie);
+    var pieStart = 0.4;
+    [[0.42, M.orange, 0.03], [0.28, M.teal, 0], [0.18, M.gold, 0], [0.12, M.cream, 0]].forEach(function (slice, i) {
+      var frac = slice[0], m = slice[1], lift = slice[2];
+      var len = frac * Math.PI * 2;
+      var s = add('pie_slice_' + (i + 1), new THREE.CylinderGeometry(0.1, 0.1, 0.035 + lift, 48, 1, false, pieStart, len), m, 0, (0.035 + lift) / 2, 0, pie);
+      if (i === 0) { var mid = pieStart + len / 2; s.position.x += Math.sin(mid) * 0.015; s.position.z += Math.cos(mid) * 0.015; }
+      pieStart += len;
+    });
+    // đồng hồ đo điểm thương hiệu
+    var gauge = new THREE.Group(); gauge.name = 'brand_gauge'; gauge.position.set(0.34, HT, 0); hub.add(gauge);
+    add('gauge_base', rbox(0.14, 0.03, 0.06, 0.012), M.cream, 0, 0.015, 0, gauge);
+    add('gauge_arc_bg', new THREE.TorusGeometry(0.055, 0.012, 14, 40, Math.PI), M.cream, 0, 0.03, 0, gauge);
+    var arc = add('gauge_arc_fill', new THREE.TorusGeometry(0.055, 0.0135, 14, 40, Math.PI * 0.72), M.orange, 0, 0.03, 0.001, gauge);
+    arc.rotation.z = Math.PI * 0.28;
+    var needle = add('gauge_needle', rbox(0.06, 0.008, 0.008, 0.003), M.dark, 0, 0.03, 0.012, gauge);
+    needle.geometry.translate(0.03, 0, 0); needle.rotation.z = Math.PI * 0.28;
+    add('gauge_pivot', new THREE.SphereGeometry(0.01, 20, 14), M.dark, 0, 0.03, 0.012, gauge);
+
+    hub.children.forEach(function (o) {
+      o.position.y -= TOP;
+      if (o.isMesh && o.geometry.type === 'TubeGeometry') o.geometry.translate(0, -TOP, 0);
+    });
+    hub.position.y = TOP; hub.scale.setScalar(1.4);
+
+    // ---- Chỗ ngồi: máy tính bảng + tách trà, một bộ mỗi ghế
+    var seats = [
+      { name: 'CEO', x: -TL / 2 - 0.32, z: 0, ry: Math.PI / 2 },
+      { name: 'CFO', x: -0.45, z: TW / 2 + 0.3, ry: 0 },
+      { name: 'CMO', x: 0.45, z: TW / 2 + 0.3, ry: 0 },
+      { name: 'COO', x: -0.45, z: -TW / 2 - 0.3, ry: Math.PI },
+      { name: 'SEC', x: 0.45, z: -TW / 2 - 0.3, ry: Math.PI }
+    ];
+    var cupProfile = [[0, 0], [0.03, 0], [0.034, 0.01], [0.038, 0.08], [0.033, 0.085], [0.03, 0.02], [0, 0.02]].map(function (p) { return new THREE.Vector2(p[0], p[1]); });
+    seats.forEach(function (s) {
+      var place = new THREE.Group(); place.name = 'place_' + s.name; g.add(place);
+      var px = s.name === 'CEO' ? -TL / 2 + 0.2 : s.x, pz = s.name === 'CEO' ? 0 : Math.sign(s.z) * (TW / 2 - 0.15);
+      var tab = add('tablet_' + s.name, rbox(0.24, 0.012, 0.17, 0.005), M.dark, px, TOP + 0.006, pz, place);
+      tab.rotation.y = s.ry;
+      var scr = add('tablet_screen_' + s.name, rbox(0.21, 0.004, 0.14, 0.002), M.gold, px, TOP + 0.013, pz, place);
+      scr.rotation.y = s.ry;
+      var side = s.name === 'CEO' ? new THREE.Vector3(0, 0, 0.2) : new THREE.Vector3(0.18, 0, 0);
+      add('cup_' + s.name, new THREE.LatheGeometry(cupProfile, 32), M.cream, px + side.x, TOP, pz + side.z, place);
+      var handle = add('cup_handle_' + s.name, new THREE.TorusGeometry(0.018, 0.006, 10, 24, Math.PI), M.cream, px + side.x + 0.037, TOP + 0.045, pz + side.z, place);
+      handle.rotation.z = -Math.PI / 2;
+    });
+
+    // ---- Ghế ngồi
+    function chair(s) {
+      var c = new THREE.Group(); c.name = 'chair_' + s.name; c.position.set(s.x, F, s.z); c.rotation.y = s.ry; g.add(c);
+      var accent = s.name === 'CEO' ? M.orange : M.teal;
+      add('chair_base', new THREE.CylinderGeometry(0.22, 0.24, 0.035, 40), M.dark, 0, 0.0175, 0, c);
+      add('chair_stem', new THREE.CylinderGeometry(0.03, 0.035, 0.36, 24), M.dark, 0, 0.035 + 0.18, 0, c);
+      add('chair_seat', rbox(0.48, 0.09, 0.46, 0.04), accent, 0, 0.44, 0, c);
+      var bh = s.name === 'CEO' ? 0.62 : 0.5;
+      var back = add('chair_back', rbox(0.46, bh, 0.08, 0.035), accent, 0, 0.44 + bh / 2 + 0.02, 0.22, c);
+      back.rotation.x = -0.12;
+      add('chair_cushion', rbox(0.36, 0.03, 0.34, 0.014), M.cream, 0, 0.495, -0.01, c);
+      [-0.25, 0.25].forEach(function (x) { add('chair_arm', rbox(0.05, 0.05, 0.34, 0.02), M.cream, x, 0.62, 0.02, c); });
+      [-0.25, 0.25].forEach(function (x) { add('chair_arm_post', new THREE.CylinderGeometry(0.014, 0.014, 0.14, 12), M.cream, x, 0.53, 0.02, c); });
+    }
+    seats.forEach(chair);
+
+    // ---- Bảng thuyết trình ở đầu bàn
+    var board = new THREE.Group(); board.name = 'presentation_board'; board.position.set(TL / 2 + 0.45, F, 0); board.rotation.y = -Math.PI / 2; g.add(board);
+    add('board_foot', slab(0.9, 0.35, 0.17, 0.04, 0.015), M.dark, 0, 0, 0, board);
+    [-0.34, 0.34].forEach(function (x) { add('board_post', new THREE.CylinderGeometry(0.02, 0.022, 1.3, 20), M.dark, x, 0.04 + 0.65, 0, board); });
+    add('board_frame', rbox(0.9, 0.6, 0.05, 0.03), M.teal, 0, 1.05, 0, board);
+    add('board_face', rbox(0.8, 0.5, 0.006, 0.02), M.cream, 0, 1.05, 0.026, board);
+    [0.12, 0.2, 0.16, 0.28, 0.36].forEach(function (h, i) {
+      add('board_bar_' + (i + 1), rbox(0.08, h, 0.02, 0.01), i === 4 ? M.orange : M.teal, -0.28 + i * 0.13, 0.82 + h / 2, 0.035, board);
+    });
+    add('board_flag_pole', new THREE.CylinderGeometry(0.005, 0.005, 0.12, 10), M.dark, 0.24, 0.82 + 0.36 + 0.06, 0.035, board);
+    var fs = new THREE.Shape(); fs.moveTo(0, 0); fs.lineTo(0.08, -0.025); fs.lineTo(0, -0.05); fs.closePath();
+    add('board_flag', new THREE.ExtrudeGeometry(fs, { depth: 0.008, bevelEnabled: true, bevelThickness: 0.002, bevelSize: 0.002, bevelSegments: 2 }), M.orange, 0.245, 0.82 + 0.36 + 0.115, 0.03, board);
+
+    // ---- Chậu cây cho ấm cúng
+    var plant = new THREE.Group(); plant.name = 'plant'; plant.position.set(-TL / 2 - 0.45, F, -0.75); g.add(plant);
+    var potP = [[0, 0], [0.1, 0], [0.13, 0.22], [0.14, 0.24], [0, 0.24]].map(function (p) { return new THREE.Vector2(p[0], p[1]); });
+    add('plant_pot', new THREE.LatheGeometry(potP, 36), M.orange, 0, 0, 0, plant);
+    [[0, 0.36, 0, 0.13], [0.08, 0.3, 0.05, 0.09], [-0.07, 0.31, -0.05, 0.1], [0.02, 0.46, -0.02, 0.09]].forEach(function (leaf, i) {
+      add('plant_leaf_' + i, new THREE.SphereGeometry(leaf[3], 28, 18), M.teal, leaf[0], leaf[1], leaf[2], plant);
+    });
+
+    stage.setObject(g);
+  });
+})();
+</script>
+</body>
+</html>
