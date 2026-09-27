@@ -70,8 +70,6 @@
   /* Hiệu ứng nhẹ cho cảm giác "game" thay vì "form khảo sát" – chuyển màn,
      chọn phương án, và ăn mừng khi có tin vui. Không thêm ảnh minh họa mới. */
   @keyframes bpPop { 0% { transform:scale(.94); } 60% { transform:scale(1.02); } 100% { transform:scale(1); } }
-  @keyframes bpFadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
-  .bp-fade { animation:bpFadeIn .32s ease; }
   .confetti-piece { position:fixed; top:-16px; width:10px; height:14px; border-radius:3px; z-index:100; pointer-events:none; animation:confettiFall linear forwards; }
   @keyframes confettiFall { to { transform:translateY(105vh) rotate(720deg); opacity:.9; } }
   /* 2.3.3 / 2.2.2 – tôn trọng tuỳ chọn giảm chuyển động của người chơi */
@@ -279,6 +277,8 @@
 
 </main>
 
+<!-- GSAP (bản core, tự lưu trữ để chơi offline vẫn có hiệu ứng) – dùng cho fadeIn() chuyển màn bên dưới. -->
+<script src="js/vendor/gsap.min.js"></script>
 <!-- AIBIS: engine tất định chọn phương thức thâm nhập (dùng chung với app/aibis). Nạp trước mã game. -->
 <script src="js/aibis/entry-mode-models.js"></script>
 <script src="js/aibis/entry-mode-engine.js"></script>
@@ -309,14 +309,18 @@
     requestAnimationFrame(step);
   }
   // Vẽ lại nội dung 1 khối vẫn có sẵn hiệu ứng chuyển màn (thay vì nhảy khựng) –
-  // remove rồi add lại class để buộc trình duyệt khởi động lại animation.
+  // dùng GSAP thay vì CSS keyframe: fade+trượt lên cho từng khối con TRỰC TIẾP
+  // của container (không đụng tới cháu bên trong), tạo cảm giác lần lượt hiện
+  // ra thay vì cả màn bật lên cùng lúc. An toàn với nội dung động (ví dụ danh
+  // sách thị trường dài ngắn khác nhau) vì stagger chỉ tính trên số khối con
+  // trực tiếp – luôn ít, bất kể bên trong mỗi khối có bao nhiêu thẻ con cháu.
   function fadeIn(id) {
-    if (reduceMotion) return;
     var el = $(id);
     if (!el) return;
-    el.classList.remove('bp-fade');
-    void el.offsetWidth;
-    el.classList.add('bp-fade');
+    if (reduceMotion || typeof gsap === 'undefined') return;
+    var kids = el.children.length ? Array.prototype.slice.call(el.children) : [el];
+    gsap.fromTo(kids, { opacity: 0, y: 12 },
+      { opacity: 1, y: 0, duration: .36, ease: 'power2.out', stagger: { each: .045, from: 'start' }, clearProps: 'opacity,transform' });
   }
   function createConfetti() {
     if (reduceMotion) return;

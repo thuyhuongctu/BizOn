@@ -4944,6 +4944,15 @@
     if (c) c.checked = lang === 'en';
   }
 
+  // lastDispatchedLang: chặn vòng lặp vô hạn watchRerenders() ↔ bizon:langchange.
+  // Một số trang (ví dụ brand-passport.html) vẽ lại TOÀN BỘ màn hình đang xem
+  // mỗi khi nhận bizon:langchange, bất kể nội dung có thật sự đổi hay không –
+  // bản thân việc vẽ lại đó lại là 1 mutation, khiến watchRerenders() lên lịch
+  // gọi applyLang() lần nữa sau 150ms, và applyLang() trước đây luôn phát lại
+  // sự kiện dù ngôn ngữ không đổi, cứ thế lặp mãi không dừng. Chỉ phát sự kiện
+  // khi ngôn ngữ THẬT SỰ đổi so với lần phát gần nhất thì vòng lặp tự tắt sau
+  // đúng 1 lượt dư thừa, mà không ảnh hưởng người dùng bấm đổi ngôn ngữ thật.
+  var lastDispatchedLang = null;
   window.applyLang = function (lang) {
     document.querySelectorAll('h1,h2,h3,h4,p,a,button,span,b,label,th,td,li,small,summary').forEach(function (el) {
       if (el.childElementCount) return;
@@ -4964,6 +4973,8 @@
     document.documentElement.lang = lang === 'en' ? 'en' : 'vi';
     langBtnSync(lang);
     try { localStorage.setItem('bizon-lang', lang); } catch (e) {}
+    if (lang === lastDispatchedLang) return;
+    lastDispatchedLang = lang;
     try { window.dispatchEvent(new CustomEvent('bizon:langchange', { detail: { lang: lang } })); } catch (e) {}
   };
   window.toggleLang = function () {
