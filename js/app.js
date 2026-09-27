@@ -184,7 +184,7 @@ function AI_OPPONENTS_LIST() { return [
     motto: T('Tăng trưởng thần tốc, lấy số lượng đè lợi nhuận', 'Blitz growth – volume over margin'),
     weakness: T('Biên lợi nhuận cực mỏng, đốt vốn nhanh – dễ hụt hơi trong cuộc chiến dài hơi.', 'Razor-thin margins and fast cash burn – runs out of steam in a long fight.'),
     style: T('Giá rẻ tốc chiến', 'Budget blitz'),
-    play: T('Giá ~125k · marketing ~90tr mỗi vòng (dao động ±12%)', 'Price ~125k · marketing ~90m/round (±12% variance)'),
+    play: T('Giá ~130k · marketing ~85tr mỗi vòng (dao động ±12%)', 'Price ~130k · marketing ~85m/round (±12% variance)'),
     counter: T('Đừng đua giá tận đáy – giữ biên lợi nhuận, xây thương hiệu để giữ khách trung thành.', "Don't race them to the bottom on price – protect your margin and build brand loyalty instead.") },
   { name: 'Mekong Ventures', icon: '🐘', img: 'assets/character/rivals/mekong.webp', accent: '#00a0c8',
     motto: T('Chậm mà chắc, bám rễ niềm tin địa phương', 'Slow and steady, rooted in local trust'),
@@ -196,7 +196,7 @@ function AI_OPPONENTS_LIST() { return [
     motto: T('Sang trọng trong từng chi tiết, bán sự khan hiếm', 'Luxury in every detail, selling scarcity'),
     weakness: T('Chi phí sản xuất thủ công cao – khó mở rộng quy mô nhanh, dễ nghẽn sản lượng.', 'High handcrafted production cost – hard to scale fast, prone to output bottlenecks.'),
     style: T('Cao cấp thương hiệu', 'Premium brand'),
-    play: T('Giá ~195k · marketing ~75tr – đánh phân khúc sang', 'Price ~195k · marketing ~75m – targets the upscale segment'),
+    play: T('Giá ~180k · marketing ~85tr – đánh phân khúc sang', 'Price ~180k · marketing ~85m – targets the upscale segment'),
     counter: T('Chiếm phân khúc phổ thông họ bỏ ngỏ, hoặc đấu trực diện bằng chất lượng + ESG.', 'Take the mass-market segment they leave open, or challenge them head-on with quality + ESG.') },
 ]; }
 const AI_OPPONENTS = AI_OPPONENTS_LIST();
@@ -413,9 +413,9 @@ function MANUAL() { return {
       <div><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p></div></div>`).join('')}` },
   ai: { icon: '⚔️', name: T('Đối thủ AI', 'AI Rivals'), html: `
     <p class="text-sm text-deep-teal/75 mb-4">${T('Ba đối thủ AI mô phỏng ba chiến lược kinh điển. Mỗi vòng, chúng tự định giá và chi marketing quanh mức đặc trưng (dao động ±12%), rồi cạnh tranh giành thị phần bằng đúng công thức sức hút của bạn: giá thấp hơn giá tham chiếu, marketing hiệu quả và thương hiệu tích lũy.', 'Three AI rivals model three classic strategies. Each round they set their own price and marketing spend around a characteristic level (±12% variance), then compete for market share using the exact same attractiveness formula as you: price below the reference price, effective marketing, and accumulated brand.')}</p>
-    ${[['🐺 Alpha Dynamics', T('Giá rẻ tốc chiến', 'Fast, cheap and aggressive'), T('Giá ~125k · marketing ~90tr. Mạnh khi thị trường nhạy giá (biến cố Price War càng lợi cho họ).', 'Price ~125k · marketing ~90m. Strong when the market is price-sensitive (a Price War event favors them even more).'), T('Khắc chế: đừng đua xuống đáy – giữ biên, xây Brand Loyalty ≥70% để khách không rời đi.', 'Counter: don\'t race to the bottom – protect your margin, build Brand Loyalty ≥70% so customers stay.')],
-       ['🐘 Mekong Ventures', T('Cân bằng chắc chắn', 'Steady and balanced'), T('Giá ~150k · marketing ~60tr. Ổn định, ít bứt phá, ít sai lầm.', 'Price ~150k · marketing ~60m. Stable, rarely surges, rarely makes mistakes.'), T('Khắc chế: tận dụng biến cố tốt (Cơ Hội Vàng, Hóa Rồng) – họ không tăng tốc theo thị trường.', 'Counter: capitalize on good events (Golden Opportunity, Dragon Ascension) – they don\'t accelerate with the market.')],
-       ['🦚 Star Clay Co.', T('Cao cấp thương hiệu', 'Premium and brand-led'), T('Giá ~195k · marketing ~75tr. Hưởng lợi lớn ở vòng 6 khi thương hiệu được nhân trọng số ×1.5.', 'Price ~195k · marketing ~75m. Gains the most in round 6, when brand gets a ×1.5 weight multiplier.'), T('Khắc chế: chiếm phân khúc phổ thông, hoặc đầu tư R&D + ESG để đấu trực diện phân khúc sang.', 'Counter: capture the mass-market segment, or invest in R&D + ESG to compete head-on in the premium segment.')]].map(([n, s2, p, c]) => `
+    ${[['🐺 Alpha Dynamics', T('Giá rẻ tốc chiến', 'Fast, cheap and aggressive'), T('Giá ~130k · marketing ~85tr. Mạnh khi thị trường nhạy giá (biến cố Price War càng lợi cho họ) – và sẽ hạ giá thêm nếu bạn phá giá sâu vòng trước.', 'Price ~130k · marketing ~85m. Strong when the market is price-sensitive (a Price War event favors them even more) – and cuts further if you deep-discount the round before.'), T('Khắc chế: đừng đua xuống đáy – giữ biên, xây Brand Loyalty ≥70% để khách không rời đi.', 'Counter: don\'t race to the bottom – protect your margin, build Brand Loyalty ≥70% so customers stay.')],
+       ['🐘 Mekong Ventures', T('Cân bằng chắc chắn', 'Steady and balanced'), T('Giá ~150k · marketing ~60tr. Ổn định, ít bứt phá – nhưng sẽ giảm giá và tăng marketing để bám đuổi nếu bạn đang chiếm trên 35% thị phần.', 'Price ~150k · marketing ~60m. Stable, rarely surges – but cuts price and raises marketing to catch up if you hold above 35% share.'), T('Khắc chế: tận dụng biến cố tốt (Cơ Hội Vàng, Hóa Rồng) – họ không tăng tốc theo thị trường.', 'Counter: capitalize on good events (Golden Opportunity, Dragon Ascension) – they don\'t accelerate with the market.')],
+       ['🦚 Star Clay Co.', T('Cao cấp thương hiệu', 'Premium and brand-led'), T('Giá ~180k · marketing ~85tr. Không cạnh tranh giá, nhưng tăng marketing để phòng thủ khi Brand Loyalty của bạn vượt 65%. Hưởng lợi lớn ở vòng 6 khi thương hiệu được nhân trọng số ×1.5.', "Price ~180k · marketing ~85m. Won't compete on price, but raises marketing to defend when your Brand Loyalty passes 65%. Gains the most in round 6, when brand gets a ×1.5 weight multiplier."), T('Khắc chế: chiếm phân khúc phổ thông, hoặc đầu tư R&D + ESG để đấu trực diện phân khúc sang.', 'Counter: capture the mass-market segment, or invest in R&D + ESG to compete head-on in the premium segment.')]].map(([n, s2, p, c]) => `
     <div class="clay-card p-4 mb-3"><p class="font-bold text-sm text-deep-teal">${n} <span class="text-primary">· ${s2}</span></p>
       <p class="text-xs text-deep-teal/60 mt-1">${p}</p><p class="text-xs font-semibold text-emerald-700 mt-1">${c}</p></div>`).join('')}
     <p class="text-[11px] text-deep-teal/50 mt-2">${T('📌 Giảng viên: hành vi AI là tất định (cùng seed đội → cùng kết quả), tiện chấm điểm & so sánh giữa các đội. Chi tiết trong tài liệu giảng viên trên GitHub.', '📌 For instructors: AI behavior is deterministic (same team seed → same outcome), which makes grading and cross-team comparison easy. Details in the instructor documentation on GitHub.')}</p>` },
@@ -1555,7 +1555,7 @@ function explainRound(r) {
   if (prev && prev.share > 35 && balRival) causes.push(T(`${balRival.name} bám đuổi bằng cách giảm giá và tăng marketing vì đang thua thị phần rõ rệt`, `${balRival.name} is catching up by cutting price and raising marketing after falling clearly behind on share`));
   if (prev && prev.brandLoyalty > 65 && premRival) causes.push(T(`${premRival.name} tăng marketing để bảo vệ phân khúc cao cấp trước thương hiệu đang mạnh lên của đội bạn`, `${premRival.name} raised marketing to defend its premium segment against your team's growing brand`));
   if (r.sold < d.production * 0.85) causes.push(T(`sản xuất ${(d.production || 0).toLocaleString('vi-VN')} sp nhưng chỉ bán ${r.sold.toLocaleString('vi-VN')} – tồn kho chôn vốn`, `produced ${(d.production || 0).toLocaleString('en-US')} units but only sold ${r.sold.toLocaleString('en-US')} – excess inventory ties up cash`));
-  if ((d.marketing || 0) < 40) causes.push(T('marketing dưới mặt bằng đối thủ (55–90tr) nên độ phủ yếu', "marketing is below the rivals' range (55-90m), so reach is weak"));
+  if ((d.marketing || 0) < 40) causes.push(T('marketing dưới mặt bằng đối thủ (55–85tr) nên độ phủ yếu', "marketing is below the rivals' range (55-85m), so reach is weak"));
   const head = dShare >= 1 ? T(`Thị phần tăng ${dShare.toFixed(1)} điểm`, `Market share rose ${dShare.toFixed(1)} points`) : dShare <= -1 ? T(`Thị phần giảm ${Math.abs(dShare).toFixed(1)} điểm`, `Market share dropped ${Math.abs(dShare).toFixed(1)} points`) : T('Thị phần đi ngang', 'Market share held steady');
   const tail = causes.length ? T(' – nguyên nhân chính: ', ' – main cause: ') + causes.slice(0, 2).join('; ')
     : r.netProfit > 0 ? T(' – chiến lược cân bằng, không có điểm yếu rõ rệt.', ' – a balanced strategy, no clear weak point.')
@@ -2189,7 +2189,7 @@ function renderCashReport(body) {
 }
 
 // ---------- 🆚 Tình báo chi phí đối thủ – so sánh ngân sách với 3 đối thủ AI ----------
-const RIVAL_STYLE_BASE = { aggressive: { price: 125, mkt: 90 }, balanced: { price: 150, mkt: 60 }, premium: { price: 195, mkt: 75 } };
+const RIVAL_STYLE_BASE = { aggressive: { price: 130, mkt: 85 }, balanced: { price: 150, mkt: 60 }, premium: { price: 180, mkt: 85 } };
 /* Ván chơi cũ chưa lưu tình báo trong report → ước lượng từ phong cách từng đối thủ */
 function rivalIntelOf(r) {
   if (r.rivals && r.rivals.length) return r.rivals;
