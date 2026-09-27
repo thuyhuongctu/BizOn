@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Sảnh 3D (thử nghiệm) – BizOn Bật Nghiệp</title>
+<meta name="description" content="Bản thử nghiệm đầu tiên của Sảnh 3D BizOn: đi lại tự do và trò chuyện với Lumina AI – hạt giống cho một hub 3D nối tới mọi trò chơi trong vũ trụ Bật Nghiệp.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<script src="js/backend-config.js"></script>
+<script src="js/error-log.js"></script>
+<link rel="stylesheet" href="css/bizon-fonts.css">
+<style>
+  html { background:#f4faff; }
+  body { font-family:'Manrope', 'Manrope Fallback',sans-serif; background:transparent; color:#033337; }
+  .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
+  .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease; }
+  .clay-btn:active { transform:translateY(2px); }
+
+  #hub3d-stage { position:relative; width:100%; aspect-ratio:16/10; max-height:74vh; border-radius:28px; overflow:hidden; background:#bfe6ec; touch-action:none; }
+  #hub3d-canvas { position:absolute; inset:0; width:100%; height:100%; display:block; }
+  #hub3d-fallback { position:absolute; inset:0; align-items:center; justify-content:center; text-align:center; padding:24px; background:#0e2a33; color:#fff; font-weight:700; }
+  #hub3d-fallback:not([hidden]) { display:flex; }
+
+  #hub3d-hint { position:absolute; left:16px; top:16px; background:rgba(3,51,55,.55); color:#fff; font-size:11px; font-weight:700; padding:8px 12px; border-radius:14px; backdrop-filter:blur(6px); max-width:220px; line-height:1.4; }
+
+  #hub3d-prompt { position:absolute; left:50%; bottom:132px; transform:translateX(-50%); background:rgba(3,51,55,.7); color:#fff; font-size:12px; font-weight:800; padding:8px 16px; border-radius:999px; backdrop-filter:blur(6px); }
+  #hub3d-interact { position:absolute; right:18px; bottom:128px; background:#fda127; color:#033337; font-weight:800; font-size:12px; border-radius:999px; padding:10px 16px; box-shadow:0 8px 20px -6px rgba(0,0,0,.35); }
+  #hub3d-prompt[hidden], #hub3d-interact[hidden] { display:none; }
+
+  #hub3d-joy-base { position:absolute; left:22px; bottom:22px; width:104px; height:104px; border-radius:50%; background:rgba(3,51,55,.28); border:2px solid rgba(255,255,255,.5); touch-action:none; }
+  #hub3d-joy-knob { position:absolute; left:50%; top:50%; width:44px; height:44px; margin:-22px; border-radius:50%; background:rgba(255,255,255,.85); box-shadow:0 4px 10px rgba(0,0,0,.25); pointer-events:none; }
+  @media (min-width:781px) { #hub3d-joy-base { display:none; } }
+
+  #hub3d-dialogue { position:absolute; inset:0; display:none; align-items:flex-end; justify-content:center; background:rgba(2,20,24,.35); padding:18px; }
+  #hub3d-dialogue.on { display:flex; }
+  #hub3d-dlg-box { width:100%; max-width:520px; background:#fff; border-radius:22px; padding:18px 20px; box-shadow:0 20px 50px -15px rgba(0,0,0,.5); position:relative; }
+  #hub3d-dlg-close { position:absolute; top:10px; right:14px; font-weight:800; opacity:.4; }
+  #hub3d-dlg-avatar { width:40px; height:40px; border-radius:50%; object-fit:cover; object-position:top; float:left; margin-right:10px; background:#e8f2f8; }
+
+  html[data-theme="dark"] { background:#081a20; color-scheme:dark; }
+  html[data-theme="dark"] body { color:#d6ecf0; }
+  html[data-theme="dark"] .clay-card { background:#0e2a33; box-shadow:0 10px 30px -5px rgba(0,0,0,.45), inset 0 -4px 0 rgba(0,0,0,.3); }
+  html[data-theme="dark"] #hub3d-dlg-box { background:#0e2a33; color:#d6ecf0; }
+</style>
+<link rel="stylesheet" href="css/tw.css">
+</head>
+<body>
+
+<main class="max-w-3xl mx-auto px-5 py-24">
+  <div class="mb-5">
+    <p class="text-[11px] font-extrabold uppercase tracking-wide text-clay-gold">🧪 Bản thử nghiệm · v0</p>
+    <h1 class="font-display font-extrabold text-2xl sm:text-3xl mt-1">🏛️ Sảnh 3D BizOn</h1>
+    <p class="text-sm text-deep-teal/60 mt-2">Lát cắt đầu tiên của một không gian 3D nối tới mọi trò chơi trong vũ trụ Bật Nghiệp: đi lại tự do và trò chuyện với Lumina AI. Cánh cửa dẫn thẳng vào từng game sẽ được thêm dần ở các bản sau.</p>
+  </div>
+
+  <div class="clay-card p-3">
+    <div id="hub3d-stage">
+      <canvas id="hub3d-canvas"></canvas>
+      <div id="hub3d-fallback" hidden>⚠️ Trình duyệt này chưa hỗ trợ WebGL nên chưa xem được Sảnh 3D.</div>
+      <p id="hub3d-hint">🖥️ WASD / mũi tên để đi · phím E để nói chuyện<br>📱 Cần điều khiển ở góc trái · chạm nút để nói chuyện</p>
+      <p id="hub3d-prompt" hidden>Nhấn <b>E</b> hoặc chạm nút bên phải để trò chuyện</p>
+      <button id="hub3d-interact" hidden>🗨️ Nói chuyện</button>
+      <div id="hub3d-joy-base"><div id="hub3d-joy-knob"></div></div>
+
+      <div id="hub3d-dialogue">
+        <div id="hub3d-dlg-box">
+          <button id="hub3d-dlg-close" aria-label="Đóng">✕</button>
+          <img id="hub3d-dlg-avatar" src="assets/character/lumina-ao-dai-wave.webp" alt="">
+          <p id="hub3d-dlg-name" class="font-display font-extrabold text-sm text-primary"></p>
+          <p id="hub3d-dlg-text" class="text-sm mt-1"></p>
+          <div class="flex gap-2 justify-end mt-3">
+            <a id="hub3d-dlg-cta" href="brand-passport.html" hidden class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-4 py-2 text-xs">🛂 Vào chơi Hộ Chiếu Thương Hiệu</a>
+            <button id="hub3d-dlg-next" class="clay-btn bg-primary text-white font-display font-extrabold px-4 py-2 text-xs">Tiếp tục ▸</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="text-[11px] text-deep-teal/45 mt-4">Nhân vật người chơi hiện là hình đặt chỗ (placeholder) vẽ trực tiếp bằng canvas – sẽ thay bằng tạo hình đất nặn thật ở bản sau. Dựng bằng <a href="https://threejs.org" target="_blank" rel="noopener" class="font-bold text-primary">three.js</a> (MIT license), chạy thẳng trong trình duyệt, không cần cài đặt.</p>
+</main>
+
+<script src="js/vendor/three.min.js"></script>
+<script src="js/hub3d.js"></script>
+<script src="js/site-dock.js" defer></script>
+<script src="js/site-footer.js" defer></script>
+<script src="js/site-nav.js" defer></script>
+</body>
+</html>
