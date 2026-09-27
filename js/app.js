@@ -3365,7 +3365,7 @@ function renderInstructor() {
       ${t.real ? `<button onclick="grantFunds(100)" class="clay-btn bg-primary text-white text-xs font-bold px-3 py-2 shrink-0">+100tr₫</button>` : ''}
     </div>`).join('');
   $('ins-log').innerHTML = (S.grantLog || []).length
-    ? S.grantLog.slice(-8).reverse().map(g => `<p>${T(`💸 Cấp <b>${g.amount}tr₫</b> cho ${g.team} – vòng ${g.round}`, `💸 Granted <b>${g.amount}m₫</b> to ${g.team} – round ${g.round}`)}</p>`).join('')
+    ? S.grantLog.slice(-8).reverse().map(g => `<p>${T(`💸 Cấp <b>${g.amount}tr₫</b> cho ${escapeHtml(g.team)} – vòng ${g.round}`, `💸 Granted <b>${g.amount}m₫</b> to ${escapeHtml(g.team)} – round ${g.round}`)}</p>`).join('')
     : `<p class="text-deep-teal/40">${T('Chưa có giao dịch nào.', 'No transactions yet.')}</p>`;
 }
 
