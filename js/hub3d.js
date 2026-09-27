@@ -8,6 +8,10 @@
  * v0.2: thay hình đặt chỗ vẽ bằng canvas bằng tạo hình đất nặn thật (chọn
  * 1 trong 2 đại diện áo dài, nhớ lựa chọn qua localStorage), và thêm hiệu
  * ứng mờ dần khi bước qua cửa thay vì điều hướng đột ngột.
+ * v0.3: thêm "hoạt hình đi bộ" giả lập cho nhân vật (chỉ có 1 ảnh tĩnh,
+ * chưa có sprite sheet nhiều khung hình) bằng cách nhấp nhô + nghiêng nhẹ
+ * + co giãn (squash & stretch) theo nhịp bước khi đang di chuyển, không
+ * cần thêm ảnh mới. Tắt hoàn toàn khi prefers-reduced-motion.
  *
  * Nhân vật người chơi, NPC và các cửa đều là sprite luôn quay mặt về camera
  * (kiểu "búp bê giấy" đứng trong khung cảnh 3D) – khớp tinh thần đất nặn/cắt
@@ -32,6 +36,17 @@
   var DOOR_DIST = 2.6;
   var DOOR_RADIUS = BOUNDS - 1.1;
   var NPC_POS = new THREE.Vector3(0, 0.95, -3.4);
+
+  // Hoạt hình đi bộ giả lập trên sprite tĩnh: tần số bước, biên độ nhấp
+  // nhô/nghiêng/co giãn. playerBob/Tilt/Squash là giá trị hiện tại, luôn
+  // easing (lerp) về đích mỗi khung hình – tránh giật cục lúc dừng đột ngột.
+  var PLAYER_W = 1.3, PLAYER_H = 2.6;
+  var WALK_FREQ = 9;
+  var BOB_HEIGHT = 0.1;
+  var TILT_AMOUNT = 0.06;
+  var SQUASH_AMOUNT = 0.05;
+  var walkPhase = 0;
+  var playerBob = 0, playerTilt = 0, playerSquash = 0;
 
   var DIALOGUE = [
     ['Lumina AI', 'Chào bạn! Mình là Lumina – người dẫn đường ở Sảnh BizOn. 👋'],
@@ -208,7 +223,7 @@
     ring.position.y = 0.01;
     scene.add(ring);
 
-    player = makeSprite(new THREE.TextureLoader().load(avatarTexPath), 1.3, 2.6);
+    player = makeSprite(new THREE.TextureLoader().load(avatarTexPath), PLAYER_W, PLAYER_H);
     player.position.set(0, 0, 4.4);
     scene.add(player);
 
@@ -333,6 +348,7 @@
     requestAnimationFrame(loop);
     var dt = Math.min(clock.getDelta(), 0.05);
 
+    var isMoving = false;
     if (!dlgOpen()) {
       var mx = 0, mz = 0;
       if (keys.w || keys.arrowup) mz -= 1;
@@ -341,7 +357,8 @@
       if (keys.d || keys.arrowright) mx += 1;
       if (joyActive) { mx += joyVec.x; mz += joyVec.y; }
       var len = Math.hypot(mx, mz);
-      if (len > 0.001) {
+      isMoving = len > 0.001;
+      if (isMoving) {
         mx /= len; mz /= len;
         player.position.x += mx * PLAYER_SPEED * dt;
         player.position.z += mz * PLAYER_SPEED * dt;
@@ -357,6 +374,20 @@
     if (!reduceMotion) {
       npcBob += dt;
       npc.position.y = NPC_POS.y + Math.sin(npcBob * 1.6) * 0.05;
+
+      // Hoạt hình đi bộ giả lập: nhấp nhô + nghiêng + co giãn theo nhịp bước
+      // khi đang di chuyển, ease mượt về trạng thái đứng yên khi dừng lại.
+      if (isMoving) walkPhase += dt * WALK_FREQ;
+      var targetBob = isMoving ? Math.abs(Math.sin(walkPhase)) * BOB_HEIGHT : 0;
+      var targetTilt = isMoving ? Math.sin(walkPhase) * TILT_AMOUNT : 0;
+      var targetSquash = isMoving ? Math.abs(Math.sin(walkPhase)) * SQUASH_AMOUNT : 0;
+      var ease = Math.min(1, dt * 12);
+      playerBob += (targetBob - playerBob) * ease;
+      playerTilt += (targetTilt - playerTilt) * ease;
+      playerSquash += (targetSquash - playerSquash) * ease;
+      player.position.y = playerBob;
+      player.material.rotation = playerTilt;
+      player.scale.set(PLAYER_W * (1 + playerSquash), PLAYER_H * (1 - playerSquash), 1);
     }
 
     currentTarget = dlgOpen() ? null : findNearestTarget();
