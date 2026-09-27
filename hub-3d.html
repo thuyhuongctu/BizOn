@@ -40,6 +40,17 @@
   #hub3d-dlg-close { position:absolute; top:10px; right:14px; font-weight:800; opacity:.4; }
   #hub3d-dlg-avatar { width:40px; height:40px; border-radius:50%; object-fit:cover; object-position:top; float:left; margin-right:10px; background:#e8f2f8; }
 
+  #hub3d-charselect { position:absolute; inset:0; z-index:60; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; background:linear-gradient(160deg,#033337,#02444d); color:#fff; padding:20px; text-align:center; }
+  #hub3d-charselect.off { display:none; }
+  #hub3d-charselect .opt { display:flex; gap:16px; }
+  #hub3d-charselect button { background:rgba(255,255,255,.08); border:2px solid rgba(255,255,255,.18); border-radius:20px; padding:10px; width:130px; transition:transform .15s ease, border-color .15s ease; }
+  #hub3d-charselect button:hover, #hub3d-charselect button:active { border-color:#fda127; transform:translateY(-3px); }
+  #hub3d-charselect img { width:100%; height:150px; object-fit:contain; object-position:bottom; }
+  #hub3d-charselect p.name { font-size:11px; font-weight:800; margin-top:6px; }
+
+  #hub3d-fade { position:absolute; inset:0; z-index:55; background:#033337; opacity:0; pointer-events:none; transition:opacity .42s ease; }
+  #hub3d-fade.on { opacity:1; }
+
   html[data-theme="dark"] { background:#081a20; color-scheme:dark; }
   html[data-theme="dark"] body { color:#d6ecf0; }
   html[data-theme="dark"] .clay-card { background:#0e2a33; box-shadow:0 10px 30px -5px rgba(0,0,0,.45), inset 0 -4px 0 rgba(0,0,0,.3); }
@@ -60,6 +71,20 @@
     <div id="hub3d-stage">
       <canvas id="hub3d-canvas"></canvas>
       <div id="hub3d-fallback" hidden>⚠️ Trình duyệt này chưa hỗ trợ WebGL nên chưa xem được Sảnh 3D.</div>
+      <div id="hub3d-fade"></div>
+      <div id="hub3d-charselect">
+        <p class="font-display font-extrabold text-lg">🧑‍🎓 Chọn đại diện của bạn</p>
+        <div class="opt">
+          <button id="hub3d-pick-nam" data-tex="assets/character/team/aodai-nam-diploma-cut.webp">
+            <img src="assets/character/team/aodai-nam-diploma-cut.webp" alt="Đại diện nam">
+            <p class="name">Đại diện (nam)</p>
+          </button>
+          <button id="hub3d-pick-nu" data-tex="assets/character/team/aodai-nu-lotus-cut.webp">
+            <img src="assets/character/team/aodai-nu-lotus-cut.webp" alt="Đại diện nữ">
+            <p class="name">Đại diện (nữ)</p>
+          </button>
+        </div>
+      </div>
       <p id="hub3d-hint">🖥️ WASD / mũi tên để đi · phím E để tương tác<br>📱 Cần điều khiển ở góc trái · chạm nút để tương tác</p>
       <p id="hub3d-prompt" hidden>Nhấn <b>E</b> hoặc chạm nút bên phải để trò chuyện</p>
       <button id="hub3d-interact" hidden>🗨️ Nói chuyện</button>
@@ -80,7 +105,7 @@
     </div>
   </div>
 
-  <p class="text-[11px] text-deep-teal/45 mt-4">Nhân vật người chơi hiện là hình đặt chỗ (placeholder) vẽ trực tiếp bằng canvas – sẽ thay bằng tạo hình đất nặn thật ở bản sau. Dựng bằng <a href="https://threejs.org" target="_blank" rel="noopener" class="font-bold text-primary">three.js</a> (MIT license), chạy thẳng trong trình duyệt, không cần cài đặt.</p>
+  <p class="text-[11px] text-deep-teal/45 mt-4">Nhân vật người chơi dùng tạo hình đất nặn thật (2 đại diện áo dài trong Thư viện Sáng tạo) thay cho hình đặt chỗ bản trước. Dựng bằng <a href="https://threejs.org" target="_blank" rel="noopener" class="font-bold text-primary">three.js</a> (MIT license), chạy thẳng trong trình duyệt, không cần cài đặt.</p>
 </main>
 
 <script src="js/vendor/three.min.js"></script>
