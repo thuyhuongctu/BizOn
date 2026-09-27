@@ -336,7 +336,7 @@ async function doLogin() {
   if (!restored && window.BizOnSeedEngine) {
     try {
       const seed = BizOnSeedEngine.createSeed(classId || 'TRIAL', team, 'case-draw');
-      S.caseId = BizOnSeedEngine.pick(seed, 'case', ['A', 'B']);
+      S.caseId = BizOnSeedEngine.pick(seed, 'case', ['A', 'B', 'C']);
     } catch (e) { /* giữ mặc định 'A' nếu có lỗi */ }
   }
   save();
@@ -706,6 +706,8 @@ function CASE_INFO_LIST() {
       desc: T('Một mùa cạnh tranh với các đối thủ nội địa quen thuộc — thị trường vẫn còn nhiều dư địa để bứt phá.', 'A season competing against familiar domestic rivals — plenty of room to break out.') },
     B: { name: T('Trường hợp B · Sóng Ngoại Nhập', 'Case B · The Import Wave'), img: 'lumina-ao-dai-alert',
       desc: T('Star Clay Co., đối thủ ngoại cao cấp, sẽ gia nhập và thử thách đội bạn suốt mùa.', 'Star Clay Co., a premium foreign rival, enters and challenges your team all season.') },
+    C: { name: T('Trường hợp C · Sóng Livestream Giá Rẻ', 'Case C · The Livestream Discount Wave'), img: 'lumina-vest-worried',
+      desc: T('Alpha Dynamics đẩy mạnh bán hàng livestream giá sốc mỗi tối, thử thách đội bạn suốt mùa bằng một cuộc đua giá không hồi kết.', 'Alpha Dynamics pushes nightly shock-price livestreams, challenging your team all season with an endless price race.') },
   };
 }
 function maybeShowCaseDraw(onDone) {
