@@ -1,7 +1,7 @@
 /* BizOn Bật Nghiệp 2026 – Service Worker (offline app shell)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
 
-const CACHE = 'bizon-v291';
+const CACHE = 'bizon-v292';
 const SHELL = [
   './',
   './index.html',
@@ -25,6 +25,11 @@ const SHELL = [
   './giang-vien.html',
   './khao-sat-online.html',
   './brand-passport.html',
+  // three.min.js (~670KB) CỐ Ý không nằm trong SHELL – trang thử nghiệm này
+  // không nên làm nặng lượt cài đặt của mọi người chơi khác; sẽ được đệm vào
+  // cache ở lượt tải đầu tiên khi ai đó thực sự mở trang qua handler chung.
+  './hub-3d.html',
+  './js/hub3d.js',
   './huong-dan.html',
   './bang-chung.html',
   './hoc-thuat.html',
