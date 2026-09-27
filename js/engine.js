@@ -704,12 +704,28 @@ function simulateRound(s, d) {
   const playerAttr = Math.pow(REF_PRICE / d.price, elasticity) * (1 + Math.sqrt(mktEff) / 18) * Math.pow(s.brand, brandPow);
 
   const diffMul = difficultyMul(s);   // độ khó: ×1.0 ở mức Thường (không đổi hành vi)
+  // Mỗi đối thủ đọc lại đúng vòng ngay trước để phản ứng theo đúng cá tính của
+  // mình – không phải cùng nhìn vào một chỉ số chung, để cảm giác như 3 đối
+  // thủ riêng biệt chứ không phải một "độ khó" đồng nhất áp lên cả ba:
+  // aggressive trả đũa phá giá, balanced bám đuổi khi đang thua thị phần,
+  // premium chỉ tăng marketing khi thương hiệu đối thủ đã đủ mạnh để đe dọa
+  // phân khúc cao cấp (không cạnh tranh giá, giữ đúng chất "không phá giá").
+  const prevReport = s.history[s.history.length - 1];
   const compDecisions = s.competitors.map(c => {
     const jitter = 0.9 + rng(s) * 0.25;
     let price = REF_PRICE, mkt = 55;
-    if (c.style === 'aggressive') { price = 125 * jitter; mkt = 90 * jitter; }
-    if (c.style === 'balanced')   { price = 150 * jitter; mkt = 60 * jitter; }
-    if (c.style === 'premium')    { price = 195 * jitter; mkt = 75 * jitter; }
+    if (c.style === 'aggressive') {
+      price = 125 * jitter; mkt = 90 * jitter;
+      if (prevReport && prevReport.decisions.price < REF_PRICE * 0.85) price *= 0.92;
+    }
+    if (c.style === 'balanced') {
+      price = 150 * jitter; mkt = 60 * jitter;
+      if (prevReport && prevReport.share > 35) { price *= 0.95; mkt *= 1.08; }
+    }
+    if (c.style === 'premium') {
+      price = 195 * jitter; mkt = 75 * jitter;
+      if (prevReport && prevReport.brandLoyalty > 65) mkt *= 1.15;
+    }
     const attr = Math.pow(REF_PRICE / price, elasticity) * (1 + Math.sqrt(mkt) / 18) * Math.pow(c.brand, brandPow) * diffMul;
     return { c, price, mkt, attr };
   });
