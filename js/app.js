@@ -30,6 +30,7 @@ function applyStateDefaults(s) {
   s.quickRatio ??= 1.0; s.roi ??= 0; s.energyLines ??= [2100, 4850, 1470];
   s.lineUpgraded ??= [false, false, false]; s.maintBonus ??= 0; s.maintenanceLog ??= [];
   s.loan ??= 0; s.costCutter ??= false; s.peakShare ??= 0; s.eventShownRound ??= 0;
+  s.rivalDialogueShownRound ??= 0;
   s.whatIfUsed ??= 0; s.advisorHistory ??= [];
   s.whatIfTotal ??= 0; s.suggestionsApplied ??= 0; s.achShown ??= (s.achievements || []).slice();
   s.conquest ??= []; s.aiHistory ??= []; s.teamMembers ??= null;
@@ -779,7 +780,9 @@ function maybeShowEventIntro() {
   div.querySelector('#ev-cta').onclick = () => {
     div.remove();
     if (ev.cta && ev.cta.report) currentReport = ev.cta.report;
-    showTab(ev.cta ? ev.cta.tab : 'decisions');
+    const goToTab = () => showTab(ev.cta ? ev.cta.tab : 'decisions');
+    if (window.RivalDialogue) RivalDialogue.maybeShow(goToTab);
+    else goToTab();
   };
   div.querySelector('#ev-close').onclick = () => { div.remove(); showTab('home'); };
   document.body.appendChild(div);

@@ -580,6 +580,7 @@ function newGameState(profile) {
     costCutter: false,
     peakShare: 0,
     eventShownRound: 0,
+    rivalDialogueShownRound: 0,
     whatIfUsed: 0,
     advisorHistory: [],
   };
