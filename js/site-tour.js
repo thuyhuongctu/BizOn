@@ -201,6 +201,7 @@
     clearTimeout(timer);
     if (i >= steps.length) { stop(); return; }
     idx = i;
+    var myIdx = i;
     var s = steps[i], L = T[lang()], text = textOf(s);
 
     unspot();
@@ -228,6 +229,12 @@
     var t0 = performance.now(), advanced = false;
     var nextStep = function () {
       if (advanced) return;
+      // Bấm "Tiếp" trong lúc đang đọc gọi go(idx+1) ngay, và go() mới đó gọi
+      // speak() → cancelSpeech() → huỷ utterance của bước cũ, kích hoạt
+      // onend/onerror của bước cũ (tức nextStep này) sau khi idx đã đổi sang
+      // bước mới. Không kiểm tra thì nextStep cũ vẫn tự lên lịch go(idx+1)
+      // theo idx MỚI, khiến tour nhảy vọt thêm 1 bước ngoài ý muốn ~0,7s sau.
+      if (idx !== myIdx) return;
       advanced = true;
       var left = Math.max(700, minMs - (performance.now() - t0));
       timer = setTimeout(function () { go(idx + 1); }, left);
@@ -293,19 +300,20 @@
     opts = window.BIZON_TOUR_OPTS || {};
     build();
     addLauncher();
-    // Nút đổi ngôn ngữ không phát sự kiện riêng, nên bám vào chính nó để dịch
-    // lại nhãn ngay khi người dùng bấm.
-    var lb = document.getElementById('lang-btn');
-    if (lb) lb.addEventListener('click', function () {
-      setTimeout(function () {
-        var L2 = T[lang()];
+    // Nghe sự kiện bizon:langchange (site-ui.js phát ra sau applyLang()) thay
+    // vì chỉ bám vào nút #lang-btn – nút đó không tồn tại trên mọi trang có
+    // tour (ví dụ index.html/academia3d-v2.html/gioi-thieu.html để nút ngôn
+    // ngữ trong dock), nên trước đây nhãn/tour không dịch lại được ở đó.
+    window.addEventListener('bizon:langchange', function () {
+      var L2 = T[lang()];
+      if (el.launch) {
         el.launch.title = L2.launch;
         el.launch.setAttribute('aria-label', L2.launch);
-        if (running) {
-          syncLabels();
-          go(Math.max(0, idx));
-        }
-      }, 0);
+      }
+      if (running) {
+        syncLabels();
+        go(Math.max(0, idx));
+      }
     });
   }
 

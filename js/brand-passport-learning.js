@@ -40,7 +40,7 @@
   ];
   var BUDGETS = ['Thận trọng', 'Cân bằng', 'Tăng tốc'];
   var MODES = ['Nền tảng số', 'Xuất khẩu trực tiếp', 'Đối tác địa phương'];
-  var MARKETS = ['Hải Lam', 'Bắc Phong', 'Kim Sa', 'Lục Đảo', 'Nhật Quang', 'Tân Cảng'];
+  var MARKETS = ['Hải Lam', 'Bắc Phong', 'Kim Sa', 'Lục Đảo', 'Nhật Quang', 'Tân Cảng', 'Hỏa Sơn'];
 
   function uid() {
     if (window.crypto && typeof window.crypto.randomUUID === 'function') return window.crypto.randomUUID();
