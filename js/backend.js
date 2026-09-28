@@ -54,7 +54,7 @@
     return res.json().catch(() => null);
   }
 
-  async function flush() {
+  async function doFlush() {
     if (!on() || !navigator.onLine) return;
     const q = readQueue();
     if (!q.length) return;
@@ -62,7 +62,30 @@
     for (const row of q) {
       try { await post(row); } catch (e) { rest.push(row); }
     }
-    writeQueue(rest);
+    // Dòng mới thêm vào SAU khi q được đọc (submitRound luôn push vào cuối
+    // mảng) chưa từng được gửi – giữ lại thay vì để writeQueue() dưới đây
+    // xoá mất chúng.
+    const extra = readQueue().slice(q.length);
+    writeQueue(rest.concat(extra));
+  }
+  // flush() được gọi từ nhiều nơi (submitRound, sự kiện 'online',
+  // DOMContentLoaded) có thể trùng thời điểm – khoá lại để chỉ 1 lượt gửi
+  // chạy thật sự cùng lúc, nếu không 2 lượt sẽ cùng đọc và cùng gửi lại y
+  // hệt các dòng giống nhau (POST trùng), và lượt xong sau sẽ writeQueue()
+  // đè mất dòng mới vừa được submitRound() thêm vào trong lúc lượt kia
+  // đang chạy.
+  let flushing = null;
+  function flush() {
+    if (flushing) return flushing;
+    // .finally() luôn chạy ở microtask kế tiếp (kể cả khi doFlush() đã xong
+    // ngay lập tức vì hàng đợi rỗng – không có await nào cả), nên gán
+    // "flushing = ..." chắc chắn hoàn tất TRƯỚC khi callback này chạy. Nếu
+    // viết finally NGAY TRONG doFlush() thay vì .finally() ở đây, đường
+    // "hàng đợi rỗng, không await" sẽ tự đặt flushing về null TRƯỚC KHI
+    // dòng "flushing = (async()=>{...})()" ở dưới kịp gán xong, khiến giá
+    // trị cuối cùng bị đè lại thành promise đã xong – kẹt "đang gửi" mãi.
+    flushing = doFlush().finally(function () { flushing = null; });
+    return flushing;
   }
 
   async function submitRound(S, report) {

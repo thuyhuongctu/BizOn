@@ -127,13 +127,20 @@
     size();
     if (reduce) { draw(false); return; }
 
+    // Quay lại tab không có nghĩa hero đang hiển thị – nếu người dùng đã cuộn
+    // khỏi màn hình trước khi chuyển tab, isVisible vẫn false nên không tự
+    // chạy lại vòng vẽ O(n²) một cách lãng phí khi hero không còn ai thấy.
+    var isVisible = true;
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (ents) {
-        ents.forEach(function (en) { if (en.isIntersecting) start(); else stop(); });
+        ents.forEach(function (en) {
+          isVisible = en.isIntersecting;
+          if (en.isIntersecting) start(); else stop();
+        });
       }, { threshold: 0 }).observe(host);
     } else { start(); }
     document.addEventListener('visibilitychange', function () {
-      if (document.hidden) stop(); else start();
+      if (document.hidden) stop(); else if (isVisible) start();
     });
   }
 

@@ -66,6 +66,7 @@
   var idx = -1, overlay = null, steps = null;
 
   function paint() {
+    if (!steps || idx < 0) return; // tour đã stop() giữa chừng (xem chú thích ở go())
     var step = steps[idx];
     var el = $q(step.sel);
     if (!el) { next(); return; } // phần tử chưa render (vd. đã vào đủ 7 thị trường) → bỏ qua bước
@@ -101,6 +102,12 @@
     idx = i;
     overlay.innerHTML = '';
     setTimeout(function () {
+      // resize/bizon:langchange có thể gọi paint() trực tiếp giữa lúc timeout
+      // này đang chờ, khiến paint() tự next() sang bước cuối rồi stop() (đặt
+      // steps=null, idx=-1) TRƯỚC KHI timeout của go() cũ kịp chạy – đọc
+      // steps[idx] lúc đó vỡ vì steps đã null. Bỏ qua nếu không còn khớp bước
+      // mà lần gọi go() này phụ trách.
+      if (!steps || idx !== i) return;
       var el = $q(steps[idx].sel);
       if (el) el.scrollIntoView({ behavior: 'instant', block: 'center' });
       setTimeout(paint, 120);
