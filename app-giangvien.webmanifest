@@ -1,0 +1,26 @@
+{
+  "id": "./bizon-gv",
+  "name": "BizOn Giảng viên",
+  "short_name": "BizOn GV",
+  "lang": "vi",
+  "start_url": "./Trang%20Giang%20Vien.dc.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#1f4a55",
+  "background_color": "#efe4d2",
+  "icons": [
+    {
+      "src": "assets/icons/rong-xanh-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/rong-xanh-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
