@@ -14,6 +14,12 @@
     if (!r.ok) throw new Error(j.error_description || j.msg || j.message || ('Lỗi đăng nhập ' + r.status));
     return j;
   }
+  async function authPut(path, tok, body) {
+    const r = await fetch(base() + '/auth/v1/' + path, { method: 'PUT', headers: { apikey: cfg().anonKey, Authorization: 'Bearer ' + tok, 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(j.error_description || j.msg || j.message || ('Lỗi ' + r.status));
+    return j;
+  }
   const keep = j => saveS({ access: j.access_token, refresh: j.refresh_token, exp: Date.now() + (j.expires_in || 3600) * 1000, email: j.user && j.user.email });
   async function token() {
     if (!session) throw new Error('Chưa đăng nhập.');
@@ -51,6 +57,8 @@
     async signIn(email, password) { demo = false; keep(await auth('token?grant_type=password', { email, password })); },
     async signUp(email, password) { const j = await auth('signup', { email, password }); if (j.access_token) keep(j); return !!j.access_token; },
     signOut() { demo = false; saveS(null); },
+    async resetPassword(email) { return auth('recover?redirect_to=' + encodeURIComponent(location.href.split('#')[0]), { email }); },
+    async completeRecovery(recoveryToken, password) { return authPut('user', recoveryToken, { password }); },
     async myClasses() { return demo ? D.classes : rpc('bizon_my_classes'); },
     async claimClass(code) { code = String(code || '').trim().toUpperCase(); if (demo) { if (!D.classes.some(c => c.class_code === code)) D.classes.unshift({ class_code: code, created_at: new Date().toISOString() }); return true; } return rpc('bizon_claim_class', { p_class_code: code }); },
     needsMigration: false, migrationNote: MIG,
