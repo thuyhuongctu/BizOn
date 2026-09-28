@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<script>try{if(!localStorage.getItem('bizon3d-lang-v1')){localStorage.setItem('bizon3d-lang-v1','1');if(localStorage.getItem('bizon-lang')==='en')localStorage.setItem('bizon-lang','vi');}}catch(e){}</script>
+<title>BizOn BẬT NGHIỆP – Trụ sở 3D</title>
+<link rel="manifest" href="app-sinhvien.webmanifest">
+<meta name="theme-color" content="#2f8a8c">
+<link rel="apple-touch-icon" href="assets/icons/rong-xanh-192.png">
+<link rel="icon" href="assets/icons/rong-xanh-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script>if ('serviceWorker' in navigator && location.protocol.startsWith('http')) addEventListener('load', () => navigator.serviceWorker.register('sw-bizon.js').catch(() => {}));</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>try{localStorage.setItem('bizon-tour-seen','1')}catch(e){}try{if(!localStorage.getItem('bizon-lang-user'))localStorage.setItem('bizon-lang','vi')}catch(e){}</script>
+<script type="importmap">
+{ "imports": {
+  "three": "./js/vendor/three.module.js",
+  "three/addons/controls/OrbitControls.js": "./js/vendor/OrbitControls.js"
+} }
+</script>
+<style>
+  html,body{margin:0;height:100%;overflow:hidden;background:#efe4d2;font-family:"Be Vietnam Pro",system-ui,sans-serif;color:#2c3552}
+  a{color:#1f6f8a}a:hover{color:#c8641c}
+  #c{position:fixed;inset:0;display:block;width:100%;height:100%}
+  .hud{position:fixed;z-index:5;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  #top{top:14px;left:14px;right:14px;justify-content:space-between;pointer-events:none}
+  #top>*{pointer-events:auto}
+  .brand{display:flex;flex-direction:column;gap:0;background:#fbf6ee;border:3px solid #e6d6bf;border-radius:18px;padding:8px 14px;box-shadow:0 4px 0 #d9c5a8}
+  .brand b{font:800 18px/1.1 "Baloo 2",sans-serif;color:#1f6f8a}
+  .brand span{font-size:12px;color:#6b6f7a}
+  .btn{font:700 14px "Baloo 2",sans-serif;border:3px solid #e6d6bf;background:#fbf6ee;color:#2c3552;border-radius:16px;padding:8px 14px;cursor:pointer;box-shadow:0 4px 0 #d9c5a8;display:flex;align-items:center;gap:6px;text-decoration:none;white-space:nowrap;flex:none}
+  .btn:hover{transform:translateY(-1px)} .btn:active{transform:translateY(2px);box-shadow:0 2px 0 #d9c5a8}
+  .btn.primary{background:#2f8a8c;border-color:#23706f;color:#fff;box-shadow:0 4px 0 #1b5a5a}
+  .kpis{display:flex;gap:6px;flex-wrap:wrap}
+  .kpi{background:#fbf6ee;border:3px solid #e6d6bf;border-radius:16px;padding:4px 10px;box-shadow:0 4px 0 #d9c5a8;text-align:center;min-width:62px}
+  .kpi small{display:block;font:800 10px/1.2 "Baloo 2",sans-serif;letter-spacing:.06em;color:#6b6f7a}
+  .kpi b{font:800 18px/1.15 "Baloo 2",sans-serif;color:#2c3552;white-space:nowrap}
+  .ev{display:inline-flex;gap:4px;align-items:center;font-weight:600}
+  .ev.bad{color:#c0443a}.ev.warn{color:#b8741a}.ev.good{color:#3f8a44}
+  #rail{top:96px;right:14px;bottom:132px;flex-direction:column;flex-wrap:nowrap;align-items:stretch;gap:6px;overflow-y:auto;scrollbar-width:none;padding:2px 2px 6px}
+  #rail .btn{font-size:13px;padding:5px 10px;justify-content:flex-start;position:relative}
+  #rail .btn i{font-style:normal;width:20px;text-align:center}
+  .badge{position:absolute;top:-6px;right:-6px;background:#d6453a;color:#fff;border-radius:999px;font:800 11px/18px "Baloo 2";min-width:18px;height:18px;text-align:center;padding:0 4px;box-sizing:border-box;display:none}
+  #cta{bottom:70px;left:50%;transform:translateX(-50%);flex-direction:column;gap:4px;align-items:center}
+  #cta .btn{font-size:18px;padding:10px 22px;border-radius:20px}
+  #cta small{font-size:12px;background:rgba(251,246,238,.92);border-radius:10px;padding:2px 10px;color:#4a4f5c}
+  body.night #cta small{background:rgba(35,44,77,.92);color:#d9ddeb}
+  body.night .kpi{background:#232c4d;border-color:#35406a;box-shadow:0 4px 0 #11162a} body.night .kpi b{color:#f1e6d3} body.night .kpi small{color:#b9bfd6}
+  #frame{position:fixed;z-index:30;background:#f4faff;overflow:hidden;transition:transform .35s cubic-bezier(.3,1,.4,1)}
+  #frame iframe{border:0;width:100%;height:100%;display:block}
+  #frame.full{inset:0}
+  #login3d{position:fixed;z-index:40;inset:0;display:none;pointer-events:none;background:#2a2340 url('assets/illustrations/rong-bay-doi-bizon.webp') center/cover no-repeat}
+  body.login3d #login3d{display:block} body.login3d #frame{visibility:hidden} body.login3d .hud,body.login3d #zones,body.login3d #more{display:none!important}
+  #login3d .card{pointer-events:auto;position:absolute;left:clamp(12px,4vw,56px);top:50%;transform:translateY(-50%);width:min(420px,calc(100vw - 24px));max-height:calc(100vh - 24px);overflow:auto;box-sizing:border-box;background:#fbf6ee;border:4px solid #e6d6bf;border-radius:28px;box-shadow:0 10px 0 #d9c5a8,0 30px 60px rgba(20,28,56,.25);padding:22px;display:flex;flex-direction:column;gap:9px;font-family:'Be Vietnam Pro',sans-serif;color:#1f3f4a}
+  #login3d h1{margin:0;font:800 28px/1.05 'Baloo 2',sans-serif;color:#1f4a55} #login3d p{margin:0;font-size:13px;color:#5a6b74;text-wrap:pretty}
+  #login3d label{font:700 13px 'Be Vietnam Pro',sans-serif;margin-top:4px} #login3d input{padding:11px 13px;border-radius:14px;border:2px solid #e6d6bf;background:#fff;font:500 15px 'Be Vietnam Pro',sans-serif;outline:none} #login3d input:focus{border-color:#2f8a8c}
+  #login3d .roles{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+  #login3d .role{border:3px solid #e6d6bf;background:#fff;border-radius:16px;padding:4px 2px 6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;font:800 12px 'Baloo 2',sans-serif;color:#1f4a55}
+  #login3d .role img{height:62px;object-fit:contain} #login3d .role[aria-pressed="true"]{border-color:#2f8a8c;background:#e3f1ef;box-shadow:0 3px 0 #23706f}
+  #login3d .go{margin-top:6px;border:0;background:#e8762d;color:#fff;border-radius:18px;padding:14px;font:800 18px 'Baloo 2',sans-serif;box-shadow:0 6px 0 #b95618;cursor:pointer}
+  #login3d .alt{border:2px solid #cbb797;background:#fff;border-radius:14px;padding:10px;font:700 14px 'Be Vietnam Pro',sans-serif;color:#1f4a55;cursor:pointer}
+  #login3d .links{display:flex;justify-content:space-between;gap:8px;font-size:13px;flex-wrap:wrap} #login3d .links a{color:#1f6f8a;font-weight:700;text-decoration:none}
+  #login3d .rtip{position:absolute;right:clamp(12px,4vw,56px);bottom:28px;max-width:320px;background:rgba(251,246,238,.95);border:3px solid #e6d6bf;border-radius:18px;padding:12px 14px;font:600 14px 'Be Vietnam Pro',sans-serif;color:#1f4a55;pointer-events:none}
+  @media (max-height:700px){#login3d .card{gap:5px;padding:16px 18px} #login3d .card>p{display:none} #login3d input{padding:8px 12px} #login3d .role img{height:44px} #login3d .go{padding:10px} #login3d .alt{padding:7px}}
+  @media (max-width:760px){#login3d .card{top:auto;bottom:0;left:0;transform:none;width:100%;border-radius:26px 26px 0 0;max-height:78vh} #login3d .rtip{display:none}}
+  #frame.sheet,#frame.hide{top:12px;right:12px;bottom:12px;width:min(480px,46vw);border-radius:26px;border:4px solid #e6d6bf;box-shadow:0 20px 60px rgba(20,28,56,.35);box-sizing:border-box}
+  #frame.hide{transform:translateX(calc(100% + 40px));visibility:hidden}
+  @media (max-height:720px) and (min-width:761px){#rail .btn span{display:none}#rail .btn{justify-content:center}}
+  #sheetX{position:fixed;z-index:31;top:92px;right:calc(min(480px,46vw) + 24px);display:none}
+  body.sheet #sheetX{display:flex}
+  body.sheet #rail,body.sheet #cta{display:none}
+  @media (max-width:760px){
+    #frame.sheet,#frame.hide{top:auto;left:0;right:0;bottom:0;width:auto;height:86vh;border-radius:26px 26px 0 0;border-width:4px 0 0}
+    #frame.hide{transform:translateY(100%)}
+    #sheetX{top:auto;right:12px;bottom:calc(86vh + 8px)}
+    body.sheet #top{display:none}
+    .brand{padding:6px 10px}.brand b{font-size:15px}
+    .kpi{min-width:0;padding:3px 8px}.kpi b{font-size:15px}
+    #rail{top:auto;bottom:118px;left:10px;right:10px;flex-direction:row;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}
+    #rail .btn span{display:none}
+    #cta{bottom:168px}
+    #cta .btn{font-size:16px}
+  }
+  @media (max-width:380px){
+    #login3d .card{padding:12px 12px 14px;gap:4px;max-height:84vh} #login3d h1{font-size:21px} #login3d .card>div:first-child img{width:42px!important}
+    #login3d .card>p{font-size:12px} #login3d .card>p+p{display:none} #login3d label{font-size:12px;margin-top:2px} #login3d input{padding:8px 10px;font-size:14px}
+    #login3d .roles{gap:4px} #login3d .role{padding:2px 1px 4px;border-width:2px;border-radius:12px;font-size:10px} #login3d .role img{height:36px}
+    #login3d .go{padding:10px;font-size:16px;margin-top:4px} #login3d .alt{padding:7px;font-size:13px} #login3d .links{font-size:12px}
+    #rail{bottom:108px;left:6px;right:6px;gap:4px} #rail .btn{padding:4px 7px;font-size:12px;min-width:40px;min-height:40px;justify-content:center} #rail .btn i{width:auto;font-size:17px}
+    #zones{left:6px;right:6px;bottom:10px} #zones .btn{font-size:11px;padding:5px 9px}
+    #cta{bottom:156px} #cta .btn{font-size:14px;padding:8px 14px}
+    .brand b{font-size:13px} .kpi{padding:2px 6px} .kpi b{font-size:13px}
+    #evc{max-height:66vh;padding:12px} #evc .btn{font-size:14px;padding:8px} #rmCard{max-height:50vh}
+  }
+  body.arena #c{z-index:35}
+  #arena{position:fixed;inset:0;z-index:36;display:none;pointer-events:none}
+  body.arena #arena{display:block}
+  body.arena #top,body.arena #rail,body.arena #cta,body.arena #zones,body.arena #sheetX,body.arena #tip{display:none!important}
+  #arena .ah{position:absolute;top:16px;left:12px;right:12px;text-align:center;color:#fff}
+  #arena .ah b{display:block;font:800 30px/1.2 "Baloo 2",sans-serif;text-shadow:0 3px 0 rgba(0,0,0,.25)}
+  #arena .ah span{display:block;font-size:14px;color:#d4ecef}
+  #arena .ah em{display:block;font:800 13px "Baloo 2",sans-serif;font-style:normal;color:#ffc56a;margin-top:2px}
+  #arena .lab{position:absolute;transform:translate(-50%,-100%);text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px}
+  #arena .lab b{font:800 13px/1.5 "Baloo 2",sans-serif;color:#fff;background:var(--c);border-radius:10px;padding:0 9px;white-space:nowrap;box-shadow:0 3px 0 rgba(0,0,0,.25)}
+  #arena .lab i{font:800 26px/1 "Baloo 2",sans-serif;font-style:normal;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.4)}
+  #arena .lab.me b{outline:3px solid #ffd28a}
+  #arena .af{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;gap:10px;align-items:center;width:min(560px,92vw);pointer-events:auto;opacity:0;transition:opacity .4s}
+  #arena .af.on{opacity:1}
+  #arena .verdict{font:800 18px/1.3 "Baloo 2",sans-serif;color:#fff;background:rgba(8,38,46,.85);border:3px solid #2f8a95;border-radius:16px;padding:8px 16px;text-align:center;text-wrap:balance}
+  #arena .btn{font-size:17px;padding:10px 22px}
+  #evc{position:fixed;z-index:25;left:14px;top:96px;bottom:84px;width:min(430px,calc(100vw - 28px));display:none;flex-direction:column;gap:10px;overflow-y:auto;background:#f6efe2;border:4px solid #e6d6bf;border-radius:26px;box-shadow:0 6px 0 #d9c5a8,0 20px 50px rgba(20,28,56,.25);padding:16px;box-sizing:border-box}
+  body.evt #evc{display:flex} body.evt #rail,body.evt #cta{display:none}
+  #evc .tag{align-self:flex-start;font:800 12px "Baloo 2",sans-serif;letter-spacing:.06em;border-radius:999px;padding:3px 12px;background:#e3f1ef;color:#1f6f8a}
+  #evc .tag.bad{background:#fde4e1;color:#c0443a} #evc .tag.warn{background:#fdf0d8;color:#a8651a}
+  #evc h2{margin:0;font:800 28px/1.15 "Baloo 2",sans-serif;color:#1f6f8a;text-transform:uppercase;text-wrap:balance} #evc h2.bad{color:#c0443a}
+  #evc p.d{margin:0;font-size:14px;color:#4a4f5c;text-wrap:pretty}
+  #evc .imps{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  #evc .imp{background:#fffaf2;border:3px solid #eadcc5;border-radius:18px;padding:8px;text-align:center}
+  #evc .imp small{display:block;font:700 10px/1.3 "Baloo 2",sans-serif;letter-spacing:.05em;color:#6b6f7a;text-transform:uppercase}
+  #evc .imp b{font:800 19px/1.3 "Baloo 2",sans-serif}
+  #evc .say{background:#fff;border:3px solid #cfe2e0;border-radius:18px 18px 18px 4px;padding:10px 12px;font-size:14px;font-style:italic;color:#2c3552;text-wrap:pretty}
+  #evc .say small{display:block;font:800 11px "Baloo 2",sans-serif;font-style:normal;color:#2f8a8c;letter-spacing:.05em;margin-bottom:2px}
+  #evc .q{font-size:12px;color:#4a4f5c;font-style:italic;border-top:2px dashed #e6d6bf;padding-top:8px}
+  #evc .btn{justify-content:center;font-size:16px;padding:10px}
+  @media (max-width:760px){#evc{top:auto;bottom:0;left:0;width:100%;max-height:60vh;border-radius:26px 26px 0 0;border-width:4px 0 0} body.evt #zones{display:none} #arena .ah b{font-size:22px} #arena .lab i{font-size:18px} #arena .lab b{font-size:11px}}
+  #evc .big{font:800 54px/1 "Baloo 2",sans-serif;color:#1f6f8a;text-align:center}
+  #evc .big small{font-size:24px}
+  #evc .ach{align-self:center;font:800 13px "Baloo 2",sans-serif;background:#2c3552;color:#ffd28a;border-radius:999px;padding:4px 14px}
+  #evc .who{display:flex;gap:10px;align-items:center}
+  #evc .who img{width:52px;height:52px;border-radius:50%;object-fit:cover;object-position:top;border:3px solid #e6d6bf;background:#fff}
+  #evc .who b{display:block;font:800 17px "Baloo 2",sans-serif;color:#2c3552}
+  #evc .who span{font-size:12px;color:#6b6f7a}
+  #evc .dots{display:flex;gap:6px;justify-content:center}
+  #evc .dots i{width:10px;height:10px;border-radius:50%;background:#e6d6bf}
+  #evc .dots i.on{background:#2f8a8c}
+  #evc .row{display:flex;gap:8px}#evc .row .btn{flex:1}
+  #evc .btn.done{opacity:.6}
+  #bub{position:fixed;z-index:24;transform:translate(-50%,-100%);display:none;pointer-events:none;font:800 13px "Baloo 2",sans-serif;background:#fff;border:3px solid #2f8a8c;color:#1f6f8a;border-radius:14px;padding:2px 10px;white-space:nowrap}
+  #bub:after{content:"";position:absolute;left:50%;bottom:-9px;margin-left:-6px;border:6px solid transparent;border-top-color:#2f8a8c}
+  body.room #c{z-index:35}
+  #room{position:fixed;inset:0;z-index:36;display:none;pointer-events:none}
+  body.room #room{display:block}
+  body.room #top,body.room #rail,body.room #cta,body.room #zones,body.room #sheetX,body.room #tip,body.room #evc{display:none!important}
+  #room .rh{position:absolute;top:14px;left:14px;right:14px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
+  #room .rh>*{pointer-events:auto}
+  #room .rt{background:#fbf6ee;border:3px solid #e6d6bf;border-radius:18px;padding:8px 14px;box-shadow:0 4px 0 #d9c5a8}
+  #room .rt b{display:block;font:800 22px/1.15 "Baloo 2",sans-serif;color:#1f6f8a}
+  #room .rt span{font-size:13px;color:#4a4f5c}
+  #room .rb{display:flex;gap:8px;flex-wrap:wrap}
+  #room .lab{position:absolute;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;gap:1px;pointer-events:none;text-align:center}
+  #room .lab b{font:800 12px/1.5 "Baloo 2",sans-serif;background:#fbf6ee;border:2px solid #e6d6bf;border-radius:10px;padding:0 8px;white-space:nowrap;color:#2c3552}
+  #room .lab i{font-style:normal;font-size:20px;line-height:1}
+  #room .lab.dim b{color:#8a8f99}
+  #room .lab.sel b{background:#2c3552;border-color:#1c2340;color:#fff}
+  #room .lab.hot b{background:#2f8a8c;border-color:#23706f;color:#fff}
+  #rmCard{position:absolute;right:14px;bottom:14px;width:min(380px,calc(100vw - 28px));pointer-events:auto;background:#f6efe2;border:4px solid #e6d6bf;border-radius:24px;box-shadow:0 6px 0 #d9c5a8,0 20px 50px rgba(20,28,56,.25);padding:14px;box-sizing:border-box;display:flex;flex-direction:column;gap:8px}
+  #rmCard:empty{display:none}
+  #rmCard h3{margin:0;font:800 22px/1.2 "Baloo 2",sans-serif;color:#2c3552;display:flex;gap:8px;align-items:center}
+  #rmCard p{margin:0;font-size:14px;color:#4a4f5c;text-wrap:pretty}
+  #rmCard .k{font:800 12px "Baloo 2",sans-serif;letter-spacing:.05em;color:#2f8a8c;text-transform:uppercase}
+  #rmCard .btn{justify-content:center;font-size:16px;padding:9px}
+  #rmCard .row{display:flex;gap:8px}#rmCard .row .btn{flex:1}
+  #rmCard .big{font:800 44px/1 "Baloo 2",sans-serif;color:#1f6f8a;text-align:center}
+  #rmCard .tgt{display:flex;align-items:center;gap:12px;justify-content:center}
+  #rmCard .tgt i{font-style:normal;font-size:52px;line-height:1}
+  #rmCard .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;text-align:center}
+  #rmCard .stats div{background:#fffaf2;border:3px solid #eadcc5;border-radius:14px;padding:4px}
+  #rmCard .stats small{display:block;font:800 10px "Baloo 2",sans-serif;color:#6b6f7a;letter-spacing:.05em}
+  #rmCard .stats b{font:800 20px "Baloo 2",sans-serif;color:#2c3552}
+  @media (max-width:760px){#rmCard{left:0;right:0;bottom:0;width:auto;border-radius:24px 24px 0 0;border-width:4px 0 0;max-height:46vh;overflow:auto}#room .rt b{font-size:18px}}
+  #zones{bottom:14px;left:14px;right:14px;flex-wrap:nowrap;overflow-x:auto;justify-content:safe center;padding-bottom:6px;scrollbar-width:none}
+  #zones .btn{font-size:13px;padding:6px 12px}
+  #zones .btn[aria-pressed="true"]{background:#2c3552;border-color:#1c2340;color:#fff;box-shadow:0 4px 0 #11162a}
+  body.night .brand,body.night .btn:not(.primary){background:#232c4d;border-color:#35406a;color:#f1e6d3;box-shadow:0 4px 0 #11162a}
+  body.night .brand b{color:#ffd28a} body.night .brand span{color:#b9bfd6}
+  #tip{position:fixed;z-index:6;pointer-events:none;transform:translate(-50%,-100%);background:#fbf6ee;border:3px solid #e6d6bf;border-radius:14px;padding:6px 10px;font-size:12px;box-shadow:0 4px 0 #d9c5a8;display:none;max-width:220px;text-align:center}
+  #tip b{display:block;font:800 14px "Baloo 2",sans-serif;color:#1f6f8a}
+  /* ---------- round result overlay */
+  #res{position:fixed;inset:0;z-index:20;display:none;align-items:center;justify-content:center;background:rgba(20,28,56,.45);padding:16px}
+  #res.on{display:flex}
+  .rs{background:#2f8a95;border-radius:34px;padding:18px;box-shadow:inset 0 -8px 0 rgba(0,0,0,.15),0 20px 60px rgba(0,0,0,.35);width:min(1040px,100%);max-height:calc(100vh - 32px);overflow:auto;box-sizing:border-box}
+  .rs-in{background:#f6efe2;border-radius:26px;box-shadow:inset 0 -6px 0 #e3d3b8,inset 0 3px 0 #fffaf1;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:18px;padding:16px;position:relative}
+  @media (max-width:760px){.rs-in{grid-template-columns:1fr}}
+  .map{background:#4b9fcf;border-radius:22px;box-shadow:inset 0 -6px 0 rgba(0,0,0,.18),inset 0 4px 0 rgba(255,255,255,.25);overflow:hidden;min-height:300px;display:flex}
+  .map svg{width:100%;height:100%;display:block}
+  .pill{align-self:flex-start;font:800 13px "Baloo 2",sans-serif;letter-spacing:.04em;color:#1f6f8a;background:#e8f2f1;border:3px solid #cfe2e0;border-radius:14px;padding:3px 12px;text-transform:uppercase;line-height:1.4}
+  .side{display:flex;flex-direction:column;gap:12px;min-width:0}
+  .side h2{margin:0;font:800 28px/1.3 "Baloo 2",sans-serif;color:#d86a24;display:flex;gap:10px;align-items:center;text-wrap:balance}
+  .side h2.lost{color:#5a4a8a}
+  .side p.sub{margin:-4px 0 0;font-size:14px;color:#4a4f5c;text-wrap:pretty}
+  .flagi{width:26px;height:30px;flex:none;position:relative}
+  .flagi:before{content:"";position:absolute;left:2px;top:0;width:4px;height:30px;border-radius:2px;background:#7a4a2a}
+  .flagi:after{content:"";position:absolute;left:6px;top:2px;width:20px;height:15px;background:var(--c,#f39a33);clip-path:polygon(0 0,100% 50%,0 100%);border-radius:3px}
+  .box{background:#fffaf2;border-radius:20px;border:3px solid #eadcc5;box-shadow:inset 0 -4px 0 #eadcc5;padding:10px 12px}
+  .box h3{margin:0 0 8px;font:800 13px "Baloo 2",sans-serif;letter-spacing:.05em;color:#2c3552}
+  .bar{display:grid;grid-template-columns:20px minmax(0,1fr) 56px;align-items:center;gap:6px;margin:7px 0}
+  .bar .trk{height:30px;border-radius:999px;background:#fbf6ee;border:3px solid var(--c);box-sizing:border-box;position:relative;overflow:hidden}
+  .bar .fill{position:absolute;inset:0 auto 0 0;background:var(--c);border-radius:999px;transition:width 1s cubic-bezier(.3,1.3,.5,1);box-shadow:inset 0 -4px 0 rgba(0,0,0,.14),inset 0 3px 0 rgba(255,255,255,.3)}
+  .bar .nm{position:relative;font:700 14px/24px "Baloo 2",sans-serif;color:#fff;padding-left:12px;white-space:nowrap;text-shadow:0 1px 0 rgba(0,0,0,.25)}
+  .bar .v{font:800 15px "Baloo 2",sans-serif;text-align:right}
+  .bar .st{font-size:16px;color:#e8a92c;text-align:center}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .stat{border-radius:18px;border:4px solid;padding:6px 10px;text-align:center;background:#fffaf2;box-shadow:inset 0 -4px 0 rgba(0,0,0,.06)}
+  .stat small{display:block;font:800 12px "Baloo 2",sans-serif;letter-spacing:.05em;color:#2c3552}
+  .stat b{font:800 26px/1.2 "Baloo 2",sans-serif}
+  .foot{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+  .legend{display:flex;flex-wrap:wrap;gap:6px}
+  .legend span{white-space:nowrap;font-size:11px;background:#fffaf2;border:2px solid #eadcc5;border-radius:10px;padding:2px 8px;display:flex;gap:5px;align-items:center}
+  .legend i{width:10px;height:10px;border-radius:3px;background:var(--c)}
+  .x{position:absolute;top:10px;right:12px;border:0;background:#eadcc5;color:#2c3552;width:32px;height:32px;border-radius:12px;font:800 18px "Baloo 2";cursor:pointer}
+  @keyframes pulse{0%{r:8;opacity:.9}100%{r:22;opacity:0}}
+  .ping{animation:pulse 1.4s ease-out infinite}
+  @keyframes pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
+  .pop{transform-box:fill-box;transform-origin:50% 100%;animation:pop .6s ease both}
+</style>
+</head>
+<body>
+<div id="boot" style="position:fixed;inset:0;z-index:200;background:#2a2340 url('assets/illustrations/rong-bay-doi-bizon.webp') center/cover no-repeat;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;font-family:'Baloo 2','Be Vietnam Pro',sans-serif;color:#2b4a55;transition:opacity .5s">
+  <img src="assets/character/rong-xanh.webp" alt="" style="margin-top:auto;width:96px;filter:drop-shadow(0 6px 10px rgba(0,0,0,.35))">
+  <div style="font-size:26px;font-weight:800;letter-spacing:.5px;white-space:nowrap;text-align:center;color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.35),0 8px 24px rgba(0,0,0,.4)">BizOn BẬT NGHIỆP</div>
+  <div style="width:min(320px,70vw);height:14px;border-radius:10px;background:#dccbb0;border:2px solid #cbb797;overflow:hidden"><div id="bootBar" style="height:100%;width:4%;background:#2f8a8c;border-radius:10px;transition:width .35s"></div></div>
+  <div id="bootMsg" style="margin-bottom:8vh;background:rgba(251,246,238,.92);padding:4px 12px;border-radius:10px;text-align:center;font:600 14px 'Be Vietnam Pro',sans-serif;color:#5a6b74">Đang tải thư viện 3D…</div>
+  <button id="bootLow" style="display:none;margin-top:6px;font:700 13px 'Baloo 2',sans-serif;background:#fbf6ee;border:2px solid #cbb797;border-radius:12px;padding:6px 12px;color:#2b4a55;cursor:pointer">Mạng chậm? Chơi bản 2D nhẹ →</button>
+</div>
+<script>
+(function(){ const bar=document.getElementById('bootBar'), msg=document.getElementById('bootMsg');
+  window.__boot=(p,m)=>{ if(!bar) return; bar.style.width=Math.round(p*100)+'%'; if(m) msg.textContent=m; if(p>=1){ const b=document.getElementById('boot'); if(b){ b.style.opacity='0'; setTimeout(()=>b.remove(),520);} } };
+  setTimeout(()=>{ const b=document.getElementById('bootLow'); if(b&&document.getElementById('boot')){ b.style.display='inline-block'; b.onclick=()=>location.href='game.html'; } },9000);
+  addEventListener('error',e=>{ if(/three|unpkg|jsdelivr/i.test(e.message||'')||(e.target&&e.target.src&&/unpkg|jsdelivr/.test(e.target.src))){ msg.textContent='Không tải được thư viện 3D. Kiểm tra mạng hoặc chơi bản 2D.'; document.getElementById('bootLow').style.display='inline-block'; } },true);
+})();
+</script>
+<div id="login3d">
+  <div class="card">
+    <div style="display:flex;align-items:center;gap:10px"><img src="assets/character/rong-xanh-sen.webp" alt="Rồng Xanh" style="width:62px;height:auto"><h1>BizOn Bật Nghiệp</h1></div>
+    <p>Chào mừng các bạn đến trụ sở BizOn ở Cần Thơ. Sáu quý tới, đội mình sẽ điều hành một xưởng đồ đất sét và đi từ Cần Thơ ra tới Hà Nội.</p>
+    <p style="font-size:13px">Chọn vai của bạn trước nhé. CEO giữ la bàn, CFO giữ túi tiền, CMO giữ loa, COO giữ xưởng, SEC giữ biên bản.</p>
+    <label for="l3Email">Email</label><input id="l3Email" type="email" placeholder="sinhvien@truong.edu.vn" autocomplete="email">
+    <label for="l3Team">Tên đội – cũng là tên doanh nghiệp</label><input id="l3Team" type="text" placeholder="VD: Rồng Xanh Corp">
+    <label for="l3Class">Mã lớp <span style="font-weight:400;color:#8a969c">(tùy chọn – để trống là chơi thử)</span></label><input id="l3Class" type="text" placeholder="VD: QTKD-2026-A" style="text-transform:uppercase">
+    <label>Vai trò của bạn</label>
+    <div class="roles" id="l3Roles"></div>
+    <button class="go" id="l3Go">Bắt đầu ▶</button>
+    <button class="alt" id="l3Demo">👥 Chơi thử với Đội Demo</button>
+    <div class="links"><a href="Trang Giang Vien.dc.html">👩‍🏫 Trang Giảng viên</a><a href="#" id="l3Classic">Giao diện 2D cũ</a></div>
+  </div>
+  <div class="rtip" id="l3Tip"></div>
+</div>
+<canvas id="c"></canvas>
+<div id="top" class="hud">
+  <div class="brand"><b id="hTeam">BizOn BẬT NGHIỆP · Trụ sở Cần Thơ</b><span id="hEvent">Chạm phòng ban hoặc nhân vật để làm việc</span></div>
+  <div class="kpis">
+    <div class="kpi"><small>TIỀN MẶT</small><b id="kCash">–</b></div>
+    <div class="kpi"><small>THỊ PHẦN</small><b id="kShare">–</b></div>
+    <div class="kpi"><small>THƯƠNG HIỆU</small><b id="kBrand">–</b></div>
+    <div class="kpi"><small>CỜ</small><b id="kFlags">0/6</b></div>
+  </div>
+</div>
+<div id="rail" class="hud">
+  <button class="btn" id="musicBtn"><i>🎵</i><span>Nhạc nền</span></button>
+  <button class="btn" data-tab="instructor"><i>👩‍🏫</i><span>Giảng viên</span></button>
+  <button class="btn" data-tab="advisor"><i>🤖</i><span>Lumina</span></button>
+  <button class="btn" data-tab="reports"><i>📊</i><span>Báo cáo</span></button>
+  <button class="btn" data-tab="shop"><i>🛒</i><span>Cửa hàng</span></button>
+  <button class="btn" data-tab="skills"><i>🌳</i><span>Kỹ năng</span></button>
+  <button class="btn" data-tab="missions"><i>📋</i><span>Nhiệm vụ</span><b class="badge" id="bMis"></b></button>
+  <button class="btn" data-tab="achievements"><i>🎖️</i><span>Thành tựu</span></button>
+  <button class="btn" data-tab="leaderboard"><i>🏆</i><span>Xếp hạng</span></button>
+  <button class="btn" data-tab="minigame"><i>🏭</i><span>Mini-game</span></button>
+  <button class="btn" id="openRes"><i>🚩</i><span>Bản đồ cờ</span></button>
+  <button class="btn" data-tab="profile"><i>👤</i><span>Hồ sơ</span></button>
+  <button class="btn" data-tab="journal"><i>📔</i><span>Nhật ký</span></button>
+  <button class="btn" data-tab="settings"><i>⚙️</i><span>Cài đặt</span></button>
+  <button class="btn" id="tourBtn"><i>❓</i><span>Hướng dẫn</span></button>
+  <button class="btn" id="langBtn"><i>🌐</i><span>Tiếng Việt</span></button>
+  <button class="btn" id="night">🌙 Ban đêm</button>
+  <button class="btn" id="lowBtn"><i>⚡</i><span>Chi tiết thấp</span></button>
+  <button class="btn" id="moreBtn"><i>🧱</i><span>Bộ sưu tập 3D</span></button>
+</div>
+<div id="more" style="position:fixed;z-index:26;right:14px;bottom:70px;display:none;flex-direction:column;gap:6px;background:#fbf6ee;border:3px solid #e6d6bf;border-radius:18px;padding:10px;box-shadow:0 6px 0 #d9c5a8">
+  <a class="btn" href="Characters 3D.html">🧍 Nhân vật 3D</a>
+  <a class="btn" href="HQ Asset Gallery.html">🧱 Nội thất, sản phẩm & linh vật</a>
+  <a class="btn" href="BizOn HQ Diorama.html">🏢 Trụ sở diorama (xem tự do)</a>
+  <a class="btn" href="Strategy Table 3D.html">🧩 Bàn họp chiến lược 3D</a>
+  <a class="btn" href="Clay Factory 3D.html">🏭 Clay Factory Frenzy 3D</a>
+  <a class="btn" href="BizOn Office Game.html">🚶 Văn phòng 2D (đi lại & hội thoại)</a>
+  <a class="btn" href="game.html">📱 Bản 2D gốc (game.html)</a>
+</div>
+<div id="cta" class="hud"><button class="btn primary" id="ctaBtn">🎯 Ra quyết định</button><small id="ctaSub">Đang tải trò chơi…</small></div>
+<div id="zones" class="hud"></div>
+<button class="btn" id="sheetX">✕ Về trụ sở</button>
+<div id="evc" role="dialog" aria-label="Biến cố thị trường"></div><div id="bub"></div>
+<div id="arena"><div class="ah"><b id="aTitle">⚔️ ĐẤU TRƯỜNG</b><span id="aSub"></span><em id="aZone"></em></div><div id="aLabs"></div>
+  <div class="af" id="aFoot"><div class="verdict" id="aVerdict"></div><button class="btn primary" id="aNext">Xem kết quả chi tiết →</button></div></div>
+<div id="room"><div class="rh"><div class="rt"><img id="rmScene" alt="" style="display:none;width:min(260px,40vw);border-radius:16px;border:3px solid #e6d6bf;margin-bottom:6px"><b id="rmTitle"></b><span id="rmSub"></span></div><div class="rb"><button class="btn" id="rm2d">📋 Dạng danh sách</button><button class="btn primary" id="rmClose">✕ Về trụ sở</button></div></div><div id="rmLabs"></div><div id="rmCard"></div></div>
+<div id="frame" class="full"><iframe id="gf" src="game.html" title="BizOn BẬT NGHIỆP"></iframe></div>
+<div id="tip"></div>
+
+<div id="res" role="dialog" aria-modal="true" aria-label="Kết quả vòng">
+  <div class="rs"><div class="rs-in">
+    <button class="x" id="closeRes" aria-label="Đóng">×</button>
+    <div class="map" id="map"></div>
+    <div class="side">
+      <span class="pill" id="rPill">Vòng 1/6 · Đồng bằng sông Cửu Long</span>
+      <h2 id="rHead"><span class="flagi"></span><span>Đội bạn cắm cờ tại Cần Thơ!</span></h2>
+      <p class="sub" id="rSub">Thị phần cao nhất và có lãi. Tỉnh này mang màu cờ của đội bạn.</p>
+      <div class="box"><h3>THỊ PHẦN VÒNG NÀY</h3><div id="bars"></div></div>
+      <div class="stats">
+        <div class="stat" style="border-color:#4f9a52"><small>LỢI NHUẬN RÒNG</small><b id="rProfit" style="color:#3f8a44">+48trđ</b></div>
+        <div class="stat" style="border-color:#f39a33"><small>CỜ CỦA ĐỘI</small><b id="rFlags" style="color:#d86a24">1/6</b></div>
+      </div>
+      <div class="foot"><div class="legend" id="legend"></div><button class="btn primary" id="nextRound">Vào vòng tiếp theo →</button></div>
+    </div>
+  </div></div>
+</div>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { makeKit } from './bizon-3d-kit.js';
+import { makeCharacters } from './bizon-characters.js';
+import { makeHQ } from './bizon-hq-kit.js';
+
+const canvas = document.getElementById('c');
+window.__boot && window.__boot(0.35, 'Đang dựng trụ sở đất sét…');
+let LOW = false; try { const v = localStorage.getItem('bizon-hq-low'); LOW = v === null ? (innerWidth < 760 || (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4) : v === '1'; } catch {}
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: !LOW, preserveDrawingBuffer: true, powerPreference: 'high-performance' });
+renderer.setPixelRatio(Math.min(devicePixelRatio, LOW ? 1.5 : 2)); window.__MAXANISO = renderer.capabilities.getMaxAnisotropy();
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = LOW ? THREE.PCFShadowMap : THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.0;
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 300);
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true; controls.maxPolarAngle = 1.35; controls.minDistance = 5; controls.maxDistance = 55;
+const HOME = { pos: new THREE.Vector3(17, 17, 21), tgt: new THREE.Vector3(-0.3, 0.4, 0.3), dir: new THREE.Vector3(0.6, 0.62, 0.72).normalize() };
+camera.position.copy(HOME.pos); controls.target.copy(HOME.tgt);
+
+const hq = makeHQ(THREE);
+const kit = makeKit(THREE);
+const chars = makeCharacters(THREE);
+hq.crew.forEach(c => chars.roster.push(c));
+const { B, Cy, G, M, mat, TX, panel, ctex, bulbMat } = hq;
+
+// ---------- lights
+const hemi = new THREE.HemisphereLight(0xfff4e6, 0xb58a66, 1.2); scene.add(hemi);
+const sun = new THREE.DirectionalLight(0xfff1dc, 2.4); sun.position.set(9, 16, 11); sun.castShadow = true;
+sun.shadow.mapSize.set(LOW ? 1024 : 2048, LOW ? 1024 : 2048); Object.assign(sun.shadow.camera, { left: -13, right: 13, top: 13, bottom: -13, near: 1, far: 50 }); sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.02;
+scene.add(sun);
+
+// ---------- floor (L-shape diorama)
+const plank = ctex(512, 512, (x, w, h) => {
+  const tones = ['#b9774a', '#a86a3f', '#c4834f', '#b06f43', '#9d6139', '#bd7c4a', '#aa6b40', '#c08050'];
+  for (let i = 0; i < 4; i++) { let off = (i * 197) % 512; for (let k = -1; k < 2; k++) { x.fillStyle = tones[(i * 3 + k + 8) % 8]; x.fillRect(off + k * 512, i * 128, 512, 128); x.fillStyle = 'rgba(60,30,15,.55)'; x.fillRect(off + k * 512 - 2, i * 128, 4, 128); } x.fillStyle = 'rgba(60,30,15,.5)'; x.fillRect(0, i * 128, w, 4);
+    for (let g = 0; g < 14; g++) { x.strokeStyle = 'rgba(80,40,20,.12)'; x.lineWidth = 2; x.beginPath(); const y = i * 128 + 14 + g * 8; x.moveTo(0, y); x.bezierCurveTo(170, y + 4, 340, y - 4, 512, y + 2); x.stroke(); } }
+});
+plank.wrapS = plank.wrapT = THREE.RepeatWrapping; plank.repeat.set(0.5, 0.5);
+const floorShape = new THREE.Shape([[-8, 6], [8, 6], [8, -6], [-3, -6], [-3, -3], [-8, -3]].map(([a, b]) => new THREE.Vector2(a, b)));
+const floorGeo = new THREE.ExtrudeGeometry(floorShape, { depth: 0.45, bevelEnabled: true, bevelThickness: 0.05, bevelSize: 0.05, bevelSegments: 3 });
+floorGeo.rotateX(-Math.PI / 2); floorGeo.translate(0, -0.5, 0);
+const floor = new THREE.Mesh(floorGeo, [new THREE.MeshStandardMaterial({ map: plank, roughness: 0.9, name: 'floor_planks' }), new THREE.MeshStandardMaterial({ color: 0x6e4428, roughness: 0.9, name: 'floor_edge' })]);
+floor.receiveShadow = true; floor.name = 'floor'; scene.add(floor);
+
+const world = G('HQ', scene);
+// walls
+const wallM = mat(0xf1e4cc, 0.95), wallTop = mat(0xe3d1b4, 0.95);
+const wall = (n, w, d, x, z, h = 3) => { B(world, n, w, h, d, wallM, x, 0, z, 0.04); B(world, n + '_cap', w + 0.04, 0.08, d + 0.04, wallTop, x, h, z, 0.03); };
+wall('wall_back', 16, 0.22, 0, -5.9); wall('wall_left', 0.22, 9, -7.9, -1.5);
+const paint = (n, w, x, z, col, alongZ) => B(world, n, alongZ ? 0.02 : w, 1.05, alongZ ? w : 0.02, mat(col, 0.95), x, 0, z, 0.008);
+paint('paint_fin', 4.9, -5.45, -5.78, 0xd98a60); paint('paint_cmo', 4.9, 5.5, -5.78, 0x3f9a98); paint('paint_ceo', 5.9, 0, -5.78, 0xe6cf9f);
+paint('paint_sec', 4.4, -7.78, 0.8, 0x9fb58c, true); paint('paint_fin2', 3.6, -7.78, -3.9, 0xd98a60, true);
+B(world, 'partition_ops', 4.0, 1.35, 0.16, mat(0x2f8a8c), 6.0, 0, -0.75, 0.05); B(world, 'partition_ops_cap', 4.05, 0.07, 0.2, wallTop, 6.0, 1.35, -0.75, 0.03);
+function sign(t, x, y, z, ry, bg, fg, w = 1.9, sub) { const g = G('sign_' + t, world, x, y, z, ry); B(g, 'sign_board', w + 0.1, w * 0.25 + 0.1, 0.06, M.woodD, 0, -(w * 0.25 + 0.1) / 2, 0, 0.02); panel(g, 'sign_face', w, w * 0.25, TX.sign(t, bg, fg, sub), 0, 0, 0.032); return g; }
+sign('FINANCE & RISK', -5.4, 2.35, -5.77, 0, '#c8643a', '#fff3e0');
+sign('CREATIVE & MARKETING', 5.5, 2.35, -5.77, 0, '#2f8a8c', '#fff3e0', 2.2);
+sign('LEGAL · SEC', -7.77, 2.35, 0.9, Math.PI / 2, '#6f8a60', '#fff3e0');
+sign('OPERATIONS, LOGISTICS & POTTERY', 6.0, 1.15, -0.66, 0, '#c8643a', '#fff3e0', 3.2);
+sign('CEO OFFICE', 0, 2.55, -5.77, 0, '#2c3552', '#ffe3a8', 1.6);
+const rdSign = G('rd_post', world, -2.6, 0, 1.4); Cy(rdSign, 'post', 0.04, 0.04, 1.6, M.woodD); rdSign.add(sign('R&D LAB', 0, 1.9, 0.05, 0, '#3f78c0', '#fff3e0', 1.1)); rdSign.rotation.y = 0.3;
+// banner
+const banner = G('banner', world, 0, 3.55, -5.62);
+B(banner, 'banner_rod', 4.6, 0.06, 0.06, M.woodD, 0, 0.62, 0, 0.02);
+for (const s of [-1, 1]) Cy(banner, 'rope', 0.012, 0.012, 1.2, M.sand, s * 2.1, 0.65, 0, 6);
+panel(banner, 'banner_cloth', 4.3, 1.2, ctex(1024, 288, (x, w, h) => { x.fillStyle = '#f6ecd8'; x.fillRect(0, 0, w, h); x.strokeStyle = '#c8643a'; x.lineWidth = 12; x.strokeRect(10, 10, w - 20, h - 20); x.textAlign = 'center'; x.fillStyle = '#1f6f8a'; x.font = '800 100px "Baloo 2",sans-serif'; x.fillText('BizOn BẬT NGHIỆP', w / 2, 118); x.fillStyle = '#2c3552'; x.font = '600 38px "Baloo 2",sans-serif'; x.fillText('Executive Headquarters & Integrated Production Workshop', w / 2, 184); x.font = '500 32px "Be Vietnam Pro",sans-serif'; x.fillText('Cần Thơ, Việt Nam', w / 2, 238); }), 0, 0, 0.035);
+
+// ---------- place items
+let LOWHIDE_EXTRA = [];
+const place = (id, x, z, ry = 0, y = 0) => { const o = hq.build(id); o.position.set(x, y, z); o.rotation.y = ry; world.add(o); return o; };
+// finance
+place('cfoDesk', -5.4, -4.9); place('goldVault', -3.8, -5.25); place('ledgerCabinet', -7.55, -2.8, Math.PI / 2); place('moneyPallet', -7.2, -4.7, Math.PI / 2);
+place('receiptPrinter', -3.9, -3.0, -Math.PI / 2); place('piggyShelf', -6.6, 1.55, 0, 0).position.set(-6.9, 1.6, -5.78);
+// legal
+place('legalDesk', -5.4, 0.7); place('lawBookcase', -7.55, 0.55, Math.PI / 2); place('fileSafe', -7.5, 2.35, Math.PI / 2); place('stampTable', -4.0, 2.45);
+place('riskBoard', -3.6, 0.3, -0.7); place('consultChairs', -5.7, 2.55, 0.1).scale.setScalar(0.95);
+// CEO
+const table = kit.items.find(i => i.id === 'table').build(); table.position.set(0, 0, -2.45); world.add(table);
+place('ceoDesk', 0, -4.95); place('visionMap', -1.95, -5.77); place('trophyCabinet', 2.3, -5.45); place('grandClock', -2.6, -5.5); place('bonsai', 1.3, -5.4);
+place('vipLounge', 2.1, 0.35, -0.3).scale.setScalar(0.9);
+// marketing
+place('creativeDesk', 4.6, -4.95); place('moodboard', 6.6, -5.3); place('streamDesk', 7.35, -3.3, -Math.PI / 2); place('billboards', 3.8, -2.2, 0.3);
+place('beanbags', 5.9, -2.0); place('awardShelf', 0, 0).position.set(4.6, 1.65, -5.78);
+LOWHIDE_EXTRA = [place('photoStation', 7.3, -1.55, -Math.PI / 2 - 0.3)];
+// ops
+place('palletRack', 6.1, -0.35); place('potteryWheel', 4.3, 1.65).getObjectByName('stool').visible = false; place('packBench', 6.4, 2.6); place('kpiBoard', 7.5, 1.3, -Math.PI / 2);
+place('palletJack', 4.9, 5.2); place('exportCrate', 6.75, 5.0, -0.1); place('waterCooler', 3.5, -0.4);
+// sản phẩm & linh vật BizOn
+const showcaseObj = place('productShowcase', -2.45, -3.35, 0.45), mascotObj = place('mascotCollection', -2.7, 3.55, Math.atan2(-0.75, 0.6));
+const LOWHIDE = [showcaseObj, mascotObj, ...LOWHIDE_EXTRA];
+// R&D
+place('labBench', -1.4, 2.5); place('printer3d', 0.7, 2.4); place('kiln', 2.3, 2.45); place('holoStation', 0.3, 5.05); place('formulaBoard', -1.6, 5.1, 0.15); place('materialRack', 2.5, 5.1, -0.3);
+const roverObj = place('rover', 1.2, 3.8);
+// plants & sofa
+place('plants', -3.4, -5.4); place('plants', 7.5, -5.4); place('plants', 7.6, 5.6, 0.6);
+// flag plaza
+const plaza = G('flag_plaza', scene, -5.6, 0, 5.0);
+Cy(plaza, 'plaza_stone', 1.9, 2.05, 0.5, mat(0xcdb99a, 0.95), 0, -0.5, 0, 48); Cy(plaza, 'plaza_top', 1.75, 1.75, 0.04, mat(0xe3d3b6, 0.95), 0, -0.02, 0, 48);
+const flags = ['star', 'elephant', 'wolf', 'peacock'].map((k, i) => { const f = hq.teamFlag(k); const a = -0.9 + i * 0.6; f.position.set(Math.sin(a) * 1.15 - 0.3, 0, Math.cos(a) * 1.15 - 0.5); f.rotation.y = 0.25; plaza.add(f); f.userData.label = hq.TEAMS[k].name; f.userData.role = k === 'star' ? 'Cờ đội bạn' : 'Đối thủ AI'; f.userData.team = k; return f; });
+const TAB_OF = { ceo: 'decisions', lumina: 'advisor', cfo: 'reports', accountant: 'reports', sec: 'journal', clerk: 'journal', cmo: 'market', designer: 'market', coo: 'minigame', potter: 'minigame', worker: 'shop', scientist: 'skills', victor: 'leaderboard' };
+const TAB_NAME = { decisions: 'Ra quyết định', advisor: 'Hỏi Lumina', reports: 'Báo cáo', journal: 'Nhật ký đội', market: 'Thị trường sống', minigame: 'Clay Factory Frenzy', shop: 'Cửa hàng', skills: 'Cây kỹ năng', leaderboard: 'Bảng xếp hạng' };
+
+// ---------- pendant lamps
+const lamps = [], pendants = [];
+[[-5.4, -3.4], [-5.4, 1.2], [-0.9, -2.45], [0.9, -2.45], [5.5, -3.6], [5.6, 2.6], [0.2, 3.6], [-5.6, 5.0]].forEach(([x, z], i) => {
+  const g = G('pendant_' + i, world, x, 0, z), top = i === 7 ? 3.3 : 4.3, low = i === 7 ? 2.6 : 2.75;
+  Cy(g, 'cord', 0.01, 0.01, top - low, M.black, 0, low, 0, 6);
+  const sh = hq.mesh(g, 'shade', new THREE.ConeGeometry(0.26, 0.24, 28, 1, true), mat(0xb87333, 0.35, 0.6), 0, low - 0.02, 0); sh.material.side = THREE.DoubleSide;
+  hq.S(g, 'bulb', 0.08, bulbMat(), 0, low - 0.12, 0);
+  const L = new THREE.PointLight(0xffc27a, 0, 7.5, 1.6); L.position.set(0, low - 0.2, 0); g.add(L); lamps.push(L); pendants.push(g);
+});
+// stars
+const starGeo = new THREE.BufferGeometry(); const sp = [];
+for (let i = 0; i < 700; i++) { const u = Math.random() * Math.PI * 2, v = Math.random() * 0.9 + 0.05; const r = 90; sp.push(Math.cos(u) * Math.cos(v) * r, Math.sin(v) * r - 10, Math.sin(u) * Math.cos(v) * r); }
+starGeo.setAttribute('position', new THREE.Float32BufferAttribute(sp, 3));
+const stars = new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0xfff5d6, size: 0.35, sizeAttenuation: true, transparent: true, opacity: 0.9 })); stars.visible = false; scene.add(stars);
+const moon = new THREE.Mesh(new THREE.SphereGeometry(2.2, 32, 20), new THREE.MeshBasicMaterial({ color: 0xfff1c4 })); moon.position.set(-30, 32, -55); moon.visible = false; scene.add(moon);
+
+// ---------- characters
+const CH = 1.35, actors = [];
+const MOOD = { until: 0, kind: null }, MEET = { on: false, speaker: null };
+const CONF = [];
+function tickConfetti(dt) { for (let i = CONF.length - 1; i >= 0; i--) { const c = CONF[i]; c.v.y -= dt * 2.2; c.m.position.addScaledVector(c.v, dt); c.m.rotation.x += c.r * dt; c.m.rotation.z += c.r * 0.7 * dt; c.life -= dt;
+  if (c.life <= 0 || c.m.position.y < 0) { scene.remove(c.m); CONF.splice(i, 1); } } }
+function confetti3D(center, n = 160) { const cols = [0xf39a33, 0x2f8a8c, 0xd6453a, 0xf2c14e, 0x3f78c0, 0x4f9a52, 0xfbf6ee];
+  for (let i = 0; i < n; i++) { const m = new THREE.Mesh(new THREE.PlaneGeometry(0.09, 0.14), new THREE.MeshStandardMaterial({ color: cols[i % cols.length], side: THREE.DoubleSide, roughness: 0.7 }));
+    m.position.set(center.x + (Math.random() - 0.5) * 5, 4.5 + Math.random() * 2.5, center.z + (Math.random() - 0.5) * 5); scene.add(m);
+    CONF.push({ m, v: new THREE.Vector3((Math.random() - 0.5) * 1.2, -Math.random() * 0.5, (Math.random() - 0.5) * 1.2), r: (Math.random() - 0.5) * 12, life: 7 }); } }
+function actor(id, x, z, ry, mode, extra = {}) {
+  const r = chars.roster.find(c => c.id === id), o = chars.build(id); extra.ry0 = ry; o.scale.setScalar(CH); o.position.set(x, 0, z); o.rotation.y = ry;
+  if (r.acc) hq.dress(o, r.acc);
+  o.traverse(m => { if (m.isMesh) m.castShadow = true; });
+  o.userData.cid = id; o.userData.label = (r.label || '') + (r.name ? ' · ' + r.name : ''); o.userData.role = r.note || r.line || '';
+  world.add(o); const a = { o, mode, phase: Math.random() * 10, ...extra }; actors.push(a); return a;
+}
+actor('ceo', -0.75, -0.55, Math.PI / 2, 'talk', { duo: 'c', turn: 0 });
+actor('lumina', 0.15, -0.55, -Math.PI / 2, 'talk', { duo: 'c', turn: 1 });
+actor('cfo', -6.3, -1.9, Math.PI / 2, 'talk', { duo: 'f', turn: 0 });
+actor('sec', -5.5, -1.9, -Math.PI / 2, 'talk', { duo: 'f', turn: 1 });
+actor('cmo', 5.1, -3.4, -0.35, 'talk');
+actor('coo', 3.4, 4.05, 0, 'walk', { path: [[3.4, 4.05], [7.7, 4.05], [7.7, 0.45], [3.4, 0.45]], seg: 0, speed: 0.8, loop: true });
+actor('tu', 1.05, -0.55, -Math.PI / 2 + 0.5, 'idle');
+
+// ---------- day / night
+const glowMats = [], screenMats = [], bulbMats = [];
+scene.traverse(o => { if (!o.isMesh) return; [].concat(o.material).forEach(m => { if (m.userData.screen) screenMats.push(m); if (m.userData.bulb) bulbMats.push(m); if (m.userData.glow) glowMats.push(m); }); });
+let night = false; try { night = localStorage.getItem('bizon-hq-night') === '1'; } catch {}
+function applyLow() {
+  document.getElementById('lowBtn').innerHTML = LOW ? '<i>✨</i><span>Chi tiết cao</span>' : '<i>⚡</i><span>Chi tiết thấp</span>';
+  LOWHIDE.forEach(o => o && (o.visible = !LOW)); renderer.setPixelRatio(Math.min(devicePixelRatio, LOW ? 1.5 : 2));
+  sun.shadow.mapSize.set(LOW ? 1024 : 2048, LOW ? 1024 : 2048); if (sun.shadow.map) { sun.shadow.map.dispose(); sun.shadow.map = null; }
+  renderer.shadowMap.type = LOW ? THREE.PCFShadowMap : THREE.PCFSoftShadowMap; renderer.shadowMap.needsUpdate = true;
+  window.__LOW = LOW;
+}
+document.getElementById('lowBtn').onclick = () => { LOW = !LOW; try { localStorage.setItem('bizon-hq-low', LOW ? '1' : '0'); } catch {} applyLow(); };
+{ const mb = document.getElementById('musicBtn'), on = () => localStorage.getItem('bizon-music') !== 'off', paint = () => { mb.innerHTML = on() ? '<i>🎵</i><span>Nhạc: Bật</span>' : '<i>🔇</i><span>Nhạc: Tắt</span>'; }; paint();
+  mb.onclick = () => { try { ev('toggleMusic()'); } catch (e) { localStorage.setItem('bizon-music', on() ? 'off' : 'on'); } paint(); };
+  addEventListener('pointerdown', () => { try { if (on()) ev('startMusic()'); } catch (e) {} }, { once: true }); }
+applyLow();
+function setNight(on) {
+  night = on; document.body.classList.toggle('night', on);
+  document.getElementById('night').textContent = on ? '☀️ Ban ngày' : '🌙 Ban đêm';
+  scene.background = new THREE.Color(on ? 0x0f1733 : 0xefe4d2);
+  wallM.color.set(on ? 0x2a3a6e : 0xf1e4cc); wallTop.color.set(on ? 0x1f2c55 : 0xe3d1b4);
+  if (floor.material[0]) floor.material[0].color.set(on ? 0xd9a57a : 0xffffff);
+  hemi.color.set(on ? 0x4a5a9a : 0xfff4e6); hemi.groundColor.set(on ? 0x2a2030 : 0xb58a66); hemi.intensity = on ? 0.45 : 1.2;
+  sun.color.set(on ? 0x8aa0e0 : 0xfff1dc); sun.intensity = on ? 0.35 : 2.4;
+  lamps.forEach(l => { l.intensity = on ? 11 : 0; l.color && l.color.set(0xffb45a); });
+  bulbMats.forEach(m => m.emissiveIntensity = on ? 2.2 : 0.15);
+  screenMats.forEach(m => m.emissiveIntensity = on ? 0.85 : 0.12);
+  stars.visible = moon.visible = on; pendants.forEach(p => p.visible = on);
+  renderer.toneMappingExposure = on ? 1.15 : 1.0;
+  try { localStorage.setItem('bizon-hq-night', on ? '1' : '0'); } catch {}
+}
+setNight(night);
+document.getElementById('night').onclick = () => setNight(!night);
+
+// ---------- zones
+const ZONES = [
+  ['Toàn cảnh', null], ['CEO · Ra quyết định', [0, 0.5, -3], 8, 'decisions'], ['Tài chính · Báo cáo', [-5.5, 0.5, -3.5], 7, 'reports'], ['SEC · Nhật ký đội', [-5.5, 0.5, 1.2], 7, 'journal'],
+  ['Marketing · Thị trường sống', [5.5, 0.5, -3.5], 7, 'market'], ['Vận hành · Xưởng đất sét', [5.6, 0.5, 2.5], 7.5, 'minigame'], ['R&D · Kỹ năng', [0.4, 0.5, 3.7], 7, 'skills'], ['Sản phẩm · Cửa hàng', [-2.45, 0.8, -3.35], 4, 'shop'], ['Linh vật 4 đội', [-2.7, 0.5, 3.55], 3, 'achievements', [-0.75, 0.6, 0.6]], ['Sảnh cờ · Chinh phục', [-5.6, 1, 5], 6, '__map'],
+];
+let tween = null; const zb = document.getElementById('zones');
+const fly = i => zb.children[i].dataset.fly = '1';
+ZONES.forEach(([label, tgt, dist, tab, dir], i) => {
+  const b = document.createElement('button'); b.className = 'btn'; b.textContent = label; b.setAttribute('aria-pressed', i === 0);
+  b.onclick = () => { zb.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b));
+    const t = tgt ? new THREE.Vector3(...tgt) : HOME.tgt.clone(); const p = tgt ? t.clone().add(new THREE.Vector3(...(dir || [0.62, 0.62, 0.75])).multiplyScalar(dist)) : HOME.pos.clone();
+    moved = true; tween = { t0: performance.now(), fp: camera.position.clone(), ft: controls.target.clone(), p, t };
+    const only = b.dataset.fly; delete b.dataset.fly; if (only) return;
+    if (!tab) window.__closeSheet && window.__closeSheet(); else setTimeout(() => tab === '__map' ? openResults() : window.__openTab && window.__openTab(tab), 650); };
+  zb.appendChild(b);
+});
+
+// ---------- picking / tooltip
+const ray = new THREE.Raycaster(), ndc = new THREE.Vector2(), tip = document.getElementById('tip'); let tipObj = null, tipUntil = 0, down = null;
+canvas.addEventListener('pointerdown', e => down = [e.clientX, e.clientY]);
+canvas.addEventListener('pointerup', e => {
+  if (!down || Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 5) return;
+  if (window.__roomPick && window.__roomPick(e)) return;
+  ndc.set(e.clientX / innerWidth * 2 - 1, -e.clientY / innerHeight * 2 + 1); ray.setFromCamera(ndc, camera);
+  const hit = ray.intersectObjects(scene.children, true)[0]; if (!hit) return;
+  if (hit.object.name === 'map_face') return openResults();
+  let o = hit.object; while (o && !o.userData.label) o = o.parent;
+  if (o) { tipObj = o; tipUntil = performance.now() + 4000; const tab = TAB_OF[o.userData.cid];
+    tip.innerHTML = `<b>${o.userData.label}</b>${o.userData.role || ''}${tab ? `<br><i style="color:#2f8a8c;font-style:normal;font-weight:700">→ ${TAB_NAME[tab]}</i>` : ''}`; tip.style.display = 'block';
+    if (o.userData.team) openResults(); else if (tab) setTimeout(() => window.__openTab && window.__openTab(tab), 700); }
+});
+
+// ---------- loop
+function homeDist() { const a = innerWidth / innerHeight; return 11.5 / Math.sin(THREE.MathUtils.degToRad(15)) / Math.min(1.25, a) * 0.85; }
+function resize() { renderer.setSize(innerWidth, innerHeight, false); camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); HOME.pos.copy(HOME.dir).multiplyScalar(homeDist()).add(HOME.tgt); if (!moved) camera.position.copy(HOME.pos); }
+let moved = false; controls.addEventListener('start', () => moved = true);
+addEventListener('resize', resize); resize();
+const spinners = []; scene.traverse(o => { if (o.userData.spin || o.name === 'holo_dragon' || o.name === 'holo_cube' || o.name === 'drone_body') spinners.push(o); });
+const clock = new THREE.Clock(); const tmp = new THREE.Vector3();
+function workArms(a, t) {
+  const r = a.o.userData.rig; for (const k in r.arms) { if (r.hold[k]) continue; const arm = r.arms[k], ph = k === 'L' ? 0 : 1.7;
+    arm.sh.rotation.x = -0.85 + Math.sin(t * 5 + ph) * 0.12; arm.el.rotation.x = -0.7 + Math.sin(t * 5 + ph + 0.8) * 0.22; arm.sh.rotation.z = arm.s * 0.18; }
+  r.head.rotation.x = 0.18;
+}
+function tick() {
+  const dt = Math.min(clock.getDelta(), 0.05), t = clock.elapsedTime;
+  for (const a of actors) {
+    let mode = a.mode;
+    if (a.duo) mode = Math.floor(t / 3.2) % 2 === a.turn ? 'talk' : 'idle';
+    if (a.seat) { a.o.position.lerp(tmp.set(a.seat[0], 0, a.seat[1]), Math.min(1, dt * 5)); let dr = a.seat[2] - a.o.rotation.y; dr = Math.atan2(Math.sin(dr), Math.cos(dr)); a.o.rotation.y += dr * Math.min(1, dt * 6);
+      mode = MEET.speaker === a.o.userData.cid ? 'talk' : 'idle'; }
+    else if (a.path) {
+      if (a.pause > 0) { a.pause -= dt; mode = 'idle'; }
+      else { const [tx, tz] = a.path[(a.seg + 1) % a.path.length]; const dx = tx - a.o.position.x, dz = tz - a.o.position.z, d = Math.hypot(dx, dz);
+        if (d < 0.05) { a.seg = (a.seg + 1) % a.path.length; a.pause = a.seg % 2 ? 1.2 : 0.4; }
+        else { const s = Math.min(d, a.speed * dt); a.o.position.x += dx / d * s; a.o.position.z += dz / d * s; const want = Math.atan2(dx, dz); let dr = want - a.o.rotation.y; dr = Math.atan2(Math.sin(dr), Math.cos(dr)); a.o.rotation.y += dr * Math.min(1, dt * 8); } }
+    }
+    if (a.o.userData.cid === 'lumina') { const on = window.__EVON; if (on) mode = 'talk';
+      const want = on ? Math.atan2(camera.position.x - a.o.position.x, camera.position.z - a.o.position.z) : a.ry0; let dr = want - a.o.rotation.y; dr = Math.atan2(Math.sin(dr), Math.cos(dr)); a.o.rotation.y += dr * Math.min(1, dt * 4); }
+    const cel = MOOD.until > performance.now() ? MOOD.kind : null;
+    if (cel === 'win' && !a.path) mode = 'talk';
+    chars.animate(a.o, t, mode === 'work' ? 'idle' : mode, a.phase);
+    if (mode === 'work' && !cel) workArms(a, t + a.phase);
+    a.o.position.y = cel === 'win' && !a.path ? Math.abs(Math.sin(t * 6 + a.phase)) * 0.16 : 0;
+    if (cel === 'lose') { const rg = a.o.userData.rig; rg.head.rotation.x = 0.38; if (rg.art) rg.sprite.material.rotation = 0.06; }
+  }
+  tickConfetti(dt);
+  flags.forEach((f, i) => { hq.waveFlag(f, t + i * 0.7); const s = f.userData.goal || 1; f.scale.y += (s - f.scale.y) * Math.min(1, dt * 3); });
+  spinners.forEach(o => { if (o.userData.spin) o.rotation.y += dt * 3; else if (o.name === 'drone_body') o.position.y = 0.45 + Math.sin(t * 2) * 0.05; else o.rotation.y += dt * 0.8; });
+  roverObj.position.set(1.2 + Math.cos(t * 0.35) * 0.55, 0, 3.75 + Math.sin(t * 0.35) * 0.3); roverObj.rotation.y = -t * 0.35 + Math.PI;
+  if (tween) { const k = Math.min(1, (performance.now() - tween.t0) / 900), e = 1 - Math.pow(1 - k, 3); camera.position.lerpVectors(tween.fp, tween.p, e); controls.target.lerpVectors(tween.ft, tween.t, e); if (k >= 1) tween = null; }
+  if (window.__ARTICK && window.__ARTICK(dt, t)) { requestAnimationFrame(tick); return; }
+  controls.update(); renderer.render(scene, camera);
+  if (tipObj) { if (performance.now() > tipUntil) { tipObj = null; tip.style.display = 'none'; } else { tipObj.getWorldPosition(tmp); tmp.y += tipObj.userData.rig ? 2.0 : 1.9; tmp.project(camera); tip.style.left = (tmp.x + 1) / 2 * innerWidth + 'px'; tip.style.top = (1 - tmp.y) / 2 * innerHeight + 'px'; } }
+  requestAnimationFrame(tick);
+}
+tick();
+window.__boot && window.__boot(0.7, 'Đang khởi động engine…');
+
+// ================= ROUND RESULTS =================
+const TEAMS = hq.TEAMS, ORDER = ['star', 'elephant', 'wolf', 'peacock'];
+const STOPS = [
+  { name: 'Cần Thơ', zone: 'Đồng bằng sông Cửu Long', ll: [105.78, 10.03] }, { name: 'TP. Hồ Chí Minh', zone: 'Đông Nam Bộ', ll: [106.70, 10.78] },
+  { name: 'Khánh Hòa', zone: 'Duyên hải Nam Trung Bộ', ll: [109.19, 12.24] }, { name: 'Đà Nẵng', zone: 'Duyên hải miền Trung', ll: [108.22, 16.05] },
+  { name: 'Thanh Hóa', zone: 'Bắc Trung Bộ', ll: [105.78, 19.81] }, { name: 'Hà Nội', zone: 'Đồng bằng sông Hồng', ll: [105.85, 21.03] },
+];
+const KEY_OF = { 'Alpha Dynamics': 'wolf', 'Mekong Ventures': 'elephant', 'Star Clay Co.': 'peacock' };
+const nm = k => k === 'star' ? ((GS && GS.profile && GS.profile.teamName) || TEAMS.star.name) : TEAMS[k].name;
+let W = null, GS = null;
+function realRounds() {
+  const s = GS; if (!s || !s.history) return [];
+  return s.history.map((hh, i) => { const ai = (s.aiHistory || [])[i] || [], c = (s.conquest || [])[i] || {};
+    const sh = [hh.share || 0, 0, 0, 0]; ai.forEach(a => { const k = KEY_OF[a.name]; if (k) sh[ORDER.indexOf(k)] = a.share || 0; });
+    const win = c.win ? 'star' : (KEY_OF[c.winner] || ORDER[1 + sh.slice(1).indexOf(Math.max(...sh.slice(1)))]);
+    return { sh, p: Math.round(hh.netProfit || 0), win }; });
+}
+let round = 0;
+const K = 30, C16 = Math.cos(16 * Math.PI / 180), P = ([lo, la]) => [((lo - 102.1) * C16 * K), ((23.6 - la) * K)];
+let vnPath = '';
+fetch('assets/geo/vnm.json').then(r => r.json()).then(g => { vnPath = g.coordinates.map(poly => poly.map(ring => 'M' + ring.map(p => P(p).map(v => v.toFixed(1)).join(',')).join('L') + 'Z').join('')).join(''); renderResults(); }).catch(() => renderResults());
+function routeD(pts) { let d = `M${pts[0]}`; for (let i = 1; i < pts.length; i++) { const [x0, y0] = pts[i - 1], [x1, y1] = pts[i]; const mx = (x0 + x1) / 2 + (y1 - y0) * -0.18, my = (y0 + y1) / 2 + (x0 - x1) * -0.18; d += ` Q${mx.toFixed(1)},${my.toFixed(1)} ${x1.toFixed(1)},${y1.toFixed(1)}`; } return d; }
+function flagSVG(x, y, col, big, cls = '', team = '') { const s = big ? 1.5 : 1; return `<g transform="translate(${x},${y}) scale(${s})"><g class="${cls}"><ellipse cx="0" cy="1" rx="7" ry="3" fill="rgba(0,0,0,.25)"/><rect x="-1.6" y="-26" width="3.2" height="27" rx="1.6" fill="#6b4128"/><path d="M1.5,-25 L22,-18.5 L1.5,-12 Z" fill="${col}" stroke="rgba(0,0,0,.2)" stroke-width="1" stroke-linejoin="round"/>${big ? (team === 'star' ? '<path d="M8.5,-21.5 l1.3,2.6 2.9,.4 -2.1,2 .5,2.9 -2.6,-1.4 -2.6,1.4 .5,-2.9 -2.1,-2 2.9,-.4z" fill="#fff6e6"/>' : `<text x="9" y="-15" font-size="8" text-anchor="middle">${TEAMS[team] ? TEAMS[team].emblem : ''}</text>`) : ''}</g></g>`; }
+function renderResults() {
+  const RR = realRounds(), empty = !RR.length; round = Math.max(0, RR.length - 1);
+  const R = empty ? { sh: [25, 25, 25, 25], p: 0, win: null } : RR[round], win = R.win, stop = STOPS[round], me = win === 'star';
+  const owners = RR.map(r => r.win), myFlags = owners.filter(w => w === 'star').length;
+  const pts = STOPS.map(s => P(s.ll)), sea = pts.map(([x, y]) => [x + 16, y]);
+  const hoang = P([111.9, 16.4]), truong = P([113.9, 10.1]);
+  document.getElementById('map').innerHTML = `<svg viewBox="-6 -6 392 478" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Bản đồ hành trình 6 vòng">
+    <defs><filter id="clay" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur in="SourceAlpha" stdDeviation="2.5" result="b"/><feOffset in="b" dy="5" result="o"/><feFlood flood-color="#123a4a" flood-opacity=".45"/><feComposite in2="o" operator="in" result="sh"/>
+      <feSpecularLighting in="b" surfaceScale="5" specularConstant=".55" specularExponent="16" lighting-color="#fff" result="sp"><feDistantLight azimuth="235" elevation="48"/></feSpecularLighting><feComposite in="sp" in2="SourceAlpha" operator="in" result="sp2"/>
+      <feMerge><feMergeNode in="sh"/><feMergeNode in="SourceGraphic"/><feMergeNode in="sp2"/></feMerge></filter>
+      <pattern id="grain" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="6" fill="#6fae4f"/><circle cx="1.5" cy="2" r=".8" fill="#80bd5d"/><circle cx="4.5" cy="4.5" r=".7" fill="#5f9c43"/></pattern></defs>
+    <rect x="-6" y="-6" width="392" height="478" fill="#4b9fcf"/>
+    ${[...Array(9)].map((_, i) => `<path d="M${-6},${40 + i * 50} q60,-10 120,0 t120,0 t140,0" stroke="rgba(255,255,255,.12)" stroke-width="3" fill="none"/>`).join('')}
+    <path d="${vnPath}" fill="url(#grain)" stroke="#4a8a35" stroke-width="2.2" stroke-linejoin="round" filter="url(#clay)"/>
+    ${[[0, 0], [9, 5], [-6, 8], [14, -4], [4, 12]].map(([dx, dy]) => `<circle cx="${hoang[0] + dx}" cy="${hoang[1] + dy}" r="2.6" fill="#8cc46a" stroke="#4a8a35"/>`).join('')}
+    ${[[0, 0], [10, 8], [-8, 14], [18, -6], [4, 22], [-14, -4], [22, 16]].map(([dx, dy]) => `<circle cx="${truong[0] + dx}" cy="${truong[1] + dy}" r="2.3" fill="#8cc46a" stroke="#4a8a35"/>`).join('')}
+    <text x="${hoang[0] - 30}" y="${hoang[1] - 10}" font-size="10" font-family="Be Vietnam Pro" fill="#eaf6ff">QĐ. Hoàng Sa</text>
+    <text x="${truong[0] - 34}" y="${truong[1] - 12}" font-size="10" font-family="Be Vietnam Pro" fill="#eaf6ff">QĐ. Trường Sa</text>
+    <path d="${routeD(sea)}" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 11"/>
+    ${pts.map(([x, y], i) => `<circle cx="${x}" cy="${y}" r="${owners[i] ? 6 : 5}" fill="${owners[i] ? TEAMS[owners[i]].color : '#fff'}" stroke="#fff" stroke-width="2.5"/>`).join('')}
+    <circle class="ping" cx="${pts[empty ? 0 : Math.min(5, RR.length)][0]}" cy="${pts[empty ? 0 : Math.min(5, RR.length)][1]}" r="8" fill="none" stroke="#3ff0e0" stroke-width="3"/>
+    ${owners.map((w, i) => i === round ? '' : flagSVG(pts[i][0], pts[i][1], TEAMS[w].color, false)).join('')}
+    ${empty ? '' : flagSVG(pts[round][0], pts[round][1], TEAMS[win].color, true, 'pop', win)}
+    <g font-family="Baloo 2" font-weight="700" font-size="13" fill="#fff" stroke="#2a5a2a" stroke-width="3" paint-order="stroke">
+      <text x="${pts[5][0] - 30}" y="${pts[5][1] - 8}">Hà Nội</text><text x="${pts[0][0] - 58}" y="${pts[0][1] + 20}">${round === 0 ? 'Cần Thơ' : ''}</text>
+      ${round > 0 && round < 5 ? `<text x="${pts[round][0] - 70}" y="${pts[round][1] + 4}">${stop.name}</text>` : ''}${round === 5 ? '' : ''}
+    </g></svg>`;
+  document.getElementById('rPill').textContent = empty ? 'Bản đồ chinh phục · 0/6' : `Vòng ${round + 1}/6 · ${stop.zone}`;
+  const lead = R.sh.indexOf(Math.max(...R.sh)), myName = (GS && GS.profile && GS.profile.teamName) || TEAMS.star.name;
+  const head = document.getElementById('rHead'); head.className = me || empty ? '' : 'lost';
+  const nmL = nm;
+  head.innerHTML = empty ? '<span class="flagi"></span><span>Chưa cắm cờ nào</span>' : `<span class="flagi" style="--c:${TEAMS[win].color}"></span><span>${me ? `Đội bạn cắm cờ tại ${stop.name}!` : `${nm(win)} cắm cờ tại ${stop.name}`}</span>`;
+  document.getElementById('rSub').textContent = empty ? 'Hoàn thành vòng 1 với thị phần cao nhất và có lãi để cắm cờ đầu tiên tại Cần Thơ.' : me ? 'Thị phần cao nhất và có lãi. Tỉnh này mang màu cờ của đội bạn.'
+    : lead === 0 ? 'Đội bạn dẫn thị phần nhưng lỗ vòng này, nên cờ thuộc về đối thủ có thị phần cao nhất.' : `${nm(win)} có thị phần cao nhất vòng này, cờ tỉnh thuộc về họ.`;
+  const rows = ORDER.map((k, i) => ({ k, v: R.sh[i] })).sort((a, b) => b.v - a.v);
+  const bars = document.getElementById('bars');
+  bars.innerHTML = rows.map(({ k, v }) => `<div class="bar" style="--c:${TEAMS[k].color}"><span class="st">${k === win ? '★' : ''}</span><div class="trk"><div class="fill" style="width:0"></div><div class="nm">${nm(k)}</div></div><span class="v" style="color:${TEAMS[k].color}">${v.toFixed(1)}%</span></div>`).join('');
+  requestAnimationFrame(() => requestAnimationFrame(() => bars.querySelectorAll('.fill').forEach((f, i) => f.style.width = Math.min(100, rows[i].v / 40 * 100) + '%')));
+  const pf = document.getElementById('rProfit'); pf.textContent = empty ? '–' : (R.p >= 0 ? '↑ +' : '↓ ') + R.p + 'trđ'; pf.style.color = R.p >= 0 ? '#3f8a44' : '#c0443a'; pf.parentElement.style.borderColor = R.p >= 0 ? '#4f9a52' : '#d6453a';
+  document.getElementById('rFlags').textContent = `${myFlags}/6`;
+  document.getElementById('legend').innerHTML = ORDER.map(k => `<span style="--c:${TEAMS[k].color}"><i></i>${nm(k)}<b>${owners.filter(w => w === k).length}</b></span>`).join('');
+  document.getElementById('nextRound').textContent = window.__afterMap ? 'Tiếp tục →' : GS && GS.finished ? '🏁 Tổng kết mùa giải →' : `🎯 Ra quyết định vòng ${GS ? GS.round : 1} →`;
+}
+const resEl = document.getElementById('res');
+function openResults() { resEl.classList.add('on'); renderResults(); }
+document.getElementById('openRes').onclick = openResults;
+function closeMap() { resEl.classList.remove('on'); const f = window.__afterMap; window.__afterMap = null; if (f) f(); }
+document.getElementById('closeRes').onclick = closeMap;
+resEl.addEventListener('click', e => { if (e.target === resEl) closeMap(); });
+document.getElementById('nextRound').onclick = () => { if (window.__afterMap) return closeMap(); resEl.classList.remove('on'); primary(); };
+addEventListener('keydown', e => { if (e.key === 'Escape' && resEl.classList.contains('on')) closeMap(); });
+
+// ================= GAME BRIDGE (game.html + engine.js thật) =================
+const frame = document.getElementById('frame'), gf = document.getElementById('gf');
+let booted = false, sheetTab = null, lastHist = -1;
+const ev = code => { try { return W.eval(code); } catch { return null; } };
+function overlayOn() {
+  const d = W && W.document; if (!d || !d.body) return false; const iw = W.innerWidth, ih = W.innerHeight;
+  for (const el of d.querySelectorAll('body > *, #app-shell > *')) {
+    if (el.id === 'app-shell' || el.tagName === 'SCRIPT' || el.tagName === 'NAV' || el.tagName === 'HEADER' || el.tagName === 'MAIN') continue;
+    const cs = W.getComputedStyle(el); if (cs.position !== 'fixed' || cs.display === 'none' || cs.visibility === 'hidden' || +cs.opacity < 0.05) continue;
+    const r = el.getBoundingClientRect(); if (r.width >= iw * 0.9 && r.height >= ih * 0.9) return true;
+  }
+  return false;
+}
+function setMode() {
+  const shell = W && W.document && W.document.getElementById('app-shell'); booted = !!shell && !shell.classList.contains('hidden');
+  const gd0 = id => W && W.document && W.document.getElementById(id), onLogin = !booted && !L3.classic && [gd0('screen-login'), gd0('screen-splash')].some(e => e && e.classList.contains('active'));
+  if (onLogin !== L3.on) { L3.on = onLogin; document.body.classList.toggle('login3d', onLogin); if (onLogin) l3Show(); }
+  const m = !booted || overlayOn() ? 'full' : sheetTab ? 'sheet' : 'hide';
+  if (frame.className !== m) { frame.className = m; document.body.classList.toggle('sheet', m === 'sheet'); }
+}
+window.__openTab = (tab, rep) => { if (!W || !booted) return; if (rep) ev('currentReport=' + JSON.stringify(rep)); W.showTab(tab); setMode(); };
+window.__closeSheet = () => { sheetTab = null; setMode(); zb.querySelectorAll('button').forEach((x, i) => x.setAttribute('aria-pressed', i === 0)); };
+document.getElementById('sheetX').onclick = window.__closeSheet;
+function primary() { if (!GS) return; GS.finished ? finale3D() : window.__openTab('decisions'); }
+// ================= ĐĂNG NHẬP 3D =================
+const L3 = { on: false, classic: false, role: 'CEO', orbit: 0 };
+const L3R = [['CEO', 'ceo', 'Minh Long · Tầm nhìn & quyết định cuối'], ['CFO', 'cfo', 'Thu Hà · Dòng tiền & ngân sách'], ['CMO', 'cmo', 'Mạnh Chi · Thương hiệu & khách hàng'], ['COO', 'coo', 'Bảo Ngọc · Sản xuất & giao hàng'], ['SEC', 'sec', 'Gia Hân · Biên bản & pháp chế']];
+const L3SAY = { CEO: 'Mỗi vòng cả đội bàn, mình chốt. Quyết định cuối là của CEO.', CFO: 'Tiền mặt là oxy. Mình tính dòng tiền trước khi ai đó đòi mở rộng.', CMO: 'Khách phải nghe thấy tên BizOn trước khi nghe tên đối thủ.', COO: 'Kế hoạch hay mấy cũng phải sản xuất và giao được đúng hẹn.', SEC: 'Mình ghi lại mọi quyết định. Cuối mùa, nhật ký này là bài học của cả đội.' };
+{ const box = document.getElementById('l3Roles');
+  box.innerHTML = L3R.map(([id, c]) => `<button class="role" data-r="${id}" aria-pressed="${id === L3.role}"><img src="assets/character/solid/${c}.webp" alt="${id}">${id}</button>`).join('');
+  box.onclick = e => { const b = e.target.closest('.role'); if (!b) return; L3.role = b.dataset.r; box.querySelectorAll('.role').forEach(x => x.setAttribute('aria-pressed', x === b)); l3Focus(); }; }
+function l3Focus() {
+  const r = L3R.find(x => x[0] === L3.role), a = actors.find(x => x.o.userData.cid === r[1]); const tp = document.getElementById('l3Tip'); tp.textContent = '👉 ' + r[0] + ' – ' + r[2]; tp.appendChild(document.createElement('br')); tp.appendChild(document.createTextNode('“' + (L3SAY[r[0]] || '') + '”'));
+  if (!a) return; const p = a.o.position.clone(); p.y = 1.0; const mob = innerWidth < 760;
+  flyTo(p.clone().add(new THREE.Vector3(mob ? 0 : -1.6, mob ? -0.9 : 0, 0)), new THREE.Vector3(2.4, 2.0, 3.6).multiplyScalar(mob ? 1.5 : 1.15));
+  a.mode0 ??= a.mode; a.mode = 'talk'; actors.forEach(o => { if (o !== a && o.mode0) { o.mode = o.mode0; } });
+}
+function l3Show() {
+  const g = id => W.document.getElementById(id);
+  [['l3Email', 'login-email'], ['l3Team', 'login-team'], ['l3Class', 'login-class']].forEach(([a, b]) => { const s = g(b); if (s && s.value && !document.getElementById(a).value) document.getElementById(a).value = s.value; });
+  l3Focus();
+}
+function l3Enter(demo) {
+  if (!W) return; const g = id => W.document.getElementById(id);
+  ['screen-splash'].forEach(id => g(id) && g(id).classList.remove('active'));
+  if (demo) { ev('doLoginDemo()'); }
+  else { g('login-email').value = document.getElementById('l3Email').value.trim(); g('login-team').value = document.getElementById('l3Team').value.trim();
+    g('login-class').value = document.getElementById('l3Class').value.trim().toUpperCase(); try { W.pickRole(L3.role); } catch (e) {} ev('doLogin()'); }
+  actors.forEach(o => { if (o.mode0) o.mode = o.mode0; });
+  setTimeout(() => { setMode(); zb.children[0] && zb.children[0].click(); maybeTour3D(); }, 600);
+}
+document.getElementById('l3Go').onclick = () => l3Enter(false);
+document.getElementById('l3Demo').onclick = () => l3Enter(true);
+document.getElementById('l3Classic').onclick = e => { e.preventDefault(); L3.classic = true; document.body.classList.remove('login3d'); L3.on = false; setMode(); };
+['l3Email', 'l3Team', 'l3Class'].forEach(id => document.getElementById(id).addEventListener('keydown', e => { if (e.key === 'Enter') l3Enter(false); }));
+document.getElementById('ctaBtn').onclick = primary;
+document.querySelectorAll('#rail [data-tab]').forEach(b => b.onclick = () => window.__openTab(b.dataset.tab));
+document.getElementById('tourBtn').onclick = () => { window.__closeSheet(); tour3D(0); };
+function bridge() {
+  const w = gf.contentWindow; if (!w || typeof w.showTab !== 'function' || w.__bridged) return; W = w; W.__bridged = true;
+  const st = W.document.createElement('style'); st.textContent = '#bz-dock-btn,#bz-dock{display:none!important}'; W.document.head.appendChild(st);
+  ['toggleLang', 'applyLang'].forEach(f => { const o = W[f]; if (typeof o === 'function') W[f] = function () { try { localStorage.setItem('bizon-lang-user', '1'); } catch {} return o.apply(this, arguments); }; });
+  const orig = W.showTab;
+  W.showTab = function (t) { const r = orig.apply(this, arguments);
+    if (booted && ROOM3D[t] && !force2D && !(t === 'reports' && ev('currentReport') === 'season')) { sheetTab = null; setMode(); room3D(t); return r; }
+    if (booted && t === 'advisor' && !force2D) { window.__advisor3D(); return r; }
+    if (booted) { sheetTab = t === 'home' ? null : t; const zi = ZONE_OF[t]; if (zi) { fly(zi); zb.children[zi].click(); } else if (t === 'advisor') flyLumina(); } setMode(); return r; };
+  W.showArena = (r, done) => arena3D(r, done);
+  W.showRoundResult = result3D; W.showVictory = victory3D;
+  const oTM = W.renderTeamMeeting; W.renderTeamMeeting = function () { const x = oTM.apply(this, arguments); const box = W.document.getElementById('team-meeting');
+    if (box && box.firstElementChild && !box.querySelector('.tm3d')) box.firstElementChild.insertAdjacentHTML('afterbegin', '<button class="tm3d clay-btn w-full bg-deep-teal text-white font-display font-bold py-3 mb-3" onclick="parent.__meeting3D()">🎥 Họp đội trong trụ sở 3D</button>'); return x; };
+  W.maybeShowEventIntro = event3D;
+}
+gf.addEventListener('load', bridge);
+bridge(); { let n = 0; const iv = setInterval(() => { bridge(); if ((W && W.__bridged) || ++n > 100) clearInterval(iv); }, 100); }
+{ let n = 0; const iv = setInterval(() => { if ((W && W.__bridged) || ++n > 120) { clearInterval(iv); window.__boot && window.__boot(1); } else window.__boot && window.__boot(0.7 + Math.min(0.28, n * 0.01)); }, 100); }
+const fmt = v => ev('money(' + (+v || 0) + ')') || Math.round(v) + 'tr₫';
+function hud() {
+  if (!W) return; const dk = W.document && W.document.getElementById('bz-dock-btn'); if (dk) dk.remove(); setMode(); GS = ev('typeof S!=="undefined"?S:null'); const s = GS; if (!s || !booted) return;
+  const e = ev('currentEvent(S)'), last = s.history && s.history[s.history.length - 1];
+  document.getElementById('hTeam').textContent = (s.profile && s.profile.teamName ? s.profile.teamName : 'BizOn BẬT NGHIỆP') + ' · Trụ sở Cần Thơ';
+  document.getElementById('hEvent').innerHTML = s.finished ? '<span class="ev good">🏁 Đã hoàn thành 6 vòng</span>' : e ? `<span class="ev ${e.tone}">Vòng ${s.round}/6 · ${e.icon} ${e.name}</span>` : '';
+  document.getElementById('kCash').textContent = fmt(s.balance);
+  document.getElementById('kShare').textContent = last ? (+last.share).toFixed(1) + '%' : '–';
+  document.getElementById('kBrand').textContent = (+s.brand || 1).toFixed(2);
+  const cq = s.conquest || [], wins = cq.filter(c => c.win).length; document.getElementById('kFlags').textContent = wins + '/6';
+  const btn = document.getElementById('ctaBtn'), sub = document.getElementById('ctaSub');
+  btn.textContent = s.finished ? '🏁 Tổng kết mùa giải' : s.committed ? '⏳ Đang mô phỏng…' : `🎯 Ra quyết định · Vòng ${s.round}/6`;
+  sub.textContent = s.finished ? 'Xem xếp hạng chung cuộc, thành tựu và chứng nhận' : 'Chốt giá, marketing, sản lượng cùng cả đội rồi khóa quyết định';
+  const mis = ev('MISSIONS_LIST().filter(m=>missionStatus(S,m)==="ready").length') || 0, bm = document.getElementById('bMis'); bm.textContent = mis; bm.style.display = mis ? 'block' : 'none';
+  const cnt = { star: 0, elephant: 0, wolf: 0, peacock: 0 }; cq.forEach(c => { const k = c.win ? 'star' : KEY_OF[c.winner]; if (k) cnt[k]++; });
+  flags.forEach(f => f.userData.goal = 0.8 + cnt[f.userData.team] * 0.12);
+  const n = (s.history || []).length;
+  if (lastHist >= 0 && n > lastHist) { fly(9); zb.children[9].click(); }
+  lastHist = n;
+}
+setInterval(hud, 300);
+
+// ================= PHÒNG 3D: Cửa hàng · Kỹ năng · Thành tựu · Xếp hạng · Mini-game =================
+const ROOM3D = { shop: 1, skills: 1, achievements: 1, leaderboard: 1, minigame: 1 };
+let force2D = false;
+const RM = { on: false, scene: new THREE.Scene(), cam: new THREE.PerspectiveCamera(36, 1, 0.1, 200), g: null, picks: [], labs: [], mode: null, sel: null, spin: [], belt: [], mg: null };
+RM.scene.background = new THREE.Color(0xefe4d2);
+{ const hl = new THREE.HemisphereLight(0xfff4e6, 0xb58a66, 1.15), dl = new THREE.DirectionalLight(0xfff1dc, 2.2); dl.position.set(5, 12, 9); dl.castShadow = true; dl.shadow.mapSize.set(2048, 2048);
+  Object.assign(dl.shadow.camera, { left: -10, right: 10, top: 10, bottom: -10, near: 1, far: 40 }); dl.shadow.bias = -0.0004; dl.shadow.normalBias = 0.02; RM.scene.add(hl, dl);
+  const fl = new THREE.Mesh(new THREE.CylinderGeometry(9, 9.2, 0.4, 72), new THREE.MeshStandardMaterial({ map: plank, color: 0xffffff, roughness: 0.9 })); fl.position.y = -0.2; fl.receiveShadow = true; RM.scene.add(fl);
+  const wl = new THREE.Mesh(new THREE.CylinderGeometry(9, 9, 4.2, 72, 1, true, Math.PI * 0.5, Math.PI), new THREE.MeshStandardMaterial({ color: 0xf1e4cc, roughness: 0.95, side: THREE.DoubleSide })); wl.position.y = 2.1; wl.receiveShadow = true; RM.scene.add(wl);
+  const tr = new THREE.Mesh(new THREE.CylinderGeometry(9.05, 9.05, 0.9, 72, 1, true, Math.PI * 0.5, Math.PI), new THREE.MeshStandardMaterial({ color: 0x2f8a8c, roughness: 0.9, side: THREE.DoubleSide })); tr.position.y = 0.45; RM.scene.add(tr); }
+const cm = (c, rough = 0.85, metal = 0) => new THREE.MeshStandardMaterial({ color: c, roughness: rough, metalness: metal });
+const mk = (g, geo, m, x = 0, y = 0, z = 0) => { const o = new THREE.Mesh(geo, m); o.userData.own = 1; o.position.set(x, y, z); o.castShadow = o.receiveShadow = true; g.add(o); return o; };
+const lathe = (pts, m, g, y = 0) => mk(g, new THREE.LatheGeometry(pts.map(([a, b]) => new THREE.Vector2(a, b)), 36), m, 0, y, 0);
+function trophyModel(gold) {
+  const g = new THREE.Group(), m = gold ? cm(0xf2c14e, 0.35, 0.45) : cm(0xb8ad9c, 0.9);
+  lathe([[0, 0], [0.2, 0], [0.2, 0.06], [0.07, 0.1], [0.05, 0.28], [0.08, 0.32], [0.2, 0.42], [0.24, 0.66], [0.22, 0.66], [0.18, 0.45], [0.06, 0.36], [0, 0.36]], m, g);
+  for (const s of [-1, 1]) { const t = mk(g, new THREE.TorusGeometry(0.09, 0.022, 8, 20, Math.PI), m, s * 0.24, 0.52, 0); t.rotation.z = s > 0 ? -Math.PI / 2 : Math.PI / 2; }
+  return g;
+}
+function itemModel(id) {
+  const g = new THREE.Group();
+  if (id === 'SOLAR_01') { const p = mk(g, new THREE.BoxGeometry(0.9, 0.05, 0.6), cm(0x2d4f8a, 0.4, 0.3), 0, 0.45, 0); p.rotation.x = -0.6;
+    for (let i = 0; i < 3; i++) for (let j = 0; j < 2; j++) { const c = mk(p, new THREE.BoxGeometry(0.26, 0.012, 0.25), cm(0x4f7fc8, 0.3, 0.4), -0.3 + i * 0.3, 0.03, -0.14 + j * 0.28); c.castShadow = false; }
+    mk(g, new THREE.CylinderGeometry(0.03, 0.03, 0.45, 10), cm(0xc9ced4, 0.4, 0.5), 0, 0.22, 0); }
+  if (id === 'MKT_BOOST_01') { const hn = mk(g, new THREE.CylinderGeometry(0.28, 0.1, 0.55, 28, 1, true), cm(0xf4f1ea), 0, 0.45, 0); hn.material.side = THREE.DoubleSide; hn.rotation.z = -Math.PI / 2 - 0.35;
+    mk(g, new THREE.TorusGeometry(0.28, 0.035, 10, 30), cm(0xe8784a), 0.26, 0.55, 0).rotation.y = Math.PI / 2; mk(g, new THREE.BoxGeometry(0.07, 0.2, 0.08), cm(0x3a3f47), -0.12, 0.28, 0); }
+  if (id === 'RD_UPGRADE_01') { lathe([[0, 0], [0.26, 0.02], [0.3, 0.14], [0.26, 0.3], [0.08, 0.42], [0.08, 0.66], [0.11, 0.7], [0, 0.7]], cm(0xbfe3ea, 0.25), g);
+    const liq = lathe([[0, 0.03], [0.24, 0.05], [0.27, 0.14], [0.22, 0.26], [0, 0.26]], cm(0x4fc0a0, 0.4), g); liq.scale.setScalar(0.95); mk(g, new THREE.SphereGeometry(0.05, 14, 10), cm(0x4fc0a0), 0.05, 0.8, 0); }
+  if (id === 'OPS_LEAN_01') { mk(g, new THREE.BoxGeometry(0.8, 0.4, 0.5), cm(0xd98a60), 0, 0.2, 0); for (let i = 0; i < 3; i++) { const rf = mk(g, new THREE.CylinderGeometry(0.001, 0.2, 0.18, 4), cm(0xc8643a), -0.26 + i * 0.26, 0.49, 0); rf.rotation.y = Math.PI / 4; rf.scale.z = 1.8; }
+    mk(g, new THREE.CylinderGeometry(0.06, 0.07, 0.5, 14), cm(0x8a8f99), 0.3, 0.55, -0.12); mk(g, new THREE.SphereGeometry(0.08, 12, 10), cm(0xffffff, 1), 0.33, 0.9, -0.12); }
+  if (id === 'INS_SHIELD_01') { const s = new THREE.Shape(); s.moveTo(0, 0.4); s.quadraticCurveTo(0.3, 0.38, 0.34, 0.3); s.quadraticCurveTo(0.34, -0.15, 0, -0.4); s.quadraticCurveTo(-0.34, -0.15, -0.34, 0.3); s.quadraticCurveTo(-0.3, 0.38, 0, 0.4);
+    const sg = new THREE.ExtrudeGeometry(s, { depth: 0.08, bevelEnabled: true, bevelThickness: 0.04, bevelSize: 0.04, bevelSegments: 4 }); sg.translate(0, 0, -0.04); mk(g, sg, cm(0x2f8a8c), 0, 0.5, 0);
+    mk(g, new THREE.BoxGeometry(0.08, 0.36, 0.06), cm(0xfbf6ee), 0, 0.52, 0.09); mk(g, new THREE.BoxGeometry(0.28, 0.08, 0.06), cm(0xfbf6ee), 0, 0.58, 0.09); }
+  if (id === 'DATA_PACK_01') { [[0.22, 0xd6453a], [0.4, 0xf39a33], [0.58, 0x4f9a52], [0.76, 0x3f78c0]].forEach(([hh, c], i) => mk(g, new THREE.BoxGeometry(0.14, hh, 0.14), cm(c), -0.27 + i * 0.18, hh / 2, 0)); }
+  return g;
+}
+const MGN = { '🏺': 'Bình gốm', '🫖': 'Ấm trà', '🧱': 'Viên gạch', '🪴': 'Chậu cây', '🏆': 'Cúp vàng' };
+function mgModel(e) {
+  const g = new THREE.Group();
+  if (e === '🏺') lathe([[0, 0], [0.14, 0], [0.2, 0.12], [0.18, 0.28], [0.09, 0.38], [0.12, 0.44], [0, 0.44]], cm(0xc8643a), g);
+  if (e === '🫖') { mk(g, new THREE.SphereGeometry(0.2, 22, 16), cm(0x5f9ea0), 0, 0.2, 0).scale.y = 0.8; const sp = mk(g, new THREE.CylinderGeometry(0.025, 0.045, 0.2, 10), cm(0x5f9ea0), 0.22, 0.25, 0); sp.rotation.z = -0.9;
+    mk(g, new THREE.SphereGeometry(0.05, 12, 10), cm(0xf4f1ea), 0, 0.38, 0); mk(g, new THREE.TorusGeometry(0.08, 0.02, 8, 16), cm(0x5f9ea0), -0.2, 0.22, 0); }
+  if (e === '🧱') mk(g, new THREE.BoxGeometry(0.46, 0.2, 0.24), cm(0xb5523a), 0, 0.1, 0);
+  if (e === '🪴') { lathe([[0, 0], [0.12, 0], [0.16, 0.2], [0, 0.2]], cm(0xc8643a), g); [[0, 0.3, 0, 0.12], [0.08, 0.26, 0.04, 0.09], [-0.08, 0.27, -0.03, 0.1]].forEach(([x, y, z, rr]) => mk(g, new THREE.SphereGeometry(rr, 14, 10), cm(0x4f9a52), x, y, z)); }
+  if (e === '🏆') { const t = trophyModel(true); t.scale.setScalar(0.62); g.add(t); }
+  return g;
+}
+const rmLabs = document.getElementById('rmLabs'), rmCard = document.getElementById('rmCard');
+function lab(obj, html, dy = 1.2, cls = '') { const el = document.createElement('div'); el.className = 'lab ' + cls; el.innerHTML = html; rmLabs.appendChild(el); RM.labs.push({ obj, el, dy }); return el; }
+function disposeOwn(root) { root.traverse(o => { if (!o.isMesh || !o.userData.own) return; o.geometry.dispose(); const m = o.material; if (m && !m.userData.shared) { if (m.map) m.map.dispose(); m.dispose(); } }); }
+function clearRoom() { RM.scene.background.set(0xefe4d2); RM.tick = null; if (RM.g) { RM.scene.remove(RM.g); disposeOwn(RM.g); } RM.g = new THREE.Group(); RM.scene.add(RM.g); RM.picks = []; RM.labs = []; RM.spin = []; RM.belt = []; RM.knobs = []; RM.ticker = null; rmLabs.innerHTML = ''; }
+function pedestal(x, z, col, h = 0.9) { const g = new THREE.Group(); g.position.set(x, 0, z); RM.g.add(g);
+  mk(g, new THREE.CylinderGeometry(0.55, 0.62, h, 36), cm(col), 0, h / 2, 0); mk(g, new THREE.CylinderGeometry(0.6, 0.6, 0.07, 36), cm(new THREE.Color(col).offsetHSL(0, -0.05, 0.14)), 0, h + 0.035, 0); return g; }
+function setRoomCam(pos, look) { RM.cp = pos; RM.cl = look; }
+const moneyS = v => fmt(v);
+function roomHead(t, s) { document.getElementById('rmTitle').textContent = t; document.getElementById('rmSub').textContent = s; }
+function buildShop() {
+  clearRoom(); const s = ev('S'), items = ev('SHOP_ITEMS_LIST().map(i=>({id:i.id,icon:i.icon,name:i.name,type:i.type,price:Math.round(i.price*skillEffect(S,"shopMul",1)),desc:i.desc}))') || [];
+  roomHead('🛒 Cửa hàng BizOn', 'Ví của đội: ' + moneyS(s.balance) + (ev('hasSkill(S,"SK_NEG1")') ? ' · đã giảm 10% nhờ Đàm phán' : ''));
+  const COL = { blueprint: 0x2f8a8c, booster: 0xe8784a, consumable: 0x6f8a60 };
+  items.forEach((it, i) => { const a = -0.95 + i * 0.38, x = Math.sin(a) * 4.6, z = -Math.cos(a) * 4.6 + 2.2;
+    const p = pedestal(x, z, COL[it.type] || 0x2f8a8c); p.rotation.y = -a; const m = itemModel(it.id); m.position.y = 0.95; p.add(m); RM.spin.push(m);
+    const own = (s.items || {})[it.id] || 0, act = (s.activeBoosts || []).includes(it.id);
+    p.userData.pick = it; RM.picks.push(p);
+    lab(p, `<i>${it.icon}</i><b>${it.name} · ${it.price}tr₫${own ? ' · x' + own : ''}${act ? ' · ✓' : ''}</b>`, 2.2, RM.sel === it.id ? 'sel' : act ? 'hot' : '');
+  });
+  setRoomCam(new THREE.Vector3(0, 4.6, 9.5), new THREE.Vector3(0, 0.9, -0.8));
+  if (!LOW) { const sh = hq.build('productShowcase'); sh.scale.setScalar(2.2); sh.position.set(0, 0, -5.4); RM.g.add(sh); const ks = hq.build('kraftGiftSet'); ks.scale.setScalar(1.6); ks.position.set(-4.6, 0, -1.6); ks.rotation.y = 0.7; RM.g.add(ks); const cr = hq.build('exportCrate'); cr.scale.setScalar(1.4); cr.position.set(5.2, 0, -1.4); cr.rotation.y = -0.6; RM.g.add(cr); }
+  const it = items.find(x => x.id === RM.sel);
+  if (!it) { rmCard.innerHTML = '<p class="k">Chạm một bục trưng bày</p><p>Bản thiết kế có hiệu lực vĩnh viễn. Vật phẩm dùng 1 lần cần bấm "Sử dụng" trước vòng muốn áp dụng.</p>'; return; }
+  const own = (s.items || {})[it.id] || 0, act = (s.activeBoosts || []).includes(it.id);
+  const TY = { blueprint: 'Bản thiết kế · vĩnh viễn', booster: 'Vật phẩm tăng lực · 1 vòng', consumable: 'Vật phẩm dùng 1 lần' };
+  rmCard.innerHTML = `<p class="k">${TY[it.type] || ''}</p><h3>${it.icon} ${it.name}</h3><p>${it.desc}</p><p><b>Giá: ${it.price}tr₫</b>${own ? ' · Đang có: ' + own : ''}${act ? ' · <b style="color:#2f8a8c">Đang kích hoạt</b>' : ''}</p>
+    <div class="row"><button class="btn primary" id="rmBuy">Mua · ${it.price}tr₫</button>${it.type !== 'blueprint' && (own > 0 || act) ? `<button class="btn" id="rmUse">${act ? 'Tắt kích hoạt' : 'Sử dụng 🚀'}</button>` : ''}</div>`;
+  rmCard.querySelector('#rmBuy').onclick = () => { W.buyItem(it.id); confettiRoom(); buildShop(); };
+  const u = rmCard.querySelector('#rmUse'); if (u) u.onclick = () => { W.toggleBoost(it.id); buildShop(); };
+}
+function buildSkills() {
+  clearRoom(); const s = ev('S'), avail = s.xp - s.spentXp, list = ev('SKILLS_LIST().map(k=>({id:k.id,icon:k.icon,name:k.name,cost:k.cost,desc:k.desc}))') || [];
+  roomHead('🌳 Cây kỹ năng', 'XP khả dụng: ' + avail.toLocaleString('vi-VN') + ' XP · mở khóa vĩnh viễn, không hoàn tác');
+  const g = new THREE.Group(); g.position.set(0, 0, -1.2); RM.g.add(g); const bark = cm(0x8a5a36);
+  mk(g, new THREE.CylinderGeometry(0.28, 0.45, 2.6, 16), bark, 0, 1.3, 0);
+  lathe([[0, 0], [1.1, 0], [0.9, 0.18], [0, 0.22]], cm(0x6fae4f), g, 0);
+  [[0, 3.1, 0, 1.25], [-0.9, 2.8, -0.2, 0.9], [0.9, 2.8, -0.2, 0.9], [0, 3.8, -0.3, 0.8]].forEach(([x, y, z, rr]) => mk(g, new THREE.SphereGeometry(rr, 24, 16), cm(0x5f9c43), x, y, z).scale.z = 0.7);
+  const F = [[-2.2, 2.3], [-1.3, 3.5], [0, 4.25], [1.3, 3.5], [2.2, 2.3]];
+  list.forEach((k, i) => { const [x, y] = F[i], owned = (s.skills || []).includes(k.id), aff = avail >= k.cost;
+    const br = mk(g, new THREE.CylinderGeometry(0.06, 0.12, 1, 10), bark, 0, 0, 0); const a = new THREE.Vector3(0, 2.3, 0), b = new THREE.Vector3(x, y, 0.35);
+    br.position.copy(a).lerp(b, 0.5); br.scale.y = a.distanceTo(b); br.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), b.clone().sub(a).normalize());
+    const f = mk(g, new THREE.SphereGeometry(0.38, 26, 18), owned ? Object.assign(cm(0xf2c14e, 0.35, 0.3), { emissive: new THREE.Color(0x8a5a10), emissiveIntensity: 0.4 }) : aff ? cm(0xe8784a) : cm(0xb8ad9c, 0.95), x, y, 0.35);
+    f.userData.pick = k; f.userData.pulse = !owned && aff; RM.picks.push(f); if (f.userData.pulse) RM.spin.push(f);
+    lab(f, `<i>${k.icon}</i><b>${owned ? '✅ ' : ''}${k.name}${owned ? '' : ' · ' + k.cost + ' XP'}</b>`, 0.55, RM.sel === k.id ? 'sel' : owned ? 'hot' : aff ? '' : 'dim'); });
+  setRoomCam(new THREE.Vector3(0, 3.2, 9.2), new THREE.Vector3(0, 2.4, -1));
+  const k = list.find(x => x.id === RM.sel);
+  if (!k) { rmCard.innerHTML = '<p class="k">Chạm một quả trên cây</p><p>Quả vàng là kỹ năng đã mở. Quả cam đủ XP để mở ngay. Quả xám cần thêm XP từ các vòng chơi.</p>'; return; }
+  const owned = (s.skills || []).includes(k.id);
+  rmCard.innerHTML = `<p class="k">${owned ? 'Đã mở khóa' : 'Chi phí ' + k.cost + ' XP'}</p><h3>${k.icon} ${k.name}</h3><p>${k.desc}</p>${owned ? '' : `<button class="btn primary" id="rmUn" ${avail >= k.cost ? '' : 'disabled style="opacity:.5"'}>Mở khóa · ${k.cost} XP</button>`}`;
+  const u = rmCard.querySelector('#rmUn'); if (u) u.onclick = () => { W.unlockSkill(k.id); confettiRoom(); buildSkills(); };
+}
+function buildAch() {
+  clearRoom(); const s = ev('S'), list = ev('ACHIEVEMENTS_LIST().map(a=>({id:a.id,icon:a.icon,name:a.name,desc:a.desc}))') || [], got = s.achievements || [];
+  roomHead('🎖️ Tủ thành tựu', `Đã mở ${got.length}/${list.length} thành tựu`);
+  const wood = cm(0x9d6139), g = new THREE.Group(); g.position.set(0, 0, -2.2); RM.g.add(g);
+  mk(g, new THREE.BoxGeometry(7.4, 3.9, 0.3), wood, 0, 1.95, -0.45); mk(g, new THREE.BoxGeometry(7.2, 3.6, 0.05), cm(0x2f5a6a), 0, 2, -0.29);
+  [0.25, 1.95, 3.75].forEach(y => mk(g, new THREE.BoxGeometry(7.4, 0.12, 0.9), wood, 0, y, 0)); for (const x of [-3.65, 3.65]) mk(g, new THREE.BoxGeometry(0.14, 3.9, 0.9), wood, x, 1.95, 0);
+  list.forEach((a, i) => { const own = got.includes(a.id), t = trophyModel(own); t.position.set(-2.8 + (i % 5) * 1.4, i < 5 ? 1.95 + 0.06 : 0.25 + 0.06, 0); t.scale.setScalar(1.25); g.add(t);
+    t.userData.pick = a; RM.picks.push(t); if (own) RM.spin.push(t);
+    lab(t, `<i>${own ? a.icon : '🔒'}</i><b>${a.name}</b>`, 1.05, RM.sel === a.id ? 'sel' : own ? 'hot' : 'dim'); });
+  if (!LOW) { const mc = hq.build('mascotCollection'); mc.scale.setScalar(1.5); mc.position.set(4.3, 0, -0.9); mc.rotation.y = -0.35; RM.g.add(mc); }
+  setRoomCam(new THREE.Vector3(0, 2.4, 7.4), new THREE.Vector3(0, 1.9, -2.2));
+  const a = list.find(x => x.id === RM.sel), cert = s.finished && !ev('isTrial()');
+  rmCard.innerHTML = a ? `<p class="k">${got.includes(a.id) ? 'Đã đạt' : 'Chưa đạt'}</p><h3>${a.icon} ${a.name}</h3><p>${a.desc}</p>` : '<p class="k">Chạm một chiếc cúp</p><p>Cúp vàng là thành tựu đã đạt. Cúp xám cho biết điều kiện còn thiếu.</p>';
+  if (cert) { rmCard.insertAdjacentHTML('beforeend', '<button class="btn primary" id="rmCert">📜 Tải chứng nhận hoàn thành</button>'); rmCard.querySelector('#rmCert').onclick = () => openList(); }
+}
+function buildLB() {
+  clearRoom(); const s = ev('S'), total = s.history.reduce((a, r) => a + r.netProfit, 0), share = s.history.length ? s.history[s.history.length - 1].share : 25, trial = ev('isTrial()');
+  let all = [{ key: 'star', id: 'ceo', name: s.profile.teamName + ' (Bạn)', profit: total, share, me: true }];
+  if (trial) all = all.concat(s.competitors.map(c => ({ key: KEY_OF[c.name] || 'wolf', id: RIVAL_ID[c.style] || 'alpha', name: c.name, profit: c.profit, share: c.share }))).sort((a, b) => b.profit - a.profit);
+  roomHead('🏆 Bảng xếp hạng', trial ? '🧪 Chơi thử · so với 3 đối thủ AI theo tổng lợi nhuận' : '🔒 Bảng xếp hạng chéo đội đang tạm khóa — chỉ hiện kết quả của đội bạn');
+  const HX = all.length === 1 ? [0] : [-1.5, -4.2, 1.2, 3.9], HH = [1.5, 1.05, 0.75, 0.5], order = all.length === 1 ? [0] : [1, 0, 2, 3];
+  order.forEach((rank, j) => { const t = all[rank]; if (!t) return; const p = pedestal(HX[j] === undefined ? 0 : [-1.4, 0, 1.4, 2.8][j], 0, new THREE.Color(TEAMS[t.key].color).getHex(), HH[rank]);
+    p.position.x = all.length === 1 ? 0 : [-1.9, 0, 1.9, 3.8][j] - 0.95;
+    const ch = chars.build(t.id); ch.scale.setScalar(1.7); ch.position.y = HH[rank] + 0.07; ch.traverse(m => { if (m.isMesh) m.castShadow = true; }); p.add(ch); p.userData.ch = ch; p.userData.rank = rank; RM.spin.push(p);
+    lab(p, `<img src="assets/character/${{ star: 'rong-xanh', wolf: 'mascot-soi', elephant: 'mascot-voi', peacock: 'mascot-cong' }[t.key] || 'rong-xanh'}.webp" alt="" style="width:46px;display:block;margin:0 auto 3px"><i>${['🥇', '🥈', '🥉', '4️⃣'][rank]}</i><b>${t.name} · ${fmt(t.profit)} · ${(+t.share).toFixed(1)}%</b>`, HH[rank] + 2.7, t.me ? 'hot' : ''); });
+  setRoomCam(new THREE.Vector3(0.9, 3.4, 9), new THREE.Vector3(0.9, 1.5, 0));
+  rmCard.innerHTML = '';
+}
+let mgRun = false, mgSpawnT = 0, mgBal0 = 0, mgRes = null;
+function buildMG() {
+  clearRoom(); const s = ev('S'), plays = s.minigamePlays || 0;
+  roomHead('🏭 Clay Factory Frenzy', 'Chạm đúng món hàng được đặt khi nó chạy qua băng chuyền · 30 giây · 3 lượt mỗi vòng');
+  const g = RM.g; mk(g, new THREE.BoxGeometry(13, 0.3, 1.5), cm(0x3a3f47, 0.7), 0, 0.75, 0.6);
+  for (const z of [-0.2, 1.4]) mk(g, new THREE.BoxGeometry(13, 0.18, 0.12), cm(0xe8784a), 0, 0.95, z);
+  for (let i = -6; i <= 6; i += 1.5) for (const z of [-0.1, 1.3]) mk(g, new THREE.BoxGeometry(0.16, 0.75, 0.16), cm(0x8a8f99, 0.5, 0.4), i, 0.375, z);
+  RM.stripes = []; for (let i = 0; i < 26; i++) { const st = mk(g, new THREE.BoxGeometry(0.06, 0.01, 1.4), cm(0x565c66), -6.5 + i * 0.5, 0.905, 0.6); st.castShadow = false; RM.stripes.push(st); }
+  const pot = chars.build('coo'); pot.scale.setScalar(1.5); pot.position.set(0, 0, -1.3); pot.traverse(m => { if (m.isMesh) m.castShadow = true; }); g.add(pot); RM.potter = pot;
+  const box = mk(g, new THREE.BoxGeometry(1.1, 0.8, 1.1), cm(0xc58f54), 7.2, 0.4, 0.6); mk(g, new THREE.BoxGeometry(1.14, 0.05, 1.14), cm(0xa8733f), 7.2, 0.8, 0.6);
+  setRoomCam(new THREE.Vector3(0, 5.2, 8.6), new THREE.Vector3(0, 0.7, 0.2));
+  mgCard();
+}
+function mgCard() {
+  const s = ev('S'), st = ev('mg?{s:mg.score,t:mg.time,g:mg.target}:null'), plays = s.minigamePlays || 0;
+  if (st) { rmCard.innerHTML = `<div class="tgt"><i>${st.g}</i><div><p class="k">Đóng gói món này</p><h3>${MGN[st.g] || ''}</h3></div></div>
+    <div class="stats"><div><small>ĐIỂM</small><b id="mgS">${st.s}</b></div><div><small>GIÂY</small><b id="mgT">${st.t}</b></div><div><small>LƯỢT</small><b>${plays}/3</b></div></div><p>Đúng món +1 điểm, sai món −1 điểm. Mỗi điểm = 2tr₫ (tối đa 60tr₫).</p>`; return; }
+  const out = plays >= 3;
+  rmCard.innerHTML = `${mgRes !== null ? `<p class="k">Kết thúc lượt</p><div class="big">+${mgRes}tr₫</div>` : '<p class="k">Xưởng đất sét</p>'}
+    <div class="stats"><div><small>KỶ LỤC</small><b>${s.minigameBest || 0}</b></div><div><small>ĐIỂM THƯỞNG</small><b>${(s.minigamePoints || 0).toLocaleString('vi-VN')}</b></div><div><small>LƯỢT</small><b>${Math.min(3, plays + (out ? 0 : 1))}/3</b></div></div>
+    <button class="btn primary" id="mgGo" ${out ? 'disabled style="opacity:.5"' : ''}>${out ? '⏳ Hết lượt – commit vòng mới để chơi tiếp' : mgRes !== null ? 'Chơi lại ▶' : 'Bắt đầu ▶'}</button>
+    <button class="btn" id="mgShop">🎁 Clay Reward Shop</button>`;
+  const b = rmCard.querySelector('#mgGo'); if (b && !out) b.onclick = () => { mgBal0 = ev('S.balance'); mgRes = null; W.startMinigame(); ev('mg&&clearInterval(mg.timers[1])'); mgRun = true; mgSpawnT = 0; mgCard(); };
+  rmCard.querySelector('#mgShop').onclick = () => { closeRoom(); force2D = true; W.showTab('minigame'); force2D = false; setTimeout(() => ev('showRewardShop()'), 200); };
+}
+function spawnMG() { const e = ['🏺', '🫖', '🧱', '🪴', '🏆'][Math.floor(Math.random() * 5)], m = mgModel(e); m.position.set(-6.6, 0.91, 0.6); m.scale.setScalar(1.6); RM.g.add(m);
+  m.userData.pick = { mg: e }; m.userData.v = 13 / (2.6 + Math.random() * 1.6); RM.picks.push(m); RM.belt.push(m); }
+function confettiRoom() { const c = RM.cp ? RM.cl : new THREE.Vector3(); for (let i = 0; i < 90; i++) { const m = new THREE.Mesh(new THREE.PlaneGeometry(0.09, 0.14), new THREE.MeshStandardMaterial({ color: [0xf39a33, 0x2f8a8c, 0xd6453a, 0xf2c14e, 0x3f78c0][i % 5], side: THREE.DoubleSide }));
+  m.position.set(c.x + (Math.random() - 0.5) * 5, 5 + Math.random() * 2, c.z + (Math.random() - 0.5) * 3); RM.scene.add(m); (RM.conf ??= []).push({ m, v: new THREE.Vector3((Math.random() - 0.5), -Math.random() * 0.5, (Math.random() - 0.5)), r: (Math.random() - 0.5) * 12, life: 5 }); } }
+const BUILD = { shop: buildShop, skills: buildSkills, achievements: buildAch, leaderboard: buildLB, minigame: buildMG };
+const ROOM_SCENE = { decisions: 'ceo-la-ban', reports: 'coo-cfo-tablet', journal: 'sec-checklist', market: 'cmo-pheu', missions: 'cmo-coo', profile: 'ceo-cfo', achievements: 'tu-phan', leaderboard: 'trao-cup' };
+function room3D(mode) { closeEvent(); if (RM.mode !== mode) RM.sel = null; RM.mode = mode; mgRes = null; BUILD[mode]();
+  { const im = document.getElementById('rmScene'), k = ROOM_SCENE[mode]; if (k && innerWidth >= 760) { im.src = 'assets/illustrations/scenes/' + k + '.webp'; im.style.display = 'block'; } else im.style.display = 'none'; } RM.on = true; controls.enabled = false; document.body.classList.add('room'); resizeRoom(); }
+function closeRoom() { if (mgRun) { ev('endMinigame()'); mgRun = false; } RM.on = false; controls.enabled = true; document.body.classList.remove('room'); }
+function openList() { const m = RM.mode; closeRoom(); force2D = true; W.showTab(m); force2D = false; }
+document.getElementById('rmClose').onclick = () => { closeRoom(); ev('showTab("home")'); };
+document.getElementById('rm2d').onclick = openList;
+function resizeRoom() { RM.cam.aspect = innerWidth / innerHeight; RM.cam.fov = innerWidth < innerHeight ? 58 : 36; RM.cam.updateProjectionMatrix(); }
+addEventListener('resize', resizeRoom);
+window.__roomPick = e => {
+  if (AR.on) return true; if (!RM.on) return false;
+  ndc.set(e.clientX / innerWidth * 2 - 1, -e.clientY / innerHeight * 2 + 1); ray.setFromCamera(ndc, RM.cam);
+  const hit = ray.intersectObjects(RM.picks, true)[0]; if (!hit) return true;
+  let o = hit.object; while (o && !o.userData.pick) o = o.parent; if (!o) return true; const pk = o.userData.pick; if (pk.slider) return true;
+  if (pk.mg) { if (!mgRun) return true; ev(pk.mg === ev('mg&&mg.target') ? 'mg.score++;pickTarget();$("mg-score").textContent=mg.score' : 'mg.score=Math.max(0,mg.score-1);$("mg-score").textContent=mg.score');
+    o.userData.pop = 1; o.userData.pick = null; RM.picks.splice(RM.picks.indexOf(o), 1); mgCard(); return true; }
+  RM.sel = pk.id; BUILD[RM.mode](); return true;
+};
+const rv = new THREE.Vector3();
+function roomTick(dt, t) {
+  const sway = Math.sin(t * 0.25) * 0.5, shx = innerWidth > 760 ? Math.min(2.2, innerWidth / 900) : 0; RM.cam.position.copy(RM.cp).add(rv.set(sway + shx, 0, 0)); RM.cam.lookAt(rv.copy(RM.cl).setX(RM.cl.x + shx));
+  if (innerWidth < innerHeight) { RM.cam.position.z += 3.5; RM.cam.position.y += 1.5; }
+  if (RM.mode === 'market' && RM.ticker) RM.ticker.offset.x += dt * 0.03;
+  RM.spin.forEach((o, i) => { if (o.userData.pulse) o.scale.setScalar(1 + Math.sin(t * 4 + i) * 0.08); else if (o.userData.ch) chars.animate(o.userData.ch, t, o.userData.rank === 0 ? 'talk' : 'idle', i); else if (RM.mode === 'achievements') o.rotation.y = Math.sin(t * 1.5 + i) * 0.35; else o.rotation.y += dt * 0.8; });
+  if (RM.mode === 'minigame') {
+    RM.stripes.forEach(s => { s.position.x += dt * 3; if (s.position.x > 6.5) s.position.x -= 13; });
+    chars.animate(RM.potter, t, mgRun ? 'talk' : 'idle', 0);
+    if (mgRun) { mgSpawnT -= dt; if (mgSpawnT <= 0) { spawnMG(); mgSpawnT = 0.7; }
+      const st = ev('mg?{s:mg.score,t:mg.time}:null');
+      if (!st) { mgRun = false; mgRes = Math.round(ev('S.balance') - mgBal0); RM.belt.forEach(m => RM.g.remove(m)); RM.belt = []; RM.picks = RM.picks.filter(p => !p.userData.pick || !p.userData.pick.mg); if (mgRes > 0) confettiRoom(); mgCard(); }
+      else { const a = document.getElementById('mgS'), b = document.getElementById('mgT'); if (a) a.textContent = st.s; if (b) b.textContent = st.t; } }
+    for (let i = RM.belt.length - 1; i >= 0; i--) { const m = RM.belt[i];
+      if (m.userData.pop) { m.userData.pop += dt * 5; m.scale.setScalar(1.6 * (1 + m.userData.pop * 0.3)); m.position.y += dt * 3; if (m.userData.pop > 2) { RM.g.remove(m); RM.belt.splice(i, 1); } continue; }
+      m.position.x += m.userData.v * dt; m.rotation.y += dt; if (m.position.x > 6.8) { RM.g.remove(m); RM.belt.splice(i, 1); const k = RM.picks.indexOf(m); if (k >= 0) RM.picks.splice(k, 1); } } }
+  if (RM.conf) for (let i = RM.conf.length - 1; i >= 0; i--) { const c = RM.conf[i]; c.v.y -= dt * 2; c.m.position.addScaledVector(c.v, dt); c.m.rotation.x += c.r * dt; c.life -= dt; if (c.life <= 0 || c.m.position.y < 0) { RM.scene.remove(c.m); RM.conf.splice(i, 1); } }
+  if (RM.tick) RM.tick(dt, t);
+  RM.labs.forEach(L => { L.obj.getWorldPosition(rv); rv.y += L.dy; rv.project(RM.cam); L.el.style.left = (rv.x + 1) / 2 * innerWidth + 'px'; L.el.style.top = (1 - rv.y) / 2 * innerHeight + 'px'; L.el.style.display = rv.z < 1 ? '' : 'none'; });
+  renderer.render(RM.scene, RM.cam);
+  return true;
+}
+const ZONE_OF = { decisions: 1, reports: 2, journal: 3, market: 4, minigame: 5, skills: 6 };
+function flyTo(tgt, off) { moved = true; tween = { t0: performance.now(), fp: camera.position.clone(), ft: controls.target.clone(), p: tgt.clone().add(off), t: tgt.clone() }; }
+function flyLumina() { const L = actors.find(a => a.o.userData.cid === 'lumina'); if (!L) return; const p = L.o.position.clone(); p.y = 1.1; const mob = innerWidth < 760;
+  flyTo(p.clone().add(new THREE.Vector3(mob ? 0 : -1.1, mob ? -0.7 : 0, 0)), new THREE.Vector3(2.6, 1.9, 3.4).multiplyScalar(mob ? 1.45 : 1.1)); }
+
+// ================= HƯỚNG DẪN LẦN ĐẦU 3D (LUMINA, 3 BƯỚC) =================
+const T3_KEY = 'bizon-tour3d-seen';
+const T3 = [
+  { cam: () => flyLumina(), img: 'assets/character/solid/lumina-tex.webp', title: '👋 Chào mừng đến trụ sở!', text: 'Mình là Lumina, cố vấn AI của đội. Đây là trụ sở BizOn ở Cần Thơ. Kéo để xoay, chụm hai ngón để phóng to. Chạm vào một khu hoặc chọn ở thanh khu vực để đi tới đó.' },
+  { cam: () => { fly(1); zb.children[1].click(); }, img: 'assets/character/solid/ceo-tex.webp', title: '🗳️ Bàn quyết định của CEO', text: 'Mỗi vòng, cả đội họp tại đây để chốt <b>giá bán, sản lượng, marketing</b>. Nghe đề xuất của CFO, CMO, COO, SEC rồi bấm <b>Commit</b>. Đã khóa thì không sửa lại được.' },
+  { cam: () => { fly(0); zb.children[0].click(); }, img: 'assets/character/rong-xanh-y-tuong.webp', title: '🚩 Cắm cờ khắp Việt Nam', text: 'Sau mỗi vòng, bản đồ cho biết ai chiếm tỉnh đó. Cờ BizOn chỉ cắm khi đội <b>dẫn thị phần và có lãi</b>. Sáu vòng, từ Cần Thơ ra Hà Nội. Bắt đầu thôi!' }];
+let t3i = 0;
+function tour3D(i = 0) {
+  t3i = i; const st = T3[i]; if (!st) return; st.cam();
+  showPanel(`<span class="tag">🤖 LUMINA HƯỚNG DẪN · ${i + 1}/3</span>
+    <div class="who"><img src="${st.img}" alt="" style="object-fit:contain;background:#f3ead9"><div><b>${st.title}</b></div></div>
+    <p class="d">${st.text}</p>
+    <div class="dots">${T3.map((_, k) => `<i class="${k === i ? 'on' : ''}"></i>`).join('')}</div>
+    <div class="row"><button class="btn" id="t3Prev" ${i ? '' : 'disabled'}>‹ Trước</button>${i < 2 ? '<button class="btn primary" id="t3Next">Tiếp ›</button>' : '<button class="btn primary" id="t3End">🎯 Vào bàn quyết định</button>'}</div>
+    <button class="btn" id="t3Skip">Bỏ qua hướng dẫn</button>`);
+  const q = s => evc.querySelector(s), done = () => { try { localStorage.setItem(T3_KEY, '1'); } catch (e) {} closeEvent(); };
+  if (q('#t3Prev')) q('#t3Prev').onclick = () => tour3D(t3i - 1);
+  if (q('#t3Next')) q('#t3Next').onclick = () => tour3D(t3i + 1);
+  if (q('#t3End')) q('#t3End').onclick = () => { done(); window.__openTab('decisions'); };
+  q('#t3Skip').onclick = done;
+}
+window.__tour3D = tour3D;
+function maybeTour3D() { try { if (localStorage.getItem(T3_KEY)) return; } catch (e) { return; } setTimeout(() => { if (!document.body.classList.contains('evt')) tour3D(0); }, 1400); }
+
+// ================= KẾT QUẢ VÒNG 3D =================
+function flyTable(wide) { const mob = innerWidth < 760; flyTo(new THREE.Vector3(mob ? 0 : -1.6, mob ? -1.2 : 0.6, -2.4), new THREE.Vector3(0.62, 0.62, 0.75).multiplyScalar((wide ? 9.5 : 7.5) * (mob ? 1.35 : 1))); }
+function showPanel(html) { evc.innerHTML = html; evc.scrollTop = 0; document.body.classList.add('evt'); sheetTab = null; setMode(); }
+const STOPS3 = ['Cần Thơ', 'TP. Hồ Chí Minh', 'Khánh Hòa', 'Đà Nẵng', 'Thanh Hóa', 'Hà Nội'];
+function resultLine(r) {
+  const S0 = ev('S') || {}, cq = (S0.conquest || [])[r.round - 1] || {}, city = STOPS3[r.round - 1] || '', np = fmt(r.netProfit), sh = (+r.share || 0).toFixed(1);
+  if (r.netProfit > 0 && cq.win) return `Cờ BizOn đã cắm ở ${city}! Thị phần ${sh}% và lãi ${np}. Giữ nhịp này nhé.`;
+  if (r.netProfit > 0) return `Có lãi ${np} nhưng ${cq.winner || 'đối thủ'} vẫn đông khách hơn ở ${city}. Xem lại giá và marketing so với họ.`;
+  if (cq.hasTopShare) return `Mình dẫn thị phần ${sh}% nhưng bán lỗ ${np}. Cờ chỉ cắm khi vừa dẫn thị phần vừa có lãi.`;
+  return `Vòng này lỗ ${np}. Đừng nản, mở báo cáo P&L xem khoản chi nào vượt.`;
+}
+function result3D(r) {
+  const s = ev('S'), ok = r.netProfit > 0; ev("playClip('assets/audio/lumina-round-result.mp3')");
+  const cq = (s.conquest || [])[r.round - 1], st = STOPS[r.round - 1];
+  const cqLine = cq && st ? (cq.win ? `<p class="d" style="color:#3f8a44;font-weight:700">🚩 Đội bạn cắm cờ tại ${st.name}!</p>`
+    : cq.hasTopShare ? `<p class="d" style="color:#b8741a;font-weight:700">⚠️ Thị phần cao nhất nhưng vòng này lỗ nên chưa cắm được cờ – ${st.name} tạm về tay ${cq.winner}.</p>`
+    : `<p class="d" style="color:#c8641c;font-weight:700">🏴 ${cq.winner} chiếm ${st.name} vòng này</p>`) : '';
+  const fresh = ev('(()=>{S.achShown??=[];const f=(S.achievements||[]).filter(id=>!S.achShown.includes(id));S.achShown.push(...f);save();return f.map(id=>{const a=ACHIEVEMENTS_LIST().find(x=>x.id===id);return a?a.icon+" "+a.name:""}).filter(Boolean)})()') || [];
+  let why = ''; try { why = W.explainRound(r); } catch {}
+  MOOD.kind = ok ? 'win' : 'lose'; MOOD.until = performance.now() + 60000; flyTable(true);
+  if (ok) confetti3D(new THREE.Vector3(0, 0, -2.4));
+  showPanel(`<img src="assets/character/${ok ? 'rong-xanh' : 'rong-xanh-suy-nghi'}.webp" alt="Rồng Xanh" style="width:84px;align-self:center"><span class="tag ${ok ? '' : 'bad'}">● Kết quả vòng ${r.round}/6</span>
+    <h2 class="${ok ? '' : 'bad'}">${ok ? '🎉 Vòng có lãi!' : '😰 Vòng này lỗ'}</h2>
+    <p class="d">${r.event.icon} ${r.event.name}${r.shielded ? ' (đã chặn bởi 🛡️)' : ''}</p>
+    <div class="say"><small>🤖 HƯƠNG AI</small>${resultLine(r)}</div>
+    <p class="d" style="text-align:center;font-weight:700">🐉 Rồng Xanh: “${cq && cq.win ? 'Cờ của mình!' : ok ? 'Sắp tới lượt mình rồi!' : 'Để Rồng Xanh xem lại số liệu…'}”</p>
+    ${ok ? '' : '<div class="q">"Dữ liệu cho ta biết quá khứ, quyết định hôm nay viết nên tương lai." – <b>Phan Anh Tú · Cố vấn học thuật</b></div>'}
+    <div class="imps">
+      <div class="imp"><small>Doanh thu</small><b>${fmt(r.revenue)}</b></div>
+      <div class="imp"><small>Lợi nhuận ròng</small><b style="color:${ok ? '#3f8a44' : '#c0443a'}">${fmt(r.netProfit)}</b></div>
+      <div class="imp"><small>Đã bán</small><b>${(+r.sold).toLocaleString('vi-VN')} sp</b></div>
+      <div class="imp"><small>Thị phần</small><b>${(+r.share).toFixed(1)}%</b></div>
+    </div>
+    <div class="say"><small>💡 VÌ SAO?</small>${why}</div>
+    <p class="d" style="color:#2f8a8c;font-weight:700">+${r.xpGain} XP</p>${cqLine}
+    ${fresh.map(a => `<span class="ach">🎖️ Thành tựu mới: ${a}. Ghi vào nhật ký đội nhé.</span>`).join('')}
+    <button class="btn primary" id="rsGo">Xác nhận & tiếp tục 🚩</button>`);
+  evc.querySelector('#rsGo').onclick = () => { closeEvent(); MOOD.until = 0; fly(9); zb.children[9].click();
+    window.__afterMap = () => { ev('renderAll()'); if (ev('S.finished')) finale3D();
+      else if (r.isNewPeak) W.showVictory(r); else W.maybeShowEventIntro(); };
+    setTimeout(openResults, 700); };
+}
+// ================= TỔNG KẾT MÙA GIẢI 3D =================
+let FIN = null; window.__finale3D = () => finale3D(); window.__ev = ev;
+function finale3D() {
+  const s = ev('S'); if (!s) return; ev("try{playClip('assets/audio/lumina-victory.mp3')}catch(e){}");
+  const cq = s.conquest || [], mine = cq.filter(c => c.win).length, H = s.history || [], last = H[H.length - 1] || {};
+  const profit = H.reduce((a, h) => a + (+h.netProfit || 0), 0), cnt = {}; cq.forEach(c => { const k = c.win ? 'star' : (KEY_OF[c.winner] || 'wolf'); cnt[k] = (cnt[k] || 0) + 1; });
+  const rank = ORDER.map(k => ({ k, n: cnt[k] || 0, sh: k === 'star' ? +last.share || 0 : ((s.competitors || []).find(c => KEY_OF[c.name] === k) || {}).share || 0 })).sort((a, b) => b.n - a.n || b.sh - a.sh);
+  const myRank = rank.findIndex(r => r.k === 'star') + 1, champ = myRank === 1;
+  if (FIN) scene.remove(FIN); FIN = G('finale', scene, -3.9, 0, 3.9, Math.atan2(0.62, 0.75));
+  const step = (w, h, x, col) => B(FIN, 'podium', w, h, 0.9, mat(col, 0.85), x, 0, 0, 0.03);
+  step(0.9, 0.55, 0, 0xe8b64a); step(0.9, 0.38, -0.95, 0xc4cad1); step(0.9, 0.25, 0.95, 0xc98a52);
+  const MAS = { star: 'mascotDragon', wolf: 'mascotWolf', elephant: 'mascotElephant', peacock: 'mascotPeacock' }, PX = [0, -0.95, 0.95], PH = [0.55, 0.38, 0.25];
+  rank.slice(0, 3).forEach((r, i) => { const m = hq.build(MAS[r.k]); m.scale.setScalar(1.35); m.position.set(PX[i], PH[i], 0); FIN.add(m); const f = hq.teamFlag(r.k); f.scale.setScalar(0.7); f.position.set(PX[i] + 0.38, PH[i], -0.35); FIN.add(f); });
+  ['ceo', 'cfo', 'cmo', 'coo', 'sec', 'lumina', 'tu'].forEach((id, i) => { const c = chars.build(id); c.scale.setScalar(CH); c.position.set(-2.4 + i * 0.8, 0, -1.1); FIN.add(c); actors.push({ o: c, mode: champ ? 'talk' : 'idle', phase: i * 0.7, fin: true }); });
+  MOOD.kind = champ ? 'win' : 'idle'; MOOD.until = performance.now() + 12000; confetti3D(new THREE.Vector3(-3.9, 0, 3.9), champ ? 320 : 120);
+  flyTo(new THREE.Vector3(-4.0, 0.8, 4.0), new THREE.Vector3(0.62, 0.55, 0.75).normalize().multiplyScalar(innerWidth < 760 ? 12 : 9.5));
+  const medal = ['🥇', '🥈', '🥉', '4️⃣'][myRank - 1];
+  showPanel(`${champ ? '<img src="assets/character/rong-xanh-cup.webp" alt="Rồng Xanh ôm cúp" style="width:96px;align-self:center"><img src="assets/illustrations/scenes/trao-cup.webp" alt="Lễ trao cúp vô địch BizOn Bật Nghiệp" style="width:100%;border-radius:18px;border:3px solid #e6d6bf;display:block">' : ''}<span class="tag">🏁 TỔNG KẾT MÙA GIẢI · 6 VÒNG</span><h2>${champ ? 'Quán quân sàn đấu!' : `Hạng ${myRank}/4`} ${medal}</h2>
+    <p class="d">${champ ? `${s.profile.teamName} cắm nhiều cờ nhất trên bản đồ Việt Nam. Đội Rồng Xanh lên bục cao nhất.` : `${nm(rank[0].k)} dẫn đầu với ${rank[0].n} cờ. Đội bạn có ${mine} cờ – xem lại báo cáo để rút bài học.`}</p>
+    <div class="imps"><div class="imp"><small>Cờ cả mùa</small><b>🚩 ${mine}/6</b></div><div class="imp"><small>Lợi nhuận tích lũy</small><b style="color:${profit >= 0 ? '#3f8a44' : '#c0443a'}">${fmt(profit)}</b></div><div class="imp"><small>Thị phần cuối</small><b>${(+last.share || 0).toFixed(1)}%</b></div><div class="imp"><small>Số dư ví</small><b>${fmt(s.balance)}</b></div></div>
+    <div class="say"><small>🤖 HƯƠNG AI</small>${champ ? 'Quán quân sàn đấu! Đội cắm nhiều cờ nhất trên bản đồ Việt Nam.' : 'Sáu vòng là sáu bài học. Đọc lại nhật ký đội, rồi thử lại mùa mới nhé.'}</div>
+    <div class="q">"${champ ? 'Một chiến lược được thực thi kỷ luật suốt sáu vòng – đó là điều đáng tự hào nhất.' : 'Doanh nghiệp giỏi không phải doanh nghiệp không bao giờ sai, mà là doanh nghiệp sửa sai nhanh.'}" – <b>Phan Anh Tú</b></div>
+    <div class="row"><button class="btn primary" id="fnRep">📊 Báo cáo mùa giải</button><button class="btn" id="fnAch">🎖️ Thành tựu</button></div>
+    <button class="btn" id="fnNew">🔄 Chơi lại mùa mới</button>`);
+  evc.querySelector('#fnRep').onclick = () => { closeEvent(); ev("currentReport='season'"); force2D = true; W.showTab('reports'); force2D = false; };
+  evc.querySelector('#fnAch').onclick = () => { closeEvent(); window.__openTab('achievements'); };
+  evc.querySelector('#fnNew').onclick = () => { closeEvent(); if (FIN) { scene.remove(FIN); FIN = null; } for (let i = actors.length - 1; i >= 0; i--) if (actors[i].fin) actors.splice(i, 1); ev('resetGame()'); };
+}
+function victory3D(r) {
+  const s = ev('S'); ev("playClip('assets/audio/lumina-victory.mp3')");
+  const prev = s.history[s.history.length - 2], growth = prev ? (r.share - prev.share).toFixed(1) : (+r.share).toFixed(1), sat = Math.min(5, s.brandLoyalty / 19).toFixed(1);
+  MOOD.kind = 'win'; MOOD.until = performance.now() + 60000; flyLumina(); window.__EVON = true; confetti3D(actors.find(a => a.o.userData.cid === 'lumina').o.position, 240);
+  showPanel(`<span class="tag">🎊 CHÚC MỪNG CHIẾN THẮNG · TOP 1 MARKET</span><h2>Thị phần đạt đỉnh mới!</h2>
+    <div class="say" style="display:flex;gap:10px;align-items:flex-start"><img src="assets/character/rong-xanh-y-tuong.webp" alt="" style="width:52px;flex:none"><div><small>LUMINA · CỐ VẤN AI</small>"Thật tuyệt vời thưa ${s.profile.role}! Chiến dịch vừa qua đã tạo nên một cú hích lịch sử. Chúng ta chính thức dẫn đầu thị trường với những con số ấn tượng!"</div>
+    <div class="big">${(+r.share).toFixed(1)}<small>%</small></div><p class="d" style="text-align:center">Tăng trưởng ${growth}% so với vòng trước.</p>
+    <div class="imps"><div class="imp"><small>📈 Hiệu quả quảng cáo</small><b>+${r.adEff}%</b></div><div class="imp"><small>😊 Hài lòng thương hiệu</small><b>${sat}/5</b></div></div>
+    <div class="q">"Xuất sắc! Đây là minh chứng cho một chiến lược được thực thi kỷ luật." – <b>Phan Anh Tú</b></div>
+    <button class="btn primary" id="vcRep">📊 Xem báo cáo chi tiết</button><button class="btn" id="vcNext">Lập kế hoạch tiếp theo</button>`);
+  const end = () => { closeEvent(); MOOD.until = 0; };
+  evc.querySelector('#vcRep').onclick = () => { end(); window.__openTab('reports'); };
+  evc.querySelector('#vcNext').onclick = () => { end(); W.maybeShowEventIntro(); };
+}
+// ================= CUỘC HỌP ĐỘI 3D =================
+const SEATS = { cfo: [-1.35, -2.45, Math.PI / 2], cmo: [1.35, -2.45, -Math.PI / 2], coo: [0.55, -1.45, Math.PI], sec: [-0.55, -1.45, Math.PI], ceo: [0, -3.5, 0] };
+const SPK = ['cfo', 'cmo', 'coo', 'sec'], bub = document.getElementById('bub');
+let meetI = 0, meetSug = [];
+window.__meeting3D = () => {
+  meetSug = ev('teamSuggestions()') || []; if (!meetSug.length) return;
+  actors.forEach(a => { const sp = SEATS[a.o.userData.cid]; if (sp) { a.seat = sp; a.home = a.home || [a.o.position.x, a.o.position.z, a.o.rotation.y]; } });
+  MEET.on = true; flyTable(false); meetI = 0; showSpeaker();
+};
+function showSpeaker() {
+  const m = meetSug[meetI]; MEET.speaker = SPK[meetI];
+  showPanel(`<span class="tag">🗣️ Cuộc họp đội – vòng ${ev('S.round')}</span>
+    <div class="who"><img src="${m.img}" alt=""><div><b>${m.icon} ${m.name}</b><span>${meetI + 1}/4 thành viên đề xuất theo vai</span></div></div>
+    <div class="say">"${m.say}"</div>
+    ${m.apply ? '<button class="btn primary" id="tmApply">👍 Nghe theo – áp vào thanh trượt</button>' : ''}
+    <div class="dots">${meetSug.map((_, i) => `<i class="${i === meetI ? 'on' : ''}"></i>`).join('')}</div>
+    <div class="row"><button class="btn" id="tmPrev" ${meetI ? '' : 'disabled'}>‹ Trước</button>${meetI < 3 ? '<button class="btn" id="tmNext">Tiếp ›</button>' : '<button class="btn primary" id="tmEnd">Chốt quyết định →</button>'}</div>
+    <button class="btn" id="tmClose">Kết thúc họp</button>`);
+  const q = id => evc.querySelector(id);
+  if (q('#tmApply')) q('#tmApply').onclick = e => { W.applySuggestion(meetI); e.target.textContent = '✓ Đã áp vào thanh trượt'; e.target.classList.add('done'); };
+  if (q('#tmPrev')) q('#tmPrev').onclick = () => { meetI--; showSpeaker(); };
+  if (q('#tmNext')) q('#tmNext').onclick = () => { meetI++; showSpeaker(); };
+  if (q('#tmEnd')) q('#tmEnd').onclick = () => { endMeeting(); window.__openTab('decisions'); };
+  q('#tmClose').onclick = () => { endMeeting(); window.__openTab('decisions'); };
+}
+function endMeeting() { MEET.on = false; MEET.speaker = null; bub.style.display = 'none'; closeEvent();
+  actors.forEach(a => { if (a.seat) { a.seat = null; a.o.position.set(a.home[0], 0, a.home[1]); a.o.rotation.y = a.home[2]; } }); }
+const bv = new THREE.Vector3();
+function bubTick() { if (MEET.on && MEET.speaker) { const a = actors.find(x => x.o.userData.cid === MEET.speaker); a.o.getWorldPosition(bv); bv.y += CH * 1.55; bv.project(camera);
+  bub.style.display = 'block'; bub.textContent = '💬 ' + (meetSug[meetI] ? meetSug[meetI].name.split('·')[1].trim() : ''); bub.style.left = (bv.x + 1) / 2 * innerWidth + 'px'; bub.style.top = (1 - bv.y) / 2 * innerHeight + 'px'; } requestAnimationFrame(bubTick); }
+bubTick();
+
+// ================= BIẾN CỐ 3D (Lumina trong trụ sở) =================
+const evc = document.getElementById('evc');
+function closeEvent() { window.__EVON = false; document.body.classList.remove('evt'); }
+function event3D() {
+  const s = ev('S'); if (!s || s.finished || s.committed || s.eventShownRound >= s.round) return;
+  const e = ev('currentEvent(S)'); if (!e) return;
+  ev('S.eventShownRound=S.round;save();try{playEventSting(currentEvent(S).tone)}catch(e){}');
+  sheetTab = null; setMode();
+  const bad = e.tone === 'bad', warn = e.tone === 'warn';
+  const dirIcon = d => ({ up: '📈', 'up-bad': '📈', down: '📉', 'down-good': '📉', flat: '➖' }[d] || '➖');
+  const dirCol = d => d === 'up' || d === 'down-good' ? '#3f8a44' : d === 'flat' ? '#2c3552' : '#c0443a';
+  evc.innerHTML = `<img src="assets/character/${bad || warn ? 'rong-xanh-ngac-nhien' : 'rong-xanh'}.webp" alt="Rồng Xanh" style="width:84px;align-self:center"><span class="tag ${bad ? 'bad' : warn ? 'warn' : ''}">● Vòng ${s.round}/6 · ${e.tag || 'BIẾN CỐ THỊ TRƯỜNG'}</span>
+    <h2 class="${bad ? 'bad' : ''}">${e.icon} ${e.name}</h2><p class="d">${e.desc}</p>
+    <div class="imps">${(e.impacts || []).map(im => `<div class="imp"><small>${im.icon} ${im.label}</small><b style="color:${dirCol(im.dir)}">${dirIcon(im.dir)} ${im.value}</b></div>`).join('')}</div>
+    <div class="say" style="display:flex;gap:10px;align-items:flex-start"><img src="assets/character/rong-xanh-y-tuong.webp" alt="" style="width:52px;flex:none"><div><small>LUMINA · CỐ VẤN AI</small>"${e.luminaMsg}"</div></div>
+    ${bad ? '<div class="q">"Bình tĩnh phân tích số liệu trước khi hành động – khủng hoảng luôn ẩn chứa cơ hội cho đội có kỷ luật." – <b>Phan Anh Tú · Cố vấn học thuật</b></div>' : ''}
+    <button class="btn primary" id="evGo">${e.cta ? e.cta.label : '🎯 Nhập quyết định'}</button><button class="btn" id="evHome">Về trụ sở</button>`;
+  evc.querySelector('#evGo').onclick = () => { closeEvent(); window.__openTab(e.cta ? e.cta.tab : 'decisions', e.cta && e.cta.report); };
+  evc.querySelector('#evHome').onclick = closeEvent;
+  evc.scrollTop = 0; window.__EVON = true; document.body.classList.add('evt'); flyLumina();
+  FO_EVENT = e; setTimeout(() => { if (window.__EVON) room3D('faceoff'); }, 1400);
+}
+
+// ================= ĐẤU TRƯỜNG 3D =================
+const AR = { on: false, scene: new THREE.Scene(), cam: new THREE.PerspectiveCamera(34, 1, 0.1, 200), pods: [], built: null, flags: [] };
+AR.scene.background = new THREE.Color(0x0b3440); AR.scene.fog = new THREE.Fog(0x0b3440, 30, 70);
+{ const hl = new THREE.HemisphereLight(0xfff4e6, 0x2a4a55, 1.15); const dl = new THREE.DirectionalLight(0xfff1dc, 2.3); dl.position.set(6, 14, 10); dl.castShadow = true; dl.shadow.mapSize.set(2048, 2048);
+  Object.assign(dl.shadow.camera, { left: -11, right: 11, top: 11, bottom: -11, near: 1, far: 45 }); dl.shadow.bias = -0.0004; dl.shadow.normalBias = 0.02; AR.scene.add(hl, dl); }
+const AS = 0.026, AOX = -2.8, AOZ = -9.4, PODX = [-4.2, -1.4, 1.4, 4.2], PODZ = 4.6, CHS = 1.75;
+const APt = ll => { const [x, y] = P(ll); return new THREE.Vector3(x * AS + AOX, 0, y * AS + AOZ); };
+const RIVAL_ID = { aggressive: 'alpha', balanced: 'mekong', premium: 'starclay' };
+function buildArena() {
+  if (AR.built) return AR.built;
+  return AR.built = (async () => {
+    const S3 = AR.scene;
+    const sea = new THREE.Mesh(new THREE.CylinderGeometry(10, 10.4, 0.5, 72), new THREE.MeshStandardMaterial({ color: 0x3f8fbf, roughness: 0.55, name: 'arena_sea' }));
+    sea.scale.z = 1.35; sea.position.set(0, -0.32, -2.2); sea.receiveShadow = true; S3.add(sea);
+    for (let i = 0; i < 7; i++) { const w = new THREE.Mesh(new THREE.TorusGeometry(2 + i * 1.3, 0.025, 6, 80), new THREE.MeshBasicMaterial({ color: 0x8fd0ee, transparent: true, opacity: 0.25 })); w.rotation.x = Math.PI / 2; w.position.set(5.5, -0.06, -3); S3.add(w); }
+    B(S3, 'arena_stage', 12, 0.4, 3.2, mat(0xc98a5a, 0.9), 0, -0.12, PODZ, 0.14); B(S3, 'arena_stage_top', 11.6, 0.05, 2.9, mat(0xe0a877, 0.9), 0, 0.26, PODZ, 0.04);
+    try { const g = await (await fetch('assets/geo/vnm.json')).json(); const land = mat(0x78b35a, 0.92);
+      const V = p => { const [x, y] = P(p); return new THREE.Vector2(x * AS + AOX, -(y * AS + AOZ)); };
+      const shapes = g.coordinates.map(poly => { const sh = new THREE.Shape(poly[0].map(V)); poly.slice(1).forEach(ho => sh.holes.push(new THREE.Path(ho.map(V)))); return sh; });
+      const eg = new THREE.ExtrudeGeometry(shapes, { depth: 0.22, bevelEnabled: true, bevelThickness: 0.06, bevelSize: 0.05, bevelSegments: 3, curveSegments: 1 }); eg.rotateX(-Math.PI / 2);
+      const m = new THREE.Mesh(eg, land); m.position.y = -0.06; m.castShadow = m.receiveShadow = true; m.name = 'arena_vietnam'; S3.add(m);
+    } catch {}
+    const isl = mat(0x8cc46a, 0.9);
+    [[111.9, 16.4, 5], [113.9, 10.1, 7]].forEach(([lo, la, n]) => { for (let i = 0; i < n; i++) { const p = APt([lo + Math.sin(i * 2.1) * 0.5, la + Math.cos(i * 1.7) * 0.5]); hq.S(S3, 'island', 0.07, isl, p.x, 0.02, p.z); } });
+    AR.pins = STOPS.map((st, i) => { const p = APt(st.ll), g = G('pin_' + i, S3, p.x, 0.2, p.z); Cy(g, 'pin_base', 0.13, 0.15, 0.08, mat(0xfbf6ee, 0.8)); return g; });
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.3, 0.04, 10, 40), new THREE.MeshBasicMaterial({ color: 0x3ff0e0 })); ring.rotation.x = Math.PI / 2; S3.add(ring); AR.ring = ring;
+    const crown = G('crown', S3); Cy(crown, 'crown_band', 0.16, 0.16, 0.09, mat(0xf2c14e, 0.35, 0.5));
+    for (let i = 0; i < 5; i++) { const a = i / 5 * Math.PI * 2, c = hq.mesh(crown, 'crown_tip', new THREE.ConeGeometry(0.045, 0.12, 10), mat(0xf2c14e, 0.35, 0.5), Math.cos(a) * 0.14, 0.14, Math.sin(a) * 0.14); }
+    crown.visible = false; AR.crown = crown;
+  })();
+}
+function podium(key, id, x) {
+  const g = G('pod_' + key, AR.scene, x, 0.28, PODZ), col = new THREE.Color(TEAMS[key].color);
+  const cg = new THREE.CylinderGeometry(0.78, 0.84, 1, 40); cg.translate(0, 0.5, 0);
+  const col3 = new THREE.Mesh(cg, new THREE.MeshStandardMaterial({ color: col, roughness: 0.85 })); col3.castShadow = col3.receiveShadow = true; g.add(col3);
+  const top = new THREE.Mesh(new THREE.CylinderGeometry(0.82, 0.82, 0.08, 40), new THREE.MeshStandardMaterial({ color: col.clone().offsetHSL(0, -0.05, 0.12), roughness: 0.8 })); top.receiveShadow = true; g.add(top);
+  const ch = chars.build(id); ch.scale.setScalar(CHS); ch.traverse(m => { if (m.isMesh) m.castShadow = true; }); g.add(ch);
+  return { g, col3, top, ch, key, h: 0.05 };
+}
+const aLabs = document.getElementById('aLabs'), aFoot = document.getElementById('aFoot');
+async function arena3D(r, done) {
+  await buildArena(); closeEvent(); const s = ev('S'); if (!s) { done(); return; }
+  const stopI = r.round - 1, st = STOPS[stopI], cq = s.conquest || [], cur = cq[stopI] || {};
+  const F = [{ key: 'star', id: 'ceo', name: s.profile.teamName, share: +r.share || 0, me: true },
+    ...s.competitors.map(c => ({ key: KEY_OF[c.name] || 'wolf', id: RIVAL_ID[c.style] || 'alpha', name: c.name, share: +c.share || 25 }))];
+  const order = [F[1], F[0], F[2], F[3]];
+  AR.pods.forEach(p => AR.scene.remove(p.g)); AR.pods = order.map((f, i) => Object.assign(podium(f.key, f.id, PODX[i]), f, { delay: i * 0.35, target: 0.3 + f.share / 40 * 2.1 }));
+  AR.flags.forEach(f => f.parent && f.parent.remove(f)); AR.flags = [];
+  cq.slice(0, stopI).forEach((c, i) => { const k = c.win ? 'star' : KEY_OF[c.winner] || 'wolf', f = hq.teamFlag(k); f.scale.setScalar(0.5); AR.pins[i].add(f); AR.flags.push(f); });
+  const winKey = cur.win ? 'star' : KEY_OF[cur.winner] || AR.pods.reduce((a, b) => b.share > a.share ? b : a).key;
+  const nf = hq.teamFlag(winKey); nf.scale.setScalar(0.62); nf.position.y = 4; AR.pins[stopI].add(nf); AR.flags.push(nf); AR.drop = nf;
+  const rp = AR.pins[stopI].position; AR.ring.position.set(rp.x, 0.26, rp.z);
+  AR.crown.visible = false; AR.winner = AR.pods.reduce((a, b) => b.share > a.share ? b : a);
+  document.getElementById('aTitle').textContent = '⚔️ ĐẤU TRƯỜNG ' + (st ? st.name.toUpperCase() : 'VÒNG ' + r.round);
+  document.getElementById('aSub').textContent = `${r.event.icon} ${r.event.name} – 12.000 khách hàng chờ trên khán đài`;
+  document.getElementById('aZone').textContent = st ? '📍 ' + st.zone : '';
+  aLabs.innerHTML = AR.pods.map(p => `<div class="lab${p.me ? ' me' : ''}" style="--c:${TEAMS[p.key].color}"><i>0%</i><b>${p.me ? '🏺 ' : ''}${p.name}</b></div>`).join('');
+  AR.labs = [...aLabs.children];
+  const v = document.getElementById('aVerdict');
+  v.textContent = cur.win ? `🚩 ${s.profile.teamName} thắng sàn đấu – cắm cờ tại ${st.name}!` : cur.hasTopShare ? '⚠️ Thị phần cao nhất nhưng vòng này lỗ – cần có lãi mới cắm được cờ!' : `🏴 ${AR.winner.name} giữ vị trí số 1 vòng này, cờ ${st ? st.name : ''} thuộc về họ`;
+  v.style.borderColor = cur.win ? '#f39a33' : '#2f8a95';
+  aFoot.classList.remove('on'); AR.t0 = performance.now(); AR.shown = false; AR.on = true; document.body.classList.add('arena');
+  document.getElementById('aNext').onclick = () => { AR.on = false; document.body.classList.remove('arena'); done(); };
+  resizeArena();
+}
+function resizeArena() { AR.cam.aspect = innerWidth / innerHeight; AR.cam.fov = innerWidth < innerHeight ? 52 : 34; AR.cam.updateProjectionMatrix(); }
+addEventListener('resize', resizeArena);
+const av = new THREE.Vector3();
+window.__ARTICK = (dt, t) => {
+  if (!AR.on) return RM.on ? roomTick(dt, t) : false;
+  const k = (performance.now() - AR.t0) / 1000, port = innerWidth < innerHeight;
+  AR.cam.position.set(Math.sin(t * 0.18) * 1.4, port ? 12 : 8.2, port ? 19 : 14.5); AR.cam.lookAt(0, 0.6, port ? -1.5 : -0.6);
+  AR.pods.forEach((p, i) => {
+    const e = Math.max(0, Math.min(1, (k - 0.3 - p.delay) / 1.3)), ee = 1 - Math.pow(1 - e, 3);
+    p.h = 0.05 + (p.target - 0.05) * ee; p.col3.scale.y = p.h; p.top.position.y = p.h; p.ch.position.y = p.h + 0.04;
+    const win = AR.shown && p === AR.winner;
+    chars.animate(p.ch, t, win ? 'talk' : 'idle', i * 1.3);
+    if (win) p.ch.position.y += Math.abs(Math.sin(t * 5)) * 0.12;
+    p.ch.getWorldPosition(av); av.y += CHS * 1.45; av.project(AR.cam);
+    const L = AR.labs[i]; L.style.left = (av.x + 1) / 2 * innerWidth + 'px'; L.style.top = (1 - av.y) / 2 * innerHeight - 6 + 'px';
+    L.firstChild.textContent = (p.share * ee).toFixed(1) + '%';
+  });
+  AR.flags.forEach((f, i) => hq.waveFlag(f, t + i * 0.6));
+  AR.ring.scale.setScalar(1 + (t * 1.2 % 1) * 0.8); AR.ring.material.opacity = 1; 
+  const dk = Math.max(0, Math.min(1, (k - 2.4) / 0.6)); AR.drop.position.y = 4 * (1 - dk * dk) ;
+  if (k > 2.9 && !AR.shown) { AR.shown = true; aFoot.classList.add('on'); AR.crown.visible = true; }
+  if (AR.crown.visible) { const w = AR.winner; w.ch.getWorldPosition(av); AR.crown.position.set(av.x, av.y + CHS * 1.28, av.z); AR.crown.rotation.y = t; }
+  renderer.render(AR.scene, AR.cam);
+  return true;
+};
+
+// ================= PHÒNG 3D (2): Ra quyết định · Báo cáo · Thị trường sống · Nhiệm vụ · Lumina chat =================
+Object.assign(ROOM3D, { decisions: 1, reports: 1, market: 1, missions: 1 });
+const gd = id => W.document.getElementById(id);
+const txt = id => { const e = gd(id); return e ? e.textContent.trim() : ''; };
+const SL = [
+  { id: 'in-price', label: '💲 Giá bán', v: 'v-price', col: 0xe8784a, role: 'CMO' },
+  { id: 'in-mkt', label: '📣 Marketing', v: 'v-mkt', col: 0xd6453a, role: 'CMO' },
+  { id: 'in-prod', label: '🏭 Sản lượng', v: 'v-prod', col: 0x2f8a8c, role: 'COO' },
+  { id: 'in-rd', label: '🔬 R&D', v: 'v-rd', col: 0x7a5ac0, role: 'CFO' },
+  { id: 'in-workers', label: '👥 Nhân viên', v: 'v-workers', col: 0x6f8a60, role: 'COO', adv: true },
+  { id: 'in-train', label: '🎓 Đào tạo/người', v: 'v-train', col: 0x3f78c0, role: 'COO', adv: true },
+];
+let decAdv = false, drag = null;
+const TX0 = -2.6, TX1 = 2.6, TY = 0.98;
+function slVal(s) { const e = gd(s.id); return { v: +e.value, min: +e.min, max: +e.max, step: +e.step || 1 }; }
+function buildDecisions() {
+  clearRoom(); const s = ev('S'), e = ev('currentEvent(S)') || {}, locked = s.committed || s.finished;
+  const showAdv = decAdv || s.round >= 3, list = SL.filter(x => !x.adv || showAdv);
+  roomHead('🎯 Bàn ra quyết định · Vòng ' + Math.min(s.round, 6) + '/6', (e.icon ? e.icon + ' ' + e.name + ' · ' : '') + (locked ? 'Đã khóa quyết định vòng này' : 'Kéo núm đất sét để chỉnh, thống nhất với cả đội rồi Commit'));
+  const g = RM.g, wood = cm(0xa86a3f), top = cm(0xc4834f);
+  mk(g, new THREE.BoxGeometry(7.6, 0.16, 1.05 * list.length + 0.9), top, 0, TY - 0.08, 0.2);
+  for (const x of [-3.5, 3.5]) for (const z of [-0.9, 1.3 + (list.length - 4) * 0.5]) mk(g, new THREE.BoxGeometry(0.2, TY - 0.16, 0.2), wood, x, (TY - 0.16) / 2, z);
+  const ceo = chars.build('ceo'); ceo.scale.setScalar(1.55); ceo.position.set(0, 0, -1.2 - list.length * 0.45); ceo.traverse(m => { if (m.isMesh) m.castShadow = true; }); g.add(ceo); RM.spin.push(Object.assign(new THREE.Object3D(), { userData: { ch: ceo, rank: 1 } }));
+  RM.knobs = [];
+  list.forEach((sl, i) => {
+    const z = -0.4 * (list.length - 1) + i * 1.0 + 0.2, { v, min, max } = slVal(sl), k = (v - min) / (max - min);
+    const tr = mk(g, new THREE.BoxGeometry(TX1 - TX0 + 0.3, 0.06, 0.2), cm(0x6e4428), 0, TY + 0.02, z); tr.receiveShadow = true;
+    const fill = mk(g, new THREE.BoxGeometry(1, 0.07, 0.16), cm(sl.col), 0, TY + 0.035, z);
+    const knob = new THREE.Group(); knob.position.set(TX0 + k * (TX1 - TX0), TY + 0.05, z); g.add(knob);
+    mk(knob, new THREE.CylinderGeometry(0.2, 0.22, 0.14, 28), cm(0xfbf6ee), 0, 0.07, 0); mk(knob, new THREE.SphereGeometry(0.15, 22, 16), cm(sl.col), 0, 0.2, 0).scale.y = 0.75;
+    const col = mk(g, new THREE.CylinderGeometry(0.16, 0.18, 1, 20), cm(sl.col), TX1 + 0.65, 0, z);
+    knob.userData.pick = { slider: sl }; RM.picks.push(knob);
+    const L = lab(knob, '', 0.55, locked ? 'dim' : '');
+    const K = { sl, knob, fill, col, L, min, max }; RM.knobs.push(K); placeKnob(K, v);
+  });
+  setRoomCam(new THREE.Vector3(0, 6.4, 6.2 + list.length * 0.35), new THREE.Vector3(0, TY, 0.1));
+  decCard();
+}
+function placeKnob(K, v) {
+  const k = (v - K.min) / (K.max - K.min), x = TX0 + k * (TX1 - TX0);
+  K.knob.position.x = x; K.fill.scale.x = Math.max(0.001, x - TX0 + 0.15); K.fill.position.x = (TX0 - 0.15 + x) / 2;
+  const h = 0.1 + k * 1.3; K.col.scale.y = h; K.col.position.y = TY + h / 2;
+  K.L.innerHTML = `<b>${K.sl.label}: ${txt(K.sl.v)}</b>`;
+}
+function setSlider(K, v) { const e = gd(K.sl.id); e.value = v; W.syncDecisionLabels(); placeKnob(K, +e.value); decStats(); }
+function decStats() {
+  const a = document.getElementById('dcShare'), b = document.getElementById('dcNet'), c = document.getElementById('dcVerdict'), d = document.getElementById('dcBe');
+  if (a) a.textContent = txt('mf-share'); if (b) b.textContent = txt('fc-net'); if (c) c.innerHTML = gd('mf-verdict') ? gd('mf-verdict').innerHTML : ''; if (d) d.textContent = txt('fc-be');
+}
+function decCard() {
+  const s = ev('S'), locked = s.committed || s.finished, fund = ev('decFunding'), term = +(gd('in-term') || {}).value || 30, showAdv = decAdv || s.round >= 3;
+  const wq = Math.max(0, (ev('WHAT_IF_LIMIT') || 2) - (s.whatIfUsed || 0));
+  rmCard.innerHTML = `<p class="k">Dự báo sống · cập nhật theo núm</p>
+    <div class="stats"><div><small>THỊ PHẦN</small><b id="dcShare"></b></div><div><small>DÒNG TIỀN RÒNG</small><b id="dcNet"></b></div><div><small>VÍ ĐỘI</small><b>${fmt(s.balance)}</b></div></div>
+    <p id="dcVerdict"></p><p id="dcBe" style="font-size:12px"></p>
+    <p class="k">Nguồn vốn</p><div class="row"><button class="btn${fund === 'equity' ? ' primary' : ''}" data-f="equity">💼 Vốn tự có</button><button class="btn${fund === 'loan' ? ' primary' : ''}" data-f="loan">🏦 Vay ngân hàng</button></div>
+    ${showAdv ? `<p class="k">Kỳ hạn thanh toán cho khách</p><div class="row">${[30, 60, 90].map(d => `<button class="btn${term === d ? ' primary' : ''}" data-t="${d}">${d} ngày</button>`).join('')}</div>` : '<button class="btn" id="dcAdv">⚙️ Hiện quyết định nâng cao</button>'}
+    <div class="row"><button class="btn" id="dcMeet">🗣️ Họp đội 3D</button><button class="btn" id="dcWhat">🔮 Nếu–Thì (${wq})</button></div>
+    <button class="btn primary" id="dcCommit" ${locked ? 'disabled style="opacity:.5"' : ''}>${locked ? (s.finished ? '🏁 Mô phỏng đã kết thúc' : '🔒 Đã commit vòng này') : '🔒 Commit – Khóa quyết định'}</button>`;
+  decStats();
+  rmCard.querySelectorAll('[data-f]').forEach(b => b.onclick = () => { if (locked) return; W.setFunding(b.dataset.f); decCard(); });
+  rmCard.querySelectorAll('[data-t]').forEach(b => b.onclick = () => { if (locked) return; gd('in-term').value = b.dataset.t; W.syncDecisionLabels(); decCard(); });
+  const adv = rmCard.querySelector('#dcAdv'); if (adv) adv.onclick = () => { decAdv = true; buildDecisions(); };
+  rmCard.querySelector('#dcMeet').onclick = () => { closeRoom(); window.__meeting3D(); };
+  rmCard.querySelector('#dcWhat').onclick = () => { closeRoom(); force2D = true; W.showTab('decisions'); force2D = false; setTimeout(() => { const w = gd('whatif-result'); if (w) W.scrollTo(0, w.getBoundingClientRect().top + W.scrollY - 200); }, 200); };
+  rmCard.querySelector('#dcCommit').onclick = () => { if (locked) return;
+    const short = ev('(()=>{const d=currentDecisionInput();const need=d.marketing+d.rd+d.production*UNIT_COST/1000+d.workers*WAGE_PER_WORKER+d.workers*d.training;return d.funding!=="loan"&&need>S.balance+300?Math.round(need-S.balance):0})()');
+    if (short) { rmCard.insertAdjacentHTML('afterbegin', `<div id="dcWarn" style="background:#fde4e1;border:3px solid #e8a39c;border-radius:16px;padding:8px 12px;font-size:13px;color:#8a2a22"><b>Không đủ vốn tự có</b> – kế hoạch vượt ví ${fmt(short)}. Giảm ngân sách hoặc vay ngân hàng (lãi 8.5%/vòng).<div class="row" style="margin-top:6px"><button class="btn" id="dcLoan">🏦 Chuyển sang vay</button></div></div>`);
+      rmCard.querySelector('#dcLoan').onclick = () => { W.setFunding('loan'); decCard(); }; rmCard.scrollTop = 0; return; }
+    W.commitDecisions(); if (ev('S.committed')) closeRoom(); else decCard(); };
+}
+const dragPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -(TY + 0.1)), dragHit = new THREE.Vector3();
+canvas.addEventListener('pointerdown', e => {
+  if (!RM.on || RM.mode !== 'decisions' || ev('S.committed||S.finished')) return;
+  ndc.set(e.clientX / innerWidth * 2 - 1, -e.clientY / innerHeight * 2 + 1); ray.setFromCamera(ndc, RM.cam);
+  const hit = ray.intersectObjects(RM.knobs.map(k => k.knob), true)[0]; if (!hit) return;
+  let o = hit.object; while (o && !(o.userData.pick && o.userData.pick.slider)) o = o.parent;
+  drag = RM.knobs.find(k => k.knob === o); if (drag) { drag.L.classList.add('sel'); canvas.setPointerCapture(e.pointerId); }
+});
+canvas.addEventListener('pointermove', e => {
+  if (!drag) return; ndc.set(e.clientX / innerWidth * 2 - 1, -e.clientY / innerHeight * 2 + 1); ray.setFromCamera(ndc, RM.cam);
+  if (!ray.ray.intersectPlane(dragPlane, dragHit)) return;
+  const k = Math.max(0, Math.min(1, (dragHit.x - TX0) / (TX1 - TX0))), st = +gd(drag.sl.id).step || 1;
+  const v = Math.round((drag.min + k * (drag.max - drag.min)) / st) * st; if (v !== +gd(drag.sl.id).value) setSlider(drag, v);
+});
+addEventListener('pointerup', () => { if (drag) { drag.L.classList.remove('sel'); drag = null; } });
+
+// ---- Báo cáo 3D
+const REP = [['profit', 'Lợi nhuận ròng'], ['revenue', 'Doanh thu'], ['balance', 'Số dư ví'], ['share', 'Thị phần 4 công ty'], ['oee', 'OEE xưởng']];
+const REP2D = [['pnl', 'P&L'], ['cash', 'Dòng tiền'], ['cvp', 'CVP & Chi phí'], ['rival', '🕵️ Chi phí đối thủ'], ['hr', '👥 Nhân sự'], ['bmc', '🧩 BMC'], ['dep', 'Khấu hao'], ['energy', '⚡ Năng lượng'], ['season', '🏁 Tổng kết mùa giải']];
+let repSel = 'profit';
+function buildReports() {
+  clearRoom(); const s = ev('S'), H = s.history || [];
+  roomHead('📊 Phòng Tài chính · Báo cáo', H.length ? `${REP.find(r => r[0] === repSel)[1]} theo ${H.length} vòng đã chơi` : 'Chưa có dữ liệu – hãy hoàn thành vòng đầu tiên!');
+  const g = RM.g; mk(g, new THREE.BoxGeometry(8.4, 0.9, 3.2), cm(0xe3d3b6), 0, 0.45, 0); mk(g, new THREE.BoxGeometry(8.6, 0.08, 3.4), cm(0xc98a5a), 0, 0.94, 0);
+  const cfo = chars.build('cfo'); cfo.scale.setScalar(1.55); cfo.position.set(-5.1, 0, 0.4); cfo.rotation.y = 0.6; cfo.traverse(m => { if (m.isMesh) m.castShadow = true; }); g.add(cfo); RM.spin.push(Object.assign(new THREE.Object3D(), { userData: { ch: cfo, rank: 0 } }));
+  const base = 0.98;
+  if (H.length) {
+    const slotX = i => -3.4 + i * 1.36;
+    if (repSel === 'share') {
+      const ai = s.aiHistory || [];
+      H.forEach((r, i) => { const vals = [['star', r.share], ...((ai[i] || []).map(a => [KEY_OF[a.name] || 'wolf', a.share]))];
+        vals.forEach(([k, v], j) => { const h = Math.max(0.05, v / 45 * 2.6), b = mk(g, new THREE.BoxGeometry(0.26, h, 0.5), cm(new THREE.Color(TEAMS[k].color).getHex()), slotX(i) - 0.42 + j * 0.28, base + h / 2, 0);
+          if (k === 'star') lab(b, `<b>${v.toFixed(1)}%</b>`, h / 2 + 0.25); });
+        lab(mk(g, new THREE.BoxGeometry(0.01, 0.01, 0.01), cm(0xffffff), slotX(i), base, 1.3), `<b>V${r.round} ${r.event ? r.event.icon : ''}</b>`, 0.05); });
+    } else {
+      const key = { profit: 'netProfit', revenue: 'revenue', balance: 'balance', oee: 'oee' }[repSel];
+      const vals = H.map(r => +r[key] || 0), mx = Math.max(1, ...vals.map(Math.abs));
+      H.forEach((r, i) => { const v = vals[i], h = Math.max(0.06, Math.abs(v) / mx * 2.6), pos = v >= 0;
+        const b = mk(g, new THREE.BoxGeometry(0.8, h, 0.8), cm(pos ? 0x2f8a8c : 0xe8784a), slotX(i), pos ? base + h / 2 : base - Math.min(h, 0.85) / 2, 0);
+        if (!pos) b.scale.y = Math.min(h, 0.85) / h;
+        mk(g, new THREE.CylinderGeometry(0.44, 0.44, 0.06, 24), cm(pos ? 0x4fb0a8 : 0xf0a070), slotX(i), pos ? base + h + 0.03 : base + 0.03, 0).scale.z = 0.95;
+        lab(b, `<b>${repSel === 'oee' ? v + '%' : fmt(v)}</b>`, pos ? h / 2 + 0.3 : 0.9);
+        lab(mk(g, new THREE.BoxGeometry(0.01, 0.01, 0.01), cm(0xffffff), slotX(i), base, 1.3), `<b>V${r.round} ${r.event ? r.event.icon : ''}</b>`, 0.05); });
+    }
+  }
+  setRoomCam(new THREE.Vector3(0, 4.3, 9.4), new THREE.Vector3(0, 1.8, 0));
+  rmCard.innerHTML = `<p class="k">Biểu đồ đất sét</p><div class="row" style="flex-wrap:wrap">${REP.map(([k, n]) => `<button class="btn${repSel === k ? ' primary' : ''}" data-r="${k}" style="flex:1 1 40%;font-size:13px">${n}</button>`).join('')}</div>
+    ${repSel === 'share' ? `<div class="row" style="flex-wrap:wrap;gap:6px">${ORDER.map(k => `<span style="font-size:12px;display:flex;gap:4px;align-items:center"><i style="width:10px;height:10px;border-radius:3px;background:${TEAMS[k].color}"></i>${k === 'star' ? s.profile.teamName : TEAMS[k].name}</span>`).join('')}</div>` : ''}
+    <p class="k">Báo cáo chi tiết (9 loại)</p><div class="row" style="flex-wrap:wrap;gap:6px">${REP2D.filter(r => r[0] !== 'season' || s.finished).map(([k, n]) => `<button class="btn" data-d="${k}" style="flex:1 1 30%;font-size:12px;padding:6px">${n}</button>`).join('')}</div>`;
+  rmCard.querySelectorAll('[data-r]').forEach(b => b.onclick = () => { repSel = b.dataset.r; buildReports(); });
+  rmCard.querySelectorAll('[data-d]').forEach(b => b.onclick = () => { closeRoom(); ev('currentReport=' + JSON.stringify(b.dataset.d)); force2D = true; W.showTab('reports'); force2D = false; });
+}
+
+// ---- Thị trường sống 3D
+function buildMarket() {
+  clearRoom(); const s = ev('S'), H = s.history || [], ai = s.aiHistory || [], e = ev('currentEvent(S)') || {};
+  roomHead('📡 Thị trường sống', 'BizOn Monitor · tin tức, tiếng nói khách hàng và động thái đối thủ');
+  const g = RM.g;
+  const series = [['star', H.map(r => r.share)], ...['Alpha Dynamics', 'Mekong Ventures', 'Star Clay Co.'].map(n => [KEY_OF[n], ai.map(sn => ((sn.find(a => a.name === n) || {}).share) || 0)])];
+  const tv = ctex(1280, 720, (x, w, h) => {
+    x.fillStyle = '#0d1117'; x.fillRect(0, 0, w, h); x.fillStyle = '#dce8e2'; x.font = '700 34px ui-monospace,Menlo,monospace'; x.fillText('📊 BIZON MONITOR', 40, 64);
+    x.fillStyle = '#8fa89f'; x.font = '26px ui-monospace,Menlo,monospace'; x.fillText(`VÒNG ${H.length}/6`, w - 200, 64); x.fillRect(40, 84, w - 80, 2);
+    if (!H.length) { x.fillText('Hoàn thành vòng 1 để kích hoạt bảng theo dõi thị trường.', 40, 160); return; }
+    const M = [['Thị phần', H.map(r => r.share), v => v.toFixed(1) + '%'], ['Doanh thu', H.map(r => r.revenue), v => fmt(v)], ['Lợi nhuận', H.map(r => r.netProfit), v => fmt(v)], ['Ví đội', H.map(r => r.balance), v => fmt(v)], ['OEE xưởng', H.map(r => r.oee), v => v + '%'], ['Brand Loyalty', H.map(r => r.brandLoyalty), v => v + '%']];
+    M.forEach(([n, sr, f], i) => { const y = 150 + i * 92; x.fillStyle = '#e8f2ec'; x.font = '700 32px ui-monospace,Menlo,monospace'; x.fillText(n, 40, y);
+      const last = sr[sr.length - 1], prev = sr[sr.length - 2]; x.textAlign = 'right'; x.fillText(f(last), w - 40, y); x.textAlign = 'left';
+      if (prev) { const c = (last - prev) / Math.abs(prev || 1) * 100; x.fillStyle = c >= 0 ? '#34d399' : '#f87171'; x.font = '24px ui-monospace,Menlo,monospace'; x.textAlign = 'right'; x.fillText((c >= 0 ? '+' : '') + c.toFixed(1) + '%', w - 40, y + 30); x.textAlign = 'left'; }
+      const mn = Math.min(...sr), mx = Math.max(...sr), sx = 480, sw = 420; x.strokeStyle = '#34d399'; x.lineWidth = 4; x.beginPath();
+      sr.forEach((v, j) => { const px = sx + (sr.length > 1 ? j / (sr.length - 1) : 0.5) * sw, py = y - 6 - (mx > mn ? (v - mn) / (mx - mn) : 0.5) * 44; j ? x.lineTo(px, py) : x.moveTo(px, py); }); x.stroke(); });
+  });
+  const frame = mk(g, new THREE.BoxGeometry(6.6, 3.9, 0.25), cm(0x2c3552), 0, 2.9, -3.4);
+  const scr = new THREE.Mesh(new THREE.PlaneGeometry(6.2, 3.49), new THREE.MeshBasicMaterial({ map: tv })); scr.position.set(0, 2.9, -3.26); g.add(scr);
+  const news = [e.icon ? `${e.icon} ${e.name}: ${e.desc}` : '', ...s.competitors.map(c => `${c.name} giữ ${(+c.share || 25).toFixed(1)}% thị phần`), H.length ? `Đội ${s.profile.teamName}: thị phần ${(+H[H.length - 1].share).toFixed(1)}%, lợi nhuận ${fmt(H[H.length - 1].netProfit)}` : 'Mùa giải BizOn BẬT NGHIỆP bắt đầu tại Cần Thơ'].filter(Boolean).join('     ●     ');
+  const tick = ctex(4096, 128, (x, w, h) => { x.fillStyle = '#1b2240'; x.fillRect(0, 0, w, h); x.fillStyle = '#ffd28a'; x.font = '700 62px "Be Vietnam Pro",sans-serif'; x.textBaseline = 'middle'; x.fillText(news + '     ●     ', 20, h / 2); });
+  tick.wrapS = THREE.RepeatWrapping; tick.repeat.x = 0.35;
+  mk(g, new THREE.BoxGeometry(8.6, 0.55, 0.2), cm(0x2c3552), 0, 5.2, -3.4);
+  const tk = new THREE.Mesh(new THREE.PlaneGeometry(8.4, 0.42), new THREE.MeshBasicMaterial({ map: tick })); tk.position.set(0, 5.2, -3.28); g.add(tk); RM.ticker = tick;
+  mk(g, new THREE.BoxGeometry(7.4, 0.5, 2.2), cm(0xe3d3b6), 0, 0.25, 0.3);
+  if (H.length) series.forEach(([k, sr], j) => { if (!sr.length) return; const col = new THREE.Color(TEAMS[k].color).getHex(), z = -0.45 + j * 0.3;
+    const pts = sr.map((v, i) => new THREE.Vector3(-3 + (sr.length > 1 ? i / (sr.length - 1) : 0.5) * 6, 0.55 + v / 45 * 2.2, z));
+    if (pts.length > 1) mk(g, new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 60, 0.05, 10), cm(col));
+    pts.forEach(p => mk(g, new THREE.SphereGeometry(0.1, 16, 12), cm(col), p.x, p.y, p.z));
+    lab(mk(g, new THREE.SphereGeometry(0.01, 4, 4), cm(col), pts[pts.length - 1].x, pts[pts.length - 1].y, z), `<b style="background:${TEAMS[k].color};color:#fff;border-color:transparent">${k === 'star' ? 'Đội bạn' : TEAMS[k].name} ${sr[sr.length - 1].toFixed(1)}%</b>`, 0.3); });
+  const cmo = chars.build('cmo'); cmo.scale.setScalar(1.55); cmo.position.set(4.6, 0, 0.6); cmo.rotation.y = -0.6; cmo.traverse(m => { if (m.isMesh) m.castShadow = true; }); g.add(cmo); RM.spin.push(Object.assign(new THREE.Object3D(), { userData: { ch: cmo, rank: 0 } }));
+  setRoomCam(new THREE.Vector3(0, 3.6, 9.6), new THREE.Vector3(0, 2.3, -1));
+  rmCard.innerHTML = e.name ? `<p class="k">Biến cố vòng ${Math.min(s.round, 6)}</p><h3>${e.icon} ${e.name}</h3><p>${e.desc}</p>` : '<p class="k">Mùa giải đã kết thúc</p>';
+  rmCard.insertAdjacentHTML('beforeend', `<p class="k">Thị phần các đội (dây đất sét)</p><p>Mỗi sợi dây là một công ty, mỗi hạt là một vòng. Màn hình phía sau là BizOn Monitor với 6 chỉ số của đội.</p>`);
+}
+
+// ---- Bảng nhiệm vụ 3D
+function buildMissions() {
+  clearRoom(); const s = ev('S'), list = ev('MISSIONS_LIST().map(m=>({id:m.id,icon:m.icon,name:m.name,desc:m.desc,rm:m.rewardMoney,rx:m.rewardXp,st:missionStatus(S,m)}))') || [];
+  const ready = list.filter(m => m.st === 'ready').length;
+  roomHead('📋 Bảng nhiệm vụ', `${ready} nhiệm vụ sẵn sàng nhận · ${list.filter(m => m.st === 'claimed').length}/${list.length} đã nhận`);
+  const g = RM.g, fr = cm(0x8a5a36);
+  mk(g, new THREE.BoxGeometry(7.6, 4.8, 0.2), fr, 0, 2.7, -2.6); mk(g, new THREE.BoxGeometry(7.2, 4.4, 0.06), cm(0xc9a06a, 0.98), 0, 2.7, -2.47);
+  for (const x of [-3.3, 3.3]) mk(g, new THREE.BoxGeometry(0.16, 0.5, 0.16), fr, x, 0.25, -2.6);
+  list.forEach((m, i) => {
+    const PAP = { ready: '#ffe08a', claimed: '#cfe8c8', pending: '#f6efe2' }[m.st];
+    const tex = ctex(360, 300, (x, w, h) => { x.fillStyle = PAP; x.fillRect(0, 0, w, h); x.fillStyle = 'rgba(0,0,0,.06)'; x.fillRect(0, h - 14, w, 14);
+      x.font = '64px sans-serif'; x.textAlign = 'center'; x.fillText(m.icon, w / 2, 86); x.fillStyle = '#2c3552'; x.font = '800 34px "Baloo 2",sans-serif'; x.fillText(m.name, w / 2, 150);
+      x.font = '600 26px "Be Vietnam Pro",sans-serif'; x.fillStyle = '#1f6f8a'; x.fillText(`🎁 ${m.rm}tr₫ + ${m.rx} XP`, w / 2, 200);
+      x.font = '800 30px "Baloo 2",sans-serif'; x.fillStyle = m.st === 'ready' ? '#c8641c' : m.st === 'claimed' ? '#3f8a44' : '#8a8f99'; x.fillText(m.st === 'ready' ? 'SẴN SÀNG NHẬN' : m.st === 'claimed' ? '✓ ĐÃ NHẬN' : '🔒 CHƯA ĐẠT', w / 2, 262); });
+    const note = new THREE.Group(); note.position.set(-2.3 + (i % 3) * 2.3, 4.05 - Math.floor(i / 3) * 1.4, -2.4); note.rotation.z = ((i * 37) % 7 - 3) * 0.02; g.add(note);
+    const p = new THREE.Mesh(new THREE.PlaneGeometry(1.8, 1.25), new THREE.MeshStandardMaterial({ map: tex, roughness: 0.95 })); p.castShadow = true; note.add(p);
+    mk(note, new THREE.SphereGeometry(0.07, 14, 10), cm([0xd6453a, 0x2f8a8c, 0xf39a33][i % 3], 0.4), 0, 0.52, 0.05);
+    note.userData.pick = m; note.userData.pulse = m.st === 'ready'; RM.picks.push(note); if (note.userData.pulse) RM.spin.push(note);
+  });
+  setRoomCam(new THREE.Vector3(0, 2.8, 7.6), new THREE.Vector3(0, 2.6, -2.5));
+  const m = list.find(x => x.id === RM.sel);
+  rmCard.innerHTML = m ? `<p class="k">${m.st === 'ready' ? 'Sẵn sàng nhận' : m.st === 'claimed' ? 'Đã nhận' : 'Chưa đạt'}</p><h3>${m.icon} ${m.name}</h3><p>${m.desc}</p><p><b>🎁 ${m.rm}tr₫ + ${m.rx} XP</b></p>${m.st === 'ready' ? '<button class="btn primary" id="msGo">Nhận thưởng</button>' : ''}`
+    : '<p class="k">Chạm một tờ giấy ghim</p><p>Giấy vàng là nhiệm vụ đã đạt, bấm để nhận tiền và XP. Giấy xanh là đã nhận.</p>';
+  const b = rmCard.querySelector('#msGo'); if (b) b.onclick = () => { W.doClaimMission(m.id); confettiRoom(); buildMissions(); rmCard.insertAdjacentHTML('afterbegin', '<img src="assets/character/rong-xanh-tim.webp" alt="Rồng Xanh bắn tim" style="width:90px;display:block;margin:0 auto"><p style="text-align:center;font-weight:700">🐉 Rồng Xanh: “Cảm ơn cả đội!”</p>'); };
+}
+Object.assign(BUILD, { decisions: buildDecisions, reports: buildReports, market: buildMarket, missions: buildMissions });
+
+// ---- Lumina chat 3D (trong trụ sở)
+function chatLog() {
+  const box = gd('advisor-chat'); if (!box) return [];
+  return [...box.children].slice(-6).map(el => el.classList.contains('justify-end') ? { me: true, t: el.textContent.trim() } : { risk: (el.querySelector('span') || {}).textContent || '', t: (el.querySelector('p') || {}).innerHTML || el.textContent.trim() });
+}
+function advisor3D() {
+  closeRoom(); sheetTab = null; setMode(); window.__EVON = true; flyLumina();
+  const s = ev('S'), q = Math.max(0, (ev('AI_QUOTA_PER_ROUND') || 3) + (ev('hasSkill(S,"SK_AI1")') ? 2 : 0) - (s.aiUsed || 0));
+  const log = chatLog();
+  showPanel(`<span class="tag">🤖 LUMINA · CỐ VẤN AI</span><h2 style="font-size:24px">Hỏi Lumina</h2><p class="d">Còn <b>${q}</b> lượt hỏi vòng này (làm mới sau khi Commit).</p>
+    <div id="lmLog" style="display:flex;flex-direction:column;gap:8px">${log.map(m => m.me ? `<div class="say" style="align-self:flex-end;background:#2f8a8c;color:#fff;border-color:#23706f;border-radius:18px 18px 4px 18px;font-style:normal">${m.t}</div>` : `<div class="say"><small>${m.risk || 'LUMINA'}</small>${m.t}</div>`).join('') || '<div class="say"><small>LUMINA</small>Chào đội! Hỏi mình về giá, marketing hoặc rủi ro của vòng này nhé.</div>'}</div>
+    <button class="btn" data-q="pricing">💲 Nếu tôi thay đổi giá bán thì sao?</button><button class="btn" data-q="marketing">📣 Nếu tăng ngân sách Marketing 15%?</button><button class="btn" data-q="risk">⚠️ Rủi ro lớn nhất vòng này là gì?</button>
+    <div class="row"><input id="lmIn" placeholder="Trò chuyện với Hương..." style="flex:1;min-width:0;border:3px solid #e6d6bf;border-radius:14px;padding:8px 12px;font:500 14px 'Be Vietnam Pro',sans-serif;background:#fffaf2"><button class="btn primary" id="lmSend" style="flex:none">➤</button></div>
+    <div class="row"><button class="btn" id="lmFull">📋 Màn cố vấn đầy đủ</button><button class="btn" id="lmHome">Về trụ sở</button></div>`);
+  const lg = evc.querySelector('#lmLog'); evc.scrollTop = 0; if (lg.lastElementChild) evc.scrollTop = Math.max(0, lg.offsetTop + lg.offsetHeight - 260);
+  const again = () => setTimeout(advisor3D, 700);
+  evc.querySelectorAll('[data-q]').forEach(b => b.onclick = () => { W.askLumina(b.dataset.q); again(); });
+  const send = () => { const v = evc.querySelector('#lmIn').value.trim(); if (!v) return; gd('chat-input').value = v; W.sendChat(); again(); };
+  evc.querySelector('#lmSend').onclick = send; evc.querySelector('#lmIn').onkeydown = e => { if (e.key === 'Enter') send(); };
+  evc.querySelector('#lmFull').onclick = () => { closeEvent(); force2D = true; W.showTab('advisor'); force2D = false; };
+  evc.querySelector('#lmHome').onclick = closeEvent;
+}
+window.__advisor3D = advisor3D;
+
+
+// ================= NHẬT KÝ ĐỘI 3D · HỒ SƠ 3D =================
+Object.assign(ROOM3D, { journal: 1, profile: 1 });
+const addCh = (g, id, sc, x, z, ry = 0) => { const c = chars.build(id); c.scale.setScalar(sc); c.position.set(x, 0, z); c.rotation.y = ry; c.traverse(m => { if (m.isMesh) m.castShadow = true; }); g.add(c); return c; };
+function buildJournal() {
+  clearRoom(); const s = ev('S'), g = RM.g, H = s.history || [], cq = s.conquest || [], Q = ev('JOURNAL_QUOTES_LIST().map(q=>({text:q.text,by:q.by}))') || [];
+  roomHead('📔 Nhật ký đội', 'Hành trình 6 vòng do SEC ghi chép · chạm một cột mốc để đọc quyết định và bài học'); RM.flagsJ = [];
+  const path = cm(0xd9c3a0, 0.95);
+  for (let i = 0; i < 40; i++) { const u = i / 39, x = -4 + u * 8, z = Math.sin(u * Math.PI * 1.6) * 0.9; const st = mk(g, new THREE.CylinderGeometry(0.16, 0.18, 0.05, 10), path, x, 0.03, z); st.castShadow = false; }
+  for (let i = 0; i < 6; i++) { const u = i / 5, x = -4 + u * 8, z = Math.sin(u * Math.PI * 1.6) * 0.9, r0 = H[i], cur = !s.finished && i === s.round - 1;
+    const c = cq[i], k = c ? (c.win ? 'star' : KEY_OF[c.winner] || 'wolf') : null;
+    const p = pedestal(x, z, r0 ? (r0.netProfit >= 0 ? 0x4f9a52 : 0xe0873a) : cur ? 0x2f8a8c : 0xb8ad9c, 0.35 + (r0 ? 0.25 : 0));
+    const book = new THREE.Group(); book.position.y = 0.65 + (r0 ? 0.25 : 0); p.add(book);
+    for (const sd of [-1, 1]) { const pg = mk(book, new THREE.BoxGeometry(0.34, 0.04, 0.46), cm(0xfbf6ee), sd * 0.18, 0.06, 0); pg.rotation.z = sd * -0.14; }
+    mk(book, new THREE.BoxGeometry(0.76, 0.05, 0.5), cm(r0 ? 0x9d6139 : 0x8a8f99), 0, 0.02, 0);
+    if (k) { const f = hq.teamFlag(k); f.scale.setScalar(0.4); f.position.set(0.42, 0.3, -0.1); p.add(f); RM.flagsJ.push(f); }
+    if (cur) { const ring = mk(p, new THREE.TorusGeometry(0.72, 0.04, 8, 40), new THREE.MeshBasicMaterial({ color: 0x3ff0e0 }), 0, 0.05, 0); ring.rotation.x = Math.PI / 2; p.userData.ring = ring; }
+    p.userData.pick = { id: 'r' + i, i }; RM.picks.push(p);
+    lab(p, `<i>${r0 ? (r0.netProfit >= 0 ? '📈' : '📉') : cur ? '✍️' : '🔒'}</i><b>V${i + 1}${STOPS[i] ? ' · ' + STOPS[i].name : ''}${r0 ? ' · ' + fmt(r0.netProfit) : cur ? ' · đang diễn ra' : ''}</b>`, 1.55, RM.sel === 'r' + i ? 'sel' : r0 ? '' : cur ? 'hot' : 'dim'); }
+  const sec = addCh(g, 'sec', 1.5, -3.4, -2.4, 0.5), lu = addCh(g, 'lumina', 1.4, 3.6, -2.3, -0.5);
+  RM.tick = (dt, t) => { chars.animate(sec, t, RM.sel ? 'talk' : 'idle', 0); chars.animate(lu, t, 'idle', 1); RM.flagsJ.forEach((f, i) => hq.waveFlag(f, t + i)); RM.picks.forEach(p => { if (p.userData.ring) p.userData.ring.scale.setScalar(1 + (t * 1.1 % 1) * 0.35); }); };
+  setRoomCam(new THREE.Vector3(0, 7, 11), new THREE.Vector3(0, 0.4, -0.2));
+  const i = RM.sel ? +RM.sel.slice(1) : -1, r0 = H[i], e = ev('currentEvent(S)');
+  if (i < 0) { rmCard.innerHTML = `<p class="k">${H.length}/6 vòng đã ghi chép</p><p>Cột xanh là vòng có lãi, cột cam là vòng lỗ, cột có vòng sáng là vòng đang diễn ra. Cờ cho biết đội nào cắm cờ tỉnh đó.</p>`; return; }
+  if (!r0) { rmCard.innerHTML = i === s.round - 1 && !s.finished ? `<p class="k">Vòng ${i + 1}/6 · đang diễn ra</p><h3>${e ? e.icon + ' ' + e.name : ''}</h3><p><b>${s.committed ? 'Đã commit – chờ kết quả' : 'Đang thảo luận quyết định'}</b></p><button class="btn primary" id="jGo">🎯 Ra quyết định</button>` : `<p class="k">Vòng ${i + 1}/6</p><p>Chưa diễn ra.</p>`;
+    const b = rmCard.querySelector('#jGo'); if (b) b.onclick = () => window.__openTab('decisions'); return; }
+  const d = r0.decisions || {}, q = Q[(r0.round - 1) % Math.max(1, Q.length)] || {}; let les = ''; try { les = W.journalLesson(r0); } catch {}
+  rmCard.innerHTML = `<p class="k">Vòng ${r0.round}/6 · hoàn thành</p><h3>${r0.event && r0.event.icon ? r0.event.icon + ' ' + r0.event.name : 'Chu kỳ ' + r0.round}</h3>
+    <div class="stats"><div><small>GIÁ</small><b style="font-size:16px">${d.price}k</b></div><div><small>MARKETING</small><b style="font-size:16px">${d.marketing}tr</b></div><div><small>SẢN LƯỢNG</small><b style="font-size:16px">${(+d.production || 0).toLocaleString('vi-VN')}</b></div></div>
+    <p><b>Kết quả:</b> ${fmt(r0.netProfit)} · thị phần ${(+r0.share).toFixed(1)}%</p><p><b>Bài học:</b> ${les}</p>${q.text ? `<p style="font-style:italic">"${q.text}" – <b>${q.by}</b></p>` : ''}`;
+}
+const ROLE_ID = { CEO: 'ceo', CFO: 'cfo', CMO: 'cmo', COO: 'coo', SEC: 'sec' };
+function buildProfile() {
+  clearRoom(); const s = ev('S'), g = RM.g, lvl = 1 + Math.floor(s.xp / 100), pct = (s.xp % 100) / 100, role = (s.profile && s.profile.role) || 'CEO';
+  const TIERS = ['Khởi nghiệp', 'Trưởng nhóm', 'Quản lý', 'Giám đốc', 'Executive', 'Chủ tịch'], total = (s.history || []).reduce((a, r) => a + r.netProfit, 0);
+  roomHead('👤 Hồ sơ đội', s.profile.teamName + ' · ' + role);
+  const p = pedestal(0, 0, 0x2f8a8c, 0.6), me = addCh(p, ROLE_ID[role] || 'ceo', 1.8, 0, 0); me.position.y = 0.67;
+  const bg = mk(p, new THREE.TorusGeometry(1.05, 0.06, 10, 64), cm(0xe6d6bf), 0, 0.72, 0); bg.rotation.x = Math.PI / 2;
+  const xr = mk(p, new THREE.TorusGeometry(1.05, 0.1, 12, 64, Math.max(0.05, pct) * Math.PI * 2), cm(0xf2c14e, 0.35, 0.4), 0, 0.74, 0); xr.rotation.x = -Math.PI / 2;
+  const others = ['ceo', 'cfo', 'cmo', 'coo', 'sec'].filter(x => x !== ROLE_ID[role]);
+  others.forEach((id, i) => { const a = -0.9 + i * 0.6, q = pedestal(Math.sin(a) * 3.4, -Math.cos(a) * 1.6 - 1.2, 0xc9ad8f, 0.3); const c = addCh(q, id, 1.35, 0, 0); c.position.y = 0.37; q.rotation.y = -a * 0.5; RM.spin.push(Object.assign(q, { userData: Object.assign(q.userData, { ch: c, rank: 1 }) })); });
+  const lu = addCh(g, 'lumina', 1.4, 3.6, 1, -0.7);
+  RM.tick = (dt, t) => { chars.animate(me, t, 'talk', 0); chars.animate(lu, t, 'idle', 2); };
+  lab(p, `<i>🏅</i><b>Cấp ${lvl} · ${TIERS[Math.min(lvl - 1, 5)]}</b>`, 3.6, 'hot');
+  setRoomCam(new THREE.Vector3(0, 3.6, 8.2), new THREE.Vector3(0, 1.5, -0.6));
+  rmCard.innerHTML = `<p class="k">${role} · Tier ${Math.min(lvl, 6)}</p><h3>${s.profile.teamName}</h3><p>${s.profile.email || ''}${s.profile.classId ? ' · Lớp ' + s.profile.classId : ''}</p>
+    <div style="height:12px;border-radius:999px;background:#e6d6bf;overflow:hidden"><div style="height:100%;width:${Math.round(pct * 100)}%;background:#f2c14e"></div></div>
+    <div class="stats"><div><small>XP</small><b style="font-size:16px">${s.xp.toLocaleString('vi-VN')}</b></div><div><small>LỢI NHUẬN</small><b style="font-size:16px">${fmt(total)}</b></div><div><small>VÒNG</small><b style="font-size:16px">${(s.history || []).length}/6</b></div></div>
+    <div class="row"><button class="btn" id="pfSet">⚙️ Cài đặt</button><button class="btn" id="pfReset">↺ Chơi lại</button></div>`;
+  rmCard.querySelector('#pfSet').onclick = () => { closeRoom(); force2D = true; W.showTab('settings'); force2D = false; };
+  rmCard.querySelector('#pfReset').onclick = () => W.resetGame();
+}
+Object.assign(BUILD, { journal: buildJournal, profile: buildProfile });
+
+// ================= ĐỐI ĐẦU 1-1 TRƯỚC MỖI VÒNG =================
+let FO_EVENT = null;
+const FO_PAIRS = [['ceo', 'alpha', 'wolf', 'Chiến lược'], ['cmo', 'starclay', 'peacock', 'Thương hiệu'], ['coo', 'mekong', 'elephant', 'Vận hành'], ['sec', 'alpha', 'wolf', 'Pháp lý'], ['cfo', 'mekong', 'elephant', 'Dòng tiền'], ['ceo', 'starclay', 'peacock', 'Chung kết']];
+const FO_LINES = { ceo: 'Chúng tôi đã có hướng đi. Vòng này là của BizOn.', cmo: 'Khách hàng sẽ nghe thấy tên chúng tôi trước.', coo: 'Hàng đến đúng hẹn, từ Cần Thơ tới Hà Nội.', sec: 'Mọi giấy tờ đã sẵn sàng. Rủi ro trong tầm kiểm soát.', cfo: 'Mỗi đồng chi ra đều có kế hoạch thu về.' };
+const FO_ROUND = [
+  ['Chúng tôi bắt đầu từ quê nhà, chậm mà chắc.', 'Giá rẻ nhất thắng. Các bạn theo kịp không?', 'Vòng này để đặt nền. Đừng phá giá, hãy tìm mức giá mà xưởng vẫn có lãi.'],
+  ['Thành phố lớn, sân khấu lớn. BizOn sẽ được nhìn thấy.', 'Hàng cao cấp không cần giảm giá.', 'Tổng cầu tăng. COO kiểm tra công suất, CFO xem có nên vay thêm không.'],
+  ['Hàng đến đúng hẹn, chất lượng không đổi.', 'Chậm mà chắc. Mekong không vội.', 'Đối thủ vừa giảm giá sâu. Giữ biên lợi nhuận, thử combo hoặc tăng giá trị thay vì đua giá đáy.'],
+  ['Rủi ro đã được ghi nhận, hồ sơ đầy đủ.', 'Khủng hoảng là lúc chúng tôi giành thị phần.', 'Chi phí điện tăng, cầu giảm. CFO để dành quỹ dự phòng, COO sắp lại lịch máy.'],
+  ['Mỗi đồng chi ra đều có kế hoạch thu về.', 'Kho của chúng tôi vẫn đầy.', 'Dây chuyền thiếu nguyên liệu. Họp khẩn: tăng ngân sách vận chuyển hay đàm phán lại thời gian giao?'],
+  ['Sáu vòng, một hướng đi. Hà Nội là đích đến.', 'Chiếc cúp này đã có chủ.', 'Vòng quyết định. Thương hiệu được tính gấp rưỡi, đầu tư dài hạn giờ mới thấy giá trị.']];
+const FO_TAUNT = { lead: 'Các bạn đang dẫn à? Vòng này sẽ khác.', behind: 'Khoảng cách đang giãn ra đấy, BizOn.' };
+function foRival(s) { const H = (s && s.history) || [], L = H[H.length - 1], base = (FO_ROUND[(s.round - 1) % 6] || [])[1] || ''; if (!L) return base; return L.share >= 30 ? FO_TAUNT.lead + ' ' + base : L.share < 20 ? FO_TAUNT.behind + ' ' + base : base; }
+function buildFaceoff() {
+  clearRoom(); const s = ev('S') || { round: 1 }, e = FO_EVENT || ev('S&&currentEvent(S)') || {}, g = RM.g, [me, rv, rflag, topic] = FO_PAIRS[(s.round - 1) % 6];
+  const rr = chars.roster.find(c => c.id === rv) || {}, mr = chars.roster.find(c => c.id === me) || {};
+  roomHead(`⚔️ V${s.round}/6 · ${topic}`, `${mr.label || me.toUpperCase()} ${mr.name ? '· ' + mr.name : ''} đấu ${rr.label || rv}`);
+  const glowM = (c) => new THREE.MeshBasicMaterial({ color: c });
+  mk(g, new THREE.PlaneGeometry(9, 7), glowM(0xd9772f), -4.5, 3.2, -3.2).castShadow = false; mk(g, new THREE.PlaneGeometry(9, 7), glowM(0x2a47a0), 4.5, 3.2, -3.2).castShadow = false;
+  const glass = new THREE.MeshStandardMaterial({ color: 0xbfeaf5, roughness: 0.08, metalness: 0.1, transparent: true, opacity: 0.38 });
+  mk(g, new THREE.BoxGeometry(3.0, 0.06, 1.7), glass, 0, 1.0, 0.4); for (const x of [-1.4, 1.4]) for (const z of [-0.5, 1.3]) mk(g, new THREE.CylinderGeometry(0.03, 0.03, 1.0, 10), glass, x, 0.5, z);
+  const edge = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(3.0, 0.06, 1.7)), new THREE.LineBasicMaterial({ color: 0x6ff0ff })); edge.position.set(0, 1.0, 0.4); g.add(edge);
+  const vn = new THREE.Mesh(new THREE.PlaneGeometry(0.9, 1.7), new THREE.MeshBasicMaterial({ color: 0x5fe6ff, transparent: true, opacity: 0.55 })); vn.rotation.x = -Math.PI / 2; vn.rotation.z = 0.35; vn.position.set(0, 1.04, 0.4); vn.userData.own = 1; g.add(vn);
+  const bars = [0xf39a33, 0x3f8a44, 0xd6453a, 0x3f78c0]; bars.forEach((c, i) => { mk(g, new THREE.BoxGeometry(0.12, 0.12 + i * 0.07, 0.12), glowM(c), -1.2 + i * 0.16, 1.06 + (0.12 + i * 0.07) / 2, 0.8); mk(g, new THREE.BoxGeometry(0.12, 0.34 - i * 0.07, 0.12), glowM(c), 0.72 + i * 0.16, 1.06 + (0.34 - i * 0.07) / 2, 0.8); });
+  RM.coins = []; for (let i = 0; i < 7; i++) { const c = mk(g, new THREE.CylinderGeometry(0.1, 0.1, 0.025, 24), cm(0xf2c14e, 0.35, 0.6), -0.75 + i * 0.25, 1.5 + (i % 3) * 0.25, 0.4); c.rotation.x = Math.PI / 2; c.userData.ph = i; RM.coins.push(c); }
+  const A = addCh(g, me, 2.0, -1.85, 0.7, 0.5), B2 = addCh(g, rv, 2.0, 1.85, 0.7, -0.5); if (rr.acc) hq.dress(B2, rr.acc);
+  const fl = []; { const f = hq.teamFlag('star'); f.scale.setScalar(1.3); f.position.set(-2.7, 0, -1.2); g.add(f); fl.push(f); } if (rflag) { const f = hq.teamFlag(rflag); f.scale.setScalar(1.3); f.position.set(2.7, 0, -1.2); g.add(f); fl.push(f); }
+  RM.scene.background.set(0x1b2240);
+  RM.tick = (dt, t) => { chars.animate(A, t, 'talk', 0); chars.animate(B2, t, 'talk', 1.3); fl.forEach((f, i) => hq.waveFlag(f, t + i)); RM.coins.forEach(c => { c.rotation.z += dt * 2; c.position.y = 1.5 + Math.sin(t * 1.6 + c.userData.ph) * 0.18 + (c.userData.ph % 3) * 0.2; }); vn.material.opacity = 0.45 + Math.sin(t * 2) * 0.12; };
+  const MASC = { wolf: 'soi', elephant: 'voi', peacock: 'cong' }, mimg = k => `<img src="assets/character/${k}.webp" alt="" style="width:34px;vertical-align:middle;margin-right:4px">`;
+  lab(A, `${mimg('rong-xanh')}<i>🚩</i><b>${mr.label || me.toUpperCase()}: “${(FO_ROUND[(s.round - 1) % 6] || [])[0] || FO_LINES[me] || ''}”</b>`, 2.35, 'hot');
+  lab(B2, `${rflag ? mimg('mascot-' + MASC[rflag]) : ''}<i>⚡</i><b>${rr.label || rv}: “${foRival(s)}”</b>`, 2.35);
+  RM.labs.slice(-2).forEach(L => { Object.assign(L.el.style, { whiteSpace: 'normal', maxWidth: '210px', textAlign: 'center' }); const b = L.el.querySelector('b'); if (b) Object.assign(b.style, { whiteSpace: 'normal', display: 'block', lineHeight: '1.25' }); });
+  { const W0 = innerWidth, w = W0 >= 760 ? 1.05 : 0; setRoomCam(new THREE.Vector3(w, 2.7, W0 < 760 ? 12.5 : 11.2), new THREE.Vector3(w, 1.4, 0)); }
+  const bad = e.tone === 'bad';
+  rmCard.innerHTML = `<p class="k">${e.tag || 'BIẾN CỐ THỊ TRƯỜNG'}</p><h3 style="${bad ? 'color:#c0443a' : ''}">${e.icon || '📣'} ${e.name || 'Đối thủ ra đòn'}</h3><p>${e.desc || ''}</p>
+    ${e.luminaMsg ? `<p style="font-style:italic">🤖 Lumina: “${e.luminaMsg}”</p>` : ''}
+    <button class="btn primary" id="foGo">${e.cta ? e.cta.label : '🎯 Nhập quyết định'}</button><button class="btn" id="foHome">Về trụ sở</button>`;
+  rmCard.querySelector('#foGo').onclick = () => { closeRoom(); window.__openTab(e.cta ? e.cta.tab : 'decisions', e.cta && e.cta.report); };
+  rmCard.querySelector('#foHome').onclick = () => { closeRoom(); ev('showTab("home")'); };
+}
+BUILD.faceoff = buildFaceoff;
+window.__faceoff = () => room3D('faceoff');
+
+// ================= NGÔN NGỮ =================
+const langBtn = document.getElementById('langBtn');
+function syncLangBtn() { let l = 'vi'; try { l = localStorage.getItem('bizon-lang') || 'vi'; } catch {} langBtn.querySelector('span').textContent = l === 'en' ? 'English' : 'Tiếng Việt'; }
+langBtn.onclick = () => { if (!W) return; W.toggleLang(); ev('renderAll()'); syncLangBtn(); if (RM.on) BUILD[RM.mode](); if (document.body.classList.contains('evt') && evc.querySelector('#lmLog')) advisor3D(); };
+syncLangBtn();
+{ const mb = document.getElementById('moreBtn'), mp = document.getElementById('more'); mb.onclick = () => { mp.style.display = mp.style.display === 'flex' ? 'none' : 'flex'; }; addEventListener('pointerdown', e => { if (!mp.contains(e.target) && !mb.contains(e.target)) mp.style.display = 'none'; }); }
+
+</script>
+</body>
+</html>

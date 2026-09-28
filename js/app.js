@@ -1328,7 +1328,21 @@ function teamSuggestions() {
   const cooProd = Math.max(200, Math.min(4000, Math.round(S.machineCapacity * (energy ? 0.65 : 0.88) / 100) * 100));
   const cooWorkers = energy ? 40 : 50;
 
-  return [
+  const H2 = S.history.slice(-2), twoWins = H2.length === 2 && H2.every(h => h.netProfit > 0);
+  const lead = {
+    cfo: S.balance < 150
+      ? T('Quỹ đang mỏng. Mình đề nghị giảm sản lượng 10% và chưa vay thêm. ', 'Cash is thin. I suggest cutting output 10% and no new loans yet. ')
+      : twoWins ? T('Dòng tiền ổn. Có thể dành một phần cho R&D. ', 'Cash flow is healthy. We can set some aside for R&D. ') : '',
+    cmo: share < 20
+      ? T('Mình cần tăng marketing, ít nhất ngang Mekong. ', 'We need more marketing, at least matching Mekong. ')
+      : S.brand > 1.2 ? T('Thương hiệu đang lên, đừng giảm giá lúc này. ', "Our brand is rising, don't cut prices now. ") : '',
+    coo: last && last.inventory > 400
+      ? T('Kho đang ứ hàng. Sản xuất ít lại, bán hết hàng cũ trước. ', 'The warehouse is overstocked. Produce less, sell old stock first. ')
+      : last && last.lostSales > 200 ? T('Mình mất đơn vì thiếu hàng. Tăng ca hoặc thêm công nhân. ', 'We lost orders to a stockout. Add shifts or workers. ') : '',
+    sec: T("Mình đã ghi quyết định của từng người. Có ai muốn nói thêm lý do trước khi chốt không? ", "I've logged everyone's decisions. Anyone want to add reasons before we lock in? "),
+  };
+
+  const out = [
     { img: 'assets/character/team/cfo.jpg', name: 'Thu Hà · CFO', icon: '💰',
       say: tight ? T(`Thanh khoản đang căng (quick ratio ${S.quickRatio.toFixed(2)}). Em đề xuất giảm R&D về ${cfoRd}tr, ưu tiên giữ tiền mặt – cần thì vay ngắn hạn thay vì cắt marketing sát sàn.`,
                      `Liquidity is tight (quick ratio ${S.quickRatio.toFixed(2)}). I suggest cutting R&D to ${cfoRd}m and prioritizing cash – take a short-term loan if needed instead of slashing marketing to the bone.`)
@@ -1351,6 +1365,8 @@ function teamSuggestions() {
       say: T(`Tóm tắt cuộc họp: biến cố vòng này là «${ev.name || '–'}». ${ev.icon || ''} ${tight ? 'Ưu tiên số 1 theo CFO: an toàn dòng tiền. ' : ''}Em đã ghi biên bản – cả đội thống nhất xong thì CEO bấm Commit nhé!`,
               `Meeting summary: this round's event is «${ev.name || '–'}». ${ev.icon || ''} ${tight ? "CFO's top priority: protect cash safety. " : ''}I've logged the minutes – once the team agrees, the CEO can hit Commit!`) },
   ];
+  ['cfo', 'cmo', 'coo', 'sec'].forEach((k, i) => { if (lead[k]) out[i].say = lead[k] + out[i].say; });
+  return out;
 }
 function applySuggestion(i) {
   const s = teamSuggestions()[i];
@@ -1385,8 +1401,29 @@ function renderTeamMeeting() {
   </div>`;
 }
 
+/* Chế độ Cơ bản/Nâng cao: vòng 1–2 gấp gọn các quyết định nâng cao (giá trị mặc định vẫn hợp lý).
+ * Các thẻ nâng cao (nhân sự, nguồn vốn/kỳ hạn, R&D) không liền kề nhau trong DOM nên dùng chung
+ * class "adv-decisions" thay vì một id duy nhất. */
+let advTouched = false;
+function setAdvDecisionsHidden(hide) {
+  document.querySelectorAll('.adv-decisions').forEach(el => el.classList.toggle('hidden', hide));
+  const btn = $('adv-toggle');
+  if (btn) btn.textContent = hide
+    ? T('⚙️ Quyết định nâng cao (R&D · Tài chính · Nhân sự) ▾', '⚙️ Advanced decisions (R&D · Finance · HR) ▾')
+    : T('⚙️ Thu gọn quyết định nâng cao ▴', '⚙️ Collapse advanced decisions ▴');
+}
+function toggleAdvDecisions() {
+  advTouched = true;
+  const anyVisible = !!document.querySelector('.adv-decisions:not(.hidden)');
+  setAdvDecisionsHidden(anyVisible);
+}
+function syncAdvDecisions() {
+  if (!document.querySelector('.adv-decisions') || advTouched) return;
+  setAdvDecisionsHidden(S.round <= 2);
+}
 function renderDecisions() {
   document.querySelectorAll('.dec-round').forEach(e => e.textContent = Math.min(S.round, ROUNDS_TOTAL));
+  syncAdvDecisions();
   syncDecisionLabels();
   renderTeamMeeting();
   const wq = $('whatif-quota');
