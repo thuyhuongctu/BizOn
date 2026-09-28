@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>BizOn Bật Nghiệp – Trang Giảng viên</title>
+<link rel="manifest" href="app-giangvien.webmanifest">
+<meta name="theme-color" content="#1f4a55">
+<link rel="apple-touch-icon" href="assets/icons/rong-xanh-192.png">
+<link rel="icon" href="assets/icons/rong-xanh-192.png">
+<script>if ('serviceWorker' in navigator && location.protocol.startsWith('http')) addEventListener('load', () => navigator.serviceWorker.register('sw-bizon.js').catch(() => {}));</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="js/backend-config.js"></script>
+<script src="js/instructor-api.js"></script>
+<script src="js/instructor-page.js"></script>
+<style>
+body{margin:0;background:#efe4d2;color:#1f3f4a;font-family:'Be Vietnam Pro',sans-serif}
+a{color:#1f6f8a}a:hover{color:#2f8a8c}
+input,select,textarea,button{font-family:inherit}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+  <header style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 22px;background:#fbf6ee;border-bottom:3px solid #e6d6bf">
+    <div style="display:flex;align-items:center;gap:12px">
+      <img src="assets/icons/rong-xanh-192.png" alt="BizOn" style="width:42px;height:42px;border-radius:12px;box-shadow:0 4px 0 #1b5a5a">
+      <div><div style="font:800 20px/1.1 'Baloo 2',sans-serif;color:#1f4a55">BizOn Bật Nghiệp · Giảng viên</div><div style="font-size:13px;color:#5a6b74">{{ subtitle }}</div></div>
+    </div>
+    <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <span style="font-size:13px;color:#5a6b74">{{ email }}</span>
+        <sc-if value="{{ inClass }}" hint-placeholder-val="{{ false }}"><button onClick="{{ backToClasses }}" style="border:2px solid #cbb797;background:#fff;border-radius:12px;padding:7px 12px;font-weight:700;color:#1f4a55;cursor:pointer">← Lớp của tôi</button></sc-if>
+        <button onClick="{{ signOut }}" style="border:2px solid #cbb797;background:#fff;border-radius:12px;padding:7px 12px;font-weight:700;color:#1f4a55;cursor:pointer">Đăng xuất</button>
+      </div>
+    </sc-if>
+  </header>
+
+  <sc-if value="{{ error }}" hint-placeholder-val="{{ false }}">
+    <div style="margin:14px 22px 0;padding:10px 14px;border-radius:12px;background:#fde4e1;color:#9c2f26;font-weight:600;font-size:14px">{{ error }}</div>
+  </sc-if>
+
+  <sc-if value="{{ migNote }}" hint-placeholder-val="{{ false }}">
+    <div style="margin:14px 22px 0;padding:10px 14px;border-radius:12px;background:#e3f1ef;color:#1f4a55;font-size:14px;border:2px solid #b9dcd8">ℹ️ {{ migNote }} Hiện đang hiển thị kết quả nộp bài cơ bản (thị phần, lợi nhuận).</div>
+  </sc-if>
+
+  <sc-if value="{{ showLogin }}" hint-placeholder-val="{{ true }}">
+    <main style="flex:1;display:flex;align-items:center;justify-content:center;padding:32px 16px">
+      <div style="width:100%;max-width:420px;background:#fbf6ee;border:3px solid #e6d6bf;border-radius:26px;padding:28px;box-shadow:0 8px 0 #d9c5a8;display:flex;flex-direction:column;gap:12px">
+        <div style="font:800 26px/1.1 'Baloo 2',sans-serif;color:#1f4a55">{{ loginTitle }}</div>
+        <div style="font-size:14px;color:#5a6b74;text-wrap:pretty">Tài khoản giảng viên dùng Supabase Auth. Mỗi mã lớp chỉ thuộc về một giảng viên.</div>
+        <label style="font-weight:700;font-size:13px">Email</label>
+        <input value="{{ fEmail }}" onChange="{{ onEmail }}" type="email" placeholder="giangvien@truong.edu.vn" style="padding:12px 14px;border-radius:14px;border:2px solid #e6d6bf;background:#fff;font-size:15px"></input>
+        <label style="font-weight:700;font-size:13px">Mật khẩu</label>
+        <input value="{{ fPass }}" onChange="{{ onPass }}" type="password" placeholder="Tối thiểu 6 ký tự" style="padding:12px 14px;border-radius:14px;border:2px solid #e6d6bf;background:#fff;font-size:15px"></input>
+        <button onClick="{{ submitLogin }}" style="margin-top:6px;border:0;background:#2f8a8c;color:#fff;border-radius:16px;padding:13px;font:800 17px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #1b5a5a;cursor:pointer">{{ loginBtn }}</button>
+        <button onClick="{{ toggleMode }}" style="border:0;background:none;color:#1f6f8a;font-weight:700;cursor:pointer;font-size:14px">{{ modeLink }}</button>
+        <div style="border-top:2px dashed #e6d6bf;padding-top:12px;display:flex;flex-direction:column;gap:6px">
+          <button onClick="{{ tryDemo }}" style="border:2px solid #cbb797;background:#fff;border-radius:14px;padding:11px;font-weight:700;color:#1f4a55;cursor:pointer">👀 Dùng thử với lớp mẫu DEMO-2026</button>
+          <div style="font-size:12px;color:#5a6b74;text-align:center">{{ backendNote }}</div>
+        </div>
+      </div>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ showClasses }}" hint-placeholder-val="{{ false }}">
+    <main style="flex:1;padding:24px 22px;max-width:980px;width:100%;margin:0 auto;box-sizing:border-box;display:flex;flex-direction:column;gap:18px">
+      <div style="font:800 24px 'Baloo 2',sans-serif">Lớp của tôi</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;background:#fbf6ee;border:3px solid #e6d6bf;border-radius:20px;padding:14px">
+        <input value="{{ fCode }}" onChange="{{ onCode }}" placeholder="Mã lớp mới, VD: QTKD-2026-A" style="flex:1;min-width:200px;padding:11px 14px;border-radius:14px;border:2px solid #e6d6bf;font-size:15px;text-transform:uppercase"></input>
+        <button onClick="{{ claim }}" style="border:0;background:#e8843a;color:#fff;border-radius:14px;padding:11px 16px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #b8611f;cursor:pointer;white-space:nowrap">＋ Tạo lớp</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px">
+        <sc-for list="{{ classes }}" as="c" hint-placeholder-count="2">
+          <button onClick="{{ c.open }}" style="text-align:left;border:3px solid #e6d6bf;background:#fbf6ee;border-radius:20px;padding:16px;cursor:pointer;box-shadow:0 5px 0 #d9c5a8;display:flex;flex-direction:column;gap:6px">
+            <span style="font:800 20px 'Baloo 2',sans-serif;color:#1f4a55">{{ c.class_code }}</span>
+            <span style="font-size:13px;color:#5a6b74">Tạo ngày {{ c.date }}</span>
+            <span style="font-size:13px;color:#2f8a8c;font-weight:700">Mở bảng điều khiển →</span>
+          </button>
+        </sc-for>
+      </div>
+      <div style="font-size:13px;color:#5a6b74"><a href="BizOn Game 3D.html" style="font-weight:700">🎮 Mở game sinh viên</a> · Phát mã lớp cho sinh viên. Các đội nhập mã này ở màn đăng nhập của game để kết quả gửi về đây.</div>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ inClass }}" hint-placeholder-val="{{ false }}">
+    <main style="flex:1;padding:18px 22px 28px;max-width:1240px;width:100%;margin:0 auto;box-sizing:border-box;display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap">
+        <div><div style="font:800 28px/1 'Baloo 2',sans-serif">{{ code }}</div><div style="font-size:13px;color:#5a6b74;margin-top:4px">{{ classStats }}</div></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button onClick="{{ refresh }}" style="border:2px solid #cbb797;background:#fff;border-radius:12px;padding:8px 12px;font-weight:700;color:#1f4a55;cursor:pointer">⟳ Tải lại</button>
+          <button onClick="{{ exportXls }}" style="border:0;background:#3f8a44;color:#fff;border-radius:12px;padding:8px 14px;font-weight:700;cursor:pointer;box-shadow:0 3px 0 #2b6330">⬇ Xuất Excel</button>
+          <button onClick="{{ openBoard }}" style="border:0;background:#1f4a55;color:#fff;border-radius:12px;padding:8px 14px;font-weight:700;cursor:pointer;box-shadow:0 3px 0 #10303a">📽 Chiếu bảng xếp hạng</button>
+        </div>
+      </div>
+      <nav style="display:flex;gap:6px;flex-wrap:wrap">
+        <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
+          <button onClick="{{ t.go }}" style="border:3px solid {{ t.border }};background:{{ t.bg }};color:{{ t.fg }};border-radius:14px;padding:8px 14px;font:700 15px 'Baloo 2',sans-serif;cursor:pointer">{{ t.label }}</button>
+        </sc-for>
+      </nav>
+
+      <sc-if value="{{ tabTeams }}" hint-placeholder-val="{{ true }}">
+        <section style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;overflow:auto">
+          <div style="display:grid;grid-template-columns:minmax(160px,1.6fr) minmax(170px,1.4fr) repeat(4,minmax(90px,1fr));gap:0;min-width:760px">
+            <div style="display:contents;font-size:12px;font-weight:700;color:#5a6b74;text-transform:uppercase;letter-spacing:.04em">
+              <div style="padding:12px 16px;border-bottom:2px solid #e6d6bf">Đội</div><div style="padding:12px;border-bottom:2px solid #e6d6bf">Tiến độ 6 vòng</div><div style="padding:12px;border-bottom:2px solid #e6d6bf">Thị phần</div><div style="padding:12px;border-bottom:2px solid #e6d6bf">LN lũy kế</div><div style="padding:12px;border-bottom:2px solid #e6d6bf">Cờ</div><div style="padding:12px;border-bottom:2px solid #e6d6bf">Nộp gần nhất</div>
+            </div>
+            <sc-for list="{{ teams }}" as="t" hint-placeholder-count="4">
+              <div style="display:contents">
+                <div style="padding:12px 16px;border-bottom:1px solid #eadcc6;font-weight:700">{{ t.name }}</div>
+                <div style="padding:12px;border-bottom:1px solid #eadcc6;display:flex;gap:4px;align-items:center">
+                  <sc-for list="{{ t.dots }}" as="d" hint-placeholder-count="6"><span title="{{ d.tip }}" style="width:20px;height:20px;border-radius:7px;background:{{ d.bg }};color:#fff;font:700 11px/20px 'Baloo 2',sans-serif;text-align:center">{{ d.n }}</span></sc-for>
+                </div>
+                <div style="padding:12px;border-bottom:1px solid #eadcc6">{{ t.share }}</div>
+                <div style="padding:12px;border-bottom:1px solid #eadcc6;font-weight:700;color:{{ t.profitColor }}">{{ t.profit }}</div>
+                <div style="padding:12px;border-bottom:1px solid #eadcc6">{{ t.flags }}</div>
+                <div style="padding:12px;border-bottom:1px solid #eadcc6;font-size:13px;color:#5a6b74">{{ t.last }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <sc-if value="{{ noTeams }}" hint-placeholder-val="{{ false }}"><div style="padding:22px;color:#5a6b74">Chưa có đội nào nộp kết quả. Sinh viên nhập mã lớp {{ code }} khi đăng nhập game.</div></sc-if>
+        </section>
+      </sc-if>
+
+      <sc-if value="{{ tabDecisions }}" hint-placeholder-val="{{ false }}">
+        <section style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+            <select value="{{ selTeam }}" onChange="{{ onSelTeam }}" style="padding:9px 12px;border-radius:12px;border:2px solid #e6d6bf;background:#fff;font-weight:600">
+              <sc-for list="{{ teamOptions }}" as="o" hint-placeholder-count="3"><option value="{{ o }}">{{ o }}</option></sc-for>
+            </select>
+            <span style="font-size:13px;color:#5a6b74">Quyết định và kết quả mỗi vòng, lấy từ bài nộp mới nhất của đội.</span>
+          </div>
+          <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;overflow:auto">
+            <div style="display:grid;grid-template-columns:70px repeat(9,minmax(86px,1fr));min-width:900px">
+              <sc-for list="{{ decHead }}" as="h" hint-placeholder-count="10"><div style="padding:11px 10px;border-bottom:2px solid #e6d6bf;font-size:12px;font-weight:700;color:#5a6b74">{{ h }}</div></sc-for>
+              <sc-for list="{{ decCells }}" as="c" hint-placeholder-count="20"><div style="padding:11px 10px;border-bottom:1px solid #eadcc6;font-size:14px;font-weight:{{ c.w }};color:{{ c.color }}">{{ c.v }}</div></sc-for>
+            </div>
+          </div>
+        </section>
+      </sc-if>
+
+      <sc-if value="{{ tabControls }}" hint-placeholder-val="{{ false }}">
+        <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px">
+          <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px">
+            <div style="font:800 19px 'Baloo 2',sans-serif">🔒 Khóa vòng cho cả lớp</div>
+            <div style="font-size:13px;color:#5a6b74">{{ lockNote }}</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <sc-for list="{{ lockBtns }}" as="b" hint-placeholder-count="7"><button onClick="{{ b.go }}" style="border:3px solid {{ b.border }};background:{{ b.bg }};color:{{ b.fg }};border-radius:12px;padding:8px 11px;font-weight:700;cursor:pointer">{{ b.label }}</button></sc-for>
+            </div>
+          </div>
+          <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px">
+            <div style="font:800 19px 'Baloo 2',sans-serif">⚡ Tung biến cố thủ công</div>
+            <div style="font-size:13px;color:#5a6b74">Thay biến cố theo kịch bản của vòng đang chơi bằng biến cố bạn chọn.</div>
+            <select value="{{ fEvent }}" onChange="{{ onEvent }}" style="padding:10px;border-radius:12px;border:2px solid #e6d6bf;background:#fff;font-weight:600">
+              <sc-for list="{{ eventOpts }}" as="o" hint-placeholder-count="7"><option value="{{ o.v }}">{{ o.l }}</option></sc-for>
+            </select>
+            <input value="{{ fMsg }}" onChange="{{ onMsg }}" placeholder="Thông báo cho cả lớp (tùy chọn)" style="padding:10px 12px;border-radius:12px;border:2px solid #e6d6bf"></input>
+            <button onClick="{{ saveEvent }}" style="border:0;background:#e8843a;color:#fff;border-radius:14px;padding:10px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #b8611f;cursor:pointer">Áp dụng cho lớp</button>
+          </div>
+          <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px">
+            <div style="font:800 19px 'Baloo 2',sans-serif">💸 Cấp / trừ vốn</div>
+            <select value="{{ gTeam }}" onChange="{{ onGTeam }}" style="padding:10px;border-radius:12px;border:2px solid #e6d6bf;background:#fff;font-weight:600">
+              <option value="*">Cả lớp</option>
+              <sc-for list="{{ teamOptions }}" as="o" hint-placeholder-count="3"><option value="{{ o }}">{{ o }}</option></sc-for>
+            </select>
+            <div style="display:flex;gap:8px"><input value="{{ gAmt }}" onChange="{{ onGAmt }}" type="number" placeholder="Triệu ₫, âm = trừ" style="flex:1;min-width:0;padding:10px 12px;border-radius:12px;border:2px solid #e6d6bf"></input><input value="{{ gReason }}" onChange="{{ onGReason }}" placeholder="Lý do" style="flex:1.4;min-width:0;padding:10px 12px;border-radius:12px;border:2px solid #e6d6bf"></input></div>
+            <button onClick="{{ doGrant }}" style="border:0;background:#2f8a8c;color:#fff;border-radius:14px;padding:10px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #1b5a5a;cursor:pointer">Gửi</button>
+            <div style="display:flex;flex-direction:column;gap:4px;max-height:160px;overflow:auto;font-size:13px">
+              <sc-for list="{{ grants }}" as="g" hint-placeholder-count="2"><div style="display:flex;justify-content:space-between;gap:8px;border-bottom:1px dashed #e6d6bf;padding:4px 0"><span>{{ g.team }} · {{ g.reason }}</span><b style="color:{{ g.color }}">{{ g.amt }}</b></div></sc-for>
+            </div>
+          </div>
+        </section>
+      </sc-if>
+
+      <sc-if value="{{ tabGrading }}" hint-placeholder-val="{{ false }}">
+        <section style="display:flex;flex-direction:column;gap:10px">
+          <div style="font-size:13px;color:#5a6b74;text-wrap:pretty">Gợi ý theo hướng dẫn giảng viên: 45% lợi nhuận lũy kế · 35% số cờ · 20% lập luận & hợp tác. Hai cột đầu tính tự động từ bài nộp; cột lập luận và hợp tác do bạn chấm (0–10).</div>
+          <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;overflow:auto">
+            <div style="display:grid;grid-template-columns:minmax(150px,1.4fr) repeat(5,minmax(90px,1fr)) minmax(160px,1.6fr) 90px;min-width:960px;align-items:center">
+              <sc-for list="{{ gradeHead }}" as="h" hint-placeholder-count="8"><div style="padding:11px 10px;border-bottom:2px solid #e6d6bf;font-size:12px;font-weight:700;color:#5a6b74">{{ h }}</div></sc-for>
+              <sc-for list="{{ gradeRows }}" as="r" hint-placeholder-count="4">
+                <div style="display:contents">
+                  <div style="padding:10px;border-bottom:1px solid #eadcc6;font-weight:700">{{ r.name }}</div>
+                  <div style="padding:10px;border-bottom:1px solid #eadcc6">{{ r.pProfit }}</div>
+                  <div style="padding:10px;border-bottom:1px solid #eadcc6">{{ r.pFlags }}</div>
+                  <div style="padding:6px;border-bottom:1px solid #eadcc6"><input value="{{ r.reasoning }}" onChange="{{ r.onR }}" type="number" min="0" max="10" step="0.5" style="width:64px;padding:7px;border-radius:10px;border:2px solid #e6d6bf"></input></div>
+                  <div style="padding:6px;border-bottom:1px solid #eadcc6"><input value="{{ r.teamwork }}" onChange="{{ r.onT }}" type="number" min="0" max="10" step="0.5" style="width:64px;padding:7px;border-radius:10px;border:2px solid #e6d6bf"></input></div>
+                  <div style="padding:10px;border-bottom:1px solid #eadcc6;font:800 18px 'Baloo 2',sans-serif;color:#1f6f8a">{{ r.total }}</div>
+                  <div style="padding:6px;border-bottom:1px solid #eadcc6"><input value="{{ r.note }}" onChange="{{ r.onN }}" placeholder="Nhận xét" style="width:100%;box-sizing:border-box;padding:7px;border-radius:10px;border:2px solid #e6d6bf"></input></div>
+                  <div style="padding:6px;border-bottom:1px solid #eadcc6"><button onClick="{{ r.save }}" style="border:0;background:#2f8a8c;color:#fff;border-radius:10px;padding:7px 10px;font-weight:700;cursor:pointer">{{ r.saveLabel }}</button></div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </section>
+      </sc-if>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ board }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:50;background:#1b2240;color:#fff;display:flex;flex-direction:column;padding:4vh 5vw;gap:3vh;box-sizing:border-box">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:16px">
+        <div><div style="font:800 clamp(28px,4vw,64px)/1 'Baloo 2',sans-serif">🏆 Bảng xếp hạng · {{ code }}</div><div style="font-size:clamp(16px,1.6vw,26px);opacity:.85;margin-top:8px">{{ classStats }}</div></div>
+        <button onClick="{{ closeBoard }}" style="border:0;background:#fff;color:#1b2240;border-radius:14px;padding:10px 16px;font-weight:800;cursor:pointer">✕ Đóng</button>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:1.4vh;overflow:auto">
+        <sc-for list="{{ boardRows }}" as="b" hint-placeholder-count="5">
+          <div style="display:grid;grid-template-columns:clamp(50px,6vw,100px) 1fr minmax(0,2fr) clamp(120px,12vw,220px);align-items:center;gap:2vw;background:{{ b.bg }};border-radius:22px;padding:1.6vh 2vw">
+            <div style="font:800 clamp(28px,3.4vw,58px) 'Baloo 2',sans-serif;text-align:center">{{ b.medal }}</div>
+            <div style="font:800 clamp(20px,2.4vw,42px) 'Baloo 2',sans-serif">{{ b.name }}</div>
+            <div style="height:clamp(16px,2vh,28px);background:rgba(255,255,255,.14);border-radius:99px;overflow:hidden"><div style="height:100%;width:{{ b.pct }};background:#f39a33;border-radius:99px"></div></div>
+            <div style="text-align:right;font:800 clamp(18px,2vw,36px) 'Baloo 2',sans-serif">{{ b.val }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { view: 'login', mode: 'in', err: '', fEmail: '', fPass: '', fCode: '', classes: [], code: '', tab: 'teams', subs: [], st: {}, selTeam: '', fEvent: '', fMsg: '', gTeam: '*', gAmt: '', gReason: '', edits: {}, saved: {}, board: false, ready: false };
+  api() { return window.BizOnInstructor; }
+  P() { return window.BizOnInstructorPage; }
+  componentDidMount() { const t = setInterval(() => { if (this.api() && this.P()) { clearInterval(t); this.setState({ ready: true }); if (this.api().signedIn) this.loadClasses(); } }, 100); }
+  fail(e) { const m = (e && e.message) || String(e); if (this.api() && m === this.api().migrationNote) return this.forceUpdate(); this.setState({ err: m }); }
+  async loadClasses() { try { const c = await this.api().myClasses(); this.setState({ classes: c || [], view: 'classes', err: '' }); } catch (e) { this.fail(e); } }
+  async openClass(code) { this.setState({ code, view: 'class', tab: 'teams', err: '', edits: {}, saved: {} }); await this.reload(code); }
+  async reload(code = this.state.code) {
+    try { const [subs, st] = await Promise.all([this.api().submissions(code), this.api().state(code)]);
+      const c = (st && st.controls) || {}; this.setState({ subs: subs || [], st: st || {}, fEvent: c.forced_event || '', fMsg: c.message || '', err: '' });
+    } catch (e) { this.fail(e); } }
+  async login() {
+    const { fEmail, fPass, mode } = this.state; if (!fEmail || !fPass) return this.fail('Nhập email và mật khẩu.');
+    try { if (mode === 'up') { const ok = await this.api().signUp(fEmail, fPass); if (!ok) return this.setState({ err: 'Đã tạo tài khoản. Kiểm tra email để xác nhận rồi đăng nhập.', mode: 'in' }); }
+      else await this.api().signIn(fEmail, fPass);
+      this.setState({ fPass: '' }); this.loadClasses(); } catch (e) { this.fail(e); } }
+  async claim() { try { await this.api().claimClass(this.state.fCode); this.setState({ fCode: '' }); this.loadClasses(); } catch (e) { this.fail(e); } }
+  async setLock(n) { try { const c = Object.assign({}, (this.state.st.controls || {}), { locked_round: n }); await this.api().setControls(this.state.code, c); this.reload(); } catch (e) { this.fail(e); } }
+  async saveEvent() { try { const s = this.state, cur = (s.st.controls || {}); await this.api().setControls(s.code, Object.assign({}, cur, { forced_event: s.fEvent, forced_event_round: s.fEvent ? this.curRound() : null, message: s.fMsg })); this.reload(); } catch (e) { this.fail(e); } }
+  async doGrant() { const s = this.state, a = +s.gAmt; if (!a) return this.fail('Nhập số tiền (triệu ₫).'); try { await this.api().grant(s.code, s.gTeam, a, s.gReason); this.setState({ gAmt: '', gReason: '' }); this.reload(); } catch (e) { this.fail(e); } }
+  async saveScore(g) { const s = this.state; try { await this.api().saveScore(s.code, g.name, g.reasoning === '' ? null : +g.reasoning, g.teamwork === '' ? null : +g.teamwork, g.note); this.setState({ saved: Object.assign({}, s.saved, { [g.name]: true }) }); this.reload(); } catch (e) { this.fail(e); } }
+  curRound() { const T = this.P().teams(this.state.subs); return Math.min(6, Math.max(1, ...T.map(t => t.rs.length + 1), 1)); }
+  renderVals() {
+    const s = this.state, A = this.api(), P = this.P(), ok = s.ready && A && P;
+    const signedIn = !!(ok && A.signedIn), v = signedIn ? s.view : 'login', inClass = v === 'class';
+    const T = ok ? P.teams(s.subs) : [], G = ok ? P.grades(T, (s.st && s.st.scores) || [], s.edits) : [], money = ok ? P.money : (x => x);
+    const c = (s.st && s.st.controls) || {}, lock = c.locked_round;
+    const tabDefs = [['teams', '👥 Đội & tiến độ'], ['decisions', '🧾 Quyết định'], ['controls', '🎛 Điều khiển lớp'], ['grading', '📝 Chấm điểm']];
+    const selTeam = s.selTeam || (T[0] && T[0].name) || '';
+    const dec = ok ? P.decRows(T.find(t => t.name === selTeam)) : { head: [], cells: [] };
+    const maxShare = Math.max(1, ...T.map(t => t.share));
+    return {
+      subtitle: inClass ? 'Bảng điều khiển lớp' : signedIn ? 'Quản lý lớp học' : 'Đăng nhập giảng viên',
+      migNote: ok && inClass && !A.demo && A.needsMigration ? A.migrationNote : '',
+      signedIn, email: ok && A.email, inClass, showLogin: v === 'login', showClasses: v === 'classes', error: s.err,
+      loginTitle: s.mode === 'up' ? 'Tạo tài khoản giảng viên' : 'Đăng nhập giảng viên', loginBtn: s.mode === 'up' ? 'Tạo tài khoản' : 'Đăng nhập',
+      modeLink: s.mode === 'up' ? 'Đã có tài khoản? Đăng nhập' : 'Chưa có tài khoản? Tạo mới',
+      backendNote: ok && A.backendOn ? 'Đang kết nối Supabase của dự án.' : 'Máy chủ chưa bật – chỉ dùng được lớp mẫu.',
+      fEmail: s.fEmail, fPass: s.fPass, fCode: s.fCode,
+      onEmail: e => this.setState({ fEmail: e.target.value }), onPass: e => this.setState({ fPass: e.target.value }), onCode: e => this.setState({ fCode: e.target.value.toUpperCase() }),
+      submitLogin: () => this.login(), toggleMode: () => this.setState({ mode: s.mode === 'up' ? 'in' : 'up', err: '' }),
+      tryDemo: () => { A.useDemo(); this.loadClasses(); }, signOut: () => { A.signOut(); this.setState({ view: 'login', classes: [], code: '' }); },
+      backToClasses: () => this.setState({ view: 'classes', board: false }), claim: () => this.claim(),
+      classes: (s.classes || []).map(x => ({ class_code: x.class_code, date: new Date(x.created_at).toLocaleDateString('vi-VN'), open: () => this.openClass(x.class_code) })),
+      code: s.code, refresh: () => this.reload(), exportXls: () => P.xls(s.code, T, G), openBoard: () => this.setState({ board: true }), closeBoard: () => this.setState({ board: false }),
+      classStats: `${T.length} đội · ${s.subs.length} bài nộp · ${lock != null ? 'Đang khóa sau vòng ' + lock : 'Không khóa vòng'}${c.forced_event ? ' · Biến cố GV: ' + c.forced_event : ''}`,
+      tabs: tabDefs.map(([k, l]) => ({ label: l, go: () => this.setState({ tab: k }), bg: s.tab === k ? '#2f8a8c' : '#fbf6ee', fg: s.tab === k ? '#fff' : '#1f4a55', border: s.tab === k ? '#23706f' : '#e6d6bf' })),
+      tabTeams: s.tab === 'teams', tabDecisions: s.tab === 'decisions', tabControls: s.tab === 'controls', tabGrading: s.tab === 'grading', noTeams: !T.length,
+      teams: T.map(t => ({ name: t.name, share: t.share.toFixed(1) + '%', profit: money(t.profit), profitColor: t.profit >= 0 ? '#3f8a44' : '#c0443a', flags: '🚩 ' + t.flags + '/6',
+        last: t.last ? new Date(t.last.created_at).toLocaleString('vi-VN') : '–',
+        dots: [1, 2, 3, 4, 5, 6].map(n => { const r = t.rs.find(x => x.round_number === n), j = r ? (r.result_json || {}) : null;
+          return { n, tip: r ? `V${n}: ${(+j.share || 0).toFixed(1)}% · ${money(j.netProfit)}${j.win === true ? ' · 🚩 Cắm cờ' : j.win === false ? ' · ' + (j.winner ? j.winner + ' chiếm' : 'Chưa cắm cờ') : ''}` : `V${n}: chưa nộp`, bg: !r ? '#d9cbb4' : j.win === true ? '#e8a22d' : (+j.netProfit >= 0 ? '#3f8a44' : '#c0443a') }; }) })),
+      teamOptions: T.map(t => t.name), selTeam, onSelTeam: e => this.setState({ selTeam: e.target.value }), decHead: dec.head, decCells: dec.cells,
+      lockNote: lock != null ? `Các đội không thể chốt vòng ${lock + 1} trở đi cho tới khi bạn mở khóa.` : 'Chọn vòng cuối cùng được phép chơi. Đội nào đi nhanh sẽ phải chờ cả lớp.',
+      lockBtns: [null, 0, 1, 2, 3, 4, 5].map(n => { const on = lock === n || (n === null && lock == null);
+        return { label: n === null ? '🔓 Mở' : n === 0 ? 'Chưa cho chơi' : 'Đến V' + n, go: () => this.setLock(n), bg: on ? '#1f4a55' : '#fff', fg: on ? '#fff' : '#1f4a55', border: on ? '#10303a' : '#e6d6bf' }; }),
+      eventOpts: ok ? P.EVENTS.map(([v, l]) => ({ v, l })) : [], fEvent: s.fEvent, onEvent: e => this.setState({ fEvent: e.target.value }), fMsg: s.fMsg, onMsg: e => this.setState({ fMsg: e.target.value }), saveEvent: () => this.saveEvent(),
+      gTeam: s.gTeam, onGTeam: e => this.setState({ gTeam: e.target.value }), gAmt: s.gAmt, onGAmt: e => this.setState({ gAmt: e.target.value }), gReason: s.gReason, onGReason: e => this.setState({ gReason: e.target.value }), doGrant: () => this.doGrant(),
+      grants: ((s.st && s.st.grants) || []).slice(0, 20).map(g => ({ team: g.team_name === '*' ? 'Cả lớp' : g.team_name, reason: g.reason || '—', amt: (g.amount > 0 ? '+' : '') + g.amount + ' tr₫', color: g.amount >= 0 ? '#3f8a44' : '#c0443a' })),
+      gradeHead: ['Đội', 'Lợi nhuận /45', 'Cờ /35', 'Lập luận /10', 'Hợp tác /10', 'Tổng /100', 'Nhận xét', ''],
+      gradeRows: G.map(g => ({ name: g.name, pProfit: g.pP.toFixed(1), pFlags: g.pF.toFixed(1), reasoning: g.reasoning, teamwork: g.teamwork, note: g.note, total: g.total.toFixed(1),
+        onR: e => this.edit(g.name, 'reasoning', e.target.value), onT: e => this.edit(g.name, 'teamwork', e.target.value), onN: e => this.edit(g.name, 'note', e.target.value),
+        save: () => this.saveScore(g), saveLabel: s.saved[g.name] ? '✓ Đã lưu' : 'Lưu' })),
+      board: inClass && s.board,
+      boardRows: T.slice().sort((a, b) => b.share - a.share || b.profit - a.profit).map((t, i) => ({ medal: ['🥇', '🥈', '🥉'][i] || String(i + 1), name: t.name, pct: (t.share / maxShare * 100).toFixed(0) + '%',
+        val: t.share.toFixed(1) + '% · 🚩' + t.flags, bg: i === 0 ? 'rgba(243,154,51,.28)' : 'rgba(255,255,255,.08)' })),
+    };
+  }
+  edit(name, k, v) { const e = Object.assign({}, this.state.edits); e[name] = Object.assign({}, e[name], { [k]: v }); this.setState({ edits: e, saved: Object.assign({}, this.state.saved, { [name]: false }) }); }
+}
+</script>
+</body>
+</html>
