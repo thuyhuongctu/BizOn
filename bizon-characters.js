@@ -228,7 +228,7 @@ export function makeCharacters(THREE) {
       const q = add('hair_quiff', cap(0.04, 0.12), hair, 0.02, 0.118, 0.07, head); q.rotation.set(0.3, 0, -1.35); q.scale.set(1, 1, 0.8);
     }
     if (c.hairStyle === 'bun') {
-      add('hair_back', sph(0.14), hair, 0, 0., -0.03, head);
+      add('hair_back', sph(0.14), hair, 0, 0.0, -0.03, head);
       add('hair_bun', sph(0.06), hair, 0, 0.14, -0.06, head);
     }
     if (c.hairStyle === 'long') {
@@ -276,14 +276,97 @@ export function makeCharacters(THREE) {
 
   // Character sheet ‚Äî colours sampled from assets/character/team/lineup-cut.webp & advisors/*.webp
   const roster = [
-    { id: 'ceo', label: 'CEO', name: 'Minh Long', note2: 'Nh√† l√£nh ƒë·∫°o t·∫ßm nh√¨n', note: 'La b√†n chi·∫øn l∆∞ÜÓ£c', skin: 0xe8b08c, hair: 0x7a5238, hairStyle: 'short', hairCap: 0.42,
+    { id: 'ceo', label: 'CEO', name: 'Minh Long', note2: 'Nh√† l√£nh ƒë·∫°o t·∫ßm nh√¨n', note: 'La b√†n chi·∫øn l∆∞·ª£c', skin: 0xe8b08c, hair: 0x7a5238, hairStyle: 'short', hairCap: 0.42,
       top: 0x2e3d6a, bottom: 0x2e3d6a, shoe: 0x6b4128, shirtFront: 0xf1efe9, tie: 0x2a3456, jacket: true, cuff: 0xf1efe9, pose: 'chest', prop: 'compass', badge: 'CEO',
-      line: 'M√¨nh gi·ªØ la b√†n. M·ªói v√≤ng, c·∫£ ƒë·ªôi ch·ªçn h∆∞·ªõng ƒëi, m√¨nh ch·ªãt quy·∫øt ƒë·ªãnh.' },
-    { id: 'cfo', label: 'CFO', name: 'Thu H√†', note2: 'Chi·∫øn l∆∞ÜÓ£c gia t√†i ch√≠nh', note: 'T√∫i ng√¢n s√°ch', skin: 0xecb896, hair: 0xe0b46a, hairStyle: 'bob', smile: 'open',
+      line: 'M√¨nh gi·ªØ la b√†n. M·ªói v√≤ng, c·∫£ ƒë·ªôi ch·ªçn h∆∞·ªõng ƒëi, m√¨nh ch·ªët quy·∫øt ƒë·ªãnh.' },
+    { id: 'cfo', label: 'CFO', name: 'Thu H√†', note2: 'Chi·∫øn l∆∞·ª£c gia t√†i ch√≠nh', note: 'T√∫i ng√¢n s√°ch', skin: 0xecb896, hair: 0xe0b46a, hairStyle: 'bob', smile: 'open',
       top: 0x8a8886, bottom: 0x7e7c7a, shoe: 0x2e2c2c, shirtFront: 0xf4f1ea, jacket: true, heels: true, pose: 'both', prop: 'moneybag', badge: 'CFO',
-      line: 'TiÜÁ∏Å∑ÜÍ›–Å≥ÄÅΩ·‰∏ÅQÀ¿h1¥ÂåÅ≠°§Å∑ÜÓ|ÅÀÜÓeπú∞Å∑±π†Å”µπ†Åì…πúÅ—ßÜÓ∏Åç°ºÅœÖ‘Å€…πú∏úÅÙ∞(ÄÄÄÅÏÅ•êËÄùçµºú∞Å±Öâï∞ËÄù5<ú∞ÅπÖµîËÄù7ÜÍÖπ†Å°§ú∞ÅπΩ—î»ËÄùA£‰Å—£ÜÓù§ÅµÖ…≠ï—•πúú∞ÅπΩ—îËÄù1ΩÑÅ—£√ÖπúÅ°ßÜÓ‘ú∞ÅÕ≠•∏ËÄ¡·î·à¿·å∞Å°Ö•»ËÄ¡‡ŸÑ–ÿÃ¿∞Å°Ö•…M—Â±îËÄùÕ°Ω…–ú∞Å°Ö•…Ö¿ËÄ¿∏–»∞ÅÕµ•±îËÄùΩ¡ï∏ú∞(ÄÄÄÄÄÅ—Ω¿ËÄ¡·à–’ÑÃÿ∞ÅâΩ——Ω¥ËÄ¡·å·Ñ‘›Ñ∞ÅÕ°ΩîËÄ¡‡·Ñ’ÑÃ–∞ÅÕ°•…—…Ωπ–ËÄ¡·ò≈ïâî¿∞ÅΩ¡ïπ)Öç≠ï–ËÅ—…’î∞Åç’ôòËÄ¡·ò≈ïâî¿∞Å©Öç≠ï–ËÅ—…’î∞Å¡ΩÕîËÄùµïùÖ¡°Ωπîú∞Å¡…Ω¿ËÄùµïùÖ¡°Ωπîú∞ÅâÖëùîËÄù5<ú∞(ÄÄÄÄÄÅ±•πîËÄù-£Öç†Å£ÅπúÅ¡£ÜÍç§Åπù°îÅ—£ÜÍï‰Å∑±π†Å—À√ÜÓmåÉGÜÓE§Å—£ÜÓú∏ÅQ£√ÖπúÅ°ßÜÓ‘Å≥ÄÅ”Å§ÅœÜÍç∏∏úÅÙ∞(ÄÄÄÅÏÅ•êËÄùçΩºú∞Å±Öâï∞ËÄù=<ú∞ÅπÖµîËÄùÜÍçºÅ9üÜÓ5åú∞ÅπΩ—î»ËÄù°’Á©∏Åù•ÑÅ€ÜÍµ∏Å£Åπ†ú∞ÅπΩ—îËÄù7Ö‰Å”µπ†ÅãÜÍçπúú∞ÅÕ≠•∏ËÄ¡·î·à‘‰¿∞Å°Ö•»ËÄ¡‡›Ñ‘»Ã‡∞Å°Ö•…M—Â±îËÄùâΩàú∞(ÄÄÄÄÄÅ—Ω¿ËÄ¡·ÑÂåŸïÑ∞ÅâΩ——ΩµQÂ¡îËÄùÕ≠•…–ú∞ÅÕ≠•…–ËÄ¡‡Ÿò‰—çå∞ÅÕ≠•…—1ï∏ËÄ¿∏Ã∞ÅÕ≠•…—±Ö…îËÄ¿∏ƒ»∞ÅÕ°ΩîËÄ¡‡·ôà¡ëå∞Å°ïï±ÃËÅ—…’î∞ÅçΩ±±Ö»ËÄ¡·âçê…ïå∞Å¡ΩÕîËÄù—Öâ±ï–ú∞Å¡…Ω¿ËÄù—Öâ±ï–ú∞ÅâÖëùîËÄù=<ú∞(ÄÄÄÄÄÅ±•πîËÄù/ÜÍ¸Å°øÜÍÖç†Å°Ö‰ÉGÜÍ˝∏ÉGâ‘Åè•πúÅ¡£ÜÍç§Åç£ÜÍÖ‰ÉG√ÜÓçå∏Åc√ÜÓ}πú∞Å≠°º∞Åù•ÖºÅ£ÅπúÉGÜÓÅ∑±π†Å±º∏úÅÙ∞(ÄÄÄÅÏÅ•êËÄùÕïåú∞Å±Öâï∞ËÄùMú∞ÅπÖµîËÄù•ÑÅ#â∏ú∞ÅπΩ—î»ËÄùQ£¿ÅØÙÅ¡£Ö¿Åç£ÜÍ¸ú∞ÅπΩ—îËÄùÜÍçπúÅâß©∏ÅãÜÍç∏ú∞ÅÕ≠•∏ËÄ¡‡ÂÑÿ¿–¿∞Å°Ö•»ËÄ¡‡ÕÑ»ÿ≈å∞Å°Ö•…M—Â±îËÄùâ’πQΩ¿ú∞ÅïÖ……•πúËÅ—…’î∞(ÄÄÄÄÄÅ—Ω¿ËÄ¡‡’ò·Ñ‘–∞ÅâΩ——Ω¥ËÄ¡‡—ò›Ñ–‡∞ÅÕ°ΩîËÄ¡‡’ÑÕÑ»‡∞ÅçΩ±±Ö»ËÄ¡‡‡ŸÖî‹ÿ∞Åâ’——ΩπÃËÄ–∞Å›Ö•Õ—âÖπêËÅ—…’î∞Å¡ΩÕîËÄùç±•¡âΩÖ…êú∞Å¡…Ω¿ËÄùç±•¡âΩÖ…êú∞ÅâÖëùîËÄùMú∞(ÄÄÄÄÄÅ±•πîËÄù3ÜÓ-ç†Å£ÜÓ5¿∞Åâß©∏ÅãÜÍç∏∞Å£ÜÍÖ∏Åç£Õ–ÉäPÅ∑ÜÓ5§Å—£ÜÓ§ÉGåÉG√ÜÓçåÅù°§Å≥ÜÍÖ§∏úÅÙ∞(ÄÄÄÅÏÅ•êËÄù±’µ•πÑú∞Å±Öâï∞ËÄù1’µ•πÑú∞ÅπÖµîËÄùÜÓDÅ€ÜÍï∏Å$ú∞ÅπΩ—îËÄüºÅìÅ§Å—ÀÜÍΩπúÉ
-‹Å°ΩÑÅÕï∏ú∞ÅÕ≠•∏ËÄ¡·ò…å·ÖÑ∞Å°Ö•»ËÄ¡‡·Ñ’ÑÕÑ∞Å°Ö•…M—Â±îËÄù›ÖŸ‰ú∞Å°Ö•…±Ω›ï»ËÅ—…’î∞Åô±ÖùA•∏ËÅ—…’î∞(ÄÄÄÄÄÅ—Ω¿ËÄ¡·òŸò≈î‡∞ÅâΩ——Ω¥ËÄ¡·òŸò≈î‡∞ÅÖΩÖ§ËÄ¿∏‘∞ÅÕ°ΩîËÄ¡·ïôî…å–∞Å°ïï±ÃËÅ—…’î∞Å¡ΩÕîËÄù±Ω—’Ãú∞(ÄÄÄÄÄÅ±•πîËÄù£ÅºÅ<ÑÅ7±π†Å≥ÄÅ1’µ•πÑ∏Å7±π†ÅœÜÍÙÉE§ÅèÂπúÉGÜÓe§Å≈’ÑÅœÖ‘Å€…πúÅÜÍµ–Å9ù°ßÜÓ¿∏úÅÙ∞(ÄÄÄÅÏÅ•êËÄù—‘ú∞Å±Öâï∞ËÄùSËÅA°Ö∏ú∞ÅπÖµîËÄùÜÓDÅ€ÜÍï∏Å£ÜÓ5åÅ—°◊ÜÍµ–ú∞ÅπΩ—îËÄüºÅìÅ§Å—ÀÜÍΩπúÉ
-‹Åç◊ÜÓe∏Åç£ÜÓ•πúÅπ£ÜÍµ∏ú∞ÅÕ≠•∏ËÄ¡·î·à¿·å∞Å°Ö•»ËÄ¡‡≈ò≈Ñƒ‡∞Å°Ö•…M—Â±îËÄùÕ±•ç¨ú∞ÅÕµ•±îËÄùΩ¡ï∏ú∞(ÄÄÄÄÄÅ—Ω¿ËÄ¡·ò—ò≈ïÑ∞ÅâΩ——Ω¥ËÄ¡·ò—ò≈ïÑ∞ÅÖΩÖ§ËÄ¿∏Ã–∞ÅÕ°ΩîËÄ¡·ïôî…å–∞Å¡ΩÕîËÄùÕç…Ω±∞ú∞(ÄÄÄÄÄÅ±•πîËÄùÜÓºÅ±ßÜÓ‘Åç°ºÅ—ÑÅâßÜÍ˝–Å≈◊ÑÅ≠£ÜÓ§∞Å≈’ÁÜÍ˝–ÉGÜÓ-π†Å£—¥ÅπÖ‰ÅŸßÜÍ˝–Åª©∏Å”√ÖπúÅ±Ö§∏úÅÙ∞(ÄÄÄÅÏÅ•êËÄùŸ•ç—Ω»ú∞Å±Öâï∞ËÄùY•ç—Ω»Å3â¥ú∞ÅπÖµîËÄüCÜÓE§Å”ÖåÄºÉGÜÓE§Å—£ÜÓúú∞ÅπΩ—îËÄù#ÜÓLÅœÑÅ—£ÜÓ,Å—À√ÜÓuπúú∞ÅÕ≠•∏ËÄ¡·îŸà»·î∞Å°Ö•»ËÄ¡‡ÂåÂåÂå∞Å°Ö•…M—Â±îËÄùù…ï‰ú∞Å°Ö•…Ö¿ËÄ¿∏–»∞(ÄÄÄÄÄÅ—Ω¿ËÄ¡‡…òÕÑ’å∞ÅâΩ——Ω¥ËÄ¡‡…òÕÑ’å∞ÅÕ°ΩîËÄ¡‡»‘»‘»‘∞ÅÕ°•…—…Ωπ–ËÄ¡·ò≈ïôî‰∞Å©Öç≠ï–ËÅ—…’î∞Å¡•∏ËÅ—…’î∞Åç’ôòËÄ¡·ò≈ïôî‰∞Å¡ΩÕîËÄù°’úú∞Å¡…Ω¿ËÄùôΩ±ëï»ú∞(ÄÄÄÄÄÅ±•πîËÄùQ£ÜÓ,Å—À√ÜÓuπúÅ≠£—πúÅç£ÜÓtÅÖ§∏ÅS—§ÉGåÉGÜÓ5åÅãÖºÅèÖºÉäPÅè…∏ÅèÖåÅãÜÍÖ∏Å—£∞ÅÕÖº¸úÅÙ∞(ÄÄÄÅÏÅ•êËÄùÖ±¡°Ñú∞Å±Öâï∞ËÄù±¡°ÑÅÂπÖµ•çÃú∞ÅπÖµîËÄüCÜÓE§Å—£ÜÓúÅ$É
-‹ÅßÑÅ…£ÜÓ,Å”ÜÓUåÅç°ßÜÍ˝∏ú∞ÅπΩ—îËÄù	§ôπ†çÖÖ–ÏÅ≥ÜÓç§Åπ°§¿¡úÅ∑ÜÓ=πúÉäLÉGÜÓ•πúÉGï•ÑÅùßÑÉGÖ‰ú∞ÅÕ≠•∏ËÄ¡·ïçå¡Ñ¿∞Å°Ö•»ËÄ¡‡…Ñ—Ñ·Ñ∞Å°Ö•…M—Â±îËÄùÕ±•ç¨ú∞(ÄÄÄÄÄÅ—Ω¿ËÄ¡‡…ò’ôà‡∞ÅâΩ——Ω¥ËÄ¡‡…ò’ôà‡∞ÅÕ°ΩîËÄ¡‡›Ñ—Ñ…Ñ∞ÅÕ°•…—…Ωπ–ËÄ¡·ò—ò≈ïÑ∞Å—•îËÄ¡‡…Ñ—ÑÂÑ∞Å©Öç≠ï–ËÅ—…’î∞Å¡•∏ËÅ—…’î∞Åç’ôòËÄ¡·ò—ò≈ïÑ∞Å¡ΩÕîËÄù¡Ωç≠ï–ú∞(ÄÄÄÄÄÅ±•πîËÄùßÑÅÀÜÓÏÅπ£ÜÍï–Å—£ÜÍΩπú∏ÅÖåÅãÜÍÖ∏Å—°ïºÅØÜÓ-¿Å≠£—πú¸úÅÙ∞(ÄÄÄÅÏÅ•êËÄùµï≠Ωπúú∞Å±Öâï∞ËÄù5ï≠ΩπúÅYïπ—’…ïÃú∞ÅπÖµîËÄüCÜÓE§Å—£ÜÓúÅ$É
-‹Åâ∏ÅãÜÍ≈πúÅç£ÜÍΩåÅç£ÜÍΩ∏ú∞ÅπΩ—îËÄùA£ÜÍç∏ÉÜÓ•πúÅç£ÜÍµ¥Å€ÜÓm§ÅâßÜÍ˝∏ÉGÜÓeπúú∞ÅÕ≠•∏ËÄ¡·î…Öå‡ÿ∞Å°Ö•»ËÄ¡‡—Ñ’Ñ›Ñ∞Å°Ö•…M—Â±îËÄùÕ°Ω…–ú∞Å°Ö•…Ö¿ËÄ¿∏––∞(ÄÄÄÄÄÅ—Ω¿ËÄ¡‡‘‘‡¿ÂÑ∞ÅâΩ——Ω¥ËÄ¡‡…îÕÑ—Ñ∞ÅÕ°ΩîËÄ¡‡…Ñ»ÿ»–∞ÅÕ°•…—…Ωπ–ËÄ¡·î·ëçå–∞ÅŸïÕ–ËÄ¡·å·Ñ‡‹‡∞Å©Öç≠ï–ËÅ—…’î∞Å¡•∏ËÅ—…’î∞Åç’ôòËÄ¡·î·ëçå–∞Å¡ΩÕîËÄùç…ΩÕÃú∞(ÄÄÄÄÄÅ±•πîËÄù£ÜÍµ¥Å∑ÄÅç£ÜÍΩå∏Å5ï≠ΩπúÅ≠£—πúÅ€ÜÓe§∏úÅÙ∞(ÄÄÄÅÏÅ•êËÄùÕ—Ö…ç±Ö‰ú∞Å±Öâï∞ËÄùM—Ö»Å±Ö‰Åº∏ú∞ÅπÖµîËÄüCÜÓE§Å—£ÜÓúÅ$É
-‹ÅÖºÅèÜÍï¿Å—£√ÖπúÅ°ßÜÓ‘ú∞ÅπΩ—îËÄùQ£ÜÓúÅè—πúÅ≠£ÃÅ∑ÜÓ|ÅÀÜÓeπúú∞ÅÕ≠•∏ËÄ¡·ò¡åÕÑÃ∞Å°Ö•»ËÄ¡‡›Ñ—ÑÃ¿∞Å°Ö•…M—Â±îËÄùâΩàú∞ÅôïÖ—°ï»ËÅ—…’î∞(ÄÄÄÄÄÅ—Ω¿ËÄ¡‡ŸÑÕÖÑ‡∞ÅâΩ——ΩµQÂ¡îËÄùÕ≠•…–ú∞ÅÕ≠•…–ËÄ¡‡ŸÑÕÖÑ‡∞ÅÕ≠•…—1ï∏ËÄ¿∏»–∞ÅÕ≠•…—±Ö…îËÄ¿∏ƒ»∞ÅÕ°ΩîËÄ¡‡›Ñ—Öå¿∞Å°ïï±ÃËÅ—…’î∞ÅçΩ±±Ö»ËÄ¡‡ÂÑ›Öê¿∞Åâ’——ΩπÃËÄ–∞Åâ—πΩ±Ω»ËÄ¡·êÂàÃ’Ñ∞Å¡ΩÕîËÄù—…Ω¡°‰ú∞(ÄÄÄÄÄÅ±•πîËÄùQ£√ÖπúÅ°ßÜÓ‘ÅçÖºÅèÜÍï¿Å≠£—πúÅèÜÍù∏ÅùßÜÍç¥ÅùßÑ∏úÅÙ∞(ÄÅtÏ(ÄÄººÅ9£â∏Å€ÜÍµ–ÅìÂπúÉÜÍçπ†Å…ïπëï»ÄÕÅüÜÓEåÄ°â•±±âΩÖ…ê§Å—°Ö‰Å∑–Å£±π†Å≠£ÜÓE§∏(ÄÅçΩπÕ–ÅIPÄÙÅÏÅçïºËÄùÕΩ±•êΩçïºµ—ï‡π›ïâ¿ú∞ÅçôºËÄùÕΩ±•êΩçôºµ—ï‡π›ïâ¿ú∞ÅçµºËÄùÕΩ±•êΩçµºµ—ï‡π›ïâ¿ú∞ÅçΩºËÄùÕΩ±•êΩçΩºµ—ï‡π›ïâ¿ú∞ÅÕïåËÄùÕΩ±•êΩÕïåµ—ï‡π›ïâ¿ú∞Å±’µ•πÑËÄùÕΩ±•êΩ±’µ•πÑµ—ï‡π›ïâ¿ú∞Å—‘ËÄùÕΩ±•êΩ—‘µ¡°Ö∏µ—ï‡π›ïâ¿ú∞ÅÖ±¡°ÑËÄùÕΩ±•êΩÖ±¡°Ñµô’±∞µ—ï‡π›ïâ¿ú∞Åµï≠ΩπúËÄù…•ŸÖ±ÃΩµï≠Ωπúπ›ïâ¿ú∞ÅÕ—Ö…ç±Ö‰ËÄù…•ŸÖ±ÃΩÕ—Ö»π›ïâ¿úÅÙÏ(ÄÅçΩπÕ–ÅIQ}AÄÙÅÏÅµï≠ΩπúËÄ¿∏¿‹∞ÅÕ—Ö…ç±Ö‰ËÄ¿∏¿‹ÅÙÏ(ÄÅçΩπÕ–ÅIQ} ÄÙÅÏÅµï≠ΩπúËÄƒ∏–∞ÅÕ—Ö…ç±Ö‰ËÄƒ∏–∞ÄÅçïºËÄƒ∏»∞ÅçôºËÄƒ∏ƒ»∞ÅçµºËÄƒ∏»∞ÅçΩºËÄƒ∏ƒ»∞ÅÕïåËÄƒ∏ƒ∞Å±’µ•πÑËÄƒ∏ƒ–∞Å—‘ËÄƒ∏ƒ‡∞ÅÖ±¡°ÑËÄƒ∏»ÅÙÏ(ÄÅçΩπÕ–ÅQ0ÄÙÅπï‹ÅQ!IπQï·—’…ï1ΩÖëï»†§∞Å—ï·Öç°îÄÙÅÌÙ∞Åâ±Ωâ5Ö–ÄÙÅπï‹ÅQ!Iπ5ïÕ°	ÖÕ•ç5Ö—ï…•Ö∞°ÏÅçΩ±Ω»ËÄ¡‡ÕÑ…Ñ≈Ñ∞Å—…ÖπÕ¡Ö…ïπ–ËÅ—…’î∞ÅΩ¡Öç•—‰ËÄ¿∏»»∞Åëï¡—°]…•—îËÅôÖ±ÕîÅÙ§Ï(ÄÅçΩπÕ–ÅIQ	MÄÙÄ°—Â¡ïΩòÅ›•πëΩ‹ÄÑÙÙÄù’πëïô•πïêúÄòòÅ›•πëΩ‹π	%i=9}IQ}	M§ÅÒÄùÖÕÕï—ÃΩç°Ö…Öç—ï»ºúÏ(ÄÅô’πç—•Ω∏ÅÖ…—°Ö»°•ê§ÅÏ(ÄÄÄÅçΩπÕ–Å…ΩΩ–ÄÙÅπï‹ÅQ!Iπ…Ω’¿†§ÏÅ…ΩΩ–ππÖµîÄÙÄùç°Ö…|úÄ¨Å•êÏÅçΩπÕ–ÅâΩë‰ÄÙÅπï‹ÅQ!Iπ…Ω’¿†§ÏÅ…ΩΩ–πÖëê°âΩë‰§Ï(ÄÄÄÅçΩπÕ–Å†ÄÙÅIQ}!m•ëtÅÒÄƒ∏ƒ‘∞ÅÕ¿ÄÙÅπï‹ÅQ!IπM¡…•—î°πï‹ÅQ!IπM¡…•—ï5Ö—ï…•Ö∞°ÏÅ—…ÖπÕ¡Ö…ïπ–ËÅôÖ±Õî∞ÅÖ±¡°ÖQïÕ–ËÄ¿∏‘∞Åëï¡—°]…•—îËÅ—…’î∞Å—Ωπï5Ö¡¡ïêËÅôÖ±ÕîÅÙ§§Ï(ÄÄÄÄººÉÜÍâπ†Å”Öç†ÅªÜÓ∏Åè…∏Å€ÂπúÉÖºÅ—ÀÜÍΩπúÅãÖ∏Å—…ΩπúÅÕ◊ÜÓE–ÉäHÅœÅ∏Å≥ÜÓdÅ≈’ÑÅπ£¿Å€ÜÍ˝–ÅãÜÍ•∏∏ÉCÜÍ•‰ÅÖ±¡°ÑÅ≥©∏ÉGÜÍ›å∞Åç£ÜÓ$ÅùßÜÓºÅŸßÜÓ∏Å∑ÜÓ¥∏(ÄÄÄÅÕ¿πµÖ—ï…•Ö∞πΩπ	ïôΩ…ïΩµ¡•±îÄÙÅÕ†ÄÙ¯ÅÏÅÕ†πô…Öùµïπ—M°Öëï»ÄÙÅÕ†πô…Öùµïπ—M°Öëï»π…ï¡±Öçî†úç•πç±’ëîÄÒÖ±¡°Ö—ïÕ—}ô…Öùµïπ–¯ú∞Äùë•ôô’ÕïΩ±Ω»πÑÄÙÅÕµΩΩ—°Õ—ï¿†¿∏¿Ã∞Ä¿∏»»∞Åë•ôô’ÕïΩ±Ω»πÑ§ÏÅ•òÄ°ë•ôô’ÕïΩ±Ω»πÑÄÄ¿∏¿»§Åë•ÕçÖ…êÏú§ÏÅÙÏ(ÄÄÄÅÕ¿πµÖ—ï…•Ö∞πç’Õ—ΩµA…Ωù…ÖµÖç°ï-ï‰ÄÙÄ†§ÄÙ¯Äùâ•ÈΩπ…—MΩ±•êúÏ(ÄÄÄÅÕ¿πçïπ—ï»πÕï–†¿∏‘∞ÅIQ}Am•ëtÅÒÄ¿§ÏÅÕ¿πÕçÖ±îπÕï–°†Ä®Ä¿∏–∞Å†∞Äƒ§ÏÅÕ¿πŸ•Õ•â±îÄÙÅôÖ±ÕîÏÅâΩë‰πÖëê°Õ¿§Ï(ÄÄÄÅÕ¿πµÖ—ï…•Ö∞πΩπ	ïôΩ…ïΩµ¡•±îÄÙÅÕ†ÄÙ¯ÅÏÅÕ†πô…Öùµïπ—M°Öëï»ÄÙÅÕ†πô…Öùµïπ—M°Öëï»π…ï¡±Öçî†úç•πç±’ëîÄÒÖ±¡°Ö—ïÕ—}ô…Öùµïπ–¯ú∞Äùë•ôô’ÕïΩ±Ω»πÑÄÙÅÕµΩΩ—°Õ—ï¿†¿∏¿Ã∞Ä¿∏»∞Åë•ôô’ÕïΩ±Ω»πÑ§Ìq∏ç•πç±’ëîÄÒÖ±¡°Ö—ïÕ—}ô…Öùµïπ–¯ú§ÏÅÙÏ(ÄÄÄÅçΩπÕ–ÅÖ¡¡±‰ÄÙÅ–ÄÙ¯ÅÏÅÕ¿πµÖ—ï…•Ö∞πµÖ¿ÄÙÅ–ÏÅÕ¿πµÖ—ï…•Ö∞ππïïëÕU¡ëÖ—îÄÙÅ—…’îÏÅÕ¿π’Õï…Ö—ÑπÖÕ¡ïç–ÄÙÅ–π•µÖùîπ›•ë—†ÄºÅ–π•µÖùîπ°ï•ù°–ÏÅÕ¿πÕçÖ±îπÕï–°†Ä®ÅÕ¿π’Õï…Ö—ÑπÖÕ¡ïç–∞Å†∞Äƒ§ÏÅÕ¿πŸ•Õ•â±îÄÙÅ—…’îÏÅÙÏ(ÄÄÄÅçΩπÕ–ÅÕ…åÄÙÅIQ	MÄ¨ÅIQm•ëtÏ(ÄÄÄÅ•òÄ°—ï·Öç°ïmÕ…çtÄòòÅ—ï·Öç°ïmÕ…çtπ•µÖùî§ÅÖ¡¡±‰°—ï·Öç°ïmÕ…çt§Ï(ÄÄÄÅï±ÕîÅ•òÄ°—ï·Öç°ïmÕ…çt§Å—ï·Öç°ïmÕ…çtπ}}‹π¡’Õ†°Ö¡¡±‰§Ï(ÄÄÄÅï±ÕîÅÏÅçΩπÕ–Å–ÄÙÅQ0π±ΩÖê°Õ…å∞Ä†§ÄÙ¯ÅÏÅ–π}}‹πôΩ…Öç†°òÄÙ¯Åò°–§§ÏÅÙ§ÏÅ–πçΩ±Ω…M¡ÖçîÄÙÅQ!IπMI	Ω±Ω…M¡ÖçîÏÅ–πÖπ•ÕΩ—…Ω¡‰ÄÙÄ°—Â¡ïΩòÅ›•πëΩ‹ÄÑÙÙÄù’πëïô•πïêúÄòòÅ›•πëΩ‹π}}5a9%M<§ÅÒÄ‡ÏÅ–πµ•π•±—ï»ÄÙÅQ!Iπ1•πïÖ…5•¡µÖ¡1•πïÖ…•±—ï»ÏÅ–πµÖù•±—ï»ÄÙÅQ!Iπ1•πïÖ…•±—ï»ÏÅ–πùïπï…Ö—ï5•¡µÖ¡ÃÄÙÅ—…’îÏÅ–π}}‹ÄÙÅmÖ¡¡±ÂtÏÅ—ï·Öç°ïmÕ…çtÄÙÅ–ÏÅÙ(ÄÄÄÅçΩπÕ–Åâ±ΩàÄÙÅπï‹ÅQ!Iπ5ïÕ†°πï‹ÅQ!Iπ•…ç±ïïΩµï—…‰†¿∏»∞Ä»–§∞Åâ±Ωâ5Ö–§ÏÅâ±Ωàπ…Ω—Ö—•Ω∏π‡ÄÙÄµ5Ö—†πA$ÄºÄ»ÏÅâ±Ωàπ¡ΩÕ•—•Ω∏π‰ÄÙÄ¿∏¿¿–ÏÅâ±ΩàπÕçÖ±îπÕï–†ƒ∞Ä¿∏‹∞Äƒ§ÏÅâ±Ωàπ…ïπëï…=…ëï»ÄÙÄ¥ƒÏÅ…ΩΩ–πÖëê°â±Ωà§Ï(ÄÄÄÅçΩπÕ–ÅêÄÙÄ†§ÄÙ¯Åπï‹ÅQ!Iπ=â©ïç–Õ†§Ï(ÄÄÄÅ…ΩΩ–π’Õï…Ö—Ñπ…•úÄÙÅÏÅÖ…–ËÅ—…’î∞ÅÕ¡…•—îËÅÕ¿∞Å†∞ÅâΩë‰∞Å—Ω…ÕºËÅâΩë‰∞Å°ïÖêËÅê†§∞Å±ïùÃËÅmê†§∞Åê†•t∞ÅÖ…µÃËÅÌÙ∞ÅïÂïÃËÅmt∞ÅµΩ’—†ËÅê†§∞Å°Ω±êËÅÌÙ∞Å…ïÕ–ËÅÌÙ∞Å¡ΩÕîËÄùÖ…–úÅÙÏ(ÄÄÄÅ…ï—’…∏Å…ΩΩ–Ï(ÄÅÙ(ÄÅçΩπÕ–ÅUM}IPÄÙÄÑ°—Â¡ïΩòÅ›•πëΩ‹ÄÑÙÙÄù’πëïô•πïêúÄòòÅ›•πëΩ‹π	%i=9}!I}IPÄÙÙÙÅôÖ±Õî§Ï(ÄÅçΩπÕ–Åâ’•±êÄÙÅ•êÄÙ¯Ä°UM}IPÄòòÅIQm•ët§Ä¸ÅÖ…—°Ö»°•ê§ÄËÅç°Ö…Öç—ï»°…ΩÕ—ï»πô•πê°»ÄÙ¯Å»π•êÄÙÙÙÅ•ê§§Ï((ÄÄººÅπ•µÖ—•Ω∏ËÅµΩëîÄù•ë±îúÅÄù—Ö±¨úÅÄù›Ö±¨ú∏ÅÖ±∞ÅïŸï…‰Åô…Öµî∏(ÄÅô’πç—•Ω∏ÅÖπ•µÖ—î°…ΩΩ–∞Å–∞ÅµΩëî∞Å¡°ÖÕîÄÙÄ¿§ÅÏ(ÄÄÄÅçΩπÕ–Å»ÄÙÅ…ΩΩ–π’Õï…Ö—Ñπ…•úÏÅ•òÄ†Ö»§Å…ï—’…∏Ï(ÄÄÄÅçΩπÕ–Å—–ÄÙÅ–Ä¨Å¡°ÖÕîÏ(ÄÄÄÅ•òÄ°»πÖ…–§ÅÏ(ÄÄÄÄÄÅçΩπÕ–ÅÃÄÙÅ»πÕ¡…•—î∞Å‹ÄÙÄ°Ãπ’Õï…Ö—ÑπÖÕ¡ïç–ÅÒÄ¿∏–§Ä®Å»π†Ï(ÄÄÄÄÄÅ•òÄ°µΩëîÄÙÙÙÄù›Ö±¨ú§ÅÏÅ»πâΩë‰π¡ΩÕ•—•Ω∏π‰ÄÙÅ5Ö—†πÖâÃ°5Ö—†πÕ•∏°—–Ä®Ä‹§§Ä®Ä¿∏¿Ã‘ÏÅ»πâΩë‰π…Ω—Ö—•Ω∏πËÄÙÄ¿ÏÅÃπµÖ—ï…•Ö∞π…Ω—Ö—•Ω∏ÄÙÅ5Ö—†πÕ•∏°—–Ä®Ä‹§Ä®Ä¿∏¿Ã‘ÏÅÃπÕçÖ±îπÕï–°‹∞Å»π†∞Äƒ§ÏÅÙ(ÄÄÄÄÄÅï±ÕîÅ•òÄ°µΩëîÄÙÙÙÄù—Ö±¨ú§ÅÏÅçΩπÕ–Å¨ÄÙÅ5Ö—†πÖâÃ°5Ö—†πÕ•∏°—–Ä®Ä–∏»§§ÏÅ»πâΩë‰π¡ΩÕ•—•Ω∏π‰ÄÙÅ¨Ä®Ä¿∏¿»ÏÅÃπµÖ—ï…•Ö∞π…Ω—Ö—•Ω∏ÄÙÅ5Ö—†πÕ•∏°—–Ä®Äƒ∏‹§Ä®Ä¿∏¿ÃÏÅÃπÕçÖ±îπÕï–°‹Ä®Ä†ƒÄ¥Å¨Ä®Ä¿∏¿ƒ‘§∞Å»π†Ä®Ä†ƒÄ¨Å¨Ä®Ä¿∏¿»‘§∞Äƒ§ÏÅÙ(ÄÄÄÄÄÅï±ÕîÅÏÅçΩπÕ–ÅàÄÙÅ5Ö—†πÕ•∏°—–Ä®Ä»∏»§ÏÅ»πâΩë‰π¡ΩÕ•—•Ω∏π‰ÄÙÄ¿ÏÅÃπµÖ—ï…•Ö∞π…Ω—Ö—•Ω∏ÄÙÅ5Ö—†πÕ•∏°—–Ä®Ä¿∏‡§Ä®Ä¿∏¿ƒÏÅÃπÕçÖ±îπÕï–°‹Ä®Ä†ƒÄ¥ÅàÄ®Ä¿∏¿¿–§∞Å»π†Ä®Ä†ƒÄ¨ÅàÄ®Ä¿∏¿¿‡§∞Äƒ§ÏÅÙ(ÄÄÄÄÄÅ…ï—’…∏Ï(ÄÄÄÅÙ(ÄÄÄÅçΩπÕ–Å›Ö±¨ÄÙÅµΩëîÄÙÙÙÄù›Ö±¨ú∞Å—Ö±¨ÄÙÅµΩëîÄÙÙÙÄù—Ö±¨úÏ(ÄÄÄÅçΩπÕ–Åâ…ïÖ—°îÄÙÅ5Ö—†πÕ•∏°—–Ä®Ä»∏»§Ï(ÄÄÄÅ»π—Ω…ÕºπÕçÖ±îπÕï–†ƒÄ¨Åâ…ïÖ—°îÄ®Ä¿∏¿¿ÿ∞ÄƒÄ¨Åâ…ïÖ—°îÄ®Ä¿∏¿ƒ»∞Äƒ§Ï(ÄÄÄÅçΩπÕ–Åâ±•π¨ÄÙÄ°—–ÄîÄÃ∏‹§ÄÄ¿∏ƒ»Ä¸Ä¿∏ƒ‘ÄËÄƒÏ(ÄÄÄÅ»πïÂïÃπôΩ…Öç†°îÄÙ¯ÅîπÕçÖ±îπ‰ÄÙÅâ±•π¨§Ï(ÄÄÄÅçΩπÕ–ÅÕ—…•ëîÄÙÅ›Ö±¨Ä¸Å5Ö—†πÕ•∏°—–Ä®Ä‹§ÄËÄ¿Ï(ÄÄÄÅ»π±ïùÕl¡tπ…Ω—Ö—•Ω∏π‡ÄÙÅÕ—…•ëîÄ®Ä¿∏‘‘ÏÅ»π±ïùÕl≈tπ…Ω—Ö—•Ω∏π‡ÄÙÄµÕ—…•ëîÄ®Ä¿∏‘‘Ï(ÄÄÄÅ»πâΩë‰π¡ΩÕ•—•Ω∏π‰ÄÙÅ›Ö±¨Ä¸Å5Ö—†πÖâÃ°5Ö—†πçΩÃ°—–Ä®Ä‹§§Ä®Ä¿∏¿»»ÄËÄ¿Ï(ÄÄÄÅ»π—Ω…Õºπ…Ω—Ö—•Ω∏πËÄÙÅ›Ö±¨Ä¸ÅÕ—…•ëîÄ®Ä¿∏¿–ÄËÅ5Ö—†πÕ•∏°—–Ä®Ä¿∏‰§Ä®Ä¿∏¿ƒ‘Ï(ÄÄÄÅ»π°ïÖêπ…Ω—Ö—•Ω∏π‰ÄÙÅ—Ö±¨Ä¸Å5Ö—†πÕ•∏°—–Ä®Äƒ∏‹§Ä®Ä¿∏ƒ‡ÄËÅ5Ö—†πÕ•∏°—–Ä®Ä¿∏ÿ§Ä®Ä¿∏¿‡Ï(ÄÄÄÅ»π°ïÖêπ…Ω—Ö—•Ω∏π‡ÄÙÅ—Ö±¨Ä¸Å5Ö—†πÕ•∏°—–Ä®Ä‘∏Ã§Ä®Ä¿∏¿ÿÄËÄ¿Ï(ÄÄÄÅ»πµΩ’—†πÕçÖ±îπÕï–†ƒ∞Å—Ö±¨Ä¸Ä¿∏ÿÄ¨Å5Ö—†πÖâÃ°5Ö—†πÕ•∏°—–Ä®Äƒƒ§§Ä®Äƒ∏ÿÄËÄƒ∞Äƒ§Ï(ÄÄÄÅôΩ»Ä°çΩπÕ–Å¨Å•∏Å»πÖ…µÃ§ÅÏ(ÄÄÄÄÄÅçΩπÕ–ÅÑÄÙÅ»πÖ…µÕm≠t∞Å…ÃÄÙÅ»π…ïÕ—m≠tÏ(ÄÄÄÄÄÅ•òÄ°»π°Ω±ëm≠t§ÅÏÅÑπÕ†π…Ω—Ö—•Ω∏π‡ÄÙÅ…Ãπ‡Ä¨Ä°›Ö±¨Ä¸Ä¿∏¿–Ä®ÅÕ—…•ëîÄËÄ¿§ÏÅçΩπ—•π’îÏÅÙ(ÄÄÄÄÄÅ•òÄ°›Ö±¨§ÅÏÅÑπÕ†π…Ω—Ö—•Ω∏π‡ÄÙÄ°¨ÄÙÙÙÄù0úÄ¸ÅÕ—…•ëîÄËÄµÕ—…•ëî§Ä®Ä¿∏‘ÏÅÑπï∞π…Ω—Ö—•Ω∏π‡ÄÙÄ¥¿∏»‘ÏÅÑπÕ†π…Ω—Ö—•Ω∏πËÄÙÅÑπÃÄ®Ä¿∏ƒÏÅÙ(ÄÄÄÄÄÅï±ÕîÅ•òÄ°—Ö±¨§ÅÏÅÑπÕ†π…Ω—Ö—•Ω∏π‡ÄÙÅ…Ãπ‡Ä¥Ä¿∏ÃÄ¥Å5Ö—†πÕ•∏°—–Ä®ÄÃ§Ä®Ä¿∏»‘ÏÅÑπï∞π…Ω—Ö—•Ω∏π‡ÄÙÅ…ÃπîÄ¥Ä¿∏ÿÄ¨Å5Ö—†πÕ•∏°—–Ä®ÄÃ∏–§Ä®Ä¿∏ÃÏÅÑπÕ†π…Ω—Ö—•Ω∏πËÄÙÅ…ÃπËÄ¨Ä¿∏ƒ‘ÏÅÙ(ÄÄÄÄÄÅï±ÕîÅÏÅÑπÕ†π…Ω—Ö—•Ω∏π‡ÄÙÅ…Ãπ‡Ä¨Å5Ö—†πÕ•∏°—–Ä®Äƒ∏ƒ§Ä®Ä¿∏¿–ÏÅÑπï∞π…Ω—Ö—•Ω∏π‡ÄÙÅ…ÃπîÏÅÑπÕ†π…Ω—Ö—•Ω∏πËÄÙÅ…ÃπËÏÅÙ(ÄÄÄÅÙ(ÄÅÙ(ÄÅ…ï—’…∏ÅÏÅ…ΩÕ—ï»∞Åâ’•±ê∞ÅÖπ•µÖ—îÅÙÏ)Ù(
+      line: 'Ti·ªÅn m·∫∑t l√† oxy. Tr∆∞·ªõc khi m·ªü r·ªông, m√¨nh t√≠nh d√≤ng ti·ªÅn cho s√°u v√≤ng.' },
+    { id: 'cmo', label: 'CMO', name: 'M·∫°nh Chi', note2: 'Ph√π th·ªßy marketing', note: 'Loa th∆∞∆°ng hi·ªáu', skin: 0xe8b08c, hair: 0x6a4630, hairStyle: 'short', hairCap: 0.42, smile: 'open',
+      top: 0xb45a36, bottom: 0xc8a57a, shoe: 0x8a5a34, shirtFront: 0xf1ebe0, openJacket: true, cuff: 0xf1ebe0, jacket: true, pose: 'megaphone', prop: 'megaphone', badge: 'CMO',
+      line: 'Kh√°ch h√†ng ph·∫£i nghe th·∫•y m√¨nh tr∆∞·ªõc ƒë·ªëi th·ªß. Th∆∞∆°ng hi·ªáu l√† t√†i s·∫£n.' },
+    { id: 'coo', label: 'COO', name: 'B·∫£o Ng·ªçc', note2: 'Chuy√™n gia v·∫≠n h√†nh', note: 'M√°y t√≠nh b·∫£ng', skin: 0xe8b590, hair: 0x7a5238, hairStyle: 'bob',
+      top: 0xa9c6ea, bottomType: 'skirt', skirt: 0x6f94cc, skirtLen: 0.3, skirtFlare: 0.12, shoe: 0x8fb0dc, heels: true, collar: 0xbcd2ec, pose: 'tablet', prop: 'tablet', badge: 'COO',
+      line: 'K·∫ø ho·∫°ch hay ƒë·∫øn ƒë√¢u c≈©ng ph·∫£i ch·∫°y ƒë∆∞·ª£c. X∆∞·ªüng, kho, giao h√†ng ƒë·ªÉ m√¨nh lo.' },
+    { id: 'sec', label: 'SEC', name: 'Gia H√¢n', note2: 'Th∆∞ k√Ω ph√°p ch·∫ø', note: 'B·∫£ng bi√™n b·∫£n', skin: 0x9a6040, hair: 0x3a261c, hairStyle: 'bunTop', earring: true,
+      top: 0x5f8a54, bottom: 0x4f7a48, shoe: 0x5a3a28, collar: 0x86ae76, buttons: 4, waistband: true, pose: 'clipboard', prop: 'clipboard', badge: 'SEC',
+      line: 'L·ªãch h·ªçp, bi√™n b·∫£n, h·∫°n ch√≥t ‚Äî m·ªçi th·ª© ƒë√£ ƒë∆∞·ª£c ghi l·∫°i.' },
+    { id: 'lumina', label: 'Lumina', name: 'C·ªë v·∫•n AI', note: '√Åo d√†i tr·∫Øng ¬∑ hoa sen', skin: 0xf2c8aa, hair: 0x8a5a3a, hairStyle: 'wavy', hairFlower: true, flagPin: true,
+      top: 0xf6f1e8, bottom: 0xf6f1e8, aoDai: 0.5, shoe: 0xefe2c4, heels: true, pose: 'lotus',
+      line: 'Ch√†o CEO! M√¨nh l√† Lumina. M√¨nh s·∫Ω ƒëi c√πng ƒë·ªôi qua s√°u v√≤ng B·∫≠t Nghi·ªáp.' },
+    { id: 'tu', label: 'T√∫ Phan', name: 'C·ªë v·∫•n h·ªçc thu·∫≠t', note: '√Åo d√†i tr·∫Øng ¬∑ cu·ªôn ch·ª©ng nh·∫≠n', skin: 0xe8b08c, hair: 0x1f1a18, hairStyle: 'slick', smile: 'open',
+      top: 0xf4f1ea, bottom: 0xf4f1ea, aoDai: 0.34, shoe: 0xefe2c4, pose: 'scroll',
+      line: 'D·ªØ li·ªáu cho ta bi·∫øt qu√° kh·ª©, quy·∫øt ƒë·ªãnh h√¥m nay vi·∫øt n√™n t∆∞∆°ng lai.' },
+    { id: 'victor', label: 'Victor L√¢m', name: 'ƒê·ªëi t√°c / ƒë·ªëi th·ªß', note: 'H·ªì s∆° th·ªã tr∆∞·ªùng', skin: 0xe6b28e, hair: 0x9c9c9c, hairStyle: 'grey', hairCap: 0.42,
+      top: 0x2f3a5c, bottom: 0x2f3a5c, shoe: 0x252525, shirtFront: 0xf1efe9, jacket: true, pin: true, cuff: 0xf1efe9, pose: 'hug', prop: 'folder',
+      line: 'Th·ªã tr∆∞·ªùng kh√¥ng ch·ªù ai. T√¥i ƒë√£ ƒë·ªçc b√°o c√°o ‚Äî c√≤n c√°c b·∫°n th√¨ sao?' },
+    { id: 'alpha', label: 'Alpha Dynamics', name: 'ƒê·ªëi th·ªß AI ¬∑ Gi√° r·∫ª t·ªëc chi·∫øn', note: 'Bi√™n l·ª£i nhu·∫≠n m·ªèng ‚Äì ƒë·ª´ng ƒëua gi√° ƒë√°y', skin: 0xecc0a0, hair: 0x2a4a8a, hairStyle: 'slick',
+      top: 0x2f5fb8, bottom: 0x2f5fb8, shoe: 0x7a4a2a, shirtFront: 0xf4f1ea, tie: 0x2a4a9a, jacket: true, pin: true, cuff: 0xf4f1ea, pose: 'pocket',
+      line: 'Gi√° r·∫ª nh·∫•t th·∫Øng. C√°c b·∫°n theo k·ªãp kh√¥ng?' },
+    { id: 'mekong', label: 'Mekong Ventures', name: 'ƒê·ªëi th·ªß AI ¬∑ C√¢n b·∫±ng ch·∫Øc ch·∫Øn', note: 'Ph·∫£n ·ª©ng ch·∫≠m v·ªõi bi·∫øn ƒë·ªông', skin: 0xe2ac86, hair: 0x4a5a7a, hairStyle: 'short', hairCap: 0.44,
+      top: 0x55809a, bottom: 0x2e3a4a, shoe: 0x2a2624, shirtFront: 0xe8dcc4, vest: 0xc8a878, jacket: true, pin: true, cuff: 0xe8dcc4, pose: 'cross',
+      line: 'Ch·∫≠m m√† ch·∫Øc. Mekong kh√¥ng v·ªôi.' },
+    { id: 'starclay', label: 'Star Clay Co.', name: 'ƒê·ªëi th·ªß AI ¬∑ Cao c·∫•p th∆∞∆°ng hi·ªáu', note: 'Th·ªß c√¥ng kh√≥ m·ªü r·ªông', skin: 0xf0c3a3, hair: 0x7a4a30, hairStyle: 'bob', feather: true,
+      top: 0x6a3aa8, bottomType: 'skirt', skirt: 0x6a3aa8, skirtLen: 0.24, skirtFlare: 0.12, shoe: 0x7a4ac0, heels: true, collar: 0x9a7ad0, buttons: 4, btnColor: 0xd9b35a, pose: 'trophy',
+      line: 'Th∆∞∆°ng hi·ªáu cao c·∫•p kh√¥ng c·∫ßn gi·∫£m gi√°.' },
+  ];
+  // Nh√¢n v·∫≠t d√πng ·∫£nh render 3D g·ªëc (billboard) thay m√¥ h√¨nh kh·ªëi.
+  const ART = { ceo: 'solid/ceo-tex.webp', cfo: 'solid/cfo-tex.webp', cmo: 'solid/cmo-tex.webp', coo: 'solid/coo-tex.webp', sec: 'solid/sec-tex.webp', lumina: 'solid/lumina-tex.webp', tu: 'solid/tu-phan-tex.webp', alpha: 'solid/alpha-full-tex.webp', mekong: 'rivals/mekong.webp', starclay: 'rivals/star.webp' };
+  const ART_PAD = { mekong: 0.07, starclay: 0.07 };
+  const ART_H = { mekong: 1.4, starclay: 1.4,  ceo: 1.2, cfo: 1.12, cmo: 1.2, coo: 1.12, sec: 1.1, lumina: 1.14, tu: 1.18, alpha: 1.2 };
+  const TL = new THREE.TextureLoader(), texCache = {}, blobMat = new THREE.MeshBasicMaterial({ color: 0x3a2a1a, transparent: true, opacity: 0.22, depthWrite: false });
+  const ARTBASE = (typeof window !== 'undefined' && window.BIZON_ART_BASE) || 'assets/character/';
+  function artChar(id) {
+    const root = new THREE.Group(); root.name = 'char_' + id; const body = new THREE.Group(); root.add(body);
+    const h = ART_H[id] || 1.15, sp = new THREE.Sprite(new THREE.SpriteMaterial({ transparent: false, alphaTest: 0.5, depthWrite: true, toneMapped: false }));
+    // ·∫¢nh t√°ch n·ªÅn c√≤n v√πng √°o tr·∫Øng b√°n trong su·ªët ‚Üí s√†n l·ªô qua nh∆∞ v·∫øt b·∫©n. ƒê·∫©y alpha l√™n ƒë·∫∑c, ch·ªâ gi·ªØ vi·ªÅn m·ªÅm.
+    sp.material.onBeforeCompile = sh => { sh.fragmentShader = sh.fragmentShader.replace('#include <alphatest_fragment>', 'diffuseColor.a = smoothstep(0.03, 0.22, diffuseColor.a); if (diffuseColor.a < 0.02) discard;'); };
+    sp.material.customProgramCacheKey = () => 'bizonArtSolid';
+    sp.center.set(0.5, ART_PAD[id] || 0); sp.scale.set(h * 0.4, h, 1); sp.visible = false; body.add(sp);
+    sp.material.onBeforeCompile = sh => { sh.fragmentShader = sh.fragmentShader.replace('#include <alphatest_fragment>', 'diffuseColor.a = smoothstep(0.03, 0.2, diffuseColor.a);\n#include <alphatest_fragment>'); };
+    const apply = t => { sp.material.map = t; sp.material.needsUpdate = true; sp.userData.aspect = t.image.width / t.image.height; sp.scale.set(h * sp.userData.aspect, h, 1); sp.visible = true; };
+    const src = ARTBASE + ART[id];
+    if (texCache[src] && texCache[src].image) apply(texCache[src]);
+    else if (texCache[src]) texCache[src].__w.push(apply);
+    else { const t = TL.load(src, () => { t.__w.forEach(f => f(t)); }); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = (typeof window !== 'undefined' && window.__MAXANISO) || 8; t.minFilter = THREE.LinearMipmapLinearFilter; t.magFilter = THREE.LinearFilter; t.generateMipmaps = true; t.__w = [apply]; texCache[src] = t; }
+    const blob = new THREE.Mesh(new THREE.CircleGeometry(0.2, 24), blobMat); blob.rotation.x = -Math.PI / 2; blob.position.y = 0.004; blob.scale.set(1, 0.7, 1); blob.renderOrder = -1; root.add(blob);
+    const d = () => new THREE.Object3D();
+    root.userData.rig = { art: true, sprite: sp, h, body, torso: body, head: d(), legs: [d(), d()], arms: {}, eyes: [], mouth: d(), hold: {}, rest: {}, pose: 'art' };
+    return root;
+  }
+  const USE_ART = !(typeof window !== 'undefined' && window.BIZON_CHAR_ART === false);
+  const build = id => (USE_ART && ART[id]) ? artChar(id) : character(roster.find(r => r.id === id));
+
+  // Animation: mode 'idle' | 'talk' | 'walk'. Call every frame.
+  function animate(root, t, mode, phase = 0) {
+    const r = root.userData.rig; if (!r) return;
+    const tt = t + phase;
+    if (r.art) {
+      const s = r.sprite, w = (s.userData.aspect || 0.4) * r.h;
+      if (mode === 'walk') { r.body.position.y = Math.abs(Math.sin(tt * 7)) * 0.035; r.body.rotation.z = 0; s.material.rotation = Math.sin(tt * 7) * 0.035; s.scale.set(w, r.h, 1); }
+      else if (mode === 'talk') { const k = Math.abs(Math.sin(tt * 4.2)); r.body.position.y = k * 0.02; s.material.rotation = Math.sin(tt * 1.7) * 0.03; s.scale.set(w * (1 - k * 0.015), r.h * (1 + k * 0.025), 1); }
+      else { const b = Math.sin(tt * 2.2); r.body.position.y = 0; s.material.rotation = Math.sin(tt * 0.8) * 0.01; s.scale.set(w * (1 - b * 0.004), r.h * (1 + b * 0.008), 1); }
+      return;
+    }
+    const walk = mode === 'walk', talk = mode === 'talk';
+    const breathe = Math.sin(tt * 2.2);
+    r.torso.scale.set(1 + breathe * 0.006, 1 + breathe * 0.012, 1);
+    const blink = (tt % 3.7) < 0.12 ? 0.15 : 1;
+    r.eyes.forEach(e => e.scale.y = blink);
+    const stride = walk ? Math.sin(tt * 7) : 0;
+    r.legs[0].rotation.x = stride * 0.55; r.legs[1].rotation.x = -stride * 0.55;
+    r.body.position.y = walk ? Math.abs(Math.cos(tt * 7)) * 0.022 : 0;
+    r.torso.rotation.z = walk ? stride * 0.04 : Math.sin(tt * 0.9) * 0.015;
+    r.head.rotation.y = talk ? Math.sin(tt * 1.7) * 0.18 : Math.sin(tt * 0.6) * 0.08;
+    r.head.rotation.x = talk ? Math.sin(tt * 5.3) * 0.06 : 0;
+    r.mouth.scale.set(1, talk ? 0.6 + Math.abs(Math.sin(tt * 11)) * 1.6 : 1, 1);
+    for (const k in r.arms) {
+      const a = r.arms[k], rs = r.rest[k];
+      if (r.hold[k]) { a.sh.rotation.x = rs.x + (walk ? 0.04 * stride : 0); continue; }
+      if (walk) { a.sh.rotation.x = (k === 'L' ? stride : -stride) * 0.5; a.el.rotation.x = -0.25; a.sh.rotation.z = a.s * 0.1; }
+      else if (talk) { a.sh.rotation.x = rs.x - 0.3 - Math.sin(tt * 3) * 0.25; a.el.rotation.x = rs.e - 0.6 + Math.sin(tt * 3.4) * 0.3; a.sh.rotation.z = rs.z + 0.15; }
+      else { a.sh.rotation.x = rs.x + Math.sin(tt * 1.1) * 0.04; a.el.rotation.x = rs.e; a.sh.rotation.z = rs.z; }
+    }
+  }
+  return { roster, build, animate };
+}
