@@ -40,6 +40,7 @@
       orcid: '0000-0003-0667-3137',
       osf: 'https://osf.io/vqtkd/',
       zenodo: '10.5281/zenodo.21592241',
+      website: 'https://patueconomics.com/',
       // không có GitHub cá nhân
     },
   };
@@ -51,6 +52,7 @@
     else if (field === 'osf') { url = p.osf; label = '🌐 OSF'; }
     else if (field === 'zenodo') { url = 'https://doi.org/' + p.zenodo; label = '📦 Zenodo DOI'; }
     else if (field === 'github') { if (!p.github) return ''; url = 'https://github.com/' + p.github; label = variant === 'mini' ? '⭐ GitHub' : ('⭐ GitHub @' + p.github); }
+    else if (field === 'website') { if (!p.website) return ''; url = p.website; label = '🔗 Website'; }
     else return '';
     var cls = variant === 'mini'
       ? 'px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-primary/8 text-primary'
