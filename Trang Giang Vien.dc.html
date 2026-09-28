@@ -53,16 +53,34 @@ input,select,textarea,button{font-family:inherit}
       <div style="width:100%;max-width:420px;background:#fbf6ee;border:3px solid #e6d6bf;border-radius:26px;padding:28px;box-shadow:0 8px 0 #d9c5a8;display:flex;flex-direction:column;gap:12px">
         <div style="font:800 26px/1.1 'Baloo 2',sans-serif;color:#1f4a55">{{ loginTitle }}</div>
         <div style="font-size:14px;color:#5a6b74;text-wrap:pretty">Tài khoản giảng viên dùng Supabase Auth. Mỗi mã lớp chỉ thuộc về một giảng viên.</div>
-        <label style="font-weight:700;font-size:13px">Email</label>
-        <input value="{{ fEmail }}" onChange="{{ onEmail }}" type="email" placeholder="giangvien@truong.edu.vn" style="padding:12px 14px;border-radius:14px;border:2px solid #e6d6bf;background:#fff;font-size:15px"></input>
-        <label style="font-weight:700;font-size:13px">Mật khẩu</label>
-        <input value="{{ fPass }}" onChange="{{ onPass }}" type="password" placeholder="Tối thiểu 6 ký tự" style="padding:12px 14px;border-radius:14px;border:2px solid #e6d6bf;background:#fff;font-size:15px"></input>
+        <sc-if value="{{ showEmailField }}" hint-placeholder-val="{{ true }}">
+          <label style="font-weight:700;font-size:13px">Email</label>
+          <input value="{{ fEmail }}" onChange="{{ onEmail }}" type="email" placeholder="giangvien@truong.edu.vn" style="padding:12px 14px;border-radius:14px;border:2px solid #e6d6bf;background:#fff;font-size:15px"></input>
+        </sc-if>
+        <sc-if value="{{ showPassField }}" hint-placeholder-val="{{ true }}">
+          <label style="font-weight:700;font-size:13px">Mật khẩu</label>
+          <input value="{{ fPass }}" onChange="{{ onPass }}" type="password" placeholder="Tối thiểu 6 ký tự" style="padding:12px 14px;border-radius:14px;border:2px solid #e6d6bf;background:#fff;font-size:15px"></input>
+        </sc-if>
+        <sc-if value="{{ showNewPassField }}" hint-placeholder-val="{{ false }}">
+          <label style="font-weight:700;font-size:13px">Mật khẩu mới</label>
+          <input value="{{ fNewPass }}" onChange="{{ onNewPass }}" type="password" placeholder="Tối thiểu 6 ký tự" style="padding:12px 14px;border-radius:14px;border:2px solid #e6d6bf;background:#fff;font-size:15px"></input>
+        </sc-if>
         <button onClick="{{ submitLogin }}" style="margin-top:6px;border:0;background:#2f8a8c;color:#fff;border-radius:16px;padding:13px;font:800 17px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #1b5a5a;cursor:pointer">{{ loginBtn }}</button>
-        <button onClick="{{ toggleMode }}" style="border:0;background:none;color:#1f6f8a;font-weight:700;cursor:pointer;font-size:14px">{{ modeLink }}</button>
-        <div style="border-top:2px dashed #e6d6bf;padding-top:12px;display:flex;flex-direction:column;gap:6px">
-          <button onClick="{{ tryDemo }}" style="border:2px solid #cbb797;background:#fff;border-radius:14px;padding:11px;font-weight:700;color:#1f4a55;cursor:pointer">👀 Dùng thử với lớp mẫu DEMO-2026</button>
-          <div style="font-size:12px;color:#5a6b74;text-align:center">{{ backendNote }}</div>
-        </div>
+        <sc-if value="{{ showForgotLink }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ forgotLink }}" style="border:0;background:none;color:#1f6f8a;font-weight:700;cursor:pointer;font-size:13px;text-align:left">Quên mật khẩu?</button>
+        </sc-if>
+        <sc-if value="{{ showModeLink }}" hint-placeholder-val="{{ true }}">
+          <button onClick="{{ toggleMode }}" style="border:0;background:none;color:#1f6f8a;font-weight:700;cursor:pointer;font-size:14px">{{ modeLink }}</button>
+        </sc-if>
+        <sc-if value="{{ showBackLink }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ backToLogin }}" style="border:0;background:none;color:#1f6f8a;font-weight:700;cursor:pointer;font-size:14px">← Quay lại đăng nhập</button>
+        </sc-if>
+        <sc-if value="{{ showDemoBlock }}" hint-placeholder-val="{{ true }}">
+          <div style="border-top:2px dashed #e6d6bf;padding-top:12px;display:flex;flex-direction:column;gap:6px">
+            <button onClick="{{ tryDemo }}" style="border:2px solid #cbb797;background:#fff;border-radius:14px;padding:11px;font-weight:700;color:#1f4a55;cursor:pointer">👀 Dùng thử với lớp mẫu DEMO-2026</button>
+            <div style="font-size:12px;color:#5a6b74;text-align:center">{{ backendNote }}</div>
+          </div>
+        </sc-if>
       </div>
     </main>
   </sc-if>
@@ -223,10 +241,19 @@ input,select,textarea,button{font-family:inherit}
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { view: 'login', mode: 'in', err: '', fEmail: '', fPass: '', fCode: '', classes: [], code: '', tab: 'teams', subs: [], st: {}, selTeam: '', fEvent: '', fMsg: '', gTeam: '*', gAmt: '', gReason: '', edits: {}, saved: {}, board: false, ready: false };
+  state = { view: 'login', mode: 'in', err: '', fEmail: '', fPass: '', fNewPass: '', recoveryToken: '', fCode: '', classes: [], code: '', tab: 'teams', subs: [], st: {}, selTeam: '', fEvent: '', fMsg: '', gTeam: '*', gAmt: '', gReason: '', edits: {}, saved: {}, board: false, ready: false };
   api() { return window.BizOnInstructor; }
   P() { return window.BizOnInstructorPage; }
-  componentDidMount() { const t = setInterval(() => { if (this.api() && this.P()) { clearInterval(t); this.setState({ ready: true }); if (this.api().signedIn) this.loadClasses(); } }, 100); }
+  componentDidMount() {
+    const t = setInterval(() => { if (this.api() && this.P()) { clearInterval(t); this.setState({ ready: true }); if (this.api().signedIn) this.loadClasses(); } }, 100);
+    try {
+      const h = new URLSearchParams(location.hash.replace(/^#/, ''));
+      if (h.get('type') === 'recovery' && h.get('access_token')) {
+        this.setState({ mode: 'newpass', recoveryToken: h.get('access_token') });
+        history.replaceState(null, '', location.pathname + location.search);
+      }
+    } catch (e) {}
+  }
   fail(e) { const m = (e && e.message) || String(e); if (this.api() && m === this.api().migrationNote) return this.forceUpdate(); this.setState({ err: m }); }
   async loadClasses() { try { const c = await this.api().myClasses(); this.setState({ classes: c || [], view: 'classes', err: '' }); } catch (e) { this.fail(e); } }
   async openClass(code) { this.setState({ code, view: 'class', tab: 'teams', err: '', edits: {}, saved: {} }); await this.reload(code); }
@@ -239,6 +266,14 @@ class Component extends DCLogic {
     try { if (mode === 'up') { const ok = await this.api().signUp(fEmail, fPass); if (!ok) return this.setState({ err: 'Đã tạo tài khoản. Kiểm tra email để xác nhận rồi đăng nhập.', mode: 'in' }); }
       else await this.api().signIn(fEmail, fPass);
       this.setState({ fPass: '' }); this.loadClasses(); } catch (e) { this.fail(e); } }
+  async requestReset() {
+    const { fEmail } = this.state; if (!fEmail) return this.fail('Nhập email để đặt lại mật khẩu.');
+    try { await this.api().resetPassword(fEmail); this.setState({ mode: 'in', err: 'Nếu email này có tài khoản, một email đặt lại mật khẩu đã được gửi. Kiểm tra hộp thư (cả Spam).' }); }
+    catch (e) { this.fail(e); } }
+  async submitNewPassword() {
+    const { fNewPass, recoveryToken } = this.state; if (!fNewPass || fNewPass.length < 6) return this.fail('Mật khẩu mới cần tối thiểu 6 ký tự.');
+    try { await this.api().completeRecovery(recoveryToken, fNewPass); this.setState({ mode: 'in', fPass: '', fNewPass: '', recoveryToken: '', err: 'Đã đặt lại mật khẩu. Đăng nhập bằng mật khẩu mới.' }); }
+    catch (e) { this.fail(e); } }
   async claim() { try { await this.api().claimClass(this.state.fCode); this.setState({ fCode: '' }); this.loadClasses(); } catch (e) { this.fail(e); } }
   async setLock(n) { try { const c = Object.assign({}, (this.state.st.controls || {}), { locked_round: n }); await this.api().setControls(this.state.code, c); this.reload(); } catch (e) { this.fail(e); } }
   async saveEvent() { try { const s = this.state, cur = (s.st.controls || {}); await this.api().setControls(s.code, Object.assign({}, cur, { forced_event: s.fEvent, forced_event_round: s.fEvent ? this.curRound() : null, message: s.fMsg })); this.reload(); } catch (e) { this.fail(e); } }
@@ -258,12 +293,17 @@ class Component extends DCLogic {
       subtitle: inClass ? 'Bảng điều khiển lớp' : signedIn ? 'Quản lý lớp học' : 'Đăng nhập giảng viên',
       migNote: ok && inClass && !A.demo && A.needsMigration ? A.migrationNote : '',
       signedIn, email: ok && A.email, inClass, showLogin: v === 'login', showClasses: v === 'classes', error: s.err,
-      loginTitle: s.mode === 'up' ? 'Tạo tài khoản giảng viên' : 'Đăng nhập giảng viên', loginBtn: s.mode === 'up' ? 'Tạo tài khoản' : 'Đăng nhập',
+      loginTitle: s.mode === 'up' ? 'Tạo tài khoản giảng viên' : s.mode === 'forgot' ? 'Đặt lại mật khẩu' : s.mode === 'newpass' ? 'Đặt mật khẩu mới' : 'Đăng nhập giảng viên',
+      loginBtn: s.mode === 'up' ? 'Tạo tài khoản' : s.mode === 'forgot' ? 'Gửi email đặt lại' : s.mode === 'newpass' ? 'Lưu mật khẩu mới' : 'Đăng nhập',
       modeLink: s.mode === 'up' ? 'Đã có tài khoản? Đăng nhập' : 'Chưa có tài khoản? Tạo mới',
       backendNote: ok && A.backendOn ? 'Đang kết nối Supabase của dự án.' : 'Máy chủ chưa bật – chỉ dùng được lớp mẫu.',
-      fEmail: s.fEmail, fPass: s.fPass, fCode: s.fCode,
-      onEmail: e => this.setState({ fEmail: e.target.value }), onPass: e => this.setState({ fPass: e.target.value }), onCode: e => this.setState({ fCode: e.target.value.toUpperCase() }),
-      submitLogin: () => this.login(), toggleMode: () => this.setState({ mode: s.mode === 'up' ? 'in' : 'up', err: '' }),
+      showEmailField: s.mode === 'in' || s.mode === 'up' || s.mode === 'forgot', showPassField: s.mode === 'in' || s.mode === 'up', showNewPassField: s.mode === 'newpass',
+      showForgotLink: s.mode === 'in', showModeLink: s.mode === 'in' || s.mode === 'up', showBackLink: s.mode === 'forgot' || s.mode === 'newpass', showDemoBlock: s.mode === 'in' || s.mode === 'up',
+      fEmail: s.fEmail, fPass: s.fPass, fNewPass: s.fNewPass, fCode: s.fCode,
+      onEmail: e => this.setState({ fEmail: e.target.value }), onPass: e => this.setState({ fPass: e.target.value }), onNewPass: e => this.setState({ fNewPass: e.target.value }), onCode: e => this.setState({ fCode: e.target.value.toUpperCase() }),
+      submitLogin: () => s.mode === 'forgot' ? this.requestReset() : s.mode === 'newpass' ? this.submitNewPassword() : this.login(),
+      toggleMode: () => this.setState({ mode: s.mode === 'up' ? 'in' : 'up', err: '' }),
+      forgotLink: () => this.setState({ mode: 'forgot', err: '' }), backToLogin: () => this.setState({ mode: 'in', err: '' }),
       tryDemo: () => { A.useDemo(); this.loadClasses(); }, signOut: () => { A.signOut(); this.setState({ view: 'login', classes: [], code: '' }); },
       backToClasses: () => this.setState({ view: 'classes', board: false }), claim: () => this.claim(),
       classes: (s.classes || []).map(x => ({ class_code: x.class_code, date: new Date(x.created_at).toLocaleDateString('vi-VN'), open: () => this.openClass(x.class_code) })),
