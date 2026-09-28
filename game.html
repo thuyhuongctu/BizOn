@@ -382,6 +382,7 @@
         <p class="text-[11px] text-deep-teal/65 mt-1"><span>Đạt</span> <b>thị phần cao nhất</b> <span>so với 3 đối thủ để cắm cờ 🚩 lên bản đồ – và giữ</span> <b>lợi nhuận dương</b><span>. Kéo các thanh trượt bên dưới, ô «Dự báo thị phần» sẽ báo ngay bạn đang thắng hay thua.</span></p>
       </div>
       <div id="team-meeting" class="mb-3"></div>
+      <button id="adv-toggle" onclick="toggleAdvDecisions()" type="button" class="clay-button-secondary text-primary text-xs font-bold py-2 px-4 mb-3">⚙️ Quyết định nâng cao (R&amp;D · Tài chính · Nhân sự) ▾</button>
 
       <!-- 📣 CMO -->
       <div class="mb-5">
@@ -423,7 +424,7 @@
         <input id="in-prod" aria-label="Sản lượng sản xuất, sản phẩm" type="range" min="200" max="4000" step="100" value="1200" class="w-full" oninput="syncDecisionLabels()">
         <p class="text-[11px] text-deep-teal/50 mt-1">Chi phí sản xuất: 60.000₫/sp + khấu hao máy móc theo công suất.</p>
       </div>
-      <div class="clay-card p-5 mb-3">
+      <div class="clay-card p-5 mb-3 adv-decisions">
         <p class="font-bold text-sm text-deep-teal mb-3">👥 Quản trị Nhân sự</p>
         <div class="flex justify-between mb-1"><label class="text-[11px] font-bold text-deep-teal/60 uppercase">Số lượng nhân viên</label><span id="v-workers" class="font-display font-bold text-primary">45 người</span></div>
         <input id="in-workers" aria-label="Số lượng nhân viên" type="range" min="20" max="100" step="5" value="45" class="w-full mb-1" oninput="syncDecisionLabels()">
@@ -440,7 +441,7 @@
           <span class="w-9 h-9 rounded-xl flex items-center justify-center text-lg shrink-0" style="background:rgba(0,102,135,.12)">💰</span>
           <div><p class="font-display font-extrabold text-deep-teal text-sm">CFO – Chiến lược gia tài chính</p><p class="text-[10px] text-deep-teal/50">Chọn nguồn vốn, kỳ hạn thanh toán, đầu tư R&amp;D; theo dõi dòng tiền</p></div>
         </div>
-      <div class="clay-card p-5 mb-3">
+      <div class="clay-card p-5 mb-3 adv-decisions">
         <p class="font-bold text-sm text-deep-teal mb-3">🏦 Quản trị Tài chính</p>
         <label class="block text-[11px] font-bold text-deep-teal/60 uppercase mb-1.5">Cơ cấu nguồn vốn</label>
         <div class="grid grid-cols-2 gap-2 mb-1">
@@ -455,7 +456,7 @@
           <option value="90">90 ngày – cầu +8%, chi phí +5%</option>
         </select>
       </div>
-      <div class="clay-card p-5 mb-3">
+      <div class="clay-card p-5 mb-3 adv-decisions">
         <div class="flex justify-between mb-1"><label class="font-bold text-sm text-deep-teal">🔬 Đầu tư R&amp;D</label><span id="v-rd" class="font-display font-bold text-primary">30tr₫</span></div>
         <input id="in-rd" aria-label="Đầu tư nghiên cứu phát triển, triệu đồng" type="range" min="0" max="150" step="5" value="30" class="w-full" oninput="syncDecisionLabels()">
         <p class="text-[11px] text-deep-teal/50 mt-1">R&amp;D tích lũy giúp giảm giá thành và tăng giá trị thương hiệu.</p>
@@ -501,6 +502,9 @@
         <div class="grid grid-cols-2 gap-2">
           <button onclick="runWhatIf('CEO')" class="clay-button-secondary text-primary text-xs font-bold py-2.5">🧭 Chiến lược (CEO)</button>
           <button onclick="runWhatIf('CFO')" class="clay-button-secondary text-primary text-xs font-bold py-2.5">💰 Tài chính (CFO)</button>
+          <button onclick="runWhatIf('CMO')" class="clay-button-secondary text-primary text-xs font-bold py-2.5">📣 Marketing (CMO)</button>
+          <button onclick="runWhatIf('COO')" class="clay-button-secondary text-primary text-xs font-bold py-2.5">🏭 Vận hành (COO)</button>
+          <button onclick="runWhatIf('SEC')" class="clay-button-secondary text-primary text-xs font-bold py-2.5">📔 Pháp chế (SEC)</button>
         </div>
         <div id="whatif-result" class="mt-3"></div>
       </div>
@@ -815,6 +819,7 @@
         <div class="p-5"><button onclick="showTab('instructor')" class="font-bold text-sm text-deep-teal w-full text-left">🧑‍🏫 Màn hình Giảng viên trong game <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full align-middle" style="background:#fff4d6;color:#946200">GV</span></button></div>
         <div class="p-5"><a href="instructor-grading.html" class="font-bold text-sm text-primary block">📝 Chấm điểm &amp; quản lý lớp (màn GV riêng)</a></div>
         <div class="p-5"><button onclick="showPremium()" class="font-bold text-sm text-deep-teal w-full text-left">👑 BizOn Premium <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full align-middle" style="background:#fff4d6;color:#946200">GIẢNG VIÊN</span></button></div>
+        <div class="p-5"><a href="BizOn%20Game%203D.html" class="font-bold text-sm text-primary block">🧊 Thử bản 3D (mới) <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full align-middle" style="background:#e6f7ff;color:#006687">MỚI</span></a></div>
         <div class="p-5"><a href="gioi-thieu.html" class="font-bold text-sm text-primary block">🌐 Trang giới thiệu</a></div>
         <div class="p-5"><a href="games.html" class="font-bold text-sm text-primary block">🕹️ BizOn Arcade (trung tâm trò chơi)</a></div>
         <div class="p-5"><a href="global.html" class="font-bold text-sm text-primary block">🌏 BizOn Go Global (thử nghiệm quốc tế)</a></div>
@@ -875,7 +880,15 @@
 <script src="js/core/seed-engine.js"></script>
 <script src="js/backend.js"></script>
 <script src="js/app.js"></script>
+<script src="js/market-dynamic.js"></script>
+<script src="js/class-sync.js"></script>
+<script src="js/lumina-whatif.js"></script>
 <script src="js/office-rounds.js"></script>
+<script src="js/flag-scene-3d.js"></script>
+<script src="js/office-scene.js"></script>
+<script src="js/office-scenes.js"></script>
+<script src="js/office-stations.js"></script>
+<script src="js/arena-duels.js"></script>
 <script src="js/rival-dialogue.js"></script>
 <!-- Đăng nhập sinh viên (email + mật khẩu, thử nghiệm, cờ ?studentAuth=1) TẮT cho
      bản phát hành CH Play đầu tiên: chưa có quy trình đồng thuận + xoá tài khoản.
