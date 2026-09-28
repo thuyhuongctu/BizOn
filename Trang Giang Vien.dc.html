@@ -34,7 +34,8 @@ input,select,textarea,button{font-family:inherit}
     <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}">
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
         <span style="font-size:13px;color:#5a6b74">{{ email }}</span>
-        <sc-if value="{{ inClass }}" hint-placeholder-val="{{ false }}"><button onClick="{{ backToClasses }}" style="border:2px solid #cbb797;background:#fff;border-radius:12px;padding:7px 12px;font-weight:700;color:#1f4a55;cursor:pointer">← Lớp của tôi</button></sc-if>
+        <sc-if value="{{ showBackNav }}" hint-placeholder-val="{{ false }}"><button onClick="{{ backToClasses }}" style="border:2px solid #cbb797;background:#fff;border-radius:12px;padding:7px 12px;font-weight:700;color:#1f4a55;cursor:pointer">← Lớp của tôi</button></sc-if>
+        <sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}"><button onClick="{{ openAdmin }}" style="border:2px solid #2f8a8c;background:#e3f1ef;border-radius:12px;padding:7px 12px;font-weight:700;color:#1f4a55;cursor:pointer">🛡️ Quản trị hệ thống</button></sc-if>
         <button onClick="{{ signOut }}" style="border:2px solid #cbb797;background:#fff;border-radius:12px;padding:7px 12px;font-weight:700;color:#1f4a55;cursor:pointer">Đăng xuất</button>
       </div>
     </sc-if>
@@ -87,28 +88,69 @@ input,select,textarea,button{font-family:inherit}
 
   <sc-if value="{{ showClasses }}" hint-placeholder-val="{{ false }}">
     <main style="flex:1;padding:24px 22px;max-width:980px;width:100%;margin:0 auto;box-sizing:border-box;display:flex;flex-direction:column;gap:18px">
+      <div style="border-radius:22px;overflow:hidden;box-shadow:0 5px 0 #d9c5a8"><img src="assets/illustrations/anh-tu-lecture-hall.webp" alt="Giảng đường BizOn" style="width:100%;max-height:200px;object-fit:cover;display:block"></div>
       <div style="font:800 24px 'Baloo 2',sans-serif">Lớp của tôi</div>
       <div style="display:flex;gap:10px;flex-wrap:wrap;background:#fbf6ee;border:3px solid #e6d6bf;border-radius:20px;padding:14px">
         <input value="{{ fCode }}" onChange="{{ onCode }}" placeholder="Mã lớp mới, VD: QTKD-2026-A" style="flex:1;min-width:200px;padding:11px 14px;border-radius:14px;border:2px solid #e6d6bf;font-size:15px;text-transform:uppercase"></input>
         <button onClick="{{ claim }}" style="border:0;background:#e8843a;color:#fff;border-radius:14px;padding:11px 16px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #b8611f;cursor:pointer;white-space:nowrap">＋ Tạo lớp</button>
       </div>
+      <sc-if value="{{ noClasses }}" hint-placeholder-val="{{ false }}">
+        <div style="text-align:center;padding:20px 10px;display:flex;flex-direction:column;align-items:center;gap:10px">
+          <img src="assets/illustrations/game/phong-hop-chien-luoc.webp" alt="Phòng họp chiến lược BizOn" style="width:100%;max-width:320px;border-radius:20px;border:3px solid #e6d6bf">
+          <div style="font-size:14px;color:#5a6b74;max-width:360px">Chưa có lớp nào. Tạo lớp đầu tiên ở ô phía trên rồi phát mã lớp cho sinh viên.</div>
+        </div>
+      </sc-if>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px">
         <sc-for list="{{ classes }}" as="c" hint-placeholder-count="2">
-          <button onClick="{{ c.open }}" style="text-align:left;border:3px solid #e6d6bf;background:#fbf6ee;border-radius:20px;padding:16px;cursor:pointer;box-shadow:0 5px 0 #d9c5a8;display:flex;flex-direction:column;gap:6px">
-            <span style="font:800 20px 'Baloo 2',sans-serif;color:#1f4a55">{{ c.class_code }}</span>
-            <span style="font-size:13px;color:#5a6b74">Tạo ngày {{ c.date }}</span>
-            <span style="font-size:13px;color:#2f8a8c;font-weight:700">Mở bảng điều khiển →</span>
-          </button>
+          <div style="border:3px solid #e6d6bf;background:#fbf6ee;border-radius:20px;padding:16px;box-shadow:0 5px 0 #d9c5a8;display:flex;flex-direction:column;gap:6px">
+            <div onClick="{{ c.open }}" style="cursor:pointer;display:flex;flex-direction:column;gap:6px">
+              <span style="font:800 20px 'Baloo 2',sans-serif;color:#1f4a55">{{ c.class_code }}</span>
+              <span style="font-size:13px;color:#5a6b74">Tạo ngày {{ c.date }}</span>
+              <span style="font-size:13px;color:#2f8a8c;font-weight:700">Mở bảng điều khiển →</span>
+            </div>
+            <button onClick="{{ c.remove }}" style="align-self:flex-start;border:0;background:none;color:#c0443a;font-weight:700;font-size:12px;cursor:pointer;padding:4px 0 0">🗑 Xóa lớp</button>
+          </div>
         </sc-for>
       </div>
       <div style="font-size:13px;color:#5a6b74"><a href="BizOn Game 3D.html" style="font-weight:700">🎮 Mở game sinh viên</a> · Phát mã lớp cho sinh viên. Các đội nhập mã này ở màn đăng nhập của game để kết quả gửi về đây.</div>
     </main>
   </sc-if>
 
+  <sc-if value="{{ showAdmin }}" hint-placeholder-val="{{ false }}">
+    <main style="flex:1;padding:24px 22px;max-width:980px;width:100%;margin:0 auto;box-sizing:border-box;display:flex;flex-direction:column;gap:18px">
+      <div style="border-radius:22px;overflow:hidden;box-shadow:0 5px 0 #16393f;position:relative">
+        <img src="assets/illustrations/lumina-holo-classroom.webp" alt="Lumina AI giám sát lớp học BizOn" style="width:100%;max-height:200px;object-fit:cover;display:block">
+        <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(31,74,85,.92),rgba(31,74,85,.15));display:flex;flex-direction:column;justify-content:flex-end;padding:16px 20px;color:#fff">
+          <div style="font:800 22px 'Baloo 2',sans-serif">🛡️ Quản trị hệ thống</div>
+          <div style="font-size:13px;opacity:.9">Toàn bộ lớp đã triển khai trên mọi giảng viên — chỉ 2 tài khoản chủ dự án thấy được màn này.</div>
+        </div>
+      </div>
+      <sc-if value="{{ noAdminClasses }}" hint-placeholder-val="{{ false }}">
+        <div style="text-align:center;padding:20px 10px;font-size:14px;color:#5a6b74">Chưa có giảng viên nào tạo lớp.</div>
+      </sc-if>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px">
+        <sc-for list="{{ adminClasses }}" as="c" hint-placeholder-count="2">
+          <div style="border:3px solid #e6d6bf;background:#fbf6ee;border-radius:20px;padding:16px;box-shadow:0 5px 0 #d9c5a8;display:flex;flex-direction:column;gap:6px">
+            <div onClick="{{ c.open }}" style="cursor:pointer;display:flex;flex-direction:column;gap:6px">
+              <span style="font:800 20px 'Baloo 2',sans-serif;color:#1f4a55">{{ c.class_code }}</span>
+              <span style="font-size:12px;color:#5a6b74">{{ c.ownerLine }}</span>
+              <span style="font-size:13px;color:#5a6b74">Tạo ngày {{ c.date }}</span>
+              <span style="font-size:13px;color:#2f8a8c;font-weight:700">Mở bảng điều khiển →</span>
+            </div>
+            <button onClick="{{ c.remove }}" style="align-self:flex-start;border:0;background:none;color:#c0443a;font-weight:700;font-size:12px;cursor:pointer;padding:4px 0 0">🗑 Xóa lớp</button>
+          </div>
+        </sc-for>
+      </div>
+    </main>
+  </sc-if>
+
   <sc-if value="{{ inClass }}" hint-placeholder-val="{{ false }}">
     <main style="flex:1;padding:18px 22px 28px;max-width:1240px;width:100%;margin:0 auto;box-sizing:border-box;display:flex;flex-direction:column;gap:16px">
       <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap">
-        <div><div style="font:800 28px/1 'Baloo 2',sans-serif">{{ code }}</div><div style="font-size:13px;color:#5a6b74;margin-top:4px">{{ classStats }}</div></div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <img src="assets/illustrations/command-center.webp" alt="Trung tâm điều hành" style="width:52px;height:52px;border-radius:14px;object-fit:cover;box-shadow:0 3px 0 #d9c5a8">
+          <div><div style="font:800 28px/1 'Baloo 2',sans-serif">{{ code }}</div><div style="font-size:13px;color:#5a6b74;margin-top:4px">{{ classStats }}</div></div>
+        </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <button onClick="{{ refresh }}" style="border:2px solid #cbb797;background:#fff;border-radius:12px;padding:8px 12px;font-weight:700;color:#1f4a55;cursor:pointer">⟳ Tải lại</button>
           <button onClick="{{ exportXls }}" style="border:0;background:#3f8a44;color:#fff;border-radius:12px;padding:8px 14px;font-weight:700;cursor:pointer;box-shadow:0 3px 0 #2b6330">⬇ Xuất Excel</button>
@@ -241,7 +283,7 @@ input,select,textarea,button{font-family:inherit}
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { view: 'login', mode: 'in', err: '', fEmail: '', fPass: '', fNewPass: '', recoveryToken: '', fCode: '', classes: [], code: '', tab: 'teams', subs: [], st: {}, selTeam: '', fEvent: '', fMsg: '', gTeam: '*', gAmt: '', gReason: '', edits: {}, saved: {}, board: false, ready: false };
+  state = { view: 'login', mode: 'in', err: '', fEmail: '', fPass: '', fNewPass: '', recoveryToken: '', fCode: '', classes: [], adminClasses: [], code: '', tab: 'teams', subs: [], st: {}, selTeam: '', fEvent: '', fMsg: '', gTeam: '*', gAmt: '', gReason: '', edits: {}, saved: {}, board: false, ready: false };
   api() { return window.BizOnInstructor; }
   P() { return window.BizOnInstructorPage; }
   componentDidMount() {
@@ -256,6 +298,10 @@ class Component extends DCLogic {
   }
   fail(e) { const m = (e && e.message) || String(e); if (this.api() && m === this.api().migrationNote) return this.forceUpdate(); this.setState({ err: m }); }
   async loadClasses() { try { const c = await this.api().myClasses(); this.setState({ classes: c || [], view: 'classes', err: '' }); } catch (e) { this.fail(e); } }
+  async loadAdmin() { try { const c = await this.api().adminAllClasses(); this.setState({ adminClasses: c || [], view: 'admin', err: '' }); } catch (e) { this.fail(e); } }
+  async removeClass(code) {
+    if (!confirm('Xóa lớp ' + code + '? Lớp sẽ hết thuộc quyền quản lý — dữ liệu bài nộp cũ của sinh viên vẫn được giữ nguyên, có thể đăng ký lại mã này sau.')) return;
+    try { await this.api().deleteClass(code); if (this.state.view === 'admin') this.loadAdmin(); else this.loadClasses(); } catch (e) { this.fail(e); } }
   async openClass(code) { this.setState({ code, view: 'class', tab: 'teams', err: '', edits: {}, saved: {} }); await this.reload(code); }
   async reload(code = this.state.code) {
     try { const [subs, st] = await Promise.all([this.api().submissions(code), this.api().state(code)]);
@@ -282,7 +328,7 @@ class Component extends DCLogic {
   curRound() { const T = this.P().teams(this.state.subs); return Math.min(6, Math.max(1, ...T.map(t => t.rs.length + 1), 1)); }
   renderVals() {
     const s = this.state, A = this.api(), P = this.P(), ok = s.ready && A && P;
-    const signedIn = !!(ok && A.signedIn), v = signedIn ? s.view : 'login', inClass = v === 'class';
+    const signedIn = !!(ok && A.signedIn), v = signedIn ? s.view : 'login', inClass = v === 'class', inAdmin = v === 'admin';
     const T = ok ? P.teams(s.subs) : [], G = ok ? P.grades(T, (s.st && s.st.scores) || [], s.edits) : [], money = ok ? P.money : (x => x);
     const c = (s.st && s.st.controls) || {}, lock = c.locked_round;
     const tabDefs = [['teams', '👥 Đội & tiến độ'], ['decisions', '🧾 Quyết định'], ['controls', '🎛 Điều khiển lớp'], ['grading', '📝 Chấm điểm']];
@@ -290,9 +336,9 @@ class Component extends DCLogic {
     const dec = ok ? P.decRows(T.find(t => t.name === selTeam)) : { head: [], cells: [] };
     const maxShare = Math.max(1, ...T.map(t => t.share));
     return {
-      subtitle: inClass ? 'Bảng điều khiển lớp' : signedIn ? 'Quản lý lớp học' : 'Đăng nhập giảng viên',
+      subtitle: inClass ? 'Bảng điều khiển lớp' : inAdmin ? 'Quản trị hệ thống' : signedIn ? 'Quản lý lớp học' : 'Đăng nhập giảng viên',
       migNote: ok && inClass && !A.demo && A.needsMigration ? A.migrationNote : '',
-      signedIn, email: ok && A.email, inClass, showLogin: v === 'login', showClasses: v === 'classes', error: s.err,
+      signedIn, email: ok && A.email, isAdmin: ok && A.isAdmin, inClass, showBackNav: inClass || inAdmin, showLogin: v === 'login', showClasses: v === 'classes', showAdmin: inAdmin, error: s.err,
       loginTitle: s.mode === 'up' ? 'Tạo tài khoản giảng viên' : s.mode === 'forgot' ? 'Đặt lại mật khẩu' : s.mode === 'newpass' ? 'Đặt mật khẩu mới' : 'Đăng nhập giảng viên',
       loginBtn: s.mode === 'up' ? 'Tạo tài khoản' : s.mode === 'forgot' ? 'Gửi email đặt lại' : s.mode === 'newpass' ? 'Lưu mật khẩu mới' : 'Đăng nhập',
       modeLink: s.mode === 'up' ? 'Đã có tài khoản? Đăng nhập' : 'Chưa có tài khoản? Tạo mới',
@@ -305,8 +351,10 @@ class Component extends DCLogic {
       toggleMode: () => this.setState({ mode: s.mode === 'up' ? 'in' : 'up', err: '' }),
       forgotLink: () => this.setState({ mode: 'forgot', err: '' }), backToLogin: () => this.setState({ mode: 'in', err: '' }),
       tryDemo: () => { A.useDemo(); this.loadClasses(); }, signOut: () => { A.signOut(); this.setState({ view: 'login', classes: [], code: '' }); },
-      backToClasses: () => this.setState({ view: 'classes', board: false }), claim: () => this.claim(),
-      classes: (s.classes || []).map(x => ({ class_code: x.class_code, date: new Date(x.created_at).toLocaleDateString('vi-VN'), open: () => this.openClass(x.class_code) })),
+      backToClasses: () => this.setState({ view: 'classes', board: false }), claim: () => this.claim(), openAdmin: () => this.loadAdmin(),
+      noClasses: !(s.classes || []).length, noAdminClasses: !(s.adminClasses || []).length,
+      classes: (s.classes || []).map(x => ({ class_code: x.class_code, date: new Date(x.created_at).toLocaleDateString('vi-VN'), open: () => this.openClass(x.class_code), remove: e => { if (e && e.stopPropagation) e.stopPropagation(); this.removeClass(x.class_code); } })),
+      adminClasses: (s.adminClasses || []).map(x => ({ class_code: x.class_code, date: new Date(x.created_at).toLocaleDateString('vi-VN'), ownerLine: '👤 ' + x.owner_email + ' · ' + x.team_count + ' đội · ' + x.submission_count + ' bài nộp', open: () => this.openClass(x.class_code), remove: e => { if (e && e.stopPropagation) e.stopPropagation(); this.removeClass(x.class_code); } })),
       code: s.code, refresh: () => this.reload(), exportXls: () => P.xls(s.code, T, G), openBoard: () => this.setState({ board: true }), closeBoard: () => this.setState({ board: false }),
       classStats: `${T.length} đội · ${s.subs.length} bài nộp · ${lock != null ? 'Đang khóa sau vòng ' + lock : 'Không khóa vòng'}${c.forced_event ? ' · Biến cố GV: ' + c.forced_event : ''}`,
       tabs: tabDefs.map(([k, l]) => ({ label: l, go: () => this.setState({ tab: k }), bg: s.tab === k ? '#2f8a8c' : '#fbf6ee', fg: s.tab === k ? '#fff' : '#1f4a55', border: s.tab === k ? '#23706f' : '#e6d6bf' })),
