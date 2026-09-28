@@ -48,11 +48,13 @@
   const missing = e => /Could not find the function|PGRST202|schema cache/i.test((e && e.message) || '');
   const guard = async p => { try { return await p; } catch (e) { if (missing(e)) { api.needsMigration = true; throw new Error(MIG); } throw e; } };
 
+  const ADMIN_EMAILS = ['thuyhuongctu@gmail.com', 'patu@ctu.edu.vn'];
   var api = {
     get demo() { return demo; },
     get email() { return demo ? 'khach@demo' : session && session.email; },
     get signedIn() { return demo || !!session; },
     get backendOn() { return !!(cfg().enabled && cfg().url && cfg().anonKey); },
+    get isAdmin() { return ADMIN_EMAILS.includes(String(api.email || '').toLowerCase()); },
     useDemo() { demo = true; },
     async signIn(email, password) { demo = false; keep(await auth('token?grant_type=password', { email, password })); },
     async signUp(email, password) { const j = await auth('signup', { email, password }); if (j.access_token) keep(j); return !!j.access_token; },
@@ -61,6 +63,8 @@
     async completeRecovery(recoveryToken, password) { return authPut('user', recoveryToken, { password }); },
     async myClasses() { return demo ? D.classes : rpc('bizon_my_classes'); },
     async claimClass(code) { code = String(code || '').trim().toUpperCase(); if (demo) { if (!D.classes.some(c => c.class_code === code)) D.classes.unshift({ class_code: code, created_at: new Date().toISOString() }); return true; } return rpc('bizon_claim_class', { p_class_code: code }); },
+    async deleteClass(code) { code = String(code || '').trim().toUpperCase(); if (demo) { const i = D.classes.findIndex(c => c.class_code === code); if (i >= 0) D.classes.splice(i, 1); return true; } return rpc('bizon_delete_class', { p_class_code: code }); },
+    async adminAllClasses() { return demo ? [] : rpc('bizon_admin_all_classes'); },
     needsMigration: false, migrationNote: MIG,
     async submissions(code) { if (demo) return dRows(code);
       try { return await rpc('bizon_submissions_v2', { p_class_code: code }); }
