@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<!-- Bản 3D rút gọn của Hộ Chiếu Mini: dùng chung cảnh Vàm Thịnh + bp3d.js của Hộ Chiếu Thương Hiệu 3D
+     (chỉ 3 đảo thị trường thay vì 7), còn phần quyết định/chấm điểm vẫn là "Ho Chieu Mini.dc.html"
+     gốc, không đổi gì ở đó – trang này chỉ đọc trạng thái qua localStorage để vẽ cảnh 3D bên cạnh.
+     © 2026 Đỗ Thùy Hương & Phan Anh Tú. -->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Hộ Chiếu Mini 3D · Đầu tư quốc tế</title>
+<meta name="description" content="Hộ Chiếu Mini 3D – bản 3D rút gọn: đưa doanh nghiệp đầu tư ra 3 thị trường nước ngoài trên cùng thế giới đất sét Vàm Thịnh của BizOn.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
+<meta name="theme-color" content="#006687">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<script src="js/backend-config.js"></script>
+<script src="js/error-log.js"></script>
+<script src="support.js"></script>
+<link rel="stylesheet" href="css/bizon-fonts.css">
+<script type="importmap">
+{ "imports": { "three": "./js/vendor/three.module.js", "three/addons/controls/OrbitControls.js": "./js/vendor/OrbitControls.js" } }
+</script>
+<style>
+  html { background:#f4faff; } html[data-theme="dark"] { background:#081a20; color-scheme:dark; }
+  body { font-family:'Manrope', 'Manrope Fallback',sans-serif; margin:0; overflow-x:hidden; }
+  a { color:#006687; } a:hover { color:#004f69; }
+  #bp3d-stage { position:fixed; left:0; top:0; width:100%; height:46svh; z-index:0; overflow:hidden;
+    background:linear-gradient(180deg,#a9d8e6 0%,#d4ecef 55%,#d4ecef 100%); }
+  html[data-theme="dark"] #bp3d-stage { background:linear-gradient(180deg,#07161c 0%,#0d2a33 60%); }
+  #bp3d-stage canvas { display:block; width:100%; height:100%; touch-action:none; }
+  #bp3d-stage::after { content:''; position:absolute; left:0; right:0; bottom:0; height:36px; background:linear-gradient(rgba(244,250,255,0),#f4faff); pointer-events:none; }
+  html[data-theme="dark"] #bp3d-stage::after { background:linear-gradient(rgba(8,26,32,0),#081a20); }
+  #bp3d-col { position:relative; z-index:1; padding-top:46svh; pointer-events:none; }
+  #bp3d-col > * { pointer-events:auto; }
+  .bp3d-tools { position:absolute; left:12px; right:12px; bottom:44px; display:flex; flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none; gap:8px; z-index:2; pointer-events:none; max-width:calc(100% - 20px); }
+  .bp3d-tools::-webkit-scrollbar { display:none; }
+  .bp3d-tools > * { pointer-events:auto; flex:0 0 auto; }
+  .bp3d-tools button { font:800 12px Manrope,sans-serif; color:#033337; background:rgba(255,255,255,.92); border:0; border-radius:999px; padding:9px 14px; min-height:40px;
+    box-shadow:0 6px 16px -6px rgba(0,60,80,.4), inset 0 -3px 0 rgba(0,0,0,.06); cursor:pointer; }
+  .bp3d-tools button:active { transform:translateY(1px); }
+  #bp3d-act { position:absolute; left:50%; bottom:12px; transform:translateX(-50%); width:min(94%,440px); background:#fffaf1; border-radius:22px; padding:12px; box-shadow:0 10px 30px rgba(3,51,55,.28), inset 0 -4px 0 rgba(3,51,55,.08); z-index:6; font-family:inherit; color:#033337; }
+  #bp3d-act[hidden] { display:none; }
+  #bp3d-act h4 { margin:0 0 2px; font-weight:800; font-size:14px; } #bp3d-act p { margin:0 0 8px; font-size:11.5px; opacity:.72; }
+  #bp3d-act .g { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px; }
+  #bp3d-act button { border:0; border-radius:14px; background:#fff; box-shadow:inset 0 -3px 0 rgba(3,51,55,.12), 0 1px 0 rgba(3,51,55,.1); padding:8px 9px; text-align:left; font:inherit; font-size:12px; font-weight:700; color:#033337; min-height:44px; cursor:pointer; }
+  #bp3d-act button small { display:block; font-weight:600; opacity:.6; font-size:10.5px; }
+  #bp3d-act .x { position:absolute; right:8px; top:8px; min-height:32px; width:32px; text-align:center; padding:0; background:#f2eadc; }
+  #bp3d-cap { position:absolute; left:50%; top:12px; transform:translate(-50%,-8px); max-width:min(92%,560px); z-index:2; pointer-events:none;
+    font:800 13px/1.4 Manrope,sans-serif; color:#033337; background:rgba(255,255,255,.95); padding:9px 16px; border-radius:18px; text-align:center;
+    box-shadow:0 10px 26px -8px rgba(0,60,80,.45); opacity:0; transition:opacity .3s, transform .3s; }
+  #bp3d-cap.on { opacity:1; transform:translate(-50%,0); }
+  #bp3d-hint { position:absolute; right:12px; bottom:50px; z-index:2; font:700 11px Manrope,sans-serif; color:#033337; background:rgba(255,255,255,.88); padding:5px 10px; border-radius:999px; pointer-events:none; white-space:nowrap; line-height:1.3; }
+  html[data-theme="dark"] #bp3d-hint { color:#d6ecf0; background:rgba(8,26,32,.85); }
+  #hc-bar { position:fixed; top:0; left:0; right:0; height:52px; z-index:60; display:flex; align-items:center; gap:8px; padding:0 12px; background:rgba(3,51,55,.86); backdrop-filter:blur(12px); color:#fff; }
+  #hc-bar b { font-size:14px; font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0; flex:1; }
+  #hc-bar a { color:#fff; font:800 12px Manrope,sans-serif; background:rgba(255,255,255,.14); border-radius:999px; padding:8px 12px; text-decoration:none; }
+  @media (min-width:1024px) {
+    #bp3d-stage { height:100vh; width:calc(100% - 460px); }
+    #bp3d-stage::after { display:none; }
+    #bp3d-col { margin-left:auto; width:460px; min-height:100vh; padding-top:52px; }
+    .bp3d-tools { bottom:18px; left:18px; } #bp3d-hint { bottom:26px; }
+  }
+</style>
+</head>
+<body>
+<div id="hc-bar">
+  <b>🎓 Hộ Chiếu Mini 3D</b>
+  <a href="Ho%20Chieu%20Mini.dc.html">📋 Bản không 3D</a>
+</div>
+<div id="bp3d-stage" aria-label="Bản đồ 3D 3 thị trường Hộ Chiếu Mini">
+  <div id="bp3d-act" hidden></div>
+  <div id="bp3d-cap" role="status" aria-live="polite"></div>
+  <div class="bp3d-tools">
+    <button id="bp3d-pp" type="button">🛂 Hộ chiếu</button>
+    <button id="bp3d-ov" type="button">🧭 Toàn cảnh</button>
+    <button id="bp3d-snd" type="button" aria-label="Âm thanh">🔊</button>
+    <button id="bp3d-land" type="button">👤 CEO lên đảo</button>
+    <button id="bp3d-full" type="button">⤢ Mở rộng</button>
+  </div>
+  <p id="bp3d-hint">Kéo để xoay · chạm vào đảo</p>
+</div>
+<div id="bp3d-col">
+<x-dc>
+<dc-import name="Ho Chieu Mini" edition="fdi" quarters="4" quarter-minutes="0" show-facilitator="false"></dc-import>
+</x-dc>
+</div>
+
+<script>
+/* ---------- Cầu nối sang bp3d.js: đọc trạng thái ván Hộ Chiếu Mini (đang lưu ở localStorage bởi
+   "Ho Chieu Mini.dc.html" không đổi gì) rồi dựng window.__bp tương thích để dùng lại nguyên vẹn
+   cảnh 3D Vàm Thịnh của Hộ Chiếu Thương Hiệu 3D, chỉ với 3 đảo thay vì 7. ---------- */
+(function () {
+  var EN = function () { try { return localStorage.getItem('bizon-lang') === 'en'; } catch (e) { return false; } };
+  var tr = function (vi, en) { return EN() ? en : vi; };
+  var MODE_MAP = { lic: 3, jv: 4, fdi: 5 };
+  var DEFAULT_MK = ['id', 'th', 'de'];
+  var curG = null, curHome = 'vn';
+  // Bản sao tối thiểu tên/quốc kỳ 4 thị trường của js/fdi-mini/data.js – dùng làm mặc định ngay
+  // khi bp3d.js đọc window.__bp.MKTS lần đầu, vì FDIMiniData có thể chưa kịp tải qua <dc-import>.
+  var MK_NAMES = {
+    id: { name: 'Indonesia', nameEn: 'Indonesia', flag: '🇮🇩' }, th: { name: 'Thái Lan', nameEn: 'Thailand', flag: '🇹🇭' },
+    de: { name: 'Đức (EU)', nameEn: 'Germany (EU)', flag: '🇩🇪' }, vn: { name: 'Việt Nam', nameEn: 'Vietnam', flag: '🇻🇳' },
+  };
+
+  function poll() {
+    try {
+      var raw = localStorage.getItem('bizon-hcmini-fdi');
+      if (raw) { var s = JSON.parse(raw); curG = s.g || null; curHome = s.home || curHome; }
+    } catch (e) {}
+    setTimeout(poll, 700);
+  }
+  poll();
+
+  function marketsNow() {
+    var D = window.FDIMiniData;
+    var mk = (curG && curG.mk) || (D ? D.pickMarkets(curHome) : DEFAULT_MK);
+    return mk.map(function (k) {
+      var m = D && D.MARKETS[k], n = MK_NAMES[k];
+      if (m) return { key: k, name: m.n[0], nameEn: m.n[1], icon: m.flag, trait: m.note[0], traitEn: m.note[1], img: null };
+      if (n) return { key: k, name: n.name, nameEn: n.nameEn, icon: n.flag, trait: '', traitEn: '', img: null };
+      return { key: k, name: k, nameEn: k, icon: '🌐', trait: '', traitEn: '', img: null };
+    });
+  }
+  function entered() {
+    var mk = (curG && curG.mk) || DEFAULT_MK;
+    return mk.map(function (k) { var p = curG && curG.pos[k]; return p ? (MODE_MAP[p.mode] ?? null) : null; });
+  }
+  function know() {
+    var mk = (curG && curG.mk) || DEFAULT_MK;
+    return mk.map(function (k) { var p = curG && curG.pos[k]; return p ? Math.round((p.know || 0) * 100) : 0; });
+  }
+
+  window.__bp = {
+    get MKTS() { return marketsNow(); },
+    get MODES() { return window.FDIMiniData ? window.FDIMiniData.MODES.map(function (m) { return { name: m.n[0], nameEn: m.n[1], icon: m.icon }; }) : []; },
+    get S() {
+      var g = curG, E = window.FDIMini;
+      return {
+        q: g ? g.q - 1 : 0, Q: g ? g.Q : 4, firm: 0, cash: g ? g.cash : 20,
+        entered: entered(), know: know(), phase: g && g.done ? 'end' : undefined,
+        profit: g && E ? E.value(g) - g.start : 0, rep: 50, rival: { rev: 0, in: [] }, qin: (g && g.mk || DEFAULT_MK).map(function () { return g ? g.q : 1; }),
+      };
+    },
+    BRAND: { kicker: tr('Đầu tư quốc tế · phiên bản rút gọn', 'International investment · lightweight edition'), title: '🎓 ' + tr('Hộ Chiếu Mini', 'Passport Mini') },
+    scores: function () {
+      var E = window.FDIMini; if (!E || !curG) return { total: 0 };
+      return { total: Math.round(E.score10(curG) * 10) };
+    },
+  };
+})();
+</script>
+<script type="module" src="bp3d.js"></script>
+</body>
+</html>
