@@ -54,16 +54,27 @@ const G0 = 0.47;
 const WOOD = M(0x9a6a3a), WOOD2 = M(0x7a4f2c);
 
 /* ---------- bố cục thế giới ---------- */
-const MK = [
+// Danh sách tên/icon/màu thị trường mặc định (7 thị trường giả tưởng của game gốc). Game khác
+// (vd Hộ Chiếu Mini) truyền window.__bp.MKTS với tên/icon riêng thì dùng luôn tên/icon đó, chỉ
+// mượn lại bảng màu này làm màu dự phòng khi thị trường không tự cho màu.
+const MK_FALLBACK = [
   { name: 'Hải Lam', icon: '🌐', c: '#2f7fb5' }, { name: 'Bắc Phong', icon: '🏔️', c: '#5b6f86' }, { name: 'Kim Sa', icon: '🌅', c: '#c07a1f' },
   { name: 'Lục Đảo', icon: '🏝️', c: '#3f8a45' }, { name: 'Nhật Quang', icon: '🌸', c: '#c0587e' }, { name: 'Tân Cảng', icon: '⚓', c: '#44566e' },
   { name: 'Hỏa Sơn', icon: '🌋', c: '#b8522a' }];
+const MK = (window.__bp && Array.isArray(window.__bp.MKTS) && window.__bp.MKTS.length && window.__bp.MKTS[0] && window.__bp.MKTS[0].name)
+  ? window.__bp.MKTS.map((mk, i) => ({ name: mk.name, icon: mk.icon || MK_FALLBACK[i % 7].icon, c: mk.c || MK_FALLBACK[i % 7].c }))
+  : MK_FALLBACK;
 const MODE_HEX = ['#2f8fcf', '#e8762d', '#3f8f4a', '#8a5fc9', '#1f8f8a', '#b0473f'];
 const MODE_ICON = ['🛒', '🚢', '🤝', '📜', '🏗️', '🏭'];
 const HOME = new THREE.Vector3(0, 0, 10);
 const END = new THREE.Vector3(9, 0, 13.5);
 const IR = 2.6;
-const IPOS = [165, 140, 115, 90, 65, 40, 15].map(a => new THREE.Vector3(19 * Math.cos(a * Math.PI / 180), 0, 6 - 19 * Math.sin(a * Math.PI / 180)));
+// Số thị trường/quý: mặc định 7/6 cho game gốc, game khác (vd Hộ Chiếu Mini) truyền window.__bp.MKTS
+// ngắn hơn + window.__bp.S.Q để tự thu gọn bố cục thế giới mà không đổi hành vi game gốc.
+const NMK = (window.__bp && window.__bp.MKTS && window.__bp.MKTS.length) || 7;
+const NQ = (window.__bp && window.__bp.S && window.__bp.S.Q) || 6;
+const IPOS = (NMK === 7 ? [165, 140, 115, 90, 65, 40, 15] : Array.from({ length: NMK }, (_, i) => NMK === 1 ? 90 : 165 - i * (150 / (NMK - 1))))
+  .map(a => new THREE.Vector3(19 * Math.cos(a * Math.PI / 180), 0, 6 - 19 * Math.sin(a * Math.PI / 180)));
 
 /* ---------- biển ---------- */
 const seaM = new THREE.MeshStandardMaterial({ color: dark ? 0x1f5a66 : 0x5db3c0, roughness: 0.35, metalness: 0.05 });
@@ -367,7 +378,7 @@ P(GE.cyl, M(0xc98f52), stampTool, 0, 0, 0.18, 0.26, 0.12, 0.26).rotation.x = Mat
 P(GE.cyl, M(0x7a4f2c), stampTool, 0, 0, 0.45, 0.09, 0.45, 0.09).rotation.x = Math.PI / 2;
 P(GE.sph, M(0x7a4f2c), stampTool, 0, 0, 0.72, 0.17);
 book.traverse(o => { o.castShadow = o.receiveShadow = false; });
-const SLOTS = [[0.52, 0.86], [1.38, 0.86], [0.52, 0.26], [1.38, 0.26], [0.52, -0.34], [1.38, -0.34], [0.95, -0.94]];
+const SLOTS = [[0.52, 0.86], [1.38, 0.86], [0.52, 0.26], [1.38, 0.26], [0.52, -0.34], [1.38, -0.34], [0.95, -0.94]].slice(0, NMK);
 const stamps = []; let shown = 0;
 function firmInfo() { const B = window.__bp; const f = B && B.FIRMS ? B.FIRMS[B.S.firm] : null; return f || { icon: '🧴', name: 'Mộc Nhiên', prod: 'Mỹ phẩm thảo mộc', prodEn: 'Herbal cosmetics' }; }
 function drawCover() {
@@ -399,7 +410,7 @@ function drawInside() {
   g.font = '96px ' + FONT; g.textAlign = 'center'; g.fillStyle = '#033337'; g.fillText(f.icon, 119, 222);
   g.textAlign = 'left';
   const rows = [[tr('Thương hiệu', 'Brand'), f.name], [tr('Sản phẩm', 'Product'), tr(f.prod, f.prodEn || f.prod)], [tr('Nơi xuất phát', 'Home port'), 'Vàm Thịnh'],
-    [tr('Quý hiện tại', 'Quarter'), B ? Math.min(6, B.S.q + 1) + '/6' : '1/6'], [tr('Dấu mộc', 'Stamps'), stamps.length + '/7']];
+    [tr('Quý hiện tại', 'Quarter'), (B ? Math.min(NQ, B.S.q + 1) : 1) + '/' + NQ], [tr('Dấu mộc', 'Stamps'), stamps.length + '/' + NMK]];
   rows.forEach(([k, v], i) => { const y = i < 2 ? 136 + i * 70 : 330 + (i - 2) * 72; const x = i < 2 ? 216 : 44;
     g.fillStyle = 'rgba(3,51,55,.55)'; g.font = '700 17px ' + FONT; g.fillText(k.toUpperCase(), x, y);
     g.fillStyle = '#033337'; g.font = '800 27px ' + FONT; g.fillText(v, x, y + 32); });
@@ -507,7 +518,7 @@ function drawCert() {
   g.strokeStyle = 'rgba(253,161,39,.55)'; g.lineWidth = 3; g.beginPath(); g.moveTo(W / 2 - 260, 344); g.lineTo(W / 2 + 260, 344); g.stroke();
   const title = ($('bp-title') && $('bp-title').textContent.trim()) || '';
   g.fillStyle = 'rgba(3,51,55,.78)'; g.font = '700 23px ' + FONT;
-  wrapText(g, tr('Đưa ' + f.name + ' từ Vàm Thịnh ra ' + stamps.length + ' thị trường qua 6 quý', 'Took ' + f.name + ' from Vàm Thịnh to ' + stamps.length + ' markets over 6 quarters') + ' · ' + tr('Điểm tổng', 'Total') + ' ' + sc.total + '/100' + (title ? ' · ' + title : ''), W / 2, 388, 760, 32);
+  wrapText(g, tr('Đưa ' + f.name + ' từ Vàm Thịnh ra ' + stamps.length + ' thị trường qua ' + NQ + ' quý', 'Took ' + f.name + ' from Vàm Thịnh to ' + stamps.length + ' markets over ' + NQ + ' quarters') + ' · ' + tr('Điểm tổng', 'Total') + ' ' + sc.total + '/100' + (title ? ' · ' + title : ''), W / 2, 388, 760, 32);
   [[250, sigs[0], 'NCS. Đỗ Thùy Hương', 'Founder & Project Lead'], [774, sigs[1], 'PGS.TS. Phan Anh Tú', 'Co-founder & Chief Academic Advisor']].forEach(([x, im, n, r]) => {
     if (im.complete && im.naturalWidth) { const h = 70, w = h * im.naturalWidth / im.naturalHeight; g.drawImage(im, x - w / 2, 496, w, h); }
     g.strokeStyle = 'rgba(3,51,55,.25)'; g.lineWidth = 2; g.beginPath(); g.moveTo(x - 150, 576); g.lineTo(x + 150, 576); g.stroke();
@@ -549,7 +560,7 @@ function camGoal(key, t) {
 }
 
 /* ---------- đồng bộ với game ---------- */
-const seen = { entered: Array(7).fill(null), rival: new Set(), cleared: Array(7).fill(false), intro: true, ended: false };
+const seen = { entered: Array(NMK).fill(null), rival: new Set(), cleared: Array(NMK).fill(false), intro: true, ended: false };
 function sync(t) {
   const B = window.__bp; if (!B) return; const S = B.S;
   if (sync.ph !== S.phase) { sync.ph = S.phase; const ab = $('bp3d-act'); if (ab) ab.hidden = true; }
@@ -561,11 +572,11 @@ function sync(t) {
   homeLabel.userData.set('🏡 Vàm Thịnh', '', '#e8762d');
   let key = intro ? 'intro' : ended ? 'end' : S.phase === 'dec' && S.sel && S.sel.enter !== null ? 'm' + S.sel.enter : S.phase === 'evt' ? 'home' : 'ov';
   // Thâm nhập → cờ, tuyến, dấu mộc
-  for (let m = 0; m < 7; m++) {
+  for (let m = 0; m < NMK; m++) {
     const md = S.entered[m], I = islands[m];
     if (md !== null && md !== undefined && seen.entered[m] === null) {
       seen.entered[m] = md;
-      const q = justStarted ? Math.max(1, S.q + 1 - (S.qin[m] || 0)) : Math.min(6, S.q + 1);
+      const q = justStarted ? Math.max(1, S.q + 1 - ((S.qin && S.qin[m]) || 0)) : Math.min(NQ, S.q + 1);
       stamps.push({ m, q, mode: md });
       I.flag = makeFlag(md, I.g, IR * 0.5, IR * 0.45);
       landParty(I, justStarted);
@@ -582,7 +593,7 @@ function sync(t) {
     I.fogT = target;
     if (kn >= 60 && !seen.cleared[m]) { seen.cleared[m] = true; if (!justStarted && !intro) say('🌤️ ' + tr('Sương mù tan ở ', 'Fog lifts over ') + MK[m].name); }
     // Đối thủ
-    if (S.rival && S.rival.in.indexOf(m) >= 0 && !seen.rival.has(m)) {
+    if (S.rival && S.rival.in && S.rival.in.indexOf(m) >= 0 && !seen.rival.has(m)) {
       seen.rival.add(m); I.rival = makeRival(I.g, -IR * 0.55, IR * 0.35, B.RIVAL && B.RIVAL.img);
       if (!justStarted) say((B.RIVAL ? B.RIVAL.icon + ' ' + B.RIVAL.name : '⚔️') + tr(' đổ bộ ', ' lands in ') + MK[m].name);
     }
@@ -810,7 +821,7 @@ frame();
 /* ---------- sự kiện thị trường 3D ---------- */
 const EVFX = { id: null, g: null, t0: 0 };
 const EVCAT = { trend: 'fair', celeb: 'fair', green: 'fair', training: 'fair', cert: 'fair', pricewar: 'storm', subst: 'storm', fx: 'storm', review: 'storm', devalue: 'storm', copy: 'storm', betray: 'storm', held: 'storm', board: 'storm', defect: 'storm', reg: 'tariff', tax: 'tariff', data: 'tariff', greenlaw: 'tariff', port: 'tariff', talent: 'home', supplier: 'home', cashflow: 'home', conflict: 'home' };
-function evTargets(S) { const e = []; for (let m = 0; m < 7; m++) if (S.entered[m] !== null && S.entered[m] !== undefined) e.push(m); return e; }
+function evTargets(S) { const e = []; for (let m = 0; m < NMK; m++) if (S.entered[m] !== null && S.entered[m] !== undefined) e.push(m); return e; }
 function fxAt(kind, par) {
   const g = grp(par, 0, 0, 0);
   if (kind === 'storm') {
@@ -931,7 +942,7 @@ function drawBadges() {
 }
 function badgeTick() {
   const B = window.__bp; if (!B || !B.S || !B.S.know) return; const S = B.S, got = myB(); let neu = null;
-  BADGES.forEach(b => { if (!got[b.id]) { try { if (b.ok(S)) { got[b.id] = Math.min(6, S.q + 1); neu = b; } } catch (e) {} } });
+  BADGES.forEach(b => { if (!got[b.id]) { try { if (b.ok(S)) { got[b.id] = Math.min(NQ, S.q + 1); neu = b; } } catch (e) {} } });
   if (neu) { try { localStorage.setItem(BK, JSON.stringify(BG)); } catch (e) {} if (badgeTick.ready) { sfx('badge'); say('🏆 ' + tr('Huy hiệu mới: ', 'New badge: ') + neu.ic + ' ' + tr(neu.vi, neu.en), 4200); } window.dispatchEvent(new CustomEvent('bp3d-badge', { detail: { id: neu.id } })); }
   badgeTick.ready = true; drawBadges();
 }
@@ -1041,25 +1052,25 @@ islands.forEach((I, m) => {
 (() => {
   const I = islands;
   // Hải Lam: drone giao hàng
-  for (let k = 0; k < 2; k++) { const d = grp(I[0].g); P(GE.box, M(0x333a44), d, 0, 0, 0, 0.26, 0.06, 0.26); [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([a, b]) => P(GE.cyl, M(0xe6e6e6, { transparent: true, opacity: 0.6 }), d, a * 0.17, 0.04, b * 0.17, 0.09, 0.01, 0.09)); P(GE.box, M(0xf2b53a), d, 0, -0.1, 0, 0.12, 0.12, 0.12);
+  if (I[0]) for (let k = 0; k < 2; k++) { const d = grp(I[0].g); P(GE.box, M(0x333a44), d, 0, 0, 0, 0.26, 0.06, 0.26); [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([a, b]) => P(GE.cyl, M(0xe6e6e6, { transparent: true, opacity: 0.6 }), d, a * 0.17, 0.04, b * 0.17, 0.09, 0.01, 0.09)); P(GE.box, M(0xf2b53a), d, 0, -0.1, 0, 0.12, 0.12, 0.12);
     anim.push(t => { const a = t * 0.5 + k * Math.PI; d.position.set(Math.cos(a) * 1.9, G0 + 2.6 + Math.sin(t * 1.3 + k) * 0.25, Math.sin(a) * 1.9); d.rotation.y = -a; }); }
   // Bắc Phong: tuyết rơi
-  particles(I[1].g, 60, { c: 0xffffff, size: 0.09, fn: (t, a, b, c) => [(a - 0.5) * 5, G0 + 4.2 - ((t * 0.35 + c * 4) % 4), (b - 0.5) * 5] });
+  if (I[1]) particles(I[1].g, 60, { c: 0xffffff, size: 0.09, fn: (t, a, b, c) => [(a - 0.5) * 5, G0 + 4.2 - ((t * 0.35 + c * 4) % 4), (b - 0.5) * 5] });
   // Kim Sa: dù bãi biển + người lướt sóng
-  [[1.7, 1.5, 0xe8604c], [2.05, 0.7, 0x3aa0d8]].forEach(([x, z, c]) => { P(GE.cyl, M(0xffffff), I[2].g, x, G0 + 0.45, z, 0.02, 0.9, 0.02); P(GE.cone, M(c), I[2].g, x, G0 + 0.95, z, 0.42, 0.22, 0.42); });
-  const surf = grp(I[2].g); P(GE.box, M(0xf2b53a), surf, 0, 0, 0, 0.7, 0.04, 0.18); const sp = pawn(surf, 0x3aa0d8, 0xe8b08c, null, 0.8); sp.position.y = 0.02; sp.rotation.y = Math.PI / 2;
-  anim.push(t => { const a = t * 0.3; surf.position.set(Math.cos(a) * 3.6, -0.02 + Math.sin(t * 2) * 0.05, Math.sin(a) * 3.6); surf.rotation.y = -a; surf.rotation.z = Math.sin(t * 2) * 0.12; });
+  if (I[2]) { [[1.7, 1.5, 0xe8604c], [2.05, 0.7, 0x3aa0d8]].forEach(([x, z, c]) => { P(GE.cyl, M(0xffffff), I[2].g, x, G0 + 0.45, z, 0.02, 0.9, 0.02); P(GE.cone, M(c), I[2].g, x, G0 + 0.95, z, 0.42, 0.22, 0.42); });
+    const surf = grp(I[2].g); P(GE.box, M(0xf2b53a), surf, 0, 0, 0, 0.7, 0.04, 0.18); const sp = pawn(surf, 0x3aa0d8, 0xe8b08c, null, 0.8); sp.position.y = 0.02; sp.rotation.y = Math.PI / 2;
+    anim.push(t => { const a = t * 0.3; surf.position.set(Math.cos(a) * 3.6, -0.02 + Math.sin(t * 2) * 0.05, Math.sin(a) * 3.6); surf.rotation.y = -a; surf.rotation.z = Math.sin(t * 2) * 0.12; }); }
   // Lục Đảo: đàn chim
-  for (let k = 0; k < 5; k++) { const b = grp(I[3].g); [-1, 1].forEach(s => { const w = P(GE.box, M(0xffffff), b, s * 0.12, 0, 0, 0.22, 0.02, 0.07); w.userData.s = s; });
+  if (I[3]) for (let k = 0; k < 5; k++) { const b = grp(I[3].g); [-1, 1].forEach(s => { const w = P(GE.box, M(0xffffff), b, s * 0.12, 0, 0, 0.22, 0.02, 0.07); w.userData.s = s; });
     anim.push(t => { const a = t * 0.45 + k * 0.35; b.position.set(Math.cos(a) * (2.4 + k * 0.1), G0 + 3.2 + Math.sin(t + k) * 0.2, Math.sin(a) * (2.4 + k * 0.1)); b.rotation.y = -a; b.children.forEach(w => w.rotation.z = w.userData.s * Math.sin(t * 9 + k) * 0.5); }); }
   // Nhật Quang: cánh hoa rơi
-  particles(I[4].g, 50, { c: 0xf6b8cb, size: 0.11, fn: (t, a, b, c) => { const y = (t * 0.25 + c * 3) % 3; return [(a - 0.5) * 4.6 + Math.sin(t + a * 9) * 0.3, G0 + 3.1 - y, (b - 0.5) * 4.6 + y * 0.3]; } });
+  if (I[4]) particles(I[4].g, 50, { c: 0xf6b8cb, size: 0.11, fn: (t, a, b, c) => { const y = (t * 0.25 + c * 3) % 3; return [(a - 0.5) * 4.6 + Math.sin(t + a * 9) * 0.3, G0 + 3.1 - y, (b - 0.5) * 4.6 + y * 0.3]; } });
   // Tân Cảng: tàu hàng ra vào
-  const ship = grp(I[5].g); P(GE.box, M(0x2b3f6b), ship, 0, 0.1, 0, 1.3, 0.3, 0.42); P(GE.box, M(0xffffff), ship, -0.45, 0.4, 0, 0.3, 0.3, 0.36);
-  [0xe8604c, 0x3aa0d8, 0xf2a73b].forEach((c, i) => P(GE.box, M(c), ship, -0.05 + i * 0.3, 0.37, 0, 0.26, 0.2, 0.34));
-  anim.push(t => { const a = t * 0.18; ship.position.set(Math.cos(a) * 3.9, -0.1 + Math.sin(t * 1.4) * 0.04, Math.sin(a) * 3.9); ship.rotation.y = -a + Math.PI; });
+  if (I[5]) { const ship = grp(I[5].g); P(GE.box, M(0x2b3f6b), ship, 0, 0.1, 0, 1.3, 0.3, 0.42); P(GE.box, M(0xffffff), ship, -0.45, 0.4, 0, 0.3, 0.3, 0.36);
+    [0xe8604c, 0x3aa0d8, 0xf2a73b].forEach((c, i) => P(GE.box, M(c), ship, -0.05 + i * 0.3, 0.37, 0, 0.26, 0.2, 0.34));
+    anim.push(t => { const a = t * 0.18; ship.position.set(Math.cos(a) * 3.9, -0.1 + Math.sin(t * 1.4) * 0.04, Math.sin(a) * 3.9); ship.rotation.y = -a + Math.PI; }); }
   // Hỏa Sơn: khói núi lửa
-  particles(I[6].g, 36, { c: 0x6a5a55, size: 0.34, o: 0.55, fn: (t, a, b, c) => { const y = (t * 0.4 + c * 3) % 3; return [Math.sin(a * 9 + t * 0.3) * y * 0.35, G0 + 2.4 + y, -0.2 + Math.cos(b * 9) * y * 0.3 - y * 0.25]; } });
+  if (I[6]) particles(I[6].g, 36, { c: 0x6a5a55, size: 0.34, o: 0.55, fn: (t, a, b, c) => { const y = (t * 0.4 + c * 3) % 3; return [Math.sin(a * 9 + t * 0.3) * y * 0.35, G0 + 2.4 + y, -0.2 + Math.cos(b * 9) * y * 0.3 - y * 0.25]; } });
 })();
 // Vàm Thịnh: chợ nổi, người dân, khói bếp
 (() => {
@@ -1169,9 +1180,9 @@ const CONVO = { q: [], i: 0, t: 0, on: false };
 function short(s) { return s.length > 40 ? s.slice(0, 38).replace(/\s\S*$/, '') + '…' : s; }
 function buildConvo() {
   const B = window.__bp; if (!B || !B.S) return [];
-  const S = B.S, n = S.entered.filter(v => v !== null && v !== undefined).length, avg = Math.round(S.know.reduce((a, b) => a + b, 0) / S.know.length), q = Math.min(6, S.q + 1);
+  const S = B.S, n = S.entered.filter(v => v !== null && v !== undefined).length, avg = Math.round(S.know.reduce((a, b) => a + b, 0) / S.know.length), q = Math.min(NQ, S.q + 1);
   const L = [];
-  L.push(['Lumina AI', tr('Quý ' + q + '/6. Tiền mặt ' + S.cash + ' tỷ, đã vào ' + n + '/7 thị trường, tri thức trung bình ' + avg + '%.', 'Quarter ' + q + '/6. Cash ' + S.cash + 'B, in ' + n + '/7 markets, average intel ' + avg + '%.')]);
+  L.push(['Lumina AI', tr('Quý ' + q + '/' + NQ + '. Tiền mặt ' + S.cash + ' tỷ, đã vào ' + n + '/' + NMK + ' thị trường, tri thức trung bình ' + avg + '%.', 'Quarter ' + q + '/' + NQ + '. Cash ' + S.cash + 'B, in ' + n + '/' + NMK + ' markets, average intel ' + avg + '%.')]);
   if (avg < 40) { L.push(['Lina Park', tr('Sương mù còn dày. Mua tin trước khi thâm nhập giúp tránh đoán sai nhu cầu – nghiên cứu thị trường rẻ hơn một lần thất bại.', 'The fog is still thick. Buying intel before entering avoids misreading demand – research is cheaper than one failure.')]); L.push(['Bà Sáu Lành', tr('Hồi má bán ghe chợ nổi, cũng phải hỏi giá mấy ghe bên cạnh trước rồi mới hét giá.', 'When I sold on the floating market, I asked the boats next door first before naming my price.')]); }
   else L.push(['An Nhiên', tr('Mình đã hiểu khách rồi. Giờ là lúc kể câu chuyện thương hiệu Vàm Thịnh cho đúng văn hoá từng nước.', 'We understand the customers now. Time to tell the Vàm Thịnh brand story in a way that fits each culture.')]);
   if (S.cash < 2.5) L.push(['Minh Khang', tr('Tiền đang mỏng. Xuất khẩu tốn ít vốn nhất; liên doanh cần nhiều vốn hơn nhưng đổi lại kiểm soát và hiểu thị trường tốt hơn.', 'Cash is thin. Exporting needs the least capital; a joint venture needs more but gives more control and market insight.')]);
@@ -1264,7 +1275,7 @@ let hq = null;
 anim.push(() => { const B = window.__bp; if (!B || !B.S) return; const S = B.S, f = S.firm | 0;
   if (S.q === 0 && S.phase === 'obs' && HIST[f] && HIST[f].length && HIST[f][HIST[f].length - 1].q > 0) HIST[f] = [];
   if (hq === S.q) return; const first = hq === null; hq = S.q;
-  const arr = HIST[f] = HIST[f] || []; if (!arr.length || arr[arr.length - 1].q !== S.q) arr.push({ q: S.q, p: +S.profit.toFixed(2), rv: +(S.rival.rev || 0).toFixed(2), c: S.cash, r: Math.round(S.rep), n: S.entered.filter(v => v !== null && v !== undefined).length, k: Math.round(S.know.reduce((a, b) => a + b, 0) / 7) });
+  const arr = HIST[f] = HIST[f] || []; if (!arr.length || arr[arr.length - 1].q !== S.q) arr.push({ q: S.q, p: +(S.profit || 0).toFixed(2), rv: +((S.rival && S.rival.rev) || 0).toFixed(2), c: S.cash, r: Math.round(S.rep || 0), n: S.entered.filter(v => v !== null && v !== undefined).length, k: Math.round(S.know.reduce((a, b) => a + b, 0) / NMK) });
   try { localStorage.setItem(HK, JSON.stringify(HIST)); } catch (e) {}
   if (!first && S.q > 0) setTimeout(() => openPanel(chPanel, drawChart), 2600);
 });
@@ -1293,7 +1304,8 @@ chBtn.setAttribute('aria-label', tr('Kết quả theo quý', 'Quarterly results'
 /* ---------- màn mở đầu & kết thúc điện ảnh ---------- */
 const introTitle = document.createElement('div');
 introTitle.style.cssText = 'position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;z-index:4;opacity:0;transition:opacity .8s;width:min(560px,92%);background:rgba(3,51,55,.72);border-radius:22px;padding:16px 18px;box-shadow:0 6px 0 rgba(3,51,55,.3)';
-introTitle.innerHTML = '<div style="font:800 12px/1 inherit;letter-spacing:.3em;text-transform:uppercase;color:#fff;text-shadow:0 2px 8px rgba(3,51,55,.6)">BizOn · ' + tr('Quốc tế hoá thương hiệu', 'Brand internationalisation') + '</div><div style="font:900 clamp(28px,6vw,54px)/1.05 inherit;color:#fff;margin-top:8px;text-shadow:0 4px 0 #033337,0 8px 24px rgba(3,51,55,.5)">🛂 ' + tr('Hộ Chiếu Thương Hiệu', 'Brand Passport') + '</div><div style="font:700 14px/1.4 inherit;color:#fff;margin-top:10px;text-shadow:0 2px 6px rgba(3,51,55,.7)">' + tr('7 thị trường · 6 quý · 1 con thuyền sen từ Vàm Thịnh', '7 markets · 6 quarters · 1 lotus boat from Vàm Thịnh') + '</div>';
+const introBrand = (window.__bp && window.__bp.BRAND) || { kicker: tr('Quốc tế hoá thương hiệu', 'Brand internationalisation'), title: '🛂 ' + tr('Hộ Chiếu Thương Hiệu', 'Brand Passport') };
+introTitle.innerHTML = '<div style="font:800 12px/1 inherit;letter-spacing:.3em;text-transform:uppercase;color:#fff;text-shadow:0 2px 8px rgba(3,51,55,.6)">BizOn · ' + introBrand.kicker + '</div><div style="font:900 clamp(28px,6vw,54px)/1.05 inherit;color:#fff;margin-top:8px;text-shadow:0 4px 0 #033337,0 8px 24px rgba(3,51,55,.5)">' + introBrand.title + '</div><div style="font:700 14px/1.4 inherit;color:#fff;margin-top:10px;text-shadow:0 2px 6px rgba(3,51,55,.7)">' + tr(NMK + ' thị trường · ' + NQ + ' quý · 1 con thuyền sen từ Vàm Thịnh', NMK + ' markets · ' + NQ + ' quarters · 1 lotus boat from Vàm Thịnh') + '</div>';
 const stampEl = document.createElement('div');
 stampEl.style.cssText = 'position:absolute;left:50%;top:44%;transform:translate(-50%,-50%) rotate(-12deg) scale(2.4);opacity:0;pointer-events:none;z-index:5;border:6px solid #c23a30;color:#c23a30;border-radius:16px;padding:10px 22px;font:900 clamp(24px,5vw,42px)/1 inherit;letter-spacing:.08em;background:rgba(255,250,240,.85);transition:transform .35s cubic-bezier(.3,1.6,.5,1),opacity .2s';
 wrap.append(introTitle, stampEl);
@@ -1328,7 +1340,7 @@ anim.push(t => { efw.material.color.setHSL((t * 0.15) % 1, 0.8, 0.65); });
 /* ---------- thẻ 2D ↔ 3D: rê/chạm thị trường trên thẻ, camera bay tới đảo ---------- */
 let hovT = null;
 document.addEventListener('pointerover', e => {
-  const el = e.target.closest && e.target.closest('[data-m]'); if (!el || wrap.contains(el)) return; const m = +el.dataset.m; if (!(m >= 0 && m < 7)) return;
+  const el = e.target.closest && e.target.closest('[data-m]'); if (!el || wrap.contains(el)) return; const m = +el.dataset.m; if (!(m >= 0 && m < NMK)) return;
   clearTimeout(hovT); hovT = setTimeout(() => { userKey = 'm' + m; autoCam = true; hiIsland(m); }, 160);
 });
 const hiRing = new THREE.Mesh(new THREE.TorusGeometry(IR * 1.3, 0.08, 8, 60), new THREE.MeshBasicMaterial({ color: 0xf2b53a, transparent: true, opacity: 0 })); hiRing.rotation.x = -Math.PI / 2; hiRing.position.y = 0.1; scene.add(hiRing);
