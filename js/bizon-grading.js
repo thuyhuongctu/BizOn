@@ -61,6 +61,24 @@
     const adv = t.rs.filter(r => ADVERSE.includes(r0(r).eventId)).map(r => r.round_number);
     return adv.some(n => { const R = L.filter(l => l.round_number === n); return R.some(l => l.kind === 'whatif') || R.filter(l => l.kind === 'proposal' || l.kind === 'minutes').length >= 3; });
   }
+  /* Nhận xét tự động theo điểm đạt được: điểm mạnh (mục đạt ≥ 80%), điểm cần cải thiện (mục thấp nhất), xếp loại */
+  const LV = { A: 'Xuất sắc', 'B+': 'Giỏi', B: 'Khá', 'C+': 'Trung bình khá', C: 'Trung bình', 'D+': 'Trung bình yếu', D: 'Yếu', F: 'Chưa đạt' };
+  function autoNote(g) {
+    const L = letter(g.total), crit = [
+      ['b1', 2, 'lợi nhuận tích lũy cao trong lớp', 'lợi nhuận tích lũy còn thấp so với lớp – xem lại giá bán và điểm hoà vốn'],
+      ['b2', 2, 'giữ thị phần tốt', 'thị phần vòng cuối thấp – cân đối giá và ngân sách marketing'],
+      ['b3', 2, 'vận hành ổn định, thanh khoản an toàn', g.qr != null && g.qr < 1 ? 'quick ratio dưới 1,0 – cần giữ tiền mặt dự phòng' : g.oee != null && g.oee < 80 ? 'OEE thấp – chú ý bảo trì và đào tạo' : 'chỉ số vận hành chưa đạt ngưỡng'],
+      ['b4', 1.5, 'mở khóa nhiều thành tựu', 'mở khóa ít thành tựu'],
+      ['b5', 1.5, 'các thành viên đóng góp đều theo vai', 'thành viên đóng góp chưa đều – CFO, CMO, COO cần gửi đề xuất mỗi vòng'],
+      ['b6', 1, 'ứng phó biến cố tốt', 'lúng túng ở vòng biến cố – nên chạy Nếu–Thì trước khi chốt']];
+    const good = crit.filter(c => g[c[0]] / c[1] >= .8).map(c => c[2]);
+    const weak = crit.map(c => [c, g[c[0]] / c[1]]).filter(x => x[1] < .6).sort((a, b) => a[1] - b[1]).slice(0, 2).map(x => x[0][3]);
+    let s = `${LV[L.l]} (${L.l}).`;
+    if (good.length) s += ' Điểm mạnh: ' + good.slice(0, 3).join('; ') + '.';
+    if (weak.length) s += ' Cần cải thiện: ' + weak.join('; ') + '.';
+    if (!L.pass) s += ' Chưa đạt điều kiện tích lũy.';
+    return s;
+  }
   function grades(T, scores, edits, log) {
     const MB = members(T, log);
     const S = {}; (scores || []).forEach(s => { S[s.team_name] = s; });
@@ -84,7 +102,8 @@
       const missing = oee == null || defect == null || qr == null || ach == null;
       return { name: t.name, rounds: t.rs.length, share: t.share, profit: t.profit, flags: t.flags, oee, defect, qr, ach, adv: adv.length, advOk: pOk,
         b1, b2, b3, b4, b5, b6, reasoning: b5r, teamwork: prep ? 1 : 0, note, missing, auto, autoPrep: ap != null, members: mine.length, total: b1 + b2 + b3 + b4 + b5 + b6 };
-    });
+    })
+    .map(g => Object.assign(g, { autoNote: autoNote(g) }));
   }
 
   /* ---------- Hộ Chiếu: A1–A4 /10 ----------
@@ -132,7 +151,7 @@
     const s1 = [row(['Đội', 'Số vòng', 'LN lũy kế (tr₫)', 'Thị phần V6 (%)', 'OEE TB', 'Lỗi V6 (%)', 'Quick ratio V6', 'Thành tựu', 'Vòng biến cố bất lợi', 'Vòng đóng góp (B5)', 'Chuẩn bị (B6)',
       'B1 /2', 'B2 /2', 'B3 /2', 'B4 /1,5', 'B5 /1,5', 'B6 /1', 'Tổng /10', 'Điểm chữ', 'Thang 4', 'Tích lũy', 'Nhận xét'])]
       .concat(G.map(g => row([g.name, g.rounds, Math.round(g.profit), g.share, r1(g.oee), r1(g.defect), r1(g.qr), g.ach ?? '', g.adv, g.reasoning === '' ? '' : +g.reasoning, g.teamwork ? 'Có' : 'Không',
-        r1(g.b1), r1(g.b2), r1(g.b3), r1(g.b4), r1(g.b5), r1(g.b6), +g.total.toFixed(1), letter(g.total).l, letter(g.total).g4, letter(g.total).pass ? 'Đạt' : 'Không', g.note])));
+        r1(g.b1), r1(g.b2), r1(g.b3), r1(g.b4), r1(g.b5), r1(g.b6), +g.total.toFixed(1), letter(g.total).l, letter(g.total).g4, letter(g.total).pass ? 'Đạt' : 'Không', g.note || g.autoNote])));
     const s2 = [row(['Đội', 'Vòng', 'Biến cố', 'Giá', 'Marketing', 'Sản lượng', 'R&D', 'Nhân công', 'Vốn', 'Thị phần (%)', 'Doanh thu (tr₫)', 'Lợi nhuận (tr₫)', 'Số dư (tr₫)', 'OEE', 'Lỗi (%)', 'Quick ratio', 'Nộp lúc'])];
     T.forEach(t => t.rs.forEach(r => { const j = r0(r), d = j.decision || j.decisions || j.input || {};
       s2.push(row([t.name, r.round_number, j.eventId || '', d.price ?? d.gia ?? '', d.marketing ?? '', d.production ?? '', d.rd ?? '', d.workers ?? '', d.funding ?? '', +(+j.share || 0).toFixed(1), Math.round(+j.revenue || 0), +(+j.netProfit || 0).toFixed(1), Math.round(+j.balance || 0), j.oee ?? '', j.defect ?? '', j.quickRatio ?? '', new Date(r.created_at).toLocaleString('vi-VN')])); }));
@@ -146,5 +165,5 @@
     const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([xml], { type: 'application/vnd.ms-excel' })); a.download = `BizOn-${code}-so-diem.xls`; document.body.appendChild(a); a.click(); a.remove();
   }
   const EVENTS = [['', 'Theo kịch bản (không can thiệp)'], ['EV_STABLE', '🌤️ Thị trường ổn định'], ['EV_GOLDEN', '🌟 Cơ hội vàng – tổng cầu tăng'], ['EV_PRICEWAR', '⚔️ Cạnh tranh về giá – nhạy giá'], ['EV_RECESSION', '⚡ Khủng hoảng năng lượng'], ['EV_SUPPLY', '🚢 Khủng hoảng chuỗi cung ứng'], ['EV_MILESTONE', '🐉 Việt Nam hóa Rồng']];
-  window.BizOnInstructorPage = { money, f1, letter, members, teams, grades, bpGrade, decRows, xls, EVENTS };
+  window.BizOnInstructorPage = { money, f1, letter, members, autoNote, teams, grades, bpGrade, decRows, xls, EVENTS };
 })();
