@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="./doc-page.js"></script>
+<script src="./ho-chieu-voice.js"></script>
+<script src="./ho-chieu-voice-2.js"></script>
+<style>
+@font-face{font-family:"Plus Jakarta Sans";src:url(assets/fonts/PlusJakartaSans-var-vietnamese.woff2) format("woff2");font-weight:200 800;unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
+@font-face{font-family:"Plus Jakarta Sans";src:url(assets/fonts/PlusJakartaSans-var-latin.woff2) format("woff2");font-weight:200 800}
+@font-face{font-family:"Manrope";src:url(assets/fonts/Manrope-var-vietnamese.woff2) format("woff2");font-weight:200 800;unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
+@font-face{font-family:"Manrope";src:url(assets/fonts/Manrope-var-latin.woff2) format("woff2");font-weight:200 800}
+doc-page:not(:defined){visibility:hidden}
+body{margin:0;font-family:"Manrope",system-ui,sans-serif;color:#033337}
+a{color:#006687}a:hover{color:#e8762d}
+table{border-collapse:collapse;width:100%}
+tr{break-inside:avoid}
+td,th{padding:5px 7px;border-bottom:1px solid #d9e4e6;vertical-align:top;text-align:left}
+th{font:700 8.5pt 'Plus Jakarta Sans';color:#006687;background:#eef5f6}
+</style>
+</helmet>
+<doc-page size="a4" margin="16mm">
+<div style="font-size:9.5pt;line-height:1.5">
+
+<div style="display:flex;flex-direction:column;gap:6px;border-bottom:3px solid #fda127;padding-bottom:12px;margin-bottom:16px">
+  <p style="margin:0;font:700 9pt 'Plus Jakarta Sans';letter-spacing:.08em;text-transform:uppercase;color:#006687">BizOn · Hộ Chiếu Thương Hiệu 3D · Hồ sơ phát triển</p>
+  <h1 style="margin:0;font:800 20pt/1.2 'Plus Jakarta Sans'">Nhận xét game, danh sách ảnh cần tạo và kịch bản thoại</h1>
+  <p style="margin:0;color:#335a5e">Biên soạn: Đỗ Thùy Hương &amp; Phan Anh Tú · © 2026 · Bản làm việc</p>
+</div>
+
+<h2 style="font:800 13pt 'Plus Jakarta Sans';color:#006687;margin:0 0 6px">1. Nhận xét game hiện tại</h2>
+<p style="margin:0 0 6px;font:700 10pt 'Plus Jakarta Sans'">Điểm mạnh</p>
+<ul style="margin:0 0 10px;padding-left:18px">
+  <li>Nền lý thuyết rõ: mô hình Uppsala, khoảng cách tâm lý, Porter, mô hình chọn phương thức thâm nhập AIBIS; mỗi khái niệm có thuật ngữ tiếng Anh và trích dẫn APA 7.</li>
+  <li>Thị trường gắn quốc gia thật (FTA, thuế, rào cản, Hofstede), quốc gia xuất phát do người chơi chọn, bản đồ thế giới toàn màn.</li>
+  <li>24 biến cố có đánh đổi thật (lợi trước mắt và hậu quả quý sau), 6 cố vấn có cá tính riêng.</li>
+  <li>Có chế độ thi, lịch vòng, chấm điểm tự động và tài liệu song ngữ, dùng được ngay trong lớp.</li>
+</ul>
+<p style="margin:0 0 6px;font:700 10pt 'Plus Jakarta Sans'">Điểm cần cải thiện</p>
+<ul style="margin:0 0 10px;padding-left:18px">
+  <li><b>Tải nhận thức cao.</b> Mỗi quý người chơi đối mặt 7 thị trường × 6 phương thức × 6 nguồn tin × 5 ưu tiên × 3 mức ngân sách, cộng cửa hàng vật phẩm. Sinh viên không chuyên ngành dễ bấm cho qua.</li>
+  <li><b>Hai lớp tên.</b> Tên giả tưởng (Hải Lam, Bắc Phong…) đi cùng quốc gia thật (Hoa Kỳ, Đức…) khiến người mới phải nhớ gấp đôi.</li>
+  <li><b>Phản hồi chậm.</b> Hậu quả của nhiều quyết định chỉ lộ ra ở quý sau, trong khi màn kết quả chủ yếu là số liệu. Người chơi khó nối nguyên nhân với kết quả.</li>
+  <li><b>Đối thủ thiếu mặt.</b> Kim Long Exports và 8 đối thủ bản địa chỉ xuất hiện như dòng chữ; chưa có khoảnh khắc đối đầu.</li>
+  <li><b>Nhiều chữ.</b> Cố vấn, biến cố và sổ tay đều là văn bản dài; khi chơi online, sinh viên không có người giải thích tại chỗ.</li>
+  <li><b>Khoảnh khắc thưởng còn nhỏ.</b> Con dấu hộ chiếu là ý tưởng mạnh nhất của game nhưng hiện chỉ là một ô nhỏ trên dải hộ chiếu.</li>
+</ul>
+
+<h2 style="font:800 13pt 'Plus Jakarta Sans';color:#006687;margin:14px 0 6px">2. Đề xuất tạo dấu ấn</h2>
+<table style="margin-bottom:10px">
+  <thead><tr><th style="width:24px">#</th><th style="width:150px">Đề xuất</th><th>Nội dung</th><th style="width:80px">Ưu tiên</th></tr></thead>
+  <tbody>
+    <sc-for list="{{ ideas }}" as="x" hint-placeholder-count="8">
+      <tr><td>{{ x.n }}</td><td style="font-weight:700">{{ x.t }}</td><td>{{ x.d }}</td><td>{{ x.p }}</td></tr>
+    </sc-for>
+  </tbody>
+</table>
+<p style="margin:0 0 10px;color:#335a5e">Mình đề xuất làm trước mục 1, 2, 3 và 7. Các mục này cũng được đưa vào hai bản rút gọn (Đầu tư quốc tế và Indonesia). Thầy/cô duyệt thì mình cài vào bản đầy đủ.</p>
+
+<h2 style="font:800 13pt 'Plus Jakarta Sans';color:#006687;margin:14px 0 6px">3. Danh sách ảnh tĩnh cần tạo</h2>
+<p style="margin:0 0 8px">Quy cách chung: <b>nhân vật, sản phẩm, con dấu, biểu tượng</b> là PNG nền trong suốt 1024×1024 (dựng thành tấm cắt đứng trong cảnh 3D); <b>cảnh, trụ sở, thẻ biến cố</b> là WebP 1600×900, góc nhìn 3/4 từ trên xuống, cùng phong cách đất sét (clay) như bộ ảnh hiện có. Đặt tên đúng cột «Tên file» để mình gắn thẳng vào game. Đã có sẵn: 7 cảnh thị trường, 6 cố vấn, 4 doanh nghiệp, Kim Long, 4 ảnh loại biến cố.</p>
+<sc-for list="{{ imgGroups }}" as="g" hint-placeholder-count="6">
+  <div style="break-inside:avoid-page;margin-bottom:10px">
+    <p style="margin:8px 0 4px;font:700 10pt 'Plus Jakarta Sans'">{{ g.title }} <span style="font-weight:600;color:#b8561b">· {{ g.count }} ảnh · {{ g.prio }}</span></p>
+    <table>
+      <thead><tr><th style="width:190px">Tên file</th><th>Nội dung cần vẽ</th><th style="width:120px">Dùng ở đâu</th></tr></thead>
+      <tbody>
+        <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="3">
+          <tr><td style="font-family:ui-monospace,monospace;font-size:8pt">{{ r.f }}</td><td>{{ r.d }}</td><td>{{ r.u }}</td></tr>
+        </sc-for>
+      </tbody>
+    </table>
+  </div>
+</sc-for>
+<p style="margin:0 0 10px;color:#335a5e">Tổng: <b>{{ imgTotal }} ảnh</b>. Nếu cần làm trước một đợt nhỏ: sản phẩm (nhóm A), con dấu (nhóm D) và cảnh 6 phương thức (nhóm C).</p>
+
+<h2 style="font:800 13pt 'Plus Jakarta Sans';color:#006687;margin:14px 0 6px">4. Kịch bản thoại (clone giọng)</h2>
+<p style="margin:0 0 6px">Mỗi dòng là <b>một file mp3</b>, đặt tên theo cột «Mã» (ví dụ <code>HC_TP_03.mp3</code>) và để vào thư mục <code>assets/voice/vi/</code> hoặc <code>assets/voice/en/</code>. Chỗ có <code>{…}</code> là phần game tự điền, không thu vào giọng; câu đã được viết để nghe vẫn tự nhiên khi bỏ trống phần đó. Dòng đánh dấu <b>MỚI</b> dành cho các tính năng đề xuất ở mục 2.</p>
+<p style="margin:0 0 8px">Giọng: <sc-for list="{{ voices }}" as="v" hint-placeholder-count="8"><span style="margin-right:10px"><b>{{ v.code }}</b> {{ v.name }} ({{ v.tone }});</span></sc-for></p>
+<div style="display:flex;gap:8px;margin-bottom:8px"><button onClick="{{ csv }}" style="border:0;background:#006687;color:#fff;border-radius:8px;padding:6px 12px;font:700 9pt 'Plus Jakarta Sans';cursor:pointer">⬇ Tải danh sách thoại (CSV)</button><span style="font-size:8.5pt;color:#335a5e;align-self:center">{{ voiceCount }} dòng · dùng để nhập vào công cụ clone giọng</span></div>
+<sc-for list="{{ voiceGroups }}" as="g" hint-placeholder-count="6">
+  <div style="margin-bottom:10px">
+    <p style="margin:8px 0 4px;font:700 10pt 'Plus Jakarta Sans'">{{ g.title }}</p>
+    <table>
+      <thead><tr><th style="width:78px">Mã</th><th style="width:48px">Giọng</th><th>Tiếng Việt</th><th>English</th></tr></thead>
+      <tbody>
+        <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="4">
+          <tr><td style="font-family:ui-monospace,monospace;font-size:8pt">{{ r.id }}<span style="color:#b8561b;font-weight:700"> {{ r.tag }}</span></td><td>{{ r.sp }}</td><td>{{ r.vi }}</td><td style="color:#335a5e">{{ r.en }}</td></tr>
+        </sc-for>
+      </tbody>
+    </table>
+  </div>
+</sc-for>
+
+</div>
+</doc-page>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() { let n = 0; const t = setInterval(() => { if ((window.__HC_VOICE && window.__HC_VOICE.groups.length > 3) || ++n > 50) { clearInterval(t); this.forceUpdate(); } }, 100); }
+  renderVals() {
+    const ideas = [
+      ['Lễ đóng dấu hộ chiếu', 'Khi vào thị trường mới: cảnh toàn màn, con dấu hạ xuống cuốn hộ chiếu kèm âm thanh và lời Lina Park. Mỗi phương thức một mẫu dấu, mỗi nước một màu mực.', 'Cao'],
+      ['Kim Long có mặt', 'Đối thủ xuất hiện 3 lần trong ván (quý 2, 4, 6) với một câu thách thức và bảng so sánh "Bạn vs Kim Long". Quý 6 là trận so kè cuối.', 'Cao'],
+      ['Thẻ nhiệm vụ mỗi quý', 'Một mục tiêu nhỏ có thưởng (vd: "Có lãi ở 1 thị trường trước quý 3", "Giữ chống chịu ≥ 50"). Giúp người mới biết nên làm gì.', 'Cao'],
+      ['"Hỏi thầy Tú" 1 lần/ván', 'Thầy Tú Phan chỉ ra quyết định rủi ro nhất trên màn hình và gợi ý khái niệm lý thuyết liên quan.', 'Vừa'],
+      ['Chân dung chiến lược cuối game', 'Xếp người chơi vào một trong 5 kiểu: Nhà thám hiểm thận trọng, Người chinh phục, Kiến trúc sư đối tác, Nhà đầu tư dài hạn, Tay chơi liều. Có câu nhận xét và lý thuyết đi kèm.', 'Vừa'],
+      ['Hộ chiếu in được', 'Cuối game xuất cuốn hộ chiếu PDF có tên đội, các con dấu, điểm và chân dung chiến lược – để nộp bài hoặc chia sẻ.', 'Vừa'],
+      ['Thoại có giọng', 'Cố vấn, biến cố và phần kết có lồng tiếng (kịch bản ở mục 4). Giảm chữ phải đọc, nhất là khi chơi online.', 'Cao'],
+      ['Nối nguyên nhân – kết quả', 'Màn kết quả quý ghi rõ "Doanh thu Bắc Phong −12% vì chưa có chứng nhận (quyết định quý 2)", kèm mũi tên về quyết định gốc.', 'Vừa'],
+    ].map((r, i) => ({ n: i + 1, t: r[0], d: r[1], p: r[2] }));
+    const G = (title, prio, rows, n) => ({ title, prio, count: n || rows.length, rows: rows.map(r => ({ f: r[0], d: r[1], u: r[2] })) });
+    const imgGroups = [
+      G('A. Sản phẩm của 4 doanh nghiệp', 'Ưu tiên 1', [
+        ['prod/moc-nhien-dau-goi.png', 'Chai dầu gội bồ kết thảo mộc Mộc Nhiên, nhãn xanh lá, có lá bồ kết', 'Kệ hàng, lễ đóng dấu'],
+        ['prod/moc-nhien-serum.png', 'Lọ serum tinh dầu tràm, nắp gỗ', 'Kệ hàng'],
+        ['prod/moc-nhien-hop-qua.png', 'Hộp quà mỹ phẩm thảo mộc, giấy kraft, dây cói', 'Cửa hàng quốc tế'],
+        ['prod/phu-sa-banh-phong-tom.png', 'Gói bánh phồng tôm Phù Sa Foods, bao bì cam', 'Kệ hàng'],
+        ['prod/phu-sa-trai-cay-say.png', 'Hũ xoài, mít sấy dẻo', 'Kệ hàng'],
+        ['prod/phu-sa-nuoc-mam.png', 'Chai nước mắm cao cấp nhãn xuất khẩu', 'Container, cảng'],
+        ['prod/lam-viet-ao-linen.png', 'Áo sơ mi linen nhuộm chàm treo móc, nhãn "Lam Việt"', 'Cửa hàng'],
+        ['prod/lam-viet-tui-coi.png', 'Túi cói Mekong có quai da', 'Cửa hàng'],
+        ['prod/lam-viet-nhan-xanh.png', 'Thẻ treo tái chế in mã truy xuất QR', 'Sự kiện tiêu dùng xanh'],
+        ['prod/mekong-digital-laptop.png', 'Laptop mở bảng điều khiển phần mềm quản trị (màn hình giả lập)', 'Văn phòng'],
+        ['prod/mekong-digital-app.png', 'Điện thoại hiện app quản lý kho, biểu đồ', 'Văn phòng'],
+        ['prod/mekong-digital-hop.png', 'Hộp bản quyền phần mềm / thẻ kích hoạt', 'Cấp phép'],
+      ]),
+      G('B. Trụ sở, văn phòng', 'Ưu tiên 1', [
+        ['hq/moc-nhien-xuong.webp', 'Xưởng thảo mộc Vàm Thịnh: nhà mái ngói, sân phơi lá, bồn chưng cất', 'Màn giới thiệu'],
+        ['hq/phu-sa-nha-may.webp', 'Nhà máy chế biến ven sông, xe tải lạnh', 'Màn giới thiệu'],
+        ['hq/lam-viet-studio.webp', 'Xưởng may nhỏ có khung dệt, vải chàm phơi', 'Màn giới thiệu'],
+        ['hq/mekong-digital-office.webp', 'Văn phòng startup kính, bảng trắng, màn hình', 'Màn giới thiệu'],
+        ['hq/kim-long-tower.webp', 'Tòa tháp Kim Long Exports, logo rồng vàng, xe container', 'Kim Long có mặt'],
+        ['rival/us-liberty-naturals.webp', 'Liberty Naturals (Mỹ): cửa hàng D2C sáng, bảng quảng cáo lớn', 'Hồ sơ quốc gia'],
+        ['rival/de-krauterhaus.webp', 'Kräuterhaus GmbH (Đức): nhà thuốc thảo dược, tem hữu cơ EU', 'Hồ sơ quốc gia'],
+        ['rival/kr-hanbit.webp', 'Hanbit Beauty (Hàn): showroom mỹ phẩm, màn hình KOL', 'Hồ sơ quốc gia'],
+        ['rival/nz-kiwi-pure.webp', 'Kiwi Pure (NZ): cửa hàng gỗ, nhãn sinh thái, đồng cỏ', 'Hồ sơ quốc gia'],
+        ['rival/jp-sakura-wakan.webp', 'Sakura Wakan (Nhật): tiệm thảo dược lâu năm, rèm noren', 'Hồ sơ quốc gia'],
+        ['rival/sg-merlion.webp', 'Merlion Trading (Singapore): kho phân phối khu vực, xe nâng', 'Hồ sơ quốc gia'],
+        ['rival/id-nusantara.webp', 'Nusantara Herba (Indonesia): sạp chợ truyền thống, tem Halal', 'Hồ sơ quốc gia'],
+        ['rival/vn-song-huong.webp', 'Sông Hương Herbal (Việt Nam): kho TMĐT, thùng hàng Shopee', 'Hồ sơ quốc gia'],
+      ]),
+      G('C. Cảnh 6 phương thức thâm nhập', 'Ưu tiên 1', [
+        ['mode/digital.webp', 'Gian hàng trực tuyến nổi trên màn hình, hộp hàng bay ra', 'Lễ đóng dấu'],
+        ['mode/export.webp', 'Tàu container rời cảng, container logo doanh nghiệp', 'Lễ đóng dấu'],
+        ['mode/alliance.webp', 'Hai giám đốc bắt tay trước kho đối tác địa phương', 'Lễ đóng dấu'],
+        ['mode/licensing.webp', 'Ký hợp đồng cấp phép, nhà máy đối tác in logo', 'Lễ đóng dấu'],
+        ['mode/jv.webp', 'Biển nhà máy liên doanh hai logo, cắt băng khánh thành', 'Lễ đóng dấu'],
+        ['mode/fdi.webp', 'Nhà máy 100% vốn mới xây, cờ doanh nghiệp', 'Lễ đóng dấu'],
+      ]),
+      G('D. Con dấu hộ chiếu', 'Ưu tiên 1', [
+        ['stamp/us.png … stamp/vn.png', '8 con dấu tròn/chữ nhật theo nước: US, DE, KR, NZ, JP, SG, ID, VN – có tên nước, biểu tượng đặc trưng, mực một màu', 'Dải hộ chiếu, PDF'],
+        ['stamp/mode-1.png … mode-6.png', '6 khung viền dấu theo phương thức (dùng chồng lên dấu nước)', 'Dải hộ chiếu'],
+        ['stamp/passport-cover.png', 'Bìa hộ chiếu BizOn, dập nổi logo, chỗ ghi tên đội', 'Màn giới thiệu, PDF'],
+      ], 15),
+      G('E. Thẻ biến cố (24)', 'Ưu tiên 2', [
+        ['event/trend.webp', 'Điện thoại hiện video lan truyền, biểu tượng lửa', 'Màn sự kiện'],
+        ['event/pricewar.webp', 'Bảng giá bị gạch 20%, hai cửa hàng đối diện', 'Màn sự kiện'],
+        ['event/…22 thẻ còn lại', 'Mỗi biến cố một cảnh: green, celeb, subst, fx, reg, tax, cert, data, greenlaw, port, talent, supplier, defect, cashflow, conflict, training, review, held, devalue, betray, copy, board', 'Màn sự kiện'],
+      ], 24),
+      G('F. Biểu cảm nhân vật', 'Ưu tiên 2', [
+        ['cast/{ten}-vui.png', '6 cố vấn (Bà Sáu Lành, Minh Khang, An Nhiên, Thầy Tú Phan, Lina Park, Lumina) – vẻ vui/khen', 'Kết quả quý tốt'],
+        ['cast/{ten}-lo.png', '6 cố vấn – vẻ lo/cảnh báo', 'Kết quả xấu, biến cố'],
+        ['cast/kim-long-ceo.png', 'CEO Kim Long: vest đỏ, khoanh tay, nụ cười thách thức', 'Kim Long có mặt'],
+      ], 13),
+      G('G. Vật phẩm cửa hàng', 'Ưu tiên 3', [
+        ['item/scout.png', 'Điều tra viên bí mật: kính lúp, sổ tay', 'Cửa hàng'],
+        ['item/shield.png', 'Bảo hiểm rủi ro: khiên có hoa sen', 'Cửa hàng'],
+        ['item/pr.png', 'Gói PR khủng hoảng: loa, micro', 'Cửa hàng'],
+        ['item/forecast.png', 'Gói dữ liệu Lumina: quả cầu dữ liệu phát sáng', 'Cửa hàng'],
+        ['item/cert.png', 'Chứng nhận nhanh Bắc Phong: huy chương, giấy chứng nhận', 'Cửa hàng'],
+        ['item/network.png', 'Mạng lưới đối tác: các nút nối nhau trên bản đồ', 'Cửa hàng'],
+      ]),
+    ];
+    const imgTotal = imgGroups.reduce((s, g) => s + g.count, 0);
+    const V = window.__HC_VOICE || { voices: [], groups: [] };
+    const voiceGroups = V.groups.map(g => ({ title: g.title, rows: g.rows.map(r => ({ id: r[0], sp: r[0].split('_')[1], vi: r[1], en: r[2], tag: r[3] ? 'MỚI' : '' })) }));
+    const all = voiceGroups.flatMap(g => g.rows);
+    const csv = () => {
+      const q = s => '"' + String(s || '').replace(/"/g, '""') + '"';
+      const t = '\ufeffma,giong,tieng_viet,english,moi\n' + all.map(r => [r.id, r.sp, r.vi, r.en, r.tag].map(q).join(',')).join('\n');
+      const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([t], { type: 'text/csv' })); a.download = 'HoChieu-thoai.csv'; a.click();
+    };
+    return { ideas, imgGroups, imgTotal, voices: V.voices, voiceGroups, voiceCount: all.length, csv };
+  }
+}
+</script>
+</body>
+</html>

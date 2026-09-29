@@ -297,7 +297,7 @@ export function makeCharacters(THREE) {
     { id: 'tu', label: 'Tú Phan', name: 'Cố vấn học thuật', note: 'Áo dài trắng · cuộn chứng nhận', skin: 0xe8b08c, hair: 0x1f1a18, hairStyle: 'slick', smile: 'open',
       top: 0xf4f1ea, bottom: 0xf4f1ea, aoDai: 0.34, shoe: 0xefe2c4, pose: 'scroll',
       line: 'Dữ liệu cho ta biết quá khứ, quyết định hôm nay viết nên tương lai.' },
-    { id: 'victor', label: 'Victor Lâm', name: 'Đối tác / đối thủ', note: 'Hồ sơ thị trường', skin: 0xe6b28e, hair: 0x9c9c9c, hairStyle: 'grey', hairCap: 0.42,
+    { id: 'victor', label: 'Thầy Tú Phan', name: 'Giảng viên cố vấn', note: 'Chiến lược quốc tế hoá', skin: 0xe6b28e, hair: 0x9c9c9c, hairStyle: 'grey', hairCap: 0.42,
       top: 0x2f3a5c, bottom: 0x2f3a5c, shoe: 0x252525, shirtFront: 0xf1efe9, jacket: true, pin: true, cuff: 0xf1efe9, pose: 'hug', prop: 'folder',
       line: 'Thị trường không chờ ai. Tôi đã đọc báo cáo — còn các bạn thì sao?' },
     { id: 'alpha', label: 'Alpha Dynamics', name: 'Đối thủ AI · Giá rẻ tốc chiến', note: 'Biên lợi nhuận mỏng – đừng đua giá đáy', skin: 0xecc0a0, hair: 0x2a4a8a, hairStyle: 'slick',
