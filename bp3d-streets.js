@@ -13,8 +13,8 @@ const small = Math.min(innerWidth, innerHeight) < 600;
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ---------- dữ liệu ---------- */
-const MODES = [['🛒', 'Nền tảng số', 'Digital platform'], ['🚢', 'Xuất khẩu trực tiếp', 'Direct export'], ['🤝', 'Đối tác địa phương', 'Local partner']];
-const MODE_HEX = ['#2f8fcf', '#e8762d', '#3f8f4a'];
+const MODES = [['🛒', 'Nền tảng số', 'Digital platform'], ['🚢', 'Xuất khẩu trực tiếp', 'Direct export'], ['🤝', 'Liên minh chiến lược', 'Strategic alliance'], ['📜', 'Cấp phép', 'Licensing'], ['🏗️', 'Liên doanh', 'Joint venture'], ['🏭', 'Đầu tư 100% vốn (FDI)', 'Wholly owned FDI']];
+const MODE_HEX = ['#2f8fcf', '#e8762d', '#3f8f4a', '#8a5fc9', '#1f8f8a', '#b0473f'];
 const TH = [
   { name: 'Hải Lam', icon: '🌐', sky: 0xbfe0f0, ground: 0xc9d3dc, road: 0x5d6877, walk: 0xe3e8ee, wall: [0x9fd4ef, 0xcfe4f2, 0x7fb3d6, 0xe6eef5], roof: 0x2f6f9a, h: [5, 11], trait: ['Thị trường số – cạnh tranh trực tuyến rất cao', 'Digital market – very high online competition'],
     shops: ['Cà phê 24h', 'Game Hub', 'Tech Mart', 'Stream Box', 'Pixel Mall', 'Cloud Tea'] },

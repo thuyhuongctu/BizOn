@@ -149,9 +149,7 @@
   #bp3d-hint { display:none !important; }
   body:not(.bp3d-playing) #bp3d-quest { display:none !important; }
   #bp3d-col .clay-card { background:#fffaf0; border:2px solid rgba(3,51,55,.07); box-shadow:0 6px 0 rgba(3,51,55,.10), 0 14px 30px -12px rgba(0,102,135,.18); }
-  html[data-theme="dark"] #bp3d-col .clay-card { background:rgba(14,42,51,.95); border-color:rgba(92,196,230,.18); }
   #bp3d-col .bp-opt { background:#fff; box-shadow:0 3px 0 rgba(3,51,55,.08); }
-  html[data-theme="dark"] #bp3d-col .bp-opt { background:rgba(8,26,32,.7); }
   #bp3d-col .bp-opt[data-m]:hover { border-color:#f2b53a; box-shadow:0 3px 0 #f2b53a; }
   #bp3d-col .bp-opt.sel { border-color:#e8762d; background:#fff3e6; box-shadow:0 3px 0 #e8762d; }
   #bp3d-col .bp-chip { background:#fff; border:1.5px solid rgba(3,51,55,.1); }
@@ -159,62 +157,10 @@
   #bp3d-col .bp-adv { background:#fff; border-color:rgba(3,51,55,.08); box-shadow:0 3px 0 rgba(3,51,55,.06); }
   #bp3d-col .bp-log li { border-left-color:#f2b53a; }
 </style>
-<style id="bp-map-pp">
-  .bp-modal { position:fixed; inset:0; z-index:80; display:none; align-items:center; justify-content:center; padding:16px; background:rgba(3,20,24,.72); backdrop-filter:blur(4px); }
-  .bp-modal.on { display:flex; }
-  .bp-modal-card { position:relative; width:100%; background:#fbf6ea; border-radius:28px; box-shadow:0 24px 70px -20px rgba(0,0,0,.55), inset 0 -6px 0 rgba(0,0,0,.06); display:flex; flex-direction:column; overflow:hidden; max-height:92vh; }
-  html[data-theme="dark"] .bp-modal-card { background:#0e2a33; }
-  .bp-modal-head { display:flex; align-items:center; gap:10px; padding:16px 18px 10px; }
-  .bp-modal-head b { font:800 18px Manrope,sans-serif; color:#033337; flex:1; min-width:0; }
-  html[data-theme="dark"] .bp-modal-head b { color:#d6ecf0; }
-  .bp-modal-close { border:0; background:rgba(3,51,55,.08); color:#033337; width:36px; height:36px; border-radius:999px; font:800 16px Manrope,sans-serif; cursor:pointer; flex:none; }
-  html[data-theme="dark"] .bp-modal-close { background:rgba(92,196,230,.14); color:#d6ecf0; }
-  .bp-modal-body { flex:1; min-height:0; overflow:auto; padding:0 18px 18px; }
-  /* --- bản đồ thị trường --- */
-  #bp-map-modal .bp-modal-card { max-width:980px; }
-  #bp-map-svg { width:100%; height:auto; display:block; }
-  .bp-map-legend { display:flex; flex-wrap:wrap; gap:10px 18px; padding:2px 4px 14px; font:700 12px Manrope,sans-serif; color:rgba(3,51,55,.75); }
-  html[data-theme="dark"] .bp-map-legend { color:rgba(214,236,240,.75); }
-  .bp-map-legend span { display:inline-flex; align-items:center; gap:6px; }
-  .bp-map-legend i { width:12px; height:12px; border-radius:4px; display:inline-block; }
-  /* --- hồ sơ đối thủ --- */
-  #bp-rival-modal .bp-modal-card { max-width:640px; }
-  .bp-rival-head { display:flex; align-items:center; gap:12px; padding:2px 0 14px; }
-  .bp-rival-head img { width:56px; height:56px; border-radius:16px; object-fit:cover; box-shadow:0 6px 16px -6px rgba(0,60,80,.4); flex:none; }
-  .bp-rival-head b { display:block; font:800 16px Manrope,sans-serif; color:#033337; }
-  .bp-rival-head span { display:block; font:700 12px Manrope,sans-serif; color:rgba(3,51,55,.6); margin-top:2px; }
-  html[data-theme="dark"] .bp-rival-head b { color:#d6ecf0; } html[data-theme="dark"] .bp-rival-head span { color:rgba(214,236,240,.62); }
-  .bp-rival-race { display:flex; flex-direction:column; gap:6px; margin-bottom:16px; }
-  .bp-rival-bar-row { display:flex; align-items:center; gap:8px; font:700 11px Manrope,sans-serif; }
-  .bp-rival-bar-row span:first-child { width:64px; flex:none; color:rgba(3,51,55,.7); }
-  .bp-rival-bar-row span:last-child { width:72px; flex:none; text-align:right; color:rgba(3,51,55,.7); }
-  html[data-theme="dark"] .bp-rival-bar-row span { color:rgba(214,236,240,.72); }
-  .bp-rival-bar-track { flex:1; height:8px; border-radius:999px; background:rgba(3,51,55,.08); overflow:hidden; }
-  html[data-theme="dark"] .bp-rival-bar-track { background:rgba(214,236,240,.12); }
-  .bp-rival-bar-fill { height:100%; border-radius:999px; }
-  .bp-rival-mkts { display:flex; flex-direction:column; gap:6px; }
-  .bp-rival-mkt { display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:14px; background:rgba(3,51,55,.04); font:700 12px Manrope,sans-serif; color:#033337; }
-  html[data-theme="dark"] .bp-rival-mkt { background:rgba(214,236,240,.06); color:#d6ecf0; }
-  .bp-rival-mkt.in { background:rgba(232,118,45,.12); }
-  html[data-theme="dark"] .bp-rival-mkt.in { background:rgba(232,118,45,.18); }
-  .bp-rival-mkt .nm { flex:1; min-width:0; }
-  .bp-rival-mkt .st { font-size:11px; font-weight:800; flex:none; }
-  .bp-rival-note { margin-top:14px; padding:10px 12px; border-radius:14px; background:rgba(3,51,55,.05); font:600 12px/1.5 Manrope,sans-serif; color:rgba(3,51,55,.75); font-style:italic; }
-  html[data-theme="dark"] .bp-rival-note { background:rgba(214,236,240,.07); color:rgba(214,236,240,.78); }
-  /* --- hộ chiếu toàn màn hình --- */
-  #bp-pp-modal .bp-modal-card { max-width:560px; align-items:center; }
-  #bp-pp-modal .bp-modal-body { display:flex; flex-direction:column; align-items:center; gap:12px; padding-top:2px; }
-  #bp-pp-pages { position:relative; width:100%; max-width:420px; aspect-ratio:512/700; }
-  #bp-pp-pages canvas { position:absolute; inset:0; width:100%; height:100%; border-radius:16px; box-shadow:0 14px 40px -14px rgba(0,60,80,.4); opacity:0; transform:scale(.97); transition:opacity .28s ease, transform .28s ease; pointer-events:none; }
-  #bp-pp-pages canvas.on { opacity:1; transform:scale(1); pointer-events:auto; }
-  .bp-pp-nav { display:flex; gap:8px; }
-  .bp-pp-nav button { border:2px solid rgba(3,51,55,.12); background:#fff; color:#033337; font:800 12px Manrope,sans-serif; padding:8px 16px; border-radius:999px; cursor:pointer; }
-  .bp-pp-nav button.on { background:#033337; color:#fff; border-color:#033337; }
-  html[data-theme="dark"] .bp-pp-nav button { background:rgba(8,26,32,.7); color:#d6ecf0; border-color:rgba(92,196,230,.22); }
-  html[data-theme="dark"] .bp-pp-nav button.on { background:#5cc4e6; color:#03252c; border-color:#5cc4e6; }
-  @media (max-width:480px) { .bp-modal-card { border-radius:20px; } }
-</style>
 <link rel="manifest" href="manifest-hochieu-3d.webmanifest">
+<script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js" integrity="sha384-CjloA8y00+1SDAUkjs099PVfnY2KmDC2BZnws9kh8D/lX1s46w6EPhpXdqMfjK6i" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js" integrity="sha384-Ukv1p/xTma6P4/2bY5KzWBw+ydSpXmhCMtyciIQVDJ1RmOxtCYNMF1uXT9T63H67" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="css/bp-ib.css?v=4">
 </head>
 <body>
 <div id="hc-bar" style="position:fixed;top:0;left:0;right:0;height:52px;z-index:60;display:flex;align-items:center;gap:8px;padding:0 12px;background:rgba(3,51,55,.86);backdrop-filter:blur(12px);color:#fff;font-family:Manrope,sans-serif">
@@ -229,8 +175,6 @@
     <div id="bp3d-cap" role="status" aria-live="polite"></div>
   <div class="bp3d-tools">
     <button id="bp3d-pp" type="button" data-en="🛂 Passport">🛂 Hộ chiếu</button>
-    <button id="bp3d-map" type="button" data-en="🗺️ Market map">🗺️ Bản đồ</button>
-    <button id="bp3d-rival" type="button" data-en="🕵️ Rival intel">🕵️ Đối thủ</button>
     <button id="bp3d-ov" type="button" data-en="🧭 Overview">🧭 Toàn cảnh</button>
     <button id="bp3d-snd" type="button" aria-label="Âm thanh" data-en-aria="Sound">🔊</button>
     <button id="bp3d-land" type="button">👤 CEO lên đảo</button>
@@ -239,52 +183,13 @@
   </div>
   <p id="bp3d-hint" data-en="Drag to rotate · tap an island">Kéo để xoay · chạm vào đảo</p>
 </div>
-<div id="bp-map-modal" class="bp-modal" role="dialog" aria-modal="true" aria-label="Bản đồ thị trường">
-  <div class="bp-modal-card">
-    <div class="bp-modal-head">
-      <b data-en="🗺️ Market map">🗺️ Bản đồ thị trường</b>
-      <button class="bp-modal-close" id="bp-map-close" type="button" aria-label="Đóng">✕</button>
-    </div>
-    <div class="bp-modal-body">
-      <div id="bp-map-svg"></div>
-      <div class="bp-map-legend" id="bp-map-legend"></div>
-    </div>
-  </div>
-</div>
-<div id="bp-rival-modal" class="bp-modal" role="dialog" aria-modal="true" aria-label="Hồ sơ đối thủ">
-  <div class="bp-modal-card">
-    <div class="bp-modal-head">
-      <b data-en="🕵️ Rival dossier">🕵️ Hồ sơ đối thủ</b>
-      <button class="bp-modal-close" id="bp-rival-close" type="button" aria-label="Đóng">✕</button>
-    </div>
-    <div class="bp-modal-body">
-      <div id="bp-rival-body"></div>
-    </div>
-  </div>
-</div>
-<div id="bp-pp-modal" class="bp-modal" role="dialog" aria-modal="true" aria-label="Hộ chiếu thương hiệu">
-  <div class="bp-modal-card">
-    <div class="bp-modal-head">
-      <b data-en="🛂 Passport">🛂 Hộ chiếu thương hiệu</b>
-      <button class="bp-modal-close" id="bp-pp-close" type="button" aria-label="Đóng">✕</button>
-    </div>
-    <div class="bp-modal-body">
-      <div id="bp-pp-pages"></div>
-      <div class="bp-pp-nav">
-        <button type="button" data-pg="cover" data-en="Cover">Bìa</button>
-        <button type="button" data-pg="inside" data-en="Info">Thông tin</button>
-        <button type="button" data-pg="page" data-en="Stamps">Dấu mộc</button>
-      </div>
-    </div>
-  </div>
-</div>
 <div id="bp3d-col">
 <header id="bp3d-head" class="max-w-2xl mx-auto px-5 pt-3"><div class="clay-card p-5">
     <p class="text-[11px] font-extrabold uppercase tracking-[.2em] text-primary" data-en="BizOn Go Global · Strategy simulation · 6 quarters · Original BizOn game">BizOn Go Global · Mô phỏng chiến lược · 6 quý · Game gốc BizOn</p>
     <h1 class="font-display font-extrabold text-2xl mt-2">🛂 Brand Passport – Hộ Chiếu Thương Hiệu</h1>
     <p class="opacity-60 text-[11px] mt-1 font-bold tracking-wide">From Vietnam to the World</p>
     <p id="bp-hero-mission" class="opacity-80 text-sm mt-3" data-en-html="In the riverside town of <b>Vàm Thịnh</b>, you take over <b>Mộc Nhiên</b> – an herbal-cosmetics brand with a beautiful story but limited resources. Your mission: take a Vietnamese brand to the world across <b>6 business quarters</b>, through the <b>fog of information</b> and trade-offs with no single right answer.">Tại thị trấn ven sông <b>Vàm Thịnh</b>, bạn tiếp quản <b>Mộc Nhiên</b> – thương hiệu mỹ phẩm thảo mộc có câu chuyện đẹp nhưng nguồn lực hạn chế. Nhiệm vụ: đưa thương hiệu Việt ra thế giới qua <b>6 quý kinh doanh</b>, trong màn <b>sương mù thông tin</b> và những đánh đổi không có đáp án đúng duy nhất.</p>
-    <p class="opacity-60 text-[11px] mt-3" data-en-html="💡 &laquo;No single internationalization path fits every business.&raquo; · The markets in this game are fictional · Scenario, data, algorithms and characters are designed from scratch by BizOn.">💡 «Không có một con đường quốc tế hóa phù hợp với mọi doanh nghiệp.» · Các thị trường trong game là giả tưởng · Kịch bản, dữ liệu, thuật toán và nhân vật do BizOn tự thiết kế từ đầu.</p>
+    <p class="opacity-60 text-[11px] mt-3" data-en-html="💡 &laquo;No single internationalization path fits every business.&raquo; · Each market is modelled on a real country (stylised figures) · Scenario, data, algorithms and characters are designed from scratch by BizOn.">💡 «Không có một con đường quốc tế hóa phù hợp với mọi doanh nghiệp.» · Mỗi thị trường tham chiếu một quốc gia thật (số liệu đã cách điệu) · Kịch bản, dữ liệu, thuật toán và nhân vật do BizOn tự thiết kế từ đầu.</p>
     <p id="bp-hero-music-note" class="opacity-60 text-[11px] mt-2" data-en-html="🛂 Theme music: <a href=&quot;am-nhac.html&quot; class=&quot;underline font-bold text-primary&quot;>&laquo;Brand Passport – Part III&raquo; (remix 2, English lyrics)</a> – plays by default when music is on; the game's collection also has &laquo;Brand Passport&raquo;, &laquo;Stamps Beyond Borders&raquo; and &laquo;Golden Silt Route&raquo;, available from the ⋯ button top-left.">🛂 Nhạc chủ đề: <a href="https://thuyhuongctu.github.io/BizOn/am-nhac.html" class="underline font-bold text-primary">«Hộ Chiếu Thương Hiệu – Phần III» (bản remix 2, lời tiếng Anh)</a> – phát mặc định khi bật nhạc; tuyển tập của game còn «Brand Passport», «Stamps Beyond Borders» và «Golden Silt Route», bật ngay từ nút ⋯ góc trái.</p>
   </div></header>
 
@@ -314,11 +219,7 @@
     <h2 class="font-display font-extrabold text-deep-teal text-lg mb-2" data-en="🏢 Choose your company">🏢 Chọn doanh nghiệp của bạn</h2>
     <p class="text-[11px] opacity-60 mb-2" data-en="Each company has its own journey and risk profile – there is no &quot;strongest&quot; choice.">Mỗi doanh nghiệp một hành trình và hệ rủi ro khác nhau – không có lựa chọn "mạnh nhất".</p>
     <div class="grid sm:grid-cols-2 gap-2" id="bp-firms"></div>
-    <h3 class="font-display font-extrabold text-deep-teal text-sm mt-5 mb-2" data-en="🏠 Home country (optional)">🏠 Quốc gia xuất phát (tùy chọn)</h3>
-    <p class="text-[11px] opacity-60 mb-2" data-en="Affects the total score: no FTA with Vietnam → revenue −8%; large cultural distance → up to −12% revenue and less knowledge from intel in the first 2 quarters. Recorded with your submission.">Ảnh hưởng đến điểm tổng: không có FTA với Việt Nam → doanh thu −8%; khoảng cách văn hoá lớn → tới −12% doanh thu và tri thức mua được ít hơn trong 2 quý đầu. Có ghi lại khi nộp kết quả.</p>
-    <div class="flex flex-wrap gap-1.5 mb-1" id="bp-homes"></div>
-    <p class="text-[11px] font-semibold mt-1.5" id="bp-home-note"></p>
-    <h3 class="font-display font-extrabold text-deep-teal text-sm mt-5 mb-2" data-en="🌏 Seven gateways to the world (fictional countries)">🌏 Bảy cánh cửa ra thế giới (quốc gia giả tưởng)</h3>
+    <h3 class="font-display font-extrabold text-deep-teal text-sm mt-5 mb-2" data-en="🌏 Seven gateways to the world (each modelled on a real country)">🌏 Bảy cánh cửa ra thế giới (mỗi nơi tham chiếu một quốc gia thật)</h3>
     <div id="bp-mkt-list" class="space-y-1.5 text-[12px]">
       <p data-en-html="🌐 <b>Hải Lam</b> – advanced digital market: fast entry, very high online competition.">🌐 <b>Hải Lam</b> – thị trường số phát triển: vào nhanh, cạnh tranh trực tuyến rất cao.</p>
       <p data-en-html="🏔️ <b>Bắc Phong</b> – strict standards: high prices and reputation, heavy compliance cost.">🏔️ <b>Bắc Phong</b> – tiêu chuẩn nghiêm ngặt: giá và uy tín cao, chi phí tuân thủ lớn.</p>
@@ -331,7 +232,7 @@
     <h3 class="font-display font-extrabold text-deep-teal text-sm mt-5 mb-2" data-en="📜 Rules of play">📜 Luật chơi</h3>
     <ul id="bp-rules-list" class="space-y-1.5 text-[12.5px]">
       <li data-en-html="🌫️ <b>Market fog</b>: each market's true profile is hidden – buy intel from 6 sources with different cost, accuracy and <b>bias</b>, then judge reliability yourself.">🌫️ <b>Sương mù thị trường</b>: hồ sơ thật của mỗi thị trường bị ẩn – mua thông tin từ 6 nguồn có chi phí, độ chính xác và <b>thiên lệch</b> khác nhau, rồi tự đánh giá độ tin cậy.</li>
-      <li data-en-html="🚪 <b>3 entry modes</b>: digital platform (low commitment) · direct export (balanced) · local partner (borrow the network, partner-dependent).">🚪 <b>3 phương thức thâm nhập</b>: nền tảng số (cam kết thấp) · xuất khẩu trực tiếp (cân bằng) · đối tác địa phương (mượn mạng lưới, phụ thuộc đối tác).</li>
+      <li data-en-html="🚪 <b>6 entry modes</b>: digital platform (low commitment) · direct export (balanced) · strategic alliance (borrow the network, partner-dependent) · licensing (lowest capital) · joint venture (shared equity, fast learning) · wholly owned FDI (maximum control, needs capability ≥ 55).">🚪 <b>6 phương thức thâm nhập</b>: nền tảng số (cam kết thấp) · xuất khẩu trực tiếp (cân bằng) · liên minh chiến lược (mượn mạng lưới, phụ thuộc đối tác) · cấp phép (vốn thấp nhất) · liên doanh (chia vốn, học nhanh) · đầu tư 100% vốn FDI (kiểm soát tối đa, cần năng lực ≥ 55).</li>
       <li data-en-html="🧭 Each quarter: read signals → set a priority → decide entry &amp; operating level → handle an event → take a lesson.">🧭 Mỗi quý: đọc tín hiệu → chọn ưu tiên → quyết định thâm nhập &amp; mức vận hành → xử lý sự kiện → nhận bài học.</li>
       <li data-en-html="👣 <b>Decision footprint</b>: constant discounting, ignored complaints, broken commitments… all leave consequences in later quarters.">👣 <b>Dấu chân quyết định</b>: giảm giá liên tục, bỏ qua khiếu nại, phá cam kết… đều để lại hệ quả ở các quý sau.</li>
       <li data-en-html="⚠️ You can <b>lose early</b>: two straight quarters out of cash, or reputation falling to crisis level.">⚠️ Có thể <b>thua sớm</b>: cạn tiền 2 quý liên tiếp hoặc uy tín rơi xuống mức khủng hoảng.</li>
@@ -347,7 +248,7 @@
       <p data-en-html="👵 <b>Bà Sáu Lành</b> · Founder &amp; Heritage Expert – guards the brand's Vietnamese identity. <i>&laquo;Preserve core values in the digital age.&raquo;</i>">👵 <b>Bà Sáu Lành</b> · Nhà sáng lập &amp; Chuyên gia Di sản – bảo vệ bản sắc Việt của thương hiệu. <i>«Giữ gìn giá trị cốt lõi trong thời đại số.»</i></p>
       <p data-en-html="💰 <b>Minh Khang</b> · CFO – prioritizes cash flow and risk control.">💰 <b>Minh Khang</b> · CFO – ưu tiên dòng tiền và kiểm soát rủi ro.</p>
       <p data-en-html="📣 <b>An Nhiên</b> · Strategy &amp; Innovation Advisor – reads trends and builds the customer community. <i>&laquo;Energy is contagious. When you believe in the vision, a community forms around you.&raquo;</i>">📣 <b>An Nhiên</b> · Cố vấn Chiến lược &amp; Đổi mới – đọc xu hướng và xây cộng đồng khách hàng. <i>«Năng lượng có tính lan tỏa. Khi bạn tin vào tầm nhìn, cộng đồng sẽ tự hình thành xung quanh bạn.»</i></p>
-      <p data-en-html="🌍 <b>Victor Lâm</b> · Global Strategy Expert – speaks from data, but isn't always right. <i>&laquo;Widen the vision, conquer every limit.&raquo;</i>">🌍 <b>Victor Lâm</b> · Chuyên gia Chiến lược Toàn cầu, nói theo dữ liệu nhưng không phải lúc nào cũng đúng. <i>«Mở rộng tầm nhìn, chinh phục mọi giới hạn.»</i></p>
+      <p data-en-html="🎓 <b>Lecturer Tú Phan</b> · Lecturer and internationalisation strategy advisor – speaks from data and theory, but always lets you decide. <i>&laquo;Widen the vision, conquer every limit.&raquo;</i>">🎓 <b>Thầy Tú Phan</b> · Giảng viên, cố vấn chiến lược quốc tế hoá – nói bằng dữ liệu và lý thuyết, nhưng luôn để bạn tự quyết. <i>«Mở rộng tầm nhìn, chinh phục mọi giới hạn.»</i></p>
       <p data-en-html="🤖 <b>Lumina AI</b> · AI Strategy Advisor (in the persona &laquo;Je m'appelle Hương&raquo;) – reads market signals and flags what's easy to miss. <i>&laquo;Building the future with AI and accurate data.&raquo;</i>">🤖 <b>Lumina AI</b> · Cố vấn AI Chiến lược (hóa thân «Je m'appelle Hương») – đọc tín hiệu thị trường và nhắc bạn điều dễ bỏ sót. <i>«Kiến tạo tương lai bằng trí tuệ nhân tạo và dữ liệu chuẩn xác.»</i></p>
     </div>
     <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-5 mb-1.5" data-en="🌊 Theme music">🌊 Nhạc chủ đề</p>
@@ -549,6 +450,17 @@
     { id: 5, key: 'tc', icon: '⚓', name: 'Tân Cảng', trait: 'cửa ngõ khu vực – vận hành đắt đỏ', traitEn: 'regional gateway – expensive to operate', img: 'assets/illustrations/game/mkt-tan-cang.webp' },
     { id: 6, key: 'hs', icon: '🌋', name: 'Hỏa Sơn', trait: 'dân số trẻ, số hóa nhanh – thị trường phân mảnh theo vùng đảo, cần đối tác địa phương mới phủ được hết', traitEn: 'young, fast-digitalizing population – fragmented across island regions, needs a local partner to reach full coverage', img: 'assets/illustrations/game/mkt-hoa-son.webp' },
   ];
+  // Quốc gia tham chiếu thật (so với BizOn Go Global – global.html). Tên thị trường trong game giữ nguyên, thông số đã cách điệu cho giảng dạy.
+  var REAL = {
+    hl: { flag: '🇺🇸', c: 'Hoa Kỳ', cEn: 'United States', fta: 'Chưa có FTA với Việt Nam; từ 24/7/2026 thêm thuế 12,5% (Mục 301) trên thuế MFN', ftaEn: 'No FTA with Vietnam; since 24 Jul 2026 an extra 12.5% (Section 301) on top of MFN duty', cul: 'Chủ nghĩa cá nhân cao (individualism), giao tiếp thẳng', culEn: 'High individualism, direct communication', bar: 'FDA (thực phẩm, mỹ phẩm), kiểm tra xuất xứ chống chuyển tải (transshipment)', barEn: 'FDA (food, cosmetics), origin checks against transshipment' },
+    bp: { flag: '🇩🇪', c: 'Đức (EU)', cEn: 'Germany (EU)', fta: 'EVFTA (hiệu lực 8/2020) – xóa gần hết thuế theo lộ trình', ftaEn: 'EVFTA (in force Aug 2020) – near-full tariff elimination on a schedule', cul: 'Né tránh bất định cao (uncertainty avoidance), chuộng quy trình, hợp đồng chi tiết', culEn: 'High uncertainty avoidance, process- and contract-oriented', bar: 'Quy định mỹ phẩm EU 1223/2009, REACH, dấu CE, quy tắc xuất xứ', barEn: 'EU Cosmetics Regulation 1223/2009, REACH, CE marking, rules of origin' },
+    ks: { flag: '🇰🇷', c: 'Hàn Quốc', cEn: 'South Korea', fta: 'VKFTA (2015), RCEP', ftaEn: 'VKFTA (2015), RCEP', cul: 'Định hướng dài hạn (long-term orientation), xu hướng tiêu dùng đổi rất nhanh', culEn: 'Long-term orientation, very fast-moving consumer trends', bar: 'Đăng ký MFDS (mỹ phẩm, thực phẩm), thương hiệu nội địa rất mạnh', barEn: 'MFDS registration (cosmetics, food), very strong local brands' },
+    ld: { flag: '🇳🇿', c: 'New Zealand', cEn: 'New Zealand', fta: 'CPTPP, AANZFTA, RCEP', ftaEn: 'CPTPP, AANZFTA, RCEP', cul: 'Khoảng cách quyền lực thấp (power distance), coi trọng môi trường', culEn: 'Low power distance, strong environmental values', bar: 'Kiểm dịch an toàn sinh học (biosecurity) nghiêm ngặt, khách đòi chứng nhận bền vững', barEn: 'Strict biosecurity checks; buyers expect sustainability certification' },
+    nq: { flag: '🇯🇵', c: 'Nhật Bản', cEn: 'Japan', fta: 'VJEPA (2009), AJCEP, CPTPP, RCEP', ftaEn: 'VJEPA (2009), AJCEP, CPTPP, RCEP', cul: 'Né tránh bất định rất cao, quan hệ dài hạn – lòng tin xây chậm', culEn: 'Very high uncertainty avoidance, long-term relationships – trust builds slowly', bar: 'Luật PMD (dược – mỹ phẩm), tiêu chuẩn JIS/JAS, nhãn tiếng Nhật', barEn: 'PMD Act (pharma – cosmetics), JIS/JAS standards, Japanese labelling' },
+    tc: { flag: '🇸🇬', c: 'Singapore', cEn: 'Singapore', fta: 'ATIGA (ASEAN), CPTPP, RCEP – hầu hết hàng hóa thuế 0%', ftaEn: 'ATIGA (ASEAN), CPTPP, RCEP – 0% duty on most goods', cul: 'Đa văn hoá, tiếng Anh thông dụng; hub trung chuyển khu vực', culEn: 'Multicultural, English widely used; regional trade hub', bar: 'Chi phí mặt bằng và nhân sự cao; đăng ký HSA (mỹ phẩm), SFA (thực phẩm)', barEn: 'High rent and labour costs; HSA (cosmetics) and SFA (food) registration' },
+    hs: { flag: '🇮🇩', c: 'Indonesia', cEn: 'Indonesia', fta: 'ATIGA (ASEAN), RCEP', ftaEn: 'ATIGA (ASEAN), RCEP', cul: 'Khoảng cách quyền lực cao, coi trọng quan hệ cá nhân; hơn 17.000 đảo', culEn: 'High power distance, relationship-based; 17,000+ islands', bar: 'Chứng nhận Halal bắt buộc (BPJPH), đăng ký BPOM, phân phối phân mảnh', barEn: 'Mandatory Halal certification (BPJPH), BPOM registration, fragmented distribution' },
+  };
+  MKTS.forEach(function (m) { m.real = REAL[m.key]; });
   // 4 doanh nghiệp – mỗi nhà một hành trình (concept mục 2)
   var FIRMS = [
     { icon: '🧴', name: 'Mộc Nhiên', prod: 'Mỹ phẩm thảo mộc', prodEn: 'Herbal cosmetics', adv: 'Câu chuyện thương hiệu mạnh', advEn: 'Strong brand story', weak: 'Khó đạt tiêu chuẩn quốc tế', weakEn: 'Hard to meet international standards', cash: 8, rep: 55, capab: 38, susts: 0, img: 'assets/character/firms/moc-nhien-cut.webp' },
@@ -556,40 +468,13 @@
     { icon: '👗', name: 'Lam Việt', prod: 'Thời trang bền vững', prodEn: 'Sustainable fashion', adv: 'Hồ sơ xanh sẵn có · hợp Lục Đảo', advEn: 'Ready-made green record · a fit for Lục Đảo', weak: 'Năng lực sản xuất hạn chế', weakEn: 'Limited production capacity', cash: 8, rep: 50, capab: 32, susts: 1, img: 'assets/character/firms/lam-viet-cut.webp' },
     { icon: '💻', name: 'Mekong Digital', prod: 'Phần mềm quản trị', prodEn: 'Management software', adv: 'Kênh số cực mạnh · biên lời cao', advEn: 'Very strong digital channel · high margins', weak: 'Mù mờ pháp luật dữ liệu', weakEn: 'Shaky on data regulations', cash: 7, rep: 46, capab: 48, susts: 0, img: 'assets/character/firms/mekong-digital-cut.webp' },
   ];
-  // Quốc gia xuất phát (concept mục "Chọn trước khi chơi"): fta = có hiệp định
-  // thương mại tự do với Việt Nam trong đời thật (AFTA/ACFTA/VKFTA/VJEPA·CPTPP/
-  // AIFTA/EVFTA) hay không – chỉ Hoa Kỳ là chưa có. cdMul = hệ số nhân thêm lên
-  // culturalDistance sẵn có của từng thị trường giả tưởng (AIBIS_CTX) để mô
-  // phỏng khoảng cách văn hoá kiểu Kogut & Singh (1988) mà KHÔNG cần dữ liệu
-  // Hofstede thật cho 7 thị trường hư cấu. Việt Nam (mặc định, id 0) = 0, để
-  // không đổi hành vi game nếu sinh viên không chọn gì khác.
-  var HOME_COUNTRIES = [
-    { id: 'VN', flag: '🇻🇳', name: 'Việt Nam', nameEn: 'Vietnam', fta: true, cdMul: 0 },
-    { id: 'TH', flag: '🇹🇭', name: 'Thái Lan', nameEn: 'Thailand', fta: true, cdMul: 0.4 },
-    { id: 'MY', flag: '🇲🇾', name: 'Malaysia', nameEn: 'Malaysia', fta: true, cdMul: 0.4 },
-    { id: 'PH', flag: '🇵🇭', name: 'Philippines', nameEn: 'Philippines', fta: true, cdMul: 0.4 },
-    { id: 'CN', flag: '🇨🇳', name: 'Trung Quốc', nameEn: 'China', fta: true, cdMul: 0.6 },
-    { id: 'IN', flag: '🇮🇳', name: 'Ấn Độ', nameEn: 'India', fta: true, cdMul: 0.75 },
-    { id: 'KR', flag: '🇰🇷', name: 'Hàn Quốc', nameEn: 'South Korea', fta: true, cdMul: 0.7 },
-    { id: 'JP', flag: '🇯🇵', name: 'Nhật Bản', nameEn: 'Japan', fta: true, cdMul: 0.75 },
-    { id: 'US', flag: '🇺🇸', name: 'Hoa Kỳ', nameEn: 'United States', fta: false, cdMul: 1.2 },
-    { id: 'DE', flag: '🇩🇪', name: 'Đức', nameEn: 'Germany', fta: true, cdMul: 1.2 },
-  ];
-  // Hệ số nhân doanh thu/tri thức theo quốc gia xuất phát cho thị trường m:
-  // không FTA → doanh thu −8% mọi quý; khoảng cách văn hoá → tới −12% doanh
-  // thu và tri thức mua được giảm, CHỈ 2 quý đầu (Q index 0,1).
-  function homeFtaMul() { return (HOME_COUNTRIES[S.home] || HOME_COUNTRIES[0]).fta ? 1 : 0.92; }
-  function homeCdFactor(m) {
-    var hc = HOME_COUNTRIES[S.home] || HOME_COUNTRIES[0];
-    if (S.q >= 2 || !hc.cdMul) return 1;
-    var cd = ((AIBIS_CTX[m] && AIBIS_CTX[m].culturalDistance) || 50) / 100;
-    return Math.max(0.88, 1 - 0.12 * cd * hc.cdMul);
-  }
-  function homeRevMul(m) { return homeFtaMul() * homeCdFactor(m); }
   var MODES = [
-    { id: 0, icon: '🛒', name: 'Nền tảng số', nameEn: 'Digital platform', cost: 0.5, margin: 0.25, scale: 0.7, op: 0.25, note: 'cam kết thấp – vào nhanh, lời mỏng', noteEn: 'low commitment – fast entry, thin margins' },
+    { id: 0, icon: '🛒', name: 'Nền tảng số', nameEn: 'Digital entry', cost: 0.5, margin: 0.25, scale: 0.7, op: 0.25, note: 'cam kết thấp – vào nhanh, lời mỏng', noteEn: 'low commitment – fast entry, thin margins' },
     { id: 1, icon: '🚢', name: 'Xuất khẩu trực tiếp', nameEn: 'Direct export', cost: 1.2, margin: 0.35, scale: 1.0, op: 0.5, note: 'cam kết vừa – kiểm soát tốt hơn', noteEn: 'moderate commitment – better control' },
-    { id: 2, icon: '🤝', name: 'Đối tác địa phương', nameEn: 'Local partner', cost: 0.8, margin: 0.28, scale: 1.3, op: 0.35, note: 'mượn mạng lưới – phụ thuộc đối tác', noteEn: 'borrowed network – dependent on the partner' },
+    { id: 2, icon: '🤝', name: 'Liên minh chiến lược', nameEn: 'Strategic alliance', cost: 0.8, margin: 0.28, scale: 1.3, op: 0.35, note: 'mượn mạng lưới đối tác địa phương – phụ thuộc đối tác', noteEn: 'borrow a local partner\'s network – partner-dependent' },
+    { id: 3, icon: '📜', name: 'Cấp phép', nameEn: 'Licensing', cost: 0.3, margin: 0.14, scale: 0.9, op: 0.08, note: 'vốn thấp nhất – lời mỏng, rủi ro thương hiệu nếu năng lực < 50', noteEn: 'lowest capital – thin margins, brand risk if capability < 50' },
+    { id: 4, icon: '🏗️', name: 'Liên doanh', nameEn: 'Joint venture', cost: 1.8, margin: 0.32, scale: 1.4, op: 0.5, note: 'chia vốn, chia lời – học thị trường nhanh (+tri thức mỗi quý)', noteEn: 'shared equity and profit – fast market learning (+intel each quarter)' },
+    { id: 5, icon: '🏭', name: 'Đầu tư 100% vốn (FDI)', nameEn: 'Wholly owned FDI', cost: 3.2, margin: 0.45, scale: 1.5, op: 0.9, note: 'kiểm soát tối đa, né thuế quan – cần năng lực ≥ 55, rủi ro cao', noteEn: 'maximum control, avoids tariffs – needs capability ≥ 55, high risk' },
   ];
   // Vận tải: lựa chọn/rủi ro RIÊNG, tách khỏi giá vốn cố định của MODES ở
   // trên – chọn 1 lần khi thâm nhập 1 thị trường, áp dụng mọi quý sau đó.
@@ -656,18 +541,18 @@
   }
 
   var S = {
-    q: 0, firm: 0, home: 0, cash: 8, rep: 50, capab: 40, resil: 50,
+    q: 0, firm: 0, cash: 8, rep: 50, capab: 40, resil: 50,
     know: [10, 10, 10, 10, 10, 10, 10], entered: [null, null, null, null, null, null, null],
     ship: [null, null, null, null, null, null, null],
     qin: [0, 0, 0, 0, 0, 0, 0], certBP: false, items: {}, shopOpen: false,
     cust: [60, 60, 60, 60, 60, 60, 60],
-    profit: 0, susts: 0, adapt: 0, lowQ: 0, rival: { rev: 0, in: [], qin: [] },
+    profit: 0, susts: 0, adapt: 0, lowQ: 0, negQ: 0, picks: [], rival: { rev: 0, in: [], qin: [] },
     foot: [], flags: {}, usedEv: [], phase: 'obs',
     sel: { prio: null, budget: 1, enter: null, enterMode: null, shipMode: null, intel: [] },
   };
   // ── AIBIS: gợi ý phương thức thâm nhập bằng engine tất định (tham khảo · số liệu minh hoạ) ──
   // Ánh xạ 3 phương thức của game sang 6 phương thức chuẩn của AIBIS.
-  var AIBIS_MAP = { 0: 'digital_entry', 1: 'export', 2: 'joint_venture' };
+  var AIBIS_MAP = { 0: 'digital_entry', 1: 'export', 2: 'strategic_alliance', 3: 'licensing', 4: 'joint_venture', 5: 'wholly_owned_fdi' };
   // Hồ sơ quốc gia MINH HOẠ theo trait mỗi thị trường (0..100) — chưa phải số liệu thật.
   var AIBIS_CTX = {
     0: { digitalReadiness: 85, crossBorderNetworkEffects: 72, dataRegulationRisk: 45, institutionalDistance: 35, culturalDistance: 30, logisticsQuality: 70, tariffPressure: 30, ipProtection: 55, opportunismRisk: 45, localPartnerValue: 45, networkImportance: 50, marketSize: 60, politicalRisk: 35 },
@@ -682,7 +567,7 @@
     var E = window.BizOnEntryModeEngine, MO = window.BizOnEntryModeModels;
     if (!E || !MO || !AIBIS_CTX[m]) return null;
     var f = FIRMS[S.firm] || FIRMS[0] || {};
-    var ctx = { country: AIBIS_CTX[m], firm: { financialCapacity: Math.min(100, (f.cash || 8) * 10), internationalExperience: 45, digitalCapability: f.capab || 45 } };
+    var ctx = aibisCtx(m);
     var out = {};
     MODES.forEach(function (md) {
       var model = null;
@@ -693,6 +578,116 @@
   }
 
   function F() { return FIRMS[S.firm]; }
+
+  // ===== AIBIS Entry Mode Workspace (cùng mô hình với app/aibis.html) =====
+  var AIBIS_PRI = { control: 55, speed: 70, learning: 65, capital: 75, risk: 40 };
+  try { var _ap = JSON.parse(localStorage.getItem('bizon-bp-aibis-pri') || 'null'); if (_ap) AIBIS_PRI = _ap; } catch (e) {}
+  function aibisCtx(m) {
+    var f = FIRMS[S.firm] || FIRMS[0] || {}, nIn = S.entered.filter(function (v) { return v !== null && v !== undefined; }).length;
+    var c = Object.assign({}, AIBIS_CTX[m] || {}), hi = homeInfo(m);
+    c.culturalDistance = Math.min(100, Math.round(hi.cd * 25)); c.tariffPressure = hi.free ? Math.min(c.tariffPressure || 30, 25) : Math.max(c.tariffPressure || 30, 60);
+    return { country: c, firm: { financialCapacity: Math.min(100, Math.round(S.cash * 10)), internationalExperience: Math.min(100, 30 + nIn * 10 + S.q * 3), digitalCapability: clamp(S.capab) },
+      priorities: { control: AIBIS_PRI.control, speed: AIBIS_PRI.speed, learning: AIBIS_PRI.learning, capitalEfficiency: AIBIS_PRI.capital, riskCompatibility: 100 - AIBIS_PRI.risk } };
+  }
+  function aibisRank(m) {
+    var E = window.BizOnEntryModeEngine, MO = window.BizOnEntryModeModels; if (!E || !MO || !AIBIS_CTX[m]) return [];
+    var ctx = aibisCtx(m);
+    return MODES.map(function (md) { var model = MO.modes.filter(function (x) { return x.id === AIBIS_MAP[md.id]; })[0]; if (!model) return null;
+      var r = E.scoreMode(model, ctx); return { md: md, score: Math.round(r.score), conf: r.confidence, comp: r.components, ex: r.explanation }; })
+      .filter(Boolean).sort(function (a, b) { return b.score - a.score; });
+  }
+  var aibisM = null;
+  function renderAibis() {
+    var st = $('bp-stage'); if (!st || S.phase !== 'dec') return;
+    var notIn = MKTS.map(function (_, m) { return m; }).filter(function (m) { return S.entered[m] === null; });
+    if (!notIn.length) { var o = $('bp-aibis'); if (o) o.remove(); return; }
+    var m = S.sel.enter != null ? S.sel.enter : (aibisM != null && notIn.indexOf(aibisM) >= 0 ? aibisM : notIn[0]); aibisM = m;
+    var box = $('bp-aibis'); if (!box) { box = document.createElement('div'); box.id = 'bp-aibis'; box.className = 'ib-dash'; var mp = $('bp-map-stage-wrap'); if (mp) mp.insertAdjacentElement('afterend', box); else st.insertAdjacentElement('afterbegin', box); }
+    var R = aibisRank(m), mk = MKTS[m], hi = homeInfo(m), top = R[0];
+    var sl = [['control', T('Kiểm soát', 'Control')], ['speed', T('Tốc độ', 'Speed')], ['learning', T('Học hỏi', 'Learning')], ['capital', T('Giới hạn vốn', 'Capital limit')], ['risk', T('Chấp nhận rủi ro', 'Risk tolerance')]];
+    box.innerHTML = '<div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center"><span class="ib-eyebrow">◐ AIBIS · ' + T('Không gian quyết định phương thức thâm nhập', 'Entry mode decision workspace') + '</span>' +
+      '<select id="bp-aibis-m" class="ib-btn" style="padding:5px 8px">' + notIn.map(function (x) { return '<option value="' + x + '"' + (x === m ? ' selected' : '') + '>' + (MKTS[x].real ? MKTS[x].real.flag + ' ' : '') + MKTS[x].name + '</option>'; }).join('') + '</select></div>' +
+      '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px">' +
+      '<div><span class="ib-eyebrow">' + T('Ưu tiên quyết định', 'Decision priorities') + '</span>' + sl.map(function (x) { return '<label style="display:grid;grid-template-columns:110px 1fr 30px;gap:8px;align-items:center;font-size:12px;margin-top:6px">' + x[1] + '<input type="range" min="0" max="100" step="5" value="' + AIBIS_PRI[x[0]] + '" data-pri="' + x[0] + '"><b class="ib-num" style="text-align:right">' + AIBIS_PRI[x[0]] + '</b></label>'; }).join('') +
+      '<p style="margin:8px 0 0;font-size:11px;opacity:.7">' + (mk.real ? mk.real.flag + ' ' + T(mk.real.c, mk.real.cEn) + ' · ' : '') + T('khoảng cách văn hoá ', 'cultural distance ') + hi.cd.toFixed(1) + ' · ' + (hi.free ? 'FTA ✓' : T('không FTA', 'no FTA')) + ' · ' + T('tiền ', 'cash ') + f1(S.cash) + TY() + ' · ' + T('năng lực ', 'capability ') + clamp(S.capab) + '</p></div>' +
+      '<div><span class="ib-eyebrow">' + T('Danh mục 6 phương thức', 'Six-mode portfolio') + '</span>' + R.map(function (r, i) {
+        return '<button type="button" onclick="bpEnter(' + m + ',' + r.md.id + ')" style="display:grid;grid-template-columns:22px minmax(0,1fr) 38px;gap:8px;align-items:center;width:100%;margin-top:6px;background:' + (S.sel.enter === m && S.sel.enterMode === r.md.id ? '#e3f1f4' : 'transparent') + ';border:0;padding:3px 4px;border-radius:8px;cursor:pointer;font:inherit;color:inherit;text-align:left">' +
+          '<span>' + r.md.icon + '</span><span style="min-width:0"><span style="display:flex;justify-content:space-between;font-size:12px;font-weight:800"><span>' + T(r.md.name, r.md.nameEn) + '</span><span style="opacity:.55;font-weight:600">' + f1(r.md.cost) + TY() + '</span></span><i style="display:block;height:6px;border-radius:9px;margin-top:3px;background:linear-gradient(90deg,' + (i === 0 ? '#006687' : '#9fc7cf') + ' ' + r.score + '%,#e6eef0 ' + r.score + '%)"></i></span><b class="ib-num" style="text-align:right">' + r.score + '</b></button>'; }).join('') + '</div>' +
+      '<div><span class="ib-eyebrow">💡 Lumina · ' + T('khuyến nghị có giải thích', 'explained recommendation') + '</span>' + (top ? '<p style="margin:6px 0 0;font-size:12.5px;line-height:1.5"><b>' + top.md.icon + ' ' + T(top.md.name, top.md.nameEn) + '</b> ' + T('dẫn đầu với ', 'leads with ') + top.score + '/100 (' + T('độ tin cậy bằng chứng ', 'evidence confidence ') + top.conf + '%).</p>' +
+        (top.ex.strengths.length ? '<p style="margin:4px 0 0;font-size:12px">✅ ' + top.ex.strengths.join(' · ') + '</p>' : '') + (top.ex.cautions.length ? '<p style="margin:4px 0 0;font-size:12px">⚠️ ' + top.ex.cautions.join(' · ') + '</p>' : '') +
+        '<p style="margin:6px 0 0;font-size:11px;opacity:.7">' + T('Thành phần: ưu tiên ', 'Components: priorities ') + Math.round(top.comp.weightedPreferences) + ' · ' + T('năng lực DN ', 'firm capability ') + Math.round(top.comp.capabilityFit) + ' · ' + T('phù hợp quốc gia ', 'country fit ') + Math.round(top.comp.countryFit) + ' · ' + T('khoảng cách ', 'distance ') + Math.round(top.comp.distancePenalty) + '</p>' : '') +
+        '<p style="margin:8px 0 0;font-size:10.5px;opacity:.6">' + T('Điểm phù hợp không phải xác suất thành công. Mô hình minh bạch phục vụ giảng dạy (Anderson & Gatignon, 1986; Zhao et al., 2004; Brouthers et al., 2022) – bấm một phương thức để chọn.', 'A fit score is not a probability of success. Transparent teaching model (Anderson & Gatignon, 1986; Zhao et al., 2004; Brouthers et al., 2022) – click a mode to select it.') + '</p></div></div>';
+    $('bp-aibis-m').onchange = function () { aibisM = +this.value; renderAibis(); };
+    box.querySelectorAll('[data-pri]').forEach(function (inp) { inp.oninput = function () { AIBIS_PRI[inp.dataset.pri] = +inp.value; inp.nextElementSibling.textContent = inp.value; try { localStorage.setItem('bizon-bp-aibis-pri', JSON.stringify(AIBIS_PRI)); } catch (e) {} clearTimeout(renderAibis.t); renderAibis.t = setTimeout(renderAibis, 120); }; });
+  }
+
+  // ===== Quốc gia chủ nhà (home) × quốc gia sở tại (host) – người chơi chọn quốc gia xuất phát =====
+  // Văn hoá: 4 chiều Hofstede cổ điển (PDI, IDV, MAS, UAI – Hofstede et al., 2010); khoảng cách văn hoá theo chỉ số Kogut & Singh (1988).
+  var HOMES = [
+    { id: 'vn', flag: '🇻🇳', c: 'Việt Nam', cEn: 'Vietnam', dem: 'Việt', demEn: 'Vietnamese', h: [70, 20, 40, 30] },
+    { id: 'th', flag: '🇹🇭', c: 'Thái Lan', cEn: 'Thailand', dem: 'Thái', demEn: 'Thai', h: [64, 20, 34, 64] },
+    { id: 'my', flag: '🇲🇾', c: 'Malaysia', cEn: 'Malaysia', dem: 'Malaysia', demEn: 'Malaysian', h: [100, 26, 50, 36] },
+    { id: 'ph', flag: '🇵🇭', c: 'Philippines', cEn: 'the Philippines', dem: 'Philippines', demEn: 'Filipino', h: [94, 32, 64, 44] },
+    { id: 'cn', flag: '🇨🇳', c: 'Trung Quốc', cEn: 'China', dem: 'Trung Quốc', demEn: 'Chinese', h: [80, 20, 66, 30] },
+    { id: 'in', flag: '🇮🇳', c: 'Ấn Độ', cEn: 'India', dem: 'Ấn Độ', demEn: 'Indian', h: [77, 48, 56, 40] },
+    { id: 'kr', flag: '🇰🇷', c: 'Hàn Quốc', cEn: 'South Korea', dem: 'Hàn', demEn: 'Korean', h: [60, 18, 39, 85] },
+    { id: 'jp', flag: '🇯🇵', c: 'Nhật Bản', cEn: 'Japan', dem: 'Nhật', demEn: 'Japanese', h: [54, 46, 95, 92] },
+    { id: 'us', flag: '🇺🇸', c: 'Hoa Kỳ', cEn: 'United States', dem: 'Mỹ', demEn: 'American', h: [40, 91, 62, 46] },
+    { id: 'de', flag: '🇩🇪', c: 'Đức', cEn: 'Germany', dem: 'Đức', demEn: 'German', h: [35, 67, 66, 65] },
+  ];
+  var VN_REAL = { flag: '🇻🇳', c: 'Việt Nam', cEn: 'Vietnam', fta: '', ftaEn: '', cul: 'Khoảng cách quyền lực khá cao, tập thể, coi trọng quan hệ cá nhân', culEn: 'Fairly high power distance, collectivist, relationship-based', bar: 'Công bố mỹ phẩm/thực phẩm với Bộ Y tế, nhãn phụ tiếng Việt, cạnh tranh mạnh trên Shopee/TikTok Shop', barEn: 'Product notification with the Ministry of Health, Vietnamese sub-labels, fierce competition on Shopee/TikTok Shop' };
+  var HOME_SLOT = { us: 'hl', de: 'bp', kr: 'ks', jp: 'nq' }; // quốc gia xuất phát trùng thị trường nào thì ô đó thành Việt Nam
+
+  var HOSTH = { hl: ['us', [40, 91, 62, 46]], bp: ['de', [35, 67, 66, 65]], ks: ['kr', [60, 18, 39, 85]], ld: ['nz', [22, 79, 58, 49]], nq: ['jp', [54, 46, 95, 92]], tc: ['sg', [74, 20, 48, 8]], hs: ['id', [78, 14, 46, 48]] };
+  var BLOC = { ASEAN: 'vn th my ph sg id', RCEP: 'vn th my ph sg id cn jp kr nz', CPTPP: 'vn my sg jp nz', EU: 'de' };
+  var ASEAN_PLUS = { jp: 'AJCEP', kr: 'AKFTA', nz: 'AANZFTA', cn: 'ACFTA', in: 'AIFTA' };
+  var BILAT = { 'vn-jp': 'VJEPA', 'vn-kr': 'VKFTA', 'vn-de': 'EVFTA', 'th-jp': 'JTEPA', 'th-nz': 'TNZCEP', 'my-jp': 'MJEPA', 'my-nz': 'MNZFTA', 'ph-jp': 'JPEPA', 'ph-kr': 'PH–KR FTA',
+    'cn-kr': 'CKFTA', 'cn-nz': 'NZ–China FTA', 'cn-sg': 'CSFTA', 'in-jp': 'CEPA Ấn–Nhật', 'in-kr': 'CEPA Ấn–Hàn', 'in-sg': 'CECA',
+    'kr-vn': 'VKFTA', 'jp-vn': 'VJEPA', 'de-vn': 'EVFTA', 'kr-us': 'KORUS', 'kr-de': 'EU–Hàn FTA', 'kr-nz': 'KNZFTA', 'kr-sg': 'KSFTA', 'kr-id': 'IK-CEPA',
+    'jp-us': 'USJTA (phạm vi hẹp)', 'jp-de': 'EPA EU–Nhật', 'jp-sg': 'JSEPA', 'jp-id': 'IJEPA', 'us-kr': 'KORUS', 'us-sg': 'USSFTA', 'us-jp': 'USJTA (phạm vi hẹp)',
+    'de-kr': 'EU–Hàn FTA', 'de-jp': 'EPA EU–Nhật', 'de-nz': 'EU–NZ FTA', 'de-sg': 'EUSFTA' };
+  var inB = function (b, x) { return (' ' + BLOC[b] + ' ').indexOf(' ' + x + ' ') >= 0; };
+  var ALLH = HOMES.map(function (x) { return x.h; }).concat(Object.keys(HOSTH).map(function (k) { return HOSTH[k][1]; }));
+  var VAR = [0, 1, 2, 3].map(function (i) { var a = ALLH.map(function (v) { return v[i]; }), m = a.reduce(function (s, x) { return s + x; }, 0) / a.length; return a.reduce(function (s, x) { return s + (x - m) * (x - m); }, 0) / (a.length - 1); });
+  function HOME() { return HOMES.filter(function (x) { return x.id === S.home; })[0] || HOMES[0]; }
+  function hostOf(m) { var key = MKTS[m].key; return HOME_SLOT[S.home] === key ? ['vn', [70, 20, 40, 30]] : HOSTH[key]; }
+  function applyHome() { MKTS.forEach(function (mk) { mk.real = HOME_SLOT[S.home] === mk.key ? VN_REAL : REAL[mk.key]; }); }
+  function homeInfo(m) {
+    var hm = HOME(), hc = hostOf(m)[0], hh = hostOf(m)[1];
+    var cd = [0, 1, 2, 3].reduce(function (s, i) { return s + Math.pow(hh[i] - hm.h[i], 2) / VAR[i]; }, 0) / 4;
+    var ag = [];
+    if (BILAT[hm.id + '-' + hc]) ag.push(BILAT[hm.id + '-' + hc]);
+    if (inB('ASEAN', hm.id) && inB('ASEAN', hc)) ag.push('ATIGA (ASEAN)');
+    if (inB('ASEAN', hm.id) && ASEAN_PLUS[hc]) ag.push(ASEAN_PLUS[hc]);
+    if (inB('ASEAN', hc) && ASEAN_PLUS[hm.id]) ag.push(ASEAN_PLUS[hm.id]);
+    if (inB('CPTPP', hm.id) && inB('CPTPP', hc)) ag.push('CPTPP');
+    if (inB('RCEP', hm.id) && inB('RCEP', hc)) ag.push('RCEP');
+    var fta, ftaEn;
+    if (hm.id === 'vn' && MKTS[m].real && MKTS[m].real !== VN_REAL) { fta = MKTS[m].real.fta; ftaEn = MKTS[m].real.ftaEn; }
+    else if (ag.length) { fta = ag.join(', '); ftaEn = fta; }
+    else if (hc === 'us') { fta = 'Chưa có FTA với ' + hm.c + '; thuế MFN cộng các thuế bổ sung hiện hành của Hoa Kỳ'; ftaEn = 'No FTA with ' + hm.cEn + '; MFN duty plus current US additional tariffs'; }
+    else { fta = 'Chưa có FTA có hiệu lực với ' + hm.c + ' – chịu thuế MFN'; ftaEn = 'No FTA in force with ' + hm.cEn + ' – MFN duty applies'; }
+    var free = hm.id === 'vn' ? hc !== 'us' : ag.length > 0;
+    var lvl = cd < 1 ? T('gần', 'close') : cd < 2 ? T('vừa', 'moderate') : T('xa', 'distant');
+    return { cd: cd, lvl: lvl, fta: T(fta, ftaEn), free: free, tariffMul: free ? 1 : 0.92, learnMul: Math.max(0.8, Math.min(1.15, 1.2 - 0.1 * cd)), newMul: 1 - Math.min(0.12, 0.04 * cd) };
+  }
+  // Doanh thu: không có FTA → −8%; hai quý đầu ở thị trường xa văn hoá → giảm tới −12% (liability of foreignness)
+  function homeRevMul(m) { var h = homeInfo(m); return (S.entered[m] === 5 ? 1 : h.tariffMul) * (S.qin[m] <= 2 ? h.newMul : 1); }
+  function renderHomes() {
+    var intro = $('bp-intro'); if (!intro) return;
+    var box = $('bp-homes');
+    if (!box) { box = document.createElement('div'); box.id = 'bp-homes-wrap'; box.className = 'mb-5'; intro.insertBefore(box, intro.firstElementChild); }
+    else box = $('bp-homes-wrap');
+    box.innerHTML = '<h2 class="font-display font-extrabold text-deep-teal text-lg mb-2">' + T('🏠 Quốc gia của bạn (home country)', '🏠 Your home country') + '</h2>' +
+      '<p class="text-[11px] opacity-60 mb-2">' + T('Nơi doanh nghiệp xuất phát. Quốc gia chủ nhà quyết định hiệp định thương mại và khoảng cách văn hoá (cultural distance) tới 7 thị trường sở tại (host country).', 'Where your firm starts. Your home country sets the trade agreements and cultural distance to the 7 host markets.') + '</p>' +
+      '<div id="bp-homes" class="flex flex-wrap gap-2">' + HOMES.map(function (x) { var on = x.id === S.home;
+        return '<button type="button" onclick="bpHome(\'' + x.id + '\')" class="clay-btn px-3 py-2 text-sm font-extrabold ' + (on ? 'bg-deep-teal text-white' : 'bg-surface-bright text-deep-teal') + '">' + x.flag + ' ' + T(x.c, x.cEn) + '</button>'; }).join('') + '</div>' +
+      '<p class="text-[11px] opacity-60 mt-2">' + T('Xem thẻ «Bảy cánh cửa ra thế giới» bên dưới cho khoảng cách văn hoá và hiệp định từng thị trường.', 'See the «Seven gateways» cards below for cultural distance and trade deals per market.') + '</p>' + mapBox('bp-map-intro', true);
+    setTimeout(function () { if (typeof drawMap === 'function') drawMap('bp-map-intro'); }, 0);
+  }
+  window.bpHome = function (id) { S.home = id; applyHome(); try { localStorage.setItem('bizon-bp-home', id); } catch (e) {} renderHomes(); };
+  try { S.home = localStorage.getItem('bizon-bp-home') || 'vn'; } catch (e) { S.home = 'vn'; }
+  applyHome();
 
   /* ================= 24 SỰ KIỆN ================= */
   function entMkts() { return MKTS.map(function (_, m) { return m; }).filter(function (m) { return S.entered[m] !== null; }); }
@@ -818,7 +813,7 @@
     { name: 'Bà Sáu Lành', role: 'Nhà sáng lập', roleEn: 'Founder', icon: '👵', gala: 'assets/character/advisors/ba-sau-lanh-aodai-cut.webp', img: 'assets/character/advisors/ba-sau-lanh-cut.webp' },
     { name: 'Minh Khang', role: 'CFO', roleEn: 'CFO', icon: '💰', gala: 'assets/character/advisors/minh-khang-aodai-cut.webp', img: 'assets/character/advisors/minh-khang-cut.webp' },
     { name: 'An Nhiên', role: 'Chiến lược & Đổi mới', roleEn: 'Strategy & Innovation', icon: '📣', gala: 'assets/character/advisors/an-nhien-aodai-cut.webp', img: 'assets/character/advisors/an-nhien-cut.webp' },
-    { name: 'Victor Lâm', role: 'Quốc tế hóa', roleEn: 'Internationalization', icon: '🌍', gala: 'assets/character/advisors/victor-lam-aodai-cut.webp', img: 'assets/character/advisors/victor-lam-cut.webp' },
+    { name: 'Thầy Tú Phan', role: 'Giảng viên · Quốc tế hóa', roleEn: 'Lecturer · Internationalization', icon: '🎓', gala: 'assets/character/advisors/tu-phan-cut.webp', img: 'assets/character/advisors/tu-phan-cut.webp' },
     { name: 'Lina Park', role: 'Phân phối', roleEn: 'Distribution', icon: '🚢', gala: 'assets/character/advisors/lina-park-aodai-cut.webp', img: 'assets/character/advisors/lina-park-cut.webp' },
     { name: 'Lumina AI', role: 'Cố vấn AI', roleEn: 'AI Advisor', icon: '🤖', gala: 'assets/character/advisors/lumina-aodai-cut.webp', img: 'assets/character/advisors/lumina-vest-cut.webp' },
   ];
@@ -846,10 +841,10 @@
       if (entMkts().length >= 3) return ['🤖', 'Lumina AI', T('Bạn đang hiện diện ở ' + entMkts().length + '/' + MKTS.length + ' thị trường. Dữ liệu cho thấy mở rộng nhanh hơn năng lực giao hàng là nguyên nhân số một của «tăng trưởng nghẽn cổ chai» – hãy nâng năng lực trước khi thêm cửa mới.', 'You are now present in ' + entMkts().length + '/' + MKTS.length + ' markets. Data shows expanding faster than delivery capability is the number-one cause of «bottlenecked growth» – raise your capability before opening a new door.')];
       return null;
     },
-    function () { if (S.know.every(function (k) { return k < 35; })) return ['🌍', 'Victor Lâm', T('Ta đang bay trong sương mù. Mua dữ liệu trước khi đặt cược – nhưng nhớ hỏi: nguồn này có lợi ích gì khi nói với ta điều đó?', "We're flying in the fog. Buy intel before you place a bet – but always ask: what does this source stand to gain by telling me this?")]; },
+    function () { if (S.know.every(function (k) { return k < 35; })) return ['🎓', 'Thầy Tú Phan', T('Ta đang bay trong sương mù. Mua dữ liệu trước khi đặt cược – nhưng nhớ hỏi: nguồn này có lợi ích gì khi nói với ta điều đó?', "We're flying in the fog. Buy intel before you place a bet – but always ask: what does this source stand to gain by telling me this?")]; },
     function () { if (S.rep >= 60) return ['📣', 'An Nhiên', T('Uy tín đang là tài sản lớn nhất của mình. Đầu tư thêm cho cộng đồng khách hàng – họ chính là kênh phân phối trung thành nhất.', 'Reputation is your biggest asset right now. Invest more in the customer community – they are your most loyal distribution channel.')]; },
     function () { if (S.capab < 45) return ['👵', 'Bà Sáu Lành', T('Đừng nhận đơn lớn khi tay nghề chưa tới, con à. Thà chậm một quý còn hơn mất chữ tín cả đời.', "Don't take on big orders before your skills catch up, dear. Better to be a quarter slower than to lose your word for a lifetime.")]; },
-    function () { if (S.entered[1] !== null && !S.certBP) return ['🌍', 'Victor Lâm', T('Bắc Phong không tha thứ cho hàng thiếu chứng nhận. Đầu tư kiểm định đi – dữ liệu các ngành đều nói vậy.', "Bắc Phong shows no mercy for uncertified goods. Invest in certification – the industry data all says the same thing.")]; },
+    function () { if (S.entered[1] !== null && !S.certBP) return ['🎓', 'Thầy Tú Phan', T('Bắc Phong không tha thứ cho hàng thiếu chứng nhận. Đầu tư kiểm định đi – dữ liệu các ngành đều nói vậy.', "Bắc Phong shows no mercy for uncertified goods. Invest in certification – the industry data all says the same thing.")]; },
     function () { return ['👵', 'Bà Sáu Lành', T('Ra biển lớn cũng được, nhưng chai dầu thơm của mình phải giữ mùi thảo mộc Vàm Thịnh. Mất bản sắc là mất hết.', 'Sailing to the open sea is fine, but our perfume bottle must keep the herbal scent of Vàm Thịnh. Lose your identity and you lose everything.')]; },
     function () { return ['📣', 'An Nhiên', T('Kim Sa đổi xu hướng mỗi mùa – nếu vào đó, phải chuẩn bị tinh thần làm mới liên tục. Năng lượng có tính lan tỏa: tin vào tầm nhìn thì cộng đồng sẽ tự hình thành quanh mình.', "Kim Sa's trends change every season – go there and be ready to keep reinventing yourself. Energy is contagious: believe in the vision and a community will form around you.")]; },
   ];
@@ -993,25 +988,6 @@
   }
   window.bpFirm = function (i) { S.firm = i; renderFirms(); };
 
-  function renderHome() {
-    var el = $('bp-homes'), note = $('bp-home-note');
-    if (!el) return;
-    el.innerHTML = HOME_COUNTRIES.map(function (h, i) {
-      return '<button class="bp-opt' + (i === S.home ? ' sel' : '') + '" style="width:auto;display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:999px;font-size:12px" onclick="bpHome(' + i + ')">' +
-        h.flag + ' ' + T(h.name, h.nameEn) + '</button>';
-    }).join('');
-    if (note) {
-      var h = HOME_COUNTRIES[S.home];
-      var bits = [];
-      bits.push(h.fta ? T('✅ Có FTA với Việt Nam', '✅ Has an FTA with Vietnam') : T('⚠️ Chưa có FTA với Việt Nam – doanh thu −8%', '⚠️ No FTA with Vietnam – revenue −8%'));
-      bits.push(!h.cdMul ? T('🏠 Thị trường quê nhà – không có khoảng cách văn hoá', '🏠 Home turf – no cultural distance') :
-        T('🌏 Khoảng cách văn hoá: ' + (h.cdMul <= 0.5 ? 'gần' : h.cdMul <= 0.8 ? 'trung bình' : 'xa') + ' – ảnh hưởng doanh thu/tri thức trong 2 quý đầu',
-          '🌏 Cultural distance: ' + (h.cdMul <= 0.5 ? 'close' : h.cdMul <= 0.8 ? 'moderate' : 'far') + ' – affects revenue/knowledge in the first 2 quarters'));
-      note.textContent = bits.join(' · ');
-    }
-  }
-  window.bpHome = function (i) { S.home = i; renderHome(); };
-
   function renderCast() {
     var el = $('bp-cast');
     if (!el) return;
@@ -1091,7 +1067,7 @@
     var cost = src.cost * (S.sel.prio === 0 ? 0.5 : 1);
     if (S.cash < cost) { $('bp-intel-note').textContent = T('Không đủ tiền cho nguồn này.', "You don't have enough cash for this source."); return; }
     S.cash -= cost;
-    S.know[m] = clamp(S.know[m] + src.know * homeCdFactor(m)); // quốc gia xuất phát: khoảng cách văn hoá làm tri thức mua được ít hơn 2 quý đầu
+    S.know[m] = clamp(S.know[m] + Math.round(src.know * homeInfo(m).learnMul)); // thị trường càng xa văn hoá, học càng chậm
     S.sel.intel.push(i);
     var real = H[m].fit;
     var msg;
@@ -1123,7 +1099,7 @@
       '<p class="text-[10px] opacity-55 mb-1.5">' + T('🧭 <b>AIBIS</b> (engine tất định) chấm mức phù hợp 0–100 cho mỗi phương thức theo hồ sơ thị trường &amp; doanh nghiệp (<i>tham khảo, số liệu minh hoạ</i>).', '🧭 <b>AIBIS</b> (a deterministic engine) scores each entry mode 0–100 based on the market &amp; company profile (<i>for reference, illustrative figures</i>).') + '</p>' +
       (notIn.length ? '<div class="space-y-2">' + notIn.map(function (m) {
         var _fit = aibisFit(m);
-        return '<div class="text-[12px] font-bold mt-1">' + mktBadge(m) + MKTS[m].name + ' <span class="opacity-55 font-semibold">(' + T('tri thức', 'knowledge') + ' ' + clamp(S.know[m]) + '/100 – ' + T(MKTS[m].trait, MKTS[m].traitEn) + ')</span>' +
+        return '<div class="text-[12px] font-bold mt-1">' + mktBadge(m) + MKTS[m].name + ' <span class="opacity-55 font-semibold">(' + T('tri thức', 'knowledge') + ' ' + clamp(S.know[m]) + '/100 – ' + T(MKTS[m].trait, MKTS[m].traitEn) + ')</span>' + (MKTS[m].real ? ' <span class="bp-chip" style="font-size:9.5px; padding:2px 7px" title="' + (homeInfo(m).fta + ' · ' + T(MKTS[m].real.bar, MKTS[m].real.barEn)).replace(/"/g, '') + '">' + MKTS[m].real.flag + ' ' + T(MKTS[m].real.c, MKTS[m].real.cEn) + ' · ' + T('KC văn hoá ', 'CD ') + homeInfo(m).cd.toFixed(1) + (homeInfo(m).free ? ' · ✅ FTA' : ' · ⚠️ ' + T('không FTA', 'no FTA')) + '</span>' : '') +
           (S.rival.in.indexOf(m) >= 0 ? ' <span class="bp-chip" style="font-size:9.5px; padding:2px 7px">' + RIVAL.icon + ' ' + T('đối thủ đã có mặt', 'rival already here') + '</span>' : '') + '</div>' +
           '<div class="grid sm:grid-cols-3 gap-2">' + MODES.map(function (md) {
             return '<button class="bp-opt" data-g="ent" data-m="' + m + '" data-md="' + md.id + '" onclick="bpEnter(' + m + ',' + md.id + ')">' + md.icon + ' ' + T(md.name, md.nameEn) + '<small>' + T('vốn', 'capital') + ' ' + f1(md.cost) + TY() + ' · ' + T(md.note, md.noteEn) + '</small>' + (_fit && _fit[md.id] != null ? '<span style="display:block;margin-top:3px;font-family:ui-monospace,monospace;font-size:10px;font-weight:800;color:#0F5C4E">AIBIS ' + _fit[md.id] + ' · ' + T('phù hợp', 'fit') + '</span>' : '') + '</button>';
@@ -1150,7 +1126,7 @@
   };
   window.bpEnter = function (m, md) {
     if (S.sel.enter === m && S.sel.enterMode === md) { S.sel.enter = null; S.sel.enterMode = null; }
-    else { S.sel.enter = m; S.sel.enterMode = md; }
+    else { if (md === 5 && S.capab < 55) { alert(T('FDI 100% vốn cần năng lực ≥ 55. Hãy «Nâng cấp năng lực» trước.', 'Wholly owned FDI needs capability ≥ 55. Upgrade capability first.')); return; } S.sel.enter = m; S.sel.enterMode = md; }
     S.sel.shipMode = null; // đổi thị trường/phương thức thì chọn lại vận chuyển
     syncDec();
   };
@@ -1286,6 +1262,8 @@
     // bảo hiểm sẽ vô tác dụng với phần lớn sự kiện "giảm doanh thu quý".
     var shielded = !!S.flags.shield;
     var before = shielded ? { cash: S.cash, rep: S.rep, capab: S.capab, resil: S.resil, adapt: S.adapt, susts: S.susts } : null;
+    var pe = S.entered.indexOf(2);
+    (S.picks = S.picks || []).push({ id: window.__bpEv.id || 'mission', i: i, rep: Math.round(S.rep), capab: Math.round(S.capab), cash: Math.round(S.cash * 10) / 10, susts: S.susts, k: Math.round(kAvgAll()), kp: pe >= 0 ? S.know[pe] : 0, k1: S.know[1] });
     var out = window.__bpEv.ch[i].fx();
     if (shielded) {
       ['cash', 'rep', 'capab', 'resil', 'adapt', 'susts'].forEach(function (k) { if (S[k] < before[k]) S[k] = before[k]; });
@@ -1299,12 +1277,39 @@
 
   // Định dạng các dòng doanh thu/lợi nhuận theo thị trường từ dữ liệu số thô –
   // dùng chung cho nhật ký và bảng "Kết quả quý", để vẽ lại được song ngữ.
+
+  // Nguyên nhân – kết quả: tách các hệ số chính đã nhân vào doanh thu quý (chỉ để giải thích, không đổi tính toán)
+  function revWhy(m, mode, bud, delayed, rivalRevHere, revAfter) {
+    var w = [], add = function (ic, vi, en, f) { if (Math.abs(f - 1) >= 0.04) w.push({ ic: ic, t: T(vi, en), p: f - 1 }); };
+    var qEnt = S.q - S.qin[m] + 2;
+    add('😊', 'hài lòng khách hàng ' + clamp(S.cust[m]) + '/100', 'customer satisfaction ' + clamp(S.cust[m]) + '/100', 0.7 + S.cust[m] / 100 * 0.6);
+    add('⭐', 'uy tín ' + clamp(S.rep) + ' & năng lực ' + clamp(S.capab), 'reputation ' + clamp(S.rep) + ' & capability ' + clamp(S.capab), (0.8 + S.rep / 250) * (0.8 + S.capab / 250));
+    add('💰', 'mức ngân sách quý này', "this quarter's budget level", bud.rev);
+    if (S.sel.prio === 1) add('🚀', 'ưu tiên Tăng trưởng quý này', 'Growth priority this quarter', 1.15);
+    if (m === 0 && S.entered[m] === 0) add('🌐', 'kênh số hợp thị trường số (vào quý ' + qEnt + ')', 'digital channel suits a digital market (entered Q' + qEnt + ')', 1.25);
+    if (m === 1 && !S.certBP) add('📜', 'chưa có chứng nhận Bắc Phong', 'no Bắc Phong certification yet', 0.45);
+    if (m === 3 && S.susts < 2) add('🌱', 'hồ sơ bền vững còn mỏng (' + (S.susts || 0) + '/2 lần đầu tư xanh)', 'thin sustainability record (' + (S.susts || 0) + '/2 green investments)', 0.6);
+    if (m === 4) add('🤝', 'lòng tin xây dần: quý thứ ' + S.qin[m] + ' ở đây', 'trust builds slowly: quarter ' + S.qin[m] + ' here', Math.min(1.15, 0.55 + 0.15 * S.qin[m]));
+    if (m === 6 && [2, 3, 4].indexOf(S.entered[m]) < 0) add('🏝️', 'thị trường phân mảnh, chưa có đối tác (vào bằng ' + T(mode.name, mode.nameEn) + ' quý ' + qEnt + ')', 'fragmented market, no partner (entered via ' + mode.nameEn + ' in Q' + qEnt + ')', 0.65);
+    add('🏠', 'thuế quan & khoảng cách văn hoá từ quốc gia xuất phát', 'tariffs & cultural distance from your home country', homeRevMul(m));
+    if (rivalRevHere > 0.01) add('🐉', RIVAL.name + ' chia thị phần', RIVAL.name + ' splits the market', revAfter / (revAfter + rivalRevHere));
+    if (delayed) add('🚚', 'chậm hàng (' + T(SHIP_MODES[S.ship[m]].name, SHIP_MODES[S.ship[m]].nameEn).toLowerCase() + ', chọn lúc vào quý ' + qEnt + ')', 'shipping delay (' + SHIP_MODES[S.ship[m]].nameEn.toLowerCase() + ', chosen at entry in Q' + qEnt + ')', 0.5);
+    w.sort(function (a, b) { return Math.abs(b.p) - Math.abs(a.p); });
+    return w.slice(0, 3);
+  }
+  function whyHtml(w) {
+    if (!w || !w.length) return '';
+    return '<br><span style="font-size:.93em"><b>' + T('Vì sao: ', 'Why: ') + '</b>' + w.map(function (x) {
+      var pc = Math.round(x.p * 100);
+      return '<span style="white-space:nowrap;color:' + (pc < 0 ? '#c0443a' : '#3f8a44') + ';font-weight:800">' + (pc > 0 ? '+' : '') + pc + '%</span> ' + x.ic + ' ' + x.t;
+    }).join(' · ') + '</span>';
+  }
   function fmtQLines(data, loanPaid) {
     var body = data.length ? data.map(function (d) {
       var ship = SHIP_MODES[S.ship[d.m]];
       return mktBadge(d.m) + MKTS[d.m].name + ': ' + T('doanh thu', 'revenue') + ' ' + f1(d.rev) + TY() + ' → ' + T('lợi nhuận', 'profit') + ' ' + f1(d.pf) + TY() +
         '<br><span style="opacity:.6; font-size:.95em">' + ship.icon + ' ' + T(ship.name, ship.nameEn) + (d.delayed ? ' · ⚠️ ' + T('chậm hàng quý này', 'delayed this quarter') : '') +
-        ' · 😊 ' + T('hài lòng KH', 'customer satisfaction') + ' ' + clamp(S.cust[d.m]) + '/100</span>';
+        ' · 😊 ' + T('hài lòng KH', 'customer satisfaction') + ' ' + clamp(S.cust[d.m]) + '/100</span>' + whyHtml(d.why);
     }).join('<br>') : T('Chưa hiện diện thị trường nào – quý này không có doanh thu quốc tế.', "You haven't entered any market yet – no international revenue this quarter.");
     return body + (loanPaid ? '<br>' + T('🏦 Trả lãi vay ngắn hạn 0,3 tỷ.', '🏦 Paid 0.3 bn in short-term loan interest.') : '');
   }
@@ -1409,19 +1414,21 @@
       var rev = 1.2 * H[m].fit * mode.scale * H[m].trend[S.q] / H[m].comp;
       rev *= (0.8 + S.rep / 250) * (0.8 + S.capab / 250) * bud.rev * wave;
       rev *= 0.7 + S.cust[m] / 100 * 0.6; // khách hàng hài lòng/trung thành: 0,7x–1,3x doanh thu
-      rev *= homeRevMul(m); // quốc gia xuất phát: FTA + khoảng cách văn hoá (mặc định VN = không đổi)
       if (S.sel.prio === 1) rev *= 1.15;
       if (m === 0 && S.entered[m] === 0) rev *= 1.25;           // Hải Lam thưởng kênh số
       if (m === 1 && !S.certBP) rev *= 0.45;                    // Bắc Phong thiếu chứng nhận
       if (m === 3 && S.susts < 2) rev *= 0.6;                   // Lục Đảo đòi hồ sơ bền vững + truy xuất
       if (m === 4) rev *= Math.min(1.15, 0.55 + 0.15 * S.qin[m]); // Nhật Quang: lòng tin xây dần
       if (m === 5) rev *= 1.2;                                  // Tân Cảng: quy mô cửa ngõ
-      if (m === 6 && S.entered[m] !== 2) rev *= 0.65;           // Hỏa Sơn: phân mảnh theo đảo, cần Đối tác địa phương mới phủ hết
+      if (m === 6 && [2, 3, 4].indexOf(S.entered[m]) < 0) rev *= 0.65;           // Hỏa Sơn: phân mảnh theo đảo, cần Đối tác địa phương mới phủ hết
       // Cá tính doanh nghiệp
       if (S.firm === 1) { if (m === 2) rev *= 1.15; }           // Phù Sa Foods hợp khách trẻ Kim Sa
       if (S.firm === 2) { rev *= 0.92; if (m === 3) rev *= 1.35; } // Lam Việt: sản xuất hạn chế, Lục Đảo yêu
       if (S.firm === 3 && S.entered[m] === 0) rev *= 1.35;      // Mekong Digital cực mạnh kênh số
-      if (S.items.NETWORK && S.entered[m] === 2) rev *= 1.10;   // Vật phẩm Mạng lưới đối tác (vĩnh viễn)
+      if (S.items.NETWORK && (S.entered[m] === 2 || S.entered[m] === 4)) rev *= 1.10;
+      if (S.entered[m] === 3 && S.capab < 50) S.rep = Math.max(0, S.rep - 1);   // Cấp phép: đối tác làm kém ảnh hưởng thương hiệu
+      if (S.entered[m] === 4) S.know[m] = clamp(S.know[m] + 6);             // Liên doanh: học nhanh từ đối tác   // Vật phẩm Mạng lưới đối tác (vĩnh viễn)
+      rev *= homeRevMul(m);                                     // home × host: thuế quan + khoảng cách văn hoá
       // Đối thủ có mặt ở thị trường này thì "miếng bánh" (= đúng rev vừa tính,
       // như thể không có đối thủ) bị chia theo tỉ lệ độ mạnh tương đối. Vắng
       // đối thủ: share = 100% về người chơi, rev giữ nguyên như trước đây.
@@ -1447,7 +1454,7 @@
       var op = mode.op * bud.op * (S.firm === 1 ? 1.2 : 1) * (m === 5 ? 1.4 : 1) * ship.opMul;
       var pf = rev * Math.max(0.08, margin) - op;
       qProfit += pf;
-      qLinesData.push({ m: m, rev: rev, pf: pf, delayed: delayed });
+      qLinesData.push({ m: m, rev: rev, pf: pf, delayed: delayed, why: revWhy(m, mode, bud, delayed, rivalRevHere, rev) });
       S.know[m] = clamp(S.know[m] + 6); // bán hàng cũng là học
       // Hài lòng/trung thành khách hàng: xây bằng ưu tiên "Xây thương hiệu",
       // hao mòn khi giảm giá theo đối thủ (price war), nhích theo lãi/lỗ quý.
@@ -1489,6 +1496,7 @@
     S.cash += qProfit; S.profit += qProfit;
     S.rep = clamp(S.rep); S.capab = clamp(S.capab); S.resil = clamp(S.resil);
     S.lowQ = S.cash < 0 ? S.lowQ + 1 : 0;
+    if (S.cash < 0) S.negQ = (S.negQ || 0) + 1;
     var report = fmtQLines(qLinesData, loanPaid);
     addLog('🧾 <b>' + T('Kết quả quý', 'Quarter results') + ':</b><br>' + report + '<br>💼 ' + T('Tiền mặt', 'Cash') + ': <b>' + f1(S.cash) + TY() + '</b>.');
     if (mktNotes.length) addLog(mktNotes.join('<br>'));
@@ -1592,7 +1600,7 @@
       var supreme = sc.total >= 72 && sc.p >= 60 && sc.r >= 60 && sc.c >= 60 && sc.a >= 60 && sc.s >= 60;
       if (!endCelebrated && (supreme || S.profit >= S.rival.rev)) { endCelebrated = true; createConfetti(); }
       $('bp-medal').textContent = supreme ? '🏆' : best.icon;
-      $('bp-title').textContent = supreme ? T('Thương hiệu Việt vươn khơi', 'A Vietnamese Brand Sets Sail') : T(best.title, best.titleEn);
+      $('bp-title').textContent = supreme ? T('Thương hiệu ' + HOME().dem + ' vươn khơi', 'A ' + HOME().demEn + ' Brand Sets Sail') : T(best.title, best.titleEn);
       $('bp-sub').textContent = supreme ? T('Cân bằng cả 5 chiều – danh hiệu cao nhất của Hộ Chiếu Thương Hiệu.', "Balanced across all 5 dimensions – Brand Passport's highest title.") :
         T('Lợi nhuận tích lũy ' + f1(S.profit) + ' tỷ ₫ sau 6 quý.', 'Cumulative profit of ' + f1(S.profit) + ' bn ₫ after 6 quarters.');
     }
@@ -1785,7 +1793,7 @@
           rep: fin.sc.r, capab: fin.sc.c, adapt: fin.sc.a, sust: fin.sc.s,
           title: fin.title,
           quarters: S.q >= 6 ? 6 : S.q + 1,
-          detail_json: { foot: S.foot, markets: S.entered, know: S.know, fail: fin.fail, home: (HOME_COUNTRIES[S.home] || HOME_COUNTRIES[0]).id },
+          detail_json: { home: S.home || 'vn', foot: S.foot, markets: S.entered, know: S.know, fail: fin.fail, picks: S.picks || [], negQ: S.negQ || 0, rival: Math.round(S.rival.rev * 10) / 10 },
           markets: S.entered.filter(function (v) { return v !== null && v !== undefined; }).length,
           badges: window.__bp3dBadges ? Object.keys(window.__bp3dBadges()).length : null,
           stars: window.__bp3dQuests ? Object.values(window.__bp3dQuests()).filter(function (x) { return x.done && x.firm === S.firm; }).length : null,
@@ -1826,6 +1834,7 @@
       if (!d) return;
       seed = d.seed;
       Object.keys(d.S).forEach(function (k) { S[k] = d.S[k]; });
+      if (typeof applyHome === 'function') applyHome();
       d.H.forEach(function (h, i) { H[i] = h; });
       $('bp-intro').classList.add('hidden');
       $('bp-play').classList.remove('hidden');
@@ -1946,8 +1955,35 @@
     if (bs && bf) { bs.className = len === 'short' ? onCls : offCls; bf.className = len === 'full' ? onCls : offCls; }
   }
 
+
+  // ===== Bản đồ thế giới (js/bp-worldmap.js) =====
+  var GEO = { vn: [105.78, 10.03], th: [100.5, 13.75], my: [101.69, 3.14], ph: [120.98, 14.6], cn: [121.47, 31.23], in: [72.88, 19.08],
+    us: [-74, 40.7], de: [13.4, 52.5], kr: [126.98, 37.57], nz: [174.78, -41.29], jp: [139.69, 35.69], sg: [103.82, 1.35], id: [106.85, -6.2], vnh: [106.66, 10.76] };
+  function mapData() {
+    var hm = HOME();
+    return { T: T, home: { id: hm.id, lon: GEO[hm.id][0], lat: GEO[hm.id][1], flag: hm.flag, label: T(hm.c, hm.cEn) },
+      hosts: MKTS.map(function (mk, m) { var hi = homeInfo(m), hc = hostOf(m)[0], g = GEO[hc === 'vn' ? 'vnh' : hc], ent = S.entered[m] !== null && S.entered[m] !== undefined;
+        return { m: m, iso: hc, lon: g[0], lat: g[1], label: mk.name, flag: mk.real ? mk.real.flag : '', entered: ent, modeIcon: ent ? MODES[S.entered[m]].icon : '',
+          rival: !!(S.rival && S.rival.in && S.rival.in.indexOf(m) >= 0), know: clamp(S.know[m]), free: hi.free, cd: hi.cd.toFixed(1),
+          tip: mk.name + (mk.real ? ' → ' + T(mk.real.c, mk.real.cEn) : '') + '\n' + T('Khoảng cách văn hoá: ', 'Cultural distance: ') + hi.cd.toFixed(2) + ' (' + hi.lvl + ')\n' + hi.fta + (mk.real ? '\n' + T('Rào cản: ', 'Barriers: ') + T(mk.real.bar, mk.real.barEn) : '') }; }) };
+  }
+  function mapBox(id, open) {
+    return '<details id="' + id + '-wrap" class="clay-card mb-3 overflow-hidden"' + (open ? ' open' : '') + ' style="padding:0"><summary class="font-display font-extrabold text-deep-teal text-sm" style="cursor:pointer;padding:10px 14px">🗺️ ' + T('Bản đồ thế giới – thị trường của bạn', 'World map – your markets') + '</summary><div id="' + id + '" style="min-height:120px"></div></details>';
+  }
+  function drawMap(id, n) { if (!$(id)) return; if (!window.BPWorldMap) { if ((n || 0) < 50) setTimeout(function () { drawMap(id, (n || 0) + 1); }, 200); return; } BPWorldMap.render($(id), mapData()); }
+  var mapOpen = true;
+  function stageMap() {
+    var st = $('bp-stage'); if (!st || $('bp-map-stage')) return;
+    st.insertAdjacentHTML('afterbegin', mapBox('bp-map-stage', mapOpen));
+    $('bp-map-stage-wrap').addEventListener('toggle', function () { mapOpen = this.open; });
+    drawMap('bp-map-stage');
+  }
+  var _stageObs0 = stageObs; stageObs = function () { var x = _stageObs0.apply(this, arguments); stageMap(); return x; };
+  var _stageDec0 = stageDecide; stageDecide = function () { var x = _stageDec0.apply(this, arguments); stageMap(); renderAibis(); return x; };
+  var _syncDec0 = syncDec; syncDec = function () { var x = _syncDec0.apply(this, arguments); renderAibis(); return x; };
+
+  renderHomes();
   renderFirms();
-  renderHome();
   applyStatic(); // trạng thái ban đầu (nếu người dùng đã chọn EN từ trước) - cũng tự gọi syncBpVideo()
   try { if (localStorage.getItem('bizon-bp-save')) $('bp-resume').classList.remove('hidden'); } catch (e) {}
 
@@ -1969,8 +2005,8 @@
   window.addEventListener('bizon:langchange', function () {
     applyStatic();
     if (!$('bp-intro').classList.contains('hidden')) {
+      renderHomes();
       renderFirms();
-      renderHome();
       renderCast();
     }
     if (!$('bp-play').classList.contains('hidden')) {
@@ -1984,12 +2020,14 @@
       renderResultsScreen();
     }
   });
-  window.__bp = { get S() { return S; }, SOURCES: SOURCES, MKTS: MKTS, FIRMS: FIRMS, MODES: MODES, RIVAL: RIVAL, CAST: CAST, scores: scores, rivalAttr: rivalAttr };
+  window.__bp = { hostOf: hostOf, mapData: mapData, HOSTH: HOSTH, homeInfo: homeInfo, HOME: HOME, HOMES: HOMES, get S() { return S; }, SOURCES: SOURCES, MKTS: MKTS, FIRMS: FIRMS, MODES: MODES, RIVAL: RIVAL, CAST: CAST, scores: scores };
 })();
 </script>
 <script src="js/bp-tutorial.js"></script>
-<script src="js/exam-clock.js"></script>
 <script src="js/bp-exam.js"></script>
+<script src="js/bp-worldmap.js?v=4"></script>
+<script src="js/bp-ib-ui.js?v=4"></script>
+<script src="js/bp-signature.js"></script>
 <script type="module" src="bp3d.js"></script>
 <script>if ('serviceWorker' in navigator && location.protocol.startsWith('http')) addEventListener('load', function () { navigator.serviceWorker.register('sw-hochieu.js').catch(function () {}); });</script>
 <script src="js/site-ui.js" defer></script>
