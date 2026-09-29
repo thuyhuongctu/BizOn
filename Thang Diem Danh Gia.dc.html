@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="./doc-page.js"></script>
+<style>
+@font-face{font-family:"Plus Jakarta Sans";src:url(assets/fonts/PlusJakartaSans-var-vietnamese.woff2) format("woff2");font-weight:200 800;unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
+@font-face{font-family:"Plus Jakarta Sans";src:url(assets/fonts/PlusJakartaSans-var-latin.woff2) format("woff2");font-weight:200 800}
+@font-face{font-family:"Manrope";src:url(assets/fonts/Manrope-var-vietnamese.woff2) format("woff2");font-weight:200 800;unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
+@font-face{font-family:"Manrope";src:url(assets/fonts/Manrope-var-latin.woff2) format("woff2");font-weight:200 800}
+doc-page:not(:defined){visibility:hidden}
+body{margin:0;font-family:"Manrope",system-ui,sans-serif;color:#033337}
+a{color:#006687}a:hover{color:#e8762d}
+table{border-collapse:collapse;width:100%}
+tr{break-inside:avoid}
+</style>
+</helmet>
+<doc-page size="a4" margin="18mm">
+<div style="font-size:10.5pt;line-height:1.5">
+
+<div style="display:flex;flex-direction:column;gap:6px;border-bottom:3px solid #fda127;padding-bottom:14px;margin-bottom:18px">
+  <p style="margin:0;font:700 9pt 'Plus Jakarta Sans';letter-spacing:.08em;text-transform:uppercase;color:#006687">BizOn · Tài liệu giảng viên</p>
+  <h1 style="margin:0;font:800 22pt/1.2 'Plus Jakarta Sans';color:#033337">Thang điểm đánh giá sinh viên qua game mô phỏng</h1>
+  <p style="margin:0;font-size:11pt;color:#335a5e">Hộ Chiếu Thương Hiệu 3D (cá nhân) và Bật Nghiệp – BizOn Game 3D (theo đội). Thang 10, làm tròn đến 0,1.</p>
+</div>
+
+<h2 style="font:800 13pt 'Plus Jakarta Sans';color:#006687;margin:0 0 8px">1. Nguyên tắc chung</h2>
+<ul style="margin:0 0 16px;padding-left:20px;display:flex;flex-direction:column;gap:3px">
+  <li>Chỉ tính điểm các lượt chơi có <b>Mã lớp</b>. Lượt chơi thử không được ghi nhận.</li>
+  <li>Bật Nghiệp: bản có Mã lớp dùng độ khó cố định, mọi đội trong lớp gặp cùng điều kiện. Giảng viên chọn độ khó trước khi mở lớp và không đổi giữa chừng.</li>
+  <li>Hộ Chiếu: lấy lần nộp kết quả <b>đầu tiên</b> trước hạn (khuyến nghị) để tránh chơi lại nhiều lần lấy điểm cao. Nếu cho phép chơi lại, ghi rõ trong đề cương.</li>
+  <li>Mỗi game chấm <b>thang 10</b>, toàn bộ điểm lấy từ <b>kết quả game</b>: màn kết quả, Dấu chân quyết định, nhật ký sự kiện và nhật ký đội. Không có bài phản tư hay báo cáo.</li>
+</ul>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px;break-inside:avoid">
+  <div style="background:#f1f8fb;border-radius:10px;padding:12px 14px">
+    <p style="margin:0 0 4px;font:700 9pt 'Plus Jakarta Sans';text-transform:uppercase;letter-spacing:.06em;color:#006687">Hộ Chiếu Thương Hiệu · 10 điểm</p>
+    <p style="margin:0">Điểm mô phỏng 5,0 · Thưởng 1,0 · Cân bằng 2,0 · Quản trị rủi ro 2,0</p>
+  </div>
+  <div style="background:#fff6ea;border-radius:10px;padding:12px 14px">
+    <p style="margin:0 0 4px;font:700 9pt 'Plus Jakarta Sans';text-transform:uppercase;letter-spacing:.06em;color:#b8561b">Bật Nghiệp · 10 điểm</p>
+    <p style="margin:0">Số liệu game 7,5 · Làm việc nhóm 1,5 · Ứng phó biến cố 1,0</p>
+  </div>
+</div>
+
+<h2 style="font:800 13pt 'Plus Jakarta Sans';color:#006687;margin:0 0 4px;break-before:auto">2. Hộ Chiếu Thương Hiệu 3D</h2>
+<p style="margin:0 0 10px;color:#335a5e">Game tính sẵn Điểm tổng /100 = 30% Lợi nhuận + 20% Uy tín + 20% Năng lực + 15% Thích ứng + 15% Bền vững. Giảng viên xem ở tab «🛂 Hộ Chiếu» của Trang Giảng Viên.</p>
+
+<table style="margin-bottom:14px;font-size:10pt">
+  <thead><tr>
+    <th style="padding:7px 10px;text-align:left;background:#033337;color:#fff;width:24%">Tiêu chí</th>
+    <th style="padding:7px 10px;text-align:left;background:#033337;color:#fff">Cách tính</th>
+    <th style="padding:7px 10px;text-align:right;background:#033337;color:#fff;width:11%">Tối đa</th>
+  </tr></thead>
+  <tbody>
+    <tr><td style="padding:7px 10px;border-bottom:1px solid #d9e4e6;vertical-align:top"><b>A1. Điểm mô phỏng</b></td><td style="padding:7px 10px;border-bottom:1px solid #d9e4e6">Điểm tổng × 0,05. Ví dụ 63/100 → 3,2.<br>Kết thúc sớm (cạn tiền 2 quý liên tiếp, hoặc uy tín chạm đáy): tối đa 1,5.</td><td style="padding:7px 10px;border-bottom:1px solid #d9e4e6;text-align:right;vertical-align:top">5,0</td></tr>
+    <tr><td style="padding:7px 10px;border-bottom:1px solid #d9e4e6;vertical-align:top"><b>A2. Thưởng kết quả</b></td><td style="padding:7px 10px;border-bottom:1px solid #d9e4e6">+0,6 nếu đạt danh hiệu «Thương hiệu Việt vươn khơi» (Điểm tổng ≥ 72, cả 5 chiều ≥ 60).<br>+0,4 nếu lợi nhuận tích lũy vượt đối thủ trong cuộc đua 6 quý.</td><td style="padding:7px 10px;border-bottom:1px solid #d9e4e6;text-align:right;vertical-align:top">1,0</td></tr>
+    <tr><td style="padding:7px 10px;border-bottom:1px solid #d9e4e6;vertical-align:top"><b>A3. Cân bằng 5 chiều</b></td><td style="padding:7px 10px;border-bottom:1px solid #d9e4e6">Theo chiều <i>thấp nhất</i> trong 5 chiều: ≥ 60 → 2,0 · 45–59 → 1,4 · 30–44 → 0,7 · dưới 30 → 0.</td><td style="padding:7px 10px;border-bottom:1px solid #d9e4e6;text-align:right;vertical-align:top">2,0</td></tr>
+    <tr><td style="padding:7px 10px;border-bottom:1px solid #d9e4e6;vertical-align:top"><b>A4. Quản trị rủi ro</b></td><td style="padding:7px 10px;border-bottom:1px solid #d9e4e6">Đọc «Dấu chân quyết định» và nhật ký sự kiện.<br>• Chất lượng quyết định (1,5): tỷ lệ lựa chọn «Vững» trên số sự kiện đã gặp ≥ 80% → 1,5 · 60–79% → 1,1 · 40–59% → 0,7 · dưới 40% → 0,3. Danh sách lựa chọn «Vững» xem bản chi tiết.<br>• Kỷ luật tiền mặt (0,5): không quý nào âm tiền → 0,5 · âm 1 quý → 0,25 · từ 2 quý → 0.</td><td style="padding:7px 10px;border-bottom:1px solid #d9e4e6;text-align:right;vertical-align:top">2,0</td></tr>
+    <tr><td style="padding:7px 10px;border-bottom:2px solid #033337;vertical-align:top" colspan="2"><b>Tổng</b></td><td style="padding:7px 10px;border-bottom:2px solid #033337;text-align:right"><b>10</b></td></tr>
+  </tbody>
+</table>
+
+<div style="height:8px"></div>
+
+<h2 style="font:800 13pt 'Plus Jakarta Sans';color:#b8561b;margin:0 0 4px">3. Bật Nghiệp – BizOn Game 3D</h2>
+<p style="margin:0 0 10px;color:#335a5e">Chấm theo đội sau 6 vòng. Không có báo cáo thuyết trình: toàn bộ điểm lấy từ Báo cáo cuối mùa, Phòng Tài chính, tab Thành tựu và nhật ký đội.</p>
+
+<table style="margin-bottom:14px;font-size:10pt">
+  <thead><tr>
+    <th style="padding:7px 10px;text-align:left;background:#033337;color:#fff;width:24%">Tiêu chí</th>
+    <th style="padding:7px 10px;text-align:left;background:#033337;color:#fff">Cách tính</th>
+    <th style="padding:7px 10px;text-align:right;background:#033337;color:#fff;width:11%">Tối đa</th>
+  </tr></thead>
+  <tbody>
+    <tr><td style="padding:7px 10px;border-bottom:1px solid #d9e4e6;vertical-align:top"><b>B1. Lợi nhuận tích lũy</b></td><td style="padding:7px 10px;border-bottom:1px solid #d9e4e6">Xếp các đội trong lớp theo tổng lợi nhuận 6 vòng: nhóm 25% cao nhất → 2,0 · 25–50% → 1,5 · 50–75% → 1,0 · còn lại → 0,5.<br>Tổng lợi nhuận âm: tối đa 0,5.</td><td style="padding:7px 10px;border-bottom:1px solid #d9e4e6;text-align:right;vertical-align:top">2,0</td></tr>
+    <tr><td style="padding:7px 10px;border-bottom:1px solid #d9e4e6;vertical-align:top"><b>B2. Thị phần chung cuộc</b></td><td style="padding:7px 10px;border-bottom:1px solid #d9e4e6">Thị phần vòng 6: ≥ 30% → 2,0 · 25–29,9% → 1,6 · 20–24,9% → 1,2 · dưới 20% → 0,8.</td><td style="padding:7px 10px;border-bottom:1px solid #d9e4e6;text-align:right;vertical-align:top">2,0</td></tr>
+    <tr><td style="padding:7px 10px;border-bottom:1px solid #d9e4e6;vertical-align:top"><b>B3. Vận hành và tài chính</b></td><td style="padding:7px 10px;border-bottom:1px solid #d9e4e6">• OEE trung bình 6 vòng: ≥ 85 → 1,0 · 80–84 → 0,7 · dưới 80 → 0,3.<br>• Tỷ lệ lỗi vòng 6 ≤ 2,0% → 0,4.<br>• Quick ratio vòng 6 ≥ 1,0 → 0,6.</td><td style="padding:7px 10px;border-bottom:1px solid #d9e4e6;text-align:right;vertical-align:top">2,0</td></tr>
+    <tr><td style="padding:7px 10px;border-bottom:1px solid #d9e4e6;vertical-align:top"><b>B4. Thành tựu</b></td><td style="padding:7px 10px;border-bottom:1px solid #d9e4e6">0,15 điểm cho mỗi thành tựu mở khóa (10 thành tựu): Khởi nghiệp, Có lãi!, Dẫn đầu thị trường, Vượt bão khủng hoảng, Két sắt đầy, Tốt nghiệp BizOn, Cắm cờ đầu tiên, Chiến lược gia Nếu–Thì, Lắng nghe đội, Vô địch BizOn.</td><td style="padding:7px 10px;border-bottom:1px solid #d9e4e6;text-align:right;vertical-align:top">1,5</td></tr>
+    <tr><td style="padding:7px 10px;border-bottom:2px solid #033337;vertical-align:top" colspan="2"><b>Cộng phần số liệu game</b></td><td style="padding:7px 10px;border-bottom:2px solid #033337;text-align:right"><b>7,5</b></td></tr>
+  </tbody>
+</table>
+
+<p style="margin:0 0 6px;font:700 10.5pt 'Plus Jakarta Sans'">B5. Làm việc nhóm theo vai trò (1,5 điểm, chấm từng thành viên)</p>
+<p style="margin:0 0 14px">Mỗi thành viên đảm nhận một vai CEO, CFO, CMO, COO hoặc SEC. Chấm từ nhật ký đội: số vòng thành viên có ít nhất một đề xuất đúng mảng vai trò. 5–6 vòng → 1,5 · 3–4 vòng → 1,0 · 1–2 vòng → 0,4 · 0 vòng → 0.</p>
+
+<p style="margin:0 0 6px;font:700 10.5pt 'Plus Jakarta Sans'">B6. Ứng phó biến cố (1,0 điểm, chung cả đội)</p>
+<p style="margin:0 0 22px">Chỉ xét các vòng có biến cố bất lợi. Quick ratio ≥ 1,0 ở mọi vòng đó → 0,4 (thủng ngưỡng 1 vòng → 0,2). Lợi nhuận ròng ≥ 0 ở mọi vòng đó → 0,4 (ít nhất một nửa số vòng → 0,2). Nhật ký cho thấy đội dùng mô phỏng Nếu–Thì hoặc họp đội trước khi chốt → 0,2.</p>
+
+<h2 style="font:800 13pt 'Plus Jakarta Sans';color:#006687;margin:0 0 8px">4. Ví dụ chấm</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px;break-inside:avoid;font-size:9.5pt">
+  <div style="border:1px solid #d9e4e6;border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:3px">
+    <p style="margin:0 0 4px;font:700 10pt 'Plus Jakarta Sans';color:#006687">Hộ Chiếu – Sinh viên A</p>
+    <p style="margin:0">Lợi nhuận 70 · Uy tín 65 · Năng lực 60 · Thích ứng 55 · Bền vững 56 → Điểm tổng 63; vượt đối thủ; không quý nào âm tiền; 7/10 lựa chọn «Vững».</p>
+    <p style="margin:6px 0 0">A1 3,2 · A2 0,4 · A3 1,4 · A4 1,6 (1,1 + 0,5)</p>
+    <p style="margin:0;font-weight:800">Tổng: 6,6</p>
+  </div>
+  <div style="border:1px solid #d9e4e6;border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:3px">
+    <p style="margin:0 0 4px;font:700 10pt 'Plus Jakarta Sans';color:#b8561b">Bật Nghiệp – Đội Rồng Xanh, thành viên CFO</p>
+    <p style="margin:0">Lợi nhuận nhóm 25–50% · thị phần 27% · OEE TB 83 · lỗi 2,3% · quick ratio 1,1 · 7 thành tựu · lỗ 1 trong 2 vòng biến cố, QR giữ ≥ 1,0 · CFO đóng góp 4/6 vòng.</p>
+    <p style="margin:6px 0 0">B1 1,5 · B2 1,6 · B3 1,3 · B4 1,05 · B5 1,0 · B6 0,6</p>
+    <p style="margin:0;font-weight:800">Tổng: 7,1</p>
+  </div>
+</div>
+
+<h2 style="font:800 13pt 'Plus Jakarta Sans';color:#006687;margin:0 0 8px">5. Tổng hợp điểm thành phần</h2>
+<p style="margin:0 0 8px">Điểm thành phần mô phỏng = 50% Hộ Chiếu + 50% Bật Nghiệp (giảng viên điều chỉnh tỷ trọng theo đề cương). Quy đổi điểm theo bảng sau:</p>
+<div style="display:grid;grid-template-columns:repeat(8,1fr);gap:4px;text-align:center;font-size:9.5pt;break-inside:avoid">
+  <div style="background:#033337;color:#fff;border-radius:6px;padding:6px 2px"><b>A</b><br>9,0–10<br><span style="font-size:8.5pt">Thang 4: 4,0</span></div>
+  <div style="background:#0d4f55;color:#fff;border-radius:6px;padding:6px 2px"><b>B+</b><br>8,0–8,9<br><span style="font-size:8.5pt">Thang 4: 3,5</span></div>
+  <div style="background:#006687;color:#fff;border-radius:6px;padding:6px 2px"><b>B</b><br>7,0–7,9<br><span style="font-size:8.5pt">Thang 4: 3,0</span></div>
+  <div style="background:#e3eef1;color:#033337;border-radius:6px;padding:6px 2px"><b>C+</b><br>6,5–6,9<br><span style="font-size:8.5pt">Thang 4: 2,5</span></div>
+  <div style="background:#e3eef1;color:#033337;border-radius:6px;padding:6px 2px"><b>C</b><br>5,5–6,4<br><span style="font-size:8.5pt">Thang 4: 2,0</span></div>
+  <div style="background:#fff0dc;color:#033337;border-radius:6px;padding:6px 2px"><b>D+</b><br>5,0–5,4<br><span style="font-size:8.5pt">Thang 4: 1,5</span></div>
+  <div style="background:#fff0dc;color:#033337;border-radius:6px;padding:6px 2px"><b>D</b><br>4,0–4,9<br><span style="font-size:8.5pt">Thang 4: 1,0</span></div>
+  <div style="background:#fbe1d4;color:#033337;border-radius:6px;padding:6px 2px"><b>F</b><br>&lt; 4,0<br><span style="font-size:8.5pt">Thang 4: 0,0</span></div>
+</div>
+<p style="margin:8px 0 0">Học phần chỉ được tính tích lũy khi đạt từ điểm D trở lên.</p>
+
+</div>
+</doc-page>
+</x-dc>
+</body>
+</html>
