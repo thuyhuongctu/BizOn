@@ -314,6 +314,10 @@
     <h2 class="font-display font-extrabold text-deep-teal text-lg mb-2" data-en="🏢 Choose your company">🏢 Chọn doanh nghiệp của bạn</h2>
     <p class="text-[11px] opacity-60 mb-2" data-en="Each company has its own journey and risk profile – there is no &quot;strongest&quot; choice.">Mỗi doanh nghiệp một hành trình và hệ rủi ro khác nhau – không có lựa chọn "mạnh nhất".</p>
     <div class="grid sm:grid-cols-2 gap-2" id="bp-firms"></div>
+    <h3 class="font-display font-extrabold text-deep-teal text-sm mt-5 mb-2" data-en="🏠 Home country (optional)">🏠 Quốc gia xuất phát (tùy chọn)</h3>
+    <p class="text-[11px] opacity-60 mb-2" data-en="Affects the total score: no FTA with Vietnam → revenue −8%; large cultural distance → up to −12% revenue and less knowledge from intel in the first 2 quarters. Recorded with your submission.">Ảnh hưởng đến điểm tổng: không có FTA với Việt Nam → doanh thu −8%; khoảng cách văn hoá lớn → tới −12% doanh thu và tri thức mua được ít hơn trong 2 quý đầu. Có ghi lại khi nộp kết quả.</p>
+    <div class="flex flex-wrap gap-1.5 mb-1" id="bp-homes"></div>
+    <p class="text-[11px] font-semibold mt-1.5" id="bp-home-note"></p>
     <h3 class="font-display font-extrabold text-deep-teal text-sm mt-5 mb-2" data-en="🌏 Seven gateways to the world (fictional countries)">🌏 Bảy cánh cửa ra thế giới (quốc gia giả tưởng)</h3>
     <div id="bp-mkt-list" class="space-y-1.5 text-[12px]">
       <p data-en-html="🌐 <b>Hải Lam</b> – advanced digital market: fast entry, very high online competition.">🌐 <b>Hải Lam</b> – thị trường số phát triển: vào nhanh, cạnh tranh trực tuyến rất cao.</p>
@@ -552,6 +556,36 @@
     { icon: '👗', name: 'Lam Việt', prod: 'Thời trang bền vững', prodEn: 'Sustainable fashion', adv: 'Hồ sơ xanh sẵn có · hợp Lục Đảo', advEn: 'Ready-made green record · a fit for Lục Đảo', weak: 'Năng lực sản xuất hạn chế', weakEn: 'Limited production capacity', cash: 8, rep: 50, capab: 32, susts: 1, img: 'assets/character/firms/lam-viet-cut.webp' },
     { icon: '💻', name: 'Mekong Digital', prod: 'Phần mềm quản trị', prodEn: 'Management software', adv: 'Kênh số cực mạnh · biên lời cao', advEn: 'Very strong digital channel · high margins', weak: 'Mù mờ pháp luật dữ liệu', weakEn: 'Shaky on data regulations', cash: 7, rep: 46, capab: 48, susts: 0, img: 'assets/character/firms/mekong-digital-cut.webp' },
   ];
+  // Quốc gia xuất phát (concept mục "Chọn trước khi chơi"): fta = có hiệp định
+  // thương mại tự do với Việt Nam trong đời thật (AFTA/ACFTA/VKFTA/VJEPA·CPTPP/
+  // AIFTA/EVFTA) hay không – chỉ Hoa Kỳ là chưa có. cdMul = hệ số nhân thêm lên
+  // culturalDistance sẵn có của từng thị trường giả tưởng (AIBIS_CTX) để mô
+  // phỏng khoảng cách văn hoá kiểu Kogut & Singh (1988) mà KHÔNG cần dữ liệu
+  // Hofstede thật cho 7 thị trường hư cấu. Việt Nam (mặc định, id 0) = 0, để
+  // không đổi hành vi game nếu sinh viên không chọn gì khác.
+  var HOME_COUNTRIES = [
+    { id: 'VN', flag: '🇻🇳', name: 'Việt Nam', nameEn: 'Vietnam', fta: true, cdMul: 0 },
+    { id: 'TH', flag: '🇹🇭', name: 'Thái Lan', nameEn: 'Thailand', fta: true, cdMul: 0.4 },
+    { id: 'MY', flag: '🇲🇾', name: 'Malaysia', nameEn: 'Malaysia', fta: true, cdMul: 0.4 },
+    { id: 'PH', flag: '🇵🇭', name: 'Philippines', nameEn: 'Philippines', fta: true, cdMul: 0.4 },
+    { id: 'CN', flag: '🇨🇳', name: 'Trung Quốc', nameEn: 'China', fta: true, cdMul: 0.6 },
+    { id: 'IN', flag: '🇮🇳', name: 'Ấn Độ', nameEn: 'India', fta: true, cdMul: 0.75 },
+    { id: 'KR', flag: '🇰🇷', name: 'Hàn Quốc', nameEn: 'South Korea', fta: true, cdMul: 0.7 },
+    { id: 'JP', flag: '🇯🇵', name: 'Nhật Bản', nameEn: 'Japan', fta: true, cdMul: 0.75 },
+    { id: 'US', flag: '🇺🇸', name: 'Hoa Kỳ', nameEn: 'United States', fta: false, cdMul: 1.2 },
+    { id: 'DE', flag: '🇩🇪', name: 'Đức', nameEn: 'Germany', fta: true, cdMul: 1.2 },
+  ];
+  // Hệ số nhân doanh thu/tri thức theo quốc gia xuất phát cho thị trường m:
+  // không FTA → doanh thu −8% mọi quý; khoảng cách văn hoá → tới −12% doanh
+  // thu và tri thức mua được giảm, CHỈ 2 quý đầu (Q index 0,1).
+  function homeFtaMul() { return (HOME_COUNTRIES[S.home] || HOME_COUNTRIES[0]).fta ? 1 : 0.92; }
+  function homeCdFactor(m) {
+    var hc = HOME_COUNTRIES[S.home] || HOME_COUNTRIES[0];
+    if (S.q >= 2 || !hc.cdMul) return 1;
+    var cd = ((AIBIS_CTX[m] && AIBIS_CTX[m].culturalDistance) || 50) / 100;
+    return Math.max(0.88, 1 - 0.12 * cd * hc.cdMul);
+  }
+  function homeRevMul(m) { return homeFtaMul() * homeCdFactor(m); }
   var MODES = [
     { id: 0, icon: '🛒', name: 'Nền tảng số', nameEn: 'Digital platform', cost: 0.5, margin: 0.25, scale: 0.7, op: 0.25, note: 'cam kết thấp – vào nhanh, lời mỏng', noteEn: 'low commitment – fast entry, thin margins' },
     { id: 1, icon: '🚢', name: 'Xuất khẩu trực tiếp', nameEn: 'Direct export', cost: 1.2, margin: 0.35, scale: 1.0, op: 0.5, note: 'cam kết vừa – kiểm soát tốt hơn', noteEn: 'moderate commitment – better control' },
@@ -622,7 +656,7 @@
   }
 
   var S = {
-    q: 0, firm: 0, cash: 8, rep: 50, capab: 40, resil: 50,
+    q: 0, firm: 0, home: 0, cash: 8, rep: 50, capab: 40, resil: 50,
     know: [10, 10, 10, 10, 10, 10, 10], entered: [null, null, null, null, null, null, null],
     ship: [null, null, null, null, null, null, null],
     qin: [0, 0, 0, 0, 0, 0, 0], certBP: false, items: {}, shopOpen: false,
@@ -959,6 +993,25 @@
   }
   window.bpFirm = function (i) { S.firm = i; renderFirms(); };
 
+  function renderHome() {
+    var el = $('bp-homes'), note = $('bp-home-note');
+    if (!el) return;
+    el.innerHTML = HOME_COUNTRIES.map(function (h, i) {
+      return '<button class="bp-opt' + (i === S.home ? ' sel' : '') + '" style="width:auto;display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:999px;font-size:12px" onclick="bpHome(' + i + ')">' +
+        h.flag + ' ' + T(h.name, h.nameEn) + '</button>';
+    }).join('');
+    if (note) {
+      var h = HOME_COUNTRIES[S.home];
+      var bits = [];
+      bits.push(h.fta ? T('✅ Có FTA với Việt Nam', '✅ Has an FTA with Vietnam') : T('⚠️ Chưa có FTA với Việt Nam – doanh thu −8%', '⚠️ No FTA with Vietnam – revenue −8%'));
+      bits.push(!h.cdMul ? T('🏠 Thị trường quê nhà – không có khoảng cách văn hoá', '🏠 Home turf – no cultural distance') :
+        T('🌏 Khoảng cách văn hoá: ' + (h.cdMul <= 0.5 ? 'gần' : h.cdMul <= 0.8 ? 'trung bình' : 'xa') + ' – ảnh hưởng doanh thu/tri thức trong 2 quý đầu',
+          '🌏 Cultural distance: ' + (h.cdMul <= 0.5 ? 'close' : h.cdMul <= 0.8 ? 'moderate' : 'far') + ' – affects revenue/knowledge in the first 2 quarters'));
+      note.textContent = bits.join(' · ');
+    }
+  }
+  window.bpHome = function (i) { S.home = i; renderHome(); };
+
   function renderCast() {
     var el = $('bp-cast');
     if (!el) return;
@@ -1038,7 +1091,7 @@
     var cost = src.cost * (S.sel.prio === 0 ? 0.5 : 1);
     if (S.cash < cost) { $('bp-intel-note').textContent = T('Không đủ tiền cho nguồn này.', "You don't have enough cash for this source."); return; }
     S.cash -= cost;
-    S.know[m] = clamp(S.know[m] + src.know);
+    S.know[m] = clamp(S.know[m] + src.know * homeCdFactor(m)); // quốc gia xuất phát: khoảng cách văn hoá làm tri thức mua được ít hơn 2 quý đầu
     S.sel.intel.push(i);
     var real = H[m].fit;
     var msg;
@@ -1356,6 +1409,7 @@
       var rev = 1.2 * H[m].fit * mode.scale * H[m].trend[S.q] / H[m].comp;
       rev *= (0.8 + S.rep / 250) * (0.8 + S.capab / 250) * bud.rev * wave;
       rev *= 0.7 + S.cust[m] / 100 * 0.6; // khách hàng hài lòng/trung thành: 0,7x–1,3x doanh thu
+      rev *= homeRevMul(m); // quốc gia xuất phát: FTA + khoảng cách văn hoá (mặc định VN = không đổi)
       if (S.sel.prio === 1) rev *= 1.15;
       if (m === 0 && S.entered[m] === 0) rev *= 1.25;           // Hải Lam thưởng kênh số
       if (m === 1 && !S.certBP) rev *= 0.45;                    // Bắc Phong thiếu chứng nhận
@@ -1731,7 +1785,7 @@
           rep: fin.sc.r, capab: fin.sc.c, adapt: fin.sc.a, sust: fin.sc.s,
           title: fin.title,
           quarters: S.q >= 6 ? 6 : S.q + 1,
-          detail_json: { foot: S.foot, markets: S.entered, know: S.know, fail: fin.fail },
+          detail_json: { foot: S.foot, markets: S.entered, know: S.know, fail: fin.fail, home: (HOME_COUNTRIES[S.home] || HOME_COUNTRIES[0]).id },
           markets: S.entered.filter(function (v) { return v !== null && v !== undefined; }).length,
           badges: window.__bp3dBadges ? Object.keys(window.__bp3dBadges()).length : null,
           stars: window.__bp3dQuests ? Object.values(window.__bp3dQuests()).filter(function (x) { return x.done && x.firm === S.firm; }).length : null,
@@ -1893,6 +1947,7 @@
   }
 
   renderFirms();
+  renderHome();
   applyStatic(); // trạng thái ban đầu (nếu người dùng đã chọn EN từ trước) - cũng tự gọi syncBpVideo()
   try { if (localStorage.getItem('bizon-bp-save')) $('bp-resume').classList.remove('hidden'); } catch (e) {}
 
@@ -1915,6 +1970,7 @@
     applyStatic();
     if (!$('bp-intro').classList.contains('hidden')) {
       renderFirms();
+      renderHome();
       renderCast();
     }
     if (!$('bp-play').classList.contains('hidden')) {
