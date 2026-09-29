@@ -247,7 +247,7 @@ input,select,textarea,button{font-family:inherit}
 
       <sc-if value="{{ tabGrading }}" hint-placeholder-val="{{ false }}">
         <section style="display:flex;flex-direction:column;gap:10px">
-          <div style="font-size:13px;color:#5a6b74;text-wrap:pretty">Thang 10 theo «Hướng dẫn chấm điểm chi tiết»: B1 xếp hạng lợi nhuận, B2 thị phần, B3 vận hành (OEE/lỗi/quick ratio), B4 thành tựu, B5 đóng góp (🤖 tự động nếu có Nhật ký thành viên, không thì bạn nhập số vòng đóng góp 0–6), B6 ứng biến biến cố (🤖 tự động nếu có nhật ký, không thì đánh dấu có chuẩn bị trước hay không).</div>
+          <div style="font-size:13px;color:#5a6b74;text-wrap:pretty">Thang 10 theo «Hướng dẫn chấm điểm chi tiết»: B1 xếp hạng lợi nhuận, B2 thị phần, B3 vận hành (OEE/lỗi/quick ratio), B4 thành tựu, B5 đóng góp (🤖 tự động nếu có Nhật ký thành viên, không thì bạn nhập số vòng đóng góp 0–6), B6 ứng biến biến cố (🤖 tự động nếu có nhật ký, không thì đánh dấu có chuẩn bị trước hay không). <a href="Thang%20Diem%20Game%20Bat%20Nghiep.dc.html" target="_blank" rel="noopener" style="color:#1f6f8a;font-weight:700">📄 Xem/in tài liệu đầy đủ (thời gian thi, cách chấm, 10 thành tựu)</a></div>
           <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;overflow:auto">
             <div style="display:grid;grid-template-columns:minmax(130px,1.2fr) repeat(6,minmax(78px,1fr)) 70px 60px minmax(140px,1.4fr) 90px;min-width:1180px;align-items:center">
               <sc-for list="{{ gradeHead }}" as="h" hint-placeholder-count="11"><div style="padding:11px 8px;border-bottom:2px solid #e6d6bf;font-size:11px;font-weight:700;color:#5a6b74">{{ h }}</div></sc-for>
