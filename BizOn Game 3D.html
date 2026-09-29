@@ -143,7 +143,10 @@
   body.room #c{z-index:35}
   #room{position:fixed;inset:0;z-index:36;display:none;pointer-events:none}
   body.room #room{display:block}
-  body.room #top,body.room #rail,body.room #cta,body.room #zones,body.room #sheetX,body.room #tip,body.room #evc{display:none!important}
+  body.room #top,body.room #cta,body.room #zones,body.room #sheetX,body.room #tip,body.room #evc{display:none!important}
+  body.room #rail{display:flex!important;top:auto;left:14px;right:auto;bottom:14px;z-index:38}
+  body.room #rail>.btn:not(#moreBtn){display:none!important}
+  body.room #more{z-index:38!important;right:auto!important;left:14px!important;bottom:56px!important}
   #room .rh{position:absolute;top:14px;left:14px;right:14px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
   #room .rh>*{pointer-events:auto}
   #room .rt{background:#fbf6ee;border:3px solid #e6d6bf;border-radius:18px;padding:8px 14px;box-shadow:0 4px 0 #d9c5a8}
