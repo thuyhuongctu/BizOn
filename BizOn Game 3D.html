@@ -52,7 +52,8 @@
   #frame iframe{border:0;width:100%;height:100%;display:block}
   #frame.full{inset:0}
   #login3d{position:fixed;z-index:40;inset:0;display:none;pointer-events:none;background:#2a2340 url('assets/illustrations/rong-bay-doi-bizon.webp') center/cover no-repeat}
-  body.login3d #login3d{display:block} body.login3d #frame{visibility:hidden} body.login3d .hud,body.login3d #zones{display:none!important}
+  body.login3d #login3d{display:block} body.login3d #frame{visibility:hidden} body.login3d .hud,body.login3d #zones,body.login3d #more{display:none!important}
+  body.diorama #cta,body.diorama #rail [data-tab]{display:none!important}
   #login3d .card{pointer-events:auto;position:absolute;left:clamp(12px,4vw,56px);top:50%;transform:translateY(-50%);width:min(420px,calc(100vw - 24px));max-height:calc(100vh - 24px);overflow:auto;box-sizing:border-box;background:#fbf6ee;border:4px solid #e6d6bf;border-radius:28px;box-shadow:0 10px 0 #d9c5a8,0 30px 60px rgba(20,28,56,.25);padding:22px;display:flex;flex-direction:column;gap:9px;font-family:'Be Vietnam Pro',sans-serif;color:#1f3f4a}
   #login3d h1{margin:0;font:800 28px/1.05 'Baloo 2',sans-serif;color:#1f4a55} #login3d p{margin:0;font-size:13px;color:#5a6b74;text-wrap:pretty}
   #login3d label{font:700 13px 'Be Vietnam Pro',sans-serif;margin-top:4px} #login3d input{padding:11px 13px;border-radius:14px;border:2px solid #e6d6bf;background:#fff;font:500 15px 'Be Vietnam Pro',sans-serif;outline:none} #login3d input:focus{border-color:#2f8a8c}
@@ -276,6 +277,16 @@
   <button class="btn" id="langBtn"><i>🌐</i><span>Tiếng Việt</span></button>
   <button class="btn" id="night">🌙 Ban đêm</button>
   <button class="btn" id="lowBtn"><i>⚡</i><span>Chi tiết thấp</span></button>
+  <button class="btn" id="moreBtn"><i>🧱</i><span>Bộ sưu tập 3D</span></button>
+</div>
+<div id="more" style="position:fixed;z-index:26;right:14px;bottom:70px;display:none;flex-direction:column;gap:6px;background:#fbf6ee;border:3px solid #e6d6bf;border-radius:18px;padding:10px;box-shadow:0 6px 0 #d9c5a8">
+  <a class="btn" href="Characters 3D.html">🧍 Nhân vật 3D</a>
+  <a class="btn" href="HQ Asset Gallery.html">🧱 Nội thất, sản phẩm & linh vật</a>
+  <a class="btn" href="BizOn HQ Diorama.html">🏢 Trụ sở diorama (xem tự do)</a>
+  <a class="btn" href="strategy-table-3d.html">🧩 Bàn họp chiến lược 3D</a>
+  <a class="btn" href="clay-factory-3d.html">🏭 Clay Factory Frenzy 3D</a>
+  <a class="btn" href="BizOn Office Game.html">🚶 Văn phòng 2D (đi lại & hội thoại)</a>
+  <a class="btn" href="game.html">📱 Bản 2D gốc (game.html)</a>
 </div>
 <div id="cta" class="hud"><button class="btn primary" id="ctaBtn">🎯 Ra quyết định</button><small id="ctaSub">Đang tải trò chơi…</small></div>
 <div id="zones" class="hud"></div>
@@ -313,6 +324,11 @@ import { makeCharacters } from './bizon-characters.js';
 import { makeHQ } from './bizon-hq-kit.js';
 
 const canvas = document.getElementById('c');
+// Chế độ "Trụ sở diorama (xem tự do)" – dùng bởi "BizOn HQ Diorama.html" trong menu Bộ sưu tập 3D:
+// tự đăng nhập Đội Demo, ẩn HUD ra quyết định, click nhân vật/khu vực chỉ hiện tooltip + bay camera
+// thay vì mở tab quyết định thật.
+const DIORAMA = new URLSearchParams(location.search).get('diorama') === '1';
+if (DIORAMA) document.body.classList.add('diorama');
 window.__boot && window.__boot(0.35, 'Đang dựng trụ sở đất sét…');
 let LOW = false; try { const v = localStorage.getItem('bizon-hq-low'); LOW = v === null ? (innerWidth < 760 || (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4) : v === '1'; } catch {}
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: !LOW, preserveDrawingBuffer: true, powerPreference: 'high-performance' });
@@ -495,7 +511,7 @@ ZONES.forEach(([label, tgt, dist, tab, dir], i) => {
   b.onclick = () => { zb.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b));
     const t = tgt ? new THREE.Vector3(...tgt) : HOME.tgt.clone(); const p = tgt ? t.clone().add(new THREE.Vector3(...(dir || [0.62, 0.62, 0.75])).multiplyScalar(dist)) : HOME.pos.clone();
     moved = true; tween = { t0: performance.now(), fp: camera.position.clone(), ft: controls.target.clone(), p, t };
-    const only = b.dataset.fly; delete b.dataset.fly; if (only) return;
+    const only = b.dataset.fly; delete b.dataset.fly; if (only || DIORAMA) return;
     if (!tab) window.__closeSheet && window.__closeSheet(); else setTimeout(() => tab === '__map' ? openResults() : window.__openTab && window.__openTab(tab), 650); };
   zb.appendChild(b);
 });
@@ -511,8 +527,8 @@ canvas.addEventListener('pointerup', e => {
   if (hit.object.name === 'map_face') return openResults();
   let o = hit.object; while (o && !o.userData.label) o = o.parent;
   if (o) { tipObj = o; tipUntil = performance.now() + 4000; const tab = TAB_OF[o.userData.cid];
-    tip.innerHTML = `<b>${o.userData.label}</b>${o.userData.role || ''}${tab ? `<br><i style="color:#2f8a8c;font-style:normal;font-weight:700">→ ${TAB_NAME[tab]}</i>` : ''}`; tip.style.display = 'block';
-    if (o.userData.team) openResults(); else if (tab) setTimeout(() => window.__openTab && window.__openTab(tab), 700); }
+    tip.innerHTML = `<b>${o.userData.label}</b>${o.userData.role || ''}${!DIORAMA && tab ? `<br><i style="color:#2f8a8c;font-style:normal;font-weight:700">→ ${TAB_NAME[tab]}</i>` : ''}`; tip.style.display = 'block';
+    if (!DIORAMA) { if (o.userData.team) openResults(); else if (tab) setTimeout(() => window.__openTab && window.__openTab(tab), 700); } }
 });
 
 // ---------- loop
@@ -700,11 +716,32 @@ function l3Enter(demo) {
   else { g('login-email').value = document.getElementById('l3Email').value.trim(); g('login-team').value = document.getElementById('l3Team').value.trim();
     g('login-class').value = document.getElementById('l3Class').value.trim().toUpperCase(); try { W.pickRole(L3.role); } catch (e) {} ev('doLogin()'); }
   actors.forEach(o => { if (o.mode0) o.mode = o.mode0; });
-  setTimeout(() => { setMode(); zb.children[0] && zb.children[0].click(); maybeTour3D(); }, 600);
+  setTimeout(() => { setMode(); zb.children[0] && zb.children[0].click(); if (!DIORAMA) maybeTour3D(); }, 600);
 }
 document.getElementById('l3Go').onclick = () => l3Enter(false);
 document.getElementById('l3Demo').onclick = () => l3Enter(true);
 document.getElementById('l3Classic').onclick = e => { e.preventDefault(); L3.classic = true; document.body.classList.remove('login3d'); L3.on = false; setMode(); };
+if (DIORAMA) {
+  setTimeout(() => { if (document.body.classList.contains('login3d')) l3Enter(true); }, 1000);
+  // Tài khoản Demo luôn là ván mới (vòng 1) nên sẽ lần lượt gặp chuỗi màn giới thiệu 1 lần của
+  // game.html (carousel intro → bốc thăm đầu mùa → biến cố thị trường vòng 1 → hội thoại đối thủ).
+  // Chế độ diorama là xem tự do nên tự bấm qua từng màn để lộ cảnh 3D phía sau, không cần thao tác tay.
+  let dismissTries = 0;
+  const dismissChain = () => {
+    ev(`(function(){
+      var d=document, b;
+      if ((b=d.getElementById('intro-skip'))) return b.click();
+      if ((b=d.getElementById('case-draw-cta'))) return b.click();
+      if ((b=d.getElementById('ev-close'))) return b.click();
+      if ((b=d.querySelector('#rd-close'))) return b.click();
+      if ((b=d.querySelector('#rd-choices button'))) return b.click();
+    })()`);
+    // Bước cuối của chuỗi giới thiệu có thể mở 1 tab dạng "phòng" 3D (ROOM3D) – đóng lại để lộ cảnh diorama.
+    if (document.body.classList.contains('room')) { closeRoom(); window.__closeSheet && window.__closeSheet(); }
+    if (++dismissTries < 30) setTimeout(dismissChain, 500);
+  };
+  setTimeout(dismissChain, 1500);
+}
 ['l3Email', 'l3Team', 'l3Class'].forEach(id => document.getElementById(id).addEventListener('keydown', e => { if (e.key === 'Enter') l3Enter(false); }));
 document.getElementById('ctaBtn').onclick = primary;
 document.querySelectorAll('#rail [data-tab]').forEach(b => b.onclick = () => window.__openTab(b.dataset.tab));
@@ -1518,6 +1555,7 @@ const langBtn = document.getElementById('langBtn');
 function syncLangBtn() { let l = 'vi'; try { l = localStorage.getItem('bizon-lang') || 'vi'; } catch {} langBtn.querySelector('span').textContent = l === 'en' ? 'English' : 'Tiếng Việt'; }
 langBtn.onclick = () => { if (!W) return; W.toggleLang(); ev('renderAll()'); syncLangBtn(); if (RM.on) BUILD[RM.mode](); if (document.body.classList.contains('evt') && evc.querySelector('#lmLog')) advisor3D(); };
 syncLangBtn();
+{ const mb = document.getElementById('moreBtn'), mp = document.getElementById('more'); mb.onclick = () => { mp.style.display = mp.style.display === 'flex' ? 'none' : 'flex'; }; addEventListener('pointerdown', e => { if (!mp.contains(e.target) && !mb.contains(e.target)) mp.style.display = 'none'; }); }
 
 </script>
 </body>

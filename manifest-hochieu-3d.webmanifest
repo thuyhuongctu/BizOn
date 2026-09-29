@@ -1,0 +1,33 @@
+{
+  "id": "./Ho%20Chieu%20Thuong%20Hieu%203D.html",
+  "name": "Hộ Chiếu Thương Hiệu 3D – BizOn",
+  "short_name": "Hộ Chiếu 3D",
+  "description": "Brand Passport – Hộ Chiếu Thương Hiệu: mô phỏng chiến lược quốc tế hóa doanh nghiệp 6 quý – đưa thương hiệu Việt ra thế giới trong màn sương mù thông tin. Game độc lập trong hệ sinh thái BizOn.",
+  "lang": "vi",
+  "start_url": "./Ho%20Chieu%20Thuong%20Hieu%203D.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#006687",
+  "background_color": "#f4faff",
+  "icons": [
+    {
+      "src": "assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

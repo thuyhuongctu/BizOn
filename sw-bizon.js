@@ -1,6 +1,7 @@
 /* BizOn – service worker: cache tĩnh, luôn lấy mạng trước cho HTML/JS để nhận bản mới. */
-const V = 'bizon-3d-v2';
-const CORE = ['BizOn%20Game%203D.html', 'Trang%20Giang%20Vien.dc.html', 'game.html', 'support.js', 'bizon-characters.js', 'bizon-hq-kit.js', 'bizon-products.js', 'bizon-mascots.js', 'js/app.js', 'js/engine.js', 'js/backend.js', 'js/backend-config.js', 'js/class-sync.js', 'js/instructor-api.js', 'js/instructor-page.js', 'assets/icons/icon-192.png', 'js/vendor/three.module.js', 'js/vendor/three.core.js', 'js/vendor/OrbitControls.js', 'assets/illustrations/rong-bay-doi-bizon.webp', 'assets/character/rong-xanh.webp', 'assets/character/rong-xanh-sen.webp'];
+const V = 'bizon-3d-v4';
+const CORE = ['BizOn%20Game%203D.html', 'Trang%20Giang%20Vien.dc.html', 'game.html', 'support.js', 'bizon-characters.js', 'bizon-hq-kit.js', 'bizon-products.js', 'bizon-mascots.js', 'js/app.js', 'js/engine.js', 'js/backend.js', 'js/backend-config.js', 'js/class-sync.js', 'js/instructor-api.js', 'js/bizon-grading.js', 'js/member-log.js', 'assets/icons/icon-192.png', 'js/vendor/three.module.js', 'js/vendor/three.core.js', 'js/vendor/OrbitControls.js', 'assets/illustrations/rong-bay-doi-bizon.webp', 'assets/character/rong-xanh.webp', 'assets/character/rong-xanh-sen.webp',
+  'Characters%203D.html', 'HQ%20Asset%20Gallery.html', 'BizOn%20HQ%20Diorama.html', 'BizOn%20Office%20Game.html', 'clay-factory-3d.html', 'strategy-table-3d.html', 'js/office-scene.js', 'js/office-scenes.js', 'js/office-stations.js'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(V).then(c => Promise.allSettled(CORE.map(u => c.add(u))))); self.skipWaiting(); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== V && k.startsWith('bizon-3d')).map(k => caches.delete(k))))); self.clients.claim(); });
 self.addEventListener('fetch', e => {
