@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>BizOn – Nhân vật 3D</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="apple-touch-icon" href="assets/icons/rong-xanh-192.png">
+<link rel="icon" href="assets/icons/rong-xanh-192.png">
+<meta name="theme-color" content="#2f8a8c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="importmap">
+{ "imports": {
+  "three": "./js/vendor/three.module.js",
+  "three/addons/controls/OrbitControls.js": "./js/vendor/OrbitControls.js"
+} }
+</script>
+<style>
+  html,body{margin:0;height:100%;overflow:hidden;background:#efe4d2;font-family:"Be Vietnam Pro",system-ui,sans-serif;color:#2c3552}
+  #c{position:fixed;inset:0;display:block;width:100%;height:100%}
+  .hud{position:fixed;z-index:5;display:flex;gap:8px;flex-wrap:wrap;align-items:center;pointer-events:none}
+  .hud>*{pointer-events:auto}
+  #top{top:14px;left:14px;right:14px;justify-content:space-between}
+  .brand{display:flex;flex-direction:column;gap:0;background:#fbf6ee;border:3px solid #e6d6bf;border-radius:18px;padding:8px 14px;box-shadow:0 4px 0 #d9c5a8}
+  .brand b{font:800 18px/1.1 "Baloo 2",sans-serif;color:#1f6f8a}
+  .brand span{font-size:12px;color:#6b6f7a}
+  .btn{font:700 14px "Baloo 2",sans-serif;border:3px solid #e6d6bf;background:#fbf6ee;color:#2c3552;border-radius:16px;padding:8px 14px;cursor:pointer;box-shadow:0 4px 0 #d9c5a8;display:flex;align-items:center;gap:6px;text-decoration:none;white-space:nowrap}
+  .btn:hover{transform:translateY(-1px)} .btn:active{transform:translateY(2px);box-shadow:0 2px 0 #d9c5a8}
+  .label{position:absolute;transform:translate(-50%,-100%);background:rgba(251,246,238,.94);border:2px solid #e6d6bf;border-radius:12px;padding:3px 9px;font:700 12px "Baloo 2",sans-serif;color:#1f4a55;white-space:nowrap;pointer-events:none;transition:opacity .15s}
+  #info{position:fixed;z-index:6;left:50%;bottom:16px;transform:translateX(-50%);max-width:min(520px,92vw);background:#fbf6ee;border:3px solid #e6d6bf;border-radius:20px;padding:14px 18px;box-shadow:0 6px 0 #d9c5a8;text-align:center;display:none}
+  #info b{font:800 16px "Baloo 2",sans-serif;color:#1f6f8a;display:block;margin-bottom:2px}
+  #info span{font-size:12px;color:#6b6f7a;display:block;margin-bottom:6px}
+  #info p{margin:0;font-size:13px;font-style:italic;color:#3a4550}
+  @media (max-width:640px){.brand span{display:none}}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="hud" id="top">
+  <div class="brand"><b>🧍 Nhân vật 3D</b><span>Bộ sưu tập · BizOn Bật Nghiệp</span></div>
+  <a class="btn" href="BizOn Game 3D.html">◀ Quay lại</a>
+</div>
+<div id="info"><b id="infoName"></b><span id="infoRole"></span><p id="infoLine"></p></div>
+<div id="labels"></div>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { makeCharacters } from './bizon-characters.js';
+
+const canvas = document.getElementById('c');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
+const scene = new THREE.Scene(); scene.background = new THREE.Color(0xefe4d2);
+const camera = new THREE.PerspectiveCamera(32, innerWidth / innerHeight, 0.1, 200);
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true; controls.maxPolarAngle = 1.4; controls.minDistance = 4; controls.maxDistance = 24;
+
+const hemi = new THREE.HemisphereLight(0xfff4e6, 0xb58a66, 1.3); scene.add(hemi);
+const sun = new THREE.DirectionalLight(0xfff1dc, 2.0); sun.position.set(6, 10, 7); scene.add(sun);
+
+const floor = new THREE.Mesh(new THREE.CircleGeometry(14, 64), new THREE.MeshStandardMaterial({ color: 0xe3d3b6, roughness: 0.95 }));
+floor.rotation.x = -Math.PI / 2; scene.add(floor);
+for (let i = 0; i <= 14; i++) { const r = new THREE.Mesh(new THREE.RingGeometry(i * 1 - 0.02, i * 1, 64), new THREE.MeshBasicMaterial({ color: 0xd9c5a8, transparent: true, opacity: 0.25, side: THREE.DoubleSide })); r.rotation.x = -Math.PI / 2; r.position.y = 0.002; scene.add(r); }
+
+const chars = makeCharacters(THREE);
+const N = chars.roster.length, R = 4.6;
+const entries = chars.roster.map((r, i) => {
+  const a = (i / N) * Math.PI * 2 - Math.PI / 2;
+  const o = chars.build(r.id);
+  o.position.set(Math.cos(a) * R, 0, Math.sin(a) * R);
+  o.rotation.y = -a + Math.PI / 2;
+  o.traverse(m => { if (m.isMesh) { m.castShadow = false; } });
+  scene.add(o);
+  return { r, o, phase: Math.random() * 10 };
+});
+camera.position.set(0, 3.6, 8.6); controls.target.set(0, 1.2, 0);
+
+const labelsBox = document.getElementById('labels');
+const labelEls = entries.map(e => {
+  const d = document.createElement('div'); d.className = 'label'; d.textContent = e.r.label + (e.r.name ? ' · ' + e.r.name : '');
+  labelsBox.appendChild(d); return d;
+});
+
+const info = document.getElementById('info'), infoName = document.getElementById('infoName'), infoRole = document.getElementById('infoRole'), infoLine = document.getElementById('infoLine');
+let focused = -1;
+function focusOn(i) {
+  focused = i; const e = entries[i];
+  const p = e.o.position.clone();
+  const dir = p.clone().normalize().multiplyScalar(3.2);
+  const tw = { t0: performance.now(), fp: camera.position.clone(), ft: controls.target.clone(), p: p.clone().add(dir).add(new THREE.Vector3(0, 1.6, 0)), t: p.clone().add(new THREE.Vector3(0, 1.15, 0)) };
+  tween = tw;
+  infoName.textContent = e.r.label + (e.r.name ? ' · ' + e.r.name : '');
+  infoRole.textContent = e.r.note2 || e.r.note || '';
+  infoLine.textContent = e.r.line ? '"' + e.r.line + '"' : '';
+  info.style.display = 'block';
+}
+let tween = null;
+const ray = new THREE.Raycaster(), ndc = new THREE.Vector2(); let down = null;
+canvas.addEventListener('pointerdown', ev => down = [ev.clientX, ev.clientY]);
+canvas.addEventListener('pointerup', ev => {
+  if (!down || Math.hypot(ev.clientX - down[0], ev.clientY - down[1]) > 5) return;
+  ndc.set(ev.clientX / innerWidth * 2 - 1, -ev.clientY / innerHeight * 2 + 1); ray.setFromCamera(ndc, camera);
+  const hits = ray.intersectObjects(entries.map(e => e.o), true);
+  if (hits[0]) { let o = hits[0].object; while (o.parent && !entries.find(e => e.o === o)) o = o.parent; const i = entries.findIndex(e => e.o === o); if (i >= 0) focusOn(i); }
+});
+
+function resize() { renderer.setSize(innerWidth, innerHeight, false); camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); }
+addEventListener('resize', resize); resize();
+
+const clock = new THREE.Clock(); const tmp = new THREE.Vector3();
+function tick() {
+  const dt = Math.min(clock.getDelta(), 0.05), t = clock.elapsedTime;
+  entries.forEach(e => chars.animate(e.o, t, focused === entries.indexOf(e) ? 'talk' : 'idle', e.phase));
+  if (tween) { const k = Math.min(1, (performance.now() - tween.t0) / 800), ea = 1 - Math.pow(1 - k, 3); camera.position.lerpVectors(tween.fp, tween.p, ea); controls.target.lerpVectors(tween.ft, tween.t, ea); if (k >= 1) tween = null; }
+  controls.update();
+  entries.forEach((e, i) => { tmp.copy(e.o.position); tmp.y += 2.05; tmp.project(camera);
+    const vis = tmp.z < 1; labelEls[i].style.display = vis ? 'block' : 'none';
+    if (vis) { labelEls[i].style.left = (tmp.x + 1) / 2 * innerWidth + 'px'; labelEls[i].style.top = (1 - tmp.y) / 2 * innerHeight + 'px'; } });
+  renderer.render(scene, camera);
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+</script>
+</body>
+</html>

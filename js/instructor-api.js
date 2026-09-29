@@ -75,9 +75,11 @@
     async state(code) { if (demo) return { controls: D.controls, grants: D.grants, scores: Object.values(D.scores) };
       try { return (await rpc('bizon_class_state_v2', { p_class_code: code })) || {}; } catch (e) { if (missing(e)) { api.needsMigration = true; return {}; } throw e; } },
     async setControls(code, c) { if (demo) { Object.assign(D.controls, c); return true; }
-      return guard(rpc('bizon_set_controls', { p_class_code: code, p_locked_round: c.locked_round ?? null, p_forced_event: c.forced_event || '', p_forced_event_round: c.forced_event_round ?? null, p_message: c.message || '' })); },
+      return guard(rpc('bizon_set_controls', { p_class_code: code, p_locked_round: c.locked_round ?? null, p_forced_event: c.forced_event || '', p_forced_event_round: c.forced_event_round ?? null, p_message: c.message || '', p_exam_started_at: c.exam_started_at ?? null })); },
     async grant(code, team, amount, reason) { if (demo) { D.grants.unshift({ team_name: team, amount, reason, created_at: new Date().toISOString() }); return true; } return guard(rpc('bizon_grant', { p_class_code: code, p_team_name: team, p_amount: amount, p_reason: reason || '' })); },
     async saveScore(code, team, reasoning, teamwork, note) { if (demo) { D.scores[team] = { team_name: team, reasoning, teamwork, note }; return true; } return guard(rpc('bizon_save_score', { p_class_code: code, p_team_name: team, p_reasoning: reasoning, p_teamwork: teamwork, p_note: note || '' })); },
+    async memberLog(code) { if (demo) return []; try { return (await rpc('bizon_member_log', { p_class_code: code })) || []; } catch (e) { if (missing(e)) return []; throw e; } },
+    async bpResults(code) { if (demo) return []; try { return (await rpc('bizon_bp_results', { p_class_code: code })) || []; } catch (e) { if (missing(e)) return []; throw e; } },
   };
   window.BizOnInstructor = api;
 })();

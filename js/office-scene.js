@@ -386,4 +386,18 @@
   }
   setTimeout(mountEntry, 0);
   window.BizonOffice = { rounds: ROUNDS, open: (n) => { const s = getS(); if (s) openOffice(s, n || Math.min(s.round, 6), () => ORIG.showTab('decisions')); } };
+
+  // Deep link game.html#office → tự mở văn phòng 2D, dùng bởi "BizOn Office Game.html"
+  // (trang xem trước độc lập trong menu Bộ sưu tập 3D). Không có S sẵn (khách chưa vào ván)
+  // thì tự đăng nhập Đội Demo rồi thử lại tới khi có S.
+  if (location.hash === '#office') {
+    let tries = 0, demoTried = false;
+    const tryOpen = () => {
+      const s = getS();
+      if (s) { window.BizonOffice.open(); return; }
+      if (!demoTried && typeof doLoginDemo === 'function') { demoTried = true; try { doLoginDemo(); } catch (e) {} }
+      if (++tries < 25) setTimeout(tryOpen, 400);
+    };
+    setTimeout(tryOpen, 600);
+  }
 })();
