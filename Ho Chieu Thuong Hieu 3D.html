@@ -159,6 +159,37 @@
   #bp3d-col .bp-adv { background:#fff; border-color:rgba(3,51,55,.08); box-shadow:0 3px 0 rgba(3,51,55,.06); }
   #bp3d-col .bp-log li { border-left-color:#f2b53a; }
 </style>
+<style id="bp-map-pp">
+  .bp-modal { position:fixed; inset:0; z-index:80; display:none; align-items:center; justify-content:center; padding:16px; background:rgba(3,20,24,.72); backdrop-filter:blur(4px); }
+  .bp-modal.on { display:flex; }
+  .bp-modal-card { position:relative; width:100%; background:#fbf6ea; border-radius:28px; box-shadow:0 24px 70px -20px rgba(0,0,0,.55), inset 0 -6px 0 rgba(0,0,0,.06); display:flex; flex-direction:column; overflow:hidden; max-height:92vh; }
+  html[data-theme="dark"] .bp-modal-card { background:#0e2a33; }
+  .bp-modal-head { display:flex; align-items:center; gap:10px; padding:16px 18px 10px; }
+  .bp-modal-head b { font:800 18px Manrope,sans-serif; color:#033337; flex:1; min-width:0; }
+  html[data-theme="dark"] .bp-modal-head b { color:#d6ecf0; }
+  .bp-modal-close { border:0; background:rgba(3,51,55,.08); color:#033337; width:36px; height:36px; border-radius:999px; font:800 16px Manrope,sans-serif; cursor:pointer; flex:none; }
+  html[data-theme="dark"] .bp-modal-close { background:rgba(92,196,230,.14); color:#d6ecf0; }
+  .bp-modal-body { flex:1; min-height:0; overflow:auto; padding:0 18px 18px; }
+  /* --- bản đồ thị trường --- */
+  #bp-map-modal .bp-modal-card { max-width:980px; }
+  #bp-map-svg { width:100%; height:auto; display:block; }
+  .bp-map-legend { display:flex; flex-wrap:wrap; gap:10px 18px; padding:2px 4px 14px; font:700 12px Manrope,sans-serif; color:rgba(3,51,55,.75); }
+  html[data-theme="dark"] .bp-map-legend { color:rgba(214,236,240,.75); }
+  .bp-map-legend span { display:inline-flex; align-items:center; gap:6px; }
+  .bp-map-legend i { width:12px; height:12px; border-radius:4px; display:inline-block; }
+  /* --- hộ chiếu toàn màn hình --- */
+  #bp-pp-modal .bp-modal-card { max-width:560px; align-items:center; }
+  #bp-pp-modal .bp-modal-body { display:flex; flex-direction:column; align-items:center; gap:12px; padding-top:2px; }
+  #bp-pp-pages { position:relative; width:100%; max-width:420px; aspect-ratio:512/700; }
+  #bp-pp-pages canvas { position:absolute; inset:0; width:100%; height:100%; border-radius:16px; box-shadow:0 14px 40px -14px rgba(0,60,80,.4); opacity:0; transform:scale(.97); transition:opacity .28s ease, transform .28s ease; pointer-events:none; }
+  #bp-pp-pages canvas.on { opacity:1; transform:scale(1); pointer-events:auto; }
+  .bp-pp-nav { display:flex; gap:8px; }
+  .bp-pp-nav button { border:2px solid rgba(3,51,55,.12); background:#fff; color:#033337; font:800 12px Manrope,sans-serif; padding:8px 16px; border-radius:999px; cursor:pointer; }
+  .bp-pp-nav button.on { background:#033337; color:#fff; border-color:#033337; }
+  html[data-theme="dark"] .bp-pp-nav button { background:rgba(8,26,32,.7); color:#d6ecf0; border-color:rgba(92,196,230,.22); }
+  html[data-theme="dark"] .bp-pp-nav button.on { background:#5cc4e6; color:#03252c; border-color:#5cc4e6; }
+  @media (max-width:480px) { .bp-modal-card { border-radius:20px; } }
+</style>
 <link rel="manifest" href="manifest-hochieu-3d.webmanifest">
 </head>
 <body>
@@ -174,6 +205,7 @@
     <div id="bp3d-cap" role="status" aria-live="polite"></div>
   <div class="bp3d-tools">
     <button id="bp3d-pp" type="button" data-en="🛂 Passport">🛂 Hộ chiếu</button>
+    <button id="bp3d-map" type="button" data-en="🗺️ Market map">🗺️ Bản đồ</button>
     <button id="bp3d-ov" type="button" data-en="🧭 Overview">🧭 Toàn cảnh</button>
     <button id="bp3d-snd" type="button" aria-label="Âm thanh" data-en-aria="Sound">🔊</button>
     <button id="bp3d-land" type="button">👤 CEO lên đảo</button>
@@ -181,6 +213,34 @@
     <a id="bp3d-street" href="Pho%20Thi%20Truong%203D.html" data-en="🏙️ Streets" style="font:800 12px Manrope,sans-serif;color:#033337;background:rgba(255,255,255,.92);border-radius:999px;padding:0 14px;min-height:40px;display:inline-flex;align-items:center;text-decoration:none;box-shadow:0 6px 16px -6px rgba(0,60,80,.4), inset 0 -3px 0 rgba(0,0,0,.06)">🏙️ Phố thị trường</a>
   </div>
   <p id="bp3d-hint" data-en="Drag to rotate · tap an island">Kéo để xoay · chạm vào đảo</p>
+</div>
+<div id="bp-map-modal" class="bp-modal" role="dialog" aria-modal="true" aria-label="Bản đồ thị trường">
+  <div class="bp-modal-card">
+    <div class="bp-modal-head">
+      <b data-en="🗺️ Market map">🗺️ Bản đồ thị trường</b>
+      <button class="bp-modal-close" id="bp-map-close" type="button" aria-label="Đóng">✕</button>
+    </div>
+    <div class="bp-modal-body">
+      <div id="bp-map-svg"></div>
+      <div class="bp-map-legend" id="bp-map-legend"></div>
+    </div>
+  </div>
+</div>
+<div id="bp-pp-modal" class="bp-modal" role="dialog" aria-modal="true" aria-label="Hộ chiếu thương hiệu">
+  <div class="bp-modal-card">
+    <div class="bp-modal-head">
+      <b data-en="🛂 Passport">🛂 Hộ chiếu thương hiệu</b>
+      <button class="bp-modal-close" id="bp-pp-close" type="button" aria-label="Đóng">✕</button>
+    </div>
+    <div class="bp-modal-body">
+      <div id="bp-pp-pages"></div>
+      <div class="bp-pp-nav">
+        <button type="button" data-pg="cover" data-en="Cover">Bìa</button>
+        <button type="button" data-pg="inside" data-en="Info">Thông tin</button>
+        <button type="button" data-pg="page" data-en="Stamps">Dấu mộc</button>
+      </div>
+    </div>
+  </div>
 </div>
 <div id="bp3d-col">
 <header id="bp3d-head" class="max-w-2xl mx-auto px-5 pt-3"><div class="clay-card p-5">

@@ -426,13 +426,34 @@ function drawPage() {
   for (let i = 0; i < shown; i++) drawStamp(g, stamps[i], i);
   t.needsUpdate = true;
 }
-const PP = { mode: 'idle', t: 0, lift: 0, open: 0, queue: [], applied: false, cur: -1 };
-function queueStamp(idx) { PP.queue.push(idx); if (PP.mode !== 'stamp') nextStamp(); }
+const PP = { mode: 'idle', t: 0, lift: 0, open: 0, queue: [], applied: false, cur: -1, justStamped: false };
+function queueStamp(idx) { PP.queue.push(idx); if (PP.mode !== 'stamp') { PP.justStamped = true; nextStamp(); } }
 function nextStamp() {
-  if (!PP.queue.length) { PP.mode = 'idle'; return; }
+  if (!PP.queue.length) {
+    PP.mode = 'idle';
+    if (PP.justStamped) { PP.justStamped = false; setTimeout(() => openPassportModal('page'), 900); }
+    return;
+  }
   PP.cur = PP.queue.shift(); PP.mode = 'stamp'; PP.t = 0; PP.applied = false;
   const [sx, sy] = SLOTS[PP.cur]; stampTool.position.set(sx, sy, 1.6); stampFace.material = M(new THREE.Color(MODE_HEX[stamps[PP.cur].mode]).getHex());
   drawInside();
+}
+function stampBurst(sx, sy) {
+  const n = 16, geo = new THREE.BufferGeometry(), pos = new Float32Array(n * 3);
+  for (let i = 0; i < n; i++) { pos[i * 3] = sx; pos[i * 3 + 1] = sy; pos[i * 3 + 2] = 0.22; }
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  const mat = new THREE.PointsMaterial({ color: 0xe9b54a, size: 0.07, transparent: true, opacity: 1, depthWrite: false });
+  const pts = new THREE.Points(geo, mat); book.add(pts);
+  const dirs = Array.from({ length: n }, () => [(Math.random() - 0.5) * 1.5, (Math.random() - 0.5) * 1.5]);
+  let t0 = null;
+  const fn = t => {
+    if (t0 === null) t0 = t;
+    const k = Math.min(1, (t - t0) / 0.65);
+    if (k >= 1) { book.remove(pts); geo.dispose(); mat.dispose(); const idx = anim.indexOf(fn); if (idx >= 0) anim.splice(idx, 1); return; }
+    for (let i = 0; i < n; i++) { pos[i * 3] = sx + dirs[i][0] * k; pos[i * 3 + 1] = sy + dirs[i][1] * k + k * k * 0.35; pos[i * 3 + 2] = 0.22; }
+    geo.attributes.position.needsUpdate = true; mat.opacity = 1 - k;
+  };
+  anim.push(fn);
 }
 let shake = 0, AC;
 function thump() {
@@ -454,7 +475,11 @@ function updatePassport(dt) {
       stampTool.visible = true;
       stampTool.position.z = t < 1.7 ? 1.6 - (1.6 - 0.1) * ease((t - 1.1) / 0.6) ** 2 : 0.1 + 1.5 * ease((t - 1.75) / 0.6);
     } else stampTool.visible = false;
-    if (t >= 1.7 && !PP.applied) { PP.applied = true; shown = Math.max(shown, PP.cur + 1); drawPage(); drawInside(); thump(); shake = 0.25; say('🛂 ' + tr('Đóng dấu mộc ', 'Stamped: ') + MK[stamps[PP.cur].m].name); }
+    if (t >= 1.7 && !PP.applied) {
+      PP.applied = true; shown = Math.max(shown, PP.cur + 1); drawPage(); drawInside(); thump(); shake = 0.35;
+      const [bx, by] = SLOTS[PP.cur]; stampBurst(bx, by);
+      say('🛂 ' + tr('Đóng dấu mộc ', 'Stamped: ') + MK[stamps[PP.cur].m].name);
+    }
     if (t > 5.3) nextStamp();
   } else if (PP.mode === 'view') { liftT = 1; openT = 1; }
   PP.lift = approach(PP.lift, liftT, dt * 2.2); PP.open = approach(PP.open, openT, dt * 1.8);
@@ -465,6 +490,67 @@ function updatePassport(dt) {
   coverPivot.rotation.y = -Math.PI * ease(PP.open);
   book.position.x = -PW * s * 0.5 * (1 - ease(PP.open)) * 0 - 0 + (ease(PP.open) - 1) * (PW * s / 2) + 0;
 }
+
+/* ---------- hộ chiếu – màn hình lớn (2D, ngoài cảnh 3D) ---------- */
+let ppPage = 'cover', ppMounted = false;
+function mountPPCanvases() {
+  if (ppMounted) return; const mount = $('bp-pp-pages'); if (!mount) return;
+  cover.c.id = 'bp-pp-cover'; inside.c.id = 'bp-pp-inside'; page.c.id = 'bp-pp-page';
+  mount.append(cover.c, inside.c, page.c); ppMounted = true;
+}
+function showPPPage(p) {
+  ppPage = p;
+  [[cover.c, 'cover'], [inside.c, 'inside'], [page.c, 'page']].forEach(([el, key]) => el.classList.toggle('on', key === p));
+  document.querySelectorAll('#bp-pp-modal .bp-pp-nav button[data-pg]').forEach(b => b.classList.toggle('on', b.dataset.pg === p));
+}
+function openPassportModal(pg) {
+  drawCover(); drawInside(); drawPage(); mountPPCanvases(); showPPPage(pg || ppPage);
+  const m = $('bp-pp-modal'); if (m) m.classList.add('on');
+}
+document.querySelectorAll('#bp-pp-modal .bp-pp-nav button[data-pg]').forEach(b => b.addEventListener('click', () => showPPPage(b.dataset.pg)));
+$('bp-pp-close') && $('bp-pp-close').addEventListener('click', () => { const m = $('bp-pp-modal'); if (m) m.classList.remove('on'); });
+
+/* ---------- bản đồ thị trường – tổng quan 2D ---------- */
+function renderMarketMap() {
+  const B = window.__bp; if (!B || !B.S) return;
+  const isDark = document.documentElement.dataset.theme === 'dark';
+  const S = B.S, MKTS = B.MKTS, ANGLES = [165, 140, 115, 90, 65, 40, 15];
+  const cx = 480, baseY = 520, Rx = 410, Ry = 300;
+  const pts = ANGLES.map(a => { const r = a * Math.PI / 180; return [cx + Math.cos(r) * Rx, baseY - Math.sin(r) * Ry]; });
+  const seaFrom = isDark ? '#123a45' : '#bfe6ee', seaTo = isDark ? '#0a232b' : '#7fc3d2';
+  const txt = isDark ? '#d6ecf0' : '#033337', sub = isDark ? 'rgba(214,236,240,.62)' : 'rgba(3,51,55,.55)';
+  let svg = '<svg viewBox="0 0 960 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="' + tr('Bản đồ thị trường', 'Market map') + '">';
+  svg += '<defs><radialGradient id="bpmSea" cx="50%" cy="25%" r="85%"><stop offset="0%" stop-color="' + seaFrom + '"/><stop offset="100%" stop-color="' + seaTo + '"/></radialGradient></defs>';
+  svg += '<rect x="0" y="0" width="960" height="600" rx="28" fill="url(#bpmSea)"/>';
+  for (let y = 44; y < 600; y += 48) svg += '<path d="M-10,' + y + ' q80,-15 160,0 t160,0 t160,0 t160,0 t160,0" stroke="' + (isDark ? 'rgba(255,255,255,.06)' : 'rgba(255,255,255,.4)') + '" stroke-width="3" fill="none"/>';
+  pts.forEach(([x, y], m) => {
+    const md = S.entered[m]; if (md === null || md === undefined) return;
+    const col = MODE_HEX[md];
+    svg += '<path d="M' + cx + ',' + baseY + ' Q' + ((cx + x) / 2) + ',' + ((baseY + y) / 2 - 46) + ' ' + x + ',' + y + '" fill="none" stroke="' + col + '" stroke-width="4" stroke-dasharray="2 11" stroke-linecap="round"/>';
+  });
+  svg += '<g transform="translate(' + cx + ',' + baseY + ')"><circle r="50" fill="' + (isDark ? '#0e2a33' : '#fffaf0') + '" stroke="#e8762d" stroke-width="4"/>' +
+    '<text y="-6" font-size="34" text-anchor="middle">🏡</text><text y="26" font-size="15" font-weight="800" text-anchor="middle" fill="' + txt + '" font-family="' + FONT + '">Vàm Thịnh</text></g>';
+  pts.forEach(([x, y], m) => {
+    const md = S.entered[m], entered = md !== null && md !== undefined, mk = MKTS[m];
+    const ringCol = entered ? MODE_HEX[md] : (isDark ? '#3a5a63' : '#c7d6da');
+    svg += '<g transform="translate(' + x + ',' + y + ')">' +
+      '<clipPath id="bpmClip' + m + '"><circle r="50"/></clipPath>' +
+      '<circle r="56" fill="none" stroke="' + ringCol + '" stroke-width="' + (entered ? 5 : 3) + '"' + (entered ? '' : ' stroke-dasharray="3 7"') + '/>' +
+      '<image href="' + mk.img + '" x="-50" y="-50" width="100" height="100" clip-path="url(#bpmClip' + m + ')" preserveAspectRatio="xMidYMid slice" style="filter:' + (entered ? 'none' : (isDark ? 'grayscale(1) brightness(.55)' : 'grayscale(1) brightness(.92) opacity(.8)')) + '"/>' +
+      (entered ? '<text x="38" y="-34" font-size="24">' + MODE_ICON[md] + '</text>' : '') +
+      '<text y="80" font-size="17" font-weight="800" text-anchor="middle" fill="' + txt + '" font-family="' + FONT + '">' + mk.icon + ' ' + mk.name + '</text>' +
+      '<text y="100" font-size="11" font-weight="700" text-anchor="middle" fill="' + sub + '" font-family="' + FONT + '">' + (entered ? tr('Đã thâm nhập', 'Entered') : tr('Chưa thâm nhập', 'Not entered')) + '</text>' +
+      '</g>';
+  });
+  svg += '</svg>';
+  const mount = $('bp-map-svg'); if (mount) mount.innerHTML = svg;
+  const enteredCount = S.entered.filter(v => v !== null && v !== undefined).length;
+  const legend = $('bp-map-legend');
+  if (legend) legend.innerHTML = '<span><b>' + enteredCount + '/7</b> ' + tr('thị trường đã thâm nhập', 'markets entered') + '</span>' +
+    MODE_ICON.map((ic, i) => '<span><i style="background:' + MODE_HEX[i] + '"></i>' + ic + ' ' + tr(['Nền tảng số', 'Xuất khẩu trực tiếp', 'Đối tác địa phương'][i], ['Digital platform', 'Direct export', 'Local partner'][i]) + '</span>').join('');
+}
+$('bp3d-map') && $('bp3d-map').addEventListener('click', () => { renderMarketMap(); const m = $('bp-map-modal'); if (m) m.classList.add('on'); });
+$('bp-map-close') && $('bp-map-close').addEventListener('click', () => { const m = $('bp-map-modal'); if (m) m.classList.remove('on'); });
 
 /* ---------- sân lễ: radar & giấy chứng nhận ---------- */
 const stage = grp(null, END.x, -4, END.z); stage.visible = false;
@@ -700,7 +786,7 @@ const landBtn = $('bp3d-land'); const landTxt = () => { if (landBtn) landBtn.tex
 landTxt(); landBtn && landBtn.addEventListener('click', () => { landMode = landMode === 'team' ? 'ceo' : 'team'; localStorage.setItem('bizon-bp3d-land', landMode); landTxt(); islands.forEach(I => I.party && landParty(I, false)); });
 $('bp3d-full') && $('bp3d-full').addEventListener('click', () => { const on = document.body.classList.toggle('bp3d-full'); $('bp3d-full').textContent = on ? tr('▾ Thu nhỏ', '▾ Shrink') : tr('⤢ Mở rộng', '⤢ Expand'); resize(); });
 $('bp3d-ov') && $('bp3d-ov').addEventListener('click', () => { userKey = camKey === 'intro' ? null : 'ov'; autoCam = true; });
-$('bp3d-pp') && $('bp3d-pp').addEventListener('click', () => { if (PP.mode === 'stamp') return; drawCover(); drawInside(); drawPage(); PP.mode = PP.mode === 'view' ? 'idle' : 'view'; });
+$('bp3d-pp') && $('bp3d-pp').addEventListener('click', () => openPassportModal('cover'));
 
 /* ---------- vòng lặp ---------- */
 function navBottom() {
