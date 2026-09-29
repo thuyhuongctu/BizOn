@@ -590,16 +590,29 @@ function realRounds() {
     return { sh, p: Math.round(hh.netProfit || 0), win }; });
 }
 let round = 0;
+let lastPoppedRound = -1;
 const K = 30, C16 = Math.cos(16 * Math.PI / 180), P = ([lo, la]) => [((lo - 102.1) * C16 * K), ((23.6 - la) * K)];
 let vnPath = '';
 fetch('assets/geo/vnm.json').then(r => r.json()).then(g => { vnPath = g.coordinates.map(poly => poly.map(ring => 'M' + ring.map(p => P(p).map(v => v.toFixed(1)).join(',')).join('L') + 'Z').join('')).join(''); renderResults(); }).catch(() => renderResults());
 function routeD(pts) { let d = `M${pts[0]}`; for (let i = 1; i < pts.length; i++) { const [x0, y0] = pts[i - 1], [x1, y1] = pts[i]; const mx = (x0 + x1) / 2 + (y1 - y0) * -0.18, my = (y0 + y1) / 2 + (x0 - x1) * -0.18; d += ` Q${mx.toFixed(1)},${my.toFixed(1)} ${x1.toFixed(1)},${y1.toFixed(1)}`; } return d; }
-function flagSVG(x, y, col, big, cls = '', team = '') { const s = big ? 1.5 : 1; return `<g transform="translate(${x},${y}) scale(${s})"><g class="${cls}"><ellipse cx="0" cy="1" rx="7" ry="3" fill="rgba(0,0,0,.25)"/><rect x="-1.6" y="-26" width="3.2" height="27" rx="1.6" fill="#6b4128"/><path d="M1.5,-25 L22,-18.5 L1.5,-12 Z" fill="${col}" stroke="rgba(0,0,0,.2)" stroke-width="1" stroke-linejoin="round"/>${big ? (team === 'star' ? '<path d="M8.5,-21.5 l1.3,2.6 2.9,.4 -2.1,2 .5,2.9 -2.6,-1.4 -2.6,1.4 .5,-2.9 -2.1,-2 2.9,-.4z" fill="#fff6e6"/>' : `<text x="9" y="-15" font-size="8" text-anchor="middle">${TEAMS[team] ? TEAMS[team].emblem : ''}</text>`) : ''}</g></g>`; }
+function flagSVG(x, y, col, big, cls = '', team = '', delay = 0) { const s = big ? 1.5 : 1; return `<g transform="translate(${x},${y}) scale(${s})"><g class="${cls}" style="${delay ? `animation-delay:${delay}s` : ''}"><ellipse cx="0" cy="1" rx="7" ry="3" fill="rgba(0,0,0,.25)"/><rect x="-1.6" y="-26" width="3.2" height="27" rx="1.6" fill="#6b4128"/><path d="M1.5,-25 L22,-18.5 L1.5,-12 Z" fill="${col}" stroke="rgba(0,0,0,.2)" stroke-width="1" stroke-linejoin="round"/>${big ? (team === 'star' ? '<path d="M8.5,-21.5 l1.3,2.6 2.9,.4 -2.1,2 .5,2.9 -2.6,-1.4 -2.6,1.4 .5,-2.9 -2.1,-2 2.9,-.4z" fill="#fff6e6"/>' : `<text x="9" y="-15" font-size="8" text-anchor="middle">${TEAMS[team] ? TEAMS[team].emblem : ''}</text>`) : ''}</g></g>`; }
+function ceoSVG(x1, y1, x2, y2) { return `<g class="ceo-walk">
+  <animateTransform attributeName="transform" type="translate" from="${x1},${y1}" to="${x2},${y2}" dur=".95s" begin=".05s" fill="freeze" calcMode="spline" keySplines=".3 0 .2 1"/>
+  <ellipse cx="0" cy="2.5" rx="5" ry="1.6" fill="rgba(0,0,0,.3)"/>
+  <g><animateTransform attributeName="transform" type="rotate" values="0;-7;0;7;0" dur=".3s" repeatCount="4" begin=".05s"/>
+    <path d="M-3.6,2 L-3.6,-6.4 Q0,-9.4 3.6,-6.4 L3.6,2 Z" fill="#24345c"/>
+    <circle cx="0" cy="-9.6" r="3.4" fill="#f4c9a0"/>
+    <path d="M-3.4,-11.6 Q0,-14.6 3.4,-11.6 Q3.4,-8.8 0,-8.8 Q-3.4,-8.8 -3.4,-11.6 Z" fill="#241c14"/>
+  </g>
+  <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.05;.85;1" dur="1.9s" begin="0s" fill="freeze"/>
+</g>`; }
 function renderResults() {
   const RR = realRounds(), empty = !RR.length; round = Math.max(0, RR.length - 1);
   const R = empty ? { sh: [25, 25, 25, 25], p: 0, win: null } : RR[round], win = R.win, stop = STOPS[round], me = win === 'star';
   const owners = RR.map(r => r.win), myFlags = owners.filter(w => w === 'star').length;
   const pts = STOPS.map(s => P(s.ll)), sea = pts.map(([x, y]) => [x + 16, y]);
+  const isFresh = !empty && round !== lastPoppedRound; if (!empty) lastPoppedRound = round;
+  const ceoFrom = round === 0 ? [pts[0][0] - 30, pts[0][1] + 36] : pts[round - 1];
   const hoang = P([111.9, 16.4]), truong = P([113.9, 10.1]);
   document.getElementById('map').innerHTML = `<svg viewBox="-6 -6 392 478" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Bản đồ hành trình 6 vòng">
     <defs><filter id="clay" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur in="SourceAlpha" stdDeviation="2.5" result="b"/><feOffset in="b" dy="5" result="o"/><feFlood flood-color="#123a4a" flood-opacity=".45"/><feComposite in2="o" operator="in" result="sh"/>
@@ -617,7 +630,8 @@ function renderResults() {
     ${pts.map(([x, y], i) => `<circle cx="${x}" cy="${y}" r="${owners[i] ? 6 : 5}" fill="${owners[i] ? TEAMS[owners[i]].color : '#fff'}" stroke="#fff" stroke-width="2.5"/>`).join('')}
     <circle class="ping" cx="${pts[empty ? 0 : Math.min(5, RR.length)][0]}" cy="${pts[empty ? 0 : Math.min(5, RR.length)][1]}" r="8" fill="none" stroke="#3ff0e0" stroke-width="3"/>
     ${owners.map((w, i) => i === round ? '' : flagSVG(pts[i][0], pts[i][1], TEAMS[w].color, false)).join('')}
-    ${empty ? '' : flagSVG(pts[round][0], pts[round][1], TEAMS[win].color, true, 'pop', win)}
+    ${empty ? '' : flagSVG(pts[round][0], pts[round][1], TEAMS[win].color, true, 'pop', win, isFresh ? 1 : 0)}
+    ${isFresh ? ceoSVG(ceoFrom[0], ceoFrom[1], pts[round][0], pts[round][1]) : ''}
     <g font-family="Baloo 2" font-weight="700" font-size="13" fill="#fff" stroke="#2a5a2a" stroke-width="3" paint-order="stroke">
       <text x="${pts[5][0] - 30}" y="${pts[5][1] - 8}">Hà Nội</text><text x="${pts[0][0] - 58}" y="${pts[0][1] + 20}">${round === 0 ? 'Cần Thơ' : ''}</text>
       ${round > 0 && round < 5 ? `<text x="${pts[round][0] - 70}" y="${pts[round][1] + 4}">${stop.name}</text>` : ''}${round === 5 ? '' : ''}
