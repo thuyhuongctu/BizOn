@@ -13,13 +13,13 @@ const EXTRA = [
   { id: 'bp_kimlong', name: 'Kim Long', skin: 0xe6b28e, hair: 0x1a1412, hairStyle: 'slick', smile: 'open',
     top: 0xb8302a, bottom: 0x2a2020, shoe: 0x1a1a1a, shirtFront: 0xf6d27a, tie: 0xf2b53a, jacket: true, cuff: 0xf6d27a, pose: 'cross' },
 ];
-export const CAST_IDS = { 'Bà Sáu Lành': 'bp_sau', 'Minh Khang': 'bp_khang', 'An Nhiên': 'bp_annhien', 'Victor Lâm': 'victor', 'Lina Park': 'bp_lina', 'Lumina AI': 'lumina' };
+export const CAST_IDS = { 'Bà Sáu Lành': 'bp_sau', 'Minh Khang': 'bp_khang', 'An Nhiên': 'bp_annhien', 'Thầy Tú Phan': 'victor', 'Lina Park': 'bp_lina', 'Lumina AI': 'lumina' };
 export const RIVAL_ID = 'bp_kimlong';
 
 export function makeBPCast(THREE) {
   const C = makeCharacters(THREE);
   // Ảnh đất sét gốc của Bật Nghiệp / Hộ Chiếu cho các nhân vật có tên (cùng cách hiển thị với BizOn Game 3D)
-  const ARTMAP = { bp_sau: 'advisors/ba-sau-lanh-cut.webp', bp_khang: 'advisors/minh-khang-cut.webp', bp_annhien: 'advisors/an-nhien-cut.webp', bp_lina: 'advisors/lina-park-cut.webp', victor: 'advisors/victor-lam-cut.webp', bp_kimlong: 'firms/kim-long-rival-cut.webp' };
+  const ARTMAP = { bp_sau: 'advisors/ba-sau-lanh-cut.webp', bp_khang: 'advisors/minh-khang-cut.webp', bp_annhien: 'advisors/an-nhien-cut.webp', bp_lina: 'advisors/lina-park-cut.webp', victor: 'advisors/tu-phan-cut.webp', bp_kimlong: 'firms/kim-long-rival-cut.webp' };
   const TL = new THREE.TextureLoader(), tc = {}, blobM = new THREE.MeshBasicMaterial({ color: 0x3a2a1a, transparent: true, opacity: 0.22, depthWrite: false });
   function artChar(src, h) {
     const root = new THREE.Group(), body = new THREE.Group(); root.add(body);
