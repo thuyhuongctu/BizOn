@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="js/backend-config.js"></script>
 <script src="js/instructor-api.js"></script>
-<script src="js/instructor-page.js"></script>
+<script src="js/bizon-grading.js"></script>
 <style>
 body{margin:0;background:#efe4d2;color:#1f3f4a;font-family:'Be Vietnam Pro',sans-serif}
 a{color:#1f6f8a}a:hover{color:#2f8a8c}
@@ -238,20 +238,66 @@ input,select,textarea,button{font-family:inherit}
 
       <sc-if value="{{ tabGrading }}" hint-placeholder-val="{{ false }}">
         <section style="display:flex;flex-direction:column;gap:10px">
-          <div style="font-size:13px;color:#5a6b74;text-wrap:pretty">Gợi ý theo hướng dẫn giảng viên: 45% lợi nhuận lũy kế · 35% số cờ · 20% lập luận & hợp tác. Hai cột đầu tính tự động từ bài nộp; cột lập luận và hợp tác do bạn chấm (0–10).</div>
+          <div style="font-size:13px;color:#5a6b74;text-wrap:pretty">Thang 10 theo «Hướng dẫn chấm điểm chi tiết»: B1 xếp hạng lợi nhuận, B2 thị phần, B3 vận hành (OEE/lỗi/quick ratio), B4 thành tựu, B5 đóng góp (🤖 tự động nếu có Nhật ký thành viên, không thì bạn nhập số vòng đóng góp 0–6), B6 ứng biến biến cố (🤖 tự động nếu có nhật ký, không thì đánh dấu có chuẩn bị trước hay không).</div>
           <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;overflow:auto">
-            <div style="display:grid;grid-template-columns:minmax(150px,1.4fr) repeat(5,minmax(90px,1fr)) minmax(160px,1.6fr) 90px;min-width:960px;align-items:center">
-              <sc-for list="{{ gradeHead }}" as="h" hint-placeholder-count="8"><div style="padding:11px 10px;border-bottom:2px solid #e6d6bf;font-size:12px;font-weight:700;color:#5a6b74">{{ h }}</div></sc-for>
+            <div style="display:grid;grid-template-columns:minmax(130px,1.2fr) repeat(6,minmax(78px,1fr)) 70px 60px minmax(140px,1.4fr) 90px;min-width:1180px;align-items:center">
+              <sc-for list="{{ gradeHead }}" as="h" hint-placeholder-count="11"><div style="padding:11px 8px;border-bottom:2px solid #e6d6bf;font-size:11px;font-weight:700;color:#5a6b74">{{ h }}</div></sc-for>
               <sc-for list="{{ gradeRows }}" as="r" hint-placeholder-count="4">
                 <div style="display:contents">
-                  <div style="padding:10px;border-bottom:1px solid #eadcc6;font-weight:700">{{ r.name }}</div>
-                  <div style="padding:10px;border-bottom:1px solid #eadcc6">{{ r.pProfit }}</div>
-                  <div style="padding:10px;border-bottom:1px solid #eadcc6">{{ r.pFlags }}</div>
-                  <div style="padding:6px;border-bottom:1px solid #eadcc6"><input value="{{ r.reasoning }}" onChange="{{ r.onR }}" type="number" min="0" max="10" step="0.5" style="width:64px;padding:7px;border-radius:10px;border:2px solid #e6d6bf"></input></div>
-                  <div style="padding:6px;border-bottom:1px solid #eadcc6"><input value="{{ r.teamwork }}" onChange="{{ r.onT }}" type="number" min="0" max="10" step="0.5" style="width:64px;padding:7px;border-radius:10px;border:2px solid #e6d6bf"></input></div>
-                  <div style="padding:10px;border-bottom:1px solid #eadcc6;font:800 18px 'Baloo 2',sans-serif;color:#1f6f8a">{{ r.total }}</div>
+                  <div style="padding:10px 8px;border-bottom:1px solid #eadcc6;font-weight:700">{{ r.name }}</div>
+                  <div style="padding:10px 8px;border-bottom:1px solid #eadcc6">{{ r.b1 }}</div>
+                  <div style="padding:10px 8px;border-bottom:1px solid #eadcc6">{{ r.b2 }}</div>
+                  <div style="padding:10px 8px;border-bottom:1px solid #eadcc6">{{ r.b3 }}</div>
+                  <div style="padding:10px 8px;border-bottom:1px solid #eadcc6">{{ r.b4 }}</div>
+                  <div style="padding:6px 8px;border-bottom:1px solid #eadcc6">
+                    <div style="font-weight:700">{{ r.b5 }}</div>
+                    <sc-if value="{{ r.showManual }}" hint-placeholder-val="{{ true }}"><input value="{{ r.reasoning }}" onChange="{{ r.onR }}" type="number" min="0" max="6" step="1" placeholder="0–6 vòng" style="width:70px;padding:5px;margin-top:3px;border-radius:8px;border:2px solid #e6d6bf;font-size:11px"></input></sc-if>
+                  </div>
+                  <div style="padding:6px 8px;border-bottom:1px solid #eadcc6">
+                    <div style="font-weight:700">{{ r.b6 }}</div>
+                    <sc-if value="{{ r.showManual }}" hint-placeholder-val="{{ true }}"><input value="{{ r.teamwork }}" onChange="{{ r.onT }}" type="number" min="0" max="1" step="1" placeholder="0/1" style="width:50px;padding:5px;margin-top:3px;border-radius:8px;border:2px solid #e6d6bf;font-size:11px"></input></sc-if>
+                  </div>
+                  <div style="padding:10px 8px;border-bottom:1px solid #eadcc6;font:800 17px 'Baloo 2',sans-serif;color:#1f6f8a">{{ r.total }}</div>
+                  <div style="padding:10px 8px;border-bottom:1px solid #eadcc6;font-weight:800;color:#5a6b74">{{ r.letter }}</div>
                   <div style="padding:6px;border-bottom:1px solid #eadcc6"><input value="{{ r.note }}" onChange="{{ r.onN }}" placeholder="Nhận xét" style="width:100%;box-sizing:border-box;padding:7px;border-radius:10px;border:2px solid #e6d6bf"></input></div>
                   <div style="padding:6px;border-bottom:1px solid #eadcc6"><button onClick="{{ r.save }}" style="border:0;background:#2f8a8c;color:#fff;border-radius:10px;padding:7px 10px;font-weight:700;cursor:pointer">{{ r.saveLabel }}</button></div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </section>
+      </sc-if>
+      <sc-if value="{{ tabMembers }}" hint-placeholder-val="{{ false }}">
+        <section style="display:flex;flex-direction:column;gap:10px">
+          <div style="font-size:13px;color:#5a6b74;text-wrap:pretty">Điểm B5 cá nhân (🤖 tự động) từ Nhật ký thành viên: mỗi vai gửi đề xuất/biên bản/Nếu–Thì trong game Bật Nghiệp. 🟢 đề xuất được CEO áp dụng · 🟡 có tham gia vòng đó · ⚪ chưa ghi nhận.</div>
+          <sc-if value="{{ noMembers }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#5a6b74;padding:16px">Chưa có dữ liệu Nhật ký thành viên cho lớp này. Sinh viên cần đăng nhập bằng Mã lớp thật (không phải Đội Demo) và mỗi vai chơi trên máy riêng để hệ thống ghi nhận.</div></sc-if>
+          <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;overflow:auto">
+            <div style="display:grid;grid-template-columns:minmax(120px,1.2fr) minmax(120px,1.2fr) 70px repeat(6,44px) 70px 70px 60px 90px;min-width:920px;align-items:center">
+              <div style="padding:11px 8px;border-bottom:2px solid #e6d6bf;font-size:11px;font-weight:700;color:#5a6b74">Đội</div>
+              <div style="padding:11px 8px;border-bottom:2px solid #e6d6bf;font-size:11px;font-weight:700;color:#5a6b74">Thành viên</div>
+              <div style="padding:11px 8px;border-bottom:2px solid #e6d6bf;font-size:11px;font-weight:700;color:#5a6b74">Vai</div>
+              <div style="padding:11px 4px;border-bottom:2px solid #e6d6bf;font-size:10px;font-weight:700;color:#5a6b74;text-align:center">V1</div>
+              <div style="padding:11px 4px;border-bottom:2px solid #e6d6bf;font-size:10px;font-weight:700;color:#5a6b74;text-align:center">V2</div>
+              <div style="padding:11px 4px;border-bottom:2px solid #e6d6bf;font-size:10px;font-weight:700;color:#5a6b74;text-align:center">V3</div>
+              <div style="padding:11px 4px;border-bottom:2px solid #e6d6bf;font-size:10px;font-weight:700;color:#5a6b74;text-align:center">V4</div>
+              <div style="padding:11px 4px;border-bottom:2px solid #e6d6bf;font-size:10px;font-weight:700;color:#5a6b74;text-align:center">V5</div>
+              <div style="padding:11px 4px;border-bottom:2px solid #e6d6bf;font-size:10px;font-weight:700;color:#5a6b74;text-align:center">V6</div>
+              <div style="padding:11px 8px;border-bottom:2px solid #e6d6bf;font-size:11px;font-weight:700;color:#5a6b74">Tham gia</div>
+              <div style="padding:11px 8px;border-bottom:2px solid #e6d6bf;font-size:11px;font-weight:700;color:#5a6b74">Áp dụng</div>
+              <div style="padding:11px 8px;border-bottom:2px solid #e6d6bf;font-size:11px;font-weight:700;color:#5a6b74">Nếu–Thì</div>
+              <div style="padding:11px 8px;border-bottom:2px solid #e6d6bf;font-size:11px;font-weight:700;color:#5a6b74">B5 /1,5</div>
+              <sc-for list="{{ memberRows }}" as="m" hint-placeholder-count="4">
+                <div style="display:contents">
+                  <div style="padding:9px 8px;border-bottom:1px solid #eadcc6;font-weight:700">{{ m.team }}</div>
+                  <div style="padding:9px 8px;border-bottom:1px solid #eadcc6">{{ m.name }}</div>
+                  <div style="padding:9px 8px;border-bottom:1px solid #eadcc6;font-weight:700;color:#1f6f8a">{{ m.role }}</div>
+                  <sc-for list="{{ m.dots }}" as="d" hint-placeholder-count="6">
+                    <div style="padding:9px 4px;border-bottom:1px solid #eadcc6;text-align:center" title="{{ d.tip }}"><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:{{ d.bg }}"></span></div>
+                  </sc-for>
+                  <div style="padding:9px 8px;border-bottom:1px solid #eadcc6">{{ m.p }}/6</div>
+                  <div style="padding:9px 8px;border-bottom:1px solid #eadcc6">{{ m.a }}/6</div>
+                  <div style="padding:9px 8px;border-bottom:1px solid #eadcc6">{{ m.whatif }}</div>
+                  <div style="padding:9px 8px;border-bottom:1px solid #eadcc6;font-weight:800;color:#1f6f8a">{{ m.b5 }}</div>
                 </div>
               </sc-for>
             </div>
@@ -283,7 +329,7 @@ input,select,textarea,button{font-family:inherit}
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { view: 'login', mode: 'in', err: '', fEmail: '', fPass: '', fNewPass: '', recoveryToken: '', fCode: '', classes: [], adminClasses: [], code: '', tab: 'teams', subs: [], st: {}, selTeam: '', fEvent: '', fMsg: '', gTeam: '*', gAmt: '', gReason: '', edits: {}, saved: {}, board: false, ready: false };
+  state = { view: 'login', mode: 'in', err: '', fEmail: '', fPass: '', fNewPass: '', recoveryToken: '', fCode: '', classes: [], adminClasses: [], code: '', tab: 'teams', subs: [], st: {}, memberLog: [], bpResults: [], selTeam: '', fEvent: '', fMsg: '', gTeam: '*', gAmt: '', gReason: '', edits: {}, saved: {}, board: false, ready: false };
   api() { return window.BizOnInstructor; }
   P() { return window.BizOnInstructorPage; }
   componentDidMount() {
@@ -304,8 +350,8 @@ class Component extends DCLogic {
     try { await this.api().deleteClass(code); if (this.state.view === 'admin') this.loadAdmin(); else this.loadClasses(); } catch (e) { this.fail(e); } }
   async openClass(code) { this.setState({ code, view: 'class', tab: 'teams', err: '', edits: {}, saved: {} }); await this.reload(code); }
   async reload(code = this.state.code) {
-    try { const [subs, st] = await Promise.all([this.api().submissions(code), this.api().state(code)]);
-      const c = (st && st.controls) || {}; this.setState({ subs: subs || [], st: st || {}, fEvent: c.forced_event || '', fMsg: c.message || '', err: '' });
+    try { const [subs, st, memberLog, bpResults] = await Promise.all([this.api().submissions(code), this.api().state(code), this.api().memberLog(code), this.api().bpResults(code)]);
+      const c = (st && st.controls) || {}; this.setState({ subs: subs || [], st: st || {}, memberLog: memberLog || [], bpResults: bpResults || [], fEvent: c.forced_event || '', fMsg: c.message || '', err: '' });
     } catch (e) { this.fail(e); } }
   async login() {
     const { fEmail, fPass, mode } = this.state; if (!fEmail || !fPass) return this.fail('Nhập email và mật khẩu.');
@@ -329,9 +375,10 @@ class Component extends DCLogic {
   renderVals() {
     const s = this.state, A = this.api(), P = this.P(), ok = s.ready && A && P;
     const signedIn = !!(ok && A.signedIn), v = signedIn ? s.view : 'login', inClass = v === 'class', inAdmin = v === 'admin';
-    const T = ok ? P.teams(s.subs) : [], G = ok ? P.grades(T, (s.st && s.st.scores) || [], s.edits) : [], money = ok ? P.money : (x => x);
+    const T = ok ? P.teams(s.subs) : [], G = ok ? P.grades(T, (s.st && s.st.scores) || [], s.edits, s.memberLog) : [], money = ok ? P.money : (x => x);
+    const MB = ok ? P.members(T, s.memberLog) : [], BP = s.bpResults || [];
     const c = (s.st && s.st.controls) || {}, lock = c.locked_round;
-    const tabDefs = [['teams', '👥 Đội & tiến độ'], ['decisions', '🧾 Quyết định'], ['controls', '🎛 Điều khiển lớp'], ['grading', '📝 Chấm điểm']];
+    const tabDefs = [['teams', '👥 Đội & tiến độ'], ['decisions', '🧾 Quyết định'], ['controls', '🎛 Điều khiển lớp'], ['grading', '📝 Chấm điểm'], ['members', '👤 Thành viên']];
     const selTeam = s.selTeam || (T[0] && T[0].name) || '';
     const dec = ok ? P.decRows(T.find(t => t.name === selTeam)) : { head: [], cells: [] };
     const maxShare = Math.max(1, ...T.map(t => t.share));
@@ -355,10 +402,10 @@ class Component extends DCLogic {
       noClasses: !(s.classes || []).length, noAdminClasses: !(s.adminClasses || []).length,
       classes: (s.classes || []).map(x => ({ class_code: x.class_code, date: new Date(x.created_at).toLocaleDateString('vi-VN'), open: () => this.openClass(x.class_code), remove: e => { if (e && e.stopPropagation) e.stopPropagation(); this.removeClass(x.class_code); } })),
       adminClasses: (s.adminClasses || []).map(x => ({ class_code: x.class_code, date: new Date(x.created_at).toLocaleDateString('vi-VN'), ownerLine: '👤 ' + x.owner_email + ' · ' + x.team_count + ' đội · ' + x.submission_count + ' bài nộp', open: () => this.openClass(x.class_code), remove: e => { if (e && e.stopPropagation) e.stopPropagation(); this.removeClass(x.class_code); } })),
-      code: s.code, refresh: () => this.reload(), exportXls: () => P.xls(s.code, T, G), openBoard: () => this.setState({ board: true }), closeBoard: () => this.setState({ board: false }),
+      code: s.code, refresh: () => this.reload(), exportXls: () => P.xls(s.code, T, G, BP, MB), openBoard: () => this.setState({ board: true }), closeBoard: () => this.setState({ board: false }),
       classStats: `${T.length} đội · ${s.subs.length} bài nộp · ${lock != null ? 'Đang khóa sau vòng ' + lock : 'Không khóa vòng'}${c.forced_event ? ' · Biến cố GV: ' + c.forced_event : ''}`,
       tabs: tabDefs.map(([k, l]) => ({ label: l, go: () => this.setState({ tab: k }), bg: s.tab === k ? '#2f8a8c' : '#fbf6ee', fg: s.tab === k ? '#fff' : '#1f4a55', border: s.tab === k ? '#23706f' : '#e6d6bf' })),
-      tabTeams: s.tab === 'teams', tabDecisions: s.tab === 'decisions', tabControls: s.tab === 'controls', tabGrading: s.tab === 'grading', noTeams: !T.length,
+      tabTeams: s.tab === 'teams', tabDecisions: s.tab === 'decisions', tabControls: s.tab === 'controls', tabGrading: s.tab === 'grading', tabMembers: s.tab === 'members', noTeams: !T.length,
       teams: T.map(t => ({ name: t.name, share: t.share.toFixed(1) + '%', profit: money(t.profit), profitColor: t.profit >= 0 ? '#3f8a44' : '#c0443a', flags: '🚩 ' + t.flags + '/6',
         last: t.last ? new Date(t.last.created_at).toLocaleString('vi-VN') : '–',
         dots: [1, 2, 3, 4, 5, 6].map(n => { const r = t.rs.find(x => x.round_number === n), j = r ? (r.result_json || {}) : null;
@@ -370,10 +417,17 @@ class Component extends DCLogic {
       eventOpts: ok ? P.EVENTS.map(([v, l]) => ({ v, l })) : [], fEvent: s.fEvent, onEvent: e => this.setState({ fEvent: e.target.value }), fMsg: s.fMsg, onMsg: e => this.setState({ fMsg: e.target.value }), saveEvent: () => this.saveEvent(),
       gTeam: s.gTeam, onGTeam: e => this.setState({ gTeam: e.target.value }), gAmt: s.gAmt, onGAmt: e => this.setState({ gAmt: e.target.value }), gReason: s.gReason, onGReason: e => this.setState({ gReason: e.target.value }), doGrant: () => this.doGrant(),
       grants: ((s.st && s.st.grants) || []).slice(0, 20).map(g => ({ team: g.team_name === '*' ? 'Cả lớp' : g.team_name, reason: g.reason || '—', amt: (g.amount > 0 ? '+' : '') + g.amount + ' tr₫', color: g.amount >= 0 ? '#3f8a44' : '#c0443a' })),
-      gradeHead: ['Đội', 'Lợi nhuận /45', 'Cờ /35', 'Lập luận /10', 'Hợp tác /10', 'Tổng /100', 'Nhận xét', ''],
-      gradeRows: G.map(g => ({ name: g.name, pProfit: g.pP.toFixed(1), pFlags: g.pF.toFixed(1), reasoning: g.reasoning, teamwork: g.teamwork, note: g.note, total: g.total.toFixed(1),
+      gradeHead: ['Đội', 'B1 Xếp hạng /2', 'B2 Thị phần /2', 'B3 Vận hành /2', 'B4 Thành tựu /1,5', 'B5 Đóng góp /1,5', 'B6 Ứng biến /1', 'Tổng /10', 'Điểm chữ', 'Nhận xét', ''],
+      gradeRows: G.map(g => ({ name: g.name, b1: P.f1(g.b1), b2: P.f1(g.b2), b3: P.f1(g.b3), b4: P.f1(g.b4),
+        b5: P.f1(g.b5) + (g.auto ? ' 🤖' : ''), b6: P.f1(g.b6) + (g.autoPrep ? ' 🤖' : ''),
+        reasoning: g.auto ? '' : g.reasoning, teamwork: g.autoPrep != null ? '' : g.teamwork, note: g.note, total: P.f1(g.total), letter: P.letter(g.total).l,
+        showManual: !g.auto || g.autoPrep == null,
         onR: e => this.edit(g.name, 'reasoning', e.target.value), onT: e => this.edit(g.name, 'teamwork', e.target.value), onN: e => this.edit(g.name, 'note', e.target.value),
         save: () => this.saveScore(g), saveLabel: s.saved[g.name] ? '✓ Đã lưu' : 'Lưu' })),
+      memberRows: MB.map(m => ({ team: m.team, name: m.name, role: m.role,
+        dots: m.dots.map((d, i) => ({ n: i + 1, bg: d === 2 ? '#3f8a44' : d === 1 ? '#e8a22d' : '#d9cbb4', tip: 'V' + (i + 1) + ': ' + (d === 2 ? 'đề xuất/biên bản được áp dụng' : d === 1 ? 'có tham gia' : 'chưa ghi nhận') })),
+        p: m.p, a: m.a, whatif: m.whatif, b5: P.f1(m.b5) })),
+      noMembers: !MB.length,
       board: inClass && s.board,
       boardRows: T.slice().sort((a, b) => b.share - a.share || b.profit - a.profit).map((t, i) => ({ medal: ['🥇', '🥈', '🥉'][i] || String(i + 1), name: t.name, pct: (t.share / maxShare * 100).toFixed(0) + '%',
         val: t.share.toFixed(1) + '% · 🚩' + t.flags, bg: i === 0 ? 'rgba(243,154,51,.28)' : 'rgba(255,255,255,.08)' })),
