@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="./js/backend-config.js"></script>
+<script src="./js/fdi-mini/data.js"></script>
+<script src="./js/fdi-mini/engine.js"></script>
+<style>
+@font-face{font-family:"Plus Jakarta Sans";src:url(assets/fonts/PlusJakartaSans-var-vietnamese.woff2) format("woff2");font-weight:200 800;unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
+@font-face{font-family:"Plus Jakarta Sans";src:url(assets/fonts/PlusJakartaSans-var-latin.woff2) format("woff2");font-weight:200 800}
+@font-face{font-family:"Manrope";src:url(assets/fonts/Manrope-var-vietnamese.woff2) format("woff2");font-weight:200 800;unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
+@font-face{font-family:"Manrope";src:url(assets/fonts/Manrope-var-latin.woff2) format("woff2");font-weight:200 800}
+body{margin:0;background:#eef4f5;font-family:"Manrope",system-ui,sans-serif;color:#033337}
+a{color:#006687}a:hover{color:#e8762d}
+button{font:inherit}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+
+<header style="background:#033337;color:#fff;padding:12px clamp(14px,3vw,28px);display:flex;gap:14px;align-items:center;flex-wrap:wrap;justify-content:space-between">
+  <div style="display:flex;gap:10px;align-items:center">
+    <div style="width:34px;height:34px;border-radius:9px;background:#fda127;color:#033337;display:grid;place-items:center;font:800 15px 'Plus Jakarta Sans'">H</div>
+    <div style="display:flex;flex-direction:column">
+      <b style="font:800 15px 'Plus Jakarta Sans'">{{ t.title }}</b>
+      <span style="font-size:11.5px;opacity:.7">{{ subtitle }}</span>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+    <sc-if value="{{ inGame }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;gap:18px;align-items:center;padding:4px 14px;border-radius:10px;background:rgba(255,255,255,.08)">
+        <div style="display:flex;flex-direction:column"><span style="font-size:10px;opacity:.65;text-transform:uppercase;letter-spacing:.06em">{{ t.quarter }}</span><b style="font:800 15px 'Plus Jakarta Sans'">{{ qLabel }}</b></div>
+        <div style="display:flex;flex-direction:column"><span style="font-size:10px;opacity:.65;text-transform:uppercase;letter-spacing:.06em">{{ t.cash }}</span><b style="font:800 15px 'Plus Jakarta Sans';color:#fda127">{{ cashTxt }}</b></div>
+        <div style="display:flex;flex-direction:column"><span style="font-size:10px;opacity:.65;text-transform:uppercase;letter-spacing:.06em">{{ t.value }}</span><b style="font:800 15px 'Plus Jakarta Sans'">{{ valueTxt }}</b></div>
+        <sc-if value="{{ hasTimer }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column"><span style="font-size:10px;opacity:.65;text-transform:uppercase;letter-spacing:.06em">⏱ {{ t.timeLeft }}</span><b style="font:800 15px 'Plus Jakarta Sans';color:{{ timerColor }}">{{ timerTxt }}</b></div>
+        </sc-if>
+      </div>
+      <button type="button" onClick="{{ openTut }}" style="background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:6px 10px;cursor:pointer">❔ {{ t.help }}</button>
+    </sc-if>
+    <div style="display:flex;border:1px solid rgba(255,255,255,.3);border-radius:8px;overflow:hidden">
+      <sc-for list="{{ langs }}" as="lg" hint-placeholder-count="2">
+        <button type="button" onClick="{{ lg.onClick }}" style="border:0;padding:6px 10px;cursor:pointer;background:{{ lg.bg }};color:{{ lg.fg }};font-weight:700;font-size:12px">{{ lg.label }}</button>
+      </sc-for>
+    </div>
+  </div>
+</header>
+
+<main style="flex:1;width:100%;max-width:1180px;margin:0 auto;padding:clamp(14px,3vw,28px);box-sizing:border-box;display:flex;flex-direction:column;gap:18px">
+
+<sc-if value="{{ isIntro }}" hint-placeholder-val="{{ true }}">
+  <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:18px;align-items:start">
+    <div style="background:#033337;color:#fff;border-radius:18px;padding:clamp(20px,3vw,32px);display:flex;flex-direction:column;gap:14px">
+      <span style="font:700 11px 'Plus Jakarta Sans';letter-spacing:.12em;text-transform:uppercase;color:#fda127">BizOn · {{ t.edition }}</span>
+      <h1 style="margin:0;font:800 clamp(24px,3.4vw,36px)/1.15 'Plus Jakarta Sans';text-wrap:pretty">{{ t.hero }}</h1>
+      <p style="margin:0;opacity:.82;line-height:1.55;text-wrap:pretty">{{ t.heroSub }}</p>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:6px">
+        <sc-for list="{{ heroFacts }}" as="f" hint-placeholder-count="3">
+          <div style="background:rgba(255,255,255,.07);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:2px">
+            <b style="font:800 22px 'Plus Jakarta Sans';color:#fda127">{{ f.v }}</b>
+            <span style="font-size:12px;opacity:.8">{{ f.k }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <p style="margin:6px 0 0;font-size:11px;opacity:.55">© 2026 Đỗ Thùy Hương &amp; Phan Anh Tú · {{ t.stylised }}</p>
+    </div>
+    <div style="background:#fff;border-radius:18px;padding:clamp(18px,3vw,28px);display:flex;flex-direction:column;gap:16px;box-shadow:0 1px 0 #d6e4e7">
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <b style="font:800 14px 'Plus Jakarta Sans'">{{ t.home }}</b>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px">
+          <sc-for list="{{ homes }}" as="h" hint-placeholder-count="6">
+            <button type="button" onClick="{{ h.onClick }}" style="display:flex;gap:8px;align-items:center;padding:10px 12px;border-radius:10px;cursor:pointer;text-align:left;border:2px solid {{ h.bd }};background:{{ h.bg }};color:#033337;font-weight:700;font-size:13px"><span style="font-size:20px">{{ h.flag }}</span>{{ h.name }}</button>
+          </sc-for>
+        </div>
+        <span style="font-size:12px;color:#4d6d71">{{ marketsPreview }}</span>
+      </div>
+      <label style="display:flex;flex-direction:column;gap:6px;font:800 14px 'Plus Jakarta Sans'">{{ t.team }}
+        <input value="{{ team }}" onChange="{{ onTeam }}" placeholder="{{ t.teamPh }}" style="font:500 15px Manrope;padding:11px 12px;border-radius:10px;border:1.5px solid #c9dade;outline:none"></input>
+      </label>
+      <label style="display:flex;flex-direction:column;gap:6px;font:800 14px 'Plus Jakarta Sans'">{{ t.cls }}
+        <input value="{{ cls }}" onChange="{{ onCls }}" placeholder="VD: FDI01" style="font:500 15px Manrope;padding:11px 12px;border-radius:10px;border:1.5px solid #c9dade;outline:none"></input>
+      </label>
+      <button type="button" onClick="{{ start }}" style="padding:14px;border:0;border-radius:12px;background:#fda127;color:#033337;font:800 16px 'Plus Jakarta Sans';cursor:pointer">{{ t.start }} →</button>
+      <sc-if value="{{ canResume }}" hint-placeholder-val="{{ false }}">
+        <button type="button" onClick="{{ resume }}" style="padding:10px;border:1.5px solid #006687;border-radius:12px;background:#fff;color:#006687;font-weight:800;cursor:pointer">↺ {{ t.resume }}</button>
+      </sc-if>
+    </div>
+  </section>
+  <sc-if value="{{ showFacil }}" hint-placeholder-val="{{ false }}">
+    <details style="background:#fff;border-radius:14px;padding:14px 18px;box-shadow:0 1px 0 #d6e4e7">
+      <summary style="cursor:pointer;font:800 14px 'Plus Jakarta Sans';color:#006687">🧑‍🏫 {{ t.facil }}</summary>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-top:10px">
+        <sc-for list="{{ facilPlan }}" as="p" hint-placeholder-count="6">
+          <div style="display:grid;grid-template-columns:92px minmax(0,1fr);gap:12px;font-size:13px;padding:6px 0;border-bottom:1px solid #edf2f3"><b style="color:#e8762d">{{ p.time }}</b><span>{{ p.what }}</span></div>
+        </sc-for>
+      </div>
+    </details>
+  </sc-if>
+</sc-if>
+
+<sc-if value="{{ isPlay }}" hint-placeholder-val="{{ false }}">
+  <section style="display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;align-items:center;background:#fff;border-radius:16px;padding:16px 20px;border-left:0;box-shadow:0 1px 0 #d6e4e7;border-top:4px solid #e8762d">
+    <div style="font-size:38px;line-height:1">{{ ev.icon }}</div>
+    <div style="display:flex;flex-direction:column;gap:3px">
+      <span style="font:700 10.5px 'Plus Jakarta Sans';letter-spacing:.1em;text-transform:uppercase;color:#e8762d">{{ t.event }} · {{ ev.flag }} {{ ev.mName }}</span>
+      <b style="font:800 17px 'Plus Jakarta Sans'">{{ ev.title }}</b>
+      <span style="font-size:13.5px;color:#335a5e;text-wrap:pretty">{{ ev.desc }}</span>
+    </div>
+  </section>
+
+  <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px">
+    <sc-for list="{{ markets }}" as="m" hint-placeholder-count="3">
+      <div style="background:#fff;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;border:2px solid {{ m.bd }};box-shadow:0 1px 0 #d6e4e7">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+          <div style="display:flex;gap:10px;align-items:center"><span style="font-size:30px">{{ m.flag }}</span><b style="font:800 17px 'Plus Jakarta Sans'">{{ m.name }}</b></div>
+          <span style="font-size:11.5px;font-weight:800;padding:4px 9px;border-radius:99px;background:{{ m.tagBg }};color:{{ m.tagFg }}">{{ m.tag }}</span>
+        </div>
+        <span style="font-size:12.5px;color:#4d6d71;line-height:1.45;text-wrap:pretty">{{ m.note }}</span>
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px">
+          <sc-for list="{{ m.stats }}" as="s" hint-placeholder-count="6">
+            <div style="background:#f3f8f9;border-radius:8px;padding:6px 8px;display:flex;flex-direction:column"><span style="font-size:10.5px;color:#5f7d81">{{ s.k }}</span><b style="font-size:13px;color:{{ s.c }}">{{ s.v }}</b></div>
+          </sc-for>
+        </div>
+        <sc-if value="{{ m.entered }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;justify-content:space-between;font-size:12.5px;background:#e3f1f4;border-radius:8px;padding:8px 10px"><span>{{ m.posLine }}</span><b>{{ m.retLine }}</b></div>
+        </sc-if>
+        <sc-if value="{{ m.selectable }}" hint-placeholder-val="{{ true }}">
+          <button type="button" onClick="{{ m.onSelect }}" style="padding:9px;border-radius:10px;cursor:pointer;font-weight:800;border:1.5px solid #006687;background:{{ m.btnBg }};color:{{ m.btnFg }}">{{ m.btn }}</button>
+        </sc-if>
+      </div>
+    </sc-for>
+  </section>
+
+  <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:14px;align-items:start">
+    <div style="background:#fff;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;box-shadow:0 1px 0 #d6e4e7">
+      <b style="font:800 15px 'Plus Jakarta Sans';color:#006687">{{ t.d1 }}</b>
+      <span style="font-size:12.5px;color:#4d6d71">{{ d1hint }}</span>
+      <sc-for list="{{ modes }}" as="o" hint-placeholder-count="3">
+        <button type="button" onClick="{{ o.onClick }}" disabled="{{ o.disabled }}" style="display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:10px;align-items:center;text-align:left;padding:10px 12px;border-radius:12px;cursor:pointer;border:2px solid {{ o.bd }};background:{{ o.bg }};color:#033337;opacity:{{ o.op }}">
+          <span style="font-size:24px">{{ o.icon }}</span>
+          <span style="display:flex;flex-direction:column;gap:2px"><b style="font-size:14px">{{ o.name }}</b><span style="font-size:12px;color:#4d6d71;line-height:1.4">{{ o.desc }}</span></span>
+          <b style="font-size:13px;color:#e8762d">{{ o.cost }}</b>
+        </button>
+      </sc-for>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div style="background:#fff;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;box-shadow:0 1px 0 #d6e4e7">
+        <b style="font:800 15px 'Plus Jakarta Sans';color:#006687">{{ t.d2 }}</b>
+        <sc-for list="{{ policies }}" as="o" hint-placeholder-count="4">
+          <button type="button" onClick="{{ o.onClick }}" style="display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:10px;align-items:center;text-align:left;padding:9px 12px;border-radius:12px;cursor:pointer;border:2px solid {{ o.bd }};background:{{ o.bg }};color:#033337">
+            <span style="font-size:20px">{{ o.icon }}</span>
+            <span style="display:flex;flex-direction:column;gap:1px"><b style="font-size:13.5px">{{ o.name }}</b><span style="font-size:12px;color:#4d6d71">{{ o.desc }}</span></span>
+            <b style="font-size:12.5px;color:#e8762d">{{ o.cost }}</b>
+          </button>
+        </sc-for>
+      </div>
+      <div style="background:#fff;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;box-shadow:0 1px 0 #d6e4e7">
+        <b style="font:800 15px 'Plus Jakarta Sans';color:#006687">{{ t.d3 }}</b>
+        <span style="font-size:12.5px;color:#4d6d71">{{ t.d3h }}</span>
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
+          <sc-for list="{{ repats }}" as="r" hint-placeholder-count="3">
+            <button type="button" onClick="{{ r.onClick }}" style="padding:10px 6px;border-radius:10px;cursor:pointer;font-weight:800;border:2px solid {{ r.bd }};background:{{ r.bg }};color:#033337;display:flex;flex-direction:column;gap:2px;align-items:center"><span style="font-size:16px">{{ r.label }}</span><span style="font-size:11px;font-weight:600;color:#4d6d71">{{ r.sub }}</span></button>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="position:sticky;bottom:0;background:#033337;color:#fff;border-radius:16px;padding:12px 16px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap">
+    <span style="font-size:13.5px">{{ summaryLine }}</span>
+    <button type="button" onClick="{{ confirm }}" disabled="{{ cantConfirm }}" style="padding:12px 22px;border:0;border-radius:12px;background:{{ confirmBg }};color:#033337;font:800 15px 'Plus Jakarta Sans';cursor:pointer">{{ t.confirm }} ✓</button>
+  </section>
+</sc-if>
+
+<sc-if value="{{ isResult }}" hint-placeholder-val="{{ false }}">
+  <section style="background:#fff;border-radius:18px;padding:clamp(16px,3vw,26px);display:flex;flex-direction:column;gap:14px;box-shadow:0 1px 0 #d6e4e7">
+    <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline">
+      <h2 style="margin:0;font:800 22px 'Plus Jakarta Sans'">{{ t.result }} · {{ res.qLabel }}</h2>
+      <span style="font-size:13px;color:#4d6d71">{{ res.evLine }}</span>
+    </div>
+    <sc-if value="{{ res.empty }}" hint-placeholder-val="{{ false }}">
+      <p style="margin:0;padding:14px;border-radius:10px;background:#fff4e5">{{ t.noInv }}</p>
+    </sc-if>
+    <div style="overflow-x:auto">
+      <div style="display:grid;grid-template-columns:minmax(150px,1.4fr) repeat(6,minmax(84px,1fr));min-width:720px;font-size:13px">
+        <sc-for list="{{ res.head }}" as="h" hint-placeholder-count="7">
+          <span style="padding:8px;font:700 11px 'Plus Jakarta Sans';text-transform:uppercase;letter-spacing:.05em;color:#006687;background:#eef6f7">{{ h }}</span>
+        </sc-for>
+        <sc-for list="{{ res.cells }}" as="c" hint-placeholder-count="14">
+          <span style="padding:9px 8px;border-bottom:1px solid #e6eef0;font-weight:{{ c.w }};color:{{ c.c }}">{{ c.v }}</span>
+        </sc-for>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:start;padding:14px 16px;border-radius:12px;background:#e3f1f4">
+      <span style="font-size:24px">💡</span>
+      <div style="display:flex;flex-direction:column;gap:4px"><b style="font:800 14px 'Plus Jakarta Sans'">{{ t.lesson }}</b>
+        <sc-for list="{{ res.lessons }}" as="l" hint-placeholder-count="2"><span style="font-size:13.5px;line-height:1.5;text-wrap:pretty">{{ l }}</span></sc-for>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+      <span style="font-size:14px">{{ t.cash }}: <b>{{ cashTxt }}</b> · {{ t.value }}: <b>{{ valueTxt }}</b></span>
+      <button type="button" onClick="{{ next }}" style="padding:12px 22px;border:0;border-radius:12px;background:#fda127;color:#033337;font:800 15px 'Plus Jakarta Sans';cursor:pointer">{{ nextLabel }} →</button>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ isEnd }}" hint-placeholder-val="{{ false }}">
+  <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:18px;align-items:start">
+    <div style="background:#033337;color:#fff;border-radius:18px;padding:clamp(20px,3vw,30px);display:flex;flex-direction:column;gap:12px">
+      <span style="font:700 11px 'Plus Jakarta Sans';letter-spacing:.12em;text-transform:uppercase;color:#fda127">{{ end.team }} · {{ end.homeLine }}</span>
+      <div style="display:flex;gap:18px;align-items:flex-end">
+        <b style="font:800 64px/1 'Plus Jakarta Sans'">{{ end.score }}</b>
+        <div style="display:flex;flex-direction:column;padding-bottom:6px"><b style="font:800 26px 'Plus Jakarta Sans';color:#fda127">{{ end.letter }}</b><span style="font-size:12px;opacity:.75">{{ end.g4 }}</span></div>
+      </div>
+      <span style="font-size:13px;opacity:.8">{{ end.valueLine }}</span>
+      <div style="display:flex;align-items:flex-end;gap:10px;height:110px;padding-top:10px;border-top:1px solid rgba(255,255,255,.15)">
+        <sc-for list="{{ end.bars }}" as="b" hint-placeholder-count="4">
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;justify-content:flex-end;height:100%"><span style="font-size:11px">{{ b.v }}</span><div style="width:100%;border-radius:6px 6px 0 0;background:#6fd3d0;height:{{ b.h }}"></div><span style="font-size:11px;opacity:.7">{{ b.q }}</span></div>
+        </sc-for>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;margin-top:6px;padding:12px;border-radius:12px;background:rgba(255,255,255,.07)">
+        <span style="font-size:11px;opacity:.7">{{ t.codeL }}</span>
+        <b style="font:700 15px ui-monospace,monospace;letter-spacing:.03em;word-break:break-all;color:#fda127">{{ end.code }}</b>
+        <span style="font-size:12px;opacity:.85;margin-top:4px">{{ subMsg }}</span>
+        <sc-if value="{{ subRetry }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ retry }}" style="align-self:flex-start;margin-top:4px;padding:6px 12px;border:0;border-radius:8px;background:#fda127;color:#033337;font-weight:800;cursor:pointer">{{ t.retry }}</button></sc-if>
+      </div>
+      <button type="button" onClick="{{ restart }}" style="padding:11px;border:1.5px solid rgba(255,255,255,.4);border-radius:12px;background:transparent;color:#fff;font-weight:800;cursor:pointer">↺ {{ t.again }}</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <sc-if value="{{ hasBoard }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#fff;border-radius:18px;padding:16px 20px;display:flex;flex-direction:column;gap:6px;box-shadow:0 1px 0 #d6e4e7">
+          <div style="display:flex;justify-content:space-between;align-items:center"><b style="font:800 15px 'Plus Jakarta Sans';color:#006687">🏆 {{ boardTitle }}</b>
+            <button type="button" onClick="{{ refresh }}" style="border:1px solid #c9dade;background:#fff;border-radius:8px;padding:4px 10px;cursor:pointer;font-size:12px;font-weight:700;color:#006687">↻ {{ t.refresh }}</button></div>
+          <sc-for list="{{ board }}" as="r" hint-placeholder-count="5">
+            <div style="display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:8px;padding:6px 8px;border-radius:8px;font-size:13.5px;background:{{ r.me }}"><span>{{ r.rank }}</span><b>{{ r.name }}</b><b style="color:#e8762d">{{ r.score }}</b></div>
+          </sc-for>
+        </div>
+      </sc-if>
+      <div style="background:#fff;border-radius:18px;padding:18px 20px;display:flex;flex-direction:column;gap:6px;box-shadow:0 1px 0 #d6e4e7">
+        <span style="font:700 11px 'Plus Jakarta Sans';letter-spacing:.1em;text-transform:uppercase;color:#e8762d">{{ t.profile }}</span>
+        <b style="font:800 20px 'Plus Jakarta Sans'">{{ end.pIcon }} {{ end.pTitle }}</b>
+        <span style="font-size:13.5px;line-height:1.55;color:#335a5e;text-wrap:pretty">{{ end.pDesc }}</span>
+      </div>
+      <div style="background:#fff;border-radius:18px;padding:18px 20px;display:flex;flex-direction:column;gap:10px;box-shadow:0 1px 0 #d6e4e7">
+        <b style="font:800 15px 'Plus Jakarta Sans';color:#006687">{{ t.recap }}</b>
+        <sc-for list="{{ recap }}" as="r" hint-placeholder-count="5">
+          <div style="display:flex;flex-direction:column;gap:2px;padding-bottom:8px;border-bottom:1px solid #edf2f3"><b style="font-size:13.5px">{{ r.k }}</b><span style="font-size:12.5px;color:#4d6d71;line-height:1.45">{{ r.v }}</span></div>
+        </sc-for>
+        <span style="font-size:11px;color:#6d888c;line-height:1.5">Anderson, E., &amp; Gatignon, H. (1986). Modes of foreign entry. <i>Journal of International Business Studies, 17</i>(3), 1–26. · Dunning, J. H. (1988). The eclectic paradigm of international production. <i>Journal of International Business Studies, 19</i>(1), 1–31.</span>
+      </div>
+    </div>
+  </section>
+  <section style="background:linear-gradient(180deg,#fffdf6,#f4faff);border:3px solid rgba(253,161,39,.55);border-radius:22px;padding:clamp(18px,3vw,30px);display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;box-shadow:inset 0 0 0 1px rgba(0,102,135,.18)">
+    <span style="font:800 11px 'Plus Jakarta Sans';letter-spacing:.14em;text-transform:uppercase;color:#5f7d81">🎓 {{ cert.kind }}</span>
+    <b style="font:800 clamp(20px,3vw,28px)/1.15 'Plus Jakarta Sans';color:#033337">{{ cert.kindEn }}</b>
+    <span style="font-size:12px;font-style:italic;color:#5f7d81">{{ t.awardedTo }}</span>
+    <input value="{{ cert.name }}" onChange="{{ cert.onName }}" aria-label="{{ t.certName }}" style="font:800 clamp(20px,3vw,28px) 'Plus Jakarta Sans';color:#006687;text-align:center;border:0;border-bottom:2px solid rgba(253,161,39,.5);background:transparent;outline:none;width:min(100%,460px);padding:2px 6px"></input>
+    <span style="font-size:11px;color:#8aa0a3">✎ {{ t.certHint }}</span>
+    <p style="margin:0;max-width:560px;font-size:13.5px;line-height:1.55;color:#335a5e;text-wrap:pretty">{{ cert.desc }}</p>
+    <div style="display:grid;grid-template-columns:minmax(0,1fr) 76px minmax(0,1fr);gap:12px;align-items:end;width:min(100%,560px);margin-top:8px">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><img src="assets/docs/sig-huong.png" alt="Chữ ký Đỗ Thùy Hương" style="height:44px;width:auto"></img><i style="display:block;height:1px;width:80%;background:rgba(3,51,55,.2)"></i><b style="font-size:11px">NCS. Đỗ Thùy Hương</b><span style="font-size:10px;color:#6d888c">Founder &amp; Project Lead</span></div>
+      <div style="width:70px;height:70px;border-radius:50%;border:2px dashed #fda127;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(12deg);background:rgba(253,161,39,.12);color:#e8762d;line-height:1.05"><span style="font-size:8px;font-weight:800;text-transform:uppercase">Official</span><b style="font:800 12px 'Plus Jakarta Sans'">BizOn</b><span style="font-size:10px">✓</span></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><img src="assets/docs/sig-tu.png" alt="Chữ ký Phan Anh Tú" style="height:40px;width:auto"></img><i style="display:block;height:1px;width:80%;background:rgba(3,51,55,.2)"></i><b style="font-size:11px">PGS.TS. Phan Anh Tú</b><span style="font-size:10px;color:#6d888c">Co-founder &amp; Chief Academic Advisor</span></div>
+    </div>
+    <span style="font-size:10.5px;color:#8aa0a3;font-weight:700">{{ cert.meta }}</span>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:6px">
+      <button type="button" onClick="{{ cert.printCert }}" style="padding:12px 18px;border:0;border-radius:12px;background:#fda127;color:#033337;font:800 14px 'Plus Jakarta Sans';cursor:pointer">🎓 {{ t.printCert }}</button>
+      <button type="button" onClick="{{ cert.printPass }}" style="padding:12px 18px;border:0;border-radius:12px;background:#033337;color:#fff;font:800 14px 'Plus Jakarta Sans';cursor:pointer">🛂 {{ t.printPass }}</button>
+    </div>
+  </section>
+</sc-if>
+
+</main>
+
+<sc-if value="{{ isTut }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;inset:0;background:rgba(3,51,55,.72);display:grid;place-items:center;padding:16px;z-index:50">
+    <div style="background:#fff;border-radius:20px;max-width:560px;width:100%;padding:clamp(20px,4vw,32px);display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span style="font:700 11px 'Plus Jakarta Sans';letter-spacing:.12em;text-transform:uppercase;color:#e8762d">{{ t.tutT }} · {{ tut.idx }}</span>
+        <button type="button" onClick="{{ tut.close }}" style="border:0;background:transparent;font-size:13px;color:#4d6d71;cursor:pointer;text-decoration:underline">{{ t.skip }}</button></div>
+      <div style="font-size:44px;line-height:1">{{ tut.icon }}</div>
+      <h3 style="margin:0;font:800 22px/1.25 'Plus Jakarta Sans'">{{ tut.title }}</h3>
+      <sc-for list="{{ tut.body }}" as="b" hint-placeholder-count="3"><p style="margin:0;font-size:14.5px;line-height:1.55;color:#335a5e;text-wrap:pretty">{{ b }}</p></sc-for>
+      <div style="display:flex;gap:6px;justify-content:center"><sc-for list="{{ tut.dots }}" as="d" hint-placeholder-count="5"><i style="width:8px;height:8px;border-radius:9px;background:{{ d }}"></i></sc-for></div>
+      <div style="display:flex;gap:10px;justify-content:space-between">
+        <button type="button" onClick="{{ tut.back }}" style="padding:11px 18px;border:1.5px solid #c9dade;border-radius:12px;background:#fff;color:#033337;font-weight:800;cursor:pointer;visibility:{{ tut.backVis }}">← {{ t.back }}</button>
+        <button type="button" onClick="{{ tut.next }}" style="padding:11px 22px;border:0;border-radius:12px;background:#fda127;color:#033337;font:800 15px 'Plus Jakarta Sans';cursor:pointer">{{ tut.nextLabel }} →</button>
+      </div>
+    </div>
+  </div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;edition&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;fdi&quot;, &quot;indo&quot;], &quot;default&quot;: &quot;fdi&quot;, &quot;tsType&quot;: &quot;'fdi'|'indo'&quot;}, &quot;quarters&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;min&quot;: 3, &quot;max&quot;: 6, &quot;default&quot;: 4, &quot;tsType&quot;: &quot;number&quot;}, &quot;quarterMinutes&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;min&quot;: 0, &quot;max&quot;: 15, &quot;default&quot;: 0, &quot;tsType&quot;: &quot;number&quot;, &quot;unit&quot;: &quot;min&quot;}, &quot;showFacilitator&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;}}">
+const L3 = (vi, en, id) => [vi, en, id];
+const T = {
+  title: L3('Hộ Chiếu Mini · Đầu tư quốc tế', 'Passport Mini · International Investment', 'Paspor Mini · Investasi Internasional'),
+  edition: L3('Phiên bản học phần Đầu tư quốc tế', 'International Investment edition', 'Edisi Investasi Internasional'),
+  hero: L3('Đưa doanh nghiệp của bạn đầu tư ra 3 thị trường nước ngoài', 'Take your company into three foreign markets', 'Bawa perusahaan Anda berinvestasi ke tiga pasar luar negeri'),
+  heroSub: L3('Mỗi quý chỉ 3 quyết định: đầu tư vào đâu và bằng cách nào, dùng chính sách gì, chuyển bao nhiêu lợi nhuận về nước. Thuế, ưu đãi, tỷ giá và rủi ro chính trị quyết định bạn thật sự mang về được bao nhiêu.', 'Just three decisions per quarter: where and how to invest, which policy to use, and how much profit to bring home. Taxes, incentives, exchange rates and political risk decide what you actually keep.', 'Hanya tiga keputusan per kuartal: berinvestasi di mana dan bagaimana, kebijakan apa, dan berapa laba yang dibawa pulang. Pajak, insentif, kurs, dan risiko politik menentukan apa yang benar-benar Anda simpan.'),
+  stylised: L3('Số liệu đã cách điệu cho giảng dạy', 'Figures stylised for teaching', 'Angka disederhanakan untuk pembelajaran'),
+  home: L3('Quốc gia của bạn (home country)', 'Your home country', 'Negara asal Anda (home country)'),
+  team: L3('Tên nhóm', 'Team name', 'Nama tim'), teamPh: L3('VD: Nhóm 3', 'e.g. Team 3', 'mis. Tim 3'),
+  cls: L3('Mã lớp (nếu giảng viên cung cấp)', 'Class code (if given)', 'Kode kelas (jika ada)'),
+  start: L3('Bắt đầu', 'Start', 'Mulai'), resume: L3('Tiếp tục ván đang chơi', 'Resume saved game', 'Lanjutkan permainan'),
+  quarter: L3('Quý', 'Quarter', 'Kuartal'), cash: L3('Tiền ở nước nhà', 'Cash at home', 'Kas di negara asal'), value: L3('Giá trị DN', 'Firm value', 'Nilai perusahaan'),
+  help: L3('Hướng dẫn', 'Guide', 'Panduan'), timeLeft: L3('Còn', 'Left', 'Sisa'),
+  event: L3('Tin thị trường', 'Market news', 'Berita pasar'),
+  d1: L3('1 · Đầu tư mới', '1 · New investment', '1 · Investasi baru'),
+  d2: L3('2 · Chính sách quý này', '2 · Policy this quarter', '2 · Kebijakan kuartal ini'),
+  d3: L3('3 · Chuyển lợi nhuận về nước (repatriation)', '3 · Repatriate profit', '3 · Repatriasi laba'),
+  d3h: L3('Phần lợi nhuận đang giữ ở nước ngoài được chuyển về. Tiền chuyển về chịu thuế khấu trừ; tiền giữ lại chịu rủi ro tỷ giá nhưng giúp chi nhánh lớn nhanh hơn.', 'Share of profit held abroad sent home. Money sent home pays withholding tax; money kept abroad carries FX risk but grows the subsidiary faster.', 'Porsi laba di luar negeri yang dikirim pulang. Uang yang dikirim kena pajak potong; uang yang ditahan berisiko kurs tetapi mempercepat pertumbuhan anak perusahaan.'),
+  none: L3('Không dùng', 'None', 'Tidak ada'), noneD: L3('Tiết kiệm tiền quý này.', 'Save cash this quarter.', 'Hemat kas kuartal ini.'),
+  confirm: L3('Chốt quyết định', 'Lock in', 'Kunci keputusan'),
+  entered: L3('Đã đầu tư', 'Invested', 'Sudah investasi'), open: L3('Chưa đầu tư', 'Not yet', 'Belum'), picked: L3('Đã chọn', 'Selected', 'Dipilih'),
+  choose: L3('Chọn đầu tư vào đây', 'Invest here', 'Investasi di sini'), unchoose: L3('Bỏ chọn', 'Deselect', 'Batal pilih'),
+  cit: L3('Thuế TNDN', 'Corporate tax', 'PPh badan'), wht: L3('Thuế khấu trừ cổ tức', 'Dividend WHT', 'Pajak dividen'), hol: L3('Miễn thuế FDI', 'FDI tax holiday', 'Tax holiday PMA'),
+  polr: L3('Rủi ro chính trị', 'Political risk', 'Risiko politik'), fxv: L3('Biến động tỷ giá', 'FX volatility', 'Volatilitas kurs'), dist: L3('Khoảng cách văn hoá', 'Cultural distance', 'Jarak budaya'),
+  qs: L3('quý', 'qtrs', 'kuartal'), noHol: L3('Không', 'None', 'Tidak ada'),
+  low: L3('Thấp', 'Low', 'Rendah'), med: L3('Vừa', 'Medium', 'Sedang'), high: L3('Cao', 'High', 'Tinggi'),
+  pickMarket: L3('Chọn một thị trường chưa đầu tư ở trên, rồi chọn phương thức. Có thể bỏ qua quý này.', 'Pick a market above you haven’t entered, then a mode. You may skip this quarter.', 'Pilih pasar di atas yang belum dimasuki, lalu modenya. Boleh dilewati.'),
+  allIn: L3('Bạn đã đầu tư cả 3 thị trường. Tập trung vào chính sách và dòng tiền.', 'You’re in all three markets. Focus on policy and cash flow.', 'Anda sudah di ketiga pasar. Fokus pada kebijakan dan arus kas.'),
+  modeFor: L3('Phương thức vào', 'Entry mode for', 'Mode masuk ke'),
+  result: L3('Kết quả', 'Results', 'Hasil'),
+  noInv: L3('Chưa có khoản đầu tư nào nên chưa có doanh thu. Tiền để yên không sinh lời.', 'No investments yet, so no revenue. Idle cash earns nothing.', 'Belum ada investasi, jadi belum ada pendapatan. Kas menganggur tidak menghasilkan.'),
+  lesson: L3('Bài học quý này', 'This quarter’s lesson', 'Pelajaran kuartal ini'),
+  next: L3('Sang quý tiếp', 'Next quarter', 'Kuartal berikutnya'), finish: L3('Xem kết quả cuối', 'See final results', 'Lihat hasil akhir'),
+  codeL: L3('Mã kết quả – nộp cho giảng viên', 'Result code – submit to your instructor', 'Kode hasil – serahkan ke dosen'),
+  again: L3('Chơi ván mới', 'New game', 'Permainan baru'), profile: L3('Phong cách đầu tư của nhóm', 'Your investor profile', 'Profil investor Anda'),
+  recap: L3('Khái niệm đã gặp', 'Concepts you met', 'Konsep yang Anda temui'),
+  tutT: L3('Hướng dẫn', 'How to play', 'Cara bermain'), skip: L3('Bỏ qua', 'Skip', 'Lewati'), back: L3('Lùi', 'Back', 'Kembali'),
+  tutNext: L3('Tiếp', 'Next', 'Lanjut'), tutGo: L3('Vào chơi', 'Let’s play', 'Ayo main'),
+  facil: L3('Kế hoạch 60 phút cho giảng viên', '60-minute run sheet for the instructor', 'Rencana 60 menit untuk dosen'),
+  timeUp: L3('Hết giờ – chốt ngay', 'Time’s up – lock in now', 'Waktu habis – kunci sekarang'),
+  sum0: L3('Chưa chọn đầu tư', 'No new investment', 'Tanpa investasi baru'), spend: L3('Chi', 'Spend', 'Biaya'), left: L3('còn lại', 'left', 'sisa'),
+  royalty: L3('phí bản quyền', 'royalty', 'royalti'), holOn: L3('đang miễn thuế', 'tax holiday', 'tax holiday'),
+  copied: L3('bị nhái', 'copied', 'ditiru'), polHit: L3('biến cố chính trị', 'political hit', 'guncangan politik'),
+  mkt: L3('Thị trường', 'Market', 'Pasar'), sales: L3('Doanh số', 'Sales', 'Penjualan'), tax: L3('Thuế TNDN', 'Corp. tax', 'PPh'), net: L3('LN của bạn', 'Your profit', 'Laba Anda'),
+  sent: L3('Về nước (sau WHT)', 'Home (after WHT)', 'Pulang (stl pajak)'), kept: L3('Đang giữ ở đó', 'Held there', 'Ditahan di sana'), fx: L3('Tỷ giá', 'FX', 'Kurs'),
+  startCap: L3('Vốn khởi điểm', 'Starting capital', 'Modal awal'), mkts: L3('thị trường', 'markets', 'pasar'), dec: L3('quyết định/quý', 'decisions/qtr', 'keputusan/kuartal'),
+  board: L3('Bảng xếp hạng lớp', 'Class leaderboard', 'Papan peringkat kelas'), refresh: L3('Làm mới', 'Refresh', 'Muat ulang'), retry: L3('Gửi lại', 'Retry', 'Kirim ulang'),
+  subNone: L3('Chưa nhập mã lớp nên kết quả chỉ lưu trên máy. Hãy gửi mã kết quả cho giảng viên.', 'No class code, so the result is saved on this device only. Send the result code to your instructor.', 'Tanpa kode kelas, hasil hanya tersimpan di perangkat ini. Kirim kode hasil ke dosen.'),
+  subBad: L3('Mã lớp không hợp lệ (3–40 ký tự chữ/số). Hãy gửi mã kết quả cho giảng viên.', 'Invalid class code (3–40 letters/digits). Send the result code to your instructor.', 'Kode kelas tidak valid (3–40 huruf/angka). Kirim kode hasil ke dosen.'),
+  subSending: L3('Đang gửi kết quả lên lớp…', 'Sending your result to the class…', 'Mengirim hasil ke kelas…'),
+  subOk: L3('✓ Đã gửi kết quả cho giảng viên.', '✓ Result sent to your instructor.', '✓ Hasil terkirim ke dosen.'),
+  subFail: L3('Không gửi được (mạng hoặc máy chủ). Bấm «Gửi lại» hoặc gửi mã kết quả.', 'Couldn’t send (network or server). Tap “Retry” or send the result code.', 'Gagal mengirim (jaringan/server). Ketuk “Kirim ulang” atau kirim kode hasil.'),
+  score: L3('Điểm', 'Score', 'Skor'),
+  awardedTo: L3('Trao cho', 'Awarded to', 'Diberikan kepada'), certName: L3('Tên người nhận', 'Recipient name', 'Nama penerima'),
+  certHint: L3('Mỗi thành viên có thể sửa thành tên mình rồi in', 'Each member can type their own name, then print', 'Setiap anggota dapat mengetik namanya sendiri lalu mencetak'),
+  printCert: L3('In bằng tốt nghiệp (PDF)', 'Print certificate (PDF)', 'Cetak sertifikat (PDF)'), printPass: L3('In hộ chiếu (PDF)', 'Print passport (PDF)', 'Cetak paspor (PDF)'),
+  gradKind: L3('Bằng tốt nghiệp BizOn', 'BizOn graduation certificate', 'Sertifikat kelulusan BizOn'), partKind: L3('Giấy chứng nhận tham gia', 'Certificate of participation', 'Sertifikat partisipasi'),
+  willGo: L3('Bạn sẽ đầu tư vào:', 'You will invest in:', 'Anda akan berinvestasi di:'),
+};
+const TUT = [
+  { icon: '🧳', t: L3('Mục tiêu', 'Your goal', 'Tujuan'), b: [L3('Bạn có 20 triệu USD ở nước nhà. Sau {Q} quý, giá trị doanh nghiệp càng cao thì điểm càng cao (thang 10).', 'You have $20M at home. After {Q} quarters, the higher your firm value, the higher your score (out of 10).', 'Anda punya US$20 jt di negara asal. Setelah {Q} kuartal, makin tinggi nilai perusahaan, makin tinggi skor (dari 10).'), L3('Giá trị DN = tiền ở nước nhà + tài sản ở nước ngoài + lợi nhuận đang giữ ở nước ngoài (sau thuế nếu chuyển về).', 'Firm value = cash at home + assets abroad + profit held abroad (after tax if sent home).', 'Nilai perusahaan = kas di negara asal + aset di luar negeri + laba yang ditahan (setelah pajak jika dipulangkan).')] },
+  { icon: '🌏', t: L3('Ba thị trường, ba môi trường đầu tư', 'Three markets, three investment climates', 'Tiga pasar, tiga iklim investasi'), b: [L3('Mỗi thẻ thị trường cho biết thuế TNDN, thuế khấu trừ khi chuyển cổ tức về, số quý miễn thuế cho FDI, rủi ro chính trị và độ biến động tỷ giá.', 'Each market card shows corporate tax, withholding tax on dividends, FDI tax-holiday quarters, political risk and FX volatility.', 'Setiap kartu pasar menunjukkan PPh badan, pajak dividen, kuartal tax holiday, risiko politik, dan volatilitas kurs.'), L3('Thị trường lớn chưa chắc tốt nhất: thuế và chi phí cao có thể ăn mất lợi nhuận.', 'A big market isn’t always best: high taxes and costs can eat your profit.', 'Pasar besar belum tentu terbaik: pajak dan biaya tinggi bisa menggerus laba.')] },
+  { icon: '🏭', t: L3('Quyết định 1: cấp phép, liên doanh hay FDI', 'Decision 1: licensing, JV or FDI', 'Keputusan 1: lisensi, JV, atau PMA'), b: [L3('📜 Cấp phép (licensing): vốn ít, nhận phí bản quyền, lời mỏng, dễ bị nhái.', '📜 Licensing: little capital, earn royalties, thin returns, easy to copy.', '📜 Lisensi: modal kecil, royalti, laba tipis, mudah ditiru.'), L3('🤝 Liên doanh (joint venture): chia vốn, chia lời, đối tác giúp giảm rủi ro chính trị và học thị trường nhanh.', '🤝 Joint venture: share capital and profit; the partner cuts political risk and speeds learning.', '🤝 Usaha patungan: berbagi modal dan laba; mitra mengurangi risiko politik dan mempercepat belajar.'), L3('🏭 FDI 100% vốn (wholly owned): vốn lớn, giữ toàn bộ lợi nhuận và hưởng ưu đãi thuế, nhưng chịu hết rủi ro.', '🏭 Wholly owned FDI: big capital, keep all profit and tax incentives, carry all the risk.', '🏭 PMA 100%: modal besar, semua laba dan insentif pajak, menanggung semua risiko.')] },
+  { icon: '🛡️', t: L3('Quyết định 2 và 3: chính sách và dòng tiền', 'Decisions 2 and 3: policy and cash flow', 'Keputusan 2 dan 3: kebijakan dan arus kas'), b: [L3('Đọc tin thị trường đầu quý. Có tin tỷ giá → cân nhắc phòng ngừa tỷ giá. Có rủi ro chính sách → quan hệ chính phủ. Muốn doanh số bền → bản địa hoá.', 'Read the market news first. Currency news → consider hedging. Policy risk → government relations. Lasting sales → localise.', 'Baca berita pasar dulu. Berita kurs → lindung nilai. Risiko kebijakan → hubungan pemerintah. Penjualan jangka panjang → lokalisasi.'), L3('Chọn chuyển 0%, 50% hay 100% lợi nhuận về nước. Cần tiền để đầu tư tiếp thì phải chuyển về.', 'Choose to send 0%, 50% or 100% of profit home. You need cash at home to invest again.', 'Pilih kirim 0%, 50%, atau 100% laba pulang. Anda butuh kas untuk investasi lagi.')] },
+  { icon: '🎯', t: L3('Chấm điểm', 'Scoring', 'Penilaian'), b: [L3('Cuối game bạn nhận điểm thang 10, điểm chữ và một mã kết quả. Gửi mã này cho giảng viên.', 'At the end you get a score out of 10, a letter grade and a result code. Send the code to your instructor.', 'Di akhir Anda mendapat skor dari 10, nilai huruf, dan kode hasil. Kirim kode ini ke dosen.'), L3('Không có đáp án đúng duy nhất. Sau mỗi quý, hãy đọc «Bài học quý này» để hiểu vì sao kết quả như vậy.', 'There is no single right answer. After each quarter, read “This quarter’s lesson” to see why things turned out that way.', 'Tidak ada satu jawaban benar. Setelah setiap kuartal, baca “Pelajaran kuartal ini”.')] },
+];
+const PROF = {
+  conqueror: ['🏭', L3('Nhà đầu tư kiểm soát', 'The controller', 'Sang pengendali'), L3('Bạn chọn FDI ở nhiều thị trường: giữ trọn lợi nhuận và ưu đãi thuế, nhưng chịu toàn bộ rủi ro chính trị và tỷ giá. Phù hợp khi doanh nghiệp có lợi thế sở hữu mạnh (Dunning).', 'You used FDI in several markets: full profit and tax incentives, but all the political and FX risk. Fits firms with strong ownership advantages (Dunning).', 'Anda memakai PMA di beberapa pasar: laba penuh dan insentif pajak, tetapi semua risiko politik dan kurs. Cocok untuk perusahaan dengan keunggulan kepemilikan kuat (Dunning).')],
+  partner: ['🤝', L3('Người xây liên minh', 'The alliance builder', 'Pembangun aliansi'), L3('Bạn dựa vào đối tác địa phương: chia bớt lợi nhuận để đổi lấy tri thức thị trường và lá chắn rủi ro chính trị.', 'You leaned on local partners: giving up some profit for market knowledge and a shield against political risk.', 'Anda mengandalkan mitra lokal: berbagi laba demi pengetahuan pasar dan perlindungan risiko politik.')],
+  cautious: ['📜', L3('Người thận trọng', 'The cautious licensor', 'Pemberi lisensi yang hati-hati'), L3('Bạn chỉ cấp phép: ít vốn, ít rủi ro, nhưng lợi nhuận mỏng và dễ mất công nghệ. Chi phí cơ hội của vốn nằm yên khá lớn.', 'You only licensed: low capital and risk, but thin returns and exposed know-how. The opportunity cost of idle capital was high.', 'Anda hanya melisensikan: modal dan risiko rendah, tetapi laba tipis dan teknologi rentan. Biaya peluang modal menganggur tinggi.')],
+  builder: ['🌱', L3('Người tái đầu tư', 'The reinvestor', 'Penanam kembali'), L3('Bạn giữ phần lớn lợi nhuận ở nước ngoài để chi nhánh lớn lên. Cách này tránh thuế khấu trừ nhưng phơi nhiễm tỷ giá cao hơn.', 'You kept most profit abroad to grow the subsidiary. This avoids withholding tax but raises FX exposure.', 'Anda menahan sebagian besar laba di luar negeri. Ini menghindari pajak potong tetapi menambah eksposur kurs.')],
+  harvester: ['🧺', L3('Người thu hoạch', 'The harvester', 'Pemanen'), L3('Bạn chuyển nhiều lợi nhuận về nước: an toàn trước tỷ giá, có tiền đầu tư tiếp, nhưng trả nhiều thuế khấu trừ hơn.', 'You sent most profit home: safe from FX, cash to reinvest, but more withholding tax paid.', 'Anda memulangkan sebagian besar laba: aman dari kurs, ada kas untuk investasi, tetapi pajak potong lebih besar.')],
+  idle: ['🪑', L3('Người đứng ngoài', 'The bystander', 'Penonton'), L3('Bạn chưa đầu tư. Tiền an toàn nhưng không tạo ra giá trị: đó cũng là một rủi ro.', 'You didn’t invest. Cash stayed safe but created no value, which is also a risk.', 'Anda tidak berinvestasi. Kas aman tetapi tidak menciptakan nilai, dan itu juga risiko.')],
+};
+const RECAP = [
+  [L3('Phương thức thâm nhập & mức cam kết (entry mode commitment)', 'Entry mode & resource commitment', 'Mode masuk & komitmen sumber daya'), L3('Kiểm soát càng cao thì cam kết vốn và rủi ro càng lớn (Anderson & Gatignon, 1986).', 'More control means more committed capital and risk (Anderson & Gatignon, 1986).', 'Kendali lebih besar berarti modal dan risiko lebih besar (Anderson & Gatignon, 1986).')],
+  [L3('Mô hình chiết trung OLI (eclectic paradigm)', 'The OLI eclectic paradigm', 'Paradigma eklektik OLI'), L3('Doanh nghiệp đầu tư FDI khi có lợi thế sở hữu (O), địa điểm (L) và lợi ích nội bộ hoá (I) (Dunning, 1988).', 'Firms choose FDI when they have ownership (O), location (L) and internalisation (I) advantages (Dunning, 1988).', 'Perusahaan memilih PMA bila punya keunggulan kepemilikan (O), lokasi (L), dan internalisasi (I) (Dunning, 1988).')],
+  [L3('Ưu đãi đầu tư & miễn thuế (tax holiday)', 'Investment incentives & tax holidays', 'Insentif investasi & tax holiday'), L3('Nước tiếp nhận miễn thuế có thời hạn để thu hút FDI; chỉ áp dụng khi bạn góp vốn, không áp dụng cho cấp phép.', 'Host countries offer time-limited tax breaks to attract FDI; they apply to equity modes, not licensing.', 'Negara tuan rumah memberi keringanan pajak sementara; berlaku untuk mode ekuitas, bukan lisensi.')],
+  [L3('Chuyển lợi nhuận & thuế khấu trừ (repatriation, withholding tax)', 'Repatriation & withholding tax', 'Repatriasi & pajak potong'), L3('Mang lợi nhuận về phải trả thuế khấu trừ; giữ lại thì chịu rủi ro tỷ giá và rủi ro chính sách.', 'Bringing profit home costs withholding tax; keeping it abroad carries FX and policy risk.', 'Memulangkan laba kena pajak potong; menahannya berisiko kurs dan kebijakan.')],
+  [L3('Rủi ro tỷ giá & rủi ro chính trị (FX & political risk)', 'FX & political risk', 'Risiko kurs & politik'), L3('Phòng ngừa tỷ giá và quan hệ với chính phủ có chi phí, nhưng giảm mạnh thiệt hại khi cú sốc xảy ra.', 'Hedging and government relations cost money but sharply cut losses when shocks hit.', 'Lindung nilai dan hubungan pemerintah berbiaya, tetapi memangkas kerugian saat guncangan.')],
+];
+const LES = {
+  fxHit: L3('Đồng tiền tại {m} mất giá làm lợi nhuận giữ lại ở đó giảm giá trị khi quy về USD. Phòng ngừa tỷ giá hoặc chuyển lợi nhuận về sớm hơn sẽ giảm thiệt hại.', '{m}’s currency fell, cutting the USD value of profit held there. Hedging or repatriating earlier would have limited the loss.', 'Mata uang {m} melemah sehingga nilai laba yang ditahan turun dalam USD. Lindung nilai atau repatriasi lebih awal akan membatasi kerugian.'),
+  fxHedged: L3('Bạn đã phòng ngừa tỷ giá đúng lúc: biến động tại {m} gần như không ảnh hưởng tới lợi nhuận.', 'Your hedge worked: the swing in {m} barely touched your profit.', 'Lindung nilai Anda berhasil: gejolak di {m} hampir tidak memengaruhi laba.'),
+  polFdi: L3('Với FDI 100% vốn, bạn chịu toàn bộ biến cố chính sách tại {m}. Đối tác liên doanh hoặc quan hệ chính phủ có thể giảm một nửa thiệt hại.', 'With wholly owned FDI you took the full policy shock in {m}. A JV partner or government relations could have halved it.', 'Dengan PMA 100% Anda menanggung penuh guncangan di {m}. Mitra JV atau hubungan pemerintah bisa memangkas separuhnya.'),
+  polSafe: L3('Đối tác địa phương hoặc quan hệ chính phủ đã che chắn bạn khỏi phần lớn biến cố tại {m}.', 'Your local partner or government ties shielded you from most of the shock in {m}.', 'Mitra lokal atau hubungan pemerintah melindungi Anda dari sebagian besar guncangan di {m}.'),
+  polOut: L3('Bạn chưa có mặt ở {m} nên tránh được biến cố chính sách. Rủi ro chính trị là một phần của môi trường đầu tư (investment climate).', 'You weren’t in {m}, so you avoided the policy shock. Political risk is part of the investment climate.', 'Anda belum di {m}, jadi terhindar dari guncangan. Risiko politik adalah bagian dari iklim investasi.'),
+  holiday: L3('Ưu đãi miễn thuế ở {m} chỉ dành cho liên doanh và FDI. Ưu đãi thu hút vốn, nhưng khi hết hạn thuế TNDN sẽ áp dụng đủ.', 'The tax holiday in {m} only applies to JVs and FDI. Incentives attract capital, but full corporate tax returns when they expire.', 'Tax holiday di {m} hanya untuk JV dan PMA. Insentif menarik modal, tetapi PPh penuh berlaku saat berakhir.'),
+  tax: L3('Thuế khấu trừ tại {m} tăng: chuyển lợi nhuận về giờ tốn hơn. Tái đầu tư tại chỗ là một lựa chọn, nhưng tiền giữ lại chịu rủi ro tỷ giá.', 'Withholding tax in {m} went up, so repatriating costs more. Reinvesting locally is an option, but retained cash carries FX risk.', 'Pajak potong di {m} naik, jadi repatriasi lebih mahal. Reinvestasi lokal adalah pilihan, tetapi kas yang ditahan berisiko kurs.'),
+  copyLic: L3('Cấp phép tại {m} bị nhái sản phẩm và mất phí bản quyền: đây là rủi ro mất tài sản trí tuệ khi bạn không kiểm soát đối tác.', 'Your licence in {m} was copied and lost royalties: the IP risk of not controlling your partner.', 'Lisensi di {m} ditiru dan kehilangan royalti: risiko HKI saat Anda tidak mengendalikan mitra.'),
+  copy: L3('Có hàng nhái tại {m}. Liên doanh và FDI giữ công nghệ trong doanh nghiệp nên ít bị ảnh hưởng hơn cấp phép (lợi ích nội bộ hoá).', 'Copycats appeared in {m}. JVs and FDI keep know-how in-house, so they suffer less than licensing (internalisation advantage).', 'Peniru muncul di {m}. JV dan PMA menjaga teknologi di dalam perusahaan (keunggulan internalisasi).'),
+  boom: L3('Cầu tại {m} tăng: mức cam kết cao hơn cho phép bạn hưởng nhiều hơn từ tăng trưởng.', 'Demand in {m} jumped: higher commitment lets you capture more of the upside.', 'Permintaan di {m} melonjak: komitmen lebih tinggi menangkap lebih banyak keuntungan.'),
+  idle: L3('Chưa đầu tư thì không có rủi ro, nhưng cũng không có lợi nhuận. Hãy chọn ít nhất một thị trường.', 'No investment means no risk, but also no return. Pick at least one market.', 'Tanpa investasi tidak ada risiko, tetapi juga tidak ada hasil. Pilih setidaknya satu pasar.'),
+  enterLic: L3('Cấp phép giúp bạn vào {m} với rất ít vốn, đổi lại chỉ nhận một phần nhỏ doanh số.', 'Licensing got you into {m} with little capital, in exchange for a small slice of sales.', 'Lisensi membawa Anda ke {m} dengan modal kecil, dengan imbalan porsi kecil penjualan.'),
+  enterJv: L3('Liên doanh tại {m}: chia 50% lợi nhuận nhưng học thị trường nhanh gấp ba cấp phép.', 'JV in {m}: 50% of the profit, but you learn the market three times faster than licensing.', 'JV di {m}: 50% laba, tetapi belajar pasar tiga kali lebih cepat dari lisensi.'),
+  enterFdi: L3('FDI 100% vốn tại {m}: bạn giữ toàn bộ lợi nhuận và hưởng miễn thuế (nếu có), đổi lại vốn lớn bị khoá vào một thị trường.', 'Wholly owned FDI in {m}: all the profit and any tax holiday, but a large sum locked into one market.', 'PMA 100% di {m}: semua laba dan tax holiday (jika ada), tetapi modal besar terkunci di satu pasar.'),
+  repat0: L3('Bạn giữ toàn bộ lợi nhuận ở nước ngoài: không trả thuế khấu trừ, nhưng tiền ở nước nhà không tăng để đầu tư tiếp.', 'You kept all profit abroad: no withholding tax, but no fresh cash at home to invest.', 'Anda menahan semua laba di luar negeri: tanpa pajak potong, tetapi tidak ada kas baru untuk investasi.'),
+};
+class Component extends DCLogic {
+  state = { ready: !!window.FDIMini, lang: null, home: 'vn', team: '', cls: '', g: null, view: 'intro', sel: null, mode: null, policy: null, repat: 0.5, last: null, tut: -1, now: Date.now(), qStart: 0 };
+  cfg() {
+    const ed = this.props.edition ?? 'fdi';
+    const indo = ed === 'indo';
+    return { ed, indo, Q: this.props.quarters ?? (indo ? 5 : 4), mins: this.props.quarterMinutes ?? (indo ? 7 : 0), langs: indo ? ['en', 'id'] : ['vi', 'en'], facil: this.props.showFacilitator ?? indo };
+  }
+  key() { return 'bizon-hcmini-' + this.cfg().ed; }
+  componentDidMount() {
+    const poll = () => { if (window.FDIMini) this.setState({ ready: true }); else setTimeout(poll, 100); };
+    if (!this.state.ready) poll();
+    try { const s = JSON.parse(localStorage.getItem(this.key()) || 'null'); if (s) this.setState({ saved: s, lang: s.lang || null, team: s.team || '', cls: s.cls || '', home: s.home || 'vn' }); } catch (e) {}
+    this.iv = setInterval(() => { if (this.state.view === 'play' && this.cfg().mins) this.setState({ now: Date.now() }); }, 1000);
+  }
+  componentWillUnmount() { clearInterval(this.iv); }
+  be() { const b = window.BIZON_BACKEND; return b && b.enabled && b.url && b.anonKey ? b : null; }
+  hdr(b) { return { apikey: b.anonKey, Authorization: 'Bearer ' + b.anonKey, 'Content-Type': 'application/json' }; }
+  submit(g) {
+    const b = this.be(), E = window.FDIMini;
+    if (!b || !/^[A-Za-z0-9_-]{3,40}$/.test(g.cls || '')) { this.setState({ sub: g.cls ? 'bad' : 'none' }); return; }
+    if (g.submitted) { this.setState({ sub: 'ok' }); this.loadBoard(g); return; }
+    const c = this.cfg(), row = { class_code: g.cls, player_name: (g.team || '').slice(0, 60), company: 'HC Mini ' + c.ed, total_score: Math.round(E.score10(g) * 10),
+      profit: Math.round((E.value(g) - g.start) * 10) / 10, quarters: g.Q, markets: Object.keys(g.pos).length, title: E.profile(g), app_version: 'hcmini-1', client_ts: new Date().toISOString(),
+      detail_json: { edition: c.ed === 'indo' ? 'indo' : 'mini', home: g.home, code: E.code(g), value: E.value(g), pos: Object.keys(g.pos).map(k => ({ m: k, mode: g.pos[k].mode, since: g.pos[k].since })), log: g.log.map(q => ({ q: q.q, ev: q.ev, dec: q.dec, value: q.value })) } };
+    this.setState({ sub: 'sending' });
+    fetch(b.url + '/rest/v1/bp_results', { method: 'POST', headers: Object.assign(this.hdr(b), { Prefer: 'return=minimal' }), body: JSON.stringify(row) })
+      .then(r => { if (!r.ok) throw new Error(r.status); g.submitted = true; this.save(); this.setState({ sub: 'ok' }); this.loadBoard(g); })
+      .catch(() => this.setState({ sub: 'fail' }));
+  }
+  loadBoard(g) {
+    const b = this.be(); if (!b || !g.cls) return;
+    fetch(b.url + '/rest/v1/rpc/bp_class_leaderboard', { method: 'POST', headers: this.hdr(b), body: JSON.stringify({ p_class_code: g.cls }) })
+      .then(r => r.ok ? r.json() : []).then(rows => this.setState({ board: (rows || []).filter(x => (x.company || '').indexOf('HC Mini') === 0).slice(0, 10) })).catch(() => {});
+  }
+  save(extra) { try { localStorage.setItem(this.key(), JSON.stringify(Object.assign({ g: this.state.g, view: this.state.view, lang: this.state.lang, team: this.state.team, cls: this.state.cls, home: this.state.home, last: this.state.last, qStart: this.state.qStart }, extra || {}))); } catch (e) {} }
+  L() { const c = this.cfg(); const l = this.state.lang && c.langs.includes(this.state.lang) ? this.state.lang : c.langs[0]; return { l, i: ['vi', 'en', 'id'].indexOf(l) }; }
+  renderVals() {
+    const c = this.cfg(), { l, i } = this.L(), s = this.state, D = window.FDIMiniData, E = window.FDIMini;
+    const t = {}; Object.keys(T).forEach(k => t[k] = T[k][i]);
+    const fmtN = (v, d = 1) => { const x = (+v || 0).toFixed(d); return l === 'en' ? x : x.replace('.', ','); };
+    const money = v => l === 'vi' ? fmtN(v) + ' tr USD' : l === 'id' ? 'US$' + fmtN(v) + ' jt' : '$' + fmtN(v) + 'M';
+    const pct = v => fmtN(v * 100, 0) + '%';
+    const nm = k => D.MARKETS[k].n[i];
+    const langs = c.langs.map(x => ({ label: x.toUpperCase(), bg: x === l ? '#fda127' : 'transparent', fg: x === l ? '#033337' : '#fff', onClick: () => { this.setState({ lang: x }, () => this.save()); } }));
+    const base = { t, langs, subtitle: c.Q + ' ' + t.qs + ' · 3 ' + t.mkts + ' · 3 ' + t.dec, inGame: false, isIntro: false, isPlay: false, isResult: false, isEnd: false, isTut: s.tut >= 0, showFacil: c.facil && s.view === 'intro' };
+    if (!s.ready || !D) return Object.assign(base, { isIntro: true, homes: [], heroFacts: [], canResume: false });
+    const g = s.g;
+    const tutStep = TUT[Math.max(0, s.tut)];
+    base.tut = { idx: (s.tut + 1) + '/' + TUT.length, icon: tutStep.icon, title: tutStep.t[i], body: tutStep.b.map(b => b[i].replace('{Q}', c.Q)), dots: TUT.map((_, k) => k === s.tut ? '#fda127' : '#d6e4e7'),
+      backVis: s.tut > 0 ? 'visible' : 'hidden', nextLabel: s.tut >= TUT.length - 1 ? t.tutGo : t.tutNext,
+      back: () => this.setState({ tut: Math.max(0, s.tut - 1) }), next: () => this.setState(s.tut >= TUT.length - 1 ? { tut: -1, qStart: s.view === 'play' && !s.qStart ? Date.now() : s.qStart } : { tut: s.tut + 1 }), close: () => this.setState({ tut: -1 }) };
+    base.openTut = () => this.setState({ tut: 0 });
+    if (g) {
+      base.inGame = true;
+      base.qLabel = Math.min(g.q, g.Q) + '/' + g.Q;
+      base.cashTxt = money(g.cash); base.valueTxt = money(E.value(g));
+      if (c.mins && s.view === 'play') {
+        const left = Math.max(0, c.mins * 60 - Math.floor((s.now - (s.qStart || s.now)) / 1000));
+        base.hasTimer = true; base.timerTxt = left ? Math.floor(left / 60) + ':' + String(left % 60).padStart(2, '0') : t.timeUp; base.timerColor = left > 60 ? '#fff' : '#ff8a7a';
+      }
+    }
+    if (s.view === 'intro') {
+      const mk = D.pickMarkets(s.home);
+      return Object.assign(base, { isIntro: true, inGame: false,
+        heroFacts: [{ v: c.Q, k: t.qs }, { v: '3', k: t.mkts }, { v: l === 'vi' ? '20 tr' : l === 'id' ? '20 jt' : '$20M', k: t.startCap }],
+        homes: D.HOMES.map(h => ({ flag: h.flag, name: h.n[i], bd: h.id === s.home ? '#fda127' : '#e1eaec', bg: h.id === s.home ? '#fff6ea' : '#fff', onClick: () => this.setState({ home: h.id }) })),
+        marketsPreview: t.willGo + ' ' + mk.map(k => D.MARKETS[k].flag + ' ' + nm(k)).join(' · '),
+        team: s.team, cls: s.cls, onTeam: e => this.setState({ team: e.target.value }), onCls: e => this.setState({ cls: e.target.value.toUpperCase() }),
+        start: () => { const g2 = E.newGame({ home: s.home, team: s.team.trim() || 'Team', cls: s.cls.trim(), quarters: c.Q }); this.setState({ g: g2, view: 'play', sel: null, mode: null, policy: null, repat: 0.5, tut: 0, qStart: 0, last: null }, () => this.save()); },
+        canResume: !!(s.saved && s.saved.g && !s.saved.g.done),
+        resume: () => { const sv = s.saved; this.setState({ g: sv.g, view: sv.view === 'intro' ? 'play' : sv.view, last: sv.last, qStart: Date.now() }); },
+        facilPlan: [
+          { time: '0–8′', what: l === 'id' ? 'Bagi kelas menjadi 16–20 tim (5 orang). Bagikan tautan dan kode kelas di chat.' : 'Split the class into 16–20 teams of about 5 in breakout rooms. Post the link and class code in chat.' },
+          { time: '8–15′', what: l === 'id' ? 'Dosen berbagi layar: tunjukkan tutorial 5 langkah dan satu kuartal contoh.' : 'Share your screen: walk through the 5-step tutorial and one sample quarter.' },
+          { time: '15–50′', what: l === 'id' ? `${c.Q} kuartal × ${c.mins} menit. Satu orang memegang layar, tim berdiskusi. Timer ada di header.` : `${c.Q} quarters × ${c.mins} min. One member drives and shares, the team discusses. The timer is in the header.` },
+          { time: '50–55′', what: l === 'id' ? 'Tim mengirim kode hasil ke formulir/chat. Dosen menampilkan 3 skor tertinggi.' : 'Teams post their result code in the form or chat. Show the top three scores.' },
+          { time: '55–60′', what: l === 'id' ? 'Debrief: kapan PMA lebih baik dari JV? Mengapa repatriasi mahal? Hubungkan dengan OLI.' : 'Debrief: when did FDI beat a JV? Why was repatriation costly? Link back to OLI.' },
+        ] });
+    }
+    if (s.view === 'play' && g) {
+      const ev = D.EVENTS.find(x => x.id === g.ev.id);
+      const lvl = (v, a, b) => v < a ? [t.low, '#3f8a44'] : v < b ? [t.med, '#c7811d'] : [t.high, '#c0443a'];
+      const markets = g.mk.map(k => {
+        const M = D.MARKETS[k], p = g.pos[k], sel = s.sel === k, pr = lvl(M.pol, 0.05, 0.12), fv = lvl(M.fxV, 0.03, 0.05), dv = lvl(M.dist, 0.4, 0.6);
+        const mo = p && D.MODES.find(x => x.id === p.mode);
+        return { flag: M.flag, name: M.n[i], note: M.note[i], entered: !!p, selectable: !p,
+          bd: sel ? '#fda127' : p ? '#9fc7cf' : 'transparent', tag: p ? mo.icon + ' ' + mo.n[i] : sel ? t.picked : t.open,
+          tagBg: p ? '#006687' : sel ? '#fda127' : '#eef2f3', tagFg: p ? '#fff' : '#033337',
+          stats: [{ k: t.cit, v: pct(M.cit), c: '#033337' }, { k: t.wht, v: pct(g.wht[k]), c: g.wht[k] > M.wht ? '#c0443a' : '#033337' }, { k: t.hol, v: g.hol[k] ? g.hol[k] + ' ' + t.qs : t.noHol, c: g.hol[k] ? '#3f8a44' : '#033337' },
+            { k: t.polr, v: pr[0], c: pr[1] }, { k: t.fxv, v: fv[0], c: fv[1] }, { k: t.dist, v: dv[0], c: dv[1] }],
+          posLine: p ? (p.mode === 'lic' ? t.royalty : t.kept) : '', retLine: p ? (p.mode === 'lic' ? '→ ' + t.cash : money(p.ret)) : '',
+          btn: sel ? t.unchoose : t.choose, btnBg: sel ? '#006687' : '#fff', btnFg: sel ? '#fff' : '#006687',
+          onSelect: () => this.setState({ sel: sel ? null : k, mode: sel ? null : s.mode }) };
+      });
+      const costOf = (m, p) => (m ? D.MODES.find(x => x.id === m).cost : 0) + (p ? D.POLICIES.find(x => x.id === p).cost : 0);
+      const modes = D.MODES.map(o => { const on = s.mode === o.id && s.sel, dis = !s.sel || costOf(o.id, s.policy) > g.cash + 1e-9;
+        return { icon: o.icon, name: o.n[i], desc: o.d[i], cost: money(o.cost), disabled: dis, op: dis ? 0.45 : 1, bd: on ? '#fda127' : '#e1eaec', bg: on ? '#fff6ea' : '#fff', onClick: () => this.setState({ mode: on ? null : o.id }) }; });
+      const policies = [{ id: null, icon: '—', n: T.none, d: T.noneD, cost: 0 }].concat(D.POLICIES).map(o => { const on = s.policy === o.id;
+        return { icon: o.icon, name: o.n[i], desc: o.d[i], cost: o.cost ? money(o.cost) : '', bd: on ? '#fda127' : '#e1eaec', bg: on ? '#fff6ea' : '#fff', onClick: () => this.setState({ policy: o.id }) }; });
+      const retTot = Object.keys(g.pos).reduce((a, k) => a + (g.pos[k].mode === 'lic' ? 0 : g.pos[k].ret), 0);
+      const repats = D.REPAT.map(r => ({ label: (r * 100) + '%', sub: money(retTot * r), bd: s.repat === r ? '#fda127' : '#e1eaec', bg: s.repat === r ? '#fff6ea' : '#fff', onClick: () => this.setState({ repat: r }) }));
+      const spend = costOf(s.sel && s.mode, s.policy), ok = spend <= g.cash + 1e-9 && (!s.sel || s.mode);
+      const allIn = g.mk.every(k => g.pos[k]);
+      return Object.assign(base, { isPlay: true, markets, modes, policies, repats,
+        ev: { icon: ev.icon, title: ev.t[i], desc: ev.d[i].replace('{m}', nm(g.ev.m)), flag: D.MARKETS[g.ev.m].flag, mName: nm(g.ev.m) },
+        d1hint: allIn ? t.allIn : s.sel ? t.modeFor + ' ' + D.MARKETS[s.sel].flag + ' ' + nm(s.sel) : t.pickMarket,
+        summaryLine: (s.sel && s.mode ? D.MARKETS[s.sel].flag + ' ' + D.MODES.find(x => x.id === s.mode).n[i] : t.sum0) + ' · ' + t.spend + ' ' + money(spend) + ' · ' + money(g.cash - spend) + ' ' + t.left + ' · ↩ ' + (s.repat * 100) + '%',
+        cantConfirm: !ok, confirmBg: ok ? '#fda127' : '#7b949a',
+        confirm: () => { if (!ok) return; const q = E.resolve(g, { invest: s.sel && s.mode ? { m: s.sel, mode: s.mode } : null, policy: s.policy, repat: s.repat });
+          this.setState({ g: Object.assign({}, g), last: q, view: 'result', sel: null, mode: null, policy: null }, () => this.save()); } });
+    }
+    if (s.view === 'result' && g && s.last) {
+      const q = s.last, ev = D.EVENTS.find(x => x.id === q.ev.id), cells = [];
+      q.rows.forEach(r => { const M = D.MARKETS[r.m], mo = D.MODES.find(x => x.id === r.mode);
+        const tags = [r.holiday ? '🎁 ' + t.holOn : '', r.copy ? '🪞 ' + t.copied : '', r.pol ? '🏛️ ' + t.polHit : ''].filter(Boolean).join(' · ');
+        cells.push({ v: M.flag + ' ' + M.n[i] + ' · ' + mo.icon + (tags ? ' · ' + tags : ''), w: 700, c: '#033337' }, { v: money(r.sales), w: 500, c: '#033337' }, { v: money(r.tax), w: 500, c: '#c0443a' }, { v: money(r.net), w: 700, c: '#033337' },
+          { v: money(r.home), w: 700, c: '#3f8a44' }, { v: r.mode === 'lic' ? '—' : money(r.ret), w: 500, c: '#033337' }, { v: (r.fx >= 0 ? '+' : '') + fmtN(r.fx * 100) + '%', w: 600, c: r.fx < -0.02 ? '#c0443a' : r.fx > 0.02 ? '#3f8a44' : '#4d6d71' }); });
+      const les = [], M = q.ev.m, mn = nm(M), P = q.rows.find(r => r.m === M), pos = g.pos[M];
+      const add = k => les.push(LES[k][i].replace('{m}', mn));
+      if (!q.rows.length) add('idle');
+      else if (q.ev.id === 'fxdown') add(P ? (q.dec.policy === 'hedge' ? 'fxHedged' : 'fxHit') : 'enter' + ({ lic: 'Lic', jv: 'Jv', fdi: 'Fdi' })[q.rows[0].mode]);
+      else if (q.ev.id === 'pol') add(!P ? 'polOut' : pos.mode === 'fdi' && q.dec.policy !== 'gov' ? 'polFdi' : 'polSafe');
+      else if (q.ev.id === 'holiday') add('holiday');
+      else if (q.ev.id === 'tax') add('tax');
+      else if (q.ev.id === 'copy') add(P && pos.mode === 'lic' ? 'copyLic' : 'copy');
+      else if (q.ev.id === 'boom') add('boom');
+      if (q.lines.length) { const [, m2, md] = q.lines[0]; const k = 'enter' + ({ lic: 'Lic', jv: 'Jv', fdi: 'Fdi' })[md]; const txt = LES[k][i].replace('{m}', nm(m2)); if (les.indexOf(txt) < 0) les.push(txt); }
+      if (q.rows.length && !q.dec.repat && les.length < 2) add('repat0');
+      return Object.assign(base, { isResult: true, res: { qLabel: t.quarter + ' ' + q.q, evLine: ev.icon + ' ' + ev.t[i] + ' · ' + D.MARKETS[M].flag + ' ' + mn, empty: !q.rows.length,
+        head: [t.mkt, t.sales, t.tax, t.net, t.sent, t.kept, t.fx], cells, lessons: les.slice(0, 2) },
+        nextLabel: g.done ? t.finish : t.next,
+        next: () => this.setState({ view: g.done ? 'end' : 'play', qStart: Date.now() }, () => { this.save(); if (g.done) this.submit(g); }) });
+    }
+    if (s.view === 'end' && g) {
+      const sc = E.score10(g), gr = E.grade(sc), pf = PROF[E.profile(g)], hm = D.HOMES.find(h => h.id === g.home);
+      const vals = [g.start].concat(g.log.map(q => q.value)), mx = Math.max.apply(0, vals);
+      const SUB = { none: T.subNone, bad: T.subBad, sending: T.subSending, ok: T.subOk, fail: T.subFail };
+      const board = (s.board || []).map((r, k) => ({ rank: ['🥇', '🥈', '🥉'][k] || String(k + 1), name: r.player_name, score: fmtN((+r.total_score || 0) / 10), me: r.player_name === g.team ? '#fff6ea' : 'transparent' }));
+      if (!s.sub && !s.subTried) setTimeout(() => { this.setState({ subTried: true }); this.submit(g); }, 0);
+      Object.assign(base, { subMsg: s.sub && SUB[s.sub] ? SUB[s.sub][i] : '', subRetry: s.sub === 'fail', retry: () => this.submit(g), board, hasBoard: board.length > 0, boardTitle: t.board + (g.cls ? ' · ' + g.cls : ''), refresh: () => this.loadBoard(g) });
+      const edName = c.indo ? L3('Hộ Chiếu Mini · Indonesia 60′', 'Passport Mini · Indonesia 60′', 'Paspor Mini · Indonesia 60′')[i] : L3('Hộ Chiếu Mini · Đầu tư quốc tế', 'Passport Mini · International Investment', 'Paspor Mini · Investasi Internasional')[i];
+      const rcpt = (s.certName != null ? s.certName : g.team) || g.team;
+      const dateTxt = new Date().toLocaleDateString(l === 'vi' ? 'vi-VN' : l === 'id' ? 'id-ID' : 'en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
+      const certDesc = (gr.pass ? L3('đã tốt nghiệp mô phỏng ', 'has graduated from the simulation ', 'telah lulus simulasi ') : L3('đã tham gia mô phỏng ', 'has taken part in the simulation ', 'telah mengikuti simulasi '))[i] + edName + ' (' + g.Q + ' ' + t.qs + ') · ' + L3('xuất phát từ ', 'home country ', 'negara asal ')[i] + hm.flag + ' ' + hm.n[i] + ' · ' + t.score + ' ' + fmtN(sc) + '/10 (' + gr.l + ') · ' + pf[0] + ' ' + pf[1][i] + '.';
+      const esc = x => String(x).replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[ch]);
+      const abs = p => new URL(p, location.href).href;
+      const SC = 'scr' + 'ipt';
+      const openPrint = (title, css, body) => { const w = window.open('', '_blank'); if (!w) { alert(L3('Trình duyệt chặn cửa sổ mới – hãy cho phép pop-up.', 'Pop-up blocked – please allow pop-ups.', 'Pop-up diblokir – izinkan pop-up.')[i]); return; }
+        w.document.open(); w.document.write('<!doctype html><html lang="' + l + '"><head><meta charset="utf-8"><title>' + esc(title) + '</title><style>@font-face{font-family:PJS;src:url(' + abs('assets/fonts/PlusJakartaSans-var-latin.woff2') + ')}@font-face{font-family:PJS;src:url(' + abs('assets/fonts/PlusJakartaSans-var-vietnamese.woff2') + ');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9}*{box-sizing:border-box}body{margin:0;font-family:PJS,system-ui,sans-serif;color:#033337;-webkit-print-color-adjust:exact;print-color-adjust:exact}' + css + '</style></head><body>' + body + '<' + SC + '>onload=function(){setTimeout(function(){print()},500)}</' + SC + '></body></html>'); w.document.close(); };
+      const sigs = '<div class="sig"><div><img src="' + abs('assets/docs/sig-huong.png') + '" style="height:15mm"><i></i><b>NCS. Đỗ Thùy Hương</b><span>Founder &amp; Project Lead</span></div><div class="seal"><small>Official</small><b>BizOn</b>✓</div><div><img src="' + abs('assets/docs/sig-tu.png') + '" style="height:13mm"><i></i><b>PGS.TS. Phan Anh Tú</b><span>Co-founder &amp; Chief Academic Advisor</span></div></div>';
+      const printCert = () => openPrint(gr.pass ? t.gradKind : t.partKind,
+        '@page{size:A4 landscape;margin:0}.c{width:297mm;height:210mm;padding:14mm;background:#fffdf6}.f{height:100%;border:2.5mm solid rgba(253,161,39,.6);outline:.4mm solid rgba(0,102,135,.3);outline-offset:-4mm;border-radius:6mm;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:4mm;padding:12mm 22mm}.eb{font-size:10pt;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#5f7d81}h1{margin:0;font-size:30pt;letter-spacing:.04em}.to{font-style:italic;color:#5f7d81}.nm{font-size:30pt;font-weight:800;color:#006687;border-bottom:.6mm solid rgba(253,161,39,.6);padding:0 10mm 2mm}p{margin:0;max-width:210mm;font-size:12.5pt;line-height:1.55}.sig{display:grid;grid-template-columns:1fr 26mm 1fr;gap:10mm;align-items:end;width:200mm;margin-top:6mm}.sig div{display:flex;flex-direction:column;align-items:center;gap:1mm;font-size:9pt}.sig i{display:block;height:.3mm;width:80%;background:rgba(3,51,55,.25)}.sig span{color:#6d888c;font-size:8pt}.seal{width:24mm;height:24mm;border-radius:50%;border:.6mm dashed #fda127;justify-content:center!important;transform:rotate(12deg);color:#e8762d;background:rgba(253,161,39,.12);line-height:1.05}.seal small{font-size:6pt;font-weight:800;text-transform:uppercase}.meta{font-size:8.5pt;color:#8aa0a3;font-weight:700}',
+        '<div class="c"><div class="f"><div class="eb">🎓 ' + esc(gr.pass ? t.gradKind : t.partKind) + '</div><h1>' + (gr.pass ? 'CERTIFICATE OF GRADUATION' : 'CERTIFICATE OF PARTICIPATION') + '</h1><div class="to">' + esc(t.awardedTo) + '</div><div class="nm">' + esc(rcpt) + '</div><p>' + esc(certDesc) + '</p>' + sigs + '<div class="meta">' + esc(dateTxt) + ' · ID ' + esc(E.code(g)) + (g.cls ? ' · ' + esc(g.cls) : '') + '</div></div></div>');
+      const st = Object.keys(g.pos).map(k => { const M = D.MARKETS[k], mo = D.MODES.find(x => x.id === g.pos[k].mode); return '<div class="st" style="color:' + ({ lic: '#6a4fc4', jv: '#3f8a44', fdi: '#c0443a' })[mo.id] + '"><span class="fl">' + M.flag + '</span>' + esc(M.n[i]) + '<span>' + mo.icon + ' ' + esc(mo.n[i]) + '</span><small>' + t.quarter + ' ' + g.pos[k].since + '</small></div>'; }).join('');
+      const mrzName = rcpt.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/Đ/g, 'D').replace(/[^A-Z0-9]+/g, '&lt;');
+      const printPass = () => openPrint(t.printPass,
+        '@page{size:A5;margin:0}.pg{width:148mm;height:210mm;padding:15mm 13mm;page-break-after:always;position:relative;overflow:hidden;background:#fbf5e6;background-image:repeating-linear-gradient(0deg,transparent 0 7mm,rgba(0,102,135,.07) 7mm 7.3mm)}.cv{background:#033337;color:#fda127;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6mm}.cv h1{margin:0;font-size:24pt;letter-spacing:.08em}.cv p{margin:0;color:#fff;opacity:.8}.eb{font-size:8pt;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#b8561b}h2{margin:2mm 0 5mm;font-size:16pt}.row{display:grid;grid-template-columns:36mm 1fr;gap:3mm;padding:2.2mm 0;border-bottom:.3mm solid #d9cbb4;font-size:10pt}.row b{font-size:8pt;color:#5f7d81;text-transform:uppercase;letter-spacing:.06em}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8mm 6mm;margin-top:6mm}.st{width:50mm;height:50mm;border-radius:50%;border:1.6mm double currentColor;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;transform:rotate(-9deg);font-weight:800;font-size:9pt;text-transform:uppercase;gap:1mm;margin:auto}.st .fl{font-size:22pt}.st small{font-size:7pt}.mrz{position:absolute;left:13mm;right:13mm;bottom:11mm;font:9pt ui-monospace,monospace;letter-spacing:.12em;opacity:.7;word-break:break-all}',
+        '<section class="pg cv"><div style="font-size:40pt">🛂</div><h1>' + (l === 'vi' ? 'HỘ CHIẾU<br>ĐẦU TƯ' : l === 'id' ? 'PASPOR<br>INVESTASI' : 'INVESTMENT<br>PASSPORT') + '</h1><p>BizOn · ' + esc(edName) + '</p><p style="font-size:8pt;margin-top:20mm">© 2026 Đỗ Thùy Hương &amp; Phan Anh Tú</p></section>' +
+        '<section class="pg"><span class="eb">' + esc(L3('Trang thông tin', 'Data page', 'Halaman data')[i]) + '</span><h2>' + esc(rcpt) + '</h2>' +
+          [[t.team, g.team], [t.home, hm.flag + ' ' + hm.n[i]], [t.value, money(g.start) + ' → ' + money(E.value(g))], [t.score, fmtN(sc) + '/10 · ' + gr.l], [t.profile, pf[0] + ' ' + pf[1][i]], [L3('Ngày cấp', 'Date of issue', 'Tanggal terbit')[i], dateTxt]].map(r => '<div class="row"><b>' + esc(r[0]) + '</b><span>' + esc(r[1]) + '</span></div>').join('') +
+          '<p style="font-size:9.5pt;line-height:1.5;margin-top:6mm">' + esc(pf[2][i]) + '</p><div class="mrz">P&lt;BIZON&lt;' + mrzName + '&lt;&lt;' + esc(g.home.toUpperCase()) + '&lt;' + fmtN(sc) + '&lt;&lt;&lt;</div></section>' +
+        '<section class="pg"><span class="eb">' + esc(L3('Thị thực & con dấu', 'Visas & stamps', 'Visa & cap')[i]) + '</span><h2>' + esc(L3('Các khoản đầu tư', 'Investments', 'Investasi')[i]) + '</h2>' + (st ? '<div class="grid">' + st + '</div>' : '<p>—</p>') + '</section>');
+      base.cert = { kind: gr.pass ? t.gradKind : t.partKind, kindEn: gr.pass ? 'CERTIFICATE OF GRADUATION' : 'CERTIFICATE OF PARTICIPATION', name: rcpt, onName: e => this.setState({ certName: e.target.value }), desc: certDesc, meta: dateTxt + ' · ID ' + E.code(g), printCert, printPass };
+      return Object.assign(base, { isEnd: true, recap: RECAP.map(r => ({ k: r[0][i], v: r[1][i] })),
+        end: { team: g.team, homeLine: hm.flag + ' ' + hm.n[i], score: fmtN(sc), letter: gr.l, g4: (l === 'vi' ? 'Thang 4: ' : 'GPA ') + fmtN(gr.g4), valueLine: money(g.start) + ' → ' + money(E.value(g)),
+          bars: vals.map((v, k) => ({ v: fmtN(v, 0), q: k ? 'Q' + k : '0', h: Math.max(6, Math.round(v / mx * 70)) + 'px' })), code: E.code(g), pIcon: pf[0], pTitle: pf[1][i], pDesc: pf[2][i] },
+        restart: () => { try { localStorage.removeItem(this.key()); } catch (e) {} this.setState({ g: null, view: 'intro', last: null, saved: null, sub: null, subTried: false, board: null }); } });
+    }
+    return Object.assign(base, { isIntro: true, homes: [], heroFacts: [] });
+  }
+}
+</script>
+</body>
+</html>

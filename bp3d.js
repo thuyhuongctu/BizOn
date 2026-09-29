@@ -58,8 +58,8 @@ const MK = [
   { name: 'Hải Lam', icon: '🌐', c: '#2f7fb5' }, { name: 'Bắc Phong', icon: '🏔️', c: '#5b6f86' }, { name: 'Kim Sa', icon: '🌅', c: '#c07a1f' },
   { name: 'Lục Đảo', icon: '🏝️', c: '#3f8a45' }, { name: 'Nhật Quang', icon: '🌸', c: '#c0587e' }, { name: 'Tân Cảng', icon: '⚓', c: '#44566e' },
   { name: 'Hỏa Sơn', icon: '🌋', c: '#b8522a' }];
-const MODE_HEX = ['#2f8fcf', '#e8762d', '#3f8f4a'];
-const MODE_ICON = ['🛒', '🚢', '🤝'];
+const MODE_HEX = ['#2f8fcf', '#e8762d', '#3f8f4a', '#8a5fc9', '#1f8f8a', '#b0473f'];
+const MODE_ICON = ['🛒', '🚢', '🤝', '📜', '🏗️', '🏭'];
 const HOME = new THREE.Vector3(0, 0, 10);
 const END = new THREE.Vector3(9, 0, 13.5);
 const IR = 2.6;
@@ -254,7 +254,7 @@ const homeLabel = makeLabel(4); homeLabel.position.set(HOME.x, 4.6, HOME.z - 1.6
 /* ---------- ban cố vấn ---------- */
 const CAST_FALLBACK = [
   ['Bà Sáu Lành', 'ba-sau-lanh-cut'], ['Minh Khang', 'minh-khang-cut'], ['An Nhiên', 'an-nhien-cut'],
-  ['Victor Lâm', 'victor-lam-cut'], ['Lina Park', 'lina-park-cut'], ['Lumina AI', 'lumina-vest-cut']];
+  ['Thầy Tú Phan', 'tu-phan-cut'], ['Lina Park', 'lina-park-cut'], ['Lumina AI', 'lumina-vest-cut']];
 const CLAY = makeBPCast(THREE); const clayAnim = [];
 const bubbleTex = emojiTex('💬', null, 128, 128, 88);
 const advisors = CAST_FALLBACK.map(([name, f], i) => {
@@ -426,34 +426,13 @@ function drawPage() {
   for (let i = 0; i < shown; i++) drawStamp(g, stamps[i], i);
   t.needsUpdate = true;
 }
-const PP = { mode: 'idle', t: 0, lift: 0, open: 0, queue: [], applied: false, cur: -1, justStamped: false };
-function queueStamp(idx) { PP.queue.push(idx); if (PP.mode !== 'stamp') { PP.justStamped = true; nextStamp(); } }
+const PP = { mode: 'idle', t: 0, lift: 0, open: 0, queue: [], applied: false, cur: -1 };
+function queueStamp(idx) { PP.queue.push(idx); if (PP.mode !== 'stamp') nextStamp(); }
 function nextStamp() {
-  if (!PP.queue.length) {
-    PP.mode = 'idle';
-    if (PP.justStamped) { PP.justStamped = false; setTimeout(() => openPassportModal('page'), 900); }
-    return;
-  }
+  if (!PP.queue.length) { PP.mode = 'idle'; return; }
   PP.cur = PP.queue.shift(); PP.mode = 'stamp'; PP.t = 0; PP.applied = false;
   const [sx, sy] = SLOTS[PP.cur]; stampTool.position.set(sx, sy, 1.6); stampFace.material = M(new THREE.Color(MODE_HEX[stamps[PP.cur].mode]).getHex());
   drawInside();
-}
-function stampBurst(sx, sy) {
-  const n = 16, geo = new THREE.BufferGeometry(), pos = new Float32Array(n * 3);
-  for (let i = 0; i < n; i++) { pos[i * 3] = sx; pos[i * 3 + 1] = sy; pos[i * 3 + 2] = 0.22; }
-  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-  const mat = new THREE.PointsMaterial({ color: 0xe9b54a, size: 0.07, transparent: true, opacity: 1, depthWrite: false });
-  const pts = new THREE.Points(geo, mat); book.add(pts);
-  const dirs = Array.from({ length: n }, () => [(Math.random() - 0.5) * 1.5, (Math.random() - 0.5) * 1.5]);
-  let t0 = null;
-  const fn = t => {
-    if (t0 === null) t0 = t;
-    const k = Math.min(1, (t - t0) / 0.65);
-    if (k >= 1) { book.remove(pts); geo.dispose(); mat.dispose(); const idx = anim.indexOf(fn); if (idx >= 0) anim.splice(idx, 1); return; }
-    for (let i = 0; i < n; i++) { pos[i * 3] = sx + dirs[i][0] * k; pos[i * 3 + 1] = sy + dirs[i][1] * k + k * k * 0.35; pos[i * 3 + 2] = 0.22; }
-    geo.attributes.position.needsUpdate = true; mat.opacity = 1 - k;
-  };
-  anim.push(fn);
 }
 let shake = 0, AC;
 function thump() {
@@ -475,11 +454,7 @@ function updatePassport(dt) {
       stampTool.visible = true;
       stampTool.position.z = t < 1.7 ? 1.6 - (1.6 - 0.1) * ease((t - 1.1) / 0.6) ** 2 : 0.1 + 1.5 * ease((t - 1.75) / 0.6);
     } else stampTool.visible = false;
-    if (t >= 1.7 && !PP.applied) {
-      PP.applied = true; shown = Math.max(shown, PP.cur + 1); drawPage(); drawInside(); thump(); shake = 0.35;
-      const [bx, by] = SLOTS[PP.cur]; stampBurst(bx, by);
-      say('🛂 ' + tr('Đóng dấu mộc ', 'Stamped: ') + MK[stamps[PP.cur].m].name);
-    }
+    if (t >= 1.7 && !PP.applied) { PP.applied = true; shown = Math.max(shown, PP.cur + 1); drawPage(); drawInside(); thump(); shake = 0.25; say('🛂 ' + tr('Đóng dấu mộc ', 'Stamped: ') + MK[stamps[PP.cur].m].name); }
     if (t > 5.3) nextStamp();
   } else if (PP.mode === 'view') { liftT = 1; openT = 1; }
   PP.lift = approach(PP.lift, liftT, dt * 2.2); PP.open = approach(PP.open, openT, dt * 1.8);
@@ -490,101 +465,6 @@ function updatePassport(dt) {
   coverPivot.rotation.y = -Math.PI * ease(PP.open);
   book.position.x = -PW * s * 0.5 * (1 - ease(PP.open)) * 0 - 0 + (ease(PP.open) - 1) * (PW * s / 2) + 0;
 }
-
-/* ---------- hộ chiếu – màn hình lớn (2D, ngoài cảnh 3D) ---------- */
-let ppPage = 'cover', ppMounted = false;
-function mountPPCanvases() {
-  if (ppMounted) return; const mount = $('bp-pp-pages'); if (!mount) return;
-  cover.c.id = 'bp-pp-cover'; inside.c.id = 'bp-pp-inside'; page.c.id = 'bp-pp-page';
-  mount.append(cover.c, inside.c, page.c); ppMounted = true;
-}
-function showPPPage(p) {
-  ppPage = p;
-  [[cover.c, 'cover'], [inside.c, 'inside'], [page.c, 'page']].forEach(([el, key]) => el.classList.toggle('on', key === p));
-  document.querySelectorAll('#bp-pp-modal .bp-pp-nav button[data-pg]').forEach(b => b.classList.toggle('on', b.dataset.pg === p));
-}
-function openPassportModal(pg) {
-  drawCover(); drawInside(); drawPage(); mountPPCanvases(); showPPPage(pg || ppPage);
-  const m = $('bp-pp-modal'); if (m) m.classList.add('on');
-}
-document.querySelectorAll('#bp-pp-modal .bp-pp-nav button[data-pg]').forEach(b => b.addEventListener('click', () => showPPPage(b.dataset.pg)));
-$('bp-pp-close') && $('bp-pp-close').addEventListener('click', () => { const m = $('bp-pp-modal'); if (m) m.classList.remove('on'); });
-
-/* ---------- bản đồ thị trường – tổng quan 2D ---------- */
-function renderMarketMap() {
-  const B = window.__bp; if (!B || !B.S) return;
-  const isDark = document.documentElement.dataset.theme === 'dark';
-  const S = B.S, MKTS = B.MKTS, ANGLES = [165, 140, 115, 90, 65, 40, 15];
-  const cx = 480, baseY = 520, Rx = 410, Ry = 300;
-  const pts = ANGLES.map(a => { const r = a * Math.PI / 180; return [cx + Math.cos(r) * Rx, baseY - Math.sin(r) * Ry]; });
-  const seaFrom = isDark ? '#123a45' : '#bfe6ee', seaTo = isDark ? '#0a232b' : '#7fc3d2';
-  const txt = isDark ? '#d6ecf0' : '#033337', sub = isDark ? 'rgba(214,236,240,.62)' : 'rgba(3,51,55,.55)';
-  let svg = '<svg viewBox="0 0 960 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="' + tr('Bản đồ thị trường', 'Market map') + '">';
-  svg += '<defs><radialGradient id="bpmSea" cx="50%" cy="25%" r="85%"><stop offset="0%" stop-color="' + seaFrom + '"/><stop offset="100%" stop-color="' + seaTo + '"/></radialGradient></defs>';
-  svg += '<rect x="0" y="0" width="960" height="600" rx="28" fill="url(#bpmSea)"/>';
-  for (let y = 44; y < 600; y += 48) svg += '<path d="M-10,' + y + ' q80,-15 160,0 t160,0 t160,0 t160,0 t160,0" stroke="' + (isDark ? 'rgba(255,255,255,.06)' : 'rgba(255,255,255,.4)') + '" stroke-width="3" fill="none"/>';
-  pts.forEach(([x, y], m) => {
-    const md = S.entered[m]; if (md === null || md === undefined) return;
-    const col = MODE_HEX[md];
-    svg += '<path d="M' + cx + ',' + baseY + ' Q' + ((cx + x) / 2) + ',' + ((baseY + y) / 2 - 46) + ' ' + x + ',' + y + '" fill="none" stroke="' + col + '" stroke-width="4" stroke-dasharray="2 11" stroke-linecap="round"/>';
-  });
-  svg += '<g transform="translate(' + cx + ',' + baseY + ')"><circle r="50" fill="' + (isDark ? '#0e2a33' : '#fffaf0') + '" stroke="#e8762d" stroke-width="4"/>' +
-    '<text y="-6" font-size="34" text-anchor="middle">🏡</text><text y="26" font-size="15" font-weight="800" text-anchor="middle" fill="' + txt + '" font-family="' + FONT + '">Vàm Thịnh</text></g>';
-  pts.forEach(([x, y], m) => {
-    const md = S.entered[m], entered = md !== null && md !== undefined, mk = MKTS[m];
-    const ringCol = entered ? MODE_HEX[md] : (isDark ? '#3a5a63' : '#c7d6da');
-    svg += '<g transform="translate(' + x + ',' + y + ')">' +
-      '<clipPath id="bpmClip' + m + '"><circle r="50"/></clipPath>' +
-      '<circle r="56" fill="none" stroke="' + ringCol + '" stroke-width="' + (entered ? 5 : 3) + '"' + (entered ? '' : ' stroke-dasharray="3 7"') + '/>' +
-      '<image href="' + mk.img + '" x="-50" y="-50" width="100" height="100" clip-path="url(#bpmClip' + m + ')" preserveAspectRatio="xMidYMid slice" style="filter:' + (entered ? 'none' : (isDark ? 'grayscale(1) brightness(.55)' : 'grayscale(1) brightness(.92) opacity(.8)')) + '"/>' +
-      (entered ? '<text x="38" y="-34" font-size="24">' + MODE_ICON[md] + '</text>' : '') +
-      '<text y="80" font-size="17" font-weight="800" text-anchor="middle" fill="' + txt + '" font-family="' + FONT + '">' + mk.icon + ' ' + mk.name + '</text>' +
-      '<text y="100" font-size="11" font-weight="700" text-anchor="middle" fill="' + sub + '" font-family="' + FONT + '">' + (entered ? tr('Đã thâm nhập', 'Entered') : tr('Chưa thâm nhập', 'Not entered')) + '</text>' +
-      '</g>';
-  });
-  svg += '</svg>';
-  const mount = $('bp-map-svg'); if (mount) mount.innerHTML = svg;
-  const enteredCount = S.entered.filter(v => v !== null && v !== undefined).length;
-  const legend = $('bp-map-legend');
-  if (legend) legend.innerHTML = '<span><b>' + enteredCount + '/7</b> ' + tr('thị trường đã thâm nhập', 'markets entered') + '</span>' +
-    MODE_ICON.map((ic, i) => '<span><i style="background:' + MODE_HEX[i] + '"></i>' + ic + ' ' + tr(['Nền tảng số', 'Xuất khẩu trực tiếp', 'Đối tác địa phương'][i], ['Digital platform', 'Direct export', 'Local partner'][i]) + '</span>').join('');
-}
-$('bp3d-map') && $('bp3d-map').addEventListener('click', () => { renderMarketMap(); const m = $('bp-map-modal'); if (m) m.classList.add('on'); });
-$('bp-map-close') && $('bp-map-close').addEventListener('click', () => { const m = $('bp-map-modal'); if (m) m.classList.remove('on'); });
-
-/* ---------- hồ sơ đối thủ – tổng hợp Kim Long trên cả 7 thị trường ---------- */
-function renderRivalDossier() {
-  const B = window.__bp; if (!B || !B.S) return;
-  const isDark = document.documentElement.dataset.theme === 'dark';
-  const S = B.S, MKTS = B.MKTS, RIVAL = B.RIVAL || { name: 'Kim Long Exports', icon: '🐉' };
-  const mine = S.profit || 0, theirs = (S.rival && S.rival.rev) || 0, max = Math.max(mine, theirs, 1);
-  const barCol = isDark ? '#5cc4e6' : '#033337', rivalCol = '#e8762d';
-  let html = '<div class="bp-rival-head">' +
-    (RIVAL.img ? '<img src="' + RIVAL.img + '" alt="">' : '<span style="font-size:40px">' + RIVAL.icon + '</span>') +
-    '<div><b>' + RIVAL.icon + ' ' + RIVAL.name + '</b><span>' + (mine >= theirs ?
-      tr('Bạn đang dẫn trước trong cuộc đua doanh thu', "You're leading the revenue race") :
-      tr('Đối thủ đang dẫn trước – tăng tốc thôi!', "The rival is ahead – time to catch up!")) + '</span></div></div>';
-  html += '<div class="bp-rival-race">' +
-    '<div class="bp-rival-bar-row"><span>🏢 ' + tr('Bạn', 'You') + '</span><div class="bp-rival-bar-track"><div class="bp-rival-bar-fill" style="width:' + Math.max(4, mine / max * 100) + '%;background:' + barCol + '"></div></div><span>' + f1(mine) + tr(' tỷ', ' bn') + '</span></div>' +
-    '<div class="bp-rival-bar-row"><span>' + RIVAL.icon + ' ' + tr('Đối thủ', 'Rival') + '</span><div class="bp-rival-bar-track"><div class="bp-rival-bar-fill" style="width:' + Math.max(4, theirs / max * 100) + '%;background:' + rivalCol + '"></div></div><span>' + f1(theirs) + tr(' tỷ', ' bn') + '</span></div>' +
-    '</div>';
-  const rivalIn = (S.rival && S.rival.in) || [];
-  html += '<div class="bp-rival-mkts">' + MKTS.map((mk, m) => {
-    const inHere = rivalIn.indexOf(m) >= 0, myHere = S.entered[m] !== null && S.entered[m] !== undefined;
-    const qn = inHere && S.rival.qin ? (S.rival.qin[m] || 0) : 0;
-    const status = inHere ? ('🐉 Q' + qn + (B.rivalAttr ? ' · ' + f1(B.rivalAttr(m)) + tr(' tỷ', ' bn') : '') + (myHere ? ' · ⚔️' : '')) : tr('chưa có mặt', 'not present');
-    return '<div class="bp-rival-mkt' + (inHere ? ' in' : '') + '"><span>' + mk.icon + '</span><span class="nm">' + mk.name + '</span><span class="st" style="color:' + (inHere ? rivalCol : (isDark ? 'rgba(214,236,240,.45)' : 'rgba(3,51,55,.4)')) + '">' + status + '</span></div>';
-  }).join('') + '</div>';
-  const sharedCount = rivalIn.filter(m => S.entered[m] !== null && S.entered[m] !== undefined).length;
-  html += '<p class="bp-rival-note">' + (rivalIn.length === 0 ?
-    tr('Kim Long chưa mở thị trường nào – đây là lúc tốt để đi trước.', "Kim Long hasn't entered any market yet – a good time to move first.") :
-    sharedCount > 0 ?
-      tr('Đang chung ' + sharedCount + ' thị trường với Kim Long – đấu giá trực diện tốn kém, khác biệt hoá hoặc liên minh địa phương thường bền hơn.', 'Sharing ' + sharedCount + ' market(s) with Kim Long – a head-on price fight is costly; differentiation or local alliances usually last longer.') :
-      tr('Kim Long đã có mặt ở ' + rivalIn.length + ' thị trường nhưng chưa đụng bạn trực tiếp – theo dõi để chọn thời điểm thâm nhập.', 'Kim Long is in ' + rivalIn.length + ' market(s) but not head-to-head with you yet – watch and time your entry.')) + '</p>';
-  const mount = $('bp-rival-body'); if (mount) mount.innerHTML = html;
-}
-$('bp3d-rival') && $('bp3d-rival').addEventListener('click', () => { renderRivalDossier(); const m = $('bp-rival-modal'); if (m) m.classList.add('on'); });
-$('bp-rival-close') && $('bp-rival-close').addEventListener('click', () => { const m = $('bp-rival-modal'); if (m) m.classList.remove('on'); });
 
 /* ---------- sân lễ: radar & giấy chứng nhận ---------- */
 const stage = grp(null, END.x, -4, END.z); stage.visible = false;
@@ -745,7 +625,7 @@ R.domElement.addEventListener('pointerup', e => {
   const r = R.domElement.getBoundingClientRect(); ptr.set((e.clientX - r.left) / r.width * 2 - 1, -(e.clientY - r.top) / r.height * 2 + 1);
   ray.setFromCamera(ptr, cam); const h = ray.intersectObjects(hits, false)[0]; if (!h) return;
   const m = h.object.userData.m, B = window.__bp;
-  if (m === -2) { userKey = 'home'; autoCam = true; say('🏡 Vàm Thịnh · ' + tr('Ban cố vấn: Bà Sáu Lành, Minh Khang, An Nhiên, Victor Lâm, Lina Park, Lumina AI', 'Advisors: Bà Sáu Lành, Minh Khang, An Nhiên, Victor Lâm, Lina Park, Lumina AI'), 4200); return; }
+  if (m === -2) { userKey = 'home'; autoCam = true; say('🏡 Vàm Thịnh · ' + tr('Ban cố vấn: Bà Sáu Lành, Minh Khang, An Nhiên, Thầy Tú Phan, Lina Park, Lumina AI', 'Advisors: Bà Sáu Lành, Minh Khang, An Nhiên, Thầy Tú Phan, Lina Park, Lumina AI'), 4200); return; }
   if (m < 0) return;
   userKey = 'm' + m; autoCam = true;
   let msg = MK[m].icon + ' ' + MK[m].name;
@@ -820,7 +700,7 @@ const landBtn = $('bp3d-land'); const landTxt = () => { if (landBtn) landBtn.tex
 landTxt(); landBtn && landBtn.addEventListener('click', () => { landMode = landMode === 'team' ? 'ceo' : 'team'; localStorage.setItem('bizon-bp3d-land', landMode); landTxt(); islands.forEach(I => I.party && landParty(I, false)); });
 $('bp3d-full') && $('bp3d-full').addEventListener('click', () => { const on = document.body.classList.toggle('bp3d-full'); $('bp3d-full').textContent = on ? tr('▾ Thu nhỏ', '▾ Shrink') : tr('⤢ Mở rộng', '⤢ Expand'); resize(); });
 $('bp3d-ov') && $('bp3d-ov').addEventListener('click', () => { userKey = camKey === 'intro' ? null : 'ov'; autoCam = true; });
-$('bp3d-pp') && $('bp3d-pp').addEventListener('click', () => openPassportModal('cover'));
+$('bp3d-pp') && $('bp3d-pp').addEventListener('click', () => { if (PP.mode === 'stamp') return; drawCover(); drawInside(); drawPage(); PP.mode = PP.mode === 'view' ? 'idle' : 'view'; });
 
 /* ---------- vòng lặp ---------- */
 function navBottom() {
@@ -982,7 +862,7 @@ const QUESTS = [
   { id: 'enter', who: 'An Nhiên', ic: '🚩', vi: 'Thâm nhập một thị trường mới', en: 'Enter a new market', ok: (S, b) => cntE(S) > b.ent },
   { id: 'clear', who: 'Lumina AI', ic: '🌤️', vi: 'Đưa một đảo lên tri thức ≥ 60%', en: 'Bring an island to ≥60% intel', ok: (S, b) => S.know.some((k, m) => k >= 60 && b.kn[m] < 60) },
   { id: 'cash', who: 'Minh Khang', ic: '💰', vi: 'Kết thúc quý với tiền mặt không thấp hơn đầu quý', en: 'End the quarter with no less cash', ok: (S, b) => S.cash >= b.cash, atEnd: true },
-  { id: 'rival', who: 'Victor Lâm', ic: '⚔️', vi: 'Có mặt ở một thị trường Kim Long đã vào', en: 'Be present where Kim Long is', ok: S => !!(S.rival && S.rival.in.some(m => S.entered[m] !== null && S.entered[m] !== undefined)) },
+  { id: 'rival', who: 'Thầy Tú Phan', ic: '⚔️', vi: 'Có mặt ở một thị trường Kim Long đã vào', en: 'Be present where Kim Long is', ok: S => !!(S.rival && S.rival.in.some(m => S.entered[m] !== null && S.entered[m] !== undefined)) },
   { id: 'two', who: 'Lina Park', ic: '🔍', vi: 'Dùng đủ 2 nguồn tin trong quý', en: 'Use 2 intel sources this quarter', ok: S => !!(S.sel && S.sel.intel && S.sel.intel.length >= 2) },
 ];
 function sum(a) { return (a || []).reduce((x, y) => x + (+y || 0), 0); }
@@ -1296,8 +1176,8 @@ function buildConvo() {
   else L.push(['An Nhiên', tr('Mình đã hiểu khách rồi. Giờ là lúc kể câu chuyện thương hiệu Vàm Thịnh cho đúng văn hoá từng nước.', 'We understand the customers now. Time to tell the Vàm Thịnh brand story in a way that fits each culture.')]);
   if (S.cash < 2.5) L.push(['Minh Khang', tr('Tiền đang mỏng. Xuất khẩu tốn ít vốn nhất; liên doanh cần nhiều vốn hơn nhưng đổi lại kiểm soát và hiểu thị trường tốt hơn.', 'Cash is thin. Exporting needs the least capital; a joint venture needs more but gives more control and market insight.')]);
   else L.push(['Minh Khang', tr('Còn dư địa vốn. Nhớ quy tắc: càng cam kết nguồn lực lớn, rủi ro càng cao nhưng lợi nhuận tiềm năng cũng cao hơn.', 'We still have room. Remember: the more resources committed, the higher the risk – and the higher the potential return.')]);
-  if (S.rival && S.rival.in && S.rival.in.length) L.push(['Victor Lâm', tr('Kim Long đang ở ' + S.rival.in.map(m => MK[m].name).join(', ') + '. Đấu giá trực diện tốn kém; khác biệt hoá hoặc liên minh thường bền hơn.', 'Kim Long is in ' + S.rival.in.map(m => MK[m].name).join(', ') + '. A head-on price fight is costly; differentiation or alliances usually last longer.')]);
-  else L.push(['Victor Lâm', tr('Kim Long chưa ra khơi. Người đến trước có lợi thế, nhưng đến trước mà chưa hiểu thị trường thì cũng dễ trả giá.', 'Kim Long hasn\'t set sail yet. First movers gain an edge – but moving first without understanding the market is expensive.')]);
+  if (S.rival && S.rival.in && S.rival.in.length) L.push(['Thầy Tú Phan', tr('Kim Long đang ở ' + S.rival.in.map(m => MK[m].name).join(', ') + '. Đấu giá trực diện tốn kém; khác biệt hoá hoặc liên minh thường bền hơn.', 'Kim Long is in ' + S.rival.in.map(m => MK[m].name).join(', ') + '. A head-on price fight is costly; differentiation or alliances usually last longer.')]);
+  else L.push(['Thầy Tú Phan', tr('Kim Long chưa ra khơi. Người đến trước có lợi thế, nhưng đến trước mà chưa hiểu thị trường thì cũng dễ trả giá.', 'Kim Long hasn\'t set sail yet. First movers gain an edge – but moving first without understanding the market is expensive.')]);
   L.push(['Bà Sáu Lành', tr('Chậm mà chắc nghen tụi con. Uy tín gầy dựng cả đời, mất chỉ một mùa.', 'Slow and steady, kids. A reputation takes a lifetime to build and one season to lose.')]);
   return L;
 }
@@ -1314,22 +1194,39 @@ const hbPanel = mkPanel(460), chPanel = mkPanel(460);
 const allPanels = () => [hbPanel, chPanel, bPanel, sPanel];
 function openPanel(p, draw) { const on = p.style.display === 'none'; allPanels().forEach(x => x.style.display = 'none'); if (on) { draw(); p.style.display = 'block'; aboveTB(p, 8); } }
 const CONCEPTS = [
-  ['🪜', 'Thang cam kết nguồn lực', 'Resource commitment ladder', 'Doanh nghiệp thường đi từ cách tốn ít vốn, ít rủi ro (bán qua nền tảng số) lên cách cam kết cao hơn (xuất khẩu trực tiếp, liên doanh) khi đã hiểu thị trường. Mô hình Uppsala gọi đây là quốc tế hoá theo từng bước.', 'Firms usually move from low-capital, low-risk entry (digital platforms) toward higher commitment (direct export, joint ventures) as they learn the market. The Uppsala model calls this stepwise internationalisation.'],
-  ['🧭', 'Khoảng cách tâm lý', 'Psychic distance', 'Khác biệt về ngôn ngữ, văn hoá, luật lệ, thói quen mua sắm làm việc kinh doanh ở nước ngoài khó hơn. Thị trường càng "xa", càng cần thêm tri thức trước khi cam kết vốn.', 'Differences in language, culture, law and buying habits make business abroad harder. The more "distant" a market, the more knowledge you need before committing capital.'],
-  ['🔍', 'Độ tin cậy nguồn tin', 'Source reliability', 'Không phải nguồn tin nào cũng ngang nhau: dữ liệu mạng xã hội rẻ nhưng hay thổi phồng, còn thử nghiệm bán hàng đắt nhưng cho dữ liệu thật. Nên kết hợp nhiều nguồn.', 'Not all sources are equal: social data is cheap but inflated, while a sales pilot is expensive but real. Combine several sources.'],
-  ['⚔️', 'Chiến lược cạnh tranh', 'Competitive strategy', 'Theo Porter, doanh nghiệp thắng bằng chi phí thấp hoặc khác biệt hoá. Liên minh chiến lược giúp chia sẻ rủi ro và mượn năng lực của đối tác.', 'Per Porter, firms win through cost leadership or differentiation. Strategic alliances share risk and borrow a partner\'s capabilities.'],
+  ['🪜', 'Thang cam kết nguồn lực (Resource commitment ladder)', 'Resource commitment ladder', 'Doanh nghiệp thường đi từ cách tốn ít vốn, ít rủi ro (bán qua nền tảng số – <i>digital platform</i>) lên cách cam kết cao hơn (xuất khẩu trực tiếp – <i>direct export</i>, liên doanh – <i>joint venture</i>) khi đã hiểu thị trường. Mô hình Uppsala (<i>Uppsala model</i>) gọi đây là quốc tế hoá theo từng bước (<i>incremental internationalisation</i>) (Johanson &amp; Vahlne, 1977, 2009).', 'Firms usually move from low-capital, low-risk entry (digital platforms) toward higher commitment (direct export, joint ventures) as they learn the market. The Uppsala model calls this incremental internationalisation (Johanson &amp; Vahlne, 1977, 2009).'],
+  ['🧭', 'Khoảng cách tâm lý (Psychic distance)', 'Psychic distance', 'Khác biệt về ngôn ngữ, văn hoá, luật lệ, thói quen mua sắm làm việc kinh doanh ở nước ngoài khó hơn (Johanson &amp; Wiedersheim-Paul, 1975). Thị trường càng "xa", càng cần thêm tri thức thị trường (<i>market knowledge</i>) trước khi cam kết vốn (<i>resource commitment</i>) (Ghemawat, 2001).', 'Differences in language, culture, law and buying habits make business abroad harder (Johanson &amp; Wiedersheim-Paul, 1975). The more "distant" a market, the more market knowledge you need before committing resources (Ghemawat, 2001).'],
+  ['🔍', 'Độ tin cậy nguồn tin (Source reliability)', 'Source reliability', 'Không phải nguồn tin nào cũng ngang nhau: dữ liệu mạng xã hội (<i>social media data</i>) rẻ nhưng hay thổi phồng, còn thử nghiệm bán hàng (<i>sales pilot</i>) đắt nhưng cho dữ liệu thật, tức tri thức trải nghiệm (<i>experiential knowledge</i>). Nên kết hợp nhiều nguồn (<i>triangulation</i>) (Eriksson et al., 1997; Johanson &amp; Vahlne, 1977).', 'Not all sources are equal: social data is cheap but inflated, while a sales pilot is expensive but yields real, experiential knowledge. Combine several sources (Eriksson et al., 1997; Johanson &amp; Vahlne, 1977).'],
+  ['⚔️', 'Chiến lược cạnh tranh (Competitive strategy)', 'Competitive strategy', 'Theo Porter (1980), doanh nghiệp thắng bằng chi phí thấp (<i>cost leadership</i>) hoặc khác biệt hoá (<i>differentiation</i>). Liên minh chiến lược (<i>strategic alliance</i>) giúp chia sẻ rủi ro và mượn năng lực của đối tác (Kogut, 1988).', 'Per Porter (1980), firms win through cost leadership or differentiation. Strategic alliances share risk and borrow a partner\'s capabilities (Kogut, 1988).'],
+];
+// Tài liệu tham khảo – APA 7th
+const REFS = [
+  'Eriksson, K., Johanson, J., Majkgård, A., &amp; Sharma, D. D. (1997). Experiential knowledge and cost in the internationalization process. <i>Journal of International Business Studies, 28</i>(2), 337–360. https://doi.org/10.1057/palgrave.jibs.8490104',
+  'Ghemawat, P. (2001). Distance still matters: The hard reality of global expansion. <i>Harvard Business Review, 79</i>(8), 137–147.',
+  'Hofstede, G., Hofstede, G. J., &amp; Minkov, M. (2010). <i>Cultures and organizations: Software of the mind</i> (3rd ed.). McGraw-Hill.',
+  'Johanson, J., &amp; Vahlne, J.-E. (1977). The internationalization process of the firm—A model of knowledge development and increasing foreign market commitments. <i>Journal of International Business Studies, 8</i>(1), 23–32. https://doi.org/10.1057/palgrave.jibs.8490676',
+  'Johanson, J., &amp; Vahlne, J.-E. (2009). The Uppsala internationalization process model revisited: From liability of foreignness to liability of outsidership. <i>Journal of International Business Studies, 40</i>(9), 1411–1431. https://doi.org/10.1057/jibs.2009.24',
+  'Johanson, J., &amp; Wiedersheim-Paul, F. (1975). The internationalization of the firm—Four Swedish cases. <i>Journal of Management Studies, 12</i>(3), 305–323. https://doi.org/10.1111/j.1467-6486.1975.tb00514.x',
+  'Kogut, B., &amp; Singh, H. (1988). The effect of national culture on the choice of entry mode. <i>Journal of International Business Studies, 19</i>(3), 411–432. https://doi.org/10.1057/palgrave.jibs.8490394',
+  'Kogut, B. (1988). Joint ventures: Theoretical and empirical perspectives. <i>Strategic Management Journal, 9</i>(4), 319–332. https://doi.org/10.1002/smj.4250090403',
+  'Porter, M. E. (1980). <i>Competitive strategy: Techniques for analyzing industries and competitors</i>. Free Press.',
 ];
 function drawHandbook() {
   const B = window.__bp, MD = B && B.MODES ? B.MODES : [];
   const bar = v => '<span style="display:inline-block;width:52px;height:7px;border-radius:9px;background:rgba(3,51,55,.1);vertical-align:middle"><i style="display:block;height:100%;width:' + Math.round(v * 100) + '%;border-radius:9px;background:#2f8a8c"></i></span>';
   hbPanel.innerHTML = '<div style="font:800 15px/1.2 inherit;margin-bottom:10px">📘 ' + tr('Sổ tay quốc tế hoá', 'Internationalisation handbook') + '</div>' +
-    '<div style="font:800 12px/1 inherit;text-transform:uppercase;letter-spacing:.05em;opacity:.6;margin-bottom:6px">' + tr('3 phương thức thâm nhập', '3 entry modes') + '</div>' +
+    '<div style="font:800 12px/1 inherit;text-transform:uppercase;letter-spacing:.05em;opacity:.6;margin-bottom:6px">' + tr('6 phương thức thâm nhập (AIBIS)', '6 entry modes (AIBIS)') + '</div>' +
     '<div style="display:grid;gap:6px">' + MD.map(md => '<div style="background:#fff;border-radius:12px;padding:8px 10px"><b style="font-size:13.5px">' + md.icon + ' ' + tr(md.name, md.nameEn) + '</b> <span style="opacity:.6">· ' + tr(md.note, md.noteEn) + '</span>' +
       '<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px 12px;margin-top:5px;font-size:11.5px">' +
       '<span>' + tr('Vốn ', 'Capital ') + md.cost + tr(' tỷ', 'B') + '</span><span>' + tr('Biên LN ', 'Margin ') + Math.round(md.margin * 100) + '%</span>' +
       '<span>' + tr('Quy mô ', 'Reach ') + bar(md.scale / 1.3) + '</span><span>' + tr('Chi phí vận hành ', 'Op. cost ') + bar(md.op / 0.5) + '</span></div></div>').join('') + '</div>' +
+    ((B && B.MKTS ? B.MKTS : []).some(m => m.real) ? '<div style="font:800 12px/1 inherit;text-transform:uppercase;letter-spacing:.05em;opacity:.6;margin:12px 0 6px">' + tr('Quốc gia sở tại (host) – so với ', 'Host countries – compared with ') + (B.HOME ? B.HOME().flag + ' ' + tr(B.HOME().c, B.HOME().cEn) : '') + '</div>' +
+      B.MKTS.filter(m => m.real).map(m => '<details style="background:#fff;border-radius:12px;padding:8px 10px;margin-bottom:6px"><summary style="cursor:pointer;font-weight:800">' + m.real.flag + ' ' + m.name + ' → ' + tr(m.real.c, m.real.cEn) + '</summary><div style="margin-top:6px;display:grid;gap:3px;font-size:11.5px;line-height:1.45"><span><b>' + tr('Hiệp định / thuế', 'Trade deal / tariff') + ':</b> ' + (B.homeInfo ? B.homeInfo(B.MKTS.indexOf(m)).fta : tr(m.real.fta, m.real.ftaEn)) + '</span>' + (B.homeInfo ? '<span><b>' + tr('Khoảng cách văn hoá', 'Cultural distance') + ' (Kogut &amp; Singh, 1988):</b> ' + B.homeInfo(B.MKTS.indexOf(m)).cd.toFixed(2) + ' – ' + B.homeInfo(B.MKTS.indexOf(m)).lvl + '</span>' : '') + '<span><b>' + tr('Văn hoá', 'Culture') + ':</b> ' + tr(m.real.cul, m.real.culEn) + '</span><span><b>' + tr('Rào cản', 'Barriers') + ':</b> ' + tr(m.real.bar, m.real.barEn) + '</span></div></details>').join('') +
+      '<p style="margin:2px 0 0;font-size:10.5px;opacity:.6;text-wrap:pretty">' + tr('Thông số trong game đã cách điệu phục vụ giảng dạy; văn hoá theo khung Hofstede et al. (2010). Thuế Hoa Kỳ cập nhật 9/2026.', 'In-game figures are stylised for teaching; culture follows Hofstede et al. (2010). US tariff as of Sep 2026.') + '</p>' : '') +
     '<div style="font:800 12px/1 inherit;text-transform:uppercase;letter-spacing:.05em;opacity:.6;margin:12px 0 6px">' + tr('Khái niệm then chốt', 'Key concepts') + '</div>' +
-    CONCEPTS.map(c => '<details style="background:#fff;border-radius:12px;padding:8px 10px;margin-bottom:6px"><summary style="cursor:pointer;font-weight:800">' + c[0] + ' ' + tr(c[1], c[2]) + '</summary><p style="margin:6px 0 0;text-wrap:pretty">' + tr(c[3], c[4]) + '</p></details>').join('');
+    CONCEPTS.map(c => '<details style="background:#fff;border-radius:12px;padding:8px 10px;margin-bottom:6px"><summary style="cursor:pointer;font-weight:800">' + c[0] + ' ' + tr(c[1], c[2]) + '</summary><p style="margin:6px 0 0;text-wrap:pretty">' + tr(c[3], c[4]) + '</p></details>').join('') +
+    '<details style="background:#fff;border-radius:12px;padding:8px 10px;margin-bottom:6px"><summary style="cursor:pointer;font-weight:800">📚 ' + tr('Tài liệu tham khảo (APA 7)', 'References (APA 7)') + '</summary>' +
+    REFS.map(r => '<p style="margin:6px 0 0;padding-left:1.4em;text-indent:-1.4em;font-size:11.5px;line-height:1.45;overflow-wrap:anywhere">' + r.replace(/(https:\/\/doi\.org\/\S+)/, '<a href="$1" target="_blank" rel="noopener" style="color:#006687">$1</a>') + '</p>').join('') + '</details>';
 }
 const hbBtn = document.createElement('button'); hbBtn.type = 'button'; hbBtn.className = bBtn.className; hbBtn.textContent = tr('📘 Sổ tay', '📘 Handbook');
 TB.appendChild(hbBtn); hbBtn.addEventListener('click', () => openPanel(hbPanel, drawHandbook));
