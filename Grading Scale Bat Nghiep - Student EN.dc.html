@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="./doc-page.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&amp;display=swap">
+<style>
+doc-page:not(:defined){visibility:hidden}
+body{margin:0;font-family:"Be Vietnam Pro",system-ui,sans-serif;color:#033337}
+a{color:#006687}a:hover{color:#e8762d}
+table{border-collapse:collapse;width:100%}
+tr{break-inside:avoid}
+td{padding:7px 9px;border-bottom:1px solid #eadcc6;vertical-align:top}
+</style>
+</helmet>
+<doc-page size="a4" margin="16mm">
+<div style="font-size:10.5pt;line-height:1.55">
+
+<div style="display:flex;flex-direction:column;gap:6px;border-bottom:3px solid #fda127;padding-bottom:12px;margin-bottom:16px">
+  <p style="margin:0;font:700 9pt 'Be Vietnam Pro';letter-spacing:.08em;text-transform:uppercase;color:#b8561b">BizOn · Student guide</p>
+  <h1 style="margin:0;font:800 22pt/1.2 'Be Vietnam Pro';color:#033337">Bật Nghiệp game: grading scale</h1>
+  <p style="margin:0;font-size:9.5pt;color:#5a6b74">Compiled by <b style="color:#033337">Đỗ Thùy Hương &amp; Phan Anh Tú</b></p>
+  <p style="margin:0;color:#335a5e">Scored out of 10. All points come from game results and the contribution log; there is no report or presentation. Team scores are shared; only B5 is graded individually.</p>
+</div>
+
+<h2 style="font:800 13pt 'Be Vietnam Pro';color:#b8561b;margin:0 0 8px">1. Before you play</h2>
+<ul style="margin:0 0 16px;padding-left:20px;display:flex;flex-direction:column;gap:3px">
+  <li>Each member signs in on <b>their own device</b> with the same <b>Class code</b> and <b>Team name</b>, and selects their role (CEO, CFO, CMO, COO or SEC).</li>
+  <li>Without a Class code the game runs in practice mode and <b>is not graded</b>.</li>
+  <li>Each team plays 6 rounds. In every round the CEO presses Commit to lock in the decisions.</li>
+</ul>
+
+<h2 style="font:800 13pt 'Be Vietnam Pro';color:#b8561b;margin:0 0 8px">2. Exam schedule</h2>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px;font-size:10pt;break-inside:avoid">
+  <div style="background:#fff6ea;border-radius:8px;padding:8px 10px">Date: <b>......./......./2026</b></div>
+  <div style="background:#fff6ea;border-radius:8px;padding:8px 10px">Start time: <b>......:.......</b></div>
+  <div style="background:#fff6ea;border-radius:8px;padding:8px 10px">Room: <b>..................</b></div>
+</div>
+<p style="margin:0 0 8px">Total time: <b>60 minutes</b>. The game opens and locks each round on schedule, with a countdown at the bottom of the screen. If a round ends before the team commits, the CEO's device commits the current slider values automatically. Each team starts the exam with <b>500 million ₫</b> in starting capital.</p>
+<table style="margin-bottom:10px;font-size:10pt">
+  <thead><tr>
+    <th style="padding:6px 9px;text-align:left;background:#033337;color:#fff;width:20%">Time</th>
+    <th style="padding:6px 9px;text-align:left;background:#033337;color:#fff;width:16%">Duration</th>
+    <th style="padding:6px 9px;text-align:left;background:#033337;color:#fff">What to do</th>
+  </tr></thead>
+  <tbody>
+    <tr><td><b>Min 0 – 10</b></td><td>10 min</td><td>Sign in on your own device, enter the Class code and Team name, pick your role. Check that all 5 roles are filled.</td></tr>
+    <tr><td><b>Min 10 – 58</b></td><td>6 rounds × 8 min</td><td>Each round:<br>• Min 0–5: read the event; CFO, CMO and COO send proposals; SEC writes the minutes; run What-If if needed.<br>• Min 5–7: the CEO applies proposals and presses Commit.<br>• Min 7–8: review the round results.</td></tr>
+    <tr><td><b>Min 58 – 60</b></td><td>2 min</td><td>Review the end-of-season report. Do not close the game until the instructor confirms all results have been received.</td></tr>
+  </tbody>
+</table>
+<p style="margin:0 0 16px;font-size:9.5pt;color:#335a5e">Arriving after minute 10: you can still join your team, but rounds already played do not count toward participation (B5). Proposals and minutes sent after the CEO commits are not counted.</p>
+
+<h2 style="font:800 13pt 'Be Vietnam Pro';color:#b8561b;margin:0 0 8px">3. How the 10 points are awarded</h2>
+<table style="margin-bottom:16px;font-size:10pt">
+  <thead><tr>
+    <th style="padding:7px 9px;text-align:left;background:#b8561b;color:#fff;width:24%">Criterion</th>
+    <th style="padding:7px 9px;text-align:left;background:#b8561b;color:#fff">How to score</th>
+    <th style="padding:7px 9px;text-align:right;background:#b8561b;color:#fff;width:10%">Max</th>
+  </tr></thead>
+  <tbody>
+    <tr><td><b>B1. Cumulative profit</b><br><span style="font-size:9pt;color:#5a6b74">Team</span></td><td>Class ranking by total 6-round profit: top 25% → 2.0 · 25–50% → 1.5 · 50–75% → 1.0 · rest → 0.5. Negative total profit: 0.5 max.</td><td style="text-align:right">2.0</td></tr>
+    <tr><td><b>B2. Round 6 market share</b><br><span style="font-size:9pt;color:#5a6b74">Team</span></td><td>≥ 30% → 2.0 · 25–29.9% → 1.6 · 20–24.9% → 1.2 · below 20% → 0.8.</td><td style="text-align:right">2.0</td></tr>
+    <tr><td><b>B3. Operations and finance</b><br><span style="font-size:9pt;color:#5a6b74">Team</span></td><td>Average OEE over 6 rounds: ≥ 85 → 1.0 · 80–84 → 0.7 · below 80 → 0.3.<br>Round 6 defect rate ≤ 2.0% → 0.4.<br>Round 6 quick ratio ≥ 1.0 → 0.6.</td><td style="text-align:right">2.0</td></tr>
+    <tr><td><b>B4. Achievements</b><br><span style="font-size:9pt;color:#5a6b74">Team</span></td><td>0.15 points per unlocked achievement (10 in total, see section 5).</td><td style="text-align:right">1.5</td></tr>
+    <tr style="background:#fff6ea"><td><b>B5. Individual contribution</b><br><span style="font-size:9pt;color:#b8561b;font-weight:700">Each member</span></td><td><b>Participation (0.75):</b> rounds in which you have a log entry: 5–6 → 0.75 · 3–4 → 0.5 · 1–2 → 0.2.<br><b>Adopted (0.75):</b> rounds in which the team used your contribution: ≥ 4 → 0.75 · 2–3 → 0.5 · 1 → 0.2. See section 4.</td><td style="text-align:right">1.5</td></tr>
+    <tr><td style="border-bottom:2px solid #033337"><b>B6. Handling market shocks</b><br><span style="font-size:9pt;color:#5a6b74">Team</span></td><td style="border-bottom:2px solid #033337">Applies to rounds with adverse events (price war, energy crisis, supply-chain crisis).<br>Quick ratio ≥ 1.0 in all those rounds → 0.4 (one round below → 0.2).<br>Profitable in all those rounds → 0.4 (at least half → 0.2).<br>Prepared before committing: the team ran What-If or logged at least 3 proposals/minutes → 0.2.</td><td style="text-align:right;border-bottom:2px solid #033337">1.0</td></tr>
+    <tr><td colspan="2"><b>Your total</b> = team B1 + B2 + B3 + B4 + B6 + your own B5</td><td style="text-align:right"><b>10</b></td></tr>
+  </tbody>
+</table>
+
+<h2 style="font:800 13pt 'Be Vietnam Pro';color:#b8561b;margin:0 0 6px">4. How contributions (B5) are counted</h2>
+<p style="margin:0 0 8px">On the Decisions screen, use the <b>«📋 Contribution log»</b> panel under the Team meeting. Only entries sent <b>before the CEO presses Commit</b> count.</p>
+<table style="margin-bottom:16px;font-size:9.5pt">
+  <thead><tr>
+    <th style="padding:6px 9px;text-align:left;background:#033337;color:#fff;width:11%">Role</th>
+    <th style="padding:6px 9px;text-align:left;background:#033337;color:#fff;width:42%">Each round</th>
+    <th style="padding:6px 9px;text-align:left;background:#033337;color:#fff">Counts as «adopted» when</th>
+  </tr></thead>
+  <tbody>
+    <tr><td><b>CFO</b></td><td>Set R&amp;D and payment terms → «Send proposal to the CEO»</td><td>The committed decision is within 10% of your proposal</td></tr>
+    <tr><td><b>CMO</b></td><td>Set price and marketing → «Send proposal to the CEO»</td><td>Same as above</td></tr>
+    <tr><td><b>COO</b></td><td>Set production, workforce and training → «Send proposal to the CEO»</td><td>Same as above</td></tr>
+    <tr><td><b>SEC</b></td><td>Write the meeting minutes: the event, each role's view, the agreed decision → «Send minutes»</td><td>The minutes are at least 30 characters long</td></tr>
+    <tr><td><b>CEO</b></td><td>Review the team's proposals, press «Apply», then Commit</td><td>The committed round uses at least one proposal from the CFO, CMO or COO</td></tr>
+  </tbody>
+</table>
+<p style="margin:0 0 16px;font-size:9.5pt;color:#335a5e">Each What-If run also counts as participation in that round. Sending several times in one round earns no extra points; the team uses the latest version.</p>
+
+<h2 style="font:800 13pt 'Be Vietnam Pro';color:#b8561b;margin:0 0 8px">5. The ten achievements (B4)</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;margin-bottom:16px;font-size:9.5pt;break-inside:avoid">
+  <span>🎉 <b>Launch</b> – finish round 1</span>
+  <span>💎 <b>In the black!</b> – positive profit in a round</span>
+  <span>👑 <b>Market leader</b> – market share ≥ 30%</span>
+  <span>🛟 <b>Weathered the storm</b> – profit in the energy-crisis round</span>
+  <span>🏦 <b>Full vault</b> – wallet balance ≥ 1 billion ₫</span>
+  <span>📜 <b>BizOn graduate</b> – finish all 6 rounds</span>
+  <span>🚩 <b>First flag</b> – win a round on the conquest map</span>
+  <span>🔮 <b>What-If strategist</b> – use the What-If simulation</span>
+  <span>🤝 <b>Team listener</b> – apply 3 Team-meeting suggestions</span>
+  <span>🏆 <b>BizOn champion</b> – highest profit in the arena</span>
+</div>
+
+<h2 style="font:800 13pt 'Be Vietnam Pro';color:#b8561b;margin:0 0 8px">6. Grade conversion</h2>
+<div style="display:grid;grid-template-columns:repeat(8,1fr);gap:4px;text-align:center;font-size:9.5pt;break-inside:avoid">
+  <div style="background:#033337;color:#fff;border-radius:6px;padding:6px 2px"><b>A</b><br>9.0–10<br><span style="font-size:8.5pt">GPA 4.0</span></div>
+  <div style="background:#0d4f55;color:#fff;border-radius:6px;padding:6px 2px"><b>B+</b><br>8.0–8.9<br><span style="font-size:8.5pt">GPA 3.5</span></div>
+  <div style="background:#006687;color:#fff;border-radius:6px;padding:6px 2px"><b>B</b><br>7.0–7.9<br><span style="font-size:8.5pt">GPA 3.0</span></div>
+  <div style="background:#e3eef1;color:#033337;border-radius:6px;padding:6px 2px"><b>C+</b><br>6.5–6.9<br><span style="font-size:8.5pt">GPA 2.5</span></div>
+  <div style="background:#e3eef1;color:#033337;border-radius:6px;padding:6px 2px"><b>C</b><br>5.5–6.4<br><span style="font-size:8.5pt">GPA 2.0</span></div>
+  <div style="background:#fff0dc;color:#033337;border-radius:6px;padding:6px 2px"><b>D+</b><br>5.0–5.4<br><span style="font-size:8.5pt">GPA 1.5</span></div>
+  <div style="background:#fff0dc;color:#033337;border-radius:6px;padding:6px 2px"><b>D</b><br>4.0–4.9<br><span style="font-size:8.5pt">GPA 1.0</span></div>
+  <div style="background:#fbe1d4;color:#033337;border-radius:6px;padding:6px 2px"><b>F</b><br>&lt; 4.0<br><span style="font-size:8.5pt">GPA 0.0</span></div>
+</div>
+<p style="margin:8px 0 0">A course earns credit only with a grade of D or higher.</p>
+
+<div style="margin-top:18px;height:62mm;border-radius:10px;overflow:hidden;break-inside:avoid;-webkit-mask-image:linear-gradient(to bottom,transparent,#000 45%);mask-image:linear-gradient(to bottom,transparent,#000 45%)"><img src="assets/illustrations/game/team-table.webp" alt="A BizOn team around a riverside worktable" style="width:100%;height:100%;object-fit:cover;object-position:50% 40%;opacity:.28;display:block"></div>
+<div style="margin-top:8px;padding-top:10px;border-top:1px solid #eadcc6;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:9pt;color:#5a6b74;break-inside:avoid">
+  <span>Compiled by <b style="color:#033337">Đỗ Thùy Hương &amp; Phan Anh Tú</b></span>
+  <span>© 2026 Đỗ Thùy Hương &amp; Phan Anh Tú. All rights reserved.</span>
+</div>
+
+</div>
+</doc-page>
+</x-dc>
+</body>
+</html>

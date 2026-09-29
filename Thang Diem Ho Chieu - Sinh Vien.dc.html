@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="./doc-page.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&amp;display=swap">
+<style>
+doc-page:not(:defined){visibility:hidden}
+body{margin:0;font-family:"Be Vietnam Pro",system-ui,sans-serif;color:#033337}
+a{color:#006687}a:hover{color:#e8762d}
+table{border-collapse:collapse;width:100%}
+tr{break-inside:avoid}
+td{padding:7px 9px;border-bottom:1px solid #d9e4e6;vertical-align:top}
+</style>
+</helmet>
+<doc-page size="a4" margin="16mm">
+<div style="font-size:10.5pt;line-height:1.55">
+
+<div style="display:flex;flex-direction:column;gap:6px;border-bottom:3px solid #fda127;padding-bottom:12px;margin-bottom:16px">
+  <p style="margin:0;font:700 9pt 'Be Vietnam Pro';letter-spacing:.08em;text-transform:uppercase;color:#006687">BizOn · Dành cho sinh viên</p>
+  <h1 style="margin:0;font:800 22pt/1.2 'Be Vietnam Pro';color:#033337">Thang điểm game Hộ Chiếu Thương Hiệu 3D</h1>
+  <p style="margin:0;font-size:9.5pt;color:#5a6b74">Biên soạn: <b style="color:#033337">Đỗ Thùy Hương &amp; Phan Anh Tú</b></p>
+  <p style="margin:0;color:#335a5e">Chơi cá nhân, thang 10. Toàn bộ điểm lấy từ kết quả game: màn kết quả, nhật ký sự kiện và «Dấu chân quyết định». Không có bài phản tư hay báo cáo.</p>
+</div>
+
+<h2 style="font:800 13pt 'Be Vietnam Pro';color:#006687;margin:0 0 8px">1. Trước khi chơi</h2>
+<ul style="margin:0 0 16px;padding-left:20px;display:flex;flex-direction:column;gap:3px">
+  <li>Trên màn giới thiệu, nhập <b>Mã lớp</b> vào ô «🎓 Mã lớp» rồi chọn doanh nghiệp. Không có Mã lớp thì <b>không được tính điểm</b>.</li>
+  <li>Game gồm 6 quý. Mỗi quý: thu thập thông tin (tối đa 2 nguồn), chọn ưu tiên và thị trường, chốt quý, rồi xử lý một sự kiện.</li>
+  <li>Kết thúc 6 quý, bấm <b>Nộp kết quả</b> với đúng họ tên. Mỗi thị trường trong game có quốc gia tham chiếu thật (xem 📘 Sổ tay).</li>
+  <li>Chọn <b>quốc gia xuất phát (home country)</b> trước khi bắt đầu: Việt Nam, Thái Lan, Malaysia, Philippines, Trung Quốc, Ấn Độ, Hàn Quốc, Nhật Bản, Hoa Kỳ hoặc Đức. Nếu bạn xuất phát từ Hàn, Nhật, Mỹ hoặc Đức, ô thị trường của nước đó trở thành <b>Việt Nam</b>.</li>
+  <li>Quốc gia xuất phát quyết định hiệp định thương mại và khoảng cách văn hoá tới từng thị trường: <b>không có FTA → doanh thu −8%</b>; thị trường xa về văn hoá → hai quý đầu doanh thu giảm tới 12% và mua thông tin thu được ít tri thức hơn. Các chỉ số này nằm trong điểm tổng /100 (A1).</li>
+  <li>Dùng <b>🗺️ Bản đồ toàn màn</b> và <b>📇 Hồ sơ quốc gia</b> (dân số, GDP, hiệp định, rào cản, tỷ giá, logistics, 4 chiều Hofstede) trước khi chọn thị trường và phương thức thâm nhập.</li>
+</ul>
+
+<h2 style="font:800 13pt 'Be Vietnam Pro';color:#006687;margin:0 0 8px">2. Thời gian thi</h2>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px;font-size:10pt;break-inside:avoid">
+  <div style="background:#e8f3f6;border-radius:8px;padding:8px 10px">Ngày thi: <b>......./......./2026</b></div>
+  <div style="background:#e8f3f6;border-radius:8px;padding:8px 10px">Giờ bắt đầu: <b>......:.......</b></div>
+  <div style="background:#e8f3f6;border-radius:8px;padding:8px 10px">Phòng: <b>..................</b></div>
+</div>
+<p style="margin:0 0 8px">Tổng thời gian <b>60 phút</b>. Game tự mở từng quý theo giờ, đồng hồ đếm ngược hiện ở cuối màn hình; chưa tới giờ thì chưa chốt quý được. Hết giờ quý mà chưa chốt, game tự chốt ưu tiên đang chọn (chưa chọn thì dùng «Củng cố nội lực») và chọn phương án đầu tiên của sự kiện.</p>
+<table style="margin-bottom:16px;font-size:10pt">
+  <thead><tr><th style="padding:7px 9px;text-align:left;background:#006687;color:#fff;width:20%">Thời điểm</th><th style="padding:7px 9px;text-align:left;background:#006687;color:#fff;width:16%">Thời lượng</th><th style="padding:7px 9px;text-align:left;background:#006687;color:#fff">Việc cần làm</th></tr></thead>
+  <tbody>
+    <tr><td><b>Phút 0 – 10</b></td><td>10 phút</td><td>Mở game, nhập Mã lớp, đọc hồ sơ 4 doanh nghiệp và chọn một doanh nghiệp. Xem 📘 Sổ tay.</td></tr>
+    <tr><td><b>Phút 10 – 58</b></td><td>6 quý × 8 phút</td><td>Mỗi quý:<br>• Phút 0–3: mua thông tin, so sánh nguồn tin.<br>• Phút 3–6: chọn ưu tiên, thị trường, phương thức thâm nhập, bấm chốt quý.<br>• Phút 6–8: xử lý sự kiện, xem kết quả quý.</td></tr>
+    <tr><td><b>Phút 58 – 60</b></td><td>2 phút</td><td>Bấm Nộp kết quả, kiểm tra tên mình trên bảng xếp hạng lớp.</td></tr>
+  </tbody>
+</table>
+
+<h2 style="font:800 13pt 'Be Vietnam Pro';color:#006687;margin:0 0 8px">3. Cách tính 10 điểm</h2>
+<table style="margin-bottom:16px;font-size:10pt">
+  <thead><tr><th style="padding:7px 9px;text-align:left;background:#006687;color:#fff;width:26%">Tiêu chí</th><th style="padding:7px 9px;text-align:left;background:#006687;color:#fff">Cách đạt điểm</th><th style="padding:7px 9px;text-align:right;background:#006687;color:#fff;width:10%">Tối đa</th></tr></thead>
+  <tbody>
+    <tr><td><b>A1. Điểm mô phỏng</b></td><td>Điểm tổng /100 của game × 0,05 (ví dụ 80 → 4,0). Kết thúc sớm vì cạn tiền 2 quý liên tiếp hoặc uy tín chạm đáy: tối đa 1,5.</td><td style="text-align:right">5,0</td></tr>
+    <tr><td><b>A2. Thưởng kết quả</b></td><td>+0,6 danh hiệu «Thương hiệu Việt vươn khơi» (Điểm tổng ≥ 72 và cả 5 chiều ≥ 60).<br>+0,4 lợi nhuận tích lũy vượt đối thủ sau 6 quý.</td><td style="text-align:right">1,0</td></tr>
+    <tr><td><b>A3. Cân bằng 5 chiều</b></td><td>Theo chiều thấp nhất: ≥ 60 → 2,0 · 45–59 → 1,4 · 30–44 → 0,7 · dưới 30 → 0.</td><td style="text-align:right">2,0</td></tr>
+    <tr><td><b>A4a. Chất lượng quyết định</b></td><td>Tỷ lệ lựa chọn «Vững» trên số sự kiện đã gặp: ≥ 80% → 1,5 · 60–79% → 1,1 · 40–59% → 0,7 · dưới 40% → 0,3. Xem mục 5.</td><td style="text-align:right">1,5</td></tr>
+    <tr><td style="border-bottom:2px solid #033337"><b>A4b. Kỷ luật tiền mặt</b></td><td style="border-bottom:2px solid #033337">Không quý nào âm tiền → 0,5 · âm 1 quý → 0,25 · từ 2 quý → 0.</td><td style="text-align:right;border-bottom:2px solid #033337">0,5</td></tr>
+    <tr><td colspan="2"><b>Tổng</b></td><td style="text-align:right"><b>10</b></td></tr>
+  </tbody>
+</table>
+
+<h2 style="font:800 13pt 'Be Vietnam Pro';color:#006687;margin:0 0 8px">4. Năm chiều điểm trong game (Điểm tổng /100)</h2>
+<table style="margin-bottom:16px;font-size:9.5pt">
+  <thead><tr><th style="padding:7px 9px;text-align:left;background:#006687;color:#fff;width:18%">Chiều</th><th style="padding:7px 9px;text-align:left;background:#006687;color:#fff;width:11%">Trọng số</th><th style="padding:7px 9px;text-align:left;background:#006687;color:#fff;width:30%">Đo bằng</th><th style="padding:7px 9px;text-align:left;background:#006687;color:#fff">Cách nâng</th></tr></thead>
+  <tbody>
+    <tr><td><b>💹 Lợi nhuận</b></td><td>30%</td><td>Lợi nhuận tích lũy so với mốc 12 tỷ ₫</td><td>Chọn thị trường và phương thức thâm nhập phù hợp, giữ giá, tránh chiến tranh giá</td></tr>
+    <tr><td><b>⭐ Uy tín</b></td><td>20%</td><td>Chỉ số uy tín cuối game</td><td>«Xây thương hiệu», xử lý khủng hoảng minh bạch</td></tr>
+    <tr><td><b>🏭 Năng lực</b></td><td>20%</td><td>Chỉ số năng lực cuối game</td><td>«Nâng cấp năng lực», nâng cấp dữ liệu, điều chỉnh sản phẩm</td></tr>
+    <tr><td><b>🤸 Thích ứng</b></td><td>15%</td><td>Sức chống chịu và số lần thích ứng</td><td>«Củng cố nội lực», các lựa chọn có «+1 thích ứng»</td></tr>
+    <tr><td><b>🌱 Bền vững</b></td><td>15%</td><td>Số hành động xanh (5 hành động → 100)</td><td>Bao bì tái chế, hồ sơ xanh</td></tr>
+  </tbody>
+</table>
+
+<h2 style="font:800 13pt 'Be Vietnam Pro';color:#006687;margin:0 0 8px">5. Lựa chọn «Vững» là gì (A4a)</h2>
+<ul style="margin:0 0 16px;padding-left:20px;display:flex;flex-direction:column;gap:3px">
+  <li>Bảo vệ thương hiệu dài hạn thay vì lợi ích ngắn hạn, ví dụ giữ giá và kể câu chuyện sản phẩm thay vì giảm giá theo đối thủ.</li>
+  <li>Xử lý sự cố minh bạch: thu hồi, xin lỗi, đền bù khách thật.</li>
+  <li>Một số lựa chọn chỉ «Vững» khi bạn đã đủ điều kiện lúc chọn (tri thức thị trường, uy tín, năng lực, tiền mặt, hồ sơ xanh). Theo dõi các chỉ số này trước khi chấp nhận cơ hội lớn.</li>
+</ul>
+
+<h2 style="font:800 13pt 'Be Vietnam Pro';color:#006687;margin:0 0 8px">6. Quy đổi điểm</h2>
+<div style="display:grid;grid-template-columns:repeat(8,1fr);gap:4px;text-align:center;font-size:9.5pt;break-inside:avoid">
+  <div style="background:#033337;color:#fff;border-radius:6px;padding:6px 2px"><b>A</b><br>9,0–10<br><span style="font-size:8.5pt">Thang 4: 4,0</span></div>
+  <div style="background:#0d4f55;color:#fff;border-radius:6px;padding:6px 2px"><b>B+</b><br>8,0–8,9<br><span style="font-size:8.5pt">Thang 4: 3,5</span></div>
+  <div style="background:#006687;color:#fff;border-radius:6px;padding:6px 2px"><b>B</b><br>7,0–7,9<br><span style="font-size:8.5pt">Thang 4: 3,0</span></div>
+  <div style="background:#e3eef1;color:#033337;border-radius:6px;padding:6px 2px"><b>C+</b><br>6,5–6,9<br><span style="font-size:8.5pt">Thang 4: 2,5</span></div>
+  <div style="background:#e3eef1;color:#033337;border-radius:6px;padding:6px 2px"><b>C</b><br>5,5–6,4<br><span style="font-size:8.5pt">Thang 4: 2,0</span></div>
+  <div style="background:#fff0dc;color:#033337;border-radius:6px;padding:6px 2px"><b>D+</b><br>5,0–5,4<br><span style="font-size:8.5pt">Thang 4: 1,5</span></div>
+  <div style="background:#fff0dc;color:#033337;border-radius:6px;padding:6px 2px"><b>D</b><br>4,0–4,9<br><span style="font-size:8.5pt">Thang 4: 1,0</span></div>
+  <div style="background:#fbe1d4;color:#033337;border-radius:6px;padding:6px 2px"><b>F</b><br>&lt; 4,0<br><span style="font-size:8.5pt">Thang 4: 0,0</span></div>
+</div>
+<p style="margin:8px 0 0">Học phần chỉ được tính tích lũy khi đạt từ điểm D trở lên.</p>
+
+<div style="margin-top:18px;height:62mm;border-radius:10px;overflow:hidden;break-inside:avoid;-webkit-mask-image:linear-gradient(to bottom,transparent,#000 45%);mask-image:linear-gradient(to bottom,transparent,#000 45%)"><img src="assets/illustrations/game/river-worldmap.webp" alt="Bản đồ thế giới bên dòng sông trong game" style="width:100%;height:100%;object-fit:cover;object-position:50% 45%;opacity:.28;display:block"></div>
+<div style="margin-top:8px;padding-top:10px;border-top:1px solid #d9e4e6;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:9pt;color:#5a6b74;break-inside:avoid">
+  <span>Biên soạn: <b style="color:#033337">Đỗ Thùy Hương &amp; Phan Anh Tú</b></span>
+  <span>© 2026 Đỗ Thùy Hương &amp; Phan Anh Tú. Bảo lưu mọi quyền.</span>
+</div>
+
+</div>
+</doc-page>
+</x-dc>
+</body>
+</html>
