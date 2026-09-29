@@ -52,7 +52,7 @@
   #frame iframe{border:0;width:100%;height:100%;display:block}
   #frame.full{inset:0}
   #login3d{position:fixed;z-index:40;inset:0;display:none;pointer-events:none;background:#2a2340 url('assets/illustrations/rong-bay-doi-bizon.webp') center/cover no-repeat}
-  body.login3d #login3d{display:block} body.login3d #frame{visibility:hidden} body.login3d .hud,body.login3d #zones,body.login3d #more{display:none!important}
+  body.login3d #login3d{display:block} body.login3d #frame{visibility:hidden} body.login3d .hud,body.login3d #zones{display:none!important}
   #login3d .card{pointer-events:auto;position:absolute;left:clamp(12px,4vw,56px);top:50%;transform:translateY(-50%);width:min(420px,calc(100vw - 24px));max-height:calc(100vh - 24px);overflow:auto;box-sizing:border-box;background:#fbf6ee;border:4px solid #e6d6bf;border-radius:28px;box-shadow:0 10px 0 #d9c5a8,0 30px 60px rgba(20,28,56,.25);padding:22px;display:flex;flex-direction:column;gap:9px;font-family:'Be Vietnam Pro',sans-serif;color:#1f3f4a}
   #login3d h1{margin:0;font:800 28px/1.05 'Baloo 2',sans-serif;color:#1f4a55} #login3d p{margin:0;font-size:13px;color:#5a6b74;text-wrap:pretty}
   #login3d label{font:700 13px 'Be Vietnam Pro',sans-serif;margin-top:4px} #login3d input{padding:11px 13px;border-radius:14px;border:2px solid #e6d6bf;background:#fff;font:500 15px 'Be Vietnam Pro',sans-serif;outline:none} #login3d input:focus{border-color:#2f8a8c}
@@ -276,16 +276,6 @@
   <button class="btn" id="langBtn"><i>🌐</i><span>Tiếng Việt</span></button>
   <button class="btn" id="night">🌙 Ban đêm</button>
   <button class="btn" id="lowBtn"><i>⚡</i><span>Chi tiết thấp</span></button>
-  <button class="btn" id="moreBtn"><i>🧱</i><span>Bộ sưu tập 3D</span></button>
-</div>
-<div id="more" style="position:fixed;z-index:26;right:14px;bottom:70px;display:none;flex-direction:column;gap:6px;background:#fbf6ee;border:3px solid #e6d6bf;border-radius:18px;padding:10px;box-shadow:0 6px 0 #d9c5a8">
-  <a class="btn" href="Characters 3D.html">🧍 Nhân vật 3D</a>
-  <a class="btn" href="HQ Asset Gallery.html">🧱 Nội thất, sản phẩm & linh vật</a>
-  <a class="btn" href="BizOn HQ Diorama.html">🏢 Trụ sở diorama (xem tự do)</a>
-  <a class="btn" href="Strategy Table 3D.html">🧩 Bàn họp chiến lược 3D</a>
-  <a class="btn" href="Clay Factory 3D.html">🏭 Clay Factory Frenzy 3D</a>
-  <a class="btn" href="BizOn Office Game.html">🚶 Văn phòng 2D (đi lại & hội thoại)</a>
-  <a class="btn" href="game.html">📱 Bản 2D gốc (game.html)</a>
 </div>
 <div id="cta" class="hud"><button class="btn primary" id="ctaBtn">🎯 Ra quyết định</button><small id="ctaSub">Đang tải trò chơi…</small></div>
 <div id="zones" class="hud"></div>
@@ -1528,7 +1518,6 @@ const langBtn = document.getElementById('langBtn');
 function syncLangBtn() { let l = 'vi'; try { l = localStorage.getItem('bizon-lang') || 'vi'; } catch {} langBtn.querySelector('span').textContent = l === 'en' ? 'English' : 'Tiếng Việt'; }
 langBtn.onclick = () => { if (!W) return; W.toggleLang(); ev('renderAll()'); syncLangBtn(); if (RM.on) BUILD[RM.mode](); if (document.body.classList.contains('evt') && evc.querySelector('#lmLog')) advisor3D(); };
 syncLangBtn();
-{ const mb = document.getElementById('moreBtn'), mp = document.getElementById('more'); mb.onclick = () => { mp.style.display = mp.style.display === 'flex' ? 'none' : 'flex'; }; addEventListener('pointerdown', e => { if (!mp.contains(e.target) && !mb.contains(e.target)) mp.style.display = 'none'; }); }
 
 </script>
 </body>
