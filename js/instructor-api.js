@@ -34,7 +34,7 @@
   }
 
   // ---------- dữ liệu mẫu ----------
-  const D = { classes: [{ class_code: 'DEMO-2026', created_at: new Date().toISOString() }], controls: { locked_round: null, forced_event: null, message: '' }, grants: [], scores: {}, subs: [] };
+  const D = { classes: [{ class_code: 'DEMO-2026', created_at: new Date().toISOString() }], controls: { locked_round: null, forced_event: null, message: '' }, grants: [], scores: {}, subs: [], exam: null };
   (function seed() {
     const T = [['Đội Rồng Vàng', 1.0], ['Đội Sông Hậu', 0.9], ['Đội Miệt Vườn', 0.8], ['Đội Phù Sa', 1.1], ['Đội Gốm Đỏ', 0.7]];
     T.forEach(([n, k], ti) => { const rounds = 6 - (ti % 3); for (let r = 1; r <= rounds; r++) {
@@ -75,7 +75,10 @@
     async state(code) { if (demo) return { controls: D.controls, grants: D.grants, scores: Object.values(D.scores) };
       try { return (await rpc('bizon_class_state_v2', { p_class_code: code })) || {}; } catch (e) { if (missing(e)) { api.needsMigration = true; return {}; } throw e; } },
     async setControls(code, c) { if (demo) { Object.assign(D.controls, c); return true; }
-      return guard(rpc('bizon_set_controls', { p_class_code: code, p_locked_round: c.locked_round ?? null, p_forced_event: c.forced_event || '', p_forced_event_round: c.forced_event_round ?? null, p_message: c.message || '', p_exam_started_at: c.exam_started_at ?? null })); },
+      return guard(rpc('bizon_set_controls', { p_class_code: code, p_locked_round: c.locked_round ?? null, p_forced_event: c.forced_event || '', p_forced_event_round: c.forced_event_round ?? null, p_message: c.message || '' })); },
+    async setExam(code, ex) { if (demo) { D.exam = ex; return true; }
+      return guard(rpc('bizon_set_exam', { p_class_code: code, p_active: !!ex.active, p_start_at: ex.start_at || null, p_setup_min: ex.setup_min ?? 10, p_round_min: ex.round_min ?? 8, p_capital: ex.capital ?? 500 })); },
+    async examFeed(code) { if (demo) return { now: new Date().toISOString(), exam: D.exam }; try { return (await rpc('bizon_exam_feed', { p_class_code: code })) || {}; } catch (e) { if (missing(e)) return {}; throw e; } },
     async grant(code, team, amount, reason) { if (demo) { D.grants.unshift({ team_name: team, amount, reason, created_at: new Date().toISOString() }); return true; } return guard(rpc('bizon_grant', { p_class_code: code, p_team_name: team, p_amount: amount, p_reason: reason || '' })); },
     async saveScore(code, team, reasoning, teamwork, note) { if (demo) { D.scores[team] = { team_name: team, reasoning, teamwork, note }; return true; } return guard(rpc('bizon_save_score', { p_class_code: code, p_team_name: team, p_reasoning: reasoning, p_teamwork: teamwork, p_note: note || '' })); },
     async memberLog(code) { if (demo) return []; try { return (await rpc('bizon_member_log', { p_class_code: code })) || []; } catch (e) { if (missing(e)) return []; throw e; } },
