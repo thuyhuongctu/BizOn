@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="./doc-page.js"></script>
+<style>
+@font-face{font-family:"Plus Jakarta Sans";src:url(assets/fonts/PlusJakartaSans-var-vietnamese.woff2) format("woff2");font-weight:200 800;unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
+@font-face{font-family:"Plus Jakarta Sans";src:url(assets/fonts/PlusJakartaSans-var-latin.woff2) format("woff2");font-weight:200 800}
+@font-face{font-family:"Manrope";src:url(assets/fonts/Manrope-var-vietnamese.woff2) format("woff2");font-weight:200 800;unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
+@font-face{font-family:"Manrope";src:url(assets/fonts/Manrope-var-latin.woff2) format("woff2");font-weight:200 800}
+doc-page:not(:defined){visibility:hidden}
+body{margin:0;font-family:"Manrope",system-ui,sans-serif;color:#033337}
+a{color:#006687}a:hover{color:#e8762d}
+table{border-collapse:collapse;width:100%}
+tr{break-inside:avoid}
+td,th{padding:5px 8px;border-bottom:1px solid #d9e4e6;vertical-align:top;text-align:left}
+th{font:700 8.5pt 'Plus Jakarta Sans';color:#006687;background:#eef6f7}
+@media print{.noprint{display:none!important}}
+</style>
+</helmet>
+<div class="noprint" style="position:fixed;top:12px;right:12px;z-index:10;display:flex;gap:6px;background:#033337;padding:6px;border-radius:10px">
+  <sc-for list="{{ langs }}" as="l" hint-placeholder-count="3">
+    <button type="button" onClick="{{ l.onClick }}" style="border:0;border-radius:7px;padding:6px 10px;font:700 12px Manrope;cursor:pointer;background:{{ l.bg }};color:{{ l.fg }}">{{ l.label }}</button>
+  </sc-for>
+</div>
+<doc-page size="a4" margin="18mm">
+<div style="font-size:10pt;line-height:1.55">
+<div style="display:flex;flex-direction:column;gap:6px;border-bottom:3px solid #fda127;padding-bottom:14px;margin-bottom:16px">
+  <p style="margin:0;font:700 9pt 'Plus Jakarta Sans';letter-spacing:.08em;text-transform:uppercase;color:#006687">BizOn · {{ t.kicker }}</p>
+  <h1 style="margin:0;font:800 20pt/1.2 'Plus Jakarta Sans'">{{ t.title }}</h1>
+  <p style="margin:0;color:#335a5e">{{ t.sub }}</p>
+</div>
+
+<h2 style="font:800 13pt 'Plus Jakarta Sans';color:#006687;margin:0 0 6px">1. {{ t.h1 }}</h2>
+<table style="margin-bottom:14px">
+  <tr><th style="width:34%"></th><th>{{ t.edFdi }}</th><th>{{ t.edIndo }}</th></tr>
+  <sc-for list="{{ editions }}" as="r" hint-placeholder-count="6">
+    <tr><td><b>{{ r.k }}</b></td><td>{{ r.a }}</td><td>{{ r.b }}</td></tr>
+  </sc-for>
+</table>
+
+<h2 style="font:800 13pt 'Plus Jakarta Sans';color:#006687;margin:0 0 6px">2. {{ t.h2 }}</h2>
+<p style="margin:0 0 6px">{{ t.p2a }}</p>
+<p style="margin:0 0 6px;padding:8px 12px;background:#eef6f7;border-radius:8px;font:700 10.5pt ui-monospace,monospace">{{ t.formula }}</p>
+<p style="margin:0 0 8px">{{ t.p2b }}</p>
+<table style="margin-bottom:14px">
+  <tr><th>{{ t.valueCol }}</th><th>{{ t.ratioCol }}</th><th>{{ t.s4 }}</th><th>{{ t.s5 }}</th></tr>
+  <sc-for list="{{ examples }}" as="r" hint-placeholder-count="6">
+    <tr><td>{{ r.v }}</td><td>{{ r.r }}</td><td><b>{{ r.a }}</b></td><td><b>{{ r.b }}</b></td></tr>
+  </sc-for>
+</table>
+
+<h2 style="font:800 13pt 'Plus Jakarta Sans';color:#006687;margin:0 0 6px">3. {{ t.h3 }}</h2>
+<table style="margin-bottom:14px">
+  <tr><th style="width:24%">{{ t.decCol }}</th><th>{{ t.goodCol }}</th><th>{{ t.riskCol }}</th></tr>
+  <sc-for list="{{ levers }}" as="r" hint-placeholder-count="5">
+    <tr><td><b>{{ r.k }}</b></td><td>{{ r.a }}</td><td>{{ r.b }}</td></tr>
+  </sc-for>
+</table>
+
+<h2 style="font:800 13pt 'Plus Jakarta Sans';color:#006687;margin:0 0 6px">4. {{ t.h4 }}</h2>
+<table style="margin-bottom:14px;max-width:420px">
+  <tr><th>{{ t.s10 }}</th><th>{{ t.letter }}</th><th>{{ t.s4pt }}</th></tr>
+  <sc-for list="{{ scale }}" as="r" hint-placeholder-count="8">
+    <tr><td>{{ r.a }}</td><td><b>{{ r.b }}</b></td><td>{{ r.c }}</td></tr>
+  </sc-for>
+</table>
+<p style="margin:0 0 14px">{{ t.pass }}</p>
+
+<h2 style="font:800 13pt 'Plus Jakarta Sans';color:#006687;margin:0 0 6px">5. {{ t.h5 }}</h2>
+<ul style="margin:0 0 14px;padding-left:18px;display:flex;flex-direction:column;gap:3px">
+  <sc-for list="{{ submit }}" as="s" hint-placeholder-count="4"><li>{{ s }}</li></sc-for>
+</ul>
+
+<h2 style="font:800 13pt 'Plus Jakarta Sans';color:#006687;margin:0 0 6px">6. {{ t.h6 }}</h2>
+<ul style="margin:0 0 14px;padding-left:18px;display:flex;flex-direction:column;gap:3px">
+  <sc-for list="{{ integrity }}" as="s" hint-placeholder-count="3"><li>{{ s }}</li></sc-for>
+</ul>
+
+<p style="margin:14px 0 0;font-size:8.5pt;color:#5f7d81">Anderson, E., &amp; Gatignon, H. (1986). Modes of foreign entry: A transaction cost analysis and propositions. <i>Journal of International Business Studies, 17</i>(3), 1–26. · Dunning, J. H. (1988). The eclectic paradigm of international production. <i>Journal of International Business Studies, 19</i>(1), 1–31.</p>
+<p style="margin:10px 0 0;font-size:8.5pt;color:#5f7d81">{{ t.copy }}</p>
+</div>
+</doc-page>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;lang&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;vi&quot;, &quot;en&quot;, &quot;id&quot;], &quot;default&quot;: &quot;vi&quot;, &quot;tsType&quot;: &quot;'vi'|'en'|'id'&quot;}}">
+const X = (vi, en, id) => ({ vi, en, id });
+const TX = {
+  kicker: X('Thang điểm sinh viên', 'Student grading scale', 'Skala penilaian mahasiswa'),
+  title: X('Hộ Chiếu Mini: Đầu tư quốc tế & bản Indonesia 60 phút', 'Passport Mini: International Investment & Indonesia 60-minute edition', 'Paspor Mini: Investasi Internasional & edisi Indonesia 60 menit'),
+  sub: X('Điểm thang 10 do game tính hoàn toàn từ kết quả chơi. Không có phần báo cáo hay thuyết trình.', 'Your score out of 10 is calculated entirely by the game from your results. There is no report or presentation.', 'Skor dari 10 dihitung sepenuhnya oleh game dari hasil permainan. Tidak ada laporan atau presentasi.'),
+  h1: X('Hai phiên bản', 'Two editions', 'Dua edisi'),
+  edFdi: X('Đầu tư quốc tế', 'International Investment', 'Investasi Internasional'), edIndo: X('Indonesia 60 phút', 'Indonesia 60 min', 'Indonesia 60 menit'),
+  h2: X('Điểm được tính thế nào', 'How the score is calculated', 'Cara skor dihitung'),
+  p2a: X('Game chỉ dùng một chỉ số: giá trị doanh nghiệp cuối game so với vốn khởi điểm 20 triệu USD. Giá trị doanh nghiệp = tiền ở nước nhà + 80% tài sản ở nước ngoài + lợi nhuận đang giữ ở nước ngoài sau thuế khấu trừ.', 'The game uses one measure: final firm value compared with the $20M starting capital. Firm value = cash at home + 80% of assets abroad + profit held abroad after withholding tax.', 'Game memakai satu ukuran: nilai perusahaan akhir dibanding modal awal US$20 jt. Nilai perusahaan = kas di negara asal + 80% aset di luar negeri + laba yang ditahan setelah pajak potong.'),
+  formula: X('Điểm = 3 + (Giá trị cuối ÷ 20 − 1) × k   (tối thiểu 1, tối đa 10)', 'Score = 3 + (Final value ÷ 20 − 1) × k   (min 1, max 10)', 'Skor = 3 + (Nilai akhir ÷ 20 − 1) × k   (min 1, maks 10)'),
+  p2b: X('Hệ số k = 27 với 4 quý và 13,8 với 5 quý, để hai bản có độ khó tương đương. Không đầu tư gì được 3 điểm.', 'k = 27 for 4 quarters and 13.8 for 5 quarters, so both editions are equally demanding. Not investing at all scores 3.', 'k = 27 untuk 4 kuartal dan 13,8 untuk 5 kuartal agar kedua edisi setara. Tidak berinvestasi sama sekali mendapat skor 3.'),
+  valueCol: X('Giá trị cuối', 'Final value', 'Nilai akhir'), ratioCol: X('So với vốn đầu', 'vs. start', 'vs. awal'), s4: X('Điểm (4 quý)', 'Score (4 qtrs)', 'Skor (4 kuartal)'), s5: X('Điểm (5 quý)', 'Score (5 qtrs)', 'Skor (5 kuartal)'),
+  h3: X('Các quyết định ảnh hưởng tới điểm', 'Decisions that drive your score', 'Keputusan yang memengaruhi skor'),
+  decCol: X('Quyết định', 'Decision', 'Keputusan'), goodCol: X('Làm tốt khi', 'Works well when', 'Berhasil bila'), riskCol: X('Rủi ro', 'Risk', 'Risiko'),
+  h4: X('Quy đổi điểm', 'Grade conversion', 'Konversi nilai'), s10: X('Thang 10', 'Out of 10', 'Skala 10'), letter: X('Điểm chữ', 'Letter', 'Huruf'), s4pt: X('Thang 4', 'GPA (4-pt)', 'Skala 4'),
+  pass: X('Học phần chỉ được tính tích lũy khi đạt từ điểm D (4,0) trở lên.', 'The course counts as passed from grade D (4.0) upward.', 'Mata kuliah dinyatakan lulus mulai nilai D (4,0).'),
+  h5: X('Nộp kết quả', 'Submitting your result', 'Mengirim hasil'), h6: X('Quy định', 'Rules', 'Aturan'),
+  copy: X('© 2026 Đỗ Thùy Hương & Phan Anh Tú. Số liệu trong game đã cách điệu cho giảng dạy.', '© 2026 Đỗ Thùy Hương & Phan Anh Tú. In-game figures are stylised for teaching.', '© 2026 Đỗ Thùy Hương & Phan Anh Tú. Angka dalam game disederhanakan untuk pembelajaran.'),
+};
+const ED = [
+  [X('Đối tượng', 'Audience', 'Peserta'), X('SV học phần Đầu tư quốc tế', 'International Investment students', 'Mahasiswa Investasi Internasional'), X('80–100 SV Indonesia, học online', '80–100 Indonesian students, online', '80–100 mahasiswa Indonesia, daring')],
+  [X('Ngôn ngữ', 'Language', 'Bahasa'), X('Việt, Anh', 'Vietnamese, English', 'Vietnam, Inggris'), X('Anh, Bahasa Indonesia', 'English, Bahasa Indonesia', 'Inggris, Bahasa Indonesia')],
+  [X('Số quý', 'Quarters', 'Kuartal'), X('4 (khoảng 30 phút)', '4 (about 30 min)', '4 (sekitar 30 menit)'), X('5 × 7 phút, có đồng hồ', '5 × 7 min, timed', '5 × 7 menit, berwaktu')],
+  [X('Thị trường', 'Markets', 'Pasar'), X('3 (Indonesia, Thái Lan, Đức; ô trùng nước xuất phát đổi thành Việt Nam)', '3 (Indonesia, Thailand, Germany; your home slot becomes Vietnam)', '3 (Indonesia, Thailand, Jerman; slot negara asal menjadi Vietnam)'), X('Như bên trái', 'Same', 'Sama')],
+  [X('Quyết định mỗi quý', 'Decisions per quarter', 'Keputusan per kuartal'), X('3: đầu tư, chính sách, chuyển lợi nhuận', '3: invest, policy, repatriate', '3: investasi, kebijakan, repatriasi'), X('Như bên trái', 'Same', 'Sama')],
+  [X('Làm theo', 'Team size', 'Ukuran tim'), X('Cá nhân hoặc nhóm 2–3', 'Individual or teams of 2–3', 'Individu atau tim 2–3'), X('Nhóm khoảng 5 SV, 1 người chia sẻ màn hình', 'Teams of about 5, one shares the screen', 'Tim sekitar 5, satu berbagi layar')],
+];
+const LEV = [
+  [X('📜 Cấp phép', '📜 Licensing', '📜 Lisensi'), X('Vốn ít, cần vào nhanh nhiều thị trường', 'Little capital, fast multi-market entry', 'Modal kecil, masuk cepat ke banyak pasar'), X('Lời mỏng; bị nhái mất 40% phí bản quyền', 'Thin returns; copycats cut royalties by 40%', 'Laba tipis; peniru memangkas royalti 40%')],
+  [X('🤝 Liên doanh', '🤝 Joint venture', '🤝 Usaha patungan'), X('Thị trường rủi ro chính trị cao, xa về văn hoá', 'High political risk, large cultural distance', 'Risiko politik tinggi, jarak budaya besar'), X('Chỉ nhận 50% lợi nhuận', 'You keep only 50% of profit', 'Hanya 50% laba')],
+  [X('🏭 FDI 100% vốn', '🏭 Wholly owned FDI', '🏭 PMA 100%'), X('Có ưu đãi miễn thuế, chính trị ổn định', 'Tax holiday available, stable politics', 'Ada tax holiday, politik stabil'), X('Vốn 10 tr USD bị khoá; chịu toàn bộ cú sốc', '$10M locked in; you take the full shock', 'US$10 jt terkunci; menanggung penuh guncangan')],
+  [X('🛡️ Chính sách quý', '🛡️ Quarterly policy', '🛡️ Kebijakan kuartal'), X('Chọn theo tin thị trường đầu quý: tỷ giá → phòng ngừa; chính sách → quan hệ chính phủ', 'Match the news: currency → hedge; policy → government relations', 'Sesuaikan berita: kurs → lindung nilai; kebijakan → hubungan pemerintah'), X('Tốn 0,3–0,4 tr USD nếu không có cú sốc', 'Costs $0.3–0.4M if no shock comes', 'Biaya US$0,3–0,4 jt bila tak ada guncangan')],
+  [X('↩ Chuyển lợi nhuận', '↩ Repatriation', '↩ Repatriasi'), X('Cần tiền đầu tư tiếp, hoặc tỷ giá sắp giảm', 'You need cash to invest, or the currency may fall', 'Butuh kas untuk investasi, atau kurs akan turun'), X('Chịu thuế khấu trừ cổ tức 0–15%', 'Pays 0–15% dividend withholding tax', 'Kena pajak dividen 0–15%')],
+];
+const SUB = [
+  X('Nhập mã lớp giảng viên cung cấp ở màn đầu. Hết quý cuối, game tự gửi điểm lên app giảng viên và hiện bảng xếp hạng lớp.', 'Enter the class code from your instructor on the first screen. After the last quarter, the game sends your score automatically and shows the class leaderboard.', 'Masukkan kode kelas dari dosen di layar pertama. Setelah kuartal terakhir, game mengirim skor otomatis dan menampilkan papan peringkat.'),
+  X('Nếu mất mạng hoặc quên mã lớp: chụp màn hình kết quả cuối và gửi «Mã kết quả» (dạng HCM-…) cho giảng viên.', 'If the network fails or you forgot the code: screenshot the final screen and send the “Result code” (HCM-…) to your instructor.', 'Jika jaringan gagal atau lupa kode: tangkap layar hasil akhir dan kirim “Kode hasil” (HCM-…) ke dosen.'),
+  X('Chơi theo nhóm: dùng tên nhóm thống nhất; mọi thành viên nhận cùng một điểm.', 'Team play: use one agreed team name; all members receive the same score.', 'Bermain tim: gunakan satu nama tim; semua anggota mendapat skor yang sama.'),
+  X('Giảng viên lấy lượt có điểm cao nhất của mỗi tên nhóm trong cùng một mã lớp.', 'The instructor takes the highest-scoring attempt per team name within one class code.', 'Dosen mengambil percobaan dengan skor tertinggi per nama tim dalam satu kode kelas.'),
+];
+const INT = [
+  X('Mỗi ván có biến cố ngẫu nhiên riêng, nên mã kết quả không sao chép được giữa các nhóm.', 'Each game has its own random events, so result codes cannot be copied between teams.', 'Setiap permainan punya kejadian acak sendiri, sehingga kode hasil tidak bisa disalin antar tim.'),
+  X('Giảng viên có thể giới hạn số lượt chơi hoặc chỉ tính lượt chơi trong giờ học.', 'Your instructor may cap attempts or count only games played during class.', 'Dosen dapat membatasi percobaan atau hanya menghitung permainan di kelas.'),
+  X('Bảng xếp hạng chỉ hiện tên nhóm và điểm.', 'The leaderboard shows only team names and scores.', 'Papan peringkat hanya menampilkan nama tim dan skor.'),
+];
+class Component extends DCLogic {
+  state = { lang: null };
+  renderVals() {
+    const l = this.state.lang || this.props.lang || 'vi';
+    const t = {}; Object.keys(TX).forEach(k => t[k] = TX[k][l]);
+    const n = (v, d = 1) => { const s = v.toFixed(d); return l === 'en' ? s : s.replace('.', ','); };
+    const sc = (v, Q) => Math.max(1, Math.min(10, Math.round((3 + (v / 20 - 1) * 27 * Math.pow(4 / Q, 3)) * 10) / 10));
+    const money = v => l === 'vi' ? n(v) + ' tr USD' : l === 'id' ? 'US$' + n(v) + ' jt' : '$' + n(v) + 'M';
+    return { t,
+      langs: ['vi', 'en', 'id'].map(x => ({ label: x.toUpperCase(), bg: x === l ? '#fda127' : 'transparent', fg: x === l ? '#033337' : '#fff', onClick: () => this.setState({ lang: x }) })),
+      editions: ED.map(r => ({ k: r[0][l], a: r[1][l], b: r[2][l] })),
+      examples: [18, 20, 22, 24, 26, 28, 30].map(v => ({ v: money(v), r: (v >= 20 ? '+' : '') + n((v / 20 - 1) * 100, 0) + '%', a: n(sc(v, 4)), b: n(sc(v, 5)) })),
+      levers: LEV.map(r => ({ k: r[0][l], a: r[1][l], b: r[2][l] })),
+      scale: [['9,0 – 10', 'A', '4,0'], ['8,0 – 8,9', 'B+', '3,5'], ['7,0 – 7,9', 'B', '3,0'], ['6,5 – 6,9', 'C+', '2,5'], ['5,5 – 6,4', 'C', '2,0'], ['5,0 – 5,4', 'D+', '1,5'], ['4,0 – 4,9', 'D', '1,0'], ['< 4,0', 'F', '0']].map(r => ({ a: l === 'en' ? r[0].replace(/,/g, '.') : r[0], b: r[1], c: l === 'en' ? r[2].replace(',', '.') : r[2] })),
+      submit: SUB.map(s => s[l]), integrity: INT.map(s => s[l]) };
+  }
+}
+</script>
+</body>
+</html>

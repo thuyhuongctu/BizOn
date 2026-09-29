@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="./js/bp-images.js"></script>
+<style>
+@font-face{font-family:"Plus Jakarta Sans";src:url(assets/fonts/PlusJakartaSans-var-vietnamese.woff2) format("woff2");font-weight:200 800;unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
+@font-face{font-family:"Plus Jakarta Sans";src:url(assets/fonts/PlusJakartaSans-var-latin.woff2) format("woff2");font-weight:200 800}
+body{margin:0;background:#eef4f5;font-family:"Plus Jakarta Sans",system-ui,sans-serif;color:#033337}
+a{color:#006687}a:hover{color:#e8762d}
+button{font:inherit}
+</style>
+</helmet>
+<div style="max-width:1200px;margin:0 auto;padding:clamp(14px,3vw,28px);display:flex;flex-direction:column;gap:16px">
+  <header style="display:flex;flex-direction:column;gap:6px">
+    <span style="font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#b8561b">BizOn · Hộ Chiếu Thương Hiệu 3D</span>
+    <h1 style="margin:0;font-size:clamp(22px,3vw,30px);font-weight:800">Kiểm tra ảnh &amp; prompt Gemini</h1>
+    <p style="margin:0;color:#335a5e;max-width:760px;line-height:1.55;text-wrap:pretty">Trang tự dò từng file trong <code>assets/hc/</code>. Tạo ảnh bằng Gemini (Imagen) với prompt bên dưới, lưu đúng tên file rồi đặt vào thư mục đó; game tự dùng ảnh mới, thiếu thì giữ ảnh cũ. Ảnh PNG: Gemini chưa xuất nền trong suốt, hãy xoá nền (Canva «Xoá nền» hoặc remove.bg) trước khi lưu.</p>
+  </header>
+
+  <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px">
+    <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+      <div style="background:#fff;border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:2px;box-shadow:0 1px 0 #d6e4e7"><span style="font-size:11px;color:#5f7d81;font-weight:700">{{ s.k }}</span><b style="font-size:24px;color:{{ s.c }}">{{ s.v }}</b></div>
+    </sc-for>
+  </section>
+
+  <section style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+    <sc-for list="{{ filters }}" as="f" hint-placeholder-count="4">
+      <button type="button" onClick="{{ f.onClick }}" style="padding:8px 14px;border-radius:99px;border:1.5px solid {{ f.bd }};background:{{ f.bg }};color:#033337;font-weight:700;font-size:13px;cursor:pointer">{{ f.label }}</button>
+    </sc-for>
+    <span style="flex:1"></span>
+    <button type="button" onClick="{{ recheck }}" style="padding:8px 14px;border-radius:10px;border:1.5px solid #006687;background:#fff;color:#006687;font-weight:800;cursor:pointer">↻ Dò lại</button>
+    <button type="button" onClick="{{ csv }}" style="padding:8px 14px;border-radius:10px;border:0;background:#033337;color:#fff;font-weight:800;cursor:pointer">⬇ Tải CSV prompt</button>
+  </section>
+
+  <sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
+    <section style="display:flex;flex-direction:column;gap:10px">
+      <h2 style="margin:6px 0 0;font-size:16px;font-weight:800;color:#006687">{{ g.title }} <span style="font-weight:600;color:#5f7d81;font-size:13px">· {{ g.sum }}</span></h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:12px">
+        <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="3">
+          <div style="background:#fff;border-radius:14px;padding:12px;display:grid;grid-template-columns:84px minmax(0,1fr);gap:12px;box-shadow:0 1px 0 #d6e4e7;border-left:0;border-top:3px solid {{ it.bar }}">
+            <div style="width:84px;height:84px;border-radius:10px;background:#f1f5f6;display:grid;place-items:center;overflow:hidden;font-size:26px">
+              <sc-if value="{{ it.ok }}" hint-placeholder-val="{{ false }}"><img src="{{ it.src }}" alt="{{ it.vi }}" style="width:100%;height:100%;object-fit:cover"></img></sc-if>
+              <sc-if value="{{ it.notOk }}" hint-placeholder-val="{{ true }}"><span>{{ it.icon }}</span></sc-if>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
+              <div style="display:flex;justify-content:space-between;gap:6px;align-items:baseline"><b style="font-size:13.5px">{{ it.vi }}</b><span style="font-size:11px;font-weight:800;color:{{ it.bar }};white-space:nowrap">{{ it.status }}</span></div>
+              <code style="font-size:11px;color:#5f7d81;word-break:break-all">{{ it.f }}</code>
+              <span style="font-size:11px;color:#5f7d81">{{ it.meta }}</span>
+              <details style="font-size:12px"><summary style="cursor:pointer;color:#006687;font-weight:700">Prompt</summary><p style="margin:6px 0 0;line-height:1.45;color:#335a5e">{{ it.p }}</p></details>
+              <button type="button" onClick="{{ it.copy }}" style="align-self:flex-start;margin-top:2px;padding:5px 10px;border-radius:8px;border:1px solid #c9dade;background:#fff;color:#006687;font-weight:700;font-size:12px;cursor:pointer">{{ it.copyLabel }}</button>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+  </sc-for>
+  <p style="margin:10px 0 0;font-size:11px;color:#6d888c">© 2026 Đỗ Thùy Hương &amp; Phan Anh Tú</p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { st: {}, filter: 'batch', copied: null, ready: !!window.BP_IMAGES };
+  componentDidMount() { const w = () => window.BP_IMAGES ? (this.setState({ ready: true }), this.check()) : setTimeout(w, 100); w(); }
+  check() {
+    const D = window.BP_IMAGES; if (!D) return; this.setState({ st: {} });
+    D.list.forEach(x => { const im = new Image(); im.onload = () => this.setState(s => ({ st: Object.assign({}, s.st, { [x.f]: 1 }) })); im.onerror = () => this.setState(s => ({ st: Object.assign({}, s.st, { [x.f]: -1 }) })); im.src = D.base + x.f + '?t=' + Date.now(); });
+  }
+  renderVals() {
+    const D = window.BP_IMAGES, s = this.state;
+    if (!D) return { stats: [], filters: [], groups: [], recheck: () => {}, csv: () => {} };
+    const L = D.list, have = L.filter(x => s.st[x.f] === 1).length, b = L.filter(x => x.batch), bHave = b.filter(x => s.st[x.f] === 1).length;
+    const sel = L.filter(x => s.filter === 'all' ? true : s.filter === 'batch' ? x.batch : s.filter === 'missing' ? s.st[x.f] !== 1 : s.st[x.f] === 1);
+    const byG = {}; sel.forEach(x => (byG[x.g] = byG[x.g] || []).push(x));
+    const F = [['batch', 'Đợt 1 ưu tiên (' + b.length + ')'], ['missing', 'Còn thiếu (' + (L.length - have) + ')'], ['have', 'Đã có (' + have + ')'], ['all', 'Tất cả (' + L.length + ')']];
+    return {
+      stats: [{ k: 'Tổng số ảnh', v: L.length, c: '#033337' }, { k: 'Đã có', v: have, c: '#3f8a44' }, { k: 'Còn thiếu', v: L.length - have, c: '#c0443a' }, { k: 'Đợt 1 đã có', v: bHave + '/' + b.length, c: '#e8762d' }],
+      filters: F.map(f => ({ label: f[1], bd: s.filter === f[0] ? '#fda127' : '#c9dade', bg: s.filter === f[0] ? '#fff6ea' : '#fff', onClick: () => this.setState({ filter: f[0] }) })),
+      recheck: () => this.check(),
+      csv: () => { const q = v => '"' + String(v).replace(/"/g, '""') + '"'; const t = '\ufeffnhom,uu_tien,dot1,ten_file,noi_dung,dung_o,trang_thai,prompt\n' + L.map(x => [x.g, x.prio, x.batch ? 'x' : '', 'assets/hc/' + x.f, x.vi, x.u, s.st[x.f] === 1 ? 'da co' : 'thieu', x.p].map(q).join(',')).join('\n');
+        const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([t], { type: 'text/csv' })); a.download = 'HoChieu-anh-prompt.csv'; a.click(); },
+      groups: Object.keys(byG).map(g => { const it = byG[g]; return { title: g, sum: it.filter(x => s.st[x.f] === 1).length + '/' + it.length + ' đã có',
+        items: it.map(x => { const st = s.st[x.f]; return { f: 'assets/hc/' + x.f, vi: x.vi, p: x.p, src: D.base + x.f, ok: st === 1, notOk: st !== 1, icon: st === undefined ? '…' : '🖼️',
+          status: st === 1 ? '✓ Đã có' : st === -1 ? '✗ Thiếu' : 'Đang dò…', bar: st === 1 ? '#3f8a44' : st === -1 ? '#e8762d' : '#c9dade',
+          meta: (x.kind === 'obj' ? 'PNG vuông 1024×1024, xoá nền' : 'WebP 16:9 (1600×900)') + ' · Ưu tiên ' + x.prio + ' · ' + x.u,
+          copyLabel: s.copied === x.f ? '✓ Đã chép' : '📋 Chép prompt',
+          copy: () => { (navigator.clipboard ? navigator.clipboard.writeText(x.p) : Promise.reject()).then(() => this.setState({ copied: x.f })).catch(() => prompt('Chép prompt:', x.p)); } }; }) }; }),
+    };
+  }
+}
+</script>
+</body>
+</html>

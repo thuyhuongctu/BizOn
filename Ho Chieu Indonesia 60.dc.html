@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<dc-import name="Ho Chieu Mini" edition="indo" quarters="{{ q }}" quarter-minutes="{{ m }}" show-facilitator="{{ f }}" hint-size="100%,100vh"></dc-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;quarters&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;min&quot;: 3, &quot;max&quot;: 6, &quot;default&quot;: 5, &quot;tsType&quot;: &quot;number&quot;}, &quot;quarterMinutes&quot;: {&quot;editor&quot;: &quot;int&quot;, &quot;min&quot;: 0, &quot;max&quot;: 15, &quot;default&quot;: 7, &quot;tsType&quot;: &quot;number&quot;, &quot;unit&quot;: &quot;min&quot;}, &quot;showFacilitator&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;}}">
+class Component extends DCLogic {
+  renderVals() { return { q: this.props.quarters ?? 5, m: this.props.quarterMinutes ?? 7, f: this.props.showFacilitator ?? true }; }
+}
+</script>
+</body>
+</html>
