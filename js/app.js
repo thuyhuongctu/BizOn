@@ -839,6 +839,7 @@ function showVictory(r) {
 // ---------- Navigation ----------
 // ---------- Clip giọng Lumina (Bizon_1/Bizon_2 do tác giả thu) ----------
 function playClip(src, vol = 0.9) {
+  if (!voiceEnabled) return;
   try { const au = new Audio(src); au.volume = vol; au.play().catch(() => {}); } catch (e) {}
 }
 
@@ -2008,7 +2009,10 @@ function pushUserMsg(text) {
 }
 
 // ---------- Giọng nói (TTS/STT – theo màn hình Chat cố vấn AI giọng nói) ----------
-let voiceEnabled = localStorage.getItem('bizon-voice') !== 'off';
+// TẠM TẮT giọng Lumina (bản thu cũ + TTS dự phòng) theo yêu cầu 29/9/2026, chờ
+// thu âm lại. Bỏ dòng ép `false` này (khôi phục dòng localStorage bên dưới) khi
+// có bộ giọng mới: `let voiceEnabled = localStorage.getItem('bizon-voice') !== 'off';`
+let voiceEnabled = false;
 let voiceGender = localStorage.getItem('bizon-voice-gender') || 'female';
 let recognizing = false, recognition = null;
 
