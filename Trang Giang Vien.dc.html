@@ -233,6 +233,15 @@ input,select,textarea,button{font-family:inherit}
               <sc-for list="{{ grants }}" as="g" hint-placeholder-count="2"><div style="display:flex;justify-content:space-between;gap:8px;border-bottom:1px dashed #e6d6bf;padding:4px 0"><span>{{ g.team }} · {{ g.reason }}</span><b style="color:{{ g.color }}">{{ g.amt }}</b></div></sc-for>
             </div>
           </div>
+          <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px">
+            <div style="font:800 19px 'Baloo 2',sans-serif">⏱ Tính giờ thi</div>
+            <div style="font-size:13px;color:#5a6b74;text-wrap:pretty">Theo «Thang điểm game Bật Nghiệp»: 10 phút đăng nhập rồi 6 vòng × 8 phút, tự khóa vòng khi hết giờ, chưa Commit thì máy CEO tự chốt theo thanh trượt hiện có.</div>
+            <div style="font-weight:700;color:{{ examColor }}">{{ examStatus }}</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <sc-if value="{{ examRunning }}" hint-placeholder-val="{{ false }}"><button onClick="{{ stopExam }}" style="border:3px solid #c0443a;background:#fff;color:#c0443a;border-radius:12px;padding:9px 14px;font-weight:700;cursor:pointer">⏹ Hủy tính giờ</button></sc-if>
+              <sc-if value="{{ examNotRunning }}" hint-placeholder-val="{{ true }}"><button onClick="{{ startExam }}" style="border:0;background:#1f4a55;color:#fff;border-radius:14px;padding:9px 14px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #10303a;cursor:pointer">▶️ Bắt đầu tính giờ (60 phút)</button></sc-if>
+            </div>
+          </div>
         </section>
       </sc-if>
 
@@ -328,12 +337,26 @@ input,select,textarea,button{font-family:inherit}
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script>
+// Lịch thi theo «Thang điểm game Bật Nghiệp»: 10' chuẩn bị + 6 vòng × 8' + 2' báo cáo = 60'.
+const EXAM_SETUP_MIN = 10, EXAM_ROUND_MIN = 8, EXAM_ROUNDS = 6, EXAM_TOTAL_MIN = 60;
+function examPhase(startedAt, now) {
+  const elapsedMin = Math.max(0, (now - new Date(startedAt).getTime()) / 60000);
+  if (elapsedMin < EXAM_SETUP_MIN) return { phase: 'setup', round: 0, remainMs: (EXAM_SETUP_MIN - elapsedMin) * 60000 };
+  if (elapsedMin < EXAM_SETUP_MIN + EXAM_ROUNDS * EXAM_ROUND_MIN) {
+    const idx = Math.floor((elapsedMin - EXAM_SETUP_MIN) / EXAM_ROUND_MIN);
+    return { phase: 'round', round: idx + 1, remainMs: (EXAM_SETUP_MIN + (idx + 1) * EXAM_ROUND_MIN - elapsedMin) * 60000 };
+  }
+  if (elapsedMin < EXAM_TOTAL_MIN) return { phase: 'final', round: EXAM_ROUNDS, remainMs: (EXAM_TOTAL_MIN - elapsedMin) * 60000 };
+  return { phase: 'done', round: EXAM_ROUNDS, remainMs: 0 };
+}
+function examMMSS(ms) { const s = Math.max(0, Math.round(ms / 1000)); return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); }
 class Component extends DCLogic {
   state = { view: 'login', mode: 'in', err: '', fEmail: '', fPass: '', fNewPass: '', recoveryToken: '', fCode: '', classes: [], adminClasses: [], code: '', tab: 'teams', subs: [], st: {}, memberLog: [], bpResults: [], selTeam: '', fEvent: '', fMsg: '', gTeam: '*', gAmt: '', gReason: '', edits: {}, saved: {}, board: false, ready: false };
   api() { return window.BizOnInstructor; }
   P() { return window.BizOnInstructorPage; }
   componentDidMount() {
     const t = setInterval(() => { if (this.api() && this.P()) { clearInterval(t); this.setState({ ready: true }); if (this.api().signedIn) this.loadClasses(); } }, 100);
+    setInterval(() => { if (this.state.tab === 'controls' && this.state.st && this.state.st.controls && this.state.st.controls.exam_started_at) this.forceUpdate(); }, 15000);
     try {
       const h = new URLSearchParams(location.hash.replace(/^#/, ''));
       if (h.get('type') === 'recovery' && h.get('access_token')) {
@@ -369,6 +392,8 @@ class Component extends DCLogic {
   async claim() { try { await this.api().claimClass(this.state.fCode); this.setState({ fCode: '' }); this.loadClasses(); } catch (e) { this.fail(e); } }
   async setLock(n) { try { const c = Object.assign({}, (this.state.st.controls || {}), { locked_round: n }); await this.api().setControls(this.state.code, c); this.reload(); } catch (e) { this.fail(e); } }
   async saveEvent() { try { const s = this.state, cur = (s.st.controls || {}); await this.api().setControls(s.code, Object.assign({}, cur, { forced_event: s.fEvent, forced_event_round: s.fEvent ? this.curRound() : null, message: s.fMsg })); this.reload(); } catch (e) { this.fail(e); } }
+  async startExam() { try { const cur = (this.state.st.controls || {}); await this.api().setControls(this.state.code, Object.assign({}, cur, { exam_started_at: new Date().toISOString() })); this.reload(); } catch (e) { this.fail(e); } }
+  async stopExam() { try { const cur = (this.state.st.controls || {}); await this.api().setControls(this.state.code, Object.assign({}, cur, { exam_started_at: null })); this.reload(); } catch (e) { this.fail(e); } }
   async doGrant() { const s = this.state, a = +s.gAmt; if (!a) return this.fail('Nhập số tiền (triệu ₫).'); try { await this.api().grant(s.code, s.gTeam, a, s.gReason); this.setState({ gAmt: '', gReason: '' }); this.reload(); } catch (e) { this.fail(e); } }
   async saveScore(g) { const s = this.state; try { await this.api().saveScore(s.code, g.name, g.reasoning === '' ? null : +g.reasoning, g.teamwork === '' ? null : +g.teamwork, g.note); this.setState({ saved: Object.assign({}, s.saved, { [g.name]: true }) }); this.reload(); } catch (e) { this.fail(e); } }
   curRound() { const T = this.P().teams(this.state.subs); return Math.min(6, Math.max(1, ...T.map(t => t.rs.length + 1), 1)); }
@@ -378,6 +403,13 @@ class Component extends DCLogic {
     const T = ok ? P.teams(s.subs) : [], G = ok ? P.grades(T, (s.st && s.st.scores) || [], s.edits, s.memberLog) : [], money = ok ? P.money : (x => x);
     const MB = ok ? P.members(T, s.memberLog) : [], BP = s.bpResults || [];
     const c = (s.st && s.st.controls) || {}, lock = c.locked_round;
+    const ep = c.exam_started_at ? examPhase(c.exam_started_at, Date.now()) : null;
+    const examStatus = !ep ? 'Chưa bắt đầu tính giờ — bấm «Bắt đầu tính giờ» khi cả lớp sẵn sàng vào phòng thi.'
+      : ep.phase === 'setup' ? `⏳ Chuẩn bị đăng nhập · còn ${examMMSS(ep.remainMs)}`
+      : ep.phase === 'round' ? `🔵 Vòng ${ep.round} đang mở · còn ${examMMSS(ep.remainMs)}`
+      : ep.phase === 'final' ? `📊 Xem báo cáo cuối mùa · còn ${examMMSS(ep.remainMs)}`
+      : `✅ Đã hết giờ thi (bắt đầu lúc ${new Date(c.exam_started_at).toLocaleTimeString('vi-VN')})`;
+    const examColor = !ep ? '#5a6b74' : ep.phase === 'final' ? '#e8843a' : ep.phase === 'done' ? '#3f8a44' : '#1f4a55';
     const tabDefs = [['teams', '👥 Đội & tiến độ'], ['decisions', '🧾 Quyết định'], ['controls', '🎛 Điều khiển lớp'], ['grading', '📝 Chấm điểm'], ['members', '👤 Thành viên']];
     const selTeam = s.selTeam || (T[0] && T[0].name) || '';
     const dec = ok ? P.decRows(T.find(t => t.name === selTeam)) : { head: [], cells: [] };
@@ -403,7 +435,8 @@ class Component extends DCLogic {
       classes: (s.classes || []).map(x => ({ class_code: x.class_code, date: new Date(x.created_at).toLocaleDateString('vi-VN'), open: () => this.openClass(x.class_code), remove: e => { if (e && e.stopPropagation) e.stopPropagation(); this.removeClass(x.class_code); } })),
       adminClasses: (s.adminClasses || []).map(x => ({ class_code: x.class_code, date: new Date(x.created_at).toLocaleDateString('vi-VN'), ownerLine: '👤 ' + x.owner_email + ' · ' + x.team_count + ' đội · ' + x.submission_count + ' bài nộp', open: () => this.openClass(x.class_code), remove: e => { if (e && e.stopPropagation) e.stopPropagation(); this.removeClass(x.class_code); } })),
       code: s.code, refresh: () => this.reload(), exportXls: () => P.xls(s.code, T, G, BP, MB), openBoard: () => this.setState({ board: true }), closeBoard: () => this.setState({ board: false }),
-      classStats: `${T.length} đội · ${s.subs.length} bài nộp · ${lock != null ? 'Đang khóa sau vòng ' + lock : 'Không khóa vòng'}${c.forced_event ? ' · Biến cố GV: ' + c.forced_event : ''}`,
+      classStats: `${T.length} đội · ${s.subs.length} bài nộp · ${lock != null ? 'Đang khóa sau vòng ' + lock : 'Không khóa vòng'}${c.forced_event ? ' · Biến cố GV: ' + c.forced_event : ''}${ep ? ' · ' + examStatus : ''}`,
+      examStatus, examColor, examRunning: !!ep, examNotRunning: !ep, startExam: () => this.startExam(), stopExam: () => this.stopExam(),
       tabs: tabDefs.map(([k, l]) => ({ label: l, go: () => this.setState({ tab: k }), bg: s.tab === k ? '#2f8a8c' : '#fbf6ee', fg: s.tab === k ? '#fff' : '#1f4a55', border: s.tab === k ? '#23706f' : '#e6d6bf' })),
       tabTeams: s.tab === 'teams', tabDecisions: s.tab === 'decisions', tabControls: s.tab === 'controls', tabGrading: s.tab === 'grading', tabMembers: s.tab === 'members', noTeams: !T.length,
       teams: T.map(t => ({ name: t.name, share: t.share.toFixed(1) + '%', profit: money(t.profit), profitColor: t.profit >= 0 ? '#3f8a44' : '#c0443a', flags: '🚩 ' + t.flags + '/6',
