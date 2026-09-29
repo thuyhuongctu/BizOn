@@ -552,6 +552,40 @@ function renderMarketMap() {
 $('bp3d-map') && $('bp3d-map').addEventListener('click', () => { renderMarketMap(); const m = $('bp-map-modal'); if (m) m.classList.add('on'); });
 $('bp-map-close') && $('bp-map-close').addEventListener('click', () => { const m = $('bp-map-modal'); if (m) m.classList.remove('on'); });
 
+/* ---------- hồ sơ đối thủ – tổng hợp Kim Long trên cả 7 thị trường ---------- */
+function renderRivalDossier() {
+  const B = window.__bp; if (!B || !B.S) return;
+  const isDark = document.documentElement.dataset.theme === 'dark';
+  const S = B.S, MKTS = B.MKTS, RIVAL = B.RIVAL || { name: 'Kim Long Exports', icon: '🐉' };
+  const mine = S.profit || 0, theirs = (S.rival && S.rival.rev) || 0, max = Math.max(mine, theirs, 1);
+  const barCol = isDark ? '#5cc4e6' : '#033337', rivalCol = '#e8762d';
+  let html = '<div class="bp-rival-head">' +
+    (RIVAL.img ? '<img src="' + RIVAL.img + '" alt="">' : '<span style="font-size:40px">' + RIVAL.icon + '</span>') +
+    '<div><b>' + RIVAL.icon + ' ' + RIVAL.name + '</b><span>' + (mine >= theirs ?
+      tr('Bạn đang dẫn trước trong cuộc đua doanh thu', "You're leading the revenue race") :
+      tr('Đối thủ đang dẫn trước – tăng tốc thôi!', "The rival is ahead – time to catch up!")) + '</span></div></div>';
+  html += '<div class="bp-rival-race">' +
+    '<div class="bp-rival-bar-row"><span>🏢 ' + tr('Bạn', 'You') + '</span><div class="bp-rival-bar-track"><div class="bp-rival-bar-fill" style="width:' + Math.max(4, mine / max * 100) + '%;background:' + barCol + '"></div></div><span>' + f1(mine) + tr(' tỷ', ' bn') + '</span></div>' +
+    '<div class="bp-rival-bar-row"><span>' + RIVAL.icon + ' ' + tr('Đối thủ', 'Rival') + '</span><div class="bp-rival-bar-track"><div class="bp-rival-bar-fill" style="width:' + Math.max(4, theirs / max * 100) + '%;background:' + rivalCol + '"></div></div><span>' + f1(theirs) + tr(' tỷ', ' bn') + '</span></div>' +
+    '</div>';
+  const rivalIn = (S.rival && S.rival.in) || [];
+  html += '<div class="bp-rival-mkts">' + MKTS.map((mk, m) => {
+    const inHere = rivalIn.indexOf(m) >= 0, myHere = S.entered[m] !== null && S.entered[m] !== undefined;
+    const qn = inHere && S.rival.qin ? (S.rival.qin[m] || 0) : 0;
+    const status = inHere ? ('🐉 Q' + qn + (B.rivalAttr ? ' · ' + f1(B.rivalAttr(m)) + tr(' tỷ', ' bn') : '') + (myHere ? ' · ⚔️' : '')) : tr('chưa có mặt', 'not present');
+    return '<div class="bp-rival-mkt' + (inHere ? ' in' : '') + '"><span>' + mk.icon + '</span><span class="nm">' + mk.name + '</span><span class="st" style="color:' + (inHere ? rivalCol : (isDark ? 'rgba(214,236,240,.45)' : 'rgba(3,51,55,.4)')) + '">' + status + '</span></div>';
+  }).join('') + '</div>';
+  const sharedCount = rivalIn.filter(m => S.entered[m] !== null && S.entered[m] !== undefined).length;
+  html += '<p class="bp-rival-note">' + (rivalIn.length === 0 ?
+    tr('Kim Long chưa mở thị trường nào – đây là lúc tốt để đi trước.', "Kim Long hasn't entered any market yet – a good time to move first.") :
+    sharedCount > 0 ?
+      tr('Đang chung ' + sharedCount + ' thị trường với Kim Long – đấu giá trực diện tốn kém, khác biệt hoá hoặc liên minh địa phương thường bền hơn.', 'Sharing ' + sharedCount + ' market(s) with Kim Long – a head-on price fight is costly; differentiation or local alliances usually last longer.') :
+      tr('Kim Long đã có mặt ở ' + rivalIn.length + ' thị trường nhưng chưa đụng bạn trực tiếp – theo dõi để chọn thời điểm thâm nhập.', 'Kim Long is in ' + rivalIn.length + ' market(s) but not head-to-head with you yet – watch and time your entry.')) + '</p>';
+  const mount = $('bp-rival-body'); if (mount) mount.innerHTML = html;
+}
+$('bp3d-rival') && $('bp3d-rival').addEventListener('click', () => { renderRivalDossier(); const m = $('bp-rival-modal'); if (m) m.classList.add('on'); });
+$('bp-rival-close') && $('bp-rival-close').addEventListener('click', () => { const m = $('bp-rival-modal'); if (m) m.classList.remove('on'); });
+
 /* ---------- sân lễ: radar & giấy chứng nhận ---------- */
 const stage = grp(null, END.x, -4, END.z); stage.visible = false;
 P(new THREE.CylinderGeometry(3.9, 4.3, 0.7, 36), M(0xeedbb0), stage, 0, -0.2, 0); P(new THREE.CylinderGeometry(3.6, 3.7, 0.2, 36), M(0xc98f52), stage, 0, 0.22, 0);

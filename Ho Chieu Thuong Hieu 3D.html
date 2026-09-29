@@ -177,6 +177,30 @@
   html[data-theme="dark"] .bp-map-legend { color:rgba(214,236,240,.75); }
   .bp-map-legend span { display:inline-flex; align-items:center; gap:6px; }
   .bp-map-legend i { width:12px; height:12px; border-radius:4px; display:inline-block; }
+  /* --- hồ sơ đối thủ --- */
+  #bp-rival-modal .bp-modal-card { max-width:640px; }
+  .bp-rival-head { display:flex; align-items:center; gap:12px; padding:2px 0 14px; }
+  .bp-rival-head img { width:56px; height:56px; border-radius:16px; object-fit:cover; box-shadow:0 6px 16px -6px rgba(0,60,80,.4); flex:none; }
+  .bp-rival-head b { display:block; font:800 16px Manrope,sans-serif; color:#033337; }
+  .bp-rival-head span { display:block; font:700 12px Manrope,sans-serif; color:rgba(3,51,55,.6); margin-top:2px; }
+  html[data-theme="dark"] .bp-rival-head b { color:#d6ecf0; } html[data-theme="dark"] .bp-rival-head span { color:rgba(214,236,240,.62); }
+  .bp-rival-race { display:flex; flex-direction:column; gap:6px; margin-bottom:16px; }
+  .bp-rival-bar-row { display:flex; align-items:center; gap:8px; font:700 11px Manrope,sans-serif; }
+  .bp-rival-bar-row span:first-child { width:64px; flex:none; color:rgba(3,51,55,.7); }
+  .bp-rival-bar-row span:last-child { width:72px; flex:none; text-align:right; color:rgba(3,51,55,.7); }
+  html[data-theme="dark"] .bp-rival-bar-row span { color:rgba(214,236,240,.72); }
+  .bp-rival-bar-track { flex:1; height:8px; border-radius:999px; background:rgba(3,51,55,.08); overflow:hidden; }
+  html[data-theme="dark"] .bp-rival-bar-track { background:rgba(214,236,240,.12); }
+  .bp-rival-bar-fill { height:100%; border-radius:999px; }
+  .bp-rival-mkts { display:flex; flex-direction:column; gap:6px; }
+  .bp-rival-mkt { display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:14px; background:rgba(3,51,55,.04); font:700 12px Manrope,sans-serif; color:#033337; }
+  html[data-theme="dark"] .bp-rival-mkt { background:rgba(214,236,240,.06); color:#d6ecf0; }
+  .bp-rival-mkt.in { background:rgba(232,118,45,.12); }
+  html[data-theme="dark"] .bp-rival-mkt.in { background:rgba(232,118,45,.18); }
+  .bp-rival-mkt .nm { flex:1; min-width:0; }
+  .bp-rival-mkt .st { font-size:11px; font-weight:800; flex:none; }
+  .bp-rival-note { margin-top:14px; padding:10px 12px; border-radius:14px; background:rgba(3,51,55,.05); font:600 12px/1.5 Manrope,sans-serif; color:rgba(3,51,55,.75); font-style:italic; }
+  html[data-theme="dark"] .bp-rival-note { background:rgba(214,236,240,.07); color:rgba(214,236,240,.78); }
   /* --- hộ chiếu toàn màn hình --- */
   #bp-pp-modal .bp-modal-card { max-width:560px; align-items:center; }
   #bp-pp-modal .bp-modal-body { display:flex; flex-direction:column; align-items:center; gap:12px; padding-top:2px; }
@@ -206,6 +230,7 @@
   <div class="bp3d-tools">
     <button id="bp3d-pp" type="button" data-en="🛂 Passport">🛂 Hộ chiếu</button>
     <button id="bp3d-map" type="button" data-en="🗺️ Market map">🗺️ Bản đồ</button>
+    <button id="bp3d-rival" type="button" data-en="🕵️ Rival intel">🕵️ Đối thủ</button>
     <button id="bp3d-ov" type="button" data-en="🧭 Overview">🧭 Toàn cảnh</button>
     <button id="bp3d-snd" type="button" aria-label="Âm thanh" data-en-aria="Sound">🔊</button>
     <button id="bp3d-land" type="button">👤 CEO lên đảo</button>
@@ -223,6 +248,17 @@
     <div class="bp-modal-body">
       <div id="bp-map-svg"></div>
       <div class="bp-map-legend" id="bp-map-legend"></div>
+    </div>
+  </div>
+</div>
+<div id="bp-rival-modal" class="bp-modal" role="dialog" aria-modal="true" aria-label="Hồ sơ đối thủ">
+  <div class="bp-modal-card">
+    <div class="bp-modal-head">
+      <b data-en="🕵️ Rival dossier">🕵️ Hồ sơ đối thủ</b>
+      <button class="bp-modal-close" id="bp-rival-close" type="button" aria-label="Đóng">✕</button>
+    </div>
+    <div class="bp-modal-body">
+      <div id="bp-rival-body"></div>
     </div>
   </div>
 </div>
@@ -1892,7 +1928,7 @@
       renderResultsScreen();
     }
   });
-  window.__bp = { get S() { return S; }, SOURCES: SOURCES, MKTS: MKTS, FIRMS: FIRMS, MODES: MODES, RIVAL: RIVAL, CAST: CAST, scores: scores };
+  window.__bp = { get S() { return S; }, SOURCES: SOURCES, MKTS: MKTS, FIRMS: FIRMS, MODES: MODES, RIVAL: RIVAL, CAST: CAST, scores: scores, rivalAttr: rivalAttr };
 })();
 </script>
 <script src="js/bp-tutorial.js"></script>
