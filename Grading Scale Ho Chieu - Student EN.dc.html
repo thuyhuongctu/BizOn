@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="./doc-page.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&amp;display=swap">
+<style>
+doc-page:not(:defined){visibility:hidden}
+body{margin:0;font-family:"Be Vietnam Pro",system-ui,sans-serif;color:#033337}
+a{color:#006687}a:hover{color:#e8762d}
+table{border-collapse:collapse;width:100%}
+tr{break-inside:avoid}
+td{padding:7px 9px;border-bottom:1px solid #d9e4e6;vertical-align:top}
+</style>
+</helmet>
+<doc-page size="a4" margin="16mm">
+<div style="font-size:10.5pt;line-height:1.55">
+
+<div style="display:flex;flex-direction:column;gap:6px;border-bottom:3px solid #fda127;padding-bottom:12px;margin-bottom:16px">
+  <p style="margin:0;font:700 9pt 'Be Vietnam Pro';letter-spacing:.08em;text-transform:uppercase;color:#006687">BizOn · Student guide</p>
+  <h1 style="margin:0;font:800 22pt/1.2 'Be Vietnam Pro';color:#033337">Brand Passport 3D game: grading scale</h1>
+  <p style="margin:0;font-size:9.5pt;color:#5a6b74">Compiled by <b style="color:#033337">Đỗ Thùy Hương &amp; Phan Anh Tú</b></p>
+  <p style="margin:0;color:#335a5e">Individual play, scored out of 10. All points come from game results: the results screen, the event log and the «Decision footprint». There is no reflection essay or report.</p>
+</div>
+
+<h2 style="font:800 13pt 'Be Vietnam Pro';color:#006687;margin:0 0 8px">1. Before you play</h2>
+<ul style="margin:0 0 16px;padding-left:20px;display:flex;flex-direction:column;gap:3px">
+  <li>On the intro screen, enter the <b>Class code</b> in the «🎓 Class code» field, then pick your company. Without a Class code you <b>are not graded</b>.</li>
+  <li>The game has 6 quarters. Each quarter: gather intel (up to 2 sources), pick a priority and markets, commit the quarter, then handle one event.</li>
+  <li>After 6 quarters, press <b>Submit result</b> with your full name. Each in-game market is modelled on a real country (see the 📘 Handbook).</li>
+  <li>Pick your <b>home country</b> before you start: Vietnam, Thailand, Malaysia, the Philippines, China, India, South Korea, Japan, the United States or Germany. If you start from Korea, Japan, the US or Germany, that country's market slot becomes <b>Vietnam</b>.</li>
+  <li>Your home country sets the trade agreements and cultural distance to each market: <b>no FTA → revenue −8%</b>; a culturally distant market → up to −12% revenue in the first two quarters and less knowledge per intel purchase. These effects feed into the /100 total (A1).</li>
+  <li>Use the <b>🗺️ Full-screen map</b> and <b>📇 Country dossiers</b> (population, GDP, trade deals, barriers, FX, logistics, Hofstede dimensions) before choosing markets and entry modes.</li>
+</ul>
+
+<h2 style="font:800 13pt 'Be Vietnam Pro';color:#006687;margin:0 0 8px">2. Exam schedule</h2>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px;font-size:10pt;break-inside:avoid">
+  <div style="background:#e8f3f6;border-radius:8px;padding:8px 10px">Date: <b>......./......./2026</b></div>
+  <div style="background:#e8f3f6;border-radius:8px;padding:8px 10px">Start time: <b>......:.......</b></div>
+  <div style="background:#e8f3f6;border-radius:8px;padding:8px 10px">Room: <b>..................</b></div>
+</div>
+<p style="margin:0 0 8px">Total time: <b>60 minutes</b>. The game opens each quarter on schedule, with a countdown at the bottom of the screen; you cannot commit a quarter before it opens. If a quarter ends before you commit, the game commits your selected priority («Strengthen resilience» if none) and picks the first option of the event.</p>
+<table style="margin-bottom:16px;font-size:10pt">
+  <thead><tr><th style="padding:7px 9px;text-align:left;background:#006687;color:#fff;width:20%">Time</th><th style="padding:7px 9px;text-align:left;background:#006687;color:#fff;width:16%">Duration</th><th style="padding:7px 9px;text-align:left;background:#006687;color:#fff">What to do</th></tr></thead>
+  <tbody>
+    <tr><td><b>Min 0 – 10</b></td><td>10 min</td><td>Open the game, enter the Class code, read the 4 company profiles and pick one. Browse the 📘 Handbook.</td></tr>
+    <tr><td><b>Min 10 – 58</b></td><td>6 quarters × 8 min</td><td>Each quarter:<br>• Min 0–3: buy intel and compare sources.<br>• Min 3–6: choose priority, market and entry mode, then commit.<br>• Min 6–8: handle the event and review the quarter.</td></tr>
+    <tr><td><b>Min 58 – 60</b></td><td>2 min</td><td>Press Submit result and check your name on the class leaderboard.</td></tr>
+  </tbody>
+</table>
+
+<h2 style="font:800 13pt 'Be Vietnam Pro';color:#006687;margin:0 0 8px">3. How the 10 points are awarded</h2>
+<table style="margin-bottom:16px;font-size:10pt">
+  <thead><tr><th style="padding:7px 9px;text-align:left;background:#006687;color:#fff;width:26%">Criterion</th><th style="padding:7px 9px;text-align:left;background:#006687;color:#fff">How to score</th><th style="padding:7px 9px;text-align:right;background:#006687;color:#fff;width:10%">Max</th></tr></thead>
+  <tbody>
+    <tr><td><b>A1. Simulation score</b></td><td>In-game total /100 × 0.05 (e.g. 80 → 4.0). Ending early (cash-out for 2 quarters in a row, or reputation collapse): 1.5 max.</td><td style="text-align:right">5.0</td></tr>
+    <tr><td><b>A2. Result bonus</b></td><td>+0.6 for the «Vietnamese brand sets sail» title (total ≥ 72 and all 5 dimensions ≥ 60).<br>+0.4 if cumulative profit beats the rival after 6 quarters.</td><td style="text-align:right">1.0</td></tr>
+    <tr><td><b>A3. Balance across 5 dimensions</b></td><td>Based on your weakest dimension: ≥ 60 → 2.0 · 45–59 → 1.4 · 30–44 → 0.7 · below 30 → 0.</td><td style="text-align:right">2.0</td></tr>
+    <tr><td><b>A4a. Decision quality</b></td><td>Share of «sound» choices among the events you faced: ≥ 80% → 1.5 · 60–79% → 1.1 · 40–59% → 0.7 · below 40% → 0.3. See section 5.</td><td style="text-align:right">1.5</td></tr>
+    <tr><td style="border-bottom:2px solid #033337"><b>A4b. Cash discipline</b></td><td style="border-bottom:2px solid #033337">No quarter with negative cash → 0.5 · one quarter → 0.25 · two or more → 0.</td><td style="text-align:right;border-bottom:2px solid #033337">0.5</td></tr>
+    <tr><td colspan="2"><b>Total</b></td><td style="text-align:right"><b>10</b></td></tr>
+  </tbody>
+</table>
+
+<h2 style="font:800 13pt 'Be Vietnam Pro';color:#006687;margin:0 0 8px">4. The five in-game dimensions (total /100)</h2>
+<table style="margin-bottom:16px;font-size:9.5pt">
+  <thead><tr><th style="padding:7px 9px;text-align:left;background:#006687;color:#fff;width:18%">Dimension</th><th style="padding:7px 9px;text-align:left;background:#006687;color:#fff;width:11%">Weight</th><th style="padding:7px 9px;text-align:left;background:#006687;color:#fff;width:30%">Measured by</th><th style="padding:7px 9px;text-align:left;background:#006687;color:#fff">How to raise it</th></tr></thead>
+  <tbody>
+    <tr><td><b>💹 Profit</b></td><td>30%</td><td>Cumulative profit against a 12 bn ₫ benchmark</td><td>Match market and entry mode, hold price, avoid price wars</td></tr>
+    <tr><td><b>⭐ Reputation</b></td><td>20%</td><td>Final reputation index</td><td>«Build the brand», handle crises transparently</td></tr>
+    <tr><td><b>🏭 Capability</b></td><td>20%</td><td>Final capability index</td><td>«Upgrade capability», data upgrades, product adaptation</td></tr>
+    <tr><td><b>🤸 Adaptability</b></td><td>15%</td><td>Resilience and number of adaptations</td><td>«Strengthen resilience», choices marked «+1 adaptation»</td></tr>
+    <tr><td><b>🌱 Sustainability</b></td><td>15%</td><td>Green actions (5 actions → 100)</td><td>Recycled packaging, green credentials</td></tr>
+  </tbody>
+</table>
+
+<h2 style="font:800 13pt 'Be Vietnam Pro';color:#006687;margin:0 0 8px">5. What counts as a «sound» choice (A4a)</h2>
+<ul style="margin:0 0 16px;padding-left:20px;display:flex;flex-direction:column;gap:3px">
+  <li>Protecting the brand long-term over short-term gain, e.g. holding price and telling the product story instead of matching a rival's price cut.</li>
+  <li>Handling incidents transparently: recall, apologise, compensate real customers.</li>
+  <li>Some choices are only sound if you meet the conditions at the time (market knowledge, reputation, capability, cash, green record). Check these before accepting a big opportunity.</li>
+</ul>
+
+<h2 style="font:800 13pt 'Be Vietnam Pro';color:#006687;margin:0 0 8px">6. Grade conversion</h2>
+<div style="display:grid;grid-template-columns:repeat(8,1fr);gap:4px;text-align:center;font-size:9.5pt;break-inside:avoid">
+  <div style="background:#033337;color:#fff;border-radius:6px;padding:6px 2px"><b>A</b><br>9.0–10<br><span style="font-size:8.5pt">GPA 4.0</span></div>
+  <div style="background:#0d4f55;color:#fff;border-radius:6px;padding:6px 2px"><b>B+</b><br>8.0–8.9<br><span style="font-size:8.5pt">GPA 3.5</span></div>
+  <div style="background:#006687;color:#fff;border-radius:6px;padding:6px 2px"><b>B</b><br>7.0–7.9<br><span style="font-size:8.5pt">GPA 3.0</span></div>
+  <div style="background:#e3eef1;color:#033337;border-radius:6px;padding:6px 2px"><b>C+</b><br>6.5–6.9<br><span style="font-size:8.5pt">GPA 2.5</span></div>
+  <div style="background:#e3eef1;color:#033337;border-radius:6px;padding:6px 2px"><b>C</b><br>5.5–6.4<br><span style="font-size:8.5pt">GPA 2.0</span></div>
+  <div style="background:#fff0dc;color:#033337;border-radius:6px;padding:6px 2px"><b>D+</b><br>5.0–5.4<br><span style="font-size:8.5pt">GPA 1.5</span></div>
+  <div style="background:#fff0dc;color:#033337;border-radius:6px;padding:6px 2px"><b>D</b><br>4.0–4.9<br><span style="font-size:8.5pt">GPA 1.0</span></div>
+  <div style="background:#fbe1d4;color:#033337;border-radius:6px;padding:6px 2px"><b>F</b><br>&lt; 4.0<br><span style="font-size:8.5pt">GPA 0.0</span></div>
+</div>
+<p style="margin:8px 0 0">A course earns credit only with a grade of D or higher.</p>
+
+<div style="margin-top:18px;height:62mm;border-radius:10px;overflow:hidden;break-inside:avoid;-webkit-mask-image:linear-gradient(to bottom,transparent,#000 45%);mask-image:linear-gradient(to bottom,transparent,#000 45%)"><img src="assets/illustrations/game/river-worldmap.webp" alt="The riverside world map from the game" style="width:100%;height:100%;object-fit:cover;object-position:50% 45%;opacity:.28;display:block"></div>
+<div style="margin-top:8px;padding-top:10px;border-top:1px solid #d9e4e6;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:9pt;color:#5a6b74;break-inside:avoid">
+  <span>Compiled by <b style="color:#033337">Đỗ Thùy Hương &amp; Phan Anh Tú</b></span>
+  <span>© 2026 Đỗ Thùy Hương &amp; Phan Anh Tú. All rights reserved.</span>
+</div>
+
+</div>
+</doc-page>
+</x-dc>
+</body>
+</html>
