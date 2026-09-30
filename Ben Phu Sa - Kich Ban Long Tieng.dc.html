@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="./js/bps-voice.js"></script>
+<style>
+body{margin:0;background:#eef4f5;font-family:"Plus Jakarta Sans",system-ui,sans-serif;color:#033337}
+a{color:#006687}a:hover{color:#e8762d}
+</style>
+</helmet>
+<div style="max-width:980px;margin:0 auto;padding:clamp(14px,3vw,28px);display:flex;flex-direction:column;gap:14px">
+  <header style="display:flex;flex-direction:column;gap:6px">
+    <span style="font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#b8561b">BizOn · Bến Phù Sa 3D</span>
+    <h1 style="margin:0;font-size:clamp(22px,3vw,30px);font-weight:800">Kịch bản lồng tiếng</h1>
+    <p style="margin:0;color:#335a5e;line-height:1.55;max-width:720px;text-wrap:pretty">Mỗi câu lưu thành một file mp3 đặt tên đúng mã, đặt vào <code>assets/voice/ben-phu-sa/vi/</code> (tiếng Việt) và <code>assets/voice/ben-phu-sa/en/</code> (tiếng Anh). Game tự phát khi có file; thiếu file thì chỉ hiện chữ.</p>
+  </header>
+  <sc-for list="{{ speakers }}" as="sp" hint-placeholder-count="4">
+    <section style="background:#fff;border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;box-shadow:0 1px 0 #d6e4e7">
+      <div style="display:flex;gap:10px;align-items:baseline;flex-wrap:wrap"><h2 style="margin:0;font-size:16px;font-weight:800;color:#006687">{{ sp.name }}</h2><span style="font-size:12px;color:#5f7d81">{{ sp.note }} · {{ sp.count }} câu</span></div>
+      <sc-for list="{{ sp.rows }}" as="r" hint-placeholder-count="3">
+        <div style="display:grid;grid-template-columns:minmax(0,120px) minmax(0,1fr) minmax(0,1fr);gap:12px;padding-top:10px;border-top:1px solid #e6eef0;font-size:13px;line-height:1.5">
+          <div style="display:flex;flex-direction:column;gap:2px"><code style="font-weight:800;color:#033337">{{ r.id }}</code><span style="font-size:11px;color:#5f7d81">{{ r.when }}</span></div>
+          <span>🇻🇳 {{ r.vi }}</span>
+          <span style="color:#335a5e">🇬🇧 {{ r.en }}</span>
+        </div>
+      </sc-for>
+    </section>
+  </sc-for>
+  <p style="margin:6px 0 0;font-size:11px;color:#6d888c">© 2026 Đỗ Thùy Hương &amp; Phan Anh Tú</p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() { const w = () => window.BPS_VOICE ? this.forceUpdate() : setTimeout(w, 80); w(); }
+  renderVals() {
+    const V = window.BPS_VOICE; if (!V) return { speakers: [] };
+    return { speakers: Object.keys(V.speakers).map(k => { const rows = V.lines.filter(l => l[1] === k).map(l => ({ id: l[0], when: l[2], vi: l[3], en: l[4] }));
+      return { name: V.speakers[k].name, note: V.speakers[k].note, count: rows.length, rows }; }) };
+  }
+}
+</script>
+</body>
+</html>
