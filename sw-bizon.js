@@ -1,5 +1,5 @@
 /* BizOn – service worker: cache tĩnh, luôn lấy mạng trước cho HTML/JS để nhận bản mới. */
-const V = 'bizon-3d-v6';
+const V = 'bizon-3d-v7';
 const CORE = ['BizOn%20Game%203D.html', 'Trang%20Giang%20Vien.dc.html', 'game.html', 'support.js', 'bizon-characters.js', 'bizon-hq-kit.js', 'bizon-products.js', 'bizon-mascots.js', 'js/app.js', 'js/engine.js', 'js/backend.js', 'js/backend-config.js', 'js/class-sync.js', 'js/instructor-api.js', 'js/bizon-grading.js', 'js/member-log.js', 'js/exam-clock.js', 'js/bn-exam.js', 'assets/icons/icon-192.png', 'js/vendor/three.module.js', 'js/vendor/three.core.js', 'js/vendor/OrbitControls.js', 'assets/illustrations/rong-bay-doi-bizon.webp', 'assets/character/rong-xanh.webp', 'assets/character/rong-xanh-sen.webp',
   'Characters%203D.html', 'HQ%20Asset%20Gallery.html', 'BizOn%20HQ%20Diorama.html', 'BizOn%20Office%20Game.html', 'clay-factory-3d.html', 'strategy-table-3d.html', 'js/office-scene.js', 'js/office-scenes.js', 'js/office-stations.js',
   'doc-page.js', 'Thang%20Diem%20Chi%20Tiet.dc.html', 'Thang%20Diem%20Danh%20Gia.dc.html', 'Thang%20Diem%20Bat%20Nghiep%20-%20Sinh%20Vien.dc.html', 'Grading%20Scale%20Bat%20Nghiep%20-%20Student%20EN.dc.html', 'Thang%20Diem%20Ho%20Chieu%20-%20Sinh%20Vien.dc.html', 'Grading%20Scale%20Ho%20Chieu%20-%20Student%20EN.dc.html'];

@@ -4142,6 +4142,10 @@
 "Class ID"
 ],
 [
+"Chơi thử (không Mã lớp): mọi dữ liệu chỉ lưu trên máy bạn. Có Mã lớp: kết quả mỗi vòng và email này được gửi về máy chủ lớp học để giảng viên chấm điểm –",
+"Practice mode (no class code): all data stays on your device. With a class code: each round's results and this email are sent to the classroom server so your instructor can grade –"
+],
+[
 "Bỏ trống vẫn chơi được trọn 6 vòng ở chế độ",
 "Leave it blank and you can still play all 6 rounds in"
 ],
