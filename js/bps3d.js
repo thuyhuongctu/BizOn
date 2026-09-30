@@ -145,15 +145,32 @@ const EXPLORE = [
   { p: [38, 8], t: ['Chợ nổi đang đổi thay', 'A changing market'], d: ['Những năm gần đây, chợ nổi thu hẹp dần khi đường bộ và cầu phát triển làm giảm nhu cầu vận chuyển đường sông – nhiều thương hồ đã lên bờ. Địa phương đang tìm cách gìn giữ nét văn hoá này.', 'In recent years, the floating market has been shrinking as new roads and bridges reduce the need for river transport – many traders have moved ashore. Local efforts are underway to help preserve this culture.'] },
   { p: [46, 10], t: ['Cái Răng lúc bình minh', 'Cái Răng at dawn'], d: ['Hàng trăm ghe xuồng san sát, tiếng máy nổ lạch tạch xen tiếng mời mua bán, những cây bẹo treo đủ màu trái cây tạo thành mảng màu rực rỡ trên mặt nước – đó là Cái Răng lúc bình minh.', "Hundreds of boats packed together, the putter of engines mixed with vendors' calls, poles hung with colorful fruit painting the water with color – that's Cái Răng at dawn."] },
 ];
+const GOODS = [0xc0443a, 0xf2c14e, 0x6fbf73, 0xe8762d, 0xfda127, 0xd94f8a];
+// một "cây bẹo" thật treo cả chùm hàng, không chỉ 1 món – cho đúng tinh thần "treo gì bán nấy"
+function beoPole(g, seed, tall = 3) {
+  cyl(0.1, 0.1, tall, 0x8a5a3b, 0.3, 0.35, 0, g);
+  const n = 2 + (seed % 2);
+  for (let k = 0; k < n; k++) ball(0.22 + (k === 0 ? 0.16 : 0), GOODS[(seed + k) % GOODS.length], 0.3 + Math.sin(seed + k) * 0.16, tall - 0.3 - k * 0.55, Math.cos(seed + k) * 0.1, g);
+}
 const explorePins = EXPLORE.map((e, i) => {
   const g = new THREE.Group(); g.position.set(e.p[0], 0, e.p[1]); scene.add(g); g.visible = false;
   box(1.6, 0.35, 0.7, 0xd9a85a, 0, 0, 0, g);
-  cyl(0.1, 0.1, 3, 0x8a5a3b, 0.3, 0.35, 0, g);
-  ball(0.36, [0xc0443a, 0xf2c14e, 0x6fbf73, 0xe8762d][i % 4], 0.3, 3.1, 0, g);
+  beoPole(g, i, 3.2);
+  box(0.32, 0.22, 0.32, GOODS[(i + 2) % GOODS.length], -0.5, 0.35, 0.15, g); box(0.3, 0.2, 0.3, GOODS[(i + 4) % GOODS.length], -0.5, 0.35, -0.18, g); // sọt hàng chất trên ghe
+  if (i % 2 === 0) { cyl(0.04, 0.04, 1.1, 0x7a5a3a, -0.9, 0.35, 0, g); cyl(0.04, 0.04, 1.1, 0x7a5a3a, -0.1, 0.35, 0.32, g); box(1, 0.06, 0.5, 0xf4efe4, -0.5, 1.4, 0.16, g); } // mái che ghe hàng ăn
   const hit = M(new THREE.CylinderGeometry(1.6, 1.6, 4, 12), new THREE.MeshBasicMaterial({ visible: false }), 0, 2, 0, g); hit.userData.explore = i;
   const lab = document.createElement('button'); lab.type = 'button'; lab.className = 'bps3d-lab'; lab.style.display = 'none'; lab.innerHTML = '<b>🪧 ' + T(e.t[0], e.t[1]) + '</b>'; labels.appendChild(lab);
   lab.onclick = () => showExplore(i);
   return { g, hit, lab };
+});
+// ghe nền rải rác dọc sông cho đông đúc – chỉ trang trí, không tương tác
+const MARKET_BOATS = [[-36, -7, 0], [-20, -8, 1], [-8, 6, 2], [7, -1, 0], [21, 8, 1], [34, -4, 2], [-32, 4, 1], [42, 4, 0]];
+const marketBoats = MARKET_BOATS.map((p, i) => {
+  const g = new THREE.Group(); g.position.set(p[0], 0, p[1]); g.rotation.y = i * 1.3; scene.add(g); g.visible = false;
+  box(1.2 + (i % 3) * 0.2, 0.3, 0.55, [0xd9a85a, 0xc9713a, 0xe0a04f][i % 3], 0, 0, 0, g);
+  if (p[2] > 0) beoPole(g, i + 5, 2.2 + (i % 2) * 0.4);
+  g.userData.bob = i * 1.7;
+  return g;
 });
 const visited = new Set();
 function showExplore(i) {
@@ -173,6 +190,7 @@ function showExplore(i) {
 window.addEventListener('bps-mode', e => {
   exploreMode = e.detail.mode === 'explore';
   explorePins.forEach(p => { p.g.visible = exploreMode; p.lab.style.display = exploreMode ? '' : 'none'; });
+  marketBoats.forEach(g => { g.visible = exploreMode; });
   controls.maxPolarAngle = exploreMode ? 1.5 : 1.25;
   controls.minDistance = exploreMode ? 8 : 18;
   controls.maxDistance = exploreMode ? 130 : 90;
