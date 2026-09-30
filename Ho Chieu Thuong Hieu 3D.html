@@ -621,7 +621,7 @@
     box.querySelectorAll('[data-pri]').forEach(function (inp) { inp.oninput = function () { AIBIS_PRI[inp.dataset.pri] = +inp.value; inp.nextElementSibling.textContent = inp.value; try { localStorage.setItem('bizon-bp-aibis-pri', JSON.stringify(AIBIS_PRI)); } catch (e) {} clearTimeout(renderAibis.t); renderAibis.t = setTimeout(renderAibis, 120); }; });
   }
 
-  // ===== Quốc gia chủ nhà (home) × quốc gia sở tại (host) – người chơi chọn quốc gia xuất phát =====
+  // ===== Quốc gia xuất phát (home) × quốc gia chủ nhà/sở tại (host) – người chơi chọn quốc gia xuất phát =====
   // Văn hoá: 4 chiều Hofstede cổ điển (PDI, IDV, MAS, UAI – Hofstede et al., 2010); khoảng cách văn hoá theo chỉ số Kogut & Singh (1988).
   var HOMES = [
     { id: 'vn', flag: '🇻🇳', c: 'Việt Nam', cEn: 'Vietnam', dem: 'Việt', demEn: 'Vietnamese', h: [70, 20, 40, 30] },
@@ -679,9 +679,10 @@
     if (!box) { box = document.createElement('div'); box.id = 'bp-homes-wrap'; box.className = 'mb-5'; intro.insertBefore(box, intro.firstElementChild); }
     else box = $('bp-homes-wrap');
     box.innerHTML = '<h2 class="font-display font-extrabold text-deep-teal text-lg mb-2">' + T('🏠 Quốc gia của bạn (home country)', '🏠 Your home country') + '</h2>' +
-      '<p class="text-[11px] opacity-60 mb-2">' + T('Nơi doanh nghiệp xuất phát. Quốc gia chủ nhà quyết định hiệp định thương mại và khoảng cách văn hoá (cultural distance) tới 7 thị trường sở tại (host country).', 'Where your firm starts. Your home country sets the trade agreements and cultural distance to the 7 host markets.') + '</p>' +
+      '<p class="text-[11px] opacity-60 mb-2">' + T('Nơi doanh nghiệp xuất phát (home country). Quốc gia này quyết định hiệp định thương mại và khoảng cách văn hoá (cultural distance) tới 7 thị trường chủ nhà/sở tại (host country) mà bạn sẽ thâm nhập.', 'Where your firm starts (home country). It sets the trade agreements and cultural distance to the 7 host markets you will enter.') + '</p>' +
       '<div id="bp-homes" class="flex flex-wrap gap-2">' + HOMES.map(function (x) { var on = x.id === S.home;
         return '<button type="button" onclick="bpHome(\'' + x.id + '\')" class="clay-btn px-3 py-2 text-sm font-extrabold ' + (on ? 'bg-deep-teal text-white' : 'bg-surface-bright text-deep-teal') + '">' + x.flag + ' ' + T(x.c, x.cEn) + '</button>'; }).join('') + '</div>' +
+      (HOME_SLOT[S.home] ? '<p style="margin:8px 0 0;font-size:11px;background:#fff6ea;border:1px solid #fda127;border-radius:8px;padding:6px 9px">' + T('⚠️ Vì quốc gia xuất phát của bạn trùng với một trong 7 thị trường chủ nhà, thị trường «' + (MKTS.filter(function (x) { return x.key === HOME_SLOT[S.home]; })[0] || {}).name + '» được đổi thành Việt Nam (để tránh tình huống doanh nghiệp "thâm nhập vào chính nước mình").', '⚠️ Because your home country matches one of the 7 host markets, the «' + (MKTS.filter(function (x) { return x.key === HOME_SLOT[S.home]; })[0] || {}).name + '» market is swapped to Vietnam (to avoid a firm "entering its own home country").') + '</p>' : '') +
       '<p class="text-[11px] opacity-60 mt-2">' + T('Xem thẻ «Bảy cánh cửa ra thế giới» bên dưới cho khoảng cách văn hoá và hiệp định từng thị trường.', 'See the «Seven gateways» cards below for cultural distance and trade deals per market.') + '</p>' + mapBox('bp-map-intro', true);
     setTimeout(function () { if (typeof drawMap === 'function') drawMap('bp-map-intro'); }, 0);
   }
