@@ -107,6 +107,7 @@ function setWeek(w) {
 }
 function coach() {
   const c = document.getElementById('bps3d-coach'), g = G(); if (!c || !g) return;
+  if (typeof exploreMode !== 'undefined' && exploreMode) { c.style.display = 'none'; return; }
   const s = g.S.sel; if (week > 0 || (s.m !== null && s.menu !== null && s.loc !== null)) { c.style.display = 'none'; return; }
   const step = s.m === null ? 1 : s.menu === null ? 2 : 3;
   c.style.display = 'block';
@@ -116,7 +117,7 @@ function labelsText() {
   const g = G(); if (!g) return;
   spots.forEach((s, i) => { const L = g.LOCS[i], w0 = g.W[week][i]; const known = Object.keys(g.S.knownPairs || {}).some(k => +k.split('-')[1] === i); s.lab.innerHTML = '<b>' + L[0] + ' ' + T(L[1], L[3]) + (known ? ' 📒' : '') + '</b><small>' + T(L[2], L[4]) + (i === stormAt ? ' · 🌧️ ' + T('mưa bão', 'storm') : w0 >= 1.1 ? ' · 🔥 ' + T('đông', 'busy') : '') + '</small>'; s.lab.classList.toggle('on', sel === i); });
 }
-function pick(i) { const g = G(); if (!g) return; if (typeof window.ftPick === 'function') window.ftPick('loc', i); }
+function pick(i) { if (exploreMode) return; const g = G(); if (!g) return; if (typeof window.ftPick === 'function') window.ftPick('loc', i); }
 let camGoal = null;
 function highlight(i) { sel = i; spots.forEach((s, k) => { s.pad.material.opacity = k === i ? 0.55 : 0; }); labelsText(); coach(); camGoal = i == null ? new THREE.Vector3(0, 0, -3) : new THREE.Vector3(P[i][0] * 0.35, 0, P[i][1] * 0.35 - 2); }
 function showRivals(prevWeek) {
@@ -131,6 +132,54 @@ function sendMe(m, loc, done) {
   me.lookAt(to.x, me.position.y, to.z); tween(me, to, 1600, done);
 }
 
+// ---- Chế độ khám phá: Chợ nổi Cái Răng (Cần Thơ) – tham quan văn hoá, tách biệt hoàn toàn
+// khỏi luật chơi kinh doanh. Nguồn: Cục Du lịch Quốc gia VN, Bộ VHTTDL, báo Tuổi Trẻ (xem PR). ----
+let exploreMode = false;
+const EXPLORE = [
+  { p: [-42, -9], t: ['Chợ nổi Cái Răng là gì?', 'What is Cái Răng floating market?'], d: ['Chợ nổi Cái Răng nằm trên sông ở quận Cái Răng, TP. Cần Thơ – nơi thương hồ tụ họp mua bán nông sản trên ghe thuyền đã hàng trăm năm nay, khi kênh rạch từng là tuyến giao thương chính của miền Tây.', "Cái Răng floating market sits on a river in Cái Răng district, Cần Thơ – where river traders have gathered to buy and sell produce from their boats for centuries, back when canals were the Mekong Delta's main trade routes."] },
+  { p: [-28, -5], t: ['Di sản văn hoá quốc gia', 'National cultural heritage'], d: ['Năm 2016, Bộ Văn hoá, Thể thao và Du lịch công nhận «Văn hoá chợ nổi Cái Răng» là di sản văn hoá phi vật thể cấp quốc gia – ghi nhận giá trị một nếp sống sông nước độc đáo của miền Tây.', 'In 2016, Vietnam’s Ministry of Culture, Sports and Tourism recognized «Cái Răng floating market culture» as a national intangible cultural heritage, honoring this distinctive Mekong Delta river way of life.'] },
+  { p: [-14, -1], t: ['Cây bẹo là gì?', 'What is a "cây bẹo"?'], d: ['«Cây bẹo» là sào tre cắm trên ghe để treo mẫu hàng lên cao. Trên sông, tiếng rao khó vang xa, nên thương hồ «bẹo hàng» bằng hình ảnh: treo gì bán nấy – nhìn cây bẹo là biết ghe bán thứ gì.', "A «cây bẹo» is a bamboo pole mounted on a boat to hoist a sample of its goods. Shouting doesn't carry far on the water, so vendors advertise visually instead – whatever hangs from the pole is what's for sale."] },
+  { p: [0, 3], t: ['Giờ vàng ghé chợ', 'The best time to visit'], d: ['Chợ đông và sôi động nhất vào sáng sớm, thường trước 8–9 giờ – càng về trưa ghe càng thưa dần. Đi chợ nổi sớm để còn thấy sương giăng trên sông và không khí mua bán tấp nập nhất.', 'The market is busiest early in the morning, usually before 8–9am – boats thin out as the day goes on. Visit early to catch the river mist and the liveliest trading.'] },
+  { p: [14, 1], t: ['Hàng hoá trên chợ', 'What is sold here'], d: ['Mặt hàng chính là trái cây và rau củ đặc sản miền Tây, chở số lượng lớn để bán sỉ. Len lỏi giữa những ghe lớn là các xuồng nhỏ bán đồ ăn thức uống nổi trên sông – cà phê, hủ tiếu, bún riêu phục vụ ngay tại chỗ.', 'The main goods are Mekong Delta fruit and vegetables, carried in bulk for wholesale. Smaller boats weave between them selling food and drink on the spot – coffee, noodle soup, served right on the water.'] },
+  { p: [27, 5], t: ['Ghe lớn, xuồng nhỏ', 'Big boats, small boats'], d: ['Ghe lớn (ghe bầu, ghe chài) thường neo cố định để bán sỉ – nhiều chiếc còn là nơi thương hồ sinh sống luôn trên sông. Xuồng nhỏ len lỏi giữa các ghe lớn để bán lẻ hoặc phục vụ đồ ăn.', 'Large boats often anchor in place for wholesale trading – many double as floating homes for the traders. Smaller boats weave between them for retail sales or food service.'] },
+  { p: [38, 8], t: ['Chợ nổi đang đổi thay', 'A changing market'], d: ['Những năm gần đây, chợ nổi thu hẹp dần khi đường bộ và cầu phát triển làm giảm nhu cầu vận chuyển đường sông – nhiều thương hồ đã lên bờ. Địa phương đang tìm cách gìn giữ nét văn hoá này.', 'In recent years, the floating market has been shrinking as new roads and bridges reduce the need for river transport – many traders have moved ashore. Local efforts are underway to help preserve this culture.'] },
+  { p: [46, 10], t: ['Cái Răng lúc bình minh', 'Cái Răng at dawn'], d: ['Hàng trăm ghe xuồng san sát, tiếng máy nổ lạch tạch xen tiếng mời mua bán, những cây bẹo treo đủ màu trái cây tạo thành mảng màu rực rỡ trên mặt nước – đó là Cái Răng lúc bình minh.', "Hundreds of boats packed together, the putter of engines mixed with vendors' calls, poles hung with colorful fruit painting the water with color – that's Cái Răng at dawn."] },
+];
+const explorePins = EXPLORE.map((e, i) => {
+  const g = new THREE.Group(); g.position.set(e.p[0], 0, e.p[1]); scene.add(g); g.visible = false;
+  box(1.6, 0.35, 0.7, 0xd9a85a, 0, 0, 0, g);
+  cyl(0.1, 0.1, 3, 0x8a5a3b, 0.3, 0.35, 0, g);
+  ball(0.36, [0xc0443a, 0xf2c14e, 0x6fbf73, 0xe8762d][i % 4], 0.3, 3.1, 0, g);
+  const hit = M(new THREE.CylinderGeometry(1.6, 1.6, 4, 12), new THREE.MeshBasicMaterial({ visible: false }), 0, 2, 0, g); hit.userData.explore = i;
+  const lab = document.createElement('button'); lab.type = 'button'; lab.className = 'bps3d-lab'; lab.style.display = 'none'; lab.innerHTML = '<b>🪧 ' + T(e.t[0], e.t[1]) + '</b>'; labels.appendChild(lab);
+  lab.onclick = () => showExplore(i);
+  return { g, hit, lab };
+});
+const visited = new Set();
+function showExplore(i) {
+  const e = EXPLORE[i], box = document.getElementById('bps3d-info'); if (!box) return;
+  document.getElementById('bps3d-info-t').textContent = T(e.t[0], e.t[1]);
+  document.getElementById('bps3d-info-d').textContent = T(e.d[0], e.d[1]);
+  box.style.display = 'grid';
+  if (visited.has(i)) return;
+  visited.add(i); explorePins[i].lab.classList.add('on');
+  const cl = document.getElementById('bps3d-checklist'); if (cl) cl.textContent = '🎯 ' + visited.size + '/' + EXPLORE.length;
+  if (visited.size === EXPLORE.length) setTimeout(() => {
+    document.getElementById('bps3d-info-t').textContent = T('🎖️ Khám phá trọn vẹn!', '🎖️ Fully explored!');
+    document.getElementById('bps3d-info-d').textContent = T('Bạn đã ghé thăm cả 8 điểm văn hoá của Chợ nổi Cái Răng. Rất tốt!', 'You visited all 8 cultural spots of Cái Răng floating market. Well done!');
+    box.style.display = 'grid';
+  }, 700);
+}
+window.addEventListener('bps-mode', e => {
+  exploreMode = e.detail.mode === 'explore';
+  explorePins.forEach(p => { p.g.visible = exploreMode; p.lab.style.display = exploreMode ? '' : 'none'; });
+  controls.maxPolarAngle = exploreMode ? 1.5 : 1.25;
+  controls.minDistance = exploreMode ? 8 : 18;
+  controls.maxDistance = exploreMode ? 130 : 90;
+  coach();
+});
+window.addEventListener('bps-lang', () => explorePins.forEach((p, i) => { p.lab.innerHTML = '<b>🪧 ' + T(EXPLORE[i].t[0], EXPLORE[i].t[1]) + '</b>'; }));
+
 // ---- tương tác ----
 const ray = new THREE.Raycaster(), mv = new THREE.Vector2();
 let downAt = null;
@@ -138,11 +187,15 @@ renderer.domElement.addEventListener('pointerdown', e => { downAt = [e.clientX, 
 renderer.domElement.addEventListener('pointerup', e => {
   if (!downAt || Math.hypot(e.clientX - downAt[0], e.clientY - downAt[1]) > 6) return;
   const r = renderer.domElement.getBoundingClientRect(); mv.set((e.clientX - r.left) / r.width * 2 - 1, -(e.clientY - r.top) / r.height * 2 + 1);
-  ray.setFromCamera(mv, camera); const hit = ray.intersectObjects(spots.map(s => s.hit))[0]; if (hit) pick(hit.object.userData.loc);
+  ray.setFromCamera(mv, camera);
+  if (exploreMode) { const eh = ray.intersectObjects(explorePins.map(p => p.hit))[0]; if (eh) showExplore(eh.object.userData.explore); return; }
+  const hit = ray.intersectObjects(spots.map(s => s.hit))[0]; if (hit) pick(hit.object.userData.loc);
 });
 renderer.domElement.addEventListener('pointermove', e => {
   const r = renderer.domElement.getBoundingClientRect(); mv.set((e.clientX - r.left) / r.width * 2 - 1, -(e.clientY - r.top) / r.height * 2 + 1);
-  ray.setFromCamera(mv, camera); renderer.domElement.style.cursor = ray.intersectObjects(spots.map(s => s.hit)).length ? 'pointer' : 'grab';
+  ray.setFromCamera(mv, camera);
+  const objs = exploreMode ? explorePins.map(p => p.hit) : spots.map(s => s.hit);
+  renderer.domElement.style.cursor = ray.intersectObjects(objs).length ? 'pointer' : 'grab';
 });
 window.addEventListener('bps-pick', e => { if (e.detail.g === 'loc') highlight(e.detail.i); else coach(); });
 window.addEventListener('bps-week', e => { highlight(null); setWeek(e.detail.week); showRivals(e.detail.week - 1); });
@@ -176,7 +229,8 @@ function frame() {
   for (let k = pops.length - 1; k >= 0; k--) { const p = pops[k], a = (now - p.t0) / 1000, sp = P[p.loc]; v3.set(sp[0], 9 + a * 1.2, sp[1]).project(camera);
     p.el.style.transform = 'translate(-50%,-100%) translate(' + ((v3.x + 1) / 2 * W0()).toFixed(1) + 'px,' + ((1 - v3.y) / 2 * H0()).toFixed(1) + 'px)'; if (a > 2.6) p.el.style.opacity = 0; if (a > 3.3) { p.el.remove(); pops.splice(k, 1); } }
   const W = W0(), H = H0();
-  spots.forEach(s => { v3.set(s.g.position.x, 7.2, s.g.position.z).project(camera); const vis = v3.z < 1; s.lab.style.display = vis ? '' : 'none'; s.lab.style.transform = 'translate(-50%,-100%) translate(' + Math.max(70, Math.min(W - 70, (v3.x + 1) / 2 * W)).toFixed(1) + 'px,' + Math.max(92, (1 - v3.y) / 2 * H).toFixed(1) + 'px)'; });
+  spots.forEach(s => { if (exploreMode) { s.lab.style.display = 'none'; return; } v3.set(s.g.position.x, 7.2, s.g.position.z).project(camera); const vis = v3.z < 1; s.lab.style.display = vis ? '' : 'none'; s.lab.style.transform = 'translate(-50%,-100%) translate(' + Math.max(70, Math.min(W - 70, (v3.x + 1) / 2 * W)).toFixed(1) + 'px,' + Math.max(92, (1 - v3.y) / 2 * H).toFixed(1) + 'px)'; });
+  if (exploreMode) explorePins.forEach(p => { v3.set(p.g.position.x, 3.4, p.g.position.z).project(camera); const vis = v3.z < 1; p.lab.style.display = vis ? '' : 'none'; p.lab.style.transform = 'translate(-50%,-100%) translate(' + Math.max(70, Math.min(W - 70, (v3.x + 1) / 2 * W)).toFixed(1) + 'px,' + Math.max(92, (1 - v3.y) / 2 * H).toFixed(1) + 'px)'; });
   requestAnimationFrame(frame);
 }
 const wait = () => { if (G()) { setWeek(G().S.week || 0); frame(); } else setTimeout(wait, 60); };
