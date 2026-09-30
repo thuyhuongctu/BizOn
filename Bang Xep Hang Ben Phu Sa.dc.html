@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="./js/backend-config.js"></script>
+<style>
+body{margin:0;background:#033337;font-family:"Plus Jakarta Sans",system-ui,sans-serif;color:#fff}
+a{color:#fda127}a:hover{color:#fff}
+input,button{font:inherit}
+</style>
+</helmet>
+<div style="min-height:100vh;box-sizing:border-box;padding:clamp(16px,3vw,40px);display:flex;flex-direction:column;gap:18px;max-width:1280px;margin:0 auto">
+  <header style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:4px">
+      <span style="font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#fda127">BizOn · Bến Phù Sa 3D</span>
+      <h1 style="margin:0;font-size:clamp(26px,4vw,48px);font-weight:800;line-height:1.1">Bảng xếp hạng lớp {{ code }}</h1>
+      <span style="font-size:14px;color:#bfe0e4">{{ sub }}</span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <input value="{{ input }}" onChange="{{ onInput }}" onKeyDown="{{ onKey }}" placeholder="Mã lớp" style="padding:10px 14px;border-radius:12px;border:0;width:170px;text-transform:uppercase;font-weight:800;color:#033337"></input>
+      <button type="button" onClick="{{ load }}" style="padding:10px 16px;border-radius:12px;border:0;background:#fda127;color:#033337;font-weight:800;cursor:pointer">Xem</button>
+      <button type="button" onClick="{{ full }}" style="padding:10px 14px;border-radius:12px;border:1.5px solid rgba(255,255,255,.35);background:transparent;color:#fff;font-weight:700;cursor:pointer">⤢ Chiếu</button>
+    </div>
+  </header>
+  <sc-if value="{{ hasMsg }}" hint-placeholder-val="{{ false }}"><p style="margin:0;padding:14px 18px;border-radius:14px;background:rgba(255,255,255,.08);color:#ffe2b8;font-size:15px">{{ msg }}</p></sc-if>
+  <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:14px">
+    <sc-for list="{{ podium }}" as="p" hint-placeholder-count="3">
+      <div style="background:{{ p.bg }};color:#033337;border-radius:22px;padding:18px 20px;display:flex;flex-direction:column;gap:4px;box-shadow:0 6px 0 rgba(0,0,0,.25)">
+        <span style="font-size:40px;line-height:1">{{ p.medal }}</span>
+        <b style="font-size:22px;line-height:1.2">{{ p.name }}</b>
+        <span style="font-size:13px;font-weight:600;opacity:.75">{{ p.team }}</span>
+        <b style="font-size:30px;margin-top:6px">{{ p.rev }}</b>
+        <span style="font-size:12px;font-weight:700;opacity:.7">{{ p.meta }}</span>
+      </div>
+    </sc-for>
+  </section>
+  <section style="display:flex;flex-direction:column;gap:6px">
+    <sc-for list="{{ rest }}" as="r" hint-placeholder-count="5">
+      <div style="display:grid;grid-template-columns:48px minmax(0,1.3fr) minmax(0,1.4fr) minmax(0,110px) minmax(0,120px);gap:12px;align-items:center;padding:12px 16px;border-radius:14px;background:rgba(255,255,255,.07);font-size:15px">
+        <b style="font-size:18px;color:#fda127">{{ r.no }}</b>
+        <b style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.name }}</b>
+        <span style="color:#bfe0e4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.team }}</span>
+        <span style="color:#bfe0e4;font-size:13px">{{ r.meta }}</span>
+        <b style="text-align:right">{{ r.rev }}</b>
+      </div>
+    </sc-for>
+  </section>
+  <p style="margin:auto 0 0;font-size:12px;color:#7fa9ae">Tự cập nhật mỗi 10 giây · lấy lượt cao nhất của mỗi người · © 2026 Đỗ Thùy Hương &amp; Phan Anh Tú</p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { input: '', code: '', rows: [], msg: 'Nhập Mã lớp rồi bấm «Xem».', at: null };
+  componentDidMount() {
+    let c = ''; try { c = new URLSearchParams(location.search).get('class') || localStorage.getItem('bizon-ft-class') || localStorage.getItem('bizon-class') || ''; } catch (e) {}
+    c = c.trim().toUpperCase(); this.setState({ input: c }); if (c) this.fetch(c);
+    this.iv = setInterval(() => { if (this.state.code) this.fetch(this.state.code, true); }, 10000);
+  }
+  componentWillUnmount() { clearInterval(this.iv); }
+  async fetch(code, quiet) {
+    const cfg = window.BIZON_BACKEND || {};
+    if (!cfg.enabled || !cfg.url || cfg.url.includes('YOUR-PROJECT')) { this.setState({ code, msg: 'Chưa cấu hình máy chủ (js/backend-config.js).' }); return; }
+    if (!quiet) this.setState({ code, msg: 'Đang tải…' });
+    try {
+      const r = await fetch(cfg.url.replace(/\/$/, '') + '/rest/v1/rpc/ft_class_leaderboard', { method: 'POST', headers: { apikey: cfg.anonKey, Authorization: 'Bearer ' + cfg.anonKey, 'Content-Type': 'application/json' }, body: JSON.stringify({ p_class_code: code }) });
+      if (r.status === 404) { this.setState({ msg: 'Máy chủ chưa có bảng xếp hạng – chạy migration 20261002000000_ft_leaderboard.sql.' }); return; }
+      if (!r.ok) throw new Error(r.status);
+      const rows = await r.json();
+      this.setState({ code, rows: rows || [], at: new Date(), msg: rows && rows.length ? '' : 'Lớp ' + code + ' chưa có đội nào nộp kết quả.' });
+      try { localStorage.setItem('bizon-ft-class', code); } catch (e) {}
+    } catch (e) { if (!quiet) this.setState({ msg: 'Không tải được – kiểm tra mạng.' }); }
+  }
+  renderVals() {
+    const s = this.state, fmt = v => (Math.round((+v || 0) * 10) / 10).toLocaleString('vi-VN') + ' tr';
+    const meta = r => 'Hiệu suất ' + Math.round(+r.efficiency || 0) + '% · hạng ' + ((+r.final_rank || 0) + 1) + '/4 bến' + (r.exam ? ' · thi' : '');
+    const M = ['🥇', '🥈', '🥉'], BG = ['#fda127', '#e6eef0', '#f1c9a5'];
+    return {
+      code: s.code || '…', input: s.input,
+      sub: s.rows.length ? s.rows.length + ' người/đội · cập nhật ' + (s.at ? s.at.toLocaleTimeString('vi-VN') : '') : 'Doanh thu 5 tuần',
+      hasMsg: !!s.msg, msg: s.msg,
+      podium: s.rows.slice(0, 3).map((r, i) => ({ medal: M[i], bg: BG[i], name: r.player_name, team: r.team_name || '', rev: fmt(r.total_revenue), meta: meta(r) })),
+      rest: s.rows.slice(3).map((r, i) => ({ no: i + 4, name: r.player_name, team: r.team_name || '', rev: fmt(r.total_revenue), meta: 'Hiệu suất ' + Math.round(+r.efficiency || 0) + '%' })),
+      onInput: e => this.setState({ input: e.target.value.toUpperCase() }),
+      onKey: e => { if (e.key === 'Enter') this.fetch(this.state.input.trim()); },
+      load: () => this.fetch(this.state.input.trim()),
+      full: () => { const d = document.documentElement; if (document.fullscreenElement) document.exitFullscreen(); else if (d.requestFullscreen) d.requestFullscreen(); },
+    };
+  }
+}
+</script>
+</body>
+</html>

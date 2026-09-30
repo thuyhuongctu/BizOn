@@ -926,8 +926,8 @@
           total_revenue: Math.round(S.total * 10) / 10,
           efficiency: S.result.eff,
           final_rank: S.result.rank,
-          detail_json: { captain: TEAM()[S.cap].name, rivals: RIVALS.map(function (r) { return { name: r.name, total: Math.round(r.total * 10) / 10 }; }) },
-          app_version: 'bizon-v302',
+          detail_json: { exam: !!(window.BizOnBpsExam && window.BizOnBpsExam.exam && window.BizOnBpsExam.exam.active), captain: TEAM()[S.cap].name, rivals: RIVALS.map(function (r) { return { name: r.name, total: Math.round(r.total * 10) / 10 }; }) },
+          app_version: 'bizon-bps3d-v1',
           client_ts: new Date().toISOString(),
         }),
       });
@@ -1056,6 +1056,9 @@
   document.getElementById('bps3d-info-close').onclick = function () { document.getElementById('bps3d-info').style.display = 'none'; };
 })();
 </script>
+<script src="js/bps-voice.js"></script>
+<script src="js/bps-cast.js"></script>
+<script src="js/bps-exam.js"></script>
 <script type="module" src="js/bps3d.js"></script>
 </body>
 </html>
