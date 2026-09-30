@@ -541,7 +541,7 @@
               <span class="online-dot w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span> <span>Online · Cố vấn chiến lược</span>
             </p>
           </div>
-          <button id="huong-voice-btn" onclick="playHuongIntro()" title="Nghe giọng thật của Hương AI" class="clay-btn bg-white w-11 h-11 rounded-full text-xl shrink-0 self-start">🔊</button>
+          <button id="huong-voice-btn" onclick="playHuongIntro()" title="Nghe giọng thật của Lumina AI" class="clay-btn bg-white w-11 h-11 rounded-full text-xl shrink-0 self-start">🔊</button>
         </div>
         <div class="relative mt-3">
           <img id="advisor-hero" src="assets/character/lumina-vest.webp" alt="" class="w-full h-44 object-cover" style="object-position:50% 8%">
@@ -572,7 +572,7 @@
           <button onclick="askLumina('risk')" class="clay-btn bg-surface-bright text-deep-teal text-left font-semibold text-sm px-4 py-3">⚠️ Rủi ro lớn nhất vòng này là gì?</button>
         </div>
         <div class="flex items-center gap-2">
-          <input id="chat-input" type="text" placeholder="Trò chuyện với Hương..." class="clay-input flex-1 rounded-full px-5 py-3 text-sm text-deep-teal" onkeydown="if(event.key==='Enter')sendChat()">
+          <input id="chat-input" type="text" placeholder="Trò chuyện với Lumina AI..." class="clay-input flex-1 rounded-full px-5 py-3 text-sm text-deep-teal" onkeydown="if(event.key==='Enter')sendChat()">
           <button id="mic-btn" onclick="toggleMic()" aria-label="Nói với Lumina bằng micro" class="clay-button-secondary w-11 h-11 rounded-full flex items-center justify-center text-lg shrink-0">🎤</button>
           <button onclick="sendChat()" aria-label="Gửi tin nhắn" class="clay-button-primary w-11 h-11 rounded-full flex items-center justify-center text-white text-lg shrink-0">➤</button>
         </div>
@@ -835,7 +835,7 @@
     </section>
   </main>
 
-  <!-- Phụ đề giọng nói Hương AI -->
+  <!-- Phụ đề giọng nói Lumina AI -->
   <div id="huong-caption-box" class="hidden fixed bottom-24 inset-x-0 z-50 flex justify-center px-5 pointer-events-none">
     <div class="clay-card px-5 py-3 flex items-center gap-3 max-w-sm shadow-clay-lg">
       <img src="assets/character/lumina-ao-dai.webp" alt="Lumina – Cố vấn học tập AI" class="w-10 h-10 rounded-full object-cover shrink-0" style="object-position:50% 10%">
