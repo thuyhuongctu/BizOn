@@ -78,10 +78,19 @@ function vessel(kind, color) {
   else { person(color, g); box(0.6, 0.8, 0.1, 0xf4efe4, 0.5, 0.9, 0.3, g); }
   scene.add(g); return g;
 }
+const TL = new THREE.TextureLoader();
+function sprite(url, h, y) { const s = new THREE.Sprite(new THREE.SpriteMaterial({ transparent: true, depthWrite: false })); s.visible = false; s.position.y = y;
+  TL.load(url, tx => { tx.colorSpace = THREE.SRGBColorSpace; s.material.map = tx; s.material.needsUpdate = true; const a = tx.image.width / tx.image.height; s.scale.set(h * a, h, 1); s.visible = true; }); return s; }
+// thầy Tú & cô Hương đứng ở bến nhà
+const dock = new THREE.Group(); dock.position.set(-4, 0, 7.5); scene.add(dock);
+box(4.4, 0.35, 2, 0xb58a5a, 0, 0, 0, dock);
+const sTu = sprite('assets/character/phu-sa/tu-cut.webp', 3.2, 2); sTu.position.x = -1; dock.add(sTu);
+const sHg = sprite('assets/character/phu-sa/huong-cut.webp', 3, 1.9); sHg.position.x = 1.1; dock.add(sHg);
+const RIMG = ['assets/character/rivals/alpha.webp', 'assets/character/rivals/mekong.webp', 'assets/character/rivals/star.webp'];
 const RC = [0x7a7f8a, 0x9a8a78, 0x3f8a44];
-const rivals = RC.map((c, k) => { const v = vessel(1, c); v.position.set(-40 + k * 3, 0, 34); v.visible = false; v.userData.home = v.position.clone(); return v; });
+const rivals = RC.map((c, k) => { const v = vessel(0, c); v.add(sprite(RIMG[k], 2.6, 2.6)); v.position.set(-40 + k * 3, 0, 34); v.visible = false; v.userData.home = v.position.clone(); return v; });
 let me = null, meKind = -1;
-const HOME = new THREE.Vector3(-4, 0.1, 6);
+const HOME = new THREE.Vector3(-4, 0.1, 10);
 
 // ---- trạng thái ----
 let stormAt = -1, sel = null, week = 0, night = 0, nightT = 0, anim = [];
@@ -127,7 +136,7 @@ function showRivals(prevWeek) {
 function tween(obj, to, ms, done) { anim.push({ obj, from: obj.position.clone(), to, t0: performance.now(), ms, done }); }
 function sendMe(m, loc, done) {
   if (me && meKind !== m) { scene.remove(me); me = null; }
-  if (!me) { me = vessel(m, 0xfda127); me.scale.setScalar(1.25); me.position.copy(HOME); meKind = m; }
+  if (!me) { me = vessel(m, 0xfda127); if (m === 0) { const sp = sprite('assets/character/phu-sa/doi-phu-sa-ghe.webp', 3.4, 3.4); me.add(sp); } me.scale.setScalar(1.25); me.position.copy(HOME); meKind = m; }
   const p = P[loc], to = m === 2 ? new THREE.Vector3(p[0] - 2, 0.1, p[1] + 4.5) : new THREE.Vector3(p[0] - 1.5, 0.1, p[1] + 4.2);
   me.lookAt(to.x, me.position.y, to.z); tween(me, to, 1600, done);
 }
@@ -221,7 +230,7 @@ const pops = [];
 function pop(loc, html, bad) { const el = document.createElement('div'); el.className = 'bps3d-pop' + (bad ? ' bad' : ''); el.innerHTML = html; labels.appendChild(el); pops.push({ el, loc, t0: performance.now() }); }
 window.addEventListener('bps-commit', e => { const d = e.detail, g = G();
   const wasStorm = d.loc === stormAt && d.m !== 2;
-  sendMe(d.m, d.loc, () => { showRivals(d.week);
+  sendMe(d.m, d.loc, () => { showRivals(d.week); window.dispatchEvent(new CustomEvent('bps-result', { detail: Object.assign({ storm: wasStorm }, d) }));
     if (d.m === 2) pop(d.loc, '📋 ' + T('Đã ghi chép', 'Notes taken'));
     else pop(d.loc, '+' + (Math.round(d.rev * 10) / 10).toLocaleString(EN() ? 'en-US' : 'vi-VN') + ' ' + T('tr', 'm') + (d.clash ? '<small>⚡ ' + d.clash + ' ' + T('đối thủ', 'rival(s)') + '</small>' : ''), d.clash > 0 || wasStorm);
     if (wasStorm) { const b = document.getElementById('bps3d-storm'); if (b) { document.getElementById('bps3d-storm-t').textContent = '🌧️ ' + T('Mưa bão ở ' + g.LOCS[d.loc][1], 'Storm at ' + g.LOCS[d.loc][3]); document.getElementById('bps3d-storm-d').textContent = T('Khu này ít khách nhất tuần. Lần sau hãy nhìn đám đông trên bản đồ trước khi chọn.', 'This was the quietest spot this week. Next time, check the crowds on the map before choosing.'); b.style.display = 'grid'; } }
