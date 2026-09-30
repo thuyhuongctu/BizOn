@@ -129,7 +129,7 @@ function applyGameStaticText() {
   setPh('login-email', 'sinhvien@truong.edu.vn', 'student@university.edu');
   setPh('login-team', 'VD: Rồng Xanh Corp', 'e.g. Blue Dragon Corp');
   setPh('login-class', 'VD: QTKD-2026-A', 'e.g. BUS-2026-A');
-  setPh('chat-input', 'Trò chuyện với Hương...', 'Chat with Hương...');
+  setPh('chat-input', 'Trò chuyện với Lumina AI...', 'Chat with Lumina AI...');
   const term = $('in-term');
   if (term && term.options.length >= 3) {
     term.options[0].textContent = T('30 ngày (Tiêu chuẩn)', '30 days (Standard)');
@@ -349,7 +349,7 @@ async function doLogin() {
   enterApp();
   createConfetti();
   try { if (!localStorage.getItem('bizon-intro-seen')) showIntro(); } catch (e) {}
-  playHuongIntro();   // giọng chào thật của Hương AI (được phép vì gọi từ thao tác chạm)
+  playHuongIntro();   // giọng chào thật của Lumina AI (được phép vì gọi từ thao tác chạm)
   startMusic();       // nhạc nền BizOn Theme
 }
 
@@ -662,7 +662,7 @@ function playEventSting(tone) {
   } catch (e) { /* trình duyệt không hỗ trợ WebAudio */ }
 }
 
-// ---------- Giọng nói thật của Hương AI (bản thu + phụ đề SRT) ----------
+// ---------- Giọng nói thật của Lumina AI (bản thu + phụ đề SRT) ----------
 const HUONG_CUES = [
   [0.03, 0.87, 'Bonjour à tous!'],
   [1.25, 2.01, "Je m'appelle Huong."],
@@ -728,7 +728,7 @@ function maybeShowCaseDraw(onDone) {
       <span class="inline-flex items-center gap-1.5 text-[11px] font-extrabold px-4 py-1.5 rounded-full bg-primary-container/25 text-primary">● ${T('BỐC THĂM ĐẦU MÙA', 'SEASON DRAW')}</span>
       <h1 class="font-display text-3xl font-extrabold text-deep-teal uppercase mt-3 leading-tight">${info.name}</h1>
       <p class="text-sm text-deep-teal/70 mt-2 max-w-sm mx-auto">${info.desc}</p>
-      <img src="assets/character/${info.img}.webp" onerror="this.onerror=null;this.src='assets/character/lumina-vest.webp'" alt="Je m'appelle Hương AI Advisor" class="w-28 mx-auto mt-6 rounded-2xl object-cover animate-float drop-shadow-xl" style="aspect-ratio:3/4; object-position:50% 8%">
+      <img src="assets/character/${info.img}.webp" onerror="this.onerror=null;this.src='assets/character/lumina-vest.webp'" alt="Lumina AI Advisor" class="w-28 mx-auto mt-6 rounded-2xl object-cover animate-float drop-shadow-xl" style="aspect-ratio:3/4; object-position:50% 8%">
       <button id="case-draw-cta" class="clay-button-primary w-full text-white font-display font-bold text-lg py-4 mt-8">${T('🎲 Vào Vòng 1', '🎲 Enter Round 1')}</button>
     </div>`;
   div.querySelector('#case-draw-cta').onclick = () => { div.remove(); onDone(); };
@@ -766,7 +766,7 @@ function maybeShowEventIntro() {
           </div>`).join('')}
       </div>
       <div class="flex items-end gap-3 mt-6">
-        <img src="assets/character/${ev.luminaImg || 'lumina-vest'}.webp" onerror="this.onerror=null;this.src='assets/character/lumina-vest.webp'" alt="Je m'appelle Hương AI Advisor" class="w-28 shrink-0 rounded-2xl object-cover animate-float drop-shadow-xl" style="aspect-ratio:3/4; object-position:50% 8%">
+        <img src="assets/character/${ev.luminaImg || 'lumina-vest'}.webp" onerror="this.onerror=null;this.src='assets/character/lumina-vest.webp'" alt="Lumina AI Advisor" class="w-28 shrink-0 rounded-2xl object-cover animate-float drop-shadow-xl" style="aspect-ratio:3/4; object-position:50% 8%">
         <div class="relative clay-raised p-4 rounded-bl-none border-l-4 border-primary-container flex-1">
           <div class="speech-tail"></div>
           <p class="text-[10px] font-extrabold text-primary mb-1">JE M'APPELLE HƯƠNG · AI ADVISOR</p>
