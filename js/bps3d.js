@@ -112,9 +112,16 @@ P.forEach((p, i) => {
 const skyClouds = []; [[-30, 22, -30], [10, 26, -36], [34, 20, -22]].forEach(c => { const g = new THREE.Group(); [[0, 0, 2.4], [2.4, 0.4, 1.8], [-2.2, 0.2, 1.9], [0.6, 1.4, 1.7]].forEach(q => blob(q[2], 0xffffff, q[0], q[1], 0, g, 1, 0.8, 0.9)); g.position.set(c[0], c[1], c[2]); g.traverse(o => { o.castShadow = false; }); scene.add(g); skyClouds.push(g); });
 // người + thuyền
 const person = (c, p) => { const g = new THREE.Group(); M(new THREE.CapsuleGeometry(0.42, 0.55, 6, 14), clay(c), 0, 0.7, 0, g); ball(0.4, 0xf1c9a5, 0, 1.62, 0, g); const hat = M(new THREE.ConeGeometry(0.62, 0.34, 18), clay(0xf3dca0), 0, 2.05, 0, g); p.add(g); return g; };
+function boatEyes(g, x, hw, s = 1) {
+  // mắt ghe – nét trang trí truyền thống ghe thuyền miền Tây, xua đuổi tà ma trên sông
+  [1, -1].forEach(k => { const e = new THREE.Group(); e.position.set(x, 0.32 * s, k * hw); e.rotation.x = Math.PI / 2; e.scale.setScalar(s); g.add(e);
+    M(new THREE.CylinderGeometry(0.2, 0.2, 0.02, 16), clay(0xf4efe4), 0, 0, 0, e);
+    M(new THREE.CylinderGeometry(0.13, 0.13, 0.03, 16), clay(0xd9473a), 0, 0, 0.006, e);
+    M(new THREE.CylinderGeometry(0.06, 0.06, 0.04, 16), clay(0x262626), 0, 0, 0.012, e); });
+}
 function vessel(kind, color) {
   const g = new THREE.Group();
-  if (kind === 0) { box(3.2, 0.6, 1.2, color, 0, 0, 0, g); cyl(0.07, 0.07, 3, 0x7a5a3a, 0, 0.6, 0, g); const s = M(new THREE.ConeGeometry(1, 2.2, 3), clay(0xf4efe4), 0.4, 2.4, 0, g); s.rotation.z = -0.1; }
+  if (kind === 0) { box(3.2, 0.6, 1.2, color, 0, 0, 0, g); cyl(0.07, 0.07, 3, 0x7a5a3a, 0, 0.6, 0, g); const s = M(new THREE.ConeGeometry(1, 2.2, 3), clay(0xf4efe4), 0.4, 2.4, 0, g); s.rotation.z = -0.1; boatEyes(g, 1.15, 0.62); }
   else if (kind === 1) { person(color, g); box(2.4, 0.08, 0.08, 0x8a5a3b, 0, 1.3, 0, g); [-1.1, 1.1].forEach(x => M(new THREE.CylinderGeometry(0.45, 0.35, 0.5, 12), clay(0xd9a85a), x, 0.8, 0, g)); }
   else { person(color, g); box(0.6, 0.8, 0.1, 0xf4efe4, 0.5, 0.9, 0.3, g); }
   scene.add(g); return g;
@@ -125,6 +132,7 @@ function sprite(url, h, y) { const s = new THREE.Sprite(new THREE.SpriteMaterial
 // thầy Tú & cô Hương đứng ở bến nhà
 const dock = new THREE.Group(); dock.position.set(-4, 0, 7.5); scene.add(dock);
 box(4.4, 0.35, 2, 0xb58a5a, 0, 0, 0, dock);
+box(0.4, 0.42, 0.4, 0x5a4632, 1.85, 0.35, -0.75, dock); lantern(1.85, 1.08, -0.75, dock); // đôn gỗ + đèn dầu bên bến
 const sTu = sprite('assets/character/phu-sa/tu-cut.webp', 3.2, 2); sTu.position.x = -1; dock.add(sTu);
 const sHg = sprite('assets/character/phu-sa/huong-cut.webp', 3, 1.9); sHg.position.x = 1.1; dock.add(sHg);
 const RIMG = ['assets/character/rivals/alpha.webp', 'assets/character/rivals/mekong.webp', 'assets/character/rivals/star.webp'];
@@ -196,15 +204,22 @@ const EXPLORE = [
   { p: [46, 10], t: ['Cái Răng lúc bình minh', 'Cái Răng at dawn'], d: ['Hàng trăm ghe xuồng san sát, tiếng máy nổ lạch tạch xen tiếng mời mua bán, những cây bẹo treo đủ màu trái cây tạo thành mảng màu rực rỡ trên mặt nước – đó là Cái Răng lúc bình minh.', "Hundreds of boats packed together, the putter of engines mixed with vendors' calls, poles hung with colorful fruit painting the water with color – that's Cái Răng at dawn."] },
 ];
 const GOODS = [0xc0443a, 0xf2c14e, 0x6fbf73, 0xe8762d, 0xfda127, 0xd94f8a];
+function pineapple(x, y, z, g, sc = 1) {
+  // trái khóm (dứa) – món hàng đặc trưng nhất treo trên cây bẹo chợ nổi
+  const p = new THREE.Group(); p.position.set(x, y, z); p.scale.setScalar(sc); g.add(p);
+  blob(0.22, 0xd9a23a, 0, 0, 0, p, 0.85, 1.15, 0.85);
+  for (let k = 0; k < 5; k++) { const a = k / 5 * Math.PI * 2; const leaf = M(new THREE.ConeGeometry(0.06, 0.26, 6), clay(0x6a9a4a), Math.cos(a) * 0.05, 0.28, Math.sin(a) * 0.05, p); leaf.rotation.z = Math.cos(a) * 0.35; leaf.rotation.x = Math.sin(a) * 0.35; }
+}
 // một "cây bẹo" thật treo cả chùm hàng, không chỉ 1 món – cho đúng tinh thần "treo gì bán nấy"
 function beoPole(g, seed, tall = 3) {
   cyl(0.1, 0.1, tall, 0x8a5a3b, 0.3, 0.35, 0, g);
   const n = 2 + (seed % 2);
-  for (let k = 0; k < n; k++) ball(0.22 + (k === 0 ? 0.16 : 0), GOODS[(seed + k) % GOODS.length], 0.3 + Math.sin(seed + k) * 0.16, tall - 0.3 - k * 0.55, Math.cos(seed + k) * 0.1, g);
+  for (let k = 0; k < n; k++) { const xx = 0.3 + Math.sin(seed + k) * 0.16, yy = tall - 0.3 - k * 0.55, zz = Math.cos(seed + k) * 0.1;
+    if (k === 0) pineapple(xx, yy, zz, g, 1.15); else ball(0.22, GOODS[(seed + k) % GOODS.length], xx, yy, zz, g); }
 }
 const explorePins = EXPLORE.map((e, i) => {
   const g = new THREE.Group(); g.position.set(e.p[0], 0, e.p[1]); scene.add(g); g.visible = false;
-  box(1.6, 0.35, 0.7, 0xd9a85a, 0, 0, 0, g);
+  box(1.6, 0.35, 0.7, 0xd9a85a, 0, 0, 0, g); boatEyes(g, 0.55, 0.37, 0.6);
   beoPole(g, i, 3.2);
   box(0.32, 0.22, 0.32, GOODS[(i + 2) % GOODS.length], -0.5, 0.35, 0.15, g); box(0.3, 0.2, 0.3, GOODS[(i + 4) % GOODS.length], -0.5, 0.35, -0.18, g); // sọt hàng chất trên ghe
   if (i % 2 === 0) { cyl(0.04, 0.04, 1.1, 0x7a5a3a, -0.9, 0.35, 0, g); cyl(0.04, 0.04, 1.1, 0x7a5a3a, -0.1, 0.35, 0.32, g); box(1, 0.06, 0.5, 0xf4efe4, -0.5, 1.4, 0.16, g); } // mái che ghe hàng ăn
@@ -217,7 +232,7 @@ const explorePins = EXPLORE.map((e, i) => {
 const MARKET_BOATS = [[-36, -7, 0], [-20, -8, 1], [-8, 6, 2], [7, -1, 0], [21, 8, 1], [34, -4, 2], [-32, 4, 1], [42, 4, 0]];
 const marketBoats = MARKET_BOATS.map((p, i) => {
   const g = new THREE.Group(); g.position.set(p[0], 0, p[1]); g.rotation.y = i * 1.3; scene.add(g); g.visible = false;
-  box(1.2 + (i % 3) * 0.2, 0.3, 0.55, [0xd9a85a, 0xc9713a, 0xe0a04f][i % 3], 0, 0, 0, g);
+  box(1.2 + (i % 3) * 0.2, 0.3, 0.55, [0xd9a85a, 0xc9713a, 0xe0a04f][i % 3], 0, 0, 0, g); boatEyes(g, 0.5, 0.29, 0.5);
   if (p[2] > 0) beoPole(g, i + 5, 2.2 + (i % 2) * 0.4);
   g.userData.bob = i * 1.7;
   return g;
