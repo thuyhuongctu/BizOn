@@ -30,17 +30,17 @@
 <header class="pt-24 pb-9 text-white" style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%)">
   <div class="max-w-3xl mx-auto px-5">
     <h1 class="font-display font-extrabold text-2xl sm:text-3xl">🔒 Chính sách Quyền riêng tư · Privacy Policy</h1>
-    <p class="text-white/80 text-sm mt-2">BizOn Web, PWA &amp; Android · cập nhật 24/09/2026 · updated September 24, 2026</p>
+    <p class="text-white/80 text-sm mt-2">BizOn Web, PWA &amp; Android · cập nhật 30/09/2026 · updated September 30, 2026</p>
   </div>
 </header>
 <main class="max-w-3xl mx-auto px-5 py-10">
   <section class="policy-card p-6 sm:p-8 mb-6" lang="vi">
     <p class="text-sm font-bold" style="color:var(--teal)">🇻🇳 Tiếng Việt</p>
     <h2>1. Tóm tắt</h2>
-    <p><b>BizOn vận hành theo nguyên tắc local-first.</b> Khi bạn chơi ở chế độ thông thường, tiến trình và lựa chọn được lưu trên thiết bị. Một số chức năng lớp học cho phép gửi kết quả hoặc nhật ký quyết định tới cơ sở dữ liệu của BizOn, nhưng chỉ sau hành động chủ động của người dùng, chẳng hạn nhập mã lớp và bấm nút nộp.</p>
+    <p><b>BizOn vận hành theo nguyên tắc local-first.</b> Khi bạn chơi ở chế độ thông thường, tiến trình và lựa chọn được lưu trên thiết bị. Khi người dùng chủ động nhập <b>mã lớp</b> (chế độ lớp học), kết quả của từng vòng chơi được gửi tự động khi kết thúc vòng tới cơ sở dữ liệu của BizOn để giảng viên chấm điểm; không nhập mã lớp thì không có gì được gửi.</p>
     <div class="mode-grid">
       <div class="mode"><strong>Chế độ local-only</strong><span>Không gửi dữ liệu trò chơi lên máy chủ. Bạn có thể xóa dữ liệu bằng cài đặt trình duyệt hoặc chức năng chơi lại.</span></div>
-      <div class="mode"><strong>Chế độ lớp học tùy chọn</strong><span>Có thể gửi mã lớp, bí danh nhóm, kết quả, quyết định và phản tư khi người dùng chủ động nộp. Không bắt buộc họ tên, email hoặc số điện thoại.</span></div>
+      <div class="mode"><strong>Chế độ lớp học tùy chọn</strong><span>Khi đã nhập mã lớp: gửi mã lớp, tên đội, vai trò, kết quả và quyết định từng vòng, phản tư, và <b>email đã nhập ở màn hình vào game</b> (tùy chọn; dùng để giảng viên nhận diện thành viên khi chấm điểm). Không thu họ tên hay số điện thoại.</span></div>
     </div>
 
     <h2>2. Dữ liệu lưu trên thiết bị</h2>
@@ -51,7 +51,7 @@
     </ul>
 
     <h2>3. Dữ liệu lớp học được gửi khi nào?</h2>
-    <p>Chỉ các màn hình có chức năng nộp kết quả, tham gia lớp hoặc pilot mới tạo yêu cầu gửi dữ liệu. Người dùng phải thực hiện hành động rõ ràng. Dữ liệu có thể gồm mã lớp, bí danh nhóm, điểm mô phỏng, chỉ số kết quả, seed kịch bản, decision trace, reflection, phiên bản ứng dụng và thời điểm gửi.</p>
+    <p>Yêu cầu gửi dữ liệu chỉ phát sinh khi người dùng đã nhập mã lớp (Bật Nghiệp: tự động cuối mỗi vòng) hoặc bấm nộp ở các màn hình Brand Passport, Bến Phù Sa, pilot. Dữ liệu có thể gồm mã lớp, tên đội, vai trò, email đã nhập (nếu có), điểm mô phỏng, chỉ số kết quả, seed kịch bản, decision trace, reflection, phiên bản ứng dụng và thời điểm gửi. Dữ liệu được lưu trên dịch vụ Supabase do BizOn quản trị, truyền qua HTTPS.</p>
     <p>Giảng viên hoặc người điều phối chỉ truy cập dữ liệu thuộc lớp tương ứng qua cơ chế khóa/RPC. Người dùng ẩn danh khác không được cấp quyền đọc trực tiếp bảng dữ liệu lớp.</p>
 
     <h2>4. Điều BizOn không thực hiện</h2>
@@ -80,7 +80,10 @@
     <h2>9. Tính chất giáo dục</h2>
     <p>BizOn phục vụ giảng dạy, học tập và nghiên cứu. Các thị trường, sự kiện, chỉ số và khuyến nghị trong mô phỏng có thể là dữ liệu minh họa; không phải tư vấn đầu tư, pháp lý hoặc tài chính.</p>
 
-    <h2>10. Liên hệ</h2>
+    <h2 id="xoa-tai-khoan">10. Xóa tài khoản và dữ liệu</h2>
+    <p><b>Tài khoản.</b> Chỉ Trang Giảng viên của BizOn – Bật Nghiệp (nhà phát triển: Thuy Huong Digital Learning – Đỗ Thùy Hương &amp; Phan Anh Tú) tạo tài khoản (email + mật khẩu, lưu trên Supabase Auth). Người chơi thông thường không có tài khoản.</p>
+    <p><b>Cách yêu cầu xóa tài khoản hoặc dữ liệu:</b> gửi email từ địa chỉ đã đăng ký (hoặc nêu mã lớp / tên đội / email đã nhập khi chơi) tới <a href="mailto:thuyhuongctu@gmail.com">thuyhuongctu@gmail.com</a> với tiêu đề <i>“Xóa tài khoản BizOn”</i> hoặc <i>“Xóa dữ liệu BizOn”</i>. Chúng tôi xác nhận trong 7 ngày và xóa trong tối đa 30 ngày: tài khoản giảng viên (email, mật khẩu băm) và toàn bộ bài nộp, nhật ký thành viên gắn với mã lớp/đội/email nêu trong yêu cầu. Nhật ký lỗi kỹ thuật không gắn định danh nên tự hết hạn sau 90 ngày. Dữ liệu chỉ lưu trên thiết bị do bạn tự xóa (xóa dữ liệu trình duyệt/ứng dụng).</p>
+    <h2>11. Liên hệ</h2>
     <p>Câu hỏi về quyền riêng tư: <a href="mailto:patu@ctu.edu.vn">patu@ctu.edu.vn</a> · <a href="mailto:thuyhuongctu@gmail.com">thuyhuongctu@gmail.com</a>.</p>
     <p class="notice"><b>Lưu ý:</b> Brand Passport Learning Pilot vẫn ở trạng thái Draft và remote submission mặc định tắt cho đến khi xác định data controller và hoàn tất kiểm thử staging.</p>
   </section>
@@ -88,10 +91,10 @@
   <section class="policy-card p-6 sm:p-8" lang="en">
     <p class="text-sm font-bold" style="color:var(--teal)">🇬🇧 English</p>
     <h2>1. Summary</h2>
-    <p><b>BizOn is local-first.</b> In normal play, progress and decisions remain on the device. Some classroom features can submit results or decision logs to a BizOn-managed database, but only after an explicit user action such as entering a class code and pressing Submit.</p>
+    <p><b>BizOn is local-first.</b> In normal play, progress and decisions remain on the device. When a user deliberately enters a <b>class code</b> (classroom mode), each round's results are sent automatically at the end of the round to a BizOn-managed database so the instructor can grade; without a class code nothing is sent.</p>
     <div class="mode-grid">
       <div class="mode"><strong>Local-only mode</strong><span>No game data is sent to a server. Users can clear it through browser settings or a restart function.</span></div>
-      <div class="mode"><strong>Optional classroom mode</strong><span>Class code, team alias, results, decisions and reflections may be submitted. Legal name, email and phone number are not required.</span></div>
+      <div class="mode"><strong>Optional classroom mode</strong><span>Once a class code is entered: class code, team name, role, per-round results and decisions, reflections, and <b>the email entered on the start screen</b> (optional; used by the instructor to identify team members when grading) are sent. No legal name or phone number is collected.</span></div>
     </div>
 
     <h2>2. Data stored on the device</h2>
@@ -102,7 +105,7 @@
     </ul>
 
     <h2>3. When classroom data is submitted</h2>
-    <p>Only screens that expose a result-submission, classroom-join or pilot action create a network submission. Possible fields include class code, team alias, simulation score, outcome metrics, scenario seed, decision trace, reflection, application version and submission timestamp.</p>
+    <p>A network submission occurs only after a class code has been entered (Bật Nghiệp: automatically at the end of each round) or when the user presses Submit on the Brand Passport, Bến Phù Sa or pilot screens. Possible fields include class code, team name, role, the email entered (if any), simulation score, outcome metrics, scenario seed, decision trace, reflection, application version and submission timestamp. Data is stored on a BizOn-managed Supabase service and transmitted over HTTPS.</p>
     <p>Instructors or facilitators access only the relevant class through a key-protected RPC. Anonymous clients are not granted direct read access to classroom tables.</p>
 
     <h2>4. What BizOn does not do</h2>
@@ -130,7 +133,10 @@
     <h2>9. Educational use</h2>
     <p>BizOn supports teaching, learning and research. Markets, events, metrics and recommendations may be illustrative simulation inputs and are not investment, legal or financial advice.</p>
 
-    <h2>10. Contact</h2>
+    <h2 id="account-deletion">10. Account and data deletion</h2>
+    <p><b>Accounts.</b> Only the Instructor page of BizOn – Bật Nghiệp (developer: Thuy Huong Digital Learning – Đỗ Thùy Hương &amp; Phan Anh Tú) creates accounts (email + password, stored in Supabase Auth). Regular players have no account.</p>
+    <p><b>How to request deletion of an account or data:</b> email <a href="mailto:thuyhuongctu@gmail.com">thuyhuongctu@gmail.com</a> from the registered address (or state the class code / team name / email entered in the game) with the subject <i>“Delete BizOn account”</i> or <i>“Delete BizOn data”</i>. We acknowledge within 7 days and delete within 30 days: the instructor account (email, hashed password) and all submissions and member logs linked to the class code / team / email named in the request. Technical error logs carry no identifier and expire after 90 days. Data stored only on your device is deleted by you (clear browser/app data).</p>
+    <h2>11. Contact</h2>
     <p>Privacy questions: <a href="mailto:patu@ctu.edu.vn">patu@ctu.edu.vn</a> · <a href="mailto:thuyhuongctu@gmail.com">thuyhuongctu@gmail.com</a>.</p>
     <p class="notice"><b>Current gate:</b> Brand Passport Learning Pilot remains a Draft and remote submission stays disabled until a data controller is identified and staging validation is complete.</p>
   </section>
