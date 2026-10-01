@@ -576,7 +576,7 @@ function tick() {
   if (tween) { const k = Math.min(1, (performance.now() - tween.t0) / 900), e = 1 - Math.pow(1 - k, 3); camera.position.lerpVectors(tween.fp, tween.p, e); controls.target.lerpVectors(tween.ft, tween.t, e); if (k >= 1) tween = null; }
   if (window.__ARTICK && window.__ARTICK(dt, t)) { requestAnimationFrame(tick); return; }
   controls.update(); renderer.render(scene, camera);
-  if (tipObj) { if (performance.now() > tipUntil) { tipObj = null; tip.style.display = 'none'; } else { tipObj.getWorldPosition(tmp); tmp.y += tipObj.userData.rig ? 2.0 : 1.9; tmp.project(camera); tip.style.left = (tmp.x + 1) / 2 * innerWidth + 'px'; tip.style.top = (1 - tmp.y) / 2 * innerHeight + 'px'; } }
+  if (tipObj) { if (performance.now() > tipUntil) { tipObj = null; tip.style.display = 'none'; } else { tipObj.getWorldPosition(tmp); tmp.y += tipObj.userData.rig ? 2.0 : 1.9; tmp.project(camera); const hw = tip.offsetWidth / 2 + 4; tip.style.left = Math.max(hw, Math.min(innerWidth - hw, (tmp.x + 1) / 2 * innerWidth)).toFixed(1) + 'px'; tip.style.top = (1 - tmp.y) / 2 * innerHeight + 'px'; } }
   requestAnimationFrame(tick);
 }
 tick();
@@ -1139,7 +1139,7 @@ function endMeeting() { MEET.on = false; MEET.speaker = null; bub.style.display 
   actors.forEach(a => { if (a.seat) { a.seat = null; a.o.position.set(a.home[0], 0, a.home[1]); a.o.rotation.y = a.home[2]; } }); }
 const bv = new THREE.Vector3();
 function bubTick() { if (MEET.on && MEET.speaker) { const a = actors.find(x => x.o.userData.cid === MEET.speaker); a.o.getWorldPosition(bv); bv.y += CH * 1.55; bv.project(camera);
-  bub.style.display = 'block'; bub.textContent = '💬 ' + (meetSug[meetI] ? meetSug[meetI].name.split('·')[1].trim() : ''); bub.style.left = (bv.x + 1) / 2 * innerWidth + 'px'; bub.style.top = (1 - bv.y) / 2 * innerHeight + 'px'; } requestAnimationFrame(bubTick); }
+  bub.style.display = 'block'; bub.textContent = '💬 ' + (meetSug[meetI] ? meetSug[meetI].name.split('·')[1].trim() : ''); const bhw = bub.offsetWidth / 2 + 4; bub.style.left = Math.max(bhw, Math.min(innerWidth - bhw, (bv.x + 1) / 2 * innerWidth)).toFixed(1) + 'px'; bub.style.top = (1 - bv.y) / 2 * innerHeight + 'px'; } requestAnimationFrame(bubTick); }
 bubTick();
 
 // ================= BIẾN CỐ 3D (Lumina trong trụ sở) =================
