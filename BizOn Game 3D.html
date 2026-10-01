@@ -965,6 +965,15 @@ window.__roomPick = e => {
   RM.sel = pk.id; BUILD[RM.mode](); return true;
 };
 const rv = new THREE.Vector3();
+// Né nhãn phòng/đấu trường chồng lên nhau: nhãn gần camera giữ vị trí, nhãn xa hơn
+// bị đẩy xuống nếu lấn vùng ngang một nhãn đã đặt trước đó (cùng cơ chế với js/bps3d.js).
+function declutterLabs(list) {
+  const ordered = list.slice().sort((a, b) => a._z - b._z), minGap = 46;
+  for (let pass = 0; pass < 5; pass++) for (let i = 0; i < ordered.length; i++) { const a = ordered[i];
+    for (let j = 0; j < i; j++) { const b = ordered[j], dx = Math.abs(a._x - b._x), minDx = (a.el.offsetWidth + b.el.offsetWidth) / 2 + 8;
+      if (dx < minDx && Math.abs(a._y - b._y) < minGap) a._y = b._y + minGap; } }
+  ordered.forEach(L => { L.el.style.left = L._x.toFixed(1) + 'px'; L.el.style.top = L._y.toFixed(1) + 'px'; });
+}
 function roomTick(dt, t) {
   const sway = Math.sin(t * 0.25) * 0.5, shx = innerWidth > 760 ? Math.min(2.2, innerWidth / 900) : 0; RM.cam.position.copy(RM.cp).add(rv.set(sway + shx, 0, 0)); RM.cam.lookAt(rv.copy(RM.cl).setX(RM.cl.x + shx));
   if (innerWidth < innerHeight) { RM.cam.position.z += 3.5; RM.cam.position.y += 1.5; }
@@ -982,7 +991,9 @@ function roomTick(dt, t) {
       m.position.x += m.userData.v * dt; m.rotation.y += dt; if (m.position.x > 6.8) { RM.g.remove(m); RM.belt.splice(i, 1); const k = RM.picks.indexOf(m); if (k >= 0) RM.picks.splice(k, 1); } } }
   if (RM.conf) for (let i = RM.conf.length - 1; i >= 0; i--) { const c = RM.conf[i]; c.v.y -= dt * 2; c.m.position.addScaledVector(c.v, dt); c.m.rotation.x += c.r * dt; c.life -= dt; if (c.life <= 0 || c.m.position.y < 0) { RM.scene.remove(c.m); RM.conf.splice(i, 1); } }
   if (RM.tick) RM.tick(dt, t);
-  RM.labs.forEach(L => { L.obj.getWorldPosition(rv); rv.y += L.dy; rv.project(RM.cam); L.el.style.left = (rv.x + 1) / 2 * innerWidth + 'px'; L.el.style.top = (1 - rv.y) / 2 * innerHeight + 'px'; L.el.style.display = rv.z < 1 ? '' : 'none'; });
+  RM.labs.forEach(L => { L.obj.getWorldPosition(rv); rv.y += L.dy; rv.project(RM.cam); const vis = rv.z < 1; L.el.style.display = vis ? '' : 'none';
+    if (vis) { const hw = L.el.offsetWidth / 2 + 4; L._x = Math.max(hw, Math.min(innerWidth - hw, (rv.x + 1) / 2 * innerWidth)); L._y = (1 - rv.y) / 2 * innerHeight; L._z = rv.z; } });
+  declutterLabs(RM.labs.filter(L => L.el.style.display !== 'none'));
   renderer.render(RM.scene, RM.cam);
   return true;
 }
