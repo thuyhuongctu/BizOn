@@ -296,6 +296,15 @@ new ResizeObserver(() => { renderer.setSize(W0(), H0()); camera.aspect = W0() / 
 
 // ---- vòng vẽ ----
 const v3 = new THREE.Vector3(); const clock = new THREE.Clock();
+// Né nhãn chồng lên nhau: nhãn gần camera giữ vị trí, nhãn xa hơn bị đẩy xuống
+// nếu lấn vào vùng ngang của một nhãn đã đặt trước đó.
+function declutter(list) {
+  const ordered = list.slice().sort((a, b) => a._z - b._z), minGap = 34;
+  for (let pass = 0; pass < 5; pass++) for (let i = 0; i < ordered.length; i++) { const a = ordered[i];
+    for (let j = 0; j < i; j++) { const b = ordered[j], dx = Math.abs(a._x - b._x), minDx = (a.lab.offsetWidth + b.lab.offsetWidth) / 2 + 8;
+      if (dx < minDx && Math.abs(a._y - b._y) < minGap) a._y = b._y + minGap; } }
+  ordered.forEach(it => { it.lab.style.transform = 'translate(-50%,-100%) translate(' + it._x.toFixed(1) + 'px,' + it._y.toFixed(1) + 'px)'; });
+}
 function frame() {
   // Tạm dừng vòng vẽ nặng khi hub clay (js/bps-hub.js) hoặc tab đang ẩn, để
   // khỏi tranh CPU/GPU với animation loop của hub – xem js/clay-hub.js.
@@ -317,8 +326,12 @@ function frame() {
   for (let k = pops.length - 1; k >= 0; k--) { const p = pops[k], a = (now - p.t0) / 1000, sp = P[p.loc]; v3.set(sp[0], 9 + a * 1.2, sp[1]).project(camera);
     p.el.style.transform = 'translate(-50%,-100%) translate(' + ((v3.x + 1) / 2 * W0()).toFixed(1) + 'px,' + ((1 - v3.y) / 2 * H0()).toFixed(1) + 'px)'; if (a > 2.6) p.el.style.opacity = 0; if (a > 3.3) { p.el.remove(); pops.splice(k, 1); } }
   const W = W0(), H = H0();
-  spots.forEach(s => { if (exploreMode) { s.lab.style.display = 'none'; return; } v3.set(s.g.position.x, 7.2, s.g.position.z).project(camera); const vis = v3.z < 1; s.lab.style.display = vis ? '' : 'none'; s.lab.style.transform = 'translate(-50%,-100%) translate(' + Math.max(70, Math.min(W - 70, (v3.x + 1) / 2 * W)).toFixed(1) + 'px,' + Math.max(92, (1 - v3.y) / 2 * H).toFixed(1) + 'px)'; });
-  if (exploreMode) explorePins.forEach(p => { v3.set(p.g.position.x, 3.4, p.g.position.z).project(camera); const vis = v3.z < 1; p.lab.style.display = vis ? '' : 'none'; p.lab.style.transform = 'translate(-50%,-100%) translate(' + Math.max(70, Math.min(W - 70, (v3.x + 1) / 2 * W)).toFixed(1) + 'px,' + Math.max(92, (1 - v3.y) / 2 * H).toFixed(1) + 'px)'; });
+  spots.forEach(s => { if (exploreMode) { s.lab.style.display = 'none'; return; } v3.set(s.g.position.x, 7.2, s.g.position.z).project(camera); const vis = v3.z < 1; s.lab.style.display = vis ? '' : 'none';
+    if (vis) { const hw = s.lab.offsetWidth / 2 + 4; s._x = Math.max(hw, Math.min(W - hw, (v3.x + 1) / 2 * W)); s._y = Math.max(92, (1 - v3.y) / 2 * H); s._z = v3.z; } });
+  if (!exploreMode) declutter(spots.filter(s => s.lab.style.display !== 'none'));
+  if (exploreMode) { explorePins.forEach(p => { v3.set(p.g.position.x, 3.4, p.g.position.z).project(camera); const vis = v3.z < 1; p.lab.style.display = vis ? '' : 'none';
+    if (vis) { const hw = p.lab.offsetWidth / 2 + 4; p._x = Math.max(hw, Math.min(W - hw, (v3.x + 1) / 2 * W)); p._y = Math.max(92, (1 - v3.y) / 2 * H); p._z = v3.z; } });
+    declutter(explorePins.filter(p => p.lab.style.display !== 'none')); }
   requestAnimationFrame(frame);
 }
 const wait = () => { if (G()) { setWeek(G().S.week || 0); frame(); } else setTimeout(wait, 60); };
