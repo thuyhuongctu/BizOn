@@ -257,6 +257,7 @@
           </div>
           <p id="ft-cert-date" class="text-[9px] text-deep-teal/45 font-bold mt-3"></p>
           <button onclick="ftDownloadCert()" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-4 py-2 text-[11px] mt-3" data-en="📥 Download certificate">📥 Tải chứng chỉ</button>
+          <button onclick="ftDownloadCertOfficial()" class="clay-btn bg-primary text-white font-display font-extrabold px-4 py-2 text-[11px] mt-3 ml-2" data-en="🎓 Official CTU certificate">🎓 Chứng nhận ĐHCT</button>
         </div>
       </div>
       <div class="mt-5 text-left hidden" id="ft-submit-box">
@@ -898,6 +899,17 @@
     a.click();
   };
 
+  // Chứng nhận chính thức kiểu ĐH Cần Thơ (bản tải thứ 2, cạnh chứng chỉ
+  // BizOn mặc định) – xem js/official-cert.js. Mã môn/tên môn/ngày học lấy
+  // từ cấu hình giảng viên theo mã lớp đã nhập (bizon_cert_feed), hoặc mặc
+  // định KT330H/Entrepreneurship nếu chưa cấu hình/không có mã lớp.
+  window.ftDownloadCertOfficial = function () {
+    if (!window.OfficialCert) return;
+    window.OfficialCert.fetchConfig().then(function (cfg) {
+      window.OfficialCert.download({ name: certName(), courseCode: cfg.course_code, courseName: cfg.course_name, courseDates: cfg.course_dates, filenamePrefix: 'BizOn-BenPhuSa' });
+    });
+  };
+
   // ===== Nộp kết quả cho giảng viên (tùy chọn) – bảng ft_results, INSERT-only =====
   var bcfg = function () { return window.BIZON_BACKEND || {}; };
   var backendOn = function () { var c = bcfg(); return c.enabled && c.url && !c.url.includes('YOUR-PROJECT'); };
@@ -991,6 +1003,9 @@
 <script src="js/bps-rival-intel.js"></script>
 <script src="js/clay-hub.js"></script>
 <script src="js/bps-hub.js"></script>
+<script src="js/official-cert.js"></script>
+<script src="js/negotiate.js"></script>
+<script src="js/bps-negotiate.js"></script>
 <script src="js/site-ui.js" defer></script>
 <script src="js/site-vnmap.js" defer></script>
 <script>
