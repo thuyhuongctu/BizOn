@@ -390,7 +390,7 @@
     budget: 1.5, items: {}, shopOpen: false, knownPairs: {}, shieldSpoilage: false, adBoost: false,
   };
   var $ = function (id) { return document.getElementById(id); };
-  window.__bps = { get S() { return S; }, get D() { return D; }, get W() { return W; }, get RIVALS() { return RIVALS; }, get LOCS() { return LOCS; }, get MENUS() { return MENUS; } };
+  window.__bps = { get S() { return S; }, get D() { return D; }, get W() { return W; }, get RIVALS() { return RIVALS; }, get LOCS() { return LOCS; }, get MENUS() { return MENUS; }, get cap() { return TEAM()[S.cap]; } };
   var f1 = function (v) { return (Math.round(v * 10) / 10).toLocaleString(isEN() ? 'en-US' : 'vi-VN', { maximumFractionDigits: 1 }); };
   var MU = function () { return T('triệu ₫', 'mn ₫'); }; // đơn vị tiền đầy đủ
   var MS = function () { return T('tr₫', 'mn₫'); }; // đơn vị tiền rút gọn (bảng xếp hạng)
@@ -718,6 +718,7 @@
     S.week++;
     if (S.week >= 5) return ftEnd();
     if (window.BPSRivalIntel) BPSRivalIntel.showArena(S.total, RIVALS, S.week);
+    if (window.BPSHub) BPSHub.markNew();
     // Rằm giữa mùa: Lễ cúng Bà Cậu (một lần, nhịp cố định – không đổi doanh thu/điểm)
     if (S.week === 2 && !S.ritualDone) { S.ritualDone = true; return showRitual(); }
     render();
@@ -988,6 +989,8 @@
 })();
 </script>
 <script src="js/bps-rival-intel.js"></script>
+<script src="js/clay-hub.js"></script>
+<script src="js/bps-hub.js"></script>
 <script src="js/site-ui.js" defer></script>
 <script src="js/site-vnmap.js" defer></script>
 <script>
