@@ -3128,6 +3128,17 @@ function renderAchievements() {
   }
 }
 
+// Chứng nhận chính thức kiểu ĐH Cần Thơ (cạnh thẻ Thành tựu) – xem
+// js/official-cert.js. Mã môn/tên môn/ngày học lấy từ cấu hình giảng viên
+// theo mã lớp (S.profile.classId), hoặc mặc định KT330H/Entrepreneurship
+// nếu chưa cấu hình/chơi thử không có mã lớp.
+window.bnDownloadCertOfficial = function () {
+  if (!window.OfficialCert || !S || !S.profile) return;
+  window.OfficialCert.fetchConfig(S.profile.classId).then(cfg => {
+    window.OfficialCert.download({ name: S.profile.teamName, courseCode: cfg.course_code, courseName: cfg.course_name, courseDates: cfg.course_dates, filenamePrefix: 'BizOn-BatNghiep' });
+  });
+};
+
 // ---------- Profile & Settings ----------
 function renderProfile() {
   $('pf-name').textContent = S.profile.teamName;
