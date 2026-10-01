@@ -1,0 +1,34 @@
+name: Gravity Lab
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'lab/gravity-lab*'
+      - 'test/gravity-lab.test.js'
+      - '.github/workflows/gravity-lab.yml'
+  pull_request:
+    paths:
+      - 'lab/gravity-lab*'
+      - 'test/gravity-lab.test.js'
+      - '.github/workflows/gravity-lab.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: JavaScript syntax
+        run: |
+          node --check lab/gravity-lab-engine.js
+          node --check lab/gravity-lab-data.js
+      - name: Engine and data tests
+        run: node test/gravity-lab.test.js
