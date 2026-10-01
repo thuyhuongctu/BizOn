@@ -2,8 +2,8 @@
 window.BPS_VOICE = {
   base: 'assets/voice/ben-phu-sa/',
   speakers: {
-    HG: { name: 'Cô Thùy Hương', img: 'assets/character/phu-sa/huong-cut.webp', note: 'Giảng viên, giọng nữ ấm, chậm rãi' },
-    TP: { name: 'Thầy Tú Phan', img: 'assets/character/phu-sa/tu-cut.webp', note: 'Cố vấn, giọng nam trầm, gợi mở' },
+    HG: { name: 'Lumina', img: 'assets/character/advisors/lumina-chap-tay-cut.webp', note: 'AI cố vấn, giọng nữ ấm, chậm rãi' },
+    TP: { name: 'Assoc. Prof. Phan Anh Tu', img: 'assets/character/phu-sa/tu-cut.webp', note: 'Cố vấn học thuật, giọng nam trầm, gợi mở' },
     RV: { name: 'Đối thủ', img: '', note: 'Giọng thách thức, vui, hơi khoe' },
     NAR: { name: 'Người dẫn', img: '', note: 'Giọng dẫn trung tính, rõ ràng' },
   },
