@@ -127,7 +127,7 @@ function vessel(kind, color) {
   scene.add(g); return g;
 }
 const TL = new THREE.TextureLoader();
-function sprite(url, h, y) { const s = new THREE.Sprite(new THREE.SpriteMaterial({ transparent: true, depthWrite: false })); s.visible = false; s.position.y = y;
+function sprite(url, h, y) { const s = new THREE.Sprite(new THREE.SpriteMaterial({ transparent: true, depthWrite: false, alphaTest: 0.5 })); s.visible = false; s.position.y = y;
   TL.load(url, tx => { tx.colorSpace = THREE.SRGBColorSpace; s.material.map = tx; s.material.needsUpdate = true; const a = tx.image.width / tx.image.height; s.scale.set(h * a, h, 1); s.visible = true; }); return s; }
 // thầy Tú & cô Hương đứng ở bến nhà
 const dock = new THREE.Group(); dock.position.set(-4, 0, 7.5); scene.add(dock);
