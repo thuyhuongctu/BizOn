@@ -109,6 +109,7 @@ test('Trang HTML nạp đúng hai tệp JS và có ghi công tác giả', () => 
   assert.ok(html.includes('gravity-lab-engine.js') && html.includes('gravity-lab-data.js'));
   assert.ok(html.includes('Phan Anh Tú') && html.includes('Đỗ Thùy Hương'));
   assert.ok(!/https?:\/\/(cdn|fonts\.googleapis)/.test(html), 'Không dùng CDN');
+  assert.ok(/<input type="checkbox" id="checkToggle">/.test(html), 'Kiểm tra nhất quán mặc định tắt');
 });
 
 console.log(`\n${passed} kiểm thử đạt.`);

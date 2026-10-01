@@ -130,7 +130,8 @@ footer{color:var(--faint);font-size:12px;text-align:center;margin-top:24px}
         <h3 data-i18n="t1_tbl">Bảng hệ số</h3>
         <div class="tblwrap"><table id="coefTbl"></table></div>
         <p class="muted small" id="modelMeta"></p>
-        <p class="muted small"><span class="flag"></span> <span data-i18n="flag_note">Sao trong bài khác mức ý nghĩa tính lại từ hệ số và sai số chuẩn (xấp xỉ chuẩn, hai phía).</span></p>
+        <label class="ctl small"><input type="checkbox" id="checkToggle"> <span data-i18n="check_toggle">Kiểm tra nhất quán: so sao trong bài với mức ý nghĩa tính lại</span></label>
+        <p class="muted small" id="flagNote" hidden><span class="flag"></span> <span data-i18n="flag_note">Sao trong bài khác mức ý nghĩa tính lại từ hệ số và sai số chuẩn (xấp xỉ chuẩn, hai phía).</span></p>
       </div>
       <div class="card">
         <h3 data-i18n="t1_read">Đọc kết quả</h3>
@@ -243,7 +244,7 @@ footer{color:var(--faint);font-size:12px;text-align:center;margin-top:24px}
     t1_h: 'Eight nested models, read through confidence intervals',
     prov_pub2019: 'Published figures · Phan & Do (2019), Table 6 · REM, robust s.e.',
     t1_p: 'Pick a model. Each dot is a coefficient; the bar is the 95% confidence interval from the published standard error. A bar crossing zero means insufficient evidence at the 5% level.',
-    t1_tbl: 'Coefficient table', flag_note: 'Reported stars differ from the significance recomputed from the coefficient and standard error (normal approximation, two-sided).',
+    t1_tbl: 'Coefficient table', check_toggle: 'Consistency check: compare the paper\'s stars with recomputed significance', flag_note: 'Reported stars differ from the significance recomputed from the coefficient and standard error (normal approximation, two-sided).',
     t1_read: 'Reading the results', t1_q: 'Discussion questions',
     q1: 'R² in the table is only about 0.006–0.024, yet FDI and lagged FDI correlate at 0.62. Which R² (within, between or overall) is reported?',
     q2: 'What goes wrong when a lagged dependent variable enters a random-effects model (Nickell, 1981)? What estimators are alternatives?',
@@ -344,6 +345,7 @@ footer{color:var(--faint);font-size:12px;text-align:center;margin-top:24px}
 
   // ---------- Tab 1 ----------
   let MODEL = 7;
+  $('checkToggle').addEventListener('change', () => renderModels());
   function renderModels() {
     $('modelSeg').innerHTML = P.models.map((_, i) => `<button type="button" class="${i === MODEL ? 'on' : ''}" data-m="${i}">${t('model')} ${i + 1}</button>`).join('');
     $('modelSeg').querySelectorAll('button').forEach(b => b.onclick = () => { MODEL = +b.dataset.m; renderModels(); });
@@ -353,8 +355,10 @@ footer{color:var(--faint);font-size:12px;text-align:center;margin-top:24px}
       return { id: v.id, label: v[LANG], b, se, st, p, re: E.stars(p) };
     });
     $('forest').innerHTML = forest(rows.filter(r => r.id !== 'cons'), { label: t('t1_h') });
-    $('coefTbl').innerHTML = `<tr><th>${t('var')}</th><th>${t('coef')}</th><th>${t('se')}</th><th>${t('starsPaper')}</th><th>${t('pRe')}</th><th>${t('starsRe')}</th></tr>` +
-      rows.map(r => `<tr><td>${r.label}${r.st !== r.re ? '<span class="flag" title="' + t('flag_note') + '"></span>' : ''}</td><td class="num">${fmt(r.b)}</td><td class="num">${fmt(r.se)}</td><td class="num">${r.st || '–'}</td><td class="num">${fmt(r.p, 3)}</td><td class="num">${r.re || '–'}</td></tr>`).join('');
+    const CHECK = $('checkToggle').checked;
+    $('flagNote').hidden = !CHECK;
+    $('coefTbl').innerHTML = `<tr><th>${t('var')}</th><th>${t('coef')}</th><th>${t('se')}</th><th>${t('starsPaper')}</th>${CHECK ? `<th>${t('pRe')}</th><th>${t('starsRe')}</th>` : ''}</tr>` +
+      rows.map(r => `<tr><td>${r.label}${CHECK && r.st !== r.re ? '<span class="flag" title="' + t('flag_note') + '"></span>' : ''}</td><td class="num">${fmt(r.b)}</td><td class="num">${fmt(r.se)}</td><td class="num">${r.st || '–'}</td>${CHECK ? `<td class="num">${fmt(r.p, 3)}</td><td class="num">${r.re || '–'}</td>` : ''}</tr>`).join('');
     $('modelMeta').textContent = `${t('obs')}: ${m.n} · R²: ${fmt(m.r2, 4)} · P: ${fmt(m.p, 4)}`;
     $('readout').innerHTML = readout(m);
   }
