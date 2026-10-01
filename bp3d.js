@@ -754,7 +754,9 @@ const tmp = new THREE.Vector3(), boatGoal = new THREE.Vector3();
 camGoal('intro', 0); cam.position.copy(goalP); ctl.target.copy(goalT);
 function frame() {
   requestAnimationFrame(frame);
-  if (document.hidden) return;
+  // Tạm dừng vòng vẽ nặng khi hub clay (js/bp-hub.js) đang mở hoặc tab đang
+  // ẩn, để khỏi tranh CPU/GPU với animation loop của hub – xem js/clay-hub.js.
+  if (document.hidden || window.__clayHubOpen) return;
   const dt = Math.min(clock.getDelta(), 0.05), t = clock.elapsedTime; U.t.value = t;
   acc += dt; if (acc > 0.25) { acc = 0; sync(t); if (window.__bp3dQReady) { questTick(); badgeTick(); } }
   perf.n++; perf.s += dt; if (perf.s > 2.5) { const fps = perf.n / perf.s; perf.n = perf.s = 0;

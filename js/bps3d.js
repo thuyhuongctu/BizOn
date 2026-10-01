@@ -297,6 +297,9 @@ new ResizeObserver(() => { renderer.setSize(W0(), H0()); camera.aspect = W0() / 
 // ---- vòng vẽ ----
 const v3 = new THREE.Vector3(); const clock = new THREE.Clock();
 function frame() {
+  // Tạm dừng vòng vẽ nặng khi hub clay (js/bps-hub.js) hoặc tab đang ẩn, để
+  // khỏi tranh CPU/GPU với animation loop của hub – xem js/clay-hub.js.
+  if (document.hidden || window.__clayHubOpen) { requestAnimationFrame(frame); return; }
   const t = clock.getElapsedTime(), now = performance.now();
   night += (nightT - night) * 0.05;
   scene.traverse(o => {

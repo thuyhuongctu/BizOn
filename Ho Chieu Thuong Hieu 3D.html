@@ -1576,6 +1576,7 @@
     renderEvtPost();
     hud();
     if (window.BPRivalIntel) BPRivalIntel.showArena(S.profit, S.rival.rev, S.q);
+    if (window.BPHub) BPHub.markNew();
   }
   window.bpNext = function () { stageObs(); };
 
@@ -2066,6 +2067,8 @@
 })();
 </script>
 <script src="js/bp-rival-intel.js"></script>
+<script src="js/clay-hub.js"></script>
+<script src="js/bp-hub.js"></script>
 <script src="js/bp-tutorial.js"></script>
 <script src="js/bp-exam.js"></script>
 <script src="js/bp-worldmap.js?v=4"></script>
