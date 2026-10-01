@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nhà máy FDI</title>
+<link rel="icon" href="../assets/brand/bizon-favicon.svg" type="image/svg+xml">
+<meta name="description" content="Nhà máy FDI – trò chơi mô phỏng điều hành một nhà máy có vốn đầu tư nước ngoài tại Việt Nam qua 8 quý biến động: nguồn đầu vào, thị trường, quy tắc xuất xứ và thuế quan.">
+<style>
+@font-face{font-family:'Plus Jakarta Sans';font-weight:400 800;font-display:swap;src:url(../assets/fonts/PlusJakartaSans-var-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
+@font-face{font-family:'Plus Jakarta Sans';font-weight:400 800;font-display:swap;src:url(../assets/fonts/PlusJakartaSans-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2122,U+2212}
+@font-face{font-family:'JetBrains Mono';font-weight:400 500;font-display:swap;src:url(../assets/fonts/IBMPlexMono-400-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
+@font-face{font-family:'JetBrains Mono';font-weight:400 500;font-display:swap;src:url(../assets/fonts/IBMPlexMono-400-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2122,U+2212}
+:root{--bg:#0B1220;--panel:#111F38;--panel2:#0E1B31;--grid:rgba(99,179,237,.08);--ink:#E7EEF8;--muted:#93A4BD;--faint:#6B7C97;--line:#22324A;--line2:#2C3F5C;
+  --accent:#06B6D4;--accent2:#22C55E;--warn:#F59E0B;--neg:#F97316;--imp:#A78BFA;--shadow:0 10px 30px rgba(0,0,0,.35);--radius:16px}
+html[data-theme="light"]{--bg:#EEF3FA;--panel:#FFFFFF;--panel2:#F5F8FD;--grid:rgba(30,64,120,.07);--ink:#0F1A2E;--muted:#52617B;--faint:#8392AB;--line:#DDE7F3;--line2:#CBD8EA;
+  --accent:#0891B2;--accent2:#16A34A;--warn:#B45309;--neg:#C2410C;--imp:#7C3AED;--shadow:0 12px 30px rgba(20,40,80,.10)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;min-height:100vh;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:26px 26px}
+.mono,.num{font-family:'JetBrains Mono',monospace}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px 56px}
+.topbar{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar-in{max-width:1120px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px}
+.logo .mark{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:17px}
+.logo .sub{display:block;font-size:11px;font-weight:600;color:var(--muted)}
+.spacer{flex:1}
+.tbtn{border:1px solid var(--line2);background:var(--panel);color:var(--ink);border-radius:10px;padding:7px 11px;font-weight:600;font-size:12.5px;font-family:inherit;cursor:pointer;text-decoration:none}
+.lang-pill{display:flex;border:1px solid var(--line2);border-radius:10px;overflow:hidden;background:var(--panel)}
+.lang-pill button{border:0;background:transparent;color:var(--muted);padding:7px 11px;font-weight:700;font-size:12.5px;cursor:pointer;font-family:inherit}
+.lang-pill button.on{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
+.hero{padding:28px 0 14px}
+.eyebrow{font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.06em}
+h1{font-size:clamp(26px,4.4vw,38px);line-height:1.15;margin:10px 0}
+.lead{color:var(--muted);max-width:800px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;margin-bottom:14px}
+.card h2{font-size:18px;margin-bottom:6px} .card h3{font-size:15px;margin:12px 0 6px}
+.muted{color:var(--muted)} .small{font-size:12.5px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px} .grid2>*{min-width:0}
+@media (max-width:860px){.grid2{grid-template-columns:1fr}}
+.prov{display:inline-flex;gap:6px;align-items:center;font-size:11.5px;font-weight:700;border-radius:999px;padding:3px 10px;border:1px solid var(--line2);color:var(--muted);margin:4px 6px 8px 0}
+.prov::before{content:'';width:8px;height:8px;border-radius:50%}
+.prov.sim::before{background:var(--warn)} .prov.pub::before{background:var(--accent2)}
+.pick{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0}
+@media (max-width:640px){.pick{grid-template-columns:1fr}}
+.pick button{text-align:left;border:2px solid var(--line2);background:var(--panel2);color:var(--ink);border-radius:14px;padding:14px;font-family:inherit;cursor:pointer}
+.pick button.on{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,var(--panel2))}
+.pick b{display:block;font-size:15px;margin-bottom:4px}
+label.ctl{display:block;margin:12px 0 2px;font-weight:700;font-size:13px}
+input[type=range]{width:100%} input[type=text],select{font:inherit;color:var(--ink);background:var(--panel2);border:1px solid var(--line2);border-radius:9px;padding:7px 9px;max-width:100%}
+.btn{border:0;border-radius:11px;padding:10px 16px;font-weight:800;font-size:14px;font-family:inherit;cursor:pointer;color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent2))}
+.btn.ghost{background:var(--panel2);color:var(--ink);border:1px solid var(--line2)}
+.event{border-left:4px solid var(--warn)}
+.event .tag{font-size:12px;font-weight:700;color:var(--warn)}
+.prog{display:flex;gap:4px;margin:6px 0 12px}
+.prog span{flex:1;height:6px;border-radius:4px;background:var(--line2)} .prog span.done{background:var(--accent2)} .prog span.now{background:var(--accent)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media (max-width:640px){.kpis{grid-template-columns:1fr 1fr}}
+.kpi{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:10px}
+.kpi small{display:block;color:var(--muted);font-size:11.5px} .kpi b{font-size:19px}
+.pos{color:var(--accent2)} .neg{color:var(--neg)}
+.mrow{display:grid;grid-template-columns:150px 1fr 54px;gap:10px;align-items:center;margin:6px 0;font-size:13px}
+.mrow .num{text-align:right}
+.hint{font-size:11.5px;color:var(--muted)}
+.tblwrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{color:var(--muted);font-size:12px}
+.note{border-left:3px solid var(--warn);padding:8px 12px;background:var(--panel2);border-radius:8px;font-size:13px;margin-top:10px}
+.badge{display:inline-block;border-radius:999px;padding:4px 10px;margin:3px 6px 3px 0;font-size:12.5px;font-weight:700;background:color-mix(in srgb,var(--accent) 16%,var(--panel2));border:1px solid var(--line2)}
+.qa li{margin:6px 0 6px 18px}
+footer{color:var(--faint);font-size:12px;text-align:center;margin-top:24px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="topbar-in">
+  <div class="logo"><span class="mark">🏭</span><span>Nhà máy FDI<span class="sub" id="brandSub"></span></span></div>
+  <div class="spacer"></div>
+  <a class="tbtn" href="../lop-hoc.html" id="backLink"></a>
+  <div class="lang-pill"><button id="langVI" class="on" type="button">VI</button><button id="langEN" type="button">EN</button></div>
+  <button class="tbtn" id="themeBtn" type="button"></button>
+</div></div>
+
+<main class="wrap" id="app"></main>
+
+<footer class="wrap">
+  <p>© 2026 PGS.TS. Phan Anh Tú &amp; NCS. Đỗ Thùy Hương · Trường Kinh tế, Đại học Cần Thơ</p>
+  <p id="footSrc"></p>
+</footer>
+
+<script src="nha-may-fdi-engine.js"></script>
+<script src="nha-may-fdi-data.js"></script>
+<script>
+(function () {
+  'use strict';
+  const E = window.FactoryEngine, D = window.FactoryData;
+  const $ = id => document.getElementById(id);
+  const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+
+  const T = {
+    vi: {
+      brandSub: 'Mô phỏng chuỗi giá trị toàn cầu', back: '← Kịch bản lớp học', light: 'Sáng', dark: 'Tối',
+      eyebrow: 'Trò chơi mô phỏng · Kinh doanh quốc tế', title: 'Điều hành một nhà máy FDI qua 8 quý biến động',
+      lead: 'Bạn là giám đốc một nhà máy có vốn đầu tư nước ngoài tại Việt Nam. Mỗi quý, chọn mua đầu vào trong nước hay nhập khẩu, chia sản lượng cho các thị trường và quyết định có đầu tư phát triển nhà cung cấp nội địa hay không. Chiến tranh thương mại, đứt gãy chuỗi cung ứng và thuế quan sẽ thử thách mô hình của bạn. Khoảng 15 phút.',
+      provSim: 'Tham số minh họa · sự kiện lấy cảm hứng từ thực tế', provPub: 'Số tham chiếu thật: Cục Hải quan, 8 tháng 2026',
+      chooseInd: 'Chọn ngành', cohort: 'Mã lớp hoặc mã nhóm (tùy chọn, không nhập họ tên)', cohortHint: 'Cùng mã thì cùng diễn biến ngẫu nhiên, để cả lớp so sánh công bằng.',
+      start: 'Bắt đầu', quarter: 'Quý', of: '/', inspired: 'Lấy cảm hứng từ',
+      decisions: 'Quyết định quý này', local: 'Tỷ lệ đầu vào mua trong nước', premium: 'Đầu vào trong nước đắt hơn nhập khẩu',
+      roo: 'Từ 40%: đạt quy tắc xuất xứ EU, Nhật – Hàn (thuế 0%)', ts: 'Dưới 30%: có thể bị nghi trung chuyển khi Hoa Kỳ siết thuế',
+      markets: 'Chia sản lượng cho thị trường', demandHint: 'cầu bình thường khoảng', invest: 'Đầu tư phát triển nhà cung cấp trong nước (có tác dụng từ quý sau)',
+      none: 'Không đầu tư', commit: 'Chốt quý', results: 'Kết quả quý', profit: 'Lợi nhuận', exports: 'Xuất khẩu', imports: 'Nhập khẩu đầu vào',
+      dva: 'Tỷ lệ giá trị gia tăng trong nước', market: 'Thị trường', offered: 'Chào bán', sold: 'Bán được', tariff: 'Thuế', revenue: 'Doanh thu',
+      chartTitle: 'Xuất khẩu và nhập khẩu đầu vào theo quý (triệu USD)', unsold: 'Hàng không bán được thanh lý trong nước với 40% giá.',
+      produced: 'Sản lượng', endTitle: 'Báo cáo sau 8 quý', totalProfit: 'Tổng lợi nhuận', totalDva: 'Tỷ lệ giá trị gia tăng trong nước (cả kỳ)',
+      ratioYou: 'Nhập khẩu đầu vào / xuất khẩu của nhà máy bạn', ratioReal: 'Cùng tỷ lệ, khu vực FDI của nhóm hàng này (Hải quan, 8 tháng 2026)',
+      realNote: 'So sánh mang tính gợi mở: số Hải quan là cấp nhóm hàng của cả khu vực FDI, không khớp từng sản phẩm.',
+      debrief: 'Câu hỏi thảo luận', download: 'Tải nhật ký quyết định (JSON)', again: 'Chơi lại',
+      q1: 'Vì sao xuất khẩu lớn chưa chắc đem lại nhiều giá trị gia tăng cho Việt Nam? Liên hệ khái niệm giá trị gia tăng trong xuất khẩu (Koopman et al., 2014).',
+      q2: 'Quy tắc xuất xứ của EVFTA và CPTPP đã thay đổi lựa chọn nguồn đầu vào của bạn như thế nào?',
+      q3: 'Nhà máy của bạn chống chịu cú sốc quý 4 và quý 7 ra sao? Đánh đổi giữa chi phí và khả năng chống chịu là gì?',
+      q4: 'Nếu là nhà hoạch định chính sách, bạn sẽ làm gì để doanh nghiệp FDI mua nhiều hơn từ nhà cung cấp trong nước?',
+      badges: { resilient: 'Chống chịu: không quý nào lỗ', upgrader: 'Nâng cấp chuỗi: giá trị gia tăng trong nước từ 45%', assembler: 'Xưởng lắp ráp: giá trị gia tăng trong nước dưới 30%', transship_flag: 'Bị gắn cờ trung chuyển ở thị trường Hoa Kỳ' },
+      units: 'đơn vị', m: 'tr', foot: 'Sự kiện lấy cảm hứng từ chiến tranh thương mại Mỹ – Trung (2018–2019), EVFTA (2020), COVID-19 (2020–2021), gián đoạn Biển Đỏ (2023–2024) và thuế đối ứng của Hoa Kỳ (2025). Mọi độ lớn trong mô phỏng là minh họa. Số tham chiếu: Cục Hải quan (2026), Biểu 017.T và 018.T.'
+    },
+    en: {
+      brandSub: 'Global value chain simulation', back: '← Classroom script', light: 'Light', dark: 'Dark',
+      eyebrow: 'Simulation game · International business', title: 'Run a foreign-invested factory through 8 turbulent quarters',
+      lead: 'You manage a foreign-invested plant in Vietnam. Each quarter, choose local or imported inputs, split output across markets, and decide whether to invest in developing local suppliers. Trade wars, supply-chain disruption and tariffs will test your model. About 15 minutes.',
+      provSim: 'Illustrative parameters · events inspired by real episodes', provPub: 'Real reference figures: Vietnam Customs, Jan–Aug 2026',
+      chooseInd: 'Choose an industry', cohort: 'Class or team code (optional, no personal names)', cohortHint: 'The same code gives the same random path, so a class can compare fairly.',
+      start: 'Start', quarter: 'Quarter', of: '/', inspired: 'Inspired by',
+      decisions: 'This quarter\'s decisions', local: 'Share of inputs bought locally', premium: 'Local inputs cost more than imports by',
+      roo: 'From 40%: meets EU and Japan–Korea rules of origin (0% duty)', ts: 'Below 30%: may be flagged for transshipment when the US tightens tariffs',
+      markets: 'Split output across markets', demandHint: 'normal demand about', invest: 'Invest in developing local suppliers (takes effect next quarter)',
+      none: 'No investment', commit: 'Commit quarter', results: 'Quarter results', profit: 'Profit', exports: 'Exports', imports: 'Imported inputs',
+      dva: 'Domestic value-added share', market: 'Market', offered: 'Offered', sold: 'Sold', tariff: 'Tariff', revenue: 'Revenue',
+      chartTitle: 'Exports and imported inputs by quarter (USD million)', unsold: 'Unsold output is cleared locally at 40% of the price.',
+      produced: 'Output', endTitle: 'Report after 8 quarters', totalProfit: 'Total profit', totalDva: 'Domestic value-added share (whole game)',
+      ratioYou: 'Imported inputs / exports at your plant', ratioReal: 'Same ratio, FDI sector for this product group (Customs, Jan–Aug 2026)',
+      realNote: 'An indicative comparison: Customs figures are product-group totals for the whole FDI sector, not matched product by product.',
+      debrief: 'Discussion questions', download: 'Download decision log (JSON)', again: 'Play again',
+      q1: 'Why do large exports not necessarily bring Vietnam much value added? Relate this to value added in exports (Koopman et al., 2014).',
+      q2: 'How did the EVFTA and CPTPP rules of origin change your sourcing choices?',
+      q3: 'How did your plant withstand the shocks in quarters 4 and 7? What is the trade-off between cost and resilience?',
+      q4: 'As a policymaker, what would you do to make foreign-invested firms buy more from local suppliers?',
+      badges: { resilient: 'Resilient: no loss-making quarter', upgrader: 'Value-chain upgrader: domestic value added ≥ 45%', assembler: 'Assembly shop: domestic value added < 30%', transship_flag: 'Flagged for transshipment in the US market' },
+      units: 'units', m: 'm', foot: 'Events inspired by the US–China trade war (2018–2019), the EVFTA (2020), COVID-19 (2020–2021), the Red Sea disruption (2023–2024) and US reciprocal tariffs (2025). All magnitudes in the simulation are illustrative. Reference figures: Vietnam Customs (2026), Tables 017.T and 018.T.'
+    }
+  };
+  let LANG = store.get('fdifactory_lang') === 'en' ? 'en' : 'vi';
+  const t = k => T[LANG][k];
+  const nf = (x, d) => (Number.isFinite(x) ? x : 0).toLocaleString(LANG === 'vi' ? 'vi-VN' : 'en-US', { maximumFractionDigits: d === undefined ? 0 : d, minimumFractionDigits: d === undefined ? 0 : d });
+  const musd = x => nf(x / 1e6, 2);
+  const pct = x => nf(x * 100, 0) + '%';
+  const nm = o => o[LANG] || o.vi;
+
+  // ---------- trạng thái giao diện ----------
+  let IND = 'electronics', COHORT = '', GAME = null;
+  let DEC = { local: 0.2, alloc: { US: 45, EU: 30, JPKR: 20, CNAS: 25 }, invest: 0 };
+
+  function chrome() {
+    $('brandSub').textContent = t('brandSub'); $('backLink').textContent = t('back');
+    const th = document.documentElement.getAttribute('data-theme');
+    $('themeBtn').textContent = (th === 'dark' ? '☀️ ' + t('light') : '🌙 ' + t('dark'));
+    $('langVI').classList.toggle('on', LANG === 'vi'); $('langEN').classList.toggle('on', LANG === 'en');
+    document.documentElement.lang = LANG; $('footSrc').textContent = t('foot');
+  }
+  $('langVI').onclick = () => { LANG = 'vi'; store.set('fdifactory_lang', 'vi'); render(); };
+  $('langEN').onclick = () => { LANG = 'en'; store.set('fdifactory_lang', 'en'); render(); };
+  $('themeBtn').onclick = () => { const n = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; document.documentElement.setAttribute('data-theme', n); store.set('fdifactory_theme', n); render(); };
+
+  function render() {
+    chrome();
+    if (!GAME) return renderSetup();
+    if (GAME.quarter > D.events.length) return renderEnd();
+    renderPlay();
+  }
+
+  // ---------- màn 1: chọn ngành ----------
+  function renderSetup() {
+    $('app').innerHTML = `
+      <section class="hero"><span class="eyebrow">${t('eyebrow')}</span><h1>${t('title')}</h1><p class="lead">${t('lead')}</p>
+        <span class="prov sim">${t('provSim')}</span><span class="prov pub">${t('provPub')}</span></section>
+      <div class="card"><h2>${t('chooseInd')}</h2>
+        <div class="pick">${Object.entries(D.industries).map(([id, ind]) => `<button type="button" data-ind="${id}" class="${id === IND ? 'on' : ''}"><b>${nm(ind)}</b>
+          <span class="small muted">${nf(ind.capacity)} ${LANG === 'vi' ? ind.unitVi : ind.unitEn}/${LANG === 'vi' ? 'quý' : 'quarter'} · ${nf(ind.price)} USD · ${t('premium').toLowerCase()} ${pct(ind.localPremium)}</span></button>`).join('')}</div>
+        <label class="ctl" for="cohort">${t('cohort')}</label><input type="text" id="cohort" maxlength="24" value="${COHORT.replace(/"/g, '')}" autocomplete="off">
+        <p class="hint">${t('cohortHint')}</p>
+        <p style="margin-top:14px"><button class="btn" id="startBtn" type="button">${t('start')}</button></p>
+      </div>`;
+    document.querySelectorAll('[data-ind]').forEach(b => b.onclick = () => { IND = b.dataset.ind; COHORT = $('cohort').value; renderSetup(); });
+    $('startBtn').onclick = () => {
+      COHORT = $('cohort').value.trim();
+      const seed = COHORT ? E.seedFrom(COHORT + '|' + IND) : (Date.now() >>> 0);
+      GAME = E.newGame(D, IND, seed);
+      DEC = { local: 0.2, alloc: { US: 45, EU: 30, JPKR: 20, CNAS: 25 }, invest: 0 };
+      render(); window.scrollTo(0, 0);
+    };
+  }
+
+  // ---------- màn 2: chơi ----------
+  function renderPlay() {
+    const ind = D.industries[GAME.industryId], q = GAME.quarter, ev = D.events[q - 1];
+    const premium = ind.localPremium * Math.exp(-GAME.supplierCum / ind.supplierScale);
+    const last = GAME.history[GAME.history.length - 1];
+    const unit = LANG === 'vi' ? ind.unitVi : ind.unitEn;
+    const norm = E.normalizeAlloc(DEC.alloc, D.markets);
+    $('app').innerHTML = `
+      <section class="hero" style="padding-bottom:6px"><span class="eyebrow">${nm(ind)}</span>
+        <h1 style="font-size:clamp(22px,3.6vw,30px)">${t('quarter')} ${q}${t('of')}${D.events.length}</h1>
+        <div class="prog">${D.events.map((_, i) => `<span class="${i + 1 < q ? 'done' : i + 1 === q ? 'now' : ''}"></span>`).join('')}</div></section>
+      <div class="card event"><span class="tag">${ev.inspired ? t('inspired') + ' ' + ev.inspired : t('quarter') + ' ' + q}</span><h2>${LANG === 'vi' ? ev.vi : ev.en}</h2><p>${LANG === 'vi' ? ev.textVi : ev.textEn}</p></div>
+      <div class="grid2">
+        <div class="card"><h2>${t('decisions')}</h2>
+          <label class="ctl" for="local">${t('local')}: <span class="num" id="localV">${pct(DEC.local)}</span></label>
+          <input type="range" id="local" min="0" max="${ind.maxLocal * 100}" step="5" value="${Math.round(DEC.local * 100)}">
+          <p class="hint">${t('premium')} <b class="num">${pct(premium)}</b>.</p>
+          <p class="hint">● ${t('roo')}<br>● ${t('ts')}</p>
+          <h3>${t('markets')}</h3>
+          ${D.markets.map(m => `<div class="mrow"><span>${nm(m)}<br><span class="hint">${t('demandHint')} ${nf(ind.capacity * m.share * ((ev.demand && ev.demand[m.id]) || 1))} ${unit}</span></span>
+            <input type="range" data-m="${m.id}" min="0" max="100" step="5" value="${DEC.alloc[m.id]}"><span class="num" id="pct-${m.id}">${pct(norm[m.id])}</span></div>`).join('')}
+          <label class="ctl" for="invest">${t('invest')}</label>
+          <select id="invest">${[0, 250000, 500000, 1000000].map(v => `<option value="${v}" ${v === DEC.invest ? 'selected' : ''}>${v ? musd(v) + ' ' + t('m') + ' USD' : t('none')}</option>`).join('')}</select>
+          <p style="margin-top:14px"><button class="btn" id="commitBtn" type="button">${t('commit')} ${q} →</button></p>
+        </div>
+        <div class="card">${last ? resultsHTML(last, ind) : `<h2>${t('results')}</h2><p class="muted small">—</p>`}</div>
+      </div>
+      ${GAME.history.length ? `<div class="card"><h3>${t('chartTitle')}</h3>${chartHTML(GAME.history)}</div>` : ''}`;
+    $('local').oninput = e => { DEC.local = +e.target.value / 100; $('localV').textContent = pct(DEC.local); };
+    document.querySelectorAll('[data-m]').forEach(r => r.oninput = () => {
+      DEC.alloc[r.dataset.m] = +r.value;
+      const n = E.normalizeAlloc(DEC.alloc, D.markets);
+      D.markets.forEach(m => { $('pct-' + m.id).textContent = pct(n[m.id]); });
+    });
+    $('invest').onchange = e => { DEC.invest = +e.target.value; };
+    $('commitBtn').onclick = () => {
+      GAME = E.playQuarter(D, GAME, { local: DEC.local, alloc: Object.assign({}, DEC.alloc), invest: DEC.invest });
+      DEC.invest = 0; render(); window.scrollTo(0, 0);
+    };
+  }
+
+  function resultsHTML(r, ind) {
+    const unit = LANG === 'vi' ? ind.unitVi : ind.unitEn;
+    return `<h2>${t('results')} ${r.quarter}</h2>
+      <div class="kpis">
+        <div class="kpi"><small>${t('profit')}</small><b class="num ${r.profit >= 0 ? 'pos' : 'neg'}">${musd(r.profit)} ${t('m')}</b></div>
+        <div class="kpi"><small>${t('exports')}</small><b class="num">${musd(r.exports)} ${t('m')}</b></div>
+        <div class="kpi"><small>${t('imports')}</small><b class="num">${musd(r.imports)} ${t('m')}</b></div>
+        <div class="kpi"><small>${t('dva')}</small><b class="num ${r.dvaRatio >= 0.45 ? 'pos' : r.dvaRatio < 0.3 ? 'neg' : ''}">${pct(r.dvaRatio)}</b></div>
+      </div>
+      <div class="tblwrap" style="margin-top:10px"><table><tr><th>${t('market')}</th><th>${t('offered')}</th><th>${t('sold')}</th><th>${t('tariff')}</th><th>${t('revenue')} (${t('m')})</th></tr>
+        ${r.byMarket.map(x => `<tr><td>${nm(D.markets.find(m => m.id === x.id))}</td><td class="num">${nf(x.offered)}</td><td class="num">${nf(x.sold)}</td><td class="num">${pct(x.tariff)}</td><td class="num">${musd(x.revenue)}</td></tr>`).join('')}
+      </table></div>
+      <p class="hint">${t('produced')}: ${nf(r.produced)} ${unit}. ${r.unsold > 0.5 ? t('unsold') : ''}</p>`;
+  }
+
+  function chartHTML(h) {
+    const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+    const W = 760, H = 230, left = 48, bottom = 30, top = 14, n = D.events.length, gw = (W - left - 16) / n;
+    const max = Math.max(1, ...h.map(r => Math.max(r.exports, r.imports))) * 1.1;
+    const Y = v => top + (1 - v / max) * (H - top - bottom);
+    const ex = css('--accent'), im = css('--imp'), muted = css('--muted'), line = css('--line2'), ink = css('--ink');
+    let s = `<svg viewBox="0 0 ${W} ${H + 24}" width="100%" role="img" aria-label="${t('chartTitle')}">`;
+    for (let i = 0; i <= 4; i++) { const v = max * i / 4; s += `<line x1="${left}" x2="${W - 16}" y1="${Y(v)}" y2="${Y(v)}" stroke="${line}" stroke-opacity=".5"/><text x="${left - 6}" y="${Y(v) + 4}" text-anchor="end" font-size="11" fill="${muted}">${nf(v / 1e6, 0)}</text>`; }
+    for (let i = 0; i < n; i++) {
+      const x0 = left + i * gw, r = h[i];
+      s += `<text x="${x0 + gw / 2}" y="${H - 10}" text-anchor="middle" font-size="11.5" fill="${muted}">Q${i + 1}</text>`;
+      if (!r) continue;
+      const bw = gw * 0.32;
+      s += `<rect x="${x0 + gw * 0.16}" y="${Y(r.exports)}" width="${bw}" height="${Y(0) - Y(r.exports)}" rx="3" fill="${ex}"/>`;
+      s += `<rect x="${x0 + gw * 0.16 + bw + 2}" y="${Y(r.imports)}" width="${bw}" height="${Y(0) - Y(r.imports)}" rx="3" fill="${im}"/>`;
+      s += `<text x="${x0 + gw / 2}" y="${Math.min(Y(r.exports), Y(r.imports)) - 4}" text-anchor="middle" font-size="10.5" fill="${ink}">${pct(r.dvaRatio)}</text>`;
+    }
+    s += `<rect x="${left}" y="${H + 8}" width="12" height="10" rx="2" fill="${ex}"/><text x="${left + 18}" y="${H + 17}" font-size="11.5" fill="${muted}">${t('exports')}</text>`;
+    s += `<rect x="${left + 120}" y="${H + 8}" width="12" height="10" rx="2" fill="${im}"/><text x="${left + 138}" y="${H + 17}" font-size="11.5" fill="${muted}">${t('imports')}</text>`;
+    s += `<text x="${left + 300}" y="${H + 17}" font-size="11.5" fill="${muted}">% = ${t('dva').toLowerCase()}</text>`;
+    return s + '</svg>';
+  }
+
+  // ---------- màn 3: báo cáo ----------
+  function renderEnd() {
+    const ind = D.industries[GAME.industryId], S = E.summary(GAME), bm = D.benchmarks[GAME.industryId];
+    const B = T[LANG].badges;
+    $('app').innerHTML = `
+      <section class="hero"><span class="eyebrow">${nm(ind)}</span><h1>${t('endTitle')}</h1></section>
+      <div class="card"><div class="kpis">
+        <div class="kpi"><small>${t('totalProfit')}</small><b class="num ${S.profit >= 0 ? 'pos' : 'neg'}">${musd(S.profit)} ${t('m')} USD</b></div>
+        <div class="kpi"><small>${t('exports')}</small><b class="num">${musd(S.exports)} ${t('m')}</b></div>
+        <div class="kpi"><small>${t('imports')}</small><b class="num">${musd(S.imports)} ${t('m')}</b></div>
+        <div class="kpi"><small>${t('totalDva')}</small><b class="num">${pct(S.dvaRatio)}</b></div></div>
+        <p style="margin-top:10px">${S.badges.map(b => `<span class="badge">${B[b]}</span>`).join('')}</p></div>
+      <div class="card"><h3>${t('chartTitle')}</h3>${chartHTML(GAME.history)}</div>
+      <div class="grid2">
+        <div class="card"><span class="prov pub">${t('provPub')}</span>
+          <p class="small">${t('ratioYou')}: <b class="num">${pct(S.imports / S.exports)}</b></p>
+          <p class="small">${t('ratioReal')}: <b class="num">${pct(bm.imports / bm.exports)}</b></p>
+          <p class="hint">${LANG === 'vi' ? bm.noteVi : bm.noteEn} (${nf(bm.exports, 1)} / ${nf(bm.imports, 1)} ${LANG === 'vi' ? 'tỷ USD' : 'USD bn'})</p>
+          <p class="note">${t('realNote')}</p></div>
+        <div class="card"><h3>${t('debrief')}</h3><ol class="qa small"><li>${t('q1')}</li><li>${t('q2')}</li><li>${t('q3')}</li><li>${t('q4')}</li></ol></div>
+      </div>
+      <p><button class="btn" id="dlBtn" type="button">${t('download')}</button> <button class="btn ghost" id="againBtn" type="button">${t('again')}</button></p>`;
+    $('dlBtn').onclick = () => {
+      const blob = new Blob([JSON.stringify({ game: 'nha-may-fdi', industry: GAME.industryId, summary: S, log: E.decisionLog(GAME, { cohort: COHORT || 'local' }) }, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'nha-may-fdi-nhat-ky.json'; a.click(); URL.revokeObjectURL(a.href);
+    };
+    $('againBtn').onclick = () => { GAME = null; render(); window.scrollTo(0, 0); };
+  }
+
+  document.documentElement.setAttribute('data-theme', store.get('fdifactory_theme') === 'light' ? 'light' : 'dark');
+  render();
+})();
+</script>
+</body>
+</html>
