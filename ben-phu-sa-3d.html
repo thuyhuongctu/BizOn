@@ -163,6 +163,7 @@
         </div>
       </div>
       <div class="flex flex-wrap gap-x-4 gap-y-1 mt-3 text-[11px] font-bold opacity-70" id="ft-scores"></div>
+      <div class="mt-3 p-3 rounded-2xl" id="ft-rival-cards" style="background:rgba(253,161,39,.07);border:1px solid rgba(253,161,39,.25)"></div>
     </div>
 
     <div class="clay-card p-5 mb-4" id="ft-shop-card">
@@ -336,9 +337,9 @@
   function TEAM() { return TEAMS[S.team].members; }
   // 3 đối thủ AI của hệ sinh thái BizOn – mỗi "nhà" một tính cách kinh doanh
   var RIVALS = [
-    { name: 'Alpha Dynamics', icon: '🐺', img: 'assets/character/rivals/alpha.webp', style: 'tốc chiến: dò 2 tuần rồi dồn lực', styleEn: 'fast mover: scouts 2 weeks then goes all-in' },
-    { name: 'Mekong Ventures', icon: '🐘', img: 'assets/character/rivals/mekong.webp', style: 'chậm mà chắc: bám trụ một khu', styleEn: 'slow and steady: sticks to one zone' },
-    { name: 'Star Clay Co.', icon: '🦚', img: 'assets/character/rivals/star.webp', style: 'thương hiệu: luân phiên hai khu', styleEn: 'brand builder: rotates between two zones' },
+    { name: 'Alpha Dynamics', icon: '🐺', img: 'assets/character/rivals/alpha.webp', accent: '#e8762d', style: 'tốc chiến: dò 2 tuần rồi dồn lực', styleEn: 'fast mover: scouts 2 weeks then goes all-in' },
+    { name: 'Mekong Ventures', icon: '🐘', img: 'assets/character/rivals/mekong.webp', accent: '#00a0c8', style: 'chậm mà chắc: bám trụ một khu', styleEn: 'slow and steady: sticks to one zone' },
+    { name: 'Star Clay Co.', icon: '🦚', img: 'assets/character/rivals/star.webp', accent: '#5a32a3', style: 'thương hiệu: luân phiên hai khu', styleEn: 'brand builder: rotates between two zones' },
   ];
   function rStyle(r) { return T(r.style, r.styleEn); }
 
@@ -454,6 +455,8 @@
       return '<span class="ft-chip' + (c.me ? '" style="color:#fda127' : '') + '"><img src="' + c.img + '" alt="">' +
         c.label + ' · ' + f1(c.total) + ' ' + T('tr', 'mn') + '</span>';
     }).join('');
+    var rivalCards = $('ft-rival-cards');
+    if (rivalCards) rivalCards.innerHTML = window.BPSRivalIntel ? BPSRivalIntel.cardsHtml(S.total, RIVALS) : '';
   }
 
   window.ftStart = function () {
@@ -714,6 +717,7 @@
 
     S.week++;
     if (S.week >= 5) return ftEnd();
+    if (window.BPSRivalIntel) BPSRivalIntel.showArena(S.total, RIVALS, S.week);
     // Rằm giữa mùa: Lễ cúng Bà Cậu (một lần, nhịp cố định – không đổi doanh thu/điểm)
     if (S.week === 2 && !S.ritualDone) { S.ritualDone = true; return showRitual(); }
     render();
@@ -983,6 +987,7 @@
   renderAvatars();
 })();
 </script>
+<script src="js/bps-rival-intel.js"></script>
 <script src="js/site-ui.js" defer></script>
 <script src="js/site-vnmap.js" defer></script>
 <script>
