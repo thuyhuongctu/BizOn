@@ -325,7 +325,7 @@ document.fonts && document.fonts.ready.then(() => { Object.keys(texCache).forEac
 const clock = new THREE.Clock(); let perfN = 0, perfS = 0;
 pose(SH[0], 0); cam.position.copy(pTmp); look.copy(lTmp);
 function frame() {
-  requestAnimationFrame(frame); if (document.hidden) return;
+  requestAnimationFrame(frame); if (document.hidden || window.__clayHubOpen) return;
   const dt = Math.min(clock.getDelta(), 0.05), t = clock.elapsedTime;
   anim.forEach(f => f(t, dt));
   clay.forEach((c, i) => CLAY.animate(c.r, t, c.mode, i * 1.7));
