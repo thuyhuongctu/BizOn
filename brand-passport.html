@@ -656,7 +656,7 @@
       return '<div class="bp-q-dot ' + (i < S.q ? 'done' : i === S.q ? 'cur' : '') + '">Q' + (i + 1) + '</div>';
     }).join('');
     var rivalRace = $('bp-rival-race');
-    if (rivalRace) rivalRace.innerHTML = raceHtml(S.profit, S.rival.rev);
+    if (rivalRace) rivalRace.innerHTML = window.BPRivalIntel ? BPRivalIntel.cardHtml(S.profit, S.rival.rev) : raceHtml(S.profit, S.rival.rev);
   }
   // Thanh so sánh minh họa "bạn vs đối thủ ảo" – dùng chung cho HUD trong ván
   // và màn Kết thúc. mine/theirs tính theo 2 đơn vị khác nhau (lợi nhuận tích
@@ -1320,6 +1320,7 @@
     if (evtPostCache.delta && evtPostCache.delta.profit >= 1) createConfetti();
     renderEvtPost();
     hud();
+    if (window.BPRivalIntel) BPRivalIntel.showArena(S.profit, S.rival.rev, S.q);
   }
   window.bpNext = function () { stageObs(); };
 
@@ -1750,6 +1751,7 @@
   });
 })();
 </script>
+<script src="js/bp-rival-intel.js"></script>
 <script src="js/bp-tutorial.js"></script>
 <script src="js/site-ui.js" defer></script>
 <script src="js/site-vnmap.js" defer></script>
