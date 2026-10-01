@@ -252,6 +252,23 @@ input,select,textarea,button{font-family:inherit}
               <sc-if value="{{ examNotRunning }}" hint-placeholder-val="{{ true }}"><button onClick="{{ startExam }}" style="border:0;background:#1f4a55;color:#fff;border-radius:14px;padding:9px 14px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #10303a;cursor:pointer">▶️ Bắt đầu tính giờ</button></sc-if>
             </div>
           </div>
+          <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px">
+            <div style="font:800 19px 'Baloo 2',sans-serif">📜 Chứng nhận chính thức (ĐH Cần Thơ)</div>
+            <div style="font-size:13px;color:#5a6b74;text-wrap:pretty">Áp dụng cho cả 3 game của lớp này. Sinh viên sẽ thấy nút tải «🎓 Chứng nhận ĐHCT» cạnh chứng chỉ BizOn mặc định, dùng đúng mã môn/tên môn/ngày học bạn nhập dưới đây.</div>
+            <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">Mã môn
+              <input value="{{ certCode }}" onChange="{{ onCertCode }}" placeholder="KT330H" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
+            </label>
+            <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">Tên môn
+              <input value="{{ certName }}" onChange="{{ onCertName }}" placeholder="Entrepreneurship" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
+            </label>
+            <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">Ngày học (hiển thị nguyên văn trên chứng nhận)
+              <input value="{{ certDates }}" onChange="{{ onCertDates }}" placeholder="4th, 10th and 11th March 2026" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
+            </label>
+            <div style="display:flex;align-items:center;gap:10px">
+              <button onClick="{{ saveCertConfig }}" style="border:0;background:#1f4a55;color:#fff;border-radius:14px;padding:9px 16px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #10303a;cursor:pointer">💾 Lưu</button>
+              <sc-if value="{{ certSaved }}" hint-placeholder-val="{{ false }}"><span style="color:#1f9a63;font-weight:800;font-size:13px">✅ Đã lưu</span></sc-if>
+            </div>
+          </div>
           <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:8px">
             <div style="font:800 19px 'Baloo 2',sans-serif">📄 Tài liệu chấm &amp; thi</div>
             <div style="font-size:13px;color:#5a6b74">Mở trực tiếp hoặc in (Ctrl+P). Gửi các file «Sinh viên» cho lớp trước buổi thi.</div>
@@ -373,7 +390,7 @@ function examPhase(ex, nowMs) {
 }
 function examMMSS(ms) { const s = Math.max(0, Math.round(ms / 1000)); return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); }
 class Component extends DCLogic {
-  state = { view: 'login', mode: 'in', err: '', fEmail: '', fPass: '', fNewPass: '', recoveryToken: '', fCode: '', classes: [], adminClasses: [], code: '', tab: 'teams', subs: [], st: {}, memberLog: [], bpResults: [], exam: null, examNow: null, exSetup: '', exRound: '', selTeam: '', fEvent: '', fMsg: '', gTeam: '*', gAmt: '', gReason: '', edits: {}, saved: {}, board: false, ready: false };
+  state = { view: 'login', mode: 'in', err: '', fEmail: '', fPass: '', fNewPass: '', recoveryToken: '', fCode: '', classes: [], adminClasses: [], code: '', tab: 'teams', subs: [], st: {}, memberLog: [], bpResults: [], exam: null, examNow: null, exSetup: '', exRound: '', selTeam: '', fEvent: '', fMsg: '', gTeam: '*', gAmt: '', gReason: '', edits: {}, saved: {}, board: false, ready: false, certCode: '', certName: '', certDates: '', certSaved: false };
   api() { return window.BizOnInstructor; }
   P() { return window.BizOnInstructorPage; }
   componentDidMount() {
@@ -393,12 +410,13 @@ class Component extends DCLogic {
   async removeClass(code) {
     if (!confirm('Xóa lớp ' + code + '? Lớp sẽ hết thuộc quyền quản lý — dữ liệu bài nộp cũ của sinh viên vẫn được giữ nguyên, có thể đăng ký lại mã này sau.')) return;
     try { await this.api().deleteClass(code); if (this.state.view === 'admin') this.loadAdmin(); else this.loadClasses(); } catch (e) { this.fail(e); } }
-  async openClass(code) { this.setState({ code, view: 'class', tab: 'teams', err: '', edits: {}, saved: {}, exSetup: '', exRound: '' }); await this.reload(code); }
+  async openClass(code) { this.setState({ code, view: 'class', tab: 'teams', err: '', edits: {}, saved: {}, exSetup: '', exRound: '', certCode: '', certName: '', certDates: '', certSaved: false }); await this.reload(code); }
   async reload(code = this.state.code) {
-    try { const [subs, st, memberLog, bpResults, ef] = await Promise.all([this.api().submissions(code), this.api().state(code), this.api().memberLog(code), this.api().bpResults(code), this.api().examFeed(code)]);
-      const c = (st && st.controls) || {}, exam = (ef && ef.exam) || null;
+    try { const [subs, st, memberLog, bpResults, ef, cf] = await Promise.all([this.api().submissions(code), this.api().state(code), this.api().memberLog(code), this.api().bpResults(code), this.api().examFeed(code), this.api().certFeed(code)]);
+      const c = (st && st.controls) || {}, exam = (ef && ef.exam) || null, cert = cf || {};
       this.setState({ subs: subs || [], st: st || {}, memberLog: memberLog || [], bpResults: bpResults || [], fEvent: c.forced_event || '', fMsg: c.message || '',
-        exam, examNow: (ef && ef.now) || null, exSetup: this.state.exSetup === '' ? String((exam && exam.setup_min) ?? 10) : this.state.exSetup, exRound: this.state.exRound === '' ? String((exam && exam.round_min) ?? 8) : this.state.exRound, err: '' });
+        exam, examNow: (ef && ef.now) || null, exSetup: this.state.exSetup === '' ? String((exam && exam.setup_min) ?? 10) : this.state.exSetup, exRound: this.state.exRound === '' ? String((exam && exam.round_min) ?? 8) : this.state.exRound,
+        certCode: this.state.certCode === '' ? (cert.course_code || 'KT330H') : this.state.certCode, certName: this.state.certName === '' ? (cert.course_name || 'Entrepreneurship') : this.state.certName, certDates: this.state.certDates === '' ? (cert.course_dates || '') : this.state.certDates, err: '' });
     } catch (e) { this.fail(e); } }
   async login() {
     const { fEmail, fPass, mode } = this.state; if (!fEmail || !fPass) return this.fail('Nhập email và mật khẩu.');
@@ -418,6 +436,7 @@ class Component extends DCLogic {
   async saveEvent() { try { const s = this.state, cur = (s.st.controls || {}); await this.api().setControls(s.code, Object.assign({}, cur, { forced_event: s.fEvent, forced_event_round: s.fEvent ? this.curRound() : null, message: s.fMsg })); this.reload(); } catch (e) { this.fail(e); } }
   async startExam() { const s = this.state; try { await this.api().setExam(s.code, { active: true, start_at: new Date().toISOString(), setup_min: +s.exSetup || 10, round_min: +s.exRound || 8, capital: 500 }); this.reload(); } catch (e) { this.fail(e); } }
   async stopExam() { const s = this.state, ex = s.exam || {}; try { await this.api().setExam(s.code, { active: false, start_at: ex.start_at || null, setup_min: +s.exSetup || 10, round_min: +s.exRound || 8, capital: 500 }); this.reload(); } catch (e) { this.fail(e); } }
+  async saveCertConfig() { const s = this.state; try { await this.api().setCertConfig(s.code, { course_code: s.certCode, course_name: s.certName, course_dates: s.certDates }); this.setState({ certSaved: true }); setTimeout(() => this.setState({ certSaved: false }), 2500); } catch (e) { this.fail(e); } }
   async doGrant() { const s = this.state, a = +s.gAmt; if (!a) return this.fail('Nhập số tiền (triệu ₫).'); try { await this.api().grant(s.code, s.gTeam, a, s.gReason); this.setState({ gAmt: '', gReason: '' }); this.reload(); } catch (e) { this.fail(e); } }
   async saveScore(g) { const s = this.state; try { await this.api().saveScore(s.code, g.name, g.reasoning === '' ? null : +g.reasoning, g.teamwork === '' ? null : +g.teamwork, g.note); this.setState({ saved: Object.assign({}, s.saved, { [g.name]: true }) }); this.reload(); } catch (e) { this.fail(e); } }
   curRound() { const T = this.P().teams(this.state.subs); return Math.min(6, Math.max(1, ...T.map(t => t.rs.length + 1), 1)); }
@@ -464,6 +483,10 @@ class Component extends DCLogic {
       examStatus, examColor, examRunning, examNotRunning: !examRunning,
       exSetup: s.exSetup, onExSetup: e => this.setState({ exSetup: e.target.value }), exRound: s.exRound, onExRound: e => this.setState({ exRound: e.target.value }),
       startExam: () => this.startExam(), stopExam: () => this.stopExam(),
+      certCode: s.certCode, onCertCode: e => this.setState({ certCode: e.target.value }),
+      certName: s.certName, onCertName: e => this.setState({ certName: e.target.value }),
+      certDates: s.certDates, onCertDates: e => this.setState({ certDates: e.target.value }),
+      saveCertConfig: () => this.saveCertConfig(), certSaved: s.certSaved,
       tabs: tabDefs.map(([k, l]) => ({ label: l, go: () => this.setState({ tab: k }), bg: s.tab === k ? '#2f8a8c' : '#fbf6ee', fg: s.tab === k ? '#fff' : '#1f4a55', border: s.tab === k ? '#23706f' : '#e6d6bf' })),
       tabTeams: s.tab === 'teams', tabDecisions: s.tab === 'decisions', tabControls: s.tab === 'controls', tabGrading: s.tab === 'grading', tabMembers: s.tab === 'members', noTeams: !T.length,
       teams: T.map(t => ({ name: t.name, share: t.share.toFixed(1) + '%', profit: money(t.profit), profitColor: t.profit >= 0 ? '#3f8a44' : '#c0443a', flags: '🚩 ' + t.flags + '/6',
