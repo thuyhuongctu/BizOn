@@ -4,12 +4,18 @@
  * Cùng cơ chế spotlight với js/tutorial.js (Bật Nghiệp) nhưng đơn giản hơn vì
  * Hộ Chiếu Thương Hiệu là một trang tuyến tính (không có các tab luôn tồn tại
  * sẵn trong DOM) – màn Quan sát và màn Quyết định chỉ thật sự có mặt khi người
- * chơi tới đúng bước đó. Vì vậy tour chia làm 2 chặng ngắn, tự bật đúng lúc:
- *   - Chặng "obs": lần đầu vào màn Quan sát & Tình báo (quý 1).
+ * chơi tới đúng bước đó. Vì vậy tour chia làm 3 chặng ngắn, tự bật đúng lúc:
+ *   - Chặng "obs": lần đầu vào màn Quan sát & Tình báo (quý 1), kết thúc bằng
+ *     giới thiệu Cửa hàng vật phẩm (luôn hiện cả 3 màn, không riêng gì Quan sát).
  *   - Chặng "dec": lần đầu vào màn Quyết định (quý 1), gồm cả khối chỉ số HUD
- *     để giải thích các chỉ số này đóng góp gì vào công thức điểm cuối.
- * Cả hai tự tắt vĩnh viễn sau khi xem (localStorage), nhưng bấm lại được bất
- * cứ lúc nào qua nút "❓ Hướng dẫn" trong màn chơi. */
+ *     (giải thích các chỉ số này đóng góp gì vào công thức điểm cuối), và ở
+ *     bản 3D thêm bản đồ thế giới + dashboard AIBIS (các bước này tự bỏ qua ở
+ *     bản 2D vì không có 2 khối đó trong DOM – xem paint()/next()).
+ *   - Chặng "evt": lần đầu vào màn Biến cố (quý 1), giải thích "Vì sao" và nút
+ *     sang quý kế xuất hiện sau khi chọn.
+ * Cả ba tự tắt vĩnh viễn sau khi xem (localStorage), nhưng bấm lại được bất
+ * cứ lúc nào qua nút "❓ Hướng dẫn" trong màn chơi (riêng màn kết thúc/giới
+ * thiệu thì nút đó không làm gì, vì không có chặng nào khớp). */
 (function () {
   var SEEN_KEY = 'bizon-bp-tour-seen';
   var $q = function (s) { return document.querySelector(s); };
@@ -43,6 +49,9 @@
     { sel: 'button[onclick="bpToDecide()"]', face: FACE_NEUTRAL,
       title: function () { return T('➡️ Sang bước Quyết định', '➡️ Move to the Decision step'); },
       text: function () { return T('Xong phần quan sát thì bấm nút này để qua bước ra quyết định của quý.', 'Once you\'re done observing, tap this to move to the quarter\'s decision step.'); } },
+    { sel: '#bp-shop-card', face: FACE_IDEA,
+      title: function () { return T('🛍️ Cửa hàng vật phẩm', '🛍️ Item shop'); },
+      text: function () { return T('Dùng tiền mặt đang có để mua vật phẩm hỗ trợ – <b>không bắt buộc</b>, mở/đóng bất cứ lúc nào, không nhất thiết phải mua ngay quý này.', 'Spend your cash on hand for support items – <b>optional</b>, open or close it anytime, no need to buy anything this quarter.'); } },
   ];
 
   var DEC_STEPS = [
@@ -54,13 +63,25 @@
       text: function () { return T('Chọn đúng <b>1 trong 5</b> mỗi quý. Đây là lựa chọn duy nhất bắt buộc – chọn xong là đủ điều kiện chốt quý.', 'Pick exactly <b>1 of 5</b> each quarter. This is the only required choice – picking it is enough to lock in the quarter.'); } },
     { sel: '#bp-enter-section', face: FACE_IDEA,
       title: function () { return T('2 · Thâm nhập thị trường (tùy chọn)', '2 · Enter a market (optional)'); },
-      text: function () { return T('Tối đa <b>1 thị trường mới/quý</b>. Chỉ số <b>AIBIS</b> chỉ mang tính tham khảo, không thay quyết định của bạn. Chọn xong 1 thị trường + 1 phương thức, chọn thêm <b>cách vận chuyển</b> (đường biển rẻ nhưng có rủi ro chậm hàng, hỏa tốc đắt nhưng ổn định) – phía dưới sẽ hiện <b>dự báo Lumina</b> ước tính doanh thu quý đó.', 'Max <b>1 new market/quarter</b>. The <b>AIBIS</b> score is for reference only, never a substitute for your own judgment. Once you pick a market + a mode, also pick a <b>shipping method</b> (sea freight is cheap but risks delays, express is pricier but reliable) – a <b>Lumina forecast</b> below then estimates that quarter\'s revenue.'); } },
+      text: function () { return T('Tối đa <b>1 thị trường mới/quý</b>. Mỗi thị trường gấp lại thành 1 hàng – <b>bấm vào tên thị trường</b> để mở ra 6 phương thức của riêng nó, đỡ rối hơn xem hết cùng lúc. Chỉ số <b>AIBIS</b> chỉ mang tính tham khảo, không thay quyết định của bạn. Chọn xong 1 thị trường + 1 phương thức, chọn thêm <b>cách vận chuyển</b> (đường biển rẻ nhưng có rủi ro chậm hàng, hỏa tốc đắt nhưng ổn định) – phía dưới sẽ hiện <b>dự báo Lumina</b> ước tính doanh thu quý đó.', 'Max <b>1 new market/quarter</b>. Each market folds into one row – <b>tap its name</b> to expand its own 6 modes, so you\'re not looking at all of them at once. The <b>AIBIS</b> score is for reference only, never a substitute for your own judgment. Once you pick a market + a mode, also pick a <b>shipping method</b> (sea freight is cheap but risks delays, express is pricier but reliable) – a <b>Lumina forecast</b> below then estimates that quarter\'s revenue.'); } },
+    { sel: '#bp-map-stage-wrap', face: FACE_IDEA,
+      title: function () { return T('🗺️ Bản đồ thế giới', '🗺️ World map'); },
+      text: function () { return T('Xem vị trí địa lý, khoảng cách văn hoá và tình trạng FTA của từng thị trường – một công cụ tham khảo thêm, gấp/mở được, không bắt buộc phải dùng.', 'See each market\'s geography, cultural distance and FTA status – an extra reference tool, collapsible, not required.'); } },
+    { sel: '#bp-aibis', grid: true, face: FACE_CHART,
+      title: function () { return T('◐ AIBIS · So sánh chi tiết', '◐ AIBIS · Detailed comparison'); },
+      text: function () { return T('Mặc định đang gấp lại – bấm để mở. Kéo 5 thanh trượt theo <b>ưu tiên của riêng bạn</b> (kiểm soát, tốc độ, học hỏi…), engine sẽ xếp hạng lại 6 phương thức cho đúng thị trường đang chọn và giải thích vì sao.', 'Closed by default – tap to open. Drag the 5 sliders to match <b>your own priorities</b> (control, speed, learning…) and the engine re-ranks the 6 modes for the selected market, with an explanation.'); } },
     { sel: '#bp-budget-section', face: FACE_WORRIED,
       title: function () { return T('3 · Mức vận hành (bắt buộc)', '3 · Operating stance (required)'); },
       text: function () { return T('Dồn lực cho doanh thu cao hơn nhưng chi phí & rủi ro tăng theo – Tiết kiệm thì ngược lại.', 'All-in raises revenue but cost and risk rise with it – Frugal does the opposite.'); } },
     { sel: '#bp-commit', face: FACE_CLAP,
       title: function () { return T('🔒 Chốt quý này', '🔒 Lock in this quarter'); },
       text: function () { return T('Chọn xong Ưu tiên + Mức vận hành là bấm được. Sau khi chốt, <b>không sửa lại được nữa</b> cho quý này.', 'Enabled once you\'ve picked a Priority and an Operating stance. Once locked in, <b>this quarter can\'t be changed</b>.'); } },
+  ];
+
+  var EVT_STEPS = [
+    { sel: '#bp-stage', face: FACE_CHART,
+      title: function () { return T('🎲 Biến cố bất ngờ', '🎲 A surprise event'); },
+      text: function () { return T('Mỗi quý có đúng <b>1 biến cố</b> – đọc kỹ rồi chọn 1 trong các lựa chọn bên dưới. Sau khi chọn, màn <b>Kết quả quý</b> hiện ngay doanh thu từng thị trường kèm dòng «Vì sao» giải thích % tác động, rồi nút <b>Sang quý kế</b> để tiếp tục.', 'Each quarter has exactly <b>1 event</b> – read it, then pick one of the choices below. After you choose, the <b>Quarter results</b> screen shows revenue per market with a "Why" line explaining each % effect, then a <b>Next quarter</b> button to continue.'); } },
   ];
 
   var idx = -1, overlay = null, steps = null;
@@ -122,8 +143,8 @@
   }
 
   function run(which) {
-    if (overlay) return; // đã có tour đang chạy (obs hoặc dec) thì không chồng lên nhau
-    steps = which === 'obs' ? OBS_STEPS : DEC_STEPS;
+    if (overlay) return; // đã có tour đang chạy (obs/dec/evt) thì không chồng lên nhau
+    steps = which === 'obs' ? OBS_STEPS : which === 'evt' ? EVT_STEPS : DEC_STEPS;
     overlay = document.createElement('div');
     overlay.style.cssText = 'position:fixed; inset:0; z-index:90; background:transparent;';
     document.body.appendChild(overlay);
@@ -156,12 +177,21 @@
     markSeen('dec');
     setTimeout(function () { run('dec'); }, 400);
   }
+  // Chặng "evt": lần đầu vào màn Biến cố (quý 1) – luôn là quý đầu vì biến cố
+  // chỉ rút sau bước Quyết định của quý 1, nên không cần so q !== 0 riêng,
+  // nhưng vẫn giữ để nhất quán với autoObs/autoDecide và phòng hờ thứ tự đổi.
+  function autoEvt(q) {
+    if (q !== 0 || seen().evt) return;
+    markSeen('evt');
+    setTimeout(function () { run('evt'); }, 400);
+  }
   // Bấm lại thủ công qua nút "❓ Hướng dẫn" – hiện đúng chặng khớp màn đang
-  // xem (obs hay dec); bỏ qua nếu đang ở màn khác (biến cố/kết thúc/giới thiệu).
+  // xem (obs/dec/evt); bỏ qua nếu đang ở màn khác (kết thúc/giới thiệu).
   function replay(phase) {
     if (phase === 'obs') run('obs');
     else if (phase === 'dec') run('dec');
+    else if (phase === 'evt') run('evt');
   }
 
-  window.BPTour = { autoObs: autoObs, autoDecide: autoDecide, replay: replay };
+  window.BPTour = { autoObs: autoObs, autoDecide: autoDecide, autoEvt: autoEvt, replay: replay };
 })();

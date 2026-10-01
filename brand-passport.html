@@ -146,6 +146,7 @@
       <p data-en-html="⚓ <b>Tân Cảng</b> – regional hub: gateway to many markets, high operating cost.">⚓ <b>Tân Cảng</b> – trung tâm khu vực: cửa ngõ nhiều thị trường, chi phí vận hành cao.</p>
       <p data-en-html="🌋 <b>Hỏa Sơn</b> – young, digital-first population: fragmented across island regions, needs a local partner for full reach.">🌋 <b>Hỏa Sơn</b> – dân số trẻ, số hóa nhanh: thị trường phân mảnh theo vùng đảo, cần đối tác địa phương mới phủ hết.</p>
     </div>
+    <div id="bp-rules-block">
     <h3 class="font-display font-extrabold text-deep-teal text-sm mt-5 mb-2" data-en="📜 Rules of play">📜 Luật chơi</h3>
     <ul id="bp-rules-list" class="space-y-1.5 text-[12.5px]">
       <li data-en-html="🌫️ <b>Market fog</b>: each market's true profile is hidden – buy intel from 6 sources with different cost, accuracy and <b>bias</b>, then judge reliability yourself.">🌫️ <b>Sương mù thị trường</b>: hồ sơ thật của mỗi thị trường bị ẩn – mua thông tin từ 6 nguồn có chi phí, độ chính xác và <b>thiên lệch</b> khác nhau, rồi tự đánh giá độ tin cậy.</li>
@@ -158,6 +159,7 @@
       <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mb-1" data-en="Scoring formula – public from quarter 1">Công thức điểm – công khai từ quý 1</p>
       <p class="text-[12.5px] font-bold" data-en="Total = 30% Profit + 20% Reputation + 20% Capability + 15% Adaptability + 15% Sustainability">Điểm tổng = 30% Lợi nhuận + 20% Uy tín + 20% Năng lực + 15% Thích ứng + 15% Bền vững</p>
       <p class="text-[11px] opacity-60 mt-1" data-en="The highest revenue doesn't always win – hot growth drains capital; losing partners or breaking rules costs you.">Doanh thu cao nhất chưa chắc thắng – tăng trưởng nóng làm cạn vốn, mất đối tác hoặc vi phạm quy định sẽ trả giá.</p>
+    </div>
     </div>
     <h3 class="font-display font-extrabold text-deep-teal text-sm mt-5 mb-2" data-en="🧑‍💼 Advisory board (differing views – judge the arguments yourself)">🧑‍💼 Ban cố vấn (quan điểm khác nhau – hãy tự đánh giá lập luận)</h3>
     <div class="bp-cast mb-3" id="bp-cast"></div>
@@ -181,6 +183,7 @@
       <div class="flex items-center justify-between flex-wrap gap-2">
         <div class="flex gap-1.5" id="bp-qdots"></div>
         <div class="flex items-center gap-2">
+          <button onclick="bpShowRules()" class="text-[11px] font-bold text-deep-teal/50" title="Luật chơi" data-en="📜 Rules">📜 Luật chơi</button>
           <button onclick="bpTourReplay()" class="text-[11px] font-bold text-deep-teal/50" title="Hướng dẫn" data-en="❓ Guide">❓ Hướng dẫn</button>
           <p class="text-sm font-extrabold" data-en-html="💼 <span id=&quot;bp-cash&quot;>0</span> bn ₫">💼 <span id="bp-cash">0</span> tỷ ₫</p>
         </div>
@@ -872,13 +875,35 @@
 
   window.bpTourReplay = function () { if (window.BPTour) BPTour.replay(S.phase); };
 
+  window.bpShowRules = function () {
+    var block = $('bp-rules-block');
+    if (!block || $('bp-rules-overlay')) return;
+    var ov = document.createElement('div');
+    ov.id = 'bp-rules-overlay';
+    ov.style.cssText = 'position:fixed;inset:0;z-index:95;background:rgba(2,25,28,.78);display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto';
+    ov.innerHTML = '<div class="clay-card p-6" style="max-width:520px;width:100%;max-height:85vh;overflow:auto">' +
+      '<div class="flex items-center justify-between mb-1">' +
+      '<h2 class="font-display font-extrabold text-deep-teal text-lg" data-en="📜 Rules &amp; scoring">📜 Luật chơi &amp; cách tính điểm</h2>' +
+      '<button onclick="bpCloseRules()" class="text-xl leading-none opacity-50" aria-label="Đóng" data-en-aria-skip="1">✕</button></div>' +
+      block.innerHTML +
+      '<button onclick="bpCloseRules()" class="clay-btn w-full bg-primary text-white font-display font-extrabold py-3 mt-4" data-en="Got it, close">Đã hiểu, đóng</button>' +
+      '</div>';
+    ov.addEventListener('click', function (e) { if (e.target === ov) bpCloseRules(); });
+    document.body.appendChild(ov);
+    applyStatic();
+  };
+  window.bpCloseRules = function () {
+    var ov = $('bp-rules-overlay');
+    if (ov) ov.remove();
+  };
+
   function stageDecide() {
     S.phase = 'dec';
     var notIn = MKTS.map(function (_, m) { return m; }).filter(function (m) { return S.entered[m] === null; });
     $('bp-stage').innerHTML =
       '<h2 class="font-display font-extrabold text-deep-teal text-base mb-1">' + T('Quý', 'Quarter') + ' ' + (S.q + 1) + '/6 – 🧭 ' + T('Quyết định', 'Decision') + '</h2>' +
       '<div id="bp-prio-section">' +
-      '<p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-3 mb-1.5">' + T('1 · Ưu tiên của quý', '1 · Priority for the quarter') + '</p>' +
+      '<p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-3 mb-1.5">' + T('1 · Ưu tiên của quý (bắt buộc)', '1 · Priority for the quarter (required)') + '</p>' +
       '<div class="grid sm:grid-cols-2 gap-2">' + PRIOS.map(function (p, i) {
         return '<button class="bp-opt" data-g="prio" data-i="' + i + '" onclick="bpPick(\'prio\',' + i + ')">' + p.icon + ' ' + T(p.name, p.nameEn) + '<small>' + T(p.note, p.noteEn) + '</small></button>';
       }).join('') + '</div></div>' +
@@ -895,7 +920,7 @@
       }).join('') + '</div>' : '<p class="text-[12px] opacity-60">' + T('Bạn đã hiện diện ở cả ' + MKTS.length + ' thị trường.', 'You are already present in all ' + MKTS.length + ' markets.') + '</p>') +
       '<div id="bp-ship-section"></div></div>' +
       '<div id="bp-budget-section">' +
-      '<p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-4 mb-1.5">' + T('3 · Mức vận hành', '3 · Operating stance') + '</p>' +
+      '<p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-4 mb-1.5">' + T('3 · Mức vận hành (bắt buộc)', '3 · Operating stance (required)') + '</p>' +
       '<div class="grid grid-cols-3 gap-2">' + BUDGETS.map(function (b, i) {
         return '<button class="bp-opt" data-g="bud" data-i="' + i + '" onclick="bpPick(\'bud\',' + i + ')" style="text-align:center">' + b.icon + ' ' + T(b.name, b.nameEn) + '</button>';
       }).join('') + '</div></div>' +
@@ -1016,6 +1041,7 @@
     evQ = S.q; // chốt số quý hiển thị trên tiêu đề – settle() sẽ tăng S.q sau
     evtPostCache = null;
     renderEventScreen();
+    if (window.BPTour) BPTour.autoEvt(S.q);
   }
 
   // evQ: số quý (0-based) tại thời điểm sự kiện được vẽ ra lần đầu. settle()
