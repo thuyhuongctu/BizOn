@@ -54,6 +54,21 @@ VietLens deliberately inverts the real-time "monitor" model. Its value is **stru
 - Source ledger with status, lag and **redistribution-rights** column.
 - Downloadable JSON report.
 
+## Tier 1 — official data layer (started 10/2026)
+
+`vietlens/data/official.json` (machine-readable) and `vietlens/official-data.js` (browser) hold **real public series**, built by `python3 vietlens/tools/build_official.py` from the source files in `vietlens/data/raw/`:
+
+| Series | Source | Period |
+|---|---|---|
+| FDI disbursed, national, quarterly | General Statistics Office quarterly reports (each point with URL and verbatim quote) | 2012Q1–2026Q2 |
+| FDI newly registered, quarterly | same (cut-off date changes flagged) | 2012Q1–2026Q2 |
+| Cumulative registered FDI by partner | GSO Statistical Yearbooks 2008 and 2012 | end-2008, end-2012 |
+| World import volume | CPB World Trade Monitor (Jul 2026 release) | 2011Q1–2026Q2 |
+| Real effective exchange rate of the dong | Bruegel REER database (Darvas, 2021), 120 partners | 2011Q1–2026Q2 |
+| Durian exports | Ministry of Industry and Trade reports; CESTI (04/2024) | 2022–Feb 2024 |
+
+The purchased Customs FDI-sector series is **not** included until its redistribution licence is confirmed. `test/vietlens-official.test.js` checks provenance completeness, rebuild reproducibility and the exclusion of purchased data. Other cards, map, signals and scenarios remain sample/proxy.
+
 ## Important limitation
 
 The current data are transparent sample/proxy observations designed to validate product architecture and user experience. They are **not live official feeds** and the forecast equations are **not calibrated predictive models**.
