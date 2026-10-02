@@ -31,5 +31,12 @@ jobs:
         run: |
           node --check vietlens/sample-data.js
           node --check vietlens/app.js
+          node --check vietlens/official-data.js
+          node --check vietlens/official.js
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
       - name: Static smoke tests
         run: node test/vietlens-smoke.test.js
+      - name: Official data layer (Tier 1)
+        run: node test/vietlens-official.test.js
