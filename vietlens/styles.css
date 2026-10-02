@@ -253,3 +253,42 @@ code { color: var(--cyan); }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
+
+/* Nấc 1 · số liệu thật */
+.official-badge { border-color: rgba(85, 211, 138, .55); color: var(--green); }
+.official { margin: 26px 0; }
+.official-head { margin-bottom: 14px; }
+.official-head h2 { margin: 0 0 6px; font-size: 26px; }
+.official-head .lead.small { font-size: 14px; color: var(--muted); max-width: 900px; }
+.official-head a, .notice a { color: var(--cyan); }
+.official-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.ocard { min-width: 0; }
+.ocard h3 { margin: 0; font-size: 18px; line-height: 1.3; }
+.ocard .badge.ok { border-color: rgba(85, 211, 138, .5); color: var(--green); white-space: nowrap; }
+.ohead { display: flex; flex-wrap: wrap; gap: 10px; align-items: baseline; margin-bottom: 8px; }
+.ohead b { font-size: 26px; }
+.ohead span { color: var(--muted); font-size: 13px; }
+.ohead em { font-style: normal; font-weight: 700; }
+.ohead em.up { color: var(--green); } .ohead em.down { color: var(--red); }
+.ocard svg { width: 100%; height: auto; display: block; }
+.ocard svg rect { fill: var(--cyan); opacity: .85; }
+.ocard svg polyline { fill: none; stroke: var(--cyan); stroke-width: 2.2; }
+.ocard svg line.g { stroke: var(--line); stroke-width: 1; }
+.ocard svg text { fill: var(--muted); font-size: 11px; }
+.ocard .cap { margin: 4px 0 0; color: var(--muted); font-size: 11.5px; }
+.hbars { display: grid; gap: 6px; margin: 6px 0; }
+.hb { display: grid; grid-template-columns: 150px 1fr 100px; gap: 8px; align-items: center; font-size: 12.5px; }
+.hb i { display: block; height: 10px; border-radius: 5px; background: linear-gradient(90deg, var(--cyan), var(--green)); }
+.hb b { text-align: right; font-weight: 600; font-size: 12px; }
+table.facts { width: 100%; border-collapse: collapse; font-size: 13px; }
+table.facts td { padding: 6px 4px; border-bottom: 1px solid var(--line); }
+.ocard td.n { text-align: right; white-space: nowrap; }
+.ocard td.q { font-size: 11.5px; color: var(--muted); min-width: 260px; }
+.prov-dl { display: grid; grid-template-columns: 130px 1fr; gap: 4px 10px; margin: 12px 0 6px; font-size: 12px; }
+.prov-dl dt { color: var(--cyan); font-weight: 700; }
+.prov-dl dd { margin: 0; color: var(--muted); }
+.ocard details { margin-top: 8px; font-size: 12.5px; }
+.ocard summary { cursor: pointer; color: var(--cyan); font-weight: 700; }
+.ocard details a { color: var(--cyan); }
+@media (max-width: 900px) { .official-grid { grid-template-columns: 1fr; } }
+@media (max-width: 620px) { .prov-dl { grid-template-columns: 1fr; } .hb { grid-template-columns: 110px 1fr 84px; } }

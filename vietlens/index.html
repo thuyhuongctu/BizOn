@@ -20,7 +20,7 @@
 <div class="internal-band" role="note">
   <div class="ib-in">
     <span class="ib-k">Nội bộ · chưa mở công khai</span>
-    <span>Trang này <b>chưa mở công khai</b>: để nội bộ tới khi có người phụ trách cập nhật và đã rà quyền tái phân phối. Số hiện là <b>dữ liệu mẫu</b>, nhịp cập nhật <b>theo quý</b>. Nguyên tắc: <b>không có xuất xứ thì không lên bảng</b> — mỗi chỉ tiêu kèm nguồn và mốc thời gian.</span>
+    <span>Trang này <b>chưa mở công khai</b>: để nội bộ tới khi có người phụ trách cập nhật và đã rà quyền tái phân phối. Phần <b>Số liệu thật</b> đã có nguồn từng điểm; các phần khác vẫn là <b>dữ liệu mẫu</b>. Nhịp cập nhật <b>theo quý</b>. Nguyên tắc: <b>không có xuất xứ thì không lên bảng</b> — mỗi chỉ tiêu kèm nguồn và mốc thời gian.</span>
   </div>
 </div>
 <header class="topbar">
@@ -30,6 +30,7 @@
   </a>
   <nav aria-label="Điều hướng chính">
     <a href="#overview">Tổng quan</a>
+    <a href="#official">Số liệu thật</a>
     <a href="#signals">Tín hiệu</a>
     <a href="#forecast">Kịch bản</a>
     <a href="#audit">Kiểm định</a>
@@ -37,6 +38,7 @@
   </nav>
   <div class="status-stack">
     <span class="preview-badge">MVP · SAMPLE DATA</span>
+    <span class="preview-badge official-badge">+ SỐ LIỆU THẬT (NẤC 1)</span>
     <div class="live" aria-live="polite"><i aria-hidden="true"></i><span id="freshnessLabel">Đang khởi tạo</span></div>
   </div>
 </header>
@@ -46,7 +48,7 @@
       <p class="eyebrow">DỮ LIỆU KINH DOANH VIỆT NAM · CÓ XUẤT XỨ</p>
       <h1>Số liệu Việt Nam,<br><span>có xuất xứ kiểm chứng được.</span></h1>
       <p class="lead">VietLens đi theo <b>chiều sâu và xuất xứ</b>, nhịp quý — không chạy đua vận tốc. Mỗi chỉ tiêu hiển thị nguồn, mốc thời gian, phương pháp và ghi chú giới hạn. Thứ người dùng Việt Nam thiếu không phải là số, mà là <b>số có xuất xứ kiểm chứng được</b> — nên chính nhãn nguồn–thời gian mới là sản phẩm.</p>
-      <div class="notice" role="note"><b>Phạm vi:</b> chỉ tiêu kinh tế cấp tỉnh/vùng theo quý, chuỗi giá trị nông sản chủ lực (lúa, tôm, cá tra, trái cây), thương mại theo mặt hàng &amp; thị trường, FDI theo tỉnh/ngành, môi trường thể chế. Quy tắc: <b>không có xuất xứ thì không lên bảng</b>. Số hiện là <b>mẫu/proxy</b> để kiểm tra kiến trúc &amp; trải nghiệm — chưa phải số liệu thật đã hiệu chỉnh.</div>
+      <div class="notice" role="note"><b>Phạm vi:</b> chỉ tiêu kinh tế cấp tỉnh/vùng theo quý, chuỗi giá trị nông sản chủ lực (lúa, tôm, cá tra, trái cây), thương mại theo mặt hàng &amp; thị trường, FDI theo tỉnh/ngành, môi trường thể chế. Quy tắc: <b>không có xuất xứ thì không lên bảng</b>. Phần <a href="#official"><b>Số liệu thật</b></a> là chuỗi công khai có trích dẫn từng điểm; các thẻ, bản đồ, tín hiệu và kịch bản còn lại vẫn là <b>mẫu/proxy</b> để kiểm tra kiến trúc &amp; trải nghiệm.</div>
       <div class="actions">
         <button id="refreshBtn" type="button">Làm mới tín hiệu</button>
         <button class="ghost" id="exportBtn" type="button">Xuất báo cáo JSON</button>
@@ -63,6 +65,16 @@
   </section>
 
   <section class="kpis" id="kpiGrid" aria-label="Chỉ số nổi bật"></section>
+
+  <section class="official" id="official" aria-labelledby="officialTitle">
+    <header class="official-head">
+      <p class="eyebrow">NẤC 1 · LỚP DỮ LIỆU THẬT</p>
+      <h2 id="officialTitle">Số liệu thật, có xuất xứ từng điểm</h2>
+      <p class="lead small">Mỗi chuỗi ghi nguồn, phương pháp, giới hạn và quyền tái phân phối; mỗi điểm số liệu của Tổng cục Thống kê kèm câu trích nguyên văn và đường dẫn. Bản máy đọc: <a href="./data/official.json">data/official.json</a>.</p>
+      <p class="method-note" id="officialMeta"></p>
+    </header>
+    <div class="official-grid" id="officialGrid"></div>
+  </section>
 
   <section class="layout" id="signals">
     <article class="panel map-panel">
@@ -119,6 +131,8 @@
   <p class="repo-note">Preview kỹ thuật đang được cô lập trong thư mục <code>vietlens/</code>; sản phẩm thương mại cần repository, database và API riêng.</p>
 </footer>
 <script src="./sample-data.js"></script>
+<script src="./official-data.js"></script>
 <script src="./app.js"></script>
+<script src="./official.js"></script>
 </body>
 </html>
