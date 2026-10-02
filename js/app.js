@@ -898,7 +898,7 @@ function renderAll() {
   if (!S) return;
   renderHeader(); renderDashboard(); renderDecisions(); renderAdvisorIntro();
   renderShop(); renderSkills(); renderLeaderboard(); renderAchievements(); renderProfile();
-  renderMissions(); renderMinigame(); renderInstructor(); renderJournal(); renderMarket();
+  renderMissions(); renderMinigame(); renderJournal(); renderMarket();
   renderCompanyCard(); renderConquest(); renderTeamCard(); renderOpponents();
   if (window.OfficeRounds) OfficeRounds.render();
   const mt = $('music-toggle'); if (mt) mt.checked = musicEnabled();
@@ -3403,41 +3403,6 @@ function showMgLeaderboard() {
       <p class="text-[10px] text-deep-teal/40 text-center mt-3">${T('So tài cùng 6 đội AI – phá kỷ lục điểm Clay Factory để leo hạng!', 'Compete against 6 AI teams – beat your Clay Factory high score to climb the ranks!')}</p>
     </div>`;
   document.body.appendChild(div);
-}
-
-// ---------- Instructor ----------
-function renderInstructor() {
-  const lockBtn = $('btn-lock');
-  lockBtn.textContent = S.roundLocked ? T('🔓 Mở khóa', '🔓 Unlock') : T('🔒 Khóa', '🔒 Lock');
-  lockBtn.classList.toggle('bg-orange-100', S.roundLocked);
-  const totalProfit = S.history.reduce((a, r) => a + r.netProfit, 0);
-  const teams = [
-    { id: 'YOU', name: S.profile.teamName + T(' (đội của lớp)', " (the class's team)"), balance: S.balance, profit: totalProfit, real: true },
-    ...S.competitors.map((c, i) => ({ id: 'AI' + i, name: c.name + ' (AI)', balance: null, profit: c.profit })),
-  ];
-  $('ins-teams').innerHTML = teams.map(t => `
-    <div class="clay-card p-4 flex items-center gap-3">
-      <span class="text-2xl">${t.real ? '🏢' : '🤖'}</span>
-      <div class="flex-1">
-        <p class="font-bold text-sm text-deep-teal">${t.name}</p>
-        <p class="text-[11px] text-deep-teal/60">${T('Lợi nhuận lũy kế:', 'Cumulative profit:')} ${money(t.profit)}${t.balance != null ? T(' · Ví: ', ' · Wallet: ') + money(t.balance) : ''}</p>
-      </div>
-      ${t.real ? `<button onclick="grantFunds(100)" class="clay-btn bg-primary text-white text-xs font-bold px-3 py-2 shrink-0">+100tr₫</button>` : ''}
-    </div>`).join('');
-  $('ins-log').innerHTML = (S.grantLog || []).length
-    ? S.grantLog.slice(-8).reverse().map(g => `<p>${T(`💸 Cấp <b>${g.amount}tr₫</b> cho ${escapeHtml(g.team)} – vòng ${g.round}`, `💸 Granted <b>${g.amount}m₫</b> to ${escapeHtml(g.team)} – round ${g.round}`)}</p>`).join('')
-    : `<p class="text-deep-teal/40">${T('Chưa có giao dịch nào.', 'No transactions yet.')}</p>`;
-}
-
-function toggleRoundLock() {
-  S.roundLocked = !S.roundLocked;
-  save(); renderAll();
-}
-
-function grantFunds(amount) {
-  S.balance += amount;
-  S.grantLog.push({ team: S.profile.teamName, amount, round: Math.min(S.round, ROUNDS_TOTAL) });
-  save(); renderAll(); createConfetti();
 }
 
 // ---------- Lumina Advisor Pro ----------
