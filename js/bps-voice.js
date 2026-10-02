@@ -8,7 +8,7 @@ window.BPS_VOICE = {
     NAR: { name: 'Người dẫn', img: '', note: 'Giọng dẫn trung tính, rõ ràng' },
   },
   lines: [
-    ['BPS_HG_01', 'HG', 'Mở đầu', 'Chào mừng các em đến Bến Phù Sa! Năm tuần, mỗi tuần ba quyết định: phương thức, món hàng và địa điểm. Hãy quan sát, thử nghiệm và học từ chính thị trường.', 'Welcome to Bến Phù Sa! Five weeks, three decisions each week: method, product and location. Observe, experiment and learn from the market itself.'],
+    ['BPS_HG_01', 'HG', 'Mở đầu', 'Chào mừng các bạn đến Bến Phù Sa! Năm tuần, mỗi tuần ba quyết định: phương thức, món hàng và địa điểm. Hãy quan sát, thử nghiệm và học từ chính thị trường.', 'Welcome to Bến Phù Sa! Five weeks, three decisions each week: method, product and location. Observe, experiment and learn from the market itself.'],
     ['BPS_TP_01', 'TP', 'Đầu tuần 1', 'Tuần đầu, chưa ai biết món nào bán chạy ở đâu. Đi gánh hoặc khảo sát chợ để dò đường trước khi dồn lực.', 'In week one nobody knows what sells where. Carry a shoulder pole or survey the market before going all in.'],
     ['BPS_TP_02', 'TP', 'Đầu tuần 2', 'Nhìn đám đông trên bản đồ: nơi đông khách chưa chắc hợp món của mình. Hãy so với nhật ký tuần trước.', 'Look at the crowds on the map: a busy spot may not suit your product. Compare with last week’s log.'],
     ['BPS_TP_03', 'TP', 'Đầu tuần 3', 'Đối thủ đã lộ cách chơi. Tránh chỗ họ bám trụ nếu không muốn chia khách.', 'The rivals have shown their hand. Avoid their strongholds unless you want to split customers.'],
