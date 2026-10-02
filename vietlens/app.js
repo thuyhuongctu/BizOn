@@ -65,7 +65,7 @@
 
   function renderKpis() {
     // Quy tắc một dòng: không có xuất xứ thì không lên bảng.
-    const sourced = data.indicators.filter((indicator) => indicator.source);
+    const sourced = data.indicators.filter((indicator) => indicator.source).map(officialOverride);
     $('kpiGrid').innerHTML = sourced.map((indicator) => `
       <article title="Phương pháp: ${indicator.method} — Giới hạn: ${indicator.limitation}">
         <small>${indicator.label}</small>
@@ -74,6 +74,22 @@
         <em class="prov">${indicator.period} · ${indicator.source}${indicator.official ? '' : ' · proxy'}</em>
       </article>
     `).join('');
+  }
+
+  // Nấc 1: chỉ tiêu nào đã có chuỗi thật thì thẻ hiển thị số thật (giữ value mẫu cho chỉ số tổng hợp, ghi rõ).
+  function officialOverride(indicator) {
+    const O = window.VIETLENS_OFFICIAL;
+    if (!O || indicator.id !== 'fdi') return indicator;
+    const s = O.series.find((x) => x.id === 'fdi_disbursed');
+    if (!s) return indicator;
+    const l = s.latest, half = { 1: '3 tháng', 2: '6 tháng', 3: '9 tháng', 4: 'Cả năm' }[l.period.slice(-1)];
+    return Object.assign({}, indicator, {
+      label: 'FDI giải ngân, cả nước',
+      display: `${l.ytd.toLocaleString('vi-VN')} tỷ USD`,
+      delta: l.ytdYoY, direction: l.ytdYoY >= 0 ? 'up' : 'down', official: true,
+      period: `${half} ${l.period.slice(0, 4)}`, source: 'Tổng cục Thống kê · số liệu thật (Nấc 1)',
+      method: s.method, limitation: s.limitation
+    });
   }
 
   function riskClass(value) {
