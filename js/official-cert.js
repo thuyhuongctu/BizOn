@@ -87,7 +87,7 @@
       g.font = '800 28px "Plus Jakarta Sans", sans-serif'; g.fillStyle = '#0a3d62';
       g.fillText('“' + courseName + ' – Code ' + courseCode + '”', 700, 490);
       g.font = '19px "Hanken Grotesk", sans-serif'; g.fillStyle = '#033337';
-      wrapText(g, T('Vào ', 'On ') + courseDates + T(' – tại Trường Kinh tế, Trường Đại học Cần Thơ, Việt Nam', ' – at School of Economics, Can Tho University, Vietnam'), 700, 535, 1050, 28);
+      wrapText(g, T('Vào ', 'On ') + courseDates + T(' – tại Trường Kinh tế, Đại học Cần Thơ, Việt Nam', ' – at School of Economics, Can Tho University, Vietnam'), 700, 535, 1050, 28);
 
       // chữ ký
       var sx = 1000, sy = 700;
