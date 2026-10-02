@@ -1,5 +1,5 @@
 /* BizOn – "Chứng nhận chính thức" (Certificate of Participation) kiểu Đại
- * học Cần Thơ / Khoa Kinh tế, dùng chung cho cả 5 file game (bản tải thứ 2,
+ * học Cần Thơ / Trường Kinh tế, dùng chung cho cả 5 file game (bản tải thứ 2,
  * cạnh chứng chỉ BizOn mặc định sẵn có). Vẽ bằng canvas, độc lập – nhận toàn
  * bộ dữ liệu qua tham số, không đọc state riêng của từng trang. Mã môn/tên
  * môn/ngày học mặc định theo khóa KT330H thật (Entrepreneurship, ĐH Cần
@@ -87,7 +87,7 @@
       g.font = '800 28px "Plus Jakarta Sans", sans-serif'; g.fillStyle = '#0a3d62';
       g.fillText('“' + courseName + ' – Code ' + courseCode + '”', 700, 490);
       g.font = '19px "Hanken Grotesk", sans-serif'; g.fillStyle = '#033337';
-      wrapText(g, T('Vào ', 'On ') + courseDates + T(' – tại Khoa Kinh tế, Trường Đại học Cần Thơ, Việt Nam', ' – at School of Economics, Can Tho University, Vietnam'), 700, 535, 1050, 28);
+      wrapText(g, T('Vào ', 'On ') + courseDates + T(' – tại Trường Kinh tế, Trường Đại học Cần Thơ, Việt Nam', ' – at School of Economics, Can Tho University, Vietnam'), 700, 535, 1050, 28);
 
       // chữ ký
       var sx = 1000, sy = 700;
@@ -97,7 +97,7 @@
       g.fillStyle = '#033337'; g.font = '800 15px "Hanken Grotesk", sans-serif';
       g.fillText(T('Assoc. Prof. Dr. Phan Anh Tu', 'Assoc. Prof. Dr. Phan Anh Tu'), sx, sy + 34);
       g.font = '700 12px "Hanken Grotesk", sans-serif'; g.fillStyle = 'rgba(3,51,55,.6)';
-      g.fillText(T('Phó Hiệu trưởng – Khoa Kinh tế', 'Vice Rector – School of Economics'), sx, sy + 52);
+      g.fillText(T('Phó Hiệu trưởng – Trường Kinh tế', 'Vice Dean – School of Economics'), sx, sy + 52);
 
       g.textAlign = 'left'; g.font = '11px "Hanken Grotesk", sans-serif'; g.fillStyle = 'rgba(3,51,55,.4)';
       g.fillText(T('Cấp ngày ', 'Issued on ') + new Date().toLocaleDateString(isEN() ? 'en-US' : 'vi-VN') + '  ·  bizon.app', 60, 950);
