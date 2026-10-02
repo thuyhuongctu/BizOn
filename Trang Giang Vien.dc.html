@@ -23,6 +23,8 @@
 body{margin:0;background:#efe4d2;color:#1f3f4a;font-family:'Be Vietnam Pro',sans-serif}
 a{color:#1f6f8a}a:hover{color:#2f8a8c}
 input,select,textarea,button{font-family:inherit}
+.scroll-hint{display:none;font-size:12px;color:#8a7b5a;align-items:center;gap:4px;padding:0 2px 6px}
+@media (max-width:820px){.scroll-hint{display:flex}}
 </style>
 </helmet>
 <div style="min-height:100vh;display:flex;flex-direction:column">
@@ -164,6 +166,7 @@ input,select,textarea,button{font-family:inherit}
       </nav>
 
       <sc-if value="{{ tabTeams }}" hint-placeholder-val="{{ true }}">
+        <div class="scroll-hint">↔️ Vuốt ngang để xem đủ cột</div>
         <section style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;overflow:auto">
           <div style="display:grid;grid-template-columns:minmax(160px,1.6fr) minmax(170px,1.4fr) repeat(4,minmax(90px,1fr));gap:0;min-width:760px">
             <div style="display:contents;font-size:12px;font-weight:700;color:#5a6b74;text-transform:uppercase;letter-spacing:.04em">
@@ -194,6 +197,7 @@ input,select,textarea,button{font-family:inherit}
             </select>
             <span style="font-size:13px;color:#5a6b74">Quyết định và kết quả mỗi vòng, lấy từ bài nộp mới nhất của đội.</span>
           </div>
+          <div class="scroll-hint">↔️ Vuốt ngang để xem đủ cột</div>
           <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;overflow:auto">
             <div style="display:grid;grid-template-columns:70px repeat(9,minmax(86px,1fr));min-width:900px">
               <sc-for list="{{ decHead }}" as="h" hint-placeholder-count="10"><div style="padding:11px 10px;border-bottom:2px solid #e6d6bf;font-size:12px;font-weight:700;color:#5a6b74">{{ h }}</div></sc-for>
@@ -288,6 +292,7 @@ input,select,textarea,button{font-family:inherit}
       <sc-if value="{{ tabGrading }}" hint-placeholder-val="{{ false }}">
         <section style="display:flex;flex-direction:column;gap:10px">
           <div style="font-size:13px;color:#5a6b74;text-wrap:pretty">Thang 10 theo «Hướng dẫn chấm điểm chi tiết»: B1 xếp hạng lợi nhuận, B2 thị phần, B3 vận hành (OEE/lỗi/quick ratio), B4 thành tựu, B5 đóng góp (🤖 tự động nếu có Nhật ký thành viên, không thì bạn nhập số vòng đóng góp 0–6), B6 ứng biến biến cố (🤖 tự động nếu có nhật ký, không thì đánh dấu có chuẩn bị trước hay không). Nhận xét bỏ trống sẽ tự điền theo điểm đạt được khi xuất Excel. <a href="Thang%20Diem%20Chi%20Tiet.dc.html" target="_blank" rel="noopener" style="color:#1f6f8a;font-weight:700">📄 Xem/in hướng dẫn chấm chi tiết</a> · thêm tài liệu ở tab «🎛 Điều khiển lớp».</div>
+          <div class="scroll-hint">↔️ Vuốt ngang để xem đủ cột</div>
           <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;overflow:auto">
             <div style="display:grid;grid-template-columns:minmax(130px,1.2fr) repeat(6,minmax(78px,1fr)) 70px 60px minmax(140px,1.4fr) 90px;min-width:1180px;align-items:center">
               <sc-for list="{{ gradeHead }}" as="h" hint-placeholder-count="11"><div style="padding:11px 8px;border-bottom:2px solid #e6d6bf;font-size:11px;font-weight:700;color:#5a6b74">{{ h }}</div></sc-for>
@@ -320,6 +325,7 @@ input,select,textarea,button{font-family:inherit}
         <section style="display:flex;flex-direction:column;gap:10px">
           <div style="font-size:13px;color:#5a6b74;text-wrap:pretty">Điểm B5 cá nhân (🤖 tự động) từ Nhật ký thành viên: mỗi vai gửi đề xuất/biên bản/Nếu–Thì trong game Bật Nghiệp. 🟢 đề xuất được CEO áp dụng · 🟡 có tham gia vòng đó · ⚪ chưa ghi nhận.</div>
           <sc-if value="{{ noMembers }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#5a6b74;padding:16px">Chưa có dữ liệu Nhật ký thành viên cho lớp này. Sinh viên cần đăng nhập bằng Mã lớp thật (không phải Đội Demo) và mỗi vai chơi trên máy riêng để hệ thống ghi nhận.</div></sc-if>
+          <div class="scroll-hint">↔️ Vuốt ngang để xem đủ cột</div>
           <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;overflow:auto">
             <div style="display:grid;grid-template-columns:minmax(120px,1.2fr) minmax(120px,1.2fr) 70px repeat(6,44px) 70px 70px 60px 90px;min-width:920px;align-items:center">
               <div style="padding:11px 8px;border-bottom:2px solid #e6d6bf;font-size:11px;font-weight:700;color:#5a6b74">Đội</div>
