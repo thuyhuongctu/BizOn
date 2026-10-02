@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hộ Chiếu Sầu Riêng</title>
+<link rel="icon" href="../assets/brand/bizon-favicon.svg" type="image/svg+xml">
+<meta name="description" content="Hộ Chiếu Sầu Riêng – trò chơi mô phỏng xuất khẩu sầu riêng Việt Nam qua 6 vụ: mã số vùng trồng, nghị định thư kiểm dịch với Trung Quốc, kênh tiểu ngạch, chính ngạch, đông lạnh và rủi ro tuân thủ.">
+<style>
+@font-face{font-family:'Plus Jakarta Sans';font-weight:400 800;font-display:swap;src:url(../assets/fonts/PlusJakartaSans-var-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
+@font-face{font-family:'Plus Jakarta Sans';font-weight:400 800;font-display:swap;src:url(../assets/fonts/PlusJakartaSans-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2122,U+2212}
+@font-face{font-family:'JetBrains Mono';font-weight:400 500;font-display:swap;src:url(../assets/fonts/IBMPlexMono-400-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
+@font-face{font-family:'JetBrains Mono';font-weight:400 500;font-display:swap;src:url(../assets/fonts/IBMPlexMono-400-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2122,U+2212}
+:root{--bg:#0B1220;--panel:#111F38;--panel2:#0E1B31;--grid:rgba(99,179,237,.08);--ink:#E7EEF8;--muted:#93A4BD;--faint:#6B7C97;--line:#22324A;--line2:#2C3F5C;
+  --accent:#84CC16;--accent2:#EAB308;--warn:#F59E0B;--neg:#F97316;--imp:#A78BFA;--shadow:0 10px 30px rgba(0,0,0,.35);--radius:16px}
+html[data-theme="light"]{--bg:#EEF3FA;--panel:#FFFFFF;--panel2:#F5F8FD;--grid:rgba(30,64,120,.07);--ink:#0F1A2E;--muted:#52617B;--faint:#8392AB;--line:#DDE7F3;--line2:#CBD8EA;
+  --accent:#4D7C0F;--accent2:#A16207;--warn:#B45309;--neg:#C2410C;--imp:#7C3AED;--shadow:0 12px 30px rgba(20,40,80,.10)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;min-height:100vh;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:26px 26px}
+.mono,.num{font-family:'JetBrains Mono',monospace}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px 56px}
+.topbar{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar-in{max-width:1120px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px}
+.logo .mark{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:17px}
+.logo .sub{display:block;font-size:11px;font-weight:600;color:var(--muted)}
+.spacer{flex:1}
+.tbtn{border:1px solid var(--line2);background:var(--panel);color:var(--ink);border-radius:10px;padding:7px 11px;font-weight:600;font-size:12.5px;font-family:inherit;cursor:pointer;text-decoration:none}
+.lang-pill{display:flex;border:1px solid var(--line2);border-radius:10px;overflow:hidden;background:var(--panel)}
+.lang-pill button{border:0;background:transparent;color:var(--muted);padding:7px 11px;font-weight:700;font-size:12.5px;cursor:pointer;font-family:inherit}
+.lang-pill button.on{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
+.hero{padding:28px 0 14px}
+.eyebrow{font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.06em}
+h1{font-size:clamp(26px,4.4vw,38px);line-height:1.15;margin:10px 0}
+.lead{color:var(--muted);max-width:800px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;margin-bottom:14px}
+.card h2{font-size:18px;margin-bottom:6px} .card h3{font-size:15px;margin:12px 0 6px}
+.muted{color:var(--muted)} .small{font-size:12.5px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px} .grid2>*{min-width:0}
+@media (max-width:860px){.grid2{grid-template-columns:1fr}}
+.prov{display:inline-flex;gap:6px;align-items:center;font-size:11.5px;font-weight:700;border-radius:999px;padding:3px 10px;border:1px solid var(--line2);color:var(--muted);margin:4px 6px 8px 0}
+.prov::before{content:'';width:8px;height:8px;border-radius:50%}
+.prov.sim::before{background:var(--warn)} .prov.pub::before{background:var(--accent2)}
+.pick{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0}
+@media (max-width:640px){.pick{grid-template-columns:1fr}}
+.pick button{text-align:left;border:2px solid var(--line2);background:var(--panel2);color:var(--ink);border-radius:14px;padding:14px;font-family:inherit;cursor:pointer}
+.pick button.on{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,var(--panel2))}
+.pick b{display:block;font-size:15px;margin-bottom:4px}
+label.ctl{display:block;margin:12px 0 2px;font-weight:700;font-size:13px}
+input[type=range]{width:100%} input[type=text],select{font:inherit;color:var(--ink);background:var(--panel2);border:1px solid var(--line2);border-radius:9px;padding:7px 9px;max-width:100%}
+.btn{border:0;border-radius:11px;padding:10px 16px;font-weight:800;font-size:14px;font-family:inherit;cursor:pointer;color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent2))}
+.btn.ghost{background:var(--panel2);color:var(--ink);border:1px solid var(--line2)}
+.event{border-left:4px solid var(--warn)}
+.event .tag{font-size:12px;font-weight:700;color:var(--warn)}
+.prog{display:flex;gap:4px;margin:6px 0 12px}
+.prog span{flex:1;height:6px;border-radius:4px;background:var(--line2)} .prog span.done{background:var(--accent2)} .prog span.now{background:var(--accent)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media (max-width:640px){.kpis{grid-template-columns:1fr 1fr}}
+.kpi{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:10px}
+.kpi small{display:block;color:var(--muted);font-size:11.5px} .kpi b{font-size:19px}
+.pos{color:var(--accent2)} .neg{color:var(--neg)}
+.mrow{display:grid;grid-template-columns:150px 1fr 54px;gap:10px;align-items:center;margin:6px 0;font-size:13px}
+.mrow .num{text-align:right}
+.hint{font-size:11.5px;color:var(--muted)}
+.tblwrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{color:var(--muted);font-size:12px}
+.note{border-left:3px solid var(--warn);padding:8px 12px;background:var(--panel2);border-radius:8px;font-size:13px;margin-top:10px}
+.badge{display:inline-block;border-radius:999px;padding:4px 10px;margin:3px 6px 3px 0;font-size:12.5px;font-weight:700;background:color-mix(in srgb,var(--accent) 16%,var(--panel2));border:1px solid var(--line2)}
+.qa li{margin:6px 0 6px 18px}
+footer{color:var(--faint);font-size:12px;text-align:center;margin-top:24px}
+[hidden]{display:none!important}
+.opt{display:block;width:100%;text-align:left;border:2px solid var(--line2);background:var(--panel2);color:var(--ink);border-radius:12px;padding:10px 12px;margin:6px 0;font-family:inherit;cursor:pointer}
+.opt.on{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,var(--panel2))}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.chip{border:1px solid var(--line2);background:var(--panel2);color:var(--ink);border-radius:999px;padding:6px 11px;font:inherit;font-size:12.5px;cursor:pointer}
+.chip.on{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 18%,var(--panel2));font-weight:700}
+.chip[disabled]{opacity:.45;cursor:not-allowed}
+.src{font-size:11px;color:var(--faint)}
+.lock{color:var(--faint);font-size:11.5px}
+.bar{height:8px;border-radius:5px;background:var(--line2);overflow:hidden} .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.srow{display:grid;grid-template-columns:150px 1fr 48px;gap:10px;align-items:center;margin:6px 0;font-size:13px}
+.ok{color:var(--accent2)} .bad{color:var(--neg)}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="topbar-in">
+  <div class="logo"><span class="mark">🌳</span><span>Hộ Chiếu Sầu Riêng<span class="sub" id="brandSub"></span></span></div>
+  <div class="spacer"></div>
+  <a class="tbtn" href="../lop-hoc.html" id="backLink"></a>
+  <div class="lang-pill"><button id="langVI" class="on" type="button">VI</button><button id="langEN" type="button">EN</button></div>
+  <button class="tbtn" id="themeBtn" type="button"></button>
+</div></div>
+
+<main class="wrap" id="app"></main>
+
+<footer class="wrap">
+  <p>© 2026 PGS.TS. Phan Anh Tú &amp; NCS. Đỗ Thùy Hương · Trường Kinh tế, Đại học Cần Thơ</p>
+  <p id="footSrc"></p>
+</footer>
+
+<script src="ho-chieu-sau-rieng-engine.js"></script>
+<script src="ho-chieu-sau-rieng-data.js"></script>
+<script>
+(function () {
+  'use strict';
+  const E = window.DurianEngine, D = window.DurianData;
+  const $ = id => document.getElementById(id);
+  const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  const T = {
+    vi: {
+      brandSub: 'Mô phỏng xuất khẩu nông sản', back: '← Kịch bản lớp học', light: 'Sáng', dark: 'Tối',
+      eyebrow: 'Trò chơi mô phỏng · Kinh doanh quốc tế', title: 'Đưa sầu riêng Việt Nam ra thế giới qua 6 vụ',
+      lead: 'Bạn điều hành một mắt xích trong chuỗi xuất khẩu sầu riêng, từ ngày Trung Quốc mở cửa chính ngạch (7/2022). Mỗi vụ: mua tin, chọn một ưu tiên đầu tư, chọn nguồn hàng, chia sản lượng cho các kênh và xử lý một biến cố. Mã số vùng trồng, kiểm dịch, dư lượng và cạnh tranh với Thái Lan sẽ thử thách bạn. Khoảng 30–40 phút.',
+      provFact: 'Sự kiện và quy định có trích nguồn tài liệu', provSim: 'Khối lượng, hệ số giá, xác suất là minh họa',
+      chooseRole: 'Chọn vai trong chuỗi', cohort: 'Mã lớp hoặc mã nhóm (tùy chọn, không nhập họ tên)', cohortHint: 'Cùng mã thì cùng diễn biến ngẫu nhiên, để cả lớp so sánh công bằng.',
+      formula: 'Điểm tổng 0–100', start: 'Bắt đầu', season: 'Vụ', of: '/',
+      anchor: 'Mốc thực tế', event: 'Biến cố', chooseOpt: 'Chọn cách phản ứng',
+      intel: '1 · Quan sát và mua tin (tối đa 2 nguồn)', free: 'miễn phí', bn: 'tỷ', priceSig: 'Dự báo giá vựa', riskSig: 'Mức rủi ro bị cảnh báo',
+      riskLv: ['Thấp', 'Vừa', 'Cao', 'Rất cao'],
+      decide: '2 · Quyết định', priority: 'Một ưu tiên đầu tư', linked: 'Tỷ lệ mua từ vùng trồng liên kết có mã số', linkedHint: 'Chỉ hàng từ vùng có mã mới được đi chính ngạch. Thương lái rẻ hơn nhưng khó kiểm soát dư lượng.',
+      induce: 'Xử lý ra hoa nghịch vụ', induceHint: 'Sản lượng thấp hơn 10–20% so với chính vụ nhưng giá cao gấp 2–3 lần; vườn yếu dần.', noInduce: 'Không xử lý (sản lượng nghịch vụ rất thấp)',
+      channels: 'Chia sản lượng cho các kênh', locked: 'Chưa đủ điều kiện', needs: { area: 'mã vùng trồng', pack: 'mã đóng gói', freezer: 'dây chuyền cấp đông', test: 'kiểm nghiệm' },
+      cap: 'tối đa', tons: 'tấn', commit: 'Chốt vụ', assets: 'Hồ sơ của bạn',
+      have: { area: 'Mã vùng trồng', pack: 'Mã cơ sở đóng gói', test: 'Kiểm nghiệm', trace: 'Truy xuất GS1', freezer: 'Cấp đông' },
+      suspended: 'Mã chính ngạch đang bị tạm dừng vụ này', cash: 'Tiền mặt', rep: 'Uy tín', cap2: 'Năng lực', adapt: 'Thích ứng', sus: 'Bền vững', tree: 'Sức khỏe vườn',
+      results: 'Kết quả vụ', revenue: 'Doanh thu', profit: 'Lợi nhuận', purchase: 'Mua hàng / giá thành', loss: 'Hao hụt',
+      channel: 'Kênh', qty: 'Tấn', price: 'Giá (nghìn đ/kg)', status: 'Tình trạng', st: { ok: '✓', blocked: 'Bị chặn, bán nội địa giá rớt', destroyed: 'Bị tiêu hủy' },
+      audit: { pass: 'Đạt kiểm tra của Hải quan Trung Quốc', fail: 'Không đạt kiểm tra: mã bị tạm dừng vụ sau', na: 'Không đi chính ngạch nên không bị kiểm tra' },
+      notes: { fraud_exposed: 'Vụ dán nhãn Thái bị phát hiện: uy tín sụp đổ, mã bị tạm dừng.', fraud_hidden: 'Vụ dán nhãn chưa bị phát hiện, nhưng bạn đã góp phần làm hỏng danh tiếng sầu riêng Việt.', suspended: 'Mã chính ngạch bị tạm dừng vụ sau.', jp_destroyed: 'Lô sang Nhật bị tiêu hủy vì dư lượng.' },
+      endTitle: 'Báo cáo sau 6 vụ', total: 'Điểm tổng', parts: { profit: 'Lợi nhuận', reputation: 'Uy tín', capability: 'Năng lực', adaptation: 'Thích ứng', sustainability: 'Bền vững' },
+      totalProfit: 'Tổng lợi nhuận', bench: 'mốc của vai', chUsed: 'Kênh đã dùng',
+      badges: { clean_official: 'Chính ngạch sạch: không lô nào bị chặn', diversified: 'Đa dạng thị trường: từ 4 kênh', fake_origin: 'Dính líu giả xuất xứ', exhausted_trees: 'Vườn kiệt sức vì xử lý nghịch vụ liên tục', resilient: 'Chống chịu: không vụ nào lỗ' },
+      debrief: 'Câu hỏi thảo luận', sources: 'Nguồn dữ kiện', download: 'Tải nhật ký quyết định (JSON)', again: 'Chơi lại',
+      q1: 'Vì sao mã số vùng trồng và mã cơ sở đóng gói vừa là rào cản vừa là cơ hội? Liên hệ khái niệm rào cản kỹ thuật và vệ sinh dịch tễ (TBT/SPS).',
+      q2: 'Phụ thuộc 92% vào một thị trường có rủi ro gì? Bạn đã đa dạng hóa kênh như thế nào?',
+      q3: 'Vì sao giá sầu riêng Việt Nam tại Trung Quốc thấp hơn Thái Lan dù thị phần cao hơn? Nâng cấp chuỗi giá trị nên bắt đầu từ đâu?',
+      q4: 'Nhà nước, hiệp hội và doanh nghiệp nên làm gì để ngăn tình trạng «dán nhãn» và giữ uy tín cho cả ngành?',
+      foot: 'Quy định và sự kiện lấy từ Nghị định thư kiểm dịch MARD–GACC (2022), báo cáo thị trường rau quả của Bộ Công Thương (12/2023–02/2024), kết quả tra cứu của CESTI (04/2024) và các nghiên cứu chuỗi cung ứng tại Cai Lậy, Phong Điền, Thái Lan, Malaysia. Khối lượng, hệ số giá và xác suất trong trò chơi là minh họa.'
+    },
+    en: {
+      brandSub: 'Agri-food export simulation', back: '← Classroom script', light: 'Light', dark: 'Dark',
+      eyebrow: 'Simulation game · International business', title: 'Take Vietnamese durian to the world over 6 seasons',
+      lead: 'You run one link of the durian export chain, starting when China opens official trade (July 2022). Each season: buy information, choose one investment priority, choose your sourcing, split output across channels and handle one event. Planting-area codes, quarantine, residues and competition from Thailand will test you. About 30–40 minutes.',
+      provFact: 'Events and rules are cited from documents', provSim: 'Volumes, price ratios and probabilities are illustrative',
+      chooseRole: 'Choose your role in the chain', cohort: 'Class or team code (optional, no personal names)', cohortHint: 'The same code gives the same random path, so a class can compare fairly.',
+      formula: 'Total score 0–100', start: 'Start', season: 'Season', of: '/',
+      anchor: 'Real milestone', event: 'Event', chooseOpt: 'Choose your response',
+      intel: '1 · Observe and buy information (up to 2 sources)', free: 'free', bn: 'bn', priceSig: 'Depot price forecast', riskSig: 'Risk of an alert',
+      riskLv: ['Low', 'Medium', 'High', 'Very high'],
+      decide: '2 · Decide', priority: 'One investment priority', linked: 'Share bought from linked, coded planting areas', linkedHint: 'Only fruit from coded areas may go through official trade. Traders are cheaper but residues are hard to control.',
+      induce: 'Induce off-season flowering', induceHint: 'Output 10–20% lower than the main season but prices 2–3 times higher; the orchard weakens.', noInduce: 'Do not induce (very low off-season output)',
+      channels: 'Split output across channels', locked: 'Not yet eligible', needs: { area: 'planting-area code', pack: 'packing code', freezer: 'freezing line', test: 'testing' },
+      cap: 'max', tons: 't', commit: 'Commit season', assets: 'Your credentials',
+      have: { area: 'Planting-area code', pack: 'Packing-facility code', test: 'Testing', trace: 'GS1 traceability', freezer: 'Freezing' },
+      suspended: 'Your official-trade codes are suspended this season', cash: 'Cash', rep: 'Reputation', cap2: 'Capability', adapt: 'Adaptation', sus: 'Sustainability', tree: 'Orchard health',
+      results: 'Season results', revenue: 'Revenue', profit: 'Profit', purchase: 'Purchases / farm cost', loss: 'Losses',
+      channel: 'Channel', qty: 'Tonnes', price: 'Price (VND k/kg)', status: 'Status', st: { ok: '✓', blocked: 'Blocked, sold at home as rejects', destroyed: 'Destroyed' },
+      audit: { pass: 'Passed the China Customs audit', fail: 'Failed the audit: codes suspended next season', na: 'No official exports, so no audit' },
+      notes: { fraud_exposed: 'The Thai relabelling was exposed: reputation collapses and codes are suspended.', fraud_hidden: 'The relabelling was not exposed, but you helped damage the reputation of Vietnamese durian.', suspended: 'Official-trade codes suspended next season.', jp_destroyed: 'The Japan lot was destroyed for residues.' },
+      endTitle: 'Report after 6 seasons', total: 'Total score', parts: { profit: 'Profit', reputation: 'Reputation', capability: 'Capability', adaptation: 'Adaptation', sustainability: 'Sustainability' },
+      totalProfit: 'Total profit', bench: 'role benchmark', chUsed: 'Channels used',
+      badges: { clean_official: 'Clean official trade: no lot blocked', diversified: 'Diversified: 4 or more channels', fake_origin: 'Involved in fake origin', exhausted_trees: 'Exhausted orchard from repeated off-season inducing', resilient: 'Resilient: no loss-making season' },
+      debrief: 'Discussion questions', sources: 'Sources', download: 'Download decision log (JSON)', again: 'Play again',
+      q1: 'Why are planting-area and packing-facility codes both a barrier and an opportunity? Relate this to technical and sanitary barriers (TBT/SPS).',
+      q2: 'What are the risks of relying on one market for 92% of exports? How did you diversify?',
+      q3: 'Why is Vietnamese durian cheaper than Thai durian in China despite a larger market share? Where should upgrading start?',
+      q4: 'What should the state, associations and firms do to stop relabelling and protect the reputation of the whole industry?',
+      foot: 'Rules and events come from the MARD–GACC phytosanitary protocol (2022), Ministry of Industry and Trade fruit market reports (Dec 2023–Feb 2024), CESTI search results (Apr 2024) and supply-chain studies in Cai Lậy, Phong Điền, Thailand and Malaysia. Volumes, price ratios and probabilities in the game are illustrative.'
+    }
+  };
+  let LANG = store.get('durian_lang') === 'en' ? 'en' : 'vi';
+  const t = k => T[LANG][k];
+  const nm = o => (LANG === 'en' ? o.en : o.vi);
+  const nf = (x, d) => (Number.isFinite(x) ? x : 0).toLocaleString(LANG === 'vi' ? 'vi-VN' : 'en-US', { maximumFractionDigits: d || 0, minimumFractionDigits: d || 0 });
+  const pct = x => nf(x * 100) + '%';
+  const money = x => nf(x, 2) + ' ' + t('bn');
+  const fact = k => { const f = D.facts[k]; return f ? `${nm(f)} <span class="src">[${f.src}]</span>` : ''; };
+
+  let ROLE = 'exporter', COHORT = '', GAME = null, DEC = null;
+  const freshDec = () => ({ priority: 'area', linked: 0.3, induce: true, alloc: { CN: 40, BORDER: 30, FROZEN: 0, TW: 5, JP: 0, DOM: 25 }, intel: [], option: 0 });
+
+  function chrome() {
+    $('brandSub').textContent = t('brandSub'); $('backLink').textContent = t('back');
+    const th = document.documentElement.getAttribute('data-theme');
+    $('themeBtn').textContent = (th === 'dark' ? '☀️ ' + t('light') : '🌙 ' + t('dark'));
+    $('langVI').classList.toggle('on', LANG === 'vi'); $('langEN').classList.toggle('on', LANG === 'en');
+    document.documentElement.lang = LANG; $('footSrc').textContent = t('foot');
+  }
+  $('langVI').onclick = () => { LANG = 'vi'; store.set('durian_lang', 'vi'); render(); };
+  $('langEN').onclick = () => { LANG = 'en'; store.set('durian_lang', 'en'); render(); };
+  $('themeBtn').onclick = () => { const n = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; document.documentElement.setAttribute('data-theme', n); store.set('durian_theme', n); render(); };
+
+  function render() {
+    chrome();
+    if (!GAME) return renderSetup();
+    if (GAME.n > D.seasons.length) return renderEnd();
+    renderPlay();
+  }
+
+  function formulaHTML() {
+    return Object.entries(D.scoreWeights).map(([k, w]) => `<b>${w}%</b> ${T[LANG].parts[k]}`).join(' + ');
+  }
+
+  // ---------- màn 1 ----------
+  function renderSetup() {
+    $('app').innerHTML = `
+      <section class="hero"><span class="eyebrow">${t('eyebrow')}</span><h1>${t('title')}</h1><p class="lead">${t('lead')}</p>
+        <span class="prov pub">${t('provFact')}</span><span class="prov sim">${t('provSim')}</span></section>
+      <div class="card"><h2>${t('chooseRole')}</h2>
+        <div class="pick">${Object.entries(D.roles).map(([id, r]) => `<button type="button" data-role="${id}" class="${id === ROLE ? 'on' : ''}"><b>${r.emoji} ${nm(r)}</b>
+          <span class="small muted">${LANG === 'en' ? r.descEn : r.descVi}</span></button>`).join('')}</div>
+        <p class="small" style="margin-top:8px">${t('formula')}: ${formulaHTML()}</p>
+        <label class="ctl" for="cohort">${t('cohort')}</label><input type="text" id="cohort" maxlength="24" value="${esc(COHORT)}" autocomplete="off">
+        <p class="hint">${t('cohortHint')}</p>
+        <p style="margin-top:14px"><button class="btn" id="startBtn" type="button">${t('start')}</button></p>
+      </div>`;
+    document.querySelectorAll('[data-role]').forEach(b => b.onclick = () => { ROLE = b.dataset.role; COHORT = $('cohort').value; renderSetup(); });
+    $('startBtn').onclick = () => {
+      COHORT = $('cohort').value.trim();
+      GAME = E.newGame(D, ROLE, COHORT ? E.seedFrom(COHORT + '|' + ROLE) : (Date.now() >>> 0));
+      DEC = freshDec(); render(); window.scrollTo(0, 0);
+    };
+  }
+
+  // ---------- màn 2 ----------
+  function renderPlay() {
+    const role = D.roles[GAME.roleId], s = D.seasons[GAME.n - 1], ev = E.eventFor(D, GAME);
+    const last = GAME.history[GAME.history.length - 1];
+    const sig = E.intelSignals(D, GAME, DEC.intel);
+    const norm = E.normalizeAlloc(DEC.alloc, D.channels.map(c => c.id));
+    const a = GAME.assets;
+    const ok = id => E.eligible(D, GAME, D.channels.find(c => c.id === id));
+    $('app').innerHTML = `
+      <section class="hero" style="padding-bottom:6px"><span class="eyebrow">${role.emoji} ${nm(role)}</span>
+        <h1 style="font-size:clamp(22px,3.6vw,30px)">${t('season')} ${GAME.n}${t('of')}${D.seasons.length} · ${s.label}</h1>
+        <div class="prog">${D.seasons.map((_, i) => `<span class="${i + 1 < GAME.n ? 'done' : i + 1 === GAME.n ? 'now' : ''}"></span>`).join('')}</div></section>
+      <div class="grid2">
+        <div class="card event"><span class="tag">${t('anchor')}</span><h2>${nm(s)}</h2><p>${LANG === 'en' ? s.textEn : s.textVi}</p>
+          <p class="hint" style="margin-top:6px">${fact(s.anchor)}</p></div>
+        ${ev ? `<div class="card event"><span class="tag">${t('event')}</span><h2>${nm(ev)}</h2><p>${LANG === 'en' ? ev.textEn : ev.textVi}</p>
+          <p class="hint">${fact(ev.src)}</p><h3>${t('chooseOpt')}</h3>
+          ${ev.options.map((o, i) => `<button type="button" class="opt ${DEC.option === i ? 'on' : ''}" data-opt="${i}">${nm(o)}</button>`).join('')}</div>` : '<div></div>'}
+      </div>
+      <div class="card"><h2>${t('assets')}</h2>
+        <div class="chips">${Object.keys(T[LANG].have).map(k => `<span class="chip ${(k === 'test' ? a.test > 0 : a[k]) ? 'on' : ''}">${(k === 'test' ? a.test > 0 : a[k]) ? '✓' : '○'} ${T[LANG].have[k]}${k === 'test' && a.test ? ' ×' + a.test : ''}</span>`).join('')}</div>
+        ${GAME.suspendedUntil >= GAME.n ? `<p class="note">${t('suspended')}</p>` : ''}
+        <div class="kpis" style="margin-top:8px">
+          <div class="kpi"><small>${t('cash')}</small><b class="num ${GAME.cash >= 0 ? 'pos' : 'neg'}">${money(GAME.cash)}</b></div>
+          <div class="kpi"><small>${t('rep')}</small><b class="num">${nf(GAME.rep)}</b></div>
+          <div class="kpi"><small>${t('adapt')}</small><b class="num">${nf(GAME.adapt)}</b></div>
+          <div class="kpi"><small>${role.ownFarm ? t('tree') : t('sus')}</small><b class="num">${nf(role.ownFarm ? GAME.treeHealth : GAME.sus)}</b></div></div></div>
+      <div class="grid2">
+        <div class="card"><h2>${t('intel')}</h2>
+          <div class="chips">${D.intel.map(i => `<button type="button" class="chip ${DEC.intel.includes(i.id) ? 'on' : ''}" data-intel="${i.id}" ${!DEC.intel.includes(i.id) && DEC.intel.length >= 2 ? 'disabled' : ''}>${nm(i)} · ${i.cost ? money(i.cost) : t('free')}</button>`).join('')}</div>
+          ${sig.map(x => { const src = D.intel.find(i => i.id === x.id); return `<p class="small">• <b>${nm(src)}</b>: ${t('priceSig')} ≈ <b class="num">${nf(x.price)}</b> ${LANG === 'en' ? 'VND k/kg' : 'nghìn đ/kg'}${x.risk !== undefined ? ` · ${t('riskSig')}: <b>${T[LANG].riskLv[x.risk]}</b>` : ''}${src.warnVi ? ` <span class="hint">(${LANG === 'en' ? src.warnEn : src.warnVi})</span>` : ''}</p>`; }).join('')}
+          <h2 style="margin-top:14px">${t('decide')}</h2>
+          <label class="ctl">${t('priority')}</label>
+          ${D.priorities.map(p => { const owned = (p.id === 'area' && a.area) || (p.id === 'pack' && a.pack) || (p.id === 'trace' && a.trace) || (p.id === 'freezer' && a.freezer) || (p.id === 'test' && a.test >= 2);
+            return `<button type="button" class="opt ${DEC.priority === p.id ? 'on' : ''}" data-pri="${p.id}" ${owned ? 'disabled style="opacity:.5"' : ''}><b>${nm(p)}</b> · <span class="num">${D.params.priorityCost[p.id] ? money(D.params.priorityCost[p.id]) : '0'}</span><br><span class="hint">${LANG === 'en' ? p.effEn : p.effVi}</span></button>`; }).join('')}
+          ${role.ownFarm ? (s.season === 'off' ? `<label class="ctl">${t('induce')}</label>
+            <button type="button" class="opt ${DEC.induce ? 'on' : ''}" data-ind="1">${t('induce')}</button><button type="button" class="opt ${!DEC.induce ? 'on' : ''}" data-ind="0">${t('noInduce')}</button><p class="hint">${t('induceHint')} [CAILAY, BC0224]</p>` : '')
+            : `<label class="ctl" for="linked">${t('linked')}: <span class="num" id="linkedV">${pct(DEC.linked)}</span></label>
+            <input type="range" id="linked" min="0" max="100" step="10" value="${Math.round(DEC.linked * 100)}"><p class="hint">${t('linkedHint')} ${fact('traders80')}</p>`}
+        </div>
+        <div class="card"><h2>${t('channels')}</h2>
+          ${D.channels.map(c => { const e = ok(c.id); const cap = c.cap === null ? '' : `${t('cap')} ${nf(c.id === 'BORDER' ? c.cap * (1 - (s.borderCut || 0)) : c.cap)} ${t('tons')}`;
+            return `<div class="mrow"><span>${c.emoji} ${nm(c)}<br><span class="hint">${e ? cap : `<span class="lock">🔒 ${t('locked')}: ${c.needs.map(k => T[LANG].needs[k]).join(', ')}</span>`}</span></span>
+            <input type="range" data-ch="${c.id}" min="0" max="100" step="5" value="${DEC.alloc[c.id] || 0}" ${e ? '' : 'disabled'}><span class="num" id="pct-${c.id}">${e ? pct(norm[c.id]) : '—'}</span></div>`; }).join('')}
+          <p class="hint">${fact('sampling')}</p>
+          <p style="margin-top:14px"><button class="btn" id="commitBtn" type="button">${t('commit')} ${GAME.n} →</button></p>
+        </div>
+      </div>
+      ${last ? `<div class="card">${resultsHTML(last)}</div>` : ''}`;
+    document.querySelectorAll('[data-opt]').forEach(b => b.onclick = () => { DEC.option = +b.dataset.opt; renderPlay(); });
+    document.querySelectorAll('[data-intel]').forEach(b => b.onclick = () => {
+      const id = b.dataset.intel; DEC.intel = DEC.intel.includes(id) ? DEC.intel.filter(x => x !== id) : DEC.intel.concat([id]).slice(0, 2); renderPlay();
+    });
+    document.querySelectorAll('[data-pri]').forEach(b => b.onclick = () => { DEC.priority = b.dataset.pri; renderPlay(); });
+    document.querySelectorAll('[data-ind]').forEach(b => b.onclick = () => { DEC.induce = b.dataset.ind === '1'; renderPlay(); });
+    if ($('linked')) $('linked').oninput = e => { DEC.linked = +e.target.value / 100; $('linkedV').textContent = pct(DEC.linked); };
+    document.querySelectorAll('[data-ch]').forEach(r => r.oninput = () => {
+      DEC.alloc[r.dataset.ch] = +r.value;
+      const ids = D.channels.map(c => c.id).filter(ok), n2 = E.normalizeAlloc(DEC.alloc, ids);
+      ids.forEach(id => { $('pct-' + id).textContent = pct(n2[id]); });
+    });
+    $('commitBtn').onclick = () => {
+      GAME = E.playSeason(D, GAME, JSON.parse(JSON.stringify(DEC)));
+      const keepAlloc = DEC.alloc, keepLinked = DEC.linked;
+      DEC = freshDec(); DEC.alloc = keepAlloc; DEC.linked = keepLinked;
+      const nextOwned = GAME.assets;
+      const firstFree = D.priorities.find(p => !((p.id === 'area' && nextOwned.area) || (p.id === 'pack' && nextOwned.pack) || (p.id === 'trace' && nextOwned.trace) || (p.id === 'freezer' && nextOwned.freezer) || (p.id === 'test' && nextOwned.test >= 2)));
+      DEC.priority = firstFree ? firstFree.id : 'finance';
+      render(); window.scrollTo(0, 0);
+    };
+  }
+
+  function resultsHTML(r) {
+    return `<h2>${t('results')} ${r.n}</h2>
+      <div class="kpis">
+        <div class="kpi"><small>${t('revenue')}</small><b class="num">${money(r.revenue)}</b></div>
+        <div class="kpi"><small>${t('purchase')}</small><b class="num">${money(r.purchase)}</b></div>
+        <div class="kpi"><small>${t('loss')}</small><b class="num">${pct(r.loss)}</b></div>
+        <div class="kpi"><small>${t('profit')}</small><b class="num ${r.profit >= 0 ? 'pos' : 'neg'}">${money(r.profit)}</b></div></div>
+      <div class="tblwrap" style="margin-top:10px"><table><tr><th>${t('channel')}</th><th>${t('qty')}</th><th>${t('price')}</th><th>${t('revenue')}</th><th>${t('status')}</th></tr>
+        ${r.byChannel.filter(c => c.qty > 0.5).map(c => { const ch = D.channels.find(x => x.id === c.id); return `<tr><td>${ch.emoji} ${nm(ch)}</td><td class="num">${nf(c.qty)}</td><td class="num">${nf(c.price)}</td><td class="num">${money(c.revenue)}</td><td class="${c.status === 'ok' ? 'ok' : 'bad'}">${T[LANG].st[c.status]}</td></tr>`; }).join('')}
+      </table></div>
+      ${r.audit ? `<p class="note">${T[LANG].audit[r.audit]}</p>` : ''}
+      ${r.notes.map(n => `<p class="note">${T[LANG].notes[n]}</p>`).join('')}`;
+  }
+
+  // ---------- màn 3 ----------
+  function renderEnd() {
+    const role = D.roles[GAME.roleId], S = E.summary(D, GAME);
+    const B = T[LANG].badges;
+    const used = new Set();
+    GAME.history.forEach(r => { [r.eventId, D.seasons[r.n - 1].anchor].forEach(k => { const f = D.facts[k] || D.facts[(D.events.find(e => e.id === k) || {}).src]; if (f) used.add(f.src); }); });
+    ['PROTO', 'KQTC', 'CAILAY', 'BC0224'].forEach(k => used.add(k));
+    $('app').innerHTML = `
+      <section class="hero"><span class="eyebrow">${role.emoji} ${nm(role)}</span><h1>${t('endTitle')}</h1></section>
+      <div class="grid2">
+        <div class="card"><div class="kpis" style="grid-template-columns:1fr 1fr">
+          <div class="kpi"><small>${t('total')}</small><b class="num">${nf(S.total)}/100</b></div>
+          <div class="kpi"><small>${t('totalProfit')}</small><b class="num ${S.profit >= 0 ? 'pos' : 'neg'}">${money(S.profit)}</b><small>${t('bench')}: ${money(S.bench)}</small></div></div>
+          <h3>${t('formula')}</h3>
+          ${Object.keys(D.scoreWeights).map(k => `<div class="srow"><span>${T[LANG].parts[k]} (${D.scoreWeights[k]}%)</span><div class="bar"><i style="width:${S.parts[k]}%"></i></div><span class="num">${nf(S.parts[k])}</span></div>`).join('')}
+          <p style="margin-top:10px">${S.badges.map(b => `<span class="badge">${B[b]}</span>`).join('')}</p>
+          <p class="small muted">${t('chUsed')}: ${S.channelsUsed.map(id => nm(D.channels.find(c => c.id === id))).join(', ')}</p></div>
+        <div class="card"><h3>${t('debrief')}</h3><ol class="qa small"><li>${t('q1')}</li><li>${t('q2')}</li><li>${t('q3')}</li><li>${t('q4')}</li></ol>
+          <p class="hint">${fact('share57')}</p><p class="hint">${fact('china92')}</p></div>
+      </div>
+      <div class="card"><h3>${t('sources')}</h3><ul class="qa small">${[...used].map(k => `<li><b>[${k}]</b> ${esc(D.sources[k])}</li>`).join('')}</ul></div>
+      <p><button class="btn" id="dlBtn" type="button">${t('download')}</button> <button class="btn ghost" id="againBtn" type="button">${t('again')}</button></p>`;
+    $('dlBtn').onclick = () => {
+      const blob = new Blob([JSON.stringify({ game: 'ho-chieu-sau-rieng', role: GAME.roleId, summary: S, log: E.decisionLog(GAME, { cohort: COHORT || 'local' }) }, null, 2)], { type: 'application/json' });
+      const el = document.createElement('a'); el.href = URL.createObjectURL(blob); el.download = 'ho-chieu-sau-rieng-nhat-ky.json'; el.click(); URL.revokeObjectURL(el.href);
+    };
+    $('againBtn').onclick = () => { GAME = null; render(); window.scrollTo(0, 0); };
+  }
+
+  document.documentElement.setAttribute('data-theme', store.get('durian_theme') === 'light' ? 'light' : 'dark');
+  render();
+})();
+</script>
+</body>
+</html>
