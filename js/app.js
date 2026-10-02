@@ -348,7 +348,6 @@ async function doLogin() {
   $('screen-login').classList.remove('active');
   enterApp();
   createConfetti();
-  try { if (!localStorage.getItem('bizon-intro-seen')) showIntro(); } catch (e) {}
   playHuongIntro();   // giọng chào thật của Lumina AI (được phép vì gọi từ thao tác chạm)
   startMusic();       // nhạc nền BizOn Theme
 }
@@ -697,7 +696,16 @@ function playHuongIntro() {
 function enterApp() {
   $('app-shell').classList.remove('hidden');
   showTab('home');
-  maybeShowCaseDraw(() => maybeShowEventIntro());
+  // Chuỗi giới thiệu đúng thứ tự tài liệu thiết kế (xem dismissChain() trong
+  // "BizOn Game 3D.html"): slide giới thiệu 6 trang → bốc thăm Trường hợp →
+  // biến cố thị trường vòng 1. Mỗi lớp overlay phải đóng hẳn mới tới lớp kế
+  // tiếp (nối tiếp bằng callback), tránh 2-3 lớp hiện chồng lên nhau cùng
+  // lúc (chữ mờ/đè nhau) như trước đây khi showIntro() bị gọi song song với
+  // maybeShowCaseDraw().
+  const afterIntro = () => maybeShowCaseDraw(() => maybeShowEventIntro());
+  let seenIntro = true;
+  try { seenIntro = !!localStorage.getItem('bizon-intro-seen'); } catch (e) {}
+  if (seenIntro) afterIntro(); else showIntro(afterIntro);
 }
 
 // ---------- Bốc thăm Trường hợp đầu mùa ----------
@@ -1734,7 +1742,7 @@ function INTRO_SLIDES_LIST() { return [
     text: T('Cắm nhiều cờ nhất, đạt TOP 1 thị phần Việt Nam và nhận chứng nhận hoàn thành. Sẵn sàng Bật Nghiệp? 🚀', 'Plant the most flags, reach #1 market share in Vietnam, and earn your certificate of completion. Ready to Bật Nghiệp? 🚀') },
 ]; }
 
-function showIntro() {
+function showIntro(onClose) {
   let idx = 0;
   const INTRO_SLIDES = INTRO_SLIDES_LIST();
   const div = document.createElement('div');
@@ -1758,10 +1766,10 @@ function showIntro() {
         </div>
       </div>`;
     div.querySelector('#intro-next').onclick = () => {
-      if (last) { div.remove(); } else { idx++; paint(); }
+      if (last) { div.remove(); if (onClose) onClose(); } else { idx++; paint(); }
     };
     div.querySelector('#intro-skip').onclick = () => {
-      if (idx) { idx--; paint(); } else div.remove();
+      if (idx) { idx--; paint(); } else { div.remove(); if (onClose) onClose(); }
     };
   };
   paint();
