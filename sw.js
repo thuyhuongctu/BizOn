@@ -6,6 +6,7 @@ const SHELL = [
   './',
   './index.html',
   './game.html',
+  './ben-phu-sa.html',
   './lab/cmr-lab.html',
   './lab/cvp-studio.html',
   './lab/gravity-lab.html',
@@ -161,6 +162,8 @@ const SHELL = [
   './assets/character/firms/moc-nhien-aodai-cut.webp',
   './assets/character/firms/phu-sa-foods-aodai-cut.webp',
   './assets/character/firms/lam-viet-aodai-cut.webp',
+  './assets/character/phu-sa/huong-cut.webp',
+  './assets/character/phu-sa/tu-cut.webp',
   // Bài chủ đề game Hộ Chiếu Thương Hiệu – nạp sẵn để mở offline vẫn có nhạc.
   // 7,1MB: đây là mục nặng nhất trong danh sách, cân nhắc bỏ nếu muốn rút ngắn
   // thời gian cài đặt (nhạc vẫn tải và lưu đệm ngay lần đầu người chơi bật).
