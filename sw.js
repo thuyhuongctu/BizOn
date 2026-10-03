@@ -1,7 +1,7 @@
 /* BizOn Bật Nghiệp 2026 – Service Worker (offline app shell)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
 
-const CACHE = 'bizon-v312';
+const CACHE = 'bizon-v313';
 const SHELL = [
   './',
   './index.html',
@@ -102,6 +102,7 @@ const SHELL = [
   './assets/illustrations/hero-vietnam-2026.webp',
   './assets/illustrations/arena-vietnam-map-v2.webp',
   // Bộ ảnh đất sét dùng cho màn Giới thiệu + Sổ tay hướng dẫn của game
+  './assets/illustrations/game/ben-phu-sa-cho-noi.webp',
   './assets/illustrations/game/river-worldmap.webp',
   './assets/illustrations/game/team-table.webp',
   './assets/illustrations/game/paths-compass.webp',
