@@ -115,6 +115,80 @@ if (baseRef) {
   console.log('ℹ️  PARITY_BASE chưa đặt — bỏ qua tầng chống trôi nội dung (chỉ kiểm parity ID).');
 }
 
+// --- Tầng 3: bộ thoại session-scope (JSON) — lớp học & Mekong (cls-*/mks-*) ---
+// Bảng voice/<id>.mp3 ở trên KHÔNG phủ các dòng cls-*/mks-* (không có clip, ID hai
+// gạch nối). Cặp JSON máy đọc dưới đây là nguồn chuẩn cho nhóm thoại đó; áp đúng
+// nguyên tắc: ID/vars/trigger/scope trùng khít, và không trôi nội dung một bên.
+const DJ_VI = 'assets/dialogue/lumina-classroom-mekong.vi.json';
+const DJ_EN = 'assets/dialogue/lumina-classroom-mekong.en.json';
+const REMOVED_IDS = ['adv-01', 'adv-05']; // bài học glossary: thoại mới không tham chiếu ID đã chỉnh/gỡ
+
+function parseDialogueJSON(text) {
+  const map = new Map();
+  if (!text) return map;
+  let doc;
+  try { doc = JSON.parse(text); } catch { return map; }
+  for (const d of doc.dialogues || []) {
+    map.set(d.id, {
+      text: d.text || '',
+      vars: (d.vars || []).slice().sort().join(','),
+      trigger: d.trigger || '',
+      scope: d.session_scope || ''
+    });
+  }
+  return map;
+}
+const readJSONWorktree = (path) => { try { return parseDialogueJSON(readFileSync(path, 'utf8')); } catch { return new Map(); } };
+const readJSONBase = (ref, path) => { try { return parseDialogueJSON(execSync(`git show ${ref}:${path}`, { encoding: 'utf8' })); } catch { return new Map(); } };
+
+const djVI = readJSONWorktree(DJ_VI);
+const djEN = readJSONWorktree(DJ_EN);
+if (djVI.size || djEN.size) {
+  const jvi = new Set(djVI.keys());
+  const jen = new Set(djEN.keys());
+  const jOnlyVI = [...jvi].filter((id) => !jen.has(id)).sort();
+  const jOnlyEN = [...jen].filter((id) => !jvi.has(id)).sort();
+  if (jOnlyVI.length) errors.push(`[JSON cls/mks] ID chỉ có ở bản VIỆT (thiếu ở EN): ${jOnlyVI.join(', ')}`);
+  if (jOnlyEN.length) errors.push(`[JSON cls/mks] ID chỉ có ở bản ANH (thiếu ở VI): ${jOnlyEN.join(', ')}`);
+
+  for (const id of [...jvi].filter((id) => jen.has(id))) {
+    const a = djVI.get(id);
+    const b = djEN.get(id);
+    if (a.vars !== b.vars) errors.push(`[JSON cls/mks] vars lệch ở ${id}: VI[${a.vars}] vs EN[${b.vars}]`);
+    if (a.trigger !== b.trigger) errors.push(`[JSON cls/mks] trigger lệch ở ${id}: VI=${a.trigger} vs EN=${b.trigger}`);
+    if (a.scope !== b.scope) errors.push(`[JSON cls/mks] session_scope lệch ở ${id}: VI=${a.scope} vs EN=${b.scope}`);
+    for (const [lang, node] of [['VIỆT', a], ['ANH', b]]) {
+      for (const rm of REMOVED_IDS) {
+        if (node.text.includes(rm)) errors.push(`[JSON cls/mks] bản ${lang} ${id}: tham chiếu ID đã chỉnh/gỡ '${rm}'`);
+      }
+    }
+  }
+
+  // Chống trôi nội dung (khi có base): text đổi một bên mà bên kia không đổi.
+  if (baseRef) {
+    const bVI = readJSONBase(baseRef, DJ_VI);
+    const bEN = readJSONBase(baseRef, DJ_EN);
+    const textMap = (m) => new Map([...m].map(([k, v]) => [k, v.text]));
+    const changedIds = (base, head) => {
+      const ids = new Set([...base.keys(), ...head.keys()]);
+      const out = new Set();
+      for (const id of ids) if (base.get(id) !== head.get(id)) out.add(id);
+      return out;
+    };
+    const vC = changedIds(textMap(bVI), textMap(djVI));
+    const eC = changedIds(textMap(bEN), textMap(djEN));
+    const both = (id) => jvi.has(id) && jen.has(id);
+    const vOnly = [...vC].filter((id) => both(id) && !eC.has(id)).sort();
+    const eOnly = [...eC].filter((id) => both(id) && !vC.has(id)).sort();
+    if (vOnly.length) errors.push(`[JSON cls/mks] Bản VIỆT đổi nhưng bản ANH KHÔNG đổi cho: ${vOnly.join(', ')} — cập nhật ${DJ_EN}.`);
+    if (eOnly.length) errors.push(`[JSON cls/mks] Bản ANH đổi nhưng bản VIỆT KHÔNG đổi cho: ${eOnly.join(', ')} — cập nhật ${DJ_VI}.`);
+  }
+
+  if (!errors.some((e) => e.startsWith('[JSON'))) {
+    console.log(`✅ JSON cls/mks parity OK — ${jvi.size} ID (lớp học + Mekong) trùng khít VI/EN.`);
+  }
+}
+
 if (errors.length) {
   console.error('❌ Lumina parity check THẤT BẠI:\n');
   for (const e of errors) console.error('  • ' + e);
