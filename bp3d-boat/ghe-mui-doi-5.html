@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ghe mui – Đội 5 người · Bến Phù Sa 3D</title>
+<script type="importmap">
+{
+  "imports": {
+    "three": "../vendor/three/three.module.js",
+    "three/addons/controls/OrbitControls.js": "../vendor/three/OrbitControls.js",
+    "three/addons/exporters/OBJExporter.js": "https://unpkg.com/three@0.184.0/examples/jsm/exporters/OBJExporter.js",
+    "three/addons/exporters/GLTFExporter.js": "https://unpkg.com/three@0.184.0/examples/jsm/exporters/GLTFExporter.js"
+  },
+  "integrity": {
+    "https://unpkg.com/three@0.184.0/examples/jsm/exporters/OBJExporter.js": "sha384-nbwtoZENJD3Vq+ACK0CuGQdPMuDWHkamC2KJD70EV5nfg6jQjfppKOea07YJN+N3",
+    "https://unpkg.com/three@0.184.0/examples/jsm/exporters/GLTFExporter.js": "sha384-VofkvpG6HERhFCYbsUOHeNXBCqID2nfqkQqnVzE1jc/oPcz+qJ13ADdXH08hE+cQ"
+  }
+}
+</script>
+<style>html{margin:0;background:#e9d9b4}body{margin:0}three-d-stage:not(:defined){visibility:hidden}
+body::before{content:"";position:fixed;inset:0;background:linear-gradient(180deg,#f7d9a0 0%,#f3e3bf 38%,#b9c49a 62%,#8fa47a 100%);z-index:-1}</style>
+</head>
+<body>
+<three-d-stage name="ghe-mui-doi-5-ben-phu-sa" background="transparent" autorotate></three-d-stage>
+<script src="three-d-stage.js"></script>
+<script type="module">
+import { makeMaterials } from './materials.js';
+import { buildGheMui } from './model-ghe-mui.js';
+import { buildCargo } from './model-ghe-cargo.js';
+import { buildTeam } from './model-team.js';
+import { buildMarket } from './model-market.js';
+import { mountMusic } from './music.js';
+mountMusic('../assets/audio/golden-silt-journey-ben-phu-sa.mp3');
+const stage = document.querySelector('three-d-stage');
+const { THREE } = await stage.ready;
+const M = makeMaterials(THREE);
+const model = new THREE.Group(); model.name = 'ben_phu_sa_ghe_mui';
+model.add(buildGheMui(THREE, M), buildCargo(THREE, M), buildTeam(THREE, M), buildMarket(THREE, M));
+const water = new THREE.Mesh(new THREE.CylinderGeometry(40, 40, 0.14, 128), M.water);
+water.name = 'water'; water.position.y = 0.1; water.receiveShadow = true; model.add(water);
+stage.setObject(model);
+{
+  const c = stage._camera, t = stage._controls, tgt = new THREE.Vector3(0, 1.3, 0);
+  const dir = new THREE.Vector3(0.55, 0.42, 1).normalize();
+  const frame = () => {
+    const vf = c.fov * Math.PI / 180, hf = 2 * Math.atan(Math.tan(vf / 2) * c.aspect);
+    const d = Math.max(3.6 / Math.tan(vf / 2), 5.4 / Math.tan(hf / 2));
+    t.target.copy(tgt); c.position.copy(tgt).addScaledVector(dir, d);
+    c.near = 0.05; c.far = 300; c.updateProjectionMatrix(); t.update();
+  };
+  frame(); new ResizeObserver(() => requestAnimationFrame(frame)).observe(stage);
+}
+</script>
+</body>
+</html>
