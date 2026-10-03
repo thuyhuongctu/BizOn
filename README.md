@@ -15,7 +15,7 @@
 | **Authors** | **Do Thuy Huong** (Founder & Creative Lead) · **Phan Anh Tu** (Co-founder & Academic Advisor) |
 | **Affiliation** | Can Tho University (CTU), Vietnam |
 | **Start here** | 🪐 [Universe BizOn – ecosystem map](https://thuyhuongctu.github.io/BizOn/universe.html) (the landing page: one engine core, many worlds) |
-| **Play now** | 🎮 [Game](https://thuyhuongctu.github.io/BizOn/) · 🌐 [Landing page](https://thuyhuongctu.github.io/BizOn/gioi-thieu.html) · 🕹️ [Arcade](https://thuyhuongctu.github.io/BizOn/games.html) · 🌏 [BizOn Go Global](https://thuyhuongctu.github.io/BizOn/global.html) |
+| **Play now** | 🎮 [Game](https://thuyhuongctu.github.io/BizOn/) · 🌐 [Landing page](https://thuyhuongctu.github.io/BizOn/gioi-thieu.html) · 🕹️ [Arcade](https://thuyhuongctu.github.io/BizOn/games.html) · 🌏 [BizOn Go Global](https://thuyhuongctu.github.io/BizOn/global.html) · ▶️ [Google Play (Android)](https://play.google.com/store/apps/details?id=io.github.thuyhuongctu.bizon) |
 | **For faculty** | 🏛️ [Institutional site](https://thuyhuongctu.github.io/BizOn/truong.html) · [Academic foundations](https://thuyhuongctu.github.io/BizOn/truong-hoc-thuat.html) · [For instructors](https://thuyhuongctu.github.io/BizOn/truong-giang-vien.html) · [Data policy](https://thuyhuongctu.github.io/BizOn/truong-chinh-sach.html) |
 | **Contact** | thuyhuongctu@gmail.com |
 | **Archive & DOI** | Zenodo concept DOI: [10.5281/zenodo.21592241](https://doi.org/10.5281/zenodo.21592241) – every release is permanently archived |
@@ -114,6 +114,7 @@ python3 -m http.server 8000   # then open http://localhost:8000
 
 - **Web:** the [`deploy-pages.yml`](.github/workflows/deploy-pages.yml) workflow auto-deploys to GitHub Pages on every push to `main`.
 - **Mobile (PWA):** open the link on a phone → "Add to Home Screen" – runs full-screen and plays offline (service worker + manifest).
+- **Android (Google Play):** [BizOn – Bật Nghiệp](https://play.google.com/store/apps/details?id=io.github.thuyhuongctu.bizon) – a Trusted Web Activity that opens this same web app, so it always runs the latest version.
 - Game progress is saved in each device's `localStorage`.
 
 ## 🧱 Source layout
