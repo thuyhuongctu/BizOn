@@ -71,7 +71,9 @@ assert.match(release, /unified-app\.js/);
 assert.match(command, /unified-app\.js/);
 assert.match(aibis, /app-shell\.js/);
 
-const music = read('am-nhac.html');
+// The clay music page (am-nhac.html) now loads its cover art from js/music-data.js,
+// so check both the page shell and its data module for the required existing assets.
+const music = read('am-nhac.html') + '\n' + read('js/music-data.js');
 assert.match(music, /arena-vietnam-map-v2\.webp/);
 assert.match(music, /hero-vietnam-2026\.webp/);
 assert.match(music, /giai-dieu-bizon\.webp/);
