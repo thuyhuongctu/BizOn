@@ -1,7 +1,7 @@
 /* BizOn Bật Nghiệp 2026 – Service Worker (offline app shell)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
 
-const CACHE = 'bizon-v314';
+const CACHE = 'bizon-v316';
 const SHELL = [
   './',
   './index.html',
@@ -59,6 +59,15 @@ const SHELL = [
   './assets/fonts/Manrope-var-latin.woff2',
   './assets/fonts/PlusJakartaSans-var-vietnamese.woff2',
   './assets/fonts/PlusJakartaSans-var-latin.woff2',
+  // Bản đất sét (Claymorphism): hệ thống thiết kế + phông thân Be Vietnam Pro.
+  './css/bizon-clay-fonts.css',
+  './css/bizon-clay.css',
+  './assets/fonts/BeVietnamPro-400-vietnamese.woff2',
+  './assets/fonts/BeVietnamPro-400-latin.woff2',
+  './assets/fonts/BeVietnamPro-700-vietnamese.woff2',
+  './assets/fonts/BeVietnamPro-700-latin.woff2',
+  './assets/fonts/BeVietnamPro-800-vietnamese.woff2',
+  './assets/fonts/BeVietnamPro-800-latin.woff2',
   './js/vendor/gsap.min.js',
   './js/engine.js',
   './js/core/seed-engine.js',
@@ -90,6 +99,9 @@ const SHELL = [
   './js/site-ui.js',
   './js/site-tour.js',
   './js/site-vnmap.js',
+  './js/bizon-clay-i18n.js',
+  './js/bizon-clay-nav.js',
+  './js/bizon-clay-footer.js',
   './js/quiz-bank.js',
   './manifest.webmanifest',
   './manifest-brand-passport.webmanifest',
