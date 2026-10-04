@@ -44,8 +44,8 @@ jobs:
           const classic = fs.readFileSync('classic-home.html', 'utf8');
           if (!/BizOn Bật Nghiệp – Trang chủ/.test(classic)) throw new Error('Classic homepage rollback identity is missing.');
           const index = fs.readFileSync('index.html', 'utf8');
-          for (const marker of ['id="globe"', 'data-passport', 'prefers-reduced-motion', 'aria-label']) {
-            if (!index.includes(marker)) throw new Error(`Academia homepage marker missing: ${marker}`);
+          for (const marker of ['css/bizon-clay.css', 'prefers-reduced-motion', 'data-en']) {
+            if (!index.includes(marker)) throw new Error(`Clay homepage marker missing: ${marker}`);
           }
           console.log('Homepage promotion and rollback contract passed.');
           NODE
