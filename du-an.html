@@ -1,139 +1,137 @@
 <!DOCTYPE html>
-<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
-<html lang="vi">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Danh mục Dự án – BizOn Bật Nghiệp</title>
-<meta name="description" content="Danh mục dự án của nhóm BizOn: game mô phỏng Bật Nghiệp, BizOn Go Global & IE Lab, kho âm nhạc gốc, bộ dữ liệu mở trên Zenodo và bộ quà tặng cài áo.">
-<meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
-<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
-<script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
-<script src="js/backend-config.js"></script>
-<script src="js/error-log.js"></script>
-<!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
-     nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
-<link rel="stylesheet" href="css/bizon-fonts.css">
-<style>
-  html { background:#f4faff; scroll-behavior:smooth; }
-  body { font-family:'Manrope', 'Manrope Fallback',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
-  .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
-  .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease; }
-  .clay-btn:active { transform:translateY(2px); }
-  .glass-nav { background:rgba(3,51,55,.78); backdrop-filter:blur(14px); }
-  .art-card { transition:transform .2s cubic-bezier(.34,1.56,.64,1); }
-  .art-card:hover { transform:translateY(-5px) scale(1.02); }
-  .tag { display:inline-block; font-size:10px; font-weight:800; padding:3px 10px; border-radius:9999px; background:rgba(0,102,135,.08); color:#006687; }
-  :root { --dt: 3 51 55; }
-  html[data-theme="dark"] { --dt: 214 236 240; background:#081a20; color-scheme:dark; }
-  html[data-theme="dark"] body { color:#d6ecf0; }
-  html[data-theme="dark"] .clay-card { background:#0e2a33; box-shadow:0 10px 30px -5px rgba(0,0,0,.45), inset 0 -4px 0 rgba(0,0,0,.3); }
-  html[data-theme="dark"] .glass-nav { background:rgba(2,20,24,.85); }
-  html[data-theme="dark"] .text-primary { color:#5cc4e6 !important; }
-  html[data-theme="dark"] .tag { background:rgba(92,196,230,.14); color:#5cc4e6; }
-</style>
-<link rel="stylesheet" href="css/tw.css">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="BizOn Bật Nghiệp">
-<meta property="og:locale" content="vi_VN">
-<meta property="og:title" content="Danh mục Dự án – BizOn Bật Nghiệp">
-<meta property="og:description" content="Danh mục dự án của nhóm BizOn: game mô phỏng Bật Nghiệp, BizOn Go Global & IE Lab, kho âm nhạc gốc, bộ dữ liệu mở trên Zenodo và bộ quà tặng cài áo.">
-<meta property="og:url" content="https://thuyhuongctu.github.io/BizOn/du-an.html">
-<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/og/og-cover.webp">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
 </head>
 <body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="css/bizon-clay-fonts.css">
+<style>
+body{margin:0;background:#FBF4E8;color:#033337;font-family:'Be Vietnam Pro','BVP Fallback',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#006687;text-decoration:none}
+a:hover{color:#033337}
+*{box-sizing:border-box}
+nav::-webkit-scrollbar{display:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</helmet>
+<div style="min-height:100vh;overflow-x:hidden">
 
-
-<!-- HERO -->
-<header class="pt-24 pb-8 text-white" data-net-hero style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%);position:relative;overflow:hidden">
-  <div class="max-w-5xl mx-auto px-5">
-    <p class="text-[11px] font-extrabold uppercase tracking-[.2em] text-clay-gold">Danh mục dự án</p>
-    <h1 class="font-display font-extrabold text-3xl sm:text-4xl mt-2">Biến ý tưởng thành sản phẩm thật</h1>
-    <p class="text-white/75 text-sm mt-3 max-w-2xl">Mọi thứ dưới đây đều đang chạy thật và dùng được ngay – do nhóm BizOn tự thiết kế, lập trình và sản xuất.</p>
+<header style="position:sticky;top:12px;z-index:50;max-width:1200px;margin:12px auto 0;padding:0 16px">
+  <div style="display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:14px;min-height:68px;padding:8px 10px 8px 20px;border-radius:999px;background:#FFFBF4;box-shadow:0 18px 30px -16px rgba(110,70,30,.35),inset 0 -6px 0 rgba(0,0,0,.05),inset 0 4px 0 rgba(255,255,255,.9)">
+    <a href="index.html" style="display:flex;align-items:center;gap:10px;color:#033337">
+      <span style="display:flex;align-items:center;font-family:'Be Vietnam Pro',sans-serif;font-weight:800;font-size:24px;letter-spacing:-.045em;line-height:1">Biz<span style="position:relative;display:inline-block;width:.86em;height:.72em;border:.15em solid currentColor;border-radius:50%;margin:0 .02em 0 .04em"><span style="position:absolute;right:.06em;top:50%;width:.26em;height:.26em;margin-top:-.13em;border-radius:50%;background:#FDA127"></span></span>n</span>
+    </a>
+    <nav style="justify-self:center;max-width:clamp(0px,calc((100vw - 1040px) * 999),100%);display:flex;gap:4px;padding:clamp(0px,calc((100vw - 1040px) * 999),5px);border-radius:999px;background:#F3E6CF;box-shadow:inset 0 3px 6px rgba(110,70,30,.18);overflow-x:auto;scrollbar-width:none;font-size:14px;font-weight:700;white-space:nowrap">
+      <sc-for list="{{ navLinks }}" as="l" hint-placeholder-count="7">
+        <a href="{{ l.href }}" style="flex:none;padding:8px 14px;border-radius:999px;color:{{ l.color }};background:{{ l.bg }};box-shadow:{{ l.sh }}" style-hover="color:#006687">{{ l.label }}</a>
+      </sc-for>
+    </nav>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="display:flex;padding:4px;border-radius:999px;background:#F3E6CF;box-shadow:inset 0 3px 5px rgba(110,70,30,.18);font-size:12px;font-weight:800">
+        <button onClick="{{ setVi }}" style="border:0;cursor:pointer;padding:7px 12px;border-radius:999px;font:inherit;background:{{ viBg }};color:{{ viFg }};box-shadow:{{ viSh }}">VI</button>
+        <button onClick="{{ setEn }}" style="border:0;cursor:pointer;padding:7px 12px;border-radius:999px;font:inherit;background:{{ enBg }};color:{{ enFg }};box-shadow:{{ enSh }}">EN</button>
+      </div>
+      <a href="game.html" style="white-space:nowrap;padding:11px 18px;border-radius:999px;background:#E8762D;color:#fff;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:16px;font-weight:700;box-shadow:inset 0 -5px 0 rgba(0,0,0,.16),inset 0 3px 0 rgba(255,255,255,.35),0 10px 18px -8px rgba(232,118,45,.7)" style-hover="color:#fff">{{ t.navCta }}</a>
+    </div>
   </div>
+  <nav style="margin:8px auto 0;width:fit-content;max-width:100%;max-height:clamp(0px,calc((1040px - 100vw) * 999),64px);padding:clamp(0px,calc((1040px - 100vw) * 999),5px);display:flex;gap:4px;border-radius:999px;background:#F3E6CF;box-shadow:inset 0 3px 6px rgba(110,70,30,.18),0 12px 20px -14px rgba(110,70,30,.5);overflow-x:auto;overflow-y:hidden;scrollbar-width:none;font-size:14px;font-weight:700;white-space:nowrap">
+    <sc-for list="{{ navLinks }}" as="l" hint-placeholder-count="7">
+      <a href="{{ l.href }}" style="flex:none;padding:8px 14px;border-radius:999px;color:{{ l.color }};background:{{ l.bg }};box-shadow:{{ l.sh }}" style-hover="color:#006687">{{ l.label }}</a>
+    </sc-for>
+  </nav>
 </header>
 
-<main class="max-w-5xl mx-auto px-5 py-10">
+<main style="max-width:1080px;margin:0 auto;padding:0 24px">
+<section style="position:relative;overflow:hidden;margin:28px 0 32px;padding:clamp(26px,4vw,48px);border-radius:40px;background:#FFF3DA;box-shadow:inset 0 -10px 0 rgba(140,80,20,.1),inset 0 6px 0 rgba(255,255,255,.7),0 30px 44px -30px rgba(110,70,30,.6)">
+  <div style="position:absolute;right:-8%;top:-40%;width:min(500px,58%);aspect-ratio:1;background:url(assets/brand/trong-dong.svg) center/contain no-repeat;opacity:.35;pointer-events:none"></div>
+  <div style="position:relative;max-width:max(min(40em,62%),min(100%,480px))">
+    <div style="display:inline-flex;padding:7px 14px;border-radius:999px;background:#FFFBF4;color:#7A4A0E;font-size:13px;font-weight:800;box-shadow:inset 0 -3px 0 rgba(0,0,0,.07)">{{ t.eyebrow }}</div>
+    <h1 style="margin:18px 0 0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-weight:800;font-size:clamp(38px,5.2vw,64px);line-height:1.1;letter-spacing:-.02em;text-wrap:balance">{{ t.h1 }}</h1>
+    <p style="margin:16px 0 0;font-size:17px;line-height:1.65;color:#3E5A5C;text-wrap:pretty">{{ t.lead }}</p>
+  </div>
+</section>
 
-  <section class="mb-14">
-    <div class="grid sm:grid-cols-2 gap-4">
-
-      <div class="clay-card art-card overflow-hidden block sm:col-span-2">
-        <div class="grid sm:grid-cols-2 items-center">
-          <img src="assets/character/team/lineup.webp" alt="Đội Demo Bật Nghiệp" class="w-full h-52 sm:h-full object-cover">
-          <div class="p-6">
-            <span class="tag">Sản phẩm chủ lực</span>
-            <h3 class="font-display font-extrabold text-deep-teal text-xl mt-3">🎮 BizOn Bật Nghiệp</h3>
-            <p class="text-sm text-deep-teal/60 mt-2">Game mô phỏng điều hành doanh nghiệp linh vật đất sét: 6 vòng kinh doanh, 5 vai trò, sự kiện thị trường, đấu trường đối thủ và cố vấn AI. Ứng dụng web PWA, chơi được cả khi ngoại tuyến.</p>
-            <div class="flex flex-wrap gap-2 mt-3">
-              <span class="tag">PWA</span><span class="tag">JavaScript</span><span class="tag">Song ngữ Việt–Anh</span>
-            </div>
-            <p class="flex flex-wrap gap-x-4 gap-y-1 mt-4"><a href="game.html" class="text-xs font-extrabold text-primary">Chơi ngay →</a><a href="BizOn Game 3D.html" class="text-xs font-extrabold text-primary">🧊 Bản 3D →</a></p>
-          </div>
-        </div>
-      </div>
-
-      <a href="global.html" class="clay-card art-card p-6 block relative overflow-hidden">
-        <img src="assets/illustrations/globe-trade.webp" alt="" loading="lazy" decoding="async" class="absolute -right-8 -bottom-8 h-36 w-auto opacity-80 pointer-events-none" loading="lazy">
-        <span class="tag">Khởi nghiệp quốc tế</span>
-        <h3 class="font-display font-extrabold text-deep-teal text-lg mt-3">🌍 BizOn Go Global &amp; IE Lab</h3>
-        <p class="text-sm text-deep-teal/60 mt-2">Mô phỏng đưa sản phẩm Việt ra 7 thị trường thế giới: chọn phương thức thâm nhập, đàm phán AI, quản trị ESG – kèm phòng thí nghiệm số liệu IE Lab và xuất CSV cho nghiên cứu, giảng dạy.</p>
-        <p class="text-xs font-extrabold text-primary mt-4">Khám phá →</p>
-      </a>
-
-      <a href="am-nhac.html" class="clay-card art-card p-6 block">
-        <span class="tag">Âm nhạc gốc</span>
-        <h3 class="font-display font-extrabold text-deep-teal text-lg mt-3">🎵 Kho Âm nhạc BizOn</h3>
-        <p class="text-sm text-deep-teal/60 mt-2">Tám bản thu tự sản xuất – nhạc chủ đề «Hương on Return», «Vừa Đủ Để Bay Cao» và «Hương sans frontières» bốn phiên bản Việt · Anh · giọng nam · Pháp – cùng bộ giọng lồng tiếng Lumina.</p>
-        <p class="text-xs font-extrabold text-primary mt-4">Nghe nhạc →</p>
-      </a>
-
-      <a href="https://doi.org/10.5281/zenodo.21592241" target="_blank" rel="noopener" class="clay-card art-card p-6 block">
-        <span class="tag">Khoa học mở</span>
-        <h3 class="font-display font-extrabold text-deep-teal text-lg mt-3">📦 Bộ dữ liệu mở trên Zenodo</h3>
-        <p class="text-sm text-deep-teal/60 mt-2">Toàn bộ mã nguồn và mô hình mô phỏng được lưu trữ phiên bản hóa trên Zenodo với DOI trích dẫn được: <b class="text-primary">10.5281/zenodo.21592241</b> – sẵn sàng cho trích dẫn học thuật.</p>
-        <p class="text-xs font-extrabold text-primary mt-4">Xem bản ghi DOI ↗</p>
-      </a>
-
-      <a href="thu-vien.html" class="clay-card art-card p-6 block">
-        <span class="tag">Thiết kế &amp; quà tặng</span>
-        <h3 class="font-display font-extrabold text-deep-teal text-lg mt-3">🎨 Thư viện Sáng tạo &amp; Cài áo Việt Nam</h3>
-        <p class="text-sm text-deep-teal/60 mt-2">Bộ tạo hình nhân vật claymorphism (Lumina, Tú Phan, Đội Demo 5 thành viên) và dòng quà tặng cài áo Bản đồ Việt Nam men đỏ viền vàng dành cho đội vô địch.</p>
-        <p class="text-xs font-extrabold text-primary mt-4">Xem thư viện →</p>
-      </a>
-
-      <a href="https://github.com/thuyhuongctu/BizOn" target="_blank" rel="noopener" class="clay-card art-card p-6 block">
-        <span class="tag">Mã nguồn</span>
-        <h3 class="font-display font-extrabold text-deep-teal text-lg mt-3">🧑‍💻 Kho mã trên GitHub</h3>
-        <p class="text-sm text-deep-teal/60 mt-2">Toàn bộ dự án phát triển công khai trên GitHub – từ mã nguồn game, tài liệu hướng dẫn giảng viên đến quy trình phát hành từng phiên bản.</p>
-        <p class="text-xs font-extrabold text-primary mt-4">github.com/thuyhuongctu/BizOn ↗</p>
-      </a>
-
+<section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));overflow:hidden;margin-bottom:20px;border-radius:34px;background:#FFFBF4;box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),0 28px 40px -26px rgba(110,70,30,.55)">
+  <div style="min-height:260px;background:url(assets/character/team/lineup.webp) center/cover no-repeat #BFE6EE"></div>
+  <div style="padding:clamp(22px,3vw,34px)">
+    <span style="display:inline-flex;padding:5px 12px;border-radius:999px;background:#FFD58A;font-size:12px;font-weight:800">{{ t.flagTag }}</span>
+    <h2 style="margin:12px 0 0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:28px;font-weight:800">BizOn Bật Nghiệp</h2>
+    <p style="margin:10px 0 0;font-size:15px;line-height:1.65;color:#3E5A5C">{{ t.flagP }}</p>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:14px">
+      <sc-for list="{{ t.flagChips }}" as="c" hint-placeholder-count="3"><span style="padding:4px 10px;border-radius:999px;background:#F3E6CF;font-size:12px;font-weight:700;color:#00506A">{{ c }}</span></sc-for>
     </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="clay-card p-8 text-center">
-    <h2 class="font-display font-extrabold text-deep-teal text-2xl">Muốn cùng kiến tạo dự án tiếp theo?</h2>
-    <p class="text-sm text-deep-teal/60 mt-2 max-w-xl mx-auto">Nhóm luôn chào đón giảng viên, nhà nghiên cứu và cộng tác viên sáng tạo.</p>
-    <div class="flex flex-wrap justify-center gap-3 mt-5">
-      <a href="lien-he.html" class="clay-btn bg-primary text-white font-display font-extrabold px-7 py-3.5 text-sm">✉️ Liên hệ ngay</a>
-      <a href="tuyen-dung.html" class="clay-btn bg-white text-primary border border-primary/20 font-display font-bold px-7 py-3.5 text-sm">🤝 Tham gia nhóm</a>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:18px">
+      <a href="game.html" style="padding:12px 18px;border-radius:18px;background:#E8762D;color:#fff;font:800 15px 'Plus Jakarta Sans','PJS Fallback',sans-serif;box-shadow:inset 0 -5px 0 rgba(0,0,0,.16)" style-hover="color:#fff">{{ t.playNow }}</a>
+      <a href="BizOn%20Game%203D.html" style="padding:12px 16px;border-radius:18px;background:#F3E6CF;color:#033337;font:700 15px 'Plus Jakarta Sans','PJS Fallback',sans-serif;box-shadow:inset 0 -4px 0 rgba(110,70,30,.12)">{{ t.v3d }}</a>
     </div>
-  </section>
+  </div>
+</section>
 
+<section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px;margin-bottom:56px">
+  <sc-for list="{{ projects }}" as="p" hint-placeholder-count="5">
+    <a href="{{ p.href }}" style="position:relative;overflow:hidden;display:flex;flex-direction:column;padding:24px;border-radius:30px;background:{{ p.bg }};color:#033337;box-shadow:inset 0 -9px 0 rgba(0,0,0,.07),inset 0 5px 0 rgba(255,255,255,.55),0 24px 34px -24px rgba(110,70,30,.55);transition:transform .2s cubic-bezier(.34,1.56,.64,1)" style-hover="transform:translateY(-5px);color:#033337">
+      <span style="align-self:flex-start;padding:5px 11px;border-radius:999px;background:#FFFBF4;font-size:12px;font-weight:800;color:#7A4A0E;box-shadow:inset 0 -2px 0 rgba(0,0,0,.06)">{{ p.tag }}</span>
+      <h3 style="margin:14px 0 0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:21px;font-weight:800">{{ p.h }}</h3>
+      <p style="margin:8px 0 18px;font-size:14px;line-height:1.6;color:#24403F">{{ p.p }}</p>
+      <span style="margin-top:auto;font-size:13px;font-weight:800;color:#00506A;overflow-wrap:anywhere">{{ p.cta }}</span>
+    </a>
+  </sc-for>
+</section>
+
+<section style="margin-bottom:72px;padding:clamp(26px,4vw,40px);border-radius:36px;background:#033337;color:#fff;text-align:center;box-shadow:inset 0 -10px 0 rgba(0,0,0,.25),0 30px 44px -30px rgba(3,51,55,.8)">
+  <h2 style="margin:0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:clamp(26px,3.2vw,38px);font-weight:800">{{ t.ctaH }}</h2>
+  <p style="margin:10px auto 0;max-width:30em;font-size:16px;color:#BFE6EE">{{ t.ctaP }}</p>
+  <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:22px">
+    <a href="lien-he.html" style="padding:14px 22px;border-radius:20px;background:#FDA127;color:#033337;font:800 16px 'Plus Jakarta Sans','PJS Fallback',sans-serif;box-shadow:inset 0 -5px 0 rgba(0,0,0,.16)" style-hover="color:#033337">{{ t.ctaC }}</a>
+    <a href="tuyen-dung.html" style="padding:14px 20px;border-radius:20px;background:#0B4A4F;color:#FFD58A;font:700 16px 'Plus Jakarta Sans','PJS Fallback',sans-serif;box-shadow:inset 0 -4px 0 rgba(0,0,0,.25)">{{ t.ctaJ }}</a>
+  </div>
+</section>
 </main>
-<script src="js/site-nethero.js" defer></script>
-<script src="js/site-ui.js" defer></script>
-<script src="js/site-vnmap.js" defer></script>
 
-<p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2" style="color:rgba(100,116,125,.85)">✉️ Liên hệ · Contact: <a href="mailto:patu@ctu.edu.vn" style="color:inherit;text-decoration:underline">patu@ctu.edu.vn</a> · <a href="mailto:thuyhuongctu@gmail.com" style="color:inherit;text-decoration:underline">thuyhuongctu@gmail.com</a></p>
-<p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2 pb-6" style="color:rgba(100,116,125,.75)">🎓 Trang web chỉ phục vụ mục đích giáo dục và nghiên cứu, không đại diện cho bất kỳ tổ chức chính trị nào. Hình ảnh quốc kỳ, bản đồ chỉ mang ý nghĩa minh họa văn hóa – giáo dục. · This website serves educational and research purposes only and does not represent any political organization.</p>
-<script src="js/site-dock.js" defer></script>
-<script src="js/site-footer.js" defer></script>
-<script src="js/site-nav.js" defer></script>
+<footer style="background:#033337;color:#9CC9C9">
+  <div style="height:30px;background:radial-gradient(circle at 30px 0,#FBF4E8 29px,transparent 30px) 0 0/60px 30px repeat-x"></div>
+  <div style="max-width:1080px;margin:0 auto;padding:28px 24px 40px;display:flex;flex-direction:column;gap:10px;font-size:13px;line-height:1.6">
+    <div>© 2026 Đỗ Thùy Hương & PGS.TS. Phan Anh Tú – BizOn Bật Nghiệp</div>
+    <a href="https://play.google.com/store/apps/details?id=io.github.thuyhuongctu.bizon" style="align-self:flex-start;padding:8px 14px;border-radius:999px;background:#0B4A4F;color:#FFD58A;font-weight:800;box-shadow:inset 0 -3px 0 rgba(0,0,0,.25)">▶ {{ t.gp }}</a>
+    <div style="display:flex;flex-wrap:wrap;gap:16px"><a href="chinh-sach.html" style="color:#FFD58A">Privacy</a><a href="tuyen-dung.html" style="color:#FFD58A">Jobs</a><a href="lien-he.html" style="color:#FFD58A">Contact</a></div>
+    <div style="font-size:12px;color:#7FA9AA">{{ t.disclaimer }}</div>
+  </div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;vi&quot;,&quot;en&quot;],&quot;default&quot;:&quot;vi&quot;,&quot;tsType&quot;:&quot;'vi'|'en'&quot;}}">
+const NAV7=[["Vũ trụ","Universe","universe.html"],["Trò chơi","Games","games.html"],["Lớp học","Classroom","lop-hoc.html"],["Học thuật","Academic","truong-hoc-thuat.html"],["Bằng chứng","Evidence","bang-chung.html"],["Pilot","Pilot","giai-phap.html"],["Đội ngũ","About","doi-ngu.html"]];
+const NAVX7=(lang,me)=>NAV7.map(([vi,en,href])=>{const on=href===me;return{label:lang==='en'?en:vi,href:on?'#':href,color:on?'#006687':'#3E5A5C',bg:on?'#FFFBF4':'transparent',sh:on?'0 4px 8px -4px rgba(110,70,30,.5),inset 0 -3px 0 rgba(110,70,30,.12)':'none'}});
+const HREF=['global.html','am-nhac.html','https://doi.org/10.5281/zenodo.21592241','thu-vien.html','https://github.com/thuyhuongctu/BizOn'];
+const BG=['#BFE6EE','#F4B6C2','#A9DCC4','#FFE3A8','#E6D3F0'];
+const T={
+vi:{gp:'Tải trên Google Play',navCta:'Bắt đầu',eyebrow:'Danh mục dự án',h1:'Biến ý tưởng thành sản phẩm thật',lead:'Mọi thứ dưới đây đều đang chạy thật và dùng được ngay – do nhóm BizOn tự thiết kế, lập trình và sản xuất.',
+flagTag:'Sản phẩm chủ lực',flagP:'Game mô phỏng điều hành doanh nghiệp linh vật đất sét: 6 vòng kinh doanh, 5 vai trò, sự kiện thị trường, đấu trường đối thủ và cố vấn AI. Ứng dụng web PWA, chơi được cả khi ngoại tuyến.',flagChips:['PWA','JavaScript','Song ngữ Việt–Anh'],playNow:'Chơi ngay →',v3d:'Bản 3D →',
+p:[['Khởi nghiệp quốc tế','BizOn Go Global & IE Lab','Mô phỏng đưa sản phẩm Việt ra 7 thị trường thế giới: chọn phương thức thâm nhập, đàm phán AI, quản trị ESG – kèm phòng thí nghiệm số liệu IE Lab và xuất CSV cho nghiên cứu, giảng dạy.','Khám phá →'],['Âm nhạc gốc','Kho Âm nhạc BizOn','Tám bản thu tự sản xuất – nhạc chủ đề «Hương on Return», «Vừa Đủ Để Bay Cao» và «Hương sans frontières» bốn phiên bản Việt · Anh · giọng nam · Pháp – cùng bộ giọng lồng tiếng Lumina.','Nghe nhạc →'],['Khoa học mở','Bộ dữ liệu mở trên Zenodo','Toàn bộ mã nguồn và mô hình mô phỏng được lưu trữ phiên bản hóa trên Zenodo với DOI trích dẫn được: 10.5281/zenodo.21592241 – sẵn sàng cho trích dẫn học thuật.','Xem bản ghi DOI ↗'],['Thiết kế & quà tặng','Thư viện Sáng tạo & Cài áo Việt Nam','Bộ tạo hình nhân vật claymorphism (Lumina, Tú Phan, Đội Demo 5 thành viên) và dòng quà tặng cài áo Bản đồ Việt Nam men đỏ viền vàng dành cho đội vô địch.','Xem thư viện →'],['Mã nguồn','Kho mã trên GitHub','Toàn bộ dự án phát triển công khai trên GitHub – từ mã nguồn game, tài liệu hướng dẫn giảng viên đến quy trình phát hành từng phiên bản.','github.com/thuyhuongctu/BizOn ↗']],
+ctaH:'Muốn cùng kiến tạo dự án tiếp theo?',ctaP:'Nhóm luôn chào đón giảng viên, nhà nghiên cứu và cộng tác viên sáng tạo.',ctaC:'Liên hệ ngay',ctaJ:'Tham gia nhóm',
+disclaimer:'Trang web chỉ phục vụ mục đích giáo dục và nghiên cứu, không đại diện cho bất kỳ tổ chức chính trị nào. Hình ảnh quốc kỳ, bản đồ chỉ mang ý nghĩa minh họa văn hóa – giáo dục.'},
+en:{gp:'Get it on Google Play',navCta:'Launch',eyebrow:'Project portfolio',h1:'Turning ideas into real products',lead:'Everything below is live and ready to use – designed, coded and produced by the BizOn team.',
+flagTag:'Flagship product',flagP:'A management simulation built around clay mascot companies: 6 business rounds, 5 roles, market events, a rival arena and an AI mentor. A PWA web app that also plays offline.',flagChips:['PWA','JavaScript','Vietnamese–English'],playNow:'Play now →',v3d:'3D version →',
+p:[['International entrepreneurship','BizOn Go Global & IE Lab','A simulation taking Vietnamese products to 7 world markets: choose an entry mode, negotiate with AI, manage ESG – plus the IE Lab data lab with CSV export for research and teaching.','Explore →'],['Original music','BizOn Music Library','Eight in-house recordings – theme songs «Hương on Return», «Vừa Đủ Để Bay Cao» and «Hương sans frontières» in four versions (Vietnamese · English · male voice · French) – plus Lumina\'s voice set.','Listen →'],['Open science','Open dataset on Zenodo','All source code and simulation models are versioned on Zenodo with a citable DOI: 10.5281/zenodo.21592241 – ready for academic citation.','View DOI record ↗'],['Design & gifts','Creative Library & Vietnam pins','The claymorphism character set (Lumina, Tú Phan, the 5-member Demo Team) and the red-enamel, gold-rimmed Vietnam map pin awarded to winning teams.','Open the library →'],['Source code','Repository on GitHub','The whole project is developed in the open on GitHub – from game code and instructor guides to the release process for every version.','github.com/thuyhuongctu/BizOn ↗']],
+ctaH:'Want to build the next project with us?',ctaP:'We welcome instructors, researchers and creative collaborators.',ctaC:'Get in touch',ctaJ:'Join the team',
+disclaimer:'This website serves educational and research purposes only and does not represent any political organization. Flag and map images are cultural and educational illustrations only.'}};
+class Component extends DCLogic{
+  state={lang:null};
+  renderVals(){
+    const lang=this.state.lang||this.props.lang||'vi';const t=T[lang];
+    const on='inset 0 -3px 0 rgba(0,0,0,.2),0 4px 8px -3px rgba(0,60,80,.5)';
+    return{t,
+      setVi:()=>this.setState({lang:'vi'}),setEn:()=>this.setState({lang:'en'}),
+      viBg:lang==='vi'?'#006687':'transparent',viFg:lang==='vi'?'#fff':'#3E5A5C',viSh:lang==='vi'?on:'none',
+      enBg:lang==='en'?'#006687':'transparent',enFg:lang==='en'?'#fff':'#3E5A5C',enSh:lang==='en'?on:'none',
+      navLinks:NAVX7(lang,''),
+      projects:t.p.map(([tag,h,p,cta],i)=>({tag,h,p,cta,href:HREF[i],bg:BG[i]}))};
+  }
+}
+</script>
 </body>
 </html>
