@@ -1,126 +1,76 @@
 <!DOCTYPE html>
-<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
+<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & PGS.TS. Phan Anh Tú -->
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Tham gia nhóm – BizOn Bật Nghiệp</title>
-<meta name="description" content="Gia nhập nhóm khởi nghiệp BizOn: văn hóa làm việc, các vị trí cộng tác đang mở – lập trình web, họa sĩ claymorphism, sản xuất âm nhạc, giảng viên thử nghiệm và dịch thuật.">
-<meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
+<title>Tham gia nhóm · BizOn Bật Nghiệp</title>
+<meta name="description" content="Tuyển cộng tác viên BizOn – lập trình web, họa sĩ claymorphism 3D, sản xuất âm nhạc, giảng viên thử nghiệm, dịch thuật & bản địa hóa.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & PGS.TS. Phan Anh Tú">
 <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
-<script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
-<script src="js/backend-config.js"></script>
-<script src="js/error-log.js"></script>
-<!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
-     nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
-<link rel="stylesheet" href="css/bizon-fonts.css">
+<link rel="stylesheet" href="css/bizon-clay-fonts.css">
+<link rel="stylesheet" href="css/bizon-clay.css">
 <style>
-  html { background:#f4faff; scroll-behavior:smooth; }
-  body { font-family:'Manrope', 'Manrope Fallback',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
-  .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
-  .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease; }
-  .clay-btn:active { transform:translateY(2px); }
-  .glass-nav { background:rgba(3,51,55,.78); backdrop-filter:blur(14px); }
-  .art-card { transition:transform .2s cubic-bezier(.34,1.56,.64,1); }
-  .art-card:hover { transform:translateY(-5px) scale(1.02); }
-  .tag { display:inline-block; font-size:10px; font-weight:800; padding:3px 10px; border-radius:9999px; background:rgba(0,102,135,.08); color:#006687; }
-  :root { --dt: 3 51 55; }
-  html[data-theme="dark"] { --dt: 214 236 240; background:#081a20; color-scheme:dark; }
-  html[data-theme="dark"] body { color:#d6ecf0; }
-  html[data-theme="dark"] .clay-card { background:#0e2a33; box-shadow:0 10px 30px -5px rgba(0,0,0,.45), inset 0 -4px 0 rgba(0,0,0,.3); }
-  html[data-theme="dark"] .glass-nav { background:rgba(2,20,24,.85); }
-  html[data-theme="dark"] .text-primary { color:#5cc4e6 !important; }
-  html[data-theme="dark"] .tag { background:rgba(92,196,230,.14); color:#5cc4e6; }
+  .td-values{margin-bottom:28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:16px}
+  .td-value{padding:22px;border-radius:28px;box-shadow:inset 0 -8px 0 rgba(0,0,0,.07),inset 0 5px 0 rgba(255,255,255,.5),0 20px 28px -22px rgba(110,70,30,.55)}
+  .td-roles{margin-bottom:28px;display:flex;flex-direction:column;gap:12px}
+  .td-role{padding:20px 22px;border-radius:24px;background:var(--clay-tray);box-shadow:inset 0 -6px 0 rgba(110,70,30,.1)}
+  .td-role .top{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .td-cta{margin-bottom:72px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
 </style>
-<link rel="stylesheet" href="css/tw.css">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="BizOn Bật Nghiệp">
-<meta property="og:locale" content="vi_VN">
-<meta property="og:title" content="Tham gia nhóm – BizOn Bật Nghiệp">
-<meta property="og:description" content="Gia nhập nhóm khởi nghiệp BizOn: văn hóa làm việc, các vị trí cộng tác đang mở – lập trình web, họa sĩ claymorphism, sản xuất âm nhạc, giảng viên thử nghiệm và dịch thuật.">
-<meta property="og:url" content="https://thuyhuongctu.github.io/BizOn/tuyen-dung.html">
-<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/og/og-cover.webp">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
+<meta property="og:title" content="Tham gia nhóm · BizOn Bật Nghiệp">
+<meta property="og:description" content="Tuyển cộng tác viên BizOn – cộng tác theo dự án, làm việc từ xa.">
 <meta name="twitter:card" content="summary_large_image">
 </head>
-<body>
+<body class="clay">
 
+<main class="clay-main">
+  <section class="clay-hero">
+    <div class="sun" aria-hidden="true"></div>
+    <div class="grid">
+      <div class="htext">
+        <span class="clay-eyebrow" data-en="Collaborators wanted">Tuyển cộng tác viên</span>
+        <h1 data-en="Shape the future with BizOn">Cùng nhào nặn tương lai với BizOn</h1>
+        <p class="lead" data-en="BizOn is a small education start-up working flexibly and remotely. We are looking for companions who love education, games and clay art – project-based collaboration, a good fit for student capstone projects too.">BizOn là nhóm khởi nghiệp giáo dục quy mô nhỏ, làm việc linh hoạt từ xa. Chúng tôi tìm những người bạn đồng hành yêu giáo dục, game và nghệ thuật đất nặn – cộng tác theo dự án, phù hợp cả sinh viên làm đồ án.</p>
+      </div>
+      <div class="art tall"><img src="assets/character/advisors/lumina-y-tuong-cut.webp" alt="" loading="lazy" style="object-position:50% 100%"></div>
+    </div>
+    <div class="wave" aria-hidden="true"></div>
+  </section>
 
-<!-- HERO -->
-<header class="pt-24 pb-10 text-white" data-net-hero style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%);position:relative;overflow:hidden">
-  <div class="max-w-5xl mx-auto px-5">
-    <p class="text-[11px] font-extrabold uppercase tracking-[.2em] text-clay-gold">Tuyển cộng tác viên</p>
-    <h1 class="font-display font-extrabold text-3xl sm:text-4xl mt-2">Cùng nhào nặn tương lai với BizOn</h1>
-    <p class="text-white/75 text-sm mt-3 max-w-2xl">BizOn là nhóm khởi nghiệp giáo dục quy mô nhỏ, làm việc linh hoạt từ xa. Chúng tôi tìm những người bạn đồng hành yêu giáo dục, game và nghệ thuật đất nặn – cộng tác theo dự án, phù hợp cả sinh viên làm đồ án.</p>
-  </div>
-</header>
+  <h2 style="font-size:28px;margin-bottom:14px" data-en="Our three values">Ba giá trị của nhóm</h2>
+  <section class="td-values">
+    <div class="td-value" style="background:var(--clay-c1)"><div style="font-family:var(--clay-head);font-size:21px;font-weight:800;line-height:1.2" data-en="Clay in hand">Đất sét trong tay</div><p style="margin:8px 0 0;font-size:14px;line-height:1.6;color:var(--clay-ink-2)" data-en="Every idea can be remoulded from scratch. If it is wrong, squash it and shape again – fast experiments matter more than instant perfection.">Mọi ý tưởng đều nặn được lại từ đầu. Sai thì bóp lại, nặn tiếp – thử nghiệm nhanh quan trọng hơn hoàn hảo ngay.</p></div>
+    <div class="td-value" style="background:var(--clay-c2)"><div style="font-family:var(--clay-head);font-size:21px;font-weight:800;line-height:1.2" data-en="Real numbers">Số liệu thật</div><p style="margin:8px 0 0;font-size:14px;line-height:1.6;color:var(--clay-ink-2)" data-en="The games are fun but the models behind them are serious: quantitative simulation, open data, reproducible results.">Trò chơi vui nhưng mô hình phía sau nghiêm túc: mô phỏng định lượng, dữ liệu mở, kết quả tái lập được.</p></div>
+    <div class="td-value" style="background:var(--clay-c3)"><div style="font-family:var(--clay-head);font-size:21px;font-weight:800;line-height:1.2" data-en="Education first">Giáo dục trước tiên</div><p style="margin:8px 0 0;font-size:14px;line-height:1.6;color:var(--clay-ink-2)" data-en="Learners come first. Every feature must answer: «How does this help students understand better?»">Người học là trung tâm. Mỗi tính năng phải trả lời được: «Điều này giúp sinh viên hiểu bài hơn thế nào?»</p></div>
+  </section>
 
-<main class="max-w-5xl mx-auto px-5 py-10">
-
-  <!-- VĂN HÓA -->
-  <section class="mb-14">
-    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-5">🧬 Ba giá trị của nhóm</h2>
-    <div class="grid sm:grid-cols-3 gap-4">
-      <div class="clay-card p-6"><p class="text-3xl">🏺</p><h3 class="font-display font-extrabold text-deep-teal text-base mt-3">Đất sét trong tay</h3><p class="text-sm text-deep-teal/60 mt-2">Mọi ý tưởng đều nặn được lại từ đầu. Sai thì bóp lại, nặn tiếp – thử nghiệm nhanh quan trọng hơn hoàn hảo ngay.</p></div>
-      <div class="clay-card p-6"><p class="text-3xl">📊</p><h3 class="font-display font-extrabold text-deep-teal text-base mt-3">Số liệu thật</h3><p class="text-sm text-deep-teal/60 mt-2">Trò chơi vui nhưng mô hình phía sau nghiêm túc: mô phỏng định lượng, dữ liệu mở, kết quả tái lập được.</p></div>
-      <div class="clay-card p-6"><p class="text-3xl">🎓</p><h3 class="font-display font-extrabold text-deep-teal text-base mt-3">Giáo dục trước tiên</h3><p class="text-sm text-deep-teal/60 mt-2">Người học là trung tâm. Mỗi tính năng phải trả lời được: «Điều này giúp sinh viên hiểu bài hơn thế nào?»</p></div>
+  <section class="clay-card" style="margin-bottom:28px">
+    <h2 style="font-size:28px" data-en="Open collaboration roles">Vị trí cộng tác đang mở</h2>
+    <p style="margin:8px 0 20px;font-size:15px;line-height:1.6;color:var(--clay-sub)" data-en="These are project-based collaborations (not full-time jobs). Please name the role you are interested in when you get in touch!">Các vị trí dưới đây là cộng tác theo dự án (không phải việc làm toàn thời gian). Ghi rõ vị trí quan tâm khi liên hệ nhé!</p>
+    <div class="td-roles">
+      <div class="td-role"><div class="top"><strong style="font-size:17px" data-en="Web developer (JavaScript)">Lập trình web (JavaScript)</strong><span class="clay-chip" style="background:var(--clay-c5);color:var(--clay-teal)" data-en="Remote">Từ xa</span></div><p style="margin:8px 0 0;font-size:14px;line-height:1.6;color:var(--clay-ink-2)" data-en="Build game features and polish the PWA and mobile experience. Tailwind or canvas experience is a plus.">Phát triển tính năng game, tối ưu PWA và trải nghiệm di động. Biết Tailwind hoặc canvas là điểm cộng.</p></div>
+      <div class="td-role"><div class="top"><strong style="font-size:17px" data-en="3D claymorphism artist">Họa sĩ claymorphism 3D</strong><span class="clay-chip" style="background:var(--clay-c5);color:var(--clay-teal)" data-en="Remote">Từ xa</span></div><p style="margin:8px 0 0;font-size:14px;line-height:1.6;color:var(--clay-ink-2)" data-en="Model clay characters and scenes – we especially need 3 human characters for the rival companies in the arena.">Tạo hình nhân vật và bối cảnh đất nặn – đặc biệt đang cần 3 tạo hình con người cho các công ty đối thủ trong đấu trường.</p></div>
+      <div class="td-role"><div class="top"><strong style="font-size:17px" data-en="Music production">Sản xuất âm nhạc</strong><span class="clay-chip" style="background:var(--clay-c5);color:var(--clay-teal)" data-en="Remote">Từ xa</span></div><p style="margin:8px 0 0;font-size:14px;line-height:1.6;color:var(--clay-ink-2)" data-en="Record and mix for the BizOn music library – next up is a vocal recording of the song «Bật Nghiệp», waiting for a singer.">Thu âm và hòa âm cho kho nhạc BizOn – gần nhất là bản thu có lời cho ca khúc «Bật Nghiệp» đang chờ giọng hát.</p></div>
+      <div class="td-role"><div class="top"><strong style="font-size:17px" data-en="Pilot instructor">Giảng viên thử nghiệm</strong><span class="clay-chip" style="background:var(--clay-c4);color:#123B2E" data-en="Flexible">Linh hoạt</span></div><p style="margin:8px 0 0;font-size:14px;line-height:1.6;color:var(--clay-ink-2)" data-en="Bring BizOn into a real class session and record timing and student feedback so the team can tune the game.">Đưa BizOn vào một buổi học thật, ghi nhận thời lượng và phản hồi của sinh viên để nhóm hiệu chỉnh trò chơi.</p></div>
+      <div class="td-role"><div class="top"><strong style="font-size:17px" data-en="Translation & localisation">Dịch thuật &amp; bản địa hóa</strong><span class="clay-chip" style="background:var(--clay-c5);color:var(--clay-teal)" data-en="Remote">Từ xa</span></div><p style="margin:8px 0 0;font-size:14px;line-height:1.6;color:var(--clay-ink-2)" data-en="Polish the English version and expand to new languages – French first (the song «Je m'appelle Hương et le Monde» has paved the way!).">Hoàn thiện bản tiếng Anh và mở rộng sang ngôn ngữ mới – ưu tiên tiếng Pháp (đã có ca khúc «Je m'appelle Hương et le Monde» mở đường!).</p></div>
     </div>
   </section>
 
-  <!-- VỊ TRÍ -->
-  <section class="mb-14">
-    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">📌 Vị trí cộng tác đang mở</h2>
-    <p class="text-sm text-deep-teal/55 mb-5">Các vị trí dưới đây là cộng tác theo dự án (không phải việc làm toàn thời gian). Ghi rõ vị trí quan tâm khi liên hệ nhé!</p>
-    <div class="grid sm:grid-cols-2 gap-4">
-      <div class="clay-card art-card p-6">
-        <div class="flex items-start justify-between gap-3"><p class="text-3xl">🧑‍💻</p><span class="tag">Từ xa</span></div>
-        <h3 class="font-display font-extrabold text-deep-teal text-base mt-3">Lập trình web (JavaScript)</h3>
-        <p class="text-sm text-deep-teal/60 mt-2">Phát triển tính năng game, tối ưu PWA và trải nghiệm di động. Biết Tailwind hoặc canvas là điểm cộng.</p>
-      </div>
-      <div class="clay-card art-card p-6">
-        <div class="flex items-start justify-between gap-3"><p class="text-3xl">🎨</p><span class="tag">Từ xa</span></div>
-        <h3 class="font-display font-extrabold text-deep-teal text-base mt-3">Họa sĩ claymorphism 3D</h3>
-        <p class="text-sm text-deep-teal/60 mt-2">Tạo hình nhân vật và bối cảnh đất nặn – đặc biệt đang cần 3 tạo hình con người cho các công ty đối thủ trong đấu trường.</p>
-      </div>
-      <div class="clay-card art-card p-6">
-        <div class="flex items-start justify-between gap-3"><p class="text-3xl">🎼</p><span class="tag">Từ xa</span></div>
-        <h3 class="font-display font-extrabold text-deep-teal text-base mt-3">Sản xuất âm nhạc</h3>
-        <p class="text-sm text-deep-teal/60 mt-2">Thu âm và hòa âm cho kho nhạc BizOn – gần nhất là bản thu có lời cho ca khúc «Bật Nghiệp» đang chờ giọng hát.</p>
-      </div>
-      <div class="clay-card art-card p-6">
-        <div class="flex items-start justify-between gap-3"><p class="text-3xl">🏫</p><span class="tag">Linh hoạt</span></div>
-        <h3 class="font-display font-extrabold text-deep-teal text-base mt-3">Giảng viên thử nghiệm</h3>
-        <p class="text-sm text-deep-teal/60 mt-2">Đưa BizOn vào một buổi học thật, ghi nhận thời lượng và phản hồi của sinh viên để nhóm hiệu chỉnh trò chơi.</p>
-      </div>
-      <div class="clay-card art-card p-6 sm:col-span-2">
-        <div class="flex items-start justify-between gap-3"><p class="text-3xl">🌐</p><span class="tag">Từ xa</span></div>
-        <h3 class="font-display font-extrabold text-deep-teal text-base mt-3">Dịch thuật &amp; bản địa hóa</h3>
-        <p class="text-sm text-deep-teal/60 mt-2">Hoàn thiện bản tiếng Anh và mở rộng sang ngôn ngữ mới – ưu tiên tiếng Pháp (đã có ca khúc «Je m'appelle Hương et le Monde» mở đường!).</p>
-      </div>
+  <section class="clay-card" style="margin-bottom:28px;text-align:center">
+    <h2 style="font-size:26px" data-en="Ready to make your mark?">Sẵn sàng tạo dấu ấn của bạn?</h2>
+    <p style="margin:10px auto 20px;max-width:46em;font-size:15px;line-height:1.65;color:var(--clay-sub)" data-en="Send a short email about yourself and anything you have made (if any) – the team will reply as soon as possible.">Gửi email giới thiệu ngắn về bản thân và sản phẩm bạn từng làm (nếu có) – nhóm sẽ phản hồi sớm nhất có thể.</p>
+    <div class="td-cta">
+      <a class="clay-btn clay-btn-pill" style="background:var(--clay-gold);color:var(--clay-ink);box-shadow:var(--clay-btn-shadow)" href="mailto:patu@ctu.edu.vn,thuyhuongctu@gmail.com?subject=Tham%20gia%20nh%C3%B3m%20BizOn" data-en="Email the team">Gửi email cho nhóm</a>
+      <a class="clay-btn clay-btn-pill" style="background:var(--clay-card);color:var(--clay-ink);box-shadow:inset 0 -5px 0 rgba(110,70,30,.15),inset 0 3px 0 #fff" href="doi-ngu.html" data-en="Meet the current team">Gặp đội ngũ hiện tại</a>
     </div>
   </section>
-
-  <!-- CTA -->
-  <section class="clay-card p-8 text-center">
-    <img src="assets/character/team/lineup.webp" alt="Đội Demo Bật Nghiệp" class="w-full max-w-xl mx-auto rounded-2xl mb-5" loading="lazy">
-    <h2 class="font-display font-extrabold text-deep-teal text-2xl">Sẵn sàng tạo dấu ấn của bạn?</h2>
-    <p class="text-sm text-deep-teal/60 mt-2 max-w-xl mx-auto">Gửi email giới thiệu ngắn về bản thân và sản phẩm bạn từng làm (nếu có) – nhóm sẽ phản hồi sớm nhất có thể.</p>
-    <div class="flex flex-wrap justify-center gap-3 mt-5">
-      <a href="mailto:patu@ctu.edu.vn,thuyhuongctu@gmail.com?subject=Tham%20gia%20nh%C3%B3m%20BizOn" class="clay-btn bg-primary text-white font-display font-extrabold px-7 py-3.5 text-sm">✉️ Gửi email cho nhóm</a>
-      <a href="doi-ngu.html" class="clay-btn bg-white text-primary border border-primary/20 font-display font-bold px-7 py-3.5 text-sm">👥 Gặp đội ngũ hiện tại</a>
-    </div>
-  </section>
-
 </main>
-<script src="js/site-nethero.js" defer></script>
-<script src="js/site-ui.js" defer></script>
-<script src="js/site-vnmap.js" defer></script>
 
-<p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2" style="color:rgba(100,116,125,.85)">✉️ Liên hệ · Contact: <a href="mailto:patu@ctu.edu.vn" style="color:inherit;text-decoration:underline">patu@ctu.edu.vn</a> · <a href="mailto:thuyhuongctu@gmail.com" style="color:inherit;text-decoration:underline">thuyhuongctu@gmail.com</a></p>
-<p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2 pb-6" style="color:rgba(100,116,125,.75)">🎓 Trang web chỉ phục vụ mục đích giáo dục và nghiên cứu, không đại diện cho bất kỳ tổ chức chính trị nào. Hình ảnh quốc kỳ, bản đồ chỉ mang ý nghĩa minh họa văn hóa – giáo dục. · This website serves educational and research purposes only and does not represent any political organization.</p>
-<script src="js/site-dock.js" defer></script>
-<script src="js/site-footer.js" defer></script>
-<script src="js/site-nav.js" defer></script>
+<script src="js/site-vnmap.js" defer></script>
+<script src="js/bizon-clay-i18n.js" defer></script>
+<script src="js/bizon-clay-nav.js" defer></script>
+<script src="js/bizon-clay-footer.js" defer></script>
 </body>
 </html>

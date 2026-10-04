@@ -14,7 +14,7 @@ assert.match(policy, /Supabase/);
 assert.match(policy, /Internet access only|quyền Internet/i);
 assert.match(policy, /patu@ctu\.edu\.vn/);
 assert.match(policy, /thuyhuongctu@gmail\.com/);
-assert.match(policy, /24\/09\/2026|September 24, 2026/);
+assert.match(policy, /30\/09\/2026|September 30, 2026/);
 assert.match(policy, /user-agent|chẩn đoán|diagnostic|crash log/i);
 assert.match(policy, /12 tháng|12 months/i);
 assert.match(policy, /90 ngày|90 days/i);

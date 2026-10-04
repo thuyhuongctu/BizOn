@@ -1,151 +1,118 @@
 <!DOCTYPE html>
-<!-- BizOn 2026 – © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
+<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & PGS.TS. Phan Anh Tú -->
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Chính sách Quyền riêng tư · Privacy Policy — BizOn</title>
-<link rel="canonical" href="https://thuyhuongctu.github.io/BizOn/truong-chinh-sach.html">
-<meta name="description" content="BizOn là nền tảng local-first. Dữ liệu trò chơi mặc định lưu trên thiết bị; dữ liệu lớp học chỉ được gửi khi người dùng chủ động sử dụng chức năng nộp kết quả.">
-<meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
-<meta name="theme-color" content="#033337">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Chính sách Quyền riêng tư · BizOn Bật Nghiệp</title>
+<meta name="description" content="Chính sách quyền riêng tư BizOn (Web, PWA & Android): local-first, dữ liệu lớp học tùy chọn, lưu giữ và xóa tài khoản/dữ liệu.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & PGS.TS. Phan Anh Tú">
 <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
-<link rel="stylesheet" href="css/bizon-fonts.css">
-<link rel="stylesheet" href="css/tw.css">
-<script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<link rel="stylesheet" href="css/bizon-clay-fonts.css">
+<link rel="stylesheet" href="css/bizon-clay.css">
 <style>
-:root{--ink:#033337;--muted:#587077;--line:rgba(3,51,55,.14);--paper:#fff;--bg:#f4faff;--teal:#006687;--gold:#d8a62e}
-*{box-sizing:border-box}html{background:var(--bg);scroll-behavior:smooth}body{margin:0;font-family:'Manrope','Manrope Fallback',system-ui,sans-serif;color:var(--ink);background:transparent}.policy-card{background:var(--paper);border:1px solid var(--line);border-radius:24px;box-shadow:0 12px 36px rgba(0,102,135,.08)}.policy-card h2{margin:1.55rem 0 .5rem;font-family:'Plus Jakarta Sans','Plus Jakarta Sans Fallback',system-ui,sans-serif;font-size:1.05rem;font-weight:800}.policy-card h2:first-of-type{margin-top:.8rem}.policy-card p,.policy-card li{font-size:.875rem;line-height:1.72;color:var(--muted)}.policy-card ul{padding-left:1.25rem}.policy-card a{color:var(--teal);font-weight:750;text-decoration:underline}.mode-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:1rem 0}.mode{padding:14px;border:1px solid var(--line);border-radius:16px;background:#f8fcfd}.mode strong{display:block;color:var(--ink);font-size:.82rem}.mode span{display:block;margin-top:4px;color:var(--muted);font-size:.74rem;line-height:1.5}.notice{padding:13px 14px;border-left:4px solid var(--gold);border-radius:10px;background:#fffaf0;color:#68501b;font-size:.78rem;line-height:1.6}.glass-nav{background:rgba(3,51,55,.88);backdrop-filter:blur(14px)}html[data-theme="dark"]{--ink:#d6ecf0;--muted:#adc8ce;--line:rgba(214,236,240,.16);--paper:#0e2a33;--bg:#081a20;color-scheme:dark}html[data-theme="dark"] .mode{background:#0a222a}html[data-theme="dark"] .notice{background:#2c2515;color:#ecd58f}@media(max-width:640px){.mode-grid{grid-template-columns:1fr}}
+  .cs-modes{margin-bottom:28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
+  .cs-mode{padding:22px;border-radius:28px;box-shadow:inset 0 -8px 0 rgba(0,0,0,.07),inset 0 5px 0 rgba(255,255,255,.5),0 20px 28px -22px rgba(110,70,30,.55)}
+  .cs-sec{padding:18px 0;border-top:2px dashed #F0E2C8;scroll-margin-top:96px}
+  .cs-sec:first-child{border-top:0}
+  .cs-sec h2{font-size:21px;line-height:1.2}
+  .cs-sec p{margin:8px 0 0;font-size:15px;line-height:1.7;color:var(--clay-sub)}
+  .cs-li{display:flex;gap:10px;margin-top:8px;font-size:15px;line-height:1.6;color:var(--clay-sub)}
+  .cs-li .dot{flex:none;width:10px;height:10px;margin-top:7px;border-radius:50%;background:var(--clay-gold);box-shadow:inset 0 -2px 0 rgba(0,0,0,.15)}
+  .cs-notice{margin-top:12px;padding:14px 18px;border-radius:20px;background:#FDE1CE;color:#5A2608;font-size:14px;line-height:1.6;font-weight:600}
+  .cs-cta{margin-bottom:72px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+  .cs-anchor{display:block;height:0;scroll-margin-top:96px}
 </style>
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="BizOn">
-<meta property="og:locale" content="vi_VN">
-<meta property="og:title" content="Chính sách Quyền riêng tư · Privacy Policy — BizOn">
-<meta property="og:description" content="Local-first by default; optional classroom submission only after an explicit user action.">
-<meta property="og:url" content="https://thuyhuongctu.github.io/BizOn/chinh-sach.html">
-<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/og/og-cover.webp">
+<meta property="og:title" content="Chính sách Quyền riêng tư · BizOn Bật Nghiệp">
+<meta property="og:description" content="Local-first, dữ liệu lớp học tùy chọn, lưu giữ và xóa dữ liệu.">
+<meta name="twitter:card" content="summary_large_image">
 </head>
-<body>
-<a href="truong-chinh-sach.html" style="display:block;background:#f4ece0;color:#02444d;text-align:center;padding:.6rem 1rem;font:600 14px/1.4 system-ui,-apple-system,sans-serif;text-decoration:none;border-bottom:2px solid #02444d">Xem chính sách trong bản thể chế → <u>Trường BizOn · Chính sách &amp; Cấp phép</u></a>
-<header class="pt-24 pb-9 text-white" style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%)">
-  <div class="max-w-3xl mx-auto px-5">
-    <h1 class="font-display font-extrabold text-2xl sm:text-3xl">🔒 Chính sách Quyền riêng tư · Privacy Policy</h1>
-    <p class="text-white/80 text-sm mt-2">BizOn Web, PWA &amp; Android · cập nhật 30/09/2026 · updated September 30, 2026</p>
-  </div>
-</header>
-<main class="max-w-3xl mx-auto px-5 py-10">
-  <section class="policy-card p-6 sm:p-8 mb-6" lang="vi">
-    <p class="text-sm font-bold" style="color:var(--teal)">🇻🇳 Tiếng Việt</p>
-    <h2>1. Tóm tắt</h2>
-    <p><b>BizOn vận hành theo nguyên tắc local-first.</b> Khi bạn chơi ở chế độ thông thường, tiến trình và lựa chọn được lưu trên thiết bị. Khi người dùng chủ động nhập <b>mã lớp</b> (chế độ lớp học), kết quả của từng vòng chơi được gửi tự động khi kết thúc vòng tới cơ sở dữ liệu của BizOn để giảng viên chấm điểm; không nhập mã lớp thì không có gì được gửi.</p>
-    <div class="mode-grid">
-      <div class="mode"><strong>Chế độ local-only</strong><span>Không gửi dữ liệu trò chơi lên máy chủ. Bạn có thể xóa dữ liệu bằng cài đặt trình duyệt hoặc chức năng chơi lại.</span></div>
-      <div class="mode"><strong>Chế độ lớp học tùy chọn</strong><span>Khi đã nhập mã lớp: gửi mã lớp, tên đội, vai trò, kết quả và quyết định từng vòng, phản tư, và <b>email đã nhập ở màn hình vào game</b> (tùy chọn; dùng để giảng viên nhận diện thành viên khi chấm điểm). Không thu họ tên hay số điện thoại.</span></div>
+<body class="clay">
+
+<main class="clay-main">
+  <section class="clay-hero">
+    <div class="sun" aria-hidden="true"></div>
+    <div class="grid">
+      <div class="htext">
+        <span class="clay-eyebrow" data-en="BizOn Web, PWA & Android · updated September 30, 2026">BizOn Web, PWA &amp; Android · cập nhật 30/09/2026</span>
+        <h1 data-en="Privacy Policy">Chính sách Quyền riêng tư</h1>
+        <p class="lead" data-en="BizOn is local-first. In normal play, progress and decisions remain on the device. When a user deliberately enters a class code (classroom mode), each round's results are sent automatically at the end of the round to a BizOn-managed database so the instructor can grade; without a class code nothing is sent.">BizOn vận hành theo nguyên tắc local-first. Khi bạn chơi ở chế độ thông thường, tiến trình và lựa chọn được lưu trên thiết bị. Khi người dùng chủ động nhập mã lớp (chế độ lớp học), kết quả của từng vòng chơi được gửi tự động khi kết thúc vòng tới cơ sở dữ liệu của BizOn để giảng viên chấm điểm; không nhập mã lớp thì không có gì được gửi.</p>
+      </div>
+      <div class="art tall"><img src="assets/character/lumina-ao-dai-present.webp" alt="" loading="lazy" style="object-position:50% 100%"></div>
     </div>
-
-    <h2>2. Dữ liệu lưu trên thiết bị</h2>
-    <ul>
-      <li>Tiến trình mô phỏng, quyết định, kết quả vòng chơi, thành tựu và tên đội tự đặt có thể được lưu trong <b>localStorage</b> của trình duyệt.</li>
-      <li>Tùy chọn giao diện, ngôn ngữ và trạng thái cài đặt PWA có thể được lưu cục bộ.</li>
-      <li>Tệp CSV/JSON được xuất trực tiếp xuống thiết bị; BizOn không nhận bản sao chỉ vì bạn bấm xuất tệp.</li>
-    </ul>
-
-    <h2>3. Dữ liệu lớp học được gửi khi nào?</h2>
-    <p>Yêu cầu gửi dữ liệu chỉ phát sinh khi người dùng đã nhập mã lớp (Bật Nghiệp: tự động cuối mỗi vòng) hoặc bấm nộp ở các màn hình Brand Passport, Bến Phù Sa, pilot. Dữ liệu có thể gồm mã lớp, tên đội, vai trò, email đã nhập (nếu có), điểm mô phỏng, chỉ số kết quả, seed kịch bản, decision trace, reflection, phiên bản ứng dụng và thời điểm gửi. Dữ liệu được lưu trên dịch vụ Supabase do BizOn quản trị, truyền qua HTTPS.</p>
-    <p>Giảng viên hoặc người điều phối chỉ truy cập dữ liệu thuộc lớp tương ứng qua cơ chế khóa/RPC. Người dùng ẩn danh khác không được cấp quyền đọc trực tiếp bảng dữ liệu lớp.</p>
-
-    <h2>4. Điều BizOn không thực hiện</h2>
-    <ul>
-      <li>Không có quảng cáo, không bán dữ liệu và không dùng dữ liệu để xây hồ sơ quảng cáo.</li>
-      <li>Không yêu cầu quyền danh bạ, vị trí, máy ảnh hoặc micro cho Android shell hiện tại.</li>
-      <li>Không cho AI thay đổi điểm số của deterministic simulation engine.</li>
-      <li>Không tự động gửi reflection của Brand Passport Learning Pilot khi chưa hoàn tất governance và người dùng chưa opt-in.</li>
-    </ul>
-
-    <h2>5. Dịch vụ hạ tầng</h2>
-    <p>Website/PWA được lưu trữ trên GitHub Pages; phông chữ và tài nguyên giao diện cốt lõi được tự lưu trữ trong dự án. Khi truy cập website, GitHub có thể xử lý dữ liệu kết nối như địa chỉ IP theo chính sách của họ. Các chức năng lớp học được bật có thể dùng Supabase để lưu dữ liệu đã mô tả ở trên.</p>
-
-    <p><b>Nhật ký lỗi kỹ thuật (chẩn đoán).</b> Để sửa lỗi và cải thiện độ ổn định, khi xảy ra lỗi JavaScript, ứng dụng có thể <b>tự động</b> gửi một bản ghi chẩn đoán gọn tới BizOn (chỉ khi backend được bật): thông điệp lỗi, tệp/nguồn, dòng và cột, ngăn xếp lỗi (stack), phiên bản ứng dụng, chuỗi trình duyệt (user-agent), kích thước cửa sổ và mốc thời gian. Bản ghi này <b>không kèm họ tên, email hay số điện thoại</b>, chỉ được ghi (không đọc lại từ phía người dùng), và dùng riêng cho việc gỡ lỗi. Chơi ngoại tuyến hoặc khi backend tắt thì không gửi.</p>
-
-    <h2>6. Android</h2>
-    <p>Ứng dụng Android BizOn là Trusted Web Activity mở cùng PWA. Bản hiện tại chỉ khai báo quyền Internet để tải nội dung HTTPS. Ứng dụng không khai báo quyền vị trí, danh bạ, máy ảnh, micro, SMS hoặc tệp nhạy cảm.</p>
-
-    <h2>7. Lưu giữ và xóa</h2>
-    <p>Dữ liệu local-only do người dùng kiểm soát trên thiết bị. Với dữ liệu gửi lên máy chủ, thời hạn lưu dự kiến: <b>kết quả lớp học 12 tháng</b> (bài nộp vòng game, Brand Passport, Bến Phù Sa); <b>khảo sát 24 tháng</b>; <b>tiến trình lưu tạm của đội 90 ngày</b> kể từ lần cập nhật; <b>nhật ký lỗi kỹ thuật 90 ngày</b>. Quá hạn, dữ liệu được xóa.</p>
-    <p>Người dùng hoặc giảng viên có thể <b>yêu cầu xóa</b> dữ liệu đã gửi (theo mã lớp, theo email nếu có, hoặc theo bí danh đã nhập) qua email liên hệ ở Mục 10; các pilot có deletion receipt thì xóa bằng mã biên nhận. Nhật ký lỗi kỹ thuật không gắn định danh người dùng nên chỉ tự hết hạn theo thời gian. Các quy trình pilot chưa được xem là production cho đến khi data controller, thời hạn lưu và đầu mối xử lý yêu cầu được công bố.</p>
-
-    <h2>8. Người học chưa thành niên</h2>
-    <p>BizOn không có quảng cáo hoặc nội dung bạo lực. Việc sử dụng chức năng gửi dữ liệu trong lớp học đối với người học chưa thành niên phải do đơn vị phụ trách tổ chức phù hợp với quy định, sự giám sát và cơ chế đồng ý áp dụng.</p>
-
-    <h2>9. Tính chất giáo dục</h2>
-    <p>BizOn phục vụ giảng dạy, học tập và nghiên cứu. Các thị trường, sự kiện, chỉ số và khuyến nghị trong mô phỏng có thể là dữ liệu minh họa; không phải tư vấn đầu tư, pháp lý hoặc tài chính.</p>
-
-    <h2 id="xoa-tai-khoan">10. Xóa tài khoản và dữ liệu</h2>
-    <p><b>Tài khoản.</b> Chỉ Trang Giảng viên của BizOn – Bật Nghiệp (nhà phát triển: Thuy Huong Digital Learning – Đỗ Thùy Hương &amp; Phan Anh Tú) tạo tài khoản (email + mật khẩu, lưu trên Supabase Auth). Người chơi thông thường không có tài khoản.</p>
-    <p><b>Cách yêu cầu xóa tài khoản hoặc dữ liệu:</b> gửi email từ địa chỉ đã đăng ký (hoặc nêu mã lớp / tên đội / email đã nhập khi chơi) tới <a href="mailto:thuyhuongctu@gmail.com">thuyhuongctu@gmail.com</a> với tiêu đề <i>“Xóa tài khoản BizOn”</i> hoặc <i>“Xóa dữ liệu BizOn”</i>. Chúng tôi xác nhận trong 7 ngày và xóa trong tối đa 30 ngày: tài khoản giảng viên (email, mật khẩu băm) và toàn bộ bài nộp, nhật ký thành viên gắn với mã lớp/đội/email nêu trong yêu cầu. Nhật ký lỗi kỹ thuật không gắn định danh nên tự hết hạn sau 90 ngày. Dữ liệu chỉ lưu trên thiết bị do bạn tự xóa (xóa dữ liệu trình duyệt/ứng dụng).</p>
-    <h2>11. Liên hệ</h2>
-    <p>Câu hỏi về quyền riêng tư: <a href="mailto:patu@ctu.edu.vn">patu@ctu.edu.vn</a> · <a href="mailto:thuyhuongctu@gmail.com">thuyhuongctu@gmail.com</a>.</p>
-    <p class="notice"><b>Lưu ý:</b> Brand Passport Learning Pilot vẫn ở trạng thái Draft và remote submission mặc định tắt cho đến khi xác định data controller và hoàn tất kiểm thử staging.</p>
+    <div class="wave" aria-hidden="true"></div>
   </section>
 
-  <section class="policy-card p-6 sm:p-8" lang="en">
-    <p class="text-sm font-bold" style="color:var(--teal)">🇬🇧 English</p>
-    <h2>1. Summary</h2>
-    <p><b>BizOn is local-first.</b> In normal play, progress and decisions remain on the device. When a user deliberately enters a <b>class code</b> (classroom mode), each round's results are sent automatically at the end of the round to a BizOn-managed database so the instructor can grade; without a class code nothing is sent.</p>
-    <div class="mode-grid">
-      <div class="mode"><strong>Local-only mode</strong><span>No game data is sent to a server. Users can clear it through browser settings or a restart function.</span></div>
-      <div class="mode"><strong>Optional classroom mode</strong><span>Once a class code is entered: class code, team name, role, per-round results and decisions, reflections, and <b>the email entered on the start screen</b> (optional; used by the instructor to identify team members when grading) are sent. No legal name or phone number is collected.</span></div>
-    </div>
-
-    <h2>2. Data stored on the device</h2>
-    <ul>
-      <li>Simulation progress, decisions, round outcomes, achievements and a user-selected team name may be stored in browser localStorage.</li>
-      <li>Theme, language and PWA installation preferences may be stored locally.</li>
-      <li>CSV/JSON exports are downloaded directly to the device; exporting alone does not transmit a copy to BizOn.</li>
-    </ul>
-
-    <h2>3. When classroom data is submitted</h2>
-    <p>A network submission occurs only after a class code has been entered (Bật Nghiệp: automatically at the end of each round) or when the user presses Submit on the Brand Passport, Bến Phù Sa or pilot screens. Possible fields include class code, team name, role, the email entered (if any), simulation score, outcome metrics, scenario seed, decision trace, reflection, application version and submission timestamp. Data is stored on a BizOn-managed Supabase service and transmitted over HTTPS.</p>
-    <p>Instructors or facilitators access only the relevant class through a key-protected RPC. Anonymous clients are not granted direct read access to classroom tables.</p>
-
-    <h2>4. What BizOn does not do</h2>
-    <ul>
-      <li>No advertising, no sale of user data and no advertising-profile creation.</li>
-      <li>The current Android shell does not request contacts, location, camera or microphone permissions.</li>
-      <li>AI does not change scores generated by the deterministic simulation engine.</li>
-      <li>The Brand Passport Learning Pilot does not automatically upload reflections before governance approval and user opt-in.</li>
-    </ul>
-
-    <h2>5. Infrastructure providers</h2>
-    <p>The website/PWA is hosted on GitHub Pages, and core fonts and interface assets are self-hosted in the project. GitHub may process connection data such as IP addresses under its own policies. Enabled classroom submission features may use Supabase to store the fields described above.</p>
-    <p><b>Technical error logs (diagnostics).</b> To fix bugs and improve stability, when a JavaScript error occurs the app may <b>automatically</b> send a small diagnostic record to BizOn (only when the backend is enabled): the error message, file/source, line and column, stack trace, app version, browser user-agent string, window size and a timestamp. This record <b>contains no legal name, email or phone number</b>, is write-only (not read back to the user) and is used solely for debugging. Nothing is sent when playing offline or when the backend is disabled.</p>
-
-    <h2>6. Android</h2>
-    <p>The BizOn Android application is a Trusted Web Activity that opens the same PWA. The current build declares Internet access only. It does not declare location, contacts, camera, microphone, SMS or sensitive-file permissions.</p>
-
-    <h2>7. Retention and deletion</h2>
-    <p>Users control local-only data on their device. For data sent to the server, the planned retention is: <b>classroom results 12 months</b> (round submissions, Brand Passport, Bến Phù Sa); <b>surveys 24 months</b>; <b>team save progress 90 days</b> from last update; <b>technical error logs 90 days</b>. Data is deleted after these windows.</p>
-    <p>Users or instructors can <b>request deletion</b> of submitted data (by class code, by email where present, or by the alias entered) via the contact in Section 10; pilots that issue a deletion receipt support deletion by that receipt. Technical error logs carry no user identifier and therefore only expire by time. A pilot is not production-ready until the data controller, retention period and request contact are published.</p>
-
-    <h2>8. Minors</h2>
-    <p>BizOn contains no ads or violent content. Classroom data submission involving minors must be organized by the responsible institution under the applicable supervision and consent requirements.</p>
-
-    <h2>9. Educational use</h2>
-    <p>BizOn supports teaching, learning and research. Markets, events, metrics and recommendations may be illustrative simulation inputs and are not investment, legal or financial advice.</p>
-
-    <h2 id="account-deletion">10. Account and data deletion</h2>
-    <p><b>Accounts.</b> Only the Instructor page of BizOn – Bật Nghiệp (developer: Thuy Huong Digital Learning – Đỗ Thùy Hương &amp; Phan Anh Tú) creates accounts (email + password, stored in Supabase Auth). Regular players have no account.</p>
-    <p><b>How to request deletion of an account or data:</b> email <a href="mailto:thuyhuongctu@gmail.com">thuyhuongctu@gmail.com</a> from the registered address (or state the class code / team name / email entered in the game) with the subject <i>“Delete BizOn account”</i> or <i>“Delete BizOn data”</i>. We acknowledge within 7 days and delete within 30 days: the instructor account (email, hashed password) and all submissions and member logs linked to the class code / team / email named in the request. Technical error logs carry no identifier and expire after 90 days. Data stored only on your device is deleted by you (clear browser/app data).</p>
-    <h2>11. Contact</h2>
-    <p>Privacy questions: <a href="mailto:patu@ctu.edu.vn">patu@ctu.edu.vn</a> · <a href="mailto:thuyhuongctu@gmail.com">thuyhuongctu@gmail.com</a>.</p>
-    <p class="notice"><b>Current gate:</b> Brand Passport Learning Pilot remains a Draft and remote submission stays disabled until a data controller is identified and staging validation is complete.</p>
+  <section class="cs-modes">
+    <div class="cs-mode" style="background:var(--clay-c5)"><div style="font-family:var(--clay-head);font-size:21px;font-weight:800;line-height:1.2" data-en="Local-only mode">Chế độ local-only</div><p style="margin:8px 0 0;font-size:14px;line-height:1.6;color:var(--clay-ink-2)" data-en="No game data is sent to a server. Users can clear it through browser settings or a restart function.">Không gửi dữ liệu trò chơi lên máy chủ. Bạn có thể xóa dữ liệu bằng cài đặt trình duyệt hoặc chức năng chơi lại.</p></div>
+    <div class="cs-mode" style="background:var(--clay-c2)"><div style="font-family:var(--clay-head);font-size:21px;font-weight:800;line-height:1.2" data-en="Optional classroom mode">Chế độ lớp học tùy chọn</div><p style="margin:8px 0 0;font-size:14px;line-height:1.6;color:var(--clay-ink-2)" data-en="Once a class code is entered: class code, team name, role, per-round results and decisions, reflections, and the email entered on the start screen (optional; used by the instructor to identify team members when grading) are sent. No legal name or phone number is collected.">Khi đã nhập mã lớp: gửi mã lớp, tên đội, vai trò, kết quả và quyết định từng vòng, phản tư, và email đã nhập ở màn hình vào game (tùy chọn; dùng để giảng viên nhận diện thành viên khi chấm điểm). Không thu họ tên hay số điện thoại.</p></div>
   </section>
-  <p class="text-center text-xs mt-8" style="color:var(--muted)">© 2026 Đỗ Thùy Hương &amp; Phan Anh Tú · BizOn</p>
+
+  <section class="clay-card" style="margin-bottom:28px">
+    <div class="cs-sec">
+      <h2 data-en="2. Data stored on the device">2. Dữ liệu lưu trên thiết bị</h2>
+      <div class="cs-li"><span class="dot"></span><span data-en="Simulation progress, decisions, round outcomes, achievements and a user-selected team name may be stored in browser localStorage.">Tiến trình mô phỏng, quyết định, kết quả vòng chơi, thành tựu và tên đội tự đặt có thể được lưu trong localStorage của trình duyệt.</span></div>
+      <div class="cs-li"><span class="dot"></span><span data-en="Theme, language and PWA installation preferences may be stored locally.">Tùy chọn giao diện, ngôn ngữ và trạng thái cài đặt PWA có thể được lưu cục bộ.</span></div>
+      <div class="cs-li"><span class="dot"></span><span data-en="CSV/JSON exports are downloaded directly to the device; exporting alone does not transmit a copy to BizOn.">Tệp CSV/JSON được xuất trực tiếp xuống thiết bị; BizOn không nhận bản sao chỉ vì bạn bấm xuất tệp.</span></div>
+    </div>
+    <div class="cs-sec">
+      <h2 data-en="3. When classroom data is submitted">3. Dữ liệu lớp học được gửi khi nào?</h2>
+      <p data-en="A network submission occurs only after a class code has been entered (Bật Nghiệp: automatically at the end of each round) or when the user presses Submit on the Brand Passport, Bến Phù Sa or pilot screens. Possible fields include class code, team name, role, the email entered (if any), simulation score, outcome metrics, scenario seed, decision trace, reflection, application version and submission timestamp. Data is stored on a BizOn-managed Supabase service and transmitted over HTTPS.">Yêu cầu gửi dữ liệu chỉ phát sinh khi người dùng đã nhập mã lớp (Bật Nghiệp: tự động cuối mỗi vòng) hoặc bấm nộp ở các màn hình Brand Passport, Bến Phù Sa, pilot. Dữ liệu có thể gồm mã lớp, tên đội, vai trò, email đã nhập (nếu có), điểm mô phỏng, chỉ số kết quả, seed kịch bản, decision trace, reflection, phiên bản ứng dụng và thời điểm gửi. Dữ liệu được lưu trên dịch vụ Supabase do BizOn quản trị, truyền qua HTTPS.</p>
+      <p data-en="Instructors or facilitators access only the relevant class through a key-protected RPC. Anonymous clients are not granted direct read access to classroom tables.">Giảng viên hoặc người điều phối chỉ truy cập dữ liệu thuộc lớp tương ứng qua cơ chế khóa/RPC. Người dùng ẩn danh khác không được cấp quyền đọc trực tiếp bảng dữ liệu lớp.</p>
+    </div>
+    <div class="cs-sec">
+      <h2 data-en="4. What BizOn does not do">4. Điều BizOn không thực hiện</h2>
+      <div class="cs-li"><span class="dot"></span><span data-en="No advertising, no sale of user data and no advertising-profile creation.">Không có quảng cáo, không bán dữ liệu và không dùng dữ liệu để xây hồ sơ quảng cáo.</span></div>
+      <div class="cs-li"><span class="dot"></span><span data-en="The current Android shell does not request contacts, location, camera or microphone permissions.">Không yêu cầu quyền danh bạ, vị trí, máy ảnh hoặc micro cho Android shell hiện tại.</span></div>
+      <div class="cs-li"><span class="dot"></span><span data-en="AI does not change scores generated by the deterministic simulation engine.">Không cho AI thay đổi điểm số của deterministic simulation engine.</span></div>
+      <div class="cs-li"><span class="dot"></span><span data-en="The Brand Passport Learning Pilot does not automatically upload reflections before governance approval and user opt-in.">Không tự động gửi reflection của Brand Passport Learning Pilot khi chưa hoàn tất governance và người dùng chưa opt-in.</span></div>
+    </div>
+    <div class="cs-sec">
+      <h2 data-en="5. Infrastructure providers">5. Dịch vụ hạ tầng</h2>
+      <p data-en="The website/PWA is hosted on GitHub Pages, and core fonts and interface assets are self-hosted in the project. GitHub may process connection data such as IP addresses under its own policies. Enabled classroom submission features may use Supabase to store the fields described above.">Website/PWA được lưu trữ trên GitHub Pages; phông chữ và tài nguyên giao diện cốt lõi được tự lưu trữ trong dự án. Khi truy cập website, GitHub có thể xử lý dữ liệu kết nối như địa chỉ IP theo chính sách của họ. Các chức năng lớp học được bật có thể dùng Supabase để lưu dữ liệu đã mô tả ở trên.</p>
+      <p data-en="Technical error logs (diagnostics). To fix bugs and improve stability, when a JavaScript error occurs the app may automatically send a small diagnostic record to BizOn (only when the backend is enabled): the error message, file/source, line and column, stack trace, app version, browser user-agent string, window size and a timestamp. This record contains no legal name, email or phone number, is write-only (not read back to the user) and is used solely for debugging. Nothing is sent when playing offline or when the backend is disabled.">Nhật ký lỗi kỹ thuật (chẩn đoán). Để sửa lỗi và cải thiện độ ổn định, khi xảy ra lỗi JavaScript, ứng dụng có thể tự động gửi một bản ghi chẩn đoán gọn tới BizOn (chỉ khi backend được bật): thông điệp lỗi, tệp/nguồn, dòng và cột, ngăn xếp lỗi (stack), phiên bản ứng dụng, chuỗi trình duyệt (user-agent), kích thước cửa sổ và mốc thời gian. Bản ghi này không kèm họ tên, email hay số điện thoại, chỉ được ghi (không đọc lại từ phía người dùng), và dùng riêng cho việc gỡ lỗi. Chơi ngoại tuyến hoặc khi backend tắt thì không gửi.</p>
+    </div>
+    <div class="cs-sec">
+      <h2 data-en="6. Android">6. Android</h2>
+      <p data-en="The BizOn Android application is a Trusted Web Activity that opens the same PWA. The current build declares Internet access only. It does not declare location, contacts, camera, microphone, SMS or sensitive-file permissions.">Ứng dụng Android BizOn là Trusted Web Activity mở cùng PWA. Bản hiện tại chỉ khai báo quyền Internet để tải nội dung HTTPS. Ứng dụng không khai báo quyền vị trí, danh bạ, máy ảnh, micro, SMS hoặc tệp nhạy cảm.</p>
+    </div>
+    <div class="cs-sec">
+      <h2 data-en="7. Retention and deletion">7. Lưu giữ và xóa</h2>
+      <p data-en="Users control local-only data on their device. For data sent to the server, the planned retention is: classroom results 12 months (round submissions, Brand Passport, Bến Phù Sa); surveys 24 months; team save progress 90 days from last update; technical error logs 90 days. Data is deleted after these windows.">Dữ liệu local-only do người dùng kiểm soát trên thiết bị. Với dữ liệu gửi lên máy chủ, thời hạn lưu dự kiến: kết quả lớp học 12 tháng (bài nộp vòng game, Brand Passport, Bến Phù Sa); khảo sát 24 tháng; tiến trình lưu tạm của đội 90 ngày kể từ lần cập nhật; nhật ký lỗi kỹ thuật 90 ngày. Quá hạn, dữ liệu được xóa.</p>
+      <p data-en="Users or instructors can request deletion of submitted data (by class code, by email where present, or by the alias entered) via the contact in Section 10; pilots that issue a deletion receipt support deletion by that receipt. Technical error logs carry no user identifier and therefore only expire by time. A pilot is not production-ready until the data controller, retention period and request contact are published.">Người dùng hoặc giảng viên có thể yêu cầu xóa dữ liệu đã gửi (theo mã lớp, theo email nếu có, hoặc theo bí danh đã nhập) qua email liên hệ ở Mục 10; các pilot có deletion receipt thì xóa bằng mã biên nhận. Nhật ký lỗi kỹ thuật không gắn định danh người dùng nên chỉ tự hết hạn theo thời gian. Các quy trình pilot chưa được xem là production cho đến khi data controller, thời hạn lưu và đầu mối xử lý yêu cầu được công bố.</p>
+    </div>
+    <div class="cs-sec">
+      <h2 data-en="8. Minors">8. Người học chưa thành niên</h2>
+      <p data-en="BizOn contains no ads or violent content. Classroom data submission involving minors must be organized by the responsible institution under the applicable supervision and consent requirements.">BizOn không có quảng cáo hoặc nội dung bạo lực. Việc sử dụng chức năng gửi dữ liệu trong lớp học đối với người học chưa thành niên phải do đơn vị phụ trách tổ chức phù hợp với quy định, sự giám sát và cơ chế đồng ý áp dụng.</p>
+    </div>
+    <div class="cs-sec">
+      <h2 data-en="9. Educational use">9. Tính chất giáo dục</h2>
+      <p data-en="BizOn supports teaching, learning and research. Markets, events, metrics and recommendations may be illustrative simulation inputs and are not investment, legal or financial advice.">BizOn phục vụ giảng dạy, học tập và nghiên cứu. Các thị trường, sự kiện, chỉ số và khuyến nghị trong mô phỏng có thể là dữ liệu minh họa; không phải tư vấn đầu tư, pháp lý hoặc tài chính.</p>
+    </div>
+    <span id="xoa-tai-khoan" class="cs-anchor" aria-hidden="true"></span>
+    <span id="account-deletion" class="cs-anchor" aria-hidden="true"></span>
+    <div class="cs-sec">
+      <h2 data-en="10. Account and data deletion">10. Xóa tài khoản và dữ liệu</h2>
+      <p data-en="Accounts. Only the Instructor page of BizOn – Bật Nghiệp (developer: Thuy Huong Digital Learning – Đỗ Thùy Hương & Phan Anh Tú) creates accounts (email + password, stored in Supabase Auth). Regular players have no account.">Tài khoản. Chỉ Trang Giảng viên của BizOn – Bật Nghiệp (nhà phát triển: Thuy Huong Digital Learning – Đỗ Thùy Hương &amp; Phan Anh Tú) tạo tài khoản (email + mật khẩu, lưu trên Supabase Auth). Người chơi thông thường không có tài khoản.</p>
+      <p data-en="How to request deletion of an account or data: email thuyhuongctu@gmail.com from the registered address (or state the class code / team name / email entered in the game) with the subject “Delete BizOn account” or “Delete BizOn data”. We acknowledge within 7 days and delete within 30 days: the instructor account (email, hashed password) and all submissions and member logs linked to the class code / team / email named in the request. Technical error logs carry no identifier and expire after 90 days. Data stored only on your device is deleted by you (clear browser/app data).">Cách yêu cầu xóa tài khoản hoặc dữ liệu: gửi email từ địa chỉ đã đăng ký (hoặc nêu mã lớp / tên đội / email đã nhập khi chơi) tới thuyhuongctu@gmail.com với tiêu đề “Xóa tài khoản BizOn” hoặc “Xóa dữ liệu BizOn”. Chúng tôi xác nhận trong 7 ngày và xóa trong tối đa 30 ngày: tài khoản giảng viên (email, mật khẩu băm) và toàn bộ bài nộp, nhật ký thành viên gắn với mã lớp/đội/email nêu trong yêu cầu. Nhật ký lỗi kỹ thuật không gắn định danh nên tự hết hạn sau 90 ngày. Dữ liệu chỉ lưu trên thiết bị do bạn tự xóa (xóa dữ liệu trình duyệt/ứng dụng).</p>
+    </div>
+    <div class="cs-sec">
+      <h2 data-en="11. Contact">11. Liên hệ</h2>
+      <p data-en="Privacy questions: patu@ctu.edu.vn · thuyhuongctu@gmail.com.">Câu hỏi về quyền riêng tư: patu@ctu.edu.vn · thuyhuongctu@gmail.com.</p>
+    </div>
+    <div class="cs-notice" data-en="Current gate: Brand Passport Learning Pilot remains a Draft and remote submission stays disabled until a data controller is identified and staging validation is complete.">Lưu ý: Brand Passport Learning Pilot vẫn ở trạng thái Draft và remote submission mặc định tắt cho đến khi xác định data controller và hoàn tất kiểm thử staging.</div>
+  </section>
+
+  <section class="cs-cta">
+    <a class="clay-btn" href="mailto:thuyhuongctu@gmail.com?subject=X%C3%B3a%20d%E1%BB%AF%20li%E1%BB%87u%20BizOn" data-en="Request data deletion">Gửi yêu cầu xóa dữ liệu</a>
+    <a class="clay-btn" style="background:var(--clay-card);color:var(--clay-ink);box-shadow:inset 0 -6px 0 rgba(110,70,30,.15),inset 0 3px 0 #fff" href="truong-chinh-sach.html" data-en="Institutional version: Policy & Licensing ↗">Bản thể chế: Chính sách &amp; Cấp phép ↗</a>
+  </section>
 </main>
-<script src="js/site-ui.js" defer></script>
+
 <script src="js/site-vnmap.js" defer></script>
-<script src="js/site-dock.js" defer></script>
-<script src="js/site-footer.js" defer></script>
-<script src="js/site-nav.js" defer></script>
+<script src="js/bizon-clay-i18n.js" defer></script>
+<script src="js/bizon-clay-nav.js" defer></script>
+<script src="js/bizon-clay-footer.js" defer></script>
 </body>
 </html>
