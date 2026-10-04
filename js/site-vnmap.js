@@ -67,9 +67,24 @@
   ];
   var GROUND = 421; // chân người chạm đúng vĩ độ ngôi sao Cần Thơ (122.0, 425.1)
 
+  // Hầu hết trang nằm ở thư mục gốc, nhưng có trang nằm trong thư mục con
+  // (ví dụ vietlens/). Suy ra gốc site từ URL của chính script này để ảnh
+  // nhà sáng lập trỏ đúng từ mọi độ sâu thư mục, thay vì giả định "cùng gốc".
+  var ROOT = (function () {
+    var s = document.currentScript;
+    if (!s) {
+      var all = document.getElementsByTagName('script');
+      for (var i = all.length - 1; i >= 0; i--) {
+        if (all[i].src && /(^|\/)js\/site-vnmap\.js(\?|$)/.test(all[i].src)) { s = all[i]; break; }
+      }
+    }
+    var src = (s && s.src) || '';
+    return src.replace(/js\/site-vnmap\.js(\?.*)?$/, '');
+  })();
+
   function base(path) {
-    // Trang nào cũng nằm cùng thư mục gốc nên đường dẫn tương đối là đủ.
-    return path;
+    // ROOT rỗng -> giữ đường dẫn tương đối như cũ (trang ở thư mục gốc).
+    return ROOT ? ROOT + path : path;
   }
 
   function svg() {
