@@ -1,328 +1,250 @@
-<!doctype html>
-<html lang="vi">
+<!DOCTYPE html>
+<html>
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="VietLens AI — quan sát tín hiệu Việt Nam, cảnh báo sớm và dự báo theo kịch bản có kiểm định. Trang giới thiệu bản MVP (dữ liệu mẫu).">
-<meta name="theme-color" content="#f4faff">
-<title>VietLens AI — Giới thiệu · Vietnam Intelligence & Foresight</title>
-<link rel="icon" type="image/svg+xml" href="../assets/brand/bizon-favicon.svg">
-<!-- Phông tự host trong ../assets/fonts (tệp tĩnh dùng chung, KHÔNG tạo phụ thuộc
-     thời gian chạy): VietLens vẫn độc lập – không dùng service worker, Supabase
-     hay state của BizOn. Offline mà chưa có phông thì rơi về phông hệ thống. -->
-<style>
-  @font-face{font-family:'Manrope';font-weight:200 800;font-display:swap;
-    src:url(../assets/fonts/Manrope-var-vietnamese.woff2) format('woff2');
-    unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB;}
-  @font-face{font-family:'Manrope';font-weight:200 800;font-display:swap;
-    src:url(../assets/fonts/Manrope-var-latin.woff2) format('woff2');
-    unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2122,U+2212;}
-  @font-face{font-family:'Jakarta';font-weight:500 800;font-display:swap;
-    src:url(../assets/fonts/PlusJakartaSans-var-vietnamese.woff2) format('woff2');
-    unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB;}
-  @font-face{font-family:'Jakarta';font-weight:500 800;font-display:swap;
-    src:url(../assets/fonts/PlusJakartaSans-var-latin.woff2) format('woff2');
-    unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2122,U+2212;}
-
-  :root{
-    --bg:#f4faff; --surface:#ffffff; --surface-2:#e9eff4; --line:rgba(0,102,135,.14);
-    --primary:#006687; --deep:#004d66; --ink:#033337; --muted:rgba(3,51,55,.62);
-    --gold:#fda127; --cyan:#00c4ff; --green:#2f9e6f; --red:#d9544d;
-    --radius:20px; --shadow:0 18px 44px -22px rgba(3,51,55,.4);
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{margin:0;background:
-      radial-gradient(120% 90% at 100% -10%,rgba(0,196,255,.10),transparent 42%),
-      radial-gradient(80% 70% at -10% 0,rgba(253,161,39,.08),transparent 40%),var(--bg);
-    color:var(--ink);font-family:'Manrope','Manrope Fallback',system-ui,sans-serif;
-    line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-  h1,h2,h3,.brand b{font-family:'Jakarta','Manrope',system-ui,sans-serif;letter-spacing:-.01em}
-  a{color:inherit}
-  .wrap{width:min(1120px,calc(100% - 40px));margin:0 auto}
-  .eyebrow{font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--primary);margin:0 0 10px}
-  .skip-link{position:absolute;left:-999px}.skip-link:focus{left:12px;top:12px;background:#fff;padding:8px 12px;border-radius:10px;z-index:99}
-
-  /* Topbar */
-  .topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:16px;
-    padding:10px 0;background:rgba(244,250,255,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-  .topbar .wrap{display:flex;align-items:center;gap:16px;width:min(1120px,calc(100% - 40px))}
-  .brand{display:flex;align-items:center;gap:11px;text-decoration:none;margin-right:auto}
-  .brand-mark{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font-weight:800;
-    color:#fff;background:linear-gradient(150deg,var(--cyan),var(--primary));box-shadow:0 8px 18px -8px rgba(0,102,135,.6)}
-  .brand b{font-size:15px;line-height:1}.brand small{display:block;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:3px}
-  .topnav{display:flex;gap:4px}
-  .topnav a{padding:8px 12px;border-radius:10px;font-size:13px;font-weight:700;color:var(--muted);text-decoration:none}
-  .topnav a:hover{background:rgba(0,102,135,.08);color:var(--ink)}
-  .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:12px;font-weight:800;font-size:13px;
-    text-decoration:none;border:1px solid transparent;cursor:pointer}
-  .btn.primary{background:linear-gradient(150deg,var(--cyan),var(--primary));color:#fff;box-shadow:0 12px 26px -12px rgba(0,102,135,.8)}
-  .btn.ghost{background:var(--surface);border-color:var(--line);color:var(--ink)}
-  .btn:hover{transform:translateY(-1px)}
-  @media(max-width:820px){.topnav{display:none}}
-
-  .badge{display:inline-flex;align-items:center;gap:7px;padding:5px 11px;border-radius:999px;font-size:11px;font-weight:800;
-    letter-spacing:.04em;background:rgba(253,161,39,.14);color:#9a5b04;border:1px solid rgba(253,161,39,.35)}
-  .badge i{width:7px;height:7px;border-radius:50%;background:var(--gold)}
-
-  /* Hero */
-  .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;padding:64px 0 40px}
-  .hero h1{font-size:clamp(2.1rem,4.6vw,3.4rem);line-height:1.08;margin:14px 0 16px;font-weight:800}
-  .hero h1 span{background:linear-gradient(90deg,var(--primary),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
-  .lead{font-size:1.05rem;color:var(--muted);max-width:36rem;margin:0 0 18px}
-  .notice{font-size:12.5px;line-height:1.55;color:#5a3b06;background:rgba(253,161,39,.10);
-    border:1px solid rgba(253,161,39,.32);border-radius:14px;padding:12px 14px;margin:0 0 20px}
-  .cta{display:flex;flex-wrap:wrap;gap:12px}
-  .pulse{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;text-align:center}
-  .pulse-ring{width:132px;height:132px;margin:4px auto 16px;border-radius:50%;display:grid;place-content:center;
-    background:conic-gradient(var(--cyan) 0 72%,rgba(0,102,135,.10) 72%);position:relative}
-  .pulse-ring::after{content:"";position:absolute;inset:11px;border-radius:50%;background:var(--surface)}
-  .pulse-ring b{position:relative;font-family:'Jakarta';font-size:2.1rem;font-weight:800;color:var(--primary)}
-  .pulse-ring small{position:relative;display:block;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-  .pulse-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-  .pulse-grid div{background:var(--surface-2);border-radius:12px;padding:9px 6px}
-  .pulse-grid small{display:block;font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-  .pulse-grid b{font-family:'Jakarta';font-size:1.05rem;font-weight:800;color:var(--deep)}
-  @media(max-width:860px){.hero{grid-template-columns:1fr;padding-top:40px}}
-
-  /* Sections */
-  section{padding:44px 0}
-  .sec-head{max-width:44rem;margin:0 auto 28px;text-align:center}
-  .sec-head h2{font-size:clamp(1.5rem,3vw,2.05rem);margin:0 0 8px;font-weight:800}
-  .sec-head p{color:var(--muted);margin:0}
-
-  /* Objective cards */
-  .cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px;transition:transform .2s,box-shadow .2s}
-  .card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
-  .card .ico{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;margin-bottom:14px;
-    background:rgba(0,102,135,.09);color:var(--primary)}
-  .card h3{font-size:1.12rem;margin:0 0 8px}
-  .card p{color:var(--muted);font-size:.92rem;margin:0}
-  .card ul{margin:14px 0 0;padding:0;list-style:none;display:grid;gap:6px}
-  .card li{font-size:.82rem;color:var(--deep);padding-left:18px;position:relative}
-  .card li::before{content:"›";position:absolute;left:2px;color:var(--gold);font-weight:800}
-  @media(max-width:820px){.cards3{grid-template-columns:1fr}}
-
-  /* Methodology bento */
-  .bento{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
-  .b{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px}
-  .b.wide{grid-column:span 7}.b.side{grid-column:span 5;background:linear-gradient(160deg,var(--deep),var(--primary));color:#fff}
-  .b.third{grid-column:span 4}
-  .b.side .eyebrow{color:#bfe9f5}.b.side h3{color:#fff}.b.side p{color:rgba(255,255,255,.82)}
-  .b h3{font-size:1.15rem;margin:0 0 10px}.b p{color:var(--muted);font-size:.92rem;margin:0}
-  .flow{display:flex;align-items:stretch;gap:8px;margin-top:18px;flex-wrap:wrap}
-  .flow .step{flex:1;min-width:120px;background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px}
-  .flow .step small{font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--primary)}
-  .flow .step b{display:block;font-family:'Jakarta';font-size:.95rem;margin-top:3px}
-  .flow .step p{font-size:.76rem;color:var(--muted);margin:4px 0 0}
-  .flow .arrow{align-self:center;color:var(--gold);font-weight:800}
-  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-  .chip{font-size:11px;font-weight:700;padding:6px 11px;border-radius:999px;background:var(--surface-2);color:var(--deep);border:1px solid var(--line)}
-  @media(max-width:860px){.b.wide,.b.side,.b.third{grid-column:span 12}.flow .arrow{display:none}}
-
-  /* Team */
-  .team{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;max-width:760px;margin:0 auto}
-  .person{display:flex;gap:16px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
-  .mono{width:64px;height:64px;flex:none;border-radius:18px;display:grid;place-items:center;font-family:'Jakarta';font-weight:800;font-size:1.4rem;color:#fff}
-  .person h4{margin:0;font-size:1.05rem}.person .role{font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--primary);margin:3px 0 4px}
-  .person p{margin:0;font-size:.82rem;color:var(--muted)}
-  @media(max-width:720px){.team{grid-template-columns:1fr}}
-
-  /* CTA */
-  .cta-band{background:linear-gradient(150deg,var(--deep),var(--primary));border-radius:26px;padding:40px;text-align:center;color:#fff;box-shadow:var(--shadow)}
-  .cta-band h2{color:#fff;font-size:clamp(1.5rem,3vw,2rem);margin:0 0 10px}
-  .cta-band p{color:rgba(255,255,255,.82);max-width:40rem;margin:0 auto 20px}
-  .cta-band .btn.ghost{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.28);color:#fff}
-
-  footer{border-top:1px solid var(--line);margin-top:20px;padding:28px 0 44px;color:var(--muted);font-size:12.5px;line-height:1.7}
-  footer b{color:var(--ink)}
-  footer .repo-note{opacity:.8;margin-top:8px}
-  footer code{background:var(--surface-2);border-radius:6px;padding:1px 6px;font-size:11.5px}
-  @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}.card:hover,.btn:hover{transform:none}}
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src=".././support.js"></script>
 </head>
 <body>
-<a class="skip-link" href="#main">Bỏ qua đến nội dung chính</a>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="../css/bizon-clay-fonts.css">
+<style>
+body{margin:0;background:#FBF4E8;color:#033337;font-family:'Be Vietnam Pro','BVP Fallback',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#006687;text-decoration:none}
+a:hover{color:#033337}
+*{box-sizing:border-box}
+nav::-webkit-scrollbar{display:none}
+@keyframes bzFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+<script src="../js/site-vnmap.js"></script>
+</helmet>
+<div style="min-height:100vh;overflow-x:hidden">
 
-<header class="topbar">
-  <div class="wrap">
-    <a class="brand" href="./index.html" aria-label="VietLens AI — mở bản demo">
-      <span class="brand-mark" aria-hidden="true">VL</span>
-      <span><b>VietLens AI</b><small>Observe Vietnam · Anticipate Change</small></span>
+<header style="position:sticky;top:12px;z-index:50;max-width:1200px;margin:12px auto 0;padding:0 16px">
+  <div style="display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:14px;min-height:68px;padding:8px 10px 8px 20px;border-radius:999px;background:#FFFBF4;box-shadow:0 18px 30px -16px rgba(110,70,30,.35),inset 0 -6px 0 rgba(0,0,0,.05),inset 0 4px 0 rgba(255,255,255,.9)">
+    <a href="../index.html" style="display:flex;align-items:center;gap:10px;color:#033337">
+      <span style="display:flex;align-items:center;font-family:'Be Vietnam Pro',sans-serif;font-weight:800;font-size:24px;letter-spacing:-.045em;line-height:1">Biz<span style="position:relative;display:inline-block;width:.86em;height:.72em;border:.15em solid currentColor;border-radius:50%;margin:0 .02em 0 .04em"><span style="position:absolute;right:.06em;top:50%;width:.26em;height:.26em;margin-top:-.13em;border-radius:50%;background:#FDA127"></span></span>n</span>
     </a>
-    <nav class="topnav" aria-label="Điều hướng trang giới thiệu">
-      <a href="#what">Năng lực</a>
-      <a href="#method">Phương pháp</a>
-      <a href="#team">Đội ngũ</a>
-      <a href="../index.html">BizOn</a>
+    <nav style="justify-self:center;max-width:clamp(0px,calc((100vw - 1040px) * 999),100%);display:flex;gap:4px;padding:clamp(0px,calc((100vw - 1040px) * 999),5px);border-radius:999px;background:#F3E6CF;box-shadow:inset 0 3px 6px rgba(110,70,30,.18);overflow-x:auto;scrollbar-width:none;font-size:14px;font-weight:700;white-space:nowrap">
+      <sc-for list="{{ navLinks }}" as="l" hint-placeholder-count="6">
+        <a href="{{ l.href }}" style="flex:none;padding:8px 14px;border-radius:999px;color:{{ l.color }};background:{{ l.bg }};box-shadow:{{ l.sh }}" style-hover="color:#006687">{{ l.label }}</a>
+      </sc-for>
     </nav>
-    <a class="btn primary" href="./index.html">Mở bản demo →</a>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="display:flex;padding:4px;border-radius:999px;background:#F3E6CF;box-shadow:inset 0 3px 5px rgba(110,70,30,.18);font-size:12px;font-weight:800">
+        <button onClick="{{ setVi }}" style="border:0;cursor:pointer;padding:7px 12px;border-radius:999px;font:inherit;background:{{ viBg }};color:{{ viFg }};box-shadow:{{ viSh }}">VI</button>
+        <button onClick="{{ setEn }}" style="border:0;cursor:pointer;padding:7px 12px;border-radius:999px;font:inherit;background:{{ enBg }};color:{{ enFg }};box-shadow:{{ enSh }}">EN</button>
+      </div>
+      <a href="https://thuyhuongctu.github.io/BizOn/game.html" style="white-space:nowrap;padding:11px 18px;border-radius:999px;background:#E8762D;color:#fff;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:16px;font-weight:700;box-shadow:inset 0 -5px 0 rgba(0,0,0,.16),inset 0 3px 0 rgba(255,255,255,.35),0 10px 18px -8px rgba(232,118,45,.7)" style-hover="color:#fff">{{ t.navCta }}</a>
+    </div>
   </div>
+<nav style="margin:8px auto 0;width:fit-content;max-width:100%;max-height:clamp(0px,calc((1040px - 100vw) * 999),64px);padding:clamp(0px,calc((1040px - 100vw) * 999),5px);display:flex;gap:4px;border-radius:999px;background:#F3E6CF;box-shadow:inset 0 3px 6px rgba(110,70,30,.18),0 12px 20px -14px rgba(110,70,30,.5);overflow-x:auto;overflow-y:hidden;scrollbar-width:none;font-size:14px;font-weight:700;white-space:nowrap">
+    <sc-for list="{{ navLinks }}" as="l" hint-placeholder-count="6">
+      <a href="{{ l.href }}" style="flex:none;padding:8px 14px;border-radius:999px;color:{{ l.color }};background:{{ l.bg }};box-shadow:{{ l.sh }}" style-hover="color:#006687">{{ l.label }}</a>
+    </sc-for>
+  </nav>
 </header>
 
-<main id="main">
-  <!-- HERO -->
-  <section class="hero" aria-label="Tổng quan">
-    <div class="wrap" style="grid-column:1/-1;display:contents">
-      <div>
-        <p class="eyebrow">Vietnam Intelligence &amp; Foresight</p>
-        <h1>Số liệu Việt Nam.<br><span>Có xuất xứ kiểm chứng được.</span></h1>
-        <p class="lead">VietLens đi theo <b>chiều sâu và xuất xứ</b>, nhịp quý cho bối cảnh Việt Nam và đồng bằng — <b>không chạy đua vận tốc</b>. Mỗi chỉ tiêu hiển thị <b>nguồn, mốc thời gian, phương pháp và giới hạn</b>: số có xuất xứ kiểm chứng được mới là sản phẩm. Quy tắc: không có xuất xứ thì không lên bảng.</p>
-        <div class="notice"><b>Phạm vi MVP:</b> Dữ liệu hiện tại là dữ liệu <b>mẫu/proxy</b> để kiểm tra kiến trúc và trải nghiệm — <b>không</b> phải nguồn dữ liệu sống hay dự báo đã hiệu chỉnh. Không dùng làm cơ sở cho quyết định tài chính, y tế, pháp lý hay chính sách.</div>
-        <div class="cta">
-          <a class="btn primary" href="./index.html">Mở bản demo trực tiếp</a>
-          <a class="btn ghost" href="#method">Xem phương pháp</a>
-        </div>
-      </div>
-      <aside class="pulse" aria-label="Chỉ số xung lực quốc gia (minh hoạ)">
-        <div class="pulse-ring"><b>72</b><small>Vietnam Pulse</small></div>
-        <div class="pulse-grid">
-          <div><small>Ổn định</small><b>68</b></div>
-          <div><small>Động lực</small><b>74</b></div>
-          <div><small>Bất định</small><b>41</b></div>
-        </div>
-        <p style="font-size:11px;color:var(--muted);margin:14px 0 0">Số liệu minh hoạ · bản demo cập nhật trực tiếp</p>
-      </aside>
-    </div>
-  </section>
+<main style="max-width:1080px;margin:0 auto;padding:0 24px">
+<section style="position:relative;overflow:hidden;margin:28px 0 48px;border-radius:40px;background:#FFF3DA;box-shadow:inset 0 -10px 0 rgba(140,80,20,.1),inset 0 6px 0 rgba(255,255,255,.7),0 30px 44px -30px rgba(110,70,30,.6)">
+  <div style="position:absolute;right:-8%;top:-34%;width:min(520px,60%);aspect-ratio:1;border-radius:50%;background:url(../assets/brand/trong-dong.svg) center/contain no-repeat;box-shadow:inset 0 -16px 0 rgba(200,110,20,.2);opacity:.85;pointer-events:none"></div>
+  <div style="position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end;padding:clamp(24px,4vw,44px) clamp(20px,4vw,44px) 0">
+  <div style="padding-bottom:clamp(28px,5vw,64px)">
+    <div style="display:inline-flex;padding:7px 14px;border-radius:999px;background:#FFFBF4;color:#7A4A0E;font-size:13px;font-weight:800;box-shadow:inset 0 -3px 0 rgba(0,0,0,.07)">{{ t.eyebrow }}</div>
+    <h1 style="margin:18px 0 0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-weight:800;font-size:clamp(40px,5.4vw,68px);line-height:1.14;letter-spacing:-.02em;text-wrap:balance">{{ t.h1 }}</h1>
+    <p style="margin:18px 0 0;max-width:34em;font-size:17px;line-height:1.65;color:#3E5A5C;text-wrap:pretty">{{ t.lead }}</p>
+  </div>
+  <div style="width:min(24vw,210px);aspect-ratio:760/1100;position:relative;margin-bottom:26px">{{ heroArt }}</div>
+</div>
+  <div style="position:relative;z-index:3;height:44px;margin-top:-44px;background:radial-gradient(circle at 36px 0,transparent 35px,#1E7E8C 36px) 0 0/72px 36px repeat-x,linear-gradient(#1E7E8C,#1E7E8C) 0 36px/100% 100% no-repeat"></div>
+</section>
 
-  <!-- WHAT / OBJECTIVES -->
-  <section id="what">
-    <div class="wrap">
-      <div class="sec-head">
-        <p class="eyebrow">Ba năng lực cốt lõi</p>
-        <h2>VietLens làm gì</h2>
-        <p>Ba không gian làm việc, thiết kế quanh nguyên tắc minh bạch nguồn và khả năng kiểm định.</p>
-      </div>
-      <div class="cards3">
-        <article class="card">
-          <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M11.5 2C6.81 2 3 5.81 3 10.5C3 14.48 5.76 17.82 9.5 18.7V22H11.5V18.7C15.24 17.82 18 14.48 18 10.5C18 5.81 14.19 2 11.5 2ZM11.5 16.5C8.19 16.5 5.5 13.81 5.5 10.5C5.5 7.19 8.19 4.5 11.5 4.5C14.81 4.5 17.5 7.19 17.5 10.5C17.5 13.81 14.81 16.5 11.5 16.5Z" fill="currentColor"/></svg></div>
-          <h3>Signal Room &amp; Regional Watch</h3>
-          <p>Tổng hợp tín hiệu ưu tiên và bản đồ nhiệt rủi ro Việt Nam theo vùng.</p>
-          <ul><li>Lọc riêng cảnh báo</li><li>Rủi ro · thời tiết · thương mại · logistics</li><li>Mỗi tín hiệu ghi nguồn &amp; độ mới</li></ul>
-        </article>
-        <article class="card">
-          <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M13 3V11H21V3H13ZM11 11V3H3V11H11ZM3 13V21H11V13H3ZM13 21H21V13H13ZM15 5H19V9H15V5ZM5 5H9V9H5V5ZM5 15H9V19H5V15ZM15 15H19V19H15V15Z" fill="currentColor"/></svg></div>
-          <h3>Scenario Lab</h3>
-          <p>Mô phỏng cú sốc: giá năng lượng, tỷ giá, chi phí logistics và nhu cầu xuất khẩu.</p>
-          <ul><li>Thanh trượt điều chỉnh cú sốc</li><li>Kết quả theo thời gian thực</li><li>Đối chiếu với baseline</li></ul>
-        </article>
-        <article class="card">
-          <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M11.99 2C6.47 2 2 6.48 2 12C2 17.52 6.47 22 11.99 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 11.99 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20ZM12.5 7H11V13L16.25 16.15L17 14.92L12.5 12.25V7Z" fill="currentColor"/></svg></div>
-          <h3>Forecast Ensemble &amp; Audit</h3>
-          <p>Triển vọng 90 ngày kèm bảng kiểm định minh bạch: phiên bản mô hình, nguồn, khoảng trống dữ liệu.</p>
-          <ul><li>Không phải tư vấn đầu tư</li><li>Ghi rõ độ tin cậy</li><li>Provenance có thể kiểm tra</li></ul>
-        </article>
-      </div>
+<section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:22px;align-items:stretch;margin-bottom:56px">
+  <div style="padding:22px 24px;border-radius:28px;background:#FFE6B8;box-shadow:inset 0 -8px 0 rgba(140,80,20,.1),inset 0 5px 0 rgba(255,255,255,.6)">
+    <div style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#7A4A0E">{{ t.mvpK }}</div>
+    <p style="margin:8px 0 0;font-size:15px;line-height:1.6;color:#4A3008">{{ t.mvp }}</p>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:16px">
+      <a href="https://thuyhuongctu.github.io/BizOn/vietlens/index.html" style="padding:12px 18px;border-radius:18px;background:#006687;color:#fff;font-size:14px;font-weight:800;box-shadow:inset 0 -5px 0 rgba(0,0,0,.2)" style-hover="color:#fff">{{ t.demo }} ↗</a>
+      <a href="#method" style="padding:12px 18px;border-radius:18px;background:#FFFBF4;color:#033337;font-size:14px;font-weight:800;box-shadow:inset 0 -5px 0 rgba(110,70,30,.12)" style-hover="color:#006687">{{ t.seeMethod }}</a>
     </div>
-  </section>
+  </div>
+  <div style="padding:22px;text-align:center;border-radius:30px;background:#FFFBF4;box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 24px 34px -24px rgba(110,70,30,.55)">
+    <div style="position:relative;width:150px;height:150px;margin:0 auto;border-radius:50%;background:conic-gradient(#006687 0 72%,#F3E6CF 72%);box-shadow:0 14px 22px -14px rgba(0,102,135,.6)">
+      <div style="position:absolute;inset:14px;border-radius:50%;background:#FFFBF4;display:grid;place-content:center;box-shadow:inset 0 4px 8px rgba(110,70,30,.15)"><b style="font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:40px;font-weight:800;color:#006687;line-height:1">72</b><span style="font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#3E5A5C">Vietnam Pulse</span></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px">
+      <sc-for list="{{ pulse }}" as="p" hint-placeholder-count="3"><div style="padding:10px 6px;border-radius:16px;background:{{ p.bg }}"><div style="font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#24403F">{{ p.k }}</div><div style="font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:20px;font-weight:800">{{ p.v }}</div></div></sc-for>
+    </div>
+    <div style="margin-top:12px;font-size:12px;color:#6B7F80">{{ t.pulseNote }}</div>
+  </div>
+</section>
 
-  <!-- METHOD -->
-  <section id="method">
-    <div class="wrap">
-      <div class="sec-head">
-        <p class="eyebrow">Phương pháp &amp; nguyên tắc</p>
-        <h2>Minh bạch trước, dự báo sau</h2>
-        <p>Mục tiêu của MVP là kiểm tra kiến trúc, provenance và audit — chưa phải một mô hình dự báo đã hiệu chỉnh.</p>
-      </div>
-      <div class="bento">
-        <div class="b wide">
-          <p class="eyebrow">Luồng xử lý</p>
-          <h3>Từ nguồn tới kết quả có kiểm định</h3>
-          <p>Mỗi con số đi qua một chuỗi ghi vết rõ ràng, để người xem luôn biết dữ liệu đến từ đâu và mới tới mức nào.</p>
-          <div class="flow">
-            <div class="step"><small>01 · Nguồn</small><b>Thu thập</b><p>Chỉ tiêu định kỳ theo quý, có xuất xứ</p></div>
-            <span class="arrow">→</span>
-            <div class="step"><small>02 · Provenance</small><b>Ghi vết</b><p>Nguồn · mốc thời gian · phương pháp · giới hạn</p></div>
-            <span class="arrow">→</span>
-            <div class="step"><small>03 · Ensemble</small><b>Tổng hợp</b><p>Baseline có trọng số + momentum + scenario</p></div>
-            <span class="arrow">→</span>
-            <div class="step"><small>04 · Audit</small><b>Kiểm định</b><p>Phiên bản · khoảng trống · giới hạn dùng</p></div>
-          </div>
-          <div class="chips"><span class="chip">Weighted baseline</span><span class="chip">Momentum</span><span class="chip">Scenario modifiers</span><span class="chip">Provenance ledger</span></div>
+<section style="margin-bottom:56px">
+  <div style="font-size:14px;font-weight:800;color:#C2581B">{{ t.capK }}</div>
+  <h2 style="margin:0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:clamp(26px,3.2vw,36px);font-weight:800;line-height:1.14;margin-top:4px">{{ t.capH }}</h2>
+  <p style="margin:8px 0 20px;font-size:15px;line-height:1.6;color:#3E5A5C">{{ t.capL }}</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:18px">
+    <sc-for list="{{ caps }}" as="c" hint-placeholder-count="3">
+      <article style="padding:24px;border-radius:30px;background:#FFFBF4;box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 24px 34px -24px rgba(110,70,30,.55)">
+        <div style="width:52px;height:52px;border-radius:18px;background:{{ c.bg }};display:grid;place-items:center;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:20px;font-weight:800;box-shadow:inset 0 -5px 0 rgba(0,0,0,.1),inset 0 3px 0 rgba(255,255,255,.5)">{{ c.n }}</div>
+        <h3 style="margin:14px 0 0;font-size:19px;font-weight:800">{{ c.h }}</h3>
+        <p style="margin:6px 0 0;font-size:14px;line-height:1.6;color:#3E5A5C">{{ c.b }}</p>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-top:12px">
+          <sc-for list="{{ c.li }}" as="l" hint-placeholder-count="3"><div style="display:flex;gap:8px;font-size:13px;color:#24403F"><span style="color:#FDA127;font-weight:800">›</span>{{ l }}</div></sc-for>
         </div>
-        <div class="b side">
-          <p class="eyebrow">Ranh giới dữ liệu</p>
-          <h3>Độc lập &amp; cô lập</h3>
-          <p>Bản preview kỹ thuật được cô lập trong thư mục <code style="background:rgba(255,255,255,.16);border-radius:6px;padding:1px 6px">vietlens/</code>. Sản phẩm thương mại cần <b>repository, database và API riêng</b> — không dùng chung dữ liệu, xác thực hay hạ tầng với BizOn.</p>
-        </div>
-        <div class="b third">
-          <p class="eyebrow">Nguyên tắc 1</p>
-          <h3>Hiển thị giới hạn</h3>
-          <p>Kết quả nào cũng kèm nhãn độ tin cậy và phạm vi sử dụng — không có “dự báo trần trụi”.</p>
-        </div>
-        <div class="b third">
-          <p class="eyebrow">Nguyên tắc 2</p>
-          <h3>Kiểm định được</h3>
-          <p>Phiên bản mô hình, thời điểm tạo, sức khoẻ nguồn và khoảng trống dữ liệu đều công khai.</p>
-        </div>
-        <div class="b third">
-          <p class="eyebrow">Nguyên tắc 3</p>
-          <h3>Không thay người quyết định</h3>
-          <p>Công cụ hỗ trợ quan sát &amp; phản tư, không phải cơ sở duy nhất cho quyết định.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+      </article>
+    </sc-for>
+  </div>
+</section>
 
-  <!-- TEAM -->
-  <section id="team">
-    <div class="wrap">
-      <div class="sec-head">
-        <p class="eyebrow">Đội ngũ</p>
-        <h2>Do nhóm BizOn phát triển</h2>
-        <p>VietLens là sản phẩm nghiên cứu &amp; intelligence độc lập trong cùng danh mục, do nhóm sáng lập BizOn khởi xướng.</p>
-      </div>
-      <div class="team">
-        <article class="person">
-          <div class="mono" style="background:linear-gradient(150deg,var(--cyan),var(--primary))">ĐH</div>
-          <div>
-            <h4>NCS. Đỗ Thùy Hương</h4>
-            <p class="role">Founder &amp; Project Lead · PhD Candidate</p>
-            <p>Nghiên cứu sinh Tiến sĩ Quản trị kinh doanh, Đại học Cần Thơ — quốc tế hoá &amp; phân tích tổng hợp.</p>
-          </div>
-        </article>
-        <article class="person">
-          <div class="mono" style="background:linear-gradient(150deg,var(--gold),#e8762d)">PT</div>
-          <div>
-            <h4>PGS.TS. Phan Anh Tú</h4>
-            <p class="role">Co-founder &amp; Cố vấn học thuật</p>
-            <p>Định hướng phương pháp nghiên cứu, chuẩn học thuật và tính minh bạch của mô hình.</p>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section>
-    <div class="wrap">
-      <div class="cta-band">
-        <p class="eyebrow" style="color:#bfe9f5">Bản demo kỹ thuật</p>
-        <h2>Xem VietLens hoạt động</h2>
-        <p>Mở bản MVP để trải nghiệm Signal Room, Scenario Lab và Forecast Audit với dữ liệu mẫu có ghi nguồn.</p>
-        <div class="cta" style="justify-content:center">
-          <a class="btn ghost" href="./index.html">Mở bản demo trực tiếp →</a>
+<section id="method" style="margin-bottom:56px">
+  <div style="font-size:14px;font-weight:800;color:#C2581B">{{ t.mK }}</div>
+  <h2 style="margin:0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:clamp(26px,3.2vw,36px);font-weight:800;line-height:1.14;margin-top:4px">{{ t.mH }}</h2>
+  <p style="margin:8px 0 20px;font-size:15px;line-height:1.6;color:#3E5A5C">{{ t.mL }}</p>
+  <div style="padding:24px;border-radius:30px;background:#FFFBF4;box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 24px 34px -24px rgba(110,70,30,.55)">
+    <div style="font-size:18px;font-weight:800">{{ t.flowH }}</div>
+    <p style="margin:6px 0 16px;font-size:14px;line-height:1.6;color:#3E5A5C">{{ t.flowL }}</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:12px">
+      <sc-for list="{{ flow }}" as="f" hint-placeholder-count="4">
+        <div style="padding:16px;border-radius:22px;background:{{ f.bg }};box-shadow:inset 0 -6px 0 rgba(0,0,0,.07),inset 0 4px 0 rgba(255,255,255,.5)">
+          <div style="font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#24403F">{{ f.k }}</div>
+          <div style="margin-top:4px;font-size:17px;font-weight:800">{{ f.h }}</div>
+          <div style="margin-top:4px;font-size:13px;line-height:1.5;color:#24403F">{{ f.b }}</div>
         </div>
-      </div>
+      </sc-for>
     </div>
-  </section>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:14px">
+      <sc-for list="{{ t.chips }}" as="c" hint-placeholder-count="4"><span style="padding:6px 12px;border-radius:999px;background:#F3E6CF;font-size:12px;font-weight:700;color:#24403F">{{ c }}</span></sc-for>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:16px;margin-top:16px">
+    <div style="padding:24px;border-radius:28px;background:#006687;color:#fff;box-shadow:inset 0 -9px 0 rgba(0,0,0,.18),inset 0 5px 0 rgba(255,255,255,.18)">
+      <div style="font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#BFE6EE">{{ t.bK }}</div>
+      <div style="margin-top:6px;font-size:19px;font-weight:800">{{ t.bH }}</div>
+      <p style="margin:8px 0 0;font-size:14px;line-height:1.6;color:#D6EEF2">{{ t.bL }}</p>
+    </div>
+    <sc-for list="{{ principles }}" as="p" hint-placeholder-count="3">
+      <div style="padding:24px;border-radius:30px;background:#FFFBF4;box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 24px 34px -24px rgba(110,70,30,.55)">
+        <div style="font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#006687">{{ p.k }}</div>
+        <div style="margin-top:6px;font-size:19px;font-weight:800">{{ p.h }}</div>
+        <p style="margin:8px 0 0;font-size:14px;line-height:1.6;color:#3E5A5C">{{ p.b }}</p>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<section style="margin-bottom:56px;padding:28px;border-radius:36px;background:#F3E6CF;box-shadow:inset 0 6px 12px rgba(110,70,30,.15)">
+  <div style="font-size:14px;font-weight:800;color:#C2581B">{{ t.dK }}</div>
+  <h2 style="margin:0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:clamp(26px,3.2vw,36px);font-weight:800;line-height:1.14;margin-top:4px">{{ t.dH }}</h2>
+  <p style="margin:8px 0 18px;font-size:15px;line-height:1.6;color:#3E5A5C">{{ t.dL }}</p>
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <sc-for list="{{ series }}" as="s" hint-placeholder-count="6">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:4px 16px;padding:14px 16px;border-radius:18px;background:#FFFBF4;box-shadow:inset 0 -4px 0 rgba(110,70,30,.08)">
+        <div style="font-size:15px;font-weight:800">{{ s.n }}</div>
+        <div style="font-size:13px;line-height:1.5;color:#3E5A5C">{{ s.s }}</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#0F5C4E">{{ s.p }}</div>
+      </div>
+    </sc-for>
+  </div>
+  <p style="margin:14px 0 0;padding:12px 16px;border-radius:18px;background:#FDE1CE;font-size:13px;line-height:1.55;color:#5A2608">{{ t.dNote }}</p>
+</section>
+
+<section style="margin-bottom:56px">
+  <div style="font-size:14px;font-weight:800;color:#C2581B">{{ t.tK }}</div>
+  <h2 style="margin:0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:clamp(26px,3.2vw,36px);font-weight:800;line-height:1.14;margin-top:4px">{{ t.tH }}</h2>
+  <p style="margin:8px 0 20px;font-size:15px;line-height:1.6;color:#3E5A5C">{{ t.tL }}</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:18px">
+    <sc-for list="{{ team }}" as="m" hint-placeholder-count="2">
+      <a href="{{ m.href }}" style="display:grid;grid-template-columns:64px minmax(0,1fr);gap:16px;align-items:center;padding:20px;color:#033337;border-radius:30px;background:#FFFBF4;box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 24px 34px -24px rgba(110,70,30,.55)" style-hover="color:#033337;transform:translateY(-3px)">
+        <span style="width:64px;height:64px;border-radius:20px;background:{{ m.bg }};color:#fff;display:grid;place-items:center;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:22px;font-weight:800;box-shadow:inset 0 -5px 0 rgba(0,0,0,.2)">{{ m.mono }}</span>
+        <span><span style="display:block;font-size:17px;font-weight:800">{{ m.n }}</span><span style="display:block;margin-top:2px;font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#006687">{{ m.r }}</span><span style="display:block;margin-top:4px;font-size:13px;line-height:1.5;color:#3E5A5C">{{ m.b }}</span></span>
+      </a>
+    </sc-for>
+  </div>
+</section>
+
+<section style="margin-bottom:72px;padding:36px 28px;border-radius:36px;background:#006687;color:#fff;text-align:center;box-shadow:inset 0 -12px 0 rgba(0,0,0,.18),inset 0 6px 0 rgba(255,255,255,.18),0 30px 40px -26px rgba(0,60,80,.8)">
+  <h2 style="margin:0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:clamp(26px,3.2vw,36px);font-weight:800;line-height:1.14;color:#fff">{{ t.ctaH }}</h2>
+  <p style="margin:10px auto 0;max-width:36em;font-size:15px;line-height:1.6;color:#D6EEF2">{{ t.ctaL }}</p>
+  <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:20px">
+    <a href="https://thuyhuongctu.github.io/BizOn/vietlens/index.html" style="padding:14px 22px;border-radius:20px;background:#FDA127;color:#033337;font:800 17px 'Plus Jakarta Sans','PJS Fallback',sans-serif;box-shadow:inset 0 -6px 0 rgba(0,0,0,.15),inset 0 3px 0 rgba(255,255,255,.4)" style-hover="color:#033337">{{ t.demo }} ↗</a>
+    <a href="../universe.html" style="padding:14px 22px;border-radius:20px;background:#FFFBF4;color:#033337;font:800 17px 'Plus Jakarta Sans','PJS Fallback',sans-serif;box-shadow:inset 0 -6px 0 rgba(110,70,30,.15),inset 0 3px 0 #fff" style-hover="color:#006687">{{ t.toUni }}</a>
+  </div>
+  <p style="margin:18px auto 0;max-width:46em;font-size:12px;line-height:1.6;color:#BFE6EE">{{ t.legal }}</p>
+</section>
 </main>
 
-<footer>
-  <div class="wrap">
-    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 18px;margin-bottom:18px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:var(--surface)">
-      <span style="font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)">Hệ sinh thái · <b style="color:var(--primary)">Je m'appelle Hương</b></span>
-      <span style="display:flex;flex-wrap:wrap;gap:8px">
-        <a href="../index.html" style="font-size:12px;font-weight:800;text-decoration:none;padding:6px 12px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--primary)">BizOn</a>
-        <a href="./gioi-thieu.html" aria-current="true" style="font-size:12px;font-weight:800;text-decoration:none;padding:6px 12px;border-radius:999px;background:var(--primary);border:1px solid var(--primary);color:#fff">VietLens AI</a>
-        <a href="https://thuyhuongctu.github.io/M-AIDA/" target="_blank" rel="noopener" style="font-size:12px;font-weight:800;text-decoration:none;padding:6px 12px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--primary)">M-AIDA ↗</a>
-      </span>
-    </div>
-    <p><b>VietLens AI MVP</b> · Dữ liệu minh hoạ có ghi nguồn và độ trễ · Không sử dụng làm cơ sở duy nhất cho quyết định tài chính, y tế, pháp lý, khẩn cấp hoặc chính sách công.</p>
-    <p class="repo-note">Preview kỹ thuật đang được cô lập trong thư mục <code>vietlens/</code>; sản phẩm thương mại cần repository, database và API riêng. © 2026 Đỗ Thùy Hương &amp; Phan Anh Tú.</p>
+<footer style="background:#033337;color:#9CC9C9">
+  <div style="height:30px;background:radial-gradient(circle at 30px 0,#FBF4E8 29px,transparent 30px) 0 0/60px 30px repeat-x"></div>
+  <div style="max-width:1080px;margin:0 auto;padding:28px 24px 40px;display:flex;flex-direction:column;gap:10px;font-size:13px;line-height:1.6">
+    <div>© 2026 Đỗ Thùy Hương & PGS.TS. Phan Anh Tú – BizOn Bật Nghiệp</div>
+    <a href="https://play.google.com/store/apps/details?id=io.github.thuyhuongctu.bizon" style="align-self:flex-start;padding:8px 14px;border-radius:999px;background:#0B4A4F;color:#FFD58A;font-weight:800;box-shadow:inset 0 -3px 0 rgba(0,0,0,.25)">▶ {{ t.gp }}</a>
+    <div style="display:flex;flex-wrap:wrap;gap:16px"><a href="../chinh-sach.html" style="color:#FFD58A">Privacy</a><a href="../tuyen-dung.html" style="color:#FFD58A">Jobs</a><a href="../lien-he.html" style="color:#FFD58A">Contact</a></div>
+    <div style="font-size:12px;color:#7FA9AA">{{ t.disclaimer }}</div>
   </div>
 </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;vi&quot;,&quot;en&quot;],&quot;default&quot;:&quot;vi&quot;,&quot;tsType&quot;:&quot;'vi'|'en'&quot;}}">
+const NAV7=[["Vũ trụ","Universe","../universe.html"],["Trò chơi","Games","../games.html"],["Lớp học","Classroom","../lop-hoc.html"],["Học thuật","Academic","../truong-hoc-thuat.html"],["Bằng chứng","Evidence","../bang-chung.html"],["Pilot","Pilot","../giai-phap.html"],["Đội ngũ","About","../doi-ngu.html"]];
+const NAVX7=(lang,me)=>NAV7.map(([vi,en,href])=>{const on=href===me;return{label:lang==='en'?en:vi,href:on?'#':href,color:on?'#006687':'#3E5A5C',bg:on?'#FFFBF4':'transparent',sh:on?'0 4px 8px -4px rgba(110,70,30,.5),inset 0 -3px 0 rgba(110,70,30,.12)':'none'}});
+const B='https://thuyhuongctu.github.io/BizOn/';
+const NAV=['../games.html',B+'brand-passport.html','../truong-hoc-thuat.html','../bang-chung.html','../giai-phap.html','../doi-ngu.html'];
+const NAVX=a=>a.map(l=>{const on=l.color==='#006687';return Object.assign({},l,{color:on?'#006687':'#3E5A5C',bg:on?'#FFFBF4':'transparent',sh:on?'0 4px 8px -4px rgba(110,70,30,.5),inset 0 -3px 0 rgba(110,70,30,.12)':'none'})});
+const NV={vi:['Trò chơi','Brand Passport','Học thuật','Bằng chứng','Pilot','Đội ngũ'],en:['Games','Brand Passport','Academic','Evidence','Pilot','About']};
+const DIS={vi:'Trang web chỉ phục vụ mục đích giáo dục và nghiên cứu, không đại diện cho bất kỳ tổ chức chính trị nào. Hình ảnh quốc kỳ, bản đồ chỉ mang ý nghĩa minh họa văn hóa – giáo dục.',en:'This website serves educational and research purposes only and does not represent any political organization. Flag and map images are cultural and educational illustrations only.'};
+const CLAY=['#7FD3DC','#FFD58A','#F4B6C2','#A9DCC4','#D9F0F2'];
+const T={vi:{eyebrow:'VietLens AI · Vietnam Intelligence & Foresight',h1:'Số liệu Việt Nam. Có xuất xứ kiểm chứng được.',lead:'VietLens đi theo chiều sâu và xuất xứ, nhịp quý cho bối cảnh Việt Nam và đồng bằng — không chạy đua vận tốc. Mỗi chỉ tiêu hiển thị nguồn, mốc thời gian, phương pháp và giới hạn: số có xuất xứ kiểm chứng được mới là sản phẩm. Quy tắc: không có xuất xứ thì không lên bảng.',
+mvpK:'Phạm vi MVP',mvp:'Dữ liệu hiện tại là dữ liệu mẫu/proxy để kiểm tra kiến trúc và trải nghiệm — không phải nguồn dữ liệu sống hay dự báo đã hiệu chỉnh. Không dùng làm cơ sở cho quyết định tài chính, y tế, pháp lý hay chính sách.',demo:'Mở bản demo trực tiếp',seeMethod:'Xem phương pháp',pulse:[['Ổn định','68'],['Động lực','74'],['Bất định','41']],pulseNote:'Số liệu minh hoạ · bản demo cập nhật trực tiếp',
+capK:'Ba năng lực cốt lõi',capH:'VietLens làm gì',capL:'Ba không gian làm việc, thiết kế quanh nguyên tắc minh bạch nguồn và khả năng kiểm định.',
+caps:[['Signal Room & Regional Watch','Tổng hợp tín hiệu ưu tiên và bản đồ nhiệt rủi ro Việt Nam theo vùng.',['Lọc riêng cảnh báo','Rủi ro · thời tiết · thương mại · logistics','Mỗi tín hiệu ghi nguồn & độ mới']],['Scenario Lab','Mô phỏng cú sốc: giá năng lượng, tỷ giá, chi phí logistics và nhu cầu xuất khẩu.',['Thanh trượt điều chỉnh cú sốc','Kết quả theo thời gian thực','Đối chiếu với baseline']],['Forecast Ensemble & Audit','Triển vọng 90 ngày kèm bảng kiểm định minh bạch: phiên bản mô hình, nguồn, khoảng trống dữ liệu.',['Không phải tư vấn đầu tư','Ghi rõ độ tin cậy','Provenance có thể kiểm tra']]],
+mK:'Phương pháp & nguyên tắc',mH:'Minh bạch trước, dự báo sau',mL:'Mục tiêu của MVP là kiểm tra kiến trúc, provenance và audit — chưa phải một mô hình dự báo đã hiệu chỉnh.',flowH:'Từ nguồn tới kết quả có kiểm định',flowL:'Mỗi con số đi qua một chuỗi ghi vết rõ ràng, để người xem luôn biết dữ liệu đến từ đâu và mới tới mức nào.',
+flow:[['01 · Nguồn','Thu thập','Chỉ tiêu định kỳ theo quý, có xuất xứ'],['02 · Provenance','Ghi vết','Nguồn · mốc thời gian · phương pháp · giới hạn'],['03 · Ensemble','Tổng hợp','Baseline có trọng số + momentum + scenario'],['04 · Audit','Kiểm định','Phiên bản · khoảng trống · giới hạn dùng']],chips:['Weighted baseline','Momentum','Scenario modifiers','Provenance ledger'],
+bK:'Ranh giới dữ liệu',bH:'Độc lập & cô lập',bL:'Bản preview kỹ thuật được cô lập trong thư mục vietlens/. Sản phẩm thương mại cần repository, database và API riêng — không dùng chung dữ liệu, xác thực hay hạ tầng với BizOn.',
+principles:[['Nguyên tắc 1','Hiển thị giới hạn','Kết quả nào cũng kèm nhãn độ tin cậy và phạm vi sử dụng — không có “dự báo trần trụi”.'],['Nguyên tắc 2','Kiểm định được','Phiên bản mô hình, thời điểm tạo, sức khoẻ nguồn và khoảng trống dữ liệu đều công khai.'],['Nguyên tắc 3','Không thay người quyết định','Công cụ hỗ trợ quan sát & phản tư, không phải cơ sở duy nhất cho quyết định.']],
+dK:'Tầng 1 · lớp dữ liệu chính thức (từ 10/2026)',dH:'Chuỗi số liệu công khai có xuất xứ',dL:'Dựng từ các tệp nguồn trong vietlens/data/raw/ bằng build_official.py, kiểm tra bởi test/vietlens-official.test.js.',
+series:[['FDI giải ngân, toàn quốc, theo quý','Báo cáo quý của Tổng cục Thống kê (mỗi điểm kèm URL và trích dẫn nguyên văn)','2012Q1–2026Q2'],['FDI đăng ký mới, theo quý','Như trên (đánh dấu thay đổi mốc chốt số)','2012Q1–2026Q2'],['FDI đăng ký lũy kế theo đối tác','Niên giám Thống kê 2008 và 2012','cuối 2008, cuối 2012'],['Khối lượng nhập khẩu thế giới','CPB World Trade Monitor (bản 07/2026)','2011Q1–2026Q2'],['Tỷ giá thực hiệu dụng của đồng Việt Nam','Bruegel REER (Darvas, 2021), 120 đối tác','2011Q1–2026Q2'],['Xuất khẩu sầu riêng','Báo cáo Bộ Công Thương; CESTI (04/2024)','2022 – 02/2024']],
+dNote:'Chuỗi FDI theo ngành mua từ Hải quan chưa được đưa vào cho tới khi xác nhận giấy phép tái phân phối. Các thẻ, bản đồ, tín hiệu và kịch bản khác vẫn là dữ liệu mẫu/proxy.',
+tK:'Đội ngũ',tH:'Do nhóm BizOn phát triển',tL:'VietLens là sản phẩm nghiên cứu & intelligence độc lập trong cùng danh mục, do nhóm sáng lập BizOn khởi xướng.',
+team:[['ĐH','NCS. Đỗ Thùy Hương','Founder & Project Lead · PhD Candidate','Nghiên cứu sinh Tiến sĩ Quản trị kinh doanh, Đại học Cần Thơ — quốc tế hoá & phân tích tổng hợp.'],['PT','PGS.TS. Phan Anh Tú','Co-founder & Cố vấn học thuật','Định hướng phương pháp nghiên cứu, chuẩn học thuật và tính minh bạch của mô hình.']],
+ctaH:'Xem VietLens hoạt động',ctaL:'Mở bản MVP để trải nghiệm Signal Room, Scenario Lab và Forecast Audit với dữ liệu mẫu có ghi nguồn.',toUni:'Về vũ trụ BizOn',legal:'VietLens AI MVP · Dữ liệu minh hoạ có ghi nguồn và độ trễ · Không sử dụng làm cơ sở duy nhất cho quyết định tài chính, y tế, pháp lý, khẩn cấp hoặc chính sách công.'},
+en:{eyebrow:'VietLens AI · Vietnam Intelligence & Foresight',h1:'Vietnam data, with checkable provenance.',lead:'VietLens is built on depth and provenance, on a quarterly cadence for Vietnam and the Mekong Delta — not a race for speed. Every indicator shows its source, period, method and limitation: a number with a checkable origin is the product. The rule: no provenance, no place on the board.',
+mvpK:'MVP scope',mvp:'Current data are sample/proxy observations for testing architecture and experience — not live feeds or calibrated forecasts. Not to be used as the basis for financial, medical, legal or policy decisions.',demo:'Open the live demo',seeMethod:'See the method',pulse:[['Stability','68'],['Momentum','74'],['Uncertainty','41']],pulseNote:'Illustrative figures · the demo updates live',
+capK:'Three core capabilities',capH:'What VietLens does',capL:'Three workspaces designed around source transparency and auditability.',
+caps:[['Signal Room & Regional Watch','Priority signals and a regional risk heat map for Vietnam.',['Alerts-only filter','Risk · weather · trade · logistics','Every signal shows source & freshness']],['Scenario Lab','Shock simulation: energy prices, FX, logistics costs and export demand.',['Shock sliders','Results in real time','Compared against baseline']],['Forecast Ensemble & Audit','A 90-day outlook with a transparent audit table: model version, sources, data gaps.',['Not investment advice','Confidence stated','Checkable provenance']]],
+mK:'Method & principles',mH:'Transparency first, forecasts second',mL:'The MVP tests architecture, provenance and audit — it is not yet a calibrated forecasting model.',flowH:'From source to audited result',flowL:'Every figure passes through a clear trace, so viewers always know where data came from and how fresh it is.',
+flow:[['01 · Source','Collect','Quarterly indicators with provenance'],['02 · Provenance','Trace','Source · period · method · limitation'],['03 · Ensemble','Combine','Weighted baseline + momentum + scenario'],['04 · Audit','Verify','Version · gaps · usage limits']],chips:['Weighted baseline','Momentum','Scenario modifiers','Provenance ledger'],
+bK:'Data boundary',bH:'Independent & isolated',bL:'The technical preview is isolated in the vietlens/ folder. A commercial product needs its own repository, database and API — no shared data, auth or infrastructure with BizOn.',
+principles:[['Principle 1','Show the limits','Every result carries a confidence label and scope of use — no "naked forecasts".'],['Principle 2','Auditable','Model version, creation time, source health and data gaps are all public.'],['Principle 3','Never the decision-maker','A tool for observation & reflection, not the sole basis for a decision.']],
+dK:'Tier 1 · official data layer (since 10/2026)',dH:'Public series with provenance',dL:'Built from source files in vietlens/data/raw/ by build_official.py and checked by test/vietlens-official.test.js.',
+series:[['FDI disbursed, national, quarterly','General Statistics Office quarterly reports (each point with URL and verbatim quote)','2012Q1–2026Q2'],['FDI newly registered, quarterly','Same (cut-off date changes flagged)','2012Q1–2026Q2'],['Cumulative registered FDI by partner','GSO Statistical Yearbooks 2008 and 2012','end-2008, end-2012'],['World import volume','CPB World Trade Monitor (Jul 2026 release)','2011Q1–2026Q2'],['Real effective exchange rate of the dong','Bruegel REER (Darvas, 2021), 120 partners','2011Q1–2026Q2'],['Durian exports','Ministry of Industry and Trade reports; CESTI (04/2024)','2022 – Feb 2024']],
+dNote:'The purchased Customs FDI-sector series is not included until its redistribution licence is confirmed. Other cards, map, signals and scenarios remain sample/proxy.',
+tK:'Team',tH:'Built by the BizOn team',tL:'VietLens is an independent research & intelligence product in the same portfolio, started by the BizOn founders.',
+team:[['ĐH','Đỗ Thùy Hương','Founder & Project Lead · PhD Candidate','PhD candidate in Business Administration, Can Tho University — internationalization & meta-analysis.'],['PT','Assoc. Prof. Phan Anh Tú','Co-founder & Academic Advisor','Research method, academic standards and model transparency.']],
+ctaH:'See VietLens in action',ctaL:'Open the MVP to try Signal Room, Scenario Lab and Forecast Audit with sourced sample data.',toUni:'Back to the BizOn universe',legal:'VietLens AI MVP · Illustrative data with source and lag · Not to be used as the sole basis for financial, medical, legal, emergency or public-policy decisions.'}};
+class Component extends DCLogic{
+  state={lang:null};
+  renderVals(){
+    const lang=this.state.lang||this.props.lang||'vi';const t=Object.assign({gp:lang==='vi'?'Tải trên Google Play':'Get it on Google Play',navCta:lang==='vi'?'Bắt đầu':'Launch',disclaimer:DIS[lang]},T[lang]);
+    if(!this._art)this._art=React.createElement('img',{src:'https://thuyhuongctu.github.io/BizOn/assets/character/advisors/lumina-bien-co-thi-truong-cut.webp',alt:'',style:{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'contain',objectPosition:'50% 100%',filter:'drop-shadow(0 18px 14px rgba(110,70,30,.35))',animation:'bzFloat 6s ease-in-out infinite'}});
+    const on='inset 0 -3px 0 rgba(0,0,0,.2),0 4px 8px -3px rgba(0,60,80,.5)';
+    return Object.assign({
+      t,heroArt:this._art,
+      setVi:()=>this.setState({lang:'vi'}),setEn:()=>this.setState({lang:'en'}),
+      viBg:lang==='vi'?'#006687':'transparent',viFg:lang==='vi'?'#fff':'#3E5A5C',viSh:lang==='vi'?on:'none',
+      enBg:lang==='en'?'#006687':'transparent',enFg:lang==='en'?'#fff':'#3E5A5C',enSh:lang==='en'?on:'none',
+      navLinks:NAVX7(lang,'../vietlens/gioi-thieu.html')
+    },((t)=>{const C=['#7FD3DC','#FFD58A','#F4B6C2','#A9DCC4'];
+ return{pulse:t.pulse.map(([k,v],i)=>({k,v,bg:['#D9F0F2','#DDF1E4','#FDE1CE'][i]})),
+  caps:t.caps.map(([h,b,li],i)=>({n:'0'+(i+1),h,b,li,bg:C[i]})),
+  flow:t.flow.map(([k,h,b],i)=>({k,h,b,bg:C[i]})),
+  principles:t.principles.map(([k,h,b])=>({k,h,b})),
+  series:t.series.map(([n,s,p])=>({n,s,p})),
+  team:t.team.map(([mono,n,r,b],i)=>({mono,n,r,b,bg:i?'#E8762D':'#006687',href:'../doi-ngu.html'}))};})(t,lang));
+  }
+}
+</script>
 </body>
 </html>
