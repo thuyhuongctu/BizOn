@@ -9,7 +9,7 @@
 <body>
 <x-dc>
 <helmet>
-<title>Bến Phù Sa v4 – Chơi nhóm</title>
+<title>Bến Phù Sa – Chơi nhóm 5 vai (3D)</title>
 <template id="__bundler_thumbnail" data-bg-color="#033337"><svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg"><rect width="1200" height="800" fill="#033337"></rect><path d="M360 470 L840 470 L760 560 L440 560 Z" fill="#fda127"></path><rect x="590" y="250" width="16" height="220" fill="#fff"></rect><path d="M606 260 L760 440 L606 440 Z" fill="#fff"></path></svg></template>
 <meta name="ext-resource-dependency" content="assets/character/phu-sa/huong-new.png">
 <meta name="ext-resource-dependency" content="assets/character/phu-sa/huong-new.png?v=7">
@@ -27,7 +27,7 @@
 <meta name="ext-resource-dependency" content="assets/character/rivals/co-bay-win.png">
 <meta name="ext-resource-dependency" content="assets/character/phu-sa/tu-huong-ganh.png">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="css/bizon-fonts-v8.css">
+<link rel="stylesheet" href="css/bizon-fonts.css">
 <script src="vendor/peerjs/peerjs.min.js"></script>
 <script src="js/bps3d-bridge.js"></script>
 <meta name="ext-resource-dependency" content="js/bps3d-v2.js">
@@ -41,7 +41,7 @@ button,input{font-family:inherit;}
 </helmet>
 <div style="min-height:100vh;font-family:'Manrope',sans-serif;color:#033337;background:radial-gradient(120% 80% at 50% 0%,#f4faf6 0%,#e6f3f2 55%,#d7ecea 100%);">
 
-<button onClick="{{ toggleLang }}" style="position:fixed;right:14px;bottom:14px;z-index:40;min-height:44px;padding:0 14px;border:none;border-radius:14px;background:#033337;color:#fff;font-weight:800;font-size:13px;cursor:pointer;box-shadow:0 10px 20px -8px rgba(3,51,55,.6);">🌐 {{ langLabel }}</button>
+<button onClick="{{ toggleLang }}" style="position:fixed;right:{{ langRight }};bottom:14px;z-index:40;white-space:nowrap;min-height:44px;padding:0 14px;border:none;border-radius:14px;background:#033337;color:#fff;font-weight:800;font-size:13px;cursor:pointer;box-shadow:0 10px 20px -8px rgba(3,51,55,.6);">🌐 {{ langLabel }}</button>
 <sc-if value="{{ hasErr }}" hint-placeholder-val="{{ false }}">
   <div style="position:fixed;left:50%;top:14px;transform:translateX(-50%);z-index:50;background:#c0392b;color:#fff;border-radius:16px;padding:10px 16px;font-size:14px;font-weight:700;box-shadow:0 12px 24px -10px rgba(0,0,0,.4);display:flex;gap:10px;align-items:center;max-width:92vw;"><span>{{ err }}</span><button onClick="{{ clearErr }}" style="border:none;background:rgba(255,255,255,.2);color:#fff;border-radius:10px;padding:4px 10px;cursor:pointer;font-weight:800;">✕</button></div>
 </sc-if>
@@ -135,17 +135,19 @@ button,input{font-family:inherit;}
 </sc-if>
 
 <sc-if value="{{ isPlay }}" hint-placeholder-val="{{ false }}">
-<div data-screen-label="Chọn bến" style="max-width:1320px;margin:0 auto;padding:clamp(12px,2vw,24px);display:flex;flex-wrap:wrap;gap:18px;align-items:flex-start;">
-  <div style="flex:1 1 560px;min-width:0;display:flex;flex-direction:column;gap:14px;">
+<div data-screen-label="Chọn bến" style="position:relative;">
+  <div style="display:{{ show3d }};position:{{ mapPos }};left:0;right:0;top:0;bottom:0;height:{{ mapH }};z-index:0;background:#bfe6f5;">
+    <div ref="{{ mapRef }}" style="position:absolute;inset:0;"></div>
+    <div style="position:absolute;left:14px;bottom:56px;right:{{ chipRight }};display:flex;gap:8px;pointer-events:none;flex-wrap:wrap;"><span style="background:rgba(3,51,55,.85);color:#fff;border-radius:12px;padding:6px 10px;font-size:12px;font-weight:700;white-space:nowrap;">{{ mapHint }}</span><span style="background:#fda127;color:#033337;border-radius:12px;padding:6px 10px;font-size:12px;font-weight:800;white-space:nowrap;">📍 {{ finalLoc }}</span></div>
+  </div>
+  <sc-if value="{{ canMin }}" hint-placeholder-val="{{ false }}"><button onClick="{{ togglePanel }}" style="position:fixed;z-index:9;right:{{ toggleRight }};bottom:14px;min-height:48px;padding:0 18px;white-space:nowrap;border:none;border-radius:999px;background:#fda127;color:#033337;font-weight:800;font-size:14px;cursor:pointer;box-shadow:0 5px 0 #c97a12,0 14px 24px -10px rgba(0,0,0,.5);">{{ panelLabel }}</button></sc-if>
+  <div style="display:{{ panelDisp }};position:{{ panelPos }};top:{{ panelTop }};right:{{ panelRight }};bottom:{{ panelBottom }};width:{{ panelW }};max-width:{{ panelMax }};margin:{{ panelMargin }};overflow-y:{{ panelOv }};z-index:8;flex-direction:column;gap:14px;padding:{{ panelPad }};background:{{ panelBg }};-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-radius:{{ panelRad }};box-shadow:{{ panelSh }};">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;"><h2 style="margin:0;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;">{{ tx.river }}</h2>
+      <div style="display:flex;gap:4px;background:#fff;border-radius:14px;padding:4px;box-shadow:0 6px 14px -8px rgba(3,51,55,.4);"><sc-for list="{{ viewOpts }}" as="o" hint-placeholder-count="2"><button onClick="{{ o.onClick }}" style="min-height:36px;padding:0 14px;border:none;border-radius:10px;background:{{ o.bg }};color:#033337;font-weight:800;cursor:pointer;">{{ o.label }}</button></sc-for></div></div>
     <sc-if value="{{ hasEv }}" hint-placeholder-val="{{ false }}">
       <div style="display:flex;gap:12px;align-items:center;background:#fff4dc;border:2px solid #fda127;border-radius:20px;padding:10px 14px;"><span style="font-size:30px;">{{ evIcon }}</span><div style="display:flex;flex-direction:column;"><span style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#e8762d;">{{ tx.evWeek }}</span><b style="font-size:15px;">{{ evName }}</b><span style="font-size:12px;opacity:.8;">{{ evDesc }}</span></div></div>
     </sc-if>
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;"><h2 style="margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;">{{ tx.river }}</h2>
-      <div style="display:flex;gap:4px;background:#fff;border-radius:14px;padding:4px;box-shadow:0 6px 14px -8px rgba(3,51,55,.4);"><sc-for list="{{ viewOpts }}" as="o" hint-placeholder-count="2"><button onClick="{{ o.onClick }}" style="min-height:36px;padding:0 14px;border:none;border-radius:10px;background:{{ o.bg }};color:#033337;font-weight:800;cursor:pointer;">{{ o.label }}</button></sc-for></div></div>
-    <div style="display:{{ show3d }};position:relative;height:clamp(300px,46vw,460px);border-radius:28px;overflow:hidden;box-shadow:0 18px 34px -18px rgba(3,51,55,.6), 0 0 0 6px #fff;">
-      <div ref="{{ mapRef }}" style="position:absolute;inset:0;"></div>
-      <div style="position:absolute;left:12px;bottom:12px;right:12px;display:flex;justify-content:space-between;gap:8px;pointer-events:none;flex-wrap:wrap;"><span style="background:rgba(3,51,55,.85);color:#fff;border-radius:12px;padding:6px 10px;font-size:12px;font-weight:700;">{{ mapHint }}</span><span style="background:#fda127;color:#033337;border-radius:12px;padding:6px 10px;font-size:12px;font-weight:800;">📍 {{ finalLoc }}</span></div>
-    </div>
+    <sc-if value="{{ showCards }}" hint-placeholder-val="{{ false }}">
     <span style="font-size:12px;opacity:.7;">{{ tx.cardsHint }}</span>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;">
       <sc-for list="{{ landings }}" as="l" hint-placeholder-count="8">
@@ -161,20 +163,15 @@ button,input{font-family:inherit;}
         </button>
       </sc-for>
     </div>
-    <div style="background:#fff;border-radius:24px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;box-shadow:0 10px 22px -12px rgba(3,51,55,.35);">
-      <b style="font-size:14px;">{{ tx.notebook }}</b>
-      <sc-if value="{{ noTips }}" hint-placeholder-val="{{ true }}"><span style="font-size:12px;opacity:.6;">{{ tx.noTips }}</span></sc-if>
-      <div style="display:flex;flex-wrap:wrap;gap:6px;"><sc-for list="{{ tips }}" as="t" hint-placeholder-count="0"><span style="font-size:12px;background:#eef4f3;border-radius:10px;padding:5px 9px;">{{ t }}</span></sc-for></div>
-    </div>
-  </div>
+    </sc-if>
 
-  <div style="flex:1 1 360px;min-width:0;display:flex;flex-direction:column;gap:14px;">
     <sc-if value="{{ isSpectator }}" hint-placeholder-val="{{ false }}"><div style="background:#fff;border-radius:24px;padding:16px;font-size:14px;">{{ tx.spect }}</div></sc-if>
 
     <sc-if value="{{ hasMethod }}" hint-placeholder-val="{{ false }}">
       <div style="background:#fff;border-radius:24px;padding:14px;display:flex;flex-direction:column;gap:8px;box-shadow:0 10px 22px -12px rgba(3,51,55,.35);">
         <b style="font-size:14px;">{{ tx.method }}</b>
         <sc-for list="{{ methods }}" as="m" hint-placeholder-count="3"><button onClick="{{ m.onClick }}" style="min-height:52px;border:2px solid {{ m.bd }};background:{{ m.bg }};border-radius:16px;padding:8px 12px;cursor:pointer;color:#033337;display:flex;gap:10px;align-items:center;text-align:left;"><span style="font-size:24px;">{{ m.icon }}</span><span style="display:flex;flex-direction:column;"><b style="font-size:13px;">{{ m.name }}</b><span style="font-size:11px;opacity:.65;">{{ m.desc }}</span></span></button></sc-for>
+        <button onClick="{{ adsAct }}" style="min-height:48px;border:2px solid {{ adsBd }};background:{{ adsBg }};border-radius:14px;padding:6px 12px;cursor:pointer;color:#033337;display:flex;gap:10px;align-items:center;text-align:left;"><span style="font-size:22px;">📣</span><span style="flex:1;display:flex;flex-direction:column;"><b style="font-size:13px;">{{ adsLabel }}</b><span style="font-size:11px;opacity:.65;">{{ adsDesc }}</span></span><b style="font-size:12px;">0,3</b></button>
       </div>
     </sc-if>
 
@@ -184,11 +181,15 @@ button,input{font-family:inherit;}
         <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;">
           <sc-for list="{{ menus }}" as="m" hint-placeholder-count="4"><button onClick="{{ m.onClick }}" style="min-height:64px;border:2px solid {{ m.bd }};background:{{ m.bg }};border-radius:16px;padding:8px 10px;cursor:pointer;color:#033337;display:flex;flex-direction:column;gap:2px;text-align:left;"><b style="font-size:13px;">{{ m.icon }} {{ m.name }}</b><span style="font-size:10px;opacity:.65;line-height:1.3;">{{ m.desc }}</span></button></sc-for>
         </div>
+        <b style="font-size:13px;margin-top:4px;">{{ qtyTitle }}</b>
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;">
+          <sc-for list="{{ qtys }}" as="q" hint-placeholder-count="3"><button onClick="{{ q.onClick }}" style="min-height:64px;border:2px solid {{ q.bd }};background:{{ q.bg }};border-radius:14px;padding:6px 8px;cursor:pointer;color:#033337;display:flex;flex-direction:column;gap:2px;text-align:left;"><b style="font-size:12px;">{{ q.icon }} {{ q.name }}</b><span style="font-size:10px;opacity:.65;line-height:1.3;">{{ q.desc }}</span></button></sc-for>
+        </div>
       </div>
     </sc-if>
 
     <sc-if value="{{ hasLand }}" hint-placeholder-val="{{ false }}">
-      <div style="background:#033337;color:#fff;border-radius:24px;padding:14px 16px;display:flex;flex-direction:column;gap:4px;"><b style="font-size:14px;color:#fda127;">{{ tx.landT }}</b><span style="font-size:13px;opacity:.85;line-height:1.45;">{{ tx.landD }} <b>{{ finalLoc }}</b></span></div>
+      <div style="background:#033337;color:#fff;border-radius:24px;padding:14px 16px;display:flex;flex-direction:column;gap:4px;"><b style="font-size:14px;color:#fda127;">{{ tx.landT }}</b><span style="font-size:13px;opacity:.85;line-height:1.45;">{{ tx.landD }} <b>{{ finalLoc }}</b></span><button onClick="{{ vetoAct }}" style="margin-top:6px;min-height:44px;border:none;border-radius:12px;background:{{ vetoBg }};color:#033337;font-weight:800;cursor:pointer;opacity:{{ vetoOp }};">⚖️ {{ vetoLabel }}</button><span style="font-size:11px;opacity:.7;">{{ vetoNote }}</span></div>
     </sc-if>
 
     <sc-if value="{{ hasScout }}" hint-placeholder-val="{{ false }}">
@@ -226,7 +227,11 @@ button,input{font-family:inherit;}
       </div>
     </sc-if>
 
+    <sc-if value="{{ hasSplit }}" hint-placeholder-val="{{ false }}">
+      <div style="background:#fdeceb;border:2px solid #c0392b;border-radius:18px;padding:10px 14px;font-size:13px;font-weight:700;line-height:1.4;">⚠️ {{ splitTxt }}</div>
+    </sc-if>
     <sc-if value="{{ seated }}" hint-placeholder-val="{{ false }}">
+      <span style="font-size:12px;opacity:.7;line-height:1.4;">{{ autoNote }}</span>
       <button onClick="{{ toggleReady }}" style="min-height:58px;border:none;border-radius:20px;background:{{ readyBg }};color:{{ readyFg }};font-size:16px;font-weight:800;cursor:pointer;box-shadow:inset 0 -5px 0 rgba(0,0,0,.15);">{{ readyLabel }}</button>
     </sc-if>
 
@@ -244,6 +249,11 @@ button,input{font-family:inherit;}
       <div style="background:rgba(3,51,55,.08);border-radius:20px;padding:12px 14px;display:flex;gap:10px;align-items:center;"><span style="font-size:22px;">🔒</span><span style="font-size:13px;line-height:1.4;">{{ otherStatus }}</span></div>
     </sc-if>
     <sc-if value="{{ isHost }}" hint-placeholder-val="{{ false }}"><button onClick="{{ force }}" style="min-height:40px;border:none;border-radius:12px;background:transparent;color:#006687;font-weight:800;cursor:pointer;">{{ tx.forceW }}</button></sc-if>
+    <div style="background:#fff;border-radius:24px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;box-shadow:0 10px 22px -12px rgba(3,51,55,.35);">
+      <b style="font-size:14px;">{{ nbTitle }}</b><span style="font-size:12px;opacity:.7;line-height:1.4;">{{ nbNote }}</span>
+      <sc-if value="{{ noTips }}" hint-placeholder-val="{{ true }}"><span style="font-size:12px;opacity:.6;">{{ tx.noTips }}</span></sc-if>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;"><sc-for list="{{ tips }}" as="t" hint-placeholder-count="0"><span style="font-size:12px;background:#eef4f3;border-radius:10px;padding:5px 9px;">{{ t }}</span></sc-for></div>
+    </div>
   </div>
 </div>
 </sc-if>
@@ -275,6 +285,9 @@ button,input{font-family:inherit;}
     </sc-for>
   </div>
   <div style="flex:1 1 340px;min-width:0;display:flex;flex-direction:column;gap:14px;">
+    <sc-if value="{{ hasPts }}" hint-placeholder-val="{{ false }}">
+      <div style="background:#033337;color:#fff;border-radius:24px;padding:14px 16px;display:flex;justify-content:space-between;gap:10px;align-items:center;"><div style="display:flex;flex-direction:column;gap:2px;"><span style="font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#fda127;">{{ ptsK }}</span><span style="font-size:12px;opacity:.8;">{{ ptsSub }}</span></div><b style="font-family:'Plus Jakarta Sans',sans-serif;font-size:26px;">{{ ptsWeek }}</b></div>
+    </sc-if>
     <div style="background:#fff;border-radius:24px;padding:16px;display:flex;flex-direction:column;gap:10px;box-shadow:0 10px 22px -12px rgba(3,51,55,.35);">
       <b style="font-size:16px;">{{ tx.board }}</b>
       <sc-for list="{{ board }}" as="b" hint-placeholder-count="4">
@@ -308,6 +321,20 @@ button,input{font-family:inherit;}
       </div>
     </sc-for>
   </div>
+  <sc-if value="{{ seated }}" hint-placeholder-val="{{ false }}">
+  <div style="background:#fff;border-radius:28px;padding:18px;display:flex;flex-direction:column;gap:10px;box-shadow:0 14px 30px -14px rgba(3,51,55,.35);">
+    <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:baseline;"><b style="font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;">{{ teamEndT }}</b><span style="font-size:12px;opacity:.7;">{{ mvpHint }}</span></div>
+    <sc-for list="{{ teamEnd }}" as="r" hint-placeholder-count="5">
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;background:{{ r.bg }};border-radius:16px;padding:8px 12px;">
+        <img src="{{ r.img }}" alt="" style="width:40px;height:40px;border-radius:50%;object-fit:cover;object-position:50% 0%;background:#fbf3e1;">
+        <div style="flex:1 1 160px;min-width:0;display:flex;flex-direction:column;"><b style="font-size:14px;">{{ r.name }} {{ r.crown }}</b><span style="font-size:11px;opacity:.7;">{{ r.role }}</span></div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;"><b style="font-size:15px;">⭐ {{ r.pts }}</b><span style="font-size:11px;opacity:.7;">{{ r.weeks }}</span></div>
+        <span style="font-size:13px;font-weight:800;min-width:54px;text-align:right;">🗳 {{ r.votes }}</span>
+        <button onClick="{{ r.onVote }}" style="min-height:44px;padding:0 14px;border:none;border-radius:12px;background:{{ r.voteBg }};color:#033337;font-weight:800;cursor:pointer;opacity:{{ r.voteOp }};">{{ r.voteLabel }}</button>
+      </div>
+    </sc-for>
+  </div>
+  </sc-if>
   <div style="display:flex;gap:10px;flex-wrap:wrap;">
     <sc-if value="{{ seated }}" hint-placeholder-val="{{ false }}"><input value="{{ klass }}" onChange="{{ onKlass }}" placeholder="{{ tx.phClass }}" aria-label="{{ tx.klass }}" style="min-height:52px;width:150px;border:none;border-radius:16px;padding:0 14px;font-size:15px;font-weight:800;letter-spacing:.06em;color:#033337;background:#fff;box-shadow:inset 0 3px 6px rgba(3,51,55,.1);"></sc-if>
     <sc-if value="{{ seated }}" hint-placeholder-val="{{ false }}"><button onClick="{{ copyResult }}" style="min-height:52px;padding:0 20px;border:none;border-radius:16px;background:#fda127;color:#033337;font-weight:800;cursor:pointer;box-shadow:inset 0 -5px 0 rgba(232,118,45,.6);">📨 {{ copyResLabel }}</button></sc-if>
@@ -329,11 +356,11 @@ const SEATS=[
 {id:'baongoc',team:'rx',name:'Bảo Ngọc',role:'COO',img:'assets/character/team/bao-ngoc-cut.webp',ab:['menu']},
 {id:'giahan',team:'rx',name:'Gia Hân',role:'Thư ký',img:'assets/character/team/gia-han-cut.webp',ab:['scout']}];
 const TEAMDEF={ps:{name:'Đội Phù Sa',icon:'🌾',color:'#e8762d',img:'assets/character/phu-sa/huong-new.png?v=7'},rx:{name:'Đội Rồng Xanh',icon:'🐉',color:'#006687',img:'assets/character/team/minh-long-cut.webp'}};
-const AB={land:'📍 Chốt bến',method:'⛵ Phương thức',menu:'🥖 Món',scout:'🔭 Trinh sát',shop:'💰 Quỹ',ally:'🤝 Liên minh',trade:'📰 Chợ tin'};
+const AB={land:'📍 Chốt bến · Phủ quyết',method:'⛵ Cách bán · Quảng cáo',menu:'🥖 Món · Số lượng',scout:'🔭 Trinh sát (tin riêng)',shop:'💰 Quỹ',ally:'🤝 Liên minh',trade:'📰 Chợ tin'};
 const LOCS=[['🛶','Chợ nổi','du khách sáng sớm'],['⛴️','Bến phà','khách vãng lai'],['🎓','Làng đại học','sinh viên'],['🌳','Công viên bờ sông','gia đình cuối tuần'],['🏭','Khu công nghiệp','công nhân tan ca'],['🌙','Chợ đêm','giới trẻ về đêm'],['🏮','Sân đình lễ hội','khách dự lễ'],['🥭','Vườn trái cây','khách miệt vườn']];
 const MENUS=[['🥖','Bánh mì','Phục vụ nhanh: +15% ở bến đông'],['🍧','Chè bưởi','Có thể hao hụt −12% nếu không bảo hiểm'],['☕','Cà phê phin','Lời +18%, chậm ở bến đông'],['🧃','Nước mía','Ăn theo thời tiết']];
 const METHODS=[['boat','⛵','Ghe hàng bông','Bán ×3 · chi phí 1,5 tr · không mang tin về',3,1.5],['pole','🧺','Gánh hàng rong','Bán ×1 · không tốn phí · 2 tin về món chạy nhất',1,0],['survey','📋','Khảo sát chợ','Không bán · chi phí 0,3 tr · gợi ý cặp món–bến tốt nhất + bến đông tuần sau',0,0.3]];
-const SHOP=[['ads','📣','Quảng cáo',0.3,'+20% doanh thu tuần này'],['ins','🛡️','Bảo hiểm chè',0.3,'Chè bưởi không hao hụt tuần này'],['hot','🗺️','Gói tin vỉa hè',0.3,'Biết bến đông nhất tuần sau']];
+const SHOP=[['ins','🛡️','Bảo hiểm chè',0.3,'Chè bưởi không hao hụt tuần này'],['hot','🗺️','Gói tin vỉa hè',0.3,'Biết bến đông nhất tuần sau']];
 const EVENTS=[
 {icon:'🌊',name:'Nước lũ về',desc:'Chợ nổi và Bến phà vắng khách (−25%), Vườn trái cây −15%.',loc:{0:.75,1:.75,7:.85},menu:{}},
 {icon:'🥭',name:'Mùa trái cây chín',desc:'Vườn trái cây đông khách (+30%), Chè bưởi bán chạy hơn (+10%).',loc:{7:1.3},menu:{1:1.1}},
@@ -342,18 +369,23 @@ const EVENTS=[
 {icon:'🌧️',name:'Mưa dầm',desc:'Công viên bờ sông vắng (−30%), Nước mía ế (−15%).',loc:{3:.7},menu:{3:.85}},
 {icon:'🎓',name:'Mùa thi cử',desc:'Làng đại học +25%, Cà phê phin +10%.',loc:{2:1.25},menu:{2:1.1}},
 {icon:'📸',name:'Khách du lịch đổ về',desc:'Chợ nổi +25%, Bến phà +10%.',loc:{0:1.25,1:1.1},menu:{}}];
-const TX={"brand":["BizOn Bật Nghiệp · Bến Phù Sa","BizOn Startup · Bến Phù Sa"],"back":["← Chơi một mình / thi thử","← Solo / practice test"],"h1a":["Chơi nhóm","Team play"],"h1b":["trên sông","on the river"],"lead":["Đội Phù Sa (2 máy) và Đội Rồng Xanh (5 máy). Mỗi người giữ một vai, cả đội cùng quyết. Hai đội chung phòng sẽ giành khách của nhau, chọn bí mật và công bố cùng lúc.","Team Phù Sa (2 devices) and Team Rồng Xanh (5 devices). Each player holds one role and the team decides together. Two teams in one room compete for the same customers, choose in secret and reveal at the same time."],"yourName":["Tên của bạn","Your name"],"create":["⛵ Tạo phòng","⛵ Create room"],"join":["Vào →","Join →"],"roomCode":["Mã phòng","Room code"],"lobbyHint":["Các bạn mở game, nhập mã này rồi chọn ghế. Một đội vào cũng chơi được, hai đội vào thì đấu với nhau.","Open the game, enter this code and pick a seat. One team can play alone; two teams play against each other."],"inRoom":["Trong phòng","In the room"],"perWeek":["⏱ Mỗi tuần","⏱ Per week"],"waitHost":["Đợi chủ phòng bắt đầu…","Waiting for the host to start…"],"room":["phòng","room"],"evWeek":["Sự kiện tuần này","This week’s event"],"river":["Bến sông","River landings"],"cardsHint":["Phiếu của đội và tin đã biết hiện trên thẻ bến bên dưới.","Team votes and known intel are shown on the landing cards below."],"notebook":["📒 Sổ tin của đội","📒 Team notebook"],"noTips":["Chưa có tin. Gánh hàng rong, khảo sát, trinh sát hoặc mua tin sẽ ghi vào đây.","No intel yet. Shoulder-pole selling, surveys, scouting or bought tips will be noted here."],"spect":["Bạn đang xem. Chưa có ghế trong đội nào.","You are watching. You have no seat on a team."],"method":["⛵ Phương thức bán","⛵ Selling method"],"menu":["🥖 Món hàng","🥖 Product"],"landT":["📍 Bạn chốt bến","📍 You pick the landing"],"landD":["Cả đội bấm bến để bỏ phiếu. Bến bạn bấm là quyết định cuối. Hiện tại:","The whole team votes by tapping a landing. Your tap is the final decision. Current:"],"scout":["🔭 Trinh sát","🔭 Scouting"],"scoutD":["Soi một bến để biết món bán chạy nhất ở đó. Mỗi tuần 1 lượt, mỗi lượt tốn 0,8 tr tiền quỹ.","Inspect a landing to learn its best-selling product. 1 turn per week, 0.8 m from team funds."],"shop":["💰 Quỹ & đồ nghề","💰 Funds & gear"],"allyT":["🤝 Liên minh tuần này","🤝 Alliance this week"],"allyD":["Hai đội liên minh không chia khách của nhau khi chung bến, và thấy bến đội kia đang chọn. Mỗi đội chỉ liên minh được 2 tuần trong mùa.","Allied teams don’t split customers when sharing a landing, and can see the other team’s landing. Each team may ally for only 2 weeks per season."],"tradeT":["📰 Chợ tin giữa hai đội","📰 Intel market between teams"],"buy":["Mua","Buy"],"noTrade":["Đội chưa có tin để bán và chưa có tin nào được rao.","Your team has no intel to sell and nothing is on offer."],"duties":["phần việc","duties"],"forceW":["Chủ phòng: chốt tuần ngay →","Host: close the week now →"],"reveal":["Công bố tuần","Week reveal"],"topWeek":["Bán chạy nhất tuần","Top seller this week"],"board":["🏆 Bảng xếp hạng","🏆 Leaderboard"],"forceN":["Chủ phòng: sang tuần ngay →","Host: next week now →"],"endK":["Hết mùa buôn","Season over"],"team":["Đội","Team"],"total":["Tổng","Total"],"again":["🔁 Chơi mùa mới (giữ phòng)","🔁 New season (same room)"],"teacher":["Bảng giáo viên →","Teacher board →"],"phName":["VD: Ngọc Anh","e.g. Ngọc Anh"],"phCode":["MÃ PHÒNG","ROOM CODE"],"klass":["Mã lớp","Class code"],"phClass":["VD: QT12A","e.g. QT12A"]};
+const TX={"brand":["BizOn Bật Nghiệp · Bến Phù Sa","BizOn Startup · Bến Phù Sa"],"back":["← Sảnh chính","← Main hall"],"h1a":["Chơi nhóm","Team play"],"h1b":["trên sông","on the river"],"lead":["Đội Rồng Xanh có 5 vai: CEO chốt bến, CFO giữ quỹ, CMO lo cách bán và quảng cáo, COO chọn món và số lượng nấu, Thư ký trinh sát. Mỗi vai chỉ thấy một phần tin, cả đội phải nói với nhau rồi cùng chốt trước khi hết giờ.","Team Rồng Xanh has 5 roles: the CEO picks the landing, the CFO holds the funds, the CMO runs selling and ads, the COO picks the product and quantity, the Secretary scouts. Each role sees only part of the intel, so the team has to talk and lock in before time runs out."],"yourName":["Tên của bạn","Your name"],"create":["⛵ Tạo phòng","⛵ Create room"],"join":["Vào →","Join →"],"roomCode":["Mã phòng","Room code"],"lobbyHint":["Các bạn mở game, nhập mã này rồi chọn ghế. Một đội vào cũng chơi được, hai đội vào thì đấu với nhau.","Open the game, enter this code and pick a seat. One team can play alone; two teams play against each other."],"inRoom":["Trong phòng","In the room"],"perWeek":["⏱ Mỗi tuần","⏱ Per week"],"waitHost":["Đợi chủ phòng bắt đầu…","Waiting for the host to start…"],"room":["phòng","room"],"evWeek":["Sự kiện tuần này","This week’s event"],"river":["Bến sông","River landings"],"cardsHint":["Phiếu của đội và tin đã biết hiện trên thẻ bến bên dưới.","Team votes and known intel are shown on the landing cards below."],"notebook":["📒 Sổ tin của đội","📒 Team notebook"],"noTips":["Chưa có tin. Gánh hàng rong, khảo sát, trinh sát hoặc mua tin sẽ ghi vào đây.","No intel yet. Shoulder-pole selling, surveys, scouting or bought tips will be noted here."],"spect":["Bạn đang xem. Chưa có ghế trong đội nào.","You are watching. You have no seat on a team."],"method":["⛵ Phương thức bán","⛵ Selling method"],"menu":["🥖 Món hàng","🥖 Product"],"landT":["📍 Bạn chốt bến","📍 You pick the landing"],"landD":["Cả đội bấm bến để bỏ phiếu. Bến bạn bấm là quyết định cuối. Hiện tại:","The whole team votes by tapping a landing. Your tap is the final decision. Current:"],"scout":["🔭 Trinh sát","🔭 Scouting"],"scoutD":["Soi một bến để biết món bán chạy nhất ở đó. Mỗi tuần 1 lượt, mỗi lượt tốn 0,8 tr tiền quỹ.","Inspect a landing to learn its best-selling product. 1 turn per week, 0.8 m from team funds."],"shop":["💰 Quỹ & đồ nghề","💰 Funds & gear"],"allyT":["🤝 Liên minh tuần này","🤝 Alliance this week"],"allyD":["Hai đội liên minh không chia khách của nhau khi chung bến, và thấy bến đội kia đang chọn. Mỗi đội chỉ liên minh được 2 tuần trong mùa.","Allied teams don’t split customers when sharing a landing, and can see the other team’s landing. Each team may ally for only 2 weeks per season."],"tradeT":["📰 Chợ tin giữa hai đội","📰 Intel market between teams"],"buy":["Mua","Buy"],"noTrade":["Đội chưa có tin để bán và chưa có tin nào được rao.","Your team has no intel to sell and nothing is on offer."],"duties":["phần việc","duties"],"forceW":["Chủ phòng: chốt tuần ngay →","Host: close the week now →"],"reveal":["Công bố tuần","Week reveal"],"topWeek":["Bán chạy nhất tuần","Top seller this week"],"board":["🏆 Bảng xếp hạng","🏆 Leaderboard"],"forceN":["Chủ phòng: sang tuần ngay →","Host: next week now →"],"endK":["Hết mùa buôn","Season over"],"team":["Đội","Team"],"total":["Tổng","Total"],"again":["🔁 Chơi mùa mới (giữ phòng)","🔁 New season (same room)"],"teacher":["Bảng giáo viên →","Teacher board →"],"phName":["VD: Ngọc Anh","e.g. Ngọc Anh"],"phCode":["MÃ PHÒNG","ROOM CODE"],"klass":["Mã lớp","Class code"],"phClass":["VD: QT12A","e.g. QT12A"]};
 const RIVALS=[['Ghe Ba Lẹ','assets/character/rivals/ba-le.png','#c0392b'],['Chú Sáu Bến Cũ','assets/character/rivals/chu-sau.png','#9a6b3f'],['Cô Bảy Sen Hồng','assets/character/rivals/co-bay.png','#d9558c']];
 const LOCS_E=[['🛶','Floating market','early tourists'],['⛴️','Ferry pier','passers-by'],['🎓','University village','students'],['🌳','Riverside park','weekend families'],['🏭','Industrial zone','shift workers'],['🌙','Night market','young night owls'],['🏮','Temple festival yard','festival-goers'],['🥭','Fruit orchard','orchard visitors']];
 const MENUS_E=[['🥖','Bánh mì','Fast service: +15% at busy landings'],['🍧','Pomelo sweet soup','May spoil −12% without insurance'],['☕','Phin coffee','+18% margin, slow at busy landings'],['🧃','Sugarcane juice','Depends on the weather']];
 const METHODS_E=[['boat','⛵','Cargo boat','Sells ×3 · costs 1.5 m · brings no intel',3,1.5],['pole','🧺','Shoulder-pole vendor','Sells ×1 · no cost · 2 tips on best sellers',1,0],['survey','📋','Market survey','No sales · costs 0.3 m · hints the best product–landing pair + next week’s busiest',0,0.3]];
-const SHOP_E=[['ads','📣','Advertising',0.3,'+20% revenue this week'],['ins','🛡️','Soup insurance',0.3,'No sweet-soup spoilage this week'],['hot','🗺️','Street tips pack',0.3,'Learn next week’s busiest landing']];
+const SHOP_E=[['ins','🛡️','Soup insurance',0.3,'No sweet-soup spoilage this week'],['hot','🗺️','Street tips pack',0.3,'Learn next week’s busiest landing']];
 const EV_E=[['Floodwater arrives','Floating market and Ferry pier −25%, Fruit orchard −15%.'],['Fruit season','Fruit orchard +30%, pomelo sweet soup +10%.'],['Temple festival','Temple festival yard +40%, Night market +15%.'],['Heatwave','Sugarcane juice +20%, phin coffee −8%.'],['Steady rain','Riverside park −30%, sugarcane juice −15%.'],['Exam season','University village +25%, phin coffee +10%.'],['Tourist wave','Floating market +25%, Ferry pier +10%.']];
+const QTY=[['🥣','Nấu ít','Ít vốn, dễ hết hàng'],['🍲','Nấu vừa','Cân bằng vốn và hàng'],['🫕','Nấu nhiều','Nhiều vốn, dễ dư hàng']];
+const QTY_E=[['🥣','Cook little','Low cost, may sell out'],['🍲','Cook medium','Balanced cost and stock'],['🫕','Cook a lot','High cost, may go to waste']];
+const QCAP=[[1.3,4],[2.4,7],[3.7,11]],QCOST=[[0.1,0.2],[0.2,0.5],[0.4,0.9]];
+const qi=m=>m==='boat'?1:0;
+const PTK=['land','shop','method','menu','scout'];
 const ROLE_E={lumina:'Founder',tuphan:'Co-founder',minhlong:'CEO',thuha:'CFO',lanchi:'CMO',baongoc:'COO',giahan:'Secretary'};
-const AB_E={land:'📍 Pick landing',method:'⛵ Method',menu:'🥖 Product',scout:'🔭 Scout',shop:'💰 Funds',ally:'🤝 Alliance',trade:'📰 Intel market'};
+const AB_E={land:'📍 Landing · Veto',method:'⛵ Method · Ads',menu:'🥖 Product · Quantity',scout:'🔭 Scout (private)',shop:'💰 Funds',ally:'🤝 Alliance',trade:'📰 Intel market'};
 const TEAM_E={ps:'Team Phù Sa',rx:'Team Rồng Xanh'};
 let EN=false;const T=(vi,en)=>EN?en:vi;
-const CODECH='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',PFX='benphusa-v4-';
+const CODECH='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',PFX='benphusa-v5-';
 const mkRnd=s=>()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};
 const share=n=>1/(1+0.4*(Math.max(1,n)-1));
 const stars=d=>Math.max(1,Math.min(5,Math.round((d-0.4)/3*4)+1));
@@ -368,7 +400,7 @@ class Component extends DCLogic {
     let pid='';try{pid=sessionStorage.getItem('bps4-pid')||'';if(!pid){pid='p'+Math.random().toString(36).slice(2,9);sessionStorage.setItem('bps4-pid',pid);}}catch(e){pid='p'+Math.random().toString(36).slice(2,9);}
     let name='';try{name=localStorage.getItem('bps4-name')||'';}catch(e){}
     let en=false,klass='';try{en=localStorage.getItem('bizon-lang')==='en';klass=localStorage.getItem('bps4-class')||'';}catch(e){}EN=en;
-    this.setState({pid,name,en,klass});this.installBridge();
+    this.setState({pid,name,en,klass});this.installBridge();this.onR=()=>this.setState({narrow:window.innerWidth<900});this.onR();window.addEventListener('resize',this.onR);
     this.tk=setInterval(()=>{if(this.isHost)this.hostTick();if(this.state.view&&(this.state.view.phase==='choose'))this.forceUpdate();},1000);
   }
   componentDidUpdate(){const v=this.state.view;if(!v||!window.BPS3D)return;const key=v.phase+'-'+v.week;if(key===this.k3)return;const prev=this.k3;this.k3=key;
@@ -382,7 +414,7 @@ class Component extends DCLogic {
       get W(){return ones();},get D(){return MENUS.map(()=>LOCS.map(()=>1));},
       get RIVALS(){const v=self.state.view||{};return RIVALS.map((r,k)=>{const plan=[];const a=(v.aiLast||[]).find(x=>x.ai===k);if(a&&v.week>0)plan[v.week-1]=a.l;if(a&&v.last)plan[v.last.w]=a.l;const b=(v.board||[]).find(x=>x.ai===k);return {name:r[0],short:['Ba Lẹ','Chú Sáu','Cô Bảy'][k],icon:['⚡','🐢','🪷'][k],plan,total:b?b.total:0};});},
       get LOCS(){return LOCS.map((l,i)=>[l[0],l[1],l[2],LOCS_E[i][1],LOCS_E[i][2]]);},get MENUS(){return MENUS.map((m,i)=>[m[0],m[1],m[2],MENUS_E[i][1],MENUS_E[i][2]]);}};}
-  componentWillUnmount(){clearInterval(this.tk);try{this.peer&&this.peer.destroy();}catch(e){}try{this.ch&&this.ch.close();}catch(e){}}
+  componentWillUnmount(){clearInterval(this.tk);window.removeEventListener('resize',this.onR);try{this.peer&&this.peer.destroy();}catch(e){}try{this.ch&&this.ch.close();}catch(e){}}
   fail(msg){this.setState({err:msg,status:''});}
   // ---------- networking ----------
   createRoom(){const name=(this.state.name||'').trim();if(!name)return this.fail(T('Nhập tên trước khi tạo phòng.','Enter your name before creating a room.'));
@@ -430,14 +462,14 @@ class Component extends DCLogic {
       return {k,m,best,home,s2,total:0,weeks:[]};});
     H.teams={};H.ab={};['ps','rx'].forEach(t=>{const seats=SEATS.filter(s=>s.team===t),filled=seats.filter(s=>H.seats[s.id]);if(!filled.length)return;
       seats.forEach(s=>{if(H.seats[s.id])H.ab[s.id]=(H.ab[s.id]||[]).concat(s.ab);else H.ab[filled[0].id]=(H.ab[filled[0].id]||[]).concat(s.ab);});
-      H.teams[t]={id:t,total:0,wallet:4,allyN:0,tips:[],known:{},choice:{method:'pole',menu:0},votes:{},ready:{},scoutUsed:0,spy:0,items:{},hot:null,weeks:[]};});
-    H.week=0;H.offers=[];H.ally=null;H.last=null;H.aiLast=[];this.beginWeek();}
+      H.teams[t]={id:t,total:0,wallet:4,allyN:0,tips:[],known:{},choice:{method:'pole',menu:0,qty:1},votes:{},ready:{},scoutUsed:0,spy:0,items:{},hot:null,weeks:[],pts:{},vetoUsed:false,vetoW:-1,auto:[],onTime:{},scoutLog:{}};});
+    H.week=0;H.offers=[];H.ally=null;H.last=null;H.aiLast=[];H.mvp={};this.beginWeek();}
   beginWeek(){const H=this.H;H.phase='choose';H.deadline=Date.now()+H.timer*1000;H.ally=null;H.offers=[];H.nextReady={};
     Object.values(H.teams).forEach(T=>{T.votes={};T.ready={};T.scoutUsed=0;T.spy=0;T.items={};});}
   bestAt(l){const D=this.H.D;let b=0;for(let m=1;m<4;m++)if(D[m][l]>D[b][l])b=m;return b;}
   landSeat(t){const H=this.H;return Object.keys(H.ab).find(s=>seatDef(s).team===t&&H.ab[s].includes('land'));}
   hasAb(pid,ab){const s=this.seatOf(pid);return !!(s&&(this.H.ab[s]||[]).includes(ab));}
-  addTip(T,m,l){const s=stars(this.H.D[m][l]);T.known[l]=T.known[l]||{};T.known[l][m]=s;if(!T.tips.some(x=>x.m===m&&x.l===l))T.tips.push({m,l,s});}
+  addTip(T,m,l,ch){const s=stars(this.H.D[m][l]);if(!T.tips.some(x=>x.m===m&&x.l===l&&x.ch===ch))T.tips.push({m,l,s,ch});}
   hostAct(pid,a){const H=this.H;if(!H||!H.players[pid])return;const seat=this.seatOf(pid),team=seat?seatDef(seat).team:null,T=team?H.teams[team]:null,other=team==='ps'?'rx':'ps',O=H.teams[other];const isHost=pid===H.host;
     switch(a.k){
       case 'seat':if(H.phase!=='lobby')break;if(a.seat&&H.seats[a.seat]&&H.seats[a.seat]!==pid)break;if(seat)delete H.seats[seat];if(a.seat&&a.seat!==seat)H.seats[a.seat]=pid;break;
@@ -446,15 +478,19 @@ class Component extends DCLogic {
       case 'vote':if(H.phase==='choose'&&T){T.votes[seat]=a.loc;}break;
       case 'method':if(H.phase==='choose'&&T&&this.hasAb(pid,'method'))T.choice.method=a.v;break;
       case 'menu':if(H.phase==='choose'&&T&&this.hasAb(pid,'menu'))T.choice.menu=a.v;break;
-      case 'scout':if(H.phase==='choose'&&T&&this.hasAb(pid,'scout')&&T.scoutUsed<1&&T.wallet>=0.8-1e-9){T.scoutUsed++;T.wallet=r1(T.wallet-0.8);T.total=r1(T.total-0.8);this.addTip(T,this.bestAt(a.loc),a.loc);}break;
+      case 'scout':if(H.phase==='choose'&&T&&this.hasAb(pid,'scout')&&T.scoutUsed<1&&T.wallet>=0.8-1e-9){T.scoutUsed++;T.wallet=r1(T.wallet-0.8);T.total=r1(T.total-0.8);const bm=this.bestAt(a.loc);this.addTip(T,bm,a.loc,'scout');T.scoutLog[H.week]={l:a.loc,s:stars(H.D[bm][a.loc])};}break;
       case 'buy':{if(H.phase!=='choose'||!T||!this.hasAb(pid,'shop'))break;const it=SHOP.find(x=>x[0]===a.v);if(!it||T.wallet<it[3]-1e-9)break;if(a.v!=='spy'&&T.items[a.v])break;T.wallet=r1(T.wallet-it[3]);T.total=r1(T.total-it[3]);T.items[a.v]=true;break;}
+      case 'qty':if(H.phase==='choose'&&T&&this.hasAb(pid,'menu'))T.choice.qty=Math.max(0,Math.min(2,a.v|0));break;
+      case 'ads':if(H.phase!=='choose'||!T||!this.hasAb(pid,'method'))break;if(T.items.ads){delete T.items.ads;T.wallet=r1(T.wallet+0.3);T.total=r1(T.total+0.3);}else if(T.wallet>=0.3-1e-9){T.items.ads=true;T.wallet=r1(T.wallet-0.3);T.total=r1(T.total-0.3);}break;
+      case 'veto':if(H.phase!=='choose'||!T||!this.hasAb(pid,'land'))break;if(T.vetoW===H.week){T.vetoW=-1;T.vetoUsed=false;}else if(!T.vetoUsed){T.vetoW=H.week;T.vetoUsed=true;}break;
+      case 'mvp':if(H.phase==='end'&&seat&&a.seat&&a.seat!==seat&&H.seats[a.seat]&&seatDef(a.seat).team===team)H.mvp[seat]=a.seat;break;
       case 'ready':if(H.phase==='choose'&&T){T.ready[seat]=!T.ready[seat];this.checkProgress();}break;
       case 'ally':if(H.phase!=='choose'||!T||!O||!this.hasAb(pid,'ally'))break;if(!H.ally){if(T.allyN>=2||O.allyN>=2)break;H.ally={from:team,state:'proposed'};}else if(H.ally.state==='proposed'&&H.ally.from!==team){H.ally.state='active';T.allyN++;O.allyN++;}else if(H.ally.state==='proposed'&&H.ally.from===team)H.ally=null;break;
-      case 'sell':{if(H.phase!=='choose'||!T||!O||!this.hasAb(pid,'trade'))break;const tip=T.tips[a.i];if(!tip)break;const ex=H.offers.find(o=>o.from===team&&o.tip.m===tip.m&&o.tip.l===tip.l&&o.state==='open');if(ex){ex.state='off';break;}H.offers.push({id:++H.oid,from:team,tip,price:0.3,state:'open'});break;}
-      case 'buyTip':{if(H.phase!=='choose'||!T||!O||!this.hasAb(pid,'trade'))break;const o=H.offers.find(x=>x.id===a.id&&x.state==='open'&&x.from!==team);if(!o||T.wallet<o.price-1e-9)break;T.wallet=r1(T.wallet-o.price);T.total=r1(T.total-o.price);O.wallet=r1(O.wallet+o.price);O.total=r1(O.total+o.price);this.addTip(T,o.tip.m,o.tip.l);o.state='sold';break;}
+      case 'sell':{if(H.phase!=='choose'||!T||!O||!this.hasAb(pid,'trade'))break;const tip=T.tips.find(t=>t.m===a.m&&t.l===a.l);if(!tip)break;const ex=H.offers.find(o=>o.from===team&&o.tip.m===tip.m&&o.tip.l===tip.l&&o.state==='open');if(ex){ex.state='off';break;}H.offers.push({id:++H.oid,from:team,tip,price:0.3,state:'open'});break;}
+      case 'buyTip':{if(H.phase!=='choose'||!T||!O||!this.hasAb(pid,'trade'))break;const o=H.offers.find(x=>x.id===a.id&&x.state==='open'&&x.from!==team);if(!o||T.wallet<o.price-1e-9)break;T.wallet=r1(T.wallet-o.price);T.total=r1(T.total-o.price);O.wallet=r1(O.wallet+o.price);O.total=r1(O.total+o.price);this.addTip(T,o.tip.m,o.tip.l,'trade');o.state='sold';break;}
       case 'next':if(H.phase==='reveal'&&seat){H.nextReady[pid]=true;this.checkProgress();}break;
       case 'force':if(!isHost)break;if(H.phase==='choose')this.resolve();else if(H.phase==='reveal')this.advance();break;
-      case 'again':if(isHost&&H.phase==='end'){H.phase='lobby';H.week=0;}break;
+      case 'again':if(isHost&&H.phase==='end'){H.phase='lobby';H.week=0;H.mvp={};}break;
     }
     this.broadcast();}
   activeSeated(){const H=this.H;return Object.keys(H.seats).filter(s=>H.teams[seatDef(s).team]&&H.players[H.seats[s]]&&H.players[H.seats[s]].online);}
@@ -467,24 +503,39 @@ class Component extends DCLogic {
     f*=METHODS.find(x=>x[0]===method)[4];f*=share(n);if(items.ads)f*=1.2;f*=0.92+H.rnd()*0.16;
     return {rev:r1(H.D[m][l]*Wv*f),spoil};}
   resolve(){const H=this.H,w=H.week,rnd=H.rnd;if(H.phase!=='choose')return;
+    Object.values(H.teams).forEach(T=>{T.auto=[];T.onTime={};Object.keys(H.seats).forEach(st=>{if(seatDef(st).team!==T.id)return;if(T.ready[st]){T.onTime[st]=true;return;}T.auto.push(st);const ab=H.ab[st]||[];
+      if(ab.includes('method')){T.choice.method=['boat','pole','survey'][Math.floor(rnd()*3)];const want=rnd()<0.5;if(want&&!T.items.ads&&T.wallet>=0.3-1e-9){T.items.ads=true;T.wallet=r1(T.wallet-0.3);T.total=r1(T.total-0.3);}else if(!want&&T.items.ads){delete T.items.ads;T.wallet=r1(T.wallet+0.3);T.total=r1(T.total+0.3);}}
+      if(ab.includes('menu')){T.choice.menu=Math.floor(rnd()*4);T.choice.qty=Math.floor(rnd()*3);}
+      if(T.votes[st]==null||ab.includes('land'))T.votes[st]=Math.floor(rnd()*8);});
+      T.split=new Set(Object.values(T.votes)).size>=3&&T.vetoW!==w;});
     const sellers=[];
     Object.values(H.teams).forEach(T=>{const ls=this.landSeat(T.id);let l=ls!=null?T.votes[ls]:undefined;
       if(l==null){const cnt={};Object.values(T.votes).forEach(x=>cnt[x]=(cnt[x]||0)+1);const ks=Object.keys(cnt);l=ks.length?+ks.sort((a,b)=>cnt[b]-cnt[a])[0]:Math.floor(rnd()*8);}
-      let method=T.choice.method;if(method==='boat'&&T.wallet<1.5-1e-9)method='pole';sellers.push({team:T.id,l,m:T.choice.menu,method,items:T.items,down:method!==T.choice.method});});
+      let method=T.choice.method;if(method==='boat'&&T.wallet<1.5-1e-9)method='pole';sellers.push({team:T.id,l,m:T.choice.menu,qty:T.choice.qty,method,items:T.items,down:method!==T.choice.method,split:!!T.split});});
     H.AI.forEach((a,k)=>{let l,method='boat';if(k===0){if(w<2){l=Math.floor(rnd()*8);method='pole';}else l=a.best;}else if(k===1)l=a.home;else l=w%2?a.s2:a.home;sellers.push({ai:k,l,m:a.m,method,items:{}});});
     const cnt={};sellers.forEach(s=>{if(s.method!=='survey')cnt[s.l]=(cnt[s.l]||0)+1;});
     const allyOn=H.ally&&H.ally.state==='active';
     sellers.forEach(s=>{let n=cnt[s.l]||1;if(s.method==='survey'){s.rev=0;s.n=0;return;}
       if(allyOn&&s.team){const p=sellers.find(x=>x.team&&x.team!==s.team);if(p&&p.l===s.l&&p.method!=='survey')n--;}
-      const r=this.calc(w,s.m,s.l,s.method,n,s.items);s.rev=r.rev;s.spoil=r.spoil;s.n=(cnt[s.l]||1)-1;});
-    sellers.forEach(s=>{if(s.team){const T=H.teams[s.team];const cost=METHODS.find(x=>x[0]===s.method)[5],net=r1(s.rev-cost);T.total=r1(T.total+net);T.wallet=r1(T.wallet+net);s.net=net;s.cost=cost;T.weeks[w]={rev:net,gross:s.rev,cost,l:s.l,m:s.m,method:s.method,clash:s.n,spoil:s.spoil};
-        if(s.method==='pole'){this.addTip(T,this.bestAt(s.l),s.l);let l2=Math.floor(rnd()*8);if(l2===s.l)l2=(l2+1)%8;this.addTip(T,this.bestAt(l2),l2);}
-        if(s.method==='survey'){let bm=0,bl=0;for(let m=0;m<4;m++)for(let l=0;l<8;l++)if(H.D[m][l]>H.D[bm][bl]){bm=m;bl=l;}if(rnd()<0.2){bm=(bm+1)%4;bl=(bl+1+Math.floor(rnd()*7))%8;}this.addTip(T,bm,bl);}
-        if((s.method==='survey'||T.items.hot)&&w<4){let b=0;for(let i=1;i<8;i++)if(H.W[w+1][i]>H.W[w+1][b])b=i;T.hot={w:w+1,l:b};}}
+      const r=this.calc(w,s.m,s.l,s.method,n,s.items);s.rev=r.rev;if(s.team){s.cap=QCAP[s.qty][qi(s.method)];s.dem=r1(r.rev*(s.split?2/3:1));s.rev=r1(Math.min(s.dem,s.cap));}s.spoil=r.spoil;s.n=(cnt[s.l]||1)-1;});
+    sellers.forEach(s=>{if(s.team){const T=H.teams[s.team];const cost=r1(METHODS.find(x=>x[0]===s.method)[5]+(s.method==='survey'?0:QCOST[s.qty][qi(s.method)])),net=r1(s.rev-cost);T.total=r1(T.total+net);T.wallet=r1(T.wallet+net);s.net=net;s.cost=cost;T.weeks[w]={rev:net,gross:s.rev,cost,l:s.l,m:s.m,method:s.method,clash:s.n,spoil:s.spoil,qty:s.qty,dem:s.dem,cap:s.cap,split:s.split,veto:T.vetoW===w,auto:T.auto.slice()};
+        if(s.method==='pole'){this.addTip(T,this.bestAt(s.l),s.l,'menu');let l2=Math.floor(rnd()*8);if(l2===s.l)l2=(l2+1)%8;this.addTip(T,this.bestAt(l2),l2,'menu');}
+        if(s.method==='survey'){let bm=0,bl=0;for(let m=0;m<4;m++)for(let l=0;l<8;l++)if(H.D[m][l]>H.D[bm][bl]){bm=m;bl=l;}if(rnd()<0.2){bm=(bm+1)%4;bl=(bl+1+Math.floor(rnd()*7))%8;}this.addTip(T,bm,bl,'land');}
+        if((s.method==='survey'||T.items.hot)&&w<4){let b=0;for(let i=1;i<8;i++)if(H.W[w+1][i]>H.W[w+1][b])b=i;T.hot={w:w+1,l:b,ch:s.method==='survey'?'method':'shop'};}
+        this.scoreWeek(T,s,w);}
       else{const c=s.method==='boat'?1.5:0,n2=r1(s.rev-c),a0=H.AI[s.ai];a0.total=r1(a0.total+n2);a0.weeks[w]=n2;}});
-    H.last={w,sellers:sellers.map(s=>({team:s.team||null,ai:s.ai!=null?s.ai:null,l:s.l,m:s.m,method:s.method,rev:s.team?s.net:s.rev,gross:s.rev,cost:s.cost||0,down:!!s.down,n:s.n,spoil:!!s.spoil}))};
+    H.last={w,sellers:sellers.map(s=>({team:s.team||null,ai:s.ai!=null?s.ai:null,l:s.l,m:s.m,method:s.method,rev:s.team?s.net:s.rev,gross:s.rev,cost:s.cost||0,down:!!s.down,n:s.n,spoil:!!s.spoil,qty:s.qty,dem:s.dem||0,cap:s.cap||0,split:!!s.split,veto:s.team?H.teams[s.team].vetoW===w:false,auto:s.team?H.teams[s.team].auto.slice():[]}))};
     H.aiLast=sellers.filter(s=>s.ai!=null).map(s=>({ai:s.ai,l:s.l}));
     H.phase='reveal';H.nextReady={};}
+  scoreWeek(T,s,w){const H=this.H;Object.keys(H.seats).forEach(seat=>{if(seatDef(seat).team!==T.id)return;const ab=(H.ab[seat]||[]).filter(a=>PTK.includes(a));let p=T.onTime[seat]?1:0,mx=1;
+    ab.forEach(a=>{mx+=3;let q=0;
+      if(a==='land'){if(!s.split)q+=2;if(s.net>0)q+=1;}
+      if(a==='shop'){if(T.wallet>=0)q+=2;const bought=Object.keys(s.items).some(k=>k!=='ads');if((bought&&s.net>0)||(!bought&&T.wallet>=2))q+=1;}
+      if(a==='method'){if(!s.down)q+=2;if(s.net>0||(s.method==='survey'&&w<=1))q+=1;}
+      if(a==='menu'){if(s.method==='survey')q=2;else{const r=s.dem/s.cap;q=r>=0.75&&r<=1.15?3:r>=0.5&&r<=1.5?1:0;}}
+      if(a==='scout'){const sc=T.scoutLog[w];q=!sc?0:((sc.s>=3&&s.l===sc.l)||(sc.s<=2&&s.l!==sc.l))?3:1;}
+      p+=q;});
+    (T.pts[seat]=T.pts[seat]||[])[w]={p,mx};});}
   advance(){const H=this.H;if(H.week>=4){H.phase='end';return;}H.week++;this.beginWeek();}
   viewFor(pid){const H=this.H,seat=this.seatOf(pid),team=seat?seatDef(seat).team:null,T=team&&H.teams[team],oid=team==='ps'?'rx':'ps',O=team&&H.teams[oid];
     const allyOn=H.ally&&H.ally.state==='active';
@@ -494,7 +545,9 @@ class Component extends DCLogic {
       active:Object.keys(H.teams),ev:H.EV&&H.EV[H.week]>=0?Object.assign({i:H.EV[H.week]},EVENTS[H.EV[H.week]]):null,ally:H.ally,aiLast:H.aiLast||[],last:H.last,
       board:[].concat(Object.values(H.teams).map(x=>({team:x.id,total:x.total,weeks:x.weeks.map(y=>y?y.rev:0)})),(H.AI||[]).map(a=>({ai:a.k,total:a.total,weeks:a.weeks}))),
       nextN:Object.keys(H.nextReady).length,activeN:this.activeSeated().length};
-    if(T)v.my={allyN:T.allyN,wallet:T.wallet,tips:T.tips,known:T.known,choice:T.choice,votes:T.votes,ready:T.ready,scoutUsed:T.scoutUsed,spy:T.spy,items:T.items,hot:T.hot,total:T.total,weeks:T.weeks};
+    const myAb=seat?(H.ab[seat]||[]):[];const vis=T?T.tips.filter(t=>myAb.includes(t.ch)):[];const known={};vis.forEach(t=>{known[t.l]=known[t.l]||{};known[t.l][t.m]=t.s;});
+    if(T){const tally={};Object.values(H.mvp||{}).forEach(x=>{if(seatDef(x).team===team)tally[x]=(tally[x]||0)+1;});v.mvp={tally,mine:(H.mvp||{})[seat]||null};}
+    if(T)v.my={vetoUsed:T.vetoUsed,vetoW:T.vetoW,pts:T.pts,auto:T.auto,allyN:T.allyN,wallet:T.wallet,tips:vis,known,choice:T.choice,votes:T.votes,ready:T.ready,scoutUsed:T.scoutUsed,spy:T.spy,items:T.items,hot:T.hot&&myAb.includes(T.hot.ch)?T.hot:null,total:T.total,weeks:T.weeks};
     if(O){const os=SEATS.filter(s=>s.team===oid&&H.seats[s.id]);v.other={id:oid,readyN:os.filter(s=>O.ready[s.id]).length,seatN:os.length};
       if(allyOn){const ls=this.landSeat(oid);v.other.loc=ls!=null&&O.votes[ls]!=null?O.votes[ls]:null;}
       v.offers=H.offers.filter(o=>o.state==='open').map(o=>({id:o.id,mine:o.from===team,l:o.tip.l,m:o.from===team?o.tip.m:null,price:o.price}));}
@@ -507,7 +560,7 @@ class Component extends DCLogic {
     const st=this.state,v=st.view,isHost=!!this.isHost;EN=!!st.en;
     const LC=EN?LOCS_E:LOCS,MN=EN?MENUS_E:MENUS,MT=EN?METHODS_E:METHODS,SH=EN?SHOP_E:SHOP,ABX=EN?AB_E:AB,roleOf=s=>EN?ROLE_E[s.id]:s.role,tName=t=>EN?TEAM_E[t]:TEAMDEF[t].name;
     const tx={};Object.keys(TX).forEach(k=>tx[k]=TX[k][EN?1:0]);
-    const out={embedded:!!this.props.onBack,standalone:!this.props.onBack,goBack:()=>{try{this.peer&&this.peer.destroy();}catch(e){}try{this.ch&&this.ch.close();}catch(e){}this.props.onBack&&this.props.onBack();},tx,langLabel:EN?'Tiếng Việt':'English',toggleLang:()=>{const en=!st.en;try{localStorage.setItem('bizon-lang',en?'en':'vi');}catch(e){}document.documentElement.lang=en?'en':'vi';this.setState({en});window.dispatchEvent(new Event('bps-lang'));},klass:st.klass||'',onKlass:e=>{const k=e.target.value.toUpperCase().slice(0,12);try{localStorage.setItem('bps4-class',k);}catch(x){}this.setState({klass:k});},err:st.err,hasErr:!!st.err,clearErr:()=>this.setState({err:''}),status:st.status,isHost,notHost:!isHost,
+    const out={langRight:'14px',embedded:!!this.props.onBack,standalone:!this.props.onBack,goBack:()=>{try{this.peer&&this.peer.destroy();}catch(e){}try{this.ch&&this.ch.close();}catch(e){}this.props.onBack&&this.props.onBack();},tx,langLabel:EN?'Tiếng Việt':'English',toggleLang:()=>{const en=!st.en;try{localStorage.setItem('bizon-lang',en?'en':'vi');}catch(e){}document.documentElement.lang=en?'en':'vi';this.setState({en});window.dispatchEvent(new Event('bps-lang'));},klass:st.klass||'',onKlass:e=>{const k=e.target.value.toUpperCase().slice(0,12);try{localStorage.setItem('bps4-class',k);}catch(x){}this.setState({klass:k});},err:st.err,hasErr:!!st.err,clearErr:()=>this.setState({err:''}),status:st.status,isHost,notHost:!isHost,
       isHome:!v,isLobby:!!v&&v.phase==='lobby',inGame:!!v&&v.phase!=='lobby',isPlay:!!v&&v.phase==='choose',isReveal:!!v&&v.phase==='reveal',isEnd:!!v&&v.phase==='end'};
     out.name=st.name;out.onName=e=>{const n=e.target.value.slice(0,24);try{localStorage.setItem('bps4-name',n);}catch(x){}this.setState({name:n});};
     out.joinCode=st.joinCode;out.onCode=e=>this.setState({joinCode:e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,5)});
@@ -547,6 +600,12 @@ class Component extends DCLogic {
           tag:isFinal?T('Đội chốt','Team pick'):allyHere?T('Đồng minh','Ally'):isHot?T('Đông nhất','Busiest'):'',tagBg:isFinal?'#e8762d':allyHere?'#006687':'#3f8a44',tagOp:isFinal||allyHere||isHot?1:0,
           onClick:()=>this.act({k:'vote',loc:i})};});
       out.hasMethod=has('method');out.methods=MT.map(m=>{const on=my.choice.method===m[0],short=my.wallet<m[5]-1e-9;return {icon:m[1],name:m[2]+(short?T(' · không đủ quỹ',' · not enough funds'):''),desc:short?T('Cần '+f1(m[5])+' tr · quỹ còn '+f1(my.wallet)+' tr. Chốt vẫn sẽ bị đổi sang cách rẻ hơn.','Needs '+f1(m[5])+' m · funds left '+f1(my.wallet)+' m. It will be switched to a cheaper method.'):m[3],bg:short?'#fdeceb':on?'#fff4dc':'#fff',bd:short&&on?'#c0392b':on?'#fda127':'rgba(3,51,55,.1)',onClick:()=>this.act({k:'method',v:m[0]})};});
+      const QT=EN?QTY_E:QTY;out.qtyTitle=T('🍳 Số lượng nấu','🍳 Quantity to cook');out.qtys=QT.map((q,i)=>{const on=my.choice.qty===i,mi=qi(my.choice.method);return {icon:q[0],name:q[1],desc:T('Bán tối đa ','Sells up to ')+f1(QCAP[i][mi])+T(' tr · vốn ',' m · costs ')+f1(QCOST[i][mi]),bg:on?'#fff4dc':'#fff',bd:on?'#fda127':'rgba(3,51,55,.1)',onClick:()=>this.act({k:'qty',v:i})};});
+      const adsOn=!!my.items.ads;out.adsLabel=adsOn?T('Quảng cáo ✓ (bấm để huỷ)','Ads ✓ (tap to cancel)'):T('Chạy quảng cáo','Run ads');out.adsDesc=T('+20% doanh thu tuần này, trừ quỹ ngay','+20% revenue this week, paid from funds now');out.adsBg=adsOn?'#d8f0d2':'#fff';out.adsBd=adsOn?'#3f8a44':'rgba(3,51,55,.1)';out.adsAct=()=>this.act({k:'ads'});
+      const vOn=my.vetoW===v.week,vCan=vOn||!my.vetoUsed;out.vetoLabel=vOn?T('Đang phủ quyết · bấm để huỷ','Veto on · tap to cancel'):my.vetoUsed?T('Đã dùng phủ quyết','Veto used'):T('Phủ quyết (1 lần/mùa)','Veto (once per season)');out.vetoBg=vOn?'#d8f0d2':'#fda127';out.vetoOp=vCan?1:.45;out.vetoNote=T('Phủ quyết giữ bến của bạn và bỏ phạt khi đội chia từ 3 bến trở lên.','A veto keeps your landing and cancels the penalty when the team splits across 3+ landings.');out.vetoAct=()=>{if(vCan)this.act({k:'veto'});};
+      const nDist=new Set(Object.values(my.votes)).size;out.hasSplit=nDist>=3;out.splitTxt=vOn?T('Đội đang chia '+nDist+' bến, nhưng CEO đã phủ quyết nên không bị phạt.','The team is split across '+nDist+' landings, but the CEO vetoed so there is no penalty.'):T('Đội đang chia '+nDist+' bến. Nếu giữ nguyên, đội mất ⅓ thời gian bán (doanh thu ×⅔).','The team is split across '+nDist+' landings. If this stays, the team loses ⅓ of its selling time (revenue ×⅔).');
+      out.autoNote=T('Hết giờ, phần của ai chưa chốt sẽ được máy chọn ngẫu nhiên.','When time runs out, anyone who has not locked in gets a random choice.');
+      out.nbTitle=T('🔒 Tin riêng của bạn','🔒 Your private intel');out.nbNote=T('Đồng đội không thấy các tin này. Hãy nói cho cả đội.','Your teammates cannot see this. Tell them.');
       out.hasMenu=has('menu');out.menus=MN.map((m,i)=>{const on=my.choice.menu===i;return {icon:m[0],name:m[1],desc:m[2],bg:on?'#fff4dc':'#fff',bd:on?'#fda127':'rgba(3,51,55,.1)',onClick:()=>this.act({k:'menu',v:i})};});
       out.hasLand=has('land');
       const sLeft=my.wallet>=0.8-1e-9?1-my.scoutUsed:0;out.hasScout=has('scout');const mc=(MT.find(x=>x[0]===my.choice.method)||[])[5]||0,risk=sLeft>0&&my.wallet-0.8<mc-1e-9;out.scoutLeft=T('Còn '+Math.max(0,sLeft)+' lượt',Math.max(0,sLeft)+' left')+(risk?T(' · soi xong quỹ không đủ cho '+MT.find(x=>x[0]===my.choice.method)[2],' · after scouting, funds won’t cover '+MT.find(x=>x[0]===my.choice.method)[2]):'');
@@ -559,25 +618,32 @@ class Component extends DCLogic {
       out.allyAct=()=>{if(!al||al.state==='proposed')this.act({k:'ally'});};
       out.hasTrade=has('trade')&&hasO;const offers=v.offers||[];
       out.offersIn=offers.filter(o=>!o.mine).map(o=>({label:teamName(v.other.id)+T(' rao bán tin về ',' offers intel on ')+LC[o.l][0]+' '+LC[o.l][1],price:f1(o.price)+T(' tr',' m'),onClick:()=>this.act({k:'buyTip',id:o.id})}));
-      out.sellList=my.tips.map((t,i)=>{const on=offers.some(o=>o.mine&&o.l===t.l&&o.m===t.m);return {label:MN[t.m][0]+' '+MN[t.m][1]+T(' ở ',' at ')+LC[t.l][1]+': ★'+t.s,btn:on?T('Đang rao · gỡ','On offer · remove'):T('Rao bán 0,3','Offer for 0.3'),bg:on?'#fff4dc':'#ffffff',onClick:()=>this.act({k:'sell',i})};});
+      out.sellList=my.tips.map(t=>{const on=offers.some(o=>o.mine&&o.l===t.l&&o.m===t.m);return {label:MN[t.m][0]+' '+MN[t.m][1]+T(' ở ',' at ')+LC[t.l][1]+': ★'+t.s,btn:on?T('Đang rao · gỡ','On offer · remove'):T('Rao bán 0,3','Offer for 0.3'),bg:on?'#fff4dc':'#ffffff',onClick:()=>this.act({k:'sell',m:t.m,l:t.l})};});
       out.noTrade=!out.offersIn.length&&!out.sellList.length;
       out.tips=my.tips.map(t=>MN[t.m][0]+' '+MN[t.m][1]+' · '+LC[t.l][1]+' ★'+t.s).concat(my.hot&&my.hot.w===v.week?[T('🗺️ Bến đông nhất tuần này: ','🗺️ Busiest landing this week: ')+LC[my.hot.l][1]]:[]);out.noTips=!out.tips.length;
       const rd=!!my.ready[v.seat];out.readyLabel=rd?T('✓ Đã chốt · bấm để sửa','✓ Locked · tap to edit'):T('Chốt phần việc của tôi','Lock in my part');out.readyBg=rd?'#3f8a44':'#fda127';out.readyFg=rd?'#ffffff':'#033337';out.toggleReady=()=>this.act({k:'ready'});
       out.teamStatus=SEATS.filter(s=>s.team===myTeam).map(s=>{const vs=v.seats.find(x=>x.id===s.id);const ab=vs.ab||[];const bits=[];
         if(ab.includes('method'))bits.push(MT.find(m=>m[0]===my.choice.method)[1]+' '+MT.find(m=>m[0]===my.choice.method)[2]);
-        if(ab.includes('menu'))bits.push(MN[my.choice.menu][0]+' '+MN[my.choice.menu][1]);
+        if(ab.includes('method')&&my.items.ads)bits.push('📣');if(ab.includes('menu'))bits.push(MN[my.choice.menu][0]+' '+MN[my.choice.menu][1]+' · '+(EN?QTY_E:QTY)[my.choice.qty][1]);
         if(my.votes[s.id]!=null)bits.push('📍 '+LC[my.votes[s.id]][1]);
         return {img:s.img,name:s.name,who:vs.by||(ab.length?'':T('(vai chuyển cho đồng đội)','(role passed to a teammate)')),op:vs.by?1:.4,doing:vs.by?(bits.join(' · ')||ab.map(a=>ABX[a]).join(', ')):T('Vai đã giao cho đồng đội','Role handed to a teammate'),mark:!vs.by?'—':vs.ready?'✅':vs.byOnline?'⏳':'📴'};});
       out.otherStatus=hasO?teamName(v.other.id)+': '+v.other.readyN+'/'+v.other.seatN+T(' đã chốt. Lựa chọn của họ được giữ kín đến lúc công bố.',' locked in. Their choices stay hidden until the reveal.'):'';
     }
     out.force=()=>this.act({k:'force'});
-    out.viewOpts=[['3d','🧊 3D'],['2d',T('🗺️ Thẻ bến','🗺️ Cards')]].map(([k,l])=>({label:l,bg:(k==='2d')===!!st.v2d?'#fda127':'transparent',onClick:()=>this.setState({v2d:k==='2d'})}));out.show3d=st.v2d||st.fail3d?'none':'block';out.mapRef=this.mapRef;
+    out.viewOpts=[['3d','🧊 3D'],['2d',T('🗺️ Thẻ bến','🗺️ Cards')]].map(([k,l])=>({label:l,bg:(k==='2d')===!!st.v2d?'#fda127':'transparent',onClick:()=>this.setState({v2d:k==='2d'})}));out.show3d=st.v2d||st.fail3d?'none':'block';
+    {const on3d=!(st.v2d||st.fail3d),wide=on3d&&!st.narrow,PW='clamp(340px,32vw,420px)',mn=wide&&!!st.pmin;
+      Object.assign(out,{langRight:wide&&v.phase==='choose'?(mn?'170px':'calc('+PW+' + 184px)'):'14px',showCards:!on3d,canMin:wide,panelLabel:mn?T('☰ Hiện bảng','☰ Show panel'):T('✕ Ẩn bảng','✕ Hide panel'),togglePanel:()=>this.setState({pmin:!st.pmin}),toggleRight:mn?'14px':'calc('+PW+' + 28px)',
+        mapPos:wide?'fixed':'relative',mapH:wide?'auto':'52vh',chipRight:wide&&!mn?'calc('+PW+' + 28px)':'14px',
+        panelDisp:mn?'none':'flex',panelPos:wide?'fixed':'relative',panelTop:wide?'110px':'auto',panelRight:wide?'14px':'auto',panelBottom:wide?'14px':'auto',panelW:wide?PW:'100%',panelMax:on3d?'none':'1100px',panelMargin:on3d?'0':'0 auto',panelOv:wide?'auto':'visible',
+        panelPad:wide?'14px 14px 72px':on3d?'14px':'clamp(12px,2vw,24px)',panelBg:wide?'rgba(247,241,230,.92)':on3d?'#e6f3f2':'transparent',panelRad:wide?'28px':on3d?'24px 24px 0 0':'0',panelSh:wide?'0 24px 60px -20px rgba(3,51,55,.55)':'none'});}out.mapRef=this.mapRef;
     if(my){const lsF=SEATS.filter(s=>s.team===myTeam).map(s=>s.id).find(id=>(v.seats.find(x=>x.id===id).ab||[]).includes('land'));const fl=lsF!=null?my.votes[lsF]:null;if(fl!==this.lastFl){this.lastFl=fl;if(window.BPS3D)setTimeout(()=>window.BPS3D.ev('bps-pick',{g:'loc',i:fl}),0);}}
     // reveal
     if(v.last){const L=v.last;out.revWeek=L.w+1;
       const mine=L.sellers.find(s=>s.team===myTeam);
       out.revHead=mine?(mine.method==='survey'?T('Đội khảo sát chợ (−0,3 tr)','Your team surveyed the market (−0.3 m)'):(mine.rev>=0?'+':'')+f1(mine.rev)+T(' tr lãi ở ',' m profit at ')+LC[mine.l][1]):T('Kết quả tuần ','Week results ')+(L.w+1);
-      out.revSub=mine?(mine.down?T('Quỹ không đủ nên đội phải đổi sang cách bán rẻ hơn. ','Not enough funds, so the team switched to a cheaper method. '):'')+(mine.method==='survey'?T('Không bán, nhận gợi ý cặp món–bến tốt nhất và bến đông tuần sau.','No sales; a hint on the best product–landing pair and next week’s busiest landing.'):T('Doanh thu '+f1(mine.gross)+' − chi phí '+f1(mine.cost)+' tr. ','Revenue '+f1(mine.gross)+' − cost '+f1(mine.cost)+' m. ')+(mine.n>0?T('Chung bến với '+mine.n+' ghe khác, khách bị chia.','Shared the landing with '+mine.n+' other boat(s); customers split.'):T('Một mình một bến.','You had the landing to yourself.'))+(mine.spoil?T(' Chè bị hao hụt.',' Sweet soup spoiled.'):'')):'';
+      out.revSub=mine?(mine.down?T('Quỹ không đủ nên đội phải đổi sang cách bán rẻ hơn. ','Not enough funds, so the team switched to a cheaper method. '):'')+(mine.method==='survey'?T('Không bán, nhận gợi ý cặp món–bến tốt nhất và bến đông tuần sau.','No sales; a hint on the best product–landing pair and next week’s busiest landing.'):T('Doanh thu '+f1(mine.gross)+' − chi phí '+f1(mine.cost)+' tr. ','Revenue '+f1(mine.gross)+' − cost '+f1(mine.cost)+' m. ')+(mine.n>0?T('Chung bến với '+mine.n+' ghe khác, khách bị chia.','Shared the landing with '+mine.n+' other boat(s); customers split.'):T('Một mình một bến.','You had the landing to yourself.'))+(mine.spoil?T(' Chè bị hao hụt.',' Sweet soup spoiled.'):'')+(mine.method!=='survey'&&mine.dem>mine.cap?T(' Hết hàng, mất khoảng '+f1(mine.dem-mine.cap)+' tr khách.',' Sold out, about '+f1(mine.dem-mine.cap)+' m of customers lost.'):'')+(mine.method!=='survey'&&mine.cap&&mine.dem<mine.cap*0.75?T(' Nấu dư, còn '+Math.round((1-mine.dem/mine.cap)*100)+'% hàng.',' Overcooked, '+Math.round((1-mine.dem/mine.cap)*100)+'% left over.'):'')):'';
+      if(mine){if(mine.split)out.revSub+=T(' Đội chia từ 3 bến trở lên nên mất ⅓ thời gian bán.',' The team split across 3+ landings and lost ⅓ of its selling time.');if(mine.veto)out.revSub+=T(' CEO đã phủ quyết.',' The CEO used the veto.');if(mine.auto&&mine.auto.length)out.revSub+=T(' Máy chọn ngẫu nhiên cho: ',' Random picks for: ')+mine.auto.map(x=>roleOf(seatDef(x))).join(', ')+'.';}
+      const pw=my&&v.seat&&my.pts[v.seat]?my.pts[v.seat][L.w]:null;out.hasPts=!!pw;out.ptsK=T('Điểm vai tuần ','Role points week ')+(L.w+1);out.ptsSub=T('Chốt đúng giờ +1 · làm tốt phần việc của vai','On-time lock +1 · how well you did your role');out.ptsWeek=pw?pw.p+'/'+pw.mx:'';
       const groups={};L.sellers.forEach(s=>{(groups[s.l]=groups[s.l]||[]).push(s);});
       const top=L.sellers.slice().sort((a,b)=>b.rev-a.rev)[0];const WIN=['assets/character/rivals/ba-le-win.png','assets/character/rivals/chu-sau-win.png','assets/character/rivals/co-bay-win.png'];const LINES=EN?['“See? Pick the busy landing and you win!”','“Regulars all round, the old landing sells steady.”','“Thank you all for supporting Sen Hồng!”']:['“Thấy chưa, chọn bến đông là ăn chắc!”','“Khách quen cả, bến cũ vẫn bán đều.”','“Cảm ơn bà con ủng hộ Sen Hồng nghen!”'];
       out.topImg=top.team?(top.team==='ps'?'assets/character/phu-sa/tu-huong-ganh.png':'assets/character/team/minh-long-cut.webp'):WIN[top.ai];out.topName=entName(top)+' · '+(top.rev>=0?'+':'')+f1(top.rev)+T(' tr',' m');
@@ -593,9 +659,15 @@ class Component extends DCLogic {
     out.endSub=my?T('Lợi nhuận cả mùa: ','Season profit: ')+f1(my.total)+T(' tr',' m')+(v.best?T(' · hiệu suất ',' · efficiency ')+Math.min(100,Math.round(my.total/v.best*100))+'%':''):'';out.endMedal=myRank>=0?(medals[myRank]||'⛵'):'⛵';
     out.endRows=bd.map((b,i)=>({medal:medals[i]||String(i+1),name:entName(b),weeks:[0,1,2,3,4].map(w=>b.weeks[w]!=null?f1(b.weeks[w]):'—'),total:f1(b.total),bg:b.team&&b.team===myTeam?'#fff4dc':i%2?'#fff':'#f4faf6'}));
     out.copyResLabel=st.copied==='res'?T('Đã sao chép, dán gửi giáo viên','Copied, paste it to your teacher'):T('Gửi giáo viên','Send to teacher');
-    out.copyResult=()=>{if(!my)return;const eff=v.best?Math.min(100,Math.round(my.total/v.best*100)):0;const code='BPS-'+Math.abs(Math.round(my.total*1000)^(eff*7919)).toString(36).toUpperCase().padStart(5,'0');
-      const cl=(st.klass||'').replace(/\|/g,'');this.copy(['Bến Phù Sa · Chơi nhóm','Học sinh: '+st.name+(cl?' · lớp '+cl:'')+' ('+(mySeat?mySeat.name+' – '+mySeat.role:'')+')','Đội: '+TEAMDEF[myTeam].name+' · phòng '+v.code,'Lợi nhuận đội: '+f1(my.total)+' tr · hạng '+(myRank+1)+'/'+bd.length,'#BPS|'+st.name.replace(/\|/g,'/')+'|'+cl+'|team|'+r1(my.total)+'|'+(myRank+1)+'|'+eff+'|'+code+'|'+new Date().toISOString().slice(0,10)+'||'+TEAMDEF[myTeam].name+'|'+(mySeat?mySeat.name+' – '+mySeat.role:'')+'|'+v.code+'|'+bd.length].join('\n'),'res');};
+    out.copyResult=()=>{if(!my)return;const sp=sumPts(v.seat),mv=v.mvp?(v.mvp.tally[v.seat]||0):0,mvMax=v.mvp?Math.max(0,...Object.values(v.mvp.tally)):0,isMvp=mv>0&&mv===mvMax;const eff=v.best?Math.min(100,Math.round(my.total/v.best*100)):0;const code='BPS-'+Math.abs(Math.round(my.total*1000)^(eff*7919)).toString(36).toUpperCase().padStart(5,'0');
+      const cl=(st.klass||'').replace(/\|/g,'');this.copy(['Bến Phù Sa · Chơi nhóm','Học sinh: '+st.name+(cl?' · lớp '+cl:'')+' ('+(mySeat?mySeat.name+' – '+mySeat.role:'')+')','Đội: '+TEAMDEF[myTeam].name+' · phòng '+v.code,'Lợi nhuận đội: '+f1(my.total)+' tr · hạng '+(myRank+1)+'/'+bd.length,'Điểm vai: '+sp.p+'/'+sp.mx+' · phiếu MVP: '+mv+(isMvp?' (MVP)':''),'#BPS|'+st.name.replace(/\|/g,'/')+'|'+cl+'|team|'+r1(my.total)+'|'+(myRank+1)+'|'+eff+'|'+code+'|'+new Date().toISOString().slice(0,10)+'||'+TEAMDEF[myTeam].name+'|'+(mySeat?mySeat.name+' – '+mySeat.role:'')+'|'+v.code+'|'+bd.length+'|'+sp.p+'/'+sp.mx+'|'+mv+'|'+(isMvp?'MVP':'')].join('\n'),'res');};
     out.again=()=>this.act({k:'again'});
+    const sumPts=sid=>{const a=(my&&my.pts[sid])||[];return {p:a.reduce((x,y)=>x+(y?y.p:0),0),mx:a.reduce((x,y)=>x+(y?y.mx:0),0),w:[0,1,2,3,4].map(i=>a[i]?a[i].p:'—').join(' · ')};};
+    if(my&&v.mvp){const tl=v.mvp.tally,maxV=Math.max(0,...Object.values(tl));const filled=v.seats.filter(x=>x.by&&seatDef(x.id).team===myTeam);
+      out.teamEndT=teamName(myTeam)+T(' · điểm vai & MVP',' · role points & MVP');out.mvpHint=T('Bỏ phiếu MVP cho một đồng đội (không tự bầu).','Vote one teammate as MVP (not yourself).');
+      out.teamEnd=filled.map(x=>{const sd=seatDef(x.id),sp=sumPts(x.id),n=tl[x.id]||0,mine2=x.id===v.seat,voted=v.mvp.mine===x.id;return {img:sd.img,name:x.by+' · '+sd.name,crown:n>0&&n===maxV?'🏆 MVP':'',role:(x.ab||[]).map(a=>ABX[a]).join(' · '),pts:sp.p+'/'+sp.mx,weeks:T('Tuần: ','Weeks: ')+sp.w,votes:n,bg:mine2?'#fff4dc':'#f4faf6',
+        voteLabel:mine2?T('Bạn','You'):voted?T('✓ Đã bầu','✓ Voted'):T('Bầu MVP','Vote MVP'),voteBg:voted?'#d8f0d2':'#fda127',voteOp:mine2?.35:1,onVote:()=>{if(!mine2)this.act({k:'mvp',seat:x.id});}};});}
+    else{out.teamEnd=[];out.teamEndT='';out.mvpHint='';}
     return out;
   }
 }
