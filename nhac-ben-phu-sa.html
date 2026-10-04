@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & PGS.TS. Phan Anh Tú -->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Golden Silt Journey – Nhạc nền Bến Phù Sa · BizOn</title>
+<meta name="description" content="Trình phát «Golden Silt Journey» – nhạc nền game Bến Phù Sa, nghe kèm lời Anh · Pháp · Việt chạy theo từng đoạn.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & PGS.TS. Phan Anh Tú">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<link rel="stylesheet" href="css/bizon-clay-fonts.css">
+<style>
+  body{margin:0;background:#033337;color:#fff;font-family:'Be Vietnam Pro','BVP Fallback',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:#FFD58A;text-decoration:none} a:hover{color:#fff} *{box-sizing:border-box}
+  @keyframes gsjSpin{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){ #gsj-disc{animation:none!important} }
+  .gsj-wrap{position:relative;min-height:100vh;overflow:hidden}
+  .gsj-bg{position:fixed;inset:0;background:url('assets/illustrations/game/ben-phu-sa-cho-noi.webp') 50% 40%/cover no-repeat;filter:saturate(1.1)}
+  .gsj-veil{position:fixed;inset:0;background:linear-gradient(180deg,rgba(3,51,55,.25) 0%,rgba(3,51,55,.82) 45%,#033337 80%)}
+  .gsj-main{position:relative;max-width:1180px;margin:0 auto;padding:24px 20px 140px}
+  .gsj-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .gsj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:40px;align-items:start;margin-top:18vh}
+  .gsj-left{position:sticky;top:24px}
+  .gsj-disc-wrap{position:relative;flex:none;width:clamp(120px,16vw,170px);aspect-ratio:1/1}
+  #gsj-disc{position:absolute;inset:0;border-radius:50%;background:repeating-radial-gradient(circle,#0E2A2D 0 2px,#173B3F 2px 4px);box-shadow:0 20px 34px -14px rgba(0,0,0,.7),inset 0 0 0 6px #0A2023;animation:gsjSpin 6s linear infinite;animation-play-state:paused}
+  #gsj-disc .lbl{position:absolute;inset:30%;border-radius:50%;background:url('assets/illustrations/game/ben-phu-sa-cho-noi.webp') 50% 50%/cover;box-shadow:0 0 0 4px #FDA127}
+  #gsj-sections article{cursor:pointer;padding:22px 24px;border-radius:28px;background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.08);transition:background .4s,border-color .4s}
+</style>
+<meta property="og:type" content="music.song">
+<meta property="og:title" content="Golden Silt Journey – Nhạc nền Bến Phù Sa">
+<meta property="og:description" content="Nghe kèm lời Anh · Pháp · Việt, chạy theo từng đoạn.">
+</head>
+<body>
+<div class="gsj-wrap">
+  <div class="gsj-bg" aria-hidden="true"></div>
+  <div class="gsj-veil" aria-hidden="true"></div>
+
+  <div class="gsj-main">
+    <header class="gsj-head">
+      <a href="am-nhac.html" style="white-space:nowrap;padding:10px 16px;border-radius:999px;background:rgba(255,251,244,.92);color:#033337;font-size:14px;font-weight:800">← Kho nhạc</a>
+      <a href="ben-phu-sa.html" style="white-space:nowrap;padding:10px 16px;border-radius:999px;background:#FDA127;color:#033337;font-size:14px;font-weight:800;box-shadow:inset 0 -4px 0 rgba(0,0,0,.15)">Chơi Bến Phù Sa ↗</a>
+    </header>
+
+    <section class="gsj-grid">
+      <div class="gsj-left">
+        <div style="display:inline-flex;padding:7px 14px;border-radius:999px;background:rgba(255,213,138,.18);color:#FFD58A;font-size:13px;font-weight:800">Nhạc nền game Bến Phù Sa · Gánh Hàng Khởi Nghiệp</div>
+        <h1 style="margin:16px 0 0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-weight:800;font-size:clamp(40px,6vw,76px);line-height:1.02;letter-spacing:-.02em">Golden Silt Journey</h1>
+        <div style="margin-top:10px;font-size:16px;font-weight:700;color:#BFE6EE">Anh · Pháp · Việt · Global electro-pop</div>
+
+        <div style="display:flex;align-items:center;gap:22px;margin-top:30px">
+          <div class="gsj-disc-wrap"><div id="gsj-disc"><div class="lbl"></div></div></div>
+          <div style="flex:1;min-width:0">
+            <button id="gsj-toggle" type="button" style="border:0;cursor:pointer;display:inline-flex;align-items:center;gap:10px;white-space:nowrap;padding:16px 26px;border-radius:999px;background:#FDA127;color:#033337;font:800 18px 'Plus Jakarta Sans','PJS Fallback',sans-serif;box-shadow:inset 0 -6px 0 rgba(0,0,0,.18),inset 0 3px 0 rgba(255,255,255,.4),0 16px 26px -12px rgba(253,161,39,.7)">▶ Phát bài hát</button>
+            <div style="display:flex;align-items:center;gap:10px;margin-top:16px;font-size:13px;font-weight:800;color:#BFE6EE">
+              <span id="gsj-tc">0:00</span>
+              <div id="gsj-seek" style="flex:1;height:10px;border-radius:999px;background:rgba(255,255,255,.16);cursor:pointer;overflow:hidden"><div id="gsj-pct" style="height:100%;width:0%;border-radius:999px;background:#7FD3DC"></div></div>
+              <span id="gsj-td">–:––</span>
+            </div>
+            <div id="gsj-now" style="margin-top:12px;font-size:14px;font-weight:700;color:#FFD58A"></div>
+          </div>
+        </div>
+
+        <div id="gsj-chips" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:26px"></div>
+        <p style="margin:18px 0 0;font-size:12px;line-height:1.6;color:#8FB7BA">Mốc từng đoạn được ước tính theo độ dài lời; bấm một đoạn để nhảy tới. © 2026 Đỗ Thùy Hương &amp; Phan Anh Tú.</p>
+      </div>
+
+      <div id="gsj-sections" style="display:flex;flex-direction:column;gap:14px"></div>
+    </section>
+  </div>
+</div>
+
+<script src="js/golden-silt-lyrics.js"></script>
+<script>
+(function(){
+  var A = new Audio('assets/audio/golden-silt-journey-ben-phu-sa-2.mp3'); A.preload = 'metadata';
+  var secs = [], ci = -1, dur = 0;
+  function mm(x){ x = Math.floor(x||0); return Math.floor(x/60) + ':' + String(x%60).padStart(2,'0'); }
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]; }); }
+
+  function parse(){
+    if(!window.BZ_GSJ) return [];
+    var out = [], cur = null;
+    window.BZ_GSJ.split('\n').forEach(function(line){
+      var m = line.match(/^\[(.+?)(?:\s+-\s+(.+))?\]$/);
+      if(m){ cur = { name:m[1], dir:m[2]||'', stanzas:[[]] }; out.push(cur); return; }
+      if(!cur) return;
+      if(!line.trim()){ if(cur.stanzas[cur.stanzas.length-1].length) cur.stanzas.push([]); return; }
+      cur.stanzas[cur.stanzas.length-1].push(line);
+    });
+    out.forEach(function(s){ s.stanzas = s.stanzas.filter(function(x){ return x.length; }); s.n = s.stanzas.reduce(function(a,x){ return a+x.length; },0)+2; });
+    var tot = out.reduce(function(a,s){ return a+s.n; },0), acc = 0;
+    out.forEach(function(s){ s.f0 = acc/tot; acc += s.n; s.f1 = acc/tot; });
+    return out;
+  }
+
+  function build(){
+    secs = parse();
+    document.getElementById('gsj-chips').innerHTML = secs.map(function(s,i){
+      return '<button type="button" data-si="'+i+'" style="border:0;cursor:pointer;white-space:nowrap;padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.12);color:#E1F2F5;font:800 12px \'Be Vietnam Pro\',sans-serif">'+esc(s.name)+'</button>';
+    }).join('');
+    document.getElementById('gsj-sections').innerHTML = secs.map(function(s,i){
+      var body = s.stanzas.map(function(lines){
+        return '<div style="display:flex;flex-direction:column;gap:2px">'+lines.map(function(l){ return '<div class="gsj-line" style="font-family:\'Plus Jakarta Sans\',\'PJS Fallback\',sans-serif;font-size:17px;font-weight:600;line-height:1.45;color:#E1F2F5">'+esc(l)+'</div>'; }).join('')+'</div>';
+      }).join('');
+      return '<article data-si="'+i+'"><div style="display:flex;flex-wrap:wrap;gap:8px;align-items:baseline"><span class="gsj-tag" style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#FFD58A">'+esc(s.name)+'</span><span style="font-size:12px;font-style:italic;color:#8FB7BA">'+esc(s.dir)+'</span></div><div style="display:flex;flex-direction:column;gap:14px;margin-top:10px">'+body+'</div></article>';
+    }).join('');
+    document.getElementById('gsj-chips').querySelectorAll('button[data-si]').forEach(function(b){ b.onclick = function(){ jump(+b.getAttribute('data-si')); }; });
+    document.getElementById('gsj-sections').querySelectorAll('article[data-si]').forEach(function(a){ a.onclick = function(){ jump(+a.getAttribute('data-si')); }; });
+    paint();
+  }
+
+  function jump(i){ if(!dur || !secs[i]) return; A.currentTime = secs[i].f0*dur; if(A.paused) A.play().catch(function(){}); }
+
+  function paint(){
+    var f = dur ? A.currentTime/dur : 0;
+    ci = secs.findIndex(function(s){ return f>=s.f0 && f<s.f1; });
+    document.getElementById('gsj-pct').style.width = (f*100).toFixed(2)+'%';
+    document.getElementById('gsj-tc').textContent = mm(A.currentTime);
+    document.getElementById('gsj-td').textContent = dur ? mm(dur) : '–:––';
+    document.getElementById('gsj-now').textContent = ci>=0 ? '♪ '+secs[ci].name : '';
+    document.getElementById('gsj-disc').style.animationPlayState = A.paused ? 'paused' : 'running';
+    document.getElementById('gsj-toggle').textContent = A.paused ? '▶ Phát bài hát' : '❚❚ Tạm dừng';
+    document.querySelectorAll('#gsj-chips button[data-si]').forEach(function(b){
+      var me = +b.getAttribute('data-si') === ci;
+      b.style.background = me ? '#FDA127' : 'rgba(255,255,255,.12)';
+      b.style.color = me ? '#033337' : '#E1F2F5';
+    });
+    document.querySelectorAll('#gsj-sections article[data-si]').forEach(function(a){
+      var me = +a.getAttribute('data-si') === ci;
+      a.style.background = me ? 'rgba(255,251,244,.96)' : 'rgba(255,255,255,.06)';
+      a.style.borderColor = me ? '#FDA127' : 'rgba(255,255,255,.08)';
+      a.querySelector('.gsj-tag').style.color = me ? '#C2581B' : '#FFD58A';
+      a.querySelectorAll('.gsj-line').forEach(function(l){ l.style.color = me ? '#033337' : '#E1F2F5'; l.style.fontSize = me ? '20px' : '17px'; l.style.fontWeight = me ? 800 : 600; });
+    });
+  }
+
+  var saved = parseFloat(localStorage.getItem('bz-gsj-t') || '0');
+  A.onloadedmetadata = function(){ dur = A.duration; if(saved && saved < dur) A.currentTime = saved; paint(); };
+  A.ontimeupdate = function(){ paint(); try{ localStorage.setItem('bz-gsj-t', String(A.currentTime)); }catch(e){} };
+  A.onplay = paint; A.onpause = paint;
+  A.onended = function(){ try{ localStorage.setItem('bz-gsj-t','0'); }catch(e){} A.currentTime = 0; paint(); };
+  document.getElementById('gsj-toggle').onclick = function(){ if(A.paused) A.play().catch(function(){}); else A.pause(); };
+  document.getElementById('gsj-seek').onclick = function(e){ if(!dur) return; var r = e.currentTarget.getBoundingClientRect(); A.currentTime = Math.max(0, Math.min(1, (e.clientX-r.left)/r.width))*dur; paint(); };
+
+  if(window.BZ_GSJ) build();
+  else { var w = setInterval(function(){ if(window.BZ_GSJ){ clearInterval(w); build(); } }, 100); }
+})();
+</script>
+</body>
+</html>
