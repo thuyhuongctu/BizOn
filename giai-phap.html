@@ -1,191 +1,183 @@
 <!DOCTYPE html>
-<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
+<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & PGS.TS. Phan Anh Tú -->
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Giải pháp – BizOn Bật Nghiệp</title>
-<meta name="description" content="Giải pháp EdTech của BizOn: game mô phỏng kinh doanh Bật Nghiệp, BizOn Go Global & IE Lab, cố vấn AI Lumina và bộ nhận diện claymorphism cho lớp học khởi nghiệp.">
-<meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
+<title>Giải pháp EdTech (Pilot) · BizOn Bật Nghiệp</title>
+<meta name="description" content="Giải pháp EdTech BizOn: game mô phỏng, Go Global, cố vấn AI, claymorphism & âm nhạc gốc; quy trình triển khai lớp học và các gói pilot cho tổ chức.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & PGS.TS. Phan Anh Tú">
 <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
-<script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
-<script src="js/backend-config.js"></script>
-<script src="js/error-log.js"></script>
-<!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
-     nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
-<link rel="stylesheet" href="css/bizon-fonts.css">
+<link rel="stylesheet" href="css/bizon-clay-fonts.css">
+<link rel="stylesheet" href="css/bizon-clay.css">
 <style>
-  html { background:#f4faff; scroll-behavior:smooth; }
-  body { font-family:'Manrope', 'Manrope Fallback',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
-  .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
-  .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease; }
-  .clay-btn:active { transform:translateY(2px); }
-  .glass-nav { background:rgba(3,51,55,.78); backdrop-filter:blur(14px); }
-  .art-card { transition:transform .2s cubic-bezier(.34,1.56,.64,1); }
-  .art-card:hover { transform:translateY(-5px) scale(1.02); }
-  .float-slow { animation:floaty 4s ease-in-out infinite; }
-  @keyframes floaty { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
-  :root { --dt: 3 51 55; }
-  html[data-theme="dark"] { --dt: 214 236 240; background:#081a20; color-scheme:dark; }
-  html[data-theme="dark"] body { color:#d6ecf0; }
-  html[data-theme="dark"] .clay-card { background:#0e2a33; box-shadow:0 10px 30px -5px rgba(0,0,0,.45), inset 0 -4px 0 rgba(0,0,0,.3); }
-  html[data-theme="dark"] .glass-nav { background:rgba(2,20,24,.85); }
-  html[data-theme="dark"] .text-primary { color:#5cc4e6 !important; }
+  .gp-hero-btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+  .gp-sols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:20px}
+  .gp-sol{display:grid;grid-template-columns:132px minmax(0,1fr);gap:18px;padding:14px;border-radius:30px;background:var(--clay-card);box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 24px 34px -24px rgba(110,70,30,.55)}
+  .gp-sol .thumb{position:relative;border-radius:22px;overflow:hidden;min-height:150px;box-shadow:inset 0 -6px 0 rgba(0,0,0,.07)}
+  .gp-sol .thumb img{position:absolute;inset:0;width:100%;height:100%;object-position:50% 50%}
+  .gp-sol .body{padding:8px 8px 8px 0;display:flex;flex-direction:column;gap:8px}
+  .gp-link{padding:7px 12px;border-radius:999px;background:var(--clay-tray);color:var(--clay-ink);font-size:13px;font-weight:800;box-shadow:inset 0 -3px 0 rgba(110,70,30,.15)}
+  .gp-link:hover{background:var(--clay-teal);color:#fff}
+  .gp-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:16px;margin-top:26px}
+  .gp-step{padding:22px 18px;border-radius:26px;background:var(--clay-card);text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;box-shadow:inset 0 -7px 0 rgba(110,70,30,.08),inset 0 4px 0 #fff,0 16px 22px -16px rgba(110,70,30,.5)}
+  .gp-step .n{width:60px;height:60px;border-radius:50%;display:grid;place-items:center;font-family:var(--clay-head);font-size:24px;font-weight:800;box-shadow:inset 0 -6px 0 rgba(0,0,0,.12),inset 0 4px 0 rgba(255,255,255,.55)}
+  .gp-whys{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:18px}
+  .gp-why{padding:24px;border-radius:28px;box-shadow:inset 0 -9px 0 rgba(0,0,0,.07),inset 0 5px 0 rgba(255,255,255,.5),0 22px 30px -22px rgba(110,70,30,.55)}
+  .gp-plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:20px;align-items:stretch}
+  .gp-plan{display:flex;flex-direction:column;padding:26px;border-radius:32px;box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 rgba(255,255,255,.8),0 26px 34px -24px rgba(110,70,30,.55)}
+  .gp-li{display:flex;gap:10px;font-size:14px;line-height:1.45;color:var(--clay-ink-2)}
+  .gp-li .dot{flex:none;width:10px;height:10px;margin-top:5px;border-radius:50%;background:var(--clay-gold);box-shadow:inset 0 -2px 0 rgba(0,0,0,.15)}
+  .gp-cta{padding:40px 30px;border-radius:36px;background:var(--clay-teal);color:#fff;text-align:center;margin-bottom:64px;box-shadow:inset 0 -12px 0 rgba(0,0,0,.18),inset 0 6px 0 rgba(255,255,255,.18),0 30px 40px -26px rgba(0,60,80,.8)}
+  .gp-cta a{font-family:var(--clay-head);font-size:18px;font-weight:800;padding:14px 22px;border-radius:20px}
+  @media (max-width:560px){ .gp-sol{grid-template-columns:1fr} .gp-sol .thumb{min-height:170px} }
 </style>
-<link rel="stylesheet" href="css/tw.css">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="BizOn Bật Nghiệp">
-<meta property="og:locale" content="vi_VN">
-<meta property="og:title" content="Giải pháp – BizOn Bật Nghiệp">
-<meta property="og:description" content="Giải pháp EdTech của BizOn: game mô phỏng kinh doanh Bật Nghiệp, BizOn Go Global & IE Lab, cố vấn AI Lumina và bộ nhận diện claymorphism cho lớp học khởi nghiệp.">
-<meta property="og:url" content="https://thuyhuongctu.github.io/BizOn/giai-phap.html">
-<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/og/og-cover.webp">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
+<meta property="og:title" content="Giải pháp EdTech (Pilot) · BizOn Bật Nghiệp">
+<meta property="og:description" content="Game mô phỏng, Go Global, cố vấn AI, claymorphism & âm nhạc gốc; quy trình lớp học và gói pilot.">
 <meta name="twitter:card" content="summary_large_image">
 </head>
-<body>
+<body class="clay">
 
-
-<!-- HERO -->
-<header class="pt-24 pb-10 text-white" data-net-hero style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%);position:relative;overflow:hidden">
-  <div class="max-w-5xl mx-auto px-5 grid sm:grid-cols-[1fr_auto] gap-6 items-center">
-    <div>
-      <p class="text-[11px] font-extrabold uppercase tracking-[.2em] text-clay-gold">Giải pháp EdTech</p>
-      <h1 class="font-display font-extrabold text-3xl sm:text-4xl mt-2">Biến lớp học kinh doanh thành sân chơi mô phỏng</h1>
-      <p class="text-white/75 text-sm mt-3 max-w-2xl">BizOn xây dựng bộ công cụ học qua chơi cho môn khởi nghiệp và kinh doanh quốc tế – chạy hoàn toàn trên trình duyệt, miễn phí, không cần cài đặt.</p>
-      <div class="flex flex-wrap gap-3 mt-5">
-        <a href="game.html" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-6 py-3 text-sm">🎮 Chơi thử ngay</a>
-        <a href="BizOn Game 3D.html" class="clay-btn bg-white/10 border border-white/25 text-white font-display font-bold px-6 py-3 text-sm">🧊 Bản 3D</a>
-        <a href="lien-he.html" class="clay-btn bg-white/10 border border-white/25 text-white font-display font-bold px-6 py-3 text-sm">🤝 Hợp tác cùng nhóm</a>
+<main class="clay-main" style="max-width:1120px">
+  <section class="clay-hero">
+    <div class="sun" aria-hidden="true"></div>
+    <div class="grid">
+      <div class="htext">
+        <span class="clay-eyebrow" data-en="EdTech solutions">Giải pháp EdTech</span>
+        <h1 data-en="Turn the business classroom into a simulation playground">Biến lớp học kinh doanh thành sân chơi mô phỏng</h1>
+        <p class="lead" style="max-width:36em" data-en="BizOn builds learn-by-playing tools for entrepreneurship and international business courses – running entirely in the browser, free, with nothing to install.">BizOn xây dựng bộ công cụ học qua chơi cho môn khởi nghiệp và kinh doanh quốc tế – chạy hoàn toàn trên trình duyệt, miễn phí, không cần cài đặt.</p>
+        <div class="gp-hero-btns">
+          <a class="clay-btn" href="game.html" data-en="Try it now →">Chơi thử ngay →</a>
+          <a class="clay-btn" style="background:var(--clay-card);color:var(--clay-ink);box-shadow:inset 0 -5px 0 rgba(110,70,30,.12),inset 0 3px 0 #fff" href="BizOn Game 3D.html" data-en="3D version">Bản 3D</a>
+          <a class="clay-btn" style="background:var(--clay-card);color:var(--clay-ink);box-shadow:inset 0 -5px 0 rgba(110,70,30,.12),inset 0 3px 0 #fff" href="lien-he.html" data-en="Partner with us">Hợp tác cùng nhóm</a>
+        </div>
       </div>
+      <div class="art" style="width:min(26vw,230px);aspect-ratio:1/2.1"><img src="assets/character/anh-tu-ao-dai-point-cut.webp" alt="" loading="lazy"></div>
     </div>
-    <img src="assets/character/anh-tu-ao-dai-point-cut.webp" alt="Tú Phan giới thiệu giải pháp" class="h-52 sm:h-64 w-auto mx-auto drop-shadow-2xl float-slow hidden sm:block">
-  </div>
-</header>
+    <div class="wave" aria-hidden="true"></div>
+  </section>
 
-<main class="max-w-5xl mx-auto px-5 py-10">
-
-  <!-- 4 GIẢI PHÁP -->
-  <section class="mb-14">
-    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-5">🧩 Bốn giải pháp cốt lõi</h2>
-    <div class="grid sm:grid-cols-2 gap-4">
-      <div class="clay-card art-card p-6 block">
-        <p class="text-4xl">🎮</p>
-        <h3 class="font-display font-extrabold text-deep-teal text-lg mt-3">Game mô phỏng Bật Nghiệp</h3>
-        <p class="text-sm text-deep-teal/60 mt-2">Điều hành xưởng linh vật đất sét qua 6 vòng kinh doanh: định giá, marketing, sản xuất, R&D, nhân sự và tài chính. Đội 3–5 người, mỗi ván ≈ 30–45 phút – vừa một buổi học.</p>
-        <p class="flex flex-wrap gap-x-4 gap-y-1 mt-3"><a href="game.html" class="text-xs font-extrabold text-primary">Vào game →</a><a href="BizOn Game 3D.html" class="text-xs font-extrabold text-primary">🧊 Bản 3D →</a></p>
+  <section style="margin-bottom:64px">
+    <h2 style="margin:0 0 22px;font-size:clamp(30px,3.6vw,42px)" data-en="Four core solutions">Bốn giải pháp cốt lõi</h2>
+    <div class="gp-sols">
+      <div class="gp-sol">
+        <div class="thumb" style="background:#FFE6B8"><img src="assets/concept/tier-2a-bat-nghiep.jpg" alt="" style="object-fit:contain" loading="lazy"></div>
+        <div class="body">
+          <h3 style="font-size:23px" data-en="Bật Nghiệp business game">Game mô phỏng Bật Nghiệp</h3>
+          <p style="font-size:14px;line-height:1.6;color:var(--clay-sub);flex:1" data-en="Run a clay-mascot workshop across 6 business rounds: pricing, marketing, production, R&D, HR and finance. Teams of 3–5, each game ≈ 30–45 minutes – one class session.">Điều hành xưởng linh vật đất sét qua 6 vòng kinh doanh: định giá, marketing, sản xuất, R&amp;D, nhân sự và tài chính. Đội 3–5 người, mỗi ván ≈ 30–45 phút – vừa một buổi học.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px"><a class="gp-link" href="game.html" data-en="Play →">Vào game →</a><a class="gp-link" href="BizOn Game 3D.html" data-en="3D version →">Bản 3D →</a></div>
+        </div>
       </div>
-      <a href="global.html" class="clay-card art-card p-6 block relative overflow-hidden">
-        <img src="assets/illustrations/globe-trade.webp" alt="" loading="lazy" decoding="async" class="absolute -right-8 -top-6 h-36 w-auto opacity-80 pointer-events-none" loading="lazy">
-        <p class="text-4xl">🌍</p>
-        <h3 class="font-display font-extrabold text-deep-teal text-lg mt-3">BizOn Go Global · IE Lab</h3>
-        <p class="text-sm text-deep-teal/60 mt-2">Mô phỏng khởi nghiệp quốc tế: chọn 1 trong 7 thị trường, đàm phán với đối tác AI, quản trị ESG và rủi ro, rồi xuất nhật ký quyết định (CSV) cho giảng viên chấm và thảo luận.</p>
-        <p class="text-xs font-extrabold text-primary mt-3">Ra biển lớn →</p>
-      </a>
-      <a href="game.html" class="clay-card art-card p-6 block">
-        <p class="text-4xl">🤖</p>
-        <h3 class="font-display font-extrabold text-deep-teal text-lg mt-3">Cố vấn AI trong game</h3>
-        <p class="text-sm text-deep-teal/60 mt-2">Lumina và Tú Phan đồng hành từng vòng: cuộc họp đội với gợi ý theo vai trò, dự báo thị phần trực tiếp, giải thích «Vì sao?» sau mỗi kết quả và sổ tay thuật ngữ dễ hiểu.</p>
-        <p class="text-xs font-extrabold text-primary mt-3">Gặp cố vấn →</p>
-      </a>
-      <a href="thu-vien.html" class="clay-card art-card p-6 block">
-        <p class="text-4xl">🎨</p>
-        <h3 class="font-display font-extrabold text-deep-teal text-lg mt-3">Claymorphism &amp; Âm nhạc gốc</h3>
-        <p class="text-sm text-deep-teal/60 mt-2">Bộ nhận diện đất nặn 3D độc quyền, kho âm nhạc gốc đa ngôn ngữ (Việt · Anh · Pháp) và bộ quà tặng cài áo Bản đồ Việt Nam – tất cả do nhóm tự sản xuất.</p>
-        <p class="text-xs font-extrabold text-primary mt-3">Xem thư viện →</p>
-      </a>
+      <div class="gp-sol">
+        <div class="thumb" style="background:#D9F0F2"><img src="assets/illustrations/globe-trade.webp" alt="" style="object-fit:cover" loading="lazy"></div>
+        <div class="body">
+          <h3 style="font-size:23px" data-en="BizOn Go Global · IE Lab">BizOn Go Global · IE Lab</h3>
+          <p style="font-size:14px;line-height:1.6;color:var(--clay-sub);flex:1" data-en="An international venture simulation: pick 1 of 7 markets, negotiate with AI partners, manage ESG and risk, then export a decision log (CSV) for grading and discussion.">Mô phỏng khởi nghiệp quốc tế: chọn 1 trong 7 thị trường, đàm phán với đối tác AI, quản trị ESG và rủi ro, rồi xuất nhật ký quyết định (CSV) cho giảng viên chấm và thảo luận.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px"><a class="gp-link" href="global.html" data-en="Go global →">Ra biển lớn →</a></div>
+        </div>
+      </div>
+      <div class="gp-sol">
+        <div class="thumb" style="background:#FBD9E0"><img src="assets/character/advisors/lumina-aodai-cut.webp" alt="" style="object-fit:contain" loading="lazy"></div>
+        <div class="body">
+          <h3 style="font-size:23px" data-en="In-game AI advisors">Cố vấn AI trong game</h3>
+          <p style="font-size:14px;line-height:1.6;color:var(--clay-sub);flex:1" data-en="Lumina and Tú Phan accompany every round: team meetings with role-based hints, live market-share forecasts, a «Why?» explanation after each result and a plain-language glossary.">Lumina và Tú Phan đồng hành từng vòng: cuộc họp đội với gợi ý theo vai trò, dự báo thị phần trực tiếp, giải thích «Vì sao?» sau mỗi kết quả và sổ tay thuật ngữ dễ hiểu.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px"><a class="gp-link" href="game.html" data-en="Meet the advisors →">Gặp cố vấn →</a></div>
+        </div>
+      </div>
+      <div class="gp-sol">
+        <div class="thumb" style="background:#DDF1E4"><img src="assets/character/bizon-duo-music.webp" alt="" style="object-fit:contain" loading="lazy"></div>
+        <div class="body">
+          <h3 style="font-size:23px" data-en="Claymorphism & original music">Claymorphism &amp; Âm nhạc gốc</h3>
+          <p style="font-size:14px;line-height:1.6;color:var(--clay-sub);flex:1" data-en="An exclusive 3D clay identity, a multilingual original soundtrack (Vietnamese · English · French) and a Vietnam-map pin gift set – all produced by the team.">Bộ nhận diện đất nặn 3D độc quyền, kho âm nhạc gốc đa ngôn ngữ (Việt · Anh · Pháp) và bộ quà tặng cài áo Bản đồ Việt Nam – tất cả do nhóm tự sản xuất.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px"><a class="gp-link" href="thu-vien.html" data-en="Open the library →">Xem thư viện →</a></div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- QUY TRÌNH LỚP HỌC -->
-  <section class="mb-14">
-    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">🏫 Quy trình triển khai trong lớp học</h2>
-    <p class="text-sm text-deep-teal/55 mb-5">Bốn bước gọn nhẹ, không cần cài đặt – chỉ cần trình duyệt và máy chiếu. Cần chi tiết từng phút? Xem <a href="lop-hoc.html" class="text-primary font-extrabold">Kịch bản lớp học 40–60 sinh viên →</a></p>
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-      <div class="clay-card p-5 text-center"><p class="text-3xl">👥</p><p class="font-display font-extrabold text-deep-teal text-sm mt-2">1 · Chia đội &amp; nhận vai</p><p class="text-[11px] text-deep-teal/50 mt-1.5">Mỗi đội 3–5 người: CEO, CFO, CMO, COO và Thư ký pháp chế.</p></div>
-      <div class="clay-card p-5 text-center"><p class="text-3xl">⏱️</p><p class="font-display font-extrabold text-deep-teal text-sm mt-2">2 · Chơi 6 vòng</p><p class="text-[11px] text-deep-teal/50 mt-1.5">Mỗi vòng 5–7 phút; một ván trọn vẹn ≈ 30–45 phút, vừa một buổi học.</p></div>
-      <div class="clay-card p-5 text-center"><p class="text-3xl">⚡</p><p class="font-display font-extrabold text-deep-teal text-sm mt-2">3 · Sự kiện &amp; cố vấn</p><p class="text-[11px] text-deep-teal/50 mt-1.5">Biến cố thị trường bất ngờ và lời khuyên AI giữ nhịp thảo luận sôi nổi.</p></div>
-      <div class="clay-card p-5 text-center"><p class="text-3xl">📊</p><p class="font-display font-extrabold text-deep-teal text-sm mt-2">4 · Tổng kết bằng dữ liệu</p><p class="text-[11px] text-deep-teal/50 mt-1.5">Xuất CSV nhật ký quyết định (IE Lab) để chấm điểm và rút bài học.</p></div>
+  <section style="margin-bottom:64px;padding:34px 28px;border-radius:36px;background:var(--clay-tray);box-shadow:inset 0 6px 12px rgba(110,70,30,.15)">
+    <h2 style="font-size:clamp(30px,3.6vw,42px)" data-en="Classroom deployment flow">Quy trình triển khai trong lớp học</h2>
+    <p style="margin:10px 0 0;font-size:15px;line-height:1.6;color:var(--clay-sub)"><span data-en="Four light steps with nothing to install – just a browser and a projector. Need a minute-by-minute plan? See the">Bốn bước gọn nhẹ, không cần cài đặt – chỉ cần trình duyệt và máy chiếu. Cần chi tiết từng phút? Xem</span> <a href="lop-hoc.html" style="font-weight:800" data-en="40–60 student class script →">Kịch bản lớp học 40–60 sinh viên →</a></p>
+    <div class="gp-steps">
+      <div class="gp-step"><span class="n" style="background:var(--clay-c1)">1</span><div style="font-family:var(--clay-head);font-size:19px;font-weight:800;line-height:1.15" data-en="Form teams & roles">Chia đội &amp; nhận vai</div><p style="font-size:13px;line-height:1.5;color:var(--clay-sub)" data-en="Teams of 3–5: CEO, CFO, CMO, COO and Legal Secretary.">Mỗi đội 3–5 người: CEO, CFO, CMO, COO và Thư ký pháp chế.</p></div>
+      <div class="gp-step"><span class="n" style="background:var(--clay-c2)">2</span><div style="font-family:var(--clay-head);font-size:19px;font-weight:800;line-height:1.15" data-en="Play 6 rounds">Chơi 6 vòng</div><p style="font-size:13px;line-height:1.5;color:var(--clay-sub)" data-en="5–7 minutes per round; a full game ≈ 30–45 minutes, one class session.">Mỗi vòng 5–7 phút; một ván trọn vẹn ≈ 30–45 phút, vừa một buổi học.</p></div>
+      <div class="gp-step"><span class="n" style="background:var(--clay-c3)">3</span><div style="font-family:var(--clay-head);font-size:19px;font-weight:800;line-height:1.15" data-en="Events & advisors">Sự kiện &amp; cố vấn</div><p style="font-size:13px;line-height:1.5;color:var(--clay-sub)" data-en="Surprise market events and AI advice keep discussion lively.">Biến cố thị trường bất ngờ và lời khuyên AI giữ nhịp thảo luận sôi nổi.</p></div>
+      <div class="gp-step"><span class="n" style="background:var(--clay-c4)">4</span><div style="font-family:var(--clay-head);font-size:19px;font-weight:800;line-height:1.15" data-en="Debrief with data">Tổng kết bằng dữ liệu</div><p style="font-size:13px;line-height:1.5;color:var(--clay-sub)" data-en="Export the decision log CSV (IE Lab) to grade and draw lessons.">Xuất CSV nhật ký quyết định (IE Lab) để chấm điểm và rút bài học.</p></div>
     </div>
   </section>
 
-  <!-- VÌ SAO CHỌN BIZON -->
-  <section class="mb-14">
-    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-5">💡 Vì sao chọn BizOn?</h2>
-    <div class="grid sm:grid-cols-3 gap-4">
-      <div class="clay-card p-5"><p class="text-2xl">🆓</p><p class="font-display font-extrabold text-deep-teal text-sm mt-2">Miễn phí cho lớp học &amp; mã nguồn công khai</p><p id="gp-oss-note" class="text-[11px] text-deep-teal/50 mt-1.5">Dạy học phi thương mại tại địa chỉ chính thức thì dùng ngay, không cần tài khoản. Mã nguồn công khai để minh bạch học thuật và kiểm chứng; quyền khai thác thương mại thuộc chủ sở hữu BizOn (xem <a href="https://github.com/thuyhuongctu/BizOn/blob/main/LICENSE" target="_blank" rel="noopener" class="underline font-bold">LICENSE</a>).</p></div>
-      <div class="clay-card p-5"><p class="text-2xl">📴</p><p class="font-display font-extrabold text-deep-teal text-sm mt-2">Hoạt động ngoại tuyến</p><p class="text-[11px] text-deep-teal/50 mt-1.5">Là PWA nên vẫn chơi được khi mạng lớp học chập chờn – cài lên màn hình chính như ứng dụng.</p></div>
-      <div class="clay-card p-5"><p class="text-2xl">🇻🇳</p><p class="font-display font-extrabold text-deep-teal text-sm mt-2">Song ngữ Việt – Anh</p><p class="text-[11px] text-deep-teal/50 mt-1.5">Chuyển đổi Việt/Anh một chạm ngay trong game – phù hợp cả lớp học chương trình tiên tiến.</p></div>
+  <section style="margin-bottom:64px">
+    <h2 style="margin:0 0 22px;font-size:clamp(30px,3.6vw,42px)" data-en="Why BizOn?">Vì sao chọn BizOn?</h2>
+    <div class="gp-whys">
+      <div class="gp-why" style="background:var(--clay-c1)"><div style="font-family:var(--clay-head);font-size:22px;font-weight:800;line-height:1.15" data-en="Free for classrooms & open source">Miễn phí cho lớp học &amp; mã nguồn công khai</div><p style="margin:8px 0 0;font-size:14px;line-height:1.6;color:var(--clay-ink-2)" data-en="Non-commercial teaching at the official address works immediately, no account needed. The source is public for academic transparency and verification; commercial rights belong to the BizOn owners (see LICENSE).">Dạy học phi thương mại tại địa chỉ chính thức thì dùng ngay, không cần tài khoản. Mã nguồn công khai để minh bạch học thuật và kiểm chứng; quyền khai thác thương mại thuộc chủ sở hữu BizOn (xem LICENSE).</p></div>
+      <div class="gp-why" style="background:var(--clay-c2)"><div style="font-family:var(--clay-head);font-size:22px;font-weight:800;line-height:1.15" data-en="Works offline">Hoạt động ngoại tuyến</div><p style="margin:8px 0 0;font-size:14px;line-height:1.6;color:var(--clay-ink-2)" data-en="As a PWA it keeps running on patchy classroom Wi-Fi – install it to the home screen like an app.">Là PWA nên vẫn chơi được khi mạng lớp học chập chờn – cài lên màn hình chính như ứng dụng.</p></div>
+      <div class="gp-why" style="background:var(--clay-c4)"><div style="font-family:var(--clay-head);font-size:22px;font-weight:800;line-height:1.15" data-en="Bilingual Vietnamese – English">Song ngữ Việt – Anh</div><p style="margin:8px 0 0;font-size:14px;line-height:1.6;color:var(--clay-ink-2)" data-en="Switch Vietnamese/English in one tap inside the game – suited to advanced-programme classes too.">Chuyển đổi Việt/Anh một chạm ngay trong game – phù hợp cả lớp học chương trình tiên tiến.</p></div>
     </div>
+    <a href="https://github.com/thuyhuongctu/BizOn/blob/main/LICENSE" target="_blank" rel="noopener" style="display:inline-flex;margin-top:12px;font-size:13px;font-weight:800">LICENSE →</a>
   </section>
 
-  <!-- Gói triển khai -->
-  <section class="mb-14">
-    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">📦 Gói triển khai cho tổ chức &amp; đối tác</h2>
-    <p class="text-sm text-deep-teal/60 mb-5">Bản chơi tự do luôn miễn phí. Các gói dưới đây dành cho triển khai có hỗ trợ trong khoa/trường/trung tâm đào tạo khởi nghiệp (giai đoạn pilot – giá dự kiến, liên hệ để chốt phạm vi).</p>
-    <img src="assets/illustrations/anh-tu-university-lobby.webp" alt="PGS.TS. Phan Anh Tú tại sảnh trường đại học – đồng hành triển khai tại đơn vị" class="w-full h-44 sm:h-56 object-cover rounded-3xl mb-5" style="object-position:50% 16%" loading="lazy">
-    <div class="grid sm:grid-cols-3 gap-4">
-      <div class="clay-card p-6 flex flex-col">
-        <p class="text-2xl">🚀</p>
-        <h3 class="font-display font-extrabold text-deep-teal text-lg mt-2">Pilot Classroom</h3>
-        <p class="font-display font-extrabold text-primary text-xl mt-1">3.000.000₫ <span class="text-[11px] text-deep-teal/50 font-bold">/lớp/học kỳ</span></p>
-        <ul class="text-[11px] text-deep-teal/60 mt-3 space-y-1.5 flex-1">
-          <li>• 1 lớp tối đa 60 sinh viên</li>
-          <li>• Kịch bản triển khai + Rubric + bảng tổng sắp</li>
-          <li>• Hỗ trợ trực tuyến trong buổi chơi</li>
-          <li>• Báo cáo tổng kết cuối pilot</li>
-        </ul>
-        <a href="lien-he.html" class="clay-btn block bg-primary text-white font-display font-extrabold px-5 py-2.5 text-xs mt-4 text-center">Đăng ký pilot →</a>
+  <section style="margin-bottom:64px">
+    <h2 style="font-size:clamp(30px,3.6vw,42px)" data-en="Deployment packages for institutions & partners">Gói triển khai cho tổ chức &amp; đối tác</h2>
+    <p style="margin:10px 0 22px;max-width:46em;font-size:15px;line-height:1.6;color:var(--clay-sub)" data-en="Free play is always free. The packages below are for supported deployment in a faculty, university or entrepreneurship centre (pilot stage – indicative prices, contact us to agree scope).">Bản chơi tự do luôn miễn phí. Các gói dưới đây dành cho triển khai có hỗ trợ trong khoa/trường/trung tâm đào tạo khởi nghiệp (giai đoạn pilot – giá dự kiến, liên hệ để chốt phạm vi).</p>
+    <div style="position:relative;height:220px;border-radius:32px;overflow:hidden;margin-bottom:22px;box-shadow:inset 0 -8px 0 rgba(0,0,0,.08)">
+      <img src="assets/illustrations/anh-tu-university-lobby.webp" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 16%" loading="lazy">
+    </div>
+    <div class="gp-plans">
+      <div class="gp-plan" style="background:var(--clay-card);border:3px solid transparent">
+        <div style="font-family:var(--clay-head);font-size:26px;font-weight:800;line-height:1.14">Pilot Classroom</div>
+        <div style="margin-top:10px;font-family:var(--clay-head);font-size:30px;font-weight:800;line-height:1.14;color:var(--clay-teal)">3.000.000₫</div>
+        <div style="margin-top:4px;font-size:13px;font-weight:700;color:var(--clay-sub)" data-en="/class/semester">/lớp/học kỳ</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin:18px 0 22px;flex:1">
+          <div class="gp-li"><span class="dot"></span><span data-en="1 class up to 60 students">1 lớp tối đa 60 sinh viên</span></div>
+          <div class="gp-li"><span class="dot"></span><span data-en="Deployment script + rubric + leaderboard">Kịch bản triển khai + Rubric + bảng tổng sắp</span></div>
+          <div class="gp-li"><span class="dot"></span><span data-en="Online support during the session">Hỗ trợ trực tuyến trong buổi chơi</span></div>
+          <div class="gp-li"><span class="dot"></span><span data-en="End-of-pilot summary report">Báo cáo tổng kết cuối pilot</span></div>
+        </div>
+        <a href="lien-he.html" style="text-align:center;padding:13px 18px;border-radius:18px;background:var(--clay-teal);color:#fff;font-family:var(--clay-head);font-size:17px;font-weight:800;box-shadow:inset 0 -5px 0 rgba(0,0,0,.14),inset 0 3px 0 rgba(255,255,255,.3)" data-en="Register a pilot →">Đăng ký pilot →</a>
       </div>
-      <div class="clay-card p-6 flex flex-col" style="border:2px solid rgba(253,161,39,.6)">
-        <p class="text-2xl">👨‍🏫</p>
-        <h3 class="font-display font-extrabold text-deep-teal text-lg mt-2">Instructor Pro</h3>
-        <p class="font-display font-extrabold text-primary text-xl mt-1">12.000.000₫ <span class="text-[11px] text-deep-teal/50 font-bold">/giảng viên/năm</span></p>
-        <ul class="text-[11px] text-deep-teal/60 mt-3 space-y-1.5 flex-1">
-          <li>• Không giới hạn lớp học</li>
-          <li>• Bộ công cụ giảng dạy đầy đủ + xuất dữ liệu</li>
-          <li>• Kịch bản tùy biến theo học phần</li>
-          <li>• Thư viện giáo án &amp; chứng nhận đội</li>
-        </ul>
-        <a href="lien-he.html" class="clay-btn block bg-clay-gold text-deep-teal font-display font-extrabold px-5 py-2.5 text-xs mt-4 text-center">Liên hệ →</a>
+      <div class="gp-plan" style="background:var(--clay-cream-deep);border:3px solid var(--clay-gold)">
+        <div style="font-family:var(--clay-head);font-size:26px;font-weight:800;line-height:1.14">Instructor Pro</div>
+        <div style="margin-top:10px;font-family:var(--clay-head);font-size:30px;font-weight:800;line-height:1.14;color:var(--clay-teal)">12.000.000₫</div>
+        <div style="margin-top:4px;font-size:13px;font-weight:700;color:var(--clay-sub)" data-en="/instructor/year">/giảng viên/năm</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin:18px 0 22px;flex:1">
+          <div class="gp-li"><span class="dot"></span><span data-en="Unlimited classes">Không giới hạn lớp học</span></div>
+          <div class="gp-li"><span class="dot"></span><span data-en="Full teaching toolkit + data export">Bộ công cụ giảng dạy đầy đủ + xuất dữ liệu</span></div>
+          <div class="gp-li"><span class="dot"></span><span data-en="Scenarios tailored to your course">Kịch bản tùy biến theo học phần</span></div>
+          <div class="gp-li"><span class="dot"></span><span data-en="Lesson-plan library & team certificates">Thư viện giáo án &amp; chứng nhận đội</span></div>
+        </div>
+        <a href="lien-he.html" style="text-align:center;padding:13px 18px;border-radius:18px;background:var(--clay-gold);color:var(--clay-ink);font-family:var(--clay-head);font-size:17px;font-weight:800;box-shadow:inset 0 -5px 0 rgba(0,0,0,.14),inset 0 3px 0 rgba(255,255,255,.3)" data-en="Contact us →">Liên hệ →</a>
       </div>
-      <div class="clay-card p-6 flex flex-col">
-        <p class="text-2xl">🏛️</p>
-        <h3 class="font-display font-extrabold text-deep-teal text-lg mt-2">Institution Pass</h3>
-        <p class="font-display font-extrabold text-primary text-xl mt-1">Theo thỏa thuận <span class="text-[11px] text-deep-teal/50 font-bold">/khoa/trường</span></p>
-        <ul class="text-[11px] text-deep-teal/60 mt-3 space-y-1.5 flex-1">
-          <li>• Tất cả giảng viên trong đơn vị</li>
-          <li>• Thương hiệu riêng của đơn vị</li>
-          <li>• Đào tạo giảng viên &amp; đồng hành triển khai</li>
-          <li>• Gói Research Edition: dữ liệu ẩn danh phục vụ nghiên cứu</li>
-        </ul>
-        <a href="lien-he.html" class="clay-btn block bg-white text-primary border border-primary/20 font-display font-extrabold px-5 py-2.5 text-xs mt-4 text-center">Đặt lịch demo →</a>
+      <div class="gp-plan" style="background:var(--clay-card);border:3px solid transparent">
+        <div style="font-family:var(--clay-head);font-size:26px;font-weight:800;line-height:1.14">Institution Pass</div>
+        <div style="margin-top:10px;font-family:var(--clay-head);font-size:30px;font-weight:800;line-height:1.14;color:var(--clay-teal)" data-en="By agreement">Theo thỏa thuận</div>
+        <div style="margin-top:4px;font-size:13px;font-weight:700;color:var(--clay-sub)" data-en="/faculty/university">/khoa/trường</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin:18px 0 22px;flex:1">
+          <div class="gp-li"><span class="dot"></span><span data-en="Every instructor in the unit">Tất cả giảng viên trong đơn vị</span></div>
+          <div class="gp-li"><span class="dot"></span><span data-en="Your institution's own branding">Thương hiệu riêng của đơn vị</span></div>
+          <div class="gp-li"><span class="dot"></span><span data-en="Instructor training & deployment support">Đào tạo giảng viên &amp; đồng hành triển khai</span></div>
+          <div class="gp-li"><span class="dot"></span><span data-en="Research Edition: anonymised data for research">Gói Research Edition: dữ liệu ẩn danh phục vụ nghiên cứu</span></div>
+        </div>
+        <a href="lien-he.html" style="text-align:center;padding:13px 18px;border-radius:18px;background:var(--clay-card);color:var(--clay-ink);font-family:var(--clay-head);font-size:17px;font-weight:800;box-shadow:inset 0 -5px 0 rgba(110,70,30,.14),inset 0 3px 0 #fff" data-en="Book a demo →">Đặt lịch demo →</a>
       </div>
     </div>
-    <p class="text-[11px] text-deep-teal/50 mt-4">📊 <a href="bang-chung.html" class="font-bold text-primary">Bằng chứng ban đầu từ lớp học thật</a> · 📐 Cơ sở học thuật: <a href="hoc-thuat.html" class="font-bold text-primary">Ma trận chuẩn đầu ra &amp; Model Cards</a> – engine mô phỏng xác định, giải thích được, kết quả tái lập phục vụ chấm điểm và nghiên cứu.</p>
+    <p style="margin:16px 0 0;font-size:13px;line-height:1.6;color:var(--clay-sub)"><a href="bang-chung.html" style="font-weight:800" data-en="Early evidence from a real classroom">Bằng chứng ban đầu từ lớp học thật</a> · <span data-en="Academic basis:">Cơ sở học thuật:</span> <a href="truong-hoc-thuat.html" style="font-weight:800" data-en="Learning-outcome matrix & Model Cards">Ma trận chuẩn đầu ra &amp; Model Cards</a> <span data-en="– a deterministic, explainable engine with reproducible results for grading and research.">– engine mô phỏng xác định, giải thích được, kết quả tái lập phục vụ chấm điểm và nghiên cứu.</span></p>
   </section>
 
-  <!-- CTA -->
-  <section class="clay-card p-8 text-center">
-    <h2 class="font-display font-extrabold text-deep-teal text-2xl">Sẵn sàng «bật nghiệp» cùng lớp của bạn?</h2>
-    <p class="text-sm text-deep-teal/60 mt-2 max-w-xl mx-auto">Dùng thử miễn phí ngay hôm nay, hoặc liên hệ nhóm để được hướng dẫn triển khai cho môn học của bạn.</p>
-    <div class="flex flex-wrap justify-center gap-3 mt-5">
-      <a href="game.html" class="clay-btn bg-primary text-white font-display font-extrabold px-7 py-3.5 text-sm">🎮 Bắt đầu chơi</a>
-      <a href="BizOn Game 3D.html" class="clay-btn bg-white text-primary border border-primary/20 font-display font-bold px-7 py-3.5 text-sm">🧊 Bản 3D</a>
-      <a href="lien-he.html" class="clay-btn bg-white text-primary border border-primary/20 font-display font-bold px-7 py-3.5 text-sm">✉️ Liên hệ nhóm</a>
+  <section class="gp-cta">
+    <h2 style="font-size:clamp(28px,3.4vw,40px)" data-en="Ready to «switch on» your class?">Sẵn sàng «bật nghiệp» cùng lớp của bạn?</h2>
+    <p style="margin:12px auto 0;max-width:36em;font-size:15px;line-height:1.6;color:#D6EEF2" data-en="Try it free today, or contact the team for guidance on deploying it in your course.">Dùng thử miễn phí ngay hôm nay, hoặc liên hệ nhóm để được hướng dẫn triển khai cho môn học của bạn.</p>
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:22px">
+      <a style="background:var(--clay-gold);color:var(--clay-ink);box-shadow:inset 0 -6px 0 rgba(0,0,0,.15),inset 0 3px 0 rgba(255,255,255,.4)" href="game.html" data-en="Start playing">Bắt đầu chơi</a>
+      <a style="background:var(--clay-card);color:var(--clay-ink);box-shadow:inset 0 -6px 0 rgba(110,70,30,.15),inset 0 3px 0 #fff" href="BizOn Game 3D.html" data-en="3D version">Bản 3D</a>
+      <a style="background:var(--clay-card);color:var(--clay-ink);box-shadow:inset 0 -6px 0 rgba(110,70,30,.15),inset 0 3px 0 #fff" href="lien-he.html" data-en="Contact the team">Liên hệ nhóm</a>
     </div>
   </section>
-
 </main>
-<script src="js/site-nethero.js" defer></script>
-<script src="js/site-ui.js" defer></script>
-<script src="js/site-vnmap.js" defer></script>
 
-<p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2" style="color:rgba(100,116,125,.85)">✉️ Liên hệ · Contact: <a href="mailto:patu@ctu.edu.vn" style="color:inherit;text-decoration:underline">patu@ctu.edu.vn</a> · <a href="mailto:thuyhuongctu@gmail.com" style="color:inherit;text-decoration:underline">thuyhuongctu@gmail.com</a></p>
-<p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2 pb-6" style="color:rgba(100,116,125,.75)">🎓 Trang web chỉ phục vụ mục đích giáo dục và nghiên cứu, không đại diện cho bất kỳ tổ chức chính trị nào. Hình ảnh quốc kỳ, bản đồ chỉ mang ý nghĩa minh họa văn hóa – giáo dục. · This website serves educational and research purposes only and does not represent any political organization.</p>
-<script src="js/site-dock.js" defer></script>
-<script src="js/site-footer.js" defer></script>
-<script src="js/site-nav.js" defer></script>
+<script src="js/site-vnmap.js" defer></script>
+<script src="js/bizon-clay-i18n.js" defer></script>
+<script src="js/bizon-clay-nav.js" defer></script>
+<script src="js/bizon-clay-footer.js" defer></script>
 </body>
 </html>
