@@ -5,35 +5,41 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Kho Âm nhạc · BizOn Bật Nghiệp</title>
-<meta name="description" content="Kho Âm nhạc BizOn: toàn bộ ca khúc gốc của hệ sinh thái BizOn Bật Nghiệp – Bật Nghiệp, Hương sans frontières, Brand Passport, BizOn Theme – cùng giọng nói cố vấn Lumina.">
+<meta name="description" content="Kho Âm nhạc BizOn: bàn xoay đĩa than với toàn bộ ca khúc gốc của hệ sinh thái BizOn Bật Nghiệp – Bật Nghiệp, Hương sans frontières, Brand Passport, BizOn Theme – cùng giọng nói cố vấn Lumina.">
 <meta name="copyright" content="© 2026 Đỗ Thùy Hương & PGS.TS. Phan Anh Tú">
 <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
 <link rel="stylesheet" href="css/bizon-clay-fonts.css">
 <link rel="stylesheet" href="css/bizon-clay.css">
 <style>
-  /* Bố cục riêng trang Kho Âm nhạc */
-  .am-hero{position:relative;overflow:hidden;margin:28px 0 44px;border-radius:40px;background:var(--clay-cream-deep);box-shadow:inset 0 -10px 0 rgba(140,80,20,.1),inset 0 6px 0 rgba(255,255,255,.7),0 30px 44px -30px rgba(110,70,30,.6)}
+  /* Bố cục riêng trang Kho Âm nhạc (bàn xoay) */
+  @keyframes amSpin{to{transform:rotate(360deg)}}
+  @keyframes amEq{0%,100%{transform:scaleY(.22)}50%{transform:scaleY(1)}}
+  @media (prefers-reduced-motion:reduce){ #am-rec,#am-eq span{animation:none!important} }
+  .am-hero{position:relative;overflow:hidden;margin:28px 0 48px;border-radius:40px;background:var(--clay-cream-deep);box-shadow:inset 0 -10px 0 rgba(140,80,20,.1),inset 0 6px 0 rgba(255,255,255,.7),0 30px 44px -30px rgba(110,70,30,.6)}
   .am-hero .sun{position:absolute;right:-8%;top:-34%;width:min(520px,60%);aspect-ratio:1;border-radius:50%;background:repeating-radial-gradient(circle,#FFD58A 0 16px,#FDBE5A 16px 19px);box-shadow:inset 0 -16px 0 rgba(200,110,20,.2);opacity:.85;pointer-events:none}
   .am-hero .grid{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end;padding:clamp(24px,4vw,44px) clamp(20px,4vw,44px) 0}
-  .am-hero h1{margin:16px 0 0;font-size:clamp(38px,5.2vw,64px);text-wrap:balance}
-  .am-hero .art{width:min(32vw,300px);aspect-ratio:1/1;position:relative;margin-bottom:22px}
-  .am-hero .art img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 18px 14px rgba(110,70,30,.35));animation:clayFloat 6s ease-in-out infinite}
+  .am-hero h1{margin:18px 0 0;font-size:clamp(40px,5.4vw,68px);text-wrap:balance}
+  .am-hero .art{width:min(30vw,280px);aspect-ratio:734/628;position:relative;margin-bottom:26px}
+  .am-hero .art img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:50% 100%;filter:drop-shadow(0 18px 14px rgba(110,70,30,.35));animation:clayFloat 6s ease-in-out infinite}
   .am-hero .wave{position:relative;z-index:3;height:44px;margin-top:-44px;background:radial-gradient(circle at 36px 0,transparent 35px,var(--clay-teal-2) 36px) 0 0/72px 36px repeat-x,linear-gradient(var(--clay-teal-2),var(--clay-teal-2)) 0 36px/100% 100% no-repeat}
-  .am-stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
-  .am-stat{display:flex;flex-direction:column;padding:12px 18px;border-radius:20px;background:var(--clay-card);box-shadow:inset 0 -5px 0 rgba(110,70,30,.1),inset 0 4px 0 #fff}
-  .am-stat b{font-family:var(--clay-head);font-size:26px;line-height:1;color:var(--clay-teal)}
-  .am-stat span{margin-top:4px;font-size:12px;font-weight:700;color:var(--clay-sub)}
-  .am-section-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:0 0 18px}
-  .am-section-head h2{font-size:clamp(26px,3.6vw,36px)}
-  .am-section-head p{margin:0;font-size:14px;color:var(--clay-sub)}
-  .am-albums{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:18px;margin-bottom:56px}
-  .am-voices{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:14px;margin-bottom:56px}
-  .am-groups{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,440px),1fr));gap:22px;margin-bottom:96px;align-items:start}
-  @media (max-width:560px){ .am-hero .grid{grid-template-columns:1fr} .am-hero .art{display:none} }
+  .am-deck{scroll-margin-top:88px;margin-bottom:56px;padding:clamp(20px,3vw,40px);border-radius:40px;background:#033337;color:#fff;box-shadow:inset 0 -14px 0 rgba(0,0,0,.25),inset 0 6px 0 rgba(255,255,255,.08),0 34px 50px -30px rgba(0,30,35,.8)}
+  .am-sec{margin-bottom:56px}
+  .am-sec h2{font-size:clamp(26px,3.2vw,36px)}
+  .am-sec>p{margin:8px 0 22px;max-width:46em;font-size:15px;line-height:1.6;color:var(--clay-sub)}
+  .am-albums{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:22px}
+  .am-shelf-wrap{padding:28px;border-radius:36px;background:var(--clay-tray);box-shadow:inset 0 6px 12px rgba(110,70,30,.15)}
+  .am-shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:18px}
+  .am-voices-sec{display:grid;grid-template-columns:minmax(140px,220px) minmax(0,1fr);gap:24px;align-items:end;margin-bottom:56px}
+  .am-voices-sec .luminart{position:relative;aspect-ratio:760/1100}
+  .am-voices-sec .luminart img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:50% 100%;filter:drop-shadow(0 16px 12px rgba(110,70,30,.35))}
+  .am-voices{display:flex;flex-wrap:wrap;gap:12px}
+  .am-bps{position:relative;display:block;border-radius:36px;overflow:hidden;aspect-ratio:688/300;min-height:240px;background:#033337 url('assets/illustrations/game/ben-phu-sa-cho-noi.webp') 50% 45%/cover no-repeat;box-shadow:0 30px 44px -28px rgba(0,40,45,.8)}
+  .am-bps:hover{transform:translateY(-4px)}
+  @media (max-width:560px){ .am-hero .grid{grid-template-columns:1fr} .am-hero .art{display:none} .am-voices-sec{grid-template-columns:1fr} .am-voices-sec .luminart{display:none} }
 </style>
 <meta property="og:type" content="website">
 <meta property="og:title" content="Kho Âm nhạc · BizOn Bật Nghiệp">
-<meta property="og:description" content="Toàn bộ ca khúc gốc của hệ sinh thái BizOn – và giọng nói cố vấn Lumina.">
+<meta property="og:description" content="Bàn xoay đĩa than với toàn bộ ca khúc gốc của BizOn – và giọng nói cố vấn Lumina.">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 <body class="clay">
@@ -42,47 +48,58 @@
   <section class="am-hero">
     <div class="sun" aria-hidden="true"></div>
     <div class="grid">
-      <div style="padding-bottom:clamp(24px,5vw,56px)">
+      <div style="padding-bottom:clamp(28px,5vw,64px)">
         <span class="clay-eyebrow" data-en="BizOn Music Library">Kho Âm nhạc BizOn</span>
-        <h1 data-en="The sound of the BizOn universe">Âm thanh của vũ trụ BizOn</h1>
-        <p style="margin:16px 0 0;max-width:36em;font-size:17px;line-height:1.65;color:var(--clay-sub);text-wrap:pretty" data-en="Every original song in the BizOn ecosystem – from the Vietnam theme to the trilingual Go Global anthems – plus the voice of our AI advisor Lumina. Tap any track to listen right here.">Tất cả ca khúc gốc của hệ sinh thái BizOn – từ nhạc chủ đề Việt Nam đến những bản anthem Go Global ba thứ tiếng – cùng giọng nói của cố vấn AI Lumina. Chạm vào bất kỳ bản thu nào để nghe ngay tại đây.</p>
-        <div class="am-stats">
-          <div class="am-stat"><b>51</b><span data-en="recordings">bản thu</span></div>
-          <div class="am-stat"><b>12</b><span data-en="song families">chùm ca khúc</span></div>
-          <div class="am-stat"><b>4</b><span data-en="collections">tuyển tập</span></div>
-          <div class="am-stat"><b>3</b><span data-en="languages (VI·EN·FR)">ngôn ngữ (Việt·Anh·Pháp)</span></div>
-        </div>
+        <h1 data-en="Soundtrack for deeper learning">Âm nhạc cho trải nghiệm học sâu hơn</h1>
+        <p style="margin:18px 0 0;max-width:34em;font-size:17px;line-height:1.65;color:var(--clay-sub);text-wrap:pretty" data-en="Every original song and voice line in the BizOn Bật Nghiệp universe – written for the games and owned by the authors.">Toàn bộ ca khúc gốc và giọng nói của vũ trụ BizOn Bật Nghiệp – sáng tác riêng cho game, thuộc bản quyền của nhóm tác giả.</p>
       </div>
       <div class="art"><img src="assets/character/bizon-duo-phong-thu-cut.webp" alt="" loading="lazy"></div>
     </div>
     <div class="wave" aria-hidden="true"></div>
   </section>
 
+  <!-- Bàn xoay (JS dựng) -->
+  <section id="am-deck" class="am-deck" aria-live="polite"></section>
+
   <!-- Tuyển tập theo game -->
-  <section>
-    <div class="am-section-head">
-      <h2 data-en="Collections by game">Tuyển tập theo game</h2>
-      <p data-en="Play a whole soundtrack, or jump into the matching game.">Phát trọn nhạc nền, hoặc vào thẳng game tương ứng.</p>
-    </div>
-    <div id="am-albums" class="am-albums" aria-live="polite"></div>
+  <section class="am-sec">
+    <h2 data-en="Which music for which game?">Nhạc nào cho game nào?</h2>
+    <p data-en="Each game has its own collection and only rotates within it. Pick a sleeve to put it on the turntable.">Mỗi game có tuyển tập riêng và chỉ xoay vòng trong tuyển tập của mình. Chọn một bìa đĩa để đặt lên bàn xoay.</p>
+    <div id="am-albums" class="am-albums"></div>
   </section>
 
-  <!-- Giọng cố vấn Lumina -->
-  <section>
-    <div class="am-section-head">
-      <h2 data-en="Lumina voice lines">Giọng cố vấn Lumina</h2>
-      <p data-en="The spoken lines you hear inside the game.">Những câu thoại bạn nghe trong game.</p>
+  <!-- Kệ đĩa ca khúc gốc -->
+  <section class="am-sec">
+    <div class="am-shelf-wrap">
+      <h2 data-en="Original songs shelf">Kệ đĩa ca khúc gốc</h2>
+      <p style="color:var(--clay-sub)" data-en="Each song has several recordings. Pick a record to hear its versions.">Mỗi ca khúc có nhiều bản thu. Chọn một đĩa để nghe các phiên bản.</p>
+      <div id="am-shelf" class="am-shelf"></div>
     </div>
-    <div id="am-voices" class="am-voices" aria-live="polite"></div>
   </section>
 
-  <!-- Toàn bộ ca khúc gốc -->
-  <section>
-    <div class="am-section-head">
-      <h2 data-en="All original songs">Toàn bộ ca khúc gốc</h2>
-      <p data-en="Each family groups the original, remixes and language versions together.">Mỗi chùm gom bản gốc, bản remix và các phiên bản ngôn ngữ.</p>
+  <!-- Giọng Lumina -->
+  <section class="am-voices-sec">
+    <div class="luminart"><img src="assets/character/lumina-ao-dai-wave.webp" alt="Lumina" loading="lazy"></div>
+    <div style="padding-bottom:20px">
+      <h2 data-en="Lumina AI voice">Giọng Lumina AI</h2>
+      <p style="margin:8px 0 18px;font-size:15px;line-height:1.6;color:var(--clay-sub)" data-en="Vietnamese voice lines of the advisor Lumina used in the games.">Các đoạn giọng nói tiếng Việt của cố vấn Lumina đang dùng trong game.</p>
+      <div id="am-voices" class="am-voices"></div>
     </div>
-    <div id="am-groups" class="am-groups" aria-live="polite"></div>
+  </section>
+
+  <p style="margin:0 0 56px;font-size:12px;line-height:1.6;color:var(--clay-sub)" data-en="© 2026 Đỗ Thùy Hương &amp; Phan Anh Tú. Music and lyrics written and produced by the BizOn authors; for educational and research use only.">© 2026 Đỗ Thùy Hương &amp; Phan Anh Tú. Nhạc và lời do nhóm tác giả sáng tác, sản xuất tại BizOn; chỉ dùng cho mục đích giáo dục, nghiên cứu.</p>
+
+  <!-- Banner Bến Phù Sa -->
+  <section style="margin:0 0 88px">
+    <a class="am-bps" href="nhac-ben-phu-sa.html">
+      <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(3,51,55,.9) 0%,rgba(3,51,55,.55) 55%,transparent 100%)"></div>
+      <div style="position:absolute;left:clamp(20px,4vw,44px);top:50%;transform:translateY(-50%);max-width:520px;color:#fff">
+        <div style="font-size:13px;font-weight:800;color:#FFD58A" data-en="New · Bến Phù Sa soundtrack">Mới · Nhạc nền Bến Phù Sa</div>
+        <div style="margin-top:6px;font-family:var(--clay-head);font-size:clamp(28px,4vw,46px);font-weight:800;line-height:1.08">Golden Silt Journey</div>
+        <div style="margin-top:8px;font-size:15px;color:#D6EEF2" data-en="Listen with EN · FR · VI lyrics, synced section by section">Nghe kèm lời Anh · Pháp · Việt, chạy theo từng đoạn</div>
+        <span style="display:inline-flex;margin-top:16px;white-space:nowrap;padding:12px 20px;border-radius:999px;background:var(--clay-gold);color:#033337;font-size:15px;font-weight:800;box-shadow:inset 0 -4px 0 rgba(0,0,0,.15)" data-en="▶ Open the lyric player">▶ Mở trình phát lời</span>
+      </div>
+    </a>
   </section>
 
   <noscript><p style="text-align:center;color:var(--clay-sub);margin:40px 0">Cần bật JavaScript để nghe Kho Âm nhạc. · Enable JavaScript to play the Music Library.</p></noscript>
