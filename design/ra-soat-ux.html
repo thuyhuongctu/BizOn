@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src=".././support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="../css/bizon-clay-fonts.css">
+<style>
+body{margin:0;background:#FBF4E8;color:#033337;font-family:'Be Vietnam Pro','BVP Fallback',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#006687;text-decoration:none}
+a:hover{color:#033337}
+*{box-sizing:border-box}
+</style>
+</helmet>
+<main style="max-width:880px;margin:0 auto;padding:64px 24px 96px">
+  <div style="display:inline-flex;padding:7px 14px;border-radius:999px;background:#FFE6B8;color:#7A4A0E;font-size:13px;font-weight:800">Rà soát UX · 04/10/2026</div>
+  <h1 style="margin:18px 0 0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-weight:800;font-size:clamp(36px,5vw,56px);line-height:1.05;letter-spacing:-.02em">Rà soát trải nghiệm BizOn và những gì bản đất sét đã sửa</h1>
+  <p style="margin:18px 0 0;font-size:17px;line-height:1.7;color:#3E5A5C">Phạm vi: các trang nội dung trên thuyhuongctu.github.io/BizOn (không gồm bên trong game). Mỗi mục ghi vấn đề ở bản gốc, mức độ, và cách bản đất sét xử lý hoặc việc còn mở.</p>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:28px">
+    <div style="padding:18px;border-radius:22px;background:#FDE1CE"><div style="font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:36px;font-weight:800">{{ nHigh }}</div><div style="font-size:13px;font-weight:700;color:#5A2608">Mức cao</div></div>
+    <div style="padding:18px;border-radius:22px;background:#FFE6B8"><div style="font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:36px;font-weight:800">{{ nMid }}</div><div style="font-size:13px;font-weight:700;color:#4A3008">Mức trung bình</div></div>
+    <div style="padding:18px;border-radius:22px;background:#D9F0F2"><div style="font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:36px;font-weight:800">{{ nFixed }}</div><div style="font-size:13px;font-weight:700;color:#03474F">Đã sửa trong bản đất sét</div></div>
+    <div style="padding:18px;border-radius:22px;background:#F3E6CF"><div style="font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:36px;font-weight:800">{{ nOpen }}</div><div style="font-size:13px;font-weight:700;color:#3E5A5C">Còn mở</div></div>
+  </div>
+
+  <sc-for list="{{ groups }}" as="g" hint-placeholder-count="4">
+    <section style="margin-top:48px">
+      <h2 style="margin:0 0 14px;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:28px;font-weight:800">{{ g.h }}</h2>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <sc-for list="{{ g.items }}" as="i" hint-placeholder-count="3">
+          <article style="padding:20px 22px;border-radius:24px;background:#FFFBF4;box-shadow:inset 0 -6px 0 rgba(110,70,30,.07),0 14px 22px -18px rgba(110,70,30,.5)">
+            <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+              <span style="padding:3px 10px;border-radius:999px;background:{{ i.sevBg }};color:{{ i.sevFg }};font-size:12px;font-weight:800">{{ i.sev }}</span>
+              <span style="padding:3px 10px;border-radius:999px;background:{{ i.stBg }};color:{{ i.stFg }};font-size:12px;font-weight:800">{{ i.st }}</span>
+            </div>
+            <h3 style="margin:10px 0 0;font-size:18px;font-weight:800;line-height:1.35">{{ i.t }}</h3>
+            <p style="margin:6px 0 0;font-size:15px;line-height:1.6;color:#3E5A5C">{{ i.p }}</p>
+            <p style="margin:8px 0 0;padding:10px 14px;border-radius:16px;background:{{ i.fixBg }};font-size:14px;line-height:1.55;color:#24403F"><strong>{{ i.fixK }}</strong> {{ i.f }}</p>
+          </article>
+        </sc-for>
+      </div>
+    </section>
+  </sc-for>
+
+  <section style="margin-top:48px;padding:26px;border-radius:28px;background:#006687;color:#fff">
+    <h2 style="margin:0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:26px;font-weight:800">Thứ tự đề xuất cho việc còn mở</h2>
+    <ol style="margin:14px 0 0;padding-left:22px;display:flex;flex-direction:column;gap:8px;font-size:15px;line-height:1.6;color:#E1F2F5">
+      <sc-for list="{{ next }}" as="n" hint-placeholder-count="4"><li>{{ n }}</li></sc-for>
+    </ol>
+  </section>
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const D=[
+['Điều hướng & lựa chọn',[
+['c','f','Hero trang chủ có 8 nút gọi hành động','Người mới không biết nên bấm gì trước; các bản 2D, 3D, Mini cạnh tranh nhau ngay màn hình đầu.','Hero còn 2 nút (Bến Phù Sa và xem tất cả). Các phiên bản chuyển thành nút nhỏ trong thẻ từng trò chơi.'],
+['m','f','Không có lối vào theo đối tượng','Giảng viên, nhà nghiên cứu, nhà trường đều phải tự dò trong menu.','Thêm phần "Bắt đầu từ vai trò của bạn" với 4 lối vào.'],
+['m','f','Menu tràn hoặc bị cắt ở khổ 920–1040px','Mục cuối bị cắt mép phải trên laptop nhỏ.','Dưới 1040px menu xuống hàng thứ hai; mục đang mở được đánh dấu.'],
+['m','o','Nhiều trang trùng chức năng','hoc-thuat.html chuyển sang truong-hoc-thuat.html; có cả chinh-sach và truong-chinh-sach.','Nên gộp còn một địa chỉ cho mỗi chủ đề và chuyển hướng 301 các địa chỉ cũ.']]],
+['Hiển thị trên nhiều thiết bị',[
+['c','f','Font hiển thị sai trên một số máy','DM Serif Display không có dấu tiếng Việt nên chữ có dấu rơi về font hệ thống; mỗi máy một kiểu.','Tự lưu trữ Be Vietnam Pro, Plus Jakarta Sans, IBM Plex Mono (bộ ký tự vietnamese), kèm font dự phòng chỉnh số đo để không giật dòng.'],
+['c','f','Ảnh nhân vật bị cắt đầu hoặc chân','Ảnh dùng object-fit:cover trong khung cố định, mất phần trên hoặc dưới tùy tỉ lệ màn hình.','Ảnh nhân vật dùng contain và cùng đường chân; khung theo đúng tỉ lệ ảnh gốc.'],
+['c','f','Nút chồng lên nhau trên điện thoại','Hàng nút dùng khoảng trắng và margin, khi xuống dòng thì chạm hoặc đè nhau.','Mọi nhóm nút dùng flex/grid có gap; bảng dài cuộn ngang thay vì ép chữ.'],
+['m','f','Lumina và Tú Phan cao bằng nhau khi đứng cạnh','Hai ảnh được ép cùng chiều cao, sai tỉ lệ nhân vật.','Tú Phan cao hơn khoảng 12–14% ở mọi cảnh đứng chung.']]],
+['Nội dung & ngôn ngữ',[
+['m','f','Trộn tiếng Việt và tiếng Anh trong cùng một khối','Nhãn tiếng Anh xen giữa đoạn tiếng Việt và ngược lại.','Mỗi trang có nút VI/EN; toàn bộ chuỗi tách theo ngôn ngữ.'],
+['m','o','Bản tiếng Anh do người viết thiết kế tự dịch ở một số trang','Liên hệ, Tuyển dụng, Bằng chứng, Pilot, Sứ mệnh.','Cần người trong nhóm rà thuật ngữ trước khi công bố.'],
+['l','o','Mô tả từng bài nhạc chỉ có tiếng Việt','Khi chuyển EN, phần mô tả bài trong Kho Âm nhạc vẫn là tiếng Việt.','Bổ sung bản dịch vào js/music-data.js.']]],
+['Tin cậy & tuân thủ',[
+['m','f','Giới hạn của bằng chứng nằm cuối trang','Người đọc dễ bỏ qua phần quan trọng nhất với hội đồng và quỹ.','Khung giới hạn viền cam, đặt ngay sau số liệu; deck có riêng một slide.'],
+['m','f','Liên kết xóa dữ liệu khó tìm từ Google Play','Yêu cầu của CH Play cần đường dẫn trực tiếp.','Giữ mốc #xoa-tai-khoan / #account-deletion và thêm nút soạn email xóa dữ liệu.'],
+['l','f','Ảnh tem và hộ chiếu có nền trắng','Phải cắt hoặc hòa nền để đặt trên nền kem.','Đã tách nền thành vn-trong.png và passport-cover-trong.png, dùng ở mọi trang.'],
+['l','f','Hồ sơ ORCID/OSF trang Đội ngũ','Bản gốc đọc từ site-people.js; bản đất sét ban đầu dùng liên kết thay thế.','Đã nối đúng ORCID, OSF, Zenodo, GitHub của từng người theo site-people.js.']]]
+];
+const SEV={c:['Cao','#FDE1CE','#8A3A0C'],m:['Trung bình','#FFE6B8','#7A4A0E'],l:['Thấp','#E6EEF0','#3E5A5C']};
+const ST={f:['Đã sửa','#DDF1E4','#0F5C4E','#EAF6EF','Bản đất sét:'],o:['Còn mở','#F3E6CF','#5A4A2E','#FFF3DA','Đề xuất:']};
+class Component extends DCLogic{
+  renderVals(){
+    const all=D.flatMap(g=>g[1]);
+    return{
+      nHigh:all.filter(i=>i[0]==='c').length,nMid:all.filter(i=>i[0]==='m').length,nFixed:all.filter(i=>i[1]==='f').length,nOpen:all.filter(i=>i[1]==='o').length,
+      groups:D.map(([h,items])=>({h,items:items.map(([s,st,t,p,f])=>({sev:SEV[s][0],sevBg:SEV[s][1],sevFg:SEV[s][2],st:ST[st][0],stBg:ST[st][1],stFg:ST[st][2],fixBg:ST[st][3],fixK:ST[st][4],t,p,f}))})),
+      next:['Gộp trang trùng và đặt chuyển hướng (giữ thứ hạng tìm kiếm, tránh link chết).','Rà bản tiếng Anh với người trong nhóm.','Bổ sung bản dịch mô tả nhạc.']
+    };
+  }
+}
+</script>
+</body>
+</html>
