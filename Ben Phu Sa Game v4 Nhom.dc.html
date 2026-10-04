@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>window.__resources=Object.assign({},window.__resources,{"https://unpkg.com/react@18.3.1/umd/react.production.min.js":"vendor/react/react.production.min.js","https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js":"vendor/react/react-dom.production.min.js"});</script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Bến Phù Sa v4 – Chơi nhóm</title>
+<template id="__bundler_thumbnail" data-bg-color="#033337"><svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg"><rect width="1200" height="800" fill="#033337"></rect><path d="M360 470 L840 470 L760 560 L440 560 Z" fill="#fda127"></path><rect x="590" y="250" width="16" height="220" fill="#fff"></rect><path d="M606 260 L760 440 L606 440 Z" fill="#fff"></path></svg></template>
+<meta name="ext-resource-dependency" content="assets/character/phu-sa/huong-new.png">
+<meta name="ext-resource-dependency" content="assets/character/phu-sa/huong-new.png?v=7">
+<meta name="ext-resource-dependency" content="assets/character/phu-sa/tu-new.png">
+<meta name="ext-resource-dependency" content="assets/character/team/minh-long-cut.webp">
+<meta name="ext-resource-dependency" content="assets/character/team/thu-ha-cut.webp">
+<meta name="ext-resource-dependency" content="assets/character/team/lan-chi-cut.webp">
+<meta name="ext-resource-dependency" content="assets/character/team/bao-ngoc-cut.webp">
+<meta name="ext-resource-dependency" content="assets/character/team/gia-han-cut.webp">
+<meta name="ext-resource-dependency" content="assets/character/rivals/ba-le.png">
+<meta name="ext-resource-dependency" content="assets/character/rivals/chu-sau.png">
+<meta name="ext-resource-dependency" content="assets/character/rivals/co-bay.png">
+<meta name="ext-resource-dependency" content="assets/character/rivals/ba-le-win.png">
+<meta name="ext-resource-dependency" content="assets/character/rivals/chu-sau-win.png">
+<meta name="ext-resource-dependency" content="assets/character/rivals/co-bay-win.png">
+<meta name="ext-resource-dependency" content="assets/character/phu-sa/tu-huong-ganh.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/bizon-fonts-v8.css">
+<script src="vendor/peerjs/peerjs.min.js"></script>
+<script src="js/bps3d-bridge.js"></script>
+<meta name="ext-resource-dependency" content="js/bps3d-v2.js">
+<style>
+html,body{margin:0;background:#e6f3f2;}
+*{box-sizing:border-box;}
+a{color:#006687;}
+a:hover{color:#e8762d;}
+button,input{font-family:inherit;}
+</style>
+</helmet>
+<div style="min-height:100vh;font-family:'Manrope',sans-serif;color:#033337;background:radial-gradient(120% 80% at 50% 0%,#f4faf6 0%,#e6f3f2 55%,#d7ecea 100%);">
+
+<button onClick="{{ toggleLang }}" style="position:fixed;right:14px;bottom:14px;z-index:40;min-height:44px;padding:0 14px;border:none;border-radius:14px;background:#033337;color:#fff;font-weight:800;font-size:13px;cursor:pointer;box-shadow:0 10px 20px -8px rgba(3,51,55,.6);">🌐 {{ langLabel }}</button>
+<sc-if value="{{ hasErr }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;left:50%;top:14px;transform:translateX(-50%);z-index:50;background:#c0392b;color:#fff;border-radius:16px;padding:10px 16px;font-size:14px;font-weight:700;box-shadow:0 12px 24px -10px rgba(0,0,0,.4);display:flex;gap:10px;align-items:center;max-width:92vw;"><span>{{ err }}</span><button onClick="{{ clearErr }}" style="border:none;background:rgba(255,255,255,.2);color:#fff;border-radius:10px;padding:4px 10px;cursor:pointer;font-weight:800;">✕</button></div>
+</sc-if>
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<div data-screen-label="Sảnh chính" style="max-width:1100px;margin:0 auto;padding:clamp(16px,4vw,40px);display:flex;flex-wrap:wrap;gap:28px;align-items:center;min-height:100vh;">
+  <div style="flex:1 1 420px;min-width:0;display:flex;flex-direction:column;gap:18px;">
+    <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;"><span style="font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#006687;">{{ tx.brand }}</span><sc-if value="{{ embedded }}" hint-placeholder-val="{{ false }}"><button onClick="{{ goBack }}" style="border:none;background:transparent;padding:0;font-size:13px;font-weight:800;color:#006687;cursor:pointer;font-family:inherit;">{{ tx.back }}</button></sc-if><sc-if value="{{ standalone }}" hint-placeholder-val="{{ true }}"><a href="Ben%20Phu%20Sa%20Game%20v3.dc.html" style="font-size:13px;font-weight:800;">{{ tx.back }}</a></sc-if></div>
+    <h1 style="margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(36px,6vw,62px);line-height:.98;letter-spacing:-.02em;">{{ tx.h1a }}<br>{{ tx.h1b }}</h1>
+    <p style="margin:0;font-size:16px;line-height:1.55;opacity:.8;max-width:520px;text-wrap:pretty;">{{ tx.lead }}</p>
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      <b style="font-size:13px;">{{ tx.yourName }}</b>
+      <input value="{{ name }}" onChange="{{ onName }}" placeholder="{{ tx.phName }}" style="min-height:50px;border:none;border-radius:16px;padding:0 16px;font-size:16px;font-weight:700;color:#033337;background:#fff;box-shadow:inset 0 3px 6px rgba(3,51,55,.1);">
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;">
+      <sc-for list="{{ nets }}" as="n" hint-placeholder-count="2">
+        <button onClick="{{ n.onClick }}" style="min-height:64px;text-align:left;padding:10px 14px;border-radius:18px;border:2px solid {{ n.bd }};background:{{ n.bg }};cursor:pointer;color:#033337;display:flex;flex-direction:column;gap:2px;"><b style="font-size:14px;">{{ n.name }}</b><span style="font-size:12px;opacity:.65;">{{ n.desc }}</span></button>
+      </sc-for>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <button onClick="{{ create }}" style="flex:1 1 200px;min-height:56px;border:none;border-radius:18px;background:#fda127;color:#033337;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 14px 24px -12px rgba(232,118,45,.8), inset 0 -5px 0 rgba(232,118,45,.6);">{{ tx.create }}</button>
+      <div style="flex:1 1 260px;display:flex;gap:8px;">
+        <input value="{{ joinCode }}" onChange="{{ onCode }}" placeholder="{{ tx.phCode }}" style="flex:1;min-width:0;min-height:56px;border:none;border-radius:18px;padding:0 16px;font-size:20px;font-weight:800;letter-spacing:.2em;text-align:center;color:#033337;background:#fff;box-shadow:inset 0 3px 6px rgba(3,51,55,.1);">
+        <button onClick="{{ join }}" style="min-height:56px;padding:0 20px;border:none;border-radius:18px;background:#033337;color:#fff;font-size:15px;font-weight:800;cursor:pointer;box-shadow:inset 0 -5px 0 rgba(0,0,0,.3);">{{ tx.join }}</button>
+      </div>
+    </div>
+    <span style="font-size:13px;opacity:.65;">{{ status }}</span>
+  </div>
+  <div style="flex:1 1 380px;min-width:0;">
+    <img src="assets/illustrations/game/ben-phu-sa-cho-noi.webp" alt="Đội Phù Sa giữa các đối thủ" style="width:100%;border-radius:32px;display:block;box-shadow:0 30px 60px -24px rgba(3,51,55,.55), 0 0 0 8px #fff;">
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isLobby }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Phòng chờ" style="max-width:1200px;margin:0 auto;padding:clamp(16px,3vw,32px);display:flex;flex-direction:column;gap:18px;">
+  <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;background:#033337;color:#fff;border-radius:28px;padding:18px 22px;box-shadow:0 18px 30px -16px rgba(3,51,55,.7);">
+    <div style="display:flex;flex-direction:column;gap:2px;"><span style="font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#fda127;">{{ tx.roomCode }} · {{ netLabel }}</span><b style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(40px,7vw,64px);letter-spacing:.18em;line-height:1;">{{ code }}</b></div>
+    <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end;">
+      <button onClick="{{ copyCode }}" style="min-height:44px;padding:0 16px;border:none;border-radius:14px;background:rgba(255,255,255,.14);color:#fff;font-weight:800;cursor:pointer;">📋 {{ copyLabel }}</button>
+      <span style="font-size:12px;opacity:.75;max-width:320px;text-align:right;">{{ tx.lobbyHint }}</span>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:18px;">
+    <sc-for list="{{ teamCols }}" as="tc" hint-placeholder-count="2">
+      <div style="background:#fff;border-radius:28px;padding:18px;display:flex;flex-direction:column;gap:12px;box-shadow:0 14px 30px -14px rgba(3,51,55,.35), inset 0 -5px 0 rgba(3,51,55,.05);">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;"><h2 style="margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;color:{{ tc.color }};">{{ tc.icon }} {{ tc.name }}</h2><span style="font-size:12px;font-weight:800;opacity:.6;">{{ tc.count }}</span></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;">
+          <sc-for list="{{ tc.seats }}" as="s" hint-placeholder-count="2">
+            <button onClick="{{ s.onClick }}" style="border:2px solid {{ s.bd }};background:{{ s.bg }};border-radius:20px;padding:10px;cursor:pointer;color:#033337;display:flex;flex-direction:column;gap:6px;align-items:stretch;text-align:left;">
+              <div style="height:120px;border-radius:14px;background:#f4faf6;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;"><img src="{{ s.img }}" alt="{{ s.name }}" style="height:112px;width:100%;object-fit:contain;opacity:{{ s.imgOp }};"></div>
+              <div style="display:flex;flex-direction:column;"><b style="font-size:14px;">{{ s.name }}</b><span style="font-size:11px;opacity:.6;">{{ s.role }}</span></div>
+              <div style="display:flex;flex-wrap:wrap;gap:4px;"><sc-for list="{{ s.abs }}" as="a" hint-placeholder-count="2"><span style="font-size:10px;font-weight:800;background:#eef4f3;border-radius:999px;padding:2px 7px;">{{ a }}</span></sc-for></div>
+              <span style="font-size:12px;font-weight:800;color:{{ s.tagColor }};">{{ s.tag }}</span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;background:#fff;border-radius:24px;padding:14px 18px;box-shadow:0 10px 22px -12px rgba(3,51,55,.35);">
+    <div style="display:flex;flex-direction:column;gap:4px;min-width:0;"><b style="font-size:14px;">{{ tx.inRoom }} ({{ playerCount }})</b><span style="font-size:13px;opacity:.75;">{{ playerNames }}</span></div>
+    <sc-if value="{{ isHost }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+        <span style="font-size:13px;font-weight:800;">{{ tx.perWeek }}</span>
+        <div style="display:flex;gap:4px;background:#eef4f3;border-radius:14px;padding:4px;">
+          <sc-for list="{{ timerOpts }}" as="o" hint-placeholder-count="3"><button onClick="{{ o.onClick }}" style="min-height:38px;padding:0 12px;border:none;border-radius:10px;background:{{ o.bg }};color:#033337;font-weight:800;cursor:pointer;">{{ o.label }}</button></sc-for>
+        </div>
+        <button onClick="{{ start }}" style="min-height:50px;padding:0 22px;border:none;border-radius:16px;background:{{ startBg }};color:#033337;font-size:15px;font-weight:800;cursor:pointer;box-shadow:inset 0 -5px 0 rgba(232,118,45,.5);">{{ startLabel }}</button>
+      </div>
+    </sc-if>
+    <sc-if value="{{ notHost }}" hint-placeholder-val="{{ true }}"><span style="font-size:13px;font-weight:700;opacity:.7;">{{ tx.waitHost }}</span></sc-if>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ inGame }}" hint-placeholder-val="{{ false }}">
+<div style="background:#033337;color:#fff;padding:10px clamp(12px,2vw,24px);display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;box-shadow:0 10px 24px -12px rgba(3,51,55,.8);position:sticky;top:0;z-index:20;">
+  <div style="display:flex;align-items:center;gap:10px;min-width:0;">
+    <img src="{{ meImg }}" alt="" style="width:42px;height:42px;border-radius:50%;object-fit:cover;object-position:50% 0%;background:#fbf3e1;border:3px solid {{ teamColor }};">
+    <div style="display:flex;flex-direction:column;line-height:1.15;min-width:0;"><b style="font-size:14px;">{{ meName }} · {{ meRole }}</b><span style="font-size:11px;opacity:.7;">{{ teamLabel }} · {{ tx.room }} {{ code }}</span></div>
+  </div>
+  <div style="display:flex;gap:5px;flex:1 1 220px;justify-content:center;min-width:0;">
+    <sc-for list="{{ weekPills }}" as="w" hint-placeholder-count="5"><div style="flex:0 1 50px;min-width:36px;height:40px;border-radius:12px;background:{{ w.bg }};color:{{ w.fg }};display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;">{{ w.label }}</div></sc-for>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <span style="background:rgba(255,255,255,.12);border-radius:12px;padding:8px 12px;font-size:13px;font-weight:800;">💰 {{ wallet }}</span>
+    <span style="background:{{ timerBg }};color:#033337;border-radius:12px;padding:8px 12px;font-size:14px;font-weight:800;min-width:72px;text-align:center;">⏱ {{ timerTxt }}</span>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isPlay }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Chọn bến" style="max-width:1320px;margin:0 auto;padding:clamp(12px,2vw,24px);display:flex;flex-wrap:wrap;gap:18px;align-items:flex-start;">
+  <div style="flex:1 1 560px;min-width:0;display:flex;flex-direction:column;gap:14px;">
+    <sc-if value="{{ hasEv }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;gap:12px;align-items:center;background:#fff4dc;border:2px solid #fda127;border-radius:20px;padding:10px 14px;"><span style="font-size:30px;">{{ evIcon }}</span><div style="display:flex;flex-direction:column;"><span style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#e8762d;">{{ tx.evWeek }}</span><b style="font-size:15px;">{{ evName }}</b><span style="font-size:12px;opacity:.8;">{{ evDesc }}</span></div></div>
+    </sc-if>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;"><h2 style="margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;">{{ tx.river }}</h2>
+      <div style="display:flex;gap:4px;background:#fff;border-radius:14px;padding:4px;box-shadow:0 6px 14px -8px rgba(3,51,55,.4);"><sc-for list="{{ viewOpts }}" as="o" hint-placeholder-count="2"><button onClick="{{ o.onClick }}" style="min-height:36px;padding:0 14px;border:none;border-radius:10px;background:{{ o.bg }};color:#033337;font-weight:800;cursor:pointer;">{{ o.label }}</button></sc-for></div></div>
+    <div style="display:{{ show3d }};position:relative;height:clamp(300px,46vw,460px);border-radius:28px;overflow:hidden;box-shadow:0 18px 34px -18px rgba(3,51,55,.6), 0 0 0 6px #fff;">
+      <div ref="{{ mapRef }}" style="position:absolute;inset:0;"></div>
+      <div style="position:absolute;left:12px;bottom:12px;right:12px;display:flex;justify-content:space-between;gap:8px;pointer-events:none;flex-wrap:wrap;"><span style="background:rgba(3,51,55,.85);color:#fff;border-radius:12px;padding:6px 10px;font-size:12px;font-weight:700;">{{ mapHint }}</span><span style="background:#fda127;color:#033337;border-radius:12px;padding:6px 10px;font-size:12px;font-weight:800;">📍 {{ finalLoc }}</span></div>
+    </div>
+    <span style="font-size:12px;opacity:.7;">{{ tx.cardsHint }}</span>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;">
+      <sc-for list="{{ landings }}" as="l" hint-placeholder-count="8">
+        <button onClick="{{ l.onClick }}" style="position:relative;min-height:150px;border:3px solid {{ l.bd }};background:{{ l.bg }};border-radius:22px;padding:10px;cursor:pointer;color:#033337;text-align:left;display:flex;flex-direction:column;gap:5px;box-shadow:0 10px 20px -12px rgba(3,51,55,.4), inset 0 -4px 0 rgba(3,51,55,.06);">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:4px;"><span style="font-size:28px;line-height:1;">{{ l.icon }}</span><span style="font-size:10px;font-weight:800;background:{{ l.tagBg }};color:#fff;border-radius:999px;padding:2px 7px;opacity:{{ l.tagOp }};">{{ l.tag }}</span></div>
+          <b style="font-size:14px;line-height:1.2;">{{ l.name }}</b>
+          <span style="font-size:11px;opacity:.6;line-height:1.3;">{{ l.aud }}</span>
+          <span style="font-size:11px;font-weight:800;color:#006687;">{{ l.known }}</span>
+          <div style="display:flex;gap:3px;flex-wrap:wrap;margin-top:auto;align-items:center;">
+            <sc-for list="{{ l.voters }}" as="p" hint-placeholder-count="0"><img src="{{ p.img }}" alt="{{ p.name }}" title="{{ p.name }}" style="width:26px;height:26px;border-radius:50%;object-fit:cover;object-position:50% 0%;background:#fbf3e1;border:2px solid {{ p.color }};"></sc-for>
+            <sc-for list="{{ l.ai }}" as="p" hint-placeholder-count="0"><img src="{{ p.img }}" alt="{{ p.name }}" title="{{ p.name }} bán ở đây tuần trước" style="width:22px;height:22px;border-radius:50%;object-fit:cover;opacity:.75;filter:grayscale(.3);"></sc-for>
+          </div>
+        </button>
+      </sc-for>
+    </div>
+    <div style="background:#fff;border-radius:24px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;box-shadow:0 10px 22px -12px rgba(3,51,55,.35);">
+      <b style="font-size:14px;">{{ tx.notebook }}</b>
+      <sc-if value="{{ noTips }}" hint-placeholder-val="{{ true }}"><span style="font-size:12px;opacity:.6;">{{ tx.noTips }}</span></sc-if>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;"><sc-for list="{{ tips }}" as="t" hint-placeholder-count="0"><span style="font-size:12px;background:#eef4f3;border-radius:10px;padding:5px 9px;">{{ t }}</span></sc-for></div>
+    </div>
+  </div>
+
+  <div style="flex:1 1 360px;min-width:0;display:flex;flex-direction:column;gap:14px;">
+    <sc-if value="{{ isSpectator }}" hint-placeholder-val="{{ false }}"><div style="background:#fff;border-radius:24px;padding:16px;font-size:14px;">{{ tx.spect }}</div></sc-if>
+
+    <sc-if value="{{ hasMethod }}" hint-placeholder-val="{{ false }}">
+      <div style="background:#fff;border-radius:24px;padding:14px;display:flex;flex-direction:column;gap:8px;box-shadow:0 10px 22px -12px rgba(3,51,55,.35);">
+        <b style="font-size:14px;">{{ tx.method }}</b>
+        <sc-for list="{{ methods }}" as="m" hint-placeholder-count="3"><button onClick="{{ m.onClick }}" style="min-height:52px;border:2px solid {{ m.bd }};background:{{ m.bg }};border-radius:16px;padding:8px 12px;cursor:pointer;color:#033337;display:flex;gap:10px;align-items:center;text-align:left;"><span style="font-size:24px;">{{ m.icon }}</span><span style="display:flex;flex-direction:column;"><b style="font-size:13px;">{{ m.name }}</b><span style="font-size:11px;opacity:.65;">{{ m.desc }}</span></span></button></sc-for>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ hasMenu }}" hint-placeholder-val="{{ false }}">
+      <div style="background:#fff;border-radius:24px;padding:14px;display:flex;flex-direction:column;gap:8px;box-shadow:0 10px 22px -12px rgba(3,51,55,.35);">
+        <b style="font-size:14px;">{{ tx.menu }}</b>
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;">
+          <sc-for list="{{ menus }}" as="m" hint-placeholder-count="4"><button onClick="{{ m.onClick }}" style="min-height:64px;border:2px solid {{ m.bd }};background:{{ m.bg }};border-radius:16px;padding:8px 10px;cursor:pointer;color:#033337;display:flex;flex-direction:column;gap:2px;text-align:left;"><b style="font-size:13px;">{{ m.icon }} {{ m.name }}</b><span style="font-size:10px;opacity:.65;line-height:1.3;">{{ m.desc }}</span></button></sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ hasLand }}" hint-placeholder-val="{{ false }}">
+      <div style="background:#033337;color:#fff;border-radius:24px;padding:14px 16px;display:flex;flex-direction:column;gap:4px;"><b style="font-size:14px;color:#fda127;">{{ tx.landT }}</b><span style="font-size:13px;opacity:.85;line-height:1.45;">{{ tx.landD }} <b>{{ finalLoc }}</b></span></div>
+    </sc-if>
+
+    <sc-if value="{{ hasScout }}" hint-placeholder-val="{{ false }}">
+      <div style="background:#fff;border-radius:24px;padding:14px;display:flex;flex-direction:column;gap:8px;box-shadow:0 10px 22px -12px rgba(3,51,55,.35);">
+        <div style="display:flex;justify-content:space-between;gap:6px;"><b style="font-size:14px;">{{ tx.scout }}</b><span style="font-size:12px;font-weight:800;color:#006687;">{{ scoutLeft }}</span></div>
+        <span style="font-size:12px;opacity:.7;">{{ tx.scoutD }}</span>
+        <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;">
+          <sc-for list="{{ scoutBtns }}" as="b" hint-placeholder-count="8"><button onClick="{{ b.onClick }}" title="{{ b.name }}" style="min-height:44px;border:none;border-radius:12px;background:{{ b.bg }};opacity:{{ b.op }};cursor:pointer;font-size:20px;">{{ b.icon }}</button></sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ hasShop }}" hint-placeholder-val="{{ false }}">
+      <div style="background:#fff;border-radius:24px;padding:14px;display:flex;flex-direction:column;gap:8px;box-shadow:0 10px 22px -12px rgba(3,51,55,.35);">
+        <div style="display:flex;justify-content:space-between;gap:6px;"><b style="font-size:14px;">{{ tx.shop }}</b><span style="font-size:13px;font-weight:800;color:#e8762d;">{{ wallet }}</span></div>
+        <sc-for list="{{ shop }}" as="s" hint-placeholder-count="4"><button onClick="{{ s.onClick }}" style="min-height:48px;border:2px solid {{ s.bd }};background:{{ s.bg }};opacity:{{ s.op }};border-radius:14px;padding:6px 10px;cursor:pointer;color:#033337;display:flex;gap:10px;align-items:center;text-align:left;"><span style="font-size:22px;">{{ s.icon }}</span><span style="flex:1;display:flex;flex-direction:column;"><b style="font-size:13px;">{{ s.name }}</b><span style="font-size:11px;opacity:.65;">{{ s.desc }}</span></span><b style="font-size:12px;">{{ s.price }}</b></button></sc-for>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ hasAlly }}" hint-placeholder-val="{{ false }}">
+      <div style="background:#fff;border-radius:24px;padding:14px;display:flex;flex-direction:column;gap:8px;box-shadow:0 10px 22px -12px rgba(3,51,55,.35);">
+        <b style="font-size:14px;">{{ tx.allyT }}</b>
+        <span style="font-size:12px;opacity:.75;line-height:1.45;">{{ tx.allyD }}</span>
+        <span style="font-size:13px;font-weight:800;color:#006687;">{{ allyStatus }}</span>
+        <button onClick="{{ allyAct }}" style="min-height:46px;border:none;border-radius:14px;background:{{ allyBg }};color:#033337;font-weight:800;cursor:pointer;">{{ allyLabel }}</button>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ hasTrade }}" hint-placeholder-val="{{ false }}">
+      <div style="background:#fff;border-radius:24px;padding:14px;display:flex;flex-direction:column;gap:8px;box-shadow:0 10px 22px -12px rgba(3,51,55,.35);">
+        <b style="font-size:14px;">{{ tx.tradeT }}</b>
+        <sc-for list="{{ offersIn }}" as="o" hint-placeholder-count="0"><div style="display:flex;gap:8px;align-items:center;background:#fff4dc;border-radius:12px;padding:8px 10px;"><span style="flex:1;font-size:12px;">{{ o.label }}</span><button onClick="{{ o.onClick }}" style="min-height:38px;padding:0 12px;border:none;border-radius:10px;background:#fda127;color:#033337;font-weight:800;cursor:pointer;">{{ tx.buy }} {{ o.price }}</button></div></sc-for>
+        <sc-for list="{{ sellList }}" as="o" hint-placeholder-count="0"><div style="display:flex;gap:8px;align-items:center;background:#eef4f3;border-radius:12px;padding:8px 10px;"><span style="flex:1;font-size:12px;">{{ o.label }}</span><button onClick="{{ o.onClick }}" style="min-height:38px;padding:0 12px;border:none;border-radius:10px;background:{{ o.bg }};color:#033337;font-weight:800;cursor:pointer;">{{ o.btn }}</button></div></sc-for>
+        <sc-if value="{{ noTrade }}" hint-placeholder-val="{{ true }}"><span style="font-size:12px;opacity:.6;">{{ tx.noTrade }}</span></sc-if>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ seated }}" hint-placeholder-val="{{ false }}">
+      <button onClick="{{ toggleReady }}" style="min-height:58px;border:none;border-radius:20px;background:{{ readyBg }};color:{{ readyFg }};font-size:16px;font-weight:800;cursor:pointer;box-shadow:inset 0 -5px 0 rgba(0,0,0,.15);">{{ readyLabel }}</button>
+    </sc-if>
+
+    <div style="background:#fff;border-radius:24px;padding:14px;display:flex;flex-direction:column;gap:8px;box-shadow:0 10px 22px -12px rgba(3,51,55,.35);">
+      <b style="font-size:14px;">{{ teamLabel }} · {{ tx.duties }}</b>
+      <sc-for list="{{ teamStatus }}" as="s" hint-placeholder-count="2">
+        <div style="display:flex;gap:10px;align-items:center;">
+          <img src="{{ s.img }}" alt="" style="width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:50% 0%;background:#fbf3e1;opacity:{{ s.op }};">
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;"><b style="font-size:13px;">{{ s.name }} <span style="font-weight:600;opacity:.6;">· {{ s.who }}</span></b><span style="font-size:11px;opacity:.7;">{{ s.doing }}</span></div>
+          <span style="font-size:18px;">{{ s.mark }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <sc-if value="{{ hasOther }}" hint-placeholder-val="{{ false }}">
+      <div style="background:rgba(3,51,55,.08);border-radius:20px;padding:12px 14px;display:flex;gap:10px;align-items:center;"><span style="font-size:22px;">🔒</span><span style="font-size:13px;line-height:1.4;">{{ otherStatus }}</span></div>
+    </sc-if>
+    <sc-if value="{{ isHost }}" hint-placeholder-val="{{ false }}"><button onClick="{{ force }}" style="min-height:40px;border:none;border-radius:12px;background:transparent;color:#006687;font-weight:800;cursor:pointer;">{{ tx.forceW }}</button></sc-if>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isReveal }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Công bố tuần" style="max-width:1200px;margin:0 auto;padding:clamp(12px,2vw,24px);display:flex;flex-wrap:wrap;gap:18px;align-items:flex-start;">
+  <div style="flex:1 1 560px;min-width:0;display:flex;flex-direction:column;gap:14px;">
+    <div style="background:#033337;color:#fff;border-radius:28px;padding:18px 22px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;">
+      <div style="display:flex;flex-direction:column;gap:2px;"><span style="font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#fda127;">{{ tx.reveal }} {{ revWeek }}</span><b style="font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;">{{ revHead }}</b><span style="font-size:13px;opacity:.8;">{{ revSub }}</span></div>
+    </div>
+    <div style="display:{{ show3d }};position:relative;height:clamp(260px,40vw,400px);border-radius:28px;overflow:hidden;box-shadow:0 18px 34px -18px rgba(3,51,55,.6), 0 0 0 6px #fff;"><div ref="{{ mapRef }}" style="position:absolute;inset:0;"></div></div>
+    <div style="display:flex;gap:14px;align-items:flex-end;background:#fff4dc;border-radius:24px;padding:12px 18px 0;overflow:hidden;box-shadow:0 10px 22px -12px rgba(3,51,55,.35);">
+      <img src="{{ topImg }}" alt="{{ topName }}" style="height:150px;width:120px;object-fit:contain;object-position:50% 100%;display:block;">
+      <div style="display:flex;flex-direction:column;gap:4px;padding-bottom:16px;min-width:0;"><span style="font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#e8762d;">{{ tx.topWeek }}</span><b style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;">{{ topName }}</b><span style="font-size:13px;opacity:.8;text-wrap:pretty;">{{ topLine }}</span></div>
+    </div>
+    <sc-for list="{{ revGroups }}" as="g" hint-placeholder-count="3">
+      <div style="background:#fff;border-radius:22px;padding:12px 14px;display:flex;flex-direction:column;gap:8px;box-shadow:0 10px 22px -12px rgba(3,51,55,.35);">
+        <div style="display:flex;justify-content:space-between;gap:8px;"><b style="font-size:15px;">{{ g.icon }} {{ g.name }}</b><span style="font-size:12px;font-weight:800;color:{{ g.clashColor }};">{{ g.clash }}</span></div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <sc-for list="{{ g.sellers }}" as="s" hint-placeholder-count="1">
+            <div style="display:flex;gap:8px;align-items:center;background:{{ s.bg }};border:2px solid {{ s.bd }};border-radius:16px;padding:6px 10px;">
+              <img src="{{ s.img }}" alt="" style="width:34px;height:34px;border-radius:50%;object-fit:cover;object-position:50% 0%;background:#fbf3e1;">
+              <div style="display:flex;flex-direction:column;"><b style="font-size:13px;">{{ s.name }}</b><span style="font-size:11px;opacity:.7;">{{ s.what }}</span></div>
+              <b style="font-size:15px;margin-left:6px;">{{ s.rev }}</b>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="flex:1 1 340px;min-width:0;display:flex;flex-direction:column;gap:14px;">
+    <div style="background:#fff;border-radius:24px;padding:16px;display:flex;flex-direction:column;gap:10px;box-shadow:0 10px 22px -12px rgba(3,51,55,.35);">
+      <b style="font-size:16px;">{{ tx.board }}</b>
+      <sc-for list="{{ board }}" as="b" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:column;gap:4px;">
+          <div style="display:flex;justify-content:space-between;gap:8px;font-size:13px;"><b>{{ b.rank }}. {{ b.name }}</b><b>{{ b.total }}</b></div>
+          <div style="height:12px;border-radius:8px;background:#eef3f2;overflow:hidden;"><div style="height:100%;width:{{ b.w }};background:{{ b.color }};border-radius:8px;transition:width .8s;"></div></div>
+        </div>
+      </sc-for>
+    </div>
+    <sc-if value="{{ seated }}" hint-placeholder-val="{{ false }}">
+      <button onClick="{{ nextWeek }}" style="min-height:58px;border:none;border-radius:20px;background:{{ nextBg }};color:#033337;font-size:16px;font-weight:800;cursor:pointer;box-shadow:inset 0 -5px 0 rgba(232,118,45,.5);">{{ nextLabel }}</button>
+    </sc-if>
+    <sc-if value="{{ isHost }}" hint-placeholder-val="{{ false }}"><button onClick="{{ force }}" style="min-height:40px;border:none;border-radius:12px;background:transparent;color:#006687;font-weight:800;cursor:pointer;">{{ tx.forceN }}</button></sc-if>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isEnd }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Kết thúc mùa" style="max-width:1100px;margin:0 auto;padding:clamp(12px,3vw,32px);display:flex;flex-direction:column;gap:18px;">
+  <div style="background:#033337;color:#fff;border-radius:32px;padding:24px 26px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;">
+    <div style="display:flex;flex-direction:column;gap:4px;"><span style="font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#fda127;">{{ tx.endK }}</span><b style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(28px,5vw,44px);line-height:1.05;">{{ endHead }}</b><span style="font-size:14px;opacity:.8;">{{ endSub }}</span></div>
+    <span style="font-size:72px;">{{ endMedal }}</span>
+  </div>
+  <div style="background:#fff;border-radius:28px;padding:18px;display:flex;flex-direction:column;gap:8px;overflow-x:auto;box-shadow:0 14px 30px -14px rgba(3,51,55,.35);">
+    <div style="min-width:560px;display:grid;grid-template-columns:minmax(0,2.2fr) repeat(5,minmax(0,1fr)) minmax(0,1.2fr);gap:8px;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;opacity:.55;padding:0 10px;"><span>{{ tx.team }}</span><span>T1</span><span>T2</span><span>T3</span><span>T4</span><span>T5</span><span>{{ tx.total }}</span></div>
+    <sc-for list="{{ endRows }}" as="r" hint-placeholder-count="4">
+      <div style="min-width:560px;display:grid;grid-template-columns:minmax(0,2.2fr) repeat(5,minmax(0,1fr)) minmax(0,1.2fr);gap:8px;align-items:center;background:{{ r.bg }};border-radius:14px;padding:10px;font-size:13px;">
+        <b>{{ r.medal }} {{ r.name }}</b>
+        <sc-for list="{{ r.weeks }}" as="x" hint-placeholder-count="5"><span>{{ x }}</span></sc-for>
+        <b style="font-size:15px;">{{ r.total }}</b>
+      </div>
+    </sc-for>
+  </div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;">
+    <sc-if value="{{ seated }}" hint-placeholder-val="{{ false }}"><input value="{{ klass }}" onChange="{{ onKlass }}" placeholder="{{ tx.phClass }}" aria-label="{{ tx.klass }}" style="min-height:52px;width:150px;border:none;border-radius:16px;padding:0 14px;font-size:15px;font-weight:800;letter-spacing:.06em;color:#033337;background:#fff;box-shadow:inset 0 3px 6px rgba(3,51,55,.1);"></sc-if>
+    <sc-if value="{{ seated }}" hint-placeholder-val="{{ false }}"><button onClick="{{ copyResult }}" style="min-height:52px;padding:0 20px;border:none;border-radius:16px;background:#fda127;color:#033337;font-weight:800;cursor:pointer;box-shadow:inset 0 -5px 0 rgba(232,118,45,.6);">📨 {{ copyResLabel }}</button></sc-if>
+    <sc-if value="{{ isHost }}" hint-placeholder-val="{{ false }}"><button onClick="{{ again }}" style="min-height:52px;padding:0 20px;border:none;border-radius:16px;background:#033337;color:#fff;font-weight:800;cursor:pointer;">{{ tx.again }}</button></sc-if>
+    <a href="Bang%20Giao%20Vien.dc.html" style="align-self:center;font-weight:800;font-size:14px;">{{ tx.teacher }}</a>
+  </div>
+</div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const SEATS=[
+{id:'lumina',team:'ps',name:'Lumina',role:'Nhà sáng lập',img:'assets/character/phu-sa/huong-new.png?v=7',ab:['land','method','menu']},
+{id:'tuphan',team:'ps',name:'Tú Phan',role:'Người đồng hành',img:'assets/character/phu-sa/tu-new.png',ab:['scout','shop','ally','trade']},
+{id:'minhlong',team:'rx',name:'Minh Long',role:'CEO',img:'assets/character/team/minh-long-cut.webp',ab:['land','ally']},
+{id:'thuha',team:'rx',name:'Thu Hà',role:'CFO',img:'assets/character/team/thu-ha-cut.webp',ab:['shop','trade']},
+{id:'lanchi',team:'rx',name:'Lan Chi',role:'CMO',img:'assets/character/team/lan-chi-cut.webp',ab:['method']},
+{id:'baongoc',team:'rx',name:'Bảo Ngọc',role:'COO',img:'assets/character/team/bao-ngoc-cut.webp',ab:['menu']},
+{id:'giahan',team:'rx',name:'Gia Hân',role:'Thư ký',img:'assets/character/team/gia-han-cut.webp',ab:['scout']}];
+const TEAMDEF={ps:{name:'Đội Phù Sa',icon:'🌾',color:'#e8762d',img:'assets/character/phu-sa/huong-new.png?v=7'},rx:{name:'Đội Rồng Xanh',icon:'🐉',color:'#006687',img:'assets/character/team/minh-long-cut.webp'}};
+const AB={land:'📍 Chốt bến',method:'⛵ Phương thức',menu:'🥖 Món',scout:'🔭 Trinh sát',shop:'💰 Quỹ',ally:'🤝 Liên minh',trade:'📰 Chợ tin'};
+const LOCS=[['🛶','Chợ nổi','du khách sáng sớm'],['⛴️','Bến phà','khách vãng lai'],['🎓','Làng đại học','sinh viên'],['🌳','Công viên bờ sông','gia đình cuối tuần'],['🏭','Khu công nghiệp','công nhân tan ca'],['🌙','Chợ đêm','giới trẻ về đêm'],['🏮','Sân đình lễ hội','khách dự lễ'],['🥭','Vườn trái cây','khách miệt vườn']];
+const MENUS=[['🥖','Bánh mì','Phục vụ nhanh: +15% ở bến đông'],['🍧','Chè bưởi','Có thể hao hụt −12% nếu không bảo hiểm'],['☕','Cà phê phin','Lời +18%, chậm ở bến đông'],['🧃','Nước mía','Ăn theo thời tiết']];
+const METHODS=[['boat','⛵','Ghe hàng bông','Bán ×3 · chi phí 1,5 tr · không mang tin về',3,1.5],['pole','🧺','Gánh hàng rong','Bán ×1 · không tốn phí · 2 tin về món chạy nhất',1,0],['survey','📋','Khảo sát chợ','Không bán · chi phí 0,3 tr · gợi ý cặp món–bến tốt nhất + bến đông tuần sau',0,0.3]];
+const SHOP=[['ads','📣','Quảng cáo',0.3,'+20% doanh thu tuần này'],['ins','🛡️','Bảo hiểm chè',0.3,'Chè bưởi không hao hụt tuần này'],['hot','🗺️','Gói tin vỉa hè',0.3,'Biết bến đông nhất tuần sau']];
+const EVENTS=[
+{icon:'🌊',name:'Nước lũ về',desc:'Chợ nổi và Bến phà vắng khách (−25%), Vườn trái cây −15%.',loc:{0:.75,1:.75,7:.85},menu:{}},
+{icon:'🥭',name:'Mùa trái cây chín',desc:'Vườn trái cây đông khách (+30%), Chè bưởi bán chạy hơn (+10%).',loc:{7:1.3},menu:{1:1.1}},
+{icon:'🏮',name:'Lễ hội cúng đình',desc:'Sân đình lễ hội +40%, Chợ đêm +15%.',loc:{6:1.4,5:1.15},menu:{}},
+{icon:'☀️',name:'Nắng nóng gay gắt',desc:'Nước mía bán chạy (+20%), Cà phê phin chậm lại (−8%).',loc:{},menu:{3:1.2,2:.92}},
+{icon:'🌧️',name:'Mưa dầm',desc:'Công viên bờ sông vắng (−30%), Nước mía ế (−15%).',loc:{3:.7},menu:{3:.85}},
+{icon:'🎓',name:'Mùa thi cử',desc:'Làng đại học +25%, Cà phê phin +10%.',loc:{2:1.25},menu:{2:1.1}},
+{icon:'📸',name:'Khách du lịch đổ về',desc:'Chợ nổi +25%, Bến phà +10%.',loc:{0:1.25,1:1.1},menu:{}}];
+const TX={"brand":["BizOn Bật Nghiệp · Bến Phù Sa","BizOn Startup · Bến Phù Sa"],"back":["← Chơi một mình / thi thử","← Solo / practice test"],"h1a":["Chơi nhóm","Team play"],"h1b":["trên sông","on the river"],"lead":["Đội Phù Sa (2 máy) và Đội Rồng Xanh (5 máy). Mỗi người giữ một vai, cả đội cùng quyết. Hai đội chung phòng sẽ giành khách của nhau, chọn bí mật và công bố cùng lúc.","Team Phù Sa (2 devices) and Team Rồng Xanh (5 devices). Each player holds one role and the team decides together. Two teams in one room compete for the same customers, choose in secret and reveal at the same time."],"yourName":["Tên của bạn","Your name"],"create":["⛵ Tạo phòng","⛵ Create room"],"join":["Vào →","Join →"],"roomCode":["Mã phòng","Room code"],"lobbyHint":["Các bạn mở game, nhập mã này rồi chọn ghế. Một đội vào cũng chơi được, hai đội vào thì đấu với nhau.","Open the game, enter this code and pick a seat. One team can play alone; two teams play against each other."],"inRoom":["Trong phòng","In the room"],"perWeek":["⏱ Mỗi tuần","⏱ Per week"],"waitHost":["Đợi chủ phòng bắt đầu…","Waiting for the host to start…"],"room":["phòng","room"],"evWeek":["Sự kiện tuần này","This week’s event"],"river":["Bến sông","River landings"],"cardsHint":["Phiếu của đội và tin đã biết hiện trên thẻ bến bên dưới.","Team votes and known intel are shown on the landing cards below."],"notebook":["📒 Sổ tin của đội","📒 Team notebook"],"noTips":["Chưa có tin. Gánh hàng rong, khảo sát, trinh sát hoặc mua tin sẽ ghi vào đây.","No intel yet. Shoulder-pole selling, surveys, scouting or bought tips will be noted here."],"spect":["Bạn đang xem. Chưa có ghế trong đội nào.","You are watching. You have no seat on a team."],"method":["⛵ Phương thức bán","⛵ Selling method"],"menu":["🥖 Món hàng","🥖 Product"],"landT":["📍 Bạn chốt bến","📍 You pick the landing"],"landD":["Cả đội bấm bến để bỏ phiếu. Bến bạn bấm là quyết định cuối. Hiện tại:","The whole team votes by tapping a landing. Your tap is the final decision. Current:"],"scout":["🔭 Trinh sát","🔭 Scouting"],"scoutD":["Soi một bến để biết món bán chạy nhất ở đó. Mỗi tuần 1 lượt, mỗi lượt tốn 0,8 tr tiền quỹ.","Inspect a landing to learn its best-selling product. 1 turn per week, 0.8 m from team funds."],"shop":["💰 Quỹ & đồ nghề","💰 Funds & gear"],"allyT":["🤝 Liên minh tuần này","🤝 Alliance this week"],"allyD":["Hai đội liên minh không chia khách của nhau khi chung bến, và thấy bến đội kia đang chọn. Mỗi đội chỉ liên minh được 2 tuần trong mùa.","Allied teams don’t split customers when sharing a landing, and can see the other team’s landing. Each team may ally for only 2 weeks per season."],"tradeT":["📰 Chợ tin giữa hai đội","📰 Intel market between teams"],"buy":["Mua","Buy"],"noTrade":["Đội chưa có tin để bán và chưa có tin nào được rao.","Your team has no intel to sell and nothing is on offer."],"duties":["phần việc","duties"],"forceW":["Chủ phòng: chốt tuần ngay →","Host: close the week now →"],"reveal":["Công bố tuần","Week reveal"],"topWeek":["Bán chạy nhất tuần","Top seller this week"],"board":["🏆 Bảng xếp hạng","🏆 Leaderboard"],"forceN":["Chủ phòng: sang tuần ngay →","Host: next week now →"],"endK":["Hết mùa buôn","Season over"],"team":["Đội","Team"],"total":["Tổng","Total"],"again":["🔁 Chơi mùa mới (giữ phòng)","🔁 New season (same room)"],"teacher":["Bảng giáo viên →","Teacher board →"],"phName":["VD: Ngọc Anh","e.g. Ngọc Anh"],"phCode":["MÃ PHÒNG","ROOM CODE"],"klass":["Mã lớp","Class code"],"phClass":["VD: QT12A","e.g. QT12A"]};
+const RIVALS=[['Ghe Ba Lẹ','assets/character/rivals/ba-le.png','#c0392b'],['Chú Sáu Bến Cũ','assets/character/rivals/chu-sau.png','#9a6b3f'],['Cô Bảy Sen Hồng','assets/character/rivals/co-bay.png','#d9558c']];
+const LOCS_E=[['🛶','Floating market','early tourists'],['⛴️','Ferry pier','passers-by'],['🎓','University village','students'],['🌳','Riverside park','weekend families'],['🏭','Industrial zone','shift workers'],['🌙','Night market','young night owls'],['🏮','Temple festival yard','festival-goers'],['🥭','Fruit orchard','orchard visitors']];
+const MENUS_E=[['🥖','Bánh mì','Fast service: +15% at busy landings'],['🍧','Pomelo sweet soup','May spoil −12% without insurance'],['☕','Phin coffee','+18% margin, slow at busy landings'],['🧃','Sugarcane juice','Depends on the weather']];
+const METHODS_E=[['boat','⛵','Cargo boat','Sells ×3 · costs 1.5 m · brings no intel',3,1.5],['pole','🧺','Shoulder-pole vendor','Sells ×1 · no cost · 2 tips on best sellers',1,0],['survey','📋','Market survey','No sales · costs 0.3 m · hints the best product–landing pair + next week’s busiest',0,0.3]];
+const SHOP_E=[['ads','📣','Advertising',0.3,'+20% revenue this week'],['ins','🛡️','Soup insurance',0.3,'No sweet-soup spoilage this week'],['hot','🗺️','Street tips pack',0.3,'Learn next week’s busiest landing']];
+const EV_E=[['Floodwater arrives','Floating market and Ferry pier −25%, Fruit orchard −15%.'],['Fruit season','Fruit orchard +30%, pomelo sweet soup +10%.'],['Temple festival','Temple festival yard +40%, Night market +15%.'],['Heatwave','Sugarcane juice +20%, phin coffee −8%.'],['Steady rain','Riverside park −30%, sugarcane juice −15%.'],['Exam season','University village +25%, phin coffee +10%.'],['Tourist wave','Floating market +25%, Ferry pier +10%.']];
+const ROLE_E={lumina:'Founder',tuphan:'Co-founder',minhlong:'CEO',thuha:'CFO',lanchi:'CMO',baongoc:'COO',giahan:'Secretary'};
+const AB_E={land:'📍 Pick landing',method:'⛵ Method',menu:'🥖 Product',scout:'🔭 Scout',shop:'💰 Funds',ally:'🤝 Alliance',trade:'📰 Intel market'};
+const TEAM_E={ps:'Team Phù Sa',rx:'Team Rồng Xanh'};
+let EN=false;const T=(vi,en)=>EN?en:vi;
+const CODECH='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',PFX='benphusa-v4-';
+const mkRnd=s=>()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};
+const share=n=>1/(1+0.4*(Math.max(1,n)-1));
+const stars=d=>Math.max(1,Math.min(5,Math.round((d-0.4)/3*4)+1));
+const f1=v=>(Math.round(v*10)/10).toLocaleString('vi-VN',{maximumFractionDigits:1});
+const r1=v=>Math.round(v*10)/10;
+const genCode=()=>Array.from({length:5},()=>CODECH[Math.floor(Math.random()*CODECH.length)]).join('');
+const seatDef=id=>SEATS.find(s=>s.id===id);
+
+class Component extends DCLogic {
+  state={view:null,recvAt:0,name:'',net:'online',joinCode:'',err:'',status:'',copied:'',pid:''};
+  componentDidMount(){
+    let pid='';try{pid=sessionStorage.getItem('bps4-pid')||'';if(!pid){pid='p'+Math.random().toString(36).slice(2,9);sessionStorage.setItem('bps4-pid',pid);}}catch(e){pid='p'+Math.random().toString(36).slice(2,9);}
+    let name='';try{name=localStorage.getItem('bps4-name')||'';}catch(e){}
+    let en=false,klass='';try{en=localStorage.getItem('bizon-lang')==='en';klass=localStorage.getItem('bps4-class')||'';}catch(e){}EN=en;
+    this.setState({pid,name,en,klass});this.installBridge();
+    this.tk=setInterval(()=>{if(this.isHost)this.hostTick();if(this.state.view&&(this.state.view.phase==='choose'))this.forceUpdate();},1000);
+  }
+  componentDidUpdate(){const v=this.state.view;if(!v||!window.BPS3D)return;const key=v.phase+'-'+v.week;if(key===this.k3)return;const prev=this.k3;this.k3=key;
+    if(v.phase==='choose'){window.BPS3D.ev('bps-week',{week:v.week});if(v.ev)setTimeout(()=>window.BPS3D.ev('bps-event',{icon:v.ev.icon}),60);}
+    if(v.phase==='reveal'&&v.last&&prev&&prev.startsWith('choose')){const s=v.last.sellers.find(x=>x.team===v.team);if(s){const mi=['boat','pole','survey'].indexOf(s.method);window.BPS3D.ev('bps-commit',{week:v.last.w,m:mi,loc:s.l,rev:s.rev,clash:s.n});}const o=v.last.sellers.find(x=>x.team&&x.team!==v.team);if(o)setTimeout(()=>window.BPS3D.ev('bps-commit-other',{team:o.team,m:['boat','pole','survey'].indexOf(o.method),loc:o.l,rev:o.rev}),900);}}
+  mapRef=el=>{if(window.BPS3D)window.BPS3D.attach(el||null);};
+  installBridge(){const self=this;window.addEventListener('bps3d-fail',()=>this.setState({fail3d:true,v2d:true}));
+    window.ftPick=(k,i)=>{const v=self.state.view;if(k==='loc'&&v&&v.phase==='choose'&&v.my)self.act({k:'vote',loc:i});};
+    const ones=()=>[0,1,2,3,4].map(()=>LOCS.map(()=>1));
+    window.__bps={get S(){const v=self.state.view||{},my=v.my||{};const kp={};Object.keys(my.known||{}).forEach(l=>Object.keys(my.known[l]).forEach(m=>kp[m+'-'+l]=true));const mine=v.seat&&my.votes?my.votes[v.seat]:null;return {sel:{m:my.choice?['boat','pole','survey'].indexOf(my.choice.method):null,menu:my.choice?my.choice.menu:null,loc:mine!=null?mine:null},knownPairs:kp,total:my.total||0,week:v.week||0,team:v.team==='rx'?0:1};},
+      get W(){return ones();},get D(){return MENUS.map(()=>LOCS.map(()=>1));},
+      get RIVALS(){const v=self.state.view||{};return RIVALS.map((r,k)=>{const plan=[];const a=(v.aiLast||[]).find(x=>x.ai===k);if(a&&v.week>0)plan[v.week-1]=a.l;if(a&&v.last)plan[v.last.w]=a.l;const b=(v.board||[]).find(x=>x.ai===k);return {name:r[0],short:['Ba Lẹ','Chú Sáu','Cô Bảy'][k],icon:['⚡','🐢','🪷'][k],plan,total:b?b.total:0};});},
+      get LOCS(){return LOCS.map((l,i)=>[l[0],l[1],l[2],LOCS_E[i][1],LOCS_E[i][2]]);},get MENUS(){return MENUS.map((m,i)=>[m[0],m[1],m[2],MENUS_E[i][1],MENUS_E[i][2]]);}};}
+  componentWillUnmount(){clearInterval(this.tk);try{this.peer&&this.peer.destroy();}catch(e){}try{this.ch&&this.ch.close();}catch(e){}}
+  fail(msg){this.setState({err:msg,status:''});}
+  // ---------- networking ----------
+  createRoom(){const name=(this.state.name||'').trim();if(!name)return this.fail(T('Nhập tên trước khi tạo phòng.','Enter your name before creating a room.'));
+    this.isHost=true;this.conns={};const code=genCode();
+    this.H={code,net:this.state.net,phase:'lobby',timer:90,seats:{},players:{[this.state.pid]:{name,online:true}},host:this.state.pid,week:0,teams:{},ab:{},offers:[],oid:0,ally:null,last:null,nextReady:{},bc:0};
+    this.setState({status:T('Đang mở phòng…','Opening room…')});
+    if(this.state.net==='local')this.openLocalHost(code);else this.openPeerHost(code);}
+  openLocalHost(code){try{this.ch=new BroadcastChannel(PFX+code);}catch(e){return this.fail(T('Trình duyệt không hỗ trợ chế độ nhiều tab.','This browser does not support multi-tab mode.'));}
+    this.ch.onmessage=e=>{const m=e.data;if(m&&m.to==='host')this.onHostMsg(m,null);};this.broadcast();}
+  openPeerHost(code){if(!window.Peer)return this.fail(T('Không tải được thư viện kết nối. Kiểm tra Internet hoặc chọn “Thử nhiều tab”.','Could not load the connection library. Check your Internet or choose “Multi-tab test”.'));
+    const p=new window.Peer(PFX+code);this.peer=p;
+    p.on('open',()=>this.broadcast());
+    p.on('connection',c=>{c.on('data',m=>this.onHostMsg(m,c));c.on('close',()=>{const pid=Object.keys(this.conns).find(k=>this.conns[k]===c);if(pid&&this.H.players[pid]){this.H.players[pid].online=false;delete this.conns[pid];this.checkProgress();this.broadcast();}});});
+    p.on('error',e=>{if(e.type==='unavailable-id'){p.destroy();this.H.code=genCode();this.openPeerHost(this.H.code);}else this.fail(T('Lỗi kết nối: ','Connection error: ')+e.type);});}
+  joinRoom(){const name=(this.state.name||'').trim(),code=(this.state.joinCode||'').trim();if(!name)return this.fail(T('Nhập tên trước khi vào phòng.','Enter your name before joining.'));if(code.length<5)return this.fail(T('Mã phòng gồm 5 ký tự.','Room codes have 5 characters.'));
+    this.isHost=false;const pid=this.state.pid;this.setState({status:T('Đang kết nối tới phòng ','Connecting to room ')+code+'…'});
+    if(this.state.net==='local'){try{this.ch=new BroadcastChannel(PFX+code);}catch(e){return this.fail(T('Trình duyệt không hỗ trợ chế độ nhiều tab.','This browser does not support multi-tab mode.'));}
+      this.ch.onmessage=e=>{const m=e.data;if(m&&m.to===pid)this.onClientMsg(m);};
+      this.ch.postMessage({t:'hello',pid,name,to:'host'});
+      setTimeout(()=>{if(!this.state.view)this.fail(T('Không tìm thấy phòng '+code+' trên máy này. Phòng phải được tạo ở chế độ “Thử nhiều tab”.','Room '+code+' not found on this device. It must be created in “Multi-tab test” mode.'));},2500);return;}
+    if(!window.Peer)return this.fail(T('Không tải được thư viện kết nối. Kiểm tra Internet.','Could not load the connection library. Check your Internet.'));
+    const p=new window.Peer();this.peer=p;
+    p.on('open',()=>{const c=p.connect(PFX+code,{reliable:true});this.conn=c;
+      c.on('open',()=>c.send({t:'hello',pid,name}));c.on('data',m=>this.onClientMsg(m));
+      c.on('close',()=>this.fail(T('Mất kết nối với chủ phòng.','Lost connection to the host.')));});
+    p.on('error',e=>this.fail(e.type==='peer-unavailable'?T('Không tìm thấy phòng ','Room not found: ')+code:T('Lỗi kết nối: ','Connection error: ')+e.type));}
+  send(m){if(this.ch)this.ch.postMessage(Object.assign({},m,{to:'host'}));else if(this.conn&&this.conn.open)this.conn.send(m);}
+  act(a){if(this.isHost)this.hostAct(this.state.pid,a);else this.send({t:'act',pid:this.state.pid,a});}
+  onClientMsg(m){if(m.t==='view')this.setState({view:m.v,recvAt:Date.now(),status:'',err:this.state.err&&this.state.view?this.state.err:''});}
+  onHostMsg(m,c){const H=this.H;if(m.t==='hello'){H.players[m.pid]=Object.assign(H.players[m.pid]||{},{name:String(m.name||'Khách').slice(0,24),online:true});if(c)this.conns[m.pid]=c;this.broadcast();}
+    else if(m.t==='act')this.hostAct(m.pid,m.a||{});}
+  broadcast(){const H=this.H;if(!H)return;H.bc=Date.now();
+    Object.keys(H.players).forEach(pid=>{const p=H.players[pid];if(!p.online)return;const v=this.viewFor(pid);
+      if(pid===this.state.pid)this.setState({view:v,recvAt:Date.now(),status:''});
+      else if(this.ch)this.ch.postMessage({t:'view',to:pid,v});
+      else{const c=this.conns[pid];if(c&&c.open)c.send({t:'view',v});}});}
+  // ---------- host game logic ----------
+  seatOf(pid){const H=this.H;return Object.keys(H.seats).find(k=>H.seats[k]===pid)||null;}
+  hostTick(){const H=this.H;if(!H)return;if(H.phase==='choose'&&Date.now()>H.deadline){this.resolve();this.broadcast();return;}if(Date.now()-H.bc>5000)this.broadcast();}
+  startGame(){const H=this.H;const seed=Math.floor(Math.random()*1e9),rnd=mkRnd(seed);H.rnd=rnd;
+    H.D=MENUS.map(()=>LOCS.map(()=>0.4+Math.pow(rnd(),1.6)*3));H.W=[0,1,2,3,4].map(()=>LOCS.map(()=>0.8+rnd()*0.45));
+    const pool=EVENTS.map((_,i)=>i);H.EV=[];for(let w=0;w<5;w++){if(w===0&&rnd()<0.5){H.EV.push(-1);continue;}H.EV.push(pool.splice(Math.floor(rnd()*pool.length),1)[0]);}
+    H.EV.forEach((e,w)=>{if(e<0)return;const fx=EVENTS[e].loc;for(const l in fx)H.W[w][l]=Math.min(1.8,H.W[w][l]*fx[l]);});
+    H.AI=RIVALS.map((r,k)=>{const m=Math.floor(rnd()*MENUS.length);let best=0;for(let l=1;l<8;l++)if(H.D[m][l]>H.D[m][best])best=l;const home=Math.floor(rnd()*8),s2=(home+1+Math.floor(rnd()*7))%8;
+      return {k,m,best,home,s2,total:0,weeks:[]};});
+    H.teams={};H.ab={};['ps','rx'].forEach(t=>{const seats=SEATS.filter(s=>s.team===t),filled=seats.filter(s=>H.seats[s.id]);if(!filled.length)return;
+      seats.forEach(s=>{if(H.seats[s.id])H.ab[s.id]=(H.ab[s.id]||[]).concat(s.ab);else H.ab[filled[0].id]=(H.ab[filled[0].id]||[]).concat(s.ab);});
+      H.teams[t]={id:t,total:0,wallet:4,allyN:0,tips:[],known:{},choice:{method:'pole',menu:0},votes:{},ready:{},scoutUsed:0,spy:0,items:{},hot:null,weeks:[]};});
+    H.week=0;H.offers=[];H.ally=null;H.last=null;H.aiLast=[];this.beginWeek();}
+  beginWeek(){const H=this.H;H.phase='choose';H.deadline=Date.now()+H.timer*1000;H.ally=null;H.offers=[];H.nextReady={};
+    Object.values(H.teams).forEach(T=>{T.votes={};T.ready={};T.scoutUsed=0;T.spy=0;T.items={};});}
+  bestAt(l){const D=this.H.D;let b=0;for(let m=1;m<4;m++)if(D[m][l]>D[b][l])b=m;return b;}
+  landSeat(t){const H=this.H;return Object.keys(H.ab).find(s=>seatDef(s).team===t&&H.ab[s].includes('land'));}
+  hasAb(pid,ab){const s=this.seatOf(pid);return !!(s&&(this.H.ab[s]||[]).includes(ab));}
+  addTip(T,m,l){const s=stars(this.H.D[m][l]);T.known[l]=T.known[l]||{};T.known[l][m]=s;if(!T.tips.some(x=>x.m===m&&x.l===l))T.tips.push({m,l,s});}
+  hostAct(pid,a){const H=this.H;if(!H||!H.players[pid])return;const seat=this.seatOf(pid),team=seat?seatDef(seat).team:null,T=team?H.teams[team]:null,other=team==='ps'?'rx':'ps',O=H.teams[other];const isHost=pid===H.host;
+    switch(a.k){
+      case 'seat':if(H.phase!=='lobby')break;if(a.seat&&H.seats[a.seat]&&H.seats[a.seat]!==pid)break;if(seat)delete H.seats[seat];if(a.seat&&a.seat!==seat)H.seats[a.seat]=pid;break;
+      case 'timer':if(isHost&&H.phase==='lobby')H.timer=a.v;break;
+      case 'start':if(isHost&&H.phase==='lobby'&&Object.keys(H.seats).length)this.startGame();break;
+      case 'vote':if(H.phase==='choose'&&T){T.votes[seat]=a.loc;}break;
+      case 'method':if(H.phase==='choose'&&T&&this.hasAb(pid,'method'))T.choice.method=a.v;break;
+      case 'menu':if(H.phase==='choose'&&T&&this.hasAb(pid,'menu'))T.choice.menu=a.v;break;
+      case 'scout':if(H.phase==='choose'&&T&&this.hasAb(pid,'scout')&&T.scoutUsed<1&&T.wallet>=0.8-1e-9){T.scoutUsed++;T.wallet=r1(T.wallet-0.8);T.total=r1(T.total-0.8);this.addTip(T,this.bestAt(a.loc),a.loc);}break;
+      case 'buy':{if(H.phase!=='choose'||!T||!this.hasAb(pid,'shop'))break;const it=SHOP.find(x=>x[0]===a.v);if(!it||T.wallet<it[3]-1e-9)break;if(a.v!=='spy'&&T.items[a.v])break;T.wallet=r1(T.wallet-it[3]);T.total=r1(T.total-it[3]);T.items[a.v]=true;break;}
+      case 'ready':if(H.phase==='choose'&&T){T.ready[seat]=!T.ready[seat];this.checkProgress();}break;
+      case 'ally':if(H.phase!=='choose'||!T||!O||!this.hasAb(pid,'ally'))break;if(!H.ally){if(T.allyN>=2||O.allyN>=2)break;H.ally={from:team,state:'proposed'};}else if(H.ally.state==='proposed'&&H.ally.from!==team){H.ally.state='active';T.allyN++;O.allyN++;}else if(H.ally.state==='proposed'&&H.ally.from===team)H.ally=null;break;
+      case 'sell':{if(H.phase!=='choose'||!T||!O||!this.hasAb(pid,'trade'))break;const tip=T.tips[a.i];if(!tip)break;const ex=H.offers.find(o=>o.from===team&&o.tip.m===tip.m&&o.tip.l===tip.l&&o.state==='open');if(ex){ex.state='off';break;}H.offers.push({id:++H.oid,from:team,tip,price:0.3,state:'open'});break;}
+      case 'buyTip':{if(H.phase!=='choose'||!T||!O||!this.hasAb(pid,'trade'))break;const o=H.offers.find(x=>x.id===a.id&&x.state==='open'&&x.from!==team);if(!o||T.wallet<o.price-1e-9)break;T.wallet=r1(T.wallet-o.price);T.total=r1(T.total-o.price);O.wallet=r1(O.wallet+o.price);O.total=r1(O.total+o.price);this.addTip(T,o.tip.m,o.tip.l);o.state='sold';break;}
+      case 'next':if(H.phase==='reveal'&&seat){H.nextReady[pid]=true;this.checkProgress();}break;
+      case 'force':if(!isHost)break;if(H.phase==='choose')this.resolve();else if(H.phase==='reveal')this.advance();break;
+      case 'again':if(isHost&&H.phase==='end'){H.phase='lobby';H.week=0;}break;
+    }
+    this.broadcast();}
+  activeSeated(){const H=this.H;return Object.keys(H.seats).filter(s=>H.teams[seatDef(s).team]&&H.players[H.seats[s]]&&H.players[H.seats[s]].online);}
+  checkProgress(){const H=this.H;const act=this.activeSeated();if(!act.length)return;
+    if(H.phase==='choose'&&act.every(s=>H.teams[seatDef(s).team].ready[s]))this.resolve();
+    else if(H.phase==='reveal'&&act.every(s=>H.nextReady[H.seats[s]]))this.advance();}
+  calc(w,m,l,method,n,items){const H=this.H,Wv=H.W[w][l];let f=1,spoil=false;
+    if(m===0&&Wv>1.1)f*=1.15;if(m===1&&!items.ins&&H.rnd()<0.3){f*=0.88;spoil=true;}if(m===2){f*=1.18;if(Wv>1.1)f*=0.9;}
+    const e=H.EV[w];if(e>=0&&EVENTS[e].menu[m])f*=EVENTS[e].menu[m];
+    f*=METHODS.find(x=>x[0]===method)[4];f*=share(n);if(items.ads)f*=1.2;f*=0.92+H.rnd()*0.16;
+    return {rev:r1(H.D[m][l]*Wv*f),spoil};}
+  resolve(){const H=this.H,w=H.week,rnd=H.rnd;if(H.phase!=='choose')return;
+    const sellers=[];
+    Object.values(H.teams).forEach(T=>{const ls=this.landSeat(T.id);let l=ls!=null?T.votes[ls]:undefined;
+      if(l==null){const cnt={};Object.values(T.votes).forEach(x=>cnt[x]=(cnt[x]||0)+1);const ks=Object.keys(cnt);l=ks.length?+ks.sort((a,b)=>cnt[b]-cnt[a])[0]:Math.floor(rnd()*8);}
+      let method=T.choice.method;if(method==='boat'&&T.wallet<1.5-1e-9)method='pole';sellers.push({team:T.id,l,m:T.choice.menu,method,items:T.items,down:method!==T.choice.method});});
+    H.AI.forEach((a,k)=>{let l,method='boat';if(k===0){if(w<2){l=Math.floor(rnd()*8);method='pole';}else l=a.best;}else if(k===1)l=a.home;else l=w%2?a.s2:a.home;sellers.push({ai:k,l,m:a.m,method,items:{}});});
+    const cnt={};sellers.forEach(s=>{if(s.method!=='survey')cnt[s.l]=(cnt[s.l]||0)+1;});
+    const allyOn=H.ally&&H.ally.state==='active';
+    sellers.forEach(s=>{let n=cnt[s.l]||1;if(s.method==='survey'){s.rev=0;s.n=0;return;}
+      if(allyOn&&s.team){const p=sellers.find(x=>x.team&&x.team!==s.team);if(p&&p.l===s.l&&p.method!=='survey')n--;}
+      const r=this.calc(w,s.m,s.l,s.method,n,s.items);s.rev=r.rev;s.spoil=r.spoil;s.n=(cnt[s.l]||1)-1;});
+    sellers.forEach(s=>{if(s.team){const T=H.teams[s.team];const cost=METHODS.find(x=>x[0]===s.method)[5],net=r1(s.rev-cost);T.total=r1(T.total+net);T.wallet=r1(T.wallet+net);s.net=net;s.cost=cost;T.weeks[w]={rev:net,gross:s.rev,cost,l:s.l,m:s.m,method:s.method,clash:s.n,spoil:s.spoil};
+        if(s.method==='pole'){this.addTip(T,this.bestAt(s.l),s.l);let l2=Math.floor(rnd()*8);if(l2===s.l)l2=(l2+1)%8;this.addTip(T,this.bestAt(l2),l2);}
+        if(s.method==='survey'){let bm=0,bl=0;for(let m=0;m<4;m++)for(let l=0;l<8;l++)if(H.D[m][l]>H.D[bm][bl]){bm=m;bl=l;}if(rnd()<0.2){bm=(bm+1)%4;bl=(bl+1+Math.floor(rnd()*7))%8;}this.addTip(T,bm,bl);}
+        if((s.method==='survey'||T.items.hot)&&w<4){let b=0;for(let i=1;i<8;i++)if(H.W[w+1][i]>H.W[w+1][b])b=i;T.hot={w:w+1,l:b};}}
+      else{const c=s.method==='boat'?1.5:0,n2=r1(s.rev-c),a0=H.AI[s.ai];a0.total=r1(a0.total+n2);a0.weeks[w]=n2;}});
+    H.last={w,sellers:sellers.map(s=>({team:s.team||null,ai:s.ai!=null?s.ai:null,l:s.l,m:s.m,method:s.method,rev:s.team?s.net:s.rev,gross:s.rev,cost:s.cost||0,down:!!s.down,n:s.n,spoil:!!s.spoil}))};
+    H.aiLast=sellers.filter(s=>s.ai!=null).map(s=>({ai:s.ai,l:s.l}));
+    H.phase='reveal';H.nextReady={};}
+  advance(){const H=this.H;if(H.week>=4){H.phase='end';return;}H.week++;this.beginWeek();}
+  viewFor(pid){const H=this.H,seat=this.seatOf(pid),team=seat?seatDef(seat).team:null,T=team&&H.teams[team],oid=team==='ps'?'rx':'ps',O=team&&H.teams[oid];
+    const allyOn=H.ally&&H.ally.state==='active';
+    const v={code:H.code,net:H.net,phase:H.phase,week:H.week,timer:H.timer,left:H.phase==='choose'?Math.max(0,Math.round((H.deadline-Date.now())/1000)):0,host:H.host,me:pid,seat,team,
+      players:Object.keys(H.players).map(k=>({pid:k,name:H.players[k].name,online:H.players[k].online,seat:this.seatOf(k)})),
+      seats:SEATS.map(s=>({id:s.id,by:H.seats[s.id]?H.players[H.seats[s.id]].name:'',byOnline:H.seats[s.id]?H.players[H.seats[s.id]].online:false,ab:H.phase==='lobby'?s.ab:(H.ab[s.id]||[]),ready:!!(H.teams[s.team]&&H.teams[s.team].ready[s.id]),next:!!(H.seats[s.id]&&H.nextReady[H.seats[s.id]])})),
+      active:Object.keys(H.teams),ev:H.EV&&H.EV[H.week]>=0?Object.assign({i:H.EV[H.week]},EVENTS[H.EV[H.week]]):null,ally:H.ally,aiLast:H.aiLast||[],last:H.last,
+      board:[].concat(Object.values(H.teams).map(x=>({team:x.id,total:x.total,weeks:x.weeks.map(y=>y?y.rev:0)})),(H.AI||[]).map(a=>({ai:a.k,total:a.total,weeks:a.weeks}))),
+      nextN:Object.keys(H.nextReady).length,activeN:this.activeSeated().length};
+    if(T)v.my={allyN:T.allyN,wallet:T.wallet,tips:T.tips,known:T.known,choice:T.choice,votes:T.votes,ready:T.ready,scoutUsed:T.scoutUsed,spy:T.spy,items:T.items,hot:T.hot,total:T.total,weeks:T.weeks};
+    if(O){const os=SEATS.filter(s=>s.team===oid&&H.seats[s.id]);v.other={id:oid,readyN:os.filter(s=>O.ready[s.id]).length,seatN:os.length};
+      if(allyOn){const ls=this.landSeat(oid);v.other.loc=ls!=null&&O.votes[ls]!=null?O.votes[ls]:null;}
+      v.offers=H.offers.filter(o=>o.state==='open').map(o=>({id:o.id,mine:o.from===team,l:o.tip.l,m:o.from===team?o.tip.m:null,price:o.price}));}
+    if(H.phase==='end'){const DM=H.D,WW=H.W;let best=0;for(let w=0;w<5;w++){let b=0;for(let m=0;m<4;m++)for(let l=0;l<8;l++)b=Math.max(b,DM[m][l]*WW[w][l]*3);best+=b-3;}v.best=r1(best);}
+    return v;}
+  // ---------- view ----------
+  copy(txt,label){const done=()=>{this.setState({copied:label});setTimeout(()=>this.setState({copied:''}),2000);};
+    try{navigator.clipboard.writeText(txt).then(done,()=>{window.prompt(T('Sao chép:','Copy:'),txt);});}catch(e){window.prompt(T('Sao chép:','Copy:'),txt);}}
+  renderVals(){
+    const st=this.state,v=st.view,isHost=!!this.isHost;EN=!!st.en;
+    const LC=EN?LOCS_E:LOCS,MN=EN?MENUS_E:MENUS,MT=EN?METHODS_E:METHODS,SH=EN?SHOP_E:SHOP,ABX=EN?AB_E:AB,roleOf=s=>EN?ROLE_E[s.id]:s.role,tName=t=>EN?TEAM_E[t]:TEAMDEF[t].name;
+    const tx={};Object.keys(TX).forEach(k=>tx[k]=TX[k][EN?1:0]);
+    const out={embedded:!!this.props.onBack,standalone:!this.props.onBack,goBack:()=>{try{this.peer&&this.peer.destroy();}catch(e){}try{this.ch&&this.ch.close();}catch(e){}this.props.onBack&&this.props.onBack();},tx,langLabel:EN?'Tiếng Việt':'English',toggleLang:()=>{const en=!st.en;try{localStorage.setItem('bizon-lang',en?'en':'vi');}catch(e){}document.documentElement.lang=en?'en':'vi';this.setState({en});window.dispatchEvent(new Event('bps-lang'));},klass:st.klass||'',onKlass:e=>{const k=e.target.value.toUpperCase().slice(0,12);try{localStorage.setItem('bps4-class',k);}catch(x){}this.setState({klass:k});},err:st.err,hasErr:!!st.err,clearErr:()=>this.setState({err:''}),status:st.status,isHost,notHost:!isHost,
+      isHome:!v,isLobby:!!v&&v.phase==='lobby',inGame:!!v&&v.phase!=='lobby',isPlay:!!v&&v.phase==='choose',isReveal:!!v&&v.phase==='reveal',isEnd:!!v&&v.phase==='end'};
+    out.name=st.name;out.onName=e=>{const n=e.target.value.slice(0,24);try{localStorage.setItem('bps4-name',n);}catch(x){}this.setState({name:n});};
+    out.joinCode=st.joinCode;out.onCode=e=>this.setState({joinCode:e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,5)});
+    out.nets=[['online',T('🌐 Qua mạng','🌐 Online'),T('Mỗi người một máy, cần Internet','One device each, needs Internet')],['local',T('🗂️ Thử nhiều tab','🗂️ Multi-tab test'),T('Mở nhiều tab trên cùng máy để chạy thử','Open several tabs on one device to try it')]].map(([k,n,d])=>({name:n,desc:d,bg:st.net===k?'#fff4dc':'#fff',bd:st.net===k?'#fda127':'rgba(3,51,55,.1)',onClick:()=>this.setState({net:k})}));
+    out.create=()=>this.createRoom();out.join=()=>this.joinRoom();
+    if(!v)return out;
+    const me=v.me,mySeat=v.seat?seatDef(v.seat):null,myTeam=v.team,my=v.my,teamName=t=>TEAMDEF[t].icon+' '+tName(t);
+    const entName=s=>s.team?teamName(s.team):RIVALS[s.ai][0],entImg=s=>s.team?TEAMDEF[s.team].img:RIVALS[s.ai][1],entColor=s=>s.team?TEAMDEF[s.team].color:RIVALS[s.ai][2];
+    out.code=v.code;out.netLabel=v.net==='local'?T('Thử nhiều tab','Multi-tab test'):T('Qua mạng','Online');out.copyLabel=st.copied==='code'?T('Đã sao chép','Copied'):T('Sao chép mã','Copy code');out.copyCode=()=>this.copy(v.code,'code');
+    // lobby
+    out.teamCols=['ps','rx'].map(t=>{const ss=SEATS.filter(s=>s.team===t);return {name:tName(t),icon:TEAMDEF[t].icon,color:TEAMDEF[t].color,count:v.seats.filter(x=>seatDef(x.id).team===t&&x.by).length+'/'+ss.length+T(' ghế',' seats'),
+      seats:ss.map(s=>{const vs=v.seats.find(x=>x.id===s.id),mine=v.seat===s.id,taken=!!vs.by;return {name:s.name,role:roleOf(s),img:s.img,abs:s.ab.map(a=>ABX[a]),imgOp:taken&&!mine?.55:1,
+        bg:mine?'#fff4dc':'#fff',bd:mine?'#fda127':taken?'rgba(3,51,55,.2)':'rgba(3,51,55,.08)',tag:mine?T('✓ Ghế của bạn (bấm để rời)','✓ Your seat (tap to leave)'):taken?'🔒 '+vs.by:T('Chọn ghế này','Take this seat'),tagColor:mine?'#e8762d':taken?'#7a8a8a':'#006687',
+        onClick:()=>this.act({k:'seat',seat:mine?null:s.id})};})};});
+    out.playerCount=v.players.length;out.playerNames=v.players.map(p=>p.name+(p.pid===v.host?T(' (chủ phòng)',' (host)'):'')+(p.seat?' · '+seatDef(p.seat).name:T(' · chưa chọn ghế',' · no seat'))+(p.online?'':T(' · mất kết nối',' · offline'))).join(' — ');
+    out.timerOpts=[60,90,120].map(s=>({label:s+'s',bg:v.timer===s?'#fda127':'transparent',onClick:()=>this.act({k:'timer',v:s})}));
+    const nSeat=v.seats.filter(x=>x.by).length;out.startBg=nSeat?'#fda127':'#d9e4e2';out.startLabel=nSeat?T('⛵ Bắt đầu mùa buôn','⛵ Start the season'):T('Cần ít nhất 1 ghế','Need at least 1 seat');out.start=()=>this.act({k:'start'});
+    // game common
+    const tl=Math.max(0,v.left-Math.floor((Date.now()-st.recvAt)/1000));
+    out.timerTxt=v.phase==='choose'?tl+'s':'—';out.timerBg=v.phase==='choose'&&tl<=10?'#ff8a7a':'#fda127';
+    out.meImg=mySeat?mySeat.img:'assets/character/rivals/ba-le.png';out.meName=mySeat?mySeat.name:T('Khán giả','Spectator');out.meRole=mySeat?roleOf(mySeat):T('đang xem','watching');
+    out.teamLabel=myTeam?teamName(myTeam):T('Không thuộc đội','No team');out.teamColor=myTeam?TEAMDEF[myTeam].color:'#888';
+    out.wallet=my?f1(my.wallet)+T(' tr',' m'):'—';
+    out.weekPills=[0,1,2,3,4].map(i=>({label:T('T','W')+(i+1),bg:i===v.week?'#fda127':i<v.week||v.phase==='end'?'rgba(255,255,255,.22)':'rgba(255,255,255,.08)',fg:i===v.week?'#033337':'#fff'}));
+    out.hasEv=!!v.ev;out.evIcon=v.ev?v.ev.icon:'';out.evName=v.ev?(EN?EV_E[v.ev.i][0]:v.ev.name):'';out.evDesc=v.ev?(EN?EV_E[v.ev.i][1]:v.ev.desc):'';
+    const myAb=mySeat?(v.seats.find(x=>x.id===v.seat).ab||[]):[];const has=a=>myAb.includes(a)&&!!my;
+    out.seated=!!mySeat&&!!my;out.isSpectator=!mySeat||!my;
+    if(my){
+      const lsId=SEATS.filter(s=>s.team===myTeam).map(s=>s.id).find(id=>(v.seats.find(x=>x.id===id).ab||[]).includes('land'));
+      const finalL=lsId!=null?my.votes[lsId]:undefined;
+      out.finalLoc=finalL!=null?LC[finalL][0]+' '+LC[finalL][1]:T('chưa chọn','not chosen');
+      out.mapHint=has('land')?T('Bấm một bến để chốt.','Tap a landing to decide.'):T('Bấm một bến để bỏ phiếu cho đội.','Tap a landing to vote for your team.');
+      out.landings=LC.map((L,i)=>{const voters=Object.keys(my.votes).filter(s=>my.votes[s]===i).map(s=>({img:seatDef(s).img,name:seatDef(s).name,color:s===lsId?'#fda127':'#ffffff'}));
+        const kn=my.known[i]||{};const known=Object.keys(kn).map(m=>MN[m][0]+'★'+kn[m]).join(' ');const isFinal=finalL===i,isHot=my.hot&&my.hot.w===v.week&&my.hot.l===i,allyHere=v.other&&v.other.loc===i;
+        return {icon:L[0],name:L[1],aud:L[2],known,voters,ai:v.aiLast.filter(a=>a.l===i).map(a=>({img:RIVALS[a.ai][1],name:RIVALS[a.ai][0]})),
+          bg:isFinal?'#fff4dc':'#ffffff',bd:isFinal?'#fda127':allyHere?'#006687':'transparent',
+          tag:isFinal?T('Đội chốt','Team pick'):allyHere?T('Đồng minh','Ally'):isHot?T('Đông nhất','Busiest'):'',tagBg:isFinal?'#e8762d':allyHere?'#006687':'#3f8a44',tagOp:isFinal||allyHere||isHot?1:0,
+          onClick:()=>this.act({k:'vote',loc:i})};});
+      out.hasMethod=has('method');out.methods=MT.map(m=>{const on=my.choice.method===m[0],short=my.wallet<m[5]-1e-9;return {icon:m[1],name:m[2]+(short?T(' · không đủ quỹ',' · not enough funds'):''),desc:short?T('Cần '+f1(m[5])+' tr · quỹ còn '+f1(my.wallet)+' tr. Chốt vẫn sẽ bị đổi sang cách rẻ hơn.','Needs '+f1(m[5])+' m · funds left '+f1(my.wallet)+' m. It will be switched to a cheaper method.'):m[3],bg:short?'#fdeceb':on?'#fff4dc':'#fff',bd:short&&on?'#c0392b':on?'#fda127':'rgba(3,51,55,.1)',onClick:()=>this.act({k:'method',v:m[0]})};});
+      out.hasMenu=has('menu');out.menus=MN.map((m,i)=>{const on=my.choice.menu===i;return {icon:m[0],name:m[1],desc:m[2],bg:on?'#fff4dc':'#fff',bd:on?'#fda127':'rgba(3,51,55,.1)',onClick:()=>this.act({k:'menu',v:i})};});
+      out.hasLand=has('land');
+      const sLeft=my.wallet>=0.8-1e-9?1-my.scoutUsed:0;out.hasScout=has('scout');const mc=(MT.find(x=>x[0]===my.choice.method)||[])[5]||0,risk=sLeft>0&&my.wallet-0.8<mc-1e-9;out.scoutLeft=T('Còn '+Math.max(0,sLeft)+' lượt',Math.max(0,sLeft)+' left')+(risk?T(' · soi xong quỹ không đủ cho '+MT.find(x=>x[0]===my.choice.method)[2],' · after scouting, funds won’t cover '+MT.find(x=>x[0]===my.choice.method)[2]):'');
+      out.scoutBtns=LC.map((L,i)=>({icon:L[0],name:T('Soi ','Scout ')+LC[i][1],bg:my.known[i]&&Object.keys(my.known[i]).length>=4?'#d8f0d2':'#eef4f3',op:sLeft>0?1:.45,onClick:()=>{if(sLeft>0)this.act({k:'scout',loc:i});}}));
+      out.hasShop=has('shop');out.shop=SH.map(s=>{const owned=my.items[s[0]],can=my.wallet>=s[3]-1e-9&&!owned,mc2=(MT.find(x=>x[0]===my.choice.method)||[])[5]||0,risk=can&&my.wallet-s[3]<mc2-1e-9;return {icon:s[1],name:s[2]+(owned?' ✓':''),desc:s[4]+(risk?T(' · mua xong quỹ không đủ cho cách bán đã chọn',' · buying this leaves too little for your chosen method'):''),price:f1(s[3])+T(' tr',' m'),bg:owned?'#d8f0d2':'#fff',bd:owned?'#3f8a44':'rgba(3,51,55,.1)',op:can||owned?1:.5,onClick:()=>{if(can)this.act({k:'buy',v:s[0]});}};});
+      const hasO=!!v.other;out.hasOther=hasO;
+      out.hasAlly=has('ally')&&hasO;const al=v.ally;
+      out.allyStatus=!al?(my.allyN>=2?T('Đội đã dùng hết 2 lượt liên minh.','Your team has used both alliance weeks.'):T('Chưa có đề nghị. Còn '+(2-my.allyN)+' lượt.','No proposal yet. '+(2-my.allyN)+' left.')):al.state==='active'?T('✅ Đang liên minh với ','✅ Allied with ')+teamName(v.other.id):al.from===myTeam?T('Đã gửi đề nghị, chờ '+teamName(v.other.id)+' trả lời.','Proposal sent, waiting for '+teamName(v.other.id)+'.'):teamName(al.from)+T(' đề nghị liên minh tuần này.',' proposes an alliance this week.');
+      out.allyLabel=!al?T('Đề nghị liên minh','Propose alliance'):al.state==='active'?T('Đang liên minh','Allied'):al.from===myTeam?T('Rút đề nghị','Withdraw'):T('Chấp nhận liên minh','Accept alliance');out.allyBg=al&&al.state==='active'?'#d8f0d2':'#fda127';
+      out.allyAct=()=>{if(!al||al.state==='proposed')this.act({k:'ally'});};
+      out.hasTrade=has('trade')&&hasO;const offers=v.offers||[];
+      out.offersIn=offers.filter(o=>!o.mine).map(o=>({label:teamName(v.other.id)+T(' rao bán tin về ',' offers intel on ')+LC[o.l][0]+' '+LC[o.l][1],price:f1(o.price)+T(' tr',' m'),onClick:()=>this.act({k:'buyTip',id:o.id})}));
+      out.sellList=my.tips.map((t,i)=>{const on=offers.some(o=>o.mine&&o.l===t.l&&o.m===t.m);return {label:MN[t.m][0]+' '+MN[t.m][1]+T(' ở ',' at ')+LC[t.l][1]+': ★'+t.s,btn:on?T('Đang rao · gỡ','On offer · remove'):T('Rao bán 0,3','Offer for 0.3'),bg:on?'#fff4dc':'#ffffff',onClick:()=>this.act({k:'sell',i})};});
+      out.noTrade=!out.offersIn.length&&!out.sellList.length;
+      out.tips=my.tips.map(t=>MN[t.m][0]+' '+MN[t.m][1]+' · '+LC[t.l][1]+' ★'+t.s).concat(my.hot&&my.hot.w===v.week?[T('🗺️ Bến đông nhất tuần này: ','🗺️ Busiest landing this week: ')+LC[my.hot.l][1]]:[]);out.noTips=!out.tips.length;
+      const rd=!!my.ready[v.seat];out.readyLabel=rd?T('✓ Đã chốt · bấm để sửa','✓ Locked · tap to edit'):T('Chốt phần việc của tôi','Lock in my part');out.readyBg=rd?'#3f8a44':'#fda127';out.readyFg=rd?'#ffffff':'#033337';out.toggleReady=()=>this.act({k:'ready'});
+      out.teamStatus=SEATS.filter(s=>s.team===myTeam).map(s=>{const vs=v.seats.find(x=>x.id===s.id);const ab=vs.ab||[];const bits=[];
+        if(ab.includes('method'))bits.push(MT.find(m=>m[0]===my.choice.method)[1]+' '+MT.find(m=>m[0]===my.choice.method)[2]);
+        if(ab.includes('menu'))bits.push(MN[my.choice.menu][0]+' '+MN[my.choice.menu][1]);
+        if(my.votes[s.id]!=null)bits.push('📍 '+LC[my.votes[s.id]][1]);
+        return {img:s.img,name:s.name,who:vs.by||(ab.length?'':T('(vai chuyển cho đồng đội)','(role passed to a teammate)')),op:vs.by?1:.4,doing:vs.by?(bits.join(' · ')||ab.map(a=>ABX[a]).join(', ')):T('Vai đã giao cho đồng đội','Role handed to a teammate'),mark:!vs.by?'—':vs.ready?'✅':vs.byOnline?'⏳':'📴'};});
+      out.otherStatus=hasO?teamName(v.other.id)+': '+v.other.readyN+'/'+v.other.seatN+T(' đã chốt. Lựa chọn của họ được giữ kín đến lúc công bố.',' locked in. Their choices stay hidden until the reveal.'):'';
+    }
+    out.force=()=>this.act({k:'force'});
+    out.viewOpts=[['3d','🧊 3D'],['2d',T('🗺️ Thẻ bến','🗺️ Cards')]].map(([k,l])=>({label:l,bg:(k==='2d')===!!st.v2d?'#fda127':'transparent',onClick:()=>this.setState({v2d:k==='2d'})}));out.show3d=st.v2d||st.fail3d?'none':'block';out.mapRef=this.mapRef;
+    if(my){const lsF=SEATS.filter(s=>s.team===myTeam).map(s=>s.id).find(id=>(v.seats.find(x=>x.id===id).ab||[]).includes('land'));const fl=lsF!=null?my.votes[lsF]:null;if(fl!==this.lastFl){this.lastFl=fl;if(window.BPS3D)setTimeout(()=>window.BPS3D.ev('bps-pick',{g:'loc',i:fl}),0);}}
+    // reveal
+    if(v.last){const L=v.last;out.revWeek=L.w+1;
+      const mine=L.sellers.find(s=>s.team===myTeam);
+      out.revHead=mine?(mine.method==='survey'?T('Đội khảo sát chợ (−0,3 tr)','Your team surveyed the market (−0.3 m)'):(mine.rev>=0?'+':'')+f1(mine.rev)+T(' tr lãi ở ',' m profit at ')+LC[mine.l][1]):T('Kết quả tuần ','Week results ')+(L.w+1);
+      out.revSub=mine?(mine.down?T('Quỹ không đủ nên đội phải đổi sang cách bán rẻ hơn. ','Not enough funds, so the team switched to a cheaper method. '):'')+(mine.method==='survey'?T('Không bán, nhận gợi ý cặp món–bến tốt nhất và bến đông tuần sau.','No sales; a hint on the best product–landing pair and next week’s busiest landing.'):T('Doanh thu '+f1(mine.gross)+' − chi phí '+f1(mine.cost)+' tr. ','Revenue '+f1(mine.gross)+' − cost '+f1(mine.cost)+' m. ')+(mine.n>0?T('Chung bến với '+mine.n+' ghe khác, khách bị chia.','Shared the landing with '+mine.n+' other boat(s); customers split.'):T('Một mình một bến.','You had the landing to yourself.'))+(mine.spoil?T(' Chè bị hao hụt.',' Sweet soup spoiled.'):'')):'';
+      const groups={};L.sellers.forEach(s=>{(groups[s.l]=groups[s.l]||[]).push(s);});
+      const top=L.sellers.slice().sort((a,b)=>b.rev-a.rev)[0];const WIN=['assets/character/rivals/ba-le-win.png','assets/character/rivals/chu-sau-win.png','assets/character/rivals/co-bay-win.png'];const LINES=EN?['“See? Pick the busy landing and you win!”','“Regulars all round, the old landing sells steady.”','“Thank you all for supporting Sen Hồng!”']:['“Thấy chưa, chọn bến đông là ăn chắc!”','“Khách quen cả, bến cũ vẫn bán đều.”','“Cảm ơn bà con ủng hộ Sen Hồng nghen!”'];
+      out.topImg=top.team?(top.team==='ps'?'assets/character/phu-sa/tu-huong-ganh.png':'assets/character/team/minh-long-cut.webp'):WIN[top.ai];out.topName=entName(top)+' · '+(top.rev>=0?'+':'')+f1(top.rev)+T(' tr',' m');
+      out.topLine=top.team?(top.team===myTeam?T('Đội bạn dẫn đầu tuần này ở '+LC[top.l][1]+'.','Your team led this week at '+LC[top.l][1]+'.'):T('Đội bạn kia dẫn đầu ở '+LC[top.l][1]+'.','The other team led at '+LC[top.l][1]+'.')):LINES[top.ai]+' · '+LC[top.l][1];
+      out.revGroups=Object.keys(groups).map(l=>{const g=groups[l],sellN=g.filter(s=>s.method!=='survey').length;return {icon:LC[l][0],name:LC[l][1],clash:sellN>1?'⚔️ '+sellN+T(' ghe chia khách',' boats split customers'):sellN===1?T('Một mình','Alone'):T('Chỉ khảo sát','Survey only'),clashColor:sellN>1?'#c0392b':'#3f8a44',
+        sellers:g.map(s=>{const me2=s.team&&s.team===myTeam;const M=MT.find(x=>x[0]===s.method);return {img:entImg(s),name:entName(s),what:M[1]+' '+M[2]+' · '+MN[s.m][0]+' '+MN[s.m][1],rev:s.method==='survey'?(s.team?'−0,5':'—'):(s.rev>=0?'+':'')+f1(s.rev),bg:me2?'#fff4dc':'#f4faf6',bd:me2?'#fda127':'transparent'};})};});}
+    const bd=v.board.slice().sort((a,b)=>b.total-a.total),top=Math.max(1,...bd.map(b=>b.total));
+    out.board=bd.map((b,i)=>({rank:i+1,name:entName(b),total:f1(b.total)+T(' tr',' m'),w:Math.max(3,b.total/top*100)+'%',color:entColor(b)}));
+    const nr=mySeat?!!v.seats.find(x=>x.id===v.seat).next:false;out.nextLabel=(nr?T('✓ Đã sẵn sàng','✓ Ready'):v.week>=4?T('Xem kết quả mùa','See season results'):T('Sẵn sàng tuần ','Ready for week ')+(v.week+2))+' ('+v.nextN+'/'+v.activeN+')';out.nextBg=nr?'#d8f0d2':'#fda127';out.nextWeek=()=>this.act({k:'next'});
+    // end
+    const medals=['🥇','🥈','🥉'];const myRank=bd.findIndex(b=>b.team===myTeam);
+    out.endHead=myTeam&&myRank>=0?teamName(myTeam)+T(' hạng ',' rank ')+(myRank+1)+'/'+bd.length:T('Bảng tổng kết','Final standings');
+    out.endSub=my?T('Lợi nhuận cả mùa: ','Season profit: ')+f1(my.total)+T(' tr',' m')+(v.best?T(' · hiệu suất ',' · efficiency ')+Math.min(100,Math.round(my.total/v.best*100))+'%':''):'';out.endMedal=myRank>=0?(medals[myRank]||'⛵'):'⛵';
+    out.endRows=bd.map((b,i)=>({medal:medals[i]||String(i+1),name:entName(b),weeks:[0,1,2,3,4].map(w=>b.weeks[w]!=null?f1(b.weeks[w]):'—'),total:f1(b.total),bg:b.team&&b.team===myTeam?'#fff4dc':i%2?'#fff':'#f4faf6'}));
+    out.copyResLabel=st.copied==='res'?T('Đã sao chép, dán gửi giáo viên','Copied, paste it to your teacher'):T('Gửi giáo viên','Send to teacher');
+    out.copyResult=()=>{if(!my)return;const eff=v.best?Math.min(100,Math.round(my.total/v.best*100)):0;const code='BPS-'+Math.abs(Math.round(my.total*1000)^(eff*7919)).toString(36).toUpperCase().padStart(5,'0');
+      const cl=(st.klass||'').replace(/\|/g,'');this.copy(['Bến Phù Sa · Chơi nhóm','Học sinh: '+st.name+(cl?' · lớp '+cl:'')+' ('+(mySeat?mySeat.name+' – '+mySeat.role:'')+')','Đội: '+TEAMDEF[myTeam].name+' · phòng '+v.code,'Lợi nhuận đội: '+f1(my.total)+' tr · hạng '+(myRank+1)+'/'+bd.length,'#BPS|'+st.name.replace(/\|/g,'/')+'|'+cl+'|team|'+r1(my.total)+'|'+(myRank+1)+'|'+eff+'|'+code+'|'+new Date().toISOString().slice(0,10)+'||'+TEAMDEF[myTeam].name+'|'+(mySeat?mySeat.name+' – '+mySeat.role:'')+'|'+v.code+'|'+bd.length].join('\n'),'res');};
+    out.again=()=>this.act({k:'again'});
+    return out;
+  }
+}
+</script>
+</body>
+</html>
