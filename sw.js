@@ -103,6 +103,8 @@ const SHELL = [
   './js/bizon-clay-i18n.js',
   './js/bizon-clay-nav.js',
   './js/bizon-clay-footer.js',
+  './js/music-data.js',
+  './js/am-nhac-clay.js',
   './js/thu-vien-data.js',
   './js/thu-vien-clay.js',
   './js/quiz-bank.js',
