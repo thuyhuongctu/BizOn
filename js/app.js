@@ -670,6 +670,7 @@ const HUONG_CUES = [
 ];
 let huongAudio = null;
 function playHuongIntro() {
+  if (!voiceEnabled) return;   // giọng Lumina đang tắt (xem voiceEnabled)
   if (!huongAudio) {
     huongAudio = new Audio('assets/audio/huong-intro.mp3');
     huongAudio.addEventListener('timeupdate', () => {
@@ -802,7 +803,7 @@ function maybeShowEventIntro() {
 
 // ---------- Màn hình Chúc mừng chiến thắng (TOP 1 MARKET) ----------
 function showVictory(r) {
-  playClip('assets/audio/lumina-victory.mp3');
+  if (voiceEnabled) playClip('assets/audio/lumina-victory.mp3');   // giọng Lumina đang tắt
   const growth = (() => {
     const prev = S.history[S.history.length - 2];
     return prev ? (r.share - prev.share).toFixed(1) : r.share.toFixed(1);
@@ -1605,7 +1606,7 @@ function explainRound(r) {
 
 function showRoundResult(r) {
   const ok = r.netProfit > 0;
-  playClip('assets/audio/lumina-round-result.mp3');
+  if (voiceEnabled) playClip('assets/audio/lumina-round-result.mp3');   // giọng Lumina đang tắt
   const cq = (S.conquest || [])[r.round - 1];
   const cqStop = CONQUEST_STOPS[r.round - 1];
   const cqLine = cq && cqStop ? (cq.win

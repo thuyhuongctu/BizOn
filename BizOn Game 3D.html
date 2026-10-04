@@ -1038,7 +1038,7 @@ function resultLine(r) {
   return `Vòng này lỗ ${np}. Đừng nản, mở báo cáo P&L xem khoản chi nào vượt.`;
 }
 function result3D(r) {
-  const s = ev('S'), ok = r.netProfit > 0; ev("playClip('assets/audio/lumina-round-result.mp3')");
+  const s = ev('S'), ok = r.netProfit > 0; /* giọng Lumina đã tắt */
   const cq = (s.conquest || [])[r.round - 1], st = STOPS[r.round - 1];
   const cqLine = cq && st ? (cq.win ? `<p class="d" style="color:#3f8a44;font-weight:700">🚩 Đội bạn cắm cờ tại ${st.name}!</p>`
     : cq.hasTopShare ? `<p class="d" style="color:#b8741a;font-weight:700">⚠️ Thị phần cao nhất nhưng vòng này lỗ nên chưa cắm được cờ – ${st.name} tạm về tay ${cq.winner}.</p>`
@@ -1071,7 +1071,7 @@ function result3D(r) {
 // ================= TỔNG KẾT MÙA GIẢI 3D =================
 let FIN = null; window.__finale3D = () => finale3D(); window.__ev = ev;
 function finale3D() {
-  const s = ev('S'); if (!s) return; ev("try{playClip('assets/audio/lumina-victory.mp3')}catch(e){}");
+  const s = ev('S'); if (!s) return; /* giọng Lumina đã tắt */
   const cq = s.conquest || [], mine = cq.filter(c => c.win).length, H = s.history || [], last = H[H.length - 1] || {};
   const profit = H.reduce((a, h) => a + (+h.netProfit || 0), 0), cnt = {}; cq.forEach(c => { const k = c.win ? 'star' : (KEY_OF[c.winner] || 'wolf'); cnt[k] = (cnt[k] || 0) + 1; });
   const rank = ORDER.map(k => ({ k, n: cnt[k] || 0, sh: k === 'star' ? +last.share || 0 : ((s.competitors || []).find(c => KEY_OF[c.name] === k) || {}).share || 0 })).sort((a, b) => b.n - a.n || b.sh - a.sh);
@@ -1097,7 +1097,7 @@ function finale3D() {
   evc.querySelector('#fnNew').onclick = () => { closeEvent(); if (FIN) { scene.remove(FIN); FIN = null; } for (let i = actors.length - 1; i >= 0; i--) if (actors[i].fin) actors.splice(i, 1); ev('resetGame()'); };
 }
 function victory3D(r) {
-  const s = ev('S'); ev("playClip('assets/audio/lumina-victory.mp3')");
+  const s = ev('S'); /* giọng Lumina đã tắt */
   const prev = s.history[s.history.length - 2], growth = prev ? (r.share - prev.share).toFixed(1) : (+r.share).toFixed(1), sat = Math.min(5, s.brandLoyalty / 19).toFixed(1);
   MOOD.kind = 'win'; MOOD.until = performance.now() + 60000; flyLumina(); window.__EVON = true; confetti3D(actors.find(a => a.o.userData.cid === 'lumina').o.position, 240);
   showPanel(`<span class="tag">🎊 CHÚC MỪNG CHIẾN THẮNG · TOP 1 MARKET</span><h2>Thị phần đạt đỉnh mới!</h2>
