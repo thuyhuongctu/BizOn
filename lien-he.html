@@ -1,133 +1,134 @@
 <!DOCTYPE html>
-<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
+<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & PGS.TS. Phan Anh Tú -->
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Liên hệ &amp; Hợp tác – BizOn Bật Nghiệp</title>
-<meta name="description" content="Liên hệ nhóm BizOn: hợp tác giảng dạy, nghiên cứu với DOI trích dẫn được, hoặc cộng tác sáng tạo âm nhạc và nghệ thuật claymorphism.">
-<meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
+<title>Liên hệ & Hợp tác · BizOn Bật Nghiệp</title>
+<meta name="description" content="Kết nối với nhóm BizOn – góp ý về trò chơi, hợp tác giảng dạy và nghiên cứu, cộng tác sáng tạo.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & PGS.TS. Phan Anh Tú">
 <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
-<script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
-<script src="js/backend-config.js"></script>
-<script src="js/error-log.js"></script>
-<!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
-     nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
-<link rel="stylesheet" href="css/bizon-fonts.css">
+<link rel="stylesheet" href="css/bizon-clay-fonts.css">
+<link rel="stylesheet" href="css/bizon-clay.css">
 <style>
-  html { background:#f4faff; scroll-behavior:smooth; }
-  body { font-family:'Manrope', 'Manrope Fallback',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
-  .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
-  .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease; }
-  .clay-btn:active { transform:translateY(2px); }
-  .clay-sunken { background:#e8f2f8; box-shadow:inset 3px 3px 8px rgba(0,102,135,.12), inset -3px -3px 8px rgba(255,255,255,.9); }
-  .glass-nav { background:rgba(3,51,55,.78); backdrop-filter:blur(14px); }
-  .art-card { transition:transform .2s cubic-bezier(.34,1.56,.64,1); }
-  .art-card:hover { transform:translateY(-5px) scale(1.02); }
-  .field { width:100%; border-radius:16px; padding:12px 16px; font-size:14px; background:#e8f2f8; color:inherit; border:none; outline:none; box-shadow:inset 3px 3px 8px rgba(0,102,135,.12), inset -3px -3px 8px rgba(255,255,255,.9); }
-  .field:focus { box-shadow:inset 3px 3px 8px rgba(0,102,135,.2), 0 0 0 2px rgba(0,102,135,.35); }
-  :root { --dt: 3 51 55; }
-  html[data-theme="dark"] { --dt: 214 236 240; background:#081a20; color-scheme:dark; }
-  html[data-theme="dark"] body { color:#d6ecf0; }
-  html[data-theme="dark"] .clay-card { background:#0e2a33; box-shadow:0 10px 30px -5px rgba(0,0,0,.45), inset 0 -4px 0 rgba(0,0,0,.3); }
-  html[data-theme="dark"] .clay-sunken, html[data-theme="dark"] .field { background:#0a222a; box-shadow:inset 3px 3px 8px rgba(0,0,0,.5), inset -3px -3px 8px rgba(255,255,255,.03); }
-  html[data-theme="dark"] .glass-nav { background:rgba(2,20,24,.85); }
-  html[data-theme="dark"] .text-primary { color:#5cc4e6 !important; }
+  /* Bố cục riêng trang Liên hệ */
+  .lh-hero{position:relative;overflow:hidden;margin:28px 0 48px;border-radius:40px;background:var(--clay-cream-deep);box-shadow:inset 0 -10px 0 rgba(140,80,20,.1),inset 0 6px 0 rgba(255,255,255,.7),0 30px 44px -30px rgba(110,70,30,.6)}
+  .lh-hero .sun{position:absolute;right:-8%;top:-34%;width:min(520px,60%);aspect-ratio:1;border-radius:50%;background:repeating-radial-gradient(circle,#FFD58A 0 16px,#FDBE5A 16px 19px);box-shadow:inset 0 -16px 0 rgba(200,110,20,.2);opacity:.85;pointer-events:none}
+  .lh-hero .grid{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end;padding:clamp(24px,4vw,44px) clamp(20px,4vw,44px) 0}
+  .lh-hero h1{margin:18px 0 0;font-size:clamp(40px,5.4vw,68px);text-wrap:balance}
+  .lh-hero .art{width:min(30vw,280px);aspect-ratio:1/1;position:relative;margin-bottom:26px}
+  .lh-hero .art img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 18px 14px rgba(110,70,30,.35));animation:clayFloat 6s ease-in-out infinite}
+  .lh-hero .wave{position:relative;z-index:3;height:44px;margin-top:-44px;background:radial-gradient(circle at 36px 0,transparent 35px,var(--clay-teal-2) 36px) 0 0/72px 36px repeat-x,linear-gradient(var(--clay-teal-2),var(--clay-teal-2)) 0 36px/100% 100% no-repeat}
+  .lh-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:22px;margin-bottom:72px;align-items:start}
+  .lh-form .row{display:flex;flex-direction:column;gap:16px}
+  .lh-ch{display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;align-items:center;padding:14px;border-radius:20px;background:var(--clay-tray);color:var(--clay-ink);box-shadow:inset 0 -4px 0 rgba(110,70,30,.12)}
+  .lh-ch:hover{color:var(--clay-ink);transform:translateX(4px)}
+  .lh-ch .sw{width:44px;height:44px;border-radius:14px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.12),inset 0 3px 0 rgba(255,255,255,.5)}
+  .lh-seek{padding:26px 30px;border-radius:32px;background:var(--clay-c4);box-shadow:inset 0 -9px 0 rgba(0,0,0,.07),inset 0 5px 0 rgba(255,255,255,.5),0 26px 36px -24px rgba(30,90,60,.5)}
+  @media (max-width:560px){ .lh-hero .grid{grid-template-columns:1fr} .lh-hero .art{display:none} }
 </style>
-<link rel="stylesheet" href="css/tw.css">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="BizOn Bật Nghiệp">
-<meta property="og:locale" content="vi_VN">
-<meta property="og:title" content="Liên hệ &amp; Hợp tác – BizOn Bật Nghiệp">
-<meta property="og:description" content="Liên hệ nhóm BizOn: hợp tác giảng dạy, nghiên cứu với DOI trích dẫn được, hoặc cộng tác sáng tạo âm nhạc và nghệ thuật claymorphism.">
-<meta property="og:url" content="https://thuyhuongctu.github.io/BizOn/lien-he.html">
-<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/og/og-cover.webp">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
+<meta property="og:title" content="Liên hệ & Hợp tác · BizOn Bật Nghiệp">
+<meta property="og:description" content="Kết nối với nhóm BizOn – góp ý, hợp tác giảng dạy & nghiên cứu, cộng tác sáng tạo.">
 <meta name="twitter:card" content="summary_large_image">
 </head>
-<body>
+<body class="clay">
 
-
-<!-- HERO -->
-<header class="pt-24 pb-10 text-white" data-net-hero style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%);position:relative;overflow:hidden">
-  <div class="max-w-5xl mx-auto px-5 grid sm:grid-cols-[1fr_auto] gap-6 items-center">
-    <div>
-      <p class="text-[11px] font-extrabold uppercase tracking-[.2em] text-clay-gold">Liên hệ &amp; Hợp tác</p>
-      <h1 class="font-display font-extrabold text-3xl sm:text-4xl mt-2">Kết nối với nhóm BizOn</h1>
-      <p class="text-white/75 text-sm mt-3 max-w-2xl">Chúng tôi luôn sẵn sàng lắng nghe – từ góp ý về trò chơi, đề xuất hợp tác giảng dạy, đến những ý tưởng sáng tạo mới.</p>
-    </div>
-    <img src="assets/character/anh-tu-ao-dai-work-cut.webp" alt="Tú Phan tại bàn làm việc" class="h-44 sm:h-56 w-auto mx-auto drop-shadow-2xl hidden sm:block">
-  </div>
-</header>
-
-<main class="max-w-5xl mx-auto px-5 py-10">
-
-  <section class="grid lg:grid-cols-2 gap-6 mb-14">
-
-    <!-- FORM -->
-    <div class="clay-card p-6 sm:p-8">
-      <h2 class="font-display font-extrabold text-deep-teal text-xl">✍️ Gửi lời nhắn</h2>
-      <p class="text-xs text-deep-teal/50 mt-1.5 mb-5">Bấm «Soạn email» sẽ mở ứng dụng thư của bạn với nội dung điền sẵn – trang web không thu thập hay lưu trữ thông tin nào.</p>
-      <div class="space-y-4">
-        <div><label class="text-xs font-extrabold text-deep-teal/70 block mb-1.5" for="ct-name">Họ và tên</label><input id="ct-name" class="field" type="text" placeholder="Nguyễn Văn A"></div>
-        <div><label class="text-xs font-extrabold text-deep-teal/70 block mb-1.5" for="ct-topic">Chủ đề</label>
-          <select id="ct-topic" class="field">
-            <option>Hợp tác giảng dạy</option>
-            <option>Hợp tác nghiên cứu</option>
-            <option>Cộng tác sáng tạo (âm nhạc / nghệ thuật)</option>
-            <option>Góp ý về trò chơi</option>
-            <option>Khác</option>
-          </select>
-        </div>
-        <div><label class="text-xs font-extrabold text-deep-teal/70 block mb-1.5" for="ct-msg">Nội dung</label><textarea id="ct-msg" class="field" rows="5" placeholder="Chia sẻ ý tưởng hoặc câu hỏi của bạn..."></textarea></div>
-        <button onclick="ctSend()" class="clay-btn bg-primary text-white font-display font-extrabold w-full py-3.5 text-sm">📨 Soạn email</button>
+<main class="clay-main">
+  <section class="lh-hero">
+    <div class="sun" aria-hidden="true"></div>
+    <div class="grid">
+      <div style="padding-bottom:clamp(28px,5vw,64px)">
+        <span class="clay-eyebrow" data-en="Contact & Partnerships">Liên hệ &amp; Hợp tác</span>
+        <h1 data-en="Get in touch with the BizOn team">Kết nối với nhóm BizOn</h1>
+        <p style="margin:18px 0 0;max-width:34em;font-size:17px;line-height:1.65;color:var(--clay-sub);text-wrap:pretty" data-en="We are always glad to hear from you – from feedback on the games and teaching partnerships to new creative ideas.">Chúng tôi luôn sẵn sàng lắng nghe – từ góp ý về trò chơi, đề xuất hợp tác giảng dạy, đến những ý tưởng sáng tạo mới.</p>
       </div>
+      <div class="art"><img src="assets/character/anh-tu-ao-dai-work-cut.webp" alt="" loading="lazy"></div>
     </div>
-
-    <!-- KÊNH CHÍNH THỨC -->
-    <div class="space-y-4">
-      <div class="clay-card p-6">
-        <h2 class="font-display font-extrabold text-deep-teal text-xl mb-4">📡 Kênh chính thức</h2>
-        <div class="space-y-3">
-          <a href="mailto:patu@ctu.edu.vn,thuyhuongctu@gmail.com" class="clay-sunken rounded-2xl p-4 flex items-center gap-3 block"><span class="text-2xl">✉️</span><span><b class="text-sm text-deep-teal block">Email</b><span class="text-xs text-deep-teal/60 block">patu@ctu.edu.vn</span><span class="text-xs text-deep-teal/60 block">thuyhuongctu@gmail.com</span></span></a>
-          <a href="https://github.com/thuyhuongctu/BizOn" target="_blank" rel="noopener" class="clay-sunken rounded-2xl p-4 flex items-center gap-3 block"><span class="text-2xl">🧑‍💻</span><span><b class="text-sm text-deep-teal block">GitHub</b><span class="text-xs text-deep-teal/60">github.com/thuyhuongctu/BizOn</span></span></a>
-          <a href="https://doi.org/10.5281/zenodo.21592241" target="_blank" rel="noopener" class="clay-sunken rounded-2xl p-4 flex items-center gap-3 block"><span class="text-2xl">📦</span><span><b class="text-sm text-deep-teal block">Zenodo (trích dẫn học thuật)</b><span class="text-xs text-deep-teal/60">DOI 10.5281/zenodo.21592241</span></span></a>
-          <a href="https://thuyhuongctu.github.io/BizOn/" class="clay-sunken rounded-2xl p-4 flex items-center gap-3 block"><span class="text-2xl">🌐</span><span><b class="text-sm text-deep-teal block">Ứng dụng web</b><span class="text-xs text-deep-teal/60">thuyhuongctu.github.io/BizOn</span></span></a>
-        </div>
-      </div>
-      <div class="clay-card p-6">
-        <h3 class="font-display font-extrabold text-deep-teal text-base mb-3">🤝 Nhóm đang tìm kiếm</h3>
-        <ul class="text-sm text-deep-teal/65 space-y-2">
-          <li>🏫 <b class="text-deep-teal">Giảng viên &amp; nhà trường</b> – dùng BizOn miễn phí trong lớp và chia sẻ phản hồi thực tế.</li>
-          <li>🔬 <b class="text-deep-teal">Nhà nghiên cứu</b> – trích dẫn qua DOI, hoặc cùng phát triển mô hình mô phỏng.</li>
-          <li>🎨 <b class="text-deep-teal">Đối tác sáng tạo</b> – âm nhạc, tạo hình đất nặn và bản địa hóa đa ngôn ngữ.</li>
-        </ul>
-        <a href="tuyen-dung.html" class="text-xs font-extrabold text-primary mt-4 inline-block">Xem các vị trí cộng tác →</a>
-      </div>
-    </div>
-
+    <div class="wave" aria-hidden="true"></div>
   </section>
 
-</main>
-<script>
-function ctSend() {
-  const name = document.getElementById('ct-name').value.trim();
-  const topic = document.getElementById('ct-topic').value;
-  const msg = document.getElementById('ct-msg').value.trim();
-  const subject = encodeURIComponent('[BizOn] ' + topic + (name ? ' – ' + name : ''));
-  const body = encodeURIComponent((msg || '') + (name ? '\n\n– ' + name : ''));
-  location.href = 'mailto:patu@ctu.edu.vn,thuyhuongctu@gmail.com?subject=' + subject + '&body=' + body;
-}
-</script>
-<script src="js/site-nethero.js" defer></script>
-<script src="js/site-ui.js" defer></script>
-<script src="js/site-vnmap.js" defer></script>
+  <section class="lh-cols">
+    <!-- Biểu mẫu liên hệ -->
+    <div class="clay-card lh-form">
+      <h2 style="font-size:28px" data-en="Send a message">Gửi lời nhắn</h2>
+      <p style="margin:6px 0 20px;font-size:13px;line-height:1.55;color:var(--clay-sub)" data-en="«Compose email» opens your mail app with the message pre-filled – this site does not collect or store any information.">Bấm «Soạn email» sẽ mở ứng dụng thư của bạn với nội dung điền sẵn – trang web không thu thập hay lưu trữ thông tin nào.</p>
+      <form class="row" id="lh-form" novalidate>
+        <label class="clay-label"><span data-en="Full name">Họ và tên</span>
+          <input class="clay-field" id="lh-name" type="text" placeholder="Nguyễn Văn A" data-en-ph="Jane Doe" autocomplete="name">
+        </label>
+        <label class="clay-label"><span data-en="Topic">Chủ đề</span>
+          <select class="clay-field" id="lh-topic">
+            <option data-en="Teaching partnership">Hợp tác giảng dạy</option>
+            <option data-en="Research partnership">Hợp tác nghiên cứu</option>
+            <option data-en="Creative collaboration (music / art)">Cộng tác sáng tạo (âm nhạc / nghệ thuật)</option>
+            <option data-en="Feedback on the games">Góp ý về trò chơi</option>
+            <option data-en="Other">Khác</option>
+          </select>
+        </label>
+        <label class="clay-label"><span data-en="Message">Nội dung</span>
+          <textarea class="clay-field" id="lh-msg" rows="5" placeholder="Chia sẻ ý tưởng hoặc câu hỏi của bạn..." data-en-ph="Share your idea or question..."></textarea>
+        </label>
+        <button class="clay-btn" type="submit" data-en="Compose email">Soạn email</button>
+      </form>
+    </div>
 
-<p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2" style="color:rgba(100,116,125,.85)">✉️ Liên hệ · Contact: <a href="mailto:patu@ctu.edu.vn" style="color:inherit;text-decoration:underline">patu@ctu.edu.vn</a> · <a href="mailto:thuyhuongctu@gmail.com" style="color:inherit;text-decoration:underline">thuyhuongctu@gmail.com</a></p>
-<p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2 pb-6" style="color:rgba(100,116,125,.75)">🎓 Trang web chỉ phục vụ mục đích giáo dục và nghiên cứu, không đại diện cho bất kỳ tổ chức chính trị nào. Hình ảnh quốc kỳ, bản đồ chỉ mang ý nghĩa minh họa văn hóa – giáo dục. · This website serves educational and research purposes only and does not represent any political organization.</p>
-<script src="js/site-dock.js" defer></script>
-<script src="js/site-footer.js" defer></script>
-<script src="js/site-nav.js" defer></script>
+    <!-- Kênh + Tuyển -->
+    <div style="display:flex;flex-direction:column;gap:22px">
+      <div class="clay-card">
+        <h2 style="font-size:28px;margin-bottom:16px" data-en="Official channels">Kênh chính thức</h2>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <a class="lh-ch" href="mailto:patu@ctu.edu.vn,thuyhuongctu@gmail.com">
+            <span class="sw" style="background:var(--clay-c1)"></span>
+            <span style="display:flex;flex-direction:column;min-width:0"><strong style="font-size:15px">Email</strong><span style="font-size:13px;color:var(--clay-sub);overflow-wrap:anywhere">patu@ctu.edu.vn · thuyhuongctu@gmail.com</span></span>
+          </a>
+          <a class="lh-ch" href="https://github.com/thuyhuongctu/BizOn" target="_blank" rel="noopener">
+            <span class="sw" style="background:var(--clay-c2)"></span>
+            <span style="display:flex;flex-direction:column;min-width:0"><strong style="font-size:15px">GitHub</strong><span style="font-size:13px;color:var(--clay-sub);overflow-wrap:anywhere">github.com/thuyhuongctu/BizOn</span></span>
+          </a>
+          <a class="lh-ch" href="https://doi.org/10.5281/zenodo.21592241" target="_blank" rel="noopener">
+            <span class="sw" style="background:var(--clay-c3)"></span>
+            <span style="display:flex;flex-direction:column;min-width:0"><strong style="font-size:15px" data-en="Zenodo (academic citation)">Zenodo (trích dẫn học thuật)</strong><span style="font-size:13px;color:var(--clay-sub);overflow-wrap:anywhere">DOI 10.5281/zenodo.21592241</span></span>
+          </a>
+          <a class="lh-ch" href="https://thuyhuongctu.github.io/BizOn/" target="_blank" rel="noopener">
+            <span class="sw" style="background:var(--clay-c4)"></span>
+            <span style="display:flex;flex-direction:column;min-width:0"><strong style="font-size:15px" data-en="Web app">Ứng dụng web</strong><span style="font-size:13px;color:var(--clay-sub);overflow-wrap:anywhere">thuyhuongctu.github.io/BizOn</span></span>
+          </a>
+        </div>
+      </div>
+
+      <div class="lh-seek">
+        <h3 style="font-size:22px;margin-bottom:12px" data-en="We are looking for">Nhóm đang tìm kiếm</h3>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="font-size:14px;line-height:1.55;color:#123B2E"><strong style="color:var(--clay-ink)" data-en="Instructors & universities">Giảng viên &amp; nhà trường</strong> <span data-en="– use BizOn free in class and share real-world feedback.">– dùng BizOn miễn phí trong lớp và chia sẻ phản hồi thực tế.</span></div>
+          <div style="font-size:14px;line-height:1.55;color:#123B2E"><strong style="color:var(--clay-ink)" data-en="Researchers">Nhà nghiên cứu</strong> <span data-en="– cite via DOI, or co-develop the simulation models.">– trích dẫn qua DOI, hoặc cùng phát triển mô hình mô phỏng.</span></div>
+          <div style="font-size:14px;line-height:1.55;color:#123B2E"><strong style="color:var(--clay-ink)" data-en="Creative partners">Đối tác sáng tạo</strong> <span data-en="– music, clay modelling and multilingual localisation.">– âm nhạc, tạo hình đất nặn và bản địa hóa đa ngôn ngữ.</span></div>
+        </div>
+        <a href="tuyen-dung.html" style="display:inline-flex;margin-top:14px;padding:9px 14px;border-radius:999px;background:var(--clay-card);color:var(--clay-ink);font-size:13px;font-weight:800;box-shadow:inset 0 -3px 0 rgba(0,0,0,.08)" data-en="See collaboration roles →">Xem các vị trí cộng tác →</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+/* Biểu mẫu → soạn email (mailto), không thu thập dữ liệu */
+(function(){
+  var f = document.getElementById('lh-form'); if(!f) return;
+  f.addEventListener('submit', function(e){
+    e.preventDefault();
+    var n = (document.getElementById('lh-name').value || '').trim();
+    var sel = document.getElementById('lh-topic');
+    var tp = (sel.options[sel.selectedIndex] && sel.options[sel.selectedIndex].textContent) || '';
+    var m = (document.getElementById('lh-msg').value || '').trim();
+    var subject = '[BizOn] ' + tp + (n ? ' – ' + n : '');
+    var body = m + (n ? '\n\n– ' + n : '');
+    location.href = 'mailto:patu@ctu.edu.vn,thuyhuongctu@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  });
+})();
+</script>
+<script src="js/site-vnmap.js" defer></script>
+<script src="js/bizon-clay-i18n.js" defer></script>
+<script src="js/bizon-clay-nav.js" defer></script>
+<script src="js/bizon-clay-footer.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,65 @@
+/* ============================================================================
+   BizOn Clay — thanh điều hướng đất sét (pill-nav) dùng chung cho trang đất sét.
+   Bơm #clay-nav vào đầu <body>. Nút VI/EN nối với js/bizon-clay-i18n.js.
+   Nạp SAU bizon-clay-i18n.js. CSS ở css/bizon-clay.css.
+   ========================================================================== */
+(function(){
+  if(window.__bizonClayNav) return; window.__bizonClayNav = true;
+  window.BIZON_NO_NAV = true; /* chặn site-nav.js cũ nếu vô tình được nạp */
+
+  var LINKS = [
+    { href:'games.html',          vi:'Trò chơi',      en:'Games' },
+    { href:'brand-passport.html', vi:'Brand Passport',en:'Brand Passport' },
+    { href:'truong-hoc-thuat.html', vi:'Học thuật',   en:'Academic' },
+    { href:'bang-chung.html',     vi:'Bằng chứng',    en:'Evidence' },
+    { href:'giai-phap.html',      vi:'Pilot',         en:'Pilot' },
+    { href:'doi-ngu.html',        vi:'Đội ngũ',       en:'About' }
+  ];
+  var CTA = { href:'game.html', vi:'Bắt đầu', en:'Launch' };
+
+  var here = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]; }); }
+
+  function linksHtml(){
+    return LINKS.map(function(l){
+      var cur = l.href.toLowerCase() === here ? ' aria-current="page"' : '';
+      return '<a href="'+l.href+'"'+cur+' data-en="'+esc(l.en)+'">'+esc(l.vi)+'</a>';
+    }).join('');
+  }
+
+  var nav = document.createElement('nav');
+  nav.id = 'clay-nav';
+  nav.setAttribute('aria-label', 'BizOn');
+  nav.innerHTML =
+    '<div class="cn-bar">'
+    + '<a class="cn-brand" href="index.html" aria-label="BizOn">Biz<span class="cn-o"></span>n</a>'
+    + '<div class="cn-links">' + linksHtml() + '</div>'
+    + '<div class="cn-right">'
+      + '<div class="cn-lang" role="group" aria-label="Ngôn ngữ / Language">'
+        + '<button type="button" data-lang="vi" aria-pressed="true">VI</button>'
+        + '<button type="button" data-lang="en" aria-pressed="false">EN</button>'
+      + '</div>'
+      + '<a class="cn-cta" href="'+CTA.href+'" data-en="'+esc(CTA.en)+'">'+esc(CTA.vi)+'</a>'
+    + '</div>'
+    + '</div>'
+    + '<div class="cn-row2">' + linksHtml() + '</div>';
+
+  document.body.insertBefore(nav, document.body.firstChild);
+
+  /* Nút VI/EN */
+  var btns = nav.querySelectorAll('.cn-lang button');
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){
+      if(window.clayApplyLang) window.clayApplyLang(b.getAttribute('data-lang'));
+    });
+  });
+  function syncLang(lang){
+    btns.forEach(function(b){ b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === lang)); });
+  }
+  window.addEventListener('bizon:langchange', function(e){ syncLang(e.detail && e.detail.lang); });
+
+  /* Dịch nhãn nav vừa bơm theo ngôn ngữ hiện tại */
+  var cur = window.clayCurrentLang ? window.clayCurrentLang() : 'vi';
+  if(window.clayApplyLang) window.clayApplyLang(cur); else syncLang(cur);
+  syncLang(cur);
+})();
