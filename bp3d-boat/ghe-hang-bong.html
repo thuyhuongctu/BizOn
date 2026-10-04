@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ghe hàng bông – Bến Phù Sa 3D</title>
+<script type="importmap">
+{
+  "imports": {
+    "three": "../vendor/three/three.module.js",
+    "three/addons/controls/OrbitControls.js": "../vendor/three/OrbitControls.js",
+    "three/addons/exporters/OBJExporter.js": "https://unpkg.com/three@0.184.0/examples/jsm/exporters/OBJExporter.js",
+    "three/addons/exporters/GLTFExporter.js": "https://unpkg.com/three@0.184.0/examples/jsm/exporters/GLTFExporter.js"
+  },
+  "integrity": {
+    "https://unpkg.com/three@0.184.0/examples/jsm/exporters/OBJExporter.js": "sha384-nbwtoZENJD3Vq+ACK0CuGQdPMuDWHkamC2KJD70EV5nfg6jQjfppKOea07YJN+N3",
+    "https://unpkg.com/three@0.184.0/examples/jsm/exporters/GLTFExporter.js": "sha384-VofkvpG6HERhFCYbsUOHeNXBCqID2nfqkQqnVzE1jc/oPcz+qJ13ADdXH08hE+cQ"
+  }
+}
+</script>
+<style>html{background:#e9d9b4}body{margin:0}html{margin:0}three-d-stage:not(:defined){visibility:hidden}
+body::before{content:"";position:fixed;inset:0;background:linear-gradient(180deg,#f6b77a 0%,#fbd49a 22%,#fde9c2 40%,#e9dcb0 55%,#b9c49a 66%,#8fa47a 100%);z-index:-2}
+#sun{position:fixed;left:72%;top:30%;width:150px;height:150px;margin:-75px 0 0 -75px;border-radius:50%;background:radial-gradient(circle,#fffbe6 0%,#ffe9a8 38%,#ffc768 62%,rgba(255,170,80,0) 72%);box-shadow:0 0 120px 60px rgba(255,190,110,.55),0 0 320px 160px rgba(255,200,140,.35);z-index:-1;pointer-events:none}
+#rays{position:fixed;left:72%;top:30%;width:1800px;height:1800px;margin:-900px 0 0 -900px;background:repeating-conic-gradient(from 0deg,rgba(255,236,190,.22) 0deg 4deg,rgba(255,236,190,0) 4deg 13deg);-webkit-mask:radial-gradient(circle,#000 6%,transparent 55%);mask:radial-gradient(circle,#000 6%,transparent 55%);animation:spin 140s linear infinite;z-index:-1;pointer-events:none}
+#haze{position:fixed;left:0;right:0;top:52%;height:16%;background:linear-gradient(180deg,rgba(255,228,190,0),rgba(255,228,190,.55),rgba(255,228,190,0));z-index:-1;pointer-events:none}
+#glow{position:fixed;inset:0;background:radial-gradient(ellipse at 72% 30%,rgba(255,200,130,.28),rgba(255,200,130,0) 55%);z-index:4;pointer-events:none;mix-blend-mode:soft-light}
+@keyframes spin{to{transform:rotate(360deg)}}</style>
+</head>
+<body>
+<div id="rays"></div><div id="sun"></div>
+<svg id="cau-can-tho" viewBox="0 0 1600 260" preserveAspectRatio="xMidYMax meet" aria-label="Cầu Cần Thơ" style="position:fixed;left:-4%;width:108%;top:calc(57% - 17vw);height:17vw;z-index:-1;pointer-events:none;opacity:.62">
+  <defs>
+    <linearGradient id="bridgeFade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9a8a9a"></stop><stop offset="1" stop-color="#b8a79a"></stop></linearGradient>
+  </defs>
+  <g fill="url(#bridgeFade)" stroke="url(#bridgeFade)">
+    <path d="M0 236 Q300 228 520 214 L1080 214 Q1300 228 1600 236 L1600 240 Q1300 232 1080 219 L520 219 Q300 232 0 240 Z" stroke="none"></path>
+    <g stroke-width="3">
+      <line x1="60" y1
+="236" x2="60" y2="252"></line><line x1="140" y1="234" x2="140" y2="252"></line><line x1="220" y1="231" x2="220" y2="252"></line><line x1="300" y1="228" x2="300" y2="252"></line><line x1="380" y1="224" x2="380" y2="252"></line><line x1="450" y1="219" x2="450" y2="252"></line>
+      <line x1="1150" y1="219" x2="1150" y2="252"></line><line x1="1220" y1="224" x2="1220" y2="252"></line><line x1="1300" y1="228" x2="1300" y2="252"></line><line x1="1380" y1="231" x2="1380" y2="252"></line><line x1="1460" y1="234" x2="1460" y2="252"></line><line x1="1540" y1="236" x2="1540" y2="252"></line>
+    </g>
+    <path d="M548 252 L566 175 L575 70 L580 14 L586 14 L591 70 L600 175 L618 252 L610 252 L594 182 L566 182 L556 252 Z M570 168 L596 168 L590 76 L576 76 Z" fill-rule="evenodd" stroke="none"></path>
+    <path d="M982 252 L1000 175 L1009 70 L1014 14 L1020 14 L1025 70 L1034 175 L1052 252 L1044 252 L1028 182 L1000 182 L990 252 Z M1004 168 L1030 168 L1024 76 L1010 76 Z" fill-rule="evenodd" stroke="none"></path>
+    <g stroke-width=".9" fill="none" opacity=".85">
+      <path d="M583 24 L800 214 M583 32 L775 214 M583 40 L750 214 M583 48 L725 214 M583 56 L700 214 M583 64 L675 214 M583 72 L650 214 M583 80 L628 214"></path>
+      <path d="M583 24 L366 214 M583 32 L391 214 M583 40 L416 214 M583 48 L441 214 M583 56 L466 214 M583 64 L491 214 M583 72 L516 214 M583 80 L538 214"></path>
+      <path d="M1017 24 L800 214 M1017 32 L825 214 M1017 40 L850 214 M1017 48 L875 214 M1017 56 L900 214 M1017 64 L925 214 M1017 72 L950 214 M1017 80 L972 214"></path>
+      <path d="M1017 24 L1234 214 M1017 32 L1209 214 M1017 40 L1184 214 M1017 48 L1159 214 M1017 56 L1134 214 M1017 64 L1109 214 M1017 72 L1084 214 M1017 80 L1062 214"></path>
+    </g>
+  </g>
+  <g fill="#fff3d6" opacity=".9">
+    <circle cx="583" cy="12" r="2.2"></circle><circle cx="1017" cy="12" r="2.2"></circle>
+  </g>
+</svg>
+<div id="haze"></div>
+<three-d-stage name="ghe-hang-bong-ben-phu-sa" background="transparent" autorotate></three-d-stage>
+<div id="cutout" style="position:fixed;inset:0;z-index:3;pointer-events:none">
+  <img src="assets/doi-phu-sa-mat-ghe.png" alt="Thầy Tú và Hương trên ghe" style="position:absolute;right:4vw;bottom:15vh;width:min(30vw,460px,calc(36vh * 1264 / 848));height:auto;filter:drop-shadow(0 14px 14px rgba(40,30,10,.3)) saturate(.95)">
+  <img src="assets/doi-5-nguoi.png" alt="Đội 5 người trên ghe" style="position:absolute;left:1vw;bottom:2vh;width:min(64vw,1000px,calc(64vh * 1376 / 768));height:auto;filter:drop-shadow(0 18px 18px rgba(40,30,10,.35))">
+</div>
+<div id="glow"></div>
+<div style="position:fixed;left:16px;top:16px;display:flex;gap:6px;z-index:5;font:700 13px/1 system-ui,sans-serif;white-space:nowrap">
+  <button id="mode-img" style="padding:9px 14px;border:0;border-radius:99px;cursor:pointer;background:#fda127;color:#033337;font:inherit">Nhân vật ảnh gốc</button>
+  <button id="mode-3d" style="padding:9px 14px;border:0;border-radius:99px;cursor:pointer;background:rgba(3,51,55,.78);color:#fff;font:inherit">Mô hình 3D</button>
+  <button id="song" style="padding:9px 14px;border:0;border-radius:99px;cursor:pointer;background:rgba(3,51,55,.78);color:#fff;font:inherit">Tiếng chim: tắt</button>
+</div>
+<script src="three-d-stage.js"></script>
+<script type="module">
+import { buildBoat } from './model-boat.js';
+import { buildHuong } from './model-huong.js';
+import { buildTu } from './model-tu.js';
+import { buildMarket } from './model-market.js';
+import { mountMusic } from './music.js';
+mountMusic('../assets/audio/golden-silt-journey-ben-phu-sa.mp3');
+import { buildRiverLife } from './model-river.js';
+import { buildSky, birdsong } from './model-sky.js';
+const gingham = (() => {
+  const c = document.createElement('canvas'); c.width = c.height = 64; const x = c.getContext('2d');
+  x.fillStyle = '#f3efe4'; x.fillRect(0, 0, 64, 64);
+  x.fillStyle = 'rgba(30,30,30,.55)'; for (let i = 0; i < 64; i += 16) { x.fillRect(i, 0, 8, 64); x.fillRect(0, i, 64, 8); }
+  x.fillStyle = '#1e1e1e'; for (let i = 0; i < 64; i += 16) for (let j = 0; j < 64; j += 16) x.fillRect(i, j, 8, 8);
+  return c;
+})();
+const stage = document.querySelector('three-d-stage');
+const { THREE } = await stage.ready;
+const mat = (name, color, roughness = 0.7, metalness = 0, extra = {}) =>
+  Object.assign(new THREE.MeshStandardMaterial({ name, color, roughness, metalness }), extra);
+const M = {
+  hull: mat('teak_hull', '#8a5a36', 0.65),
+  trim: mat('dark_teak', '#5e3a22', 0.6),
+  plank: mat('deck_plank', '#a87448', 0.75),
+  wicker: mat('wicker', '#b88a4e', 0.9),
+  bamboo: mat('bamboo', '#d9b56a', 0.55),
+  bambooNode: mat('bamboo_node', '#a8843f', 0.6),
+  mango: mat('mango_yellow', '#f2c230', 0.45),
+  mangoOrange: mat('mango_orange', '#f08a24', 0.45),
+  red: mat('tomato_red', '#d63a2a', 0.35),
+  lime: mat('lime_green', '#9cc93a', 0.5),
+  pineapple: mat('pineapple', '#c99a2e', 0.8),
+  durian: mat('durian', '#8aa23a', 0.85),
+  leaf: mat('leaf', '#3f8a44', 0.7),
+  skin: mat('skin', '#f2c4a0', 0.6),
+  blush: mat('blush', '#ec9a8a', 0.7),
+  eyeDark: mat('eye_dark', '#2a1a14', 0.3),
+  mouth: mat('mouth', '#b6524a', 0.6),
+  eyeWhite: mat('boat_eye_white', '#f5efe2', 0.6),
+  dark: mat('ink', '#1c1a18', 0.6),
+  lavender: mat('lavender_ao_ba_ba', '#b9a2d8', 0.75),
+  pants: mat('black_silk', '#2c2b33', 0.42),
+  pantsFold: mat('black_silk_fold', '#1a1920', 0.55),
+  hyacinthLeaf: mat('luc_binh_leaf', '#3f8a3a', 0.35),
+  hyacinthStem: mat('luc_binh_stem', '#6fae4c', 0.5),
+  hyacinthRoot: mat('luc_binh_root', '#3b3326', 0.9),
+  hyacinthFlower: mat('luc_binh_flower', '#b9a0e0', 0.6),
+  hyacinthFlowerDeep: mat('luc_binh_flower_deep', '#8f72c8', 0.6),
+  hyacinthEye: mat('luc_binh_eye', '#f2c230', 0.5),
+  fishSilver: mat('ca_silver', '#cfd6d2', 0.25, 0.6),
+  fishBack: mat('ca_back', '#4d6b62', 0.4),
+  fishBeak: mat('ca_beak', '#c2483a', 0.5),
+  fishFin: mat('ca_fin', '#a9b7ae', 0.5),
+  ripple: mat('ripple', '#dfe6d4', 0.3),
+  pantsDark: mat('charcoal', '#2b2b30', 0.7),
+  shirtBlue: mat('denim_blue', '#4a6a98', 0.8),
+  scarf: mat('khan_ran_gingham', '#ffffff', 0.85),
+  iris: mat('iris_brown', '#6a3c22', 0.3),
+  brow: mat('brow', '#4a2a1a', 0.6),
+  teeth: mat('teeth', '#fbf7ef', 0.4),
+  button: mat('button', '#efe8f5', 0.4),
+  embroidery: mat('embroidery_violet', '#7a4fb0', 0.6),
+  shirtSeam: mat('denim_seam', '#3a5580', 0.8),
+  hairAuburn: mat('hair_auburn', '#9a4a26', 0.55),
+  hairDark: mat('hair_black', '#2a2420', 0.5),
+  water: mat('river_phu_sa', '#9aa97e', 0.6),
+  hullSide: mat('teak_weathered', '#7a5234', 0.7),
+  nonLa: mat('non_la', '#e8d29a', 0.8),
+  shirtGreen: mat('shirt_green', '#5f9a6a', 0.8),
+  shirtRed: mat('shirt_red', '#c8574a', 0.8),
+  shirtCyan: mat('shirt_cyan', '#5aa6c4', 0.8),
+};
+const model = new THREE.Group(); model.name = 'ben_phu_sa_boat_duo';
+model.add(buildBoat(THREE, M));
+{
+  const tex = new THREE.CanvasTexture(gingham); tex.wrapS = tex.wrapT = THREE.RepeatWrapping; tex.repeat.set(3, 3); tex.colorSpace = THREE.SRGBColorSpace;
+  M.scarf.map = tex;
+}
+const huong = buildHuong(THREE, M), tu = buildTu(THREE, M);
+huong.scale.setScalar(1.3); tu.scale.setScalar(1.3);
+model.add(huong, tu);
+const hero = [model.children[0], huong, tu];
+const tex = new THREE.TextureLoader().load('assets/doi-5-nguoi.png');
+tex.anisotropy = 8; tex.generateMipmaps = false; tex.minFilter = THREE.LinearFilter;
+tex.colorSpace = THREE.SRGBColorSpace;
+const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true, alphaTest: 0.02, toneMapped: false, depthWrite: false }));
+sprite.name = 'doi_phu_sa_cutout'; sprite.center.set(0.5, 0.07);
+sprite.scale.set(6.6, 6.6 * 768 / 1376, 1); sprite.position.set(0, 0.12, 0.2);
+sprite.renderOrder = 10;
+model.add(sprite);
+const setMode = img => {
+  sprite.visible = false; hero.forEach(o => o.visible = !img);
+  if (stage._controls) stage._controls.autoRotate = !img;
+  document.getElementById('cutout').style.display = img ? 'block' : 'none';
+  const on = 'background:#fda127;color:#033337', off = 'background:rgba(3,51,55,.78);color:#fff';
+  document.getElementById('mode-img').style.cssText += img ? on : off;
+  document.getElementById('mode-3d').style.cssText += img ? off : on;
+};
+document.getElementById('mode-img').onclick = () => setMode(true);
+document.getElementById('mode-3d').onclick = () => setMode(false);
+setMode(true);
+const water = new THREE.Mesh(new THREE.CylinderGeometry(40, 40, 0.14, 128), M.water);
+water.name = 'water'; water.position.y = 0.1;
+model.add(buildMarket(THREE, M));
+model.add(buildRiverLife(THREE, M, water.position.y + 0.07)); water.receiveShadow = true;
+model.add(water);
+stage.setObject(model);
+// Bình minh: warm low sun from the right-back, cool sky fill, birds + butterflies, birdsong
+{
+  const sc = stage._scene;
+  sc.traverse(o => { if (o.isHemisphereLight) { o.color.set('#ffe2b8'); o.groundColor.set('#7d8a5e'); o.intensity = 0.85; } });
+  const k = stage._key; k.color.set('#ffb469'); k.intensity = 2.8; k.position.set(6, 3.2, -3.5);
+  const rim = new THREE.DirectionalLight('#ffd08a', 1.1); rim.position.set(3, 2, -6); sc.add(rim);
+  sc.fog = new THREE.Fog('#f6d9ad', 12, 26);
+  const sky = buildSky(THREE); model.add(sky.group);
+  const t0 = performance.now(); const tick = () => { sky.update((performance.now() - t0) / 1000); requestAnimationFrame(tick); }; tick();
+  const song = birdsong(), sb = document.getElementById('song');
+  sb.onclick = () => { const on = song.toggle(); sb.textContent = 'Tiếng chim: ' + (on ? 'bật' : 'tắt'); sb.style.background = on ? '#fda127' : 'rgba(3,51,55,.78)'; sb.style.color = on ? '#033337' : '#fff'; };
+}
+// Frame the duo, with the market around them
+{
+  const c = stage._camera, t = stage._controls, tgt = new THREE.Vector3(0, 1.5, 0.2);
+  const dir = new THREE.Vector3(1, 0.35, 1.25).normalize();
+  const frame = () => {
+    const vf = c.fov * Math.PI / 180, hf = 2 * Math.atan(Math.tan(vf / 2) * c.aspect);
+    const d = Math.max(3.4 / Math.tan(vf / 2), 3.6 / Math.tan(hf / 2));
+    t.target.copy(tgt); c.position.copy(tgt).addScaledVector(dir, d);
+    c.near = 0.05; c.far = 300; c.updateProjectionMatrix(); t.update();
+  };
+  frame();
+  new ResizeObserver(() => requestAnimationFrame(frame)).observe(stage);
+}
+</script>
+</body>
+</html>
