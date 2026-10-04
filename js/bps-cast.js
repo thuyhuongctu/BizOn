@@ -37,7 +37,7 @@
     el.querySelector('.x').onclick = done;
     var ms = Math.max(3500, (EN() ? l[4] : l[3]).length * 65);
     hideT = setTimeout(done, ms);
-    if (!muted) {
+    if (!muted && l[1] !== 'HG') {   // giọng Lumina (HG) đã tắt; vẫn hiện lời thoại
       cur = new Audio(V.base + (EN() ? 'en' : 'vi') + '/' + l[0] + '.mp3');
       cur.onended = function () { clearTimeout(hideT); hideT = setTimeout(done, 900); };
       cur.play().catch(function () {});
