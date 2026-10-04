@@ -76,6 +76,7 @@
         + '<div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:4px">'
         + '<a href="'+esc(play[i])+'" style="padding:13px 22px;border-radius:18px;background:#E8762D;color:#fff;font-family:var(--clay-head);font-size:18px;font-weight:800;box-shadow:inset 0 -6px 0 rgba(0,0,0,.18),inset 0 3px 0 rgba(255,255,255,.3),0 12px 18px -10px rgba(232,118,45,.8)">'+esc(t.play)+'</a>'
         + '<a href="'+esc(d3[i])+'" style="padding:13px 20px;border-radius:18px;background:var(--clay-tray);color:var(--clay-ink);font-family:var(--clay-head);font-size:18px;font-weight:800;box-shadow:inset 0 -5px 0 rgba(110,70,30,.15)">'+esc(t.d3)+'</a>'
+        + (i===0 ? '<a href="'+B+'ben-phu-sa-v8.html" style="padding:13px 20px;border-radius:18px;background:var(--clay-teal);color:#fff;font-family:var(--clay-head);font-size:18px;font-weight:800;box-shadow:inset 0 -5px 0 rgba(0,60,80,.35)">🆕 3D v8</a>' : '')
         + '</div></div></article>';
     }).join(''));
 
