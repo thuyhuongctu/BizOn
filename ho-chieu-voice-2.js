@@ -31,7 +31,7 @@
     ['HC_TP_20', 'Xuất sắc. Bạn mở rộng từng bước, học trước khi cam kết và giữ được tiền mặt. Đó chính là quốc tế hoá bài bản.', 'Excellent. You expanded step by step, learned before committing and protected your cash. That is textbook internationalisation.'],
     ['HC_TP_21', 'Rất tốt. Chiến lược vững, chỉ còn vài quyết định có thể tối ưu hơn. Xem lại quý bạn lỗ nhiều nhất.', 'Very good. A solid strategy, with a few decisions that could be sharper. Review the quarter where you lost the most.'],
     ['HC_TP_22', 'Khá. Bạn đã vào được thị trường, nhưng đôi lúc cam kết vốn trước khi đủ tri thức.', 'Good. You entered markets, but sometimes committed capital before you knew enough.'],
-    ['HC_TP_23', 'Đạt. Hãy xem lại khoảng cách tâm lý và thang cam kết nguồn lực, rồi chơi lại một ván.', 'Pass. Revisit psychic distance and the resource-commitment ladder, then play another round.'],
+    ['HC_TP_23', 'Đạt. Hãy xem lại khoảng cách chênh lệch về trình độ phát triển kinh tế xã hội và thang cam kết nguồn lực, rồi chơi lại một ván.', 'Pass. Revisit psychic distance and the resource-commitment ladder, then play another round.'],
     ['HC_TP_24', 'Chưa đạt lần này. Không sao – doanh nghiệp thật cũng học từ thất bại. Chơi lại và thử đi chậm hơn.', 'Not a pass this time. That’s fine – real companies learn from failure too. Play again and try moving more slowly.'],
     ['HC_BSL_10', 'Con làm tốt lắm. Mùi thảo mộc Vàm Thịnh giờ đã đi khắp nơi rồi.', 'You did so well, my dear. The scent of Vàm Thịnh herbs has travelled everywhere now.'],
     ['HC_NAR_30', 'Hộ chiếu của bạn đã hoàn tất. Cảm ơn bạn đã chơi Hộ Chiếu Thương Hiệu.', 'Your passport is complete. Thank you for playing Brand Passport.'],
