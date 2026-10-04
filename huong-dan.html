@@ -1,257 +1,260 @@
 <!DOCTYPE html>
-<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
-<html lang="vi">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Hướng dẫn chơi · Game Bật Nghiệp — BizOn</title>
-<meta name="description" content="Hướng dẫn chơi game mô phỏng kinh doanh BizOn Bật Nghiệp: bắt đầu ván, nhịp 6 vòng, 5 vai C-suite, quyết định CFO/CEO, mô phỏng Nếu–Thì, chọn độ khó 3 đối thủ AI và cách xếp hạng theo thị phần.">
-<meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
-<meta name="theme-color" content="#033337">
-<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
-<script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
-<script src="js/backend-config.js"></script>
-<script src="js/error-log.js"></script>
-<link rel="stylesheet" href="css/bizon-fonts.css">
-<style>
-  html{background:#f4faff;scroll-behavior:smooth}
-  body{font-family:'Manrope','Manrope Fallback',system-ui,sans-serif;background:transparent;color:#033337;overflow-x:hidden}
-  .clay-card{background:#fff;border-radius:24px;box-shadow:0 10px 30px -5px rgba(0,102,135,.08),inset 0 -4px 0 rgba(0,0,0,.05)}
-  .clay-btn{border-radius:22px;box-shadow:0 8px 20px -6px rgba(0,102,135,.35),inset 0 -4px 0 rgba(0,0,0,.12);transition:transform .12s ease}
-  .clay-btn:active{transform:translateY(2px)}
-  .float-slow{animation:floaty 4s ease-in-out infinite}
-  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-  .step{position:relative;padding-left:56px}
-  .step .num{position:absolute;left:0;top:0;width:40px;height:40px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-family:'Plus Jakarta Sans','Plus Jakarta Sans Fallback',system-ui,sans-serif;font-weight:800;font-size:1.05rem;color:#fff;background:linear-gradient(155deg,#006687,#02444d);box-shadow:0 8px 18px -8px rgba(0,102,135,.6)}
-  .role-row{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;padding:13px 0;border-top:1px solid rgba(3,51,55,.10)}
-  .role-row:first-child{border-top:0}
-  .role-ic{font-size:1.5rem;line-height:1;width:34px;text-align:center}
-  .pill{display:inline-block;font-size:.7rem;font-weight:800;padding:2px 9px;border-radius:999px;background:rgba(0,102,135,.10);color:#02545f}
-  .toc a{color:#006687;font-weight:750;text-decoration:none}
-  .toc a:hover{text-decoration:underline}
-  .note{padding:13px 15px;border-left:4px solid #d8a62e;border-radius:10px;background:#fffaf0;color:#68501b;font-size:.82rem;line-height:1.65}
-  .tip{padding:13px 15px;border-left:4px solid #0F5C4E;border-radius:10px;background:#eefaf4;color:#0e4a3d;font-size:.82rem;line-height:1.65}
-  details.faq{border:1px solid rgba(3,51,55,.12);border-radius:14px;background:#fff;padding:0 15px;margin-bottom:10px}
-  details.faq summary{cursor:pointer;font-weight:800;color:#02444d;padding:13px 0;list-style:none;font-size:.92rem}
-  details.faq summary::-webkit-details-marker{display:none}
-  details.faq summary::before{content:"＋";margin-right:9px;color:#006687;font-weight:800}
-  details.faq[open] summary::before{content:"－"}
-  details.faq p{margin:0 0 14px;font-size:.85rem;line-height:1.7;color:#587077}
-  :root{--dt:3 51 55}
-  html[data-theme="dark"]{background:#081a20;color-scheme:dark}
-  html[data-theme="dark"] body{color:#d6ecf0}
-  html[data-theme="dark"] .clay-card{background:#0e2a33;box-shadow:0 10px 30px -5px rgba(0,0,0,.45),inset 0 -4px 0 rgba(0,0,0,.3)}
-  html[data-theme="dark"] .role-row{border-top-color:rgba(214,236,240,.14)}
-  html[data-theme="dark"] .pill{background:rgba(127,217,190,.16);color:#9fe6cf}
-  html[data-theme="dark"] .toc a{color:#5cc4e6}
-  html[data-theme="dark"] .note{background:#2c2515;color:#ecd58f}
-  html[data-theme="dark"] .tip{background:#0d2a24;color:#9fe6cf}
-  html[data-theme="dark"] details.faq{background:#0e2a33;border-color:rgba(214,236,240,.16)}
-  html[data-theme="dark"] details.faq summary{color:#d6ecf0}
-  html[data-theme="dark"] details.faq p{color:#adc8ce}
-</style>
-<link rel="stylesheet" href="css/tw.css">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="BizOn Bật Nghiệp">
-<meta property="og:locale" content="vi_VN">
-<meta property="og:title" content="Hướng dẫn chơi · Game Bật Nghiệp — BizOn">
-<meta property="og:description" content="Cách chơi game mô phỏng kinh doanh BizOn Bật Nghiệp: 6 vòng, 5 vai C-suite, quyết định CFO/CEO, mô phỏng Nếu–Thì, chọn độ khó 3 đối thủ AI và cách xếp hạng.">
-<meta property="og:url" content="https://thuyhuongctu.github.io/BizOn/huong-dan.html">
-<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/og/og-cover.webp">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
 </head>
 <body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="css/bizon-clay-fonts.css">
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#FBF4E8;color:#033337;font-family:'Be Vietnam Pro','BVP Fallback',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#006687;text-decoration:none}
+a:hover{color:#033337}
+*{box-sizing:border-box}
+nav::-webkit-scrollbar{display:none}
+details summary::-webkit-details-marker{display:none}
+@keyframes bzFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</helmet>
+<div style="min-height:100vh;overflow-x:hidden">
 
-<!-- HERO -->
-<header class="pt-24 pb-10 text-white" style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%);position:relative;overflow:hidden">
-  <div class="max-w-4xl mx-auto px-5 grid sm:grid-cols-[1fr_auto] gap-6 items-center">
-    <div>
-      <p class="text-[11px] font-extrabold uppercase tracking-[.2em] text-clay-gold" data-en="Player's guide · Bật Nghiệp game">Hướng dẫn chơi · Game Bật Nghiệp</p>
-      <h1 class="font-display font-extrabold text-3xl sm:text-4xl mt-2" data-en="📖 How to play Bật Nghiệp">📖 Hướng dẫn chơi Bật Nghiệp</h1>
-      <p class="text-white/75 text-sm mt-3 max-w-2xl" data-en-html="Run your company through <b>6 business rounds</b>, take one C-suite seat, use the <b>What-If</b> simulator and outsmart 3 AI rivals. This page walks you through everything step by step.">Điều hành công ty qua <b>6 vòng kinh doanh</b>, ngồi vào một ghế C-suite, dùng mô phỏng <b>Nếu–Thì</b> và vượt mặt 3 đối thủ AI. Trang này hướng dẫn bạn từng bước một.</p>
-      <div class="flex flex-wrap gap-3 mt-5">
-        <a href="game.html" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-6 py-3 text-sm" data-en="🎮 Play now">🎮 Chơi ngay</a>
-        <a href="BizOn Game 3D.html" class="clay-btn bg-white/10 border border-white/25 text-white font-display font-bold px-6 py-3 text-sm" data-en="🧊 Try the 3D version">🧊 Thử bản 3D</a>
-        <a href="#bat-dau" class="clay-btn bg-white/10 border border-white/25 text-white font-display font-bold px-6 py-3 text-sm" data-en="↓ Start from the top">↓ Bắt đầu từ đầu</a>
+<header style="position:sticky;top:12px;z-index:50;max-width:1200px;margin:12px auto 0;padding:0 16px">
+  <div style="display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:14px;min-height:68px;padding:8px 10px 8px 20px;border-radius:999px;background:#FFFBF4;box-shadow:0 18px 30px -16px rgba(110,70,30,.35),inset 0 -6px 0 rgba(0,0,0,.05),inset 0 4px 0 rgba(255,255,255,.9)">
+    <a href="index.html" style="display:flex;align-items:center;gap:10px;color:#033337">
+      <span style="display:flex;align-items:center;font-family:'Be Vietnam Pro',sans-serif;font-weight:800;font-size:24px;letter-spacing:-.045em;line-height:1">Biz<span style="position:relative;display:inline-block;width:.86em;height:.72em;border:.15em solid currentColor;border-radius:50%;margin:0 .02em 0 .04em"><span style="position:absolute;right:.06em;top:50%;width:.26em;height:.26em;margin-top:-.13em;border-radius:50%;background:#FDA127"></span></span>n</span>
+    </a>
+    <nav style="justify-self:center;max-width:clamp(0px,calc((100vw - 1040px) * 999),100%);display:flex;gap:4px;padding:clamp(0px,calc((100vw - 1040px) * 999),5px);border-radius:999px;background:#F3E6CF;box-shadow:inset 0 3px 6px rgba(110,70,30,.18);overflow-x:auto;scrollbar-width:none;font-size:14px;font-weight:700;white-space:nowrap">
+      <sc-for list="{{ navLinks }}" as="l" hint-placeholder-count="7">
+        <a href="{{ l.href }}" style="flex:none;padding:8px 14px;border-radius:999px;color:{{ l.color }};background:{{ l.bg }};box-shadow:{{ l.sh }}" style-hover="color:#006687">{{ l.label }}</a>
+      </sc-for>
+    </nav>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="display:flex;padding:4px;border-radius:999px;background:#F3E6CF;box-shadow:inset 0 3px 5px rgba(110,70,30,.18);font-size:12px;font-weight:800">
+        <button onClick="{{ setVi }}" style="border:0;cursor:pointer;padding:7px 12px;border-radius:999px;font:inherit;background:{{ viBg }};color:{{ viFg }};box-shadow:{{ viSh }}">VI</button>
+        <button onClick="{{ setEn }}" style="border:0;cursor:pointer;padding:7px 12px;border-radius:999px;font:inherit;background:{{ enBg }};color:{{ enFg }};box-shadow:{{ enSh }}">EN</button>
       </div>
+      <a href="game.html" style="white-space:nowrap;padding:11px 18px;border-radius:999px;background:#E8762D;color:#fff;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:16px;font-weight:700;box-shadow:inset 0 -5px 0 rgba(0,0,0,.16),inset 0 3px 0 rgba(255,255,255,.35),0 10px 18px -8px rgba(232,118,45,.7)" style-hover="color:#fff">{{ t.navCta }}</a>
     </div>
-    <img src="assets/character/lumina-ao-dai-present.webp" alt="Lumina AI hướng dẫn chơi" class="h-52 sm:h-60 w-auto mx-auto drop-shadow-2xl float-slow hidden sm:block" loading="lazy">
   </div>
+  <nav style="margin:8px auto 0;width:fit-content;max-width:100%;max-height:clamp(0px,calc((1040px - 100vw) * 999),64px);padding:clamp(0px,calc((1040px - 100vw) * 999),5px);display:flex;gap:4px;border-radius:999px;background:#F3E6CF;box-shadow:inset 0 3px 6px rgba(110,70,30,.18),0 12px 20px -14px rgba(110,70,30,.5);overflow-x:auto;overflow-y:hidden;scrollbar-width:none;font-size:14px;font-weight:700;white-space:nowrap">
+    <sc-for list="{{ navLinks }}" as="l" hint-placeholder-count="7">
+      <a href="{{ l.href }}" style="flex:none;padding:8px 14px;border-radius:999px;color:{{ l.color }};background:{{ l.bg }};box-shadow:{{ l.sh }}" style-hover="color:#006687">{{ l.label }}</a>
+    </sc-for>
+  </nav>
 </header>
 
-<main class="max-w-4xl mx-auto px-5 py-10">
-
-  <!-- NHÌN NHANH -->
-  <section class="mb-12">
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
-      <div class="clay-card p-4 text-center"><p class="text-2xl">🔁</p><p class="font-display font-extrabold text-deep-teal text-lg mt-1">6</p><p class="text-[11px] text-deep-teal/55 mt-1" data-en="rounds per game">vòng mỗi ván</p></div>
-      <div class="clay-card p-4 text-center"><p class="text-2xl">🧑‍💼</p><p class="font-display font-extrabold text-deep-teal text-lg mt-1">5</p><p class="text-[11px] text-deep-teal/55 mt-1" data-en="C-suite roles">vai C-suite</p></div>
-      <div class="clay-card p-4 text-center"><p class="text-2xl">🤖</p><p class="font-display font-extrabold text-deep-teal text-lg mt-1">3</p><p class="text-[11px] text-deep-teal/55 mt-1" data-en="AI rivals">đối thủ AI</p></div>
-      <div class="clay-card p-4 text-center"><p class="text-2xl">⏱️</p><p class="font-display font-extrabold text-deep-teal text-lg mt-1">30–45'</p><p class="text-[11px] text-deep-teal/55 mt-1" data-en="per game">mỗi ván</p></div>
-    </div>
-    <div class="clay-card p-5 mt-3 toc">
-      <p class="text-[11px] font-extrabold uppercase tracking-wide text-deep-teal/50 mb-2" data-en="On this page">Trong trang này</p>
-      <div class="grid sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
-        <a href="#bat-dau" data-en="1 · Start a game">1 · Bắt đầu một ván</a>
-        <a href="#vong-choi" data-en="2 · How a round works">2 · Một vòng diễn ra thế nào</a>
-        <a href="#do-kho" data-en="3 · Choosing opponent difficulty">3 · Chọn độ khó đối thủ</a>
-        <a href="#vai-tro" data-en="4 · The 5 roles & decisions">4 · 5 vai &amp; quyết định</a>
-        <a href="#what-if" data-en="5 · The What-If simulator">5 · Mô phỏng Nếu–Thì</a>
-        <a href="#cham-diem" data-en="6 · How winning is scored">6 · Cách tính thắng thua</a>
-        <a href="#meo" data-en="7 · Tips">7 · Mẹo chơi</a>
-        <a href="#faq" data-en="8 · Quick questions">8 · Hỏi nhanh</a>
+<main style="max-width:1000px;margin:0 auto;padding:0 22px">
+<section style="position:relative;overflow:hidden;margin:28px 0 22px;border-radius:40px;background:#FFF3DA;box-shadow:inset 0 -10px 0 rgba(140,80,20,.1),inset 0 6px 0 rgba(255,255,255,.7),0 30px 44px -30px rgba(110,70,30,.6)">
+  <div style="position:absolute;right:-8%;top:-34%;width:min(520px,60%);aspect-ratio:1;background:url(assets/brand/trong-dong.svg) center/contain no-repeat;opacity:.85;pointer-events:none"></div>
+  <div style="position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;align-items:end;padding:clamp(24px,4vw,44px) clamp(20px,4vw,44px) 0">
+    <div style="padding-bottom:clamp(28px,5vw,56px)">
+      <div style="display:inline-flex;padding:7px 14px;border-radius:999px;background:#FFFBF4;color:#7A4A0E;font-size:13px;font-weight:800;box-shadow:inset 0 -3px 0 rgba(0,0,0,.07)">{{ t.eyebrow }}</div>
+      <h1 style="margin:18px 0 0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-weight:800;font-size:clamp(38px,5.2vw,64px);line-height:1.1;letter-spacing:-.02em;text-wrap:balance">{{ t.h1 }}</h1>
+      <p style="margin:16px 0 0;max-width:34em;font-size:17px;line-height:1.65;color:#3E5A5C;text-wrap:pretty">{{ t.lead }}</p>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:22px">
+        <a href="game.html" style="padding:14px 22px;border-radius:20px;background:#E8762D;color:#fff;font:800 16px 'Plus Jakarta Sans','PJS Fallback',sans-serif;box-shadow:inset 0 -5px 0 rgba(0,0,0,.16),inset 0 3px 0 rgba(255,255,255,.35),0 12px 20px -10px rgba(232,118,45,.7)" style-hover="color:#fff">{{ t.play }}</a>
+        <a href="https://thuyhuongctu.github.io/BizOn/BizOn%20Game%203D.html" style="padding:14px 20px;border-radius:20px;background:#FFFBF4;color:#033337;font:700 16px 'Plus Jakarta Sans','PJS Fallback',sans-serif;box-shadow:inset 0 -5px 0 rgba(110,70,30,.1)">{{ t.play3d }}</a>
       </div>
     </div>
-  </section>
+    <div style="width:min(28vw,250px);aspect-ratio:3/4;position:relative">{{ heroArt }}</div>
+  </div>
+  <div style="position:relative;z-index:3;height:44px;margin-top:-44px;background:radial-gradient(circle at 36px 0,transparent 35px,#1E7E8C 36px) 0 0/72px 36px repeat-x,linear-gradient(#1E7E8C,#1E7E8C) 0 36px/100% 100% no-repeat"></div>
+</section>
 
-  <!-- 1. BẮT ĐẦU -->
-  <section id="bat-dau" class="mb-12 scroll-mt-20">
-    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-4" data-en="1 · Start a game">1 · Bắt đầu một ván</h2>
-    <div class="space-y-5">
-      <div class="clay-card p-5 step"><span class="num">1</span>
-        <h3 class="font-display font-extrabold text-deep-teal" data-en="Open the game & log in">Mở game &amp; đăng nhập</h3>
-        <p class="text-sm text-deep-teal/65 mt-1.5" data-en-html="After a short splash, enter your <b>email</b>, your <b>team name</b> (e.g. Rồng Xanh Corp) and — if your class uses one — a <b>class code</b> (e.g. QTKD-2026-A). No password needed. The class code is what lets the instructor collect your team's results.">Sau màn chờ ngắn, nhập <b>email</b>, <b>tên đội</b> (VD: Rồng Xanh Corp) và — nếu lớp có dùng — <b>mã lớp</b> (VD: QTKD-2026-A). Không cần mật khẩu. Mã lớp là thứ giúp giảng viên thu kết quả của đội bạn.</p>
+<section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:14px;margin-bottom:16px">
+  <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+    <div style="padding:18px;border-radius:24px;background:#F3E6CF;text-align:center;box-shadow:inset 4px 5px 10px rgba(110,70,30,.16),inset -4px -4px 8px rgba(255,255,255,.7)">
+      <div style="font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:38px;font-weight:800;line-height:1;color:{{ s.c }}">{{ s.n }}</div>
+      <div style="margin-top:6px;font-size:13px;font-weight:700;color:#3E5A5C">{{ s.l }}</div>
+    </div>
+  </sc-for>
+</section>
+<nav style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:52px;padding:14px;border-radius:24px;background:#FFFBF4;box-shadow:inset 0 -5px 0 rgba(110,70,30,.08)">
+  <sc-for list="{{ toc }}" as="x" hint-placeholder-count="8">
+    <a href="{{ x.href }}" style="padding:8px 13px;border-radius:999px;background:#F3E6CF;font-size:13px;font-weight:800;box-shadow:inset 0 -3px 0 rgba(110,70,30,.12)" style-hover="background:#FFD58A;color:#033337">{{ x.l }}</a>
+  </sc-for>
+</nav>
+
+<section id="bat-dau" style="margin-bottom:56px;scroll-margin-top:110px">
+  <h2 style="margin:0 0 18px;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:clamp(26px,3vw,34px);font-weight:800">{{ t.s1 }}</h2>
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <sc-for list="{{ start }}" as="s" hint-placeholder-count="3">
+      <div style="display:grid;grid-template-columns:48px minmax(0,1fr);gap:16px;padding:22px;border-radius:28px;background:#FFFBF4;box-shadow:inset 0 -8px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 22px 32px -24px rgba(110,70,30,.5)">
+        <span style="width:48px;height:48px;border-radius:16px;background:#006687;color:#fff;display:grid;place-items:center;font:800 20px 'Plus Jakarta Sans',sans-serif;box-shadow:inset 0 -5px 0 rgba(0,0,0,.2),inset 0 3px 0 rgba(255,255,255,.25)">{{ s.n }}</span>
+        <div><h3 style="margin:0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:19px;font-weight:800">{{ s.h }}</h3><p style="margin:6px 0 0;font-size:15px;line-height:1.65;color:#3E5A5C;text-wrap:pretty">{{ s.p }}</p></div>
       </div>
-      <div class="clay-card p-5 step"><span class="num">2</span>
-        <h3 class="font-display font-extrabold text-deep-teal" data-en="Pick your C-suite seat">Chọn ghế C-suite của bạn</h3>
-        <p class="text-sm text-deep-teal/65 mt-1.5" data-en-html="Choose one seat: <b>CEO, CFO, CMO, COO</b> or <b>Thư ký (SEC)</b>. Your seat gets extra AI coaching, but you still make the <b>final call on every decision</b> each round — the other four seats only offer suggestions.">Chọn một ghế: <b>CEO, CFO, CMO, COO</b> hoặc <b>Thư ký (SEC)</b>. Ghế của bạn được cố vấn AI kèm sát hơn, nhưng bạn vẫn là người <b>quyết định cuối cùng cho mọi lựa chọn</b> mỗi vòng — bốn ghế còn lại chỉ đưa ra gợi ý.</p>
+    </sc-for>
+  </div>
+</section>
+
+<section id="vong-choi" style="margin-bottom:56px;scroll-margin-top:110px">
+  <h2 style="margin:0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:clamp(26px,3vw,34px);font-weight:800">{{ t.s2 }}</h2>
+  <p style="margin:8px 0 18px;font-size:15px;color:#3E5A5C">{{ t.s2sub }}</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:16px">
+    <sc-for list="{{ beats }}" as="b" hint-placeholder-count="4">
+      <div style="padding:22px;border-radius:28px;background:{{ b.bg }};box-shadow:inset 0 -8px 0 rgba(0,0,0,.07),inset 0 5px 0 rgba(255,255,255,.5),0 22px 32px -24px rgba(110,70,30,.5)">
+        <div style="font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:34px;font-weight:800;line-height:1;color:rgba(3,51,55,.35)">{{ b.n }}</div>
+        <h3 style="margin:10px 0 0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:18px;font-weight:800">{{ b.h }}</h3>
+        <p style="margin:6px 0 0;font-size:14px;line-height:1.6;color:#24403F">{{ b.p }}</p>
       </div>
-      <div class="clay-card p-5 step"><span class="num">3</span>
-        <h3 class="font-display font-extrabold text-deep-teal" data-en="Get your scenario season (A or B)">Nhận mùa kịch bản (A hoặc B)</h3>
-        <p class="text-sm text-deep-teal/65 mt-1.5" data-en-html="Each new game draws one of two 6-event storylines: <b>«Giữ Sân Nhà» (A)</b> or <b>«Sóng Ngoại Nhập» (B)</b>. The draw is fixed from your class code + team name (so it's fair and repeatable), and both seasons are equally hard — only the story differs. You start with <b>500 triệu ₫</b> of seed capital.">Mỗi ván mới bốc một trong hai tuyến truyện 6 biến cố: <b>«Giữ Sân Nhà» (A)</b> hoặc <b>«Sóng Ngoại Nhập» (B)</b>. Kết quả bốc cố định theo mã lớp + tên đội (nên công bằng và tái lập được), và hai mùa khó như nhau — chỉ khác câu chuyện. Bạn khởi đầu với <b>500 triệu ₫</b> vốn.</p>
+    </sc-for>
+  </div>
+  <div style="margin-top:16px;padding:16px 20px;border-radius:22px;background:#FFE3A8;font-size:14px;line-height:1.65;color:#4A3410;box-shadow:inset 0 -5px 0 rgba(140,80,20,.12)"><strong>{{ t.cashB }}</strong> {{ t.cash }}</div>
+</section>
+
+<section id="do-kho" style="margin-bottom:56px;scroll-margin-top:110px">
+  <h2 style="margin:0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:clamp(26px,3vw,34px);font-weight:800">{{ t.s3 }}</h2>
+  <p style="margin:8px 0 18px;font-size:15px;color:#3E5A5C">{{ t.s3sub }}</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:16px;align-items:start">
+    <div style="padding:22px;border-radius:28px;background:#FFFBF4;box-shadow:inset 0 -8px 0 rgba(110,70,30,.08),0 22px 32px -24px rgba(110,70,30,.5)">
+      <div style="display:flex;gap:6px;padding:5px;border-radius:999px;background:#F3E6CF;box-shadow:inset 0 3px 6px rgba(110,70,30,.18);margin-bottom:16px">
+        <sc-for list="{{ t.levels }}" as="l" hint-placeholder-count="3"><span style="flex:1;padding:8px;border-radius:999px;text-align:center;font-size:13px;font-weight:800;background:{{ l.bg }};color:{{ l.fg }}">{{ l.t }}</span></sc-for>
+      </div>
+      <div style="font-size:12px;font-weight:800;color:#7A4A0E;margin-bottom:10px">{{ t.where }}</div>
+      <div style="display:flex;flex-direction:column;gap:9px">
+        <sc-for list="{{ diffSteps }}" as="s" hint-placeholder-count="3"><div style="display:grid;grid-template-columns:26px minmax(0,1fr);gap:10px;font-size:14px;line-height:1.55"><span style="width:26px;height:26px;border-radius:50%;background:#F3E6CF;display:grid;place-items:center;font-size:12px;font-weight:800">{{ s.n }}</span><span>{{ s.t }}</span></div></sc-for>
       </div>
     </div>
-  </section>
+    <div style="padding:20px 22px;border-radius:28px;background:#F8C9A8;font-size:14px;line-height:1.65;color:#4A2210;box-shadow:inset 0 -8px 0 rgba(0,0,0,.07),inset 0 5px 0 rgba(255,255,255,.5)"><strong style="display:block;margin-bottom:6px;font-size:15px;color:#7A2E08">{{ t.diffWarnB }}</strong>{{ t.diffWarn }}</div>
+  </div>
+</section>
 
-  <!-- 2. VÒNG CHƠI -->
-  <section id="vong-choi" class="mb-12 scroll-mt-20">
-    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2" data-en="2 · How a round works">2 · Một vòng diễn ra thế nào</h2>
-    <p class="text-sm text-deep-teal/60 mb-5" data-en-html="Every game is <b>6 rounds</b> (chu kỳ). Each round repeats the same 5 beats:">Mỗi ván có <b>6 vòng</b> (chu kỳ). Mỗi vòng lặp lại 5 nhịp giống nhau:</p>
-    <div class="grid sm:grid-cols-2 gap-4">
-      <div class="clay-card p-5"><p class="text-2xl">👀</p><h3 class="font-display font-extrabold text-deep-teal text-base mt-2" data-en="1. Observe">1. Quan sát</h3><p class="text-sm text-deep-teal/60 mt-1.5" data-en-html="Open <b>Tổng quan</b> (home dashboard) to read the round's market event and your 3 vital signs: <b>tiền mặt, thị phần, uy tín thương hiệu</b>. Lumina flags what to watch.">Mở <b>Tổng quan</b> (bảng chính) để đọc biến cố thị trường của vòng và 3 chỉ số sống còn: <b>tiền mặt, thị phần, uy tín thương hiệu</b>. Lumina nhắc điều cần để ý.</p></div>
-      <div class="clay-card p-5"><p class="text-2xl">🎛️</p><h3 class="font-display font-extrabold text-deep-teal text-base mt-2" data-en="2. Decide">2. Quyết định</h3><p class="text-sm text-deep-teal/60 mt-1.5" data-en-html="In the <b>Quyết định</b> tab, set the numbers for each role (price, marketing, production, staffing, funding…). A live forecast shows your projected cash and market share vs the 3 rivals.">Ở tab <b>Quyết định</b>, đặt các thông số cho từng vai (giá, marketing, sản lượng, nhân sự, vốn…). Bảng dự báo trực tiếp cho thấy tiền mặt và thị phần dự kiến so với 3 đối thủ.</p></div>
-      <div class="clay-card p-5"><p class="text-2xl">🔮</p><h3 class="font-display font-extrabold text-deep-teal text-base mt-2" data-en="3. Test with What-If (optional)">3. Thử Nếu–Thì (tùy chọn)</h3><p class="text-sm text-deep-teal/60 mt-1.5" data-en-html="Before locking, you may run up to <b>2 free simulations</b> per round to preview the outcome of your current numbers. See section 5.">Trước khi khóa, bạn có thể chạy tối đa <b>2 lượt mô phỏng miễn phí</b> mỗi vòng để xem trước kết quả của bộ thông số hiện tại. Xem mục 5.</p></div>
-      <div class="clay-card p-5"><p class="text-2xl">🔒</p><h3 class="font-display font-extrabold text-deep-teal text-base mt-2" data-en="4. Lock & settle">4. Khóa &amp; giải quyết</h3><p class="text-sm text-deep-teal/60 mt-1.5" data-en-html="Press <b>Khóa vòng</b>. The 3 AI rivals make their moves at the same time, the market resolves, and you see the round report (revenue, profit, new share). Then the next round opens.">Bấm <b>Khóa vòng</b>. 3 đối thủ AI ra quyết định cùng lúc, thị trường được giải quyết, và bạn xem báo cáo vòng (doanh thu, lợi nhuận, thị phần mới). Sau đó vòng tiếp theo mở ra.</p></div>
-    </div>
-    <p class="note mt-4" data-en-html="💡 <b>Tiền không tự sinh ra.</b> Everything you spend (marketing, production, wages, R&D) comes out of your cash. If a plan needs more than you have, either fund it with a bank loan (CFO) or scale it down.">💡 <b>Tiền không tự sinh ra.</b> Mọi khoản chi (marketing, sản xuất, lương, R&amp;D) đều trừ vào tiền mặt của bạn. Nếu một kế hoạch cần nhiều hơn số bạn có, hãy cấp vốn bằng khoản vay ngân hàng (CFO) hoặc thu nhỏ lại.</p>
-  </section>
+<section id="vai-tro" style="margin-bottom:56px;scroll-margin-top:110px">
+  <h2 style="margin:0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:clamp(26px,3vw,34px);font-weight:800">{{ t.s4 }}</h2>
+  <p style="margin:8px 0 18px;font-size:15px;color:#3E5A5C">{{ t.s4sub }}</p>
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <sc-for list="{{ roles }}" as="r" hint-placeholder-count="5">
+      <div style="display:grid;grid-template-columns:72px minmax(0,1fr);gap:16px;align-items:start;padding:18px 20px;border-radius:24px;background:#FFFBF4;box-shadow:inset 0 -6px 0 rgba(110,70,30,.08),0 18px 26px -22px rgba(110,70,30,.5)">
+        <span style="height:44px;border-radius:14px;background:{{ r.c }};display:grid;place-items:center;font:800 14px 'Plus Jakarta Sans',sans-serif;color:#033337;box-shadow:inset 0 -4px 0 rgba(0,0,0,.1),inset 0 3px 0 rgba(255,255,255,.5)">{{ r.k }}</span>
+        <div><div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px"><strong style="font-size:17px">{{ r.n }}</strong><span style="padding:3px 10px;border-radius:999px;background:#F3E6CF;font-size:12px;font-weight:800;color:#00506A">{{ r.tag }}</span></div><p style="margin:6px 0 0;font-size:14px;line-height:1.65;color:#3E5A5C">{{ r.p }}</p></div>
+      </div>
+    </sc-for>
+  </div>
+</section>
 
-  <!-- 3. ĐỘ KHÓ -->
-  <section id="do-kho" class="mb-12 scroll-mt-20">
-    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2" data-en="3 · Choosing opponent difficulty">3 · Chọn độ khó đối thủ</h2>
-    <p class="text-sm text-deep-teal/60 mb-5" data-en-html="The 3 AI rivals can play at <b>Dễ · Thường · Khó</b> (Easy · Normal · Hard). Higher difficulty makes them more competitive.">3 đối thủ AI có thể chơi ở mức <b>Dễ · Thường · Khó</b>. Mức càng cao thì đối thủ càng mạnh.</p>
-    <div class="clay-card p-5 mb-4">
-      <p class="text-[11px] font-extrabold uppercase tracking-wide text-deep-teal/50 mb-3" data-en="Where to set it">Đặt ở đâu</p>
-      <ol class="space-y-2 text-sm text-deep-teal/70" style="list-style:decimal;padding-left:1.2rem">
-        <li data-en-html="Open the <b>Cài đặt</b> (Settings) tab from the bottom bar.">Mở tab <b>Cài đặt</b> ở thanh dưới cùng.</li>
-        <li data-en-html="Find <b>🎚️ Độ khó đối thủ</b> and tap <b>Dễ / Thường / Khó</b>.">Tìm mục <b>🎚️ Độ khó đối thủ</b> và bấm <b>Dễ / Thường / Khó</b>.</li>
-        <li data-en-html="Go back to <b>Tổng quan</b> (home) and start entering this round's decisions.">Quay lại <b>Tổng quan</b> (màn chính) và bắt đầu nhập quyết định của vòng này.</li>
-      </ol>
-    </div>
-    <p class="note" data-en-html="⚠️ <b>Set the difficulty before you lock your first round.</b> In a graded game (one with a class code), the difficulty <b>locks after the first round is committed</b> and can't be changed mid-game — to switch it you must <b>Chơi lại (Reset)</b> in Settings and log in again. In free-play (no class code) you can change it any time. Tip: pick a level while you haven't played any round yet.">⚠️ <b>Hãy chọn độ khó trước khi khóa vòng đầu tiên.</b> Với ván có tính điểm (có mã lớp), độ khó sẽ <b>khóa lại ngay sau khi khóa vòng đầu</b> và không đổi được giữa chừng — muốn đổi phải bấm <b>Chơi lại (Reset)</b> trong Cài đặt rồi đăng nhập lại. Với chế độ chơi tự do (không mã lớp) thì đổi lúc nào cũng được. Mẹo: chọn mức khi bạn chưa chơi vòng nào.</p>
-  </section>
+<section id="what-if" style="margin-bottom:56px;scroll-margin-top:110px">
+  <h2 style="margin:0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:clamp(26px,3vw,34px);font-weight:800">{{ t.s5 }}</h2>
+  <p style="margin:8px 0 18px;font-size:15px;color:#3E5A5C">{{ t.s5sub }}</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px">
+    <sc-for list="{{ t.wif }}" as="w" hint-placeholder-count="2">
+      <div style="padding:22px;border-radius:28px;background:#1E7E8C;color:#fff;box-shadow:inset 0 -8px 0 rgba(0,0,0,.18),inset 0 5px 0 rgba(255,255,255,.18),0 22px 32px -24px rgba(3,51,55,.7)">
+        <h3 style="margin:0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:19px;font-weight:800">{{ w.h }}</h3>
+        <p style="margin:8px 0 0;font-size:14px;line-height:1.6;color:#D7F1F4">{{ w.p }}</p>
+      </div>
+    </sc-for>
+  </div>
+  <div style="margin-top:16px;padding:16px 20px;border-radius:22px;background:#F8C9A8;font-size:14px;line-height:1.65;color:#4A2210;box-shadow:inset 0 -5px 0 rgba(0,0,0,.07)"><strong style="color:#7A2E08">{{ t.wifB }}</strong> {{ t.wifN }}</div>
+</section>
 
-  <!-- 4. VAI TRÒ -->
-  <section id="vai-tro" class="mb-12 scroll-mt-20">
-    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2" data-en="4 · The 5 roles & their decisions">4 · 5 vai &amp; quyết định của từng vai</h2>
-    <p class="text-sm text-deep-teal/60 mb-5" data-en-html="You control one seat but decide for all of them. Here's what each role sets each round:">Bạn ngồi một ghế nhưng quyết định cho tất cả. Đây là những gì mỗi vai đặt mỗi vòng:</p>
-    <div class="clay-card p-5 sm:p-6">
-      <div class="role-row"><div class="role-ic">🧭</div><div><p class="font-display font-extrabold text-deep-teal">CEO <span class="pill" data-en="Vision & coordination">Tầm nhìn &amp; điều phối</span></p><p class="text-sm text-deep-teal/60 mt-1" data-en-html="Sets the direction, runs the <b>What-If</b> simulations and presses <b>Khóa vòng</b> to lock the round.">Đặt định hướng, chạy mô phỏng <b>Nếu–Thì</b> và bấm <b>Khóa vòng</b> để chốt vòng.</p></div></div>
-      <div class="role-row"><div class="role-ic">💰</div><div><p class="font-display font-extrabold text-deep-teal">CFO <span class="pill" data-en="Finance">Tài chính</span></p><p class="text-sm text-deep-teal/60 mt-1" data-en-html="Two key choices: <b>Cơ cấu nguồn vốn</b> — 💼 <b>Vốn tự có</b> (equity) or 🏦 <b>Vay ngân hàng</b> (overdraft at 8.5%/round on the shortfall); and <b>Kỳ hạn thanh toán cho khách</b> — <b>30 / 60 / 90 ngày</b> (longer terms lift demand a little but also raise your costs: 90 days ≈ +8% demand, +5% cost). Also sets the R&D budget.">Hai lựa chọn then chốt: <b>Cơ cấu nguồn vốn</b> — 💼 <b>Vốn tự có</b> hoặc 🏦 <b>Vay ngân hàng</b> (thấu chi 8,5%/vòng trên phần thiếu); và <b>Kỳ hạn thanh toán cho khách</b> — <b>30 / 60 / 90 ngày</b> (kỳ hạn dài giúp cầu tăng nhẹ nhưng cũng đội chi phí: 90 ngày ≈ +8% cầu, +5% chi phí). Vai này cũng đặt ngân sách R&amp;D.</p></div></div>
-      <div class="role-row"><div class="role-ic">📣</div><div><p class="font-display font-extrabold text-deep-teal">CMO <span class="pill" data-en="Marketing">Marketing</span></p><p class="text-sm text-deep-teal/60 mt-1" data-en-html="Sets the <b>selling price</b> (80–300k ₫, reference 150k) and the <b>marketing budget</b>. Price too high and rivals undercut you; too low and you leave money on the table. Watch the live share forecast.">Đặt <b>giá bán</b> (80–300k ₫, tham chiếu 150k) và <b>ngân sách marketing</b>. Giá quá cao thì bị đối thủ cắt giá; quá thấp thì mất lời. Theo dõi bảng dự báo thị phần trực tiếp.</p></div></div>
-      <div class="role-row"><div class="role-ic">🏭</div><div><p class="font-display font-extrabold text-deep-teal">COO <span class="pill" data-en="Operations">Vận hành</span></p><p class="text-sm text-deep-teal/60 mt-1" data-en-html="Sets <b>production volume</b>, <b>headcount</b> (each worker costs 1 triệu/round and makes up to 70 units) and <b>training budget</b>. Make too little and you sell out; too much and unsold stock ties up cash.">Đặt <b>sản lượng</b>, <b>số nhân viên</b> (mỗi người tốn 1 triệu/vòng, làm được tối đa 70 sản phẩm) và <b>ngân sách đào tạo</b>. Sản xuất quá ít thì cháy hàng; quá nhiều thì tồn kho ứ vốn.</p></div></div>
-      <div class="role-row"><div class="role-ic">📝</div><div><p class="font-display font-extrabold text-deep-teal">Thư ký · SEC <span class="pill" data-en="Legal & records">Pháp chế &amp; ghi chép</span></p><p class="text-sm text-deep-teal/60 mt-1" data-en-html="No numbers to set — opens the team journal and reads the round's market event so the team doesn't miss context.">Không có thông số — mở nhật ký đội và đọc biến cố thị trường của vòng để cả đội không bỏ sót bối cảnh.</p></div></div>
-    </div>
-  </section>
+<section id="cham-diem" style="margin-bottom:56px;scroll-margin-top:110px">
+  <h2 style="margin:0 0 18px;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:clamp(26px,3vw,34px);font-weight:800">{{ t.s6 }}</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px">
+    <div style="padding:22px;border-radius:28px;background:#FFE3A8;box-shadow:inset 0 -8px 0 rgba(140,80,20,.12),inset 0 5px 0 rgba(255,255,255,.6)"><strong style="font-size:17px;color:#7A4A0E">{{ t.winRB }}</strong><p style="margin:8px 0 0;font-size:14px;line-height:1.65;color:#4A3410">{{ t.winR }}</p></div>
+    <div style="padding:22px;border-radius:28px;background:#FFFBF4;box-shadow:inset 0 -8px 0 rgba(110,70,30,.08),0 22px 32px -24px rgba(110,70,30,.5)"><strong style="font-size:17px">{{ t.finB }}</strong><p style="margin:8px 0 0;font-size:14px;line-height:1.65;color:#3E5A5C">{{ t.fin }}</p></div>
+  </div>
+  <div style="margin-top:16px;padding:16px 20px;border-radius:22px;background:#A9DCC4;font-size:14px;line-height:1.65;color:#123B2E;box-shadow:inset 0 -5px 0 rgba(0,0,0,.07)"><strong style="color:#0F4A35">{{ t.gradeB }}</strong> {{ t.grade }}</div>
+</section>
 
-  <!-- 5. WHAT-IF -->
-  <section id="what-if" class="mb-12 scroll-mt-20">
-    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2" data-en="5 · The What-If (Nếu–Thì) simulator">5 · Mô phỏng «Nếu–Thì»</h2>
-    <p class="text-sm text-deep-teal/60 mb-5" data-en-html="Before you commit, you can dry-run your current numbers to preview the outcome. It's <b>free</b> — the only limit is the number of runs.">Trước khi chốt, bạn có thể chạy thử bộ thông số hiện tại để xem trước kết quả. Nó <b>miễn phí</b> — giới hạn duy nhất là số lượt chạy.</p>
-    <div class="grid sm:grid-cols-2 gap-4 mb-4">
-      <div class="clay-card p-5"><p class="text-2xl">🧭</p><h3 class="font-display font-extrabold text-deep-teal text-base mt-2" data-en="Strategy (CEO)">Chiến lược (CEO)</h3><p class="text-sm text-deep-teal/60 mt-1.5" data-en-html="Forecasts your <b>market share, net profit and break-even</b>, with a verdict: safe, viable-but-risky, or high-risk.">Dự báo <b>thị phần, lợi nhuận ròng và điểm hòa vốn</b>, kèm kết luận: an toàn, khả thi nhưng rủi ro, hay rủi ro cao.</p></div>
-      <div class="clay-card p-5"><p class="text-2xl">💰</p><h3 class="font-display font-extrabold text-deep-teal text-base mt-2" data-en="Finance (CFO)">Tài chính (CFO)</h3><p class="text-sm text-deep-teal/60 mt-1.5" data-en-html="A stress test: projected <b>end-of-round cash, Quick Ratio and ROI</b>, flagging capital erosion or insolvency risk.">Bài kiểm tra chịu lực: dự báo <b>tiền mặt cuối vòng, hệ số thanh toán nhanh và ROI</b>, cảnh báo bào mòn vốn hay rủi ro mất khả năng chi trả.</p></div>
-    </div>
-    <p class="note" data-en-html="⚠️ <b>You get 2 runs per round in total — shared between the two buttons, not 2 each.</b> Running Strategy once and Finance once already uses up both. The quota resets after you lock the round. Use them wisely: run the one that answers your biggest doubt.">⚠️ <b>Bạn có 2 lượt mỗi vòng tính CHUNG — dùng chung cho cả hai nút, không phải 2 lượt mỗi nút.</b> Chạy Chiến lược một lần và Tài chính một lần là đã hết. Hạn mức được nạp lại sau khi bạn khóa vòng. Hãy dùng khôn ngoan: chạy cái trả lời được điều bạn phân vân nhất.</p>
-  </section>
+<section id="meo" style="margin-bottom:56px;scroll-margin-top:110px">
+  <h2 style="margin:0 0 18px;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:clamp(26px,3vw,34px);font-weight:800">{{ t.s7 }}</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:14px">
+    <sc-for list="{{ t.tips }}" as="x" hint-placeholder-count="6">
+      <div style="padding:18px 20px;border-radius:24px;background:#FFFBF4;box-shadow:inset 0 -6px 0 rgba(110,70,30,.08),0 16px 24px -20px rgba(110,70,30,.5)"><strong style="display:block;font-size:15px;color:#00506A">{{ x.b }}</strong><p style="margin:6px 0 0;font-size:14px;line-height:1.6;color:#3E5A5C">{{ x.r }}</p></div>
+    </sc-for>
+  </div>
+</section>
 
-  <!-- 6. CHẤM ĐIỂM -->
-  <section id="cham-diem" class="mb-12 scroll-mt-20">
-    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2" data-en="6 · How winning is scored">6 · Cách tính thắng thua</h2>
-    <div class="clay-card p-5 sm:p-6">
-      <p class="text-sm text-deep-teal/70 leading-relaxed" data-en-html="🏆 <b>Winning a round</b> means holding the <b>highest market share among the 4 companies</b> — but only if your profit stays positive. Highest share while losing money doesn't count as a win.">🏆 <b>Thắng một vòng</b> nghĩa là giữ <b>thị phần cao nhất trong 4 công ty</b> — nhưng chỉ khi lợi nhuận vẫn dương. Thị phần cao nhất mà lỗ thì chưa tính là thắng.</p>
-      <p class="text-sm text-deep-teal/70 leading-relaxed mt-3" data-en-html="👑 <b>The final ranking</b> after 6 rounds is by <b>overall market share</b> — that's the arena's measure of victory. The end-of-game summary also shows total revenue, cumulative profit, brand loyalty (out of 10), and each rival's share, growth and ROI, plus your revenue vs a +8%/round target line.">👑 <b>Xếp hạng chung cuộc</b> sau 6 vòng dựa trên <b>thị phần chung cuộc</b> — đó là thước đo chiến thắng của sàn đấu. Bảng tổng kết cuối ván còn hiển thị tổng doanh thu, lợi nhuận tích lũy, uy tín thương hiệu (trên 10), và thị phần, tăng trưởng, ROI của từng đối thủ, cùng doanh thu của bạn so với mốc mục tiêu +8%/vòng.</p>
-      <p class="tip mt-4" data-en-html="🎓 <b>For class grading:</b> the game ranks by market share, but your instructor may add their own rubric (e.g. profit, reflection quality, decision reasoning). Watch the class group for the scoring criteria for the 6 rounds.">🎓 <b>Về chấm điểm lớp học:</b> game xếp hạng theo thị phần, nhưng giảng viên có thể thêm tiêu chí riêng (VD: lợi nhuận, chất lượng phản tư, lập luận quyết định). Theo dõi nhóm lớp để nhận tiêu chí chấm điểm cho 6 vòng chơi.</p>
-    </div>
-  </section>
+<section id="faq" style="margin-bottom:56px;scroll-margin-top:110px">
+  <h2 style="margin:0 0 18px;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:clamp(26px,3vw,34px);font-weight:800">{{ t.s8 }}</h2>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <sc-for list="{{ t.faq }}" as="f" hint-placeholder-count="5">
+      <details style="padding:0 20px;border-radius:22px;background:#FFFBF4;box-shadow:inset 0 -5px 0 rgba(110,70,30,.08)">
+        <summary style="cursor:pointer;list-style:none;padding:16px 0;font-size:15px;font-weight:800;color:#033337">＋ {{ f.q }}</summary>
+        <p style="margin:0 0 16px;font-size:14px;line-height:1.7;color:#3E5A5C">{{ f.a }}</p>
+      </details>
+    </sc-for>
+  </div>
+</section>
 
-  <!-- 7. MẸO -->
-  <section id="meo" class="mb-12 scroll-mt-20">
-    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-4" data-en="7 · Tips to play well">7 · Mẹo chơi hay</h2>
-    <div class="grid sm:grid-cols-2 gap-3">
-      <div class="clay-card p-4"><p class="text-sm text-deep-teal/70" data-en-html="🔮 <b>Simulate before you lock.</b> Spend a What-If run whenever a decision feels risky — it's free and it catches insolvency early.">🔮 <b>Mô phỏng trước khi khóa.</b> Dùng một lượt Nếu–Thì mỗi khi một quyết định thấy rủi ro — nó miễn phí và bắt sớm nguy cơ mất khả năng chi trả.</p></div>
-      <div class="clay-card p-4"><p class="text-sm text-deep-teal/70" data-en-html="⚖️ <b>Balance price vs marketing.</b> Cutting price wins share but thins margin; heavy marketing needs the sales to pay it back. Watch the live forecast.">⚖️ <b>Cân đối giá và marketing.</b> Giảm giá thì được thị phần nhưng mỏng biên lời; marketing mạnh cần doanh số bù lại. Nhìn bảng dự báo trực tiếp.</p></div>
-      <div class="clay-card p-4"><p class="text-sm text-deep-teal/70" data-en-html="📦 <b>Match production to demand.</b> Unsold units freeze your cash; too few and you sell out. Use the forecast to size the batch.">📦 <b>Khớp sản lượng với nhu cầu.</b> Hàng tồn làm đóng băng tiền mặt; sản xuất quá ít thì cháy hàng. Dùng dự báo để canh mẻ sản xuất.</p></div>
-      <div class="clay-card p-4"><p class="text-sm text-deep-teal/70" data-en-html="💳 <b>Payment terms are a lever.</b> 90-day terms boost demand but cost more — worth it when you need share, risky when cash is tight.">💳 <b>Kỳ hạn thanh toán là một đòn bẩy.</b> Kỳ hạn 90 ngày đẩy cầu nhưng tốn hơn — đáng khi cần thị phần, rủi ro khi tiền eo hẹp.</p></div>
-      <div class="clay-card p-4"><p class="text-sm text-deep-teal/70" data-en-html="🏦 <b>Borrow on purpose, not by accident.</b> Bank funding covers a shortfall at 8.5%/round — plan the payback, don't let interest snowball.">🏦 <b>Vay có chủ đích, đừng vay bị động.</b> Vốn vay bù phần thiếu với lãi 8,5%/vòng — hãy tính đường trả, đừng để lãi cuộn lên.</p></div>
-      <div class="clay-card p-4"><p class="text-sm text-deep-teal/70" data-en-html="🎚️ <b>Set difficulty first.</b> In a graded game you can't change it after round 1 — decide as a team before you lock.">🎚️ <b>Chọn độ khó trước tiên.</b> Ván tính điểm không đổi được sau vòng 1 — cả đội thống nhất trước khi khóa.</p></div>
-    </div>
-  </section>
-
-  <!-- 8. FAQ -->
-  <section id="faq" class="mb-12 scroll-mt-20">
-    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-4" data-en="8 · Quick questions">8 · Hỏi nhanh</h2>
-    <details class="faq"><summary data-en="Can we change the difficulty in the middle of a game?">Có đổi được độ khó giữa chừng không?</summary><p data-en-html="In a graded game (with a class code) — no, it locks after you commit round 1. To change it, use <b>Chơi lại (Reset)</b> in Settings and log in again. In free-play with no class code, you can change it any time.">Trong ván tính điểm (có mã lớp) — không, nó khóa sau khi bạn khóa vòng 1. Muốn đổi, dùng <b>Chơi lại (Reset)</b> trong Cài đặt rồi đăng nhập lại. Ở chế độ chơi tự do không mã lớp thì đổi lúc nào cũng được.</p></details>
-    <details class="faq"><summary data-en="Is our progress saved if we close the tab?">Đóng tab thì có lưu tiến trình không?</summary><p data-en-html="Yes — progress is saved on your device automatically. Teams with a class code also resume from the server, so you can continue on another shared-lab computer by logging in with the same team name and class code.">Có — tiến trình tự lưu trên thiết bị. Đội có mã lớp còn được khôi phục từ máy chủ, nên bạn có thể chơi tiếp trên máy phòng lab khác bằng cách đăng nhập cùng tên đội và mã lớp.</p></details>
-    <details class="faq"><summary data-en="How do we start over?">Làm sao chơi lại từ đầu?</summary><p data-en-html="Open <b>Cài đặt → ♻️ Chơi lại từ đầu (Reset)</b>. It clears the current progress and returns to the login screen.">Mở <b>Cài đặt → ♻️ Chơi lại từ đầu (Reset)</b>. Nó xóa tiến trình hiện tại và về màn đăng nhập.</p></details>
-    <details class="faq"><summary data-en="Is the game bilingual?">Game có song ngữ không?</summary><p data-en-html="Yes. Switch Vietnamese/English any time from the <b>⋯</b> button (or <b>Cài đặt → 🌐 Giao diện tiếng Anh</b>). Your current game isn't affected — only the language changes.">Có. Chuyển Việt/Anh bất cứ lúc nào từ nút <b>⋯</b> (hoặc <b>Cài đặt → 🌐 Giao diện tiếng Anh</b>). Ván đang chơi không bị ảnh hưởng — chỉ đổi ngôn ngữ.</p></details>
-    <details class="faq"><summary data-en="We hit a bug — what do we do?">Gặp lỗi thì làm gì?</summary><p data-en-html="Report it to the class group, or use <b>Cài đặt → 🐞 Gửi báo cáo lỗi</b> in the game. Say which round and what you tapped so it's easy to reproduce.">Báo lên nhóm lớp, hoặc dùng <b>Cài đặt → 🐞 Gửi báo cáo lỗi</b> trong game. Ghi rõ đang ở vòng nào và bạn bấm gì để dễ tái hiện.</p></details>
-  </section>
-
-  <!-- CTA -->
-  <section class="clay-card p-8 text-center">
-    <h2 class="font-display font-extrabold text-deep-teal text-2xl" data-en="Ready to play?">Sẵn sàng chơi chưa?</h2>
-    <p class="text-sm text-deep-teal/60 mt-2 max-w-xl mx-auto" data-en="Grab your team, pick a seat and take your company through 6 rounds.">Rủ đội của bạn, chọn một ghế và dẫn công ty qua 6 vòng.</p>
-    <div class="flex flex-wrap justify-center gap-3 mt-5">
-      <a href="game.html" class="clay-btn bg-primary text-white font-display font-extrabold px-7 py-3.5 text-sm" data-en="🎮 Start playing">🎮 Bắt đầu chơi</a>
-      <a href="BizOn Game 3D.html" class="clay-btn bg-white text-primary border border-primary/20 font-display font-bold px-7 py-3.5 text-sm" data-en="🧊 Bật Nghiệp 3D">🧊 Bật Nghiệp 3D</a>
-      <a href="brand-passport.html" class="clay-btn bg-white text-primary border border-primary/20 font-display font-bold px-7 py-3.5 text-sm" data-en="🛂 Try Brand Passport">🛂 Thử Hộ Chiếu Thương Hiệu</a>
-      <a href="Ho Chieu Thuong Hieu 3D.html" class="clay-btn bg-white text-primary border border-primary/20 font-display font-bold px-7 py-3.5 text-sm" data-en="🧊 Brand Passport 3D">🧊 Hộ Chiếu Thương Hiệu 3D</a>
-    </div>
-  </section>
-
+<section style="margin-bottom:72px;padding:clamp(26px,4vw,40px);border-radius:36px;background:#033337;color:#fff;text-align:center;box-shadow:inset 0 -10px 0 rgba(0,0,0,.25),0 30px 44px -30px rgba(3,51,55,.8)">
+  <h2 style="margin:0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:clamp(28px,3.4vw,40px);font-weight:800">{{ t.ctaH }}</h2>
+  <p style="margin:10px auto 0;max-width:30em;font-size:16px;color:#BFE6EE">{{ t.ctaP }}</p>
+  <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:22px">
+    <a href="game.html" style="padding:14px 22px;border-radius:20px;background:#FDA127;color:#033337;font:800 16px 'Plus Jakarta Sans','PJS Fallback',sans-serif;box-shadow:inset 0 -5px 0 rgba(0,0,0,.16)" style-hover="color:#033337">{{ t.ctaPlay }}</a>
+    <a href="https://thuyhuongctu.github.io/BizOn/BizOn%20Game%203D.html" style="padding:14px 18px;border-radius:20px;background:#0B4A4F;color:#FFD58A;font:700 15px 'Plus Jakarta Sans','PJS Fallback',sans-serif;box-shadow:inset 0 -4px 0 rgba(0,0,0,.25)">Bật Nghiệp 3D</a>
+    <a href="https://thuyhuongctu.github.io/BizOn/brand-passport.html" style="padding:14px 18px;border-radius:20px;background:#0B4A4F;color:#FFD58A;font:700 15px 'Plus Jakarta Sans','PJS Fallback',sans-serif;box-shadow:inset 0 -4px 0 rgba(0,0,0,.25)">{{ t.ctaBP }}</a>
+  </div>
+</section>
 </main>
 
-<p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2" style="color:rgba(100,116,125,.85)">✉️ Liên hệ · Contact: <a href="mailto:patu@ctu.edu.vn" style="color:inherit;text-decoration:underline">patu@ctu.edu.vn</a> · <a href="mailto:thuyhuongctu@gmail.com" style="color:inherit;text-decoration:underline">thuyhuongctu@gmail.com</a></p>
-<p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2 pb-6" style="color:rgba(100,116,125,.75)">© 2026 Đỗ Thùy Hương &amp; Phan Anh Tú · BizOn Bật Nghiệp</p>
-
-<script>
-/* Song ngữ tự chứa: đổi nội dung tĩnh của TRANG NÀY theo data-en/data-en-html khi
- * người dùng bấm nút ngôn ngữ (site-ui.js phát sự kiện 'bizon:langchange').
- * Không đụng tới bản đồ dịch trung tâm trong site-ui.js. */
-(function () {
-  'use strict';
-  function isEN() { try { return (localStorage.getItem('bizon-lang') || 'vi') === 'en'; } catch (e) { return false; } }
-  function apply() {
-    var en = isEN();
-    document.querySelectorAll('[data-en]').forEach(function (el) {
-      if (el.getAttribute('data-vi-txt') === null) el.setAttribute('data-vi-txt', el.textContent);
-      el.textContent = en ? el.getAttribute('data-en') : el.getAttribute('data-vi-txt');
-    });
-    document.querySelectorAll('[data-en-html]').forEach(function (el) {
-      if (el.getAttribute('data-vi-html') === null) el.setAttribute('data-vi-html', el.innerHTML);
-      el.innerHTML = en ? el.getAttribute('data-en-html') : el.getAttribute('data-vi-html');
-    });
-    document.documentElement.lang = en ? 'en' : 'vi';
+<footer style="background:#033337;color:#9CC9C9">
+  <div style="height:30px;background:radial-gradient(circle at 30px 0,#FBF4E8 29px,transparent 30px) 0 0/60px 30px repeat-x"></div>
+  <div style="max-width:1080px;margin:0 auto;padding:28px 24px 40px;display:flex;flex-direction:column;gap:10px;font-size:13px;line-height:1.6">
+    <div>© 2026 Đỗ Thùy Hương & PGS.TS. Phan Anh Tú – BizOn Bật Nghiệp</div>
+    <a href="https://play.google.com/store/apps/details?id=io.github.thuyhuongctu.bizon" style="align-self:flex-start;padding:8px 14px;border-radius:999px;background:#0B4A4F;color:#FFD58A;font-weight:800;box-shadow:inset 0 -3px 0 rgba(0,0,0,.25)">▶ {{ t.gp }}</a>
+    <div style="display:flex;flex-wrap:wrap;gap:16px"><a href="chinh-sach.html" style="color:#FFD58A">Privacy</a><a href="tuyen-dung.html" style="color:#FFD58A">Jobs</a><a href="lien-he.html" style="color:#FFD58A">Contact</a></div>
+  </div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;vi&quot;,&quot;en&quot;],&quot;default&quot;:&quot;vi&quot;,&quot;tsType&quot;:&quot;'vi'|'en'&quot;}}">
+const NAV7=[["Vũ trụ","Universe","universe.html"],["Trò chơi","Games","games.html"],["Lớp học","Classroom","lop-hoc.html"],["Học thuật","Academic","truong-hoc-thuat.html"],["Bằng chứng","Evidence","bang-chung.html"],["Pilot","Pilot","giai-phap.html"],["Đội ngũ","About","doi-ngu.html"]];
+const NAVX7=(lang,me)=>NAV7.map(([vi,en,href])=>{const on=href===me;return{label:lang==='en'?en:vi,href:on?'#':href,color:on?'#006687':'#3E5A5C',bg:on?'#FFFBF4':'transparent',sh:on?'0 4px 8px -4px rgba(110,70,30,.5),inset 0 -3px 0 rgba(110,70,30,.12)':'none'}});
+const IDS=['#bat-dau','#vong-choi','#do-kho','#vai-tro','#what-if','#cham-diem','#meo','#faq'];
+const LV=t=>t.map((x,i)=>({t:x,bg:i===1?'#006687':'transparent',fg:i===1?'#fff':'#3E5A5C'}));
+const T={
+vi:{gp:'Tải trên Google Play',navCta:'Bắt đầu',eyebrow:'Hướng dẫn chơi · Game Bật Nghiệp',h1:'Hướng dẫn chơi Bật Nghiệp',lead:'Điều hành công ty qua 6 vòng kinh doanh, ngồi vào một ghế C-suite, dùng mô phỏng Nếu–Thì và vượt mặt 3 đối thủ AI. Trang này hướng dẫn bạn từng bước một.',play:'Chơi ngay',play3d:'Thử bản 3D',
+stats:['vòng mỗi ván','vai C-suite','đối thủ AI','mỗi ván'],toc:['1 · Bắt đầu một ván','2 · Một vòng diễn ra thế nào','3 · Chọn độ khó đối thủ','4 · 5 vai & quyết định','5 · Mô phỏng Nếu–Thì','6 · Cách tính thắng thua','7 · Mẹo chơi','8 · Hỏi nhanh'],
+s1:'1 · Bắt đầu một ván',start:[['Mở game & đăng nhập','Sau màn chờ ngắn, nhập email, tên đội (VD: Rồng Xanh Corp) và — nếu lớp có dùng — mã lớp (VD: QTKD-2026-A). Không cần mật khẩu. Mã lớp là thứ giúp giảng viên thu kết quả của đội bạn.'],['Chọn ghế C-suite của bạn','Chọn một ghế: CEO, CFO, CMO, COO hoặc Thư ký (SEC). Ghế của bạn được cố vấn AI kèm sát hơn, nhưng bạn vẫn là người quyết định cuối cùng cho mọi lựa chọn mỗi vòng — bốn ghế còn lại chỉ đưa ra gợi ý.'],['Nhận mùa kịch bản (A hoặc B)','Mỗi ván mới bốc một trong hai tuyến truyện 6 biến cố: «Giữ Sân Nhà» (A) hoặc «Sóng Ngoại Nhập» (B). Kết quả bốc cố định theo mã lớp + tên đội (nên công bằng và tái lập được), và hai mùa khó như nhau — chỉ khác câu chuyện. Bạn khởi đầu với 500 triệu ₫ vốn.']],
+s2:'2 · Một vòng diễn ra thế nào',s2sub:'Mỗi ván có 6 vòng (chu kỳ). Mỗi vòng lặp lại các nhịp giống nhau:',beats:[['Quan sát','Mở Tổng quan (bảng chính) để đọc biến cố thị trường của vòng và 3 chỉ số sống còn: tiền mặt, thị phần, uy tín thương hiệu. Lumina nhắc điều cần để ý.'],['Quyết định','Ở tab Quyết định, đặt các thông số cho từng vai (giá, marketing, sản lượng, nhân sự, vốn…). Bảng dự báo trực tiếp cho thấy tiền mặt và thị phần dự kiến so với 3 đối thủ.'],['Thử Nếu–Thì (tùy chọn)','Trước khi khóa, bạn có thể chạy tối đa 2 lượt mô phỏng miễn phí mỗi vòng để xem trước kết quả của bộ thông số hiện tại. Xem mục 5.'],['Khóa & giải quyết','Bấm Khóa vòng. 3 đối thủ AI ra quyết định cùng lúc, thị trường được giải quyết, và bạn xem báo cáo vòng (doanh thu, lợi nhuận, thị phần mới). Sau đó vòng tiếp theo mở ra.']],
+cashB:'Tiền không tự sinh ra.',cash:'Mọi khoản chi (marketing, sản xuất, lương, R&D) đều trừ vào tiền mặt của bạn. Nếu một kế hoạch cần nhiều hơn số bạn có, hãy cấp vốn bằng khoản vay ngân hàng (CFO) hoặc thu nhỏ lại.',
+s3:'3 · Chọn độ khó đối thủ',s3sub:'3 đối thủ AI có thể chơi ở mức Dễ · Thường · Khó. Mức càng cao thì đối thủ càng mạnh.',levels:LV(['Dễ','Thường','Khó']),where:'Đặt ở đâu',diff:['Mở tab Cài đặt ở thanh dưới cùng.','Tìm mục Độ khó đối thủ và bấm Dễ / Thường / Khó.','Quay lại Tổng quan (màn chính) và bắt đầu nhập quyết định của vòng này.'],
+diffWarnB:'Hãy chọn độ khó trước khi khóa vòng đầu tiên.',diffWarn:'Với ván có tính điểm (có mã lớp), độ khó sẽ khóa lại ngay sau khi khóa vòng đầu và không đổi được giữa chừng — muốn đổi phải bấm Chơi lại (Reset) trong Cài đặt rồi đăng nhập lại. Với chế độ chơi tự do (không mã lớp) thì đổi lúc nào cũng được. Mẹo: chọn mức khi bạn chưa chơi vòng nào.',
+s4:'4 · 5 vai & quyết định của từng vai',s4sub:'Bạn ngồi một ghế nhưng quyết định cho tất cả. Đây là những gì mỗi vai đặt mỗi vòng:',roles:[['CEO','Tầm nhìn & điều phối','Đặt định hướng, chạy mô phỏng Nếu–Thì và bấm Khóa vòng để chốt vòng.'],['CFO','Tài chính','Hai lựa chọn then chốt: Cơ cấu nguồn vốn — Vốn tự có hoặc Vay ngân hàng (thấu chi 8,5%/vòng trên phần thiếu); và Kỳ hạn thanh toán cho khách — 30 / 60 / 90 ngày (kỳ hạn dài giúp cầu tăng nhẹ nhưng cũng đội chi phí: 90 ngày ≈ +8% cầu, +5% chi phí). Vai này cũng đặt ngân sách R&D.'],['CMO','Marketing','Đặt giá bán (80–300k ₫, tham chiếu 150k) và ngân sách marketing. Giá quá cao thì bị đối thủ cắt giá; quá thấp thì mất lời. Theo dõi bảng dự báo thị phần trực tiếp.'],['COO','Vận hành','Đặt sản lượng, số nhân viên (mỗi người tốn 1 triệu/vòng, làm được tối đa 70 sản phẩm) và ngân sách đào tạo. Sản xuất quá ít thì cháy hàng; quá nhiều thì tồn kho ứ vốn.'],['Thư ký · SEC','Pháp chế & ghi chép','Không có thông số — mở nhật ký đội và đọc biến cố thị trường của vòng để cả đội không bỏ sót bối cảnh.']],
+s5:'5 · Mô phỏng «Nếu–Thì»',s5sub:'Trước khi chốt, bạn có thể chạy thử bộ thông số hiện tại để xem trước kết quả. Nó miễn phí — giới hạn duy nhất là số lượt chạy.',wif:[{h:'Chiến lược (CEO)',p:'Dự báo thị phần, lợi nhuận ròng và điểm hòa vốn, kèm kết luận: an toàn, khả thi nhưng rủi ro, hay rủi ro cao.'},{h:'Tài chính (CFO)',p:'Bài kiểm tra chịu lực: dự báo tiền mặt cuối vòng, hệ số thanh toán nhanh và ROI, cảnh báo bào mòn vốn hay rủi ro mất khả năng chi trả.'}],wifB:'Bạn có 2 lượt mỗi vòng tính CHUNG — dùng chung cho cả hai nút, không phải 2 lượt mỗi nút.',wifN:'Chạy Chiến lược một lần và Tài chính một lần là đã hết. Hạn mức được nạp lại sau khi bạn khóa vòng. Hãy dùng khôn ngoan: chạy cái trả lời được điều bạn phân vân nhất.',
+s6:'6 · Cách tính thắng thua',winRB:'Thắng một vòng',winR:'nghĩa là giữ thị phần cao nhất trong 4 công ty — nhưng chỉ khi lợi nhuận vẫn dương. Thị phần cao nhất mà lỗ thì chưa tính là thắng.',finB:'Xếp hạng chung cuộc',fin:'sau 6 vòng dựa trên thị phần chung cuộc — đó là thước đo chiến thắng của sàn đấu. Bảng tổng kết cuối ván còn hiển thị tổng doanh thu, lợi nhuận tích lũy, uy tín thương hiệu (trên 10), và thị phần, tăng trưởng, ROI của từng đối thủ, cùng doanh thu của bạn so với mốc mục tiêu +8%/vòng.',gradeB:'Về chấm điểm lớp học:',grade:'game xếp hạng theo thị phần, nhưng giảng viên có thể thêm tiêu chí riêng (VD: lợi nhuận, chất lượng phản tư, lập luận quyết định). Theo dõi nhóm lớp để nhận tiêu chí chấm điểm cho 6 vòng chơi.',
+s7:'7 · Mẹo chơi hay',tips:[{b:'Mô phỏng trước khi khóa.',r:'Dùng một lượt Nếu–Thì mỗi khi một quyết định thấy rủi ro — nó miễn phí và bắt sớm nguy cơ mất khả năng chi trả.'},{b:'Cân đối giá và marketing.',r:'Giảm giá thì được thị phần nhưng mỏng biên lời; marketing mạnh cần doanh số bù lại. Nhìn bảng dự báo trực tiếp.'},{b:'Khớp sản lượng với nhu cầu.',r:'Hàng tồn làm đóng băng tiền mặt; sản xuất quá ít thì cháy hàng. Dùng dự báo để canh mẻ sản xuất.'},{b:'Kỳ hạn thanh toán là một đòn bẩy.',r:'Kỳ hạn 90 ngày đẩy cầu nhưng tốn hơn — đáng khi cần thị phần, rủi ro khi tiền eo hẹp.'},{b:'Vay có chủ đích, đừng vay bị động.',r:'Vốn vay bù phần thiếu với lãi 8,5%/vòng — hãy tính đường trả, đừng để lãi cuộn lên.'},{b:'Chọn độ khó trước tiên.',r:'Ván tính điểm không đổi được sau vòng 1 — cả đội thống nhất trước khi khóa.'}],
+s8:'8 · Hỏi nhanh',faq:[{q:'Có đổi được độ khó giữa chừng không?',a:'Trong ván tính điểm (có mã lớp) — không, nó khóa sau khi bạn khóa vòng 1. Muốn đổi, dùng Chơi lại (Reset) trong Cài đặt rồi đăng nhập lại. Ở chế độ chơi tự do không mã lớp thì đổi lúc nào cũng được.'},{q:'Đóng tab thì có lưu tiến trình không?',a:'Có — tiến trình tự lưu trên thiết bị. Đội có mã lớp còn được khôi phục từ máy chủ, nên bạn có thể chơi tiếp trên máy phòng lab khác bằng cách đăng nhập cùng tên đội và mã lớp.'},{q:'Làm sao chơi lại từ đầu?',a:'Mở Cài đặt → Chơi lại từ đầu (Reset). Nó xóa tiến trình hiện tại và về màn đăng nhập.'},{q:'Game có song ngữ không?',a:'Có. Chuyển Việt/Anh bất cứ lúc nào từ nút ⋯ (hoặc Cài đặt → Giao diện tiếng Anh). Ván đang chơi không bị ảnh hưởng — chỉ đổi ngôn ngữ.'},{q:'Gặp lỗi thì làm gì?',a:'Báo lên nhóm lớp, hoặc dùng Cài đặt → Gửi báo cáo lỗi trong game. Ghi rõ đang ở vòng nào và bạn bấm gì để dễ tái hiện.'}],
+ctaH:'Sẵn sàng chơi chưa?',ctaP:'Rủ đội của bạn, chọn một ghế và dẫn công ty qua 6 vòng.',ctaPlay:'Bắt đầu chơi',ctaBP:'Thử Hộ Chiếu Thương Hiệu'},
+en:{gp:'Get it on Google Play',navCta:'Launch',eyebrow:'Player\'s guide · Bật Nghiệp game',h1:'How to play Bật Nghiệp',lead:'Run your company through 6 business rounds, take one C-suite seat, use the What-If simulator and outsmart 3 AI rivals. This page walks you through everything step by step.',play:'Play now',play3d:'Try the 3D version',
+stats:['rounds per game','C-suite roles','AI rivals','per game'],toc:['1 · Start a game','2 · How a round works','3 · Opponent difficulty','4 · The 5 roles & decisions','5 · The What-If simulator','6 · How winning is scored','7 · Tips','8 · Quick questions'],
+s1:'1 · Start a game',start:[['Open the game & log in','After a short splash, enter your email, your team name (e.g. Rồng Xanh Corp) and — if your class uses one — a class code (e.g. QTKD-2026-A). No password needed. The class code is what lets the instructor collect your team\'s results.'],['Pick your C-suite seat','Choose one seat: CEO, CFO, CMO, COO or Thư ký (SEC). Your seat gets extra AI coaching, but you still make the final call on every decision each round — the other four seats only offer suggestions.'],['Get your scenario season (A or B)','Each new game draws one of two 6-event storylines: «Giữ Sân Nhà» (A) or «Sóng Ngoại Nhập» (B). The draw is fixed from your class code + team name (so it\'s fair and repeatable), and both seasons are equally hard — only the story differs. You start with 500 triệu ₫ of seed capital.']],
+s2:'2 · How a round works',s2sub:'Every game is 6 rounds (chu kỳ). Each round repeats the same beats:',beats:[['Observe','Open Tổng quan (home dashboard) to read the round\'s market event and your 3 vital signs: cash, market share, brand reputation. Lumina flags what to watch.'],['Decide','In the Quyết định tab, set the numbers for each role (price, marketing, production, staffing, funding…). A live forecast shows your projected cash and market share vs the 3 rivals.'],['Test with What-If (optional)','Before locking, you may run up to 2 free simulations per round to preview the outcome of your current numbers. See section 5.'],['Lock & settle','Press Khóa vòng. The 3 AI rivals make their moves at the same time, the market resolves, and you see the round report (revenue, profit, new share). Then the next round opens.']],
+cashB:'Money doesn\'t appear from nowhere.',cash:'Everything you spend (marketing, production, wages, R&D) comes out of your cash. If a plan needs more than you have, either fund it with a bank loan (CFO) or scale it down.',
+s3:'3 · Choosing opponent difficulty',s3sub:'The 3 AI rivals can play at Dễ · Thường · Khó (Easy · Normal · Hard). Higher difficulty makes them more competitive.',levels:LV(['Easy','Normal','Hard']),where:'Where to set it',diff:['Open the Cài đặt (Settings) tab from the bottom bar.','Find Độ khó đối thủ and tap Dễ / Thường / Khó.','Go back to Tổng quan (home) and start entering this round\'s decisions.'],
+diffWarnB:'Set the difficulty before you lock your first round.',diffWarn:'In a graded game (one with a class code), the difficulty locks after the first round is committed and can\'t be changed mid-game — to switch it you must Chơi lại (Reset) in Settings and log in again. In free-play (no class code) you can change it any time. Tip: pick a level while you haven\'t played any round yet.',
+s4:'4 · The 5 roles & their decisions',s4sub:'You control one seat but decide for all of them. Here\'s what each role sets each round:',roles:[['CEO','Vision & coordination','Sets the direction, runs the What-If simulations and presses Khóa vòng to lock the round.'],['CFO','Finance','Two key choices: Capital structure — equity or bank loan (overdraft at 8.5%/round on the shortfall); and customer payment terms — 30 / 60 / 90 days (longer terms lift demand a little but also raise your costs: 90 days ≈ +8% demand, +5% cost). Also sets the R&D budget.'],['CMO','Marketing','Sets the selling price (80–300k ₫, reference 150k) and the marketing budget. Price too high and rivals undercut you; too low and you leave money on the table. Watch the live share forecast.'],['COO','Operations','Sets production volume, headcount (each worker costs 1 triệu/round and makes up to 70 units) and training budget. Make too little and you sell out; too much and unsold stock ties up cash.'],['Thư ký · SEC','Legal & records','No numbers to set — opens the team journal and reads the round\'s market event so the team doesn\'t miss context.']],
+s5:'5 · The What-If (Nếu–Thì) simulator',s5sub:'Before you commit, you can dry-run your current numbers to preview the outcome. It\'s free — the only limit is the number of runs.',wif:[{h:'Strategy (CEO)',p:'Forecasts your market share, net profit and break-even, with a verdict: safe, viable-but-risky, or high-risk.'},{h:'Finance (CFO)',p:'A stress test: projected end-of-round cash, Quick Ratio and ROI, flagging capital erosion or insolvency risk.'}],wifB:'You get 2 runs per round in total — shared between the two buttons, not 2 each.',wifN:'Running Strategy once and Finance once already uses up both. The quota resets after you lock the round. Use them wisely: run the one that answers your biggest doubt.',
+s6:'6 · How winning is scored',winRB:'Winning a round',winR:'means holding the highest market share among the 4 companies — but only if your profit stays positive. Highest share while losing money doesn\'t count as a win.',finB:'The final ranking',fin:'after 6 rounds is by overall market share — that\'s the arena\'s measure of victory. The end-of-game summary also shows total revenue, cumulative profit, brand loyalty (out of 10), and each rival\'s share, growth and ROI, plus your revenue vs a +8%/round target line.',gradeB:'For class grading:',grade:'the game ranks by market share, but your instructor may add their own rubric (e.g. profit, reflection quality, decision reasoning). Watch the class group for the scoring criteria for the 6 rounds.',
+s7:'7 · Tips to play well',tips:[{b:'Simulate before you lock.',r:'Spend a What-If run whenever a decision feels risky — it\'s free and it catches insolvency early.'},{b:'Balance price vs marketing.',r:'Cutting price wins share but thins margin; heavy marketing needs the sales to pay it back. Watch the live forecast.'},{b:'Match production to demand.',r:'Unsold units freeze your cash; too few and you sell out. Use the forecast to size the batch.'},{b:'Payment terms are a lever.',r:'90-day terms boost demand but cost more — worth it when you need share, risky when cash is tight.'},{b:'Borrow on purpose, not by accident.',r:'Bank funding covers a shortfall at 8.5%/round — plan the payback, don\'t let interest snowball.'},{b:'Set difficulty first.',r:'In a graded game you can\'t change it after round 1 — decide as a team before you lock.'}],
+s8:'8 · Quick questions',faq:[{q:'Can we change the difficulty in the middle of a game?',a:'In a graded game (with a class code) — no, it locks after you commit round 1. To change it, use Chơi lại (Reset) in Settings and log in again. In free-play with no class code, you can change it any time.'},{q:'Is our progress saved if we close the tab?',a:'Yes — progress is saved on your device automatically. Teams with a class code also resume from the server, so you can continue on another shared-lab computer by logging in with the same team name and class code.'},{q:'How do we start over?',a:'Open Cài đặt → Chơi lại từ đầu (Reset). It clears the current progress and returns to the login screen.'},{q:'Is the game bilingual?',a:'Yes. Switch Vietnamese/English any time from the ⋯ button (or Cài đặt → Giao diện tiếng Anh). Your current game isn\'t affected — only the language changes.'},{q:'We hit a bug — what do we do?',a:'Report it to the class group, or use Cài đặt → Gửi báo cáo lỗi in the game. Say which round and what you tapped so it\'s easy to reproduce.'}],
+ctaH:'Ready to play?',ctaP:'Grab your team, pick a seat and take your company through 6 rounds.',ctaPlay:'Start playing',ctaBP:'Try Brand Passport'}};
+class Component extends DCLogic{
+  state={lang:null};
+  renderVals(){
+    const lang=this.state.lang||this.props.lang||'vi';const t=T[lang];
+    if(!this._art)this._art=React.createElement('img',{src:'assets/character/lumina-ao-dai-present.webp',alt:'Lumina',style:{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'contain',objectPosition:'50% 100%',filter:'drop-shadow(0 18px 14px rgba(110,70,30,.35))',animation:'bzFloat 6s ease-in-out infinite'}});
+    const on='inset 0 -3px 0 rgba(0,0,0,.2),0 4px 8px -3px rgba(0,60,80,.5)';
+    const sn=['6','5','3',"30–45'"],sc=['#006687','#E8762D','#1E7E8C','#7A4A0E'];
+    const bb=['#BFE6EE','#FFE3A8','#F4B6C2','#A9DCC4'],rc=['#FFD58A','#A9DCC4','#F4B6C2','#7FD3DC','#E6D3F0'];
+    return{t,heroArt:this._art,
+      setVi:()=>this.setState({lang:'vi'}),setEn:()=>this.setState({lang:'en'}),
+      viBg:lang==='vi'?'#006687':'transparent',viFg:lang==='vi'?'#fff':'#3E5A5C',viSh:lang==='vi'?on:'none',
+      enBg:lang==='en'?'#006687':'transparent',enFg:lang==='en'?'#fff':'#3E5A5C',enSh:lang==='en'?on:'none',
+      navLinks:NAVX7(lang,'games.html'),
+      stats:t.stats.map((l,i)=>({l,n:sn[i],c:sc[i]})),
+      toc:t.toc.map((l,i)=>({l,href:IDS[i]})),
+      start:t.start.map(([h,p],i)=>({h,p,n:i+1})),
+      beats:t.beats.map(([h,p],i)=>({h,p,n:'0'+(i+1),bg:bb[i]})),
+      diffSteps:t.diff.map((x,i)=>({n:i+1,t:x})),
+      roles:t.roles.map(([n,tag,p],i)=>({n,tag,p,k:i===4?'SEC':n,c:rc[i]}))};
   }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', apply);
-  else apply();
-  window.addEventListener('bizon:langchange', apply);
-})();
+}
 </script>
-<script src="js/site-ui.js" defer></script>
-<script src="js/site-vnmap.js" defer></script>
-<script src="js/site-dock.js" defer></script>
-<script src="js/site-footer.js" defer></script>
-<script src="js/site-nav.js" defer></script>
 </body>
 </html>

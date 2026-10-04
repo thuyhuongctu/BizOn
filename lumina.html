@@ -1,222 +1,226 @@
 <!DOCTYPE html>
-<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
-<html lang="vi">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Thẻ mô tả hệ thống – Cố vấn Lumina AI – BizOn Bật Nghiệp</title>
-<meta name="description" content="Thẻ mô tả hệ thống của cố vấn Lumina trong BizOn Bật Nghiệp: cơ chế hoạt động, dữ liệu đầu vào, giới hạn đã biết và cách xử lý dữ liệu người học.">
-<meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
-<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
-<script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
-<script src="js/backend-config.js"></script>
-<script src="js/error-log.js"></script>
-<!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
-     nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
-<link rel="stylesheet" href="css/bizon-fonts.css">
-<style>
-  html { background:#f4faff; scroll-behavior:smooth; }
-  body { font-family:'Manrope', 'Manrope Fallback',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
-  .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
-  .clay-sunken { background:#e8f2f8; box-shadow:inset 3px 3px 8px rgba(0,102,135,.12), inset -3px -3px 8px rgba(255,255,255,.9); }
-  .glass-nav { background:rgba(3,51,55,.78); backdrop-filter:blur(14px); }
-  .lm-yes { border-left:4px solid #128a5a; }
-  .lm-no  { border-left:4px solid #c2410c; }
-  .lm-code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:11px; background:rgba(0,102,135,.08); padding:1px 6px; border-radius:6px; }
-  /* ===== Chế độ tối ===== */
-  :root { --dt: 3 51 55; }
-  html[data-theme="dark"] { --dt: 214 236 240; background:#081a20; color-scheme:dark; }
-  html[data-theme="dark"] body { color:#d6ecf0; }
-  html[data-theme="dark"] .clay-card { background:#0e2a33; box-shadow:0 10px 30px -5px rgba(0,0,0,.45), inset 0 -4px 0 rgba(0,0,0,.3); }
-  html[data-theme="dark"] .clay-sunken { background:#0a222a; box-shadow:inset 3px 3px 8px rgba(0,0,0,.5), inset -3px -3px 8px rgba(255,255,255,.03); }
-  html[data-theme="dark"] .glass-nav { background:rgba(2,20,24,.85); }
-  html[data-theme="dark"] .text-primary { color:#5cc4e6 !important; }
-  html[data-theme="dark"] .lm-code { background:rgba(92,196,230,.14); }
-</style>
-<link rel="stylesheet" href="css/tw.css">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="BizOn Bật Nghiệp">
-<meta property="og:locale" content="vi_VN">
-<meta property="og:title" content="Thẻ mô tả hệ thống – Cố vấn Lumina AI">
-<meta property="og:description" content="Lumina hoạt động bằng gì, dùng dữ liệu nào, giới hạn ra sao – công bố minh bạch phục vụ nghiên cứu giáo dục.">
-<meta property="og:url" content="https://thuyhuongctu.github.io/BizOn/lumina.html">
-<meta property="og:image" content="https://thuyhuongctu.github.io/BizOn/assets/og/og-cover.webp">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
 </head>
 <body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="css/bizon-clay-fonts.css">
+<style>
+body{margin:0;background:#FBF4E8;color:#033337;font-family:'Be Vietnam Pro','BVP Fallback',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#006687;text-decoration:none}
+a:hover{color:#033337}
+*{box-sizing:border-box}
+nav::-webkit-scrollbar{display:none}
+@keyframes bzFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+<script src="js/site-vnmap.js"></script>
+</helmet>
+<div style="min-height:100vh;overflow-x:hidden">
 
-
-<!-- HERO -->
-<header class="pt-24 pb-8 text-white" style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%)">
-  <div class="max-w-5xl mx-auto px-5 flex items-center gap-6">
-    <div class="min-w-0">
-      <p class="text-[11px] font-extrabold uppercase tracking-wider" style="color:rgba(255,255,255,.6)">Thẻ mô tả hệ thống</p>
-      <h1 class="font-display font-extrabold text-3xl sm:text-4xl mt-1">🤖 Cố vấn Lumina AI</h1>
-      <p class="text-white/75 text-sm mt-3 max-w-2xl">Trang này công bố Lumina thực sự hoạt động bằng gì, đọc dữ liệu nào và có giới hạn ra sao. Chúng tôi công bố để người dạy, người học và người phản biện kiểm chứng được – chứ không mô tả Lumina mạnh hơn thực tế.</p>
+<header style="position:sticky;top:12px;z-index:50;max-width:1200px;margin:12px auto 0;padding:0 16px">
+  <div style="display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:14px;min-height:68px;padding:8px 10px 8px 20px;border-radius:999px;background:#FFFBF4;box-shadow:0 18px 30px -16px rgba(110,70,30,.35),inset 0 -6px 0 rgba(0,0,0,.05),inset 0 4px 0 rgba(255,255,255,.9)">
+    <a href="index.html" style="display:flex;align-items:center;gap:10px;color:#033337">
+      <span style="display:flex;align-items:center;font-family:'Be Vietnam Pro',sans-serif;font-weight:800;font-size:24px;letter-spacing:-.045em;line-height:1">Biz<span style="position:relative;display:inline-block;width:.86em;height:.72em;border:.15em solid currentColor;border-radius:50%;margin:0 .02em 0 .04em"><span style="position:absolute;right:.06em;top:50%;width:.26em;height:.26em;margin-top:-.13em;border-radius:50%;background:#FDA127"></span></span>n</span>
+    </a>
+    <nav style="justify-self:center;max-width:clamp(0px,calc((100vw - 1040px) * 999),100%);display:flex;gap:4px;padding:clamp(0px,calc((100vw - 1040px) * 999),5px);border-radius:999px;background:#F3E6CF;box-shadow:inset 0 3px 6px rgba(110,70,30,.18);overflow-x:auto;scrollbar-width:none;font-size:14px;font-weight:700;white-space:nowrap">
+      <sc-for list="{{ navLinks }}" as="l" hint-placeholder-count="7">
+        <a href="{{ l.href }}" style="flex:none;padding:8px 14px;border-radius:999px;color:{{ l.color }};background:{{ l.bg }};box-shadow:{{ l.sh }}" style-hover="color:#006687">{{ l.label }}</a>
+      </sc-for>
+    </nav>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="display:flex;padding:4px;border-radius:999px;background:#F3E6CF;box-shadow:inset 0 3px 5px rgba(110,70,30,.18);font-size:12px;font-weight:800">
+        <button onClick="{{ setVi }}" style="border:0;cursor:pointer;padding:7px 12px;border-radius:999px;font:inherit;background:{{ viBg }};color:{{ viFg }};box-shadow:{{ viSh }}">VI</button>
+        <button onClick="{{ setEn }}" style="border:0;cursor:pointer;padding:7px 12px;border-radius:999px;font:inherit;background:{{ enBg }};color:{{ enFg }};box-shadow:{{ enSh }}">EN</button>
+      </div>
+      <a href="game.html" style="white-space:nowrap;padding:11px 18px;border-radius:999px;background:#E8762D;color:#fff;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:16px;font-weight:700;box-shadow:inset 0 -5px 0 rgba(0,0,0,.16),inset 0 3px 0 rgba(255,255,255,.35),0 10px 18px -8px rgba(232,118,45,.7)" style-hover="color:#fff">{{ t.navCta }}</a>
     </div>
-    <img src="assets/character/lumina-casual.webp" alt="Lumina – tạo hình đời thường" class="hidden sm:block w-36 object-contain shrink-0 drop-shadow-2xl" loading="lazy">
   </div>
+  <nav style="margin:8px auto 0;width:fit-content;max-width:100%;max-height:clamp(0px,calc((1040px - 100vw) * 999),64px);padding:clamp(0px,calc((1040px - 100vw) * 999),5px);display:flex;gap:4px;border-radius:999px;background:#F3E6CF;box-shadow:inset 0 3px 6px rgba(110,70,30,.18),0 12px 20px -14px rgba(110,70,30,.5);overflow-x:auto;overflow-y:hidden;scrollbar-width:none;font-size:14px;font-weight:700;white-space:nowrap">
+    <sc-for list="{{ navLinks }}" as="l" hint-placeholder-count="7">
+      <a href="{{ l.href }}" style="flex:none;padding:8px 14px;border-radius:999px;color:{{ l.color }};background:{{ l.bg }};box-shadow:{{ l.sh }}" style-hover="color:#006687">{{ l.label }}</a>
+    </sc-for>
+  </nav>
 </header>
 
-<main class="max-w-5xl mx-auto px-5 py-10">
+<main style="max-width:1080px;margin:0 auto;padding:0 24px">
+<section style="position:relative;overflow:hidden;margin:28px 0 40px;border-radius:40px;background:#033337;color:#fff;box-shadow:inset 0 -10px 0 rgba(0,0,0,.25),inset 0 6px 0 rgba(255,255,255,.08),0 30px 44px -30px rgba(3,51,55,.8)">
+  <div style="position:absolute;right:-10%;top:-40%;width:min(560px,64%);aspect-ratio:1;border-radius:50%;background:url(assets/brand/trong-dong.svg) center/contain no-repeat;opacity:.18;pointer-events:none"></div>
+  <div style="position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end;padding:clamp(24px,4vw,44px) clamp(20px,4vw,44px) 0">
+    <div style="padding-bottom:clamp(28px,5vw,60px)">
+      <div style="display:inline-flex;padding:7px 14px;border-radius:999px;background:rgba(255,213,138,.16);color:#FFD58A;font-size:13px;font-weight:800">{{ t.eyebrow }}</div>
+      <h1 style="margin:18px 0 0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-weight:800;font-size:clamp(40px,5.4vw,68px);line-height:1.1;letter-spacing:-.02em;text-wrap:balance">{{ t.h1 }}</h1>
+      <p style="margin:18px 0 0;max-width:36em;font-size:17px;line-height:1.65;color:#BFE6EE;text-wrap:pretty">{{ t.lead }}</p>
+    </div>
+    <div style="width:min(28vw,260px);aspect-ratio:3/4;position:relative">{{ heroArt }}</div>
+  </div>
+</section>
 
-  <!-- TÓM TẮT MỘT DÒNG -->
-  <section class="clay-card p-5 sm:p-6 mb-10">
-    <h2 class="font-display font-extrabold text-deep-teal text-lg mb-2">Tóm tắt trong một câu</h2>
-    <p class="text-sm text-deep-teal/70">Lumina là <b>nhân vật cố vấn trong trò chơi</b>, vận hành bằng một bộ luật «nếu – thì» viết bằng JavaScript, chạy hoàn toàn trên trình duyệt của người chơi. Lumina <b>không phải</b> một mô hình học máy và không gọi bất kỳ dịch vụ AI nào trong lúc chơi.</p>
-  </section>
+<section style="margin-bottom:40px;padding:clamp(22px,3vw,32px);border-radius:32px;background:#FFF3DA;box-shadow:inset 0 -9px 0 rgba(140,80,20,.1),inset 0 5px 0 rgba(255,255,255,.7),0 26px 36px -24px rgba(110,70,30,.5)">
+  <h2 style="margin:0 0 10px;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:22px;font-weight:800">{{ t.sumTitle }}</h2>
+  <p style="margin:0;font-size:17px;line-height:1.7;color:#24403F;text-wrap:pretty">{{ t.sum1 }}<strong style="color:#033337">{{ t.sumB1 }}</strong>{{ t.sum2 }}<strong style="color:#B5480F">{{ t.sumB2 }}</strong>{{ t.sum3 }}</p>
+</section>
 
-  <!-- LÀ GÌ / KHÔNG PHẢI LÀ GÌ -->
-  <section class="mb-12">
-    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-5">✅ Lumina là gì – và không phải là gì</h2>
-    <div class="grid sm:grid-cols-2 gap-4">
-      <div class="clay-card lm-yes p-5">
-        <h3 class="font-display font-extrabold text-deep-teal text-sm mb-3">Đúng như công bố</h3>
-        <ul class="space-y-2 text-[13px] text-deep-teal/70">
-          <li>• Bộ luật «nếu – thì» tất định, đặt trong <span class="lm-code">js/engine.js</span> – hàm <span class="lm-code">luminaAdvice()</span> và <span class="lm-code">whatIfSimulate()</span>.</li>
-          <li>• Đọc trạng thái ván chơi hiện tại để chọn kịch bản lời khuyên phù hợp.</li>
-          <li>• Chạy trên trình duyệt, không cần mạng sau lần tải đầu.</li>
-          <li>• Cùng một trạng thái ván chơi luôn cho ra cùng một lời khuyên – đây là tính chất của bộ luật tất định, kiểm chứng được bằng cách đọc mã nguồn.</li>
-          <li>• Kèm mức rủi ro <b>thấp / trung bình / cao</b> để người học tự đánh giá.</li>
-        </ul>
-      </div>
-      <div class="clay-card lm-no p-5">
-        <h3 class="font-display font-extrabold text-deep-teal text-sm mb-3">Không phải – xin đừng hiểu nhầm</h3>
-        <ul class="space-y-2 text-[13px] text-deep-teal/70">
-          <li>• <b>Không</b> có mạng nơ-ron, không có trọng số mô hình.</li>
-          <li>• <b>Không</b> được huấn luyện trên dữ liệu nào, kể cả dữ liệu người học.</li>
-          <li>• <b>Không</b> gọi mô hình ngôn ngữ lớn hay dịch vụ AI bên ngoài trong lúc chơi.</li>
-          <li>• <b>Không</b> đưa ra tư vấn kinh doanh thật – mọi lời khuyên chỉ đúng bên trong mô hình mô phỏng của trò chơi.</li>
-          <li>• <b>Không</b> tự học từ ván chơi trước; bộ luật cố định cho tới khi nhóm tác giả sửa mã.</li>
-        </ul>
+<section style="margin-bottom:56px">
+  <h2 style="margin:0 0 18px;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:clamp(26px,3vw,34px);font-weight:800">{{ t.isTitle }}</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:20px">
+    <div style="padding:26px;border-radius:30px;background:#A9DCC4;box-shadow:inset 0 -9px 0 rgba(0,0,0,.07),inset 0 5px 0 rgba(255,255,255,.5),0 26px 36px -24px rgba(30,90,60,.5)">
+      <h3 style="margin:0 0 14px;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:20px;font-weight:800;color:#0F4A35">{{ t.yesTitle }}</h3>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <sc-for list="{{ t.yes }}" as="x" hint-placeholder-count="5">
+          <div style="display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;font-size:15px;line-height:1.6;color:#123B2E"><span style="width:22px;height:22px;margin-top:2px;border-radius:50%;background:#FFFBF4;color:#128A5A;display:grid;place-items:center;font-size:12px;font-weight:900;box-shadow:inset 0 -2px 0 rgba(0,0,0,.08)">✓</span><span>{{ x }}</span></div>
+        </sc-for>
       </div>
     </div>
-  </section>
-
-  <!-- ĐẦU VÀO – ĐẦU RA -->
-  <section class="mb-12">
-    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">🔎 Lumina đọc gì và trả về gì</h2>
-    <p class="text-sm text-deep-teal/55 mb-5">Toàn bộ đầu vào đều là số liệu của chính ván chơi, nằm trong bộ nhớ trình duyệt.</p>
-    <div class="grid sm:grid-cols-2 gap-4">
-      <div class="clay-card p-5">
-        <h3 class="font-display font-extrabold text-deep-teal text-sm mb-3">Đầu vào</h3>
-        <ul class="space-y-1.5 text-[13px] text-deep-teal/70">
-          <li>• Biến cố của vòng đang chơi và sắc thái của nó</li>
-          <li>• Số đơn hàng bị hụt ở vòng trước</li>
-          <li>• Thị phần và số dư ví ảo hiện tại</li>
-          <li>• Chủ đề người chơi hỏi: giá bán, marketing hoặc rủi ro</li>
-          <li>• Giá tham chiếu thị trường của trò chơi</li>
-        </ul>
-      </div>
-      <div class="clay-card p-5">
-        <h3 class="font-display font-extrabold text-deep-teal text-sm mb-3">Đầu ra</h3>
-        <ul class="space-y-1.5 text-[13px] text-deep-teal/70">
-          <li>• Một đoạn lời khuyên bằng tiếng Việt</li>
-          <li>• Một mức rủi ro: thấp, trung bình hoặc cao</li>
-          <li>• Gợi ý hành động cụ thể trong trò chơi (giảm giá, tăng marketing, mua vật phẩm phòng thủ…)</li>
-          <li>• Với «Nếu – Thì»: dự báo thị phần và điểm hòa vốn theo thông số giả định</li>
-        </ul>
+    <div style="padding:26px;border-radius:30px;background:#F8C9A8;box-shadow:inset 0 -9px 0 rgba(0,0,0,.07),inset 0 5px 0 rgba(255,255,255,.5),0 26px 36px -24px rgba(150,70,20,.5)">
+      <h3 style="margin:0 0 14px;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:20px;font-weight:800;color:#7A2E08">{{ t.noTitle }}</h3>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <sc-for list="{{ t.no }}" as="x" hint-placeholder-count="5">
+          <div style="display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;font-size:15px;line-height:1.6;color:#4A2210"><span style="width:22px;height:22px;margin-top:2px;border-radius:50%;background:#FFFBF4;color:#C2410C;display:grid;place-items:center;font-size:12px;font-weight:900;box-shadow:inset 0 -2px 0 rgba(0,0,0,.08)">✕</span><span>{{ x }}</span></div>
+        </sc-for>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- GIỚI HẠN LƯỢT -->
-  <section class="mb-12">
-    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">⏱️ Giới hạn lượt hỏi</h2>
-    <p class="text-sm text-deep-teal/55 mb-5">Giới hạn này là dụng ý sư phạm: người học phải tự phân tích trước, hỏi cố vấn sau – chứ không hỏi thay cho suy nghĩ.</p>
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-      <div class="clay-sunken rounded-2xl px-4 py-3 text-center">
-        <p class="font-display font-extrabold text-deep-teal text-2xl">3</p>
-        <p class="text-[11px] text-deep-teal/55 mt-0.5">lượt tư vấn mỗi vòng</p>
-      </div>
-      <div class="clay-sunken rounded-2xl px-4 py-3 text-center">
-        <p class="font-display font-extrabold text-deep-teal text-2xl">+2</p>
-        <p class="text-[11px] text-deep-teal/55 mt-0.5">nếu mua kỹ năng «Cộng hưởng Lumina»</p>
-      </div>
-      <div class="clay-sunken rounded-2xl px-4 py-3 text-center">
-        <p class="font-display font-extrabold text-deep-teal text-2xl">2</p>
-        <p class="text-[11px] text-deep-teal/55 mt-0.5">lượt mô phỏng «Nếu – Thì» mỗi vòng</p>
-      </div>
-      <div class="clay-sunken rounded-2xl px-4 py-3 text-center">
-        <p class="font-display font-extrabold text-deep-teal text-2xl">6</p>
-        <p class="text-[11px] text-deep-teal/55 mt-0.5">vòng chơi trong một ván đầy đủ</p>
+<section style="margin-bottom:56px">
+  <h2 style="margin:0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:clamp(26px,3vw,34px);font-weight:800">{{ t.ioTitle }}</h2>
+  <p style="margin:8px 0 18px;font-size:15px;color:#3E5A5C">{{ t.ioNote }}</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:20px;align-items:stretch">
+    <div style="padding:26px;border-radius:30px;background:#FFFBF4;box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 26px 36px -24px rgba(110,70,30,.5)">
+      <div style="display:inline-flex;padding:6px 12px;border-radius:999px;background:#7FD3DC;font-size:12px;font-weight:800;color:#033337">{{ t.inTitle }}</div>
+      <div style="display:flex;flex-direction:column;gap:9px;margin-top:14px">
+        <sc-for list="{{ t.ins }}" as="x" hint-placeholder-count="5"><div style="padding:10px 14px;border-radius:16px;background:#F3E6CF;font-size:14px;line-height:1.5;box-shadow:inset 0 -3px 0 rgba(110,70,30,.1)">{{ x }}</div></sc-for>
       </div>
     </div>
-  </section>
-
-  <!-- GIỌNG NÓI -->
-  <section class="mb-12">
-    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">🎙️ Giọng nói của Lumina</h2>
-    <div class="clay-card p-5 sm:p-6">
-      <p class="text-sm text-deep-teal/70">Kho lời thoại tiếng Việt đã soạn <b>49 câu</b>, công bố tại <a href="https://github.com/thuyhuongctu/BizOn/blob/main/docs/loi-thoai-lumina.md" target="_blank" rel="noopener" class="font-bold text-primary">loi-thoai-lumina.md</a>. Tính đến bản này, <b>4 tệp giọng đã thu</b> và đang dùng trong trò chơi: lời chào, cố vấn xin chào, kết quả vòng chơi, chúc mừng chiến thắng. <b>46 câu còn lại đã có sẵn tên tệp trong danh sách nhưng chưa thu</b> – hiện chỉ hiển thị bằng chữ.</p>
-      <p class="text-[11px] text-deep-teal/45 mt-3">Nghe thử bốn tệp giọng tại <a href="am-nhac.html" class="font-bold text-primary">Kho Âm nhạc BizOn</a>.</p>
-    </div>
-  </section>
-
-  <!-- DỮ LIỆU NGƯỜI HỌC -->
-  <section class="mb-12">
-    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">🔒 Dữ liệu người học</h2>
-    <div class="grid sm:grid-cols-3 gap-4">
-      <div class="clay-card p-5">
-        <p class="text-2xl">🎮</p>
-        <h3 class="font-display font-extrabold text-deep-teal text-sm mt-1">Chơi thử</h3>
-        <p class="text-[12px] text-deep-teal/60 mt-1">Không nhập Mã lớp thì <b>không có dữ liệu nào rời khỏi máy</b>. Ván chơi chỉ nằm trong bộ nhớ trình duyệt.</p>
-      </div>
-      <div class="clay-card p-5">
-        <p class="text-2xl">🏫</p>
-        <h3 class="font-display font-extrabold text-deep-teal text-sm mt-1">Chơi trong lớp</h3>
-        <p class="text-[12px] text-deep-teal/60 mt-1">Khi người học nhập Mã lớp, kết quả từng vòng mới được gửi lên cơ sở dữ liệu để giảng viên theo dõi và chấm.</p>
-      </div>
-      <div class="clay-card p-5">
-        <p class="text-2xl">🚫</p>
-        <h3 class="font-display font-extrabold text-deep-teal text-sm mt-1">Không dùng để huấn luyện</h3>
-        <p class="text-[12px] text-deep-teal/60 mt-1">Dữ liệu chơi không được dùng huấn luyện bất kỳ mô hình nào – hệ thống không có mô hình để huấn luyện.</p>
+    <div style="padding:26px;border-radius:30px;background:#FFFBF4;box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 26px 36px -24px rgba(110,70,30,.5)">
+      <div style="display:inline-flex;padding:6px 12px;border-radius:999px;background:#FFD58A;font-size:12px;font-weight:800;color:#033337">{{ t.outTitle }}</div>
+      <div style="display:flex;flex-direction:column;gap:9px;margin-top:14px">
+        <sc-for list="{{ t.outs }}" as="x" hint-placeholder-count="4"><div style="padding:10px 14px;border-radius:16px;background:#F3E6CF;font-size:14px;line-height:1.5;box-shadow:inset 0 -3px 0 rgba(110,70,30,.1)">{{ x }}</div></sc-for>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- HẠN CHẾ ĐÃ BIẾT -->
-  <section class="mb-12">
-    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">⚠️ Hạn chế đã biết</h2>
-    <p class="text-sm text-deep-teal/55 mb-5">Nêu ra để người dạy biết trước khi đưa vào buổi học.</p>
-    <div class="clay-card p-5 sm:p-6">
-      <ul class="space-y-2.5 text-[13px] text-deep-teal/70">
-        <li>• <b>Bộ luật còn hẹp.</b> Lumina chỉ tư vấn ba chủ đề: giá bán, marketing và rủi ro. Câu hỏi ngoài ba chủ đề này sẽ rơi về nhánh rủi ro.</li>
-        <li>• <b>Chỉ đúng trong mô hình mô phỏng.</b> Các con số dự báo đến từ công thức của trò chơi, không phải từ dữ liệu thị trường thật.</li>
-        <li>• <b>Chỉ có tiếng Việt trong trò chơi.</b> Giao diện có bản tiếng Anh nhưng lời cố vấn hiện chỉ phát bằng tiếng Việt.</li>
-        <li>• <b>Chưa có nghiên cứu hiệu quả.</b> Nhóm tác giả chưa công bố kết quả đo hiệu quả học tập của Lumina; đây là bản dùng cho nghiên cứu, không phải bằng chứng đã kiểm định.</li>
-        <li>• <b>Hình ảnh nhân vật</b> do nhóm tác giả thiết kế và biên tập, thuộc bộ mỹ thuật ứng dụng của nhóm.</li>
-      </ul>
-    </div>
-  </section>
+<section style="margin-bottom:56px">
+  <h2 style="margin:0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:clamp(26px,3vw,34px);font-weight:800">{{ t.qTitle }}</h2>
+  <p style="margin:8px 0 18px;max-width:46em;font-size:15px;line-height:1.6;color:#3E5A5C">{{ t.qNote }}</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:16px">
+    <sc-for list="{{ quota }}" as="q" hint-placeholder-count="4">
+      <div style="padding:22px 20px;border-radius:26px;background:#F3E6CF;box-shadow:inset 4px 5px 10px rgba(110,70,30,.18),inset -4px -4px 8px rgba(255,255,255,.7)">
+        <div style="font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:44px;font-weight:800;line-height:1;color:{{ q.c }}">{{ q.n }}</div>
+        <div style="margin-top:8px;font-size:14px;line-height:1.45;color:#3E5A5C">{{ q.l }}</div>
+      </div>
+    </sc-for>
+  </div>
+</section>
 
-  <!-- KIỂM CHỨNG -->
-  <section class="mb-12">
-    <h2 class="font-display font-extrabold text-deep-teal text-xl mb-2">🔬 Cách tự kiểm chứng</h2>
-    <div class="clay-card p-5 sm:p-6">
-      <p class="text-sm text-deep-teal/70 mb-3">Mọi tuyên bố ở trang này đều đọc được trực tiếp trong mã nguồn công bố:</p>
-      <ul class="space-y-1.5 text-[13px] text-deep-teal/70">
-        <li>• Bộ luật tư vấn: <span class="lm-code">js/engine.js</span> → <span class="lm-code">luminaAdvice()</span></li>
-        <li>• Mô phỏng «Nếu – Thì»: <span class="lm-code">js/engine.js</span> → <span class="lm-code">whatIfSimulate()</span></li>
-        <li>• Giới hạn lượt hỏi: <span class="lm-code">AI_QUOTA_PER_ROUND</span> và <span class="lm-code">WHAT_IF_LIMIT</span></li>
-        <li>• Điều kiện gửi dữ liệu lên máy chủ: <span class="lm-code">js/backend.js</span> – chỉ gửi khi có Mã lớp</li>
-        <li>• Thiết kế module cố vấn: <a href="https://github.com/thuyhuongctu/BizOn/blob/main/docs/lumina-ai-mentor.md" target="_blank" rel="noopener" class="font-bold text-primary">docs/lumina-ai-mentor.md</a></li>
-      </ul>
-      <p class="text-[11px] text-deep-teal/45 mt-4">Lưu ý: kho mã công bố là phần chạy trên trình duyệt. Nhóm tác giả giữ riêng một số tài liệu nội bộ và chưa công bố toàn bộ hồ sơ dự án.</p>
-    </div>
-  </section>
+<section style="margin-bottom:56px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:20px;align-items:start">
+  <div style="padding:28px;border-radius:30px;background:#FFFBF4;box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 26px 36px -24px rgba(110,70,30,.5)">
+    <h2 style="margin:0 0 12px;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:26px;font-weight:800">{{ t.vTitle }}</h2>
+    <p style="margin:0;font-size:15px;line-height:1.7;color:#24403F">{{ t.vNew }}<a href="https://github.com/thuyhuongctu/BizOn/blob/main/docs/loi-thoai-lumina.md" style="font-weight:800">loi-thoai-lumina.md</a>.</p>
+    <a href="am-nhac.html" style="display:inline-flex;margin-top:16px;padding:9px 14px;border-radius:999px;background:#F3E6CF;font-size:13px;font-weight:800;box-shadow:inset 0 -3px 0 rgba(110,70,30,.12)">{{ t.vLink }} →</a>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <h2 style="margin:0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:26px;font-weight:800">{{ t.dTitle }}</h2>
+    <sc-for list="{{ data }}" as="d" hint-placeholder-count="3">
+      <div style="display:grid;grid-template-columns:12px minmax(0,1fr);gap:16px;padding:18px 20px;border-radius:24px;background:#FFFBF4;box-shadow:inset 0 -6px 0 rgba(110,70,30,.08),0 18px 26px -20px rgba(110,70,30,.5)">
+        <span style="width:12px;border-radius:999px;background:{{ d.c }}"></span>
+        <div><strong style="font-size:16px">{{ d.h }}</strong><p style="margin:4px 0 0;font-size:14px;line-height:1.55;color:#3E5A5C">{{ d.p }}</p></div>
+      </div>
+    </sc-for>
+  </div>
+</section>
 
-  <p class="text-center text-xs text-deep-teal/40 mt-8">© 2026 Đỗ Thùy Hương &amp; Phan Anh Tú · BizOn Bật Nghiệp – Bảo lưu mọi quyền · <a href="am-nhac.html" class="font-bold text-primary">🎶 Kho Âm nhạc</a> · <a href="index.html" class="font-bold text-primary">🏠 Trang chủ</a></p>
+<section style="margin-bottom:56px">
+  <h2 style="margin:0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:clamp(26px,3vw,34px);font-weight:800">{{ t.lTitle }}</h2>
+  <p style="margin:8px 0 18px;font-size:15px;color:#3E5A5C">{{ t.lNote }}</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px">
+    <sc-for list="{{ t.lims }}" as="l" hint-placeholder-count="5">
+      <div style="padding:20px 22px;border-radius:24px;background:#FFF3DA;box-shadow:inset 0 -6px 0 rgba(140,80,20,.1),inset 0 4px 0 rgba(255,255,255,.7)">
+        <strong style="display:block;font-size:16px;color:#7A4A0E">{{ l.b }}</strong>
+        <p style="margin:6px 0 0;font-size:14px;line-height:1.6;color:#3E3A2C">{{ l.r }}</p>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<section style="margin-bottom:72px;padding:clamp(22px,3vw,32px);border-radius:32px;background:#1E7E8C;color:#fff;box-shadow:inset 0 -9px 0 rgba(0,0,0,.18),inset 0 5px 0 rgba(255,255,255,.18),0 26px 36px -24px rgba(3,51,55,.7)">
+  <h2 style="margin:0 0 6px;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:26px;font-weight:800">{{ t.kTitle }}</h2>
+  <p style="margin:0 0 18px;font-size:15px;color:#D7F1F4">{{ t.kNote }}</p>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <sc-for list="{{ verify }}" as="k" hint-placeholder-count="5">
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:12px 16px;border-radius:18px;background:rgba(3,51,55,.35)">
+        <span style="font-size:14px;font-weight:700;min-width:13em">{{ k.l }}</span>
+        <code style="padding:3px 10px;border-radius:10px;background:#FFFBF4;color:#033337;font:600 13px ui-monospace,SFMono-Regular,Menlo,monospace">{{ k.a }}</code>
+        <sc-if value="{{ k.b }}" hint-placeholder-val="{{ true }}"><code style="padding:3px 10px;border-radius:10px;background:#FFD58A;color:#033337;font:600 13px ui-monospace,SFMono-Regular,Menlo,monospace">{{ k.b }}</code></sc-if>
+      </div>
+    </sc-for>
+    <a href="https://github.com/thuyhuongctu/BizOn/blob/main/docs/lumina-ai-mentor.md" style="align-self:flex-start;margin-top:6px;padding:9px 14px;border-radius:999px;background:#FFFBF4;color:#033337;font-size:13px;font-weight:800;box-shadow:inset 0 -3px 0 rgba(0,0,0,.1)">docs/lumina-ai-mentor.md ↗</a>
+  </div>
+  <p style="margin:16px 0 0;font-size:13px;line-height:1.55;color:#BFE6EE">{{ t.kFoot }}</p>
+</section>
 </main>
 
-<script src="js/site-ui.js" defer></script>
-<script src="js/site-vnmap.js" defer></script>
-<script src="js/site-dock.js" defer></script>
-<script src="js/site-footer.js" defer></script>
-<script src="js/site-nav.js" defer></script>
-<p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2" style="color:rgba(100,116,125,.85)">✉️ Liên hệ · Contact: <a href="mailto:patu@ctu.edu.vn" style="color:inherit;text-decoration:underline">patu@ctu.edu.vn</a> · <a href="mailto:thuyhuongctu@gmail.com" style="color:inherit;text-decoration:underline">thuyhuongctu@gmail.com</a></p>
-<p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2 pb-6" style="color:rgba(100,116,125,.75)">🎓 Trang web chỉ phục vụ mục đích giáo dục và nghiên cứu, không đại diện cho bất kỳ tổ chức chính trị nào. · This website serves educational and research purposes only and does not represent any political organization.</p>
+<footer style="background:#033337;color:#9CC9C9">
+  <div style="height:30px;background:radial-gradient(circle at 30px 0,#FBF4E8 29px,transparent 30px) 0 0/60px 30px repeat-x"></div>
+  <div style="max-width:1080px;margin:0 auto;padding:28px 24px 40px;display:flex;flex-direction:column;gap:10px;font-size:13px;line-height:1.6">
+    <div>© 2026 Đỗ Thùy Hương & PGS.TS. Phan Anh Tú – BizOn Bật Nghiệp</div>
+    <a href="https://play.google.com/store/apps/details?id=io.github.thuyhuongctu.bizon" style="align-self:flex-start;padding:8px 14px;border-radius:999px;background:#0B4A4F;color:#FFD58A;font-weight:800;box-shadow:inset 0 -3px 0 rgba(0,0,0,.25)">▶ {{ t.gp }}</a>
+    <div style="display:flex;flex-wrap:wrap;gap:16px"><a href="chinh-sach.html" style="color:#FFD58A">Privacy</a><a href="tuyen-dung.html" style="color:#FFD58A">Jobs</a><a href="lien-he.html" style="color:#FFD58A">Contact</a></div>
+    <div style="font-size:12px;color:#7FA9AA">{{ t.disclaimer }}</div>
+  </div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;vi&quot;,&quot;en&quot;],&quot;default&quot;:&quot;vi&quot;,&quot;tsType&quot;:&quot;'vi'|'en'&quot;}}">
+const NAV7=[["Vũ trụ","Universe","universe.html"],["Trò chơi","Games","games.html"],["Lớp học","Classroom","lop-hoc.html"],["Học thuật","Academic","truong-hoc-thuat.html"],["Bằng chứng","Evidence","bang-chung.html"],["Pilot","Pilot","giai-phap.html"],["Đội ngũ","About","doi-ngu.html"]];
+const NAVX7=(lang,me)=>NAV7.map(([vi,en,href])=>{const on=href===me;return{label:lang==='en'?en:vi,href:on?'#':href,color:on?'#006687':'#3E5A5C',bg:on?'#FFFBF4':'transparent',sh:on?'0 4px 8px -4px rgba(110,70,30,.5),inset 0 -3px 0 rgba(110,70,30,.12)':'none'}});
+const T={
+vi:{gp:'Tải trên Google Play',navCta:'Bắt đầu',eyebrow:'Thẻ mô tả hệ thống',h1:'Cố vấn Lumina AI',lead:'Trang này công bố Lumina thực sự hoạt động bằng gì, đọc dữ liệu nào và có giới hạn ra sao. Chúng tôi công bố để người dạy, người học và người phản biện kiểm chứng được – chứ không mô tả Lumina mạnh hơn thực tế.',
+sumTitle:'Tóm tắt trong một câu',sum1:'Lumina là ',sumB1:'nhân vật cố vấn trong trò chơi',sum2:', vận hành bằng một bộ luật «nếu – thì» viết bằng JavaScript, chạy hoàn toàn trên trình duyệt của người chơi. Lumina ',sumB2:'không phải',sum3:' một mô hình học máy và không gọi bất kỳ dịch vụ AI nào trong lúc chơi.',
+isTitle:'Lumina là gì – và không phải là gì',yesTitle:'Đúng như công bố',yes:['Bộ luật «nếu – thì» tất định, đặt trong js/engine.js – hàm luminaAdvice() và whatIfSimulate().','Đọc trạng thái ván chơi hiện tại để chọn kịch bản lời khuyên phù hợp.','Chạy trên trình duyệt, không cần mạng sau lần tải đầu.','Cùng một trạng thái ván chơi luôn cho ra cùng một lời khuyên – đây là tính chất của bộ luật tất định, kiểm chứng được bằng cách đọc mã nguồn.','Kèm mức rủi ro thấp / trung bình / cao để người học tự đánh giá.'],
+noTitle:'Không phải – xin đừng hiểu nhầm',no:['Không có mạng nơ-ron, không có trọng số mô hình.','Không được huấn luyện trên dữ liệu nào, kể cả dữ liệu người học.','Không gọi mô hình ngôn ngữ lớn hay dịch vụ AI bên ngoài trong lúc chơi.','Không đưa ra tư vấn kinh doanh thật – mọi lời khuyên chỉ đúng bên trong mô hình mô phỏng của trò chơi.','Không tự học từ ván chơi trước; bộ luật cố định cho tới khi nhóm tác giả sửa mã.'],
+ioTitle:'Lumina đọc gì và trả về gì',ioNote:'Toàn bộ đầu vào đều là số liệu của chính ván chơi, nằm trong bộ nhớ trình duyệt.',inTitle:'Đầu vào',ins:['Biến cố của vòng đang chơi và sắc thái của nó','Số đơn hàng bị hụt ở vòng trước','Thị phần và số dư ví ảo hiện tại','Chủ đề người chơi hỏi: giá bán, marketing hoặc rủi ro','Giá tham chiếu thị trường của trò chơi'],outTitle:'Đầu ra',outs:['Một đoạn lời khuyên bằng tiếng Việt','Một mức rủi ro: thấp, trung bình hoặc cao','Gợi ý hành động cụ thể trong trò chơi (giảm giá, tăng marketing, mua vật phẩm phòng thủ…)','Với «Nếu – Thì»: dự báo thị phần và điểm hòa vốn theo thông số giả định'],
+qTitle:'Giới hạn lượt hỏi',qNote:'Giới hạn này là dụng ý sư phạm: người học phải tự phân tích trước, hỏi cố vấn sau – chứ không hỏi thay cho suy nghĩ.',q:['lượt tư vấn mỗi vòng','nếu mua kỹ năng «Cộng hưởng Lumina»','lượt mô phỏng «Nếu – Thì» mỗi vòng','vòng chơi trong một ván đầy đủ'],
+vTitle:'Giọng nói của Lumina',vNew:'Lời thoại tiếng Việt của Lumina đang được biên soạn lại; bản mới sẽ công bố tại ',v1:'Kho lời thoại tiếng Việt đã soạn ',vB1:'49 câu',v2:', công bố tại ',v3:'. Tính đến bản này, ',vB2:'4 tệp giọng đã thu',v4:' và đang dùng trong trò chơi: lời chào, cố vấn xin chào, kết quả vòng chơi, chúc mừng chiến thắng. ',vB3:'46 câu còn lại đã có sẵn tên tệp trong danh sách nhưng chưa thu',v5:' – hiện chỉ hiển thị bằng chữ.',vLink:'Nghe giọng Lumina tại Kho Âm nhạc',
+dTitle:'Dữ liệu người học',d:[['Chơi thử','Không nhập Mã lớp thì không có dữ liệu nào rời khỏi máy. Ván chơi chỉ nằm trong bộ nhớ trình duyệt.'],['Chơi trong lớp','Khi người học nhập Mã lớp, kết quả từng vòng mới được gửi lên cơ sở dữ liệu để giảng viên theo dõi và chấm.'],['Không dùng để huấn luyện','Dữ liệu chơi không được dùng huấn luyện bất kỳ mô hình nào – hệ thống không có mô hình để huấn luyện.']],
+lTitle:'Hạn chế đã biết',lNote:'Nêu ra để người dạy biết trước khi đưa vào buổi học.',lims:[{b:'Bộ luật còn hẹp.',r:'Lumina chỉ tư vấn ba chủ đề: giá bán, marketing và rủi ro. Câu hỏi ngoài ba chủ đề này sẽ rơi về nhánh rủi ro.'},{b:'Chỉ đúng trong mô hình mô phỏng.',r:'Các con số dự báo đến từ công thức của trò chơi, không phải từ dữ liệu thị trường thật.'},{b:'Chỉ có tiếng Việt trong trò chơi.',r:'Giao diện có bản tiếng Anh nhưng lời cố vấn hiện chỉ phát bằng tiếng Việt.'},{b:'Chưa có nghiên cứu hiệu quả.',r:'Nhóm tác giả chưa công bố kết quả đo hiệu quả học tập của Lumina; đây là bản dùng cho nghiên cứu, không phải bằng chứng đã kiểm định.'},{b:'Hình ảnh nhân vật',r:'do nhóm tác giả thiết kế và biên tập, thuộc bộ mỹ thuật ứng dụng của nhóm.'}],
+kTitle:'Cách tự kiểm chứng',kNote:'Mọi tuyên bố ở trang này đều đọc được trực tiếp trong mã nguồn công bố:',k:['Bộ luật tư vấn','Mô phỏng «Nếu – Thì»','Giới hạn lượt hỏi','Điều kiện gửi dữ liệu (chỉ khi có Mã lớp)'],kFoot:'Lưu ý: kho mã công bố là phần chạy trên trình duyệt. Nhóm tác giả giữ riêng một số tài liệu nội bộ và chưa công bố toàn bộ hồ sơ dự án.',
+disclaimer:'Trang web chỉ phục vụ mục đích giáo dục và nghiên cứu, không đại diện cho bất kỳ tổ chức chính trị nào.'},
+en:{gp:'Get it on Google Play',navCta:'Launch',eyebrow:'System card',h1:'Lumina AI mentor',lead:'This page discloses what Lumina actually runs on, which data it reads and where its limits are. We publish it so instructors, learners and reviewers can verify it – not to make Lumina sound more capable than it is.',
+sumTitle:'In one sentence',sum1:'Lumina is ',sumB1:'an in-game mentor character',sum2:', driven by a set of «if – then» rules written in JavaScript that run entirely in the player\'s browser. Lumina is ',sumB2:'not',sum3:' a machine-learning model and calls no AI service during play.',
+isTitle:'What Lumina is – and is not',yesTitle:'As disclosed',yes:['A deterministic «if – then» rule set in js/engine.js – functions luminaAdvice() and whatIfSimulate().','Reads the current game state to pick a matching advice script.','Runs in the browser; no network needed after the first load.','The same game state always produces the same advice – a property of deterministic rules you can verify in the source.','Includes a low / medium / high risk level so learners can judge for themselves.'],
+noTitle:'Not – please don\'t misread',no:['No neural network, no model weights.','Not trained on any data, learner data included.','Calls no large language model or external AI service during play.','Gives no real business advice – all advice holds only inside the game\'s simulation model.','Does not learn from previous games; the rules stay fixed until the authors change the code.'],
+ioTitle:'What Lumina reads and returns',ioNote:'All inputs are the game\'s own numbers, held in browser memory.',inTitle:'Inputs',ins:['The current round\'s event and its tone','Orders missed in the previous round','Current market share and virtual wallet balance','The topic asked: pricing, marketing or risk','The game\'s market reference price'],outTitle:'Outputs',outs:['A paragraph of advice in Vietnamese','A risk level: low, medium or high','A concrete in-game action (cut price, raise marketing, buy defensive items…)','For «What if»: projected market share and break-even under assumed parameters'],
+qTitle:'Question limits',qNote:'The limit is pedagogical: learners analyse first and ask the mentor second – never instead of thinking.',q:['advice turns per round','with the «Lumina Resonance» skill','«What if» simulations per round','rounds in a full game'],
+vTitle:'Lumina\'s voice',vNew:'Lumina\'s Vietnamese script is being rewritten; the new version will be published in ',v1:'The Vietnamese script has ',vB1:'49 lines',v2:', published in ',v3:'. As of this release, ',vB2:'4 voice files are recorded',v4:' and used in the game: greeting, mentor hello, round result, victory. ',vB3:'The other 46 lines have file names reserved but are not yet recorded',v5:' – they show as text only.',vLink:'Hear Lumina\'s voice in the Music Library',
+dTitle:'Learner data',d:[['Practice play','Without a Class code, no data leaves the device. The game lives only in browser memory.'],['Class play','Only when a learner enters a Class code are per-round results sent to the database for the instructor to follow and grade.'],['Never used for training','Play data trains no model – there is no model to train.']],
+lTitle:'Known limitations',lNote:'Listed so instructors know before using it in class.',lims:[{b:'The rule set is narrow.',r:'Lumina advises on three topics only: pricing, marketing and risk. Anything else falls through to the risk branch.'},{b:'Valid only inside the simulation.',r:'Projected numbers come from the game\'s formulas, not real market data.'},{b:'Vietnamese only in-game.',r:'The interface has English, but mentor lines currently play in Vietnamese only.'},{b:'No efficacy study yet.',r:'The authors have not published learning-outcome results for Lumina; this is a research build, not validated evidence.'},{b:'Character artwork',r:'is designed and edited by the authors as part of the team\'s applied art set.'}],
+kTitle:'How to verify',kNote:'Every claim on this page can be read directly in the published source:',k:['Advice rules','«What if» simulation','Question limits','Data upload condition (Class code only)'],kFoot:'Note: the published repository is the browser-side code. The authors keep some internal documents private and have not published the full project record.',
+disclaimer:'This website serves educational and research purposes only and does not represent any political organization.'}};
+class Component extends DCLogic{
+  state={lang:null};
+  renderVals(){
+    const lang=this.state.lang||this.props.lang||'vi';const t=T[lang];
+    if(!this._art)this._art=React.createElement('img',{src:'assets/character/advisors/lumina-y-tuong-cut.webp',alt:'Lumina',style:{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'contain',objectPosition:'50% 100%',filter:'drop-shadow(0 18px 14px rgba(0,0,0,.4))',animation:'bzFloat 6s ease-in-out infinite'}});
+    const on='inset 0 -3px 0 rgba(0,0,0,.2),0 4px 8px -3px rgba(0,60,80,.5)';
+    const qn=['3','+2','2','6'],qc=['#006687','#E8762D','#1E7E8C','#7A4A0E'];
+    const files=[['js/engine.js','luminaAdvice()'],['js/engine.js','whatIfSimulate()'],['AI_QUOTA_PER_ROUND','WHAT_IF_LIMIT'],['js/backend.js','']];
+    return{t,heroArt:this._art,
+      setVi:()=>this.setState({lang:'vi'}),setEn:()=>this.setState({lang:'en'}),
+      viBg:lang==='vi'?'#006687':'transparent',viFg:lang==='vi'?'#fff':'#3E5A5C',viSh:lang==='vi'?on:'none',
+      enBg:lang==='en'?'#006687':'transparent',enFg:lang==='en'?'#fff':'#3E5A5C',enSh:lang==='en'?on:'none',
+      navLinks:NAVX7(lang,''),
+      quota:t.q.map((l,i)=>({l,n:qn[i],c:qc[i]})),
+      data:t.d.map(([h,p],i)=>({h,p,c:['#7FD3DC','#FFD58A','#F4B6C2'][i]})),
+      verify:t.k.map((l,i)=>({l,a:files[i][0],b:files[i][1]}))};
+  }
+}
+</script>
 </body>
 </html>
