@@ -161,7 +161,7 @@ const sDuo = new THREE.Group(); sDuo.position.set(0.2, 0.35, 0.2); dock.add(sDuo
 function duoOnBoat(v) { const h = sprite('assets/character/phu-sa/huong-new.png?v=7', 2.2, 1.7); h.position.set(-0.55, 0, 0.1); const tu = sprite('assets/character/phu-sa/tu-new.png?v=5', 2.45, 1.82); tu.position.set(0.6, 0, -0.1); v.add(h, tu); }
 // Đội Demo Rồng Xanh (5 bạn) trên ghe mui neo gần bến
 const team5 = new THREE.Group(); team5.position.set(-14, 0.1, 3.2); scene.add(team5);
-const sTeam = sprite('assets/character/phu-sa/doi-phu-sa-ghe-v2.png', 4.8, 2.0); team5.add(sTeam);
+const sTeam = sprite('assets/doi-5-nguoi.png', 4.8, 2.0); team5.add(sTeam);
 M(new THREE.CylinderGeometry(3.2, 3.2, 0.05, 32), new THREE.MeshBasicMaterial({ color: 0x3f8f9c, transparent: true, opacity: 0.25 }), 0, 0.02, 0, team5).castShadow = false;
 const RIMG = ['assets/character/rivals/ba-le-full.png', 'assets/character/rivals/chu-sau-full.png', 'assets/character/rivals/co-bay-full.png'];
 const RC = [0x7a7f8a, 0x9a8a78, 0x3f8a44];
@@ -213,7 +213,7 @@ function showRivals(prevWeek) {
 function tween(obj, to, ms, done) { anim.push({ obj, from: obj.position.clone(), to, t0: performance.now(), ms, done }); }
 function sendMe(m, loc, done) {
   if (me && meKind !== m) { scene.remove(me); me = null; }
-  if (!me) { me = vessel(m, 0xfda127); if (m === 0) { const isTeam5 = (G() && G().S.team === 0); if (isTeam5) me.add(sprite('assets/character/phu-sa/doi-phu-sa-ghe-v2.png', 4.2, 2.0)); else duoOnBoat(me); (isTeam5 ? sTeam : sDuo).visible = false; setTimeout(() => { (isTeam5 ? sTeam : sDuo).visible = false; }, 400); } me.scale.setScalar(1.25); me.position.copy(HOME); meKind = m; }
+  if (!me) { me = vessel(m, 0xfda127); if (m === 0) { const isTeam5 = (G() && G().S.team === 0); if (isTeam5) me.add(sprite('assets/doi-5-nguoi.png', 4.2, 2.0)); else duoOnBoat(me); (isTeam5 ? sTeam : sDuo).visible = false; setTimeout(() => { (isTeam5 ? sTeam : sDuo).visible = false; }, 400); } me.scale.setScalar(1.25); me.position.copy(HOME); meKind = m; }
   const p = P[loc], to = m === 2 ? new THREE.Vector3(p[0] - 2, 0.1, p[1] + 4.5) : new THREE.Vector3(p[0] - 1.5, 0.1, p[1] + 4.2);
   me.lookAt(to.x, me.position.y, to.z); follow = me; tween(me, to, 1600, () => { setTimeout(() => { follow = null; camGoal = new THREE.Vector3(0, 0, -3); }, 1400); if (done) done(); });
 }
@@ -503,7 +503,7 @@ hooks.push(t => {
 // ---- (7) Ghe đội kia (chơi nhóm v4): Rồng Xanh / Phù Sa chạy tới bến lúc công bố ----
 const others = {};
 function otherBoat(team) { if (others[team]) return others[team];
-  const v = vessel(0, team === 'rx' ? 0x2f7fb8 : 0xfda127); if (team === 'rx') v.add(sprite('assets/character/phu-sa/doi-phu-sa-ghe-v2.png', 4.2, 2.0)); else duoOnBoat(v);
+  const v = vessel(0, team === 'rx' ? 0x2f7fb8 : 0xfda127); if (team === 'rx') v.add(sprite('assets/doi-5-nguoi.png', 4.2, 2.0)); else duoOnBoat(v);
   v.scale.setScalar(1.2); v.position.set(team === 'rx' ? -14 : -4, 0.1, team === 'rx' ? 4.5 : 10); v.userData.home = v.position.clone(); scene.add(v); return others[team] = v; }
 window.addEventListener('bps-commit-other', e => { const d = e.detail; if (d.m === 2) return; const v = otherBoat(d.team), p = P[d.loc];
   const to = new THREE.Vector3(p[0] + 2.2, 0.1, p[1] + 3.6); v.visible = true; v.lookAt(to.x, v.position.y, to.z); tween(v, to, 1900, () => pop(d.loc, (d.team === 'rx' ? '🐉 ' : '🌾 ') + (d.rev >= 0 ? '+' : '') + (Math.round(d.rev * 10) / 10).toLocaleString(EN() ? 'en-US' : 'vi-VN') + ' ' + T('tr', 'm'), false)); });
