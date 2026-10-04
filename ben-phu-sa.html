@@ -120,6 +120,7 @@
     <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-4 mb-1.5" data-en="Choose your captain">Chọn thuyền trưởng</p>
     <div class="grid grid-cols-5 gap-2" id="ft-avatars"></div>
     <button id="ft-music" onclick="ftMusic()" class="clay-btn w-full bg-deep-teal text-white font-display font-extrabold py-3 text-sm mt-4" data-en="🎵 Play theme song «Đội Phù Sa»">🎵 Bật nhạc chủ đề «Đội Phù Sa»</button>
+    <a href="nhac-ben-phu-sa.html" class="clay-btn w-full bg-white text-deep-teal font-display font-extrabold py-3 text-sm mt-3 flex items-center justify-center" style="border:2px solid rgba(0,102,135,.2)" data-en="🎤 «Golden Silt Journey» – listen with lyrics">🎤 «Golden Silt Journey» – nghe kèm lời</a>
     <button onclick="ftStart()" class="clay-btn w-full bg-clay-gold text-deep-teal font-display font-extrabold py-4 mt-3" data-en="🚀 Start the 5-week venture">🚀 Bắt đầu 5 tuần kinh doanh</button>
   </section>
 
@@ -979,7 +980,7 @@
  * của đội, không lẫn nhạc game khác). Dùng chung dock toàn site (site-dock.js). */
 (function () {
   var THEME = 'doi-phu-sa.mp3';
-  var SOUNDTRACK = ['doi-phu-sa.mp3', 'doi-phu-sa-remix.mp3', 'doi-phu-sa-remix2.mp3', 'doi-phu-sa-remix3.mp3', 'golden-silt-journey-ben-phu-sa.mp3'];
+  var SOUNDTRACK = ['doi-phu-sa.mp3', 'doi-phu-sa-remix.mp3', 'doi-phu-sa-remix2.mp3', 'doi-phu-sa-remix3.mp3', 'golden-silt-journey-ben-phu-sa.mp3', 'golden-silt-journey-ben-phu-sa-2.mp3'];
   function sync(on) {
     var b = document.getElementById('ft-music');
     if (b) b.textContent = on ? T('⏸️ Tạm dừng nhạc «Đội Phù Sa»', '⏸️ Pause the «Đội Phù Sa» theme') : T('🎵 Bật nhạc chủ đề «Đội Phù Sa»', '🎵 Play theme song «Đội Phù Sa»');
