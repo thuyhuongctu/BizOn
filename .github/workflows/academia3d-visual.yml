@@ -1,9 +1,14 @@
-name: Academia 3D visual QA
+name: Homepage visual QA
 
 on:
   pull_request:
     paths:
+      - 'index.html'
       - 'academia3d-v2.html'
+      - 'css/bizon-clay.css'
+      - 'js/bizon-clay-nav.js'
+      - 'js/bizon-clay-footer.js'
+      - 'js/bizon-clay-i18n.js'
       - '.github/workflows/academia3d-visual.yml'
   workflow_dispatch:
 
@@ -38,7 +43,7 @@ jobs:
           cat /tmp/bizon-visual.log
           exit 1
 
-      - name: Capture desktop and Android states
+      - name: Capture desktop and Android states (clay homepage)
         run: |
           mkdir -p visual-qa
           node <<'NODE'
@@ -46,15 +51,15 @@ jobs:
           const fs = require('fs');
 
           (async () => {
+            // index.html and academia3d-v2.html are byte-identical (the clay homepage);
+            // the service worker is blocked so each run reflects the committed files.
             const url = 'http://127.0.0.1:4173/academia3d-v2.html';
             const scenarios = [
-              { name: 'desktop-light-vi', viewport: { width: 1440, height: 1000 }, theme: 'light', language: 'vi' },
-              { name: 'desktop-dark-vi', viewport: { width: 1440, height: 1000 }, theme: 'dark', language: 'vi' },
-              { name: 'desktop-light-en', viewport: { width: 1440, height: 1000 }, theme: 'light', language: 'en' },
-              { name: 'android-light-vi', viewport: { width: 390, height: 844 }, theme: 'light', language: 'vi', mobile: true },
-              { name: 'android-dark-vi', viewport: { width: 390, height: 844 }, theme: 'dark', language: 'vi', mobile: true },
-              { name: 'android-light-en', viewport: { width: 390, height: 844 }, theme: 'light', language: 'en', mobile: true },
-              { name: 'android-reduced-motion', viewport: { width: 390, height: 844 }, theme: 'light', language: 'vi', mobile: true, reducedMotion: 'reduce' }
+              { name: 'desktop-light-vi', viewport: { width: 1440, height: 1000 }, language: 'vi' },
+              { name: 'desktop-light-en', viewport: { width: 1440, height: 1000 }, language: 'en' },
+              { name: 'android-light-vi', viewport: { width: 390, height: 844 }, language: 'vi', mobile: true },
+              { name: 'android-light-en', viewport: { width: 390, height: 844 }, language: 'en', mobile: true },
+              { name: 'android-reduced-motion', viewport: { width: 390, height: 844 }, language: 'vi', mobile: true, reducedMotion: 'reduce' }
             ];
 
             const browser = await chromium.launch({ headless: true });
@@ -66,7 +71,8 @@ jobs:
                 deviceScaleFactor: 1,
                 isMobile: Boolean(scenario.mobile),
                 hasTouch: Boolean(scenario.mobile),
-                reducedMotion: scenario.reducedMotion || 'no-preference'
+                reducedMotion: scenario.reducedMotion || 'no-preference',
+                serviceWorkers: 'block'
               });
               const page = await context.newPage();
               const errors = [];
@@ -76,18 +82,10 @@ jobs:
               });
 
               await page.goto(url, { waitUntil: 'networkidle' });
-              await page.evaluate(({ theme, language }) => {
-                document.documentElement.dataset.theme = theme;
-                const current = document.documentElement.lang || 'vi';
-                if (current !== language) document.querySelector('#language')?.click();
-              }, scenario);
+              await page.evaluate(language => {
+                if (window.clayApplyLang) window.clayApplyLang(language);
+              }, scenario.language);
               await page.waitForTimeout(400);
-
-              const revealNodes = page.locator('.reveal');
-              for (let index = 0; index < await revealNodes.count(); index += 1) {
-                await revealNodes.nth(index).scrollIntoViewIfNeeded();
-                await page.waitForTimeout(220);
-              }
               await page.evaluate(() => {
                 document.documentElement.style.scrollBehavior = 'auto';
                 if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
@@ -100,20 +98,16 @@ jobs:
                 width: window.innerWidth,
                 scrollWidth: document.documentElement.scrollWidth,
                 scrollY: window.scrollY,
-                theme: document.documentElement.dataset.theme,
                 language: document.documentElement.lang,
-                heroVisible: Boolean(document.querySelector('.hero')),
-                globeVisible: Boolean(document.querySelector('#globe')),
-                passportVisible: Boolean(document.querySelector('[data-passport]')),
-                hiddenRevealCount: document.querySelectorAll('.reveal:not(.visible)').length
+                navVisible: Boolean(document.querySelector('#clay-nav')),
+                footerVisible: Boolean(document.querySelector('#clay-footer')),
+                heroVisible: Boolean(document.querySelector('.hp-hero'))
               }));
 
               if (state.scrollWidth > state.width + 1) errors.push(`Horizontal overflow: ${state.scrollWidth}px > ${state.width}px`);
               if (state.scrollY !== 0) errors.push(`Screenshot did not reset to top: scrollY=${state.scrollY}`);
-              if (state.theme !== scenario.theme) errors.push(`Theme mismatch: ${state.theme}`);
               if (state.language !== scenario.language) errors.push(`Language mismatch: ${state.language}`);
-              if (!state.heroVisible || !state.globeVisible || !state.passportVisible) errors.push('Required hero elements are missing.');
-              if (state.hiddenRevealCount > 0) errors.push(`${state.hiddenRevealCount} reveal sections remained hidden after scrolling.`);
+              if (!state.heroVisible || !state.navVisible || !state.footerVisible) errors.push('Required clay homepage chrome (hero / nav / footer) is missing.');
 
               await page.screenshot({
                 path: `visual-qa/${scenario.name}.png`,
@@ -142,6 +136,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: academia3d-visual-qa
+          name: homepage-visual-qa
           path: visual-qa/
           retention-days: 14
