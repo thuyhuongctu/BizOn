@@ -1,7 +1,7 @@
 /* BizOn Bật Nghiệp 2026 – Service Worker (offline app shell)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
 
-const CACHE = 'bizon-v332';
+const CACHE = 'bizon-v334';
 const SHELL = [
   './',
   './index.html',
@@ -65,6 +65,8 @@ const SHELL = [
   // Bản đất sét (Claymorphism): hệ thống thiết kế + phông thân Be Vietnam Pro.
   './css/bizon-clay-fonts.css',
   './css/bizon-clay.css',
+  './css/clay-tool-skin.css',
+  './css/clay-dark-skin.css',
   './assets/fonts/BeVietnamPro-400-vietnamese.woff2',
   './assets/fonts/BeVietnamPro-400-latin.woff2',
   './assets/fonts/BeVietnamPro-700-vietnamese.woff2',
