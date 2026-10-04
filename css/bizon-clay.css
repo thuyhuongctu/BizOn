@@ -133,7 +133,7 @@
    Hero đất sét dùng chung (mặt trời tia, nhân vật nổi, sóng teal dưới chân)
    ========================================================================== */
 .clay-hero{position:relative;overflow:hidden;margin:28px 0 48px;border-radius:40px;background:var(--clay-cream-deep);box-shadow:inset 0 -10px 0 rgba(140,80,20,.1),inset 0 6px 0 rgba(255,255,255,.7),0 30px 44px -30px rgba(110,70,30,.6)}
-.clay-hero .sun{position:absolute;right:-8%;top:-34%;width:min(520px,60%);aspect-ratio:1;border-radius:50%;background:repeating-radial-gradient(circle,#FFD58A 0 16px,#FDBE5A 16px 19px);box-shadow:inset 0 -16px 0 rgba(200,110,20,.2);opacity:.85;pointer-events:none}
+.clay-hero .sun{position:absolute;right:-8%;top:-34%;width:min(520px,60%);aspect-ratio:1;border-radius:50%;background:url(../assets/brand/trong-dong.svg) center/contain no-repeat;opacity:.85;pointer-events:none}
 .clay-hero .grid{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end;padding:clamp(24px,4vw,44px) clamp(20px,4vw,44px) 0}
 .clay-hero .htext{padding-bottom:clamp(28px,5vw,64px)}
 .clay-hero h1{margin:18px 0 0;font-size:clamp(40px,5.4vw,68px);text-wrap:balance}
