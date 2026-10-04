@@ -20,7 +20,7 @@
   const ROLES = {
     ceo: { name: 'CEO Minh Long', img: A('v2/ceo.png') },
     cfo: { name: 'CFO Thu Hà', img: A('v2/cfo.png') },
-    cmo: { name: 'CMO Lan Chi', img: A('v2/cmo.png') },
+    cmo: { name: 'CMO Mạnh Chi', img: A('v2/cmo.png') },
     coo: { name: 'COO Bảo Ngọc', img: A('v2/coo.png') },
     sec: { name: 'SEC Gia Hân', img: A('v2/sec.png') },
   };
