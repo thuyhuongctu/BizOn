@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>window.__resources=Object.assign({},window.__resources,{"https://unpkg.com/react@18.3.1/umd/react.production.min.js":"vendor/react/react.production.min.js","https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js":"vendor/react/react-dom.production.min.js"});</script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Bến Phù Sa – Bảng giáo viên</title>
+
+<link rel="stylesheet" href="css/bizon-fonts-v8.css">
+<style>
+html,body{margin:0;background:#e6f3f2;}
+*{box-sizing:border-box;}
+a{color:#006687;}
+a:hover{color:#e8762d;}
+button,textarea,input{font-family:inherit;}
+</style>
+</helmet>
+<div data-screen-label="Bảng giáo viên" style="min-height:100vh;font-family:'Manrope',sans-serif;color:#033337;background:radial-gradient(120% 80% at 50% 0%,#f4faf6 0%,#e6f3f2 55%,#d7ecea 100%);padding:clamp(16px,4vw,40px);">
+  <div style="max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:18px;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;">
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <span style="font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#006687;">BizOn Bật Nghiệp · Bến Phù Sa</span>
+        <h1 style="margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(28px,4vw,42px);line-height:1.05;">Bảng giáo viên</h1>
+        <p style="margin:0;font-size:14px;opacity:.75;max-width:620px;text-wrap:pretty;">Dán kết quả học sinh gửi qua Zalo, Messenger hoặc email vào ô bên dưới. Có thể dán nhiều bài cùng lúc, kể cả bài chơi một mình và chơi nhóm; bảng tự đọc dòng bắt đầu bằng #BPS, bỏ bài trùng mã và gom bài chơi nhóm theo đội.</p>
+      </div>
+      <a href="ben-phu-sa-v8.html" style="font-weight:800;font-size:14px;">← Về trò chơi</a>
+    </div>
+
+    <div style="background:#fff;border-radius:28px;padding:18px;box-shadow:0 14px 30px -14px rgba(3,51,55,.35), inset 0 -5px 0 rgba(3,51,55,.05);display:flex;flex-direction:column;gap:12px;">
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+        <b style="font-size:14px;">Lọc theo lớp</b>
+        <input value="{{ filter }}" sc-camel-on-change="{{ onFilter }}" placeholder="VD: QT12A" style="min-height:42px;border:none;border-radius:12px;padding:0 12px;font-weight:700;font-size:14px;letter-spacing:.06em;color:#033337;background:#eef4f3;box-shadow:inset 0 3px 6px rgba(3,51,55,.1);width:160px;">
+        <span style="font-size:12px;opacity:.6;">Dữ liệu chỉ lưu trên máy này.</span>
+      </div>
+      <textarea value="{{ raw }}" sc-camel-on-change="{{ onRaw }}" placeholder="Dán kết quả tại đây…" style="min-height:150px;border:none;border-radius:16px;padding:14px;font-size:13px;line-height:1.5;color:#033337;background:#f4faf6;box-shadow:inset 0 3px 8px rgba(3,51,55,.1);resize:vertical;"></textarea>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button sc-camel-on-click="{{ exportCsv }}" style="min-height:44px;padding:0 18px;border:none;border-radius:14px;background:#fda127;color:#033337;font-weight:800;font-size:13px;cursor:pointer;box-shadow:inset 0 -4px 0 rgba(232,118,45,.6);">⬇️ Tải CSV (Excel)</button>
+        <button sc-camel-on-click="{{ addDemo }}" style="min-height:44px;padding:0 18px;border:none;border-radius:14px;background:#eef4f3;color:#033337;font-weight:800;font-size:13px;cursor:pointer;">Thêm dữ liệu mẫu</button>
+        <button sc-camel-on-click="{{ clearAll }}" style="min-height:44px;padding:0 18px;border:none;border-radius:14px;background:transparent;color:#c0392b;font-weight:800;font-size:13px;cursor:pointer;">Xoá hết</button>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;">
+      <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+        <div style="background:#fff;border-radius:22px;padding:14px 16px;box-shadow:0 10px 22px -12px rgba(3,51,55,.35), inset 0 -4px 0 rgba(3,51,55,.05);display:flex;flex-direction:column;gap:2px;">
+          <span style="font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.6;">{{ s.label }}</span>
+          <b style="font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;line-height:1.1;color:{{ s.color }};">{{ s.value }}</b>
+        </div>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{ hasTeams }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <h2 style="margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;">Kết quả theo đội (chơi nhóm)</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:12px;">
+        <sc-for list="{{ teams }}" as="tm" hint-placeholder-count="2">
+          <div style="background:#fff;border-radius:24px;padding:16px;display:flex;flex-direction:column;gap:8px;border-top:6px solid {{ tm.color }};box-shadow:0 12px 26px -14px rgba(3,51,55,.4);">
+            <div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline;"><b style="font-family:'Plus Jakarta Sans',sans-serif;font-size:17px;color:{{ tm.color }};">{{ tm.name }}</b><b style="font-size:14px;">{{ tm.total }}</b></div>
+            <span style="font-size:12px;opacity:.7;">{{ tm.meta }} · {{ tm.count }}</span>
+            <div style="display:flex;flex-direction:column;gap:4px;">
+              <sc-for list="{{ tm.members }}" as="mb" hint-placeholder-count="2"><div style="display:flex;justify-content:space-between;gap:8px;background:#f4faf6;border-radius:10px;padding:6px 10px;font-size:13px;"><b>{{ mb.name }}</b><span style="opacity:.7;text-align:right;">{{ mb.role }}</span></div></sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    </sc-if>
+
+    <div style="background:#fff;border-radius:28px;padding:18px;box-shadow:0 14px 30px -14px rgba(3,51,55,.35), inset 0 -5px 0 rgba(3,51,55,.05);display:flex;flex-direction:column;gap:10px;overflow-x:auto;">
+      <h2 style="margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;">Kết quả học sinh</h2>
+      <sc-if value="{{ empty }}" hint-placeholder-val="{{ true }}">
+        <p style="margin:0;font-size:14px;opacity:.65;">Chưa có bài nào. Dán kết quả ở trên hoặc bấm “Thêm dữ liệu mẫu” để xem thử.</p>
+      </sc-if>
+      <sc-if value="{{ notEmpty }}" hint-placeholder-val="{{ false }}">
+        <div style="min-width:640px;display:flex;flex-direction:column;gap:6px;">
+          <div style="display:grid;grid-template-columns:40px minmax(0,2fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1.6fr) 70px minmax(0,1.2fr);gap:10px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.55;padding:0 10px;">
+            <span>#</span><span>Học sinh</span><span>Lớp</span><span>Chế độ</span><span>Doanh thu</span><span>Hạng</span><span>Ôn tập · Mã</span>
+          </div>
+          <sc-for list="{{ rows }}" as="r" hint-placeholder-count="3">
+            <div style="display:grid;grid-template-columns:40px minmax(0,2fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1.6fr) 70px minmax(0,1.2fr);gap:10px;align-items:center;background:{{ r.bg }};border-radius:14px;padding:10px;font-size:13px;">
+              <b style="font-size:16px;">{{ r.medal }}</b>
+              <div style="display:flex;flex-direction:column;min-width:0;"><b style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ r.name }}</b><span style="font-size:11px;opacity:.65;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ r.sub }}</span></div>
+              <span style="font-weight:700;letter-spacing:.04em;">{{ r.klass }}</span>
+              <span>{{ r.mode }}</span>
+              <div style="display:flex;flex-direction:column;gap:3px;"><b>{{ r.total }} tr₫ · {{ r.eff }}%</b><div style="height:8px;border-radius:6px;background:#eef3f2;overflow:hidden;"><div style="height:100%;width:{{ r.w }};background:#006687;border-radius:6px;"></div></div></div>
+              <span style="font-weight:800;">{{ r.rank }}/{{ r.of }}</span>
+              <span style="font-size:11px;opacity:.7;">📝 {{ r.quiz }} · {{ r.code }}<br>{{ r.date }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script="">
+const KEY='bps-teacher-raw';
+const DEMO=['#BPS|Nguyễn An|QT12A|exam|24.6|1|78|BPS-1A2B3|2026-10-04','#BPS|Trần Bình|QT12A|practice|18.2|2|58|BPS-4C5D6|2026-10-04','#BPS|Lê Chi|QT12A|exam|12.9|4|41|BPS-7E8F9|2026-10-04','#BPS|Phạm Dũng|QT12B|exam|21.3|1|68|BPS-0G1H2|2026-10-04','#BPS|Võ Hà|QT12A|team|26.4|1|72|BPS-T1A01|2026-10-04||Đội Phù Sa|Lumina – Nhà sáng lập|K7Q2M|5','#BPS|Đặng Khoa|QT12A|team|26.4|1|72|BPS-T1A02|2026-10-04||Đội Phù Sa|Tú Phan – Người đồng hành|K7Q2M|5','#BPS|Ngô Lan|QT12A|team|19.8|3|54|BPS-T2B01|2026-10-04||Đội Rồng Xanh|Minh Long – CEO|K7Q2M|5','#BPS|Bùi Minh|QT12A|team|19.8|3|54|BPS-T2B02|2026-10-04||Đội Rồng Xanh|Thu Hà – CFO|K7Q2M|5','#BPS|Lý Ngân|QT12A|team|19.8|3|54|BPS-T2B03|2026-10-04||Đội Rồng Xanh|Lan Chi – CMO|K7Q2M|5'].join('\n');
+class Component extends DCLogic {
+  state={raw:'',filter:''};
+  componentDidMount(){let raw='';try{raw=localStorage.getItem(KEY)||'';}catch(e){}this.setState({raw});}
+  save(raw){try{localStorage.setItem(KEY,raw);}catch(e){}this.setState({raw});}
+  parse(){const seen={},out=[];(this.state.raw||'').split(/\r?\n/).forEach(line=>{const i=line.indexOf('#BPS|');if(i<0)return;const p=line.slice(i+5).trim().split('|');if(p.length<7)return;
+    const r={name:p[0],klass:(p[1]||'').toUpperCase(),mode:p[2],total:parseFloat(p[3])||0,rank:parseInt(p[4])||0,eff:parseInt(p[5])||0,code:p[6],date:p[7]||'',quiz:p[8]||'',team:p[9]||'',role:p[10]||'',room:p[11]||'',of:parseInt(p[12])||4};const k=r.code+'|'+r.name;if(seen[k])return;seen[k]=1;out.push(r);});return out;}
+  csv(rows){const head='Hoc sinh,Lop,Che do,Doi,Vai tro,Phong,Doanh thu (tr),Hieu suat (%),Hang,Ma,Ngay,On tap (/5)';const esc=v=>'"'+String(v).replace(/"/g,'""')+'"';
+    const body=rows.map(r=>[r.name,r.klass,r.mode==='exam'?'Thi thu':r.mode==='team'?'Choi nhom':'Luyen tap',r.team,r.role,r.room,r.total,r.eff,r.rank,r.code,r.date,r.quiz].map(esc).join(','));
+    const blob=new Blob(['\ufeff'+[head].concat(body).join('\n')],{type:'text/csv;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ket-qua-ben-phu-sa.csv';document.body.appendChild(a);a.click();a.remove();}
+  renderVals(){
+    const f=(this.state.filter||'').trim().toUpperCase();
+    const all=this.parse(),rows=all.filter(r=>!f||r.klass===f).sort((a,b)=>b.total-a.total);
+    const top=Math.max(1,...rows.map(r=>r.total));const n=rows.length;
+    const avg=n?rows.reduce((s,r)=>s+r.total,0)/n:0,avgE=n?Math.round(rows.reduce((s,r)=>s+r.eff,0)/n):0,wins=rows.filter(r=>r.rank===1).length;
+    const fmt=v=>(Math.round(v*10)/10).toLocaleString('vi-VN');
+    return {
+      raw:this.state.raw,filter:this.state.filter,
+      onRaw:e=>this.save(e.target.value),onFilter:e=>this.setState({filter:e.target.value.toUpperCase()}),
+      addDemo:()=>this.save((this.state.raw?this.state.raw+'\n':'')+DEMO),
+      clearAll:()=>{if(window.confirm('Xoá toàn bộ kết quả đã dán?'))this.save('');},
+      exportCsv:()=>this.csv(rows),hasTeams:rows.some(r=>r.mode==='team'&&r.team),
+      empty:!n,notEmpty:!!n,
+      teams:(()=>{const g={};rows.filter(r=>r.mode==='team'&&r.team).forEach(r=>{const k=r.room+'|'+r.team;(g[k]=g[k]||{name:r.team,room:r.room,klass:r.klass,total:r.total,rank:r.rank,of:r.of,eff:r.eff,members:[]}).members.push({name:r.name,role:r.role});});return Object.values(g).sort((a,b)=>a.room<b.room?-1:a.room>b.room?1:a.rank-b.rank).map(x=>({name:(x.name.indexOf('Rồng')>=0?'🐉 ':'🌾 ')+x.name,meta:'Phòng '+x.room+(x.klass?' · lớp '+x.klass:'')+' · hạng '+x.rank+'/'+x.of,total:fmt(x.total)+' tr₫ · '+x.eff+'%',count:x.members.length+(x.name.indexOf('Rồng')>=0?'/5':'/2')+' thành viên đã nộp',color:x.name.indexOf('Rồng')>=0?'#006687':'#e8762d',members:x.members}));})(),
+      stats:[{label:'Số bài',value:String(n),color:'#033337'},{label:'Doanh thu TB',value:fmt(avg)+' tr₫',color:'#e8762d'},{label:'Hiệu suất TB',value:avgE+'%',color:'#006687'},{label:'Thắng hạng 1',value:wins+'/'+n,color:'#033337'}],
+      rows:rows.map((r,i)=>({name:r.name,klass:r.klass,mode:r.mode==='exam'?'⏱️ Thi thử':r.mode==='team'?'🌐 Chơi nhóm':'🎯 Luyện tập',sub:r.team?r.team+' · '+r.role:'',of:r.of,total:fmt(r.total),eff:r.eff,rank:r.rank,code:r.code,date:r.date,quiz:r.quiz?r.quiz+'/5':'—',w:Math.max(4,r.total/top*100)+'%',medal:['🥇','🥈','🥉'][i]||String(i+1),bg:i%2?'#ffffff':'#f4faf6'}))
+    };
+  }
+}
+</script>
+
+
+</body></html>
