@@ -57,55 +57,56 @@
   html[data-theme="dark"] #hub3d-dlg-box { background:#0e2a33; color:#d6ecf0; }
 </style>
 <link rel="stylesheet" href="css/tw.css">
+<link rel="stylesheet" href="css/clay-tool-skin.css">
 </head>
 <body>
 
 <main class="max-w-3xl mx-auto px-5 py-24">
   <div class="mb-5">
-    <p class="text-[11px] font-extrabold uppercase tracking-wide text-clay-gold">🧪 Bản thử nghiệm · v0</p>
-    <h1 class="font-display font-extrabold text-2xl sm:text-3xl mt-1">🏛️ Sảnh 3D BizOn</h1>
+    <p class="text-[11px] font-extrabold uppercase tracking-wide text-clay-gold" data-en="🧪 Experimental · v0">🧪 Bản thử nghiệm · v0</p>
+    <h1 class="font-display font-extrabold text-2xl sm:text-3xl mt-1" data-en="🏛️ BizOn 3D Lobby">🏛️ Sảnh 3D BizOn</h1>
     <p class="text-sm text-deep-teal/60 mt-2">Một không gian 3D nối tới mọi trò chơi trong vũ trụ Bật Nghiệp: đi lại tự do, bước qua 5 cánh cửa quanh sân để sang thẳng từng game, trò chuyện với Lumina AI &amp; Thầy Tú, bật nhạc nền ở máy hát, đọc bảng thông tin, hoặc xem bảng thành tích đã ghé qua bao nhiêu game.</p>
   </div>
 
   <div class="clay-card p-3">
     <div id="hub3d-stage">
       <canvas id="hub3d-canvas"></canvas>
-      <div id="hub3d-fallback" hidden>⚠️ Trình duyệt này chưa hỗ trợ WebGL nên chưa xem được Sảnh 3D.</div>
+      <div id="hub3d-fallback" hidden data-en="⚠️ This browser does not support WebGL yet, so the 3D Lobby cannot be shown.">⚠️ Trình duyệt này chưa hỗ trợ WebGL nên chưa xem được Sảnh 3D.</div>
       <div id="hub3d-fade"></div>
       <div id="hub3d-charselect">
-        <p class="font-display font-extrabold text-lg">🧑‍🎓 Chọn đại diện của bạn</p>
+        <p class="font-display font-extrabold text-lg" data-en="🧑‍🎓 Choose your avatar">🧑‍🎓 Chọn đại diện của bạn</p>
         <div class="opt">
           <button id="hub3d-pick-nam" data-tex="assets/character/team/aodai-nam-diploma-cut.webp">
             <img src="assets/character/team/aodai-nam-diploma-cut.webp" alt="Đại diện nam">
-            <p class="name">Đại diện (nam)</p>
+            <p class="name" data-en="Avatar (male)">Đại diện (nam)</p>
           </button>
           <button id="hub3d-pick-nu" data-tex="assets/character/team/aodai-nu-lotus-cut.webp">
             <img src="assets/character/team/aodai-nu-lotus-cut.webp" alt="Đại diện nữ">
-            <p class="name">Đại diện (nữ)</p>
+            <p class="name" data-en="Avatar (female)">Đại diện (nữ)</p>
           </button>
         </div>
       </div>
-      <p id="hub3d-hint">🖥️ WASD / mũi tên để đi · phím E để tương tác<br>📱 Cần điều khiển ở góc trái · chạm nút để tương tác</p>
-      <p id="hub3d-prompt" hidden>Nhấn <b>E</b> hoặc chạm nút bên phải để trò chuyện</p>
-      <button id="hub3d-interact" hidden>🗨️ Nói chuyện</button>
+      <p id="hub3d-hint" data-en-html="🖥️ WASD / arrow keys to move · E to interact&lt;br&gt;📱 Joystick at bottom left · tap the button to interact">🖥️ WASD / mũi tên để đi · phím E để tương tác<br>📱 Cần điều khiển ở góc trái · chạm nút để tương tác</p>
+      <p id="hub3d-prompt" hidden data-en-html="Press &lt;b&gt;E&lt;/b&gt; or tap the button on the right to chat">Nhấn <b>E</b> hoặc chạm nút bên phải để trò chuyện</p>
+      <button id="hub3d-interact" hidden data-en="🗨️ Talk">🗨️ Nói chuyện</button>
       <div id="hub3d-joy-base"><div id="hub3d-joy-knob"></div></div>
 
       <div id="hub3d-dialogue">
         <div id="hub3d-dlg-box">
-          <button id="hub3d-dlg-close" aria-label="Đóng">✕</button>
+          <button id="hub3d-dlg-close" aria-label="Đóng" data-en-aria="Close">✕</button>
           <img id="hub3d-dlg-avatar" src="assets/character/lumina-ao-dai-wave.webp" alt="">
           <p id="hub3d-dlg-name" class="font-display font-extrabold text-sm text-primary"></p>
           <p id="hub3d-dlg-text" class="text-sm mt-1"></p>
           <div class="flex gap-2 justify-end mt-3">
-            <a id="hub3d-dlg-cta" href="brand-passport.html" hidden class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-4 py-2 text-xs">🛂 Vào chơi Hộ Chiếu Thương Hiệu</a>
-            <button id="hub3d-dlg-next" class="clay-btn bg-primary text-white font-display font-extrabold px-4 py-2 text-xs">Tiếp tục ▸</button>
+            <a id="hub3d-dlg-cta" href="brand-passport.html" hidden class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-4 py-2 text-xs" data-en="🛂 Play Brand Passport">🛂 Vào chơi Hộ Chiếu Thương Hiệu</a>
+            <button id="hub3d-dlg-next" class="clay-btn bg-primary text-white font-display font-extrabold px-4 py-2 text-xs" data-en="Continue ▸">Tiếp tục ▸</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <p class="text-[11px] text-deep-teal/45 mt-4">Nhân vật người chơi dùng tạo hình đất nặn thật (2 đại diện áo dài trong Thư viện Sáng tạo) thay cho hình đặt chỗ bản trước. Dựng bằng <a href="https://threejs.org" target="_blank" rel="noopener" class="font-bold text-primary">three.js</a> (MIT license), chạy thẳng trong trình duyệt, không cần cài đặt.</p>
+  <p class="text-[11px] text-deep-teal/45 mt-4" data-en-html="The player characters use real clay sculpts (the 2 áo dài avatars from the Creative Library) instead of the earlier placeholders. Built with &lt;a href=&quot;https://threejs.org&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot; class=&quot;font-bold text-primary&quot;&gt;three.js&lt;/a&gt; (MIT licence), running straight in the browser with nothing to install.">Nhân vật người chơi dùng tạo hình đất nặn thật (2 đại diện áo dài trong Thư viện Sáng tạo) thay cho hình đặt chỗ bản trước. Dựng bằng <a href="https://threejs.org" target="_blank" rel="noopener" class="font-bold text-primary">three.js</a> (MIT license), chạy thẳng trong trình duyệt, không cần cài đặt.</p>
 </main>
 
 <script src="js/vendor/three.min.js"></script>
@@ -113,5 +114,11 @@
 <script src="js/site-dock.js" defer></script>
 <script src="js/site-footer.js" defer></script>
 <script src="js/site-nav.js" defer></script>
+
+<script src="js/bizon-clay-i18n.js"></script>
+<button type="button" id="clay-lang-fab" onclick="window.clayToggleLang&&clayToggleLang()" aria-label="VI / EN" style="position:fixed;left:14px;bottom:14px;z-index:9999;border:0;cursor:pointer;padding:9px 14px;border-radius:999px;background:#FFFBF4;color:#033337;font:800 13px 'Be Vietnam Pro',system-ui,sans-serif;box-shadow:0 10px 18px -8px rgba(110,70,30,.55),inset 0 -4px 0 rgba(110,70,30,.12)">VI · EN</button>
+<script>(function(){var b=document.getElementById('clay-lang-fab');function lbl(){var l=window.clayCurrentLang?clayCurrentLang():'vi';b.textContent=l==='en'?'Tiếng Việt':'English';}
+window.addEventListener('bizon:langchange',lbl);setTimeout(lbl,0);
+setInterval(function(){try{var s=localStorage.getItem('bizon-lang')==='en'?'en':'vi';if(window.clayApplyLang&&window.__bizonLang&&s!==window.__bizonLang)clayApplyLang(s);}catch(e){}},600);})();</script>
 </body>
 </html>
