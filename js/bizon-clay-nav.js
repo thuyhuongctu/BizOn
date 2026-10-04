@@ -8,12 +8,13 @@
   window.BIZON_NO_NAV = true; /* chặn site-nav.js cũ nếu vô tình được nạp */
 
   var LINKS = [
-    { href:'games.html',          vi:'Trò chơi',      en:'Games' },
-    { href:'brand-passport.html', vi:'Brand Passport',en:'Brand Passport' },
-    { href:'truong-hoc-thuat.html', vi:'Học thuật',   en:'Academic' },
-    { href:'bang-chung.html',     vi:'Bằng chứng',    en:'Evidence' },
-    { href:'giai-phap.html',      vi:'Pilot',         en:'Pilot' },
-    { href:'doi-ngu.html',        vi:'Đội ngũ',       en:'About' }
+    { href:'universe.html',         vi:'Vũ trụ',    en:'Universe' },
+    { href:'games.html',            vi:'Trò chơi',  en:'Games' },
+    { href:'lop-hoc.html',          vi:'Lớp học',   en:'Classroom' },
+    { href:'truong-hoc-thuat.html', vi:'Học thuật', en:'Academic' },
+    { href:'bang-chung.html',       vi:'Bằng chứng',en:'Evidence' },
+    { href:'giai-phap.html',        vi:'Pilot',     en:'Pilot' },
+    { href:'doi-ngu.html',          vi:'Đội ngũ',   en:'About' }
   ];
   var CTA = { href:'game.html', vi:'Bắt đầu', en:'Launch' };
 
