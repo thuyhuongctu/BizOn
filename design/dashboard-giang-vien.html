@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src=".././support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="../css/bizon-clay-fonts.css">
+<style>
+body{margin:0;background:#FBF4E8;color:#033337;font-family:'Be Vietnam Pro','BVP Fallback',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#006687;text-decoration:none}
+a:hover{color:#033337}
+*{box-sizing:border-box}
+</style>
+</helmet>
+<div style="min-height:100vh;max-width:1280px;margin:0 auto;padding:20px 20px 48px">
+  <header style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;padding:12px 14px 12px 22px;border-radius:999px;background:#FFFBF4;box-shadow:0 18px 30px -16px rgba(110,70,30,.35),inset 0 -6px 0 rgba(0,0,0,.05)">
+    <div style="display:flex;align-items:center;gap:14px">
+      <span style="display:flex;align-items:center;font-family:'Be Vietnam Pro',sans-serif;font-weight:800;font-size:24px;letter-spacing:-.045em;line-height:1">Biz<span style="position:relative;display:inline-block;width:.86em;height:.72em;border:.15em solid currentColor;border-radius:50%;margin:0 .02em 0 .04em"><span style="position:absolute;right:.06em;top:50%;width:.26em;height:.26em;margin-top:-.13em;border-radius:50%;background:#FDA127"></span></span>n</span>
+      <span style="font-size:15px;font-weight:800">Bảng điều khiển giảng viên</span>
+      <span style="padding:4px 10px;border-radius:999px;background:#FFE6B8;color:#7A4A0E;font-size:12px;font-weight:800">Dữ liệu minh họa</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;color:#3E5A5C">Mã lớp <span style="padding:8px 14px;border-radius:999px;background:#F3E6CF;font-family:'IBM Plex Mono',monospace;color:#033337">KT330H-01</span></div>
+  </header>
+
+  <section style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;margin-top:22px">
+    <div>
+      <h1 style="margin:0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:clamp(28px,3.4vw,40px);font-weight:800;line-height:1.1">Vòng {{ round }} / 6 · {{ phaseLabel }}</h1>
+      <div style="margin-top:4px;font-size:14px;color:#3E5A5C">{{ lockedCount }} / 10 đội đã khóa quyết định · {{ eventLabel }}</div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+      <div style="display:flex;gap:4px;padding:4px;border-radius:999px;background:#F3E6CF;box-shadow:inset 0 3px 6px rgba(110,70,30,.18)">
+        <sc-for list="{{ rounds }}" as="r" hint-placeholder-count="6">
+          <button onClick="{{ r.pick }}" style="border:0;cursor:pointer;width:40px;height:40px;border-radius:50%;background:{{ r.bg }};color:{{ r.fg }};font:800 14px 'Be Vietnam Pro',sans-serif;box-shadow:{{ r.sh }}">{{ r.n }}</button>
+        </sc-for>
+      </div>
+      <button onClick="{{ toggleLock }}" style="border:0;cursor:pointer;padding:12px 18px;border-radius:999px;background:{{ lockBg }};color:#fff;font:800 14px 'Be Vietnam Pro',sans-serif;box-shadow:inset 0 -4px 0 rgba(0,0,0,.2),0 10px 16px -10px rgba(0,60,80,.7)">{{ lockLabel }}</button>
+    </div>
+  </section>
+
+  <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:20px">
+    <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
+      <div style="padding:18px 20px;border-radius:24px;background:{{ k.bg }};box-shadow:inset 0 -7px 0 rgba(0,0,0,.07),inset 0 4px 0 rgba(255,255,255,.5),0 16px 22px -18px rgba(110,70,30,.55)">
+        <div style="font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#24403F">{{ k.k }}</div>
+        <div style="margin-top:6px;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:32px;font-weight:800;line-height:1">{{ k.v }}</div>
+        <div style="margin-top:6px;font-size:13px;color:#24403F">{{ k.s }}</div>
+      </div>
+    </sc-for>
+  </section>
+
+  <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));gap:18px;margin-top:18px;align-items:start">
+    <div style="padding:20px;border-radius:28px;background:#FFFBF4;box-shadow:inset 0 -8px 0 rgba(110,70,30,.08),0 22px 30px -24px rgba(110,70,30,.55)">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px"><h2 style="margin:0;font-size:19px;font-weight:800">Bảng xếp hạng</h2><span style="font-size:12px;font-weight:700;color:#3E5A5C">Thị phần (chính) · lợi nhuận lũy kế (phụ)</span></div>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-top:14px">
+        <sc-for list="{{ teams }}" as="t" hint-placeholder-count="10">
+          <button onClick="{{ t.pick }}" style="border:0;cursor:pointer;text-align:left;display:grid;grid-template-columns:30px minmax(0,1.3fr) minmax(0,1.6fr) 84px 88px;gap:10px;align-items:center;padding:9px 10px;border-radius:16px;background:{{ t.rowBg }};font:600 14px 'Be Vietnam Pro',sans-serif;color:#033337">
+            <span style="font-weight:800;color:#8AA0A1">{{ t.rank }}</span>
+            <span style="font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ t.name }}</span>
+            <span style="height:14px;border-radius:999px;background:#F3E6CF;overflow:hidden"><span style="display:block;height:100%;width:{{ t.shareW }};border-radius:999px;background:{{ t.color }}"></span></span>
+            <span style="text-align:right;font-weight:800;color:{{ t.profitFg }}">{{ t.profit }}</span>
+            <span style="justify-self:end;white-space:nowrap;padding:3px 8px;border-radius:999px;background:{{ t.stBg }};color:{{ t.stFg }};font-size:11px;font-weight:800">{{ t.st }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <div style="padding:20px;border-radius:28px;background:#FFFBF4;box-shadow:inset 0 -8px 0 rgba(110,70,30,.08),0 22px 30px -24px rgba(110,70,30,.55)">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px"><h2 style="margin:0;font-size:19px;font-weight:800">{{ sel.name }}</h2><span style="font-size:12px;font-weight:700;color:#3E5A5C">Lợi nhuận theo vòng (triệu ₫)</span></div>
+        <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px;align-items:end;height:170px;margin-top:16px;padding:0 4px;border-bottom:2px dashed #F0E2C8">
+          <sc-for list="{{ sel.bars }}" as="b" hint-placeholder-count="6">
+            <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:6px">
+              <span style="font-size:11px;font-weight:800;color:#3E5A5C">{{ b.v }}</span>
+              <span style="width:100%;height:{{ b.h }};border-radius:12px 12px 4px 4px;background:{{ b.c }};box-shadow:inset 0 -5px 0 rgba(0,0,0,.12),inset 0 3px 0 rgba(255,255,255,.4)"></span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:6px;font-size:12px;font-weight:700;text-align:center;color:#8AA0A1">
+          <sc-for list="{{ sel.bars }}" as="b" hint-placeholder-count="6"><span>V{{ b.n }}</span></sc-for>
+        </div>
+      </div>
+
+      <div style="padding:20px;border-radius:28px;background:#FFFBF4;box-shadow:inset 0 -8px 0 rgba(110,70,30,.08),0 22px 30px -24px rgba(110,70,30,.55)">
+        <h2 style="margin:0 0 12px;font-size:19px;font-weight:800">Quyết định vòng {{ round }}</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px">
+          <sc-for list="{{ sel.dec }}" as="d" hint-placeholder-count="5">
+            <div style="padding:12px 14px;border-radius:18px;background:#F3E6CF"><div style="font-size:12px;font-weight:800;color:#3E5A5C">{{ d.k }}</div><div style="margin-top:4px;font-size:18px;font-weight:800">{{ d.v }}</div></div>
+          </sc-for>
+        </div>
+        <div style="margin-top:14px;padding:12px 16px;border-radius:18px;background:#D9F0F2;font-size:14px;line-height:1.55;color:#03343A"><strong>Lumina · Vì sao?</strong> {{ sel.why }}</div>
+      </div>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-wrap:wrap;gap:10px;margin-top:18px">
+    <button onClick="{{ exportCsv }}" style="border:0;cursor:pointer;padding:12px 18px;border-radius:18px;background:#FFFBF4;color:#033337;font:800 14px 'Be Vietnam Pro',sans-serif;box-shadow:inset 0 -5px 0 rgba(110,70,30,.12),0 12px 18px -12px rgba(110,70,30,.5)">↓ Xuất nhật ký CSV</button>
+    <a href="../lop-hoc.html" style="padding:12px 18px;border-radius:18px;background:#FFFBF4;color:#033337;font-size:14px;font-weight:800;box-shadow:inset 0 -5px 0 rgba(110,70,30,.12),0 12px 18px -12px rgba(110,70,30,.5)">Kịch bản lớp học →</a>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const NAMES=['Sen Vàng','Mekong Clay','Phù Sa Foods','Lúa Mới','Gốm Đỏ','Cầu Vồng','Ghe Xanh','Nắng Sớm','Dừa Tươi','Bến Ninh Kiều'];
+const COLORS=['#006687','#E8762D','#1E7E8C','#FDA127','#C2581B','#5DB8C4','#0F5C4E','#E7A08F','#7FA9AA','#B5862E'];
+const EV=['Không có biến cố','Chiến tranh giá từ Alpha Dynamics','Thị trường ổn định','Khủng hoảng năng lượng','Lãi suất tăng','Vòng chung kết · Việt Nam 2026'];
+function rng(s){return()=>{s=(s*1103515245+12345)&0x7fffffff;return s/0x7fffffff}}
+const DATA=NAMES.map((name,i)=>{const r=rng(17+i*31);let cum=0;const rounds=[];for(let k=0;k<6;k++){const p=Math.round((r()*90-20+k*6+(i<3?15:0)));cum+=p;rounds.push({p,cum,share:Math.max(3,Math.round(6+r()*10+(i<3?5:0)+k*(i%3-1)*.6)),price:Math.round(80+r()*60)*1000,mkt:Math.round(5+r()*25),out:Math.round(400+r()*900),loan:r()>.6?'Vay 8,5%':'Vốn chủ'})}return{name,color:COLORS[i],rounds}});
+const WHY=['Giá thấp hơn trung bình kéo thêm khách nhưng biên lời mỏng.','Ngân sách marketing cao giữ thị phần khi đối thủ phá giá.','Sản lượng vượt cầu nên tồn kho làm tăng chi phí.','Khoản vay giúp mở rộng nhưng lãi làm giảm lợi nhuận quý.','Chi phí điện năng tăng ăn vào lợi nhuận vận hành.'];
+class Component extends DCLogic{
+  state={round:4,sel:0,locked:false};
+  renderVals(){
+    const R=this.state.round,ix=R-1;
+    const rows=DATA.map((t,i)=>({i,t,r:t.rounds[ix]})).sort((a,b)=>b.r.share-a.r.share||b.r.cum-a.r.cum);
+    const maxShare=Math.max(...rows.map(x=>x.r.share));
+    const lockedN=this.state.locked?10:Math.min(10,4+R);
+    const s=DATA[this.state.sel],sr=s.rounds[ix];
+    const maxP=Math.max(...s.rounds.map(x=>Math.abs(x.p)),1);
+    const fmt=n=>(n>=0?'+':'')+n+'tr';
+    const totalShare=rows.reduce((a,x)=>a+x.r.share,0);
+    return{
+      round:R,phaseLabel:this.state.locked?'Đã khóa vòng':'Đang ra quyết định',eventLabel:EV[ix],lockedCount:lockedN,
+      lockLabel:this.state.locked?'Mở lại vòng':'Khóa vòng cả lớp',lockBg:this.state.locked?'#E8762D':'#006687',
+      toggleLock:()=>this.setState(z=>({locked:!z.locked})),
+      rounds:[1,2,3,4,5,6].map(n=>({n,bg:n===R?'#006687':'transparent',fg:n===R?'#fff':'#3E5A5C',sh:n===R?'inset 0 -3px 0 rgba(0,0,0,.2)':'none',pick:()=>this.setState({round:n,locked:false})})),
+      kpis:[
+        {k:'Đội dẫn đầu',v:rows[0].t.name,s:'Thị phần '+Math.round(rows[0].r.share/totalShare*100)+'%',bg:'#7FD3DC'},
+        {k:'Đội đang lỗ',v:DATA.filter(t=>t.rounds[ix].cum<0).length+' / 10',s:'Lợi nhuận lũy kế âm',bg:'#F4B6C2'},
+        {k:'Đội dùng vay',v:DATA.filter(t=>t.rounds[ix].loan!=='Vốn chủ').length+' / 10',s:'Lãi suất 8,5%',bg:'#FFD58A'},
+        {k:'Đã khóa',v:lockedN+' / 10',s:this.state.locked?'Kết quả đã công bố':'Chờ các đội còn lại',bg:'#A9DCC4'}],
+      teams:rows.map((x,k)=>({rank:k+1,name:x.t.name,color:x.t.color,shareW:Math.round(x.r.share/maxShare*100)+'%',profit:fmt(x.r.cum),profitFg:x.r.cum<0?'#C2581B':'#0F5C4E',
+        st:(this.state.locked||k<lockedN)?'Đã khóa':'Đang họp',stBg:(this.state.locked||k<lockedN)?'#DDF1E4':'#FFE6B8',stFg:(this.state.locked||k<lockedN)?'#0F5C4E':'#7A4A0E',
+        rowBg:x.i===this.state.sel?'#FFF3DA':'transparent',pick:()=>this.setState({sel:x.i})})),
+      sel:{name:s.name,
+        bars:s.rounds.map((x,k)=>({n:k+1,v:x.p,h:Math.max(6,Math.round(Math.abs(x.p)/maxP*120))+'px',c:k>ix?'#E6D5B5':(x.p<0?'#E8762D':s.color)})),
+        dec:[{k:'Giá bán',v:sr.price.toLocaleString('vi-VN')+'₫'},{k:'Marketing',v:sr.mkt+'tr'},{k:'Sản lượng',v:sr.out},{k:'Nguồn vốn',v:sr.loan},{k:'Thị phần',v:Math.round(sr.share/totalShare*100)+'%'}],
+        why:(()=>{const avgP=DATA.reduce((a,t)=>a+t.rounds[ix].price,0)/10,avgM=DATA.reduce((a,t)=>a+t.rounds[ix].mkt,0)/10,avgO=DATA.reduce((a,t)=>a+t.rounds[ix].out,0)/10;
+          if(ix===3)return WHY[4];
+          if(sr.loan!=='Vốn chủ')return WHY[3];
+          if(sr.price<avgP)return WHY[0];
+          if(sr.mkt>avgM)return WHY[1];
+          if(sr.out>avgO)return WHY[2];
+          return 'Giá cao hơn trung bình lớp và marketing thấp nên thị phần giữ ở mức vừa; dùng vốn chủ nên không chịu lãi vay.';})()},
+      exportCsv:()=>{const lines=['team,round,price,marketing,output,funding,share,profit,cumulative'];DATA.forEach(t=>t.rounds.forEach((x,k)=>lines.push([t.name,k+1,x.price,x.mkt,x.out,x.loan,x.share,x.p,x.cum].join(','))));const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+lines.join('\n')],{type:'text/csv'}));a.download='bizon-KT330H-01-demo.csv';a.click();}
+    };
+  }
+}
+</script>
+</body>
+</html>

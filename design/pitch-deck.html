@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src=".././support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="../css/bizon-clay-fonts.css">
+<style>
+body{margin:0;background:#033337;font-family:'Be Vietnam Pro','BVP Fallback',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#006687;text-decoration:none}
+a:hover{color:#033337}
+*{box-sizing:border-box}
+</style>
+</helmet>
+<x-import component-from-global-scope="deck-stage" from="../deck-stage.js" width="1920" height="1080" hint-size="100%,100%">
+
+<section data-label="Bìa" data-screen-label="01" data-speaker-notes="Giới thiệu BizOn: nền tảng mô phỏng kinh doanh làm tại Đồng bằng sông Cửu Long." style="background:#FBF4E8;color:#033337;overflow:hidden">
+  <div style="position:absolute;right:-180px;top:-160px;width:900px;height:900px;border-radius:50%;background:repeating-radial-gradient(circle,#FFD58A 0 26px,#FDBE5A 26px 31px);opacity:.85"></div>
+  <div style="position:absolute;left:0;right:0;bottom:0;height:200px;background:#1E7E8C"></div>
+  <div style="position:absolute;left:0;right:0;bottom:200px;height:40px;background:radial-gradient(circle at 40px 40px,#1E7E8C 39px,transparent 40px) 0 0/80px 40px repeat-x"></div>
+  <div style="position:absolute;left:140px;top:100px;width:900px">
+    <div style="display:inline-flex;align-items:center;gap:14px;padding:12px 26px 12px 12px;border-radius:999px;background:#FFFBF4;box-shadow:0 14px 26px -14px rgba(110,70,30,.5);font-size:28px;font-weight:700;color:#3E5A5C"><span style="width:44px;height:44px;border-radius:50%;background:#DA251D;color:#FFDD00;display:grid;place-items:center;font-size:24px">★</span>Thiết kế tại Đồng bằng sông Cửu Long</div>
+    <div style="margin-top:56px;display:flex;align-items:center;font-family:'Be Vietnam Pro',sans-serif;font-weight:800;font-size:200px;letter-spacing:-.05em;line-height:.9">Biz<span style="position:relative;display:inline-block;width:.86em;height:.72em;border:.15em solid currentColor;border-radius:50%;margin:0 .02em 0 .04em"><span style="position:absolute;right:.06em;top:50%;width:.26em;height:.26em;margin-top:-.13em;border-radius:50%;background:#FDA127"></span></span>n</div>
+    <h1 style="margin:40px 0 0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-weight:800;font-size:76px;line-height:1.08;letter-spacing:-.02em">Học kinh doanh qua mô phỏng, <span style="color:#006687">từ Việt Nam ra thế giới.</span></h1>
+    <p style="margin:28px 0 0;font-size:30px;line-height:1.4;color:#3E5A5C">Đỗ Thùy Hương & PGS.TS. Phan Anh Tú<br>Trường Kinh tế, Đại học Cần Thơ</p>
+  </div>
+  <img src="../assets/character/lumina-ao-dai-wave.webp" alt="" style="position:absolute;right:500px;bottom:110px;height:720px;filter:drop-shadow(0 24px 20px rgba(110,70,30,.35))">
+  <img src="../assets/character/anh-tu-ao-dai-welcome-cut.webp" alt="" style="position:absolute;right:150px;bottom:110px;height:820px;filter:drop-shadow(0 24px 20px rgba(110,70,30,.35))">
+</section>
+
+<section data-label="Vấn đề" data-screen-label="02" data-speaker-notes="Điểm nghẽn ở khu vực doanh nghiệp. Dẫn số liệu từ bài phỏng vấn PGS.TS. Phan Anh Tú trên Tuổi Trẻ và Một Thế Giới." style="background:#FBF4E8;color:#033337;padding:110px 140px">
+  <div style="font-size:30px;font-weight:800;color:#C2581B">Vấn đề</div>
+  <h2 style="margin:16px 0 0;max-width:1400px;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-weight:800;font-size:80px;line-height:1.05;letter-spacing:-.02em">Đồng bằng không thiếu người tài, mà thiếu chỗ để dùng người tài.</h2>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:90px">
+    <div style="padding:48px;border-radius:44px;background:#7FD3DC;box-shadow:inset 0 -14px 0 rgba(0,0,0,.08),inset 0 8px 0 rgba(255,255,255,.5),0 30px 44px -28px rgba(0,60,80,.6)">
+      <div style="font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:120px;font-weight:800;line-height:1">86→74%</div>
+      <p style="margin:24px 0 0;font-size:30px;line-height:1.45;color:#03343A">tỉ lệ cử nhân làm đúng chuyên môn giảm</p>
+    </div>
+    <div style="padding:48px;border-radius:44px;background:#FFD58A;box-shadow:inset 0 -14px 0 rgba(0,0,0,.08),inset 0 8px 0 rgba(255,255,255,.5),0 30px 44px -28px rgba(110,70,30,.6)">
+      <div style="font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:120px;font-weight:800;line-height:1">29/34</div>
+      <p style="margin:24px 0 0;font-size:30px;line-height:1.45;color:#4A3008">hạng trình độ phát triển doanh nghiệp của Cần Thơ trong PII 2025, dù thể chế hạng 4/34</p>
+    </div>
+    <div style="padding:48px;border-radius:44px;background:#F4B6C2;box-shadow:inset 0 -14px 0 rgba(0,0,0,.08),inset 0 8px 0 rgba(255,255,255,.5),0 30px 44px -28px rgba(150,60,80,.6)">
+      <div style="font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:120px;font-weight:800;line-height:1">Lý thuyết</div>
+      <p style="margin:24px 0 0;font-size:30px;line-height:1.45;color:#4A1A26">sinh viên kinh doanh học trên giấy, hiếm khi tự ra quyết định và chịu hệ quả</p>
+    </div>
+  </div>
+  <p style="position:absolute;left:140px;bottom:70px;font-size:24px;color:#6B7F80">Nguồn: Tuổi Trẻ Online 27/07 và 05/08/2026; Tạp chí Một Thế Giới 30/07/2026</p>
+</section>
+
+<section data-label="Giải pháp" data-screen-label="03" data-speaker-notes="Một hệ sinh thái, bốn cổng. Chạy trên trình duyệt, miễn phí cho lớp học, có trên Google Play." style="background:#1E7E8C;color:#fff;padding:110px 140px">
+  <div style="font-size:30px;font-weight:800;color:#FFD58A">Giải pháp</div>
+  <h2 style="margin:16px 0 0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-weight:800;font-size:80px;line-height:1.05;letter-spacing:-.02em">Một hệ sinh thái, bốn cổng trải nghiệm.</h2>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:70px">
+    <div style="padding:20px;border-radius:40px;background:#FFFBF4;color:#033337;box-shadow:inset 0 -12px 0 rgba(110,70,30,.08),0 30px 40px -24px rgba(0,30,40,.6)">
+      <div style="height:300px;border-radius:30px;overflow:hidden;background:#FFE6B8"><img src="../assets/concept/tier-2a-bat-nghiep.jpg" alt="" style="width:100%;height:100%;object-fit:cover"></div>
+      <div style="padding:26px 14px 14px"><div style="font-size:24px;font-weight:800;letter-spacing:.1em;color:#C2581B">01 · CORE</div><div style="margin-top:8px;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:44px;font-weight:800">Bật Nghiệp</div><p style="margin:12px 0 0;font-size:26px;line-height:1.45;color:#3E5A5C">Điều hành doanh nghiệp qua 6 vòng quyết định.</p></div>
+    </div>
+    <div style="padding:20px;border-radius:40px;background:#FFFBF4;color:#033337;box-shadow:inset 0 -12px 0 rgba(110,70,30,.08),0 30px 40px -24px rgba(0,30,40,.6)">
+      <div style="height:300px;border-radius:30px;overflow:hidden;background:#fff"><img src="../assets/hc/stamp/passport-cover-trong.png" alt="" style="width:100%;height:100%;object-fit:cover"></div>
+      <div style="padding:26px 14px 14px"><div style="font-size:24px;font-weight:800;letter-spacing:.1em;color:#C2581B">02 · INTERNATIONAL</div><div style="margin-top:8px;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:44px;font-weight:800">Brand Passport</div><p style="margin:12px 0 0;font-size:26px;line-height:1.45;color:#3E5A5C">Đưa thương hiệu Việt ra 7 thị trường.</p></div>
+    </div>
+    <div style="padding:20px;border-radius:40px;background:#FFFBF4;color:#033337;box-shadow:inset 0 -12px 0 rgba(110,70,30,.08),0 30px 40px -24px rgba(0,30,40,.6)">
+      <div style="height:300px;border-radius:30px;overflow:hidden;background:#D9F0F2"><img src="../assets/illustrations/globe-trade.webp" alt="" style="width:100%;height:100%;object-fit:cover"></div>
+      <div style="padding:26px 14px 14px"><div style="font-size:24px;font-weight:800;letter-spacing:.1em;color:#C2581B">03 · LAB</div><div style="margin-top:8px;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:44px;font-weight:800">IE Lab</div><p style="margin:12px 0 0;font-size:26px;line-height:1.45;color:#3E5A5C">Thử giả định quốc tế hóa, xuất nhật ký CSV.</p></div>
+    </div>
+    <div style="padding:20px;border-radius:40px;background:#FFFBF4;color:#033337;box-shadow:inset 0 -12px 0 rgba(110,70,30,.08),0 30px 40px -24px rgba(0,30,40,.6)">
+      <div style="height:300px;border-radius:30px;overflow:hidden;background:#FFE6B8"><img src="../assets/concept/tier-1-ben-phu-sa.jpg" alt="" style="width:100%;height:100%;object-fit:cover"></div>
+      <div style="padding:26px 14px 14px"><div style="font-size:24px;font-weight:800;letter-spacing:.1em;color:#C2581B">04 · ARCADE</div><div style="margin-top:8px;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:44px;font-weight:800">Arcade</div><p style="margin:12px 0 0;font-size:26px;line-height:1.45;color:#3E5A5C">Mini-game luyện từng kỹ năng, gồm Bến Phù Sa.</p></div>
+    </div>
+  </div>
+  <p style="position:absolute;left:140px;bottom:70px;font-size:28px;font-weight:700;color:#D6EEF2">Trình duyệt · PWA ngoại tuyến · Google Play · Song ngữ Việt–Anh</p>
+</section>
+
+<section data-label="Cách hoạt động" data-screen-label="04" data-speaker-notes="Bảy bước từ nghiên cứu đến bằng chứng. Engine xác định; AI chỉ diễn giải, không chấm điểm." style="background:#FBF4E8;color:#033337;padding:110px 140px">
+  <div style="font-size:30px;font-weight:800;color:#C2581B">Cách hoạt động</div>
+  <h2 style="margin:16px 0 0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-weight:800;font-size:80px;line-height:1.05;letter-spacing:-.02em">Từ lý thuyết đến quyết định.</h2>
+  <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:22px;margin-top:100px">
+    <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px"><span style="width:130px;height:130px;border-radius:50%;background:#7FD3DC;display:grid;place-items:center;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:48px;font-weight:800;box-shadow:inset 0 -10px 0 rgba(0,0,0,.12),inset 0 6px 0 rgba(255,255,255,.55),0 20px 26px -16px rgba(110,70,30,.6)">01</span><span style="font-size:34px;font-weight:800">Nghiên cứu</span><span style="font-size:24px;line-height:1.4;color:#3E5A5C">IB · Entrepreneurship</span></div>
+    <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px"><span style="width:130px;height:130px;border-radius:50%;background:#FFD58A;display:grid;place-items:center;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:48px;font-weight:800;box-shadow:inset 0 -10px 0 rgba(0,0,0,.12),inset 0 6px 0 rgba(255,255,255,.55),0 20px 26px -16px rgba(110,70,30,.6)">02</span><span style="font-size:34px;font-weight:800">Mô hình</span><span style="font-size:24px;line-height:1.4;color:#3E5A5C">Giả định và tham số</span></div>
+    <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px"><span style="width:130px;height:130px;border-radius:50%;background:#F4B6C2;display:grid;place-items:center;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:48px;font-weight:800;box-shadow:inset 0 -10px 0 rgba(0,0,0,.12),inset 0 6px 0 rgba(255,255,255,.55),0 20px 26px -16px rgba(110,70,30,.6)">03</span><span style="font-size:34px;font-weight:800">Mô phỏng</span><span style="font-size:24px;line-height:1.4;color:#3E5A5C">Kịch bản có hệ quả</span></div>
+    <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px"><span style="width:130px;height:130px;border-radius:50%;background:#A9DCC4;display:grid;place-items:center;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:48px;font-weight:800;box-shadow:inset 0 -10px 0 rgba(0,0,0,.12),inset 0 6px 0 rgba(255,255,255,.55),0 20px 26px -16px rgba(110,70,30,.6)">04</span><span style="font-size:34px;font-weight:800">Quyết định</span><span style="font-size:24px;line-height:1.4;color:#3E5A5C">Hành động và đánh đổi</span></div>
+    <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px"><span style="width:130px;height:130px;border-radius:50%;background:#7FD3DC;display:grid;place-items:center;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:48px;font-weight:800;box-shadow:inset 0 -10px 0 rgba(0,0,0,.12),inset 0 6px 0 rgba(255,255,255,.55),0 20px 26px -16px rgba(110,70,30,.6)">05</span><span style="font-size:34px;font-weight:800">Kết quả</span><span style="font-size:24px;line-height:1.4;color:#3E5A5C">Hệ quả giải thích được</span></div>
+    <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px"><span style="width:130px;height:130px;border-radius:50%;background:#FFD58A;display:grid;place-items:center;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:48px;font-weight:800;box-shadow:inset 0 -10px 0 rgba(0,0,0,.12),inset 0 6px 0 rgba(255,255,255,.55),0 20px 26px -16px rgba(110,70,30,.6)">06</span><span style="font-size:34px;font-weight:800">Phản tư</span><span style="font-size:24px;line-height:1.4;color:#3E5A5C">AI hỗ trợ chất vấn</span></div>
+    <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px"><span style="width:130px;height:130px;border-radius:50%;background:#F4B6C2;display:grid;place-items:center;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:48px;font-weight:800;box-shadow:inset 0 -10px 0 rgba(0,0,0,.12),inset 0 6px 0 rgba(255,255,255,.55),0 20px 26px -16px rgba(110,70,30,.6)">07</span><span style="font-size:34px;font-weight:800">Bằng chứng</span><span style="font-size:24px;line-height:1.4;color:#3E5A5C">Sản phẩm học tập quan sát được</span></div>
+  </div>
+  <div style="position:absolute;left:140px;right:140px;bottom:90px;display:grid;grid-template-columns:repeat(3,1fr);gap:28px">
+    <div style="padding:28px 32px;border-radius:30px;background:#FFFBF4;font-size:28px;font-weight:700;line-height:1.4;box-shadow:inset 0 -8px 0 rgba(110,70,30,.08),0 20px 30px -22px rgba(110,70,30,.5)">Engine xác định, kết quả tái lập được</div>
+    <div style="padding:28px 32px;border-radius:30px;background:#FFFBF4;font-size:28px;font-weight:700;line-height:1.4;box-shadow:inset 0 -8px 0 rgba(110,70,30,.08),0 20px 30px -22px rgba(110,70,30,.5)">AI diễn giải, không thay engine chấm điểm</div>
+    <div style="padding:28px 32px;border-radius:30px;background:#FFFBF4;font-size:28px;font-weight:700;line-height:1.4;box-shadow:inset 0 -8px 0 rgba(110,70,30,.08),0 20px 30px -22px rgba(110,70,30,.5)">Model cards và phương trình công khai</div>
+  </div>
+</section>
+
+<section data-label="Trong lớp học" data-screen-label="05" data-speaker-notes="Một buổi 90 phút hoặc giải đấu 15 tuần. Đội 5 vai, chơi đồng bộ bằng Mã lớp." style="background:#FBF4E8;color:#033337;overflow:hidden">
+  <img src="../assets/illustrations/lumina-holo-classroom.webp" alt="" style="position:absolute;right:0;top:0;width:900px;height:1080px;object-fit:cover">
+  <div style="position:absolute;left:140px;top:110px;width:820px">
+    <div style="font-size:30px;font-weight:800;color:#C2581B">Trong lớp học</div>
+    <h2 style="margin:16px 0 0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-weight:800;font-size:76px;line-height:1.05;letter-spacing:-.02em">Vừa một buổi học, hoặc cả học kỳ.</h2>
+    <div style="display:flex;flex-direction:column;gap:22px;margin-top:60px">
+      <div style="display:grid;grid-template-columns:120px 1fr;gap:28px;align-items:center;padding:26px 30px;border-radius:32px;background:#FFFBF4;box-shadow:inset 0 -8px 0 rgba(110,70,30,.08),0 20px 30px -22px rgba(110,70,30,.5)"><span style="font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:56px;font-weight:800;color:#006687">5</span><span style="font-size:30px;line-height:1.4">vai mỗi đội: CEO, CFO, CMO, COO, Thư ký pháp chế</span></div>
+      <div style="display:grid;grid-template-columns:120px 1fr;gap:28px;align-items:center;padding:26px 30px;border-radius:32px;background:#FFFBF4;box-shadow:inset 0 -8px 0 rgba(110,70,30,.08),0 20px 30px -22px rgba(110,70,30,.5)"><span style="font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:56px;font-weight:800;color:#006687">90′</span><span style="font-size:30px;line-height:1.4">một buổi trọn vẹn: 6 vòng, mỗi vòng 7 phút</span></div>
+      <div style="display:grid;grid-template-columns:120px 1fr;gap:28px;align-items:center;padding:26px 30px;border-radius:32px;background:#FFFBF4;box-shadow:inset 0 -8px 0 rgba(110,70,30,.08),0 20px 30px -22px rgba(110,70,30,.5)"><span style="font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:56px;font-weight:800;color:#006687">15</span><span style="font-size:30px;line-height:1.4">tuần giải đấu, hai mùa giải để tách may rủi khỏi năng lực</span></div>
+      <div style="display:grid;grid-template-columns:120px 1fr;gap:28px;align-items:center;padding:26px 30px;border-radius:32px;background:#FFFBF4;box-shadow:inset 0 -8px 0 rgba(110,70,30,.08),0 20px 30px -22px rgba(110,70,30,.5)"><span style="font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:56px;font-weight:800;color:#006687">CSV</span><span style="font-size:30px;line-height:1.4">nhật ký quyết định cho rubric và debriefing</span></div>
+    </div>
+  </div>
+</section>
+
+<section data-label="Bằng chứng" data-screen-label="06" data-speaker-notes="Kết quả hồi cứu từ học phần dùng BizArena, tiền thân của BizOn. Nói rõ giới hạn ở slide sau." style="background:#FBF4E8;color:#033337;padding:110px 140px">
+  <div style="font-size:30px;font-weight:800;color:#C2581B">Bằng chứng ban đầu · n = 40</div>
+  <h2 style="margin:16px 0 0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-weight:800;font-size:80px;line-height:1.05;letter-spacing:-.02em">Điểm tăng đều qua từng vòng chơi.</h2>
+  <div style="display:grid;grid-template-columns:1.25fr 1fr;gap:70px;margin-top:80px;align-items:start">
+    <div style="display:flex;flex-direction:column;gap:34px">
+      <div><div style="display:flex;justify-content:space-between;font-size:30px;font-weight:700"><span>Vòng 1 (QT1)</span><span>8,31</span></div><div style="margin-top:12px;height:46px;border-radius:999px;background:#F3E6CF;box-shadow:inset 0 4px 8px rgba(110,70,30,.18)"><div style="width:69%;height:100%;border-radius:999px;background:#7FD3DC;box-shadow:inset 0 -8px 0 rgba(0,0,0,.12),inset 0 5px 0 rgba(255,255,255,.4)"></div></div></div>
+      <div><div style="display:flex;justify-content:space-between;font-size:30px;font-weight:700"><span>Vòng 2 (QT2)</span><span>8,62</span></div><div style="margin-top:12px;height:46px;border-radius:999px;background:#F3E6CF;box-shadow:inset 0 4px 8px rgba(110,70,30,.18)"><div style="width:77%;height:100%;border-radius:999px;background:#5DB8C4;box-shadow:inset 0 -8px 0 rgba(0,0,0,.12),inset 0 5px 0 rgba(255,255,255,.4)"></div></div></div>
+      <div><div style="display:flex;justify-content:space-between;font-size:30px;font-weight:700"><span>Vòng 3 (QT3)</span><span>9,21</span></div><div style="margin-top:12px;height:46px;border-radius:999px;background:#F3E6CF;box-shadow:inset 0 4px 8px rgba(110,70,30,.18)"><div style="width:92%;height:100%;border-radius:999px;background:#1E7E8C;box-shadow:inset 0 -8px 0 rgba(0,0,0,.12),inset 0 5px 0 rgba(255,255,255,.4)"></div></div></div>
+      <div><div style="display:flex;justify-content:space-between;font-size:30px;font-weight:700"><span>Tiểu luận doanh nghiệp</span><span>8,49</span></div><div style="margin-top:12px;height:46px;border-radius:999px;background:#F3E6CF;box-shadow:inset 0 4px 8px rgba(110,70,30,.18)"><div style="width:73%;height:100%;border-radius:999px;background:#FDA127;box-shadow:inset 0 -8px 0 rgba(0,0,0,.12),inset 0 5px 0 rgba(255,255,255,.4)"></div></div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:26px">
+      <div style="padding:34px 40px;border-radius:40px;background:#7FD3DC;box-shadow:inset 0 -12px 0 rgba(0,0,0,.08),inset 0 7px 0 rgba(255,255,255,.5)"><div style="font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:84px;font-weight:800;line-height:1">+0,90</div><div style="margin-top:10px;font-size:26px;color:#03343A">điểm, từ vòng 1 đến vòng 3</div></div>
+      <div style="padding:34px 40px;border-radius:40px;background:#FFD58A;box-shadow:inset 0 -12px 0 rgba(0,0,0,.08),inset 0 7px 0 rgba(255,255,255,.5)"><div style="font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:84px;font-weight:800;line-height:1">r ≈ 0,31</div><div style="margin-top:10px;font-size:26px;color:#4A3008">giữa điểm mô phỏng và điểm tiểu luận</div></div>
+      <div style="padding:34px 40px;border-radius:40px;background:#A9DCC4;box-shadow:inset 0 -12px 0 rgba(0,0,0,.08),inset 0 7px 0 rgba(255,255,255,.5)"><div style="font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:84px;font-weight:800;line-height:1">98%</div><div style="margin-top:10px;font-size:26px;color:#123B2E">sinh viên đạt điểm học phần ≥ 8,0</div></div>
+    </div>
+  </div>
+</section>
+
+<section data-label="Giới hạn" data-screen-label="07" data-speaker-notes="Nói thẳng giới hạn. Đây là điểm khác biệt về uy tín học thuật." style="background:#FDE1CE;color:#3B1A06;padding:110px 140px">
+  <div style="font-size:30px;font-weight:800;color:#8A3A0C">Nói thẳng</div>
+  <h2 style="margin:16px 0 0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-weight:800;font-size:80px;line-height:1.05;letter-spacing:-.02em;color:#5A2608">Giới hạn của bằng chứng hiện có.</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:80px">
+    <div style="padding:40px;border-radius:40px;background:#FFFBF4;box-shadow:inset 0 -10px 0 rgba(150,70,20,.08),0 24px 34px -24px rgba(150,70,20,.5)"><div style="font-size:34px;font-weight:800">Hồi cứu, chưa có pre-test</div><p style="margin:14px 0 0;font-size:28px;line-height:1.5;color:#5A2608">Chưa tách được hiệu ứng mô phỏng khỏi hiệu ứng luyện tập.</p></div>
+    <div style="padding:40px;border-radius:40px;background:#FFFBF4;box-shadow:inset 0 -10px 0 rgba(150,70,20,.08),0 24px 34px -24px rgba(150,70,20,.5)"><div style="font-size:34px;font-weight:800">Một lớp, một giảng viên</div><p style="margin:14px 0 0;font-size:28px;line-height:1.5;color:#5A2608">Giảng viên đồng thời là đồng tác giả; cần lặp lại ở lớp khác.</p></div>
+    <div style="padding:40px;border-radius:40px;background:#FFFBF4;box-shadow:inset 0 -10px 0 rgba(150,70,20,.08),0 24px 34px -24px rgba(150,70,20,.5)"><div style="font-size:34px;font-weight:800">Điểm dồn trần</div><p style="margin:14px 0 0;font-size:28px;line-height:1.5;color:#5A2608">Độ lệch chuẩn nhỏ làm hệ số tương quan bị nén.</p></div>
+    <div style="padding:40px;border-radius:40px;background:#DDF1E4;box-shadow:inset 0 -10px 0 rgba(30,90,60,.08),0 24px 34px -24px rgba(30,90,60,.5)"><div style="font-size:34px;font-weight:800;color:#0F5C4E">Bước kế tiếp đã sẵn sàng</div><p style="margin:14px 0 0;font-size:28px;line-height:1.5;color:#123B2E">Bộ pre/post-test 15 câu, thiết kế trước–sau có mốc so sánh cho KT330H và KT301H.</p></div>
+  </div>
+</section>
+
+<section data-label="Triển khai" data-screen-label="08" data-speaker-notes="Bản chơi tự do luôn miễn phí. Ba gói triển khai có hỗ trợ, giá dự kiến giai đoạn pilot." style="background:#FBF4E8;color:#033337;padding:110px 140px">
+  <div style="font-size:30px;font-weight:800;color:#C2581B">Gói triển khai · giá dự kiến giai đoạn pilot</div>
+  <h2 style="margin:16px 0 0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-weight:800;font-size:80px;line-height:1.05;letter-spacing:-.02em">Miễn phí cho lớp học. Có hỗ trợ khi cần.</h2>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:36px;margin-top:80px">
+    <div style="padding:46px;border-radius:44px;background:#FFFBF4;box-shadow:inset 0 -12px 0 rgba(110,70,30,.08),0 30px 44px -30px rgba(110,70,30,.55)"><div style="font-size:40px;font-weight:800">Pilot Classroom</div><div style="margin-top:20px;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:64px;font-weight:800;color:#006687">3.000.000₫</div><div style="font-size:26px;color:#3E5A5C">/lớp/học kỳ</div><p style="margin:28px 0 0;font-size:27px;line-height:1.5;color:#24403F">1 lớp tối đa 60 sinh viên, kịch bản, rubric, hỗ trợ trực tuyến, báo cáo cuối pilot</p></div>
+    <div style="padding:46px;border-radius:44px;background:#FFF3DA;border:5px solid #FDA127;box-shadow:inset 0 -12px 0 rgba(110,70,30,.08),0 30px 44px -30px rgba(110,70,30,.55)"><div style="font-size:40px;font-weight:800">Instructor Pro</div><div style="margin-top:20px;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:64px;font-weight:800;color:#006687">12.000.000₫</div><div style="font-size:26px;color:#3E5A5C">/giảng viên/năm</div><p style="margin:28px 0 0;font-size:27px;line-height:1.5;color:#24403F">Không giới hạn lớp, xuất dữ liệu, kịch bản tùy biến theo học phần</p></div>
+    <div style="padding:46px;border-radius:44px;background:#FFFBF4;box-shadow:inset 0 -12px 0 rgba(110,70,30,.08),0 30px 44px -30px rgba(110,70,30,.55)"><div style="font-size:40px;font-weight:800">Institution Pass</div><div style="margin-top:20px;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:64px;font-weight:800;color:#006687">Theo thỏa thuận</div><div style="font-size:26px;color:#3E5A5C">/khoa/trường</div><p style="margin:28px 0 0;font-size:27px;line-height:1.5;color:#24403F">Toàn đơn vị, thương hiệu riêng, đào tạo giảng viên, Research Edition</p></div>
+  </div>
+</section>
+
+<section data-label="Đội ngũ" data-screen-label="09" data-speaker-notes="Hai nhà sáng lập: nghiên cứu quốc tế hóa và khởi nghiệp quốc tế." style="background:#1E7E8C;color:#fff;overflow:hidden">
+  <div style="position:absolute;left:140px;top:110px;width:980px">
+    <div style="font-size:30px;font-weight:800;color:#FFD58A">Đội ngũ sáng lập</div>
+    <h2 style="margin:16px 0 0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-weight:800;font-size:72px;line-height:1.08;letter-spacing:-.02em">Dẫn dắt bởi nghiên cứu, bắt nguồn từ Việt Nam.</h2>
+    <div style="margin-top:60px;padding:36px 40px;border-radius:40px;background:#FFFBF4;color:#033337;box-shadow:inset 0 -10px 0 rgba(110,70,30,.08)">
+      <div style="font-size:42px;font-weight:800;color:#006687">Đỗ Thùy Hương</div>
+      <div style="margin-top:6px;font-size:26px;font-weight:700;color:#3E5A5C">Sáng lập & Chủ nhiệm dự án · NCS Quản trị Kinh doanh, ĐH Cần Thơ</div>
+      <p style="margin:14px 0 0;font-size:26px;line-height:1.5;color:#24403F">Chiến lược quốc tế hóa, meta-analysis, phương pháp định lượng; phát triển chính engine và các game.</p>
+    </div>
+    <div style="margin-top:26px;padding:36px 40px;border-radius:40px;background:#FFFBF4;color:#033337;box-shadow:inset 0 -10px 0 rgba(110,70,30,.08)">
+      <div style="font-size:42px;font-weight:800;color:#C2581B">PGS.TS. Phan Anh Tú</div>
+      <div style="margin-top:6px;font-size:26px;font-weight:700;color:#3E5A5C">Đồng sáng lập & Cố vấn học thuật trưởng · Phó Hiệu trưởng Trường Kinh tế</div>
+      <p style="margin:14px 0 0;font-size:26px;line-height:1.5;color:#24403F">Khởi nghiệp, đổi mới sáng tạo, khởi nghiệp quốc tế; định hướng học thuật và phản biện mô hình.</p>
+    </div>
+  </div>
+  <div style="position:absolute;right:60px;bottom:-40px;width:620px;height:200px;border-radius:50%;background:#F2C98A;box-shadow:inset 0 -16px 0 rgba(140,80,20,.18)"></div>
+  <img src="../assets/character/lumina-ao-dai-wave.webp" alt="" style="position:absolute;right:390px;bottom:60px;height:700px;filter:drop-shadow(0 24px 20px rgba(0,30,40,.4))">
+  <img src="../assets/character/anh-tu-ao-dai-welcome-cut.webp" alt="" style="position:absolute;right:110px;bottom:60px;height:800px;filter:drop-shadow(0 24px 20px rgba(0,30,40,.4))">
+</section>
+
+<section data-label="Lời mời" data-screen-label="10" data-speaker-notes="Kêu gọi: chạy pilot tại đơn vị, hợp tác nghiên cứu, tải app." style="background:#033337;color:#fff;padding:110px 140px;overflow:hidden">
+  <div style="font-size:30px;font-weight:800;color:#FFD58A">Lời mời hợp tác</div>
+  <h2 style="margin:16px 0 0;max-width:1300px;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-weight:800;font-size:96px;line-height:1.02;letter-spacing:-.02em">Chạy pilot BizOn tại đơn vị của bạn.</h2>
+  <div style="display:flex;flex-direction:column;gap:22px;margin-top:70px;font-size:34px;line-height:1.4">
+    <div style="display:flex;gap:22px;align-items:center"><span style="width:22px;height:22px;border-radius:50%;background:#FDA127"></span>Giảng viên và nhà trường: dùng miễn phí, chia sẻ phản hồi</div>
+    <div style="display:flex;gap:22px;align-items:center"><span style="width:22px;height:22px;border-radius:50%;background:#7FD3DC"></span>Nhà nghiên cứu: trích dẫn qua DOI, đồng phát triển mô hình</div>
+    <div style="display:flex;gap:22px;align-items:center"><span style="width:22px;height:22px;border-radius:50%;background:#F4B6C2"></span>Đối tác và quỹ: tài trợ pilot có đo lường trước–sau</div>
+  </div>
+  <div style="position:absolute;left:140px;bottom:100px;display:flex;flex-direction:column;gap:12px;font-size:30px">
+    <div style="font-weight:800;color:#FFD58A">thuyhuongctu.github.io/BizOn · Google Play: BizOn</div>
+    <div style="color:#9CC9C9">patu@ctu.edu.vn · thuyhuongctu@gmail.com · DOI 10.5281/zenodo.21592241</div>
+  </div>
+  <img src="../assets/character/rong-xanh-cup.webp" alt="" style="position:absolute;right:120px;bottom:80px;height:620px;filter:drop-shadow(0 24px 20px rgba(0,0,0,.4))">
+</section>
+
+</x-import>
+</x-dc>
+</body>
+</html>
