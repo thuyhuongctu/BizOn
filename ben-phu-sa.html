@@ -163,6 +163,7 @@
       <button id="ft-commit" onclick="ftCommit()" class="clay-btn w-full bg-primary text-white font-display font-extrabold py-3.5 mt-5" data-en="🔒 Lock in this week">🔒 Chốt tuần này</button>
       <p id="ft-hint" class="text-xs font-semibold opacity-60 mt-2 text-center"></p>
       <p id="ft-forecast" class="text-xs font-semibold opacity-70 mt-1 text-center"></p>
+      <button type="button" onclick="ftShowRules()" style="display:block;margin:8px auto 0;min-height:36px;padding:0 14px;border:0;border-radius:12px;background:rgba(0,102,135,.1);color:#006687;font-weight:800;font-size:12px;cursor:pointer" data-en="❓ How to play">❓ Cách chơi</button>
     </div>
 
     <div class="clay-card p-6">
@@ -262,6 +263,16 @@
   </section>
 
 </main>
+
+<!-- Modal nhắc luật chơi trong lúc chơi – tái dùng nội dung "Luật chơi" đã có
+     ở màn giới thiệu (#ft-intro), vì màn đó bị ẩn ngay khi ftStart() chạy
+     nên không có cách nào xem lại luật giữa ván nếu không có modal này. -->
+<div id="ft-rules-modal" class="hidden" style="position:fixed;inset:0;z-index:85;background:rgba(2,25,28,.72);display:flex;align-items:center;justify-content:center;padding:14px">
+  <div class="clay-card p-6" style="max-width:520px;max-height:88vh;overflow:auto;position:relative">
+    <button type="button" onclick="document.getElementById('ft-rules-modal').classList.add('hidden')" style="position:absolute;right:14px;top:14px;width:32px;height:32px;border-radius:50%;border:0;background:rgba(0,102,135,.08);color:#033337;font-weight:900;cursor:pointer">✕</button>
+    <div id="ft-rules-body"></div>
+  </div>
+</div>
 
 <script>
 (function () {
@@ -481,6 +492,23 @@
     $('ft-shop-panel').classList.toggle('hidden', !S.shopOpen);
     $('ft-shop-caret').textContent = S.shopOpen ? '▴' : '▾';
     if (S.shopOpen) renderShop();
+  };
+
+  // Nhắc luật chơi giữa ván – màn #ft-intro có sẵn nội dung "Luật chơi" đầy
+  // đủ nhưng bị ẩn hẳn ngay khi ftStart() chạy, nên trước đây không có cách
+  // nào xem lại luật mà không bấm "Chơi lại". Clone lại đúng nội dung đó
+  // (không viết tay bản sao) vào modal nổi, không làm mất lựa chọn đang chọn.
+  window.ftShowRules = function () {
+    // Clone lại mỗi lần mở (không cache) để luôn khớp ngôn ngữ hiện tại –
+    // #ft-intro đã tự giữ đúng bản dịch qua applyStatic()/bizon:langchange,
+    // nên bản sao chụp đúng y trạng thái đang hiển thị, không cần dịch lại.
+    var body = $('ft-rules-body');
+    body.innerHTML = '';
+    var h2 = document.querySelector('#ft-intro h2'), ul = document.querySelector('#ft-intro ul'), det = document.querySelector('#ft-intro details');
+    if (h2) body.appendChild(h2.cloneNode(true));
+    if (ul) body.appendChild(ul.cloneNode(true));
+    if (det) body.appendChild(det.cloneNode(true));
+    $('ft-rules-modal').classList.remove('hidden');
   };
 
   window.ftBuyItem = function (id) {
