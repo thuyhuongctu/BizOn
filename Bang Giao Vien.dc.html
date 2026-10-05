@@ -4,6 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>window.__resources=Object.assign({},window.__resources,{"https://unpkg.com/react@18.3.1/umd/react.production.min.js":"vendor/react/react.production.min.js","https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js":"vendor/react/react-dom.production.min.js"});</script>
 <script src="./support.js"></script>
+<script src="./js/backend-config.js"></script>
 </head>
 <body>
 <x-dc>
@@ -25,7 +26,7 @@ button,textarea,input{font-family:inherit;}
       <div style="display:flex;flex-direction:column;gap:4px;">
         <span style="font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#006687;">BizOn Bật Nghiệp · Bến Phù Sa</span>
         <h1 style="margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(28px,4vw,42px);line-height:1.05;">Bảng giáo viên</h1>
-        <p style="margin:0;font-size:14px;opacity:.75;max-width:620px;text-wrap:pretty;">Dán kết quả học sinh gửi qua Zalo, Messenger hoặc email vào ô bên dưới. Có thể dán nhiều bài cùng lúc, kể cả bài chơi một mình và chơi nhóm; bảng tự đọc dòng bắt đầu bằng #BPS, bỏ bài trùng mã và gom bài chơi nhóm theo đội.</p>
+        <p style="margin:0;font-size:14px;opacity:.75;max-width:620px;text-wrap:pretty;">Dán kết quả học sinh gửi qua Zalo, Messenger hoặc email vào ô bên dưới (chủ yếu dùng cho bài chơi nhóm). Có thể dán nhiều bài cùng lúc; bảng tự đọc dòng bắt đầu bằng #BPS, bỏ bài trùng mã và gom bài chơi nhóm theo đội. Bài chơi một mình (bản 2D/3D) đã tự nộp thẳng lên hệ thống khi hoàn thành — nhập mã lớp rồi bấm "Tải bài nộp trực tiếp" để kéo về cùng bảng.</p>
       </div>
       <a href="ben-phu-sa-v8.html" style="font-weight:800;font-size:14px;">← Về trò chơi</a>
     </div>
@@ -35,6 +36,10 @@ button,textarea,input{font-family:inherit;}
         <b style="font-size:14px;">Lọc theo lớp</b>
         <input value="{{ filter }}" sc-camel-on-change="{{ onFilter }}" placeholder="VD: QT12A" style="min-height:42px;border:none;border-radius:12px;padding:0 12px;font-weight:700;font-size:14px;letter-spacing:.06em;color:#033337;background:#eef4f3;box-shadow:inset 0 3px 6px rgba(3,51,55,.1);width:160px;">
         <span style="font-size:12px;opacity:.6;">Dữ liệu chỉ lưu trên máy này.</span>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding-top:2px;border-top:1px solid #eef4f3;">
+        <button sc-camel-on-click="{{ loadRemote }}" style="min-height:40px;padding:0 16px;border:none;border-radius:12px;background:#006687;color:#fff;font-weight:800;font-size:13px;cursor:pointer;">☁️ Tải bài nộp trực tiếp (bản chơi một mình)</button>
+        <span style="font-size:12px;opacity:.65;">{{ remoteStatus }}</span>
       </div>
       <textarea value="{{ raw }}" sc-camel-on-change="{{ onRaw }}" placeholder="Dán kết quả tại đây…" style="min-height:150px;border:none;border-radius:16px;padding:14px;font-size:13px;line-height:1.5;color:#033337;background:#f4faf6;box-shadow:inset 0 3px 8px rgba(3,51,55,.1);resize:vertical;"></textarea>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
@@ -102,22 +107,40 @@ button,textarea,input{font-family:inherit;}
 const KEY='bps-teacher-raw';
 const DEMO=['#BPS|Nguyễn An|QT12A|exam|24.6|1|78|BPS-1A2B3|2026-10-04','#BPS|Trần Bình|QT12A|practice|18.2|2|58|BPS-4C5D6|2026-10-04','#BPS|Lê Chi|QT12A|exam|12.9|4|41|BPS-7E8F9|2026-10-04','#BPS|Phạm Dũng|QT12B|exam|21.3|1|68|BPS-0G1H2|2026-10-04','#BPS|Võ Hà|QT12A|team|26.4|1|72|BPS-T1A01|2026-10-04||Đội Phù Sa|Lumina – Nhà sáng lập|K7Q2M|5|9/12|1|MVP','#BPS|Đặng Khoa|QT12A|team|26.4|1|72|BPS-T1A02|2026-10-04||Đội Phù Sa|Tú Phan – Người đồng hành|K7Q2M|5|7/12|0|','#BPS|Ngô Lan|QT12A|team|19.8|3|54|BPS-T2B01|2026-10-04||Đội Rồng Xanh|Minh Long – CEO|K7Q2M|5|11/16|2|MVP','#BPS|Bùi Minh|QT12A|team|19.8|3|54|BPS-T2B02|2026-10-04||Đội Rồng Xanh|Thu Hà – CFO|K7Q2M|5|8/16|0|','#BPS|Lý Ngân|QT12A|team|19.8|3|54|BPS-T2B03|2026-10-04||Đội Rồng Xanh|Lan Chi – CMO|K7Q2M|5|9/16|1|'].join('\n');
 class Component extends DCLogic {
-  state={raw:'',filter:''};
+  state={raw:'',filter:'',remoteRows:[],remoteStatus:''};
   componentDidMount(){let raw='';try{raw=localStorage.getItem(KEY)||'';}catch(e){}this.setState({raw});}
   save(raw){try{localStorage.setItem(KEY,raw);}catch(e){}this.setState({raw});}
   parse(){const seen={},out=[];(this.state.raw||'').split(/\r?\n/).forEach(line=>{const i=line.indexOf('#BPS|');if(i<0)return;const p=line.slice(i+5).trim().split('|');if(p.length<7)return;
     const r={name:p[0],klass:(p[1]||'').toUpperCase(),mode:p[2],total:parseFloat(p[3])||0,rank:parseInt(p[4])||0,eff:parseInt(p[5])||0,code:p[6],date:p[7]||'',quiz:p[8]||'',team:p[9]||'',role:p[10]||'',room:p[11]||'',of:parseInt(p[12])||4,pts:p[13]||'',mvpVotes:parseInt(p[14])||0,isMvp:p[15]==='MVP'};const k=r.code+'|'+r.name;if(seen[k])return;seen[k]=1;out.push(r);});return out;}
+  // Bài chơi một mình (bản 2D/3D) tự nộp thẳng vào bảng ft_results qua nút
+  // "Nộp kết quả" trong game — KHÔNG sinh mã #BPS để dán tay. Kéo về đây qua
+  // RPC công khai ft_class_leaderboard(p_class_code) (20261002000000_ft_leaderboard.sql),
+  // chuyển sang cùng khuôn dạng dòng với parse() rồi gộp vào bảng chung.
+  async loadRemote(){
+    const klass=(this.state.filter||'').trim().toUpperCase();
+    if(!klass){this.setState({remoteStatus:'⚠️ Nhập mã lớp ở ô lọc trước đã nhé.'});return;}
+    const cfg=window.BIZON_BACKEND||{};
+    if(!cfg.enabled||!cfg.url){this.setState({remoteStatus:'⚠️ Chưa bật kết nối hệ thống.'});return;}
+    this.setState({remoteStatus:'⏳ Đang tải…'});
+    try{
+      const res=await fetch(cfg.url.replace(/\/$/,'')+'/rest/v1/rpc/ft_class_leaderboard',{method:'POST',headers:{'Content-Type':'application/json',apikey:cfg.anonKey,Authorization:'Bearer '+cfg.anonKey},body:JSON.stringify({p_class_code:klass})});
+      if(!res.ok)throw new Error('HTTP '+res.status);
+      const data=await res.json();
+      const rows=(data||[]).map(d=>({name:d.player_name||'(ẩn danh)',klass,mode:d.exam?'exam':'solo',total:Number(d.total_revenue)||0,rank:Number(d.final_rank)||0,eff:Number(d.efficiency)||0,code:'Nộp trực tiếp',date:(d.created_at||'').slice(0,10),quiz:'',team:'',role:'',room:'',of:4,pts:'',mvpVotes:0,isMvp:false}));
+      this.setState({remoteRows:rows,remoteStatus:rows.length?'✅ Đã tải '+rows.length+' bài của lớp '+klass+'.':'Không có bài nộp trực tiếp nào cho lớp này.'});
+    }catch(e){this.setState({remoteStatus:'⚠️ Chưa tải được — kiểm tra mạng rồi thử lại.'});}
+  }
   csv(rows){const head='Hoc sinh,Lop,Che do,Doi,Vai tro,Phong,Doanh thu (tr),Hieu suat (%),Hang,Ma,Ngay,On tap (/5),Diem vai,Phieu MVP,MVP';const esc=v=>'"'+String(v).replace(/"/g,'""')+'"';
-    const body=rows.map(r=>[r.name,r.klass,r.mode==='exam'?'Thi thu':r.mode==='team'?'Choi nhom':'Luyen tap',r.team,r.role,r.room,r.total,r.eff,r.rank,r.code,r.date,r.quiz,r.pts,r.mvpVotes,r.isMvp?'MVP':''].map(esc).join(','));
+    const body=rows.map(r=>[r.name,r.klass,r.mode==='exam'?'Thi thu':r.mode==='team'?'Choi nhom':r.mode==='solo'?'Nop truc tiep':'Luyen tap',r.team,r.role,r.room,r.total,r.eff,r.rank,r.code,r.date,r.quiz,r.pts,r.mvpVotes,r.isMvp?'MVP':''].map(esc).join(','));
     const blob=new Blob(['\ufeff'+[head].concat(body).join('\n')],{type:'text/csv;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ket-qua-ben-phu-sa.csv';document.body.appendChild(a);a.click();a.remove();}
   renderVals(){
     const f=(this.state.filter||'').trim().toUpperCase();
-    const all=this.parse(),rows=all.filter(r=>!f||r.klass===f).sort((a,b)=>b.total-a.total);
+    const all=this.parse().concat(this.state.remoteRows||[]),rows=all.filter(r=>!f||r.klass===f).sort((a,b)=>b.total-a.total);
     const top=Math.max(1,...rows.map(r=>r.total));const n=rows.length;
     const avg=n?rows.reduce((s,r)=>s+r.total,0)/n:0,avgE=n?Math.round(rows.reduce((s,r)=>s+r.eff,0)/n):0,wins=rows.filter(r=>r.rank===1).length;
     const fmt=v=>(Math.round(v*10)/10).toLocaleString('vi-VN');
     return {
-      raw:this.state.raw,filter:this.state.filter,
+      raw:this.state.raw,filter:this.state.filter,remoteStatus:this.state.remoteStatus,loadRemote:()=>this.loadRemote(),
       onRaw:e=>this.save(e.target.value),onFilter:e=>this.setState({filter:e.target.value.toUpperCase()}),
       addDemo:()=>this.save((this.state.raw?this.state.raw+'\n':'')+DEMO),
       clearAll:()=>{if(window.confirm('Xoá toàn bộ kết quả đã dán?'))this.save('');},
@@ -125,7 +148,7 @@ class Component extends DCLogic {
       empty:!n,notEmpty:!!n,
       teams:(()=>{const g={};rows.filter(r=>r.mode==='team'&&r.team).forEach(r=>{const k=r.room+'|'+r.team;(g[k]=g[k]||{name:r.team,room:r.room,klass:r.klass,total:r.total,rank:r.rank,of:r.of,eff:r.eff,members:[]}).members.push({name:r.name,role:r.role});});return Object.values(g).sort((a,b)=>a.room<b.room?-1:a.room>b.room?1:a.rank-b.rank).map(x=>({name:(x.name.indexOf('Rồng')>=0?'🐉 ':'🌾 ')+x.name,meta:'Phòng '+x.room+(x.klass?' · lớp '+x.klass:'')+' · hạng '+x.rank+'/'+x.of,total:fmt(x.total)+' tr₫ · '+x.eff+'%',count:x.members.length+(x.name.indexOf('Rồng')>=0?'/5':'/2')+' thành viên đã nộp',color:x.name.indexOf('Rồng')>=0?'#006687':'#e8762d',members:x.members}));})(),
       stats:[{label:'Số bài',value:String(n),color:'#033337'},{label:'Doanh thu TB',value:fmt(avg)+' tr₫',color:'#e8762d'},{label:'Hiệu suất TB',value:avgE+'%',color:'#006687'},{label:'Thắng hạng 1',value:wins+'/'+n,color:'#033337'}],
-      rows:rows.map((r,i)=>({name:r.name,klass:r.klass,mode:r.mode==='exam'?'⏱️ Thi thử':r.mode==='team'?'🌐 Chơi nhóm':'🎯 Luyện tập',sub:r.team?r.team+' · '+r.role:'',of:r.of,total:fmt(r.total),eff:r.eff,rank:r.rank,code:r.code,date:r.date,quiz:r.quiz?r.quiz+'/5':'—',ptsTxt:r.pts?('⭐ '+r.pts+(r.isMvp?' · 🏆 MVP':r.mvpVotes?' · 🗳 '+r.mvpVotes:'')):'—',w:Math.max(4,r.total/top*100)+'%',medal:['🥇','🥈','🥉'][i]||String(i+1),bg:i%2?'#ffffff':'#f4faf6'}))
+      rows:rows.map((r,i)=>({name:r.name,klass:r.klass,mode:r.mode==='exam'?'⏱️ Thi thử':r.mode==='team'?'🌐 Chơi nhóm':r.mode==='solo'?'💻 Nộp trực tiếp':'🎯 Luyện tập',sub:r.team?r.team+' · '+r.role:'',of:r.of,total:fmt(r.total),eff:r.eff,rank:r.rank,code:r.code,date:r.date,quiz:r.quiz?r.quiz+'/5':'—',ptsTxt:r.pts?('⭐ '+r.pts+(r.isMvp?' · 🏆 MVP':r.mvpVotes?' · 🗳 '+r.mvpVotes:'')):'—',w:Math.max(4,r.total/top*100)+'%',medal:['🥇','🥈','🥉'][i]||String(i+1),bg:i%2?'#ffffff':'#f4faf6'}))
     };
   }
 }
