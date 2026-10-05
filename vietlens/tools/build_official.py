@@ -155,6 +155,31 @@ def usd_index_series():
     }
 
 
+def cpi_series():
+    """CPI tháng cuối quý so với cùng kỳ năm trước (tools/extract_cpi.py). Quý báo cáo không nêu so cùng kỳ: value = None."""
+    r = {x['quarter']: x for x in rows('cpi_quarterly.csv')}
+    quarters = sorted({x['quarter'] for x in rows('usd_index_quarterly.csv')} | set(r), key=qkey)
+    obs = []
+    for q in quarters:
+        x = r.get(q)
+        obs.append({'period': q, 'value': float(x['cpi_yoy_pct']) if x else None,
+                    'source': x['source_name'] if x else None, 'url': x['source_url'] if x else None,
+                    'quote': x['quote'] if x else None})
+    last = next(o for o in reversed(obs) if o['value'] is not None)
+    return {
+        'id': 'cpi_yoy', 'label': 'Chỉ số giá tiêu dùng CPI (tháng cuối quý so với cùng kỳ)', 'domain': 'economy',
+        'unit': '% so cùng kỳ', 'frequency': 'quý (tháng cuối quý)', 'official': True, 'chart': 'line',
+        'latest': {'period': last['period'], 'value': last['value']},
+        'source': 'Tổng cục Thống kê (nay là Cục Thống kê, Bộ Tài chính) — báo cáo tình hình kinh tế – xã hội quý, mục chỉ số giá',
+        'method': 'Tỷ lệ thay đổi của CPI tháng cuối quý so với cùng tháng năm trước, lấy đúng số in trong báo cáo.',
+        'limitation': 'Một tháng đại diện cho quý, không phải CPI bình quân quý. Ba quý (III/2015, II/2016, III/2016) báo cáo chỉ so '
+                      'với tháng 12 năm trước nên để trống, không suy. Câu trích giữ nguyên văn kể cả lỗi in của nguồn '
+                      '(ví dụ báo cáo quý II/2026 ghi "so với tháng 12/2024" thay vì 12/2025).',
+        'rights': 'Số liệu thống kê nhà nước công bố công khai; trích dẫn có ghi nguồn. Rà điều khoản trước khi phát hành qua API.',
+        'observations': obs
+    }
+
+
 def partner_series():
     r = rows('fdi_stock_by_source.csv')
     out = []
@@ -208,7 +233,7 @@ def durian_series():
 
 
 def build():
-    series = fdi_series() + fdi_trade_series() + [retail_series(), usd_index_series()] + partner_series() + [
+    series = fdi_series() + fdi_trade_series() + [retail_series(), cpi_series(), usd_index_series()] + partner_series() + [
         quarterly_avg('wtv_import_volume', 'world_import_volume', 'Khối lượng nhập khẩu hàng hóa thế giới', 'chỉ số 2021 = 100',
                       'CPB Netherlands Bureau for Economic Policy Analysis — World Trade Monitor (bản tháng 7/2026, công bố 25/9/2026)',
                       'Chỉ số khối lượng nhập khẩu thế giới, đã điều chỉnh mùa vụ (chuỗi mgz_w1_qnmi_sn), bình quân quý.',

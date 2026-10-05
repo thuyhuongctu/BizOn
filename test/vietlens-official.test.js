@@ -88,6 +88,17 @@ test('Chỉ số giá USD: đủ 58 quý, câu trích bắt đầu bằng tên c
   assert.strictEqual(s.latest.value, 0.57);
 });
 
+test('CPI: 58 quý, 3 quý để trống (không suy), số khớp câu trích', () => {
+  const s = json.series.find((x) => x.id === 'cpi_yoy');
+  assert.strictEqual(s.observations.length, 58);
+  assert.deepStrictEqual(s.observations.filter((o) => o.value === null).map((o) => o.period), ['2015Q3', '2016Q2', '2016Q3']);
+  s.observations.filter((o) => o.value !== null).forEach((o) => {
+    const found = [...o.quote.matchAll(/(tăng|giảm) ([\d,]+)%/g)].map((m) => (m[1] === 'tăng' ? 1 : -1) * parseFloat(m[2].replace(',', '.')));
+    assert.ok(found.includes(o.value), `${o.period}: ${o.value}`);
+  });
+  assert.strictEqual(s.latest.value, 4.69);   // tháng 6/2026
+});
+
 test('Chuỗi bình quân quý chỉ lấy quý đủ 3 tháng', () => {
   ['world_import_volume', 'reer_vnd'].forEach((id) => {
     const s = json.series.find((x) => x.id === id);
