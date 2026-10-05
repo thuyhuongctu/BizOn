@@ -105,6 +105,16 @@ body:has(#ft-intro:not(.hidden)) main{position:fixed;right:0;top:0;bottom:0;widt
 body:has(#ft-intro:not(.hidden)) #ft-intro{border-radius:0!important;box-shadow:none!important;background:transparent!important;min-height:100%;padding:28px 24px 0!important;display:flex;flex-direction:column}
 }
 @media (min-width:901px) and (max-height:700px){body:has(#ft-intro:not(.hidden)) header>img{height:26vh!important}body:has(#ft-intro:not(.hidden)) header{padding-top:64px!important}}
+/* Dưới 901px chưa có layout "title screen" riêng như desktop – màn giới
+   thiệu bị trộn chung với phần cuộn của trang, giống hệt bug ban đầu mà
+   bản desktop đã né được. Thêm overlay toàn màn hình ở đây, cùng tinh
+   thần #login3d của BizOn Game 3D.html (che hẳn nền, cuộn riêng bên
+   trong), dùng chung z-index:20 với #ft-play/#ft-ritual/#ft-end vì 3 màn
+   đó không bao giờ hiện cùng lúc với #ft-intro. */
+@media (max-width:900px){
+  body:has(#ft-intro:not(.hidden)){overflow:hidden}
+  #ft-intro:not(.hidden){position:fixed;inset:0;z-index:20;overflow-y:auto;border-radius:0!important;margin:0!important;max-width:none!important;padding-top:max(24px,env(safe-area-inset-top))!important;padding-bottom:max(24px,env(safe-area-inset-bottom))!important}
+}
 #ft-intro>button[onclick="ftStart()"]{position:sticky;bottom:0;z-index:5;margin-bottom:16px}
 body:has(#ft-ritual:not(.hidden)) header,body:has(#ft-end:not(.hidden)) header{display:none}
 #ft-ritual:not(.hidden),#ft-end:not(.hidden){position:fixed;inset:0;z-index:20;overflow-y:auto;max-width:none!important;margin:0!important;padding:48px max(20px,calc(50% - 360px))!important;background:linear-gradient(160deg,rgba(3,51,55,.88),rgba(0,102,135,.7)),url('assets/scene/ben-phu-sa/cho-noi-ngay.webp') center/cover}
@@ -222,7 +232,11 @@ document.addEventListener('DOMContentLoaded',function(){var m=document.getElemen
 
   <!-- MÀN GIỚI THIỆU -->
   <section id="ft-intro" class="clay-card p-6">
-    <h2 class="font-display font-extrabold text-deep-teal text-lg mb-3" data-en="📜 Rules of play">📜 Luật chơi</h2>
+    <button type="button" onclick="document.getElementById('ft-rules-box').classList.toggle('hidden');this.querySelector('b').textContent=document.getElementById('ft-rules-box').classList.contains('hidden')?'▾':'▴'" class="w-full flex items-center justify-between" style="padding:2px 0">
+      <span class="font-display font-extrabold text-deep-teal text-base" data-en="📜 Rules of play">📜 Luật chơi</span>
+      <b class="text-xs font-bold opacity-60">▾</b>
+    </button>
+    <div id="ft-rules-box" class="hidden mt-3">
     <ul class="space-y-2 text-sm">
       <li data-en-html="⛵ &lt;b&gt;Trading boat&lt;/b&gt;: revenue &lt;b&gt;×3&lt;/b&gt;, costs &lt;b&gt;1.5 mn ₫/week&lt;/b&gt; (boat hire + stock) – and locks in the product &amp; location for the whole week. For when you already &lt;i&gt;know&lt;/i&gt; the winning formula.">⛵ <b>Ghe hàng bông</b>: doanh thu <b>×3</b>, tốn <b>1,5 triệu ₫/tuần</b> (thuê ghe + nhập hàng) – và chốt cứng món hàng &amp; địa điểm cả tuần. Dành cho lúc bạn đã <i>biết</i> công thức thắng.</li>
       <li data-en-html="🧺 &lt;b&gt;Street cart&lt;/b&gt;: revenue ×1, &lt;b&gt;no fixed cost&lt;/b&gt; – and weaves through every market alley, so you pick up &lt;b&gt;a lot of market intel&lt;/b&gt;. The experimenter's weapon.">🧺 <b>Gánh hàng rong</b>: doanh thu ×1, <b>không tốn chi phí cố định</b> – lại len lỏi khắp ngõ chợ nên nghe ngóng được <b>rất nhiều thông tin thị trường</b>. Vũ khí của người thử nghiệm.</li>
@@ -246,12 +260,16 @@ document.addEventListener('DOMContentLoaded',function(){var m=document.getElemen
       </ul>
     </details>
     <p class="text-xs font-semibold opacity-70 mt-4 italic text-center" data-en="«From one small cart, you can build a big brand – if you know how to watch the market, understand your customers, and decide at the right moment.»">«Từ một gánh hàng nhỏ, bạn có thể xây dựng nên một thương hiệu lớn – nếu biết quan sát thị trường, thấu hiểu khách hàng và ra quyết định đúng lúc.»</p>
+    </div>
     <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-5 mb-1.5" data-en="Choose your team">Chọn đội của bạn</p>
     <div class="grid grid-cols-2 gap-2" id="ft-teams"></div>
     <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-4 mb-1.5" data-en="Choose your captain">Chọn thuyền trưởng</p>
     <div class="grid grid-cols-5 gap-2" id="ft-avatars"></div>
     <p id="ft-perk" class="text-xs mt-2 px-3 py-2 rounded-xl" style="background:#fff4dc;color:#033337;line-height:1.45"></p>
-    <figure id="ft-mv" class="clay-card mt-4" style="margin:16px 0 0;padding:10px;border-radius:24px;overflow:hidden">
+    <button onclick="ftStart()" class="clay-btn w-full bg-clay-gold text-deep-teal font-display font-extrabold py-4 mt-5" data-en="🚀 Start the 5-week venture">🚀 Bắt đầu 5 tuần kinh doanh</button>
+    <button type="button" onclick="bpsHotseat()" class="clay-btn w-full font-display font-extrabold py-3 mt-3" style="background:linear-gradient(180deg,#fffdf6,#f1e7d3);color:#033337" data-en="👥 2 players, one device (same market)">👥 2 người chung máy (cùng thị trường)</button>
+    <button type="button" onclick="bpsNet(true)" class="clay-btn w-full font-display font-extrabold py-3 mt-3" style="background:linear-gradient(180deg,#0f5a60,#033337);color:#fff" data-en="🌐 Multi-team over the network (class mode)">🌐 Chơi nhiều đội qua mạng (cả lớp)</button>
+    <figure id="ft-mv" class="clay-card mt-5" style="margin:16px 0 0;padding:10px;border-radius:24px;overflow:hidden">
       <div style="position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:repeating-linear-gradient(135deg,#e9f3f6 0 12px,#dcebef 12px 24px)">
         <iframe id="ft-mv-frame" src="bp3d-boat/ghe-hang-bong.html" title="MV 3D Lumina &amp; Tú Phan – Golden Silt Journey" loading="lazy" allow="autoplay; fullscreen" style="position:absolute;inset:0;width:100%;height:100%;border:0;display:block"></iframe>
       </div>
@@ -259,9 +277,6 @@ document.addEventListener('DOMContentLoaded',function(){var m=document.getElemen
     </figure>
     <script>(function(){var fr=document.getElementById('ft-mv-frame'),intro=document.getElementById('ft-intro');
       new MutationObserver(function(){if(intro.classList.contains('hidden')){try{fr.contentWindow.document.querySelectorAll('audio,video').forEach(function(m){m.pause();});var A=fr.contentWindow.Audio;}catch(e){} fr.src='about:blank';}}).observe(intro,{attributes:true});})();</script>
-    <button type="button" onclick="bpsHotseat()" class="clay-btn w-full font-display font-extrabold py-3 mt-3" style="background:linear-gradient(180deg,#fffdf6,#f1e7d3);color:#033337" data-en="👥 2 players, one device (same market)">👥 2 người chung máy (cùng thị trường)</button>
-    <button type="button" onclick="bpsNet(true)" class="clay-btn w-full font-display font-extrabold py-3 mt-3" style="background:linear-gradient(180deg,#0f5a60,#033337);color:#fff" data-en="🌐 Multi-team over the network (class mode)">🌐 Chơi nhiều đội qua mạng (cả lớp)</button>
-    <button onclick="ftStart()" class="clay-btn w-full bg-clay-gold text-deep-teal font-display font-extrabold py-4 mt-3" data-en="🚀 Start the 5-week venture">🚀 Bắt đầu 5 tuần kinh doanh</button>
   </section>
 
   <!-- MÀN CHƠI -->
