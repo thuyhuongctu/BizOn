@@ -203,7 +203,7 @@
       <p class="font-display font-extrabold text-primary text-4xl mt-3"><span id="ft-final">0</span> <span data-en="mn ₫">triệu ₫</span></p>
       <p class="text-sm font-semibold opacity-70 mt-1.5" id="ft-eff"></p>
       <div class="mt-4 space-y-2 text-left" id="ft-board"></div>
-      <p class="text-xs opacity-60 mt-3" id="ft-reveal"></p>
+      <div class="text-xs opacity-60 mt-3" id="ft-reveal"></div>
       <div class="mt-5 hidden" id="ft-cert-box">
         <div class="rounded-[20px] p-5 text-center relative overflow-hidden" style="background:linear-gradient(180deg,#fffdf6,#f4faff);border:3px solid rgba(253,161,39,.55);box-shadow:inset 0 0 0 1px rgba(0,102,135,.18)">
           <p class="text-[10px] font-extrabold uppercase tracking-widest text-deep-teal/50" data-en="🎓 Certificate of Completion">🎓 Giấy chứng nhận hoàn thành</p>
@@ -376,6 +376,7 @@
   var S = {
     week: 0, total: 0, team: 0, cap: 0, sel: { m: null, menu: null, loc: null }, log: [], ritualDone: false,
     budget: 1.5, items: {}, shopOpen: false, knownPairs: {}, shieldSpoilage: false, adBoost: false, surveyMenu: null,
+    history: [], // {w, m, menu, loc, net} mỗi tuần – để debrief cuối ván giải thích ĐÚNG đường đi của ván này
   };
   var $ = function (id) { return document.getElementById(id); };
   var f1 = function (v) { return (Math.round(v * 10) / 10).toLocaleString(isEN() ? 'en-US' : 'vi-VN', { maximumFractionDigits: 1 }); };
@@ -664,6 +665,7 @@
       var noisy = rnd() < 0.2;
       var rm = noisy ? (bc[0] + 1) % 3 : bc[0];
       S.surveyMenu = rm;
+      S.history.push({ w: w, m: 2, menu: null, loc: null, net: -SURVEY_COST });
       addLog(w + 1, T(
         '📋 Sổ ghi chép của tiểu thương: mùa trước, ' + MENUS[rm][0] + ' <b>' + mName(rm) + '</b> bán chạy nhất <i>(không rõ bán ở khu nào – dữ liệu cũ, chỉ mang tính tham khảo · phí ' + f1(SURVEY_COST) + ' ' + MU() + ')</i>.',
         "📋 The trader's old ledger: last season, " + MENUS[rm][0] + ' <b>' + mName(rm) + '</b> sold best <i>(doesn\'t say where – old data, for reference only · cost ' + f1(SURVEY_COST) + ' ' + MU() + ')</i>.'
@@ -677,6 +679,7 @@
       if (adApplied) { rev *= 1.2; S.adBoost = false; }
       var cost = m === 0 ? BOAT_COST : 0;
       S.total += rev - cost;
+      S.history.push({ w: w, m: m, menu: menu, loc: loc, net: rev - cost });
       S.knownPairs[menu + '-' + loc] = true;
       var icon = m === 0 ? '⛵' : '🧺';
       var isBest = bestAt(loc) === menu;
@@ -776,8 +779,8 @@
     $('ft-end').classList.remove('hidden');
     window.scrollTo(0, 0);
     // Chuẩn so sánh: chạy ghe hàng bông đúng cặp tốt nhất cả 5 tuần (đã trừ phí ghe)
-    var bc = bestCombo(), maxRev = 0;
-    for (var w = 0; w < 5; w++) maxRev += D[bc[0]][bc[1]] * W[w][bc[1]] * 3 - BOAT_COST;
+    var bc = bestCombo(), maxRev = 0, maxPerWeek = [];
+    for (var w = 0; w < 5; w++) { var mw = D[bc[0]][bc[1]] * W[w][bc[1]] * 3 - BOAT_COST; maxPerWeek.push(mw); maxRev += mw; }
     var eff = Math.max(0, Math.min(100, Math.round(S.total / maxRev * 100)));
     $('ft-final').textContent = f1(S.total);
     $('ft-eff').textContent = T('Hiệu suất ' + eff + '% so với kịch bản hoàn hảo (' + f1(maxRev) + ' triệu ₫).', 'Efficiency ' + eff + '% versus the perfect-play scenario (' + f1(maxRev) + ' mn ₫).');
@@ -804,10 +807,24 @@
     // trước và bản tải về như lỗi đã gặp và sửa ở Hộ Chiếu Thương Hiệu.
     initSubmit();
     renderCertBox(crown[1]);
+    // Đường đi THẬT của ván này – trước đây debrief chỉ có đáp án chung (cặp
+    // thắng + chiến lược tham chiếu), không giải thích vì sao CHÍNH ván này
+    // ra kết quả đó. Dựng lại từ S.history (ghi ở ftCommit) + maxPerWeek (đã
+    // tính sẵn ở trên) để chỉ ra từng tuần cụ thể đã "để lại trên bàn" bao
+    // nhiêu so với lựa chọn tốt nhất tuần đó.
+    var pathHtml = S.history.map(function (h) {
+      var left = maxPerWeek[h.w] - h.net;
+      var desc = h.m === 2 ? T('khảo sát chợ', 'a market survey') : MENUS[h.menu][0] + ' ' + mName(h.menu) + ' × ' + LOCS[h.loc][0] + ' ' + lName(h.loc);
+      return '<li><b>' + T('Tuần ' + (h.w + 1), 'Week ' + (h.w + 1)) + ':</b> ' + METHODS[h.m].icon + ' ' + desc + ' → <b>' + f1(h.net) + ' ' + MU() + '</b>' +
+        (left > 0.05 ? ' <span style="opacity:.65">(' + T('để lại trên bàn ~', 'left ~') + f1(left) + ' ' + MU() + T('', ' on the table') + ')</span>' : '') + '</li>';
+    }).join('');
+    var totalLeft = Math.max(0, maxRev - S.total);
     $('ft-reveal').innerHTML = T(
       '🔍 Đáp án của ván này: cặp thắng là ' + MENUS[bc[0]][0] + ' <b>' + mName(bc[0]) + '</b> × ' + LOCS[bc[1]][0] + ' <b>' + lName(bc[1]) + '</b>. Chiến lược tham chiếu: gánh hàng rong tuần 1–2 để dò (không tốn phí), ghe hàng bông tuần 3–5 với cặp tốt nhất – và né khu đông đối thủ khi doanh thu gốc ngang nhau. Chạy ghe ngay từ đầu khi chưa biết thị trường thường lỗ phí ghe.',
       '🔍 This run\'s answer key: the winning pair was ' + MENUS[bc[0]][0] + ' <b>' + mName(bc[0]) + '</b> × ' + LOCS[bc[1]][0] + ' <b>' + lName(bc[1]) + '</b>. Reference strategy: street cart in weeks 1–2 to scout (no fixed cost), trading boat in weeks 3–5 with the best pair – and avoid crowded spots when base revenue is close. Launching the boat blind usually burns the boat cost.'
-    );
+    ) + '<p class="font-display font-extrabold text-deep-teal text-[11px] uppercase tracking-wide mt-3 mb-1">' + T('📖 Đường đi của bạn ván này', "📖 Your path this run") + '</p>' +
+      '<ul class="text-left space-y-1">' + pathHtml + '</ul>' +
+      '<p class="mt-2"><b>' + T('Tổng cộng bạn để lại trên bàn khoảng ', 'In total you left about ') + f1(totalLeft) + ' ' + MU() + '</b> ' + T('so với chơi tối ưu cả 5 tuần.', 'compared to playing optimally all 5 weeks.') + '</p>';
   }
 
   /* ================= CHỨNG CHỈ HOÀN THÀNH ================= */
