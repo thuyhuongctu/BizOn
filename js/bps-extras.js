@@ -45,8 +45,16 @@
   window.ftStart = function () {
     S0.apply(this, arguments);
     var seen = false; try { seen = localStorage.getItem('bps3d-tut') === '1'; } catch (e) {}
-    if (!seen) setTimeout(function () { if (!$('ft-play').classList.contains('hidden')) window.bpsTutorial(); }, 800);
+    if (!seen) setTimeout(waitThenTutorial, 800);
   };
+  // Hộp mẹo "Cách dùng cảnh 3D" (js/bps3d-v3.js, #bps3d-tips-box) có thể vẫn
+  // đang mở lúc này – đợi nó đóng trước khi mở thêm hướng dẫn từng-bước,
+  // tránh 2 lớp hướng dẫn chồng nhau trên màn hình nhỏ.
+  function waitThenTutorial() {
+    if (!$('ft-play') || $('ft-play').classList.contains('hidden')) return;
+    if ($('bps3d-tips-box')) { setTimeout(waitThenTutorial, 400); return; }
+    window.bpsTutorial();
+  }
   var fc = $('ft-forecast');
   if (fc) { var hb = document.createElement('button'); hb.type = 'button'; hb.setAttribute('data-en', '❓ How to play'); hb.textContent = T('❓ Cách chơi', '❓ How to play');
     hb.style.cssText = 'display:block;margin:8px auto 0;min-height:36px;padding:0 14px;border:0;border-radius:12px;background:rgba(0,102,135,.1);color:#006687;font-weight:800;font-size:12px;cursor:pointer';

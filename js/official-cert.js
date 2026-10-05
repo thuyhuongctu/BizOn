@@ -53,6 +53,15 @@
     return lines.length;
   }
 
+  // Mã xác thực ngắn, không phải chữ ký mật mã học – chỉ để giảng viên có
+  // một chuỗi cố định (từ tên + mã môn + ngày) đối chiếu nhanh với bài nộp
+  // trong ft_results khi cần, tránh tên tự gõ không gắn với gì cả.
+  function shortCode(str) {
+    var h = 0;
+    for (var i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) >>> 0;
+    return h.toString(36).toUpperCase();
+  }
+
   function download(opts) {
     opts = opts || {};
     var name = opts.name || T('Học viên BizOn', 'BizOn Learner');
@@ -60,6 +69,7 @@
     var courseName = opts.courseName || T('Khởi nghiệp (Entrepreneurship)', 'Entrepreneurship');
     var courseDates = opts.courseDates || new Date().toLocaleDateString(isEN() ? 'en-US' : 'vi-VN', { year: 'numeric', month: 'long', day: 'numeric' });
     var filenamePrefix = opts.filenamePrefix || 'BizOn';
+    var verifyCode = opts.verifyCode || shortCode(name + '|' + courseCode + '|' + courseDates);
 
     Promise.all([loadImg('assets/docs/ctu-logo.png'), loadImg('assets/docs/soe-logo.png'), loadImg('assets/docs/sig-tu.png')]).then(function (imgs) {
       var ctuLogo = imgs[0], soeLogo = imgs[1], sigTu = imgs[2];
@@ -100,7 +110,8 @@
       g.fillText(T('Phó Hiệu trưởng – Trường Kinh tế', 'Vice Dean – School of Economics'), sx, sy + 52);
 
       g.textAlign = 'left'; g.font = '11px "Hanken Grotesk", sans-serif'; g.fillStyle = 'rgba(3,51,55,.4)';
-      g.fillText(T('Cấp ngày ', 'Issued on ') + new Date().toLocaleDateString(isEN() ? 'en-US' : 'vi-VN') + '  ·  bizon.app', 60, 950);
+      g.fillText(T('Cấp ngày ', 'Issued on ') + new Date().toLocaleDateString(isEN() ? 'en-US' : 'vi-VN') + '  ·  thuyhuongctu.github.io/BizOn', 60, 950);
+      g.textAlign = 'right'; g.fillText(T('Mã xác thực ', 'Verification code ') + verifyCode, 1340, 950);
 
       var a = document.createElement('a');
       a.download = filenamePrefix + '-ChungNhanDHCT-' + name.replace(/[^\p{L}\p{N}]+/gu, '') + '.png';
