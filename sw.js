@@ -1,7 +1,7 @@
 /* BizOn Bật Nghiệp 2026 – Service Worker (offline app shell)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
 
-const CACHE = 'bizon-v351';
+const CACHE = 'bizon-v352';
 const SHELL = [
   './',
   './index.html',
@@ -184,11 +184,11 @@ const SHELL = [
   './assets/illustrations/team-holo-meeting.webp',
   './assets/illustrations/logo-splash.webp',
   './assets/illustrations/login-clay.webp',
-  './assets/character/anh-tu-ao-dai-welcome-cut.webp',
+  './assets/character/anh-tu-ao-dai-welcome-cut-v2.webp',
   './assets/character/anh-tu-ao-dai-explain-cut.webp',
   './assets/character/anh-tu-ao-dai-point-cut.webp',
   './assets/character/anh-tu-ao-dai-work-cut.webp',
-  './assets/character/anh-tu-ao-dai-cut.webp',
+  './assets/character/anh-tu-ao-dai-cut-v2.webp',
   './assets/character/anh-tu-ao-dai-smile-cut.webp',
   './assets/character/anh-tu-suit-green.webp',
   './assets/character/advisors/ba-sau-lanh-cut.webp',
@@ -212,7 +212,7 @@ const SHELL = [
   './assets/character/firms/moc-nhien-aodai-cut.webp',
   './assets/character/firms/phu-sa-foods-aodai-cut.webp',
   './assets/character/firms/lam-viet-aodai-cut.webp',
-  './assets/character/phu-sa/huong-cut.webp',
+  './assets/character/phu-sa/huong-cut-v2.webp',
   './assets/character/phu-sa/tu-cut.webp',
   // Bài chủ đề game Hộ Chiếu Thương Hiệu – nạp sẵn để mở offline vẫn có nhạc.
   // 7,1MB: đây là mục nặng nhất trong danh sách, cân nhắc bỏ nếu muốn rút ngắn
