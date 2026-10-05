@@ -33,7 +33,7 @@
       ],
       player: { img: 'assets/character/team/minh-long-cut.webp', name: T('Bạn', 'You'), x: 700, y: 760 },
       npcs: [
-        { id: 'lumina', img: 'assets/character/phu-sa/huong-cut.webp', icon: '🤖', name: 'Lumina', x: 700, y: 560,
+        { id: 'lumina', img: 'assets/character/phu-sa/huong-cut-v2.webp', icon: '🤖', name: 'Lumina', x: 700, y: 560,
           desc: T(
             'Đội Rồng Xanh có 5 vai: CEO chốt bến, CFO giữ quỹ, CMO lo cách bán và quảng cáo, COO chọn món và số lượng nấu, Thư ký trinh sát. Mỗi vai chỉ thấy một phần tin — cả đội phải nói chuyện với nhau rồi cùng chốt trước khi hết giờ.',
             "Team Rồng Xanh has 5 roles: the CEO picks the landing, the CFO holds the funds, the CMO runs selling and ads, the COO picks the product and quantity, the Secretary scouts. Each role sees only part of the intel, so the team has to talk and lock in before time runs out."

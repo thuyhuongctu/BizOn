@@ -63,7 +63,7 @@
   // Lumina 760×1100, thầy Tú 342×1046.
   var FOLK = [
     { src: 'assets/character/advisors/lumina-aodai-cut.webp', cx: 105.0, w: 26.3, h: 38 },
-    { src: 'assets/character/anh-tu-ao-dai-cut.webp',         cx: 128.5, w: 12.4, h: 38 }
+    { src: 'assets/character/anh-tu-ao-dai-cut-v2.webp',         cx: 128.5, w: 12.4, h: 38 }
   ];
   var GROUND = 421; // chân người chạm đúng vĩ độ ngôi sao Cần Thơ (122.0, 425.1)
 
