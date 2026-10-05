@@ -598,7 +598,7 @@
     ship: [null, null, null, null, null, null, null],
     qin: [0, 0, 0, 0, 0, 0, 0], certBP: false, items: {}, shopOpen: false,
     cust: [60, 60, 60, 60, 60, 60, 60],
-    profit: 0, susts: 0, adapt: 0, lowQ: 0, negQ: 0, picks: [], rival: { rev: 0, in: [], qin: [] },
+    profit: 0, susts: 0, adapt: 0, lowQ: 0, negQ: 0, picks: [], rival: { rev: 0, in: [], qin: [], next: null, block: -1 }, duelHist: [],
     foot: [], flags: {}, usedEv: [], phase: 'obs',
     sel: { prio: null, budget: 1, enter: null, enterMode: null, shipMode: null, intel: [] },
   };
@@ -950,6 +950,27 @@
       '<p class="text-[9.5px] opacity-40 mt-1.5">' + T('Ước tính minh họa – không tính vào điểm số.', 'Illustrative estimate – not part of your score.') + '</p>';
   }
 
+  // Biểu đồ cột lợi nhuận bạn-vs-đối thủ theo TỪNG quý (khác raceHtml ở trên
+  // – đó là doanh thu CỘNG DỒN cả ván). Dựng từ S.duelHist, ghi ở cuối mỗi
+  // quý trong commit().
+  function duelChartHtml() {
+    var h = S.duelHist; if (!h.length) return '';
+    var max = Math.max.apply(null, h.map(function (d) { return Math.max(d.you, d.riv, 0); }).concat([0.1]));
+    var H = 52;
+    var bars = h.map(function (d, i) {
+      var yh = Math.max(2, Math.round(Math.max(d.you, 0) / max * H)), rh = Math.max(2, Math.round(Math.max(d.riv, 0) / max * H));
+      return '<div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;min-width:0">' +
+        '<div style="display:flex;gap:3px;align-items:flex-end;height:' + H + 'px" title="' + T('Bạn', 'You') + ' ' + f1(d.you) + TY() + ' · ' + RIVAL.name + ' ' + f1(d.riv) + TY() + '">' +
+        '<div style="width:8px;border-radius:3px 3px 0 0;background:#e8742a;height:' + yh + 'px"></div>' +
+        '<div style="width:8px;border-radius:3px 3px 0 0;background:#c8372d;height:' + rh + 'px"></div></div>' +
+        '<span style="font-size:9.5px;font-weight:700;opacity:.5">Q' + (i + 1) + '</span></div>';
+    }).join('');
+    return '<p class="text-[10px] font-extrabold uppercase tracking-wide opacity-50 mt-4 mb-1.5">⚔️ ' + T('Đối đầu theo quý', 'Quarter-by-quarter duel') + '</p>' +
+      '<div style="display:flex;gap:3px;align-items:flex-end">' + bars + '</div>' +
+      '<div style="display:flex;gap:12px;margin-top:5px;font-size:10px;font-weight:700;opacity:.55">' +
+      '<span>🟧 ' + T('Bạn', 'You') + '</span><span>🟥 ' + RIVAL.name + '</span></div>';
+  }
+
   function addLog(html) {
     var li = document.createElement('li');
     li.innerHTML = '<b>' + T('Quý', 'Quarter') + ' ' + (S.q + 1) + ':</b> ' + html;
@@ -1102,7 +1123,25 @@
   function stageObs() {
     S.phase = 'obs'; S.sel = { prio: null, budget: 1, enter: null, enterMode: null, shipMode: null, intel: [] };
     sigCache = null; evtPostCache = null; // quý mới – tín hiệu và bảng kết quả quý trước không còn hiệu lực
+    rivalPreview();
     renderObsScreen();
+  }
+  // Chọn trước mục tiêu Kim Long SẼ nhắm nếu họ di chuyển quý này (xác suất
+  // di chuyển vẫn chỉ tung ở rivalEnterStep() lúc chốt quý – preview chỉ
+  // quyết định NƠI, không quyết định CÓ di chuyển hay không), để người chơi
+  // có cơ hội trả 0,3 tỷ chặn đầu trước khi biết chắc họ có đến hay không.
+  // Bị chặn quý trước → trả đũa: nhắm thẳng thị trường player đã vào (nếu
+  // còn chỗ), hết chỗ thì mở chiến dịch giảm giá (dùng chung cờ priceWar đã
+  // có) thay vì nhắm đảo mới.
+  function rivalPreview() {
+    var notIn = MKTS.map(function (_, m) { return m; }).filter(function (m) { return S.rival.in.indexOf(m) < 0; });
+    if (!notIn.length) { S.rival.next = null; return; }
+    if (S.rival.block === S.q - 1) {
+      var yourMkts = notIn.filter(function (m) { return S.entered[m] !== null && S.entered[m] !== undefined; });
+      if (yourMkts.length) { S.rival.next = yourMkts[Math.floor(rnd() * yourMkts.length)]; return; }
+      S.flags.priceWar = (S.flags.priceWar || 0) + 1;
+    }
+    S.rival.next = notIn[Math.floor(rnd() * notIn.length)];
   }
   function renderObsScreen() {
     var advs = [];
@@ -1153,6 +1192,30 @@
 
   window.bpToDecide = function () { stageDecide(); };
 
+  // Chặn đầu đối thủ: trả 0,3 tỷ để Kim Long không thâm nhập được thị trường
+  // đang nhắm (S.rival.next) trong quý này – mỗi quý họ chỉ nhắm đúng 1 nơi,
+  // nên chặn đầu quý này coi như vô hiệu hoá toàn bộ nước đi của họ.
+  // Đơn giản hoá so với mockup gốc (không có cơ chế "cập bến đúng đảo").
+  function rivalTargetCardHtml() {
+    if (S.rival.next == null) return '';
+    var blocked = S.rival.block === S.q, m = S.rival.next;
+    // Không dùng class "bp-chip": css/bp-ib.css đặt .bp-chip{background:#fff!important},
+    // đè mất nền đỏ/xanh của nút này (chữ trắng trên nền trắng, không đọc được) –
+    // tự style riêng bằng border-radius/padding tương đương thay vì class đó.
+    return '<div class="mt-3 p-3 rounded-2xl flex items-center justify-between gap-2 flex-wrap" style="background:rgba(200,55,45,.08);border:1.5px solid rgba(200,55,45,.3)">' +
+      '<p class="text-[12px] font-bold" style="color:#c8372d">' + RIVAL.icon + ' ' + RIVAL.name + ' ' + T('đang nhắm ', 'is eyeing ') + mktBadge(m) + MKTS[m].name + '</p>' +
+      (blocked ?
+        '<span style="font-size:11px;font-weight:800;padding:6px 12px;border-radius:999px;background:#2a8fe0;color:#fff;white-space:nowrap">🛡️ ' + T('đã chặn', 'blocked') + '</span>' :
+        '<button type="button" onclick="bpBlockRival()" style="font-size:11px;font-weight:800;padding:6px 12px;border-radius:999px;border:0;background:#c8372d;color:#fff;cursor:pointer;white-space:nowrap' + (S.cash < 0.3 ? ';opacity:.5' : '') + '" ' + (S.cash < 0.3 ? 'disabled' : '') + '>🛡️ ' + T('Chặn đầu (0,3 tỷ)', 'Block (0.3bn)') + '</button>') +
+      '</div>';
+  }
+  window.bpBlockRival = function () {
+    if (S.rival.next == null || S.rival.block === S.q || S.cash < 0.3) return;
+    S.cash -= 0.3; S.rival.block = S.q;
+    addLog(T('🛡️ Bạn trả ' + f1(0.3) + TY() + ' chặn đầu ' + RIVAL.name + ' tại ' + MKTS[S.rival.next].name + ' quý này.', '🛡️ You paid ' + f1(0.3) + TY() + ' to block ' + RIVAL.name + ' from entering ' + MKTS[S.rival.next].name + ' this quarter.'));
+    stageDecide();
+  };
+
   window.bpTourReplay = function () { if (window.BPTour) BPTour.replay(S.phase); };
 
   window.bpShowRules = function () {
@@ -1186,6 +1249,7 @@
         'Chọn <b>1 Ưu tiên</b> + <b>1 Mức vận hành</b> (cả hai bắt buộc) để chốt được quý này. Thâm nhập 1 thị trường mới ở mục 2 là <b>tùy chọn</b> – không bắt buộc phải làm mỗi quý.',
         'Pick <b>1 Priority</b> + <b>1 Operating stance</b> (both required) to lock in this quarter. Entering a new market in section 2 is <b>optional</b> – you don\'t have to do it every quarter.'
       ) +
+      rivalTargetCardHtml() +
       '<div id="bp-prio-section">' +
       '<p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-3 mb-1.5">' + T('1 · Ưu tiên của quý (bắt buộc)', '1 · Priority for the quarter (required)') + '</p>' +
       '<div class="grid sm:grid-cols-2 gap-2">' + PRIOS.map(function (p, i) {
@@ -1474,11 +1538,12 @@
   // tường thuật – chấp nhận việc này làm lệch chuỗi ngẫu nhiên so với các
   // ván ?seed=… trước đây (đã thống nhất, video hướng dẫn sẽ quay lại sau).
   function rivalEnterStep() {
-    var notIn = MKTS.map(function (_, m) { return m; }).filter(function (m) { return S.rival.in.indexOf(m) < 0; });
-    if (notIn.length && rnd() < 0.22 + S.q * 0.05) {
-      var pick = notIn[Math.floor(rnd() * notIn.length)];
-      S.rival.in.push(pick);
-      return pick;
+    if (S.rival.block === S.q) return null; // đã trả tiền chặn đầu quý này – khỏi tung xác suất
+    var target = S.rival.next;
+    if (target == null || S.rival.in.indexOf(target) >= 0) return null; // đã vào market đó theo cách khác giữa chừng quý
+    if (rnd() < 0.22 + S.q * 0.05) {
+      S.rival.in.push(target);
+      return target;
     }
     return null;
   }
@@ -1594,6 +1659,7 @@
     var loanPaid = false;
     if (S.flags.loan) { S.cash -= 0.3; S.flags.loan = false; loanPaid = true; }
     S.cash += qProfit; S.profit += qProfit;
+    S.duelHist.push({ you: qProfit, riv: qRivalRev }); // cho biểu đồ đối đầu theo quý ở màn kết thúc
     S.rep = clamp(S.rep); S.capab = clamp(S.capab); S.resil = clamp(S.resil);
     S.lowQ = S.cash < 0 ? S.lowQ + 1 : 0;
     if (S.cash < 0) S.negQ = (S.negQ || 0) + 1;
@@ -1647,12 +1713,6 @@
     return { p: pS, r: clamp(S.rep), c: clamp(S.capab), a: aS, s: sS,
       total: Math.round(0.3 * pS + 0.2 * clamp(S.rep) + 0.2 * clamp(S.capab) + 0.15 * aS + 0.15 * sS) };
   }
-  var MEDALS = {
-    p: { icon: '🚢', title: 'Nhà xuất khẩu bản lĩnh', titleEn: 'The Bold Exporter' },
-    r: { icon: '✨', title: 'Kiến trúc sư thương hiệu toàn cầu', titleEn: 'Global Brand Architect' },
-    s: { icon: '🌱', title: 'Nhà quốc tế hóa bền vững', titleEn: 'Sustainable Internationalizer' },
-    a: { icon: '🤸', title: 'Bậc thầy thích nghi', titleEn: 'Master of Adaptation' },
-  };
   // reason: null (kết thúc bình thường) · 'cash' (cạn tiền 2 quý) · 'rep' (uy tín khủng hoảng).
   // lastEvOut giữ nguyên câu kết quả lựa chọn cuối cùng (đã chốt ngôn ngữ lúc
   // bấm) – chỉ phần khung câu (nhãn, câu dẫn) được dịch lại khi vẽ lại màn.
@@ -1686,25 +1746,38 @@
       '<p class="text-[11px] opacity-60 mt-2">' + (S.profit >= S.rival.rev ?
         T('🏆 Bạn đã vượt qua ' + RIVAL.name + ' trong cuộc đua doanh thu 6 quý.', '🏆 You outpaced ' + RIVAL.name + ' in the 6-quarter revenue race.') :
         T('🐉 ' + RIVAL.name + ' đã về đích trước – thử lại để soán ngôi.', '🐉 ' + RIVAL.name + ' finished ahead – try again to take the lead.')) + '</p>';
+    $('bp-rival-final').innerHTML += duelChartHtml();
     if (endReason === 'cash') {
       $('bp-medal').textContent = '💸';
-      $('bp-title').textContent = T('Mất khả năng thanh toán', 'Loss of Solvency');
+      $('bp-title').textContent = T('Cạn vốn', 'Out of Cash');
       $('bp-sub').textContent = T('Hai quý liên tiếp âm tiền mặt – hội đồng buộc dừng hành trình. ', 'Two consecutive quarters of negative cash – the board halts the journey. ') + lastEvOut +
         T(' Báo cáo dưới đây cho thấy chuỗi quyết định dẫn tới kết cục này.', ' The report below shows the chain of decisions that led to this outcome.');
     } else if (endReason === 'rep') {
-      $('bp-medal').textContent = '🥀';
-      $('bp-title').textContent = T('Uy tín chạm đáy khủng hoảng', 'Reputation Hit Crisis Level');
+      $('bp-medal').textContent = '📉';
+      $('bp-title').textContent = T('Sụp đổ', 'Collapse');
       $('bp-sub').textContent = T('Thương hiệu không còn được tin – các đối tác lần lượt rời đi.', 'The brand is no longer trusted – partners leave one by one.') +
         T(' Báo cáo dưới đây cho thấy chuỗi quyết định dẫn tới kết cục này.', ' The report below shows the chain of decisions that led to this outcome.');
     } else {
-      var bestKey = ['p', 'r', 's', 'a'].sort(function (x, y) { return sc[y] - sc[x]; })[0];
-      var best = MEDALS[bestKey];
+      // 8 kết thúc đặt tên (ngoài 2 kết thúc thua sớm cash/rep ở trên), đánh
+      // giá theo thứ tự ưu tiên – mốc đầu tiên khớp thì dừng:
+      // toàn cầu (cân bằng cao) > khắc tinh Kim Long (thắng áp đảo) >
+      // dẫn đầu xanh (bền vững nổi bật) > chuyên gia ngách (lợi nhuận cao,
+      // ít thị trường) > Kim Long thắng (thua cuộc đua) > đang lớn (mặc định).
+      var dims = { p: sc.p, r: sc.r, s: sc.s, a: sc.a };
+      var bestKey = Object.keys(dims).sort(function (x, y) { return dims[y] - dims[x]; })[0];
+      var nMarkets = S.entered.filter(function (v) { return v !== null && v !== undefined; }).length;
       var supreme = sc.total >= 72 && sc.p >= 60 && sc.r >= 60 && sc.c >= 60 && sc.a >= 60 && sc.s >= 60;
-      if (!endCelebrated && (supreme || S.profit >= S.rival.rev)) { endCelebrated = true; createConfetti(); }
-      $('bp-medal').textContent = supreme ? '🏆' : best.icon;
-      $('bp-title').textContent = supreme ? T('Thương hiệu ' + HOME().dem + ' vươn khơi', 'A ' + HOME().demEn + ' Brand Sets Sail') : T(best.title, best.titleEn);
-      $('bp-sub').textContent = supreme ? T('Cân bằng cả 5 chiều – danh hiệu cao nhất của Hộ Chiếu Thương Hiệu.', "Balanced across all 5 dimensions – Brand Passport's highest title.") :
-        T('Lợi nhuận tích lũy ' + f1(S.profit) + ' tỷ ₫ sau 6 quý.', 'Cumulative profit of ' + f1(S.profit) + ' bn ₫ after 6 quarters.');
+      var nemesis = S.profit > 0 && S.profit >= S.rival.rev * 1.5;
+      var ending = supreme ? { icon: '🏆', t: T('Thương hiệu ' + HOME().dem + ' vươn khơi', 'A ' + HOME().demEn + ' Brand Sets Sail'), sub: T('Cân bằng cả 5 chiều – danh hiệu cao nhất của Hộ Chiếu Thương Hiệu.', "Balanced across all 5 dimensions – Brand Passport's highest title.") }
+        : nemesis ? { icon: '🛡️', t: T('Khắc tinh của ' + RIVAL.name, RIVAL.name + "'s Nemesis"), sub: T('Doanh thu vượt xa ' + RIVAL.name + ' – đối thủ phải dè chừng bạn.', 'Revenue far outpaces ' + RIVAL.name + " – the rival now has to watch its back.") }
+        : (bestKey === 's' && sc.s >= 60) ? { icon: '🌿', t: T('Dẫn đầu xanh', 'Green Leader'), sub: T('Hồ sơ bền vững nổi bật nhất trong 5 chiều điểm số.', 'Sustainability is the standout among the 5 scoring dimensions.') }
+        : (bestKey === 'p' && sc.p >= 60 && nMarkets <= 3) ? { icon: '💎', t: T('Chuyên gia ngách', 'Niche Specialist'), sub: T('Lợi nhuận cao dù chỉ tập trung ' + nMarkets + '/7 thị trường.', 'High profit from focusing on just ' + nMarkets + '/7 markets.') }
+        : S.profit < S.rival.rev ? { icon: '🐉', t: T(RIVAL.name + ' thắng', RIVAL.name + ' Wins'), sub: T(RIVAL.name + ' về đích trước trong cuộc đua doanh thu 6 quý – thử lại để soán ngôi.', RIVAL.name + ' finished ahead in the 6-quarter revenue race – try again to take the lead.') }
+        : { icon: '🚢', t: T('Đang lớn', 'Still Growing'), sub: T('Lợi nhuận tích lũy ' + f1(S.profit) + ' tỷ ₫ sau 6 quý.', 'Cumulative profit of ' + f1(S.profit) + ' bn ₫ after 6 quarters.') };
+      if (!endCelebrated && (supreme || nemesis)) { endCelebrated = true; createConfetti(); }
+      $('bp-medal').textContent = ending.icon;
+      $('bp-title').textContent = ending.t;
+      $('bp-sub').textContent = ending.sub;
     }
     $('bp-footprint').innerHTML = S.foot.length ?
       '<p class="font-extrabold text-[11px] uppercase tracking-wide opacity-55 mb-1">👣 ' + T('Dấu chân quyết định của bạn', 'Your decision footprint') + '</p>' +
