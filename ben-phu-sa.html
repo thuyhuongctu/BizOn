@@ -439,6 +439,7 @@
     $('ft-play').classList.remove('hidden');
     render();
     renderShop();
+    window.scrollTo(0, 0);
   };
 
   function renderShop() {
@@ -723,6 +724,7 @@
   function ftEnd() {
     $('ft-play').classList.add('hidden');
     $('ft-end').classList.remove('hidden');
+    window.scrollTo(0, 0);
     // Chuẩn so sánh: chạy ghe hàng bông đúng cặp tốt nhất cả 5 tuần (đã trừ phí ghe)
     var bc = bestCombo(), maxRev = 0;
     for (var w = 0; w < 5; w++) maxRev += D[bc[0]][bc[1]] * W[w][bc[1]] * 3 - BOAT_COST;

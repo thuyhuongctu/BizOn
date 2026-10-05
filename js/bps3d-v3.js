@@ -545,12 +545,22 @@ if (LOW) { sun.castShadow = true; }
 
 // ---- (10) Hướng dẫn lần đầu trong cảnh 3D ----
 (function tips() { let seen = false; try { seen = localStorage.getItem('bps3d-tips') === '1'; } catch (e) {} if (seen) return;
-  const box = document.createElement('div'); box.style.cssText = 'position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;pointer-events:auto;max-width:min(92%,380px);background:#fffdf6;color:#033337;border-radius:22px;padding:16px 18px;font:600 13px/1.45 Manrope,system-ui,sans-serif;box-shadow:0 6px 0 #d9c7a6,0 20px 40px -12px rgba(3,51,55,.55);display:flex;flex-direction:column;gap:8px';
+  const box = document.createElement('div'); box.id = 'bps3d-tips-box'; box.style.cssText = 'position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;pointer-events:auto;max-width:min(92%,380px);background:#fffdf6;color:#033337;border-radius:22px;padding:16px 18px;font:600 13px/1.45 Manrope,system-ui,sans-serif;box-shadow:0 6px 0 #d9c7a6,0 20px 40px -12px rgba(3,51,55,.55);display:flex;flex-direction:column;gap:8px';
   const fill = () => { box.innerHTML = '<b style="font:800 16px Plus Jakarta Sans,sans-serif">' + T('Cách dùng cảnh 3D', 'Using the 3D scene') + '</b>' +
     ['👆 ' + T('Kéo để xoay sông nước', 'Drag to rotate the river'), '🤏 ' + T('Chụm hai ngón hoặc lăn chuột để phóng to', 'Pinch or scroll to zoom'), '📍 ' + T('Bấm vào nhãn bến hoặc bãi đất để chọn bến', 'Tap a landing label or plot to choose it'), '⛵ ' + T('Chốt xong, ghe sẽ chạy tới bến và hiện doanh thu', 'Once locked in, your boat sails there and shows the revenue'), '🔊 ' + T('Bật âm thanh ở góc phải nếu muốn nghe sông nước', 'Turn on sound at the top right to hear the river')].map(x => '<span>' + x + '</span>').join('') +
     '<button type="button" style="margin-top:4px;min-height:44px;border:0;border-radius:14px;background:#fda127;color:#033337;font:800 14px Manrope,sans-serif;cursor:pointer;box-shadow:inset 0 -4px 0 rgba(232,118,45,.6)">' + T('Đã hiểu, bắt đầu', 'Got it, let’s go') + '</button>';
     box.querySelector('button').onclick = () => { try { localStorage.setItem('bps3d-tips', '1'); } catch (e) {} box.remove(); }; };
-  fill(); window.addEventListener('bps-lang', () => { if (box.isConnected) fill(); }); host.parentElement.appendChild(box); })();
+  fill(); window.addEventListener('bps-lang', () => { if (box.isConnected) fill(); });
+  // Nếu trang có hướng dẫn từng-bước riêng (js/bps-extras.js, #bps-tut) đang
+  // mở, đợi nó đóng trước khi hiện thêm hộp mẹo cảnh 3D này, tránh 2 lớp
+  // hướng dẫn chồng nhau trên màn hình nhỏ. Trang không có #bps-tut (vd.
+  // Ben Phu Sa Game v4 Nhom.dc.html) thì hiện ngay như cũ.
+  const appendWhenFree = () => {
+    const otherTour = document.getElementById('bps-tut');
+    if (otherTour && getComputedStyle(otherTour).display !== 'none') { setTimeout(appendWhenFree, 400); return; }
+    host.parentElement.appendChild(box);
+  };
+  appendWhenFree(); })();
 
 const wait = () => { if (G()) { setWeek(G().S.week || 0); frame(); } else setTimeout(wait, 60); };
 wait();
