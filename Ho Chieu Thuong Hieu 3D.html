@@ -115,6 +115,12 @@
   body.bp3d-full #bp3d-stage::after { display:none; }
   @media (min-width:1024px) { #bp3d-full { display:none; } }
   #bp-howto { display:none !important; }
+  /* Màn giới thiệu làm overlay toàn màn hình, cùng tinh thần #login3d của
+     BizOn Game 3D.html (Bật Nghiệp) – che hẳn bản đồ 3D/hero phía sau,
+     cuộn riêng bên trong, thay vì chỉ là một section đầu trang phải cuộn
+     qua. Dưới #hc-bar (z-index:60) để vẫn đổi được ngôn ngữ/giao diện. */
+  body:has(#bp-intro:not(.hidden)) { overflow:hidden; }
+  #bp-intro:not(.hidden) { position:fixed; inset:0; z-index:50; overflow-y:auto; border-radius:0 !important; margin:0 !important; max-width:none !important; padding-top:max(68px,calc(52px + env(safe-area-inset-top))) !important; padding-bottom:max(24px,env(safe-area-inset-bottom)) !important; }
   .clay-card { background:rgba(255,255,255,.95); }
   html[data-theme="dark"] .clay-card { background:rgba(14,42,51,.95); }
   #bp3d-head h1 { color:#033337; }
@@ -198,8 +204,14 @@
 
   <!-- VIDEO HƯỚNG DẪN CHƠI -->
   <section id="bp-howto" class="clay-card p-5 mb-6">
-    <p class="text-center text-[11px] font-extrabold text-primary uppercase tracking-[.2em]" data-en="Watch before you play">📺 Xem trước khi chơi</p>
-    <h2 class="font-display font-extrabold text-deep-teal text-lg text-center mt-1 mb-3" data-en="How-to-play video">Video hướng dẫn chơi</h2>
+    <button type="button" onclick="document.getElementById('bp-howto-box').classList.toggle('hidden');this.querySelector('b').textContent=document.getElementById('bp-howto-box').classList.contains('hidden')?'▾':'▴'" class="w-full flex items-center justify-between">
+      <span>
+        <span class="block text-[11px] font-extrabold text-primary uppercase tracking-[.2em]" data-en="Watch before you play">📺 Xem trước khi chơi</span>
+        <span class="block font-display font-extrabold text-deep-teal text-lg mt-1" data-en="How-to-play video">Video hướng dẫn chơi</span>
+      </span>
+      <b class="text-xs font-bold opacity-60">▾</b>
+    </button>
+    <div id="bp-howto-box" class="hidden mt-3">
     <div class="flex justify-center gap-2 mb-3">
       <button id="bp-video-len-short" onclick="bpVideoLen('short')" class="clay-btn bg-deep-teal text-white font-display font-extrabold px-4 py-1.5 text-xs" data-en="🎬 Quick (~40s)">🎬 Ngắn (~40 giây)</button>
       <button id="bp-video-len-full" onclick="bpVideoLen('full')" class="clay-btn bg-white text-deep-teal border border-deep-teal/20 font-display font-extrabold px-4 py-1.5 text-xs" data-en="📖 Detailed – all 6 quarters (~105s)">📖 Chi tiết – đủ 6 quý (~105 giây)</button>
@@ -213,6 +225,7 @@
     <video id="bp-video-full-en" controls preload="none" playsinline class="w-full rounded-2xl mx-auto hidden" style="max-height:70vh">
     </video>
     <p class="text-[10px] text-deep-teal/40 mt-3 text-center" data-en="Burned-in captions + original background music – switch language from the ⋯ button top-left to switch the video too.">Có phụ đề chữ đốt sẵn + nhạc nền gốc – đổi ngôn ngữ bằng nút ⋯ góc trái sẽ đổi luôn video.</p>
+    </div>
   </section>
 
   <!-- MÀN GIỚI THIỆU -->
@@ -220,6 +233,11 @@
     <h2 class="font-display font-extrabold text-deep-teal text-lg mb-2" data-en="🏢 Choose your company">🏢 Chọn doanh nghiệp của bạn</h2>
     <p class="text-[11px] opacity-60 mb-2" data-en="Each company has its own journey and risk profile – there is no &quot;strongest&quot; choice.">Mỗi doanh nghiệp một hành trình và hệ rủi ro khác nhau – không có lựa chọn "mạnh nhất".</p>
     <div class="grid sm:grid-cols-2 gap-2" id="bp-firms"></div>
+    <button type="button" onclick="document.getElementById('bp-more-box').classList.toggle('hidden');this.querySelector('b').textContent=document.getElementById('bp-more-box').classList.contains('hidden')?'▾':'▴'" class="w-full flex items-center justify-between mt-5" style="padding:2px 0">
+      <span class="font-display font-extrabold text-deep-teal text-sm" data-en="🌏 Markets · 📜 Rules · 🧑‍💼 Advisory board">🌏 Thị trường · 📜 Luật chơi · 🧑‍💼 Ban cố vấn</span>
+      <b class="text-xs font-bold opacity-60">▾</b>
+    </button>
+    <div id="bp-more-box" class="hidden mt-3">
     <h3 class="font-display font-extrabold text-deep-teal text-sm mt-5 mb-2" data-en="🌏 Seven gateways to the world (each modelled on a real country)">🌏 Bảy cánh cửa ra thế giới (mỗi nơi tham chiếu một quốc gia thật)</h3>
     <div id="bp-mkt-list" class="space-y-1.5 text-[12px]">
       <p data-en-html="🌐 <b>Hải Lam</b> – advanced digital market: fast entry, very high online competition.">🌐 <b>Hải Lam</b> – thị trường số phát triển: vào nhanh, cạnh tranh trực tuyến rất cao.</p>
@@ -253,6 +271,7 @@
       <p data-en-html="📣 <b>An Nhiên</b> · Strategy &amp; Innovation Advisor – reads trends and builds the customer community. <i>&laquo;Energy is contagious. When you believe in the vision, a community forms around you.&raquo;</i>">📣 <b>An Nhiên</b> · Cố vấn Chiến lược &amp; Đổi mới – đọc xu hướng và xây cộng đồng khách hàng. <i>«Năng lượng có tính lan tỏa. Khi bạn tin vào tầm nhìn, cộng đồng sẽ tự hình thành xung quanh bạn.»</i></p>
       <p data-en-html="🎓 <b>Lecturer Tú Phan</b> · Lecturer and internationalisation strategy advisor – speaks from data and theory, but always lets you decide. <i>&laquo;Widen the vision, conquer every limit.&raquo;</i>">🎓 <b>Thầy Tú Phan</b> · Giảng viên, cố vấn chiến lược quốc tế hoá – nói bằng dữ liệu và lý thuyết, nhưng luôn để bạn tự quyết. <i>«Mở rộng tầm nhìn, chinh phục mọi giới hạn.»</i></p>
       <p data-en-html="🤖 <b>Lumina AI</b> · AI Strategy Advisor (in the persona &laquo;Je m'appelle Hương&raquo;) – reads market signals and flags what's easy to miss. <i>&laquo;Building the future with AI and accurate data.&raquo;</i>">🤖 <b>Lumina AI</b> · Cố vấn AI Chiến lược (hóa thân «Je m'appelle Hương») – đọc tín hiệu thị trường và nhắc bạn điều dễ bỏ sót. <i>«Kiến tạo tương lai bằng trí tuệ nhân tạo và dữ liệu chuẩn xác.»</i></p>
+    </div>
     </div>
     <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-5 mb-1.5" data-en="🌊 Theme music">🌊 Nhạc chủ đề</p>
     <button id="bp-music" onclick="bpMusic()" class="clay-btn w-full bg-deep-teal text-white font-display font-extrabold py-3 text-sm" data-en="🎵 Play theme music">🎵 Bật nhạc chủ đề</button>
