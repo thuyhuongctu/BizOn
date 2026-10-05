@@ -61,6 +61,20 @@ test('Xuất/nhập khẩu khu vực FDI: đủ 58 quý, lũy kế tăng trong n
   assert.strictEqual(x.latest.ytdYoY, 26.0);   // tỷ lệ in trong báo cáo, không tự tính
 });
 
+test('Bán lẻ: đủ 58 quý, lũy kế tăng trong năm, khớp câu trích; 6 tháng 2026 = 3.889,5 nghìn tỷ đồng', () => {
+  const s = json.series.find((x) => x.id === 'retail_sales');
+  assert.strictEqual(s.observations.length, 58);
+  s.observations.forEach((o, i) => {
+    assert.ok(o.value === null || o.value > 0, `${o.period}: ${o.value}`);
+    const shown = o.ytd.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 });   // 3.889,5
+    const forms = [shown, shown.replace('.', ''), shown.replace(/,0$/, ''), shown.replace('.', '').replace(/,0$/, '')];   // 1.932,0 | 1932,0 | 1.932 | 1932
+    assert.ok(forms.some((f) => new RegExp(`(^|[^\\d.,])${f.replace(/\./g, '\\.')}([^\\d]|$)`).test(o.quote)), `${o.period}: ${shown} không có trong trích dẫn`);
+  });
+  assert.strictEqual(s.latest.ytd, 3889.5);
+  assert.strictEqual(s.latest.ytdYoY, 12.9);
+  assert.strictEqual(s.latest.realYoY, 7.3);
+});
+
 test('Chuỗi bình quân quý chỉ lấy quý đủ 3 tháng', () => {
   ['world_import_volume', 'reer_vnd'].forEach((id) => {
     const s = json.series.find((x) => x.id === id);

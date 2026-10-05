@@ -56,13 +56,14 @@ VietLens deliberately inverts the real-time "monitor" model. Its value is **stru
 
 ## Tier 1 — official data layer (started 10/2026)
 
-`vietlens/data/official.json` (machine-readable) and `vietlens/official-data.js` (browser) hold **real public series**, built by `python3 vietlens/tools/build_official.py` from the source files in `vietlens/data/raw/` (the FDI-sector trade file is produced first by `python3 vietlens/tools/extract_fdi_trade.py`):
+`vietlens/data/official.json` (machine-readable) and `vietlens/official-data.js` (browser) hold **real public series**, built by `python3 vietlens/tools/build_official.py` from the source files in `vietlens/data/raw/` (the FDI-sector trade and retail files are produced first by `python3 vietlens/tools/extract_fdi_trade.py` and `python3 vietlens/tools/extract_retail.py`):
 
 | Series | Source | Period |
 |---|---|---|
 | FDI disbursed, national, quarterly | General Statistics Office quarterly reports (each point with URL and verbatim quote) | 2012Q1–2026Q2 |
 | FDI newly registered, quarterly | same (cut-off date changes flagged) | 2012Q1–2026Q2 |
 | FDI-sector goods exports (incl. crude oil) and imports, year-to-date, with share of total | Same GSO quarterly reports; 8 quarters 2022–2024 from the attached .docx text (`tools/extract_fdi_trade.py`) | 2012Q1–2026Q2 |
+| Retail sales of goods and consumer services, year-to-date (current prices), with printed nominal and real growth | Same GSO quarterly reports (`tools/extract_retail.py`) | 2012Q1–2026Q2 |
 | Cumulative registered FDI by partner | GSO Statistical Yearbooks 2008 and 2012 | end-2008, end-2012 |
 | World import volume | CPB World Trade Monitor (Jul 2026 release) | 2011Q1–2026Q2 |
 | Real effective exchange rate of the dong | Bruegel REER database (Darvas, 2021), 120 partners | 2011Q1–2026Q2 |

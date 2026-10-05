@@ -53,7 +53,7 @@
 
   function headline(s) {
     const l = s.latest;
-    if (s.id.startsWith('fdi_') && l.ytd !== undefined) return `<b>${nf(l.ytd, 2)} tỷ USD</b><span>${ytdLabel(l.period)}${l.ytdYoY !== null ? ` · <em class="${l.ytdYoY >= 0 ? 'up' : 'down'}">${sign(l.ytdYoY)} so cùng kỳ</em>` : ''}${l.share != null ? ` · chiếm ${nf(l.share, 1)}% tổng kim ngạch` : ''}</span>`;
+    if (l.ytd !== undefined) return `<b>${nf(l.ytd, s.unit === 'tỷ USD' ? 2 : 1)} ${esc(s.unit)}</b><span>${ytdLabel(l.period)}${l.ytdYoY != null ? ` · <em class="${l.ytdYoY >= 0 ? 'up' : 'down'}">${sign(l.ytdYoY)} so cùng kỳ</em>` : ''}${l.realYoY != null ? ` · loại trừ yếu tố giá ${sign(l.realYoY)}` : ''}${l.share != null ? ` · chiếm ${nf(l.share, 1)}% tổng kim ngạch` : ''}</span>`;
     if (s.chart === 'hbar') return `<b>${nf(l.total, 1)} tỷ USD</b><span>tổng, mọi đối tác</span>`;
     if (s.chart === 'line') return `<b>${nf(l.value, 1)}</b><span>${qLabel(l.period)} · <em class="${l.yoy >= 0 ? 'up' : 'down'}">${sign(l.yoy)} so cùng kỳ</em></span>`;
     return `<b>${nf(l.value, 0)} triệu USD</b><span>năm ${esc(l.period)}</span>`;
@@ -63,14 +63,14 @@
     const withQuote = s.observations.filter((o) => o.quote);
     if (!withQuote.length) return '';
     return `<details><summary>Xem ${withQuote.length} điểm số liệu kèm trích dẫn nguyên văn</summary><div class="table-wrap"><table><thead><tr><th>Kỳ</th><th>Số</th><th>Trích dẫn</th><th>Nguồn</th></tr></thead><tbody>
-      ${withQuote.slice().reverse().map((o) => `<tr><td>${esc(VI[o.period] || qLabel(o.period))}</td><td class="n">${o.ytd !== undefined ? nf(o.ytd, 2) : nf(o.value, 1)}</td><td class="q">«${esc(o.quote)}»</td><td>${o.url ? `<a href="${esc(o.url)}" rel="noopener" target="_blank">mở</a>` : esc(o.source)}</td></tr>`).join('')}
+      ${withQuote.slice().reverse().map((o) => `<tr><td>${esc(VI[o.period] || qLabel(o.period))}</td><td class="n">${o.ytd !== undefined ? nf(o.ytd, s.unit === 'tỷ USD' ? 2 : 1) : nf(o.value, 1)}</td><td class="q">«${esc(o.quote)}»</td><td>${o.url ? `<a href="${esc(o.url)}" rel="noopener" target="_blank">mở</a>` : esc(o.source)}</td></tr>`).join('')}
     </tbody></table></div></details>`;
   }
 
   function card(s) {
     const chart = s.chart === 'bar' ? barChart(s.observations, s.unit) : s.chart === 'line' ? lineChart(s.observations, s.unit)
       : s.chart === 'hbar' ? hbar(s.observations) : factsTable(s.observations);
-    const note = s.chart === 'bar' ? '<p class="cap">Cột = dòng vốn từng quý (tỷ USD), suy từ số lũy kế công bố.</p>' : '';
+    const note = s.chart === 'bar' ? `<p class="cap">Cột = giá trị từng quý (${esc(s.unit)}), suy từ số lũy kế công bố.</p>` : '';
     return `<article class="panel ocard" id="o-${esc(s.id)}">
       <header><div><p class="eyebrow">SỐ LIỆU THẬT · ${esc(s.frequency.toUpperCase())}</p><h3>${esc(s.label)}</h3></div><span class="badge ok">có xuất xứ</span></header>
       <div class="ohead">${headline(s)}</div>
