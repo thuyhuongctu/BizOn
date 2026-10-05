@@ -34,6 +34,12 @@
       counter: function () { return T('Theo dõi lịch luân phiên của họ 1–2 tuần rồi né đúng tuần họ ghé khu bạn định bán.', 'Watch their rotation for 1–2 weeks, then avoid the exact week they visit the spot you want to sell at.'); },
     },
   };
+  // Bản chơi nhóm v8 (ben-phu-sa-v8.html) đặt tên đối thủ khác (Ghe Ba Lẹ /
+  // Chú Sáu Bến Cũ / Cô Bảy Sen Hồng) nhưng cùng 3 tính cách/thứ tự với bản
+  // 2D – trỏ thẳng vào cùng nội dung hồ sơ, tránh trùng lặp.
+  INTEL['Ghe Ba Lẹ'] = INTEL['Alpha Dynamics'];
+  INTEL['Chú Sáu Bến Cũ'] = INTEL['Mekong Ventures'];
+  INTEL['Cô Bảy Sen Hồng'] = INTEL['Star Clay Co.'];
   var TAUNTS_AHEAD = [
     function (leaderName) { return T('Bạn đang tạm dẫn đầu cả bến! Giữ nhịp này.', "You're currently leading the whole wharf! Keep this pace."); },
     function (leaderName) { return T('Khoảng cách đang có lợi cho bạn – đừng chủ quan, tuần sau có thể đổi khác.', 'The gap favors you for now – stay sharp, next week could flip it.'); },
