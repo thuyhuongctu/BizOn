@@ -1,5 +1,5 @@
 {
- "builtAt": "2026-10-02",
+ "builtAt": "2026-10-05",
  "datasetStatus": "official-public",
  "version": "1.0.0",
  "rule": "Không có xuất xứ thì không lên bảng.",
@@ -962,6 +962,1208 @@
      "source": "GSO/NSO Thông cáo báo chí tình hình KT-XH quý II và 6 tháng đầu năm 2026 [data to 30/6/2026]",
      "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2026/07/thong-cao-bao-chi-ve-tinh-hinh-kinh-te-xa-hoi-quy-ii-va-sau-thang-dau-nam-2026/",
      "quote": "Trong đó: 2.013 dự án được cấp phép mới với số vốn đăng ký đạt 17,39 tỷ USD, tăng 1,3% so với cùng kỳ năm trước về số dự án và tăng 87,2% về số vốn đăng ký; có 541 lượt dự án đã cấp phép từ các năm trước đăng ký điều chỉnh vốn đầu tư tăng thêm 11,04 tỷ USD, tăng 23,5% so với cùng kỳ năm trước; Vốn đăng ký góp vốn, mua cổ phần của nhà đầu tư nước ngoài có lượt với tổng giá trị góp vốn 6,22 tỷ USD, tăng 89,5% so với cùng kỳ năm trước."
+    }
+   ]
+  },
+  {
+   "id": "fdi_sector_exports",
+   "label": "Xuất khẩu hàng hóa của khu vực có vốn FDI (kể cả dầu thô)",
+   "domain": "trade",
+   "unit": "tỷ USD",
+   "frequency": "quý",
+   "official": true,
+   "chart": "bar",
+   "latest": {
+    "period": "2026Q2",
+    "ytd": 213.01,
+    "share": 79.9,
+    "ytdYoY": 26.0
+   },
+   "source": "Tổng cục Thống kê (nay là Cục Thống kê, Bộ Tài chính) — báo cáo tình hình kinh tế – xã hội quý",
+   "method": "Kim ngạch lũy kế từ đầu năm của khu vực có vốn đầu tư nước ngoài, công bố lần đầu tại cuối mỗi quý; giá trị quý = lũy kế quý này − lũy kế quý trước cùng năm. Tỷ trọng = khu vực FDI / tổng kim ngạch cùng kỳ. Tăng/giảm so cùng kỳ: tỷ lệ in trong báo cáo (so với số đã điều chỉnh của năm trước).",
+   "limitation": "Số ước tính lần công bố đầu, chưa thay bằng số chính thức của Hải quan; không có chiều mặt hàng hay đối tác. Gồm cả dầu thô. Một số quý báo cáo không nêu tổng kim ngạch trong cùng câu nên để trống tỷ trọng. 8 quý 2022–2024 lấy từ tệp lời văn .docx đính kèm vì văn bản trên trang bị cắt.",
+   "rights": "Số liệu thống kê nhà nước công bố công khai; trích dẫn có ghi nguồn. Rà điều khoản trước khi phát hành qua API.",
+   "observations": [
+    {
+     "period": "2012Q1",
+     "ytd": 15.5,
+     "value": 15.5,
+     "shareYtd": 63.3,
+     "yoyPrinted": 43.1,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2012",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/12/tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2012/",
+     "quote": "Xuất khẩu hàng hoá Kim ngạch hàng hóa xuất khẩu ba tháng đầu năm ước tính đạt 24,5 tỷ USD, tăng 23,6% so với cùng kỳ năm trước, bao gồm: Khu vực kinh tế trong nước đạt gần 9 tỷ USD, xấp xỉ cùng kỳ năm trước, khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 15,5 tỷ USD, tăng 43,1%."
+    },
+    {
+     "period": "2012Q2",
+     "ytd": 32.6,
+     "value": 17.1,
+     "shareYtd": 61.4,
+     "yoyPrinted": null,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng năm 2012",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/12/tinh-hinh-kinh-te-xa-hoi-sau-thang-dau-nam-2012/",
+     "quote": "Tính chung sáu tháng đầu năm, kim ngạch hàng hóa xuất khẩu đạt 53,1 tỷ USD, tăng 22,2% so với cùng kỳ năm trước, bao gồm: Khu vực kinh tế trong nước đạt 20,5 tỷ USD, tăng 4%; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 32,6 tỷ USD, chiếm 61,5% tổng kim ngạch (Cùng kỳ năm 2011 chiếm 54,7%) và tăng 37,3%."
+    },
+    {
+     "period": "2012Q3",
+     "ytd": 52.5,
+     "value": 19.9,
+     "shareYtd": 62.6,
+     "yoyPrinted": 34.6,
+     "source": "GSO Báo cáo tình hình KT-XH tháng 9 và 9 tháng năm 2012",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/12/tinh-hinh-kinh-te-xa-hoi-chin-thang-nam-2012/",
+     "quote": "Tính chung chín tháng năm 2012, kim ngạch hàng hóa xuất khẩu đạt 83,8 tỷ USD, tăng 18,9% so với cùng kỳ năm trước, bao gồm: Khu vực kinh tế trong nước đạt 31,3 tỷ USD, giảm 0,6%; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 52,5 tỷ USD, tăng 34,6%."
+    },
+    {
+     "period": "2012Q4",
+     "ytd": 72.3,
+     "value": 19.8,
+     "shareYtd": 63.1,
+     "yoyPrinted": 31.2,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2012",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/12/tinh-hinh-kinh-te-xa-hoi-thang-muoi-hai-va-nam-2012/",
+     "quote": "Tính chung cả năm 2012, kim ngạch hàng hóa xuất khẩu đạt 114,6 tỷ USD, tăng 18,3% so với năm 2011, bao gồm: Khu vực kinh tế trong nước đạt 42,3 tỷ USD, tăng 1,3%; khu vực có vốn đầu tư nước ngoài (gồm cả dầu thô) đạt 72,3 tỷ USD, tăng 31,2%."
+    },
+    {
+     "period": "2013Q1",
+     "ytd": 19.3,
+     "value": 19.3,
+     "shareYtd": 65.0,
+     "yoyPrinted": null,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2013",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2013/",
+     "quote": "Tính chung quý I năm 2013, kim ngạch hàng hóa xuất khẩu ước tính đạt 29,7 tỷ USD, tăng 19,7% so với cùng kỳ năm trước (nếu loại trừ yếu tố giá, kim ngạch hàng hóa xuất khẩu quý I đạt 31 tỷ USD, tăng 25,1%), bao gồm: Khu vực kinh tế trong nước đạt 10,4 tỷ USD, tăng 10,1%; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 19,3 tỷ USD, tiếp tục tăng mạnh ở mức 25,6%, chủ yếu do đóng góp của một số mặt hàng gia công lắp ráp như: Điện thoại các loại và linh kiện; điện tử máy tính và linh kiện; đá quý kim loại quý và sản phẩm."
+    },
+    {
+     "period": "2013Q2",
+     "ytd": 41.1,
+     "value": 21.8,
+     "shareYtd": 66.3,
+     "yoyPrinted": null,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng năm 2013",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-sau-thang-dau-nam-2013/",
+     "quote": "Tính chung sáu tháng đầu năm, kim ngạch hàng hóa xuất khẩu đạt 62 tỷ USD, tăng 16,1% so với cùng kỳ năm trước (thấp hơn mức tăng 23% của cùng kỳ năm 2012), bao gồm: Khu vực kinh tế trong nước đạt 20,9 tỷ USD, tăng 2,2%; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 41,1 tỷ USD, chiếm 66,3% tổng kim ngạch (Cùng kỳ năm 2012 chiếm 61,7 %) và tăng 24,7%."
+    },
+    {
+     "period": "2013Q3",
+     "ytd": 63.9,
+     "value": 22.8,
+     "shareYtd": 66.2,
+     "yoyPrinted": 22.4,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2013",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-chin-thang-nam-2013/",
+     "quote": "Kim ngạch hàng hóa xuất khẩu chín tháng ước tính đạt 96,5 tỷ USD, tăng 15,7% so với cùng kỳ năm trước, bao gồm: Khu vực kinh tế trong nước đạt 32,5 tỷ USD, tăng 4,4%; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 63,9 tỷ USD, tăng 22,4%."
+    },
+    {
+     "period": "2013Q4",
+     "ytd": 88.4,
+     "value": 24.5,
+     "shareYtd": null,
+     "yoyPrinted": 22.4,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2013",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-nam-2013/",
+     "quote": "Trong năm 2013, kim ngạch xuất khẩu khu vực kinh tế trong nước đạt 43,8 tỷ USD, tăng 3,5%; khu vực có vốn đầu tư nước ngoài (gồm cả dầu thô) đạt 88,4 tỷ USD, tăng 22,4%."
+    },
+    {
+     "period": "2014Q1",
+     "ytd": 22.4,
+     "value": 22.4,
+     "shareYtd": 67.3,
+     "yoyPrinted": 16.3,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2014 [2850 triệu USD]",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2014/",
+     "quote": "Tính chung 3 tháng đầu năm, kim ngạch hàng hóa xuất khẩu ước tính đạt 33,3 tỷ USD, tăng 14,1% so với cùng kỳ năm trước (nếu loại trừ yếu tố giá, tăng 13,2%), bao gồm: Khu vực kinh tế trong nước đạt 10,9 tỷ USD, tăng 9,8%; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 22,4 tỷ USD, tăng 16,3%."
+    },
+    {
+     "period": "2014Q2",
+     "ytd": 47.8,
+     "value": 25.4,
+     "shareYtd": 67.4,
+     "yoyPrinted": null,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng năm 2014",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-6-thang-dau-nam-2014/",
+     "quote": "Tính chung 6 tháng đầu năm, kim ngạch hàng hóa xuất khẩu đạt 70,9 tỷ USD, tăng 14,9% so với cùng kỳ năm trước, bao gồm: Khu vực kinh tế trong nước đạt 23,1 tỷ USD, tăng 11,5%; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 47,8 tỷ USD, chiếm 67,5% tổng kim ngạch và tăng 16,6%."
+    },
+    {
+     "period": "2014Q3",
+     "ytd": 73.0,
+     "value": 25.2,
+     "shareYtd": 66.6,
+     "yoyPrinted": 14.1,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2014",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-9-thang-nam-2014/",
+     "quote": "Tính chung 9 tháng năm nay, kim ngạch hàng hóa xuất khẩu ước tính đạt 109,6 tỷ USD, tăng 14,1% so với cùng kỳ năm 2013, trong đó khu vực kinh tế trong nước đạt 36,6 tỷ USD, tăng 14,2%; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 73 tỷ USD, tăng 14,1%."
+    },
+    {
+     "period": "2014Q4",
+     "ytd": 101.6,
+     "value": 28.6,
+     "shareYtd": 67.7,
+     "yoyPrinted": null,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2014",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-nam-2014/",
+     "quote": "Tính chung cả năm 2014, kim ngạch hàng hóa xuất khẩu đạt 150 tỷ USD, tăng 13,6% so với năm 2013, trong đó, khu vực kinh tế trong nước đạt 48,4 tỷ USD, tăng 10,4%, mức tăng cao nhất từ năm 2012 [2] và đóng góp 3,5 điểm phần trăm vào mức tăng chung; khu vực có vốn đầu tư nước ngoài đạt 101,6 tỷ USD (gồm cả dầu thô), tăng 15,2%, đóng góp 10,1 điểm phần trăm và đạt 94,4 tỷ USD (không kể dầu thô), tăng 16,7%."
+    },
+    {
+     "period": "2015Q1",
+     "ytd": 25.1,
+     "value": 25.1,
+     "shareYtd": 70.3,
+     "yoyPrinted": 12.9,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2015 [3050 triệu USD]",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/05/tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2015/",
+     "quote": "Tính chung quý I năm nay, kim ngạch hàng hóa xuất khẩu ước tính đạt 35,7 tỷ USD, tăng 6,9% so với cùng kỳ năm 2014, trong đó khu vực kinh tế trong nước đạt 10,6 tỷ USD, giảm 5,1% (Cùng kỳ năm trước tăng 5%); khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 25,1 tỷ USD, tăng 12,9% và chiếm 70% tổng kim ngạch xuất khẩu, cao hơn tỷ trọng 66,7% của cùng kỳ năm 2014."
+    },
+    {
+     "period": "2015Q2",
+     "ytd": 54.9,
+     "value": 29.8,
+     "shareYtd": null,
+     "yoyPrinted": 15.3,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng năm 2015",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-6-thang-dau-nam-2015/",
+     "quote": "Mức giảm đơn giá bình quân thể hiện ở một số mặt hàng như: Dầu thô giảm 47,6%; cao su giảm 22,4%; gạo giảm 4,7%; sắn và các sản phẩm sắn giảm 5,3%… Trong tổng kim ngạch hàng hóa xuất khẩu 6 tháng, khu vực kinh tế trong nước đạt 22,8 tỷ USD, giảm 2,9%; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 54,9 tỷ USD, tăng 15,3%, thấp hơn mức tăng 16,1% của cùng kỳ năm 2014 và chiếm 70,6% tổng kim ngạch xuất khẩu, mức cao nhất từ trước đến nay."
+    },
+    {
+     "period": "2015Q3",
+     "ytd": 85.2,
+     "value": 30.3,
+     "shareYtd": 70.6,
+     "yoyPrinted": null,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2015",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/bao-cao-tinh-hinh-kinh-te-xa-hoi-9-thang-nam-2015/",
+     "quote": "Trong tổng kim ngạch hàng hóa xuất khẩu 9 tháng, khu vực kinh tế trong nước ước tính đạt 35,5 tỷ USD, chiếm 29,4% tổng kim ngạch và giảm 2,7% so với cùng kỳ năm trước; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 85,2 tỷ USD, chiếm 70,6% và tăng 15,8% [10] ."
+    },
+    {
+     "period": "2015Q4",
+     "ytd": 115.1,
+     "value": 29.9,
+     "shareYtd": null,
+     "yoyPrinted": 13.8,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2015",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/11/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2015/",
+     "quote": "Kim ngạch xuất khẩu khu vực có vốn đầu tư nước ngoài ước tính đạt 115,1 tỷ USD, tăng 13,8% so với năm trước, chiếm tỷ trọng 70,9% tổng kim ngạch hàng hóa xuất khẩu, đóng góp 9,3 điểm phần trăm vào mức tăng trưởng xuất khẩu chung."
+    },
+    {
+     "period": "2016Q1",
+     "ytd": 27.1,
+     "value": 27.1,
+     "shareYtd": 71.5,
+     "yoyPrinted": 5.8,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2016",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/11/bc-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2016/",
+     "quote": "Tính chung quý I năm nay, kim ngạch hàng hóa xuất khẩu ước tính đạt 37,9 tỷ USD, tăng 4,1% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 10,8 tỷ USD, tăng 0,3%; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 27,1 tỷ USD, tăng 5,8%."
+    },
+    {
+     "period": "2016Q2",
+     "ytd": 58.5,
+     "value": 31.4,
+     "shareYtd": 71.2,
+     "yoyPrinted": 6.9,
+     "source": "GSO Báo cáo tình hình KT-XH 6 tháng đầu năm 2016",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/05/bao-cao-tinh-hinh-kinh-te-xa-hoi-6-thang-dau-nam-2016/",
+     "quote": "Tính chung 6 tháng đầu năm nay, kim ngạch hàng hóa xuất khẩu ước tính đạt 82,2 tỷ USD, tăng 5,9% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 23,7 tỷ USD, tăng 3,3%; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 58,5 tỷ USD, tăng 6,9%."
+    },
+    {
+     "period": "2016Q3",
+     "ytd": 91.2,
+     "value": 32.7,
+     "shareYtd": 71.1,
+     "yoyPrinted": 7.4,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2016 (page slug mislabelled 2020)",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/11/bao-cao-tinh-hinh-kinh-te-xa-hoi-thang-quy-iii-va-9-thang-nam-2020/",
+     "quote": "Tính chung 9 tháng năm nay, kim ngạch hàng hóa xuất khẩu ước tính đạt 128,2 tỷ USD, tăng 6,7% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 37,0 tỷ USD, tăng 5,0%; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 91,2 tỷ USD, tăng 7,4%."
+    },
+    {
+     "period": "2016Q4",
+     "ytd": 125.9,
+     "value": 34.7,
+     "shareYtd": 71.6,
+     "yoyPrinted": 10.2,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2016 (page slug mislabelled 2020)",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/11/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2020/",
+     "quote": "Tính chung cả năm 2016, kim ngạch hàng hóa xuất khẩu ước tính đạt 175,9 tỷ USD, tăng 8,6% so với năm trước (Năm 2015 tăng 7,9%), trong đó khu vực kinh tế trong nước đạt 50,0 tỷ USD, tăng 4,8%, khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 125,9 tỷ USD, tăng 10,2% (Nếu không kể dầu thô, kim ngạch hàng hóa xuất khẩu đạt 123,5 tỷ USD, tăng 11,8%)."
+    },
+    {
+     "period": "2017Q1",
+     "ytd": 31.4,
+     "value": 31.4,
+     "shareYtd": 71.9,
+     "yoyPrinted": 13.0,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2017 [3.620 triệu USD]",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/05/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2017/",
+     "quote": "Xuất, nhập khẩu hàng hóa Kim ngạch hàng hóa xuất khẩu quý I năm 2017 ước tính đạt 43,7 tỷ USD, tăng 12,8% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 12,3 tỷ USD, tăng 12,1%; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 31,4 tỷ USD, tăng 13%."
+    },
+    {
+     "period": "2017Q2",
+     "ytd": 70.8,
+     "value": 39.4,
+     "shareYtd": 72.4,
+     "yoyPrinted": 21.0,
+     "source": "GSO Báo cáo tình hình KT-XH tháng 6 và 6 tháng năm 2017",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/10/bc-tinh-hinh-kinh-te-xa-hoi-6-thang-dau-nam-2017/",
+     "quote": "Xuất, nhập khẩu hàng hóa Kim ngạch hàng hóa xuất khẩu 6 tháng đầu năm ước tính đạt 97,8 tỷ USD, tăng 18,9% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 27 tỷ USD, tăng 13,8%; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 70,8 tỷ USD, tăng 21%."
+    },
+    {
+     "period": "2017Q3",
+     "ytd": 110.8,
+     "value": 40.0,
+     "shareYtd": 71.9,
+     "yoyPrinted": 21.0,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2017",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/10/bao-cao-tinh-hinh-kinh-te-xa-hoi-9-thang-nam-2017/",
+     "quote": "Xuất, nhập khẩu hàng hóa Kim ngạch hàng hóa xuất khẩu 9 tháng năm 2017 ước tính đạt 154 tỷ USD, tăng 19,8% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 43,2 tỷ USD, tăng 16,8%; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 110,8 tỷ USD, tăng 21%."
+    },
+    {
+     "period": "2017Q4",
+     "ytd": 155.24,
+     "value": 44.44,
+     "shareYtd": 72.6,
+     "yoyPrinted": 23.0,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2017",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/10/bao-cao-tinh-hinh-kinh-te-xa-hoi-nam-2017/",
+     "quote": "Xuất khẩu hàng hóa Kim ngạch hàng hóa xuất khẩu năm 2017 ước tính đạt 213,77 tỷ USD, tăng 21,1% so với năm trước, đây là mức tăng cao nhất trong nhiều năm qua, trong đó khu vực kinh tế trong nước đạt 58,53 tỷ USD, tăng 16,2%; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 155,24 tỷ USD, tăng 23%."
+    },
+    {
+     "period": "2018Q1",
+     "ytd": 39.34,
+     "value": 39.34,
+     "shareYtd": 72.4,
+     "yoyPrinted": 23.2,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2018 [3.880 triệu USD]",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/04/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2018/",
+     "quote": "Xuất, nhập khẩu hàng hóa, dịch vụ Xuất, nhập khẩu hàng hóa Kim ngạch hàng hóa xuất khẩu quý I/2018 ước tính đạt 54,31 tỷ USD, tăng 22% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 14,97 tỷ USD, tăng 18,9%; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 39,34 tỷ USD, tăng 23,2%."
+    },
+    {
+     "period": "2018Q2",
+     "ytd": 80.86,
+     "value": 41.52,
+     "shareYtd": 71.0,
+     "yoyPrinted": null,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng năm 2018",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/04/bao-cao-tinh-hinh-kinh-te-xa-hoi-6-thang-dau-nam-2018/",
+     "quote": "Xuất, nhập khẩu hàng hóa, dịch vụ a) Xuất, nhập khẩu hàng hóa Kim ngạch hàng hóa xuất khẩu 6 tháng đầu năm ước tính đạt 113,93 tỷ USD, tăng 16% so với cùng kỳ năm 2017, trong đó khu vực kinh tế trong nước đạt 33,07 tỷ USD, tăng 19,9%; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 80,86 tỷ USD (chiếm tới 71% tổng kim ngạch xuất khẩu), tăng 14,5%."
+    },
+    {
+     "period": "2018Q3",
+     "ytd": 127.84,
+     "value": 46.98,
+     "shareYtd": 71.5,
+     "yoyPrinted": null,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2018",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/04/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iii-va-9-thang-nam-2018/",
+     "quote": "Tính chung 9 tháng, kim ngạch hàng hóa xuất khẩu ước tính đạt 178,91 tỷ USD, tăng 15,4% so với cùng kỳ năm 2017, trong đó khu vực kinh tế trong nước đạt 51,07 tỷ USD, tăng 17,5%; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 127,84 tỷ USD (chiếm 71,5% tổng kim ngạch xuất khẩu), tăng 14,6%."
+    },
+    {
+     "period": "2018Q4",
+     "ytd": 175.52,
+     "value": 47.68,
+     "shareYtd": 71.7,
+     "yoyPrinted": 12.9,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2018",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/04/thong-cao-bao-chi-ve-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2018/",
+     "quote": "Tính chung cả năm 2018, kim ngạch hàng hóa xuất khẩu ước tính đạt 244,72 tỷ USD, tăng 13,8% so với năm 2017, trong đó khu vực kinh tế trong nước đạt 69,20 tỷ USD, tăng 15,9%, chiếm 28,3% tổng kim ngạch xuất khẩu; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 175,52 tỷ USD, tăng 12,9%, chiếm 71,7% (giảm 0,6 điểm phần trăm so với năm 2017)."
+    },
+    {
+     "period": "2019Q1",
+     "ytd": 41.46,
+     "value": 41.46,
+     "shareYtd": 70.9,
+     "yoyPrinted": 2.7,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2019 [4.120 triệu USD]",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/05/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2019/",
+     "quote": "Kim ngạch hàng hóa xuất khẩu quý I/2019 ước tính đạt 58,51 tỷ USD, tăng 4,7% so với cùng kỳ năm 2018, trong đó khu vực kinh tế trong nước đạt 17,05 tỷ USD, tăng 9,7%, chiếm 29,1% tổng kim ngạch xuất khẩu; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 41,46 tỷ USD, tăng 2,7%, chiếm 70,9%."
+    },
+    {
+     "period": "2019Q2",
+     "ytd": 85.9,
+     "value": 44.44,
+     "shareYtd": 70.0,
+     "yoyPrinted": 5.9,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng năm 2019",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/10/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-ii-va-6-thang-dau-nam-2019/",
+     "quote": "Tính chung 6 tháng đầu năm 2019, kim ngạch hàng hóa xuất khẩu ước tính đạt 122,72 tỷ USD, tăng 7,3% so với cùng kỳ năm 2018, trong đó khu vực kinh tế trong nước đạt 36,82 tỷ USD, tăng 10,8%, chiếm 30% tổng kim ngạch xuất khẩu; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 85,90 tỷ USD, tăng 5,9%, chiếm 70% (giảm 0,9 điểm phần trăm so với cùng kỳ năm trước)."
+    },
+    {
+     "period": "2019Q3",
+     "ytd": 134.73,
+     "value": 48.83,
+     "shareYtd": 69.3,
+     "yoyPrinted": 5.0,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2019",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/10/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iii-va-9-thang-nam-2019/",
+     "quote": "Tính chung 9 tháng năm 2019, kim ngạch hàng hóa xuất khẩu ước tính đạt 194,30 tỷ USD, tăng 8,2% so với cùng kỳ năm 2018, trong đó khu vực kinh tế trong nước đạt 59,57 tỷ USD, tăng 16,4%, chiếm 30,7% tổng kim ngạch xuất khẩu; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 134,73 tỷ USD, tăng 5%, chiếm 69,3% (tỷ trọng giảm 2,1 điểm phần trăm so với cùng kỳ năm trước)."
+    },
+    {
+     "period": "2019Q4",
+     "ytd": 181.35,
+     "value": 46.62,
+     "shareYtd": 68.8,
+     "yoyPrinted": 4.2,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2019",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/12/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2019/",
+     "quote": "Tính chung cả năm 2019, kim ngạch hàng hóa xuất khẩu ước tính đạt 263,45 tỷ USD, tăng 8,1% so với năm 2018, trong đó khu vực kinh tế trong nước đạt 82,10 tỷ USD, tăng 17,7%, chiếm 31,2% tổng kim ngạch xuất khẩu; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 181,35 tỷ USD, tăng 4,2%, chiếm 68,8% (tỷ trọng giảm 2,5 điểm phần trăm so với năm trước)."
+    },
+    {
+     "period": "2020Q1",
+     "ytd": 40.43,
+     "value": 40.43,
+     "shareYtd": 68.4,
+     "yoyPrinted": -2.9,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2020",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/03/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2020/",
+     "quote": "Tính chung quý I/2020, kim ngạch hàng hóa xuất khẩu ước tính đạt 59,08 tỷ USD, tăng 0,5% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 18,65 tỷ USD, tăng 8,7%, chiếm 31,6% tổng kim ngạch xuất khẩu; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 40,43 tỷ USD, giảm 2,9%, chiếm 68,4%."
+    },
+    {
+     "period": "2020Q2",
+     "ytd": 79.83,
+     "value": 39.4,
+     "shareYtd": 65.9,
+     "yoyPrinted": -6.7,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng năm 2020",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/06/bao-cao-tinh-hinh-kinh-te-xa-hoi-6-thang-dau-nam-2020/",
+     "quote": "Tính chung 6 tháng đầu năm 2020, kim ngạch hàng hóa xuất khẩu ước tính đạt 121,21 tỷ USD, giảm 1,1% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 41,38 tỷ USD, tăng 11,7%, chiếm 34,1% tổng kim ngạch xuất khẩu; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 79,83 tỷ USD, giảm 6,7%, chiếm 65,9%."
+    },
+    {
+     "period": "2020Q3",
+     "ytd": 131.03,
+     "value": 51.2,
+     "shareYtd": 64.6,
+     "yoyPrinted": -2.9,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2020 [stated as 'gần 13,8 tỷ USD']",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/09/tinh-hinh-kinh-te-xa-hoi-thang-9-va-9-thang-nam-2020/",
+     "quote": "Tính chung 9 tháng năm 2020, kim ngạch hàng hóa xuất khẩu ước tính đạt 202,86 tỷ USD, tăng 4,2% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước tiếp tục là động lực cho sự tăng trưởng của hoạt động xuất khẩu cả nước khi đạt 71,83 tỷ USD, tăng mạnh 20,2%, chiếm 35,4% tổng kim ngạch xuất khẩu; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 131,03 tỷ USD, giảm 2,9%, chiếm 64,6%."
+    },
+    {
+     "period": "2020Q4",
+     "ytd": 203.3,
+     "value": 72.27,
+     "shareYtd": 72.2,
+     "yoyPrinted": 9.7,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2020 [stated as 'gần 20 tỷ USD']",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/12/baocao-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2020/",
+     "quote": "Tính chung cả năm 2020, kim ngạch xuất khẩu hàng hóa ước tính đạt 281,5 tỷ USD, tăng 6,5% so với năm 2019, trong đó khu vực kinh tế trong nước đạt 78,2 tỷ USD, giảm 1,1%, chiếm 27,8% tổng kim ngạch xuất khẩu; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 203,3 tỷ USD, tăng 9,7%, chiếm 72,2%."
+    },
+    {
+     "period": "2021Q1",
+     "ytd": 59.04,
+     "value": 59.04,
+     "shareYtd": 76.3,
+     "yoyPrinted": 28.5,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2021",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2021/03/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2021/",
+     "quote": "Kim ngạch hàng hóa xuất khẩu quý I/2021 ước tính đạt 77,34 tỷ USD, tăng 22% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 18,3 tỷ USD, tăng 4,9%, chiếm 23,7% tổng kim ngạch xuất khẩu; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 59,04 tỷ USD, tăng 28,5%, chiếm 76,3%."
+    },
+    {
+     "period": "2021Q2",
+     "ytd": 116.74,
+     "value": 57.7,
+     "shareYtd": 74.1,
+     "yoyPrinted": 33.0,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng đầu năm 2021",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2021/06/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-ii-va-6-thang-dau-nam-2021/",
+     "quote": "Tính chung 6 tháng đầu năm 2021, kim ngạch xuất khẩu hàng hóa ước tính đạt 157,63 tỷ USD, tăng 28,4% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 40,89 tỷ USD, tăng 16,8%, chiếm 25,9% tổng kim ngạch xuất khẩu; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 116,74 tỷ USD, tăng 33%, chiếm 74,1%."
+    },
+    {
+     "period": "2021Q3",
+     "ytd": 177.8,
+     "value": 61.06,
+     "shareYtd": 73.9,
+     "yoyPrinted": 22.8,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2021",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2021/09/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iii-va-9-thang-nam-2021/",
+     "quote": "Tính chung 9 tháng năm 2021, kim ngạch xuất khẩu hàng hóa ước tính đạt 240,52 tỷ USD, tăng 18,8% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 62,72 tỷ USD, tăng 8,5%, chiếm 26,1% tổng kim ngạch xuất khẩu; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 177,8 tỷ USD, tăng 22,8%, chiếm 73,9%."
+    },
+    {
+     "period": "2021Q4",
+     "ytd": 247.54,
+     "value": 69.74,
+     "shareYtd": 73.6,
+     "yoyPrinted": 21.1,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2021",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2021/12/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2021/",
+     "quote": "Tính chung năm 2021, kim ngạch xuất khẩu hàng hóa ước đạt 336,25 tỷ USD, tăng 19% so với năm trước. Trong đó, khu vực kinh tế trong nước đạt 88,71 tỷ USD, tăng 13,4%, chiếm 26,4% tổng kim ngạch xuất khẩu; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 247,54 tỷ USD, tăng 21,1%, chiếm 73,6%."
+    },
+    {
+     "period": "2022Q1",
+     "ytd": 65.31,
+     "value": 65.31,
+     "shareYtd": 73.7,
+     "yoyPrinted": 10.0,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2022",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2022/03/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2022/",
+     "quote": "Kim ngạch hàng hóa xuất khẩu quý I/2022 ước đạt 88,58 tỷ USD, tăng 12,9% so với cùng kỳ năm trước. Trong đó, khu vực kinh tế trong nước đạt 23,27 tỷ USD, tăng 22%, chiếm 26,3% tổng kim ngạch xuất khẩu; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 65,31 tỷ USD, tăng 10%, chiếm 73,7%."
+    },
+    {
+     "period": "2022Q2",
+     "ytd": 136.68,
+     "value": 71.37,
+     "shareYtd": 73.5,
+     "yoyPrinted": 16.3,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng đầu năm 2022 (tệp lời văn .docx đính kèm)",
+     "url": "https://www.nso.gov.vn/wp-content/uploads/2022/06/02.-Loi-van-6.2022-1.docx",
+     "quote": "Tính chung 6 tháng đầu năm 2022, kim ngạch xuất khẩu hàng hóa ước đạt 185,94 tỷ USD, tăng 17,3% so với cùng kỳ năm trước. Trong đó, khu vực kinh tế trong nước đạt 49,26 tỷ USD, tăng 20%, chiếm 26,5% tổng kim ngạch xuất khẩu; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 136,68 tỷ USD, tăng 16,3%, chiếm 73,5%."
+    },
+    {
+     "period": "2022Q3",
+     "ytd": 209.3,
+     "value": 72.62,
+     "shareYtd": 74.1,
+     "yoyPrinted": 17.6,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2022 (tệp lời văn .docx đính kèm)",
+     "url": "https://www.nso.gov.vn/wp-content/uploads/2022/09/02-Loi-van-9.2022-28.9-2.docx",
+     "quote": "Tính chung 9 tháng năm 2022, kim ngạch xuất khẩu hàng hóa ước đạt 282,52 tỷ USD, tăng 17,3% so với cùng kỳ năm trước. Trong đó, khu vực kinh tế trong nước đạt 73,22 tỷ USD, tăng 16,4%, chiếm 25,9% tổng kim ngạch xuất khẩu; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 209,3 tỷ USD, tăng 17,6%, chiếm 74,1%."
+    },
+    {
+     "period": "2022Q4",
+     "ytd": 276.76,
+     "value": 67.46,
+     "shareYtd": 74.4,
+     "yoyPrinted": 12.1,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2022 (tệp lời văn .docx đính kèm)",
+     "url": "https://www.nso.gov.vn/wp-content/uploads/2022/12/02-Loi-van-2022.docx",
+     "quote": "Tính chung cả năm 2022, kim ngạch xuất khẩu hàng hóa ước đạt 371,85 tỷ USD, tăng 10,6% so với năm trước. Trong đó, khu vực kinh tế trong nước đạt 95,09 tỷ USD, tăng 6,5%, chiếm 25,6% tổng kim ngạch xuất khẩu; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 276,76 tỷ USD, tăng 12,1%, chiếm 74,4%."
+    },
+    {
+     "period": "2023Q1",
+     "ytd": 59.91,
+     "value": 59.91,
+     "shareYtd": 75.7,
+     "yoyPrinted": -10.0,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2023 (tệp lời văn .docx đính kèm)",
+     "url": "https://www.nso.gov.vn/wp-content/uploads/2023/03/01-Loi-van-quy-I.2023-3.docx",
+     "quote": "Tính chung quý I năm 2023, kim ngạch xuất khẩu hàng hóa ước đạt 79,17 tỷ USD, giảm 11,9% so với cùng kỳ năm trước. Trong đó, khu vực kinh tế trong nước đạt 19,26 tỷ USD, giảm 17,4%, chiếm 24,3% tổng kim ngạch xuất khẩu; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 59,91 tỷ USD, giảm 10%, chiếm 75,7%."
+    },
+    {
+     "period": "2023Q2",
+     "ytd": 121.04,
+     "value": 61.13,
+     "shareYtd": 73.6,
+     "yoyPrinted": -12.2,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng đầu năm 2023 (tệp lời văn .docx đính kèm)",
+     "url": "https://www.nso.gov.vn/wp-content/uploads/2023/06/01-Loi-van-quy-II.2023-final.docx",
+     "quote": "Tính chung 6 tháng đầu năm 2023, kim ngạch xuất khẩu hàng hóa ước đạt 164,45 tỷ USD, giảm 12,1% so với cùng kỳ năm trước. Trong đó, khu vực kinh tế trong nước đạt 43,41 tỷ USD, giảm 11,9%, chiếm 26,4% tổng kim ngạch xuất khẩu; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 121,04 tỷ USD, giảm 12,2%, chiếm 73,6%."
+    },
+    {
+     "period": "2023Q3",
+     "ytd": 190.81,
+     "value": 69.77,
+     "shareYtd": 73.5,
+     "yoyPrinted": -9.1,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2023 (tệp lời văn .docx đính kèm)",
+     "url": "https://www.nso.gov.vn/wp-content/uploads/2023/09/01-Loi-van-quy-III.2023.docx",
+     "quote": "Tính chung 9 tháng năm 2023, kim ngạch xuất khẩu hàng hóa ước đạt 259,67 tỷ USD, giảm 8,2% so với cùng kỳ năm trước. Trong đó, khu vực kinh tế trong nước đạt 68,86 tỷ USD, giảm 5,7%, chiếm 26,5% tổng kim ngạch xuất khẩu; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 190,81 tỷ USD, giảm 9,1%, chiếm 73,5%."
+    },
+    {
+     "period": "2023Q4",
+     "ytd": 259.95,
+     "value": 69.14,
+     "shareYtd": 73.1,
+     "yoyPrinted": -5.8,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2023 (tệp lời văn .docx đính kèm)",
+     "url": "https://www.nso.gov.vn/wp-content/uploads/2023/12/01-Loi-van-quy-IV-va-nam-2023-3.docx",
+     "quote": "Tính chung cả năm 2023, kim ngạch xuất khẩu hàng hóa ước đạt 355,5 tỷ USD, giảm 4,4% so với năm trước. Trong đó, khu vực kinh tế trong nước đạt 95,55 tỷ USD, giảm 0,3%, chiếm 26,9% tổng kim ngạch xuất khẩu; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 259,95 tỷ USD, giảm 5,8%, chiếm 73,1%."
+    },
+    {
+     "period": "2024Q1",
+     "ytd": 67.85,
+     "value": 67.85,
+     "shareYtd": 72.9,
+     "yoyPrinted": 13.9,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý I năm 2024",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2024/03/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2024/",
+     "quote": "Tính chung quý I/2024, kim ngạch xuất khẩu hàng hóa ước đạt 93,06 tỷ USD, tăng 17% so với cùng kỳ năm trước. Trong đó, khu vực kinh tế trong nước đạt 25,21 tỷ USD, tăng 26,2%, chiếm 27,1% tổng kim ngạch xuất khẩu; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 67,85 tỷ USD, tăng 13,9%, chiếm 72,9%."
+    },
+    {
+     "period": "2024Q2",
+     "ytd": 136.69,
+     "value": 68.84,
+     "shareYtd": 71.9,
+     "yoyPrinted": 12.3,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý II và 6 tháng đầu năm 2024",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2024/06/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-ii-va-sau-thang-dau-nam-2024/",
+     "quote": "Tính chung sáu tháng đầu năm 2024, kim ngạch xuất khẩu hàng hóa ước đạt 190,08 tỷ USD, tăng 14,5% so với cùng kỳ năm trước. Trong đó, khu vực kinh tế trong nước đạt 53,39 tỷ USD, tăng 20,6%, chiếm 28,1% tổng kim ngạch xuất khẩu; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 136,69 tỷ USD, tăng 12,3%, chiếm 71,9%. + Về cơ cấu nhóm hàng xuất khẩu sáu tháng đầu năm 2024, nhóm hàng công nghiệp chế biến ước đạt 166,79 tỷ USD, chiếm 87,7%. – Nhập khẩu hàng hóa: Kim ngạch nhập khẩu hàng hóa tháng 6/2024 ước đạt 30,15 tỷ USD, giảm 7,9% so với tháng trước và tăng 13,1% so với cùng kỳ năm trước."
+    },
+    {
+     "period": "2024Q3",
+     "ytd": 216.16,
+     "value": 79.47,
+     "shareYtd": 72.1,
+     "yoyPrinted": 13.4,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2024",
+     "url": "https://www.nso.gov.vn/bai-top/2024/10/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iii-va-9-thang-nam-2024/",
+     "quote": "Tính chung chín tháng năm 2024, kim ngạch xuất khẩu hàng hóa sơ bộ đạt 299,63 tỷ USD, tăng 15,4% so với cùng kỳ năm trước. Trong đó, khu vực kinh tế trong nước đạt 83,47 tỷ USD, tăng 20,7%, chiếm 27,9% tổng kim ngạch xuất khẩu; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 216,16 tỷ USD, tăng 13,4%, chiếm 72,1%. + Về cơ cấu nhóm hàng xuất khẩu chín tháng năm 2024, nhóm hàng công nghiệp chế biến sơ bộ đạt 263,47 tỷ USD, chiếm 87,9%. – Nhập khẩu hàng hóa: Kim ngạch nhập khẩu hàng hóa tháng 9/2024 sơ bộ đạt 31,76 tỷ USD, giảm 5,9% so với tháng trước và tăng 11,1% so với cùng kỳ năm trước."
+    },
+    {
+     "period": "2024Q4",
+     "ytd": 290.94,
+     "value": 74.78,
+     "shareYtd": 71.7,
+     "yoyPrinted": 12.3,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý IV và năm 2024 (tệp lời văn .docx đính kèm)",
+     "url": "https://www.nso.gov.vn/wp-content/uploads/2025/01/01-Loi-van-quy-IV-va-nam-2024-final-2.docx",
+     "quote": "Tính chung cả năm 2024, kim ngạch xuất khẩu hàng hóa đạt 405,53 tỷ USD, tăng 14,3% so với năm trước. Trong đó, khu vực kinh tế trong nước đạt 114,59 tỷ USD, tăng 19,8%, chiếm 28,3% tổng kim ngạch xuất khẩu; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 290,94 tỷ USD, tăng 12,3%, chiếm 71,7%."
+    },
+    {
+     "period": "2025Q1",
+     "ytd": 73.82,
+     "value": 73.82,
+     "shareYtd": 71.8,
+     "yoyPrinted": 9.0,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý I năm 2025",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2025/04/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2025/",
+     "quote": "Tính chung quý I/2025, kim ngạch xuất khẩu hàng hóa đạt 102,84 tỷ USD, tăng 10,6% so với cùng kỳ năm trước. Trong đó, khu vực kinh tế trong nước đạt 29,02 tỷ USD, tăng 15,0%, chiếm 28,2% tổng kim ngạch xuất khẩu; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 73,82 tỷ USD, tăng 9,0%, chiếm 71,8%."
+    },
+    {
+     "period": "2025Q2",
+     "ytd": 161.55,
+     "value": 87.73,
+     "shareYtd": 73.5,
+     "yoyPrinted": 16.4,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý II và 6 tháng đầu năm 2025",
+     "url": "https://www.nso.gov.vn/bai-top/2025/07/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-ii-va-6-thang-dau-nam-2025/",
+     "quote": "Tính chung sáu tháng đầu năm 2025, kim ngạch xuất khẩu hàng hóa đạt 219,83 tỷ USD, tăng 14,4% so với cùng kỳ năm trước. Trong đó, khu vực kinh tế trong nước đạt 58,28 tỷ USD, tăng 9,4%, chiếm 26,5% tổng kim ngạch xuất khẩu; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 161,55 tỷ USD, tăng 16,4%, chiếm 73,5%. + Về cơ cấu nhóm hàng xuất khẩu sáu tháng đầu năm 2025, nhóm hàng công nghiệp chế biến đạt 194,28 tỷ USD, chiếm 88,4%. – Nhập khẩu hàng hóa: Kim ngạch nhập khẩu hàng hóa tháng 6/2025 đạt 36,66 tỷ USD, giảm 6,1% so với tháng trước và tăng 20,2% so với cùng kỳ năm trước."
+    },
+    {
+     "period": "2025Q3",
+     "ytd": 263.33,
+     "value": 101.78,
+     "shareYtd": 75.5,
+     "yoyPrinted": 21.4,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2025",
+     "url": "https://www.nso.gov.vn/bai-top/2025/10/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iii-va-9-thang-nam-2025/",
+     "quote": "Tính chung chín tháng năm 2025, kim ngạch xuất khẩu hàng hóa đạt 348,74 tỷ USD, tăng 16,0% so với cùng kỳ năm trước. Trong đó, khu vực kinh tế trong nước đạt 85,41 tỷ USD, tăng 2,0%, chiếm 24,5% tổng kim ngạch xuất khẩu; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 263,33 tỷ USD, tăng 21,4%, chiếm 75,5%. + Về cơ cấu nhóm hàng xuất khẩu chín tháng năm 2025 , nhóm hàng công nghiệp chế biến đạt 309,03 tỷ USD, chiếm 88,6%. – Nhập khẩu hàng hóa: Kim ngạch nhập khẩu hàng hóa tháng Chín đạt 39,82 tỷ USD, tăng 0,4% so với tháng trước và tăng 24,9% so với cùng kỳ năm trước."
+    },
+    {
+     "period": "2025Q4",
+     "ytd": 367.09,
+     "value": 103.76,
+     "shareYtd": 77.3,
+     "yoyPrinted": 26.1,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý IV và năm 2025",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2026/01/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2025/",
+     "quote": "Tính chung cả năm 2025, kim ngạch xuất khẩu hàng hóa đạt 475,04 tỷ USD, tăng 17,0% so với năm trước. Trong đó, khu vực kinh tế trong nước đạt 107,95 tỷ USD, giảm 6,1%, chiếm 22,7% tổng kim ngạch xuất khẩu; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 367,09 tỷ USD, tăng 26,1%, chiếm 77,3%. + Về cơ cấu nhóm hàng xuất khẩu năm 2025, nhóm hàng công nghiệp chế biến đạt 421,47 tỷ USD, chiếm 88,7%. – Nhập khẩu hàng hóa: Kim ngạch nhập khẩu hàng hóa tháng Mười Hai đạt 44,69 tỷ USD, tăng 17,6% so với tháng trước và tăng 27,7% so với cùng kỳ năm trước."
+    },
+    {
+     "period": "2026Q1",
+     "ytd": 98.46,
+     "value": 98.46,
+     "shareYtd": 80.1,
+     "yoyPrinted": 33.3,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý I năm 2026",
+     "url": "https://www.nso.gov.vn/bai-top/2026/04/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2026/",
+     "quote": "Tính chung quý I/2026, kim ngạch xuất khẩu hàng hóa đạt 122,93 tỷ USD, tăng 19,1% so với cùng kỳ năm trước. Trong đó, khu vực kinh tế trong nước đạt 24,47 tỷ USD, giảm 16,6%, chiếm 19,9% tổng kim ngạch xuất khẩu; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 98,46 tỷ USD, tăng 33,3%, chiếm 80,1%. + Về cơ cấu nhóm hàng xuất khẩu quý I/2026 , nhóm hàng công nghiệp chế biến đạt 110,52 tỷ USD, chiếm 89,9% – Nhập khẩu hàng hóa: Kim ngạch nhập khẩu hàng hóa tháng Ba đạt 47,11 tỷ USD, tăng 38,2% so với tháng trước và tăng 27,8% so với cùng kỳ năm trước."
+    },
+    {
+     "period": "2026Q2",
+     "ytd": 213.01,
+     "value": 114.55,
+     "shareYtd": 79.9,
+     "yoyPrinted": 26.0,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý II và 6 tháng 2026",
+     "url": "https://www.nso.gov.vn/bai-top/2026/07/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-ii-va-sau-thang-dau-nam-2026/",
+     "quote": "Tính chung sáu tháng đầu năm 2026, kim ngạch xuất khẩu hàng hóa đạt 266,52 tỷ USD, tăng 21,0% so với cùng kỳ năm trước. Trong đó, khu vực kinh tế trong nước đạt 53,51 tỷ USD, tăng 4,6%, chiếm 20,1% tổng kim ngạch xuất khẩu; khu vực có vốn đầu tư nước ngoài (kể cả dầu thô) đạt 213,01 tỷ USD, tăng 26,0%, chiếm 79,9%."
+    }
+   ]
+  },
+  {
+   "id": "fdi_sector_imports",
+   "label": "Nhập khẩu hàng hóa của khu vực có vốn FDI",
+   "domain": "trade",
+   "unit": "tỷ USD",
+   "frequency": "quý",
+   "official": true,
+   "chart": "bar",
+   "latest": {
+    "period": "2026Q2",
+    "ytd": 204.71,
+    "share": 72.3,
+    "ytdYoY": 37.3
+   },
+   "source": "Tổng cục Thống kê (nay là Cục Thống kê, Bộ Tài chính) — báo cáo tình hình kinh tế – xã hội quý",
+   "method": "Kim ngạch lũy kế từ đầu năm của khu vực có vốn đầu tư nước ngoài, công bố lần đầu tại cuối mỗi quý; giá trị quý = lũy kế quý này − lũy kế quý trước cùng năm. Tỷ trọng = khu vực FDI / tổng kim ngạch cùng kỳ. Tăng/giảm so cùng kỳ: tỷ lệ in trong báo cáo (so với số đã điều chỉnh của năm trước).",
+   "limitation": "Số ước tính lần công bố đầu, chưa thay bằng số chính thức của Hải quan; không có chiều mặt hàng hay đối tác. Một số quý báo cáo không nêu tổng kim ngạch trong cùng câu nên để trống tỷ trọng. 8 quý 2022–2024 lấy từ tệp lời văn .docx đính kèm vì văn bản trên trang bị cắt.",
+   "rights": "Số liệu thống kê nhà nước công bố công khai; trích dẫn có ghi nguồn. Rà điều khoản trước khi phát hành qua API.",
+   "observations": [
+    {
+     "period": "2012Q1",
+     "ytd": 13.0,
+     "value": 13.0,
+     "shareYtd": 52.4,
+     "yoyPrinted": 30.3,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2012",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/12/tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2012/",
+     "quote": "Nhập khẩu hàng hoá Kim ngạch hàng hóa nhập khẩu ba tháng đầu năm ước tính đạt 24,8 tỷ USD, tăng 6,9% so với cùng kỳ năm trước, bao gồm: Khu vực kinh tế trong nước đạt 11,7 tỷ USD, giảm 10,9%; khu vực có vốn đầu tư nước ngoài đạt 13 tỷ USD, tăng 30,3%."
+    },
+    {
+     "period": "2012Q2",
+     "ytd": 28.0,
+     "value": 15.0,
+     "shareYtd": 52.0,
+     "yoyPrinted": 26.1,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng năm 2012",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/12/tinh-hinh-kinh-te-xa-hoi-sau-thang-dau-nam-2012/",
+     "quote": "Tính chung sáu tháng đầu năm, kim ngạch hàng hóa nhập khẩu đạt 53,8 tỷ USD, tăng 6,9% so với cùng kỳ năm 2011 (Mức tăng thấp nhất kể từ sau năm 2009 là năm suy giảm kinh tế), bao gồm: Khu vực kinh tế trong nước đạt 25,8 tỷ USD, giảm mạnh ở mức 8,2%; khu vực có vốn đầu tư nước ngoài đạt 28 tỷ USD, tăng 26,1%."
+    },
+    {
+     "period": "2012Q3",
+     "ytd": 43.9,
+     "value": 15.9,
+     "shareYtd": 52.4,
+     "yoyPrinted": 24.8,
+     "source": "GSO Báo cáo tình hình KT-XH tháng 9 và 9 tháng năm 2012",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/12/tinh-hinh-kinh-te-xa-hoi-chin-thang-nam-2012/",
+     "quote": "Tính chung chín tháng, kim ngạch hàng hóa nhập khẩu đạt 83,7 tỷ USD, tăng 6,6% so với cùng kỳ năm 2011, bao gồm: Khu vực kinh tế trong nước đạt 39,8 tỷ USD, giảm mạnh ở mức 8,2%; khu vực có vốn đầu tư nước ngoài đạt 43,9 tỷ USD, tăng 24,8%."
+    },
+    {
+     "period": "2012Q4",
+     "ytd": 60.3,
+     "value": 16.4,
+     "shareYtd": 52.8,
+     "yoyPrinted": 23.5,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2012",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/12/tinh-hinh-kinh-te-xa-hoi-thang-muoi-hai-va-nam-2012/",
+     "quote": "Kim ngạch hàng hóa nhập khẩu năm 2012 đạt 114,3 tỷ USD, tăng 7,1% so với năm trước, bao gồm: Khu vực kinh tế trong nước đạt 54 tỷ USD, giảm 6,7%; khu vực có vốn đầu tư nước ngoài đạt 60,3 tỷ USD, tăng 23,5%."
+    },
+    {
+     "period": "2013Q1",
+     "ytd": 16.1,
+     "value": 16.1,
+     "shareYtd": 55.1,
+     "yoyPrinted": null,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2013",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2013/",
+     "quote": "Tính chung quý I, kim ngạch hàng hóa nhập khẩu ước tính đạt 29,2 tỷ USD, tăng 17% so với cùng kỳ năm trước, tương đương 4,2 tỷ USD (Nếu loại trừ yếu tố giá, nhập khẩu quý I ước đạt 30 tỷ USD, tăng 20,4%), bao gồm: Khu vực kinh tế trong nước đạt 13,1 tỷ USD, chiếm 44,7% tổng kim ngạch hàng hóa nhập khẩu và tăng 7,9%, đóng góp 3,8 điểm phần trăm trong mức tăng chung; khu vực có vốn đầu tư nước ngoài đạt 16,1 tỷ USD, chiếm 55,3%, tăng 25,5%, tương đương 3,3 tỷ USD và đóng góp 13,2 điểm phần trăm trong mức tăng chung."
+    },
+    {
+     "period": "2013Q2",
+     "ytd": 35.7,
+     "value": 19.6,
+     "shareYtd": null,
+     "yoyPrinted": 27.8,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng năm 2013",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-sau-thang-dau-nam-2013/",
+     "quote": "Kim ngạch hàng hóa nhập khẩu sáu tháng của khu vực kinh tế trong nước đạt 27,7 tỷ USD, tăng 6,3%; khu vực có vốn đầu tư nước ngoài đạt 35,7 tỷ USD, tăng 27,8%."
+    },
+    {
+     "period": "2013Q3",
+     "ytd": 54.5,
+     "value": 18.8,
+     "shareYtd": 56.4,
+     "yoyPrinted": 24.8,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2013",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-chin-thang-nam-2013/",
+     "quote": "Kim ngạch hàng hóa nhập khẩu chín tháng đạt 96,6 tỷ USD, tăng 15,5% so với cùng kỳ năm 2012, bao gồm: Khu vực kinh tế trong nước đạt 42,1 tỷ USD, tăng 5,3%; khu vực có vốn đầu tư nước ngoài đạt 54,5 tỷ USD, tăng 24,8%."
+    },
+    {
+     "period": "2013Q4",
+     "ytd": 74.5,
+     "value": 20.0,
+     "shareYtd": null,
+     "yoyPrinted": 24.2,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2013",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-nam-2013/",
+     "quote": "Trong năm 2013, kim ngạch nhập khẩu khu vực kinh tế trong nước đạt 56,8 tỷ USD, tăng 5,6%; khu vực có vốn đầu tư nước ngoài đạt 74,5 tỷ USD, tăng 24,2%."
+    },
+    {
+     "period": "2014Q1",
+     "ytd": 18.5,
+     "value": 18.5,
+     "shareYtd": 57.3,
+     "yoyPrinted": null,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2014 [2850 triệu USD]",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2014/",
+     "quote": "Tính chung quý I, kim ngạch hàng hóa nhập khẩu ước tính đạt 32,3 tỷ USD, tăng 12,4% so với cùng kỳ năm trước (nếu loại trừ yếu tố giá, tăng 15,5%), bao gồm: Khu vực kinh tế trong nước đạt 13,8 tỷ USD, chiếm 42,6% tổng kim ngạch hàng hóa nhập khẩu và tăng 9,7%, đóng góp 4,2 điểm phần trăm trong mức tăng chung; khu vực có vốn đầu tư nước ngoài đạt 18,5 tỷ USD, chiếm 57,4%, tăng 14,6% và đóng góp 8,2 điểm phần trăm trong mức tăng chung."
+    },
+    {
+     "period": "2014Q2",
+     "ytd": 39.3,
+     "value": 20.8,
+     "shareYtd": 56.5,
+     "yoyPrinted": 11.6,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng năm 2014",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-6-thang-dau-nam-2014/",
+     "quote": "Tính chung 6 tháng đầu năm, kim ngạch hàng hóa nhập khẩu đạt 69,6 tỷ USD, tăng 11% so với cùng kỳ năm 2013, trong đó khu vực kinh tế trong nước đạt 30,3 tỷ USD, tăng 10,3%; khu vực có vốn đầu tư nước ngoài đạt 39,3 tỷ USD, tăng 11,6%."
+    },
+    {
+     "period": "2014Q3",
+     "ytd": 60.3,
+     "value": 21.0,
+     "shareYtd": 56.2,
+     "yoyPrinted": 9.8,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2014",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-9-thang-nam-2014/",
+     "quote": "Tính chung 9 tháng năm nay, kim ngạch hàng hóa nhập khẩu ước tính đạt 107,2 tỷ USD, tăng 11,1% so với cùng kỳ năm 2013, bao gồm: Khu vực kinh tế trong nước đạt 46,9 tỷ USD, tăng 12,8%; khu vực có vốn đầu tư nước ngoài đạt 60,3 tỷ USD, tăng 9,8%."
+    },
+    {
+     "period": "2014Q4",
+     "ytd": 84.5,
+     "value": 24.2,
+     "shareYtd": 57.1,
+     "yoyPrinted": 13.6,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2014",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-nam-2014/",
+     "quote": "Tính chung năm 2014, kim ngạch hàng hóa nhập khẩu ước tính đạt 148 tỷ USD, tăng 12,1% so với năm trước, trong đó khu vực có vốn đầu tư nước ngoài đạt 84,5 tỷ USD, tăng 13,6%; khu vực kinh tế trong nước đạt 63,5 tỷ USD, tăng 10,2%."
+    },
+    {
+     "period": "2015Q1",
+     "ytd": 23.1,
+     "value": 23.1,
+     "shareYtd": 61.6,
+     "yoyPrinted": 24.1,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2015 [3050 triệu USD]",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/05/tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2015/",
+     "quote": "Kim ngạch hàng hoá nhập khẩu 3 tháng đầu năm nay ước tính đạt 37,5 tỷ USD, tăng 16,3% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 14,4 tỷ USD, tăng 5,7% và chiếm 38,4% (thấp hơn mức tỷ trọng 42,2% của cùng kỳ năm trước); khu vực có vốn đầu tư nước ngoài đạt 23,1 tỷ USD, tăng 24,1% và chiếm 61,6% tổng kim ngạch nhập khẩu (cao hơn mức tỷ trọng 57,8% của quý I/2014)."
+    },
+    {
+     "period": "2015Q2",
+     "ytd": 48.8,
+     "value": 25.7,
+     "shareYtd": 59.9,
+     "yoyPrinted": 25.5,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng năm 2015",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-6-thang-dau-nam-2015/",
+     "quote": "Tính chung 6 tháng đầu năm, kim ngạch hàng hóa nhập khẩu ước tính đạt 81,5 tỷ USD, tăng 17,7% so với cùng kỳ năm 2014, cao hơn nhiều mức tăng 10,5% của cùng kỳ năm 2014, trong đó khu vực kinh tế trong nước đạt 32,7 tỷ USD, tăng 7,7%, thấp hơn mức tăng 10,6% của 6 tháng năm trước; khu vực có vốn đầu tư nước ngoài đạt 48,8 tỷ USD, tăng 25,5%, cao hơn nhiều mức tăng 10,4% của cùng kỳ năm 2014."
+    },
+    {
+     "period": "2015Q3",
+     "ytd": 73.3,
+     "value": 24.5,
+     "shareYtd": 58.9,
+     "yoyPrinted": 20.7,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2015",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/bao-cao-tinh-hinh-kinh-te-xa-hoi-9-thang-nam-2015/",
+     "quote": "Tính chung 9 tháng, kim ngạch hàng hóa nhập khẩu ước tính đạt 124,5 tỷ USD, tăng 15,9% so với cùng kỳ năm 2014, trong đó khu vực kinh tế trong nước đạt 51,3 tỷ USD, tăng 9,7%; khu vực có vốn đầu tư nước ngoài đạt 73,3 tỷ USD, tăng 20,7%."
+    },
+    {
+     "period": "2015Q4",
+     "ytd": 98.0,
+     "value": 24.7,
+     "shareYtd": 59.2,
+     "yoyPrinted": 16.4,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2015",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/11/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2015/",
+     "quote": "Tính chung cả năm 2015, kim ngạch hàng hóa nhập khẩu ước tính đạt 165,6 tỷ USD, tăng 12% so với năm trước, trong đó khu vực có vốn đầu tư nước ngoài đạt 98 tỷ USD, tăng 16,4%; khu vực kinh tế trong nước đạt 67,6 tỷ USD, tăng 6,3%."
+    },
+    {
+     "period": "2016Q1",
+     "ytd": 22.2,
+     "value": 22.2,
+     "shareYtd": 59.8,
+     "yoyPrinted": -5.7,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2016",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/11/bc-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2016/",
+     "quote": "Kim ngạch hàng hoá nhập khẩu quý I ước tính đạt 37,1 tỷ USD, giảm 4,8% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 14,9 tỷ USD, giảm 3,5%; khu vực có vốn đầu tư nước ngoài đạt 22,2 tỷ USD, giảm 5,7%."
+    },
+    {
+     "period": "2016Q2",
+     "ytd": 47.3,
+     "value": 25.1,
+     "shareYtd": 58.6,
+     "yoyPrinted": -1.8,
+     "source": "GSO Báo cáo tình hình KT-XH 6 tháng đầu năm 2016",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/05/bao-cao-tinh-hinh-kinh-te-xa-hoi-6-thang-dau-nam-2016/",
+     "quote": "Tính chung 6 tháng đầu năm, kim ngạch hàng hoá nhập khẩu đạt 80,7 tỷ USD, giảm 0,5% so với cùng kỳ năm trước , trong đó khu vực kinh tế trong nước đạt 33,4 tỷ USD, tăng 1,3%; khu vực có vốn đầu tư nước ngoài đạt 47,3 tỷ USD, giảm 1,8%."
+    },
+    {
+     "period": "2016Q3",
+     "ytd": 74.0,
+     "value": 26.7,
+     "shareYtd": 59.0,
+     "yoyPrinted": 0.9,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2016 (page slug mislabelled 2020)",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/11/bao-cao-tinh-hinh-kinh-te-xa-hoi-thang-quy-iii-va-9-thang-nam-2020/",
+     "quote": "Tính chung 9 tháng năm 2016, kim ngạch hàng hoá nhập khẩu đạt 125,4 tỷ USD, tăng 1,3% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 51,4 tỷ USD, tăng 2,0%; khu vực có vốn đầu tư nước ngoài đạt 74,0 tỷ USD, tăng 0,9%."
+    },
+    {
+     "period": "2016Q4",
+     "ytd": 102.2,
+     "value": 28.2,
+     "shareYtd": 59.0,
+     "yoyPrinted": 5.1,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2016 (page slug mislabelled 2020)",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/11/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2020/",
+     "quote": "Tính chung năm 2016, kim ngạch hàng hoá nhập khẩu ước tính đạt 173,3 tỷ USD, tăng 4,6% so với năm trước, trong đó khu vực kinh tế trong nước đạt 71,1 tỷ USD, tăng 4%; khu vực có vốn đầu tư nước ngoài đạt 102,2 tỷ USD, tăng 5,1%."
+    },
+    {
+     "period": "2017Q1",
+     "ytd": 27.2,
+     "value": 27.2,
+     "shareYtd": 59.6,
+     "yoyPrinted": 21.1,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2017 [3.620 triệu USD]",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/05/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2017/",
+     "quote": "Kim ngạch hàng hoá nhập khẩu quý I năm nay đạt 45,6 tỷ USD, tăng 22,4% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước nhập 18,4 tỷ USD, tăng 24,4%; khu vực có vốn đầu tư nước ngoài nhập 27,2 tỷ USD, tăng 21,1%."
+    },
+    {
+     "period": "2017Q2",
+     "ytd": 60.6,
+     "value": 33.4,
+     "shareYtd": 60.3,
+     "yoyPrinted": 28.3,
+     "source": "GSO Báo cáo tình hình KT-XH tháng 6 và 6 tháng năm 2017",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/10/bc-tinh-hinh-kinh-te-xa-hoi-6-thang-dau-nam-2017/",
+     "quote": "Kim ngạch hàng hóa nhập khẩu 6 tháng đầu năm đạt 100,5 tỷ USD, tăng 24,1% so với cùng kỳ năm trước, trong đó: Khu vực kinh tế trong nước đạt 39,9 tỷ USD, tăng 18,2%; khu vực có vốn đầu tư nước ngoài đạt 60,6 tỷ USD, tăng 28,3%."
+    },
+    {
+     "period": "2017Q3",
+     "ytd": 93.2,
+     "value": 32.6,
+     "shareYtd": 60.3,
+     "yoyPrinted": 26.1,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2017",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/10/bao-cao-tinh-hinh-kinh-te-xa-hoi-9-thang-nam-2017/",
+     "quote": "Kim ngạch hàng hóa nhập khẩu 9 tháng đạt 154,5 tỷ USD, tăng 23,1% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 61,3 tỷ USD, tăng 18,7%; khu vực có vốn đầu tư nước ngoài đạt 93,2 tỷ USD, tăng 26,1%."
+    },
+    {
+     "period": "2017Q4",
+     "ytd": 126.4,
+     "value": 33.2,
+     "shareYtd": 59.9,
+     "yoyPrinted": 23.4,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2017",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/10/bao-cao-tinh-hinh-kinh-te-xa-hoi-nam-2017/",
+     "quote": "Kim ngạch hàng hoá nhập khẩu năm 2017 ước tính đạt 211,1 tỷ USD, tăng 20,8% so với năm trước, trong đó khu vực kinh tế trong nước đạt 84,7 tỷ USD, tăng 17%; khu vực có vốn đầu tư nước ngoài đạt 126,4 tỷ USD, tăng 23,4%."
+    },
+    {
+     "period": "2018Q1",
+     "ytd": 31.75,
+     "value": 31.75,
+     "shareYtd": 59.9,
+     "yoyPrinted": 13.7,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2018 [3.880 triệu USD]",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/04/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2018/",
+     "quote": "Kim ngạch hàng hóa nhập khẩu quý I/2018 đạt 53,01 tỷ USD, tăng 13,6% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 21,26 tỷ USD, tăng 13,4%; khu vực có vốn đầu tư nước ngoài đạt 31,75 tỷ USD, tăng 13,7%."
+    },
+    {
+     "period": "2018Q2",
+     "ytd": 65.21,
+     "value": 33.46,
+     "shareYtd": 58.6,
+     "yoyPrinted": 8.1,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng năm 2018",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/04/bao-cao-tinh-hinh-kinh-te-xa-hoi-6-thang-dau-nam-2018/",
+     "quote": "Kim ngạch hàng hoá nhập khẩu 6 tháng ước tính đạt 111,22 tỷ USD, tăng 10% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 46,01 tỷ USD, tăng 12,9%; khu vực có vốn đầu tư nước ngoài đạt 65,21 tỷ USD, tăng 8,1%."
+    },
+    {
+     "period": "2018Q3",
+     "ytd": 104.18,
+     "value": 38.97,
+     "shareYtd": 60.0,
+     "yoyPrinted": 11.9,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2018",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/04/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iii-va-9-thang-nam-2018/",
+     "quote": "Tính chung 9 tháng, kim ngạch hàng hoá nhập khẩu ước tính đạt 173,52 tỷ USD, tăng 11,8% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 69,34 tỷ USD, tăng 11,7%; khu vực có vốn đầu tư nước ngoài đạt 104,18 tỷ USD, tăng 11,9%."
+    },
+    {
+     "period": "2018Q4",
+     "ytd": 142.71,
+     "value": 38.53,
+     "shareYtd": 60.1,
+     "yoyPrinted": 11.6,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2018",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/04/thong-cao-bao-chi-ve-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2018/",
+     "quote": "Tính chung cả năm 2018, kim ngạch hàng hoá nhập khẩu ước tính đạt 237,51 tỷ USD, tăng 11,5% so với năm trước, trong đó khu vực kinh tế trong nước đạt 94,80 tỷ USD, tăng 11,3%; khu vực có vốn đầu tư nước ngoài đạt 142,71 tỷ USD, tăng 11,6%."
+    },
+    {
+     "period": "2019Q1",
+     "ytd": 33.89,
+     "value": 33.89,
+     "shareYtd": 58.5,
+     "yoyPrinted": 6.0,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2019 [4.120 triệu USD]",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/05/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2019/",
+     "quote": "Kim ngạch hàng hóa nhập khẩu quý I/2019 ước tính đạt 57,98 tỷ USD, tăng 8,9% so với cùng kỳ năm 2018, trong đó khu vực kinh tế trong nước đạt 24,09 tỷ USD, tăng 13,4%; khu vực có vốn đầu tư nước ngoài đạt 33,89 tỷ USD, tăng 6%."
+    },
+    {
+     "period": "2019Q2",
+     "ytd": 70.22,
+     "value": 36.33,
+     "shareYtd": 57.2,
+     "yoyPrinted": 7.8,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng năm 2019",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/10/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-ii-va-6-thang-dau-nam-2019/",
+     "quote": "Tính chung 6 tháng đầu năm nay, kim ngạch hàng hóa nhập khẩu ước tính đạt 122,76 tỷ USD, tăng 10,5% so với cùng kỳ năm 2018, trong đó khu vực kinh tế trong nước đạt 52,54 tỷ USD, tăng 14,4%; khu vực có vốn đầu tư nước ngoài đạt 70,22 tỷ USD, tăng 7,8%. b) Xuất, nhập khẩu dịch vụ Trong quý II/2019, kim ngạch xuất khẩu dịch vụ đạt 3,8 tỷ USD, tăng 6,4% so với cùng kỳ năm 2018; kim ngạch nhập khẩu dịch vụ đạt 4,7 tỷ USD, tăng 3,1%."
+    },
+    {
+     "period": "2019Q3",
+     "ytd": 109.45,
+     "value": 39.23,
+     "shareYtd": 58.1,
+     "yoyPrinted": 5.5,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2019",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/10/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iii-va-9-thang-nam-2019/",
+     "quote": "Tính chung 9 tháng năm 2019, kim ngạch hàng hóa nhập khẩu ước tính đạt 188,42 tỷ USD, tăng 8,9% so với cùng kỳ năm 2018, trong đó khu vực kinh tế trong nước đạt 78,97 tỷ USD, tăng 14%; khu vực có vốn đầu tư nước ngoài đạt 109,45 tỷ USD, tăng 5,5%."
+    },
+    {
+     "period": "2019Q4",
+     "ytd": 145.5,
+     "value": 36.05,
+     "shareYtd": 57.4,
+     "yoyPrinted": 2.5,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2019",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/12/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2019/",
+     "quote": "Tính chung năm 2019, kim ngạch hàng hóa nhập khẩu ước tính đạt 253,51 tỷ USD, tăng 7% so với năm 2018, trong đó khu vực kinh tế trong nước đạt 108,01 tỷ USD, tăng 13,8%; khu vực có vốn đầu tư nước ngoài đạt 145,50 tỷ USD, tăng 2,5%."
+    },
+    {
+     "period": "2020Q1",
+     "ytd": 33.18,
+     "value": 33.18,
+     "shareYtd": 59.0,
+     "yoyPrinted": -0.8,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2020",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/03/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2020/",
+     "quote": "Tính chung quý I/2020, kim ngạch hàng hóa nhập khẩu ước tính đạt 56,26 tỷ USD, giảm 1,9% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 23,08 tỷ USD, giảm 3,4%; khu vực có vốn đầu tư nước ngoài đạt 33,18 tỷ USD, giảm 0,8%."
+    },
+    {
+     "period": "2020Q2",
+     "ytd": 65.62,
+     "value": 32.44,
+     "shareYtd": 56.0,
+     "yoyPrinted": -5.4,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng năm 2020",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/06/bao-cao-tinh-hinh-kinh-te-xa-hoi-6-thang-dau-nam-2020/",
+     "quote": "Tính chung 6 tháng đầu năm 2020, kim ngạch hàng hóa nhập khẩu ước tính đạt 117,17 tỷ USD, giảm 3% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 51,55 tỷ USD, tăng 0,1%; khu vực có vốn đầu tư nước ngoài đạt 65,62 tỷ USD, giảm 5,4%."
+    },
+    {
+     "period": "2020Q3",
+     "ytd": 103.52,
+     "value": 37.9,
+     "shareYtd": 55.7,
+     "yoyPrinted": -4.8,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2020 [stated as 'gần 13,8 tỷ USD']",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/09/tinh-hinh-kinh-te-xa-hoi-thang-9-va-9-thang-nam-2020/",
+     "quote": "Tính chung 9 tháng năm 2020, kim ngạch hàng hóa nhập khẩu ước tính đạt 185,87 tỷ USD, giảm 0,8% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 82,35 tỷ USD, tăng 4,7%; khu vực có vốn đầu tư nước ngoài đạt 103,52 tỷ USD, giảm 4,8%."
+    },
+    {
+     "period": "2020Q4",
+     "ytd": 168.8,
+     "value": 65.28,
+     "shareYtd": 64.3,
+     "yoyPrinted": 13.0,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2020 [stated as 'gần 20 tỷ USD']",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/12/baocao-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2020/",
+     "quote": "Tính chung năm 2020, kim ngạch nhập khẩu hàng hóa ước tính đạt 262,4 tỷ USD, tăng 3,6% so với năm 2019, trong đó khu vực kinh tế trong nước đạt 93,6 tỷ USD, giảm 10%; khu vực có vốn đầu tư nước ngoài đạt 168,8 tỷ USD, tăng 13%."
+    },
+    {
+     "period": "2021Q1",
+     "ytd": 50.26,
+     "value": 50.26,
+     "shareYtd": 66.7,
+     "yoyPrinted": 31.5,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2021",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2021/03/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2021/",
+     "quote": "Tính chung quý I/2021, kim ngạch nhập khẩu hàng hóa ước tính đạt 75,31 tỷ USD, tăng 26,3% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 25,05 tỷ USD, tăng 17%; khu vực có vốn đầu tư nước ngoài đạt 50,26 tỷ USD, tăng 31,5%."
+    },
+    {
+     "period": "2021Q2",
+     "ytd": 103.2,
+     "value": 52.94,
+     "shareYtd": 64.9,
+     "yoyPrinted": 39.5,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng đầu năm 2021",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2021/06/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-ii-va-6-thang-dau-nam-2021/",
+     "quote": "Tính chung 6 tháng đầu năm 2021, kim ngạch nhập khẩu hàng hóa ước tính đạt 159,1 tỷ USD, tăng 36,1% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 55,9 tỷ USD, tăng 30,2%; khu vực có vốn đầu tư nước ngoài đạt 103,2 tỷ USD, tăng 39,5%."
+    },
+    {
+     "period": "2021Q3",
+     "ytd": 158.93,
+     "value": 55.73,
+     "shareYtd": 65.5,
+     "yoyPrinted": 33.6,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2021",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2021/09/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iii-va-9-thang-nam-2021/",
+     "quote": "Tính chung 9 tháng năm 2021, kim ngạch nhập khẩu hàng hóa ước tính đạt 242,65 tỷ USD, tăng 30,5% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 83,72 tỷ USD, tăng 25%; khu vực có vốn đầu tư nước ngoài đạt 158,93 tỷ USD, tăng 33,6%."
+    },
+    {
+     "period": "2021Q4",
+     "ytd": 218.18,
+     "value": 59.25,
+     "shareYtd": 65.7,
+     "yoyPrinted": 29.1,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2021",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2021/12/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2021/",
+     "quote": "Tính chung năm 2021, kim ngạch nhập khẩu hàng hóa ước đạt 332,25 tỷ USD, tăng 26,5% so với năm trước, trong đó khu vực kinh tế trong nước đạt 114,07 tỷ USD, tăng 21,8%; khu vực có vốn đầu tư nước ngoài đạt 218,18 tỷ USD, tăng 29,1%."
+    },
+    {
+     "period": "2022Q1",
+     "ytd": 58.34,
+     "value": 58.34,
+     "shareYtd": 66.5,
+     "yoyPrinted": 17.1,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2022",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2022/03/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2022/",
+     "quote": "Tính chung quý I/2022, kim ngạch nhập khẩu hàng hóa ước đạt 87,77 tỷ USD, tăng 15,9% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 29,43 tỷ USD, tăng 13,7%; khu vực có vốn đầu tư nước ngoài đạt 58,34 tỷ USD, tăng 17,1%."
+    },
+    {
+     "period": "2022Q2",
+     "ytd": 120.0,
+     "value": 61.66,
+     "shareYtd": 64.8,
+     "yoyPrinted": 15.6,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng đầu năm 2022 (tệp lời văn .docx đính kèm)",
+     "url": "https://www.nso.gov.vn/wp-content/uploads/2022/06/02.-Loi-van-6.2022-1.docx",
+     "quote": "Tính chung 6 tháng đầu năm 2022, kim ngạch nhập khẩu hàng hóa ước đạt 185,23 tỷ USD, tăng 15,5% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 65,23 tỷ USD, tăng 15,2%; khu vực có vốn đầu tư nước ngoài đạt 120 tỷ USD, tăng 15,6%."
+    },
+    {
+     "period": "2022Q3",
+     "ytd": 179.89,
+     "value": 59.89,
+     "shareYtd": 65.2,
+     "yoyPrinted": 12.7,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2022 (tệp lời văn .docx đính kèm)",
+     "url": "https://www.nso.gov.vn/wp-content/uploads/2022/09/02-Loi-van-9.2022-28.9-2.docx",
+     "quote": "Tính chung 9 tháng năm 2022, kim ngạch nhập khẩu hàng hóa ước đạt 276 tỷ USD, tăng 13% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 96,11 tỷ USD, tăng 13,6%; khu vực có vốn đầu tư nước ngoài đạt 179,89 tỷ USD, tăng 12,7%."
+    },
+    {
+     "period": "2022Q4",
+     "ytd": 234.86,
+     "value": 54.97,
+     "shareYtd": 65.1,
+     "yoyPrinted": 7.5,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2022 (tệp lời văn .docx đính kèm)",
+     "url": "https://www.nso.gov.vn/wp-content/uploads/2022/12/02-Loi-van-2022.docx",
+     "quote": "Tính chung cả năm 2022, kim ngạch nhập khẩu hàng hóa ước đạt 360,65 tỷ USD, tăng 8,4% so với năm trước, trong đó khu vực kinh tế trong nước đạt 125,79 tỷ USD, tăng 10%; khu vực có vốn đầu tư nước ngoài đạt 234,86 tỷ USD, tăng 7,5%."
+    },
+    {
+     "period": "2023Q1",
+     "ytd": 49.07,
+     "value": 49.07,
+     "shareYtd": 65.3,
+     "yoyPrinted": -15.4,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2023 (tệp lời văn .docx đính kèm)",
+     "url": "https://www.nso.gov.vn/wp-content/uploads/2023/03/01-Loi-van-quy-I.2023-3.docx",
+     "quote": "Tính chung quý I năm 2023, kim ngạch nhập khẩu hàng hóa ước đạt 75,1 tỷ USD, giảm 14,7% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 26,03 tỷ USD, giảm 13,3%; khu vực có vốn đầu tư nước ngoài đạt 49,07 tỷ USD, giảm 15,4%."
+    },
+    {
+     "period": "2023Q2",
+     "ytd": 98.98,
+     "value": 49.91,
+     "shareYtd": 65.0,
+     "yoyPrinted": -17.8,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng đầu năm 2023 (tệp lời văn .docx đính kèm)",
+     "url": "https://www.nso.gov.vn/wp-content/uploads/2023/06/01-Loi-van-quy-II.2023-final.docx",
+     "quote": "Tính chung 6 tháng đầu năm 2023, kim ngạch nhập khẩu hàng hóa ước đạt 152,2 tỷ USD, giảm 18,2% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 53,22 tỷ USD, giảm 19%; khu vực có vốn đầu tư nước ngoài đạt 98,98 tỷ USD, giảm 17,8%."
+    },
+    {
+     "period": "2023Q3",
+     "ytd": 152.87,
+     "value": 53.89,
+     "shareYtd": 64.2,
+     "yoyPrinted": -14.9,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2023 (tệp lời văn .docx đính kèm)",
+     "url": "https://www.nso.gov.vn/wp-content/uploads/2023/09/01-Loi-van-quy-III.2023.docx",
+     "quote": "Tính chung 9 tháng năm 2023, kim ngạch nhập khẩu hàng hóa ước đạt 237,99 tỷ USD, giảm 13,8% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 85,12 tỷ USD, giảm 11,8%; khu vực có vốn đầu tư nước ngoài đạt 152,87 tỷ USD, giảm 14,9%."
+    },
+    {
+     "period": "2023Q4",
+     "ytd": 210.21,
+     "value": 57.34,
+     "shareYtd": 64.2,
+     "yoyPrinted": -9.8,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2023 (tệp lời văn .docx đính kèm)",
+     "url": "https://www.nso.gov.vn/wp-content/uploads/2023/12/01-Loi-van-quy-IV-va-nam-2023-3.docx",
+     "quote": "Tính chung cả năm 2023, kim ngạch nhập khẩu hàng hóa ước đạt 327,5 tỷ USD, giảm 8,9% so với năm trước, trong đó khu vực kinh tế trong nước đạt 117,29 tỷ USD, giảm 7,2%; khu vực có vốn đầu tư nước ngoài đạt 210,21 tỷ USD, giảm 9,8%."
+    },
+    {
+     "period": "2024Q1",
+     "ytd": 55.28,
+     "value": 55.28,
+     "shareYtd": 65.1,
+     "yoyPrinted": 13.6,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý I năm 2024",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2024/03/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2024/",
+     "quote": "Tính chung quý I/2024, kim ngạch nhập khẩu hàng hóa ước đạt 84,98 tỷ USD, tăng 13,9% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 29,7 tỷ USD, tăng 14,4%; khu vực có vốn đầu tư nước ngoài đạt 55,28 tỷ USD, tăng 13,6%."
+    },
+    {
+     "period": "2024Q2",
+     "ytd": 112.71,
+     "value": 57.43,
+     "shareYtd": 63.2,
+     "yoyPrinted": 14.1,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý II và 6 tháng đầu năm 2024",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2024/06/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-ii-va-sau-thang-dau-nam-2024/",
+     "quote": "Tính chung sáu tháng đầu năm 2024, kim ngạch nhập khẩu hàng hóa ước đạt 178,45 tỷ USD, tăng 17,0% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 65,74 tỷ USD, tăng 22,3%; khu vực có vốn đầu tư nước ngoài đạt 112,71 tỷ USD, tăng 14,1%. + Về cơ cấu nhóm hàng nhập khẩu sáu tháng đầu năm 2024 , nhóm hàng tư liệu sản xuất ước đạt 167,73 tỷ USD, chiếm 94%. – Về thị trường xuất, nhập khẩu hàng hóa sáu tháng đầu năm 2024 , Hoa Kỳ là thị trường xuất khẩu lớn nhất của Việt Nam với kim ngạch ước đạt 54,3 tỷ USD."
+    },
+    {
+     "period": "2024Q3",
+     "ytd": 177.99,
+     "value": 65.28,
+     "shareYtd": 63.8,
+     "yoyPrinted": 16.5,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2024",
+     "url": "https://www.nso.gov.vn/bai-top/2024/10/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iii-va-9-thang-nam-2024/",
+     "quote": "Tính chung chín tháng năm 2024, kim ngạch nhập khẩu hàng hóa sơ bộ đạt 278,84 tỷ USD, tăng 17,3% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 100,85 tỷ USD, tăng 18,8%; khu vực có vốn đầu tư nước ngoài đạt 177,99 tỷ USD, tăng 16,5%. + Về cơ cấu nhóm hàng nhập khẩu chín tháng năm 2024 , nhóm hàng tư liệu sản xuất sơ bộ đạt 261,5 tỷ USD, chiếm 93,8%. – Về thị trường xuất, nhập khẩu hàng hóa chín tháng năm 2024, Hoa Kỳ là thị trường xuất khẩu lớn nhất của Việt Nam với kim ngạch ước đạt 89,5 tỷ USD."
+    },
+    {
+     "period": "2024Q4",
+     "ytd": 240.65,
+     "value": 62.66,
+     "shareYtd": 63.2,
+     "yoyPrinted": 15.1,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý IV và năm 2024 (tệp lời văn .docx đính kèm)",
+     "url": "https://www.nso.gov.vn/wp-content/uploads/2025/01/01-Loi-van-quy-IV-va-nam-2024-final-2.docx",
+     "quote": "Tính chung cả năm 2024, kim ngạch nhập khẩu hàng hóa đạt 380,76 tỷ USD, tăng 16,7% so với năm trước, trong đó khu vực kinh tế trong nước đạt 140,11 tỷ USD, tăng 19,5%; khu vực có vốn đầu tư nước ngoài đạt 240,65 tỷ USD, tăng 15,1%."
+    },
+    {
+     "period": "2025Q1",
+     "ytd": 62.9,
+     "value": 62.9,
+     "shareYtd": 63.1,
+     "yoyPrinted": 15.8,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý I năm 2025",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2025/04/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2025/",
+     "quote": "Tính chung quý I/2025, kim ngạch nhập khẩu hàng hóa đạt 99,68 tỷ USD, tăng 17,0% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 36,78 tỷ USD, tăng 19,3%; khu vực có vốn đầu tư nước ngoài đạt 62,9 tỷ USD, tăng 15,8%."
+    },
+    {
+     "period": "2025Q2",
+     "ytd": 139.38,
+     "value": 76.48,
+     "shareYtd": 65.7,
+     "yoyPrinted": 22.3,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý II và 6 tháng đầu năm 2025",
+     "url": "https://www.nso.gov.vn/bai-top/2025/07/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-ii-va-6-thang-dau-nam-2025/",
+     "quote": "Tính chung sáu tháng đầu năm 2025, kim ngạch nhập khẩu hàng hóa đạt 212,2 tỷ USD, tăng 17,9% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 72,82 tỷ USD, tăng 10,4%; khu vực có vốn đầu tư nước ngoài đạt 139,38 tỷ USD, tăng 22,3%. + Về cơ cấu nhóm hàng nhập khẩu sáu tháng đầu năm 2025, nhóm hàng tư liệu sản xuất đạt 198,92 tỷ USD, chiếm 93,7%. – Về thị trường xuất, nhập khẩu hàng hóa sáu tháng đầu năm 2025 , Hoa Kỳ là thị trường xuất khẩu lớn nhất của Việt Nam với kim ngạch đạt 70,91 tỷ USD."
+    },
+    {
+     "period": "2025Q3",
+     "ytd": 226.25,
+     "value": 86.87,
+     "shareYtd": 68.2,
+     "yoyPrinted": 26.8,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2025",
+     "url": "https://www.nso.gov.vn/bai-top/2025/10/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iii-va-9-thang-nam-2025/",
+     "quote": "Tính chung chín tháng năm 2025, kim ngạch nhập khẩu hàng hóa đạt 331,92 tỷ USD, tăng 18,8% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 105,67 tỷ USD, tăng 4,6%; khu vực có vốn đầu tư nước ngoài đạt 226,25 tỷ USD, tăng 26,8%. + Về cơ cấu nhóm hàng nhập khẩu chín tháng năm 2025 , nhóm hàng tư liệu sản xuất đạt 311,22 tỷ USD, chiếm 93,8%. – Về thị trường xuất, nhập khẩu hàng hóa chín tháng năm 2025 , Hoa Kỳ là thị trường xuất khẩu lớn nhất của Việt Nam với kim ngạch đạt 112,8 tỷ USD."
+    },
+    {
+     "period": "2025Q4",
+     "ytd": 317.63,
+     "value": 91.38,
+     "shareYtd": 69.8,
+     "yoyPrinted": 31.9,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý IV và năm 2025",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2026/01/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2025/",
+     "quote": "Tính chung cả năm 2025, kim ngạch nhập khẩu hàng hóa đạt 455,01 tỷ USD, tăng 19,4% so với năm trước, trong đó khu vực kinh tế trong nước đạt 137,38 tỷ USD, giảm 2,0%; khu vực có vốn đầu tư nước ngoài đạt 317,63 tỷ USD, tăng 31,9%. + Về cơ cấu nhóm hàng nhập khẩu năm 2025, nhóm hàng tư liệu sản xuất đạt 426,11 tỷ USD, chiếm 93,6%. – Về thị trường xuất, nhập khẩu hàng hóa năm 2025, Hoa Kỳ là thị trường xuất khẩu lớn nhất của Việt Nam với kim ngạch đạt 153,2 tỷ USD."
+    },
+    {
+     "period": "2026Q1",
+     "ytd": 91.37,
+     "value": 91.37,
+     "shareYtd": 72.2,
+     "yoyPrinted": 45.3,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý I năm 2026",
+     "url": "https://www.nso.gov.vn/bai-top/2026/04/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2026/",
+     "quote": "Tính chung quý I/2026, kim ngạch nhập khẩu hàng hóa đạt 126,57 tỷ USD, tăng 27,0% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 35,2 tỷ USD, giảm 4,3%; khu vực có vốn đầu tư nước ngoài đạt 91,37 tỷ USD, tăng 45,3%. + Về cơ cấu nhóm hàng nhập khẩu quý I/2026, nhóm hàng tư liệu sản xuất đạt 118,84 tỷ USD, chiếm 93,9% – Về thị trường xuất, nhập khẩu hàng hóa quý I/2026 , Hoa Kỳ là thị trường xuất khẩu lớn nhất của Việt Nam với kim ngạch đạt 39,0 tỷ USD."
+    },
+    {
+     "period": "2026Q2",
+     "ytd": 204.71,
+     "value": 113.34,
+     "shareYtd": 72.3,
+     "yoyPrinted": 37.3,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý II và 6 tháng 2026",
+     "url": "https://www.nso.gov.vn/bai-top/2026/07/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-ii-va-sau-thang-dau-nam-2026/",
+     "quote": "Tính chung sáu tháng đầu năm 2026, kim ngạch nhập khẩu hàng hóa ước đạt 283,17 tỷ USD, tăng 33,4% so với cùng kỳ năm trước, trong đó khu vực kinh tế trong nước đạt 78,46 tỷ USD, tăng 24,3%; khu vực có vốn đầu tư nước ngoài đạt 204,71 tỷ USD, tăng 37,3%."
     }
    ]
   },

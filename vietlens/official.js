@@ -53,7 +53,7 @@
 
   function headline(s) {
     const l = s.latest;
-    if (s.id.startsWith('fdi_') && l.ytd !== undefined) return `<b>${nf(l.ytd, 2)} tỷ USD</b><span>${ytdLabel(l.period)}${l.ytdYoY !== null ? ` · <em class="${l.ytdYoY >= 0 ? 'up' : 'down'}">${sign(l.ytdYoY)} so cùng kỳ</em>` : ''}</span>`;
+    if (s.id.startsWith('fdi_') && l.ytd !== undefined) return `<b>${nf(l.ytd, 2)} tỷ USD</b><span>${ytdLabel(l.period)}${l.ytdYoY !== null ? ` · <em class="${l.ytdYoY >= 0 ? 'up' : 'down'}">${sign(l.ytdYoY)} so cùng kỳ</em>` : ''}${l.share != null ? ` · chiếm ${nf(l.share, 1)}% tổng kim ngạch` : ''}</span>`;
     if (s.chart === 'hbar') return `<b>${nf(l.total, 1)} tỷ USD</b><span>tổng, mọi đối tác</span>`;
     if (s.chart === 'line') return `<b>${nf(l.value, 1)}</b><span>${qLabel(l.period)} · <em class="${l.yoy >= 0 ? 'up' : 'down'}">${sign(l.yoy)} so cùng kỳ</em></span>`;
     return `<b>${nf(l.value, 0)} triệu USD</b><span>năm ${esc(l.period)}</span>`;

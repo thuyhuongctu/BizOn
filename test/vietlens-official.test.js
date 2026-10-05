@@ -45,6 +45,22 @@ test('FDI giải ngân: lũy kế không giảm trong năm, dòng quý dương, 
   assert.strictEqual(d.latest.ytdYoY, Math.round(1000 * (13.03 / prev.ytd - 1)) / 10);
 });
 
+test('Xuất/nhập khẩu khu vực FDI: đủ 58 quý, lũy kế tăng trong năm, khớp câu trích, tỷ trọng đúng', () => {
+  ['fdi_sector_exports', 'fdi_sector_imports'].forEach((id) => {
+    const s = json.series.find((x) => x.id === id);
+    assert.strictEqual(s.observations.length, 58);
+    s.observations.forEach((o) => {
+      assert.ok(o.value === null || o.value > 0, `${id} ${o.period}: ${o.value}`);
+      assert.ok(o.quote.includes(String(o.ytd).replace('.', ',')) || o.quote.includes(String(o.ytd)), `${id} ${o.period}: ${o.ytd} không có trong trích dẫn`);
+    });
+  });
+  const x = json.series.find((s) => s.id === 'fdi_sector_exports');
+  // 6 tháng 2026: 213,01 tỷ USD, chiếm 79,9% (báo cáo quý II/2026)
+  assert.strictEqual(x.latest.ytd, 213.01);
+  assert.strictEqual(x.latest.share, 79.9);
+  assert.strictEqual(x.latest.ytdYoY, 26.0);   // tỷ lệ in trong báo cáo, không tự tính
+});
+
 test('Chuỗi bình quân quý chỉ lấy quý đủ 3 tháng', () => {
   ['world_import_volume', 'reer_vnd'].forEach((id) => {
     const s = json.series.find((x) => x.id === id);
