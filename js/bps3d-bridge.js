@@ -1,4 +1,4 @@
-/* Cầu nối cảnh 3D (bps3d-v2.js) với Bến Phù Sa v2. Tạo khung #bps3d một lần, giữ renderer sống khi chuyển màn. */
+/* Cầu nối cảnh 3D (bps3d-v3.js) với Bến Phù Sa v2. Tạo khung #bps3d một lần, giữ renderer sống khi chuyển màn. */
 (function(){
   var wrap=null,hold=null,loaded=false,failed=false;
   function css(){ if(document.getElementById('bps3d-style'))return; var s=document.createElement('style'); s.id='bps3d-style'; s.textContent=
@@ -18,7 +18,7 @@
   function webgl(){ try{ var c=document.createElement('canvas'); return !!(c.getContext('webgl2')||c.getContext('webgl')); }catch(e){ return false; } }
   function attach(el){ ensure(); (el||hold).appendChild(wrap);
     if(!loaded){ loaded=true; if(!webgl()){ failed=true; window.dispatchEvent(new Event('bps3d-fail')); return; }
-      import(new URL('js/bps3d-v2.js',document.baseURI).href).catch(function(e){ failed=true; console.warn('3D không tải được',e); window.dispatchEvent(new Event('bps3d-fail')); }); } }
+      import(new URL('js/bps3d-v3.js',document.baseURI).href).catch(function(e){ failed=true; console.warn('3D không tải được',e); window.dispatchEvent(new Event('bps3d-fail')); }); } }
   function ev(n,d){ window.dispatchEvent(new CustomEvent(n,{detail:d})); }
   window.BPS3D={attach:attach,ev:ev,get failed(){return failed;}};
 })();
