@@ -30,6 +30,8 @@
 <link rel="stylesheet" href="css/bizon-fonts.css">
 <script src="vendor/peerjs/peerjs.min.js"></script>
 <script src="js/bps3d-bridge.js"></script>
+<script src="js/clay-hub.js"></script>
+<script src="js/bps-hub-nhom.js"></script>
 <meta name="ext-resource-dependency" content="js/bps3d-v2.js">
 <style>
 html,body{margin:0;background:#e6f3f2;}
@@ -52,9 +54,9 @@ button,input{font-family:inherit;}
     <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;"><span style="font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#006687;">{{ tx.brand }}</span><sc-if value="{{ embedded }}" hint-placeholder-val="{{ false }}"><button onClick="{{ goBack }}" style="border:none;background:transparent;padding:0;font-size:13px;font-weight:800;color:#006687;cursor:pointer;font-family:inherit;">{{ tx.back }}</button></sc-if><sc-if value="{{ standalone }}" hint-placeholder-val="{{ true }}"><a href="ben-phu-sa-v8.html" style="font-size:13px;font-weight:800;">{{ tx.back }}</a></sc-if></div>
     <h1 style="margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(36px,6vw,62px);line-height:.98;letter-spacing:-.02em;">{{ tx.h1a }}<br>{{ tx.h1b }}</h1>
     <p style="margin:0;font-size:16px;line-height:1.55;opacity:.8;max-width:520px;text-wrap:pretty;">{{ tx.lead }}</p>
-    <div style="display:flex;flex-direction:column;gap:6px;">
+    <div id="bps-nhom-name-wrap" style="display:flex;flex-direction:column;gap:6px;">
       <b style="font-size:13px;">{{ tx.yourName }}</b>
-      <input value="{{ name }}" onChange="{{ onName }}" placeholder="{{ tx.phName }}" style="min-height:50px;border:none;border-radius:16px;padding:0 16px;font-size:16px;font-weight:700;color:#033337;background:#fff;box-shadow:inset 0 3px 6px rgba(3,51,55,.1);">
+      <input id="bps-nhom-name-input" value="{{ name }}" onChange="{{ onName }}" placeholder="{{ tx.phName }}" style="min-height:50px;border:none;border-radius:16px;padding:0 16px;font-size:16px;font-weight:700;color:#033337;background:#fff;box-shadow:inset 0 3px 6px rgba(3,51,55,.1);">
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;">
       <sc-for list="{{ nets }}" as="n" hint-placeholder-count="2">
@@ -64,7 +66,7 @@ button,input{font-family:inherit;}
     <div style="display:flex;gap:10px;flex-wrap:wrap;">
       <button onClick="{{ create }}" style="flex:1 1 200px;min-height:56px;border:none;border-radius:18px;background:#fda127;color:#033337;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 14px 24px -12px rgba(232,118,45,.8), inset 0 -5px 0 rgba(232,118,45,.6);">{{ tx.create }}</button>
       <div style="flex:1 1 260px;display:flex;gap:8px;">
-        <input value="{{ joinCode }}" onChange="{{ onCode }}" placeholder="{{ tx.phCode }}" style="flex:1;min-width:0;min-height:56px;border:none;border-radius:18px;padding:0 16px;font-size:20px;font-weight:800;letter-spacing:.2em;text-align:center;color:#033337;background:#fff;box-shadow:inset 0 3px 6px rgba(3,51,55,.1);">
+        <input id="bps-nhom-code-input" value="{{ joinCode }}" onChange="{{ onCode }}" placeholder="{{ tx.phCode }}" style="flex:1;min-width:0;min-height:56px;border:none;border-radius:18px;padding:0 16px;font-size:20px;font-weight:800;letter-spacing:.2em;text-align:center;color:#033337;background:#fff;box-shadow:inset 0 3px 6px rgba(3,51,55,.1);">
         <button onClick="{{ join }}" style="min-height:56px;padding:0 20px;border:none;border-radius:18px;background:#033337;color:#fff;font-size:15px;font-weight:800;cursor:pointer;box-shadow:inset 0 -5px 0 rgba(0,0,0,.3);">{{ tx.join }}</button>
       </div>
     </div>
