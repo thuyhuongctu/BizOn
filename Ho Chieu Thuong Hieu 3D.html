@@ -115,6 +115,12 @@
   body.bp3d-full #bp3d-stage::after { display:none; }
   @media (min-width:1024px) { #bp3d-full { display:none; } }
   #bp-howto { display:none !important; }
+  /* Màn giới thiệu làm overlay toàn màn hình, cùng tinh thần #login3d của
+     BizOn Game 3D.html (Bật Nghiệp) – che hẳn bản đồ 3D/hero phía sau,
+     cuộn riêng bên trong, thay vì chỉ là một section đầu trang phải cuộn
+     qua. Dưới #hc-bar (z-index:60) để vẫn đổi được ngôn ngữ/giao diện. */
+  body:has(#bp-intro:not(.hidden)) { overflow:hidden; }
+  #bp-intro:not(.hidden) { position:fixed; inset:0; z-index:50; overflow-y:auto; border-radius:0 !important; margin:0 !important; max-width:none !important; padding-top:max(68px,calc(52px + env(safe-area-inset-top))) !important; padding-bottom:max(24px,env(safe-area-inset-bottom)) !important; }
   .clay-card { background:rgba(255,255,255,.95); }
   html[data-theme="dark"] .clay-card { background:rgba(14,42,51,.95); }
   #bp3d-head h1 { color:#033337; }
