@@ -162,6 +162,7 @@ html[data-theme="dark"] #ft-play:not(.hidden){background:#081a20}
 #ft-rival-cards{border:0!important;border-radius:20px!important;background:linear-gradient(180deg,#fff4e0,#ffe9c7)!important;box-shadow:0 4px 0 #f0cf9a,inset 0 2px 0 #fff!important}
 html[data-theme="dark"] .clay-card{background:linear-gradient(180deg,#123744,#0b2830)!important;box-shadow:0 14px 28px -10px rgba(0,0,0,.6),0 6px 0 #061a20,inset 0 2px 0 rgba(255,255,255,.08)!important}
 #bps3d-coach.bps3d-chip{white-space:normal!important;max-width:min(520px,calc(100% - 28px))!important;line-height:1.45!important;padding:10px 14px!important}
+#bps3d-hint.bps3d-chip{white-space:normal!important;max-width:min(94%,420px)!important;text-align:center!important;line-height:1.4!important}
 body:has(#ft-play:not(.hidden)) [class*="dock"],body:has(#ft-play:not(.hidden)) [id*="dock"],body:has(#ft-play:not(.hidden)) [id*="universe"],body:has(#ft-play:not(.hidden)) a[href="universe.html"]{display:none!important}
 #hud-panel .ft-row,#ft-scores{font-size:12px}
 </style>
@@ -273,7 +274,7 @@ document.addEventListener('DOMContentLoaded',function(){var m=document.getElemen
         <button type="button" id="bps3d-mode-explore" class="bps3d-chip" style="cursor:pointer;border:0" data-en="🚶 Explore Phù Sa">🚶 Khám phá chợ nổi</button>
       </div>
       <span id="bps3d-checklist" class="bps3d-chip" style="position:absolute;right:12px;bottom:48px;display:none">🎯 0/8</span>
-      <p id="bps3d-hint" class="bps3d-chip" style="position:absolute;left:50%;bottom:12px;transform:translateX(-50%);margin:0;pointer-events:none;white-space:nowrap" data-en="Drag to rotate · scroll to zoom · tap a spot to choose">Kéo để xoay · cuộn để phóng to · bấm vào một điểm để chọn</p>
+      <p id="bps3d-hint" class="bps3d-chip" style="position:absolute;left:50%;bottom:12px;transform:translateX(-50%);margin:0;pointer-events:none" data-en="Drag to rotate · pinch or scroll to zoom · tap a spot to choose">Kéo để xoay · chụm hoặc cuộn để phóng to · bấm vào một điểm để chọn</p>
     </div>
     <div class="clay-card p-6 mb-4">
       <div id="ft-event" class="hidden" style="display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;padding:12px 14px;border-radius:18px;background:linear-gradient(180deg,#fff4e0,#ffe2b0);box-shadow:0 4px 0 #f0c27a,inset 0 2px 0 #fff;color:#033337"></div>
@@ -380,6 +381,7 @@ document.addEventListener('DOMContentLoaded',function(){var m=document.getElemen
           <p id="ft-cert-date" class="text-[9px] text-deep-teal/45 font-bold mt-3"></p>
           <button onclick="ftDownloadCert()" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-4 py-2 text-[11px] mt-3" data-en="📥 Download certificate">📥 Tải chứng chỉ</button>
           <button onclick="ftDownloadCertOfficial()" class="clay-btn bg-primary text-white font-display font-extrabold px-4 py-2 text-[11px] mt-3 ml-2" data-en="🎓 Official CTU certificate">🎓 Chứng nhận ĐHCT</button>
+          <p id="ft-cert-msg" class="text-[10px] font-bold mt-2" style="color:#c0392b"></p>
         </div>
       </div>
       <div class="mt-5 text-left hidden" id="ft-submit-box">
@@ -617,6 +619,7 @@ document.addEventListener('DOMContentLoaded',function(){var m=document.getElemen
     $('ft-play').classList.remove('hidden');
     render();
     renderShop();
+    window.scrollTo(0, 0);
   };
 
   function renderShop() {
@@ -911,6 +914,7 @@ document.addEventListener('DOMContentLoaded',function(){var m=document.getElemen
   function ftEnd() {
     $('ft-play').classList.add('hidden');
     $('ft-end').classList.remove('hidden');
+    window.scrollTo(0, 0);
     // Chuẩn so sánh: chạy ghe hàng bông đúng cặp tốt nhất cả 5 tuần
     var bc = bestCombo(), maxRev = 0;
     for (var w = 0; w < 5; w++) maxRev += D[bc[0]][bc[1]] * W[w][bc[1]] * 3 - BOAT_COST;
@@ -1071,8 +1075,20 @@ document.addEventListener('DOMContentLoaded',function(){var m=document.getElemen
   // định KT330H/Entrepreneurship nếu chưa cấu hình/không có mã lớp.
   window.ftDownloadCertOfficial = function () {
     if (!window.OfficialCert) return;
-    window.OfficialCert.fetchConfig().then(function (cfg) {
-      window.OfficialCert.download({ name: certName(), courseCode: cfg.course_code, courseName: cfg.course_name, courseDates: cfg.course_dates, filenamePrefix: 'BizOn-BenPhuSa' });
+    var nameEl = $('ft-name'), classEl = $('ft-class');
+    var name = (nameEl && nameEl.value.trim()) || '';
+    var klass = (classEl && classEl.value.trim()) || '';
+    if (!name || !klass) {
+      if ($('ft-cert-msg')) $('ft-cert-msg').textContent = T(
+        '⚠️ Nhập Tên và Mã lớp ở ô bên dưới (khung "Nộp kết quả") trước khi tải chứng nhận chính thức.',
+        '⚠️ Enter your Name and Class code below (the "Submit result" box) before downloading the official certificate.'
+      );
+      (name ? classEl : nameEl).focus();
+      return;
+    }
+    if ($('ft-cert-msg')) $('ft-cert-msg').textContent = '';
+    window.OfficialCert.fetchConfig(klass).then(function (cfg) {
+      window.OfficialCert.download({ name: name, courseCode: cfg.course_code, courseName: cfg.course_name, courseDates: cfg.course_dates, filenamePrefix: 'BizOn-BenPhuSa' });
     });
   };
 
@@ -1214,7 +1230,7 @@ window.bpsNet = function (on) { var o = document.getElementById('bps-net'), fr =
     var en = localStorage.getItem('bizon-lang') === 'en';
     document.getElementById('bps3d-hint').textContent = m === 'explore'
       ? (en ? 'Drag to rotate · tap a bẹo pole for cultural info' : 'Kéo để xoay · bấm vào cây bẹo để xem thông tin văn hoá')
-      : (en ? 'Drag to rotate · scroll to zoom · tap a spot to choose' : 'Kéo để xoay · cuộn để phóng to · bấm vào một điểm để chọn');
+      : (en ? 'Drag to rotate · pinch or scroll to zoom · tap a spot to choose' : 'Kéo để xoay · chụm hoặc cuộn để phóng to · bấm vào một điểm để chọn');
     ev('bps-mode', { mode: m });
   }
   document.getElementById('bps3d-mode-game').onclick = function () { setMode('game'); };
