@@ -1,15 +1,17 @@
 /* BizOn Bật Nghiệp 2026 – Service Worker (offline app shell)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
 
-const CACHE = 'bizon-v347';
+const CACHE = 'bizon-v348';
 const SHELL = [
   './',
   './index.html',
   './game.html',
   './ben-phu-sa.html',
+  './ben-phu-sa-3d.html',
   './ben-phu-sa-v8.html',
   './Ben Phu Sa Game v4 Nhom.dc.html',
   './Bang Giao Vien.dc.html',
+  './Trang Giang Vien.dc.html',
   './nhac-ben-phu-sa.html',
   './lab/cmr-lab.html',
   './lab/cvp-studio.html',
@@ -121,12 +123,19 @@ const SHELL = [
   './js/golden-silt-lyrics.js',
   './js/quiz-bank.js',
   './js/games-clay.js',
+  './js/bps3d.js',
   './js/bps3d-v3.js',
+  './js/bps-voice.js',
+  './js/bps-cast.js',
+  './js/bps-exam.js',
   './js/bps-extras.js',
   './js/bps-hotseat.js',
   './js/bps3d-bridge.js',
   './support.js',
   './vendor/peerjs/peerjs.min.js',
+  './vendor/three/three.module.js',
+  './vendor/three/three.core.js',
+  './vendor/three/OrbitControls.js',
   './vendor/react/react.production.min.js',
   './vendor/react/react-dom.production.min.js',
   './css/bizon-fonts-v8.css',
