@@ -381,6 +381,7 @@ document.addEventListener('DOMContentLoaded',function(){var m=document.getElemen
           <p id="ft-cert-date" class="text-[9px] text-deep-teal/45 font-bold mt-3"></p>
           <button onclick="ftDownloadCert()" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-4 py-2 text-[11px] mt-3" data-en="📥 Download certificate">📥 Tải chứng chỉ</button>
           <button onclick="ftDownloadCertOfficial()" class="clay-btn bg-primary text-white font-display font-extrabold px-4 py-2 text-[11px] mt-3 ml-2" data-en="🎓 Official CTU certificate">🎓 Chứng nhận ĐHCT</button>
+          <p id="ft-cert-msg" class="text-[10px] font-bold mt-2" style="color:#c0392b"></p>
         </div>
       </div>
       <div class="mt-5 text-left hidden" id="ft-submit-box">
@@ -1074,8 +1075,20 @@ document.addEventListener('DOMContentLoaded',function(){var m=document.getElemen
   // định KT330H/Entrepreneurship nếu chưa cấu hình/không có mã lớp.
   window.ftDownloadCertOfficial = function () {
     if (!window.OfficialCert) return;
-    window.OfficialCert.fetchConfig().then(function (cfg) {
-      window.OfficialCert.download({ name: certName(), courseCode: cfg.course_code, courseName: cfg.course_name, courseDates: cfg.course_dates, filenamePrefix: 'BizOn-BenPhuSa' });
+    var nameEl = $('ft-name'), classEl = $('ft-class');
+    var name = (nameEl && nameEl.value.trim()) || '';
+    var klass = (classEl && classEl.value.trim()) || '';
+    if (!name || !klass) {
+      if ($('ft-cert-msg')) $('ft-cert-msg').textContent = T(
+        '⚠️ Nhập Tên và Mã lớp ở ô bên dưới (khung "Nộp kết quả") trước khi tải chứng nhận chính thức.',
+        '⚠️ Enter your Name and Class code below (the "Submit result" box) before downloading the official certificate.'
+      );
+      (name ? classEl : nameEl).focus();
+      return;
+    }
+    if ($('ft-cert-msg')) $('ft-cert-msg').textContent = '';
+    window.OfficialCert.fetchConfig(klass).then(function (cfg) {
+      window.OfficialCert.download({ name: name, courseCode: cfg.course_code, courseName: cfg.course_name, courseDates: cfg.course_dates, filenamePrefix: 'BizOn-BenPhuSa' });
     });
   };
 
