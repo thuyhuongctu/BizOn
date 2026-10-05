@@ -58,7 +58,7 @@
             var el = $('bp-shop-card'); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' }); } },
         { id: 'notebook', icon: '📓', art: 'assets/illustrations/game/paths-compass.webp', name: T('Sổ tay chiến lược', 'Strategy Notebook'), x: 700, y: 380,
           onOpen: function (api) { api.dialogue({ name: T('Sổ tay chiến lược', 'Strategy Notebook'), icon: '📓', art: 'assets/illustrations/game/paths-compass.webp', station: true }, notebookText(), [{ text: T('Đóng', 'Close'), primary: true, onPick: api.close }]); } },
-        { id: 'rules', icon: '📜', art: 'assets/illustrations/game/strategy-notes-podium.webp', name: T('Luật chơi', 'Rules'), x: 980, y: 380,
+        { id: 'rules', icon: '📜', art: 'assets/illustrations/strategy-notes-podium.webp', name: T('Luật chơi', 'Rules'), x: 980, y: 380,
           onOpen: function () { if (typeof window.bpShowRules === 'function') window.bpShowRules(); } },
       ],
     };
