@@ -30,10 +30,12 @@
 
   function lineChart(obs, unit) {
     const W = 640, H = 170, L = 34, B = 22;
-    const vals = obs.map((o) => o.value), lo = Math.min(...vals) * 0.97, hi = Math.max(...vals) * 1.03;
+    const vals = obs.map((o) => o.value), mn = Math.min(...vals), mx = Math.max(...vals), pad = (mx - mn) * 0.06 || 1;
+    const lo = mn - pad, hi = mx + pad, dec = hi - lo < 20 ? 1 : 0;   // đệm theo biên độ: đúng cả khi có giá trị âm
     const x = (i) => L + i * (W - L - 6) / (obs.length - 1), y = (v) => 8 + (1 - (v - lo) / (hi - lo)) * (H - B - 8);
     let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Biểu đồ đường theo quý, ${esc(unit)}">`;
-    [lo, (lo + hi) / 2, hi].forEach((v) => { s += `<line x1="${L}" x2="${W}" y1="${y(v)}" y2="${y(v)}" class="g"/><text x="${L - 4}" y="${y(v) + 4}" text-anchor="end">${nf(v, 0)}</text>`; });
+    [lo, (lo + hi) / 2, hi].forEach((v) => { s += `<line x1="${L}" x2="${W}" y1="${y(v)}" y2="${y(v)}" class="g"/><text x="${L - 4}" y="${y(v) + 4}" text-anchor="end">${nf(v, dec)}</text>`; });
+    if (lo < 0 && hi > 0) s += `<line x1="${L}" x2="${W}" y1="${y(0)}" y2="${y(0)}" class="g z"/>`;
     s += `<polyline points="${obs.map((o, i) => `${x(i)},${y(o.value)}`).join(' ')}"/>`;
     obs.forEach((o, i) => { if (o.period.endsWith('Q1') && +o.period.slice(0, 4) % 2 === 0 && x(i) < W - 30) s += `<text x="${x(i)}" y="${H - 6}">${o.period.slice(0, 4)}</text>`; });
     return s + '</svg>';
@@ -55,6 +57,7 @@
     const l = s.latest;
     if (l.ytd !== undefined) return `<b>${nf(l.ytd, s.unit === 'tỷ USD' ? 2 : 1)} ${esc(s.unit)}</b><span>${ytdLabel(l.period)}${l.ytdYoY != null ? ` · <em class="${l.ytdYoY >= 0 ? 'up' : 'down'}">${sign(l.ytdYoY)} so cùng kỳ</em>` : ''}${l.realYoY != null ? ` · loại trừ yếu tố giá ${sign(l.realYoY)}` : ''}${l.share != null ? ` · chiếm ${nf(l.share, 1)}% tổng kim ngạch` : ''}</span>`;
     if (s.chart === 'hbar') return `<b>${nf(l.total, 1)} tỷ USD</b><span>tổng, mọi đối tác</span>`;
+    if (s.unit === '% so cùng kỳ') return `<b>${l.value > 0 ? '+' : ''}${nf(l.value, 2)}%</b><span>${qLabel(l.period)} · tháng cuối quý so với cùng kỳ năm trước</span>`;
     if (s.chart === 'line') return `<b>${nf(l.value, 1)}</b><span>${qLabel(l.period)} · <em class="${l.yoy >= 0 ? 'up' : 'down'}">${sign(l.yoy)} so cùng kỳ</em></span>`;
     return `<b>${nf(l.value, 0)} triệu USD</b><span>năm ${esc(l.period)}</span>`;
   }
@@ -63,7 +66,7 @@
     const withQuote = s.observations.filter((o) => o.quote);
     if (!withQuote.length) return '';
     return `<details><summary>Xem ${withQuote.length} điểm số liệu kèm trích dẫn nguyên văn</summary><div class="table-wrap"><table><thead><tr><th>Kỳ</th><th>Số</th><th>Trích dẫn</th><th>Nguồn</th></tr></thead><tbody>
-      ${withQuote.slice().reverse().map((o) => `<tr><td>${esc(VI[o.period] || qLabel(o.period))}</td><td class="n">${o.ytd !== undefined ? nf(o.ytd, s.unit === 'tỷ USD' ? 2 : 1) : nf(o.value, 1)}</td><td class="q">«${esc(o.quote)}»</td><td>${o.url ? `<a href="${esc(o.url)}" rel="noopener" target="_blank">mở</a>` : esc(o.source)}</td></tr>`).join('')}
+      ${withQuote.slice().reverse().map((o) => `<tr><td>${esc(VI[o.period] || qLabel(o.period))}</td><td class="n">${o.ytd !== undefined ? nf(o.ytd, s.unit === 'tỷ USD' ? 2 : 1) : nf(o.value, s.unit === '% so cùng kỳ' ? 2 : 1)}</td><td class="q">«${esc(o.quote)}»</td><td>${o.url ? `<a href="${esc(o.url)}" rel="noopener" target="_blank">mở</a>` : esc(o.source)}</td></tr>`).join('')}
     </tbody></table></div></details>`;
   }
 

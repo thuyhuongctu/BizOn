@@ -135,6 +135,26 @@ def retail_series():
     }
 
 
+def usd_index_series():
+    """Chỉ số giá đô la Mỹ, tháng cuối quý so với cùng kỳ năm trước (tools/extract_usd_index.py)."""
+    r = rows('usd_index_quarterly.csv')
+    obs = [{'period': x['quarter'], 'value': float(x['usd_index_yoy_pct']), 'source': x['source_name'],
+            'url': x['source_url'], 'quote': x['quote']} for x in sorted(r, key=lambda x: qkey(x['quarter']))]
+    return {
+        'id': 'usd_index_yoy', 'label': 'Chỉ số giá đô la Mỹ trong nước (tháng cuối quý so với cùng kỳ)', 'domain': 'finance',
+        'unit': '% so cùng kỳ', 'frequency': 'quý (tháng cuối quý)', 'official': True, 'chart': 'line',
+        'latest': {'period': obs[-1]['period'], 'value': obs[-1]['value']},
+        'source': 'Tổng cục Thống kê (nay là Cục Thống kê, Bộ Tài chính) — báo cáo tình hình kinh tế – xã hội quý, mục chỉ số giá',
+        'method': 'Tỷ lệ thay đổi của chỉ số giá đô la Mỹ tháng cuối quý so với cùng tháng năm trước, lấy đúng số in trong báo cáo. '
+                  'Dương = đồng Việt Nam mất giá so với đô la Mỹ trên thị trường trong nước.',
+        'limitation': 'Một tháng đại diện cho quý, không phải bình quân quý. Đây là giá USD bình quân trong nước, không phải tỷ giá '
+                      'trung tâm của Ngân hàng Nhà nước và không phải chỉ số DXY quốc tế. Báo cáo quý IV đôi khi viết '
+                      '"so với tháng 12 năm trước" (cùng nghĩa). Số công bố lần đầu.',
+        'rights': 'Số liệu thống kê nhà nước công bố công khai; trích dẫn có ghi nguồn. Rà điều khoản trước khi phát hành qua API.',
+        'observations': obs
+    }
+
+
 def partner_series():
     r = rows('fdi_stock_by_source.csv')
     out = []
@@ -188,7 +208,7 @@ def durian_series():
 
 
 def build():
-    series = fdi_series() + fdi_trade_series() + [retail_series()] + partner_series() + [
+    series = fdi_series() + fdi_trade_series() + [retail_series(), usd_index_series()] + partner_series() + [
         quarterly_avg('wtv_import_volume', 'world_import_volume', 'Khối lượng nhập khẩu hàng hóa thế giới', 'chỉ số 2021 = 100',
                       'CPB Netherlands Bureau for Economic Policy Analysis — World Trade Monitor (bản tháng 7/2026, công bố 25/9/2026)',
                       'Chỉ số khối lượng nhập khẩu thế giới, đã điều chỉnh mùa vụ (chuỗi mgz_w1_qnmi_sn), bình quân quý.',
