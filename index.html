@@ -39,6 +39,11 @@
   @keyframes bzDrift{0%{transform:translateX(-30%) rotate(-2deg)}50%{transform:translateX(30%) rotate(2deg)}100%{transform:translateX(-30%) rotate(-2deg)}}
   @media (prefers-reduced-motion:reduce){*{animation:none!important}}
   @media (max-width:560px){ .hp-stage{min-height:340px} }
+  /* Nút "làm mới trang" — chỉ trang chủ, bơm vào thanh nav đất sét chung */
+  .cn-refresh{display:grid;place-items:center;width:38px;height:38px;border:0;border-radius:50%;background:var(--clay-tray);color:var(--clay-sub);font-size:18px;line-height:1;cursor:pointer;box-shadow:inset 0 3px 5px rgba(110,70,30,.18)}
+  .cn-refresh:hover{color:var(--clay-ink)}
+  .cn-refresh:active{transform:scale(.9)}
+  @media (max-width:560px){ .cn-refresh{width:34px;height:34px;font-size:16px} }
 </style>
 <meta property="og:type" content="website">
 <meta property="og:title" content="BizOn Bật Nghiệp — Học kinh doanh qua mô phỏng">
@@ -78,7 +83,7 @@
     </div>
     <div class="hp-river" aria-hidden="true">
       <div class="hp-wave" style="top:40px;background:radial-gradient(circle at 36px 0, transparent 35px, #5DB8C4 36px) 0 0/72px 36px repeat-x, linear-gradient(#5DB8C4,#5DB8C4) 0 36px/100% 100% no-repeat;animation:bzWaveR 6s linear infinite"></div>
-      <img src="assets/character/phu-sa/doi-phu-sa-ghe.webp" alt="" draggable="false" style="position:absolute;left:50%;margin-left:-110px;bottom:34px;width:220px;filter:drop-shadow(0 10px 8px rgba(0,50,60,.35));animation:bzDrift 22s ease-in-out infinite">
+      <img src="assets/character/phu-sa/huong-tu-ghe-chonoi.webp" alt="" draggable="false" style="position:absolute;left:50%;margin-left:-110px;bottom:34px;width:220px;filter:drop-shadow(0 10px 8px rgba(0,50,60,.35));animation:bzDrift 22s ease-in-out infinite">
       <div class="hp-wave" style="top:92px;background:radial-gradient(circle at 36px 0, transparent 35px, #1E7E8C 36px) 0 0/72px 36px repeat-x, linear-gradient(#1E7E8C,#1E7E8C) 0 92px/100% 100% no-repeat;animation:bzWave 4s linear infinite"></div>
     </div>
   </section>
@@ -93,7 +98,7 @@
           <div style="width:52px;height:52px;border-radius:18px;background:var(--clay-card);display:grid;place-items:center;font-family:var(--clay-head);font-size:22px;font-weight:800;color:var(--clay-teal);box-shadow:inset 0 -5px 0 rgba(0,0,0,.08),0 8px 14px -8px rgba(0,0,0,.35)">01</div>
           <div style="font-family:var(--clay-head);font-size:24px;font-weight:800;line-height:1.14;color:var(--clay-ink)" data-en="Students">Sinh viên</div>
           <p style="margin:0;font-size:15px;line-height:1.55;color:var(--clay-ink-2);flex:1" data-en="Play a short round, make decisions and get feedback from Lumina.">Chơi một ván ngắn, ra quyết định và nhận phản hồi từ Lumina.</p>
-          <div style="display:flex;flex-wrap:wrap;gap:8px"><a class="hp-pill" style="background:rgba(255,251,244,.85);color:var(--clay-ink)" href="ben-phu-sa.html" data-en="Bến Phù Sa →">Bến Phù Sa →</a><a class="hp-pill" style="background:rgba(255,251,244,.85);color:var(--clay-ink)" href="game.html" data-en="Bật Nghiệp →">Bật Nghiệp →</a></div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px"><a class="hp-pill" style="background:rgba(255,251,244,.85);color:var(--clay-ink)" href="ben-phu-sa-v8.html" data-en="Bến Phù Sa →">Bến Phù Sa →</a><a class="hp-pill" style="background:rgba(255,251,244,.85);color:var(--clay-ink)" href="game.html" data-en="Bật Nghiệp →">Bật Nghiệp →</a><a class="hp-pill" style="background:rgba(255,251,244,.85);color:var(--clay-ink)" href="brand-passport.html" data-en="Brand Passport →">Hộ Chiếu Thương Hiệu →</a></div>
         </div>
         <div style="padding:26px 24px;border-radius:30px;background:var(--clay-c1);display:flex;flex-direction:column;gap:12px;box-shadow:inset 0 -10px 0 rgba(0,0,0,.08),inset 0 6px 0 rgba(255,255,255,.5),0 24px 30px -18px rgba(0,30,40,.55)">
           <div style="width:52px;height:52px;border-radius:18px;background:var(--clay-card);display:grid;place-items:center;font-family:var(--clay-head);font-size:22px;font-weight:800;color:var(--clay-teal);box-shadow:inset 0 -5px 0 rgba(0,0,0,.08),0 8px 14px -8px rgba(0,0,0,.35)">02</div>
@@ -119,16 +124,25 @@
 
   <!-- PRODUCTS -->
   <section id="cong" class="hp-sec">
-    <div class="hp-eyebrow" data-en="One ecosystem · four gateways">Một hệ sinh thái · bốn cổng trải nghiệm</div>
+    <div class="hp-eyebrow" data-en="One ecosystem · five gateways">Một hệ sinh thái · năm cổng trải nghiệm</div>
     <h2 class="hp-h2" style="max-width:18em" data-en="Learn business by making consequential decisions.">Học kinh doanh bằng những quyết định có hệ quả.</h2>
     <div class="hp-cardgrid">
+      <article style="display:flex;flex-direction:column;border-radius:32px;background:var(--clay-card);padding:12px;box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 rgba(255,255,255,.95),0 26px 36px -22px rgba(110,70,30,.5)">
+        <div style="position:relative;aspect-ratio:4/5;border-radius:24px;overflow:hidden;background:#D7ECEA;box-shadow:inset 0 -8px 0 rgba(0,0,0,.06)"><img src="assets/illustrations/game/ben-phu-sa-cho-noi.webp" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" loading="lazy"></div>
+        <div style="padding:16px 10px 10px;display:flex;flex-direction:column;gap:8px;flex:1">
+          <div style="font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--clay-accent)" data-en="TIER 1 · START HERE">BẬC 1 · BẮT ĐẦU Ở ĐÂY</div>
+          <h3 style="margin:0;font-family:var(--clay-head);font-weight:800;font-size:28px;line-height:1.14">Bến Phù Sa</h3>
+          <p style="margin:0;font-size:15px;line-height:1.55;color:var(--clay-sub);flex:1" data-en="A riverside street-vendor start-up on Bến Phù Sa's floating market: pick a Method, Product and Location each week, and learn when to test cheap and when to scale.">Khởi nghiệp gánh hàng rong trên sông nước Bến Phù Sa: mỗi tuần chọn Phương thức – Món hàng – Địa điểm, học khi nào nên thử nhanh và khi nào nên nhân rộng.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px"><a class="hp-pill" style="background:var(--clay-tray);color:var(--clay-ink)" href="ben-phu-sa.html" data-en="2D">Bản 2D</a><a class="hp-pill" style="background:var(--clay-tray);color:var(--clay-ink)" href="ben-phu-sa-v8.html" data-en="3D + team">Bản 3D + nhóm</a></div>
+        </div>
+      </article>
       <article style="display:flex;flex-direction:column;border-radius:32px;background:var(--clay-card);padding:12px;box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 rgba(255,255,255,.95),0 26px 36px -22px rgba(110,70,30,.5)">
         <div style="position:relative;aspect-ratio:4/5;border-radius:24px;overflow:hidden;background:#FFE6B8;box-shadow:inset 0 -8px 0 rgba(0,0,0,.06)"><img src="assets/concept/tier-2a-bat-nghiep.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain" loading="lazy"></div>
         <div style="padding:16px 10px 10px;display:flex;flex-direction:column;gap:8px;flex:1">
           <div style="font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--clay-accent)">01 · BIZON CORE</div>
           <h3 style="margin:0;font-family:var(--clay-head);font-weight:800;font-size:28px;line-height:1.14">Bật Nghiệp</h3>
           <p style="margin:0;font-size:15px;line-height:1.55;color:var(--clay-sub);flex:1" data-en="Build and operate a business through multi-round strategic decisions in a Vietnamese context.">Xây dựng và điều hành doanh nghiệp qua các vòng quyết định chiến lược trong bối cảnh Việt Nam.</p>
-          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px"><a class="hp-pill" style="background:var(--clay-tray);color:var(--clay-ink)" href="game.html" data-en="2D">Bản 2D</a><a class="hp-pill" style="background:var(--clay-tray);color:var(--clay-ink)" href="BizOn Game 3D.html" data-en="3D">Bản 3D</a><a class="hp-pill" style="background:var(--clay-tray);color:var(--clay-ink)" href="ben-phu-sa.html">Bến Phù Sa</a></div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px"><a class="hp-pill" style="background:var(--clay-tray);color:var(--clay-ink)" href="game.html" data-en="2D">Bản 2D</a><a class="hp-pill" style="background:var(--clay-tray);color:var(--clay-ink)" href="BizOn Game 3D.html" data-en="3D">Bản 3D</a></div>
         </div>
       </article>
       <article style="display:flex;flex-direction:column;border-radius:32px;background:var(--clay-card);padding:12px;box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 rgba(255,255,255,.95),0 26px 36px -22px rgba(110,70,30,.5)">
@@ -264,5 +278,22 @@
 <script src="js/bizon-clay-i18n.js" defer></script>
 <script src="js/bizon-clay-nav.js" defer></script>
 <script src="js/bizon-clay-footer.js" defer></script>
+<script>
+/* Nút "làm mới trang" — chỉ trang chủ, bơm vào thanh nav đất sét chung sau khi nav.js dựng xong */
+document.addEventListener('DOMContentLoaded', function(){
+  var right = document.querySelector('#clay-nav .cn-right');
+  if(!right || document.getElementById('hp-refresh')) return;
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.id = 'hp-refresh';
+  btn.className = 'cn-refresh';
+  btn.setAttribute('aria-label', 'Làm mới trang');
+  btn.setAttribute('data-en-aria', 'Refresh page');
+  btn.textContent = '⟳';
+  btn.addEventListener('click', function(){ location.reload(); });
+  right.insertBefore(btn, right.firstChild);
+  if(window.clayApplyLang) window.clayApplyLang(window.clayCurrentLang ? window.clayCurrentLang() : 'vi');
+});
+</script>
 </body>
 </html>
