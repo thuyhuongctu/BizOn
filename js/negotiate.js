@@ -90,13 +90,27 @@
       if (isAudio) m.innerHTML = html; else m.textContent = html;
       tr.appendChild(m); tr.scrollTop = tr.scrollHeight;
     }
-    function partnerReply() {
-      var line = cfg.replyLines[Math.min(replyI, cfg.replyLines.length - 1)]; replyI++;
+    // Đối tác vẫn trả lời theo kịch bản cố định (replyLines, by design – xem
+    // ghi chú đầu file), nhưng trước đây hoàn toàn phớt lờ nội dung người
+    // chơi vừa gõ, nên gõ gì cũng ra câu kế tiếp giống nhau – mất cảm giác
+    // "đàm phán" 2 chiều. Thêm một lớp phản hồi ngắn, nhẹ dựa trên nội dung
+    // gõ (độ dài + có số hay không, vì giá/số lượng luôn là số) chứ không
+    // phải NLP đầy đủ, để ít nhất đối tác có "nghe" người chơi nói gì trước
+    // khi tiếp tục kịch bản.
+    function reactPrefix(v) {
+      if (!v) return '';
+      var words = v.trim().split(/\s+/);
+      if (/\d/.test(v)) return T('Ok, tôi ghi nhận con số đó. ', 'Okay, noted that number. ');
+      if (words.length <= 2) return T('Bạn trả lời ngắn vậy tôi chưa rõ lắm, nhưng thôi, ', "That's a pretty short answer, but alright, ");
+      return '';
+    }
+    function partnerReply(userText) {
+      var line = reactPrefix(userText) + cfg.replyLines[Math.min(replyI, cfg.replyLines.length - 1)]; replyI++;
       setTimeout(function () { addMsg('them', line); }, 450);
     }
     function sendText() {
       var v = input.value.trim(); if (!v) return;
-      addMsg('me', v); input.value = ''; partnerReply();
+      addMsg('me', v); input.value = ''; partnerReply(v);
     }
     root.querySelector('.send').onclick = sendText;
     input.addEventListener('keydown', function (e) { if (e.key === 'Enter') sendText(); });
