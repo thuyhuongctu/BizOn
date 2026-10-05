@@ -114,6 +114,9 @@
   body.bp3d-full #bp3d-stage { z-index:40; }
   body.bp3d-full #bp3d-stage::after { display:none; }
   @media (min-width:1024px) { #bp3d-full { display:none; } }
+  /* Video hướng dẫn chơi chưa đúng nội dung – tạm gỡ hiển thị, chờ làm lại
+     video đúng. Giữ nguyên markup/dây nối <source>/poster bên dưới để chỉ
+     cần xoá dòng display:none này khi có video đúng. */
   #bp-howto { display:none !important; }
   /* Màn giới thiệu làm overlay toàn màn hình, cùng tinh thần #login3d của
      BizOn Game 3D.html (Bật Nghiệp) – che hẳn bản đồ 3D/hero phía sau,
@@ -163,6 +166,16 @@
   #bp3d-col .bp-adv { background:#fff; border-color:rgba(3,51,55,.08); box-shadow:0 3px 0 rgba(3,51,55,.06); }
   #bp3d-col .bp-log li { border-left-color:#f2b53a; }
 </style>
+<style id="bp-status-sticky">
+  /* Thanh trạng thái (quý · Luật chơi/Hướng dẫn · tiền mặt) nổi lại khi cuộn
+     qua nội dung quyết định dài, thay vì biến mất khi cuộn qua #bp3d-stage
+     cố định phía trên – cùng tinh thần "HUD nổi" đã làm ở ben-phu-sa-v8.html.
+     Là con trực tiếp của #bp-play (không lồng trong 1 clay-card nhỏ) để còn
+     "dính" suốt chiều cao cả màn chơi, không chỉ trong phạm vi thẻ đầu tiên. */
+  #bp-status-bar { position:sticky; top:52px; z-index:20; margin:0 0 16px; border-radius:16px;
+    background:#fffaf0; box-shadow:0 10px 20px -14px rgba(0,60,80,.35); }
+  html[data-theme="dark"] #bp-status-bar { background:#0e2a33; }
+</style>
 <link rel="manifest" href="manifest-hochieu-3d.webmanifest">
 <script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js" integrity="sha384-CjloA8y00+1SDAUkjs099PVfnY2KmDC2BZnws9kh8D/lX1s46w6EPhpXdqMfjK6i" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js" integrity="sha384-Ukv1p/xTma6P4/2bY5KzWBw+ydSpXmhCMtyciIQVDJ1RmOxtCYNMF1uXT9T63H67" crossorigin="anonymous"></script>
@@ -202,34 +215,39 @@
 
 <main class="max-w-2xl mx-auto px-5 py-8">
 
-  <!-- VIDEO HƯỚNG DẪN CHƠI -->
-  <section id="bp-howto" class="clay-card p-5 mb-6">
-    <button type="button" onclick="document.getElementById('bp-howto-box').classList.toggle('hidden');this.querySelector('b').textContent=document.getElementById('bp-howto-box').classList.contains('hidden')?'▾':'▴'" class="w-full flex items-center justify-between">
-      <span>
-        <span class="block text-[11px] font-extrabold text-primary uppercase tracking-[.2em]" data-en="Watch before you play">📺 Xem trước khi chơi</span>
-        <span class="block font-display font-extrabold text-deep-teal text-lg mt-1" data-en="How-to-play video">Video hướng dẫn chơi</span>
-      </span>
-      <b class="text-xs font-bold opacity-60">▾</b>
-    </button>
-    <div id="bp-howto-box" class="hidden mt-3">
-    <div class="flex justify-center gap-2 mb-3">
-      <button id="bp-video-len-short" onclick="bpVideoLen('short')" class="clay-btn bg-deep-teal text-white font-display font-extrabold px-4 py-1.5 text-xs" data-en="🎬 Quick (~40s)">🎬 Ngắn (~40 giây)</button>
-      <button id="bp-video-len-full" onclick="bpVideoLen('full')" class="clay-btn bg-white text-deep-teal border border-deep-teal/20 font-display font-extrabold px-4 py-1.5 text-xs" data-en="📖 Detailed – all 6 quarters (~105s)">📖 Chi tiết – đủ 6 quý (~105 giây)</button>
-    </div>
-    <video id="bp-video-short-vi" controls preload="none" playsinline class="w-full rounded-2xl block mx-auto" style="max-height:70vh">
-    </video>
-    <video id="bp-video-short-en" controls preload="none" playsinline class="w-full rounded-2xl mx-auto hidden" style="max-height:70vh">
-    </video>
-    <video id="bp-video-full-vi" controls preload="none" playsinline class="w-full rounded-2xl mx-auto hidden" style="max-height:70vh">
-    </video>
-    <video id="bp-video-full-en" controls preload="none" playsinline class="w-full rounded-2xl mx-auto hidden" style="max-height:70vh">
-    </video>
-    <p class="text-[10px] text-deep-teal/40 mt-3 text-center" data-en="Burned-in captions + original background music – switch language from the ⋯ button top-left to switch the video too.">Có phụ đề chữ đốt sẵn + nhạc nền gốc – đổi ngôn ngữ bằng nút ⋯ góc trái sẽ đổi luôn video.</p>
-    </div>
-  </section>
-
   <!-- MÀN GIỚI THIỆU -->
   <section id="bp-intro" class="clay-card p-6">
+    <!-- VIDEO HƯỚNG DẪN CHƠI – nằm trong #bp-intro (không phải section riêng trước nó) vì
+         #bp-intro là overlay toàn màn hình (position:fixed) từ PR #627; để ở ngoài sẽ bị
+         overlay che mất, không bấm được. -->
+    <section id="bp-howto" class="clay-card p-5 mb-6">
+      <button type="button" onclick="document.getElementById('bp-howto-box').classList.toggle('hidden');this.querySelector('b').textContent=document.getElementById('bp-howto-box').classList.contains('hidden')?'▾':'▴'" class="w-full flex items-center justify-between">
+        <span>
+          <span class="block text-[11px] font-extrabold text-primary uppercase tracking-[.2em]" data-en="Watch before you play">📺 Xem trước khi chơi</span>
+          <span class="block font-display font-extrabold text-deep-teal text-lg mt-1" data-en="How-to-play video">Video hướng dẫn chơi</span>
+        </span>
+        <b class="text-xs font-bold opacity-60">▾</b>
+      </button>
+      <div id="bp-howto-box" class="hidden mt-3">
+      <div class="flex justify-center gap-2 mb-3">
+        <button id="bp-video-len-short" onclick="bpVideoLen('short')" class="clay-btn bg-deep-teal text-white font-display font-extrabold px-4 py-1.5 text-xs" data-en="🎬 Quick (~40s)">🎬 Ngắn (~40 giây)</button>
+        <button id="bp-video-len-full" onclick="bpVideoLen('full')" class="clay-btn bg-white text-deep-teal border border-deep-teal/20 font-display font-extrabold px-4 py-1.5 text-xs" data-en="📖 Detailed – all 6 quarters (~105s)">📖 Chi tiết – đủ 6 quý (~105 giây)</button>
+      </div>
+      <video id="bp-video-short-vi" controls preload="none" playsinline poster="assets/video/bp-huong-dan-choi-vi-poster.jpg" class="w-full rounded-2xl block mx-auto" style="max-height:70vh">
+        <source src="assets/video/bp-huong-dan-choi-vi-v3.mp4" type="video/mp4">
+      </video>
+      <video id="bp-video-short-en" controls preload="none" playsinline poster="assets/video/bp-huong-dan-choi-en-poster.jpg" class="w-full rounded-2xl mx-auto hidden" style="max-height:70vh">
+        <source src="assets/video/bp-huong-dan-choi-en-v3.mp4" type="video/mp4">
+      </video>
+      <video id="bp-video-full-vi" controls preload="none" playsinline poster="assets/video/bp-huong-dan-chi-tiet-vi-poster.jpg" class="w-full rounded-2xl mx-auto hidden" style="max-height:70vh">
+        <source src="assets/video/bp-huong-dan-chi-tiet-vi-v4.mp4" type="video/mp4">
+      </video>
+      <video id="bp-video-full-en" controls preload="none" playsinline poster="assets/video/bp-huong-dan-chi-tiet-en-poster.jpg" class="w-full rounded-2xl mx-auto hidden" style="max-height:70vh">
+        <source src="assets/video/bp-huong-dan-chi-tiet-en-v4.mp4" type="video/mp4">
+      </video>
+      <p class="text-[10px] text-deep-teal/40 mt-3 text-center" data-en="Burned-in captions + original background music – switch language from the ⋯ button top-left to switch the video too.">Có phụ đề chữ đốt sẵn + nhạc nền gốc – đổi ngôn ngữ bằng nút ⋯ góc trái sẽ đổi luôn video.</p>
+      </div>
+    </section>
     <h2 class="font-display font-extrabold text-deep-teal text-lg mb-2" data-en="🏢 Choose your company">🏢 Chọn doanh nghiệp của bạn</h2>
     <p class="text-[11px] opacity-60 mb-2" data-en="Each company has its own journey and risk profile – there is no &quot;strongest&quot; choice.">Mỗi doanh nghiệp một hành trình và hệ rủi ro khác nhau – không có lựa chọn "mạnh nhất".</p>
     <div class="grid sm:grid-cols-2 gap-2" id="bp-firms"></div>
@@ -282,16 +300,16 @@
 
   <!-- MÀN CHƠI -->
   <section id="bp-play" class="hidden">
-    <div class="clay-card p-5 mb-4">
-      <div class="flex items-center justify-between flex-wrap gap-2">
-        <div class="flex gap-1.5" id="bp-qdots"></div>
-        <div class="flex items-center gap-2">
-          <button onclick="bpShowRules()" class="text-[11px] font-bold text-deep-teal/50" title="Luật chơi" data-en="📜 Rules">📜 Luật chơi</button>
-          <button onclick="bpTourReplay()" class="text-[11px] font-bold text-deep-teal/50" title="Hướng dẫn" data-en="❓ Guide">❓ Hướng dẫn</button>
-          <p class="text-sm font-extrabold" data-en-html="💼 <span id=&quot;bp-cash&quot;>0</span> bn ₫">💼 <span id="bp-cash">0</span> tỷ ₫</p>
-        </div>
+    <div class="flex items-center justify-between flex-wrap gap-2 p-3" id="bp-status-bar">
+      <div class="flex gap-1.5" id="bp-qdots"></div>
+      <div class="flex items-center gap-2">
+        <button onclick="bpShowRules()" class="text-[11px] font-bold text-deep-teal/50" title="Luật chơi" data-en="📜 Rules">📜 Luật chơi</button>
+        <button onclick="bpTourReplay()" class="text-[11px] font-bold text-deep-teal/50" title="Hướng dẫn" data-en="❓ Guide">❓ Hướng dẫn</button>
+        <p class="text-sm font-extrabold" data-en-html="💼 <span id=&quot;bp-cash&quot;>0</span> bn ₫">💼 <span id="bp-cash">0</span> tỷ ₫</p>
       </div>
-      <div class="flex flex-wrap gap-1.5 mt-3" id="bp-hud"></div>
+    </div>
+    <div class="clay-card p-5 mb-4">
+      <div class="flex flex-wrap gap-1.5" id="bp-hud"></div>
       <div class="mt-3 p-3 rounded-2xl" id="bp-rival-race" style="background:rgba(253,161,39,.07);border:1px solid rgba(253,161,39,.25)"></div>
     </div>
 
@@ -494,12 +512,13 @@
     hs: { flag: '🇮🇩', c: 'Indonesia', cEn: 'Indonesia', fta: 'ATIGA (ASEAN), RCEP', ftaEn: 'ATIGA (ASEAN), RCEP', cul: 'Khoảng cách quyền lực cao, coi trọng quan hệ cá nhân; hơn 17.000 đảo', culEn: 'High power distance, relationship-based; 17,000+ islands', bar: 'Chứng nhận Halal bắt buộc (BPJPH), đăng ký BPOM, phân phối phân mảnh', barEn: 'Mandatory Halal certification (BPJPH), BPOM registration, fragmented distribution' },
   };
   MKTS.forEach(function (m) { m.real = REAL[m.key]; });
-  // 4 doanh nghiệp – mỗi nhà một hành trình (concept mục 2)
+  // 5 doanh nghiệp – mỗi nhà một hành trình (concept mục 2)
   var FIRMS = [
     { icon: '🧴', name: 'Mộc Nhiên', prod: 'Mỹ phẩm thảo mộc', prodEn: 'Herbal cosmetics', adv: 'Câu chuyện thương hiệu mạnh', advEn: 'Strong brand story', weak: 'Khó đạt tiêu chuẩn quốc tế', weakEn: 'Hard to meet international standards', cash: 8, rep: 55, capab: 38, susts: 0, img: 'assets/character/firms/moc-nhien-cut.webp' },
     { icon: '🥫', name: 'Phù Sa Foods', prod: 'Thực phẩm chế biến', prodEn: 'Processed food', adv: 'Hương vị đặc trưng · hợp khách trẻ', advEn: 'Distinctive flavor · a fit for young customers', weak: 'Chi phí bảo quản cao (+20% vận hành)', weakEn: 'High storage cost (+20% operating)', cash: 8, rep: 48, capab: 45, susts: 0, img: 'assets/character/firms/phu-sa-foods-cut.webp' },
     { icon: '👗', name: 'Lam Việt', prod: 'Thời trang bền vững', prodEn: 'Sustainable fashion', adv: 'Hồ sơ xanh sẵn có · hợp Lục Đảo', advEn: 'Ready-made green record · a fit for Lục Đảo', weak: 'Năng lực sản xuất hạn chế', weakEn: 'Limited production capacity', cash: 8, rep: 50, capab: 32, susts: 1, img: 'assets/character/firms/lam-viet-cut.webp' },
     { icon: '💻', name: 'Mekong Digital', prod: 'Phần mềm quản trị', prodEn: 'Management software', adv: 'Kênh số cực mạnh · biên lời cao', advEn: 'Very strong digital channel · high margins', weak: 'Mù mờ pháp luật dữ liệu', weakEn: 'Shaky on data regulations', cash: 7, rep: 46, capab: 48, susts: 0, img: 'assets/character/firms/mekong-digital-cut.webp' },
+    { icon: '🧺', name: 'Lục Bình Craft', prod: 'Thủ công mỹ nghệ', prodEn: 'Handicrafts', adv: 'Chi phí vận hành thấp · hợp đối tác địa phương', advEn: 'Low operating cost · a fit for local partners', weak: 'Tay nghề thủ công khó nhân rộng quy mô lớn', weakEn: 'Hand-made skill is hard to scale into mass production', cash: 7, rep: 52, capab: 30, susts: 1 },
   ];
   var MODES = [
     { id: 0, icon: '🛒', name: 'Nền tảng số', nameEn: 'Digital entry', cost: 0.5, margin: 0.25, scale: 0.7, op: 0.25, note: 'cam kết thấp – vào nhanh, lời mỏng', noteEn: 'low commitment – fast entry, thin margins' },
@@ -1505,6 +1524,7 @@
       if (S.firm === 1) { if (m === 2) rev *= 1.15; }           // Phù Sa Foods hợp khách trẻ Kim Sa
       if (S.firm === 2) { rev *= 0.92; if (m === 3) rev *= 1.35; } // Lam Việt: sản xuất hạn chế, Lục Đảo yêu
       if (S.firm === 3 && S.entered[m] === 0) rev *= 1.35;      // Mekong Digital cực mạnh kênh số
+      if (S.firm === 4) { if (S.entered[m] === 2) rev *= 1.2; if (S.entered[m] === 5) rev *= 0.75; } // Lục Bình Craft: hợp Liên minh chiến lược, khó phát huy FDI quy mô lớn
       if (S.items.NETWORK && (S.entered[m] === 2 || S.entered[m] === 4)) rev *= 1.10;
       if (S.entered[m] === 3 && S.capab < 50) S.rep = Math.max(0, S.rep - 1);   // Cấp phép: đối tác làm kém ảnh hưởng thương hiệu
       if (S.entered[m] === 4) S.know[m] = clamp(S.know[m] + 6);             // Liên doanh: học nhanh từ đối tác   // Vật phẩm Mạng lưới đối tác (vĩnh viễn)
@@ -1531,7 +1551,7 @@
       var ship = SHIP_MODES[S.ship[m]];
       var delayed = rnd() < ship.risk;
       if (delayed) rev *= 0.5;
-      var op = mode.op * bud.op * (S.firm === 1 ? 1.2 : 1) * (m === 5 ? 1.4 : 1) * ship.opMul;
+      var op = mode.op * bud.op * (S.firm === 1 ? 1.2 : 1) * (S.firm === 4 ? 0.8 : 1) * (m === 5 ? 1.4 : 1) * ship.opMul;
       var pf = rev * Math.max(0.08, margin) - op;
       qProfit += pf;
       qLinesData.push({ m: m, rev: rev, pf: pf, delayed: delayed, why: revWhy(m, mode, bud, delayed, rivalRevHere, rev) });
@@ -2127,6 +2147,8 @@
 <script src="js/bp-exam.js"></script>
 <script src="js/bp-worldmap.js?v=4"></script>
 <script src="js/bp-ib-ui.js?v=4"></script>
+<script src="ho-chieu-voice.js"></script>
+<script src="ho-chieu-voice-2.js"></script>
 <script src="js/bp-signature.js"></script>
 <script type="module" src="bp3d.js"></script>
 <script>if ('serviceWorker' in navigator && location.protocol.startsWith('http')) addEventListener('load', function () { navigator.serviceWorker.register('sw-hochieu.js').catch(function () {}); });</script>
