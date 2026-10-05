@@ -433,6 +433,15 @@
   function T(vi, en) { return isEN() ? en : vi; }
   var TY = function () { return T(' tỷ', ' bn'); }; // hậu tố đơn vị tiền sau số
 
+  // Banner "🎯 Mục tiêu bước này" – nhắc người chơi đang ở bước nào phải làm
+  // gì trước khi bấm tiếp, cùng quy ước thị giác với "🎯 Cách thắng vòng này"
+  // của Bật Nghiệp (clay-card viền vàng) để 2 game nhất quán.
+  function objBanner(vi, en) {
+    return '<div class="clay-card p-3.5 mb-3" style="border:2px solid rgba(253,161,39,.5)">' +
+      '<p class="font-display font-extrabold text-deep-teal text-[13px]">🎯 ' + T('Mục tiêu bước này', 'Goal for this step') + '</p>' +
+      '<p class="text-[11.5px] text-deep-teal/70 mt-1">' + T(vi, en) + '</p></div>';
+  }
+
   // Hạt giống quyết định điều kiện thị trường của cả ván (độ phù hợp, cạnh
   // tranh, xu hướng từng quý). Cho phép đặt qua ?seed=… để cả lớp chơi trên
   // cùng một bộ điều kiện – so sánh giữa các đội mới công bằng – và để bộ
@@ -610,8 +619,9 @@
     var box = $('bp-aibis');
     if (!box) {
       var wrap = document.createElement('details');
+      wrap.open = true;
       wrap.className = 'clay-card mb-3 overflow-hidden'; wrap.style.padding = '0';
-      wrap.innerHTML = '<summary class="font-display font-extrabold text-deep-teal text-sm" style="cursor:pointer;padding:10px 14px">◐ ' + T('So sánh chi tiết 6 phương thức (AIBIS) – bấm để mở', 'Compare all 6 entry modes in detail (AIBIS) – tap to open') + '</summary>';
+      wrap.innerHTML = '<summary class="font-display font-extrabold text-deep-teal text-sm" style="cursor:pointer;padding:10px 14px">◐ ' + T('AIBIS – công cụ gợi ý phương thức thâm nhập (bấm để thu gọn)', 'AIBIS – entry-mode recommendation tool (tap to collapse)') + '</summary>';
       box = document.createElement('div'); box.id = 'bp-aibis'; box.className = 'ib-dash'; box.style.padding = '0 14px 14px';
       wrap.appendChild(box);
       var mp = $('bp-map-stage-wrap'); if (mp) mp.insertAdjacentElement('afterend', wrap); else st.insertAdjacentElement('afterbegin', wrap);
@@ -1062,6 +1072,10 @@
     var discount = 1;
     $('bp-stage').innerHTML =
       '<h2 class="font-display font-extrabold text-deep-teal text-base mb-1">' + T('Quý', 'Quarter') + ' ' + (S.q + 1) + '/6 – 👁️ ' + T('Quan sát &amp; Tình báo', 'Observe &amp; Intelligence') + '</h2>' +
+      objBanner(
+        'Đọc các tín hiệu dưới đây (chỉ đáng tin một phần) rồi <b>tùy chọn</b> mua tối đa 2 nguồn tin để giảm "sương mù" trước khi quyết định ở bước sau. Có thể bỏ qua mua tin để tiết kiệm tiền.',
+        'Read the signals below (only partly reliable), then <b>optionally</b> buy up to 2 intel sources to cut through the "fog" before deciding in the next step. You can skip buying intel to save cash.'
+      ) +
       '<div id="bp-signals">' + signals().map(function (s) { return '<p class="text-[12.5px] mt-2">' + s + '</p>'; }).join('') + '</div>' +
       '<div class="mt-3 space-y-2">' + advs.map(function (a) { return '<div class="bp-adv">' + faceHtml(a[1], a[0]) + '<div><p class="who">' + a[1] + '</p><p>' + a[2] + '</p></div></div>'; }).join('') + '</div>' +
       (preDrawnEv ? '<div class="bp-adv mt-2">' + faceHtml('Lumina AI', '🤖') + '<div><p class="who">Lumina AI</p><p>' + T('🔮 Dự báo: sự kiện quý sau thuộc nhóm ' + preDrawnEv.cat + ', «' + preDrawnEv.t + '».', "🔮 Forecast: next quarter's event falls under " + preDrawnEv.cat + ', «' + preDrawnEv.tEn + '».') + '</p></div></div>' :
@@ -1130,6 +1144,10 @@
     var notIn = MKTS.map(function (_, m) { return m; }).filter(function (m) { return S.entered[m] === null; });
     $('bp-stage').innerHTML =
       '<h2 class="font-display font-extrabold text-deep-teal text-base mb-1">' + T('Quý', 'Quarter') + ' ' + (S.q + 1) + '/6 – 🧭 ' + T('Quyết định', 'Decision') + '</h2>' +
+      objBanner(
+        'Chọn <b>1 Ưu tiên</b> + <b>1 Mức vận hành</b> (cả hai bắt buộc) để chốt được quý này. Thâm nhập 1 thị trường mới ở mục 2 là <b>tùy chọn</b> – không bắt buộc phải làm mỗi quý.',
+        'Pick <b>1 Priority</b> + <b>1 Operating stance</b> (both required) to lock in this quarter. Entering a new market in section 2 is <b>optional</b> – you don\'t have to do it every quarter.'
+      ) +
       '<div id="bp-prio-section">' +
       '<p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-3 mb-1.5">' + T('1 · Ưu tiên của quý (bắt buộc)', '1 · Priority for the quarter (required)') + '</p>' +
       '<div class="grid sm:grid-cols-2 gap-2">' + PRIOS.map(function (p, i) {
