@@ -274,6 +274,7 @@ code { color: var(--cyan); }
 .ocard svg rect { fill: var(--cyan); opacity: .85; }
 .ocard svg polyline { fill: none; stroke: var(--cyan); stroke-width: 2.2; }
 .ocard svg line.g { stroke: var(--line); stroke-width: 1; }
+.ocard svg line.g.z { stroke: var(--muted); stroke-dasharray: 3 3; opacity: .7; }
 .ocard svg text { fill: var(--muted); font-size: 11px; }
 .ocard .cap { margin: 4px 0 0; color: var(--muted); font-size: 11.5px; }
 .hbars { display: grid; gap: 6px; margin: 6px 0; }

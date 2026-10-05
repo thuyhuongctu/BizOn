@@ -2769,6 +2769,431 @@
    ]
   },
   {
+   "id": "usd_index_yoy",
+   "label": "Chỉ số giá đô la Mỹ trong nước (tháng cuối quý so với cùng kỳ)",
+   "domain": "finance",
+   "unit": "% so cùng kỳ",
+   "frequency": "quý (tháng cuối quý)",
+   "official": true,
+   "chart": "line",
+   "latest": {
+    "period": "2026Q2",
+    "value": 0.57
+   },
+   "source": "Tổng cục Thống kê (nay là Cục Thống kê, Bộ Tài chính) — báo cáo tình hình kinh tế – xã hội quý, mục chỉ số giá",
+   "method": "Tỷ lệ thay đổi của chỉ số giá đô la Mỹ tháng cuối quý so với cùng tháng năm trước, lấy đúng số in trong báo cáo. Dương = đồng Việt Nam mất giá so với đô la Mỹ trên thị trường trong nước.",
+   "limitation": "Một tháng đại diện cho quý, không phải bình quân quý. Đây là giá USD bình quân trong nước, không phải tỷ giá trung tâm của Ngân hàng Nhà nước và không phải chỉ số DXY quốc tế. Báo cáo quý IV đôi khi viết \"so với tháng 12 năm trước\" (cùng nghĩa). Số công bố lần đầu.",
+   "rights": "Số liệu thống kê nhà nước công bố công khai; trích dẫn có ghi nguồn. Rà điều khoản trước khi phát hành qua API.",
+   "observations": [
+    {
+     "period": "2012Q1",
+     "value": -2.38,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2012",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/12/tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2012/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 3/2012 giảm 0,63% so với tháng trước; giảm 0,99% so với tháng 12/2011; giảm 2,38% so với cùng kỳ năm 2011."
+    },
+    {
+     "period": "2012Q2",
+     "value": 1.18,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng năm 2012",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/12/tinh-hinh-kinh-te-xa-hoi-sau-thang-dau-nam-2012/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 6/2012 tăng 0,2% so với tháng trước; giảm 0,8% so với tháng 12/2011 và tăng 1,18% so với cùng kỳ năm 2011."
+    },
+    {
+     "period": "2012Q3",
+     "value": 0.15,
+     "source": "GSO Báo cáo tình hình KT-XH tháng 9 và 9 tháng năm 2012",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/12/tinh-hinh-kinh-te-xa-hoi-chin-thang-nam-2012/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 9/2012 tăng 0,06% so với tháng trước; giảm 0,94% so với tháng 12/2011 và tăng 0,15% so với cùng kỳ b."
+    },
+    {
+     "period": "2012Q4",
+     "value": -0.96,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2012",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/12/tinh-hinh-kinh-te-xa-hoi-thang-muoi-hai-va-nam-2012/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 12/2012 tăng 0,03% so với tháng trước; giảm 0,96% so với tháng 12/2011."
+    },
+    {
+     "period": "2013Q1",
+     "value": 0.39,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2013",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2013/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 3/2013 tăng 0,41% so với tháng trước; tăng 0,36% so với tháng 12/2012; tăng 0,39% so với cùng kỳ năm 2012."
+    },
+    {
+     "period": "2013Q2",
+     "value": 0.68,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng năm 2013",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-sau-thang-dau-nam-2013/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 6/2013 tăng 0,26% so với tháng trước; tăng 0,84% so với tháng 12/2012; tăng 0,68% so với cùng kỳ năm 2012."
+    },
+    {
+     "period": "2013Q3",
+     "value": 1.3,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2013",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-chin-thang-nam-2013/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 9/2013 giảm 0,26% so với tháng trước; tăng 1,32% so với tháng 12/2012; tăng 1,3% so với cùng kỳ năm 2012."
+    },
+    {
+     "period": "2013Q4",
+     "value": 1.09,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2013",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-nam-2013/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 12/2013 tăng 0,05% so với tháng trước; tăng 1,09% so với cùng kỳ năm 2012."
+    },
+    {
+     "period": "2014Q1",
+     "value": 0.66,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2014 [2850 triệu USD]",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2014/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 3/2014 tăng 0,02% so với tháng trước; giảm 0,07% so với tháng 12/2013; tăng 0,66% so với cùng kỳ năm 2013."
+    },
+    {
+     "period": "2014Q2",
+     "value": 0.57,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng năm 2014",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-6-thang-dau-nam-2014/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 6/2014 tăng 0,49% so với tháng trước và tăng 0,57% so với cùng kỳ năm trước."
+    },
+    {
+     "period": "2014Q3",
+     "value": 0.04,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2014",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-9-thang-nam-2014/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 9/2014 giảm 0,15% so với tháng trước; tăng 0,27% so với tháng 12/2013 và tăng 0,04% so với cùng kỳ năm trước."
+    },
+    {
+     "period": "2014Q4",
+     "value": 1.03,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2014",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-nam-2014/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 12/2014 tăng 0,35% so với tháng trước; tăng 1,03% so với cùng kỳ năm 2013."
+    },
+    {
+     "period": "2015Q1",
+     "value": 1.29,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2015 [3050 triệu USD]",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/05/tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2015/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 3/2015 tăng 0,16% so với tháng trước; tăng 0,19% so với tháng 12/2014; tăng 1,29% so với cùng kỳ năm 2014."
+    },
+    {
+     "period": "2015Q2",
+     "value": 2.65,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng năm 2015",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-6-thang-dau-nam-2015/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 6/2015 tăng 0,62% so với tháng trước; tăng 1,92% so với tháng 12/2014 và tăng 2,65% so với cùng kỳ năm 2014."
+    },
+    {
+     "period": "2015Q3",
+     "value": 5.9,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2015",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/bao-cao-tinh-hinh-kinh-te-xa-hoi-9-thang-nam-2015/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 9/2015 tăng 2,71% so với tháng trước; tăng 5,1% so với tháng 12/2014 và tăng 5,9% so với cùng kỳ năm 2014."
+    },
+    {
+     "period": "2015Q4",
+     "value": 5.34,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2015",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/11/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2015/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 12/2015 tăng 0,69% so với tháng trước và tăng 5,34% so với cùng kỳ năm 2014; bình quân năm 2015 tăng 3,16% so với năm 2014."
+    },
+    {
+     "period": "2016Q1",
+     "value": 4.26,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2016",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/11/bc-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2016/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 3/2016 giảm 0,38% so với tháng trước; giảm 0,84% so với tháng 12/2015; tăng 4,26% so với cùng kỳ năm 2015."
+    },
+    {
+     "period": "2016Q2",
+     "value": 2.52,
+     "source": "GSO Báo cáo tình hình KT-XH 6 tháng đầu năm 2016",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/05/bao-cao-tinh-hinh-kinh-te-xa-hoi-6-thang-dau-nam-2016/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 6/2016 tăng 0,09% so với tháng trước; giảm 0,80% so với tháng 12/2015 và tăng 2,52% so với cùng kỳ năm 2015."
+    },
+    {
+     "period": "2016Q3",
+     "value": -0.77,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2016 (page slug mislabelled 2020)",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/11/bao-cao-tinh-hinh-kinh-te-xa-hoi-thang-quy-iii-va-9-thang-nam-2020/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 9/2016 tăng 0,07% so với tháng trước; giảm 0,99% so với tháng 12/2015 và giảm 0,77% so với cùng kỳ năm 2015."
+    },
+    {
+     "period": "2016Q4",
+     "value": 0.8,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2016 (page slug mislabelled 2020)",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/11/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2020/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 12/2016 tăng 1,52% so với tháng trước và tăng 0,8% so với cùng kỳ năm 2015; bình quân năm 2016 tăng 2,23% so với năm 2015."
+    },
+    {
+     "period": "2017Q1",
+     "value": 1.92,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2017 [3.620 triệu USD]",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/05/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2017/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 3/2017 tăng 0,41% so với tháng trước; tăng 0,26% so với tháng 12/2016 và tăng 1,92% so với cùng kỳ năm 2016."
+    },
+    {
+     "period": "2017Q2",
+     "value": 1.5,
+     "source": "GSO Báo cáo tình hình KT-XH tháng 6 và 6 tháng năm 2017",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/10/bc-tinh-hinh-kinh-te-xa-hoi-6-thang-dau-nam-2017/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 6/2017 giảm 0,07% so với tháng trước; giảm 0,11% so với tháng 12/2016 và tăng 1,50% so với cùng kỳ năm 2016."
+    },
+    {
+     "period": "2017Q3",
+     "value": 1.78,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2017",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/10/bao-cao-tinh-hinh-kinh-te-xa-hoi-9-thang-nam-2017/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 9/2017 tăng 0,03% so với tháng trước; giảm 0,03% so với tháng 12/2016 và tăng 1,78% so với cùng kỳ năm 2016."
+    },
+    {
+     "period": "2017Q4",
+     "value": -0.05,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2017",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/10/bao-cao-tinh-hinh-kinh-te-xa-hoi-nam-2017/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 12/2017 tăng 0,02% so với tháng trước và giảm 0,05% so với cùng kỳ năm 2016; bình quân năm 2017 tăng 1,40% so với năm 2016."
+    },
+    {
+     "period": "2018Q1",
+     "value": -0.09,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2018 [3.880 triệu USD]",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/04/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2018/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 3/2018 tăng 0,27% so với tháng trước; tăng 0,22% so với tháng 12/2017 và giảm 0,09% so với cùng kỳ năm 2017."
+    },
+    {
+     "period": "2018Q2",
+     "value": 0.52,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng năm 2018",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/04/bao-cao-tinh-hinh-kinh-te-xa-hoi-6-thang-dau-nam-2018/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 6/2018 tăng 0,2% so với tháng trước; tăng 0,46% so với tháng 12/2017 và tăng 0,52% so với cùng kỳ năm 2017."
+    },
+    {
+     "period": "2018Q3",
+     "value": 2.57,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2018",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/04/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iii-va-9-thang-nam-2018/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 9/2018 tăng 0,16% so với tháng trước; tăng 2,59% so với tháng 12/2017 và tăng 2,57% so với cùng kỳ năm 2017."
+    },
+    {
+     "period": "2018Q4",
+     "value": 2.69,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2018",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/04/thong-cao-bao-chi-ve-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2018/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 12/2018 giảm 0,07% so với tháng trước và tăng 2,69% so với cùng kỳ năm 2017; bình quân năm 2018 tăng 1,29% so với năm 2017."
+    },
+    {
+     "period": "2019Q1",
+     "value": 2.02,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2019 [4.120 triệu USD]",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/05/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2019/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 3/2019 tăng 0,05% so với tháng trước; giảm 0,44% so với tháng 12/2018 và tăng 2,02% so với cùng kỳ năm 2018."
+    },
+    {
+     "period": "2019Q2",
+     "value": 2.52,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng năm 2019",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/10/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-ii-va-6-thang-dau-nam-2019/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 6/2019 tăng 0,3% so với tháng trước; tăng 0,29% so với tháng 12/2018 và tăng 2,52% so với cùng kỳ năm 2018."
+    },
+    {
+     "period": "2019Q3",
+     "value": -0.39,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2019",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/10/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iii-va-9-thang-nam-2019/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 9/2019 giảm 0,11% so với tháng trước; giảm 0,49% so với tháng 12/2018 và giảm 0,39% so với cùng kỳ năm 2018."
+    },
+    {
+     "period": "2019Q4",
+     "value": -0.77,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2019",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/12/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2019/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 12/2019 giảm 0,19% so với tháng trước và giảm 0,77% so với cùng kỳ năm 2018; bình quân năm 2019 tăng 0,99% so với năm 2018."
+    },
+    {
+     "period": "2020Q1",
+     "value": 0.17,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2020",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/03/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2020/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 3/2020 tăng 0,17% so với tháng trước; tăng 0,51% so với tháng 12/2019 và tăng 0,17% so với cùng kỳ năm 2019."
+    },
+    {
+     "period": "2020Q2",
+     "value": -0.59,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng năm 2020",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/06/bao-cao-tinh-hinh-kinh-te-xa-hoi-6-thang-dau-nam-2020/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 6/2020 giảm 0,58% so với tháng trước; tăng 0,47% so với tháng 12/2019 và giảm 0,59% so với cùng kỳ năm 2019."
+    },
+    {
+     "period": "2020Q3",
+     "value": -0.17,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2020 [stated as 'gần 13,8 tỷ USD']",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/09/tinh-hinh-kinh-te-xa-hoi-thang-9-va-9-thang-nam-2020/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 9/2020 giảm 0,05% so với tháng trước; tăng 0,12% so với tháng 12/2019 và giảm 0,17% so với cùng kỳ năm 2019."
+    },
+    {
+     "period": "2020Q4",
+     "value": -0.09,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2020 [stated as 'gần 20 tỷ USD']",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/12/baocao-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2020/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 12/2020 giảm 0,23% so với tháng trước và giảm 0,09% so với cùng kỳ năm 2019; bình quân năm 2020 giảm 0,02% so với năm 2019."
+    },
+    {
+     "period": "2021Q1",
+     "value": -0.7,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2021",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2021/03/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2021/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 3/2021 tăng 0,23% so với tháng trước; giảm 0,11% so với tháng 12/2020 và giảm 0,7% so với cùng kỳ năm 2020."
+    },
+    {
+     "period": "2021Q2",
+     "value": -0.87,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng đầu năm 2021",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2021/06/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-ii-va-6-thang-dau-nam-2021/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 6/2021 giảm 0,3% so với tháng trước; giảm 0,32% so với tháng 12/2020 và giảm 0,87% so với cùng kỳ năm 2020."
+    },
+    {
+     "period": "2021Q3",
+     "value": -1.35,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2021",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2021/09/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iii-va-9-thang-nam-2021/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 9/2021 giảm 0,48% so với tháng trước; giảm 1,14% so với tháng 12/2020 và giảm 1,35% so với cùng kỳ năm 2020 do nhu cầu mua bán ngoại tệ hạn chế trong điều kiện giãn cách xã hội kéo dài."
+    },
+    {
+     "period": "2021Q4",
+     "value": -0.58,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2021",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2021/12/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2021/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 12/2021 tăng 0,84% so với tháng trước; giảm 0,58% so với tháng 12/2020 và bình quân năm 2021 giảm 0,97% so với năm trước."
+    },
+    {
+     "period": "2022Q1",
+     "value": -0.43,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2022",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2022/03/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2022/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 3/2022 tăng 0,64% so với tháng trước; giảm 0,43% so với cùng kỳ năm trước; bình quân quý I năm 2022, chỉ số giá đô la Mỹ trong nước giảm 0,67%."
+    },
+    {
+     "period": "2022Q2",
+     "value": 1.23,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng đầu năm 2022",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2022/06/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-ii-va-6-thang-dau-nam-2022/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 6/2022 tăng 0,72% so với tháng trước và tăng 1,23% so với cùng kỳ năm 2021; bình quân 6 tháng đầu năm 2022 giảm 0,2%."
+    },
+    {
+     "period": "2022Q3",
+     "value": 3.45,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2022",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2022/09/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iii-va-9-thang-nam-2022/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 9/2022 tăng 0,53% so với tháng trước; tăng 2,87% so với tháng 12/2021 và tăng 3,45% so với cùng kỳ năm trước; bình quân 9 tháng năm 2022 tăng 0,7%."
+    },
+    {
+     "period": "2022Q4",
+     "value": 5.0,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2022",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2022/12/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2022/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 12/2022 giảm 2,6% so với tháng trước và tăng 5% so với cùng kỳ năm 2021; bình quân năm 2022 tăng 2,09% so với năm trước."
+    },
+    {
+     "period": "2023Q1",
+     "value": 3.5,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2023",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2023/03/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2023/",
+     "quote": "Chỉ số giá đô la Mỹ tháng Ba tăng 0,47% so với tháng trước; tăng 3,5% so với cùng kỳ năm trước; bình quân quý I năm 2023, chỉ số giá đô la Mỹ trong nước tăng 3,45% so với cùng kỳ năm trước."
+    },
+    {
+     "period": "2023Q2",
+     "value": 1.14,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng đầu năm 2023",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2023/06/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-ii-va-6-thang-dau-nam-2023/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 6/2023 tăng 0,14% so với tháng trước; giảm 2,23% so với tháng 12/2022; tăng 1,14% so với cùng kỳ năm trước; bình quân 6 tháng đầu năm 2023 tăng 2,61%."
+    },
+    {
+     "period": "2023Q3",
+     "value": 2.43,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2023",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2023/09/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iii-va-9-thang-nam-2023/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 9/2023 tăng 1,53% so với tháng trước; tăng 0,35% so với tháng 12/2022; tăng 2,43% so với cùng kỳ năm trước; bình quân 9 tháng năm 2023 tăng 2,29% so với cùng kỳ năm trước."
+    },
+    {
+     "period": "2023Q4",
+     "value": 1.04,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2023",
+     "url": "https://www.nso.gov.vn/bai-top/2023/12/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2023/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 12/2023 giảm 0,56% so với tháng trước; tăng 1,04% so với cùng kỳ năm trước; bình quân năm 2023 tăng 1,86%."
+    },
+    {
+     "period": "2024Q1",
+     "value": 4.32,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý I năm 2024",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2024/03/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2024/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 3/2024 tăng 0,88% so với tháng trước; tăng 1,81% so với tháng 12/2023; tăng 4,32% so với cùng kỳ năm trước; bình quân quý I/2024 tăng 3,97%."
+    },
+    {
+     "period": "2024Q2",
+     "value": 7.66,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý II và 6 tháng đầu năm 2024",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2024/06/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-ii-va-sau-thang-dau-nam-2024/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 6/2024 giảm 0,04% so với tháng trước; tăng 4,17% so với tháng 12/2023; tăng 7,66% so với cùng kỳ năm trước; bình quân sáu tháng đầu năm 2024 tăng 5,64%."
+    },
+    {
+     "period": "2024Q3",
+     "value": 2.4,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2024",
+     "url": "https://www.nso.gov.vn/bai-top/2024/10/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iii-va-9-thang-nam-2024/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 9/2024 giảm 1,79% so với tháng trước; tăng 1,7% so với tháng 12/2023; tăng 2,4% so với cùng kỳ năm trước; bình quân chín tháng năm 2024 tăng 5,46%."
+    },
+    {
+     "period": "2024Q4",
+     "value": 4.31,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý IV và năm 2024",
+     "url": "https://www.nso.gov.vn/bai-top/2025/01/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2024/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 12/2024 tăng 0,09% so với tháng trước; tăng 4,31% so với cùng kỳ năm trước; bình quân năm 2024 tăng 4,91%."
+    },
+    {
+     "period": "2025Q1",
+     "value": 3.4,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý I năm 2025",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2025/04/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2025/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 3/2025 tăng 0,77% so với tháng trước; tăng 3,4% so với cùng kỳ năm trước; tăng 0,92% so với tháng 12/2024; bình quân quý I/2025, chỉ số giá đô la Mỹ tăng 3,63%."
+    },
+    {
+     "period": "2025Q2",
+     "value": 3.06,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý II và 6 tháng đầu năm 2025",
+     "url": "https://www.nso.gov.vn/bai-top/2025/07/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-ii-va-6-thang-dau-nam-2025/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 6/2025 tăng 0,32% so với tháng trước; tăng 3,06% so với cùng kỳ năm trước; tăng 2,92% so với tháng 12/2024; bình quân quý II/2025 tăng 2,98%; bình quân sáu tháng đầu năm 2025 tăng 3,3%."
+    },
+    {
+     "period": "2025Q3",
+     "value": 6.64,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2025",
+     "url": "https://www.nso.gov.vn/bai-top/2025/10/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iii-va-9-thang-nam-2025/",
+     "quote": "Chỉ số giá đô la Mỹ tháng Chín tăng 0,30% so với tháng trước; tăng 6,64% so với cùng kỳ năm 2024; tăng 3,98% so với tháng 12/2024; bình quân chín tháng năm 2025 tăng 3,80% so với cùng kỳ năm trước."
+    },
+    {
+     "period": "2025Q4",
+     "value": 3.68,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý IV và năm 2025",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2026/01/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2025/",
+     "quote": "Chỉ số giá đô la Mỹ tháng Mười Hai tăng 0,17% so với tháng trước; tăng 3,68% so với cùng kỳ năm trước; bình quân năm 2025, chỉ số giá đô la Mỹ tăng 3,92%."
+    },
+    {
+     "period": "2026Q1",
+     "value": 2.25,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý I năm 2026",
+     "url": "https://www.nso.gov.vn/bai-top/2026/04/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2026/",
+     "quote": "Chỉ số giá đô la Mỹ tháng 3/2026 tăng 0,72% so với tháng trước; tăng 2,25% so với cùng kỳ năm trước; giảm 0,47% so với tháng 12/2025; bình quân quý I/2026, chỉ số giá đô la Mỹ tăng 2,58%."
+    },
+    {
+     "period": "2026Q2",
+     "value": 0.57,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý II và 6 tháng 2026",
+     "url": "https://www.nso.gov.vn/bai-top/2026/07/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-ii-va-sau-thang-dau-nam-2026/",
+     "quote": "Chỉ số giá đô la Mỹ tháng Sáu tăng 0,11% so với tháng trước; tăng 0,57% so với cùng kỳ năm trước; giảm 0,17% so với tháng 12/2025; bình quân quý II/2026 tăng 0,93%; bình quân sáu tháng đầu năm 2026 tăng 1,75%."
+    }
+   ]
+  },
+  {
    "id": "fdi_stock_partner_2012",
    "label": "Vốn FDI đăng ký lũy kế theo đối tác (dự án còn hiệu lực, 31/12/2012)",
    "domain": "economy",

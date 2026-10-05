@@ -75,6 +75,19 @@ test('Bán lẻ: đủ 58 quý, lũy kế tăng trong năm, khớp câu trích; 
   assert.strictEqual(s.latest.realYoY, 7.3);
 });
 
+test('Chỉ số giá USD: đủ 58 quý, câu trích bắt đầu bằng tên chỉ tiêu và chứa đúng tỷ lệ', () => {
+  const s = json.series.find((x) => x.id === 'usd_index_yoy');
+  assert.strictEqual(s.observations.length, 58);
+  s.observations.forEach((o) => {
+    assert.ok(o.quote.startsWith('Chỉ số giá đô la Mỹ'), o.period);
+    const found = [...o.quote.matchAll(/(tăng|giảm) ([\d,]+)% so với (?:cùng kỳ|tháng 12\/)/g)]
+      .map((m) => (m[1] === 'tăng' ? 1 : -1) * parseFloat(m[2].replace(',', '.')));
+    assert.ok(found.includes(o.value), `${o.period}: ${o.value} không có trong trích dẫn`);
+  });
+  // tháng 6/2026: tăng 0,57% so với cùng kỳ năm trước
+  assert.strictEqual(s.latest.value, 0.57);
+});
+
 test('Chuỗi bình quân quý chỉ lấy quý đủ 3 tháng', () => {
   ['world_import_volume', 'reer_vnd'].forEach((id) => {
     const s = json.series.find((x) => x.id === id);
