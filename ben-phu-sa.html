@@ -510,14 +510,13 @@
       S.items[id]--;
       addLog(S.week + 1, T('🗺️ Gói tin vỉa hè: tuần sau, khu <b>' + lName(best) + '</b> sẽ đông khách nhất.', '🗺️ Street-Talk Pack: next week, <b>' + lName(best) + '</b> will be the busiest spot.'));
     } else if (id === 'SCOUT') {
-      var pickM = prompt(T('Chọn món hàng (1-3):\n1 = ' + mName(0) + '\n2 = ' + mName(1) + '\n3 = ' + mName(2), 'Pick a product (1-3):\n1 = ' + mName(0) + '\n2 = ' + mName(1) + '\n3 = ' + mName(2)));
-      var mm = parseInt(pickM, 10) - 1;
-      if (!(mm >= 0 && mm <= 2)) return;
-      var pickL = prompt(T('Chọn địa điểm (1-6):\n' + LOCS.map(function (l, i) { return (i + 1) + ' = ' + lName(i); }).join('\n'), 'Pick a location (1-6):\n' + LOCS.map(function (l, i) { return (i + 1) + ' = ' + lName(i); }).join('\n')));
-      var ll = parseInt(pickL, 10) - 1;
-      if (!(ll >= 0 && ll <= 5)) return;
+      // Dùng đúng Món hàng + Địa điểm người chơi đang chọn trên màn quyết định
+      // (như v8) thay vì prompt() – khớp giao diện đất sét, không chặn luồng
+      // trên di động.
+      var mm = S.sel.menu, ll = S.sel.loc;
+      if (mm === null || ll === null) { $('ft-hint').textContent = T('🔍 Chọn trước Món hàng và Địa điểm muốn dò, rồi bấm Dùng.', '🔍 Pick the Product and Location you want scouted first, then tap Use.'); return; }
       S.items[id]--; S.knownPairs[mm + '-' + ll] = true;
-      addLog(S.week + 1, T('🔍 Thám tử chợ: nhu cầu thật của ' + mName(mm) + ' tại ' + lName(ll) + ' là <b>' + f1(D[mm][ll]) + '</b> (thang cơ sở 1,0–3,4).', '🔍 Market Scout: the true demand for ' + mName(mm) + ' at ' + lName(ll) + ' is <b>' + f1(D[mm][ll]) + '</b> (base scale 1.0–3.4).'));
+      addLog(S.week + 1, T('🔍 Thám tử chợ: nhu cầu thật của ' + mName(mm) + ' tại ' + lName(ll) + ' là <b>' + f1(D[mm][ll]) + '</b> (thang cơ sở 0,4–3,4).', '🔍 Market Scout: the true demand for ' + mName(mm) + ' at ' + lName(ll) + ' is <b>' + f1(D[mm][ll]) + '</b> (base scale 0.4–3.4).'));
     }
     renderShop(); syncSel();
   };
@@ -606,8 +605,16 @@
     if ($('ft-forecast')) $('ft-forecast').textContent = forecastText();
   }
 
+  // Nhiều addLog() được gọi liên tiếp trong CÙNG 1 tuần (kết quả bán → cảm
+  // nhận/điềm báo → tin đồn...) – unshift thẳng sẽ đảo ngược thứ tự trong
+  // tuần đó, chôn kết quả bán (dòng quan trọng nhất, gọi đầu tiên) xuống
+  // dưới các dòng flavor gọi sau. Theo dõi vị trí chèn của tuần hiện tại để
+  // các dòng trong cùng 1 tuần vẫn theo đúng thứ tự gọi, còn tuần mới hơn
+  // vẫn luôn nằm trên các tuần cũ.
   function addLog(week, html) {
-    S.log.unshift('<li><b>' + T('Tuần ' + week, 'Week ' + week) + ':</b> ' + html + '</li>');
+    var li = '<li><b>' + T('Tuần ' + week, 'Week ' + week) + ':</b> ' + html + '</li>';
+    if (week !== S.logWeek) { S.log.unshift(li); S.logWeek = week; S.logInsertAt = 1; }
+    else { S.log.splice(S.logInsertAt, 0, li); S.logInsertAt++; }
     $('ft-log').innerHTML = S.log.join('');
   }
 
