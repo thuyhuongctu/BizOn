@@ -10,11 +10,11 @@
 
 ## 1 · Overview
 
-Brand Passport is a strategy simulation about **internationalizing a business**, played over **6 business quarters**. Each player takes over one of 4 Vietnamese companies and expands the brand into 7 fictional markets under conditions of **"information fog"**: no complete data is given upfront, so players must buy intelligence, judge how reliable each source is, and decide under uncertainty, much like real international business.
+Brand Passport is a strategy simulation about **internationalizing a business**, played over **6 business quarters**. Each player takes over one of 5 Vietnamese companies and expands the brand into 7 fictional markets under conditions of **"information fog"**: no complete data is given upfront, so players must buy intelligence, judge how reliable each source is, and decide under uncertainty, much like real international business.
 
 It is a standalone game in the BizOn ecosystem, built for International Business or Entrepreneurial Internationalization coursework. No login is required, it runs directly in the browser, and all progress is saved locally on the player's device.
 
-### 4 companies to choose from
+### 5 companies to choose from
 
 | Company | Product | Strength | Weakness |
 |---|---|---|---|
@@ -22,6 +22,7 @@ It is a standalone game in the BizOn ecosystem, built for International Business
 | 🥫 Phù Sa Foods | Processed food | Distinctive flavor, appeals to young buyers | High storage cost (+20% operating cost) |
 | 👗 Lam Việt | Sustainable fashion | Green credentials already in place, fits Lục Đảo well | Limited production capacity |
 | 💻 Mekong Digital | Management software | Very strong digital channels, high margins | Weak on data regulation |
+| 🧺 Lục Bình Craft | Handicrafts | Low operating cost, fits local-partner entry | Hand-made skill is hard to scale into mass production |
 
 There is no single "strongest" pick. Each company carries its own path and its own risk profile.
 

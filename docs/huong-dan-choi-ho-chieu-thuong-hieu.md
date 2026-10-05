@@ -9,11 +9,11 @@
 
 ## 1 · Tổng quan
 
-Hộ Chiếu Thương Hiệu là game mô phỏng chiến lược **quốc tế hóa doanh nghiệp** qua **6 quý kinh doanh**. Người chơi tiếp quản một trong 4 doanh nghiệp Việt Nam, đưa thương hiệu ra 7 thị trường giả tưởng trong điều kiện **"sương mù thông tin"**: không có dữ liệu đầy đủ, phải tự mua tin, tự đánh giá độ tin cậy và ra quyết định trong điều kiện bất định, giống thực tế kinh doanh quốc tế.
+Hộ Chiếu Thương Hiệu là game mô phỏng chiến lược **quốc tế hóa doanh nghiệp** qua **6 quý kinh doanh**. Người chơi tiếp quản một trong 5 doanh nghiệp Việt Nam, đưa thương hiệu ra 7 thị trường giả tưởng trong điều kiện **"sương mù thông tin"**: không có dữ liệu đầy đủ, phải tự mua tin, tự đánh giá độ tin cậy và ra quyết định trong điều kiện bất định, giống thực tế kinh doanh quốc tế.
 
 Đây là game độc lập trong hệ sinh thái BizOn, dùng cho học phần Kinh doanh quốc tế / Khởi sự doanh nghiệp quốc tế hóa. Không cần đăng nhập, chơi ngay trên trình duyệt, dữ liệu lưu cục bộ trên máy người chơi.
 
-### 4 doanh nghiệp có thể chọn
+### 5 doanh nghiệp có thể chọn
 
 | Doanh nghiệp | Sản phẩm | Điểm mạnh | Điểm yếu |
 |---|---|---|---|
@@ -21,6 +21,7 @@ Hộ Chiếu Thương Hiệu là game mô phỏng chiến lược **quốc tế 
 | 🥫 Phù Sa Foods | Thực phẩm chế biến | Hương vị đặc trưng, hợp khách trẻ | Chi phí bảo quản cao (+20% vận hành) |
 | 👗 Lam Việt | Thời trang bền vững | Hồ sơ xanh sẵn có, hợp Lục Đảo | Năng lực sản xuất hạn chế |
 | 💻 Mekong Digital | Phần mềm quản trị | Kênh số cực mạnh, biên lời cao | Mù mờ pháp luật dữ liệu |
+| 🧺 Lục Bình Craft | Thủ công mỹ nghệ | Chi phí vận hành thấp, hợp đối tác địa phương | Tay nghề thủ công khó nhân rộng quy mô lớn |
 
 Không có lựa chọn "mạnh nhất" — mỗi doanh nghiệp một hành trình và hệ rủi ro riêng.
 
