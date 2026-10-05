@@ -99,6 +99,23 @@
   function esc(e) { if (e.key === 'Escape') close(); }
   function close() { var o = $('ib-ovl'); if (o) o.remove(); document.removeEventListener('keydown', esc); }
   function dossier(m) { overlay('', '<div class="ib-drawer" role="dialog" aria-modal="true">' + dossierHtml(m) + '</div>'); }
+
+  // Trạm hộ chiếu toàn cầu – điểm vào 3D gộp chung đổi quốc gia xuất phát +
+  // bản đồ/hồ sơ quốc gia, thay cho màn chọn quốc gia phẳng trên #bp-intro.
+  function stationHtml() {
+    var b = B(), homes = b.HOMES || [], hm = b.HOME ? b.HOME() : (homes[0] || { flag: '🇻🇳', c: 'Việt Nam', cEn: 'Vietnam' });
+    return '<div class="ib-dhead"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><span class="ib-eyebrow" style="color:#9cc3cb">' + T('🛂 Trạm hộ chiếu toàn cầu', '🛂 Global passport desk') + '</span><button class="ib-btn" type="button" onclick="IBUI.close()">✕</button></div>' +
+      '<h3>' + hm.flag + ' ' + T(hm.c, hm.cEn) + '</h3><div style="opacity:.8;font-size:12.5px">' + T('Quốc gia xuất phát hiện tại của doanh nghiệp bạn.', "Your firm's current home country.") + '</div></div>' +
+      '<div class="ib-dbody">' +
+      '<div><span class="ib-eyebrow">' + T('Đổi quốc gia xuất phát', 'Change home country') + '</span>' +
+      '<p style="margin:6px 0 10px;font-size:12px;opacity:.7">' + T('Quốc gia này quyết định hiệp định thương mại và khoảng cách văn hoá (cultural distance) tới 7 thị trường chủ nhà/sở tại mà bạn sẽ thâm nhập.', 'This sets the trade agreements and cultural distance to the 7 host markets you will enter.') + '</p>' +
+      '<div style="display:flex;flex-wrap:wrap;gap:6px">' + homes.map(function (x) { var on = x.id === hm.id;
+        return '<button type="button" onclick="IBUI.pickHome(\'' + x.id + '\')" class="ib-pill' + (on ? ' ok' : '') + '" style="cursor:pointer;border:0;font-size:12.5px">' + x.flag + ' ' + T(x.c, x.cEn) + '</button>'; }).join('') + '</div></div>' +
+      '<div style="margin-top:14px"><button type="button" class="ib-btn ib-gold" onclick="IBUI.map()">🗺️ ' + T('Mở bản đồ thị trường & hồ sơ quốc gia', 'Open market map & country dossiers') + '</button></div>' +
+      '<p style="margin:14px 0 0;font-size:10.5px;opacity:.6">' + T('Quay lại trạm này bất cứ lúc nào (qua 🏢 Văn phòng) để đổi quốc gia xuất phát hoặc xem lại hồ sơ từng thị trường.', 'Come back to this desk any time (via 🏢 Office) to change your home country or re-check a market dossier.') + '</p></div>';
+  }
+  function station() { overlay('', '<div class="ib-drawer" role="dialog" aria-modal="true">' + stationHtml() + '</div>'); }
+  function pickHome(id) { if (typeof window.bpHome === 'function') window.bpHome(id); station(); }
   function map(pick) {
     var o = overlay('full', '<div class="ib-mapwin" role="dialog" aria-modal="true"><div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid #d6e4e7"><span class="ib-eyebrow">🗺️ ' + T('Bản đồ thị trường toàn cầu – bấm một quốc gia để xem hồ sơ', 'Global market map – click a country for its dossier') + '</span><button class="ib-btn" type="button" onclick="IBUI.close()">✕</button></div><div class="body"><div id="ib-bigmap" style="overflow:auto;padding:8px"></div><div class="side" id="ib-mapside"></div></div></div>');
     var side = $('ib-mapside');
@@ -195,6 +212,6 @@
     document.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('#bp-homes, #lang-btn, #bp-homes-wrap')) setTimeout(sync, 60); });
     sync();
   }
-  window.IBUI = { go: go, dossier: dossier, map: map, close: close, sync: sync };
+  window.IBUI = { go: go, dossier: dossier, map: map, station: station, pickHome: pickHome, close: close, sync: sync };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();

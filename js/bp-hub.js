@@ -52,6 +52,8 @@
           } },
       ],
       stations: [
+        { id: 'passport', icon: '🛂', art: 'assets/illustrations/game/globe-walk.webp', name: T('Trạm hộ chiếu', 'Passport desk'), x: 150, y: 380,
+          onOpen: function (api) { api.exit(); if (window.IBUI) window.IBUI.station(); } },
         { id: 'shop', icon: '🛍️', art: 'assets/illustrations/game/celebrate-shop.webp', name: T('Cửa hàng', 'Shop'), x: 420, y: 380,
           desc: T('Dùng tiền mặt mua vật phẩm hỗ trợ.', 'Spend cash on helpful items.'),
           onOpen: function (api) { api.exit(); var s2 = G() && G().S; if (s2 && !s2.shopOpen && typeof window.bpToggleShop === 'function') window.bpToggleShop();
@@ -90,5 +92,9 @@
   }
   function clearNew() { var dot = $('bp-hub-dot'); if (dot) dot.remove(); }
 
-  window.BPHub = { open: function () { clearNew(); window.ClayHub.open(buildConfig()); }, markNew: markNew };
+  window.BPHub = {
+    open: function () { clearNew(); window.ClayHub.open(buildConfig()); },
+    openPassport: function () { clearNew(); var cfg = buildConfig(); cfg.autoTalk = 'passport'; window.ClayHub.open(cfg); },
+    markNew: markNew
+  };
 })();
