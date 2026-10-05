@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<!-- Bảng tổng kết lớp cho giảng viên – đọc trực tiếp các file CSV học viên xuất
+     từ màn kết thúc "Hộ Chiếu Thương Hiệu 3D" (nút "📊 Xuất kết quả CSV").
+     Hoàn toàn chạy trên trình duyệt của giảng viên, không gửi dữ liệu đi đâu,
+     không cần mạng hay mã lớp – dùng khi KHÔNG dùng hệ thống nộp bài trực
+     tuyến (Supabase) đã có sẵn trong game (xem "Trang Giang Vien.dc.html").
+     BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Bảng tổng kết lớp (CSV) – Hộ Chiếu Thương Hiệu 3D</title>
+<meta name="description" content="Kéo-thả các file CSV học viên xuất từ Hộ Chiếu Thương Hiệu 3D để xem bảng tổng kết cả lớp, không cần mạng.">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<link rel="stylesheet" href="css/bizon-fonts.css">
+<style>
+  html { background:#f4faff; }
+  html[data-theme="dark"] { background:#081a20; }
+  body { font-family:'Manrope','Manrope Fallback',sans-serif; color:#033337; margin:0; }
+  html[data-theme="dark"] body { color:#eaf6fb; }
+  .wrap { max-width:1100px; margin:0 auto; padding:28px 20px 60px; display:flex; flex-direction:column; gap:18px; }
+  .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); padding:20px; }
+  html[data-theme="dark"] .clay-card { background:#0e2a33; box-shadow:0 10px 30px -5px rgba(0,0,0,.3); }
+  .clay-btn { border-radius:16px; border:0; cursor:pointer; font:800 13px 'Manrope',sans-serif; padding:10px 16px; min-height:44px; box-shadow:0 6px 0 rgba(0,0,0,.12); transition:transform .12s ease; }
+  .clay-btn:active { transform:translateY(2px); }
+  .drop { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; padding:28px; background:#fff; border:3px dashed rgba(0,102,135,.35); border-radius:18px; cursor:pointer; text-align:center; }
+  html[data-theme="dark"] .drop { background:#0e2a33; border-color:rgba(92,196,230,.35); }
+  .drop.over { border-color:#fda127; background:#fff6e6; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th, td { text-align:left; padding:8px 10px; border-bottom:1px solid rgba(0,102,135,.1); }
+  html[data-theme="dark"] th, html[data-theme="dark"] td { border-bottom-color:rgba(92,196,230,.15); }
+  th { font-weight:800; font-size:11px; text-transform:uppercase; letter-spacing:.04em; opacity:.6; }
+  tr:hover td { background:rgba(0,102,135,.04); }
+  .pill { display:inline-block; padding:2px 9px; border-radius:999px; background:rgba(0,102,135,.08); font-weight:800; font-size:11px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div style="display:flex;flex-direction:column;gap:4px">
+    <div style="font:700 11px 'Manrope';letter-spacing:.12em;color:#006687">GIẢNG VIÊN · TEACHER</div>
+    <div style="font:900 26px/1.15 'Manrope'">🛂 Bảng tổng kết lớp – Hộ Chiếu Thương Hiệu 3D</div>
+    <div style="font:600 13px/1.55 'Manrope';color:#4a6a72;max-width:700px">Học viên bấm <b>"📊 Xuất kết quả CSV"</b> ở màn kết thúc game và gửi file cho bạn (email, Zalo, Drive…). Kéo-thả tất cả file vào đây để xem cả lớp. Mọi thứ xử lý ngay trên máy bạn, không gửi đi đâu – dùng khi lớp chưa dùng được hệ thống nộp bài trực tuyến (mã lớp).</div>
+  </div>
+
+  <label class="drop" id="drop">
+    <div style="font:800 17px 'Manrope'">📂 Kéo-thả file BP3D-*.csv vào đây</div>
+    <div style="font:600 12px 'Manrope';color:#4a6a72">hoặc bấm để chọn nhiều file</div>
+    <input type="file" accept=".csv" multiple id="filePick" style="display:none">
+  </label>
+
+  <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+    <button class="clay-btn" style="background:#e8742a;color:#fff" id="btnExport">📥 Xuất bảng lớp CSV</button>
+    <button class="clay-btn" style="background:transparent;color:#4a6a72;box-shadow:none" id="btnClear">🗑️ Xóa danh sách</button>
+    <div style="flex:1"></div>
+    <input id="filter" placeholder="Lọc theo lớp…" style="padding:10px 12px;min-height:44px;box-sizing:border-box;border:2px solid rgba(0,102,135,.18);border-radius:12px;font:700 13px 'Manrope';background:transparent;color:inherit">
+  </div>
+
+  <div class="clay-card" id="empty">
+    <p style="font:700 13px 'Manrope';opacity:.55;text-align:center;padding:20px 0">Chưa có kết quả nào. Kéo-thả file CSV ở trên để bắt đầu.</p>
+  </div>
+
+  <div class="clay-card" id="tableWrap" style="display:none;overflow-x:auto;padding:0">
+    <table>
+      <thead><tr>
+        <th>Tên</th><th>Lớp</th><th>Thương hiệu</th><th>Điểm</th><th>Danh hiệu</th>
+        <th>Thị trường</th><th>Lợi nhuận (tỷ)</th><th>Kim Long (tỷ)</th><th>Quý dẫn trước</th><th>Ngày</th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <p style="font:600 11px 'Manrope';opacity:.5;text-align:center">BizOn Bật Nghiệp 2026 · Dữ liệu chỉ lưu trong trình duyệt này (localStorage), không đồng bộ với hệ thống nộp bài trực tuyến.</p>
+</div>
+
+<script>
+(function () {
+  var KEY = 'bizon-bp-teacher-csv';
+  var students = [];
+  try { students = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { students = []; }
+
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(students)); } catch (e) {} }
+
+  // Parser CSV tối giản – đủ dùng cho định dạng do chính game xuất ra
+  // (trường bọc ngoặc kép, dấu " nhân đôi bên trong). Không cần thư viện ngoài.
+  function parseCsvLine(line) {
+    var out = [], cur = '', inQ = false;
+    for (var i = 0; i < line.length; i++) {
+      var c = line[i];
+      if (inQ) {
+        if (c === '"') { if (line[i + 1] === '"') { cur += '"'; i++; } else inQ = false; }
+        else cur += c;
+      } else {
+        if (c === '"') inQ = true;
+        else if (c === ',') { out.push(cur); cur = ''; }
+        else cur += c;
+      }
+    }
+    out.push(cur);
+    return out;
+  }
+
+  function parseFile(text, fileName) {
+    var text2 = text.replace(/^﻿/, '');
+    var lines = text2.split(/\r?\n/).filter(function (l) { return l.trim().length; });
+    if (lines.length < 2) return null;
+    var head = parseCsvLine(lines[0]), row = parseCsvLine(lines[1]);
+    if (head[0] !== 'code' || row[0] !== '#BP3D') return null; // không phải file do game này xuất
+    var o = {}; head.forEach(function (k, i) { o[k] = row[i]; });
+    o._file = fileName;
+    o._id = (o.name || '') + '|' + (o.class || '') + '|' + (o.date || '') + '|' + (o.total || '');
+    return o;
+  }
+
+  function addStudent(o) {
+    if (!o) return false;
+    var i = students.findIndex(function (s) { return s._id === o._id; });
+    if (i >= 0) students[i] = o; else students.push(o);
+    return true;
+  }
+
+  function render() {
+    var filter = ($('filter').value || '').trim().toLowerCase();
+    var list = students.filter(function (s) { return !filter || (s.class || '').toLowerCase().indexOf(filter) >= 0; });
+    list.sort(function (a, b) { return (Number(b.total) || 0) - (Number(a.total) || 0); });
+    $('empty').style.display = students.length ? 'none' : '';
+    $('tableWrap').style.display = students.length ? '' : 'none';
+    $('rows').innerHTML = list.map(function (s) {
+      return '<tr>' +
+        '<td style="font-weight:800">' + esc(s.name) + '</td>' +
+        '<td>' + (s.class ? '<span class="pill">' + esc(s.class) + '</span>' : '') + '</td>' +
+        '<td>' + esc(s.firm) + '</td>' +
+        '<td style="font-weight:900">' + esc(s.total) + '/100</td>' +
+        '<td>' + esc(s.title) + '</td>' +
+        '<td>' + esc(s.markets) + '/7</td>' +
+        '<td>' + esc(s.profit_bn) + '</td>' +
+        '<td>' + esc(s.rival_bn) + '</td>' +
+        '<td>' + esc(s.quarters_won) + '</td>' +
+        '<td style="opacity:.6">' + esc(s.date) + '</td>' +
+        '</tr>';
+    }).join('');
+  }
+  function esc(x) { return x === undefined || x === null ? '' : String(x).replace(/[&<>]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]; }); }
+  function $(id) { return document.getElementById(id); }
+
+  function handleFiles(files) {
+    var n = 0, list = Array.prototype.slice.call(files);
+    var next = function () {
+      if (!list.length) { save(); render(); return; }
+      var f = list.shift();
+      var r = new FileReader();
+      r.onload = function () { if (addStudent(parseFile(String(r.result), f.name))) n++; next(); };
+      r.onerror = next;
+      r.readAsText(f, 'utf-8');
+    };
+    next();
+  }
+
+  $('filePick').addEventListener('change', function (e) { handleFiles(e.target.files); e.target.value = ''; });
+  $('drop').addEventListener('click', function (e) { if (e.target.id !== 'filePick') $('filePick').click(); });
+  $('drop').addEventListener('dragover', function (e) { e.preventDefault(); $('drop').classList.add('over'); });
+  $('drop').addEventListener('dragleave', function () { $('drop').classList.remove('over'); });
+  $('drop').addEventListener('drop', function (e) {
+    e.preventDefault(); $('drop').classList.remove('over');
+    var files = Array.prototype.filter.call(e.dataTransfer.files, function (f) { return /\.csv$/i.test(f.name); });
+    handleFiles(files);
+  });
+  $('filter').addEventListener('input', render);
+  $('btnClear').addEventListener('click', function () {
+    if (!confirm('Xóa toàn bộ danh sách đã nạp? (file CSV gốc của học viên không bị ảnh hưởng)')) return;
+    students = []; save(); render();
+  });
+  $('btnExport').addEventListener('click', function () {
+    var q = function (x) { return '"' + String(x === undefined || x === null ? '' : x).replace(/"/g, '""') + '"'; };
+    var head = ['name', 'class', 'firm', 'total', 'title', 'markets', 'profit_bn', 'rival_bn', 'rival_markets', 'quarters_won', 'home', 'date'];
+    var rows = [head.join(',')].concat(students.map(function (s) { return head.map(function (k) { return q(s[k]); }).join(','); }));
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob(['﻿' + rows.join('\n')], { type: 'text/csv' }));
+    a.download = 'BP3D-lop-' + new Date().toISOString().slice(0, 10) + '.csv';
+    document.body.appendChild(a); a.click(); a.remove();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

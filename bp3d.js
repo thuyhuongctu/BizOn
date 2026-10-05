@@ -234,7 +234,7 @@ const islands = IPOS.map((pos, m) => {
     const pf = new THREE.Mesh(GE.puff, fm); pf.position.set(Math.cos(a) * d, 1 + (i % 4) * 0.55, Math.sin(a) * d); pf.scale.set(s * 1.2, s * 0.8, s); pf.userData.b = pf.position.clone(); pf.renderOrder = 5; fog.add(pf);
   }
   anim.push(t => fog.children.forEach((pf, i) => { pf.position.x = pf.userData.b.x + Math.sin(t * 0.4 + i) * 0.25; pf.position.y = pf.userData.b.y + Math.sin(t * 0.6 + i * 2) * 0.12; }));
-  return { g, pos, label, fog, fm, fogV: 0.62, flag: null, rival: null, route: null };
+  return { g, pos, label, fog, fm, fogV: 0.62, flag: null, rival: null, route: null, pm: null };
 });
 
 /* ---------- Vàm Thịnh ---------- */
@@ -276,6 +276,28 @@ const advisors = CAST_FALLBACK.map(([name, f], i) => {
   return { name, g, sp, bub, say3, talk: 0 };
 });
 
+/* ---------- cố vấn thường trú ở từng đảo thị trường – mỗi người một chuyên môn,
+ * nói 1 câu ngắn khi người chơi ghé lần đầu mỗi lượt (độc lập với ban cố vấn ở
+ * Vàm Thịnh phía trên). Dùng chung cho mọi game nạp bp3d.js (NMK có thể khác 7,
+ * S.MKTS[m].trait có thể trống ở bản rút gọn) nên câu nói viết chung, không
+ * gắn tên thị trường cụ thể. ---------- */
+const ISL_ADV_POOL = ['Thầy Tú Phan', 'Lina Park', 'An Nhiên', 'Lumina AI', 'Minh Khang'];
+const ISL_ADV_LINE = {
+  'Thầy Tú Phan': ['Nhìn số liệu trước khi tin cảm giác – thị trường nào cũng có logic riêng.', "Trust the data before your gut – every market runs on its own logic."],
+  'Lina Park': ['Mỗi nơi có luật chơi riêng. Đọc kỹ trước khi đặt cược.', 'Every place has its own rulebook. Read it before you bet.'],
+  'An Nhiên': ['Câu chuyện thương hiệu phải đổi theo văn hoá từng nơi, không rập khuôn.', "The brand story must flex to fit each culture, never copy-paste."],
+  'Lumina AI': ['Dữ liệu giúp con nhìn xa hơn, nhưng quyết định vẫn là của con.', 'The data helps you see further, but the decision is still yours.'],
+  'Minh Khang': ['Tính kỹ chi phí trước khi cam kết – lời mỏng cũng vẫn là lời.', 'Count the cost carefully before committing – a thin margin is still a margin.'],
+};
+const islAdv = islands.map((I, m) => {
+  const name = ISL_ADV_POOL[m % ISL_ADV_POOL.length];
+  const g = grp(I.g, -IR * 0.5, G0, -IR * 0.55);
+  g.add(CLAY.build(CAST_IDS[name], 1.2)); blob(g, 0, 0, 0, 0.3);
+  const say3 = makeLabel(4.2); say3.position.y = 2.05; say3.visible = false; g.add(say3);
+  return { name, g, say3, until: 0 };
+});
+window.__bp3dIslAdv = islAdv;
+
 /* ---------- thuyền sen ---------- */
 function makeBoat(s = 1, sail = true) {
   const b = grp(); const body = grp(b);
@@ -302,7 +324,7 @@ let landMode = localStorage.getItem('bizon-bp3d-land') || 'ceo';
 function landParty(I, quiet) {
   if (!quiet) sfx('cheer');
   if (I.party) { I.party.forEach(r => { I.g.remove(r); const k = landed.findIndex(o => o.r === r); if (k >= 0) landed.splice(k, 1); }); }
-  const ids = landMode === 'team' ? TEAM : ['ceo'], n = ids.length, fx = IR * 0.5, fz = IR * 0.45;
+  const ids = (I.pm || landMode) === 'team' ? TEAM : ['ceo'], n = ids.length, fx = IR * 0.5, fz = IR * 0.45;
   I.party = ids.map((id, k) => {
     const r = CLAY.build(id, n > 1 ? 1.15 : 1.35), a = n > 1 ? Math.PI * (0.35 + 0.75 * k / (n - 1)) : Math.PI * 0.6, rad = n > 1 ? 0.95 : 0.6;
     r.position.set(fx + Math.cos(a) * rad, G0, fz + Math.sin(a) * rad); r.rotation.y = Math.atan2(-Math.cos(a), -Math.sin(a)) * 0.35 + 0.3;
@@ -579,6 +601,7 @@ function sync(t) {
       const q = justStarted ? Math.max(1, S.q + 1 - ((S.qin && S.qin[m]) || 0)) : Math.min(NQ, S.q + 1);
       stamps.push({ m, q, mode: md });
       I.flag = makeFlag(md, I.g, IR * 0.5, IR * 0.45);
+      I.pm = S.party ? S.party[m] : null; // ai lên đảo thật (CEO/cả đội) – ưu tiên hơn nút bật/tắt hiển thị chung
       landParty(I, justStarted);
       const kind = md === 0 ? 'data' : (S.ship && S.ship[m] === 1) ? 'air' : 'sea';
       I.route = makeRoute(m, kind); I.routeKind = kind;
@@ -603,6 +626,10 @@ function sync(t) {
     }
     const st = md !== null && md !== undefined ? MODE_ICON[md] + ' ' + tr('đã vào', 'entered') : kn >= 60 ? '🌤️ ' + tr('đã rõ', 'clear') : '🌫️ ' + tr('tri thức ', 'intel ') + kn + '%';
     const vk = userKey || key, far = vk === 'ov' || vk === 'intro';
+    // Cố vấn của đảo đang nói → nhường chỗ, tạm ẩn nhãn trạng thái của đảo để khỏi chồng chữ
+    const ia = islAdv[m], iaShow = !!ia && ia.until > t;
+    if (ia) { ia.say3.visible = iaShow; if (iaShow) ia.say3.userData.set('💬 ' + ia.name, tr(ISL_ADV_LINE[ia.name][0], ISL_ADV_LINE[ia.name][1]), '#e8762d'); }
+    I.label.visible = !intro && !iaShow;
     I.label.userData.set(MK[m].icon + ' ' + MK[m].name, far ? '' : st + (S.rival && S.rival.in.indexOf(m) >= 0 ? ' · ⚔️' : ''), md !== null && md !== undefined ? MODE_HEX[md] : MK[m].c);
   }
   
@@ -639,6 +666,7 @@ R.domElement.addEventListener('pointerup', e => {
   if (m === -2) { userKey = 'home'; autoCam = true; say('🏡 Vàm Thịnh · ' + tr('Ban cố vấn: Bà Sáu Lành, Minh Khang, An Nhiên, Thầy Tú Phan, Lina Park, Lumina AI', 'Advisors: Bà Sáu Lành, Minh Khang, An Nhiên, Thầy Tú Phan, Lina Park, Lumina AI'), 4200); return; }
   if (m < 0) return;
   userKey = 'm' + m; autoCam = true;
+  if (islAdv[m]) islAdv[m].until = LIFE.t + 4.5;
   let msg = MK[m].icon + ' ' + MK[m].name;
   const sl = $('bp3d-street'); if (sl) sl.href = 'Pho%20Thi%20Truong%203D.html?m=' + m;
   if (B && B.MKTS) { const mk = B.MKTS[m], S = B.S; msg += ' — ' + tr(mk.trait, mk.traitEn) + ' · ' + tr('tri thức ', 'intel ') + S.know[m] + '%'; if (S.entered[m] !== null && B.MODES) msg += ' · ' + MODE_ICON[S.entered[m]] + ' ' + tr(B.MODES[S.entered[m]].name, B.MODES[S.entered[m]].nameEn); }
@@ -708,7 +736,7 @@ addEventListener('pointerdown', function first() { removeEventListener('pointerd
 setMute(window.__bp3dMute);
 window.__bp3dSfx = sfx;
 const landBtn = $('bp3d-land'); const landTxt = () => { if (landBtn) landBtn.textContent = landMode === 'team' ? tr('👥 Cả đội lên đảo', '👥 Whole team lands') : tr('👤 CEO lên đảo', '👤 CEO lands'); };
-landTxt(); landBtn && landBtn.addEventListener('click', () => { landMode = landMode === 'team' ? 'ceo' : 'team'; localStorage.setItem('bizon-bp3d-land', landMode); landTxt(); islands.forEach(I => I.party && landParty(I, false)); });
+landTxt(); landBtn && landBtn.addEventListener('click', () => { landMode = landMode === 'team' ? 'ceo' : 'team'; localStorage.setItem('bizon-bp3d-land', landMode); landTxt(); islands.forEach(I => I.party && !I.pm && landParty(I, false)); });
 $('bp3d-full') && $('bp3d-full').addEventListener('click', () => { const on = document.body.classList.toggle('bp3d-full'); $('bp3d-full').textContent = on ? tr('▾ Thu nhỏ', '▾ Shrink') : tr('⤢ Mở rộng', '⤢ Expand'); resize(); });
 $('bp3d-ov') && $('bp3d-ov').addEventListener('click', () => { userKey = camKey === 'intro' ? null : 'ov'; autoCam = true; });
 $('bp3d-pp') && $('bp3d-pp').addEventListener('click', () => { if (PP.mode === 'stamp') return; drawCover(); drawInside(); drawPage(); PP.mode = PP.mode === 'view' ? 'idle' : 'view'; });
@@ -1000,6 +1028,7 @@ window.__bp3dStyle = () => STY;
 
 /* ---------- sự sống: dân cư, văn hóa, Vàm Thịnh, hành trình thuyền ---------- */
 const LIFE = { t: 0, dt: 0 }; anim.push(t => { LIFE.dt = Math.min(0.05, t - LIFE.t); LIFE.t = t; });
+window.__bp3dLife = LIFE;
 const villAnim = [];
 function pawn(par, body, head = null, hat = null, s = 1) {
   const r = CLAY.villager(body, head === 0xf0c09c ? null : head, villAnim.length, 0.78 * s); par.add(r);
