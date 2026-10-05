@@ -498,12 +498,13 @@
     hs: { flag: '🇮🇩', c: 'Indonesia', cEn: 'Indonesia', fta: 'ATIGA (ASEAN), RCEP', ftaEn: 'ATIGA (ASEAN), RCEP', cul: 'Khoảng cách quyền lực cao, coi trọng quan hệ cá nhân; hơn 17.000 đảo', culEn: 'High power distance, relationship-based; 17,000+ islands', bar: 'Chứng nhận Halal bắt buộc (BPJPH), đăng ký BPOM, phân phối phân mảnh', barEn: 'Mandatory Halal certification (BPJPH), BPOM registration, fragmented distribution' },
   };
   MKTS.forEach(function (m) { m.real = REAL[m.key]; });
-  // 4 doanh nghiệp – mỗi nhà một hành trình (concept mục 2)
+  // 5 doanh nghiệp – mỗi nhà một hành trình (concept mục 2)
   var FIRMS = [
     { icon: '🧴', name: 'Mộc Nhiên', prod: 'Mỹ phẩm thảo mộc', prodEn: 'Herbal cosmetics', adv: 'Câu chuyện thương hiệu mạnh', advEn: 'Strong brand story', weak: 'Khó đạt tiêu chuẩn quốc tế', weakEn: 'Hard to meet international standards', cash: 8, rep: 55, capab: 38, susts: 0, img: 'assets/character/firms/moc-nhien-cut.webp' },
     { icon: '🥫', name: 'Phù Sa Foods', prod: 'Thực phẩm chế biến', prodEn: 'Processed food', adv: 'Hương vị đặc trưng · hợp khách trẻ', advEn: 'Distinctive flavor · a fit for young customers', weak: 'Chi phí bảo quản cao (+20% vận hành)', weakEn: 'High storage cost (+20% operating)', cash: 8, rep: 48, capab: 45, susts: 0, img: 'assets/character/firms/phu-sa-foods-cut.webp' },
     { icon: '👗', name: 'Lam Việt', prod: 'Thời trang bền vững', prodEn: 'Sustainable fashion', adv: 'Hồ sơ xanh sẵn có · hợp Lục Đảo', advEn: 'Ready-made green record · a fit for Lục Đảo', weak: 'Năng lực sản xuất hạn chế', weakEn: 'Limited production capacity', cash: 8, rep: 50, capab: 32, susts: 1, img: 'assets/character/firms/lam-viet-cut.webp' },
     { icon: '💻', name: 'Mekong Digital', prod: 'Phần mềm quản trị', prodEn: 'Management software', adv: 'Kênh số cực mạnh · biên lời cao', advEn: 'Very strong digital channel · high margins', weak: 'Mù mờ pháp luật dữ liệu', weakEn: 'Shaky on data regulations', cash: 7, rep: 46, capab: 48, susts: 0, img: 'assets/character/firms/mekong-digital-cut.webp' },
+    { icon: '🧺', name: 'Lục Bình Craft', prod: 'Thủ công mỹ nghệ', prodEn: 'Handicrafts', adv: 'Chi phí vận hành thấp · hợp đối tác địa phương', advEn: 'Low operating cost · a fit for local partners', weak: 'Tay nghề thủ công khó nhân rộng quy mô lớn', weakEn: 'Hand-made skill is hard to scale into mass production', cash: 7, rep: 52, capab: 30, susts: 1 },
   ];
   var MODES = [
     { id: 0, icon: '🛒', name: 'Nền tảng số', nameEn: 'Digital entry', cost: 0.5, margin: 0.25, scale: 0.7, op: 0.25, note: 'cam kết thấp – vào nhanh, lời mỏng', noteEn: 'low commitment – fast entry, thin margins' },
@@ -1509,6 +1510,7 @@
       if (S.firm === 1) { if (m === 2) rev *= 1.15; }           // Phù Sa Foods hợp khách trẻ Kim Sa
       if (S.firm === 2) { rev *= 0.92; if (m === 3) rev *= 1.35; } // Lam Việt: sản xuất hạn chế, Lục Đảo yêu
       if (S.firm === 3 && S.entered[m] === 0) rev *= 1.35;      // Mekong Digital cực mạnh kênh số
+      if (S.firm === 4) { if (S.entered[m] === 2) rev *= 1.2; if (S.entered[m] === 5) rev *= 0.75; } // Lục Bình Craft: hợp Liên minh chiến lược, khó phát huy FDI quy mô lớn
       if (S.items.NETWORK && (S.entered[m] === 2 || S.entered[m] === 4)) rev *= 1.10;
       if (S.entered[m] === 3 && S.capab < 50) S.rep = Math.max(0, S.rep - 1);   // Cấp phép: đối tác làm kém ảnh hưởng thương hiệu
       if (S.entered[m] === 4) S.know[m] = clamp(S.know[m] + 6);             // Liên doanh: học nhanh từ đối tác   // Vật phẩm Mạng lưới đối tác (vĩnh viễn)
@@ -1535,7 +1537,7 @@
       var ship = SHIP_MODES[S.ship[m]];
       var delayed = rnd() < ship.risk;
       if (delayed) rev *= 0.5;
-      var op = mode.op * bud.op * (S.firm === 1 ? 1.2 : 1) * (m === 5 ? 1.4 : 1) * ship.opMul;
+      var op = mode.op * bud.op * (S.firm === 1 ? 1.2 : 1) * (S.firm === 4 ? 0.8 : 1) * (m === 5 ? 1.4 : 1) * ship.opMul;
       var pf = rev * Math.max(0.08, margin) - op;
       qProfit += pf;
       qLinesData.push({ m: m, rev: rev, pf: pf, delayed: delayed, why: revWhy(m, mode, bud, delayed, rivalRevHere, rev) });

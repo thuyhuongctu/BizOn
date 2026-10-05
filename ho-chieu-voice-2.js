@@ -14,8 +14,11 @@
   G.push({ title: '4.5 Biến cố (Lumina đọc tiêu đề)', rows: [['HC_LUM_10', 'Biến cố thị trường.', 'Market event.']].concat(EV.map(function (e, i) { return ['HC_LUM_E' + String(i + 1).padStart(2, '0'), e[1], e[2]]; })) });
   G.push({ title: '4.6 Kim Long Exports (MỚI)', rows: [
     ['HC_KL_01', 'Kim Long chào đồng hương. Thế giới rộng lắm, nhưng thị phần thì có hạn đấy.', 'Kim Long greets a fellow newcomer. The world is big, but market share is not.', 1],
+    ['HC_KL_01B', 'Kim Long để ý đồng hương đi khá nhanh đấy. Để xem giữ được phong độ bao lâu.', 'Kim Long notices a fellow countryman moving fast. Let’s see how long that lasts.', 1],
     ['HC_KL_02', 'Chúng tôi đã có mặt ở ba thị trường. Các bạn vẫn còn đang mua báo cáo à?', 'We’re already in three markets. Are you still buying reports?', 1],
+    ['HC_KL_02B', 'Thừa nhận đi, thị phần các bạn đang nhỉnh hơn tụi tôi rồi. Quý tới tụi tôi sẽ tăng tốc.', 'Fine, I’ll admit it — your market share is ahead of ours right now. We’re speeding up next quarter.', 1],
     ['HC_KL_03', 'Quý cuối rồi. Để xem ai mới là thương hiệu đi xa nhất.', 'Final quarter. Let’s see whose brand has travelled furthest.', 1],
+    ['HC_KL_03B', 'Quý cuối rồi. Các bạn đang dẫn trước – nhưng thương trường còn dài, đừng vội ăn mừng.', 'Final quarter. You’re ahead right now – but the market is a long game, don’t celebrate yet.', 1],
     ['HC_KL_04', 'Lần này các bạn thắng. Nhưng thị trường còn dài lắm.', 'You win this time. But the market is a long game.', 1],
     ['HC_KL_05', 'Kim Long dẫn trước. Lần sau nhớ đi nhanh hơn.', 'Kim Long stays ahead. Move faster next time.', 1],
   ] });
