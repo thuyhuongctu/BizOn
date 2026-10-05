@@ -114,6 +114,10 @@
   body.bp3d-full #bp3d-stage { z-index:40; }
   body.bp3d-full #bp3d-stage::after { display:none; }
   @media (min-width:1024px) { #bp3d-full { display:none; } }
+  /* Video hướng dẫn chơi chưa đúng nội dung – tạm gỡ hiển thị, chờ làm lại
+     video đúng. Giữ nguyên markup/dây nối <source>/poster bên dưới để chỉ
+     cần xoá dòng display:none này khi có video đúng. */
+  #bp-howto { display:none !important; }
   /* Màn giới thiệu làm overlay toàn màn hình, cùng tinh thần #login3d của
      BizOn Game 3D.html (Bật Nghiệp) – che hẳn bản đồ 3D/hero phía sau,
      cuộn riêng bên trong, thay vì chỉ là một section đầu trang phải cuộn
