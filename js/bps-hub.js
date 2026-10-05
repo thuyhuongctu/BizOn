@@ -15,16 +15,21 @@
   var f1 = function (v) { return (Math.round(v * 10) / 10).toLocaleString(isEN() ? 'en-US' : 'vi-VN', { maximumFractionDigits: 1 }); };
   var G = function () { return window.__bps; };
 
-  var RULES_TEXT = T(
-    '⛵ Ghe hàng bông: doanh thu ×3 nhưng chốt cứng món hàng & địa điểm cả tuần.\n' +
-    '🧺 Gánh hàng rong: doanh thu ~1/3 nhưng nghe ngóng được nhiều thông tin thị trường.\n' +
-    '📋 Khảo sát chợ: mất trọn tuần không bán hàng, nhận dữ liệu lịch sử.\n' +
-    '⚔️ Đụng cùng địa điểm với đối thủ là chia nhau khách!',
-    '⛵ Trading boat: revenue ×3 but locks the product & location for the whole week.\n' +
-    '🧺 Street cart: revenue ~1/3 but you gather a lot of market intel.\n' +
-    '📋 Market survey: no sales for the week, but you get historical data.\n' +
-    '⚔️ Hitting the same location as a rival means splitting the customers!'
-  );
+  // Hàm, không phải hằng – T() chỉ đọc đúng ngôn ngữ nếu được GỌI LÚC MỞ hộp
+  // thoại, không phải lúc script nạp. Trước đây là biến đánh giá 1 lần khi
+  // IIFE chạy, nên đổi ngôn ngữ giữa ván không cập nhật được nội dung này.
+  function rulesText() {
+    return T(
+      '⛵ Ghe hàng bông: doanh thu ×3 nhưng chốt cứng món hàng & địa điểm cả tuần.\n' +
+      '🧺 Gánh hàng rong: doanh thu ×1 nhưng nghe ngóng được nhiều thông tin thị trường.\n' +
+      '📋 Khảo sát chợ: mất trọn tuần không bán hàng, nhận dữ liệu lịch sử.\n' +
+      '⚔️ Đụng cùng địa điểm với đối thủ là chia nhau khách!',
+      '⛵ Trading boat: revenue ×3 but locks the product & location for the whole week.\n' +
+      '🧺 Street cart: revenue ×1 but you gather a lot of market intel.\n' +
+      '📋 Market survey: no sales for the week, but you get historical data.\n' +
+      '⚔️ Hitting the same location as a rival means splitting the customers!'
+    );
+  }
 
   function notebookText() {
     var b = G(); var s = b && b.S, R = b && b.RIVALS; if (!s || !R) return '';
@@ -70,8 +75,8 @@
             var el = $('ft-shop-card'); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' }); } },
         { id: 'notebook', icon: '📓', art: 'assets/illustrations/game/paths-compass.webp', name: T('Nhật ký thương hồ', "Trader's Journal"), x: 700, y: 380,
           onOpen: function (api) { api.dialogue({ name: T('Nhật ký thương hồ', "Trader's Journal"), icon: '📓', art: 'assets/illustrations/game/paths-compass.webp', station: true }, notebookText(), [{ text: T('Đóng', 'Close'), primary: true, onPick: api.close }]); } },
-        { id: 'rules', icon: '📜', art: 'assets/illustrations/game/strategy-notes-podium.webp', name: T('Luật chơi', 'Rules'), x: 980, y: 380,
-          onOpen: function (api) { api.dialogue({ name: T('Luật chơi', 'Rules'), icon: '📜', art: 'assets/illustrations/game/strategy-notes-podium.webp', station: true }, RULES_TEXT, [{ text: T('Đã hiểu', 'Got it'), primary: true, onPick: api.close }]); } },
+        { id: 'rules', icon: '📜', art: 'assets/illustrations/strategy-notes-podium.webp', name: T('Luật chơi', 'Rules'), x: 980, y: 380,
+          onOpen: function (api) { api.dialogue({ name: T('Luật chơi', 'Rules'), icon: '📜', art: 'assets/illustrations/strategy-notes-podium.webp', station: true }, rulesText(), [{ text: T('Đã hiểu', 'Got it'), primary: true, onPick: api.close }]); } },
       ],
     };
   }
