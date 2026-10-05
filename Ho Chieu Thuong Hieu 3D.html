@@ -114,7 +114,6 @@
   body.bp3d-full #bp3d-stage { z-index:40; }
   body.bp3d-full #bp3d-stage::after { display:none; }
   @media (min-width:1024px) { #bp3d-full { display:none; } }
-  #bp-howto { display:none !important; }
   /* Màn giới thiệu làm overlay toàn màn hình, cùng tinh thần #login3d của
      BizOn Game 3D.html (Bật Nghiệp) – che hẳn bản đồ 3D/hero phía sau,
      cuộn riêng bên trong, thay vì chỉ là một section đầu trang phải cuộn
@@ -202,34 +201,39 @@
 
 <main class="max-w-2xl mx-auto px-5 py-8">
 
-  <!-- VIDEO HƯỚNG DẪN CHƠI -->
-  <section id="bp-howto" class="clay-card p-5 mb-6">
-    <button type="button" onclick="document.getElementById('bp-howto-box').classList.toggle('hidden');this.querySelector('b').textContent=document.getElementById('bp-howto-box').classList.contains('hidden')?'▾':'▴'" class="w-full flex items-center justify-between">
-      <span>
-        <span class="block text-[11px] font-extrabold text-primary uppercase tracking-[.2em]" data-en="Watch before you play">📺 Xem trước khi chơi</span>
-        <span class="block font-display font-extrabold text-deep-teal text-lg mt-1" data-en="How-to-play video">Video hướng dẫn chơi</span>
-      </span>
-      <b class="text-xs font-bold opacity-60">▾</b>
-    </button>
-    <div id="bp-howto-box" class="hidden mt-3">
-    <div class="flex justify-center gap-2 mb-3">
-      <button id="bp-video-len-short" onclick="bpVideoLen('short')" class="clay-btn bg-deep-teal text-white font-display font-extrabold px-4 py-1.5 text-xs" data-en="🎬 Quick (~40s)">🎬 Ngắn (~40 giây)</button>
-      <button id="bp-video-len-full" onclick="bpVideoLen('full')" class="clay-btn bg-white text-deep-teal border border-deep-teal/20 font-display font-extrabold px-4 py-1.5 text-xs" data-en="📖 Detailed – all 6 quarters (~105s)">📖 Chi tiết – đủ 6 quý (~105 giây)</button>
-    </div>
-    <video id="bp-video-short-vi" controls preload="none" playsinline class="w-full rounded-2xl block mx-auto" style="max-height:70vh">
-    </video>
-    <video id="bp-video-short-en" controls preload="none" playsinline class="w-full rounded-2xl mx-auto hidden" style="max-height:70vh">
-    </video>
-    <video id="bp-video-full-vi" controls preload="none" playsinline class="w-full rounded-2xl mx-auto hidden" style="max-height:70vh">
-    </video>
-    <video id="bp-video-full-en" controls preload="none" playsinline class="w-full rounded-2xl mx-auto hidden" style="max-height:70vh">
-    </video>
-    <p class="text-[10px] text-deep-teal/40 mt-3 text-center" data-en="Burned-in captions + original background music – switch language from the ⋯ button top-left to switch the video too.">Có phụ đề chữ đốt sẵn + nhạc nền gốc – đổi ngôn ngữ bằng nút ⋯ góc trái sẽ đổi luôn video.</p>
-    </div>
-  </section>
-
   <!-- MÀN GIỚI THIỆU -->
   <section id="bp-intro" class="clay-card p-6">
+    <!-- VIDEO HƯỚNG DẪN CHƠI – nằm trong #bp-intro (không phải section riêng trước nó) vì
+         #bp-intro là overlay toàn màn hình (position:fixed) từ PR #627; để ở ngoài sẽ bị
+         overlay che mất, không bấm được. -->
+    <section id="bp-howto" class="clay-card p-5 mb-6">
+      <button type="button" onclick="document.getElementById('bp-howto-box').classList.toggle('hidden');this.querySelector('b').textContent=document.getElementById('bp-howto-box').classList.contains('hidden')?'▾':'▴'" class="w-full flex items-center justify-between">
+        <span>
+          <span class="block text-[11px] font-extrabold text-primary uppercase tracking-[.2em]" data-en="Watch before you play">📺 Xem trước khi chơi</span>
+          <span class="block font-display font-extrabold text-deep-teal text-lg mt-1" data-en="How-to-play video">Video hướng dẫn chơi</span>
+        </span>
+        <b class="text-xs font-bold opacity-60">▾</b>
+      </button>
+      <div id="bp-howto-box" class="hidden mt-3">
+      <div class="flex justify-center gap-2 mb-3">
+        <button id="bp-video-len-short" onclick="bpVideoLen('short')" class="clay-btn bg-deep-teal text-white font-display font-extrabold px-4 py-1.5 text-xs" data-en="🎬 Quick (~40s)">🎬 Ngắn (~40 giây)</button>
+        <button id="bp-video-len-full" onclick="bpVideoLen('full')" class="clay-btn bg-white text-deep-teal border border-deep-teal/20 font-display font-extrabold px-4 py-1.5 text-xs" data-en="📖 Detailed – all 6 quarters (~105s)">📖 Chi tiết – đủ 6 quý (~105 giây)</button>
+      </div>
+      <video id="bp-video-short-vi" controls preload="none" playsinline poster="assets/video/bp-huong-dan-choi-vi-poster.jpg" class="w-full rounded-2xl block mx-auto" style="max-height:70vh">
+        <source src="assets/video/bp-huong-dan-choi-vi-v3.mp4" type="video/mp4">
+      </video>
+      <video id="bp-video-short-en" controls preload="none" playsinline poster="assets/video/bp-huong-dan-choi-en-poster.jpg" class="w-full rounded-2xl mx-auto hidden" style="max-height:70vh">
+        <source src="assets/video/bp-huong-dan-choi-en-v3.mp4" type="video/mp4">
+      </video>
+      <video id="bp-video-full-vi" controls preload="none" playsinline poster="assets/video/bp-huong-dan-chi-tiet-vi-poster.jpg" class="w-full rounded-2xl mx-auto hidden" style="max-height:70vh">
+        <source src="assets/video/bp-huong-dan-chi-tiet-vi-v4.mp4" type="video/mp4">
+      </video>
+      <video id="bp-video-full-en" controls preload="none" playsinline poster="assets/video/bp-huong-dan-chi-tiet-en-poster.jpg" class="w-full rounded-2xl mx-auto hidden" style="max-height:70vh">
+        <source src="assets/video/bp-huong-dan-chi-tiet-en-v4.mp4" type="video/mp4">
+      </video>
+      <p class="text-[10px] text-deep-teal/40 mt-3 text-center" data-en="Burned-in captions + original background music – switch language from the ⋯ button top-left to switch the video too.">Có phụ đề chữ đốt sẵn + nhạc nền gốc – đổi ngôn ngữ bằng nút ⋯ góc trái sẽ đổi luôn video.</p>
+      </div>
+    </section>
     <h2 class="font-display font-extrabold text-deep-teal text-lg mb-2" data-en="🏢 Choose your company">🏢 Chọn doanh nghiệp của bạn</h2>
     <p class="text-[11px] opacity-60 mb-2" data-en="Each company has its own journey and risk profile – there is no &quot;strongest&quot; choice.">Mỗi doanh nghiệp một hành trình và hệ rủi ro khác nhau – không có lựa chọn "mạnh nhất".</p>
     <div class="grid sm:grid-cols-2 gap-2" id="bp-firms"></div>
@@ -2127,6 +2131,8 @@
 <script src="js/bp-exam.js"></script>
 <script src="js/bp-worldmap.js?v=4"></script>
 <script src="js/bp-ib-ui.js?v=4"></script>
+<script src="ho-chieu-voice.js"></script>
+<script src="ho-chieu-voice-2.js"></script>
 <script src="js/bp-signature.js"></script>
 <script type="module" src="bp3d.js"></script>
 <script>if ('serviceWorker' in navigator && location.protocol.startsWith('http')) addEventListener('load', function () { navigator.serviceWorker.register('sw-hochieu.js').catch(function () {}); });</script>

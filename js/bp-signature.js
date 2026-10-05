@@ -1,6 +1,7 @@
-/* BizOn Hộ Chiếu – lớp «dấu ấn»: lễ đóng dấu, Kim Long xuất hiện, thẻ nhiệm vụ, Hỏi thầy Tú, lồng tiếng mp3.
+/* BizOn Hộ Chiếu – lớp «dấu ấn»: lễ đóng dấu, Kim Long xuất hiện, thẻ nhiệm vụ, Hỏi thầy Tú, lồng tiếng.
  * Chỉ đọc window.__bp.S (ghi duy nhất cờ S.flags.askTu); không sửa luật chơi.
- * Giọng: assets/voice/{vi|en}/{MÃ}.mp3 (mã theo kịch bản «Ho Chieu - Nhan Xet Anh Thoai»). Thiếu file thì im lặng.
+ * Giọng: Web Speech API (speechSynthesis) đọc trực tiếp text từ window.__HC_VOICE (ho-chieu-voice.js/-2.js,
+ * nạp trước file này) — không có file mp3 ghi âm thật, trình duyệt không hỗ trợ speechSynthesis thì im lặng.
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. */
 (function () {
   var B = function () { return window.__bp; }, S = function () { return B() && B().S; }, $ = function (id) { return document.getElementById(id); };
@@ -35,18 +36,28 @@
 
   // ---------- Giọng ----------
   var muted = false; try { muted = localStorage.getItem('bizon-bp-voice') === 'off'; } catch (e) {}
-  var cur = null, queue = [];
+  var HC_LINES = {};
+  (function () {
+    var V = window.__HC_VOICE;
+    if (!V || !V.groups) return;
+    V.groups.forEach(function (g) { g.rows.forEach(function (r) { HC_LINES[r[0]] = { vi: r[1], en: r[2] }; }); });
+  })();
+  var canSpeak = typeof window !== 'undefined' && 'speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined';
+  var speaking = false, queue = [];
   function play(code) {
-    if (muted || !code) return;
-    queue.push(code); if (!cur) next();
+    if (muted || !code || !canSpeak) return;
+    var line = HC_LINES[code]; if (!line) return;
+    queue.push(line); if (!speaking) next();
   }
   function next() {
-    var c = queue.shift(); if (!c) { cur = null; return; }
-    cur = new Audio('assets/voice/' + (EN() ? 'en' : 'vi') + '/' + c + '.mp3');
-    cur.onended = cur.onerror = function () { cur = null; next(); };
-    cur.play().catch(function () { cur = null; next(); });
+    var line = queue.shift(); if (!line) { speaking = false; return; }
+    speaking = true;
+    var u = new SpeechSynthesisUtterance(T(line.vi, line.en));
+    u.lang = EN() ? 'en-US' : 'vi-VN';
+    u.onend = u.onerror = next;
+    try { window.speechSynthesis.speak(u); } catch (e) { next(); }
   }
-  function stopVoice() { queue = []; if (cur) { try { cur.pause(); } catch (e) {} cur = null; } }
+  function stopVoice() { queue = []; speaking = false; if (canSpeak) { try { window.speechSynthesis.cancel(); } catch (e) {} } }
   var vb = document.createElement('button'); vb.id = 'sg-voice'; vb.type = 'button';
   var paintVb = function () { vb.innerHTML = '🎙️' + (muted ? '<i style="position:absolute;left:10px;right:10px;top:22px;height:2.5px;background:#ff8a7a;transform:rotate(-40deg)"></i>' : ''); vb.title = T(muted ? 'Bật lồng tiếng nhân vật' : 'Tắt lồng tiếng nhân vật', muted ? 'Character voices on' : 'Character voices off'); vb.setAttribute('aria-label', vb.title); };
   vb.onclick = function () { muted = !muted; try { localStorage.setItem('bizon-bp-voice', muted ? 'off' : 'on'); } catch (e) {} if (muted) stopVoice(); paintVb(); };
