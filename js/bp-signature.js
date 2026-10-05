@@ -1,6 +1,7 @@
-/* BizOn Hộ Chiếu – lớp «dấu ấn»: lễ đóng dấu, Kim Long xuất hiện, thẻ nhiệm vụ, Hỏi thầy Tú, lồng tiếng mp3.
+/* BizOn Hộ Chiếu – lớp «dấu ấn»: lễ đóng dấu, Kim Long xuất hiện, thẻ nhiệm vụ, Hỏi thầy Tú, lồng tiếng.
  * Chỉ đọc window.__bp.S (ghi duy nhất cờ S.flags.askTu); không sửa luật chơi.
- * Giọng: assets/voice/{vi|en}/{MÃ}.mp3 (mã theo kịch bản «Ho Chieu - Nhan Xet Anh Thoai»). Thiếu file thì im lặng.
+ * Giọng: Web Speech API (speechSynthesis) đọc trực tiếp text từ window.__HC_VOICE (ho-chieu-voice.js/-2.js,
+ * nạp trước file này) — không có file mp3 ghi âm thật, trình duyệt không hỗ trợ speechSynthesis thì im lặng.
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. */
 (function () {
   var B = function () { return window.__bp; }, S = function () { return B() && B().S; }, $ = function (id) { return document.getElementById(id); };
@@ -35,18 +36,28 @@
 
   // ---------- Giọng ----------
   var muted = false; try { muted = localStorage.getItem('bizon-bp-voice') === 'off'; } catch (e) {}
-  var cur = null, queue = [];
+  var HC_LINES = {};
+  (function () {
+    var V = window.__HC_VOICE;
+    if (!V || !V.groups) return;
+    V.groups.forEach(function (g) { g.rows.forEach(function (r) { HC_LINES[r[0]] = { vi: r[1], en: r[2] }; }); });
+  })();
+  var canSpeak = typeof window !== 'undefined' && 'speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined';
+  var speaking = false, queue = [];
   function play(code) {
-    if (muted || !code) return;
-    queue.push(code); if (!cur) next();
+    if (muted || !code || !canSpeak) return;
+    var line = HC_LINES[code]; if (!line) return;
+    queue.push(line); if (!speaking) next();
   }
   function next() {
-    var c = queue.shift(); if (!c) { cur = null; return; }
-    cur = new Audio('assets/voice/' + (EN() ? 'en' : 'vi') + '/' + c + '.mp3');
-    cur.onended = cur.onerror = function () { cur = null; next(); };
-    cur.play().catch(function () { cur = null; next(); });
+    var line = queue.shift(); if (!line) { speaking = false; return; }
+    speaking = true;
+    var u = new SpeechSynthesisUtterance(T(line.vi, line.en));
+    u.lang = EN() ? 'en-US' : 'vi-VN';
+    u.onend = u.onerror = next;
+    try { window.speechSynthesis.speak(u); } catch (e) { next(); }
   }
-  function stopVoice() { queue = []; if (cur) { try { cur.pause(); } catch (e) {} cur = null; } }
+  function stopVoice() { queue = []; speaking = false; if (canSpeak) { try { window.speechSynthesis.cancel(); } catch (e) {} } }
   var vb = document.createElement('button'); vb.id = 'sg-voice'; vb.type = 'button';
   var paintVb = function () { vb.innerHTML = '🎙️' + (muted ? '<i style="position:absolute;left:10px;right:10px;top:22px;height:2.5px;background:#ff8a7a;transform:rotate(-40deg)"></i>' : ''); vb.title = T(muted ? 'Bật lồng tiếng nhân vật' : 'Tắt lồng tiếng nhân vật', muted ? 'Character voices on' : 'Character voices off'); vb.setAttribute('aria-label', vb.title); };
   vb.onclick = function () { muted = !muted; try { localStorage.setItem('bizon-bp-voice', muted ? 'off' : 'on'); } catch (e) {} if (muted) stopVoice(); paintVb(); };
@@ -95,7 +106,7 @@
   function stamp(m, mode) {
     var b = B(), mk = b.MKTS[m], md = b.MODES[mode] || b.MODES[0], s = S(), real = mk.real || {};
     var n = s.entered.filter(function (v) { return v !== null && v !== undefined; }).length;
-    var cc = hostCode(m); setTimeout(function () { img('mode/' + MODE_IMG[mode] + '.webp', function (src) { var el = $('sg-scene'); if (el) { el.style.height = '150px'; el.innerHTML = '<img src="' + src + '" alt="" style="width:100%;height:100%;object-fit:cover;display:block">'; var pr = $('sg-prod'); if (pr) pr.style.top = '118px'; } }); img('stamp/' + cc + '.png', function (src) { var el = document.querySelector('.sg-stamp'); if (el) { el.style.border = '0'; el.innerHTML = '<img src="' + src + '" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain">'; img('stamp/mode-' + (mode + 1) + '.png', function (s2) { el.insertAdjacentHTML('beforeend', '<img src="' + s2 + '" alt="" style="position:absolute;inset:-8%;width:116%;height:116%;object-fit:contain">'); }); } }); fillImg('#sg-prod', 'prod/' + FIRM_PROD[s.firm | 0] + '.png', 'width:100%;height:100%;object-fit:contain'); }, 0);
+    var cc = hostCode(m); setTimeout(function () { img('mode/' + MODE_IMG[mode] + '.webp', function (src) { var el = $('sg-scene'); if (el) { el.style.height = '150px'; el.innerHTML = '<img src="' + src + '" alt="" style="width:100%;height:100%;object-fit:cover;display:block">'; var pr = $('sg-prod'); if (pr) pr.style.top = '118px'; } }); img('stamp/' + cc + '.png', function (src) { var el = document.querySelector('.sg-stamp'); if (el) { el.style.border = '0'; el.innerHTML = '<img src="' + src + '" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain">'; img('stamp/mode-' + (mode + 1) + '.png', function (s2) { el.insertAdjacentHTML('beforeend', '<img src="' + s2 + '" alt="" style="position:absolute;inset:-8%;width:116%;height:116%;object-fit:contain">'); }); } }); if (FIRM_PROD[s.firm | 0]) fillImg('#sg-prod', 'prod/' + FIRM_PROD[s.firm | 0] + '.png', 'width:100%;height:100%;object-fit:contain'); }, 0);
     overlay('<div id="sg-scene" style="margin:-26px -26px 14px;height:0;overflow:hidden;border-radius:18px 18px 0 0"></div><div id="sg-prod" style="position:absolute;right:18px;top:18px;width:78px;height:78px"></div><span class="sg-eb">🛂 ' + T('Hộ chiếu thương hiệu · trang ', 'Brand passport · page ') + n + '</span>' +
       '<h3>' + (real.flag ? real.flag + ' ' : '') + mk.name + (real.c ? ' · ' + T(real.c, real.cEn) : '') + '</h3>' +
       '<div class="sg-stamp" style="color:' + INK[mode % 6] + '"><i class="sg-ink"></i><span class="f">' + md.icon + '</span>' + T(md.name, md.nameEn) + '<span class="d">' + T('Quý ', 'Q') + (s.q + 1) + ' · ' + new Date().getFullYear() + '</span></div>' +
@@ -103,14 +114,27 @@
     stopVoice(); play('HC_LP_' + (10 + mode)); play('HC_NAR_20');
   }
 
-  // 2. Kim Long
+  // 2. Kim Long – mỗi mốc 2 biến thể (đang dẫn / đang bị dẫn), chọn theo
+  // S.profit so với S.rival.rev tại thời điểm xuất hiện, cùng tiêu chí với
+  // điều kiện thắng cuối ván – để Kim Long phản ứng đúng diễn biến ván chơi
+  // thay vì luôn nói một câu bất biến.
   var KL = {
-    1: ['HC_KL_01', 'Kim Long chào đồng hương. Thế giới rộng lắm, nhưng thị phần thì có hạn đấy.', 'Kim Long greets a fellow countryman. The world is big, but market share is limited.'],
-    3: ['HC_KL_02', 'Chúng tôi đã có mặt ở ba thị trường. Các bạn vẫn còn đang mua báo cáo à?', 'We’re already in three markets. Still buying reports?'],
-    5: ['HC_KL_03', 'Quý cuối rồi. Để xem ai mới là thương hiệu đi xa nhất.', 'Final quarter. Let’s see whose brand travels furthest.'],
+    1: {
+      ahead: ['HC_KL_01', 'Kim Long chào đồng hương. Thế giới rộng lắm, nhưng thị phần thì có hạn đấy.', 'Kim Long greets a fellow countryman. The world is big, but market share is limited.'],
+      behind: ['HC_KL_01B', 'Kim Long để ý đồng hương đi khá nhanh đấy. Để xem giữ được phong độ bao lâu.', 'Kim Long notices a fellow countryman moving fast. Let’s see how long that lasts.'],
+    },
+    3: {
+      ahead: ['HC_KL_02', 'Chúng tôi đã có mặt ở ba thị trường. Các bạn vẫn còn đang mua báo cáo à?', 'We’re already in three markets. Still buying reports?'],
+      behind: ['HC_KL_02B', 'Thừa nhận đi, thị phần các bạn đang nhỉnh hơn tụi tôi rồi. Quý tới tụi tôi sẽ tăng tốc.', 'Fine, I’ll admit it — your market share is ahead of ours right now. We’re speeding up next quarter.'],
+    },
+    5: {
+      ahead: ['HC_KL_03', 'Quý cuối rồi. Để xem ai mới là thương hiệu đi xa nhất.', 'Final quarter. Let’s see whose brand travels furthest.'],
+      behind: ['HC_KL_03B', 'Quý cuối rồi. Các bạn đang dẫn trước – nhưng thương trường còn dài, đừng vội ăn mừng.', 'Final quarter. You’re ahead right now – but the market is a long game, don’t celebrate yet.'],
+    },
   };
   function kimLong(q) {
-    var k = KL[q], s = S(); if (!k) return;
+    var m = KL[q], s = S(); if (!m) return;
+    var k = s.profit >= s.rival.rev ? m.behind : m.ahead; // Kim Long nói giọng "behind" khi CHÍNH Kim Long đang bị dẫn (người chơi đang thắng)
     var you = s.entered.filter(function (v) { return v !== null && v !== undefined; }).length, them = (s.rival.in || []).length;
     overlay('<span class="sg-eb">⚔️ ' + T('Đối thủ xuất hiện · Quý ', 'Rival appears · Q') + (q + 1) + '</span>' +
       '<div id="sg-kl-tower" style="margin:-26px -26px 12px;height:0;overflow:hidden;border-radius:18px 18px 0 0"></div><div style="display:flex;gap:12px;align-items:center"><div id="sg-kl-ceo" style="width:0;height:84px;flex:none"></div><h3>Kim Long Exports</h3></div><p class="sg-q" style="animation-delay:.1s"><b>CEO Kim Long:</b> «' + T(k[1], k[2]) + '»</p>' +
