@@ -66,6 +66,47 @@ def fdi_series():
     return out
 
 
+def fdi_trade_series():
+    """Xuất/nhập khẩu của khu vực có vốn FDI, lũy kế từ đầu năm (tools/extract_fdi_trade.py)."""
+    r = rows('fdi_sector_trade_quarterly.csv')
+    out = []
+    for d, sid, label, extra in (
+        ('export', 'fdi_sector_exports', 'Xuất khẩu hàng hóa của khu vực có vốn FDI (kể cả dầu thô)', ' Gồm cả dầu thô.'),
+        ('import', 'fdi_sector_imports', 'Nhập khẩu hàng hóa của khu vực có vốn FDI', '')):
+        by = {x['quarter']: x for x in r if x['direction'] == d}
+        obs = []
+        for q in sorted(by, key=qkey):
+            x = by[q]
+            ytd = float(x['fdi_ytd_usd_bn'])
+            prev = f'{q[:4]}Q{int(q[-1]) - 1}'
+            flow = ytd if q.endswith('Q1') else (ytd - float(by[prev]['fdi_ytd_usd_bn']) if prev in by else None)
+            share = (round(100 * ytd / float(x['total_ytd_usd_bn']), 1) if x['total_ytd_usd_bn']
+                     else float(x['share_printed']) if x['share_printed'] else None)
+            obs.append({'period': q, 'ytd': ytd, 'value': None if flow is None else round(flow, 2), 'shareYtd': share,
+                        'yoyPrinted': float(x['yoy_printed']) if x['yoy_printed'] else None,
+                        'source': x['source_name'], 'url': x['source_url'], 'quote': x['quote']})
+        last = obs[-1]
+        same = next((o for o in obs if o['period'] == f'{int(last["period"][:4]) - 1}{last["period"][4:]}'), None)
+        out.append({
+            'id': sid, 'label': label, 'domain': 'trade', 'unit': 'tỷ USD', 'frequency': 'quý', 'official': True, 'chart': 'bar',
+            # So cùng kỳ: lấy tỷ lệ Tổng cục Thống kê in trong câu (so với số đã điều chỉnh của năm trước),
+            # không tự tính từ số công bố lần đầu năm trước (hai cách có thể lệch vài điểm phần trăm).
+            'latest': {'period': last['period'], 'ytd': last['ytd'], 'share': last['shareYtd'],
+                       'ytdYoY': last['yoyPrinted'] if last['yoyPrinted'] is not None
+                       else (None if not same else round(100 * (last['ytd'] / same['ytd'] - 1), 1))},
+            'source': 'Tổng cục Thống kê (nay là Cục Thống kê, Bộ Tài chính) — báo cáo tình hình kinh tế – xã hội quý',
+            'method': 'Kim ngạch lũy kế từ đầu năm của khu vực có vốn đầu tư nước ngoài, công bố lần đầu tại cuối mỗi quý; '
+                      'giá trị quý = lũy kế quý này − lũy kế quý trước cùng năm. Tỷ trọng = khu vực FDI / tổng kim ngạch cùng kỳ. '
+                      'Tăng/giảm so cùng kỳ: tỷ lệ in trong báo cáo (so với số đã điều chỉnh của năm trước).',
+            'limitation': 'Số ước tính lần công bố đầu, chưa thay bằng số chính thức của Hải quan; không có chiều mặt hàng hay đối tác.'
+                          + extra + ' Một số quý báo cáo không nêu tổng kim ngạch trong cùng câu nên để trống tỷ trọng. '
+                          '8 quý 2022–2024 lấy từ tệp lời văn .docx đính kèm vì văn bản trên trang bị cắt.',
+            'rights': 'Số liệu thống kê nhà nước công bố công khai; trích dẫn có ghi nguồn. Rà điều khoản trước khi phát hành qua API.',
+            'observations': obs
+        })
+    return out
+
+
 def partner_series():
     r = rows('fdi_stock_by_source.csv')
     out = []
@@ -119,7 +160,7 @@ def durian_series():
 
 
 def build():
-    series = fdi_series() + partner_series() + [
+    series = fdi_series() + fdi_trade_series() + partner_series() + [
         quarterly_avg('wtv_import_volume', 'world_import_volume', 'Khối lượng nhập khẩu hàng hóa thế giới', 'chỉ số 2021 = 100',
                       'CPB Netherlands Bureau for Economic Policy Analysis — World Trade Monitor (bản tháng 7/2026, công bố 25/9/2026)',
                       'Chỉ số khối lượng nhập khẩu thế giới, đã điều chỉnh mùa vụ (chuỗi mgz_w1_qnmi_sn), bình quân quý.',
