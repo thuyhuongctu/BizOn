@@ -312,11 +312,15 @@ window.addEventListener('bps-pick', e => { if (e.detail.g === 'loc') highlight(e
 window.addEventListener('bps-week', e => { highlight(null); setWeek(e.detail.week); showRivals(e.detail.week - 1); });
 const pops = [];
 function pop(loc, html, bad) { const el = document.createElement('div'); el.className = 'bps3d-pop' + (bad ? ' bad' : ''); el.innerHTML = html; labels.appendChild(el); pops.push({ el, loc, t0: performance.now() }); }
+// Dấu +/− tự viết tay thay vì để toLocaleString tự chèn dấu âm – một số
+// trình duyệt dùng gạch ngang ASCII "-" cho số âm, lệch với dấu trừ kiểu chữ
+// "−" dùng ở chỗ khác trong game, nên số lỗ hiển thị không đồng bộ.
+function fmtDelta(v) { return (v >= 0 ? '+' : '−') + (Math.round(Math.abs(v) * 10) / 10).toLocaleString(EN() ? 'en-US' : 'vi-VN'); }
 window.addEventListener('bps-commit', e => { const d = e.detail, g = G();
   const wasStorm = d.loc === stormAt && d.m !== 2;
   sendMe(d.m, d.loc, () => { showRivals(d.week); window.dispatchEvent(new CustomEvent('bps-result', { detail: Object.assign({ storm: wasStorm }, d) }));
     if (d.m === 2) pop(d.loc, '📋 ' + T('Đã ghi chép', 'Notes taken'));
-    else pop(d.loc, (d.rev >= 0 ? '+' : '') + (Math.round(d.rev * 10) / 10).toLocaleString(EN() ? 'en-US' : 'vi-VN') + ' ' + T('tr', 'm') + (d.clash ? '<small>⚡ ' + d.clash + ' ' + T('đối thủ', 'rival(s)') + '</small>' : ''), d.clash > 0 || wasStorm);
+    else pop(d.loc, fmtDelta(d.rev) + ' ' + T('tr', 'm') + (d.clash ? '<small>⚡ ' + d.clash + ' ' + T('đối thủ', 'rival(s)') + '</small>' : ''), d.clash > 0 || wasStorm);
     if (wasStorm) { const b = document.getElementById('bps3d-storm'); if (b) { document.getElementById('bps3d-storm-t').textContent = '🌧️ ' + T('Mưa bão ở ' + g.LOCS[d.loc][1], 'Storm at ' + g.LOCS[d.loc][3]); document.getElementById('bps3d-storm-d').textContent = T('Khu này ít khách nhất tuần. Lần sau hãy nhìn đám đông trên bản đồ trước khi chọn.', 'This was the quietest spot this week. Next time, check the crowds on the map before choosing.'); b.style.display = 'grid'; } }
   }); });
 window.addEventListener('bps-lang', labelsText);
@@ -506,7 +510,7 @@ function otherBoat(team) { if (others[team]) return others[team];
   const v = vessel(0, team === 'rx' ? 0x2f7fb8 : 0xfda127); if (team === 'rx') v.add(sprite('assets/doi-5-nguoi.png', 4.2, 2.0)); else duoOnBoat(v);
   v.scale.setScalar(1.2); v.position.set(team === 'rx' ? -14 : -4, 0.1, team === 'rx' ? 4.5 : 10); v.userData.home = v.position.clone(); scene.add(v); return others[team] = v; }
 window.addEventListener('bps-commit-other', e => { const d = e.detail; if (d.m === 2) return; const v = otherBoat(d.team), p = P[d.loc];
-  const to = new THREE.Vector3(p[0] + 2.2, 0.1, p[1] + 3.6); v.visible = true; v.lookAt(to.x, v.position.y, to.z); tween(v, to, 1900, () => pop(d.loc, (d.team === 'rx' ? '🐉 ' : '🌾 ') + (d.rev >= 0 ? '+' : '') + (Math.round(d.rev * 10) / 10).toLocaleString(EN() ? 'en-US' : 'vi-VN') + ' ' + T('tr', 'm'), false)); });
+  const to = new THREE.Vector3(p[0] + 2.2, 0.1, p[1] + 3.6); v.visible = true; v.lookAt(to.x, v.position.y, to.z); tween(v, to, 1900, () => pop(d.loc, (d.team === 'rx' ? '🐉 ' : '🌾 ') + fmtDelta(d.rev) + ' ' + T('tr', 'm'), false)); });
 window.addEventListener('bps-week', () => { Object.values(others).forEach(v => { tween(v, v.userData.home.clone(), 1500); }); if (team5) team5.visible = !others.rx; });
 
 // ---- (8) Hiệu ứng sự kiện tuần: lũ, mưa, lễ hội, nắng nóng, mùa trái cây, mùa thi, du khách ----
@@ -545,12 +549,22 @@ if (LOW) { sun.castShadow = true; }
 
 // ---- (10) Hướng dẫn lần đầu trong cảnh 3D ----
 (function tips() { let seen = false; try { seen = localStorage.getItem('bps3d-tips') === '1'; } catch (e) {} if (seen) return;
-  const box = document.createElement('div'); box.style.cssText = 'position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;pointer-events:auto;max-width:min(92%,380px);background:#fffdf6;color:#033337;border-radius:22px;padding:16px 18px;font:600 13px/1.45 Manrope,system-ui,sans-serif;box-shadow:0 6px 0 #d9c7a6,0 20px 40px -12px rgba(3,51,55,.55);display:flex;flex-direction:column;gap:8px';
+  const box = document.createElement('div'); box.id = 'bps3d-tips-box'; box.style.cssText = 'position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;pointer-events:auto;max-width:min(92%,380px);background:#fffdf6;color:#033337;border-radius:22px;padding:16px 18px;font:600 13px/1.45 Manrope,system-ui,sans-serif;box-shadow:0 6px 0 #d9c7a6,0 20px 40px -12px rgba(3,51,55,.55);display:flex;flex-direction:column;gap:8px';
   const fill = () => { box.innerHTML = '<b style="font:800 16px Plus Jakarta Sans,sans-serif">' + T('Cách dùng cảnh 3D', 'Using the 3D scene') + '</b>' +
     ['👆 ' + T('Kéo để xoay sông nước', 'Drag to rotate the river'), '🤏 ' + T('Chụm hai ngón hoặc lăn chuột để phóng to', 'Pinch or scroll to zoom'), '📍 ' + T('Bấm vào nhãn bến hoặc bãi đất để chọn bến', 'Tap a landing label or plot to choose it'), '⛵ ' + T('Chốt xong, ghe sẽ chạy tới bến và hiện doanh thu', 'Once locked in, your boat sails there and shows the revenue'), '🔊 ' + T('Bật âm thanh ở góc phải nếu muốn nghe sông nước', 'Turn on sound at the top right to hear the river')].map(x => '<span>' + x + '</span>').join('') +
     '<button type="button" style="margin-top:4px;min-height:44px;border:0;border-radius:14px;background:#fda127;color:#033337;font:800 14px Manrope,sans-serif;cursor:pointer;box-shadow:inset 0 -4px 0 rgba(232,118,45,.6)">' + T('Đã hiểu, bắt đầu', 'Got it, let’s go') + '</button>';
     box.querySelector('button').onclick = () => { try { localStorage.setItem('bps3d-tips', '1'); } catch (e) {} box.remove(); }; };
-  fill(); window.addEventListener('bps-lang', () => { if (box.isConnected) fill(); }); host.parentElement.appendChild(box); })();
+  fill(); window.addEventListener('bps-lang', () => { if (box.isConnected) fill(); });
+  // Nếu trang có hướng dẫn từng-bước riêng (js/bps-extras.js, #bps-tut) đang
+  // mở, đợi nó đóng trước khi hiện thêm hộp mẹo cảnh 3D này, tránh 2 lớp
+  // hướng dẫn chồng nhau trên màn hình nhỏ. Trang không có #bps-tut (vd.
+  // Ben Phu Sa Game v4 Nhom.dc.html) thì hiện ngay như cũ.
+  const appendWhenFree = () => {
+    const otherTour = document.getElementById('bps-tut');
+    if (otherTour && getComputedStyle(otherTour).display !== 'none') { setTimeout(appendWhenFree, 400); return; }
+    host.parentElement.appendChild(box);
+  };
+  appendWhenFree(); })();
 
 const wait = () => { if (G()) { setWeek(G().S.week || 0); frame(); } else setTimeout(wait, 60); };
 wait();
