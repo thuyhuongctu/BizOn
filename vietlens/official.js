@@ -30,13 +30,18 @@
 
   function lineChart(obs, unit) {
     const W = 640, H = 170, L = 34, B = 22;
-    const vals = obs.map((o) => o.value), mn = Math.min(...vals), mx = Math.max(...vals), pad = (mx - mn) * 0.06 || 1;
+    const vals = obs.map((o) => o.value).filter((v) => v !== null), mn = Math.min(...vals), mx = Math.max(...vals), pad = (mx - mn) * 0.06 || 1;
     const lo = mn - pad, hi = mx + pad, dec = hi - lo < 20 ? 1 : 0;   // đệm theo biên độ: đúng cả khi có giá trị âm
     const x = (i) => L + i * (W - L - 6) / (obs.length - 1), y = (v) => 8 + (1 - (v - lo) / (hi - lo)) * (H - B - 8);
     let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Biểu đồ đường theo quý, ${esc(unit)}">`;
     [lo, (lo + hi) / 2, hi].forEach((v) => { s += `<line x1="${L}" x2="${W}" y1="${y(v)}" y2="${y(v)}" class="g"/><text x="${L - 4}" y="${y(v) + 4}" text-anchor="end">${nf(v, dec)}</text>`; });
     if (lo < 0 && hi > 0) s += `<line x1="${L}" x2="${W}" y1="${y(0)}" y2="${y(0)}" class="g z"/>`;
-    s += `<polyline points="${obs.map((o, i) => `${x(i)},${y(o.value)}`).join(' ')}"/>`;
+    // ngắt đường ở quý thiếu số liệu (không nối qua chỗ trống)
+    let seg = [];
+    obs.forEach((o, i) => {
+      if (o.value !== null) seg.push(`${x(i)},${y(o.value)}`);
+      if ((o.value === null || i === obs.length - 1) && seg.length) { s += `<polyline points="${seg.join(' ')}"/>`; seg = []; }
+    });
     obs.forEach((o, i) => { if (o.period.endsWith('Q1') && +o.period.slice(0, 4) % 2 === 0 && x(i) < W - 30) s += `<text x="${x(i)}" y="${H - 6}">${o.period.slice(0, 4)}</text>`; });
     return s + '</svg>';
   }
