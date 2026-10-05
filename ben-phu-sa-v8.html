@@ -20,6 +20,8 @@
   function isEN() { try { return (localStorage.getItem('bizon-lang') || 'vi') === 'en'; } catch (e) { return false; } }
   function T(vi, en) { return isEN() ? en : vi; }
 </script>
+<script src="js/backend-config.js"></script>
+<script src="js/error-log.js"></script>
 <!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
      nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
 <link rel="stylesheet" href="css/bizon-fonts-v8.css">
@@ -533,7 +535,7 @@ document.addEventListener('DOMContentLoaded',function(){var m=document.getElemen
 
   var S = {
     week: 0, total: 0, team: 0, cap: 0, sel: { m: null, menu: null, loc: null }, log: [], ritualDone: false,
-    budget: 1.5, items: {}, shopOpen: false, knownPairs: {}, shieldSpoilage: false, adBoost: false,
+    budget: 1.5, items: {}, shopOpen: false, knownPairs: {}, shieldSpoilage: false, adBoost: false, surveyMenu: null,
   };
   var $ = function (id) { return document.getElementById(id); };
   window.__bps = { get S() { return S; }, get D() { return D; }, get W() { return W; }, get RIVALS() { return RIVALS; }, get LOCS() { return LOCS; }, get MENUS() { return MENUS; }, get cap() { return TEAM()[S.cap]; } };
@@ -559,7 +561,7 @@ document.addEventListener('DOMContentLoaded',function(){var m=document.getElemen
   // allowRisk cũng đóng vai trò "đây là lượt của người chơi, không phải đối
   // thủ" – cửa hàng vật phẩm (bảo hiểm hao hụt, uy tín thương hồ) chỉ áp dụng
   // khi allowRisk=true, y hệt cách rnd() hao hụt chỉ rút cho người chơi.
-  function menuAdj(menu, w, loc, allowRisk) {
+  function menuAdj(menu, w, loc, allowRisk, isBoat) {
     var f = 1, evw = evOf(w);
     if (evw && evw.menu[menu]) f *= evw.menu[menu];
     if (menu === 0 && W[w][loc] >= 1.05) f *= 1.15;
@@ -569,7 +571,7 @@ document.addEventListener('DOMContentLoaded',function(){var m=document.getElemen
       else if (rnd() < 0.25) f *= 0.88;
     }
     if (menu === 2) { f *= 1.18; if (W[w][loc] >= 1.05) f *= 0.93; }
-    if (menu === 0 && allowRisk && (S.items.REP || 0) > 0) f *= 1.08;
+    if (isBoat && allowRisk && (S.items.REP || 0) > 0) f *= 1.08;
     return f;
   }
 
@@ -780,20 +782,22 @@ document.addEventListener('DOMContentLoaded',function(){var m=document.getElemen
     if (m !== 2) count[loc]++;
 
     if (m === 2) {
-      // Nghiên cứu: dữ liệu lịch sử – đúng hướng nhưng 20% bị nhiễu
+      // Nghiên cứu: báo cáo lịch sử – chỉ tiết lộ MÓN bán chạy nhất (20% nhiễu,
+      // trừ khi có perk Tú Phan), KHÔNG tiết lộ địa điểm – muốn biết bán ở đâu
+      // vẫn phải tự dò (gánh hàng rong) hoặc đoán.
       S.total -= surveyCost();
       var bc = bestCombo();
       var noisy = !PERK('cof') && rnd() < 0.2;
       var rm = noisy ? (bc[0] + 1) % 3 : bc[0];
-      var rl = noisy ? (bc[1] + 1 + Math.floor(rnd() * (NL - 1))) % NL : bc[1];
+      S.surveyMenu = rm;
       addLog(w + 1, T(
-        '📋 Sổ ghi chép của tiểu thương: mùa trước, ' + MENUS[rm][0] + ' <b>' + mName(rm) + '</b> bán chạy nhất, khu <b>' + lName(rl) + '</b> đông khách nhất. <i>(dữ liệu cũ – chỉ mang tính tham khảo · phí ' + f1(surveyCost()) + ' ' + MU() + ')</i>',
-        "📋 The trader's old ledger: last season, " + MENUS[rm][0] + ' <b>' + mName(rm) + '</b> sold best, and <b>' + lName(rl) + '</b> was the busiest spot. <i>(old data – for reference only · cost ' + f1(surveyCost()) + ' ' + MU() + ')</i>'
+        '📋 Sổ ghi chép của tiểu thương: mùa trước, ' + MENUS[rm][0] + ' <b>' + mName(rm) + '</b> bán chạy nhất <i>(không rõ bán ở khu nào – dữ liệu cũ, chỉ mang tính tham khảo · phí ' + f1(surveyCost()) + ' ' + MU() + ')</i>.',
+        "📋 The trader's old ledger: last season, " + MENUS[rm][0] + ' <b>' + mName(rm) + '</b> sold best <i>(doesn\'t say where – old data, for reference only · cost ' + f1(surveyCost()) + ' ' + MU() + ')</i>.'
       ));
     } else {
       var mult = m === 0 ? 3 : 1;
       var shieldActiveBefore = S.shieldSpoilage;
-      var adj = menuAdj(menu, w, loc, true);
+      var adj = menuAdj(menu, w, loc, true, m === 0);
       var rev = D[menu][loc] * W[w][loc] * mult * adj * share(count[loc]);
       var adApplied = S.adBoost;
       if (adApplied) { rev *= 1.2; S.adBoost = false; }
@@ -809,7 +813,7 @@ document.addEventListener('DOMContentLoaded',function(){var m=document.getElemen
       if (menu === 1 && shieldActiveBefore && !S.shieldSpoilage) notes.push(T('🛡️ hao hụt được Bảo hiểm hao hụt chặn', '🛡️ spoilage blocked by Spoilage Insurance'));
       else if (menu === 1 && adj < 1) notes.push(T('🍧 hao hụt bảo quản −12%', '🍧 storage spoilage −12%'));
       if (menu === 2) notes.push(W[w][loc] >= 1.05 ? T('☕ biên lời cao +18%, nhưng pha chậm lỡ bớt khách cao điểm', '☕ high margin +18%, but slow brewing misses some peak-week customers') : T('☕ biên lời cao +18%', '☕ high margin +18%'));
-      if (menu === 0 && (S.items.REP || 0) > 0) notes.push(T('🌟 uy tín thương hồ +8%', "🌟 trader's reputation +8%"));
+      if (m === 0 && (S.items.REP || 0) > 0) notes.push(T('🌟 uy tín thương hồ +8%', "🌟 trader's reputation +8%"));
       if (adApplied) notes.push(T('📣 quảng cáo chớp nhoáng +20%', '📣 flash ad +20%'));
       if (cmoApplied) notes.push(T('✨ CMO ra mắt ấn tượng +10%', '✨ CMO launch buzz +10%'));
       if (clash > 0) notes.push(T('⚡ đụng độ ' + clash + ' đối thủ – chia nhau khách!', '⚡ clashed with ' + clash + ' rival(s) – splitting the customers!'));
@@ -871,7 +875,7 @@ document.addEventListener('DOMContentLoaded',function(){var m=document.getElemen
     // Đối thủ bán theo kế hoạch riêng – cùng chịu luật chia khách
     RIVALS.forEach(function (r) {
       var rl2 = r.plan[w];
-      r.total += D[r.menu][rl2] * W[w][rl2] * r.mult[w] * menuAdj(r.menu, w, rl2, false) * share(count[rl2]) - (r.mult[w] === 3 ? BOAT_COST : 0);
+      r.total += D[r.menu][rl2] * W[w][rl2] * r.mult[w] * menuAdj(r.menu, w, rl2, false, r.mult[w] === 3) * share(count[rl2]) - (r.mult[w] === 3 ? BOAT_COST : 0);
     });
     addLog(w + 1, '⚔️ <i>' + T('Đối thủ tuần này', "This week's rivals") + ':</i> ' + RIVALS.map(function (r) {
       var rl2 = r.plan[w];
@@ -1173,34 +1177,10 @@ window.bpsNet = function (on) { var o = document.getElementById('bps-net'), fr =
   if (on) { try { var de = document.documentElement; if (!document.fullscreenElement && de.requestFullscreen) de.requestFullscreen().catch(function () {}); } catch (e) {} } };
 </script>
 <script src="js/bps-rival-intel.js"></script>
+<script src="js/official-cert.js"></script>
+<script src="js/negotiate.js"></script>
+<script src="js/bps-negotiate.js"></script>
 <script src="js/site-ui.js" defer></script>
-<script>
-/* Nhạc chủ đề game Bến Phù Sa — anthem «Đội Phù Sa» (xoay vòng trong nhóm ca khúc
- * của đội, không lẫn nhạc game khác). Dùng chung dock toàn site (site-dock.js). */
-(function () {
-  var THEME = 'doi-phu-sa.mp3';
-  var SOUNDTRACK = ['doi-phu-sa.mp3', 'doi-phu-sa-remix.mp3', 'doi-phu-sa-remix2.mp3', 'doi-phu-sa-remix3.mp3'];
-  function sync(on) {
-    var b = document.getElementById('ft-music');
-    if (b) b.textContent = on ? T('⏸️ Tạm dừng nhạc «Đội Phù Sa»', '⏸️ Pause the «Đội Phù Sa» theme') : T('🎵 Bật nhạc chủ đề «Đội Phù Sa»', '🎵 Play theme song «Đội Phù Sa»');
-  }
-  window.ftMusic = function () {
-    var d = window.BizonDock; if (!d) return;
-    if (d.scope) d.scope(SOUNDTRACK, 'Đội Phù Sa');
-    if (d.isPlaying()) { d.pause(); sync(false); try { localStorage.setItem('bizon-ft-music', '0'); } catch (e) {} }
-    else { d.play(THEME); sync(true); try { localStorage.setItem('bizon-ft-music', '1'); } catch (e) {} }
-  };
-  // Bấm "Bắt đầu" là cử chỉ người dùng hợp lệ → nối lại nhạc nếu trước đó đã bật
-  document.addEventListener('click', function (e) {
-    var t = e.target && e.target.closest ? e.target.closest('button') : null;
-    if (!t || t.id === 'ft-music') return;
-    if (!/ftStart\(\)/.test(t.getAttribute('onclick') || '')) return;
-    try { if (localStorage.getItem('bizon-ft-music') !== '1') return; } catch (e2) { return; }
-    var d = window.BizonDock;
-    if (d && !d.isPlaying()) { if (d.scope) d.scope(SOUNDTRACK, 'Đội Phù Sa'); d.play(THEME); sync(true); }
-  });
-})();
-</script>
 <p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2" style="color:rgba(100,116,125,.85)">✉️ Liên hệ · Contact: <a href="mailto:patu@ctu.edu.vn" style="color:inherit;text-decoration:underline">patu@ctu.edu.vn</a> · <a href="mailto:thuyhuongctu@gmail.com" style="color:inherit;text-decoration:underline">thuyhuongctu@gmail.com</a></p>
 <p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2 pb-6" style="color:rgba(100,116,125,.75)">🎓 Trang web chỉ phục vụ mục đích giáo dục và nghiên cứu, không đại diện, không liên kết và không nhận tài trợ từ bất kỳ tổ chức chính trị nào. · This website serves educational and research purposes only and is not affiliated with any political organization.</p>
 <!-- Lối nhỏ về Vũ trụ (ngôn ngữ đất sét) — không phải thanh nav thể chế -->
@@ -1242,6 +1222,7 @@ window.bpsNet = function (on) { var o = document.getElementById('bps-net'), fr =
   document.getElementById('bps3d-info-close').onclick = function () { document.getElementById('bps3d-info').style.display = 'none'; };
 })();
 </script>
+<script src="js/bps-voice.js"></script>
 <script src="js/bps-cast.js"></script>
 <script src="js/bps-exam.js"></script>
 <script type="module" src="js/bps3d-v3.js"></script>
