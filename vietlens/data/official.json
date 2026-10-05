@@ -2168,6 +2168,607 @@
    ]
   },
   {
+   "id": "retail_sales",
+   "label": "Tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng, cả nước",
+   "domain": "economy",
+   "unit": "nghìn tỷ đồng",
+   "frequency": "quý",
+   "official": true,
+   "chart": "bar",
+   "latest": {
+    "period": "2026Q2",
+    "ytd": 3889.5,
+    "ytdYoY": 12.9,
+    "realYoY": 7.3
+   },
+   "source": "Tổng cục Thống kê (nay là Cục Thống kê, Bộ Tài chính) — báo cáo tình hình kinh tế – xã hội quý",
+   "method": "Số lũy kế từ đầu năm theo giá hiện hành, công bố lần đầu tại cuối mỗi quý; giá trị quý = lũy kế quý này − lũy kế quý trước cùng năm. Tăng so cùng kỳ (danh nghĩa và loại trừ yếu tố giá) lấy đúng tỷ lệ in trong báo cáo.",
+   "limitation": "Số ước tính lần công bố đầu; giá hiện hành nên chịu ảnh hưởng lạm phát (xem tỷ lệ loại trừ yếu tố giá). Cấp cả nước, chưa có cấp vùng hay tỉnh. Một vài quý báo cáo không nêu tỷ lệ loại trừ yếu tố giá.",
+   "rights": "Số liệu thống kê nhà nước công bố công khai; trích dẫn có ghi nguồn. Rà điều khoản trước khi phát hành qua API.",
+   "observations": [
+    {
+     "period": "2012Q1",
+     "ytd": 569.7,
+     "value": 569.7,
+     "yoyPrinted": 21.8,
+     "realYoY": 5.0,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2012",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/12/tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2012/",
+     "quote": "Bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng Tổng mức hàng hóa bán lẻ và doanh thu dịch vụ tiêu dùng ba tháng đầu năm theo giá thực tế ước tính đạt 569,7 nghìn tỷ đồng, tăng 21,8% so với cùng kỳ năm trước (nếu loại trừ yếu tố giá thì tăng 5%), bao gồm: Kinh tế cá thể đạt 276,6 nghìn tỷ đồng, chiếm 48,6% tổng mức và tăng 16,9%; kinh tế tư nhân đạt 202,8 nghìn tỷ đồng, chiếm 35,6% và tăng 25,7%; kinh tế Nhà nước đạt 66 nghìn tỷ đồng, chiếm 11,6% và tăng 28,7%; khu vực có vốn đầu tư nước ngoài đạt 17,5 nghìn tỷ đồng, chiếm 3% và tăng 36,7%; kinh tế tập thể đạt 6,7 nghìn tỷ đồng, chiếm 1,2% và tăng 19,2%."
+    },
+    {
+     "period": "2012Q2",
+     "ytd": 1137.4,
+     "value": 567.7,
+     "yoyPrinted": 19.5,
+     "realYoY": 6.5,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng năm 2012",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/12/tinh-hinh-kinh-te-xa-hoi-sau-thang-dau-nam-2012/",
+     "quote": "Tính chung sáu tháng đầu năm nay, tổng mức hàng hóa bán lẻ và doanh thu dịch vụ tiêu dùng ước tính đạt 1137,4 nghìn tỷ đồng, tăng 19,5% so với cùng kỳ năm trước, nếu loại trừ yếu tố giá thì tăng 6,5%."
+    },
+    {
+     "period": "2012Q3",
+     "ytd": 1713.1,
+     "value": 575.7,
+     "yoyPrinted": 17.3,
+     "realYoY": 6.7,
+     "source": "GSO Báo cáo tình hình KT-XH tháng 9 và 9 tháng năm 2012",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/12/tinh-hinh-kinh-te-xa-hoi-chin-thang-nam-2012/",
+     "quote": "Tổng mức hàng hóa bán lẻ chín tháng năm nay ước tính đạt 1713,1 nghìn tỷ đồng, tăng 17,3% so với cùng kỳ năm trước, nếu loại trừ yếu tố giá thì tăng 6,7%."
+    },
+    {
+     "period": "2012Q4",
+     "ytd": 2324.4,
+     "value": 611.3,
+     "yoyPrinted": 16.0,
+     "realYoY": 6.2,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2012",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/12/tinh-hinh-kinh-te-xa-hoi-thang-muoi-hai-va-nam-2012/",
+     "quote": "Bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng Tổng mức hàng hóa bán lẻ và doanh thu dịch vụ tiêu dùng năm 2012 ước tính đạt 2324,4 nghìn tỷ đồng, tăng 16% so với năm 2011 (Loại trừ yếu tố giá tăng 6,2%), trong đó khu vực kinh tế nhà nước đạt 288,9 nghìn tỷ đồng, chiếm 12,3% và giảm 1,2%; kinh tế ngoài nhà nước đạt 1968,1 nghìn tỷ đồng, chiếm 84,8% và tăng 18,4%; khu vực có vốn đầu tư nước ngoài đạt 67,4 nghìn tỷ đồng, chiếm 2,9% và tăng 34,7%."
+    },
+    {
+     "period": "2013Q1",
+     "ytd": 636.2,
+     "value": 636.2,
+     "yoyPrinted": 11.7,
+     "realYoY": 4.5,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2013",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2013/",
+     "quote": "Tính chung ba tháng đầu năm, tổng mức hàng hóa bán lẻ và doanh thu dịch vụ tiêu dùng ước tính đạt 636,2 nghìn tỷ đồng, tăng 11,7% so với cùng kỳ năm 2012, nếu loại trừ yếu tố giá thì tăng 4,5%, thấp hơn mức tăng 4,7% cùng kỳ năm trước."
+    },
+    {
+     "period": "2013Q2",
+     "ytd": 1275.4,
+     "value": 639.2,
+     "yoyPrinted": 11.9,
+     "realYoY": 4.9,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng năm 2013",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-sau-thang-dau-nam-2013/",
+     "quote": "Tổng mức hàng hóa bán lẻ và doanh thu dịch vụ tiêu dùng sáu tháng đầu năm ước tính đạt 1275,4 nghìn tỷ đồng, tăng 11,9% so với cùng kỳ năm trước, nếu loại trừ yếu tố giá thì tăng 4,9%, tuy thấp hơn nhiều so với mức tăng 6,7% của cùng kỳ năm 2012 nhưng quý II năm nay tăng 5,1%, cao hơn mức tăng 4,5% của quý trước."
+    },
+    {
+     "period": "2013Q3",
+     "ytd": 1932.0,
+     "value": 656.6,
+     "yoyPrinted": 12.5,
+     "realYoY": 5.3,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2013",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-chin-thang-nam-2013/",
+     "quote": "Bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng Tổng mức hàng hóa bán lẻ và doanh thu dịch vụ tiêu dùng chín tháng ước tính đạt 1932 nghìn tỷ đồng, tăng 12,5% so với cùng kỳ năm trước, loại trừ yếu tố giá tăng 5,3%."
+    },
+    {
+     "period": "2013Q4",
+     "ytd": 2618.0,
+     "value": 686.0,
+     "yoyPrinted": 12.6,
+     "realYoY": null,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2013",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-nam-2013/",
+     "quote": "Tổng mức hàng hóa bán lẻ và doanh thu dịch vụ tiêu dùng năm 2013 ước tính đạt 2618 nghìn tỷ đồng, tăng 12,6% so với năm 2012 và là mức tăng thấp nhất trong vòng bốn năm trở lại đây, loại trừ yếu tố giá năm 2013 tăng 5,6%; năm 2012 tăng 6,5%; năm 2011 tăng 4,4%."
+    },
+    {
+     "period": "2014Q1",
+     "ytd": 701.4,
+     "value": 701.4,
+     "yoyPrinted": 10.2,
+     "realYoY": 5.1,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2014 [2850 triệu USD]",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2014/",
+     "quote": "Tính chung ba tháng đầu năm, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng ước tính đạt 701,4 nghìn tỷ đồng, tăng 10,2% so với cùng kỳ năm trước, loại trừ yếu tố giá tăng 5,1%, tuy cao hơn mức tăng của cùng kỳ hai năm trước nhưng vẫn ở mức thấp [7] ."
+    },
+    {
+     "period": "2014Q2",
+     "ytd": 1439.0,
+     "value": 737.6,
+     "yoyPrinted": 10.7,
+     "realYoY": 5.7,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng năm 2014",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-6-thang-dau-nam-2014/",
+     "quote": "Tính chung 6 tháng đầu năm, tổng mức hàng hóa bán lẻ và doanh thu dịch vụ tiêu dùng ước tính đạt 1439 nghìn tỷ đồng, tăng 10,7% so với cùng kỳ năm trước (nếu loại trừ yếu tố giá tăng 5,7%)."
+    },
+    {
+     "period": "2014Q3",
+     "ytd": 2145.5,
+     "value": 706.5,
+     "yoyPrinted": 11.1,
+     "realYoY": 6.2,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2014",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-9-thang-nam-2014/",
+     "quote": "Tính chung 9 tháng năm nay, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng cả nước đạt 2145,5 nghìn tỷ đồng, tăng 11,1% so với cùng kỳ năm 2013, nếu loại trừ yếu tố giá tăng 6,2%, cao hơn mức tăng 5,4% của cùng kỳ năm 2013."
+    },
+    {
+     "period": "2014Q4",
+     "ytd": 2945.2,
+     "value": 799.7,
+     "yoyPrinted": 10.6,
+     "realYoY": 6.3,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2014",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-nam-2014/",
+     "quote": "Tính chung cả năm 2014, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng ước tính đạt 2945,2 nghìn tỷ đồng, tăng 10,6% so với năm 2013, nếu loại trừ yếu tố giá tăng 6,3%, cao hơn mức tăng 5,5% của năm 2013."
+    },
+    {
+     "period": "2015Q1",
+     "ytd": 790.8,
+     "value": 790.8,
+     "yoyPrinted": 10.0,
+     "realYoY": 9.2,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2015 [3050 triệu USD]",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/05/tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2015/",
+     "quote": "Tính chung 3 tháng đầu năm nay, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng ước tính đạt 790,8 nghìn tỷ đồng, tăng 10% so với cùng kỳ năm trước, loại trừ yếu tố giá tăng 9,2% (cao hơn mức tăng 5,1% của cùng kỳ năm 2014)."
+    },
+    {
+     "period": "2015Q2",
+     "ytd": 1572.1,
+     "value": 781.3,
+     "yoyPrinted": 9.8,
+     "realYoY": 8.3,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng năm 2015",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/tinh-hinh-kinh-te-xa-hoi-6-thang-dau-nam-2015/",
+     "quote": "Tính chung 6 tháng đầu năm nay, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng ước tính đạt 1572,1 nghìn tỷ đồng, tăng 9,8% so với cùng kỳ năm 2014, loại trừ yếu tố giá tăng 8,3%, cao hơn mức tăng cùng kỳ của một số năm gần đây[7]."
+    },
+    {
+     "period": "2015Q3",
+     "ytd": 2374.5,
+     "value": 802.4,
+     "yoyPrinted": 9.8,
+     "realYoY": 9.1,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2015",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/07/bao-cao-tinh-hinh-kinh-te-xa-hoi-9-thang-nam-2015/",
+     "quote": "Tính chung 9 tháng, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng ước tính đạt 2374,5 nghìn tỷ đồng, tăng 9,8% so với cùng kỳ năm trước (loại trừ yếu tố giá tăng 9,1%, cao hơn mức tăng 7,3% của cùng kỳ năm 2014)."
+    },
+    {
+     "period": "2015Q4",
+     "ytd": 3242.9,
+     "value": 868.4,
+     "yoyPrinted": 9.5,
+     "realYoY": 8.4,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2015",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/11/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2015/",
+     "quote": "Tính chung cả năm 2015, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng ước tính đạt 3242,9 nghìn tỷ đồng, tăng 9,5% so với năm trước (loại trừ yếu tố giá tăng 8,4%, cao hơn mức tăng 8,1% của năm 2014)."
+    },
+    {
+     "period": "2016Q1",
+     "ytd": 859.6,
+     "value": 859.6,
+     "yoyPrinted": 9.1,
+     "realYoY": null,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2016",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/11/bc-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2016/",
+     "quote": "Tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng quý I năm nay ước tính đạt 859,6 nghìn tỷ đồng, tăng 9,1% so với cùng kỳ năm trước."
+    },
+    {
+     "period": "2016Q2",
+     "ytd": 1724.0,
+     "value": 864.4,
+     "yoyPrinted": 9.5,
+     "realYoY": null,
+     "source": "GSO Báo cáo tình hình KT-XH 6 tháng đầu năm 2016",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/05/bao-cao-tinh-hinh-kinh-te-xa-hoi-6-thang-dau-nam-2016/",
+     "quote": "Tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng 6 tháng đầu năm nay ước tính đạt 1724 nghìn tỷ đồng, tăng 9,5% so với cùng kỳ năm trước."
+    },
+    {
+     "period": "2016Q3",
+     "ytd": 2605.8,
+     "value": 881.8,
+     "yoyPrinted": 9.5,
+     "realYoY": 7.7,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2016 (page slug mislabelled 2020)",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/11/bao-cao-tinh-hinh-kinh-te-xa-hoi-thang-quy-iii-va-9-thang-nam-2020/",
+     "quote": "Tính chung 9 tháng, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng đạt 2605,8 nghìn tỷ đồng, tăng 9,5% (thấp hơn mức tăng 10,2% cùng kỳ năm 2015), nếu loại trừ yếu tố giá còn tăng 7,7% (cùng kỳ năm 2015 tăng 9,2%)."
+    },
+    {
+     "period": "2016Q4",
+     "ytd": 3527.4,
+     "value": 921.6,
+     "yoyPrinted": 10.2,
+     "realYoY": 7.8,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2016 (page slug mislabelled 2020)",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/11/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2020/",
+     "quote": "Tính chung cả năm 2016, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng ước tính đạt 3.527,4 nghìn tỷ đồng, tăng 10,2% so với năm trước (Năm 2015 tăng 9,8%), nếu loại trừ yếu tố giá thì còn tăng 7,8%, thấp hơn mức tăng 8,5% của năm trước do sức mua không biến động lớn, trong khi giá tiêu dùng năm nay tăng cao hơn so với năm 2015."
+    },
+    {
+     "period": "2017Q1",
+     "ytd": 921.1,
+     "value": 921.1,
+     "yoyPrinted": 9.2,
+     "realYoY": 6.2,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2017 [3.620 triệu USD]",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/05/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2017/",
+     "quote": "Hoạt động dịch vụ Tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng quý I năm 2017 ước tính đạt 921,1 nghìn tỷ đồng, tăng 9,2% so với cùng kỳ năm trước, nếu loại trừ yếu tố giá tăng 6,2% (thấp hơn mức tăng 7,5% của quý I năm 2016)."
+    },
+    {
+     "period": "2017Q2",
+     "ytd": 1924.1,
+     "value": 1003.0,
+     "yoyPrinted": 10.1,
+     "realYoY": 8.4,
+     "source": "GSO Báo cáo tình hình KT-XH tháng 6 và 6 tháng năm 2017",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/10/bc-tinh-hinh-kinh-te-xa-hoi-6-thang-dau-nam-2017/",
+     "quote": "Hoạt động dịch vụ Tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng 6 tháng năm nay đạt 1.924,1 nghìn tỷ đồng, tăng 10,1% so với cùng kỳ năm trước, nếu loại trừ yếu tố giá tăng 8,4% (cao hơn mức tăng 8,1% của cùng kỳ năm 2016)."
+    },
+    {
+     "period": "2017Q3",
+     "ytd": 2917.6,
+     "value": 993.5,
+     "yoyPrinted": 10.5,
+     "realYoY": 9.2,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2017",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/10/bao-cao-tinh-hinh-kinh-te-xa-hoi-9-thang-nam-2017/",
+     "quote": "Hoạt động dịch vụ Tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng 9 tháng năm 2017 đạt 2.917,6 nghìn tỷ đồng, tăng 10,5% so với cùng kỳ năm trước, nếu loại trừ yếu tố giá tăng 9,2% (cùng kỳ năm 2016 tăng 9%)."
+    },
+    {
+     "period": "2017Q4",
+     "ytd": 3934.2,
+     "value": 1016.6,
+     "yoyPrinted": 10.9,
+     "realYoY": 9.46,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2017",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/10/bao-cao-tinh-hinh-kinh-te-xa-hoi-nam-2017/",
+     "quote": "Hoạt động dịch vụ Tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng năm 2017 ước tính đạt 3.934,2 nghìn tỷ đồng, tăng 10,9% so với năm trước (Năm 2016 tăng 10,1%), nếu loại trừ yếu tố giá tăng 9,46%, cao hơn mức tăng 8,33% của năm trước."
+    },
+    {
+     "period": "2018Q1",
+     "ytd": 1048.0,
+     "value": 1048.0,
+     "yoyPrinted": 9.9,
+     "realYoY": 8.6,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2018 [3.880 triệu USD]",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/04/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2018/",
+     "quote": "Hoạt động dịch vụ Tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng quý I năm 2017 ước tính đạt 1.048 nghìn tỷ đồng, tăng 9,9% so với cùng kỳ năm trước, nếu loại trừ yếu tố giá tăng 8,6% (cùng kỳ năm 2017 tăng 6,4%)."
+    },
+    {
+     "period": "2018Q2",
+     "ytd": 2120.9,
+     "value": 1072.9,
+     "yoyPrinted": 10.7,
+     "realYoY": 8.3,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng năm 2018",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/04/bao-cao-tinh-hinh-kinh-te-xa-hoi-6-thang-dau-nam-2018/",
+     "quote": "Hoạt động dịch vụ Tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng 6 tháng đầu năm 2018 ước tính đạt 2.120,9 nghìn tỷ đồng, tăng 10,7% so với cùng kỳ năm trước, nếu loại trừ yếu tố giá tăng 8,3% (cao hơn mức tăng 7,9% của cùng kỳ năm 2017)."
+    },
+    {
+     "period": "2018Q3",
+     "ytd": 3235.1,
+     "value": 1114.2,
+     "yoyPrinted": 11.3,
+     "realYoY": 8.8,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2018",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/04/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iii-va-9-thang-nam-2018/",
+     "quote": "Hoạt động dịch vụ Tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng 9 tháng năm 2018 ước tính đạt 3.235,1 nghìn tỷ đồng, tăng 11,3% so với cùng kỳ năm trước, nếu loại trừ yếu tố giá tăng 8,8% (cùng kỳ năm 2017 tăng 8,76%)."
+    },
+    {
+     "period": "2018Q4",
+     "ytd": 4395.7,
+     "value": 1160.6,
+     "yoyPrinted": 11.7,
+     "realYoY": 9.4,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2018",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/04/thong-cao-bao-chi-ve-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2018/",
+     "quote": "Hoạt động dịch vụ Tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng năm 2018 ước tính đạt 4.395,7 nghìn tỷ đồng, tăng 11,7% so với năm trước, nếu loại trừ yếu tố giá tăng 9,4% (năm 2017 tăng 9,3%)."
+    },
+    {
+     "period": "2019Q1",
+     "ytd": 1184.9,
+     "value": 1184.9,
+     "yoyPrinted": 12.0,
+     "realYoY": 9.0,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2019 [4.120 triệu USD]",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/05/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2019/",
+     "quote": "Hoạt động dịch vụ Tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng quý I/2019 ước tính đạt 1.184,9 nghìn tỷ đồng, tăng 12% so với cùng kỳ năm trước, nếu loại trừ yếu tố giá tăng 9% (cùng kỳ năm 2018 tăng 8,9%)."
+    },
+    {
+     "period": "2019Q2",
+     "ytd": 2391.1,
+     "value": 1206.2,
+     "yoyPrinted": 11.5,
+     "realYoY": 8.7,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng năm 2019",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/10/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-ii-va-6-thang-dau-nam-2019/",
+     "quote": "Tính chung 6 tháng đầu năm 2019, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng đạt 2.391,1 nghìn tỷ đồng, tăng 11,5% so với cùng kỳ năm trước, nếu loại trừ yếu tố giá tăng 8,7% (cùng kỳ năm 2018 tăng 8,6%)."
+    },
+    {
+     "period": "2019Q3",
+     "ytd": 3634.8,
+     "value": 1243.7,
+     "yoyPrinted": 11.6,
+     "realYoY": 9.2,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2019",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/10/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iii-va-9-thang-nam-2019/",
+     "quote": "Tính chung 9 tháng năm 2019, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng đạt 3.634,8 nghìn tỷ đồng, tăng 11,6% so với cùng kỳ năm trước, nếu loại trừ yếu tố giá tăng 9,2% (cùng kỳ năm 2018 tăng 9,1%)."
+    },
+    {
+     "period": "2019Q4",
+     "ytd": 4940.4,
+     "value": 1305.6,
+     "yoyPrinted": 11.8,
+     "realYoY": 9.2,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2019",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2019/12/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2019/",
+     "quote": "Năm 2019, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng đạt 4.940,4 nghìn tỷ đồng, tăng 11,8% so với năm trước, nếu loại trừ yếu tố giá tăng 9,2% (năm 2018 tăng 8,4%)."
+    },
+    {
+     "period": "2020Q1",
+     "ytd": 1246.1,
+     "value": 1246.1,
+     "yoyPrinted": 4.7,
+     "realYoY": 1.6,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2020",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/03/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2020/",
+     "quote": "Tính chung quý I/2020, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng đạt 1.246,1 nghìn tỷ đồng, tăng 4,7% so với cùng kỳ năm trước, nếu loại trừ yếu tố giá tăng 1,6% (cùng kỳ năm 2019 tăng 9,3%)."
+    },
+    {
+     "period": "2020Q2",
+     "ytd": 2380.8,
+     "value": 1134.7,
+     "yoyPrinted": -0.8,
+     "realYoY": -5.3,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng năm 2020",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/06/bao-cao-tinh-hinh-kinh-te-xa-hoi-6-thang-dau-nam-2020/",
+     "quote": "Tính chung 6 tháng đầu năm 2020, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng đạt 2.380,8 nghìn tỷ đồng, giảm 0,8% so với cùng kỳ năm trước, nếu loại trừ yếu tố giá giảm 5,3% (cùng kỳ năm 2019 tăng 8,5%)."
+    },
+    {
+     "period": "2020Q3",
+     "ytd": 3673.5,
+     "value": 1292.7,
+     "yoyPrinted": 0.7,
+     "realYoY": -3.6,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2020 [stated as 'gần 13,8 tỷ USD']",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/09/tinh-hinh-kinh-te-xa-hoi-thang-9-va-9-thang-nam-2020/",
+     "quote": "Tính chung 9 tháng năm 2020, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng đạt 3.673,5 nghìn tỷ đồng, tăng 0,7% so với cùng kỳ năm trước, nếu loại trừ yếu tố giá giảm 3,6% (cùng kỳ năm 2019 tăng 10,8%)."
+    },
+    {
+     "period": "2020Q4",
+     "ytd": 5059.8,
+     "value": 1386.3,
+     "yoyPrinted": 2.6,
+     "realYoY": -1.2,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2020 [stated as 'gần 20 tỷ USD']",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2020/12/baocao-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2020/",
+     "quote": "Năm 2020, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng đạt 5.059,8 nghìn tỷ đồng, tăng 2,6% so với năm trước, nếu loại trừ yếu tố giá giảm 1,2% (năm 2019 tăng 9,5%)."
+    },
+    {
+     "period": "2021Q1",
+     "ytd": 1291.1,
+     "value": 1291.1,
+     "yoyPrinted": 5.1,
+     "realYoY": 4.42,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2021",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2021/03/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2021/",
+     "quote": "Tính chung quý I/2021, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng đạt 1.291,1 nghìn tỷ đồng, tăng 5,1% so với cùng kỳ năm trước, nếu loại trừ yếu tố giá tăng 4,42% (cùng kỳ năm 2020 giảm 0,01%)."
+    },
+    {
+     "period": "2021Q2",
+     "ytd": 2463.8,
+     "value": 1172.7,
+     "yoyPrinted": 4.9,
+     "realYoY": 3.55,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng đầu năm 2021",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2021/06/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-ii-va-6-thang-dau-nam-2021/",
+     "quote": "Tính chung 6 tháng đầu năm 2021, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng đạt 2.463,8 nghìn tỷ đồng, tăng 4,9% so với cùng kỳ năm trước, nếu loại trừ yếu tố giá tăng 3,55% (cùng kỳ năm 2020 giảm 5,77%)."
+    },
+    {
+     "period": "2021Q3",
+     "ytd": 3367.7,
+     "value": 903.9,
+     "yoyPrinted": -7.1,
+     "realYoY": -8.7,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2021",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2021/09/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iii-va-9-thang-nam-2021/",
+     "quote": "Tính chung 9 tháng năm 2021, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng đạt 3.367,7 nghìn tỷ đồng, giảm 7,1% so với cùng kỳ năm trước, nếu loại trừ yếu tố giá giảm 8,7% (cùng kỳ năm 2020 giảm 5,1%)."
+    },
+    {
+     "period": "2021Q4",
+     "ytd": 4789.5,
+     "value": 1421.8,
+     "yoyPrinted": -3.8,
+     "realYoY": -6.2,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2021",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2021/12/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2021/",
+     "quote": "Năm 2021, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng ước đạt 4.789,5 nghìn tỷ đồng, giảm 3,8% so với năm trước, nếu loại trừ yếu tố giá giảm 6,2% (năm 2020 giảm 3%)."
+    },
+    {
+     "period": "2022Q1",
+     "ytd": 1318.0,
+     "value": 1318.0,
+     "yoyPrinted": 4.4,
+     "realYoY": 1.6,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2022",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2022/03/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2022/",
+     "quote": "Tính chung quý I năm 2022, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng ước đạt 1.318 nghìn tỷ đồng, tăng 4,4% so với cùng kỳ năm trước, nếu loại trừ yếu tố giá tăng 1,6% (cùng kỳ năm 2021tăng 2%)."
+    },
+    {
+     "period": "2022Q2",
+     "ytd": 2717.0,
+     "value": 1399.0,
+     "yoyPrinted": 11.7,
+     "realYoY": 7.9,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng đầu năm 2022 (tệp lời văn .docx đính kèm)",
+     "url": "https://www.nso.gov.vn/wp-content/uploads/2022/06/02.-Loi-van-6.2022-1.docx",
+     "quote": "Tính chung 6 tháng đầu năm 2022, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng ước đạt 2.717 nghìn tỷ đồng, tăng 11,7% so với cùng kỳ năm trước, nếu loại trừ yếu tố giá tăng 7,9% (cùng kỳ năm 2021 tăng 1,9%)."
+    },
+    {
+     "period": "2022Q3",
+     "ytd": 4170.2,
+     "value": 1453.2,
+     "yoyPrinted": 21.0,
+     "realYoY": 16.8,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2022",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2022/09/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iii-va-9-thang-nam-2022/",
+     "quote": "Tính chung 9 tháng năm 2022, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng ước đạt 4.170,2 nghìn tỷ đồng, tăng 21% so với cùng kỳ năm trước (cùng kỳ năm 2021 giảm 5%), nếu loại trừ yếu tố giá tăng 16,8% (cùng kỳ năm 2021 giảm 6,6%)."
+    },
+    {
+     "period": "2022Q4",
+     "ytd": 5679.9,
+     "value": 1509.7,
+     "yoyPrinted": 19.8,
+     "realYoY": 15.6,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2022",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2022/12/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2022/",
+     "quote": "Năm 2022, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng ước đạt 5.679,9 nghìn tỷ đồng, tăng 19,8% so với năm trước, nếu loại trừ yếu tố giá tăng 15,6% (năm 2021 giảm 6,7%)."
+    },
+    {
+     "period": "2023Q1",
+     "ytd": 1505.3,
+     "value": 1505.3,
+     "yoyPrinted": 13.9,
+     "realYoY": 10.3,
+     "source": "GSO Báo cáo tình hình KT-XH quý I năm 2023",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2023/03/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2023/",
+     "quote": "Tính chung quý I/2023, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng ước đạt 1.505,3 nghìn tỷ đồng, tăng 13,9% so với cùng kỳ năm trước, nếu loại trừ yếu tố giá tăng 10,3%."
+    },
+    {
+     "period": "2023Q2",
+     "ytd": 3016.8,
+     "value": 1511.5,
+     "yoyPrinted": 10.9,
+     "realYoY": 8.44,
+     "source": "GSO Báo cáo tình hình KT-XH quý II và 6 tháng đầu năm 2023",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2023/06/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-ii-va-6-thang-dau-nam-2023/",
+     "quote": "Tính chung 6 tháng đầu năm 2023, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng theo giá hiện hành ước đạt 3.016,8 nghìn tỷ đồng, tăng 10,9% so với cùng kỳ năm trước (cùng kỳ năm 2022 tăng 12,2%), nếu loại trừ yếu tố giá tăng 8,44%, tương đương cùng kỳ năm 2022."
+    },
+    {
+     "period": "2023Q3",
+     "ytd": 4567.8,
+     "value": 1551.0,
+     "yoyPrinted": 9.7,
+     "realYoY": 7.3,
+     "source": "GSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2023",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2023/09/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iii-va-9-thang-nam-2023/",
+     "quote": "Tính chung 9 tháng năm 2023, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng theo giá hiện hành ước đạt 4.567,8 nghìn tỷ đồng, tăng 9,7% so với cùng kỳ năm trước (cùng kỳ năm 2022 tăng 20,9%), nếu loại trừ yếu tố giá tăng 7,3% (cùng kỳ năm 2022 tăng 16,6%)."
+    },
+    {
+     "period": "2023Q4",
+     "ytd": 6231.8,
+     "value": 1664.0,
+     "yoyPrinted": 9.6,
+     "realYoY": 7.1,
+     "source": "GSO Báo cáo tình hình KT-XH quý IV và năm 2023",
+     "url": "https://www.nso.gov.vn/bai-top/2023/12/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2023/",
+     "quote": "Tính chung năm 2023, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng theo giá hiện hành ước đạt 6.231,8 nghìn tỷ đồng, tăng 9,6% so với năm trước (năm 2022 tăng 20%), nếu loại trừ yếu tố giá tăng 7,1% (năm 2022 tăng 15,8%)."
+    },
+    {
+     "period": "2024Q1",
+     "ytd": 1537.6,
+     "value": 1537.6,
+     "yoyPrinted": 8.2,
+     "realYoY": 5.1,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý I năm 2024",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2024/03/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2024/",
+     "quote": "Tính chung quý I/2024, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng theo giá hiện hành ước đạt 1.537,6 nghìn tỷ đồng, tăng 8,2% so với cùng kỳ năm trước (quý I/2023 tăng 13,9%), nếu loại trừ yếu tố giá tăng 5,1% (quý I/2023 tăng 10,1%)."
+    },
+    {
+     "period": "2024Q2",
+     "ytd": 3098.7,
+     "value": 1561.1,
+     "yoyPrinted": 8.6,
+     "realYoY": 5.7,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý II và 6 tháng đầu năm 2024",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2024/06/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-ii-va-sau-thang-dau-nam-2024/",
+     "quote": "Tính chung sáu tháng đầu năm 2024, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng theo giá hiện hành ước đạt 3.098,7 nghìn tỷ đồng, tăng 8,6% so với cùng kỳ năm trước (cùng kỳ năm 2023 tăng 11,3%), nếu loại trừ yếu tố giá tăng 5,7% (cùng kỳ năm 2023 tăng 8,8%)."
+    },
+    {
+     "period": "2024Q3",
+     "ytd": 4703.4,
+     "value": 1604.7,
+     "yoyPrinted": 8.8,
+     "realYoY": 5.8,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2024",
+     "url": "https://www.nso.gov.vn/bai-top/2024/10/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iii-va-9-thang-nam-2024/",
+     "quote": "Tính chung chín tháng năm 2024, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng theo giá hiện hành ước đạt 4.703,4 nghìn tỷ đồng, tăng 8,8% so với cùng kỳ năm trước (cùng kỳ năm 2023 tăng 10,1%), nếu loại trừ yếu tố giá tăng 5,8% (cùng kỳ năm 2023 tăng 7,6%)."
+    },
+    {
+     "period": "2024Q4",
+     "ytd": 6391.0,
+     "value": 1687.6,
+     "yoyPrinted": 9.0,
+     "realYoY": 5.9,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý IV và năm 2024",
+     "url": "https://www.nso.gov.vn/bai-top/2025/01/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2024/",
+     "quote": "Tính chung năm 2024, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng theo giá hiện hành ước đạt 6.391,0 nghìn tỷ đồng, tăng 9,0% so với năm trước (năm 2023 tăng 9,4%), nếu loại trừ yếu tố giá tăng 5,9% (năm 2023 tăng 6,8%)."
+    },
+    {
+     "period": "2025Q1",
+     "ytd": 1708.3,
+     "value": 1708.3,
+     "yoyPrinted": 9.9,
+     "realYoY": 7.5,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý I năm 2025",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2025/04/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2025/",
+     "quote": "Tính chung quý I/2025, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng theo giá hiện hành ước đạt 1.708,3 nghìn tỷ đồng, tăng 9,9% so với cùng kỳ năm trước, nếu loại trừ yếu tố giá tăng 7,5%."
+    },
+    {
+     "period": "2025Q2",
+     "ytd": 3416.8,
+     "value": 1708.5,
+     "yoyPrinted": 9.3,
+     "realYoY": 7.2,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý II và 6 tháng đầu năm 2025",
+     "url": "https://www.nso.gov.vn/bai-top/2025/07/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-ii-va-6-thang-dau-nam-2025/",
+     "quote": "Tính chung sáu tháng đầu năm 2025, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng theo giá hiện hành ước đạt 3.416,8 nghìn tỷ đồng, tăng 9,3% so với cùng kỳ năm trước (cùng kỳ năm 2024 tăng 8,9%), nếu loại trừ yếu tố giá tăng 7,2% (cùng kỳ năm 2024 tăng 6,0%)."
+    },
+    {
+     "period": "2025Q3",
+     "ytd": 5176.0,
+     "value": 1759.2,
+     "yoyPrinted": 9.5,
+     "realYoY": 7.2,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý III và 9 tháng năm 2025",
+     "url": "https://www.nso.gov.vn/bai-top/2025/10/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iii-va-9-thang-nam-2025/",
+     "quote": "Tính chung chín tháng năm 2025, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng theo giá hiện hành ước đạt 5.176,0 nghìn tỷ đồng, tăng 9,5% so với cùng kỳ năm trước (cùng kỳ năm 2024 tăng 8,8%), nếu loại trừ yếu tố giá tăng 7,2% (cùng kỳ năm 2024 tăng 5,8%)."
+    },
+    {
+     "period": "2025Q4",
+     "ytd": 7008.9,
+     "value": 1832.9,
+     "yoyPrinted": 9.2,
+     "realYoY": 6.7,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý IV và năm 2025",
+     "url": "https://www.nso.gov.vn/du-lieu-va-so-lieu-thong-ke/2026/01/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-iv-va-nam-2025/",
+     "quote": "Tính chung năm 2025, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng theo giá hiện hành ước đạt 7.008,9 nghìn tỷ đồng, tăng 9,2% so với năm trước (năm 2024 tăng 8,9%), nếu loại trừ yếu tố giá tăng 6,7% (tương đương mức tăng năm 2024)."
+    },
+    {
+     "period": "2026Q1",
+     "ytd": 1902.8,
+     "value": 1902.8,
+     "yoyPrinted": 10.9,
+     "realYoY": 7.0,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý I năm 2026",
+     "url": "https://www.nso.gov.vn/bai-top/2026/04/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-i-nam-2026/",
+     "quote": "Tính chung quý I/2026, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng theo giá hiện hành ước đạt 1.902,8 nghìn tỷ đồng, tăng 10,9% so với cùng kỳ năm trước, nếu loại trừ yếu tố giá tăng 7,0%."
+    },
+    {
+     "period": "2026Q2",
+     "ytd": 3889.5,
+     "value": 1986.7,
+     "yoyPrinted": 12.9,
+     "realYoY": 7.3,
+     "source": "GSO/NSO Báo cáo tình hình KT-XH quý II và 6 tháng 2026",
+     "url": "https://www.nso.gov.vn/bai-top/2026/07/bao-cao-tinh-hinh-kinh-te-xa-hoi-quy-ii-va-sau-thang-dau-nam-2026/",
+     "quote": "Tính chung sáu tháng đầu năm 2026, tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng theo giá hiện hành ước đạt 3.889,5 nghìn tỷ đồng, tăng 12,9% so với cùng kỳ năm trước, nếu loại trừ yếu tố giá tăng 7,3% (cùng kỳ năm 2025 tăng 7,4%)."
+    }
+   ]
+  },
+  {
    "id": "fdi_stock_partner_2012",
    "label": "Vốn FDI đăng ký lũy kế theo đối tác (dự án còn hiệu lực, 31/12/2012)",
    "domain": "economy",

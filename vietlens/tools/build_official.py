@@ -107,6 +107,34 @@ def fdi_trade_series():
     return out
 
 
+def retail_series():
+    """Tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng, lũy kế từ đầu năm (tools/extract_retail.py)."""
+    r = {x['quarter']: x for x in rows('retail_sales_quarterly.csv')}
+    obs = []
+    for q in sorted(r, key=qkey):
+        x = r[q]
+        ytd = float(x['retail_ytd_vnd_trn'])
+        prev = f'{q[:4]}Q{int(q[-1]) - 1}'
+        flow = ytd if q.endswith('Q1') else (ytd - float(r[prev]['retail_ytd_vnd_trn']) if prev in r else None)
+        obs.append({'period': q, 'ytd': ytd, 'value': None if flow is None else round(flow, 1),
+                    'yoyPrinted': float(x['yoy_printed']) if x['yoy_printed'] else None,
+                    'realYoY': float(x['real_yoy_printed']) if x['real_yoy_printed'] else None,
+                    'source': x['source_name'], 'url': x['source_url'], 'quote': x['quote']})
+    last = obs[-1]
+    return {
+        'id': 'retail_sales', 'label': 'Tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng, cả nước', 'domain': 'economy',
+        'unit': 'nghìn tỷ đồng', 'frequency': 'quý', 'official': True, 'chart': 'bar',
+        'latest': {'period': last['period'], 'ytd': last['ytd'], 'ytdYoY': last['yoyPrinted'], 'realYoY': last['realYoY']},
+        'source': 'Tổng cục Thống kê (nay là Cục Thống kê, Bộ Tài chính) — báo cáo tình hình kinh tế – xã hội quý',
+        'method': 'Số lũy kế từ đầu năm theo giá hiện hành, công bố lần đầu tại cuối mỗi quý; giá trị quý = lũy kế quý này − lũy kế '
+                  'quý trước cùng năm. Tăng so cùng kỳ (danh nghĩa và loại trừ yếu tố giá) lấy đúng tỷ lệ in trong báo cáo.',
+        'limitation': 'Số ước tính lần công bố đầu; giá hiện hành nên chịu ảnh hưởng lạm phát (xem tỷ lệ loại trừ yếu tố giá). '
+                      'Cấp cả nước, chưa có cấp vùng hay tỉnh. Một vài quý báo cáo không nêu tỷ lệ loại trừ yếu tố giá.',
+        'rights': 'Số liệu thống kê nhà nước công bố công khai; trích dẫn có ghi nguồn. Rà điều khoản trước khi phát hành qua API.',
+        'observations': obs
+    }
+
+
 def partner_series():
     r = rows('fdi_stock_by_source.csv')
     out = []
@@ -160,7 +188,7 @@ def durian_series():
 
 
 def build():
-    series = fdi_series() + fdi_trade_series() + partner_series() + [
+    series = fdi_series() + fdi_trade_series() + [retail_series()] + partner_series() + [
         quarterly_avg('wtv_import_volume', 'world_import_volume', 'Khối lượng nhập khẩu hàng hóa thế giới', 'chỉ số 2021 = 100',
                       'CPB Netherlands Bureau for Economic Policy Analysis — World Trade Monitor (bản tháng 7/2026, công bố 25/9/2026)',
                       'Chỉ số khối lượng nhập khẩu thế giới, đã điều chỉnh mùa vụ (chuỗi mgz_w1_qnmi_sn), bình quân quý.',
