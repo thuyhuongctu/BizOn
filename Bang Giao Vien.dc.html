@@ -77,17 +77,18 @@ button,textarea,input{font-family:inherit;}
       </sc-if>
       <sc-if value="{{ notEmpty }}" hint-placeholder-val="{{ false }}">
         <div style="min-width:640px;display:flex;flex-direction:column;gap:6px;">
-          <div style="display:grid;grid-template-columns:40px minmax(0,2fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1.6fr) 70px minmax(0,1.2fr);gap:10px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.55;padding:0 10px;">
-            <span>#</span><span>Học sinh</span><span>Lớp</span><span>Chế độ</span><span>Doanh thu</span><span>Hạng</span><span>Ôn tập · Mã</span>
+          <div style="display:grid;grid-template-columns:40px minmax(0,2fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1.6fr) 70px minmax(0,1fr) minmax(0,1.2fr);gap:10px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.55;padding:0 10px;">
+            <span>#</span><span>Học sinh</span><span>Lớp</span><span>Chế độ</span><span>Doanh thu</span><span>Hạng</span><span>Điểm vai · MVP</span><span>Ôn tập · Mã</span>
           </div>
           <sc-for list="{{ rows }}" as="r" hint-placeholder-count="3">
-            <div style="display:grid;grid-template-columns:40px minmax(0,2fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1.6fr) 70px minmax(0,1.2fr);gap:10px;align-items:center;background:{{ r.bg }};border-radius:14px;padding:10px;font-size:13px;">
+            <div style="display:grid;grid-template-columns:40px minmax(0,2fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1.6fr) 70px minmax(0,1fr) minmax(0,1.2fr);gap:10px;align-items:center;background:{{ r.bg }};border-radius:14px;padding:10px;font-size:13px;">
               <b style="font-size:16px;">{{ r.medal }}</b>
               <div style="display:flex;flex-direction:column;min-width:0;"><b style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ r.name }}</b><span style="font-size:11px;opacity:.65;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ r.sub }}</span></div>
               <span style="font-weight:700;letter-spacing:.04em;">{{ r.klass }}</span>
               <span>{{ r.mode }}</span>
               <div style="display:flex;flex-direction:column;gap:3px;"><b>{{ r.total }} tr₫ · {{ r.eff }}%</b><div style="height:8px;border-radius:6px;background:#eef3f2;overflow:hidden;"><div style="height:100%;width:{{ r.w }};background:#006687;border-radius:6px;"></div></div></div>
               <span style="font-weight:800;">{{ r.rank }}/{{ r.of }}</span>
+              <span style="font-size:12px;">{{ r.ptsTxt }}</span>
               <span style="font-size:11px;opacity:.7;">📝 {{ r.quiz }} · {{ r.code }}<br>{{ r.date }}</span>
             </div>
           </sc-for>
@@ -99,15 +100,15 @@ button,textarea,input{font-family:inherit;}
 </x-dc>
 <script type="text/x-dc" data-dc-script="">
 const KEY='bps-teacher-raw';
-const DEMO=['#BPS|Nguyễn An|QT12A|exam|24.6|1|78|BPS-1A2B3|2026-10-04','#BPS|Trần Bình|QT12A|practice|18.2|2|58|BPS-4C5D6|2026-10-04','#BPS|Lê Chi|QT12A|exam|12.9|4|41|BPS-7E8F9|2026-10-04','#BPS|Phạm Dũng|QT12B|exam|21.3|1|68|BPS-0G1H2|2026-10-04','#BPS|Võ Hà|QT12A|team|26.4|1|72|BPS-T1A01|2026-10-04||Đội Phù Sa|Lumina – Nhà sáng lập|K7Q2M|5','#BPS|Đặng Khoa|QT12A|team|26.4|1|72|BPS-T1A02|2026-10-04||Đội Phù Sa|Tú Phan – Người đồng hành|K7Q2M|5','#BPS|Ngô Lan|QT12A|team|19.8|3|54|BPS-T2B01|2026-10-04||Đội Rồng Xanh|Minh Long – CEO|K7Q2M|5','#BPS|Bùi Minh|QT12A|team|19.8|3|54|BPS-T2B02|2026-10-04||Đội Rồng Xanh|Thu Hà – CFO|K7Q2M|5','#BPS|Lý Ngân|QT12A|team|19.8|3|54|BPS-T2B03|2026-10-04||Đội Rồng Xanh|Lan Chi – CMO|K7Q2M|5'].join('\n');
+const DEMO=['#BPS|Nguyễn An|QT12A|exam|24.6|1|78|BPS-1A2B3|2026-10-04','#BPS|Trần Bình|QT12A|practice|18.2|2|58|BPS-4C5D6|2026-10-04','#BPS|Lê Chi|QT12A|exam|12.9|4|41|BPS-7E8F9|2026-10-04','#BPS|Phạm Dũng|QT12B|exam|21.3|1|68|BPS-0G1H2|2026-10-04','#BPS|Võ Hà|QT12A|team|26.4|1|72|BPS-T1A01|2026-10-04||Đội Phù Sa|Lumina – Nhà sáng lập|K7Q2M|5|9/12|1|MVP','#BPS|Đặng Khoa|QT12A|team|26.4|1|72|BPS-T1A02|2026-10-04||Đội Phù Sa|Tú Phan – Người đồng hành|K7Q2M|5|7/12|0|','#BPS|Ngô Lan|QT12A|team|19.8|3|54|BPS-T2B01|2026-10-04||Đội Rồng Xanh|Minh Long – CEO|K7Q2M|5|11/16|2|MVP','#BPS|Bùi Minh|QT12A|team|19.8|3|54|BPS-T2B02|2026-10-04||Đội Rồng Xanh|Thu Hà – CFO|K7Q2M|5|8/16|0|','#BPS|Lý Ngân|QT12A|team|19.8|3|54|BPS-T2B03|2026-10-04||Đội Rồng Xanh|Lan Chi – CMO|K7Q2M|5|9/16|1|'].join('\n');
 class Component extends DCLogic {
   state={raw:'',filter:''};
   componentDidMount(){let raw='';try{raw=localStorage.getItem(KEY)||'';}catch(e){}this.setState({raw});}
   save(raw){try{localStorage.setItem(KEY,raw);}catch(e){}this.setState({raw});}
   parse(){const seen={},out=[];(this.state.raw||'').split(/\r?\n/).forEach(line=>{const i=line.indexOf('#BPS|');if(i<0)return;const p=line.slice(i+5).trim().split('|');if(p.length<7)return;
-    const r={name:p[0],klass:(p[1]||'').toUpperCase(),mode:p[2],total:parseFloat(p[3])||0,rank:parseInt(p[4])||0,eff:parseInt(p[5])||0,code:p[6],date:p[7]||'',quiz:p[8]||'',team:p[9]||'',role:p[10]||'',room:p[11]||'',of:parseInt(p[12])||4};const k=r.code+'|'+r.name;if(seen[k])return;seen[k]=1;out.push(r);});return out;}
-  csv(rows){const head='Hoc sinh,Lop,Che do,Doi,Vai tro,Phong,Doanh thu (tr),Hieu suat (%),Hang,Ma,Ngay,On tap (/5)';const esc=v=>'"'+String(v).replace(/"/g,'""')+'"';
-    const body=rows.map(r=>[r.name,r.klass,r.mode==='exam'?'Thi thu':r.mode==='team'?'Choi nhom':'Luyen tap',r.team,r.role,r.room,r.total,r.eff,r.rank,r.code,r.date,r.quiz].map(esc).join(','));
+    const r={name:p[0],klass:(p[1]||'').toUpperCase(),mode:p[2],total:parseFloat(p[3])||0,rank:parseInt(p[4])||0,eff:parseInt(p[5])||0,code:p[6],date:p[7]||'',quiz:p[8]||'',team:p[9]||'',role:p[10]||'',room:p[11]||'',of:parseInt(p[12])||4,pts:p[13]||'',mvpVotes:parseInt(p[14])||0,isMvp:p[15]==='MVP'};const k=r.code+'|'+r.name;if(seen[k])return;seen[k]=1;out.push(r);});return out;}
+  csv(rows){const head='Hoc sinh,Lop,Che do,Doi,Vai tro,Phong,Doanh thu (tr),Hieu suat (%),Hang,Ma,Ngay,On tap (/5),Diem vai,Phieu MVP,MVP';const esc=v=>'"'+String(v).replace(/"/g,'""')+'"';
+    const body=rows.map(r=>[r.name,r.klass,r.mode==='exam'?'Thi thu':r.mode==='team'?'Choi nhom':'Luyen tap',r.team,r.role,r.room,r.total,r.eff,r.rank,r.code,r.date,r.quiz,r.pts,r.mvpVotes,r.isMvp?'MVP':''].map(esc).join(','));
     const blob=new Blob(['\ufeff'+[head].concat(body).join('\n')],{type:'text/csv;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ket-qua-ben-phu-sa.csv';document.body.appendChild(a);a.click();a.remove();}
   renderVals(){
     const f=(this.state.filter||'').trim().toUpperCase();
@@ -124,7 +125,7 @@ class Component extends DCLogic {
       empty:!n,notEmpty:!!n,
       teams:(()=>{const g={};rows.filter(r=>r.mode==='team'&&r.team).forEach(r=>{const k=r.room+'|'+r.team;(g[k]=g[k]||{name:r.team,room:r.room,klass:r.klass,total:r.total,rank:r.rank,of:r.of,eff:r.eff,members:[]}).members.push({name:r.name,role:r.role});});return Object.values(g).sort((a,b)=>a.room<b.room?-1:a.room>b.room?1:a.rank-b.rank).map(x=>({name:(x.name.indexOf('Rồng')>=0?'🐉 ':'🌾 ')+x.name,meta:'Phòng '+x.room+(x.klass?' · lớp '+x.klass:'')+' · hạng '+x.rank+'/'+x.of,total:fmt(x.total)+' tr₫ · '+x.eff+'%',count:x.members.length+(x.name.indexOf('Rồng')>=0?'/5':'/2')+' thành viên đã nộp',color:x.name.indexOf('Rồng')>=0?'#006687':'#e8762d',members:x.members}));})(),
       stats:[{label:'Số bài',value:String(n),color:'#033337'},{label:'Doanh thu TB',value:fmt(avg)+' tr₫',color:'#e8762d'},{label:'Hiệu suất TB',value:avgE+'%',color:'#006687'},{label:'Thắng hạng 1',value:wins+'/'+n,color:'#033337'}],
-      rows:rows.map((r,i)=>({name:r.name,klass:r.klass,mode:r.mode==='exam'?'⏱️ Thi thử':r.mode==='team'?'🌐 Chơi nhóm':'🎯 Luyện tập',sub:r.team?r.team+' · '+r.role:'',of:r.of,total:fmt(r.total),eff:r.eff,rank:r.rank,code:r.code,date:r.date,quiz:r.quiz?r.quiz+'/5':'—',w:Math.max(4,r.total/top*100)+'%',medal:['🥇','🥈','🥉'][i]||String(i+1),bg:i%2?'#ffffff':'#f4faf6'}))
+      rows:rows.map((r,i)=>({name:r.name,klass:r.klass,mode:r.mode==='exam'?'⏱️ Thi thử':r.mode==='team'?'🌐 Chơi nhóm':'🎯 Luyện tập',sub:r.team?r.team+' · '+r.role:'',of:r.of,total:fmt(r.total),eff:r.eff,rank:r.rank,code:r.code,date:r.date,quiz:r.quiz?r.quiz+'/5':'—',ptsTxt:r.pts?('⭐ '+r.pts+(r.isMvp?' · 🏆 MVP':r.mvpVotes?' · 🗳 '+r.mvpVotes:'')):'—',w:Math.max(4,r.total/top*100)+'%',medal:['🥇','🥈','🥉'][i]||String(i+1),bg:i%2?'#ffffff':'#f4faf6'}))
     };
   }
 }

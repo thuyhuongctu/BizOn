@@ -29,10 +29,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="css/bizon-fonts.css">
 <script src="vendor/peerjs/peerjs.min.js"></script>
+<script type="importmap">{"imports":{"three":"./vendor/three/three.module.js","three/addons/controls/OrbitControls.js":"./vendor/three/OrbitControls.js"}}</script>
 <script src="js/bps3d-bridge.js"></script>
 <script src="js/clay-hub.js"></script>
 <script src="js/bps-hub-nhom.js"></script>
-<meta name="ext-resource-dependency" content="js/bps3d-v2.js">
+<meta name="ext-resource-dependency" content="js/bps3d-v3.js">
 <style>
 html,body{margin:0;background:#e6f3f2;}
 *{box-sizing:border-box;}
@@ -45,7 +46,7 @@ button,input{font-family:inherit;}
 
 <button onClick="{{ toggleLang }}" style="position:fixed;right:{{ langRight }};bottom:14px;z-index:40;white-space:nowrap;min-height:44px;padding:0 14px;border:none;border-radius:14px;background:#033337;color:#fff;font-weight:800;font-size:13px;cursor:pointer;box-shadow:0 10px 20px -8px rgba(3,51,55,.6);">🌐 {{ langLabel }}</button>
 <sc-if value="{{ hasErr }}" hint-placeholder-val="{{ false }}">
-  <div style="position:fixed;left:50%;top:14px;transform:translateX(-50%);z-index:50;background:#c0392b;color:#fff;border-radius:16px;padding:10px 16px;font-size:14px;font-weight:700;box-shadow:0 12px 24px -10px rgba(0,0,0,.4);display:flex;gap:10px;align-items:center;max-width:92vw;"><span>{{ err }}</span><button onClick="{{ clearErr }}" style="border:none;background:rgba(255,255,255,.2);color:#fff;border-radius:10px;padding:4px 10px;cursor:pointer;font-weight:800;">✕</button></div>
+  <div style="position:fixed;left:50%;top:14px;transform:translateX(-50%);z-index:50;background:#c0392b;color:#fff;border-radius:16px;padding:10px 16px;font-size:14px;font-weight:700;box-shadow:0 12px 24px -10px rgba(0,0,0,.4);display:flex;gap:10px;align-items:center;max-width:92vw;"><span>{{ err }}</span><sc-if value="{{ hasRetry }}" hint-placeholder-val="{{ false }}"><button onClick="{{ retry }}" style="border:none;background:rgba(255,255,255,.28);color:#fff;border-radius:10px;padding:4px 10px;cursor:pointer;font-weight:800;white-space:nowrap;">{{ retryLabel }}</button></sc-if><button onClick="{{ clearErr }}" style="border:none;background:rgba(255,255,255,.2);color:#fff;border-radius:10px;padding:4px 10px;cursor:pointer;font-weight:800;">✕</button></div>
 </sc-if>
 
 <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
@@ -388,6 +389,11 @@ const AB_E={land:'📍 Landing · Veto',method:'⛵ Method · Ads',menu:'🥖 Pr
 const TEAM_E={ps:'Team Phù Sa',rx:'Team Rồng Xanh'};
 let EN=false;const T=(vi,en)=>EN?en:vi;
 const CODECH='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',PFX='benphusa-v5-';
+// PEER_TIMEOUT_MS: mạng lớp học/trường hay chặn kết nối ngang hàng (P2P) mà
+// không báo lỗi gì cả — PeerJS lặng im chờ mãi. Hết giờ này mà chưa 'open'
+// (host) hay chưa nối được tới host (client) thì huỷ peer cũ và báo lỗi có
+// nút "Thử lại", thay vì kẹt vô hạn ở "Đang kết nối…".
+const PEER_TIMEOUT_MS = 12000;
 const mkRnd=s=>()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};
 const share=n=>1/(1+0.4*(Math.max(1,n)-1));
 const stars=d=>Math.max(1,Math.min(5,Math.round((d-0.4)/3*4)+1));
@@ -417,10 +423,10 @@ class Component extends DCLogic {
       get RIVALS(){const v=self.state.view||{};return RIVALS.map((r,k)=>{const plan=[];const a=(v.aiLast||[]).find(x=>x.ai===k);if(a&&v.week>0)plan[v.week-1]=a.l;if(a&&v.last)plan[v.last.w]=a.l;const b=(v.board||[]).find(x=>x.ai===k);return {name:r[0],short:['Ba Lẹ','Chú Sáu','Cô Bảy'][k],icon:['⚡','🐢','🪷'][k],plan,total:b?b.total:0};});},
       get LOCS(){return LOCS.map((l,i)=>[l[0],l[1],l[2],LOCS_E[i][1],LOCS_E[i][2]]);},get MENUS(){return MENUS.map((m,i)=>[m[0],m[1],m[2],MENUS_E[i][1],MENUS_E[i][2]]);}};}
   componentWillUnmount(){clearInterval(this.tk);window.removeEventListener('resize',this.onR);try{this.peer&&this.peer.destroy();}catch(e){}try{this.ch&&this.ch.close();}catch(e){}}
-  fail(msg){this.setState({err:msg,status:''});}
+  fail(msg,retryAction){this._retryAction=retryAction||null;this.setState({err:msg,status:''});}
   // ---------- networking ----------
   createRoom(){const name=(this.state.name||'').trim();if(!name)return this.fail(T('Nhập tên trước khi tạo phòng.','Enter your name before creating a room.'));
-    this.isHost=true;this.conns={};const code=genCode();
+    this._retryAction=null;this.isHost=true;this.conns={};const code=genCode();
     this.H={code,net:this.state.net,phase:'lobby',timer:90,seats:{},players:{[this.state.pid]:{name,online:true}},host:this.state.pid,week:0,teams:{},ab:{},offers:[],oid:0,ally:null,last:null,nextReady:{},bc:0};
     this.setState({status:T('Đang mở phòng…','Opening room…')});
     if(this.state.net==='local')this.openLocalHost(code);else this.openPeerHost(code);}
@@ -428,21 +434,27 @@ class Component extends DCLogic {
     this.ch.onmessage=e=>{const m=e.data;if(m&&m.to==='host')this.onHostMsg(m,null);};this.broadcast();}
   openPeerHost(code){if(!window.Peer)return this.fail(T('Không tải được thư viện kết nối. Kiểm tra Internet hoặc chọn “Thử nhiều tab”.','Could not load the connection library. Check your Internet or choose “Multi-tab test”.'));
     const p=new window.Peer(PFX+code);this.peer=p;
-    p.on('open',()=>this.broadcast());
+    const openTimer=setTimeout(()=>{try{p.destroy();}catch(e){}
+      this.fail(T('Không mở được phòng sau '+(PEER_TIMEOUT_MS/1000)+' giây — mạng có thể đang chặn kết nối trực tiếp. Thử lại, hoặc chọn “Thử nhiều tab” nếu cả nhóm dùng chung một máy/mạng.','Could not open the room after '+(PEER_TIMEOUT_MS/1000)+'s — the network may be blocking direct connections. Try again, or use “Multi-tab test” if the whole team is on the same device/network.'),()=>this.createRoom());},PEER_TIMEOUT_MS);
+    p.on('open',()=>{clearTimeout(openTimer);this.broadcast();});
     p.on('connection',c=>{c.on('data',m=>this.onHostMsg(m,c));c.on('close',()=>{const pid=Object.keys(this.conns).find(k=>this.conns[k]===c);if(pid&&this.H.players[pid]){this.H.players[pid].online=false;delete this.conns[pid];this.checkProgress();this.broadcast();}});});
-    p.on('error',e=>{if(e.type==='unavailable-id'){p.destroy();this.H.code=genCode();this.openPeerHost(this.H.code);}else this.fail(T('Lỗi kết nối: ','Connection error: ')+e.type);});}
+    p.on('error',e=>{clearTimeout(openTimer);if(e.type==='unavailable-id'){p.destroy();this.H.code=genCode();this.openPeerHost(this.H.code);}else this.fail(T('Lỗi kết nối: ','Connection error: ')+e.type,()=>this.createRoom());});}
   joinRoom(){const name=(this.state.name||'').trim(),code=(this.state.joinCode||'').trim();if(!name)return this.fail(T('Nhập tên trước khi vào phòng.','Enter your name before joining.'));if(code.length<5)return this.fail(T('Mã phòng gồm 5 ký tự.','Room codes have 5 characters.'));
-    this.isHost=false;const pid=this.state.pid;this.setState({status:T('Đang kết nối tới phòng ','Connecting to room ')+code+'…'});
+    this._retryAction=null;this.isHost=false;const pid=this.state.pid;this.setState({status:T('Đang kết nối tới phòng ','Connecting to room ')+code+'…'});
     if(this.state.net==='local'){try{this.ch=new BroadcastChannel(PFX+code);}catch(e){return this.fail(T('Trình duyệt không hỗ trợ chế độ nhiều tab.','This browser does not support multi-tab mode.'));}
       this.ch.onmessage=e=>{const m=e.data;if(m&&m.to===pid)this.onClientMsg(m);};
       this.ch.postMessage({t:'hello',pid,name,to:'host'});
-      setTimeout(()=>{if(!this.state.view)this.fail(T('Không tìm thấy phòng '+code+' trên máy này. Phòng phải được tạo ở chế độ “Thử nhiều tab”.','Room '+code+' not found on this device. It must be created in “Multi-tab test” mode.'));},2500);return;}
+      setTimeout(()=>{if(!this.state.view)this.fail(T('Không tìm thấy phòng '+code+' trên máy này. Phòng phải được tạo ở chế độ “Thử nhiều tab”.','Room '+code+' not found on this device. It must be created in “Multi-tab test” mode.'),()=>this.joinRoom());},2500);return;}
     if(!window.Peer)return this.fail(T('Không tải được thư viện kết nối. Kiểm tra Internet.','Could not load the connection library. Check your Internet.'));
     const p=new window.Peer();this.peer=p;
-    p.on('open',()=>{const c=p.connect(PFX+code,{reliable:true});this.conn=c;
-      c.on('open',()=>c.send({t:'hello',pid,name}));c.on('data',m=>this.onClientMsg(m));
-      c.on('close',()=>this.fail(T('Mất kết nối với chủ phòng.','Lost connection to the host.')));});
-    p.on('error',e=>this.fail(e.type==='peer-unavailable'?T('Không tìm thấy phòng ','Room not found: ')+code:T('Lỗi kết nối: ','Connection error: ')+e.type));}
+    const openTimer=setTimeout(()=>{try{p.destroy();}catch(e){}
+      this.fail(T('Không kết nối được tới phòng '+code+' sau '+(PEER_TIMEOUT_MS/1000)+' giây — mạng có thể đang chặn kết nối trực tiếp. Thử lại, hoặc nhờ chủ phòng dùng “Thử nhiều tab” nếu cả nhóm cùng một máy/mạng.','Could not connect to room '+code+' after '+(PEER_TIMEOUT_MS/1000)+'s — the network may be blocking direct connections. Try again, or ask the host to use “Multi-tab test” if the whole team is on the same device/network.'),()=>this.joinRoom());},PEER_TIMEOUT_MS);
+    p.on('open',()=>{clearTimeout(openTimer);const c=p.connect(PFX+code,{reliable:true});this.conn=c;
+      const connTimer=setTimeout(()=>{try{p.destroy();}catch(e){}
+        this.fail(T('Không kết nối được tới phòng '+code+' — kiểm tra lại mã phòng hoặc thử lại.','Could not connect to room '+code+' — double-check the room code, or try again.'),()=>this.joinRoom());},PEER_TIMEOUT_MS);
+      c.on('open',()=>{clearTimeout(connTimer);c.send({t:'hello',pid,name});});c.on('data',m=>this.onClientMsg(m));
+      c.on('close',()=>this.fail(T('Mất kết nối với chủ phòng.','Lost connection to the host.'),()=>this.joinRoom()));});
+    p.on('error',e=>{clearTimeout(openTimer);this.fail(e.type==='peer-unavailable'?T('Không tìm thấy phòng ','Room not found: ')+code:T('Lỗi kết nối: ','Connection error: ')+e.type,()=>this.joinRoom());});}
   send(m){if(this.ch)this.ch.postMessage(Object.assign({},m,{to:'host'}));else if(this.conn&&this.conn.open)this.conn.send(m);}
   act(a){if(this.isHost)this.hostAct(this.state.pid,a);else this.send({t:'act',pid:this.state.pid,a});}
   onClientMsg(m){if(m.t==='view')this.setState({view:m.v,recvAt:Date.now(),status:'',err:this.state.err&&this.state.view?this.state.err:''});}
@@ -562,7 +574,7 @@ class Component extends DCLogic {
     const st=this.state,v=st.view,isHost=!!this.isHost;EN=!!st.en;
     const LC=EN?LOCS_E:LOCS,MN=EN?MENUS_E:MENUS,MT=EN?METHODS_E:METHODS,SH=EN?SHOP_E:SHOP,ABX=EN?AB_E:AB,roleOf=s=>EN?ROLE_E[s.id]:s.role,tName=t=>EN?TEAM_E[t]:TEAMDEF[t].name;
     const tx={};Object.keys(TX).forEach(k=>tx[k]=TX[k][EN?1:0]);
-    const out={langRight:'14px',embedded:!!this.props.onBack,standalone:!this.props.onBack,goBack:()=>{try{this.peer&&this.peer.destroy();}catch(e){}try{this.ch&&this.ch.close();}catch(e){}this.props.onBack&&this.props.onBack();},tx,langLabel:EN?'Tiếng Việt':'English',toggleLang:()=>{const en=!st.en;try{localStorage.setItem('bizon-lang',en?'en':'vi');}catch(e){}document.documentElement.lang=en?'en':'vi';this.setState({en});window.dispatchEvent(new Event('bps-lang'));},klass:st.klass||'',onKlass:e=>{const k=e.target.value.toUpperCase().slice(0,12);try{localStorage.setItem('bps4-class',k);}catch(x){}this.setState({klass:k});},err:st.err,hasErr:!!st.err,clearErr:()=>this.setState({err:''}),status:st.status,isHost,notHost:!isHost,
+    const out={langRight:'14px',embedded:!!this.props.onBack,standalone:!this.props.onBack,goBack:()=>{try{this.peer&&this.peer.destroy();}catch(e){}try{this.ch&&this.ch.close();}catch(e){}this.props.onBack&&this.props.onBack();},tx,langLabel:EN?'Tiếng Việt':'English',toggleLang:()=>{const en=!st.en;try{localStorage.setItem('bizon-lang',en?'en':'vi');}catch(e){}document.documentElement.lang=en?'en':'vi';this.setState({en});window.dispatchEvent(new Event('bps-lang'));},klass:st.klass||'',onKlass:e=>{const k=e.target.value.toUpperCase().slice(0,12);try{localStorage.setItem('bps4-class',k);}catch(x){}this.setState({klass:k});},err:st.err,hasErr:!!st.err,clearErr:()=>{this._retryAction=null;this.setState({err:''});},hasRetry:!!this._retryAction,retryLabel:T('🔄 Thử lại','🔄 Try again'),retry:()=>{const fn=this._retryAction;this._retryAction=null;this.setState({err:''});fn&&fn();},status:st.status,isHost,notHost:!isHost,
       isHome:!v,isLobby:!!v&&v.phase==='lobby',inGame:!!v&&v.phase!=='lobby',isPlay:!!v&&v.phase==='choose',isReveal:!!v&&v.phase==='reveal',isEnd:!!v&&v.phase==='end'};
     out.name=st.name;out.onName=e=>{const n=e.target.value.slice(0,24);try{localStorage.setItem('bps4-name',n);}catch(x){}this.setState({name:n});};
     out.joinCode=st.joinCode;out.onCode=e=>this.setState({joinCode:e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,5)});
