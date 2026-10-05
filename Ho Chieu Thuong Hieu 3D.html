@@ -596,11 +596,12 @@
     q: 0, firm: 0, cash: 8, rep: 50, capab: 40, resil: 50,
     know: [10, 10, 10, 10, 10, 10, 10], entered: [null, null, null, null, null, null, null],
     ship: [null, null, null, null, null, null, null],
+    party: [null, null, null, null, null, null, null], // 'ceo' hoặc 'team' – ai lên đảo khi vào thị trường này
     qin: [0, 0, 0, 0, 0, 0, 0], certBP: false, items: {}, shopOpen: false,
     cust: [60, 60, 60, 60, 60, 60, 60],
     profit: 0, susts: 0, adapt: 0, lowQ: 0, negQ: 0, picks: [], rival: { rev: 0, in: [], qin: [], next: null, block: -1 }, duelHist: [],
     foot: [], flags: {}, usedEv: [], phase: 'obs',
-    sel: { prio: null, budget: 1, enter: null, enterMode: null, shipMode: null, intel: [] },
+    sel: { prio: null, budget: 1, enter: null, enterMode: null, shipMode: null, party: 'ceo', intel: [] },
   };
   // ── AIBIS: gợi ý phương thức thâm nhập bằng engine tất định (tham khảo · số liệu minh hoạ) ──
   // Ánh xạ 3 phương thức của game sang 6 phương thức chuẩn của AIBIS.
@@ -1121,7 +1122,7 @@
   }
 
   function stageObs() {
-    S.phase = 'obs'; S.sel = { prio: null, budget: 1, enter: null, enterMode: null, shipMode: null, intel: [] };
+    S.phase = 'obs'; S.sel = { prio: null, budget: 1, enter: null, enterMode: null, shipMode: null, party: 'ceo', intel: [] };
     sigCache = null; evtPostCache = null; // quý mới – tín hiệu và bảng kết quả quý trước không còn hiệu lực
     rivalPreview();
     renderObsScreen();
@@ -1293,6 +1294,7 @@
     syncDec();
   };
   window.bpShip = function (sm) { S.sel.shipMode = sm; syncDec(); };
+  window.bpParty = function (p) { S.sel.party = p; syncDec(); };
   // Dự báo Lumina: ước tính doanh thu quý cho cặp thị trường × phương thức
   // đang chọn, từ đúng công thức settle() dùng (không rút rnd() mới) – dải
   // rộng hay hẹp tùy tri thức đã có, phản ánh đúng tinh thần "sương mù thị
@@ -1318,11 +1320,18 @@
   function renderShipPicker() {
     var el = $('bp-ship-section');
     if (!el) return;
-    el.innerHTML = S.sel.enter === null ? '' :
+    if (S.sel.enter === null) { el.innerHTML = ''; return; }
+    var teamCost = MODES[S.sel.enterMode].cost + 0.2, canTeam = S.cash >= teamCost;
+    el.innerHTML =
       '<p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-3 mb-1.5">' + T('🚚 Vận chuyển hàng đi ' + MKTS[S.sel.enter].name, '🚚 Shipping to ' + MKTS[S.sel.enter].name) + '</p>' +
       '<div class="grid grid-cols-2 gap-2">' + SHIP_MODES.map(function (sm) {
         return '<button class="bp-opt' + (sm.id === S.sel.shipMode ? ' sel' : '') + '" data-g="ship" data-i="' + sm.id + '" onclick="bpShip(' + sm.id + ')">' + sm.icon + ' ' + T(sm.name, sm.nameEn) + '<small>' + T(sm.note, sm.noteEn) + '</small></button>';
-      }).join('') + '</div>';
+      }).join('') + '</div>' +
+      '<p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-3 mb-1.5">' + T('🧑‍💼 Ai lên đảo ' + MKTS[S.sel.enter].name, '🧑‍💼 Who lands at ' + MKTS[S.sel.enter].name) + '</p>' +
+      '<div class="grid grid-cols-2 gap-2">' +
+        '<button class="bp-opt' + (S.sel.party !== 'team' ? ' sel' : '') + '" data-g="party" data-i="ceo" onclick="bpParty(\'ceo\')">👤 ' + T('CEO đi một mình', 'CEO alone') + '<small>' + T('Miễn phí · +3% tri thức', 'Free · +3% insight') + '</small></button>' +
+        '<button class="bp-opt' + (S.sel.party === 'team' ? ' sel' : '') + (canTeam ? '' : ' opacity-50') + '" data-g="party" data-i="team" onclick="bpParty(\'team\')"' + (canTeam ? '' : ' disabled') + '>👥 ' + T('Cả đội lên đảo', 'Full team') + '<small>' + T('−0,2 tỷ · +10% tri thức, +3 năng lực, giảm thiệt hại khủng hoảng', '−0.2 bn · +10% insight, +3 capability, cushions crises') + '</small></button>' +
+      '</div>';
   }
   function syncDec() {
     renderShipPicker();
@@ -1366,10 +1375,17 @@
       S.entered[S.sel.enter] = S.sel.enterMode;
       S.ship[S.sel.enter] = S.sel.shipMode == null ? 0 : S.sel.shipMode; // phòng khi bấm được dù nút đang khóa
       var pickedShip = SHIP_MODES[S.ship[S.sel.enter]];
+      var goTeam = S.sel.party === 'team' && S.cash >= 0.2;
+      S.party[S.sel.enter] = goTeam ? 'team' : 'ceo';
+      if (goTeam) { S.cash -= 0.2; S.know[S.sel.enter] = clamp(S.know[S.sel.enter] + 10); S.capab = clamp(S.capab + 3); }
+      else S.know[S.sel.enter] = clamp(S.know[S.sel.enter] + 3);
       addLog(T(
         '🚪 Thâm nhập <b>' + MKTS[S.sel.enter].name + '</b> bằng ' + MODES[S.sel.enterMode].icon + ' ' + MODES[S.sel.enterMode].name + ', vận chuyển bằng ' + pickedShip.icon + ' ' + pickedShip.name + '.',
         '🚪 Entered <b>' + MKTS[S.sel.enter].name + '</b> via ' + MODES[S.sel.enterMode].icon + ' ' + MODES[S.sel.enterMode].nameEn + ', shipping by ' + pickedShip.icon + ' ' + pickedShip.nameEn + '.'
       ));
+      addLog(goTeam ?
+        T('👥 Cả đội lên đảo <b>' + MKTS[S.sel.enter].name + '</b> – tri thức +10%, năng lực +3.', '👥 The full team lands at <b>' + MKTS[S.sel.enter].name + '</b> – insight +10%, capability +3.') :
+        T('👤 CEO lên đảo <b>' + MKTS[S.sel.enter].name + '</b> một mình – tiết kiệm nhưng chỉ tri thức +3%.', '👤 The CEO lands at <b>' + MKTS[S.sel.enter].name + '</b> alone – cheaper, but only +3% insight.'));
     }
     stageEvent();
   };
@@ -1417,6 +1433,9 @@
     if (evtPostCache) renderEvtPost();
   }
 
+  // Sự kiện thuộc nhóm khủng hoảng (cố ý mất mát/đối đầu, không phải cơ hội) –
+  // đội tại chỗ (S.party[m]==='team') giúp xử lý nhanh hơn, giảm bớt thiệt hại.
+  var CRISIS_EV = ['review', 'held', 'devalue', 'betray', 'copy', 'board', 'defect', 'supplier', 'cashflow'];
   window.bpEv = function (i) {
     // Bảo hiểm rủi ro (vật phẩm SHIELD): chặn phần thiệt hại của sự kiện kế
     // tiếp – chụp số liệu trước/sau, khôi phục lại bất kỳ chỉ số nào bị giảm.
@@ -1424,12 +1443,19 @@
     // (hệ số nhân doanh thu quý sau) – phải chặn cả trường hợp này, nếu không
     // bảo hiểm sẽ vô tác dụng với phần lớn sự kiện "giảm doanh thu quý".
     var shielded = !!S.flags.shield;
-    var before = shielded ? { cash: S.cash, rep: S.rep, capab: S.capab, resil: S.resil, adapt: S.adapt, susts: S.susts } : null;
+    var KS = ['cash', 'rep', 'capab', 'resil', 'adapt', 'susts'];
+    var before = {}; KS.forEach(function (k) { before[k] = S[k]; });
     var pe = S.entered.indexOf(2);
     (S.picks = S.picks || []).push({ id: window.__bpEv.id || 'mission', i: i, rep: Math.round(S.rep), capab: Math.round(S.capab), cash: Math.round(S.cash * 10) / 10, susts: S.susts, k: Math.round(kAvgAll()), kp: pe >= 0 ? S.know[pe] : 0, k1: S.know[1] });
     var out = window.__bpEv.ch[i].fx();
+    var ent = entMkts(), nTeam = ent.filter(function (m) { return S.party[m] === 'team'; }).length;
+    if (!shielded && nTeam && ent.length && CRISIS_EV.indexOf(window.__bpEv.id) >= 0) {
+      var cut = 0.35 * nTeam / ent.length;
+      KS.forEach(function (k) { if (S[k] < before[k]) S[k] = before[k] - (before[k] - S[k]) * (1 - cut); });
+      out += ' <i>' + T('(👥 Đội tại chỗ ở ' + nTeam + '/' + ent.length + ' thị trường xử lý nhanh – thiệt hại giảm ' + Math.round(cut * 100) + '%)', '(👥 On-site teams in ' + nTeam + '/' + ent.length + ' markets reacted fast – damage cut ' + Math.round(cut * 100) + '%)') + '</i>';
+    }
     if (shielded) {
-      ['cash', 'rep', 'capab', 'resil', 'adapt', 'susts'].forEach(function (k) { if (S[k] < before[k]) S[k] = before[k]; });
+      KS.forEach(function (k) { if (S[k] < before[k]) S[k] = before[k]; });
       if (S.flags.wave && S.flags.wave < 1) S.flags.wave = 1;
       S.flags.shield = false;
       out += ' <i>' + T('(🛡️ Bảo hiểm rủi ro đã chặn phần thiệt hại)', '(🛡️ Risk Insurance blocked the negative impact)') + '</i>';
@@ -1710,8 +1736,13 @@
     var pS = clamp(S.profit / 12 * 100);
     var aS = clamp(S.resil * 0.55 + S.adapt * 9);
     var sS = clamp(20 + S.susts * 18);
+    // Hệ số bề rộng thị trường: ở yên 0-2 thị trường bị trừ tới 30% điểm tổng,
+    // mở rộng từ 4-5 thị trường trở lên được cộng tới 10% – khuyến khích đúng
+    // tinh thần "đưa thương hiệu ra thế giới" thay vì co cụm 1 thị trường an toàn.
+    var nMk = S.entered.filter(function (v) { return v !== null && v !== undefined; }).length;
+    var breadth = Math.min(1.1, 0.7 + 0.08 * nMk);
     return { p: pS, r: clamp(S.rep), c: clamp(S.capab), a: aS, s: sS,
-      total: Math.round(0.3 * pS + 0.2 * clamp(S.rep) + 0.2 * clamp(S.capab) + 0.15 * aS + 0.15 * sS) };
+      total: Math.round((0.3 * pS + 0.2 * clamp(S.rep) + 0.2 * clamp(S.capab) + 0.15 * aS + 0.15 * sS) * breadth) };
   }
   // reason: null (kết thúc bình thường) · 'cash' (cạn tiền 2 quý) · 'rep' (uy tín khủng hoảng).
   // lastEvOut giữ nguyên câu kết quả lựa chọn cuối cùng (đã chốt ngôn ngữ lúc
@@ -1980,7 +2011,7 @@
           rep: fin.sc.r, capab: fin.sc.c, adapt: fin.sc.a, sust: fin.sc.s,
           title: fin.title,
           quarters: S.q >= 6 ? 6 : S.q + 1,
-          detail_json: { home: S.home || 'vn', foot: S.foot, markets: S.entered, know: S.know, fail: fin.fail, picks: S.picks || [], negQ: S.negQ || 0, rival: Math.round(S.rival.rev * 10) / 10 },
+          detail_json: { home: S.home || 'vn', foot: S.foot, markets: S.entered, know: S.know, party: S.party, fail: fin.fail, picks: S.picks || [], negQ: S.negQ || 0, rival: Math.round(S.rival.rev * 10) / 10 },
           markets: S.entered.filter(function (v) { return v !== null && v !== undefined; }).length,
           badges: window.__bp3dBadges ? Object.keys(window.__bp3dBadges()).length : null,
           stars: window.__bp3dQuests ? Object.values(window.__bp3dQuests()).filter(function (x) { return x.done && x.firm === S.firm; }).length : null,
