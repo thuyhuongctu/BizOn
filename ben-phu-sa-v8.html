@@ -733,21 +733,38 @@ document.addEventListener('DOMContentLoaded',function(){var m=document.getElemen
     syncSel();
   };
 
+  // Hệ số điều chỉnh món/địa điểm mà dự báo có thể biết TRƯỚC khi chốt (sự
+  // kiện tuần, bánh mì giờ cao điểm, biên lời cà phê, uy tín thương hồ) – lấy
+  // lại đúng công thức của menuAdj() nhưng KHÔNG rút rnd(), nên không đổi ván;
+  // phần hao hụt ngẫu nhiên của chè bưởi (25% × −12%) thay bằng kỳ vọng
+  // thống kê 0,97 để dự báo không lệch quá xa khi không có perk/bảo hiểm chặn.
+  function forecastAdj(menu, w, loc, isBoat) {
+    var f = 1, evw = evOf(w);
+    if (evw && evw.menu[menu]) f *= evw.menu[menu];
+    if (menu === 0 && W[w][loc] >= 1.05) f *= 1.15;
+    if (menu === 1 && !PERK('coo') && !S.shieldSpoilage) f *= 0.97;
+    if (menu === 2) { f *= 1.18; if (W[w][loc] >= 1.05) f *= 0.93; }
+    if (isBoat && (S.items.REP || 0) > 0) f *= 1.08;
+    return f;
+  }
+
   // Dự báo doanh thu: ước tính dải doanh thu tuần này cho cặp Món hàng ×
   // Địa điểm × Phương thức đang chọn – hẹp lại nếu cặp đó đã được Thám tử chợ
   // tiết lộ hoặc từng bán qua, không thì để dải rộng theo biên độ D toàn cục
-  // (1,0–3,4). Không rút rnd() mới nên không đổi ván khi chỉ đang xem thử.
+  // (1,0–3,4), đã nhân hệ số món/địa điểm đã biết trước (forecastAdj) cho sát
+  // kết quả thật hơn. Không rút rnd() mới nên không đổi ván khi chỉ đang xem thử.
   function forecastText() {
     if (S.sel.m === null || S.sel.m === 2 || S.sel.menu === null || S.sel.loc === null) return '';
     var mult = S.sel.m === 0 ? 3 : 1;
     var baseW = W[S.week][S.sel.loc];
+    var adj = forecastAdj(S.sel.menu, S.week, S.sel.loc, S.sel.m === 0);
     var known = S.knownPairs[S.sel.menu + '-' + S.sel.loc];
     var lo, hi;
     if (known) {
-      var exact = D[S.sel.menu][S.sel.loc] * baseW * mult;
+      var exact = D[S.sel.menu][S.sel.loc] * baseW * mult * adj;
       lo = exact * 0.9; hi = exact * 1.1;
     } else {
-      lo = 0.4 * baseW * mult; hi = 3.4 * baseW * mult * 1.1;
+      lo = 0.4 * baseW * mult * adj; hi = 3.4 * baseW * mult * 1.1 * adj;
     }
     if (S.sel.m === 0) { lo -= boatCost(); hi -= boatCost(); }
     return T('🔮 Dự báo lợi nhuận tuần này: khoảng ' + f1(lo) + '–' + f1(hi) + ' ' + MU() + ' (đã trừ chi phí, chưa tính đụng độ).',

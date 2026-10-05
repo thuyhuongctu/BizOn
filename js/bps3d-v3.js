@@ -312,11 +312,15 @@ window.addEventListener('bps-pick', e => { if (e.detail.g === 'loc') highlight(e
 window.addEventListener('bps-week', e => { highlight(null); setWeek(e.detail.week); showRivals(e.detail.week - 1); });
 const pops = [];
 function pop(loc, html, bad) { const el = document.createElement('div'); el.className = 'bps3d-pop' + (bad ? ' bad' : ''); el.innerHTML = html; labels.appendChild(el); pops.push({ el, loc, t0: performance.now() }); }
+// Dấu +/− tự viết tay thay vì để toLocaleString tự chèn dấu âm – một số
+// trình duyệt dùng gạch ngang ASCII "-" cho số âm, lệch với dấu trừ kiểu chữ
+// "−" dùng ở chỗ khác trong game, nên số lỗ hiển thị không đồng bộ.
+function fmtDelta(v) { return (v >= 0 ? '+' : '−') + (Math.round(Math.abs(v) * 10) / 10).toLocaleString(EN() ? 'en-US' : 'vi-VN'); }
 window.addEventListener('bps-commit', e => { const d = e.detail, g = G();
   const wasStorm = d.loc === stormAt && d.m !== 2;
   sendMe(d.m, d.loc, () => { showRivals(d.week); window.dispatchEvent(new CustomEvent('bps-result', { detail: Object.assign({ storm: wasStorm }, d) }));
     if (d.m === 2) pop(d.loc, '📋 ' + T('Đã ghi chép', 'Notes taken'));
-    else pop(d.loc, (d.rev >= 0 ? '+' : '') + (Math.round(d.rev * 10) / 10).toLocaleString(EN() ? 'en-US' : 'vi-VN') + ' ' + T('tr', 'm') + (d.clash ? '<small>⚡ ' + d.clash + ' ' + T('đối thủ', 'rival(s)') + '</small>' : ''), d.clash > 0 || wasStorm);
+    else pop(d.loc, fmtDelta(d.rev) + ' ' + T('tr', 'm') + (d.clash ? '<small>⚡ ' + d.clash + ' ' + T('đối thủ', 'rival(s)') + '</small>' : ''), d.clash > 0 || wasStorm);
     if (wasStorm) { const b = document.getElementById('bps3d-storm'); if (b) { document.getElementById('bps3d-storm-t').textContent = '🌧️ ' + T('Mưa bão ở ' + g.LOCS[d.loc][1], 'Storm at ' + g.LOCS[d.loc][3]); document.getElementById('bps3d-storm-d').textContent = T('Khu này ít khách nhất tuần. Lần sau hãy nhìn đám đông trên bản đồ trước khi chọn.', 'This was the quietest spot this week. Next time, check the crowds on the map before choosing.'); b.style.display = 'grid'; } }
   }); });
 window.addEventListener('bps-lang', labelsText);
@@ -506,7 +510,7 @@ function otherBoat(team) { if (others[team]) return others[team];
   const v = vessel(0, team === 'rx' ? 0x2f7fb8 : 0xfda127); if (team === 'rx') v.add(sprite('assets/doi-5-nguoi.png', 4.2, 2.0)); else duoOnBoat(v);
   v.scale.setScalar(1.2); v.position.set(team === 'rx' ? -14 : -4, 0.1, team === 'rx' ? 4.5 : 10); v.userData.home = v.position.clone(); scene.add(v); return others[team] = v; }
 window.addEventListener('bps-commit-other', e => { const d = e.detail; if (d.m === 2) return; const v = otherBoat(d.team), p = P[d.loc];
-  const to = new THREE.Vector3(p[0] + 2.2, 0.1, p[1] + 3.6); v.visible = true; v.lookAt(to.x, v.position.y, to.z); tween(v, to, 1900, () => pop(d.loc, (d.team === 'rx' ? '🐉 ' : '🌾 ') + (d.rev >= 0 ? '+' : '') + (Math.round(d.rev * 10) / 10).toLocaleString(EN() ? 'en-US' : 'vi-VN') + ' ' + T('tr', 'm'), false)); });
+  const to = new THREE.Vector3(p[0] + 2.2, 0.1, p[1] + 3.6); v.visible = true; v.lookAt(to.x, v.position.y, to.z); tween(v, to, 1900, () => pop(d.loc, (d.team === 'rx' ? '🐉 ' : '🌾 ') + fmtDelta(d.rev) + ' ' + T('tr', 'm'), false)); });
 window.addEventListener('bps-week', () => { Object.values(others).forEach(v => { tween(v, v.userData.home.clone(), 1500); }); if (team5) team5.visible = !others.rx; });
 
 // ---- (8) Hiệu ứng sự kiện tuần: lũ, mưa, lễ hội, nắng nóng, mùa trái cây, mùa thi, du khách ----
