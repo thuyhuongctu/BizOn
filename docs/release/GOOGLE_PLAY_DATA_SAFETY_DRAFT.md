@@ -114,16 +114,30 @@ For the lowest-risk internal test:
 Rà mã build thực tế bổ sung hai luồng dữ liệu và chốt hướng xử lý cho bản
 internal-testing đầu tiên:
 
-### 9.1 Student login (email + password) — DISABLED for first build
+### 9.1 Student login (email + password) — RE-ENABLED 2026-10-06
 - `js/student-auth.js` collects an `@student.ctu.edu.vn` email + password via
-  Supabase Auth, wired only on `game.html`.
-- It is **flag-gated** (`?studentAuth=1`) and hidden by default — the module
-  returns immediately without the flag, and the panel starts `hidden`.
-- For the first Play release the `<script src="js/student-auth.js">` include in
-  `game.html` is **commented out**, so the feature cannot activate even with the
-  flag. → **Do NOT declare Personal info: Email / Account** for this build.
-- Re-enable later only after account-deletion and consent operations exist; then
-  update this worksheet, the Privacy Policy, and the Data Safety declaration.
+  Supabase Auth, wired on `game.html` as the default/recommended login path
+  (the old free-text login form remains below it for "Chơi thử nhanh, không
+  cần tài khoản").
+- The `<script src="js/student-auth.js">` include in `game.html` is **no
+  longer commented out** — the panel is visible by default, not gated behind
+  `?studentAuth=1`.
+- Gate closed: students can now **self-delete their account** in-app via the
+  "🗑️ Xóa tài khoản của tôi" button in the panel, which calls
+  `bizon_delete_my_account()` (migration
+  `20261006000000_student_delete_account.sql`) — deletes the caller's own
+  `auth.users` row; `student_team_membership` cascades automatically.
+  Team-shared gameplay results (`team_saves`, `round_submissions`) are
+  **not** deleted by this action, since they belong to the whole team, not
+  one student.
+- **Consent**: no separate consent screen was added — signing up with the
+  password form is the consent action, same pattern as the existing
+  free-text login (which already links to the Privacy Policy). Revisit if
+  Play Console review asks for an explicit checkbox.
+- → **Must declare Personal info: Email / Account** for any Play build that
+  ships after this change. Re-check this worksheet and the Privacy Policy
+  wording against the exact Play Console Data Safety form before submission
+  (see release gates in §7 — none of those are closed by this change alone).
 
 ### 9.2 Automatic error logs (client_errors) — KEPT, declare Diagnostics
 - `js/error-log.js` (loaded on ~22 pages) auto-sends on JavaScript errors, when
@@ -136,6 +150,8 @@ internal-testing đầu tiên:
 - Disclosed in Privacy Policy §5 (VI + EN), updated 2026-09-24.
 
 ### 9.3 Net Data Safety answer for the first build
+*(historical snapshot — see §9.1 update above for the status as of 2026-10-06,
+when student login was re-enabled; recheck before any Play submission.)*
 - **Data collected? Yes** — optional classroom submission (app activity /
   user-generated content) + automatic crash logs/diagnostics.
 - **Personal info (Email/Account)? No** — student login disabled for this build.
