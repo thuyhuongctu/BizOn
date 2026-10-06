@@ -94,9 +94,30 @@
 
   <!-- MÀN GIỚI THIỆU -->
   <section id="ft-intro" class="clay-card p-6">
-    <figure class="-mx-6 -mt-6 mb-5 overflow-hidden">
-      <img src="assets/illustrations/game/ben-phu-sa-cho-noi.webp" alt="Cả đội Phù Sa bán trái cây trên ghe hàng bông giữa chợ nổi Mekong lúc bình minh" class="w-full h-40 sm:h-52 object-cover" loading="lazy">
-    </figure>
+    <!-- HERO CHỌN ĐỘI & THUYỀN TRƯỞNG — 2 cột -->
+    <div class="grid sm:grid-cols-2 gap-5 mb-6" style="align-items:stretch">
+      <div class="relative overflow-hidden" style="border-radius:22px;min-height:200px;background:linear-gradient(180deg,rgba(3,51,55,.1) 0%,rgba(3,51,55,.85) 100%), url('assets/illustrations/game/ben-phu-sa-cho-noi.webp') center/cover">
+        <div class="absolute inset-0 flex flex-col justify-end p-5 text-white">
+          <p class="text-[10px] font-extrabold uppercase text-clay-gold" style="letter-spacing:.2em" data-en="🧺 Tier 1 · Bến Phù Sa">🧺 Bậc 1 · Bến Phù Sa</p>
+          <p class="text-white/80 text-xs font-semibold mt-1" data-en="Test cheap first, then scale at the right moment.">Thử rẻ trước, nhân rộng đúng lúc.</p>
+          <div class="grid grid-cols-3 gap-1.5 mt-4 text-[10px] font-bold leading-tight">
+            <div class="rounded-lg bg-white/15 px-2 py-1.5">🧺 <span data-en="Street cart">Gánh hàng rong</span><br><span class="opacity-70" data-en="×1 · tips">×1 · nhiều tin</span></div>
+            <div class="rounded-lg bg-white/15 px-2 py-1.5">⛵ <span data-en="Trading boat">Ghe hàng bông</span><br><span class="opacity-70" data-en="×3 revenue">×3 doanh thu</span></div>
+            <div class="rounded-lg bg-white/15 px-2 py-1.5">📋 <span data-en="Market survey">Khảo sát chợ</span><br><span class="opacity-70" data-en="No sales · data">Không bán · dữ liệu</span></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="font-display font-extrabold text-deep-teal text-base" data-en="⚓ Who's steering this season?">⚓ Ai cầm chèo mùa này?</p>
+        <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-3 mb-1.5" data-en="Choose your team">Chọn đội của bạn</p>
+        <div class="grid grid-cols-2 gap-2" id="ft-teams"></div>
+        <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-4 mb-1.5" data-en="Choose your captain">Chọn thuyền trưởng</p>
+        <div class="grid grid-cols-5 gap-2" id="ft-avatars"></div>
+        <button id="ft-music" onclick="ftMusic()" class="clay-btn w-full bg-deep-teal text-white font-display font-extrabold py-3 text-sm mt-4" data-en="🎵 Play theme song «Đội Phù Sa»">🎵 Bật nhạc chủ đề «Đội Phù Sa»</button>
+        <a href="nhac-ben-phu-sa.html" class="clay-btn w-full bg-white text-deep-teal font-display font-extrabold py-3 text-sm mt-3 flex items-center justify-center" style="border:2px solid rgba(0,102,135,.2)" data-en="🎤 «Golden Silt Journey» – listen with lyrics">🎤 «Golden Silt Journey» – nghe kèm lời</a>
+        <button onclick="ftStart()" class="clay-btn w-full bg-clay-gold text-deep-teal font-display font-extrabold py-4 mt-3" data-en="🚀 Start the 5-week venture">🚀 Bắt đầu 5 tuần kinh doanh</button>
+      </div>
+    </div>
     <h2 class="font-display font-extrabold text-deep-teal text-lg mb-3" data-en="📜 Rules of play">📜 Luật chơi</h2>
     <ul class="space-y-2 text-sm">
       <li data-en-html="⛵ &lt;b&gt;Trading boat&lt;/b&gt;: revenue &lt;b&gt;×3&lt;/b&gt; – but locks in the product &amp; location for the whole week. For when you already &lt;i&gt;know&lt;/i&gt; the winning formula.">⛵ <b>Ghe hàng bông</b>: doanh thu <b>×3</b> – nhưng chốt cứng món hàng &amp; địa điểm cả tuần. Dành cho lúc bạn đã <i>biết</i> công thức thắng.</li>
@@ -116,13 +137,6 @@
       </ul>
     </details>
     <p class="text-xs font-semibold opacity-70 mt-4 italic text-center" data-en="«From one small cart, you can build a big brand – if you know how to watch the market, understand your customers, and decide at the right moment.»">«Từ một gánh hàng nhỏ, bạn có thể xây dựng nên một thương hiệu lớn – nếu biết quan sát thị trường, thấu hiểu khách hàng và ra quyết định đúng lúc.»</p>
-    <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-5 mb-1.5" data-en="Choose your team">Chọn đội của bạn</p>
-    <div class="grid grid-cols-2 gap-2" id="ft-teams"></div>
-    <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-4 mb-1.5" data-en="Choose your captain">Chọn thuyền trưởng</p>
-    <div class="grid grid-cols-5 gap-2" id="ft-avatars"></div>
-    <button id="ft-music" onclick="ftMusic()" class="clay-btn w-full bg-deep-teal text-white font-display font-extrabold py-3 text-sm mt-4" data-en="🎵 Play theme song «Đội Phù Sa»">🎵 Bật nhạc chủ đề «Đội Phù Sa»</button>
-    <a href="nhac-ben-phu-sa.html" class="clay-btn w-full bg-white text-deep-teal font-display font-extrabold py-3 text-sm mt-3 flex items-center justify-center" style="border:2px solid rgba(0,102,135,.2)" data-en="🎤 «Golden Silt Journey» – listen with lyrics">🎤 «Golden Silt Journey» – nghe kèm lời</a>
-    <button onclick="ftStart()" class="clay-btn w-full bg-clay-gold text-deep-teal font-display font-extrabold py-4 mt-3" data-en="🚀 Start the 5-week venture">🚀 Bắt đầu 5 tuần kinh doanh</button>
   </section>
 
   <!-- MÀN CHƠI -->
@@ -267,9 +281,9 @@
 <!-- Modal nhắc luật chơi trong lúc chơi – tái dùng nội dung "Luật chơi" đã có
      ở màn giới thiệu (#ft-intro), vì màn đó bị ẩn ngay khi ftStart() chạy
      nên không có cách nào xem lại luật giữa ván nếu không có modal này. -->
-<div id="ft-rules-modal" class="hidden" style="position:fixed;inset:0;z-index:85;background:rgba(2,25,28,.72);display:flex;align-items:center;justify-content:center;padding:14px">
+<div id="ft-rules-modal" style="position:fixed;inset:0;z-index:85;background:rgba(2,25,28,.72);display:none;align-items:center;justify-content:center;padding:14px">
   <div class="clay-card p-6" style="max-width:520px;max-height:88vh;overflow:auto;position:relative">
-    <button type="button" onclick="document.getElementById('ft-rules-modal').classList.add('hidden')" style="position:absolute;right:14px;top:14px;width:32px;height:32px;border-radius:50%;border:0;background:rgba(0,102,135,.08);color:#033337;font-weight:900;cursor:pointer">✕</button>
+    <button type="button" onclick="document.getElementById('ft-rules-modal').style.display='none'" style="position:absolute;right:14px;top:14px;width:32px;height:32px;border-radius:50%;border:0;background:rgba(0,102,135,.08);color:#033337;font-weight:900;cursor:pointer">✕</button>
     <div id="ft-rules-body"></div>
   </div>
 </div>
@@ -313,8 +327,8 @@
       { img: 'assets/character/team/gia-han-cut.webp', name: 'Gia Hân', role: 'Thư ký', roleEn: 'Secretary' },
     ] },
     { name: 'Đội Phù Sa', nameEn: 'Phù Sa Team', icon: '🌾', members: [
-      { img: 'assets/character/phu-sa/huong-cut-v2.webp', name: 'Hương', role: 'Nhà sáng lập', roleEn: 'Founder' },
-      { img: 'assets/character/phu-sa/tu-cut.webp', name: 'Thầy Tú', role: 'Người đồng hành', roleEn: 'Co-founder' },
+      { img: 'assets/character/phu-sa/lumina-v2.png', name: 'Hương', role: 'Nhà sáng lập', roleEn: 'Founder' },
+      { img: 'assets/character/phu-sa/tu-phan-v2.png', name: 'Thầy Tú', role: 'Người đồng hành', roleEn: 'Co-founder' },
     ] },
   ];
   function tmName(i) { return T(TEAMS[i].name, TEAMS[i].nameEn); }
@@ -509,7 +523,7 @@
     if (h2) body.appendChild(h2.cloneNode(true));
     if (ul) body.appendChild(ul.cloneNode(true));
     if (det) body.appendChild(det.cloneNode(true));
-    $('ft-rules-modal').classList.remove('hidden');
+    $('ft-rules-modal').style.display = 'flex';
   };
 
   window.ftBuyItem = function (id) {
