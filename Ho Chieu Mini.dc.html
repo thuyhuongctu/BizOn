@@ -67,7 +67,17 @@ button{font:inherit}
           </div>
         </sc-for>
       </div>
-      <a href="https://claude.ai/artifact/B8wg2PMSdCdDe9imzmj1kX" target="_blank" rel="noopener" style="color:#fda127;font-size:12.5px;font-weight:700;text-decoration:underline">{{ t.guideLink }}</a>
+      <button type="button" onClick="{{ toggleGuide }}" style="display:inline-flex;align-self:flex-start;align-items:center;gap:6px;padding:11px 16px;border-radius:12px;background:#fda127;color:#033337;font:800 13.5px 'Plus Jakarta Sans';border:0;cursor:pointer;box-shadow:0 2px 0 #c97d0f">{{ guideBtnLabel }}</button>
+      <sc-if value="{{ guideOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:8px;background:#fff;border-radius:14px;padding:10px;box-shadow:0 1px 0 #d6e4e7">
+          <sc-for list="{{ guidePages }}" as="pg" hint-placeholder-count="5">
+            <sc-if value="{{ pg.ok }}" hint-placeholder-val="{{ false }}">
+              <img src="{{ pg.src }}" alt="{{ pg.alt }}" style="width:100%;border-radius:8px;display:block"></img>
+            </sc-if>
+          </sc-for>
+          <a href="assets/docs/huong-dan-ho-chieu-mini.pdf" target="_blank" rel="noopener" style="text-align:center;font-size:12px;font-weight:700;color:#006687;text-decoration:none;padding:6px">{{ t.guideDownload }}</a>
+        </div>
+      </sc-if>
       <p style="margin:6px 0 0;font-size:11px;opacity:.55">© 2026 Đỗ Thùy Hương &amp; Phan Anh Tú · {{ t.stylised }}</p>
     </div>
     <div style="background:#fff;border-radius:18px;padding:clamp(18px,3vw,28px);display:flex;flex-direction:column;gap:16px;box-shadow:0 1px 0 #d6e4e7">
@@ -310,7 +320,9 @@ const T = {
   start: L3('Bắt đầu', 'Start', 'Mulai'), resume: L3('Tiếp tục ván đang chơi', 'Resume saved game', 'Lanjutkan permainan'),
   quarter: L3('Quý', 'Quarter', 'Kuartal'), cash: L3('Tiền ở nước nhà', 'Cash at home', 'Kas di negara asal'), value: L3('Giá trị DN', 'Firm value', 'Nilai perusahaan'),
   help: L3('Hướng dẫn', 'Guide', 'Panduan'), timeLeft: L3('Còn', 'Left', 'Sisa'),
-  guideLink: L3('📖 Hướng dẫn chi tiết & mẹo thắng (mở tab mới)', '📖 Detailed guide & winning tips (opens new tab)', '📖 Panduan rinci & tips menang (tab baru)'),
+  guideShow: L3('📖 Xem hướng dẫn chi tiết & mẹo thắng', '📖 View detailed guide & winning tips', '📖 Lihat panduan rinci & tips menang'),
+  guideHide: L3('📖 Ẩn hướng dẫn', '📖 Hide guide', '📖 Sembunyikan panduan'),
+  guideDownload: L3('⬇️ Tải file PDF xuống máy', '⬇️ Download PDF file', '⬇️ Unduh file PDF'),
   event: L3('Tin thị trường', 'Market news', 'Berita pasar'),
   d1: L3('1 · Đầu tư mới', '1 · New investment', '1 · Investasi baru'),
   d2: L3('2 · Chính sách quý này', '2 · Policy this quarter', '2 · Kebijakan kuartal ini'),
@@ -397,7 +409,7 @@ const LES = {
   repat0: L3('Bạn giữ toàn bộ lợi nhuận ở nước ngoài: không trả thuế khấu trừ, nhưng tiền ở nước nhà không tăng để đầu tư tiếp.', 'You kept all profit abroad: no withholding tax, but no fresh cash at home to invest.', 'Anda menahan semua laba di luar negeri: tanpa pajak potong, tetapi tidak ada kas baru untuk investasi.'),
 };
 class Component extends DCLogic {
-  state = { ready: !!window.FDIMini, lang: null, home: 'vn', team: '', cls: '', g: null, view: 'intro', sel: null, mode: null, policy: null, repat: 0.5, last: null, tut: -1, now: Date.now(), qStart: 0 };
+  state = { ready: !!window.FDIMini, lang: null, home: 'vn', team: '', cls: '', g: null, view: 'intro', sel: null, mode: null, policy: null, repat: 0.5, last: null, tut: -1, now: Date.now(), qStart: 0, guideOpen: false };
   cfg() {
     const ed = this.props.edition ?? 'fdi';
     const indo = ed === 'indo';
@@ -440,7 +452,9 @@ class Component extends DCLogic {
     const pct = v => fmtN(v * 100, 0) + '%';
     const nm = k => D.MARKETS[k].n[i];
     const langs = c.langs.map(x => ({ label: x.toUpperCase(), bg: x === l ? '#fda127' : 'transparent', fg: x === l ? '#033337' : '#fff', onClick: () => { this.setState({ lang: x }, () => this.save()); } }));
-    const base = { t, langs, subtitle: c.Q + ' ' + t.qs + ' · 3 ' + t.mkts + ' · 3 ' + t.dec, inGame: false, isIntro: false, isPlay: false, isResult: false, isEnd: false, isTut: s.tut >= 0, showFacil: c.facil && s.view === 'intro' };
+    const base = { t, langs, subtitle: c.Q + ' ' + t.qs + ' · 3 ' + t.mkts + ' · 3 ' + t.dec, inGame: false, isIntro: false, isPlay: false, isResult: false, isEnd: false, isTut: s.tut >= 0, showFacil: c.facil && s.view === 'intro',
+      guideOpen: s.guideOpen, guideBtnLabel: s.guideOpen ? t.guideHide : t.guideShow, toggleGuide: () => this.setState({ guideOpen: !s.guideOpen }),
+      guidePages: [1, 2, 3, 4, 5].map(n => ({ src: 'assets/docs/guide-mini/guide-p' + n + '.webp', alt: 'Hướng dẫn chơi Hộ Chiếu Mini — trang ' + n, ok: true })) };
     if (!s.ready || !D) return Object.assign(base, { isIntro: true, homes: [], heroFacts: [], canResume: false });
     const g = s.g;
     const tutStep = TUT[Math.max(0, s.tut)];
