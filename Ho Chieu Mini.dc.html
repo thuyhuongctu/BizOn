@@ -94,7 +94,10 @@ button{font:inherit}
         <input value="{{ team }}" onChange="{{ onTeam }}" placeholder="{{ t.teamPh }}" style="font:500 15px Manrope;padding:11px 12px;border-radius:10px;border:1.5px solid #c9dade;outline:none"></input>
       </label>
       <label style="display:flex;flex-direction:column;gap:6px;font:800 14px 'Plus Jakarta Sans'">{{ t.cls }}
-        <input value="{{ cls }}" onChange="{{ onCls }}" placeholder="VD: FDI01" style="font:500 15px Manrope;padding:11px 12px;border-radius:10px;border:1.5px solid #c9dade;outline:none"></input>
+        <input value="{{ cls }}" onChange="{{ onCls }}" placeholder="VD: FDI01" style="font:500 15px Manrope;padding:11px 12px;border-radius:10px;border:1.5px solid {{ clsBd }};outline:none"></input>
+        <sc-if value="{{ clsEmpty }}" hint-placeholder-val="{{ false }}">
+          <span style="font-size:11.5px;color:#e8762d">⚠️ {{ t.clsWarn }}</span>
+        </sc-if>
       </label>
       <button type="button" onClick="{{ start }}" style="padding:14px;border:0;border-radius:12px;background:#fda127;color:#033337;font:800 16px 'Plus Jakarta Sans';cursor:pointer">{{ t.start }} →</button>
       <sc-if value="{{ canResume }}" hint-placeholder-val="{{ false }}">
@@ -317,6 +320,8 @@ const T = {
   home: L3('Quốc gia của bạn (home country)', 'Your home country', 'Negara asal Anda (home country)'),
   team: L3('Tên nhóm', 'Team name', 'Nama tim'), teamPh: L3('VD: Nhóm 3', 'e.g. Team 3', 'mis. Tim 3'),
   cls: L3('Mã lớp (nếu giảng viên cung cấp)', 'Class code (if given)', 'Kode kelas (jika ada)'),
+  clsWarn: L3('Nếu giảng viên đã giao mã lớp, hãy nhập đúng mã để được chấm điểm.', 'If your instructor gave you a class code, enter it exactly to be graded.', 'Jika dosen memberi kode kelas, masukkan dengan benar agar dinilai.'),
+  clsConfirm: L3('Bạn chưa nhập mã lớp — kết quả sẽ KHÔNG được giảng viên chấm điểm, chỉ lưu trên máy này. Vẫn muốn chơi tiếp?', 'You have not entered a class code — your result will NOT be graded, only saved on this device. Continue anyway?', 'Anda belum memasukkan kode kelas — hasil TIDAK akan dinilai, hanya tersimpan di perangkat ini. Tetap lanjutkan?'),
   start: L3('Bắt đầu', 'Start', 'Mulai'), resume: L3('Tiếp tục ván đang chơi', 'Resume saved game', 'Lanjutkan permainan'),
   quarter: L3('Quý', 'Quarter', 'Kuartal'), cash: L3('Tiền ở nước nhà', 'Cash at home', 'Kas di negara asal'), value: L3('Giá trị DN', 'Firm value', 'Nilai perusahaan'),
   help: L3('Hướng dẫn', 'Guide', 'Panduan'), timeLeft: L3('Còn', 'Left', 'Sisa'),
@@ -478,7 +483,12 @@ class Component extends DCLogic {
         homes: D.HOMES.map(h => ({ flag: h.flag, name: h.n[i], bd: h.id === s.home ? '#fda127' : '#e1eaec', bg: h.id === s.home ? '#fff6ea' : '#fff', onClick: () => this.setState({ home: h.id }) })),
         marketsPreview: t.willGo + ' ' + mk.map(k => D.MARKETS[k].flag + ' ' + nm(k)).join(' · '),
         team: s.team, cls: s.cls, onTeam: e => this.setState({ team: e.target.value }), onCls: e => this.setState({ cls: e.target.value.toUpperCase() }),
-        start: () => { const g2 = E.newGame({ home: s.home, team: s.team.trim() || 'Team', cls: s.cls.trim(), quarters: c.Q }); this.setState({ g: g2, view: 'play', sel: null, mode: null, policy: null, repat: 0.5, tut: 0, qStart: 0, last: null }, () => this.save()); },
+        clsEmpty: !s.cls.trim(), clsBd: s.cls.trim() ? '#c9dade' : '#fda127',
+        start: () => {
+          if (!s.cls.trim() && !window.confirm(t.clsConfirm)) return;
+          const g2 = E.newGame({ home: s.home, team: s.team.trim() || 'Team', cls: s.cls.trim(), quarters: c.Q });
+          this.setState({ g: g2, view: 'play', sel: null, mode: null, policy: null, repat: 0.5, tut: 0, qStart: 0, last: null }, () => this.save());
+        },
         canResume: !!(s.saved && s.saved.g && !s.saved.g.done),
         resume: () => { const sv = s.saved; this.setState({ g: sv.g, view: sv.view === 'intro' ? 'play' : sv.view, last: sv.last, qStart: Date.now() }); },
         facilPlan: [
