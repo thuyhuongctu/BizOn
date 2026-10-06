@@ -182,13 +182,16 @@ function setWeek(w) {
   coach();
   const g = G(); if (!g) return;
   const wk = g.W[week], lo = wk.indexOf(Math.min.apply(null, wk)); stormAt = wk[lo] < 0.9 ? lo : -1;
+  const newCrowd = [];
   spots.forEach((s, i) => {
     const w0 = g.W[week][i];
     s.cloud.visible = i === stormAt;
-    while (s.crowd.children.length) s.crowd.remove(s.crowd.children[0]);
     const n = Math.round((w0 - 0.75) * 16);
-    for (let k = 0; k < n; k++) { const a = k * 2.4, r = 3 + (k % 3) * 0.9; const pp = person([0xe8762d, 0x006687, 0xf2c14e, 0xc0446a, 0x6fbf73][k % 5], s.crowd); pp.scale.setScalar(0.6); pp.position.set(Math.cos(a) * r, 0.1, Math.sin(a) * r); pp.userData.jig = k; }
+    for (let k = 0; k < n && newCrowd.length < CROWD_MAX; k++) { const a = k * 2.4, r = 3 + (k % 3) * 0.9; newCrowd.push({ x: P[i][0] + Math.cos(a) * r, z: P[i][1] + Math.sin(a) * r, jig: k, color: new THREE.Color([0xe8762d, 0x006687, 0xf2c14e, 0xc0446a, 0x6fbf73][k % 5]) }); }
   });
+  crowdData = newCrowd;
+  crowdData.forEach((d, k) => writePerson(WALKER_N + k, d.x, 0.1, d.z, 0, 0.6, d.color));
+  syncPeopleCount();
   labelsText();
 }
 function coach() {
@@ -426,10 +429,37 @@ hooks.push(t => {
     const x2 = x + dir * 0.5; v.position.set(x, 0.1 + Math.sin(t * 2 + k) * 0.06, z); v.lookAt(x2, v.position.y, riverZ(x2) + v.userData.lane); v.rotateY(-Math.PI / 2);
   });
 });
-// ---- (3) Người dân đi chợ quanh các điểm ----
+// ---- (3) Người dân đi chợ quanh các điểm + đám đông theo nhu cầu — dùng chung 3 InstancedMesh
+// (thân/đầu/nón) để số lệnh vẽ không tăng theo số người (tối đa 32 người đi dạo + 80 đám đông,
+// thay cho việc tạo N Group/Mesh riêng như trước — đây là nguyên nhân khiến cảnh mất chi tiết
+// khi đông người, vì hệ tự hạ chất lượng ở mục (9) phải phản ứng với số lệnh vẽ tăng tuyến tính). ----
+const WALKER_N = 32, CROWD_MAX = 80, PEOPLE_MAX = WALKER_N + CROWD_MAX;
+const peopleBody = new THREE.InstancedMesh(new THREE.CapsuleGeometry(0.42, 0.55, 6, 14), clay(0xffffff), PEOPLE_MAX);
+const peopleHead = new THREE.InstancedMesh(new THREE.SphereGeometry(0.4, 24, 18), clay(0xf1c9a5), PEOPLE_MAX);
+const peopleHat = new THREE.InstancedMesh(new THREE.ConeGeometry(0.62, 0.34, 18), clay(0xf3dca0), PEOPLE_MAX);
+[peopleBody, peopleHead, peopleHat].forEach(m => { m.castShadow = m.receiveShadow = true; m.count = 0; scene.add(m); });
+const peopleDummy = new THREE.Object3D();
+function writePerson(i, x, y, z, ry, scale, color) {
+  peopleDummy.rotation.set(0, ry, 0); peopleDummy.scale.setScalar(scale);
+  peopleDummy.position.set(x, y + 0.7 * scale, z); peopleDummy.updateMatrix(); peopleBody.setMatrixAt(i, peopleDummy.matrix); if (color) peopleBody.setColorAt(i, color);
+  peopleDummy.position.set(x, y + 1.62 * scale, z); peopleDummy.updateMatrix(); peopleHead.setMatrixAt(i, peopleDummy.matrix);
+  peopleDummy.position.set(x, y + 2.05 * scale, z); peopleDummy.updateMatrix(); peopleHat.setMatrixAt(i, peopleDummy.matrix);
+}
+let crowdData = [];
+function syncPeopleCount() {
+  peopleBody.count = peopleHead.count = peopleHat.count = WALKER_N + crowdData.length;
+  peopleBody.instanceMatrix.needsUpdate = peopleHead.instanceMatrix.needsUpdate = peopleHat.instanceMatrix.needsUpdate = true;
+  peopleBody.instanceColor.needsUpdate = true;
+}
 const walkers = [];
-spots.forEach((sp, i) => { for (let k = 0; k < 4; k++) { const w = person([0xe8762d, 0x006687, 0xf2c14e, 0xc0446a, 0x6fbf73, 0x8a5ab0][(i + k) % 6], sp.g); w.scale.setScalar(0.55); w.userData = { r: 6 + (k % 2) * 0.9, ph: k * 1.57 + i, sp: (k % 2 ? -1 : 1) * (0.12 + k * 0.02) }; walkers.push(w); } });
-hooks.push(t => walkers.forEach(w => { const d = w.userData, a = d.ph + t * d.sp; w.position.set(Math.cos(a) * d.r, 0.1 + Math.abs(Math.sin(t * 6 + d.ph)) * 0.12, Math.sin(a) * d.r); w.rotation.y = -a - (d.sp > 0 ? 0 : Math.PI); }));
+spots.forEach((sp, i) => { for (let k = 0; k < 4; k++) walkers.push({ ox: P[i][0], oz: P[i][1], r: 6 + (k % 2) * 0.9, ph: k * 1.57 + i, sp: (k % 2 ? -1 : 1) * (0.12 + k * 0.02), color: new THREE.Color([0xe8762d, 0x006687, 0xf2c14e, 0xc0446a, 0x6fbf73, 0x8a5ab0][(i + k) % 6]) }); });
+walkers.forEach((d, i) => writePerson(i, d.ox, 0.1, d.oz, 0, 0.55, d.color));
+syncPeopleCount();
+hooks.push(t => {
+  walkers.forEach((d, i) => { const a = d.ph + t * d.sp; writePerson(i, d.ox + Math.cos(a) * d.r, 0.1 + Math.abs(Math.sin(t * 6 + d.ph)) * 0.12, d.oz + Math.sin(a) * d.r, -a - (d.sp > 0 ? 0 : Math.PI), 0.55); });
+  crowdData.forEach((d, k) => writePerson(WALKER_N + k, d.x, 0.1 + Math.abs(Math.sin(t * 3 + d.jig)) * 0.15, d.z, 0, 0.6));
+  peopleBody.instanceMatrix.needsUpdate = peopleHead.instanceMatrix.needsUpdate = peopleHat.instanceMatrix.needsUpdate = true;
+});
 
 // ---- (2) Ngày – đêm: sương sớm, mặt trời, dây đèn lồng ----
 const mist = new THREE.Group(); scene.add(mist);
@@ -541,11 +571,27 @@ hooks.push(t => {
   if (evMark) { const sp = P[evMark.userData]; v3.set(sp[0], 8 + Math.sin(t * 2.4) * 0.6, sp[1]).project(camera); const r = renderer.domElement; evMark.style.transform = 'translate(-50%,-100%) translate(' + ((v3.x + 1) / 2 * r.clientWidth).toFixed(1) + 'px,' + ((1 - v3.y) / 2 * r.clientHeight).toFixed(1) + 'px)'; evMark.style.display = v3.z < 1 ? '' : 'none'; }
 });
 
-// ---- (9) Tự hạ chất lượng khi máy chạy chậm ----
-let perfN = 0, perfSum = 0, perfLast = performance.now(), degraded = LOW;
-hooks.push(() => { const now = performance.now(), dt = now - perfLast; perfLast = now; if (degraded || dt > 500) return; perfSum += dt; perfN++;
-  if (perfN >= 120) { if (perfSum / perfN > 40) { degraded = true; renderer.setPixelRatio(1); sun.castShadow = false; renderer.shadowMap.enabled = false; scene.traverse(o => { if (o.material) o.material.needsUpdate = true; }); } perfN = 0; perfSum = 0; } });
-if (LOW) { sun.castShadow = true; }
+// ---- (9) Tự điều chỉnh chất lượng theo tốc độ máy — nhiều bậc, có thể phục hồi ----
+// Bậc 0: đầy đủ (độ phân giải gốc + đổ bóng) · Bậc 1: độ phân giải 1x, còn đổ bóng ·
+// Bậc 2: độ phân giải 1x, tắt đổ bóng. Tụt bậc khi trung bình >40ms/khung (dưới
+// ~25fps) trong 120 khung liên tiếp; phục hồi khi trung bình <22ms/khung (có
+// khoảng đệm giữa 2 ngưỡng để không nhảy bậc liên tục quanh biên).
+const targetPR = LOW ? 1 : Math.min(2, devicePixelRatio);
+let qLevel = -1;
+function setQuality(lv) {
+  lv = Math.max(0, Math.min(2, lv)); if (lv === qLevel) return; qLevel = lv;
+  renderer.setPixelRatio(lv >= 1 ? 1 : targetPR);
+  const shadowsOn = lv < 2;
+  if (renderer.shadowMap.enabled !== shadowsOn) { renderer.shadowMap.enabled = shadowsOn; scene.traverse(o => { if (o.material) o.material.needsUpdate = true; }); }
+  sun.castShadow = shadowsOn;
+}
+let perfN = 0, perfSum = 0, perfLast = performance.now();
+hooks.push(() => { const now = performance.now(), dt = now - perfLast; perfLast = now; if (dt > 500) return; perfSum += dt; perfN++;
+  if (perfN >= 120) { const avg = perfSum / perfN;
+    if (avg > 40 && qLevel < 2) setQuality(qLevel + 1);
+    else if (avg < 22 && qLevel > 0) setQuality(qLevel - 1);
+    perfN = 0; perfSum = 0; } });
+setQuality(0);
 
 // ---- (10) Hướng dẫn lần đầu trong cảnh 3D ----
 (function tips() { let seen = false; try { seen = localStorage.getItem('bps3d-tips') === '1'; } catch (e) {} if (seen) return;
