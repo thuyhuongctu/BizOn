@@ -11,6 +11,7 @@
 <script src="./js/backend-config.js"></script>
 <script src="./js/fdi-mini/data.js"></script>
 <script src="./js/fdi-mini/engine.js"></script>
+<script src="./js/official-cert.js"></script>
 <style>
 @font-face{font-family:"Plus Jakarta Sans";src:url(assets/fonts/PlusJakartaSans-var-vietnamese.woff2) format("woff2");font-weight:200 800;unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
 @font-face{font-family:"Plus Jakarta Sans";src:url(assets/fonts/PlusJakartaSans-var-latin.woff2) format("woff2");font-weight:200 800}
@@ -285,6 +286,7 @@ button{font:inherit}
     <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:6px">
       <button type="button" onClick="{{ cert.printCert }}" style="padding:12px 18px;border:0;border-radius:12px;background:#fda127;color:#033337;font:800 14px 'Plus Jakarta Sans';cursor:pointer">🎓 {{ t.printCert }}</button>
       <button type="button" onClick="{{ cert.printPass }}" style="padding:12px 18px;border:0;border-radius:12px;background:#033337;color:#fff;font:800 14px 'Plus Jakarta Sans';cursor:pointer">🛂 {{ t.printPass }}</button>
+      <button type="button" onClick="{{ cert.printOfficial }}" style="padding:12px 18px;border:1.5px solid #0a3d62;border-radius:12px;background:#fff;color:#0a3d62;font:800 14px 'Plus Jakarta Sans';cursor:pointer">🎓 {{ t.printOfficial }}</button>
     </div>
   </section>
 </sc-if>
@@ -371,6 +373,7 @@ const T = {
   awardedTo: L3('Trao cho', 'Awarded to', 'Diberikan kepada'), certName: L3('Tên người nhận', 'Recipient name', 'Nama penerima'),
   certHint: L3('Mỗi thành viên có thể sửa thành tên mình rồi in', 'Each member can type their own name, then print', 'Setiap anggota dapat mengetik namanya sendiri lalu mencetak'),
   printCert: L3('In bằng tốt nghiệp (PDF)', 'Print certificate (PDF)', 'Cetak sertifikat (PDF)'), printPass: L3('In hộ chiếu (PDF)', 'Print passport (PDF)', 'Cetak paspor (PDF)'),
+  printOfficial: L3('Tải chứng nhận ĐHCT (theo học phần)', 'Download CTU certificate (course-linked)', 'Unduh sertifikat CTU (sesuai mata kuliah)'),
   gradKind: L3('Bằng tốt nghiệp BizOn', 'BizOn graduation certificate', 'Sertifikat kelulusan BizOn'), partKind: L3('Giấy chứng nhận tham gia', 'Certificate of participation', 'Sertifikat partisipasi'),
   willGo: L3('Bạn sẽ đầu tư vào:', 'You will invest in:', 'Anda akan berinvestasi di:'),
 };
@@ -582,7 +585,9 @@ class Component extends DCLogic {
           [[t.team, g.team], [t.home, hm.flag + ' ' + hm.n[i]], [t.value, money(g.start) + ' → ' + money(E.value(g))], [t.score, fmtN(sc) + '/10 · ' + gr.l], [t.profile, pf[0] + ' ' + pf[1][i]], [L3('Ngày cấp', 'Date of issue', 'Tanggal terbit')[i], dateTxt]].map(r => '<div class="row"><b>' + esc(r[0]) + '</b><span>' + esc(r[1]) + '</span></div>').join('') +
           '<p style="font-size:9.5pt;line-height:1.5;margin-top:6mm">' + esc(pf[2][i]) + '</p><div class="mrz">P&lt;BIZON&lt;' + mrzName + '&lt;&lt;' + esc(g.home.toUpperCase()) + '&lt;' + fmtN(sc) + '&lt;&lt;&lt;</div></section>' +
         '<section class="pg"><span class="eb">' + esc(L3('Thị thực & con dấu', 'Visas & stamps', 'Visa & cap')[i]) + '</span><h2>' + esc(L3('Các khoản đầu tư', 'Investments', 'Investasi')[i]) + '</h2>' + (st ? '<div class="grid">' + st + '</div>' : '<p>—</p>') + '</section>');
-      base.cert = { kind: gr.pass ? t.gradKind : t.partKind, kindEn: gr.pass ? 'CERTIFICATE OF GRADUATION' : 'CERTIFICATE OF PARTICIPATION', name: rcpt, onName: e => this.setState({ certName: e.target.value }), desc: certDesc, meta: dateTxt + ' · ID ' + E.code(g), printCert, printPass };
+      const printOfficial = () => { if (!window.OfficialCert) return;
+        window.OfficialCert.fetchConfig(g.cls).then(cfg => window.OfficialCert.download({ name: rcpt, courseCode: cfg.course_code, courseName: cfg.course_name, courseDates: cfg.course_dates, filenamePrefix: 'BizOn-HoChieuMini' })); };
+      base.cert = { kind: gr.pass ? t.gradKind : t.partKind, kindEn: gr.pass ? 'CERTIFICATE OF GRADUATION' : 'CERTIFICATE OF PARTICIPATION', name: rcpt, onName: e => this.setState({ certName: e.target.value }), desc: certDesc, meta: dateTxt + ' · ID ' + E.code(g), printCert, printPass, printOfficial };
       return Object.assign(base, { isEnd: true, recap: RECAP.map(r => ({ k: r[0][i], v: r[1][i] })),
         end: { team: g.team, homeLine: hm.flag + ' ' + hm.n[i], score: fmtN(sc), letter: gr.l, g4: (l === 'vi' ? 'Thang 4: ' : 'GPA ') + fmtN(gr.g4), valueLine: money(g.start) + ' → ' + money(E.value(g)),
           bars: vals.map((v, k) => ({ v: fmtN(v, 0), q: k ? 'Q' + k : '0', h: Math.max(6, Math.round(v / mx * 70)) + 'px' })), code: E.code(g), pIcon: pf[0], pTitle: pf[1][i], pDesc: pf[2][i] },
