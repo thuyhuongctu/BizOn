@@ -1,7 +1,7 @@
 /* BizOn Bật Nghiệp 2026 – Service Worker (offline app shell)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
 
-const CACHE = 'bizon-v374';
+const CACHE = 'bizon-v375';
 const SHELL = [
   './',
   './index.html',
@@ -126,6 +126,14 @@ const SHELL = [
   './js/games-clay.js',
   './js/bps3d.js',
   './js/bps3d-v3.js',
+  './js/bps3d-npc.js',
+  './js/ghe-phu-sa.js',
+  './bp3d-boat/model-boat.js',
+  './bp3d-boat/model-huong.js',
+  './bp3d-boat/model-tu.js',
+  './bp3d-boat/model-ghe-mui.js',
+  './bp3d-boat/model-ghe-cargo.js',
+  './bp3d-boat/model-team.js',
   './js/bps-voice.js',
   './js/bps-cast.js',
   './js/bps-exam.js',
@@ -214,6 +222,9 @@ const SHELL = [
   './assets/character/firms/lam-viet-aodai-cut.webp',
   './assets/character/phu-sa/huong-cut-v2.webp',
   './assets/character/phu-sa/tu-cut.webp',
+  './assets/character/phu-sa/doi-phu-sa-ghe-v2.png',
+  './assets/character/phu-sa/doi-phu-sa-ghe-v7.png',
+  './assets/character/phu-sa/doi-5-nguoi.png',
   // Bài chủ đề game Hộ Chiếu Thương Hiệu – nạp sẵn để mở offline vẫn có nhạc.
   // 7,1MB: đây là mục nặng nhất trong danh sách, cân nhắc bỏ nếu muốn rút ngắn
   // thời gian cài đặt (nhạc vẫn tải và lưu đệm ngay lần đầu người chơi bật).

@@ -53,6 +53,12 @@
   .ft-week-dot { width:30px; height:30px; border-radius:9999px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:12px; background:rgba(0,102,135,.1); }
   .ft-week-dot.done { background:#006687; color:#fff; }
   .ft-week-dot.cur { background:#fda127; color:#033337; }
+  .ft-cell { position:relative; height:46px; border-radius:10px; border:1.5px dashed rgba(0,102,135,.25); background:rgba(0,102,135,.04); color:rgba(3,51,55,.45); font:700 15px/1 'Newsreader',serif; cursor:pointer; padding:0; }
+  .ft-cell.known { border-style:solid; border-color:transparent; background:#006687; color:#fff; }
+  .ft-cell.sel { box-shadow:0 0 0 3px #fda127; }
+  .ft-cell:disabled { opacity:.4; cursor:not-allowed; }
+  html[data-theme="dark"] .ft-cell { border-color:rgba(92,196,230,.3); background:rgba(92,196,230,.06); color:rgba(214,236,240,.4); }
+  html[data-theme="dark"] .ft-cell.known { background:#5cc4e6; color:#033337; }
   :root { --dt: 3 51 55; }
   html[data-theme="dark"] { --dt: 214 236 240; background:#081a20; color-scheme:dark; }
   html[data-theme="dark"] body { color:#d6ecf0; }
@@ -170,10 +176,8 @@
       <h2 class="font-display font-extrabold text-deep-teal text-base mb-3"><span data-en="Week">Tuần</span> <span id="ft-week">1</span>/5 – <span data-en="choose 3 decisions">chọn 3 quyết định</span></h2>
       <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mb-1.5" data-en="1 · Method">1 · Phương thức</p>
       <div class="grid grid-cols-3 gap-2" id="ft-methods"></div>
-      <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mb-1.5 mt-4" data-en="2 · Product">2 · Món hàng</p>
-      <div class="grid grid-cols-3 gap-2" id="ft-menus"></div>
-      <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mb-1.5 mt-4" data-en="3 · Location">3 · Địa điểm</p>
-      <div class="grid grid-cols-3 gap-2" id="ft-locs"></div>
+      <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mb-1.5 mt-4" data-en="2 · Product × Location — tap a cell to pick both">2 · Món hàng × Địa điểm — bấm 1 ô để chọn cả hai</p>
+      <div id="ft-matrix" style="overflow-x:auto"></div>
       <button id="ft-commit" onclick="ftCommit()" class="clay-btn w-full bg-primary text-white font-display font-extrabold py-3.5 mt-5" data-en="🔒 Lock in this week">🔒 Chốt tuần này</button>
       <p id="ft-hint" class="text-xs font-semibold opacity-60 mt-2 text-center"></p>
       <p id="ft-forecast" class="text-xs font-semibold opacity-70 mt-1 text-center"></p>
@@ -581,10 +585,36 @@
     $('ft-methods').innerHTML = METHODS.map(function (m, i) {
       return optBtn('m', i, '<span class="big">' + m.icon + '</span><span>' + mdName(i) + '</span><br><span style="font-size:10px;opacity:.6">' + mdSub(i) + '</span>');
     }).join('');
-    $('ft-menus').innerHTML = MENUS.map(function (m, i) { return optBtn('menu', i, '<span class="big">' + m[0] + '</span><span>' + mName(i) + '</span><br><span style="font-size:9px;opacity:.6">' + mSub(i) + '</span>'); }).join('');
-    $('ft-locs').innerHTML = LOCS.map(function (l, i) { return optBtn('loc', i, '<span class="big">' + l[0] + '</span><span>' + lName(i) + '</span><br><span style="font-size:9px;opacity:.6">' + lSub(i) + '</span>'); }).join('');
+    renderMatrix();
     renderScores();
   }
+
+  // Lưới Món hàng × Địa điểm: 1 ô = chọn cả món lẫn chỗ cùng lúc. Ô "đã biết"
+  // (từng bán ở đó hoặc dùng Thám tử chợ) tô đậm; ô chưa dò hiện dấu "?".
+  function renderMatrix() {
+    var research = S.sel.m === 2;
+    var html = '<div style="display:grid;grid-template-columns:72px repeat(' + LOCS.length + ',minmax(0,1fr));gap:4px;align-items:stretch;min-width:' + (72 + LOCS.length * 50) + 'px">';
+    html += '<div></div>';
+    LOCS.forEach(function (l, li) {
+      html += '<div style="display:flex;flex-direction:column;align-items:center;gap:1px;padding-bottom:3px;text-align:center"><span style="font-size:15px;line-height:1">' + l[0] + '</span><span style="font-size:8.5px;font-weight:700;line-height:1.15">' + lName(li) + '</span></div>';
+    });
+    MENUS.forEach(function (m, mi) {
+      html += '<div style="display:flex;align-items:center;gap:4px;min-width:0"><span style="font-size:15px">' + m[0] + '</span><span style="font-size:9.5px;font-weight:700;line-height:1.15;text-align:left">' + mName(mi) + '</span></div>';
+      LOCS.forEach(function (l, li) {
+        var known = !!S.knownPairs[mi + '-' + li];
+        var sel = S.sel.menu === mi && S.sel.loc === li;
+        var title = known ? T('Đã biết nhu cầu khu này', 'Demand already known here') : T('Chưa dò – bấm để chọn', 'Not scouted yet – tap to pick');
+        html += '<button type="button" class="ft-cell' + (known ? ' known' : '') + (sel ? ' sel' : '') + '"' + (research ? ' disabled' : '') + ' onclick="ftPickPair(' + mi + ',' + li + ')" title="' + title + '">' + (known ? '✓' : '?') + '</button>';
+      });
+    });
+    html += '</div>';
+    $('ft-matrix').innerHTML = html;
+  }
+
+  window.ftPickPair = function (menu, loc) {
+    S.sel.menu = menu; S.sel.loc = loc;
+    syncSel();
+  };
 
   function render() {
     renderOptions();
@@ -638,8 +668,8 @@
       b.classList.toggle('sel', S.sel[b.dataset.g] === Number(b.dataset.i));
     });
     var research = S.sel.m === 2;
-    // Nghiên cứu thì không cần chọn thực đơn/địa điểm
-    document.querySelectorAll('[data-g="menu"],[data-g="loc"]').forEach(function (b) { b.disabled = research; });
+    // Nghiên cứu thì không cần chọn món/địa điểm – vẽ lại lưới để khóa + cập nhật ô đang chọn
+    renderMatrix();
     var ready = S.sel.m !== null && (research || (S.sel.menu !== null && S.sel.loc !== null));
     $('ft-commit').disabled = !ready;
     $('ft-commit').style.opacity = ready ? 1 : 0.5;
