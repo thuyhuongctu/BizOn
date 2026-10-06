@@ -217,9 +217,19 @@
 
   <!-- MÀN GIỚI THIỆU -->
   <section id="bp-intro" class="clay-card p-6">
-    <!-- VIDEO HƯỚNG DẪN CHƠI – nằm trong #bp-intro (không phải section riêng trước nó) vì
-         #bp-intro là overlay toàn màn hình (position:fixed) từ PR #627; để ở ngoài sẽ bị
-         overlay che mất, không bấm được. -->
+    <!-- VIDEO GIỚI THIỆU (trailer kể chuyện) + VIDEO HƯỚNG DẪN CHƠI – cả hai nằm
+         trong #bp-intro (không phải section riêng trước nó) vì #bp-intro là
+         overlay toàn màn hình (position:fixed) từ PR #627; để ở ngoài sẽ bị
+         overlay che mất, không bấm được. Cùng mẫu lazy-load + tự tắt tiếng khi
+         đóng intro như #ft-mv ở ben-phu-sa-v8.html. -->
+    <figure id="bp-mv" class="clay-card mb-6" style="margin:0 0 24px;padding:10px;border-radius:24px;overflow:hidden">
+      <div style="position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:repeating-linear-gradient(135deg,#e9f3f6 0 12px,#dcebef 12px 24px)">
+        <iframe id="bp-mv-frame" src="bp3d-explainer.html" title="Video giới thiệu Hộ Chiếu Thương Hiệu" loading="lazy" allow="autoplay; fullscreen" style="position:absolute;inset:0;width:100%;height:100%;border:0;display:block"></iframe>
+      </div>
+      <figcaption style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 6px 2px;font:800 13px/1.3 'Plus Jakarta Sans',sans-serif;color:#033337"><span data-en="🎬 Intro video – Brand Passport">🎬 Video giới thiệu – Hộ Chiếu Thương Hiệu</span><a href="bp3d-explainer.html" target="_blank" style="font-weight:700;font-size:11px;color:#006687;white-space:nowrap" data-en="⤢ Open full screen">⤢ Mở toàn màn hình</a></figcaption>
+    </figure>
+    <script>(function(){var fr=document.getElementById('bp-mv-frame'),intro=document.getElementById('bp-intro');
+      new MutationObserver(function(){if(intro.classList.contains('hidden')){try{fr.contentWindow.document.querySelectorAll('audio,video').forEach(function(m){m.pause();});}catch(e){} fr.src='about:blank';}}).observe(intro,{attributes:true});})();</script>
     <section id="bp-howto" class="clay-card p-5 mb-6">
       <button type="button" onclick="document.getElementById('bp-howto-box').classList.toggle('hidden');this.querySelector('b').textContent=document.getElementById('bp-howto-box').classList.contains('hidden')?'▾':'▴'" class="w-full flex items-center justify-between">
         <span>
