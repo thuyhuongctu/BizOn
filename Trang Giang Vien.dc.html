@@ -319,6 +319,26 @@ input,select,textarea,button{font-family:inherit}
               </sc-for>
             </div>
           </div>
+          <sc-if value="{{ hasMini }}" hint-placeholder-val="{{ false }}">
+            <div style="font:800 15px 'Baloo 2',sans-serif;color:#1f4a55;margin-top:6px">🌍 Hộ Chiếu Mini (điểm tự tính trong game)</div>
+            <div class="scroll-hint">↔️ Vuốt ngang để xem đủ cột</div>
+            <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;overflow:auto">
+              <div style="display:grid;grid-template-columns:minmax(130px,1.4fr) minmax(120px,1fr) 90px minmax(150px,1.3fr) 80px 70px minmax(130px,1fr);min-width:820px;align-items:center">
+                <sc-for list="{{ miniHead }}" as="h" hint-placeholder-count="7"><div style="padding:11px 8px;border-bottom:2px solid #e6d6bf;font-size:11px;font-weight:700;color:#5a6b74">{{ h }}</div></sc-for>
+                <sc-for list="{{ miniRows }}" as="r" hint-placeholder-count="3">
+                  <div style="display:contents">
+                    <div style="padding:10px 8px;border-bottom:1px solid #eadcc6;font-weight:700">{{ r.name }}</div>
+                    <div style="padding:10px 8px;border-bottom:1px solid #eadcc6">{{ r.home }}</div>
+                    <div style="padding:10px 8px;border-bottom:1px solid #eadcc6">{{ r.markets }}</div>
+                    <div style="padding:10px 8px;border-bottom:1px solid #eadcc6">{{ r.profile }}</div>
+                    <div style="padding:10px 8px;border-bottom:1px solid #eadcc6;font:800 17px 'Baloo 2',sans-serif;color:#1f6f8a">{{ r.total }}</div>
+                    <div style="padding:10px 8px;border-bottom:1px solid #eadcc6;font-weight:800;color:#5a6b74">{{ r.letter }}</div>
+                    <div style="padding:10px 8px;border-bottom:1px solid #eadcc6;font-size:12px;color:#5a6b74">{{ r.when }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
         </section>
       </sc-if>
       <sc-if value="{{ tabMembers }}" hint-placeholder-val="{{ false }}">
@@ -451,6 +471,7 @@ class Component extends DCLogic {
     const signedIn = !!(ok && A.signedIn), v = signedIn ? s.view : 'login', inClass = v === 'class', inAdmin = v === 'admin';
     const T = ok ? P.teams(s.subs) : [], G = ok ? P.grades(T, (s.st && s.st.scores) || [], s.edits, s.memberLog) : [], money = ok ? P.money : (x => x);
     const MB = ok ? P.members(T, s.memberLog) : [], BP = s.bpResults || [];
+    const MINI = BP.filter(r => /^HC Mini/.test(r.company || ''));
     const c = (s.st && s.st.controls) || {}, lock = c.locked_round;
     const ex = s.exam, ep = examPhase(ex, Date.now());
     const examStatus = !ep ? 'Chưa bắt đầu tính giờ — chọn số phút rồi bấm «Bắt đầu tính giờ» khi cả lớp sẵn sàng vào phòng thi.'
@@ -513,6 +534,10 @@ class Component extends DCLogic {
         showManual: !g.auto || g.autoPrep == null,
         onR: e => this.edit(g.name, 'reasoning', e.target.value), onT: e => this.edit(g.name, 'teamwork', e.target.value), onN: e => this.edit(g.name, 'note', e.target.value),
         save: () => this.saveScore(g), saveLabel: s.saved[g.name] ? '✓ Đã lưu' : 'Lưu' })),
+      hasMini: !!MINI.length,
+      miniHead: ['Sinh viên', 'Quốc gia xuất phát', 'Số thị trường', 'Hồ sơ nhà đầu tư', 'Điểm /10', 'Điểm chữ', 'Nộp lúc'],
+      miniRows: MINI.map(r => { const m = P.miniGrade(r), L = P.letter(m.total);
+        return { name: r.player_name || 'Ẩn danh', home: m.home, markets: m.markets, profile: m.profile, total: P.f1(m.total), letter: L.l, when: new Date(r.created_at).toLocaleString('vi-VN') }; }),
       memberRows: MB.map(m => ({ team: m.team, name: m.name, role: m.role,
         dots: m.dots.map((d, i) => ({ n: i + 1, bg: d === 2 ? '#3f8a44' : d === 1 ? '#e8a22d' : '#d9cbb4', tip: 'V' + (i + 1) + ': ' + (d === 2 ? 'đề xuất/biên bản được áp dụng' : d === 1 ? 'có tham gia' : 'chưa ghi nhận') })),
         p: m.p, a: m.a, whatif: m.whatif, b5: P.f1(m.b5) })),
