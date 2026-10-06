@@ -34,8 +34,8 @@
   @keyframes bzBob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-8px) rotate(3deg)}}
   @keyframes bzRock{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(6deg)}}
   @keyframes bzSpin{to{transform:rotate(360deg)}}
-  @keyframes bzWave{to{background-position-x:72px}}
-  @keyframes bzWaveR{to{background-position-x:-72px}}
+  @keyframes bzWave{to{background-position-x:72px, 0}}
+  @keyframes bzWaveR{to{background-position-x:-72px, 0}}
   @keyframes bzDrift{0%{transform:translateX(-30%) rotate(-2deg)}50%{transform:translateX(30%) rotate(2deg)}100%{transform:translateX(-30%) rotate(-2deg)}}
   @media (prefers-reduced-motion:reduce){*{animation:none!important}}
   @media (max-width:560px){ .hp-stage{min-height:340px} }
