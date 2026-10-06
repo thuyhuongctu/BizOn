@@ -130,6 +130,14 @@
     return { a1, a2, a3, a4a, a4b, solid, picks: P ? P.length : null, negQ: d.negQ ?? null, lo, missing: a4a == null || a4b == null, total: a1 + a2 + a3 + (a4a || 0) + (a4b || 0) };
   }
 
+  /* ---------- Hộ Chiếu Mini: điểm đã tính sẵn trong game (score10), chỉ đổi định dạng hiển thị ---------- */
+  const MINI_HOME = { vn: '🇻🇳 Việt Nam', id: '🇮🇩 Indonesia', th: '🇹🇭 Thái Lan', my: '🇲🇾 Malaysia', kr: '🇰🇷 Hàn Quốc', jp: '🇯🇵 Nhật Bản' };
+  const MINI_PROFILE = { conqueror: 'Nhà đầu tư kiểm soát', partner: 'Người xây liên minh', cautious: 'Người thận trọng', builder: 'Người tái đầu tư', harvester: 'Người thu hoạch', idle: 'Người đứng ngoài' };
+  function miniGrade(r) {
+    const d = r.detail_json || {};
+    return { total: (+r.total_score || 0) / 10, home: MINI_HOME[d.home] || d.home || '–', profile: MINI_PROFILE[r.title] || r.title || '–', markets: r.markets ?? 0 };
+  }
+
   function decRows(team) {
     const head = ['Vòng', 'Giá (k₫)', 'Marketing', 'Sản lượng', 'R&D', 'Nhân công', 'Vốn', 'Thị phần', 'Lợi nhuận', 'Kết quả'];
     const cells = [];
@@ -161,9 +169,12 @@
     const s4 = [row(['Đội', 'Thành viên', 'Email', 'Vai', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'Vòng tham gia', 'Vòng được áp dụng', 'Lần Nếu–Thì', 'B5 cá nhân /1,5', 'Tổng cá nhân /10', 'Điểm chữ', 'Thang 4', 'Tích lũy'])]
       .concat((MB || []).map(m => { const g = G.find(x => x.name === m.team), tot = g ? g.total - g.b5 + m.b5 : m.b5, L = letter(tot);
         return row([m.team, m.name, m.email, m.role].concat(m.dots.map(d => d === 2 ? 'Áp dụng' : d === 1 ? 'Tham gia' : ''), [m.p, m.a, m.whatif, r1(m.b5), +tot.toFixed(1), L.l, L.g4, L.pass ? 'Đạt' : 'Không'])); }));
-    const xml = `<?xml version="1.0" encoding="UTF-8"?><?mso-application progid="Excel.Sheet"?><Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">${sheet('Bật Nghiệp', s1)}${sheet('Quyết định theo vòng', s2)}${sheet('Hộ Chiếu', s3)}${sheet('Thành viên', s4)}</Workbook>`;
+    const s5 = [row(['Sinh viên', 'Quốc gia xuất phát', 'Số thị trường đầu tư', 'Hồ sơ nhà đầu tư', 'Điểm /10', 'Điểm chữ', 'Thang 4', 'Tích lũy', 'Nộp lúc'])]
+      .concat((BP || []).filter(r => /^HC Mini/.test(r.company || '')).map(r => { const m = miniGrade(r), L = letter(m.total);
+        return row([r.player_name || 'Ẩn danh', m.home, m.markets, m.profile, +m.total.toFixed(1), L.l, L.g4, L.pass ? 'Đạt' : 'Không', new Date(r.created_at).toLocaleString('vi-VN')]); }));
+    const xml = `<?xml version="1.0" encoding="UTF-8"?><?mso-application progid="Excel.Sheet"?><Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">${sheet('Bật Nghiệp', s1)}${sheet('Quyết định theo vòng', s2)}${sheet('Hộ Chiếu', s3)}${sheet('Thành viên', s4)}${sheet('Hộ Chiếu Mini', s5)}</Workbook>`;
     const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([xml], { type: 'application/vnd.ms-excel' })); a.download = `BizOn-${code}-so-diem.xls`; document.body.appendChild(a); a.click(); a.remove();
   }
   const EVENTS = [['', 'Theo kịch bản (không can thiệp)'], ['EV_STABLE', '🌤️ Thị trường ổn định'], ['EV_GOLDEN', '🌟 Cơ hội vàng – tổng cầu tăng'], ['EV_PRICEWAR', '⚔️ Cạnh tranh về giá – nhạy giá'], ['EV_RECESSION', '⚡ Khủng hoảng năng lượng'], ['EV_SUPPLY', '🚢 Khủng hoảng chuỗi cung ứng'], ['EV_MILESTONE', '🐉 Việt Nam hóa Rồng']];
-  window.BizOnInstructorPage = { money, f1, letter, members, autoNote, teams, grades, bpGrade, decRows, xls, EVENTS };
+  window.BizOnInstructorPage = { money, f1, letter, members, autoNote, teams, grades, bpGrade, miniGrade, decRows, xls, EVENTS };
 })();
