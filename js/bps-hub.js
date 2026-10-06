@@ -56,6 +56,21 @@
           else api.dialogue(r, isEN() ? r.styleEn : r.style, [{ text: 'OK', primary: true, onPick: api.close }]);
         } };
     });
+    // 2 thương hồ hàng xóm – thuần flavor/gợi ý, không đổi doanh thu hay điểm số
+    npcs.push(
+      { id: 'phusafoods', img: 'assets/character/phu-sa/ong-phu-sa-foods.webp', icon: '🫙', accent: '#b8561b', name: T('Chú Ba Phù Sa Foods', 'Chú Ba Phù Sa Foods'), x: 160, y: 600,
+        talk: function (api) {
+          api.dialogue({ name: T('Chú Ba Phù Sa Foods', 'Chú Ba Phù Sa Foods'), icon: '🫙', img: 'assets/character/phu-sa/ong-phu-sa-foods.webp' },
+            T('Chú đóng hũ rau củ ngâm bán mối cho mấy ghe hàng bông quanh đây. Mỗi món một tính nết: bánh mì bán chạy giờ cao điểm, chè bưởi phải canh kẻo hao, cà phê phin lời dày nhưng pha lâu. Biết tính món mình bán thì đỡ lỗ hơn nhiều.',
+              'I jar pickled veggies and sell to the trading boats around here. Every product has its own temperament: bánh mì sells fast at peak hours, chè bưởi needs watching or it spoils, phin coffee has thick margins but brews slowly. Know your product\'s nature and you lose a lot less.'),
+            [{ text: T('Cảm ơn chú!', 'Thanks, chú!'), primary: true, onPick: api.close }]); } },
+      { id: 'caothaoduoc', img: 'assets/character/phu-sa/ba-cao-thao-duoc.webp', icon: '🌿', accent: '#5a8a3a', name: T('Bà Năm Thảo Dược', 'Bà Năm Thảo Dược'), x: 1240, y: 600,
+        talk: function (api) {
+          api.dialogue({ name: T('Bà Năm Thảo Dược', 'Bà Năm Thảo Dược'), icon: '🌿', img: 'assets/character/phu-sa/ba-cao-thao-duoc.webp' },
+            T('Bà bán cao thảo dược ở bến này hơn hai mươi năm rồi. Khách cũ quay lại vì bà cân đủ, nói thật – chứ không phải vì rẻ. Uy tín thương hồ là thứ tích theo tuần, mất thì mất nhanh mà gầy lại chậm lắm con à.',
+              "I've sold herbal remedies at this wharf for over twenty years. Customers come back because I weigh fair and speak true – not because I'm cheap. A trader's reputation builds up week by week, but it's quick to lose and slow to rebuild, child."),
+            [{ text: T('Dạ, con nhớ!', 'I will, thank you!'), primary: true, onPick: api.close }]); } }
+    );
     return {
       title: T('🏯 Bến đậu thương hồ', '🏯 The Trader\'s Mooring'),
       subtitle: T('Bến Phù Sa', 'Bến Phù Sa'),
