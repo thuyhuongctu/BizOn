@@ -128,7 +128,7 @@
     <h2 class="hp-h2" style="max-width:18em" data-en="Learn business by making consequential decisions.">Học kinh doanh bằng những quyết định có hệ quả.</h2>
     <div class="hp-cardgrid">
       <article style="display:flex;flex-direction:column;border-radius:32px;background:var(--clay-card);padding:12px;box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 rgba(255,255,255,.95),0 26px 36px -22px rgba(110,70,30,.5)">
-        <div style="position:relative;aspect-ratio:4/5;border-radius:24px;overflow:hidden;background:#D7ECEA;box-shadow:inset 0 -8px 0 rgba(0,0,0,.06)"><img src="assets/illustrations/game/ben-phu-sa-cho-noi.webp" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" loading="lazy"></div>
+        <div id="hp-ghe-widget" style="position:relative;aspect-ratio:4/5;border-radius:24px;overflow:hidden;background:#D7ECEA;box-shadow:inset 0 -8px 0 rgba(0,0,0,.06)"><img src="assets/illustrations/game/ben-phu-sa-cho-noi.webp" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" loading="lazy"></div>
         <div style="padding:16px 10px 10px;display:flex;flex-direction:column;gap:8px;flex:1">
           <div style="font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--clay-accent)" data-en="TIER 1 · START HERE">BẬC 1 · BẮT ĐẦU Ở ĐÂY</div>
           <h3 style="margin:0;font-family:var(--clay-head);font-weight:800;font-size:28px;line-height:1.14">Bến Phù Sa</h3>
@@ -294,6 +294,21 @@ document.addEventListener('DOMContentLoaded', function(){
   right.insertBefore(btn, right.firstChild);
   if(window.clayApplyLang) window.clayApplyLang(window.clayCurrentLang ? window.clayCurrentLang() : 'vi');
 });
+/* Thẻ sản phẩm Bến Phù Sa — thay ảnh tĩnh bằng ghe 3D xoay nhẹ khi lướt tới gần */
+(function(){
+  var el = document.getElementById('hp-ghe-widget');
+  if (!el) return;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (!entry.isIntersecting) return;
+      io.disconnect();
+      import('./js/ghe-phu-sa.js').then(function(m){
+        return m.mountGhe(el, { style: '3d', autorotate: true, water: false, background: '#D7ECEA' });
+      }).catch(function(){ /* ảnh tĩnh vẫn còn sẵn trong thẻ, không cần fallback thêm */ });
+    });
+  }, { rootMargin: '200px' });
+  io.observe(el);
+})();
 </script>
 </body>
 </html>
