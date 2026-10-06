@@ -71,8 +71,8 @@
     var filenamePrefix = opts.filenamePrefix || 'BizOn';
     var verifyCode = opts.verifyCode || shortCode(name + '|' + courseCode + '|' + courseDates);
 
-    Promise.all([loadImg('assets/docs/ctu-logo.png'), loadImg('assets/docs/soe-logo.png'), loadImg('assets/docs/sig-tu.png')]).then(function (imgs) {
-      var ctuLogo = imgs[0], soeLogo = imgs[1], sigTu = imgs[2];
+    Promise.all([loadImg('assets/docs/ctu-logo.png'), loadImg('assets/docs/soe-logo.png'), loadImg('assets/docs/sig-huong.png')]).then(function (imgs) {
+      var ctuLogo = imgs[0], soeLogo = imgs[1], sigHuong = imgs[2];
       var cv = document.createElement('canvas'); cv.width = 1400; cv.height = 990;
       var g = cv.getContext('2d');
 
@@ -101,13 +101,13 @@
 
       // chữ ký
       var sx = 1000, sy = 700;
-      if (sigTu) { var h = 90, w = sigTu.width * h / sigTu.height; g.drawImage(sigTu, sx - w / 2, sy - h, w, h); }
-      else { g.font = 'italic 36px "Segoe Script", cursive'; g.fillStyle = '#0a3d62'; g.fillText('Phan Anh Tu', sx, sy - 20); }
+      if (sigHuong) { var h = 90, w = sigHuong.width * h / sigHuong.height; g.drawImage(sigHuong, sx - w / 2, sy - h, w, h); }
+      else { g.font = 'italic 36px "Segoe Script", cursive'; g.fillStyle = '#0a3d62'; g.fillText('Do Thuy Huong', sx, sy - 20); }
       g.strokeStyle = 'rgba(3,51,55,.35)'; g.lineWidth = 1.5; g.beginPath(); g.moveTo(sx - 150, sy + 10); g.lineTo(sx + 150, sy + 10); g.stroke();
       g.fillStyle = '#033337'; g.font = '800 15px "Hanken Grotesk", sans-serif';
-      g.fillText(T('Assoc. Prof. Dr. Phan Anh Tu', 'Assoc. Prof. Dr. Phan Anh Tu'), sx, sy + 34);
+      g.fillText(T('Nghiên cứu sinh Đỗ Thùy Hương', 'PhD Candidate Do Thuy Huong'), sx, sy + 34);
       g.font = '700 12px "Hanken Grotesk", sans-serif'; g.fillStyle = 'rgba(3,51,55,.6)';
-      g.fillText(T('Phó Hiệu trưởng – Trường Kinh tế', 'Vice Dean – School of Economics'), sx, sy + 52);
+      g.fillText(T('Trường Kinh tế, Đại học Cần Thơ', 'School of Economics, Can Tho University'), sx, sy + 52);
 
       g.textAlign = 'left'; g.font = '11px "Hanken Grotesk", sans-serif'; g.fillStyle = 'rgba(3,51,55,.4)';
       g.fillText(T('Cấp ngày ', 'Issued on ') + new Date().toLocaleDateString(isEN() ? 'en-US' : 'vi-VN') + '  ·  thuyhuongctu.github.io/BizOn', 60, 950);
