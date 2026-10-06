@@ -134,6 +134,7 @@
       cfg.onClose && cfg.onClose();
     }
     activeClose = finish;
+    if (cfg.autoTalk) setTimeout(() => talk(cfg.autoTalk), 260);
     q('.skip').onclick = () => finish();
     joy.addEventListener('pointerdown', e => { drag = true; pid = e.pointerId; joy.setPointerCapture(pid); const r = joy.getBoundingClientRect(); jc = { x: r.left + r.width / 2, y: r.top + r.height / 2 }; });
     joy.addEventListener('pointermove', e => { if (!drag || e.pointerId !== pid) return; let dx = e.clientX - jc.x, dy = e.clientY - jc.y, d = Math.hypot(dx, dy); if (d > 46) { dx *= 46 / d; dy *= 46 / d; } thumb.style.transform = `translate(${dx}px,${dy}px)`; vec = { x: dx / 46, y: dy / 46 }; target = null; });

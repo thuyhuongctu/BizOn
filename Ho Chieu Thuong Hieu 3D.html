@@ -741,16 +741,17 @@
   function homeRevMul(m) { var h = homeInfo(m); return (S.entered[m] === 5 ? 1 : h.tariffMul) * (S.qin[m] <= 2 ? h.newMul : 1); }
   function renderHomes() {
     var intro = $('bp-intro'); if (!intro) return;
-    var box = $('bp-homes');
+    var box = $('bp-homes-wrap');
     if (!box) { box = document.createElement('div'); box.id = 'bp-homes-wrap'; box.className = 'mb-5'; intro.insertBefore(box, intro.firstElementChild); }
-    else box = $('bp-homes-wrap');
+    var hm = HOME();
     box.innerHTML = '<h2 class="font-display font-extrabold text-deep-teal text-lg mb-2">' + T('🏠 Quốc gia của bạn (home country)', '🏠 Your home country') + '</h2>' +
       '<p class="text-[11px] opacity-60 mb-2">' + T('Nơi doanh nghiệp xuất phát (home country). Quốc gia này quyết định hiệp định thương mại và khoảng cách văn hoá (cultural distance) tới 7 thị trường chủ nhà/sở tại (host country) mà bạn sẽ thâm nhập.', 'Where your firm starts (home country). It sets the trade agreements and cultural distance to the 7 host markets you will enter.') + '</p>' +
-      '<div id="bp-homes" class="flex flex-wrap gap-2">' + HOMES.map(function (x) { var on = x.id === S.home;
-        return '<button type="button" onclick="bpHome(\'' + x.id + '\')" class="clay-btn px-3 py-2 text-sm font-extrabold ' + (on ? 'bg-deep-teal text-white' : 'bg-surface-bright text-deep-teal') + '">' + x.flag + ' ' + T(x.c, x.cEn) + '</button>'; }).join('') + '</div>' +
-      (HOME_SLOT[S.home] ? '<p style="margin:8px 0 0;font-size:11px;background:#fff6ea;border:1px solid #fda127;border-radius:8px;padding:6px 9px">' + T('⚠️ Vì quốc gia xuất phát của bạn trùng với một trong 7 thị trường chủ nhà, thị trường «' + (MKTS.filter(function (x) { return x.key === HOME_SLOT[S.home]; })[0] || {}).name + '» được đổi thành Việt Nam (để tránh tình huống doanh nghiệp "thâm nhập vào chính nước mình").', '⚠️ Because your home country matches one of the 7 host markets, the «' + (MKTS.filter(function (x) { return x.key === HOME_SLOT[S.home]; })[0] || {}).name + '» market is swapped to Vietnam (to avoid a firm "entering its own home country").') + '</p>' : '') +
-      '<p class="text-[11px] opacity-60 mt-2">' + T('Xem thẻ «Bảy cánh cửa ra thế giới» bên dưới cho khoảng cách văn hoá và hiệp định từng thị trường.', 'See the «Seven gateways» cards below for cultural distance and trade deals per market.') + '</p>' + mapBox('bp-map-intro', true);
-    setTimeout(function () { if (typeof drawMap === 'function') drawMap('bp-map-intro'); }, 0);
+      '<button type="button" class="clay-btn w-full flex items-center gap-3 px-4 py-3 text-left" onclick="window.BPHub && window.BPHub.openPassport()">' +
+        '<span style="font-size:30px;line-height:1">' + hm.flag + '</span>' +
+        '<span class="min-w-0"><b class="block font-display font-extrabold text-deep-teal">' + T('Hiện tại: ', 'Currently: ') + T(hm.c, hm.cEn) + '</b>' +
+        '<span class="text-[11px] opacity-70">' + T('🛂 Bấm để bước vào quầy hộ chiếu 3D – đổi quốc gia, xem bản đồ & hồ sơ 7 thị trường', '🛂 Tap to enter the 3D passport desk – change country, browse the map & market dossiers') + '</span></span>' +
+      '</button>' +
+      (HOME_SLOT[S.home] ? '<p style="margin:8px 0 0;font-size:11px;background:#fff6ea;border:1px solid #fda127;border-radius:8px;padding:6px 9px">' + T('⚠️ Vì quốc gia xuất phát của bạn trùng với một trong 7 thị trường chủ nhà, thị trường «' + (MKTS.filter(function (x) { return x.key === HOME_SLOT[S.home]; })[0] || {}).name + '» được đổi thành Việt Nam (để tránh tình huống doanh nghiệp "thâm nhập vào chính nước mình").', '⚠️ Because your home country matches one of the 7 host markets, the «' + (MKTS.filter(function (x) { return x.key === HOME_SLOT[S.home]; })[0] || {}).name + '» market is swapped to Vietnam (to avoid a firm "entering its own home country").') + '</p>' : '');
   }
   window.bpHome = function (id) { S.home = id; applyHome(); try { localStorage.setItem('bizon-bp-home', id); } catch (e) {} renderHomes(); };
   try { S.home = localStorage.getItem('bizon-bp-home') || 'vn'; } catch (e) { S.home = 'vn'; }
@@ -2289,7 +2290,7 @@
 <script src="js/bp-tutorial.js"></script>
 <script src="js/bp-exam.js"></script>
 <script src="js/bp-worldmap.js?v=4"></script>
-<script src="js/bp-ib-ui.js?v=4"></script>
+<script src="js/bp-ib-ui.js?v=5"></script>
 <script src="ho-chieu-voice.js"></script>
 <script src="ho-chieu-voice-2.js"></script>
 <script src="js/bp-signature.js"></script>
