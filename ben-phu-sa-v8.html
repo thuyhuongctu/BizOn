@@ -33,10 +33,12 @@
   .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease; }
   .clay-btn:active { transform:translateY(2px); }
   .glass-nav { background:rgba(3,51,55,.78); backdrop-filter:blur(14px); }
-  .ft-opt { border:2px solid rgba(0,102,135,.16); border-radius:16px; padding:10px 8px; text-align:center; cursor:pointer; font-weight:700; font-size:12px; transition:all .12s; background:transparent; color:inherit; width:100%; }
+  .ft-opt { position:relative; border:2px solid rgba(0,102,135,.16); border-radius:16px; padding:10px 8px; text-align:center; cursor:pointer; font-weight:700; font-size:12px; transition:all .12s; background:transparent; color:inherit; width:100%; }
   .ft-opt .big { font-size:22px; display:block; }
   .ft-opt.sel { border-color:#006687; background:rgba(0,102,135,.08); box-shadow:0 4px 12px -4px rgba(0,102,135,.35); }
   .ft-opt:disabled { opacity:.45; cursor:not-allowed; }
+  .ft-known-badge { position:absolute; top:-6px; right:-6px; width:18px; height:18px; border-radius:50%; background:#006687; color:#fff; font-size:11px; font-weight:800; display:grid; place-items:center; box-shadow:0 0 0 2px #fff6ea; }
+  html[data-theme="dark"] .ft-known-badge { background:#5cc4e6; color:#033337; box-shadow:0 0 0 2px #0e2a33; }
   .ft-ava { border:2px solid rgba(0,102,135,.16); border-radius:16px; padding:5px 4px 7px; cursor:pointer; background:transparent; color:inherit; width:100%; font-weight:700; font-size:10px; line-height:1.25; transition:all .12s; }
   .ft-ava img { width:100%; aspect-ratio:1/1; object-fit:cover; object-position:top; border-radius:12px; background:rgba(0,102,135,.07); }
   .ft-ava.sel { border-color:#006687; background:rgba(0,102,135,.08); box-shadow:0 4px 12px -4px rgba(0,102,135,.35); }
@@ -301,6 +303,7 @@ document.addEventListener('DOMContentLoaded',function(){var m=document.getElemen
   <section id="ft-play" class="hidden">
     <div id="bps3d-wrap" class="mb-4" style="position:relative;border-radius:28px;overflow:hidden;box-shadow:0 8px 0 rgba(3,51,55,.12),0 18px 40px rgba(3,51,55,.18)">
       <div id="bps3d" style="position:relative;width:100%;height:clamp(340px,58vh,640px);background:#bfe6f5"><div id="bps3d-labels" style="position:absolute;inset:0;pointer-events:none"></div></div>
+      <div id="bps3d-row" style="position:absolute;inset:0;display:none;z-index:1;background:#cfeaf2"></div>
       <div style="position:absolute;left:14px;right:150px;top:12px;display:flex;gap:8px;flex-wrap:wrap;align-items:flex-start;pointer-events:none">
         <span id="bps3d-tod" class="bps3d-chip">Tuần 1</span>
         <span id="bps3d-dots" class="bps3d-chip" style="letter-spacing:3px">○○○○○</span>
@@ -313,6 +316,7 @@ document.addEventListener('DOMContentLoaded',function(){var m=document.getElemen
       <div style="position:absolute;left:14px;bottom:48px;display:flex;gap:6px;pointer-events:auto;z-index:2">
         <button type="button" id="bps3d-mode-game" class="bps3d-chip bps3d-mode-on" style="cursor:pointer;border:0" data-en="🎮 Business">🎮 Kinh doanh</button>
         <button type="button" id="bps3d-mode-explore" class="bps3d-chip" style="cursor:pointer;border:0" data-en="🚶 Explore Phù Sa">🚶 Khám phá chợ nổi</button>
+        <button type="button" id="bps3d-mode-row" class="bps3d-chip" style="cursor:pointer;border:0" data-en="🚣 Row & meet locals">🚣 Chèo ghe gặp người</button>
       </div>
       <span id="bps3d-checklist" class="bps3d-chip" style="position:absolute;right:12px;bottom:48px;display:none">🎯 0/8</span>
       <p id="bps3d-hint" class="bps3d-chip" style="position:absolute;left:50%;bottom:12px;transform:translateX(-50%);margin:0;pointer-events:none" data-en="Drag to rotate · pinch or scroll to zoom · tap a spot to choose">Kéo để xoay · chụm hoặc cuộn để phóng to · bấm vào một điểm để chọn</p>
@@ -759,9 +763,24 @@ document.addEventListener('DOMContentLoaded',function(){var m=document.getElemen
     $('ft-methods').innerHTML = METHODS.map(function (m, i) {
       return optBtn('m', i, '<span class="big">' + m.icon + '</span><span>' + mdName(i) + '</span><br><span style="font-size:10px;opacity:.6">' + mdSub(i) + '</span>');
     }).join('');
-    $('ft-menus').innerHTML = MENUS.map(function (m, i) { return optBtn('menu', i, '<span class="big">' + m[0] + '</span><span>' + mName(i) + '</span><br><span style="font-size:9px;opacity:.6">' + mSub(i) + '</span>'); }).join('');
-    $('ft-locs').innerHTML = LOCS.map(function (l, i) { return optBtn('loc', i, '<span class="big">' + l[0] + '</span><span>' + lName(i) + '</span><br><span style="font-size:9px;opacity:.6">' + lSub(i) + '</span>'); }).join('');
+    renderMenuLoc();
     renderScores();
+  }
+
+  // Huy hiệu "✓ đã biết" lấy ý tưởng từ bảng Evidence Matrix: món/địa điểm
+  // đã có dữ liệu (từng bán qua hoặc dùng Thám tử chợ) cho CẶP đang chọn dở
+  // (hoặc bất kỳ cặp nào nếu chưa chọn vế kia) thì có dấu tích góc nút – không
+  // đổi cơ chế chọn địa điểm chính (bấm trên bản đồ 3D), chỉ thêm gợi ý.
+  function knownBadge(kind, idx) {
+    var known = kind === 'menu'
+      ? (S.sel.loc !== null ? S.knownPairs[idx + '-' + S.sel.loc] : LOCS.some(function (_, l) { return S.knownPairs[idx + '-' + l]; }))
+      : (S.sel.menu !== null ? S.knownPairs[S.sel.menu + '-' + idx] : MENUS.some(function (_, m) { return S.knownPairs[m + '-' + idx]; }));
+    return known ? '<span class="ft-known-badge" title="' + T('Đã biết nhu cầu', 'Demand already known') + '">✓</span>' : '';
+  }
+
+  function renderMenuLoc() {
+    $('ft-menus').innerHTML = MENUS.map(function (m, i) { return optBtn('menu', i, knownBadge('menu', i) + '<span class="big">' + m[0] + '</span><span>' + mName(i) + '</span><br><span style="font-size:9px;opacity:.6">' + mSub(i) + '</span>'); }).join('');
+    $('ft-locs').innerHTML = LOCS.map(function (l, i) { return optBtn('loc', i, knownBadge('loc', i) + '<span class="big">' + l[0] + '</span><span>' + lName(i) + '</span><br><span style="font-size:9px;opacity:.6">' + lSub(i) + '</span>'); }).join('');
   }
 
   function render() {
@@ -815,6 +834,7 @@ document.addEventListener('DOMContentLoaded',function(){var m=document.getElemen
   }
 
   function syncSel() {
+    renderMenuLoc(); // vẽ lại để cập nhật huy hiệu "✓ đã biết" theo lựa chọn mới nhất
     document.querySelectorAll('.ft-opt').forEach(function (b) {
       b.classList.toggle('sel', S.sel[b.dataset.g] === Number(b.dataset.i));
     });
@@ -1351,6 +1371,59 @@ body.bps-net-on .vutru-goc{display:none}
 <script src="js/bps-cast.js"></script>
 <script src="js/bps-exam.js"></script>
 <script type="module" src="js/bps3d-v3.js"></script>
+<script>
+// Chế độ phụ "🚣 Chèo ghe gặp người": chèo tự do quanh bến, lại gần NPC để nói
+// chuyện. Dựng cảnh riêng (js/bps3d-npc.js), không đụng tới bps3d-v3.js hay
+// cơ chế chọn địa điểm chính – chỉ là một lớp overlay bật/tắt được.
+(function () {
+  var btn = document.getElementById('bps3d-mode-row');
+  var gameBtn = document.getElementById('bps3d-mode-game'), exploreBtn = document.getElementById('bps3d-mode-explore');
+  if (!btn || !gameBtn || !exploreBtn) return;
+  var box = document.getElementById('bps3d-row');
+  var ctl = null, modP = null, paused = false, mod = null;
+  function en() { return localStorage.getItem('bizon-lang') === 'en'; }
+  function npcList() {
+    if (!modP) return [];
+    return [
+      { id: 'lumina', img: 'assets/character/phu-sa/lumina-v2.png', x3: modP[1][0], z3: modP[1][1], h3: 3.6, tag: 'Lumina', tagBg: '#006687', tagFg: '#fff' },
+      { id: 'tu', img: 'assets/character/phu-sa/tu-phan-v2.png', x3: modP[5][0], z3: modP[5][1], h3: 3.6, tag: en() ? 'Mr. Tú' : 'Thầy Tú', tagBg: '#fda127', tagFg: '#033337' },
+    ];
+  }
+  var DIALOGUE = {
+    lumina: { vi: ['Lumina', 'Mỗi tuần quan sát kỹ một khu trước khi chốt Ghe hàng bông nhé – đi mù dễ lỗ phí ghe lắm!'], en: ['Lumina', 'Scout a spot well before committing the trading boat each week – going in blind often eats the boat fee.'] },
+    tu: { vi: ['Thầy Tú', 'Chè bưởi ngon nhưng mau hư – nhớ bán sớm hoặc mua Bảo hiểm hao hụt.'], en: ['Mr. Tú', 'Chè bưởi is tasty but spoils fast – sell it early or grab Spoilage Insurance.'] },
+  };
+  function curInit() { return { npcs: npcList(), onTalk: onTalk, onClose: onClose, models3d: true, paused: paused }; }
+  function onTalk(id) {
+    var d = DIALOGUE[id]; if (!d) return;
+    document.getElementById('bps3d-info-t').textContent = en() ? d.en[0] : d.vi[0];
+    document.getElementById('bps3d-info-d').textContent = en() ? d.en[1] : d.vi[1];
+    document.getElementById('bps3d-info').style.display = 'grid';
+    paused = true; if (ctl) ctl.update(curInit());
+  }
+  function onClose() {
+    document.getElementById('bps3d-info').style.display = 'none';
+    paused = false; if (ctl) ctl.update(curInit());
+  }
+  var infoClose = document.getElementById('bps3d-info-close');
+  if (infoClose) infoClose.addEventListener('click', onClose);
+  function hideRow() { btn.classList.remove('bps3d-mode-on'); box.style.display = 'none'; }
+  gameBtn.addEventListener('click', hideRow);
+  exploreBtn.addEventListener('click', hideRow);
+  btn.onclick = async function () {
+    gameBtn.classList.remove('bps3d-mode-on'); exploreBtn.classList.remove('bps3d-mode-on');
+    btn.classList.add('bps3d-mode-on'); box.style.display = 'block';
+    if (!ctl) {
+      mod = mod || await import('./js/bps3d-npc.js');
+      modP = mod.P;
+      ctl = await mod.mount(box, curInit());
+    } else {
+      ctl.update(curInit());
+    }
+  };
+  new MutationObserver(function () { if (ctl) ctl.update(curInit()); }).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+})();
+</script>
 <script>
 (function(){
   var play=document.getElementById('ft-play'), wrap=document.getElementById('bps3d-wrap');
