@@ -22,6 +22,7 @@
 </script>
 <script src="js/backend-config.js"></script>
 <script src="js/error-log.js"></script>
+<script src="js/student-login.js"></script>
 <!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
      nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
 <link rel="stylesheet" href="css/bizon-fonts-v8.css">
@@ -409,6 +410,7 @@ document.addEventListener('DOMContentLoaded',function(){var m=document.getElemen
       </div>
       <div class="mt-5 text-left hidden" id="ft-submit-box">
         <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mb-1.5" data-en="📡 Submit your result to the instructor (optional)">📡 Nộp kết quả cho giảng viên (tùy chọn)</p>
+        <div id="ft-student-login"></div>
         <div class="flex flex-col sm:flex-row gap-2">
           <input id="ft-class" placeholder="Mã lớp (VD: QTKD-2026-A)" data-en-ph="Class code (e.g. QTKD-2026-A)" class="flex-1 border-2 rounded-xl px-3 py-2.5 text-sm font-semibold" style="border-color:rgba(0,102,135,.25);background:transparent;color:inherit">
           <input id="ft-name" placeholder="Tên của bạn" data-en-ph="Your name" class="flex-1 border-2 rounded-xl px-3 py-2.5 text-sm font-semibold" style="border-color:rgba(0,102,135,.25);background:transparent;color:inherit">
@@ -1165,8 +1167,16 @@ document.addEventListener('DOMContentLoaded',function(){var m=document.getElemen
       $('ft-class').value = localStorage.getItem('bizon-ft-class') || localStorage.getItem('bizon-class') || '';
       $('ft-name').value = localStorage.getItem('bizon-ft-name') || '';
     } catch (e) {}
+    if (window.StudentLogin && $('ft-student-login')) {
+      window.StudentLogin.mount($('ft-student-login'), { onChange: function (session) {
+        if (session && !$('ft-name').value.trim()) $('ft-name').value = session.email;
+      } });
+    }
   }
 
+  // Đăng nhập thật (StudentLogin) → nộp qua RPC bizon_submit_ft_result (xác
+  // thực, gắn student_id/email server-side). Không đăng nhập → đường anon
+  // INSERT cũ, không đổi gì (xem supabase/migrations/20261006020000).
   window.ftSubmit = async function () {
     var klass = $('ft-class').value.trim(), name = $('ft-name').value.trim();
     var msg = $('ft-send-msg'), btn = $('ft-send');
@@ -1175,24 +1185,35 @@ document.addEventListener('DOMContentLoaded',function(){var m=document.getElemen
     try { localStorage.setItem('bizon-ft-class', klass); localStorage.setItem('bizon-ft-name', name); } catch (e) {}
     btn.disabled = true; btn.style.opacity = 0.5;
     msg.textContent = T('Đang gửi…', 'Sending…');
+    var detail = { exam: !!(window.BizOnBpsExam && window.BizOnBpsExam.exam && window.BizOnBpsExam.exam.active), captain: TEAM()[S.cap].name, rivals: RIVALS.map(function (r) { return { name: r.name, total: Math.round(r.total * 10) / 10 }; }) };
+    var session = window.StudentLogin && window.StudentLogin.getSession();
     try {
-      var c = bcfg();
-      var res = await fetch(c.url.replace(/\/$/, '') + '/rest/v1/ft_results', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', apikey: c.anonKey, Authorization: 'Bearer ' + c.anonKey, Prefer: 'return=minimal' },
-        body: JSON.stringify({
-          class_code: klass,
-          player_name: name || null,
-          team_name: tmName(S.team) + ' – ' + TEAM()[S.cap].name,
-          total_revenue: Math.round(S.total * 10) / 10,
-          efficiency: S.result.eff,
-          final_rank: S.result.rank,
-          detail_json: { exam: !!(window.BizOnBpsExam && window.BizOnBpsExam.exam && window.BizOnBpsExam.exam.active), captain: TEAM()[S.cap].name, rivals: RIVALS.map(function (r) { return { name: r.name, total: Math.round(r.total * 10) / 10 }; }) },
-          app_version: 'bizon-bps3d-v1',
-          client_ts: new Date().toISOString(),
-        }),
-      });
-      if (!res.ok) throw new Error('HTTP ' + res.status);
+      if (session) {
+        await window.StudentLogin.rpc('bizon_submit_ft_result', {
+          p_class_code: klass, p_player_name: name || null,
+          p_team_name: tmName(S.team) + ' – ' + TEAM()[S.cap].name,
+          p_total_revenue: Math.round(S.total * 10) / 10, p_efficiency: S.result.eff, p_final_rank: S.result.rank,
+          p_detail_json: detail, p_app_version: 'bizon-bps3d-v1',
+        });
+      } else {
+        var c = bcfg();
+        var res = await fetch(c.url.replace(/\/$/, '') + '/rest/v1/ft_results', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', apikey: c.anonKey, Authorization: 'Bearer ' + c.anonKey, Prefer: 'return=minimal' },
+          body: JSON.stringify({
+            class_code: klass,
+            player_name: name || null,
+            team_name: tmName(S.team) + ' – ' + TEAM()[S.cap].name,
+            total_revenue: Math.round(S.total * 10) / 10,
+            efficiency: S.result.eff,
+            final_rank: S.result.rank,
+            detail_json: detail,
+            app_version: 'bizon-bps3d-v1',
+            client_ts: new Date().toISOString(),
+          }),
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+      }
       msg.textContent = T('✅ Đã nộp! Kết quả đã hiện trên bảng của giảng viên.', "✅ Submitted! Your result now shows on the instructor's dashboard.");
     } catch (e) {
       btn.disabled = false; btn.style.opacity = 1;

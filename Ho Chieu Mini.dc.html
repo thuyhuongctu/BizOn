@@ -9,6 +9,7 @@
 <x-dc>
 <helmet>
 <script src="./js/backend-config.js"></script>
+<script src="./js/student-login.js"></script>
 <script src="./js/fdi-mini/data.js"></script>
 <script src="./js/fdi-mini/engine.js"></script>
 <script src="./js/official-cert.js"></script>
@@ -100,6 +101,7 @@ button{font:inherit}
           <span style="font-size:11.5px;color:#e8762d">⚠️ {{ t.clsWarn }}</span>
         </sc-if>
       </label>
+      <div id="hcmini-login"></div>
       <button type="button" onClick="{{ start }}" style="padding:14px;border:0;border-radius:12px;background:#fda127;color:#033337;font:800 16px 'Plus Jakarta Sans';cursor:pointer">{{ t.start }} →</button>
       <sc-if value="{{ canResume }}" hint-placeholder-val="{{ false }}">
         <button type="button" onClick="{{ resume }}" style="padding:10px;border:1.5px solid #006687;border-radius:12px;background:#fff;color:#006687;font-weight:800;cursor:pointer">↺ {{ t.resume }}</button>
@@ -429,21 +431,52 @@ class Component extends DCLogic {
     if (!this.state.ready) poll();
     try { const s = JSON.parse(localStorage.getItem(this.key()) || 'null'); if (s) this.setState({ saved: s, lang: s.lang || null, team: s.team || '', cls: s.cls || '', home: s.home || 'vn' }); } catch (e) {}
     this.iv = setInterval(() => { if (this.state.view === 'play' && this.cfg().mins) this.setState({ now: Date.now() }); }, 1000);
+    // Gắn widget "Đăng nhập bằng email trường" (js/student-login.js) vào ô
+    // #hcmini-login trong màn hình intro — khung dò lại định kỳ vì engine
+    // template có thể tạo lại node này mỗi lần render; dataset.saMounted
+    // đánh dấu đã gắn để không gắn lại đè lên lúc người dùng đang gõ.
+    this.loginIv = setInterval(() => {
+      const el = document.getElementById('hcmini-login');
+      if (el && window.StudentLogin && !el.dataset.saMounted) {
+        el.dataset.saMounted = '1';
+        window.StudentLogin.mount(el, {});
+      }
+    }, 400);
   }
-  componentWillUnmount() { clearInterval(this.iv); }
+  componentWillUnmount() { clearInterval(this.iv); clearInterval(this.loginIv); }
   be() { const b = window.BIZON_BACKEND; return b && b.enabled && b.url && b.anonKey ? b : null; }
   hdr(b) { return { apikey: b.anonKey, Authorization: 'Bearer ' + b.anonKey, 'Content-Type': 'application/json' }; }
+  // Đăng nhập thật (StudentLogin) → nộp qua RPC bizon_submit_bp_result (xác
+  // thực, gắn student_id/email server-side). Không đăng nhập → đường anon
+  // INSERT cũ (xem supabase/migrations/20261006020000). Lưu ý: bỏ trường
+  // "markets" khỏi row trước đây gửi lên — bp_results không có cột đó, nên
+  // mọi lần nộp trước migration này thực ra luôn bị PostgREST từ chối
+  // (PGRST204) và rơi vào nhánh 'fail' một cách im lặng; sửa luôn ở đây.
   submit(g) {
     const b = this.be(), E = window.FDIMini;
     if (!b || !/^[A-Za-z0-9_-]{3,40}$/.test(g.cls || '')) { this.setState({ sub: g.cls ? 'bad' : 'none' }); return; }
     if (g.submitted) { this.setState({ sub: 'ok' }); this.loadBoard(g); return; }
-    const c = this.cfg(), row = { class_code: g.cls, player_name: (g.team || '').slice(0, 60), company: 'HC Mini ' + c.ed, total_score: Math.round(E.score10(g) * 10),
-      profit: Math.round((E.value(g) - g.start) * 10) / 10, quarters: g.Q, markets: Object.keys(g.pos).length, title: E.profile(g), app_version: 'hcmini-1', client_ts: new Date().toISOString(),
-      detail_json: { edition: c.ed === 'indo' ? 'indo' : 'mini', home: g.home, code: E.code(g), value: E.value(g), pos: Object.keys(g.pos).map(k => ({ m: k, mode: g.pos[k].mode, since: g.pos[k].since })), log: g.log.map(q => ({ q: q.q, ev: q.ev, dec: q.dec, value: q.value })) } };
+    const c = this.cfg();
+    const playerName = (g.team || '').slice(0, 60), company = 'HC Mini ' + c.ed,
+      totalScore = Math.round(E.score10(g) * 10), profit = Math.round((E.value(g) - g.start) * 10) / 10,
+      title = E.profile(g), quarters = g.Q,
+      detail = { edition: c.ed === 'indo' ? 'indo' : 'mini', home: g.home, code: E.code(g), value: E.value(g), pos: Object.keys(g.pos).map(k => ({ m: k, mode: g.pos[k].mode, since: g.pos[k].since })), log: g.log.map(q => ({ q: q.q, ev: q.ev, dec: q.dec, value: q.value })) };
     this.setState({ sub: 'sending' });
-    fetch(b.url + '/rest/v1/bp_results', { method: 'POST', headers: Object.assign(this.hdr(b), { Prefer: 'return=minimal' }), body: JSON.stringify(row) })
-      .then(r => { if (!r.ok) throw new Error(r.status); g.submitted = true; this.save(); this.setState({ sub: 'ok' }); this.loadBoard(g); })
-      .catch(() => this.setState({ sub: 'fail' }));
+    const session = window.StudentLogin && window.StudentLogin.getSession();
+    const done = () => { g.submitted = true; this.save(); this.setState({ sub: 'ok' }); this.loadBoard(g); };
+    const fail = () => this.setState({ sub: 'fail' });
+    if (session) {
+      window.StudentLogin.rpc('bizon_submit_bp_result', {
+        p_class_code: g.cls, p_player_name: playerName, p_company: company, p_total_score: totalScore,
+        p_profit: profit, p_rep: null, p_capab: null, p_adapt: null, p_sust: null,
+        p_title: title, p_quarters: quarters, p_detail_json: detail, p_app_version: 'hcmini-1',
+      }).then(done).catch(fail);
+    } else {
+      const row = { class_code: g.cls, player_name: playerName, company, total_score: totalScore, profit, quarters, title, app_version: 'hcmini-1', client_ts: new Date().toISOString(), detail_json: detail };
+      fetch(b.url + '/rest/v1/bp_results', { method: 'POST', headers: Object.assign(this.hdr(b), { Prefer: 'return=minimal' }), body: JSON.stringify(row) })
+        .then(r => { if (!r.ok) throw new Error(r.status); done(); })
+        .catch(fail);
+    }
   }
   loadBoard(g) {
     const b = this.be(); if (!b || !g.cls) return;
