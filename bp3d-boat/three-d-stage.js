@@ -319,7 +319,7 @@
         this._ground.position.y = box.min.y;
         const sphere = box.getBoundingSphere(new THREE.Sphere());
         const dist =
-          (sphere.radius / Math.tan((this._camera.fov * Math.PI) / 360)) * 0.85;
+          (sphere.radius / Math.tan((this._camera.fov * Math.PI) / 360)) * 1.35;
         const dir = new THREE.Vector3(1, 0.55, 1.25).normalize();
         this._camera.position
           .copy(sphere.center)
