@@ -185,8 +185,22 @@ export function mount(el, init) {
   // hiệu ứng cập bến: vòng sóng lan + tiếng chuông gỗ nhẹ (WebAudio, không cần file)
   const WAKE = []; for (let k = 0; k < 6; k++) { const r = M(new THREE.TorusGeometry(1, 0.08, 6, 28), new THREE.MeshBasicMaterial({ color: 0xe8f7fa, transparent: true, opacity: 0 }), 0, 0.3, 0); r.rotation.x = -Math.PI / 2; r.castShadow = false; r.userData.t = 9; WAKE.push(r); }
   let wakeAcc = 0; const ripple = (x, z, big) => { const r = WAKE.find(w => w.userData.t >= 1) || WAKE[0]; r.position.set(x, 0.3, z); r.userData.t = 0; r.userData.big = big ? 2.4 : 1; };
-  let AC = null; const chime = () => { try { AC = AC || new (window.AudioContext || window.webkitAudioContext)(); if (AC.state === 'suspended') AC.resume(); const t0 = AC.currentTime;
+  let muted = localStorage.getItem('bps3d-npc-muted') === '1';
+  let AC = null; const chime = () => { if (muted) return; try { AC = AC || new (window.AudioContext || window.webkitAudioContext)(); if (AC.state === 'suspended') AC.resume(); const t0 = AC.currentTime;
     [[523, 0], [659, 0.09], [784, 0.18]].forEach(([f, d]) => { const o = AC.createOscillator(), g = AC.createGain(); o.type = 'sine'; o.frequency.value = f; g.gain.setValueAtTime(0, t0 + d); g.gain.linearRampToValueAtTime(0.12, t0 + d + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t0 + d + 0.5); o.connect(g).connect(AC.destination); o.start(t0 + d); o.stop(t0 + d + 0.55); }); } catch (e) {} };
+
+  // thanh gợi ý điều khiển + nút tắt chuông cập bến / toàn màn hình, góc trên-trái
+  const EN = () => localStorage.getItem('bizon-lang') === 'en';
+  const ctlBar = document.createElement('div'); Object.assign(ctlBar.style, { position: 'absolute', left: '10px', top: '10px', zIndex: 4, display: 'flex', alignItems: 'center', gap: '6px' });
+  const pill = (txt, title) => { const b = document.createElement('button'); b.type = 'button'; if (title) b.title = title;
+    Object.assign(b.style, { border: 0, background: 'rgba(3,51,55,.85)', color: '#fff', fontSize: '12px', height: '26px', padding: '0 10px', borderRadius: '999px', cursor: 'pointer' }); b.textContent = txt; return b; };
+  const muteBtn = pill(muted ? '🔇' : '🔊', EN() ? 'Mute dock-arrival chime' : 'Tắt chuông cập bến');
+  muteBtn.onclick = () => { muted = !muted; localStorage.setItem('bps3d-npc-muted', muted ? '1' : '0'); muteBtn.textContent = muted ? '🔇' : '🔊'; };
+  const fullBtn = pill('⛶', EN() ? 'Fullscreen' : 'Toàn màn hình');
+  fullBtn.onclick = () => { try { if (document.fullscreenElement) document.exitFullscreen(); else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen(); } catch (e) {} };
+  const hintSpan = document.createElement('span'); Object.assign(hintSpan.style, { pointerEvents: 'none', background: 'rgba(3,51,55,.85)', color: '#fff', fontSize: '11px', padding: '5px 10px', borderRadius: '999px', whiteSpace: 'nowrap' });
+  hintSpan.textContent = EN() ? 'WASD / joystick / tap the water · near an NPC press E' : 'WASD / joystick / bấm nước · gần NPC bấm E';
+  ctlBar.append(muteBtn, fullBtn, hintSpan); el.appendChild(ctlBar);
   let lastNear = null;
   let last = performance.now(), raf, first = true;
   function loop(now) { const dt = Math.min(0.05, (now - last) / 1000); last = now;
