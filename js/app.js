@@ -1203,6 +1203,11 @@ function renderHeader() {
  * về lớp và không cấp giấy chứng nhận. */
 function isTrial() { return !((S.profile && S.profile.classId) || '').trim(); }
 
+/* Phiên "thi thật" = có Mã lớp thật (không tính 'DEMO-2026' mà doLoginDemo()
+ * tự gán cho Đội Demo chơi thử) – dùng để chặn Reset, vì kết quả mỗi vòng
+ * đã gửi về giảng viên và việc reset cục bộ không xóa được dữ liệu đó. */
+function isRealExam() { return !isTrial() && S.profile.classId !== 'DEMO-2026'; }
+
 function renderDashboard() {
   const ev = currentEvent(S);
   $('dash-round').textContent = Math.min(S.round, ROUNDS_TOTAL);
@@ -3165,7 +3170,13 @@ function renderProfile() {
 }
 
 function resetGame() {
-  if (!confirm(T('Xóa toàn bộ tiến trình và chơi lại từ đầu?', 'Erase all progress and start over?'))) return;
+  if (isRealExam()) {
+    alert(T('Không thể Reset trong phiên thi có mã lớp – kết quả mỗi vòng đã được gửi về cho giảng viên và không thể xóa cục bộ. Nếu gặp lỗi kỹ thuật thật sự (màn hình kẹt, không bấm được), hãy liên hệ giảng viên thay vì Reset.',
+      'Reset is not available in a graded class session – each round\'s result is already sent to your instructor and cannot be erased locally. If you hit a real technical issue (the screen is stuck, nothing responds), contact your instructor instead of resetting.'));
+    return;
+  }
+  if (!confirm(T('Chỉ Reset khi vòng chơi thật sự gặp lỗi (giao diện kẹt, dữ liệu hiển thị sai…) – đừng Reset chỉ vì không hài lòng với kết quả, vì toàn bộ tiến trình sẽ mất và không lấy lại được.\n\nXóa toàn bộ tiến trình và chơi lại từ đầu?',
+    'Only reset when the round has a real problem (the UI is stuck, data looks wrong…) – don\'t reset just because you\'re unhappy with the outcome, since all progress will be lost and cannot be recovered.\n\nErase all progress and start over?'))) return;
   localStorage.removeItem(STORAGE_KEY);
   location.reload();
 }
