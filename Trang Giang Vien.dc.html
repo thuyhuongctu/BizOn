@@ -379,6 +379,46 @@ input,select,textarea,button{font-family:inherit}
           </div>
         </section>
       </sc-if>
+      <sc-if value="{{ tabActivity }}" hint-placeholder-val="{{ false }}">
+        <section style="display:flex;flex-direction:column;gap:14px">
+          <div style="font-size:13px;color:#5a6b74;text-wrap:pretty">Ma trận tham gia theo đội/vai từ Nhật ký thành viên (đề xuất, biên bản, Nếu–Thì, hỏi Lumina, chốt vòng) — <b>bằng chứng số để bạn tham khảo, không phải điểm chấm</b> (khác B5 ở tab «Chấm điểm»). «Chỉ số đồng đội» = 100 trừ chênh lệch điểm tham gia cao nhất–thấp nhất trong đội.</div>
+          <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;padding:16px;display:flex;flex-direction:column;gap:10px">
+            <div style="font:800 17px 'Baloo 2',sans-serif">🏷️ Nhãn 4 mức rubric (tự đặt tên, áp dụng toàn lớp)</div>
+            <div style="font-size:12px;color:#5a6b74">Mức 1 = chỉ số đồng đội ≥ 85 · Mức 2 = 65–84 · Mức 3 = 45–64 · Mức 4 = dưới 45.</div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px">
+              <input value="{{ rLv1 }}" onChange="{{ onRLv1 }}" placeholder="Rất cân bằng" style="padding:9px 12px;border-radius:12px;border:2px solid #e6d6bf"></input>
+              <input value="{{ rLv2 }}" onChange="{{ onRLv2 }}" placeholder="Khá cân bằng" style="padding:9px 12px;border-radius:12px;border:2px solid #e6d6bf"></input>
+              <input value="{{ rLv3 }}" onChange="{{ onRLv3 }}" placeholder="Lệch rõ" style="padding:9px 12px;border-radius:12px;border:2px solid #e6d6bf"></input>
+              <input value="{{ rLv4 }}" onChange="{{ onRLv4 }}" placeholder="Lệch nhiều" style="padding:9px 12px;border-radius:12px;border:2px solid #e6d6bf"></input>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <button onClick="{{ saveRubric }}" style="border:0;background:#1f4a55;color:#fff;border-radius:14px;padding:9px 16px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #10303a;cursor:pointer">💾 Lưu nhãn</button>
+              <sc-if value="{{ rubricSaved }}" hint-placeholder-val="{{ false }}"><span style="color:#1f9a63;font-weight:800;font-size:13px">✅ Đã lưu</span></sc-if>
+            </div>
+          </div>
+          <sc-if value="{{ noActivity }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#5a6b74;padding:16px">Chưa có dữ liệu Nhật ký thành viên cho lớp này.</div></sc-if>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px">
+            <sc-for list="{{ activityTeams }}" as="at" hint-placeholder-count="2">
+              <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;padding:16px;display:flex;flex-direction:column;gap:8px">
+                <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px">
+                  <span style="font:800 18px 'Baloo 2',sans-serif;color:#1f4a55">{{ at.name }}</span>
+                  <span style="font:800 15px 'Baloo 2',sans-serif;color:#2f8a8c">{{ at.balance }}/100</span>
+                </div>
+                <div style="font-size:12px;font-weight:700;color:#e8843a">{{ at.levelLabel }}</div>
+                <sc-for list="{{ at.members }}" as="m" hint-placeholder-count="4">
+                  <div style="border-top:1px dashed #e6d6bf;padding-top:8px">
+                    <div style="display:flex;justify-content:space-between;gap:8px">
+                      <span style="font-weight:700;font-size:13px">{{ m.name }} <span style="color:#1f6f8a">{{ m.role }}</span></span>
+                      <span style="font:800 14px 'Baloo 2',sans-serif;color:#1f4a55">{{ m.score }}đ</span>
+                    </div>
+                    <div style="font-size:11px;color:#5a6b74;margin-top:2px">{{ m.line }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+      </sc-if>
     </main>
   </sc-if>
 
@@ -416,7 +456,7 @@ function examPhase(ex, nowMs) {
 }
 function examMMSS(ms) { const s = Math.max(0, Math.round(ms / 1000)); return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); }
 class Component extends DCLogic {
-  state = { view: 'login', mode: 'in', err: '', fEmail: '', fPass: '', fNewPass: '', recoveryToken: '', fCode: '', classes: [], adminClasses: [], code: '', tab: 'teams', subs: [], st: {}, memberLog: [], bpResults: [], exam: null, examNow: null, exSetup: '', exRound: '', selTeam: '', fEvent: '', fMsg: '', gTeam: '*', gAmt: '', gReason: '', edits: {}, saved: {}, board: false, ready: false, certCode: '', certName: '', certDates: '', certSaved: false };
+  state = { view: 'login', mode: 'in', err: '', fEmail: '', fPass: '', fNewPass: '', recoveryToken: '', fCode: '', classes: [], adminClasses: [], code: '', tab: 'teams', subs: [], st: {}, memberLog: [], bpResults: [], exam: null, examNow: null, exSetup: '', exRound: '', selTeam: '', fEvent: '', fMsg: '', gTeam: '*', gAmt: '', gReason: '', edits: {}, saved: {}, board: false, ready: false, certCode: '', certName: '', certDates: '', certSaved: false, rubric: {}, rLv1: '', rLv2: '', rLv3: '', rLv4: '', rubricSaved: false };
   api() { return window.BizOnInstructor; }
   P() { return window.BizOnInstructorPage; }
   componentDidMount() {
@@ -436,13 +476,15 @@ class Component extends DCLogic {
   async removeClass(code) {
     if (!confirm('Xóa lớp ' + code + '? Lớp sẽ hết thuộc quyền quản lý — dữ liệu bài nộp cũ của sinh viên vẫn được giữ nguyên, có thể đăng ký lại mã này sau.')) return;
     try { await this.api().deleteClass(code); if (this.state.view === 'admin') this.loadAdmin(); else this.loadClasses(); } catch (e) { this.fail(e); } }
-  async openClass(code) { this.setState({ code, view: 'class', tab: 'teams', err: '', edits: {}, saved: {}, exSetup: '', exRound: '', certCode: '', certName: '', certDates: '', certSaved: false }); await this.reload(code); }
+  async openClass(code) { this.setState({ code, view: 'class', tab: 'teams', err: '', edits: {}, saved: {}, exSetup: '', exRound: '', certCode: '', certName: '', certDates: '', certSaved: false, rLv1: '', rLv2: '', rLv3: '', rLv4: '', rubricSaved: false }); await this.reload(code); }
   async reload(code = this.state.code) {
-    try { const [subs, st, memberLog, bpResults, ef, cf] = await Promise.all([this.api().submissions(code), this.api().state(code), this.api().memberLog(code), this.api().bpResults(code), this.api().examFeed(code), this.api().certFeed(code)]);
-      const c = (st && st.controls) || {}, exam = (ef && ef.exam) || null, cert = cf || {};
+    try { const [subs, st, memberLog, bpResults, ef, cf, rf] = await Promise.all([this.api().submissions(code), this.api().state(code), this.api().memberLog(code), this.api().bpResults(code), this.api().examFeed(code), this.api().certFeed(code), this.api().rubricFeed(code)]);
+      const c = (st && st.controls) || {}, exam = (ef && ef.exam) || null, cert = cf || {}, rubric = rf || {};
       this.setState({ subs: subs || [], st: st || {}, memberLog: memberLog || [], bpResults: bpResults || [], fEvent: c.forced_event || '', fMsg: c.message || '',
         exam, examNow: (ef && ef.now) || null, exSetup: this.state.exSetup === '' ? String((exam && exam.setup_min) ?? 10) : this.state.exSetup, exRound: this.state.exRound === '' ? String((exam && exam.round_min) ?? 8) : this.state.exRound,
-        certCode: this.state.certCode === '' ? (cert.course_code || 'KT330H') : this.state.certCode, certName: this.state.certName === '' ? (cert.course_name || 'Entrepreneurship') : this.state.certName, certDates: this.state.certDates === '' ? (cert.course_dates || '') : this.state.certDates, err: '' });
+        certCode: this.state.certCode === '' ? (cert.course_code || 'KT330H') : this.state.certCode, certName: this.state.certName === '' ? (cert.course_name || 'Entrepreneurship') : this.state.certName, certDates: this.state.certDates === '' ? (cert.course_dates || '') : this.state.certDates,
+        rubric, rLv1: this.state.rLv1 === '' ? (rubric.level1 || 'Rất cân bằng') : this.state.rLv1, rLv2: this.state.rLv2 === '' ? (rubric.level2 || 'Khá cân bằng') : this.state.rLv2,
+        rLv3: this.state.rLv3 === '' ? (rubric.level3 || 'Lệch rõ') : this.state.rLv3, rLv4: this.state.rLv4 === '' ? (rubric.level4 || 'Lệch nhiều') : this.state.rLv4, err: '' });
     } catch (e) { this.fail(e); } }
   async login() {
     const { fEmail, fPass, mode } = this.state; if (!fEmail || !fPass) return this.fail('Nhập email và mật khẩu.');
@@ -463,6 +505,7 @@ class Component extends DCLogic {
   async startExam() { const s = this.state; try { await this.api().setExam(s.code, { active: true, start_at: new Date().toISOString(), setup_min: +s.exSetup || 10, round_min: +s.exRound || 8, capital: 500 }); this.reload(); } catch (e) { this.fail(e); } }
   async stopExam() { const s = this.state, ex = s.exam || {}; try { await this.api().setExam(s.code, { active: false, start_at: ex.start_at || null, setup_min: +s.exSetup || 10, round_min: +s.exRound || 8, capital: 500 }); this.reload(); } catch (e) { this.fail(e); } }
   async saveCertConfig() { const s = this.state; try { await this.api().setCertConfig(s.code, { course_code: s.certCode, course_name: s.certName, course_dates: s.certDates }); this.setState({ certSaved: true }); setTimeout(() => this.setState({ certSaved: false }), 2500); } catch (e) { this.fail(e); } }
+  async saveRubric() { const s = this.state; try { await this.api().setRubricConfig(s.code, { level1: s.rLv1, level2: s.rLv2, level3: s.rLv3, level4: s.rLv4 }); this.setState({ rubricSaved: true }); setTimeout(() => this.setState({ rubricSaved: false }), 2500); } catch (e) { this.fail(e); } }
   async doGrant() { const s = this.state, a = +s.gAmt; if (!a) return this.fail('Nhập số tiền (triệu ₫).'); try { await this.api().grant(s.code, s.gTeam, a, s.gReason); this.setState({ gAmt: '', gReason: '' }); this.reload(); } catch (e) { this.fail(e); } }
   async saveScore(g) { const s = this.state; try { await this.api().saveScore(s.code, g.name, g.reasoning === '' ? null : +g.reasoning, g.teamwork === '' ? null : +g.teamwork, g.note); this.setState({ saved: Object.assign({}, s.saved, { [g.name]: true }) }); this.reload(); } catch (e) { this.fail(e); } }
   curRound() { const T = this.P().teams(this.state.subs); return Math.min(6, Math.max(1, ...T.map(t => t.rs.length + 1), 1)); }
@@ -471,6 +514,7 @@ class Component extends DCLogic {
     const signedIn = !!(ok && A.signedIn), v = signedIn ? s.view : 'login', inClass = v === 'class', inAdmin = v === 'admin';
     const T = ok ? P.teams(s.subs) : [], G = ok ? P.grades(T, (s.st && s.st.scores) || [], s.edits, s.memberLog) : [], money = ok ? P.money : (x => x);
     const MB = ok ? P.members(T, s.memberLog) : [], BP = s.bpResults || [];
+    const AC = ok ? P.memberActivity(s.memberLog) : [];
     const MINI = BP.filter(r => /^HC Mini/.test(r.company || ''));
     const c = (s.st && s.st.controls) || {}, lock = c.locked_round;
     const ex = s.exam, ep = examPhase(ex, Date.now());
@@ -481,7 +525,7 @@ class Component extends DCLogic {
       : `✅ Đã hết giờ thi (bắt đầu lúc ${new Date(ex.start_at).toLocaleTimeString('vi-VN')})`;
     const examColor = !ep ? '#5a6b74' : ep.phase === 'end' ? '#3f8a44' : '#1f4a55';
     const examRunning = !!(ex && ex.active);
-    const tabDefs = [['teams', '👥 Đội & tiến độ'], ['decisions', '🧾 Quyết định'], ['controls', '🎛 Điều khiển lớp'], ['grading', '📝 Chấm điểm'], ['members', '👤 Thành viên']];
+    const tabDefs = [['teams', '👥 Đội & tiến độ'], ['decisions', '🧾 Quyết định'], ['controls', '🎛 Điều khiển lớp'], ['grading', '📝 Chấm điểm'], ['members', '👤 Thành viên'], ['activity', '📊 Sổ điểm']];
     const selTeam = s.selTeam || (T[0] && T[0].name) || '';
     const dec = ok ? P.decRows(T.find(t => t.name === selTeam)) : { head: [], cells: [] };
     const maxShare = Math.max(1, ...T.map(t => t.share));
@@ -505,7 +549,7 @@ class Component extends DCLogic {
       noClasses: !(s.classes || []).length, noAdminClasses: !(s.adminClasses || []).length,
       classes: (s.classes || []).map(x => ({ class_code: x.class_code, date: new Date(x.created_at).toLocaleDateString('vi-VN'), open: () => this.openClass(x.class_code), remove: e => { if (e && e.stopPropagation) e.stopPropagation(); this.removeClass(x.class_code); } })),
       adminClasses: (s.adminClasses || []).map(x => ({ class_code: x.class_code, date: new Date(x.created_at).toLocaleDateString('vi-VN'), ownerLine: '👤 ' + x.owner_email + ' · ' + x.team_count + ' đội · ' + x.submission_count + ' bài nộp', open: () => this.openClass(x.class_code), remove: e => { if (e && e.stopPropagation) e.stopPropagation(); this.removeClass(x.class_code); } })),
-      code: s.code, refresh: () => this.reload(), exportXls: () => P.xls(s.code, T, G, BP, MB), openBoard: () => this.setState({ board: true }), closeBoard: () => this.setState({ board: false }),
+      code: s.code, refresh: () => this.reload(), exportXls: () => P.xls(s.code, T, G, BP, MB, AC, s.rubric), openBoard: () => this.setState({ board: true }), closeBoard: () => this.setState({ board: false }),
       classStats: `${T.length} đội · ${s.subs.length} bài nộp · ${lock != null ? 'Đang khóa sau vòng ' + lock : 'Không khóa vòng'}${c.forced_event ? ' · Biến cố GV: ' + c.forced_event : ''}${examRunning ? ' · ' + examStatus : ''}`,
       examStatus, examColor, examRunning, examNotRunning: !examRunning,
       exSetup: s.exSetup, onExSetup: e => this.setState({ exSetup: e.target.value }), exRound: s.exRound, onExRound: e => this.setState({ exRound: e.target.value }),
@@ -515,7 +559,7 @@ class Component extends DCLogic {
       certDates: s.certDates, onCertDates: e => this.setState({ certDates: e.target.value }),
       saveCertConfig: () => this.saveCertConfig(), certSaved: s.certSaved,
       tabs: tabDefs.map(([k, l]) => ({ label: l, go: () => this.setState({ tab: k }), bg: s.tab === k ? '#2f8a8c' : '#fbf6ee', fg: s.tab === k ? '#fff' : '#1f4a55', border: s.tab === k ? '#23706f' : '#e6d6bf' })),
-      tabTeams: s.tab === 'teams', tabDecisions: s.tab === 'decisions', tabControls: s.tab === 'controls', tabGrading: s.tab === 'grading', tabMembers: s.tab === 'members', noTeams: !T.length,
+      tabTeams: s.tab === 'teams', tabDecisions: s.tab === 'decisions', tabControls: s.tab === 'controls', tabGrading: s.tab === 'grading', tabMembers: s.tab === 'members', tabActivity: s.tab === 'activity', noTeams: !T.length,
       teams: T.map(t => ({ name: t.name, share: t.share.toFixed(1) + '%', profit: money(t.profit), profitColor: t.profit >= 0 ? '#3f8a44' : '#c0443a', flags: '🚩 ' + t.flags + '/6',
         last: t.last ? new Date(t.last.created_at).toLocaleString('vi-VN') : '–',
         dots: [1, 2, 3, 4, 5, 6].map(n => { const r = t.rs.find(x => x.round_number === n), j = r ? (r.result_json || {}) : null;
@@ -542,6 +586,14 @@ class Component extends DCLogic {
         dots: m.dots.map((d, i) => ({ n: i + 1, bg: d === 2 ? '#3f8a44' : d === 1 ? '#e8a22d' : '#d9cbb4', tip: 'V' + (i + 1) + ': ' + (d === 2 ? 'đề xuất/biên bản được áp dụng' : d === 1 ? 'có tham gia' : 'chưa ghi nhận') })),
         p: m.p, a: m.a, whatif: m.whatif, b5: P.f1(m.b5) })),
       noMembers: !MB.length,
+      noActivity: !AC.length,
+      rLv1: s.rLv1, onRLv1: e => this.setState({ rLv1: e.target.value }), rLv2: s.rLv2, onRLv2: e => this.setState({ rLv2: e.target.value }),
+      rLv3: s.rLv3, onRLv3: e => this.setState({ rLv3: e.target.value }), rLv4: s.rLv4, onRLv4: e => this.setState({ rLv4: e.target.value }),
+      saveRubric: () => this.saveRubric(), rubricSaved: s.rubricSaved,
+      activityTeams: AC.map(t => { const lv = ok ? P.rubricLevel(t.balance, s.rubric) : { label: '' };
+        return { name: t.team, balance: t.balance, levelLabel: lv.label,
+          members: t.members.slice().sort((a, b) => b.score - a.score).map(m => ({ name: m.name, role: m.role, score: m.score,
+            line: `${m.proposals} đề xuất · ${m.minutes} biên bản · ${m.whatif} Nếu–Thì · ${m.lumina} hỏi Lumina · ${m.commits} chốt vòng` + (m.overdraftRounds ? ` · ⚠️ ${m.overdraftRounds} vòng thấu chi` : '') })) }; }),
       board: inClass && s.board,
       boardRows: T.slice().sort((a, b) => b.share - a.share || b.profit - a.profit).map((t, i) => ({ medal: ['🥇', '🥈', '🥉'][i] || String(i + 1), name: t.name, pct: (t.share / maxShare * 100).toFixed(0) + '%',
         val: t.share.toFixed(1) + '% · 🚩' + t.flags, bg: i === 0 ? 'rgba(243,154,51,.28)' : 'rgba(255,255,255,.08)' })),

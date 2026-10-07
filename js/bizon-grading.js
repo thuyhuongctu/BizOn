@@ -106,6 +106,39 @@
     .map(g => Object.assign(g, { autoNote: autoNote(g) }));
   }
 
+  /* ---------- Sổ điểm (Giai đoạn 2 Member Analytics): ma trận đội×vai ----------
+   * Dùng CHÍNH nhật ký thành viên (member_log, mọi kind kể cả lumina) để cho giảng viên
+   * xem "bằng chứng số" mức tham gia từng người theo đội — KHÔNG phải điểm chấm (khác B5 ở trên). */
+  function memberActivity(log) {
+    const byTeam = {}; (log || []).forEach(l => { (byTeam[l.team_name] = byTeam[l.team_name] || []).push(l); });
+    const RO = { CEO: 0, CFO: 1, CMO: 2, COO: 3, SEC: 4 };
+    return Object.keys(byTeam).sort().map(team => {
+      const byMember = {}, keyOf = r => r.role + '|' + (r.member_name || r.role);
+      byTeam[team].forEach(r => { const k = keyOf(r); if (!byMember[k]) byMember[k] = { role: r.role, name: r.member_name || r.role, proposals: 0, minutes: 0, whatif: 0, lumina: 0, commits: 0, overdraftRounds: 0 };
+        const m = byMember[k];
+        if (r.kind === 'proposal') m.proposals++;
+        else if (r.kind === 'minutes') m.minutes++;
+        else if (r.kind === 'whatif') m.whatif++;
+        else if (r.kind === 'lumina') m.lumina++;
+        else if (r.kind === 'commit') { m.commits++; if ((r.payload || {}).overdraft > 0) m.overdraftRounds++; } });
+      const members = Object.values(byMember).map(m => ({ ...m, actions: m.proposals + m.minutes + m.whatif + m.lumina + m.commits }));
+      const maxActions = Math.max(1, ...members.map(m => m.actions));
+      members.forEach(m => { m.score = Math.round(m.actions / maxActions * 100); });
+      const scores = members.map(m => m.score);
+      const balance = members.length ? Math.max(0, 100 - (Math.max(...scores) - Math.min(...scores))) : 100;
+      members.sort((a, b) => RO[a.role] - RO[b.role]);
+      return { team, members, balance };
+    });
+  }
+  // Nhãn diễn giải điểm cân bằng 0–100 theo 4 mức rubric giảng viên tự đặt (mặc định nếu chưa cấu hình).
+  function rubricLevel(balance, rubric) {
+    const R = rubric || {};
+    if (balance >= 85) return { label: R.level1 || 'Rất cân bằng', idx: 0 };
+    if (balance >= 65) return { label: R.level2 || 'Khá cân bằng', idx: 1 };
+    if (balance >= 45) return { label: R.level3 || 'Lệch rõ', idx: 2 };
+    return { label: R.level4 || 'Lệch nhiều', idx: 3 };
+  }
+
   /* ---------- Hộ Chiếu: A1–A4 /10 ----------
    * Lựa chọn «Vững» theo bảng 2.3. Mảng = chỉ số lựa chọn được tính; hàm = có điều kiện (ảnh chụp chỉ số lúc chọn). */
   const SOLID = {
@@ -151,7 +184,7 @@
     });
     return { head, cells };
   }
-  function xls(code, T, G, BP, MB) {
+  function xls(code, T, G, BP, MB, AC, rubric) {
     const esc = v => String(v == null ? '' : v).replace(/&/g, '&amp;').replace(/</g, '&lt;');
     const row = c => '<Row>' + c.map(x => `<Cell><Data ss:Type="${typeof x === 'number' && isFinite(x) ? 'Number' : 'String'}">${esc(x)}</Data></Cell>`).join('') + '</Row>';
     const sheet = (n, rows) => `<Worksheet ss:Name="${esc(n)}"><Table>${rows.join('')}</Table></Worksheet>`;
@@ -172,9 +205,12 @@
     const s5 = [row(['Sinh viên', 'Quốc gia xuất phát', 'Số thị trường đầu tư', 'Hồ sơ nhà đầu tư', 'Điểm /10', 'Điểm chữ', 'Thang 4', 'Tích lũy', 'Nộp lúc'])]
       .concat((BP || []).filter(r => /^HC Mini/.test(r.company || '')).map(r => { const m = miniGrade(r), L = letter(m.total);
         return row([r.player_name || 'Ẩn danh', m.home, m.markets, m.profile, +m.total.toFixed(1), L.l, L.g4, L.pass ? 'Đạt' : 'Không', new Date(r.created_at).toLocaleString('vi-VN')]); }));
-    const xml = `<?xml version="1.0" encoding="UTF-8"?><?mso-application progid="Excel.Sheet"?><Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">${sheet('Bật Nghiệp', s1)}${sheet('Quyết định theo vòng', s2)}${sheet('Hộ Chiếu', s3)}${sheet('Thành viên', s4)}${sheet('Hộ Chiếu Mini', s5)}</Workbook>`;
+    const s6 = [row(['Đội', 'Chỉ số đồng đội /100', 'Mức rubric', 'Thành viên', 'Vai', 'Đề xuất', 'Biên bản', 'Nếu–Thì', 'Hỏi Lumina', 'Chốt vòng', 'Vòng thấu chi', 'Điểm tham gia /100'])]
+      .concat((AC || []).flatMap(t => { const lv = rubricLevel(t.balance, rubric);
+        return t.members.map(m => row([t.team, t.balance, lv.label, m.name, m.role, m.proposals, m.minutes, m.whatif, m.lumina, m.commits, m.overdraftRounds, m.score])); }));
+    const xml = `<?xml version="1.0" encoding="UTF-8"?><?mso-application progid="Excel.Sheet"?><Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">${sheet('Bật Nghiệp', s1)}${sheet('Quyết định theo vòng', s2)}${sheet('Hộ Chiếu', s3)}${sheet('Thành viên', s4)}${sheet('Hộ Chiếu Mini', s5)}${sheet('Sổ điểm', s6)}</Workbook>`;
     const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([xml], { type: 'application/vnd.ms-excel' })); a.download = `BizOn-${code}-so-diem.xls`; document.body.appendChild(a); a.click(); a.remove();
   }
   const EVENTS = [['', 'Theo kịch bản (không can thiệp)'], ['EV_STABLE', '🌤️ Thị trường ổn định'], ['EV_GOLDEN', '🌟 Cơ hội vàng – tổng cầu tăng'], ['EV_PRICEWAR', '⚔️ Cạnh tranh về giá – nhạy giá'], ['EV_RECESSION', '⚡ Khủng hoảng năng lượng'], ['EV_SUPPLY', '🚢 Khủng hoảng chuỗi cung ứng'], ['EV_MILESTONE', '🐉 Việt Nam hóa Rồng']];
-  window.BizOnInstructorPage = { money, f1, letter, members, autoNote, teams, grades, bpGrade, miniGrade, decRows, xls, EVENTS };
+  window.BizOnInstructorPage = { money, f1, letter, members, autoNote, teams, grades, bpGrade, miniGrade, decRows, xls, EVENTS, memberActivity, rubricLevel };
 })();
