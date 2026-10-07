@@ -38,6 +38,34 @@
     try { const c = cfg(); const r = await fetch(c.url.replace(/\/$/, '') + '/rest/v1/rpc/bizon_team_log', { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: c.anonKey, Authorization: 'Bearer ' + c.anonKey }, body: JSON.stringify({ p_class_code: w.classCode, p_team_name: w.team, p_round: Math.min(6, w.S.round || 1) }) });
       return r.ok ? (await r.json()) || [] : []; } catch (e) { return []; }
   }
+  async function teamAllLog() {
+    const w = who(); if (!w || !w.live) return [];
+    try { const c = cfg(); const r = await fetch(c.url.replace(/\/$/, '') + '/rest/v1/rpc/bizon_team_all_log', { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: c.anonKey, Authorization: 'Bearer ' + c.anonKey }, body: JSON.stringify({ p_class_code: w.classCode, p_team_name: w.team }) });
+      return r.ok ? (await r.json()) || [] : []; } catch (e) { return []; }
+  }
+  // Gộp nhật ký đội thành thống kê theo thành viên (vai + tên) cho tab "Hiệu suất thành viên".
+  // Đếm số hành động ghi nhận được – KHÔNG phải điểm chấm, chỉ đo mức độ tham gia tương đối.
+  function teamStats(rows) {
+    const byMember = {}; // key: role+'|'+name
+    const keyOf = r => r.role + '|' + (r.member_name || r.role);
+    rows.forEach(r => {
+      const k = keyOf(r); if (!byMember[k]) byMember[k] = { role: r.role, name: r.member_name || r.role, proposals: 0, minutes: 0, whatif: 0, lumina: 0, commits: 0, overdraftRounds: 0, lastAt: r.created_at };
+      const m = byMember[k];
+      if (r.kind === 'proposal') m.proposals++;
+      else if (r.kind === 'minutes') m.minutes++;
+      else if (r.kind === 'whatif') m.whatif++;
+      else if (r.kind === 'lumina') m.lumina++;
+      else if (r.kind === 'commit') { m.commits++; if ((r.payload || {}).overdraft > 0) m.overdraftRounds++; }
+      if (r.created_at > m.lastAt) m.lastAt = r.created_at;
+    });
+    const members = Object.values(byMember).map(m => ({ ...m, actions: m.proposals + m.minutes + m.whatif + m.lumina + m.commits }));
+    const maxActions = Math.max(1, ...members.map(m => m.actions));
+    members.forEach(m => { m.score = Math.round(m.actions / maxActions * 100); });
+    // Cân bằng đội: 100 trừ chênh lệch điểm tham gia cao nhất–thấp nhất (đội đều tay → điểm cao)
+    const scores = members.map(m => m.score);
+    const balance = members.length ? Math.max(0, 100 - (Math.max(...scores) - Math.min(...scores))) : 100;
+    return { members, balance };
+  }
   const sent = {}; // vòng đã gửi trên máy này: { 'r3': true }
   function valsFor(role) { const o = {}; (FIELDS[role] || []).forEach(([id, k]) => { const el = $(id); if (el) o[k] = +el.value; }); return o; }
   function fmt(role, p) { return (FIELDS[role] || []).filter(f => p[f[1]] != null).map(f => `${f[2]} <b>${(+p[f[1]]).toLocaleString('vi-VN')}${f[3]}</b>`).join(' · '); }
@@ -87,11 +115,58 @@
     }
     if (typeof window.commitDecisions === 'function' && !window.commitDecisions.__ml) {
       const o = window.commitDecisions; window.commitDecisions = function () { const S = st(), was = S && S.committed, d = typeof currentDecisionInput === 'function' ? currentDecisionInput() : {}; const x = o.apply(this, arguments);
-        const S2 = st(); if (S2 && !was && S2.committed) record('commit', d); return x; }; window.commitDecisions.__ml = true;
+        const S2 = st(); if (S2 && !was && S2.committed) { const last = S2.history && S2.history[S2.history.length - 1];
+          record('commit', Object.assign({}, d, last ? { overdraft: last.overdraft || 0, netProfit: last.netProfit } : {})); } return x; }; window.commitDecisions.__ml = true;
+    }
+    if (typeof window.askLumina === 'function' && !window.askLumina.__ml) {
+      const o = window.askLumina; window.askLumina = function (topic) { const S = st(), before = S && S.aiAskedTotal; const x = o.apply(this, arguments);
+        const S2 = st(); if (S2 && S2.aiAskedTotal > before) record('lumina', { topic }); return x; }; window.askLumina.__ml = true;
     }
   }
   hook(); document.addEventListener('DOMContentLoaded', hook); window.addEventListener('load', () => { hook(); setTimeout(hook, 1500); });
   window.addEventListener('online', flush); document.addEventListener('DOMContentLoaded', flush);
   setInterval(() => { const w = who(); if (w && w.role === 'CEO' && $('member-panel') && !document.hidden) render(); }, 20000);
-  window.BizonMemberLog = { record, flush, render };
+
+  const ROLE_NAME = { CEO: 'CEO', CFO: 'CFO', CMO: 'CMO', COO: 'COO', SEC: TT('Thư ký', 'Secretary') };
+  function statLine(m) {
+    const parts = [];
+    if (m.proposals) parts.push(TT(`${m.proposals} đề xuất`, `${m.proposals} proposals`));
+    if (m.minutes) parts.push(TT(`${m.minutes} biên bản`, `${m.minutes} minutes`));
+    if (m.whatif) parts.push(TT(`${m.whatif} lượt Nếu–Thì`, `${m.whatif} what-ifs`));
+    if (m.lumina) parts.push(TT(`${m.lumina} lượt hỏi Lumina`, `${m.lumina} Lumina asks`));
+    if (m.commits) parts.push(TT(`${m.commits} lần chốt vòng`, `${m.commits} commits`));
+    if (m.overdraftRounds) parts.push(`<span class="text-orange-600">${TT(`${m.overdraftRounds} vòng thấu chi`, `${m.overdraftRounds} overdraft rounds`)}</span>`);
+    return parts.join(' · ') || TT('Chưa ghi nhận hành động nào', 'No actions recorded yet');
+  }
+  async function renderReport(body) {
+    const w = who();
+    if (!w || !w.live) { body.innerHTML = `<div class="clay-card p-8 text-center text-sm text-deep-teal/50">${TT('Tab này chỉ có dữ liệu khi đội chơi bằng Mã lớp thật và máy chủ đang bật.', 'This tab only has data when the team plays with a real class code and the server is on.')}</div>`; return; }
+    body.innerHTML = `<div class="clay-card p-8 text-center text-sm text-deep-teal/50">${TT('Đang tải…', 'Loading…')}</div>`;
+    const rows = await teamAllLog();
+    if (!rows.length) { body.innerHTML = `<div class="clay-card p-8 text-center text-sm text-deep-teal/50">${TT('Chưa có dữ liệu – đội chưa gửi đề xuất, biên bản hay hỏi Lumina lần nào.', 'No data yet – the team has not sent proposals, minutes or asked Lumina yet.')}</div>`; return; }
+    const { members, balance } = teamStats(rows);
+    members.sort((a, b) => b.score - a.score);
+    body.innerHTML = `
+      <div class="clay-card p-5 mb-3">
+        <h3 class="font-display font-bold text-deep-teal text-sm mb-1">${TT('📈 Hiệu suất thành viên', '📈 Member performance')}</h3>
+        <p class="text-[11px] text-deep-teal/60 mb-4">${TT('Ai đóng góp gì trong trận – dựa trên số lượng hành động ghi nhận, không theo thắng/thua.', 'Who contributed what this match – based on the number of logged actions, not win/lose.')}</p>
+        <div class="clay-sunken rounded-2xl p-4">
+          <p class="text-[10px] font-extrabold text-deep-teal/60 uppercase tracking-wide mb-1">${TT('Chỉ số đồng đội · Team balance', 'Team balance index')}</p>
+          <p class="font-display font-black text-deep-teal text-3xl">${balance}<span class="text-sm text-deep-teal/40">/100</span></p>
+        </div>
+      </div>
+      <div class="clay-card p-5">
+        <h4 class="font-display font-bold text-deep-teal text-xs mb-3">${TT('Đội hình', 'Lineup')}</h4>
+        ${members.map(m => `
+          <div class="clay-sunken rounded-2xl p-3 mb-2">
+            <div class="flex items-center justify-between mb-1">
+              <p class="text-xs font-extrabold text-deep-teal">${m.name} <span class="text-primary">${ROLE_NAME[m.role] || m.role}</span></p>
+              <p class="font-display font-bold text-deep-teal text-sm">${m.score}<span class="text-[10px] text-deep-teal/40">${TT('đ', 'pt')}</span></p>
+            </div>
+            <div class="w-full h-1.5 rounded-full bg-primary/10 overflow-hidden mb-1.5"><div class="h-full bg-primary rounded-full" style="width:${m.score}%"></div></div>
+            <p class="text-[10px] text-deep-teal/60">${statLine(m)}</p>
+          </div>`).join('')}
+      </div>`;
+  }
+  window.BizonMemberLog = { record, flush, render, renderReport };
 })();

@@ -836,7 +836,7 @@ function simulateRound(s, d) {
     revenue, netProfit, share, sold, demandUnits, lostSales,
     inventory: s.inventory, depreciation, cogs, unitCost,
     marketing: d.marketing, rd: d.rd,
-    wageCost, trainingCost, creditInterest, workers: d.workers,
+    wageCost, trainingCost, creditInterest, overdraft, workers: d.workers,
     fixed: fixedThisRound, holding, loanInterest,
     oee: s.oee, defect: s.defect, adEff: s.adEff, brandLoyalty: s.brandLoyalty,
     quickRatio: s.quickRatio, roi: s.roi, isNewPeak,
