@@ -45,6 +45,8 @@ export async function mountGhe(el, opts = {}) {
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
@@ -52,6 +54,8 @@ export async function mountGhe(el, opts = {}) {
     const hemi = new THREE.HemisphereLight('#ffe9c6', '#6a7a52', 0.95);
     const key = new THREE.DirectionalLight('#ffd9a0', 2.2);
     key.position.set(4, 5, 3);
+    key.castShadow = true;
+    key.shadow.mapSize.set(1024, 1024);
     const fill = new THREE.DirectionalLight('#cfe3ff', 0.5);
     fill.position.set(-4, 2, -3);
     scene.add(hemi, key, fill);
@@ -95,17 +99,26 @@ export async function mountGhe(el, opts = {}) {
     const huong = buildHuong(THREE, M), tu = buildTu(THREE, M);
     huong.scale.setScalar(1.3); tu.scale.setScalar(1.3);
     model.add(huong, tu);
+    model.traverse(n => { if (n.isMesh) n.castShadow = n.receiveShadow = true; });
 
     let water = null;
     if (o.water) {
       water = new THREE.Mesh(new THREE.CylinderGeometry(6, 6, 0.1, 64), M.water);
       water.position.y = 0.05;
+      water.receiveShadow = true;
       model.add(water);
     }
     scene.add(model);
 
     const tgt = new THREE.Vector3(0, 1.1, 0.1);
-    let autorotate = !!o.autorotate;
+    let autorotate = !!o.autorotate, drag = null, dragAngle = 0;
+    // Kéo chuột/chạm để tự xoay ghe xem các góc; vẫn giữ animation bồng bềnh
+    // nhẹ phía dưới cho cảm giác ghe đang trôi trên sông dù không kéo.
+    canvas.style.touchAction = 'none';
+    canvas.addEventListener('pointerdown', e => { drag = { x: e.clientX, a: dragAngle }; canvas.setPointerCapture(e.pointerId); });
+    canvas.addEventListener('pointermove', e => { if (drag) dragAngle = drag.a + (e.clientX - drag.x) * 0.01; });
+    canvas.addEventListener('pointerup', () => { drag = null; });
+    canvas.addEventListener('pointercancel', () => { drag = null; });
 
     function frame() {
       const w = el.clientWidth || 1, h = el.clientHeight || 1;
@@ -122,9 +135,13 @@ export async function mountGhe(el, opts = {}) {
     ro.observe(el);
 
     let raf = 0, alive = true;
-    const tick = () => {
+    const tick = now => {
       if (!alive) return;
-      if (autorotate) model.rotation.y += 0.0045;
+      if (autorotate && !drag) dragAngle += 0.0045;
+      model.rotation.y = dragAngle;
+      const t = (now || 0) / 1000;
+      model.position.y = Math.sin(t * 1.4) * 0.05;
+      model.rotation.z = Math.sin(t * 1.1) * 0.025;
       renderer.render(scene, camera);
       raf = requestAnimationFrame(tick);
     };
