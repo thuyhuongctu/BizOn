@@ -196,7 +196,7 @@
     let rows, note;
     if (trial) {
       rows = [{ name: me + tr(' (Bạn)', ' (You)'), profit: totalProfit, share: lastShare, me: true }, ...(s.competitors || []).map(c => ({ name: c.name, profit: c.profit || 0, share: c.share || 25 }))].sort((a, b) => b.profit - a.profit);
-      note = tr('🧪 Chơi thử · so với 3 đối thủ AI (nhập Mã lớp để đua với các đội trong lớp)', '🧪 Trial · vs 3 AI rivals (enter a Class ID to compete with classmates)');
+      note = tr('🧪 Chơi thử · so với 3 đối thủ ảo (nhập Mã lớp để đua với các đội trong lớp)', '🧪 Trial · vs 3 virtual rivals (enter a Class ID to compete with classmates)');
     } else {
       rows = [{ name: me + tr(' (Bạn)', ' (You)'), profit: totalProfit, share: lastShare, me: true }];
       note = tr('🔒 Bảng xếp hạng chéo đội đang tạm khóa — chỉ hiện kết quả của đội bạn', '🔒 Cross-team leaderboard is temporarily locked — showing only your team’s results');

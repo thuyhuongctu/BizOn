@@ -51,7 +51,7 @@
       ['Bảng điều khiển lớp', 'giang-vien.html'],
       ['Khảo sát trước–sau', 'khao-sat-online.html'],
       ['Học thuật & Model Cards', 'hoc-thuat.html'],
-      ['Thẻ mô tả Lumina AI', 'lumina.html'],
+      ['Thẻ mô tả Lumina', 'lumina.html'],
       ['Bằng chứng lớp học', 'bang-chung.html'],
     ]],
     ['🏛️ Về BizOn', [

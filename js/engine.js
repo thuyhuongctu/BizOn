@@ -195,7 +195,7 @@ function SKILLS_LIST() { return [
   { id: 'SK_MKT1', icon: '📣', name: T('Marketing số', 'Digital Marketing'),       cost: 80,  desc: T('+10% hiệu quả ngân sách quảng cáo.', "+10% advertising budget effectiveness."), effect: { mktMul: 1.10 } },
   { id: 'SK_OPS1', icon: '🏭', name: T('Sản xuất tinh gọn', 'Lean Manufacturing'),  cost: 80,  desc: T('-5% giá thành đơn vị.', '-5% unit production cost.'), effect: { costMul: 0.95 } },
   { id: 'SK_NEG1', icon: '🤝', name: T('Đàm phán chiến lược', 'Strategic Negotiation'), cost: 120, desc: T('Giảm 10% giá vật phẩm trong Cửa hàng.', '10% off item prices in the Shop.'), effect: { shopMul: 0.90 } },
-  { id: 'SK_AI1',  icon: '🤖', name: T('Cộng hưởng Lumina', 'Lumina Synergy'),  cost: 150, desc: T('+2 lượt hỏi Lumina AI mỗi vòng.', '+2 Lumina AI questions per round.'), effect: { aiQuota: 2 } },
+  { id: 'SK_AI1',  icon: '🤖', name: T('Cộng hưởng Lumina', 'Lumina Synergy'),  cost: 150, desc: T('+2 lượt hỏi Lumina mỗi vòng.', '+2 Lumina questions per round.'), effect: { aiQuota: 2 } },
 ]; }
 
 const COMPETITORS = [
@@ -210,7 +210,7 @@ function MISSIONS_LIST() { return [
   { id: 'M_PROFIT',   icon: '💎', name: T('Kinh doanh có lãi', 'Profitable Business'), desc: T('Đạt lợi nhuận dương trong một vòng.', 'Post a positive profit in one round.'), rewardMoney: 30, rewardXp: 20, test: s => s.history.some(r => r.netProfit > 0) },
   { id: 'M_SHARE30',  icon: '👑', name: T('Chiếm lĩnh thị trường', 'Market Domination'), desc: T('Đạt thị phần từ 30% trở lên.', 'Reach 30% market share or more.'), rewardMoney: 50, rewardXp: 30, test: s => s.history.some(r => r.share >= 30) },
   { id: 'M_SHOP',     icon: '🛍️', name: T('Nhà đầu tư thông thái', 'Savvy Investor'), desc: T('Mua ít nhất 1 vật phẩm trong Cửa hàng.', 'Buy at least 1 item from the Shop.'), rewardMoney: 20, rewardXp: 10, test: s => (s.itemsBought || 0) >= 1 },
-  { id: 'M_AI3',      icon: '🤖', name: T('Người bạn của Lumina', "Lumina's Friend"), desc: T('Hỏi Lumina AI tổng cộng 3 lần.', 'Ask Lumina AI a total of 3 times.'), rewardMoney: 15, rewardXp: 10, test: s => (s.aiAskedTotal || 0) >= 3 },
+  { id: 'M_AI3',      icon: '🤖', name: T('Người bạn của Lumina', "Lumina's Friend"), desc: T('Hỏi Lumina tổng cộng 3 lần.', 'Ask Lumina a total of 3 times.'), rewardMoney: 15, rewardXp: 10, test: s => (s.aiAskedTotal || 0) >= 3 },
   { id: 'M_SKILL',    icon: '🌳', name: T('Học không ngừng', 'Lifelong Learner'), desc: T('Mở khóa 1 kỹ năng trong Cây kỹ năng.', 'Unlock 1 skill in the Skill Tree.'), rewardMoney: 25, rewardXp: 15, test: s => s.skills.length >= 1 },
   { id: 'M_MINIGAME', icon: '🏭', name: T('Thợ đất sét cừ khôi', 'Master Clay Worker'), desc: T('Đạt từ 15 điểm trong Clay Factory Frenzy.', 'Score at least 15 in Clay Factory Frenzy.'), rewardMoney: 25, rewardXp: 15, test: s => (s.minigameBest || 0) >= 15 },
   { id: 'M_SURVIVE',  icon: '🛟', name: T('Thuyền trưởng bão táp', 'Storm Captain'), desc: T('Có lãi trong vòng Khủng hoảng năng lượng.', 'Turn a profit during the Energy Crisis round.'), rewardMoney: 60, rewardXp: 40, test: s => s.history.some(r => r.event.id === 'EV_RECESSION' && r.netProfit > 0) },
@@ -884,7 +884,7 @@ function unlockAchievements(s, r) {
   });
 }
 
-/** Lumina AI – kịch bản "Nếu – Thì" theo dữ liệu vòng trước. */
+/** Lumina – kịch bản "Nếu – Thì" theo dữ liệu vòng trước. */
 function luminaAdvice(s, topic) {
   const last = s.history[s.history.length - 1];
   const ev = currentEvent(s);

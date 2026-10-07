@@ -17,7 +17,7 @@
     { tab: 'home', sel: '#btn-go-decisions',
       title: '🗳️ Cánh cửa quan trọng nhất', text: 'Nút này mở <b>bảng quyết định</b> – nơi cả đội thống nhất giá bán, sản xuất, marketing… cho vòng này. Ta vào xem thử nhé!' },
     { tab: 'decisions', sel: '#in-price', card: true,
-      title: '💲 Kéo là ra chiến lược', text: 'Kéo các thanh trượt để định <b>giá bán</b>, ngân sách <b>marketing</b>, <b>sản lượng</b>… Ô «Dự báo thị phần» sẽ báo ngay bạn đang thắng hay thua so với 3 đối thủ AI.' },
+      title: '💲 Kéo là ra chiến lược', text: 'Kéo các thanh trượt để định <b>giá bán</b>, ngân sách <b>marketing</b>, <b>sản lượng</b>… Ô «Dự báo thị phần» sẽ báo ngay bạn đang thắng hay thua so với 3 đối thủ ảo.' },
     { tab: 'decisions', sel: '#btn-commit',
       title: '🔒 Commit – khóa quyết định', text: 'Cả đội thống nhất xong mới bấm nút này. Sau khi khóa, thị trường chạy mô phỏng và <b>không sửa lại được</b> – đúng như đời thật!' },
     { tab: 'advisor', sel: '#advisor-chat',

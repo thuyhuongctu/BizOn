@@ -76,7 +76,7 @@
   }
   var MODE_IMG = ['digital', 'export', 'alliance', 'licensing', 'jv', 'fdi'];
   var FIRM_SLUG = ['moc-nhien', 'phu-sa', 'lam-viet', 'mekong-digital'], FIRM_PROD = ['moc-nhien-dau-goi', 'phu-sa-banh-phong-tom', 'lam-viet-ao-linen', 'mekong-digital-laptop'];
-  var CAST_SLUG = { 'Bà Sáu Lành': 'ba-sau-lanh', 'Minh Khang': 'minh-khang', 'An Nhiên': 'an-nhien', 'Thầy Tú Phan': 'tu-phan', 'Lina Park': 'lina-park', 'Lumina AI': 'lumina' };
+  var CAST_SLUG = { 'Bà Sáu Lành': 'ba-sau-lanh', 'Minh Khang': 'minh-khang', 'An Nhiên': 'an-nhien', 'Tu Phan': 'tu-phan', 'Lina Park': 'lina-park', 'Lumina': 'lumina' };
   function fillImg(sel, path, style) { img(path, function (src) { var el = document.querySelector(sel); if (el) el.innerHTML = '<img src="' + src + '" alt="" style="' + style + '">'; }); }
   function hostCode(m) { var b = B(); try { return b.hostOf ? b.hostOf(m)[0] : ''; } catch (e) { return ''; } }
   window.BPImg = img;

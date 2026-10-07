@@ -122,12 +122,12 @@
 "A real market engine"
 ],
 [
-"Độ co giãn giá, thị phần, biến cố Cơ Hội Vàng · Price War · Khủng hoảng năng lượng – mỗi vòng là một ván cờ mới với 3 đối thủ AI.",
-"Price elasticity, market share, Golden Opportunity · Price War · energy-crisis events – every round is a fresh chess match against 3 AI rivals."
+"Độ co giãn giá, thị phần, biến cố Cơ Hội Vàng · Price War · Khủng hoảng năng lượng – mỗi vòng là một ván cờ mới với 3 đối thủ ảo.",
+"Price elasticity, market share, Golden Opportunity · Price War · energy-crisis events – every round is a fresh chess match against 3 virtual rivals."
 ],
 [
 "Cố vấn AI Lumina",
-"Lumina AI advisor"
+"Lumina advisor"
 ],
 [
 "Trò chuyện bằng giọng nói tiếng Việt, mô phỏng \"Nếu – Thì\" trước khi chốt, bộ não cố vấn riêng cho CEO · CFO · COO · CMO.",
@@ -242,8 +242,8 @@
 "Profit"
 ],
 [
-"· 12.000 sp tổng cầu · 3 đối thủ AI",
-"· 12,000-unit demand · 3 AI rivals"
+"· 12.000 sp tổng cầu · 3 đối thủ ảo",
+"· 12,000-unit demand · 3 virtual rivals"
 ],
 [
 "Bản demo rút gọn từ engine thật (độ co giãn giá 1.8, giá tham chiếu 150k). Bản đầy đủ có 6 vòng, biến cố, nhân sự, tài chính, cố vấn AI.",
@@ -506,8 +506,8 @@
 "BizOn Founding Team"
 ],
 [
-"Hóa thân Lumina AI",
-"Lumina AI persona"
+"Hóa thân Lumina",
+"Lumina persona"
 ],
 [
 "Sứ mệnh & Tầm nhìn 2026",
@@ -870,8 +870,8 @@
 "👥 Try the Demo Team (5 characters)"
 ],
 [
-"⚔️ 3 đối thủ AI của bạn",
-"⚔️ Your 3 AI rivals"
+"⚔️ 3 đối thủ ảo của bạn",
+"⚔️ Your 3 virtual rivals"
 ],
 [
 "🚀 IE Lab – Khởi nghiệp quốc tế (International Entrepreneurship)",
@@ -2034,8 +2034,8 @@
 "Male-vocal mix · English lyrics"
 ],
 [
-"Lumina AI – Áo dài",
-"Lumina AI – Áo dài"
+"Lumina – Áo dài",
+"Lumina – Áo dài"
 ],
 [
 "Lễ phục · màn chào và đêm trao Hộ chiếu Thương hiệu",
@@ -2194,24 +2194,24 @@
 "🐺 Alpha Dynamics CEO"
 ],
 [
-"Đối thủ AI · giá rẻ tốc chiến, khoanh tay thách thức",
-"AI rival · low-price blitz, arms crossed in defiance"
+"Đối thủ ảo · giá rẻ tốc chiến, khoanh tay thách thức",
+"virtual rival · low-price blitz, arms crossed in defiance"
 ],
 [
 "🐘 CEO Mekong Ventures",
 "🐘 Mekong Ventures CEO"
 ],
 [
-"Đối thủ AI · cân bằng chắc chắn như đồng bằng",
-"AI rival · steady balance, solid as the delta"
+"Đối thủ ảo · cân bằng chắc chắn như đồng bằng",
+"virtual rival · steady balance, solid as the delta"
 ],
 [
 "🦚 CEO Star Clay Co.",
 "🦚 Star Clay Co. CEO"
 ],
 [
-"Đối thủ AI · cao cấp thương hiệu, tay nâng cúp RIVAL",
-"AI rival · premium branding, holding the RIVAL trophy"
+"Đối thủ ảo · cao cấp thương hiệu, tay nâng cúp RIVAL",
+"virtual rival · premium branding, holding the RIVAL trophy"
 ],
 [
 "👆 Chạm vào một đối thủ để xem hồ sơ tình báo",
@@ -2382,8 +2382,8 @@
 "🎶 BizOn Music Library"
 ],
 [
-"Ca khúc gốc, trình phát đầy đủ, lời bài hát và giọng Lumina AI.",
-"Original songs, a full player, lyrics and the Lumina AI voice."
+"Ca khúc gốc, trình phát đầy đủ, lời bài hát và giọng Lumina.",
+"Original songs, a full player, lyrics and the Lumina voice."
 ],
 [
 "Toàn bộ ca khúc gốc và giọng Lumina của riêng BizOn – trình phát đầy đủ.",
@@ -2398,8 +2398,8 @@
 "💿 Original songs"
 ],
 [
-"🎙️ Giọng Lumina AI",
-"🎙️ Lumina AI voice"
+"🎙️ Giọng Lumina",
+"🎙️ Lumina voice"
 ],
 [
 "🎮 Nghe nhạc ở đâu trong game?",
@@ -2562,8 +2562,8 @@
 "For instructors & businesses"
 ],
 [
-"Mang BizOn vào lớp học hoặc chương trình đào tạo: Class ID cho từng lớp, chế độ Giảng viên (khóa vòng, cấp vốn thưởng, nhật ký), hành vi đối thủ AI tất định – kết quả tái lập được, tiện chấm điểm giữa các đội.",
-"Bring BizOn to your classroom or training program: per-class Class IDs, an Instructor mode (round locks, bonus funding, logs), and deterministic AI rivals – reproducible results, easy to grade across teams."
+"Mang BizOn vào lớp học hoặc chương trình đào tạo: Class ID cho từng lớp, chế độ Giảng viên (khóa vòng, cấp vốn thưởng, nhật ký), hành vi đối thủ ảo tất định – kết quả tái lập được, tiện chấm điểm giữa các đội.",
+"Bring BizOn to your classroom or training program: per-class Class IDs, an Instructor mode (round locks, bonus funding, logs), and deterministic virtual rivals – reproducible results, easy to grade across teams."
 ],
 [
 "📖 Hướng dẫn giảng viên",
@@ -2595,7 +2595,7 @@
 ],
 [
 "Kiến trúc sư chính của BizOn – hóa thân thành cố vấn AI Lumina, tập trung vào trải nghiệm người dùng và thẩm mỹ Claymorphism hiện đại.",
-"BizOn's lead architect – embodied as the Lumina AI advisor, focused on user experience and modern claymorphism aesthetics."
+"BizOn's lead architect – embodied as the Lumina advisor, focused on user experience and modern claymorphism aesthetics."
 ],
 [
 "Cố vấn học thuật cao cấp – đảm bảo tính thực tiễn và chiều sâu kiến thức kinh doanh trong mọi kịch bản mô phỏng.",
@@ -2610,8 +2610,8 @@
 "A 3D claymorphism business-simulation game for entrepreneurship education – pick a door to begin."
 ],
 [
-"Chinh phục bản đồ Việt Nam từ Cần Thơ tới Hà Nội cùng cố vấn Lumina AI.",
-"Conquer the map of Vietnam from Cần Thơ to Hà Nội with the Lumina AI advisor."
+"Chinh phục bản đồ Việt Nam từ Cần Thơ tới Hà Nội cùng cố vấn Lumina.",
+"Conquer the map of Vietnam from Cần Thơ to Hà Nội with the Lumina advisor."
 ],
 [
 "CHƠI NGAY →",
@@ -3018,7 +3018,7 @@
 ["🧺 Gánh Hàng Khởi Nghiệp – kết quả lớp", "🧺 Entrepreneurial Street Vendor – class results"],
 ["Hộ Chiếu Thương Hiệu", "Brand Passport"],
 ["BizOn Go Global: chọn 1 trong 4 doanh nghiệp, đưa thương hiệu Việt từ Vàm Thịnh ra 7 thị trường giả tưởng – sương mù thông tin, đàm phán đối tác, sự kiện bất định; thành công đo bằng 5 chiều: lợi nhuận, uy tín, năng lực, thích ứng, bền vững.", "BizOn Go Global: pick 1 of 4 companies and take a Vietnamese brand from Vàm Thịnh to 7 fictional markets – information fog, partner negotiation, uncertain events; success measured in 5 dimensions: profit, reputation, capability, adaptability, sustainability."],
-["Sinh viên nộp từ màn kết thúc của game (cùng Mã lớp). Mỗi người tính ván có hiệu suất cao nhất; hạng là thứ hạng so với 3 đối thủ AI trong ván đó.", "Students submit from the game's end screen (same Class code). Each player counts their best-efficiency run; rank is their placing against the 3 AI rivals in that run."],
+["Sinh viên nộp từ màn kết thúc của game (cùng Mã lớp). Mỗi người tính ván có hiệu suất cao nhất; hạng là thứ hạng so với 3 đối thủ ảo trong ván đó.", "Students submit from the game's end screen (same Class code). Each player counts their best-efficiency run; rank is their placing against the 3 virtual rivals in that run."],
 ["Sinh viên", "Student"],
 ["Hiệu suất", "Efficiency"],
 ["Hạng trong ván", "In-game rank"],
@@ -3172,8 +3172,8 @@
 "System card"
 ],
 [
-"🤖 Cố vấn Lumina AI",
-"🤖 Lumina AI advisor"
+"🤖 Cố vấn Lumina",
+"🤖 Lumina advisor"
 ],
 [
 "Trang này công bố Lumina thực sự hoạt động bằng gì, đọc dữ liệu nào và có giới hạn ra sao. Chúng tôi công bố để người dạy, người học và người phản biện kiểm chứng được – chứ không mô tả Lumina mạnh hơn thực tế.",
@@ -3584,8 +3584,8 @@
 "Music production notes"
 ],
 [
-"Thẻ mô tả Lumina AI",
-"Lumina AI system card"
+"Thẻ mô tả Lumina",
+"Lumina system card"
 ],
 [
 "Đơn vị sản xuất",
@@ -3608,64 +3608,64 @@
 "groups"
 ],
 [
-"Lumina AI – Chắp tay cảm ơn",
-"Lumina AI – Hands together in thanks"
+"Lumina – Chắp tay cảm ơn",
+"Lumina – Hands together in thanks"
 ],
 [
 "Áo dài trắng, tai nghe · dáng chào và cảm ơn cuối buổi chơi",
 "White áo dài with headphones · the greeting and thank-you at the end of a session"
 ],
 [
-"Lumina AI – Có ý tưởng",
-"Lumina AI – An idea strikes"
+"Lumina – Có ý tưởng",
+"Lumina – An idea strikes"
 ],
 [
 "Giơ ngón trỏ, tia sáng vàng · khoảnh khắc gợi ý chiến lược",
 "Index finger raised, golden sparkles · the moment a strategy is suggested"
 ],
 [
-"Lumina AI – Vỗ tay chúc mừng",
-"Lumina AI – Applause"
+"Lumina – Vỗ tay chúc mừng",
+"Lumina – Applause"
 ],
 [
 "Kim tuyến và sao vàng rơi quanh · đội chơi hoàn thành mục tiêu",
 "Confetti and gold stars falling · the team hits its target"
 ],
 [
-"Lumina AI – Báo biến cố thị trường",
-"Lumina AI – Market event alert"
+"Lumina – Báo biến cố thị trường",
+"Lumina – Market event alert"
 ],
 [
 "Bảng hologram biểu đồ giá · khoảnh khắc thị trường biến động bất ngờ",
 "Holographic price chart · the moment the market moves unexpectedly"
 ],
 [
-"Lumina AI – Nghe nhạc (váy)",
-"Lumina AI – Listening (dress)"
+"Lumina – Nghe nhạc (váy)",
+"Lumina – Listening (dress)"
 ],
 [
 "Tạo hình Hậu trường sản xuất · trang phục thường, khuông nhạc cuộn quanh",
 "Production-notes artwork · everyday outfit, a stave curling around her"
 ],
 [
-"Lumina AI – Nghe nhạc (vest)",
-"Lumina AI – Listening (suit)"
+"Lumina – Nghe nhạc (vest)",
+"Lumina – Listening (suit)"
 ],
 [
 "Tạo hình Thẻ mô tả hệ thống · trang phục công sở, khuông nhạc cuộn quanh",
 "System-card artwork · office outfit, a stave curling around her"
 ],
 [
-"Lumina AI – Nghe nhạc (đứng)",
-"Lumina AI – Listening (standing)"
+"Lumina – Nghe nhạc (đứng)",
+"Lumina – Listening (standing)"
 ],
 [
 "Tạo hình Kho Âm nhạc · áo dài trắng, tai nghe và nốt nhạc bay",
 "Music-library artwork · white áo dài, headphones and floating notes"
 ],
 [
-"Lumina AI – Nghe nhạc (ngồi)",
-"Lumina AI – Listening (seated)"
+"Lumina – Nghe nhạc (ngồi)",
+"Lumina – Listening (seated)"
 ],
 [
 "Tạo hình Kho Âm nhạc · ngồi ghế đất sét, cánh hoa rơi quanh",
@@ -3857,7 +3857,7 @@
 ],
 [
 "Học cách điều hành một doanh nghiệp. Sáu vòng trên bản đồ Việt Nam, năm vai trò lãnh đạo, ba đối thủ máy.",
-"Learn how to run a business. Six rounds across a map of Vietnam, five leadership roles, three AI rivals."
+"Learn how to run a business. Six rounds across a map of Vietnam, five leadership roles, three virtual rivals."
 ],
 [
 "Bắt đầu ở đây →",
@@ -4250,8 +4250,8 @@
 "🚩 Market Share Forecast – can you plant the flag?"
 ],
 [
-"Ước tính theo thông số đang nhập, so với 3 đối thủ AI",
-"Estimated from your current inputs, versus the 3 AI rivals"
+"Ước tính theo thông số đang nhập, so với 3 đối thủ ảo",
+"Estimated from your current inputs, versus the 3 virtual rivals"
 ],
 [
 "COO – Chuyên gia vận hành",
@@ -4606,8 +4606,8 @@
 "📖 Documentation for instructors / administrators"
 ],
 [
-"Toàn bộ luật chơi, hành vi 3 đối thủ AI, công thức thị trường, bản đồ chinh phục và gợi ý tổ chức lớp học được ghi trong",
-"All game rules, the 3 AI rivals' behavior, market formulas, the conquest map, and classroom facilitation tips are documented in the"
+"Toàn bộ luật chơi, hành vi 3 đối thủ ảo, công thức thị trường, bản đồ chinh phục và gợi ý tổ chức lớp học được ghi trong",
+"All game rules, the 3 virtual rivals' behavior, market formulas, the conquest map, and classroom facilitation tips are documented in the"
 ],
 [
 "Hướng dẫn giảng viên",
@@ -4910,7 +4910,7 @@
     { page: 'ben-phu-sa', sel: '#ft-intro ul li:nth-child(3)', en: "📋 <b>Market survey</b>: spend a full week not selling and receive <b>historical data</b> (directionally right, possibly outdated)." },
     { page: 'ben-phu-sa', sel: '#ft-intro ul li:nth-child(4)', en: "🎯 True demand for each <b>Product × Location</b> pair is hidden – different every game. Weekly observation is your best clue." },
     { page: 'ben-phu-sa', sel: '#ft-intro ul li:nth-child(5)', en: "🧾 Each product runs a different operating model: 🥖 <b>bánh mì</b> serves fast (extra upside in peak weeks) · 🍧 <b>sweet soup</b> needs careful storage (occasional spoilage) · ☕ <b>phin coffee</b> has high margins but brews slowly." },
-    { page: 'ben-phu-sa', sel: '#ft-intro ul li:nth-child(6)', en: "⚔️ <b>3 AI rivals</b> – Alpha Dynamics 🐺, Mekong Ventures 🐘, Star Clay Co. 🦚 – also trade all over Bến Phù Sa. Share a location and you <b>split the customers</b>!" },
+    { page: 'ben-phu-sa', sel: '#ft-intro ul li:nth-child(6)', en: "⚔️ <b>3 virtual rivals</b> – Alpha Dynamics 🐺, Mekong Ventures 🐘, Star Clay Co. 🦚 – also trade all over Bến Phù Sa. Share a location and you <b>split the customers</b>!" },
     { page: 'ben-phu-sa', sel: '#ft-end ol li:nth-child(3)', en: "How did you balance <b>learning</b> (street hawking) and <b>scaling</b> (river vendor boat)?" },
     { page: 'ben-phu-sa', sel: '#ft-end ol + p', en: "💡 Core lesson: <b>test cheap and fast first</b> (prototype by street hawking); only when the signal is clear do you <b>bet big</b> (river vendor boat). Historical data is directional – direct observation is gold." },
     { page: 'ben-phu-sa', sel: '#ft-end ol + p + p', en: "📰 True story: Croatian founder <b>Matko Kmezic</b> runs the «Viet Drip» phin-coffee cart with low plastic stools, Vietnamese-sidewalk style, in Amsterdam – selling just 3–4 cups a day at first, patiently explaining robusta to every customer, until people started queueing. Exactly this game's lesson: test small, learn fast, scale at the right time. <a href=\"https://znews.vn/xe-ca-phe-phin-ghe-nhua-do-kieu-viet-o-ha-lan-post1672015.html\" target=\"_blank\" rel=\"noopener\" class=\"underline font-bold\">Znews, Jul 26, 2026 →</a>" },
@@ -4918,7 +4918,7 @@
     { page: 'khao-sat-online', sel: 'header .max-w-3xl p', en: "An <b>anonymous</b> survey used only to improve the game and for educational research. There are no answers that earn grades – please answer honestly based on what you know right now." },
     { sel: '.bzf-eco-label', en: "Ecosystem · <b>Je m'appelle Hương</b>" },
     { sel: '#top h1', en: "Build your<br><span class=\"hero-grad\">business</span> empire" },
-    { sel: '#top .max-w-6xl > div > p.mt-5', en: "Run your company through <b class=\"text-white\">6 fierce market rounds</b> – pricing, production, marketing, fundraising – outsmarting 3 AI rivals with advisor <b class=\"lumina-name font-display\">Lumina AI</b> <span class=\"signature text-lg text-white\">Je m'appelle Hương</span> at your side. All inside a one-of-a-kind 3D clay world." },
+    { sel: '#top .max-w-6xl > div > p.mt-5', en: "Run your company through <b class=\"text-white\">6 fierce market rounds</b> – pricing, production, marketing, fundraising – outsmarting 3 virtual rivals with advisor <b class=\"lumina-name font-display\">Lumina</b> <span class=\"signature text-lg text-white\">Je m'appelle Hương</span> at your side. All inside a one-of-a-kind 3D clay world." },
     { page: 'brand-passport', sel: '#bp-hero-mission', en: "In the riverside town of <b>Vàm Thịnh</b>, you take over <b>Mộc Nhiên</b> – an herbal cosmetics brand with a beautiful story but limited resources. Your mission: take a Vietnamese brand global over <b>6 business quarters</b>, through a <b>fog of information</b> and trade-offs with no single right answer." },
     { page: 'brand-passport', sel: '#bp-hero-music-note', en: "🛂 Theme music: <a href=\"am-nhac.html\" class=\"underline font-bold text-clay-gold\">«Brand Passport – Part III» (remix 2, English lyrics)</a> – plays by default when you turn on music; the game's playlist also includes «Brand Passport», «Stamps Beyond Borders» and «Golden Silt Route», accessible from the ⋯ button in the corner." },
     { page: 'brand-passport', sel: '#bp-mkt-list p:nth-child(1)', en: "🌐 <b>Hải Lam</b> – a developed digital market: fast entry, very high online competition." },
@@ -4936,7 +4936,7 @@
     { page: 'brand-passport', sel: '#bp-advisor-bios p:nth-child(2)', en: "💰 <b>Minh Khang</b> · CFO – prioritizes cash flow and risk control." },
     { page: 'brand-passport', sel: '#bp-advisor-bios p:nth-child(3)', en: "📣 <b>An Nhiên</b> · Strategy &amp; Innovation Advisor – reads trends and builds customer community. <i>«Energy is contagious. When you believe in the vision, a community forms around you.»</i>" },
     { page: 'brand-passport', sel: '#bp-advisor-bios p:nth-child(4)', en: "🌍 <b>Victor Lâm</b> · Global Strategy Expert, speaks by the data but isn't always right. <i>«Broaden your vision, conquer every limit.»</i>" },
-    { page: 'brand-passport', sel: '#bp-advisor-bios p:nth-child(5)', en: "🤖 <b>Lumina AI</b> · AI Strategy Advisor (avatar «Je m'appelle Hương») – reads market signals and flags what's easy to miss. <i>«Building the future with artificial intelligence and precise data.»</i>" },
+    { page: 'brand-passport', sel: '#bp-advisor-bios p:nth-child(5)', en: "🤖 <b>Lumina</b> · AI Strategy Advisor (avatar «Je m'appelle Hương») – reads market signals and flags what's easy to miss. <i>«Building the future with artificial intelligence and precise data.»</i>" },
     { page: 'brand-passport', sel: '#bp-lesson', en: "💡 Core lesson: internationalization isn't about picking the «best market» but choosing <b>a level of commitment that matches your current capability</b>, then raising it as your market knowledge deepens." }
   ];
 
