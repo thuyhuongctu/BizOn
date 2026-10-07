@@ -31,7 +31,7 @@ Hệ thống thiết kế chính thức của BizOn Bật Nghiệp.
 
 ## Kiến trúc màn hình
 - **Shell layout:** `flex-col` với `BottomNavBar` cố định (`fixed bottom-0`).
-- Luồng chính: Splash → Login → Dashboard → Quyết định → Lumina AI → Báo cáo.
+- Luồng chính: Splash → Login → Dashboard → Quyết định → Lumina → Báo cáo.
 - Gamification: Cây kỹ năng, Cửa hàng & Kho đồ, Thành tựu, Chứng chỉ, Bảng xếp hạng.
 
 ## Hiệu ứng hoạt họa

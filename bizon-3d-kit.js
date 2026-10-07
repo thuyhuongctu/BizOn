@@ -311,7 +311,7 @@ export function makeKit(THREE) {
     return g;
   }
 
-  // ---------- 8. Lumina AI advisor console
+  // ---------- 8. Lumina advisor console
   function lumina() {
     const g = group('BizOn_Lumina_Console');
     add('pedestal', lathe([[0, 0], [0.12, 0], [0.12, 0.02], [0.07, 0.05], [0.05, 0.2], [0.08, 0.23], [0.08, 0.25], [0, 0.25]], 48), M.cream, 0, 0, 0, g);
@@ -341,7 +341,7 @@ export function makeKit(THREE) {
       { id: 'shop', label: 'Cửa hàng', sub: 'Kho đồ của đội', build: shopChest },
       { id: 'skills', label: 'Cây kỹ năng', sub: 'Mở khóa bằng XP', build: skillTree },
       { id: 'podium', label: 'Bảng xep hạng', sub: 'Thành tựu & cúp', build: podium },
-      { id: 'lumina', label: 'Lumina AI', sub: 'Cố vấn chiến lược', build: lumina },
+      { id: 'lumina', label: 'Lumina', sub: 'Cố vấn chiến lược', build: lumina },
     ],
   };
 }

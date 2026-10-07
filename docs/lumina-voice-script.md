@@ -21,10 +21,10 @@ Hiện ở tab Nhật ký, đọc khi bấm nút 🔊 cạnh mỗi câu.
 
 | Clip | Người nói | Nội dung tiếng Việt |
 |---|---|---|
-| `quote-01` | **Lumina AI** | Mục tiêu không phải là đánh bại đối thủ, mà là làm cho họ trở nên không còn quan trọng. |
+| `quote-01` | **Lumina** | Mục tiêu không phải là đánh bại đối thủ, mà là làm cho họ trở nên không còn quan trọng. |
 | `quote-02` | SEC (nhân vật) | Mọi báo cáo tài chính đều là một câu chuyện, hãy đảm bảo đội của bạn đang viết một chương thành công. |
 | `quote-03` | Phan Anh Tú | Dữ liệu cho ta biết quá khứ, quyết định hôm nay viết nên tương lai. |
-| `quote-04` | **Lumina AI** | Khủng hoảng là bài kiểm tra tốt nhất cho năng lực quản trị dòng tiền. |
+| `quote-04` | **Lumina** | Khủng hoảng là bài kiểm tra tốt nhất cho năng lực quản trị dòng tiền. |
 | `quote-05` | Phan Anh Tú | Thị phần mua được bằng tiền, nhưng lòng trung thành phải xây bằng giá trị. |
 | `quote-06` | SEC (nhân vật) | Đừng sợ commit sai – hãy sợ việc không rút ra được bài học nào. |
 

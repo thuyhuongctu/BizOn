@@ -30,7 +30,7 @@ Khóa và gửi quyết định (đẩy vào queue xử lý).
 }
 ```
 
-## Lumina AI Advisor
+## Lumina Advisor
 
 ### `GET /ai/advisor/suggestions`
 Kịch bản "Nếu – Thì" hiển thị qua nhân vật Je m'appelle Hương.

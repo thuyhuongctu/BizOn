@@ -1,4 +1,4 @@
-# Lumina AI Mentor – API, Database & Logic "Nếu – Thì"
+# Lumina Mentor – API, Database & Logic "Nếu – Thì"
 
 Module Cố vấn AI Lumina (Je m'appelle Hương): kết nối giao diện người chơi với
 hệ thống kịch bản và cơ sở dữ liệu AI. Bản prototype hiện thực thi logic này

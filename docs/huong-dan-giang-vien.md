@@ -24,9 +24,9 @@
 
 **Chấm điểm gợi ý:** 45% lợi nhuận lũy kế · 35% số cờ chinh phục (thắng thị phần vòng) · 20% hợp tác vai trò & bài học rút ra (Nhật ký đội) — chi tiết rubric, cách chấm theo từng vòng và sổ điểm mẫu: xem `docs/chuan-dau-ra-va-rubric.md` §4.1 hoặc bản trích gọn `docs/cham-diem-bat-nghiep.md`.
 
-## 3. Ba đối thủ AI – hành vi chính xác
+## 3. Ba đối thủ ảo – hành vi chính xác
 
-Mỗi vòng, 3 đối thủ AI tự quyết định **giá** và **marketing** quanh mức đặc trưng, nhân với hệ số dao động ngẫu nhiên **±12%** (jitter 0,9–1,15, tất định theo seed của đội – cùng một đội chơi lại sẽ ra đúng kết quả cũ, tiện đối chiếu):
+Mỗi vòng, 3 đối thủ ảo tự quyết định **giá** và **marketing** quanh mức đặc trưng, nhân với hệ số dao động ngẫu nhiên **±12%** (jitter 0,9–1,15, tất định theo seed của đội – cùng một đội chơi lại sẽ ra đúng kết quả cũ, tiện đối chiếu):
 
 | Đối thủ | Phong cách | Giá cơ sở | Marketing cơ sở | Ý nghĩa sư phạm |
 |---|---|---|---|---|
@@ -40,7 +40,7 @@ Mỗi vòng, 3 đối thủ AI tự quyết định **giá** và **marketing** q
 
 ## 4. Sáu vòng chơi = Hành trình chinh phục Việt Nam
 
-Mỗi vòng gắn với một tỉnh/thành (bản đồ mới sau sáp nhập). **Đội có thị phần cao nhất vòng đó (≥ đối thủ AI cao nhất) VÀ có lãi** cắm cờ 🚩; thị phần cao nhất mà lỗ thì chỉ hiện cảnh báo ⚠️ (chưa cắm được cờ) – tránh việc phá giá/đổ hết ngân sách marketing để "thắng thị phần" trong khi âm vốn; thua cả hai điều kiện thì AI cắm cờ 🏴:
+Mỗi vòng gắn với một tỉnh/thành (bản đồ mới sau sáp nhập). **Đội có thị phần cao nhất vòng đó (≥ đối thủ ảo cao nhất) VÀ có lãi** cắm cờ 🚩; thị phần cao nhất mà lỗ thì chỉ hiện cảnh báo ⚠️ (chưa cắm được cờ) – tránh việc phá giá/đổ hết ngân sách marketing để "thắng thị phần" trong khi âm vốn; thua cả hai điều kiện thì AI cắm cờ 🏴:
 
 Vòng 1 **Cần Thơ** → 2 **TP. Hồ Chí Minh** → 3 **Khánh Hòa** → 4 **Đà Nẵng** → 5 **Thanh Hóa** → 6 **Hà Nội**
 
@@ -59,8 +59,8 @@ Bản đồ chinh phục hiển thị trên Trang chủ của mỗi đội – d
 
 ## 6. Công cụ hỗ trợ học tập trong game
 
-- **Lumina AI** (Lumina Áo Dài / Lumina Vest Trắng): cố vấn theo vai trò, mô phỏng "Nếu – Thì" trước khi chốt, chúc mừng KPI và cảnh báo rủi ro theo đúng kịch bản sư phạm.
-- **Sổ tay 📖**: luật chơi, vai trò, đối thủ AI, mẹo, xử lý sự cố – sinh viên tự tra cứu.
+- **Lumina** (Lumina Áo Dài / Lumina Vest Trắng): cố vấn theo vai trò, mô phỏng "Nếu – Thì" trước khi chốt, chúc mừng KPI và cảnh báo rủi ro theo đúng kịch bản sư phạm.
+- **Sổ tay 📖**: luật chơi, vai trò, đối thủ ảo, mẹo, xử lý sự cố – sinh viên tự tra cứu.
 - **7 báo cáo chuẩn giáo trình**: P&L, dòng tiền 3 hoạt động, CVP hòa vốn, nhân sự, BMC, khấu hao, kiểm toán năng lượng.
 - **BizOn Monitor** (tab Thị trường sống): sparkline chỉ số đội + 3 đối thủ theo vòng – dạy đọc dashboard.
 - **IE Lab – Khởi nghiệp quốc tế** (trang BizOn Go Global): công cụ mô phỏng số liệu quan hệ quốc tế hóa – hiệu quả doanh nghiệp (chữ U ngược với điểm ngoặt minh họa ≈43% FSTS, kịch bản đảo nhỏ, "lá chắn số") – dùng cho học phần Khởi nghiệp/Kinh doanh quốc tế; toàn bộ là tham số mô phỏng giáo dục.
