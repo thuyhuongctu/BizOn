@@ -192,7 +192,7 @@
           <button onclick="toggleTheme()" class="clay-sunken rounded-full w-8 h-8 text-sm" title="Sáng/Tối">🌙</button>
         </div>
       </div>
-      <p class="text-sm text-deep-teal/60 mb-2"><span class="font-display font-extrabold lumina-name">Lumina AI</span> – <span class="signature text-lg text-deep-teal">Je m'appelle Hương</span> <span>đang chờ đồng hành cùng đội của bạn.</span></p>
+      <p class="text-sm text-deep-teal/60 mb-2"><span class="font-display font-extrabold lumina-name">Lumina</span> – <span class="signature text-lg text-deep-teal">Je m'appelle Hương</span> <span>đang chờ đồng hành cùng đội của bạn.</span></p>
       <p class="text-[11px] font-bold text-deep-teal/55 mb-6">⏱️ Một ván 6 vòng ≈ 30–45 phút (mỗi vòng 5–7 phút) – vừa một buổi học. Chơi thử nhanh với Đội Demo: ~10 phút cho 2 vòng đầu.</p>
 
       <!-- Đăng nhập sinh viên thật — xác thực email trường thật qua Supabase Auth,
@@ -304,7 +304,7 @@
         <div class="clay-card p-4 text-center">
           <p class="text-2xl">📊</p><p id="m-share" class="font-display font-extrabold text-deep-teal text-sm mt-1">–</p>
           <p class="text-[10px] text-deep-teal/50 font-semibold uppercase">Thị phần (%)</p>
-          <p class="text-[9px] text-deep-teal/40 mt-0.5 leading-tight">% khách chọn bạn trong 4 đội (bạn + 3 đối thủ AI)</p>
+          <p class="text-[9px] text-deep-teal/40 mt-0.5 leading-tight">% khách chọn bạn trong 4 đội (bạn + 3 đối thủ ảo)</p>
         </div>
         <div class="clay-card p-4 text-center">
           <p class="text-2xl">⭐</p><p id="m-brand" class="font-display font-extrabold text-deep-teal text-sm mt-1">–</p>
@@ -326,11 +326,11 @@
       <div id="opponents-card"></div>
       <div class="clay-card p-5 mb-4 flex items-center gap-4">
         <div class="glow-ring rounded-full shrink-0">
-          <img src="assets/character/lumina-vest.webp" alt="Lumina AI" class="w-14 h-14 rounded-full object-cover shadow-clay" style="object-position:50% 12%">
+          <img src="assets/character/lumina-vest.webp" alt="Lumina" class="w-14 h-14 rounded-full object-cover shadow-clay" style="object-position:50% 12%">
         </div>
         <div class="flex-1 min-w-0">
           <p class="flex items-baseline gap-1.5 flex-wrap">
-            <span class="font-display font-extrabold lumina-name text-base">Lumina AI</span>
+            <span class="font-display font-extrabold lumina-name text-base">Lumina</span>
             <span class="signature text-lg text-deep-teal leading-none">Je m'appelle Hương</span>
           </p>
           <p id="dash-lumina" class="text-xs text-deep-teal/70 mt-0.5">Xin chào! Hãy vào mục Cố vấn để nhận gợi ý chiến thuật nhé.</p>
@@ -404,7 +404,7 @@
       </div>
       <div class="clay-card p-5 mb-3">
         <div class="flex justify-between items-start mb-3">
-          <div><p class="font-bold text-sm text-deep-teal">🚩 Dự báo Thị phần – bạn có cắm được cờ?</p><p class="text-[11px] text-deep-teal/50">Ước tính theo thông số đang nhập, so với 3 đối thủ AI</p></div>
+          <div><p class="font-bold text-sm text-deep-teal">🚩 Dự báo Thị phần – bạn có cắm được cờ?</p><p class="text-[11px] text-deep-teal/50">Ước tính theo thông số đang nhập, so với 3 đối thủ ảo</p></div>
           <p id="mf-share" class="font-display font-extrabold text-primary text-2xl">–</p>
         </div>
         <div class="h-3 rounded-full bg-surface-bright overflow-hidden shadow-inner relative">
@@ -531,11 +531,11 @@
       <div class="clay-card mb-4 overflow-hidden">
         <div class="flex items-center gap-4 p-4 pb-0">
           <div class="glow-ring rounded-clay shrink-0">
-            <img id="lumina-mascot-avatar" src="assets/character/lumina-vest.webp" alt="Lumina AI – vest trắng" class="w-16 h-16 rounded-clay object-cover shadow-clay-lg" style="object-position:50% 12%">
+            <img id="lumina-mascot-avatar" src="assets/character/lumina-vest.webp" alt="Lumina – vest trắng" class="w-16 h-16 rounded-clay object-cover shadow-clay-lg" style="object-position:50% 12%">
           </div>
           <div class="flex-1 min-w-0">
             <div class="flex items-center gap-2">
-              <h2 class="font-display text-2xl font-extrabold lumina-name tracking-tight">Lumina AI</h2>
+              <h2 class="font-display text-2xl font-extrabold lumina-name tracking-tight">Lumina</h2>
               <span class="text-[9px] font-extrabold text-white bg-gradient-to-r from-primary to-primary-container px-2 py-0.5 rounded-full shadow-clay shrink-0">✦ MENTOR</span>
             </div>
             <p class="signature signature-underline text-xl text-deep-teal leading-tight mt-0.5">Je m'appelle Hương</p>
@@ -543,7 +543,7 @@
               <span class="online-dot w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span> <span>Online · Cố vấn chiến lược</span>
             </p>
           </div>
-          <button id="huong-voice-btn" onclick="playHuongIntro()" title="Nghe giọng thật của Lumina AI" class="clay-btn bg-white w-11 h-11 rounded-full text-xl shrink-0 self-start">🔊</button>
+          <button id="huong-voice-btn" onclick="playHuongIntro()" title="Nghe giọng thật của Lumina" class="clay-btn bg-white w-11 h-11 rounded-full text-xl shrink-0 self-start">🔊</button>
         </div>
         <div class="relative mt-3">
           <img id="advisor-hero" src="assets/character/lumina-vest.webp" alt="" class="w-full h-44 object-cover" style="object-position:50% 8%">
@@ -574,7 +574,7 @@
           <button onclick="askLumina('risk')" class="clay-btn bg-surface-bright text-deep-teal text-left font-semibold text-sm px-4 py-3">⚠️ Rủi ro lớn nhất vòng này là gì?</button>
         </div>
         <div class="flex items-center gap-2">
-          <input id="chat-input" type="text" placeholder="Trò chuyện với Lumina AI..." class="clay-input flex-1 rounded-full px-5 py-3 text-sm text-deep-teal" onkeydown="if(event.key==='Enter')sendChat()">
+          <input id="chat-input" type="text" placeholder="Trò chuyện với Lumina..." class="clay-input flex-1 rounded-full px-5 py-3 text-sm text-deep-teal" onkeydown="if(event.key==='Enter')sendChat()">
           <button id="mic-btn" onclick="toggleMic()" aria-label="Nói với Lumina bằng micro" class="clay-button-secondary w-11 h-11 rounded-full flex items-center justify-center text-lg shrink-0">🎤</button>
           <button onclick="sendChat()" aria-label="Gửi tin nhắn" class="clay-button-primary w-11 h-11 rounded-full flex items-center justify-center text-white text-lg shrink-0">➤</button>
         </div>
@@ -822,7 +822,7 @@
     </section>
   </main>
 
-  <!-- Phụ đề giọng nói Lumina AI -->
+  <!-- Phụ đề giọng nói Lumina -->
   <div id="huong-caption-box" class="hidden fixed bottom-24 inset-x-0 z-50 flex justify-center px-5 pointer-events-none">
     <div class="clay-card px-5 py-3 flex items-center gap-3 max-w-sm shadow-clay-lg">
       <img src="assets/character/lumina-ao-dai.webp" alt="Lumina – Cố vấn học tập AI" class="w-10 h-10 rounded-full object-cover shrink-0" style="object-position:50% 10%">

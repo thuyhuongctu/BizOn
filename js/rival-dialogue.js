@@ -1,4 +1,4 @@
-/* BizOn – Hội thoại đối thủ AI: một màn khiêu khích ngắn từ 1 trong 3 đối
+/* BizOn – Hội thoại đối thủ ảo: một màn khiêu khích ngắn từ 1 trong 3 đối
  * thủ AI (Alpha Dynamics / Mekong Ventures / Star Clay Co.) ngay trước khi
  * vào tab Quyết định mỗi vòng. Người chơi chọn 1 trong 3 phản ứng, tác
  * động nhẹ lên S.brand/S.balance – KHÔNG thay thế các quyết định giá/
