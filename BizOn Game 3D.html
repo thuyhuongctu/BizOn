@@ -1091,7 +1091,8 @@ function finale3D() {
     <div class="say"><small>🤖 HƯƠNG AI</small>${champ ? 'Quán quân sàn đấu! Đội cắm nhiều cờ nhất trên bản đồ Việt Nam.' : 'Sáu vòng là sáu bài học. Đọc lại nhật ký đội, rồi thử lại mùa mới nhé.'}</div>
     <div class="q">"${champ ? 'Một chiến lược được thực thi kỷ luật suốt sáu vòng – đó là điều đáng tự hào nhất.' : 'Doanh nghiệp giỏi không phải doanh nghiệp không bao giờ sai, mà là doanh nghiệp sửa sai nhanh.'}" – <b>Phan Anh Tú</b></div>
     <div class="row"><button class="btn primary" id="fnRep">📊 Báo cáo mùa giải</button><button class="btn" id="fnAch">🎖️ Thành tựu</button></div>
-    <button class="btn" id="fnNew">🔄 Chơi lại mùa mới</button>`);
+    <button class="btn" id="fnNew">🔄 Chơi lại mùa mới</button>
+    <p style="font-size:11px;color:#8a7a68;margin-top:4px;line-height:1.4">${s.profile.classId && s.profile.classId !== 'DEMO-2026' ? 'Phiên thi có mã lớp: không thể Reset – kết quả đã gửi về giảng viên.' : 'Chỉ Reset khi vòng chơi thật sự gặp lỗi.'}</p>`);
   evc.querySelector('#fnRep').onclick = () => { closeEvent(); ev("currentReport='season'"); force2D = true; W.showTab('reports'); force2D = false; };
   evc.querySelector('#fnAch').onclick = () => { closeEvent(); window.__openTab('achievements'); };
   evc.querySelector('#fnNew').onclick = () => { closeEvent(); if (FIN) { scene.remove(FIN); FIN = null; } for (let i = actors.length - 1; i >= 0; i--) if (actors[i].fin) actors.splice(i, 1); ev('resetGame()'); };
@@ -1515,7 +1516,8 @@ function buildProfile() {
   rmCard.innerHTML = `<p class="k">${role} · Tier ${Math.min(lvl, 6)}</p><h3>${s.profile.teamName}</h3><p>${s.profile.email || ''}${s.profile.classId ? ' · Lớp ' + s.profile.classId : ''}</p>
     <div style="height:12px;border-radius:999px;background:#e6d6bf;overflow:hidden"><div style="height:100%;width:${Math.round(pct * 100)}%;background:#f2c14e"></div></div>
     <div class="stats"><div><small>XP</small><b style="font-size:16px">${s.xp.toLocaleString('vi-VN')}</b></div><div><small>LỢI NHUẬN</small><b style="font-size:16px">${fmt(total)}</b></div><div><small>VÒNG</small><b style="font-size:16px">${(s.history || []).length}/6</b></div></div>
-    <div class="row"><button class="btn" id="pfSet">⚙️ Cài đặt</button><button class="btn" id="pfReset">↺ Chơi lại</button></div>`;
+    <div class="row"><button class="btn" id="pfSet">⚙️ Cài đặt</button><button class="btn" id="pfReset">↺ Chơi lại</button></div>
+    <p style="font-size:11px;color:#8a7a68;margin-top:4px;line-height:1.4">Chỉ Reset khi vòng chơi thật sự gặp lỗi. ${s.profile.classId && s.profile.classId !== 'DEMO-2026' ? 'Phiên thi có mã lớp: không thể Reset.' : 'Không phải vì không hài lòng kết quả.'}</p>`;
   rmCard.querySelector('#pfSet').onclick = () => { closeRoom(); force2D = true; W.showTab('settings'); force2D = false; };
   rmCard.querySelector('#pfReset').onclick = () => W.resetGame();
 }
