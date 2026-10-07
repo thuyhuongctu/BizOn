@@ -926,7 +926,7 @@ function renderMonitor() {
     return;
   }
   const metrics = [
-    { name: T('Thị phần', 'Market Share'),      tag: T('THỊ PHẦN', 'MARKET SHARE'),   s: H.map(r => r.share),        fmt: v => v.toFixed(1) + '%' },
+    { name: T('Thị phần', 'Market Share'),      tag: T('THỊ PHẦN', 'MARKET SHARE'),   s: H.map(r => r.share),        fmt: v => v.toFixed(1) + '%', tip: T('% khách chọn bạn trong 4 đội (bạn + 3 đối thủ AI)', '% of customers who picked you, of 4 teams (you + 3 AI rivals)') },
     { name: T('Doanh thu', 'Revenue'),     tag: T('DOANH THU', 'REVENUE'),  s: H.map(r => r.revenue),      fmt: v => money(v) },
     { name: T('Lợi nhuận', 'Profit'),     tag: T('LỢI NHUẬN', 'PROFIT'),  s: H.map(r => r.netProfit),    fmt: v => money(v) },
     { name: T('Ví đội', 'Team Wallet'),        tag: T('DÒNG TIỀN', 'CASH FLOW'),  s: H.map(r => r.balance),      fmt: v => money(v) },
@@ -934,7 +934,7 @@ function renderMonitor() {
     { name: 'Brand Loyalty', tag: T('THƯƠNG HIỆU', 'BRAND'), s: H.map(r => r.brandLoyalty), fmt: v => v + '%' },
   ];
   (S.aiHistory || []).length && COMPETITORS.forEach((c, i) => {
-    metrics.push({ name: c.name, tag: T('ĐỐI THỦ AI', 'AI RIVAL'), s: (S.aiHistory || []).map(snap => (snap[i] || {}).share || 0), fmt: v => v.toFixed(1) + '%' });
+    metrics.push({ name: c.name, tag: T('ĐỐI THỦ AI', 'AI RIVAL'), s: (S.aiHistory || []).map(snap => (snap[i] || {}).share || 0), fmt: v => v.toFixed(1) + '%', tip: T('% thị phần của đối thủ này trong 4 đội', "This rival's % share of the 4-team market") });
   });
 
   const pct = m => {
@@ -957,7 +957,7 @@ function renderMonitor() {
     const lastV = m.s[m.s.length - 1];
     const chgTxt = m.chg === null ? '' : `<span style="color:${m.chg >= 0 ? '#34d399' : '#f87171'}">${m.chg >= 0 ? '+' : ''}${m.chg.toFixed(2)}%</span>`;
     return `<div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.05)">
-      <div style="flex:1;min-width:0"><p style="font-size:13px;font-weight:700;color:#e8f2ec;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${m.name}</p>
+      <div style="flex:1;min-width:0"><p style="font-size:13px;font-weight:700;color:#e8f2ec;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"${m.tip ? ` title="${m.tip}"` : ''}>${m.name}${m.tip ? ' ⓘ' : ''}</p>
         <p style="font-size:8.5px;letter-spacing:.14em;color:#7d948b">${m.tag}</p></div>
       <div style="flex-shrink:0">${mmSpark(m.s)}</div>
       <div style="text-align:right;flex-shrink:0;min-width:64px"><p style="font-size:13px;font-weight:700;color:#e8f2ec">${m.fmt(lastV)}</p>
@@ -1046,11 +1046,12 @@ function renderMarket() {
       </div>
     </div>
     <div class="clay-card p-5 mb-3">
-      <h3 class="font-display font-bold text-deep-teal text-sm mb-4">${T('📊 Thị phần thời gian thực', '📊 Real-time market share')}</h3>
+      <h3 class="font-display font-bold text-deep-teal text-sm mb-1">${T('📊 Thị phần thời gian thực', '📊 Real-time market share')}</h3>
+      <p class="text-[10px] text-deep-teal/50 mb-3">${T('% khách chọn mỗi đội trong tổng 4 đội – cộng lại = 100%', "% of customers who picked each team, out of 4 – adds up to 100%")}</p>
       <div class="clay-sunken rounded-2xl p-4 flex items-end justify-around h-48">
         ${teams.map(t => `
           <div class="flex flex-col items-center gap-2 h-full justify-end">
-            <span class="text-[10px] font-extrabold ${t.me ? 'text-primary' : 'text-deep-teal/50'}">${t.share.toFixed(0)}%</span>
+            <span class="text-[10px] font-extrabold ${t.me ? 'text-primary' : 'text-deep-teal/50'}" title="${T('% thị phần', '% market share')}">${t.share.toFixed(0)}%</span>
             <div class="clay-bar-v w-10" style="height:${Math.max(12, t.share / maxShare * 78)}%; background:${t.me ? 'linear-gradient(to top,#004d66,#00c4ff)' : '#dfe3e7'}"></div>
             <span class="text-[9px] font-bold ${t.me ? 'text-primary' : 'text-deep-teal/50'}">${t.name}</span>
           </div>`).join('')}
@@ -1624,8 +1625,8 @@ function showRoundResult(r) {
       <div class="grid grid-cols-2 gap-2 text-left text-sm">
         <div class="bg-surface-bright rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">${T('Doanh thu', 'Revenue')}</p><p class="font-display font-bold text-deep-teal">${money(r.revenue)}</p></div>
         <div class="bg-surface-bright rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">${T('Lợi nhuận ròng', 'Net profit')}</p><p class="font-display font-bold ${ok ? 'text-emerald-600' : 'text-orange-600'}">${money(r.netProfit)}</p></div>
-        <div class="bg-surface-bright rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">${T('Đã bán', 'Units sold')}</p><p class="font-display font-bold text-deep-teal">${r.sold.toLocaleString('vi-VN')} ${T('sp', 'units')}</p></div>
-        <div class="bg-surface-bright rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">${T('Thị phần (%)', 'Market share (%)')}</p><p class="font-display font-bold text-deep-teal">${r.share.toFixed(1)}%</p></div>
+        <div class="bg-surface-bright rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">${T('Đã bán', 'Units sold')}</p><p class="font-display font-bold text-deep-teal">${r.sold.toLocaleString('vi-VN')} ${T('sp', 'units')}</p><p class="text-[9px] text-deep-teal/40 leading-tight mt-0.5">${T('≤ sản lượng – thấp hơn do dư tồn kho hoặc thiếu hàng', '≤ output – lower from excess stock or a stockout')}</p></div>
+        <div class="bg-surface-bright rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">${T('Thị phần (%)', 'Market share (%)')}</p><p class="font-display font-bold text-deep-teal">${r.share.toFixed(1)}%</p><p class="text-[9px] text-deep-teal/40 leading-tight mt-0.5">${T('% khách chọn bạn trong 4 đội', '% of customers who picked you of 4 teams')}</p></div>
       </div>
       <div class="clay-sunken rounded-2xl p-3 mt-3 text-left"><p class="text-[10px] font-extrabold text-deep-teal/50 uppercase mb-0.5">${T('💡 Vì sao?', '💡 Why?')}</p><p class="text-[11px] text-deep-teal/75">${explainRound(r)}</p></div>
       <p class="mt-3 text-xs font-bold text-primary">+${r.xpGain} XP</p>
