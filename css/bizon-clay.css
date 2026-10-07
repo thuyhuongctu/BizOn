@@ -112,6 +112,7 @@
 #clay-nav .cn-dl{flex:none;display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border:0;border-radius:50%;background:var(--clay-teal);color:#fff;font:inherit;font-size:16px;line-height:1;cursor:pointer;box-shadow:var(--clay-btn-shadow),0 8px 14px -8px rgba(0,60,80,.7)}
 #clay-nav .cn-dl:hover{color:#fff}
 #clay-nav .cn-dlmenu{position:absolute;right:0;top:calc(100% + 10px);z-index:20;display:flex;flex-direction:column;gap:2px;min-width:240px;padding:8px;border-radius:var(--clay-r);background:var(--clay-card);box-shadow:0 18px 30px -12px rgba(110,70,30,.5),inset 0 4px 0 rgba(255,255,255,.9)}
+#clay-nav .cn-dlmenu[hidden]{display:none}
 #clay-nav .cn-dlmenu a{padding:10px 12px;border-radius:var(--clay-r-sm);color:var(--clay-ink);font-size:14px;font-weight:700;white-space:nowrap}
 #clay-nav .cn-dlmenu a:hover{background:var(--clay-tray);color:var(--clay-teal)}
 @media (max-width:560px){
