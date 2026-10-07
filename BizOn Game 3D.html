@@ -225,80 +225,81 @@
   <img src="assets/character/rong-xanh.webp" alt="" style="margin-top:auto;width:96px;filter:drop-shadow(0 6px 10px rgba(0,0,0,.35))">
   <div style="font-size:26px;font-weight:800;letter-spacing:.5px;white-space:nowrap;text-align:center;color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.35),0 8px 24px rgba(0,0,0,.4)">BizOn BẬT NGHIỆP</div>
   <div style="width:min(320px,70vw);height:14px;border-radius:10px;background:#dccbb0;border:2px solid #cbb797;overflow:hidden"><div id="bootBar" style="height:100%;width:4%;background:#2f8a8c;border-radius:10px;transition:width .35s"></div></div>
-  <div id="bootMsg" style="margin-bottom:8vh;background:rgba(251,246,238,.92);padding:4px 12px;border-radius:10px;text-align:center;font:600 14px 'Be Vietnam Pro',sans-serif;color:#5a6b74">Đang tải thư viện 3D…</div>
-  <button id="bootLow" style="display:none;margin-top:6px;font:700 13px 'Baloo 2',sans-serif;background:#fbf6ee;border:2px solid #cbb797;border-radius:12px;padding:6px 12px;color:#2b4a55;cursor:pointer">Mạng chậm? Chơi bản 2D nhẹ →</button>
+  <div id="bootMsg" data-en="Loading the 3D library…" style="margin-bottom:8vh;background:rgba(251,246,238,.92);padding:4px 12px;border-radius:10px;text-align:center;font:600 14px 'Be Vietnam Pro',sans-serif;color:#5a6b74">Đang tải thư viện 3D…</div>
+  <button id="bootLow" style="display:none;margin-top:6px;font:700 13px 'Baloo 2',sans-serif;background:#fbf6ee;border:2px solid #cbb797;border-radius:12px;padding:6px 12px;color:#2b4a55;cursor:pointer" data-en="Slow network? Play the light 2D version →">Mạng chậm? Chơi bản 2D nhẹ →</button>
 </div>
 <script>
-(function(){ const bar=document.getElementById('bootBar'), msg=document.getElementById('bootMsg');
+(function(){ const bar=document.getElementById('bootBar'), msg=document.getElementById('bootMsg'); let en=false; try{ en=localStorage.getItem('bizon-lang')==='en'; }catch(e){}
+  if(en) document.querySelectorAll('#boot [data-en]').forEach(el=>{ el.textContent=el.dataset.en; });
   window.__boot=(p,m)=>{ if(!bar) return; bar.style.width=Math.round(p*100)+'%'; if(m) msg.textContent=m; if(p>=1){ const b=document.getElementById('boot'); if(b){ b.style.opacity='0'; setTimeout(()=>b.remove(),520);} } };
   setTimeout(()=>{ const b=document.getElementById('bootLow'); if(b&&document.getElementById('boot')){ b.style.display='inline-block'; b.onclick=()=>location.href='game.html'; } },9000);
-  addEventListener('error',e=>{ if(/three|unpkg|jsdelivr/i.test(e.message||'')||(e.target&&e.target.src&&/unpkg|jsdelivr/.test(e.target.src))){ msg.textContent='Không tải được thư viện 3D. Kiểm tra mạng hoặc chơi bản 2D.'; document.getElementById('bootLow').style.display='inline-block'; } },true);
+  addEventListener('error',e=>{ if(/three|unpkg|jsdelivr/i.test(e.message||'')||(e.target&&e.target.src&&/unpkg|jsdelivr/.test(e.target.src))){ msg.textContent=en?'Could not load the 3D library. Check your network or play the 2D version.':'Không tải được thư viện 3D. Kiểm tra mạng hoặc chơi bản 2D.'; document.getElementById('bootLow').style.display='inline-block'; } },true);
 })();
 </script>
 <div id="login3d">
   <div class="card">
     <div style="display:flex;align-items:center;gap:10px"><img src="assets/character/rong-xanh-sen.webp" alt="Rồng Xanh" style="width:62px;height:auto"><h1>BizOn Bật Nghiệp</h1></div>
-    <p>Chào mừng các bạn đến trụ sở BizOn ở Cần Thơ. Sáu quý tới, đội mình sẽ điều hành một xưởng đồ đất sét và đi từ Cần Thơ ra tới Hà Nội.</p>
-    <p style="font-size:13px">Chọn vai của bạn trước nhé. CEO giữ la bàn, CFO giữ túi tiền, CMO giữ loa, COO giữ xưởng, SEC giữ biên bản.</p>
-    <label for="l3Email">Email <span style="font-weight:400;color:#8a969c">(tùy chọn)</span></label><input id="l3Email" type="email" placeholder="sinhvien@truong.edu.vn" autocomplete="email">
-    <div style="font:500 11px/1.35 'Be Vietnam Pro',sans-serif;color:#8a969c;margin:-2px 0 2px">Chơi thử (không Mã lớp): mọi dữ liệu chỉ lưu trên máy bạn. Có Mã lớp: kết quả mỗi vòng và email này được gửi về máy chủ lớp học để giảng viên chấm điểm – xem <a href="chinh-sach.html" target="_blank" rel="noopener" style="color:#2f8a8c">Chính sách quyền riêng tư</a>.</div>
-    <label for="l3Team">Tên đội – cũng là tên doanh nghiệp</label><input id="l3Team" type="text" placeholder="VD: Rồng Xanh Corp">
-    <label for="l3Class">Mã lớp <span style="font-weight:400;color:#8a969c">(tùy chọn – để trống là chơi thử)</span></label><input id="l3Class" type="text" placeholder="VD: QTKD-2026-A" style="text-transform:uppercase">
-    <label>Vai trò của bạn</label>
+    <p data-en="Welcome to BizOn headquarters in Can Tho. Over the next six quarters, your team will run a clay-goods workshop and travel from Can Tho all the way to Hanoi.">Chào mừng các bạn đến trụ sở BizOn ở Cần Thơ. Sáu quý tới, đội mình sẽ điều hành một xưởng đồ đất sét và đi từ Cần Thơ ra tới Hà Nội.</p>
+    <p style="font-size:13px" data-en="Pick your role first. The CEO holds the compass, the CFO the purse, the CMO the megaphone, the COO the workshop and the SEC the minutes.">Chọn vai của bạn trước nhé. CEO giữ la bàn, CFO giữ túi tiền, CMO giữ loa, COO giữ xưởng, SEC giữ biên bản.</p>
+    <label for="l3Email">Email <span style="font-weight:400;color:#8a969c" data-en="(optional)">(tùy chọn)</span></label><input id="l3Email" type="email" placeholder="sinhvien@truong.edu.vn" autocomplete="email">
+    <div style="font:500 11px/1.35 'Be Vietnam Pro',sans-serif;color:#8a969c;margin:-2px 0 2px"><span data-en="Trial play (no class code): all data stays on your device. With a class code: each round's results and this email are sent to the class server for instructor grading – see ">Chơi thử (không Mã lớp): mọi dữ liệu chỉ lưu trên máy bạn. Có Mã lớp: kết quả mỗi vòng và email này được gửi về máy chủ lớp học để giảng viên chấm điểm – xem </span><a href="chinh-sach.html" target="_blank" rel="noopener" style="color:#2f8a8c" data-en="Privacy policy">Chính sách quyền riêng tư</a>.</div>
+    <label for="l3Team" data-en="Team name – also your company name">Tên đội – cũng là tên doanh nghiệp</label><input id="l3Team" type="text" placeholder="VD: Rồng Xanh Corp" data-en-ph="e.g. Green Dragon Corp">
+    <label for="l3Class"><span data-en="Class code">Mã lớp</span> <span style="font-weight:400;color:#8a969c" data-en="(optional – leave blank for trial play)">(tùy chọn – để trống là chơi thử)</span></label><input id="l3Class" type="text" placeholder="VD: QTKD-2026-A" data-en-ph="e.g. BA-2026-A" style="text-transform:uppercase">
+    <label data-en="Your role">Vai trò của bạn</label>
     <div class="roles" id="l3Roles"></div>
-    <button class="go" id="l3Go">Bắt đầu ▶</button>
-    <button class="alt" id="l3Demo">👥 Chơi thử với Đội Demo</button>
-    <div class="links"><a href="Trang Giang Vien.dc.html">👩‍🏫 Trang Giảng viên</a><a href="#" id="l3Classic">Giao diện 2D cũ</a></div>
+    <button class="go" id="l3Go" data-en="Start ▶">Bắt đầu ▶</button>
+    <button class="alt" id="l3Demo" data-en="👥 Try it with the Demo Team">👥 Chơi thử với Đội Demo</button>
+    <div class="links"><a href="Trang Giang Vien.dc.html" data-en="👩‍🏫 Instructor page">👩‍🏫 Trang Giảng viên</a><a href="#" id="l3Classic" data-en="Classic 2D interface">Giao diện 2D cũ</a></div>
   </div>
   <div class="rtip" id="l3Tip"></div>
 </div>
 <canvas id="c"></canvas>
 <div id="top" class="hud">
-  <div class="brand"><b id="hTeam">BizOn BẬT NGHIỆP · Trụ sở Cần Thơ</b><span id="hEvent">Chạm phòng ban hoặc nhân vật để làm việc</span></div>
+  <div class="brand"><b id="hTeam" data-en="BizOn BẬT NGHIỆP · Can Tho Headquarters">BizOn BẬT NGHIỆP · Trụ sở Cần Thơ</b><span id="hEvent" data-en="Tap a department or a character to get to work">Chạm phòng ban hoặc nhân vật để làm việc</span></div>
   <div class="kpis">
-    <div class="kpi"><small>TIỀN MẶT</small><b id="kCash">–</b></div>
-    <div class="kpi"><small>THỊ PHẦN</small><b id="kShare">–</b></div>
-    <div class="kpi"><small>THƯƠNG HIỆU</small><b id="kBrand">–</b></div>
-    <div class="kpi"><small>CỜ</small><b id="kFlags">0/6</b></div>
+    <div class="kpi"><small data-en="CASH">TIỀN MẶT</small><b id="kCash">–</b></div>
+    <div class="kpi"><small data-en="MARKET SHARE">THỊ PHẦN</small><b id="kShare">–</b></div>
+    <div class="kpi"><small data-en="BRAND">THƯƠNG HIỆU</small><b id="kBrand">–</b></div>
+    <div class="kpi"><small data-en="FLAGS">CỜ</small><b id="kFlags">0/6</b></div>
   </div>
 </div>
 <div id="rail" class="hud">
   <button class="btn" id="musicBtn"><i>🎵</i><span>Nhạc nền</span></button>
-  <button class="btn" data-tab="instructor"><i>👩‍🏫</i><span>Giảng viên</span></button>
+  <button class="btn" data-tab="instructor"><i>👩‍🏫</i><span data-en="Instructor">Giảng viên</span></button>
   <button class="btn" data-tab="advisor"><i>🤖</i><span>Lumina</span></button>
-  <button class="btn" data-tab="reports"><i>📊</i><span>Báo cáo</span></button>
-  <button class="btn" data-tab="shop"><i>🛒</i><span>Cửa hàng</span></button>
-  <button class="btn" data-tab="skills"><i>🌳</i><span>Kỹ năng</span></button>
-  <button class="btn" data-tab="missions"><i>📋</i><span>Nhiệm vụ</span><b class="badge" id="bMis"></b></button>
-  <button class="btn" data-tab="achievements"><i>🎖️</i><span>Thành tựu</span></button>
-  <button class="btn" data-tab="leaderboard"><i>🏆</i><span>Xếp hạng</span></button>
+  <button class="btn" data-tab="reports"><i>📊</i><span data-en="Reports">Báo cáo</span></button>
+  <button class="btn" data-tab="shop"><i>🛒</i><span data-en="Shop">Cửa hàng</span></button>
+  <button class="btn" data-tab="skills"><i>🌳</i><span data-en="Skills">Kỹ năng</span></button>
+  <button class="btn" data-tab="missions"><i>📋</i><span data-en="Missions">Nhiệm vụ</span><b class="badge" id="bMis"></b></button>
+  <button class="btn" data-tab="achievements"><i>🎖️</i><span data-en="Achievements">Thành tựu</span></button>
+  <button class="btn" data-tab="leaderboard"><i>🏆</i><span data-en="Leaderboard">Xếp hạng</span></button>
   <button class="btn" data-tab="minigame"><i>🏭</i><span>Mini-game</span></button>
-  <button class="btn" id="openRes"><i>🚩</i><span>Bản đồ cờ</span></button>
-  <button class="btn" data-tab="profile"><i>👤</i><span>Hồ sơ</span></button>
-  <button class="btn" data-tab="journal"><i>📔</i><span>Nhật ký</span></button>
-  <button class="btn" data-tab="settings"><i>⚙️</i><span>Cài đặt</span></button>
-  <button class="btn" id="tourBtn"><i>❓</i><span>Hướng dẫn</span></button>
+  <button class="btn" id="openRes"><i>🚩</i><span data-en="Flag map">Bản đồ cờ</span></button>
+  <button class="btn" data-tab="profile"><i>👤</i><span data-en="Profile">Hồ sơ</span></button>
+  <button class="btn" data-tab="journal"><i>📔</i><span data-en="Journal">Nhật ký</span></button>
+  <button class="btn" data-tab="settings"><i>⚙️</i><span data-en="Settings">Cài đặt</span></button>
+  <button class="btn" id="tourBtn"><i>❓</i><span data-en="Guide">Hướng dẫn</span></button>
   <button class="btn" id="langBtn"><i>🌐</i><span>Tiếng Việt</span></button>
   <button class="btn" id="night">🌙 Ban đêm</button>
   <button class="btn" id="lowBtn"><i>⚡</i><span>Chi tiết thấp</span></button>
-  <button class="btn" id="moreBtn"><i>🧱</i><span>Bộ sưu tập 3D</span></button>
+  <button class="btn" id="moreBtn"><i>🧱</i><span data-en="3D collection">Bộ sưu tập 3D</span></button>
 </div>
 <div id="more" style="position:fixed;z-index:26;right:14px;bottom:70px;display:none;flex-direction:column;gap:6px;background:#fbf6ee;border:3px solid #e6d6bf;border-radius:18px;padding:10px;box-shadow:0 6px 0 #d9c5a8">
-  <a class="btn" href="Characters 3D.html">🧍 Nhân vật 3D</a>
-  <a class="btn" href="HQ Asset Gallery.html">🧱 Nội thất, sản phẩm & linh vật</a>
-  <a class="btn" href="BizOn HQ Diorama.html">🏢 Trụ sở diorama (xem tự do)</a>
-  <a class="btn" href="strategy-table-3d.html">🧩 Bàn họp chiến lược 3D</a>
+  <a class="btn" href="Characters 3D.html" data-en="🧍 3D characters">🧍 Nhân vật 3D</a>
+  <a class="btn" href="HQ Asset Gallery.html" data-en="🧱 Furniture, products & mascots">🧱 Nội thất, sản phẩm & linh vật</a>
+  <a class="btn" href="BizOn HQ Diorama.html" data-en="🏢 HQ diorama (free view)">🏢 Trụ sở diorama (xem tự do)</a>
+  <a class="btn" href="strategy-table-3d.html" data-en="🧩 3D strategy table">🧩 Bàn họp chiến lược 3D</a>
   <a class="btn" href="clay-factory-3d.html">🏭 Clay Factory Frenzy 3D</a>
-  <a class="btn" href="BizOn Office Game.html">🚶 Văn phòng 2D (đi lại & hội thoại)</a>
-  <a class="btn" href="game.html">📱 Bản 2D gốc (game.html)</a>
+  <a class="btn" href="BizOn Office Game.html" data-en="🚶 2D office (walk & talk)">🚶 Văn phòng 2D (đi lại & hội thoại)</a>
+  <a class="btn" href="game.html" data-en="📱 Original 2D version (game.html)">📱 Bản 2D gốc (game.html)</a>
 </div>
-<div id="cta" class="hud"><button class="btn primary" id="ctaBtn">🎯 Ra quyết định</button><small id="ctaSub">Đang tải trò chơi…</small></div>
+<div id="cta" class="hud"><button class="btn primary" id="ctaBtn" data-en="🎯 Make decisions">🎯 Ra quyết định</button><small id="ctaSub" data-en="Loading the game…">Đang tải trò chơi…</small></div>
 <div id="zones" class="hud"></div>
-<button class="btn" id="sheetX">✕ Về trụ sở</button>
+<button class="btn" id="sheetX" data-en="✕ Back to HQ">✕ Về trụ sở</button>
 <div id="evc" role="dialog" aria-label="Biến cố thị trường"></div><div id="bub"></div>
 <div id="arena"><div class="ah"><b id="aTitle">⚔️ ĐẤU TRƯỜNG</b><span id="aSub"></span><em id="aZone"></em></div><div id="aLabs"></div>
-  <div class="af" id="aFoot"><div class="verdict" id="aVerdict"></div><button class="btn primary" id="aNext">Xem kết quả chi tiết →</button></div></div>
-<div id="room"><div class="rh"><div class="rt"><img id="rmScene" alt="" style="display:none;width:min(260px,40vw);border-radius:16px;border:3px solid #e6d6bf;margin-bottom:6px"><b id="rmTitle"></b><span id="rmSub"></span></div><div class="rb"><button class="btn" id="rm2d">📋 Dạng danh sách</button><button class="btn primary" id="rmClose">✕ Về trụ sở</button></div></div><div id="rmLabs"></div><div id="rmCard"></div></div>
+  <div class="af" id="aFoot"><div class="verdict" id="aVerdict"></div><button class="btn primary" id="aNext" data-en="See detailed results →">Xem kết quả chi tiết →</button></div></div>
+<div id="room"><div class="rh"><div class="rt"><img id="rmScene" alt="" style="display:none;width:min(260px,40vw);border-radius:16px;border:3px solid #e6d6bf;margin-bottom:6px"><b id="rmTitle"></b><span id="rmSub"></span></div><div class="rb"><button class="btn" id="rm2d" data-en="📋 List view">📋 Dạng danh sách</button><button class="btn primary" id="rmClose" data-en="✕ Back to HQ">✕ Về trụ sở</button></div></div><div id="rmLabs"></div><div id="rmCard"></div></div>
 <div id="frame" class="full"><iframe id="gf" src="game.html" title="BizOn BẬT NGHIỆP"></iframe></div>
 <div id="tip"></div>
 
@@ -310,10 +311,10 @@
       <span class="pill" id="rPill">Vòng 1/6 · Đồng bằng sông Cửu Long</span>
       <h2 id="rHead"><span class="flagi"></span><span>Đội bạn cắm cờ tại Cần Thơ!</span></h2>
       <p class="sub" id="rSub">Thị phần cao nhất và có lãi. Tỉnh này mang màu cờ của đội bạn.</p>
-      <div class="box"><h3>THỊ PHẦN VÒNG NÀY</h3><div id="bars"></div></div>
+      <div class="box"><h3 data-en="MARKET SHARE THIS ROUND">THỊ PHẦN VÒNG NÀY</h3><div id="bars"></div></div>
       <div class="stats">
-        <div class="stat" style="border-color:#4f9a52"><small>LỢI NHUẬN RÒNG</small><b id="rProfit" style="color:#3f8a44">+48trđ</b></div>
-        <div class="stat" style="border-color:#f39a33"><small>CỜ CỦA ĐỘI</small><b id="rFlags" style="color:#d86a24">1/6</b></div>
+        <div class="stat" style="border-color:#4f9a52"><small data-en="NET PROFIT">LỢI NHUẬN RÒNG</small><b id="rProfit" style="color:#3f8a44">+48trđ</b></div>
+        <div class="stat" style="border-color:#f39a33"><small data-en="TEAM FLAGS">CỜ CỦA ĐỘI</small><b id="rFlags" style="color:#d86a24">1/6</b></div>
       </div>
       <div class="foot"><div class="legend" id="legend"></div><button class="btn primary" id="nextRound">Vào vòng tiếp theo →</button></div>
     </div>
@@ -328,12 +329,24 @@ import { makeCharacters } from './bizon-characters.js';
 import { makeHQ } from './bizon-hq-kit.js';
 
 const canvas = document.getElementById('c');
+// ---------- song ngữ Việt / Anh cho khung Trụ sở 3D (phần game nhúng trong iframe do js/site-ui.js dịch)
+const EN = () => { try { return localStorage.getItem('bizon-lang') === 'en'; } catch (e) { return false; } };
+const T = (vi, en) => EN() ? en : vi;
+const TL = v => Array.isArray(v) ? T(v[0], v[1]) : (v || '');
+const NUM = v => (+v || 0).toLocaleString(EN() ? 'en-US' : 'vi-VN');
+function applyHudLang() {
+  const en = EN();
+  document.querySelectorAll('[data-en]').forEach(el => { if (el.dataset.vi === undefined) el.dataset.vi = el.textContent; el.textContent = en ? el.dataset.en : el.dataset.vi; });
+  document.querySelectorAll('[data-en-ph]').forEach(el => { if (el.dataset.viPh === undefined) el.dataset.viPh = el.placeholder; el.placeholder = en ? el.dataset.enPh : el.dataset.viPh; });
+  document.documentElement.lang = en ? 'en' : 'vi';
+}
+applyHudLang();
 // Chế độ "Trụ sở diorama (xem tự do)" – dùng bởi "BizOn HQ Diorama.html" trong menu Bộ sưu tập 3D:
 // tự đăng nhập Đội Demo, ẩn HUD ra quyết định, click nhân vật/khu vực chỉ hiện tooltip + bay camera
 // thay vì mở tab quyết định thật.
 const DIORAMA = new URLSearchParams(location.search).get('diorama') === '1';
 if (DIORAMA) document.body.classList.add('diorama');
-window.__boot && window.__boot(0.35, 'Đang dựng trụ sở đất sét…');
+window.__boot && window.__boot(0.35, T('Đang dựng trụ sở đất sét…', 'Building the clay headquarters…'));
 let LOW = false; try { const v = localStorage.getItem('bizon-hq-low'); LOW = v === null ? (innerWidth < 760 || (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4) : v === '1'; } catch {}
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: !LOW, preserveDrawingBuffer: true, powerPreference: 'high-performance' });
 renderer.setPixelRatio(Math.min(devicePixelRatio, LOW ? 1.5 : 2)); window.__MAXANISO = renderer.capabilities.getMaxAnisotropy();
@@ -391,7 +404,7 @@ const rdSign = G('rd_post', world, -2.6, 0, 1.4); Cy(rdSign, 'post', 0.04, 0.04,
 const banner = G('banner', world, 0, 3.55, -5.62);
 B(banner, 'banner_rod', 4.6, 0.06, 0.06, M.woodD, 0, 0.62, 0, 0.02);
 for (const s of [-1, 1]) Cy(banner, 'rope', 0.012, 0.012, 1.2, M.sand, s * 2.1, 0.65, 0, 6);
-panel(banner, 'banner_cloth', 4.3, 1.2, ctex(1024, 288, (x, w, h) => { x.fillStyle = '#f6ecd8'; x.fillRect(0, 0, w, h); x.strokeStyle = '#c8643a'; x.lineWidth = 12; x.strokeRect(10, 10, w - 20, h - 20); x.textAlign = 'center'; x.fillStyle = '#1f6f8a'; x.font = '800 100px "Baloo 2",sans-serif'; x.fillText('BizOn BẬT NGHIỆP', w / 2, 118); x.fillStyle = '#2c3552'; x.font = '600 38px "Baloo 2",sans-serif'; x.fillText('Executive Headquarters & Integrated Production Workshop', w / 2, 184); x.font = '500 32px "Be Vietnam Pro",sans-serif'; x.fillText('Cần Thơ, Việt Nam', w / 2, 238); }), 0, 0, 0.035);
+panel(banner, 'banner_cloth', 4.3, 1.2, ctex(1024, 288, (x, w, h) => { x.fillStyle = '#f6ecd8'; x.fillRect(0, 0, w, h); x.strokeStyle = '#c8643a'; x.lineWidth = 12; x.strokeRect(10, 10, w - 20, h - 20); x.textAlign = 'center'; x.fillStyle = '#1f6f8a'; x.font = '800 100px "Baloo 2",sans-serif'; x.fillText('BizOn BẬT NGHIỆP', w / 2, 118); x.fillStyle = '#2c3552'; x.font = '600 38px "Baloo 2",sans-serif'; x.fillText('Executive Headquarters & Integrated Production Workshop', w / 2, 184); x.font = '500 32px "Be Vietnam Pro",sans-serif'; x.fillText(T('Cần Thơ, Việt Nam', 'Can Tho, Vietnam'), w / 2, 238); }), 0, 0, 0.035);
 
 // ---------- place items
 let LOWHIDE_EXTRA = [];
@@ -424,9 +437,11 @@ place('plants', -3.4, -5.4); place('plants', 7.5, -5.4); place('plants', 7.6, 5.
 // flag plaza
 const plaza = G('flag_plaza', scene, -5.6, 0, 5.0);
 Cy(plaza, 'plaza_stone', 1.9, 2.05, 0.5, mat(0xcdb99a, 0.95), 0, -0.5, 0, 48); Cy(plaza, 'plaza_top', 1.75, 1.75, 0.04, mat(0xe3d3b6, 0.95), 0, -0.02, 0, 48);
-const flags = ['star', 'elephant', 'wolf', 'peacock'].map((k, i) => { const f = hq.teamFlag(k); const a = -0.9 + i * 0.6; f.position.set(Math.sin(a) * 1.15 - 0.3, 0, Math.cos(a) * 1.15 - 0.5); f.rotation.y = 0.25; plaza.add(f); f.userData.label = hq.TEAMS[k].name; f.userData.role = k === 'star' ? 'Cờ đội bạn' : 'Đối thủ ảo'; f.userData.team = k; return f; });
+const flags = ['star', 'elephant', 'wolf', 'peacock'].map((k, i) => { const f = hq.teamFlag(k); const a = -0.9 + i * 0.6; f.position.set(Math.sin(a) * 1.15 - 0.3, 0, Math.cos(a) * 1.15 - 0.5); f.rotation.y = 0.25; plaza.add(f); f.userData.label = hq.TEAMS[k].name; f.userData.role = k === 'star' ? ['Cờ đội bạn', 'Your team flag'] : ['Đối thủ ảo', 'Virtual rival']; f.userData.team = k; return f; });
 const TAB_OF = { ceo: 'decisions', lumina: 'advisor', cfo: 'reports', accountant: 'reports', sec: 'journal', clerk: 'journal', cmo: 'market', designer: 'market', coo: 'minigame', potter: 'minigame', worker: 'shop', scientist: 'skills', victor: 'leaderboard' };
-const TAB_NAME = { decisions: 'Ra quyết định', advisor: 'Hỏi Lumina', reports: 'Báo cáo', journal: 'Nhật ký đội', market: 'Thị trường sống', minigame: 'Clay Factory Frenzy', shop: 'Cửa hàng', skills: 'Cây kỹ năng', leaderboard: 'Bảng xếp hạng' };
+const TAB_NAME_VI = { decisions: 'Ra quyết định', advisor: 'Hỏi Lumina', reports: 'Báo cáo', journal: 'Nhật ký đội', market: 'Thị trường sống', minigame: 'Clay Factory Frenzy', shop: 'Cửa hàng', skills: 'Cây kỹ năng', leaderboard: 'Bảng xếp hạng' };
+const TAB_NAME_EN = { decisions: 'Decisions', advisor: 'Ask Lumina', reports: 'Reports', journal: 'Team journal', market: 'Live market', minigame: 'Clay Factory Frenzy', shop: 'Shop', skills: 'Skill tree', leaderboard: 'Leaderboard' };
+const tabName = t => (EN() ? TAB_NAME_EN : TAB_NAME_VI)[t];
 
 // ---------- pendant lamps
 const lamps = [], pendants = [];
@@ -474,20 +489,21 @@ const glowMats = [], screenMats = [], bulbMats = [];
 scene.traverse(o => { if (!o.isMesh) return; [].concat(o.material).forEach(m => { if (m.userData.screen) screenMats.push(m); if (m.userData.bulb) bulbMats.push(m); if (m.userData.glow) glowMats.push(m); }); });
 let night = false; try { night = localStorage.getItem('bizon-hq-night') === '1'; } catch {}
 function applyLow() {
-  document.getElementById('lowBtn').innerHTML = LOW ? '<i>✨</i><span>Chi tiết cao</span>' : '<i>⚡</i><span>Chi tiết thấp</span>';
+  document.getElementById('lowBtn').innerHTML = LOW ? '<i>✨</i><span>' + T('Chi tiết cao', 'High detail') + '</span>' : '<i>⚡</i><span>' + T('Chi tiết thấp', 'Low detail') + '</span>';
   LOWHIDE.forEach(o => o && (o.visible = !LOW)); renderer.setPixelRatio(Math.min(devicePixelRatio, LOW ? 1.5 : 2));
   sun.shadow.mapSize.set(LOW ? 1024 : 2048, LOW ? 1024 : 2048); if (sun.shadow.map) { sun.shadow.map.dispose(); sun.shadow.map = null; }
   renderer.shadowMap.type = LOW ? THREE.PCFShadowMap : THREE.PCFSoftShadowMap; renderer.shadowMap.needsUpdate = true;
   window.__LOW = LOW;
 }
 document.getElementById('lowBtn').onclick = () => { LOW = !LOW; try { localStorage.setItem('bizon-hq-low', LOW ? '1' : '0'); } catch {} applyLow(); };
-{ const mb = document.getElementById('musicBtn'), on = () => localStorage.getItem('bizon-music') !== 'off', paint = () => { mb.innerHTML = on() ? '<i>🎵</i><span>Nhạc: Bật</span>' : '<i>🔇</i><span>Nhạc: Tắt</span>'; }; paint();
+let paintMusic = () => {};
+{ const mb = document.getElementById('musicBtn'), on = () => localStorage.getItem('bizon-music') !== 'off', paint = () => { mb.innerHTML = on() ? '<i>🎵</i><span>' + T('Nhạc: Bật', 'Music: On') + '</span>' : '<i>🔇</i><span>' + T('Nhạc: Tắt', 'Music: Off') + '</span>'; }; paint(); paintMusic = paint;
   mb.onclick = () => { try { ev('toggleMusic()'); } catch (e) { localStorage.setItem('bizon-music', on() ? 'off' : 'on'); } paint(); };
   addEventListener('pointerdown', () => { try { if (on()) ev('startMusic()'); } catch (e) {} }, { once: true }); }
 applyLow();
 function setNight(on) {
   night = on; document.body.classList.toggle('night', on);
-  document.getElementById('night').textContent = on ? '☀️ Ban ngày' : '🌙 Ban đêm';
+  document.getElementById('night').textContent = on ? T('☀️ Ban ngày', '☀️ Daytime') : T('🌙 Ban đêm', '🌙 Night');
   scene.background = new THREE.Color(on ? 0x0f1733 : 0xefe4d2);
   wallM.color.set(on ? 0x2a3a6e : 0xf1e4cc); wallTop.color.set(on ? 0x1f2c55 : 0xe3d1b4);
   if (floor.material[0]) floor.material[0].color.set(on ? 0xd9a57a : 0xffffff);
@@ -505,13 +521,13 @@ document.getElementById('night').onclick = () => setNight(!night);
 
 // ---------- zones
 const ZONES = [
-  ['Toàn cảnh', null], ['CEO · Ra quyết định', [0, 0.5, -3], 8, 'decisions'], ['Tài chính · Báo cáo', [-5.5, 0.5, -3.5], 7, 'reports'], ['SEC · Nhật ký đội', [-5.5, 0.5, 1.2], 7, 'journal'],
-  ['Marketing · Thị trường sống', [5.5, 0.5, -3.5], 7, 'market'], ['Vận hành · Xưởng đất sét', [5.6, 0.5, 2.5], 7.5, 'minigame'], ['R&D · Kỹ năng', [0.4, 0.5, 3.7], 7, 'skills'], ['Sản phẩm · Cửa hàng', [-2.45, 0.8, -3.35], 4, 'shop'], ['Linh vật 4 đội', [-2.7, 0.5, 3.55], 3, 'achievements', [-0.75, 0.6, 0.6]], ['Sảnh cờ · Chinh phục', [-5.6, 1, 5], 6, '__map'],
+  [['Toàn cảnh', 'Overview'], null], [['CEO · Ra quyết định', 'CEO · Decisions'], [0, 0.5, -3], 8, 'decisions'], [['Tài chính · Báo cáo', 'Finance · Reports'], [-5.5, 0.5, -3.5], 7, 'reports'], [['SEC · Nhật ký đội', 'SEC · Team journal'], [-5.5, 0.5, 1.2], 7, 'journal'],
+  [['Marketing · Thị trường sống', 'Marketing · Live market'], [5.5, 0.5, -3.5], 7, 'market'], [['Vận hành · Xưởng đất sét', 'Operations · Clay workshop'], [5.6, 0.5, 2.5], 7.5, 'minigame'], [['R&D · Kỹ năng', 'R&D · Skills'], [0.4, 0.5, 3.7], 7, 'skills'], [['Sản phẩm · Cửa hàng', 'Products · Shop'], [-2.45, 0.8, -3.35], 4, 'shop'], [['Linh vật 4 đội', 'Four team mascots'], [-2.7, 0.5, 3.55], 3, 'achievements', [-0.75, 0.6, 0.6]], [['Sảnh cờ · Chinh phục', 'Flag hall · Conquest'], [-5.6, 1, 5], 6, '__map'],
 ];
 let tween = null; const zb = document.getElementById('zones');
 const fly = i => zb.children[i].dataset.fly = '1';
 ZONES.forEach(([label, tgt, dist, tab, dir], i) => {
-  const b = document.createElement('button'); b.className = 'btn'; b.textContent = label; b.setAttribute('aria-pressed', i === 0);
+  const b = document.createElement('button'); b.className = 'btn'; b.textContent = label[0]; b.dataset.en = label[1]; b.setAttribute('aria-pressed', i === 0);
   b.onclick = () => { zb.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b));
     const t = tgt ? new THREE.Vector3(...tgt) : HOME.tgt.clone(); const p = tgt ? t.clone().add(new THREE.Vector3(...(dir || [0.62, 0.62, 0.75])).multiplyScalar(dist)) : HOME.pos.clone();
     moved = true; tween = { t0: performance.now(), fp: camera.position.clone(), ft: controls.target.clone(), p, t };
@@ -519,6 +535,7 @@ ZONES.forEach(([label, tgt, dist, tab, dir], i) => {
     if (!tab) window.__closeSheet && window.__closeSheet(); else setTimeout(() => tab === '__map' ? openResults() : window.__openTab && window.__openTab(tab), 650); };
   zb.appendChild(b);
 });
+applyHudLang();
 
 // ---------- picking / tooltip
 const ray = new THREE.Raycaster(), ndc = new THREE.Vector2(), tip = document.getElementById('tip'); let tipObj = null, tipUntil = 0, down = null;
@@ -531,7 +548,7 @@ canvas.addEventListener('pointerup', e => {
   if (hit.object.name === 'map_face') return openResults();
   let o = hit.object; while (o && !o.userData.label) o = o.parent;
   if (o) { tipObj = o; tipUntil = performance.now() + 4000; const tab = TAB_OF[o.userData.cid];
-    tip.innerHTML = `<b>${o.userData.label}</b>${o.userData.role || ''}${!DIORAMA && tab ? `<br><i style="color:#2f8a8c;font-style:normal;font-weight:700">→ ${TAB_NAME[tab]}</i>` : ''}`; tip.style.display = 'block';
+    tip.innerHTML = `<b>${o.userData.label}</b>${TL(o.userData.role)}${!DIORAMA && tab ? `<br><i style="color:#2f8a8c;font-style:normal;font-weight:700">→ ${tabName(tab)}</i>` : ''}`; tip.style.display = 'block';
     if (!DIORAMA) { if (o.userData.team) openResults(); else if (tab) setTimeout(() => window.__openTab && window.__openTab(tab), 700); } }
 });
 
@@ -580,15 +597,17 @@ function tick() {
   requestAnimationFrame(tick);
 }
 tick();
-window.__boot && window.__boot(0.7, 'Đang khởi động engine…');
+window.__boot && window.__boot(0.7, T('Đang khởi động engine…', 'Starting the engine…'));
 
 // ================= ROUND RESULTS =================
 const TEAMS = hq.TEAMS, ORDER = ['star', 'elephant', 'wolf', 'peacock'];
 const STOPS = [
-  { name: 'Cần Thơ', zone: 'Đồng bằng sông Cửu Long', ll: [105.78, 10.03] }, { name: 'TP. Hồ Chí Minh', zone: 'Đông Nam Bộ', ll: [106.70, 10.78] },
-  { name: 'Khánh Hòa', zone: 'Duyên hải Nam Trung Bộ', ll: [109.19, 12.24] }, { name: 'Đà Nẵng', zone: 'Duyên hải miền Trung', ll: [108.22, 16.05] },
-  { name: 'Thanh Hóa', zone: 'Bắc Trung Bộ', ll: [105.78, 19.81] }, { name: 'Hà Nội', zone: 'Đồng bằng sông Hồng', ll: [105.85, 21.03] },
+  { name: 'Cần Thơ', en: 'Can Tho', zone: ['Đồng bằng sông Cửu Long', 'Mekong Delta'], ll: [105.78, 10.03] }, { name: 'TP. Hồ Chí Minh', en: 'Ho Chi Minh City', zone: ['Đông Nam Bộ', 'Southeast region'], ll: [106.70, 10.78] },
+  { name: 'Khánh Hòa', en: 'Khanh Hoa', zone: ['Duyên hải Nam Trung Bộ', 'South Central Coast'], ll: [109.19, 12.24] }, { name: 'Đà Nẵng', en: 'Da Nang', zone: ['Duyên hải miền Trung', 'Central Coast'], ll: [108.22, 16.05] },
+  { name: 'Thanh Hóa', en: 'Thanh Hoa', zone: ['Bắc Trung Bộ', 'North Central Coast'], ll: [105.78, 19.81] }, { name: 'Hà Nội', en: 'Hanoi', zone: ['Đồng bằng sông Hồng', 'Red River Delta'], ll: [105.85, 21.03] },
 ];
+const SN = st => (EN() ? st.en : st.name) || '';
+const cityName = i => STOPS[i] ? SN(STOPS[i]) : '';
 const KEY_OF = { 'Alpha Dynamics': 'wolf', 'Mekong Ventures': 'elephant', 'Star Clay Co.': 'peacock' };
 const nm = k => k === 'star' ? ((GS && GS.profile && GS.profile.teamName) || TEAMS.star.name) : TEAMS[k].name;
 let W = null, GS = null;
@@ -634,8 +653,8 @@ function renderResults() {
     <path d="${vnPath}" fill="url(#grain)" stroke="#4a8a35" stroke-width="2.2" stroke-linejoin="round" filter="url(#clay)"/>
     ${[[0, 0], [9, 5], [-6, 8], [14, -4], [4, 12]].map(([dx, dy]) => `<circle cx="${hoang[0] + dx}" cy="${hoang[1] + dy}" r="2.6" fill="#8cc46a" stroke="#4a8a35"/>`).join('')}
     ${[[0, 0], [10, 8], [-8, 14], [18, -6], [4, 22], [-14, -4], [22, 16]].map(([dx, dy]) => `<circle cx="${truong[0] + dx}" cy="${truong[1] + dy}" r="2.3" fill="#8cc46a" stroke="#4a8a35"/>`).join('')}
-    <text x="${hoang[0] - 30}" y="${hoang[1] - 10}" font-size="10" font-family="Be Vietnam Pro" fill="#eaf6ff">QĐ. Hoàng Sa</text>
-    <text x="${truong[0] - 34}" y="${truong[1] - 12}" font-size="10" font-family="Be Vietnam Pro" fill="#eaf6ff">QĐ. Trường Sa</text>
+    <text x="${hoang[0] - 30}" y="${hoang[1] - 10}" font-size="10" font-family="Be Vietnam Pro" fill="#eaf6ff">${T('QĐ. Hoàng Sa', 'Hoang Sa Is.')}</text>
+    <text x="${truong[0] - 34}" y="${truong[1] - 12}" font-size="10" font-family="Be Vietnam Pro" fill="#eaf6ff">${T('QĐ. Trường Sa', 'Truong Sa Is.')}</text>
     <path d="${routeD(sea)}" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 11"/>
     ${pts.map(([x, y], i) => `<circle cx="${x}" cy="${y}" r="${owners[i] ? 6 : 5}" fill="${owners[i] ? TEAMS[owners[i]].color : '#fff'}" stroke="#fff" stroke-width="2.5"/>`).join('')}
     <circle class="ping" cx="${pts[empty ? 0 : Math.min(5, RR.length)][0]}" cy="${pts[empty ? 0 : Math.min(5, RR.length)][1]}" r="8" fill="none" stroke="#3ff0e0" stroke-width="3"/>
@@ -643,16 +662,16 @@ function renderResults() {
     ${empty ? '' : flagSVG(pts[round][0], pts[round][1], TEAMS[win].color, true, 'pop', win, isFresh ? 1 : 0)}
     ${isFresh ? ceoSVG(ceoFrom[0], ceoFrom[1], pts[round][0], pts[round][1]) : ''}
     <g font-family="Baloo 2" font-weight="700" font-size="13" fill="#fff" stroke="#2a5a2a" stroke-width="3" paint-order="stroke">
-      <text x="${pts[5][0] - 30}" y="${pts[5][1] - 8}">Hà Nội</text><text x="${pts[0][0] - 58}" y="${pts[0][1] + 20}">${round === 0 ? 'Cần Thơ' : ''}</text>
-      ${round > 0 && round < 5 ? `<text x="${pts[round][0] - 70}" y="${pts[round][1] + 4}">${stop.name}</text>` : ''}${round === 5 ? '' : ''}
+      <text x="${pts[5][0] - 30}" y="${pts[5][1] - 8}">${T('Hà Nội', 'Hanoi')}</text><text x="${pts[0][0] - 58}" y="${pts[0][1] + 20}">${round === 0 ? T('Cần Thơ', 'Can Tho') : ''}</text>
+      ${round > 0 && round < 5 ? `<text x="${pts[round][0] - 70}" y="${pts[round][1] + 4}">${SN(stop)}</text>` : ''}${round === 5 ? '' : ''}
     </g></svg>`;
-  document.getElementById('rPill').textContent = empty ? 'Bản đồ chinh phục · 0/6' : `Vòng ${round + 1}/6 · ${stop.zone}`;
+  document.getElementById('rPill').textContent = empty ? T('Bản đồ chinh phục · 0/6', 'Conquest map · 0/6') : `${T('Vòng', 'Round')} ${round + 1}/6 · ${TL(stop.zone)}`;
   const lead = R.sh.indexOf(Math.max(...R.sh)), myName = (GS && GS.profile && GS.profile.teamName) || TEAMS.star.name;
   const head = document.getElementById('rHead'); head.className = me || empty ? '' : 'lost';
   const nmL = nm;
-  head.innerHTML = empty ? '<span class="flagi"></span><span>Chưa cắm cờ nào</span>' : `<span class="flagi" style="--c:${TEAMS[win].color}"></span><span>${me ? `Đội bạn cắm cờ tại ${stop.name}!` : `${nm(win)} cắm cờ tại ${stop.name}`}</span>`;
-  document.getElementById('rSub').textContent = empty ? 'Hoàn thành vòng 1 với thị phần cao nhất và có lãi để cắm cờ đầu tiên tại Cần Thơ.' : me ? 'Thị phần cao nhất và có lãi. Tỉnh này mang màu cờ của đội bạn.'
-    : lead === 0 ? 'Đội bạn dẫn thị phần nhưng lỗ vòng này, nên cờ thuộc về đối thủ có thị phần cao nhất.' : `${nm(win)} có thị phần cao nhất vòng này, cờ tỉnh thuộc về họ.`;
+  head.innerHTML = empty ? '<span class="flagi"></span><span>' + T('Chưa cắm cờ nào', 'No flags planted yet') + '</span>' : `<span class="flagi" style="--c:${TEAMS[win].color}"></span><span>${me ? T(`Đội bạn cắm cờ tại ${SN(stop)}!`, `Your team planted a flag in ${SN(stop)}!`) : T(`${nm(win)} cắm cờ tại ${SN(stop)}`, `${nm(win)} planted a flag in ${SN(stop)}`)}</span>`;
+  document.getElementById('rSub').textContent = empty ? T('Hoàn thành vòng 1 với thị phần cao nhất và có lãi để cắm cờ đầu tiên tại Cần Thơ.', 'Finish round 1 with the highest market share and a profit to plant the first flag in Can Tho.') : me ? T('Thị phần cao nhất và có lãi. Tỉnh này mang màu cờ của đội bạn.', 'Highest market share and a profit. This province now carries your team colours.')
+    : lead === 0 ? T('Đội bạn dẫn thị phần nhưng lỗ vòng này, nên cờ thuộc về đối thủ có thị phần cao nhất.', 'Your team led market share but made a loss this round, so the flag goes to the rival with the highest share.') : T(`${nm(win)} có thị phần cao nhất vòng này, cờ tỉnh thuộc về họ.`, `${nm(win)} had the highest market share this round, so the province flag is theirs.`);
   const rows = ORDER.map((k, i) => ({ k, v: R.sh[i] })).sort((a, b) => b.v - a.v);
   const bars = document.getElementById('bars');
   bars.innerHTML = rows.map(({ k, v }) => `<div class="bar" style="--c:${TEAMS[k].color}"><span class="st">${k === win ? '★' : ''}</span><div class="trk"><div class="fill" style="width:0"></div><div class="nm">${nm(k)}</div></div><span class="v" style="color:${TEAMS[k].color}">${v.toFixed(1)}%</span></div>`).join('');
@@ -660,7 +679,7 @@ function renderResults() {
   const pf = document.getElementById('rProfit'); pf.textContent = empty ? '–' : (R.p >= 0 ? '↑ +' : '↓ ') + R.p + 'trđ'; pf.style.color = R.p >= 0 ? '#3f8a44' : '#c0443a'; pf.parentElement.style.borderColor = R.p >= 0 ? '#4f9a52' : '#d6453a';
   document.getElementById('rFlags').textContent = `${myFlags}/6`;
   document.getElementById('legend').innerHTML = ORDER.map(k => `<span style="--c:${TEAMS[k].color}"><i></i>${nm(k)}<b>${owners.filter(w => w === k).length}</b></span>`).join('');
-  document.getElementById('nextRound').textContent = window.__afterMap ? 'Tiếp tục →' : GS && GS.finished ? '🏁 Tổng kết mùa giải →' : `🎯 Ra quyết định vòng ${GS ? GS.round : 1} →`;
+  document.getElementById('nextRound').textContent = window.__afterMap ? T('Tiếp tục →', 'Continue →') : GS && GS.finished ? T('🏁 Tổng kết mùa giải →', '🏁 Season wrap-up →') : T(`🎯 Ra quyết định vòng ${GS ? GS.round : 1} →`, `🎯 Make decisions for round ${GS ? GS.round : 1} →`);
 }
 const resEl = document.getElementById('res');
 function openResults() { resEl.classList.add('on'); renderResults(); }
@@ -697,13 +716,13 @@ document.getElementById('sheetX').onclick = window.__closeSheet;
 function primary() { if (!GS) return; GS.finished ? finale3D() : window.__openTab('decisions'); }
 // ================= ĐĂNG NHẬP 3D =================
 const L3 = { on: false, classic: false, role: 'CEO', orbit: 0 };
-const L3R = [['CEO', 'ceo', 'Minh Long · Tầm nhìn & quyết định cuối'], ['CFO', 'cfo', 'Thu Hà · Dòng tiền & ngân sách'], ['CMO', 'cmo', 'Mạnh Chi · Thương hiệu & khách hàng'], ['COO', 'coo', 'Bảo Ngọc · Sản xuất & giao hàng'], ['SEC', 'sec', 'Gia Hân · Biên bản & pháp chế']];
-const L3SAY = { CEO: 'Mỗi vòng cả đội bàn, mình chốt. Quyết định cuối là của CEO.', CFO: 'Tiền mặt là oxy. Mình tính dòng tiền trước khi ai đó đòi mở rộng.', CMO: 'Khách phải nghe thấy tên BizOn trước khi nghe tên đối thủ.', COO: 'Kế hoạch hay mấy cũng phải sản xuất và giao được đúng hẹn.', SEC: 'Mình ghi lại mọi quyết định. Cuối mùa, nhật ký này là bài học của cả đội.' };
+const L3R = [['CEO', 'ceo', 'Minh Long · Tầm nhìn & quyết định cuối', 'Minh Long · Vision & final call'], ['CFO', 'cfo', 'Thu Hà · Dòng tiền & ngân sách', 'Thu Ha · Cash flow & budget'], ['CMO', 'cmo', 'Mạnh Chi · Thương hiệu & khách hàng', 'Manh Chi · Brand & customers'], ['COO', 'coo', 'Bảo Ngọc · Sản xuất & giao hàng', 'Bao Ngoc · Production & delivery'], ['SEC', 'sec', 'Gia Hân · Biên bản & pháp chế', 'Gia Han · Minutes & compliance']];
+const L3SAY = { CEO: ['Mỗi vòng cả đội bàn, mình chốt. Quyết định cuối là của CEO.', 'Every round the whole team debates and I decide. The final call belongs to the CEO.'], CFO: ['Tiền mặt là oxy. Mình tính dòng tiền trước khi ai đó đòi mở rộng.', 'Cash is oxygen. I run the cash flow before anyone asks to expand.'], CMO: ['Khách phải nghe thấy tên BizOn trước khi nghe tên đối thủ.', 'Customers must hear the BizOn name before they hear a rival\'s.'], COO: ['Kế hoạch hay mấy cũng phải sản xuất và giao được đúng hẹn.', 'However good the plan, we still have to produce and deliver on time.'], SEC: ['Mình ghi lại mọi quyết định. Cuối mùa, nhật ký này là bài học của cả đội.', 'I record every decision. At the end of the season, this journal is the whole team\'s lesson.'] };
 { const box = document.getElementById('l3Roles');
   box.innerHTML = L3R.map(([id, c]) => `<button class="role" data-r="${id}" aria-pressed="${id === L3.role}"><img src="assets/character/solid/${c}.webp" alt="${id}">${id}</button>`).join('');
   box.onclick = e => { const b = e.target.closest('.role'); if (!b) return; L3.role = b.dataset.r; box.querySelectorAll('.role').forEach(x => x.setAttribute('aria-pressed', x === b)); l3Focus(); }; }
 function l3Focus() {
-  const r = L3R.find(x => x[0] === L3.role), a = actors.find(x => x.o.userData.cid === r[1]); const tp = document.getElementById('l3Tip'); tp.textContent = '👉 ' + r[0] + ' – ' + r[2]; tp.appendChild(document.createElement('br')); tp.appendChild(document.createTextNode('“' + (L3SAY[r[0]] || '') + '”'));
+  const r = L3R.find(x => x[0] === L3.role), a = actors.find(x => x.o.userData.cid === r[1]); const tp = document.getElementById('l3Tip'); tp.textContent = '👉 ' + r[0] + ' – ' + T(r[2], r[3]); tp.appendChild(document.createElement('br')); tp.appendChild(document.createTextNode('“' + TL(L3SAY[r[0]]) + '”'));
   if (!a) return; const p = a.o.position.clone(); p.y = 1.0; const mob = innerWidth < 760;
   flyTo(p.clone().add(new THREE.Vector3(mob ? 0 : -1.6, mob ? -0.9 : 0, 0)), new THREE.Vector3(2.4, 2.0, 3.6).multiplyScalar(mob ? 1.5 : 1.15));
   a.mode0 ??= a.mode; a.mode = 'talk'; actors.forEach(o => { if (o !== a && o.mode0) { o.mode = o.mode0; } });
@@ -762,7 +781,7 @@ function bridge() {
   W.showArena = (r, done) => arena3D(r, done);
   W.showRoundResult = result3D; W.showVictory = victory3D;
   const oTM = W.renderTeamMeeting; W.renderTeamMeeting = function () { const x = oTM.apply(this, arguments); const box = W.document.getElementById('team-meeting');
-    if (box && box.firstElementChild && !box.querySelector('.tm3d')) box.firstElementChild.insertAdjacentHTML('afterbegin', '<button class="tm3d clay-btn w-full bg-deep-teal text-white font-display font-bold py-3 mb-3" onclick="parent.__meeting3D()">🎥 Họp đội trong trụ sở 3D</button>'); return x; };
+    if (box && box.firstElementChild && !box.querySelector('.tm3d')) box.firstElementChild.insertAdjacentHTML('afterbegin', '<button class="tm3d clay-btn w-full bg-deep-teal text-white font-display font-bold py-3 mb-3" onclick="parent.__meeting3D()">' + T('🎥 Họp đội trong trụ sở 3D', '🎥 Team meeting in the 3D HQ') + '</button>'); return x; };
   W.maybeShowEventIntro = event3D;
 }
 gf.addEventListener('load', bridge);
@@ -772,15 +791,15 @@ const fmt = v => ev('money(' + (+v || 0) + ')') || Math.round(v) + 'tr₫';
 function hud() {
   if (!W) return; const dk = W.document && W.document.getElementById('bz-dock-btn'); if (dk) dk.remove(); setMode(); GS = ev('typeof S!=="undefined"?S:null'); const s = GS; if (!s || !booted) return;
   const e = ev('currentEvent(S)'), last = s.history && s.history[s.history.length - 1];
-  document.getElementById('hTeam').textContent = (s.profile && s.profile.teamName ? s.profile.teamName : 'BizOn BẬT NGHIỆP') + ' · Trụ sở Cần Thơ';
-  document.getElementById('hEvent').innerHTML = s.finished ? '<span class="ev good">🏁 Đã hoàn thành 6 vòng</span>' : e ? `<span class="ev ${e.tone}">Vòng ${s.round}/6 · ${e.icon} ${e.name}</span>` : '';
+  document.getElementById('hTeam').textContent = (s.profile && s.profile.teamName ? s.profile.teamName : 'BizOn BẬT NGHIỆP') + T(' · Trụ sở Cần Thơ', ' · Can Tho Headquarters');
+  document.getElementById('hEvent').innerHTML = s.finished ? '<span class="ev good">' + T('🏁 Đã hoàn thành 6 vòng', '🏁 All 6 rounds completed') + '</span>' : e ? `<span class="ev ${e.tone}">${T('Vòng', 'Round')} ${s.round}/6 · ${e.icon} ${e.name}</span>` : '';
   document.getElementById('kCash').textContent = fmt(s.balance);
   document.getElementById('kShare').textContent = last ? (+last.share).toFixed(1) + '%' : '–';
   document.getElementById('kBrand').textContent = (+s.brand || 1).toFixed(2);
   const cq = s.conquest || [], wins = cq.filter(c => c.win).length; document.getElementById('kFlags').textContent = wins + '/6';
   const btn = document.getElementById('ctaBtn'), sub = document.getElementById('ctaSub');
-  btn.textContent = s.finished ? '🏁 Tổng kết mùa giải' : s.committed ? '⏳ Đang mô phỏng…' : `🎯 Ra quyết định · Vòng ${s.round}/6`;
-  sub.textContent = s.finished ? 'Xem xếp hạng chung cuộc, thành tựu và chứng nhận' : 'Chốt giá, marketing, sản lượng cùng cả đội rồi khóa quyết định';
+  btn.textContent = s.finished ? T('🏁 Tổng kết mùa giải', '🏁 Season wrap-up') : s.committed ? T('⏳ Đang mô phỏng…', '⏳ Simulating…') : T(`🎯 Ra quyết định · Vòng ${s.round}/6`, `🎯 Make decisions · Round ${s.round}/6`);
+  sub.textContent = s.finished ? T('Xem xếp hạng chung cuộc, thành tựu và chứng nhận', 'See the final rankings, achievements and certificate') : T('Chốt giá, marketing, sản lượng cùng cả đội rồi khóa quyết định', 'Settle price, marketing and output with the team, then lock in the decisions');
   const mis = ev('MISSIONS_LIST().filter(m=>missionStatus(S,m)==="ready").length') || 0, bm = document.getElementById('bMis'); bm.textContent = mis; bm.style.display = mis ? 'block' : 'none';
   const cnt = { star: 0, elephant: 0, wolf: 0, peacock: 0 }; cq.forEach(c => { const k = c.win ? 'star' : KEY_OF[c.winner]; if (k) cnt[k]++; });
   flags.forEach(f => f.userData.goal = 0.8 + cnt[f.userData.team] * 0.12);
@@ -826,7 +845,7 @@ function itemModel(id) {
   if (id === 'DATA_PACK_01') { [[0.22, 0xd6453a], [0.4, 0xf39a33], [0.58, 0x4f9a52], [0.76, 0x3f78c0]].forEach(([hh, c], i) => mk(g, new THREE.BoxGeometry(0.14, hh, 0.14), cm(c), -0.27 + i * 0.18, hh / 2, 0)); }
   return g;
 }
-const MGN = { '🏺': 'Bình gốm', '🫖': 'Ấm trà', '🧱': 'Viên gạch', '🪴': 'Chậu cây', '🏆': 'Cúp vàng' };
+const MGN = { '🏺': ['Bình gốm', 'Clay vase'], '🫖': ['Ấm trà', 'Teapot'], '🧱': ['Viên gạch', 'Brick'], '🪴': ['Chậu cây', 'Potted plant'], '🏆': ['Cúp vàng', 'Gold trophy'] };
 function mgModel(e) {
   const g = new THREE.Group();
   if (e === '🏺') lathe([[0, 0], [0.14, 0], [0.2, 0.12], [0.18, 0.28], [0.09, 0.38], [0.12, 0.44], [0, 0.44]], cm(0xc8643a), g);
@@ -848,7 +867,7 @@ const moneyS = v => fmt(v);
 function roomHead(t, s) { document.getElementById('rmTitle').textContent = t; document.getElementById('rmSub').textContent = s; }
 function buildShop() {
   clearRoom(); const s = ev('S'), items = ev('SHOP_ITEMS_LIST().map(i=>({id:i.id,icon:i.icon,name:i.name,type:i.type,price:Math.round(i.price*skillEffect(S,"shopMul",1)),desc:i.desc}))') || [];
-  roomHead('🛒 Cửa hàng BizOn', 'Ví của đội: ' + moneyS(s.balance) + (ev('hasSkill(S,"SK_NEG1")') ? ' · đã giảm 10% nhờ Đàm phán' : ''));
+  roomHead(T('🛒 Cửa hàng BizOn', '🛒 BizOn Shop'), T('Ví của đội: ', 'Team wallet: ') + moneyS(s.balance) + (ev('hasSkill(S,"SK_NEG1")') ? T(' · đã giảm 10% nhờ Đàm phán', ' · 10% off thanks to Negotiation') : ''));
   const COL = { blueprint: 0x2f8a8c, booster: 0xe8784a, consumable: 0x6f8a60 };
   items.forEach((it, i) => { const a = -0.95 + i * 0.38, x = Math.sin(a) * 4.6, z = -Math.cos(a) * 4.6 + 2.2;
     const p = pedestal(x, z, COL[it.type] || 0x2f8a8c); p.rotation.y = -a; const m = itemModel(it.id); m.position.y = 0.95; p.add(m); RM.spin.push(m);
@@ -859,17 +878,17 @@ function buildShop() {
   setRoomCam(new THREE.Vector3(0, 4.6, 9.5), new THREE.Vector3(0, 0.9, -0.8));
   if (!LOW) { const sh = hq.build('productShowcase'); sh.scale.setScalar(2.2); sh.position.set(0, 0, -5.4); RM.g.add(sh); const ks = hq.build('kraftGiftSet'); ks.scale.setScalar(1.6); ks.position.set(-4.6, 0, -1.6); ks.rotation.y = 0.7; RM.g.add(ks); const cr = hq.build('exportCrate'); cr.scale.setScalar(1.4); cr.position.set(5.2, 0, -1.4); cr.rotation.y = -0.6; RM.g.add(cr); }
   const it = items.find(x => x.id === RM.sel);
-  if (!it) { rmCard.innerHTML = '<p class="k">Chạm một bục trưng bày</p><p>Bản thiết kế có hiệu lực vĩnh viễn. Vật phẩm dùng 1 lần cần bấm "Sử dụng" trước vòng muốn áp dụng.</p>'; return; }
+  if (!it) { rmCard.innerHTML = T('<p class="k">Chạm một bục trưng bày</p><p>Bản thiết kế có hiệu lực vĩnh viễn. Vật phẩm dùng 1 lần cần bấm "Sử dụng" trước vòng muốn áp dụng.</p>', '<p class="k">Tap a display stand</p><p>Blueprints last forever. Single-use items must be activated with "Use" before the round you want them applied to.</p>'); return; }
   const own = (s.items || {})[it.id] || 0, act = (s.activeBoosts || []).includes(it.id);
-  const TY = { blueprint: 'Bản thiết kế · vĩnh viễn', booster: 'Vật phẩm tăng lực · 1 vòng', consumable: 'Vật phẩm dùng 1 lần' };
-  rmCard.innerHTML = `<p class="k">${TY[it.type] || ''}</p><h3>${it.icon} ${it.name}</h3><p>${it.desc}</p><p><b>Giá: ${it.price}tr₫</b>${own ? ' · Đang có: ' + own : ''}${act ? ' · <b style="color:#2f8a8c">Đang kích hoạt</b>' : ''}</p>
-    <div class="row"><button class="btn primary" id="rmBuy">Mua · ${it.price}tr₫</button>${it.type !== 'blueprint' && (own > 0 || act) ? `<button class="btn" id="rmUse">${act ? 'Tắt kích hoạt' : 'Sử dụng 🚀'}</button>` : ''}</div>`;
+  const TY = { blueprint: ['Bản thiết kế · vĩnh viễn', 'Blueprint · permanent'], booster: ['Vật phẩm tăng lực · 1 vòng', 'Booster · 1 round'], consumable: ['Vật phẩm dùng 1 lần', 'Single-use item'] };
+  rmCard.innerHTML = `<p class="k">${TL(TY[it.type])}</p><h3>${it.icon} ${it.name}</h3><p>${it.desc}</p><p><b>${T('Giá', 'Price')}: ${it.price}tr₫</b>${own ? T(' · Đang có: ', ' · Owned: ') + own : ''}${act ? ' · <b style="color:#2f8a8c">' + T('Đang kích hoạt', 'Active') + '</b>' : ''}</p>
+    <div class="row"><button class="btn primary" id="rmBuy">${T('Mua', 'Buy')} · ${it.price}tr₫</button>${it.type !== 'blueprint' && (own > 0 || act) ? `<button class="btn" id="rmUse">${act ? T('Tắt kích hoạt', 'Deactivate') : T('Sử dụng 🚀', 'Use 🚀')}</button>` : ''}</div>`;
   rmCard.querySelector('#rmBuy').onclick = () => { W.buyItem(it.id); confettiRoom(); buildShop(); };
   const u = rmCard.querySelector('#rmUse'); if (u) u.onclick = () => { W.toggleBoost(it.id); buildShop(); };
 }
 function buildSkills() {
   clearRoom(); const s = ev('S'), avail = s.xp - s.spentXp, list = ev('SKILLS_LIST().map(k=>({id:k.id,icon:k.icon,name:k.name,cost:k.cost,desc:k.desc}))') || [];
-  roomHead('🌳 Cây kỹ năng', 'XP khả dụng: ' + avail.toLocaleString('vi-VN') + ' XP · mở khóa vĩnh viễn, không hoàn tác');
+  roomHead(T('🌳 Cây kỹ năng', '🌳 Skill tree'), T('XP khả dụng: ', 'Available XP: ') + NUM(avail) + T(' XP · mở khóa vĩnh viễn, không hoàn tác', ' XP · permanent unlock, no undo'));
   const g = new THREE.Group(); g.position.set(0, 0, -1.2); RM.g.add(g); const bark = cm(0x8a5a36);
   mk(g, new THREE.CylinderGeometry(0.28, 0.45, 2.6, 16), bark, 0, 1.3, 0);
   lathe([[0, 0], [1.1, 0], [0.9, 0.18], [0, 0.22]], cm(0x6fae4f), g, 0);
@@ -883,14 +902,14 @@ function buildSkills() {
     lab(f, `<i>${k.icon}</i><b>${owned ? '✅ ' : ''}${k.name}${owned ? '' : ' · ' + k.cost + ' XP'}</b>`, 0.55, RM.sel === k.id ? 'sel' : owned ? 'hot' : aff ? '' : 'dim'); });
   setRoomCam(new THREE.Vector3(0, 3.2, 9.2), new THREE.Vector3(0, 2.4, -1));
   const k = list.find(x => x.id === RM.sel);
-  if (!k) { rmCard.innerHTML = '<p class="k">Chạm một quả trên cây</p><p>Quả vàng là kỹ năng đã mở. Quả cam đủ XP để mở ngay. Quả xám cần thêm XP từ các vòng chơi.</p>'; return; }
+  if (!k) { rmCard.innerHTML = T('<p class="k">Chạm một quả trên cây</p><p>Quả vàng là kỹ năng đã mở. Quả cam đủ XP để mở ngay. Quả xám cần thêm XP từ các vòng chơi.</p>', '<p class="k">Tap a fruit on the tree</p><p>Gold fruit are skills you have unlocked. Orange fruit can be unlocked now with your XP. Grey fruit need more XP from future rounds.</p>'); return; }
   const owned = (s.skills || []).includes(k.id);
-  rmCard.innerHTML = `<p class="k">${owned ? 'Đã mở khóa' : 'Chi phí ' + k.cost + ' XP'}</p><h3>${k.icon} ${k.name}</h3><p>${k.desc}</p>${owned ? '' : `<button class="btn primary" id="rmUn" ${avail >= k.cost ? '' : 'disabled style="opacity:.5"'}>Mở khóa · ${k.cost} XP</button>`}`;
+  rmCard.innerHTML = `<p class="k">${owned ? T('Đã mở khóa', 'Unlocked') : T('Chi phí ', 'Cost ') + k.cost + ' XP'}</p><h3>${k.icon} ${k.name}</h3><p>${k.desc}</p>${owned ? '' : `<button class="btn primary" id="rmUn" ${avail >= k.cost ? '' : 'disabled style="opacity:.5"'}>${T('Mở khóa', 'Unlock')} · ${k.cost} XP</button>`}`;
   const u = rmCard.querySelector('#rmUn'); if (u) u.onclick = () => { W.unlockSkill(k.id); confettiRoom(); buildSkills(); };
 }
 function buildAch() {
   clearRoom(); const s = ev('S'), list = ev('ACHIEVEMENTS_LIST().map(a=>({id:a.id,icon:a.icon,name:a.name,desc:a.desc}))') || [], got = s.achievements || [];
-  roomHead('🎖️ Tủ thành tựu', `Đã mở ${got.length}/${list.length} thành tựu`);
+  roomHead(T('🎖️ Tủ thành tựu', '🎖️ Trophy cabinet'), T(`Đã mở ${got.length}/${list.length} thành tựu`, `${got.length}/${list.length} achievements unlocked`));
   const wood = cm(0x9d6139), g = new THREE.Group(); g.position.set(0, 0, -2.2); RM.g.add(g);
   mk(g, new THREE.BoxGeometry(7.4, 3.9, 0.3), wood, 0, 1.95, -0.45); mk(g, new THREE.BoxGeometry(7.2, 3.6, 0.05), cm(0x2f5a6a), 0, 2, -0.29);
   [0.25, 1.95, 3.75].forEach(y => mk(g, new THREE.BoxGeometry(7.4, 0.12, 0.9), wood, 0, y, 0)); for (const x of [-3.65, 3.65]) mk(g, new THREE.BoxGeometry(0.14, 3.9, 0.9), wood, x, 1.95, 0);
@@ -900,14 +919,14 @@ function buildAch() {
   if (!LOW) { const mc = hq.build('mascotCollection'); mc.scale.setScalar(1.5); mc.position.set(4.3, 0, -0.9); mc.rotation.y = -0.35; RM.g.add(mc); }
   setRoomCam(new THREE.Vector3(0, 2.4, 7.4), new THREE.Vector3(0, 1.9, -2.2));
   const a = list.find(x => x.id === RM.sel), cert = s.finished && !ev('isTrial()');
-  rmCard.innerHTML = a ? `<p class="k">${got.includes(a.id) ? 'Đã đạt' : 'Chưa đạt'}</p><h3>${a.icon} ${a.name}</h3><p>${a.desc}</p>` : '<p class="k">Chạm một chiếc cúp</p><p>Cúp vàng là thành tựu đã đạt. Cúp xám cho biết điều kiện còn thiếu.</p>';
-  if (cert) { rmCard.insertAdjacentHTML('beforeend', '<button class="btn primary" id="rmCert">📜 Tải chứng nhận hoàn thành</button>'); rmCard.querySelector('#rmCert').onclick = () => openList(); }
+  rmCard.innerHTML = a ? `<p class="k">${got.includes(a.id) ? T('Đã đạt', 'Achieved') : T('Chưa đạt', 'Not yet')}</p><h3>${a.icon} ${a.name}</h3><p>${a.desc}</p>` : T('<p class="k">Chạm một chiếc cúp</p><p>Cúp vàng là thành tựu đã đạt. Cúp xám cho biết điều kiện còn thiếu.</p>', '<p class="k">Tap a trophy</p><p>Gold trophies are achievements you have earned. Grey ones show what is still missing.</p>');
+  if (cert) { rmCard.insertAdjacentHTML('beforeend', '<button class="btn primary" id="rmCert">' + T('📜 Tải chứng nhận hoàn thành', '📜 Download completion certificate') + '</button>'); rmCard.querySelector('#rmCert').onclick = () => openList(); }
 }
 function buildLB() {
   clearRoom(); const s = ev('S'), total = s.history.reduce((a, r) => a + r.netProfit, 0), share = s.history.length ? s.history[s.history.length - 1].share : 25, trial = ev('isTrial()');
-  let all = [{ key: 'star', id: 'ceo', name: s.profile.teamName + ' (Bạn)', profit: total, share, me: true }];
+  let all = [{ key: 'star', id: 'ceo', name: s.profile.teamName + T(' (Bạn)', ' (You)'), profit: total, share, me: true }];
   if (trial) all = all.concat(s.competitors.map(c => ({ key: KEY_OF[c.name] || 'wolf', id: RIVAL_ID[c.style] || 'alpha', name: c.name, profit: c.profit, share: c.share }))).sort((a, b) => b.profit - a.profit);
-  roomHead('🏆 Bảng xếp hạng', trial ? '🧪 Chơi thử · so với 3 đối thủ ảo theo tổng lợi nhuận' : '🔒 Bảng xếp hạng chéo đội đang tạm khóa — chỉ hiện kết quả của đội bạn');
+  roomHead(T('🏆 Bảng xếp hạng', '🏆 Leaderboard'), trial ? T('🧪 Chơi thử · so với 3 đối thủ ảo theo tổng lợi nhuận', '🧪 Trial play · vs 3 virtual rivals by total profit') : T('🔒 Bảng xếp hạng chéo đội đang tạm khóa — chỉ hiện kết quả của đội bạn', '🔒 The cross-team leaderboard is locked for now — showing your team only'));
   const HX = all.length === 1 ? [0] : [-1.5, -4.2, 1.2, 3.9], HH = [1.5, 1.05, 0.75, 0.5], order = all.length === 1 ? [0] : [1, 0, 2, 3];
   order.forEach((rank, j) => { const t = all[rank]; if (!t) return; const p = pedestal(HX[j] === undefined ? 0 : [-1.4, 0, 1.4, 2.8][j], 0, new THREE.Color(TEAMS[t.key].color).getHex(), HH[rank]);
     p.position.x = all.length === 1 ? 0 : [-1.9, 0, 1.9, 3.8][j] - 0.95;
@@ -919,7 +938,7 @@ function buildLB() {
 let mgRun = false, mgSpawnT = 0, mgBal0 = 0, mgRes = null;
 function buildMG() {
   clearRoom(); const s = ev('S'), plays = s.minigamePlays || 0;
-  roomHead('🏭 Clay Factory Frenzy', 'Chạm đúng món hàng được đặt khi nó chạy qua băng chuyền · 30 giây · 3 lượt mỗi vòng');
+  roomHead('🏭 Clay Factory Frenzy', T('Chạm đúng món hàng được đặt khi nó chạy qua băng chuyền · 30 giây · 3 lượt mỗi vòng', 'Tap the ordered item as it passes on the conveyor · 30 seconds · 3 plays per round'));
   const g = RM.g; mk(g, new THREE.BoxGeometry(13, 0.3, 1.5), cm(0x3a3f47, 0.7), 0, 0.75, 0.6);
   for (const z of [-0.2, 1.4]) mk(g, new THREE.BoxGeometry(13, 0.18, 0.12), cm(0xe8784a), 0, 0.95, z);
   for (let i = -6; i <= 6; i += 1.5) for (const z of [-0.1, 1.3]) mk(g, new THREE.BoxGeometry(0.16, 0.75, 0.16), cm(0x8a8f99, 0.5, 0.4), i, 0.375, z);
@@ -931,12 +950,12 @@ function buildMG() {
 }
 function mgCard() {
   const s = ev('S'), st = ev('mg?{s:mg.score,t:mg.time,g:mg.target}:null'), plays = s.minigamePlays || 0;
-  if (st) { rmCard.innerHTML = `<div class="tgt"><i>${st.g}</i><div><p class="k">Đóng gói món này</p><h3>${MGN[st.g] || ''}</h3></div></div>
-    <div class="stats"><div><small>ĐIỂM</small><b id="mgS">${st.s}</b></div><div><small>GIÂY</small><b id="mgT">${st.t}</b></div><div><small>LƯỢT</small><b>${plays}/3</b></div></div><p>Đúng món +1 điểm, sai món −1 điểm. Mỗi điểm = 2tr₫ (tối đa 60tr₫).</p>`; return; }
+  if (st) { rmCard.innerHTML = `<div class="tgt"><i>${st.g}</i><div><p class="k">${T('Đóng gói món này', 'Pack this item')}</p><h3>${TL(MGN[st.g])}</h3></div></div>
+    <div class="stats"><div><small>${T('ĐIỂM', 'SCORE')}</small><b id="mgS">${st.s}</b></div><div><small>${T('GIÂY', 'SECONDS')}</small><b id="mgT">${st.t}</b></div><div><small>${T('LƯỢT', 'PLAYS')}</small><b>${plays}/3</b></div></div><p>${T('Đúng món +1 điểm, sai món −1 điểm. Mỗi điểm = 2tr₫ (tối đa 60tr₫).', 'Right item +1 point, wrong item −1 point. Each point = 2tr₫ (max 60tr₫).')}</p>`; return; }
   const out = plays >= 3;
-  rmCard.innerHTML = `${mgRes !== null ? `<p class="k">Kết thúc lượt</p><div class="big">+${mgRes}tr₫</div>` : '<p class="k">Xưởng đất sét</p>'}
-    <div class="stats"><div><small>KỶ LỤC</small><b>${s.minigameBest || 0}</b></div><div><small>ĐIỂM THƯỞNG</small><b>${(s.minigamePoints || 0).toLocaleString('vi-VN')}</b></div><div><small>LƯỢT</small><b>${Math.min(3, plays + (out ? 0 : 1))}/3</b></div></div>
-    <button class="btn primary" id="mgGo" ${out ? 'disabled style="opacity:.5"' : ''}>${out ? '⏳ Hết lượt – commit vòng mới để chơi tiếp' : mgRes !== null ? 'Chơi lại ▶' : 'Bắt đầu ▶'}</button>
+  rmCard.innerHTML = `${mgRes !== null ? `<p class="k">${T('Kết thúc lượt', 'Play over')}</p><div class="big">+${mgRes}tr₫</div>` : '<p class="k">' + T('Xưởng đất sét', 'Clay workshop') + '</p>'}
+    <div class="stats"><div><small>${T('KỶ LỤC', 'BEST')}</small><b>${s.minigameBest || 0}</b></div><div><small>${T('ĐIỂM THƯỞNG', 'BONUS POINTS')}</small><b>${NUM(s.minigamePoints || 0)}</b></div><div><small>${T('LƯỢT', 'PLAYS')}</small><b>${Math.min(3, plays + (out ? 0 : 1))}/3</b></div></div>
+    <button class="btn primary" id="mgGo" ${out ? 'disabled style="opacity:.5"' : ''}>${out ? T('⏳ Hết lượt – commit vòng mới để chơi tiếp', '⏳ No plays left – commit a new round to play again') : mgRes !== null ? T('Chơi lại ▶', 'Play again ▶') : T('Bắt đầu ▶', 'Start ▶')}</button>
     <button class="btn" id="mgShop">🎁 Clay Reward Shop</button>`;
   const b = rmCard.querySelector('#mgGo'); if (b && !out) b.onclick = () => { mgBal0 = ev('S.balance'); mgRes = null; W.startMinigame(); ev('mg&&clearInterval(mg.timers[1])'); mgRun = true; mgSpawnT = 0; mgCard(); };
   rmCard.querySelector('#mgShop').onclick = () => { closeRoom(); force2D = true; W.showTab('minigame'); force2D = false; setTimeout(() => ev('showRewardShop()'), 200); };
@@ -1005,18 +1024,18 @@ function flyLumina() { const L = actors.find(a => a.o.userData.cid === 'lumina')
 // ================= HƯỚNG DẪN LẦN ĐẦU 3D (LUMINA, 3 BƯỚC) =================
 const T3_KEY = 'bizon-tour3d-seen';
 const T3 = [
-  { cam: () => flyLumina(), img: 'assets/character/solid/lumina-tex.webp', title: '👋 Chào mừng đến trụ sở!', text: 'Mình là Lumina, cố vấn AI của đội. Đây là trụ sở BizOn ở Cần Thơ. Kéo để xoay, chụm hai ngón để phóng to. Chạm vào một khu hoặc chọn ở thanh khu vực để đi tới đó.' },
-  { cam: () => { fly(1); zb.children[1].click(); }, img: 'assets/character/solid/ceo-tex.webp', title: '🗳️ Bàn quyết định của CEO', text: 'Mỗi vòng, cả đội họp tại đây để chốt <b>giá bán, sản lượng, marketing</b>. Nghe đề xuất của CFO, CMO, COO, SEC rồi bấm <b>Commit</b>. Đã khóa thì không sửa lại được.' },
-  { cam: () => { fly(0); zb.children[0].click(); }, img: 'assets/character/rong-xanh-y-tuong.webp', title: '🚩 Cắm cờ khắp Việt Nam', text: 'Sau mỗi vòng, bản đồ cho biết ai chiếm tỉnh đó. Cờ BizOn chỉ cắm khi đội <b>dẫn thị phần và có lãi</b>. Sáu vòng, từ Cần Thơ ra Hà Nội. Bắt đầu thôi!' }];
+  { cam: () => flyLumina(), img: 'assets/character/solid/lumina-tex.webp', title: ['👋 Chào mừng đến trụ sở!', '👋 Welcome to headquarters!'], text: ['Mình là Lumina, cố vấn của đội. Đây là trụ sở BizOn ở Cần Thơ. Kéo để xoay, chụm hai ngón để phóng to. Chạm vào một khu hoặc chọn ở thanh khu vực để đi tới đó.', 'I am Lumina, the team advisor. This is BizOn headquarters in Can Tho. Drag to rotate, pinch to zoom. Tap an area, or pick one on the zone bar, to go there.'] },
+  { cam: () => { fly(1); zb.children[1].click(); }, img: 'assets/character/solid/ceo-tex.webp', title: ['🗳️ Bàn quyết định của CEO', '🗳️ The CEO\'s decision table'], text: ['Mỗi vòng, cả đội họp tại đây để chốt <b>giá bán, sản lượng, marketing</b>. Nghe đề xuất của CFO, CMO, COO, SEC rồi bấm <b>Commit</b>. Đã khóa thì không sửa lại được.', 'Each round the whole team meets here to settle <b>price, output and marketing</b>. Hear the CFO, CMO, COO and SEC proposals, then press <b>Commit</b>. Once locked, nothing can be changed.'] },
+  { cam: () => { fly(0); zb.children[0].click(); }, img: 'assets/character/rong-xanh-y-tuong.webp', title: ['🚩 Cắm cờ khắp Việt Nam', '🚩 Plant flags across Vietnam'], text: ['Sau mỗi vòng, bản đồ cho biết ai chiếm tỉnh đó. Cờ BizOn chỉ cắm khi đội <b>dẫn thị phần và có lãi</b>. Sáu vòng, từ Cần Thơ ra Hà Nội. Bắt đầu thôi!', 'After each round the map shows who holds that province. A BizOn flag is planted only when the team <b>leads market share and makes a profit</b>. Six rounds, from Can Tho to Hanoi. Let\'s begin!'] }];
 let t3i = 0;
 function tour3D(i = 0) {
   t3i = i; const st = T3[i]; if (!st) return; st.cam();
-  showPanel(`<span class="tag">🤖 LUMINA HƯỚNG DẪN · ${i + 1}/3</span>
-    <div class="who"><img src="${st.img}" alt="" style="object-fit:contain;background:#f3ead9"><div><b>${st.title}</b></div></div>
-    <p class="d">${st.text}</p>
+  showPanel(`<span class="tag">${T('🤖 LUMINA HƯỚNG DẪN', '🤖 LUMINA GUIDE')} · ${i + 1}/3</span>
+    <div class="who"><img src="${st.img}" alt="" style="object-fit:contain;background:#f3ead9"><div><b>${TL(st.title)}</b></div></div>
+    <p class="d">${TL(st.text)}</p>
     <div class="dots">${T3.map((_, k) => `<i class="${k === i ? 'on' : ''}"></i>`).join('')}</div>
-    <div class="row"><button class="btn" id="t3Prev" ${i ? '' : 'disabled'}>‹ Trước</button>${i < 2 ? '<button class="btn primary" id="t3Next">Tiếp ›</button>' : '<button class="btn primary" id="t3End">🎯 Vào bàn quyết định</button>'}</div>
-    <button class="btn" id="t3Skip">Bỏ qua hướng dẫn</button>`);
+    <div class="row"><button class="btn" id="t3Prev" ${i ? '' : 'disabled'}>${T('‹ Trước', '‹ Back')}</button>${i < 2 ? '<button class="btn primary" id="t3Next">' + T('Tiếp ›', 'Next ›') + '</button>' : '<button class="btn primary" id="t3End">' + T('🎯 Vào bàn quyết định', '🎯 Go to the decision table') + '</button>'}</div>
+    <button class="btn" id="t3Skip">${T('Bỏ qua hướng dẫn', 'Skip the guide')}</button>`);
   const q = s => evc.querySelector(s), done = () => { try { localStorage.setItem(T3_KEY, '1'); } catch (e) {} closeEvent(); };
   if (q('#t3Prev')) q('#t3Prev').onclick = () => tour3D(t3i - 1);
   if (q('#t3Next')) q('#t3Next').onclick = () => tour3D(t3i + 1);
@@ -1029,40 +1048,39 @@ function maybeTour3D() { try { if (localStorage.getItem(T3_KEY)) return; } catch
 // ================= KẾT QUẢ VÒNG 3D =================
 function flyTable(wide) { const mob = innerWidth < 760; flyTo(new THREE.Vector3(mob ? 0 : -1.6, mob ? -1.2 : 0.6, -2.4), new THREE.Vector3(0.62, 0.62, 0.75).multiplyScalar((wide ? 9.5 : 7.5) * (mob ? 1.35 : 1))); }
 function showPanel(html) { evc.innerHTML = html; evc.scrollTop = 0; document.body.classList.add('evt'); sheetTab = null; setMode(); }
-const STOPS3 = ['Cần Thơ', 'TP. Hồ Chí Minh', 'Khánh Hòa', 'Đà Nẵng', 'Thanh Hóa', 'Hà Nội'];
 function resultLine(r) {
-  const S0 = ev('S') || {}, cq = (S0.conquest || [])[r.round - 1] || {}, city = STOPS3[r.round - 1] || '', np = fmt(r.netProfit), sh = (+r.share || 0).toFixed(1);
-  if (r.netProfit > 0 && cq.win) return `Cờ BizOn đã cắm ở ${city}! Thị phần ${sh}% và lãi ${np}. Giữ nhịp này nhé.`;
-  if (r.netProfit > 0) return `Có lãi ${np} nhưng ${cq.winner || 'đối thủ'} vẫn đông khách hơn ở ${city}. Xem lại giá và marketing so với họ.`;
-  if (cq.hasTopShare) return `Mình dẫn thị phần ${sh}% nhưng bán lỗ ${np}. Cờ chỉ cắm khi vừa dẫn thị phần vừa có lãi.`;
-  return `Vòng này lỗ ${np}. Đừng nản, mở báo cáo P&L xem khoản chi nào vượt.`;
+  const S0 = ev('S') || {}, cq = (S0.conquest || [])[r.round - 1] || {}, city = cityName(r.round - 1), np = fmt(r.netProfit), sh = (+r.share || 0).toFixed(1);
+  if (r.netProfit > 0 && cq.win) return T(`Cờ BizOn đã cắm ở ${city}! Thị phần ${sh}% và lãi ${np}. Giữ nhịp này nhé.`, `The BizOn flag is planted in ${city}! ${sh}% market share and a ${np} profit. Keep this pace.`);
+  if (r.netProfit > 0) return T(`Có lãi ${np} nhưng ${cq.winner || 'đối thủ'} vẫn đông khách hơn ở ${city}. Xem lại giá và marketing so với họ.`, `A ${np} profit, but ${cq.winner || 'a rival'} still draws more customers in ${city}. Review your price and marketing against theirs.`);
+  if (cq.hasTopShare) return T(`Mình dẫn thị phần ${sh}% nhưng bán lỗ ${np}. Cờ chỉ cắm khi vừa dẫn thị phần vừa có lãi.`, `We lead with ${sh}% market share but sold at a ${np} loss. A flag is planted only when we lead share and make a profit.`);
+  return T(`Vòng này lỗ ${np}. Đừng nản, mở báo cáo P&L xem khoản chi nào vượt.`, `A ${np} loss this round. Don't give up: open the P&L report to see which cost ran over.`);
 }
 function result3D(r) {
   const s = ev('S'), ok = r.netProfit > 0; /* giọng Lumina đã tắt */
   const cq = (s.conquest || [])[r.round - 1], st = STOPS[r.round - 1];
-  const cqLine = cq && st ? (cq.win ? `<p class="d" style="color:#3f8a44;font-weight:700">🚩 Đội bạn cắm cờ tại ${st.name}!</p>`
-    : cq.hasTopShare ? `<p class="d" style="color:#b8741a;font-weight:700">⚠️ Thị phần cao nhất nhưng vòng này lỗ nên chưa cắm được cờ – ${st.name} tạm về tay ${cq.winner}.</p>`
-    : `<p class="d" style="color:#c8641c;font-weight:700">🏴 ${cq.winner} chiếm ${st.name} vòng này</p>`) : '';
+  const cqLine = cq && st ? (cq.win ? `<p class="d" style="color:#3f8a44;font-weight:700">${T(`🚩 Đội bạn cắm cờ tại ${SN(st)}!`, `🚩 Your team planted a flag in ${SN(st)}!`)}</p>`
+    : cq.hasTopShare ? `<p class="d" style="color:#b8741a;font-weight:700">${T(`⚠️ Thị phần cao nhất nhưng vòng này lỗ nên chưa cắm được cờ – ${SN(st)} tạm về tay ${cq.winner}.`, `⚠️ Highest market share but a loss this round, so no flag yet – ${SN(st)} goes to ${cq.winner} for now.`)}</p>`
+    : `<p class="d" style="color:#c8641c;font-weight:700">${T(`🏴 ${cq.winner} chiếm ${SN(st)} vòng này`, `🏴 ${cq.winner} takes ${SN(st)} this round`)}</p>`) : '';
   const fresh = ev('(()=>{S.achShown??=[];const f=(S.achievements||[]).filter(id=>!S.achShown.includes(id));S.achShown.push(...f);save();return f.map(id=>{const a=ACHIEVEMENTS_LIST().find(x=>x.id===id);return a?a.icon+" "+a.name:""}).filter(Boolean)})()') || [];
   let why = ''; try { why = W.explainRound(r); } catch {}
   MOOD.kind = ok ? 'win' : 'lose'; MOOD.until = performance.now() + 60000; flyTable(true);
   if (ok) confetti3D(new THREE.Vector3(0, 0, -2.4));
-  showPanel(`<img src="assets/character/${ok ? 'rong-xanh' : 'rong-xanh-suy-nghi'}.webp" alt="Rồng Xanh" style="width:84px;align-self:center"><span class="tag ${ok ? '' : 'bad'}">● Kết quả vòng ${r.round}/6</span>
-    <h2 class="${ok ? '' : 'bad'}">${ok ? '🎉 Vòng có lãi!' : '😰 Vòng này lỗ'}</h2>
-    <p class="d">${r.event.icon} ${r.event.name}${r.shielded ? ' (đã chặn bởi 🛡️)' : ''}</p>
-    <div class="say"><small>🤖 HƯƠNG AI</small>${resultLine(r)}</div>
-    <p class="d" style="text-align:center;font-weight:700">🐉 Rồng Xanh: “${cq && cq.win ? 'Cờ của mình!' : ok ? 'Sắp tới lượt mình rồi!' : 'Để Rồng Xanh xem lại số liệu…'}”</p>
-    ${ok ? '' : '<div class="q">"Dữ liệu cho ta biết quá khứ, quyết định hôm nay viết nên tương lai." – <b>Phan Anh Tú · Cố vấn học thuật</b></div>'}
+  showPanel(`<img src="assets/character/${ok ? 'rong-xanh' : 'rong-xanh-suy-nghi'}.webp" alt="Rồng Xanh" style="width:84px;align-self:center"><span class="tag ${ok ? '' : 'bad'}">● ${T('Kết quả vòng', 'Round result')} ${r.round}/6</span>
+    <h2 class="${ok ? '' : 'bad'}">${ok ? T('🎉 Vòng có lãi!', '🎉 A profitable round!') : T('😰 Vòng này lỗ', '😰 A loss this round')}</h2>
+    <p class="d">${r.event.icon} ${r.event.name}${r.shielded ? T(' (đã chặn bởi 🛡️)', ' (blocked by 🛡️)') : ''}</p>
+    <div class="say"><small>🤖 LUMINA</small>${resultLine(r)}</div>
+    <p class="d" style="text-align:center;font-weight:700">${T('🐉 Rồng Xanh', '🐉 Green Dragon')}: “${cq && cq.win ? T('Cờ của mình!', 'That flag is ours!') : ok ? T('Sắp tới lượt mình rồi!', 'Our turn is coming!') : T('Để Rồng Xanh xem lại số liệu…', 'Let Green Dragon check the numbers…')}”</p>
+    ${ok ? '' : '<div class="q">' + T('"Dữ liệu cho ta biết quá khứ, quyết định hôm nay viết nên tương lai." – <b>Phan Anh Tú · Cố vấn học thuật</b>', '"Data tells us about the past; today\'s decisions write the future." – <b>Phan Anh Tú · Academic advisor</b>') + '</div>'}
     <div class="imps">
-      <div class="imp"><small>Doanh thu</small><b>${fmt(r.revenue)}</b></div>
-      <div class="imp"><small>Lợi nhuận ròng</small><b style="color:${ok ? '#3f8a44' : '#c0443a'}">${fmt(r.netProfit)}</b></div>
-      <div class="imp"><small>Đã bán</small><b>${(+r.sold).toLocaleString('vi-VN')} sp</b></div>
-      <div class="imp"><small>Thị phần</small><b>${(+r.share).toFixed(1)}%</b></div>
+      <div class="imp"><small>${T('Doanh thu', 'Revenue')}</small><b>${fmt(r.revenue)}</b></div>
+      <div class="imp"><small>${T('Lợi nhuận ròng', 'Net profit')}</small><b style="color:${ok ? '#3f8a44' : '#c0443a'}">${fmt(r.netProfit)}</b></div>
+      <div class="imp"><small>${T('Đã bán', 'Units sold')}</small><b>${NUM(+r.sold)} ${T('sp', 'units')}</b></div>
+      <div class="imp"><small>${T('Thị phần', 'Market share')}</small><b>${(+r.share).toFixed(1)}%</b></div>
     </div>
-    <div class="say"><small>💡 VÌ SAO?</small>${why}</div>
+    <div class="say"><small>${T('💡 VÌ SAO?', '💡 WHY?')}</small>${why}</div>
     <p class="d" style="color:#2f8a8c;font-weight:700">+${r.xpGain} XP</p>${cqLine}
-    ${fresh.map(a => `<span class="ach">🎖️ Thành tựu mới: ${a}. Ghi vào nhật ký đội nhé.</span>`).join('')}
-    <button class="btn primary" id="rsGo">Xác nhận & tiếp tục 🚩</button>`);
+    ${fresh.map(a => `<span class="ach">${T(`🎖️ Thành tựu mới: ${a}. Ghi vào nhật ký đội nhé.`, `🎖️ New achievement: ${a}. Note it in the team journal.`)}</span>`).join('')}
+    <button class="btn primary" id="rsGo">${T('Xác nhận & tiếp tục 🚩', 'Confirm & continue 🚩')}</button>`);
   evc.querySelector('#rsGo').onclick = () => { closeEvent(); MOOD.until = 0; fly(9); zb.children[9].click();
     window.__afterMap = () => { ev('renderAll()'); if (ev('S.finished')) finale3D();
       else if (r.isNewPeak) W.showVictory(r); else W.maybeShowEventIntro(); };
@@ -1085,14 +1103,14 @@ function finale3D() {
   MOOD.kind = champ ? 'win' : 'idle'; MOOD.until = performance.now() + 12000; confetti3D(new THREE.Vector3(-3.9, 0, 3.9), champ ? 320 : 120);
   flyTo(new THREE.Vector3(-4.0, 0.8, 4.0), new THREE.Vector3(0.62, 0.55, 0.75).normalize().multiplyScalar(innerWidth < 760 ? 12 : 9.5));
   const medal = ['🥇', '🥈', '🥉', '4️⃣'][myRank - 1];
-  showPanel(`${champ ? '<img src="assets/character/rong-xanh-cup.webp" alt="Rồng Xanh ôm cúp" style="width:96px;align-self:center"><img src="assets/illustrations/team-victory-celebration.webp" alt="Lễ trao cúp vô địch BizOn Bật Nghiệp" style="width:100%;border-radius:18px;border:3px solid #e6d6bf;display:block">' : ''}<span class="tag">🏁 TỔNG KẾT MÙA GIẢI · 6 VÒNG</span><h2>${champ ? 'Quán quân sàn đấu!' : `Hạng ${myRank}/4`} ${medal}</h2>
-    <p class="d">${champ ? `${s.profile.teamName} cắm nhiều cờ nhất trên bản đồ Việt Nam. Đội Rồng Xanh lên bục cao nhất.` : `${nm(rank[0].k)} dẫn đầu với ${rank[0].n} cờ. Đội bạn có ${mine} cờ – xem lại báo cáo để rút bài học.`}</p>
-    <div class="imps"><div class="imp"><small>Cờ cả mùa</small><b>🚩 ${mine}/6</b></div><div class="imp"><small>Lợi nhuận tích lũy</small><b style="color:${profit >= 0 ? '#3f8a44' : '#c0443a'}">${fmt(profit)}</b></div><div class="imp"><small>Thị phần cuối</small><b>${(+last.share || 0).toFixed(1)}%</b></div><div class="imp"><small>Số dư ví</small><b>${fmt(s.balance)}</b></div></div>
-    <div class="say"><small>🤖 HƯƠNG AI</small>${champ ? 'Quán quân sàn đấu! Đội cắm nhiều cờ nhất trên bản đồ Việt Nam.' : 'Sáu vòng là sáu bài học. Đọc lại nhật ký đội, rồi thử lại mùa mới nhé.'}</div>
-    <div class="q">"${champ ? 'Một chiến lược được thực thi kỷ luật suốt sáu vòng – đó là điều đáng tự hào nhất.' : 'Doanh nghiệp giỏi không phải doanh nghiệp không bao giờ sai, mà là doanh nghiệp sửa sai nhanh.'}" – <b>Phan Anh Tú</b></div>
-    <div class="row"><button class="btn primary" id="fnRep">📊 Báo cáo mùa giải</button><button class="btn" id="fnAch">🎖️ Thành tựu</button></div>
-    <button class="btn" id="fnNew">🔄 Chơi lại mùa mới</button>
-    <p style="font-size:11px;color:#8a7a68;margin-top:4px;line-height:1.4">${s.profile.classId && s.profile.classId !== 'DEMO-2026' ? 'Phiên thi có mã lớp: không thể Reset – kết quả đã gửi về giảng viên.' : 'Chỉ Reset khi vòng chơi thật sự gặp lỗi.'}</p>`);
+  showPanel(`${champ ? '<img src="assets/character/rong-xanh-cup.webp" alt="Rồng Xanh ôm cúp" style="width:96px;align-self:center"><img src="assets/illustrations/team-victory-celebration.webp" alt="Lễ trao cúp vô địch BizOn Bật Nghiệp" style="width:100%;border-radius:18px;border:3px solid #e6d6bf;display:block">' : ''}<span class="tag">${T('🏁 TỔNG KẾT MÙA GIẢI · 6 VÒNG', '🏁 SEASON WRAP-UP · 6 ROUNDS')}</span><h2>${champ ? T('Quán quân sàn đấu!', 'Champions of the arena!') : `${T('Hạng', 'Rank')} ${myRank}/4`} ${medal}</h2>
+    <p class="d">${champ ? T(`${s.profile.teamName} cắm nhiều cờ nhất trên bản đồ Việt Nam. Đội Rồng Xanh lên bục cao nhất.`, `${s.profile.teamName} planted the most flags on the map of Vietnam. Team Green Dragon takes the top step.`) : T(`${nm(rank[0].k)} dẫn đầu với ${rank[0].n} cờ. Đội bạn có ${mine} cờ – xem lại báo cáo để rút bài học.`, `${nm(rank[0].k)} leads with ${rank[0].n} flags. Your team has ${mine} – review the reports for the lessons.`)}</p>
+    <div class="imps"><div class="imp"><small>${T('Cờ cả mùa', 'Season flags')}</small><b>🚩 ${mine}/6</b></div><div class="imp"><small>${T('Lợi nhuận tích lũy', 'Cumulative profit')}</small><b style="color:${profit >= 0 ? '#3f8a44' : '#c0443a'}">${fmt(profit)}</b></div><div class="imp"><small>${T('Thị phần cuối', 'Final share')}</small><b>${(+last.share || 0).toFixed(1)}%</b></div><div class="imp"><small>${T('Số dư ví', 'Wallet balance')}</small><b>${fmt(s.balance)}</b></div></div>
+    <div class="say"><small>🤖 LUMINA</small>${champ ? T('Quán quân sàn đấu! Đội cắm nhiều cờ nhất trên bản đồ Việt Nam.', 'Champions of the arena! The team planted the most flags on the map of Vietnam.') : T('Sáu vòng là sáu bài học. Đọc lại nhật ký đội, rồi thử lại mùa mới nhé.', 'Six rounds, six lessons. Reread the team journal, then try a new season.')}</div>
+    <div class="q">"${champ ? T('Một chiến lược được thực thi kỷ luật suốt sáu vòng – đó là điều đáng tự hào nhất.', 'A strategy executed with discipline for six rounds – that is the thing to be proudest of.') : T('Doanh nghiệp giỏi không phải doanh nghiệp không bao giờ sai, mà là doanh nghiệp sửa sai nhanh.', 'A good business is not one that never errs, but one that corrects its errors fast.')}" – <b>Phan Anh Tú</b></div>
+    <div class="row"><button class="btn primary" id="fnRep">${T('📊 Báo cáo mùa giải', '📊 Season report')}</button><button class="btn" id="fnAch">${T('🎖️ Thành tựu', '🎖️ Achievements')}</button></div>
+    <button class="btn" id="fnNew">${T('🔄 Chơi lại mùa mới', '🔄 Play a new season')}</button>
+    <p style="font-size:11px;color:#8a7a68;margin-top:4px;line-height:1.4">${s.profile.classId && s.profile.classId !== 'DEMO-2026' ? T('Phiên thi có mã lớp: không thể Reset – kết quả đã gửi về giảng viên.', 'Graded session with a class code: no reset – results were sent to the instructor.') : T('Chỉ Reset khi vòng chơi thật sự gặp lỗi.', 'Reset only if the game is truly broken.')}</p>`);
   evc.querySelector('#fnRep').onclick = () => { closeEvent(); ev("currentReport='season'"); force2D = true; W.showTab('reports'); force2D = false; };
   evc.querySelector('#fnAch').onclick = () => { closeEvent(); window.__openTab('achievements'); };
   evc.querySelector('#fnNew').onclick = () => { closeEvent(); if (FIN) { scene.remove(FIN); FIN = null; } for (let i = actors.length - 1; i >= 0; i--) if (actors[i].fin) actors.splice(i, 1); ev('resetGame()'); };
@@ -1101,12 +1119,12 @@ function victory3D(r) {
   const s = ev('S'); /* giọng Lumina đã tắt */
   const prev = s.history[s.history.length - 2], growth = prev ? (r.share - prev.share).toFixed(1) : (+r.share).toFixed(1), sat = Math.min(5, s.brandLoyalty / 19).toFixed(1);
   MOOD.kind = 'win'; MOOD.until = performance.now() + 60000; flyLumina(); window.__EVON = true; confetti3D(actors.find(a => a.o.userData.cid === 'lumina').o.position, 240);
-  showPanel(`<span class="tag">🎊 CHÚC MỪNG CHIẾN THẮNG · TOP 1 MARKET</span><h2>Thị phần đạt đỉnh mới!</h2>
-    <div class="say" style="display:flex;gap:10px;align-items:flex-start"><img src="assets/character/rong-xanh-y-tuong.webp" alt="" style="width:52px;flex:none"><div><small>LUMINA · CỐ VẤN AI</small>"Thật tuyệt vời thưa ${s.profile.role}! Chiến dịch vừa qua đã tạo nên một cú hích lịch sử. Chúng ta chính thức dẫn đầu thị trường với những con số ấn tượng!"</div>
-    <div class="big">${(+r.share).toFixed(1)}<small>%</small></div><p class="d" style="text-align:center">Tăng trưởng ${growth}% so với vòng trước.</p>
-    <div class="imps"><div class="imp"><small>📈 Hiệu quả quảng cáo</small><b>+${r.adEff}%</b></div><div class="imp"><small>😊 Hài lòng thương hiệu</small><b>${sat}/5</b></div></div>
-    <div class="q">"Xuất sắc! Đây là minh chứng cho một chiến lược được thực thi kỷ luật." – <b>Phan Anh Tú</b></div>
-    <button class="btn primary" id="vcRep">📊 Xem báo cáo chi tiết</button><button class="btn" id="vcNext">Lập kế hoạch tiếp theo</button>`);
+  showPanel(`<span class="tag">${T('🎊 CHÚC MỪNG CHIẾN THẮNG · TOP 1 MARKET', '🎊 CONGRATULATIONS · TOP 1 MARKET')}</span><h2>${T('Thị phần đạt đỉnh mới!', 'A new market share peak!')}</h2>
+    <div class="say" style="display:flex;gap:10px;align-items:flex-start"><img src="assets/character/rong-xanh-y-tuong.webp" alt="" style="width:52px;flex:none"><div><small>${T('LUMINA · CỐ VẤN', 'LUMINA · ADVISOR')}</small>"${T(`Thật tuyệt vời thưa ${s.profile.role}! Chiến dịch vừa qua đã tạo nên một cú hích lịch sử. Chúng ta chính thức dẫn đầu thị trường với những con số ấn tượng!`, `Wonderful, ${s.profile.role}! The last campaign delivered a historic boost. We now officially lead the market with impressive numbers!`)}"</div>
+    <div class="big">${(+r.share).toFixed(1)}<small>%</small></div><p class="d" style="text-align:center">${T(`Tăng trưởng ${growth}% so với vòng trước.`, `Up ${growth}% on the previous round.`)}</p>
+    <div class="imps"><div class="imp"><small>${T('📈 Hiệu quả quảng cáo', '📈 Ad effectiveness')}</small><b>+${r.adEff}%</b></div><div class="imp"><small>${T('😊 Hài lòng thương hiệu', '😊 Brand satisfaction')}</small><b>${sat}/5</b></div></div>
+    <div class="q">"${T('Xuất sắc! Đây là minh chứng cho một chiến lược được thực thi kỷ luật.', 'Excellent! This is proof of a strategy executed with discipline.')}" – <b>Phan Anh Tú</b></div>
+    <button class="btn primary" id="vcRep">${T('📊 Xem báo cáo chi tiết', '📊 See the detailed report')}</button><button class="btn" id="vcNext">${T('Lập kế hoạch tiếp theo', 'Plan the next round')}</button>`);
   const end = () => { closeEvent(); MOOD.until = 0; };
   evc.querySelector('#vcRep').onclick = () => { end(); window.__openTab('reports'); };
   evc.querySelector('#vcNext').onclick = () => { end(); W.maybeShowEventIntro(); };
@@ -1122,15 +1140,15 @@ window.__meeting3D = () => {
 };
 function showSpeaker() {
   const m = meetSug[meetI]; MEET.speaker = SPK[meetI];
-  showPanel(`<span class="tag">🗣️ Cuộc họp đội – vòng ${ev('S.round')}</span>
-    <div class="who"><img src="${m.img}" alt=""><div><b>${m.icon} ${m.name}</b><span>${meetI + 1}/4 thành viên đề xuất theo vai</span></div></div>
+  showPanel(`<span class="tag">${T('🗣️ Cuộc họp đội – vòng', '🗣️ Team meeting – round')} ${ev('S.round')}</span>
+    <div class="who"><img src="${m.img}" alt=""><div><b>${m.icon} ${m.name}</b><span>${meetI + 1}/4 ${T('thành viên đề xuất theo vai', 'members proposing by role')}</span></div></div>
     <div class="say">"${m.say}"</div>
-    ${m.apply ? '<button class="btn primary" id="tmApply">👍 Nghe theo – áp vào thanh trượt</button>' : ''}
+    ${m.apply ? '<button class="btn primary" id="tmApply">' + T('👍 Nghe theo – áp vào thanh trượt', '👍 Take the advice – apply to the sliders') + '</button>' : ''}
     <div class="dots">${meetSug.map((_, i) => `<i class="${i === meetI ? 'on' : ''}"></i>`).join('')}</div>
-    <div class="row"><button class="btn" id="tmPrev" ${meetI ? '' : 'disabled'}>‹ Trước</button>${meetI < 3 ? '<button class="btn" id="tmNext">Tiếp ›</button>' : '<button class="btn primary" id="tmEnd">Chốt quyết định →</button>'}</div>
-    <button class="btn" id="tmClose">Kết thúc họp</button>`);
+    <div class="row"><button class="btn" id="tmPrev" ${meetI ? '' : 'disabled'}>${T('‹ Trước', '‹ Back')}</button>${meetI < 3 ? '<button class="btn" id="tmNext">' + T('Tiếp ›', 'Next ›') + '</button>' : '<button class="btn primary" id="tmEnd">' + T('Chốt quyết định →', 'Finalise decisions →') + '</button>'}</div>
+    <button class="btn" id="tmClose">${T('Kết thúc họp', 'End meeting')}</button>`);
   const q = id => evc.querySelector(id);
-  if (q('#tmApply')) q('#tmApply').onclick = e => { W.applySuggestion(meetI); e.target.textContent = '✓ Đã áp vào thanh trượt'; e.target.classList.add('done'); };
+  if (q('#tmApply')) q('#tmApply').onclick = e => { W.applySuggestion(meetI); e.target.textContent = T('✓ Đã áp vào thanh trượt', '✓ Applied to the sliders'); e.target.classList.add('done'); };
   if (q('#tmPrev')) q('#tmPrev').onclick = () => { meetI--; showSpeaker(); };
   if (q('#tmNext')) q('#tmNext').onclick = () => { meetI++; showSpeaker(); };
   if (q('#tmEnd')) q('#tmEnd').onclick = () => { endMeeting(); window.__openTab('decisions'); };
@@ -1154,12 +1172,12 @@ function event3D() {
   const bad = e.tone === 'bad', warn = e.tone === 'warn';
   const dirIcon = d => ({ up: '📈', 'up-bad': '📈', down: '📉', 'down-good': '📉', flat: '➖' }[d] || '➖');
   const dirCol = d => d === 'up' || d === 'down-good' ? '#3f8a44' : d === 'flat' ? '#2c3552' : '#c0443a';
-  evc.innerHTML = `<img src="assets/character/${bad || warn ? 'rong-xanh-ngac-nhien' : 'rong-xanh'}.webp" alt="Rồng Xanh" style="width:84px;align-self:center"><span class="tag ${bad ? 'bad' : warn ? 'warn' : ''}">● Vòng ${s.round}/6 · ${e.tag || 'BIẾN CỐ THỊ TRƯỜNG'}</span>
+  evc.innerHTML = `<img src="assets/character/${bad || warn ? 'rong-xanh-ngac-nhien' : 'rong-xanh'}.webp" alt="Rồng Xanh" style="width:84px;align-self:center"><span class="tag ${bad ? 'bad' : warn ? 'warn' : ''}">● ${T('Vòng', 'Round')} ${s.round}/6 · ${e.tag || T('BIẾN CỐ THỊ TRƯỜNG', 'MARKET EVENT')}</span>
     <h2 class="${bad ? 'bad' : ''}">${e.icon} ${e.name}</h2><p class="d">${e.desc}</p>
     <div class="imps">${(e.impacts || []).map(im => `<div class="imp"><small>${im.icon} ${im.label}</small><b style="color:${dirCol(im.dir)}">${dirIcon(im.dir)} ${im.value}</b></div>`).join('')}</div>
-    <div class="say" style="display:flex;gap:10px;align-items:flex-start"><img src="assets/character/rong-xanh-y-tuong.webp" alt="" style="width:52px;flex:none"><div><small>LUMINA · CỐ VẤN AI</small>"${e.luminaMsg}"</div></div>
-    ${bad ? '<div class="q">"Bình tĩnh phân tích số liệu trước khi hành động – khủng hoảng luôn ẩn chứa cơ hội cho đội có kỷ luật." – <b>Phan Anh Tú · Cố vấn học thuật</b></div>' : ''}
-    <button class="btn primary" id="evGo">${e.cta ? e.cta.label : '🎯 Nhập quyết định'}</button><button class="btn" id="evHome">Về trụ sở</button>`;
+    <div class="say" style="display:flex;gap:10px;align-items:flex-start"><img src="assets/character/rong-xanh-y-tuong.webp" alt="" style="width:52px;flex:none"><div><small>${T('LUMINA · CỐ VẤN', 'LUMINA · ADVISOR')}</small>"${e.luminaMsg}"</div></div>
+    ${bad ? '<div class="q">' + T('"Bình tĩnh phân tích số liệu trước khi hành động – khủng hoảng luôn ẩn chứa cơ hội cho đội có kỷ luật." – <b>Phan Anh Tú · Cố vấn học thuật</b>', '"Analyse the numbers calmly before acting – a crisis always hides an opportunity for a disciplined team." – <b>Phan Anh Tú · Academic advisor</b>') + '</div>' : ''}
+    <button class="btn primary" id="evGo">${e.cta ? e.cta.label : T('🎯 Nhập quyết định', '🎯 Enter decisions')}</button><button class="btn" id="evHome">${T('Về trụ sở', 'Back to HQ')}</button>`;
   evc.querySelector('#evGo').onclick = () => { closeEvent(); window.__openTab(e.cta ? e.cta.tab : 'decisions', e.cta && e.cta.report); };
   evc.querySelector('#evHome').onclick = closeEvent;
   evc.scrollTop = 0; window.__EVON = true; document.body.classList.add('evt'); flyLumina();
@@ -1219,13 +1237,13 @@ async function arena3D(r, done) {
   const nf = hq.teamFlag(winKey); nf.scale.setScalar(0.62); nf.position.y = 4; AR.pins[stopI].add(nf); AR.flags.push(nf); AR.drop = nf;
   const rp = AR.pins[stopI].position; AR.ring.position.set(rp.x, 0.26, rp.z);
   AR.crown.visible = false; AR.winner = AR.pods.reduce((a, b) => b.share > a.share ? b : a);
-  document.getElementById('aTitle').textContent = '⚔️ ĐẤU TRƯỜNG ' + (st ? st.name.toUpperCase() : 'VÒNG ' + r.round);
-  document.getElementById('aSub').textContent = `${r.event.icon} ${r.event.name} – 12.000 khách hàng chờ trên khán đài`;
-  document.getElementById('aZone').textContent = st ? '📍 ' + st.zone : '';
+  document.getElementById('aTitle').textContent = T('⚔️ ĐẤU TRƯỜNG ', '⚔️ ARENA ') + (st ? SN(st).toUpperCase() : T('VÒNG ', 'ROUND ') + r.round);
+  document.getElementById('aSub').textContent = `${r.event.icon} ${r.event.name} – ${T('12.000 khách hàng chờ trên khán đài', '12,000 customers waiting in the stands')}`;
+  document.getElementById('aZone').textContent = st ? '📍 ' + TL(st.zone) : '';
   aLabs.innerHTML = AR.pods.map(p => `<div class="lab${p.me ? ' me' : ''}" style="--c:${TEAMS[p.key].color}"><i>0%</i><b>${p.me ? '🏺 ' : ''}${p.name}</b></div>`).join('');
   AR.labs = [...aLabs.children];
   const v = document.getElementById('aVerdict');
-  v.textContent = cur.win ? `🚩 ${s.profile.teamName} thắng sàn đấu – cắm cờ tại ${st.name}!` : cur.hasTopShare ? '⚠️ Thị phần cao nhất nhưng vòng này lỗ – cần có lãi mới cắm được cờ!' : `🏴 ${AR.winner.name} giữ vị trí số 1 vòng này, cờ ${st ? st.name : ''} thuộc về họ`;
+  v.textContent = cur.win ? T(`🚩 ${s.profile.teamName} thắng sàn đấu – cắm cờ tại ${SN(st)}!`, `🚩 ${s.profile.teamName} wins the arena – flag planted in ${SN(st)}!`) : cur.hasTopShare ? T('⚠️ Thị phần cao nhất nhưng vòng này lỗ – cần có lãi mới cắm được cờ!', '⚠️ Highest market share but a loss this round – you need a profit to plant a flag!') : T(`🏴 ${AR.winner.name} giữ vị trí số 1 vòng này, cờ ${st ? SN(st) : ''} thuộc về họ`, `🏴 ${AR.winner.name} holds the number-one spot this round; the ${st ? SN(st) : ''} flag is theirs`);
   v.style.borderColor = cur.win ? '#f39a33' : '#2f8a95';
   aFoot.classList.remove('on'); AR.t0 = performance.now(); AR.shown = false; AR.on = true; document.body.classList.add('arena');
   document.getElementById('aNext').onclick = () => { AR.on = false; document.body.classList.remove('arena'); done(); };
@@ -1262,12 +1280,12 @@ Object.assign(ROOM3D, { decisions: 1, reports: 1, market: 1, missions: 1 });
 const gd = id => W.document.getElementById(id);
 const txt = id => { const e = gd(id); return e ? e.textContent.trim() : ''; };
 const SL = [
-  { id: 'in-price', label: '💲 Giá bán', v: 'v-price', col: 0xe8784a, role: 'CMO' },
-  { id: 'in-mkt', label: '📣 Marketing', v: 'v-mkt', col: 0xd6453a, role: 'CMO' },
-  { id: 'in-prod', label: '🏭 Sản lượng', v: 'v-prod', col: 0x2f8a8c, role: 'COO' },
-  { id: 'in-rd', label: '🔬 R&D', v: 'v-rd', col: 0x7a5ac0, role: 'CFO' },
-  { id: 'in-workers', label: '👥 Nhân viên', v: 'v-workers', col: 0x6f8a60, role: 'COO', adv: true },
-  { id: 'in-train', label: '🎓 Đào tạo/người', v: 'v-train', col: 0x3f78c0, role: 'COO', adv: true },
+  { id: 'in-price', label: ['💲 Giá bán', '💲 Price'], v: 'v-price', col: 0xe8784a, role: 'CMO' },
+  { id: 'in-mkt', label: ['📣 Marketing', '📣 Marketing'], v: 'v-mkt', col: 0xd6453a, role: 'CMO' },
+  { id: 'in-prod', label: ['🏭 Sản lượng', '🏭 Production'], v: 'v-prod', col: 0x2f8a8c, role: 'COO' },
+  { id: 'in-rd', label: ['🔬 R&D', '🔬 R&D'], v: 'v-rd', col: 0x7a5ac0, role: 'CFO' },
+  { id: 'in-workers', label: ['👥 Nhân viên', '👥 Workers'], v: 'v-workers', col: 0x6f8a60, role: 'COO', adv: true },
+  { id: 'in-train', label: ['🎓 Đào tạo/người', '🎓 Training/worker'], v: 'v-train', col: 0x3f78c0, role: 'COO', adv: true },
 ];
 let decAdv = false, drag = null;
 const TX0 = -2.6, TX1 = 2.6, TY = 0.98;
@@ -1275,7 +1293,7 @@ function slVal(s) { const e = gd(s.id); return { v: +e.value, min: +e.min, max: 
 function buildDecisions() {
   clearRoom(); const s = ev('S'), e = ev('currentEvent(S)') || {}, locked = s.committed || s.finished;
   const showAdv = decAdv || s.round >= 3, list = SL.filter(x => !x.adv || showAdv);
-  roomHead('🎯 Bàn ra quyết định · Vòng ' + Math.min(s.round, 6) + '/6', (e.icon ? e.icon + ' ' + e.name + ' · ' : '') + (locked ? 'Đã khóa quyết định vòng này' : 'Kéo núm đất sét để chỉnh, thống nhất với cả đội rồi Commit'));
+  roomHead(T('🎯 Bàn ra quyết định · Vòng ', '🎯 Decision table · Round ') + Math.min(s.round, 6) + '/6', (e.icon ? e.icon + ' ' + e.name + ' · ' : '') + (locked ? T('Đã khóa quyết định vòng này', 'Decisions locked for this round') : T('Kéo núm đất sét để chỉnh, thống nhất với cả đội rồi Commit', 'Drag the clay knobs to adjust, agree with the team, then Commit')));
   const g = RM.g, wood = cm(0xa86a3f), top = cm(0xc4834f);
   mk(g, new THREE.BoxGeometry(7.6, 0.16, 1.05 * list.length + 0.9), top, 0, TY - 0.08, 0.2);
   for (const x of [-3.5, 3.5]) for (const z of [-0.9, 1.3 + (list.length - 4) * 0.5]) mk(g, new THREE.BoxGeometry(0.2, TY - 0.16, 0.2), wood, x, (TY - 0.16) / 2, z);
@@ -1299,7 +1317,7 @@ function placeKnob(K, v) {
   const k = (v - K.min) / (K.max - K.min), x = TX0 + k * (TX1 - TX0);
   K.knob.position.x = x; K.fill.scale.x = Math.max(0.001, x - TX0 + 0.15); K.fill.position.x = (TX0 - 0.15 + x) / 2;
   const h = 0.1 + k * 1.3; K.col.scale.y = h; K.col.position.y = TY + h / 2;
-  K.L.innerHTML = `<b>${K.sl.label}: ${txt(K.sl.v)}</b>`;
+  K.L.innerHTML = `<b>${TL(K.sl.label)}: ${txt(K.sl.v)}</b>`;
 }
 function setSlider(K, v) { const e = gd(K.sl.id); e.value = v; W.syncDecisionLabels(); placeKnob(K, +e.value); decStats(); }
 function decStats() {
@@ -1309,13 +1327,13 @@ function decStats() {
 function decCard() {
   const s = ev('S'), locked = s.committed || s.finished, fund = ev('decFunding'), term = +(gd('in-term') || {}).value || 30, showAdv = decAdv || s.round >= 3;
   const wq = Math.max(0, (ev('WHAT_IF_LIMIT') || 2) - (s.whatIfUsed || 0));
-  rmCard.innerHTML = `<p class="k">Dự báo sống · cập nhật theo núm</p>
-    <div class="stats"><div><small>THỊ PHẦN</small><b id="dcShare"></b></div><div><small>DÒNG TIỀN RÒNG</small><b id="dcNet"></b></div><div><small>VÍ ĐỘI</small><b>${fmt(s.balance)}</b></div></div>
+  rmCard.innerHTML = `<p class="k">${T('Dự báo sống · cập nhật theo núm', 'Live forecast · updates with the knobs')}</p>
+    <div class="stats"><div><small>${T('THỊ PHẦN', 'MARKET SHARE')}</small><b id="dcShare"></b></div><div><small>${T('DÒNG TIỀN RÒNG', 'NET CASH FLOW')}</small><b id="dcNet"></b></div><div><small>${T('VÍ ĐỘI', 'TEAM WALLET')}</small><b>${fmt(s.balance)}</b></div></div>
     <p id="dcVerdict"></p><p id="dcBe" style="font-size:12px"></p>
-    <p class="k">Nguồn vốn</p><div class="row"><button class="btn${fund === 'equity' ? ' primary' : ''}" data-f="equity">💼 Vốn tự có</button><button class="btn${fund === 'loan' ? ' primary' : ''}" data-f="loan">🏦 Vay ngân hàng</button></div>
-    ${showAdv ? `<p class="k">Kỳ hạn thanh toán cho khách</p><div class="row">${[30, 60, 90].map(d => `<button class="btn${term === d ? ' primary' : ''}" data-t="${d}">${d} ngày</button>`).join('')}</div>` : '<button class="btn" id="dcAdv">⚙️ Hiện quyết định nâng cao</button>'}
-    <div class="row"><button class="btn" id="dcMeet">🗣️ Họp đội 3D</button><button class="btn" id="dcWhat">🔮 Nếu–Thì (${wq})</button></div>
-    <button class="btn primary" id="dcCommit" ${locked ? 'disabled style="opacity:.5"' : ''}>${locked ? (s.finished ? '🏁 Mô phỏng đã kết thúc' : '🔒 Đã commit vòng này') : '🔒 Commit – Khóa quyết định'}</button>`;
+    <p class="k">${T('Nguồn vốn', 'Funding')}</p><div class="row"><button class="btn${fund === 'equity' ? ' primary' : ''}" data-f="equity">${T('💼 Vốn tự có', '💼 Equity')}</button><button class="btn${fund === 'loan' ? ' primary' : ''}" data-f="loan">${T('🏦 Vay ngân hàng', '🏦 Bank loan')}</button></div>
+    ${showAdv ? `<p class="k">${T('Kỳ hạn thanh toán cho khách', 'Customer payment terms')}</p><div class="row">${[30, 60, 90].map(d => `<button class="btn${term === d ? ' primary' : ''}" data-t="${d}">${d} ${T('ngày', 'days')}</button>`).join('')}</div>` : '<button class="btn" id="dcAdv">' + T('⚙️ Hiện quyết định nâng cao', '⚙️ Show advanced decisions') + '</button>'}
+    <div class="row"><button class="btn" id="dcMeet">${T('🗣️ Họp đội 3D', '🗣️ 3D team meeting')}</button><button class="btn" id="dcWhat">${T('🔮 Nếu–Thì', '🔮 What-if')} (${wq})</button></div>
+    <button class="btn primary" id="dcCommit" ${locked ? 'disabled style="opacity:.5"' : ''}>${locked ? (s.finished ? T('🏁 Mô phỏng đã kết thúc', '🏁 Simulation finished') : T('🔒 Đã commit vòng này', '🔒 Committed this round')) : T('🔒 Commit – Khóa quyết định', '🔒 Commit – Lock in decisions')}</button>`;
   decStats();
   rmCard.querySelectorAll('[data-f]').forEach(b => b.onclick = () => { if (locked) return; W.setFunding(b.dataset.f); decCard(); });
   rmCard.querySelectorAll('[data-t]').forEach(b => b.onclick = () => { if (locked) return; gd('in-term').value = b.dataset.t; W.syncDecisionLabels(); decCard(); });
@@ -1324,7 +1342,7 @@ function decCard() {
   rmCard.querySelector('#dcWhat').onclick = () => { closeRoom(); force2D = true; W.showTab('decisions'); force2D = false; setTimeout(() => { const w = gd('whatif-result'); if (w) W.scrollTo(0, w.getBoundingClientRect().top + W.scrollY - 200); }, 200); };
   rmCard.querySelector('#dcCommit').onclick = () => { if (locked) return;
     const short = ev('(()=>{const d=currentDecisionInput();const need=d.marketing+d.rd+d.production*UNIT_COST/1000+d.workers*WAGE_PER_WORKER+d.workers*d.training;return d.funding!=="loan"&&need>S.balance+300?Math.round(need-S.balance):0})()');
-    if (short) { rmCard.insertAdjacentHTML('afterbegin', `<div id="dcWarn" style="background:#fde4e1;border:3px solid #e8a39c;border-radius:16px;padding:8px 12px;font-size:13px;color:#8a2a22"><b>Không đủ vốn tự có</b> – kế hoạch vượt ví ${fmt(short)}. Giảm ngân sách hoặc vay ngân hàng (lãi 8.5%/vòng).<div class="row" style="margin-top:6px"><button class="btn" id="dcLoan">🏦 Chuyển sang vay</button></div></div>`);
+    if (short) { rmCard.insertAdjacentHTML('afterbegin', `<div id="dcWarn" style="background:#fde4e1;border:3px solid #e8a39c;border-radius:16px;padding:8px 12px;font-size:13px;color:#8a2a22">${T(`<b>Không đủ vốn tự có</b> – kế hoạch vượt ví ${fmt(short)}. Giảm ngân sách hoặc vay ngân hàng (lãi 8.5%/vòng).`, `<b>Not enough equity</b> – the plan exceeds the wallet by ${fmt(short)}. Cut the budget or take a bank loan (8.5% interest per round).`)}<div class="row" style="margin-top:6px"><button class="btn" id="dcLoan">${T('🏦 Chuyển sang vay', '🏦 Switch to a loan')}</button></div></div>`);
       rmCard.querySelector('#dcLoan').onclick = () => { W.setFunding('loan'); decCard(); }; rmCard.scrollTop = 0; return; }
     W.commitDecisions(); if (ev('S.committed')) closeRoom(); else decCard(); };
 }
@@ -1345,12 +1363,12 @@ canvas.addEventListener('pointermove', e => {
 addEventListener('pointerup', () => { if (drag) { drag.L.classList.remove('sel'); drag = null; } });
 
 // ---- Báo cáo 3D
-const REP = [['profit', 'Lợi nhuận ròng'], ['revenue', 'Doanh thu'], ['balance', 'Số dư ví'], ['share', 'Thị phần 4 công ty'], ['oee', 'OEE xưởng']];
-const REP2D = [['pnl', 'P&L'], ['cash', 'Dòng tiền'], ['cvp', 'CVP & Chi phí'], ['rival', '🕵️ Chi phí đối thủ'], ['hr', '👥 Nhân sự'], ['bmc', '🧩 BMC'], ['dep', 'Khấu hao'], ['energy', '⚡ Năng lượng'], ['season', '🏁 Tổng kết mùa giải']];
+const REP = [['profit', ['Lợi nhuận ròng', 'Net profit']], ['revenue', ['Doanh thu', 'Revenue']], ['balance', ['Số dư ví', 'Wallet balance']], ['share', ['Thị phần 4 công ty', 'Market share of 4 firms']], ['oee', ['OEE xưởng', 'Workshop OEE']]];
+const REP2D = [['pnl', 'P&L'], ['cash', ['Dòng tiền', 'Cash flow']], ['cvp', ['CVP & Chi phí', 'CVP & Costs']], ['rival', ['🕵️ Chi phí đối thủ', '🕵️ Rival costs']], ['hr', ['👥 Nhân sự', '👥 HR']], ['bmc', '🧩 BMC'], ['dep', ['Khấu hao', 'Depreciation']], ['energy', ['⚡ Năng lượng', '⚡ Energy']], ['season', ['🏁 Tổng kết mùa giải', '🏁 Season wrap-up']]];
 let repSel = 'profit';
 function buildReports() {
   clearRoom(); const s = ev('S'), H = s.history || [];
-  roomHead('📊 Phòng Tài chính · Báo cáo', H.length ? `${REP.find(r => r[0] === repSel)[1]} theo ${H.length} vòng đã chơi` : 'Chưa có dữ liệu – hãy hoàn thành vòng đầu tiên!');
+  roomHead(T('📊 Phòng Tài chính · Báo cáo', '📊 Finance room · Reports'), H.length ? `${TL(REP.find(r => r[0] === repSel)[1])} ${T('theo', 'over')} ${H.length} ${T('vòng đã chơi', 'rounds played')}` : T('Chưa có dữ liệu – hãy hoàn thành vòng đầu tiên!', 'No data yet – complete the first round!'));
   const g = RM.g; mk(g, new THREE.BoxGeometry(8.4, 0.9, 3.2), cm(0xe3d3b6), 0, 0.45, 0); mk(g, new THREE.BoxGeometry(8.6, 0.08, 3.4), cm(0xc98a5a), 0, 0.94, 0);
   const cfo = chars.build('cfo'); cfo.scale.setScalar(1.55); cfo.position.set(-5.1, 0, 0.4); cfo.rotation.y = 0.6; cfo.traverse(m => { if (m.isMesh) m.castShadow = true; }); g.add(cfo); RM.spin.push(Object.assign(new THREE.Object3D(), { userData: { ch: cfo, rank: 0 } }));
   const base = 0.98;
@@ -1374,9 +1392,9 @@ function buildReports() {
     }
   }
   setRoomCam(new THREE.Vector3(0, 4.3, 9.4), new THREE.Vector3(0, 1.8, 0));
-  rmCard.innerHTML = `<p class="k">Biểu đồ đất sét</p><div class="row" style="flex-wrap:wrap">${REP.map(([k, n]) => `<button class="btn${repSel === k ? ' primary' : ''}" data-r="${k}" style="flex:1 1 40%;font-size:13px">${n}</button>`).join('')}</div>
+  rmCard.innerHTML = `<p class="k">${T('Biểu đồ đất sét', 'Clay charts')}</p><div class="row" style="flex-wrap:wrap">${REP.map(([k, n]) => `<button class="btn${repSel === k ? ' primary' : ''}" data-r="${k}" style="flex:1 1 40%;font-size:13px">${TL(n)}</button>`).join('')}</div>
     ${repSel === 'share' ? `<div class="row" style="flex-wrap:wrap;gap:6px">${ORDER.map(k => `<span style="font-size:12px;display:flex;gap:4px;align-items:center"><i style="width:10px;height:10px;border-radius:3px;background:${TEAMS[k].color}"></i>${k === 'star' ? s.profile.teamName : TEAMS[k].name}</span>`).join('')}</div>` : ''}
-    <p class="k">Báo cáo chi tiết (9 loại)</p><div class="row" style="flex-wrap:wrap;gap:6px">${REP2D.filter(r => r[0] !== 'season' || s.finished).map(([k, n]) => `<button class="btn" data-d="${k}" style="flex:1 1 30%;font-size:12px;padding:6px">${n}</button>`).join('')}</div>`;
+    <p class="k">${T('Báo cáo chi tiết (9 loại)', 'Detailed reports (9 types)')}</p><div class="row" style="flex-wrap:wrap;gap:6px">${REP2D.filter(r => r[0] !== 'season' || s.finished).map(([k, n]) => `<button class="btn" data-d="${k}" style="flex:1 1 30%;font-size:12px;padding:6px">${TL(n)}</button>`).join('')}</div>`;
   rmCard.querySelectorAll('[data-r]').forEach(b => b.onclick = () => { repSel = b.dataset.r; buildReports(); });
   rmCard.querySelectorAll('[data-d]').forEach(b => b.onclick = () => { closeRoom(); ev('currentReport=' + JSON.stringify(b.dataset.d)); force2D = true; W.showTab('reports'); force2D = false; });
 }
@@ -1384,14 +1402,14 @@ function buildReports() {
 // ---- Thị trường sống 3D
 function buildMarket() {
   clearRoom(); const s = ev('S'), H = s.history || [], ai = s.aiHistory || [], e = ev('currentEvent(S)') || {};
-  roomHead('📡 Thị trường sống', 'BizOn Monitor · tin tức, tiếng nói khách hàng và động thái đối thủ');
+  roomHead(T('📡 Thị trường sống', '📡 Live market'), T('BizOn Monitor · tin tức, tiếng nói khách hàng và động thái đối thủ', 'BizOn Monitor · news, customer voice and rival moves'));
   const g = RM.g;
   const series = [['star', H.map(r => r.share)], ...['Alpha Dynamics', 'Mekong Ventures', 'Star Clay Co.'].map(n => [KEY_OF[n], ai.map(sn => ((sn.find(a => a.name === n) || {}).share) || 0)])];
   const tv = ctex(1280, 720, (x, w, h) => {
     x.fillStyle = '#0d1117'; x.fillRect(0, 0, w, h); x.fillStyle = '#dce8e2'; x.font = '700 34px ui-monospace,Menlo,monospace'; x.fillText('📊 BIZON MONITOR', 40, 64);
-    x.fillStyle = '#8fa89f'; x.font = '26px ui-monospace,Menlo,monospace'; x.fillText(`VÒNG ${H.length}/6`, w - 200, 64); x.fillRect(40, 84, w - 80, 2);
-    if (!H.length) { x.fillText('Hoàn thành vòng 1 để kích hoạt bảng theo dõi thị trường.', 40, 160); return; }
-    const M = [['Thị phần', H.map(r => r.share), v => v.toFixed(1) + '%'], ['Doanh thu', H.map(r => r.revenue), v => fmt(v)], ['Lợi nhuận', H.map(r => r.netProfit), v => fmt(v)], ['Ví đội', H.map(r => r.balance), v => fmt(v)], ['OEE xưởng', H.map(r => r.oee), v => v + '%'], ['Brand Loyalty', H.map(r => r.brandLoyalty), v => v + '%']];
+    x.fillStyle = '#8fa89f'; x.font = '26px ui-monospace,Menlo,monospace'; x.fillText(`${T('VÒNG', 'ROUND')} ${H.length}/6`, w - 200, 64); x.fillRect(40, 84, w - 80, 2);
+    if (!H.length) { x.fillText(T('Hoàn thành vòng 1 để kích hoạt bảng theo dõi thị trường.', 'Complete round 1 to activate the market monitor.'), 40, 160); return; }
+    const M = [[T('Thị phần', 'Market share'), H.map(r => r.share), v => v.toFixed(1) + '%'], [T('Doanh thu', 'Revenue'), H.map(r => r.revenue), v => fmt(v)], [T('Lợi nhuận', 'Profit'), H.map(r => r.netProfit), v => fmt(v)], [T('Ví đội', 'Team wallet'), H.map(r => r.balance), v => fmt(v)], [T('OEE xưởng', 'Workshop OEE'), H.map(r => r.oee), v => v + '%'], ['Brand Loyalty', H.map(r => r.brandLoyalty), v => v + '%']];
     M.forEach(([n, sr, f], i) => { const y = 150 + i * 92; x.fillStyle = '#e8f2ec'; x.font = '700 32px ui-monospace,Menlo,monospace'; x.fillText(n, 40, y);
       const last = sr[sr.length - 1], prev = sr[sr.length - 2]; x.textAlign = 'right'; x.fillText(f(last), w - 40, y); x.textAlign = 'left';
       if (prev) { const c = (last - prev) / Math.abs(prev || 1) * 100; x.fillStyle = c >= 0 ? '#34d399' : '#f87171'; x.font = '24px ui-monospace,Menlo,monospace'; x.textAlign = 'right'; x.fillText((c >= 0 ? '+' : '') + c.toFixed(1) + '%', w - 40, y + 30); x.textAlign = 'left'; }
@@ -1400,7 +1418,7 @@ function buildMarket() {
   });
   const frame = mk(g, new THREE.BoxGeometry(6.6, 3.9, 0.25), cm(0x2c3552), 0, 2.9, -3.4);
   const scr = new THREE.Mesh(new THREE.PlaneGeometry(6.2, 3.49), new THREE.MeshBasicMaterial({ map: tv })); scr.position.set(0, 2.9, -3.26); g.add(scr);
-  const news = [e.icon ? `${e.icon} ${e.name}: ${e.desc}` : '', ...s.competitors.map(c => `${c.name} giữ ${(+c.share || 25).toFixed(1)}% thị phần`), H.length ? `Đội ${s.profile.teamName}: thị phần ${(+H[H.length - 1].share).toFixed(1)}%, lợi nhuận ${fmt(H[H.length - 1].netProfit)}` : 'Mùa giải BizOn BẬT NGHIỆP bắt đầu tại Cần Thơ'].filter(Boolean).join('     ●     ');
+  const news = [e.icon ? `${e.icon} ${e.name}: ${e.desc}` : '', ...s.competitors.map(c => T(`${c.name} giữ ${(+c.share || 25).toFixed(1)}% thị phần`, `${c.name} holds ${(+c.share || 25).toFixed(1)}% market share`)), H.length ? T(`Đội ${s.profile.teamName}: thị phần ${(+H[H.length - 1].share).toFixed(1)}%, lợi nhuận ${fmt(H[H.length - 1].netProfit)}`, `Team ${s.profile.teamName}: ${(+H[H.length - 1].share).toFixed(1)}% market share, profit ${fmt(H[H.length - 1].netProfit)}`) : T('Mùa giải BizOn BẬT NGHIỆP bắt đầu tại Cần Thơ', 'The BizOn BẬT NGHIỆP season begins in Can Tho')].filter(Boolean).join('     ●     ');
   const tick = ctex(4096, 128, (x, w, h) => { x.fillStyle = '#1b2240'; x.fillRect(0, 0, w, h); x.fillStyle = '#ffd28a'; x.font = '700 62px "Be Vietnam Pro",sans-serif'; x.textBaseline = 'middle'; x.fillText(news + '     ●     ', 20, h / 2); });
   tick.wrapS = THREE.RepeatWrapping; tick.repeat.x = 0.35;
   mk(g, new THREE.BoxGeometry(8.6, 0.55, 0.2), cm(0x2c3552), 0, 5.2, -3.4);
@@ -1410,18 +1428,18 @@ function buildMarket() {
     const pts = sr.map((v, i) => new THREE.Vector3(-3 + (sr.length > 1 ? i / (sr.length - 1) : 0.5) * 6, 0.55 + v / 45 * 2.2, z));
     if (pts.length > 1) mk(g, new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 60, 0.05, 10), cm(col));
     pts.forEach(p => mk(g, new THREE.SphereGeometry(0.1, 16, 12), cm(col), p.x, p.y, p.z));
-    lab(mk(g, new THREE.SphereGeometry(0.01, 4, 4), cm(col), pts[pts.length - 1].x, pts[pts.length - 1].y, z), `<b style="background:${TEAMS[k].color};color:#fff;border-color:transparent">${k === 'star' ? 'Đội bạn' : TEAMS[k].name} ${sr[sr.length - 1].toFixed(1)}%</b>`, 0.3); });
+    lab(mk(g, new THREE.SphereGeometry(0.01, 4, 4), cm(col), pts[pts.length - 1].x, pts[pts.length - 1].y, z), `<b style="background:${TEAMS[k].color};color:#fff;border-color:transparent">${k === 'star' ? T('Đội bạn', 'Your team') : TEAMS[k].name} ${sr[sr.length - 1].toFixed(1)}%</b>`, 0.3); });
   const cmo = chars.build('cmo'); cmo.scale.setScalar(1.55); cmo.position.set(4.6, 0, 0.6); cmo.rotation.y = -0.6; cmo.traverse(m => { if (m.isMesh) m.castShadow = true; }); g.add(cmo); RM.spin.push(Object.assign(new THREE.Object3D(), { userData: { ch: cmo, rank: 0 } }));
   setRoomCam(new THREE.Vector3(0, 3.6, 9.6), new THREE.Vector3(0, 2.3, -1));
-  rmCard.innerHTML = e.name ? `<p class="k">Biến cố vòng ${Math.min(s.round, 6)}</p><h3>${e.icon} ${e.name}</h3><p>${e.desc}</p>` : '<p class="k">Mùa giải đã kết thúc</p>';
-  rmCard.insertAdjacentHTML('beforeend', `<p class="k">Thị phần các đội (dây đất sét)</p><p>Mỗi sợi dây là một công ty, mỗi hạt là một vòng. Màn hình phía sau là BizOn Monitor với 6 chỉ số của đội.</p>`);
+  rmCard.innerHTML = e.name ? `<p class="k">${T('Biến cố vòng', 'Round event')} ${Math.min(s.round, 6)}</p><h3>${e.icon} ${e.name}</h3><p>${e.desc}</p>` : '<p class="k">' + T('Mùa giải đã kết thúc', 'The season is over') + '</p>';
+  rmCard.insertAdjacentHTML('beforeend', `<p class="k">${T('Thị phần các đội (dây đất sét)', 'Team market shares (clay strings)')}</p><p>${T('Mỗi sợi dây là một công ty, mỗi hạt là một vòng. Màn hình phía sau là BizOn Monitor với 6 chỉ số của đội.', 'Each string is a company and each bead a round. The screen behind is BizOn Monitor with six team indicators.')}</p>`);
 }
 
 // ---- Bảng nhiệm vụ 3D
 function buildMissions() {
   clearRoom(); const s = ev('S'), list = ev('MISSIONS_LIST().map(m=>({id:m.id,icon:m.icon,name:m.name,desc:m.desc,rm:m.rewardMoney,rx:m.rewardXp,st:missionStatus(S,m)}))') || [];
   const ready = list.filter(m => m.st === 'ready').length;
-  roomHead('📋 Bảng nhiệm vụ', `${ready} nhiệm vụ sẵn sàng nhận · ${list.filter(m => m.st === 'claimed').length}/${list.length} đã nhận`);
+  roomHead(T('📋 Bảng nhiệm vụ', '📋 Mission board'), T(`${ready} nhiệm vụ sẵn sàng nhận · ${list.filter(m => m.st === 'claimed').length}/${list.length} đã nhận`, `${ready} missions ready to claim · ${list.filter(m => m.st === 'claimed').length}/${list.length} claimed`));
   const g = RM.g, fr = cm(0x8a5a36);
   mk(g, new THREE.BoxGeometry(7.6, 4.8, 0.2), fr, 0, 2.7, -2.6); mk(g, new THREE.BoxGeometry(7.2, 4.4, 0.06), cm(0xc9a06a, 0.98), 0, 2.7, -2.47);
   for (const x of [-3.3, 3.3]) mk(g, new THREE.BoxGeometry(0.16, 0.5, 0.16), fr, x, 0.25, -2.6);
@@ -1430,7 +1448,7 @@ function buildMissions() {
     const tex = ctex(360, 300, (x, w, h) => { x.fillStyle = PAP; x.fillRect(0, 0, w, h); x.fillStyle = 'rgba(0,0,0,.06)'; x.fillRect(0, h - 14, w, 14);
       x.font = '64px sans-serif'; x.textAlign = 'center'; x.fillText(m.icon, w / 2, 86); x.fillStyle = '#2c3552'; x.font = '800 34px "Baloo 2",sans-serif'; x.fillText(m.name, w / 2, 150);
       x.font = '600 26px "Be Vietnam Pro",sans-serif'; x.fillStyle = '#1f6f8a'; x.fillText(`🎁 ${m.rm}tr₫ + ${m.rx} XP`, w / 2, 200);
-      x.font = '800 30px "Baloo 2",sans-serif'; x.fillStyle = m.st === 'ready' ? '#c8641c' : m.st === 'claimed' ? '#3f8a44' : '#8a8f99'; x.fillText(m.st === 'ready' ? 'SẴN SÀNG NHẬN' : m.st === 'claimed' ? '✓ ĐÃ NHẬN' : '🔒 CHƯA ĐẠT', w / 2, 262); });
+      x.font = '800 30px "Baloo 2",sans-serif'; x.fillStyle = m.st === 'ready' ? '#c8641c' : m.st === 'claimed' ? '#3f8a44' : '#8a8f99'; x.fillText(m.st === 'ready' ? T('SẴN SÀNG NHẬN', 'READY TO CLAIM') : m.st === 'claimed' ? T('✓ ĐÃ NHẬN', '✓ CLAIMED') : T('🔒 CHƯA ĐẠT', '🔒 NOT YET'), w / 2, 262); });
     const note = new THREE.Group(); note.position.set(-2.3 + (i % 3) * 2.3, 4.05 - Math.floor(i / 3) * 1.4, -2.4); note.rotation.z = ((i * 37) % 7 - 3) * 0.02; g.add(note);
     const p = new THREE.Mesh(new THREE.PlaneGeometry(1.8, 1.25), new THREE.MeshStandardMaterial({ map: tex, roughness: 0.95 })); p.castShadow = true; note.add(p);
     mk(note, new THREE.SphereGeometry(0.07, 14, 10), cm([0xd6453a, 0x2f8a8c, 0xf39a33][i % 3], 0.4), 0, 0.52, 0.05);
@@ -1438,9 +1456,9 @@ function buildMissions() {
   });
   setRoomCam(new THREE.Vector3(0, 2.8, 7.6), new THREE.Vector3(0, 2.6, -2.5));
   const m = list.find(x => x.id === RM.sel);
-  rmCard.innerHTML = m ? `<p class="k">${m.st === 'ready' ? 'Sẵn sàng nhận' : m.st === 'claimed' ? 'Đã nhận' : 'Chưa đạt'}</p><h3>${m.icon} ${m.name}</h3><p>${m.desc}</p><p><b>🎁 ${m.rm}tr₫ + ${m.rx} XP</b></p>${m.st === 'ready' ? '<button class="btn primary" id="msGo">Nhận thưởng</button>' : ''}`
-    : '<p class="k">Chạm một tờ giấy ghim</p><p>Giấy vàng là nhiệm vụ đã đạt, bấm để nhận tiền và XP. Giấy xanh là đã nhận.</p>';
-  const b = rmCard.querySelector('#msGo'); if (b) b.onclick = () => { W.doClaimMission(m.id); confettiRoom(); buildMissions(); rmCard.insertAdjacentHTML('afterbegin', '<img src="assets/character/rong-xanh-tim.webp" alt="Rồng Xanh bắn tim" style="width:90px;display:block;margin:0 auto"><p style="text-align:center;font-weight:700">🐉 Rồng Xanh: “Cảm ơn cả đội!”</p>'); };
+  rmCard.innerHTML = m ? `<p class="k">${m.st === 'ready' ? T('Sẵn sàng nhận', 'Ready to claim') : m.st === 'claimed' ? T('Đã nhận', 'Claimed') : T('Chưa đạt', 'Not yet')}</p><h3>${m.icon} ${m.name}</h3><p>${m.desc}</p><p><b>🎁 ${m.rm}tr₫ + ${m.rx} XP</b></p>${m.st === 'ready' ? '<button class="btn primary" id="msGo">' + T('Nhận thưởng', 'Claim reward') + '</button>' : ''}`
+    : T('<p class="k">Chạm một tờ giấy ghim</p><p>Giấy vàng là nhiệm vụ đã đạt, bấm để nhận tiền và XP. Giấy xanh là đã nhận.</p>', '<p class="k">Tap a pinned note</p><p>Yellow notes are completed missions – tap one to claim money and XP. Green notes are already claimed.</p>');
+  const b = rmCard.querySelector('#msGo'); if (b) b.onclick = () => { W.doClaimMission(m.id); confettiRoom(); buildMissions(); rmCard.insertAdjacentHTML('afterbegin', '<img src="assets/character/rong-xanh-tim.webp" alt="Rồng Xanh bắn tim" style="width:90px;display:block;margin:0 auto"><p style="text-align:center;font-weight:700">' + T('🐉 Rồng Xanh: “Cảm ơn cả đội!”', '🐉 Green Dragon: “Thanks, team!”') + '</p>'); };
 }
 Object.assign(BUILD, { decisions: buildDecisions, reports: buildReports, market: buildMarket, missions: buildMissions });
 
@@ -1453,11 +1471,11 @@ function advisor3D() {
   closeRoom(); sheetTab = null; setMode(); window.__EVON = true; flyLumina();
   const s = ev('S'), q = Math.max(0, (ev('AI_QUOTA_PER_ROUND') || 3) + (ev('hasSkill(S,"SK_AI1")') ? 2 : 0) - (s.aiUsed || 0));
   const log = chatLog();
-  showPanel(`<span class="tag">🤖 LUMINA · CỐ VẤN AI</span><h2 style="font-size:24px">Hỏi Lumina</h2><p class="d">Còn <b>${q}</b> lượt hỏi vòng này (làm mới sau khi Commit).</p>
-    <div id="lmLog" style="display:flex;flex-direction:column;gap:8px">${log.map(m => m.me ? `<div class="say" style="align-self:flex-end;background:#2f8a8c;color:#fff;border-color:#23706f;border-radius:18px 18px 4px 18px;font-style:normal">${m.t}</div>` : `<div class="say"><small>${m.risk || 'LUMINA'}</small>${m.t}</div>`).join('') || '<div class="say"><small>LUMINA</small>Chào đội! Hỏi mình về giá, marketing hoặc rủi ro của vòng này nhé.</div>'}</div>
-    <button class="btn" data-q="pricing">💲 Nếu tôi thay đổi giá bán thì sao?</button><button class="btn" data-q="marketing">📣 Nếu tăng ngân sách Marketing 15%?</button><button class="btn" data-q="risk">⚠️ Rủi ro lớn nhất vòng này là gì?</button>
-    <div class="row"><input id="lmIn" placeholder="Trò chuyện với Lumina..." style="flex:1;min-width:0;border:3px solid #e6d6bf;border-radius:14px;padding:8px 12px;font:500 14px 'Be Vietnam Pro',sans-serif;background:#fffaf2"><button class="btn primary" id="lmSend" style="flex:none">➤</button></div>
-    <div class="row"><button class="btn" id="lmFull">📋 Màn cố vấn đầy đủ</button><button class="btn" id="lmHome">Về trụ sở</button></div>`);
+  showPanel(`<span class="tag">${T('🤖 LUMINA · CỐ VẤN', '🤖 LUMINA · ADVISOR')}</span><h2 style="font-size:24px">${T('Hỏi Lumina', 'Ask Lumina')}</h2><p class="d">${T(`Còn <b>${q}</b> lượt hỏi vòng này (làm mới sau khi Commit).`, `<b>${q}</b> questions left this round (resets after Commit).`)}</p>
+    <div id="lmLog" style="display:flex;flex-direction:column;gap:8px">${log.map(m => m.me ? `<div class="say" style="align-self:flex-end;background:#2f8a8c;color:#fff;border-color:#23706f;border-radius:18px 18px 4px 18px;font-style:normal">${m.t}</div>` : `<div class="say"><small>${m.risk || 'LUMINA'}</small>${m.t}</div>`).join('') || '<div class="say"><small>LUMINA</small>' + T('Chào đội! Hỏi mình về giá, marketing hoặc rủi ro của vòng này nhé.', 'Hi team! Ask me about price, marketing or the risks this round.') + '</div>'}</div>
+    <button class="btn" data-q="pricing">${T('💲 Nếu tôi thay đổi giá bán thì sao?', '💲 What if I change the price?')}</button><button class="btn" data-q="marketing">${T('📣 Nếu tăng ngân sách Marketing 15%?', '📣 What if marketing goes up 15%?')}</button><button class="btn" data-q="risk">${T('⚠️ Rủi ro lớn nhất vòng này là gì?', '⚠️ What is the biggest risk this round?')}</button>
+    <div class="row"><input id="lmIn" placeholder="${T('Trò chuyện với Lumina...', 'Chat with Lumina...')}" style="flex:1;min-width:0;border:3px solid #e6d6bf;border-radius:14px;padding:8px 12px;font:500 14px 'Be Vietnam Pro',sans-serif;background:#fffaf2"><button class="btn primary" id="lmSend" style="flex:none">➤</button></div>
+    <div class="row"><button class="btn" id="lmFull">${T('📋 Màn cố vấn đầy đủ', '📋 Full advisor screen')}</button><button class="btn" id="lmHome">${T('Về trụ sở', 'Back to HQ')}</button></div>`);
   const lg = evc.querySelector('#lmLog'); evc.scrollTop = 0; if (lg.lastElementChild) evc.scrollTop = Math.max(0, lg.offsetTop + lg.offsetHeight - 260);
   const again = () => setTimeout(advisor3D, 700);
   evc.querySelectorAll('[data-q]').forEach(b => b.onclick = () => { W.askLumina(b.dataset.q); again(); });
@@ -1474,7 +1492,7 @@ Object.assign(ROOM3D, { journal: 1, profile: 1 });
 const addCh = (g, id, sc, x, z, ry = 0) => { const c = chars.build(id); c.scale.setScalar(sc); c.position.set(x, 0, z); c.rotation.y = ry; c.traverse(m => { if (m.isMesh) m.castShadow = true; }); g.add(c); return c; };
 function buildJournal() {
   clearRoom(); const s = ev('S'), g = RM.g, H = s.history || [], cq = s.conquest || [], Q = ev('JOURNAL_QUOTES_LIST().map(q=>({text:q.text,by:q.by}))') || [];
-  roomHead('📔 Nhật ký đội', 'Hành trình 6 vòng do SEC ghi chép · chạm một cột mốc để đọc quyết định và bài học'); RM.flagsJ = [];
+  roomHead(T('📔 Nhật ký đội', '📔 Team journal'), T('Hành trình 6 vòng do SEC ghi chép · chạm một cột mốc để đọc quyết định và bài học', 'A six-round journey recorded by the SEC · tap a milestone to read the decisions and lessons')); RM.flagsJ = [];
   const path = cm(0xd9c3a0, 0.95);
   for (let i = 0; i < 40; i++) { const u = i / 39, x = -4 + u * 8, z = Math.sin(u * Math.PI * 1.6) * 0.9; const st = mk(g, new THREE.CylinderGeometry(0.16, 0.18, 0.05, 10), path, x, 0.03, z); st.castShadow = false; }
   for (let i = 0; i < 6; i++) { const u = i / 5, x = -4 + u * 8, z = Math.sin(u * Math.PI * 1.6) * 0.9, r0 = H[i], cur = !s.finished && i === s.round - 1;
@@ -1486,24 +1504,24 @@ function buildJournal() {
     if (k) { const f = hq.teamFlag(k); f.scale.setScalar(0.4); f.position.set(0.42, 0.3, -0.1); p.add(f); RM.flagsJ.push(f); }
     if (cur) { const ring = mk(p, new THREE.TorusGeometry(0.72, 0.04, 8, 40), new THREE.MeshBasicMaterial({ color: 0x3ff0e0 }), 0, 0.05, 0); ring.rotation.x = Math.PI / 2; p.userData.ring = ring; }
     p.userData.pick = { id: 'r' + i, i }; RM.picks.push(p);
-    lab(p, `<i>${r0 ? (r0.netProfit >= 0 ? '📈' : '📉') : cur ? '✍️' : '🔒'}</i><b>V${i + 1}${STOPS[i] ? ' · ' + STOPS[i].name : ''}${r0 ? ' · ' + fmt(r0.netProfit) : cur ? ' · đang diễn ra' : ''}</b>`, 1.55, RM.sel === 'r' + i ? 'sel' : r0 ? '' : cur ? 'hot' : 'dim'); }
+    lab(p, `<i>${r0 ? (r0.netProfit >= 0 ? '📈' : '📉') : cur ? '✍️' : '🔒'}</i><b>V${i + 1}${STOPS[i] ? ' · ' + SN(STOPS[i]) : ''}${r0 ? ' · ' + fmt(r0.netProfit) : cur ? T(' · đang diễn ra', ' · in progress') : ''}</b>`, 1.55, RM.sel === 'r' + i ? 'sel' : r0 ? '' : cur ? 'hot' : 'dim'); }
   const sec = addCh(g, 'sec', 1.5, -3.4, -2.4, 0.5), lu = addCh(g, 'lumina', 1.4, 3.6, -2.3, -0.5);
   RM.tick = (dt, t) => { chars.animate(sec, t, RM.sel ? 'talk' : 'idle', 0); chars.animate(lu, t, 'idle', 1); RM.flagsJ.forEach((f, i) => hq.waveFlag(f, t + i)); RM.picks.forEach(p => { if (p.userData.ring) p.userData.ring.scale.setScalar(1 + (t * 1.1 % 1) * 0.35); }); };
   setRoomCam(new THREE.Vector3(0, 7, 11), new THREE.Vector3(0, 0.4, -0.2));
   const i = RM.sel ? +RM.sel.slice(1) : -1, r0 = H[i], e = ev('currentEvent(S)');
-  if (i < 0) { rmCard.innerHTML = `<p class="k">${H.length}/6 vòng đã ghi chép</p><p>Cột xanh là vòng có lãi, cột cam là vòng lỗ, cột có vòng sáng là vòng đang diễn ra. Cờ cho biết đội nào cắm cờ tỉnh đó.</p>`; return; }
-  if (!r0) { rmCard.innerHTML = i === s.round - 1 && !s.finished ? `<p class="k">Vòng ${i + 1}/6 · đang diễn ra</p><h3>${e ? e.icon + ' ' + e.name : ''}</h3><p><b>${s.committed ? 'Đã commit – chờ kết quả' : 'Đang thảo luận quyết định'}</b></p><button class="btn primary" id="jGo">🎯 Ra quyết định</button>` : `<p class="k">Vòng ${i + 1}/6</p><p>Chưa diễn ra.</p>`;
+  if (i < 0) { rmCard.innerHTML = `<p class="k">${H.length}/6 ${T('vòng đã ghi chép', 'rounds recorded')}</p><p>${T('Cột xanh là vòng có lãi, cột cam là vòng lỗ, cột có vòng sáng là vòng đang diễn ra. Cờ cho biết đội nào cắm cờ tỉnh đó.', 'Green columns are profitable rounds, orange ones are losses, and the column with the glowing ring is the current round. Flags show which team holds each province.')}</p>`; return; }
+  if (!r0) { rmCard.innerHTML = i === s.round - 1 && !s.finished ? `<p class="k">${T('Vòng', 'Round')} ${i + 1}/6 · ${T('đang diễn ra', 'in progress')}</p><h3>${e ? e.icon + ' ' + e.name : ''}</h3><p><b>${s.committed ? T('Đã commit – chờ kết quả', 'Committed – awaiting results') : T('Đang thảo luận quyết định', 'Decisions under discussion')}</b></p><button class="btn primary" id="jGo">${T('🎯 Ra quyết định', '🎯 Make decisions')}</button>` : `<p class="k">${T('Vòng', 'Round')} ${i + 1}/6</p><p>${T('Chưa diễn ra.', 'Not played yet.')}</p>`;
     const b = rmCard.querySelector('#jGo'); if (b) b.onclick = () => window.__openTab('decisions'); return; }
   const d = r0.decisions || {}, q = Q[(r0.round - 1) % Math.max(1, Q.length)] || {}; let les = ''; try { les = W.journalLesson(r0); } catch {}
-  rmCard.innerHTML = `<p class="k">Vòng ${r0.round}/6 · hoàn thành</p><h3>${r0.event && r0.event.icon ? r0.event.icon + ' ' + r0.event.name : 'Chu kỳ ' + r0.round}</h3>
-    <div class="stats"><div><small>GIÁ</small><b style="font-size:16px">${d.price}k</b></div><div><small>MARKETING</small><b style="font-size:16px">${d.marketing}tr</b></div><div><small>SẢN LƯỢNG</small><b style="font-size:16px">${(+d.production || 0).toLocaleString('vi-VN')}</b></div></div>
-    <p><b>Kết quả:</b> ${fmt(r0.netProfit)} · thị phần ${(+r0.share).toFixed(1)}%</p><p><b>Bài học:</b> ${les}</p>${q.text ? `<p style="font-style:italic">"${q.text}" – <b>${q.by}</b></p>` : ''}`;
+  rmCard.innerHTML = `<p class="k">${T('Vòng', 'Round')} ${r0.round}/6 · ${T('hoàn thành', 'completed')}</p><h3>${r0.event && r0.event.icon ? r0.event.icon + ' ' + r0.event.name : T('Chu kỳ ', 'Cycle ') + r0.round}</h3>
+    <div class="stats"><div><small>${T('GIÁ', 'PRICE')}</small><b style="font-size:16px">${d.price}k</b></div><div><small>MARKETING</small><b style="font-size:16px">${d.marketing}tr</b></div><div><small>${T('SẢN LƯỢNG', 'OUTPUT')}</small><b style="font-size:16px">${NUM(+d.production || 0)}</b></div></div>
+    <p><b>${T('Kết quả', 'Result')}:</b> ${fmt(r0.netProfit)} · ${T('thị phần', 'market share')} ${(+r0.share).toFixed(1)}%</p><p><b>${T('Bài học', 'Lesson')}:</b> ${les}</p>${q.text ? `<p style="font-style:italic">"${q.text}" – <b>${q.by}</b></p>` : ''}`;
 }
 const ROLE_ID = { CEO: 'ceo', CFO: 'cfo', CMO: 'cmo', COO: 'coo', SEC: 'sec' };
 function buildProfile() {
   clearRoom(); const s = ev('S'), g = RM.g, lvl = 1 + Math.floor(s.xp / 100), pct = (s.xp % 100) / 100, role = (s.profile && s.profile.role) || 'CEO';
-  const TIERS = ['Khởi nghiệp', 'Trưởng nhóm', 'Quản lý', 'Giám đốc', 'Executive', 'Chủ tịch'], total = (s.history || []).reduce((a, r) => a + r.netProfit, 0);
-  roomHead('👤 Hồ sơ đội', s.profile.teamName + ' · ' + role);
+  const TIERS = [['Khởi nghiệp', 'Startup'], ['Trưởng nhóm', 'Team lead'], ['Quản lý', 'Manager'], ['Giám đốc', 'Director'], ['Executive', 'Executive'], ['Chủ tịch', 'Chairperson']], total = (s.history || []).reduce((a, r) => a + r.netProfit, 0);
+  roomHead(T('👤 Hồ sơ đội', '👤 Team profile'), s.profile.teamName + ' · ' + role);
   const p = pedestal(0, 0, 0x2f8a8c, 0.6), me = addCh(p, ROLE_ID[role] || 'ceo', 1.8, 0, 0); me.position.y = 0.67;
   const bg = mk(p, new THREE.TorusGeometry(1.05, 0.06, 10, 64), cm(0xe6d6bf), 0, 0.72, 0); bg.rotation.x = Math.PI / 2;
   const xr = mk(p, new THREE.TorusGeometry(1.05, 0.1, 12, 64, Math.max(0.05, pct) * Math.PI * 2), cm(0xf2c14e, 0.35, 0.4), 0, 0.74, 0); xr.rotation.x = -Math.PI / 2;
@@ -1511,13 +1529,13 @@ function buildProfile() {
   others.forEach((id, i) => { const a = -0.9 + i * 0.6, q = pedestal(Math.sin(a) * 3.4, -Math.cos(a) * 1.6 - 1.2, 0xc9ad8f, 0.3); const c = addCh(q, id, 1.35, 0, 0); c.position.y = 0.37; q.rotation.y = -a * 0.5; RM.spin.push(Object.assign(q, { userData: Object.assign(q.userData, { ch: c, rank: 1 }) })); });
   const lu = addCh(g, 'lumina', 1.4, 3.6, 1, -0.7);
   RM.tick = (dt, t) => { chars.animate(me, t, 'talk', 0); chars.animate(lu, t, 'idle', 2); };
-  lab(p, `<i>🏅</i><b>Cấp ${lvl} · ${TIERS[Math.min(lvl - 1, 5)]}</b>`, 3.6, 'hot');
+  lab(p, `<i>🏅</i><b>${T('Cấp', 'Level')} ${lvl} · ${TL(TIERS[Math.min(lvl - 1, 5)])}</b>`, 3.6, 'hot');
   setRoomCam(new THREE.Vector3(0, 3.6, 8.2), new THREE.Vector3(0, 1.5, -0.6));
-  rmCard.innerHTML = `<p class="k">${role} · Tier ${Math.min(lvl, 6)}</p><h3>${s.profile.teamName}</h3><p>${s.profile.email || ''}${s.profile.classId ? ' · Lớp ' + s.profile.classId : ''}</p>
+  rmCard.innerHTML = `<p class="k">${role} · Tier ${Math.min(lvl, 6)}</p><h3>${s.profile.teamName}</h3><p>${s.profile.email || ''}${s.profile.classId ? T(' · Lớp ', ' · Class ') + s.profile.classId : ''}</p>
     <div style="height:12px;border-radius:999px;background:#e6d6bf;overflow:hidden"><div style="height:100%;width:${Math.round(pct * 100)}%;background:#f2c14e"></div></div>
-    <div class="stats"><div><small>XP</small><b style="font-size:16px">${s.xp.toLocaleString('vi-VN')}</b></div><div><small>LỢI NHUẬN</small><b style="font-size:16px">${fmt(total)}</b></div><div><small>VÒNG</small><b style="font-size:16px">${(s.history || []).length}/6</b></div></div>
-    <div class="row"><button class="btn" id="pfSet">⚙️ Cài đặt</button><button class="btn" id="pfReset">↺ Chơi lại</button></div>
-    <p style="font-size:11px;color:#8a7a68;margin-top:4px;line-height:1.4">Chỉ Reset khi vòng chơi thật sự gặp lỗi. ${s.profile.classId && s.profile.classId !== 'DEMO-2026' ? 'Phiên thi có mã lớp: không thể Reset.' : 'Không phải vì không hài lòng kết quả.'}</p>`;
+    <div class="stats"><div><small>XP</small><b style="font-size:16px">${NUM(s.xp)}</b></div><div><small>${T('LỢI NHUẬN', 'PROFIT')}</small><b style="font-size:16px">${fmt(total)}</b></div><div><small>${T('VÒNG', 'ROUNDS')}</small><b style="font-size:16px">${(s.history || []).length}/6</b></div></div>
+    <div class="row"><button class="btn" id="pfSet">${T('⚙️ Cài đặt', '⚙️ Settings')}</button><button class="btn" id="pfReset">${T('↺ Chơi lại', '↺ Play again')}</button></div>
+    <p style="font-size:11px;color:#8a7a68;margin-top:4px;line-height:1.4">${T('Chỉ Reset khi vòng chơi thật sự gặp lỗi.', 'Reset only if the game is truly broken.')} ${s.profile.classId && s.profile.classId !== 'DEMO-2026' ? T('Phiên thi có mã lớp: không thể Reset.', 'Graded session with a class code: no reset.') : T('Không phải vì không hài lòng kết quả.', 'Not because you dislike the results.')}</p>`;
   rmCard.querySelector('#pfSet').onclick = () => { closeRoom(); force2D = true; W.showTab('settings'); force2D = false; };
   rmCard.querySelector('#pfReset').onclick = () => W.resetGame();
 }
@@ -1525,21 +1543,21 @@ Object.assign(BUILD, { journal: buildJournal, profile: buildProfile });
 
 // ================= ĐỐI ĐẦU 1-1 TRƯỚC MỖI VÒNG =================
 let FO_EVENT = null;
-const FO_PAIRS = [['ceo', 'alpha', 'wolf', 'Chiến lược'], ['cmo', 'starclay', 'peacock', 'Thương hiệu'], ['coo', 'mekong', 'elephant', 'Vận hành'], ['sec', 'alpha', 'wolf', 'Pháp lý'], ['cfo', 'mekong', 'elephant', 'Dòng tiền'], ['ceo', 'starclay', 'peacock', 'Chung kết']];
-const FO_LINES = { ceo: 'Chúng tôi đã có hướng đi. Vòng này là của BizOn.', cmo: 'Khách hàng sẽ nghe thấy tên chúng tôi trước.', coo: 'Hàng đến đúng hẹn, từ Cần Thơ tới Hà Nội.', sec: 'Mọi giấy tờ đã sẵn sàng. Rủi ro trong tầm kiểm soát.', cfo: 'Mỗi đồng chi ra đều có kế hoạch thu về.' };
+const FO_PAIRS = [['ceo', 'alpha', 'wolf', ['Chiến lược', 'Strategy']], ['cmo', 'starclay', 'peacock', ['Thương hiệu', 'Brand']], ['coo', 'mekong', 'elephant', ['Vận hành', 'Operations']], ['sec', 'alpha', 'wolf', ['Pháp lý', 'Legal']], ['cfo', 'mekong', 'elephant', ['Dòng tiền', 'Cash flow']], ['ceo', 'starclay', 'peacock', ['Chung kết', 'Final']]];
+const FO_LINES = { ceo: ['Chúng tôi đã có hướng đi. Vòng này là của BizOn.', 'We have our direction. This round belongs to BizOn.'], cmo: ['Khách hàng sẽ nghe thấy tên chúng tôi trước.', 'Customers will hear our name first.'], coo: ['Hàng đến đúng hẹn, từ Cần Thơ tới Hà Nội.', 'Goods on time, from Can Tho to Hanoi.'], sec: ['Mọi giấy tờ đã sẵn sàng. Rủi ro trong tầm kiểm soát.', 'All the paperwork is ready. Risks are under control.'], cfo: ['Mỗi đồng chi ra đều có kế hoạch thu về.', 'Every dong spent has a plan to come back.'] };
 const FO_ROUND = [
-  ['Chúng tôi bắt đầu từ quê nhà, chậm mà chắc.', 'Giá rẻ nhất thắng. Các bạn theo kịp không?', 'Vòng này để đặt nền. Đừng phá giá, hãy tìm mức giá mà xưởng vẫn có lãi.'],
-  ['Thành phố lớn, sân khấu lớn. BizOn sẽ được nhìn thấy.', 'Hàng cao cấp không cần giảm giá.', 'Tổng cầu tăng. COO kiểm tra công suất, CFO xem có nên vay thêm không.'],
-  ['Hàng đến đúng hẹn, chất lượng không đổi.', 'Chậm mà chắc. Mekong không vội.', 'Đối thủ vừa giảm giá sâu. Giữ biên lợi nhuận, thử combo hoặc tăng giá trị thay vì đua giá đáy.'],
-  ['Rủi ro đã được ghi nhận, hồ sơ đầy đủ.', 'Khủng hoảng là lúc chúng tôi giành thị phần.', 'Chi phí điện tăng, cầu giảm. CFO để dành quỹ dự phòng, COO sắp lại lịch máy.'],
-  ['Mỗi đồng chi ra đều có kế hoạch thu về.', 'Kho của chúng tôi vẫn đầy.', 'Dây chuyền thiếu nguyên liệu. Họp khẩn: tăng ngân sách vận chuyển hay đàm phán lại thời gian giao?'],
-  ['Sáu vòng, một hướng đi. Hà Nội là đích đến.', 'Chiếc cúp này đã có chủ.', 'Vòng quyết định. Thương hiệu được tính gấp rưỡi, đầu tư dài hạn giờ mới thấy giá trị.']];
-const FO_TAUNT = { lead: 'Các bạn đang dẫn à? Vòng này sẽ khác.', behind: 'Khoảng cách đang giãn ra đấy, BizOn.' };
-function foRival(s) { const H = (s && s.history) || [], L = H[H.length - 1], base = (FO_ROUND[(s.round - 1) % 6] || [])[1] || ''; if (!L) return base; return L.share >= 30 ? FO_TAUNT.lead + ' ' + base : L.share < 20 ? FO_TAUNT.behind + ' ' + base : base; }
+  [['Chúng tôi bắt đầu từ quê nhà, chậm mà chắc.', 'We start from our hometown, slow and steady.'], ['Giá rẻ nhất thắng. Các bạn theo kịp không?', 'The lowest price wins. Can you keep up?'], ['Vòng này để đặt nền. Đừng phá giá, hãy tìm mức giá mà xưởng vẫn có lãi.', 'This round lays the foundation. Do not dump prices; find a price at which the workshop still profits.']],
+  [['Thành phố lớn, sân khấu lớn. BizOn sẽ được nhìn thấy.', 'Big city, big stage. BizOn will be seen.'], ['Hàng cao cấp không cần giảm giá.', 'Premium goods need no discount.'], ['Tổng cầu tăng. COO kiểm tra công suất, CFO xem có nên vay thêm không.', 'Total demand is rising. COO, check capacity; CFO, see whether to borrow more.']],
+  [['Hàng đến đúng hẹn, chất lượng không đổi.', 'Goods arrive on time, quality unchanged.'], ['Chậm mà chắc. Mekong không vội.', 'Slow and steady. Mekong is in no hurry.'], ['Đối thủ vừa giảm giá sâu. Giữ biên lợi nhuận, thử combo hoặc tăng giá trị thay vì đua giá đáy.', 'A rival just cut prices deeply. Protect the margin; try a combo or add value instead of racing to the bottom.']],
+  [['Rủi ro đã được ghi nhận, hồ sơ đầy đủ.', 'Risks logged, files complete.'], ['Khủng hoảng là lúc chúng tôi giành thị phần.', 'A crisis is when we take market share.'], ['Chi phí điện tăng, cầu giảm. CFO để dành quỹ dự phòng, COO sắp lại lịch máy.', 'Power costs are up and demand is down. CFO, keep a reserve; COO, reschedule the machines.']],
+  [['Mỗi đồng chi ra đều có kế hoạch thu về.', 'Every dong spent has a plan to come back.'], ['Kho của chúng tôi vẫn đầy.', 'Our warehouse is still full.'], ['Dây chuyền thiếu nguyên liệu. Họp khẩn: tăng ngân sách vận chuyển hay đàm phán lại thời gian giao?', 'The line is short of materials. Emergency meeting: raise the shipping budget or renegotiate delivery times?']],
+  [['Sáu vòng, một hướng đi. Hà Nội là đích đến.', 'Six rounds, one direction. Hanoi is the destination.'], ['Chiếc cúp này đã có chủ.', 'This trophy already has an owner.'], ['Vòng quyết định. Thương hiệu được tính gấp rưỡi, đầu tư dài hạn giờ mới thấy giá trị.', 'The deciding round. Brand counts one and a half times; long-term investment finally shows its value.']]];
+const FO_TAUNT = { lead: ['Các bạn đang dẫn à? Vòng này sẽ khác.', 'Leading, are you? This round will be different.'], behind: ['Khoảng cách đang giãn ra đấy, BizOn.', 'The gap is widening, BizOn.'] };
+function foRival(s) { const H = (s && s.history) || [], L = H[H.length - 1], base = TL((FO_ROUND[(s.round - 1) % 6] || [])[1]); if (!L) return base; return L.share >= 30 ? TL(FO_TAUNT.lead) + ' ' + base : L.share < 20 ? TL(FO_TAUNT.behind) + ' ' + base : base; }
 function buildFaceoff() {
   clearRoom(); const s = ev('S') || { round: 1 }, e = FO_EVENT || ev('S&&currentEvent(S)') || {}, g = RM.g, [me, rv, rflag, topic] = FO_PAIRS[(s.round - 1) % 6];
   const rr = chars.roster.find(c => c.id === rv) || {}, mr = chars.roster.find(c => c.id === me) || {};
-  roomHead(`⚔️ V${s.round}/6 · ${topic}`, `${mr.label || me.toUpperCase()} ${mr.name ? '· ' + mr.name : ''} đấu ${rr.label || rv}`);
+  roomHead(`⚔️ V${s.round}/6 · ${TL(topic)}`, `${mr.label || me.toUpperCase()} ${mr.name ? '· ' + mr.name : ''} ${T('đấu', 'vs')} ${rr.label || rv}`);
   const glowM = (c) => new THREE.MeshBasicMaterial({ color: c });
   mk(g, new THREE.PlaneGeometry(9, 7), glowM(0xd9772f), -4.5, 3.2, -3.2).castShadow = false; mk(g, new THREE.PlaneGeometry(9, 7), glowM(0x2a47a0), 4.5, 3.2, -3.2).castShadow = false;
   const glass = new THREE.MeshStandardMaterial({ color: 0xbfeaf5, roughness: 0.08, metalness: 0.1, transparent: true, opacity: 0.38 });
@@ -1553,14 +1571,14 @@ function buildFaceoff() {
   RM.scene.background.set(0x1b2240);
   RM.tick = (dt, t) => { chars.animate(A, t, 'talk', 0); chars.animate(B2, t, 'talk', 1.3); fl.forEach((f, i) => hq.waveFlag(f, t + i)); RM.coins.forEach(c => { c.rotation.z += dt * 2; c.position.y = 1.5 + Math.sin(t * 1.6 + c.userData.ph) * 0.18 + (c.userData.ph % 3) * 0.2; }); vn.material.opacity = 0.45 + Math.sin(t * 2) * 0.12; };
   const MASC = { wolf: 'soi', elephant: 'voi', peacock: 'cong' }, mimg = k => `<img src="assets/character/${k}.webp" alt="" style="width:34px;vertical-align:middle;margin-right:4px">`;
-  lab(A, `${mimg('rong-xanh')}<i>🚩</i><b>${mr.label || me.toUpperCase()}: “${(FO_ROUND[(s.round - 1) % 6] || [])[0] || FO_LINES[me] || ''}”</b>`, 2.35, 'hot');
+  lab(A, `${mimg('rong-xanh')}<i>🚩</i><b>${mr.label || me.toUpperCase()}: “${TL((FO_ROUND[(s.round - 1) % 6] || [])[0]) || TL(FO_LINES[me])}”</b>`, 2.35, 'hot');
   lab(B2, `${rflag ? mimg('mascot-' + MASC[rflag]) : ''}<i>⚡</i><b>${rr.label || rv}: “${foRival(s)}”</b>`, 2.35);
   RM.labs.slice(-2).forEach(L => { Object.assign(L.el.style, { whiteSpace: 'normal', maxWidth: '210px', textAlign: 'center' }); const b = L.el.querySelector('b'); if (b) Object.assign(b.style, { whiteSpace: 'normal', display: 'block', lineHeight: '1.25' }); });
   { const W0 = innerWidth, w = W0 >= 760 ? 1.05 : 0; setRoomCam(new THREE.Vector3(w, 2.7, W0 < 760 ? 12.5 : 11.2), new THREE.Vector3(w, 1.4, 0)); }
   const bad = e.tone === 'bad';
-  rmCard.innerHTML = `<p class="k">${e.tag || 'BIẾN CỐ THỊ TRƯỜNG'}</p><h3 style="${bad ? 'color:#c0443a' : ''}">${e.icon || '📣'} ${e.name || 'Đối thủ ra đòn'}</h3><p>${e.desc || ''}</p>
+  rmCard.innerHTML = `<p class="k">${e.tag || T('BIẾN CỐ THỊ TRƯỜNG', 'MARKET EVENT')}</p><h3 style="${bad ? 'color:#c0443a' : ''}">${e.icon || '📣'} ${e.name || T('Đối thủ ra đòn', 'A rival strikes')}</h3><p>${e.desc || ''}</p>
     ${e.luminaMsg ? `<p style="font-style:italic">🤖 Lumina: “${e.luminaMsg}”</p>` : ''}
-    <button class="btn primary" id="foGo">${e.cta ? e.cta.label : '🎯 Nhập quyết định'}</button><button class="btn" id="foHome">Về trụ sở</button>`;
+    <button class="btn primary" id="foGo">${e.cta ? e.cta.label : T('🎯 Nhập quyết định', '🎯 Enter decisions')}</button><button class="btn" id="foHome">${T('Về trụ sở', 'Back to HQ')}</button>`;
   rmCard.querySelector('#foGo').onclick = () => { closeRoom(); window.__openTab(e.cta ? e.cta.tab : 'decisions', e.cta && e.cta.report); };
   rmCard.querySelector('#foHome').onclick = () => { closeRoom(); ev('showTab("home")'); };
 }
@@ -1570,7 +1588,7 @@ window.__faceoff = () => room3D('faceoff');
 // ================= NGÔN NGỮ =================
 const langBtn = document.getElementById('langBtn');
 function syncLangBtn() { let l = 'vi'; try { l = localStorage.getItem('bizon-lang') || 'vi'; } catch {} langBtn.querySelector('span').textContent = l === 'en' ? 'English' : 'Tiếng Việt'; }
-langBtn.onclick = () => { if (!W) return; W.toggleLang(); ev('renderAll()'); syncLangBtn(); if (RM.on) BUILD[RM.mode](); if (document.body.classList.contains('evt') && evc.querySelector('#lmLog')) advisor3D(); };
+langBtn.onclick = () => { if (!W) return; W.toggleLang(); ev('renderAll()'); syncLangBtn(); applyHudLang(); applyLow(); setNight(night); paintMusic(); if (L3.on) l3Focus(); if (RM.on) BUILD[RM.mode](); if (document.body.classList.contains('evt') && evc.querySelector('#lmLog')) advisor3D(); };
 syncLangBtn();
 { const mb = document.getElementById('moreBtn'), mp = document.getElementById('more'); mb.onclick = () => { mp.style.display = mp.style.display === 'flex' ? 'none' : 'flex'; }; addEventListener('pointerdown', e => { if (!mp.contains(e.target) && !mb.contains(e.target)) mp.style.display = 'none'; }); }
 

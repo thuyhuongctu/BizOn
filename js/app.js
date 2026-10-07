@@ -422,7 +422,7 @@ function MANUAL() { return {
        ['🦚 Star Clay Co.', T('Cao cấp thương hiệu', 'Premium and brand-led'), T('Giá ~180k · marketing ~85tr. Không cạnh tranh giá, nhưng tăng marketing để phòng thủ khi Brand Loyalty của bạn vượt 65%. Hưởng lợi lớn ở vòng 6 khi thương hiệu được nhân trọng số ×1.5.', "Price ~180k · marketing ~85m. Won't compete on price, but raises marketing to defend when your Brand Loyalty passes 65%. Gains the most in round 6, when brand gets a ×1.5 weight multiplier."), T('Khắc chế: chiếm phân khúc phổ thông, hoặc đầu tư R&D + ESG để đấu trực diện phân khúc sang.', 'Counter: capture the mass-market segment, or invest in R&D + ESG to compete head-on in the premium segment.')]].map(([n, s2, p, c]) => `
     <div class="clay-card p-4 mb-3"><p class="font-bold text-sm text-deep-teal">${n} <span class="text-primary">· ${s2}</span></p>
       <p class="text-xs text-deep-teal/60 mt-1">${p}</p><p class="text-xs font-semibold text-emerald-700 mt-1">${c}</p></div>`).join('')}
-    <p class="text-[11px] text-deep-teal/50 mt-2">${T('📌 Giảng viên: hành vi AI là tất định (cùng seed đội → cùng kết quả), tiện chấm điểm & so sánh giữa các đội. Chi tiết trong tài liệu giảng viên trên GitHub.', '📌 For instructors: AI behavior is deterministic (same team seed → same outcome), which makes grading and cross-team comparison easy. Details in the instructor documentation on GitHub.')}</p>` },
+    <p class="text-[11px] text-deep-teal/50 mt-2">${T('📌 Giảng viên: hành vi đối thủ ảo là tất định (cùng seed đội → cùng kết quả), tiện chấm điểm & so sánh giữa các đội. Chi tiết trong tài liệu giảng viên trên GitHub.', '📌 For instructors: rival behaviour is deterministic (same team seed → same outcome), which makes grading and cross-team comparison easy. Details in the instructor documentation on GitHub.')}</p>` },
   roles: { icon: '👥', name: T('Vai trò & Đội ngũ', 'Roles & Team'), html: `
     <img src="assets/illustrations/game/boardroom-lumina.webp" alt="${T('Đội C-suite họp cùng cố vấn Lumina', 'The C-suite team meeting with advisor Lumina')}" class="w-full h-36 object-cover rounded-2xl mb-4">
     <p class="text-sm text-deep-teal/75 mb-4">${T('Sự phối hợp giữa 5 vị trí cốt lõi là chìa khóa thành công:', 'Coordination across the 5 core roles is the key to success:')}</p>
@@ -449,9 +449,9 @@ function MANUAL() { return {
       <p class="text-xs text-deep-teal/70 mt-1 leading-relaxed">${T('Đặt <b>giá 150.000₫</b> (bằng giá tham chiếu), <b>marketing 60 triệu₫</b>, <b>sản lượng 4.000 bộ</b>. Mỗi bộ lời ~<b>90.000₫</b> trước chi phí cố định (giá 150k − chi phí biến đổi ~60k). Cả thị trường cầu ~<b>12.000 bộ/vòng</b> chia cho bạn và 3 đối thủ ảo — nếu sức hút ngang mức trung bình, thị phần ~<b>25%</b> (~3.000 bộ), doanh thu ~<b>450 triệu₫</b>, gộp lãi ~<b>270 triệu₫</b> trước chi phí cố định + marketing.', 'Set <b>price at 150,000₫</b> (equal to the reference price), <b>marketing at 60 million₫</b>, <b>production at 4,000 units</b>. Each unit earns ~<b>90,000₫</b> before fixed costs (price 150k − variable cost ~60k). Total market demand is ~<b>12,000 units/round</b>, split between you and 3 virtual rivals — at average attractiveness, that\'s ~<b>25% share</b> (~3,000 units), revenue ~<b>450 million₫</b>, gross profit ~<b>270 million₫</b> before fixed costs + marketing.')}</p>
       <p class="text-xs font-semibold text-emerald-700 mt-1.5">${T('🚩 Muốn cắm cờ: cần thị phần cao nhất trong 4 đội — thử hạ giá về ~140k <i>hoặc</i> tăng marketing, nhưng luôn giữ lãi dương và ≥15% tiền dự phòng.', '🚩 To claim the flag: you need the highest share among the 4 teams — try dropping price to ~140k <i>or</i> raising marketing, but always keep profit positive and ≥15% cash in reserve.')}</p>
     </div>` },
-  lumina: { icon: '🤖', name: T('Cố vấn AI Lumina', 'Lumina Advisor'), html: `
+  lumina: { icon: '🤖', name: T('Cố vấn Lumina', 'Lumina Advisor'), html: `
     <img src="assets/illustrations/game/lumina-vortex.webp" alt="${T('Lumina đồng hành cùng đội', 'Lumina accompanying the team')}" class="w-full h-36 object-cover rounded-2xl mb-4">
-    <div class="clay-card p-4 mb-4 flex gap-3 items-center"><img src="assets/character/lumina-vest.webp" alt="" class="w-12 h-12 rounded-full object-cover" style="object-position:50% 14%"><p class="text-xs text-deep-teal/75">${T('Hương là trợ lý AI cá nhân của đội – trò chuyện được bằng giọng nói tiếng Việt trong tab Lumina.', 'Hương is your team\'s personal AI assistant – you can talk to her by voice in Vietnamese in the Lumina tab.')}</p></div>
+    <div class="clay-card p-4 mb-4 flex gap-3 items-center"><img src="assets/character/lumina-vest.webp" alt="" class="w-12 h-12 rounded-full object-cover" style="object-position:50% 14%"><p class="text-xs text-deep-teal/75">${T('Hương là trợ lý cá nhân của đội – trò chuyện được bằng giọng nói tiếng Việt trong tab Lumina.', 'Hương is your team\'s personal assistant – you can talk to her by voice in Vietnamese in the Lumina tab.')}</p></div>
     ${[[T('📊 Phân tích dữ liệu', '📊 Data analysis'), T('Kịch bản tối ưu theo mục tiêu tài chính; mô phỏng "Nếu – Thì" trước khi Commit (2 lượt/vòng).', 'Optimal scenarios tailored to your financial goals; "What-If" simulations before you Commit (2 uses/round).')],
        [T('🔮 Dự đoán thị trường', '🔮 Market forecasting'), T('Cảnh báo rủi ro (đỏ/cam) hoặc cơ hội (xanh ngọc) theo từng vai trò CFO · COO · CMO · SEC.', 'Risk warnings (red/amber) or opportunities (teal) tailored to each role: CFO · COO · CMO · SEC.')],
        [T('🛟 Phòng ngừa khủng hoảng', '🛟 Crisis preparedness'), T('Kịch bản ứng phó khi thị trường biến động mạnh; lời khuyên khẩn cấp khi thanh khoản đỏ.', 'Response playbooks for sharp market swings; emergency advice when liquidity turns red.')]].map(([t, d]) => `
@@ -778,7 +778,7 @@ function maybeShowEventIntro() {
         <img src="assets/character/${ev.luminaImg || 'lumina-vest'}.webp" onerror="this.onerror=null;this.src='assets/character/lumina-vest.webp'" alt="Lumina Advisor" class="w-28 shrink-0 rounded-2xl object-cover animate-float drop-shadow-xl" style="aspect-ratio:3/4; object-position:50% 8%">
         <div class="relative clay-raised p-4 rounded-bl-none border-l-4 border-primary-container flex-1">
           <div class="speech-tail"></div>
-          <p class="text-[10px] font-extrabold text-primary mb-1">JE M'APPELLE HƯƠNG · AI ADVISOR</p>
+          <p class="text-[10px] font-extrabold text-primary mb-1">JE M'APPELLE HƯƠNG · ADVISOR</p>
           <p class="text-sm text-deep-teal italic leading-relaxed">"${ev.luminaMsg}"</p>
         </div>
       </div>
@@ -1804,8 +1804,8 @@ function renderAdvisorIntro() {
   // cũng chỉ 1 lần), nếu không sẽ chồng tiếng với huong-intro.mp3 (doLogin) lúc
   // đăng nhập, hoặc không bao giờ phát được vì bong bóng đã có sẵn từ trước.
   if (!$('advisor-chat').childElementCount) {
-    pushLumina({ risk: 'low', log: false, clip: 'chat-02', mute: true, text: T(`Xin chào, Je m'appelle Hương! 👋 Tôi là Lumina – cố vấn AI của đội ${escapeHtml(S.profile.teamName)}. Hãy chọn một câu hỏi bên dưới, tôi sẽ phân tích kịch bản "Nếu – Thì" cho bạn.`,
-      `Hi, Je m'appelle Hương! 👋 I'm Lumina – the AI advisor for team ${escapeHtml(S.profile.teamName)}. Pick a question below and I'll walk you through a "What-If" scenario.`) });
+    pushLumina({ risk: 'low', log: false, clip: 'chat-02', mute: true, text: T(`Xin chào, Je m'appelle Hương! 👋 Tôi là Lumina – cố vấn của đội ${escapeHtml(S.profile.teamName)}. Hãy chọn một câu hỏi bên dưới, tôi sẽ phân tích kịch bản "Nếu – Thì" cho bạn.`,
+      `Hi, Je m'appelle Hương! 👋 I'm Lumina – the advisor for team ${escapeHtml(S.profile.teamName)}. Pick a question below and I'll walk you through a "What-If" scenario.`) });
   }
   if (!advisorGreetingSpoken && $('tab-advisor')?.classList.contains('active')) {
     advisorGreetingSpoken = true;
@@ -2088,8 +2088,8 @@ function toggleMic() {
 
 function chatRespond(text) {
   const t = text.toLowerCase();
-  if (/xin chào|chào|hello|hi |^hi$|^hey/.test(t)) return { risk: 'low', free: true, text: T(`Chào bạn! Tôi là Hương – cố vấn AI của đội ${escapeHtml(S.profile.teamName)}. Bạn có thể hỏi tôi về giá bán, marketing, rủi ro, vốn vay hay vận hành nhé!`,
-    `Hi there! I'm Hương – the AI advisor for team ${escapeHtml(S.profile.teamName)}. You can ask me about pricing, marketing, risk, loans, or operations!`) };
+  if (/xin chào|chào|hello|hi |^hi$|^hey/.test(t)) return { risk: 'low', free: true, text: T(`Chào bạn! Tôi là Hương – cố vấn của đội ${escapeHtml(S.profile.teamName)}. Bạn có thể hỏi tôi về giá bán, marketing, rủi ro, vốn vay hay vận hành nhé!`,
+    `Hi there! I'm Hương – the advisor for team ${escapeHtml(S.profile.teamName)}. You can ask me about pricing, marketing, risk, loans, or operations!`) };
   if (/giá|price/.test(t)) return luminaAdvice(S, 'pricing');
   if (/marketing|quảng cáo|truyền thông|advertis/.test(t)) return luminaAdvice(S, 'marketing');
   if (/vay|vốn|thanh khoản|tiền mặt|dòng tiền|loan|cash|liquidity/.test(t)) return { risk: S.quickRatio < 1 ? 'high' : 'low', text: T(`Tình hình tài chính: ví còn ${money(S.balance)}, khả năng thanh toán nhanh ${S.quickRatio.toFixed(2)}${S.quickRatio < 1.1 ? ' – dưới ngưỡng an toàn 1.1, nên cân nhắc khoản vay đệm' : ' – an toàn'}. ROI hiện tại ${S.roi}%.`,
@@ -2438,7 +2438,7 @@ function renderSeasonReport(body) {
 
   const achUnlocked = (S.achievements || []).map(id => ACHIEVEMENTS_LIST().find(a => a.id === id)).filter(Boolean);
   const verdict = champion
-    ? T(`Mùa giải trong mơ! Đội dẫn đầu thị phần chung cuộc với ${shareLast.toFixed(1)}% – vượt cả 3 tập đoàn AI${totalProfit > 0 ? `, kèm lợi nhuận tích lũy ${money(Math.round(totalProfit))}` : `. Lợi nhuận còn âm ${money(Math.abs(Math.round(totalProfit)))}, nhưng vị thế thị trường chính là bàn đạp cho mùa sau`}. Hãy chụp lại báo cáo này làm kỷ niệm nhé!`,
+    ? T(`Mùa giải trong mơ! Đội dẫn đầu thị phần chung cuộc với ${shareLast.toFixed(1)}% – vượt cả 3 đối thủ ảo${totalProfit > 0 ? `, kèm lợi nhuận tích lũy ${money(Math.round(totalProfit))}` : `. Lợi nhuận còn âm ${money(Math.abs(Math.round(totalProfit)))}, nhưng vị thế thị trường chính là bàn đạp cho mùa sau`}. Hãy chụp lại báo cáo này làm kỷ niệm nhé!`,
         `A dream season! Your team leads final market share at ${shareLast.toFixed(1)}% – beating all 3 virtual rivals${totalProfit > 0 ? `, with cumulative profit of ${money(Math.round(totalProfit))}` : `. Profit is still negative at ${money(Math.abs(Math.round(totalProfit)))}, but this market position is a springboard for next season`}. Screenshot this report as a keepsake!`)
     : totalProfit > 0
       ? T(`Kết thúc mùa ở hạng ${myRank}/4 với lợi nhuận dương ${money(Math.round(totalProfit))} – nền tảng rất tốt. Khoảng cách với ${ranking[0].name} nằm ở ${growth < 5 ? 'tốc độ chiếm thị phần: hãy mạnh tay marketing sớm hơn ở mùa sau' : 'biên lợi nhuận: xem lại cấu trúc chi phí tab CVP'}.`,
@@ -3414,7 +3414,7 @@ function showMgLeaderboard() {
         <p class="font-display font-extrabold text-white text-sm">${T(`Hạng của bạn: #${rank}`, `Your rank: #${rank}`)}</p>
         <p class="font-display font-extrabold text-white">${T(`${you.score} điểm`, `${you.score} pts`)}</p>
       </div>
-      <p class="text-[10px] text-deep-teal/40 text-center mt-3">${T('So tài cùng 6 đội AI – phá kỷ lục điểm Clay Factory để leo hạng!', 'Compete against 6 AI teams – beat your Clay Factory high score to climb the ranks!')}</p>
+      <p class="text-[10px] text-deep-teal/40 text-center mt-3">${T('So tài cùng 6 đội ảo – phá kỷ lục điểm Clay Factory để leo hạng!', 'Compete against 6 virtual teams – beat your Clay Factory high score to climb the ranks!')}</p>
     </div>`;
   document.body.appendChild(div);
 }
