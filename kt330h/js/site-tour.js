@@ -1,4 +1,4 @@
-/* BizOn Classroom KT330H — Lumina AI, hướng dẫn viên trên màn hình
+/* BizOn Classroom KT330H — Lumina, hướng dẫn viên trên màn hình
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.
  * Cùng mã nguồn với bizon-classroom_kt330h-kt338/js/site-tour.js, chỉnh
  * lang() để đọc localStorage theo định dạng persist của zustand (app này
@@ -66,16 +66,16 @@
 
   var T = {
     vi: {
-      who: 'Lumina AI · Tour tham quan',
+      who: 'Lumina · Tour tham quan',
       voiceOn: '🔊 Giọng', voiceOff: '🔇 Giọng',
       stop: '✕ Dừng', next: '▶ Tiếp', done: '🏁 Xong',
-      launch: 'Lumina AI dẫn tham quan trang'
+      launch: 'Lumina dẫn tham quan trang'
     },
     en: {
-      who: 'Lumina AI · Guided tour',
+      who: 'Lumina · Guided tour',
       voiceOn: '🔊 Voice', voiceOff: '🔇 Voice',
       stop: '✕ Stop', next: '▶ Next', done: '🏁 Done',
-      launch: 'Lumina AI guided tour of this page'
+      launch: 'Lumina guided tour of this page'
     }
   };
 

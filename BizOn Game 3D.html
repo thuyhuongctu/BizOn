@@ -424,7 +424,7 @@ place('plants', -3.4, -5.4); place('plants', 7.5, -5.4); place('plants', 7.6, 5.
 // flag plaza
 const plaza = G('flag_plaza', scene, -5.6, 0, 5.0);
 Cy(plaza, 'plaza_stone', 1.9, 2.05, 0.5, mat(0xcdb99a, 0.95), 0, -0.5, 0, 48); Cy(plaza, 'plaza_top', 1.75, 1.75, 0.04, mat(0xe3d3b6, 0.95), 0, -0.02, 0, 48);
-const flags = ['star', 'elephant', 'wolf', 'peacock'].map((k, i) => { const f = hq.teamFlag(k); const a = -0.9 + i * 0.6; f.position.set(Math.sin(a) * 1.15 - 0.3, 0, Math.cos(a) * 1.15 - 0.5); f.rotation.y = 0.25; plaza.add(f); f.userData.label = hq.TEAMS[k].name; f.userData.role = k === 'star' ? 'Cờ đội bạn' : 'Đối thủ AI'; f.userData.team = k; return f; });
+const flags = ['star', 'elephant', 'wolf', 'peacock'].map((k, i) => { const f = hq.teamFlag(k); const a = -0.9 + i * 0.6; f.position.set(Math.sin(a) * 1.15 - 0.3, 0, Math.cos(a) * 1.15 - 0.5); f.rotation.y = 0.25; plaza.add(f); f.userData.label = hq.TEAMS[k].name; f.userData.role = k === 'star' ? 'Cờ đội bạn' : 'Đối thủ ảo'; f.userData.team = k; return f; });
 const TAB_OF = { ceo: 'decisions', lumina: 'advisor', cfo: 'reports', accountant: 'reports', sec: 'journal', clerk: 'journal', cmo: 'market', designer: 'market', coo: 'minigame', potter: 'minigame', worker: 'shop', scientist: 'skills', victor: 'leaderboard' };
 const TAB_NAME = { decisions: 'Ra quyết định', advisor: 'Hỏi Lumina', reports: 'Báo cáo', journal: 'Nhật ký đội', market: 'Thị trường sống', minigame: 'Clay Factory Frenzy', shop: 'Cửa hàng', skills: 'Cây kỹ năng', leaderboard: 'Bảng xếp hạng' };
 
@@ -907,7 +907,7 @@ function buildLB() {
   clearRoom(); const s = ev('S'), total = s.history.reduce((a, r) => a + r.netProfit, 0), share = s.history.length ? s.history[s.history.length - 1].share : 25, trial = ev('isTrial()');
   let all = [{ key: 'star', id: 'ceo', name: s.profile.teamName + ' (Bạn)', profit: total, share, me: true }];
   if (trial) all = all.concat(s.competitors.map(c => ({ key: KEY_OF[c.name] || 'wolf', id: RIVAL_ID[c.style] || 'alpha', name: c.name, profit: c.profit, share: c.share }))).sort((a, b) => b.profit - a.profit);
-  roomHead('🏆 Bảng xếp hạng', trial ? '🧪 Chơi thử · so với 3 đối thủ AI theo tổng lợi nhuận' : '🔒 Bảng xếp hạng chéo đội đang tạm khóa — chỉ hiện kết quả của đội bạn');
+  roomHead('🏆 Bảng xếp hạng', trial ? '🧪 Chơi thử · so với 3 đối thủ ảo theo tổng lợi nhuận' : '🔒 Bảng xếp hạng chéo đội đang tạm khóa — chỉ hiện kết quả của đội bạn');
   const HX = all.length === 1 ? [0] : [-1.5, -4.2, 1.2, 3.9], HH = [1.5, 1.05, 0.75, 0.5], order = all.length === 1 ? [0] : [1, 0, 2, 3];
   order.forEach((rank, j) => { const t = all[rank]; if (!t) return; const p = pedestal(HX[j] === undefined ? 0 : [-1.4, 0, 1.4, 2.8][j], 0, new THREE.Color(TEAMS[t.key].color).getHex(), HH[rank]);
     p.position.x = all.length === 1 ? 0 : [-1.9, 0, 1.9, 3.8][j] - 0.95;

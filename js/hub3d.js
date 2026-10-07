@@ -71,10 +71,10 @@
     lumina: {
       avatar: 'assets/character/lumina-ao-dai-wave.webp',
       lines: [
-        ['Lumina AI', 'Chào bạn! Mình là Lumina – người dẫn đường ở Sảnh BizOn. 👋'],
-        ['Lumina AI', 'Đây là hub 3D nối tới mọi trò chơi trong vũ trụ Bật Nghiệp.'],
-        ['Lumina AI', 'Đi tới gần một cánh cửa quanh sân rồi nhấn E (hoặc chạm nút) để bước sang game đó.'],
-        ['Lumina AI', 'Trong lúc chờ khám phá hết, bạn có thể ghé chơi luôn Hộ Chiếu Thương Hiệu nhé!'],
+        ['Lumina', 'Chào bạn! Mình là Lumina – người dẫn đường ở Sảnh BizOn. 👋'],
+        ['Lumina', 'Đây là hub 3D nối tới mọi trò chơi trong vũ trụ Bật Nghiệp.'],
+        ['Lumina', 'Đi tới gần một cánh cửa quanh sân rồi nhấn E (hoặc chạm nút) để bước sang game đó.'],
+        ['Lumina', 'Trong lúc chờ khám phá hết, bạn có thể ghé chơi luôn Hộ Chiếu Thương Hiệu nhé!'],
       ],
       cta: { label: '🛂 Vào chơi Hộ Chiếu Thương Hiệu', href: 'brand-passport.html' },
     },

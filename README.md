@@ -85,12 +85,12 @@ Contracts are guarded by Node tests (`test/decision-log.test.js`, `test/round-sw
 | Play time | A full 6-round match ≈ 30–45 minutes (5–7 min/round) – fits one class session; BizOn Go Global ≈ 10–15 minutes for 4 quarters |
 | Rounds | 6 rounds = 6 provinces on Vietnam's new administrative map; each round brings a market event (Golden Opportunity, Price War, Energy Crisis, Credit Squeeze, Vietnam Rising Dragon) |
 | Decisions | Price · Marketing · R&D · Production volume · Workforce & training · Funding source (equity / 8.5% loans) · 30/60/90-day payment terms · Maintenance |
-| AI rivals | Three rival CEOs with 3D portraits and distinct playbooks – 🐺 Alpha Dynamics (budget) · 🐘 Mekong Ventures (balanced) · 🦚 Star Clay Co. (premium); tap a rival for its **Rival Intelligence** profile (motto, playbook, weakness, counter-strategy); behavior is **deterministic per team seed**, which makes grading easy |
-| Lumina AI advisor | "What-If" scenarios, role-specific risk alerts, Vietnamese voice chat (STT/TTS), a dedicated advisor brain for CEO · CFO · CMO · COO · SEC |
+| virtual rivals | Three rival CEOs with 3D portraits and distinct playbooks – 🐺 Alpha Dynamics (budget) · 🐘 Mekong Ventures (balanced) · 🦚 Star Clay Co. (premium); tap a rival for its **Rival Intelligence** profile (motto, playbook, weakness, counter-strategy); behavior is **deterministic per team seed**, which makes grading easy |
+| Lumina advisor | "What-If" scenarios, role-specific risk alerts, Vietnamese voice chat (STT/TTS), a dedicated advisor brain for CEO · CFO · CMO · COO · SEC |
 | Reports | P&L, three-activity cash flow, CVP break-even, HR, Business Model Canvas, depreciation, energy audit ⚡ |
 | Learn by playing | Quests, a skill tree, completion certificates, a team journal, the Clay Reward Shop, mini-games, and an **educational badge system** (conquest, What-If explorer, team player, champion…) with in-game toasts |
 | Instructor tools | Class IDs, round locking, bonus funding with an audit log – full guide at [`docs/huong-dan-giang-vien.md`](docs/huong-dan-giang-vien.md) |
-| BizOn Monitor | A terminal-style market board: sparklines for the team's metrics and all 3 AI rivals, round by round |
+| BizOn Monitor | A terminal-style market board: sparklines for the team's metrics and all 3 virtual rivals, round by round |
 | Team meeting | The Demo Team (CEO Minh Long · CFO Thu Hà · CMO Mạnh Chi · COO Bảo Ngọc · Legal Secretary Gia Hân) proposes role-based numbers each round (deterministic per seed) – one tap applies them to the sliders |
 | Battle arena | After every commit, the four companies enter an animated arena named after the round's province; market-share bars race and the verdict decides the flag 🚩 |
 | Onboarding | Win-condition banner, live market-share forecast, Basic/Advanced decision modes (rounds 1–2 simplified), a one-line "Why?" after each round, and a plain-language glossary |
@@ -169,7 +169,7 @@ Fonts are **self-hosted** (no CDN) as static `.woff2` files under `assets/fonts/
 
 | Author | Role |
 |---|---|
-| **Do Thuy Huong** | Founder & Creative Lead – game design, embodiment of the Lumina AI character · thuyhuongctu@gmail.com |
+| **Do Thuy Huong** | Founder & Creative Lead – game design, embodiment of the Lumina character · thuyhuongctu@gmail.com |
 | **Phan Anh Tu** | Co-founder & Academic Advisor – academic oversight, business-administration expertise · patu@ctu.edu.vn |
 
 © 2026 Do Thuy Huong & Phan Anh Tu · **BizOn Bật Nghiệp** – All rights reserved.
