@@ -138,6 +138,22 @@
     if (m.overdraftRounds) parts.push(`<span class="text-orange-600">${TT(`${m.overdraftRounds} vòng thấu chi`, `${m.overdraftRounds} overdraft rounds`)}</span>`);
     return parts.join(' · ') || TT('Chưa ghi nhận hành động nào', 'No actions recorded yet');
   }
+  function exportPdf(members, balance, meta) {
+    const rows = members.map(m => `<tr><td>${(m.name || '').replace(/</g, '&lt;')}</td><td>${ROLE_NAME[m.role] || m.role}</td><td style="text-align:center">${m.score}</td><td>${statLine(m).replace(/<[^>]+>/g, '')}</td></tr>`).join('');
+    const html = `<!doctype html><html><head><meta charset="utf-8"><title>${TT('Báo cáo hiệu suất thành viên', 'Member performance report')}</title>
+      <style>body{font-family:Arial,Helvetica,sans-serif;padding:28px;color:#1f3f4a}h1{font-size:21px;margin:0 0 4px}
+      .meta{font-size:12px;color:#5a6b74;margin-bottom:14px}.balance{font-size:30px;font-weight:800;margin:6px 0 16px}
+      table{width:100%;border-collapse:collapse;font-size:13px}th,td{border:1px solid #ccc;padding:8px;text-align:left}
+      th{background:#f2ede1}</style></head><body>
+      <h1>${TT('📈 Báo cáo hiệu suất thành viên', '📈 Member performance report')}</h1>
+      <div class="meta">${TT('Đội', 'Team')}: ${(meta.team || '').replace(/</g, '&lt;')} · ${TT('Mã lớp', 'Class code')}: ${(meta.classCode || '').replace(/</g, '&lt;')} · ${new Date().toLocaleString('vi-VN')}</div>
+      <div class="balance">${TT('Chỉ số đồng đội', 'Team balance')}: ${balance}/100</div>
+      <table><thead><tr><th>${TT('Tên', 'Name')}</th><th>${TT('Vai', 'Role')}</th><th>${TT('Điểm', 'Score')}</th><th>${TT('Hoạt động', 'Activity')}</th></tr></thead><tbody>${rows}</tbody></table>
+      <script>window.onload=()=>setTimeout(()=>window.print(),300)<\/script></body></html>`;
+    const win = window.open('', '_blank');
+    if (!win) { alert(TT('Trình duyệt chặn cửa sổ mới. Cho phép pop-up để xuất PDF.', 'Your browser blocked the new window. Allow pop-ups to export the PDF.')); return; }
+    win.document.write(html); win.document.close();
+  }
   async function renderReport(body) {
     const w = who();
     if (!w || !w.live) { body.innerHTML = `<div class="clay-card p-8 text-center text-sm text-deep-teal/50">${TT('Tab này chỉ có dữ liệu khi đội chơi bằng Mã lớp thật và máy chủ đang bật.', 'This tab only has data when the team plays with a real class code and the server is on.')}</div>`; return; }
@@ -148,7 +164,10 @@
     members.sort((a, b) => b.score - a.score);
     body.innerHTML = `
       <div class="clay-card p-5 mb-3">
-        <h3 class="font-display font-bold text-deep-teal text-sm mb-1">${TT('📈 Hiệu suất thành viên', '📈 Member performance')}</h3>
+        <div class="flex items-start justify-between gap-2">
+          <h3 class="font-display font-bold text-deep-teal text-sm mb-1">${TT('📈 Hiệu suất thành viên', '📈 Member performance')}</h3>
+          <button id="mp-pdf" class="clay-btn bg-surface-bright text-primary text-[10px] font-extrabold px-3 py-1.5 whitespace-nowrap">🖨️ ${TT('Xuất PDF', 'Export PDF')}</button>
+        </div>
         <p class="text-[11px] text-deep-teal/60 mb-4">${TT('Ai đóng góp gì trong trận – dựa trên số lượng hành động ghi nhận, không theo thắng/thua.', 'Who contributed what this match – based on the number of logged actions, not win/lose.')}</p>
         <div class="clay-sunken rounded-2xl p-4">
           <p class="text-[10px] font-extrabold text-deep-teal/60 uppercase tracking-wide mb-1">${TT('Chỉ số đồng đội · Team balance', 'Team balance index')}</p>
@@ -167,6 +186,7 @@
             <p class="text-[10px] text-deep-teal/60">${statLine(m)}</p>
           </div>`).join('')}
       </div>`;
+    const pdfBtn = $('mp-pdf'); if (pdfBtn) pdfBtn.onclick = () => exportPdf(members, balance, { team: w.team, classCode: w.classCode });
   }
-  window.BizonMemberLog = { record, flush, render, renderReport };
+  window.BizonMemberLog = { record, flush, render, renderReport, teamStats, exportPdf };
 })();
