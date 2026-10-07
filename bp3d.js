@@ -265,7 +265,7 @@ const homeLabel = makeLabel(4); homeLabel.position.set(HOME.x, 4.6, HOME.z - 1.6
 /* ---------- ban cố vấn ---------- */
 const CAST_FALLBACK = [
   ['Bà Sáu Lành', 'ba-sau-lanh-cut'], ['Minh Khang', 'minh-khang-cut'], ['An Nhiên', 'an-nhien-cut'],
-  ['Thầy Tú Phan', 'tu-phan-cut'], ['Lina Park', 'lina-park-cut'], ['Lumina AI', 'lumina-vest-cut']];
+  ['Tu Phan', 'tu-phan-cut'], ['Lina Park', 'lina-park-cut'], ['Lumina', 'lumina-vest-cut']];
 const CLAY = makeBPCast(THREE); const clayAnim = [];
 const bubbleTex = emojiTex('💬', null, 128, 128, 88);
 const advisors = CAST_FALLBACK.map(([name, f], i) => {
@@ -281,12 +281,12 @@ const advisors = CAST_FALLBACK.map(([name, f], i) => {
  * Vàm Thịnh phía trên). Dùng chung cho mọi game nạp bp3d.js (NMK có thể khác 7,
  * S.MKTS[m].trait có thể trống ở bản rút gọn) nên câu nói viết chung, không
  * gắn tên thị trường cụ thể. ---------- */
-const ISL_ADV_POOL = ['Thầy Tú Phan', 'Lina Park', 'An Nhiên', 'Lumina AI', 'Minh Khang'];
+const ISL_ADV_POOL = ['Tu Phan', 'Lina Park', 'An Nhiên', 'Lumina', 'Minh Khang'];
 const ISL_ADV_LINE = {
-  'Thầy Tú Phan': ['Nhìn số liệu trước khi tin cảm giác – thị trường nào cũng có logic riêng.', "Trust the data before your gut – every market runs on its own logic."],
+  'Tu Phan': ['Nhìn số liệu trước khi tin cảm giác – thị trường nào cũng có logic riêng.', "Trust the data before your gut – every market runs on its own logic."],
   'Lina Park': ['Mỗi nơi có luật chơi riêng. Đọc kỹ trước khi đặt cược.', 'Every place has its own rulebook. Read it before you bet.'],
   'An Nhiên': ['Câu chuyện thương hiệu phải đổi theo văn hoá từng nơi, không rập khuôn.', "The brand story must flex to fit each culture, never copy-paste."],
-  'Lumina AI': ['Dữ liệu giúp con nhìn xa hơn, nhưng quyết định vẫn là của con.', 'The data helps you see further, but the decision is still yours.'],
+  'Lumina': ['Dữ liệu giúp con nhìn xa hơn, nhưng quyết định vẫn là của con.', 'The data helps you see further, but the decision is still yours.'],
   'Minh Khang': ['Tính kỹ chi phí trước khi cam kết – lời mỏng cũng vẫn là lời.', 'Count the cost carefully before committing – a thin margin is still a margin.'],
 };
 const islAdv = islands.map((I, m) => {
@@ -663,7 +663,7 @@ R.domElement.addEventListener('pointerup', e => {
   const r = R.domElement.getBoundingClientRect(); ptr.set((e.clientX - r.left) / r.width * 2 - 1, -(e.clientY - r.top) / r.height * 2 + 1);
   ray.setFromCamera(ptr, cam); const h = ray.intersectObjects(hits, false)[0]; if (!h) return;
   const m = h.object.userData.m, B = window.__bp;
-  if (m === -2) { userKey = 'home'; autoCam = true; say('🏡 Vàm Thịnh · ' + tr('Ban cố vấn: Bà Sáu Lành, Minh Khang, An Nhiên, Thầy Tú Phan, Lina Park, Lumina AI', 'Advisors: Bà Sáu Lành, Minh Khang, An Nhiên, Thầy Tú Phan, Lina Park, Lumina AI'), 4200); return; }
+  if (m === -2) { userKey = 'home'; autoCam = true; say('🏡 Vàm Thịnh · ' + tr('Ban cố vấn: Bà Sáu Lành, Minh Khang, An Nhiên, Tu Phan, Lina Park, Lumina', 'Advisors: Bà Sáu Lành, Minh Khang, An Nhiên, Tu Phan, Lina Park, Lumina'), 4200); return; }
   if (m < 0) return;
   userKey = 'm' + m; autoCam = true;
   if (islAdv[m]) islAdv[m].until = LIFE.t + 4.5;
@@ -901,9 +901,9 @@ window.BP3D = { say, queueStamp };
 const QUESTS = [
   { id: 'fog', who: 'Bà Sáu Lành', ic: '🌫️', vi: 'Làm rõ thêm 40% tri thức (tổng các đảo)', en: 'Gain +40% total intel', ok: (S, b) => sum(S.know) - b.know >= 40 },
   { id: 'enter', who: 'An Nhiên', ic: '🚩', vi: 'Thâm nhập một thị trường mới', en: 'Enter a new market', ok: (S, b) => cntE(S) > b.ent },
-  { id: 'clear', who: 'Lumina AI', ic: '🌤️', vi: 'Đưa một đảo lên tri thức ≥ 60%', en: 'Bring an island to ≥60% intel', ok: (S, b) => S.know.some((k, m) => k >= 60 && b.kn[m] < 60) },
+  { id: 'clear', who: 'Lumina', ic: '🌤️', vi: 'Đưa một đảo lên tri thức ≥ 60%', en: 'Bring an island to ≥60% intel', ok: (S, b) => S.know.some((k, m) => k >= 60 && b.kn[m] < 60) },
   { id: 'cash', who: 'Minh Khang', ic: '💰', vi: 'Kết thúc quý với tiền mặt không thấp hơn đầu quý', en: 'End the quarter with no less cash', ok: (S, b) => S.cash >= b.cash, atEnd: true },
-  { id: 'rival', who: 'Thầy Tú Phan', ic: '⚔️', vi: 'Có mặt ở một thị trường Kim Long đã vào', en: 'Be present where Kim Long is', ok: S => !!(S.rival && S.rival.in.some(m => S.entered[m] !== null && S.entered[m] !== undefined)) },
+  { id: 'rival', who: 'Tu Phan', ic: '⚔️', vi: 'Có mặt ở một thị trường Kim Long đã vào', en: 'Be present where Kim Long is', ok: S => !!(S.rival && S.rival.in.some(m => S.entered[m] !== null && S.entered[m] !== undefined)) },
   { id: 'two', who: 'Lina Park', ic: '🔍', vi: 'Dùng đủ 2 nguồn tin trong quý', en: 'Use 2 intel sources this quarter', ok: S => !!(S.sel && S.sel.intel && S.sel.intel.length >= 2) },
 ];
 function sum(a) { return (a || []).reduce((x, y) => x + (+y || 0), 0); }
@@ -1213,13 +1213,13 @@ function buildConvo() {
   const B = window.__bp; if (!B || !B.S) return [];
   const S = B.S, n = S.entered.filter(v => v !== null && v !== undefined).length, avg = Math.round(S.know.reduce((a, b) => a + b, 0) / S.know.length), q = Math.min(NQ, S.q + 1);
   const L = [];
-  L.push(['Lumina AI', tr('Quý ' + q + '/' + NQ + '. Tiền mặt ' + S.cash + ' tỷ, đã vào ' + n + '/' + NMK + ' thị trường, tri thức trung bình ' + avg + '%.', 'Quarter ' + q + '/' + NQ + '. Cash ' + S.cash + 'B, in ' + n + '/' + NMK + ' markets, average intel ' + avg + '%.')]);
+  L.push(['Lumina', tr('Quý ' + q + '/' + NQ + '. Tiền mặt ' + S.cash + ' tỷ, đã vào ' + n + '/' + NMK + ' thị trường, tri thức trung bình ' + avg + '%.', 'Quarter ' + q + '/' + NQ + '. Cash ' + S.cash + 'B, in ' + n + '/' + NMK + ' markets, average intel ' + avg + '%.')]);
   if (avg < 40) { L.push(['Lina Park', tr('Sương mù còn dày. Mua tin trước khi thâm nhập giúp tránh đoán sai nhu cầu – nghiên cứu thị trường rẻ hơn một lần thất bại.', 'The fog is still thick. Buying intel before entering avoids misreading demand – research is cheaper than one failure.')]); L.push(['Bà Sáu Lành', tr('Hồi má bán ghe chợ nổi, cũng phải hỏi giá mấy ghe bên cạnh trước rồi mới hét giá.', 'When I sold on the floating market, I asked the boats next door first before naming my price.')]); }
   else L.push(['An Nhiên', tr('Mình đã hiểu khách rồi. Giờ là lúc kể câu chuyện thương hiệu Vàm Thịnh cho đúng văn hoá từng nước.', 'We understand the customers now. Time to tell the Vàm Thịnh brand story in a way that fits each culture.')]);
   if (S.cash < 2.5) L.push(['Minh Khang', tr('Tiền đang mỏng. Xuất khẩu tốn ít vốn nhất; liên doanh cần nhiều vốn hơn nhưng đổi lại kiểm soát và hiểu thị trường tốt hơn.', 'Cash is thin. Exporting needs the least capital; a joint venture needs more but gives more control and market insight.')]);
   else L.push(['Minh Khang', tr('Còn dư địa vốn. Nhớ quy tắc: càng cam kết nguồn lực lớn, rủi ro càng cao nhưng lợi nhuận tiềm năng cũng cao hơn.', 'We still have room. Remember: the more resources committed, the higher the risk – and the higher the potential return.')]);
-  if (S.rival && S.rival.in && S.rival.in.length) L.push(['Thầy Tú Phan', tr('Kim Long đang ở ' + S.rival.in.map(m => MK[m].name).join(', ') + '. Đấu giá trực diện tốn kém; khác biệt hoá hoặc liên minh thường bền hơn.', 'Kim Long is in ' + S.rival.in.map(m => MK[m].name).join(', ') + '. A head-on price fight is costly; differentiation or alliances usually last longer.')]);
-  else L.push(['Thầy Tú Phan', tr('Kim Long chưa ra khơi. Người đến trước có lợi thế, nhưng đến trước mà chưa hiểu thị trường thì cũng dễ trả giá.', 'Kim Long hasn\'t set sail yet. First movers gain an edge – but moving first without understanding the market is expensive.')]);
+  if (S.rival && S.rival.in && S.rival.in.length) L.push(['Tu Phan', tr('Kim Long đang ở ' + S.rival.in.map(m => MK[m].name).join(', ') + '. Đấu giá trực diện tốn kém; khác biệt hoá hoặc liên minh thường bền hơn.', 'Kim Long is in ' + S.rival.in.map(m => MK[m].name).join(', ') + '. A head-on price fight is costly; differentiation or alliances usually last longer.')]);
+  else L.push(['Tu Phan', tr('Kim Long chưa ra khơi. Người đến trước có lợi thế, nhưng đến trước mà chưa hiểu thị trường thì cũng dễ trả giá.', 'Kim Long hasn\'t set sail yet. First movers gain an edge – but moving first without understanding the market is expensive.')]);
   L.push(['Bà Sáu Lành', tr('Chậm mà chắc nghen tụi con. Uy tín gầy dựng cả đời, mất chỉ một mùa.', 'Slow and steady, kids. A reputation takes a lifetime to build and one season to lose.')]);
   return L;
 }
