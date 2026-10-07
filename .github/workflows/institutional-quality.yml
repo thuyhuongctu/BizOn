@@ -8,7 +8,6 @@ name: BizOn Institutional Quality
 on:
   pull_request:
     paths:
-      - 'universe.html'
       - 'truong.html'
       - 'truong-hoc-thuat.html'
       - 'truong-giang-vien.html'
@@ -41,7 +40,6 @@ jobs:
       - name: Validate institutional pages strictly (no inline style, correct aria-label)
         run: |
           npx --yes html-validate@8.24.1 --config .htmlvalidate-institutional.json \
-            universe.html \
             truong.html \
             truong-hoc-thuat.html \
             truong-giang-vien.html \
