@@ -17,6 +17,8 @@
     { href:'doi-ngu.html',          vi:'Đội ngũ',   en:'About' }
   ];
   var CTA = { href:'game.html', vi:'Bắt đầu', en:'Launch' };
+  var DL_HREF = 'https://play.google.com/store/apps/details?id=io.github.thuyhuongctu.bizon';
+  var DL_ARIA = { vi:'Tải app BizOn trên Google Play', en:'Get the BizOn app on Google Play' };
 
   var here = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
   function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]; }); }
@@ -40,6 +42,7 @@
         + '<button type="button" data-lang="vi" aria-pressed="true">VI</button>'
         + '<button type="button" data-lang="en" aria-pressed="false">EN</button>'
       + '</div>'
+      + '<a class="cn-dl" href="'+DL_HREF+'" target="_blank" rel="noopener" aria-label="'+esc(DL_ARIA.vi)+'" data-en-aria="'+esc(DL_ARIA.en)+'">⬇</a>'
       + '<a class="cn-cta" href="'+CTA.href+'" data-en="'+esc(CTA.en)+'">'+esc(CTA.vi)+'</a>'
     + '</div>'
     + '</div>'

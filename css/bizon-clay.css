@@ -108,6 +108,13 @@
 #clay-nav .cn-lang button[aria-pressed="true"]{background:var(--clay-teal);color:#fff;box-shadow:inset 0 -3px 0 rgba(0,0,0,.2),0 4px 8px -3px rgba(0,60,80,.5)}
 #clay-nav .cn-cta{white-space:nowrap;padding:11px 18px;border-radius:var(--clay-r-pill);background:var(--clay-orange);color:#fff;font-family:var(--clay-head);font-size:16px;font-weight:700;box-shadow:var(--clay-btn-shadow),0 10px 18px -8px rgba(232,118,45,.7)}
 #clay-nav .cn-cta:hover{color:#fff}
+#clay-nav .cn-dl{flex:none;display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:var(--clay-teal);color:#fff;font-size:16px;line-height:1;box-shadow:var(--clay-btn-shadow),0 8px 14px -8px rgba(0,60,80,.7)}
+#clay-nav .cn-dl:hover{color:#fff}
+@media (max-width:560px){
+  #clay-nav .cn-right{gap:6px}
+  #clay-nav .cn-dl,#clay-nav .cn-refresh{width:32px;height:32px;font-size:14px}
+  #clay-nav .cn-cta{padding:11px 14px;font-size:15px}
+}
 /* Hàng điều hướng thứ hai cho màn hình hẹp */
 #clay-nav .cn-row2{margin:8px auto 0;width:fit-content;max-width:100%;padding:5px;display:none;gap:4px;border-radius:var(--clay-r-pill);background:var(--clay-tray);box-shadow:var(--clay-tray-shadow),0 12px 20px -14px rgba(110,70,30,.5);overflow-x:auto;scrollbar-width:none;font-size:14px;font-weight:700;white-space:nowrap}
 @media (max-width:1040px){
