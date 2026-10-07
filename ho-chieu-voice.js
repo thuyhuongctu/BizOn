@@ -7,7 +7,7 @@ window.__HC_VOICE = {
     { code: 'AN', name: 'An Nhiên', tone: 'nữ trẻ, nhiều năng lượng' },
     { code: 'TP', name: 'Thầy Tú Phan', tone: 'nam, giảng viên, từ tốn' },
     { code: 'LP', name: 'Lina Park', tone: 'nữ, nhanh, thực tế' },
-    { code: 'LUM', name: 'Lumina AI', tone: 'nữ, trong, hơi "số"' },
+    { code: 'LUM', name: 'Lumina', tone: 'nữ, trong, hơi "số"' },
     { code: 'KL', name: 'CEO Kim Long', tone: 'nam, tự tin, thách thức' },
   ],
   groups: [

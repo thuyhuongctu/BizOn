@@ -114,9 +114,9 @@
     const R = rivals();
     const root = document.createElement('div'); root.id = 'bza'; root.setAttribute('role', 'dialog'); root.setAttribute('aria-label', 'Đấu trường C-Suite');
     root.innerHTML = `<div class="wrap">
-      <div class="top"><button class="ib" data-x aria-label="${tr('Đóng', 'Close')}">←</button><b>${tr('Đấu trường C-Suite', 'C-Suite Arena')}<small>${tr('Vòng', 'Round')} ${k.round}/6 · ${team} ${tr('đối đầu 3 đối thủ AI & biến cố thị trường', 'vs 3 AI rivals & market events')}</small></b></div>
+      <div class="top"><button class="ib" data-x aria-label="${tr('Đóng', 'Close')}">←</button><b>${tr('Đấu trường C-Suite', 'C-Suite Arena')}<small>${tr('Vòng', 'Round')} ${k.round}/6 · ${team} ${tr('đối đầu 3 đối thủ ảo & biến cố thị trường', 'vs 3 virtual rivals & market events')}</small></b></div>
       <div class="hero"><img src="${A(dark ? 'lineup-flags-night.jpg' : 'lineup-flags-day.jpg')}" alt="${tr('Đội C-Suite của bạn đối mắt ba đối thị quanh bàn sa bàn Việt Nam', 'Your C-suite faces three rivals around the Vietnam sand table')}">
-        <div class="cap"><span>⚑ ${tr('Mặt trận: sa bàn kinh tế Đồng bằng sông Cửa Long & TP.HCM', 'Front: Mekong Delta & HCMC economic sand table')}</span><span>◎ ${tr('Lumina AI giám sát 24/7', 'Lumina AI on watch 24/7')}</span></div></div>
+        <div class="cap"><span>⚑ ${tr('Mặt trận: sa bàn kinh tế Đồng bằng sông Cửa Long & TP.HCM', 'Front: Mekong Delta & HCMC economic sand table')}</span><span>◎ ${tr('Lumina giám sát 24/7', 'Lumina on watch 24/7')}</span></div></div>
       <div class="stats">
         <div class="st"><small>${tr('Thỉ phần', 'Market share')}</small><b>${k.share}</b>${k.shareDelta ? `<i>${k.shareDelta}</i>` : ''}</div>
         <div class="st"><small>${tr('Lợi nhuận vòng trước', 'Last round profit')}</small><b>${k.profit}</b></div>
@@ -134,7 +134,7 @@
             <div class="side"><b>🏺 ${team}</b><ul>${d.mine.map(x => `<li>${esc(x.replace('{cash}', k.cash))}</li>`).join('')}</ul></div>
             <div class="side r"><b>${d.ricon} ${esc(d.rival)}</b><ul>${d.theirs.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>
           </div>
-          <div class="tip"><img src="assets/icons/icon-192.png" alt="" onerror="this.remove()"><p><b>${tr('CỐ VẤN LUMINA AI KHUYÊN', 'LUMINA AI ADVISES')}</b>“${esc(d.tip)}”</p></div>
+          <div class="tip"><img src="assets/icons/icon-192.png" alt="" onerror="this.remove()"><p><b>${tr('CỐ VẤN LUMINA KHUYÊN', 'LUMINA ADVISES')}</b>“${esc(d.tip)}”</p></div>
           <div class="ft"><div class="meter">${tr('Độ căng thẳng', 'Tension')}: <b>${d.tension}%</b><div><span style="width:${d.tension}%"></span></div></div>
             <button class="go" data-tab="decisions">${tr('Chốt lệnh', 'Commit')} ${d.role} →</button></div>
         </div></article>`).join('')}
@@ -157,7 +157,7 @@
     if (!anchor) return;
     if (!document.getElementById('bza-css')) { const st = document.createElement('style'); st.id = 'bza-css'; st.textContent = CSS; document.head.appendChild(st); }
     anchor.insertAdjacentHTML('beforebegin', `
-      <button id="bza-entry" type="button" class="bza-entry"><img src="${A('duel-ceo-alpha.jpg')}" alt=""><span><b>⚔️ ${tr('đấu trường C-Suite', 'C-Suite Arena')}</b><small>${tr('5 cặp đối đầu: CEO, CFO, CMO, COO, SEC vs đối thủ AI', '5 duels: your C-suite vs AI rivals')}</small></span><em>→</em></button>
+      <button id="bza-entry" type="button" class="bza-entry"><img src="${A('duel-ceo-alpha.jpg')}" alt=""><span><b>⚔️ ${tr('đấu trường C-Suite', 'C-Suite Arena')}</b><small>${tr('5 cặp đối đầu: CEO, CFO, CMO, COO, SEC vs đối thủ ảo', '5 duels: your C-suite vs virtual rivals')}</small></span><em>→</em></button>
       <a id="bza-hq" class="bza-entry" href="BizOn HQ Diorama.html"><img src="${A('hq-night-cutaway.jpg')}" alt=""><span><b>🏢 ${tr('Trụ sở 3D đất sét', '3D clay HQ')}</b><small>${tr('Đi dạo 6 phòng ban, ngày/đêm, xem kết quả cắm cờ', 'Tour 6 departments, day/night, flag results')}</small></span><em>→</em></a>`);
     document.getElementById('bza-entry').onclick = () => open();
   }

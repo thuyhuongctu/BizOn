@@ -4,7 +4,7 @@
  *      assets/illustrations/arena-vietnam-map-v2.webp
  * Luồng: popup biến cố (maybeShowEventIntro) → CTA → văn phòng → gặp người có dấu ! → 1/3 phương án →
  * ghi vào S → save() → mở tab của CTA. «Về Trung tâm điều hành»/«Bỏ qua cảnh» = bỏ qua. Mỗi vòng 1 lần.
- * Trong văn phòng còn có: 3 đối thủ AI (thoại theo thị phần thật), bản đồ cờ trên tường, và các góc
+ * Trong văn phòng còn có: 3 đối thủ ảo (thoại theo thị phần thật), bản đồ cờ trên tường, và các góc
  * Cửa hàng / Mini-game / Cây kỹ năng / Nhiệm vụ / Bảng xếp hạng / Thành tựu / Báo cáo / Thị trường.
  * Nút «🏢 Vào văn phòng» được gắn vào Trang chủ để quay lại bất cứ lúc nào.
  */
@@ -25,7 +25,7 @@
     sec: { name: 'SEC Gia Hân', img: A('v2/sec.png') },
   };
   const SPOTS = [[330, 560], [2070, 560], [330, 1060], [2070, 1060], [720, 900]];
-  const LUMINA = { name: 'Lumina AI', img: A('v2/lumina.png'), x: 1200, y: 640 };
+  const LUMINA = { name: 'Lumina', img: A('v2/lumina.png'), x: 1200, y: 640 };
   const RIVAL_SPOTS = { alpha: [800, 1360], mekong: [1200, 1380], star: [1600, 1360] };
   const RIVAL_DEF = {
     alpha: { name: 'Alpha Dynamics', img: A('rivals/alpha.webp'), fb: A('rivals/alpha.webp'), accent: '#e8762d', icon: '🐺' },
@@ -248,7 +248,7 @@
         <div class="desk" style="left:180px;top:560px;width:300px;height:150px"></div><div class="desk" style="left:180px;top:1060px;width:300px;height:150px"></div>
         <div class="desk" style="left:1920px;top:560px;width:300px;height:150px"></div><div class="desk" style="left:1920px;top:1060px;width:300px;height:150px"></div>
         <div class="rug" style="left:640px;top:1300px;width:1120px;height:170px;background:#efe3f0;box-shadow:inset 0 0 0 10px #e2d2e4"></div>
-        <div style="position:absolute;left:1200px;top:1480px;transform:translateX(-50%);font-size:12px;font-weight:900;color:#5a32a3;letter-spacing:.06em">${tr('KHU KHÁCH · ĐỐI THỦ AI', 'VISITORS · AI RIVALS')}</div>
+        <div style="position:absolute;left:1200px;top:1480px;transform:translateX(-50%);font-size:12px;font-weight:900;color:#5a32a3;letter-spacing:.06em">${tr('KHU KHÁCH · ĐỐI THỦ ẢO', 'VISITORS · VIRTUAL RIVALS')}</div>
         <div class="npcs"></div>
         <div class="pl"><div class="sh"></div><img class="pi" src="${ROLES[myRole].img}" alt="${ROLES[myRole].name}"><div style="text-align:center;margin-top:4px"><span class="pill" style="font-size:12px;color:#006687">${tr('Bạn', 'You')} · ${myRole.toUpperCase()}</span></div></div>
         <div class="mk" style="position:absolute;width:32px;height:32px;margin:-16px;border-radius:50%;border:4px solid #00c4ff;display:none"></div>

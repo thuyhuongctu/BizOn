@@ -96,7 +96,7 @@
 
   // Bản đồ chinh phục thật (S.conquest, recordConquest trong app.js) khắt khe
   // hơn hẳn: chỉ đội có thị phần cao nhất VÀ có lãi vòng đó mới thật sự giữ
-  // tỉnh, còn không thì tỉnh "tạm về tay" đối thủ AI. Hành trình BizOn ở đây
+  // tỉnh, còn không thì tỉnh "tạm về tay" đối thủ ảo. Hành trình BizOn ở đây
   // vẫn giữ cờ động viên (cắm dù thắng hay thua) làm chỉ số chính – dòng này
   // chỉ CHÚ THÍCH THÊM ai đang thực sự giữ tỉnh theo luật cạnh tranh, không
   // đổi cách tính cờ/tiến độ đã có.
