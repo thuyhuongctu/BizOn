@@ -178,7 +178,7 @@ function pickRole(id) {
 // ---------- Đội demo 5 nhân vật & 3 đối thủ đại diện ----------
 function DEMO_TEAM_LIST() { return [
   { role: 'CEO', icon: '🧭', img: 'assets/character/team/ceo.webp', name: 'Minh Long',  note: T('Nhà lãnh đạo tầm nhìn', 'Visionary Leader') },
-  { role: 'CFO', icon: '💰', img: 'assets/character/team/cfo.jpg', name: 'Thu Hà',     note: T('Chiến lược gia tài chính', 'Finance Strategist') },
+  { role: 'CFO', icon: '💰', img: 'assets/character/team/cfo.webp', name: 'Thu Hà',     note: T('Chiến lược gia tài chính', 'Finance Strategist') },
   { role: 'CMO', icon: '📣', img: 'assets/character/team/cmo.webp', name: 'Mạnh Chi',   note: T('Phù thủy marketing', 'Marketing Wizard') },
   { role: 'COO', icon: '🏭', img: 'assets/character/team/coo.webp', name: 'Bảo Ngọc',   note: T('Chuyên gia vận hành', 'Operations Expert') },
   { role: 'SEC', icon: '📝', img: 'assets/character/team/sec.webp', name: 'Gia Hân',    note: T('Thư ký pháp chế', 'Legal Secretary') },
@@ -1359,7 +1359,7 @@ function teamSuggestions() {
   };
 
   const out = [
-    { img: 'assets/character/team/cfo.jpg', name: 'Thu Hà · CFO', icon: '💰',
+    { img: 'assets/character/team/cfo.webp', name: 'Thu Hà · CFO', icon: '💰',
       say: tight ? T(`Thanh khoản đang căng (quick ratio ${S.quickRatio.toFixed(2)}). Em đề xuất giảm R&D về ${cfoRd}tr, ưu tiên giữ tiền mặt – cần thì vay ngắn hạn thay vì cắt marketing sát sàn.`,
                      `Liquidity is tight (quick ratio ${S.quickRatio.toFixed(2)}). I suggest cutting R&D to ${cfoRd}m and prioritizing cash – take a short-term loan if needed instead of slashing marketing to the bone.`)
                  : T(`Két sắt ổn (${Math.round(S.balance)}tr). Em đề xuất R&D ${cfoRd}tr – biến cố tốt thì đầu tư cho vòng sau, đừng để tiền nằm im.`,
