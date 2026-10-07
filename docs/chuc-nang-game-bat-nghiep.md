@@ -66,7 +66,7 @@ Mỗi trong **6 vòng** (mỗi vòng ≈ 1 quý kinh doanh, 5–7 phút) đi qua
 1. **Biến cố thị trường xuất hiện** (`maybeShowEventIntro`) – overlay toàn màn hình giới thiệu biến cố của vòng (xem bảng ở [mục 5.4](#54-6-biến-cố-thị-trường-theo-vòng)), kèm lời khuyên của Lumina theo đúng biến cố.
 2. **Ra quyết định** (tab Decisions) – 4–7 slider theo vai trò, có dự báo thị phần & dòng tiền sống, có thể hỏi "Nếu – Thì" (tối đa 2 lượt/vòng) và nghe gợi ý Cuộc họp đội trước khi chốt.
 3. **Commit (khóa quyết định)** – không thể sửa sau khi khóa; nếu giảng viên đã khóa vòng (`toggleRoundLock`) thì bị chặn.
-4. **Engine mô phỏng xử lý** (~2.3 giây, có màn loading) – tính thị phần, doanh thu, chi phí, các chỉ số vận hành, đồng thời 3 đối thủ AI cũng ra quyết định của họ.
+4. **Engine mô phỏng xử lý** (~2.3 giây, có màn loading) – tính thị phần, doanh thu, chi phí, các chỉ số vận hành, đồng thời 3 đối thủ ảo cũng ra quyết định của họ.
 5. **Đấu trường** (`showArena`) – 4 công ty (bạn + 3 AI) hiện trên bản đồ Việt Nam, thanh thị phần chạy hoạt hình. Cắm cờ 🚩 lên tỉnh/thành tương ứng trên **bản đồ chinh phục** (Cần Thơ → TP.HCM → Khánh Hòa → Đà Nẵng → Thanh Hóa → Hà Nội) cần **thị phần cao nhất VÀ có lãi** vòng đó (`recordConquest`) – thị phần cao nhất mà lỗ chỉ hiện cảnh báo ⚠️, chưa cắm được cờ (tránh mẹo phá giá tối đa để "thắng" trong khi âm vốn).
 6. **Kết quả vòng** – modal tổng kết số liệu + thành tựu/nhiệm vụ mới mở; nếu đạt đỉnh mới (thị phần ≥30% và có lãi) → màn `showVictory`; nếu lên cấp → `showLevelUp`.
 7. Vòng 6 kết thúc → tự chuyển sang báo cáo "🏁 Tổng kết mùa giải" + pháo hoa + nhạc nền đổi sang bản remix chủ đề.
@@ -75,9 +75,9 @@ Mỗi trong **6 vòng** (mỗi vòng ≈ 1 quý kinh doanh, 5–7 phút) đi qua
 
 ### 4.1. `tab-home` – Tổng quan
 
-Màn hình trung tâm: banner biến cố đang diễn ra, 3 KPI (tiền mặt, thị phần %, điểm thương hiệu), **bản đồ chinh phục** (số cờ đã cắm/6, danh sách 6 tỉnh + trạng thái thắng/thua), thẻ đội hình, thẻ 3 đối thủ AI (xem [4.1.1](#411-3-đối-thủ-ai)), gợi ý nhanh từ Lumina, và lưới "Truy cập nhanh" 12 nút tới mọi tab/khu vực khác. Nút chính "Nhập quyết định vòng này" đưa thẳng sang tab Decisions.
+Màn hình trung tâm: banner biến cố đang diễn ra, 3 KPI (tiền mặt, thị phần %, điểm thương hiệu), **bản đồ chinh phục** (số cờ đã cắm/6, danh sách 6 tỉnh + trạng thái thắng/thua), thẻ đội hình, thẻ 3 đối thủ ảo (xem [4.1.1](#411-3-đối-thủ-ai)), gợi ý nhanh từ Lumina, và lưới "Truy cập nhanh" 12 nút tới mọi tab/khu vực khác. Nút chính "Nhập quyết định vòng này" đưa thẳng sang tab Decisions.
 
-#### 4.1.1. 3 đối thủ AI
+#### 4.1.1. 3 đối thủ ảo
 
 | Đối thủ | Phong cách | Giá cơ sở | Marketing cơ sở | Điểm yếu (khắc chế) |
 |---|---|---|---|---|
@@ -111,7 +111,7 @@ Công cụ hỗ trợ trước khi chốt:
 - **Mô phỏng "Nếu – Thì"** (`runWhatIf`, CEO/CFO) – tối đa **2 lượt/vòng**.
 - **Commit** (`commitDecisions`) – khóa vòng, không sửa được nữa; bị chặn nếu giảng viên đã khóa vòng hoặc thanh khoản không đủ (chọn vốn chủ mà chi vượt số dư + 300tr₫ đệm).
 
-### 4.3. `tab-advisor` – Lumina AI
+### 4.3. `tab-advisor` – Lumina
 
 - Ảnh + trạng thái "MARKET VOLATILITY" (thấp/trung bình/cao theo tông biến cố hiện tại).
 - 🔊 Nút nghe **giọng thật** của Hương AI chào hỏi (`playHuongIntro`, có phụ đề đồng bộ).
@@ -188,7 +188,7 @@ mktEff       = marketing × (mktBoost biến cố) × hệ_số_kỹ_năng_marke
 sức_hấp_dẫn  = (150 / giá_bán) ^ elasticity × (1 + √mktEff / 18) × thương_hiệu ^ trọng_số_thương_hiệu
 thị_phần(%)  = 100 × sức_hấp_dẫn_của_bạn / (sức_hấp_dẫn_của_bạn + Σ sức_hấp_dẫn_3_AI)
 ```
-3 đối thủ AI dùng cùng công thức nhưng thương hiệu và biến động giá/marketing riêng của họ (mục 4.1.1) – không hưởng hệ số kỹ năng/vật phẩm của người chơi.
+3 đối thủ ảo dùng cùng công thức nhưng thương hiệu và biến động giá/marketing riêng của họ (mục 4.1.1) – không hưởng hệ số kỹ năng/vật phẩm của người chơi.
 
 ### 5.2. Sản lượng bán được & tồn kho
 
@@ -262,7 +262,7 @@ Mở bằng XP tích lũy trừ XP đã tiêu (`spentXp`); **không thể gỡ b
 | Chiến lược gia Nếu–Thì | Dùng mô phỏng "Nếu–Thì" ít nhất 1 lần |
 | Lắng nghe đội | Áp dụng gợi ý Cuộc họp đội ≥3 lần |
 | Tốt nghiệp BizOn | Hoàn thành đủ 6 vòng |
-| Vô địch BizOn | Hoàn thành game với tổng lợi nhuận ≥ mọi đối thủ AI |
+| Vô địch BizOn | Hoàn thành game với tổng lợi nhuận ≥ mọi đối thủ ảo |
 
 ## 9. Nhiệm vụ – 9 mục
 
@@ -323,7 +323,7 @@ Từ Trang chủ/Cài đặt, game liên kết sang các trải nghiệm khác t
 - **🕹️ BizOn Arcade** (`games.html`) – trung tâm các trò chơi nhỏ khác của hệ sinh thái.
 - **🌏 BizOn Go Global** (`global.html`) – mở rộng quốc tế hoá sau khi chinh phục xong Việt Nam: chọn 1 trong 7 thị trường quốc tế, đàm phán đối tác bản địa, 4 phương thức thâm nhập.
 - **🛶 Bến Phù Sa** – mô phỏng khởi nghiệp "gánh hàng rong" 5 tuần, cùng vũ trụ nhân vật Lumina.
-- **📖 Sổ tay hướng dẫn** (trong game, `showManual()`) – tra cứu nhanh luật chơi, vai trò, đối thủ AI, mẹo chơi, xử lý sự cố ngay trong ứng dụng.
+- **📖 Sổ tay hướng dẫn** (trong game, `showManual()`) – tra cứu nhanh luật chơi, vai trò, đối thủ ảo, mẹo chơi, xử lý sự cố ngay trong ứng dụng.
 
 ## 15. Bảng tra nhanh hằng số
 

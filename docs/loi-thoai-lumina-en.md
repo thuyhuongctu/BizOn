@@ -1,4 +1,4 @@
-# 🎙️ Lumina AI advisor – English voice-over script
+# 🎙️ Lumina advisor – English voice-over script
 
 > Bản thoại tiếng Anh để thu giọng, song song với bản tiếng Việt trong
 > [`loi-thoai-lumina.md`](loi-thoai-lumina.md).
@@ -116,10 +116,10 @@ Lumina, Tú Phan, Đỗ Thùy Hương.** Riêng `BizOn`, `BizOn Go Global`,
 
 | File | Giọng | Line |
 |---|---|---|
-| `voice/en/quote-01.mp3` | Lumina AI | The goal is not to defeat your competitors, but to make them irrelevant. |
+| `voice/en/quote-01.mp3` | Lumina | The goal is not to defeat your competitors, but to make them irrelevant. |
 | `voice/en/quote-02.mp3` | **Secretary** | Every financial report tells a story — make sure your team is writing a successful chapter. |
 | `voice/en/quote-03.mp3` | Phan Anh Tú | Data tells us the past. The decisions we make today write the future. |
-| `voice/en/quote-04.mp3` | Lumina AI | A crisis is the best test there is of cash-flow management. |
+| `voice/en/quote-04.mp3` | Lumina | A crisis is the best test there is of cash-flow management. |
 | `voice/en/quote-05.mp3` | Phan Anh Tú | Market share can be bought with money, but loyalty has to be built with value. |
 | `voice/en/quote-06.mp3` | **Secretary** | Don't be afraid of committing to the wrong call — be afraid of learning nothing from it. |
 
@@ -138,7 +138,7 @@ Lumina, Tú Phan, Đỗ Thùy Hương.** Riêng `BizOn`, `BizOn Go Global`,
 | `voice/en/intro-01.mp3` | 🇻🇳 Vietnam 2026 | The economy is rising — the dragon is waking. Your team runs a clay toy company: a start-up from the Mekong Delta, with ambitions across both the domestic and the international market. |
 | `voice/en/intro-02.mp3` | 🏺 Your business | You run a handmade clay toy workshop in **Cần Thơ**, with starting capital of five hundred **million dong**. Your flagship product: the "Vietnamese Clay Mascot Set" — a gift and collectors' line, reference price one hundred and fifty **thousand dong** per set. Your company's name is whatever your team chose at login! |
 | `voice/en/intro-03.mp3` | 🗺️ 6 rounds · 6 provinces | Each round is a business quarter in one province or city on the new map: **Cần Thơ**, then **Hồ Chí Minh** City, then **Khánh Hòa**, then **Đà Nẵng**, then **Thanh Hóa**, then **Hà Nội**. Win a round and your team plants its flag on that province! Each round runs five to seven minutes; a full game, thirty to forty-five. |
-| `voice/en/intro-04.mp3` | 👥 The C-Suite | The CEO steers strategy, the CFO guards the treasury, the CMO takes the market, the COO runs the workshop, and the **Secretary** keeps the minutes — alongside your advisor Lumina AI, and Professor **Tú Phan**. |
+| `voice/en/intro-04.mp3` | 👥 The C-Suite | The CEO steers strategy, the CFO guards the treasury, the CMO takes the market, the COO runs the workshop, and the **Secretary** keeps the minutes — alongside your advisor Lumina, and Professor **Tú Phan**. |
 | `voice/en/intro-05.mp3` | 🌏 Then: the open sea | Conquered Vietnam? BizOn Go Global is waiting — choose one of seven international markets, negotiate with local partners, and test yourself against four entry modes. |
 | `voice/en/intro-06.mp3` | 🏆 Your goal | Plant the most flags, take the number one share of the Vietnamese market, and earn your certificate of completion. Ready for **Bật Nghiệp**? |
 

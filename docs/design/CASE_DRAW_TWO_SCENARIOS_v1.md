@@ -244,7 +244,7 @@ vì năng lực ra quyết định thật của từng đội.
 Ghi lại để cân nhắc riêng, không phụ thuộc việc trên:
 - Âm thanh đếm ngược gấp gáp hơn trong 3 phút "khóa quyết định" (đã có bước
   này trong `CYCLE_STEPS`, plan-data.ts) — tăng cảm giác gấp rút thật.
-- Câu "khiêu khích" của đối thủ AI xuất hiện ngay sau khi công bố kết quả
+- Câu "khiêu khích" của đối thủ ảo xuất hiện ngay sau khi công bố kết quả
   (dùng đúng 3 cái tên trong `COMPETITORS`, `js/engine.js:85-89`), theo style
   từng đối thủ (aggressive/balanced/premium) — không cần đổi luật, chỉ thêm
   flavor text.

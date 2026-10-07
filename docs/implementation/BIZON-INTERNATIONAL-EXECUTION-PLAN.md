@@ -36,7 +36,7 @@ Supporting assets such as Arcade, music, characters and Brand Passport remain av
 ### 4.1 Strengths already present
 
 - Six-round deterministic business simulation.
-- Three AI rivals with different playbooks.
+- Three virtual rivals with different playbooks.
 - Lumina advisor and What-If logic.
 - Go Global and IE Lab.
 - Class IDs, round locking and instructor bonus audit trail.
@@ -189,7 +189,7 @@ Acceptance criteria:
 - research mode does not upload without consent;
 - AIBIS numerical output is independent of LLM availability.
 
-### WS4 — Lumina AI governance
+### WS4 — Lumina governance
 
 **Objective:** add controlled generative support without compromising simulation integrity.
 
