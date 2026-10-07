@@ -2145,6 +2145,7 @@ function showReport(kind) {
     b.classList.toggle('bg-white', !on); b.classList.toggle('text-deep-teal', !on);
   });
   const body = $('report-body');
+  if (kind === 'members') { if (window.BizonMemberLog) window.BizonMemberLog.renderReport(body); return; }
   if (kind === 'energy') { renderEnergyReport(body); return; }
   if (kind === 'cvp') { renderCvpReport(body); return; }
   if (kind === 'hr') { renderHrReport(body); return; }
