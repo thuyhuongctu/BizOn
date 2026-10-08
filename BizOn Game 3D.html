@@ -1045,7 +1045,7 @@ let t3i = 0;
 function tour3D(i = 0) {
   t3i = i; const st = T3[i]; if (!st) return; st.cam();
   showPanel(`<span class="tag">${T('🤖 LUMINA HƯỚNG DẪN', '🤖 LUMINA GUIDE')} · ${i + 1}/3</span>
-    <div class="who"><img src="${st.img}" alt="" style="object-fit:contain;background:#f3ead9"><div><b>${TL(st.title)}</b></div></div>
+    <div class="who"><img src="${st.img}" alt=""><div><b>${TL(st.title)}</b></div></div>
     <p class="d">${TL(st.text)}</p>
     <div class="dots">${T3.map((_, k) => `<i class="${k === i ? 'on' : ''}"></i>`).join('')}</div>
     <div class="row"><button class="btn" id="t3Prev" ${i ? '' : 'disabled'}>${T('‹ Trước', '‹ Back')}</button>${i < 2 ? '<button class="btn primary" id="t3Next">' + T('Tiếp ›', 'Next ›') + '</button>' : '<button class="btn primary" id="t3End">' + T('🎯 Vào bàn quyết định', '🎯 Go to the decision table') + '</button>'}</div>
