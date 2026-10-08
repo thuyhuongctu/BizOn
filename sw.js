@@ -1,7 +1,7 @@
 /* BizOn Bật Nghiệp 2026 – Service Worker (offline app shell)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
 
-const CACHE = 'bizon-v402';
+const CACHE = 'bizon-v403';
 const SHELL = [
   './',
   './index.html',
@@ -240,10 +240,30 @@ const SHELL = [
   './assets/illustrations/game/mkt-nhat-quang.webp',
   './assets/illustrations/game/mkt-tan-cang.webp',
   './assets/illustrations/game/mkt-hoa-son.webp',
-  './assets/illustrations/game/evtcat-market.webp',
-  './assets/illustrations/game/evtcat-institutional.webp',
-  './assets/illustrations/game/evtcat-internal.webp',
-  './assets/illustrations/game/evtcat-crisis.webp',
+  './assets/illustrations/game/evt-trend.webp',
+  './assets/illustrations/game/evt-pricewar.webp',
+  './assets/illustrations/game/evt-green.webp',
+  './assets/illustrations/game/evt-celeb.webp',
+  './assets/illustrations/game/evt-subst.webp',
+  './assets/illustrations/game/evt-fx.webp',
+  './assets/illustrations/game/evt-reg.webp',
+  './assets/illustrations/game/evt-tax.webp',
+  './assets/illustrations/game/evt-cert.webp',
+  './assets/illustrations/game/evt-data.webp',
+  './assets/illustrations/game/evt-greenlaw.webp',
+  './assets/illustrations/game/evt-port.webp',
+  './assets/illustrations/game/evt-talent.webp',
+  './assets/illustrations/game/evt-supplier.webp',
+  './assets/illustrations/game/evt-defect.webp',
+  './assets/illustrations/game/evt-cashflow.webp',
+  './assets/illustrations/game/evt-conflict.webp',
+  './assets/illustrations/game/evt-training.webp',
+  './assets/illustrations/game/evt-review.webp',
+  './assets/illustrations/game/evt-held.webp',
+  './assets/illustrations/game/evt-devalue.webp',
+  './assets/illustrations/game/evt-betray.webp',
+  './assets/illustrations/game/evt-copy.webp',
+  './assets/illustrations/game/evt-board.webp',
   './assets/character/team/lineup-cut.webp',
   './assets/character/team/csuite-lineup.webp',
   './assets/character/team/ceo-cut.webp',
