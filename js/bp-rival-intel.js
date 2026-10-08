@@ -40,7 +40,7 @@
       '<div class="flex-1 h-2.5 rounded-full bg-deep-teal/10 overflow-hidden"><div class="h-full bg-primary" style="width:' + Math.max(4, mine / max * 100) + '%"></div></div>' +
       '<span class="w-16 text-right shrink-0">' + f1(mine) + TY() + '</span></div>' +
       '<div class="flex items-center gap-2 text-[11px] font-bold mt-1">' +
-      '<span class="w-16 shrink-0"><img src="' + RIVAL.img + '" class="w-4 h-4 rounded-full inline-block object-cover align-middle" style="background:' + RIVAL.accent + '22">' + ' ' + T('Đối thủ', 'Rival') + '</span>' +
+      '<span class="w-16 shrink-0"><img src="' + RIVAL.img + '" class="w-4 h-4 rounded-full inline-block object-cover align-middle">' + ' ' + T('Đối thủ', 'Rival') + '</span>' +
       '<div class="flex-1 h-2.5 rounded-full bg-deep-teal/10 overflow-hidden"><div class="h-full" style="width:' + Math.max(4, theirs / max * 100) + '%;background:' + RIVAL.accent + '"></div></div>' +
       '<span class="w-16 text-right shrink-0">' + f1(theirs) + TY() + '</span></div>';
   }
@@ -50,7 +50,7 @@
     var statusLine = ahead ? '🏆 ' + T('Bạn đang dẫn trước!', 'You are ahead!')
       : '🐉 ' + RIVAL.name + ' ' + T('đang dẫn trước bạn.', 'is ahead of you.');
     return '<button type="button" onclick="BPRivalIntel.showDetail()" class="w-full text-left flex items-center gap-3">' +
-      '<img src="' + RIVAL.img + '" alt="" class="w-11 h-11 rounded-full object-cover shrink-0" style="background:' + RIVAL.accent + '22;box-shadow:0 4px 10px rgba(0,0,0,.15)">' +
+      '<img src="' + RIVAL.img + '" alt="" class="w-11 h-11 rounded-full object-cover shrink-0" style="box-shadow:0 4px 10px rgba(0,0,0,.15)">' +
       '<div class="flex-1 min-w-0">' +
       '<p class="text-[10px] font-extrabold uppercase tracking-wide opacity-50">🆚 ' + T('Cuộc đua với ', 'The race with ') + RIVAL.name + '</p>' +
       '<p class="text-[13px] font-extrabold">' + statusLine + '</p></div>' +
@@ -71,7 +71,7 @@
       ov.style.cssText = 'position:fixed;inset:0;z-index:96;background:rgba(2,25,28,.82);display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto';
       ov.innerHTML = '<div class="clay-card p-6" style="max-width:420px;width:100%;max-height:85vh;overflow:auto">' +
         '<div class="flex items-center gap-3 mb-3">' +
-        '<img src="' + RIVAL.img + '" class="w-14 h-14 rounded-full object-cover" style="background:' + RIVAL.accent + '22">' +
+        '<img src="' + RIVAL.img + '" class="w-14 h-14 rounded-full object-cover">' +
         '<div class="flex-1"><p class="font-display font-extrabold text-deep-teal text-lg">' + RIVAL.icon + ' ' + RIVAL.name + '</p>' +
         '<p class="text-[11px] font-bold" style="color:' + RIVAL.accent + '">' + RIVAL.style() + '</p></div>' +
         '<button type="button" onclick="BPRivalIntel.closeDetail()" class="text-xl leading-none opacity-50">✕</button></div>' +
@@ -108,7 +108,7 @@
         '<div><div class="w-16 h-16 rounded-full mx-auto flex items-center justify-center text-3xl" style="background:rgba(0,102,135,.12)">🏢</div>' +
         '<p class="text-[11px] font-extrabold mt-1">' + T('Bạn', 'You') + '</p><p class="text-xs font-bold">' + f1(mine) + TY() + '</p></div>' +
         '<p class="text-2xl" style="margin-bottom:28px">' + (ahead ? '🏆' : '⚔️') + '</p>' +
-        '<div><img src="' + RIVAL.img + '" class="w-16 h-16 rounded-full mx-auto object-cover" style="background:' + RIVAL.accent + '22">' +
+        '<div><img src="' + RIVAL.img + '" class="w-16 h-16 rounded-full mx-auto object-cover">' +
         '<p class="text-[11px] font-extrabold mt-1">' + RIVAL.icon + ' ' + RIVAL.name + '</p><p class="text-xs font-bold">' + f1(theirs) + TY() + '</p></div></div>' +
         '<div class="h-2.5 rounded-full bg-deep-teal/10 overflow-hidden flex mb-3">' +
         '<div style="width:' + Math.max(4, mine / max * 100) + '%;background:#006687"></div>' +

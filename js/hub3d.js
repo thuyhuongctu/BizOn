@@ -171,7 +171,7 @@
   }
 
   function makeSprite(texture, w, h) {
-    var mat = new THREE.SpriteMaterial({ map: texture, transparent: true });
+    var mat = new THREE.SpriteMaterial({ map: texture, transparent: true, depthWrite: false, alphaTest: 0.5 });
     var spr = new THREE.Sprite(mat);
     spr.scale.set(w, h, 1);
     spr.center.set(0.5, 0);
