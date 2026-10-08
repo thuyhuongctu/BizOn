@@ -542,6 +542,12 @@
     { id: 4, icon: '🏗️', name: 'Liên doanh', nameEn: 'Joint venture', cost: 1.8, margin: 0.32, scale: 1.4, op: 0.5, note: 'chia vốn, chia lời – học thị trường nhanh (+tri thức mỗi quý)', noteEn: 'shared equity and profit – fast market learning (+intel each quarter)' },
     { id: 5, icon: '🏭', name: 'Đầu tư 100% vốn (FDI)', nameEn: 'Wholly owned FDI', cost: 3.2, margin: 0.45, scale: 1.5, op: 0.9, note: 'kiểm soát tối đa, né thuế quan – cần năng lực ≥ 55, rủi ro cao', noteEn: 'maximum control, avoids tariffs – needs capability ≥ 55, high risk' },
   ];
+  // Đối thủ không có "phương thức vào" riêng như người chơi nên không có
+  // margin thật để tính – dùng margin trung bình của 6 MODES (~0,30) làm
+  // ước tính lợi nhuận đối thủ, để so sánh LỢI NHUẬN với LỢI NHUẬN (không
+  // so lợi nhuận người chơi với DOANH THU đối thủ – luôn lớn hơn lợi nhuận,
+  // khiến đội chơi có lãi thật vẫn bị báo "thua").
+  var RIVAL_MARGIN = 0.30;
   // Vận tải: lựa chọn/rủi ro RIÊNG, tách khỏi giá vốn cố định của MODES ở
   // trên – chọn 1 lần khi thâm nhập 1 thị trường, áp dụng mọi quý sau đó.
   // Đường biển rẻ hơn nhưng mỗi quý có rủi ro chậm hàng (mất nửa doanh thu
@@ -613,7 +619,7 @@
     party: [null, null, null, null, null, null, null], // 'ceo' hoặc 'team' – ai lên đảo khi vào thị trường này
     qin: [0, 0, 0, 0, 0, 0, 0], certBP: false, items: {}, shopOpen: false,
     cust: [60, 60, 60, 60, 60, 60, 60],
-    profit: 0, susts: 0, adapt: 0, lowQ: 0, negQ: 0, picks: [], rival: { rev: 0, in: [], qin: [], next: null, block: -1 }, duelHist: [],
+    profit: 0, susts: 0, adapt: 0, lowQ: 0, negQ: 0, picks: [], rival: { rev: 0, profit: 0, in: [], qin: [], next: null, block: -1 }, duelHist: [],
     foot: [], flags: {}, usedEv: [], phase: 'obs',
     sel: { prio: null, budget: 1, enter: null, enterMode: null, shipMode: null, party: 'ceo', intel: [] },
   };
@@ -943,7 +949,7 @@
       return '<div class="bp-q-dot ' + (i < S.q ? 'done' : i === S.q ? 'cur' : '') + '">Q' + (i + 1) + '</div>';
     }).join('');
     var rivalRace = $('bp-rival-race');
-    if (rivalRace) rivalRace.innerHTML = window.BPRivalIntel ? BPRivalIntel.cardHtml(S.profit, S.rival.rev) : raceHtml(S.profit, S.rival.rev);
+    if (rivalRace) rivalRace.innerHTML = window.BPRivalIntel ? BPRivalIntel.cardHtml(S.profit, S.rival.profit) : raceHtml(S.profit, S.rival.profit);
   }
   // Thanh so sánh minh họa "bạn vs đối thủ ảo" – dùng chung cho HUD trong ván
   // và màn Kết thúc. mine/theirs tính theo 2 đơn vị khác nhau (lợi nhuận tích
@@ -1569,8 +1575,8 @@
     ].join('');
     var rivalLine = Math.round(d.rivalRev * 10) === 0 ? '' :
       '<p class="text-[11px] opacity-60 mt-2">' + rivalBadge() + T(
-        RIVAL.name + ' tăng ' + f1(d.rivalRev) + TY() + ' quý này – ' + (S.profit >= S.rival.rev ? 'bạn vẫn đang dẫn trước.' : 'bạn đang bị dẫn, tăng tốc thôi!'),
-        RIVAL.name + ' grew ' + f1(d.rivalRev) + TY() + ' this quarter – ' + (S.profit >= S.rival.rev ? "you're still ahead." : 'you are behind, time to pick up the pace!')
+        RIVAL.name + ' tăng ' + f1(d.rivalRev) + TY() + ' quý này – ' + (S.profit >= S.rival.profit ? 'bạn vẫn đang dẫn trước.' : 'bạn đang bị dẫn, tăng tốc thôi!'),
+        RIVAL.name + ' grew ' + f1(d.rivalRev) + TY() + ' this quarter – ' + (S.profit >= S.rival.profit ? "you're still ahead." : 'you are behind, time to pick up the pace!')
       ) + '</p>';
     return '<div class="mt-4 p-3.5 rounded-2xl" style="background:rgba(253,161,39,.08); border:1px solid rgba(253,161,39,.25)">' +
       '<p class="font-display font-extrabold text-deep-teal text-sm">' + T('🎬 Tóm tắt quý ' + qDone, '🎬 Quarter ' + qDone + ' summary') + ' – ' + verdict + '</p>' +
@@ -1712,18 +1718,20 @@
       if (S.entered[m] === null) qRivalRev += rivalAttr(m);
     });
     S.rival.rev += qRivalRev;
+    var qRivalProfit = qRivalRev * RIVAL_MARGIN;
+    S.rival.profit += qRivalProfit;
     if (S.sel.prio === 1) S.resil -= 3;
     var loanPaid = false;
     if (S.flags.loan) { S.cash -= 0.3; S.flags.loan = false; loanPaid = true; }
     S.cash += qProfit; S.profit += qProfit;
-    S.duelHist.push({ you: qProfit, riv: qRivalRev }); // cho biểu đồ đối đầu theo quý ở màn kết thúc
+    S.duelHist.push({ you: qProfit, riv: qRivalProfit }); // cho biểu đồ đối đầu LỢI NHUẬN theo quý ở màn kết thúc
     S.rep = clamp(S.rep); S.capab = clamp(S.capab); S.resil = clamp(S.resil);
     S.lowQ = S.cash < 0 ? S.lowQ + 1 : 0;
     if (S.cash < 0) S.negQ = (S.negQ || 0) + 1;
     var report = fmtQLines(qLinesData, loanPaid);
     addLog('🧾 <b>' + T('Kết quả quý', 'Quarter results') + ':</b><br>' + report + '<br>💼 ' + T('Tiền mặt', 'Cash') + ': <b>' + f1(S.cash) + TY() + '</b>.');
     if (mktNotes.length) addLog(mktNotes.join('<br>'));
-    addLog(RIVAL.icon + ' <b>' + RIVAL.name + ':</b> ' + (S.profit >= S.rival.rev ?
+    addLog(RIVAL.icon + ' <b>' + RIVAL.name + ':</b> ' + (S.profit >= S.rival.profit ?
       T('vẫn bám đuổi phía sau bạn, doanh thu ước ' + f1(S.rival.rev) + TY() + '.', 'still chasing behind you, estimated revenue ' + f1(S.rival.rev) + TY() + '.') :
       T('đang dẫn trước bạn, doanh thu ước ' + f1(S.rival.rev) + TY() + ' – tăng tốc thôi!', 'currently ahead of you, estimated revenue ' + f1(S.rival.rev) + TY() + ' – time to pick up the pace!')));
     if (rivalEntered !== null) addLog(RIVAL.icon + ' ' + T(
@@ -1757,7 +1765,7 @@
     if (evtPostCache.delta && evtPostCache.delta.profit >= 1) createConfetti();
     renderEvtPost();
     hud();
-    if (window.BPRivalIntel) BPRivalIntel.showArena(S.profit, S.rival.rev, S.q);
+    if (window.BPRivalIntel) BPRivalIntel.showArena(S.profit, S.rival.profit, S.q);
     if (window.BPHub) BPHub.markNew();
   }
   window.bpNext = function () { stageObs(); };
@@ -1804,9 +1812,9 @@
     $('bp-breakdown').innerHTML = rows.map(function (r) {
       return '<div><div class="flex justify-between text-[12px] font-bold"><span>' + r[0] + '</span><span>' + r[1] + '</span></div><div class="bp-bar mt-1"><i style="width:' + r[1] + '%"></i></div></div>';
     }).join('');
-    $('bp-rival-final').innerHTML = raceHtml(S.profit, S.rival.rev) +
-      '<p class="text-[11px] opacity-60 mt-2">' + (S.profit >= S.rival.rev ?
-        T('🏆 Bạn đã vượt qua ' + RIVAL.name + ' trong cuộc đua doanh thu 6 quý.', '🏆 You outpaced ' + RIVAL.name + ' in the 6-quarter revenue race.') :
+    $('bp-rival-final').innerHTML = raceHtml(S.profit, S.rival.profit) +
+      '<p class="text-[11px] opacity-60 mt-2">' + (S.profit >= S.rival.profit ?
+        T('🏆 Bạn đã vượt qua ' + RIVAL.name + ' trong cuộc đua lợi nhuận 6 quý.', '🏆 You outpaced ' + RIVAL.name + ' in the 6-quarter profit race.') :
         T('🐉 ' + RIVAL.name + ' đã về đích trước – thử lại để soán ngôi.', '🐉 ' + RIVAL.name + ' finished ahead – try again to take the lead.')) + '</p>';
     $('bp-rival-final').innerHTML += duelChartHtml();
     if (endReason === 'cash') {
@@ -1829,12 +1837,12 @@
       var bestKey = Object.keys(dims).sort(function (x, y) { return dims[y] - dims[x]; })[0];
       var nMarkets = S.entered.filter(function (v) { return v !== null && v !== undefined; }).length;
       var supreme = sc.total >= 72 && sc.p >= 60 && sc.r >= 60 && sc.c >= 60 && sc.a >= 60 && sc.s >= 60;
-      var nemesis = S.profit > 0 && S.profit >= S.rival.rev * 1.5;
+      var nemesis = S.profit > 0 && S.profit >= S.rival.profit * 1.5;
       var ending = supreme ? { icon: '🏆', t: T('Thương hiệu ' + HOME().dem + ' vươn khơi', 'A ' + HOME().demEn + ' Brand Sets Sail'), sub: T('Cân bằng cả 5 chiều – danh hiệu cao nhất của Hộ Chiếu Thương Hiệu.', "Balanced across all 5 dimensions – Brand Passport's highest title.") }
-        : nemesis ? { icon: '🛡️', t: T('Khắc tinh của ' + RIVAL.name, RIVAL.name + "'s Nemesis"), sub: T('Doanh thu vượt xa ' + RIVAL.name + ' – đối thủ phải dè chừng bạn.', 'Revenue far outpaces ' + RIVAL.name + " – the rival now has to watch its back.") }
+        : nemesis ? { icon: '🛡️', t: T('Khắc tinh của ' + RIVAL.name, RIVAL.name + "'s Nemesis"), sub: T('Lợi nhuận vượt xa ' + RIVAL.name + ' – đối thủ phải dè chừng bạn.', 'Profit far outpaces ' + RIVAL.name + " – the rival now has to watch its back.") }
         : (bestKey === 's' && sc.s >= 60) ? { icon: '🌿', t: T('Dẫn đầu xanh', 'Green Leader'), sub: T('Hồ sơ bền vững nổi bật nhất trong 5 chiều điểm số.', 'Sustainability is the standout among the 5 scoring dimensions.') }
         : (bestKey === 'p' && sc.p >= 60 && nMarkets <= 3) ? { icon: '💎', t: T('Chuyên gia ngách', 'Niche Specialist'), sub: T('Lợi nhuận cao dù chỉ tập trung ' + nMarkets + '/7 thị trường.', 'High profit from focusing on just ' + nMarkets + '/7 markets.') }
-        : S.profit < S.rival.rev ? { icon: '🐉', t: T(RIVAL.name + ' thắng', RIVAL.name + ' Wins'), sub: T(RIVAL.name + ' về đích trước trong cuộc đua doanh thu 6 quý – thử lại để soán ngôi.', RIVAL.name + ' finished ahead in the 6-quarter revenue race – try again to take the lead.') }
+        : S.profit < S.rival.profit ? { icon: '🐉', t: T(RIVAL.name + ' thắng', RIVAL.name + ' Wins'), sub: T(RIVAL.name + ' về đích trước trong cuộc đua lợi nhuận 6 quý – thử lại để soán ngôi.', RIVAL.name + ' finished ahead in the 6-quarter profit race – try again to take the lead.') }
         : { icon: '🚢', t: T('Đang lớn', 'Still Growing'), sub: T('Lợi nhuận tích lũy ' + f1(S.profit) + ' tỷ ₫ sau 6 quý.', 'Cumulative profit of ' + f1(S.profit) + ' bn ₫ after 6 quarters.') };
       if (!endCelebrated && (supreme || nemesis)) { endCelebrated = true; createConfetti(); }
       $('bp-medal').textContent = ending.icon;
