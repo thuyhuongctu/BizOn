@@ -854,22 +854,23 @@
       { l: '🤝 Hứa tăng tốc doanh số ngay', lEn: '🤝 Promise to accelerate sales right away', fx: function () { S.flags.wave = 1.1; S.resil -= 5; S.foot.push(T('Hứa với hội đồng chỉ tiêu ngắn hạn', 'Promised the board a short-term target')); return T('Cả công ty tăng tốc (+10% quý này) nhưng căng như dây đàn – chống chịu −5.', 'The whole company speeds up (+10% this quarter) but is stretched thin – resilience −5.'); } }] },
   ];
 
-  // Ảnh minh họa theo NHÓM sự kiện (thay vì từng sự kiện riêng lẻ – 23 sự
-  // kiện là quá nhiều để vẽ riêng từng cái) – khớp đúng 4 nhóm đã chia sẵn
-  // trong mảng EVENTS ở trên (Thị trường / Thể chế / Nội bộ / Khủng hoảng).
-  // NHIỆM VỤ không có id nên EVT_CAT[ev.id] trả về undefined – không hiện
-  // banner, vì màn NHIỆM VỤ đã có chân dung Lina Park riêng.
-  var EVT_CAT = {
-    trend: 'market', pricewar: 'market', green: 'market', celeb: 'market', subst: 'market', fx: 'market',
-    reg: 'institutional', tax: 'institutional', cert: 'institutional', data: 'institutional', greenlaw: 'institutional', port: 'institutional',
-    talent: 'internal', supplier: 'internal', defect: 'internal', cashflow: 'internal', conflict: 'internal', training: 'internal',
-    review: 'crisis', held: 'crisis', devalue: 'crisis', betray: 'crisis', copy: 'crisis', board: 'crisis',
-  };
-  var EVT_CAT_IMG = {
-    market: 'assets/illustrations/game/evtcat-market.webp',
-    institutional: 'assets/illustrations/game/evtcat-institutional.webp',
-    internal: 'assets/illustrations/game/evtcat-internal.webp',
-    crisis: 'assets/illustrations/game/evtcat-crisis.webp',
+  // Ảnh minh họa RIÊNG cho từng sự kiện (trước đây dùng chung 1 ảnh/nhóm 4
+  // nhóm – nay mỗi sự kiện có ảnh riêng, vẽ tay). NHIỆM VỤ không có id nên
+  // EVT_IMG[ev.id] trả về undefined – không hiện banner, vì màn NHIỆM VỤ
+  // đã có chân dung Lina Park riêng.
+  var EVT_IMG = {
+    trend: 'assets/illustrations/game/evt-trend.webp', pricewar: 'assets/illustrations/game/evt-pricewar.webp',
+    green: 'assets/illustrations/game/evt-green.webp', celeb: 'assets/illustrations/game/evt-celeb.webp',
+    subst: 'assets/illustrations/game/evt-subst.webp', fx: 'assets/illustrations/game/evt-fx.webp',
+    reg: 'assets/illustrations/game/evt-reg.webp', tax: 'assets/illustrations/game/evt-tax.webp',
+    cert: 'assets/illustrations/game/evt-cert.webp', data: 'assets/illustrations/game/evt-data.webp',
+    greenlaw: 'assets/illustrations/game/evt-greenlaw.webp', port: 'assets/illustrations/game/evt-port.webp',
+    talent: 'assets/illustrations/game/evt-talent.webp', supplier: 'assets/illustrations/game/evt-supplier.webp',
+    defect: 'assets/illustrations/game/evt-defect.webp', cashflow: 'assets/illustrations/game/evt-cashflow.webp',
+    conflict: 'assets/illustrations/game/evt-conflict.webp', training: 'assets/illustrations/game/evt-training.webp',
+    review: 'assets/illustrations/game/evt-review.webp', held: 'assets/illustrations/game/evt-held.webp',
+    devalue: 'assets/illustrations/game/evt-devalue.webp', betray: 'assets/illustrations/game/evt-betray.webp',
+    copy: 'assets/illustrations/game/evt-copy.webp', board: 'assets/illustrations/game/evt-board.webp',
   };
 
   // Nhiệm vụ đàm phán «Cánh cửa Bắc Phong» – kích hoạt một lần ở quý 4
@@ -1449,9 +1450,9 @@
   function renderEventScreen() {
     var ev = window.__bpEv;
     if (!ev) return;
-    var catImg = EVT_CAT_IMG[EVT_CAT[ev.id]];
+    var evtImg = EVT_IMG[ev.id];
     $('bp-stage').innerHTML =
-      (catImg ? '<img src="' + catImg + '" alt="" class="bp-evt-banner" loading="lazy">' : '') +
+      (evtImg ? '<img src="' + evtImg + '" alt="" class="bp-evt-banner" loading="lazy">' : '') +
       '<h2 class="font-display font-extrabold text-deep-teal text-base mb-1">' + T('Quý', 'Quarter') + ' ' + (evQ + 1) + '/6 – ' + ev.cat + ' ' + T(ev.t, ev.tEn) + '</h2>' +
       '<p class="text-[13px] mt-2">' + ev.d() + '</p>' +
       '<div class="space-y-2 mt-4">' + ev.ch.map(function (c, i) {
