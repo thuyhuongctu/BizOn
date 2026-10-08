@@ -736,8 +736,22 @@ function l3Enter(demo) {
   if (!W) return; const g = id => W.document.getElementById(id);
   ['screen-splash'].forEach(id => g(id) && g(id).classList.remove('active'));
   if (demo) { ev('doLoginDemo()'); }
-  else { g('login-email').value = document.getElementById('l3Email').value.trim(); g('login-team').value = document.getElementById('l3Team').value.trim();
-    g('login-class').value = document.getElementById('l3Class').value.trim().toUpperCase(); try { W.pickRole(L3.role); } catch (e) {} ev('doLogin()'); }
+  else {
+    const classId = document.getElementById('l3Class').value.trim().toUpperCase();
+    const email = document.getElementById('l3Email').value.trim();
+    // Có Mã lớp cần đăng nhập email trường (bizon_join_team chặn trùng vai) — màn 3D chỉ thu
+    // thập email/đội/mã lớp dạng tự do, không có ô mật khẩu nên không tự đăng nhập được. Chuyển
+    // sang giao diện 2D cũ, nơi có khung "🔒 Đăng nhập bằng email trường" (js/student-auth.js).
+    if (classId) {
+      alert(T('Có Mã lớp cần đăng nhập bằng email trường. Mình chuyển bạn sang giao diện đăng nhập đầy đủ bên dưới.',
+        'A class code requires signing in with your school email. Switching you to the full login screen below.'));
+      const se = g('sa-email'); if (se && email) se.value = email;
+      document.body.classList.remove('login3d'); L3.classic = true; L3.on = false; setMode();
+      return;
+    }
+    g('login-email').value = email; g('login-team').value = document.getElementById('l3Team').value.trim();
+    g('login-class').value = classId; try { W.pickRole(L3.role); } catch (e) {} ev('doLogin()');
+  }
   actors.forEach(o => { if (o.mode0) o.mode = o.mode0; });
   setTimeout(() => { setMode(); zb.children[0] && zb.children[0].click(); if (!DIORAMA) maybeTour3D(); }, 600);
 }
