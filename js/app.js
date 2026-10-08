@@ -211,6 +211,7 @@ async function doLoginDemo() {
   $('login-team').value = T('Đội Demo Rồng Xanh', 'Blue Dragon Demo Team');
   $('login-class').value = 'DEMO-2026';
   pickedRole = 'CEO';
+  window.__bizonAuthedJoin = true; // sân chơi demo dùng chung, không cần qua cổng xác thực vai trò
   await doLogin();
   S.teamMembers = DEMO_TEAM_LIST();
   save(); renderAll();
@@ -321,6 +322,17 @@ async function doLogin() {
   const email = $('login-email').value.trim() || 'sinhvien@bizon.vn';
   const team = $('login-team').value.trim() || T('Đội Claymorphism', 'Team Claymorphism');
   const classId = $('login-class').value.trim();
+
+  // Có Mã lớp mà chưa qua cổng "🔒 Đăng nhập bằng email trường" (bizon_join_team,
+  // chặn trùng vai bằng unique constraint) — không cho vào thẳng bằng đường gõ tự
+  // do nữa, tránh lặp lại lỗi 2 sinh viên cùng nhận vai CEO của 1 đội (báo cáo
+  // thực tế: nhóm "Novara"). Chơi thử không Mã lớp vẫn không đổi gì.
+  if (classId && !window.__bizonAuthedJoin) {
+    alert(T('Lớp có Mã lớp cần đăng nhập bằng email trường ở khung "🔒 Đăng nhập bằng email trường" phía trên trước khi vào trò chơi — để giữ đúng vai trò của bạn, tránh trùng vai với bạn khác trong đội. Để trống Mã lớp nếu chỉ muốn chơi thử, không cần tính điểm.',
+      'A class code requires signing in with your school email in the "🔒 Sign in with school email" box above before you can start — this locks in your role and prevents clashing with a teammate. Leave the class code blank if you just want to try the game without being graded.'));
+    return;
+  }
+  window.__bizonAuthedJoin = false; // dùng 1 lần – lượt doLogin() kế tiếp phải qua lại cổng
 
   // Đội đã có Mã lớp: thử tải lại tiến trình từ máy chủ trước — để đổi
   // sang máy khác ở phòng máy dùng chung vẫn tiếp tục đúng chỗ đang chơi
