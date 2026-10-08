@@ -227,6 +227,7 @@
       if (teamEl) teamEl.value = state.team.team_name;
       if (classEl) classEl.value = state.team.class_code;
       if (typeof pickRole === 'function') pickRole(state.team.role);
+      window.__bizonAuthedJoin = true; // đã qua bizon_join_team (chặn trùng vai) – mở cổng cho doLogin() dùng Mã lớp
       if (typeof doLogin === 'function') doLogin();
     }
 
