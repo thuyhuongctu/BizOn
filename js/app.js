@@ -1478,11 +1478,21 @@ function commitDecisions() {
     alert(T('ERR_ROUND_LOCKED – Giảng viên đã khóa vòng chơi này. Chờ mở khóa để tiếp tục.', 'ERR_ROUND_LOCKED – Your instructor has locked this round. Wait for it to unlock to continue.'));
     return;
   }
-  const d = currentDecisionInput();
-  const cashNeeded = d.marketing + d.rd + d.production * UNIT_COST / 1000 + d.workers * WAGE_PER_WORKER + d.workers * d.training;
+  let d = currentDecisionInput();
+  let cashNeeded = d.marketing + d.rd + d.production * UNIT_COST / 1000 + d.workers * WAGE_PER_WORKER + d.workers * d.training;
   if (d.funding !== 'loan' && cashNeeded > S.balance + 300) {
-    alert(T('ERR_INSUFFICIENT_FUNDS – Kế hoạch chi vượt quá vốn tự có của đội. Hãy giảm ngân sách hoặc chuyển sang nguồn vốn "Vay ngân hàng" (lãi 8.5%/vòng).', 'ERR_INSUFFICIENT_FUNDS – The planned spend exceeds your team\'s equity. Reduce the budget or switch funding to "Bank loan" (8.5%/round interest).'));
-    return;
+    // Hết giờ thi, hệ thống tự Commit (js/bn-exam.js) nhưng thanh trượt hiện tại
+    // vượt vốn tự có: không được phép kẹt vô hạn chờ sinh viên sửa tay (họ có
+    // thể không còn ở màn hình). Tự chuyển sang "Vay ngân hàng" như lời khuyên
+    // trong thông báo lỗi, để vòng vẫn chốt được đúng giờ.
+    if (window.__bnExamAuto) {
+      if (typeof setFunding === 'function') setFunding('loan');
+      d = currentDecisionInput();
+      cashNeeded = d.marketing + d.rd + d.production * UNIT_COST / 1000 + d.workers * WAGE_PER_WORKER + d.workers * d.training;
+    } else {
+      alert(T('ERR_INSUFFICIENT_FUNDS – Kế hoạch chi vượt quá vốn tự có của đội. Hãy giảm ngân sách hoặc chuyển sang nguồn vốn "Vay ngân hàng" (lãi 8.5%/vòng).', 'ERR_INSUFFICIENT_FUNDS – The planned spend exceeds your team\'s equity. Reduce the budget or switch funding to "Bank loan" (8.5%/round interest).'));
+      return;
+    }
   }
   S.committed = true;
   renderDecisions();
