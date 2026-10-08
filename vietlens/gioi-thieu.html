@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>window.__resources=Object.assign({},window.__resources,{"https://unpkg.com/react@18.3.1/umd/react.production.min.js":"../vendor/react/react.production.min.js","https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js":"../vendor/react/react-dom.production.min.js"});</script>
 <script src=".././support.js"></script>
 </head>
 <body>
@@ -228,7 +229,7 @@ class Component extends DCLogic{
   state={lang:null};
   renderVals(){
     const lang=this.state.lang||this.props.lang||'vi';const t=Object.assign({gp:lang==='vi'?'Tải trên Google Play':'Get it on Google Play',navCta:lang==='vi'?'Bắt đầu':'Launch',disclaimer:DIS[lang]},T[lang]);
-    if(!this._art)this._art=React.createElement('img',{src:'https://thuyhuongctu.github.io/BizOn/assets/character/advisors/lumina-bien-co-thi-truong-cut.webp',alt:'',style:{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'contain',objectPosition:'50% 100%',filter:'drop-shadow(0 18px 14px rgba(110,70,30,.35))',animation:'bzFloat 6s ease-in-out infinite'}});
+    if(!this._art)this._art=React.createElement('img',{src:'../assets/character/advisors/lumina-bien-co-thi-truong-cut.webp',alt:'',style:{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'contain',objectPosition:'50% 100%',filter:'drop-shadow(0 18px 14px rgba(110,70,30,.35))',animation:'bzFloat 6s ease-in-out infinite'}});
     const on='inset 0 -3px 0 rgba(0,0,0,.2),0 4px 8px -3px rgba(0,60,80,.5)';
     return Object.assign({
       t,heroArt:this._art,
