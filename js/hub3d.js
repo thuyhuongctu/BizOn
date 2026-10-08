@@ -246,7 +246,7 @@
     interactables.push(jukeboxInteractable);
 
     var tuPos = new THREE.Vector3(Math.cos(TU_ANGLE) * EXTRA_RADIUS, 0.95, Math.sin(TU_ANGLE) * EXTRA_RADIUS);
-    tuNpc = makeSprite(new THREE.TextureLoader().load(DIALOGUES.tu.avatar), 1.3, 2.6);
+    tuNpc = makeSprite(new THREE.TextureLoader().load(DIALOGUES.tu.avatar), 1.09, 2.6);
     tuNpc.position.copy(tuPos);
     scene.add(tuNpc);
     interactables.push({
