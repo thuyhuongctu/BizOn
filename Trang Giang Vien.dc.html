@@ -471,7 +471,7 @@ class Component extends DCLogic {
       }
     } catch (e) {}
   }
-  fail(e) { const m = (e && e.message) || String(e); if (this.api() && m === this.api().migrationNote) return this.forceUpdate(); this.setState({ err: m }); }
+  fail(e) { const m = (e && e.message) || String(e); this.setState({ err: m }); }
   async loadClasses() { try { const c = await this.api().myClasses(); this.setState({ classes: c || [], view: 'classes', err: '' }); } catch (e) { this.fail(e); } }
   async loadAdmin() { try { const c = await this.api().adminAllClasses(); this.setState({ adminClasses: c || [], view: 'admin', err: '' }); } catch (e) { this.fail(e); } }
   async removeClass(code) {

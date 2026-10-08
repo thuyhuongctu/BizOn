@@ -109,5 +109,6 @@
   }
   setInterval(tick, 1000); setInterval(feed, 10000);
   feed().then(tick);
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) feed().then(tick); });
   window.BizOnBpsExam = { get exam() { return exam; }, refresh: function () { return feed().then(tick); } };
 })();
