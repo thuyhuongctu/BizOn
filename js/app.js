@@ -271,7 +271,7 @@ function renderOpponents() {
     ${opponents.map((o, i) => `
       <button onclick="showRivalDetail(${i})" class="w-full text-left py-2 ${i < 2 ? 'border-b border-surface-bright' : ''}">
         <div class="flex items-center gap-3">
-          <img src="${o.img}" alt="${o.name}" class="w-10 h-10 rounded-full object-cover object-top shadow-clay shrink-0" style="background:${o.accent}22">
+          <img src="${o.img}" alt="${o.name}" class="w-10 h-10 rounded-full object-cover object-top shadow-clay shrink-0">
           <div class="flex-1 min-w-0">
             <p class="text-xs font-extrabold text-deep-teal">${o.icon} ${o.name} <span class="font-bold text-primary">· ${o.style}</span></p>
             <p class="text-[10px] text-deep-teal/55 truncate">${o.play}</p>
@@ -796,7 +796,7 @@ function maybeShowEventIntro() {
       </div>
       ${bad ? `
       <div class="clay-raised p-3 mt-3 flex items-center gap-3">
-        <img src="assets/character/anh-tu-ao-dai-work-cut.webp" alt="Phan Anh Tú" class="w-11 h-11 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 6%;background:#dbeef7">
+        <img src="assets/character/anh-tu-ao-dai-work-cut.webp" alt="Phan Anh Tú" class="w-11 h-11 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 6%">
         <p class="text-xs text-deep-teal/80 italic">${T('"Bình tĩnh phân tích số liệu trước khi hành động – khủng hoảng luôn ẩn chứa cơ hội cho đội có kỷ luật." – <b class="text-emerald-700">Phan Anh Tú · Cố vấn học thuật</b>', '"Stay calm and read the data before acting – every crisis hides an opportunity for a disciplined team." – <b class="text-emerald-700">Phan Anh Tú · Academic Advisor</b>')}</p>
       </div>` : ''}
       <button id="ev-cta" class="clay-button-primary w-full text-white font-display font-bold text-lg py-4 mt-6">${ev.cta ? ev.cta.label : T('🎯 Nhập quyết định', '🎯 Enter decisions')}</button>
@@ -845,7 +845,7 @@ function showVictory(r) {
         <div class="clay-card p-4"><p class="text-2xl">😊</p><p class="font-display font-extrabold text-deep-teal">${satisfaction}/5</p><p class="text-[10px] text-deep-teal/50 font-semibold">${T('Độ hài lòng thương hiệu', 'Brand satisfaction')}</p></div>
       </div>
       <div class="clay-raised p-3 mb-4 flex items-center gap-3 text-left">
-        <img src="assets/character/anh-tu-ao-dai-smile-cut.webp" alt="Phan Anh Tú" class="w-12 h-12 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 5%;background:#dbeef7">
+        <img src="assets/character/anh-tu-ao-dai-smile-cut.webp" alt="Phan Anh Tú" class="w-12 h-12 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 5%">
         <p class="text-xs text-deep-teal/80 italic">${T('"Xuất sắc! Đây là minh chứng cho một chiến lược được thực thi kỷ luật." – <b class="text-emerald-700">Phan Anh Tú</b>', '"Excellent! This is proof of a disciplined, well-executed strategy." – <b class="text-emerald-700">Phan Anh Tú</b>')}</p>
       </div>
       <button id="vic-report" class="clay-btn w-full bg-deep-teal text-white font-display font-bold py-4 mb-3">${T('📊 XEM BÁO CÁO CHI TIẾT', '📊 VIEW DETAILED REPORT')}</button>

@@ -66,7 +66,7 @@
       '<p class="text-[13px] font-extrabold mb-2">' + statusLine + '</p>' +
       rivals.map(function (r, i) {
         return '<button type="button" onclick="BPSRivalIntel.showDetail(' + i + ')" class="w-full text-left flex items-center gap-2.5 mb-1.5">' +
-          '<img src="' + r.img + '" alt="" class="w-9 h-9 rounded-full object-cover shrink-0" style="background:' + (r.accent || '#006687') + '22">' +
+          '<img src="' + r.img + '" alt="" class="w-9 h-9 rounded-full object-cover shrink-0">' +
           '<div class="flex-1 min-w-0">' +
           '<p class="text-[11px] font-extrabold truncate">' + r.icon + ' ' + r.name + '</p>' +
           '<div class="h-2 rounded-full bg-deep-teal/10 overflow-hidden mt-0.5"><div class="h-full" style="width:' + pct(r.total, max) + '%;background:' + (r.accent || '#006687') + '"></div></div>' +
@@ -91,7 +91,7 @@
       ov.style.cssText = 'position:fixed;inset:0;z-index:96;background:rgba(2,25,28,.82);display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto';
       ov.innerHTML = '<div class="clay-card p-6" style="max-width:420px;width:100%;max-height:85vh;overflow:auto">' +
         '<div class="flex items-center gap-3 mb-3">' +
-        '<img src="' + r.img + '" class="w-14 h-14 rounded-full object-cover" style="background:' + (r.accent || '#006687') + '22">' +
+        '<img src="' + r.img + '" class="w-14 h-14 rounded-full object-cover">' +
         '<div class="flex-1"><p class="font-display font-extrabold text-deep-teal text-lg">' + r.icon + ' ' + r.name + '</p>' +
         '<p class="text-[11px] font-bold" style="color:' + (r.accent || '#006687') + '">' + (isEN() ? r.styleEn : r.style) + '</p></div>' +
         '<button type="button" onclick="BPSRivalIntel.closeDetail()" class="text-xl leading-none opacity-50">✕</button></div>' +
