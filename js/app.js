@@ -3201,6 +3201,22 @@ function resetGame() {
   if (!confirm(T('Chỉ Reset khi vòng chơi thật sự gặp lỗi (giao diện kẹt, dữ liệu hiển thị sai…) – đừng Reset chỉ vì không hài lòng với kết quả, vì toàn bộ tiến trình sẽ mất và không lấy lại được.\n\nXóa toàn bộ tiến trình và chơi lại từ đầu?',
     'Only reset when the round has a real problem (the UI is stuck, data looks wrong…) – don\'t reset just because you\'re unhappy with the outcome, since all progress will be lost and cannot be recovered.\n\nErase all progress and start over?'))) return;
   localStorage.removeItem(STORAGE_KEY);
+  try { sessionStorage.removeItem('bizon-student-session'); } catch (e) {}
+  location.reload();
+}
+
+// Đăng xuất khỏi tài khoản email trường hiện tại để trả máy sạch cho sinh viên
+// kế tiếp (phòng máy dùng chung) – khác resetGame(): không bị khóa trong phiên
+// thi có mã lớp, vì đây không xóa tiến trình của đội (đã lưu trên máy chủ mỗi
+// vòng), chỉ xóa phiên đăng nhập cục bộ + khôi phục màn đăng nhập. Cùng khóa
+// sessionStorage 'bizon-student-session' với js/student-auth.js (restoreSession)
+// và js/student-login.js (Bến Phù Sa/Hộ Chiếu Mini) nên đăng xuất ở đây cũng dọn
+// luôn phiên dùng chung cho các game khác mở trong cùng tab.
+function signOutStudent() {
+  if (!confirm(T('Đăng xuất khỏi tài khoản hiện tại để sinh viên khác dùng máy này? Tiến trình của bạn đã được lưu trên máy chủ (nếu có Mã lớp) nên không mất – đăng nhập lại bất cứ lúc nào là chơi tiếp được.',
+    'Sign out of the current account so another student can use this device? Your progress is already saved on the server (if you have a class code), so nothing is lost – sign back in anytime to continue.'))) return;
+  localStorage.removeItem(STORAGE_KEY);
+  try { sessionStorage.removeItem('bizon-student-session'); } catch (e) {}
   location.reload();
 }
 
