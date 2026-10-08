@@ -109,5 +109,6 @@
   setInterval(feed, 10000);
   document.addEventListener('DOMContentLoaded', function () { feed().then(tick); });
   window.addEventListener('load', function () { wrap(); tick(); });
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) feed().then(tick); });
   window.BizOnBpExam = { get exam() { return exam; }, refresh: function () { return feed().then(tick); } };
 })();
