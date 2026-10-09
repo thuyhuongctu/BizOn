@@ -145,10 +145,28 @@ window.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => {
     $('screen-splash').classList.remove('active');
     const saved = load();
-    if (saved && saved.profile) { S = saved; enterApp(); }
-    else $('screen-login').classList.add('active');
+    $('screen-login').classList.add('active');
+    // Máy dùng chung (phòng máy/lớp học): không tự nhảy thẳng vào ván của người
+    // chơi trước đó nữa — hỏi xác nhận trước, để SV kế tiếp không bị lẫn vào
+    // tiến trình/vai trò của bạn khác khi bấm vào game.
+    if (saved && saved.profile) showResumeBanner(saved);
   }, 1600);
 });
+
+function showResumeBanner(saved) {
+  const banner = $('resume-banner');
+  if (!banner) { S = saved; enterApp(); return; }
+  $('resume-banner-text').textContent = T(
+    `Máy này đang có ván chơi dở: đội "${saved.profile.teamName}" – vai ${saved.profile.role}${saved.profile.classId ? ' · Lớp ' + saved.profile.classId : ''}. Đây có phải là bạn?`,
+    `This device has a game in progress: team "${saved.profile.teamName}" – role ${saved.profile.role}${saved.profile.classId ? ' · Class ' + saved.profile.classId : ''}. Is this you?`
+  );
+  banner.classList.remove('hidden');
+  $('resume-continue').onclick = () => { banner.classList.add('hidden'); S = saved; enterApp(); };
+  $('resume-fresh').onclick = () => {
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+    banner.classList.add('hidden');
+  };
+}
 
 // Đổi ngôn ngữ ngay trong game: applyLang() (site-ui.js) chỉ biết đổi text tĩnh,
 // nên phát sự kiện này để app.js tự render lại toàn bộ nội dung động (Bảng điều

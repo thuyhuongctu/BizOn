@@ -195,6 +195,16 @@
       <p class="text-sm text-deep-teal/60 mb-2"><span class="font-display font-extrabold lumina-name">Lumina</span> – <span class="signature text-lg text-deep-teal">Je m'appelle Hương</span> <span>đang chờ đồng hành cùng đội của bạn.</span></p>
       <p class="text-[11px] font-bold text-deep-teal/55 mb-6">⏱️ Một ván 6 vòng ≈ 30–45 phút (mỗi vòng 5–7 phút) – vừa một buổi học. Chơi thử nhanh với Đội Demo: ~10 phút cho 2 vòng đầu.</p>
 
+      <!-- Máy dùng chung có thể còn ván chơi của người trước lưu trong localStorage –
+           hỏi xác nhận trước khi tự nhảy vào, thay vì vào thẳng không hỏi. -->
+      <div id="resume-banner" class="hidden clay-card p-4 mb-5" style="border:2px solid #e8762d">
+        <p id="resume-banner-text" class="text-sm font-bold text-deep-teal mb-3"></p>
+        <div class="flex gap-2">
+          <button id="resume-continue" type="button" class="flex-1 clay-button-primary text-white font-display font-bold py-2.5 text-sm rounded-clay" style="background:#e8762d">▶️ Tiếp tục</button>
+          <button id="resume-fresh" type="button" class="flex-1 clay-button-secondary text-deep-teal/70 font-display font-bold py-2.5 text-sm rounded-clay">🆕 Người khác</button>
+        </div>
+      </div>
+
       <!-- Đăng nhập sinh viên thật — xác thực email trường thật qua Supabase Auth,
            gắn danh tính xác thực vào đội/vai trò (student_team_membership). js/student-auth.js. -->
       <div id="student-auth-panel" class="clay-card p-5 mb-5" style="border:2px solid #006687">
