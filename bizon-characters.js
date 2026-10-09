@@ -311,7 +311,7 @@ export function makeCharacters(THREE) {
       line: 'Thương hiệu cao cấp không cần giảm giá.' },
   ];
   // Nhân vật dùng ảnh render 3D gốc (billboard) thay mô hình khối.
-  const ART = { ceo: 'solid/ceo-tex.webp', cfo: 'solid/cfo-tex.webp', cmo: 'solid/cmo-tex.webp', coo: 'solid/coo-tex.webp', sec: 'solid/sec-tex.webp', lumina: 'solid/lumina-tex.webp', tu: 'solid/tu-phan-tex.webp', alpha: 'solid/alpha-full-tex.webp', mekong: 'rivals/mekong.webp', starclay: 'rivals/star.webp' };
+  const ART = { ceo: 'solid/ceo-tex.webp', cfo: 'solid/cfo-tex.webp', cmo: 'solid/cmo-tex.webp', coo: 'solid/coo-tex.webp', sec: 'solid/sec-tex.webp', lumina: 'solid/lumina-tex.webp', tu: 'solid/tu-phan-tex-v2.webp', alpha: 'solid/alpha-full-tex.webp', mekong: 'rivals/mekong.webp', starclay: 'rivals/star.webp' };
   const ART_PAD = { mekong: 0.07, starclay: 0.07 };
   const ART_H = { mekong: 1.4, starclay: 1.4,  ceo: 1.2, cfo: 1.12, cmo: 1.2, coo: 1.12, sec: 1.1, lumina: 1.14, tu: 1.18, alpha: 1.2 };
   const TL = new THREE.TextureLoader(), texCache = {}, blobMat = new THREE.MeshBasicMaterial({ color: 0x3a2a1a, transparent: true, opacity: 0.22, depthWrite: false });
