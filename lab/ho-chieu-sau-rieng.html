@@ -1,23 +1,33 @@
 <!DOCTYPE html>
-<html lang="vi" data-theme="dark">
+<html lang="vi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hộ Chiếu Sầu Riêng · Bản lớp học</title>
 <link rel="icon" href="../assets/brand/bizon-favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/bizon-clay-fonts.css">
+<meta name="theme-color" content="#FBF4E8">
 <meta name="description" content="Hộ Chiếu Sầu Riêng – bản lớp học: đội 5 vai (CEO, CMO, COO, CFO, SEC) điều hành chuỗi xuất khẩu sầu riêng Việt Nam qua 6 vụ, cạnh tranh với 3 đối thủ AI, mô phỏng «Nếu – Thì», hỏi Lumina, phiếu quyết định, nhật ký SEC và nhật ký sự kiện cho nghiên cứu.">
 <style>
 @font-face{font-family:'Plus Jakarta Sans';font-weight:400 800;font-display:swap;src:url(../assets/fonts/PlusJakartaSans-var-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
 @font-face{font-family:'Plus Jakarta Sans';font-weight:400 800;font-display:swap;src:url(../assets/fonts/PlusJakartaSans-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2122,U+2212}
 @font-face{font-family:'JetBrains Mono';font-weight:400 500;font-display:swap;src:url(../assets/fonts/IBMPlexMono-400-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
 @font-face{font-family:'JetBrains Mono';font-weight:400 500;font-display:swap;src:url(../assets/fonts/IBMPlexMono-400-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2122,U+2212}
-:root{--bg:#0B1220;--panel:#111F38;--panel2:#0E1B31;--grid:rgba(99,179,237,.08);--ink:#E7EEF8;--muted:#93A4BD;--faint:#6B7C97;--line:#22324A;--line2:#2C3F5C;
-  --accent:#84CC16;--accent2:#EAB308;--warn:#F59E0B;--neg:#F97316;--imp:#A78BFA;--shadow:0 10px 30px rgba(0,0,0,.35);--radius:16px}
-html[data-theme="light"]{--bg:#EEF3FA;--panel:#FFFFFF;--panel2:#F5F8FD;--grid:rgba(30,64,120,.07);--ink:#0F1A2E;--muted:#52617B;--faint:#8392AB;--line:#DDE7F3;--line2:#CBD8EA;
-  --accent:#4D7C0F;--accent2:#A16207;--warn:#B45309;--neg:#C2410C;--imp:#7C3AED;--shadow:0 12px 30px rgba(20,40,80,.10)}
+:root{
+  /* Bảng màu trang chủ BizOn (css/bizon-clay.css) + điểm nhấn xanh vỏ – vàng múi sầu riêng */
+  --bg:#FBF4E8;--panel:#FFFBF4;--panel2:#FFF6E6;--tray:#F3E6CF;
+  --ink:#033337;--muted:#3E5A5C;--faint:#546869;
+  --line:rgba(110,70,30,.12);--line2:rgba(110,70,30,.22);
+  --durian:#4A7419;--durian-deep:#385A10;--durian-soft:#E6F0CF;
+  --flesh:#F5BE2E;--flesh-soft:#FFF0C2;
+  --accent:var(--durian-deep);--accent2:var(--flesh);
+  --teal:#006687;--warn:#C2581B;--neg:#C2410C;--imp:#7C3AED;
+  --shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 26px 36px -24px rgba(110,70,30,.5);
+  --shadow-sm:inset 0 -6px 0 rgba(110,70,30,.07),0 14px 22px -18px rgba(110,70,30,.5);
+  --radius:26px}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;min-height:100vh;
-  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:26px 26px}
+body{font-family:'Be Vietnam Pro','BVP Fallback',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;min-height:100vh}
+h1,h2,h3,.logo{font-family:'Plus Jakarta Sans','PJS Fallback',system-ui,sans-serif;letter-spacing:-.01em}
 .mono,.num{font-family:'JetBrains Mono',monospace}
 .wrap{max-width:1120px;margin:0 auto;padding:0 16px 56px}
 .topbar{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
@@ -96,6 +106,8 @@ footer{color:var(--faint);font-size:12px;text-align:center;margin-top:24px}
 .cast .who img,.rv img{width:100%;height:110px;object-fit:contain}
 .cast .who b,.rv b{display:block;font-size:13.5px;margin-top:4px}
 .rvs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.rvs7{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
+.rvs7 .rv{padding:8px} .rvs7 .rv img{height:96px}
 @media (max-width:640px){.rvs{grid-template-columns:1fr}}
 .flow{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 10px;padding:0;list-style:none}
 .flow li{font-size:12px;border:1px solid var(--line2);border-radius:999px;padding:4px 10px;color:var(--muted);background:var(--panel2)}
@@ -132,8 +144,48 @@ textarea{font:inherit;color:var(--ink);background:var(--panel2);border:1px solid
 .lb td img{width:34px;height:34px;object-fit:contain;vertical-align:middle;margin-right:6px}
 details.gv{margin-top:10px} details.gv summary{cursor:pointer;font-weight:700;font-size:13px}
 .music{min-width:38px}
+/* ---- Lớp áo đất sét sáng, đồng bộ trang chủ; nhấn xanh – vàng sầu riêng ---- */
+.topbar{background:rgba(251,244,232,.92);border-bottom:1px solid var(--line)}
+.logo .mark{width:36px;height:36px;border-radius:14px;background:radial-gradient(circle at 35% 30%,#8DBA3E,var(--durian) 60%,var(--durian-deep));box-shadow:inset 0 -4px 0 rgba(0,0,0,.18),inset 0 2px 0 rgba(255,255,255,.35)}
+.logo .sub{color:var(--muted)}
+.tbtn{background:var(--panel);border:1px solid var(--line2);border-radius:14px;box-shadow:var(--shadow-sm);color:var(--ink)}
+.lang-pill{background:var(--tray);border:0;border-radius:14px;box-shadow:inset 0 3px 6px rgba(110,70,30,.18)}
+.lang-pill button.on{background:var(--durian);color:#fff;border-radius:12px}
+.eyebrow{color:var(--durian-deep)}
+.card{border:0;border-radius:var(--radius);box-shadow:var(--shadow);background:var(--panel)}
+.event{border-left:0;background:linear-gradient(180deg,var(--flesh-soft),var(--panel) 46%)}
+.event .tag{color:var(--warn)}
+.kpi{background:var(--panel2);border:0;border-radius:16px;box-shadow:inset 0 -4px 0 rgba(110,70,30,.06)}
+.pos,.ok{color:var(--durian-deep)} .neg,.bad{color:var(--neg)}
+.btn{background:var(--durian);color:#fff;border-radius:18px;box-shadow:inset 0 -5px 0 rgba(0,0,0,.18),inset 0 3px 0 rgba(255,255,255,.3),0 12px 18px -12px rgba(63,107,20,.8)}
+.btn:hover{background:var(--durian-deep)}
+.btn.ghost{background:var(--panel);color:var(--ink);border:0;box-shadow:inset 0 -5px 0 rgba(110,70,30,.12),0 10px 16px -12px rgba(110,70,30,.5)}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.opt,.pick button{background:var(--panel2);border:2px solid transparent;border-radius:16px;box-shadow:inset 0 -4px 0 rgba(110,70,30,.06)}
+.opt.on,.pick button.on{border-color:var(--durian);background:var(--durian-soft)}
+.chip{background:var(--panel2);border:1px solid var(--line2)}
+.chip.on{background:var(--flesh-soft);border-color:var(--flesh);color:var(--ink)}
+.prov{border-color:var(--line2);color:var(--muted)}
+.prov.pub::before{background:var(--durian)} .prov.sim::before{background:var(--flesh)}
+.prog span{background:var(--tray)} .prog span.done{background:var(--durian)} .prog span.now{background:var(--flesh)}
+.bar{background:var(--tray)} .bar i{background:linear-gradient(90deg,var(--durian),var(--flesh))}
+.arena .arow .bar i.me{background:linear-gradient(90deg,var(--durian),var(--flesh))}
+.arena .arow .bar i.ai{background:#B9C7B9}
+input[type=range]{accent-color:var(--durian)}
+input[type=text],select,textarea{background:var(--panel2);border:1px solid var(--line2);color:var(--ink)}
+.note{border-left-color:var(--flesh);background:var(--flesh-soft)}
+.badge{background:var(--durian-soft);border:1px solid var(--durian)}
+.flags span{background:var(--panel2)} .flags span.win{border-color:var(--durian)} .flags span.now{border-color:var(--flesh)}
+.flow li{background:var(--panel2)} .flow li b{color:var(--durian-deep)}
+.bubble{background:var(--panel2);border:0;box-shadow:inset 0 -4px 0 rgba(110,70,30,.06)}
+.bubble .ask{color:var(--durian-deep)}
+.adv,.cast .who,.rv{background:var(--panel2);border:0;box-shadow:inset 0 -4px 0 rgba(110,70,30,.06)}
+.mini{background:var(--flesh-soft);border:1px solid var(--flesh);color:var(--ink)}
+.timer{background:var(--panel2)}
+.hero-cast img{filter:drop-shadow(0 12px 14px rgba(110,70,30,.35))}
+.req::after{color:var(--neg)}
+footer{color:var(--faint)}
 </style>
-<link rel="stylesheet" href="../css/clay-dark-skin.css">
 </head>
 <body>
 <div class="topbar"><div class="topbar-in">
@@ -142,7 +194,6 @@ details.gv{margin-top:10px} details.gv summary{cursor:pointer;font-weight:700;fo
   <button class="tbtn music" id="musicBtn" type="button" aria-pressed="false">♪</button>
   <a class="tbtn" href="../lop-hoc.html" id="backLink"></a>
   <div class="lang-pill"><button id="langVI" class="on" type="button">VI</button><button id="langEN" type="button">EN</button></div>
-  <button class="tbtn" id="themeBtn" type="button"></button>
 </div></div>
 
 <main class="wrap" id="app"></main>
@@ -212,6 +263,8 @@ details.gv{margin-top:10px} details.gv summary{cursor:pointer;font-weight:700;fo
   function boot(app) {
     APP = app;
     RIVALS = E.rivalsRun(D, APP.roleId, APP.seed);
+    // ván lưu từ bản cũ có thể trỏ tới đối thủ đã đổi: tính lại cờ theo đối thủ hiện tại
+    APP.flags = APP.game.history.map(r => E.flagFor(RIVALS, r));
   }
 
   // ---------------- khung chung ----------------
@@ -220,8 +273,6 @@ details.gv{margin-top:10px} details.gv summary{cursor:pointer;font-weight:700;fo
     document.title = L('Hộ Chiếu Sầu Riêng · Bản lớp học', 'Sầu Riêng Passport (Durian) · Classroom edition');
     $('brandSub').textContent = L('Bản lớp học · mô phỏng xuất khẩu nông sản', 'Classroom edition · agri-food export simulation');
     $('backLink').textContent = L('← Kịch bản lớp học', '← Classroom script');
-    const th = document.documentElement.getAttribute('data-theme');
-    $('themeBtn').textContent = th === 'dark' ? '☀️ ' + L('Sáng', 'Light') : '🌙 ' + L('Tối', 'Dark');
     $('langVI').classList.toggle('on', LANG === 'vi'); $('langEN').classList.toggle('on', LANG === 'en');
     $('musicBtn').title = L('Nhạc nền «And The World Say Hello!» (kho nhạc BizOn)', 'Background music «And The World Say Hello!» (BizOn library)');
     document.documentElement.lang = LANG;
@@ -231,10 +282,6 @@ details.gv{margin-top:10px} details.gv summary{cursor:pointer;font-weight:700;fo
   }
   $('langVI').onclick = () => { LANG = 'vi'; store.set('durian_lang', 'vi'); render(); };
   $('langEN').onclick = () => { LANG = 'en'; store.set('durian_lang', 'en'); render(); };
-  $('themeBtn').onclick = () => {
-    const n = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', n); store.set('durian_theme', n); render();
-  };
   $('musicBtn').onclick = () => {
     const a = $('bgm');
     if (a.paused) { a.volume = 0.35; const p = a.play(); if (p && p.catch) p.catch(() => {}); $('musicBtn').setAttribute('aria-pressed', 'true'); $('musicBtn').textContent = '♪ ❚❚'; }
@@ -292,9 +339,9 @@ details.gv{margin-top:10px} details.gv summary{cursor:pointer;font-weight:700;fo
         <p class="small muted">${L('Mỗi vai trình bày khuyến nghị trước khi CEO chốt. Đổi vai ở vụ 3 hoặc 4; nhật ký ghi lại ai đang thao tác.', 'Each role presents a recommendation before the CEO commits. Rotate roles in season 3 or 4; the log records who is operating.')}</p>
         <div class="cast">${D.team.map(m => `<div class="who"><img src="${IMG(m.img)}" alt="${esc(m.name)}" loading="lazy"><b>${m.id.toUpperCase()} · ${esc(m.name)}</b><span class="hint">${nm(m)}</span></div>`).join('')}</div></div>
 
-      <div class="card"><h2>${L('4 · Ba đối thủ AI', '4 · Three AI rivals')}</h2>
-        <p class="small muted">${L('Đối thủ chơi cùng vai với đội, trên cùng lõi mô phỏng, theo chiến lược cố định. Đội cắm cờ 🟩 ở vụ nào lợi nhuận vụ đó không thấp hơn đối thủ mạnh nhất.', 'Rivals play the same firm type on the same engine with fixed strategies. Your team plants a 🟩 flag in any season where its profit is at least the best rival\'s.')}</p>
-        <div class="rvs">${D.rivals.map(r => `<div class="rv"><img src="${IMG(r.img)}" alt="${esc(nm(r))}" loading="lazy"><b>${esc(nm(r))}</b><span class="hint">${LANG === 'en' ? r.styleEn : r.styleVi}</span></div>`).join('')}</div></div>
+      <div class="card"><h2>${L('4 · Đối thủ AI: 7 CEO quốc tế của BizOn Go Global', '4 · AI rivals: the 7 international CEOs of BizOn Go Global')}</h2>
+        <p class="small muted">${L('Mỗi CEO điều hành một nhà buôn nước ngoài cùng thu mua sầu riêng Việt Nam. Mỗi ván gặp 3 người, mỗi người một lối chơi (tuân thủ cao · kênh và quy mô · đi tắt), chọn theo mã lớp và doanh nghiệp. Đối thủ chơi cùng vai, cùng lõi mô phỏng. Đội cắm cờ 🟩 ở vụ nào lợi nhuận vụ đó không thấp hơn đối thủ mạnh nhất.', 'Each CEO runs a foreign trading house that also buys Vietnamese durian. Each game draws 3, one per playing style (high compliance · channels and scale · shortcuts), chosen by class code and firm. Rivals play the same firm type on the same engine. Your team plants a 🟩 flag in any season where its profit is at least the best rival\'s.')}</p>
+        <div class="rvs7">${D.rivals.map(r => `<div class="rv"><img src="${IMG(r.img)}" alt="CEO ${esc(r.ceo)}" loading="lazy"><b>${esc(nm(r))} ${r.flag}</b><span class="hint">CEO ${esc(r.ceo)} · ${esc(r.hub)}</span><span class="hint" style="display:block;margin-top:4px">${LANG === 'en' ? r.styleEn : r.styleVi}</span></div>`).join('')}</div></div>
 
       <div class="card"><h2>${L('5 · Luật, nhịp vụ và cách chấm', '5 · Rules, season flow and grading')}</h2>
         ${flowHTML()}
@@ -448,7 +495,7 @@ details.gv{margin-top:10px} details.gv summary{cursor:pointer;font-weight:700;fo
   }
   function leaderboardHTML(upto) {
     const rows = [{ id: 'me', img: null, name: L('Đội của bạn', 'Your team') + (APP.team ? ' · ' + esc(APP.team) : ''), h: APP.game.history.slice(0, upto) }]
-      .concat(RIVALS.map(r => ({ id: r.id, img: rivalInfo(r.id).img, name: esc(nm(rivalInfo(r.id))), h: r.state.history.slice(0, upto) })));
+      .concat(RIVALS.map(r => ({ id: r.id, img: rivalInfo(r.id).img, name: esc(nm(rivalInfo(r.id))) + ' ' + rivalInfo(r.id).flag + '<span class="hint"> · ' + esc(rivalInfo(r.id).ceo) + '</span>', h: r.state.history.slice(0, upto) })));
     rows.forEach(r => { r.profit = r.h.reduce((x, y) => x + y.profit, 0); });
     rows.sort((x, y) => y.profit - x.profit);
     return `<div class="tblwrap"><table class="lb"><tr><th>#</th><th>${L('Doanh nghiệp', 'Firm')}</th><th>${L('Lợi nhuận lũy kế', 'Cumulative profit')}</th><th>${L('Lô bị chặn', 'Blocked lots')}</th></tr>
@@ -796,7 +843,7 @@ details.gv{margin-top:10px} details.gv summary{cursor:pointer;font-weight:700;fo
           <li>${L('Vì sao mã số vùng trồng và mã cơ sở đóng gói vừa là rào cản vừa là cơ hội? Liên hệ khái niệm rào cản kỹ thuật và vệ sinh dịch tễ (TBT/SPS).', 'Why are planting-area and packing-facility codes both a barrier and an opportunity? Relate this to technical and sanitary barriers (TBT/SPS).')}</li>
           <li>${L('Phụ thuộc 92% vào một thị trường có rủi ro gì? Đội đã đa dạng hóa kênh như thế nào?', 'What are the risks of relying on one market for 92% of exports? How did your team diversify?')}</li>
           <li>${L('Vì sao giá sầu riêng Việt Nam tại Trung Quốc thấp hơn Thái Lan dù thị phần cao hơn? Nâng cấp chuỗi giá trị nên bắt đầu từ đâu?', 'Why is Vietnamese durian cheaper than Thai durian in China despite a larger share? Where should upgrading start?')}</li>
-          <li>${L('Alpha Durian chọn «dán nhãn». Nhà nước, hiệp hội và doanh nghiệp nên làm gì để giữ uy tín cho cả ngành?', 'Alpha Durian chose to relabel. What should the state, associations and firms do to protect the whole industry\'s reputation?')}</li>
+          <li>${L('So sánh lối chơi của ba đối thủ đội đã gặp: lối đi tắt (thương lái, tiểu ngạch) và lối tuân thủ cao, bên nào bền vững hơn qua 6 vụ? Nếu có doanh nghiệp «dán nhãn Thái», nhà nước, hiệp hội và doanh nghiệp nên làm gì để giữ uy tín cho cả ngành?', 'Compare the three rivals you met: did the shortcut path (traders, border trade) or the high-compliance path hold up better over 6 seasons? If a firm relabels fruit as Thai, what should the state, associations and firms do to protect the industry\'s reputation?')}</li>
           <li>${L('Ý kiến nào của Lumina đội đã bác bỏ, và vì sao?', 'Which of Lumina\'s points did the team reject, and why?')}</li></ol>
           <p class="hint">${fact('share57')}</p><p class="hint">${fact('china92')}</p></div>
         <div class="card"><h3>${L('Rubric gợi ý (kết quả game 20%)', 'Suggested rubric (game result 20%)')}</h3>
@@ -824,7 +871,6 @@ details.gv{margin-top:10px} details.gv summary{cursor:pointer;font-weight:700;fo
     };
   }
 
-  document.documentElement.setAttribute('data-theme', store.get('durian_theme') === 'light' ? 'light' : 'dark');
   render();
 })();
 </script>
