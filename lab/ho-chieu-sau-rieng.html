@@ -96,6 +96,8 @@ footer{color:var(--faint);font-size:12px;text-align:center;margin-top:24px}
 .cast .who img,.rv img{width:100%;height:110px;object-fit:contain}
 .cast .who b,.rv b{display:block;font-size:13.5px;margin-top:4px}
 .rvs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.rvs7{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
+.rvs7 .rv{padding:8px} .rvs7 .rv img{height:96px}
 @media (max-width:640px){.rvs{grid-template-columns:1fr}}
 .flow{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 10px;padding:0;list-style:none}
 .flow li{font-size:12px;border:1px solid var(--line2);border-radius:999px;padding:4px 10px;color:var(--muted);background:var(--panel2)}
@@ -212,6 +214,8 @@ details.gv{margin-top:10px} details.gv summary{cursor:pointer;font-weight:700;fo
   function boot(app) {
     APP = app;
     RIVALS = E.rivalsRun(D, APP.roleId, APP.seed);
+    // ván lưu từ bản cũ có thể trỏ tới đối thủ đã đổi: tính lại cờ theo đối thủ hiện tại
+    APP.flags = APP.game.history.map(r => E.flagFor(RIVALS, r));
   }
 
   // ---------------- khung chung ----------------
@@ -292,9 +296,9 @@ details.gv{margin-top:10px} details.gv summary{cursor:pointer;font-weight:700;fo
         <p class="small muted">${L('Mỗi vai trình bày khuyến nghị trước khi CEO chốt. Đổi vai ở vụ 3 hoặc 4; nhật ký ghi lại ai đang thao tác.', 'Each role presents a recommendation before the CEO commits. Rotate roles in season 3 or 4; the log records who is operating.')}</p>
         <div class="cast">${D.team.map(m => `<div class="who"><img src="${IMG(m.img)}" alt="${esc(m.name)}" loading="lazy"><b>${m.id.toUpperCase()} · ${esc(m.name)}</b><span class="hint">${nm(m)}</span></div>`).join('')}</div></div>
 
-      <div class="card"><h2>${L('4 · Ba đối thủ AI', '4 · Three AI rivals')}</h2>
-        <p class="small muted">${L('Đối thủ chơi cùng vai với đội, trên cùng lõi mô phỏng, theo chiến lược cố định. Đội cắm cờ 🟩 ở vụ nào lợi nhuận vụ đó không thấp hơn đối thủ mạnh nhất.', 'Rivals play the same firm type on the same engine with fixed strategies. Your team plants a 🟩 flag in any season where its profit is at least the best rival\'s.')}</p>
-        <div class="rvs">${D.rivals.map(r => `<div class="rv"><img src="${IMG(r.img)}" alt="${esc(nm(r))}" loading="lazy"><b>${esc(nm(r))}</b><span class="hint">${LANG === 'en' ? r.styleEn : r.styleVi}</span></div>`).join('')}</div></div>
+      <div class="card"><h2>${L('4 · Đối thủ AI: 7 CEO quốc tế của BizOn Go Global', '4 · AI rivals: the 7 international CEOs of BizOn Go Global')}</h2>
+        <p class="small muted">${L('Mỗi CEO điều hành một nhà buôn nước ngoài cùng thu mua sầu riêng Việt Nam. Mỗi ván gặp 3 người, mỗi người một lối chơi (tuân thủ cao · kênh và quy mô · đi tắt), chọn theo mã lớp và doanh nghiệp. Đối thủ chơi cùng vai, cùng lõi mô phỏng. Đội cắm cờ 🟩 ở vụ nào lợi nhuận vụ đó không thấp hơn đối thủ mạnh nhất.', 'Each CEO runs a foreign trading house that also buys Vietnamese durian. Each game draws 3, one per playing style (high compliance · channels and scale · shortcuts), chosen by class code and firm. Rivals play the same firm type on the same engine. Your team plants a 🟩 flag in any season where its profit is at least the best rival\'s.')}</p>
+        <div class="rvs7">${D.rivals.map(r => `<div class="rv"><img src="${IMG(r.img)}" alt="CEO ${esc(r.ceo)}" loading="lazy"><b>${esc(nm(r))} ${r.flag}</b><span class="hint">CEO ${esc(r.ceo)} · ${esc(r.hub)}</span><span class="hint" style="display:block;margin-top:4px">${LANG === 'en' ? r.styleEn : r.styleVi}</span></div>`).join('')}</div></div>
 
       <div class="card"><h2>${L('5 · Luật, nhịp vụ và cách chấm', '5 · Rules, season flow and grading')}</h2>
         ${flowHTML()}
@@ -448,7 +452,7 @@ details.gv{margin-top:10px} details.gv summary{cursor:pointer;font-weight:700;fo
   }
   function leaderboardHTML(upto) {
     const rows = [{ id: 'me', img: null, name: L('Đội của bạn', 'Your team') + (APP.team ? ' · ' + esc(APP.team) : ''), h: APP.game.history.slice(0, upto) }]
-      .concat(RIVALS.map(r => ({ id: r.id, img: rivalInfo(r.id).img, name: esc(nm(rivalInfo(r.id))), h: r.state.history.slice(0, upto) })));
+      .concat(RIVALS.map(r => ({ id: r.id, img: rivalInfo(r.id).img, name: esc(nm(rivalInfo(r.id))) + ' ' + rivalInfo(r.id).flag + '<span class="hint"> · ' + esc(rivalInfo(r.id).ceo) + '</span>', h: r.state.history.slice(0, upto) })));
     rows.forEach(r => { r.profit = r.h.reduce((x, y) => x + y.profit, 0); });
     rows.sort((x, y) => y.profit - x.profit);
     return `<div class="tblwrap"><table class="lb"><tr><th>#</th><th>${L('Doanh nghiệp', 'Firm')}</th><th>${L('Lợi nhuận lũy kế', 'Cumulative profit')}</th><th>${L('Lô bị chặn', 'Blocked lots')}</th></tr>
@@ -796,7 +800,7 @@ details.gv{margin-top:10px} details.gv summary{cursor:pointer;font-weight:700;fo
           <li>${L('Vì sao mã số vùng trồng và mã cơ sở đóng gói vừa là rào cản vừa là cơ hội? Liên hệ khái niệm rào cản kỹ thuật và vệ sinh dịch tễ (TBT/SPS).', 'Why are planting-area and packing-facility codes both a barrier and an opportunity? Relate this to technical and sanitary barriers (TBT/SPS).')}</li>
           <li>${L('Phụ thuộc 92% vào một thị trường có rủi ro gì? Đội đã đa dạng hóa kênh như thế nào?', 'What are the risks of relying on one market for 92% of exports? How did your team diversify?')}</li>
           <li>${L('Vì sao giá sầu riêng Việt Nam tại Trung Quốc thấp hơn Thái Lan dù thị phần cao hơn? Nâng cấp chuỗi giá trị nên bắt đầu từ đâu?', 'Why is Vietnamese durian cheaper than Thai durian in China despite a larger share? Where should upgrading start?')}</li>
-          <li>${L('Alpha Durian chọn «dán nhãn». Nhà nước, hiệp hội và doanh nghiệp nên làm gì để giữ uy tín cho cả ngành?', 'Alpha Durian chose to relabel. What should the state, associations and firms do to protect the whole industry\'s reputation?')}</li>
+          <li>${L('So sánh lối chơi của ba đối thủ đội đã gặp: lối đi tắt (thương lái, tiểu ngạch) và lối tuân thủ cao, bên nào bền vững hơn qua 6 vụ? Nếu có doanh nghiệp «dán nhãn Thái», nhà nước, hiệp hội và doanh nghiệp nên làm gì để giữ uy tín cho cả ngành?', 'Compare the three rivals you met: did the shortcut path (traders, border trade) or the high-compliance path hold up better over 6 seasons? If a firm relabels fruit as Thai, what should the state, associations and firms do to protect the industry\'s reputation?')}</li>
           <li>${L('Ý kiến nào của Lumina đội đã bác bỏ, và vì sao?', 'Which of Lumina\'s points did the team reject, and why?')}</li></ol>
           <p class="hint">${fact('share57')}</p><p class="hint">${fact('china92')}</p></div>
         <div class="card"><h3>${L('Rubric gợi ý (kết quả game 20%)', 'Suggested rubric (game result 20%)')}</h3>

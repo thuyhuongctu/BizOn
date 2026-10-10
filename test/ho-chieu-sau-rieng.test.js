@@ -182,9 +182,14 @@ test('Nếu – Thì: không làm đổi trạng thái, không lộ may rủi ki
   assert.ok(r.pBlockCN > 0 && r.pBlockCN < 1 && !r.blockedCN && g.suspendedUntil === s.suspendedUntil);
 });
 
-test('Đối thủ AI: tất định theo hạt giống, đủ 6 vụ, cờ so với đối thủ mạnh nhất', () => {
-  assert.strictEqual(D.rivals.length, 3);
+test('Đối thủ AI: 7 CEO Go Global, mỗi ván 3 người khác nhóm, tất định, đủ 6 vụ, cờ so với đối thủ mạnh nhất', () => {
+  assert.strictEqual(D.rivals.length, 7);
   const a = E.rivalsRun(D, 'exporter', 77), b = E.rivalsRun(D, 'exporter', 77);
+  assert.strictEqual(a.length, 3);
+  // mỗi ván 3 đối thủ, mỗi người một nhóm lối chơi; khắp các hạt giống thì gặp đủ 7 CEO
+  assert.deepStrictEqual(a.map(r => D.rivals.find(x => x.id === r.id).group).sort(), D.rivalGroups.slice().sort());
+  const seen = new Set(); for (let k = 0; k < 60; k++) E.pickRivals(D, k * 7919).forEach(r => seen.add(r.id));
+  assert.strictEqual(seen.size, 7);
   assert.strictEqual(JSON.stringify(a), JSON.stringify(b));
   a.forEach(r => assert.strictEqual(r.state.history.length, 6));
   const fake = { n: 1, profit: Math.max(...a.map(r => r.state.history[0].profit)) };
@@ -192,7 +197,7 @@ test('Đối thủ AI: tất định theo hạt giống, đủ 6 vụ, cờ so v
   assert.ok(!E.flagFor(a, { n: 1, profit: fake.profit - 0.01 }).win);
   // đối thủ không mua lại tài sản đã có
   const st = E.newGame(D, 'packer', 1);
-  assert.notStrictEqual(E.rivalDecision(D, Object.assign({}, D.rivals[1], { plan: ['pack', 'area'] }), st, null).priority, 'pack');
+  assert.notStrictEqual(E.rivalDecision(D, Object.assign({}, D.rivals[0], { plan: ['pack', 'area'] }), st, null).priority, 'pack');
 });
 
 test('Bản lớp học: đủ 5 vai, câu hỏi Lumina, rubric 100%, cột nhật ký sự kiện', () => {
