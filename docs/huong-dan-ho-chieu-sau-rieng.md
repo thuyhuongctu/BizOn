@@ -1,4 +1,4 @@
-# Hướng dẫn — Hộ Chiếu Sầu Riêng (Durian Passport)
+# Hướng dẫn — Hộ Chiếu Sầu Riêng (tiếng Anh: Sầu Riêng Passport · Durian)
 
 **Chơi ngay:** https://thuyhuongctu.github.io/BizOn/lab/ho-chieu-sau-rieng.html
 **Thời lượng:** bản lớp học 6 vụ × 50–60 phút (hoặc 4 buổi), chơi nhanh 40–60 phút · đội 5 vai · song ngữ VI/EN · chạy ngoại tuyến, ván lưu trên máy để học qua nhiều buổi, không gửi dữ liệu đi đâu.
