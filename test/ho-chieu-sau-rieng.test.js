@@ -164,4 +164,43 @@ test('Trang HTML nạp đúng hai tệp lõi, có bản quyền, không gọi m�
   ['ho-chieu-sau-rieng.html', 'ho-chieu-sau-rieng-engine.js', 'ho-chieu-sau-rieng-data.js'].forEach(f => assert.ok(sw.includes('./lab/' + f), 'sw.js thiếu ' + f));
 });
 
+test('Nếu – Thì: không làm đổi trạng thái, không lộ may rủi kiểm dịch, gần kết quả khi giá ước tính đúng', () => {
+  const s0 = E.newGame(D, 'exporter', 99);
+  const before = JSON.stringify(s0);
+  const dec = { priority: 'area', linked: 0.5, alloc: { BORDER: 50, DOM: 50 }, intel: ['moit', 'buyer'], option: 0 };
+  const f1 = E.forecast(D, s0, dec), f2 = E.forecast(D, s0, dec);
+  assert.strictEqual(JSON.stringify(s0), before, 'forecast sửa trạng thái');
+  assert.strictEqual(f1.profit, f2.profit);
+  // giá ước tính = giá thật thì dự báo khớp kết quả khi không có rủi ro ngẫu nhiên (không đi chính ngạch, Nhật)
+  const exp = E.playSeason(D, s0, dec, { expected: true, depotEstimate: E.depotPrice(D, s0) });
+  const act = E.playSeason(D, s0, dec);
+  near(exp.history[0].profit, act.history[0].profit, 1e-9, 'dự báo với giá thật');
+  // có chính ngạch: dự báo trả về xác suất bị chặn trong [0,1] và không gắn cờ bị chặn
+  let s = E.newGame(D, 'packer', 5); s = E.playSeason(D, s, { priority: 'area', linked: 0.8, alloc: { DOM: 100 }, option: 0 });
+  const g = E.playSeason(D, s, { priority: 'test', linked: 0.8, alloc: { CN: 80, DOM: 20 }, option: 0 }, { expected: true, depotEstimate: 100 });
+  const r = g.history[1];
+  assert.ok(r.pBlockCN > 0 && r.pBlockCN < 1 && !r.blockedCN && g.suspendedUntil === s.suspendedUntil);
+});
+
+test('Đối thủ AI: tất định theo hạt giống, đủ 6 vụ, cờ so với đối thủ mạnh nhất', () => {
+  assert.strictEqual(D.rivals.length, 3);
+  const a = E.rivalsRun(D, 'exporter', 77), b = E.rivalsRun(D, 'exporter', 77);
+  assert.strictEqual(JSON.stringify(a), JSON.stringify(b));
+  a.forEach(r => assert.strictEqual(r.state.history.length, 6));
+  const fake = { n: 1, profit: Math.max(...a.map(r => r.state.history[0].profit)) };
+  assert.ok(E.flagFor(a, fake).win);
+  assert.ok(!E.flagFor(a, { n: 1, profit: fake.profit - 0.01 }).win);
+  // đối thủ không mua lại tài sản đã có
+  const st = E.newGame(D, 'packer', 1);
+  assert.notStrictEqual(E.rivalDecision(D, Object.assign({}, D.rivals[1], { plan: ['pack', 'area'] }), st, null).priority, 'pack');
+});
+
+test('Bản lớp học: đủ 5 vai, câu hỏi Lumina, rubric 100%, cột nhật ký sự kiện', () => {
+  assert.deepStrictEqual(D.team.map(m => m.id), ['ceo', 'cmo', 'coo', 'cfo', 'sec']);
+  assert.ok(D.luminaQuestions.length >= 3);
+  assert.strictEqual(D.rubric.reduce((x, r) => x + r.w, 0), 100);
+  ['event_id', 'timestamp', 'class_id', 'team_id', 'round_id', 'role', 'event_type', 'committed'].forEach(c => assert.ok(D.eventLogColumns.includes(c)));
+  [...D.team.map(m => m.img), ...D.rivals.map(r => r.img)].forEach(img => assert.ok(fs.existsSync(path.join(__dirname, '..', 'assets', 'character', img)), 'thiếu ảnh ' + img));
+});
+
 console.log(`\n${passed} kiểm thử đạt`);

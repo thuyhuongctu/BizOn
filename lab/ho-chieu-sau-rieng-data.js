@@ -223,7 +223,83 @@
   // Điểm tổng 0–100, công khai từ đầu ván (cùng cấu trúc Hộ Chiếu Thương Hiệu)
   const scoreWeights = { profit: 30, reputation: 20, capability: 20, adaptation: 15, sustainability: 15 };
 
-  const api = { sources, facts, params, roles, channels, priorities, intel, seasons, events, scoreWeights };
+  // ================= Bản lớp học (theo kế hoạch triển khai BizOn Classroom) =================
+
+  // Đội 5 vai. Nhân vật đất sét dùng chung với Bật Nghiệp; mỗi vai phụ trách một nhóm quyết định.
+  const team = [
+    { id: 'ceo', name: 'Minh Long', img: 'team/ceo-cut.webp', vi: 'CEO – điều phối, chạy «Nếu – Thì», chốt vụ', en: 'CEO – coordinates, runs what-ifs, commits',
+      owns: ['whatif', 'commit'] },
+    { id: 'cmo', name: 'Lan Chi', img: 'team/cmo-cut.webp', vi: 'CMO – mua tin, đọc giá, chia kênh bán', en: 'CMO – buys information, reads prices, splits channels',
+      owns: ['intel', 'alloc'] },
+    { id: 'coo', name: 'Bảo Ngọc', img: 'team/coo-cut.webp', vi: 'COO – nguồn hàng, vùng trồng có mã, hao hụt, nghịch vụ', en: 'COO – sourcing, coded areas, losses, off-season',
+      owns: ['linked', 'induce'] },
+    { id: 'cfo', name: 'Thu Hà', img: 'team/cfo-cut.webp', vi: 'CFO – tiền mặt, ưu tiên đầu tư, chi phí tuân thủ', en: 'CFO – cash, investment priority, compliance costs',
+      owns: ['priority'] },
+    { id: 'sec', name: 'Gia Hân', img: 'team/sec-cut.webp', vi: 'SEC – đọc biến cố, ghi phiếu quyết định và nhật ký đội', en: 'SEC – reads events, keeps the decision sheet and team journal',
+      owns: ['option', 'journal'] }
+  ];
+
+  // Ba đối thủ AI: cùng vai với đội, cùng lõi mô phỏng, chiến lược cố định (minh họa ba lối đi trong ngành)
+  const rivals = [
+    { id: 'alpha', img: 'rivals/alpha.webp', vi: 'Alpha Durian', en: 'Alpha Durian',
+      styleVi: 'Tốc chiến: dồn tiểu ngạch, mua qua thương lái, sẵn sàng «dán nhãn»', styleEn: 'Fast and cheap: border trade, trader sourcing, open to relabelling',
+      plan: ['finance', 'finance', 'area', 'finance', 'pack', 'finance'], linked: 0.1, induce: true,
+      alloc: { CN: 20, BORDER: 60, FROZEN: 0, TW: 0, JP: 0, DOM: 20 }, options: { fake: 1, pest: 1, rain: 0 } },
+    { id: 'mekong', img: 'rivals/mekong.webp', vi: 'Mekong Fruit', en: 'Mekong Fruit',
+      styleVi: 'Cân bằng: làm mã số từng bước, giữ cả chính ngạch lẫn nội địa', styleEn: 'Balanced: builds codes step by step, keeps official and domestic channels',
+      plan: ['area', 'pack', 'test', 'trace', 'finance', 'finance'], linked: 0.5, induce: true,
+      alloc: { CN: 40, BORDER: 25, FROZEN: 0, TW: 10, JP: 0, DOM: 25 }, options: {} },
+    { id: 'star', img: 'rivals/star.webp', vi: 'Star Durian', en: 'Star Durian',
+      styleVi: 'Cao cấp: kiểm nghiệm, truy xuất, vùng liên kết; nhắm Nhật Bản, Đài Loan, đông lạnh', styleEn: 'Premium: testing, traceability, linked areas; targets Japan, Taiwan, frozen',
+      plan: ['test', 'area', 'pack', 'trace', 'freezer', 'test'], linked: 0.9, induce: false,
+      alloc: { CN: 40, BORDER: 0, FROZEN: 10, TW: 20, JP: 20, DOM: 10 }, options: { break: 0, glut: 2 } }
+  ];
+
+  // Lumina: tối đa 3 câu hỏi mỗi vụ. Lumina giải thích và đặt câu hỏi ngược, không đưa đáp án tối ưu.
+  const luminaQuestions = [
+    { id: 'risk', vi: 'Rủi ro chính ngạch của đội vụ này đến từ đâu?', en: 'Where does our official-trade risk come from this season?' },
+    { id: 'price', vi: 'Nên tin nguồn giá nào?', en: 'Which price source should we trust?' },
+    { id: 'channel', vi: 'Kênh nào phù hợp với hồ sơ hiện tại?', en: 'Which channels fit our current credentials?' },
+    { id: 'invest', vi: 'Ưu tiên đầu tư nào tạo tác động tích lũy?', en: 'Which investment has a cumulative effect?' },
+    { id: 'cash', vi: 'Dòng tiền của đội có đủ an toàn?', en: 'Is our cash position safe?' },
+    { id: 'event', vi: 'Biến cố này liên quan khái niệm nào trong kinh doanh quốc tế?', en: 'Which international-business concept does this event illustrate?' }
+  ];
+
+  // Nhịp một vụ (khoảng 50–60 phút trên lớp; chơi nhanh 5–7 phút)
+  const flow = [
+    { id: 'read', min: 5, vi: 'Đọc thị trường', en: 'Read the market' },
+    { id: 'meet', min: 10, vi: 'Họp đội theo vai', en: 'Role meeting' },
+    { id: 'whatif', min: 5, vi: 'Nếu – Thì (tối đa 2)', en: 'What-if (max 2)' },
+    { id: 'lumina', min: 5, vi: 'Hỏi Lumina (tối đa 3)', en: 'Ask Lumina (max 3)' },
+    { id: 'sheet', min: 10, vi: 'Phiếu quyết định', en: 'Decision sheet' },
+    { id: 'commit', min: 5, vi: 'Chốt vụ', en: 'Commit' },
+    { id: 'result', min: 5, vi: 'Kết quả và nhật ký SEC', en: 'Results and SEC journal' }
+  ];
+
+  // Khung debrief sau mỗi hai vụ
+  const debrief = [
+    { id: 'what', vi: 'What? Đội đã quyết định gì và kết quả ra sao?', en: 'What? What did the team decide and what happened?' },
+    { id: 'why', vi: 'Why? Vì sao kết quả khác hoặc giống dự báo «Nếu – Thì»?', en: 'Why? Why did results differ from (or match) the what-if forecast?' },
+    { id: 'sowhat', vi: 'So what? Điều này liên quan lý thuyết nào (TBT/SPS, phương thức thâm nhập, nâng cấp chuỗi giá trị)?', en: 'So what? Which theory does this relate to (TBT/SPS, entry modes, value-chain upgrading)?' },
+    { id: 'nowhat', vi: 'Now what? Đội sẽ thay đổi điều gì ở vụ tiếp theo?', en: 'Now what? What will the team change next season?' }
+  ];
+
+  // Rubric gợi ý: kết quả xếp hạng chỉ chiếm 20%
+  const rubric = [
+    { w: 20, vi: 'Kết quả hoạt động qua 6 vụ (điểm tổng trong game)', en: 'Performance over 6 seasons (in-game total)' },
+    { w: 20, vi: 'Chất lượng lập luận trước quyết định (phiếu quyết định)', en: 'Quality of pre-decision reasoning (decision sheets)' },
+    { w: 15, vi: 'Phân tích tài chính và vận hành', en: 'Financial and operational analysis' },
+    { w: 15, vi: 'Khả năng thích nghi qua các vụ', en: 'Adaptation across seasons' },
+    { w: 15, vi: 'Nhật ký SEC và phản tư', en: 'SEC journal and reflection' },
+    { w: 10, vi: 'Hợp tác và đóng góp cá nhân', en: 'Collaboration and individual contribution' },
+    { w: 5, vi: 'Báo cáo hoặc pitch cuối kỳ', en: 'Final report or pitch' }
+  ];
+
+  // Cột của nhật ký sự kiện (event log) xuất CSV
+  const eventLogColumns = ['event_id', 'timestamp', 'class_id', 'team_id', 'round_id', 'role', 'event_type', 'old_value', 'new_value', 'device_session', 'committed'];
+
+  const api = { sources, facts, params, roles, channels, priorities, intel, seasons, events, scoreWeights,
+    team, rivals, luminaQuestions, flow, debrief, rubric, eventLogColumns };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.DurianData = api;
 })(typeof window !== 'undefined' ? window : globalThis);
