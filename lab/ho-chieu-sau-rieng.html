@@ -137,7 +137,7 @@ details.gv{margin-top:10px} details.gv summary{cursor:pointer;font-weight:700;fo
 </head>
 <body>
 <div class="topbar"><div class="topbar-in">
-  <div class="logo"><span class="mark">🌳</span><span>Hộ Chiếu Sầu Riêng<span class="sub" id="brandSub"></span></span></div>
+  <div class="logo"><span class="mark">🌳</span><span><span id="brandName">Hộ Chiếu Sầu Riêng</span><span class="sub" id="brandSub"></span></span></div>
   <div class="spacer"></div>
   <button class="tbtn music" id="musicBtn" type="button" aria-pressed="false">♪</button>
   <a class="tbtn" href="../lop-hoc.html" id="backLink"></a>
@@ -216,6 +216,8 @@ details.gv{margin-top:10px} details.gv summary{cursor:pointer;font-weight:700;fo
 
   // ---------------- khung chung ----------------
   function chrome() {
+    $('brandName').textContent = L('Hộ Chiếu Sầu Riêng', 'Sầu Riêng Passport');
+    document.title = L('Hộ Chiếu Sầu Riêng · Bản lớp học', 'Sầu Riêng Passport (Durian) · Classroom edition');
     $('brandSub').textContent = L('Bản lớp học · mô phỏng xuất khẩu nông sản', 'Classroom edition · agri-food export simulation');
     $('backLink').textContent = L('← Kịch bản lớp học', '← Classroom script');
     const th = document.documentElement.getAttribute('data-theme');
@@ -259,7 +261,7 @@ details.gv{margin-top:10px} details.gv summary{cursor:pointer;font-weight:700;fo
     $('app').innerHTML = `
       <section class="hero"><div class="hero-row"><div>
         <span class="eyebrow">${L('Trò chơi mô phỏng · Kinh doanh quốc tế · Bản lớp học', 'Simulation game · International business · Classroom edition')}</span>
-        <h1>${L('Hộ Chiếu Sầu Riêng: đưa sầu riêng Việt Nam ra thế giới qua 6 vụ', 'Durian Passport: take Vietnamese durian to the world over 6 seasons')}</h1>
+        <h1>${L('Hộ Chiếu Sầu Riêng: đưa sầu riêng Việt Nam ra thế giới qua 6 vụ', 'Sầu Riêng Passport (Durian): take Vietnamese durian to the world over 6 seasons')}</h1>
         <p class="lead">${L(
           'Đội 5 người điều hành một mắt xích trong chuỗi xuất khẩu sầu riêng, từ ngày Trung Quốc mở cửa chính ngạch (7/2022), và cạnh tranh với 3 đối thủ AI. Mỗi vụ: đọc thị trường, họp đội theo vai, chạy tối đa 2 lần «Nếu – Thì», hỏi Lumina tối đa 3 câu, ghi phiếu quyết định, chốt vụ rồi viết nhật ký. Mục tiêu không chỉ là thắng cờ mà là giải thích được vì sao kết quả khác dự báo.',
           'A team of five runs one link of the durian export chain from the day China opens official trade (July 2022), competing with 3 AI rivals. Each season: read the market, hold a role meeting, run up to 2 what-ifs, ask Lumina up to 3 questions, fill in a decision sheet, commit, then write the journal. The aim is not only to win flags but to explain why results differ from forecasts.')}</p>
