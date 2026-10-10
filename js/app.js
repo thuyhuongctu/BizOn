@@ -145,10 +145,28 @@ window.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => {
     $('screen-splash').classList.remove('active');
     const saved = load();
-    if (saved && saved.profile) { S = saved; enterApp(); }
-    else $('screen-login').classList.add('active');
+    $('screen-login').classList.add('active');
+    // Máy dùng chung (phòng máy/lớp học): không tự nhảy thẳng vào ván của người
+    // chơi trước đó nữa — hỏi xác nhận trước, để SV kế tiếp không bị lẫn vào
+    // tiến trình/vai trò của bạn khác khi bấm vào game.
+    if (saved && saved.profile) showResumeBanner(saved);
   }, 1600);
 });
+
+function showResumeBanner(saved) {
+  const banner = $('resume-banner');
+  if (!banner) { S = saved; enterApp(); return; }
+  $('resume-banner-text').textContent = T(
+    `Máy này đang có ván chơi dở: đội "${saved.profile.teamName}" – vai ${saved.profile.role}${saved.profile.classId ? ' · Lớp ' + saved.profile.classId : ''}. Đây có phải là bạn?`,
+    `This device has a game in progress: team "${saved.profile.teamName}" – role ${saved.profile.role}${saved.profile.classId ? ' · Class ' + saved.profile.classId : ''}. Is this you?`
+  );
+  banner.classList.remove('hidden');
+  $('resume-continue').onclick = () => { banner.classList.add('hidden'); S = saved; enterApp(); };
+  $('resume-fresh').onclick = () => {
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+    banner.classList.add('hidden');
+  };
+}
 
 // Đổi ngôn ngữ ngay trong game: applyLang() (site-ui.js) chỉ biết đổi text tĩnh,
 // nên phát sự kiện này để app.js tự render lại toàn bộ nội dung động (Bảng điều
@@ -323,15 +341,14 @@ async function doLogin() {
   const team = $('login-team').value.trim() || T('Đội Claymorphism', 'Team Claymorphism');
   const classId = $('login-class').value.trim();
 
-  // Có Mã lớp mà chưa qua cổng "🔒 Đăng nhập bằng email trường" (bizon_join_team,
-  // chặn trùng vai bằng unique constraint) — không cho vào thẳng bằng đường gõ tự
-  // do nữa, tránh lặp lại lỗi 2 sinh viên cùng nhận vai CEO của 1 đội (báo cáo
-  // thực tế: nhóm "Novara"). Chơi thử không Mã lớp vẫn không đổi gì.
-  if (classId && !window.__bizonAuthedJoin) {
-    alert(T('Lớp có Mã lớp cần đăng nhập bằng email trường ở khung "🔒 Đăng nhập bằng email trường" phía trên trước khi vào trò chơi — để giữ đúng vai trò của bạn, tránh trùng vai với bạn khác trong đội. Để trống Mã lớp nếu chỉ muốn chơi thử, không cần tính điểm.',
-      'A class code requires signing in with your school email in the "🔒 Sign in with school email" box above before you can start — this locks in your role and prevents clashing with a teammate. Leave the class code blank if you just want to try the game without being graded.'));
-    return;
-  }
+  // Cổng "phải qua đăng nhập email trường mới được dùng Mã lớp" đã TẮT tạm thời
+  // (2026-10-09) — khung email trường bị chặn bởi giới hạn gửi email xác thực
+  // mặc định của Supabase khi nhiều SV đăng ký cùng lúc. Mất đi: chặn trùng vai
+  // bằng unique constraint (bizon_join_team) — 2 SV cùng đội lỡ chọn trùng vai sẽ
+  // đè tiến trình của nhau khi lưu, không báo lỗi (báo cáo thực tế trước đây:
+  // nhóm "Novara"). Bật lại cổng này sau khi đã cấu hình SMTP riêng cho Supabase
+  // Auth (Settings → SMTP Settings) bằng cách khôi phục khối if bên dưới:
+  //   if (classId && !window.__bizonAuthedJoin) { alert(...); return; }
   window.__bizonAuthedJoin = false; // dùng 1 lần – lượt doLogin() kế tiếp phải qua lại cổng
 
   // Đội đã có Mã lớp: thử tải lại tiến trình từ máy chủ trước — để đổi

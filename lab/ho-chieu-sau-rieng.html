@@ -1,23 +1,33 @@
 <!DOCTYPE html>
-<html lang="vi" data-theme="dark">
+<html lang="vi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hộ Chiếu Sầu Riêng</title>
+<title>Hộ Chiếu Sầu Riêng · Bản lớp học</title>
 <link rel="icon" href="../assets/brand/bizon-favicon.svg" type="image/svg+xml">
-<meta name="description" content="Hộ Chiếu Sầu Riêng – trò chơi mô phỏng xuất khẩu sầu riêng Việt Nam qua 6 vụ: mã số vùng trồng, nghị định thư kiểm dịch với Trung Quốc, kênh tiểu ngạch, chính ngạch, đông lạnh và rủi ro tuân thủ.">
+<link rel="stylesheet" href="../css/bizon-clay-fonts.css">
+<meta name="theme-color" content="#FBF4E8">
+<meta name="description" content="Hộ Chiếu Sầu Riêng – bản lớp học: đội 5 vai (CEO, CMO, COO, CFO, SEC) điều hành chuỗi xuất khẩu sầu riêng Việt Nam qua 6 vụ, cạnh tranh với 3 đối thủ AI, mô phỏng «Nếu – Thì», hỏi Lumina, phiếu quyết định, nhật ký SEC và nhật ký sự kiện cho nghiên cứu.">
 <style>
 @font-face{font-family:'Plus Jakarta Sans';font-weight:400 800;font-display:swap;src:url(../assets/fonts/PlusJakartaSans-var-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
 @font-face{font-family:'Plus Jakarta Sans';font-weight:400 800;font-display:swap;src:url(../assets/fonts/PlusJakartaSans-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2122,U+2212}
 @font-face{font-family:'JetBrains Mono';font-weight:400 500;font-display:swap;src:url(../assets/fonts/IBMPlexMono-400-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
 @font-face{font-family:'JetBrains Mono';font-weight:400 500;font-display:swap;src:url(../assets/fonts/IBMPlexMono-400-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2122,U+2212}
-:root{--bg:#0B1220;--panel:#111F38;--panel2:#0E1B31;--grid:rgba(99,179,237,.08);--ink:#E7EEF8;--muted:#93A4BD;--faint:#6B7C97;--line:#22324A;--line2:#2C3F5C;
-  --accent:#84CC16;--accent2:#EAB308;--warn:#F59E0B;--neg:#F97316;--imp:#A78BFA;--shadow:0 10px 30px rgba(0,0,0,.35);--radius:16px}
-html[data-theme="light"]{--bg:#EEF3FA;--panel:#FFFFFF;--panel2:#F5F8FD;--grid:rgba(30,64,120,.07);--ink:#0F1A2E;--muted:#52617B;--faint:#8392AB;--line:#DDE7F3;--line2:#CBD8EA;
-  --accent:#4D7C0F;--accent2:#A16207;--warn:#B45309;--neg:#C2410C;--imp:#7C3AED;--shadow:0 12px 30px rgba(20,40,80,.10)}
+:root{
+  /* Bảng màu trang chủ BizOn (css/bizon-clay.css) + điểm nhấn xanh vỏ – vàng múi sầu riêng */
+  --bg:#FBF4E8;--panel:#FFFBF4;--panel2:#FFF6E6;--tray:#F3E6CF;
+  --ink:#033337;--muted:#3E5A5C;--faint:#546869;
+  --line:rgba(110,70,30,.12);--line2:rgba(110,70,30,.22);
+  --durian:#4A7419;--durian-deep:#385A10;--durian-soft:#E6F0CF;
+  --flesh:#F5BE2E;--flesh-soft:#FFF0C2;
+  --accent:var(--durian-deep);--accent2:var(--flesh);
+  --teal:#006687;--warn:#C2581B;--neg:#C2410C;--imp:#7C3AED;
+  --shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 26px 36px -24px rgba(110,70,30,.5);
+  --shadow-sm:inset 0 -6px 0 rgba(110,70,30,.07),0 14px 22px -18px rgba(110,70,30,.5);
+  --radius:26px}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;min-height:100vh;
-  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:26px 26px}
+body{font-family:'Be Vietnam Pro','BVP Fallback',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;min-height:100vh}
+h1,h2,h3,.logo{font-family:'Plus Jakarta Sans','PJS Fallback',system-ui,sans-serif;letter-spacing:-.01em}
 .mono,.num{font-family:'JetBrains Mono',monospace}
 .wrap{max-width:1120px;margin:0 auto;padding:0 16px 56px}
 .topbar{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
@@ -84,19 +94,110 @@ footer{color:var(--faint);font-size:12px;text-align:center;margin-top:24px}
 .bar{height:8px;border-radius:5px;background:var(--line2);overflow:hidden} .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2))}
 .srow{display:grid;grid-template-columns:150px 1fr 48px;gap:10px;align-items:center;margin:6px 0;font-size:13px}
 .ok{color:var(--accent2)} .bad{color:var(--neg)}
+/* ---- Bản lớp học ---- */
+.hero-row{display:grid;grid-template-columns:1fr 220px;gap:18px;align-items:end}
+@media (max-width:760px){.hero-row{grid-template-columns:1fr}.hero-row .hero-cast{display:none}}
+.hero-cast{display:flex;align-items:flex-end;justify-content:center;gap:0}
+.hero-cast img{height:190px;width:auto;object-fit:contain;filter:drop-shadow(0 10px 18px rgba(0,0,0,.35))}
+.hero-cast img+img{margin-left:-46px;height:170px}
+.cast{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+@media (max-width:760px){.cast{grid-template-columns:repeat(2,1fr)}}
+.cast .who,.rv{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:10px;text-align:center;min-width:0}
+.cast .who img,.rv img{width:100%;height:110px;object-fit:contain}
+.cast .who b,.rv b{display:block;font-size:13.5px;margin-top:4px}
+.rvs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.rvs7{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
+.rvs7 .rv{padding:8px} .rvs7 .rv img{height:96px}
+@media (max-width:640px){.rvs{grid-template-columns:1fr}}
+.flow{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 10px;padding:0;list-style:none}
+.flow li{font-size:12px;border:1px solid var(--line2);border-radius:999px;padding:4px 10px;color:var(--muted);background:var(--panel2)}
+.flow li b{color:var(--accent);margin-right:4px}
+.flags{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 8px}
+.flags span{font-size:12px;border-radius:10px;padding:4px 8px;border:1px solid var(--line2);background:var(--panel2)}
+.flags span.win{border-color:var(--accent2)} .flags span.lose{border-color:var(--neg)} .flags span.now{border-color:var(--accent);font-weight:800}
+.ops{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.timer{font-family:'JetBrains Mono',monospace;font-weight:700;border:1px solid var(--line2);border-radius:10px;padding:4px 10px;background:var(--panel2)}
+.timer.late{color:var(--neg);border-color:var(--neg)}
+.advice{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media (max-width:760px){.advice{grid-template-columns:1fr}}
+.adv{display:grid;grid-template-columns:64px 1fr;gap:10px;background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:10px;align-items:start}
+.adv img{width:64px;height:64px;object-fit:contain}
+.adv p{font-size:13px;margin:2px 0 6px}
+.mini{border:1px solid var(--line2);background:var(--panel);color:var(--ink);border-radius:10px;padding:5px 10px;font:inherit;font-size:12px;font-weight:700;cursor:pointer}
+.mini[disabled]{opacity:.45;cursor:not-allowed}
+.lumina{display:grid;grid-template-columns:120px 1fr;gap:14px;align-items:start}
+@media (max-width:640px){.lumina{grid-template-columns:1fr}.lumina>img{display:none}}
+.lumina>img{width:120px;height:auto}
+.bubble{background:var(--panel2);border:1px solid var(--line2);border-radius:14px;padding:10px 12px;margin:8px 0;font-size:13px}
+.bubble .q{font-weight:700;margin-bottom:4px}
+.bubble .ask{color:var(--accent);font-style:italic;margin-top:6px}
+textarea{font:inherit;color:var(--ink);background:var(--panel2);border:1px solid var(--line2);border-radius:10px;padding:8px 10px;width:100%;min-height:58px;resize:vertical}
+.sheet label.ctl{margin-top:10px}
+.req::after{content:' *';color:var(--neg)}
+.radios{display:flex;flex-wrap:wrap;gap:6px}
+.wf{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:8px 0}
+@media (max-width:760px){.wf{grid-template-columns:repeat(2,1fr)}}
+.err{color:var(--neg);font-size:12.5px;font-weight:700;margin-top:6px}
+.arena .arow{display:grid;grid-template-columns:150px 1fr 90px;gap:10px;align-items:center;margin:6px 0;font-size:13px}
+.arena .arow .bar i.me{background:linear-gradient(90deg,var(--accent2),var(--accent))}
+.arena .arow .bar i.ai{background:var(--faint)}
+.lb td img{width:34px;height:34px;object-fit:contain;vertical-align:middle;margin-right:6px}
+details.gv{margin-top:10px} details.gv summary{cursor:pointer;font-weight:700;font-size:13px}
+.music{min-width:38px}
+/* ---- Lớp áo đất sét sáng, đồng bộ trang chủ; nhấn xanh – vàng sầu riêng ---- */
+.topbar{background:rgba(251,244,232,.92);border-bottom:1px solid var(--line)}
+.logo .mark{width:36px;height:36px;border-radius:14px;background:radial-gradient(circle at 35% 30%,#8DBA3E,var(--durian) 60%,var(--durian-deep));box-shadow:inset 0 -4px 0 rgba(0,0,0,.18),inset 0 2px 0 rgba(255,255,255,.35)}
+.logo .sub{color:var(--muted)}
+.tbtn{background:var(--panel);border:1px solid var(--line2);border-radius:14px;box-shadow:var(--shadow-sm);color:var(--ink)}
+.lang-pill{background:var(--tray);border:0;border-radius:14px;box-shadow:inset 0 3px 6px rgba(110,70,30,.18)}
+.lang-pill button.on{background:var(--durian);color:#fff;border-radius:12px}
+.eyebrow{color:var(--durian-deep)}
+.card{border:0;border-radius:var(--radius);box-shadow:var(--shadow);background:var(--panel)}
+.event{border-left:0;background:linear-gradient(180deg,var(--flesh-soft),var(--panel) 46%)}
+.event .tag{color:var(--warn)}
+.kpi{background:var(--panel2);border:0;border-radius:16px;box-shadow:inset 0 -4px 0 rgba(110,70,30,.06)}
+.pos,.ok{color:var(--durian-deep)} .neg,.bad{color:var(--neg)}
+.btn{background:var(--durian);color:#fff;border-radius:18px;box-shadow:inset 0 -5px 0 rgba(0,0,0,.18),inset 0 3px 0 rgba(255,255,255,.3),0 12px 18px -12px rgba(63,107,20,.8)}
+.btn:hover{background:var(--durian-deep)}
+.btn.ghost{background:var(--panel);color:var(--ink);border:0;box-shadow:inset 0 -5px 0 rgba(110,70,30,.12),0 10px 16px -12px rgba(110,70,30,.5)}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.opt,.pick button{background:var(--panel2);border:2px solid transparent;border-radius:16px;box-shadow:inset 0 -4px 0 rgba(110,70,30,.06)}
+.opt.on,.pick button.on{border-color:var(--durian);background:var(--durian-soft)}
+.chip{background:var(--panel2);border:1px solid var(--line2)}
+.chip.on{background:var(--flesh-soft);border-color:var(--flesh);color:var(--ink)}
+.prov{border-color:var(--line2);color:var(--muted)}
+.prov.pub::before{background:var(--durian)} .prov.sim::before{background:var(--flesh)}
+.prog span{background:var(--tray)} .prog span.done{background:var(--durian)} .prog span.now{background:var(--flesh)}
+.bar{background:var(--tray)} .bar i{background:linear-gradient(90deg,var(--durian),var(--flesh))}
+.arena .arow .bar i.me{background:linear-gradient(90deg,var(--durian),var(--flesh))}
+.arena .arow .bar i.ai{background:#B9C7B9}
+input[type=range]{accent-color:var(--durian)}
+input[type=text],select,textarea{background:var(--panel2);border:1px solid var(--line2);color:var(--ink)}
+.note{border-left-color:var(--flesh);background:var(--flesh-soft)}
+.badge{background:var(--durian-soft);border:1px solid var(--durian)}
+.flags span{background:var(--panel2)} .flags span.win{border-color:var(--durian)} .flags span.now{border-color:var(--flesh)}
+.flow li{background:var(--panel2)} .flow li b{color:var(--durian-deep)}
+.bubble{background:var(--panel2);border:0;box-shadow:inset 0 -4px 0 rgba(110,70,30,.06)}
+.bubble .ask{color:var(--durian-deep)}
+.adv,.cast .who,.rv{background:var(--panel2);border:0;box-shadow:inset 0 -4px 0 rgba(110,70,30,.06)}
+.mini{background:var(--flesh-soft);border:1px solid var(--flesh);color:var(--ink)}
+.timer{background:var(--panel2)}
+.hero-cast img{filter:drop-shadow(0 12px 14px rgba(110,70,30,.35))}
+.req::after{color:var(--neg)}
+footer{color:var(--faint)}
 </style>
-<link rel="stylesheet" href="../css/clay-dark-skin.css">
 </head>
 <body>
 <div class="topbar"><div class="topbar-in">
-  <div class="logo"><span class="mark">🌳</span><span>Hộ Chiếu Sầu Riêng<span class="sub" id="brandSub"></span></span></div>
+  <div class="logo"><span class="mark">🌳</span><span><span id="brandName">Hộ Chiếu Sầu Riêng</span><span class="sub" id="brandSub"></span></span></div>
   <div class="spacer"></div>
+  <button class="tbtn music" id="musicBtn" type="button" aria-pressed="false">♪</button>
   <a class="tbtn" href="../lop-hoc.html" id="backLink"></a>
   <div class="lang-pill"><button id="langVI" class="on" type="button">VI</button><button id="langEN" type="button">EN</button></div>
-  <button class="tbtn" id="themeBtn" type="button"></button>
 </div></div>
 
 <main class="wrap" id="app"></main>
+<audio id="bgm" src="../assets/audio/and-the-world-say-hello.mp3" preload="none" loop></audio>
 
 <footer class="wrap">
   <p>© 2026 PGS.TS. Phan Anh Tú &amp; NCS. Đỗ Thùy Hương · Trường Kinh tế, Đại học Cần Thơ</p>
@@ -110,241 +211,666 @@ footer{color:var(--faint);font-size:12px;text-align:center;margin-top:24px}
   'use strict';
   const E = window.DurianEngine, D = window.DurianData;
   const $ = id => document.getElementById(id);
-  const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
-  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-
-  const T = {
-    vi: {
-      brandSub: 'Mô phỏng xuất khẩu nông sản', back: '← Kịch bản lớp học', light: 'Sáng', dark: 'Tối',
-      eyebrow: 'Trò chơi mô phỏng · Kinh doanh quốc tế', title: 'Đưa sầu riêng Việt Nam ra thế giới qua 6 vụ',
-      lead: 'Bạn điều hành một mắt xích trong chuỗi xuất khẩu sầu riêng, từ ngày Trung Quốc mở cửa chính ngạch (7/2022). Mỗi vụ: mua tin, chọn một ưu tiên đầu tư, chọn nguồn hàng, chia sản lượng cho các kênh và xử lý một biến cố. Mã số vùng trồng, kiểm dịch, dư lượng và cạnh tranh với Thái Lan sẽ thử thách bạn. Khoảng 30–40 phút.',
-      provFact: 'Sự kiện và quy định có trích nguồn tài liệu', provSim: 'Khối lượng, hệ số giá, xác suất là minh họa',
-      chooseRole: 'Chọn vai trong chuỗi', cohort: 'Mã lớp hoặc mã nhóm (tùy chọn, không nhập họ tên)', cohortHint: 'Cùng mã thì cùng diễn biến ngẫu nhiên, để cả lớp so sánh công bằng.',
-      formula: 'Điểm tổng 0–100', start: 'Bắt đầu', season: 'Vụ', of: '/',
-      anchor: 'Mốc thực tế', event: 'Biến cố', chooseOpt: 'Chọn cách phản ứng',
-      intel: '1 · Quan sát và mua tin (tối đa 2 nguồn)', free: 'miễn phí', bn: 'tỷ', priceSig: 'Dự báo giá vựa', riskSig: 'Mức rủi ro bị cảnh báo',
-      riskLv: ['Thấp', 'Vừa', 'Cao', 'Rất cao'],
-      decide: '2 · Quyết định', priority: 'Một ưu tiên đầu tư', linked: 'Tỷ lệ mua từ vùng trồng liên kết có mã số', linkedHint: 'Chỉ hàng từ vùng có mã mới được đi chính ngạch. Thương lái rẻ hơn nhưng khó kiểm soát dư lượng.',
-      induce: 'Xử lý ra hoa nghịch vụ', induceHint: 'Sản lượng thấp hơn 10–20% so với chính vụ nhưng giá cao gấp 2–3 lần; vườn yếu dần.', noInduce: 'Không xử lý (sản lượng nghịch vụ rất thấp)',
-      channels: 'Chia sản lượng cho các kênh', locked: 'Chưa đủ điều kiện', needs: { area: 'mã vùng trồng', pack: 'mã đóng gói', freezer: 'dây chuyền cấp đông', test: 'kiểm nghiệm' },
-      cap: 'tối đa', tons: 'tấn', commit: 'Chốt vụ', assets: 'Hồ sơ của bạn',
-      have: { area: 'Mã vùng trồng', pack: 'Mã cơ sở đóng gói', test: 'Kiểm nghiệm', trace: 'Truy xuất GS1', freezer: 'Cấp đông' },
-      suspended: 'Mã chính ngạch đang bị tạm dừng vụ này', cash: 'Tiền mặt', rep: 'Uy tín', cap2: 'Năng lực', adapt: 'Thích ứng', sus: 'Bền vững', tree: 'Sức khỏe vườn',
-      results: 'Kết quả vụ', revenue: 'Doanh thu', profit: 'Lợi nhuận', purchase: 'Mua hàng / giá thành', loss: 'Hao hụt',
-      channel: 'Kênh', qty: 'Tấn', price: 'Giá (nghìn đ/kg)', status: 'Tình trạng', st: { ok: '✓', blocked: 'Bị chặn, bán nội địa giá rớt', destroyed: 'Bị tiêu hủy' },
-      audit: { pass: 'Đạt kiểm tra của Hải quan Trung Quốc', fail: 'Không đạt kiểm tra: mã bị tạm dừng vụ sau', na: 'Không đi chính ngạch nên không bị kiểm tra' },
-      notes: { fraud_exposed: 'Vụ dán nhãn Thái bị phát hiện: uy tín sụp đổ, mã bị tạm dừng.', fraud_hidden: 'Vụ dán nhãn chưa bị phát hiện, nhưng bạn đã góp phần làm hỏng danh tiếng sầu riêng Việt.', suspended: 'Mã chính ngạch bị tạm dừng vụ sau.', jp_destroyed: 'Lô sang Nhật bị tiêu hủy vì dư lượng.' },
-      endTitle: 'Báo cáo sau 6 vụ', total: 'Điểm tổng', parts: { profit: 'Lợi nhuận', reputation: 'Uy tín', capability: 'Năng lực', adaptation: 'Thích ứng', sustainability: 'Bền vững' },
-      totalProfit: 'Tổng lợi nhuận', bench: 'mốc của vai', chUsed: 'Kênh đã dùng',
-      badges: { clean_official: 'Chính ngạch sạch: không lô nào bị chặn', diversified: 'Đa dạng thị trường: từ 4 kênh', fake_origin: 'Dính líu giả xuất xứ', exhausted_trees: 'Vườn kiệt sức vì xử lý nghịch vụ liên tục', resilient: 'Chống chịu: không vụ nào lỗ' },
-      debrief: 'Câu hỏi thảo luận', sources: 'Nguồn dữ kiện', download: 'Tải nhật ký quyết định (JSON)', again: 'Chơi lại',
-      q1: 'Vì sao mã số vùng trồng và mã cơ sở đóng gói vừa là rào cản vừa là cơ hội? Liên hệ khái niệm rào cản kỹ thuật và vệ sinh dịch tễ (TBT/SPS).',
-      q2: 'Phụ thuộc 92% vào một thị trường có rủi ro gì? Bạn đã đa dạng hóa kênh như thế nào?',
-      q3: 'Vì sao giá sầu riêng Việt Nam tại Trung Quốc thấp hơn Thái Lan dù thị phần cao hơn? Nâng cấp chuỗi giá trị nên bắt đầu từ đâu?',
-      q4: 'Nhà nước, hiệp hội và doanh nghiệp nên làm gì để ngăn tình trạng «dán nhãn» và giữ uy tín cho cả ngành?',
-      foot: 'Quy định và sự kiện lấy từ Nghị định thư kiểm dịch MARD–GACC (2022), báo cáo thị trường rau quả của Bộ Công Thương (12/2023–02/2024), kết quả tra cứu của CESTI (04/2024) và các nghiên cứu chuỗi cung ứng tại Cai Lậy, Phong Điền, Thái Lan, Malaysia. Khối lượng, hệ số giá và xác suất trong trò chơi là minh họa.'
-    },
-    en: {
-      brandSub: 'Agri-food export simulation', back: '← Classroom script', light: 'Light', dark: 'Dark',
-      eyebrow: 'Simulation game · International business', title: 'Take Vietnamese durian to the world over 6 seasons',
-      lead: 'You run one link of the durian export chain, starting when China opens official trade (July 2022). Each season: buy information, choose one investment priority, choose your sourcing, split output across channels and handle one event. Planting-area codes, quarantine, residues and competition from Thailand will test you. About 30–40 minutes.',
-      provFact: 'Events and rules are cited from documents', provSim: 'Volumes, price ratios and probabilities are illustrative',
-      chooseRole: 'Choose your role in the chain', cohort: 'Class or team code (optional, no personal names)', cohortHint: 'The same code gives the same random path, so a class can compare fairly.',
-      formula: 'Total score 0–100', start: 'Start', season: 'Season', of: '/',
-      anchor: 'Real milestone', event: 'Event', chooseOpt: 'Choose your response',
-      intel: '1 · Observe and buy information (up to 2 sources)', free: 'free', bn: 'bn', priceSig: 'Depot price forecast', riskSig: 'Risk of an alert',
-      riskLv: ['Low', 'Medium', 'High', 'Very high'],
-      decide: '2 · Decide', priority: 'One investment priority', linked: 'Share bought from linked, coded planting areas', linkedHint: 'Only fruit from coded areas may go through official trade. Traders are cheaper but residues are hard to control.',
-      induce: 'Induce off-season flowering', induceHint: 'Output 10–20% lower than the main season but prices 2–3 times higher; the orchard weakens.', noInduce: 'Do not induce (very low off-season output)',
-      channels: 'Split output across channels', locked: 'Not yet eligible', needs: { area: 'planting-area code', pack: 'packing code', freezer: 'freezing line', test: 'testing' },
-      cap: 'max', tons: 't', commit: 'Commit season', assets: 'Your credentials',
-      have: { area: 'Planting-area code', pack: 'Packing-facility code', test: 'Testing', trace: 'GS1 traceability', freezer: 'Freezing' },
-      suspended: 'Your official-trade codes are suspended this season', cash: 'Cash', rep: 'Reputation', cap2: 'Capability', adapt: 'Adaptation', sus: 'Sustainability', tree: 'Orchard health',
-      results: 'Season results', revenue: 'Revenue', profit: 'Profit', purchase: 'Purchases / farm cost', loss: 'Losses',
-      channel: 'Channel', qty: 'Tonnes', price: 'Price (VND k/kg)', status: 'Status', st: { ok: '✓', blocked: 'Blocked, sold at home as rejects', destroyed: 'Destroyed' },
-      audit: { pass: 'Passed the China Customs audit', fail: 'Failed the audit: codes suspended next season', na: 'No official exports, so no audit' },
-      notes: { fraud_exposed: 'The Thai relabelling was exposed: reputation collapses and codes are suspended.', fraud_hidden: 'The relabelling was not exposed, but you helped damage the reputation of Vietnamese durian.', suspended: 'Official-trade codes suspended next season.', jp_destroyed: 'The Japan lot was destroyed for residues.' },
-      endTitle: 'Report after 6 seasons', total: 'Total score', parts: { profit: 'Profit', reputation: 'Reputation', capability: 'Capability', adaptation: 'Adaptation', sustainability: 'Sustainability' },
-      totalProfit: 'Total profit', bench: 'role benchmark', chUsed: 'Channels used',
-      badges: { clean_official: 'Clean official trade: no lot blocked', diversified: 'Diversified: 4 or more channels', fake_origin: 'Involved in fake origin', exhausted_trees: 'Exhausted orchard from repeated off-season inducing', resilient: 'Resilient: no loss-making season' },
-      debrief: 'Discussion questions', sources: 'Sources', download: 'Download decision log (JSON)', again: 'Play again',
-      q1: 'Why are planting-area and packing-facility codes both a barrier and an opportunity? Relate this to technical and sanitary barriers (TBT/SPS).',
-      q2: 'What are the risks of relying on one market for 92% of exports? How did you diversify?',
-      q3: 'Why is Vietnamese durian cheaper than Thai durian in China despite a larger market share? Where should upgrading start?',
-      q4: 'What should the state, associations and firms do to stop relabelling and protect the reputation of the whole industry?',
-      foot: 'Rules and events come from the MARD–GACC phytosanitary protocol (2022), Ministry of Industry and Trade fruit market reports (Dec 2023–Feb 2024), CESTI search results (Apr 2024) and supply-chain studies in Cai Lậy, Phong Điền, Thailand and Malaysia. Volumes, price ratios and probabilities in the game are illustrative.'
-    }
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} },
+    del(k) { try { localStorage.removeItem(k); } catch (e) {} }
   };
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const IMG = p => '../assets/character/' + p;
+  const SAVE_KEY = 'durian_class_v2';
+  const MAX_WHATIF = 2, MAX_LUMINA = 3;
+
   let LANG = store.get('durian_lang') === 'en' ? 'en' : 'vi';
-  const t = k => T[LANG][k];
+  const L = (vi, en) => (LANG === 'en' ? en : vi);
   const nm = o => (LANG === 'en' ? o.en : o.vi);
   const nf = (x, d) => (Number.isFinite(x) ? x : 0).toLocaleString(LANG === 'vi' ? 'vi-VN' : 'en-US', { maximumFractionDigits: d || 0, minimumFractionDigits: d || 0 });
   const pct = x => nf(x * 100) + '%';
-  const money = x => nf(x, 2) + ' ' + t('bn');
+  const money = x => nf(x, 2) + ' ' + L('tỷ', 'bn');
   const fact = k => { const f = D.facts[k]; return f ? `${nm(f)} <span class="src">[${f.src}]</span>` : ''; };
+  const CH_IDS = D.channels.map(c => c.id);
 
-  let ROLE = 'exporter', COHORT = '', GAME = null, DEC = null;
+  // ---------------- trạng thái ván (lưu cục bộ để học qua nhiều buổi) ----------------
+  let APP = null;        // { cls, team, roleId, seed, timerMin, game, dec, operator, session, roundStart, events[], whatifs{}, lumina{}, sheets{}, journals{}, debriefs{}, flags[] }
+  let RIVALS = null;     // tính lại từ hạt giống, không cần lưu
+  let SETUP = { cls: '', team: '', roleId: 'exporter', timerMin: 0 };
+  let ERR = '';
+
   const freshDec = () => ({ priority: 'area', linked: 0.3, induce: true, alloc: { CN: 40, BORDER: 30, FROZEN: 0, TW: 5, JP: 0, DOM: 25 }, intel: [], option: 0 });
+  const owned = (a, id) => (id === 'area' && a.area) || (id === 'pack' && a.pack) || (id === 'trace' && a.trace) || (id === 'freezer' && a.freezer) || (id === 'test' && a.test >= 2);
+  const save = () => { if (APP) store.set(SAVE_KEY, JSON.stringify(APP)); };
+  const roundN = () => APP.game.n;                         // vụ đang quyết định
+  const pendingJournal = () => APP.game.history.length > 0 && !APP.journals[APP.game.history.length];
 
+  function logEv(type, oldV, newV, committed) {
+    if (!APP) return;
+    const round = pendingJournal() ? APP.game.history.length : Math.min(APP.game.n, D.seasons.length);
+    APP.events.push({
+      event_id: 'EV' + String(APP.events.length + 1).padStart(6, '0'),
+      timestamp: new Date().toISOString(), class_id: APP.cls || 'local', team_id: APP.team || 'TEAM',
+      round_id: 'R' + round, role: (APP.operator || 'ceo').toUpperCase(), event_type: type,
+      old_value: oldV === undefined ? '' : (typeof oldV === 'object' ? JSON.stringify(oldV) : String(oldV)),
+      new_value: newV === undefined ? '' : (typeof newV === 'object' ? JSON.stringify(newV) : String(newV)),
+      device_session: APP.session, committed: committed ? 1 : 0
+    });
+  }
+
+  function load() {
+    const raw = store.get(SAVE_KEY);
+    if (!raw) return null;
+    try { const x = JSON.parse(raw); return x && x.game && x.roleId ? x : null; } catch (e) { return null; }
+  }
+  function boot(app) {
+    APP = app;
+    RIVALS = E.rivalsRun(D, APP.roleId, APP.seed);
+    // ván lưu từ bản cũ có thể trỏ tới đối thủ đã đổi: tính lại cờ theo đối thủ hiện tại
+    APP.flags = APP.game.history.map(r => E.flagFor(RIVALS, r));
+  }
+
+  // ---------------- khung chung ----------------
   function chrome() {
-    $('brandSub').textContent = t('brandSub'); $('backLink').textContent = t('back');
-    const th = document.documentElement.getAttribute('data-theme');
-    $('themeBtn').textContent = (th === 'dark' ? '☀️ ' + t('light') : '🌙 ' + t('dark'));
+    $('brandName').textContent = L('Hộ Chiếu Sầu Riêng', 'Sầu Riêng Passport');
+    document.title = L('Hộ Chiếu Sầu Riêng · Bản lớp học', 'Sầu Riêng Passport (Durian) · Classroom edition');
+    $('brandSub').textContent = L('Bản lớp học · mô phỏng xuất khẩu nông sản', 'Classroom edition · agri-food export simulation');
+    $('backLink').textContent = L('← Kịch bản lớp học', '← Classroom script');
     $('langVI').classList.toggle('on', LANG === 'vi'); $('langEN').classList.toggle('on', LANG === 'en');
-    document.documentElement.lang = LANG; $('footSrc').textContent = t('foot');
+    $('musicBtn').title = L('Nhạc nền «And The World Say Hello!» (kho nhạc BizOn)', 'Background music «And The World Say Hello!» (BizOn library)');
+    document.documentElement.lang = LANG;
+    $('footSrc').textContent = L(
+      'Quy định và sự kiện lấy từ Nghị định thư kiểm dịch MARD–GACC (2022), báo cáo thị trường rau quả của Bộ Công Thương (12/2023–02/2024), kết quả tra cứu của CESTI (04/2024) và các nghiên cứu chuỗi cung ứng tại Cai Lậy, Phong Điền, Thái Lan, Malaysia. Khối lượng, hệ số giá, xác suất và chiến lược của đối thủ AI là minh họa.',
+      'Rules and events come from the MARD–GACC phytosanitary protocol (2022), Ministry of Industry and Trade fruit market reports (Dec 2023–Feb 2024), CESTI search results (Apr 2024) and supply-chain studies in Cai Lậy, Phong Điền, Thailand and Malaysia. Volumes, price ratios, probabilities and AI rival strategies are illustrative.');
   }
   $('langVI').onclick = () => { LANG = 'vi'; store.set('durian_lang', 'vi'); render(); };
   $('langEN').onclick = () => { LANG = 'en'; store.set('durian_lang', 'en'); render(); };
-  $('themeBtn').onclick = () => { const n = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; document.documentElement.setAttribute('data-theme', n); store.set('durian_theme', n); render(); };
+  $('musicBtn').onclick = () => {
+    const a = $('bgm');
+    if (a.paused) { a.volume = 0.35; const p = a.play(); if (p && p.catch) p.catch(() => {}); $('musicBtn').setAttribute('aria-pressed', 'true'); $('musicBtn').textContent = '♪ ❚❚'; }
+    else { a.pause(); $('musicBtn').setAttribute('aria-pressed', 'false'); $('musicBtn').textContent = '♪'; }
+  };
 
   function render() {
-    chrome();
-    if (!GAME) return renderSetup();
-    if (GAME.n > D.seasons.length) return renderEnd();
+    chrome(); stopTimer();
+    if (!APP) return renderSetup();
+    if (pendingJournal()) return renderResult();
+    if (APP.game.n > D.seasons.length) return renderEnd();
     renderPlay();
   }
 
-  function formulaHTML() {
-    return Object.entries(D.scoreWeights).map(([k, w]) => `<b>${w}%</b> ${T[LANG].parts[k]}`).join(' + ');
-  }
+  const formulaHTML = () => Object.entries(D.scoreWeights).map(([k, w]) => `<b>${w}%</b> ${partName(k)}`).join(' + ');
+  const partName = k => ({ profit: L('Lợi nhuận', 'Profit'), reputation: L('Uy tín', 'Reputation'), capability: L('Năng lực', 'Capability'), adaptation: L('Thích ứng', 'Adaptation'), sustainability: L('Bền vững', 'Sustainability') })[k];
+  const flowHTML = () => `<ol class="flow">${D.flow.map((f, i) => `<li><b>${i + 1}</b>${nm(f)} · ${f.min}′</li>`).join('')}</ol>`;
+  const teamMember = id => D.team.find(m => m.id === id);
+  const rivalInfo = id => D.rivals.find(r => r.id === id);
 
-  // ---------- màn 1 ----------
+  // ================= màn 1: lập đội =================
   function renderSetup() {
+    const saved = load();
     $('app').innerHTML = `
-      <section class="hero"><span class="eyebrow">${t('eyebrow')}</span><h1>${t('title')}</h1><p class="lead">${t('lead')}</p>
-        <span class="prov pub">${t('provFact')}</span><span class="prov sim">${t('provSim')}</span></section>
-      <div class="card"><h2>${t('chooseRole')}</h2>
-        <div class="pick">${Object.entries(D.roles).map(([id, r]) => `<button type="button" data-role="${id}" class="${id === ROLE ? 'on' : ''}"><b>${r.emoji} ${nm(r)}</b>
-          <span class="small muted">${LANG === 'en' ? r.descEn : r.descVi}</span></button>`).join('')}</div>
-        <p class="small" style="margin-top:8px">${t('formula')}: ${formulaHTML()}</p>
-        <label class="ctl" for="cohort">${t('cohort')}</label><input type="text" id="cohort" maxlength="24" value="${esc(COHORT)}" autocomplete="off">
-        <p class="hint">${t('cohortHint')}</p>
-        <p style="margin-top:14px"><button class="btn" id="startBtn" type="button">${t('start')}</button></p>
+      <section class="hero"><div class="hero-row"><div>
+        <span class="eyebrow">${L('Trò chơi mô phỏng · Kinh doanh quốc tế · Bản lớp học', 'Simulation game · International business · Classroom edition')}</span>
+        <h1>${L('Hộ Chiếu Sầu Riêng: đưa sầu riêng Việt Nam ra thế giới qua 6 vụ', 'Sầu Riêng Passport (Durian): take Vietnamese durian to the world over 6 seasons')}</h1>
+        <p class="lead">${L(
+          'Đội 5 người điều hành một mắt xích trong chuỗi xuất khẩu sầu riêng, từ ngày Trung Quốc mở cửa chính ngạch (7/2022), và cạnh tranh với 3 đối thủ AI. Mỗi vụ: đọc thị trường, họp đội theo vai, chạy tối đa 2 lần «Nếu – Thì», hỏi Lumina tối đa 3 câu, ghi phiếu quyết định, chốt vụ rồi viết nhật ký. Mục tiêu không chỉ là thắng cờ mà là giải thích được vì sao kết quả khác dự báo.',
+          'A team of five runs one link of the durian export chain from the day China opens official trade (July 2022), competing with 3 AI rivals. Each season: read the market, hold a role meeting, run up to 2 what-ifs, ask Lumina up to 3 questions, fill in a decision sheet, commit, then write the journal. The aim is not only to win flags but to explain why results differ from forecasts.')}</p>
+        <span class="prov pub">${L('Sự kiện và quy định có trích nguồn tài liệu', 'Events and rules are cited from documents')}</span><span class="prov sim">${L('Khối lượng, hệ số giá, xác suất là minh họa', 'Volumes, price ratios and probabilities are illustrative')}</span>
+      </div><div class="hero-cast"><img src="${IMG('anh-tu-ao-dai-welcome-cut-v2.webp')}" alt="${L('Thầy Tú Phan', 'Dr Tú Phan')}"><img src="${IMG('lumina-ao-dai-wave.webp')}" alt="Lumina"></div></div></section>
+
+      ${saved ? `<div class="card"><h2>${L('Ván đang dở', 'Game in progress')}</h2>
+        <p class="small">${L('Lớp', 'Class')} <b>${esc(saved.cls || '—')}</b> · ${L('Đội', 'Team')} <b>${esc(saved.team || '—')}</b> · ${nm(D.roles[saved.roleId])} · ${L('vụ', 'season')} ${Math.min(saved.game.n, 6)}/6</p>
+        <p class="hint">${L('Nếu máy này dùng chung, hãy kiểm tra đúng mã đội trước khi tiếp tục.', 'If this device is shared, check the team code before continuing.')}</p>
+        <p style="margin-top:10px"><button class="btn" id="resumeBtn" type="button">${L('Tiếp tục ván', 'Resume')}</button> <button class="btn ghost" id="discardBtn" type="button">${L('Xóa ván cũ', 'Discard')}</button></p></div>` : ''}
+
+      <div class="card"><h2>${L('1 · Thông tin lớp và đội', '1 · Class and team')}</h2>
+        <div class="grid2"><div>
+          <label class="ctl" for="cls">${L('Mã lớp (Class ID)', 'Class ID')}</label><input type="text" id="cls" maxlength="24" value="${esc(SETUP.cls)}" placeholder="KT330H-F1" autocomplete="off">
+          <label class="ctl" for="teamId">${L('Mã đội (không nhập họ tên)', 'Team code (no personal names)')}</label><input type="text" id="teamId" maxlength="16" value="${esc(SETUP.team)}" placeholder="TEAM_03" autocomplete="off">
+          <p class="hint">${L('Cùng mã lớp và cùng doanh nghiệp thì cùng diễn biến ngẫu nhiên và cùng đối thủ AI, để cả lớp so sánh công bằng.', 'The same class code and firm give the same random path and AI rivals, so the class can compare fairly.')}</p>
+        </div><div>
+          <label class="ctl" for="timer">${L('Thời gian mỗi vụ (giảng viên quy định)', 'Time per season (set by the instructor)')}</label>
+          <select id="timer">${[0, 8, 10, 15, 20, 50].map(m => `<option value="${m}" ${+SETUP.timerMin === m ? 'selected' : ''}>${m ? m + ' ' + L('phút', 'min') : L('Không giới hạn', 'No limit')}</option>`).join('')}</select>
+          <p class="hint">${L('Hết giờ vẫn chốt được nhưng nhật ký ghi «trễ hạn».', 'You can still commit after time is up, but the log records it as late.')}</p>
+        </div></div></div>
+
+      <div class="card"><h2>${L('2 · Chọn doanh nghiệp của đội', '2 · Choose your firm')}</h2>
+        <div class="pick">${Object.entries(D.roles).map(([id, r]) => `<button type="button" data-role="${id}" class="${id === SETUP.roleId ? 'on' : ''}"><b>${r.emoji} ${nm(r)}</b>
+          <span class="small muted">${LANG === 'en' ? r.descEn : r.descVi}</span></button>`).join('')}</div></div>
+
+      <div class="card"><h2>${L('3 · Đội 5 vai', '3 · Five roles')}</h2>
+        <p class="small muted">${L('Mỗi vai trình bày khuyến nghị trước khi CEO chốt. Đổi vai ở vụ 3 hoặc 4; nhật ký ghi lại ai đang thao tác.', 'Each role presents a recommendation before the CEO commits. Rotate roles in season 3 or 4; the log records who is operating.')}</p>
+        <div class="cast">${D.team.map(m => `<div class="who"><img src="${IMG(m.img)}" alt="${esc(m.name)}" loading="lazy"><b>${m.id.toUpperCase()} · ${esc(m.name)}</b><span class="hint">${nm(m)}</span></div>`).join('')}</div></div>
+
+      <div class="card"><h2>${L('4 · Đối thủ AI: 7 CEO quốc tế của BizOn Go Global', '4 · AI rivals: the 7 international CEOs of BizOn Go Global')}</h2>
+        <p class="small muted">${L('Mỗi CEO điều hành một nhà buôn nước ngoài cùng thu mua sầu riêng Việt Nam. Mỗi ván gặp 3 người, mỗi người một lối chơi (tuân thủ cao · kênh và quy mô · đi tắt), chọn theo mã lớp và doanh nghiệp. Đối thủ chơi cùng vai, cùng lõi mô phỏng. Đội cắm cờ 🟩 ở vụ nào lợi nhuận vụ đó không thấp hơn đối thủ mạnh nhất.', 'Each CEO runs a foreign trading house that also buys Vietnamese durian. Each game draws 3, one per playing style (high compliance · channels and scale · shortcuts), chosen by class code and firm. Rivals play the same firm type on the same engine. Your team plants a 🟩 flag in any season where its profit is at least the best rival\'s.')}</p>
+        <div class="rvs7">${D.rivals.map(r => `<div class="rv"><img src="${IMG(r.img)}" alt="CEO ${esc(r.ceo)}" loading="lazy"><b>${esc(nm(r))} ${r.flag}</b><span class="hint">CEO ${esc(r.ceo)} · ${esc(r.hub)}</span><span class="hint" style="display:block;margin-top:4px">${LANG === 'en' ? r.styleEn : r.styleVi}</span></div>`).join('')}</div></div>
+
+      <div class="card"><h2>${L('5 · Luật, nhịp vụ và cách chấm', '5 · Rules, season flow and grading')}</h2>
+        ${flowHTML()}
+        <p class="small">${L('Điểm trong game 0–100, công khai từ đầu', 'In-game score 0–100, public from the start')}: ${formulaHTML()}</p>
+        <p class="small">${L('Giới hạn mỗi vụ', 'Limits per season')}: <b>${MAX_WHATIF}</b> ${L('lần «Nếu – Thì»', 'what-ifs')} · <b>${MAX_LUMINA}</b> ${L('câu hỏi Lumina', 'Lumina questions')} · ${L('tối đa 2 nguồn tin', 'up to 2 information sources')} · ${L('chốt rồi không sửa được', 'commits are final')}.</p>
+        <details class="gv"><summary>${L('Rubric gợi ý cho giảng viên (kết quả game chỉ chiếm 20%)', 'Suggested rubric for instructors (game result is only 20%)')}</summary>
+          <div class="tblwrap"><table>${D.rubric.map(r => `<tr><td>${nm(r)}</td><td class="num">${r.w}%</td></tr>`).join('')}</table></div></details>
+        <p style="margin-top:14px"><button class="btn" id="startBtn" type="button">${L('Bắt đầu ván mới', 'Start a new game')}</button></p>
+        ${ERR ? `<p class="err">${esc(ERR)}</p>` : ''}
       </div>`;
-    document.querySelectorAll('[data-role]').forEach(b => b.onclick = () => { ROLE = b.dataset.role; COHORT = $('cohort').value; renderSetup(); });
+    const keep = () => { SETUP.cls = $('cls').value.trim(); SETUP.team = $('teamId').value.trim(); SETUP.timerMin = +$('timer').value; };
+    document.querySelectorAll('[data-role]').forEach(b => b.onclick = () => { keep(); SETUP.roleId = b.dataset.role; renderSetup(); });
+    if ($('resumeBtn')) $('resumeBtn').onclick = () => { boot(saved); logEv('RESUME', '', 'R' + saved.game.n); save(); render(); window.scrollTo(0, 0); };
+    if ($('discardBtn')) $('discardBtn').onclick = () => { if (confirm(L('Xóa hẳn ván đang lưu trên máy này?', 'Permanently delete the saved game on this device?'))) { store.del(SAVE_KEY); renderSetup(); } };
     $('startBtn').onclick = () => {
-      COHORT = $('cohort').value.trim();
-      GAME = E.newGame(D, ROLE, COHORT ? E.seedFrom(COHORT + '|' + ROLE) : (Date.now() >>> 0));
-      DEC = freshDec(); render(); window.scrollTo(0, 0);
+      keep();
+      if (saved && !confirm(L('Bắt đầu ván mới sẽ ghi đè ván đang dở. Tiếp tục?', 'A new game will overwrite the saved one. Continue?'))) return;
+      ERR = '';
+      const seed = SETUP.cls ? E.seedFrom(SETUP.cls + '|' + SETUP.roleId) : (Date.now() >>> 0);
+      boot({
+        cls: SETUP.cls, team: SETUP.team, roleId: SETUP.roleId, seed, timerMin: SETUP.timerMin,
+        game: E.newGame(D, SETUP.roleId, seed), dec: freshDec(), operator: 'ceo',
+        session: 'S' + (Date.now() >>> 0).toString(36).toUpperCase(), roundStart: Date.now(),
+        events: [], whatifs: {}, lumina: {}, sheets: {}, journals: {}, debriefs: {}, flags: [], timing: {}
+      });
+      logEv('LOGIN', '', JSON.stringify({ role: SETUP.roleId, timer: SETUP.timerMin }));
+      save(); render(); window.scrollTo(0, 0);
     };
   }
 
-  // ---------- màn 2 ----------
+  // ================= đề xuất của đội (tất định, có chủ ý chưa tối ưu) =================
+  function teamAdvice() {
+    const g = APP.game, a = g.assets, s = D.seasons[g.n - 1], role = D.roles[g.roleId], ev = E.eventFor(D, g);
+    const ok = id => E.eligible(D, g, D.channels.find(c => c.id === id));
+    const out = [];
+    // CMO: kênh + nguồn tin
+    const alloc = { CN: 0, BORDER: 0, FROZEN: 0, TW: 0, JP: 0, DOM: 0 };
+    if (ok('CN')) { alloc.CN = 50; alloc.BORDER = (s.borderCut || 0) < 0.4 ? 15 : 5; } else { alloc.BORDER = 40; }
+    if (ok('FROZEN')) alloc.FROZEN = s.frozenProtocol ? 25 : 10;
+    alloc.TW = 10; if (ok('JP')) alloc.JP = 5;
+    alloc.DOM = Math.max(5, 100 - Object.values(alloc).reduce((x, y) => x + y, 0));
+    const intel = s.cadmium || (ev && (ev.id === 'residue' || ev.id === 'pest')) ? ['moit', 'ppd'] : ['moit', 'buyer'];
+    out.push({ who: 'cmo', apply: { alloc, intel },
+      text: L(`Chia: ${CH_IDS.filter(k => alloc[k]).map(k => k + ' ' + alloc[k]).join(' · ')}. Mua tin: ${intel.map(i => nm(D.intel.find(x => x.id === i))).join(' + ')}.`,
+        `Split: ${CH_IDS.filter(k => alloc[k]).map(k => k + ' ' + alloc[k]).join(' · ')}. Buy: ${intel.map(i => nm(D.intel.find(x => x.id === i))).join(' + ')}.`),
+      why: ok('CN') ? L('Đã đủ mã, nên dồn vào chính ngạch; tiểu ngạch đang bị siết.', 'We hold both codes, so lean on official trade; border trade is tightening.')
+        : L('Chưa đủ mã chính ngạch nên tạm dựa vào tiểu ngạch và nội địa.', 'No official codes yet, so rely on border and domestic trade for now.') });
+    // COO: nguồn hàng
+    if (role.ownFarm) {
+      const induce = s.season === 'off' && g.treeHealth > 70;
+      out.push({ who: 'coo', apply: { induce },
+        text: s.season === 'off' ? (induce ? L('Xử lý ra hoa nghịch vụ vụ này.', 'Induce off-season flowering this season.') : L('Cho vườn nghỉ, không xử lý nghịch vụ.', 'Rest the orchard; do not induce.')) : L('Chính vụ: thu hoạch bình thường, giảm hao hụt sau thu hoạch.', 'Main season: harvest normally and cut post-harvest losses.'),
+        why: L(`Sức khỏe vườn ${nf(g.treeHealth)}/100; xử lý liên tục làm giảm tuổi thọ cây 20–30%.`, `Orchard health ${nf(g.treeHealth)}/100; repeated inducing cuts tree life by 20–30%.`) });
+    } else {
+      const linked = a.area || (APP.dec.priority === 'area') ? 0.7 : 0.3;
+      out.push({ who: 'coo', apply: { linked },
+        text: L(`Mua ${pct(linked)} từ vùng liên kết có mã, phần còn lại qua thương lái.`, `Buy ${pct(linked)} from linked coded areas, the rest via traders.`),
+        why: L('Chỉ hàng có mã vùng trồng mới đi chính ngạch; hàng thương lái rẻ hơn 8% nhưng rủi ro dư lượng cao hơn.', 'Only coded fruit may go official; trader fruit is 8% cheaper but carries more residue risk.') });
+    }
+    // CFO: ưu tiên đầu tư
+    const order = role.ownFarm ? ['pack', 'area', 'test', 'trace'] : ['area', 'pack', 'test', 'trace'];
+    if (role.freezer || g.n >= 4) order.push('freezer');
+    const pick = order.find(p => !owned(a, p) && g.cash > (D.params.priorityCost[p] || 0) + 1) || 'finance';
+    out.push({ who: 'cfo', apply: { priority: pick },
+      text: L(`Ưu tiên: ${nm(D.priorities.find(p => p.id === pick))}.`, `Priority: ${nm(D.priorities.find(p => p.id === pick))}.`),
+      why: g.cash < 2 ? L(`Tiền mặt chỉ còn ${money(g.cash)}; âm tiền chịu lãi 8% mỗi vụ.`, `Cash is only ${money(g.cash)}; negative cash costs 8% per season.`)
+        : L('Mã số và cấp đông có hiệu lực từ vụ sau; kiểm nghiệm có tác dụng ngay.', 'Codes and freezing take effect next season; testing works immediately.') });
+    // SEC: biến cố
+    if (ev) {
+      let best = 0, bestV = -1e9;
+      ev.options.forEach((o, i) => { const e = o.eff || {}; const v = (e.rep || 0) + (e.sus || 0) + (e.adapt || 0) - (e.fraud ? 50 : 0) - (e.pestRisk ? 30 : 0) + (e.cash || 0) * 5; if (v > bestV) { bestV = v; best = i; } });
+      out.push({ who: 'sec', apply: { option: best },
+        text: L(`Biến cố «${nm(ev)}»: đề xuất «${nm(ev.options[best])}».`, `Event «${nm(ev)}»: suggest «${nm(ev.options[best])}».`),
+        why: fact(ev.src) });
+    }
+    return out;
+  }
+
+  // ================= Lumina: giải thích, không ra đáp án =================
+  function luminaAnswer(qid) {
+    const g = APP.game, a = g.assets, s = D.seasons[g.n - 1], role = D.roles[g.roleId], ev = E.eventFor(D, g), dec = APP.dec;
+    const f = E.forecast(D, g, dec);
+    switch (qid) {
+      case 'risk': {
+        const trader = role.ownFarm ? 0 : 1 - dec.linked;
+        return { a: L(`Ba nguồn rủi ro: (1) ${pct(trader)} hàng mua qua thương lái, khó kiểm soát dư lượng; (2) mức kiểm nghiệm hiện có ×${a.test}; (3) ${s.cadmium ? 'vụ này có đợt cảnh báo cadimi, rủi ro bị chặn nhân 2,5' : 'bối cảnh vụ'}${ev ? ' và biến cố «' + nm(ev) + '»' : ''}. Với phương án đang nhập, xác suất lô chính ngạch bị chặn ước khoảng ${pct(f.pBlockCN || 0)}.`,
+            `Three sources of risk: (1) ${pct(trader)} of fruit bought via traders, where residues are hard to control; (2) your testing level ×${a.test}; (3) ${s.cadmium ? 'this season\'s cadmium alerts, which multiply blocking risk by 2.5' : 'the season context'}${ev ? ' and the event «' + nm(ev) + '»' : ''}. With the current plan, the chance an official lot is blocked is about ${pct(f.pBlockCN || 0)}.`),
+          ask: L('Đội chấp nhận mức rủi ro này để đổi lấy điều gì? Nếu bị chặn, mã bị tạm dừng vụ sau.', 'What does the team gain by accepting this risk? If blocked, your codes are suspended next season.'), src: fact('sampling') };
+      }
+      case 'price': {
+        const sig = E.intelSignals(D, g, dec.intel);
+        return { a: sig.length ? L(`Đội đang có ${sig.length} tín hiệu giá: ${sig.map(x => nm(D.intel.find(i => i.id === x.id)) + ' ≈ ' + nf(x.price)).join('; ')} (nghìn đ/kg). Dự báo «Nếu – Thì» dùng trung bình các tín hiệu này.`,
+            `You hold ${sig.length} price signals: ${sig.map(x => nm(D.intel.find(i => i.id === x.id)) + ' ≈ ' + nf(x.price)).join('; ')} (VND k/kg). The what-if uses their average.`)
+            : L(`Đội chưa mua tin. Mức giá công khai ước khoảng ${nf(E.basePrice(D, g))} nghìn đ/kg, chưa tính dao động của vụ.`, `You have bought no information. The public price is about ${nf(E.basePrice(D, g))} VND k/kg, before this season's swings.`),
+          ask: L('Nguồn nào có động cơ thổi giá hoặc ép giá? Hai nguồn lệch nhau thì đội tin nguồn nào, vì sao?', 'Which source has a reason to talk prices up or down? If two sources disagree, which one do you trust and why?'), src: '' };
+      }
+      case 'channel': {
+        const okC = D.channels.filter(c => E.eligible(D, g, c)), lock = D.channels.filter(c => !E.eligible(D, g, c));
+        return { a: L(`Mở: ${okC.map(c => c.emoji + ' ' + nm(c)).join(', ')}. ${lock.length ? 'Đang khóa: ' + lock.map(c => nm(c)).join(', ') + '.' : ''} Mỗi kênh có trần khối lượng; phần vượt trần tự chuyển về nội địa.`,
+            `Open: ${okC.map(c => c.emoji + ' ' + nm(c)).join(', ')}. ${lock.length ? 'Locked: ' + lock.map(c => nm(c)).join(', ') + '.' : ''} Each channel has a volume cap; anything above it goes to the domestic market.`),
+          ask: L('Đội đang tối ưu thị phần, lợi nhuận hay giảm phụ thuộc một thị trường?', 'Is the team optimising share, profit or reducing reliance on one market?'), src: fact('china92') };
+      }
+      case 'invest': {
+        const miss = ['area', 'pack', 'test', 'trace', 'freezer'].filter(p => !owned(a, p));
+        return { a: L(`Còn thiếu: ${miss.map(p => nm(D.priorities.find(x => x.id === p))).join(', ') || 'không'}. Mã vùng trồng, mã đóng gói và cấp đông có hiệu lực từ vụ sau; kiểm nghiệm và truy xuất có tác dụng ngay. Năng lực tích lũy chiếm 20% điểm tổng.`,
+            `Missing: ${miss.map(p => nm(D.priorities.find(x => x.id === p))).join(', ') || 'none'}. Area codes, packing codes and freezing take effect next season; testing and traceability work now. Accumulated capability is 20% of the total score.`),
+          ask: L('Khoản đầu tư nào tạo tác động tích lũy, khoản nào chỉ cứu vụ này?', 'Which investment builds over time, and which only rescues this season?'), src: fact('codes') };
+      }
+      case 'cash': {
+        return { a: L(`Tiền mặt hiện có ${money(g.cash)}. Theo phương án đang nhập, cuối vụ ước còn ${money(f.cashAfter)} (lợi nhuận dự báo ${money(f.profit)}). Tiền mặt âm chịu chi phí vốn 8% mỗi vụ (4% nếu chọn củng cố tài chính).`,
+            `Cash now: ${money(g.cash)}. With the current plan, cash at the end of the season is about ${money(f.cashAfter)} (forecast profit ${money(f.profit)}). Negative cash costs 8% per season (4% if you choose to strengthen finances).`),
+          ask: L('Nếu kênh chính ngạch bị chặn, dòng tiền thay đổi ra sao? Đội có phương án dự phòng không?', 'If the official channel is blocked, how does cash change? Does the team have a fallback?'), src: '' };
+      }
+      default: {
+        const map = {
+          break: L('Chi phí giao dịch và chủ nghĩa cơ hội (thỏa thuận miệng, «bẻ kèo»): vì sao hợp đồng bao tiêu và liên kết dọc quan trọng.', 'Transaction costs and opportunism (verbal deals broken): why forward contracts and vertical linkage matter.'),
+          rain: L('Rủi ro khí hậu trong chuỗi nông sản: đa dạng nguồn cung và đánh đổi giữa cứu sản lượng và rủi ro dư lượng.', 'Climate risk in agri-food chains: diversifying supply and the trade-off between saving volume and residue risk.'),
+          salinity: L('Rủi ro khí hậu và đầu tư thích ứng: chi phí hôm nay đổi lấy khả năng chống chịu.', 'Climate risk and adaptation investment: paying today for resilience.'),
+          fake: L('Xuất xứ quốc gia (country-of-origin) và uy tín ngành: lợi ích ngắn hạn của một doanh nghiệp làm hại danh tiếng chung.', 'Country of origin and industry reputation: one firm\'s short-term gain harms everyone\'s reputation.'),
+          pest: L('Biện pháp SPS: một con rệp sáp có thể làm cả lô bị từ chối và mã bị tạm dừng.', 'SPS measures: one mealybug can get a whole lot refused and a code suspended.'),
+          glut: L('Quyền lực người mua và rủi ro tập trung thị trường: vì sao cần đa dạng hóa.', 'Buyer power and market-concentration risk: why diversification matters.'),
+          residue: L('Giới hạn dư lượng tối đa (MRL) và tiêu chuẩn của thị trường cao cấp.', 'Maximum residue limits (MRLs) and premium-market standards.'),
+          thaidrought: L('Cạnh tranh giữa các nước xuất khẩu: cú sốc nguồn cung ở đối thủ là cơ hội, nhưng giữ khách cũ cũng có giá trị.', 'Competition between exporting countries: a rival\'s supply shock is an opportunity, but loyal buyers have value too.')
+        };
+        return { a: ev ? (map[ev.id] || '') : L('Vụ này không có biến cố riêng.', 'No specific event this season.'),
+          ask: L('Đội sẽ dẫn chứng khái niệm này thế nào trong nhật ký?', 'How will the team use this concept in the journal?'), src: ev ? fact(ev.src) : '' };
+      }
+    }
+  }
+
+  // ================= đồng hồ vụ =================
+  let TIMER = null;
+  function stopTimer() { if (TIMER) { clearInterval(TIMER); TIMER = null; } }
+  function startTimer() {
+    if (!APP.timerMin) return;
+    const tick = () => {
+      const el = $('timer'); if (!el) return stopTimer();
+      const left = APP.timerMin * 60 - Math.floor((Date.now() - APP.roundStart) / 1000);
+      const m = Math.floor(Math.abs(left) / 60), s = Math.abs(left) % 60;
+      el.textContent = (left < 0 ? '−' : '') + m + ':' + String(s).padStart(2, '0');
+      el.classList.toggle('late', left < 0);
+      if (left < 0 && !APP.timing['late' + roundN()]) { APP.timing['late' + roundN()] = 1; logEv('TIMER_EXPIRED', '', APP.timerMin); save(); }
+    };
+    tick(); TIMER = setInterval(tick, 1000);
+  }
+
+  // ================= màn 2: một vụ =================
+  function flagsHTML(nowN) {
+    return `<div class="flags">${D.seasons.map((s, i) => { const f = APP.flags[i];
+      return `<span class="${f ? (f.win ? 'win' : 'lose') : (i + 1 === nowN ? 'now' : '')}">${f ? (f.win ? '🟩' : '🟥') : (i + 1 === nowN ? '📍' : '⬜')} ${L('Vụ', 'S')}${i + 1}</span>`; }).join('')}</div>`;
+  }
+  function leaderboardHTML(upto) {
+    const rows = [{ id: 'me', img: null, name: L('Đội của bạn', 'Your team') + (APP.team ? ' · ' + esc(APP.team) : ''), h: APP.game.history.slice(0, upto) }]
+      .concat(RIVALS.map(r => ({ id: r.id, img: rivalInfo(r.id).img, name: esc(nm(rivalInfo(r.id))) + ' ' + rivalInfo(r.id).flag + '<span class="hint"> · ' + esc(rivalInfo(r.id).ceo) + '</span>', h: r.state.history.slice(0, upto) })));
+    rows.forEach(r => { r.profit = r.h.reduce((x, y) => x + y.profit, 0); });
+    rows.sort((x, y) => y.profit - x.profit);
+    return `<div class="tblwrap"><table class="lb"><tr><th>#</th><th>${L('Doanh nghiệp', 'Firm')}</th><th>${L('Lợi nhuận lũy kế', 'Cumulative profit')}</th><th>${L('Lô bị chặn', 'Blocked lots')}</th></tr>
+      ${rows.map((r, i) => `<tr><td>${i + 1}</td><td>${r.img ? `<img src="${IMG(r.img)}" alt="">` : '⭐ '}${r.id === 'me' ? '<b>' + r.name + '</b>' : r.name}</td><td class="num ${r.profit >= 0 ? 'pos' : 'neg'}">${money(r.profit)}</td><td class="num">${r.h.filter(x => x.blockedCN).length}</td></tr>`).join('')}</table></div>`;
+  }
+
   function renderPlay() {
-    const role = D.roles[GAME.roleId], s = D.seasons[GAME.n - 1], ev = E.eventFor(D, GAME);
-    const last = GAME.history[GAME.history.length - 1];
-    const sig = E.intelSignals(D, GAME, DEC.intel);
-    const norm = E.normalizeAlloc(DEC.alloc, D.channels.map(c => c.id));
-    const a = GAME.assets;
-    const ok = id => E.eligible(D, GAME, D.channels.find(c => c.id === id));
+    const g = APP.game, role = D.roles[g.roleId], s = D.seasons[g.n - 1], ev = E.eventFor(D, g), dec = APP.dec, a = g.assets, n = g.n;
+    const sig = E.intelSignals(D, g, dec.intel);
+    const okIds = CH_IDS.filter(id => E.eligible(D, g, D.channels.find(c => c.id === id)));
+    const norm = E.normalizeAlloc(Object.fromEntries(okIds.map(id => [id, dec.alloc[id]])), okIds);
+    const wf = APP.whatifs[n] || [], lq = APP.lumina[n] || [], sh = APP.sheets[n] || {};
+    const advice = teamAdvice();
     $('app').innerHTML = `
-      <section class="hero" style="padding-bottom:6px"><span class="eyebrow">${role.emoji} ${nm(role)}</span>
-        <h1 style="font-size:clamp(22px,3.6vw,30px)">${t('season')} ${GAME.n}${t('of')}${D.seasons.length} · ${s.label}</h1>
-        <div class="prog">${D.seasons.map((_, i) => `<span class="${i + 1 < GAME.n ? 'done' : i + 1 === GAME.n ? 'now' : ''}"></span>`).join('')}</div></section>
+      <section class="hero" style="padding-bottom:6px"><span class="eyebrow">${role.emoji} ${nm(role)} · ${L('Lớp', 'Class')} ${esc(APP.cls || '—')} · ${L('Đội', 'Team')} ${esc(APP.team || '—')}</span>
+        <h1 style="font-size:clamp(22px,3.6vw,30px)">${L('Vụ', 'Season')} ${n}/${D.seasons.length} · ${s.label}</h1>
+        ${flagsHTML(n)}${flowHTML()}
+        <div class="ops"><span class="small muted">${L('Vai đang thao tác', 'Operating role')}:</span>
+          ${D.team.map(m => `<button type="button" class="chip ${APP.operator === m.id ? 'on' : ''}" data-op="${m.id}">${m.id.toUpperCase()}</button>`).join('')}
+          ${APP.timerMin ? `<span class="spacer"></span><span class="small muted">${L('Còn lại', 'Time left')}</span><span class="timer" id="timer"></span>` : ''}</div>
+        ${n === 3 || n === 4 ? `<p class="hint" style="margin-top:6px">🔄 ${L('Gợi ý: luân chuyển vai ở vụ 3 hoặc 4 để mỗi bạn trải nghiệm một chức năng khác.', 'Tip: rotate roles in season 3 or 4 so everyone experiences another function.')}</p>` : ''}
+      </section>
+
       <div class="grid2">
-        <div class="card event"><span class="tag">${t('anchor')}</span><h2>${nm(s)}</h2><p>${LANG === 'en' ? s.textEn : s.textVi}</p>
+        <div class="card event"><span class="tag">① ${L('Đọc thị trường · mốc thực tế', 'Read the market · real milestone')}</span><h2>${nm(s)}</h2><p>${LANG === 'en' ? s.textEn : s.textVi}</p>
           <p class="hint" style="margin-top:6px">${fact(s.anchor)}</p></div>
-        ${ev ? `<div class="card event"><span class="tag">${t('event')}</span><h2>${nm(ev)}</h2><p>${LANG === 'en' ? ev.textEn : ev.textVi}</p>
-          <p class="hint">${fact(ev.src)}</p><h3>${t('chooseOpt')}</h3>
-          ${ev.options.map((o, i) => `<button type="button" class="opt ${DEC.option === i ? 'on' : ''}" data-opt="${i}">${nm(o)}</button>`).join('')}</div>` : '<div></div>'}
+        ${ev ? `<div class="card event"><span class="tag">① ${L('Biến cố · SEC đọc cho đội', 'Event · SEC reads it out')}</span><h2>${nm(ev)}</h2><p>${LANG === 'en' ? ev.textEn : ev.textVi}</p>
+          <p class="hint">${fact(ev.src)}</p><h3>${L('Chọn cách phản ứng', 'Choose your response')}</h3>
+          ${ev.options.map((o, i) => `<button type="button" class="opt ${dec.option === i ? 'on' : ''}" data-opt="${i}">${nm(o)}</button>`).join('')}</div>` : '<div></div>'}
       </div>
-      <div class="card"><h2>${t('assets')}</h2>
-        <div class="chips">${Object.keys(T[LANG].have).map(k => `<span class="chip ${(k === 'test' ? a.test > 0 : a[k]) ? 'on' : ''}">${(k === 'test' ? a.test > 0 : a[k]) ? '✓' : '○'} ${T[LANG].have[k]}${k === 'test' && a.test ? ' ×' + a.test : ''}</span>`).join('')}</div>
-        ${GAME.suspendedUntil >= GAME.n ? `<p class="note">${t('suspended')}</p>` : ''}
-        <div class="kpis" style="margin-top:8px">
-          <div class="kpi"><small>${t('cash')}</small><b class="num ${GAME.cash >= 0 ? 'pos' : 'neg'}">${money(GAME.cash)}</b></div>
-          <div class="kpi"><small>${t('rep')}</small><b class="num">${nf(GAME.rep)}</b></div>
-          <div class="kpi"><small>${t('adapt')}</small><b class="num">${nf(GAME.adapt)}</b></div>
-          <div class="kpi"><small>${role.ownFarm ? t('tree') : t('sus')}</small><b class="num">${nf(role.ownFarm ? GAME.treeHealth : GAME.sus)}</b></div></div></div>
+
       <div class="grid2">
-        <div class="card"><h2>${t('intel')}</h2>
-          <div class="chips">${D.intel.map(i => `<button type="button" class="chip ${DEC.intel.includes(i.id) ? 'on' : ''}" data-intel="${i.id}" ${!DEC.intel.includes(i.id) && DEC.intel.length >= 2 ? 'disabled' : ''}>${nm(i)} · ${i.cost ? money(i.cost) : t('free')}</button>`).join('')}</div>
-          ${sig.map(x => { const src = D.intel.find(i => i.id === x.id); return `<p class="small">• <b>${nm(src)}</b>: ${t('priceSig')} ≈ <b class="num">${nf(x.price)}</b> ${LANG === 'en' ? 'VND k/kg' : 'nghìn đ/kg'}${x.risk !== undefined ? ` · ${t('riskSig')}: <b>${T[LANG].riskLv[x.risk]}</b>` : ''}${src.warnVi ? ` <span class="hint">(${LANG === 'en' ? src.warnEn : src.warnVi})</span>` : ''}</p>`; }).join('')}
-          <h2 style="margin-top:14px">${t('decide')}</h2>
-          <label class="ctl">${t('priority')}</label>
-          ${D.priorities.map(p => { const owned = (p.id === 'area' && a.area) || (p.id === 'pack' && a.pack) || (p.id === 'trace' && a.trace) || (p.id === 'freezer' && a.freezer) || (p.id === 'test' && a.test >= 2);
-            return `<button type="button" class="opt ${DEC.priority === p.id ? 'on' : ''}" data-pri="${p.id}" ${owned ? 'disabled style="opacity:.5"' : ''}><b>${nm(p)}</b> · <span class="num">${D.params.priorityCost[p.id] ? money(D.params.priorityCost[p.id]) : '0'}</span><br><span class="hint">${LANG === 'en' ? p.effEn : p.effVi}</span></button>`; }).join('')}
-          ${role.ownFarm ? (s.season === 'off' ? `<label class="ctl">${t('induce')}</label>
-            <button type="button" class="opt ${DEC.induce ? 'on' : ''}" data-ind="1">${t('induce')}</button><button type="button" class="opt ${!DEC.induce ? 'on' : ''}" data-ind="0">${t('noInduce')}</button><p class="hint">${t('induceHint')} [CAILAY, BC0224]</p>` : '')
-            : `<label class="ctl" for="linked">${t('linked')}: <span class="num" id="linkedV">${pct(DEC.linked)}</span></label>
-            <input type="range" id="linked" min="0" max="100" step="10" value="${Math.round(DEC.linked * 100)}"><p class="hint">${t('linkedHint')} ${fact('traders80')}</p>`}
+        <div class="card"><h2>${L('Hồ sơ của đội', 'Team credentials')}</h2>
+          <div class="chips">${['area', 'pack', 'test', 'trace', 'freezer'].map(k => { const has = k === 'test' ? a.test > 0 : a[k];
+            return `<span class="chip ${has ? 'on' : ''}">${has ? '✓' : '○'} ${nm(D.priorities.find(p => p.id === k))}${k === 'test' && a.test ? ' ×' + a.test : ''}</span>`; }).join('')}</div>
+          ${g.suspendedUntil >= n ? `<p class="note">${L('Mã chính ngạch đang bị tạm dừng vụ này.', 'Your official-trade codes are suspended this season.')}</p>` : ''}
+          <div class="kpis" style="margin-top:8px">
+            <div class="kpi"><small>${L('Tiền mặt', 'Cash')}</small><b class="num ${g.cash >= 0 ? 'pos' : 'neg'}">${money(g.cash)}</b></div>
+            <div class="kpi"><small>${L('Uy tín', 'Reputation')}</small><b class="num">${nf(g.rep)}</b></div>
+            <div class="kpi"><small>${L('Thích ứng', 'Adaptation')}</small><b class="num">${nf(g.adapt)}</b></div>
+            <div class="kpi"><small>${role.ownFarm ? L('Sức khỏe vườn', 'Orchard health') : L('Bền vững', 'Sustainability')}</small><b class="num">${nf(role.ownFarm ? g.treeHealth : g.sus)}</b></div></div></div>
+        <div class="card"><h2>${L('Bảng xếp hạng', 'Leaderboard')}</h2>${leaderboardHTML(n - 1)}
+          <p class="hint">${L('Chỉ hiện lợi nhuận và số lô bị chặn; đối thủ đã chơi xong các vụ trước.', 'Shows profit and blocked lots only; rivals have finished the previous seasons.')}</p></div>
+      </div>
+
+      <div class="card"><h2>② ${L('Họp đội: mỗi vai một khuyến nghị', 'Team meeting: one recommendation per role')}</h2>
+        <p class="small muted">${L('Đề xuất là ý kiến của thành viên ảo, có thể chưa tối ưu. Đội phải tự quyết và ghi lý do.', 'These are suggestions from virtual members and may not be optimal. The team decides and records why.')}</p>
+        <div class="advice">${advice.map((x, i) => { const m = teamMember(x.who);
+          return `<div class="adv"><img src="${IMG(m.img)}" alt="${esc(m.name)}"><div><b>${x.who.toUpperCase()} · ${esc(m.name)}</b><p>${x.text}</p><p class="hint">${x.why}</p>
+            <button type="button" class="mini" data-adv="${i}">${L('Áp dụng đề xuất', 'Apply suggestion')}</button></div></div>`; }).join('')}</div></div>
+
+      <div class="grid2">
+        <div class="card"><h2>③ ${L('Quyết định', 'Decisions')}</h2>
+          <h3>CMO · ${L('Mua tin (tối đa 2 nguồn)', 'Buy information (up to 2)')}</h3>
+          <div class="chips">${D.intel.map(i => `<button type="button" class="chip ${dec.intel.includes(i.id) ? 'on' : ''}" data-intel="${i.id}" ${!dec.intel.includes(i.id) && dec.intel.length >= 2 ? 'disabled' : ''}>${nm(i)} · ${i.cost ? money(i.cost) : L('miễn phí', 'free')}</button>`).join('')}</div>
+          ${sig.map(x => { const src = D.intel.find(i => i.id === x.id); return `<p class="small">• <b>${nm(src)}</b>: ${L('dự báo giá vựa', 'depot price forecast')} ≈ <b class="num">${nf(x.price)}</b> ${L('nghìn đ/kg', 'VND k/kg')}${x.risk !== undefined ? ` · ${L('rủi ro bị cảnh báo', 'alert risk')}: <b>${[L('Thấp', 'Low'), L('Vừa', 'Medium'), L('Cao', 'High'), L('Rất cao', 'Very high')][x.risk]}</b>` : ''}${src.warnVi ? ` <span class="hint">(${LANG === 'en' ? src.warnEn : src.warnVi})</span>` : ''}</p>`; }).join('')}
+          <h3>CFO · ${L('Một ưu tiên đầu tư', 'One investment priority')}</h3>
+          ${D.priorities.map(p => { const own = owned(a, p.id);
+            return `<button type="button" class="opt ${dec.priority === p.id ? 'on' : ''}" data-pri="${p.id}" ${own ? 'disabled style="opacity:.5"' : ''}><b>${nm(p)}</b> · <span class="num">${D.params.priorityCost[p.id] ? money(D.params.priorityCost[p.id]) : '0'}</span><br><span class="hint">${LANG === 'en' ? p.effEn : p.effVi}</span></button>`; }).join('')}
+          <h3>COO · ${L('Nguồn hàng', 'Sourcing')}</h3>
+          ${role.ownFarm ? (s.season === 'off' ? `<button type="button" class="opt ${dec.induce ? 'on' : ''}" data-ind="1">${L('Xử lý ra hoa nghịch vụ', 'Induce off-season flowering')}</button><button type="button" class="opt ${!dec.induce ? 'on' : ''}" data-ind="0">${L('Không xử lý (sản lượng nghịch vụ rất thấp)', 'Do not induce (very low off-season output)')}</button><p class="hint">${fact('offYield')}</p>` : `<p class="small muted">${L('Chính vụ: vườn của HTX tự cho trái.', 'Main season: the cooperative\'s own orchards bear fruit.')}</p>`)
+            : `<label class="ctl" for="linked">${L('Tỷ lệ mua từ vùng trồng liên kết có mã số', 'Share bought from linked, coded planting areas')}: <span class="num" id="linkedV">${pct(dec.linked)}</span></label>
+              <input type="range" id="linked" min="0" max="100" step="10" value="${Math.round(dec.linked * 100)}"><p class="hint">${fact('traders80')}</p>`}
         </div>
-        <div class="card"><h2>${t('channels')}</h2>
-          ${D.channels.map(c => { const e = ok(c.id); const cap = c.cap === null ? '' : `${t('cap')} ${nf(c.id === 'BORDER' ? c.cap * (1 - (s.borderCut || 0)) : c.cap)} ${t('tons')}`;
-            return `<div class="mrow"><span>${c.emoji} ${nm(c)}<br><span class="hint">${e ? cap : `<span class="lock">🔒 ${t('locked')}: ${c.needs.map(k => T[LANG].needs[k]).join(', ')}</span>`}</span></span>
-            <input type="range" data-ch="${c.id}" min="0" max="100" step="5" value="${DEC.alloc[c.id] || 0}" ${e ? '' : 'disabled'}><span class="num" id="pct-${c.id}">${e ? pct(norm[c.id]) : '—'}</span></div>`; }).join('')}
+        <div class="card"><h2>CMO · ${L('Chia sản lượng cho các kênh', 'Split output across channels')}</h2>
+          ${D.channels.map(c => { const e = okIds.includes(c.id); const cap = c.cap === null ? '' : `${L('tối đa', 'max')} ${nf(c.id === 'BORDER' ? c.cap * (1 - (s.borderCut || 0)) : c.cap)} ${L('tấn', 't')}`;
+            return `<div class="mrow"><span>${c.emoji} ${nm(c)}<br><span class="hint">${e ? cap : `<span class="lock">🔒 ${L('Chưa đủ điều kiện', 'Not yet eligible')}</span>`}</span></span>
+            <input type="range" data-ch="${c.id}" min="0" max="100" step="5" value="${dec.alloc[c.id] || 0}" ${e ? '' : 'disabled'}><span class="num" id="pct-${c.id}">${e ? pct(norm[c.id]) : '—'}</span></div>`; }).join('')}
           <p class="hint">${fact('sampling')}</p>
-          <p style="margin-top:14px"><button class="btn" id="commitBtn" type="button">${t('commit')} ${GAME.n} →</button></p>
+
+          <h2 style="margin-top:16px">④ ${L('Nếu – Thì (CEO chạy, còn', 'What-if (CEO runs it,')} ${MAX_WHATIF - wf.length}/${MAX_WHATIF}${L(')', ' left)')}</h2>
+          <p class="hint">${L('Dự báo dùng giá ước tính từ nguồn tin đã mua và rủi ro kỳ vọng. Kết quả thật còn phụ thuộc giá vựa thực tế và may rủi kiểm dịch.', 'The forecast uses the price estimated from purchased information and expected risk. Actual results also depend on the real depot price and inspection luck.')}</p>
+          <p><button type="button" class="btn ghost" id="wfBtn" ${wf.length >= MAX_WHATIF ? 'disabled' : ''}>${L('Chạy mô phỏng', 'Run simulation')}</button></p>
+          ${wf.map((w, i) => `<div class="bubble"><div class="q">#${i + 1} · ${esc(w.label)}</div><div class="wf">
+            <div class="kpi"><small>${L('Lợi nhuận dự báo', 'Forecast profit')}</small><b class="num ${w.profit >= 0 ? 'pos' : 'neg'}">${money(w.profit)}</b></div>
+            <div class="kpi"><small>${L('Tiền mặt cuối vụ', 'Cash after')}</small><b class="num">${money(w.cashAfter)}</b></div>
+            <div class="kpi"><small>${L('Khả năng bị chặn', 'Block chance')}</small><b class="num">${pct(w.pBlockCN || 0)}</b></div>
+            <div class="kpi"><small>${L('Giá vựa ước', 'Est. depot')}</small><b class="num">${nf(w.depotEstimate)}</b></div>
+            <div class="kpi"><small>${L('Uy tín sau vụ', 'Rep. after')}</small><b class="num">${nf(w.rep)}</b></div></div></div>`).join('')}
         </div>
       </div>
-      ${last ? `<div class="card">${resultsHTML(last)}</div>` : ''}`;
-    document.querySelectorAll('[data-opt]').forEach(b => b.onclick = () => { DEC.option = +b.dataset.opt; renderPlay(); });
+
+      <div class="card"><h2>⑤ ${L('Hỏi Lumina', 'Ask Lumina')} (${L('còn', 'left')} ${MAX_LUMINA - lq.length}/${MAX_LUMINA})</h2>
+        <div class="lumina"><img src="${IMG(lq.length ? 'lumina-ao-dai-present.webp' : 'lumina-ao-dai.webp')}" alt="Lumina"><div>
+          <p class="small muted">${L('Lumina giải thích và hỏi ngược, không đưa đáp án. Ở nhật ký, đội ghi rõ dùng hay bác bỏ từng ý.', 'Lumina explains and asks back; it does not give the answer. In the journal, record whether you used or rejected each point.')}</p>
+          <div class="chips">${D.luminaQuestions.map(q => `<button type="button" class="chip" data-lq="${q.id}" ${lq.length >= MAX_LUMINA || lq.some(x => x.q === q.id) ? 'disabled' : ''}>${nm(q)}</button>`).join('')}</div>
+          ${lq.map(x => `<div class="bubble"><div class="q">${nm(D.luminaQuestions.find(q => q.id === x.q))}</div>${x.a}${x.src ? `<div class="hint">${x.src}</div>` : ''}<div class="ask">↪ ${x.ask}</div></div>`).join('')}
+        </div></div></div>
+
+      <div class="card sheet"><h2>⑥ ${L('Phiếu quyết định (SEC ghi, cả đội thống nhất)', 'Decision sheet (SEC writes, team agrees)')}</h2>
+        <label class="ctl req">${L('Mục tiêu ưu tiên của vụ', 'Priority goal this season')}</label>
+        <div class="radios">${Object.entries(GOALS())
+          .map(([k, v]) => `<button type="button" class="chip ${sh.goal === k ? 'on' : ''}" data-goal="${k}">${v}</button>`).join('')}</div>
+        <div class="grid2"><div>
+          <label class="ctl req" for="sh-assume">${L('Giả định: đội tin điều gì sẽ xảy ra?', 'Assumption: what does the team believe will happen?')}</label><textarea id="sh-assume" data-sh="assume">${esc(sh.assume)}</textarea>
+          <label class="ctl" for="sh-risk">${L('Rủi ro: biến nào có thể làm dự báo sai?', 'Risk: what could make the forecast wrong?')}</label><textarea id="sh-risk" data-sh="risk">${esc(sh.risk)}</textarea>
+        </div><div>
+          <label class="ctl" for="sh-disagree">${L('Bất đồng: thành viên nào không đồng ý, ở điểm nào?', 'Disagreement: who disagreed, and on what?')}</label><textarea id="sh-disagree" data-sh="disagree">${esc(sh.disagree)}</textarea>
+          <label class="ctl req" for="sh-ceo">${L('CEO chọn phương án nào và vì sao?', 'Which option did the CEO choose, and why?')}</label><textarea id="sh-ceo" data-sh="ceo">${esc(sh.ceo)}</textarea>
+        </div></div>
+        <p class="small" style="margin-top:8px">${L('Dự báo ghi vào phiếu', 'Forecast on the sheet')}: ${wf.length ? `<b class="num">${money(wf[wf.length - 1].profit)}</b> (${L('lần «Nếu – Thì» gần nhất', 'latest what-if')})` : `<span class="muted">${L('chưa chạy «Nếu – Thì»', 'no what-if yet')}</span>`}</p>
+        <p style="margin-top:14px"><button class="btn" id="commitBtn" type="button">⑦ ${L('CEO chốt vụ', 'CEO commits season')} ${n} →</button></p>
+        ${ERR ? `<p class="err">${esc(ERR)}</p>` : ''}
+      </div>`;
+
+    // ---- sự kiện giao diện ----
+    const rerender = () => { save(); renderPlay(); };
+    document.querySelectorAll('[data-op]').forEach(b => b.onclick = () => { const o = APP.operator; APP.operator = b.dataset.op; logEv('SET_OPERATOR', o, APP.operator); rerender(); });
+    document.querySelectorAll('[data-opt]').forEach(b => b.onclick = () => { const o = dec.option; dec.option = +b.dataset.opt; logEv('CHOOSE_OPTION', o, dec.option); rerender(); });
     document.querySelectorAll('[data-intel]').forEach(b => b.onclick = () => {
-      const id = b.dataset.intel; DEC.intel = DEC.intel.includes(id) ? DEC.intel.filter(x => x !== id) : DEC.intel.concat([id]).slice(0, 2); renderPlay();
+      const id = b.dataset.intel, had = dec.intel.includes(id);
+      dec.intel = had ? dec.intel.filter(x => x !== id) : dec.intel.concat([id]).slice(0, 2);
+      logEv(had ? 'UNBUY_INTEL' : 'BUY_INTEL', '', id); rerender();
     });
-    document.querySelectorAll('[data-pri]').forEach(b => b.onclick = () => { DEC.priority = b.dataset.pri; renderPlay(); });
-    document.querySelectorAll('[data-ind]').forEach(b => b.onclick = () => { DEC.induce = b.dataset.ind === '1'; renderPlay(); });
-    if ($('linked')) $('linked').oninput = e => { DEC.linked = +e.target.value / 100; $('linkedV').textContent = pct(DEC.linked); };
-    document.querySelectorAll('[data-ch]').forEach(r => r.oninput = () => {
-      DEC.alloc[r.dataset.ch] = +r.value;
-      const ids = D.channels.map(c => c.id).filter(ok), n2 = E.normalizeAlloc(DEC.alloc, ids);
-      ids.forEach(id => { $('pct-' + id).textContent = pct(n2[id]); });
+    document.querySelectorAll('[data-pri]').forEach(b => b.onclick = () => { const o = dec.priority; dec.priority = b.dataset.pri; logEv('CHANGE_PRIORITY', o, dec.priority); rerender(); });
+    document.querySelectorAll('[data-ind]').forEach(b => b.onclick = () => { const o = dec.induce; dec.induce = b.dataset.ind === '1'; logEv('CHANGE_INDUCE', o, dec.induce); rerender(); });
+    if ($('linked')) {
+      let before = dec.linked;
+      $('linked').oninput = e => { dec.linked = +e.target.value / 100; $('linkedV').textContent = pct(dec.linked); };
+      $('linked').onchange = () => { logEv('CHANGE_LINKED', before, dec.linked); before = dec.linked; save(); };
+    }
+    document.querySelectorAll('[data-ch]').forEach(r => {
+      let before = dec.alloc[r.dataset.ch] || 0;
+      r.oninput = () => {
+        dec.alloc[r.dataset.ch] = +r.value;
+        const n2 = E.normalizeAlloc(Object.fromEntries(okIds.map(id => [id, dec.alloc[id]])), okIds);
+        okIds.forEach(id => { $('pct-' + id).textContent = pct(n2[id]); });
+      };
+      r.onchange = () => { logEv('CHANGE_ALLOC_' + r.dataset.ch, before, +r.value); before = +r.value; save(); };
     });
-    $('commitBtn').onclick = () => {
-      GAME = E.playSeason(D, GAME, JSON.parse(JSON.stringify(DEC)));
-      const keepAlloc = DEC.alloc, keepLinked = DEC.linked;
-      DEC = freshDec(); DEC.alloc = keepAlloc; DEC.linked = keepLinked;
-      const nextOwned = GAME.assets;
-      const firstFree = D.priorities.find(p => !((p.id === 'area' && nextOwned.area) || (p.id === 'pack' && nextOwned.pack) || (p.id === 'trace' && nextOwned.trace) || (p.id === 'freezer' && nextOwned.freezer) || (p.id === 'test' && nextOwned.test >= 2)));
-      DEC.priority = firstFree ? firstFree.id : 'finance';
-      render(); window.scrollTo(0, 0);
+    document.querySelectorAll('[data-adv]').forEach(b => b.onclick = () => {
+      const x = advice[+b.dataset.adv];
+      Object.entries(x.apply).forEach(([k, v]) => { dec[k] = k === 'alloc' ? Object.assign({}, v) : (Array.isArray(v) ? v.slice() : v); });
+      logEv('APPLY_ADVICE', x.who.toUpperCase(), x.apply); rerender();
+    });
+    $('wfBtn').onclick = () => {
+      if ((APP.whatifs[n] || []).length >= MAX_WHATIF) return;
+      const f = E.forecast(D, g, JSON.parse(JSON.stringify(dec)));
+      const label = `${nm(D.priorities.find(p => p.id === dec.priority))} · ${role.ownFarm ? '' : pct(dec.linked) + ' ' + L('vùng có mã', 'coded') + ' · '}${CH_IDS.filter(id => okIds.includes(id) && dec.alloc[id] > 0).map(id => id + ' ' + (dec.alloc[id] || 0)).join('/')}`;
+      APP.whatifs[n] = (APP.whatifs[n] || []).concat([{ label, profit: f.profit, cashAfter: f.cashAfter, pBlockCN: f.pBlockCN, depotEstimate: f.depotEstimate, rep: f.rep, decision: JSON.parse(JSON.stringify(dec)) }]);
+      logEv('RUN_WHATIF', label, nf(f.profit, 2)); rerender();
+    };
+    document.querySelectorAll('[data-lq]').forEach(b => b.onclick = () => {
+      if ((APP.lumina[n] || []).length >= MAX_LUMINA) return;
+      const ans = luminaAnswer(b.dataset.lq);
+      APP.lumina[n] = (APP.lumina[n] || []).concat([Object.assign({ q: b.dataset.lq }, ans)]);
+      logEv('ASK_LUMINA', '', b.dataset.lq); rerender();
+    });
+    document.querySelectorAll('[data-goal]').forEach(b => b.onclick = () => { APP.sheets[n] = Object.assign({}, APP.sheets[n], { goal: b.dataset.goal }); logEv('SHEET_GOAL', '', b.dataset.goal); rerender(); });
+    document.querySelectorAll('[data-sh]').forEach(t => {
+      t.oninput = () => { APP.sheets[n] = Object.assign({}, APP.sheets[n], { [t.dataset.sh]: t.value }); };
+      t.onchange = () => { logEv('EDIT_SHEET_' + t.dataset.sh.toUpperCase(), '', t.value.length + ' chars'); save(); };
+    });
+    $('commitBtn').onclick = () => commit();
+    startTimer();
+  }
+
+  function commit() {
+    const n = roundN(), sh = APP.sheets[n] || {};
+    if (!sh.goal || !(sh.assume || '').trim() || (sh.ceo || '').trim().length < 10) {
+      ERR = L('Phiếu quyết định còn thiếu: mục tiêu, giả định và lý do của CEO (tối thiểu 10 ký tự).', 'The decision sheet is incomplete: goal, assumption and the CEO\'s reason (at least 10 characters).');
+      logEv('COMMIT_REJECTED', '', 'SHEET_INCOMPLETE'); save(); renderPlay();
+      const el = document.querySelector('.err'); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    if (!confirm(L('Chốt vụ ' + n + '? Đã chốt thì không sửa được.', 'Commit season ' + n + '? Commits are final.'))) return;
+    ERR = '';
+    const dec = JSON.parse(JSON.stringify(APP.dec));
+    const f = E.forecast(D, APP.game, dec);
+    const elapsed = Math.round((Date.now() - APP.roundStart) / 1000);
+    APP.timing[n] = { start: new Date(APP.roundStart).toISOString(), commit: new Date().toISOString(), seconds: elapsed, onTime: !APP.timerMin || elapsed <= APP.timerMin * 60, operator: APP.operator };
+    APP.sheets[n] = Object.assign({}, sh, { forecastFinal: f.profit, forecastWhatIf: (APP.whatifs[n] || []).length ? APP.whatifs[n][APP.whatifs[n].length - 1].profit : null, pBlockCN: f.pBlockCN });
+    APP.game = E.playSeason(D, APP.game, dec);
+    const r = APP.game.history[APP.game.history.length - 1];
+    APP.flags[n - 1] = E.flagFor(RIVALS, r);
+    logEv('COMMIT', '', JSON.stringify(dec), true);
+    // giữ phương án làm điểm xuất phát vụ sau
+    const next = freshDec(); next.alloc = dec.alloc; next.linked = dec.linked; next.intel = [];
+    const free = D.priorities.find(p => !owned(APP.game.assets, p.id));
+    next.priority = free ? free.id : 'finance';
+    APP.dec = next;
+    save(); render(); window.scrollTo(0, 0);
+  }
+
+  // ================= màn 3: kết quả vụ + nhật ký SEC =================
+  function resultsHTML(r) {
+    const st = { ok: '✓', blocked: L('Bị chặn, bán nội địa giá rớt', 'Blocked, sold at home as rejects'), destroyed: L('Bị tiêu hủy', 'Destroyed') };
+    const audit = { pass: L('Đạt kiểm tra của Hải quan Trung Quốc', 'Passed the China Customs audit'), fail: L('Không đạt kiểm tra: mã bị tạm dừng vụ sau', 'Failed the audit: codes suspended next season'), na: L('Không đi chính ngạch nên không bị kiểm tra', 'No official exports, so no audit') };
+    const notes = { fraud_exposed: L('Vụ dán nhãn Thái bị phát hiện: uy tín sụp đổ, mã bị tạm dừng.', 'The Thai relabelling was exposed: reputation collapses and codes are suspended.'), fraud_hidden: L('Vụ dán nhãn chưa bị phát hiện, nhưng đội đã góp phần làm hỏng danh tiếng sầu riêng Việt.', 'The relabelling was not exposed, but the team helped damage the reputation of Vietnamese durian.'), suspended: L('Mã chính ngạch bị tạm dừng vụ sau.', 'Official-trade codes suspended next season.'), jp_destroyed: L('Lô sang Nhật bị tiêu hủy vì dư lượng.', 'The Japan lot was destroyed for residues.') };
+    return `<div class="kpis">
+        <div class="kpi"><small>${L('Doanh thu', 'Revenue')}</small><b class="num">${money(r.revenue)}</b></div>
+        <div class="kpi"><small>${L('Mua hàng / giá thành', 'Purchases / farm cost')}</small><b class="num">${money(r.purchase)}</b></div>
+        <div class="kpi"><small>${L('Hao hụt', 'Losses')}</small><b class="num">${pct(r.loss)}</b></div>
+        <div class="kpi"><small>${L('Lợi nhuận', 'Profit')}</small><b class="num ${r.profit >= 0 ? 'pos' : 'neg'}">${money(r.profit)}</b></div></div>
+      <div class="tblwrap" style="margin-top:10px"><table><tr><th>${L('Kênh', 'Channel')}</th><th>${L('Tấn', 'Tonnes')}</th><th>${L('Giá (nghìn đ/kg)', 'Price (VND k/kg)')}</th><th>${L('Doanh thu', 'Revenue')}</th><th>${L('Tình trạng', 'Status')}</th></tr>
+        ${r.byChannel.filter(c => c.qty > 0.5).map(c => { const ch = D.channels.find(x => x.id === c.id); return `<tr><td>${ch.emoji} ${nm(ch)}</td><td class="num">${nf(c.qty)}</td><td class="num">${nf(c.price)}</td><td class="num">${money(c.revenue)}</td><td class="${c.status === 'ok' ? 'ok' : 'bad'}">${st[c.status]}</td></tr>`; }).join('')}
+      </table></div>
+      ${r.audit ? `<p class="note">${audit[r.audit]}</p>` : ''}
+      ${r.notes.map(x => notes[x] ? `<p class="note">${notes[x]}</p>` : '').join('')}`;
+  }
+
+  function arenaHTML(n) {
+    const rows = [{ name: L('Đội của bạn', 'Your team'), p: APP.game.history[n - 1].profit, me: true }]
+      .concat(RIVALS.map(r => ({ name: nm(rivalInfo(r.id)), p: r.state.history[n - 1].profit, img: rivalInfo(r.id).img })));
+    const mx = Math.max(...rows.map(r => Math.abs(r.p)), 0.01);
+    return `<div class="arena">${rows.map(r => `<div class="arow"><span>${r.me ? '⭐ <b>' + r.name + '</b>' : esc(r.name)}</span><div class="bar"><i class="${r.me ? 'me' : 'ai'}" style="width:${Math.max(2, 100 * Math.abs(r.p) / mx)}%"></i></div><span class="num ${r.p >= 0 ? 'pos' : 'neg'}">${money(r.p)}</span></div>`).join('')}</div>`;
+  }
+
+  function renderResult() {
+    const n = APP.game.history.length, r = APP.game.history[n - 1], s = D.seasons[n - 1], sh = APP.sheets[n] || {}, fl = APP.flags[n - 1];
+    const fc = sh.forecastWhatIf !== null && sh.forecastWhatIf !== undefined ? sh.forecastWhatIf : sh.forecastFinal;
+    const j = APP.journals['draft' + n] || {}, db = APP.debriefs[n] || {}, lq = APP.lumina[n] || [];
+    const needDebrief = n % 2 === 0;
+    $('app').innerHTML = `
+      <section class="hero" style="padding-bottom:6px"><span class="eyebrow">${L('Kết quả vụ', 'Season result')} ${n} · ${s.label}</span>
+        <h1 style="font-size:clamp(22px,3.6vw,30px)">${fl.win ? '🟩 ' + L('Đội cắm cờ vụ này!', 'Your team plants the flag!') : '🟥 ' + L('Đối thủ giữ cờ vụ này', 'A rival takes this season\'s flag')}</h1>
+        ${flagsHTML(0)}</section>
+      <div class="grid2">
+        <div class="card"><h2>${L('Báo cáo vụ', 'Season report')}</h2>${resultsHTML(r)}</div>
+        <div class="card"><h2>${L('Đấu trường: lợi nhuận vụ', 'Arena: season profit')}</h2>${arenaHTML(n)}
+          ${fl.rival ? `<p class="hint">${L('Đối thủ mạnh nhất vụ này', 'Strongest rival this season')}: ${esc(nm(rivalInfo(fl.rival.id)))} (${money(fl.rival.profit)})</p>` : ''}
+          <h3>${L('Dự báo so với thực tế', 'Forecast vs actual')}</h3>
+          <div class="kpis" style="grid-template-columns:repeat(3,1fr)">
+            <div class="kpi"><small>${L('Dự báo', 'Forecast')}</small><b class="num">${money(fc)}</b></div>
+            <div class="kpi"><small>${L('Thực tế', 'Actual')}</small><b class="num">${money(r.profit)}</b></div>
+            <div class="kpi"><small>${L('Sai lệch', 'Gap')}</small><b class="num ${r.profit - fc >= 0 ? 'pos' : 'neg'}">${(r.profit - fc >= 0 ? '+' : '') + money(r.profit - fc)}</b></div></div>
+          <p class="hint">${L('Giá vựa thực tế', 'Actual depot price')} ${nf(r.depot)} ${L('nghìn đ/kg', 'VND k/kg')}${r.blockedCN ? ' · ' + L('lô chính ngạch bị chặn', 'official lot blocked') : ''}.</p></div>
+      </div>
+
+      <div class="card sheet"><h2>${L('Nhật ký SEC', 'SEC journal')}</h2>
+        <label class="ctl req">${L('Nguyên nhân chính của sai lệch', 'Main cause of the gap')}</label>
+        <div class="radios">${Object.entries(CAUSES())
+          .map(([k, v]) => `<button type="button" class="chip ${j.cause === k ? 'on' : ''}" data-cause="${k}">${v}</button>`).join('')}</div>
+        <div class="grid2"><div>
+          <label class="ctl" for="j-good">${L('Điều đội làm tốt', 'What went well')}</label><textarea id="j-good" data-j="good">${esc(j.good)}</textarea>
+          <label class="ctl" for="j-bad">${L('Sai lầm hoặc điều bất ngờ', 'Mistakes or surprises')}</label><textarea id="j-bad" data-j="bad">${esc(j.bad)}</textarea>
+        </div><div>
+          <label class="ctl req" for="j-next">${L('Thay đổi dự kiến ở vụ sau', 'Planned change next season')}</label><textarea id="j-next" data-j="next">${esc(j.next)}</textarea>
+          ${lq.length ? `<label class="ctl">${L('Ý kiến Lumina: đội dùng hay bác bỏ?', 'Lumina\'s points: used or rejected?')}</label>
+            ${lq.map(x => `<div class="small" style="margin:4px 0">${nm(D.luminaQuestions.find(q => q.id === x.q))}<div class="radios">${[['used', L('Dùng', 'Used')], ['rejected', L('Bác bỏ', 'Rejected')], ['ignored', L('Chưa dùng', 'Not used')]].map(([k, v]) => `<button type="button" class="chip ${(j.lumina || {})[x.q] === k ? 'on' : ''}" data-lu="${x.q}" data-luv="${k}">${v}</button>`).join('')}</div></div>`).join('')}` : `<p class="hint" style="margin-top:12px">${L('Vụ này đội không hỏi Lumina.', 'The team did not ask Lumina this season.')}</p>`}
+        </div></div>
+        ${needDebrief ? `<h3 style="margin-top:16px">🗣️ ${L('Debrief sau hai vụ (giảng viên dẫn dắt 15–20 phút)', 'Debrief after two seasons (instructor-led, 15–20 min)')}</h3>
+          <div class="grid2">${D.debrief.map(q => `<div><label class="ctl" for="db-${q.id}">${nm(q)}</label><textarea id="db-${q.id}" data-db="${q.id}">${esc(db[q.id])}</textarea></div>`).join('')}</div>` : ''}
+        <p style="margin-top:14px"><button class="btn" id="nextBtn" type="button">${n < D.seasons.length ? L('Lưu nhật ký và sang vụ', 'Save journal, go to season') + ' ' + (n + 1) + ' →' : L('Lưu nhật ký và xem báo cáo cuối', 'Save journal and see the final report') + ' →'}</button></p>
+        ${ERR ? `<p class="err">${esc(ERR)}</p>` : ''}
+      </div>`;
+    const draft = () => (APP.journals['draft' + n] = APP.journals['draft' + n] || {});
+    document.querySelectorAll('[data-cause]').forEach(b => b.onclick = () => { draft().cause = b.dataset.cause; save(); renderResult(); });
+    document.querySelectorAll('[data-lu]').forEach(b => b.onclick = () => { const d = draft(); d.lumina = Object.assign({}, d.lumina, { [b.dataset.lu]: b.dataset.luv }); save(); renderResult(); });
+    document.querySelectorAll('[data-j]').forEach(t => { t.oninput = () => { draft()[t.dataset.j] = t.value; }; t.onchange = save; });
+    document.querySelectorAll('[data-db]').forEach(t => { t.oninput = () => { APP.debriefs[n] = Object.assign({}, APP.debriefs[n], { [t.dataset.db]: t.value }); }; t.onchange = save; });
+    $('nextBtn').onclick = () => {
+      const d = draft();
+      if (!d.cause || !(d.next || '').trim()) {
+        ERR = L('Nhật ký còn thiếu: nguyên nhân sai lệch và thay đổi dự kiến ở vụ sau.', 'The journal is incomplete: cause of the gap and planned change.');
+        save(); renderResult(); const el = document.querySelector('.err'); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' }); return;
+      }
+      ERR = '';
+      APP.journals[n] = Object.assign({ deviation: r.profit - fc }, d);
+      delete APP.journals['draft' + n];
+      logEv('WRITE_JOURNAL', '', JSON.stringify({ cause: d.cause, lumina: d.lumina || {} }));
+      if (needDebrief) logEv('WRITE_DEBRIEF', '', Object.keys(APP.debriefs[n] || {}).filter(k => (APP.debriefs[n][k] || '').trim()).join('|'));
+      APP.roundStart = Date.now();
+      save(); render(); window.scrollTo(0, 0);
     };
   }
 
-  function resultsHTML(r) {
-    return `<h2>${t('results')} ${r.n}</h2>
-      <div class="kpis">
-        <div class="kpi"><small>${t('revenue')}</small><b class="num">${money(r.revenue)}</b></div>
-        <div class="kpi"><small>${t('purchase')}</small><b class="num">${money(r.purchase)}</b></div>
-        <div class="kpi"><small>${t('loss')}</small><b class="num">${pct(r.loss)}</b></div>
-        <div class="kpi"><small>${t('profit')}</small><b class="num ${r.profit >= 0 ? 'pos' : 'neg'}">${money(r.profit)}</b></div></div>
-      <div class="tblwrap" style="margin-top:10px"><table><tr><th>${t('channel')}</th><th>${t('qty')}</th><th>${t('price')}</th><th>${t('revenue')}</th><th>${t('status')}</th></tr>
-        ${r.byChannel.filter(c => c.qty > 0.5).map(c => { const ch = D.channels.find(x => x.id === c.id); return `<tr><td>${ch.emoji} ${nm(ch)}</td><td class="num">${nf(c.qty)}</td><td class="num">${nf(c.price)}</td><td class="num">${money(c.revenue)}</td><td class="${c.status === 'ok' ? 'ok' : 'bad'}">${T[LANG].st[c.status]}</td></tr>`; }).join('')}
-      </table></div>
-      ${r.audit ? `<p class="note">${T[LANG].audit[r.audit]}</p>` : ''}
-      ${r.notes.map(n => `<p class="note">${T[LANG].notes[n]}</p>`).join('')}`;
+  // ================= màn 4: báo cáo cuối =================
+  // Chỉ số thích nghi: tổng thay đổi quyết định đã chuẩn hóa về [0,1] cho từng biến
+  function adaptationIndex(h, k) {
+    const a = h[k - 2].decision, b = h[k - 1].decision;
+    const alloc = CH_IDS.reduce((x, id) => x + Math.abs((a.alloc[id] || 0) - (b.alloc[id] || 0)), 0) / 2;
+    const intelA = new Set(a.intel), intelB = new Set(b.intel), uni = new Set([...a.intel, ...b.intel]);
+    const intel = uni.size ? 1 - [...intelA].filter(x => intelB.has(x)).length / uni.size : 0;
+    return Math.abs(a.linked - b.linked) + (a.priority !== b.priority ? 1 : 0) + alloc + intel;
   }
 
-  // ---------- màn 3 ----------
+  function csv(rows, cols) {
+    const q = v => { const s = v === null || v === undefined ? '' : String(v); return /[",\n;]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+    return '﻿' + [cols.join(',')].concat(rows.map(r => cols.map(c => q(r[c])).join(','))).join('\n');
+  }
+  function download(name, text, type) {
+    const blob = new Blob([text], { type });
+    const el = document.createElement('a'); el.href = URL.createObjectURL(blob); el.download = name; el.click();
+    setTimeout(() => URL.revokeObjectURL(el.href), 1000);
+  }
+  function roundRows() {
+    return APP.game.history.map(r => {
+      const n = r.n, sh = APP.sheets[n] || {}, j = APP.journals[n] || {}, tm = APP.timing[n] || {}, fl = APP.flags[n - 1] || {};
+      const row = {
+        class_id: APP.cls || 'local', team_id: APP.team || 'TEAM', firm: APP.roleId, round_id: 'R' + n, season: r.season,
+        priority: r.decision.priority, linked: r.decision.linked, induce: r.decision.induce ? 1 : 0, intel: r.decision.intel.join('|'), event: r.eventId, option: r.option,
+        whatif_runs: (APP.whatifs[n] || []).length, lumina_questions: (APP.lumina[n] || []).map(x => x.q).join('|'),
+        goal: sh.goal, forecast_profit: sh.forecastWhatIf !== null && sh.forecastWhatIf !== undefined ? sh.forecastWhatIf : sh.forecastFinal, forecast_p_block: sh.pBlockCN,
+        commit_time: tm.commit, decision_seconds: tm.seconds, on_time: tm.onTime ? 1 : 0, committed_by: (tm.operator || '').toUpperCase(),
+        depot_price: r.depot, volume_t: r.volume, loss: r.loss, revenue: r.revenue, purchase: r.purchase, logistics: r.logistics, investment: r.priorityCost, intel_cost: r.intelCost, finance_cost: r.finance,
+        profit: r.profit, blocked_cn: r.blockedCN ? 1 : 0, audit: r.audit || '', flag_win: fl.win ? 1 : 0,
+        journal_cause: j.cause, deviation: j.deviation, adaptation_index: n > 1 ? adaptationIndex(APP.game.history, n) : ''
+      };
+      CH_IDS.forEach(id => { const c = r.byChannel.find(x => x.id === id); row['qty_' + id] = c ? c.qty : 0; row['status_' + id] = c ? c.status : ''; });
+      RIVALS.forEach(rv => { const h = rv.state.history[n - 1]; row['rival_' + rv.id + '_profit'] = h.profit; row['rival_' + rv.id + '_blocked'] = h.blockedCN ? 1 : 0; });
+      Object.keys(row).forEach(k => { if (typeof row[k] === 'number' && !Number.isInteger(row[k])) row[k] = Math.round(row[k] * 10000) / 10000; });
+      return row;
+    });
+  }
+
+  const GOALS = () => ({ share: L('Thị phần chính ngạch', 'Official market share'), profit: L('Lợi nhuận', 'Profit'), cash: L('Tiền mặt', 'Cash'), rep: L('Uy tín, tuân thủ', 'Reputation, compliance'), capability: L('Năng lực dài hạn', 'Long-term capability') });
+  const CAUSES = () => ({ event: L('Biến cố', 'Event'), price: L('Giá vựa khác ước tính', 'Depot price differed'), inspection: L('Kiểm dịch, kiểm tra', 'Inspection, audit'), assumption: L('Giả định sai', 'Wrong assumption'), rivals: L('Đối thủ', 'Rivals'), other: L('Khác', 'Other') });
+
   function renderEnd() {
-    const role = D.roles[GAME.roleId], S = E.summary(D, GAME);
-    const B = T[LANG].badges;
-    const used = new Set();
-    GAME.history.forEach(r => { [r.eventId, D.seasons[r.n - 1].anchor].forEach(k => { const f = D.facts[k] || D.facts[(D.events.find(e => e.id === k) || {}).src]; if (f) used.add(f.src); }); });
-    ['PROTO', 'KQTC', 'CAILAY', 'BC0224'].forEach(k => used.add(k));
+    const g = APP.game, role = D.roles[g.roleId], S = E.summary(D, g);
+    const badges = { clean_official: L('Chính ngạch sạch: không lô nào bị chặn', 'Clean official trade: no lot blocked'), diversified: L('Đa dạng thị trường: từ 4 kênh', 'Diversified: 4 or more channels'), fake_origin: L('Dính líu giả xuất xứ', 'Involved in fake origin'), exhausted_trees: L('Vườn kiệt sức vì xử lý nghịch vụ liên tục', 'Exhausted orchard from repeated off-season inducing'), resilient: L('Chống chịu: không vụ nào lỗ', 'Resilient: no loss-making season') };
+    const flagsWon = APP.flags.filter(f => f && f.win).length;
+    const rivS = RIVALS.map(r => ({ id: r.id, S: E.summary(D, r.state) }));
+    const board = [{ name: L('Đội của bạn', 'Your team'), me: true, total: S.total, profit: S.profit }].concat(rivS.map(x => ({ name: nm(rivalInfo(x.id)), img: rivalInfo(x.id).img, total: x.S.total, profit: x.S.profit }))).sort((a, b) => b.total - a.total);
+    const used = new Set(['PROTO', 'KQTC', 'CAILAY', 'BC0224']);
+    g.history.forEach(r => { [D.seasons[r.n - 1].anchor, (D.events.find(e => e.id === r.eventId) || {}).src].forEach(k => { const f = D.facts[k]; if (f) used.add(f.src); }); });
+    const mae = g.history.reduce((x, r) => { const sh = APP.sheets[r.n] || {}; const fc = sh.forecastWhatIf !== null && sh.forecastWhatIf !== undefined ? sh.forecastWhatIf : sh.forecastFinal; return x + Math.abs(r.profit - (fc || 0)); }, 0) / g.history.length;
     $('app').innerHTML = `
-      <section class="hero"><span class="eyebrow">${role.emoji} ${nm(role)}</span><h1>${t('endTitle')}</h1></section>
+      <section class="hero"><div class="hero-row"><div><span class="eyebrow">${role.emoji} ${nm(role)} · ${L('Lớp', 'Class')} ${esc(APP.cls || '—')} · ${L('Đội', 'Team')} ${esc(APP.team || '—')}</span>
+        <h1>${L('Báo cáo sau 6 vụ', 'Report after 6 seasons')}</h1>${flagsHTML(0)}
+        <p class="lead">${L(`Đội cắm ${flagsWon}/6 cờ. Sai lệch bình quân giữa dự báo và lợi nhuận thực tế: ${money(mae)} mỗi vụ.`, `Your team planted ${flagsWon}/6 flags. Mean absolute gap between forecast and actual profit: ${money(mae)} per season.`)}</p></div>
+        <div class="hero-cast"><img src="${IMG(flagsWon >= 3 ? 'lumina-ao-dai-cheer.webp' : 'lumina-ao-dai-thumbsup.webp')}" alt="Lumina"></div></div></section>
       <div class="grid2">
         <div class="card"><div class="kpis" style="grid-template-columns:1fr 1fr">
-          <div class="kpi"><small>${t('total')}</small><b class="num">${nf(S.total)}/100</b></div>
-          <div class="kpi"><small>${t('totalProfit')}</small><b class="num ${S.profit >= 0 ? 'pos' : 'neg'}">${money(S.profit)}</b><small>${t('bench')}: ${money(S.bench)}</small></div></div>
-          <h3>${t('formula')}</h3>
-          ${Object.keys(D.scoreWeights).map(k => `<div class="srow"><span>${T[LANG].parts[k]} (${D.scoreWeights[k]}%)</span><div class="bar"><i style="width:${S.parts[k]}%"></i></div><span class="num">${nf(S.parts[k])}</span></div>`).join('')}
-          <p style="margin-top:10px">${S.badges.map(b => `<span class="badge">${B[b]}</span>`).join('')}</p>
-          <p class="small muted">${t('chUsed')}: ${S.channelsUsed.map(id => nm(D.channels.find(c => c.id === id))).join(', ')}</p></div>
-        <div class="card"><h3>${t('debrief')}</h3><ol class="qa small"><li>${t('q1')}</li><li>${t('q2')}</li><li>${t('q3')}</li><li>${t('q4')}</li></ol>
-          <p class="hint">${fact('share57')}</p><p class="hint">${fact('china92')}</p></div>
+          <div class="kpi"><small>${L('Điểm tổng trong game', 'In-game total')}</small><b class="num">${nf(S.total)}/100</b></div>
+          <div class="kpi"><small>${L('Tổng lợi nhuận', 'Total profit')}</small><b class="num ${S.profit >= 0 ? 'pos' : 'neg'}">${money(S.profit)}</b><small>${L('mốc của vai', 'role benchmark')}: ${money(S.bench)}</small></div></div>
+          <h3>${L('Điểm tổng 0–100', 'Total score 0–100')}</h3>
+          ${Object.keys(D.scoreWeights).map(k => `<div class="srow"><span>${partName(k)} (${D.scoreWeights[k]}%)</span><div class="bar"><i style="width:${S.parts[k]}%"></i></div><span class="num">${nf(S.parts[k])}</span></div>`).join('')}
+          <p style="margin-top:10px">${S.badges.map(b => `<span class="badge">${badges[b]}</span>`).join('')}</p></div>
+        <div class="card"><h2>${L('Bảng xếp hạng cuối', 'Final leaderboard')}</h2>
+          <div class="tblwrap"><table class="lb"><tr><th>#</th><th>${L('Doanh nghiệp', 'Firm')}</th><th>${L('Điểm', 'Score')}</th><th>${L('Lợi nhuận', 'Profit')}</th></tr>
+          ${board.map((b, i) => `<tr><td>${i + 1}</td><td>${b.img ? `<img src="${IMG(b.img)}" alt="">` : '⭐ '}${b.me ? '<b>' + b.name + '</b>' : esc(b.name)}</td><td class="num">${nf(b.total)}</td><td class="num ${b.profit >= 0 ? 'pos' : 'neg'}">${money(b.profit)}</td></tr>`).join('')}</table></div>
+          <p class="hint">${L('Đối thủ dùng chiến lược cố định; so sánh để thảo luận lối đi nào bền vững, không phải để học thuộc.', 'Rivals use fixed strategies; compare them to discuss which path is sustainable, not to memorise.')}</p></div>
       </div>
-      <div class="card"><h3>${t('sources')}</h3><ul class="qa small">${[...used].map(k => `<li><b>[${k}]</b> ${esc(D.sources[k])}</li>`).join('')}</ul></div>
-      <p><button class="btn" id="dlBtn" type="button">${t('download')}</button> <button class="btn ghost" id="againBtn" type="button">${t('again')}</button></p>`;
-    $('dlBtn').onclick = () => {
-      const blob = new Blob([JSON.stringify({ game: 'ho-chieu-sau-rieng', role: GAME.roleId, summary: S, log: E.decisionLog(GAME, { cohort: COHORT || 'local' }) }, null, 2)], { type: 'application/json' });
-      const el = document.createElement('a'); el.href = URL.createObjectURL(blob); el.download = 'ho-chieu-sau-rieng-nhat-ky.json'; el.click(); URL.revokeObjectURL(el.href);
+
+      <div class="card"><h2>${L('Dấu vết quyết định', 'Decision trail')}</h2>
+        <div class="tblwrap"><table><tr><th>${L('Vụ', 'Season')}</th><th>${L('Mục tiêu', 'Goal')}</th><th>${L('Ưu tiên', 'Priority')}</th><th>${L('Dự báo', 'Forecast')}</th><th>${L('Thực tế', 'Actual')}</th><th>${L('Nguyên nhân (SEC)', 'Cause (SEC)')}</th><th>${L('Chỉ số thích nghi', 'Adaptation index')}</th><th>${L('Đúng hạn', 'On time')}</th><th>${L('Cờ', 'Flag')}</th></tr>
+          ${roundRows().map((x, i) => `<tr><td>${i + 1}</td><td>${esc(GOALS()[x.goal] || '')}</td><td>${esc(nm(D.priorities.find(p => p.id === x.priority)))}</td><td class="num">${money(x.forecast_profit || 0)}</td><td class="num ${x.profit >= 0 ? 'pos' : 'neg'}">${money(x.profit)}</td><td>${esc(CAUSES()[x.journal_cause] || '')}</td><td class="num">${x.adaptation_index === '' ? '—' : nf(x.adaptation_index, 2)}</td><td>${x.on_time ? '✓' : '⏰'}</td><td>${x.flag_win ? '🟩' : '🟥'}</td></tr>`).join('')}
+        </table></div>
+        <p class="hint">${L('Chỉ số thích nghi = tổng thay đổi so với vụ trước, mỗi biến chuẩn hóa về 0–1 (tỷ lệ vùng có mã, ưu tiên, cơ cấu kênh, nguồn tin).', 'Adaptation index = total change from the previous season, each variable normalised to 0–1 (coded share, priority, channel mix, information sources).')}</p></div>
+
+      <div class="grid2">
+        <div class="card"><h3>${L('Câu hỏi thảo luận cuối kỳ', 'Final discussion questions')}</h3><ol class="qa small">
+          <li>${L('Vì sao mã số vùng trồng và mã cơ sở đóng gói vừa là rào cản vừa là cơ hội? Liên hệ khái niệm rào cản kỹ thuật và vệ sinh dịch tễ (TBT/SPS).', 'Why are planting-area and packing-facility codes both a barrier and an opportunity? Relate this to technical and sanitary barriers (TBT/SPS).')}</li>
+          <li>${L('Phụ thuộc 92% vào một thị trường có rủi ro gì? Đội đã đa dạng hóa kênh như thế nào?', 'What are the risks of relying on one market for 92% of exports? How did your team diversify?')}</li>
+          <li>${L('Vì sao giá sầu riêng Việt Nam tại Trung Quốc thấp hơn Thái Lan dù thị phần cao hơn? Nâng cấp chuỗi giá trị nên bắt đầu từ đâu?', 'Why is Vietnamese durian cheaper than Thai durian in China despite a larger share? Where should upgrading start?')}</li>
+          <li>${L('So sánh lối chơi của ba đối thủ đội đã gặp: lối đi tắt (thương lái, tiểu ngạch) và lối tuân thủ cao, bên nào bền vững hơn qua 6 vụ? Nếu có doanh nghiệp «dán nhãn Thái», nhà nước, hiệp hội và doanh nghiệp nên làm gì để giữ uy tín cho cả ngành?', 'Compare the three rivals you met: did the shortcut path (traders, border trade) or the high-compliance path hold up better over 6 seasons? If a firm relabels fruit as Thai, what should the state, associations and firms do to protect the industry\'s reputation?')}</li>
+          <li>${L('Ý kiến nào của Lumina đội đã bác bỏ, và vì sao?', 'Which of Lumina\'s points did the team reject, and why?')}</li></ol>
+          <p class="hint">${fact('share57')}</p><p class="hint">${fact('china92')}</p></div>
+        <div class="card"><h3>${L('Rubric gợi ý (kết quả game 20%)', 'Suggested rubric (game result 20%)')}</h3>
+          <div class="tblwrap"><table>${D.rubric.map(r => `<tr><td>${nm(r)}</td><td class="num">${r.w}%</td></tr>`).join('')}</table></div>
+          <h3>${L('Xuất dữ liệu cho giảng viên', 'Export data for the instructor')}</h3>
+          <p class="small muted">${L('Dữ liệu chỉ nằm trên máy này cho đến khi đội tải về và nộp. Không có họ tên.', 'Data stays on this device until the team downloads and submits it. No names are stored.')}</p>
+          <p style="margin-top:8px"><button class="btn" id="csvRounds" type="button">${L('Bảng đội – vụ (CSV)', 'Team–season table (CSV)')}</button>
+            <button class="btn ghost" id="csvEvents" type="button">${L('Nhật ký sự kiện (CSV)', 'Event log (CSV)')}</button>
+            <button class="btn ghost" id="jsonAll" type="button">${L('Toàn bộ (JSON)', 'Everything (JSON)')}</button></p></div>
+      </div>
+      <div class="card"><h3>${L('Nguồn dữ kiện', 'Sources')}</h3><ul class="qa small">${[...used].map(k => `<li><b>[${k}]</b> ${esc(D.sources[k])}</li>`).join('')}</ul></div>
+      <p><button class="btn ghost" id="againBtn" type="button">${L('Chơi ván mới', 'New game')}</button></p>`;
+    const base = 'ho-chieu-sau-rieng_' + (APP.cls || 'local') + '_' + (APP.team || 'team');
+    $('csvRounds').onclick = () => { logEv('EXPORT', '', 'rounds_csv'); save(); const rows = roundRows(); download(base + '_doi-vu.csv', csv(rows, Object.keys(rows[0])), 'text/csv;charset=utf-8'); };
+    $('csvEvents').onclick = () => { logEv('EXPORT', '', 'events_csv'); save(); download(base + '_su-kien.csv', csv(APP.events, D.eventLogColumns), 'text/csv;charset=utf-8'); };
+    $('jsonAll').onclick = () => {
+      logEv('EXPORT', '', 'json'); save();
+      download(base + '.json', JSON.stringify({ game: 'ho-chieu-sau-rieng', edition: 'classroom-v2', class_id: APP.cls, team_id: APP.team, firm: APP.roleId, seed: APP.seed, summary: S,
+        rounds: roundRows(), sheets: APP.sheets, journals: APP.journals, debriefs: APP.debriefs, lumina: APP.lumina, whatifs: APP.whatifs, events: APP.events,
+        rivals: rivS.map(x => ({ id: x.id, total: x.S.total, profit: x.S.profit })), log: E.decisionLog(g, { cohort: APP.cls || 'local' }) }, null, 2), 'application/json');
     };
-    $('againBtn').onclick = () => { GAME = null; render(); window.scrollTo(0, 0); };
+    $('againBtn').onclick = () => {
+      if (!confirm(L('Đã tải dữ liệu chưa? Ván mới sẽ xóa ván này khỏi máy.', 'Have you downloaded the data? A new game deletes this one from the device.'))) return;
+      store.del(SAVE_KEY); APP = null; RIVALS = null; render(); window.scrollTo(0, 0);
+    };
   }
 
-  document.documentElement.setAttribute('data-theme', store.get('durian_theme') === 'light' ? 'light' : 'dark');
   render();
 })();
 </script>

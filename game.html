@@ -195,51 +195,30 @@
       <p class="text-sm text-deep-teal/60 mb-2"><span class="font-display font-extrabold lumina-name">Lumina</span> – <span class="signature text-lg text-deep-teal">Je m'appelle Hương</span> <span>đang chờ đồng hành cùng đội của bạn.</span></p>
       <p class="text-[11px] font-bold text-deep-teal/55 mb-6">⏱️ Một ván 6 vòng ≈ 30–45 phút (mỗi vòng 5–7 phút) – vừa một buổi học. Chơi thử nhanh với Đội Demo: ~10 phút cho 2 vòng đầu.</p>
 
-      <!-- Đăng nhập sinh viên thật — xác thực email trường thật qua Supabase Auth,
-           gắn danh tính xác thực vào đội/vai trò (student_team_membership). js/student-auth.js. -->
-      <div id="student-auth-panel" class="clay-card p-5 mb-5" style="border:2px solid #006687">
-        <p class="text-[11px] font-extrabold uppercase tracking-wider mb-1" style="color:#006687">🔒 Đăng nhập bằng email trường</p>
-        <p class="text-[11px] text-deep-teal/55 mb-3">Khuyến nghị cho buổi học/thi có tính điểm — giảng viên truy được đúng người qua email, không ai đoán/xí tên đội của đội khác.</p>
-        <div id="sa-auth-block">
-          <label class="block text-xs font-bold text-deep-teal mb-1">Email trường (@student.ctu.edu.vn)</label>
-          <input id="sa-email" type="email" placeholder="23017163@student.ctu.edu.vn" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-3 py-2.5 mb-2.5 text-sm outline-none focus:border-primary-container">
-          <label class="block text-xs font-bold text-deep-teal mb-1">Mật khẩu (≥ 8 ký tự)</label>
-          <input id="sa-password" type="password" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-3 py-2.5 mb-3 text-sm outline-none focus:border-primary-container">
-          <div class="flex gap-2">
-            <button id="sa-signup" type="button" class="flex-1 clay-button-secondary text-deep-teal/80 font-display font-bold py-2.5 text-sm rounded-clay">Đăng ký</button>
-            <button id="sa-signin" type="button" class="flex-1 clay-button-secondary text-deep-teal/80 font-display font-bold py-2.5 text-sm rounded-clay">Đăng nhập</button>
-          </div>
+      <!-- Máy dùng chung có thể còn ván chơi của người trước lưu trong localStorage –
+           hỏi xác nhận trước khi tự nhảy vào, thay vì vào thẳng không hỏi. -->
+      <div id="resume-banner" class="hidden clay-card p-4 mb-5" style="border:2px solid #e8762d">
+        <p id="resume-banner-text" class="text-sm font-bold text-deep-teal mb-3"></p>
+        <div class="flex gap-2">
+          <button id="resume-continue" type="button" class="flex-1 clay-button-primary text-white font-display font-bold py-2.5 text-sm rounded-clay" style="background:#e8762d">▶️ Tiếp tục</button>
+          <button id="resume-fresh" type="button" class="flex-1 clay-button-secondary text-deep-teal/70 font-display font-bold py-2.5 text-sm rounded-clay">🆕 Người khác</button>
         </div>
-        <div id="sa-team-block" class="hidden">
-          <p id="sa-account-line" class="text-[11px] text-deep-teal/60 mb-2"></p>
-          <label class="block text-xs font-bold text-deep-teal mb-1">Mã lớp</label>
-          <input id="sa-class" type="text" placeholder="VD: KT330H-M01" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-3 py-2.5 mb-2.5 text-sm outline-none focus:border-primary-container">
-          <label class="block text-xs font-bold text-deep-teal mb-1">Tên đội</label>
-          <input id="sa-team" type="text" placeholder="VD: Rồng Xanh Corp" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-3 py-2.5 mb-2.5 text-sm outline-none focus:border-primary-container">
-          <label class="block text-xs font-bold text-deep-teal mb-1">Vai trò</label>
-          <select id="sa-role" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-3 py-2.5 mb-3 text-sm outline-none focus:border-primary-container">
-            <option value="CEO">CEO</option><option value="CFO">CFO</option><option value="CMO">CMO</option><option value="COO">COO</option><option value="SEC">SEC (Thư ký)</option>
-          </select>
-          <div class="flex gap-2 mb-3">
-            <button id="sa-join" type="button" class="flex-1 clay-button-secondary text-deep-teal/80 font-display font-bold py-2.5 text-sm rounded-clay">Tham gia đội</button>
-            <button id="sa-signout" type="button" class="clay-button-secondary text-deep-teal/60 font-display font-bold py-2.5 px-3 text-sm rounded-clay">Đăng xuất</button>
-          </div>
-          <p id="sa-team-label" class="text-[11px] font-bold text-deep-teal/70 mb-3"></p>
-          <button id="sa-start" type="button" class="hidden w-full clay-button-primary text-white font-display font-bold py-3.5" style="background:#006687; box-shadow:0 6px 0 #00485c, 0 12px 24px rgba(0,72,92,.25)">Bắt đầu mô phỏng 🚀</button>
-        </div>
-        <p id="sa-status" class="text-[11px] font-bold mt-2 opacity-70"></p>
-        <button id="sa-delete-account" type="button" class="hidden w-full text-center text-[11px] font-bold text-red-700/70 mt-3 underline">🗑️ Xóa tài khoản của tôi (không thể hoàn tác)</button>
       </div>
-      <p class="text-center text-[11px] font-bold text-deep-teal/40 mb-4">— hoặc —</p>
-      <p class="text-[11px] font-extrabold uppercase tracking-wider text-deep-teal/40 mb-2">✏️ Chơi thử nhanh, không cần tài khoản</p>
 
+      <!-- Khung "🔒 Đăng nhập bằng email trường" (js/student-auth.js, Supabase Auth
+           thật qua signUp()/signIn()) đã gỡ khỏi màn đăng nhập (2026-10-09) — khung
+           đó tạo tài khoản Supabase Auth thật nên dễ dính lại giới hạn gửi email
+           xác thực khi nhiều SV bấm "Đăng ký" cùng lúc (xem comment trong doLogin()
+           ở js/app.js). Mã lớp gõ tự do dưới đây giờ là đường vào duy nhất. File
+           js/student-auth.js vẫn còn trong repo nhưng init() của nó tự return sớm
+           khi không tìm thấy #student-auth-panel, nên không cần sửa/xoá file đó. -->
       <label class="block text-sm font-bold text-deep-teal mb-1">Email</label>
       <input id="login-email" type="email" placeholder="sinhvien@truong.edu.vn" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 mb-1.5 outline-none focus:border-primary-container">
       <p class="text-[11px] text-deep-teal/55 mb-4 leading-snug"><span>Chơi thử (không Mã lớp): mọi dữ liệu chỉ lưu trên máy bạn. Có Mã lớp: kết quả mỗi vòng và email này được gửi về máy chủ lớp học để giảng viên chấm điểm –</span> <a href="chinh-sach.html" target="_blank" rel="noopener" class="underline">Chính sách quyền riêng tư</a></p>
       <label class="block text-sm font-bold text-deep-teal mb-1">Tên đội – cũng là tên doanh nghiệp của bạn</label>
       <input id="login-team" type="text" placeholder="VD: Rồng Xanh Corp" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 mb-4 outline-none focus:border-primary-container">
       <label class="block text-sm font-bold text-deep-teal mb-1"><span>Mã lớp học – Class ID</span> <span class="font-normal text-deep-teal/40">(tùy chọn)</span></label>
-      <p class="text-[11px] text-deep-teal/55 mb-1.5 leading-snug"><span>Bỏ trống vẫn chơi được trọn 6 vòng ở chế độ</span> <b>chơi thử</b><span>. Muốn vào bằng Mã lớp để tính điểm, dùng khung "🔒 Đăng nhập bằng email trường" phía trên — khung bên dưới chỉ dành cho chơi thử không Mã lớp.</span></p>
+      <p class="text-[11px] text-deep-teal/55 mb-1.5 leading-snug"><span>Bỏ trống vẫn chơi được trọn 6 vòng ở chế độ</span> <b>chơi thử</b><span>. Điền Mã lớp để kết quả gửi về máy chủ lớp học.</span></p>
       <input id="login-class" type="text" placeholder="VD: QTKD-2026-A" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 mb-4 outline-none focus:border-primary-container">
       <label class="block text-sm font-bold text-deep-teal mb-2">Vai trò của bạn</label>
       <div id="role-picker" class="grid grid-cols-5 gap-2 mb-6"></div>

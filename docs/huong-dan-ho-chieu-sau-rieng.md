@@ -1,7 +1,7 @@
-# Hướng dẫn — Hộ Chiếu Sầu Riêng (Durian Passport)
+# Hướng dẫn — Hộ Chiếu Sầu Riêng (tiếng Anh: Sầu Riêng Passport · Durian)
 
 **Chơi ngay:** https://thuyhuongctu.github.io/BizOn/lab/ho-chieu-sau-rieng.html
-**Thời lượng:** 30–40 phút · chơi cá nhân hoặc theo nhóm · song ngữ VI/EN · chạy ngoại tuyến, không gửi dữ liệu đi đâu.
+**Thời lượng:** bản lớp học 6 vụ × 50–60 phút (hoặc 4 buổi), chơi nhanh 40–60 phút · đội 5 vai · song ngữ VI/EN · chạy ngoại tuyến, ván lưu trên máy để học qua nhiều buổi, không gửi dữ liệu đi đâu.
 
 © 2026 PGS.TS. Phan Anh Tú & NCS. Đỗ Thùy Hương.
 
@@ -19,6 +19,16 @@ Sau buổi chơi, người học có thể:
 - **6 vụ**, chính vụ và nghịch vụ xen kẽ, theo mốc thật: mở cửa chính ngạch (27/7/2022) → lô đầu tiên qua Hà Khẩu → trùng vụ Thái Lan → **Nhiệm vụ vụ 4:** kiểm tra của Hải quan Trung Quốc và cảnh báo cadimi → Việt Nam vượt Thái Lan, chuẩn độ khô 35% → nghị định thư đông lạnh (giả định).
 - **Mỗi vụ:** (1) mua tối đa 2 nguồn tin, có nguồn thiên lệch; (2) chọn 1 ưu tiên đầu tư, nguồn hàng (thương lái hay vùng liên kết có mã), xử lý nghịch vụ (HTX); (3) chia sản lượng cho 6 kênh; (4) chọn phản ứng với một biến cố.
 - **Điểm tổng 0–100**, công khai từ đầu: 30% lợi nhuận + 20% uy tín + 20% năng lực + 15% thích ứng + 15% bền vững.
+
+## 2b · Bản lớp học (theo kế hoạch triển khai BizOn Classroom)
+
+- **Đội 5 vai** (nhân vật đất sét của Bật Nghiệp): CEO Minh Long chạy «Nếu – Thì» và chốt vụ; CMO Lan Chi mua tin, chia kênh; COO Bảo Ngọc lo nguồn hàng, vùng có mã, nghịch vụ; CFO Thu Hà chọn ưu tiên đầu tư, giữ tiền mặt; SEC Gia Hân đọc biến cố, ghi phiếu và nhật ký. Ô «Vai đang thao tác» ghi lại ai bấm gì; gợi ý luân chuyển vai ở vụ 3–4.
+- **Đối thủ AI: 7 CEO quốc tế của BizOn Go Global** (`global.html`), mỗi người điều hành một nhà buôn nước ngoài cùng thu mua sầu riêng Việt Nam: Merlion Fresh 🇸🇬 (Wei Ming Tan), Sakura Fruit 🇯🇵 (Yuki Tanaka), EuroFrost GmbH 🇩🇪 (Stefan Weber), Liberty Produce 🇺🇸 (Jake Miller), Falcon Trade 🇦🇪 (Omar Al-Rashid), Hanul Agri 🇰🇷 (Ji-Woo Park), Savanna Green 🇰🇪 (David Kimani). Mỗi ván gặp 3 người, mỗi người một nhóm lối chơi (tuân thủ cao · kênh và quy mô · đi tắt), chọn tất định theo mã lớp và doanh nghiệp; cả lớp cùng mã thì gặp cùng đối thủ. Đối thủ chơi cùng loại doanh nghiệp, trên cùng lõi mô phỏng. Đội cắm cờ 🟩 ở vụ nào lợi nhuận vụ đó không thấp hơn đối thủ mạnh nhất.
+- **Nhịp mỗi vụ:** đọc thị trường → họp đội (4 khuyến nghị, có thể chưa tối ưu) → «Nếu – Thì» tối đa 2 lần → hỏi Lumina tối đa 3 câu → phiếu quyết định (mục tiêu, giả định, rủi ro, bất đồng, lý do của CEO) → chốt (không sửa được) → kết quả, đấu trường, dự báo so với thực tế → nhật ký SEC (nguyên nhân sai lệch, thay đổi vụ sau, ý kiến Lumina dùng hay bác bỏ). Sau vụ 2, 4, 6 có khung debrief What? Why? So what? Now what?
+- **«Nếu – Thì»** dùng giá ước tính từ nguồn tin đã mua và rủi ro kỳ vọng; không làm lộ may rủi kiểm dịch, nên kết quả thật có thể khác dự báo. Lumina chỉ giải thích và hỏi ngược, không đưa đáp án.
+- **Đồng hồ vụ** (tùy chọn 8–50 phút): hết giờ vẫn chốt được nhưng ghi «trễ hạn».
+- **Xuất dữ liệu:** bảng đội–vụ (CSV: quyết định, dự báo, kết quả, đối thủ, chỉ số thích nghi, đúng hạn), nhật ký sự kiện (CSV: `event_id, timestamp, class_id, team_id, round_id, role, event_type, old_value, new_value, device_session, committed`) và toàn bộ (JSON). Không lưu họ tên.
+- **Rubric gợi ý:** kết quả game 20% · lập luận trước quyết định 20% · phân tích tài chính – vận hành 15% · thích nghi 15% · nhật ký SEC 15% · hợp tác 10% · báo cáo cuối 5%.
 
 ## 3 · Nguồn dữ kiện
 
@@ -44,4 +54,4 @@ Quy định, mốc thời gian và biến cố đều có trích nguồn hiển 
 | 30′ | Thảo luận 4 câu hỏi ở màn báo cáo; so sánh điểm thành phần giữa các vai |
 | 10′ | Tổng kết: TBT/SPS, đa dạng hóa thị trường, uy tín ngành |
 
-Nhật ký quyết định (JSON) tải về ở màn cuối để chấm hoặc phân tích.
+Bảng đội–vụ, nhật ký sự kiện (CSV) và toàn bộ dữ liệu (JSON) tải về ở màn cuối để chấm hoặc phân tích.

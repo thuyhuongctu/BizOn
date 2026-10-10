@@ -223,7 +223,103 @@
   // Điểm tổng 0–100, công khai từ đầu ván (cùng cấu trúc Hộ Chiếu Thương Hiệu)
   const scoreWeights = { profit: 30, reputation: 20, capability: 20, adaptation: 15, sustainability: 15 };
 
-  const api = { sources, facts, params, roles, channels, priorities, intel, seasons, events, scoreWeights };
+  // ================= Bản lớp học (theo kế hoạch triển khai BizOn Classroom) =================
+
+  // Đội 5 vai. Nhân vật đất sét dùng chung với Bật Nghiệp; mỗi vai phụ trách một nhóm quyết định.
+  const team = [
+    { id: 'ceo', name: 'Minh Long', img: 'team/ceo-cut.webp', vi: 'CEO – điều phối, chạy «Nếu – Thì», chốt vụ', en: 'CEO – coordinates, runs what-ifs, commits',
+      owns: ['whatif', 'commit'] },
+    { id: 'cmo', name: 'Lan Chi', img: 'team/cmo-cut.webp', vi: 'CMO – mua tin, đọc giá, chia kênh bán', en: 'CMO – buys information, reads prices, splits channels',
+      owns: ['intel', 'alloc'] },
+    { id: 'coo', name: 'Bảo Ngọc', img: 'team/coo-cut.webp', vi: 'COO – nguồn hàng, vùng trồng có mã, hao hụt, nghịch vụ', en: 'COO – sourcing, coded areas, losses, off-season',
+      owns: ['linked', 'induce'] },
+    { id: 'cfo', name: 'Thu Hà', img: 'team/cfo-cut.webp', vi: 'CFO – tiền mặt, ưu tiên đầu tư, chi phí tuân thủ', en: 'CFO – cash, investment priority, compliance costs',
+      owns: ['priority'] },
+    { id: 'sec', name: 'Gia Hân', img: 'team/sec-cut.webp', vi: 'SEC – đọc biến cố, ghi phiếu quyết định và nhật ký đội', en: 'SEC – reads events, keeps the decision sheet and team journal',
+      owns: ['option', 'journal'] }
+  ];
+
+  // Đối thủ AI: 7 CEO quốc tế của BizOn Go Global (global.html), chuyển sang bối cảnh sầu riêng:
+  // mỗi người điều hành một nhà buôn nước ngoài cùng thu mua sầu riêng Việt Nam để xuất khẩu.
+  // Mỗi ván gặp 3 người, mỗi người từ một nhóm chiến lược (tuân thủ cao · kênh và quy mô · đi tắt),
+  // chọn tất định theo hạt giống của lớp + doanh nghiệp. Cùng vai với đội, cùng lõi mô phỏng.
+  const rivals = [
+    { id: 'sea', group: 'channel', img: 'rivals-global/sea-cut.webp', flag: '🇸🇬', ceo: 'Wei Ming Tan', hub: 'Singapore', vi: 'Merlion Fresh', en: 'Merlion Fresh',
+      styleVi: 'Trùm hub logistics: làm mã số từng bước, dùng Singapore trung chuyển sang Đài Loan và Trung Quốc', styleEn: 'Logistics hub: builds codes step by step, re-exports via Singapore to Taiwan and China',
+      plan: ['area', 'pack', 'trace', 'finance', 'test', 'finance'], linked: 0.6, induce: true,
+      alloc: { CN: 45, BORDER: 10, FROZEN: 0, TW: 20, JP: 0, DOM: 25 }, options: { glut: 2 } },
+    { id: 'eas', group: 'compliance', img: 'rivals-global/eas-cut.webp', flag: '🇯🇵', ceo: 'Yuki Tanaka', hub: 'Tokyo', vi: 'Sakura Fruit', en: 'Sakura Fruit',
+      styleVi: 'Chất lượng thủ công: kiểm nghiệm từng lô, vùng liên kết, nhắm Nhật Bản và Đài Loan', styleEn: 'Craft quality: tests every lot, linked areas, targets Japan and Taiwan',
+      plan: ['test', 'area', 'pack', 'trace', 'test', 'freezer'], linked: 0.9, induce: false,
+      alloc: { CN: 30, BORDER: 0, FROZEN: 0, TW: 20, JP: 30, DOM: 20 }, options: { residue: 0 } },
+    { id: 'eu', group: 'channel', img: 'rivals-global/eu-cut.webp', flag: '🇩🇪', ceo: 'Stefan Weber', hub: 'Berlin', vi: 'EuroFrost GmbH', en: 'EuroFrost GmbH',
+      styleVi: 'Tự động hóa quy mô: đầu tư cấp đông sớm, chạy dây chuyền lớn, ít linh hoạt', styleEn: 'Automation at scale: invests in freezing early, runs a large line, little flexibility',
+      plan: ['freezer', 'area', 'pack', 'test', 'trace', 'finance'], linked: 0.7, induce: true,
+      alloc: { CN: 30, BORDER: 10, FROZEN: 40, TW: 0, JP: 0, DOM: 20 }, options: {} },
+    { id: 'na', group: 'shortcut', img: 'rivals-global/na-cut.webp', flag: '🇺🇸', ceo: 'Jake Miller', hub: 'New York', vi: 'Liberty Produce', en: 'Liberty Produce',
+      styleVi: 'Đổi mới theo trend: chạy nhanh theo giá, chia nhiều kênh, ít đầu tư tuân thủ', styleEn: 'Trend-chaser: moves fast with prices, spreads across channels, invests little in compliance',
+      plan: ['area', 'finance', 'pack', 'finance', 'test', 'finance'], linked: 0.3, induce: true,
+      alloc: { CN: 35, BORDER: 30, FROZEN: 0, TW: 15, JP: 0, DOM: 20 }, options: { thaidrought: 0 } },
+    { id: 'me', group: 'shortcut', img: 'rivals-global/me-cut.webp', flag: '🇦🇪', ceo: 'Omar Al-Rashid', hub: 'Dubai', vi: 'Falcon Trade', en: 'Falcon Trade',
+      styleVi: 'Vốn sâu: mua khối lượng lớn qua thương lái, dồn tiểu ngạch, chấp nhận rủi ro kiểm dịch', styleEn: 'Deep pockets: buys big volumes via traders, leans on border trade, accepts inspection risk',
+      plan: ['finance', 'finance', 'area', 'finance', 'pack', 'finance'], linked: 0.1, induce: true,
+      alloc: { CN: 20, BORDER: 60, FROZEN: 0, TW: 0, JP: 0, DOM: 20 }, options: { pest: 1 } },
+    { id: 'kr', group: 'compliance', img: 'rivals-global/kr-cut.webp', flag: '🇰🇷', ceo: 'Ji-Woo Park', hub: 'Seoul', vi: 'Hanul Agri', en: 'Hanul Agri',
+      styleVi: 'Nhà máy thông minh: truy xuất GS1 trước, dữ liệu vùng trồng, rồi mở cấp đông', styleEn: 'Smart factory: GS1 traceability first, planting-area data, then freezing',
+      plan: ['trace', 'area', 'pack', 'test', 'freezer', 'finance'], linked: 0.8, induce: true,
+      alloc: { CN: 50, BORDER: 0, FROZEN: 15, TW: 10, JP: 0, DOM: 25 }, options: {} },
+    { id: 'af', group: 'compliance', img: 'rivals-global/af-cut.webp', flag: '🇰🇪', ceo: 'David Kimani', hub: 'Nairobi', vi: 'Savanna Green', en: 'Savanna Green',
+      styleVi: 'Tăng trưởng xanh: 100% vùng liên kết, không ép nghịch vụ, ưu tiên bền vững hơn lợi nhuận nhanh', styleEn: 'Green growth: 100% linked areas, no off-season forcing, sustainability over quick profit',
+      plan: ['area', 'pack', 'trace', 'test', 'finance', 'finance'], linked: 1.0, induce: false,
+      alloc: { CN: 45, BORDER: 0, FROZEN: 0, TW: 10, JP: 0, DOM: 45 }, options: { salinity: 0, break: 2 } }
+  ];
+  const rivalGroups = ['compliance', 'channel', 'shortcut'];
+
+  // Lumina: tối đa 3 câu hỏi mỗi vụ. Lumina giải thích và đặt câu hỏi ngược, không đưa đáp án tối ưu.
+  const luminaQuestions = [
+    { id: 'risk', vi: 'Rủi ro chính ngạch của đội vụ này đến từ đâu?', en: 'Where does our official-trade risk come from this season?' },
+    { id: 'price', vi: 'Nên tin nguồn giá nào?', en: 'Which price source should we trust?' },
+    { id: 'channel', vi: 'Kênh nào phù hợp với hồ sơ hiện tại?', en: 'Which channels fit our current credentials?' },
+    { id: 'invest', vi: 'Ưu tiên đầu tư nào tạo tác động tích lũy?', en: 'Which investment has a cumulative effect?' },
+    { id: 'cash', vi: 'Dòng tiền của đội có đủ an toàn?', en: 'Is our cash position safe?' },
+    { id: 'event', vi: 'Biến cố này liên quan khái niệm nào trong kinh doanh quốc tế?', en: 'Which international-business concept does this event illustrate?' }
+  ];
+
+  // Nhịp một vụ (khoảng 50–60 phút trên lớp; chơi nhanh 5–7 phút)
+  const flow = [
+    { id: 'read', min: 5, vi: 'Đọc thị trường', en: 'Read the market' },
+    { id: 'meet', min: 10, vi: 'Họp đội theo vai', en: 'Role meeting' },
+    { id: 'whatif', min: 5, vi: 'Nếu – Thì (tối đa 2)', en: 'What-if (max 2)' },
+    { id: 'lumina', min: 5, vi: 'Hỏi Lumina (tối đa 3)', en: 'Ask Lumina (max 3)' },
+    { id: 'sheet', min: 10, vi: 'Phiếu quyết định', en: 'Decision sheet' },
+    { id: 'commit', min: 5, vi: 'Chốt vụ', en: 'Commit' },
+    { id: 'result', min: 5, vi: 'Kết quả và nhật ký SEC', en: 'Results and SEC journal' }
+  ];
+
+  // Khung debrief sau mỗi hai vụ
+  const debrief = [
+    { id: 'what', vi: 'What? Đội đã quyết định gì và kết quả ra sao?', en: 'What? What did the team decide and what happened?' },
+    { id: 'why', vi: 'Why? Vì sao kết quả khác hoặc giống dự báo «Nếu – Thì»?', en: 'Why? Why did results differ from (or match) the what-if forecast?' },
+    { id: 'sowhat', vi: 'So what? Điều này liên quan lý thuyết nào (TBT/SPS, phương thức thâm nhập, nâng cấp chuỗi giá trị)?', en: 'So what? Which theory does this relate to (TBT/SPS, entry modes, value-chain upgrading)?' },
+    { id: 'nowhat', vi: 'Now what? Đội sẽ thay đổi điều gì ở vụ tiếp theo?', en: 'Now what? What will the team change next season?' }
+  ];
+
+  // Rubric gợi ý: kết quả xếp hạng chỉ chiếm 20%
+  const rubric = [
+    { w: 20, vi: 'Kết quả hoạt động qua 6 vụ (điểm tổng trong game)', en: 'Performance over 6 seasons (in-game total)' },
+    { w: 20, vi: 'Chất lượng lập luận trước quyết định (phiếu quyết định)', en: 'Quality of pre-decision reasoning (decision sheets)' },
+    { w: 15, vi: 'Phân tích tài chính và vận hành', en: 'Financial and operational analysis' },
+    { w: 15, vi: 'Khả năng thích nghi qua các vụ', en: 'Adaptation across seasons' },
+    { w: 15, vi: 'Nhật ký SEC và phản tư', en: 'SEC journal and reflection' },
+    { w: 10, vi: 'Hợp tác và đóng góp cá nhân', en: 'Collaboration and individual contribution' },
+    { w: 5, vi: 'Báo cáo hoặc pitch cuối kỳ', en: 'Final report or pitch' }
+  ];
+
+  // Cột của nhật ký sự kiện (event log) xuất CSV
+  const eventLogColumns = ['event_id', 'timestamp', 'class_id', 'team_id', 'round_id', 'role', 'event_type', 'old_value', 'new_value', 'device_session', 'committed'];
+
+  const api = { sources, facts, params, roles, channels, priorities, intel, seasons, events, scoreWeights,
+    team, rivals, rivalGroups, luminaQuestions, flow, debrief, rubric, eventLogColumns };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.DurianData = api;
 })(typeof window !== 'undefined' ? window : globalThis);

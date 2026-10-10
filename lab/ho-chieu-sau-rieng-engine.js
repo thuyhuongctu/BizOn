@@ -67,6 +67,55 @@
     return P.depotMain * (s.season === 'off' ? P.offMult : 1) * s.demand * noise;
   }
 
+  // Giá vựa «công khai» không nhiễu: mức người chơi ước được khi chưa mua tin
+  function basePrice(data, state) {
+    const s = data.seasons[state.n - 1], P = data.params;
+    return P.depotMain * (s.season === 'off' ? P.offMult : 1) * s.demand;
+  }
+
+  // Dự báo «Nếu – Thì»: giá vựa ước tính = trung bình các nguồn tin đã mua (chưa mua thì dùng giá công khai)
+  function forecast(data, state, decision) {
+    const sig = intelSignals(data, state, (decision && decision.intel) || []);
+    const est = sig.length ? sig.reduce((x, y) => x + y.price, 0) / sig.length : basePrice(data, state);
+    const next = playSeason(data, state, decision, { expected: true, depotEstimate: est });
+    const r = next.history[next.history.length - 1];
+    return { depotEstimate: est, profit: r.profit, revenue: r.revenue, pBlockCN: r.pBlockCN, pLossJP: r.pLossJP,
+      cashAfter: next.cash, rep: next.rep, adapt: next.adapt, sus: next.sus, audit: r.audit, byChannel: r.byChannel };
+  }
+
+  // Ba đối thủ AI: chơi cùng vai, cùng lõi mô phỏng, theo chiến lược cố định và hạt giống riêng (tất định)
+  function rivalDecision(data, rival, state, ev) {
+    const owned = id => (id === 'area' && state.assets.area) || (id === 'pack' && state.assets.pack)
+      || (id === 'trace' && state.assets.trace) || (id === 'freezer' && state.assets.freezer) || (id === 'test' && state.assets.test >= 2);
+    const want = rival.plan[state.n - 1] || 'finance';
+    const priority = owned(want) ? (rival.plan.find(p => !owned(p)) || 'finance') : want;
+    let option = 0;
+    if (ev && rival.options && rival.options[ev.id] !== undefined) option = rival.options[ev.id];
+    return { priority, linked: rival.linked, induce: rival.induce !== false, alloc: rival.alloc, intel: [], option };
+  }
+  // Chọn 3 đối thủ cho ván: mỗi nhóm chiến lược một người, tất định theo hạt giống
+  function pickRivals(data, seed) {
+    const groups = data.rivalGroups || [];
+    if (!groups.length) return (data.rivals || []).slice(0, 3);
+    const rnd = mulberry32((seed ^ 0x5EED) >>> 0);
+    return groups.map(g => { const pool = data.rivals.filter(r => r.group === g); return pool[Math.floor(rnd() * pool.length)]; }).filter(Boolean);
+  }
+  function rivalsRun(data, roleId, seed) {
+    return pickRivals(data, seed).map(rv => {
+      let st = newGame(data, roleId, (seed ^ seedFrom(rv.id)) >>> 0);
+      while (st.n <= data.seasons.length) st = playSeason(data, st, rivalDecision(data, rv, st, eventFor(data, st)));
+      return { id: rv.id, state: st };
+    });
+  }
+
+  // Cờ của vụ n: đội thắng nếu lợi nhuận vụ ≥ đối thủ AI cao nhất
+  function flagFor(rivals, playerResult) {
+    const n = playerResult.n;
+    let best = null;
+    rivals.forEach(r => { const h = r.state.history[n - 1]; if (h && (!best || h.profit > best.profit)) best = { id: r.id, profit: h.profit }; });
+    return { n, win: !best || playerResult.profit >= best.profit, rival: best };
+  }
+
   // Dự báo giá từ các nguồn tin (để giao diện hiển thị trước khi quyết định)
   function intelSignals(data, state, ids) {
     const p = depotPrice(data, state);
@@ -107,7 +156,10 @@
   }
 
   // Tính một vụ; trả về trạng thái mới (không sửa trạng thái cũ).
-  function playSeason(data, state, decision) {
+  // opts.expected = true: chế độ «Nếu – Thì» (dự báo). Không rút ngẫu nhiên cho kiểm dịch, gian lận;
+  // thay bằng kỳ vọng theo xác suất, và dùng giá vựa ước tính (opts.depotEstimate) thay cho giá thật.
+  function playSeason(data, state, decision, opts) {
+    const X = !!(opts && opts.expected);
     if (state.n > data.seasons.length) throw new Error('Trò chơi đã kết thúc');
     const P = data.params, s = data.seasons[state.n - 1], role = data.roles[state.roleId];
     const ev = eventFor(data, state);
@@ -126,7 +178,7 @@
     if (induce) tree -= P.treeHealthCost;
     if (eff.volume) volume *= 1 + eff.volume;
 
-    const depot = depotPrice(data, state);
+    const depot = X ? (opts.depotEstimate || basePrice(data, state)) : depotPrice(data, state);
     const buyCost = role.ownFarm ? P.farmCost * (s.season === 'off' && induce ? 1.3 : 1)
       : depot * (1 + P.linkedPremium * linked + (eff.buyCost || 0));
     const purchase = bn(volume, buyCost);
@@ -141,9 +193,12 @@
       const q = sellable * eff.fraud;
       sellable -= q;
       fraudRev = bn(q, depot * P.fraudMult);
-      fraudExposed = rnd() < 0.5;
-      if (fraudExposed) { rep -= 30; sus -= 20; notes.push('fraud_exposed'); }
-      else { sus -= 10; notes.push('fraud_hidden'); }
+      if (X) { rep -= 15; sus -= 15; notes.push('fraud_risk'); }   // kỳ vọng: 50% bị phát hiện
+      else {
+        fraudExposed = rnd() < 0.5;
+        if (fraudExposed) { rep -= 30; sus -= 20; notes.push('fraud_exposed'); }
+        else { sus -= 10; notes.push('fraud_hidden'); }
+      }
     }
 
     // --- phân bổ kênh ---
@@ -174,7 +229,7 @@
 
     // --- giá, chi phí, kiểm soát tuân thủ ---
     const traderShare = role.ownFarm ? 0 : 1 - linked;
-    let blockedCN = false, jpDestroyed = false;
+    let blockedCN = false, jpDestroyed = false, pBlockCN = 0, pLossJP = 0;
     const results = byChannel.map(b => {
       const ch = data.channels.find(c => c.id === b.id);
       let price = depot * ch.priceMult;
@@ -191,14 +246,19 @@
         if (s.cadmium) risk *= 2.5;
         const sampling = state.cleanCN >= 2 ? 0.6 : 1;                       // 2% → 1% (PROTO)
         const pest = ((eff.pestRisk || 0) + 0.03) * sampling;
-        if (rnd() < clamp(risk, 0, 0.9) || rnd() < clamp(pest, 0, 0.9)) {
+        if (X) {
+          pBlockCN = 1 - (1 - clamp(risk, 0, 0.9)) * (1 - clamp(pest, 0, 0.9));
+          const rej = bn(b.qty, depot * data.channels.find(c => c.id === 'DOM').priceMult * (1 - P.rejectedDiscount));
+          revenue = (1 - pBlockCN) * revenue + pBlockCN * rej;
+        } else if (rnd() < clamp(risk, 0, 0.9) || rnd() < clamp(pest, 0, 0.9)) {
           blockedCN = true; status = 'blocked';
           revenue = bn(b.qty, depot * data.channels.find(c => c.id === 'DOM').priceMult * (1 - P.rejectedDiscount));
         }
       }
       if (b.qty > 0 && ch.id === 'JP') {
         const r = (0.10 + 0.2 * traderShare) * (1 - 0.4 * assets.test) + (eff.risk || 0);
-        if (rnd() < clamp(r, 0, 0.9)) { jpDestroyed = true; status = 'destroyed'; revenue = 0; }
+        if (X) { pLossJP = clamp(r, 0, 0.9); revenue *= 1 - pLossJP; }
+        else if (rnd() < clamp(r, 0, 0.9)) { jpDestroyed = true; status = 'destroyed'; revenue = 0; }
       }
       return { id: ch.id, qty: b.qty, price, revenue, cost, status };
     });
@@ -215,9 +275,10 @@
     // --- hậu quả chính ngạch ---
     let suspendedUntil = state.suspendedUntil, cleanCN = state.cleanCN;
     if (blockedCN || audit === 'fail' || fraudExposed) { suspendedUntil = state.n + 1; rep -= blockedCN ? 12 : 0; cleanCN = 0; notes.push('suspended'); }
+    else if (X && usedCN) { rep += 3 * (1 - pBlockCN) - 12 * pBlockCN; }
     else if (usedCN) { cleanCN += 1; rep += 3; }
     if (jpDestroyed) { rep -= 5; notes.push('jp_destroyed'); }
-    else if (results.find(r => r.id === 'JP').qty > 0) rep += 3;
+    else if (results.find(r => r.id === 'JP').qty > 0) rep += X ? 3 - 8 * pLossJP : 3;
     if (results.find(r => r.id === 'TW').qty > 0) rep += 1;
 
     // --- ưu tiên đầu tư (tài sản mã số, cấp đông có hiệu lực từ vụ sau) ---
@@ -251,6 +312,7 @@
       depot, volume, loss, sellable, purchase, logistics, priorityCost: pCost, intelCost, finance,
       eventCash: eff.cash || 0, fraudRev, revenue, profit, byChannel: results, audit, blockedCN, jpDestroyed, notes
     };
+    if (X) { result.expected = true; result.pBlockCN = pBlockCN; result.pLossJP = pLossJP; }
     const nextAssets = Object.assign({}, assets, pending);
     return {
       roleId: state.roleId, seed: state.seed, n: state.n + 1,
@@ -299,7 +361,7 @@
     }));
   }
 
-  const api = { mulberry32, seedFrom, newGame, eventFor, depotPrice, intelSignals, riskLevel, eligible, normalizeAlloc, playSeason, capability, summary, decisionLog };
+  const api = { mulberry32, seedFrom, newGame, eventFor, depotPrice, basePrice, forecast, rivalDecision, pickRivals, rivalsRun, flagFor, intelSignals, riskLevel, eligible, normalizeAlloc, playSeason, capability, summary, decisionLog };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.DurianEngine = api;
 })(typeof window !== 'undefined' ? window : globalThis);
