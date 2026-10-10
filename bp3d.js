@@ -4,6 +4,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { makeBPCast, CAST_IDS, RIVAL_ID } from './bp-clay-cast.js';
+import { makeMeshyLoader } from './js/meshy-loader.js';
 
 const $ = id => document.getElementById(id);
 const EN = () => { try { return localStorage.getItem('bizon-lang') === 'en'; } catch (e) { return false; } };
@@ -150,6 +151,7 @@ function house(par, x, z, wall, roof, s = 1, ry = 0) {
   const r = P(GE.cone4, M(roof), g, 0, 0.9 * s, 0, 0.66 * s, 0.46 * s, 0.6 * s); r.rotation.y = Math.PI / 4;
   P(GE.box, M(0x6a4a3a), g, 0, 0.2 * s, 0.34 * s, 0.2 * s, 0.34 * s, 0.02);
 }
+const meshyLoader = makeMeshyLoader(THREE);
 const DECO = [
   p => { // Hải Lam – thị trường số
     [[-0.8, 0.3, 2.6], [0.5, -0.6, 3.4], [1.05, 0.75, 1.9], [-0.25, 1.15, 1.4]].forEach(([x, z, h]) => {
@@ -206,6 +208,9 @@ const DECO = [
     P(GE.cyl, M(0xd6453a), p, -1.55, G0 + 1.05, 1.0, 0.26, 0.28, 0.26);
     const lt = P(GE.sph, new THREE.MeshStandardMaterial({ color: 0xfff2a8, emissive: 0xffe07a, emissiveIntensity: 1 }), p, -1.55, G0 + 1.75, 1.0, 0.2);
     anim.push(t => { lt.material.emissiveIntensity = 0.7 + Math.sin(t * 2.5) * 0.5; });
+    // nhà kho (model Kenney City Kit: Industrial, CC0 — xem assets/models/SOURCES.md)
+    meshyLoader.clone('assets/models/tan-cang-warehouse.glb').then(wh => { wh.position.set(0, G0, -1.7); p.add(wh); }).catch(() => {});
+    meshyLoader.clone('assets/models/crate.glb').then(ct => { ct.position.set(0.85, G0, 1.0); ct.rotation.y = 0.4; ct.scale.setScalar(0.55); p.add(ct); }).catch(() => {});
   },
   p => { // Hỏa Sơn – phân mảnh theo vùng đảo
     P(new THREE.CylinderGeometry(0.45, 1.6, 2.3, 20), M(0x7a5a48, { flatShading: true }), p, 0, G0 + 1.1, -0.2);

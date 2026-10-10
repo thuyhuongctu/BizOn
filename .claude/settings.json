@@ -3,5 +3,10 @@
     "commit": "",
     "pr": "",
     "sessionUrl": false
+  },
+  "permissions": {
+    "allow": [
+      "Bash(npm exec --yes --package=meshy-cli@0.4.0 -- meshy:*)"
+    ]
   }
 }
