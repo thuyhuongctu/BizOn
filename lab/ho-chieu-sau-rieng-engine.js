@@ -93,8 +93,15 @@
     if (ev && rival.options && rival.options[ev.id] !== undefined) option = rival.options[ev.id];
     return { priority, linked: rival.linked, induce: rival.induce !== false, alloc: rival.alloc, intel: [], option };
   }
+  // Chọn 3 đối thủ cho ván: mỗi nhóm chiến lược một người, tất định theo hạt giống
+  function pickRivals(data, seed) {
+    const groups = data.rivalGroups || [];
+    if (!groups.length) return (data.rivals || []).slice(0, 3);
+    const rnd = mulberry32((seed ^ 0x5EED) >>> 0);
+    return groups.map(g => { const pool = data.rivals.filter(r => r.group === g); return pool[Math.floor(rnd() * pool.length)]; }).filter(Boolean);
+  }
   function rivalsRun(data, roleId, seed) {
-    return (data.rivals || []).map(rv => {
+    return pickRivals(data, seed).map(rv => {
       let st = newGame(data, roleId, (seed ^ seedFrom(rv.id)) >>> 0);
       while (st.n <= data.seasons.length) st = playSeason(data, st, rivalDecision(data, rv, st, eventFor(data, st)));
       return { id: rv.id, state: st };
@@ -354,7 +361,7 @@
     }));
   }
 
-  const api = { mulberry32, seedFrom, newGame, eventFor, depotPrice, basePrice, forecast, rivalDecision, rivalsRun, flagFor, intelSignals, riskLevel, eligible, normalizeAlloc, playSeason, capability, summary, decisionLog };
+  const api = { mulberry32, seedFrom, newGame, eventFor, depotPrice, basePrice, forecast, rivalDecision, pickRivals, rivalsRun, flagFor, intelSignals, riskLevel, eligible, normalizeAlloc, playSeason, capability, summary, decisionLog };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.DurianEngine = api;
 })(typeof window !== 'undefined' ? window : globalThis);

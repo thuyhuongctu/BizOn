@@ -239,21 +239,41 @@
       owns: ['option', 'journal'] }
   ];
 
-  // Ba đối thủ AI: cùng vai với đội, cùng lõi mô phỏng, chiến lược cố định (minh họa ba lối đi trong ngành)
+  // Đối thủ AI: 7 CEO quốc tế của BizOn Go Global (global.html), chuyển sang bối cảnh sầu riêng:
+  // mỗi người điều hành một nhà buôn nước ngoài cùng thu mua sầu riêng Việt Nam để xuất khẩu.
+  // Mỗi ván gặp 3 người, mỗi người từ một nhóm chiến lược (tuân thủ cao · kênh và quy mô · đi tắt),
+  // chọn tất định theo hạt giống của lớp + doanh nghiệp. Cùng vai với đội, cùng lõi mô phỏng.
   const rivals = [
-    { id: 'alpha', img: 'rivals/alpha.webp', vi: 'Alpha Durian', en: 'Alpha Durian',
-      styleVi: 'Tốc chiến: dồn tiểu ngạch, mua qua thương lái, sẵn sàng «dán nhãn»', styleEn: 'Fast and cheap: border trade, trader sourcing, open to relabelling',
+    { id: 'sea', group: 'channel', img: 'rivals-global/sea-cut.webp', flag: '🇸🇬', ceo: 'Wei Ming Tan', hub: 'Singapore', vi: 'Merlion Fresh', en: 'Merlion Fresh',
+      styleVi: 'Trùm hub logistics: làm mã số từng bước, dùng Singapore trung chuyển sang Đài Loan và Trung Quốc', styleEn: 'Logistics hub: builds codes step by step, re-exports via Singapore to Taiwan and China',
+      plan: ['area', 'pack', 'trace', 'finance', 'test', 'finance'], linked: 0.6, induce: true,
+      alloc: { CN: 45, BORDER: 10, FROZEN: 0, TW: 20, JP: 0, DOM: 25 }, options: { glut: 2 } },
+    { id: 'eas', group: 'compliance', img: 'rivals-global/eas-cut.webp', flag: '🇯🇵', ceo: 'Yuki Tanaka', hub: 'Tokyo', vi: 'Sakura Fruit', en: 'Sakura Fruit',
+      styleVi: 'Chất lượng thủ công: kiểm nghiệm từng lô, vùng liên kết, nhắm Nhật Bản và Đài Loan', styleEn: 'Craft quality: tests every lot, linked areas, targets Japan and Taiwan',
+      plan: ['test', 'area', 'pack', 'trace', 'test', 'freezer'], linked: 0.9, induce: false,
+      alloc: { CN: 30, BORDER: 0, FROZEN: 0, TW: 20, JP: 30, DOM: 20 }, options: { residue: 0 } },
+    { id: 'eu', group: 'channel', img: 'rivals-global/eu-cut.webp', flag: '🇩🇪', ceo: 'Stefan Weber', hub: 'Berlin', vi: 'EuroFrost GmbH', en: 'EuroFrost GmbH',
+      styleVi: 'Tự động hóa quy mô: đầu tư cấp đông sớm, chạy dây chuyền lớn, ít linh hoạt', styleEn: 'Automation at scale: invests in freezing early, runs a large line, little flexibility',
+      plan: ['freezer', 'area', 'pack', 'test', 'trace', 'finance'], linked: 0.7, induce: true,
+      alloc: { CN: 30, BORDER: 10, FROZEN: 40, TW: 0, JP: 0, DOM: 20 }, options: {} },
+    { id: 'na', group: 'shortcut', img: 'rivals-global/na-cut.webp', flag: '🇺🇸', ceo: 'Jake Miller', hub: 'New York', vi: 'Liberty Produce', en: 'Liberty Produce',
+      styleVi: 'Đổi mới theo trend: chạy nhanh theo giá, chia nhiều kênh, ít đầu tư tuân thủ', styleEn: 'Trend-chaser: moves fast with prices, spreads across channels, invests little in compliance',
+      plan: ['area', 'finance', 'pack', 'finance', 'test', 'finance'], linked: 0.3, induce: true,
+      alloc: { CN: 35, BORDER: 30, FROZEN: 0, TW: 15, JP: 0, DOM: 20 }, options: { thaidrought: 0 } },
+    { id: 'me', group: 'shortcut', img: 'rivals-global/me-cut.webp', flag: '🇦🇪', ceo: 'Omar Al-Rashid', hub: 'Dubai', vi: 'Falcon Trade', en: 'Falcon Trade',
+      styleVi: 'Vốn sâu: mua khối lượng lớn qua thương lái, dồn tiểu ngạch, chấp nhận rủi ro kiểm dịch', styleEn: 'Deep pockets: buys big volumes via traders, leans on border trade, accepts inspection risk',
       plan: ['finance', 'finance', 'area', 'finance', 'pack', 'finance'], linked: 0.1, induce: true,
-      alloc: { CN: 20, BORDER: 60, FROZEN: 0, TW: 0, JP: 0, DOM: 20 }, options: { fake: 1, pest: 1, rain: 0 } },
-    { id: 'mekong', img: 'rivals/mekong.webp', vi: 'Mekong Fruit', en: 'Mekong Fruit',
-      styleVi: 'Cân bằng: làm mã số từng bước, giữ cả chính ngạch lẫn nội địa', styleEn: 'Balanced: builds codes step by step, keeps official and domestic channels',
-      plan: ['area', 'pack', 'test', 'trace', 'finance', 'finance'], linked: 0.5, induce: true,
-      alloc: { CN: 40, BORDER: 25, FROZEN: 0, TW: 10, JP: 0, DOM: 25 }, options: {} },
-    { id: 'star', img: 'rivals/star.webp', vi: 'Star Durian', en: 'Star Durian',
-      styleVi: 'Cao cấp: kiểm nghiệm, truy xuất, vùng liên kết; nhắm Nhật Bản, Đài Loan, đông lạnh', styleEn: 'Premium: testing, traceability, linked areas; targets Japan, Taiwan, frozen',
-      plan: ['test', 'area', 'pack', 'trace', 'freezer', 'test'], linked: 0.9, induce: false,
-      alloc: { CN: 40, BORDER: 0, FROZEN: 10, TW: 20, JP: 20, DOM: 10 }, options: { break: 0, glut: 2 } }
+      alloc: { CN: 20, BORDER: 60, FROZEN: 0, TW: 0, JP: 0, DOM: 20 }, options: { pest: 1 } },
+    { id: 'kr', group: 'compliance', img: 'rivals-global/kr-cut.webp', flag: '🇰🇷', ceo: 'Ji-Woo Park', hub: 'Seoul', vi: 'Hanul Agri', en: 'Hanul Agri',
+      styleVi: 'Nhà máy thông minh: truy xuất GS1 trước, dữ liệu vùng trồng, rồi mở cấp đông', styleEn: 'Smart factory: GS1 traceability first, planting-area data, then freezing',
+      plan: ['trace', 'area', 'pack', 'test', 'freezer', 'finance'], linked: 0.8, induce: true,
+      alloc: { CN: 50, BORDER: 0, FROZEN: 15, TW: 10, JP: 0, DOM: 25 }, options: {} },
+    { id: 'af', group: 'compliance', img: 'rivals-global/af-cut.webp', flag: '🇰🇪', ceo: 'David Kimani', hub: 'Nairobi', vi: 'Savanna Green', en: 'Savanna Green',
+      styleVi: 'Tăng trưởng xanh: 100% vùng liên kết, không ép nghịch vụ, ưu tiên bền vững hơn lợi nhuận nhanh', styleEn: 'Green growth: 100% linked areas, no off-season forcing, sustainability over quick profit',
+      plan: ['area', 'pack', 'trace', 'test', 'finance', 'finance'], linked: 1.0, induce: false,
+      alloc: { CN: 45, BORDER: 0, FROZEN: 0, TW: 10, JP: 0, DOM: 45 }, options: { salinity: 0, break: 2 } }
   ];
+  const rivalGroups = ['compliance', 'channel', 'shortcut'];
 
   // Lumina: tối đa 3 câu hỏi mỗi vụ. Lumina giải thích và đặt câu hỏi ngược, không đưa đáp án tối ưu.
   const luminaQuestions = [
@@ -299,7 +319,7 @@
   const eventLogColumns = ['event_id', 'timestamp', 'class_id', 'team_id', 'round_id', 'role', 'event_type', 'old_value', 'new_value', 'device_session', 'committed'];
 
   const api = { sources, facts, params, roles, channels, priorities, intel, seasons, events, scoreWeights,
-    team, rivals, luminaQuestions, flow, debrief, rubric, eventLogColumns };
+    team, rivals, rivalGroups, luminaQuestions, flow, debrief, rubric, eventLogColumns };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.DurianData = api;
 })(typeof window !== 'undefined' ? window : globalThis);
