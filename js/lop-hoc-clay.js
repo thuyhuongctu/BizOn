@@ -75,6 +75,7 @@
     set('lop-actions',
       '<a href="game.html" style="padding:12px 18px;border-radius:18px;font:800 15px var(--clay-head);box-shadow:inset 0 -5px 0 rgba(0,0,0,.14),inset 0 3px 0 rgba(255,255,255,.3),0 12px 18px -12px rgba(110,70,30,.6);background:var(--clay-teal);color:#fff">'+esc(d.b1)+' →</a>'
       + '<a href="BizOn Game 3D.html" style="padding:12px 18px;border-radius:18px;font:800 15px var(--clay-head);box-shadow:inset 0 -5px 0 rgba(0,0,0,.14),inset 0 3px 0 rgba(255,255,255,.3),0 12px 18px -12px rgba(110,70,30,.6);background:var(--clay-card);color:var(--clay-ink)">'+esc(d.b2)+'</a>'
+      + (d.b4 ? '<a href="lab/ho-chieu-sau-rieng.html" style="padding:12px 18px;border-radius:18px;font:800 15px var(--clay-head);box-shadow:inset 0 -5px 0 rgba(0,0,0,.14),inset 0 3px 0 rgba(255,255,255,.3),0 12px 18px -12px rgba(110,70,30,.6);background:var(--clay-gold);color:#033337">'+esc(d.b4)+'</a>' : '')
       + '<button type="button" id="lop-print" style="border:0;cursor:pointer;padding:12px 18px;border-radius:18px;font:800 15px var(--clay-head);box-shadow:inset 0 -5px 0 rgba(0,0,0,.14),inset 0 3px 0 rgba(255,255,255,.3),0 12px 18px -12px rgba(110,70,30,.6);background:var(--clay-card);color:var(--clay-ink)">'+esc(d.b3)+'</button>');
 
     set('lop-toc', d.sec.map(function(s,i){
