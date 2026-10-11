@@ -408,14 +408,14 @@
   // từng bước chỉ gắn trích dẫn khi có dữ kiện cụ thể đã kiểm chứng ở trên (không suy diễn số liệu).
   const eightSteps = {
     steps: [
-      { n: 1, icon: '📝', vi: 'Đăng ký Mã số vùng trồng & Cơ sở đóng gói với GACC.', en: 'Register growing-area and packing-facility codes with GACC.', factSrc: 'codes' },
+      { n: 1, icon: '📝', vi: 'Đăng ký Mã số vùng trồng & Cơ sở đóng gói với GACC.', en: 'Register growing-area and packing-facility codes with GACC.', factSrc: 'codes', img: 'hc/pipeline/codes.webp', imgAlt: 'Đăng ký mã số vùng trồng tại vườn sầu riêng' },
       { n: 2, icon: '🤝', vi: 'Ký hợp đồng ngoại thương trước khi giao hàng.', en: 'Sign the foreign-trade contract before shipping.', img: 'hc/pipeline/partner.webp', imgAlt: 'Đối tác ký hợp đồng ngoại thương' },
-      { n: 3, icon: '📦', vi: 'Thu hoạch, phân loại và đóng gói đúng tiêu chuẩn nhãn mác.', en: 'Harvest, grade and pack to the labelling standard.', factSrc: 'grades' },
+      { n: 3, icon: '📦', vi: 'Thu hoạch, phân loại và đóng gói đúng tiêu chuẩn nhãn mác.', en: 'Harvest, grade and pack to the labelling standard.', factSrc: 'grades', img: 'hc/pipeline/harvest.webp', imgAlt: 'Thu hoạch, phân loại và đóng gói sầu riêng' },
       { n: 4, icon: '🌿', vi: 'Kiểm dịch thực vật & xin giấy Phytosanitary Certificate.', en: 'Phytosanitary inspection and certificate.', factSrc: 'sampling', img: 'hc/pipeline/quarantine.webp', imgAlt: 'Cán bộ kiểm dịch thực vật' },
       { n: 5, icon: '🖥️', vi: 'Khai báo hải quan xuất khẩu trên hệ thống VNACCS.', en: 'File the export customs declaration on VNACCS.', img: 'hc/pipeline/customs.webp', imgAlt: 'Nhân viên hải quan' },
       { n: 6, icon: '🚚', vi: 'Vận chuyển bằng đường bộ, đường biển hoặc đường sắt.', en: 'Transport by road, sea or rail.' },
       { n: 7, icon: '🔬', vi: 'Thông quan phía Trung Quốc & kiểm tra MRL ngẫu nhiên.', en: 'Clearance in China and random MRL testing.', factSrc: 'cadmium', img: 'hc/pipeline/lab-f.webp', img2: 'hc/pipeline/lab-m.webp', imgAlt: 'Kỹ thuật viên kiểm nghiệm dư lượng' },
-      { n: 8, icon: '🗂️', vi: 'Hoàn tất thanh toán & lưu trữ hồ sơ xuất khẩu.', en: 'Settle payment and keep export records.' }
+      { n: 8, icon: '🗂️', vi: 'Hoàn tất thanh toán & lưu trữ hồ sơ xuất khẩu.', en: 'Settle payment and keep export records.', img: 'hc/pipeline/payment.webp', imgAlt: 'Hoàn tất thanh toán xuất khẩu' }
     ],
     storage: [
       { vi: 'Sầu riêng tươi (trái già): giữ lạnh khoảng 13,5°C, được đến 15 ngày trong thử nghiệm bán công nghiệp.', en: 'Mature fresh durian: kept at about 13.5°C, lasting up to 15 days in a semi-commercial trial.', factSrc: 'freshStorage' },
