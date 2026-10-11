@@ -1,7 +1,7 @@
 # Định hướng nâng cấp BizOn lên game engine 3D thật (Unity/Unreal)
 
 *Tài liệu chiến lược — không phải code. Viết để ra quyết định trước khi đầu tư công sức/ngân sách.*
-*Bối cảnh: người dùng gửi clip "Rio Rise" (game mobile 3D ảnh thật, studio chuyên làm) và hỏi hướng nâng cấp BizOn lên mức tương tự.*
+*Bối cảnh: người dùng gửi clip "Rio Rise" (game mobile 3D ảnh thật, studio chuyên làm) và hỏi hướng nâng cấp BizOn lên mức tương tự. Cập nhật: dự án sẽ **thương mại hóa sau giai đoạn thử nghiệm** — mục 11 phân tích riêng tác động của việc này lên toàn bộ khuyến nghị.*
 
 ---
 
@@ -118,6 +118,55 @@ Repo đã có sẵn nền WebGL thật (không phải Unity, nhưng là 3D thậ
 
 ---
 
+## 11. Tác động của kế hoạch thương mại hóa sau thử nghiệm
+
+Đây là thông tin thay đổi phép tính, không chỉ là chi tiết thêm — toàn bộ khuyến nghị ở mục 10 vẫn đứng vững, nhưng lý do đứng vững thì khác hẳn.
+
+### 11.1 Giấy phép engine theo doanh thu — không đáng lo ở giai đoạn pilot
+
+Đã tra cứu ngưỡng hiện hành (xem Nguồn cuối tài liệu):
+
+| Engine | Miễn phí tới đâu | Sau ngưỡng |
+|---|---|---|
+| **Unity Personal** | Doanh thu + vốn gọi được ≤ **200.000 USD**/12 tháng gần nhất | Bắt buộc lên Unity Pro (thuê bao theo seat) |
+| **Unity Enterprise** | — | Bắt buộc khi > 25 triệu USD/12 tháng |
+| **Unreal Engine** | **0% phí trước**, mọi doanh thu tới **1 triệu USD vòng đời/sản phẩm** | 5% royalty trên phần vượt 1 triệu USD (tính theo từng sản phẩm, không gộp cả studio) |
+
+→ Cả hai engine đều có "đường băng miễn phí" đủ dài cho toàn bộ giai đoạn thử nghiệm và cả early-commercial (vài trăm khách hàng đầu, vài trường đại học đầu tiên trả phí). **Không cần quyết định Unity hay Unreal vì lý do chi phí license ở thời điểm hiện tại** — quyết định vẫn nên dựa trên mục 4 (phân phối web/offline), vì đó mới là ràng buộc thật.
+
+### 11.2 Sở hữu trí tuệ — cần làm sớm, trước khi có doanh thu
+
+Repo đã có sẵn quy trình đăng ký quyền tác giả (`docs/ho-so-so-huu-tri-tue.md`, `docs/bieu-mau-dang-ky-quyen-tac-gia.md`) — đây là nền tảng đúng, cần mở rộng áp dụng cho nhánh 3D trước khi thương mại hóa công khai:
+
+- **Hợp đồng freelancer/sinh viên làm asset 3D phải có điều khoản chuyển nhượng toàn quyền** (work-for-hire), không chỉ "cho phép dùng" — khác biệt quan trọng giữa dùng cho đồ án học thuật và dùng trong sản phẩm bán ra thị trường.
+- **Asset CC0 (Kenney, Quaternius, Mixamo) vẫn dùng thương mại được** — giấy phép CC0 không giới hạn mục đích sử dụng, kể cả bán sản phẩm. Không cần thay thế các asset nền đã dùng.
+- **Đăng ký bảo hộ thương hiệu/nhân vật riêng càng sớm càng rẻ**: tên "BizOn", tên các game ("Hộ Chiếu Sầu Riêng", "Bến Phù Sa", "Bật Nghiệp"...), nhân vật ("Bà Sáu Lành", "Lumina", các CEO đối thủ...) — nếu để tới lúc có doanh thu mới đăng ký, rủi ro bị đăng ký trước hoặc tranh chấp cao hơn nhiều so với chi phí đăng ký sớm.
+
+### 11.3 Bối cảnh thị trường — khoảng trống thật, nhưng chưa ai kiểm chứng
+
+Tra cứu nhanh các sản phẩm mô phỏng kinh doanh dùng trong giáo dục được nhắc tới nhiều nhất: **Capsim** (Capstone/Foundation/Comp-XM/GlobalDNA), **Forio**, **Simul8**, **Interpretive Simulations**, **Top-BOSS**. Tất cả đều là mô phỏng dạng số liệu/bảng biểu — **không có đối thủ nào dùng trải nghiệm 3D nhập vai** như BizOn đang xây.
+
+Hai mặt của việc này:
+- **Cơ hội thật**: nếu BizOn mang được trải nghiệm 3D vào đúng phân khúc edtech-KDQT đang toàn số liệu/bảng biểu, đó là khác biệt hóa rõ ràng, không phải chạy đua tính năng với đối thủ đã có.
+- **Rủi ro thật**: chính vì chưa ai làm, chưa có bằng chứng thị trường rằng "game 3D + nội dung học thuật trích nguồn" là mô hình khách hàng (trường/giảng viên) sẵn sàng trả tiền — khác với việc cải tiến một sản phẩm đã được thị trường chứng minh. **Đây là lý do kỹ hơn để pilot trước khi đầu tư fidelity cao**, không phải lý do để bỏ qua bước pilot.
+
+### 11.4 Điều thật sự cần nâng cấp trước khi thương mại hóa — không phải đồ họa
+
+Xếp theo thứ tự ưu tiên hợp lý hơn so với "nâng 3D trước":
+
+1. **Bằng chứng hiệu quả sư phạm + mức sẵn lòng trả tiền** — thu thập từ chính đợt thử nghiệm hiện tại (phản hồi giảng viên, kết quả học tập đo được, mức độ engagement). Đây là tài sản quý nhất để gọi vốn/bán hàng, quan trọng hơn đồ họa đẹp.
+2. **Kiến trúc multi-tenant** — Supabase hiện tại thiết kế cho quy mô một vài lớp/giảng viên. Thương mại hóa cho nhiều trường cần: phân quyền theo tổ chức (RLS theo tenant), hạ tầng billing, điều khoản dịch vụ, và quan trọng nhất là **chính sách bảo mật dữ liệu sinh viên** (khác hẳn yêu cầu khi chỉ dùng nội bộ một lớp).
+3. **Sở hữu trí tuệ** — như mục 11.2, làm trước khi có doanh thu để chi phí thấp nhất.
+4. **Đồ họa/3D fidelity** — chỉ nên là khoản đầu tư ở bước sau, dùng đúng ngân sách gọi được sau khi đã có bằng chứng ở bước 1, theo đúng lộ trình Pha 0→1→2→3 đã đề xuất ở mục 8.
+
+### 11.5 Khuyến nghị cập nhật
+
+Thông tin thương mại hóa **không đổi** khuyến nghị cốt lõi ở mục 10 — nó củng cố thêm lý do: giai đoạn thử nghiệm càng giữ chi phí thấp (CSS/2.5D hiện tại + nâng cấp nhẹ như vừa làm), càng nhiều "đạn" (thời gian, ngân sách, uy tín) để dành cho bước thương mại hóa thật khi đã có bằng chứng. Nâng fididelity 3D trước khi kiểm chứng được mô hình kinh doanh là rủi ro tài chính không cần thiết, không phải bước chuẩn bị khôn ngoan.
+
+**Việc nên làm ngay, không tốn ngân sách 3D:** bắt đầu ghi lại có hệ thống bằng chứng từ đợt thử nghiệm (feedback form giảng viên/SV, số liệu sử dụng, kết quả học tập trước/sau) — đây sẽ là nền tảng quyết định fidelity nào, engine nào, ngân sách bao nhiêu khi tới lúc thương mại hóa thật.
+
+---
+
 ## Việc "cần nâng" — phần bị ngắt trong tin nhắn trước
 
 Tin nhắn trước của bạn dừng ở "Nếu nâng lên 3D thật, tôi cần nâng" — có vẻ bị cắt giữa chừng. Để trả lời đúng ý, dưới đây là mọi thứ cần nâng cấp/chuẩn bị nếu thật sự đi theo hướng Unity/Unreal, theo từng nhóm — bạn xem có đúng phần bạn định hỏi không, hoặc cho tôi biết ý đầy đủ:
@@ -130,3 +179,16 @@ Tin nhắn trước của bạn dừng ở "Nếu nâng lên 3D thật, tôi c�
 - **Hạ tầng phân phối**: nếu xuất app cài đặt thay vì WebGL, cần tài khoản Google Play/App Store, quy trình ký app, cập nhật theo học kỳ.
 
 Cho tôi biết đúng ý "cần nâng ___" của bạn (nâng cấp phần cứng? nâng cấp đội ngũ? nâng ngân sách bao nhiêu?) để tôi khoanh đúng trọng tâm thay vì liệt kê dàn trải như trên.
+
+---
+
+## Nguồn tra cứu (mục 11.1, 11.3)
+
+- [State of Unity Licensing in 2026](https://enginesdatabase.com/blog/state-of-unity-licensing-in-2026/)
+- [Unity — Plans & Pricing](https://unity.com/products)
+- [Unreal Engine EULA — Royalty obligation threshold at $1,000,000](https://conductatlas.com/platform/unreal-engine/unreal-engine-eula/royalty-obligation-threshold-at-one-million-usd/)
+- [Meta Developer Docs — Unreal / Oculus license](https://developers.meta.com/horizon/documentation/unreal/unreal-oculus-license/)
+- [Unity vs Unreal Engine 2026](https://tech-insider.org/unity-vs-unreal-engine-2026/)
+- [Capsim alternatives/competitors — CB Insights](https://www.cbinsights.com/compare/capsim-vs-top-boss)
+
+*Lưu ý: các con số license engine đổi theo thời gian — kiểm tra lại trang chính thức của Unity/Epic trước khi đưa vào hợp đồng hoặc quyết định ngân sách chính thức.*
