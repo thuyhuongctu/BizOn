@@ -313,7 +313,7 @@ footer{color:var(--faint)}
           'Đội 5 người điều hành một mắt xích trong chuỗi xuất khẩu sầu riêng, từ ngày Trung Quốc mở cửa chính ngạch (7/2022), và cạnh tranh với 3 đối thủ AI. Mỗi vụ: đọc thị trường, họp đội theo vai, chạy tối đa 2 lần «Nếu – Thì», hỏi Lumina tối đa 3 câu, ghi phiếu quyết định, chốt vụ rồi viết nhật ký. Mục tiêu không chỉ là thắng cờ mà là giải thích được vì sao kết quả khác dự báo.',
           'A team of five runs one link of the durian export chain from the day China opens official trade (July 2022), competing with 3 AI rivals. Each season: read the market, hold a role meeting, run up to 2 what-ifs, ask Lumina up to 3 questions, fill in a decision sheet, commit, then write the journal. The aim is not only to win flags but to explain why results differ from forecasts.')}</p>
         <span class="prov pub">${L('Sự kiện và quy định có trích nguồn tài liệu', 'Events and rules are cited from documents')}</span><span class="prov sim">${L('Khối lượng, hệ số giá, xác suất là minh họa', 'Volumes, price ratios and probabilities are illustrative')}</span>
-      </div><div class="hero-cast"><img src="${IMG('anh-tu-ao-dai-welcome-cut-v2.webp')}" alt="${L('Thầy Tú Phan', 'Dr Tú Phan')}"><img src="${IMG('lumina-ao-dai-wave.webp')}" alt="Lumina"></div></div></section>
+      </div><div class="hero-cast"><img src="${IMG('anh-tu-ao-dai-welcome-cut-v2.webp')}" alt="${L('Thầy Tú Phan', 'Dr Tú Phan')}"><img src="${IMG('lumina-je-standing.webp')}" alt="Lumina"></div></div></section>
 
       ${saved ? `<div class="card"><h2>${L('Ván đang dở', 'Game in progress')}</h2>
         <p class="small">${L('Lớp', 'Class')} <b>${esc(saved.cls || '—')}</b> · ${L('Đội', 'Team')} <b>${esc(saved.team || '—')}</b> · ${nm(D.roles[saved.roleId])} · ${L('vụ', 'season')} ${Math.min(saved.game.n, 6)}/6</p>
@@ -818,7 +818,7 @@ footer{color:var(--faint)}
       <section class="hero"><div class="hero-row"><div><span class="eyebrow">${role.emoji} ${nm(role)} · ${L('Lớp', 'Class')} ${esc(APP.cls || '—')} · ${L('Đội', 'Team')} ${esc(APP.team || '—')}</span>
         <h1>${L('Báo cáo sau 6 vụ', 'Report after 6 seasons')}</h1>${flagsHTML(0)}
         <p class="lead">${L(`Đội cắm ${flagsWon}/6 cờ. Sai lệch bình quân giữa dự báo và lợi nhuận thực tế: ${money(mae)} mỗi vụ.`, `Your team planted ${flagsWon}/6 flags. Mean absolute gap between forecast and actual profit: ${money(mae)} per season.`)}</p></div>
-        <div class="hero-cast"><img src="${IMG(flagsWon >= 3 ? 'lumina-ao-dai-cheer.webp' : 'lumina-ao-dai-thumbsup.webp')}" alt="Lumina"></div></div></section>
+        <div class="hero-cast"><img src="${IMG(flagsWon >= 3 ? 'lumina-je-cheer.webp' : 'lumina-ao-dai-thumbsup.webp')}" alt="Lumina"></div></div></section>
       <div class="grid2">
         <div class="card"><div class="kpis" style="grid-template-columns:1fr 1fr">
           <div class="kpi"><small>${L('Điểm tổng trong game', 'In-game total')}</small><b class="num">${nf(S.total)}/100</b></div>
