@@ -69,9 +69,9 @@ button{font:inherit}
 .stn3d .box img{width:100%;height:100%;object-fit:cover;border-radius:50%}
 .stn3d .evbadge{position:absolute;top:-4px;left:-4px;background:#fff;border-radius:50%;font-size:13px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.3);animation:ev-pulse 1.6s ease-in-out infinite}
 @keyframes ev-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
-@media (max-width:680px){.stn3d .box{width:58px;height:58px;font-size:24px}.stn3d.big .box{width:76px;height:76px;font-size:32px}.stn3d .tag{font-size:9.5px;padding:2px 7px;max-width:98px}}
+@media (max-width:680px){.stn3d .box{width:58px;height:58px;font-size:24px}.stn3d.big .box{width:76px;height:76px;font-size:32px}.stn3d .tag{font-size:9.5px;padding:2px 7px;max-width:98px}.stage{padding-top:160px}}
 @media (prefers-reduced-motion:reduce){.stn3d .box,.stn3d.active .box{animation:none}.stn3d .evbadge{animation:none}}
-.hint3d{position:absolute;left:14px;top:14px;background:rgba(3,40,20,.72);color:#fff;font-size:11.5px;padding:7px 11px;border-radius:12px;max-width:260px;z-index:3}
+.hint3d{position:absolute;left:14px;top:14px;background:rgba(3,40,20,.72);color:#fff;font-size:11.5px;padding:7px 11px;border-radius:12px;max-width:260px;z-index:3;pointer-events:none}
 .toast3d{position:fixed;top:66px;right:14px;background:var(--ink);color:#fff;padding:10px 14px;border-radius:14px;font-size:12.5px;z-index:60;max-width:300px;box-shadow:0 10px 24px rgba(0,0,0,.3);opacity:0;transform:translateY(-10px);transition:.25s}
 .toast3d.on{opacity:1;transform:none}
 /* ---------- decision card ---------- */
@@ -109,7 +109,7 @@ button{font:inherit}
 .dcard .btn{display:block;width:100%;border:0;border-radius:12px;padding:11px;font-weight:800;font-size:13.5px;color:#fff;background:var(--durian);cursor:pointer;box-shadow:inset 0 -4px 0 rgba(0,0,0,.18)}
 .dcard .btn:hover{background:var(--durian-deep)}
 .dcard .fthint{font-size:10.5px;color:var(--muted);text-align:center;margin-top:5px}
-@media (max-width:680px){.dcard{left:8px;right:8px;bottom:0;width:auto;max-height:58vh;max-height:80dvh;border-radius:var(--radius) var(--radius) 0 0}.dcard .hd{padding:10px 14px 4px}.stats4{padding:0 14px;margin-bottom:6px}.stats4 .s{padding:4px 3px}}
+@media (max-width:680px){.dcard{position:relative;left:auto;right:auto;top:auto;bottom:auto;width:calc(100% - 16px);margin:16px auto 32px;max-height:none;border-radius:var(--radius)}.dcard .hd{padding:10px 14px 4px}.stats4{padding:0 14px;margin-bottom:6px}.stats4 .s{padding:4px 3px}}
 /* ---------- minimap modal ---------- */
 .mmBack{position:fixed;inset:0;background:rgba(3,40,20,.55);z-index:50;display:flex;align-items:center;justify-content:center;padding:16px}
 .mmBox{background:var(--panel);border-radius:20px;max-width:420px;width:100%;padding:18px;box-shadow:0 30px 60px rgba(0,0,0,.4)}
@@ -258,7 +258,7 @@ button{font:inherit}
   function stationDef(g, s) {
     const okIds = CH_IDS.filter(id => E.eligible(D, g, D.channels.find(c => c.id === id)));
     const chStn = D.channels.map((c, i) => {
-      const pos = { CN: [34, 26], BORDER: [13, 42], FROZEN: [21, 16], TW: [17, 58], JP: [41, 10], DOM: [70, 44] }[c.id] || [50, 50];
+      const pos = { CN: [24, 30], BORDER: [13, 42], FROZEN: [21, 16], TW: [17, 58], JP: [41, 10], DOM: [70, 44] }[c.id] || [50, 50];
       const [vi, en] = SHORT_CH[c.id] || [c.vi, c.en];
       const tint = CH_TINT[c.id] || [];
       return { id: c.id, icon: c.emoji, name: L(vi, en), x: pos[0], y: pos[1], active: (APP.dec.alloc[c.id] || 0) > 0, locked: !okIds.includes(c.id), tint };
@@ -266,8 +266,8 @@ button{font:inherit}
     const extra = [
       { id: 'audit', icon: '🧾', name: L('Đối soát', 'Audit'), x: 58, y: 14, big: false, locked: s.mission !== 'audit', pale: s.mission !== 'audit', tint: ['#E6E9EC', '#B8C0C8'] },
       { id: 'trader', icon: '🤝', name: L('Tiểu thương', 'Petty traders'), x: 38, y: 46 },
-      { id: 'rv_sea', icon: '🇸🇬', img: IMG('rivals-global/sea-cut.webp'), name: 'Singapore', x: 50, y: 22, pale: true, rival: 'sea' },
-      { id: 'rv_eu', icon: '🇪🇺', img: IMG('rivals-global/eu-cut.webp'), name: L('Châu Âu', 'Europe'), x: 44, y: 6, pale: true, rival: 'eu' }
+      { id: 'rv_sea', icon: '🇸🇬', img: IMG('rivals-global/sea-cut.webp'), name: 'Singapore', x: 25, y: 85, pale: true, rival: 'sea' },
+      { id: 'rv_eu', icon: '🇪🇺', img: IMG('rivals-global/eu-cut.webp'), name: L('Châu Âu', 'Europe'), x: 62, y: 76, pale: true, rival: 'eu' }
     ];
     return chStn.concat(extra);
   }
@@ -304,15 +304,22 @@ button{font:inherit}
         <div class="box">${st.img ? `<img src="${st.img}" alt="${esc(st.name)}">` : st.icon}${st.locked && !st.pale ? '<span class="lockbadge">🔒</span>' : ''}</div><span class="tag">${esc(st.name)}</span></div>`).join('')}
     </div>`;
   }
+  // Trên di động, #dcard nằm dưới bản đồ trong luồng trang (không còn che bản đồ) —
+  // cuộn nó vào khung nhìn sau khi chạm trạm để người chơi thấy ngay dossier vừa đổi.
+  function scrollDcard() {
+    if (window.matchMedia('(max-width:680px)').matches) {
+      const d = $('dcard'); if (d) d.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    }
+  }
   function wireMap() {
-    $('stn-sau').onclick = () => { TAB = 'chain'; renderCard(); };
+    $('stn-sau').onclick = () => { TAB = 'chain'; renderCard(); scrollDcard(); };
     D.channels.forEach(c => { const el = $('stn-' + c.id); if (el) el.onclick = () => {
       TAB = 'channel'; renderCard(); const row = $('ch-' + c.id); if (row) row.scrollIntoView({ block: 'center', behavior: 'smooth' });
       toast(`${c.emoji} ${nm(c)} — ${nm(D.entryModes[c.entryMode])}`);
     }; });
-    const audit = $('stn-audit'); if (audit) audit.onclick = () => { TAB = 'chain'; renderCard(); };
+    const audit = $('stn-audit'); if (audit) audit.onclick = () => { TAB = 'chain'; renderCard(); scrollDcard(); };
     const trader = $('stn-trader'); if (trader) trader.onclick = () => {
-      TAB = 'invest'; renderCard();
+      TAB = 'invest'; renderCard(); scrollDcard();
       toast('🤝 ' + (LANG === 'en' ? D.sourcingTheory.en : D.sourcingTheory.vi));
     };
     const sea = $('stn-rv_sea'); if (sea) sea.onclick = () => rivalToast('sea');
