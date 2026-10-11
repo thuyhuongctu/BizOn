@@ -257,6 +257,7 @@ footer{color:var(--faint)}
   const pct = x => nf(x * 100) + '%';
   const money = x => nf(x, 2) + ' ' + L('tỷ', 'bn');
   const fact = k => { const f = D.facts[k]; return f ? `${nm(f)} <span class="src">[${f.src}]</span>` : ''; };
+  const seasonLabel = s => s.label.replace(/chính vụ|nghịch vụ/, m => L(m, m === 'chính vụ' ? 'main season' : 'off-season'));
   const CH_IDS = D.channels.map(c => c.id);
 
   // ---------------- trạng thái ván (lưu cục bộ để học qua nhiều buổi) ----------------
@@ -605,7 +606,7 @@ footer{color:var(--faint)}
     const advice = teamAdvice();
     $('app').innerHTML = `
       <section class="hero" style="padding-bottom:6px"><span class="eyebrow">${role.emoji} ${nm(role)} · ${L('Lớp', 'Class')} ${esc(APP.cls || '—')} · ${L('Đội', 'Team')} ${esc(APP.team || '—')}</span>
-        <h1 style="font-size:clamp(22px,3.6vw,30px)">${L('Vụ', 'Season')} ${n}/${D.seasons.length} · ${s.label}</h1>
+        <h1 style="font-size:clamp(22px,3.6vw,30px)">${L('Vụ', 'Season')} ${n}/${D.seasons.length} · ${seasonLabel(s)}</h1>
         ${flagsHTML(n)}${flowHTML()}
         <div class="ops"><span class="small muted">${L('Vai đang thao tác', 'Operating role')}:</span>
           ${D.team.map(m => `<button type="button" class="chip ${APP.operator === m.id ? 'on' : ''}" data-op="${m.id}">${m.id.toUpperCase()}</button>`).join('')}
@@ -810,7 +811,7 @@ footer{color:var(--faint)}
     const justFormalized = APP.game.assets.area && APP.game.assets.pack && !(APP.milestones && APP.milestones.formalized);
     if (justFormalized) { APP.milestones = Object.assign({}, APP.milestones, { formalized: true }); save(); }
     $('app').innerHTML = `
-      <section class="hero" style="padding-bottom:6px"><span class="eyebrow">${L('Kết quả vụ', 'Season result')} ${n} · ${s.label}</span>
+      <section class="hero" style="padding-bottom:6px"><span class="eyebrow">${L('Kết quả vụ', 'Season result')} ${n} · ${seasonLabel(s)}</span>
         <h1 style="font-size:clamp(22px,3.6vw,30px)">${fl.win ? '🟩 ' + L('Đội cắm cờ vụ này!', 'Your team plants the flag!') : '🟥 ' + L('Đối thủ giữ cờ vụ này', 'A rival takes this season\'s flag')}</h1>
         ${flagsHTML(0)}</section>
       ${justFormalized ? `<div class="card" style="border:2px solid var(--accent)"><h2>🏷️ ${L('Mốc: chính thức hóa doanh nghiệp xuất khẩu', 'Milestone: formalised as an export business')}</h2>
