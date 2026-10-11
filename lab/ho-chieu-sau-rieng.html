@@ -41,6 +41,8 @@ h1,h2,h3,.logo{font-family:'Plus Jakarta Sans','PJS Fallback',system-ui,sans-ser
 .lang-pill button{border:0;background:transparent;color:var(--muted);padding:7px 11px;font-weight:700;font-size:12.5px;cursor:pointer;font-family:inherit}
 .lang-pill button.on{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
 .hero{padding:28px 0 14px}
+.page-badge{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.page-badge img{width:52px;height:52px;border-radius:14px;box-shadow:0 6px 16px rgba(0,0,0,.25)}
 .eyebrow{font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.06em}
 h1{font-size:clamp(26px,4.4vw,38px);line-height:1.15;margin:10px 0}
 .lead{color:var(--muted);max-width:800px}
@@ -307,7 +309,7 @@ footer{color:var(--faint)}
     const saved = load();
     $('app').innerHTML = `
       <section class="hero"><div class="hero-row"><div>
-        <span class="eyebrow">${L('Trò chơi mô phỏng · Kinh doanh quốc tế · Bản lớp học', 'Simulation game · International business · Classroom edition')}</span>
+        <div class="page-badge"><img src="../assets/brand/durian-passport-badge.webp" alt="Durian Passport"><span class="eyebrow">${L('Trò chơi mô phỏng · Kinh doanh quốc tế · Bản lớp học', 'Simulation game · International business · Classroom edition')}</span></div>
         <h1>${L('Hộ Chiếu Sầu Riêng: đưa sầu riêng Việt Nam ra thế giới qua 6 vụ', 'Sầu Riêng Passport (Durian): take Vietnamese durian to the world over 6 seasons')}</h1>
         <p class="lead">${L(
           'Đội 5 người điều hành một mắt xích trong chuỗi xuất khẩu sầu riêng, từ ngày Trung Quốc mở cửa chính ngạch (7/2022), và cạnh tranh với 3 đối thủ AI. Mỗi vụ: đọc thị trường, họp đội theo vai, chạy tối đa 2 lần «Nếu – Thì», hỏi Lumina tối đa 3 câu, ghi phiếu quyết định, chốt vụ rồi viết nhật ký. Mục tiêu không chỉ là thắng cờ mà là giải thích được vì sao kết quả khác dự báo.',
