@@ -433,6 +433,62 @@ import { P3 } from '../js/poly3d-kit.js';
         const c = P3.crate(THREE, { size: 0.4, color: crateColors[0] });
         c.position.set(x, 0.2, z); g.add(c);
       });
+    } else if (zone.id === 'CN') {
+      const b = P3.building(THREE, { w: 2, d: 1.8, h: 1.3, wallColor: 0xf6e9d8, roofColor: 0xc9372f, roofType: 'flat' });
+      g.add(b);
+      const tierMat = new THREE.MeshStandardMaterial({ color: 0xe6b84a, roughness: 0.5 });
+      const tier = new THREE.Mesh(new THREE.ConeGeometry(1.2, 0.55, 4), tierMat);
+      tier.rotation.y = Math.PI / 4; tier.position.y = 1.3 + 0.55 / 2 - 0.03; tier.castShadow = true; g.add(tier);
+      const lanternMat = new THREE.MeshStandardMaterial({ color: 0xd9372f, roughness: 0.4, emissive: 0x4a0f0a, emissiveIntensity: 0.3 });
+      const lantern = new THREE.Mesh(new THREE.SphereGeometry(0.16, 10, 8), lanternMat);
+      lantern.position.set(1.5, 1.1, 1.0); g.add(lantern);
+      const p = P3.character(THREE, { shirt: 0xc9372f, hat: 'none' });
+      p.position.set(1.7, 0, 0.3); p.rotation.y = 0.9; g.add(p);
+    } else if (zone.id === 'TW') {
+      const b = P3.building(THREE, { w: 2, d: 1.7, h: 1.3, wallColor: 0xf3eee1, roofColor: zone.roof || 0x6fae8f, roofType: 'flat' });
+      g.add(b);
+      const awningMat = new THREE.MeshStandardMaterial({ color: 0x6fae8f, roughness: 0.7 });
+      const awning = new THREE.Mesh(new THREE.BoxGeometry(2.1, 0.08, 0.7), awningMat);
+      awning.position.set(0, 1.0, 1.0); awning.rotation.x = -0.15; awning.castShadow = true; g.add(awning);
+      [[1.5, 1.0], [1.8, 0.7]].forEach(([x, z], i) => {
+        const c = P3.crate(THREE, { size: 0.38, color: [0x8fcdae, 0x6fae8f][i % 2] });
+        c.position.set(x, 0.19, z); g.add(c);
+      });
+      const p = P3.character(THREE, { shirt: 0x6fae8f, hat: 'none' });
+      p.position.set(-1.6, 0, 0.9); p.rotation.y = -0.7; g.add(p);
+    } else if (zone.id === 'JP') {
+      const b = P3.building(THREE, { w: 1.9, d: 1.6, h: 1.3, wallColor: 0xf6f3ee, roofColor: zone.roof || 0xd98fae, roofType: 'flat' });
+      g.add(b);
+      const toriiMat = new THREE.MeshStandardMaterial({ color: 0xc9372f, roughness: 0.6 });
+      const tp1 = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 1.3, 8), toriiMat);
+      tp1.position.set(1.6, 0.65, -0.6); tp1.castShadow = true; g.add(tp1);
+      const tp2 = tp1.clone(); tp2.position.set(1.6, 0.65, 0.6); g.add(tp2);
+      const tbar = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.1, 1.5), toriiMat);
+      tbar.position.set(1.6, 1.28, 0); tbar.castShadow = true; g.add(tbar);
+      const tbar2 = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.06, 1.3), toriiMat);
+      tbar2.position.set(1.6, 1.12, 0); g.add(tbar2);
+      const p = P3.character(THREE, { shirt: 0xd98fae, hat: 'none' });
+      p.position.set(-1.6, 0, 0.8); p.rotation.y = -0.6; g.add(p);
+    } else if (zone.id === 'DOM') {
+      const canopyMat = new THREE.MeshStandardMaterial({ color: zone.roof || 0xd9955f, roughness: 0.8 });
+      const canopy = new THREE.Mesh(new THREE.ConeGeometry(1.6, 0.5, 4), canopyMat);
+      canopy.rotation.y = Math.PI / 4; canopy.position.y = 1.1; canopy.castShadow = true; g.add(canopy);
+      const poleMat = new THREE.MeshStandardMaterial({ color: 0x9a7033, roughness: 0.9 });
+      [[-1.1, -1.1], [1.1, -1.1], [-1.1, 1.1], [1.1, 1.1]].forEach(([x, z]) => {
+        const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 1.0, 6), poleMat);
+        pole.position.set(x, 0.5, z); pole.castShadow = true; g.add(pole);
+      });
+      const table = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.08, 1.0), poleMat);
+      table.position.y = 0.55; table.castShadow = true; g.add(table);
+      for (let i = 0; i < 6; i++) {
+        const f = new THREE.Mesh(new THREE.DodecahedronGeometry(0.1, 0), new THREE.MeshStandardMaterial({ color: 0xcdb24a, roughness: 0.6, flatShading: true }));
+        f.position.set(-0.55 + (i % 3) * 0.5, 0.65 + Math.floor(i / 3) * 0.15, (Math.random() - 0.5) * 0.5);
+        f.castShadow = true; g.add(f);
+      }
+      const p1 = P3.character(THREE, { shirt: 0xcf7a3a, hat: 'none' });
+      p1.position.set(1.9, 0, 0.3); p1.rotation.y = -0.9; g.add(p1);
+      const p2 = P3.character(THREE, { shirt: 0x3f7d3a, hat: 'none' });
+      p2.position.set(-1.9, 0, -0.3); p2.rotation.y = 1.3; g.add(p2);
     } else if (zone.theme === 'city' || zone.theme === 'market' || zone.theme === 'office') {
       const roofType = zone.theme === 'office' ? 'flat' : 'gable';
       const b = P3.building(THREE, { w: 2.3, d: 1.9, h: 1.5, wallColor: 0xf3eee1, roofColor: zone.roof || 0xb5523a, roofType });
