@@ -253,6 +253,7 @@ button{font:inherit}
     });
     const extra = [
       { id: 'audit', icon: '🧾', name: L('Đối soát', 'Audit'), x: 58, y: 14, big: false, locked: s.mission !== 'audit', pale: s.mission !== 'audit', tint: ['#E6E9EC', '#B8C0C8'] },
+      { id: 'trader', icon: '🤝', name: L('Tiểu thương', 'Petty traders'), x: 38, y: 46 },
       { id: 'rv_sea', icon: '🇸🇬', name: 'Singapore', x: 50, y: 22, pale: true, rival: 'sea' },
       { id: 'rv_eu', icon: '🇪🇺', name: L('Châu Âu', 'Europe'), x: 44, y: 6, pale: true, rival: 'eu' }
     ];
@@ -289,8 +290,15 @@ button{font:inherit}
   }
   function wireMap() {
     $('stn-sau').onclick = () => { TAB = 'chain'; renderCard(); };
-    D.channels.forEach(c => { const el = $('stn-' + c.id); if (el) el.onclick = () => { TAB = 'channel'; renderCard(); const row = $('ch-' + c.id); if (row) row.scrollIntoView({ block: 'center', behavior: 'smooth' }); }; });
+    D.channels.forEach(c => { const el = $('stn-' + c.id); if (el) el.onclick = () => {
+      TAB = 'channel'; renderCard(); const row = $('ch-' + c.id); if (row) row.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      toast(`${c.emoji} ${nm(c)} — ${nm(D.entryModes[c.entryMode])}`);
+    }; });
     const audit = $('stn-audit'); if (audit) audit.onclick = () => { TAB = 'chain'; renderCard(); };
+    const trader = $('stn-trader'); if (trader) trader.onclick = () => {
+      TAB = 'invest'; renderCard();
+      toast('🤝 ' + (LANG === 'en' ? D.sourcingTheory.en : D.sourcingTheory.vi));
+    };
     const sea = $('stn-rv_sea'); if (sea) sea.onclick = () => rivalToast('sea');
     const eu = $('stn-rv_eu'); if (eu) eu.onclick = () => rivalToast('eu');
   }
@@ -320,18 +328,21 @@ button{font:inherit}
     return `<h4>🏗️ ${L('Ưu tiên đầu tư', 'Investment priority')}</h4>
       ${D.priorities.map(p => { const own = owned(a, p.id);
         return `<button type="button" class="opt3 ${dec.priority === p.id ? 'on' : ''}" data-pri="${p.id}" ${own ? 'disabled style="opacity:.5"' : ''}><b>${nm(p)}</b> · ${D.params.priorityCost[p.id] ? money(D.params.priorityCost[p.id]) : '0'}</button>`; }).join('')}
-      <h4>🌱 ${L('Nguồn hàng', 'Sourcing')}</h4>
+      <h4>🌱 ${L('Nguồn hàng: tiểu thương hay liên kết?', 'Sourcing: traders or linked?')}</h4>
       ${role.ownFarm ? (s.season === 'off' ? `<button type="button" class="opt3 ${dec.induce ? 'on' : ''}" data-ind="1">${L('Xử lý ra hoa nghịch vụ', 'Induce off-season flowering')}</button><button type="button" class="opt3 ${!dec.induce ? 'on' : ''}" data-ind="0">${L('Không xử lý', 'Do not induce')}</button>` : `<p>${L('Chính vụ: vườn tự cho trái.', 'Main season: the orchard bears fruit on its own.')}</p>`)
-        : `<label style="display:block;font-size:11.5px;font-weight:700;margin:6px 0 2px">${L('Tỷ lệ mua từ vùng liên kết có mã', 'Share from linked coded areas')}: <span class="num" id="linkedV3">${pct(dec.linked)}</span></label><input type="range" id="linked3" min="0" max="100" step="10" value="${Math.round(dec.linked * 100)}">`}`;
+        : `<label style="display:block;font-size:11.5px;font-weight:700;margin:6px 0 2px">${L('Tỷ lệ mua từ vùng liên kết có mã (còn lại qua thương lái/tiểu thương)', 'Share from linked coded areas (rest via traders)')}: <span class="num" id="linkedV3">${pct(dec.linked)}</span></label><input type="range" id="linked3" min="0" max="100" step="10" value="${Math.round(dec.linked * 100)}">
+          <p class="src">${LANG === 'en' ? D.sourcingTheory.en : D.sourcingTheory.vi}</p>`}
+      <p class="src" style="color:${a.area && a.pack ? 'var(--flesh)' : 'inherit'}">${a.area && a.pack ? '✅ ' + L('Đã chính thức hóa: đủ mã vùng trồng + mã đóng gói.', 'Formalised: both the area and packing codes are held.') : '⏳ ' + L('Chưa chính thức hóa: còn thiếu mã vùng trồng hoặc mã đóng gói.', 'Not yet formalised: still missing a code.')}</p>`;
   }
   function tabChannelHTML() {
     const g = APP.game, s = D.seasons[g.n - 1], dec = APP.dec;
     const okIds = CH_IDS.filter(id => E.eligible(D, g, D.channels.find(c => c.id === id)));
     const norm = E.normalizeAlloc(Object.fromEntries(okIds.map(id => [id, dec.alloc[id]])), okIds);
-    return `<h4>🚢 ${L('Chia sản lượng cho các kênh', 'Split output across channels')}</h4>
+    return `<h4>🚢 ${L('Chia sản lượng cho các kênh (mỗi kênh = một phương thức thâm nhập)', 'Split output across channels (each channel = an entry mode)')}</h4>
       ${D.channels.map(c => { const e = okIds.includes(c.id);
         return `<div class="mrow3" id="ch-${c.id}"><span>${c.emoji} ${nm(c)}${e ? '' : ` <span class="lock3">🔒</span>`}</span>
-          <input type="range" data-ch="${c.id}" min="0" max="100" step="5" value="${dec.alloc[c.id] || 0}" ${e ? '' : 'disabled'}><span class="num" id="pct3-${c.id}">${e ? pct(norm[c.id]) : '—'}</span></div>`; }).join('')}`;
+          <input type="range" data-ch="${c.id}" min="0" max="100" step="5" value="${dec.alloc[c.id] || 0}" ${e ? '' : 'disabled'}><span class="num" id="pct3-${c.id}">${e ? pct(norm[c.id]) : '—'}</span></div>
+          <p class="src" style="margin:-2px 0 6px">${nm(D.entryModes[c.entryMode])} · ${c.pipeline.map(p => LANG === 'en' ? p.en : p.vi).join(' → ')}</p>`; }).join('')}`;
   }
 
   function cardHTML() {
@@ -399,6 +410,11 @@ button{font:inherit}
     $('mapLbl').textContent = L('Bản đồ', 'Map'); $('mapBtn').onclick = openMinimap;
     $('app').innerHTML = `<div class="stage">${mapHTML()}<div class="dcard" id="dcard"></div></div>`;
     wireMap(); renderCard();
+    const g = APP.game;
+    if (g.assets.area && g.assets.pack && !(APP.milestones && APP.milestones.formalized)) {
+      APP.milestones = Object.assign({}, APP.milestones, { formalized: true }); save();
+      toast('🏷️ ' + (LANG === 'en' ? D.formalization.en : D.formalization.vi));
+    }
   }
 
   function renderEmpty() {

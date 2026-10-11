@@ -336,8 +336,17 @@ footer{color:var(--faint)}
         </div></div></div>
 
       <div class="card"><h2>${L('2 · Chọn doanh nghiệp của đội', '2 · Choose your firm')}</h2>
+        <p class="small muted">${L('Mỗi vai ở một nấc khác nhau trên trục tiểu thương → công ty XNK: nấc thấp giá rẻ nhưng chưa có mã số, nấc cao có mã số nhưng vốn vào nhiều hơn.', 'Each role sits at a different rung on the petty-trader → export-company ladder: lower rungs are cheaper but lack codes; higher rungs hold codes but need more capital.')}</p>
         <div class="pick">${Object.entries(D.roles).map(([id, r]) => `<button type="button" data-role="${id}" class="${id === SETUP.roleId ? 'on' : ''}"><b>${r.emoji} ${nm(r)}</b>
+          <span class="hint" style="display:block;font-weight:700">${LANG === 'en' ? r.scaleEn : r.scaleVi}</span>
           <span class="small muted">${LANG === 'en' ? r.descEn : r.descVi}</span></button>`).join('')}</div></div>
+
+      <div class="card"><h2>${L('2b · Hai lớp «bậc 3»: tiểu thương/liên kết ở nhà, phương thức thâm nhập ra ngoài', '2b · Two "tier 3" layers: trader/linked sourcing at home, entry modes abroad')}</h2>
+        <p class="small">${LANG === 'en' ? D.sourcingTheory.en : D.sourcingTheory.vi} <span class="src">[${D.sourcingTheory.src ? D.facts[D.sourcingTheory.src].src : ''}]</span></p>
+        <p class="small">${LANG === 'en' ? D.formalization.en : D.formalization.vi} <span class="src">[${D.formalization.src ? D.facts[D.formalization.src].src : ''}]</span></p>
+        <div class="tblwrap"><table><tr><th>${L('Kênh', 'Channel')}</th><th>${L('Phương thức thâm nhập', 'Entry mode')}</th><th>${L('Khâu tới hiện diện ở host country', 'Stages to host-country presence')}</th></tr>
+          ${D.channels.map(c => `<tr><td>${c.emoji} ${nm(c)}</td><td>${nm(D.entryModes[c.entryMode])}</td><td class="small">${c.pipeline.map(p => LANG === 'en' ? p.en : p.vi).join(' → ')}</td></tr>`).join('')}
+        </table></div></div>
 
       <div class="card"><h2>${L('3 · Đội 5 vai', '3 · Five roles')}</h2>
         <p class="small muted">${L('Mỗi vai trình bày khuyến nghị trước khi CEO chốt. Đổi vai ở vụ 3 hoặc 4; nhật ký ghi lại ai đang thao tác.', 'Each role presents a recommendation before the CEO commits. Rotate roles in season 3 or 4; the log records who is operating.')}</p>
@@ -559,15 +568,19 @@ footer{color:var(--faint)}
           <h3>CFO · ${L('Một ưu tiên đầu tư', 'One investment priority')}</h3>
           ${D.priorities.map(p => { const own = owned(a, p.id);
             return `<button type="button" class="opt ${dec.priority === p.id ? 'on' : ''}" data-pri="${p.id}" ${own ? 'disabled style="opacity:.5"' : ''}><b>${nm(p)}</b> · <span class="num">${D.params.priorityCost[p.id] ? money(D.params.priorityCost[p.id]) : '0'}</span><br><span class="hint">${LANG === 'en' ? p.effEn : p.effVi}</span></button>`; }).join('')}
-          <h3>COO · ${L('Nguồn hàng', 'Sourcing')}</h3>
+          <h3>COO · ${L('Nguồn hàng: tiểu thương hay liên kết? (entry mode ở nhà)', 'Sourcing: traders or linked areas? (home-country entry mode)')}</h3>
           ${role.ownFarm ? (s.season === 'off' ? `<button type="button" class="opt ${dec.induce ? 'on' : ''}" data-ind="1">${L('Xử lý ra hoa nghịch vụ', 'Induce off-season flowering')}</button><button type="button" class="opt ${!dec.induce ? 'on' : ''}" data-ind="0">${L('Không xử lý (sản lượng nghịch vụ rất thấp)', 'Do not induce (very low off-season output)')}</button><p class="hint">${fact('offYield')}</p>` : `<p class="small muted">${L('Chính vụ: vườn của HTX tự cho trái.', 'Main season: the cooperative\'s own orchards bear fruit.')}</p>`)
-            : `<label class="ctl" for="linked">${L('Tỷ lệ mua từ vùng trồng liên kết có mã số', 'Share bought from linked, coded planting areas')}: <span class="num" id="linkedV">${pct(dec.linked)}</span></label>
-              <input type="range" id="linked" min="0" max="100" step="10" value="${Math.round(dec.linked * 100)}"><p class="hint">${fact('traders80')}</p>`}
+            : `<label class="ctl" for="linked">${L('Tỷ lệ mua từ vùng trồng liên kết có mã số (phần còn lại qua thương lái/tiểu thương)', 'Share bought from linked, coded areas (the rest via traders/petty intermediaries)')}: <span class="num" id="linkedV">${pct(dec.linked)}</span></label>
+              <input type="range" id="linked" min="0" max="100" step="10" value="${Math.round(dec.linked * 100)}"><p class="hint">${fact('traders80')}</p>
+              <p class="small muted">${LANG === 'en' ? D.sourcingTheory.en : D.sourcingTheory.vi}</p>`}
+          <p class="small ${a.area && a.pack ? 'pos' : 'muted'}">${a.area && a.pack ? '✅ ' + L('Đã chính thức hóa: đủ mã vùng trồng + mã đóng gói để làm doanh nghiệp xuất khẩu chính ngạch.', 'Formalised: both the area and packing codes are held — eligible as an official export business.') : '⏳ ' + L('Chưa chính thức hóa: còn thiếu mã vùng trồng hoặc mã đóng gói.', 'Not yet formalised: still missing the area or packing code.')}</p>
         </div>
-        <div class="card"><h2>CMO · ${L('Chia sản lượng cho các kênh', 'Split output across channels')}</h2>
+        <div class="card"><h2>CMO · ${L('Chia sản lượng cho các kênh (mỗi kênh = một phương thức thâm nhập)', 'Split output across channels (each channel = an entry mode)')}</h2>
           ${D.channels.map(c => { const e = okIds.includes(c.id); const cap = c.cap === null ? '' : `${L('tối đa', 'max')} ${nf(c.id === 'BORDER' ? c.cap * (1 - (s.borderCut || 0)) : c.cap)} ${L('tấn', 't')}`;
             return `<div class="mrow"><span>${c.emoji} ${nm(c)}<br><span class="hint">${e ? cap : `<span class="lock">🔒 ${L('Chưa đủ điều kiện', 'Not yet eligible')}</span>`}</span></span>
-            <input type="range" data-ch="${c.id}" min="0" max="100" step="5" value="${dec.alloc[c.id] || 0}" ${e ? '' : 'disabled'}><span class="num" id="pct-${c.id}">${e ? pct(norm[c.id]) : '—'}</span></div>`; }).join('')}
+            <input type="range" data-ch="${c.id}" min="0" max="100" step="5" value="${dec.alloc[c.id] || 0}" ${e ? '' : 'disabled'}><span class="num" id="pct-${c.id}">${e ? pct(norm[c.id]) : '—'}</span></div>
+            <details class="gv" style="margin:-4px 0 8px"><summary class="hint">${nm(D.entryModes[c.entryMode])} · ${L('khâu đến host country', 'stages to host country')}</summary>
+              <p class="small muted">${c.pipeline.map(p => LANG === 'en' ? p.en : p.vi).join(' → ')}</p></details>`; }).join('')}
           <p class="hint">${fact('sampling')}</p>
 
           <h2 style="margin-top:16px">④ ${L('Nếu – Thì (CEO chạy, còn', 'What-if (CEO runs it,')} ${MAX_WHATIF - wf.length}/${MAX_WHATIF}${L(')', ' left)')}</h2>
@@ -713,10 +726,14 @@ footer{color:var(--faint)}
     const fc = sh.forecastWhatIf !== null && sh.forecastWhatIf !== undefined ? sh.forecastWhatIf : sh.forecastFinal;
     const j = APP.journals['draft' + n] || {}, db = APP.debriefs[n] || {}, lq = APP.lumina[n] || [];
     const needDebrief = n % 2 === 0;
+    const justFormalized = APP.game.assets.area && APP.game.assets.pack && !(APP.milestones && APP.milestones.formalized);
+    if (justFormalized) { APP.milestones = Object.assign({}, APP.milestones, { formalized: true }); save(); }
     $('app').innerHTML = `
       <section class="hero" style="padding-bottom:6px"><span class="eyebrow">${L('Kết quả vụ', 'Season result')} ${n} · ${s.label}</span>
         <h1 style="font-size:clamp(22px,3.6vw,30px)">${fl.win ? '🟩 ' + L('Đội cắm cờ vụ này!', 'Your team plants the flag!') : '🟥 ' + L('Đối thủ giữ cờ vụ này', 'A rival takes this season\'s flag')}</h1>
         ${flagsHTML(0)}</section>
+      ${justFormalized ? `<div class="card" style="border:2px solid var(--accent)"><h2>🏷️ ${L('Mốc: chính thức hóa doanh nghiệp xuất khẩu', 'Milestone: formalised as an export business')}</h2>
+        <p class="small">${LANG === 'en' ? D.formalization.en : D.formalization.vi} <span class="src">[${D.facts[D.formalization.src].src}]</span></p></div>` : ''}
       <div class="grid2">
         <div class="card"><h2>${L('Báo cáo vụ', 'Season report')}</h2>${resultsHTML(r)}</div>
         <div class="card"><h2>${L('Đấu trường: lợi nhuận vụ', 'Arena: season profit')}</h2>${arenaHTML(n)}
