@@ -367,7 +367,7 @@ footer{color:var(--faint)}
           <img src="../assets/${a.img}" alt="${esc(nm(a))}" loading="lazy">
           <b>${a.emoji} ${esc(nm(a))}</b><span class="small muted">${LANG === 'en' ? a.roleEn : a.roleVi}</span></button>`).join('')}</div></div>
 
-      <div class="card"><h2>${L('2 · Chọn doanh nghiệp của đội', '2 · Choose your firm')}</h2>
+      <div class="card"><h2>${L('2a · Chọn doanh nghiệp của đội', '2a · Choose your firm')}</h2>
         <p class="small muted">${L('Mỗi vai ở một nấc khác nhau trên trục tiểu thương → công ty XNK: nấc thấp giá rẻ nhưng chưa có mã số, nấc cao có mã số nhưng vốn vào nhiều hơn.', 'Each role sits at a different rung on the petty-trader → export-company ladder: lower rungs are cheaper but lack codes; higher rungs hold codes but need more capital.')}</p>
         <div class="pick">${Object.entries(D.roles).map(([id, r]) => `<button type="button" data-role="${id}" class="${id === SETUP.roleId ? 'on' : ''}"><b>${r.emoji} ${nm(r)}</b>
           <span class="hint" style="display:block;font-weight:700">${LANG === 'en' ? r.scaleEn : r.scaleVi}</span>
