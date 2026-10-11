@@ -485,7 +485,7 @@ import { P3 } from '../js/poly3d-kit.js';
           decor.add(t);
         }
         const mood = g.history.length ? (g.history[g.history.length - 1].profit >= 0 ? 'vui' : 'lo') : 'vui';
-        decor.add(makeBillboard(`../assets/hc/cast/ba-sau-lanh-${mood}.webp`, IMG('advisors/ba-sau-lanh-cut.webp'), 2.1));
+        decor.add(makeBillboard(`../assets/hc/cast/ba-sau-lanh-${mood}-cut.webp`, IMG('advisors/ba-sau-lanh-cut.webp'), 2.1));
       } else if (zone.rival) {
         decor.add(buildZoneDecor(zone));
         decor.add(makeBillboard(zone.img, IMG('advisors/ba-sau-lanh-cut.webp'), 1.8));
@@ -530,7 +530,7 @@ import { P3 } from '../js/poly3d-kit.js';
     // nhân vật người chơi (billboard theo avatar đã chọn, hoặc hình khối mặc định)
     const player = new THREE.Group();
     const av = APP.avatarId ? D.avatars.find(a => a.id === APP.avatarId) : null;
-    if (av) player.add(makeBillboard(`../assets/${av.img}`, IMG('advisors/ba-sau-lanh-cut.webp'), 1.7));
+    if (av) player.add(makeBillboard(`../assets/${av.img.replace(/\.webp$/, '-cut.webp')}`, IMG('advisors/ba-sau-lanh-cut.webp'), 1.7));
     else player.add(P3.character(THREE, { shirt: 0xd94f4f }));
     player.position.set(0, 0, 4);
     scene.add(player);
