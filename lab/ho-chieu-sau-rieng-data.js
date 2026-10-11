@@ -394,8 +394,40 @@
   // Cột của nhật ký sự kiện (event log) xuất CSV
   const eventLogColumns = ['event_id', 'timestamp', 'class_id', 'team_id', 'round_id', 'role', 'event_type', 'old_value', 'new_value', 'device_session', 'committed'];
 
+  // ---------- Nhân vật đại diện (chọn 1 khi bắt đầu ván — thuần cosmetic, không đổi luật chơi) ----------
+  const avatars = [
+    { id: 'basaulanh', emoji: '👵', vi: 'Bà Sáu Lành', en: 'Bà Sáu Lành', img: 'hc/cast/ba-sau-lanh-vui.webp',
+      roleVi: 'Nông hộ trồng sầu riêng, HTX Cai Lậy', roleEn: 'Durian grower, Cai Lậy co-op' },
+    { id: 'bacba', emoji: '👴', vi: 'Bác Ba', en: 'Bác Ba', img: 'hc/cast/bac-ba.webp',
+      roleVi: 'Nông hộ trồng sầu riêng, một nhà vườn khác', roleEn: 'Durian grower, another household' },
+    { id: 'huong', emoji: '👩', vi: 'Hương', en: 'Hương', img: 'hc/cast/huong.webp',
+      roleVi: 'Nhà sáng lập BizOn', roleEn: 'BizOn founder' },
+    { id: 'tuphan', emoji: '👨‍🏫', vi: 'Tú Phan', en: 'Tú Phan', img: 'hc/cast/tu-phan-avatar.webp',
+      roleVi: 'Giảng viên, Trường Kinh tế — Đại học Cần Thơ', roleEn: 'Lecturer, CTU School of Economics' }
+  ];
+
+  // ---------- Quy trình 8 bước xuất khẩu sầu riêng chính ngạch sang Trung Quốc (tài liệu tham khảo, có nguồn) ----------
+  const eightSteps = {
+    src: 'TWL', url: 'https://3w-logistics.com/vi/thu-tuc-xuat-khau-sau-rieng-sang-trung-quoc/',
+    steps: [
+      { n: 1, icon: '📝', vi: 'Đăng ký Mã số vùng trồng & Cơ sở đóng gói với GACC.', en: 'Register growing-area and packing-facility codes with GACC.', factSrc: 'gaccTimeline' },
+      { n: 2, icon: '🤝', vi: 'Ký hợp đồng ngoại thương (ưu tiên L/C hoặc T/T cọc 30%).', en: 'Sign the foreign-trade contract (L/C, or T/T with a 30% deposit).', factSrc: 'depositTerms', img: 'hc/pipeline/partner.webp', imgAlt: 'Đối tác ký hợp đồng ngoại thương' },
+      { n: 3, icon: '📦', vi: 'Thu hoạch, phân loại và đóng gói đúng tiêu chuẩn nhãn mác.', en: 'Harvest, grade and pack to the labelling standard.', factSrc: 'grades' },
+      { n: 4, icon: '🌿', vi: 'Kiểm dịch thực vật & xin giấy Phytosanitary Certificate.', en: 'Phytosanitary inspection and certificate.', factSrc: 'sampling', img: 'hc/pipeline/quarantine.webp', imgAlt: 'Cán bộ kiểm dịch thực vật' },
+      { n: 5, icon: '🖥️', vi: 'Khai báo hải quan xuất khẩu trên hệ thống VNACCS.', en: 'File the export customs declaration on VNACCS.', factSrc: 'reqDocs', img: 'hc/pipeline/customs.webp', imgAlt: 'Nhân viên hải quan' },
+      { n: 6, icon: '🚚', vi: 'Vận chuyển (đường bộ, đường biển hoặc đường sắt).', en: 'Transport (road, sea or rail).', factSrc: 'transitTimes' },
+      { n: 7, icon: '🔬', vi: 'Thông quan phía Trung Quốc & kiểm tra MRL ngẫu nhiên.', en: 'Clearance in China and random MRL testing.', factSrc: 'cadmium', img: 'hc/pipeline/lab-f.webp', img2: 'hc/pipeline/lab-m.webp', imgAlt: 'Kỹ thuật viên kiểm nghiệm dư lượng' },
+      { n: 8, icon: '🗂️', vi: 'Hoàn tất thanh toán & lưu trữ hồ sơ (tối thiểu 3 năm).', en: 'Settle payment and keep records (at least 3 years).', factSrc: 'depositTerms' }
+    ],
+    storage: [
+      { vi: 'Sầu riêng tươi nguyên trái: 13–15°C, ẩm 85–90%, giữ 5–7 ngày.', en: 'Whole fresh durian: 13–15°C, 85–90% humidity, lasts 5–7 days.', factSrc: 'freshStorage' },
+      { vi: 'Sầu riêng đông lạnh: −18°C, hạn dùng 18–24 tháng.', en: 'Frozen durian: −18°C, 18–24 month shelf life.', factSrc: 'frozenStorageTWL' }
+    ],
+    docs: { factSrc: 'reqDocs' }
+  };
+
   const api = { sources, facts, params, roles, channels, entryModes, sourcingTheory, formalization, priorities, intel, seasons, events, scoreWeights,
-    team, rivals, rivalGroups, luminaQuestions, flow, debrief, rubric, eventLogColumns };
+    team, rivals, rivalGroups, luminaQuestions, flow, debrief, rubric, eventLogColumns, avatars, eightSteps };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.DurianData = api;
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -59,6 +59,20 @@ h1{font-size:clamp(26px,4.4vw,38px);line-height:1.15;margin:10px 0}
 .pick button{text-align:left;border:2px solid var(--line2);background:var(--panel2);color:var(--ink);border-radius:14px;padding:14px;font-family:inherit;cursor:pointer}
 .pick button.on{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,var(--panel2))}
 .pick b{display:block;font-size:15px;margin-bottom:4px}
+.pickAv{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:10px 0}
+@media (max-width:640px){.pickAv{grid-template-columns:1fr 1fr}}
+.pickAv button{text-align:center;border:2px solid var(--line2);background:var(--panel2);color:var(--ink);border-radius:14px;padding:10px;font-family:inherit;cursor:pointer}
+.pickAv button.on{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,var(--panel2))}
+.pickAv img{width:64px;height:64px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 6px;background:var(--panel)}
+.pickAv b{display:block;font-size:13px}
+.avatar-badge{display:none;align-items:center;gap:6px;margin-left:8px;font-size:12px;font-weight:700;color:var(--muted)}
+.avatar-badge.on{display:flex}
+.avatar-badge img{width:26px;height:26px;border-radius:50%;object-fit:cover}
+.step8{border:1px solid var(--line2);border-radius:14px;padding:10px 12px;margin:8px 0;background:var(--panel2)}
+.step8 .n{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:800;margin-right:6px;flex-shrink:0}
+.step8-row{display:flex;gap:10px;align-items:flex-start}
+.step8-row img{width:48px;height:48px;border-radius:10px;object-fit:cover;flex-shrink:0}
+.step8-row img + img{margin-left:-14px;border:2px solid var(--panel2)}
 label.ctl{display:block;margin:12px 0 2px;font-weight:700;font-size:13px}
 input[type=range]{width:100%} input[type=text],select{font:inherit;color:var(--ink);background:var(--panel2);border:1px solid var(--line2);border-radius:9px;padding:7px 9px;max-width:100%}
 .btn{border:0;border-radius:11px;padding:10px 16px;font-weight:800;font-size:14px;font-family:inherit;cursor:pointer;color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent2))}
@@ -192,6 +206,7 @@ footer{color:var(--faint)}
 <body>
 <div class="topbar"><div class="topbar-in">
   <div class="logo"><span class="mark">🌳</span><span><span id="brandName">Hộ Chiếu Sầu Riêng</span><span class="sub" id="brandSub"></span></span></div>
+  <span class="avatar-badge" id="avatarBadge"></span>
   <div class="spacer"></div>
   <button class="tbtn music" id="musicBtn" type="button" aria-pressed="false">♪</button>
   <a class="tbtn" href="ho-chieu-sau-rieng-3d.html" id="map3dLink">🗺️</a>
@@ -236,7 +251,7 @@ footer{color:var(--faint)}
   // ---------------- trạng thái ván (lưu cục bộ để học qua nhiều buổi) ----------------
   let APP = null;        // { cls, team, roleId, seed, timerMin, game, dec, operator, session, roundStart, events[], whatifs{}, lumina{}, sheets{}, journals{}, debriefs{}, flags[] }
   let RIVALS = null;     // tính lại từ hạt giống, không cần lưu
-  let SETUP = { cls: '', team: '', roleId: 'exporter', timerMin: 0 };
+  let SETUP = { cls: '', team: '', roleId: 'exporter', timerMin: 0, avatarId: 'basaulanh' };
   let ERR = '';
 
   const freshDec = () => ({ priority: 'area', linked: 0.3, induce: true, alloc: { CN: 40, BORDER: 30, FROZEN: 0, TW: 5, JP: 0, DOM: 25 }, intel: [], option: 0 });
@@ -283,6 +298,10 @@ footer{color:var(--faint)}
     $('footSrc').textContent = L(
       'Quy định và sự kiện lấy từ Nghị định thư kiểm dịch MARD–GACC (2022), báo cáo thị trường rau quả của Bộ Công Thương (12/2023–02/2024), kết quả tra cứu của CESTI (04/2024) và các nghiên cứu chuỗi cung ứng tại Cai Lậy, Phong Điền, Thái Lan, Malaysia. Khối lượng, hệ số giá, xác suất và chiến lược của đối thủ AI là minh họa.',
       'Rules and events come from the MARD–GACC phytosanitary protocol (2022), Ministry of Industry and Trade fruit market reports (Dec 2023–Feb 2024), CESTI search results (Apr 2024) and supply-chain studies in Cai Lậy, Phong Điền, Thailand and Malaysia. Volumes, price ratios, probabilities and AI rival strategies are illustrative.');
+    const av = APP && APP.avatarId ? D.avatars.find(a => a.id === APP.avatarId) : null;
+    const badge = $('avatarBadge');
+    badge.classList.toggle('on', !!av);
+    badge.innerHTML = av ? `<img src="../assets/${av.img}" alt="${esc(nm(av))}"><span>${esc(nm(av))}</span>` : '';
   }
   $('langVI').onclick = () => { LANG = 'vi'; store.set('durian_lang', 'vi'); render(); };
   $('langEN').onclick = () => { LANG = 'en'; store.set('durian_lang', 'en'); render(); };
@@ -319,6 +338,13 @@ footer{color:var(--faint)}
         <span class="prov pub">${L('Sự kiện và quy định có trích nguồn tài liệu', 'Events and rules are cited from documents')}</span><span class="prov sim">${L('Khối lượng, hệ số giá, xác suất là minh họa', 'Volumes, price ratios and probabilities are illustrative')}</span>
       </div><div class="hero-cast"><img src="${IMG('anh-tu-ao-dai-welcome-cut-v2.webp')}" alt="${L('Thầy Tú Phan', 'Dr Tú Phan')}"><img src="${IMG('lumina-je-standing.webp')}" alt="Lumina"></div></div></section>
 
+      <div class="card"><h2>${L('🪙 Thử mẫu huy hiệu mới (chưa chốt)', '🪙 Badge design preview (not final)')}</h2>
+        <p class="small muted">${L('Đặt 2 mẫu cạnh nhau để xem thử — chưa thay cho huy hiệu đang dùng trong hồ sơ/chứng nhận.', 'Placed side by side for a look — not yet replacing the badge used in the dossier/certificate.')}</p>
+        <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start">
+          <div style="text-align:center"><img src="../assets/brand/durian-passport-badge-green-preview.webp" alt="Mẫu A — nền xanh" style="width:120px;height:120px;border-radius:16px;object-fit:cover"><p class="small muted" style="margin-top:4px">${L('Mẫu A · nền xanh, viền chỉ khâu', 'Design A · green, stitched border')}</p></div>
+          <div style="text-align:center"><img src="../assets/brand/durian-passport-badge-gold-preview.webp" alt="Mẫu B — nền vàng kim loại" style="width:120px;height:120px;border-radius:16px;object-fit:cover"><p class="small muted" style="margin-top:4px">${L('Mẫu B · nền vàng kim loại', 'Design B · metallic gold')}</p></div>
+        </div></div>
+
       ${saved ? `<div class="card"><h2>${L('Ván đang dở', 'Game in progress')}</h2>
         <p class="small">${L('Lớp', 'Class')} <b>${esc(saved.cls || '—')}</b> · ${L('Đội', 'Team')} <b>${esc(saved.team || '—')}</b> · ${nm(D.roles[saved.roleId])} · ${L('vụ', 'season')} ${Math.min(saved.game.n, 6)}/6</p>
         <p class="hint">${L('Nếu máy này dùng chung, hãy kiểm tra đúng mã đội trước khi tiếp tục.', 'If this device is shared, check the team code before continuing.')}</p>
@@ -335,6 +361,12 @@ footer{color:var(--faint)}
           <p class="hint">${L('Hết giờ vẫn chốt được nhưng nhật ký ghi «trễ hạn».', 'You can still commit after time is up, but the log records it as late.')}</p>
         </div></div></div>
 
+      <div class="card"><h2>${L('1b · Chọn nhân vật đại diện', '1b · Pick your avatar')}</h2>
+        <p class="small muted">${L('Chỉ là ảnh đại diện của bạn xuyên suốt ván chơi — không ảnh hưởng điểm số hay luật chơi.', 'Just your avatar for this game — it does not affect scoring or the rules.')}</p>
+        <div class="pickAv">${D.avatars.map(a => `<button type="button" data-avatar="${a.id}" class="${a.id === SETUP.avatarId ? 'on' : ''}">
+          <img src="../assets/${a.img}" alt="${esc(nm(a))}" loading="lazy">
+          <b>${a.emoji} ${esc(nm(a))}</b><span class="small muted">${LANG === 'en' ? a.roleEn : a.roleVi}</span></button>`).join('')}</div></div>
+
       <div class="card"><h2>${L('2 · Chọn doanh nghiệp của đội', '2 · Choose your firm')}</h2>
         <p class="small muted">${L('Mỗi vai ở một nấc khác nhau trên trục tiểu thương → công ty XNK: nấc thấp giá rẻ nhưng chưa có mã số, nấc cao có mã số nhưng vốn vào nhiều hơn.', 'Each role sits at a different rung on the petty-trader → export-company ladder: lower rungs are cheaper but lack codes; higher rungs hold codes but need more capital.')}</p>
         <div class="pick">${Object.entries(D.roles).map(([id, r]) => `<button type="button" data-role="${id}" class="${id === SETUP.roleId ? 'on' : ''}"><b>${r.emoji} ${nm(r)}</b>
@@ -347,6 +379,18 @@ footer{color:var(--faint)}
         <div class="tblwrap"><table><tr><th>${L('Kênh', 'Channel')}</th><th>${L('Phương thức thâm nhập', 'Entry mode')}</th><th>${L('Khâu tới hiện diện ở host country', 'Stages to host-country presence')}</th></tr>
           ${D.channels.map(c => `<tr><td>${c.emoji} ${nm(c)}</td><td>${nm(D.entryModes[c.entryMode])}</td><td class="small">${c.pipeline.map(p => LANG === 'en' ? p.en : p.vi).join(' → ')}</td></tr>`).join('')}
         </table></div></div>
+
+      <div class="card"><h2>📦 ${L('2c · Quy trình 8 bước xuất khẩu chính ngạch sang Trung Quốc', '2c · The 8-step official export process to China')}</h2>
+        <p class="small muted">${L('Tài liệu tham khảo — không phải luật chơi.', 'Reference material — not a game rule.')} <span class="src">[${D.sources[D.eightSteps.src] ? D.eightSteps.src : ''}]</span></p>
+        ${D.eightSteps.steps.map(s => `<div class="step8"><div class="step8-row">
+          ${s.img ? `<img src="../assets/${s.img}" alt="${esc(s.imgAlt || '')}" loading="lazy">${s.img2 ? `<img src="../assets/${s.img2}" alt="" loading="lazy">` : ''}` : ''}
+          <div><b><span class="n">${s.n}</span>${esc(LANG === 'en' ? s.en : s.vi)}</b>
+          ${s.factSrc && D.facts[s.factSrc] ? `<p class="small muted" style="margin-top:4px">${fact(s.factSrc)}</p>` : ''}</div>
+        </div></div>`).join('')}
+        <details class="gv"><summary>${L('Nhiệt độ bảo quản: tươi so với đông lạnh', 'Storage temperature: fresh vs frozen')}</summary>
+          ${D.eightSteps.storage.map(x => `<p class="small">${esc(LANG === 'en' ? x.en : x.vi)} ${x.factSrc && D.facts[x.factSrc] ? `<span class="src">[${D.facts[x.factSrc].src}]</span>` : ''}</p>`).join('')}
+        </details>
+        <p class="small muted" style="margin-top:8px"><a href="${esc(D.eightSteps.url)}" target="_blank" rel="noopener noreferrer">${L('Nguồn: 3W Logistics ↗', 'Source: 3W Logistics ↗')}</a></p></div>
 
       <div class="card"><h2>${L('3 · Đội 5 vai', '3 · Five roles')}</h2>
         <p class="small muted">${L('Mỗi vai trình bày khuyến nghị trước khi CEO chốt. Đổi vai ở vụ 3 hoặc 4; nhật ký ghi lại ai đang thao tác.', 'Each role presents a recommendation before the CEO commits. Rotate roles in season 3 or 4; the log records who is operating.')}</p>
@@ -367,6 +411,7 @@ footer{color:var(--faint)}
       </div>`;
     const keep = () => { SETUP.cls = $('cls').value.trim(); SETUP.team = $('teamId').value.trim(); SETUP.timerMin = +$('timer').value; };
     document.querySelectorAll('[data-role]').forEach(b => b.onclick = () => { keep(); SETUP.roleId = b.dataset.role; renderSetup(); });
+    document.querySelectorAll('[data-avatar]').forEach(b => b.onclick = () => { keep(); SETUP.avatarId = b.dataset.avatar; renderSetup(); });
     if ($('resumeBtn')) $('resumeBtn').onclick = () => { boot(saved); logEv('RESUME', '', 'R' + saved.game.n); save(); render(); window.scrollTo(0, 0); };
     if ($('discardBtn')) $('discardBtn').onclick = () => { if (confirm(L('Xóa hẳn ván đang lưu trên máy này?', 'Permanently delete the saved game on this device?'))) { store.del(SAVE_KEY); renderSetup(); } };
     $('startBtn').onclick = () => {
@@ -375,12 +420,12 @@ footer{color:var(--faint)}
       ERR = '';
       const seed = SETUP.cls ? E.seedFrom(SETUP.cls + '|' + SETUP.roleId) : (Date.now() >>> 0);
       boot({
-        cls: SETUP.cls, team: SETUP.team, roleId: SETUP.roleId, seed, timerMin: SETUP.timerMin,
+        cls: SETUP.cls, team: SETUP.team, roleId: SETUP.roleId, avatarId: SETUP.avatarId, seed, timerMin: SETUP.timerMin,
         game: E.newGame(D, SETUP.roleId, seed), dec: freshDec(), operator: 'ceo',
         session: 'S' + (Date.now() >>> 0).toString(36).toUpperCase(), roundStart: Date.now(),
         events: [], whatifs: {}, lumina: {}, sheets: {}, journals: {}, debriefs: {}, flags: [], timing: {}
       });
-      logEv('LOGIN', '', JSON.stringify({ role: SETUP.roleId, timer: SETUP.timerMin }));
+      logEv('LOGIN', '', JSON.stringify({ role: SETUP.roleId, avatar: SETUP.avatarId, timer: SETUP.timerMin }));
       save(); render(); window.scrollTo(0, 0);
     };
   }
