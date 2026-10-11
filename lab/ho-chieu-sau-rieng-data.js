@@ -29,7 +29,9 @@
     MYSOP: 'MARDI (2023). The SOP for exporting frozen whole durian fruit.',
     MYSC: 'Bài báo (2019). From farm to China: Malaysian frozen whole durian export supply chain.',
     GS1: 'APEC (2017). Application of global data standards for supply chain connectivity (thí điểm truy xuất sầu riêng Malaysia).',
-    TCVN: 'TCVN 10739:2015 – Sầu riêng quả tươi.'
+    TCVN: 'TCVN 10739:2015 – Sầu riêng quả tươi.',
+    CODEX: 'Codex Alimentarius – FAO/WHO, CXC 8-1976 (Code of Practice for the Processing and Handling of Quick Frozen Foods): chuẩn quốc tế bảo quản/phân phối thực phẩm đông lạnh ở −18°C.',
+    THAIPH: 'Boonyaritthongchai, P. và cộng sự. Storage of Durians on a Semi-Commercial Scale. Agriculture and Natural Resources (Thái Lan), chỉ mục FAO AGRIS.'
   };
 
   // ---------- Dữ kiện dùng trong trò chơi (có trích nguồn) ----------
@@ -60,7 +62,9 @@
     thaiOverlap: { src: 'CAILAY', vi: 'Chính vụ miền Tây (tháng 4–8) trùng vụ Thái Lan và Đông Nam Bộ nên thương lái Trung Quốc ít mua sầu riêng Việt Nam.', en: 'The Mekong main season (Apr–Aug) overlaps Thailand and the Southeast, so Chinese buyers purchase less Vietnamese durian.' },
     grades: { src: 'TCVN', vi: 'Hạng Đặc biệt ≥4 ngăn múi, hạng I ≥3, hạng II ≥2; dung sai chất lượng 10%.', en: 'Extra grade ≥4 full locules, Grade I ≥3, Grade II ≥2; 10% quality tolerance.' },
     thaiDrought: { src: 'GMSARN', vi: 'Hạn hán ở Thái Lan (2016–2017) làm giảm nguồn cung; thị phần Việt Nam tại Trung Quốc lên 37,39% năm 2017.', en: 'Drought in Thailand (2016–2017) cut supply; Vietnam\'s share in China rose to 37.39% in 2017.' },
-    border2018: { src: 'TW', vi: 'Năm 2018 Trung Quốc siết dần nhập khẩu tiểu ngạch, làm giảm kim ngạch sầu riêng Việt Nam.', en: 'In 2018 China tightened small-scale border imports, reducing Vietnam\'s durian exports.' }
+    border2018: { src: 'TW', vi: 'Năm 2018 Trung Quốc siết dần nhập khẩu tiểu ngạch, làm giảm kim ngạch sầu riêng Việt Nam.', en: 'In 2018 China tightened small-scale border imports, reducing Vietnam\'s durian exports.' },
+    freshStorage: { src: 'THAIPH', vi: 'Thử nghiệm bán công nghiệp ở Thái Lan: sầu riêng tươi (trái già) bảo quản ở khoảng 13,5°C giữ được đến 15 ngày; trái non dễ bị tổn thương lạnh ở mức nhiệt này.', en: 'A Thai semi-commercial trial: mature fresh durian stored at about 13.5°C lasted up to 15 days; younger fruit showed chilling injury at that temperature.' },
+    frozenStandard: { src: 'CODEX', vi: 'Chuẩn quốc tế Codex (FAO/WHO) cho thực phẩm đông lạnh: bảo quản và phân phối ở −18°C trở xuống.', en: 'The international Codex (FAO/WHO) standard for quick-frozen foods: store and distribute at −18°C or below.' }
   };
 
   // ---------- Tham số minh họa ----------
@@ -117,12 +121,15 @@
   // priceMult: giá bán so với giá vựa trong vụ. Neo: DN xuất khẩu Cai Lậy mua 26.333, bán 47.333 đ/kg (×1,8; CAILAY);
   // bán lẻ 82.200 so với vựa 71.100 đ/kg (×1,16; PDIEN); đông lạnh/tươi ×2,47 và chi phí cấp đông ≈ 0,5 giá tươi (JETRO).
   // Các hệ số còn lại là minh họa. · cost: chi phí logistics/kiểm dịch, nghìn đ/kg · cap: tấn/vụ (null = không giới hạn)
-  // pipeline: 3 khâu ngoại thương nối tiếp từ thông quan đến khi sản phẩm hiện diện tại host country (chỉ mô tả, không ảnh hưởng công thức).
+  // pipeline: các khâu ngoại thương nối tiếp từ thông quan đến khi sản phẩm hiện diện tại host country (chỉ mô tả, không ảnh hưởng công thức);
+  // CN chính ngạch có thêm khâu 'contract' mở đầu (hồ sơ – hợp đồng) theo quy trình 8 bước xuất khẩu chính ngạch.
   const channels = [
     { id: 'CN', emoji: '🇨🇳', vi: 'Trung Quốc chính ngạch (tươi)', en: 'China official (fresh)', priceMult: 1.6, cost: 8, cap: null, needs: ['area', 'pack'], src: 'CAILAY',
       entryMode: 'direct',
       pipeline: [
+        { id: 'contract', vi: 'Đăng ký mã vùng trồng – mã cơ sở đóng gói với GACC, rồi ký hợp đồng ngoại thương trước khi giao hàng.', en: 'Register growing-area and packing-facility codes with GACC, then sign the foreign-trade contract before shipping.', src: 'codes' },
         { id: 'customs', vi: 'Thông quan tại cửa khẩu (Hữu Nghị, Lào Cai…): đối chiếu mã vùng trồng – mã đóng gói, lấy mẫu kiểm dịch.', en: 'Clearance at border gates (Hữu Nghị, Lào Cai…): area/packing codes checked, phytosanitary sampling.', src: 'codes' },
+        { id: 'transport', vi: 'Vận chuyển bằng đường bộ, đường biển hoặc đường sắt; trái tươi cần giữ lạnh khoảng 13,5°C để kéo dài thời gian bảo quản.', en: 'Shipped by road, sea or rail; fresh fruit needs cold storage around 13.5°C to extend shelf life.', src: 'freshStorage' },
         { id: 'distribute', vi: 'Vào chợ đầu mối biên giới rồi hệ thống bán sỉ nội địa Trung Quốc.', en: 'Into border wholesale markets, then China\'s domestic wholesale network.', src: 'china92' },
         { id: 'retail', vi: 'Lên sạp trái cây và sàn thương mại điện tử ở các đô thị lớn.', en: 'Reaches fruit stalls and e-commerce platforms in major cities.', src: 'share57' }
       ] },
@@ -137,6 +144,7 @@
       entryMode: 'process_export',
       pipeline: [
         { id: 'customs', vi: 'Cấp đông đúng chuẩn trước khi đóng container lạnh xuất khẩu.', en: 'Frozen to spec before loading a cold-chain export container.', src: 'frozenMY' },
+        { id: 'transport', vi: 'Bảo quản và vận chuyển ở −18°C trở xuống trong container lạnh, theo chuẩn quốc tế cho thực phẩm đông lạnh.', en: 'Stored and shipped at −18°C or below in a reefer container, per the international standard for quick-frozen foods.', src: 'frozenStandard' },
         { id: 'distribute', vi: 'Vào kho lạnh phân phối, chờ nghị định thư đông lạnh để mở rộng.', en: 'Enters cold-storage distribution, pending a frozen protocol to scale up.', src: 'frozenPush' },
         { id: 'retail', vi: 'Bán cho ngành chế biến (kem, bánh) và siêu thị đông lạnh.', en: 'Sold to processors (ice cream, pastry) and frozen-food retailers.', src: 'frozenThai' }
       ] },
@@ -383,8 +391,40 @@
   // Cột của nhật ký sự kiện (event log) xuất CSV
   const eventLogColumns = ['event_id', 'timestamp', 'class_id', 'team_id', 'round_id', 'role', 'event_type', 'old_value', 'new_value', 'device_session', 'committed'];
 
+  // ---------- Nhân vật đại diện (chọn 1 khi bắt đầu ván — thuần cosmetic, không đổi luật chơi) ----------
+  const avatars = [
+    { id: 'basaulanh', emoji: '👵', vi: 'Bà Sáu Lành', en: 'Bà Sáu Lành', img: 'hc/cast/ba-sau-lanh-vui.webp',
+      roleVi: 'Nông hộ trồng sầu riêng, HTX Cai Lậy', roleEn: 'Durian grower, Cai Lậy co-op' },
+    { id: 'bacba', emoji: '👴', vi: 'Bác Ba', en: 'Bác Ba', img: 'hc/cast/bac-ba.webp',
+      roleVi: 'Nông hộ trồng sầu riêng, một nhà vườn khác', roleEn: 'Durian grower, another household' },
+    { id: 'huong', emoji: '👩', vi: 'Hương', en: 'Hương', img: 'hc/cast/huong.webp',
+      roleVi: 'Nhà sáng lập BizOn', roleEn: 'BizOn founder' },
+    { id: 'tuphan', emoji: '👨‍🏫', vi: 'Tú Phan', en: 'Tú Phan', img: 'hc/cast/tu-phan-avatar.webp',
+      roleVi: 'Giảng viên, Trường Kinh tế — Đại học Cần Thơ', roleEn: 'Lecturer, CTU School of Economics' }
+  ];
+
+  // ---------- Quy trình 8 bước xuất khẩu sầu riêng chính ngạch sang Trung Quốc (tài liệu tham khảo) ----------
+  // Trình tự các bước dựa trên khung quy định MARD–GACC (PROTO) đã dùng xuyên suốt dữ liệu này;
+  // từng bước chỉ gắn trích dẫn khi có dữ kiện cụ thể đã kiểm chứng ở trên (không suy diễn số liệu).
+  const eightSteps = {
+    steps: [
+      { n: 1, icon: '📝', vi: 'Đăng ký Mã số vùng trồng & Cơ sở đóng gói với GACC.', en: 'Register growing-area and packing-facility codes with GACC.', factSrc: 'codes', img: 'hc/pipeline/codes.webp', imgAlt: 'Đăng ký mã số vùng trồng tại vườn sầu riêng' },
+      { n: 2, icon: '🤝', vi: 'Ký hợp đồng ngoại thương trước khi giao hàng.', en: 'Sign the foreign-trade contract before shipping.', img: 'hc/pipeline/partner.webp', imgAlt: 'Đối tác ký hợp đồng ngoại thương' },
+      { n: 3, icon: '📦', vi: 'Thu hoạch, phân loại và đóng gói đúng tiêu chuẩn nhãn mác.', en: 'Harvest, grade and pack to the labelling standard.', factSrc: 'grades', img: 'hc/pipeline/harvest.webp', imgAlt: 'Thu hoạch, phân loại và đóng gói sầu riêng' },
+      { n: 4, icon: '🌿', vi: 'Kiểm dịch thực vật & xin giấy Phytosanitary Certificate.', en: 'Phytosanitary inspection and certificate.', factSrc: 'sampling', img: 'hc/pipeline/quarantine.webp', imgAlt: 'Cán bộ kiểm dịch thực vật' },
+      { n: 5, icon: '🖥️', vi: 'Khai báo hải quan xuất khẩu trên hệ thống VNACCS.', en: 'File the export customs declaration on VNACCS.', img: 'hc/pipeline/customs.webp', imgAlt: 'Nhân viên hải quan' },
+      { n: 6, icon: '🚚', vi: 'Vận chuyển bằng đường bộ, đường biển hoặc đường sắt.', en: 'Transport by road, sea or rail.' },
+      { n: 7, icon: '🔬', vi: 'Thông quan phía Trung Quốc & kiểm tra MRL ngẫu nhiên.', en: 'Clearance in China and random MRL testing.', factSrc: 'cadmium', img: 'hc/pipeline/lab-f.webp', img2: 'hc/pipeline/lab-m.webp', imgAlt: 'Kỹ thuật viên kiểm nghiệm dư lượng' },
+      { n: 8, icon: '🗂️', vi: 'Hoàn tất thanh toán & lưu trữ hồ sơ xuất khẩu.', en: 'Settle payment and keep export records.', img: 'hc/pipeline/payment.webp', imgAlt: 'Hoàn tất thanh toán xuất khẩu' }
+    ],
+    storage: [
+      { vi: 'Sầu riêng tươi (trái già): giữ lạnh khoảng 13,5°C, được đến 15 ngày trong thử nghiệm bán công nghiệp.', en: 'Mature fresh durian: kept at about 13.5°C, lasting up to 15 days in a semi-commercial trial.', factSrc: 'freshStorage' },
+      { vi: 'Sầu riêng đông lạnh: bảo quản ở −18°C trở xuống theo chuẩn quốc tế Codex.', en: 'Frozen durian: stored at −18°C or below, per the international Codex standard.', factSrc: 'frozenStandard' }
+    ]
+  };
+
   const api = { sources, facts, params, roles, channels, entryModes, sourcingTheory, formalization, priorities, intel, seasons, events, scoreWeights,
-    team, rivals, rivalGroups, luminaQuestions, flow, debrief, rubric, eventLogColumns };
+    team, rivals, rivalGroups, luminaQuestions, flow, debrief, rubric, eventLogColumns, avatars, eightSteps };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.DurianData = api;
 })(typeof window !== 'undefined' ? window : globalThis);

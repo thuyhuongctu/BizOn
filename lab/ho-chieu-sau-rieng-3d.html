@@ -34,6 +34,9 @@ button{font:inherit}
 .tbtn{border:1px solid var(--line2);background:var(--panel);color:var(--ink);border-radius:10px;padding:7px 12px;font-weight:700;font-size:12.5px;cursor:pointer;text-decoration:none;white-space:nowrap}
 .tbtn.on{background:var(--durian);color:#fff;border-color:var(--durian)}
 .lang-pill{display:flex;border:1px solid var(--line2);border-radius:10px;overflow:hidden;background:var(--panel)}
+.avatar-badge{display:none;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--muted)}
+.avatar-badge.on{display:flex}
+.avatar-badge img{width:26px;height:26px;border-radius:50%;object-fit:cover}
 .lang-pill button{border:0;background:transparent;color:var(--muted);padding:7px 11px;font-weight:700;font-size:12.5px;cursor:pointer}
 .lang-pill button.on{background:var(--durian);color:#fff}
 /* ---------- map stage ---------- */
@@ -133,6 +136,7 @@ button{font:inherit}
 
 <div class="topbar">
   <div class="brand">🌳 <span id="brandName">Hộ Chiếu Sầu Riêng</span></div>
+  <span class="avatar-badge" id="avatarBadge"></span>
   <div class="spacer"></div>
   <button class="tbtn" id="voiceBtn" type="button" hidden>🔊 <span id="voiceLbl"></span></button>
   <button class="tbtn" id="mapBtn" type="button" hidden>🗺️ <span id="mapLbl"></span></button>
@@ -188,6 +192,10 @@ button{font:inherit}
     $('cardLink').textContent = '📋 ' + L('Bản thẻ', 'Card view');
     $('langVI').classList.toggle('on', LANG === 'vi'); $('langEN').classList.toggle('on', LANG === 'en');
     document.documentElement.lang = LANG;
+    const av = APP && APP.avatarId ? D.avatars.find(a => a.id === APP.avatarId) : null;
+    const badge = $('avatarBadge');
+    badge.classList.toggle('on', !!av);
+    badge.innerHTML = av ? `<img src="../assets/${av.img}" alt="${esc(nm(av))}"><span>${esc(nm(av))}</span>` : '';
   }
   $('langVI').onclick = () => { LANG = 'vi'; store.set('durian_lang', 'vi'); render(); };
   $('langEN').onclick = () => { LANG = 'en'; store.set('durian_lang', 'en'); render(); };
@@ -290,7 +298,7 @@ button{font:inherit}
       ${props}
       <div class="hint3d">${L('Chạm vào một trạm để xem chi tiết trong hồ sơ của Bà Sáu Lành bên dưới.', 'Tap a station to see details in Bà Sáu Lành\'s dossier below.')}</div>
       <div class="stn3d big" id="stn-sau" style="left:${CX}%;top:${CY}%">
-        <div class="box"><img src="../assets/hc/cast/ba-sau-lanh-${mood}.png" alt="Bà Sáu Lành" onerror="this.src='${IMG('advisors/ba-sau-lanh-cut.webp')}'">${ev ? `<span class="evbadge" title="${esc(nm(ev))}">${EVENT_ICON[ev.id] || '⚡'}</span>` : ''}</div>
+        <div class="box"><img src="../assets/hc/cast/ba-sau-lanh-${mood}.webp" alt="Bà Sáu Lành" onerror="this.src='${IMG('advisors/ba-sau-lanh-cut.webp')}'">${ev ? `<span class="evbadge" title="${esc(nm(ev))}">${EVENT_ICON[ev.id] || '⚡'}</span>` : ''}</div>
         <span class="tag">${L('Bà Sáu Lành', 'Bà Sáu Lành')}</span></div>
       ${stns.map((st, i) => `<div class="stn3d ${st.locked ? 'lock' : ''} ${st.active ? 'active' : ''} ${st.pale ? 'pale' : ''}" id="stn-${st.id}" style="left:${st.x}%;top:${st.y}%;--bob-delay:${(i % 5) * 0.35}s${st.tint && st.tint.length ? `;--tint-a:${st.tint[0]};--tint-b:${st.tint[1]}` : ''}">
         <div class="box">${st.img ? `<img src="${st.img}" alt="${esc(st.name)}">` : st.icon}${st.locked && !st.pale ? '<span class="lockbadge">🔒</span>' : ''}</div><span class="tag">${esc(st.name)}</span></div>`).join('')}
@@ -360,7 +368,7 @@ button{font:inherit}
     const norm = E.normalizeAlloc(Object.fromEntries(okIds.map(id => [id, APP.dec.alloc[id]])), okIds);
     const top = okIds.slice().sort((x, y) => norm[y] - norm[x]).slice(0, 2).map(id => `${nm(D.channels.find(c => c.id === id))} ${pct(norm[id])}`).join(' · ');
     const tabs = [['chain', '📖 ' + L('Chuỗi', 'Chain')], ['intel', '📡 ' + L('Tin', 'Intel')], ['invest', '🏗️ ' + L('Đầu tư', 'Invest')], ['channel', '🚢 ' + L('Kênh', 'Channels')]];
-    return `<div class="hd"><img src="../assets/hc/cast/ba-sau-lanh-${mood}.png" alt="Bà Sáu Lành" onerror="this.src='${IMG('advisors/ba-sau-lanh-cut.webp')}'">
+    return `<div class="hd"><img src="../assets/hc/cast/ba-sau-lanh-${mood}.webp" alt="Bà Sáu Lành" onerror="this.src='${IMG('advisors/ba-sau-lanh-cut.webp')}'">
         <div style="flex:1;min-width:0"><h3>BÀ SÁU LÀNH</h3><div class="sub">${role.emoji} ${nm(role)} · ${L('Vụ', 'Season')} ${n}/${D.seasons.length}</div>
           <div class="prog">${D.seasons.map((x, i) => `<span class="${i < n - 1 ? 'done' : i === n - 1 ? 'now' : ''}"></span>`).join('')}</div></div></div>
       <div class="goal">${nm(s)}</div>
