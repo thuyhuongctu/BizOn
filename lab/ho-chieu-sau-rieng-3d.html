@@ -43,16 +43,28 @@ button{font:inherit}
     radial-gradient(ellipse 60% 40% at 30% 85%, rgba(0,70,110,.35), transparent 70%),
     linear-gradient(165deg,#DCCB9E 0%,#C9B37E 28%,#8FAE5E 52%,#5C8A3C 78%,#3F6B2A 100%)}
 .map3d::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 90% 60% at 50% 0%,rgba(255,255,255,.12),transparent 60%);pointer-events:none}
-.stn3d{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;z-index:2;transition:transform .15s}
-.stn3d:hover{transform:translate(-50%,-50%) translateY(-3px)}
-.stn3d .box{width:72px;height:72px;border-radius:50%;background:linear-gradient(160deg,#fffdf6,#f3e6c9);box-shadow:0 10px 16px -6px rgba(20,40,10,.5),inset 0 -5px 0 rgba(110,70,30,.12),inset 0 3px 0 #fff;display:flex;align-items:center;justify-content:center;font-size:30px}
-.stn3d.big .box{width:94px;height:94px;font-size:40px}
-.stn3d.lock .box{filter:grayscale(.6);opacity:.55}
-.stn3d.active .box{box-shadow:0 0 0 4px var(--flesh),0 10px 18px -6px rgba(20,40,10,.5)}
-.stn3d.pale .box{opacity:.55;background:linear-gradient(160deg,#eef3ea,#d9e3cf)}
+.routes3d{position:absolute;inset:0;z-index:1;pointer-events:none}
+.routes3d path{fill:none;stroke:rgba(255,255,255,.55);stroke-width:2;stroke-dasharray:3 7;stroke-linecap:round}
+.routes3d path.on{stroke:var(--flesh);stroke-width:2.6;stroke-dasharray:4 6;opacity:.9}
+.prop3d{position:absolute;transform:translate(-50%,-50%);z-index:1;pointer-events:none;opacity:.85}
+.prop3d.crate{width:30px;height:24px;background:linear-gradient(160deg,#C8905A,#8B5A2B);border-radius:3px;box-shadow:0 6px 10px -4px rgba(20,30,10,.5),inset 0 0 0 2px rgba(60,35,10,.4)}
+.prop3d.crate::after{content:'';position:absolute;inset:3px;border:1px dashed rgba(255,240,210,.5);border-radius:2px}
+.prop3d.durian{width:26px;height:26px;border-radius:46% 54% 55% 45%/50% 45% 55% 50%;background:radial-gradient(circle at 35% 30%,#8DBA3E,#4A7419 65%,#385A10);box-shadow:0 6px 10px -4px rgba(20,30,10,.5)}
+.prop3d.sack{width:26px;height:30px;border-radius:50% 50% 40% 40%/60% 60% 30% 30%;background:linear-gradient(160deg,#E8D9B5,#C4A96E);box-shadow:0 6px 10px -4px rgba(20,30,10,.5)}
+@keyframes stn3d-bob{0%,100%{transform:translate(-50%,-50%) translateY(0)}50%{transform:translate(-50%,-50%) translateY(-4px)}}
+.stn3d{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;z-index:2;transition:filter .15s}
+.stn3d .box{animation:stn3d-bob 3.2s ease-in-out infinite;animation-delay:var(--bob-delay,0s)}
+.stn3d:hover .box{filter:brightness(1.06)}
+.stn3d .box{width:72px;height:72px;border-radius:50%;background:linear-gradient(160deg,var(--tint-a,#fffdf6),var(--tint-b,#f3e6c9));box-shadow:0 10px 16px -6px rgba(20,40,10,.5),inset 0 -5px 0 rgba(110,70,30,.12),inset 0 3px 0 #fff;display:flex;align-items:center;justify-content:center;font-size:30px}
+.stn3d.big .box{width:94px;height:94px;font-size:40px;animation:none}
+.stn3d.lock .box{filter:grayscale(.6);opacity:.55;animation:none}
+@keyframes stn3d-glow{0%,100%{box-shadow:0 0 0 4px var(--flesh),0 10px 18px -6px rgba(20,40,10,.5)}50%{box-shadow:0 0 0 7px color-mix(in srgb,var(--flesh) 55%,transparent),0 10px 18px -6px rgba(20,40,10,.5)}}
+.stn3d.active .box{animation:stn3d-bob 3.2s ease-in-out infinite var(--bob-delay,0s),stn3d-glow 2.2s ease-in-out infinite}
+.stn3d.pale .box{opacity:.55;background:linear-gradient(160deg,#eef3ea,#d9e3cf);animation:none}
 .stn3d .tag{background:rgba(3,40,20,.82);color:#fff;font-size:10.5px;font-weight:800;padding:3px 9px;border-radius:999px;white-space:nowrap;max-width:140px;overflow:hidden;text-overflow:ellipsis}
 .stn3d .lockbadge{position:absolute;top:-4px;right:-4px;background:#fff;border-radius:50%;font-size:13px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.3)}
 @media (max-width:680px){.stn3d .box{width:58px;height:58px;font-size:24px}.stn3d.big .box{width:76px;height:76px;font-size:32px}.stn3d .tag{font-size:9.5px;padding:2px 7px;max-width:98px}}
+@media (prefers-reduced-motion:reduce){.stn3d .box,.stn3d.active .box{animation:none}}
 .hint3d{position:absolute;left:14px;top:14px;background:rgba(3,40,20,.72);color:#fff;font-size:11.5px;padding:7px 11px;border-radius:12px;max-width:260px;z-index:3}
 .toast3d{position:fixed;top:66px;right:14px;background:var(--ink);color:#fff;padding:10px 14px;border-radius:14px;font-size:12.5px;z-index:60;max-width:300px;box-shadow:0 10px 24px rgba(0,0,0,.3);opacity:0;transform:translateY(-10px);transition:.25s}
 .toast3d.on{opacity:1;transform:none}
@@ -227,20 +239,30 @@ button{font:inherit}
     CN: ['Chính ngạch', 'Official'], BORDER: ['Biên giới', 'Border'], FROZEN: ['Đông lạnh', 'Frozen'],
     TW: ['Đài Loan', 'Taiwan'], JP: ['Nhật Bản', 'Japan'], DOM: ['Nội địa', 'Domestic']
   };
+  const CH_TINT = {
+    CN: ['#FFE8C2', '#F0B35C'], BORDER: ['#EADFC4', '#C9A96E'], FROZEN: ['#DCF0F5', '#9FD3E0'],
+    TW: ['#D8F0E6', '#8FCDAE'], JP: ['#FDEAF0', '#F2B8CC'], DOM: ['#FFE8D5', '#F2A96B']
+  };
   function stationDef(g, s) {
     const okIds = CH_IDS.filter(id => E.eligible(D, g, D.channels.find(c => c.id === id)));
     const chStn = D.channels.map((c, i) => {
       const pos = { CN: [34, 26], BORDER: [13, 42], FROZEN: [21, 16], TW: [17, 58], JP: [41, 10], DOM: [70, 44] }[c.id] || [50, 50];
       const [vi, en] = SHORT_CH[c.id] || [c.vi, c.en];
-      return { id: c.id, icon: c.emoji, name: L(vi, en), x: pos[0], y: pos[1], active: (APP.dec.alloc[c.id] || 0) > 0, locked: !okIds.includes(c.id) };
+      const tint = CH_TINT[c.id] || [];
+      return { id: c.id, icon: c.emoji, name: L(vi, en), x: pos[0], y: pos[1], active: (APP.dec.alloc[c.id] || 0) > 0, locked: !okIds.includes(c.id), tint };
     });
     const extra = [
-      { id: 'audit', icon: '🧾', name: L('Đối soát', 'Audit'), x: 58, y: 14, big: false, locked: s.mission !== 'audit', pale: s.mission !== 'audit' },
+      { id: 'audit', icon: '🧾', name: L('Đối soát', 'Audit'), x: 58, y: 14, big: false, locked: s.mission !== 'audit', pale: s.mission !== 'audit', tint: ['#E6E9EC', '#B8C0C8'] },
       { id: 'rv_sea', icon: '🇸🇬', name: 'Singapore', x: 50, y: 22, pale: true, rival: 'sea' },
       { id: 'rv_eu', icon: '🇪🇺', name: L('Châu Âu', 'Europe'), x: 44, y: 6, pale: true, rival: 'eu' }
     ];
     return chStn.concat(extra);
   }
+  const PROPS3D = [
+    { cls: 'crate', x: 68, y: 52 }, { cls: 'crate', x: 73, y: 50 }, { cls: 'durian', x: 71, y: 47 },
+    { cls: 'sack', x: 24, y: 48 }, { cls: 'durian', x: 27, y: 50 }, { cls: 'crate', x: 15, y: 30 },
+    { cls: 'sack', x: 36, y: 14 }, { cls: 'durian', x: 62, y: 58 }
+  ];
   function rivalToast(id) {
     const r = D.rivals.find(x => x.id === id);
     if (!r) return;
@@ -250,10 +272,18 @@ button{font:inherit}
   function mapHTML() {
     const g = APP.game, s = D.seasons[g.n - 1];
     const stns = stationDef(g, s);
+    const CX = 46, CY = 34;
+    const routes = stns.filter(st => !st.rival).map(st => {
+      const mx = (CX + st.x) / 2, my = (CY + st.y) / 2 - 4;
+      return `<path class="${st.active ? 'on' : ''}" vector-effect="non-scaling-stroke" d="M${CX},${CY} Q${mx},${my} ${st.x},${st.y}"/>`;
+    }).join('');
+    const props = PROPS3D.map(p => `<div class="prop3d ${p.cls}" style="left:${p.x}%;top:${p.y}%"></div>`).join('');
     return `<div class="map3d" id="map3d">
+      <svg class="routes3d" viewBox="0 0 100 100" preserveAspectRatio="none">${routes}</svg>
+      ${props}
       <div class="hint3d">${L('Chạm vào một trạm để xem chi tiết trong hồ sơ của Bà Sáu Lành bên dưới.', 'Tap a station to see details in Bà Sáu Lành\'s dossier below.')}</div>
-      <div class="stn3d big" id="stn-sau" style="left:${46}%;top:${34}%"><div class="box">🧺</div><span class="tag">${L('Bà Sáu Lành', 'Bà Sáu Lành')}</span></div>
-      ${stns.map(st => `<div class="stn3d ${st.locked ? 'lock' : ''} ${st.active ? 'active' : ''} ${st.pale ? 'pale' : ''}" id="stn-${st.id}" style="left:${st.x}%;top:${st.y}%">
+      <div class="stn3d big" id="stn-sau" style="left:${CX}%;top:${CY}%"><div class="box">🧺</div><span class="tag">${L('Bà Sáu Lành', 'Bà Sáu Lành')}</span></div>
+      ${stns.map((st, i) => `<div class="stn3d ${st.locked ? 'lock' : ''} ${st.active ? 'active' : ''} ${st.pale ? 'pale' : ''}" id="stn-${st.id}" style="left:${st.x}%;top:${st.y}%;--bob-delay:${(i % 5) * 0.35}s${st.tint && st.tint.length ? `;--tint-a:${st.tint[0]};--tint-b:${st.tint[1]}` : ''}">
         <div class="box">${st.icon}${st.locked && !st.pale ? '<span class="lockbadge">🔒</span>' : ''}</div><span class="tag">${esc(st.name)}</span></div>`).join('')}
     </div>`;
   }
