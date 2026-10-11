@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demo 3D low-poly · Vườn sầu riêng</title>
+<style>
+  html,body{margin:0;height:100%;background:linear-gradient(#bfe3ef,#eaf6ee);overflow:hidden;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+  canvas{display:block;touch-action:none}
+  #hud{position:fixed;top:14px;left:14px;right:14px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;pointer-events:none;z-index:2}
+  #hud .pill{pointer-events:auto;background:rgba(255,255,255,.92);border-radius:14px;padding:10px 14px;font-size:13px;font-weight:700;color:#174d2e;box-shadow:0 6px 16px -8px rgba(0,0,0,.3)}
+  #hud .hint{font-weight:500;color:#45604f}
+  #status{position:fixed;bottom:14px;left:14px;right:14px;text-align:center;font-size:12px;color:#45604f;pointer-events:none}
+</style>
+</head>
+<body>
+<div id="hud">
+  <div class="pill">🌳 Demo cảnh 3D low-poly · Vườn sầu riêng<br><span class="hint">Kéo để xoay · Lăn/chụm để zoom</span></div>
+</div>
+<div id="status">Đang tải Three.js…</div>
+<script type="module">
+import * as THREE from '../js/vendor/three.module.js';
+
+const statusEl = document.getElementById('status');
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color('#bfe3ef');
+scene.fog = new THREE.Fog('#bfe3ef', 14, 32);
+
+const camera = new THREE.PerspectiveCamera(42, innerWidth / innerHeight, 0.1, 100);
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(2, devicePixelRatio || 1));
+renderer.setSize(innerWidth, innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+if ('outputColorSpace' in renderer) renderer.outputColorSpace = THREE.SRGBColorSpace;
+document.body.appendChild(renderer.domElement);
+
+// ---------- Ánh sáng ----------
+scene.add(new THREE.HemisphereLight(0xffffff, 0x6b8f5a, 0.85));
+const sun = new THREE.DirectionalLight(0xfff2d6, 1.15);
+sun.position.set(8, 14, 6);
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+sun.shadow.camera.left = -14; sun.shadow.camera.right = 14;
+sun.shadow.camera.top = 14; sun.shadow.camera.bottom = -14;
+sun.shadow.camera.near = 1; sun.shadow.camera.far = 40;
+scene.add(sun);
+const fill = new THREE.DirectionalLight(0xbfe6ec, 0.3);
+fill.position.set(-6, 5, -4);
+scene.add(fill);
+
+// ---------- Nền đất (bãi cỏ + đất) ----------
+const grassMat = new THREE.MeshStandardMaterial({ color: 0x8fbf6e, roughness: 1 });
+const grass = new THREE.Mesh(new THREE.CircleGeometry(16, 48), grassMat);
+grass.rotation.x = -Math.PI / 2;
+grass.receiveShadow = true;
+scene.add(grass);
+
+const soilMat = new THREE.MeshStandardMaterial({ color: 0xc9a46a, roughness: 1 });
+const soil = new THREE.Mesh(new THREE.CircleGeometry(9, 40), soilMat);
+soil.rotation.x = -Math.PI / 2;
+soil.position.y = 0.01;
+soil.receiveShadow = true;
+scene.add(soil);
+
+// ---------- Cây sầu riêng low-poly (tán cầu + thân trụ + trái vàng) ----------
+const trunkMat = new THREE.MeshStandardMaterial({ color: 0x7a5230, roughness: 0.9 });
+const leafMats = [0x3f7d3a, 0x4c8f43, 0x366b33].map(c => new THREE.MeshStandardMaterial({ color: c, roughness: 0.85, flatShading: true }));
+const fruitMat = new THREE.MeshStandardMaterial({ color: 0xcdb24a, roughness: 0.6, flatShading: true });
+
+function makeDurianTree(scale, leafMat) {
+  const g = new THREE.Group();
+  const trunkH = 1.1 * scale;
+  const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.11 * scale, 0.16 * scale, trunkH, 8), trunkMat);
+  trunk.position.y = trunkH / 2;
+  trunk.castShadow = true;
+  g.add(trunk);
+
+  const canopyY = trunkH + 0.55 * scale;
+  const blobs = [
+    { r: 0.95, dx: 0, dz: 0, dy: 0 },
+    { r: 0.62, dx: 0.55, dz: 0.2, dy: 0.15 },
+    { r: 0.58, dx: -0.5, dz: -0.25, dy: 0.1 },
+    { r: 0.5, dx: 0.1, dz: 0.55, dy: -0.1 },
+    { r: 0.48, dx: -0.3, dz: 0.4, dy: 0.2 },
+  ];
+  blobs.forEach(b => {
+    const m = new THREE.Mesh(new THREE.IcosahedronGeometry(b.r * scale, 1), leafMat);
+    m.position.set(b.dx * scale, canopyY + b.dy * scale, b.dz * scale);
+    m.castShadow = true;
+    g.add(m);
+  });
+
+  // trái sầu riêng (quả cầu gai vàng nhỏ) treo quanh tán
+  const fruitCount = 3 + Math.floor(Math.random() * 3);
+  for (let i = 0; i < fruitCount; i++) {
+    const a = Math.random() * Math.PI * 2;
+    const rad = 0.55 * scale + Math.random() * 0.3 * scale;
+    const fruit = new THREE.Mesh(new THREE.DodecahedronGeometry(0.11 * scale, 0), fruitMat);
+    fruit.position.set(Math.cos(a) * rad, canopyY - 0.3 * scale - Math.random() * 0.3 * scale, Math.sin(a) * rad);
+    fruit.castShadow = true;
+    g.add(fruit);
+  }
+  return g;
+}
+
+// Lưới 4x4 cây (giống ảnh tham chiếu) với jitter nhẹ cho tự nhiên
+const rows = 4, cols = 4, spacing = 3.4;
+let seedIdx = 0;
+for (let r = 0; r < rows; r++) {
+  for (let c = 0; c < cols; c++) {
+    const scale = 0.62 + Math.random() * 0.22;
+    const leafMat = leafMats[seedIdx++ % leafMats.length];
+    const tree = makeDurianTree(scale, leafMat);
+    tree.position.set(
+      (c - (cols - 1) / 2) * spacing + (Math.random() - 0.5) * 0.5,
+      0,
+      (r - (rows - 1) / 2) * spacing + (Math.random() - 0.5) * 0.5
+    );
+    tree.rotation.y = Math.random() * Math.PI * 2;
+    scene.add(tree);
+  }
+}
+
+// ---------- Nông dân low-poly (nón lá + giỏ trái) ----------
+function makeFarmer() {
+  const g = new THREE.Group();
+  const skinMat = new THREE.MeshStandardMaterial({ color: 0xe8b98a, roughness: 0.8 });
+  const shirtMat = new THREE.MeshStandardMaterial({ color: 0x5b7fae, roughness: 0.9 });
+  const pantsMat = new THREE.MeshStandardMaterial({ color: 0x3b3b3b, roughness: 0.9 });
+  const hatMat = new THREE.MeshStandardMaterial({ color: 0xe7d6a3, roughness: 0.95 });
+  const basketMat = new THREE.MeshStandardMaterial({ color: 0x9a7033, roughness: 0.9 });
+
+  const legs = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.1, 0.5, 8), pantsMat);
+  legs.position.y = 0.25; legs.castShadow = true; g.add(legs);
+
+  const body = new THREE.Mesh(new THREE.CylinderGeometry(0.17, 0.2, 0.55, 8), shirtMat);
+  body.position.y = 0.78; body.castShadow = true; g.add(body);
+
+  const head = new THREE.Mesh(new THREE.SphereGeometry(0.15, 12, 10), skinMat);
+  head.position.y = 1.16; head.castShadow = true; g.add(head);
+
+  const hat = new THREE.Mesh(new THREE.ConeGeometry(0.28, 0.16, 16), hatMat);
+  hat.position.y = 1.28; hat.castShadow = true; g.add(hat);
+
+  const basket = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.12, 0.2, 10, 1, true), basketMat);
+  basket.material.side = THREE.DoubleSide;
+  basket.position.set(0.28, 0.75, 0.12); basket.rotation.z = -0.15; basket.castShadow = true; g.add(basket);
+  for (let i = 0; i < 4; i++) {
+    const f = new THREE.Mesh(new THREE.DodecahedronGeometry(0.06, 0), fruitMat);
+    f.position.set(0.28 + (Math.random() - 0.5) * 0.15, 0.86 + Math.random() * 0.05, 0.12 + (Math.random() - 0.5) * 0.15);
+    f.castShadow = true; g.add(f);
+  }
+  return g;
+}
+const farmer = makeFarmer();
+farmer.position.set(6.4, 0, 2.6);
+farmer.rotation.y = -0.6;
+scene.add(farmer);
+
+// ---------- Camera orbit (kéo/chạm xoay, lăn chuột zoom) — cùng kiểu three-d-stage.js ----------
+let theta = Math.PI * 0.22, phi = Math.PI * 0.3, radius = 17;
+const target = new THREE.Vector3(0, 1, 0);
+function updateCamera() {
+  const sinPhi = Math.sin(phi);
+  camera.position.set(
+    target.x + radius * sinPhi * Math.sin(theta),
+    target.y + radius * Math.cos(phi),
+    target.z + radius * sinPhi * Math.cos(theta)
+  );
+  camera.lookAt(target);
+}
+updateCamera();
+
+let dragging = false, lastX = 0, lastY = 0, idle = 0, autorotate = true;
+renderer.domElement.addEventListener('pointerdown', e => { dragging = true; lastX = e.clientX; lastY = e.clientY; autorotate = false; });
+window.addEventListener('pointermove', e => {
+  if (!dragging) return;
+  const dx = e.clientX - lastX, dy = e.clientY - lastY;
+  lastX = e.clientX; lastY = e.clientY;
+  theta -= dx * 0.007;
+  phi = Math.min(Math.PI * 0.49, Math.max(Math.PI * 0.12, phi - dy * 0.007));
+  idle = 0;
+  updateCamera();
+});
+window.addEventListener('pointerup', () => dragging = false);
+renderer.domElement.addEventListener('wheel', e => {
+  e.preventDefault();
+  radius = Math.min(22, Math.max(4, radius + e.deltaY * 0.01));
+  updateCamera();
+}, { passive: false });
+
+addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+
+let last = performance.now();
+function loop(now) {
+  const dt = Math.min(0.05, (now - last) / 1000); last = now;
+  idle += dt;
+  if (autorotate && idle > 0) { theta += dt * 0.12; updateCamera(); }
+  renderer.render(scene, camera);
+  requestAnimationFrame(loop);
+}
+statusEl.textContent = '';
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
