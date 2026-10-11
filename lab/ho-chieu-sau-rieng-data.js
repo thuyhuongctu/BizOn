@@ -231,7 +231,7 @@
       owns: ['whatif', 'commit'] },
     { id: 'cmo', name: 'Lan Chi', img: 'team/cmo-cut.webp', vi: 'CMO – mua tin, đọc giá, chia kênh bán', en: 'CMO – buys information, reads prices, splits channels',
       owns: ['intel', 'alloc'] },
-    { id: 'coo', name: 'Bảo Ngọc', img: 'team/coo-cut.webp', vi: 'COO – nguồn hàng, vùng trồng có mã, hao hụt, nghịch vụ', en: 'COO – sourcing, coded areas, losses, off-season',
+    { id: 'coo', name: 'Bảo Ngọc', img: 'team/coo.webp', vi: 'COO – nguồn hàng, vùng trồng có mã, hao hụt, nghịch vụ', en: 'COO – sourcing, coded areas, losses, off-season',
       owns: ['linked', 'induce'] },
     { id: 'cfo', name: 'Thu Hà', img: 'team/cfo-cut.webp', vi: 'CFO – tiền mặt, ưu tiên đầu tư, chi phí tuân thủ', en: 'CFO – cash, investment priority, compliance costs',
       owns: ['priority'] },
