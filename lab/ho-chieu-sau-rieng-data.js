@@ -423,8 +423,79 @@
     ]
   };
 
+  // ---------- Chuỗi cung ứng lạnh chi tiết: từ vườn đến tay người tiêu dùng (minh họa trực quan) ----------
+  // Không phải tài liệu quy định chính thức — chỉ là hình minh họa mở rộng cho quy trình 8 bước ở trên,
+  // giúp đội hình dung đầy đủ hành trình. Không gắn factSrc vì không phải dữ kiện trích dẫn.
+  const chain2 = {
+    stages: [
+      { id: 'farm', vi: 'Tại vườn & sơ chế', en: 'At the orchard & initial processing', items: [
+        { img: 'hc/chain2/01-vuon-kiem-tra.webp', vi: 'Vườn đạt mã số vùng trồng, chuyên gia kiểm tra chất lượng trước vụ hái.', en: 'Orchard with a registered growing-area code; specialists check quality before harvest.' },
+        { img: 'hc/chain2/02-vuon-ban-giao-hop-dong.webp', vi: 'Nông hộ bàn giao trái cho đối tác thu mua, ký ngay hợp đồng và hộ chiếu số.', en: 'The grower hands fruit to the buyer and signs the contract and digital passport on the spot.' },
+        { img: 'hc/chain2/03-vuon-ma-vung-trong.webp', vi: 'Đội ngũ xác nhận mã vùng trồng qua ứng dụng truy xuất nguồn gốc.', en: 'The team confirms the growing-area code through a traceability app.' },
+        { img: 'hc/chain2/04-thu-hoach-dong-goi.webp', vi: 'Thu hoạch, phân loại và đóng gói đúng nhãn mác xuất khẩu.', en: 'Harvesting, sorting and labelling to export standard.' },
+        { img: 'hc/chain2/05-kiem-nghiem-chung-thu.webp', vi: 'Kiểm nghiệm chất lượng, xin giấy chứng thư kiểm dịch thực vật.', en: 'Quality testing and applying for the phytosanitary certificate.' },
+        { img: 'hc/chain2/06-lab-do-brix.webp', vi: 'Đo độ ngọt Brix và dư lượng hóa chất trong phòng thí nghiệm.', en: 'Measuring Brix sweetness and chemical residues in the lab.' }
+      ] },
+      { id: 'paperwork', vi: 'Thủ tục & hải quan xuất khẩu', en: 'Export paperwork & customs clearance', items: [
+        { img: 'hc/chain2/07-ky-hop-dong-ngoai-thuong.webp', vi: 'Ký hợp đồng ngoại thương trước khi giao hàng.', en: 'Signing the foreign-trade contract before shipping.' },
+        { img: 'hc/chain2/08-ho-so-xuat-khau.webp', vi: 'Chuẩn bị bộ hồ sơ: L/C, vận đơn, chứng thư kiểm dịch, hồ sơ truy xuất GACC.', en: 'Preparing the paper trail: L/C, bill of lading, phytosanitary certificate, GACC traceability dossier.' },
+        { img: 'hc/chain2/09-thanh-toan-lc-tt.webp', vi: 'Xác nhận thanh toán quốc tế thành công (L/C hoặc T/T).', en: 'Confirming successful international payment (L/C or T/T).' },
+        { img: 'hc/chain2/10-khai-hai-quan-vnaccs.webp', vi: 'Khai báo hải quan điện tử trên hệ thống VNACCS/VCIS, tờ khai được thông quan.', en: 'Filing the e-customs declaration on VNACCS/VCIS; the declaration clears.' },
+        { img: 'hc/chain2/11-kiem-dich-noi-dia.webp', vi: 'Kiểm dịch thực vật tại trạm kiểm soát nội địa trước khi ra cửa khẩu.', en: 'Phytosanitary inspection at a domestic checkpoint before reaching the border.' }
+      ] },
+      { id: 'cold-pack', vi: 'Đóng hàng lạnh & vận chuyển nội địa', en: 'Cold packing & domestic transport', items: [
+        { img: 'hc/chain2/12-dong-cont-lanh.webp', vi: 'Đóng hàng vào container lạnh đạt chuẩn GACC tại kho.', en: 'Loading the cold container to GACC standard at the depot.' },
+        { img: 'hc/chain2/13-quet-qr-cont-lanh.webp', vi: 'Quét mã QR niêm phong container để truy xuất nguồn gốc.', en: "Scanning the container's sealed QR code for traceability." },
+        { img: 'hc/chain2/14-xe-lanh-sac-dien.webp', vi: 'Đội xe lạnh sạc điện, giữ nhiệt ổn định trước khi lên đường.', en: 'The refrigerated fleet charges up, holding a steady temperature before departure.' },
+        { img: 'hc/chain2/15-kho-lanh-trung-chuyen.webp', vi: 'Kho lạnh trung chuyển giữ 13,5°C, độ ẩm 85%.', en: 'A transit cold store holds 13.5°C at 85% humidity.' },
+        { img: 'hc/chain2/16-kiem-tra-nhiet-do-cont.webp', vi: 'Kiểm tra nhiệt độ thực tế trong container trước khi niêm phong.', en: "Checking the container's actual temperature before sealing." }
+      ] },
+      { id: 'border', vi: 'Qua cửa khẩu biên giới', en: 'Crossing the land border', items: [
+        { img: 'hc/chain2/17-tram-can-etc-wim.webp', vi: 'Qua trạm cân tải trọng tự động (WIM) và thu phí không dừng (ETC).', en: 'Passing automatic weigh-in-motion (WIM) and non-stop toll (ETC) stations.' },
+        { img: 'hc/chain2/18-bien-bao-cua-khau.webp', vi: 'Biển chỉ dẫn hướng cửa khẩu quốc tế Hữu Nghị – Tân Thanh.', en: 'Road sign pointing to the Hữu Nghị–Tân Thanh international border gate.' },
+        { img: 'hc/chain2/19-doi-tai-xe-bien-gioi.webp', vi: 'Khu vực bàn giao xe và đổi tài xế biên giới.', en: 'The cross-border vehicle handover and driver-changeover zone.' },
+        { img: 'hc/chain2/20-cong-kiem-soat-bien-phong.webp', vi: 'Qua cổng kiểm soát biên phòng, làn xe hàng xuất khẩu.', en: 'Clearing the border-defence checkpoint on the export-cargo lane.' },
+        { img: 'hc/chain2/21-xe-lanh-cua-khau-huu-nghi.webp', vi: 'Đoàn xe lạnh xếp hàng tại cửa khẩu quốc tế Tân Thanh – Hữu Nghị.', en: 'The refrigerated convoy lines up at the Tân Thanh–Hữu Nghị international gate.' },
+        { img: 'hc/chain2/22-hai-quan-trung-quoc-tiep-nhan.webp', vi: 'Hải quan Trung Quốc tiếp nhận và quét mã lô hàng.', en: 'Chinese customs receives and scans the shipment.' },
+        { img: 'hc/chain2/23-gacc-fast-track.webp', vi: 'Làn ưu tiên GACC: kiểm dịch nhanh cho lô hàng đã có đủ hồ sơ.', en: 'The GACC fast-track lane: quick inspection for a shipment with a complete dossier.' }
+      ] },
+      { id: 'rail-sea', vi: 'Đường sắt & đường biển liên vận', en: 'Rail & sea freight', items: [
+        { img: 'hc/chain2/24-ga-lien-van-dong-dang.webp', vi: 'Đoàn tàu lạnh liên vận quốc tế qua ga Đồng Đăng.', en: 'A refrigerated international freight train passes through Đồng Đăng station.' },
+        { img: 'hc/chain2/25-cang-cau-container.webp', vi: 'Container lạnh được cẩu lên tàu tại cảng biển.', en: 'Reefer containers are craned onto the ship at a seaport.' },
+        { img: 'hc/chain2/26-cang-sts-quay.webp', vi: 'Bến cẩu STS xếp dỡ container xuất khẩu.', en: 'An STS quay crane handles export containers.' }
+      ] },
+      { id: 'air', vi: 'Đường hàng không', en: 'Air freight', items: [
+        { img: 'hc/chain2/27-buong-lai-phi-cong.webp', vi: 'Tổ bay kiểm tra hành trình trước khi cất cánh.', en: 'The flight crew checks the route before take-off.' },
+        { img: 'hc/chain2/28-may-bay-ha-canh.webp', vi: 'Chuyến bay chở hàng lạnh hạ cánh lúc hoàng hôn.', en: 'The cold-chain cargo flight lands at dusk.' },
+        { img: 'hc/chain2/29-may-bay-cat-canh.webp', vi: 'Máy bay chở hàng cất cánh trên tuyến vận chuyển lạnh đường hàng không.', en: 'Cargo plane taking off on the air-freight cold-chain route.' },
+        { img: 'hc/chain2/30-khoang-hang-may-bay.webp', vi: 'Chất xếp pallet hàng trong khoang chở hàng.', en: 'Loading cargo pallets inside the hold.' },
+        { img: 'hc/chain2/31-kho-lanh-san-bay.webp', vi: 'Kho lạnh sân bay giữ hàng chờ chuyến, nhiệt độ 14°C.', en: 'Airport cold storage holds cargo awaiting its flight at 14°C.' },
+        { img: 'hc/chain2/32-chat-hang-len-may-bay.webp', vi: 'Chất ULD lên máy bay, duy trì 13–15°C.', en: 'Loading ULDs onto the aircraft, keeping 13–15°C.' }
+      ] },
+      { id: 'process', vi: 'Chế biến giá trị gia tăng', en: 'Value-added processing', items: [
+        { img: 'hc/chain2/33-kho-lanh-che-bien.webp', vi: 'Kho lạnh tại nhà máy chế biến, giữ −18,5°C.', en: 'Cold storage at the processing plant, held at −18.5°C.' },
+        { img: 'hc/chain2/34-nha-may-che-bien.webp', vi: 'Dây chuyền chế biến sầu riêng sấy dẻo và đông lạnh đạt chuẩn HACCP, ISO 22000.', en: 'The dried and frozen durian processing line meets HACCP and ISO 22000 standards.' }
+      ] },
+      { id: 'consumer', vi: 'Đến tay người tiêu dùng', en: 'Reaching the end consumer', items: [
+        { img: 'hc/chain2/35-cho-ban-le-trung-quoc.webp', vi: 'Bắt tay giao hàng tại chợ bán lẻ Trung Quốc.', en: 'Handshake delivery at a retail market in China.' },
+        { img: 'hc/chain2/36-quan-trang-mieng.webp', vi: 'Sầu riêng Việt thành món tráng miệng: crepe, gelato, chè.', en: 'Vietnamese durian becomes dessert: crepes, gelato, sweet bowls.' },
+        { img: 'hc/chain2/37-giao-hang-cho-trai-cay.webp', vi: 'Giao hàng tận nơi cho sạp trái cây tươi.', en: 'Doorstep delivery to a fresh-fruit stall.' },
+        { img: 'hc/chain2/38-sieu-thi-gia-dinh.webp', vi: 'Một gia đình chọn mua sầu riêng Việt Nam tại siêu thị.', en: 'A family picks up Vietnamese durian at the supermarket.' }
+      ] }
+    ],
+    cast: [
+      { img: 'hc/chain2/cast-thuong-nhan-nam.webp', vi: 'Thương nhân xuất khẩu', en: 'Export trader' },
+      { img: 'hc/chain2/cast-bo-ba-hai-quan.webp', vi: 'Bộ đội biên phòng · Hải quan · Thương nhân', en: 'Border guard · Customs officer · Trader' },
+      { img: 'hc/chain2/cast-thuong-nhan-nu.webp', vi: 'Thương nhân xuất khẩu', en: 'Export trader' },
+      { img: 'hc/chain2/cast-kiem-dich-vien.webp', vi: 'Cán bộ kiểm dịch thực vật', en: 'Phytosanitary officer' },
+      { img: 'hc/chain2/cast-co-truong-logistics.webp', vi: 'Cơ trưởng vận tải hàng không', en: 'Air-cargo captain' },
+      { img: 'hc/chain2/cast-kiem-nghiem-vien-nu.webp', vi: 'Kỹ thuật viên kiểm nghiệm', en: 'Lab technician' },
+      { img: 'hc/chain2/cast-doi-nguyen-cuu-vuon.webp', vi: 'Đội nghiên cứu thị trường tại vườn', en: 'Field research team at the orchard' }
+    ]
+  };
+
   const api = { sources, facts, params, roles, channels, entryModes, sourcingTheory, formalization, priorities, intel, seasons, events, scoreWeights,
-    team, rivals, rivalGroups, luminaQuestions, flow, debrief, rubric, eventLogColumns, avatars, eightSteps };
+    team, rivals, rivalGroups, luminaQuestions, flow, debrief, rubric, eventLogColumns, avatars, eightSteps, chain2 };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.DurianData = api;
 })(typeof window !== 'undefined' ? window : globalThis);

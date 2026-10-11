@@ -73,6 +73,10 @@ h1{font-size:clamp(26px,4.4vw,38px);line-height:1.15;margin:10px 0}
 .step8-row{display:flex;gap:10px;align-items:flex-start}
 .step8-row img{width:48px;height:48px;border-radius:10px;object-fit:cover;flex-shrink:0}
 .step8-row img + img{margin-left:-14px;border:2px solid var(--panel2)}
+.chain2-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:8px}
+.chain2-grid .c2{border:1px solid var(--line2);border-radius:12px;overflow:hidden;background:var(--panel2)}
+.chain2-grid .c2 img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.chain2-grid .c2 p{margin:0;padding:8px 10px;font-size:11.5px;line-height:1.4}
 .quickstart{border:2px solid var(--accent);background:color-mix(in srgb,var(--accent) 8%,var(--panel))}
 .quickstart ol{margin:8px 0 0 18px;padding:0} .quickstart li{margin:4px 0;font-size:13.5px}
 .refcard{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:4px 18px;margin-bottom:14px}
@@ -416,6 +420,16 @@ footer{color:var(--faint)}
         <details class="gv"><summary>${L('Nhiệt độ bảo quản: tươi so với đông lạnh', 'Storage temperature: fresh vs frozen')}</summary>
           ${D.eightSteps.storage.map(x => `<p class="small">${esc(LANG === 'en' ? x.en : x.vi)} ${x.factSrc && D.facts[x.factSrc] ? `<span class="src">[${D.facts[x.factSrc].src}]</span>` : ''}</p>`).join('')}
         </details></div></details>
+
+      <details class="refcard"><summary><h2>🧊 ${L('2d · Chuỗi cung ứng lạnh chi tiết: từ vườn đến tay người tiêu dùng', '2d · The detailed cold chain: from orchard to consumer')}</h2><span class="tag">${L('minh họa', 'illustration')}</span><span class="chev">▸</span></summary>
+        <div class="body">
+        <p class="small muted">${L('Hình minh họa trực quan mở rộng cho quy trình 8 bước ở trên — không phải tài liệu quy định chính thức, không gắn trích dẫn.', 'A visual expansion of the 8-step process above — not an official regulatory document, and not individually cited.')}</p>
+        ${D.chain2.stages.map(st => `<details class="gv"><summary>${esc(nm(st))}</summary>
+          <div class="chain2-grid">${st.items.map(it => `<div class="c2"><img src="../assets/${it.img}" alt="${esc(nm(it))}" loading="lazy"><p>${esc(nm(it))}</p></div>`).join('')}</div>
+        </details>`).join('')}
+        <h3 style="margin-top:16px;font-size:14px">👥 ${L('Đội ngũ đồng hành trong hành trình', 'People along the journey')}</h3>
+        <div class="cast">${D.chain2.cast.map(c => `<div class="who"><img src="../assets/${c.img}" alt="${esc(nm(c))}" loading="lazy"><b>${esc(nm(c))}</b></div>`).join('')}</div>
+        </div></details>
 
       <details class="refcard"><summary><h2>${L('3 · Đội 5 vai', '3 · Five roles')}</h2><span class="tag">${L('tài liệu tham khảo', 'reference')}</span><span class="chev">▸</span></summary>
         <div class="body">
