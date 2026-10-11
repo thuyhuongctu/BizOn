@@ -322,13 +322,24 @@ input,select,textarea,button{font-family:inherit}
           </div>
           <sc-if value="{{ hasMini }}" hint-placeholder-val="{{ false }}">
             <div style="font:800 15px 'Baloo 2',sans-serif;color:#1f4a55;margin-top:6px">🌍 Hộ Chiếu Mini (điểm tự tính trong game)</div>
+            <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:16px;padding:10px 12px;margin:6px 0 10px">
+              <div style="font-size:12px;font-weight:700;color:#1f4a55;margin-bottom:4px">📋 Danh sách lớp (để ghép MSSV) — dán STT, Họ và tên, MSSV, Email, Nhóm (mỗi sinh viên một dòng, cách nhau bằng Tab hoặc dấu phẩy — dán thẳng từ Excel/Sheets cũng được)</div>
+              <textarea value="{{ rosterText }}" onChange="{{ onRosterText }}" placeholder="1&#9;Nguyễn Thị Mỹ Đình&#9;B2409655&#9;dinhb2409655@student.ctu.edu.vn&#9;ONEWAY" rows="4" style="width:100%;box-sizing:border-box;padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf;font-family:monospace;font-size:11.5px"></textarea>
+              <div style="display:flex;align-items:center;gap:10px;margin-top:6px;flex-wrap:wrap">
+                <button onClick="{{ saveRoster }}" style="border:0;background:#2f8a8c;color:#fff;border-radius:10px;padding:7px 14px;font-weight:700;cursor:pointer">{{ rosterSaveLabel }}</button>
+                <div style="font-size:11.5px;color:#5a6b74">{{ rosterHint }}</div>
+              </div>
+            </div>
             <div class="scroll-hint">↔️ Vuốt ngang để xem đủ cột</div>
             <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;overflow:auto">
-              <div style="display:grid;grid-template-columns:minmax(130px,1.4fr) minmax(120px,1fr) 90px minmax(150px,1.3fr) 80px 70px minmax(130px,1fr);min-width:820px;align-items:center">
-                <sc-for list="{{ miniHead }}" as="h" hint-placeholder-count="7"><div style="padding:11px 8px;border-bottom:2px solid #e6d6bf;font-size:11px;font-weight:700;color:#5a6b74">{{ h }}</div></sc-for>
+              <div style="display:grid;grid-template-columns:minmax(120px,1fr) 100px minmax(150px,1.2fr) minmax(170px,1.3fr) minmax(100px,0.7fr) 90px minmax(160px,1.1fr) 70px 80px minmax(130px,1fr);min-width:1380px;align-items:center">
+                <sc-for list="{{ miniHead }}" as="h" hint-placeholder-count="10"><div style="padding:11px 8px;border-bottom:2px solid #e6d6bf;font-size:11px;font-weight:700;color:#5a6b74">{{ h }}</div></sc-for>
                 <sc-for list="{{ miniRows }}" as="r" hint-placeholder-count="3">
                   <div style="display:contents">
-                    <div style="padding:10px 8px;border-bottom:1px solid #eadcc6;font-weight:700">{{ r.name }}</div>
+                    <div style="padding:10px 8px;border-bottom:1px solid #eadcc6;font-weight:700">{{ r.group }}</div>
+                    <div style="padding:10px 8px;border-bottom:1px solid #eadcc6;font-family:monospace">{{ r.mssv }}</div>
+                    <div style="padding:10px 8px;border-bottom:1px solid #eadcc6">{{ r.name }}</div>
+                    <div style="padding:10px 8px;border-bottom:1px solid #eadcc6;font-size:12px;color:#5a6b74">{{ r.email }}</div>
                     <div style="padding:10px 8px;border-bottom:1px solid #eadcc6">{{ r.home }}</div>
                     <div style="padding:10px 8px;border-bottom:1px solid #eadcc6">{{ r.markets }}</div>
                     <div style="padding:10px 8px;border-bottom:1px solid #eadcc6">{{ r.profile }}</div>
@@ -457,7 +468,7 @@ function examPhase(ex, nowMs) {
 }
 function examMMSS(ms) { const s = Math.max(0, Math.round(ms / 1000)); return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); }
 class Component extends DCLogic {
-  state = { view: 'login', mode: 'in', err: '', fEmail: '', fPass: '', fNewPass: '', recoveryToken: '', fCode: '', classes: [], adminClasses: [], code: '', tab: 'teams', subs: [], st: {}, memberLog: [], bpResults: [], exam: null, examNow: null, exSetup: '', exRound: '', selTeam: '', fEvent: '', fMsg: '', gTeam: '*', gAmt: '', gReason: '', edits: {}, saved: {}, board: false, ready: false, certCode: '', certName: '', certDates: '', certSaved: false, rubric: {}, rLv1: '', rLv2: '', rLv3: '', rLv4: '', rubricSaved: false };
+  state = { view: 'login', mode: 'in', err: '', fEmail: '', fPass: '', fNewPass: '', recoveryToken: '', fCode: '', classes: [], adminClasses: [], code: '', tab: 'teams', subs: [], st: {}, memberLog: [], bpResults: [], exam: null, examNow: null, exSetup: '', exRound: '', selTeam: '', fEvent: '', fMsg: '', gTeam: '*', gAmt: '', gReason: '', edits: {}, saved: {}, board: false, ready: false, certCode: '', certName: '', certDates: '', certSaved: false, rubric: {}, rLv1: '', rLv2: '', rLv3: '', rLv4: '', rubricSaved: false, rosterText: '', rosterSaved: false };
   api() { return window.BizOnInstructor; }
   P() { return window.BizOnInstructorPage; }
   componentDidMount() {
@@ -477,7 +488,9 @@ class Component extends DCLogic {
   async removeClass(code) {
     if (!confirm('Xóa lớp ' + code + '? Lớp sẽ hết thuộc quyền quản lý — dữ liệu bài nộp cũ của sinh viên vẫn được giữ nguyên, có thể đăng ký lại mã này sau.')) return;
     try { await this.api().deleteClass(code); if (this.state.view === 'admin') this.loadAdmin(); else this.loadClasses(); } catch (e) { this.fail(e); } }
-  async openClass(code) { this.setState({ code, view: 'class', tab: 'teams', err: '', edits: {}, saved: {}, exSetup: '', exRound: '', certCode: '', certName: '', certDates: '', certSaved: false, rLv1: '', rLv2: '', rLv3: '', rLv4: '', rubricSaved: false }); await this.reload(code); }
+  async openClass(code) { this.setState({ code, view: 'class', tab: 'teams', err: '', edits: {}, saved: {}, exSetup: '', exRound: '', certCode: '', certName: '', certDates: '', certSaved: false, rLv1: '', rLv2: '', rLv3: '', rLv4: '', rubricSaved: false, rosterText: this.getRosterText(code), rosterSaved: false }); await this.reload(code); }
+  getRosterText(code) { try { return localStorage.getItem('bizon-gv-roster-' + code) || ''; } catch (e) { return ''; } }
+  saveRosterText() { const s = this.state; try { localStorage.setItem('bizon-gv-roster-' + s.code, s.rosterText); } catch (e) {} this.setState({ rosterSaved: true }); setTimeout(() => this.setState({ rosterSaved: false }), 2200); }
   async reload(code = this.state.code) {
     try { const [subs, st, memberLog, bpResults, ef, cf, rf] = await Promise.all([this.api().submissions(code), this.api().state(code), this.api().memberLog(code), this.api().bpResults(code), this.api().examFeed(code), this.api().certFeed(code), this.api().rubricFeed(code)]);
       const c = (st && st.controls) || {}, exam = (ef && ef.exam) || null, cert = cf || {}, rubric = rf || {};
@@ -517,6 +530,8 @@ class Component extends DCLogic {
     const MB = ok ? P.members(T, s.memberLog) : [], BP = s.bpResults || [];
     const AC = ok ? P.memberActivity(s.memberLog) : [];
     const MINI = BP.filter(r => /^HC Mini/.test(r.company || ''));
+    const roster = ok ? P.parseRoster(s.rosterText) : {};
+    const rosterGroups = Object.keys(roster).length;
     const c = (s.st && s.st.controls) || {}, lock = c.locked_round;
     const ex = s.exam, ep = examPhase(ex, Date.now());
     const examStatus = !ep ? 'Chưa bắt đầu tính giờ — chọn số phút rồi bấm «Bắt đầu tính giờ» khi cả lớp sẵn sàng vào phòng thi.'
@@ -550,7 +565,7 @@ class Component extends DCLogic {
       noClasses: !(s.classes || []).length, noAdminClasses: !(s.adminClasses || []).length,
       classes: (s.classes || []).map(x => ({ class_code: x.class_code, date: new Date(x.created_at).toLocaleDateString('vi-VN'), open: () => this.openClass(x.class_code), remove: e => { if (e && e.stopPropagation) e.stopPropagation(); this.removeClass(x.class_code); } })),
       adminClasses: (s.adminClasses || []).map(x => ({ class_code: x.class_code, date: new Date(x.created_at).toLocaleDateString('vi-VN'), ownerLine: '👤 ' + x.owner_email + ' · ' + x.team_count + ' đội · ' + x.submission_count + ' bài nộp', open: () => this.openClass(x.class_code), remove: e => { if (e && e.stopPropagation) e.stopPropagation(); this.removeClass(x.class_code); } })),
-      code: s.code, refresh: () => this.reload(), exportXls: () => P.xls(s.code, T, G, BP, MB, AC, s.rubric), openBoard: () => this.setState({ board: true }), closeBoard: () => this.setState({ board: false }),
+      code: s.code, refresh: () => this.reload(), exportXls: () => P.xls(s.code, T, G, BP, MB, AC, s.rubric, roster), openBoard: () => this.setState({ board: true }), closeBoard: () => this.setState({ board: false }),
       classStats: `${T.length} đội · ${s.subs.length} bài nộp · ${lock != null ? 'Đang khóa sau vòng ' + lock : 'Không khóa vòng'}${c.forced_event ? ' · Biến cố GV: ' + c.forced_event : ''}${examRunning ? ' · ' + examStatus : ''}`,
       examStatus, examColor, examRunning, examNotRunning: !examRunning,
       exSetup: s.exSetup, onExSetup: e => this.setState({ exSetup: e.target.value }), exRound: s.exRound, onExRound: e => this.setState({ exRound: e.target.value }),
@@ -580,9 +595,10 @@ class Component extends DCLogic {
         onR: e => this.edit(g.name, 'reasoning', e.target.value), onT: e => this.edit(g.name, 'teamwork', e.target.value), onN: e => this.edit(g.name, 'note', e.target.value),
         save: () => this.saveScore(g), saveLabel: s.saved[g.name] ? '✓ Đã lưu' : 'Lưu' })),
       hasMini: !!MINI.length,
-      miniHead: ['Sinh viên', 'Quốc gia xuất phát', 'Số thị trường', 'Hồ sơ nhà đầu tư', 'Điểm /10', 'Điểm chữ', 'Nộp lúc'],
-      miniRows: MINI.map(r => { const m = P.miniGrade(r), L = P.letter(m.total);
-        return { name: r.player_name || 'Ẩn danh', home: m.home, markets: m.markets, profile: m.profile, total: P.f1(m.total), letter: L.l, when: new Date(r.created_at).toLocaleString('vi-VN') }; }),
+      rosterText: s.rosterText, onRosterText: e => this.setState({ rosterText: e.target.value }), saveRoster: () => this.saveRosterText(), rosterSaveLabel: s.rosterSaved ? '✓ Đã lưu' : 'Lưu danh sách',
+      rosterHint: rosterGroups ? `Đã nhận ${rosterGroups} nhóm từ danh sách dán bên dưới — điểm Hộ Chiếu Mini sẽ tự ghép MSSV theo tên nhóm đã nộp.` : 'Chưa có danh sách lớp — bảng và Excel sẽ hiện tên nhóm đã nộp, chưa có MSSV.',
+      miniHead: ['Nhóm/Đội', 'MSSV', 'Họ và tên', 'Email', 'Quốc gia xuất phát', 'Số thị trường', 'Hồ sơ nhà đầu tư', 'Điểm /10', 'Điểm chữ', 'Nộp lúc'],
+      miniRows: ok ? P.miniExport(BP, roster).map(r => ({ group: r.group, mssv: r.mssv, name: r.name, email: r.email, home: r.home, markets: r.markets, profile: r.profile, total: P.f1(r.total), letter: r.letter, when: r.when })) : [],
       memberRows: MB.map(m => ({ team: m.team, name: m.name, role: m.role,
         dots: m.dots.map((d, i) => ({ n: i + 1, bg: d === 2 ? '#3f8a44' : d === 1 ? '#e8a22d' : '#d9cbb4', tip: 'V' + (i + 1) + ': ' + (d === 2 ? 'đề xuất/biên bản được áp dụng' : d === 1 ? 'có tham gia' : 'chưa ghi nhận') })),
         p: m.p, a: m.a, whatif: m.whatif, b5: P.f1(m.b5) })),

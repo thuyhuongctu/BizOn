@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hộ Chiếu Sầu Riêng · Bản đồ 3D</title>
+<link rel="icon" href="../assets/brand/bizon-favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#1F3A22">
+<meta name="description" content="Hộ Chiếu Sầu Riêng – bản đồ chuỗi cung ứng 3D: khám phá các trạm chính ngạch, tiểu ngạch, đông lạnh, Đài Loan, Nhật Bản cùng Bà Sáu Lành, dùng chung dữ liệu và luật chơi với bản thẻ lớp học.">
+<style>
+@font-face{font-family:'Plus Jakarta Sans';font-weight:400 800;font-display:swap;src:url(../assets/fonts/PlusJakartaSans-var-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
+@font-face{font-family:'Plus Jakarta Sans';font-weight:400 800;font-display:swap;src:url(../assets/fonts/PlusJakartaSans-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2122,U+2212}
+@font-face{font-family:'JetBrains Mono';font-weight:400 500;font-display:swap;src:url(../assets/fonts/IBMPlexMono-400-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
+@font-face{font-family:'JetBrains Mono';font-weight:400 500;font-display:swap;src:url(../assets/fonts/IBMPlexMono-400-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2122,U+2212}
+:root{
+  --bg:#FBF4E8;--panel:#FFFBF4;--panel2:#FFF6E6;--tray:#F3E6CF;
+  --ink:#033337;--muted:#3E5A5C;--faint:#546869;
+  --line:rgba(110,70,30,.12);--line2:rgba(110,70,30,.22);
+  --durian:#4A7419;--durian-deep:#385A10;--durian-soft:#E6F0CF;
+  --flesh:#F5BE2E;--flesh-soft:#FFF0C2;
+  --accent:var(--durian-deep);--accent2:var(--flesh);
+  --neg:#C2410C;
+  --radius:22px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Be Vietnam Pro',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;min-height:100vh;overflow-x:hidden}
+h1,h2,h3{font-family:'Plus Jakarta Sans',system-ui,sans-serif;letter-spacing:-.01em}
+.mono,.num{font-family:'JetBrains Mono',monospace}
+[hidden]{display:none!important}
+button{font:inherit}
+/* ---------- top bar ---------- */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px 14px;background:rgba(251,244,232,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:8px;font-weight:800;font-size:14.5px;background:var(--panel);border:1px solid var(--line2);border-radius:999px;padding:7px 14px}
+.spacer{flex:1}
+.tbtn{border:1px solid var(--line2);background:var(--panel);color:var(--ink);border-radius:10px;padding:7px 12px;font-weight:700;font-size:12.5px;cursor:pointer;text-decoration:none;white-space:nowrap}
+.tbtn.on{background:var(--durian);color:#fff;border-color:var(--durian)}
+.lang-pill{display:flex;border:1px solid var(--line2);border-radius:10px;overflow:hidden;background:var(--panel)}
+.lang-pill button{border:0;background:transparent;color:var(--muted);padding:7px 11px;font-weight:700;font-size:12.5px;cursor:pointer}
+.lang-pill button.on{background:var(--durian);color:#fff}
+/* ---------- map stage ---------- */
+.stage{position:relative;padding-top:58px;min-height:100vh}
+.map3d{position:relative;margin:0 auto;max-width:1180px;height:min(78vh,640px);min-height:420px;border-radius:0 0 40px 40px;overflow:hidden;
+  background:
+    radial-gradient(ellipse 60% 40% at 30% 85%, rgba(0,70,110,.35), transparent 70%),
+    linear-gradient(165deg,#DCCB9E 0%,#C9B37E 28%,#8FAE5E 52%,#5C8A3C 78%,#3F6B2A 100%)}
+.map3d::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 90% 60% at 50% 0%,rgba(255,255,255,.12),transparent 60%);pointer-events:none}
+.stn3d{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;z-index:2;transition:transform .15s}
+.stn3d:hover{transform:translate(-50%,-50%) translateY(-3px)}
+.stn3d .box{width:72px;height:72px;border-radius:50%;background:linear-gradient(160deg,#fffdf6,#f3e6c9);box-shadow:0 10px 16px -6px rgba(20,40,10,.5),inset 0 -5px 0 rgba(110,70,30,.12),inset 0 3px 0 #fff;display:flex;align-items:center;justify-content:center;font-size:30px}
+.stn3d.big .box{width:94px;height:94px;font-size:40px}
+.stn3d.lock .box{filter:grayscale(.6);opacity:.55}
+.stn3d.active .box{box-shadow:0 0 0 4px var(--flesh),0 10px 18px -6px rgba(20,40,10,.5)}
+.stn3d.pale .box{opacity:.55;background:linear-gradient(160deg,#eef3ea,#d9e3cf)}
+.stn3d .tag{background:rgba(3,40,20,.82);color:#fff;font-size:10.5px;font-weight:800;padding:3px 9px;border-radius:999px;white-space:nowrap;max-width:140px;overflow:hidden;text-overflow:ellipsis}
+.stn3d .lockbadge{position:absolute;top:-4px;right:-4px;background:#fff;border-radius:50%;font-size:13px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+@media (max-width:680px){.stn3d .box{width:58px;height:58px;font-size:24px}.stn3d.big .box{width:76px;height:76px;font-size:32px}.stn3d .tag{font-size:9.5px;padding:2px 7px;max-width:98px}}
+.hint3d{position:absolute;left:14px;top:14px;background:rgba(3,40,20,.72);color:#fff;font-size:11.5px;padding:7px 11px;border-radius:12px;max-width:260px;z-index:3}
+.toast3d{position:fixed;top:66px;right:14px;background:var(--ink);color:#fff;padding:10px 14px;border-radius:14px;font-size:12.5px;z-index:60;max-width:300px;box-shadow:0 10px 24px rgba(0,0,0,.3);opacity:0;transform:translateY(-10px);transition:.25s}
+.toast3d.on{opacity:1;transform:none}
+/* ---------- decision card ---------- */
+.dcard{position:fixed;left:14px;bottom:14px;width:min(94vw,440px);max-height:min(72vh,620px);background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 22px 50px -18px rgba(20,40,10,.55);z-index:20;display:flex;flex-direction:column;overflow:hidden}
+.dcard .hd{display:flex;gap:10px;align-items:flex-start;padding:14px 16px 6px}
+.dcard .hd img{width:46px;height:46px;border-radius:50%;object-fit:cover;background:var(--panel2);flex-shrink:0}
+.dcard .hd h3{font-size:14.5px;font-weight:900;color:var(--durian-deep)}
+.dcard .hd .sub{font-size:11.5px;color:var(--muted);margin-top:1px}
+.prog{display:flex;gap:4px;margin:6px 0}
+.prog span{flex:1;height:5px;border-radius:4px;background:var(--line2)}
+.prog span.done{background:var(--durian)}.prog span.now{background:var(--flesh)}
+.dcard .goal{padding:0 16px;font-size:12.5px;font-weight:700;color:var(--ink);margin-bottom:6px}
+.stats4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:0 16px;margin-bottom:8px}
+.stats4 .s{background:var(--panel2);border-radius:10px;padding:6px 4px;text-align:center}
+.stats4 .s small{display:block;font-size:9.5px;color:var(--muted)}
+.stats4 .s b{font-size:13px}
+.tabs3{display:flex;gap:4px;padding:0 12px;border-bottom:1px solid var(--line)}
+.tabs3 button{flex:1;border:0;background:transparent;color:var(--muted);font-weight:700;font-size:11.5px;padding:9px 4px;border-bottom:3px solid transparent;cursor:pointer}
+.tabs3 button.on{color:var(--durian-deep);border-color:var(--durian)}
+.tabbody{flex:1;overflow-y:auto;padding:10px 16px}
+.tabbody h4{font-size:12.5px;margin:8px 0 3px;color:var(--durian-deep)}
+.tabbody p{font-size:12.5px;margin:0 0 6px;line-height:1.5}
+.src{font-size:10.5px;color:var(--faint)}
+.opt3{display:block;width:100%;text-align:left;border:1.5px solid var(--line2);background:var(--panel2);color:var(--ink);border-radius:10px;padding:8px 10px;margin:4px 0;font:inherit;font-size:12px;cursor:pointer}
+.opt3.on{border-color:var(--durian);background:var(--durian-soft)}
+.chips3{display:flex;flex-wrap:wrap;gap:5px;margin:4px 0 8px}
+.chip3{border:1px solid var(--line2);background:var(--panel2);color:var(--ink);border-radius:999px;padding:5px 10px;font-size:11px;cursor:pointer}
+.chip3.on{border-color:var(--durian);background:var(--flesh-soft);font-weight:700}
+.chip3[disabled]{opacity:.4;cursor:not-allowed}
+.mrow3{display:grid;grid-template-columns:1fr 70px 36px;gap:6px;align-items:center;margin:6px 0;font-size:11.5px}
+.mrow3 input[type=range]{width:100%;accent-color:var(--durian)}
+.lock3{color:var(--faint);font-size:10.5px}
+.dcard .ft{padding:10px 16px 14px;border-top:1px solid var(--line);background:var(--panel2)}
+.dcard .ft .alloc{font-size:11px;color:var(--muted);margin-bottom:8px}
+.dcard .btn{display:block;width:100%;border:0;border-radius:12px;padding:11px;font-weight:800;font-size:13.5px;color:#fff;background:var(--durian);cursor:pointer;box-shadow:inset 0 -4px 0 rgba(0,0,0,.18)}
+.dcard .btn:hover{background:var(--durian-deep)}
+.dcard .fthint{font-size:10.5px;color:var(--muted);text-align:center;margin-top:5px}
+@media (max-width:680px){.dcard{left:8px;right:8px;bottom:0;width:auto;max-height:58vh;border-radius:var(--radius) var(--radius) 0 0}}
+/* ---------- minimap modal ---------- */
+.mmBack{position:fixed;inset:0;background:rgba(3,40,20,.55);z-index:50;display:flex;align-items:center;justify-content:center;padding:16px}
+.mmBox{background:var(--panel);border-radius:20px;max-width:420px;width:100%;padding:18px;box-shadow:0 30px 60px rgba(0,0,0,.4)}
+.mmBox h3{font-size:15px;margin-bottom:4px}
+.mmLegend{display:flex;flex-wrap:wrap;gap:8px;font-size:11px;color:var(--muted);margin:6px 0 10px}
+.mmLegend span{display:inline-flex;align-items:center;gap:4px}
+.mmLegend i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.mmRow{display:grid;grid-template-columns:1fr 1fr 40px;gap:8px;align-items:center;margin:6px 0;font-size:12.5px}
+.mmBar{height:8px;border-radius:5px;background:var(--tray);overflow:hidden}
+.mmBar i{display:block;height:100%;background:linear-gradient(90deg,var(--durian),var(--flesh))}
+.mmClose{margin-top:12px;width:100%;border:0;border-radius:12px;padding:10px;background:var(--panel2);color:var(--ink);font-weight:700;cursor:pointer}
+/* ---------- empty / end states ---------- */
+.wrap{max-width:720px;margin:0 auto;padding:90px 16px 40px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px;text-align:center}
+.card h1{font-size:22px;margin-bottom:8px}
+.card p{color:var(--muted);margin-bottom:14px}
+.card .btn{display:inline-block;border:0;border-radius:12px;padding:11px 20px;font-weight:800;color:#fff;background:var(--durian);text-decoration:none}
+.flags2{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:10px 0}
+.flags2 span{font-size:12px;border-radius:10px;padding:4px 9px;border:1px solid var(--line2);background:var(--panel2)}
+.flags2 span.win{border-color:var(--durian)}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">🌳 <span id="brandName">Hộ Chiếu Sầu Riêng</span></div>
+  <div class="spacer"></div>
+  <button class="tbtn" id="voiceBtn" type="button" hidden>🔊 <span id="voiceLbl"></span></button>
+  <button class="tbtn" id="mapBtn" type="button" hidden>🗺️ <span id="mapLbl"></span></button>
+  <a class="tbtn" href="ho-chieu-sau-rieng.html" id="cardLink">📋 Bản thẻ</a>
+  <div class="lang-pill"><button id="langVI" class="on" type="button">VI</button><button id="langEN" type="button">EN</button></div>
+</div>
+
+<div id="app"></div>
+
+<script src="ho-chieu-sau-rieng-engine.js"></script>
+<script src="ho-chieu-sau-rieng-data.js"></script>
+<script>
+(function () {
+  'use strict';
+  const E = window.DurianEngine, D = window.DurianData;
+  const $ = id => document.getElementById(id);
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  };
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const IMG = p => '../assets/character/' + p;
+  const SAVE_KEY = 'durian_class_v2';
+
+  let LANG = store.get('durian_lang') === 'en' ? 'en' : 'vi';
+  const L = (vi, en) => (LANG === 'en' ? en : vi);
+  const nm = o => (LANG === 'en' ? o.en : o.vi);
+  const nf = (x, d) => (Number.isFinite(x) ? x : 0).toLocaleString(LANG === 'vi' ? 'vi-VN' : 'en-US', { maximumFractionDigits: d || 0, minimumFractionDigits: d || 0 });
+  const pct = x => nf(x * 100) + '%';
+  const money = x => nf(x, 2) + ' ' + L('tỷ', 'bn');
+  const fact = k => { const f = D.facts[k]; return f ? `${nm(f)} <span class="src">[${f.src}]</span>` : ''; };
+  const CH_IDS = D.channels.map(c => c.id);
+  const owned = (a, id) => (id === 'area' && a.area) || (id === 'pack' && a.pack) || (id === 'trace' && a.trace) || (id === 'freezer' && a.freezer) || (id === 'test' && a.test >= 2);
+
+  let APP = null, RIVALS = null, TAB = 'chain';
+
+  function load() {
+    const raw = store.get(SAVE_KEY);
+    if (!raw) return null;
+    try { const x = JSON.parse(raw); return x && x.game && x.roleId ? x : null; } catch (e) { return null; }
+  }
+  function boot(app) {
+    APP = app;
+    RIVALS = E.rivalsRun(D, APP.roleId, APP.seed);
+    APP.flags = APP.game.history.map(r => E.flagFor(RIVALS, r));
+  }
+  const save = () => { if (APP) store.set(SAVE_KEY, JSON.stringify(APP)); };
+
+  // ---------------- khung chung ----------------
+  function chrome() {
+    document.title = L('Hộ Chiếu Sầu Riêng · Bản đồ 3D', 'Sầu Riêng Passport · 3D map');
+    $('brandName').textContent = L('Hộ Chiếu Sầu Riêng', 'Sầu Riêng Passport');
+    $('cardLink').textContent = '📋 ' + L('Bản thẻ', 'Card view');
+    $('langVI').classList.toggle('on', LANG === 'vi'); $('langEN').classList.toggle('on', LANG === 'en');
+    document.documentElement.lang = LANG;
+  }
+  $('langVI').onclick = () => { LANG = 'vi'; store.set('durian_lang', 'vi'); render(); };
+  $('langEN').onclick = () => { LANG = 'en'; store.set('durian_lang', 'en'); render(); };
+
+  // ---------------- giọng đọc (Web Speech API; im lặng nếu trình duyệt không hỗ trợ) ----------------
+  const canSpeak = typeof window !== 'undefined' && 'speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined';
+  let speaking = false;
+  function toggleVoice() {
+    if (!canSpeak) { toast(L('Trình duyệt này không hỗ trợ đọc giọng nói.', 'This browser does not support voice reading.')); return; }
+    if (speaking) { speechSynthesis.cancel(); speaking = false; updateVoiceBtn(); return; }
+    const g = APP.game, s = D.seasons[g.n - 1], ev = E.eventFor(D, g);
+    const text = [nm(s), LANG === 'en' ? s.textEn : s.textVi, ev ? (nm(ev) + '. ' + (LANG === 'en' ? ev.textEn : ev.textVi)) : ''].filter(Boolean).join('. ');
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = LANG === 'en' ? 'en-US' : 'vi-VN';
+    u.onend = u.onerror = () => { speaking = false; updateVoiceBtn(); };
+    speechSynthesis.cancel(); speechSynthesis.speak(u); speaking = true; updateVoiceBtn();
+  }
+  function updateVoiceBtn() { $('voiceLbl').textContent = L(speaking ? 'Đang đọc vườn…' : 'Nghe vườn', speaking ? 'Reading…' : 'Listen'); $('voiceBtn').classList.toggle('on', speaking); }
+
+  let toastT;
+  function toast(msg) {
+    let el = $('toast3d');
+    if (!el) { el = document.createElement('div'); el.id = 'toast3d'; el.className = 'toast3d'; document.body.appendChild(el); }
+    el.textContent = msg; el.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => el.classList.remove('on'), 3600);
+  }
+
+  // ---------------- minimap (phân bổ kênh %) ----------------
+  function openMinimap() {
+    const g = APP.game, s = D.seasons[g.n - 1];
+    const okIds = CH_IDS.filter(id => E.eligible(D, g, D.channels.find(c => c.id === id)));
+    const norm = E.normalizeAlloc(Object.fromEntries(okIds.map(id => [id, APP.dec.alloc[id]])), okIds);
+    const back = document.createElement('div'); back.className = 'mmBack';
+    back.innerHTML = `<div class="mmBox">
+      <h3>🗺️ ${L('Phân bổ sản lượng theo kênh', 'Output split by channel')}</h3>
+      <p class="small" style="font-size:11.5px;color:var(--muted)">${L('Vụ', 'Season')} ${g.n}/6 · ${nm(s)}</p>
+      <div class="mmLegend">
+        <span><i style="background:var(--durian)"></i>${L('Việt Nam · xuất phát', 'Vietnam · origin')}</span>
+        <span><i style="background:var(--flesh)"></i>${L('Kênh đang chọn', 'Selected channel')}</span>
+        <span><i style="background:#B9C7B9"></i>${L('Đối thủ đang hỏi mua', 'Rivals inquiring')}</span>
+      </div>
+      ${D.channels.map(c => { const e = okIds.includes(c.id), v = e ? norm[c.id] : 0;
+        return `<div class="mmRow"><span>${c.emoji} ${nm(c)}</span><div class="mmBar"><i style="width:${Math.round(v * 100)}%"></i></div><span class="num">${e ? pct(v) : '🔒'}</span></div>`; }).join('')}
+      <p class="small" style="font-size:11px;color:var(--muted);margin-top:8px">${L('Singapore (Wei Ming · Merlion Fresh) và Châu Âu (Stefan · EuroFrost) chỉ là đối thủ AI đang mua gom quanh khu vực — hai kênh này chưa mở trong 6 vụ.', 'Singapore (Wei Ming · Merlion Fresh) and Europe (Stefan · EuroFrost) are AI rivals buying nearby — these are not channels open to you in these 6 seasons.')}</p>
+      <button class="mmClose" type="button">${L('Đóng', 'Close')}</button></div>`;
+    document.body.appendChild(back);
+    back.querySelector('.mmClose').onclick = () => back.remove();
+    back.onclick = e => { if (e.target === back) back.remove(); };
+  }
+
+  // ---------------- trạm trên bản đồ ----------------
+  const SHORT_CH = {
+    CN: ['Chính ngạch', 'Official'], BORDER: ['Biên giới', 'Border'], FROZEN: ['Đông lạnh', 'Frozen'],
+    TW: ['Đài Loan', 'Taiwan'], JP: ['Nhật Bản', 'Japan'], DOM: ['Nội địa', 'Domestic']
+  };
+  function stationDef(g, s) {
+    const okIds = CH_IDS.filter(id => E.eligible(D, g, D.channels.find(c => c.id === id)));
+    const chStn = D.channels.map((c, i) => {
+      const pos = { CN: [34, 26], BORDER: [13, 42], FROZEN: [21, 16], TW: [17, 58], JP: [41, 10], DOM: [70, 44] }[c.id] || [50, 50];
+      const [vi, en] = SHORT_CH[c.id] || [c.vi, c.en];
+      return { id: c.id, icon: c.emoji, name: L(vi, en), x: pos[0], y: pos[1], active: (APP.dec.alloc[c.id] || 0) > 0, locked: !okIds.includes(c.id) };
+    });
+    const extra = [
+      { id: 'audit', icon: '🧾', name: L('Đối soát', 'Audit'), x: 58, y: 14, big: false, locked: s.mission !== 'audit', pale: s.mission !== 'audit' },
+      { id: 'rv_sea', icon: '🇸🇬', name: 'Singapore', x: 50, y: 22, pale: true, rival: 'sea' },
+      { id: 'rv_eu', icon: '🇪🇺', name: L('Châu Âu', 'Europe'), x: 44, y: 6, pale: true, rival: 'eu' }
+    ];
+    return chStn.concat(extra);
+  }
+  function rivalToast(id) {
+    const r = D.rivals.find(x => x.id === id);
+    if (!r) return;
+    toast(`${r.flag} ${esc(r.ceo)} · ${nm(r)} — ${LANG === 'en' ? r.styleEn : r.styleVi}`);
+  }
+
+  function mapHTML() {
+    const g = APP.game, s = D.seasons[g.n - 1];
+    const stns = stationDef(g, s);
+    return `<div class="map3d" id="map3d">
+      <div class="hint3d">${L('Chạm vào một trạm để xem chi tiết trong hồ sơ của Bà Sáu Lành bên dưới.', 'Tap a station to see details in Bà Sáu Lành\'s dossier below.')}</div>
+      <div class="stn3d big" id="stn-sau" style="left:${46}%;top:${34}%"><div class="box">🧺</div><span class="tag">${L('Bà Sáu Lành', 'Bà Sáu Lành')}</span></div>
+      ${stns.map(st => `<div class="stn3d ${st.locked ? 'lock' : ''} ${st.active ? 'active' : ''} ${st.pale ? 'pale' : ''}" id="stn-${st.id}" style="left:${st.x}%;top:${st.y}%">
+        <div class="box">${st.icon}${st.locked && !st.pale ? '<span class="lockbadge">🔒</span>' : ''}</div><span class="tag">${esc(st.name)}</span></div>`).join('')}
+    </div>`;
+  }
+  function wireMap() {
+    $('stn-sau').onclick = () => { TAB = 'chain'; renderCard(); };
+    D.channels.forEach(c => { const el = $('stn-' + c.id); if (el) el.onclick = () => { TAB = 'channel'; renderCard(); const row = $('ch-' + c.id); if (row) row.scrollIntoView({ block: 'center', behavior: 'smooth' }); }; });
+    const audit = $('stn-audit'); if (audit) audit.onclick = () => { TAB = 'chain'; renderCard(); };
+    const sea = $('stn-rv_sea'); if (sea) sea.onclick = () => rivalToast('sea');
+    const eu = $('stn-rv_eu'); if (eu) eu.onclick = () => rivalToast('eu');
+  }
+
+  // ---------------- thẻ quyết định (dùng chung APP.dec với bản thẻ) ----------------
+  function tabChainHTML() {
+    const g = APP.game, s = D.seasons[g.n - 1], ev = E.eventFor(D, g), role = D.roles[g.roleId], dec = APP.dec;
+    return `<h4>📖 ${L('Mốc thật', 'Real milestone')}</h4>
+      <p>${LANG === 'en' ? s.textEn : s.textVi}</p><p class="src">${fact(s.anchor)}</p>
+      ${s.mission === 'audit' ? `<h4>🧾 ${L('Đối soát vụ này', 'This season\'s audit')}</h4><p>${L('Có mã vùng trồng, mã đóng gói và truy xuất/kiểm nghiệm thì qua kiểm tra; hồ sơ yếu sẽ bị tạm dừng mã vụ sau.', 'Hold area and packing codes plus traceability or testing to pass; a weak record gets your codes suspended next season.')}</p>` : ''}
+      ${ev ? `<h4>⚡ ${nm(ev)}</h4><p>${LANG === 'en' ? ev.textEn : ev.textVi}</p><p class="src">${fact(ev.src)}</p>
+        <h4>${L('Cách phản ứng', 'Response')}</h4>
+        ${ev.options.map((o, i) => `<button type="button" class="opt3 ${dec.option === i ? 'on' : ''}" data-opt="${i}">${nm(o)}</button>`).join('')}` : ''}
+      <h4>🏪 ${L('Chuỗi nội địa', 'Domestic chain')}</h4>
+      <p>${L('Đầu mối thu gom tại chợ đầu mối → quầy lẻ phân phối → tay khách. Hàng rớt chuẩn chính ngạch hoặc vượt trần tiểu ngạch đều tự động chuyển về kênh nội địa trong mô phỏng.', 'Wholesale hub → retail counter → customer. Fruit that fails official-trade standards or exceeds the border-trade cap is automatically routed to the domestic channel in the simulation.')}</p>
+      <p class="src">${fact('traders80')}</p>`;
+  }
+  function tabIntelHTML() {
+    const g = APP.game, dec = APP.dec;
+    const sig = E.intelSignals(D, g, dec.intel);
+    return `<h4>📡 ${L('Mua tin (tối đa 2 nguồn)', 'Buy information (up to 2)')}</h4>
+      <div class="chips3">${D.intel.map(i => `<button type="button" class="chip3 ${dec.intel.includes(i.id) ? 'on' : ''}" data-intel="${i.id}" ${!dec.intel.includes(i.id) && dec.intel.length >= 2 ? 'disabled' : ''}>${nm(i)} · ${i.cost ? money(i.cost) : L('miễn phí', 'free')}</button>`).join('')}</div>
+      ${sig.map(x => { const src = D.intel.find(i => i.id === x.id); return `<p>• <b>${nm(src)}</b>: ${L('giá vựa ước', 'depot est.')} ≈ <b class="num">${nf(x.price)}</b>${x.risk !== undefined ? ` · ${L('rủi ro', 'risk')}: <b>${[L('Thấp', 'Low'), L('Vừa', 'Medium'), L('Cao', 'High'), L('Rất cao', 'Very high')][x.risk]}</b>` : ''}</p>`; }).join('') || `<p class="src">${L('Chưa mua nguồn tin nào.', 'No information bought yet.')}</p>`}`;
+  }
+  function tabInvestHTML() {
+    const g = APP.game, role = D.roles[g.roleId], s = D.seasons[g.n - 1], a = g.assets, dec = APP.dec;
+    return `<h4>🏗️ ${L('Ưu tiên đầu tư', 'Investment priority')}</h4>
+      ${D.priorities.map(p => { const own = owned(a, p.id);
+        return `<button type="button" class="opt3 ${dec.priority === p.id ? 'on' : ''}" data-pri="${p.id}" ${own ? 'disabled style="opacity:.5"' : ''}><b>${nm(p)}</b> · ${D.params.priorityCost[p.id] ? money(D.params.priorityCost[p.id]) : '0'}</button>`; }).join('')}
+      <h4>🌱 ${L('Nguồn hàng', 'Sourcing')}</h4>
+      ${role.ownFarm ? (s.season === 'off' ? `<button type="button" class="opt3 ${dec.induce ? 'on' : ''}" data-ind="1">${L('Xử lý ra hoa nghịch vụ', 'Induce off-season flowering')}</button><button type="button" class="opt3 ${!dec.induce ? 'on' : ''}" data-ind="0">${L('Không xử lý', 'Do not induce')}</button>` : `<p>${L('Chính vụ: vườn tự cho trái.', 'Main season: the orchard bears fruit on its own.')}</p>`)
+        : `<label style="display:block;font-size:11.5px;font-weight:700;margin:6px 0 2px">${L('Tỷ lệ mua từ vùng liên kết có mã', 'Share from linked coded areas')}: <span class="num" id="linkedV3">${pct(dec.linked)}</span></label><input type="range" id="linked3" min="0" max="100" step="10" value="${Math.round(dec.linked * 100)}">`}`;
+  }
+  function tabChannelHTML() {
+    const g = APP.game, s = D.seasons[g.n - 1], dec = APP.dec;
+    const okIds = CH_IDS.filter(id => E.eligible(D, g, D.channels.find(c => c.id === id)));
+    const norm = E.normalizeAlloc(Object.fromEntries(okIds.map(id => [id, dec.alloc[id]])), okIds);
+    return `<h4>🚢 ${L('Chia sản lượng cho các kênh', 'Split output across channels')}</h4>
+      ${D.channels.map(c => { const e = okIds.includes(c.id);
+        return `<div class="mrow3" id="ch-${c.id}"><span>${c.emoji} ${nm(c)}${e ? '' : ` <span class="lock3">🔒</span>`}</span>
+          <input type="range" data-ch="${c.id}" min="0" max="100" step="5" value="${dec.alloc[c.id] || 0}" ${e ? '' : 'disabled'}><span class="num" id="pct3-${c.id}">${e ? pct(norm[c.id]) : '—'}</span></div>`; }).join('')}`;
+  }
+
+  function cardHTML() {
+    const g = APP.game, role = D.roles[g.roleId], s = D.seasons[g.n - 1], n = g.n;
+    const mood = g.history.length ? (g.history[g.history.length - 1].profit >= 0 ? 'vui' : 'lo') : 'vui';
+    const okIds = CH_IDS.filter(id => E.eligible(D, g, D.channels.find(c => c.id === id)));
+    const norm = E.normalizeAlloc(Object.fromEntries(okIds.map(id => [id, APP.dec.alloc[id]])), okIds);
+    const top = okIds.slice().sort((x, y) => norm[y] - norm[x]).slice(0, 2).map(id => `${nm(D.channels.find(c => c.id === id))} ${pct(norm[id])}`).join(' · ');
+    const tabs = [['chain', '📖 ' + L('Chuỗi', 'Chain')], ['intel', '📡 ' + L('Tin', 'Intel')], ['invest', '🏗️ ' + L('Đầu tư', 'Invest')], ['channel', '🚢 ' + L('Kênh', 'Channels')]];
+    return `<div class="hd"><img src="../assets/hc/cast/ba-sau-lanh-${mood}.png" alt="Bà Sáu Lành" onerror="this.src='${IMG('advisors/ba-sau-lanh-cut.webp')}'">
+        <div style="flex:1;min-width:0"><h3>BÀ SÁU LÀNH</h3><div class="sub">${role.emoji} ${nm(role)} · ${L('Vụ', 'Season')} ${n}/${D.seasons.length}</div>
+          <div class="prog">${D.seasons.map((x, i) => `<span class="${i < n - 1 ? 'done' : i === n - 1 ? 'now' : ''}"></span>`).join('')}</div></div></div>
+      <div class="goal">${nm(s)}</div>
+      <div class="stats4">
+        <div class="s"><small>${L('Tiền', 'Cash')}</small><b class="num">${nf(g.cash, 2)}</b></div>
+        <div class="s"><small>${L('Uy tín', 'Rep.')}</small><b class="num">${nf(g.rep)}</b></div>
+        <div class="s"><small>${L('Thích ứng', 'Adapt.')}</small><b class="num">${nf(g.adapt)}</b></div>
+        <div class="s"><small>${role.ownFarm ? L('Sức vườn', 'Orchard') : L('Bền vững', 'Sustain.')}</small><b class="num">${nf(role.ownFarm ? g.treeHealth : g.sus)}</b></div>
+      </div>
+      <div class="tabs3">${tabs.map(([id, label]) => `<button type="button" class="${TAB === id ? 'on' : ''}" data-tab3="${id}">${label}</button>`).join('')}</div>
+      <div class="tabbody" id="tabbody3">${{ chain: tabChainHTML, intel: tabIntelHTML, invest: tabInvestHTML, channel: tabChannelHTML }[TAB]()}</div>
+      <div class="ft"><div class="alloc">${L('Xuất trực tiếp', 'Direct export')} · ${top || L('chưa chọn kênh', 'no channel yet')}</div>
+        <button class="btn" id="goCard" type="button">${L('Chốt vụ', 'Commit season')} ${n} →</button>
+        <div class="fthint">${L('Hoàn tất phiếu quyết định và nhật ký ở bản thẻ', 'Finish the decision sheet and journal in the card view')}</div></div>`;
+  }
+
+  function wireCard() {
+    const g = APP.game, dec = APP.dec;
+    document.querySelectorAll('[data-tab3]').forEach(b => b.onclick = () => { TAB = b.dataset.tab3; renderCard(); });
+    document.querySelectorAll('[data-opt]').forEach(b => b.onclick = () => { dec.option = +b.dataset.opt; save(); renderCard(); });
+    document.querySelectorAll('[data-intel]').forEach(b => b.onclick = () => {
+      const id = b.dataset.intel, had = dec.intel.includes(id);
+      dec.intel = had ? dec.intel.filter(x => x !== id) : dec.intel.concat([id]).slice(0, 2);
+      save(); renderCard();
+    });
+    document.querySelectorAll('[data-pri]').forEach(b => b.onclick = () => { dec.priority = b.dataset.pri; save(); renderCard(); });
+    document.querySelectorAll('[data-ind]').forEach(b => b.onclick = () => { dec.induce = b.dataset.ind === '1'; save(); renderCard(); });
+    if ($('linked3')) {
+      $('linked3').oninput = e => { dec.linked = +e.target.value / 100; $('linkedV3').textContent = pct(dec.linked); };
+      $('linked3').onchange = save;
+    }
+    const okIds = CH_IDS.filter(id => E.eligible(D, g, D.channels.find(c => c.id === id)));
+    document.querySelectorAll('[data-ch]').forEach(r => {
+      r.oninput = () => {
+        dec.alloc[r.dataset.ch] = +r.value;
+        const n2 = E.normalizeAlloc(Object.fromEntries(okIds.map(id => [id, dec.alloc[id]])), okIds);
+        okIds.forEach(id => { const el = $('pct3-' + id); if (el) el.textContent = pct(n2[id]); });
+      };
+      r.onchange = () => { save(); const stn = document.getElementById('stn-' + r.dataset.ch); if (stn) stn.classList.toggle('active', (dec.alloc[r.dataset.ch] || 0) > 0); };
+    });
+    $('goCard').onclick = () => { save(); location.href = 'ho-chieu-sau-rieng.html'; };
+  }
+
+  function renderCard() {
+    const el = $('dcard'); if (!el) return;
+    el.innerHTML = cardHTML();
+    wireCard();
+  }
+
+  // ---------------- màn chính: bản đồ + thẻ ----------------
+  function renderMap() {
+    chrome();
+    $('voiceBtn').hidden = false; $('mapBtn').hidden = false;
+    $('voiceBtn').onclick = toggleVoice; updateVoiceBtn();
+    $('mapLbl').textContent = L('Bản đồ', 'Map'); $('mapBtn').onclick = openMinimap;
+    $('app').innerHTML = `<div class="stage">${mapHTML()}<div class="dcard" id="dcard"></div></div>`;
+    wireMap(); renderCard();
+  }
+
+  function renderEmpty() {
+    chrome(); $('voiceBtn').hidden = true; $('mapBtn').hidden = true;
+    $('app').innerHTML = `<div class="wrap"><div class="card">
+      <h1>🌳 ${L('Chưa có đội nào đang chơi', 'No team in progress yet')}</h1>
+      <p>${L('Bản đồ 3D dùng chung dữ liệu với bản thẻ — hãy lập đội và vào vụ 1 ở bản thẻ trước, rồi quay lại đây để khám phá bản đồ.', 'The 3D map shares data with the card view — set up your team and start season 1 there first, then come back here to explore the map.')}</p>
+      <a class="btn" href="ho-chieu-sau-rieng.html">${L('Sang bản thẻ để lập đội →', 'Go to the card view to set up →')}</a>
+    </div></div>`;
+  }
+  function renderPendingJournal() {
+    chrome(); $('voiceBtn').hidden = true; $('mapBtn').hidden = true;
+    const n = APP.game.history.length;
+    $('app').innerHTML = `<div class="wrap"><div class="card">
+      <h1>📝 ${L('Cần ghi nhật ký SEC trước', 'SEC journal needed first')}</h1>
+      <p>${L(`Vụ ${n} đã chốt. Hãy ghi nhật ký SEC ở bản thẻ trước khi bản đồ mở sang vụ tiếp theo.`, `Season ${n} is committed. Write the SEC journal in the card view before the map opens the next season.`)}</p>
+      <a class="btn" href="ho-chieu-sau-rieng.html">${L('Sang bản thẻ để ghi nhật ký →', 'Go to the card view to journal →')}</a>
+    </div></div>`;
+  }
+  function renderDone() {
+    chrome(); $('voiceBtn').hidden = true; $('mapBtn').hidden = true;
+    const flagsWon = APP.flags.filter(f => f && f.win).length;
+    $('app').innerHTML = `<div class="wrap"><div class="card">
+      <h1>🏁 ${L('Hành trình 6 vụ đã hoàn tất', 'The 6-season journey is complete')}</h1>
+      <div class="flags2">${D.seasons.map((s, i) => { const f = APP.flags[i]; return `<span class="${f && f.win ? 'win' : ''}">${f ? (f.win ? '🟩' : '🟥') : '⬜'} ${L('Vụ', 'S')}${i + 1}</span>`; }).join('')}</div>
+      <p>${L(`Đội cắm ${flagsWon}/6 cờ. Xem báo cáo đầy đủ và xuất CSV ở bản thẻ.`, `Your team planted ${flagsWon}/6 flags. See the full report and export CSV in the card view.`)}</p>
+      <a class="btn" href="ho-chieu-sau-rieng.html">${L('Xem báo cáo cuối →', 'See the final report →')}</a>
+    </div></div>`;
+  }
+
+  function render() {
+    APP = load();
+    if (!APP) return renderEmpty();
+    boot(APP);
+    if (APP.game.history.length > 0 && !APP.journals[APP.game.history.length]) return renderPendingJournal();
+    if (APP.game.n > D.seasons.length) return renderDone();
+    TAB = 'chain';
+    renderMap();
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>
