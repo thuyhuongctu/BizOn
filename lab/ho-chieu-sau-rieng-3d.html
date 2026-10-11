@@ -72,7 +72,7 @@ button{font:inherit}
 .toast3d{position:fixed;top:66px;right:14px;background:var(--ink);color:#fff;padding:10px 14px;border-radius:14px;font-size:12.5px;z-index:60;max-width:300px;box-shadow:0 10px 24px rgba(0,0,0,.3);opacity:0;transform:translateY(-10px);transition:.25s}
 .toast3d.on{opacity:1;transform:none}
 /* ---------- decision card ---------- */
-.dcard{position:fixed;left:14px;bottom:14px;width:min(94vw,440px);max-height:min(72vh,620px);background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 22px 50px -18px rgba(20,40,10,.55);z-index:20;display:flex;flex-direction:column;overflow:hidden}
+.dcard{position:fixed;left:14px;bottom:14px;width:min(94vw,440px);max-height:min(72vh,620px);max-height:min(72dvh,620px);background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 22px 50px -18px rgba(20,40,10,.55);z-index:20;display:flex;flex-direction:column;overflow:hidden}
 .dcard .hd{display:flex;gap:10px;align-items:flex-start;padding:14px 16px 6px}
 .dcard .hd img{width:46px;height:46px;border-radius:50%;object-fit:cover;background:var(--panel2);flex-shrink:0}
 .dcard .hd h3{font-size:14.5px;font-weight:900;color:var(--durian-deep)}
@@ -88,7 +88,7 @@ button{font:inherit}
 .tabs3{display:flex;gap:4px;padding:0 12px;border-bottom:1px solid var(--line)}
 .tabs3 button{flex:1;border:0;background:transparent;color:var(--muted);font-weight:700;font-size:11.5px;padding:9px 4px;border-bottom:3px solid transparent;cursor:pointer}
 .tabs3 button.on{color:var(--durian-deep);border-color:var(--durian)}
-.tabbody{flex:1;overflow-y:auto;padding:10px 16px}
+.tabbody{flex:1;overflow-y:auto;padding:10px 16px;min-height:132px}
 .tabbody h4{font-size:12.5px;margin:8px 0 3px;color:var(--durian-deep)}
 .tabbody p{font-size:12.5px;margin:0 0 6px;line-height:1.5}
 .src{font-size:10.5px;color:var(--faint)}
@@ -106,7 +106,7 @@ button{font:inherit}
 .dcard .btn{display:block;width:100%;border:0;border-radius:12px;padding:11px;font-weight:800;font-size:13.5px;color:#fff;background:var(--durian);cursor:pointer;box-shadow:inset 0 -4px 0 rgba(0,0,0,.18)}
 .dcard .btn:hover{background:var(--durian-deep)}
 .dcard .fthint{font-size:10.5px;color:var(--muted);text-align:center;margin-top:5px}
-@media (max-width:680px){.dcard{left:8px;right:8px;bottom:0;width:auto;max-height:58vh;border-radius:var(--radius) var(--radius) 0 0}}
+@media (max-width:680px){.dcard{left:8px;right:8px;bottom:0;width:auto;max-height:58vh;max-height:80dvh;border-radius:var(--radius) var(--radius) 0 0}.dcard .hd{padding:10px 14px 4px}.stats4{padding:0 14px;margin-bottom:6px}.stats4 .s{padding:4px 3px}}
 /* ---------- minimap modal ---------- */
 .mmBack{position:fixed;inset:0;background:rgba(3,40,20,.55);z-index:50;display:flex;align-items:center;justify-content:center;padding:16px}
 .mmBox{background:var(--panel);border-radius:20px;max-width:420px;width:100%;padding:18px;box-shadow:0 30px 60px rgba(0,0,0,.4)}
