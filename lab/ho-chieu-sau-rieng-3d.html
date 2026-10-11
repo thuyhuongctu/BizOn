@@ -63,8 +63,11 @@ button{font:inherit}
 .stn3d.pale .box{opacity:.55;background:linear-gradient(160deg,#eef3ea,#d9e3cf);animation:none}
 .stn3d .tag{background:rgba(3,40,20,.82);color:#fff;font-size:10.5px;font-weight:800;padding:3px 9px;border-radius:999px;white-space:nowrap;max-width:140px;overflow:hidden;text-overflow:ellipsis}
 .stn3d .lockbadge{position:absolute;top:-4px;right:-4px;background:#fff;border-radius:50%;font-size:13px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+.stn3d .box img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.stn3d .evbadge{position:absolute;top:-4px;left:-4px;background:#fff;border-radius:50%;font-size:13px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.3);animation:ev-pulse 1.6s ease-in-out infinite}
+@keyframes ev-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
 @media (max-width:680px){.stn3d .box{width:58px;height:58px;font-size:24px}.stn3d.big .box{width:76px;height:76px;font-size:32px}.stn3d .tag{font-size:9.5px;padding:2px 7px;max-width:98px}}
-@media (prefers-reduced-motion:reduce){.stn3d .box,.stn3d.active .box{animation:none}}
+@media (prefers-reduced-motion:reduce){.stn3d .box,.stn3d.active .box{animation:none}.stn3d .evbadge{animation:none}}
 .hint3d{position:absolute;left:14px;top:14px;background:rgba(3,40,20,.72);color:#fff;font-size:11.5px;padding:7px 11px;border-radius:12px;max-width:260px;z-index:3}
 .toast3d{position:fixed;top:66px;right:14px;background:var(--ink);color:#fff;padding:10px 14px;border-radius:14px;font-size:12.5px;z-index:60;max-width:300px;box-shadow:0 10px 24px rgba(0,0,0,.3);opacity:0;transform:translateY(-10px);transition:.25s}
 .toast3d.on{opacity:1;transform:none}
@@ -243,6 +246,7 @@ button{font:inherit}
     CN: ['#FFE8C2', '#F0B35C'], BORDER: ['#EADFC4', '#C9A96E'], FROZEN: ['#DCF0F5', '#9FD3E0'],
     TW: ['#D8F0E6', '#8FCDAE'], JP: ['#FDEAF0', '#F2B8CC'], DOM: ['#FFE8D5', '#F2A96B']
   };
+  const EVENT_ICON = { break: '🙅', rain: '🌧️', salinity: '🌊', fake: '🎭', pest: '🐛', glut: '🚦', residue: '⚠️', thaidrought: '🌵' };
   function stationDef(g, s) {
     const okIds = CH_IDS.filter(id => E.eligible(D, g, D.channels.find(c => c.id === id)));
     const chStn = D.channels.map((c, i) => {
@@ -254,8 +258,8 @@ button{font:inherit}
     const extra = [
       { id: 'audit', icon: '🧾', name: L('Đối soát', 'Audit'), x: 58, y: 14, big: false, locked: s.mission !== 'audit', pale: s.mission !== 'audit', tint: ['#E6E9EC', '#B8C0C8'] },
       { id: 'trader', icon: '🤝', name: L('Tiểu thương', 'Petty traders'), x: 38, y: 46 },
-      { id: 'rv_sea', icon: '🇸🇬', name: 'Singapore', x: 50, y: 22, pale: true, rival: 'sea' },
-      { id: 'rv_eu', icon: '🇪🇺', name: L('Châu Âu', 'Europe'), x: 44, y: 6, pale: true, rival: 'eu' }
+      { id: 'rv_sea', icon: '🇸🇬', img: IMG('rivals-global/sea-cut.webp'), name: 'Singapore', x: 50, y: 22, pale: true, rival: 'sea' },
+      { id: 'rv_eu', icon: '🇪🇺', img: IMG('rivals-global/eu-cut.webp'), name: L('Châu Âu', 'Europe'), x: 44, y: 6, pale: true, rival: 'eu' }
     ];
     return chStn.concat(extra);
   }
@@ -279,13 +283,17 @@ button{font:inherit}
       return `<path class="${st.active ? 'on' : ''}" vector-effect="non-scaling-stroke" d="M${CX},${CY} Q${mx},${my} ${st.x},${st.y}"/>`;
     }).join('');
     const props = PROPS3D.map(p => `<div class="prop3d ${p.cls}" style="left:${p.x}%;top:${p.y}%"></div>`).join('');
+    const mood = g.history.length ? (g.history[g.history.length - 1].profit >= 0 ? 'vui' : 'lo') : 'vui';
+    const ev = E.eventFor(D, g);
     return `<div class="map3d" id="map3d">
       <svg class="routes3d" viewBox="0 0 100 100" preserveAspectRatio="none">${routes}</svg>
       ${props}
       <div class="hint3d">${L('Chạm vào một trạm để xem chi tiết trong hồ sơ của Bà Sáu Lành bên dưới.', 'Tap a station to see details in Bà Sáu Lành\'s dossier below.')}</div>
-      <div class="stn3d big" id="stn-sau" style="left:${CX}%;top:${CY}%"><div class="box">🧺</div><span class="tag">${L('Bà Sáu Lành', 'Bà Sáu Lành')}</span></div>
+      <div class="stn3d big" id="stn-sau" style="left:${CX}%;top:${CY}%">
+        <div class="box"><img src="../assets/hc/cast/ba-sau-lanh-${mood}.png" alt="Bà Sáu Lành" onerror="this.src='${IMG('advisors/ba-sau-lanh-cut.webp')}'">${ev ? `<span class="evbadge" title="${esc(nm(ev))}">${EVENT_ICON[ev.id] || '⚡'}</span>` : ''}</div>
+        <span class="tag">${L('Bà Sáu Lành', 'Bà Sáu Lành')}</span></div>
       ${stns.map((st, i) => `<div class="stn3d ${st.locked ? 'lock' : ''} ${st.active ? 'active' : ''} ${st.pale ? 'pale' : ''}" id="stn-${st.id}" style="left:${st.x}%;top:${st.y}%;--bob-delay:${(i % 5) * 0.35}s${st.tint && st.tint.length ? `;--tint-a:${st.tint[0]};--tint-b:${st.tint[1]}` : ''}">
-        <div class="box">${st.icon}${st.locked && !st.pale ? '<span class="lockbadge">🔒</span>' : ''}</div><span class="tag">${esc(st.name)}</span></div>`).join('')}
+        <div class="box">${st.img ? `<img src="${st.img}" alt="${esc(st.name)}">` : st.icon}${st.locked && !st.pale ? '<span class="lockbadge">🔒</span>' : ''}</div><span class="tag">${esc(st.name)}</span></div>`).join('')}
     </div>`;
   }
   function wireMap() {
