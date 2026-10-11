@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demo 3D low-poly · Vườn sầu riêng</title>
+<style>
+  html,body{margin:0;height:100%;background:linear-gradient(#bfe3ef,#eaf6ee);overflow:hidden;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+  canvas{display:block;touch-action:none}
+  #hud{position:fixed;top:14px;left:14px;right:14px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;pointer-events:none;z-index:2}
+  #hud .pill{pointer-events:auto;background:rgba(255,255,255,.92);border-radius:14px;padding:10px 14px;font-size:13px;font-weight:700;color:#174d2e;box-shadow:0 6px 16px -8px rgba(0,0,0,.3)}
+  #hud .hint{font-weight:500;color:#45604f}
+</style>
+</head>
+<body>
+<div id="hud">
+  <div class="pill">🌳 Demo cảnh 3D low-poly · Vườn sầu riêng<br><span class="hint">Kéo để xoay · Lăn/chụm để zoom</span></div>
+</div>
+<script type="module">
+import * as THREE from '../js/vendor/three.module.js';
+import { P3 } from '../js/poly3d-kit.js';
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color('#bfe3ef');
+scene.fog = new THREE.Fog('#bfe3ef', 14, 32);
+
+const camera = new THREE.PerspectiveCamera(42, innerWidth / innerHeight, 0.1, 100);
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(2, devicePixelRatio || 1));
+renderer.setSize(innerWidth, innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+if ('outputColorSpace' in renderer) renderer.outputColorSpace = THREE.SRGBColorSpace;
+document.body.appendChild(renderer.domElement);
+
+P3.lights(THREE, scene);
+scene.add(P3.ground(THREE, {}));
+
+const leafColors = [0x3f7d3a, 0x4c8f43, 0x366b33];
+const rows = 4, cols = 4, spacing = 3.4;
+let seedIdx = 0;
+for (let r = 0; r < rows; r++) {
+  for (let c = 0; c < cols; c++) {
+    const tree = P3.durianTree(THREE, { scale: 0.62 + Math.random() * 0.22, leafColor: leafColors[seedIdx++ % leafColors.length] });
+    tree.position.set(
+      (c - (cols - 1) / 2) * spacing + (Math.random() - 0.5) * 0.5,
+      0,
+      (r - (rows - 1) / 2) * spacing + (Math.random() - 0.5) * 0.5
+    );
+    tree.rotation.y = Math.random() * Math.PI * 2;
+    scene.add(tree);
+  }
+}
+
+const farmer = P3.character(THREE, { shirt: 0x5b7fae, basket: true });
+farmer.position.set(6.4, 0, 2.6);
+farmer.rotation.y = -0.6;
+scene.add(farmer);
+
+const orbit = P3.orbitCamera(THREE, renderer, camera, { radius: 17, phi: Math.PI * 0.3 });
+
+addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+
+let last = performance.now();
+function loop(now) {
+  const dt = Math.min(0.05, (now - last) / 1000); last = now;
+  orbit.tick(dt);
+  renderer.render(scene, camera);
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
