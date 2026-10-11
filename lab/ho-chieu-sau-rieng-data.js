@@ -235,7 +235,7 @@
       owns: ['linked', 'induce'] },
     { id: 'cfo', name: 'Thu Hà', img: 'team/cfo-cut.webp', vi: 'CFO – tiền mặt, ưu tiên đầu tư, chi phí tuân thủ', en: 'CFO – cash, investment priority, compliance costs',
       owns: ['priority'] },
-    { id: 'sec', name: 'Gia Hân', img: 'team/sec-cut.webp', vi: 'SEC – đọc biến cố, ghi phiếu quyết định và nhật ký đội', en: 'SEC – reads events, keeps the decision sheet and team journal',
+    { id: 'sec', name: 'Gia Hân', img: 'team/sec.webp', vi: 'SEC – đọc biến cố, ghi phiếu quyết định và nhật ký đội', en: 'SEC – reads events, keeps the decision sheet and team journal',
       owns: ['option', 'journal'] }
   ];
 
