@@ -85,33 +85,98 @@
     htx: { emoji: '🌳', vi: 'HTX nhà vườn Cai Lậy', en: 'Cai Lậy growers\' cooperative',
       descVi: 'Tự trồng trên vườn của xã viên, giá thành thấp, có thể xử lý ra hoa nghịch vụ. Chưa có cơ sở đóng gói.',
       descEn: 'Grows its own fruit at low cost and can induce off-season flowering. No packing facility yet.',
+      scaleVi: 'Tiểu nông / HTX', scaleEn: 'Smallholder / co-op',
       volume: 250, benchMargin: 40, ownFarm: true, areaCode: false, packCode: false, freezer: false, cashAdj: -2 },
     packer: { emoji: '📦', vi: 'Cơ sở đóng gói Đắk Lắk', en: 'Đắk Lắk packing house',
       descVi: 'Đã có mã cơ sở đóng gói; mua trái từ nhà vườn Tây Nguyên, dễ bị «bẻ kèo» khi giá lên.',
       descEn: 'Already holds a packing-facility code; buys from Central Highlands growers who may break deals when prices rise.',
+      scaleVi: 'Cơ sở trung gian (đã có mã đóng gói)', scaleEn: 'Intermediary facility (packing code in hand)',
       volume: 500, benchMargin: 4, ownFarm: false, areaCode: false, packCode: true, freezer: false, cashAdj: 0 },
     exporter: { emoji: '🚛', vi: 'Công ty xuất khẩu TP.HCM', en: 'Ho Chi Minh City exporter',
       descVi: 'Vốn lớn, có khách Trung Quốc; mua chủ yếu qua thương lái nên khó kiểm soát dư lượng.',
       descEn: 'Well capitalised with Chinese buyers; buys mostly through traders, so residues are hard to control.',
+      scaleVi: 'Công ty xuất khẩu (chưa có mã)', scaleEn: 'Export company (no codes yet)',
       volume: 700, benchMargin: 4, ownFarm: false, areaCode: false, packCode: false, freezer: false, cashAdj: 6 },
     frozen: { emoji: '❄️', vi: 'Doanh nghiệp cấp đông Tiền Giang', en: 'Tiền Giang freezing company',
       descVi: 'Có dây chuyền cấp đông; sản phẩm đông lạnh giá cao nhưng chi phí lớn và chờ nghị định thư.',
       descEn: 'Owns a freezing line; frozen products earn more but cost more, and await a protocol.',
+      scaleVi: 'Doanh nghiệp chế biến (đã có mã đóng gói)', scaleEn: 'Processing company (packing code in hand)',
       volume: 350, benchMargin: 6, ownFarm: false, areaCode: false, packCode: true, freezer: true, cashAdj: 2 }
+  };
+
+  // ---------- Phương thức thâm nhập (entry mode) — khung lý thuyết KDQT gắn vào từng kênh ----------
+  const entryModes = {
+    indirect: { vi: 'Xuất khẩu gián tiếp (qua trung gian)', en: 'Indirect export (via an intermediary)' },
+    direct: { vi: 'Xuất khẩu trực tiếp chính ngạch', en: 'Direct official export' },
+    direct_strict: { vi: 'Xuất khẩu trực tiếp, rào cản kỹ thuật cao', en: 'Direct export, high technical barriers' },
+    process_export: { vi: 'Xuất khẩu qua chế biến (nâng cấp chuỗi giá trị)', en: 'Export via processing (value-chain upgrading)' },
+    domestic: { vi: 'Không xuất khẩu — thị trường nội địa', en: 'No export — domestic market' }
   };
 
   // ---------- Kênh bán ----------
   // priceMult: giá bán so với giá vựa trong vụ. Neo: DN xuất khẩu Cai Lậy mua 26.333, bán 47.333 đ/kg (×1,8; CAILAY);
   // bán lẻ 82.200 so với vựa 71.100 đ/kg (×1,16; PDIEN); đông lạnh/tươi ×2,47 và chi phí cấp đông ≈ 0,5 giá tươi (JETRO).
   // Các hệ số còn lại là minh họa. · cost: chi phí logistics/kiểm dịch, nghìn đ/kg · cap: tấn/vụ (null = không giới hạn)
+  // pipeline: 3 khâu ngoại thương nối tiếp từ thông quan đến khi sản phẩm hiện diện tại host country (chỉ mô tả, không ảnh hưởng công thức).
   const channels = [
-    { id: 'CN', emoji: '🇨🇳', vi: 'Trung Quốc chính ngạch (tươi)', en: 'China official (fresh)', priceMult: 1.6, cost: 8, cap: null, needs: ['area', 'pack'], src: 'CAILAY' },
-    { id: 'BORDER', emoji: '🛻', vi: 'Trung Quốc tiểu ngạch', en: 'China border trade', priceMult: 1.35, cost: 5, cap: 260, needs: [], src: 'CAILAY' },
-    { id: 'FROZEN', emoji: '❄️', vi: 'Đông lạnh (múi, nguyên trái)', en: 'Frozen (pulp, whole fruit)', priceMult: 2.6, cost: 6, freezeCost: 0.6, cap: 220, needs: ['freezer'], src: 'JETRO' },
-    { id: 'TW', emoji: '🇹🇼', vi: 'Đài Loan', en: 'Taiwan', priceMult: 2.1, cost: 15, tariff: 0.17, cap: 50, needs: [], src: 'TW' },
-    { id: 'JP', emoji: '🇯🇵', vi: 'Nhật Bản (hàng cao cấp)', en: 'Japan (premium)', priceMult: 2.4, cost: 22, cap: 30, needs: ['test'], src: 'BC1223' },
-    { id: 'DOM', emoji: '🏪', vi: 'Nội địa (chợ đầu mối TP.HCM)', en: 'Domestic (HCMC wholesale)', priceMult: 1.1, cost: 2, cap: null, needs: [], src: 'PDIEN' }
+    { id: 'CN', emoji: '🇨🇳', vi: 'Trung Quốc chính ngạch (tươi)', en: 'China official (fresh)', priceMult: 1.6, cost: 8, cap: null, needs: ['area', 'pack'], src: 'CAILAY',
+      entryMode: 'direct',
+      pipeline: [
+        { id: 'customs', vi: 'Thông quan tại cửa khẩu (Hữu Nghị, Lào Cai…): đối chiếu mã vùng trồng – mã đóng gói, lấy mẫu kiểm dịch.', en: 'Clearance at border gates (Hữu Nghị, Lào Cai…): area/packing codes checked, phytosanitary sampling.', src: 'codes' },
+        { id: 'distribute', vi: 'Vào chợ đầu mối biên giới rồi hệ thống bán sỉ nội địa Trung Quốc.', en: 'Into border wholesale markets, then China\'s domestic wholesale network.', src: 'china92' },
+        { id: 'retail', vi: 'Lên sạp trái cây và sàn thương mại điện tử ở các đô thị lớn.', en: 'Reaches fruit stalls and e-commerce platforms in major cities.', src: 'share57' }
+      ] },
+    { id: 'BORDER', emoji: '🛻', vi: 'Trung Quốc tiểu ngạch', en: 'China border trade', priceMult: 1.35, cost: 5, cap: 260, needs: [], src: 'CAILAY',
+      entryMode: 'indirect',
+      pipeline: [
+        { id: 'customs', vi: 'Qua lối mở biên giới, thủ tục đơn giản hơn nhưng dễ bị siết bất ngờ.', en: 'Through informal border crossings — simpler paperwork but prone to sudden tightening.', src: 'border2018' },
+        { id: 'distribute', vi: 'Thương lái biên giới gom và bán lại cho đầu mối Trung Quốc ngay tại cửa khẩu.', en: 'Border traders consolidate loads and resell to Chinese buyers right at the gate.', src: 'traders80' },
+        { id: 'retail', vi: 'Khó truy xuất khi ra thị trường — không mang thương hiệu Việt Nam.', en: 'Hard to trace once on the market — carries no Vietnamese branding.', src: null }
+      ] },
+    { id: 'FROZEN', emoji: '❄️', vi: 'Đông lạnh (múi, nguyên trái)', en: 'Frozen (pulp, whole fruit)', priceMult: 2.6, cost: 6, freezeCost: 0.6, cap: 220, needs: ['freezer'], src: 'JETRO',
+      entryMode: 'process_export',
+      pipeline: [
+        { id: 'customs', vi: 'Cấp đông đúng chuẩn trước khi đóng container lạnh xuất khẩu.', en: 'Frozen to spec before loading a cold-chain export container.', src: 'frozenMY' },
+        { id: 'distribute', vi: 'Vào kho lạnh phân phối, chờ nghị định thư đông lạnh để mở rộng.', en: 'Enters cold-storage distribution, pending a frozen protocol to scale up.', src: 'frozenPush' },
+        { id: 'retail', vi: 'Bán cho ngành chế biến (kem, bánh) và siêu thị đông lạnh.', en: 'Sold to processors (ice cream, pastry) and frozen-food retailers.', src: 'frozenThai' }
+      ] },
+    { id: 'TW', emoji: '🇹🇼', vi: 'Đài Loan', en: 'Taiwan', priceMult: 2.1, cost: 15, tariff: 0.17, cap: 50, needs: [], src: 'TW',
+      entryMode: 'direct_strict',
+      pipeline: [
+        { id: 'customs', vi: 'Chịu thuế MFN 17% và kiểm dư lượng Cypermethrin/Chlorpyrifos khi nhập cảnh.', en: 'Faces a 17% MFN tariff and Cypermethrin/Chlorpyrifos residue checks on entry.', src: 'twTariff' },
+        { id: 'distribute', vi: 'Qua nhà nhập khẩu trái cây Đài Loan vào hệ thống siêu thị.', en: 'Through a Taiwanese fruit importer into the supermarket system.', src: null },
+        { id: 'retail', vi: 'Cạnh tranh trực tiếp với sầu riêng Thái Lan trên kệ.', en: 'Competes directly with Thai durian on the shelf.', src: null }
+      ] },
+    { id: 'JP', emoji: '🇯🇵', vi: 'Nhật Bản (hàng cao cấp)', en: 'Japan (premium)', priceMult: 2.4, cost: 22, cap: 30, needs: ['test'], src: 'BC1223',
+      entryMode: 'direct_strict',
+      pipeline: [
+        { id: 'customs', vi: 'Kiểm nghiệm dư lượng nghiêm ngặt (procymidone ≤0,01 ppm); vi phạm là tiêu hủy cả lô.', en: 'Strict residue testing (procymidone ≤0.01 ppm); a violation means the whole lot is destroyed.', src: 'japanMRL' },
+        { id: 'distribute', vi: 'Qua nhà nhập khẩu cao cấp, số lượng nhỏ, đòi hồ sơ kiểm nghiệm đầy đủ.', en: 'Through a premium importer, small volumes, full test documentation required.', src: 'japanMRL' },
+        { id: 'retail', vi: 'Bán ở phân khúc trái cây cao cấp, giá cao nhất trong các kênh.', en: 'Sold in the premium fruit segment — the highest price of all channels.', src: null }
+      ] },
+    { id: 'DOM', emoji: '🏪', vi: 'Nội địa (chợ đầu mối TP.HCM)', en: 'Domestic (HCMC wholesale)', priceMult: 1.1, cost: 2, cap: null, needs: [], src: 'PDIEN',
+      entryMode: 'domestic',
+      pipeline: [
+        { id: 'customs', vi: 'Không qua biên giới — chỉ kiểm chất lượng nội địa theo TCVN.', en: 'No border crossing — only domestic quality checks under TCVN.', src: 'grades' },
+        { id: 'distribute', vi: 'Qua chợ đầu mối TP.HCM rồi đi các tỉnh.', en: 'Via HCMC\'s wholesale market out to the provinces.', src: null },
+        { id: 'retail', vi: 'Lên sạp chợ và cửa hàng trái cây trong nước.', en: 'Reaches domestic market stalls and fruit shops.', src: null }
+      ] }
   ];
+
+  // ---------- Lớp "tiểu thương" ↔ "công ty" và entry mode ngay tại home country ----------
+  // Lý thuyết: trước khi nói tới phương thức thâm nhập ra nước ngoài, doanh nghiệp phải chọn cách gia nhập
+  // chuỗi cung ứng trong nước (mua qua thương lái tự do hay liên kết vùng trồng có mã số) và hoàn tất thủ tục
+  // để được công nhận là doanh nghiệp xuất khẩu chính thức — đó cũng là một "entry mode", chỉ diễn ra ở home country.
+  const sourcingTheory = {
+    vi: 'Tỷ lệ mua qua vùng liên kết so với thương lái tự do (tiểu thương) chính là lựa chọn phương thức gia nhập ngay trong nước: liên kết giúp có mã số để đi chính ngạch nhưng tốn chi phí hơn (+8%); thương lái rẻ, linh hoạt nhưng dễ «bẻ kèo» và khó kiểm soát dư lượng.',
+    en: 'The share bought from linked, coded areas versus free-roaming traders (tiểu thương) is itself a home-country entry-mode choice: linked sourcing earns the codes needed for official export but costs more (+8%); traders are cheap and flexible but prone to broken deals and harder residue control.',
+    src: 'traders80'
+  };
+  const formalization = {
+    vi: 'Khi vừa có mã vùng trồng vừa có mã cơ sở đóng gói, cơ sở thu mua đủ điều kiện trở thành doanh nghiệp xuất khẩu chính ngạch — đây là quá trình "gia nhập" (entry mode) diễn ra ngay tại Việt Nam, trước khi tính đến phương thức thâm nhập thị trường nước ngoài.',
+    en: 'Once both the planting-area code and the packing-facility code are held, the buying operation becomes eligible to export officially — a home-country "entry mode" process that happens before any foreign-market entry mode even applies.',
+    src: 'codes'
+  };
 
   // ---------- Ưu tiên đầu tư (chọn 1 mỗi vụ) ----------
   const priorities = [
@@ -300,7 +365,7 @@
   const debrief = [
     { id: 'what', vi: 'What? Đội đã quyết định gì và kết quả ra sao?', en: 'What? What did the team decide and what happened?' },
     { id: 'why', vi: 'Why? Vì sao kết quả khác hoặc giống dự báo «Nếu – Thì»?', en: 'Why? Why did results differ from (or match) the what-if forecast?' },
-    { id: 'sowhat', vi: 'So what? Điều này liên quan lý thuyết nào (TBT/SPS, phương thức thâm nhập, nâng cấp chuỗi giá trị)?', en: 'So what? Which theory does this relate to (TBT/SPS, entry modes, value-chain upgrading)?' },
+    { id: 'sowhat', vi: 'So what? Điều này liên quan lý thuyết nào (TBT/SPS, phương thức thâm nhập — tiểu thương/liên kết ở nhà, kênh nào gián tiếp/trực tiếp/qua chế biến ra nước ngoài —, nâng cấp chuỗi giá trị)?', en: 'So what? Which theory does this relate to (TBT/SPS, entry modes — trader vs. linked sourcing at home, which channels are indirect/direct/processed abroad —, value-chain upgrading)?' },
     { id: 'nowhat', vi: 'Now what? Đội sẽ thay đổi điều gì ở vụ tiếp theo?', en: 'Now what? What will the team change next season?' }
   ];
 
@@ -318,7 +383,7 @@
   // Cột của nhật ký sự kiện (event log) xuất CSV
   const eventLogColumns = ['event_id', 'timestamp', 'class_id', 'team_id', 'round_id', 'role', 'event_type', 'old_value', 'new_value', 'device_session', 'committed'];
 
-  const api = { sources, facts, params, roles, channels, priorities, intel, seasons, events, scoreWeights,
+  const api = { sources, facts, params, roles, channels, entryModes, sourcingTheory, formalization, priorities, intel, seasons, events, scoreWeights,
     team, rivals, rivalGroups, luminaQuestions, flow, debrief, rubric, eventLogColumns };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.DurianData = api;
