@@ -29,7 +29,8 @@
     MYSOP: 'MARDI (2023). The SOP for exporting frozen whole durian fruit.',
     MYSC: 'Bài báo (2019). From farm to China: Malaysian frozen whole durian export supply chain.',
     GS1: 'APEC (2017). Application of global data standards for supply chain connectivity (thí điểm truy xuất sầu riêng Malaysia).',
-    TCVN: 'TCVN 10739:2015 – Sầu riêng quả tươi.'
+    TCVN: 'TCVN 10739:2015 – Sầu riêng quả tươi.',
+    TWL: '3W Logistics (2026). Quy trình 8 bước và thủ tục xuất khẩu sầu riêng chính ngạch sang Trung Quốc.'
   };
 
   // ---------- Dữ kiện dùng trong trò chơi (có trích nguồn) ----------
@@ -60,7 +61,13 @@
     thaiOverlap: { src: 'CAILAY', vi: 'Chính vụ miền Tây (tháng 4–8) trùng vụ Thái Lan và Đông Nam Bộ nên thương lái Trung Quốc ít mua sầu riêng Việt Nam.', en: 'The Mekong main season (Apr–Aug) overlaps Thailand and the Southeast, so Chinese buyers purchase less Vietnamese durian.' },
     grades: { src: 'TCVN', vi: 'Hạng Đặc biệt ≥4 ngăn múi, hạng I ≥3, hạng II ≥2; dung sai chất lượng 10%.', en: 'Extra grade ≥4 full locules, Grade I ≥3, Grade II ≥2; 10% quality tolerance.' },
     thaiDrought: { src: 'GMSARN', vi: 'Hạn hán ở Thái Lan (2016–2017) làm giảm nguồn cung; thị phần Việt Nam tại Trung Quốc lên 37,39% năm 2017.', en: 'Drought in Thailand (2016–2017) cut supply; Vietnam\'s share in China rose to 37.39% in 2017.' },
-    border2018: { src: 'TW', vi: 'Năm 2018 Trung Quốc siết dần nhập khẩu tiểu ngạch, làm giảm kim ngạch sầu riêng Việt Nam.', en: 'In 2018 China tightened small-scale border imports, reducing Vietnam\'s durian exports.' }
+    border2018: { src: 'TW', vi: 'Năm 2018 Trung Quốc siết dần nhập khẩu tiểu ngạch, làm giảm kim ngạch sầu riêng Việt Nam.', en: 'In 2018 China tightened small-scale border imports, reducing Vietnam\'s durian exports.' },
+    reqDocs: { src: 'TWL', vi: 'Bộ chứng từ chính ngạch gồm 7 loại: hợp đồng ngoại thương (song ngữ, có chữ ký – con dấu hai bên), hóa đơn thương mại và phiếu đóng gói, chứng từ vận tải (vận đơn đường biển hoặc CMR/AWB với đường bộ/hàng không), C/O mẫu E (ASEAN–Trung Quốc), Giấy chứng nhận kiểm dịch thực vật, giấy xác nhận mã vùng trồng – mã cơ sở đóng gói, và tờ khai hải quan xuất khẩu.', en: 'The official-channel paperwork has 7 items: a bilingual foreign-trade contract (signed and stamped by both sides), commercial invoice and packing list, a transport document (bill of lading for sea, or CMR/AWB for road/air), a Form E certificate of origin (ASEAN–China), a Phytosanitary Certificate, proof of growing-area and packing-facility codes, and the customs export declaration.' },
+    gaccTimeline: { src: 'TWL', vi: 'Đăng ký và được GACC phê duyệt mã vùng trồng – mã cơ sở đóng gói thường mất 2–4 tháng xử lý.', en: 'Registering and getting GACC approval for growing-area and packing-facility codes usually takes 2–4 months.' },
+    depositTerms: { src: 'TWL', vi: 'Hợp đồng ngoại thương phổ biến đặt cọc 30%, thanh toán 70% còn lại trước khi giao hàng.', en: 'Foreign-trade contracts commonly ask for a 30% deposit, with the remaining 70% paid before delivery.' },
+    freshStorage: { src: 'TWL', vi: 'Sầu riêng tươi nguyên trái bảo quản tốt nhất ở 13–15°C, độ ẩm 85–90%, giữ được khoảng 5–7 ngày.', en: 'Whole fresh durian keeps best at 13–15°C and 85–90% humidity, lasting about 5–7 days.' },
+    frozenStorageTWL: { src: 'TWL', vi: 'Sầu riêng đông lạnh bảo quản và vận chuyển ở −18°C, hạn dùng 18–24 tháng.', en: 'Frozen durian is stored and transported at −18°C, with an 18–24 month shelf life.' },
+    transitTimes: { src: 'TWL', vi: 'Thời gian vận chuyển sang Trung Quốc: đường bộ 3–5 ngày (2–3 ngày từ vùng trồng ra cửa khẩu), đường biển 7–12 ngày, đường sắt 5–8 ngày; hải quan biên giới có thể giữ hàng 1–3 ngày để lấy mẫu ngẫu nhiên.', en: 'Transit time to China: road 3–5 days (2–3 days from the growing area to the border), sea 7–12 days, rail 5–8 days; Chinese border customs may hold a shipment 1–3 days for random sampling.' }
   };
 
   // ---------- Tham số minh họa ----------
@@ -117,12 +124,15 @@
   // priceMult: giá bán so với giá vựa trong vụ. Neo: DN xuất khẩu Cai Lậy mua 26.333, bán 47.333 đ/kg (×1,8; CAILAY);
   // bán lẻ 82.200 so với vựa 71.100 đ/kg (×1,16; PDIEN); đông lạnh/tươi ×2,47 và chi phí cấp đông ≈ 0,5 giá tươi (JETRO).
   // Các hệ số còn lại là minh họa. · cost: chi phí logistics/kiểm dịch, nghìn đ/kg · cap: tấn/vụ (null = không giới hạn)
-  // pipeline: 3 khâu ngoại thương nối tiếp từ thông quan đến khi sản phẩm hiện diện tại host country (chỉ mô tả, không ảnh hưởng công thức).
+  // pipeline: các khâu ngoại thương nối tiếp từ thông quan đến khi sản phẩm hiện diện tại host country (chỉ mô tả, không ảnh hưởng công thức);
+  // CN chính ngạch có thêm khâu 'contract' mở đầu (hồ sơ – hợp đồng) theo quy trình 8 bước TWL.
   const channels = [
     { id: 'CN', emoji: '🇨🇳', vi: 'Trung Quốc chính ngạch (tươi)', en: 'China official (fresh)', priceMult: 1.6, cost: 8, cap: null, needs: ['area', 'pack'], src: 'CAILAY',
       entryMode: 'direct',
       pipeline: [
+        { id: 'contract', vi: 'Đăng ký mã vùng trồng – mã cơ sở đóng gói với GACC (2–4 tháng), rồi ký hợp đồng ngoại thương (đặt cọc 30%) và chuẩn bị đủ 7 loại chứng từ.', en: 'Register growing-area and packing-facility codes with GACC (2–4 months), sign the foreign-trade contract (30% deposit) and prepare all 7 required documents.', src: 'gaccTimeline' },
         { id: 'customs', vi: 'Thông quan tại cửa khẩu (Hữu Nghị, Lào Cai…): đối chiếu mã vùng trồng – mã đóng gói, lấy mẫu kiểm dịch.', en: 'Clearance at border gates (Hữu Nghị, Lào Cai…): area/packing codes checked, phytosanitary sampling.', src: 'codes' },
+        { id: 'transport', vi: 'Vận chuyển đường bộ 3–5 ngày (đường biển 7–12 ngày, đường sắt 5–8 ngày); trái tươi giữ 13–15°C, 85–90% ẩm.', en: 'Road transport takes 3–5 days (sea 7–12, rail 5–8); fresh fruit is kept at 13–15°C and 85–90% humidity.', src: 'transitTimes' },
         { id: 'distribute', vi: 'Vào chợ đầu mối biên giới rồi hệ thống bán sỉ nội địa Trung Quốc.', en: 'Into border wholesale markets, then China\'s domestic wholesale network.', src: 'china92' },
         { id: 'retail', vi: 'Lên sạp trái cây và sàn thương mại điện tử ở các đô thị lớn.', en: 'Reaches fruit stalls and e-commerce platforms in major cities.', src: 'share57' }
       ] },
@@ -137,6 +147,7 @@
       entryMode: 'process_export',
       pipeline: [
         { id: 'customs', vi: 'Cấp đông đúng chuẩn trước khi đóng container lạnh xuất khẩu.', en: 'Frozen to spec before loading a cold-chain export container.', src: 'frozenMY' },
+        { id: 'transport', vi: 'Bảo quản và vận chuyển ở −18°C trong container lạnh; hạn dùng 18–24 tháng.', en: 'Stored and shipped at −18°C in a reefer container; 18–24 month shelf life.', src: 'frozenStorageTWL' },
         { id: 'distribute', vi: 'Vào kho lạnh phân phối, chờ nghị định thư đông lạnh để mở rộng.', en: 'Enters cold-storage distribution, pending a frozen protocol to scale up.', src: 'frozenPush' },
         { id: 'retail', vi: 'Bán cho ngành chế biến (kem, bánh) và siêu thị đông lạnh.', en: 'Sold to processors (ice cream, pastry) and frozen-food retailers.', src: 'frozenThai' }
       ] },
