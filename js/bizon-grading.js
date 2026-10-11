@@ -171,6 +171,40 @@
     return { total: (+r.total_score || 0) / 10, home: MINI_HOME[d.home] || d.home || '–', profile: MINI_PROFILE[r.title] || r.title || '–', markets: r.markets ?? 0 };
   }
 
+  // ---------- Danh sách lớp (dán STT · Họ và tên · MSSV · Email · Nhóm) để ghép MSSV vào điểm Hộ Chiếu Mini ----------
+  // Hộ Chiếu Mini chỉ nộp theo tên đội/nhóm (không đăng nhập sinh viên), nên ghép theo tên nhóm người chơi gõ khi vào game.
+  // Chỉ lưu cục bộ trên máy của giảng viên (localStorage) — không gửi lên Supabase, không đụng schema.
+  function parseRoster(text) {
+    const map = {}; let lastGroup = '';
+    String(text || '').split(/\r?\n/).forEach(line => {
+      if (!line.trim()) return;
+      const cells = (line.indexOf('\t') >= 0 ? line.split('\t') : line.split(',')).map(c => c.trim());
+      if (/^stt$/i.test(cells[0] || '') || /^(họ|ho)\s*(và|va)?\s*tên/i.test(cells[1] || '')) return; // bỏ dòng tiêu đề
+      const [, name, mssv, email, groupCell] = cells;
+      if (!name && !mssv) return;
+      const g = (groupCell || lastGroup || '').trim();
+      if (groupCell) lastGroup = groupCell.trim();
+      if (!g) return;
+      const key = g.toLowerCase();
+      (map[key] = map[key] || { label: g, members: [] }).members.push({ name: (name || '').trim(), mssv: (mssv || '').trim(), email: (email || '').trim() });
+    });
+    return map;
+  }
+  function rosterGroup(roster, playerName) {
+    const key = String(playerName || '').trim().toLowerCase();
+    return (roster && roster[key]) || null;
+  }
+  // Gộp điểm Hộ Chiếu Mini (theo nhóm) với danh sách lớp → một dòng mỗi sinh viên khi khớp được tên nhóm, nếu không khớp thì giữ một dòng theo tên đã nộp.
+  function miniExport(BP, roster) {
+    return (BP || []).filter(r => /^HC Mini/.test(r.company || '')).flatMap(r => {
+      const m = miniGrade(r), L = letter(m.total), when = new Date(r.created_at).toLocaleString('vi-VN');
+      const grp = rosterGroup(roster, r.player_name);
+      const common = { home: m.home, markets: m.markets, profile: m.profile, total: +m.total.toFixed(1), letter: L.l, g4: L.g4, pass: L.pass, when };
+      if (grp && grp.members.length) return grp.members.map(mm => Object.assign({ group: grp.label, mssv: mm.mssv, name: mm.name, email: mm.email }, common));
+      return [Object.assign({ group: '', mssv: '', name: r.player_name || 'Ẩn danh', email: '' }, common)];
+    });
+  }
+
   function decRows(team) {
     const head = ['Vòng', 'Giá (k₫)', 'Marketing', 'Sản lượng', 'R&D', 'Nhân công', 'Vốn', 'Thị phần', 'Lợi nhuận', 'Kết quả'];
     const cells = [];
@@ -184,7 +218,7 @@
     });
     return { head, cells };
   }
-  function xls(code, T, G, BP, MB, AC, rubric) {
+  function xls(code, T, G, BP, MB, AC, rubric, roster) {
     const esc = v => String(v == null ? '' : v).replace(/&/g, '&amp;').replace(/</g, '&lt;');
     const row = c => '<Row>' + c.map(x => `<Cell><Data ss:Type="${typeof x === 'number' && isFinite(x) ? 'Number' : 'String'}">${esc(x)}</Data></Cell>`).join('') + '</Row>';
     const sheet = (n, rows) => `<Worksheet ss:Name="${esc(n)}"><Table>${rows.join('')}</Table></Worksheet>`;
@@ -202,9 +236,8 @@
     const s4 = [row(['Đội', 'Thành viên', 'Email', 'Vai', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'Vòng tham gia', 'Vòng được áp dụng', 'Lần Nếu–Thì', 'B5 cá nhân /1,5', 'Tổng cá nhân /10', 'Điểm chữ', 'Thang 4', 'Tích lũy'])]
       .concat((MB || []).map(m => { const g = G.find(x => x.name === m.team), tot = g ? g.total - g.b5 + m.b5 : m.b5, L = letter(tot);
         return row([m.team, m.name, m.email, m.role].concat(m.dots.map(d => d === 2 ? 'Áp dụng' : d === 1 ? 'Tham gia' : ''), [m.p, m.a, m.whatif, r1(m.b5), +tot.toFixed(1), L.l, L.g4, L.pass ? 'Đạt' : 'Không'])); }));
-    const s5 = [row(['Sinh viên', 'Quốc gia xuất phát', 'Số thị trường đầu tư', 'Hồ sơ nhà đầu tư', 'Điểm /10', 'Điểm chữ', 'Thang 4', 'Tích lũy', 'Nộp lúc'])]
-      .concat((BP || []).filter(r => /^HC Mini/.test(r.company || '')).map(r => { const m = miniGrade(r), L = letter(m.total);
-        return row([r.player_name || 'Ẩn danh', m.home, m.markets, m.profile, +m.total.toFixed(1), L.l, L.g4, L.pass ? 'Đạt' : 'Không', new Date(r.created_at).toLocaleString('vi-VN')]); }));
+    const s5 = [row(['Nhóm/Đội', 'MSSV', 'Họ và tên', 'Email', 'Quốc gia xuất phát', 'Số thị trường đầu tư', 'Hồ sơ nhà đầu tư', 'Điểm /10', 'Điểm chữ', 'Thang 4', 'Tích lũy', 'Nộp lúc'])]
+      .concat(miniExport(BP, roster).map(r => row([r.group, r.mssv, r.name, r.email, r.home, r.markets, r.profile, r.total, r.letter, r.g4, r.pass ? 'Đạt' : 'Không', r.when])));
     const s6 = [row(['Đội', 'Chỉ số đồng đội /100', 'Mức rubric', 'Thành viên', 'Vai', 'Đề xuất', 'Biên bản', 'Nếu–Thì', 'Hỏi Lumina', 'Chốt vòng', 'Vòng thấu chi', 'Điểm tham gia /100'])]
       .concat((AC || []).flatMap(t => { const lv = rubricLevel(t.balance, rubric);
         return t.members.map(m => row([t.team, t.balance, lv.label, m.name, m.role, m.proposals, m.minutes, m.whatif, m.lumina, m.commits, m.overdraftRounds, m.score])); }));
@@ -212,5 +245,5 @@
     const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([xml], { type: 'application/vnd.ms-excel' })); a.download = `BizOn-${code}-so-diem.xls`; document.body.appendChild(a); a.click(); a.remove();
   }
   const EVENTS = [['', 'Theo kịch bản (không can thiệp)'], ['EV_STABLE', '🌤️ Thị trường ổn định'], ['EV_GOLDEN', '🌟 Cơ hội vàng – tổng cầu tăng'], ['EV_PRICEWAR', '⚔️ Cạnh tranh về giá – nhạy giá'], ['EV_RECESSION', '⚡ Khủng hoảng năng lượng'], ['EV_SUPPLY', '🚢 Khủng hoảng chuỗi cung ứng'], ['EV_MILESTONE', '🐉 Việt Nam hóa Rồng']];
-  window.BizOnInstructorPage = { money, f1, letter, members, autoNote, teams, grades, bpGrade, miniGrade, decRows, xls, EVENTS, memberActivity, rubricLevel };
+  window.BizOnInstructorPage = { money, f1, letter, members, autoNote, teams, grades, bpGrade, miniGrade, parseRoster, rosterGroup, miniExport, decRows, xls, EVENTS, memberActivity, rubricLevel };
 })();

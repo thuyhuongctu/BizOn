@@ -41,6 +41,8 @@ h1,h2,h3,.logo{font-family:'Plus Jakarta Sans','PJS Fallback',system-ui,sans-ser
 .lang-pill button{border:0;background:transparent;color:var(--muted);padding:7px 11px;font-weight:700;font-size:12.5px;cursor:pointer;font-family:inherit}
 .lang-pill button.on{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
 .hero{padding:28px 0 14px}
+.page-badge{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.page-badge img{width:52px;height:52px;border-radius:14px;box-shadow:0 6px 16px rgba(0,0,0,.25)}
 .eyebrow{font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.06em}
 h1{font-size:clamp(26px,4.4vw,38px);line-height:1.15;margin:10px 0}
 .lead{color:var(--muted);max-width:800px}
@@ -192,6 +194,7 @@ footer{color:var(--faint)}
   <div class="logo"><span class="mark">🌳</span><span><span id="brandName">Hộ Chiếu Sầu Riêng</span><span class="sub" id="brandSub"></span></span></div>
   <div class="spacer"></div>
   <button class="tbtn music" id="musicBtn" type="button" aria-pressed="false">♪</button>
+  <a class="tbtn" href="ho-chieu-sau-rieng-3d.html" id="map3dLink">🗺️</a>
   <a class="tbtn" href="../lop-hoc.html" id="backLink"></a>
   <div class="lang-pill"><button id="langVI" class="on" type="button">VI</button><button id="langEN" type="button">EN</button></div>
 </div></div>
@@ -273,6 +276,7 @@ footer{color:var(--faint)}
     document.title = L('Hộ Chiếu Sầu Riêng · Bản lớp học', 'Sầu Riêng Passport (Durian) · Classroom edition');
     $('brandSub').textContent = L('Bản lớp học · mô phỏng xuất khẩu nông sản', 'Classroom edition · agri-food export simulation');
     $('backLink').textContent = L('← Kịch bản lớp học', '← Classroom script');
+    $('map3dLink').title = L('Bản đồ 3D: khám phá chuỗi cung ứng cùng Bà Sáu Lành', '3D map: explore the supply chain with Bà Sáu Lành');
     $('langVI').classList.toggle('on', LANG === 'vi'); $('langEN').classList.toggle('on', LANG === 'en');
     $('musicBtn').title = L('Nhạc nền «And The World Say Hello!» (kho nhạc BizOn)', 'Background music «And The World Say Hello!» (BizOn library)');
     document.documentElement.lang = LANG;
@@ -307,13 +311,13 @@ footer{color:var(--faint)}
     const saved = load();
     $('app').innerHTML = `
       <section class="hero"><div class="hero-row"><div>
-        <span class="eyebrow">${L('Trò chơi mô phỏng · Kinh doanh quốc tế · Bản lớp học', 'Simulation game · International business · Classroom edition')}</span>
+        <div class="page-badge"><img src="../assets/brand/durian-passport-badge.webp" alt="Durian Passport"><span class="eyebrow">${L('Trò chơi mô phỏng · Kinh doanh quốc tế · Bản lớp học', 'Simulation game · International business · Classroom edition')}</span></div>
         <h1>${L('Hộ Chiếu Sầu Riêng: đưa sầu riêng Việt Nam ra thế giới qua 6 vụ', 'Sầu Riêng Passport (Durian): take Vietnamese durian to the world over 6 seasons')}</h1>
         <p class="lead">${L(
           'Đội 5 người điều hành một mắt xích trong chuỗi xuất khẩu sầu riêng, từ ngày Trung Quốc mở cửa chính ngạch (7/2022), và cạnh tranh với 3 đối thủ AI. Mỗi vụ: đọc thị trường, họp đội theo vai, chạy tối đa 2 lần «Nếu – Thì», hỏi Lumina tối đa 3 câu, ghi phiếu quyết định, chốt vụ rồi viết nhật ký. Mục tiêu không chỉ là thắng cờ mà là giải thích được vì sao kết quả khác dự báo.',
           'A team of five runs one link of the durian export chain from the day China opens official trade (July 2022), competing with 3 AI rivals. Each season: read the market, hold a role meeting, run up to 2 what-ifs, ask Lumina up to 3 questions, fill in a decision sheet, commit, then write the journal. The aim is not only to win flags but to explain why results differ from forecasts.')}</p>
         <span class="prov pub">${L('Sự kiện và quy định có trích nguồn tài liệu', 'Events and rules are cited from documents')}</span><span class="prov sim">${L('Khối lượng, hệ số giá, xác suất là minh họa', 'Volumes, price ratios and probabilities are illustrative')}</span>
-      </div><div class="hero-cast"><img src="${IMG('anh-tu-ao-dai-welcome-cut-v2.webp')}" alt="${L('Thầy Tú Phan', 'Dr Tú Phan')}"><img src="${IMG('lumina-ao-dai-wave.webp')}" alt="Lumina"></div></div></section>
+      </div><div class="hero-cast"><img src="${IMG('anh-tu-ao-dai-welcome-cut-v2.webp')}" alt="${L('Thầy Tú Phan', 'Dr Tú Phan')}"><img src="${IMG('lumina-je-standing.webp')}" alt="Lumina"></div></div></section>
 
       ${saved ? `<div class="card"><h2>${L('Ván đang dở', 'Game in progress')}</h2>
         <p class="small">${L('Lớp', 'Class')} <b>${esc(saved.cls || '—')}</b> · ${L('Đội', 'Team')} <b>${esc(saved.team || '—')}</b> · ${nm(D.roles[saved.roleId])} · ${L('vụ', 'season')} ${Math.min(saved.game.n, 6)}/6</p>
@@ -818,7 +822,7 @@ footer{color:var(--faint)}
       <section class="hero"><div class="hero-row"><div><span class="eyebrow">${role.emoji} ${nm(role)} · ${L('Lớp', 'Class')} ${esc(APP.cls || '—')} · ${L('Đội', 'Team')} ${esc(APP.team || '—')}</span>
         <h1>${L('Báo cáo sau 6 vụ', 'Report after 6 seasons')}</h1>${flagsHTML(0)}
         <p class="lead">${L(`Đội cắm ${flagsWon}/6 cờ. Sai lệch bình quân giữa dự báo và lợi nhuận thực tế: ${money(mae)} mỗi vụ.`, `Your team planted ${flagsWon}/6 flags. Mean absolute gap between forecast and actual profit: ${money(mae)} per season.`)}</p></div>
-        <div class="hero-cast"><img src="${IMG(flagsWon >= 3 ? 'lumina-ao-dai-cheer.webp' : 'lumina-ao-dai-thumbsup.webp')}" alt="Lumina"></div></div></section>
+        <div class="hero-cast"><img src="${IMG(flagsWon >= 3 ? 'lumina-je-cheer.webp' : 'lumina-ao-dai-thumbsup.webp')}" alt="Lumina"></div></div></section>
       <div class="grid2">
         <div class="card"><div class="kpis" style="grid-template-columns:1fr 1fr">
           <div class="kpi"><small>${L('Điểm tổng trong game', 'In-game total')}</small><b class="num">${nf(S.total)}/100</b></div>
