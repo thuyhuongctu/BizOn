@@ -32,6 +32,7 @@
     var b = G() || {};
     var s = b.S, firms = b.FIRMS || [];
     var f = (s && firms[s.firm]) || {};
+    var hm = b.HOME ? b.HOME() : null;
     return {
       title: T('🏢 Văn phòng chiến lược', '🏢 Strategy Office'),
       subtitle: T('Hộ Chiếu Thương Hiệu', 'Brand Passport'),
@@ -53,6 +54,7 @@
       ],
       stations: [
         { id: 'passport', icon: '🛂', art: 'assets/illustrations/game/globe-walk.webp', name: T('Trạm hộ chiếu', 'Passport desk'), x: 150, y: 380,
+          badge: hm && hm.id === 'vn' ? '🇻🇳' : '',
           onOpen: function (api) { api.exit(); if (window.IBUI) window.IBUI.station(); } },
         { id: 'shop', icon: '🛍️', art: 'assets/illustrations/game/celebrate-shop.webp', name: T('Cửa hàng', 'Shop'), x: 420, y: 380,
           desc: T('Dùng tiền mặt mua vật phẩm hỗ trợ.', 'Spend cash on helpful items.'),

@@ -13,7 +13,7 @@
  *   decor: [{x,y,w,h,img,radius}]                         // khung ảnh trang trí tĩnh
  *   player: {img, name, tag, x, y}
  *   npcs: [{id,img,fb,accent,icon,name,tag,x,y,talk(api)}] // talk tuỳ chọn – mặc định mở hội thoại tĩnh từ desc
- *   stations: [{id,icon,art,name,desc,x,y,flat,onOpen(api)}]
+ *   stations: [{id,icon,art,name,desc,x,y,flat,badge,onOpen(api)}] // badge: nhãn nhỏ (vd. cờ) đè góc trạm, tuỳ chọn
  *   onClose()
  * }
  * api truyền vào talk()/onOpen(): { dialogue(text, choices), toast(msg), close(), exit() }
@@ -34,9 +34,11 @@
 #chub .npc img{height:190px;width:auto;transform-origin:bottom center;animation:chub-idle 2.6s ease-in-out infinite}
 #chub .npc.near img,#chub .stn.near .box{filter:drop-shadow(0 0 8px rgba(0,196,255,.9))}
 #chub .tag{margin-top:6px;background:#033337;color:#fff;font-size:11px;font-weight:800;padding:3px 10px;border-radius:999px;white-space:nowrap}
-#chub .stn .box{width:100px;height:100px;border-radius:50%;background:#fff;box-shadow:0 12px 16px -8px rgba(0,60,80,.4);display:flex;align-items:center;justify-content:center;font-size:42px;overflow:hidden}
-#chub .stn .box img{width:100%;height:100%;object-fit:cover}
+#chub .stn .box{position:relative;width:100px;height:100px;border-radius:50%;background:#fff;box-shadow:0 12px 16px -8px rgba(0,60,80,.4);display:flex;align-items:center;justify-content:center;font-size:42px}
+#chub .stn .box img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+#chub .stn .badge{position:absolute;right:-4px;bottom:-4px;font-size:22px;line-height:1;filter:drop-shadow(0 2px 3px rgba(0,0,0,.35));pointer-events:none}
 #chub .stn.flat .box{border-radius:26px;background:#f7ecd9}
+#chub .stn.flat .box img{border-radius:26px}
 #chub .pl{position:absolute;transform:translate(-50%,-100%)}
 #chub .pl img{height:210px;width:auto;position:relative;transform-origin:bottom center}
 #chub .sh{position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);width:100px;height:20px;border-radius:50%;background:rgba(15,117,150,.3);filter:blur(2px)}
@@ -98,7 +100,7 @@
       if (kind === 'npc') {
         el.innerHTML = `<img src="${def.img}" alt="${def.name}"${def.fb ? ` onerror="this.onerror=null;this.src='${def.fb}'"` : ''} style="animation-delay:${-Math.random() * 3}s"><span class="tag"${def.accent ? ` style="background:${def.accent}"` : ''}>${def.icon ? def.icon + ' ' : ''}${def.name}</span>`;
       } else {
-        el.innerHTML = `<div class="box">${def.art ? `<img src="${def.art}" alt="" onerror="this.outerHTML='${def.icon || ''}'">` : (def.icon || '')}</div><span class="tag" style="background:#006687">${def.name}</span>`;
+        el.innerHTML = `<div class="box">${def.art ? `<img src="${def.art}" alt="" onerror="this.outerHTML='${def.icon || ''}'">` : (def.icon || '')}${def.badge ? `<span class="badge">${def.badge}</span>` : ''}</div><span class="tag" style="background:#006687">${def.name}</span>`;
       }
       el.onclick = e => { e.stopPropagation(); talk(def.id); };
       npcsEl.appendChild(el); entities[def.id] = def;
