@@ -6,7 +6,7 @@
 <title>Hộ Chiếu Sầu Riêng · Bản đồ 3D</title>
 <link rel="icon" href="../assets/brand/bizon-favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#1F3A22">
-<meta name="description" content="Hộ Chiếu Sầu Riêng – bản đồ chuỗi cung ứng 3D: khám phá các trạm chính ngạch, tiểu ngạch, đông lạnh, Đài Loan, Nhật Bản cùng Bà Sáu Lành, dùng chung dữ liệu và luật chơi với bản thẻ lớp học.">
+<meta name="description" content="Hộ Chiếu Sầu Riêng – bản đồ chuỗi cung ứng 3D đi lại được: khám phá các trạm chính ngạch, tiểu ngạch, đông lạnh, Đài Loan, Nhật Bản cùng Bà Sáu Lành, dùng chung dữ liệu và luật chơi với bản thẻ lớp học.">
 <style>
 @font-face{font-family:'Plus Jakarta Sans';font-weight:400 800;font-display:swap;src:url(../assets/fonts/PlusJakartaSans-var-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
 @font-face{font-family:'Plus Jakarta Sans';font-weight:400 800;font-display:swap;src:url(../assets/fonts/PlusJakartaSans-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2122,U+2212}
@@ -22,7 +22,8 @@
   --neg:#C2410C;
   --radius:22px}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Be Vietnam Pro',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;min-height:100vh;overflow-x:hidden}
+html,body{height:100%}
+body{font-family:'Be Vietnam Pro',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;overflow:hidden}
 h1,h2,h3{font-family:'Plus Jakarta Sans',system-ui,sans-serif;letter-spacing:-.01em}
 .mono,.num{font-family:'JetBrains Mono',monospace}
 [hidden]{display:none!important}
@@ -39,44 +40,36 @@ button{font:inherit}
 .avatar-badge img{width:26px;height:26px;border-radius:50%;object-fit:cover}
 .lang-pill button{border:0;background:transparent;color:var(--muted);padding:7px 11px;font-weight:700;font-size:12.5px;cursor:pointer}
 .lang-pill button.on{background:var(--durian);color:#fff}
-/* ---------- map stage ---------- */
-.stage{position:relative;padding-top:58px;min-height:100vh}
-.map3d{position:relative;margin:0 auto;max-width:1180px;height:min(78vh,640px);min-height:420px;border-radius:0 0 40px 40px;overflow:hidden;
-  background:
-    radial-gradient(ellipse 60% 40% at 30% 85%, rgba(0,70,110,.35), transparent 70%),
-    linear-gradient(165deg,#DCCB9E 0%,#C9B37E 28%,#8FAE5E 52%,#5C8A3C 78%,#3F6B2A 100%)}
-.map3d::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 90% 60% at 50% 0%,rgba(255,255,255,.12),transparent 60%);pointer-events:none}
-.routes3d{position:absolute;inset:0;z-index:1;pointer-events:none}
-.routes3d path{fill:none;stroke:rgba(255,255,255,.55);stroke-width:2;stroke-dasharray:3 7;stroke-linecap:round}
-.routes3d path.on{stroke:var(--flesh);stroke-width:2.6;stroke-dasharray:4 6;opacity:.9}
-.prop3d{position:absolute;transform:translate(-50%,-50%);z-index:1;pointer-events:none;opacity:.85}
-.prop3d.crate{width:30px;height:24px;background:linear-gradient(160deg,#C8905A,#8B5A2B);border-radius:3px;box-shadow:0 6px 10px -4px rgba(20,30,10,.5),inset 0 0 0 2px rgba(60,35,10,.4)}
-.prop3d.crate::after{content:'';position:absolute;inset:3px;border:1px dashed rgba(255,240,210,.5);border-radius:2px}
-.prop3d.durian{width:26px;height:26px;border-radius:46% 54% 55% 45%/50% 45% 55% 50%;background:radial-gradient(circle at 35% 30%,#8DBA3E,#4A7419 65%,#385A10);box-shadow:0 6px 10px -4px rgba(20,30,10,.5)}
-.prop3d.sack{width:26px;height:30px;border-radius:50% 50% 40% 40%/60% 60% 30% 30%;background:linear-gradient(160deg,#E8D9B5,#C4A96E);box-shadow:0 6px 10px -4px rgba(20,30,10,.5)}
-@keyframes stn3d-bob{0%,100%{transform:translate(-50%,-50%) translateY(0)}50%{transform:translate(-50%,-50%) translateY(-4px)}}
-.stn3d{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;z-index:2;transition:filter .15s}
-.stn3d .box{animation:stn3d-bob 3.2s ease-in-out infinite;animation-delay:var(--bob-delay,0s)}
-.stn3d:hover .box{filter:brightness(1.06)}
-.stn3d .box{width:72px;height:72px;border-radius:50%;background:linear-gradient(160deg,var(--tint-a,#fffdf6),var(--tint-b,#f3e6c9));box-shadow:0 10px 16px -6px rgba(20,40,10,.5),inset 0 -5px 0 rgba(110,70,30,.12),inset 0 3px 0 #fff;display:flex;align-items:center;justify-content:center;font-size:30px}
-.stn3d.big .box{width:94px;height:94px;font-size:40px;animation:none}
-.stn3d.lock .box{filter:grayscale(.6);opacity:.55;animation:none}
-@keyframes stn3d-glow{0%,100%{box-shadow:0 0 0 4px var(--flesh),0 10px 18px -6px rgba(20,40,10,.5)}50%{box-shadow:0 0 0 7px color-mix(in srgb,var(--flesh) 55%,transparent),0 10px 18px -6px rgba(20,40,10,.5)}}
-.stn3d.active .box{animation:stn3d-bob 3.2s ease-in-out infinite var(--bob-delay,0s),stn3d-glow 2.2s ease-in-out infinite}
-.stn3d.pale .box{opacity:.55;background:linear-gradient(160deg,#eef3ea,#d9e3cf);animation:none}
-.stn3d .tag{background:rgba(3,40,20,.82);color:#fff;font-size:10.5px;font-weight:800;padding:3px 9px;border-radius:999px;white-space:nowrap;max-width:140px;overflow:hidden;text-overflow:ellipsis}
-.stn3d .lockbadge{position:absolute;top:-4px;right:-4px;background:#fff;border-radius:50%;font-size:13px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.3)}
-.stn3d .box img{width:100%;height:100%;object-fit:cover;border-radius:50%}
-.stn3d .evbadge{position:absolute;top:-4px;left:-4px;background:#fff;border-radius:50%;font-size:13px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.3);animation:ev-pulse 1.6s ease-in-out infinite}
-@keyframes ev-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
-@media (max-width:680px){.stn3d .box{width:58px;height:58px;font-size:24px}.stn3d.big .box{width:76px;height:76px;font-size:32px}.stn3d .tag{font-size:9.5px;padding:2px 7px;max-width:98px}.stage{padding-top:160px}}
-@media (prefers-reduced-motion:reduce){.stn3d .box,.stn3d.active .box{animation:none}.stn3d .evbadge{animation:none}}
-.hint3d{position:absolute;left:14px;top:14px;background:rgba(3,40,20,.72);color:#fff;font-size:11.5px;padding:7px 11px;border-radius:12px;max-width:260px;z-index:3;pointer-events:none}
+/* ---------- bản đồ 3D đi lại ---------- */
+#world3d{position:fixed;inset:0;z-index:1;background:linear-gradient(#bfe3ef,#eaf6ee);touch-action:none}
+#world3d canvas{display:block;touch-action:none}
+#labels3d{position:fixed;inset:0;z-index:2;pointer-events:none}
+.lbl3d{position:absolute;transform:translate(-50%,-100%);background:rgba(255,255,255,.92);border-radius:999px;padding:4px 10px;font-size:11px;font-weight:800;color:#174d2e;white-space:nowrap;pointer-events:auto;cursor:pointer;box-shadow:0 4px 10px -4px rgba(0,0,0,.3);transition:box-shadow .15s}
+.lbl3d.near{box-shadow:0 0 0 3px var(--flesh),0 4px 10px -4px rgba(0,0,0,.4)}
+.lbl3d.locked{opacity:.55;filter:grayscale(.5)}
+.lbl3d.pale{opacity:.6}
+.lbl3d.active{background:var(--durian-soft);box-shadow:0 0 0 2px var(--durian)}
+.hint3d{position:absolute;left:14px;top:62px;background:rgba(3,40,20,.72);color:#fff;font-size:11px;padding:7px 11px;border-radius:12px;max-width:240px;z-index:3;pointer-events:none}
+@media (max-width:680px){.hint3d{display:none}}
+#prompt3d{position:fixed;left:50%;bottom:calc(var(--sheet-peek,68px) + 14px);transform:translateX(-50%);background:var(--ink);color:#fff;padding:9px 16px;border-radius:999px;font-size:12.5px;font-weight:700;opacity:0;transition:opacity .15s,bottom .2s;pointer-events:none;z-index:15}
+#prompt3d.on{opacity:1}
+#joy3d{position:fixed;bottom:calc(var(--sheet-peek,68px) + 20px);left:20px;width:104px;height:104px;border-radius:50%;background:rgba(255,255,255,.4);border:4px solid rgba(255,255,255,.75);touch-action:none;z-index:15;display:none}
+#joy3d .thumb{position:absolute;left:50%;top:50%;width:44px;height:44px;margin:-22px;border-radius:50%;background:#fff;box-shadow:0 4px 10px rgba(0,0,0,.2)}
+@media (hover:none){#joy3d{display:block}}
 .toast3d{position:fixed;top:66px;right:14px;background:var(--ink);color:#fff;padding:10px 14px;border-radius:14px;font-size:12.5px;z-index:60;max-width:300px;box-shadow:0 10px 24px rgba(0,0,0,.3);opacity:0;transform:translateY(-10px);transition:.25s}
 .toast3d.on{opacity:1;transform:none}
-/* ---------- decision card ---------- */
-.dcard{position:fixed;left:14px;bottom:14px;width:min(94vw,440px);max-height:min(72vh,620px);max-height:min(72dvh,620px);background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 22px 50px -18px rgba(20,40,10,.55);z-index:20;display:flex;flex-direction:column;overflow:hidden}
-.dcard .hd{display:flex;gap:10px;align-items:flex-start;padding:14px 16px 6px}
+/* ---------- decision sheet (bottom sheet, thu gọn/mở rộng) ---------- */
+.dcard{position:fixed;left:0;right:0;bottom:0;margin:0 auto;width:min(100vw,460px);max-height:min(76vh,640px);max-height:min(76dvh,640px);background:var(--panel);border:1px solid var(--line);border-radius:var(--radius) var(--radius) 0 0;box-shadow:0 -14px 40px -18px rgba(20,40,10,.55);z-index:20;display:flex;flex-direction:column;overflow:hidden;transform:translateY(calc(100% - var(--sheet-peek,68px)));transition:transform .25s cubic-bezier(.2,.8,.3,1)}
+.dcard.open{transform:translateY(0)}
+.dcard .peek{display:flex;align-items:center;gap:10px;padding:10px 16px;cursor:pointer;flex-shrink:0}
+.dcard .peek img{width:40px;height:40px;border-radius:50%;object-fit:cover;background:var(--panel2);flex-shrink:0}
+.dcard .peek .pk-txt{flex:1;min-width:0}
+.dcard .peek b{font-size:12.5px;display:block}
+.dcard .peek small{font-size:10.5px;color:var(--muted)}
+.dcard .peek .chev{font-size:13px;color:var(--muted);transition:transform .2s}
+.dcard.open .peek .chev{transform:rotate(180deg)}
+.dcard .body3{flex:1;overflow-y:auto;display:flex;flex-direction:column;min-height:0}
+.dcard .hd{display:flex;gap:10px;align-items:flex-start;padding:4px 16px 6px}
 .dcard .hd img{width:46px;height:46px;border-radius:50%;object-fit:cover;background:var(--panel2);flex-shrink:0}
 .dcard .hd h3{font-size:14.5px;font-weight:900;color:var(--durian-deep)}
 .dcard .hd .sub{font-size:11.5px;color:var(--muted);margin-top:1px}
@@ -88,10 +81,10 @@ button{font:inherit}
 .stats4 .s{background:var(--panel2);border-radius:10px;padding:6px 4px;text-align:center}
 .stats4 .s small{display:block;font-size:9.5px;color:var(--muted)}
 .stats4 .s b{font-size:13px}
-.tabs3{display:flex;gap:4px;padding:0 12px;border-bottom:1px solid var(--line)}
+.tabs3{display:flex;gap:4px;padding:0 12px;border-bottom:1px solid var(--line);flex-shrink:0}
 .tabs3 button{flex:1;border:0;background:transparent;color:var(--muted);font-weight:700;font-size:11.5px;padding:9px 4px;border-bottom:3px solid transparent;cursor:pointer}
 .tabs3 button.on{color:var(--durian-deep);border-color:var(--durian)}
-.tabbody{flex:1;overflow-y:auto;padding:10px 16px;min-height:132px}
+.tabbody{flex:1;overflow-y:auto;padding:10px 16px;min-height:100px}
 .tabbody h4{font-size:12.5px;margin:8px 0 3px;color:var(--durian-deep)}
 .tabbody p{font-size:12.5px;margin:0 0 6px;line-height:1.5}
 .src{font-size:10.5px;color:var(--faint)}
@@ -104,12 +97,11 @@ button{font:inherit}
 .mrow3{display:grid;grid-template-columns:1fr 70px 36px;gap:6px;align-items:center;margin:6px 0;font-size:11.5px}
 .mrow3 input[type=range]{width:100%;accent-color:var(--durian)}
 .lock3{color:var(--faint);font-size:10.5px}
-.dcard .ft{padding:10px 16px 14px;border-top:1px solid var(--line);background:var(--panel2)}
+.dcard .ft{padding:10px 16px 14px;border-top:1px solid var(--line);background:var(--panel2);flex-shrink:0}
 .dcard .ft .alloc{font-size:11px;color:var(--muted);margin-bottom:8px}
 .dcard .btn{display:block;width:100%;border:0;border-radius:12px;padding:11px;font-weight:800;font-size:13.5px;color:#fff;background:var(--durian);cursor:pointer;box-shadow:inset 0 -4px 0 rgba(0,0,0,.18)}
 .dcard .btn:hover{background:var(--durian-deep)}
 .dcard .fthint{font-size:10.5px;color:var(--muted);text-align:center;margin-top:5px}
-@media (max-width:680px){.dcard{position:relative;left:auto;right:auto;top:auto;bottom:auto;width:calc(100% - 16px);margin:16px auto 32px;max-height:none;border-radius:var(--radius)}.dcard .hd{padding:10px 14px 4px}.stats4{padding:0 14px;margin-bottom:6px}.stats4 .s{padding:4px 3px}}
 /* ---------- minimap modal ---------- */
 .mmBack{position:fixed;inset:0;background:rgba(3,40,20,.55);z-index:50;display:flex;align-items:center;justify-content:center;padding:16px}
 .mmBox{background:var(--panel);border-radius:20px;max-width:420px;width:100%;padding:18px;box-shadow:0 30px 60px rgba(0,0,0,.4)}
@@ -122,7 +114,7 @@ button{font:inherit}
 .mmBar i{display:block;height:100%;background:linear-gradient(90deg,var(--durian),var(--flesh))}
 .mmClose{margin-top:12px;width:100%;border:0;border-radius:12px;padding:10px;background:var(--panel2);color:var(--ink);font-weight:700;cursor:pointer}
 /* ---------- empty / end states ---------- */
-.wrap{max-width:720px;margin:0 auto;padding:90px 16px 40px}
+.wrap{max-width:720px;margin:0 auto;padding:90px 16px 40px;overflow-y:auto;height:100%}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px;text-align:center}
 .card h1{font-size:22px;margin-bottom:8px}
 .card p{color:var(--muted);margin-bottom:14px}
@@ -148,7 +140,10 @@ button{font:inherit}
 
 <script src="ho-chieu-sau-rieng-engine.js"></script>
 <script src="ho-chieu-sau-rieng-data.js"></script>
-<script>
+<script type="module">
+import * as THREE from '../js/vendor/three.module.js';
+import { P3 } from '../js/poly3d-kit.js';
+
 (function () {
   'use strict';
   const E = window.DurianEngine, D = window.DurianData;
@@ -171,7 +166,8 @@ button{font:inherit}
   const CH_IDS = D.channels.map(c => c.id);
   const owned = (a, id) => (id === 'area' && a.area) || (id === 'pack' && a.pack) || (id === 'trace' && a.trace) || (id === 'freezer' && a.freezer) || (id === 'test' && a.test >= 2);
 
-  let APP = null, RIVALS = null, TAB = 'chain';
+  let APP = null, RIVALS = null, TAB = 'chain', sheetOpen = false;
+  let world = null; // instance Three.js của bản đồ 3D hiện tại (dispose khi re-render)
 
   function load() {
     const raw = store.get(SAVE_KEY);
@@ -200,7 +196,7 @@ button{font:inherit}
   $('langVI').onclick = () => { LANG = 'vi'; store.set('durian_lang', 'vi'); render(); };
   $('langEN').onclick = () => { LANG = 'en'; store.set('durian_lang', 'en'); render(); };
 
-  // ---------------- giọng đọc (Web Speech API; im lặng nếu trình duyệt không hỗ trợ) ----------------
+  // ---------------- giọng đọc ----------------
   const canSpeak = typeof window !== 'undefined' && 'speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined';
   let speaking = false;
   function toggleVoice() {
@@ -245,85 +241,33 @@ button{font:inherit}
     back.onclick = e => { if (e.target === back) back.remove(); };
   }
 
-  // ---------------- trạm trên bản đồ ----------------
+  // ---------------- định nghĩa trạm ----------------
   const SHORT_CH = {
     CN: ['Chính ngạch', 'Official'], BORDER: ['Biên giới', 'Border'], FROZEN: ['Đông lạnh', 'Frozen'],
     TW: ['Đài Loan', 'Taiwan'], JP: ['Nhật Bản', 'Japan'], DOM: ['Nội địa', 'Domestic']
   };
-  const CH_TINT = {
-    CN: ['#FFE8C2', '#F0B35C'], BORDER: ['#EADFC4', '#C9A96E'], FROZEN: ['#DCF0F5', '#9FD3E0'],
-    TW: ['#D8F0E6', '#8FCDAE'], JP: ['#FDEAF0', '#F2B8CC'], DOM: ['#FFE8D5', '#F2A96B']
-  };
+  const CH_TINT = { CN: 0xE0954A, BORDER: 0xC9A96E, FROZEN: 0x6fa3c9, TW: 0x6fae8f, JP: 0xd98fae, DOM: 0xd9955f };
   const EVENT_ICON = { break: '🙅', rain: '🌧️', salinity: '🌊', fake: '🎭', pest: '🐛', glut: '🚦', residue: '⚠️', thaidrought: '🌵' };
+
   function stationDef(g, s) {
     const okIds = CH_IDS.filter(id => E.eligible(D, g, D.channels.find(c => c.id === id)));
     const chStn = D.channels.map((c, i) => {
       const pos = { CN: [24, 30], BORDER: [13, 42], FROZEN: [21, 16], TW: [17, 58], JP: [41, 10], DOM: [70, 44] }[c.id] || [50, 50];
       const [vi, en] = SHORT_CH[c.id] || [c.vi, c.en];
-      const tint = CH_TINT[c.id] || [];
-      return { id: c.id, icon: c.emoji, name: L(vi, en), x: pos[0], y: pos[1], active: (APP.dec.alloc[c.id] || 0) > 0, locked: !okIds.includes(c.id), tint };
+      return { id: c.id, icon: c.emoji, name: L(vi, en), x: pos[0], y: pos[1], active: (APP.dec.alloc[c.id] || 0) > 0, locked: !okIds.includes(c.id), theme: 'city', roof: CH_TINT[c.id] };
     });
     const extra = [
-      { id: 'audit', icon: '🧾', name: L('Đối soát', 'Audit'), x: 58, y: 14, big: false, locked: s.mission !== 'audit', pale: s.mission !== 'audit', tint: ['#E6E9EC', '#B8C0C8'] },
-      { id: 'trader', icon: '🤝', name: L('Tiểu thương', 'Petty traders'), x: 38, y: 46 },
-      { id: 'rv_sea', icon: '🇸🇬', img: IMG('rivals-global/sea-cut.webp'), name: 'Singapore', x: 25, y: 85, pale: true, rival: 'sea' },
-      { id: 'rv_eu', icon: '🇪🇺', img: IMG('rivals-global/eu-cut.webp'), name: L('Châu Âu', 'Europe'), x: 62, y: 76, pale: true, rival: 'eu' }
+      { id: 'audit', icon: '🧾', name: L('Đối soát', 'Audit'), x: 58, y: 14, locked: s.mission !== 'audit', pale: s.mission !== 'audit', theme: 'office' },
+      { id: 'trader', icon: '🤝', name: L('Tiểu thương', 'Petty traders'), x: 38, y: 46, theme: 'market' },
+      { id: 'rv_sea', icon: '🇸🇬', img: IMG('rivals-global/sea-cut.webp'), name: 'Singapore', x: 25, y: 85, pale: true, rival: 'sea', theme: 'outpost' },
+      { id: 'rv_eu', icon: '🇪🇺', img: IMG('rivals-global/eu-cut.webp'), name: L('Châu Âu', 'Europe'), x: 62, y: 76, pale: true, rival: 'eu', theme: 'outpost' }
     ];
     return chStn.concat(extra);
   }
-  const PROPS3D = [
-    { cls: 'crate', x: 68, y: 52 }, { cls: 'crate', x: 73, y: 50 }, { cls: 'durian', x: 71, y: 47 },
-    { cls: 'sack', x: 24, y: 48 }, { cls: 'durian', x: 27, y: 50 }, { cls: 'crate', x: 15, y: 30 },
-    { cls: 'sack', x: 36, y: 14 }, { cls: 'durian', x: 62, y: 58 }
-  ];
   function rivalToast(id) {
     const r = D.rivals.find(x => x.id === id);
     if (!r) return;
     toast(`${r.flag} ${esc(r.ceo)} · ${nm(r)} — ${LANG === 'en' ? r.styleEn : r.styleVi}`);
-  }
-
-  function mapHTML() {
-    const g = APP.game, s = D.seasons[g.n - 1];
-    const stns = stationDef(g, s);
-    const CX = 46, CY = 34;
-    const routes = stns.filter(st => !st.rival).map(st => {
-      const mx = (CX + st.x) / 2, my = (CY + st.y) / 2 - 4;
-      return `<path class="${st.active ? 'on' : ''}" vector-effect="non-scaling-stroke" d="M${CX},${CY} Q${mx},${my} ${st.x},${st.y}"/>`;
-    }).join('');
-    const props = PROPS3D.map(p => `<div class="prop3d ${p.cls}" style="left:${p.x}%;top:${p.y}%"></div>`).join('');
-    const mood = g.history.length ? (g.history[g.history.length - 1].profit >= 0 ? 'vui' : 'lo') : 'vui';
-    const ev = E.eventFor(D, g);
-    return `<div class="map3d" id="map3d">
-      <svg class="routes3d" viewBox="0 0 100 100" preserveAspectRatio="none">${routes}</svg>
-      ${props}
-      <div class="hint3d">${L('Chạm vào một trạm để xem chi tiết trong hồ sơ của Bà Sáu Lành bên dưới.', 'Tap a station to see details in Bà Sáu Lành\'s dossier below.')}</div>
-      <div class="stn3d big" id="stn-sau" style="left:${CX}%;top:${CY}%">
-        <div class="box"><img src="../assets/hc/cast/ba-sau-lanh-${mood}.webp" alt="Bà Sáu Lành" onerror="this.src='${IMG('advisors/ba-sau-lanh-cut.webp')}'">${ev ? `<span class="evbadge" title="${esc(nm(ev))}">${EVENT_ICON[ev.id] || '⚡'}</span>` : ''}</div>
-        <span class="tag">${L('Bà Sáu Lành', 'Bà Sáu Lành')}</span></div>
-      ${stns.map((st, i) => `<div class="stn3d ${st.locked ? 'lock' : ''} ${st.active ? 'active' : ''} ${st.pale ? 'pale' : ''}" id="stn-${st.id}" style="left:${st.x}%;top:${st.y}%;--bob-delay:${(i % 5) * 0.35}s${st.tint && st.tint.length ? `;--tint-a:${st.tint[0]};--tint-b:${st.tint[1]}` : ''}">
-        <div class="box">${st.img ? `<img src="${st.img}" alt="${esc(st.name)}">` : st.icon}${st.locked && !st.pale ? '<span class="lockbadge">🔒</span>' : ''}</div><span class="tag">${esc(st.name)}</span></div>`).join('')}
-    </div>`;
-  }
-  // Trên di động, #dcard nằm dưới bản đồ trong luồng trang (không còn che bản đồ) —
-  // cuộn nó vào khung nhìn sau khi chạm trạm để người chơi thấy ngay dossier vừa đổi.
-  function scrollDcard() {
-    if (window.matchMedia('(max-width:680px)').matches) {
-      const d = $('dcard'); if (d) d.scrollIntoView({ block: 'start', behavior: 'smooth' });
-    }
-  }
-  function wireMap() {
-    $('stn-sau').onclick = () => { TAB = 'chain'; renderCard(); scrollDcard(); };
-    D.channels.forEach(c => { const el = $('stn-' + c.id); if (el) el.onclick = () => {
-      TAB = 'channel'; renderCard(); const row = $('ch-' + c.id); if (row) row.scrollIntoView({ block: 'center', behavior: 'smooth' });
-      toast(`${c.emoji} ${nm(c)} — ${nm(D.entryModes[c.entryMode])}`);
-    }; });
-    const audit = $('stn-audit'); if (audit) audit.onclick = () => { TAB = 'chain'; renderCard(); scrollDcard(); };
-    const trader = $('stn-trader'); if (trader) trader.onclick = () => {
-      TAB = 'invest'; renderCard(); scrollDcard();
-      toast('🤝 ' + (LANG === 'en' ? D.sourcingTheory.en : D.sourcingTheory.vi));
-    };
-    const sea = $('stn-rv_sea'); if (sea) sea.onclick = () => rivalToast('sea');
-    const eu = $('stn-rv_eu'); if (eu) eu.onclick = () => rivalToast('eu');
   }
 
   // ---------------- thẻ quyết định (dùng chung APP.dec với bản thẻ) ----------------
@@ -375,7 +319,12 @@ button{font:inherit}
     const norm = E.normalizeAlloc(Object.fromEntries(okIds.map(id => [id, APP.dec.alloc[id]])), okIds);
     const top = okIds.slice().sort((x, y) => norm[y] - norm[x]).slice(0, 2).map(id => `${nm(D.channels.find(c => c.id === id))} ${pct(norm[id])}`).join(' · ');
     const tabs = [['chain', '📖 ' + L('Chuỗi', 'Chain')], ['intel', '📡 ' + L('Tin', 'Intel')], ['invest', '🏗️ ' + L('Đầu tư', 'Invest')], ['channel', '🚢 ' + L('Kênh', 'Channels')]];
-    return `<div class="hd"><img src="../assets/hc/cast/ba-sau-lanh-${mood}.webp" alt="Bà Sáu Lành" onerror="this.src='${IMG('advisors/ba-sau-lanh-cut.webp')}'">
+    return `<div class="peek" id="peekBar">
+        <img src="../assets/hc/cast/ba-sau-lanh-${mood}.webp" alt="Bà Sáu Lành" onerror="this.src='${IMG('advisors/ba-sau-lanh-cut.webp')}'">
+        <div class="pk-txt"><b>BÀ SÁU LÀNH · ${L('Vụ', 'Season')} ${n}/${D.seasons.length}</b><small>${nf(g.cash, 2)} ${L('tỷ', 'bn')} · ${L('Uy tín', 'Rep.')} ${nf(g.rep)} · ${top || L('chưa chọn kênh', 'no channel yet')}</small></div>
+        <span class="chev">▾</span></div>
+      <div class="body3">
+      <div class="hd"><img src="../assets/hc/cast/ba-sau-lanh-${mood}.webp" alt="Bà Sáu Lành" onerror="this.src='${IMG('advisors/ba-sau-lanh-cut.webp')}'">
         <div style="flex:1;min-width:0"><h3>BÀ SÁU LÀNH</h3><div class="sub">${role.emoji} ${nm(role)} · ${L('Vụ', 'Season')} ${n}/${D.seasons.length}</div>
           <div class="prog">${D.seasons.map((x, i) => `<span class="${i < n - 1 ? 'done' : i === n - 1 ? 'now' : ''}"></span>`).join('')}</div></div></div>
       <div class="goal">${nm(s)}</div>
@@ -389,11 +338,19 @@ button{font:inherit}
       <div class="tabbody" id="tabbody3">${{ chain: tabChainHTML, intel: tabIntelHTML, invest: tabInvestHTML, channel: tabChannelHTML }[TAB]()}</div>
       <div class="ft"><div class="alloc">${L('Xuất trực tiếp', 'Direct export')} · ${top || L('chưa chọn kênh', 'no channel yet')}</div>
         <button class="btn" id="goCard" type="button">${L('Chốt vụ', 'Commit season')} ${n} →</button>
-        <div class="fthint">${L('Hoàn tất phiếu quyết định và nhật ký ở bản thẻ', 'Finish the decision sheet and journal in the card view')}</div></div>`;
+        <div class="fthint">${L('Hoàn tất phiếu quyết định và nhật ký ở bản thẻ', 'Finish the decision sheet and journal in the card view')}</div></div>
+      </div>`;
+  }
+
+  function setSheetOpen(v) {
+    sheetOpen = v;
+    const el = $('dcard'); if (el) el.classList.toggle('open', v);
+    document.documentElement.style.setProperty('--sheet-peek', v ? 'min(76vh,640px)' : '68px');
   }
 
   function wireCard() {
     const g = APP.game, dec = APP.dec;
+    $('peekBar').onclick = () => setSheetOpen(!sheetOpen);
     document.querySelectorAll('[data-tab3]').forEach(b => b.onclick = () => { TAB = b.dataset.tab3; renderCard(); });
     document.querySelectorAll('[data-opt]').forEach(b => b.onclick = () => { dec.option = +b.dataset.opt; save(); renderCard(); });
     document.querySelectorAll('[data-intel]').forEach(b => b.onclick = () => {
@@ -414,7 +371,7 @@ button{font:inherit}
         const n2 = E.normalizeAlloc(Object.fromEntries(okIds.map(id => [id, dec.alloc[id]])), okIds);
         okIds.forEach(id => { const el = $('pct3-' + id); if (el) el.textContent = pct(n2[id]); });
       };
-      r.onchange = () => { save(); const stn = document.getElementById('stn-' + r.dataset.ch); if (stn) stn.classList.toggle('active', (dec.alloc[r.dataset.ch] || 0) > 0); };
+      r.onchange = () => { save(); refreshStationVisuals(); };
     });
     $('goCard').onclick = () => { save(); location.href = 'ho-chieu-sau-rieng.html'; };
   }
@@ -424,15 +381,99 @@ button{font:inherit}
     el.innerHTML = cardHTML();
     wireCard();
   }
+  function openSheetToTab(tab, focusSel) {
+    TAB = tab; renderCard(); setSheetOpen(true);
+    if (focusSel) setTimeout(() => { const row = document.querySelector(focusSel); if (row) row.scrollIntoView({ block: 'center', behavior: 'smooth' }); }, 60);
+  }
 
-  // ---------------- màn chính: bản đồ + thẻ ----------------
+  // ================= BẢN ĐỒ 3D ĐI LẠI =================
+  function disposeWorld() {
+    if (!world) return;
+    try { cancelAnimationFrame(world.raf); } catch (e) {}
+    try { window.removeEventListener('resize', world.onResize); } catch (e) {}
+    try { world.renderer.dispose(); } catch (e) {}
+    try { world.container.innerHTML = ''; } catch (e) {}
+    try { world.labelsEl.innerHTML = ''; } catch (e) {}
+    world = null;
+  }
+  let refreshStationVisuals = () => {};
+
+  function buildZoneDecor(zone) {
+    const g = new THREE.Group();
+    const crateColors = [0xcf7a3a, 0xb5632a, 0xe0954a];
+    if (zone.id === 'BORDER') {
+      const b = P3.building(THREE, { w: 1.8, d: 1.6, h: 1.4, wallColor: 0xe9ecef, roofColor: zone.roof || 0xc9a96e, roofType: 'gable' });
+      b.position.x = -1.6; g.add(b);
+      const postMat = new THREE.MeshStandardMaterial({ color: 0xd94f4f, roughness: 0.6 });
+      const post1 = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 1.2, 8), postMat);
+      post1.position.set(1.2, 0.6, -0.8); post1.castShadow = true; g.add(post1);
+      const post2 = post1.clone(); post2.position.set(1.2, 0.6, 0.8); g.add(post2);
+      const bar = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 1.8, 8), postMat);
+      bar.rotation.z = Math.PI / 2; bar.position.set(1.2, 1.05, 0); bar.castShadow = true; g.add(bar);
+      const officer = P3.character(THREE, { shirt: 0x2f4a6b, hat: 'mũ cứng', hatColor: 0xe6b84a });
+      officer.position.set(0.3, 0, -1.4); officer.rotation.y = 1.8; g.add(officer);
+    } else if (zone.id === 'FROZEN') {
+      const b = P3.building(THREE, { w: 2.2, d: 1.8, h: 1.6, wallColor: 0xeaf4fb, roofColor: zone.roof || 0x6fa3c9, roofType: 'flat' });
+      g.add(b);
+      [[1.6, 1.1], [2.0, 0.7], [1.4, 0.6]].forEach(([x, z], i) => {
+        const c = P3.crate(THREE, { size: 0.42, color: [0x6fa3c9, 0x8fbfe0][i % 2] });
+        c.position.set(x, 0.21, z); c.rotation.y = Math.random() * 0.5; g.add(c);
+      });
+      const p = P3.character(THREE, { shirt: 0x6fa3c9, hat: 'none' });
+      p.position.set(-1.7, 0, 1); p.rotation.y = -0.8; g.add(p);
+    } else if (zone.id === 'trader') {
+      const b = P3.building(THREE, { w: 2, d: 1.7, h: 1.2, wallColor: 0xf3eee1, roofColor: zone.roof || 0xe0954a, roofType: 'flat' });
+      g.add(b);
+      ['Thương lái 1', 'Thương lái 2'].forEach((_, i) => {
+        const p = P3.character(THREE, { shirt: [0x3f7d3a, 0xcf7a3a][i], hat: 'none' });
+        p.position.set(1.6 + i * 0.7, 0, 0.9 - i * 0.6); p.rotation.y = 0.6 + i;
+        g.add(p);
+      });
+      [[1.3, 1.5]].forEach(([x, z]) => {
+        const c = P3.crate(THREE, { size: 0.4, color: crateColors[0] });
+        c.position.set(x, 0.2, z); g.add(c);
+      });
+    } else if (zone.theme === 'city' || zone.theme === 'market' || zone.theme === 'office') {
+      const roofType = zone.theme === 'office' ? 'flat' : 'gable';
+      const b = P3.building(THREE, { w: 2.3, d: 1.9, h: 1.5, wallColor: 0xf3eee1, roofColor: zone.roof || 0xb5523a, roofType });
+      g.add(b);
+      const pColor = zone.theme === 'office' ? 0x2f4a6b : [0x3f7d3a, 0xcf7a3a, 0x7a4fae][Math.abs(zone.id.charCodeAt(0)) % 3];
+      const p = P3.character(THREE, { shirt: pColor, hat: zone.theme === 'office' ? 'mũ cứng' : 'none', hatColor: 0xe6b84a });
+      p.position.set(1.7, 0, 1.1); p.rotation.y = 0.6;
+      g.add(p);
+    } else if (zone.theme === 'outpost') {
+      const b = P3.building(THREE, { w: 1.7, d: 1.5, h: 1.3, wallColor: 0xe9ecef, roofColor: 0x7a4fae, roofType: 'flat' });
+      g.add(b);
+    }
+    return g;
+  }
+  function makeBillboard(url, fallbackUrl, h) {
+    const loader = new THREE.TextureLoader();
+    const mat = new THREE.SpriteMaterial({ transparent: true });
+    const sprite = new THREE.Sprite(mat);
+    sprite.scale.set(h * 0.78, h, 1);
+    sprite.position.y = h / 2;
+    const apply = tex => { tex.colorSpace = THREE.SRGBColorSpace; mat.map = tex; mat.needsUpdate = true; };
+    loader.load(url, apply, undefined, () => { if (fallbackUrl) loader.load(fallbackUrl, apply); });
+    return sprite;
+  }
+
   function renderMap() {
     chrome();
     $('voiceBtn').hidden = false; $('mapBtn').hidden = false;
     $('voiceBtn').onclick = toggleVoice; updateVoiceBtn();
     $('mapLbl').textContent = L('Bản đồ', 'Map'); $('mapBtn').onclick = openMinimap;
-    $('app').innerHTML = `<div class="stage">${mapHTML()}<div class="dcard" id="dcard"></div></div>`;
-    wireMap(); renderCard();
+    document.documentElement.style.setProperty('--sheet-peek', '68px');
+    $('app').innerHTML = `
+      <div id="world3d"></div>
+      <div id="labels3d"></div>
+      <div class="hint3d">${L('WASD/mũi tên di chuyển · E hoặc chạm nhãn để tương tác · Joystick ở góc trái trên di động', 'WASD/arrows to move · E or tap a label to interact · Joystick bottom-left on mobile')}</div>
+      <div id="prompt3d"></div>
+      <div id="joy3d"><div class="thumb"></div></div>
+      <div class="dcard" id="dcard"></div>`;
+    sheetOpen = false;
+    renderCard();
+    setupWorld();
     const g = APP.game;
     if (g.assets.area && g.assets.pack && !(APP.milestones && APP.milestones.formalized)) {
       APP.milestones = Object.assign({}, APP.milestones, { formalized: true }); save();
@@ -440,8 +481,193 @@ button{font:inherit}
     }
   }
 
+  function setupWorld() {
+    disposeWorld();
+    const container = $('world3d'), labelsEl = $('labels3d');
+    const g = APP.game, s = D.seasons[g.n - 1];
+    const stns = stationDef(g, s);
+    const CX = 46, CY = 34, K = 0.5;
+    const ZONES = [{ id: 'sau', name: L('Bà Sáu Lành', 'Bà Sáu Lành'), x: CX, y: CY, hub: true }].concat(stns);
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color('#bfe3ef');
+    scene.fog = new THREE.Fog('#bfe3ef', 22, 75);
+    const camera = new THREE.PerspectiveCamera(48, innerWidth / innerHeight, 0.1, 200);
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setPixelRatio(Math.min(2, devicePixelRatio || 1));
+    renderer.setSize(innerWidth, innerHeight);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    if ('outputColorSpace' in renderer) renderer.outputColorSpace = THREE.SRGBColorSpace;
+    container.appendChild(renderer.domElement);
+
+    P3.lights(THREE, scene);
+    const bigGrass = new THREE.Mesh(new THREE.PlaneGeometry(160, 160), new THREE.MeshStandardMaterial({ color: 0x9fc27e, roughness: 1 }));
+    bigGrass.rotation.x = -Math.PI / 2; bigGrass.receiveShadow = true; scene.add(bigGrass);
+
+    ZONES.forEach(zone => {
+      zone.wx = (zone.x - CX) * K; zone.wz = (zone.y - CY) * K;
+      const decor = new THREE.Group();
+      if (zone.hub) {
+        const leafColors = [0x3f7d3a, 0x4c8f43, 0x366b33];
+        for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) {
+          const t = P3.durianTree(THREE, { scale: 0.5 + Math.random() * 0.18, leafColor: leafColors[(r + c) % 3] });
+          t.position.set((c - 1) * 2.2 + (Math.random() - 0.5) * 0.4, 0, (r - 1) * 2.2 + (Math.random() - 0.5) * 0.4);
+          t.rotation.y = Math.random() * Math.PI * 2;
+          decor.add(t);
+        }
+        const mood = g.history.length ? (g.history[g.history.length - 1].profit >= 0 ? 'vui' : 'lo') : 'vui';
+        decor.add(makeBillboard(`../assets/hc/cast/ba-sau-lanh-${mood}-cut.webp`, IMG('advisors/ba-sau-lanh-cut.webp'), 2.1));
+      } else if (zone.rival) {
+        decor.add(buildZoneDecor(zone));
+        decor.add(makeBillboard(zone.img, IMG('advisors/ba-sau-lanh-cut.webp'), 1.8));
+      } else {
+        decor.add(buildZoneDecor(zone));
+      }
+      if (zone.locked || zone.pale) {
+        decor.traverse(o => { if (o.material) { o.material = o.material.clone(); o.material.transparent = true; o.material.opacity = 0.5; } });
+      }
+      decor.position.set(zone.wx, 0, zone.wz);
+      scene.add(decor);
+      zone.decor = decor;
+
+      if (!zone.hub) {
+        const dist = Math.hypot(zone.wx, zone.wz);
+        if (dist > 0.1) {
+          const path = P3.road(THREE, { length: dist, width: 1.1, color: 0xd8c9a6 });
+          path.position.set(zone.wx / 2, 0, zone.wz / 2);
+          path.rotation.y = Math.atan2(zone.wx, zone.wz);
+          scene.add(path);
+        }
+      }
+
+      zone.worldPos = new THREE.Vector3(zone.wx, 1.8, zone.wz);
+      zone.el = document.createElement('div');
+      zone.el.className = 'lbl3d' + (zone.locked ? ' locked' : '') + (zone.pale ? ' pale' : '') + (zone.active ? ' active' : '');
+      zone.el.textContent = (zone.icon ? zone.icon + ' ' : '') + zone.name + (zone.locked ? ' 🔒' : '');
+      zone.el.onclick = () => { if (zone === nearZone) interact(zone); };
+      labelsEl.appendChild(zone.el);
+    });
+
+    refreshStationVisuals = () => {
+      const okIds = CH_IDS.filter(id => E.eligible(D, g, D.channels.find(c => c.id === id)));
+      ZONES.forEach(z => {
+        if (z.hub || !D.channels.find(c => c.id === z.id)) return;
+        const active = (APP.dec.alloc[z.id] || 0) > 0;
+        z.active = active;
+        z.el.classList.toggle('active', active);
+      });
+    };
+
+    // nhân vật người chơi (billboard theo avatar đã chọn, hoặc hình khối mặc định)
+    const player = new THREE.Group();
+    const av = APP.avatarId ? D.avatars.find(a => a.id === APP.avatarId) : null;
+    if (av) player.add(makeBillboard(`../assets/${av.img.replace(/\.webp$/, '-cut.webp')}`, IMG('advisors/ba-sau-lanh-cut.webp'), 1.7));
+    else player.add(P3.character(THREE, { shirt: 0xd94f4f }));
+    player.position.set(0, 0, 4);
+    scene.add(player);
+
+    const camOffset = new THREE.Vector3(0, 6.4, 8.8);
+    function updateCamera(instant) {
+      const desired = player.position.clone().add(camOffset);
+      if (instant) camera.position.copy(desired); else camera.position.lerp(desired, 0.09);
+      camera.lookAt(player.position.x, player.position.y + 1, player.position.z);
+    }
+    updateCamera(true);
+
+    const keys = {};
+    const onKeyDown = e => { keys[e.key.toLowerCase()] = true; if (e.key.toLowerCase() === 'e' && nearZone) interact(nearZone); };
+    const onKeyUp = e => { keys[e.key.toLowerCase()] = false; };
+    window.addEventListener('keydown', onKeyDown);
+    window.addEventListener('keyup', onKeyUp);
+
+    const joyEl = $('joy3d'), thumbEl = joyEl.querySelector('.thumb');
+    let joyVec = { x: 0, y: 0 }, joyDrag = false, joyId = null, joyC = { x: 0, y: 0 };
+    const onJoyDown = e => { joyDrag = true; joyId = e.pointerId; joyEl.setPointerCapture(joyId); const r = joyEl.getBoundingClientRect(); joyC = { x: r.left + r.width / 2, y: r.top + r.height / 2 }; };
+    const onJoyMove = e => { if (!joyDrag || e.pointerId !== joyId) return; let dx = e.clientX - joyC.x, dy = e.clientY - joyC.y, d = Math.hypot(dx, dy); if (d > 40) { dx *= 40 / d; dy *= 40 / d; } thumbEl.style.transform = `translate(${dx}px,${dy}px)`; joyVec = { x: dx / 40, y: dy / 40 }; };
+    const onJoyRelease = e => { if (e.pointerId !== joyId) return; joyDrag = false; joyId = null; thumbEl.style.transform = ''; joyVec = { x: 0, y: 0 }; };
+    joyEl.addEventListener('pointerdown', onJoyDown);
+    joyEl.addEventListener('pointermove', onJoyMove);
+    joyEl.addEventListener('pointerup', onJoyRelease);
+    joyEl.addEventListener('pointercancel', onJoyRelease);
+
+    let nearZone = null;
+    const promptEl = $('prompt3d');
+    function interact(zone) {
+      if (zone.hub) { openSheetToTab('chain'); return; }
+      if (zone.rival) { rivalToast(zone.rival); return; }
+      if (zone.id === 'audit') { openSheetToTab('chain'); return; }
+      if (zone.id === 'trader') { openSheetToTab('invest'); toast('🤝 ' + (LANG === 'en' ? D.sourcingTheory.en : D.sourcingTheory.vi)); return; }
+      const ch = D.channels.find(c => c.id === zone.id);
+      if (ch) { openSheetToTab('channel', '#ch-' + ch.id); toast(`${ch.emoji} ${nm(ch)} — ${nm(D.entryModes[ch.entryMode])}`); return; }
+    }
+
+    const SPEED = 5.4;
+    let playerFacing = 0, last = performance.now();
+    function loop(now) {
+      world.raf = requestAnimationFrame(loop);
+      const dt = Math.min(0.05, (now - last) / 1000); last = now;
+      let mx = 0, mz = 0;
+      if (keys['w'] || keys['arrowup']) mz -= 1;
+      if (keys['s'] || keys['arrowdown']) mz += 1;
+      if (keys['a'] || keys['arrowleft']) mx -= 1;
+      if (keys['d'] || keys['arrowright']) mx += 1;
+      mx += joyVec.x; mz += joyVec.y;
+      const len = Math.hypot(mx, mz);
+      if (len > 0.05) {
+        mx /= len || 1; mz /= len || 1;
+        player.position.x += mx * SPEED * dt;
+        player.position.z += mz * SPEED * dt;
+        const targetFacing = Math.atan2(mx, mz);
+        let diff = targetFacing - playerFacing;
+        while (diff > Math.PI) diff -= Math.PI * 2;
+        while (diff < -Math.PI) diff += Math.PI * 2;
+        playerFacing += diff * Math.min(1, dt * 10);
+        player.rotation.y = playerFacing;
+      }
+      player.position.x = Math.max(-34, Math.min(34, player.position.x));
+      player.position.z = Math.max(-46, Math.min(10, player.position.z));
+      updateCamera(false);
+
+      let closest = null, closestD = Infinity;
+      ZONES.forEach(zone => {
+        const v = zone.worldPos.clone().project(camera);
+        const visible = v.z < 1;
+        zone.el.style.display = visible ? 'block' : 'none';
+        zone.el.style.left = ((v.x * 0.5 + 0.5) * innerWidth) + 'px';
+        zone.el.style.top = ((-v.y * 0.5 + 0.5) * innerHeight) + 'px';
+        const d = Math.hypot(zone.wx - player.position.x, zone.wz - player.position.z);
+        if (d < closestD) { closestD = d; closest = zone; }
+      });
+      const NEAR_R = 3.3;
+      if (closest && closestD < NEAR_R) {
+        if (nearZone !== closest) nearZone = closest;
+        closest.el.classList.add('near');
+        promptEl.textContent = `${closest.icon ? closest.icon + ' ' : ''}${closest.name} · ${L('Nhấn E / chạm nhãn để vào', 'Press E / tap label to enter')}`;
+        promptEl.classList.add('on');
+      } else {
+        if (nearZone) nearZone.el.classList.remove('near');
+        nearZone = null;
+        promptEl.classList.remove('on');
+      }
+      ZONES.forEach(z => { if (z !== nearZone) z.el.classList.remove('near'); });
+
+      renderer.render(scene, camera);
+    }
+
+    function onResize() {
+      camera.aspect = innerWidth / innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(innerWidth, innerHeight);
+    }
+    window.addEventListener('resize', onResize);
+
+    world = { renderer, container, labelsEl, onResize, raf: 0 };
+    requestAnimationFrame(loop);
+  }
+
   function renderEmpty() {
-    chrome(); $('voiceBtn').hidden = true; $('mapBtn').hidden = true;
+    disposeWorld(); chrome(); $('voiceBtn').hidden = true; $('mapBtn').hidden = true;
     $('app').innerHTML = `<div class="wrap"><div class="card">
       <h1>🌳 ${L('Chưa có đội nào đang chơi', 'No team in progress yet')}</h1>
       <p>${L('Bản đồ 3D dùng chung dữ liệu với bản thẻ — hãy lập đội và vào vụ 1 ở bản thẻ trước, rồi quay lại đây để khám phá bản đồ.', 'The 3D map shares data with the card view — set up your team and start season 1 there first, then come back here to explore the map.')}</p>
@@ -449,7 +675,7 @@ button{font:inherit}
     </div></div>`;
   }
   function renderPendingJournal() {
-    chrome(); $('voiceBtn').hidden = true; $('mapBtn').hidden = true;
+    disposeWorld(); chrome(); $('voiceBtn').hidden = true; $('mapBtn').hidden = true;
     const n = APP.game.history.length;
     $('app').innerHTML = `<div class="wrap"><div class="card">
       <h1>📝 ${L('Cần ghi nhật ký SEC trước', 'SEC journal needed first')}</h1>
@@ -458,7 +684,7 @@ button{font:inherit}
     </div></div>`;
   }
   function renderDone() {
-    chrome(); $('voiceBtn').hidden = true; $('mapBtn').hidden = true;
+    disposeWorld(); chrome(); $('voiceBtn').hidden = true; $('mapBtn').hidden = true;
     const flagsWon = APP.flags.filter(f => f && f.win).length;
     $('app').innerHTML = `<div class="wrap"><div class="card">
       <h1>🏁 ${L('Hành trình 6 vụ đã hoàn tất', 'The 6-season journey is complete')}</h1>
