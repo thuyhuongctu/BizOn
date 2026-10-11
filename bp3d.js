@@ -388,6 +388,92 @@ function makeRoute(m, kind) {
   dots.count = 0; return g;
 }
 
+/* ---------- trạm chọn (tương tác 3D thay panel chữ liệt kê) ----------
+ * 6 trạm thâm nhập nổi quanh đảo đang focus (thay panel chữ của openAct() cho bước
+ * chọn MODES) + 2 bến vận chuyển ở Vàm Thịnh (thay nút chọn SHIP_MODES ở thẻ Quyết
+ * định HTML). Bấm trúng trạm gọi thẳng window.bpEnter/window.bpShip đã có sẵn –
+ * không đổi logic game, chỉ đổi nguồn gọi từ nút HTML sang vật thể 3D. */
+const KIOSK_R = IR * 1.45;
+function kioskAntenna(g, hex) { // 0 nền tảng số
+  P(GE.cyl, M(0xe9eef2), g, 0, 0.5, 0, 0.05, 1.0, 0.05);
+  const dish = P(GE.cone, M(hex), g, 0, 0.95, 0, 0.26, 0.14, 0.26); dish.rotation.x = Math.PI;
+  const wave = new THREE.Mesh(new THREE.RingGeometry(0.08, 0.12, 20), new THREE.MeshBasicMaterial({ color: hex, transparent: true, opacity: 0.8, side: THREE.DoubleSide }));
+  wave.position.y = 1.0; g.add(wave);
+  anim.push(t => { const k = (t * 0.6) % 1; wave.scale.setScalar(0.3 + k * 1.6); wave.material.opacity = 0.7 * (1 - k); });
+}
+function kioskCrates(g, hex) { // 1 xuất khẩu trực tiếp
+  P(GE.box, M(0xd98a3f), g, -0.14, 0.2, 0.1, 0.32, 0.32, 0.32);
+  P(GE.box, M(0xc97431), g, 0.15, 0.18, -0.08, 0.28, 0.28, 0.28);
+  P(GE.box, M(hex), g, 0, 0.55, 0, 0.3, 0.3, 0.3);
+}
+function kioskHandshake(g, hex) { // 2 liên minh chiến lược
+  const a = P(GE.cyl, WOOD2, g, -0.2, 0.42, 0, 0.05, 0.84, 0.05); a.rotation.z = 0.35;
+  const b = P(GE.cyl, WOOD2, g, 0.2, 0.42, 0, 0.05, 0.84, 0.05); b.rotation.z = -0.35;
+  P(GE.sph, M(hex), g, 0, 0.78, 0, 0.14, 0.1, 0.14);
+}
+function kioskScroll(g, hex) { // 3 cấp phép (licensing)
+  P(GE.cyl, M(0xf3e6c8), g, 0, 0.48, 0, 0.12, 0.88, 0.12);
+  P(GE.cyl, M(hex), g, 0, 0.86, 0, 0.14, 0.05, 0.14);
+  P(GE.sph, M(0xe8472d), g, 0.1, 0.7, 0.13, 0.08, 0.08, 0.04);
+}
+function kioskCrane(g, hex) { // 4 liên doanh (JV)
+  P(GE.cyl, M(0xbfc6cc), g, -0.15, 0.55, 0, 0.045, 1.1, 0.045);
+  P(GE.box, M(0xbfc6cc), g, 0.1, 1.05, 0, 0.5, 0.045, 0.045);
+  P(GE.sph, M(hex), g, 0.33, 0.78, 0, 0.055, 0.055, 0.055);
+}
+function kioskFactory(g, hex) { // 5 FDI sở hữu toàn bộ
+  P(GE.box, M(hex), g, 0, 0.3, 0, 0.58, 0.58, 0.4);
+  P(GE.cyl, M(0x8a8a8a), g, -0.17, 0.78, 0, 0.055, 0.5, 0.055);
+  P(GE.cyl, M(0x8a8a8a), g, 0.1, 0.84, 0, 0.05, 0.6, 0.05);
+  const sm = new THREE.MeshStandardMaterial({ color: 0xdad6d0, transparent: true, opacity: 0.6, depthWrite: false });
+  const puffs = [0, 1].map(i => { const s = new THREE.Mesh(GE.puff, sm.clone()); g.add(s); return s; });
+  anim.push(t => puffs.forEach((s, i) => { const k = (t * 0.25 + i / 2) % 1; s.position.set(0.1 + Math.sin(k * 3 + i) * 0.05, 0.9 + k * 0.8, 0); s.scale.setScalar(0.08 + k * 0.18); s.material.opacity = 0.6 * (1 - k); }));
+}
+const KIOSK_BUILD = [kioskAntenna, kioskCrates, kioskHandshake, kioskScroll, kioskCrane, kioskFactory];
+const kiosks = KIOSK_BUILD.map((build, i) => {
+  const g = grp(null, 0, G0, 0); g.visible = false;
+  build(g, MODE_HEX[i]);
+  const hitMesh = new THREE.Mesh(new THREE.SphereGeometry(0.75, 10, 8), new THREE.MeshBasicMaterial({ visible: false }));
+  hitMesh.position.y = 0.5; hitMesh.userData.kioskMode = i; g.add(hitMesh); hits.push(hitMesh);
+  const sign = makeLabel(1.3); sign.position.y = 1.25; g.add(sign); sign.userData.set(MODE_ICON[i], '', MODE_HEX[i]);
+  return { g, hitMesh, sign, mode: i };
+});
+const SHIP_POS = [new THREE.Vector3(HOME.x - 3.1, 0, HOME.z + 3.1), new THREE.Vector3(HOME.x - 3.1, 0, HOME.z - 1.0)];
+const shipKiosks = ['sea', 'air'].map((kind, i) => {
+  const g = grp(null, SHIP_POS[i].x, G0, SHIP_POS[i].z); g.visible = false; g.lookAt(HOME.x, G0, HOME.z);
+  let prop;
+  if (kind === 'sea') { prop = makeBoat(0.5, false); P(GE.box, M(0x3aa0d8), prop.userData.body, 0, 0.62, 0, 0.9, 0.45, 0.5); }
+  else { prop = grp(); P(GE.cap, M(0xffffff), prop, 0, 0.5, 0, 0.14, 0.38, 0.14).rotation.z = Math.PI / 2; P(GE.box, M(0x2f8fcf), prop, 0, 0.5, 0, 0.26, 0.045, 1.15); P(GE.box, M(0x2f8fcf), prop, -0.46, 0.64, 0, 0.17, 0.26, 0.045); prop.scale.setScalar(1.15); }
+  g.add(prop);
+  const hitMesh = new THREE.Mesh(new THREE.SphereGeometry(0.85, 10, 8), new THREE.MeshBasicMaterial({ visible: false }));
+  hitMesh.position.y = 0.5; hitMesh.userData.kioskShip = kind; g.add(hitMesh); hits.push(hitMesh);
+  const sign = makeLabel(1.3); sign.position.y = 1.15; g.add(sign); sign.userData.set(kind === 'sea' ? '🚤' : '✈️', '', kind === 'sea' ? '#2f8fcf' : '#8a5fc9');
+  return { g, hitMesh, sign, kind };
+});
+function updateKiosks() {
+  const B = window.__bp;
+  if (!B || !B.S || !B.MODES) { kiosks.forEach(k => k.g.visible = false); shipKiosks.forEach(k => k.g.visible = false); return; }
+  const S = B.S;
+  const focusM = userKey && userKey[0] === 'm' ? +userKey.slice(1) : null;
+  const showModes = S.phase === 'dec' && focusM !== null && (S.entered[focusM] === null || S.entered[focusM] === undefined) && (S.sel.enter == null || S.sel.enter === focusM);
+  kiosks.forEach((k, i) => {
+    k.g.visible = showModes;
+    k.hitMesh.userData.kioskM = focusM;
+    if (!showModes) return;
+    const a = -Math.PI / 2 + i * (Math.PI * 2 / 6);
+    k.g.position.set(IPOS[focusM].x + Math.cos(a) * KIOSK_R, G0, IPOS[focusM].z + Math.sin(a) * KIOSK_R);
+    k.g.lookAt(IPOS[focusM].x, G0, IPOS[focusM].z);
+    const sel = S.sel.enter === focusM && S.sel.enterMode === i, md = B.MODES[i];
+    k.sign.userData.set(MODE_ICON[i], sel ? tr('✓ đã chọn', '✓ selected') : f1(md.cost) + tr(' tỷ', ' bn'), MODE_HEX[i]);
+  });
+  const showShip = S.phase === 'dec' && S.sel.enter != null && S.sel.shipMode == null;
+  // Bến thuyền/máy bay nằm ở Vàm Thịnh, xa đảo đang focus — lia camera về nhà mới hiện bến lần đầu
+  // (không lia lại mỗi tick, để người chơi tự xoay/zoom tiếp nếu muốn) để trạm nằm trong khung hình.
+  if (showShip && !updateKiosks.prevShip) { userKey = 'home'; autoCam = true; }
+  updateKiosks.prevShip = showShip;
+  shipKiosks.forEach(k => { k.g.visible = showShip; });
+}
+
 /* ---------- hộ chiếu 3D ---------- */
 const PW = 1.9, PH = 2.6;
 const mkCanvas = (w, h) => { const c = document.createElement('canvas'); c.width = w; c.height = h; const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; return { c, t, g: c.getContext('2d') }; };
@@ -667,9 +753,26 @@ R.domElement.addEventListener('pointerup', e => {
   if (PP.mode === 'stamp' && PP.t > 2.4 && PP.t < 4.1) { PP.t = 4.1; return; }
   const r = R.domElement.getBoundingClientRect(); ptr.set((e.clientX - r.left) / r.width * 2 - 1, -(e.clientY - r.top) / r.height * 2 + 1);
   ray.setFromCamera(ptr, cam); const h = ray.intersectObjects(hits, false)[0]; if (!h) return;
-  const m = h.object.userData.m, B = window.__bp;
+  const B = window.__bp;
+  if (h.object.userData.kioskMode !== undefined && B && B.MODES && B.S) {
+    const mode = h.object.userData.kioskMode, mk = h.object.userData.kioskM;
+    if (mk === null || mk === undefined || !window.bpEnter) return;
+    const md = B.MODES[mode]; window.bpEnter(mk, mode); sfx('pop');
+    const already = B.S.sel.enter === mk && B.S.sel.enterMode === mode;
+    say((already ? '🚩 ' : '↩️ ') + md.icon + ' ' + tr(md.name, md.nameEn) + (already ? ' · ' + f1(md.cost) + tr(' tỷ · ', ' bn · ') + tr(md.note, md.noteEn) : ' · ' + tr('đã bỏ chọn', 'deselected')), 4800);
+    return;
+  }
+  if (h.object.userData.kioskShip !== undefined && B && B.S) {
+    const kind = h.object.userData.kioskShip, sm = kind === 'air' ? 1 : 0;
+    if (!window.bpShip) return;
+    window.bpShip(sm); sfx('pop');
+    const pick = (B.SHIP_MODES || [])[sm];
+    say('🚚 ' + (pick ? pick.icon + ' ' + tr(pick.name, pick.nameEn) : kind), 4200);
+    return;
+  }
+  const m = h.object.userData.m;
   if (m === -2) { userKey = 'home'; autoCam = true; say('🏡 Vàm Thịnh · ' + tr('Ban cố vấn: Bà Sáu Lành, Minh Khang, An Nhiên, Tu Phan, Lina Park, Lumina', 'Advisors: Bà Sáu Lành, Minh Khang, An Nhiên, Tu Phan, Lina Park, Lumina'), 4200); return; }
-  if (m < 0) return;
+  if (m === undefined || m < 0) return;
   userKey = 'm' + m; autoCam = true;
   if (islAdv[m]) islAdv[m].until = LIFE.t + 4.5;
   let msg = MK[m].icon + ' ' + MK[m].name;
@@ -686,7 +789,7 @@ function duelFx(I) {
   return g;
 }
 function f1(x) { return (Math.round(x * 10) / 10).toString().replace('.', tr(',', '.')); }
-function openAct(m) {
+function openAct(m, forceList) {
   const B = window.__bp, box = $('bp3d-act'); if (!B || !box || !B.S) return false; const S = B.S, mk = B.MKTS[m];
   const head = '<button class="x" type="button" aria-label="' + tr('Đóng', 'Close') + '" data-x>✕</button><h4>' + MK[m].icon + ' ' + MK[m].name + '</h4><p>' + tr(mk.trait, mk.traitEn) + ' · ' + tr('tri thức ', 'intel ') + S.know[m] + '% · ' + tr('tiền ', 'cash ') + f1(S.cash) + tr(' tỷ', ' bn') + '</p>';
   let body = '';
@@ -694,19 +797,33 @@ function openAct(m) {
     const used = S.sel.intel.length >= 2, disc = S.sel.prio === 0 ? 0.5 : 1;
     body = '<p style="margin:0 0 6px;font-weight:800;opacity:.9">🔍 ' + tr('Mua tin cho đảo này', 'Buy intel for this island') + (used ? ' · ' + tr('đã đủ 2 nguồn/quý', '2 sources used') : '') + '</p><div class="g">' +
       B.SOURCES.map((s, i) => '<button type="button" data-src="' + i + '"' + (used || S.cash < s.cost * disc || S.sel.intel.indexOf(i) >= 0 ? ' disabled' : '') + '>' + s.icon + ' ' + tr(s.name, s.nameEn) + '<small>' + f1(s.cost * disc) + tr(' tỷ', ' bn') + ' · +' + s.know + '</small></button>').join('') + '</div>';
-  } else if (S.phase === 'dec' && S.entered[m] === null && B.MODES) {
+  } else if (S.phase === 'dec' && forceList && S.entered[m] === null && B.MODES) {
     body = '<p style="margin:0 0 6px;font-weight:800;opacity:.9">🚩 ' + tr('Chọn phương thức thâm nhập', 'Pick an entry mode') + '</p><div class="g">' +
       B.MODES.map(md => '<button type="button" data-md="' + md.id + '"' + (S.sel.enter === m && S.sel.enterMode === md.id ? ' class="sel"' : '') + '>' + md.icon + ' ' + tr(md.name, md.nameEn) + '<small>' + f1(md.cost) + tr(' tỷ', ' bn') + ' · ' + tr(md.note, md.noteEn) + '</small></button>').join('') + '</div>' +
-      '<p style="margin:8px 0 0">' + tr('Sau đó chọn vận chuyển ở thẻ Quyết định bên dưới.', 'Then choose shipping in the Decision card below.') + '</p>';
+      '<p style="margin:8px 0 0">' + tr('Hoặc chạm thẳng vào trạm quanh đảo trong cảnh 3D.', 'Or tap a kiosk around the island in the 3D scene.') + '</p>';
   } else return false;
   box.innerHTML = head + body; box.hidden = false; box.dataset.m = m; return true;
 }
 $('bp3d-act') && $('bp3d-act').addEventListener('click', e => {
   const b = e.target.closest('button'); if (!b || b.disabled) return; const box = $('bp3d-act'), m = +box.dataset.m;
   if (b.hasAttribute('data-x')) { box.hidden = true; return; }
-  if (b.dataset.src !== undefined && window.bpIntel) { window.bpIntel(+b.dataset.src, m); sfx && sfx('coin'); openAct(m); const n = $('bp-intel-note'); if (n) say('🔍 ' + n.textContent, 5200); }
-  if (b.dataset.md !== undefined && window.bpEnter) { window.bpEnter(m, +b.dataset.md); sfx && sfx('pop'); openAct(m); }
+  if (b.dataset.src !== undefined && window.bpIntel) { window.bpIntel(+b.dataset.src, m); sfx && sfx('coin'); openAct(m, true); const n = $('bp-intel-note'); if (n) say('🔍 ' + n.textContent, 5200); }
+  if (b.dataset.md !== undefined && window.bpEnter) { window.bpEnter(m, +b.dataset.md); sfx && sfx('pop'); openAct(m, true); }
 });
+// Nút phụ "☰" mở panel chữ liệt kê (dự phòng) cho đảo đang focus — bước chọn chính giờ làm
+// trực tiếp bằng cách chạm trạm 3D quanh đảo (xem updateKiosks ở trên).
+(() => {
+  const tools = document.querySelector('.bp3d-tools'); if (!tools) return;
+  const btn = document.createElement('button'); btn.type = 'button'; btn.id = 'bp3d-list'; btn.textContent = '☰';
+  btn.title = tr('Xem dạng danh sách', 'View as a list'); btn.setAttribute('aria-label', btn.title);
+  btn.addEventListener('click', () => {
+    const m = userKey && userKey[0] === 'm' ? +userKey.slice(1) : null;
+    if (m === null) { say(tr('Chạm vào một đảo trước.', 'Tap an island first.'), 3200); return; }
+    const box = $('bp3d-act'); if (box && !box.hidden && box.dataset.m == m) { box.hidden = true; return; }
+    if (!openAct(m, true)) say(tr('Đảo này chưa cần chọn gì thêm.', 'Nothing to pick for this island right now.'), 3200);
+  });
+  tools.appendChild(btn);
+})();
 /* ---------- âm thanh 3D (tổng hợp, không cần file) ---------- */
 window.__bp3dMute = localStorage.getItem('bizon-bp3d-mute') === '1';
 let seaN = null;
@@ -740,6 +857,7 @@ $('bp3d-snd') && $('bp3d-snd').addEventListener('click', () => setMute(!window._
 addEventListener('pointerdown', function first() { removeEventListener('pointerdown', first); setMute.ready = true; if (!window.__bp3dMute) seaSnd(true); }, { once: true });
 setMute(window.__bp3dMute);
 window.__bp3dSfx = sfx;
+window.__bp3dKiosks = { kiosks, shipKiosks, updateKiosks, cam, IPOS, HOME, R, hits, ray, get userKey() { return userKey; } }; // hỗ trợ debug/kiểm thử, không ảnh hưởng game
 const landBtn = $('bp3d-land'); const landTxt = () => { if (landBtn) landBtn.textContent = landMode === 'team' ? tr('👥 Cả đội lên đảo', '👥 Whole team lands') : tr('👤 CEO lên đảo', '👤 CEO lands'); };
 landTxt(); landBtn && landBtn.addEventListener('click', () => { landMode = landMode === 'team' ? 'ceo' : 'team'; localStorage.setItem('bizon-bp3d-land', landMode); landTxt(); islands.forEach(I => I.party && !I.pm && landParty(I, false)); });
 $('bp3d-full') && $('bp3d-full').addEventListener('click', () => { const on = document.body.classList.toggle('bp3d-full'); $('bp3d-full').textContent = on ? tr('▾ Thu nhỏ', '▾ Shrink') : tr('⤢ Mở rộng', '⤢ Expand'); resize(); });
@@ -791,7 +909,7 @@ function frame() {
   // ẩn, để khỏi tranh CPU/GPU với animation loop của hub – xem js/clay-hub.js.
   if (document.hidden || window.__clayHubOpen) return;
   const dt = Math.min(clock.getDelta(), 0.05), t = clock.elapsedTime; U.t.value = t;
-  acc += dt; if (acc > 0.25) { acc = 0; sync(t); if (window.__bp3dQReady) { questTick(); badgeTick(); } }
+  acc += dt; if (acc > 0.25) { acc = 0; sync(t); updateKiosks(); if (window.__bp3dQReady) { questTick(); badgeTick(); } }
   perf.n++; perf.s += dt; if (perf.s > 2.5) { const fps = perf.n / perf.s; perf.n = perf.s = 0;
     if (fps < 38 && t > 4) { const pr = R.getPixelRatio(); if (pr > 1.01) { R.setPixelRatio(Math.max(1, pr - 0.3)); resize(); } else if (R.shadowMap.enabled) { R.shadowMap.enabled = false; scene.traverse(o => o.material && (o.material.needsUpdate = true)); } } }
   anim.forEach(f => f(t));
