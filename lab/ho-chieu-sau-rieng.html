@@ -381,7 +381,7 @@ footer{color:var(--faint)}
         </table></div></div>
 
       <div class="card"><h2>📦 ${L('2c · Quy trình 8 bước xuất khẩu chính ngạch sang Trung Quốc', '2c · The 8-step official export process to China')}</h2>
-        <p class="small muted">${L('Tài liệu tham khảo — không phải luật chơi.', 'Reference material — not a game rule.')} <span class="src">[${D.sources[D.eightSteps.src] ? D.eightSteps.src : ''}]</span></p>
+        <p class="small muted">${L('Tài liệu tham khảo — không phải luật chơi. Từng dữ kiện cụ thể có trích nguồn riêng bên dưới.', 'Reference material — not a game rule. Each specific fact is cited individually below.')}</p>
         ${D.eightSteps.steps.map(s => `<div class="step8"><div class="step8-row">
           ${s.img ? `<img src="../assets/${s.img}" alt="${esc(s.imgAlt || '')}" loading="lazy">${s.img2 ? `<img src="../assets/${s.img2}" alt="" loading="lazy">` : ''}` : ''}
           <div><b><span class="n">${s.n}</span>${esc(LANG === 'en' ? s.en : s.vi)}</b>
@@ -389,8 +389,7 @@ footer{color:var(--faint)}
         </div></div>`).join('')}
         <details class="gv"><summary>${L('Nhiệt độ bảo quản: tươi so với đông lạnh', 'Storage temperature: fresh vs frozen')}</summary>
           ${D.eightSteps.storage.map(x => `<p class="small">${esc(LANG === 'en' ? x.en : x.vi)} ${x.factSrc && D.facts[x.factSrc] ? `<span class="src">[${D.facts[x.factSrc].src}]</span>` : ''}</p>`).join('')}
-        </details>
-        <p class="small muted" style="margin-top:8px"><a href="${esc(D.eightSteps.url)}" target="_blank" rel="noopener noreferrer">${L('Nguồn: 3W Logistics ↗', 'Source: 3W Logistics ↗')}</a></p></div>
+        </details></div>
 
       <div class="card"><h2>${L('3 · Đội 5 vai', '3 · Five roles')}</h2>
         <p class="small muted">${L('Mỗi vai trình bày khuyến nghị trước khi CEO chốt. Đổi vai ở vụ 3 hoặc 4; nhật ký ghi lại ai đang thao tác.', 'Each role presents a recommendation before the CEO commits. Rotate roles in season 3 or 4; the log records who is operating.')}</p>
