@@ -161,7 +161,7 @@ test('Trang HTML nạp đúng hai tệp lõi, có bản quyền, không gọi m�
   assert.ok(html.includes('Phan Anh Tú') && html.includes('Đỗ Thùy Hương'));
   assert.ok(!/fetch\(|XMLHttpRequest|https?:\/\/(?!www\.w3\.org)/.test(html.replace(/<footer[\s\S]*?<\/footer>/, '')), 'có gọi mạng');
   const sw = fs.readFileSync(path.join(__dirname, '..', 'sw.js'), 'utf8');
-  ['ho-chieu-sau-rieng.html', 'ho-chieu-sau-rieng-engine.js', 'ho-chieu-sau-rieng-data.js'].forEach(f => assert.ok(sw.includes('./lab/' + f), 'sw.js thiếu ' + f));
+  ['ho-chieu-sau-rieng.html', 'ho-chieu-sau-rieng-3d.html', 'ho-chieu-sau-rieng-engine.js', 'ho-chieu-sau-rieng-data.js'].forEach(f => assert.ok(sw.includes('./lab/' + f), 'sw.js thiếu ' + f));
 });
 
 test('Nếu – Thì: không làm đổi trạng thái, không lộ may rủi kiểm dịch, gần kết quả khi giá ước tính đúng', () => {
@@ -206,6 +206,17 @@ test('Bản lớp học: đủ 5 vai, câu hỏi Lumina, rubric 100%, cột nh�
   assert.strictEqual(D.rubric.reduce((x, r) => x + r.w, 0), 100);
   ['event_id', 'timestamp', 'class_id', 'team_id', 'round_id', 'role', 'event_type', 'committed'].forEach(c => assert.ok(D.eventLogColumns.includes(c)));
   [...D.team.map(m => m.img), ...D.rivals.map(r => r.img)].forEach(img => assert.ok(fs.existsSync(path.join(__dirname, '..', 'assets', 'character', img)), 'thiếu ảnh ' + img));
+});
+
+test('Chuỗi cung ứng lạnh chi tiết (chain2) và quy trình 8 bước (eightSteps): đủ ảnh trên đĩa', () => {
+  assert.strictEqual(D.chain2.stages.length, 8);
+  const chainImgs = D.chain2.stages.flatMap(st => st.items.map(it => it.img)).concat(D.chain2.cast.map(c => c.img));
+  assert.strictEqual(chainImgs.length, 45);
+  chainImgs.forEach(img => assert.ok(fs.existsSync(path.join(__dirname, '..', 'assets', img)), 'thiếu ảnh chain2 ' + img));
+  assert.strictEqual(D.eightSteps.steps.length, 8);
+  D.eightSteps.steps.forEach(st => {
+    [st.img, st.img2].filter(Boolean).forEach(img => assert.ok(fs.existsSync(path.join(__dirname, '..', 'assets', img)), 'thiếu ảnh bước ' + st.n + ': ' + img));
+  });
 });
 
 console.log(`\n${passed} kiểm thử đạt`);
