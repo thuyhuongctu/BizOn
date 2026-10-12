@@ -2,8 +2,8 @@ cff-version: 1.2.0
 message: "Nếu sử dụng phần mềm này trong giảng dạy hoặc nghiên cứu, vui lòng trích dẫn theo thông tin dưới đây. / If you use this software, please cite it as below."
 title: "BizOn Bật Nghiệp: A 3D claymorphism business-simulation game for entrepreneurship education"
 type: software
-version: "1.1"
-date-released: 2026-07-26
+version: "1.3"
+date-released: 2026-10-12
 authors:
   - family-names: "Do"
     given-names: "Thuy Huong"
@@ -15,8 +15,11 @@ authors:
     orcid: "https://orcid.org/0000-0003-0667-3137"
     email: patu@ctu.edu.vn
     affiliation: "Can Tho University"
-doi: 10.5281/zenodo.21592241
+doi: 10.5281/zenodo.23325489
 identifiers:
+  - type: doi
+    value: 10.5281/zenodo.23325489
+    description: "Version DOI – v.1.3 (phiên bản này / this version)"
   - type: doi
     value: 10.5281/zenodo.21592241
     description: "Concept DOI (mọi phiên bản / all versions)"

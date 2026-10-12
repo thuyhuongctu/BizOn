@@ -41,6 +41,7 @@
     + '<div class="cf-inner">'
       + '<div class="cf-cols">' + cols + '</div>'
       + '<div data-en="© 2026 Do Thuy Huong &amp; Phan Anh Tu &ndash; BizOn Bat Nghiep">© 2026 Đỗ Thùy Hương &amp; Phan Anh Tú – BizOn Bật Nghiệp</div>'
+      + '<div style="font-size:12px"><span data-en="Cite as:" data-vi="Trích dẫn:">Trích dẫn:</span> <a href="https://doi.org/10.5281/zenodo.23325489" target="_blank" rel="noopener" style="color:var(--clay-foot-link)">doi:10.5281/zenodo.23325489</a></div>'
       + '<a class="cf-gp" href="'+GP+'" target="_blank" rel="noopener" data-en="▶ Get it on Google Play">▶ Tải trên Google Play</a>'
       + '<div style="display:flex;flex-wrap:wrap;gap:16px">'
         + '<a href="chinh-sach.html" style="color:var(--clay-foot-link)" data-en="Privacy">Chính sách</a>'
