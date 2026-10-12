@@ -1,7 +1,7 @@
 /* BizOn Bật Nghiệp 2026 – Service Worker (offline app shell)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
 
-const CACHE = 'bizon-v416';
+const CACHE = 'bizon-v423';
 const SHELL = [
   './',
   './index.html',
@@ -21,10 +21,15 @@ const SHELL = [
   './lab/nha-may-fdi.html',
   './lab/nha-may-fdi-engine.js',
   './lab/nha-may-fdi-data.js',
+  './ho-chieu-sau-rieng.html',
   './lab/ho-chieu-sau-rieng.html',
   './lab/ho-chieu-sau-rieng-3d.html',
   './lab/ho-chieu-sau-rieng-engine.js',
   './lab/ho-chieu-sau-rieng-data.js',
+  './js/durian-voice.js',
+  './js/vendor/three.module.js',
+  './js/vendor/three.core.js',
+  './js/poly3d-kit.js',
   './thu-vien.html',
   './am-nhac.html',
   './lumina.html',
@@ -43,6 +48,7 @@ const SHELL = [
   './giang-vien.html',
   './khao-sat-online.html',
   './brand-passport.html',
+  './ho-chieu-thuong-hieu.html',
   // three.min.js (~670KB) CỐ Ý không nằm trong SHELL – trang thử nghiệm này
   // không nên làm nặng lượt cài đặt của mọi người chơi khác; sẽ được đệm vào
   // cache ở lượt tải đầu tiên khi ai đó thực sự mở trang qua handler chung.
@@ -231,6 +237,8 @@ const SHELL = [
   // 7,1MB: đây là mục nặng nhất trong danh sách, cân nhắc bỏ nếu muốn rút ngắn
   // thời gian cài đặt (nhạc vẫn tải và lưu đệm ngay lần đầu người chơi bật).
   './assets/audio/ho-chieu-p3-en-remix2.mp3',
+  // Bài chủ đề game Hộ Chiếu Sầu Riêng – nạp sẵn để mở offline vẫn có nhạc.
+  './assets/audio/durian-passport.mp3',
   './assets/character/rivals/alpha.webp',
   './assets/character/rivals/mekong.webp',
   './assets/character/rivals/star.webp',

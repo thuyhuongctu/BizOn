@@ -73,6 +73,10 @@ h1{font-size:clamp(26px,4.4vw,38px);line-height:1.15;margin:10px 0}
 .step8-row{display:flex;gap:10px;align-items:flex-start}
 .step8-row img{width:48px;height:48px;border-radius:10px;object-fit:cover;flex-shrink:0}
 .step8-row img + img{margin-left:-14px;border:2px solid var(--panel2)}
+.chain2-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:8px}
+.chain2-grid .c2{border:1px solid var(--line2);border-radius:12px;overflow:hidden;background:var(--panel2)}
+.chain2-grid .c2 img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.chain2-grid .c2 p{margin:0;padding:8px 10px;font-size:11.5px;line-height:1.4}
 .quickstart{border:2px solid var(--accent);background:color-mix(in srgb,var(--accent) 8%,var(--panel))}
 .quickstart ol{margin:8px 0 0 18px;padding:0} .quickstart li{margin:4px 0;font-size:13.5px}
 .refcard{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:4px 18px;margin-bottom:14px}
@@ -226,15 +230,18 @@ footer{color:var(--faint)}
 </div></div>
 
 <main class="wrap" id="app"></main>
-<audio id="bgm" src="../assets/audio/and-the-world-say-hello.mp3" preload="none" loop></audio>
+<audio id="bgm" src="../assets/audio/durian-passport.mp3" preload="none" loop></audio>
 
 <footer class="wrap">
   <p>© 2026 PGS.TS. Phan Anh Tú &amp; NCS. Đỗ Thùy Hương · Trường Kinh tế, Đại học Cần Thơ</p>
   <p id="footSrc"></p>
+  <p>Cite (APA 7): Phan, A. T., &amp; Do, T. H. (2026). <i>Hộ Chiếu Sầu Riêng (Durian Passport): a 6-season durian-export simulation for Vietnam–China trade</i> [Computer software]. <a href="https://doi.org/10.5281/zenodo.23307827" target="_blank" rel="noopener">https://doi.org/10.5281/zenodo.23307827</a></p>
+  <p>⭐ Mã nguồn (tách từ BizOn): <a href="https://github.com/thuyhuongctu/Durian-Pasaport" target="_blank" rel="noopener">github.com/thuyhuongctu/Durian-Pasaport</a></p>
 </footer>
 
 <script src="ho-chieu-sau-rieng-engine.js"></script>
 <script src="ho-chieu-sau-rieng-data.js"></script>
+<script src="../js/durian-voice.js"></script>
 <script>
 (function () {
   'use strict';
@@ -257,6 +264,7 @@ footer{color:var(--faint)}
   const pct = x => nf(x * 100) + '%';
   const money = x => nf(x, 2) + ' ' + L('tỷ', 'bn');
   const fact = k => { const f = D.facts[k]; return f ? `${nm(f)} <span class="src">[${f.src}]</span>` : ''; };
+  const seasonLabel = s => s.label.replace(/chính vụ|nghịch vụ/, m => L(m, m === 'chính vụ' ? 'main season' : 'off-season'));
   const CH_IDS = D.channels.map(c => c.id);
 
   // ---------------- trạng thái ván (lưu cục bộ để học qua nhiều buổi) ----------------
@@ -304,7 +312,7 @@ footer{color:var(--faint)}
     $('backLink').textContent = L('← Kịch bản lớp học', '← Classroom script');
     $('map3dLink').title = L('Bản đồ 3D: khám phá chuỗi cung ứng cùng Bà Sáu Lành', '3D map: explore the supply chain with Bà Sáu Lành');
     $('langVI').classList.toggle('on', LANG === 'vi'); $('langEN').classList.toggle('on', LANG === 'en');
-    $('musicBtn').title = L('Nhạc nền «And The World Say Hello!» (kho nhạc BizOn)', 'Background music «And The World Say Hello!» (BizOn library)');
+    $('musicBtn').title = L('Nhạc nền «Durian Passport» (kho nhạc BizOn)', 'Background music «Durian Passport» (BizOn library)');
     document.documentElement.lang = LANG;
     $('footSrc').textContent = L(
       'Quy định và sự kiện lấy từ Nghị định thư kiểm dịch MARD–GACC (2022), báo cáo thị trường rau quả của Bộ Công Thương (12/2023–02/2024), kết quả tra cứu của CESTI (04/2024) và các nghiên cứu chuỗi cung ứng tại Cai Lậy, Phong Điền, Thái Lan, Malaysia. Khối lượng, hệ số giá, xác suất và chiến lược của đối thủ AI là minh họa.',
@@ -347,7 +355,7 @@ footer{color:var(--faint)}
           'Đội 5 người điều hành một mắt xích trong chuỗi xuất khẩu sầu riêng, từ ngày Trung Quốc mở cửa chính ngạch (7/2022), và cạnh tranh với 3 đối thủ AI. Mỗi vụ: đọc thị trường, họp đội theo vai, chạy tối đa 2 lần «Nếu – Thì», hỏi Lumina tối đa 3 câu, ghi phiếu quyết định, chốt vụ rồi viết nhật ký. Mục tiêu không chỉ là thắng cờ mà là giải thích được vì sao kết quả khác dự báo.',
           'A team of five runs one link of the durian export chain from the day China opens official trade (July 2022), competing with 3 AI rivals. Each season: read the market, hold a role meeting, run up to 2 what-ifs, ask Lumina up to 3 questions, fill in a decision sheet, commit, then write the journal. The aim is not only to win flags but to explain why results differ from forecasts.')}</p>
         <span class="prov pub">${L('Sự kiện và quy định có trích nguồn tài liệu', 'Events and rules are cited from documents')}</span><span class="prov sim">${L('Khối lượng, hệ số giá, xác suất là minh họa', 'Volumes, price ratios and probabilities are illustrative')}</span>
-      </div><div class="hero-cast"><img src="${IMG('anh-tu-ao-dai-welcome-cut-v2.webp')}" alt="${L('Thầy Tú Phan', 'Dr Tú Phan')}"><img src="${IMG('lumina-je-standing.webp')}" alt="Lumina"></div></div></section>
+      </div><div class="hero-cast"><img src="${IMG('ba-sau-lanh-huong-welcome.webp')}" alt="${L('Bà Sáu Lành và Hương', 'Bà Sáu Lành and Hương')}"></div></div></section>
 
       <div class="card quickstart"><h2>${L('🚀 Bắt đầu nhanh', '🚀 Quick start')}</h2>
         <p class="small">${L('Chỉ cần làm 3 việc bên dưới rồi bấm nút «Bắt đầu ván mới» — mọi mục còn lại là tài liệu tham khảo, gấp sẵn, đọc trong lúc chơi cũng được.', 'Just do the 3 steps below, then tap «Start a new game» — everything else is reference material, collapsed by default, fine to read while you play.')}</p>
@@ -415,6 +423,16 @@ footer{color:var(--faint)}
         <details class="gv"><summary>${L('Nhiệt độ bảo quản: tươi so với đông lạnh', 'Storage temperature: fresh vs frozen')}</summary>
           ${D.eightSteps.storage.map(x => `<p class="small">${esc(LANG === 'en' ? x.en : x.vi)} ${x.factSrc && D.facts[x.factSrc] ? `<span class="src">[${D.facts[x.factSrc].src}]</span>` : ''}</p>`).join('')}
         </details></div></details>
+
+      <details class="refcard"><summary><h2>🧊 ${L('2d · Chuỗi cung ứng lạnh chi tiết: từ vườn đến tay người tiêu dùng', '2d · The detailed cold chain: from orchard to consumer')}</h2><span class="tag">${L('minh họa', 'illustration')}</span><span class="chev">▸</span></summary>
+        <div class="body">
+        <p class="small muted">${L('Hình minh họa trực quan mở rộng cho quy trình 8 bước ở trên — không phải tài liệu quy định chính thức, không gắn trích dẫn.', 'A visual expansion of the 8-step process above — not an official regulatory document, and not individually cited.')}</p>
+        ${D.chain2.stages.map(st => `<details class="gv"><summary>${esc(nm(st))}</summary>
+          <div class="chain2-grid">${st.items.map(it => `<div class="c2"><img src="../assets/${it.img}" alt="${esc(nm(it))}" loading="lazy"><p>${esc(nm(it))}</p></div>`).join('')}</div>
+        </details>`).join('')}
+        <h3 style="margin-top:16px;font-size:14px">👥 ${L('Đội ngũ đồng hành trong hành trình', 'People along the journey')}</h3>
+        <div class="cast">${D.chain2.cast.map(c => `<div class="who"><img src="../assets/${c.img}" alt="${esc(nm(c))}" loading="lazy"><b>${esc(nm(c))}</b></div>`).join('')}</div>
+        </div></details>
 
       <details class="refcard"><summary><h2>${L('3 · Đội 5 vai', '3 · Five roles')}</h2><span class="tag">${L('tài liệu tham khảo', 'reference')}</span><span class="chev">▸</span></summary>
         <div class="body">
@@ -605,7 +623,7 @@ footer{color:var(--faint)}
     const advice = teamAdvice();
     $('app').innerHTML = `
       <section class="hero" style="padding-bottom:6px"><span class="eyebrow">${role.emoji} ${nm(role)} · ${L('Lớp', 'Class')} ${esc(APP.cls || '—')} · ${L('Đội', 'Team')} ${esc(APP.team || '—')}</span>
-        <h1 style="font-size:clamp(22px,3.6vw,30px)">${L('Vụ', 'Season')} ${n}/${D.seasons.length} · ${s.label}</h1>
+        <h1 style="font-size:clamp(22px,3.6vw,30px)">${L('Vụ', 'Season')} ${n}/${D.seasons.length} · ${seasonLabel(s)}</h1>
         ${flagsHTML(n)}${flowHTML()}
         <div class="ops"><span class="small muted">${L('Vai đang thao tác', 'Operating role')}:</span>
           ${D.team.map(m => `<button type="button" class="chip ${APP.operator === m.id ? 'on' : ''}" data-op="${m.id}">${m.id.toUpperCase()}</button>`).join('')}
@@ -614,7 +632,7 @@ footer{color:var(--faint)}
       </section>
 
       <div class="grid2">
-        <div class="card event"><span class="tag">① ${L('Đọc thị trường · mốc thực tế', 'Read the market · real milestone')}</span><h2>${nm(s)}</h2><p>${LANG === 'en' ? s.textEn : s.textVi}</p>
+        <div class="card event"><span class="tag">① ${L('Đọc thị trường · mốc thực tế', 'Read the market · real milestone')}</span><h2>${nm(s)} ${window.DurianVoice && window.DurianVoice.canSpeak ? `<button type="button" class="mini" data-speak-season title="${L('Nghe vụ này', 'Listen to this season')}">🔊</button>` : ''}</h2><p>${LANG === 'en' ? s.textEn : s.textVi}</p>
           <p class="hint" style="margin-top:6px">${fact(s.anchor)}</p></div>
         ${ev ? `<div class="card event"><span class="tag">① ${L('Biến cố · SEC đọc cho đội', 'Event · SEC reads it out')}</span><h2>${nm(ev)}</h2><p>${LANG === 'en' ? ev.textEn : ev.textVi}</p>
           <p class="hint">${fact(ev.src)}</p><h3>${L('Chọn cách phản ứng', 'Choose your response')}</h3>
@@ -638,7 +656,7 @@ footer{color:var(--faint)}
       <div class="card"><h2>② ${L('Họp đội: mỗi vai một khuyến nghị', 'Team meeting: one recommendation per role')}</h2>
         <p class="small muted">${L('Đề xuất là ý kiến của thành viên ảo, có thể chưa tối ưu. Đội phải tự quyết và ghi lý do.', 'These are suggestions from virtual members and may not be optimal. The team decides and records why.')}</p>
         <div class="advice">${advice.map((x, i) => { const m = teamMember(x.who);
-          return `<div class="adv"><img src="${IMG(m.img)}" alt="${esc(m.name)}"><div><b>${x.who.toUpperCase()} · ${esc(m.name)}</b><p>${x.text}</p><p class="hint">${x.why}</p>
+          return `<div class="adv"><img src="${IMG(m.img)}" alt="${esc(m.name)}"><div><b>${x.who.toUpperCase()} · ${esc(m.name)} ${window.DurianVoice && window.DurianVoice.canSpeak ? `<button type="button" class="mini" data-speak-adv="${i}" title="${L('Nghe lời khuyên', 'Listen to this advice')}">🔊</button>` : ''}</b><p>${x.text}</p><p class="hint">${x.why}</p>
             <button type="button" class="mini" data-adv="${i}">${L('Áp dụng đề xuất', 'Apply suggestion')}</button></div></div>`; }).join('')}</div></div>
 
       <div class="grid2">
@@ -740,7 +758,18 @@ footer{color:var(--faint)}
       if ((APP.lumina[n] || []).length >= MAX_LUMINA) return;
       const ans = luminaAnswer(b.dataset.lq);
       APP.lumina[n] = (APP.lumina[n] || []).concat([Object.assign({ q: b.dataset.lq }, ans)]);
+      if (window.DurianVoice) window.DurianVoice.say(ans.a + '. ' + ans.ask, 'LUM', LANG);
       logEv('ASK_LUMINA', '', b.dataset.lq); rerender();
+    });
+    document.querySelectorAll('[data-speak-season]').forEach(b => b.onclick = () => {
+      if (!window.DurianVoice) return;
+      const text = (LANG === 'en' ? s.textEn : s.textVi) + (ev ? '. ' + (LANG === 'en' ? ev.textEn : ev.textVi) : '');
+      window.DurianVoice.say(text, 'NAR', LANG);
+    });
+    document.querySelectorAll('[data-speak-adv]').forEach(b => b.onclick = () => {
+      if (!window.DurianVoice) return;
+      const x = advice[+b.dataset.speakAdv], m = teamMember(x.who);
+      window.DurianVoice.say(m.name + '. ' + x.text, x.who, LANG);
     });
     document.querySelectorAll('[data-goal]').forEach(b => b.onclick = () => { APP.sheets[n] = Object.assign({}, APP.sheets[n], { goal: b.dataset.goal }); logEv('SHEET_GOAL', '', b.dataset.goal); rerender(); });
     document.querySelectorAll('[data-sh]').forEach(t => {
@@ -810,13 +839,13 @@ footer{color:var(--faint)}
     const justFormalized = APP.game.assets.area && APP.game.assets.pack && !(APP.milestones && APP.milestones.formalized);
     if (justFormalized) { APP.milestones = Object.assign({}, APP.milestones, { formalized: true }); save(); }
     $('app').innerHTML = `
-      <section class="hero" style="padding-bottom:6px"><span class="eyebrow">${L('Kết quả vụ', 'Season result')} ${n} · ${s.label}</span>
+      <section class="hero" style="padding-bottom:6px"><span class="eyebrow">${L('Kết quả vụ', 'Season result')} ${n} · ${seasonLabel(s)}</span>
         <h1 style="font-size:clamp(22px,3.6vw,30px)">${fl.win ? '🟩 ' + L('Đội cắm cờ vụ này!', 'Your team plants the flag!') : '🟥 ' + L('Đối thủ giữ cờ vụ này', 'A rival takes this season\'s flag')}</h1>
         ${flagsHTML(0)}</section>
       ${justFormalized ? `<div class="card" style="border:2px solid var(--accent)"><h2>🏷️ ${L('Mốc: chính thức hóa doanh nghiệp xuất khẩu', 'Milestone: formalised as an export business')}</h2>
         <p class="small">${LANG === 'en' ? D.formalization.en : D.formalization.vi} <span class="src">[${D.facts[D.formalization.src].src}]</span></p></div>` : ''}
       <div class="grid2">
-        <div class="card"><h2>${L('Báo cáo vụ', 'Season report')}</h2>${resultsHTML(r)}</div>
+        <div class="card"><h2>${L('Báo cáo vụ', 'Season report')} ${window.DurianVoice && window.DurianVoice.canSpeak ? `<button type="button" class="mini" data-speak-result title="${L('Nghe báo cáo', 'Listen to the report')}">🔊</button>` : ''}</h2>${resultsHTML(r)}</div>
         <div class="card"><h2>${L('Đấu trường: lợi nhuận vụ', 'Arena: season profit')}</h2>${arenaHTML(n)}
           ${fl.rival ? `<p class="hint">${L('Đối thủ mạnh nhất vụ này', 'Strongest rival this season')}: ${esc(nm(rivalInfo(fl.rival.id)))} (${money(fl.rival.profit)})</p>` : ''}
           <h3>${L('Dự báo so với thực tế', 'Forecast vs actual')}</h3>
@@ -846,6 +875,13 @@ footer{color:var(--faint)}
       </div>`;
     const draft = () => (APP.journals['draft' + n] = APP.journals['draft' + n] || {});
     document.querySelectorAll('[data-cause]').forEach(b => b.onclick = () => { draft().cause = b.dataset.cause; save(); renderResult(); });
+    document.querySelectorAll('[data-speak-result]').forEach(b => b.onclick = () => {
+      if (!window.DurianVoice) return;
+      const gap = r.profit - fc;
+      const text = L(`Vụ ${n}: ${fl.win ? 'đội cắm cờ vụ này.' : 'đối thủ giữ cờ vụ này.'} Lợi nhuận thực tế ${money(r.profit)}, dự báo ${money(fc)}, sai lệch ${gap >= 0 ? '+' : ''}${money(gap)}.`,
+        `Season ${n}: ${fl.win ? 'your team planted the flag.' : 'a rival took this season.'} Actual profit ${money(r.profit)}, forecast ${money(fc)}, gap ${gap >= 0 ? '+' : ''}${money(gap)}.`);
+      window.DurianVoice.say(text, 'NAR', LANG);
+    });
     document.querySelectorAll('[data-lu]').forEach(b => b.onclick = () => { const d = draft(); d.lumina = Object.assign({}, d.lumina, { [b.dataset.lu]: b.dataset.luv }); save(); renderResult(); });
     document.querySelectorAll('[data-j]').forEach(t => { t.oninput = () => { draft()[t.dataset.j] = t.value; }; t.onchange = save; });
     document.querySelectorAll('[data-db]').forEach(t => { t.oninput = () => { APP.debriefs[n] = Object.assign({}, APP.debriefs[n], { [t.dataset.db]: t.value }); }; t.onchange = save; });
