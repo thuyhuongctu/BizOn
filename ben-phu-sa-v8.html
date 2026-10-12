@@ -24,7 +24,7 @@
 <script src="js/error-log.js"></script>
 <script src="js/student-login.js"></script>
 <script src="js/game3d-login-gate.js"></script>
-<script>Game3DGate.mount({ introId: 'ft-intro', title: 'Chào mừng tới Bến Phù Sa!', subtitle: 'Điền nhanh thông tin đội rồi vào thẳng phần giới thiệu — bỏ trống vẫn chơi được trọn vẹn.' });</script>
+<script>Game3DGate.mount({ introId: 'ft-intro', ns: 'bps', title: 'Chào mừng tới Bến Phù Sa!', subtitle: 'Điền nhanh thông tin đội rồi vào thẳng phần giới thiệu — bỏ trống vẫn chơi được trọn vẹn.' });</script>
 <!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
      nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
 <link rel="stylesheet" href="css/bizon-fonts-v8.css">
@@ -1203,8 +1203,8 @@ document.addEventListener('DOMContentLoaded',function(){var m=document.getElemen
     if (!backendOn()) return; // backend tắt thì ẩn luôn khối nộp
     $('ft-submit-box').classList.remove('hidden');
     try {
-      $('ft-class').value = localStorage.getItem('bizon-ft-class') || localStorage.getItem('bizon-class') || '';
-      $('ft-name').value = localStorage.getItem('bizon-ft-name') || '';
+      $('ft-class').value = localStorage.getItem('bps-class') || '';
+      $('ft-name').value = localStorage.getItem('bps-name') || '';
     } catch (e) {}
     if (window.StudentLogin && $('ft-student-login')) {
       window.StudentLogin.mount($('ft-student-login'), { onChange: function (session) {
@@ -1221,7 +1221,7 @@ document.addEventListener('DOMContentLoaded',function(){var m=document.getElemen
     var msg = $('ft-send-msg'), btn = $('ft-send');
     if (!klass) { msg.textContent = T('Nhập Mã lớp trước đã nhé.', 'Enter a class code first.'); return; }
     if (!S.result) return;
-    try { localStorage.setItem('bizon-ft-class', klass); localStorage.setItem('bizon-ft-name', name); } catch (e) {}
+    try { localStorage.setItem('bps-class', klass); localStorage.setItem('bps-name', name); } catch (e) {}
     btn.disabled = true; btn.style.opacity = 0.5;
     msg.textContent = T('Đang gửi…', 'Sending…');
     var detail = { exam: !!(window.BizOnBpsExam && window.BizOnBpsExam.exam && window.BizOnBpsExam.exam.active), captain: TEAM()[S.cap].name, rivals: RIVALS.map(function (r) { return { name: r.name, total: Math.round(r.total * 10) / 10 }; }) };
@@ -1323,7 +1323,7 @@ window.bpsNet = function (on) { var o = document.getElementById('bps-net'), fr =
   if (on) { try { var de = document.documentElement; if (!document.fullscreenElement && de.requestFullscreen) de.requestFullscreen().catch(function () {}); } catch (e) {} } };
 </script>
 <script src="js/bps-rival-intel.js"></script>
-<script src="js/official-cert.js"></script>
+<script>window.BIZON_GAME_NS='bps';</script><script src="js/official-cert.js"></script>
 <script src="js/negotiate.js"></script>
 <script src="js/bps-negotiate.js"></script>
 <script src="js/site-ui.js" defer></script>

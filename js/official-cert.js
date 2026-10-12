@@ -20,7 +20,13 @@
   function T(vi, en) { return isEN() ? en : vi; }
   var DEFAULTS = { course_code: 'KT330H', course_name: 'Entrepreneurship', course_dates: '' };
 
-  function classCode() { try { return (localStorage.getItem('bizon-ft-class') || localStorage.getItem('bizon-class') || '').trim().toUpperCase(); } catch (e) { return ''; } }
+  function classCode() {
+    try {
+      var ns = window.BIZON_GAME_NS;
+      if (ns) return (localStorage.getItem(ns + '-class') || '').trim().toUpperCase();
+      return (localStorage.getItem('bizon-ft-class') || localStorage.getItem('bizon-class') || '').trim().toUpperCase();
+    } catch (e) { return ''; }
+  }
   // classCodeOverride: truyền thẳng mã lớp khi trang không dùng chung khoá
   // localStorage (vd: game.html lưu mã lớp riêng trong S.profile.classId).
   function fetchConfig(classCodeOverride) {
