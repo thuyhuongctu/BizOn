@@ -19,7 +19,7 @@
 <script src="js/backend-config.js"></script>
 <script src="js/error-log.js"></script>
 <script src="js/game3d-login-gate.js"></script>
-<script>Game3DGate.mount({ introId: 'bp-intro', title: 'Chào mừng tới Hộ Chiếu Thương Hiệu!', subtitle: 'Điền nhanh thông tin đội rồi vào thẳng phần giới thiệu — bỏ trống vẫn chơi được trọn vẹn.' });</script>
+<script>Game3DGate.mount({ introId: 'bp-intro', ns: 'bp', title: 'Chào mừng tới Hộ Chiếu Thương Hiệu!', subtitle: 'Điền nhanh thông tin đội rồi vào thẳng phần giới thiệu — bỏ trống vẫn chơi được trọn vẹn.' });</script>
 <!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
      nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
 <link rel="stylesheet" href="css/bizon-fonts.css">
@@ -2022,8 +2022,8 @@
     if (!backendOn()) return;
     $('bp-submit-box').classList.remove('hidden');
     try {
-      $('bp-class').value = localStorage.getItem('bizon-ft-class') || localStorage.getItem('bizon-class') || '';
-      $('bp-name').value = localStorage.getItem('bizon-ft-name') || '';
+      $('bp-class').value = localStorage.getItem('bp-class') || '';
+      $('bp-name').value = localStorage.getItem('bp-name') || '';
     } catch (e) {}
   }
   var boardT = null;
@@ -2054,7 +2054,7 @@
     if (!klass) { msg.textContent = T('Nhập Mã lớp trước đã nhé.', 'Please enter a Class code first.'); return; }
     var fin = window.__bpFinal;
     if (!fin) return;
-    try { localStorage.setItem('bizon-ft-class', klass); localStorage.setItem('bizon-ft-name', name); } catch (e) {}
+    try { localStorage.setItem('bp-class', klass); localStorage.setItem('bp-name', name); } catch (e) {}
     btn.disabled = true; btn.style.opacity = 0.5;
     msg.textContent = T('Đang gửi…', 'Sending…');
     try {
@@ -2305,7 +2305,7 @@
 <script src="js/bp-rival-intel.js"></script>
 <script src="js/clay-hub.js"></script>
 <script src="js/bp-hub.js"></script>
-<script src="js/official-cert.js"></script>
+<script>window.BIZON_GAME_NS='bp';</script><script src="js/official-cert.js"></script>
 <script src="js/negotiate.js"></script>
 <script src="js/bp-negotiate.js"></script>
 <script src="js/bp-tutorial.js"></script>

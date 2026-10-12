@@ -3,7 +3,9 @@
  * sẵn có của mỗi game, giống đúng cơ chế game.html (doLogin()/doLoginDemo()) —
  * không mật khẩu, không auth thật, bỏ trống vẫn chơi được ở chế độ chơi thử.
  * Dùng chung class .clay-card/.clay-btn đã có trong css/tw.css nên không cần
- * CSS riêng. Nạp SCRIPT này rồi gọi: Game3DGate.mount({introId:'bp-intro', ...}).
+ * CSS riêng. Nạp SCRIPT này rồi gọi: Game3DGate.mount({introId:'bp-intro', ns:'bp', ...}).
+ * ns là tiền tố khoá localStorage riêng của từng họ game (ns-name / ns-class / ns-email),
+ * để team/lớp của game này không ghi đè game khác.
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. */
 (function () {
   'use strict';
@@ -13,6 +15,8 @@
 
   function mount(opts) {
     opts = opts || {};
+    var ns = opts.ns;
+    if (!ns) { console.warn('Game3DGate.mount: thiếu ns'); return; }
     var introId = opts.introId;
     var title = opts.title || T('Chào mừng!', 'Welcome!');
     var subtitle = opts.subtitle || '';
@@ -45,11 +49,9 @@
 
       function enter(team, email, classId) {
         try {
-          localStorage.setItem('bizon-team', team || '');
-          localStorage.setItem('bizon-class', classId || '');
-          localStorage.setItem('bizon-ft-class', classId || '');
-          localStorage.setItem('bizon-ft-name', team || '');
-          if (email) localStorage.setItem('bizon-email', email);
+          localStorage.setItem(ns + '-name', team || '');
+          localStorage.setItem(ns + '-class', classId || '');
+          localStorage.setItem(ns + '-email', email || '');
         } catch (e) {}
         box.remove();
         intro.classList.remove('hidden');
