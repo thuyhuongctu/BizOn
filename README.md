@@ -140,10 +140,10 @@ docs/                 # Instructor guide, song lyrics, CH Play guide + store ass
 
 If you use BizOn in teaching or research, please cite:
 
-> Do, T. H., & Phan, A. T. (2026). *BizOn Bật Nghiệp: A 3D claymorphism business-simulation game for entrepreneurship education* [Computer software]. Can Tho University. https://doi.org/10.5281/zenodo.21592241
+> Do, T. H., & Phan, A. T. (2026). *BizOn Bật Nghiệp: A 3D claymorphism business-simulation game for entrepreneurship education* (Version v.1.3) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.23325489
 
 - Machine-readable citation file: [`CITATION.cff`](CITATION.cff) (GitHub shows a **"Cite this repository"** button).
-- **Zenodo:** concept DOI [10.5281/zenodo.21592241](https://doi.org/10.5281/zenodo.21592241) (represents all versions); each GitHub release is automatically archived with its own version DOI.
+- **Zenodo:** version DOI for v.1.3 [10.5281/zenodo.23325489](https://doi.org/10.5281/zenodo.23325489); concept DOI [10.5281/zenodo.21592241](https://doi.org/10.5281/zenodo.21592241) represents all versions. Each GitHub release is archived with its own version DOI.
 
 ## ⚖️ Copyright & intellectual property
 
