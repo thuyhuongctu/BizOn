@@ -241,6 +241,7 @@ footer{color:var(--faint)}
 
 <script src="ho-chieu-sau-rieng-engine.js"></script>
 <script src="ho-chieu-sau-rieng-data.js"></script>
+<script src="../js/durian-voice.js"></script>
 <script>
 (function () {
   'use strict';
@@ -631,7 +632,7 @@ footer{color:var(--faint)}
       </section>
 
       <div class="grid2">
-        <div class="card event"><span class="tag">① ${L('Đọc thị trường · mốc thực tế', 'Read the market · real milestone')}</span><h2>${nm(s)}</h2><p>${LANG === 'en' ? s.textEn : s.textVi}</p>
+        <div class="card event"><span class="tag">① ${L('Đọc thị trường · mốc thực tế', 'Read the market · real milestone')}</span><h2>${nm(s)} ${window.DurianVoice && window.DurianVoice.canSpeak ? `<button type="button" class="mini" data-speak-season title="${L('Nghe vụ này', 'Listen to this season')}">🔊</button>` : ''}</h2><p>${LANG === 'en' ? s.textEn : s.textVi}</p>
           <p class="hint" style="margin-top:6px">${fact(s.anchor)}</p></div>
         ${ev ? `<div class="card event"><span class="tag">① ${L('Biến cố · SEC đọc cho đội', 'Event · SEC reads it out')}</span><h2>${nm(ev)}</h2><p>${LANG === 'en' ? ev.textEn : ev.textVi}</p>
           <p class="hint">${fact(ev.src)}</p><h3>${L('Chọn cách phản ứng', 'Choose your response')}</h3>
@@ -655,7 +656,7 @@ footer{color:var(--faint)}
       <div class="card"><h2>② ${L('Họp đội: mỗi vai một khuyến nghị', 'Team meeting: one recommendation per role')}</h2>
         <p class="small muted">${L('Đề xuất là ý kiến của thành viên ảo, có thể chưa tối ưu. Đội phải tự quyết và ghi lý do.', 'These are suggestions from virtual members and may not be optimal. The team decides and records why.')}</p>
         <div class="advice">${advice.map((x, i) => { const m = teamMember(x.who);
-          return `<div class="adv"><img src="${IMG(m.img)}" alt="${esc(m.name)}"><div><b>${x.who.toUpperCase()} · ${esc(m.name)}</b><p>${x.text}</p><p class="hint">${x.why}</p>
+          return `<div class="adv"><img src="${IMG(m.img)}" alt="${esc(m.name)}"><div><b>${x.who.toUpperCase()} · ${esc(m.name)} ${window.DurianVoice && window.DurianVoice.canSpeak ? `<button type="button" class="mini" data-speak-adv="${i}" title="${L('Nghe lời khuyên', 'Listen to this advice')}">🔊</button>` : ''}</b><p>${x.text}</p><p class="hint">${x.why}</p>
             <button type="button" class="mini" data-adv="${i}">${L('Áp dụng đề xuất', 'Apply suggestion')}</button></div></div>`; }).join('')}</div></div>
 
       <div class="grid2">
@@ -757,7 +758,18 @@ footer{color:var(--faint)}
       if ((APP.lumina[n] || []).length >= MAX_LUMINA) return;
       const ans = luminaAnswer(b.dataset.lq);
       APP.lumina[n] = (APP.lumina[n] || []).concat([Object.assign({ q: b.dataset.lq }, ans)]);
+      if (window.DurianVoice) window.DurianVoice.say(ans.a + '. ' + ans.ask, 'LUM', LANG);
       logEv('ASK_LUMINA', '', b.dataset.lq); rerender();
+    });
+    document.querySelectorAll('[data-speak-season]').forEach(b => b.onclick = () => {
+      if (!window.DurianVoice) return;
+      const text = (LANG === 'en' ? s.textEn : s.textVi) + (ev ? '. ' + (LANG === 'en' ? ev.textEn : ev.textVi) : '');
+      window.DurianVoice.say(text, 'NAR', LANG);
+    });
+    document.querySelectorAll('[data-speak-adv]').forEach(b => b.onclick = () => {
+      if (!window.DurianVoice) return;
+      const x = advice[+b.dataset.speakAdv], m = teamMember(x.who);
+      window.DurianVoice.say(m.name + '. ' + x.text, x.who, LANG);
     });
     document.querySelectorAll('[data-goal]').forEach(b => b.onclick = () => { APP.sheets[n] = Object.assign({}, APP.sheets[n], { goal: b.dataset.goal }); logEv('SHEET_GOAL', '', b.dataset.goal); rerender(); });
     document.querySelectorAll('[data-sh]').forEach(t => {
@@ -833,7 +845,7 @@ footer{color:var(--faint)}
       ${justFormalized ? `<div class="card" style="border:2px solid var(--accent)"><h2>🏷️ ${L('Mốc: chính thức hóa doanh nghiệp xuất khẩu', 'Milestone: formalised as an export business')}</h2>
         <p class="small">${LANG === 'en' ? D.formalization.en : D.formalization.vi} <span class="src">[${D.facts[D.formalization.src].src}]</span></p></div>` : ''}
       <div class="grid2">
-        <div class="card"><h2>${L('Báo cáo vụ', 'Season report')}</h2>${resultsHTML(r)}</div>
+        <div class="card"><h2>${L('Báo cáo vụ', 'Season report')} ${window.DurianVoice && window.DurianVoice.canSpeak ? `<button type="button" class="mini" data-speak-result title="${L('Nghe báo cáo', 'Listen to the report')}">🔊</button>` : ''}</h2>${resultsHTML(r)}</div>
         <div class="card"><h2>${L('Đấu trường: lợi nhuận vụ', 'Arena: season profit')}</h2>${arenaHTML(n)}
           ${fl.rival ? `<p class="hint">${L('Đối thủ mạnh nhất vụ này', 'Strongest rival this season')}: ${esc(nm(rivalInfo(fl.rival.id)))} (${money(fl.rival.profit)})</p>` : ''}
           <h3>${L('Dự báo so với thực tế', 'Forecast vs actual')}</h3>
@@ -863,6 +875,13 @@ footer{color:var(--faint)}
       </div>`;
     const draft = () => (APP.journals['draft' + n] = APP.journals['draft' + n] || {});
     document.querySelectorAll('[data-cause]').forEach(b => b.onclick = () => { draft().cause = b.dataset.cause; save(); renderResult(); });
+    document.querySelectorAll('[data-speak-result]').forEach(b => b.onclick = () => {
+      if (!window.DurianVoice) return;
+      const gap = r.profit - fc;
+      const text = L(`Vụ ${n}: ${fl.win ? 'đội cắm cờ vụ này.' : 'đối thủ giữ cờ vụ này.'} Lợi nhuận thực tế ${money(r.profit)}, dự báo ${money(fc)}, sai lệch ${gap >= 0 ? '+' : ''}${money(gap)}.`,
+        `Season ${n}: ${fl.win ? 'your team planted the flag.' : 'a rival took this season.'} Actual profit ${money(r.profit)}, forecast ${money(fc)}, gap ${gap >= 0 ? '+' : ''}${money(gap)}.`);
+      window.DurianVoice.say(text, 'NAR', LANG);
+    });
     document.querySelectorAll('[data-lu]').forEach(b => b.onclick = () => { const d = draft(); d.lumina = Object.assign({}, d.lumina, { [b.dataset.lu]: b.dataset.luv }); save(); renderResult(); });
     document.querySelectorAll('[data-j]').forEach(t => { t.oninput = () => { draft()[t.dataset.j] = t.value; }; t.onchange = save; });
     document.querySelectorAll('[data-db]').forEach(t => { t.oninput = () => { APP.debriefs[n] = Object.assign({}, APP.debriefs[n], { [t.dataset.db]: t.value }); }; t.onchange = save; });
