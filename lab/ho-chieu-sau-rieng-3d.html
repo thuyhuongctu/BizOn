@@ -343,7 +343,7 @@ import { P3 } from '../js/poly3d-kit.js';
 
   // ---------------- thẻ quyết định (dùng chung APP.dec với bản thẻ) ----------------
   function tabChainHTML() {
-    const g = APP.game, s = D.seasons[g.n - 1], ev = E.eventFor(D, g), role = D.roles[g.roleId], dec = APP.dec;
+    const g = APP.game, s = D.seasons[g.n - 1], ev = E.eventFor(D, g), dec = APP.dec;
     return `<h4>📖 ${L('Mốc thật', 'Real milestone')}</h4>
       <p>${LANG === 'en' ? s.textEn : s.textVi}</p><p class="src">${fact(s.anchor)}</p>
       ${s.mission === 'audit' ? `<h4>🧾 ${L('Đối soát vụ này', 'This season\'s audit')}</h4><p>${L('Có mã vùng trồng, mã đóng gói và truy xuất/kiểm nghiệm thì qua kiểm tra; hồ sơ yếu sẽ bị tạm dừng mã vụ sau.', 'Hold area and packing codes plus traceability or testing to pass; a weak record gets your codes suspended next season.')}</p>` : ''}

@@ -64,7 +64,7 @@
     var img = ['assets/concept/tier-1-ben-phu-sa.jpg','assets/concept/tier-2a-bat-nghiep.jpg','assets/concept/tier-2b-ho-chieu.jpg','assets/concept/tier-2b-ho-chieu-sau-rieng-v2.jpg'];
     var tagBg = ['#0F5C4E','#E8762D','#B3541A','#B3541A'];
     var play = [B+'ben-phu-sa.html', B+'game.html', B+'brand-passport.html', B+'lab/ho-chieu-sau-rieng.html'];
-    var d3 = [B+'ben-phu-sa-3d.html', B+'BizOn Game 3D.html', B+'Ho Chieu Thuong Hieu 3D.html', null];
+    var d3 = [B+'ben-phu-sa-3d.html', B+'BizOn Game 3D.html', B+'Ho Chieu Thuong Hieu 3D.html', B+'lab/ho-chieu-sau-rieng-3d.html'];
     set('ar-mains', t.mains.map(function(m,i){
       return '<article id="g'+i+'" style="display:flex;flex-wrap:wrap;gap:22px;align-items:center;padding:14px;border-radius:32px;background:var(--clay-card);box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 26px 36px -26px rgba(110,70,30,.55)">'
         + '<div style="flex:1 1 220px;max-width:300px;margin:0 auto;position:relative;aspect-ratio:540/666;border-radius:24px;overflow:hidden;background:var(--clay-tray)"><img src="'+img[i]+'" alt="" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></div>'
@@ -79,6 +79,7 @@
           : '<a href="'+B+'lop-hoc.html" style="padding:13px 20px;border-radius:18px;background:var(--clay-tray);color:var(--clay-ink);font-family:var(--clay-head);font-size:18px;font-weight:800;box-shadow:inset 0 -5px 0 rgba(110,70,30,.15)">'+esc(t.playbook)+'</a>')
         + (i===0 ? '<a href="'+B+'ben-phu-sa-v8.html" style="padding:13px 20px;border-radius:18px;background:var(--clay-teal);color:#fff;font-family:var(--clay-head);font-size:18px;font-weight:800;box-shadow:inset 0 -5px 0 rgba(0,60,80,.35)">'+esc(t.d3team)+'</a>' : '')
         + (i===0 ? '<a href="'+B+'Bang Giao Vien.dc.html" style="padding:13px 20px;border-radius:18px;background:var(--clay-tray);color:var(--clay-ink);font-family:var(--clay-head);font-size:16px;font-weight:800;box-shadow:inset 0 -5px 0 rgba(110,70,30,.15)">👩‍🏫 Bảng giáo viên</a>' : '')
+        + (i===3 ? '<a href="'+B+'lop-hoc.html" style="padding:13px 20px;border-radius:18px;background:var(--clay-tray);color:var(--clay-ink);font-family:var(--clay-head);font-size:16px;font-weight:800;box-shadow:inset 0 -5px 0 rgba(110,70,30,.15)">'+esc(t.playbook)+'</a>' : '')
         + '</div></div></article>';
     }).join(''));
 
