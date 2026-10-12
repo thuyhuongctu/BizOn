@@ -18,6 +18,8 @@
 <script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
 <script src="js/backend-config.js"></script>
 <script src="js/error-log.js"></script>
+<script src="js/game3d-login-gate.js"></script>
+<script>Game3DGate.mount({ introId: 'bp-intro', title: 'Chào mừng tới Hộ Chiếu Thương Hiệu!', subtitle: 'Điền nhanh thông tin đội rồi vào thẳng phần giới thiệu — bỏ trống vẫn chơi được trọn vẹn.' });</script>
 <!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
      nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
 <link rel="stylesheet" href="css/bizon-fonts.css">
@@ -216,7 +218,7 @@
 <main class="max-w-2xl mx-auto px-5 py-8">
 
   <!-- MÀN GIỚI THIỆU -->
-  <section id="bp-intro" class="clay-card p-6">
+  <section id="bp-intro" class="clay-card p-6 hidden">
     <!-- VIDEO GIỚI THIỆU (trailer kể chuyện) + VIDEO HƯỚNG DẪN CHƠI – cả hai nằm
          trong #bp-intro (không phải section riêng trước nó) vì #bp-intro là
          overlay toàn màn hình (position:fixed) từ PR #627; để ở ngoài sẽ bị

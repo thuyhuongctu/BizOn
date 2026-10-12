@@ -22,6 +22,8 @@
 </script>
 <script src="js/backend-config.js"></script>
 <script src="js/error-log.js"></script>
+<script src="js/game3d-login-gate.js"></script>
+<script>Game3DGate.mount({ introId: 'ft-intro', title: 'Chào mừng tới Bến Phù Sa!', subtitle: 'Điền nhanh thông tin đội rồi vào thẳng phần giới thiệu — bỏ trống vẫn chơi được trọn vẹn.' });</script>
 <!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
      nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
 <link rel="stylesheet" href="css/bizon-fonts.css">
@@ -110,7 +112,7 @@
 <main class="max-w-2xl mx-auto px-5 py-8">
 
   <!-- MÀN GIỚI THIỆU -->
-  <section id="ft-intro" class="clay-card p-6">
+  <section id="ft-intro" class="clay-card p-6 hidden">
     <h2 class="font-display font-extrabold text-deep-teal text-lg mb-3" data-en="📜 Rules of play">📜 Luật chơi</h2>
     <ul class="space-y-2 text-sm">
       <li data-en-html="⛵ &lt;b&gt;Trading boat&lt;/b&gt;: revenue &lt;b&gt;×3&lt;/b&gt; – but locks in the product &amp; location for the whole week. For when you already &lt;i&gt;know&lt;/i&gt; the winning formula.">⛵ <b>Ghe hàng bông</b>: doanh thu <b>×3</b> – nhưng chốt cứng món hàng &amp; địa điểm cả tuần. Dành cho lúc bạn đã <i>biết</i> công thức thắng.</li>

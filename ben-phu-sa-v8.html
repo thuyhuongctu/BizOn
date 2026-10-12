@@ -23,6 +23,8 @@
 <script src="js/backend-config.js"></script>
 <script src="js/error-log.js"></script>
 <script src="js/student-login.js"></script>
+<script src="js/game3d-login-gate.js"></script>
+<script>Game3DGate.mount({ introId: 'ft-intro', title: 'Chào mừng tới Bến Phù Sa!', subtitle: 'Điền nhanh thông tin đội rồi vào thẳng phần giới thiệu — bỏ trống vẫn chơi được trọn vẹn.' });</script>
 <!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
      nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
 <link rel="stylesheet" href="css/bizon-fonts-v8.css">
@@ -234,7 +236,7 @@ document.addEventListener('DOMContentLoaded',function(){var m=document.getElemen
 <main class="max-w-2xl mx-auto px-5 py-8">
 
   <!-- MÀN GIỚI THIỆU -->
-  <section id="ft-intro" class="clay-card p-6">
+  <section id="ft-intro" class="clay-card p-6 hidden">
     <!-- HERO CHỌN ĐỘI & THUYỀN TRƯỞNG — 2 cột -->
     <div class="grid sm:grid-cols-2 gap-5 mb-6" style="align-items:stretch">
       <div class="relative overflow-hidden" style="border-radius:22px;min-height:200px;background:linear-gradient(180deg,rgba(3,51,55,.1) 0%,rgba(3,51,55,.85) 100%), url('assets/scene/ben-phu-sa/cho-noi-ngay.webp') center/cover">
