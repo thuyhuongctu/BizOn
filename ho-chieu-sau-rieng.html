@@ -15,6 +15,10 @@
 <link rel="stylesheet" href="css/bizon-clay.css">
 <style>
   .dp-hero{position:relative;overflow:hidden;margin-top:28px;border-radius:40px;background:var(--clay-cream-deep);box-shadow:inset 0 -10px 0 rgba(140,80,20,.1),inset 0 6px 0 rgba(255,255,255,.7),0 30px 44px -30px rgba(110,70,30,.6);padding:clamp(28px,5vw,48px) clamp(22px,5vw,48px)}
+  .dp-hero-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(20px,4vw,40px);align-items:center}
+  @media (max-width:760px){ .dp-hero-grid{grid-template-columns:1fr} }
+  .dp-hero-art{border-radius:26px;overflow:hidden;box-shadow:0 20px 30px -18px rgba(110,70,30,.55),inset 0 -6px 0 rgba(0,0,0,.08)}
+  .dp-hero-art img{display:block;width:100%;height:100%;object-fit:cover;aspect-ratio:16/9}
   .dp-crumb{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13px;font-weight:800;color:#7A4A0E}
   .dp-crumb a{color:#7A4A0E}
   .dp-crumb span.tag{padding:5px 12px;border-radius:999px;background:var(--clay-card);box-shadow:inset 0 -3px 0 rgba(0,0,0,.06)}
@@ -37,9 +41,14 @@
 
 <main class="clay-main">
   <section class="dp-hero">
-    <div class="dp-crumb"><a href="index.html">BizOn</a><span>›</span><span class="tag" data-en="Durian Passport">Hộ Chiếu Sầu Riêng</span></div>
-    <h1 data-en="Hộ Chiếu Sầu Riêng">Hộ Chiếu Sầu Riêng</h1>
-    <p data-en="Take Vietnamese durian to the world over 6 seasons: planting-area codes, the China phytosanitary protocol, official vs border trade, frozen and premium markets. A team of 5 roles faces AI rivals. Choose a mode below to start.">Đưa sầu riêng Việt ra thế giới qua 6 vụ: mã số vùng trồng, nghị định thư kiểm dịch với Trung Quốc, chính ngạch – tiểu ngạch, đông lạnh và thị trường cao cấp. Đội 5 vai đấu các đối thủ AI. Chọn một chế độ bên dưới để bắt đầu.</p>
+    <div class="dp-hero-grid">
+      <div>
+        <div class="dp-crumb"><a href="index.html">BizOn</a><span>›</span><span class="tag" data-en="Durian Passport">Hộ Chiếu Sầu Riêng</span></div>
+        <h1 data-en="Hộ Chiếu Sầu Riêng">Hộ Chiếu Sầu Riêng</h1>
+        <p data-en="Take Vietnamese durian to the world over 6 seasons: planting-area codes, the China phytosanitary protocol, official vs border trade, frozen and premium markets. A team of 5 roles faces AI rivals. Choose a mode below to start.">Đưa sầu riêng Việt ra thế giới qua 6 vụ: mã số vùng trồng, nghị định thư kiểm dịch với Trung Quốc, chính ngạch – tiểu ngạch, đông lạnh và thị trường cao cấp. Đội 5 vai đấu các đối thủ AI. Chọn một chế độ bên dưới để bắt đầu.</p>
+      </div>
+      <div class="dp-hero-art"><img src="assets/concept/ho-chieu-sau-rieng-hub-cho-noi.webp" alt="" loading="eager"></div>
+    </div>
 
     <div class="dp-modes">
       <div class="dp-mode">
