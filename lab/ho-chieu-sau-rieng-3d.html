@@ -104,7 +104,7 @@ button{font:inherit}
 .dcard .fthint{font-size:10.5px;color:var(--muted);text-align:center;margin-top:5px}
 /* ---------- minimap modal ---------- */
 .mmBack{position:fixed;inset:0;background:rgba(3,40,20,.55);z-index:50;display:flex;align-items:center;justify-content:center;padding:16px}
-.mmBox{background:var(--panel);border-radius:20px;max-width:420px;width:100%;padding:18px;box-shadow:0 30px 60px rgba(0,0,0,.4)}
+.mmBox{background:var(--panel);border-radius:20px;max-width:420px;width:100%;max-height:88vh;max-height:88dvh;overflow-y:auto;padding:18px;box-shadow:0 30px 60px rgba(0,0,0,.4)}
 .mmBox h3{font-size:15px;margin-bottom:4px}
 .mmLegend{display:flex;flex-wrap:wrap;gap:8px;font-size:11px;color:var(--muted);margin:6px 0 10px}
 .mmLegend span{display:inline-flex;align-items:center;gap:4px}
@@ -113,6 +113,32 @@ button{font:inherit}
 .mmBar{height:8px;border-radius:5px;background:var(--tray);overflow:hidden}
 .mmBar i{display:block;height:100%;background:linear-gradient(90deg,var(--durian),var(--flesh))}
 .mmClose{margin-top:12px;width:100%;border:0;border-radius:12px;padding:10px;background:var(--panel2);color:var(--ink);font-weight:700;cursor:pointer}
+.step8{display:flex;gap:10px;align-items:flex-start;margin:8px 0;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.step8:last-child{border-bottom:0}
+.s8-ic{font-size:20px;flex-shrink:0;width:28px;text-align:center}
+.s8-txt{flex:1;min-width:0}
+.s8-txt b{display:block;font-size:12.5px;margin-bottom:4px}
+.s8-txt img{width:120px;max-width:45%;border-radius:8px;margin-top:4px;margin-right:6px}
+.teamRow{display:flex;gap:10px;align-items:center;margin:8px 0;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.teamRow:last-child{border-bottom:0}
+.teamRow img{width:46px;height:46px;border-radius:50%;object-fit:cover;flex-shrink:0;background:var(--panel2)}
+.teamRow b{font-size:13px}
+.teamRow p{font-size:11.5px;margin:2px 0 0;color:var(--muted)}
+/* ---------- gallery modal (chuỗi cung ứng lạnh) ---------- */
+.galBack{position:fixed;inset:0;background:rgba(3,40,20,.6);z-index:55;display:flex;align-items:center;justify-content:center;padding:14px}
+.galBox{background:var(--panel);border-radius:20px;max-width:720px;width:100%;max-height:88vh;max-height:88dvh;overflow-y:auto;padding:18px;box-shadow:0 30px 60px rgba(0,0,0,.4)}
+.galBox h3{font-size:15px;margin-bottom:6px}
+details.gv2{margin-top:6px}
+details.gv2 summary{cursor:pointer;font-weight:700;font-size:12.5px;padding:8px 0}
+.chain2-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin:6px 0 10px}
+.chain2-grid .c2{border:1px solid var(--line2);border-radius:10px;overflow:hidden;background:var(--panel2)}
+.chain2-grid .c2 img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.chain2-grid .c2 p{margin:0;padding:6px 8px;font-size:10.5px;line-height:1.35}
+.cast2{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}
+.cast2 .who{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:8px;text-align:center}
+.cast2 .who img{width:100%;height:70px;object-fit:contain}
+.cast2 .who b{display:block;font-size:10.5px;margin-top:4px}
+@media (max-width:480px){.cast2{grid-template-columns:repeat(2,1fr)}}
 /* ---------- empty / end states ---------- */
 .wrap{max-width:720px;margin:0 auto;padding:90px 16px 40px;overflow-y:auto;height:100%}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px;text-align:center}
@@ -241,6 +267,43 @@ import { P3 } from '../js/poly3d-kit.js';
     back.onclick = e => { if (e.target === back) back.remove(); };
   }
 
+  function openEightSteps() {
+    const back = document.createElement('div'); back.className = 'mmBack';
+    back.innerHTML = `<div class="mmBox" style="max-width:480px">
+      <h3>📋 ${L('Quy trình 8 bước xuất khẩu chính ngạch sang Trung Quốc', 'The 8-step official export process to China')}</h3>
+      ${D.eightSteps.steps.map(st => `<div class="step8"><div class="s8-ic">${st.icon}</div><div class="s8-txt"><b>${st.n}. ${nm(st)}</b>${st.img ? `<img src="../assets/${st.img}" alt="${esc(st.imgAlt || '')}" loading="lazy">` : ''}${st.img2 ? `<img src="../assets/${st.img2}" alt="${esc(st.imgAlt || '')}" loading="lazy">` : ''}</div></div>`).join('')}
+      <button class="mmClose" type="button">${L('Đóng', 'Close')}</button></div>`;
+    document.body.appendChild(back);
+    back.querySelector('.mmClose').onclick = () => back.remove();
+    back.onclick = e => { if (e.target === back) back.remove(); };
+  }
+
+  function openTeamModal() {
+    const back = document.createElement('div'); back.className = 'mmBack';
+    back.innerHTML = `<div class="mmBox">
+      <h3>🧑‍💼 ${L('Đội 5 vai', 'The five roles')}</h3>
+      ${D.team.map(t => `<div class="teamRow"><img src="${IMG(t.img)}" alt="${esc(t.name)}"><div><b>${esc(t.name)}</b><p>${esc(nm(t))}</p></div></div>`).join('')}
+      <button class="mmClose" type="button">${L('Đóng', 'Close')}</button></div>`;
+    document.body.appendChild(back);
+    back.querySelector('.mmClose').onclick = () => back.remove();
+    back.onclick = e => { if (e.target === back) back.remove(); };
+  }
+
+  function openChain2Gallery() {
+    const back = document.createElement('div'); back.className = 'galBack';
+    back.innerHTML = `<div class="galBox">
+      <h3>🧊 ${L('Hành trình chuỗi lạnh: từ vườn đến tay người tiêu dùng', 'The cold-chain journey: from orchard to consumer')}</h3>
+      ${D.chain2.stages.map(st => `<details class="gv2"><summary>${esc(nm(st))}</summary>
+        <div class="chain2-grid">${st.items.map(it => `<div class="c2"><img src="../assets/${it.img}" alt="${esc(nm(it))}" loading="lazy"><p>${esc(nm(it))}</p></div>`).join('')}</div>
+      </details>`).join('')}
+      <h4 style="margin-top:10px;font-size:12.5px">${L('Những người bạn sẽ gặp', 'People along the way')}</h4>
+      <div class="cast2">${D.chain2.cast.map(c => `<div class="who"><img src="../assets/${c.img}" alt="${esc(nm(c))}" loading="lazy"><b>${esc(nm(c))}</b></div>`).join('')}</div>
+      <button class="mmClose" type="button">${L('Đóng', 'Close')}</button></div>`;
+    document.body.appendChild(back);
+    back.querySelector('.mmClose').onclick = () => back.remove();
+    back.onclick = e => { if (e.target === back) back.remove(); };
+  }
+
   // ---------------- định nghĩa trạm ----------------
   const SHORT_CH = {
     CN: ['Chính ngạch', 'Official'], BORDER: ['Biên giới', 'Border'], FROZEN: ['Đông lạnh', 'Frozen'],
@@ -256,11 +319,19 @@ import { P3 } from '../js/poly3d-kit.js';
       const [vi, en] = SHORT_CH[c.id] || [c.vi, c.en];
       return { id: c.id, icon: c.emoji, name: L(vi, en), x: pos[0], y: pos[1], active: (APP.dec.alloc[c.id] || 0) > 0, locked: !okIds.includes(c.id), theme: 'city', roof: CH_TINT[c.id] };
     });
+    const RIVAL_ROOF = { sea: 0x7a4fae, eu: 0x7a4fae, eas: 0x3f8f73, kr: 0x3f8f73, af: 0x3f8f73, na: 0xd9742f, me: 0xd9742f };
     const extra = [
       { id: 'audit', icon: '🧾', name: L('Đối soát', 'Audit'), x: 58, y: 14, locked: s.mission !== 'audit', pale: s.mission !== 'audit', theme: 'office' },
       { id: 'trader', icon: '🤝', name: L('Tiểu thương', 'Petty traders'), x: 38, y: 46, theme: 'market' },
-      { id: 'rv_sea', icon: '🇸🇬', img: IMG('rivals-global/sea-cut.webp'), name: 'Singapore', x: 25, y: 85, pale: true, rival: 'sea', theme: 'outpost' },
-      { id: 'rv_eu', icon: '🇪🇺', img: IMG('rivals-global/eu-cut.webp'), name: L('Châu Âu', 'Europe'), x: 62, y: 76, pale: true, rival: 'eu', theme: 'outpost' }
+      { id: 'team', icon: '🧑‍💼', name: L('Văn phòng đội', 'Team office'), x: 33, y: 18, theme: 'office' },
+      { id: 'chain2', icon: '🧊', name: L('Hành trình chuỗi lạnh', 'Cold-chain journey'), x: 56, y: 40, theme: 'gallery' },
+      { id: 'rv_sea', icon: '🇸🇬', img: IMG('rivals-global/sea-cut.webp'), name: 'Singapore', x: 25, y: 85, pale: true, rival: 'sea', theme: 'outpost', roof: RIVAL_ROOF.sea },
+      { id: 'rv_eu', icon: '🇪🇺', img: IMG('rivals-global/eu-cut.webp'), name: L('Châu Âu', 'Europe'), x: 62, y: 76, pale: true, rival: 'eu', theme: 'outpost', roof: RIVAL_ROOF.eu },
+      { id: 'rv_eas', icon: '🇯🇵', img: IMG('rivals-global/eas-cut.webp'), name: 'Tokyo', x: 10, y: 70, pale: true, rival: 'eas', theme: 'outpost', roof: RIVAL_ROOF.eas },
+      { id: 'rv_na', icon: '🇺🇸', img: IMG('rivals-global/na-cut.webp'), name: 'New York', x: 80, y: 85, pale: true, rival: 'na', theme: 'outpost', roof: RIVAL_ROOF.na },
+      { id: 'rv_me', icon: '🇦🇪', img: IMG('rivals-global/me-cut.webp'), name: 'Dubai', x: 90, y: 55, pale: true, rival: 'me', theme: 'outpost', roof: RIVAL_ROOF.me },
+      { id: 'rv_kr', icon: '🇰🇷', img: IMG('rivals-global/kr-cut.webp'), name: 'Seoul', x: 45, y: 92, pale: true, rival: 'kr', theme: 'outpost', roof: RIVAL_ROOF.kr },
+      { id: 'rv_af', icon: '🇰🇪', img: IMG('rivals-global/af-cut.webp'), name: 'Nairobi', x: 5, y: 95, pale: true, rival: 'af', theme: 'outpost', roof: RIVAL_ROOF.af }
     ];
     return chStn.concat(extra);
   }
@@ -276,7 +347,7 @@ import { P3 } from '../js/poly3d-kit.js';
     return `<h4>📖 ${L('Mốc thật', 'Real milestone')}</h4>
       <p>${LANG === 'en' ? s.textEn : s.textVi}</p><p class="src">${fact(s.anchor)}</p>
       ${s.mission === 'audit' ? `<h4>🧾 ${L('Đối soát vụ này', 'This season\'s audit')}</h4><p>${L('Có mã vùng trồng, mã đóng gói và truy xuất/kiểm nghiệm thì qua kiểm tra; hồ sơ yếu sẽ bị tạm dừng mã vụ sau.', 'Hold area and packing codes plus traceability or testing to pass; a weak record gets your codes suspended next season.')}</p>` : ''}
-      ${ev ? `<h4>⚡ ${nm(ev)}</h4><p>${LANG === 'en' ? ev.textEn : ev.textVi}</p><p class="src">${fact(ev.src)}</p>
+      ${ev ? `<h4>${EVENT_ICON[ev.id] || '⚡'} ${nm(ev)}</h4><p>${LANG === 'en' ? ev.textEn : ev.textVi}</p><p class="src">${fact(ev.src)}</p>
         <h4>${L('Cách phản ứng', 'Response')}</h4>
         ${ev.options.map((o, i) => `<button type="button" class="opt3 ${dec.option === i ? 'on' : ''}" data-opt="${i}">${nm(o)}</button>`).join('')}` : ''}
       <h4>🏪 ${L('Chuỗi nội địa', 'Domestic chain')}</h4>
@@ -309,7 +380,8 @@ import { P3 } from '../js/poly3d-kit.js';
       ${D.channels.map(c => { const e = okIds.includes(c.id);
         return `<div class="mrow3" id="ch-${c.id}"><span>${c.emoji} ${nm(c)}${e ? '' : ` <span class="lock3">🔒</span>`}</span>
           <input type="range" data-ch="${c.id}" min="0" max="100" step="5" value="${dec.alloc[c.id] || 0}" ${e ? '' : 'disabled'}><span class="num" id="pct3-${c.id}">${e ? pct(norm[c.id]) : '—'}</span></div>
-          <p class="src" style="margin:-2px 0 6px">${nm(D.entryModes[c.entryMode])} · ${c.pipeline.map(p => LANG === 'en' ? p.en : p.vi).join(' → ')}</p>`; }).join('')}`;
+          <p class="src" style="margin:-2px 0 6px">${nm(D.entryModes[c.entryMode])} · ${c.pipeline.map(p => LANG === 'en' ? p.en : p.vi).join(' → ')}</p>
+          ${c.id === 'CN' ? `<button type="button" class="opt3" data-eightsteps="1" style="margin:2px 0 8px">📋 ${L('Xem quy trình 8 bước xuất khẩu chính ngạch', 'View the 8-step official export process')}</button>` : ''}`; }).join('')}`;
   }
 
   function cardHTML() {
@@ -373,6 +445,7 @@ import { P3 } from '../js/poly3d-kit.js';
       };
       r.onchange = () => { save(); refreshStationVisuals(); };
     });
+    document.querySelectorAll('[data-eightsteps]').forEach(b => b.onclick = () => openEightSteps());
     $('goCard').onclick = () => { save(); location.href = 'ho-chieu-sau-rieng.html'; };
   }
 
@@ -489,6 +562,21 @@ import { P3 } from '../js/poly3d-kit.js';
       p1.position.set(1.9, 0, 0.3); p1.rotation.y = -0.9; g.add(p1);
       const p2 = P3.character(THREE, { shirt: 0x3f7d3a, hat: 'none' });
       p2.position.set(-1.9, 0, -0.3); p2.rotation.y = 1.3; g.add(p2);
+    } else if (zone.id === 'team') {
+      const b = P3.building(THREE, { w: 2.6, d: 1.6, h: 1.4, wallColor: 0xeef1f5, roofColor: 0x2f4a6b, roofType: 'flat' });
+      g.add(b);
+    } else if (zone.id === 'chain2') {
+      const kiosk = P3.building(THREE, { w: 1.6, d: 1.4, h: 1.1, wallColor: 0xeaf4fb, roofColor: 0x6fa3c9, roofType: 'flat' });
+      g.add(kiosk);
+      const signMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.5 });
+      const sign = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.6, 0.05), signMat);
+      sign.position.set(0, 1.5, 0.72); sign.castShadow = true; g.add(sign);
+      [[1.3, 0.6], [1.5, 0.2]].forEach(([x, z], i) => {
+        const c = P3.crate(THREE, { size: 0.36, color: [0x6fa3c9, 0x8fbfe0][i % 2] });
+        c.position.set(x, 0.18, z); g.add(c);
+      });
+      const p = P3.character(THREE, { shirt: 0x6fa3c9, hat: 'none' });
+      p.position.set(-1.4, 0, 0.8); p.rotation.y = -0.7; g.add(p);
     } else if (zone.theme === 'city' || zone.theme === 'market' || zone.theme === 'office') {
       const roofType = zone.theme === 'office' ? 'flat' : 'gable';
       const b = P3.building(THREE, { w: 2.3, d: 1.9, h: 1.5, wallColor: 0xf3eee1, roofColor: zone.roof || 0xb5523a, roofType });
@@ -498,8 +586,16 @@ import { P3 } from '../js/poly3d-kit.js';
       p.position.set(1.7, 0, 1.1); p.rotation.y = 0.6;
       g.add(p);
     } else if (zone.theme === 'outpost') {
-      const b = P3.building(THREE, { w: 1.7, d: 1.5, h: 1.3, wallColor: 0xe9ecef, roofColor: 0x7a4fae, roofType: 'flat' });
+      const roof = zone.roof || 0x7a4fae;
+      const b = P3.building(THREE, { w: 1.7, d: 1.5, h: 1.3, wallColor: 0xe9ecef, roofColor: roof, roofType: 'flat' });
       g.add(b);
+      const poleMat = new THREE.MeshStandardMaterial({ color: 0x9a7033, roughness: 0.8 });
+      const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 1.6, 6), poleMat);
+      pole.position.set(1.3, 0.8, -0.9); pole.castShadow = true; g.add(pole);
+      const flag = new THREE.Mesh(new THREE.PlaneGeometry(0.5, 0.32), new THREE.MeshStandardMaterial({ color: roof, roughness: 0.6, side: THREE.DoubleSide }));
+      flag.position.set(1.55, 1.4, -0.9); flag.castShadow = true; g.add(flag);
+      const p = P3.character(THREE, { shirt: roof, hat: 'none' });
+      p.position.set(-1.5, 0, 0.9); p.rotation.y = -0.8; g.add(p);
     }
     return g;
   }
@@ -542,8 +638,9 @@ import { P3 } from '../js/poly3d-kit.js';
     const container = $('world3d'), labelsEl = $('labels3d');
     const g = APP.game, s = D.seasons[g.n - 1];
     const stns = stationDef(g, s);
+    const ev3d = E.eventFor(D, g);
     const CX = 46, CY = 34, K = 0.5;
-    const ZONES = [{ id: 'sau', name: L('Bà Sáu Lành', 'Bà Sáu Lành'), x: CX, y: CY, hub: true }].concat(stns);
+    const ZONES = [{ id: 'sau', icon: (ev3d && EVENT_ICON[ev3d.id]) || '🌳', name: L('Bà Sáu Lành', 'Bà Sáu Lành'), x: CX, y: CY, hub: true }].concat(stns);
 
     const scene = new THREE.Scene();
     scene.background = new THREE.Color('#bfe3ef');
@@ -574,6 +671,13 @@ import { P3 } from '../js/poly3d-kit.js';
         }
         const mood = g.history.length ? (g.history[g.history.length - 1].profit >= 0 ? 'vui' : 'lo') : 'vui';
         decor.add(makeBillboard(`../assets/hc/cast/ba-sau-lanh-${mood}-cut.webp`, IMG('advisors/ba-sau-lanh-cut.webp'), 2.1));
+      } else if (zone.id === 'team') {
+        decor.add(buildZoneDecor(zone));
+        D.team.forEach((t, i) => {
+          const bb = makeBillboard(IMG(t.img), IMG('advisors/ba-sau-lanh-cut.webp'), 1.25);
+          bb.position.x = -1.6 + i * 0.8; bb.position.z = 1.1;
+          decor.add(bb);
+        });
       } else if (zone.rival) {
         decor.add(buildZoneDecor(zone));
         decor.add(makeBillboard(zone.img, IMG('advisors/ba-sau-lanh-cut.webp'), 1.8));
@@ -654,6 +758,8 @@ import { P3 } from '../js/poly3d-kit.js';
       if (zone.rival) { rivalToast(zone.rival); return; }
       if (zone.id === 'audit') { openSheetToTab('chain'); return; }
       if (zone.id === 'trader') { openSheetToTab('invest'); toast('🤝 ' + (LANG === 'en' ? D.sourcingTheory.en : D.sourcingTheory.vi)); return; }
+      if (zone.id === 'team') { openTeamModal(); return; }
+      if (zone.id === 'chain2') { openChain2Gallery(); return; }
       const ch = D.channels.find(c => c.id === zone.id);
       if (ch) { openSheetToTab('channel', '#ch-' + ch.id); toast(`${ch.emoji} ${nm(ch)} — ${nm(D.entryModes[ch.entryMode])}`); return; }
     }
@@ -682,7 +788,7 @@ import { P3 } from '../js/poly3d-kit.js';
         player.rotation.y = playerFacing;
       }
       player.position.x = Math.max(-34, Math.min(34, player.position.x));
-      player.position.z = Math.max(-46, Math.min(10, player.position.z));
+      player.position.z = Math.max(-46, Math.min(36, player.position.z));
       updateCamera(false);
 
       let closest = null, closestD = Infinity;
