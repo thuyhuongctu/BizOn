@@ -5,12 +5,12 @@
  * - Hết giờ quý: tự đi tiếp (chốt ưu tiên đang chọn, mặc định «Củng cố nội lực»; sự kiện chọn phương án đầu).
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. */
 (function () {
-  var KEY = 'bizon-ft-class';
+  var KEY = 'bp-class';
   var cfg = function () { return window.BIZON_BACKEND || {}; };
   var on = function () { var c = cfg(); return c.enabled && c.url && c.url.indexOf('YOUR-PROJECT') < 0; };
   var T = function (vi, en) { return (document.documentElement.lang || 'vi').indexOf('en') === 0 ? en : vi; };
   var exam = null, skew = 0, busy = false, lastAuto = '';
-  var code = function () { try { return (localStorage.getItem(KEY) || localStorage.getItem('bizon-class') || '').trim().toUpperCase(); } catch (e) { return ''; } };
+  var code = function () { try { return (localStorage.getItem(KEY) || '').trim().toUpperCase(); } catch (e) { return ''; } };
   var BP = function () { return window.__bp && window.__bp.S; };
 
   function status(ex, now) {

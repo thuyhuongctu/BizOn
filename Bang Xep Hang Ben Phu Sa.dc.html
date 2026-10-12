@@ -59,7 +59,7 @@ input,button{font:inherit}
 class Component extends DCLogic {
   state = { input: '', code: '', rows: [], msg: 'Nhập Mã lớp rồi bấm «Xem».', at: null };
   componentDidMount() {
-    let c = ''; try { c = new URLSearchParams(location.search).get('class') || localStorage.getItem('bizon-ft-class') || localStorage.getItem('bizon-class') || ''; } catch (e) {}
+    let c = ''; try { c = new URLSearchParams(location.search).get('class') || localStorage.getItem('bps-class') || ''; } catch (e) {}
     c = c.trim().toUpperCase(); this.setState({ input: c }); if (c) this.fetch(c);
     this.iv = setInterval(() => { if (this.state.code) this.fetch(this.state.code, true); }, 10000);
   }
@@ -74,7 +74,7 @@ class Component extends DCLogic {
       if (!r.ok) throw new Error(r.status);
       const rows = await r.json();
       this.setState({ code, rows: rows || [], at: new Date(), msg: rows && rows.length ? '' : 'Lớp ' + code + ' chưa có đội nào nộp kết quả.' });
-      try { localStorage.setItem('bizon-ft-class', code); } catch (e) {}
+      try { localStorage.setItem('bps-class', code); } catch (e) {}
     } catch (e) { if (!quiet) this.setState({ msg: 'Không tải được – kiểm tra mạng.' }); }
   }
   renderVals() {

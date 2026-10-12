@@ -3,7 +3,7 @@
  * Chưa tới giờ: khóa «Chốt tuần». Hết giờ: tự chốt lựa chọn đang có (thiếu thì: gánh hàng rong · món 1 · điểm đông khách nhất).
  * Kết thúc: tự nộp kết quả (ft_results) nếu đã có Mã lớp. © 2026 Đỗ Thùy Hương & Phan Anh Tú. */
 (function () {
-  var KEY = 'bizon-ft-class';
+  var KEY = 'bps-class';
   var cfg = function () { return window.BIZON_BACKEND || {}; };
   var on = function () { var c = cfg(); return c.enabled && c.url && c.url.indexOf('YOUR-PROJECT') < 0; };
   var EN = function () { try { return localStorage.getItem('bizon-lang') === 'en'; } catch (e) { return false; } };
@@ -46,9 +46,9 @@
       '<label style="display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:800;color:#033337">' + T('👤 Tên bạn / tên đội', '👤 Your name / team name') + '<input id="bps-exam-name" autocomplete="off" style="padding:10px 12px;border-radius:14px;border:2px solid rgba(0,102,135,.2);font:700 15px inherit"></label>' +
       '<p id="bps-exam-note" style="margin:0;font-size:11px;opacity:.65"></p>';
     start.parentNode.insertBefore(box, start);
-    var inp = $('bps-exam-class'), nm = $('bps-exam-name'); inp.value = code(); try { nm.value = localStorage.getItem('bizon-ft-name') || ''; } catch (e) {}
+    var inp = $('bps-exam-class'), nm = $('bps-exam-name'); inp.value = code(); try { nm.value = localStorage.getItem('bps-name') || ''; } catch (e) {}
     inp.addEventListener('change', function () { try { localStorage.setItem(KEY, inp.value.trim().toUpperCase()); } catch (e) {} feed().then(tick); });
-    nm.addEventListener('change', function () { try { localStorage.setItem('bizon-ft-name', nm.value.trim()); } catch (e) {} });
+    nm.addEventListener('change', function () { try { localStorage.setItem('bps-name', nm.value.trim()); } catch (e) {} });
   }
   function pill(ex) {
     var el = $('bps-exam-clock');
@@ -95,7 +95,7 @@
   function autoSubmit() {
     var end = $('ft-end'), g = G(); if (submitted || !end || end.classList.contains('hidden') || !g || !g.S.result || !code()) return;
     submitted = true;
-    var c = $('ft-class'), n = $('ft-name'); if (c && !c.value) c.value = code(); if (n && !n.value) try { n.value = localStorage.getItem('bizon-ft-name') || ''; } catch (e) {}
+    var c = $('ft-class'), n = $('ft-name'); if (c && !c.value) c.value = code(); if (n && !n.value) try { n.value = localStorage.getItem('bps-name') || ''; } catch (e) {}
     if (typeof window.ftSubmit === 'function') window.ftSubmit();
   }
   function tick() {
