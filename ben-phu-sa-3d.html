@@ -85,6 +85,26 @@
 .bps3d-mode-on{background:#fda127;color:#033337}
 #bps3d-wrap:fullscreen{border-radius:0}#bps3d-wrap:fullscreen #bps3d{height:100vh!important}
 @media (max-width:640px){.bps3d-lab small{display:none}}
+/* Màn hình lớn toàn khung hình như Bật Nghiệp: cảnh 3D chiếm toàn bộ khung
+   dưới thanh điều hướng (52px); bảng quyết định là lớp phủ (cột bên phải trên
+   máy tính, tấm trượt dưới đáy trên di động). Inline style của #bps3d-wrap và
+   #bps3d được ghi đè bằng !important. */
+@media (min-width:1024px){
+  #bps3d-wrap{position:fixed!important;left:0!important;top:52px!important;right:460px!important;bottom:0!important;width:auto!important;height:auto!important;margin:0!important;border-radius:0!important;box-shadow:none!important;z-index:1}
+  #bps3d{height:100%!important}
+  #ft-play{position:fixed;top:52px;right:0;bottom:0;width:460px;overflow-y:auto;z-index:3;padding:72px 16px 24px;background:rgba(255,250,241,.96);box-shadow:-20px 0 40px -30px rgba(0,60,80,.4)}
+}
+/* Cảnh 3D nằm ngoài #ft-play (đưa ra thân trang bằng script cuối trang) để
+   không bị nhốt trong ngăn xếp lớp của bảng quyết định; chỉ hiện khi đang chơi. */
+#bps3d-wrap{display:none}
+body:has(#ft-play:not(.hidden)) #bps3d-wrap{display:block}
+/* Khi đang chơi, ẩn tiêu đề trang để cảnh 3D không bị chữ đè lên. */
+body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
+@media (max-width:1023px){
+  #bps3d-wrap{position:fixed!important;left:0!important;right:0!important;top:52px!important;bottom:0!important;width:auto!important;height:auto!important;margin:0!important;border-radius:0!important;box-shadow:none!important;z-index:1}
+  #bps3d{height:100%!important}
+  #ft-play{position:fixed;left:0;right:0;bottom:0;top:auto;max-height:52vh;overflow-y:auto;z-index:3;padding:14px 14px 20px;border-radius:24px 24px 0 0;background:rgba(255,250,241,.96);box-shadow:0 -12px 30px -12px rgba(0,60,80,.4)}
+}
 @media (max-width:760px){.bps3d-legend{display:none}}
 </style>
 <script type="importmap">{"imports":{"three":"./vendor/three/three.module.js","three/addons/controls/OrbitControls.js":"./vendor/three/OrbitControls.js"}}</script>
@@ -1095,5 +1115,6 @@
 <script src="js/bps-cast.js"></script>
 <script src="js/bps-exam.js"></script>
 <script type="module" src="js/bps3d.js"></script>
+<script>document.body.appendChild(document.getElementById('bps3d-wrap'));</script>
 </body>
 </html>
