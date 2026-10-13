@@ -130,6 +130,18 @@
   html[data-theme="dark"] .clay-card { background:rgba(14,42,51,.95); }
   #bp3d-head h1 { color:#033337; }
   html[data-theme="dark"] #bp3d-head h1 { color:#d6ecf0; }
+  /* Màn hình lớn toàn khung hình, như Bật Nghiệp: cảnh 3D chiếm toàn bộ màn
+     hình, bảng quyết định là lớp phủ có thể thu gọn (nút ⤢ ở dưới) thay vì
+     một cột/dải riêng làm co bản đồ lại. */
+  #bp3d-stage { height:100svh; width:100%; }
+  #bp3d-col { position:fixed; left:0; right:0; bottom:0; top:auto; z-index:3; margin:0; min-height:0; max-height:50svh; overflow-y:auto; padding-top:14px; pointer-events:none;
+    background:rgba(244,250,255,.94); border-radius:24px 24px 0 0; box-shadow:0 -12px 30px -12px rgba(0,60,80,.4); }
+  #bp3d-col > * { pointer-events:auto; }
+  html[data-theme="dark"] #bp3d-col { background:rgba(8,26,32,.92); }
+  @media (min-width:1024px) {
+    body #bp3d-stage { width:100%; height:100vh; }
+    body #bp3d-col { left:auto; top:0; bottom:0; width:460px; max-height:none; height:100vh; margin-left:0; padding-top:72px; border-radius:0; box-shadow:-20px 0 40px -30px rgba(0,60,80,.4); pointer-events:auto; }
+  }
   @media (max-width:379px) { .bp3d-tools button { padding:8px 11px; font-size:11px; } #bp3d-hint { display:none; } }
   @media (min-width:1024px) {
     #bp3d-stage { height:100vh; width:calc(100% - 500px); }
