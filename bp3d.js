@@ -877,8 +877,8 @@ function navBottom() {
 }
 let fitCache = {};
 function resize() {
-  const top = navBottom(), desk = innerWidth >= 1024;
-  const full = document.body.classList.contains('bp3d-full'); wrap.style.top = top + 'px'; wrap.style.height = ((desk || full ? innerHeight : innerHeight * 0.54) - top) + 'px';
+  const top = navBottom();
+  wrap.style.top = top + 'px'; wrap.style.height = (innerHeight - top) + 'px'; // cảnh 3D chiếm toàn khung hình dưới thanh điều hướng; bảng quyết định là lớp phủ (xem CSS)
   const w = wrap.clientWidth, h = wrap.clientHeight; if (!w || !h) return;
   R.setSize(w, h, false); cam.aspect = w / h; cam.clearViewOffset(); cam.updateProjectionMatrix(); fitCache = {};
 }
