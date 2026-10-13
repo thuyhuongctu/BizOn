@@ -76,6 +76,25 @@
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
   }
+  /* Màn chơi một màn hình (máy tính): HUD trên cùng, bàn quyết định bên trái,
+     cửa hàng và nhật ký bên phải; mỗi khung cuộn trong chính nó. */
+  @media (min-width: 900px) {
+    body:has(#bp-play:not(.hidden)) { position: fixed; inset: 0; width: 100%; height: 100vh; overflow: hidden; }
+    body:has(#bp-play:not(.hidden)) > header.pt-24 { display: none !important; }
+    body:has(#bp-play:not(.hidden)) > main { max-width: none !important; padding: 0 !important; height: 100vh; }
+    body:has(#bp-play:not(.hidden)) #bp-howto, body:has(#bp-play:not(.hidden)) #bp-intro { display: none !important; }
+    #bp-play:not(.hidden) {
+      display: grid !important; box-sizing: border-box; height: 100vh;
+      grid-template-columns: minmax(0, 1fr) minmax(300px, 380px);
+      grid-template-rows: auto minmax(0, 1fr) minmax(0, 1fr);
+      gap: 12px; padding: 70px 14px 14px;
+    }
+    #bp-play:not(.hidden) > .clay-card { margin: 0 !important; min-height: 0; overflow: auto; }
+    #bp-play:not(.hidden) > .clay-card:first-child { grid-column: 1 / -1; overflow: visible; }
+    #bp-play:not(.hidden) #bp-stage { grid-column: 1; grid-row: 2 / 4; }
+    #bp-play:not(.hidden) #bp-shop-card { grid-column: 2; grid-row: 2; }
+    #bp-play:not(.hidden) > .clay-card:last-child { grid-column: 2; grid-row: 3; }
+  }
 </style>
 <link rel="stylesheet" href="css/tw.css">
 <meta property="og:type" content="website">
