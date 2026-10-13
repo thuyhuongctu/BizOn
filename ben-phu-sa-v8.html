@@ -144,6 +144,13 @@ html[data-theme="dark"] #ft-play:not(.hidden){background:#081a20}
   #ft-play #bps3d-wrap,#ft-play #bps3d{height:52vh!important}
   #hud-panel{height:auto;min-height:0;border-left:0;border-top:1px solid rgba(0,102,135,.12);border-radius:24px 24px 0 0;margin-top:-20px;position:relative;z-index:3;background:inherit}
 }
+/* Di động: cảnh 3D chiếm toàn khung hình như Bật Nghiệp; bảng HUD/quyết định là tấm trượt dưới đáy (52vh). */
+@media (max-width:900px){
+  #ft-play:not(.hidden){grid-template-rows:minmax(0,1fr)}
+  #ft-play #bps3d-wrap,#ft-play #bps3d{height:100vh!important}
+  #hud-panel{position:fixed;left:0;right:0;bottom:0;top:auto;height:auto;max-height:52vh;margin:0;padding-top:14px;border-radius:24px 24px 0 0;background:rgba(255,250,241,.96);box-shadow:0 -12px 30px -12px rgba(0,60,80,.4);z-index:3}
+  html[data-theme="dark"] #hud-panel{background:rgba(8,26,32,.94)}
+}
 </style>
 <style id="clay-3d-ui">
 /* Đất sét 3D: khối dày, mép bo, sáng trên – tối dưới, bóng đổ mềm, bấm lún xuống */
