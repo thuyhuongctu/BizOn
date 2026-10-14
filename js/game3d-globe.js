@@ -4,8 +4,10 @@
 import * as THREE from 'three';
 
 (function () {
+  // Trả về { dispose } để trang tắt WebGL khi không cần quả địa cầu nữa (vd. khi vào game).
   function mount(el) {
-    if (!el || el.dataset.globeMounted) return;
+    if (!el) return null;
+    if (el._globeHandle) return el._globeHandle;
     el.dataset.globeMounted = '1';
 
     var renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -77,16 +79,22 @@ import * as THREE from 'three';
       renderer.setSize(w, h, false);
     }
     resize();
-    if (window.ResizeObserver) new ResizeObserver(resize).observe(el);
+    var ro = window.ResizeObserver ? new ResizeObserver(resize) : null;
+    if (ro) ro.observe(el);
+
+    function dispose() {
+      renderer.setAnimationLoop(null);
+      if (ro) ro.disconnect();
+      renderer.dispose();
+      renderer.domElement.remove();
+      delete el.dataset.globeMounted;
+      el._globeHandle = null;
+    }
 
     var t0 = performance.now();
     renderer.setAnimationLoop(function () {
       // Tự dọn khi khung đăng nhập bị gỡ khỏi trang
-      if (!el.isConnected) {
-        renderer.setAnimationLoop(null);
-        renderer.dispose();
-        return;
-      }
+      if (!el.isConnected) { dispose(); return; }
       var t = (performance.now() - t0) / 1000;
       var pulse = 1 + 0.35 * Math.sin(t * 2.4);
       ring.scale.set(pulse, pulse, pulse);
@@ -94,6 +102,9 @@ import * as THREE from 'three';
       earth.rotation.y += 0.002;
       renderer.render(scene, camera);
     });
+
+    el._globeHandle = { dispose: dispose };
+    return el._globeHandle;
   }
 
   window.Game3DGlobe = { mount: mount };

@@ -162,6 +162,8 @@ details.gv2 summary{cursor:pointer;font-weight:700;font-size:12.5px;padding:8px 
   <div class="lang-pill"><button id="langVI" class="on" type="button">VI</button><button id="langEN" type="button">EN</button></div>
 </div>
 
+<script type="importmap">{"imports":{"three":"../js/vendor/three.module.js"}}</script>
+<script type="module" src="../js/game3d-globe.js"></script>
 <div id="app"></div>
 
 <script src="ho-chieu-sau-rieng-engine.js"></script>
@@ -201,6 +203,7 @@ import { P3 } from '../js/poly3d-kit.js';
     try { const x = JSON.parse(raw); return x && x.game && x.roleId ? x : null; } catch (e) { return null; }
   }
   function boot(app) {
+    disposeGlobe();
     APP = app;
     RIVALS = E.rivalsRun(D, APP.roleId, APP.seed);
     APP.flags = APP.game.history.map(r => E.flagFor(RIVALS, r));
@@ -381,6 +384,7 @@ import { P3 } from '../js/poly3d-kit.js';
         return `<div class="mrow3" id="ch-${c.id}"><span>${c.emoji} ${nm(c)}${e ? '' : ` <span class="lock3">🔒</span>`}</span>
           <input type="range" data-ch="${c.id}" min="0" max="100" step="5" value="${dec.alloc[c.id] || 0}" ${e ? '' : 'disabled'}><span class="num" id="pct3-${c.id}">${e ? pct(norm[c.id]) : '—'}</span></div>
           <p class="src" style="margin:-2px 0 6px">${nm(D.entryModes[c.entryMode])} · ${c.pipeline.map(p => LANG === 'en' ? p.en : p.vi).join(' → ')}</p>
+          ${e ? `<div style="display:flex;gap:6px;flex-wrap:wrap;margin:0 0 4px"><button type="button" class="opt3" data-fc="${c.id}">🔮 ${L('Dự báo nếu dồn 100%', 'Forecast at 100%')}</button><button type="button" class="opt3" data-fcset="${c.id}">➡️ ${L('Dồn 100% vào kênh này', 'Put 100% into this channel')}</button></div><p class="src" id="fcv-${c.id}" style="margin:0 0 8px"></p>` : ''}
           ${c.id === 'CN' ? `<button type="button" class="opt3" data-eightsteps="1" style="margin:2px 0 8px">📋 ${L('Xem quy trình 8 bước xuất khẩu chính ngạch', 'View the 8-step official export process')}</button>` : ''}`; }).join('')}`;
   }
 
@@ -420,6 +424,11 @@ import { P3 } from '../js/poly3d-kit.js';
     document.documentElement.style.setProperty('--sheet-peek', v ? 'min(76vh,640px)' : '68px');
   }
 
+  // Dự báo cho một kênh (dồn 100% vào kênh đó). Chỉ ước tính, không ghi gì vào tiến trình.
+  function channelForecast(id) {
+    const alloc = {}; CH_IDS.forEach(x => { alloc[x] = x === id ? 100 : 0; });
+    return E.forecast(D, APP.game, Object.assign({}, APP.dec, { alloc: alloc }));
+  }
   function wireCard() {
     const g = APP.game, dec = APP.dec;
     $('peekBar').onclick = () => setSheetOpen(!sheetOpen);
@@ -444,6 +453,19 @@ import { P3 } from '../js/poly3d-kit.js';
         okIds.forEach(id => { const el = $('pct3-' + id); if (el) el.textContent = pct(n2[id]); });
       };
       r.onchange = () => { save(); refreshStationVisuals(); };
+    });
+    document.querySelectorAll('[data-fc]').forEach(b => b.onclick = () => {
+      const id = b.dataset.fc, el = $('fcv-' + id);
+      try {
+        const f = channelForecast(id);
+        if (el) el.textContent = L('Dự báo: doanh thu ', 'Forecast: revenue ') + money(f.revenue) + L(' · lợi nhuận ', ' · profit ') + money(f.profit) + L(' (ước tính, chưa chốt vụ)', ' (estimate, season not committed)');
+      } catch (e) { if (el) el.textContent = L('Không dự báo được kênh này.', 'Cannot forecast this channel.'); }
+    });
+    document.querySelectorAll('[data-fcset]').forEach(b => b.onclick = () => {
+      const id = b.dataset.fcset;
+      CH_IDS.forEach(x => { dec.alloc[x] = x === id ? 100 : 0; });
+      save(); refreshStationVisuals(); renderCard();
+      toast(L('Đã dồn 100% sản lượng vào ', 'Put 100% of output into ') + nm(D.channels.find(c => c.id === id)) + L('. Chưa chốt vụ.', '. Season not committed yet.'));
     });
     document.querySelectorAll('[data-eightsteps]').forEach(b => b.onclick = () => openEightSteps());
     $('goCard').onclick = () => { save(); location.href = 'ho-chieu-sau-rieng.html'; };
@@ -828,13 +850,17 @@ import { P3 } from '../js/poly3d-kit.js';
     requestAnimationFrame(loop);
   }
 
+  function disposeGlobe() {
+    if (window.__sauGlobe) { window.__sauGlobe.dispose(); window.__sauGlobe = null; }
+  }
   function renderEmpty() {
-    disposeWorld(); chrome(); $('voiceBtn').hidden = true; $('mapBtn').hidden = true;
-    $('app').innerHTML = `<div class="wrap"><div class="card">
+    disposeWorld(); disposeGlobe(); chrome(); $('voiceBtn').hidden = true; $('mapBtn').hidden = true;
+    $('app').innerHTML = `<div id="sauGlobe" aria-hidden="true" style="position:fixed;inset:0;pointer-events:none;opacity:.4;z-index:0"></div><div class="wrap" style="position:relative;z-index:1"><div class="card">
       <h1>🌳 ${L('Chưa có đội nào đang chơi', 'No team in progress yet')}</h1>
       <p>${L('Bản đồ 3D dùng chung dữ liệu với bản thẻ — hãy lập đội và vào vụ 1 ở bản thẻ trước, rồi quay lại đây để khám phá bản đồ.', 'The 3D map shares data with the card view — set up your team and start season 1 there first, then come back here to explore the map.')}</p>
       <a class="btn" href="ho-chieu-sau-rieng.html">${L('Sang bản thẻ để lập đội →', 'Go to the card view to set up →')}</a>
     </div></div>`;
+    if (window.Game3DGlobe) window.__sauGlobe = Game3DGlobe.mount($('sauGlobe'));
   }
   function renderPendingJournal() {
     disposeWorld(); chrome(); $('voiceBtn').hidden = true; $('mapBtn').hidden = true;
