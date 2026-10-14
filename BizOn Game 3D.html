@@ -20,6 +20,7 @@
   "three/addons/controls/OrbitControls.js": "./js/vendor/OrbitControls.js"
 } }
 </script>
+<script type="module" src="js/game3d-globe.js"></script>
 <style>
   html,body{margin:0;height:100%;overflow:hidden;background:#efe4d2;font-family:"Be Vietnam Pro",system-ui,sans-serif;color:#2c3552}
   a{color:#1f6f8a}a:hover{color:#c8641c}
@@ -55,6 +56,8 @@
   body.login3d #login3d{display:block} body.login3d #frame{visibility:hidden} body.login3d .hud,body.login3d #zones,body.login3d #more{display:none!important}
   body.diorama #cta,body.diorama #rail [data-tab]{display:none!important}
   #login3d .card{pointer-events:auto;position:absolute;left:clamp(12px,4vw,56px);top:50%;transform:translateY(-50%);width:min(420px,calc(100vw - 24px));max-height:calc(100vh - 24px);overflow:auto;box-sizing:border-box;background:#fbf6ee;border:4px solid #e6d6bf;border-radius:28px;box-shadow:0 10px 0 #d9c5a8,0 30px 60px rgba(20,28,56,.25);padding:22px;display:flex;flex-direction:column;gap:9px;font-family:'Be Vietnam Pro',sans-serif;color:#1f3f4a}
+  #l3Globe{position:absolute;right:22px;top:22px;width:150px;height:150px;pointer-events:none;opacity:.9}
+  @media (max-width:760px){#l3Globe{display:none}}
   #login3d h1{margin:0;font:800 28px/1.05 'Baloo 2',sans-serif;color:#1f4a55} #login3d p{margin:0;font-size:13px;color:#5a6b74;text-wrap:pretty}
   #login3d label{font:700 13px 'Be Vietnam Pro',sans-serif;margin-top:4px} #login3d input{padding:11px 13px;border-radius:14px;border:2px solid #e6d6bf;background:#fff;font:500 15px 'Be Vietnam Pro',sans-serif;outline:none} #login3d input:focus{border-color:#2f8a8c}
   #login3d .roles{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
@@ -252,6 +255,7 @@
     <div class="links"><a href="Trang Giang Vien.dc.html" data-en="👩‍🏫 Instructor page">👩‍🏫 Trang Giảng viên</a><a href="#" id="l3Classic" data-en="Classic 2D interface">Giao diện 2D cũ</a></div>
   </div>
   <div class="rtip" id="l3Tip"></div>
+  <div id="l3Globe" aria-hidden="true"></div>
 </div>
 <canvas id="c"></canvas>
 <div id="top" class="hud">
@@ -706,7 +710,7 @@ function overlayOn() {
 function setMode() {
   const shell = W && W.document && W.document.getElementById('app-shell'); booted = !!shell && !shell.classList.contains('hidden');
   const gd0 = id => W && W.document && W.document.getElementById(id), onLogin = !booted && !L3.classic && [gd0('screen-login'), gd0('screen-splash')].some(e => e && e.classList.contains('active'));
-  if (onLogin !== L3.on) { L3.on = onLogin; document.body.classList.toggle('login3d', onLogin); if (onLogin) l3Show(); }
+  if (onLogin !== L3.on) { L3.on = onLogin; document.body.classList.toggle('login3d', onLogin); if (onLogin) l3Show(); else if (window.__l3Globe) { window.__l3Globe.dispose(); window.__l3Globe = null; } }
   const m = !booted || overlayOn() ? 'full' : sheetTab ? 'sheet' : 'hide';
   if (frame.className !== m) { frame.className = m; document.body.classList.toggle('sheet', m === 'sheet'); }
 }
@@ -729,6 +733,8 @@ function l3Focus() {
 }
 function l3Show() {
   const g = id => W.document.getElementById(id);
+  // Quả địa cầu nhỏ góc trên phải (góc dưới phải đã có bong bóng gợi ý); chỉ trên màn rộng (trên điện thoại thẻ thành bottom sheet, ẩn bằng CSS)
+  if (!window.__l3Globe && window.Game3DGlobe && innerWidth > 760) window.__l3Globe = Game3DGlobe.mount(document.getElementById('l3Globe'));
   [['l3Email', 'login-email'], ['l3Team', 'login-team'], ['l3Class', 'login-class']].forEach(([a, b]) => { const s = g(b); if (s && s.value && !document.getElementById(a).value) document.getElementById(a).value = s.value; });
   l3Focus();
 }
