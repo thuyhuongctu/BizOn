@@ -20,6 +20,8 @@
     var introId = opts.introId;
     var title = opts.title || T('Chào mừng!', 'Welcome!');
     var subtitle = opts.subtitle || '';
+    // backdrop: đặt quả địa cầu làm nền phía sau thẻ (cần Game3DGlobe đã nạp; thiếu thì bỏ qua)
+    var wantGlobe = !!opts.backdrop;
 
     function go() {
       var intro = document.getElementById(introId);
@@ -30,7 +32,8 @@
       box.id = 'g3d-gate';
       box.style.cssText = 'position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(160deg,#02191c 0%,#033337 60%,#02444d 100%);overflow-y:auto';
       box.innerHTML =
-        '<div class="clay-card p-0" style="max-width:420px;width:100%;overflow:hidden">' +
+        (wantGlobe && window.Game3DGlobe ? '<div id="g3d-globe" aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;opacity:.5"></div>' : '') +
+        '<div class="clay-card p-0" style="max-width:420px;width:100%;overflow:hidden;position:relative;z-index:1">' +
           '<div style="padding:28px 24px 24px">' +
             '<h2 class="font-display font-extrabold" style="font-size:22px;margin:0 0 4px;color:#033337">' + esc(title) + '</h2>' +
             (subtitle ? '<p style="font-size:13px;color:rgba(3,51,55,.6);margin:0 0 18px;line-height:1.4">' + esc(subtitle) + '</p>' : '<div style="margin-bottom:10px"></div>') +
@@ -46,6 +49,7 @@
           '</div>' +
         '</div>';
       document.body.appendChild(box);
+      if (wantGlobe && window.Game3DGlobe) window.Game3DGlobe.mount(document.getElementById('g3d-globe'));
 
       function enter(team, email, classId) {
         try {
