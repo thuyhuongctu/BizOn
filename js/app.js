@@ -1693,7 +1693,11 @@ function showRoundResult(r) {
     else if (r.isNewPeak) showVictory(r);
     else maybeShowEventIntro();
   };
+  // Bấm đúp sẽ mở hai cảnh cờ chồng nhau (mỗi cảnh gọi proceed() một lần), nên chỉ nhận lần bấm đầu.
+  let advancing = false;
   div.querySelector('button').onclick = () => {
+    if (advancing) return;
+    advancing = true;
     if (window.OfficeRounds) OfficeRounds.showFlagScene(r, proceed);
     else proceed();
   };
