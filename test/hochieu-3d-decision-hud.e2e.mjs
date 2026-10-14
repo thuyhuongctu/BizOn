@@ -15,7 +15,9 @@ const browser = await chromium.launch({
   headless: true,
   args: ['--no-sandbox', '--use-gl=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'],
 });
-const page = await browser.newPage({ viewport: { width: 1280, height: 860 } });
+// serviceWorkers: 'block' — sw-hochieu.js có thể tự tải lại trang giữa chừng và làm hỏng bối cảnh kiểm thử.
+const context = await browser.newContext({ viewport: { width: 1280, height: 860 }, serviceWorkers: 'block' });
+const page = await context.newPage();
 const errors = [];
 page.on('pageerror', e => errors.push(e.message));
 page.on('dialog', d => d.accept());
@@ -30,8 +32,14 @@ try {
   await page.waitForTimeout(1200);
   await page.evaluate(() => { window.bpFirm(0); window.bpStart(); });
   await page.waitForFunction(() => window.__bp3dKiosks && window.__bp3dKiosks.cam, { timeout: 30000 });
-  await page.evaluate(() => { window.bpToDecide(); });
-  await page.waitForTimeout(2000);
+  // Pha quan sát có thể chuyển tiếp bất đồng bộ sau bpStart(); gọi bpToDecide() cho tới khi pha là 'dec'.
+  for (let i = 0; i < 60; i++) {
+    const ph = await page.evaluate(() => window.__bp.S.phase).catch(() => null);
+    if (ph === 'dec') break;
+    await page.evaluate(() => { window.bpToDecide(); }).catch(() => {});
+    await page.waitForTimeout(500);
+  }
+  await page.waitForTimeout(1500);
   // Gỡ lớp hướng dẫn (tutorial) đang chặn click trong lần chơi đầu tiên.
   await page.evaluate(() => {
     document.querySelectorAll('body > div').forEach(d => {
