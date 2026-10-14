@@ -23,7 +23,7 @@
 <script src="js/backend-config.js"></script>
 <script src="js/error-log.js"></script>
 <script src="js/game3d-login-gate.js"></script>
-<script>Game3DGate.mount({ introId: 'ft-intro', ns: 'bps', title: 'Chào mừng tới Bến Phù Sa!', subtitle: 'Điền nhanh thông tin đội rồi vào thẳng phần giới thiệu — bỏ trống vẫn chơi được trọn vẹn.' });</script>
+<script>Game3DGate.mount({ backdrop: true, introId: 'ft-intro', ns: 'bps', title: 'Chào mừng tới Bến Phù Sa!', subtitle: 'Điền nhanh thông tin đội rồi vào thẳng phần giới thiệu — bỏ trống vẫn chơi được trọn vẹn.' });</script>
 <!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
      nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
 <link rel="stylesheet" href="css/bizon-fonts.css">
@@ -108,6 +108,7 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
 @media (max-width:760px){.bps3d-legend{display:none}}
 </style>
 <script type="importmap">{"imports":{"three":"./vendor/three/three.module.js","three/addons/controls/OrbitControls.js":"./vendor/three/OrbitControls.js"}}</script>
+<script type="module" src="js/game3d-globe.js"></script>
 <link rel="stylesheet" href="css/clay-tool-skin.css">
 </head>
 <body>
