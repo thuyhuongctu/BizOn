@@ -618,7 +618,7 @@
   // (từng bán ở đó hoặc dùng Thám tử chợ) tô đậm; ô chưa dò hiện dấu "?".
   function renderMatrix() {
     var research = S.sel.m === 2;
-    var html = '<div style="display:grid;grid-template-columns:72px repeat(' + LOCS.length + ',minmax(0,1fr));gap:4px;align-items:stretch;min-width:' + (72 + LOCS.length * 50) + 'px">';
+    var html = '<div style="display:grid;grid-template-columns:46px repeat(' + LOCS.length + ',minmax(0,1fr));gap:4px;align-items:stretch;min-width:' + (46 + LOCS.length * 42) + 'px">';
     html += '<div></div>';
     LOCS.forEach(function (l, li) {
       html += '<div style="display:flex;flex-direction:column;align-items:center;gap:1px;padding-bottom:3px;text-align:center"><span style="font-size:15px;line-height:1">' + l[0] + '</span><span style="font-size:8.5px;font-weight:700;line-height:1.15">' + lName(li) + '</span></div>';
