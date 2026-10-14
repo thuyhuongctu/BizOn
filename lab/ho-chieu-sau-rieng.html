@@ -246,6 +246,7 @@ footer{color:var(--faint)}
 
 <script src="ho-chieu-sau-rieng-engine.js"></script>
 <script src="ho-chieu-sau-rieng-data.js"></script>
+<script src="ho-chieu-sau-rieng-core.js"></script>
 <script src="../js/durian-voice.js"></script>
 <script>
 (function () {
@@ -280,24 +281,13 @@ footer{color:var(--faint)}
   let SETUP = { cls: '', team: '', roleId: 'exporter', timerMin: 0, avatarId: 'basaulanh' };
   let ERR = '';
 
-  const freshDec = () => ({ priority: 'area', linked: 0.3, induce: true, alloc: { CN: 40, BORDER: 30, FROZEN: 0, TW: 5, JP: 0, DOM: 25 }, intel: [], option: 0 });
-  const owned = (a, id) => (id === 'area' && a.area) || (id === 'pack' && a.pack) || (id === 'trace' && a.trace) || (id === 'freezer' && a.freezer) || (id === 'test' && a.test >= 2);
+  const freshDec = () => DurianCore.freshDec();
+  const owned = (a, id) => DurianCore.owned(a, id);
   const save = () => { if (APP) store.set(SAVE_KEY, JSON.stringify(APP)); };
   const roundN = () => APP.game.n;                         // vụ đang quyết định
-  const pendingJournal = () => APP.game.history.length > 0 && !APP.journals[APP.game.history.length];
+  const pendingJournal = () => DurianCore.pendingJournal(APP);
 
-  function logEv(type, oldV, newV, committed) {
-    if (!APP) return;
-    const round = pendingJournal() ? APP.game.history.length : Math.min(APP.game.n, D.seasons.length);
-    APP.events.push({
-      event_id: 'EV' + String(APP.events.length + 1).padStart(6, '0'),
-      timestamp: new Date().toISOString(), class_id: APP.cls || 'local', team_id: APP.team || 'TEAM',
-      round_id: 'R' + round, role: (APP.operator || 'ceo').toUpperCase(), event_type: type,
-      old_value: oldV === undefined ? '' : (typeof oldV === 'object' ? JSON.stringify(oldV) : String(oldV)),
-      new_value: newV === undefined ? '' : (typeof newV === 'object' ? JSON.stringify(newV) : String(newV)),
-      device_session: APP.session, committed: committed ? 1 : 0
-    });
-  }
+  const logEv = (type, oldV, newV, committed) => DurianCore.logEv(APP, D, type, oldV, newV, committed);
 
   function load() {
     const raw = store.get(SAVE_KEY);
@@ -799,7 +789,7 @@ footer{color:var(--faint)}
 
   function commit() {
     const n = roundN(), sh = APP.sheets[n] || {};
-    if (!sh.goal || !(sh.assume || '').trim() || (sh.ceo || '').trim().length < 10) {
+    if (!DurianCore.sheetComplete(sh)) {
       ERR = L('Phiếu quyết định còn thiếu: mục tiêu, giả định và lý do của CEO (tối thiểu 10 ký tự).', 'The decision sheet is incomplete: goal, assumption and the CEO\'s reason (at least 10 characters).');
       logEv('COMMIT_REJECTED', '', 'SHEET_INCOMPLETE'); save(); renderPlay();
       const el = document.querySelector('.err'); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -807,20 +797,7 @@ footer{color:var(--faint)}
     }
     if (!confirm(L('Chốt vụ ' + n + '? Đã chốt thì không sửa được.', 'Commit season ' + n + '? Commits are final.'))) return;
     ERR = '';
-    const dec = JSON.parse(JSON.stringify(APP.dec));
-    const f = E.forecast(D, APP.game, dec);
-    const elapsed = Math.round((Date.now() - APP.roundStart) / 1000);
-    APP.timing[n] = { start: new Date(APP.roundStart).toISOString(), commit: new Date().toISOString(), seconds: elapsed, onTime: !APP.timerMin || elapsed <= APP.timerMin * 60, operator: APP.operator };
-    APP.sheets[n] = Object.assign({}, sh, { forecastFinal: f.profit, forecastWhatIf: (APP.whatifs[n] || []).length ? APP.whatifs[n][APP.whatifs[n].length - 1].profit : null, pBlockCN: f.pBlockCN });
-    APP.game = E.playSeason(D, APP.game, dec);
-    const r = APP.game.history[APP.game.history.length - 1];
-    APP.flags[n - 1] = E.flagFor(RIVALS, r);
-    logEv('COMMIT', '', JSON.stringify(dec), true);
-    // giữ phương án làm điểm xuất phát vụ sau
-    const next = freshDec(); next.alloc = dec.alloc; next.linked = dec.linked; next.intel = [];
-    const free = D.priorities.find(p => !owned(APP.game.assets, p.id));
-    next.priority = free ? free.id : 'finance';
-    APP.dec = next;
+    DurianCore.commitSeason(APP, D, E, RIVALS, n, sh);
     save(); render(); window.scrollTo(0, 0);
   }
 
@@ -957,7 +934,7 @@ footer{color:var(--faint)}
     });
   }
 
-  const GOALS = () => ({ share: L('Thị phần chính ngạch', 'Official market share'), profit: L('Lợi nhuận', 'Profit'), cash: L('Tiền mặt', 'Cash'), rep: L('Uy tín, tuân thủ', 'Reputation, compliance'), capability: L('Năng lực dài hạn', 'Long-term capability') });
+  const GOALS = () => DurianCore.goals(L);
   const CAUSES = () => ({ event: L('Biến cố', 'Event'), price: L('Giá vựa khác ước tính', 'Depot price differed'), inspection: L('Kiểm dịch, kiểm tra', 'Inspection, audit'), assumption: L('Giả định sai', 'Wrong assumption'), rivals: L('Đối thủ', 'Rivals'), other: L('Khác', 'Other') });
 
   function renderEnd() {

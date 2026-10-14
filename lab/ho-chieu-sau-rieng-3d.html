@@ -168,6 +168,7 @@ details.gv2 summary{cursor:pointer;font-weight:700;font-size:12.5px;padding:8px 
 
 <script src="ho-chieu-sau-rieng-engine.js"></script>
 <script src="ho-chieu-sau-rieng-data.js"></script>
+<script src="ho-chieu-sau-rieng-core.js"></script>
 <script type="module">
 import * as THREE from '../js/vendor/three.module.js';
 import { P3 } from '../js/poly3d-kit.js';
@@ -414,10 +415,60 @@ import { P3 } from '../js/poly3d-kit.js';
       <div class="tabbody" id="tabbody3">${{ chain: tabChainHTML, intel: tabIntelHTML, invest: tabInvestHTML, channel: tabChannelHTML }[TAB]()}</div>
       <div class="ft"><div class="alloc">${L('Xuất trực tiếp', 'Direct export')} · ${top || L('chưa chọn kênh', 'no channel yet')}</div>
         <button class="btn" id="goCard" type="button">${L('Chốt vụ', 'Commit season')} ${n} →</button>
-        <div class="fthint">${L('Hoàn tất phiếu quyết định và nhật ký ở bản thẻ', 'Finish the decision sheet and journal in the card view')}</div></div>
+        <div class="fthint">${L('Phiếu quyết định chốt tại đây. Nhật ký SEC ghi ở bản thẻ sau khi chốt.', 'The decision sheet is committed here. Write the SEC journal in the card view after committing.')}</div></div>
       </div>`;
   }
 
+  // Chốt vụ ngay trên bản đồ 3D: cùng lõi (DurianCore) và cùng luật với nút "CEO chốt vụ"
+  // ở bản thẻ, nên nhật ký kiểm toán giống nhau. Nhật ký SEC vẫn ghi ở bản thẻ sau khi chốt.
+  function openCommitSheet() {
+    const n = APP.game.n;
+    if (n > D.seasons.length || DurianCore.pendingJournal(APP)) return;
+    const back = document.createElement('div'); back.className = 'mmBack';
+    const sheetVal = k => esc((APP.sheets[n] || {})[k]);
+    const paint = () => {
+      const sh = APP.sheets[n] || {};
+      back.innerHTML = `<div class="mmBox">
+        <h3>📝 ${L('Phiếu quyết định vụ', 'Decision sheet, season')} ${n}</h3>
+        <p class="small" style="font-size:11.5px;color:var(--muted)">${L('Ba mục có dấu * là bắt buộc. Nhật ký SEC ghi ở bản thẻ sau khi chốt.', 'Items marked * are required. The SEC journal is written in the card view after committing.')}</p>
+        <label style="display:block;font-size:12px;font-weight:700;margin:6px 0 4px">${L('Mục tiêu ưu tiên của vụ *', 'Priority goal this season *')}</label>
+        <div class="radios" style="display:flex;flex-wrap:wrap;gap:6px">${Object.entries(DurianCore.goals(L)).map(([k, v]) => `<button type="button" class="opt3 ${sh.goal === k ? 'on' : ''}" data-goal="${k}">${esc(v)}</button>`).join('')}</div>
+        <label style="display:block;font-size:12px;font-weight:700;margin:8px 0 4px">${L('Giả định: đội tin điều gì sẽ xảy ra? *', 'Assumption: what does the team believe will happen? *')}</label>
+        <textarea data-sh="assume" rows="2" style="width:100%;box-sizing:border-box">${sheetVal('assume')}</textarea>
+        <label style="display:block;font-size:12px;font-weight:700;margin:8px 0 4px">${L('Rủi ro: biến nào có thể làm dự báo sai?', 'Risk: what could make the forecast wrong?')}</label>
+        <textarea data-sh="risk" rows="2" style="width:100%;box-sizing:border-box">${sheetVal('risk')}</textarea>
+        <label style="display:block;font-size:12px;font-weight:700;margin:8px 0 4px">${L('Bất đồng: thành viên nào không đồng ý, ở điểm nào?', 'Disagreement: who disagreed, and on what?')}</label>
+        <textarea data-sh="disagree" rows="2" style="width:100%;box-sizing:border-box">${sheetVal('disagree')}</textarea>
+        <label style="display:block;font-size:12px;font-weight:700;margin:8px 0 4px">${L('CEO chọn phương án nào và vì sao? *', 'Which option did the CEO choose, and why? *')}</label>
+        <textarea data-sh="ceo" rows="3" style="width:100%;box-sizing:border-box">${sheetVal('ceo')}</textarea>
+        <p class="err" id="scErr" style="color:#b3261e;font-size:12px"></p>
+        <div style="display:flex;gap:8px;margin-top:10px"><button type="button" class="opt3" id="scNo">${L('Huỷ', 'Cancel')}</button><button type="button" class="btn" id="scOk" style="flex:1">⑦ ${L('CEO chốt vụ', 'CEO commits season')} ${n} →</button></div>
+      </div>`;
+      back.querySelectorAll('[data-goal]').forEach(b => b.onclick = () => {
+        APP.sheets[n] = Object.assign({}, APP.sheets[n], { goal: b.dataset.goal });
+        DurianCore.logEv(APP, D, 'SHEET_GOAL', '', b.dataset.goal); save(); paint();
+      });
+      back.querySelectorAll('[data-sh]').forEach(t => {
+        t.oninput = () => { APP.sheets[n] = Object.assign({}, APP.sheets[n], { [t.dataset.sh]: t.value }); };
+        t.onchange = () => { DurianCore.logEv(APP, D, 'EDIT_SHEET_' + t.dataset.sh.toUpperCase(), '', t.value.length + ' chars'); save(); };
+      });
+      back.querySelector('#scNo').onclick = () => back.remove();
+      back.querySelector('#scOk').onclick = () => {
+        const cur = APP.sheets[n] || {};
+        if (!DurianCore.sheetComplete(cur)) {
+          DurianCore.logEv(APP, D, 'COMMIT_REJECTED', '', 'SHEET_INCOMPLETE'); save();
+          back.querySelector('#scErr').textContent = L('Phiếu quyết định còn thiếu: mục tiêu, giả định và lý do của CEO (tối thiểu 10 ký tự).', 'The decision sheet is incomplete: goal, assumption and the CEO\'s reason (at least 10 characters).');
+          return;
+        }
+        if (!confirm(L('Chốt vụ ' + n + '? Đã chốt thì không sửa được.', 'Commit season ' + n + '? Commits are final.'))) return;
+        DurianCore.commitSeason(APP, D, E, RIVALS, n, cur);
+        save(); back.remove(); toast(L('Đã chốt vụ ' + n + '. Ghi nhật ký SEC ở bản thẻ để mở vụ tiếp theo.', 'Season ' + n + ' committed. Write the SEC journal in the card view to open the next season.'));
+        render();
+      };
+    };
+    paint();
+    document.body.appendChild(back);
+  }
   function setSheetOpen(v) {
     sheetOpen = v;
     const el = $('dcard'); if (el) el.classList.toggle('open', v);
@@ -468,7 +519,7 @@ import { P3 } from '../js/poly3d-kit.js';
       toast(L('Đã dồn 100% sản lượng vào ', 'Put 100% of output into ') + nm(D.channels.find(c => c.id === id)) + L('. Chưa chốt vụ.', '. Season not committed yet.'));
     });
     document.querySelectorAll('[data-eightsteps]').forEach(b => b.onclick = () => openEightSteps());
-    $('goCard').onclick = () => { save(); location.href = 'ho-chieu-sau-rieng.html'; };
+    $('goCard').onclick = () => openCommitSheet();
   }
 
   function renderCard() {
