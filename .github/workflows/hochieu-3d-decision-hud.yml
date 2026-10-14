@@ -1,0 +1,47 @@
+name: Hộ Chiếu 3D decision HUD
+
+on:
+  pull_request:
+    paths:
+      - 'Ho Chieu Thuong Hieu 3D.html'
+      - 'bp3d.js'
+      - 'sw-hochieu.js'
+      - 'test/hochieu-3d-decision-hud.e2e.mjs'
+      - '.github/workflows/hochieu-3d-decision-hud.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  decision-hud:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install Playwright
+        run: |
+          npm install --no-save playwright@1.54.1
+          npx playwright install --with-deps chromium
+
+      - name: Start preview server
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/bizon-hochieu.log 2>&1 &
+          for i in {1..20}; do
+            curl --fail --silent "http://127.0.0.1:4173/Ho%20Chieu%20Thuong%20Hieu%203D.html" > /dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/bizon-hochieu.log
+          exit 1
+
+      - name: Run in-scene decision flow test (phone viewport)
+        env:
+          BASE: http://127.0.0.1:4173
+        run: node test/hochieu-3d-decision-hud.e2e.mjs
