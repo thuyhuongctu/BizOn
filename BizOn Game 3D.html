@@ -1085,7 +1085,7 @@ function result3D(r) {
   let why = ''; try { why = W.explainRound(r); } catch {}
   MOOD.kind = ok ? 'win' : 'lose'; MOOD.until = performance.now() + 60000; flyTable(true);
   if (ok) confetti3D(new THREE.Vector3(0, 0, -2.4));
-  showPanel(`<img src="assets/character/${ok ? 'rong-xanh' : 'rong-xanh-suy-nghi'}.webp" alt="Rồng Xanh" style="width:84px;align-self:center"><span class="tag ${ok ? '' : 'bad'}">● ${T('Kết quả vòng', 'Round result')} ${r.round}/6</span>
+  showPanel(`<img src="assets/character/${ok ? 'rong-xanh' : 'rong-xanh-y-tuong'}.webp" alt="Rồng Xanh" style="width:84px;align-self:center"><span class="tag ${ok ? '' : 'bad'}">● ${T('Kết quả vòng', 'Round result')} ${r.round}/6</span>
     <h2 class="${ok ? '' : 'bad'}">${ok ? T('🎉 Vòng có lãi!', '🎉 A profitable round!') : T('😰 Vòng này lỗ', '😰 A loss this round')}</h2>
     <p class="d">${r.event.icon} ${r.event.name}${r.shielded ? T(' (đã chặn bởi 🛡️)', ' (blocked by 🛡️)') : ''}</p>
     <div class="say"><small>🤖 LUMINA</small>${resultLine(r)}</div>
@@ -1192,7 +1192,7 @@ function event3D() {
   const bad = e.tone === 'bad', warn = e.tone === 'warn';
   const dirIcon = d => ({ up: '📈', 'up-bad': '📈', down: '📉', 'down-good': '📉', flat: '➖' }[d] || '➖');
   const dirCol = d => d === 'up' || d === 'down-good' ? '#3f8a44' : d === 'flat' ? '#2c3552' : '#c0443a';
-  evc.innerHTML = `<img src="assets/character/${bad || warn ? 'rong-xanh-ngac-nhien' : 'rong-xanh'}.webp" alt="Rồng Xanh" style="width:84px;align-self:center"><span class="tag ${bad ? 'bad' : warn ? 'warn' : ''}">● ${T('Vòng', 'Round')} ${s.round}/6 · ${e.tag || T('BIẾN CỐ THỊ TRƯỜNG', 'MARKET EVENT')}</span>
+  evc.innerHTML = `<img src="assets/character/${bad || warn ? 'rong-xanh-y-tuong' : 'rong-xanh'}.webp" alt="Rồng Xanh" style="width:84px;align-self:center"><span class="tag ${bad ? 'bad' : warn ? 'warn' : ''}">● ${T('Vòng', 'Round')} ${s.round}/6 · ${e.tag || T('BIẾN CỐ THỊ TRƯỜNG', 'MARKET EVENT')}</span>
     <h2 class="${bad ? 'bad' : ''}">${e.icon} ${e.name}</h2><p class="d">${e.desc}</p>
     <div class="imps">${(e.impacts || []).map(im => `<div class="imp"><small>${im.icon} ${im.label}</small><b style="color:${dirCol(im.dir)}">${dirIcon(im.dir)} ${im.value}</b></div>`).join('')}</div>
     <div class="say" style="display:flex;gap:10px;align-items:flex-start"><img src="assets/character/rong-xanh-y-tuong.webp" alt="" style="width:52px;flex:none"><div><small>${T('LUMINA · CỐ VẤN', 'LUMINA · ADVISOR')}</small>"${e.luminaMsg}"</div></div>

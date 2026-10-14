@@ -28,7 +28,7 @@
     let j; try { j = await feed(code, team); } catch (e) { return; }
     ctl = (j && j.controls) || null; let dirty = false;
     const lk = ctl && ctl.locked_round != null ? S.round > ctl.locked_round : false;
-    if (S.roundLocked !== lk) { S.roundLocked = lk; dirty = true; if (lk) toast(`Cả lớp đang chờ nhau. Giảng viên sẽ mở vòng ${ctl.locked_round + 1} khi mọi đội xong.`, 'rong-xanh-ngap'); else toast('Giảng viên đã mở vòng mới. Tiếp tục thôi!', 'rong-xanh-y-tuong'); }
+    if (S.roundLocked !== lk) { S.roundLocked = lk; dirty = true; if (lk) toast(`Cả lớp đang chờ nhau. Giảng viên sẽ mở vòng ${ctl.locked_round + 1} khi mọi đội xong.`, 'rong-xanh-sen'); else toast('Giảng viên đã mở vòng mới. Tiếp tục thôi!', 'rong-xanh-y-tuong'); }
     S.classGrantIds = S.classGrantIds || [];
     ((j && j.grants) || []).forEach(g => { if (S.classGrantIds.includes(g.id)) return; S.classGrantIds.push(g.id); S.balance += +g.amount || 0;
       (S.grantLog = S.grantLog || []).push({ team: team, amount: +g.amount, round: Math.min(S.round, 6), reason: g.reason || 'Giảng viên' }); dirty = true;
