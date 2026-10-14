@@ -753,6 +753,7 @@ R.domElement.addEventListener('pointerup', e => {
   if (PP.mode === 'stamp' && PP.t > 2.4 && PP.t < 4.1) { PP.t = 4.1; return; }
   const r = R.domElement.getBoundingClientRect(); ptr.set((e.clientX - r.left) / r.width * 2 - 1, -(e.clientY - r.top) / r.height * 2 + 1);
   ray.setFromCamera(ptr, cam); const h = ray.intersectObjects(hits, false)[0]; if (!h) return;
+  if (h.object.userData.choice) { h.object.userData.choice.onPick(); sfx('pop'); return; }
   const B = window.__bp;
   if (h.object.userData.kioskMode !== undefined && B && B.MODES && B.S) {
     const mode = h.object.userData.kioskMode, mk = h.object.userData.kioskM;
@@ -1512,3 +1513,56 @@ function compactTB() {
   const hint = $('bp3d-hint'); if (hint) hint.style.display = TB.scrollWidth > TB.clientWidth + 2 || TB.getBoundingClientRect().right > hint.getBoundingClientRect().left - 8 ? 'none' : '';
 }
 setInterval(compactTB, 800); compactTB(); addEventListener('resize', compactTB);
+
+/* ---------- quyết định chính ngay trên cảnh 3D (HUD gắn camera) ----------
+   Pha 'dec' của Hộ Chiếu Thương Hiệu 3D gọi window.__bp3dChoices(rows): mỗi
+   lựa chọn là một Sprite con của camera (luôn nằm trong khung nhìn) và được bấm
+   qua cùng bộ raycast với chạm đảo. Ẩn khi rời pha 'dec'. */
+const choiceHud = new THREE.Group(); cam.add(choiceHud);
+let choiceRows = null;
+const CH_D = 8, CH_TOP = 0.8, CH_GAP = 0.07;       // khoảng cách camera · mép trên (NDC) · khe giữa ô
+function chTex(it) {
+  const c = document.createElement('canvas'); c.width = 512; c.height = 256; const g = c.getContext('2d');
+  const dim = it.enabled === false;
+  g.globalAlpha = dim ? 0.45 : 1;
+  g.fillStyle = it.sel ? '#e8762d' : '#fffaf0';
+  g.beginPath(); g.roundRect ? g.roundRect(10, 10, 492, 236, 60) : g.rect(10, 10, 492, 236); g.fill();
+  g.lineWidth = 14; g.strokeStyle = it.sel ? '#b95618' : '#2f8a8c'; g.stroke();
+  g.fillStyle = it.sel ? '#ffffff' : '#033337'; g.textAlign = 'center'; g.textBaseline = 'middle';
+  g.font = '700 80px sans-serif'; g.fillText(it.icon, 256, 84);
+  g.font = '800 44px sans-serif'; wrapText(g, it.label, 256, 176, 440, 48);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+}
+function layoutChoices() {
+  if (!choiceRows) return;
+  const halfH = CH_D * Math.tan(THREE.MathUtils.degToRad(cam.fov / 2)), halfW = halfH * cam.aspect;
+  let y = halfH * CH_TOP;
+  choiceRows.forEach(row => {
+    const n = row.length, w = Math.min(n === 1 ? 1.3 : 1.9, (2 * halfW * 0.92 - CH_GAP * (n - 1)) / n), h = w / 2;
+    row.forEach((o, i) => { const x = -((n - 1) * (w + CH_GAP)) / 2 + i * (w + CH_GAP); o.sp.position.set(x, y - h / 2, -CH_D); o.sp.scale.set(w, h, 1); });
+    y -= h + CH_GAP;
+  });
+}
+function clearChoices() {
+  if (!choiceRows) return;
+  choiceRows.forEach(row => row.forEach(o => {
+    const i = hits.indexOf(o.sp); if (i >= 0) hits.splice(i, 1);
+    choiceHud.remove(o.sp); o.sp.material.map.dispose(); o.sp.material.dispose();
+  }));
+  choiceRows = null; document.body.classList.remove('bp3d-choice-hud');
+}
+window.__bp3dChoices = function (rows) {
+  clearChoices();
+  if (!rows || !rows.length) return;
+  choiceRows = rows.map(row => row.map(it => {
+    const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: chTex(it), transparent: true, depthTest: false, depthWrite: false }));
+    sp.renderOrder = 999; sp.userData.choice = it; choiceHud.add(sp); hits.push(sp);
+    return { sp, it };
+  }));
+  layoutChoices();
+  document.body.classList.add('bp3d-choice-hud');
+};
+setInterval(() => {
+  if (!choiceRows) return;
+  if (!window.__bp || !window.__bp.S || window.__bp.S.phase !== 'dec') clearChoices(); else layoutChoices();
+}, 400);

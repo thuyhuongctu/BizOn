@@ -190,6 +190,11 @@
   #bp-status-bar { position:sticky; top:52px; z-index:20; margin:0 0 16px; border-radius:16px;
     background:#fffaf0; box-shadow:0 10px 20px -14px rgba(0,60,80,.35); }
   html[data-theme="dark"] #bp-status-bar { background:#0e2a33; }
+  /* Quyết định chính nằm trên cảnh 3D (bp3d.js → __bp3dChoices): ẩn bản HTML trùng lặp
+     và thu tấm phủ dưới trên điện thoại để không che các ô lựa chọn trong cảnh. */
+  body.bp3d-choice-hud #bp-prio-section, body.bp3d-choice-hud #bp-budget-section,
+  body.bp3d-choice-hud #bp-commit, body.bp3d-choice-hud #bp-dec-note { display:none !important; }
+  @media (max-width:760px) { body.bp3d-choice-hud #bp3d-col { max-height:34svh !important; } }
 </style>
 <link rel="manifest" href="manifest-hochieu-3d.webmanifest">
 <script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js" integrity="sha384-CjloA8y00+1SDAUkjs099PVfnY2KmDC2BZnws9kh8D/lX1s46w6EPhpXdqMfjK6i" crossorigin="anonymous"></script>
@@ -1385,6 +1390,18 @@
         '<button class="bp-opt' + (S.sel.party === 'team' ? ' sel' : '') + (canTeam ? '' : ' opacity-50') + '" data-g="party" data-i="team" onclick="bpParty(\'team\')"' + (canTeam ? '' : ' disabled') + '>👥 ' + T('Cả đội lên đảo', 'Full team') + '<small>' + T('−0,2 tỷ · +10% tri thức, +3 năng lực, giảm thiệt hại khủng hoảng', '−0.2 bn · +10% insight, +3 capability, cushions crises') + '</small></button>' +
       '</div>';
   }
+  function pushChoices() {
+    if (!window.__bp3dChoices || S.phase !== 'dec') return;
+    var narrow = window.innerWidth < 760;
+    var ready = S.sel.prio !== null && (S.sel.enter === null || S.sel.shipMode != null);
+    var prio = PRIOS.map(function (p, i) { return { icon: p.icon, label: T(p.name, p.nameEn), sel: S.sel.prio === i, enabled: true, onPick: function () { window.bpPick('prio', i); } }; });
+    var bud = BUDGETS.map(function (b, i) { return { icon: b.icon, label: T(b.name, b.nameEn), sel: S.sel.budget === i, enabled: true, onPick: function () { window.bpPick('bud', i); } }; });
+    var commit = { icon: '🔒', label: T('Chốt quý này', 'Lock in quarter'), sel: false, enabled: ready, onPick: function () { if (ready) window.bpCommit(); } };
+    lastNarrow = narrow;
+    window.__bp3dChoices(narrow ? [prio.slice(0, 3), prio.slice(3), bud, [commit]] : [prio, bud, [commit]]);
+  }
+  var lastNarrow = null;
+  window.addEventListener('resize', function () { if ((window.innerWidth < 760) !== lastNarrow) pushChoices(); });
   function syncDec() {
     renderShipPicker();
     document.querySelectorAll('[data-g="prio"]').forEach(function (b) { b.classList.toggle('sel', Number(b.dataset.i) === S.sel.prio); });
@@ -1393,6 +1410,7 @@
     var ready = S.sel.prio !== null && (S.sel.enter === null || S.sel.shipMode != null);
     var btn = $('bp-commit');
     if (btn) { btn.disabled = !ready; btn.style.opacity = ready ? 1 : 0.5; }
+    pushChoices();
     var note = $('bp-dec-note');
     if (note) {
       if (S.sel.enter !== null) {
