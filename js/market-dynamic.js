@@ -376,12 +376,18 @@
       return `${r}${c.played.win ? `<text x="${x + w / 2}" y="${pad - 8}" text-anchor="middle" font-size="16">🚩</text>` : ''}<text x="${x + w / 2}" y="${pad + 16}" text-anchor="middle" font-size="12" font-weight="900" fill="#fff">${c.played.share}%</text><text x="${x + w / 2}" y="${H - 10}" text-anchor="middle" font-size="12" font-weight="800" fill="#033337">${c.short}</text>`;
     }).join('');
     // Biểu đồ 2: doanh thu & lãi của bạn theo thành phố
-    const me = teams[0], maxV = Math.max(1, ...me.rows.map(x => Math.max(x.revenue, Math.abs(x.profit)))) * 1.1;
-    const H2 = 220, base = H2 - 40, sc = (base - 20) / maxV;
+    // Một thang đứng chung cho cột doanh thu và đường lãi. Lãi âm nằm dưới đường 0 thật;
+    // trước đây lãi bị kẹp tối đa 18px nên trông như hoà vốn, và đè lên nhãn thành phố.
+    const me = teams[0];
+    const H2 = 220, pTop = 22, pBot = H2 - 40;
+    const hi = Math.max(1, ...me.rows.map(x => x.revenue), ...me.rows.map(x => x.profit)) * 1.1;
+    const lo = Math.min(0, ...me.rows.map(x => x.profit)) * 1.1;
+    const yOf = v => pTop + (hi - v) / (hi - lo) * (pBot - pTop);
+    const y0 = yOf(0);
     const rev = sn.cities.map((c, i) => { const x = pad + i * bw + bw * 0.22, w = bw * 0.56; const lab = `<text x="${x + w / 2}" y="${H2 - 14}" text-anchor="middle" font-size="12" font-weight="800" fill="${c.played ? '#033337' : '#8a9aa2'}">${c.short}</text>`;
-      if (!c.played) return lab; const h = c.played.revenue * sc;
-      return `<rect x="${x}" y="${(base - h).toFixed(1)}" width="${w}" height="${h.toFixed(1)}" rx="6" fill="#9fd0e0"></rect><text x="${x + w / 2}" y="${(base - h - 6).toFixed(1)}" text-anchor="middle" font-size="11" font-weight="800" fill="#006687">${c.played.revenue}</text>${lab}`; }).join('');
-    const pp = sn.cities.map((c, i) => c.played ? [pad + i * bw + bw / 2, base - Math.max(0, c.played.profit) * sc + (c.played.profit < 0 ? Math.min(18, -c.played.profit * sc) : 0), c.played.profit] : null).filter(Boolean);
+      if (!c.played) return lab; const yr = yOf(c.played.revenue);
+      return `<rect x="${x}" y="${yr.toFixed(1)}" width="${w}" height="${(y0 - yr).toFixed(1)}" rx="6" fill="#9fd0e0"></rect><text x="${x + w / 2}" y="${(yr - 6).toFixed(1)}" text-anchor="middle" font-size="11" font-weight="800" fill="#006687">${c.played.revenue}</text>${lab}`; }).join('');
+    const pp = sn.cities.map((c, i) => c.played ? [pad + i * bw + bw / 2, yOf(c.played.profit), c.played.profit] : null).filter(Boolean);
     const line = pp.length ? `<polyline points="${pp.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ')}" fill="none" stroke="#f08a3c" stroke-width="3"></polyline>${pp.map(p => `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="5" fill="${p[2] >= 0 ? '#f08a3c' : '#c0392b'}" stroke="#fff" stroke-width="2"></circle>`).join('')}` : '';
     const root = document.createElement('div'); root.id = 'bzmk';
     root.innerHTML = `<div class="cd" role="dialog" aria-modal="true"><div class="hd"><div><div class="k">${tr('Tổng kết hành trình', 'Journey summary')} · ${played.length}/6 ${tr('thành phố', 'cities')}</div><h2>${rank[0].key === 'me' ? tr('🏆 Đội bạn dẫn đầu!', '🏆 Your team finished first!') : tr(`Hạng ${rank.indexOf(me) + 1}/4 · ${rank[0].name} dẫn đầu`, `Rank ${rank.indexOf(me) + 1}/4 · ${rank[0].name} leads`)}</h2></div><div class="hb"><button class="x2 bd">📈 ${tr('Bảng thị trường', 'Market board')}</button><button class="x">${opts.btn || tr('Đóng', 'Close')}</button></div></div>
@@ -391,7 +397,7 @@
       </div><p style="margin:10px 0 0;font-size:12px;color:#5d6770">${tr('Xếp theo số cờ, rồi tổng lãi. Cờ của đối thủ = thành phố họ có thị phần cao nhất khi đội bạn không cắm được cờ.', 'Ranked by flags, then total profit. A rival flag = a city where they had the top share and your team did not plant a flag.')}</p></div>
       <div class="top"><div class="pn"><h3>${tr('Thị phần theo thành phố', 'Share by city')}</h3><p style="margin:-4px 0 10px;font-size:11px;color:#5d6770">${tr('Mỗi cột = 100% khách ở thành phố đó, chia theo % mỗi đội giành được', "Each bar = 100% of that city's customers, split by each team's % share")}</p><svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block">${bars}</svg>
         <div class="lg">${teams.map(t => `<span><i style="background:${t.c}"></i>${t.key === 'me' ? tr('Bạn', 'You') : (RIV[t.key] || {}).n || t.name}</span>`).join('')}</div></div>
-      <div class="pn"><h3>${tr('Doanh thu & lãi của bạn (tr₫)', 'Your revenue & profit (m₫)')}</h3><svg viewBox="0 0 ${W} ${H2}" style="width:100%;height:auto;display:block"><line x1="${pad}" x2="${W - pad}" y1="${base}" y2="${base}" stroke="#dbe9f0" stroke-width="2"></line>${rev}${line}</svg>
+      <div class="pn"><h3>${tr('Doanh thu & lãi của bạn (tr₫)', 'Your revenue & profit (m₫)')}</h3><svg viewBox="0 0 ${W} ${H2}" style="width:100%;height:auto;display:block"><line x1="${pad}" x2="${W - pad}" y1="${y0.toFixed(1)}" y2="${y0.toFixed(1)}" stroke="#dbe9f0" stroke-width="2"></line>${rev}${line}</svg>
         <div class="lg"><span><i style="background:#9fd0e0"></i>${tr('Doanh thu', 'Revenue')}</span><span><i style="background:#f08a3c"></i>${tr('Lãi ròng', 'Net profit')}</span></div></div></div></div>`;
     document.body.appendChild(root);
     const close = () => { root.remove(); window.removeEventListener('keydown', kd); opts.onClose && opts.onClose(); };
