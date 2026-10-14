@@ -20,7 +20,8 @@
 <script src="js/error-log.js"></script>
 <!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
      nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
-<link rel="stylesheet" href="css/bizon-fonts.css">
+<link rel="stylesheet" href="css/bizon-clay-fonts.css">
+<link rel="stylesheet" href="css/bizon-clay.css">
 <style>
   html { background:#f4faff; }
   body { font-family:'Manrope', 'Manrope Fallback',sans-serif; background:transparent; color:#033337; overflow-x:hidden; }
@@ -76,18 +77,24 @@
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
   }
+  /* Đồng nhất với trang chủ: nền, chữ, thanh điều hướng và chân trang đất sét. */
+  body.clay header.pt-24 { background: transparent !important; color: var(--clay-ink); padding-top: 28px !important; }
+  body.clay header.pt-24 .text-white, body.clay header.pt-24 [class*="text-white/"] { color: var(--clay-ink) !important; opacity: .78; }
+  body.clay header.pt-24 h1 { color: var(--clay-ink); }
+  body.clay header.pt-24 .text-clay-gold { color: var(--clay-orange) !important; }
+  body.clay header.pt-24 figure { box-shadow: 0 18px 30px -18px rgba(110,70,30,.45); }
   /* Màn chơi một màn hình (máy tính): HUD trên cùng, bàn quyết định bên trái,
      cửa hàng và nhật ký bên phải; mỗi khung cuộn trong chính nó. */
   @media (min-width: 900px) {
     body:has(#bp-play:not(.hidden)) { position: fixed; inset: 0; width: 100%; height: 100vh; overflow: hidden; }
     body:has(#bp-play:not(.hidden)) > header.pt-24 { display: none !important; }
-    body:has(#bp-play:not(.hidden)) > main { max-width: none !important; padding: 0 !important; height: 100vh; }
+    body:has(#bp-play:not(.hidden)) > main { max-width: none !important; padding: 0 !important; height: calc(100vh - 90px); }
     body:has(#bp-play:not(.hidden)) #bp-howto, body:has(#bp-play:not(.hidden)) #bp-intro { display: none !important; }
     #bp-play:not(.hidden) {
-      display: grid !important; box-sizing: border-box; height: 100vh;
+      display: grid !important; box-sizing: border-box; height: calc(100vh - 90px);
       grid-template-columns: minmax(0, 1fr) minmax(300px, 380px);
       grid-template-rows: auto minmax(0, 1fr) minmax(0, 1fr);
-      gap: 12px; padding: 70px 14px 14px;
+      gap: 12px; padding: 14px;
     }
     #bp-play:not(.hidden) > .clay-card { margin: 0 !important; min-height: 0; overflow: auto; }
     #bp-play:not(.hidden) > .clay-card:first-child { grid-column: 1 / -1; overflow: visible; }
@@ -109,10 +116,10 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="css/clay-tool-skin.css">
 </head>
-<body>
+<body class="clay">
 
 
-<header class="pt-24 pb-8 text-white" style="background:linear-gradient(160deg,#033337 0%,#02444d 55%,#006687 100%)">
+<header class="pt-24 pb-8">
   <div class="max-w-2xl mx-auto px-5">
     <p class="text-[11px] font-extrabold uppercase tracking-[.2em] text-clay-gold" data-en="BizOn Go Global · Strategy simulation · 6 quarters · Original BizOn game">BizOn Go Global · Mô phỏng chiến lược · 6 quý · Game gốc BizOn</p>
     <figure class="mt-3 mb-4 rounded-3xl overflow-hidden shadow-2xl">
@@ -1798,12 +1805,13 @@
 <script src="js/game3d-login-gate.js"></script><script>Game3DGate.mount({ introId: 'bp-intro', ns: 'bp', title: 'Chào mừng tới Hộ Chiếu Thương Hiệu!', subtitle: 'Điền nhanh thông tin đội rồi vào thẳng phần giới thiệu — bỏ trống vẫn chơi được trọn vẹn.' });</script><script>window.BIZON_GAME_NS='bp';</script><script src="js/official-cert.js"></script>
 <script src="js/negotiate.js"></script>
 <script src="js/bp-negotiate.js"></script>
+<script src="js/bizon-clay-i18n.js" defer></script>
+<script src="js/bizon-clay-nav.js" defer></script>
 <script src="js/site-ui.js" defer></script>
 <script src="js/site-vnmap.js" defer></script>
 <script src="js/site-dock.js" defer></script>
-<script src="js/site-footer.js" defer></script>
-<script src="js/site-nav.js" defer></script>
 <p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2" style="color:rgba(100,116,125,.85)">✉️ Liên hệ · Contact: <a href="mailto:patu@ctu.edu.vn" style="color:inherit;text-decoration:underline">patu@ctu.edu.vn</a> · <a href="mailto:thuyhuongctu@gmail.com" style="color:inherit;text-decoration:underline">thuyhuongctu@gmail.com</a></p>
 <p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2 pb-6" style="color:rgba(100,116,125,.75)">🎓 Trang web chỉ phục vụ mục đích giáo dục và nghiên cứu, không đại diện, không liên kết và không nhận tài trợ từ bất kỳ tổ chức chính trị nào. · This website serves educational and research purposes only and is not affiliated with any political organization.</p>
+<script src="js/bizon-clay-footer.js" defer></script>
 </body>
 </html>
