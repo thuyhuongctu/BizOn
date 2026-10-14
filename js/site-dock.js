@@ -66,10 +66,10 @@
   /* ---------- CSS ---------- */
   var css = document.createElement('style');
   css.textContent =
-    '#bz-dock-btn{position:fixed;left:16px;bottom:16px;z-index:70;width:46px;height:46px;border-radius:9999px;border:none;cursor:pointer;' +
+    '#bz-dock-btn{position:fixed;right:16px;bottom:16px;z-index:70;width:46px;height:46px;border-radius:9999px;border:none;cursor:pointer;' +
       'background:#fff;color:#033337;font-size:20px;font-weight:800;box-shadow:0 8px 24px -6px rgba(0,102,135,.4), inset 0 -3px 0 rgba(0,0,0,.08);transition:transform .12s}' +
     '#bz-dock-btn:active{transform:scale(.94)}' +
-    '#bz-dock{position:fixed;left:14px;bottom:70px;z-index:70;width:min(88vw,320px);background:#fff;color:#033337;border-radius:22px;' +
+    '#bz-dock{position:fixed;right:14px;bottom:70px;z-index:70;width:min(88vw,320px);background:#fff;color:#033337;border-radius:22px;' +
       'box-shadow:0 18px 44px -10px rgba(0,60,80,.35), inset 0 -4px 0 rgba(0,0,0,.05);padding:16px;display:none;font-family:Manrope,\'Plus Jakarta Sans\',sans-serif}' +
     '#bz-dock.open{display:block}' +
     '#bz-dock .bz-cap{font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;opacity:.55;margin:2px 0 8px}' +
