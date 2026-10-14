@@ -19,7 +19,7 @@
 <script src="js/backend-config.js"></script>
 <script src="js/error-log.js"></script>
 <script src="js/game3d-login-gate.js"></script>
-<script>Game3DGate.mount({ introId: 'bp-intro', ns: 'bp', title: 'Chào mừng tới Hộ Chiếu Thương Hiệu!', subtitle: 'Điền nhanh thông tin đội rồi vào thẳng phần giới thiệu — bỏ trống vẫn chơi được trọn vẹn.' });</script>
+<script>Game3DGate.mount({ backdrop: true, introId: 'bp-intro', ns: 'bp', title: 'Chào mừng tới Hộ Chiếu Thương Hiệu!', subtitle: 'Điền nhanh thông tin đội rồi vào thẳng phần giới thiệu — bỏ trống vẫn chơi được trọn vẹn.' });</script>
 <!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
      nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
 <link rel="stylesheet" href="css/bizon-fonts.css">
@@ -83,6 +83,7 @@
 <script type="importmap">
 { "imports": { "three": "./js/vendor/three.module.js", "three/addons/controls/OrbitControls.js": "./js/vendor/OrbitControls.js" } }
 </script>
+<script type="module" src="js/game3d-globe.js"></script>
 <style>
   a { color:#006687; } a:hover { color:#004f69; }
   #bp3d-stage { position:fixed; left:0; top:0; width:100%; height:54svh; z-index:0; overflow:hidden;
