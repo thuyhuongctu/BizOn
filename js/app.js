@@ -2600,6 +2600,11 @@ function renderSeasonReport(body) {
         <a href="brand-passport.html" class="clay-btn bg-white/10 border border-white/25 text-white font-display font-extrabold px-4 py-2.5 text-xs">${T('🛂 Hộ Chiếu Thương Hiệu', '🛂 Brand Passport')}</a>
       </div>
     </div>` : ''}
+    ${S.finished && S.profile.classId ? `<div class="clay-card p-4 mb-3 flex gap-3 items-center">
+      <div class="flex-1 min-w-0"><p class="font-display font-bold text-primary text-sm">${T('📋 Khảo sát sau khi chơi', '📋 Post-game survey')}</p>
+      <p class="text-xs text-deep-teal/70 mt-0.5">${T('Ẩn danh, khoảng 5 phút. Làm xong rồi chờ giảng viên bắt đầu tính giờ thi.', 'Anonymous, about 5 minutes. Finish it, then wait for the instructor to start the exam timer.')}</p></div>
+      <a href="khao-sat-online.html?phase=post&bo=batnghiep&class=${encodeURIComponent(S.profile.classId)}" class="clay-btn bg-deep-teal text-white font-display font-extrabold px-4 py-2.5 text-xs shrink-0">${T('Làm khảo sát →', 'Take survey →')}</a>
+    </div>` : ''}
     <div class="clay-card p-4 bg-primary-container/10 flex gap-3 items-start">
       <img src="assets/character/lumina-vest-thumbsup.webp" alt="Mentor Hương" class="w-10 h-10 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 10%">
       <div><p class="font-display font-bold text-primary text-sm">${T('Mentor Hương · Tổng kết mùa giải', 'Mentor Hương · Season Wrap-Up')}</p>
