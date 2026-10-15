@@ -23,6 +23,9 @@
   }
   var mmss = function (m) { var s = Math.max(0, Math.round(m * 60)); return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); };
   var now = function () { return Date.now() + skew; };
+  // Giờ trong ngày theo máy chủ (HH:MM), hiện cùng đồng hồ đếm ngược để sinh viên biết mốc giờ
+  // Luôn theo giờ Việt Nam (không phụ thuộc múi giờ của máy sinh viên)
+  var clock = function () { try { return new Date(now()).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Ho_Chi_Minh' }); } catch (e) { var d = new Date(now()); return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'); } };
 
   function toast(msg) {
     var el = document.createElement('div'); el.textContent = msg;
@@ -44,7 +47,7 @@
     if (!el) { el = document.createElement('div'); el.id = 'bn-exam-clock'; el.style.cssText = 'position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:9998;padding:8px 16px;border-radius:999px;font:800 15px inherit;color:#fff;box-shadow:0 4px 0 rgba(0,0,0,.25);white-space:nowrap'; document.body.appendChild(el); }
     el.style.display = 'block';
     el.style.background = ex.phase === 'round' && ex.left < 1 ? '#c0443a' : ex.phase === 'end' ? '#5a6b74' : '#1f4a55';
-    el.textContent = '⏱ ' + (ex.phase === 'wait' ? TT('Thi bắt đầu sau ', 'Exam starts in ') + mmss(ex.left)
+    el.textContent = '🕒 ' + clock() + '  ·  ⏱ ' + (ex.phase === 'wait' ? TT('Thi bắt đầu sau ', 'Exam starts in ') + mmss(ex.left)
       : ex.phase === 'setup' ? TT('Chuẩn bị · vòng 1 mở sau ', 'Setup · Round 1 opens in ') + mmss(ex.left)
       : ex.phase === 'end' ? TT('Đã hết giờ thi', 'Exam time is over')
       : TT('Vòng ', 'Round ') + ex.round + TT(' · còn ', ' · ') + mmss(ex.left));
