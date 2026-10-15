@@ -745,16 +745,7 @@ function l3Enter(demo) {
   else {
     const classId = document.getElementById('l3Class').value.trim().toUpperCase();
     const email = document.getElementById('l3Email').value.trim();
-    // Có Mã lớp cần đăng nhập email trường (bizon_join_team chặn trùng vai) — màn 3D chỉ thu
-    // thập email/đội/mã lớp dạng tự do, không có ô mật khẩu nên không tự đăng nhập được. Chuyển
-    // sang giao diện 2D cũ, nơi có khung "🔒 Đăng nhập bằng email trường" (js/student-auth.js).
-    if (classId) {
-      alert(T('Có Mã lớp cần đăng nhập bằng email trường. Mình chuyển bạn sang giao diện đăng nhập đầy đủ bên dưới.',
-        'A class code requires signing in with your school email. Switching you to the full login screen below.'));
-      const se = g('sa-email'); if (se && email) se.value = email;
-      document.body.classList.remove('login3d'); L3.classic = true; L3.on = false; setMode();
-      return;
-    }
+    // Có Mã lớp: vào thẳng như bản 2D (cổng email trường đã tắt từ hotfix doLogin trong js/app.js).
     g('login-email').value = email; g('login-team').value = document.getElementById('l3Team').value.trim();
     g('login-class').value = classId; try { W.pickRole(L3.role); } catch (e) {} ev('doLogin()');
   }
