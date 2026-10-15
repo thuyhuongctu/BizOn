@@ -1449,7 +1449,7 @@ function renderTeamMeeting() {
 /* Chế độ Cơ bản/Nâng cao: vòng 1–2 gấp gọn các quyết định nâng cao (giá trị mặc định vẫn hợp lý).
  * Các thẻ nâng cao (nhân sự, nguồn vốn/kỳ hạn, R&D) không liền kề nhau trong DOM nên dùng chung
  * class "adv-decisions" thay vì một id duy nhất. */
-let advTouched = false;
+let advTouchedRound = null; // vòng mà người chơi tự bấm gấp/mở; sang vòng mới thì trở về mặc định theo vòng
 function setAdvDecisionsHidden(hide) {
   document.querySelectorAll('.adv-decisions').forEach(el => el.classList.toggle('hidden', hide));
   const btn = $('adv-toggle');
@@ -1458,12 +1458,12 @@ function setAdvDecisionsHidden(hide) {
     : T('⚙️ Thu gọn quyết định nâng cao ▴', '⚙️ Collapse advanced decisions ▴');
 }
 function toggleAdvDecisions() {
-  advTouched = true;
+  advTouchedRound = S.round;
   const anyVisible = !!document.querySelector('.adv-decisions:not(.hidden)');
   setAdvDecisionsHidden(anyVisible);
 }
 function syncAdvDecisions() {
-  if (!document.querySelector('.adv-decisions') || advTouched) return;
+  if (!document.querySelector('.adv-decisions') || advTouchedRound === S.round) return;
   setAdvDecisionsHidden(S.round <= 2);
 }
 function renderDecisions() {
