@@ -281,14 +281,6 @@
     $('ks-c-card').classList.toggle('hidden', !post);
   };
 
-  // Mở từ màn kết thúc game: khao-sat-online.html?phase=post&class=KT330H-M01 → chọn sẵn phiếu SAU và điền mã lớp
-  try {
-    const qp = new URLSearchParams(location.search);
-    if (qp.get('phase') === 'post') document.querySelector('input[name="phase"][value="post"]').checked = true;
-    if (qp.get('class')) $('ks-class').value = qp.get('class').slice(0, 40);
-    window.ksPhase();
-  } catch (e) {}
-
   const val = name => { const el = document.querySelector(`input[name="${name}"]:checked`); return el ? el.value : null; };
 
   // ===== Hàng đợi nộp (như backend.js: mất mạng vẫn không mất phiếu) =====
