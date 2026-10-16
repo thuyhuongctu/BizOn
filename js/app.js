@@ -163,6 +163,17 @@ function prefillLogin(profile) {
   if (profile.role && profile.role !== pickedRole) { pickedRole = profile.role; renderRolePicker(); }
 }
 
+// Mã đồng bộ đội để nhập trên máy khác của cùng đội (xem doLogin).
+function showSyncCode() {
+  const code = window.BizonBackend ? BizonBackend.getSyncCode(S) : null;
+  if (!code) {
+    alert(T('Mã đồng bộ chỉ có khi đã vào lớp thật (có Mã lớp và Tên đội).',
+            'A sync code only exists in a real class session (Class ID and team name required).'));
+    return;
+  }
+  prompt(T('Mã đồng bộ đội (giữ kín, chỉ nhập trên máy khác của đội):', 'Team sync code (keep it private, enter only on the team\'s other device):'), code);
+}
+
 function showResumeBanner(saved) {
   const banner = $('resume-banner');
   if (!banner) { S = saved; enterApp(); return; }
@@ -360,6 +371,14 @@ async function doLogin() {
   // Auth (Settings → SMTP Settings) bằng cách khôi phục khối if bên dưới:
   //   if (classId && !window.__bizonAuthedJoin) { alert(...); return; }
   window.__bizonAuthedJoin = false; // dùng 1 lần – lượt doLogin() kế tiếp phải qua lại cổng
+
+  // Đội chơi trên máy khác: nếu có Mã đồng bộ thì gắn vào máy này trước khi tải tiến trình.
+  const syncCode = ($('login-sync') ? $('login-sync').value : '').trim();
+  if (syncCode && !(window.BizonBackend && BizonBackend.adoptSyncCode(classId, team, syncCode))) {
+    alert(T('Mã đồng bộ không đúng: cần đủ 48 ký tự, và Mã lớp + Tên đội phải giống y như trên máy kia.',
+            'Wrong sync code: it needs all 48 characters, and the Class ID and team name must match the other device.'));
+    return;
+  }
 
   // Đội đã có Mã lớp: thử tải lại tiến trình từ máy chủ trước — để đổi
   // sang máy khác ở phòng máy dùng chung vẫn tiếp tục đúng chỗ đang chơi
