@@ -149,9 +149,19 @@ window.addEventListener('DOMContentLoaded', () => {
     // Máy dùng chung (phòng máy/lớp học): không tự nhảy thẳng vào ván của người
     // chơi trước đó nữa — hỏi xác nhận trước, để SV kế tiếp không bị lẫn vào
     // tiến trình/vai trò của bạn khác khi bấm vào game.
-    if (saved && saved.profile) showResumeBanner(saved);
+    if (saved && saved.profile) { prefillLogin(saved.profile); showResumeBanner(saved); }
   }, 1600);
 });
+
+// Điền sẵn đội, mã lớp và vai trò của ván đang dở để sinh viên chỉ cần bấm
+// "Bắt đầu" – không phải gõ lại (gõ lệch một ký tự là dễ vào nhầm/tạo ván mới).
+function prefillLogin(profile) {
+  const setIfEmpty = (id, v) => { const el = $(id); if (el && !el.value && v) el.value = v; };
+  setIfEmpty('login-team', profile.teamName);
+  setIfEmpty('login-class', profile.classId);
+  setIfEmpty('login-email', profile.email);
+  if (profile.role && profile.role !== pickedRole) { pickedRole = profile.role; renderRolePicker(); }
+}
 
 function showResumeBanner(saved) {
   const banner = $('resume-banner');
@@ -363,9 +373,12 @@ async function doLogin() {
   }
   // Máy chưa đồng bộ kịp lên máy chủ (mạng chậm, vừa tải lại trang): giữ tiến trình đang lưu
   // trên máy của đội, không để đăng nhập lại tạo ván mới ghi đè lên ván đang chơi dở.
+  // So khớp mềm: bỏ khoảng trắng thừa và không phân biệt hoa/thường, để gõ
+  // "Yến Phương" hay "yến  phương" vẫn vào đúng ván đang dở trên máy này.
+  const sameName = (a, b) => String(a || '').trim().replace(/\s+/g, ' ').toLowerCase() === String(b || '').trim().replace(/\s+/g, ' ').toLowerCase();
   if (!restored) {
     const local = load();
-    if (local && local.profile && local.profile.classId === classId && local.profile.teamName === team) restored = local;
+    if (local && local.profile && sameName(local.profile.classId, classId) && sameName(local.profile.teamName, team)) restored = local;
   }
   S = restored || newGameState({ email, teamName: team, role: pickedRole, classId });
   // Ván mới: lấy mức khó ưu tiên đã lưu (ván khôi phục giữ mức đã lưu trong save).
