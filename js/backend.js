@@ -4,7 +4,8 @@
  * Engine mô phỏng vẫn chạy trên máy sinh viên; tệp này chỉ gửi bản sao
  * kết quả mỗi lần đội khóa vòng – kèm mã băm SHA-256 để giảng viên đối
  * chiếu. Mất mạng không sao: kết quả xếp hàng trong localStorage và tự
- * gửi lại khi có mạng. Mọi lỗi đều im lặng, không ảnh hưởng trải nghiệm. */
+ * gửi lại khi có mạng. Lỗi không chặn game, nhưng nếu còn kết quả chưa gửi
+ * được thì hiện một thanh cảnh báo để sinh viên biết và bấm "Gửi lại". */
 (function () {
   const QKEY = 'bizon-backend-queue';
   const cfg = () => window.BIZON_BACKEND || {};
@@ -68,6 +69,40 @@
     const extra = readQueue().slice(q.length);
     writeQueue(rest.concat(extra));
   }
+
+  // Báo trạng thái gửi cho giao diện: số kết quả còn nằm trong hàng đợi.
+  function notify() {
+    let pending = 0;
+    try { pending = readQueue().length; } catch (e) {}
+    window.dispatchEvent(new CustomEvent('bizon-sync', { detail: { pending } }));
+    showSyncBanner(pending);
+  }
+
+  // Thanh cảnh báo cố định dưới màn hình, chỉ hiện khi còn kết quả chưa gửi.
+  // Dùng textContent (không innerHTML) vì tên đội do sinh viên nhập.
+  function showSyncBanner(pending) {
+    let el = document.getElementById('bizon-sync-banner');
+    if (!pending) { if (el) el.remove(); return; }
+    if (!el) {
+      if (!document.body) return;
+      el = document.createElement('div');
+      el.id = 'bizon-sync-banner';
+      el.setAttribute('role', 'alert');
+      el.style.cssText = 'position:fixed;left:12px;right:12px;bottom:12px;z-index:9999;display:flex;align-items:center;justify-content:space-between;gap:10px;background:#fff3cd;color:#664d03;border:2px solid #ffc107;border-radius:12px;padding:10px 14px;font:600 14px/1.4 system-ui,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.2)';
+      document.body.appendChild(el);
+    }
+    el.textContent = '';
+    const msg = document.createElement('span');
+    msg.textContent = '⚠️ Chưa gửi được ' + pending + ' kết quả vòng chơi lên máy chủ. Kiểm tra mạng rồi bấm "Gửi lại". / ' +
+      pending + ' round result(s) not sent yet. Check your connection and tap "Resend".';
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.textContent = 'Gửi lại / Resend';
+    btn.style.cssText = 'flex:none;border:0;border-radius:8px;padding:6px 10px;background:#664d03;color:#fff;font:700 13px system-ui,sans-serif;cursor:pointer';
+    btn.onclick = function () { flush(); };
+    el.append(msg, btn);
+  }
+
   // flush() được gọi từ nhiều nơi (submitRound, sự kiện 'online',
   // DOMContentLoaded) có thể trùng thời điểm – khoá lại để chỉ 1 lượt gửi
   // chạy thật sự cùng lúc, nếu không 2 lượt sẽ cùng đọc và cùng gửi lại y
@@ -84,7 +119,7 @@
     // "hàng đợi rỗng, không await" sẽ tự đặt flushing về null TRƯỚC KHI
     // dòng "flushing = (async()=>{...})()" ở dưới kịp gán xong, khiến giá
     // trị cuối cùng bị đè lại thành promise đã xong – kẹt "đang gửi" mãi.
-    flushing = doFlush().finally(function () { flushing = null; });
+    flushing = doFlush().finally(function () { flushing = null; notify(); });
     return flushing;
   }
 
