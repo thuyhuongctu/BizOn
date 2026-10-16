@@ -22,15 +22,19 @@ const src = fs.readFileSync(path.join(ROOT, 'js', 'engine.js'), 'utf8');
 
 /* engine.js là script thường: mọi khai báo ở mức ngoài cùng nằm trong phạm vi
  * của chính đoạn mã đó. Chạy trong vm rồi gom tên cần dùng ở cuối cùng đoạn. */
-const ctx = vm.createContext({ console });
+/* Từ 10/2026 engine dùng hàm song ngữ T(vi, en) do js/app.js khai báo, và các
+ * danh sách (biến cố, cửa hàng, nhiệm vụ, thành tựu) trở thành hàm *_LIST() để
+ * đổi ngôn ngữ được. Ở đây cấp T trả về bản tiếng Việt. */
+const ctx = vm.createContext({ console, T: (vi) => vi });
 vm.runInContext(src + `
 ;globalThis.__E = {
   newGameState, simulateRound, currentEvent, rng, energyReport,
   approveLoan, doMaintenance, optimizeLine, cutCosts, brandingPremium,
-  claimMission, missionStatus, MISSIONS,
+  claimMission, missionStatus, MISSIONS: MISSIONS_LIST(),
   whatIfSimulate, WHAT_IF_LIMIT, forecastCash, esgScore,
   ROUNDS_TOTAL, STARTING_BALANCE, UNITS_PER_WORKER, REF_PRICE,
-  MARKET_EVENTS, SHOP_ITEMS, ACHIEVEMENTS, BASE_MARKET_UNITS,
+  MARKET_EVENTS: MARKET_EVENTS_LIST(), SHOP_ITEMS: SHOP_ITEMS_LIST(),
+  ACHIEVEMENTS: ACHIEVEMENTS_LIST(), BASE_MARKET_UNITS,
 };`, ctx, { filename: 'js/engine.js' });
 const E = ctx.__E;
 
