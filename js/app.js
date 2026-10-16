@@ -361,6 +361,12 @@ async function doLogin() {
       if (saved && saved.state_json) restored = applyStateDefaults(saved.state_json);
     } catch (e) { /* im lặng – bắt đầu ván mới nếu không tải được */ }
   }
+  // Máy chưa đồng bộ kịp lên máy chủ (mạng chậm, vừa tải lại trang): giữ tiến trình đang lưu
+  // trên máy của đội, không để đăng nhập lại tạo ván mới ghi đè lên ván đang chơi dở.
+  if (!restored) {
+    const local = load();
+    if (local && local.profile && local.profile.classId === classId && local.profile.teamName === team) restored = local;
+  }
   S = restored || newGameState({ email, teamName: team, role: pickedRole, classId });
   // Ván mới: lấy mức khó ưu tiên đã lưu (ván khôi phục giữ mức đã lưu trong save).
   if (!restored) { try { S.difficulty = localStorage.getItem('bizon-difficulty') || 'normal'; } catch (e) {} }
