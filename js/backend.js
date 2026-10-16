@@ -70,19 +70,21 @@
     writeQueue(rest.concat(extra));
   }
 
-  // Báo trạng thái gửi cho giao diện: số kết quả còn nằm trong hàng đợi.
+  // Trạng thái gửi: số kết quả vòng còn chờ + tiến trình đội lưu lên máy chủ có lỗi hay không.
+  let stateError = false;
+  let lastState = null;
   function notify() {
     let pending = 0;
     try { pending = readQueue().length; } catch (e) {}
-    window.dispatchEvent(new CustomEvent('bizon-sync', { detail: { pending } }));
-    showSyncBanner(pending);
+    window.dispatchEvent(new CustomEvent('bizon-sync', { detail: { pending, stateError } }));
+    showSyncBanner(pending, stateError);
   }
 
-  // Thanh cảnh báo cố định dưới màn hình, chỉ hiện khi còn kết quả chưa gửi.
+  // Thanh cảnh báo cố định dưới màn hình, chỉ hiện khi còn việc chưa gửi được.
   // Dùng textContent (không innerHTML) vì tên đội do sinh viên nhập.
-  function showSyncBanner(pending) {
+  function showSyncBanner(pending, stateErr) {
     let el = document.getElementById('bizon-sync-banner');
-    if (!pending) { if (el) el.remove(); return; }
+    if (!pending && !stateErr) { if (el) el.remove(); return; }
     if (!el) {
       if (!document.body) return;
       el = document.createElement('div');
@@ -93,13 +95,18 @@
     }
     el.textContent = '';
     const msg = document.createElement('span');
-    msg.textContent = '⚠️ Chưa gửi được ' + pending + ' kết quả vòng chơi lên máy chủ. Kiểm tra mạng rồi bấm "Gửi lại". / ' +
-      pending + ' round result(s) not sent yet. Check your connection and tap "Resend".';
+    msg.textContent = pending
+      ? '⚠️ Chưa gửi được ' + pending + ' kết quả vòng chơi lên máy chủ. Kiểm tra mạng rồi bấm "Gửi lại". / ' +
+        pending + ' round result(s) not sent yet. Check your connection and tap "Resend".'
+      : '⚠️ Chưa lưu được tiến trình đội lên máy chủ. Kiểm tra mạng rồi bấm "Gửi lại". / Team progress not saved to the server yet. Check your connection and tap "Resend".';
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.textContent = 'Gửi lại / Resend';
     btn.style.cssText = 'flex:none;border:0;border-radius:8px;padding:6px 10px;background:#664d03;color:#fff;font:700 13px system-ui,sans-serif;cursor:pointer';
-    btn.onclick = function () { flush(); };
+    btn.onclick = function () {
+      flush();
+      if (stateError && lastState) saveTeamStateNow(lastState);
+    };
     el.append(msg, btn);
   }
 
@@ -194,9 +201,15 @@
     if (!on()) return;
     const key = teamKey(S);
     if (!key) return;
+    lastState = S;
     try {
       await rpc('upsert_team_save', { p_class_code: key.classCode, p_team_name: key.teamName, p_state: S, p_token: saveToken(key.classCode, key.teamName) });
-    } catch (e) { /* im lặng – thử lại ở lần lưu tiếp theo */ }
+      stateError = false;
+    } catch (e) {
+      // Lỗi lưu tiến trình không chặn game; báo để sinh viên biết và bấm "Gửi lại".
+      stateError = true;
+    }
+    notify();
   }
 
   let syncTimer = null;
