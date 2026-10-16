@@ -1,0 +1,43 @@
+name: Yêu cầu cập nhật game (Claude làm)
+description: Ghi một yêu cầu để Claude tự làm và mở Pull Request. Claude kiểm tra 4 lần/ngày (06:50, 11:50, 16:50, 21:50).
+title: "[Yêu cầu] "
+labels: ["claude"]
+body:
+  - type: input
+    id: trang
+    attributes:
+      label: Trang / game
+      description: Tên tệp hoặc đường dẫn, ví dụ ben-phu-sa.html
+      placeholder: ben-phu-sa.html (Bật Nghiệp 2D)
+    validations:
+      required: true
+  - type: textarea
+    id: thay-doi
+    attributes:
+      label: Muốn thay đổi gì
+      placeholder: Thêm vòng 7 – tình huống xuất khẩu gạo sang Nhật Bản
+    validations:
+      required: true
+  - type: input
+    id: vi-sao
+    attributes:
+      label: Vì sao
+      placeholder: Dùng cho buổi 9 lớp EC1600
+  - type: textarea
+    id: hoan-thanh
+    attributes:
+      label: Hoàn thành khi
+      description: Cách kiểm tra là đã đúng ý
+      placeholder: Sinh viên chơi được vòng 7, điểm vào bảng xếp hạng
+    validations:
+      required: true
+  - type: input
+    id: khong-doi
+    attributes:
+      label: Không được đổi
+      placeholder: Cách tính điểm 6 vòng cũ
+  - type: input
+    id: han
+    attributes:
+      label: Hạn
+      placeholder: trước 30/10
