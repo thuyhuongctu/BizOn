@@ -282,5 +282,22 @@
     try { localStorage.setItem('bizon-save-token:' + cls + ':' + team, c); return true; } catch (e) { return false; }
   }
 
-  window.BizonBackend = { submitRound, flush, syncTeamState, loadTeamState, classLeaderboard, getSyncCode, adoptSyncCode };
+  // Báo lỗi từ sinh viên về bảng bug_reports (chỉ giảng viên đọc được).
+  async function sendBugReport(S, description) {
+    if (!on()) return false;
+    const p = (S && S.profile) || {};
+    try {
+      await rpc('bizon_report_bug', {
+        p_class_code: p.classId || '',
+        p_team_name: p.teamName || '',
+        p_round: ((S && S.history) || []).length + 1,
+        p_role: p.role || '',
+        p_description: description,
+        p_user_agent: navigator.userAgent,
+      });
+      return true;
+    } catch (e) { return false; }
+  }
+
+  window.BizonBackend = { submitRound, flush, syncTeamState, loadTeamState, classLeaderboard, getSyncCode, adoptSyncCode, sendBugReport };
 })();

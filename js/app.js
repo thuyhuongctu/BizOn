@@ -163,6 +163,23 @@ function prefillLogin(profile) {
   if (profile.role && profile.role !== pickedRole) { pickedRole = profile.role; renderRolePicker(); }
 }
 
+// Báo lỗi cho giảng viên: gửi thật về máy chủ, và nói thật kết quả gửi.
+async function reportBug() {
+  const text = prompt(T('Mô tả lỗi bạn gặp (bấm nút nào, ở vòng nào). Ít nhất 5 ký tự:',
+                        'Describe the problem (which button, which round). At least 5 characters:'), '');
+  if (text === null) return;
+  const desc = text.trim();
+  if (desc.length < 5) {
+    alert(T('Mô tả quá ngắn, vui lòng ghi rõ hơn.', 'Description too short, please be more specific.'));
+    return;
+  }
+  const ok = window.BizonBackend ? await BizonBackend.sendBugReport(S, desc) : false;
+  alert(ok
+    ? T('Đã gửi báo cáo lỗi tới giảng viên. Cảm ơn bạn!', 'Bug report sent to your instructor. Thank you!')
+    : T('Chưa gửi được báo cáo (chưa có mạng, hoặc chưa vào lớp có mã lớp). Hãy báo trực tiếp cho giảng viên hoặc nhóm lớp.',
+        'Could not send the report (no network, or no class code). Please tell your instructor or the class group directly.'));
+}
+
 // Mã đồng bộ đội để nhập trên máy khác của cùng đội (xem doLogin).
 function showSyncCode() {
   const code = window.BizonBackend ? BizonBackend.getSyncCode(S) : null;
