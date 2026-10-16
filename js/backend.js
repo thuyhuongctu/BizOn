@@ -267,5 +267,20 @@
       }
     }
   });
-  window.BizonBackend = { submitRound, flush, syncTeamState, loadTeamState, classLeaderboard };
+  // Mã đồng bộ đội = token lưu trên máy này. Đội chơi trên nhiều máy: nhập mã này
+  // trên máy mới (cùng Mã lớp và Tên đội) để tải đúng tiến trình của đội.
+  function getSyncCode(S) {
+    const key = teamKey(S);
+    return key ? saveToken(key.classCode, key.teamName) : null;
+  }
+  function adoptSyncCode(classId, teamName, code) {
+    const c = String(code || '').trim().toLowerCase();
+    if (!/^[0-9a-f]{48}$/.test(c)) return false;
+    const cls = String(classId || '').trim();
+    const team = String(teamName || '').trim();
+    if (!cls || !team || cls === 'DEMO-2026') return false;
+    try { localStorage.setItem('bizon-save-token:' + cls + ':' + team, c); return true; } catch (e) { return false; }
+  }
+
+  window.BizonBackend = { submitRound, flush, syncTeamState, loadTeamState, classLeaderboard, getSyncCode, adoptSyncCode };
 })();

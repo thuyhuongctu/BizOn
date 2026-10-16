@@ -220,6 +220,9 @@
       <label class="block text-sm font-bold text-deep-teal mb-1"><span>Mã lớp học – Class ID</span> <span class="font-normal text-deep-teal/40">(tùy chọn)</span></label>
       <p class="text-[11px] text-deep-teal/55 mb-1.5 leading-snug"><span>Bỏ trống vẫn chơi được trọn 6 vòng ở chế độ</span> <b>chơi thử</b><span>. Điền Mã lớp để kết quả gửi về máy chủ lớp học.</span></p>
       <input id="login-class" type="text" placeholder="VD: QTKD-2026-A" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 mb-4 outline-none focus:border-primary-container">
+      <label class="block text-sm font-bold text-deep-teal mb-1"><span>Mã đồng bộ đội</span> <span class="font-normal text-deep-teal/40">(tùy chọn)</span></label>
+      <p class="text-[11px] text-deep-teal/55 mb-1.5 leading-snug"><span>Chỉ điền khi đội đã chơi trên máy khác: lấy mã ở mục</span> <b>🔑 Mã đồng bộ đội</b> <span>trong menu cài đặt của máy cũ.</span></p>
+      <input id="login-sync" type="text" autocomplete="off" spellcheck="false" placeholder="48 ký tự" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 mb-4 outline-none focus:border-primary-container">
       <label class="block text-sm font-bold text-deep-teal mb-2">Vai trò của bạn</label>
       <div id="role-picker" class="grid grid-cols-5 gap-2 mb-6"></div>
       <button onclick="doLogin()" class="clay-button-primary w-full text-white font-display font-bold py-4" style="background:#e8762d; box-shadow:0 6px 0 #b95618, 0 12px 24px rgba(184,86,24,.25)">Bắt đầu mô phỏng 🚀</button>
@@ -794,6 +797,7 @@
         <div class="p-5"><a href="index.html" class="font-bold text-sm text-primary block">🏠 Trang chủ BizOn</a></div>
         <div class="p-5"><a href="https://github.com/thuyhuongctu/BizOn/tree/main" target="_blank" rel="noopener" class="font-bold text-sm text-primary block">⭐ Mã nguồn trên GitHub</a></div>
         <div class="p-5"><button onclick="alert(T('Đã gửi báo cáo lỗi tới đội ngũ BizOn. Cảm ơn bạn!', 'Bug report sent to the BizOn team. Thank you!'))" class="font-bold text-sm text-primary">🐞 Gửi báo cáo lỗi</button></div>
+        <div class="p-5"><button onclick="showSyncCode()" class="font-bold text-sm text-deep-teal w-full text-left">🔑 Mã đồng bộ đội (chơi trên máy khác)</button></div>
         <div class="p-5"><button onclick="signOutStudent()" class="font-bold text-sm text-deep-teal w-full text-left">🔓 Đăng xuất (đổi sinh viên dùng máy này)</button>
           <p class="text-[11px] text-deep-teal/50 mt-1 leading-snug">Dùng khi hết giờ, cần nhường máy dùng chung cho bạn khác. Tiến trình đã lưu trên máy chủ (nếu có Mã lớp) – đăng nhập lại là chơi tiếp được, không mất gì.</p></div>
         <div class="p-5"><button onclick="resetGame()" class="font-bold text-sm text-orange-600 w-full text-left">♻️ Chơi lại từ đầu (Reset)</button>
