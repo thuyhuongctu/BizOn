@@ -2,7 +2,7 @@
  * BPWorldMap.render(el, data) – data: { home:{id,lon,lat,flag,label}, hosts:[{m,label,lon,lat,iso,entered,modeIcon,rival,know,free,cd,tip}], T }
  * Cần d3 v7 + topojson-client (thẻ script trong <head>). Không có mạng thì hiện thông báo thay bản đồ. */
 (function () {
-  var URL_ATLAS = 'https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json';
+  var URL_ATLAS = 'js/vendor/countries-110m.json'; // đã vendor sẵn (world-atlas@2.0.2) để chạy được khi mạng bị chặn
   var atlasP = null;
   function atlas() {
     if (!atlasP) atlasP = fetch(URL_ATLAS).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
