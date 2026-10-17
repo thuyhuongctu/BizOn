@@ -1399,9 +1399,14 @@ function renderMarketForecast() {
   const bar = $('mf-bar');
   if (bar) { bar.style.width = Math.min(100, Math.max(4, share)) + '%'; bar.classList.toggle('opacity-50', !winning); }
   const fc = forecastCash(S, d);
+  // Dự báo chỉ tính cho vòng này; lũy kế các vòng trước có thể vẫn âm, nên nói rõ để khỏi hiểu nhầm là đã thắng cả ván.
+  const cum = S.history.reduce((a, h) => a + (h.netProfit || 0), 0);
+  const cumNote = cum < 0
+    ? T(` <i>Lưu ý: lũy kế các vòng trước vẫn âm (${money(cum)}) – cần thêm lãi để bù.</i>`, ` <i>Note: cumulative profit from earlier rounds is still negative (${money(cum)}) – you need more profit to recover.</i>`)
+    : '';
   $('mf-verdict').innerHTML = winning
-    ? (fc.net >= 0 ? T(`✅ <b>Đang thắng!</b> Ước tính bạn vượt mức trung bình đối thủ (~${rivalAvg.toFixed(0)}%/đội) và có lãi – giữ vững là cắm được cờ 🚩.`,
-                       `✅ <b>You're winning!</b> Estimated above the rival average (~${rivalAvg.toFixed(0)}%/team) and profitable – hold this and you'll plant the flag 🚩.`)
+    ? (fc.net >= 0 ? T(`✅ <b>Vòng này đang thắng!</b> Ước tính bạn vượt mức trung bình đối thủ (~${rivalAvg.toFixed(0)}%/đội) và có lãi – giữ vững là cắm được cờ 🚩.${cumNote}`,
+                       `✅ <b>Winning this round!</b> Estimated above the rival average (~${rivalAvg.toFixed(0)}%/team) and profitable – hold this and you'll plant the flag 🚩.${cumNote}`)
                    : T(`🟡 Thị phần đủ thắng (~ đối thủ ${rivalAvg.toFixed(0)}%/đội) nhưng <b>đang lỗ</b> – tăng giá nhẹ hoặc bớt chi để có lãi, vì thắng vòng cần cả hai.`,
                        `🟡 Share is enough to win (~rivals ${rivalAvg.toFixed(0)}%/team) but you're <b>losing money</b> – raise price slightly or cut spend to turn a profit, since winning the round needs both.`))
     : T(`🔻 Chưa đủ – mỗi đối thủ đang giữ ~${rivalAvg.toFixed(0)}%. Gợi ý: <b>giảm giá gần 150k</b> hoặc <b>tăng marketing</b> để kéo khách (xem đề xuất của Mạnh Chi ở Cuộc họp đội).`,
