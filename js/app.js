@@ -2640,7 +2640,7 @@ function renderSeasonReport(body) {
             <p class="text-[8px] text-deep-teal/50 font-bold">Co-founder &amp; Chief Academic Advisor</p>
           </div>
         </div>
-        <p class="text-[9px] text-deep-teal/45 font-bold mt-3">${T(`Cấp ngày ${new Date().toLocaleDateString('vi-VN')}`, `Issued ${new Date().toLocaleDateString('en-US')}`)} · thuyhuongctu.github.io/BizOn</p>
+        <p class="text-[9px] text-deep-teal/45 font-bold mt-3">${T(`Cấp ngày ${new Date().toLocaleDateString('vi-VN')}`, `Issued ${new Date().toLocaleDateString('en-US')}`)} · bizonland.com</p>
         <div class="flex gap-2 justify-center mt-3"><button onclick="downloadCertificate('vi')" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-4 py-2 text-[11px]">📥 Tải chứng nhận</button><button onclick="downloadCertificate('en')" class="clay-btn bg-white text-primary border border-primary/25 font-display font-extrabold px-4 py-2 text-[11px]">📥 Certificate (EN)</button></div>
       </div>
     </div>` : ''}
@@ -2707,7 +2707,7 @@ async function downloadCertificate(lang = 'vi') {
     champ: 'as Champion of the Arena',
     stats: ['FINAL RANK', 'MARKET SHARE', 'CUMULATIVE PROFIT'],
     sig1: 'PhD Candidate Do Thuy Huong', sig2: 'Assoc. Prof. Phan Anh Tu, Ph.D.',
-    date: `Issued on ${new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })} · thuyhuongctu.github.io/BizOn`,
+    date: `Issued on ${new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })} · bizonland.com`,
   } : {
     small: '🎓 GIẤY CHỨNG NHẬN HOÀN THÀNH', to: 'Trao cho',
     cls: `Lớp / Mã lớp: ${c.classId}`,
@@ -2715,7 +2715,7 @@ async function downloadCertificate(lang = 'vi') {
     champ: 'với ngôi vị Quán quân sàn đấu',
     stats: ['HẠNG CHUNG CUỘC', 'THỊ PHẦN', 'LỢI NHUẬN TÍCH LŨY'],
     sig1: 'NCS. Đỗ Thùy Hương', sig2: 'PGS.TS. Phan Anh Tú',
-    date: `Cấp ngày ${new Date().toLocaleDateString('vi-VN')} · thuyhuongctu.github.io/BizOn`,
+    date: `Cấp ngày ${new Date().toLocaleDateString('vi-VN')} · bizonland.com`,
   };
   const [sigH, sigT] = await Promise.all([loadSigImg('assets/docs/sig-huong.png'), loadSigImg('assets/docs/sig-tu.png')]);
   const cv = document.createElement('canvas');

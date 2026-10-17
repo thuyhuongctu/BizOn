@@ -116,7 +116,7 @@
       g.fillText(T('Trường Kinh tế, Đại học Cần Thơ', 'School of Economics, Can Tho University'), sx, sy + 52);
 
       g.textAlign = 'left'; g.font = '11px "Hanken Grotesk", sans-serif'; g.fillStyle = 'rgba(3,51,55,.4)';
-      g.fillText(T('Cấp ngày ', 'Issued on ') + new Date().toLocaleDateString(isEN() ? 'en-US' : 'vi-VN') + '  ·  thuyhuongctu.github.io/BizOn', 60, 950);
+      g.fillText(T('Cấp ngày ', 'Issued on ') + new Date().toLocaleDateString(isEN() ? 'en-US' : 'vi-VN') + '  ·  bizonland.com', 60, 950);
       g.textAlign = 'right'; g.fillText(T('Mã xác thực ', 'Verification code ') + verifyCode, 1340, 950);
 
       var a = document.createElement('a');

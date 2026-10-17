@@ -1,6 +1,6 @@
 // App shell V7 adds the scoped Instructor Studio while preserving approved BizOn artwork offline.
 const CACHE_NAME = 'bizon-app-shell-v7';
-const APP_SCOPE_PREFIX = '/BizOn/';
+const APP_SCOPE_PREFIX = '/';
 const APP_SHELL = [
   './',
   './release.html',

@@ -124,7 +124,7 @@
 
   // Keep the installed Web/PWA experience inside the unified app shell.
   if (!location.pathname.endsWith('/app/instructor-studio.html')) {
-    document.querySelectorAll('a[href="../giang-vien.html"], a[href="/BizOn/giang-vien.html"]').forEach(link => {
+    document.querySelectorAll('a[href="../giang-vien.html"], a[href="/BizOn/giang-vien.html"], a[href="/giang-vien.html"]').forEach(link => {
       link.href = './instructor-studio.html';
     });
   }

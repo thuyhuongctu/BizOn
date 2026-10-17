@@ -7,7 +7,7 @@
  * thì dock tự dùng cơ chế dự phòng hoặc ẩn nút tương ứng. */
 (function () {
   var IS_GAME = /game\.html$/.test(location.pathname); // game có hệ nhạc riêng
-  var SITE_URL = 'https://thuyhuongctu.github.io/BizOn/';
+  var SITE_URL = 'https://bizonland.com/';
   /* Playlist toàn bộ ca khúc gốc – phát nối tiếp đến hết rồi tự lặp lại từ đầu.
    * Tên bài theo đúng Kho Âm nhạc (am-nhac.html) – nguồn chuẩn của hệ sinh thái. */
   var PLAYLIST = [

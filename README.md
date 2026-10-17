@@ -14,9 +14,9 @@
 |---|---|
 | **Authors** | **Do Thuy Huong** (Founder & Creative Lead) · **Phan Anh Tu** (Co-founder & Academic Advisor) |
 | **Affiliation** | Can Tho University (CTU), Vietnam |
-| **Start here** | 🪐 [Universe BizOn – ecosystem map](https://thuyhuongctu.github.io/BizOn/universe.html) (the landing page: one engine core, many worlds) |
-| **Play now** | 🎮 [Game](https://thuyhuongctu.github.io/BizOn/) · 🌐 [Landing page](https://thuyhuongctu.github.io/BizOn/gioi-thieu.html) · 🕹️ [Arcade](https://thuyhuongctu.github.io/BizOn/games.html) · 🌏 [BizOn Go Global](https://thuyhuongctu.github.io/BizOn/global.html) · ▶️ [Google Play (Android)](https://play.google.com/store/apps/details?id=io.github.thuyhuongctu.bizon) |
-| **For faculty** | 🏛️ [Institutional site](https://thuyhuongctu.github.io/BizOn/truong.html) · [Academic foundations](https://thuyhuongctu.github.io/BizOn/truong-hoc-thuat.html) · [For instructors](https://thuyhuongctu.github.io/BizOn/truong-giang-vien.html) · [Data policy](https://thuyhuongctu.github.io/BizOn/truong-chinh-sach.html) |
+| **Start here** | 🪐 [Universe BizOn – ecosystem map](https://bizonland.com/universe.html) (the landing page: one engine core, many worlds) |
+| **Play now** | 🎮 [Game](https://bizonland.com/) · 🌐 [Landing page](https://bizonland.com/gioi-thieu.html) · 🕹️ [Arcade](https://bizonland.com/games.html) · 🌏 [BizOn Go Global](https://bizonland.com/global.html) · ▶️ [Google Play (Android)](https://play.google.com/store/apps/details?id=io.github.thuyhuongctu.bizon) |
+| **For faculty** | 🏛️ [Institutional site](https://bizonland.com/truong.html) · [Academic foundations](https://bizonland.com/truong-hoc-thuat.html) · [For instructors](https://bizonland.com/truong-giang-vien.html) · [Data policy](https://bizonland.com/truong-chinh-sach.html) |
 | **Contact** | thuyhuongctu@gmail.com |
 | **Archive & DOI** | Zenodo concept DOI: [10.5281/zenodo.21592241](https://doi.org/10.5281/zenodo.21592241) – every release is permanently archived |
 
@@ -26,12 +26,12 @@
 
 <video src="https://raw.githubusercontent.com/thuyhuongctu/BizOn/main/assets/video/bizon-intro.mp4" controls muted playsinline poster="https://raw.githubusercontent.com/thuyhuongctu/BizOn/main/assets/video/bizon-intro-poster.jpg" width="720"></video>
 
-> ▶️ If the player above doesn't load, watch the reel on **[Universe BizOn](https://thuyhuongctu.github.io/BizOn/universe.html)** or [download the MP4](assets/video/bizon-intro.mp4).
+> ▶️ If the player above doesn't load, watch the reel on **[Universe BizOn](https://bizonland.com/universe.html)** or [download the MP4](assets/video/bizon-intro.mp4).
 >
 > ℹ️ **This reel is an AI-generated illustration, not real classroom footage.**
 > *Video là hình ảnh minh hoạ do AI dựng, không phải cảnh quay thực tế trên lớp học.*
 
-[![BizOn intro reel](assets/video/bizon-intro-poster.jpg)](https://thuyhuongctu.github.io/BizOn/universe.html)
+[![BizOn intro reel](assets/video/bizon-intro-poster.jpg)](https://bizonland.com/universe.html)
 
 ---
 
@@ -39,16 +39,16 @@
 
 | Page | Content |
 |---|---|
-| [`index.html`](https://thuyhuongctu.github.io/BizOn/) | **Main game** – a 6-round conquest across the map of Vietnam (Cần Thơ → Hà Nội); win a round's market share *and* turn a profit to plant your flag 🚩; the map features the Lũng Cú flag tower and the Hoàng Sa & Trường Sa archipelagos |
-| [`gioi-thieu.html`](https://thuyhuongctu.github.io/BizOn/gioi-thieu.html) | International-style landing page: interactive demo, 5 leadership roles, the 6-round journey, mini-games, an AI tour guide, FAQ, instructor section |
-| [`games.html`](https://thuyhuongctu.github.io/BizOn/games.html) | **BizOn Arcade** – 8 games in the ecosystem |
-| [`global.html`](https://thuyhuongctu.github.io/BizOn/global.html) | **BizOn Go Global** (beta) – from Vietnam to the world: pick a market and an entry mode (Export · Licensing · Joint Venture · Greenfield FDI), with a live World Market board and the **IE Lab** (International Entrepreneurship, data simulation) |
-| [`doi-ngu.html`](https://thuyhuongctu.github.io/BizOn/doi-ngu.html) | Founding team, the 5-member Demo Team, mission & vision 2026 |
-| [`am-nhac.html`](https://thuyhuongctu.github.io/BizOn/am-nhac.html) | **Music library** – the project's original soundtrack («Hương on Return», «Bật Nghiệp», «Vừa Đủ Để Bay Cao», «Hương sans frontières» VI/EN, «And The World Say Hello!»…) |
-| [`thu-vien.html`](https://thuyhuongctu.github.io/BizOn/thu-vien.html) | Creative library: characters, artwork, the «Bản đồ Việt Nam» enamel-pin merch |
-| [`giai-phap.html`](https://thuyhuongctu.github.io/BizOn/giai-phap.html) · [`du-an.html`](https://thuyhuongctu.github.io/BizOn/du-an.html) · [`tuyen-dung.html`](https://thuyhuongctu.github.io/BizOn/tuyen-dung.html) · [`lien-he.html`](https://thuyhuongctu.github.io/BizOn/lien-he.html) | Startup presence: solutions for instructors, project portfolio, join-us page, contact |
-| [`chinh-sach.html`](https://thuyhuongctu.github.io/BizOn/chinh-sach.html) | Privacy policy (no ads, no personal-data collection) |
-| [`khao-sat.html`](https://thuyhuongctu.github.io/BizOn/khao-sat.html) | Printable pre/post classroom survey forms |
+| [`index.html`](https://bizonland.com/) | **Main game** – a 6-round conquest across the map of Vietnam (Cần Thơ → Hà Nội); win a round's market share *and* turn a profit to plant your flag 🚩; the map features the Lũng Cú flag tower and the Hoàng Sa & Trường Sa archipelagos |
+| [`gioi-thieu.html`](https://bizonland.com/gioi-thieu.html) | International-style landing page: interactive demo, 5 leadership roles, the 6-round journey, mini-games, an AI tour guide, FAQ, instructor section |
+| [`games.html`](https://bizonland.com/games.html) | **BizOn Arcade** – 8 games in the ecosystem |
+| [`global.html`](https://bizonland.com/global.html) | **BizOn Go Global** (beta) – from Vietnam to the world: pick a market and an entry mode (Export · Licensing · Joint Venture · Greenfield FDI), with a live World Market board and the **IE Lab** (International Entrepreneurship, data simulation) |
+| [`doi-ngu.html`](https://bizonland.com/doi-ngu.html) | Founding team, the 5-member Demo Team, mission & vision 2026 |
+| [`am-nhac.html`](https://bizonland.com/am-nhac.html) | **Music library** – the project's original soundtrack («Hương on Return», «Bật Nghiệp», «Vừa Đủ Để Bay Cao», «Hương sans frontières» VI/EN, «And The World Say Hello!»…) |
+| [`thu-vien.html`](https://bizonland.com/thu-vien.html) | Creative library: characters, artwork, the «Bản đồ Việt Nam» enamel-pin merch |
+| [`giai-phap.html`](https://bizonland.com/giai-phap.html) · [`du-an.html`](https://bizonland.com/du-an.html) · [`tuyen-dung.html`](https://bizonland.com/tuyen-dung.html) · [`lien-he.html`](https://bizonland.com/lien-he.html) | Startup presence: solutions for instructors, project portfolio, join-us page, contact |
+| [`chinh-sach.html`](https://bizonland.com/chinh-sach.html) | Privacy policy (no ads, no personal-data collection) |
+| [`khao-sat.html`](https://bizonland.com/khao-sat.html) | Printable pre/post classroom survey forms |
 
 Every page supports **light/dark mode**, a **Vietnamese–English bilingual interface**, and **background music** from the project's original soundtrack (lyrics in [`docs/loi-bai-hat.md`](docs/loi-bai-hat.md)).
 
@@ -58,12 +58,12 @@ BizOn ships in **two design registers**, and the boundary is the screen frame: o
 
 | Page | Content |
 |---|---|
-| [`universe.html`](https://thuyhuongctu.github.io/BizOn/universe.html) | **Universe BizOn – the landing page.** One-glance ecosystem map: a deterministic engine core with the two pillars and subsystems (AIBIS · Lumina · VietLens · living market) orbiting it, over one shared infrastructure layer |
-| [`truong.html`](https://thuyhuongctu.github.io/BizOn/truong.html) | Institutional home – two pillars, the design-register principle, an overview for a department head |
-| [`truong-gioi-thieu.html`](https://thuyhuongctu.github.io/BizOn/truong-gioi-thieu.html) | About the project – the problem it addresses, the ecosystem, provenance (DOI · CITATION.cff · ORCID), the author team |
-| [`truong-hoc-thuat.html`](https://thuyhuongctu.github.io/BizOn/truong-hoc-thuat.html) | Academic foundations – Model Cards, the reproducibility contract (frozen snapshots), strategy-diversity health metric, two-purpose consent, and known limitations |
-| [`truong-giang-vien.html`](https://thuyhuongctu.github.io/BizOn/truong-giang-vien.html) | For instructors – four-step class flow, the four-level rubric (grades *reasoning*, not win/lose), CLO/BP learning-outcome matrix, engine-logged anchor metrics |
-| [`truong-chinh-sach.html`](https://thuyhuongctu.github.io/BizOn/truong-chinh-sach.html) | Data policy & IP – six hard data principles, the consent gate (default **off**), license terms, and the open legal questions left to counsel |
+| [`universe.html`](https://bizonland.com/universe.html) | **Universe BizOn – the landing page.** One-glance ecosystem map: a deterministic engine core with the two pillars and subsystems (AIBIS · Lumina · VietLens · living market) orbiting it, over one shared infrastructure layer |
+| [`truong.html`](https://bizonland.com/truong.html) | Institutional home – two pillars, the design-register principle, an overview for a department head |
+| [`truong-gioi-thieu.html`](https://bizonland.com/truong-gioi-thieu.html) | About the project – the problem it addresses, the ecosystem, provenance (DOI · CITATION.cff · ORCID), the author team |
+| [`truong-hoc-thuat.html`](https://bizonland.com/truong-hoc-thuat.html) | Academic foundations – Model Cards, the reproducibility contract (frozen snapshots), strategy-diversity health metric, two-purpose consent, and known limitations |
+| [`truong-giang-vien.html`](https://bizonland.com/truong-giang-vien.html) | For instructors – four-step class flow, the four-level rubric (grades *reasoning*, not win/lose), CLO/BP learning-outcome matrix, engine-logged anchor metrics |
+| [`truong-chinh-sach.html`](https://bizonland.com/truong-chinh-sach.html) | Data policy & IP – six hard data principles, the consent gate (default **off**), license terms, and the open legal questions left to counsel |
 
 ## 🧪 Academic engine layer
 
