@@ -49,7 +49,9 @@ for (const path of ['app/release.html', 'app/brand-passport.html', 'brand-passpo
 const release = fs.readFileSync('app/release.html', 'utf8');
 assert.match(release, /\.\/brand-passport\.html/);
 assert.match(release, /Dữ liệu được lưu trên thiết bị/);
-assert.match(release, /serviceWorker\.register\('\.\/sw\.js'/);
+// Đăng ký service worker nằm trong lớp vỏ dùng chung (app-shell), không còn inline trong release.html.
+assert.match(release, /app-shell\/unified-app\.js/);
+assert.match(fs.readFileSync('js/app-shell/unified-app.js', 'utf8'), /serviceWorker\.register\('\.\/sw\.js'/);
 assert.doesNotMatch(release, /Teaching demo|AI Command Center|Local-only|placeholder|auto-generated/i);
 
 console.log('Android TWA API 36 production-surface contract passed');

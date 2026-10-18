@@ -1399,9 +1399,14 @@ function renderMarketForecast() {
   const bar = $('mf-bar');
   if (bar) { bar.style.width = Math.min(100, Math.max(4, share)) + '%'; bar.classList.toggle('opacity-50', !winning); }
   const fc = forecastCash(S, d);
+  // Dự báo chỉ tính cho vòng này; lũy kế các vòng trước có thể vẫn âm, nên nói rõ để khỏi hiểu nhầm là đã thắng cả ván.
+  const cum = S.history.reduce((a, h) => a + (h.netProfit || 0), 0);
+  const cumNote = cum < 0
+    ? T(` <i>Lưu ý: lũy kế các vòng trước vẫn âm (${money(cum)}) – cần thêm lãi để bù.</i>`, ` <i>Note: cumulative profit from earlier rounds is still negative (${money(cum)}) – you need more profit to recover.</i>`)
+    : '';
   $('mf-verdict').innerHTML = winning
-    ? (fc.net >= 0 ? T(`✅ <b>Đang thắng!</b> Ước tính bạn vượt mức trung bình đối thủ (~${rivalAvg.toFixed(0)}%/đội) và có lãi – giữ vững là cắm được cờ 🚩.`,
-                       `✅ <b>You're winning!</b> Estimated above the rival average (~${rivalAvg.toFixed(0)}%/team) and profitable – hold this and you'll plant the flag 🚩.`)
+    ? (fc.net >= 0 ? T(`✅ <b>Vòng này đang thắng!</b> Ước tính bạn vượt mức trung bình đối thủ (~${rivalAvg.toFixed(0)}%/đội) và có lãi – giữ vững là cắm được cờ 🚩.${cumNote}`,
+                       `✅ <b>Winning this round!</b> Estimated above the rival average (~${rivalAvg.toFixed(0)}%/team) and profitable – hold this and you'll plant the flag 🚩.${cumNote}`)
                    : T(`🟡 Thị phần đủ thắng (~ đối thủ ${rivalAvg.toFixed(0)}%/đội) nhưng <b>đang lỗ</b> – tăng giá nhẹ hoặc bớt chi để có lãi, vì thắng vòng cần cả hai.`,
                        `🟡 Share is enough to win (~rivals ${rivalAvg.toFixed(0)}%/team) but you're <b>losing money</b> – raise price slightly or cut spend to turn a profit, since winning the round needs both.`))
     : T(`🔻 Chưa đủ – mỗi đối thủ đang giữ ~${rivalAvg.toFixed(0)}%. Gợi ý: <b>giảm giá gần 150k</b> hoặc <b>tăng marketing</b> để kéo khách (xem đề xuất của Mạnh Chi ở Cuộc họp đội).`,
@@ -2914,7 +2919,7 @@ function renderBmcReport(body) {
     <p class="text-[11px] text-deep-teal/50 mb-3">${T(`Business Model Canvas của đội ${escapeHtml(S.profile.teamName)} – cập nhật theo dữ liệu vòng ${Math.min(S.round, ROUNDS_TOTAL)}.`, `Business Model Canvas for team ${escapeHtml(S.profile.teamName)} – updated with round ${Math.min(S.round, ROUNDS_TOTAL)} data.`)}</p>
     <div class="grid grid-cols-2 gap-3">
       ${block(T('Phân khúc khách hàng', 'Customer Segments'), '🎯', T(`Thị trường đại chúng ${share}% thị phần; khách nhạy giá ${currentEvent(S).elasticityMul ? 'CAO (chiến tranh giá!)' : 'trung bình'}.`, `Mass market at ${share}% share; price sensitivity ${currentEvent(S).elasticityMul ? 'HIGH (price war!)' : 'average'}.`))}
-      ${block(T('Giá trị cốt lõi', 'Value Propositions'), '💎', T(`Sản phẩm giá ${(last ? last.decisions.price : 150).toLocaleString('vi-VN')}k₫, thương hiệu hạng ${S.brand >= 1.2 ? 'A' : 'B+'}, R&D tích lũy ${Math.round(S.rdCumulative)}tr₫.`, `Product priced ${(last ? last.decisions.price : 150).toLocaleString('en-US')}k₫, brand grade ${S.brand >= 1.2 ? 'A' : 'B+'}, cumulative R&D ${Math.round(S.rdCumulative)}m₫.`))}
+      ${block(T('Đề xuất giá trị', 'Value Proposition'), '💎', T(`Sản phẩm giá ${(last ? last.decisions.price : 150).toLocaleString('vi-VN')}k₫, thương hiệu hạng ${S.brand >= 1.2 ? 'A' : 'B+'}, R&D tích lũy ${Math.round(S.rdCumulative)}tr₫.`, `Product priced ${(last ? last.decisions.price : 150).toLocaleString('en-US')}k₫, brand grade ${S.brand >= 1.2 ? 'A' : 'B+'}, cumulative R&D ${Math.round(S.rdCumulative)}m₫.`))}
       ${block(T('Kênh phân phối', 'Channels'), '🚚', T(`Kênh Modern Trade + trực tuyến; tỷ lệ đáp ứng đơn ${currentEvent(S).fulfillMul ? '85% (khủng hoảng cung ứng)' : '100%'}.`, `Modern Trade + online channels; order fulfillment rate ${currentEvent(S).fulfillMul ? '85% (supply chain crisis)' : '100%'}.`))}
       ${block(T('Quan hệ khách hàng', 'Customer Relationships'), '❤️', T(`Brand Loyalty ${S.brandLoyalty}%; độ hài lòng ${Math.min(5, S.brandLoyalty / 19).toFixed(1)}/5.`, `Brand Loyalty ${S.brandLoyalty}%; satisfaction ${Math.min(5, S.brandLoyalty / 19).toFixed(1)}/5.`))}
       ${block(T('Dòng doanh thu', 'Revenue Streams'), '💵', T(`Bán sản phẩm: ${money(totalRev)} lũy kế; giá bán là đòn bẩy chính.`, `Product sales: ${money(totalRev)} cumulative; price is the main lever.`))}

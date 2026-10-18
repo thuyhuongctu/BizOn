@@ -22,15 +22,15 @@ const src = fs.readFileSync(path.join(ROOT, 'js', 'engine.js'), 'utf8');
 
 /* engine.js là script thường: mọi khai báo ở mức ngoài cùng nằm trong phạm vi
  * của chính đoạn mã đó. Chạy trong vm rồi gom tên cần dùng ở cuối cùng đoạn. */
-const ctx = vm.createContext({ console });
+const ctx = vm.createContext({ console, T: (vi) => vi }); // T() là hàm i18n của app.js; engine dùng tiếng Việt khi kiểm thử
 vm.runInContext(src + `
 ;globalThis.__E = {
   newGameState, simulateRound, currentEvent, rng, energyReport,
   approveLoan, doMaintenance, optimizeLine, cutCosts, brandingPremium,
-  claimMission, missionStatus, MISSIONS,
+  claimMission, missionStatus, MISSIONS_LIST,
   whatIfSimulate, WHAT_IF_LIMIT, forecastCash, esgScore,
   ROUNDS_TOTAL, STARTING_BALANCE, UNITS_PER_WORKER, REF_PRICE,
-  MARKET_EVENTS, SHOP_ITEMS, ACHIEVEMENTS, BASE_MARKET_UNITS,
+  MARKET_EVENTS_LIST, SHOP_ITEMS_LIST, ACHIEVEMENTS_LIST, BASE_MARKET_UNITS,
 };`, ctx, { filename: 'js/engine.js' });
 const E = ctx.__E;
 
@@ -94,7 +94,7 @@ test('Ván chạy đúng sáu vòng rồi kết thúc', () => {
 test('Mỗi vòng dùng đúng biến cố thị trường của vòng đó', () => {
   const s = newGame();
   for (let i = 1; i <= E.ROUNDS_TOTAL; i++) {
-    const want = E.MARKET_EVENTS[i];
+    const want = E.MARKET_EVENTS_LIST()[i];
     const r = E.simulateRound(s, DEC());
     eq(r.event.id, want.id, `vòng ${i} dùng biến cố ${want.id}`);
   }
@@ -185,7 +185,7 @@ test('Chỉ số vận hành luôn nằm trong khoảng cho phép', () => {
 /* ================= VẬT PHẨM & QUYẾT ĐỊNH TÀI CHÍNH ================= */
 
 test('Khiên bảo hiểm vô hiệu hoá biến cố xấu đúng một lần', () => {
-  const badRound = E.MARKET_EVENTS.findIndex((e, i) => i >= 1 && e && e.tone === 'bad');
+  const badRound = E.MARKET_EVENTS_LIST().findIndex((e, i) => i >= 1 && e && e.tone === 'bad');
   check(badRound > 0, `tìm được vòng có biến cố xấu: vòng ${badRound}`);
   if (badRound <= 0) return;
 
@@ -235,7 +235,7 @@ test('Cắt giảm chi phí chỉ có tác dụng đúng một vòng', () => {
 test('Nhận thưởng nhiệm vụ chỉ được một lần', () => {
   const s = newGame();
   E.simulateRound(s, DEC());
-  const m = E.MISSIONS.find(x => x.id === 'M_FIRST');
+  const m = E.MISSIONS_LIST().find(x => x.id === 'M_FIRST');
   eq(E.missionStatus(s, m), 'ready', 'chơi xong vòng 1 thì nhiệm vụ Khởi động sẵn sàng');
   const before = s.balance;
   eq(E.claimMission(s, 'M_FIRST'), true, 'lần nhận đầu thành công');
