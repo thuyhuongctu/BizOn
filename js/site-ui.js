@@ -4726,8 +4726,8 @@
 "INSTRUCTOR"
 ],
 [
-"BizOn Bật Nghiệp 2026 · v1.1.0 · © 2026 Đỗ Thùy Hương & Phan Anh Tú – Bảo lưu mọi quyền · Chỉ phục vụ giáo dục, không đại diện cho tổ chức chính trị nào · ✉️ patu@ctu.edu.vn · thuyhuongctu@gmail.com",
-"BizOn Bật Nghiệp 2026 · v1.1.0 · © 2026 Đỗ Thùy Hương & Phan Anh Tú – All rights reserved · For educational use only, not affiliated with any political organization · ✉️ patu@ctu.edu.vn · thuyhuongctu@gmail.com"
+"BizOn Bật Nghiệp 2026 · v1.1.0 · © 2026 Đỗ Thùy Hương & Phan Anh Tú – Bảo lưu mọi quyền · Chỉ phục vụ giáo dục, không đại diện cho tổ chức chính trị nào · ✉️ bricoleur@bizonland.com",
+"BizOn Bật Nghiệp 2026 · v1.1.0 · © 2026 Đỗ Thùy Hương & Phan Anh Tú – All rights reserved · For educational use only, not affiliated with any political organization · ✉️ bricoleur@bizonland.com"
 ],
 [
 "Tổng quan",

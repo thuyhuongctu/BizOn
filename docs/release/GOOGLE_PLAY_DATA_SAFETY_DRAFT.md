@@ -158,6 +158,6 @@ when student login was re-enabled; recheck before any Play submission.)*
 - **Encrypted in transit? Yes** (HTTPS). **Shared/sold? No** (GitHub Pages +
   Supabase are processors). **Ads/Analytics SDK? None.**
 - Retention & deletion: see Privacy Policy §7; keep a deletion contact operative
-  (patu@ctu.edu.vn / thuyhuongctu@gmail.com) and define retention windows for
+  (bricoleur@bizonland.com) and define retention windows for
   round_submissions, bp_results, team_saves, client_errors before leaving
   internal testing.

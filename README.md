@@ -17,7 +17,7 @@
 | **Start here** | 🪐 [Universe BizOn – ecosystem map](https://bizonland.com/universe.html) (the landing page: one engine core, many worlds) |
 | **Play now** | 🎮 [Game](https://bizonland.com/) · 🌐 [Landing page](https://bizonland.com/gioi-thieu.html) · 🕹️ [Arcade](https://bizonland.com/games.html) · 🌏 [BizOn Go Global](https://bizonland.com/global.html) · ▶️ [Google Play (Android)](https://play.google.com/store/apps/details?id=io.github.thuyhuongctu.bizon) |
 | **For faculty** | 🏛️ [Institutional site](https://bizonland.com/truong.html) · [Academic foundations](https://bizonland.com/truong-hoc-thuat.html) · [For instructors](https://bizonland.com/truong-giang-vien.html) · [Data policy](https://bizonland.com/truong-chinh-sach.html) |
-| **Contact** | thuyhuongctu@gmail.com |
+| **Contact** | bricoleur@bizonland.com |
 | **Archive & DOI** | Zenodo concept DOI: [10.5281/zenodo.21592241](https://doi.org/10.5281/zenodo.21592241) – every release is permanently archived |
 
 ---
@@ -149,7 +149,7 @@ If you use BizOn in teaching or research, please cite:
 
 **Proprietary software** – see [`LICENSE`](LICENSE). The source code, the simulation-engine algorithms, the character designs (**Lumina**, **Tú Phan**, the Demo Team), the original music library, and the **BizOn** name and identity belong to the authors **Do Thuy Huong & Phan Anh Tu**.
 
-✅ **Free tiers (scope-limited).** The **BizOn Arcade** and the **Level-1 game** (*Gánh hàng rong* / Street Vendor) are free to use at the official URL, indefinitely. The **two pillars** — *Bật Nghiệp* and *Hộ chiếu Thương hiệu* — are free for **Can Tho University**, and free for a **single trial semester** at any other institution. ❌ **Beyond those tiers** — continued use of the two pillars at other institutions, the **Instructor Studio**, copying or re-deploying the source, extracting characters/music, or any fee-charging use — requires a **written license**. Contact thuyhuongctu@gmail.com. This scope-limited grant replaces the earlier blanket "free for non-commercial classroom teaching" statement.
+✅ **Free tiers (scope-limited).** The **BizOn Arcade** and the **Level-1 game** (*Gánh hàng rong* / Street Vendor) are free to use at the official URL, indefinitely. The **two pillars** — *Bật Nghiệp* and *Hộ chiếu Thương hiệu* — are free for **Can Tho University**, and free for a **single trial semester** at any other institution. ❌ **Beyond those tiers** — continued use of the two pillars at other institutions, the **Instructor Studio**, copying or re-deploying the source, extracting characters/music, or any fee-charging use — requires a **written license**. Contact bricoleur@bizonland.com. This scope-limited grant replaces the earlier blanket "free for non-commercial classroom teaching" statement.
 
 Registration dossiers (copyright, trademark) and the commercialization strategy are managed in the authors' private document repository.
 
@@ -169,7 +169,7 @@ Fonts are **self-hosted** (no CDN) as static `.woff2` files under `assets/fonts/
 
 | Author | Role |
 |---|---|
-| **Do Thuy Huong** | Founder & Creative Lead – game design, embodiment of the Lumina character · thuyhuongctu@gmail.com |
-| **Phan Anh Tu** | Co-founder & Academic Advisor – academic oversight, business-administration expertise · patu@ctu.edu.vn |
+| **Do Thuy Huong** | Founder & Creative Lead – game design, embodiment of the Lumina character · bricoleur@bizonland.com |
+| **Phan Anh Tu** | Co-founder & Academic Advisor – academic oversight, business-administration expertise |
 
 © 2026 Do Thuy Huong & Phan Anh Tu · **BizOn Bật Nghiệp** – All rights reserved.
