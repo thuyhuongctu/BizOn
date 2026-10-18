@@ -234,7 +234,8 @@ footer{color:var(--faint)}
 <audio id="bgm" src="../assets/audio/huong-ngot-phu-sa.mp3" preload="none" loop></audio>
 <script>
   // Hai bài nền của trang chơi: «Hương Ngọt Phù Sa» (tiếng Việt) và «Durian Passport» (tiếng Anh)
-  const BGM_TRACKS = { vi: { src: '../assets/audio/huong-ngot-phu-sa.mp3', label: 'VI' }, en: { src: '../assets/audio/durian-passport.mp3', label: 'EN' } };
+  const BGM_TRACKS = { vi: { src: '../assets/audio/huong-ngot-phu-sa.mp3', label: 'VI' }, vi2: { src: '../assets/audio/huong-ngot-que-minh.mp3', label: 'VI2' }, en: { src: '../assets/audio/durian-passport.mp3', label: 'EN' } };
+  const TRACK_ORDER = ['vi', 'vi2', 'en'];
 </script>
 
 <footer class="wrap">
@@ -264,7 +265,7 @@ footer{color:var(--faint)}
   const MAX_WHATIF = 2, MAX_LUMINA = 3;
 
   let LANG = store.get('durian_lang') === 'en' ? 'en' : 'vi';
-  let TRACK = store.get('durian_track') === 'en' ? 'en' : 'vi';
+  let TRACK = BGM_TRACKS[store.get('durian_track')] ? store.get('durian_track') : 'vi';
   document.getElementById('bgm').src = BGM_TRACKS[TRACK].src;
   const L = (vi, en) => (LANG === 'en' ? en : vi);
   const nm = o => (LANG === 'en' ? o.en : o.vi);
@@ -311,7 +312,7 @@ footer{color:var(--faint)}
     $('langVI').classList.toggle('on', LANG === 'vi'); $('langEN').classList.toggle('on', LANG === 'en');
     $('musicBtn').title = L('Bật/tắt nhạc nền', 'Play/pause background music');
     $('trackBtn').textContent = BGM_TRACKS[TRACK].label;
-    $('trackBtn').title = L('Đổi bài nền: «Hương Ngọt Phù Sa» (VI) / «Durian Passport» (EN)', 'Switch track: «Hương Ngọt Phù Sa» (VI) / «Durian Passport» (EN)');
+    $('trackBtn').title = L('Đổi bài nền: «Hương Ngọt Phù Sa» (VI) · «Hương Ngọt Quê Mình» (VI2) · «Durian Passport» (EN)', 'Switch track: «Hương Ngọt Phù Sa» (VI) · «Hương Ngọt Quê Mình» (VI2) · «Durian Passport» (EN)');
     document.documentElement.lang = LANG;
     $('footSrc').textContent = L(
       'Quy định và sự kiện lấy từ Nghị định thư kiểm dịch MARD–GACC (2022), báo cáo thị trường rau quả của Bộ Công Thương (12/2023–02/2024), kết quả tra cứu của CESTI (04/2024) và các nghiên cứu chuỗi cung ứng tại Cai Lậy, Phong Điền, Thái Lan, Malaysia. Khối lượng, hệ số giá, xác suất và chiến lược của đối thủ AI là minh họa.',
@@ -330,7 +331,7 @@ footer{color:var(--faint)}
   };
   $('trackBtn').onclick = () => {
     const a = $('bgm'), wasPlaying = !a.paused;
-    TRACK = TRACK === 'vi' ? 'en' : 'vi';
+    TRACK = TRACK_ORDER[(TRACK_ORDER.indexOf(TRACK) + 1) % TRACK_ORDER.length];
     store.set('durian_track', TRACK);
     a.pause(); a.src = BGM_TRACKS[TRACK].src; a.load();
     if (wasPlaying) { a.volume = 0.35; const p = a.play(); if (p && p.catch) p.catch(() => {}); }
