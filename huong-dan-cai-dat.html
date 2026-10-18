@@ -178,7 +178,7 @@ class Component extends DCLogic{
   renderVals(){
     const lang=this.state.lang||this.props.lang||'vi';const t=T[lang];
     const on='inset 0 -3px 0 rgba(0,0,0,.2),0 4px 8px -3px rgba(0,60,80,.5)';
-    const meta=[{c:'#006687',soft:'#BFE6EE',ink:'#00506A',qr:'assets/qr/qr-bizon.png',link:'thuyhuongctu.github.io/BizOn',href:'https://thuyhuongctu.github.io/BizOn/'},{c:'#C53F86',soft:'#F4B6C2',ink:'#8A1F55',qr:'assets/qr/qr-enquiz.png',link:'thuyhuongctu.github.io/EnQuiz',href:'https://thuyhuongctu.github.io/EnQuiz/'}];
+    const meta=[{c:'#006687',soft:'#BFE6EE',ink:'#00506A',qr:'assets/qr/qr-bizon.png',link:'bizonland.com',href:'https://bizonland.com/'},{c:'#C53F86',soft:'#F4B6C2',ink:'#8A1F55',qr:'assets/qr/qr-enquiz.png',link:'thuyhuongctu.github.io/EnQuiz',href:'https://thuyhuongctu.github.io/EnQuiz/'}];
     return{t,
       setVi:()=>this.setState({lang:'vi'}),setEn:()=>this.setState({lang:'en'}),
       viBg:lang==='vi'?'#006687':'transparent',viFg:lang==='vi'?'#fff':'#3E5A5C',viSh:lang==='vi'?on:'none',

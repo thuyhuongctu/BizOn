@@ -8,7 +8,7 @@
 
   var CLAY = ['#7FD3DC','#FFD58A','#F4B6C2','#A9DCC4'];
   var BEATS = {0:2,2:1,1:0}, BASE = [[40,42],[70,30],[110,20]];
-  var B = 'https://thuyhuongctu.github.io/BizOn/';
+  var B = 'https://bizonland.com/';
 
   var T = {
     vi:{ psTitle:'Tất cả trò chơi đã mở và có trên CH Play', psBody:'Cài ứng dụng BizOn lên điện thoại Android để chơi mọi lúc, kể cả khi mạng chập chờn.', gp:'Tải trên Google Play',
