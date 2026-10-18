@@ -58,7 +58,7 @@ select cron.schedule('bizon-purge-daily', '15 3 * * *', $$ select bizon_purge_ex
 > Nếu không muốn dùng pg_cron: chạy `select bizon_purge_expired();` thủ công theo
 > lịch (vd cuối mỗi tháng) và ghi lại ngày chạy.
 
-## D. Xử lý yêu cầu xoá của người dùng (đầu mối: patu@ctu.edu.vn · thuyhuongctu@gmail.com)
+## D. Xử lý yêu cầu xoá của người dùng (đầu mối: patu@ctu.edu.vn · bricoleur@bizonland.com)
 
 Ví dụ câu lệnh (chạy trong SQL Editor sau khi xác minh yêu cầu):
 

@@ -91,4 +91,4 @@ Dữ liệu trước–sau từ 2–3 lớp (~100 sinh viên) chính là bằng 
 
 - Mã nguồn: https://github.com/thuyhuongctu/BizOn
 - Trang giới thiệu: https://thuyhuongctu.github.io/BizOn/gioi-thieu.html
-- Liên hệ hợp tác: thuyhuongctu@gmail.com
+- Liên hệ hợp tác: bricoleur@bizonland.com

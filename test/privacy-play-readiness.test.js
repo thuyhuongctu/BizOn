@@ -13,7 +13,7 @@ assert.match(policy, /GitHub Pages/);
 assert.match(policy, /Supabase/);
 assert.match(policy, /Internet access only|quyền Internet/i);
 assert.match(policy, /patu@ctu\.edu\.vn/);
-assert.match(policy, /thuyhuongctu@gmail\.com/);
+assert.match(policy, /bricoleur@bizonland\.com/);
 assert.match(policy, /30\/09\/2026|September 30, 2026/);
 assert.match(policy, /user-agent|chẩn đoán|diagnostic|crash log/i);
 assert.match(policy, /12 tháng|12 months/i);

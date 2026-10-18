@@ -72,7 +72,7 @@ khi build kiểm tra lại `targetSdkVersion` trong log.
 
 - **Danh mục**: Giáo dục (hoặc Mô phỏng)
 - **URL chính sách quyền riêng tư**: `https://thuyhuongctu.github.io/BizOn/chinh-sach.html`
-- **Email liên hệ**: thuyhuongctu@gmail.com
+- **Email liên hệ**: bricoleur@bizonland.com
 
 ### Khai Data Safety (An toàn dữ liệu)
 
