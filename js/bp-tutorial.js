@@ -87,6 +87,7 @@
   var idx = -1, overlay = null, steps = null;
 
   function paint() {
+    if (endShowing()) { stop(); return; }
     if (!steps || idx < 0) return; // tour đã stop() giữa chừng (xem chú thích ở go())
     var step = steps[idx];
     var el = $q(step.sel);
@@ -142,8 +143,16 @@
     steps = null; idx = -1;
   }
 
+  // Màn kết thúc đang hiện thì không được có tour nào nằm đè lên nó – kể cả
+  // timer đã hẹn từ trước (autoObs/autoDecide/autoEvt dùng setTimeout 400ms)
+  // vẫn có thể chạy sau khi ván đã kết thúc.
+  function endShowing() {
+    var e = document.getElementById('bp-end');
+    return !!e && !e.classList.contains('hidden');
+  }
+
   function run(which) {
-    if (overlay) return; // đã có tour đang chạy (obs/dec/evt) thì không chồng lên nhau
+    if (overlay || endShowing()) return; // đã có tour đang chạy (obs/dec/evt) thì không chồng lên nhau
     steps = which === 'obs' ? OBS_STEPS : which === 'evt' ? EVT_STEPS : DEC_STEPS;
     overlay = document.createElement('div');
     overlay.style.cssText = 'position:fixed; inset:0; z-index:90; background:transparent;';
@@ -193,5 +202,5 @@
     else if (phase === 'evt') run('evt');
   }
 
-  window.BPTour = { autoObs: autoObs, autoDecide: autoDecide, autoEvt: autoEvt, replay: replay };
+  window.BPTour = { autoObs: autoObs, autoDecide: autoDecide, autoEvt: autoEvt, replay: replay, close: stop };
 })();
