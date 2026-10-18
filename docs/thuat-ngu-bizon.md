@@ -10,8 +10,9 @@ Nguồn đối chiếu: bài giảng *Overview_Lec* (chương 1–7, theo giáo 
 | Internal / external opportunity | Cơ hội nội tại / Cơ hội bên ngoài (Internal / external opportunity) | Nội tại: đam mê, nguồn lực của bản thân hoặc tổ chức. Bên ngoài: do hoàn cảnh bên ngoài tạo ra. |
 | Feasibility analysis | Phân tích tính khả thi (Feasibility analysis) | Đã dùng. Gồm ba phần: sản phẩm/dịch vụ, thị trường và ngành, tài chính. |
 | SWOT | Điểm mạnh – Điểm yếu – Cơ hội – Thách thức (SWOT) | Đã dùng trong quiz. Lưu ý: giáo trình gọi *Threats* là yếu tố bên ngoài có thể gây hại; "Thách thức" đang được dùng nhất quán, giữ nguyên. |
-| Entrepreneur | Nhà khởi nghiệp (Entrepreneur) | Chưa thấy dùng trong giao diện; dùng khi cần gọi người làm khởi nghiệp. |
-| Start-up | Khởi nghiệp (Start-up) | Đang lẫn với "Khởi sự" (xem mục *Chưa thống nhất*). |
+| Entrepreneurship | Khởi nghiệp (Entrepreneurship) | Lĩnh vực lớn, bao gồm mọi hoạt động tạo doanh nghiệp mới. Start-up là một trường hợp cụ thể của khởi nghiệp. Dùng tên này cho nhãn nhóm câu hỏi ("Khởi nghiệp" trong `js/quiz-bank.js`). |
+| Entrepreneur | Nhà khởi nghiệp (Entrepreneur) | Người làm khởi nghiệp. Chưa thấy dùng trong giao diện. |
+| Start-up | Doanh nghiệp khởi nghiệp (Start-up) | Một trường hợp của khởi nghiệp (Entrepreneurship): doanh nghiệp mới, tìm mô hình kinh doanh có thể tăng trưởng nhanh trong điều kiện bất định. |
 | Business model | Mô hình kinh doanh (Business model) | Đã dùng đúng. |
 | Business Model Canvas | Business Model Canvas | Giữ nguyên tên tiếng Anh; đã dùng đúng. |
 | Value Proposition | Đề xuất giá trị (Value Proposition) | **Đã sửa** từ "Giá trị cốt lõi" (ô tổng kết trong `js/app.js`). |
@@ -69,7 +70,10 @@ Nguồn đối chiếu: bài giảng *Overview_Lec* (chương 1–7, theo giáo 
 | Net present value (NPV) | Giá trị hiện tại ròng (NPV) (Net present value (NPV)) | Chưa có trong giao diện. |
 | Net cash flow | Dòng tiền thuần (Net cash flow) | |
 
-## Chưa thống nhất (cần quyết định)
+## Đã thống nhất
 
-1. **"Khởi sự" hay "Khởi nghiệp":** tên học phần và một số nhãn dùng "Khởi sự" (ví dụ nhóm câu hỏi "Khởi sự" trong `js/quiz-bank.js`), còn phần lớn nội dung dùng "khởi nghiệp". Đề xuất: dùng "Khởi nghiệp" cho thuật ngữ *start-up* và giữ "Khởi sự doanh nghiệp" làm tên học phần, vì tên học phần đã công bố.
-2. **SWOT, "Thách thức" hay "Đe dọa":** giữ "Thách thức" cho đến khi giảng viên chọn cách dùng.
+1. **Khởi nghiệp là khái niệm lớn; start-up là một trường hợp của nó.** "Khởi nghiệp" (Entrepreneurship) là tên nhóm chung, đã đổi nhãn nhóm câu hỏi trong `js/quiz-bank.js` từ "Khởi sự" sang "Khởi nghiệp". Tên học phần "Khởi sự doanh nghiệp" vẫn giữ nguyên vì đã công bố.
+
+## Chưa thống nhất
+
+1. **SWOT, "Thách thức" hay "Đe dọa":** giữ "Thách thức" cho đến khi giảng viên chọn cách dùng.
