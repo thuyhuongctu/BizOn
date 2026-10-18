@@ -170,6 +170,6 @@ Fonts are **self-hosted** (no CDN) as static `.woff2` files under `assets/fonts/
 | Author | Role |
 |---|---|
 | **Do Thuy Huong** | Founder & Creative Lead – game design, embodiment of the Lumina character · bricoleur@bizonland.com |
-| **Phan Anh Tu** | Co-founder & Academic Advisor – academic oversight, business-administration expertise · patu@ctu.edu.vn |
+| **Phan Anh Tu** | Co-founder & Academic Advisor – academic oversight, business-administration expertise |
 
 © 2026 Do Thuy Huong & Phan Anh Tu · **BizOn Bật Nghiệp** – All rights reserved.
