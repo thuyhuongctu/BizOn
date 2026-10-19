@@ -75,7 +75,7 @@
 
   // Dự báo «Nếu – Thì»: giá vựa ước tính = trung bình các nguồn tin đã mua (chưa mua thì dùng giá công khai)
   function forecast(data, state, decision) {
-    const sig = intelSignals(data, state, (decision && decision.intel) || []);
+    const sig = intelSignals(data, state, (decision && decision.intel) || []).filter(x => x && x.price != null);
     const est = sig.length ? sig.reduce((x, y) => x + y.price, 0) / sig.length : basePrice(data, state);
     const next = playSeason(data, state, decision, { expected: true, depotEstimate: est });
     const r = next.history[next.history.length - 1];
@@ -98,7 +98,7 @@
     const groups = data.rivalGroups || [];
     if (!groups.length) return (data.rivals || []).slice(0, 3);
     const rnd = mulberry32((seed ^ 0x5EED) >>> 0);
-    return groups.map(g => { const pool = data.rivals.filter(r => r.group === g); return pool[Math.floor(rnd() * pool.length)]; }).filter(Boolean);
+    return groups.map(g => { const pool = data.rivals.filter(r => r.group === g && r.ready !== false); return pool[Math.floor(rnd() * pool.length)]; }).filter(Boolean);
   }
   function rivalsRun(data, roleId, seed) {
     return pickRivals(data, seed).map(rv => {
@@ -123,10 +123,10 @@
     return (ids || []).map(id => {
       const src = data.intel.find(x => x.id === id);
       if (!src) return null;
-      const rnd = mulberry32(state.seed + state.n * 31 + id.length * 977);
-      const est = p * (1 + src.bias + src.noise * (2 * rnd() - 1));
-      const out = { id, price: est };
-      if (src.reveals === 'risk') out.risk = riskLevel(data, state, ev);
+      const rnd = mulberry32((state.seed + state.n * 31 + seedFrom(id)) >>> 0);
+      // Cục BVTV chỉ cảnh báo rủi ro, không báo giá (tránh nguồn tin «biết trước giá thật»)
+      if (src.reveals === 'risk') return { id, price: null, risk: riskLevel(data, state, ev) };
+      return { id, price: p * (1 + src.bias + src.noise * (2 * rnd() - 1)) };
       return out;
     }).filter(Boolean);
   }
@@ -282,7 +282,9 @@
     if (results.find(r => r.id === 'TW').qty > 0) rep += 1;
 
     // --- ưu tiên đầu tư (tài sản mã số, cấp đông có hiệu lực từ vụ sau) ---
-    const pr = decision.priority || 'finance';
+    const ownedNow = id => id === 'test' ? assets.test >= 2 : id !== 'finance' && !!assets[id];
+    let pr = decision.priority || 'finance';
+    if (ownedNow(pr)) pr = 'finance';               // đã sở hữu: không tính tiền lần hai
     const pCost = P.priorityCost[pr] || 0;
     const pending = {};
     if (pr === 'area') pending.area = true;
@@ -295,7 +297,9 @@
     const intelCost = (decision.intel || []).slice(0, 2).reduce((x, id) => x + ((data.intel.find(i => i.id === id) || {}).cost || 0), 0);
     const revenue = results.reduce((x, r) => x + r.revenue, 0) + fraudRev;
     const logistics = results.reduce((x, r) => x + r.cost, 0);
-    const finance = state.cash < 0 ? -state.cash * (pr === 'finance' ? 0.04 : 0.08) : 0;
+    // Lãi vay: 8% trong hạn mức tín dụng, 15% cho phần vượt hạn mức; ưu tiên «tài chính» giảm một nửa
+    const lim = P.creditLimit || 8, debt = Math.max(0, -state.cash), half = pr === 'finance' ? 0.5 : 1;
+    const finance = (Math.min(debt, lim) * 0.08 + Math.max(0, debt - lim) * 0.15) * half;
     const profit = revenue - purchase - logistics - pCost - intelCost - (eff.cash ? -eff.cash : 0) - finance;
 
     // --- chỉ số mềm ---
@@ -305,6 +309,8 @@
     rep += eff.rep || 0;
     sus += (eff.sus || 0) + (linked >= 0.5 ? 3 : 0) - (induce ? 2 : 0);
     if (profit < 0) resil -= 6; else resil += 2;
+    if (state.cash < 0) resil -= 3;
+    if (state.cash + profit < -lim) { resil -= 8; rep -= 3; notes.push('over_credit'); }
 
     const result = {
       n: state.n, season: s.season, eventId: ev ? ev.id : null, option: ev ? ev.options.indexOf(opt) : null,
