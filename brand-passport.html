@@ -1383,6 +1383,7 @@
     localStorage.removeItem('bizon-bp-save');
     $('bp-play').classList.add('hidden');
     $('bp-end').classList.remove('hidden');
+    if (window.BPTour) BPTour.close(); // tour đang đè (vd. "Tín hiệu thị trường") không được còn lại trên màn kết thúc
     endReason = reason;
     if (evOut !== undefined) lastEvOut = evOut;
     fadeIn('bp-end');
