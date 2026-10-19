@@ -10,13 +10,16 @@
   // Web Speech API không chọn được giọng cụ thể theo tên trên mọi trình duyệt,
   // nên dùng pitch/rate làm tín hiệu phân biệt nhẹ giữa các nhân vật.
   var TONE = {
-    NAR: { pitch: 1,    rate: 1 },
+    NAR: { pitch: 0.9,  rate: 1 },
     LUM: { pitch: 1.3,  rate: 1.04 },
     cmo: { pitch: 1.15, rate: 1.06 },
     coo: { pitch: 0.85, rate: 0.95 },
     cfo: { pitch: 1.08, rate: 1 },
     sec: { pitch: 1,    rate: 0.98 }
   };
+
+  // Giới tính giọng theo nhân vật: người dẫn (NAR) là nam; Lumina (LUM) và 4 vai họp đội là nữ
+  var GENDER = { NAR: 'male', LUM: 'female', cmo: 'female', coo: 'female', cfo: 'female', sec: 'female' };
 
   function next() {
     var item = queue.shift();
@@ -26,6 +29,14 @@
     var u = new SpeechSynthesisUtterance(item.text);
     u.lang = item.lang === 'en' ? 'en-US' : 'vi-VN';
     u.pitch = tone.pitch; u.rate = tone.rate;
+    var lg = item.lang === 'en' ? 'en' : 'vi';
+    var isMale = GENDER[item.speaker] === 'male';
+    var vs = window.speechSynthesis.getVoices().filter(function (x) { return x.lang && x.lang.toLowerCase().indexOf(lg) === 0; });
+    var v = vs.filter(function (x) {
+      if (isMale) return /male|nam|minh|david|mark|guy/i.test(x.name) && !/female|nữ/i.test(x.name);
+      return /female|nữ|linh|hoai/i.test(x.name);
+    })[0] || vs[0];
+    if (v) u.voice = v;
     u.onend = u.onerror = next;
     try { window.speechSynthesis.speak(u); } catch (e) { next(); }
   }
