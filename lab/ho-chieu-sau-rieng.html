@@ -951,7 +951,7 @@ footer{color:var(--faint)}
       <section class="hero"><div class="hero-row"><div><span class="eyebrow">${role.emoji} ${nm(role)} · ${L('Lớp', 'Class')} ${esc(APP.cls || '—')} · ${L('Đội', 'Team')} ${esc(APP.team || '—')}</span>
         <h1>${L('Báo cáo sau 6 vụ', 'Report after 6 seasons')}</h1>${flagsHTML(0)}
         <p class="lead">${L(`Đội cắm ${flagsWon}/6 cờ. Sai lệch bình quân giữa dự báo và lợi nhuận thực tế: ${money(mae)} mỗi vụ.`, `Your team planted ${flagsWon}/6 flags. Mean absolute gap between forecast and actual profit: ${money(mae)} per season.`)}</p></div>
-        <div class="hero-cast"><img src="${IMG(flagsWon >= 3 ? 'lumina-je-cheer.webp' : 'lumina-ao-dai-thumbsup.webp')}" alt="Lumina"></div></div></section>
+        <div class="hero-cast"><img src="${IMG(flagsWon >= 3 ? 'teo-soi-champions.webp' : 'lumina-ao-dai-thumbsup.webp')}" alt="${flagsWon >= 3 ? 'Tèo Soi' : 'Lumina'}"></div></div></section>
       <div class="grid2">
         <div class="card"><div class="kpis" style="grid-template-columns:1fr 1fr">
           <div class="kpi"><small>${L('Điểm tổng trong game', 'In-game total')}</small><b class="num">${nf(S.total)}/100</b></div>
