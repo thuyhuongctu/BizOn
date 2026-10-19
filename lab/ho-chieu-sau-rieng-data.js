@@ -31,11 +31,15 @@
     GS1: 'APEC (2017). Application of global data standards for supply chain connectivity (thí điểm truy xuất sầu riêng Malaysia).',
     TCVN: 'TCVN 10739:2015 – Sầu riêng quả tươi.',
     CODEX: 'Codex Alimentarius – FAO/WHO, CXC 8-1976 (Code of Practice for the Processing and Handling of Quick Frozen Foods): chuẩn quốc tế bảo quản/phân phối thực phẩm đông lạnh ở −18°C.',
+    FROZENPROTO: 'VTV/VGP (19/8/2024). Chính thức cấp phép sầu riêng đông lạnh sang Trung Quốc (Bộ NN&PTNT – GACC ký nghị định thư).',
+    CDAO: 'Dân Việt (24/5/2025); Tuổi Trẻ (6/2/2025). Yêu cầu của GACC về kiểm nghiệm cadimi và vàng O đối với sầu riêng nhập khẩu.',
     THAIPH: 'Boonyaritthongchai, P. và cộng sự. Storage of Durians on a Semi-Commercial Scale. Agriculture and Natural Resources (Thái Lan), chỉ mục FAO AGRIS.'
   };
 
   // ---------- Dữ kiện dùng trong trò chơi (có trích nguồn) ----------
   const facts = {
+    frozenSigned: { v: '19/8/2024', src: 'FROZENPROTO', vi: 'Bộ NN&PTNT và GACC ký nghị định thư sầu riêng đông lạnh (nguyên quả, xay nhuyễn, cơm sầu riêng). Cơ sở đóng gói phải có HACCP, truy xuất nguồn gốc, đủ năng lực cấp đông và kho lạnh.', en: 'MARD and GACC signed the frozen-durian protocol (whole fruit, purée, pulp). Packing houses need HACCP, traceability, and adequate freezing and cold-storage capacity.' },
+    cdAuramine: { v: '1/6/2024 · 10/1/2025', src: 'CDAO', vi: 'Từ 1/6/2024 mọi lô sầu riêng Việt Nam phải kiểm cadimi tại phòng thử nghiệm được hai bên công nhận; từ 10/1/2025 thêm giấy kiểm định vàng O (auramine O), và Trung Quốc kiểm tra lại 100% lô tại cửa khẩu.', en: 'From 1 Jun 2024 every Vietnamese durian lot must be tested for cadmium at a mutually approved lab; from 10 Jan 2025 an auramine O certificate is also required, and China re-checks 100% of lots at the border.' },
     openDate: { v: '27/7/2022', src: 'BC1022', vi: 'Hải quan Trung Quốc cho phép nhập khẩu sầu riêng tươi Việt Nam.', en: 'China Customs authorised imports of fresh Vietnamese durian.' },
     firstLot: { v: '17,28 tấn', src: 'BC1022', vi: 'Lô chính ngạch đầu tiên thông quan tại Hà Khẩu (10/2022).', en: 'First official lot cleared at Hekou (Oct 2022).' },
     codes: { src: 'PROTO', vi: 'Vùng trồng và cơ sở đóng gói phải đăng ký và được cả hai bên phê duyệt; thùng hàng ghi mã vùng trồng và mã cơ sở đóng gói. Hàng từ nơi chưa đăng ký bị từ chối.', en: 'Planting areas and packing facilities must be registered and approved by both sides; boxes carry both codes. Goods from unregistered sources are refused.' },
@@ -70,6 +74,7 @@
   // ---------- Tham số minh họa ----------
   const params = {
     cash0: 12,                 // tỷ đồng tiền mặt ban đầu
+    creditLimit: 8,            // hạn mức vay ngân hàng, tỷ đồng (vượt: lãi 15%, trừ Chống chịu & Uy tín)
     depotMain: 50,             // giá vựa chính vụ, nghìn đ/kg (minh họa; nghịch vụ = depotMain × offMult)
     offMult: 2.5,              // neo vào «gấp 2–3 lần» (BC0224)
     farmCost: 20,              // giá thành tự trồng, nghìn đ/kg (minh họa, quy đổi mặt bằng giá 2024)
@@ -202,7 +207,7 @@
     { id: 'moit', vi: 'Báo cáo thị trường Bộ Công Thương', en: 'Ministry of Industry and Trade market report', cost: 0.05, bias: 0, noise: 0.05, src: 'BC0224' },
     { id: 'trader', vi: 'Tin từ thương lái', en: 'Word from traders', cost: 0, bias: 0.20, noise: 0.15, warnVi: 'Hay thổi giá để giữ hàng', warnEn: 'Tends to talk prices up', src: 'PDIEN' },
     { id: 'buyer', vi: 'Đối tác nhập khẩu Trung Quốc', en: 'Chinese importer', cost: 0.1, bias: -0.10, noise: 0.08, warnVi: 'Hay nói giảm để ép giá', warnEn: 'Tends to talk prices down', src: 'JETRO' },
-    { id: 'ppd', vi: 'Cảnh báo của Cục Bảo vệ thực vật', en: 'Plant Protection Department alerts', cost: 0.05, bias: 0, noise: 0, reveals: 'risk', src: 'KQTC' }
+    { id: 'ppd', vi: 'Cảnh báo của Cục Bảo vệ thực vật', en: 'Plant Protection Department alerts', cost: 0.05, bias: 0, noise: 0, reveals: 'risk', warnVi: 'Chỉ báo mức rủi ro, không báo giá', warnEn: 'Risk level only, no price', src: 'KQTC' }
   ];
 
   // ---------- 6 vụ: mốc thật + nhiệm vụ ----------
@@ -210,8 +215,8 @@
   const seasons = [
     { n: 1, season: 'main', label: '2022 · chính vụ', demand: 0.9, anchor: 'openDate',
       vi: 'Mở cửa chính ngạch', en: 'Official trade opens',
-      textVi: 'Ngày 27/7/2022, Hải quan Trung Quốc cho phép nhập khẩu sầu riêng tươi Việt Nam. Muốn đi chính ngạch phải có mã số vùng trồng và mã cơ sở đóng gói; trước đó hầu hết đi tiểu ngạch.',
-      textEn: 'On 27 July 2022 China Customs allowed fresh Vietnamese durian. Official trade needs a planting-area code and a packing-facility code; before this, almost everything went through border trade.' },
+      textVi: 'Ngày 27/7/2022, Hải quan Trung Quốc cho phép nhập khẩu sầu riêng tươi Việt Nam. Muốn đi chính ngạch phải có mã số vùng trồng (PUC) và mã số cơ sở đóng gói (PHC); trước đó hầu hết đi tiểu ngạch.',
+      textEn: 'On 27 July 2022 China Customs allowed fresh Vietnamese durian. Official trade needs a planting-unit code (PUC) and a packing-house code (PHC); before this, almost everything went through border trade.' },
     { n: 2, season: 'off', label: '2022–23 · nghịch vụ', demand: 1.0, anchor: 'firstLot', borderCut: 0.15,
       vi: 'Lô chính ngạch đầu tiên', en: 'First official lot',
       textVi: 'Tháng 10/2022, 17,28 tấn sầu riêng tươi thông quan tại Hà Khẩu. Tiểu ngạch bị siết dần; nghịch vụ giá cao gấp 2–3 lần chính vụ.',
@@ -228,10 +233,10 @@
       vi: 'Việt Nam vượt Thái Lan', en: 'Vietnam overtakes Thailand',
       textVi: 'Đầu 2024 Việt Nam chiếm 57% thị phần giá trị tại Trung Quốc nhưng giá bình quân thấp hơn Thái Lan. Thái Lan nâng chuẩn độ khô từ 32% lên 35%: người mua đòi chất lượng cao hơn.',
       textEn: 'In early 2024 Vietnam held a 57% value share in China but at a lower average price than Thailand. Thailand raised its dry-matter standard from 32% to 35%: buyers demand higher quality.' },
-    { n: 6, season: 'off', label: '2024–25 · nghịch vụ', demand: 1.1, anchor: 'frozenPush', frozenProtocol: true, borderCut: 0.6,
-      vi: 'Nghị định thư đông lạnh (giả định)', en: 'Frozen protocol (scenario)',
-      textVi: 'Kịch bản giả định của trò chơi: nghị định thư sầu riêng đông lạnh được ký (tài liệu 04/2024 cho biết Việt Nam đang thúc đẩy). Kênh đông lạnh được giá cao hơn nếu có vùng trồng và cơ sở đạt chuẩn.',
-      textEn: 'A game scenario: a frozen-durian protocol is signed (documents from Apr 2024 say Vietnam was pushing for it). The frozen channel pays more for firms with qualified areas and facilities.' }
+    { n: 6, season: 'off', label: '2024–25 · nghịch vụ', demand: 1.1, anchor: 'frozenSigned', frozenProtocol: true, borderCut: 0.6,
+      vi: 'Nghị định thư đông lạnh & kiểm nghiệm vàng O', en: 'Frozen protocol & auramine O testing',
+      textVi: 'Ngày 19/8/2024, Việt Nam và Trung Quốc ký nghị định thư sầu riêng đông lạnh: kênh đông lạnh được giá cao hơn nếu có vùng trồng và cơ sở đạt chuẩn. Từ 10/1/2025, mọi lô phải kèm giấy kiểm định cadimi và vàng O từ phòng thử nghiệm được công nhận.',
+      textEn: 'On 19 Aug 2024 Vietnam and China signed the frozen-durian protocol: the frozen channel pays more for firms with qualified areas and facilities. From 10 Jan 2025 every lot needs cadmium and auramine O certificates from an approved lab.' },
   ];
 
   // ---------- Biến cố có lựa chọn (mỗi vụ rút 1, không lặp) ----------
@@ -304,11 +309,11 @@
       owns: ['whatif', 'commit'] },
     { id: 'cmo', name: 'Lan Chi', img: 'team/cmo-cut.webp', vi: 'CMO – mua tin, đọc giá, chia kênh bán', en: 'CMO – buys information, reads prices, splits channels',
       owns: ['intel', 'alloc'] },
-    { id: 'coo', name: 'Bảo Ngọc', img: 'team/coo.webp', vi: 'COO – nguồn hàng, vùng trồng có mã, hao hụt, nghịch vụ', en: 'COO – sourcing, coded areas, losses, off-season',
+    { id: 'coo', name: 'Bảo Ngọc', img: 'team/bao-ngoc-cut.webp', vi: 'COO – nguồn hàng, vùng trồng có mã, hao hụt, nghịch vụ', en: 'COO – sourcing, coded areas, losses, off-season',
       owns: ['linked', 'induce'] },
     { id: 'cfo', name: 'Thu Hà', img: 'team/cfo-cut.webp', vi: 'CFO – tiền mặt, ưu tiên đầu tư, chi phí tuân thủ', en: 'CFO – cash, investment priority, compliance costs',
       owns: ['priority'] },
-    { id: 'sec', name: 'Gia Hân', img: 'team/sec.webp', vi: 'SEC – đọc biến cố, ghi phiếu quyết định và nhật ký đội', en: 'SEC – reads events, keeps the decision sheet and team journal',
+    { id: 'sec', name: 'Gia Hân', img: 'team/gia-han-cut.webp', vi: 'SEC – đọc biến cố, ghi phiếu quyết định và nhật ký đội', en: 'SEC – reads events, keeps the decision sheet and team journal',
       owns: ['option', 'journal'] }
   ];
 
@@ -429,6 +434,8 @@
   const chain2 = {
     stages: [
       { id: 'farm', vi: 'Tại vườn & sơ chế', en: 'At the orchard & initial processing', items: [
+        { img: 'scenes/orchard.jpg', vi: 'Vườn sầu riêng đạt mã số vùng trồng (PUC): cây khỏe, trái treo đủ độ già trước khi cắt.', en: 'Durian orchard with a registered planting-unit code (PUC): healthy trees, fruit left to mature before cutting.' },
+        { img: 'scenes/packhouse.jpg', vi: 'Cơ sở đóng gói có mã số (PHC): phân loại, cân, đóng thùng và dán nhãn truy xuất trước khi lên xe lạnh.', en: 'Packing house with a registered code (PHC): grading, weighing, boxing and traceability labels before the reefer truck.' },
         { img: 'hc/chain2/01-vuon-kiem-tra.webp', vi: 'Vườn đạt mã số vùng trồng, chuyên gia kiểm tra chất lượng trước vụ hái.', en: 'Orchard with a registered growing-area code; specialists check quality before harvest.' },
         { img: 'hc/chain2/02-vuon-ban-giao-hop-dong.webp', vi: 'Nông hộ bàn giao trái cho đối tác thu mua, ký ngay hợp đồng và hộ chiếu số.', en: 'The grower hands fruit to the buyer and signs the contract and digital passport on the spot.' },
         { img: 'hc/chain2/03-vuon-ma-vung-trong.webp', vi: 'Đội ngũ xác nhận mã vùng trồng qua ứng dụng truy xuất nguồn gốc.', en: 'The team confirms the growing-area code through a traceability app.' },
@@ -437,6 +444,7 @@
         { img: 'hc/chain2/06-lab-do-brix.webp', vi: 'Đo độ ngọt Brix và dư lượng hóa chất trong phòng thí nghiệm.', en: 'Measuring Brix sweetness and chemical residues in the lab.' }
       ] },
       { id: 'paperwork', vi: 'Thủ tục & hải quan xuất khẩu', en: 'Export paperwork & customs clearance', items: [
+        { img: 'scenes/port.jpg', vi: 'Cảng container: container lạnh được cắm điện, kiểm tra nhiệt độ rồi mới cẩu lên tàu.', en: 'Container port: reefers are plugged in and temperature-checked before loading onto the vessel.' },
         { img: 'hc/chain2/07-ky-hop-dong-ngoai-thuong.webp', vi: 'Ký hợp đồng ngoại thương trước khi giao hàng.', en: 'Signing the foreign-trade contract before shipping.' },
         { img: 'hc/chain2/08-ho-so-xuat-khau.webp', vi: 'Chuẩn bị bộ hồ sơ: L/C, vận đơn, chứng thư kiểm dịch, hồ sơ truy xuất GACC.', en: 'Preparing the paper trail: L/C, bill of lading, phytosanitary certificate, GACC traceability dossier.' },
         { img: 'hc/chain2/09-thanh-toan-lc-tt.webp', vi: 'Xác nhận thanh toán quốc tế thành công (L/C hoặc T/T).', en: 'Confirming successful international payment (L/C or T/T).' },
@@ -451,6 +459,7 @@
         { img: 'hc/chain2/16-kiem-tra-nhiet-do-cont.webp', vi: 'Kiểm tra nhiệt độ thực tế trong container trước khi niêm phong.', en: "Checking the container's actual temperature before sealing." }
       ] },
       { id: 'border', vi: 'Qua cửa khẩu biên giới', en: 'Crossing the land border', items: [
+        { img: 'scenes/border.jpg', vi: 'Cửa khẩu biên giới: xe lạnh xếp hàng qua luồng xanh, cơ quan kiểm dịch thực vật kiểm tra trước khi thông quan.', en: 'Border gate: reefer trucks queue in the green lane; plant-quarantine officers inspect before clearance.' },
         { img: 'hc/chain2/17-tram-can-etc-wim.webp', vi: 'Qua trạm cân tải trọng tự động (WIM) và thu phí không dừng (ETC).', en: 'Passing automatic weigh-in-motion (WIM) and non-stop toll (ETC) stations.' },
         { img: 'hc/chain2/18-bien-bao-cua-khau.webp', vi: 'Biển chỉ dẫn hướng cửa khẩu quốc tế Hữu Nghị – Tân Thanh.', en: 'Road sign pointing to the Hữu Nghị–Tân Thanh international border gate.' },
         { img: 'hc/chain2/19-doi-tai-xe-bien-gioi.webp', vi: 'Khu vực bàn giao xe và đổi tài xế biên giới.', en: 'The cross-border vehicle handover and driver-changeover zone.' },
@@ -477,6 +486,7 @@
         { img: 'hc/chain2/34-nha-may-che-bien.webp', vi: 'Dây chuyền chế biến sầu riêng sấy dẻo và đông lạnh đạt chuẩn HACCP, ISO 22000.', en: 'The dried and frozen durian processing line meets HACCP and ISO 22000 standards.' }
       ] },
       { id: 'consumer', vi: 'Đến tay người tiêu dùng', en: 'Reaching the end consumer', items: [
+        { img: 'scenes/supermarket.jpg', vi: 'Siêu thị nước ngoài: sầu riêng tươi, đông lạnh và sản phẩm chế biến được bày theo hạng, có mã truy xuất.', en: 'Overseas supermarket: fresh, frozen and processed durian displayed by grade with traceability codes.' },
         { img: 'hc/chain2/35-cho-ban-le-trung-quoc.webp', vi: 'Bắt tay giao hàng tại chợ bán lẻ Trung Quốc.', en: 'Handshake delivery at a retail market in China.' },
         { img: 'hc/chain2/36-quan-trang-mieng.webp', vi: 'Sầu riêng Việt thành món tráng miệng: crepe, gelato, chè.', en: 'Vietnamese durian becomes dessert: crepes, gelato, sweet bowls.' },
         { img: 'hc/chain2/37-giao-hang-cho-trai-cay.webp', vi: 'Giao hàng tận nơi cho sạp trái cây tươi.', en: 'Doorstep delivery to a fresh-fruit stall.' },
