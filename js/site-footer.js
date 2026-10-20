@@ -159,7 +159,7 @@
         '<p class="bzf-cite">Cite (APA 7): Do, T. H., &amp; Phan, A. T. (2026). <i>BizOn Bật Nghiệp: A claymorphism business-simulation ecosystem for entrepreneurship education</i> [Computer software]. https://doi.org/10.5281/zenodo.21592241</p>' +
         '<div class="bzf-tail" id="bzf-tail"></div>' +
         '<div class="bzf-legal">' +
-          '<span>© 2026 BizOn Bật Nghiệp · Đỗ Thùy Hương &amp; Phan Anh Tú</span>' +
+          '<span>© 2026 Bizonland · Đỗ Thùy Hương &amp; Phan Anh Tú · All rights reserved</span>' +
           '<span><a href="chinh-sach.html">Chính sách quyền riêng tư</a> · <a href="reset.html">Làm mới ứng dụng</a></span>' +
         '</div>' +
       '</div>';
