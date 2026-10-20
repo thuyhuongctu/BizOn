@@ -6,15 +6,28 @@
   const clamp = v => Math.max(0, Math.min(100, +v || 0));
   const band = (v, steps) => { for (const [min, pts] of steps) if (v >= min) return pts; return 0; };
   const LETTERS = [[9, 'A', 4], [8, 'B+', 3.5], [7, 'B', 3], [6.5, 'C+', 2.5], [5.5, 'C', 2], [5, 'D+', 1.5], [4, 'D', 1], [-1, 'F', 0]];
-  const letter = v => { const x = Math.round((+v || 0) * 10) / 10, m = LETTERS.find(([min]) => x >= min); return { l: m[1], g4: m[2], pass: m[2] >= 1 }; };
-  const f1 = v => v == null ? '–' : (+v).toFixed(1).replace('.', ',');
+  // Làm tròn 1 chữ số kiểu half-up. Math.round(5.45 * 10) cho 54 vì 5.45 * 10 = 54.4999… trong số thực,
+  // nên 5,45 bị hiện thành 5,4 (D+) thay vì 5,5 (C). Cộng một lượng rất nhỏ trước khi làm tròn.
+  const rnd1 = v => Math.round((+v || 0) * 10 + 1e-7) / 10;
+  const letter = v => { const x = rnd1(v), m = LETTERS.find(([min]) => x >= min); return { l: m[1], g4: m[2], pass: m[2] >= 1 }; };
+  // Khóa so khớp tên đội: SV gõ "Clayholic CN1" và "CLAYHOLIC CN1" là cùng một đội.
+  const tkey = n => String(n == null ? '' : n).trim().replace(/\s+/g, ' ').toLowerCase();
+  // Đội do giảng viên chơi thử (email giảng viên hoặc tên "GV …") không được tính vào xếp hạng B1 của lớp.
+  const STAFF = ['thuyhuongctu@gmail.com', 'patu@ctu.edu.vn'];
+  const isStaffTeam = (name, rs) => /^gv(\s|$)/i.test(String(name || '').trim()) ||
+    (rs.length > 0 && rs.every(r => STAFF.includes(String(r.student_email || '').trim().toLowerCase())));
+  // MSSV trong email/tên (vd. "kimb2301347@student…") – để gộp các dòng nhật ký của cùng một SV.
+  const mssvOf = (...xs) => { for (const x of xs) { const m = String(x || '').match(/[bm]\d{7}/i); if (m) return m[0].toUpperCase(); } return ''; };
+  const f1 = v => v == null ? '–' : rnd1(v).toFixed(1).replace('.', ',');
   function teams(subs) {
-    const by = {}; (subs || []).forEach(s => { (by[s.team_name] = by[s.team_name] || []).push(s); });
-    return Object.keys(by).map(name => {
-      const rs = by[name].sort((a, b) => a.round_number - b.round_number), last = rs[rs.length - 1];
+    // Gom theo khóa không phân biệt hoa/thường; giữ cách viết gặp đầu tiên làm tên hiển thị.
+    const by = {}, label = {};
+    (subs || []).forEach(s => { const k = tkey(s.team_name); if (!(k in label)) label[k] = String(s.team_name || '').trim(); (by[k] = by[k] || []).push(s); });
+    return Object.keys(by).map(k => {
+      const name = label[k], rs = by[k].sort((a, b) => a.round_number - b.round_number), last = rs[rs.length - 1];
       const profit = rs.reduce((a, r) => a + (+r0(r).netProfit || 0), 0);
       const flags = rs.filter(r => r0(r).win === true || (r0(r).win == null && (+r0(r).share || 0) >= 25 && +r0(r).netProfit > 0)).length;
-      return { name, rs, last, profit, flags, share: +(+r0(last).share || 0).toFixed(1) };
+      return { name, rs, last, profit, flags, share: +(+r0(last).share || 0).toFixed(1), staff: isStaffTeam(name, rs) };
     }).sort((a, b) => b.profit - a.profit);
   }
 
@@ -29,14 +42,16 @@
   const near = (a, b) => b != null && Math.abs(+a - +b) <= Math.max(1, Math.abs(+b) * .1);
   function members(T, log) {
     const out = [], byTeam = {};
-    (log || []).forEach(l => { (byTeam[l.team_name] = byTeam[l.team_name] || []).push(l); });
-    Object.keys(byTeam).forEach(team => {
-      const L = byTeam[team], t = T.find(x => x.name === team), commitAt = {}, dec = {};
+    (log || []).forEach(l => { const k = tkey(l.team_name); (byTeam[k] = byTeam[k] || []).push(l); });
+    Object.keys(byTeam).forEach(k => {
+      const L = byTeam[k], t = T.find(x => tkey(x.name) === k), team = t ? t.name : String(L[0].team_name || '').trim(), commitAt = {}, dec = {};
       L.filter(l => l.kind === 'commit').forEach(l => { if (!commitAt[l.round_number] || l.created_at < commitAt[l.round_number]) commitAt[l.round_number] = l.created_at; });
       (t ? t.rs : []).forEach(r => { const j = r0(r); dec[r.round_number] = j.decisions || j.decision || {}; if (!commitAt[r.round_number]) commitAt[r.round_number] = r.created_at; });
       const M = {};
       L.forEach(l => {
-        const k = (l.member_email || l.member_name || '?') + '|' + l.role;
+        // Cùng MSSV thì cùng một người, kể cả khi email bị gõ thiếu ở một lần đăng nhập.
+        const who = mssvOf(l.member_email, l.member_name) || String(l.member_email || l.member_name || '?').trim().toLowerCase();
+        const k = who + '|' + l.role;
         const m = M[k] = M[k] || { team, name: l.member_name || l.member_email || '?', email: l.member_email || '', role: l.role, part: {}, applied: {}, whatif: 0, props: 0 };
         if (commitAt[l.round_number] && l.created_at > commitAt[l.round_number]) return; // gửi sau khi đội đã chốt: không tính
         m.part[l.round_number] = true;
@@ -57,7 +72,7 @@
   }
   // Chuẩn bị trước biến cố (B6): vòng biến cố bất lợi có Nếu–Thì hoặc ≥ 3 ghi nhận đề xuất/biên bản trước khi chốt
   function autoPrep(t, log) {
-    const L = (log || []).filter(l => l.team_name === t.name); if (!L.length) return null;
+    const L = (log || []).filter(l => tkey(l.team_name) === tkey(t.name)); if (!L.length) return null;
     const adv = t.rs.filter(r => ADVERSE.includes(r0(r).eventId)).map(r => r.round_number);
     return adv.some(n => { const R = L.filter(l => l.round_number === n); return R.some(l => l.kind === 'whatif') || R.filter(l => l.kind === 'proposal' || l.kind === 'minutes').length >= 3; });
   }
@@ -81,10 +96,12 @@
   }
   function grades(T, scores, edits, log) {
     const MB = members(T, log);
-    const S = {}; (scores || []).forEach(s => { S[s.team_name] = s; });
-    const n = T.length; // T đã xếp theo lợi nhuận giảm dần
-    return T.map((t, i) => {
-      const e = Object.assign({}, S[t.name] || {}, edits[t.name] || {});
+    const S = {}; (scores || []).forEach(s => { S[tkey(s.team_name)] = s; });
+    // T đã xếp theo lợi nhuận giảm dần. Xếp hạng B1 chỉ giữa các đội sinh viên.
+    const ranked = T.filter(t => !t.staff), n = ranked.length;
+    return T.map(t => {
+      const i = ranked.filter(x => x.profit > t.profit).length;
+      const e = Object.assign({}, S[tkey(t.name)] || {}, (edits || {})[t.name] || {});
       const mine = MB.filter(m => m.team === t.name), auto = mine.length > 0, ap = autoPrep(t, log);
       const b5r = e.reasoning ?? '', prep = ap != null ? ap : +(e.teamwork ?? 0) > 0, note = e.note ?? '';
       const J = t.rs.map(r0), L = J[J.length - 1] || {};
@@ -110,7 +127,8 @@
    * Dùng CHÍNH nhật ký thành viên (member_log, mọi kind kể cả lumina) để cho giảng viên
    * xem "bằng chứng số" mức tham gia từng người theo đội — KHÔNG phải điểm chấm (khác B5 ở trên). */
   function memberActivity(log) {
-    const byTeam = {}; (log || []).forEach(l => { (byTeam[l.team_name] = byTeam[l.team_name] || []).push(l); });
+    const byTeam = {}, label = {};
+    (log || []).forEach(l => { const k = tkey(l.team_name); if (!(k in label)) label[k] = String(l.team_name || '').trim(); (byTeam[k] = byTeam[k] || []).push(l); });
     const RO = { CEO: 0, CFO: 1, CMO: 2, COO: 3, SEC: 4 };
     return Object.keys(byTeam).sort().map(team => {
       const byMember = {}, keyOf = r => r.role + '|' + (r.member_name || r.role);
@@ -127,7 +145,7 @@
       const scores = members.map(m => m.score);
       const balance = members.length ? Math.max(0, 100 - (Math.max(...scores) - Math.min(...scores))) : 100;
       members.sort((a, b) => RO[a.role] - RO[b.role]);
-      return { team, members, balance };
+      return { team: label[team], members, balance };
     });
   }
   // Nhãn diễn giải điểm cân bằng 0–100 theo 4 mức rubric giảng viên tự đặt (mặc định nếu chưa cấu hình).
@@ -199,7 +217,7 @@
     return (BP || []).filter(r => /^HC Mini/.test(r.company || '')).flatMap(r => {
       const m = miniGrade(r), L = letter(m.total), when = new Date(r.created_at).toLocaleString('vi-VN');
       const grp = rosterGroup(roster, r.player_name);
-      const common = { home: m.home, markets: m.markets, profile: m.profile, total: +m.total.toFixed(1), letter: L.l, g4: L.g4, pass: L.pass, when };
+      const common = { home: m.home, markets: m.markets, profile: m.profile, total: rnd1(m.total), letter: L.l, g4: L.g4, pass: L.pass, when };
       if (grp && grp.members.length) return grp.members.map(mm => Object.assign({ group: grp.label, mssv: mm.mssv, name: mm.name, email: mm.email }, common));
       return [Object.assign({ group: '', mssv: '', name: r.player_name || 'Ẩn danh', email: '' }, common)];
     });
@@ -226,16 +244,16 @@
     const s1 = [row(['Đội', 'Số vòng', 'LN lũy kế (tr₫)', 'Thị phần V6 (%)', 'OEE TB', 'Lỗi V6 (%)', 'Quick ratio V6', 'Thành tựu', 'Vòng biến cố bất lợi', 'Vòng đóng góp (B5)', 'Chuẩn bị (B6)',
       'B1 /2', 'B2 /2', 'B3 /2', 'B4 /1,5', 'B5 /1,5', 'B6 /1', 'Tổng /10', 'Điểm chữ', 'Thang 4', 'Tích lũy', 'Nhận xét'])]
       .concat(G.map(g => row([g.name, g.rounds, Math.round(g.profit), g.share, r1(g.oee), r1(g.defect), r1(g.qr), g.ach ?? '', g.adv, g.reasoning === '' ? '' : +g.reasoning, g.teamwork ? 'Có' : 'Không',
-        r1(g.b1), r1(g.b2), r1(g.b3), r1(g.b4), r1(g.b5), r1(g.b6), +g.total.toFixed(1), letter(g.total).l, letter(g.total).g4, letter(g.total).pass ? 'Đạt' : 'Không', g.note || g.autoNote])));
+        r1(g.b1), r1(g.b2), r1(g.b3), r1(g.b4), r1(g.b5), r1(g.b6), rnd1(g.total), letter(g.total).l, letter(g.total).g4, letter(g.total).pass ? 'Đạt' : 'Không', g.note || g.autoNote])));
     const s2 = [row(['Đội', 'Vòng', 'Biến cố', 'Giá', 'Marketing', 'Sản lượng', 'R&D', 'Nhân công', 'Vốn', 'Thị phần (%)', 'Doanh thu (tr₫)', 'Lợi nhuận (tr₫)', 'Số dư (tr₫)', 'OEE', 'Lỗi (%)', 'Quick ratio', 'Nộp lúc'])];
     T.forEach(t => t.rs.forEach(r => { const j = r0(r), d = j.decision || j.decisions || j.input || {};
       s2.push(row([t.name, r.round_number, j.eventId || '', d.price ?? d.gia ?? '', d.marketing ?? '', d.production ?? '', d.rd ?? '', d.workers ?? '', d.funding ?? '', +(+j.share || 0).toFixed(1), Math.round(+j.revenue || 0), +(+j.netProfit || 0).toFixed(1), Math.round(+j.balance || 0), j.oee ?? '', j.defect ?? '', j.quickRatio ?? '', new Date(r.created_at).toLocaleString('vi-VN')])); }));
     const s3 = [row(['Sinh viên', 'Doanh nghiệp', 'Quốc gia xuất phát', 'Điểm tổng /100', 'Chiều thấp nhất', 'Lựa chọn Vững', 'Số sự kiện', 'Quý âm tiền', 'A1 /5', 'A2 /1', 'A3 /2', 'A4a /1,5', 'A4b /0,5', 'Tổng /10', 'Điểm chữ', 'Thang 4', 'Tích lũy', 'Nộp lúc'])]
       .concat((BP || []).filter(r => !/^HC Mini/.test(r.company || '')).map(r => { const a = bpGrade(r), d = r.detail_json || {}; return row([r.player_name || 'Ẩn danh', r.company || '', d.home || '', r.total_score ?? '', Math.round(a.lo), a.solid ?? '', a.picks ?? '', a.negQ ?? '',
-        r1(a.a1), r1(a.a2), r1(a.a3), r1(a.a4a), r1(a.a4b), +a.total.toFixed(1), letter(a.total).l, letter(a.total).g4, letter(a.total).pass ? 'Đạt' : 'Không', new Date(r.created_at).toLocaleString('vi-VN')]); }));
+        r1(a.a1), r1(a.a2), r1(a.a3), r1(a.a4a), r1(a.a4b), rnd1(a.total), letter(a.total).l, letter(a.total).g4, letter(a.total).pass ? 'Đạt' : 'Không', new Date(r.created_at).toLocaleString('vi-VN')]); }));
     const s4 = [row(['Đội', 'Thành viên', 'Email', 'Vai', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'Vòng tham gia', 'Vòng được áp dụng', 'Lần Nếu–Thì', 'B5 cá nhân /1,5', 'Tổng cá nhân /10', 'Điểm chữ', 'Thang 4', 'Tích lũy'])]
       .concat((MB || []).map(m => { const g = G.find(x => x.name === m.team), tot = g ? g.total - g.b5 + m.b5 : m.b5, L = letter(tot);
-        return row([m.team, m.name, m.email, m.role].concat(m.dots.map(d => d === 2 ? 'Áp dụng' : d === 1 ? 'Tham gia' : ''), [m.p, m.a, m.whatif, r1(m.b5), +tot.toFixed(1), L.l, L.g4, L.pass ? 'Đạt' : 'Không'])); }));
+        return row([m.team, m.name, m.email, m.role].concat(m.dots.map(d => d === 2 ? 'Áp dụng' : d === 1 ? 'Tham gia' : ''), [m.p, m.a, m.whatif, r1(m.b5), rnd1(tot), L.l, L.g4, L.pass ? 'Đạt' : 'Không'])); }));
     const s5 = [row(['Nhóm/Đội', 'MSSV', 'Họ và tên', 'Email', 'Quốc gia xuất phát', 'Số thị trường đầu tư', 'Hồ sơ nhà đầu tư', 'Điểm /10', 'Điểm chữ', 'Thang 4', 'Tích lũy', 'Nộp lúc'])]
       .concat(miniExport(BP, roster).map(r => row([r.group, r.mssv, r.name, r.email, r.home, r.markets, r.profile, r.total, r.letter, r.g4, r.pass ? 'Đạt' : 'Không', r.when])));
     const s6 = [row(['Đội', 'Chỉ số đồng đội /100', 'Mức rubric', 'Thành viên', 'Vai', 'Đề xuất', 'Biên bản', 'Nếu–Thì', 'Hỏi Lumina', 'Chốt vòng', 'Vòng thấu chi', 'Điểm tham gia /100'])]
