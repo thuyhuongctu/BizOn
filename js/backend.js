@@ -130,6 +130,12 @@
     return flushing;
   }
 
+  // Kết quả cắm cờ của vòng (recordConquest trong app.js chạy trước submitRound).
+  function conquestWin(S, round) {
+    const c = (S.conquest || []).filter(x => x && x.round === round).pop();
+    return c ? !!c.win : null;
+  }
+
   async function submitRound(S, report) {
     if (!on()) return;
     // Ván chơi thử (không nhập Mã lớp) không gửi lên máy chủ. Người chơi tự do
@@ -147,6 +153,12 @@
         sold: report.sold, lostSales: report.lostSales, inventory: report.inventory,
         balance: report.balance, oee: report.oee, roi: report.roi,
         quickRatio: report.quickRatio, brandLoyalty: report.brandLoyalty,
+        // Ba trường dưới đây Trang Giảng viên dùng để chấm B3 (lỗi sản phẩm),
+        // B4 (số thành tựu) và đếm cờ. Trước đây không gửi, nên mọi đội bị
+        // B4 = 0 và mất 0,4 điểm lỗi ở B3 dù đã đạt trong game.
+        defect: report.defect,
+        ach: Array.isArray(S.achievements) ? S.achievements.length : null,
+        win: conquestWin(S, report.round),
       };
       const text = JSON.stringify(result);
       const row = {
