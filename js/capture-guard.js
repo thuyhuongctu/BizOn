@@ -48,14 +48,14 @@
   /* Hình mờ lặp lại, rất nhạt: không cản người xem nhưng làm mọi ảnh chụp mang dấu nguồn. */
   function addWatermark() {
     var c = document.createElement('canvas');
-    c.width = 280; c.height = 170;
+    c.width = 340; c.height = 170;
     var g = c.getContext('2d');
-    g.translate(140, 85);
+    g.translate(170, 85);
     g.rotate(-0.35);
     g.fillStyle = 'rgba(3,51,55,0.07)';
     g.font = '700 15px system-ui,sans-serif';
     g.textAlign = 'center';
-    g.fillText('BizOn · bản quyền', 0, 0);
+    g.fillText('© Bizonland · All rights reserved', 0, 0);
     var layer = document.createElement('div');
     layer.setAttribute('aria-hidden', 'true');
     layer.style.cssText = 'position:fixed;inset:0;z-index:2147483646;pointer-events:none;background-image:url(' + c.toDataURL('image/png') + ')';
