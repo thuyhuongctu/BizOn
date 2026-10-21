@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & PGS.TS. Phan Anh Tú -->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title data-en="1-round demo · BizOn Bật Nghiệp">Demo 1 vòng · BizOn Bật Nghiệp</title>
+<meta name="description" data-en-content="Drag 3 decision sliders and watch the market react instantly – learn the rules of BizOn Bật Nghiệp in 60 seconds, no sign-in." content="Kéo 3 thanh quyết định, xem thị trường phản ứng tức thì – hiểu luật chơi BizOn Bật Nghiệp trong 60 giây, không cần đăng nhập.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & PGS.TS. Phan Anh Tú">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script src="js/bizon-boot.js"></script>
+<link rel="stylesheet" href="css/bizon-clay-fonts.css">
+<link rel="stylesheet" href="css/bizon-clay.css">
+<style>
+  /* Bố cục riêng trang Demo 1 vòng (khôi phục mục #demo của gioi-thieu.html cũ, theo hệ đất sét) */
+  .dm-hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end;margin:28px 0 26px}
+  .dm-hero h1{margin:14px 0 0;font-size:clamp(36px,5vw,60px);text-wrap:balance}
+  .dm-hero p{margin:12px 0 0;max-width:40em;font-size:17px;line-height:1.6;color:var(--clay-ink-2)}
+  .dm-hero img{width:min(28vw,220px);height:auto;filter:drop-shadow(0 18px 14px rgba(110,70,30,.35));animation:clayFloat 6s ease-in-out infinite}
+  .dm-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:22px;align-items:start;margin-bottom:72px}
+  .dm-h{margin:0 0 22px;font-family:var(--clay-head);font-size:22px;font-weight:800}
+  .dm-h small{font-size:12px;font-weight:700;color:var(--clay-ink-2)}
+  .dm-sl{margin-bottom:20px}
+  .dm-sl .top{display:flex;justify-content:space-between;gap:10px;font-weight:800;font-size:15px;margin-bottom:8px}
+  .dm-sl .top b{font-family:var(--clay-head);color:var(--clay-teal)}
+  .dm-sl input{width:100%;accent-color:var(--clay-teal);height:28px}
+  .dm-lumina{display:grid;grid-template-columns:52px minmax(0,1fr);gap:12px;align-items:start;margin-top:6px;padding:14px;border-radius:22px;background:var(--clay-tray);box-shadow:var(--clay-tray-shadow)}
+  .dm-lumina img{width:52px;height:52px;border-radius:50%;object-fit:cover;object-position:50% 12%}
+  .dm-lumina p{margin:0;font-size:14.5px;line-height:1.55;font-style:italic;color:var(--clay-ink-2)}
+  .dm-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:20px}
+  .dm-kpi{padding:14px 10px;border-radius:22px;background:var(--clay-tray);box-shadow:var(--clay-tray-shadow);text-align:center}
+  .dm-kpi b{display:block;font-family:var(--clay-head);font-size:clamp(20px,2.6vw,26px);font-weight:800;color:var(--clay-ink)}
+  .dm-kpi span{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--clay-ink-2)}
+  .dm-kpi b.up{color:#2E7139} .dm-kpi b.down{color:#B3261E}
+  html[data-theme="dark"] .dm-kpi b.up{color:#8FD49A} html[data-theme="dark"] .dm-kpi b.down{color:#FF9E94}
+  .dm-bar{margin-bottom:12px}
+  .dm-bar .top{display:flex;justify-content:space-between;gap:10px;font-size:14px;font-weight:700;margin-bottom:5px;color:var(--clay-ink-2)}
+  .dm-bar.you .top{color:var(--clay-teal);font-weight:800}
+  .dm-bar .track{height:14px;border-radius:999px;background:var(--clay-tray);box-shadow:var(--clay-tray-shadow);overflow:hidden}
+  .dm-bar .fill{height:100%;border-radius:999px;background:rgba(3,51,55,.28);transition:width .25s}
+  html[data-theme="dark"] .dm-bar .fill{background:rgba(214,236,240,.3)}
+  .dm-bar.you .fill{background:linear-gradient(90deg,var(--clay-teal),var(--clay-teal-2))}
+  .dm-note{margin:16px 0 0;font-size:12.5px;line-height:1.55;color:var(--clay-ink-2)}
+  .dm-ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+  @media (max-width:560px){ .dm-hero{grid-template-columns:1fr} .dm-hero img{display:none} }
+</style>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Demo 1 vòng · BizOn Bật Nghiệp">
+<meta property="og:description" content="Kéo 3 thanh quyết định, xem thị trường phản ứng tức thì – hiểu luật chơi trong 60 giây.">
+<meta name="twitter:card" content="summary_large_image">
+<script src="js/capture-guard.js"></script>
+</head>
+<body class="clay">
+
+<main class="clay-main">
+  <section class="dm-hero">
+    <div>
+      <span class="clay-eyebrow" data-en="No sign-in · 60 seconds">Không cần đăng nhập · 60 giây</span>
+      <h1 data-en="Play one round of BizOn">Chơi thử 1 vòng BizOn</h1>
+      <p data-en="Drag the 3 decision sliders – the market reacts instantly, using the same demand formula as the full game.">Kéo 3 thanh quyết định – thị trường phản ứng ngay lập tức, theo đúng công thức cầu của game thật.</p>
+    </div>
+    <img src="assets/dragon/idea.webp" alt="" width="220" height="292">
+  </section>
+
+  <div class="dm-cols">
+    <section class="clay-card" aria-labelledby="dm-dec">
+      <h2 class="dm-h" id="dm-dec" data-en="🎯 Your decisions (CEO)">🎯 Quyết định của bạn (CEO)</h2>
+      <div class="dm-sl">
+        <label class="top" for="dm-price"><span data-en="💲 Selling price">💲 Giá bán</span><b><span id="dm-price-v">150</span> <span data-en="k ₫">nghìn ₫</span></b></label>
+        <input id="dm-price" type="range" min="100" max="220" value="150" step="5">
+      </div>
+      <div class="dm-sl">
+        <label class="top" for="dm-mkt"><span data-en="📣 Marketing budget">📣 Ngân sách marketing</span><b><span id="dm-mkt-v">50</span> <span data-en="m ₫">tr ₫</span></b></label>
+        <input id="dm-mkt" type="range" min="20" max="150" value="50" step="5">
+      </div>
+      <div class="dm-sl">
+        <label class="top" for="dm-prod"><span data-en="🏭 Output">🏭 Sản lượng</span><b><span id="dm-prod-v">3.000</span> <span data-en="units">sp</span></b></label>
+        <input id="dm-prod" type="range" min="1000" max="6000" value="3000" step="100">
+      </div>
+      <div class="dm-lumina">
+        <img src="assets/character/lumina-vest.webp" alt="Lumina" width="52" height="52">
+        <p id="dm-lumina" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="clay-card" aria-labelledby="dm-mk">
+      <h2 class="dm-h" id="dm-mk"><span data-en="📊 How the market reacts">📊 Thị trường phản ứng</span> <small data-en="· 12,000 units total demand · 3 AI rivals">· tổng cầu 12.000 sp · 3 đối thủ AI</small></h2>
+      <div class="dm-kpis">
+        <div class="dm-kpi"><b id="dm-share">–</b><span data-en="Share">Thị phần</span></div>
+        <div class="dm-kpi"><b id="dm-rev">–</b><span data-en="Revenue">Doanh thu</span></div>
+        <div class="dm-kpi"><b id="dm-profit">–</b><span data-en="Profit">Lợi nhuận</span></div>
+      </div>
+      <div id="dm-bars"></div>
+      <p class="dm-note" data-en="A cut-down version of the real engine (price elasticity 2.2, reference price 150k). The full game has 6 rounds, market events, staff, finance and an AI advisor.">Bản rút gọn từ engine thật (độ co giãn giá 2,2, giá tham chiếu 150 nghìn). Bản đầy đủ có 6 vòng, biến cố thị trường, nhân sự, tài chính và cố vấn AI.</p>
+      <div class="dm-ctas">
+        <a class="clay-btn clay-btn-orange" href="game.html" data-en="🚀 Play the full 6-round game">🚀 Chơi bản đầy đủ 6 vòng</a>
+        <a class="clay-btn" href="BizOn%20Game%203D.html" data-en="🧊 Or play in 3D">🧊 Hoặc chơi bản 3D</a>
+      </div>
+    </section>
+  </div>
+</main>
+
+<script>
+/* Demo mô phỏng 1 vòng – cùng dạng hàm hấp dẫn của js/engine.js (giá tham chiếu 150k, độ co giãn PRICE_ELASTICITY = 2.2). */
+(function () {
+  var REF = 150, ELAST = 2.2, DEMAND = 12000;
+  var $ = function (id) { return document.getElementById(id); };
+  var en = function () { return (window.clayCurrentLang ? window.clayCurrentLang() : document.documentElement.lang) === 'en'; };
+  var T = function (vi, e) { return en() ? e : vi; };
+  var num = function (n) { return Math.round(n).toLocaleString(en() ? 'en-US' : 'vi-VN'); };
+  var pct1 = function (x) { return x.toFixed(1).replace('.', en() ? '.' : ','); };
+  var attr = function (p, m, brand) { return Math.pow(REF / p, ELAST) * (1 + Math.sqrt(m) / 18) * brand; };
+  var RIVALS = [
+    { vi: 'Alpha Corp (giá rẻ)', en: 'Alpha Corp (low price)', p: 125, m: 90, b: 1.05 },
+    { vi: 'Beta Ltd (cân bằng)', en: 'Beta Ltd (balanced)', p: 150, m: 60, b: 1.0 },
+    { vi: 'Delta Inc (cao cấp)', en: 'Delta Inc (premium)', p: 195, m: 75, b: 1.15 }
+  ];
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function run() {
+    var price = +$('dm-price').value, mkt = +$('dm-mkt').value, prod = +$('dm-prod').value;
+    $('dm-price-v').textContent = price;
+    $('dm-mkt-v').textContent = mkt;
+    $('dm-prod-v').textContent = num(prod);
+    var you = attr(price, mkt, 1.0);
+    var rows = [{ name: T('BizOn (BẠN)', 'BizOn (YOU)'), a: you, you: true }].concat(RIVALS.map(function (r) { return { name: T(r.vi, r.en), a: attr(r.p, r.m, r.b) }; }));
+    var total = rows.reduce(function (s, r) { return s + r.a; }, 0);
+    var demand = Math.round(DEMAND * you / total);
+    var sold = Math.min(prod, demand);
+    var revenue = sold * price / 1000;             // triệu ₫
+    var profit = Math.round(revenue - (prod * 0.045 + mkt + 75));
+    $('dm-share').textContent = pct1(100 * you / total) + '%';
+    $('dm-rev').textContent = num(revenue) + T(' tr', 'm');
+    var pe = $('dm-profit');
+    pe.textContent = (profit >= 0 ? '+' : '−') + num(Math.abs(profit)) + T(' tr', 'm');
+    pe.className = profit >= 0 ? 'up' : 'down';
+    rows.sort(function (x, y) { return y.a - x.a; });
+    $('dm-bars').innerHTML = rows.map(function (r) {
+      var pct = 100 * r.a / total;
+      return '<div class="dm-bar' + (r.you ? ' you' : '') + '"><div class="top"><span>' + esc(r.name) + '</span><span>' + pct1(pct) + '%</span></div>' +
+        '<div class="track"><div class="fill" style="width:' + Math.max(3, Math.min(100, pct * 2)).toFixed(1) + '%"></div></div></div>';
+    }).join('');
+    var msg;
+    if (sold < demand) msg = T('Nhu cầu tới ' + num(demand) + ' sp mà bạn chỉ sản xuất ' + num(prod) + ' – đang bỏ lỡ doanh thu đấy! Thử tăng sản lượng xem sao.',
+      'Demand reaches ' + num(demand) + ' units but you only make ' + num(prod) + ' – you are leaving revenue on the table! Try raising output.');
+    else if (profit < 0) msg = T('Kế hoạch này đang lỗ! Giá thấp quá hoặc chi phí cao quá – thử tăng giá nhẹ hoặc giảm sản lượng dư thừa nhé.',
+      'This plan loses money! The price is too low or costs too high – try a slightly higher price or cut surplus output.');
+    else if (price >= 190) msg = T('Chiến lược cao cấp! Biên lợi nhuận dày nhưng thị phần mỏng – trong game thật, hãy đầu tư R&D và thương hiệu để giữ khách.',
+      'A premium strategy! Fat margins but a thin share – in the full game, invest in R&D and brand to keep customers.');
+    else if (profit > 150) msg = T('Xuất sắc! Lãi ' + num(profit) + ' tr ₫ chỉ trong 1 vòng. Vào game thật để đấu 6 vòng với các biến cố Chiến tranh giá và Khủng hoảng năng lượng nào!',
+      'Excellent! ' + num(profit) + 'm ₫ profit in a single round. Jump into the full game for 6 rounds with Price War and Energy Crisis events!');
+    else msg = T('Kế hoạch cân bằng, có lãi ổn định. Trong game thật, biến cố thị trường mỗi vòng sẽ thử thách chiến lược này của bạn!',
+      'A balanced plan with a steady profit. In the full game, a market event every round will test this strategy!');
+    $('dm-lumina').textContent = '“' + msg + '”';
+  }
+  ['dm-price', 'dm-mkt', 'dm-prod'].forEach(function (id) { $(id).addEventListener('input', run); });
+  window.addEventListener('bizon:langchange', function () { setTimeout(run, 0); });
+  run();
+})();
+</script>
+<script src="js/site-vnmap.js" defer></script>
+<script src="js/bizon-clay-i18n.js" defer></script>
+<script src="js/bizon-clay-nav.js" defer></script>
+<script src="js/bizon-clay-footer.js" defer></script>
+</body>
+</html>
