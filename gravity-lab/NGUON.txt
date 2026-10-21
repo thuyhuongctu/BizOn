@@ -1,0 +1,1 @@
+Bản build tĩnh của Gravity Lab (https://github.com/thuyhuongctu/Gravity-Lab), commit 1ffb624, build 2026-10-21 bằng `npm ci && npm run build`. Không sửa tay: cập nhật bằng cách build lại từ kho gốc rồi chép đè thư mục dist/ vào đây.

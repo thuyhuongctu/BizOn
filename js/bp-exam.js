@@ -8,7 +8,8 @@
   var KEY = 'bp-class';
   var cfg = function () { return window.BIZON_BACKEND || {}; };
   var on = function () { var c = cfg(); return c.enabled && c.url && c.url.indexOf('YOUR-PROJECT') < 0; };
-  var T = function (vi, en) { return (document.documentElement.lang || 'vi').indexOf('en') === 0 ? en : vi; };
+  // Đọc ngôn ngữ đã lưu (site-ui.js đặt <html lang> muộn hơn, sau DOMContentLoaded) – <html lang> chỉ là dự phòng.
+  var T = function (vi, en) { var l = ''; try { l = localStorage.getItem('bizon-lang') || ''; } catch (e) {} return (l || document.documentElement.lang || 'vi').indexOf('en') === 0 ? en : vi; };
   var exam = null, skew = 0, busy = false, lastAuto = '';
   var code = function () { try { return (localStorage.getItem(KEY) || '').trim().toUpperCase(); } catch (e) { return ''; } };
   var BP = function () { return window.__bp && window.__bp.S; };
@@ -42,8 +43,8 @@
   function classField() {
     var intro = document.getElementById('bp-intro'); if (!intro || !on() || document.getElementById('bp-exam-class')) return;
     var box = document.createElement('div'); box.className = 'mt-4';
-    box.innerHTML = '<label style="display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:800;color:#033337">' + T('🎓 Mã lớp (bắt buộc khi thi)', '🎓 Class code (required in exams)') +
-      '<input id="bp-exam-class" autocomplete="off" style="padding:10px 12px;border-radius:14px;border:2px solid rgba(0,102,135,.2);font:700 15px inherit;text-transform:uppercase" placeholder="VD: QTKD-K48"></label>' +
+    box.innerHTML = '<label style="display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:800;color:#033337"><span id="bp-exam-lbl">' + T('🎓 Mã lớp (bắt buộc khi thi)', '🎓 Class code (required in exams)') + '</span>' +
+      '<input id="bp-exam-class" autocomplete="off" style="padding:10px 12px;border-radius:14px;border:2px solid rgba(0,102,135,.2);font:700 15px inherit;text-transform:uppercase" placeholder="' + T('VD: QTKD-K48', 'e.g. QTKD-K48') + '"></label>' +
       '<p id="bp-exam-note" style="margin:6px 0 0;font-size:11px;opacity:.65"></p>';
     var start = intro.querySelector('[onclick="bpStart()"]'); intro.insertBefore(box, start || null);
     var inp = document.getElementById('bp-exam-class'); inp.value = code();
@@ -100,6 +101,8 @@
   function tick() {
     classField(); wrap();
     var ex = status(exam, now()); pill(ex);
+    var lbl = document.getElementById('bp-exam-lbl'), want = T('🎓 Mã lớp (bắt buộc khi thi)', '🎓 Class code (required in exams)'); // theo kịp khi đổi ngôn ngữ
+    if (lbl && lbl.textContent !== want) { lbl.textContent = want; var ci = document.getElementById('bp-exam-class'); if (ci) ci.placeholder = T('VD: QTKD-K48', 'e.g. QTKD-K48'); }
     var note = document.getElementById('bp-exam-note');
     if (note) note.textContent = !code() ? T('Nhập Mã lớp để nhận lịch thi và được chấm điểm.', 'Enter the class code to get the exam schedule and be graded.')
       : exam && exam.active ? T('✓ Đã nhận lịch thi của lớp ', '✓ Exam schedule received for ') + code() : T('Lớp ' + code() + ' chưa bật chế độ thi.', 'Class ' + code() + ' has no active exam.');

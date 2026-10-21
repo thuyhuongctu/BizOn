@@ -58,7 +58,7 @@
     { sel: '#bp-hud', grid: true, face: FACE_CHART,
       title: function () { return T('📊 6 chỉ số quyết định điểm cuối', '📊 6 stats that decide your final score'); },
       text: function () { return T('Điểm tổng = <b>30% Lợi nhuận + 20% Uy tín + 20% Năng lực + 15% Thích ứng + 15% Bền vững</b>. Uy tín/Năng lực/Bền vững thấy ngay ở đây; Thích ứng và Lợi nhuận tích lũy được tính dần qua các quý. Tri thức và Chống chịu không trực tiếp tính điểm nhưng ảnh hưởng doanh thu và độ an toàn.', 'Total score = <b>30% Profit + 20% Reputation + 20% Capability + 15% Adaptation + 15% Sustainability</b>. Reputation/Capability/Sustainability show right here; Adaptation and cumulative Profit build up over the quarters. Knowledge and Resilience don\'t score directly but affect revenue and safety.'); } },
-    { sel: '#bp-prio-section', face: FACE_NEUTRAL,
+    { sel: '#bp-prio-section', hud: 'prio', face: FACE_NEUTRAL,
       title: function () { return T('1 · Ưu tiên của quý (bắt buộc)', '1 · Priority for the quarter (required)'); },
       text: function () { return T('Chọn đúng <b>1 trong 5</b> mỗi quý. Đây là lựa chọn duy nhất bắt buộc – chọn xong là đủ điều kiện chốt quý.', 'Pick exactly <b>1 of 5</b> each quarter. This is the only required choice – picking it is enough to lock in the quarter.'); } },
     { sel: '#bp-enter-section', face: FACE_IDEA,
@@ -70,10 +70,10 @@
     { sel: '#bp-aibis', grid: true, face: FACE_CHART,
       title: function () { return T('◐ AIBIS · So sánh chi tiết', '◐ AIBIS · Detailed comparison'); },
       text: function () { return T('Mặc định đang gấp lại – bấm để mở. Kéo 5 thanh trượt theo <b>ưu tiên của riêng bạn</b> (kiểm soát, tốc độ, học hỏi…), engine sẽ xếp hạng lại 6 phương thức cho đúng thị trường đang chọn và giải thích vì sao.', 'Closed by default – tap to open. Drag the 5 sliders to match <b>your own priorities</b> (control, speed, learning…) and the engine re-ranks the 6 modes for the selected market, with an explanation.'); } },
-    { sel: '#bp-budget-section', face: FACE_WORRIED,
+    { sel: '#bp-budget-section', hud: 'bud', face: FACE_WORRIED,
       title: function () { return T('3 · Mức vận hành (bắt buộc)', '3 · Operating stance (required)'); },
       text: function () { return T('Dồn lực cho doanh thu cao hơn nhưng chi phí & rủi ro tăng theo – Tiết kiệm thì ngược lại.', 'All-in raises revenue but cost and risk rise with it – Frugal does the opposite.'); } },
-    { sel: '#bp-commit', face: FACE_CLAP,
+    { sel: '#bp-commit', hud: 'commit', face: FACE_CLAP,
       title: function () { return T('🔒 Chốt quý này', '🔒 Lock in this quarter'); },
       text: function () { return T('Chọn xong Ưu tiên + Mức vận hành là bấm được. Sau khi chốt, <b>không sửa lại được nữa</b> cho quý này.', 'Enabled once you\'ve picked a Priority and an Operating stance. Once locked in, <b>this quarter can\'t be changed</b>.'); } },
   ];
@@ -84,16 +84,27 @@
       text: function () { return T('Mỗi quý có đúng <b>1 biến cố</b> – đọc kỹ rồi chọn 1 trong các lựa chọn bên dưới. Sau khi chọn, màn <b>Kết quả quý</b> hiện ngay doanh thu từng thị trường kèm dòng «Vì sao» giải thích % tác động, rồi nút <b>Sang quý kế</b> để tiếp tục.', 'Each quarter has exactly <b>1 event</b> – read it, then pick one of the choices below. After you choose, the <b>Quarter results</b> screen shows revenue per market with a "Why" line explaining each % effect, then a <b>Next quarter</b> button to continue.'); } },
   ];
 
-  var idx = -1, overlay = null, steps = null;
+  var idx = -1, overlay = null, steps = null, dir = 1;
+
+  // Phần tử có thật sự hiện trên màn hình không (display:none ở chính nó hoặc tổ tiên → kích thước 0).
+  function shown(el) { if (!el) return false; var r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0 && getComputedStyle(el).visibility !== 'hidden'; }
+  // Bản 3D: Ưu tiên/Mức vận hành/Chốt quý là các ô ngay trên cảnh 3D (bp3d.js → __bp3dChoices), khối HTML tương ứng bị ẩn –
+  // soi đúng nhóm ô đó (window.__bp3dChoiceRect) thay vì một điểm 16×16 ở góc trái trên.
+  function hudRect(step) {
+    if (!step.hud || !document.body.classList.contains('bp3d-choice-hud') || typeof window.__bp3dChoiceRect !== 'function') return null;
+    var r = window.__bp3dChoiceRect(step.hud); return r && r.width > 4 && r.height > 4 ? r : null;
+  }
+  function skip() { if (dir < 0 && idx > 0) go(idx - 1); else next(); } // đi tiếp theo đúng chiều người chơi đang bấm (Trước/Tiếp)
 
   function paint() {
     if (endShowing()) { stop(); return; }
     if (!steps || idx < 0) return; // tour đã stop() giữa chừng (xem chú thích ở go())
     var step = steps[idx];
-    var el = $q(step.sel);
-    if (!el) { next(); return; } // phần tử chưa render (vd. đã vào đủ 7 thị trường) → bỏ qua bước
-    if (step.grid) el = el.closest('.clay-card') || el;
-    var r = el.getBoundingClientRect();
+    var el = $q(step.sel), r = null;
+    if (step.grid && el) el = el.closest('.clay-card') || el;
+    if (shown(el)) r = el.getBoundingClientRect();
+    else r = hudRect(step);
+    if (!r) { skip(); return; } // phần tử chưa render/đang ẩn (vd. đã vào đủ 7 thị trường) → bỏ qua bước
     var pad = 8;
     var top = Math.max(8, r.top - pad), left = Math.max(8, r.left - pad);
     var w = Math.min(innerWidth - left - 8, r.width + pad * 2), h = r.height + pad * 2;
@@ -121,6 +132,7 @@
   }
 
   function go(i) {
+    dir = i < idx ? -1 : 1;
     idx = i;
     overlay.innerHTML = '';
     setTimeout(function () {
@@ -131,7 +143,7 @@
       // mà lần gọi go() này phụ trách.
       if (!steps || idx !== i) return;
       var el = $q(steps[idx].sel);
-      if (el) el.scrollIntoView({ behavior: 'instant', block: 'center' });
+      if (shown(el)) el.scrollIntoView({ behavior: 'instant', block: 'center' });
       setTimeout(paint, 120);
     }, 180);
   }
