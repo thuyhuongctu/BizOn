@@ -36,6 +36,27 @@
     THAIPH: 'Boonyaritthongchai, P. và cộng sự. Storage of Durians on a Semi-Commercial Scale. Agriculture and Natural Resources (Thái Lan), chỉ mục FAO AGRIS.'
   };
 
+  // Bản tiếng Anh của trích dẫn: giữ nguyên tên tài liệu tiếng Việt, dịch phần mô tả và kèm nghĩa trong [ ].
+  const sourcesEn = {
+    PROTO: 'Protocol on phytosanitary requirements for fresh durian exported from Viet Nam to China (MARD–GACC, 2022), Art. 2–9 and Annex.',
+    BC1022: 'Tien Giang Trade Promotion Centre (2022). Thông tin thị trường xuất khẩu tháng 10/2022 [Export market bulletin, Oct 2022].',
+    BC1223: 'Ministry of Industry and Trade (2023). Báo cáo thị trường rau quả tháng 12/2023 [Fruit and vegetable market report, Dec 2023].',
+    BC0124: 'Ministry of Industry and Trade (2024). Báo cáo thị trường rau quả tháng 01/2024 [Fruit and vegetable market report, Jan 2024].',
+    BC0224: 'Ministry of Industry and Trade (2024). Báo cáo thị trường rau quả tháng 02/2024 [Fruit and vegetable market report, Feb 2024].',
+    KQTC: 'CESTI (2024). Search results for «Xuất khẩu trái sầu riêng» [durian exports] (Apr 2024), incl. agro.gov.vn news of 8 Apr 2024.',
+    CAILAY: 'Master\'s thesis (2014). Giải pháp hoàn thiện chuỗi cung ứng sầu riêng tại huyện Cai Lậy, Tiền Giang [Improving the durian supply chain in Cai Lậy].',
+    PDIEN: 'Journal article (2017). Chiến lược và giải pháp nâng cấp chuỗi cung ứng sầu riêng huyện Phong Điền, Cần Thơ [Upgrading the Phong Điền durian supply chain].',
+    CGIAR: 'CGIAR (2022). Fruit production and value chain – Mekong River Delta, Viet Nam (climate-risk assessment).',
+    TW: 'Journal article (2020). Đẩy mạnh xuất khẩu sầu riêng của Việt Nam sang thị trường Đài Loan [Boosting Vietnamese durian exports to Taiwan].',
+    MYSC: 'Journal article (2019). From farm to China: Malaysian frozen whole durian export supply chain.',
+    GS1: 'APEC (2017). Application of global data standards for supply chain connectivity (Malaysian durian traceability pilot).',
+    TCVN: 'TCVN 10739:2015 – Fresh durian (Vietnamese national standard).',
+    CODEX: 'Codex Alimentarius – FAO/WHO, CXC 8-1976 (Code of Practice for the Processing and Handling of Quick Frozen Foods): store and distribute quick-frozen food at −18°C or below.',
+    FROZENPROTO: 'VTV/VGP (19 Aug 2024). Frozen durian officially licensed for China (MARD–GACC protocol signed).',
+    CDAO: 'Dân Việt (24 May 2025); Tuổi Trẻ (6 Feb 2025). GACC requirements for cadmium and auramine O testing of imported durian.',
+    THAIPH: 'Boonyaritthongchai, P. et al. Storage of Durians on a Semi-Commercial Scale. Agriculture and Natural Resources (Thailand), FAO AGRIS index.'
+  };
+
   // ---------- Dữ kiện dùng trong trò chơi (có trích nguồn) ----------
   const facts = {
     frozenSigned: { v: '19/8/2024', src: 'FROZENPROTO', vi: 'Bộ NN&PTNT và GACC ký nghị định thư sầu riêng đông lạnh (nguyên quả, xay nhuyễn, cơm sầu riêng). Cơ sở đóng gói phải có HACCP, truy xuất nguồn gốc, đủ năng lực cấp đông và kho lạnh.', en: 'MARD and GACC signed the frozen-durian protocol (whole fruit, purée, pulp). Packing houses need HACCP, traceability, and adequate freezing and cold-storage capacity.' },
@@ -74,7 +95,7 @@
   // ---------- Tham số minh họa ----------
   const params = {
     cash0: 12,                 // tỷ đồng tiền mặt ban đầu
-    creditLimit: 8,            // hạn mức vay ngân hàng, tỷ đồng (vượt: lãi 15%, trừ Chống chịu & Uy tín)
+    creditLimit: 8,            // hạn mức vay ngân hàng, tỷ đồng (vượt: lãi 15%, Uy tín −3; engine còn trừ chỉ số ẩn resil, không vào điểm)
     depotMain: 50,             // giá vựa chính vụ, nghìn đ/kg (minh họa; nghịch vụ = depotMain × offMult)
     offMult: 2.5,              // neo vào «gấp 2–3 lần» (BC0224)
     farmCost: 20,              // giá thành tự trồng, nghìn đ/kg (minh họa, quy đổi mặt bằng giá 2024)
@@ -181,8 +202,8 @@
   // chuỗi cung ứng trong nước (mua qua thương lái tự do hay liên kết vùng trồng có mã số) và hoàn tất thủ tục
   // để được công nhận là doanh nghiệp xuất khẩu chính thức — đó cũng là một "entry mode", chỉ diễn ra ở home country.
   const sourcingTheory = {
-    vi: 'Tỷ lệ mua qua vùng liên kết so với thương lái tự do (tiểu thương) chính là lựa chọn phương thức gia nhập ngay trong nước: liên kết giúp có mã số để đi chính ngạch nhưng tốn chi phí hơn (+8%); thương lái rẻ, linh hoạt nhưng dễ «bẻ kèo» và khó kiểm soát dư lượng.',
-    en: 'The share bought from linked, coded areas versus free-roaming traders (tiểu thương) is itself a home-country entry-mode choice: linked sourcing earns the codes needed for official export but costs more (+8%); traders are cheap and flexible but prone to broken deals and harder residue control.',
+    vi: `Tỷ lệ mua qua vùng liên kết so với thương lái tự do (tiểu thương) chính là lựa chọn phương thức gia nhập ngay trong nước: liên kết giúp có mã số để đi chính ngạch nhưng tốn chi phí hơn (+${Math.round(params.linkedPremium * 100)}%); thương lái rẻ, linh hoạt nhưng dễ «bẻ kèo» và khó kiểm soát dư lượng.`,
+    en: `The share bought from linked, coded areas versus free-roaming traders (tiểu thương) is itself a home-country entry-mode choice: linked sourcing earns the codes needed for official export but costs more (+${Math.round(params.linkedPremium * 100)}%); traders are cheap and flexible but prone to broken deals and harder residue control.`,
     src: 'traders80'
   };
   const formalization = {
@@ -198,7 +219,7 @@
     { id: 'test', vi: 'Kiểm nghiệm dư lượng và kim loại nặng', en: 'Residue and heavy-metal testing', effVi: 'Giảm rủi ro bị cảnh báo (tối đa 2 cấp). Bắt buộc với Nhật Bản.', effEn: 'Cuts alert risk (up to 2 levels). Required for Japan.', src: 'KQTC' },
     { id: 'trace', vi: 'Truy xuất nguồn gốc (mã vạch GS1)', en: 'Traceability (GS1 barcodes)', effVi: 'Giảm hao hụt, chống giả xuất xứ, qua kiểm tra nhanh hơn.', effEn: 'Lower losses, protection against fake origin, faster checks.', src: 'GS1' },
     { id: 'freezer', vi: 'Đầu tư cấp đông nhanh', en: 'Invest in cryogenic freezing', effVi: 'Mở kênh đông lạnh từ vụ sau. Chi phí lớn.', effEn: 'Unlocks the frozen channel from next season. Costly.', src: 'MYSOP' },
-    { id: 'finance', vi: 'Củng cố tài chính', en: 'Strengthen finances', effVi: 'Không chi tiền; +Chống chịu, giảm chi phí vốn.', effEn: 'No spending; +Resilience, lower financing cost.', src: null }
+    { id: 'finance', vi: 'Củng cố tài chính', en: 'Strengthen finances', effVi: 'Không chi tiền; nếu đang vay ngân hàng thì lãi vay vụ này giảm một nửa.', effEn: 'No spending; if the team is borrowing, this season’s interest is halved.', src: null }
   ];
 
   // ---------- Nguồn tin (mua tối đa 2 mỗi vụ) ----------
@@ -402,8 +423,8 @@
       roleVi: 'Nông hộ trồng sầu riêng, HTX Cai Lậy', roleEn: 'Durian grower, Cai Lậy co-op' },
     { id: 'bacba', emoji: '👴', vi: 'Bác Ba', en: 'Bác Ba', img: 'hc/cast/bac-ba.webp',
       roleVi: 'Nông hộ trồng sầu riêng, một nhà vườn khác', roleEn: 'Durian grower, another household' },
-    { id: 'huong', emoji: '👩', vi: 'Hương', en: 'Hương', img: 'hc/cast/huong.webp',
-      roleVi: 'Nhà sáng lập BizOn', roleEn: 'BizOn founder' },
+    { id: 'huong', emoji: '👩', vi: 'Lumina (Hương)', en: 'Lumina (Hương)', img: 'hc/cast/huong.webp',
+      roleVi: 'Cố vấn BizOn · nhà sáng lập', roleEn: 'BizOn advisor · founder' },
     { id: 'tuphan', emoji: '👨‍🏫', vi: 'Tú Phan', en: 'Tú Phan', img: 'hc/cast/tu-phan-avatar.webp',
       roleVi: 'Giảng viên, Trường Kinh tế — Đại học Cần Thơ', roleEn: 'Lecturer, CTU School of Economics' }
   ];
@@ -504,7 +525,7 @@
     ]
   };
 
-  const api = { sources, facts, params, roles, channels, entryModes, sourcingTheory, formalization, priorities, intel, seasons, events, scoreWeights,
+  const api = { sources, sourcesEn, facts, params, roles, channels, entryModes, sourcingTheory, formalization, priorities, intel, seasons, events, scoreWeights,
     team, rivals, rivalGroups, luminaQuestions, flow, debrief, rubric, eventLogColumns, avatars, eightSteps, chain2 };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.DurianData = api;

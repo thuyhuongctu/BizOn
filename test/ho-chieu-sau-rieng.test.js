@@ -219,4 +219,43 @@ test('Chuỗi cung ứng lạnh chi tiết (chain2) và quy trình 8 bước (ei
   });
 });
 
+// Bản 3D là bundle tự chứa: engine, data, core được nhúng (gzip + base64) trong <script type="__bundler/manifest">.
+// Đóng gói lại bằng: node scripts/release/rebundle-ho-chieu-sau-rieng-3d.mjs
+const readBundle3D = () => {
+  const zlib = require('zlib');
+  const html = fs.readFileSync(path.join(__dirname, '..', 'lab', 'ho-chieu-sau-rieng-3d.html'), 'utf8');
+  const lines = html.split('\n');
+  const at = tag => { const i = lines.findIndex(l => l.trim() === '<script type="' + tag + '">'); assert.ok(i >= 0, 'bundle thiếu ' + tag); return JSON.parse(lines[i + 1]); };
+  const manifest = at('__bundler/manifest'), template = at('__bundler/template');
+  const decode = e => { const raw = Buffer.from(e.data, 'base64'); return e.compressed ? zlib.gunzipSync(raw) : raw; };
+  return { manifest, template, decode };
+};
+
+test('Bản 3D: engine, data, core nhúng trong bundle trùng từng byte với lab/*.js và được trang chơi nạp', () => {
+  const { manifest, template, decode } = readBundle3D();
+  const js = Object.entries(manifest).filter(([, e]) => /javascript/.test(e.mime)).map(([uuid, e]) => ({ uuid, text: decode(e) }));
+  [['ho-chieu-sau-rieng-engine.js', 'root.DurianEngine = api'], ['ho-chieu-sau-rieng-data.js', 'root.DurianData = api'], ['ho-chieu-sau-rieng-core.js', 'window.DurianCore = {']].forEach(([file, marker]) => {
+    const src = fs.readFileSync(path.join(__dirname, '..', 'lab', file));
+    const same = js.filter(a => a.text.includes(marker));
+    assert.strictEqual(same.length, 1, file + ': cần đúng một bản nhúng, có ' + same.length + ' (chạy scripts/release/rebundle-ho-chieu-sau-rieng-3d.mjs)');
+    assert.ok(same[0].text.equals(src), file + ': bản nhúng trong 3D khác lab/' + file + ' (chạy scripts/release/rebundle-ho-chieu-sau-rieng-3d.mjs)');
+    assert.ok(template.includes('<script src="' + same[0].uuid + '">'), file + ': template 3D không nạp uuid ' + same[0].uuid);
+  });
+});
+
+test('Bản 3D: chữ trên giao diện khớp tham số (vùng liên kết, xử lý ra hoa), link giảng viên tồn tại, không còn chỉ số ẩn «Chống chịu»', () => {
+  const { template } = readBundle3D();
+  assert.ok(!/đắt hơn 8%|cost 8% more|sản lượng −15%|output −15%|Chống chịu −8/.test(template), 'còn chữ cũ trái với tham số');
+  assert.ok(/induce: true, intel: \[\], option: null/.test(template), 'mặc định xử lý ra hoa phải giống bản 2D (true)');
+  assert.ok(DCore().freshDec().induce === true);
+  (template.match(/<a href="([^"#]+)"/g) || []).map(a => a.slice(9, -1)).filter(h => !/^https?:/.test(h)).forEach(h => assert.ok(fs.existsSync(path.join(__dirname, '..', decodeURI(h))), 'link 3D hỏng: ' + h));
+  const html2d = fs.readFileSync(path.join(__dirname, '..', 'lab', 'ho-chieu-sau-rieng.html'), 'utf8');
+  assert.ok(!/rẻ hơn 8%|8% cheaper/.test(html2d), 'bản 2D còn «8%» cứng');
+  assert.ok(!/8%/.test(D.sourcingTheory.vi) && D.sourcingTheory.vi.includes('+' + Math.round(D.params.linkedPremium * 100) + '%'));
+  assert.ok(!/Chống chịu|Resilience/.test(D.priorities.find(p => p.id === 'finance').effVi + D.priorities.find(p => p.id === 'finance').effEn));
+  Object.keys(D.sourcesEn).forEach(k => assert.ok(D.sources[k], 'sourcesEn có khóa lạ: ' + k));
+});
+
+function DCore() { global.window = global.window || {}; require('../lab/ho-chieu-sau-rieng-core.js'); return global.window.DurianCore; }
+
 console.log(`\n${passed} kiểm thử đạt`);
