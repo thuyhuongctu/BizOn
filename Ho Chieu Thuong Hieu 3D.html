@@ -1454,7 +1454,7 @@
         var fr = forecastRange(S.sel.enter, S.sel.enterMode);
         var compTxt = fr.comp >= 1.3 ? T('cạnh tranh cao', 'high competition') : fr.comp <= 0.85 ? T('cạnh tranh dịu', 'light competition') : T('cạnh tranh vừa', 'moderate competition');
         var rivalTxt = fr.rivalShare > 0.03 ? T(' · 🐉 ' + RIVAL.name + ' đang giữ khoảng ' + Math.round(fr.rivalShare * 100) + '% thị phần ở đây', ' · 🐉 ' + RIVAL.name + ' currently holds about ' + Math.round(fr.rivalShare * 100) + '% of the share here') : '';
-        var shipTxt = S.sel.shipMode == null ? T('<br>🚚 Chọn thêm cách vận chuyển bên dưới để chốt được quý này.', '<br>🚚 Pick a shipping method below to lock in this quarter.') :
+        var shipTxt = S.sel.shipMode == null ? T('<br>🚚 Chọn thêm cách vận chuyển (🚤 Đường biển / ✈️ Hỏa tốc) ở mục «Vận chuyển hàng» để chốt được quý này.', '<br>🚚 Pick a shipping method (🚤 Sea / ✈️ Express) under «Shipping» to lock in this quarter.') :
           T('<br>🚚 ' + SHIP_MODES[S.sel.shipMode].name + ': rủi ro chậm hàng mỗi quý ~' + Math.round(SHIP_MODES[S.sel.shipMode].risk * 100) + '%.', '<br>🚚 ' + SHIP_MODES[S.sel.shipMode].nameEn + ': ~' + Math.round(SHIP_MODES[S.sel.shipMode].risk * 100) + '% chance of delay each quarter.');
         note.innerHTML = T(
           'Sẽ thâm nhập ' + MKTS[S.sel.enter].name + ' bằng ' + MODES[S.sel.enterMode].name + ' (vốn ' + f1(MODES[S.sel.enterMode].cost) + ' tỷ).<br>🔮 <b>Dự báo Lumina:</b> doanh thu quý ước ' + f1(fr.lo) + '–' + f1(fr.hi) + ' tỷ ₫ · ' + compTxt + rivalTxt + '.' + shipTxt,
@@ -1836,7 +1836,8 @@
     if (evtPostCache.delta && evtPostCache.delta.profit >= 1) createConfetti();
     renderEvtPost();
     hud();
-    if (window.BPRivalIntel) BPRivalIntel.showArena(S.profit, S.rival.profit, S.q);
+    // Màn «đua» sau quý: chờ lớp phủ đóng dấu/Kim Long (.sg-ov, js/bp-signature.js) đóng xong rồi mới hiện – không chồng hai lớp phủ.
+    (function arena(qA, n) { if (!window.BPRivalIntel || S.q !== qA) return; if (document.querySelector('.sg-ov') && n < 100) return setTimeout(function () { arena(qA, n + 1); }, 600); BPRivalIntel.showArena(S.profit, S.rival.profit, S.q); })(S.q, 0);
     if (window.BPHub) BPHub.markNew();
   }
   window.bpNext = function () { stageObs(); };

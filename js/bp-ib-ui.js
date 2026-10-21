@@ -214,6 +214,7 @@
     var mo = new MutationObserver(function () { clearTimeout(boot.t); boot.t = setTimeout(sync, 30); });
     ['bp-hud', 'bp-stage', 'bp-end', 'bp-intro', 'bp-play'].forEach(function (id) { var el = $(id); if (el) mo.observe(el, id === 'bp-play' ? { attributes: true, attributeFilter: ['class'] } : { childList: true, subtree: id !== 'bp-intro', attributes: id === 'bp-end', ...(id === 'bp-end' ? { attributeFilter: ['class'] } : {}) }); });
     document.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('#bp-homes, #lang-btn, #bp-homes-wrap')) setTimeout(sync, 60); });
+    window.addEventListener('bizon:langchange', function () { setTimeout(sync, 0); }); // vẽ lại thẻ KPI/hộ chiếu ngay khi đổi ngôn ngữ, không chờ MutationObserver
     sync();
   }
   window.IBUI = { go: go, dossier: dossier, map: map, station: station, pickHome: pickHome, close: close, sync: sync };

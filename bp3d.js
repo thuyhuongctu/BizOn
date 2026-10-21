@@ -1322,7 +1322,7 @@ window.__bp3dDuel = m => {
   duelCard.innerHTML = '<div style="font:800 11px/1 inherit;letter-spacing:.08em;text-transform:uppercase;color:#e8472d">⚔️ ' + tr('Đối đầu tại ', 'Face-off in ') + MK[m].icon + ' ' + MK[m].name + '</div>' +
     '<div style="font:800 17px/1.3 inherit;margin:6px 0 4px">' + tr('Kim Long vừa hạ giá 15% ngay cạnh cửa hàng của bạn. Đội phản ứng thế nào?', 'Kim Long just cut prices 15% right next to your store. How does the team respond?') + '</div>' +
     '<div style="display:flex;flex-direction:column;gap:8px;margin-top:10px">' + DUEL_OPT.map((o, i) => '<button type="button" data-i="' + i + '" style="text-align:left;border:2px solid rgba(3,51,55,.15);background:#fff;border-radius:14px;padding:10px 12px;cursor:pointer;font:700 13px/1.35 inherit;color:#033337;min-height:44px"><b style="font-size:14px">' + o.ic + ' ' + tr(o.vi, o.en) + '</b><br><span style="opacity:.7;font-size:11.5px">' + tr('Tiền ', 'Cash ') + o.fx.cash + tr(' tỷ · Uy tín ', 'B · Rep ') + (o.fx.rep > 0 ? '+' : '') + o.fx.rep + tr(' · Chống chịu +', ' · Resilience +') + o.fx.resil + '</span></button>').join('') + '</div>';
-  duelCard.style.pointerEvents = 'auto'; duelCard.style.opacity = 1; duelCard.style.transform = 'translate(-50%,-50%) scale(1)'; userKey = 'm' + m; autoCam = true;
+  duelCard.style.pointerEvents = 'auto'; duelCard.style.opacity = 1; duelCard.style.transform = 'translate(-50%,-50%) scale(1)'; userKey = 'm' + m; autoCam = true; chPanel.style.display = 'none'; // một lớp phủ một lúc
   duelCard.onclick = e => {
     const b = e.target.closest('button[data-i]'); if (!b) return; const o = DUEL_OPT[+b.dataset.i], S = B.S;
     if (b.dataset.done || gameOver()) { duelCard.style.opacity = 0; duelCard.style.pointerEvents = 'none'; return; } // hết ván rồi thì không đổi chỉ số nữa
@@ -1424,7 +1424,7 @@ function quiz(md) {
   const [qq, opts, ok] = QUIZ[md];
   qzCard.innerHTML = '<div style="font:800 11px/1 inherit;letter-spacing:.08em;text-transform:uppercase;color:#2f8a8c">📘 ' + tr('Ôn nhanh · Lumina hỏi', 'Quick check · Lumina asks') + '</div><div style="font:800 16px/1.3 inherit;margin:6px 0 10px">' + tr(qq[0], qq[1]) + '</div>' +
     opts.map((o, i) => '<button type="button" data-i="' + i + '" style="display:block;width:100%;text-align:left;border:2px solid rgba(3,51,55,.15);background:#fff;border-radius:14px;padding:10px 12px;margin-bottom:7px;cursor:pointer;font:700 13px/1.35 inherit;color:#033337;min-height:44px">' + tr(o[0], o[1]) + '</button>').join('');
-  qzCard.style.pointerEvents = 'auto'; qzCard.style.opacity = 1; qzCard.style.transform = 'translate(-50%,-50%) scale(1)';
+  qzCard.style.pointerEvents = 'auto'; qzCard.style.opacity = 1; qzCard.style.transform = 'translate(-50%,-50%) scale(1)'; chPanel.style.display = 'none'; // một lớp phủ một lúc (📈 vẫn mở lại được)
   qzCard.onclick = e => { const b = e.target.closest('button[data-i]'); if (!b) return;
     if (b.dataset.done) { qzCard.style.opacity = 0; qzCard.style.pointerEvents = 'none'; return; }
     const i = +b.dataset.i, right = i === ok; QZ[key] = right ? 1 : 0; try { localStorage.setItem(QZK, JSON.stringify(QZ)); } catch (er) {}
@@ -1540,7 +1540,7 @@ function compactTB() {
   [...TB.children].forEach(b => { const txt = b.textContent.trim(), ic = b.dataset.icon;
     if (txt !== ic) { b.dataset.full = txt; b.dataset.icon = txt.length <= 7 ? txt : txt.split(' ')[0]; }
     const want = narrow ? b.dataset.icon : b.dataset.full; if (b.textContent !== want) b.textContent = want;
-    b.title = b.dataset.full; b.setAttribute('aria-label', b.dataset.full); });
+    if (b.dataset.full !== b.dataset.icon || !b.getAttribute('aria-label')) { b.title = b.dataset.full; b.setAttribute('aria-label', b.dataset.full); } }); // nút chỉ có biểu tượng (📈, 🎨, 🔊) giữ nhãn đọc màn hình riêng
   const hint = $('bp3d-hint'); if (hint) hint.style.display = TB.scrollWidth > TB.clientWidth + 2 || TB.getBoundingClientRect().right > hint.getBoundingClientRect().left - 8 ? 'none' : '';
 }
 setInterval(compactTB, 800); compactTB(); addEventListener('resize', compactTB);
