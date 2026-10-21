@@ -9,6 +9,9 @@ import { makeMeshyLoader } from './js/meshy-loader.js';
 const $ = id => document.getElementById(id);
 const EN = () => { try { return localStorage.getItem('bizon-lang') === 'en'; } catch (e) { return false; } };
 const tr = (vi, en) => EN() ? en : vi;
+// Bản rút gọn (Hộ Chiếu Mini 3D đặt window.__bp.LITE): tắt nhiệm vụ, huy hiệu, họp cố vấn, sổ tay và biểu đồ quý vốn viết riêng
+// cho Hộ Chiếu Thương Hiệu (tỷ ₫, Kim Long, mua tin…). Không đặt cờ này thì mọi thứ y như cũ.
+const LITE = !!(window.__bp && window.__bp.LITE);
 const FONT = 'Manrope, "Be Vietnam Pro", system-ui, sans-serif';
 const wrap = $('bp3d-stage');
 const small = Math.min(innerWidth, innerHeight) < 600;
@@ -910,7 +913,7 @@ function frame() {
   // ẩn, để khỏi tranh CPU/GPU với animation loop của hub – xem js/clay-hub.js.
   if (document.hidden || window.__clayHubOpen) return;
   const dt = Math.min(clock.getDelta(), 0.05), t = clock.elapsedTime; U.t.value = t;
-  acc += dt; if (acc > 0.25) { acc = 0; sync(t); updateKiosks(); if (window.__bp3dQReady) { questTick(); badgeTick(); } }
+  acc += dt; if (acc > 0.25) { acc = 0; sync(t); updateKiosks(); if (window.__bp3dQReady && !LITE) { questTick(); badgeTick(); } }
   perf.n++; perf.s += dt; if (perf.s > 2.5) { const fps = perf.n / perf.s; perf.n = perf.s = 0;
     if (fps < 38 && t > 4) { const pr = R.getPixelRatio(); if (pr > 1.01) { R.setPixelRatio(Math.max(1, pr - 0.3)); resize(); } else if (R.shadowMap.enabled) { R.shadowMap.enabled = false; scene.traverse(o => o.material && (o.material.needsUpdate = true)); } } }
   anim.forEach(f => f(t));
@@ -1080,7 +1083,7 @@ function qStars() { const B = window.__bp; const f = B && B.S ? B.S.firm : null;
 const BK = 'bizon-bp3d-badges';
 let BG = {}; try { BG = JSON.parse(localStorage.getItem(BK) || '{}'); } catch (e) {}
 const bBtn = document.createElement('button'); bBtn.type = 'button';
-const TB = $('bp3d-ov') ? $('bp3d-ov').parentElement : wrap; bBtn.className = $('bp3d-ov') ? $('bp3d-ov').className : ''; TB.appendChild(bBtn); bBtn.textContent = '🏆';
+const TB = $('bp3d-ov') ? $('bp3d-ov').parentElement : wrap; bBtn.className = $('bp3d-ov') ? $('bp3d-ov').className : ''; TB.appendChild(bBtn); bBtn.textContent = '🏆'; if (LITE) bBtn.style.display = 'none';
 function aboveTB(el, gap) { const w = wrap.getBoundingClientRect(), t = TB === wrap ? w.bottom - 10 : TB.getBoundingClientRect().top; el.style.bottom = Math.round(w.bottom - t + gap) + 'px'; el.style.maxHeight = Math.max(120, Math.round(t - w.top - gap - 8)) + 'px'; }
 const bPanel = document.createElement('div');
 bPanel.style.cssText = 'position:absolute;right:10px;bottom:60px;z-index:7;width:min(320px,calc(100% - 20px));overflow:auto;background:rgba(255,250,240,.97);color:#033337;border-radius:16px;padding:12px;box-shadow:0 6px 0 rgba(3,51,55,.2);display:none';
@@ -1359,7 +1362,7 @@ window.__bp3dConvo = () => CONVO.on && CONVO.q[CONVO.i] ? { who: CONVO.q[CONVO.i
 function startConvo() { CONVO.q = buildConvo(); if (!CONVO.q.length) return; CONVO.i = 0; CONVO.on = true; CONVO.t = LIFE.t; userKey = 'home'; autoCam = true; say('💬 ' + CONVO.q[0][0] + ': ' + CONVO.q[0][1], 5600); sfx('pop'); }
 anim.push(t => { if (!CONVO.on) return; const cur = CONVO.q[CONVO.i], dur = 2.4 + cur[1].length * 0.035; if (t - CONVO.t > dur) { CONVO.i++; CONVO.t = t; if (CONVO.i >= CONVO.q.length) { CONVO.on = false; return; } const n = CONVO.q[CONVO.i]; say('💬 ' + n[0] + ': ' + n[1], (2.4 + n[1].length * 0.035) * 1000 + 400); } });
 const cBtn = document.createElement('button'); cBtn.type = 'button'; cBtn.className = bBtn.className; cBtn.textContent = tr('💬 Họp cố vấn', '💬 Advisor huddle');
-TB.insertBefore(cBtn, TB.children[2] || null); cBtn.addEventListener('click', () => { CONVO.on ? (CONVO.on = false) : startConvo(); });
+TB.insertBefore(cBtn, TB.children[2] || null); if (LITE) cBtn.style.display = 'none'; cBtn.addEventListener('click', () => { CONVO.on ? (CONVO.on = false) : startConvo(); });
 let lastQ = -1; anim.push(() => { const B = window.__bp; if (!B || !B.S || B.S.phase === 'end') return; if (B.S.phase === 'obs' && B.S.q !== lastQ) { lastQ = B.S.q; if (LIFE.t > 3) setTimeout(startConvo, 1200); } });
 
 /* ---------- sổ tay học tập + câu hỏi ôn sau mỗi lần thâm nhập ---------- */
@@ -1407,7 +1410,7 @@ function drawHandbook() {
     REFS.map(r => '<p style="margin:6px 0 0;padding-left:1.4em;text-indent:-1.4em;font-size:11.5px;line-height:1.45;overflow-wrap:anywhere">' + r.replace(/(https:\/\/doi\.org\/\S+)/, '<a href="$1" target="_blank" rel="noopener" style="color:#006687">$1</a>') + '</p>').join('') + '</details>';
 }
 const hbBtn = document.createElement('button'); hbBtn.type = 'button'; hbBtn.className = bBtn.className; hbBtn.textContent = tr('📘 Sổ tay', '📘 Handbook');
-TB.appendChild(hbBtn); hbBtn.addEventListener('click', () => openPanel(hbPanel, drawHandbook));
+TB.appendChild(hbBtn); if (LITE) hbBtn.style.display = 'none'; hbBtn.addEventListener('click', () => openPanel(hbPanel, drawHandbook));
 bBtn.addEventListener('click', () => { hbPanel.style.display = chPanel.style.display = 'none'; });
 sBtn.addEventListener('click', () => { hbPanel.style.display = chPanel.style.display = 'none'; });
 // câu hỏi ôn tập ngắn sau khi thâm nhập
@@ -1471,7 +1474,7 @@ function drawChart() {
     '<p style="font-size:11px;opacity:.6;margin:8px 0 0">' + tr('Đường đỏ là lợi nhuận lũy kế ước tính của đối thủ – cùng phép so với thẻ «Cuộc đua» và màn kết thúc.', 'The red line is the rival\'s estimated cumulative profit – the same comparison as the «Race» card and the final screen.') + '</p>';
 }
 const chBtn = document.createElement('button'); chBtn.type = 'button'; chBtn.className = bBtn.className; chBtn.textContent = '📈';
-chBtn.setAttribute('aria-label', tr('Kết quả theo quý', 'Quarterly results')); TB.appendChild(chBtn); chBtn.addEventListener('click', () => openPanel(chPanel, drawChart));
+chBtn.setAttribute('aria-label', tr('Kết quả theo quý', 'Quarterly results')); TB.appendChild(chBtn); if (LITE) chBtn.style.display = 'none'; chBtn.addEventListener('click', () => openPanel(chPanel, drawChart));
 // Đổi ngôn ngữ giữa ván (site-ui.js phát 'bizon:langchange'): vẽ lại chữ của các nút/khung do bp3d.js tự tạo.
 addEventListener('bizon:langchange', () => {
   landTxt(); cBtn.textContent = tr('💬 Họp cố vấn', '💬 Advisor huddle'); hbBtn.textContent = tr('📘 Sổ tay', '📘 Handbook');

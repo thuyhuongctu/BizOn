@@ -1,6 +1,9 @@
 /* BizOn Hộ Chiếu Mini – bộ máy tính toán (không phụ thuộc giao diện). Đơn vị: triệu USD. */
 (function () {
+  // Lấy dữ liệu lúc gọi hàm chứ không lúc nạp: khi trang nhúng bằng <dc-import>, data.js và engine.js có thể
+  // tải xong không theo thứ tự → D bị undefined vĩnh viễn và bấm «Bắt đầu» lỗi pickMarkets.
   var D = window.FDIMiniData;
+  function live(f) { return function () { D = D || window.FDIMiniData; return f.apply(this, arguments); }; }
   function rng(seed) { var s = seed >>> 0 || 1; return function () { s ^= s << 13; s ^= s >>> 17; s ^= s << 5; return ((s >>> 0) % 100000) / 100000; }; }
   function newGame(o) {
     var seed = o.seed || (Date.now() % 1e9);
@@ -79,5 +82,5 @@
     return rep < 0.4 ? 'builder' : 'harvester';
   }
   function code(st) { var s = score10(st); return ['HCM', st.cls || '-', (st.team || '-').replace(/\W+/g, ''), st.home, s.toFixed(1), Math.round(value(st) * 10), (st.seed % 9973)].join('-'); }
-  window.FDIMini = { newGame: newGame, resolve: resolve, canAfford: canAfford, value: value, score10: score10, grade: grade, profile: profile, code: code, rollEvent: rollEvent };
+  window.FDIMini = { newGame: live(newGame), resolve: live(resolve), canAfford: live(canAfford), value: value, score10: score10, grade: grade, profile: profile, code: code, rollEvent: live(rollEvent) };
 })();

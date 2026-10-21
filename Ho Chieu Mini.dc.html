@@ -44,11 +44,11 @@ button{font:inherit}
           <div style="display:flex;flex-direction:column"><span style="font-size:10px;opacity:.65;text-transform:uppercase;letter-spacing:.06em">⏱ {{ t.timeLeft }}</span><b style="font:800 15px 'Plus Jakarta Sans';color:{{ timerColor }}">{{ timerTxt }}</b></div>
         </sc-if>
       </div>
-      <button type="button" onClick="{{ openTut }}" style="background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:6px 10px;cursor:pointer">❔ {{ t.help }}</button>
+      <button type="button" onClick="{{ openTut }}" style="background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:6px 10px;min-height:40px;cursor:pointer">❔ {{ t.help }}</button>
     </sc-if>
     <div style="display:flex;border:1px solid rgba(255,255,255,.3);border-radius:8px;overflow:hidden">
       <sc-for list="{{ langs }}" as="lg" hint-placeholder-count="2">
-        <button type="button" onClick="{{ lg.onClick }}" style="border:0;padding:6px 10px;cursor:pointer;background:{{ lg.bg }};color:{{ lg.fg }};font-weight:700;font-size:12px">{{ lg.label }}</button>
+        <button type="button" onClick="{{ lg.onClick }}" style="border:0;padding:6px 10px;min-width:40px;min-height:40px;cursor:pointer;background:{{ lg.bg }};color:{{ lg.fg }};font-weight:700;font-size:12px">{{ lg.label }}</button>
       </sc-for>
     </div>
   </div>
@@ -70,12 +70,12 @@ button{font:inherit}
           </div>
         </sc-for>
       </div>
-      <button type="button" onClick="{{ toggleGuide }}" style="display:inline-flex;align-self:flex-start;align-items:center;gap:6px;padding:11px 16px;border-radius:12px;background:#fda127;color:#033337;font:800 13.5px 'Plus Jakarta Sans';border:0;cursor:pointer;box-shadow:0 2px 0 #c97d0f">{{ guideBtnLabel }}</button>
+      <button type="button" onClick="{{ toggleGuide }}" style="display:inline-flex;align-self:flex-start;align-items:center;gap:6px;padding:11px 16px;min-height:44px;border-radius:12px;background:#fda127;color:#033337;font:800 13.5px 'Plus Jakarta Sans';border:0;cursor:pointer;box-shadow:0 2px 0 #c97d0f">{{ guideBtnLabel }}</button>
       <sc-if value="{{ guideOpen }}" hint-placeholder-val="{{ false }}">
         <div style="display:flex;flex-direction:column;gap:8px;background:#fff;border-radius:14px;padding:10px;box-shadow:0 1px 0 #d6e4e7">
           <sc-for list="{{ guidePages }}" as="pg" hint-placeholder-count="5">
             <sc-if value="{{ pg.ok }}" hint-placeholder-val="{{ false }}">
-              <img src="{{ pg.src }}" alt="{{ pg.alt }}" style="width:100%;border-radius:8px;display:block"></img>
+              <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" sc-camel-src="{{ pg.src }}" alt="{{ pg.alt }}" style="width:100%;border-radius:8px;display:block"></img>
             </sc-if>
           </sc-for>
           <a href="assets/docs/huong-dan-ho-chieu-mini.pdf" target="_blank" rel="noopener" style="text-align:center;font-size:12px;font-weight:700;color:#006687;text-decoration:none;padding:6px">{{ t.guideDownload }}</a>
@@ -299,7 +299,7 @@ button{font:inherit}
   <div style="position:fixed;inset:0;background:rgba(3,51,55,.72);display:grid;place-items:center;padding:16px;z-index:50">
     <div style="background:#fff;border-radius:20px;max-width:560px;width:100%;padding:clamp(20px,4vw,32px);display:flex;flex-direction:column;gap:14px">
       <div style="display:flex;justify-content:space-between;align-items:center"><span style="font:700 11px 'Plus Jakarta Sans';letter-spacing:.12em;text-transform:uppercase;color:#e8762d">{{ t.tutT }} · {{ tut.idx }}</span>
-        <button type="button" onClick="{{ tut.close }}" style="border:0;background:transparent;font-size:13px;color:#4d6d71;cursor:pointer;text-decoration:underline">{{ t.skip }}</button></div>
+        <button type="button" onClick="{{ tut.close }}" style="border:0;background:transparent;font-size:13px;color:#4d6d71;cursor:pointer;text-decoration:underline;min-height:40px;padding:0 8px">{{ t.skip }}</button></div>
       <div style="font-size:44px;line-height:1">{{ tut.icon }}</div>
       <h3 style="margin:0;font:800 22px/1.25 'Plus Jakarta Sans'">{{ tut.title }}</h3>
       <sc-for list="{{ tut.body }}" as="b" hint-placeholder-count="3"><p style="margin:0;font-size:14.5px;line-height:1.55;color:#335a5e;text-wrap:pretty">{{ b }}</p></sc-for>
@@ -423,7 +423,10 @@ class Component extends DCLogic {
   cfg() {
     const ed = this.props.edition ?? 'fdi';
     const indo = ed === 'indo';
-    return { ed, indo, Q: this.props.quarters ?? (indo ? 5 : 4), mins: this.props.quarterMinutes ?? (indo ? 7 : 0), langs: indo ? ['en', 'id'] : ['vi', 'en'], facil: this.props.showFacilitator ?? indo };
+    // Thuộc tính HTML của <dc-import> đến dạng chuỗi: quarter-minutes="0" và show-facilitator="false" là chuỗi khác rỗng
+    // (truthy) nên bản 3D từng luôn hiện «⏱ Hết giờ» và kế hoạch 60 phút cho giảng viên. Đổi về số/boolean thật.
+    const num = (v, d) => v == null || v === '' ? d : +v || 0, bool = (v, d) => v == null || v === '' ? d : v !== false && v !== 'false' && v !== '0' && v !== 0;
+    return { ed, indo, Q: this.props.quarters ?? (indo ? 5 : 4), mins: num(this.props.quarterMinutes, indo ? 7 : 0), langs: indo ? ['en', 'id'] : ['vi', 'en'], facil: bool(this.props.showFacilitator, indo) };
   }
   key() { return 'bizon-hcmini-' + this.cfg().ed; }
   componentDidMount() {
@@ -550,7 +553,7 @@ class Component extends DCLogic {
       const q = s.last, ev = D.EVENTS.find(x => x.id === q.ev.id), cells = [];
       q.rows.forEach(r => { const M = D.MARKETS[r.m], mo = D.MODES.find(x => x.id === r.mode);
         const tags = [r.holiday ? '🎁 ' + t.holOn : '', r.copy ? '🪞 ' + t.copied : '', r.pol ? '🏛️ ' + t.polHit : ''].filter(Boolean).join(' · ');
-        cells.push({ v: M.flag + ' ' + M.n[i] + ' · ' + mo.icon + (tags ? ' · ' + tags : ''), w: 700, c: '#033337' }, { v: money(r.sales), w: 500, c: '#033337' }, { v: money(r.tax), w: 500, c: '#c0443a' }, { v: money(r.net), w: 700, c: '#033337' },
+        cells.push({ v: M.flag + ' ' + M.n[i] + ' · ' + mo.icon + (tags ? ' · ' + tags : ''), w: 700, c: '#033337' }, { v: money(r.mode === 'lic' ? r.sales * 1.5 : r.sales), w: 500, c: '#033337' }, /* cấp phép: hiện doanh số của đối tác (engine tính phí 7% × doanh số × 1,5) để khớp mô tả «7% doanh số đối tác» */ { v: money(r.tax), w: 500, c: '#c0443a' }, { v: money(r.net), w: 700, c: '#033337' },
           { v: money(r.home), w: 700, c: '#3f8a44' }, { v: r.mode === 'lic' ? '—' : money(r.ret), w: 500, c: '#033337' }, { v: (r.fx >= 0 ? '+' : '') + fmtN(r.fx * 100) + '%', w: 600, c: r.fx < -0.02 ? '#c0443a' : r.fx > 0.02 ? '#3f8a44' : '#4d6d71' }); });
       const les = [], M = q.ev.m, mn = nm(M), P = q.rows.find(r => r.m === M), pos = g.pos[M];
       const add = k => les.push(LES[k][i].replace('{m}', mn));
