@@ -3,1045 +3,921 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CVP Studio</title>
-<!-- Phông tự host (không Google Fonts CDN) để chạy offline & hợp CSP như phần
-     còn lại của BizOn. Plus Jakarta Sans (chữ chính, đủ tiếng Việt), IBM Plex
-     Mono (số/nhãn). Slot 'Instrument Serif' dùng Plus Jakarta để giữ tiếng Việt
-     trọn vẹn (DM Serif không có bộ ký tự tiếng Việt). -->
+<title>CVP Lab</title>
+<meta name="description" content="CVP Lab – workshop Chi phí – Sản lượng – Lợi nhuận: đồ thị CVP, điểm hòa vốn, lợi nhuận mục tiêu, biên an toàn và 6 thử thách đua nhóm.">
+<!-- Phông tự host (không Google Fonts CDN) để chạy offline & hợp CSP như phần còn lại của BizOn.
+     Mockup dùng Baloo 2 / Nunito → thay bằng Plus Jakarta Sans (đủ tiếng Việt) giống CMR Lab; IBM Plex Mono cho công thức. -->
 <style>
 @font-face{font-family:'Plus Jakarta Sans';font-weight:400 800;font-display:swap;src:url(../assets/fonts/PlusJakartaSans-var-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
 @font-face{font-family:'Plus Jakarta Sans';font-weight:400 800;font-display:swap;src:url(../assets/fonts/PlusJakartaSans-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2122,U+2212}
 @font-face{font-family:'JetBrains Mono';font-weight:400 500;font-display:swap;src:url(../assets/fonts/IBMPlexMono-400-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
 @font-face{font-family:'JetBrains Mono';font-weight:400 500;font-display:swap;src:url(../assets/fonts/IBMPlexMono-400-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2122,U+2212}
-@font-face{font-family:'JetBrains Mono';font-weight:600 700;font-display:swap;src:url(../assets/fonts/IBMPlexMono-600-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
-@font-face{font-family:'JetBrains Mono';font-weight:600 700;font-display:swap;src:url(../assets/fonts/IBMPlexMono-600-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2122,U+2212}
-@font-face{font-family:'Instrument Serif';font-weight:400;font-style:italic;font-display:swap;src:url(../assets/fonts/PlusJakartaSans-var-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
-@font-face{font-family:'Instrument Serif';font-weight:400;font-style:italic;font-display:swap;src:url(../assets/fonts/PlusJakartaSans-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2122,U+2212}
-</style>
-
-<style>
-:root{
-  --bg:#0B1220; --bg2:#0F1A2E; --panel:#111F38; --panel2:#0E1B31;
-  --grid:rgba(99,179,237,.08); --ink:#E7EEF8; --muted:#93A4BD; --faint:#6B7C97;
-  --line:#22324A; --line2:#2C3F5C;
-  --rev:#3B82F6; --cost:#F97316; --fc:#94A3B8; --bep:#F59E0B;
-  --loss:#EF4444; --profit:#22C55E;
-  --green:#22C55E; --amber:#F59E0B; --red:#EF4444;
-  --t1:#06B6D4; --t2:#22C55E; --t3:#F97316; --t4:#8B5CF6; --t5:#EC4899;
-  --shadow:0 10px 30px rgba(0,0,0,.35); --shadow-sm:0 4px 14px rgba(0,0,0,.25);
-  --radius:16px; --radius-sm:11px;
-}
-html[data-theme="light"]{
-  --bg:#EEF3FA; --bg2:#FFFFFF; --panel:#FFFFFF; --panel2:#F5F8FD;
-  --grid:rgba(30,64,120,.07); --ink:#0F1A2E; --muted:#52617B; --faint:#8392AB;
-  --line:#DDE7F3; --line2:#CBD8EA;
-  --fc:#64748B;
-  --shadow:0 12px 30px rgba(20,40,80,.10); --shadow-sm:0 4px 14px rgba(20,40,80,.07);
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{
-  font-family:'Plus Jakarta Sans',system-ui,sans-serif;
-  background:var(--bg); color:var(--ink); line-height:1.55;
-  min-height:100vh;
-  background-image:
-    linear-gradient(var(--grid) 1px,transparent 1px),
-    linear-gradient(90deg,var(--grid) 1px,transparent 1px);
-  background-size:26px 26px;
-  transition:background-color .3s,color .3s;
-}
+:root{--ink:#1F2A44;--page:#F4F1EA;--card:#FBF9F4;--field:#ECE7DC;--track:#E9E4D8;--chartbg:#F1EEE6;--muted:#5F6675;--muted2:#4F5768;--muted3:#48505F;--off:#B9B5AC;--burg:#8C2F39;--burg-d:#6B1F28;--gold:#C9A24A;--gold-d:#6E5520;--blue:#3E5C8A;--blue-d:#2A4268;--slate:#5B6C9A;--plum:#7E5E77;--copper:#A8703A;--sage:#8FAF98;--green:#3F6E52;--peri:#A9B4CF;--mist:#E4E8F1;--sand:#F3EAD3;--clay:0 26px 40px -22px rgba(31,42,68,.4),inset 0 -8px 16px rgba(0,0,0,.05),inset 0 8px 16px rgba(255,255,255,.9);--clay-s:0 22px 30px -18px rgba(31,42,68,.4),inset 0 6px 12px rgba(255,255,255,.9);--well:inset 0 4px 10px rgba(31,42,68,.18),inset 0 -2px 6px rgba(255,255,255,.9)}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--page);color:var(--ink);font-family:'Plus Jakarta Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none;padding:0}
+button:disabled{cursor:not-allowed}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+a{color:var(--burg);text-decoration:none;font-weight:700}
+a:hover{color:var(--burg-d);text-decoration:underline}
+[hidden]{display:none!important}
 .mono{font-family:'JetBrains Mono',monospace}
-.wrap{max-width:1180px;margin:0 auto;padding:0 18px 60px}
-
-/* ---- Topbar ---- */
-.topbar{
-  position:sticky;top:0;z-index:30;
-  background:color-mix(in srgb,var(--bg) 88%,transparent);
-  backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--line);
+.wrap{max-width:1440px;margin:0 auto;padding:28px 48px 30px}
+.m-only{display:none}
+/* nav */
+.nav{display:flex;align-items:center;justify-content:space-between;gap:14px;background:var(--card);border-radius:999px;padding:12px 14px;box-shadow:0 14px 24px -12px rgba(31,42,68,.3),inset 0 -5px 10px rgba(0,0,0,.06),inset 0 5px 10px rgba(255,255,255,.9)}
+.nav-l,.nav-r,.brand{display:flex;align-items:center}
+.nav-l{gap:22px;min-width:0}
+.brand{gap:12px}
+.nav-r{gap:14px}
+.logo{width:46px;height:46px;border-radius:16px;background:var(--blue);color:#fff;display:grid;place-items:center;font-weight:800;font-size:23px;box-shadow:0 8px 14px -6px rgba(30,45,80,.6),inset 0 -5px 8px rgba(10,20,50,.3),inset 0 5px 8px rgba(210,220,240,.7)}
+.wink{display:none;width:42px;height:42px;object-fit:contain;mix-blend-mode:multiply}
+.ttl{font-weight:800;font-size:21px;line-height:1.05;white-space:nowrap}
+.sub{font-size:12px;color:var(--muted);font-weight:700}
+.back{font-size:14px;color:var(--muted)}
+.seg{display:flex;gap:4px;background:var(--track);border-radius:999px;padding:4px;box-shadow:inset 0 3px 8px rgba(31,42,68,.18)}
+.seg button{padding:6px 14px;border-radius:999px;font-weight:800;font-size:13px;color:var(--muted)}
+.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 4px 8px -3px rgba(31,42,68,.4)}
+.lang1{display:none;min-width:44px;min-height:36px;border-radius:999px;background:var(--track);font-weight:800;font-size:12px;box-shadow:inset 0 3px 6px rgba(31,42,68,.18)}
+.xp-pill{display:flex;align-items:center;gap:10px;background:var(--gold);color:var(--ink);border-radius:999px;padding:6px 18px 6px 6px;font-weight:800;font-size:17px;white-space:nowrap;box-shadow:0 10px 16px -8px rgba(110,85,30,.6),inset 0 -5px 8px rgba(110,85,30,.25),inset 0 5px 8px rgba(250,240,215,.8)}
+.tbadge{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-size:14px;font-weight:800;box-shadow:inset 0 -4px 6px rgba(0,0,0,.18),inset 0 4px 6px rgba(255,255,255,.5)}
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) 240px 440px;gap:36px;align-items:center;padding:64px 0 48px}
+.hero-txt{display:flex;flex-direction:column;align-items:flex-start;gap:18px;min-width:0}
+.eyebrow{background:var(--card);border-radius:999px;padding:6px 16px;font-weight:800;font-size:13px;letter-spacing:.08em;color:var(--blue);box-shadow:0 8px 14px -8px rgba(31,42,68,.3),inset 0 3px 6px rgba(255,255,255,.9)}
+h1{font-size:72px;line-height:.98;letter-spacing:-.025em;font-weight:800;margin:0;text-wrap:balance}
+h1 em{font-style:normal;color:var(--blue);text-shadow:0 6px 0 var(--blue-d),0 14px 22px rgba(30,45,80,.35)}
+.intro{font-size:19px;line-height:1.5;color:var(--muted2);max-width:620px;margin:0;font-weight:600;text-wrap:pretty}
+.hero-dragon{width:280px;height:280px;justify-self:center;object-fit:contain;mix-blend-mode:multiply}
+.team-card{border-radius:36px;padding:28px;display:flex;flex-direction:column;gap:20px;box-shadow:0 26px 40px -18px rgba(31,42,68,.55),inset 0 -10px 18px rgba(0,0,0,.18),inset 0 10px 18px rgba(255,255,255,.45);transition:background .3s}
+.tc-top{display:flex;justify-content:space-between;align-items:center;gap:14px}
+.tc-name{font-weight:800;font-size:14px;letter-spacing:.1em;opacity:.9}
+.tc-level{font-weight:800;font-size:32px;line-height:1.05;letter-spacing:-.01em}
+.lvl-coin{flex:none;width:78px;height:78px;border-radius:50%;background:var(--gold);color:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;box-shadow:0 10px 16px -6px rgba(0,0,0,.3),inset 0 -6px 10px rgba(110,85,30,.3),inset 0 6px 10px rgba(250,240,215,.9)}
+.lvl-coin small{font-size:11px;font-weight:800}
+.lvl-coin b{font-size:32px;font-weight:800}
+.xp-row{display:flex;justify-content:space-between;font-weight:700;font-size:14px;margin-bottom:8px}
+.xp-bar{height:22px;border-radius:999px;background:rgba(0,0,0,.18);padding:3px;box-shadow:inset 0 4px 8px rgba(0,0,0,.25)}
+.xp-bar i{display:block;height:100%;border-radius:999px;background:var(--gold);transition:width .6s;box-shadow:inset 0 -3px 5px rgba(110,85,30,.35),inset 0 3px 5px rgba(250,240,215,.9)}
+.bd-t{font-weight:700;font-size:14px;margin-bottom:10px}
+.badges{display:flex;gap:12px}
+.bdg{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:15px;transition:all .3s}
+.bdg.on{background:var(--gold);color:var(--ink);box-shadow:0 8px 12px -5px rgba(0,0,0,.35),inset 0 -5px 8px rgba(110,85,30,.35),inset 0 5px 8px rgba(250,240,215,.9)}
+.bdg.off{background:rgba(0,0,0,.14);color:rgba(255,255,255,.75);box-shadow:inset 0 4px 8px rgba(0,0,0,.2)}
+/* section heads */
+.sh{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin:0 0 16px}
+.sh h2{margin:0;font-size:28px;font-weight:800;letter-spacing:-.01em}
+.sh p{margin:0;font-size:15px;color:var(--muted);font-weight:600}
+.picker{padding-bottom:48px}
+.teams{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px}
+.team-tile{height:104px;border-radius:28px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;outline-offset:5px;transition:transform .2s;box-shadow:0 16px 22px -12px rgba(31,42,68,.5),inset 0 -8px 12px rgba(0,0,0,.16),inset 0 8px 12px rgba(255,255,255,.5)}
+.team-tile:hover{transform:translateY(-6px)}
+.team-tile.on{transform:translateY(-6px);outline:4px solid var(--ink)}
+.team-tile b{font-weight:800;font-size:32px;line-height:1}
+.team-tile b i{font-style:normal}
+.team-tile span{font-weight:800;font-size:12px;opacity:.9}
+/* cards */
+.main{display:grid;grid-template-columns:420px minmax(0,1fr);gap:28px;align-items:start;padding-bottom:48px}
+.col{display:flex;flex-direction:column;gap:20px;min-width:0}
+.col-r{gap:28px}
+.card{background:var(--card);border-radius:36px;padding:30px;box-shadow:var(--clay);min-width:0}
+.ch{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.ch h2,.ch h3{margin:0;font-weight:800;font-size:24px;letter-spacing:-.01em}
+.ch h3{font-size:21px}
+.pill{flex:none;font-weight:800;font-size:12px;padding:5px 12px;border-radius:999px;color:#fff;white-space:nowrap}
+.biz{display:flex;flex-direction:column;gap:16px}
+.fields{display:flex;flex-direction:column;gap:16px}
+.fld{display:flex;flex-direction:column;gap:6px;min-width:0}
+.fld label{display:flex;justify-content:space-between;gap:8px;font-size:14px;font-weight:800}
+.fld label .u{color:var(--muted);font-weight:700;white-space:nowrap}
+.fld .short{display:none}
+.inp{width:100%;font-weight:800;font-size:21px;color:var(--ink);padding:11px 18px;border:none;border-radius:20px;background:var(--field);box-shadow:var(--well);outline:none;font-variant-numeric:tabular-nums}
+.inp.txt{font-weight:700;font-size:17px;padding:14px 18px}
+.inp:focus{box-shadow:var(--well),0 0 0 3px rgba(62,92,138,.4)}
+.inp[aria-invalid="true"]{box-shadow:var(--well),0 0 0 3px rgba(140,47,57,.55)}
+.err{font-size:13px;font-weight:700;color:var(--burg)}
+.sw{display:flex;justify-content:space-between;align-items:center;gap:14px;width:100%;text-align:left;padding:14px 16px;border-radius:22px;background:var(--field);box-shadow:inset 0 4px 10px rgba(31,42,68,.12)}
+.sw .sw-t{display:flex;flex-direction:column;gap:2px}
+.sw .sw-t b{font-size:14px;font-weight:800}
+.sw .sw-t small{font-size:13px;color:var(--muted);font-weight:600}
+.sw .tT{display:none}
+.track{flex:none;width:64px;height:36px;border-radius:999px;background:var(--off);padding:4px;display:flex;justify-content:flex-start;box-shadow:inset 0 4px 8px rgba(0,0,0,.2);transition:background .2s}
+.track i{width:28px;height:28px;border-radius:50%;background:var(--card);box-shadow:0 3px 6px rgba(0,0,0,.25)}
+.on>.track,.track.on{background:var(--green);justify-content:flex-end}
+.btn{margin-top:6px;width:100%;background:var(--burg);color:#fff;border-radius:24px;padding:18px;display:flex;justify-content:center;align-items:center;gap:12px;font-weight:800;font-size:19px;box-shadow:0 14px 22px -10px rgba(110,30,40,.7),inset 0 -7px 10px rgba(60,10,20,.3),inset 0 7px 10px rgba(240,205,205,.7);transition:transform .1s}
+.btn:active:not(:disabled){transform:scale(.97) translateY(3px)}
+.btn:disabled{opacity:.55}
+.btn.done:disabled{opacity:1}
+.btn .tag{background:var(--gold);color:var(--ink);border-radius:999px;padding:0 12px;font-size:15px}
+.traps{background:var(--sand);border-radius:32px;padding:24px;display:flex;flex-direction:column;gap:14px;box-shadow:0 20px 30px -20px rgba(110,85,30,.5),inset 0 6px 12px rgba(255,255,255,.7)}
+.traps h3{margin:0;font-size:21px;font-weight:800}
+.trap{display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;align-items:start}
+.trap b{width:34px;height:34px;border-radius:12px;background:var(--copper);color:#fff;display:grid;place-items:center;font-weight:800;font-size:16px;box-shadow:inset 0 -3px 5px rgba(0,0,0,.18),inset 0 3px 5px rgba(255,255,255,.4)}
+.trap p{margin:0;font-size:15px;line-height:1.5;font-weight:600;color:var(--muted3);text-wrap:pretty}
+/* chart */
+.chartcard{display:flex;flex-direction:column;gap:16px}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;font-weight:800;color:var(--muted3)}
+.legend span{display:flex;align-items:center;gap:6px}
+.lg{width:18px;height:4px;border-radius:2px}
+.lg.dash{height:0;border-top:3px dashed var(--copper)}
+.lg.dot{height:0;border-top:3px dotted var(--green)}
+.lg.bep{width:12px;height:12px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 2px var(--ink)}
+.chartbox{background:var(--chartbg);border-radius:26px;padding:12px;box-shadow:inset 0 5px 12px rgba(31,42,68,.14)}
+.chartbox svg{display:block;width:100%;height:auto}
+.chart-empty{height:300px;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 16px;font-weight:700;color:var(--muted)}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.metrics.m-only{display:none}
+.metric{border-radius:26px;padding:18px 18px;display:flex;flex-direction:column;min-width:0}
+.metric small{font-weight:800;font-size:13px}
+.metric b{font-weight:800;font-size:27px;line-height:1.2;letter-spacing:-.02em;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.metric b.sm{font-size:22px}
+.metric span{font-weight:700;font-size:13px}
+.m-cm{background:var(--sage);box-shadow:0 16px 22px -14px rgba(50,80,60,.6),inset 0 -6px 10px rgba(20,50,30,.18),inset 0 6px 10px rgba(255,255,255,.6)}
+.m-cmr{background:var(--burg);color:#fff;box-shadow:0 16px 22px -14px rgba(110,30,40,.7),inset 0 -6px 10px rgba(60,10,20,.3),inset 0 6px 10px rgba(240,205,205,.6)}
+.m-q{background:var(--peri);box-shadow:0 16px 22px -14px rgba(50,60,110,.6),inset 0 -6px 10px rgba(30,40,90,.2),inset 0 6px 10px rgba(255,255,255,.6)}
+.m-tr{background:var(--gold);box-shadow:0 16px 22px -14px rgba(110,85,30,.6),inset 0 -6px 10px rgba(110,85,30,.25),inset 0 6px 10px rgba(250,240,215,.8)}
+.duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.duo .card{border-radius:32px;padding:26px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--clay-s)}
+.big{font-weight:800;font-size:42px;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.big small{font-size:17px;color:var(--muted);letter-spacing:0}
+.kv{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;font-size:14px;font-weight:700;color:var(--muted3)}
+.kv b{font-weight:800;color:var(--ink);text-align:right}
+.fchip{font-size:13px;font-weight:700;color:var(--muted);background:var(--field);border-radius:14px;padding:8px 12px}
+#tgtBody,#mosBody{display:flex;flex-direction:column;gap:10px}
+#mosBody{gap:12px}
+#relCtl{display:flex;flex-direction:column;gap:12px}
+.empty-t{font-size:15px;font-weight:600;color:var(--muted);margin:0}
+.mosbar{height:26px;border-radius:999px;background:var(--track);padding:4px;box-shadow:inset 0 4px 8px rgba(31,42,68,.2)}
+.mosbar i{display:block;height:100%;border-radius:999px;transition:width .6s;box-shadow:inset 0 -3px 5px rgba(0,0,0,.2),inset 0 3px 5px rgba(255,255,255,.4)}
+.moslab{display:flex;justify-content:space-between;font-size:12px;font-weight:800;color:var(--muted)}
+/* explain */
+.explain{background:var(--mist);border-radius:36px;padding:30px 36px;display:grid;grid-template-columns:180px minmax(0,1fr);gap:32px;align-items:center;margin-bottom:56px;box-shadow:0 22px 30px -18px rgba(31,42,68,.4),inset 0 -8px 14px rgba(0,0,0,.05),inset 0 8px 14px rgba(255,255,255,.7)}
+.explain img{width:180px;height:180px;object-fit:contain;mix-blend-mode:multiply}
+.explain .sh{margin-bottom:14px}
+.explain .sh h2{font-size:32px}
+.story{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 28px}
+.st{display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;align-items:start}
+.st b{width:30px;height:30px;border-radius:10px;background:var(--slate);color:#fff;display:grid;place-items:center;font-weight:800;font-size:15px}
+.st p{margin:0;font-size:16px;line-height:1.5;font-weight:600;color:#38404F;text-wrap:pretty}
+/* challenges */
+.row-c{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:28px;padding-bottom:56px;align-items:start}
+.chal-h{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}
+.chal-h h2{margin:0;font-size:40px;font-weight:800;letter-spacing:-.02em}
+.chal-h h2 .cnt{color:var(--muted);font-size:26px}
+.chals{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.chal{background:var(--card);border-radius:30px;padding:22px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--clay-s);transition:opacity .3s}
+.chal-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.chal .q{margin:0;font-weight:800;font-size:16px;line-height:1.4;text-wrap:pretty}
+.ctag{flex:none;font-weight:800;font-size:12px;padding:5px 10px;border-radius:999px;white-space:nowrap}
+.opts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:auto}
+.opt{border-radius:18px;padding:12px 6px;text-align:center;font-weight:800;font-size:15px;line-height:1.2;overflow-wrap:anywhere;font-variant-numeric:tabular-nums;box-shadow:0 10px 16px -10px rgba(31,42,68,.5),inset 0 -5px 8px rgba(0,0,0,.1),inset 0 5px 8px rgba(255,255,255,.7);transition:transform .15s}
+.opt:hover:not(:disabled){transform:translateY(-3px)}
+.opt:disabled{cursor:default}
+.board{background:var(--ink);color:var(--card);border-radius:36px;padding:28px;display:flex;flex-direction:column;gap:12px;margin-top:80px;box-shadow:0 26px 40px -20px rgba(31,42,68,.7),inset 0 -8px 16px rgba(0,0,0,.3),inset 0 8px 16px rgba(255,255,255,.12)}
+.board h2{margin:0;font-size:26px;font-weight:800}
+.board .short{display:none}
+.brow{display:grid;grid-template-columns:40px minmax(0,1fr) 72px;gap:12px;align-items:center;padding:8px 10px;border-radius:20px}
+.brow.me{background:rgba(255,255,255,.12)}
+.rank{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:15px}
+.bname{font-size:14px;font-weight:800}
+.bbar{height:10px;background:rgba(255,255,255,.1);border-radius:999px;margin-top:6px}
+.bbar i{display:block;height:100%;border-radius:999px;transition:width .6s}
+.bxp{font-weight:800;font-size:15px;text-align:right;white-space:nowrap}
+footer{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 18px;padding:22px 0 0;font-size:14px;color:var(--muted);font-weight:700}
+footer nav{display:flex;flex-wrap:wrap;gap:8px 18px}
+footer a{white-space:nowrap}
+.tabbar{display:none}
+/* modal & toast */
+.scrim{position:fixed;inset:0;background:rgba(31,42,68,.5);display:grid;place-items:center;z-index:50;padding:20px;overflow:auto}
+.modal{width:440px;max-width:100%;margin-top:110px;background:var(--card);border-radius:44px;padding:40px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;box-shadow:0 40px 60px -20px rgba(0,0,0,.5),inset 0 10px 18px #fff}
+.modal .dimg{width:220px;height:200px;margin-top:-110px}
+.modal .dimg img{width:220px;height:220px;object-fit:contain;mix-blend-mode:multiply}
+.modal .lvlc{width:120px;height:120px;border-radius:50%;background:var(--gold);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;box-shadow:0 18px 26px -10px rgba(110,85,30,.7),inset 0 -10px 14px rgba(110,85,30,.35),inset 0 10px 14px rgba(250,240,215,.9)}
+.modal .lvlc small{font-weight:800;font-size:14px}
+.modal .lvlc b{font-weight:800;font-size:54px}
+.modal h2{margin:0;font-weight:800;font-size:44px;line-height:1;letter-spacing:-.02em}
+.modal p{margin:0;font-size:16px;font-weight:700;color:var(--muted2)}
+.modal .gain{font-weight:800;font-size:26px;color:var(--burg)}
+.modal .btn{width:auto;padding:14px 44px;margin-top:0}
+.toast{position:fixed;right:48px;top:110px;z-index:60;background:var(--sage);border-radius:24px;padding:14px 22px;display:flex;gap:12px;align-items:center;font-weight:800;font-size:17px;box-shadow:0 18px 26px -12px rgba(50,80,60,.7),inset 0 6px 10px rgba(255,255,255,.6)}
+.toast span{background:var(--gold);padding:0 10px;border-radius:999px}
+/* teacher */
+.teacher{background:var(--ink);color:var(--card);min-height:100vh;display:grid;grid-template-columns:minmax(0,1fr) 600px;gap:40px;padding:56px 64px}
+.t-left{display:flex;flex-direction:column;gap:32px;min-width:0}
+.t-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.t-id{display:flex;align-items:center;gap:28px}
+.t-boat{width:170px;height:170px;border-radius:50%;background:var(--card);overflow:hidden;flex:none;box-shadow:0 18px 30px -12px rgba(0,0,0,.6)}
+.t-boat img{width:100%;height:100%;object-fit:cover;mix-blend-mode:multiply}
+.t-kick{font-weight:800;font-size:22px;letter-spacing:.1em;color:var(--gold)}
+.t-title{font-size:80px;line-height:.95;font-weight:800;letter-spacing:-.025em;margin:6px 0 0}
+.tstats{display:flex;gap:20px}
+.tstat{background:rgba(255,255,255,.08);border-radius:28px;padding:18px 26px}
+.tstat small{display:block;font-weight:800;font-size:20px;color:#C3C8D4}
+.tstat b{display:block;font-weight:800;font-size:50px;line-height:1.05}
+.tcols{flex:1;min-height:420px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:36px;align-items:end;background:rgba(255,255,255,.05);border-radius:40px;padding:36px 44px 28px;box-shadow:inset 0 10px 24px rgba(0,0,0,.3)}
+.tc{height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:14px;min-width:0}
+.tc .v{font-weight:800;font-size:38px}
+.tc .bw{flex:1;min-height:0;width:100%;position:relative}
+.tc .bw i{position:absolute;left:0;right:0;bottom:0;border-radius:34px 34px 20px 20px;transition:height .6s;box-shadow:0 20px 30px -14px rgba(0,0,0,.6),inset 0 -12px 18px rgba(0,0,0,.2),inset 0 12px 18px rgba(255,255,255,.45)}
+.tc .tn{display:flex;align-items:center;gap:10px;font-weight:800;font-size:34px}
+.tc .tn span{width:20px;height:20px;border-radius:50%}
+.t-right{display:flex;flex-direction:column;gap:22px}
+.tcard{background:var(--card);color:var(--ink);border-radius:40px;padding:28px;display:flex;flex-direction:column;gap:12px;box-shadow:0 26px 40px -20px rgba(0,0,0,.6),inset 0 8px 16px #fff}
+.tcard h2{margin:0 0 4px;font-weight:800;font-size:32px}
+.rel{display:flex;justify-content:space-between;align-items:center;gap:16px;width:100%;text-align:left;padding:10px 12px 10px 20px;border-radius:24px;background:var(--field);box-shadow:inset 0 4px 10px rgba(31,42,68,.15);font-weight:800;font-size:22px}
+.rel .track{width:80px;height:44px;padding:5px}
+.rel .track i{width:34px;height:34px}
+.rel.on .track{background:var(--sage)}
+.award{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.award button{height:88px;border-radius:26px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;line-height:1.05;box-shadow:0 12px 18px -10px rgba(31,42,68,.6),inset 0 -6px 10px rgba(0,0,0,.16),inset 0 6px 10px rgba(255,255,255,.5);transition:transform .1s}
+.award button:active{transform:scale(.94)}
+.award b{font-size:28px}
+.award span{font-size:20px}
+.reset{width:100%;text-align:center;padding:18px;border-radius:30px;background:rgba(255,255,255,.08);color:var(--card);font-weight:800;font-size:24px}
+.t-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.t-foot a{color:#C3C8D4;font-size:15px}
+.teacher .seg{background:rgba(255,255,255,.1)}
+.teacher .seg button{color:#C3C8D4}
+.teacher .seg button.on{color:var(--ink)}
+/* responsive */
+@media (max-width: 1240px){
+  .hero{grid-template-columns:minmax(0,1fr) 200px}
+  .hero-dragon{width:200px;height:200px}
+  .team-card{grid-column:1/-1}
+  .main{grid-template-columns:minmax(0,1fr)}
+  .row-c{grid-template-columns:minmax(0,1fr)}
+  .board{margin-top:0}
+  .teacher{grid-template-columns:minmax(0,1fr);padding:40px 32px}
+  .tcols{min-height:380px}
 }
-.topbar-in{max-width:1180px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;gap:14px}
-.logo{display:flex;align-items:center;gap:11px;font-weight:800;font-size:18px;letter-spacing:-.3px}
-.logo .mark{
-  width:38px;height:38px;border-radius:11px;flex:none;
-  background:linear-gradient(135deg,var(--rev),var(--profit));
-  display:grid;place-items:center;color:#fff;box-shadow:0 6px 16px rgba(59,130,246,.4);
-  position:relative;overflow:hidden;
+@media (max-width: 900px){
+  .metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .duo,.chals,.story{grid-template-columns:minmax(0,1fr)}
+  .hero{grid-template-columns:minmax(0,1fr)}
+  .hero-dragon{display:none}
+  h1{font-size:52px}
 }
-.logo .mark svg{width:24px;height:24px}
-.logo .sub{font-weight:600;font-size:11.5px;color:var(--muted);letter-spacing:0}
-.spacer{flex:1}
-.tbtn{
-  border:1px solid var(--line2);background:var(--panel);color:var(--ink);
-  border-radius:10px;padding:7px 11px;font-weight:600;font-size:13px;cursor:pointer;
-  display:flex;align-items:center;gap:6px;transition:.15s;font-family:inherit;
-}
-.tbtn:hover{border-color:var(--rev);transform:translateY(-1px)}
-.lang-pill{display:flex;border:1px solid var(--line2);border-radius:10px;overflow:hidden;background:var(--panel)}
-.lang-pill button{border:0;background:transparent;color:var(--muted);padding:7px 11px;font-weight:700;font-size:12.5px;cursor:pointer;font-family:inherit}
-.lang-pill button.on{background:linear-gradient(135deg,var(--rev),var(--profit));color:#fff}
-
-/* ---- Hero head ---- */
-.hero{padding:26px 0 6px}
-.eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--line2);
-  color:var(--muted);font-weight:700;font-size:11.5px;letter-spacing:.4px;text-transform:uppercase;
-  padding:5px 11px;border-radius:999px;font-family:'JetBrains Mono',monospace}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--profit);box-shadow:0 0 0 3px color-mix(in srgb,var(--profit) 30%,transparent)}
-h1.title{font-size:clamp(26px,4.4vw,40px);font-weight:800;letter-spacing:-1px;margin:13px 0 8px;line-height:1.08}
-h1.title .hl{background:linear-gradient(120deg,var(--rev),var(--profit));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.lead{color:var(--muted);max-width:680px;font-size:15px}
-
-/* ---- Cards ---- */
-.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm)}
-.card-h{display:flex;align-items:center;gap:10px;padding:15px 18px;border-bottom:1px solid var(--line)}
-.card-h .ix{width:28px;height:28px;border-radius:9px;display:grid;place-items:center;flex:none;font-weight:800;font-size:13px;font-family:'JetBrains Mono',monospace}
-.card-h h2{font-size:15.5px;font-weight:700}
-.card-h .hint{margin-left:auto;color:var(--faint);font-size:12px;font-weight:600}
-.card-b{padding:18px}
-
-/* ---- Gamification bar ---- */
-#gamebar{margin-top:18px;display:none}
-.game-grid{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;padding:15px 18px}
-.lvl-ring{position:relative;width:62px;height:62px;flex:none}
-.lvl-ring svg{transform:rotate(-90deg)}
-.lvl-ring .num{position:absolute;inset:0;display:grid;place-items:center;font-weight:800;font-size:20px;font-family:'JetBrains Mono',monospace}
-.lvl-meta .lname{font-weight:800;font-size:15px}
-.lvl-meta .ltag{color:var(--muted);font-size:12px;font-weight:600}
-.xp-wrap{min-width:120px}
-.xp-top{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);font-weight:700;margin-bottom:5px}
-.xp-bar{height:9px;background:var(--panel2);border:1px solid var(--line2);border-radius:999px;overflow:hidden}
-.xp-fill{height:100%;width:0;background:linear-gradient(90deg,var(--rev),var(--profit));border-radius:999px;transition:width .6s cubic-bezier(.2,.8,.2,1)}
-.badges{display:flex;gap:7px;flex-wrap:wrap;max-width:320px;justify-content:flex-end}
-.badge{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;font-size:17px;
-  background:var(--panel2);border:1px solid var(--line2);opacity:.32;filter:grayscale(1);transition:.25s;position:relative;cursor:default}
-.badge.got{opacity:1;filter:none;border-color:var(--profit);box-shadow:0 0 0 2px color-mix(in srgb,var(--profit) 22%,transparent)}
-.badge .tip{position:absolute;bottom:46px;left:50%;transform:translateX(-50%);background:var(--bg2);color:var(--ink);
-  border:1px solid var(--line2);border-radius:8px;padding:6px 9px;font-size:11px;font-weight:600;white-space:nowrap;
-  box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.15s;z-index:5}
-.badge:hover .tip{opacity:1;transform:translateX(-50%) translateY(-2px)}
-
-/* ---- Team select ---- */
-.teams{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
-.team{background:var(--panel);border:1.5px solid var(--line);border-radius:var(--radius-sm);padding:15px 12px;cursor:pointer;
-  transition:.18s;text-align:center;position:relative;overflow:hidden}
-.team:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
-.team .tid{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:19px;letter-spacing:1px}
-.team .tlbl{font-size:11.5px;color:var(--muted);font-weight:600;margin-top:2px}
-.team .tstat{margin-top:9px;font-size:11px;color:var(--faint);font-weight:700;font-family:'JetBrains Mono',monospace}
-.team .stripe{position:absolute;top:0;left:0;right:0;height:4px;background:var(--c)}
-.team.active{border-color:var(--c);box-shadow:0 0 0 2px color-mix(in srgb,var(--c) 30%,transparent),var(--shadow)}
-.team.active .tid{color:var(--c)}
-
-/* ---- Layout after select ---- */
-#work{display:none;margin-top:18px}
-.layout{display:grid;grid-template-columns:330px 1fr;gap:18px;align-items:start}
-.col-stack{display:flex;flex-direction:column;gap:18px}
-
-/* ---- Inputs ---- */
-.field{margin-bottom:14px}
-.field:last-child{margin-bottom:0}
-.field label{display:block;font-size:12.5px;font-weight:700;color:var(--muted);margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
-.field label .u{font-family:'JetBrains Mono',monospace;color:var(--faint);font-weight:600}
-.inp{width:100%;border:1.5px solid var(--line2);background:var(--panel2);color:var(--ink);
-  border-radius:10px;padding:11px 12px;font-size:15px;font-family:'JetBrains Mono',monospace;font-weight:600;transition:.15s}
-.inp:focus{outline:none;border-color:var(--rev);box-shadow:0 0 0 3px color-mix(in srgb,var(--rev) 18%,transparent)}
-.inp::placeholder{color:var(--faint);font-weight:500}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.switch{display:flex;align-items:center;gap:9px;padding:10px 12px;background:var(--panel2);border:1.5px solid var(--line2);border-radius:10px;cursor:pointer;user-select:none}
-.switch input{display:none}
-.knob{width:38px;height:21px;border-radius:999px;background:var(--line2);position:relative;flex:none;transition:.2s}
-.knob::after{content:"";position:absolute;top:2px;left:2px;width:17px;height:17px;border-radius:50%;background:#fff;transition:.2s}
-.switch input:checked+.knob{background:var(--amber)}
-.switch input:checked+.knob::after{transform:translateX(17px)}
-.switch .sl{font-size:12.5px;font-weight:700}
-.switch .sl small{display:block;color:var(--faint);font-weight:600;font-size:11px}
-.go{width:100%;margin-top:16px;border:0;border-radius:11px;padding:13px;font-size:14.5px;font-weight:800;cursor:pointer;
-  background:linear-gradient(135deg,var(--rev),var(--profit));color:#fff;font-family:inherit;transition:.15s;box-shadow:0 8px 20px rgba(59,130,246,.32)}
-.go:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(59,130,246,.42)}
-.go:active{transform:translateY(0)}
-.note-tax{display:none;margin-top:10px;font-size:11.5px;color:var(--amber);background:color-mix(in srgb,var(--amber) 10%,transparent);
-  border:1px solid color-mix(in srgb,var(--amber) 35%,transparent);border-radius:9px;padding:8px 10px;font-weight:600}
-.note-tax .mono{color:var(--amber)}
-
-/* ---- CVP chart ---- */
-.chart-card .card-b{padding:10px 12px 14px}
-.chart-meta{display:flex;flex-wrap:wrap;gap:7px;padding:0 6px 10px}
-.lg{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:var(--muted);
-  background:var(--panel2);border:1px solid var(--line2);border-radius:999px;padding:4px 9px}
-.lg i{width:16px;height:0;border-top:3px solid var(--rev);border-radius:2px}
-.lg.tc i{border-top-color:var(--cost)}
-.lg.fc i{border-top:3px dashed var(--fc)}
-.lg.bep i{width:9px;height:9px;border:0;border-radius:50%;background:var(--bep);box-shadow:0 0 0 2px color-mix(in srgb,var(--bep) 35%,transparent)}
-#cvp{width:100%;height:auto;display:block;border-radius:10px;background:var(--panel2);border:1px solid var(--line2)}
-.chart-empty{padding:46px 20px;text-align:center;color:var(--faint);font-weight:600}
-.chart-empty .big{font-size:40px;margin-bottom:8px}
-.warn-bep{display:none;margin:0 6px;padding:10px 12px;border-radius:9px;font-size:12.5px;font-weight:600;
-  color:var(--red);background:color-mix(in srgb,var(--red) 10%,transparent);border:1px solid color-mix(in srgb,var(--red) 35%,transparent)}
-
-/* ---- Result metrics ---- */
-.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.metric{background:var(--panel);border:1px solid var(--line);border-top-width:3px;border-radius:var(--radius-sm);padding:13px 14px;box-shadow:var(--shadow-sm)}
-.metric.cm{border-top-color:var(--profit)}
-.metric.cmr{border-top-color:var(--amber)}
-.metric.bq{border-top-color:var(--rev)}
-.metric.btr{border-top-color:var(--cost)}
-.metric .ml{font-size:11.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.3px}
-.metric .mv{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:22px;margin-top:4px;letter-spacing:-.5px}
-.metric .mx{font-size:11px;color:var(--faint);font-weight:600;margin-top:2px;font-family:'JetBrains Mono',monospace}
-
-/* ---- Target + MoS blocks ---- */
-.split{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
-.kv{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px dashed var(--line)}
-.kv:last-child{border-bottom:0}
-.kv .k{font-size:13px;color:var(--muted);font-weight:600}
-.kv .v{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:14.5px;text-align:right}
-.tag{display:inline-block;font-size:10.5px;font-weight:800;padding:2px 7px;border-radius:6px;font-family:'JetBrains Mono',monospace;letter-spacing:.3px}
-.tag.pre{background:color-mix(in srgb,var(--rev) 16%,transparent);color:var(--rev)}
-.tag.post{background:color-mix(in srgb,var(--amber) 18%,transparent);color:var(--amber)}
-
-/* MoS gauge */
-.gauge{height:30px;border-radius:999px;position:relative;margin:18px 0 10px;overflow:visible;
-  background:linear-gradient(90deg,var(--red) 0%,var(--red) 15%,var(--amber) 15%,var(--amber) 30%,var(--green) 30%,var(--green) 100%);}
-.gauge .seglab{position:absolute;top:34px;font-size:10px;font-weight:800;color:var(--faint);font-family:'JetBrains Mono',monospace;transform:translateX(-50%)}
-.gauge .mk{position:absolute;top:-7px;bottom:-7px;width:4px;background:var(--ink);border-radius:3px;left:0;transition:left .5s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 0 3px var(--panel)}
-.gauge .mk::after{content:attr(data-v);position:absolute;top:-26px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);
-  font-size:11px;font-weight:800;padding:2px 7px;border-radius:6px;white-space:nowrap;font-family:'JetBrains Mono',monospace}
-.verdict{margin-top:26px;padding:11px 13px;border-radius:10px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:9px}
-.verdict.green{background:color-mix(in srgb,var(--green) 12%,transparent);color:var(--green);border:1px solid color-mix(in srgb,var(--green) 35%,transparent)}
-.verdict.amber{background:color-mix(in srgb,var(--amber) 12%,transparent);color:var(--amber);border:1px solid color-mix(in srgb,var(--amber) 35%,transparent)}
-.verdict.red{background:color-mix(in srgb,var(--red) 12%,transparent);color:var(--red);border:1px solid color-mix(in srgb,var(--red) 35%,transparent)}
-
-/* Interpretation */
-.interp{display:flex;flex-direction:column;gap:10px}
-.iline{display:flex;gap:11px;padding:11px 13px;background:var(--panel2);border:1px solid var(--line2);border-radius:11px;font-size:13px}
-.iline .ic{flex:none;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-size:15px;background:var(--panel);border:1px solid var(--line2)}
-.iline b{color:var(--ink)}
-.iline.empty{color:var(--faint);font-weight:600;justify-content:center}
-
-/* Challenges */
-.ch{display:flex;align-items:center;gap:12px;padding:12px 13px;border:1px solid var(--line);border-radius:11px;margin-bottom:9px;background:var(--panel2);transition:.2s}
-.ch:last-child{margin-bottom:0}
-.ch.done{border-color:var(--profit);background:color-mix(in srgb,var(--profit) 8%,transparent)}
-.ch .box{width:24px;height:24px;border-radius:7px;border:2px solid var(--line2);flex:none;display:grid;place-items:center;color:transparent;font-weight:900;transition:.2s}
-.ch.done .box{background:var(--profit);border-color:var(--profit);color:#fff}
-.ch .ctxt{flex:1;font-size:13px;font-weight:600}
-.ch .ctxt small{display:block;color:var(--faint);font-weight:500;font-size:11.5px;margin-top:1px}
-.ch .cxp{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:12.5px;color:var(--amber);flex:none}
-.ch.done .cxp{color:var(--profit)}
-
-/* Leaderboard */
-.lb{width:100%;border-collapse:collapse;font-size:13px}
-.lb th{text-align:left;color:var(--faint);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.4px;padding:8px 10px;border-bottom:1px solid var(--line)}
-.lb td{padding:11px 10px;border-bottom:1px solid var(--line);font-weight:600}
-.lb tr:last-child td{border-bottom:0}
-.lb .rk{font-family:'JetBrains Mono',monospace;font-weight:800;width:42px}
-.lb .tdot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:7px;vertical-align:middle}
-.lb .xpc{font-family:'JetBrains Mono',monospace;font-weight:800;text-align:right}
-.lb tr.me td{background:color-mix(in srgb,var(--rev) 7%,transparent)}
-.medal{font-size:15px}
-
-/* Tips / traps */
-.traps{margin-top:14px}
-.trap{padding:10px 12px;border-radius:10px;background:var(--panel2);border:1px solid var(--line2);margin-bottom:8px;font-size:12.5px}
-.trap:last-child{margin-bottom:0}
-.trap b{color:var(--cost)}
-
-/* Toast + Modal */
-#toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(120px);z-index:60;
-  background:var(--bg2);border:1px solid var(--line2);color:var(--ink);padding:13px 18px;border-radius:13px;
-  box-shadow:var(--shadow);font-weight:700;font-size:14px;display:flex;align-items:center;gap:10px;transition:transform .4s cubic-bezier(.2,.9,.2,1);max-width:90vw}
-#toast.show{transform:translateX(-50%) translateY(0)}
-#toast .ic{font-size:20px}
-.modal-bg{position:fixed;inset:0;z-index:70;background:rgba(3,8,18,.6);backdrop-filter:blur(4px);display:none;place-items:center;padding:20px}
-.modal-bg.show{display:grid}
-.modal{background:var(--bg2);border:1px solid var(--line2);border-radius:20px;padding:34px 30px;text-align:center;max-width:380px;width:100%;
-  box-shadow:var(--shadow);animation:pop .4s cubic-bezier(.2,.9,.3,1.2)}
-@keyframes pop{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
-.modal .burst{font-size:54px;margin-bottom:6px}
-.modal h3{font-size:13px;font-weight:800;color:var(--amber);text-transform:uppercase;letter-spacing:1px}
-.modal .lvbig{font-size:30px;font-weight:800;margin:8px 0 2px}
-.modal p{color:var(--muted);font-size:13.5px;margin-bottom:20px}
-.modal button{border:0;border-radius:11px;padding:11px 26px;font-weight:800;font-size:14px;cursor:pointer;
-  background:linear-gradient(135deg,var(--rev),var(--profit));color:#fff;font-family:inherit}
-
-footer{text-align:center;color:var(--faint);font-size:12px;font-weight:600;margin-top:34px;padding-top:18px;border-top:1px solid var(--line)}
-.sec-gap{margin-top:18px}
-
-@media(max-width:860px){
-  .layout{grid-template-columns:1fr}
-  .metrics{grid-template-columns:repeat(2,1fr)}
-  .split{grid-template-columns:1fr}
-  .teams{grid-template-columns:repeat(5,1fr);gap:8px}
-  .team{padding:11px 6px}
-  .team .tid{font-size:15px}
-  .game-grid{grid-template-columns:auto 1fr;gap:12px}
-  .badges{grid-column:1/-1;justify-content:flex-start;max-width:none}
-}
-@media(max-width:520px){
-  .teams{grid-template-columns:repeat(3,1fr)}
-  .row2{grid-template-columns:1fr}
+@media (max-width: 720px){
+  .wrap{padding:16px 16px 116px}
+  .wrap>*{min-width:0}
+  .nav{background:none;box-shadow:none;padding:2px 0 6px;border-radius:0}
+  .logo,.sub,.back,.nav .seg{display:none}
+  .wink{display:block}
+  .brand{gap:6px}
+  .ttl{font-size:20px}
+  .nav-r{gap:8px}
+  .lang1{display:block}
+  .xp-pill{font-size:15px;gap:8px;padding:4px 12px 4px 4px;box-shadow:inset 0 -4px 6px rgba(110,85,30,.25),inset 0 4px 6px rgba(250,240,215,.8)}
+  .tbadge{width:28px;height:28px;font-size:13px}
+  [data-tab]{display:none!important}
+  .hero[data-tab].on{display:block!important;padding:8px 0 16px}
+  .chartcard[data-tab].on,.biz[data-tab].on,.chal-wrap[data-tab].on,.board[data-tab].on{display:flex!important}
+  .picker[data-tab].on,.duo[data-tab].on,.explain[data-tab].on,.metrics[data-tab].on{display:grid!important}
+  .m-only.metrics[data-tab].on{display:grid!important}
+  .eyebrow,.intro,.team-card,.d-only{display:none!important}
+  h1{font-size:34px;line-height:1;letter-spacing:-.02em}
+  h1 em{text-shadow:none}
+  .picker{padding-bottom:16px}
+  .picker .sh{display:none}
+  .teams{gap:8px}
+  .team-tile{height:52px;border-radius:18px;outline-offset:3px;box-shadow:0 10px 14px -8px rgba(31,42,68,.5),inset 0 -5px 8px rgba(0,0,0,.15),inset 0 5px 8px rgba(255,255,255,.5)}
+  .team-tile.on,.team-tile:hover{transform:none}
+  .team-tile b{font-size:18px}
+  .team-tile b i,.team-tile span{display:none}
+  .main{gap:16px;padding-bottom:16px}
+  .col,.col-r{gap:16px}
+  .card{border-radius:30px;padding:20px}
+  .biz{gap:12px}
+  .biz .ch h2{font-size:20px}
+  .biz .ch .pill{font-size:11px;padding:4px 10px}
+  .fields{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+  .fld{gap:4px}
+  #fName{display:none}
+  #fR,#swTax,#fTax{grid-column:1/-1}
+  #fR{order:5}#swTax{order:6}#fTax{order:7}
+  #vErr{grid-column:1/-1}
+  .fld label{font-size:12px}
+  .fld label .long,.fld label .u{display:none}
+  .fld label .short{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .inp{font-size:18px;padding:10px 12px;border-radius:16px;box-shadow:inset 0 3px 8px rgba(31,42,68,.18)}
+  .sw{background:none;box-shadow:none;padding:0;min-height:44px;gap:10px}
+  .sw .sw-t b{font-size:13px}
+  .sw .sw-t small{display:none}
+  .sw .tT{display:inline}
+  .sw .track{width:56px;height:32px}
+  .sw .track i{width:24px;height:24px}
+  .btn{border-radius:20px;padding:14px;font-size:17px;margin-top:0}
+  .btn .tag{background:none;color:inherit;padding:0;font-size:17px}
+  .btn .tag::before{content:'· '}
+  .m-only{display:grid}
+  .metrics{gap:10px}
+  .metric{border-radius:22px;padding:12px 14px}
+  .metric small{font-size:11px}
+  .metric b,.metric b.sm{font-size:20px}
+  .metric span{display:none}
+  .chartcard{background:none;box-shadow:none;padding:0;gap:12px}
+  .chartcard .ch h2{font-size:28px}
+  .chartcard .ch .pill{display:none}
+  .chartbox{background:var(--card);border-radius:24px;padding:10px;box-shadow:inset 0 4px 10px rgba(31,42,68,.12)}
+  .chart-empty{height:160px}
+  .legend{font-size:12px;gap:12px}
+  .duo{gap:14px}
+  .duo .card{border-radius:26px;padding:18px;gap:8px;box-shadow:0 14px 20px -14px rgba(31,42,68,.4),inset 0 6px 10px rgba(255,255,255,.9)}
+  .duo .ch h3{font-size:18px}
+  .duo .ch .pill{font-size:11px;padding:4px 10px}
+  #tgtBody{gap:6px}#mosBody{gap:8px}
+  .big{font-size:30px}
+  .big small{font-size:14px}
+  .kv{font-size:13px}
+  .fchip{font-size:12px;background:none;padding:0}
+  .mosbar{height:18px;padding:3px}
+  .explain{border-radius:26px;padding:18px;gap:10px;margin:16px 0}
+  .explain img,.explain .sh p{display:none}
+  .explain .sh{margin-bottom:8px}
+  .explain .sh h2{font-size:18px}
+  .story{gap:10px}
+  .st{display:block}
+  .st b{display:inline;background:none;color:inherit;font-size:14px;width:auto;height:auto}
+  .st b::after{content:'. '}
+  .st p{display:inline;font-size:14px}
+  .row-c{gap:16px;padding-bottom:16px}
+  .chal-wrap{flex-direction:column}
+  .chal-h{margin-bottom:14px}
+  .chal-h h2{font-size:28px}
+  .chal-h h2 .cnt{font-size:19px}
+  .chal-h .pill{display:none}
+  .chals{gap:14px}
+  .chal{border-radius:26px;padding:18px;gap:12px;box-shadow:0 14px 20px -14px rgba(31,42,68,.4),inset 0 6px 10px rgba(255,255,255,.9)}
+  .chal .q{font-size:15px}
+  .chal-top{display:contents}
+  .ctag{order:3;background:none!important;color:var(--tagc)!important;padding:0;font-size:12px;white-space:normal}
+  .opts{gap:8px}
+  .opt{min-height:44px;border-radius:16px;padding:4px;font-size:14px;line-height:1.15;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 12px -8px rgba(31,42,68,.5),inset 0 -4px 6px rgba(0,0,0,.1),inset 0 4px 6px rgba(255,255,255,.7)}
+  .board{background:none;color:var(--ink);box-shadow:none;padding:0;border-radius:0;gap:10px}
+  .board h2{font-size:28px}
+  .board h2 .long{display:none}
+  .board h2 .short{display:inline}
+  .brow{grid-template-columns:38px minmax(0,1fr) 64px;gap:10px;padding:10px;background:var(--card);box-shadow:inset 0 4px 8px rgba(255,255,255,.8)}
+  .brow.me{background:var(--mist)}
+  .bbar{display:none}
+  footer{font-size:13px;padding-top:8px}
+  .tabbar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;position:fixed;left:14px;right:14px;bottom:18px;z-index:40;background:var(--ink);border-radius:30px;padding:6px;box-shadow:0 16px 24px -10px rgba(31,42,68,.7)}
+  .tabbar button{min-height:48px;border-radius:24px;font-weight:800;font-size:12px;color:#C3C8D4}
+  .tabbar button.on{background:var(--blue);color:#fff;box-shadow:inset 0 -4px 6px rgba(10,20,50,.3),inset 0 4px 6px rgba(210,220,240,.6)}
+  .toast{right:16px;top:72px}
+  .modal{padding:32px 24px 26px;margin-top:100px}
+  .modal h2{font-size:36px}
+  .teacher{padding:24px 16px;gap:24px}
+  .t-boat{width:96px;height:96px}
+  .t-id{gap:16px}
+  .t-kick{font-size:14px}
+  .t-title{font-size:44px}
+  .tstats{width:100%}
+  .tstat{flex:1;padding:14px 16px}
+  .tstat small{font-size:13px}
+  .tstat b{font-size:32px}
+  .tcols{min-height:280px;gap:8px;padding:16px 10px;border-radius:28px}
+  .tc .v{font-size:16px}
+  .tc .tn{font-size:16px;gap:4px}
+  .tc .tn span{width:10px;height:10px}
+  .tc .bw i{border-radius:16px 16px 10px 10px}
+  .tcard{border-radius:28px;padding:20px}
+  .tcard h2{font-size:24px}
+  .rel{font-size:16px;padding:8px 10px 8px 14px}
+  .rel .track{width:64px;height:36px;padding:4px}
+  .rel .track i{width:28px;height:28px}
+  .award{gap:8px}
+  .award button{height:64px;border-radius:20px}
+  .award b{font-size:18px}
+  .award span{font-size:15px}
+  .reset{font-size:19px}
 }
 </style>
-<link rel="stylesheet" href="../css/clay-dark-skin.css">
 <script src="../js/capture-guard.js"></script>
 </head>
 <body>
-
-<div class="topbar">
-  <div class="topbar-in">
-    <div class="logo">
-      <span class="mark">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M3 16l5-5 4 3 7-8"/></svg>
-      </span>
-      <span>CVP&nbsp;Studio<span class="sub" data-i18n="brand_sub">CVP & Hòa vốn</span></span>
+<div class="wrap" id="student">
+  <header class="nav">
+    <div class="nav-l">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">B</div>
+        <img class="wink" src="../assets/cvp-lab/dragon-wink.jpg" alt="" width="42" height="42">
+        <div>
+          <div class="ttl">CVP Lab</div>
+          <div class="sub" id="navSub">Workshop CVP &amp; Hòa vốn</div>
+        </div>
+      </div>
+      <a class="back" id="clsLink" href="../lop-hoc.html">← Kịch bản lớp học</a>
     </div>
-    <div class="spacer"></div>
-    <a class="tbtn" href="../lop-hoc.html" title="Về Kịch bản lớp học BizOn" style="text-decoration:none">← Kịch bản lớp học</a>
-    <div class="lang-pill">
-      <button id="langVI" class="on" onclick="setLang('vi')">VI</button>
-      <button id="langEN" onclick="setLang('en')">EN</button>
+    <div class="nav-r">
+      <div class="seg" role="group" aria-label="Ngôn ngữ / Language">
+        <button type="button" data-act="lang" data-v="vi">VI</button>
+        <button type="button" data-act="lang" data-v="en">EN</button>
+      </div>
+      <button type="button" class="lang1" id="lang1" data-act="langT">EN</button>
+      <div class="xp-pill"><span class="tbadge" id="navBadge">01</span><span id="navXp">70 XP</span></div>
     </div>
-    <button class="tbtn" onclick="toggleTheme()" id="themeBtn">☀️ <span data-i18n="theme">Sáng</span></button>
-  </div>
-</div>
+  </header>
 
-<div class="wrap">
-
-  <div class="hero">
-    <span class="eyebrow"><span class="dot"></span><span data-i18n="eyebrow">Workshop CVP · Buổi đóng Chương 1</span></span>
-    <h1 class="title"><span data-i18n="title_a">Đọc được</span> <span class="hl" data-i18n="title_b">điểm hòa vốn</span> <span data-i18n="title_c">trước khi đặt cược.</span></h1>
-    <p class="lead" data-i18n="lead">Nhập số liệu doanh nghiệp của nhóm → xem ngay đồ thị CVP, điểm hòa vốn (BEP), sản lượng để đạt lợi nhuận mục tiêu, và biên an toàn (MoS). Thử nhiều mô hình, mở khóa huy hiệu, đua giữa 5 nhóm.</p>
-  </div>
-
-  <!-- Gamification bar -->
-  <div class="card" id="gamebar">
-    <div class="game-grid">
-      <div class="lvl-ring">
-        <svg width="62" height="62" viewBox="0 0 62 62">
-          <circle cx="31" cy="31" r="26" fill="none" stroke="var(--line2)" stroke-width="6"/>
-          <circle id="lvlArc" cx="31" cy="31" r="26" fill="none" stroke="url(#gr)" stroke-width="6" stroke-linecap="round" stroke-dasharray="163.4" stroke-dashoffset="163.4"/>
-          <defs><linearGradient id="gr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--rev)"/><stop offset="1" stop-color="var(--profit)"/></linearGradient></defs>
-        </svg>
-        <span class="num" id="lvlNum">1</span>
+  <section class="hero" data-tab="0">
+    <div class="hero-txt">
+      <span class="eyebrow" id="eyebrow">WORKSHOP CVP · BUỔI ĐÓNG CHƯƠNG 1</span>
+      <h1><span id="hero1">Đọc được</span> <em id="hero2">điểm hòa vốn</em> <span id="hero3">trước khi đặt cược.</span></h1>
+      <p class="intro" id="intro">Nhập số liệu doanh nghiệp của nhóm → xem ngay đồ thị CVP, điểm hòa vốn (BEP), sản lượng để đạt lợi nhuận mục tiêu, và biên an toàn (MoS). Thử nhiều mô hình, mở khóa huy hiệu, đua giữa 5 nhóm.</p>
+    </div>
+    <img class="hero-dragon" id="heroDragon" src="../assets/cvp-lab/dragon-magnifier.jpg" alt="" width="280" height="280">
+    <div class="team-card" id="teamCard">
+      <div class="tc-top">
+        <div>
+          <div class="tc-name" id="tcName">NHÓM T01</div>
+          <div class="tc-level" id="tcLevel">Người học việc</div>
+        </div>
+        <div class="lvl-coin"><small>LVL</small><b id="lvlNo">1</b></div>
       </div>
       <div>
-        <div class="lvl-meta"><div class="lname" id="lvlName">Người học việc</div><div class="ltag" id="teamTag">Nhóm —</div></div>
-        <div class="xp-wrap" style="margin-top:8px">
-          <div class="xp-top"><span data-i18n="xp">XP</span><span id="xpTxt" class="mono">0 / 100</span></div>
-          <div class="xp-bar"><div class="xp-fill" id="xpFill"></div></div>
-        </div>
+        <div class="xp-row"><span id="xpLbl">Điểm kinh nghiệm</span><span id="xpTxt">70 / 100 XP</span></div>
+        <div class="xp-bar"><i id="xpFill"></i></div>
       </div>
-      <div class="badges" id="badgeGrid"></div>
+      <div>
+        <div class="bd-t" id="bdT">Huy hiệu đạt được</div>
+        <div class="badges" id="badges"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="picker" data-tab="0">
+    <div class="sh"><h2 id="pickTitle">Chọn nhóm của bạn</h2><p id="pickSub">T01 – T05 · mỗi nhóm có XP và huy hiệu riêng.</p></div>
+    <div class="teams" id="teams"></div>
+  </section>
+
+  <div class="main">
+    <div class="col">
+      <section class="card biz" data-tab="0">
+        <div class="ch"><h2 id="bizTitle">Số liệu doanh nghiệp</h2><span class="pill" style="background:var(--slate)" id="step1">BƯỚC 1</span></div>
+        <div class="fields">
+          <div class="fld" id="fName"><label for="inName"><span id="lName">Tên DN / Sản phẩm</span></label><input class="inp txt" id="inName" type="text" autocomplete="off"></div>
+          <div class="fld"><label for="inP"><span class="long" id="lP">Giá bán P</span><span class="short" id="sP">Giá bán P</span><span class="u" id="uP">đ/SP</span></label><input class="inp" id="inP" type="text" inputmode="numeric" autocomplete="off"></div>
+          <div class="fld"><label for="inV"><span class="long" id="lV">Biến phí v</span><span class="short" id="sV">Biến phí v</span><span class="u" id="uV">đ/SP</span></label><input class="inp" id="inV" type="text" inputmode="numeric" autocomplete="off" aria-describedby="vErr"></div>
+          <div class="fld"><label for="inFC"><span class="long" id="lFC">Định phí FC</span><span class="short" id="sFC">Định phí FC</span><span class="u" id="uFC">đ/tháng</span></label><input class="inp" id="inFC" type="text" inputmode="numeric" autocomplete="off"></div>
+          <div class="fld"><label for="inTgt"><span class="long" id="lTgt">LN mục tiêu (tuỳ chọn)</span><span class="short" id="sTgt">LN mục tiêu</span><span class="u" id="uTgt">đ/tháng</span></label><input class="inp" id="inTgt" type="text" inputmode="numeric" autocomplete="off"></div>
+          <div class="err" id="vErr" role="alert" hidden></div>
+          <button type="button" class="sw" id="swTax" role="switch" aria-checked="false" data-act="tax">
+            <span class="sw-t"><b><span id="atL">LN trên là SAU thuế</span><span class="tT" id="atT"> · t 20%</span></b><small id="atH">Bật để quy đổi π ÷ (1 − t)</small></span>
+            <span class="track" aria-hidden="true"><i></i></span>
+          </button>
+          <div class="fld" id="fTax" hidden><label for="inTax"><span class="long" id="lTax">Thuế suất t</span><span class="short" id="sTax">Thuế suất t (%)</span><span class="u">%</span></label><input class="inp" id="inTax" type="text" inputmode="numeric" autocomplete="off"></div>
+          <div class="fld" id="fR"><label for="inR"><span class="long" id="lR">Doanh thu thực/kỳ vọng (cho MoS)</span><span class="short" id="sR">Doanh thu thực R (đ/tháng)</span><span class="u" id="uR">đ/tháng</span></label><input class="inp" id="inR" type="text" inputmode="numeric" autocomplete="off"></div>
+        </div>
+        <button class="btn" type="button" id="calc" data-act="calc"><span id="calcL">Tính toán &amp; Nhận XP</span><span class="tag" id="calcTag">+50 XP</span></button>
+      </section>
+      <div class="metrics m-only" id="metricsM" data-tab="0"></div>
+      <section class="traps d-only" id="traps">
+        <h3 id="trapsT">Ba cái bẫy</h3>
+        <div id="trapList"></div>
+      </section>
+    </div>
+
+    <div class="col col-r">
+      <section class="card chartcard" data-tab="1">
+        <div class="ch"><h2 id="chartT">Đồ thị CVP</h2><span class="pill" style="background:var(--blue)" id="step2">BƯỚC 2</span></div>
+        <div class="legend" id="legend"></div>
+        <div class="chartbox" id="chartBox"></div>
+        <div class="metrics d-only" id="metricsD"></div>
+      </section>
+      <div class="duo" data-tab="1">
+        <section class="card">
+          <div class="ch"><h3 id="tgtT">Lợi nhuận mục tiêu</h3><span class="pill" style="background:var(--plum)" id="step3">BƯỚC 3</span></div>
+          <div id="tgtBody"></div>
+        </section>
+        <section class="card">
+          <div class="ch"><h3 id="mosT">Biên an toàn (MoS)</h3><span class="pill" id="mosZone">—</span></div>
+          <div id="mosBody"></div>
+        </section>
+      </div>
     </div>
   </div>
 
-  <!-- Team select -->
-  <div class="card sec-gap">
-    <div class="card-h"><span class="ix" style="background:color-mix(in srgb,var(--rev) 18%,transparent);color:var(--rev)">1</span>
-      <h2 data-i18n="step1">Chọn nhóm của bạn</h2><span class="hint" data-i18n="step1h">T01 – T05</span></div>
-    <div class="card-b"><div class="teams" id="teams"></div></div>
+  <section class="explain" data-tab="1">
+    <img src="../assets/cvp-lab/dragon-scroll.jpg" alt="" width="180" height="180">
+    <div>
+      <div class="sh"><h2 id="explainT">Diễn giải bằng lời</h2><p id="explainSub">Hiểu, không chỉ tính</p></div>
+      <div class="story" id="story"></div>
+    </div>
+  </section>
+
+  <div class="row-c">
+    <section class="chal-wrap" data-tab="2">
+      <div class="chal-h"><h2><span id="chalT">Thử thách</span> <span class="cnt" id="solved">0/6</span></h2><span class="pill" style="background:var(--plum)" id="step4">BƯỚC 4</span></div>
+      <div class="chals" id="chals"></div>
+    </section>
+    <section class="board" data-tab="3">
+      <h2><span class="long" id="boardT">Bảng xếp hạng lớp</span><span class="short" id="boardS">Xếp hạng</span></h2>
+      <div id="boardRows"></div>
+    </section>
   </div>
 
-  <!-- Work area -->
-  <div id="work">
-    <div class="layout">
-      <!-- Left: inputs -->
-      <div class="card">
-        <div class="card-h"><span class="ix" style="background:color-mix(in srgb,var(--rev) 18%,transparent);color:var(--rev)">2</span>
-          <h2 data-i18n="step2">Số liệu doanh nghiệp</h2></div>
-        <div class="card-b">
-          <div class="field"><label data-i18n="f_name">Tên DN / Sản phẩm</label>
-            <input class="inp" id="iName" type="text" placeholder="Quán Café Mộc" style="font-family:inherit"></div>
-          <div class="row2">
-            <div class="field"><label><span data-i18n="f_p">Giá bán P</span><span class="u">đ/SP</span></label>
-              <input class="inp" id="iP" type="number" min="0" inputmode="numeric" placeholder="35000" oninput="live()"></div>
-            <div class="field"><label><span data-i18n="f_v">Biến phí v</span><span class="u">đ/SP</span></label>
-              <input class="inp" id="iV" type="number" min="0" inputmode="numeric" placeholder="12000" oninput="live()"></div>
-          </div>
-          <div class="field"><label><span data-i18n="f_fc">Định phí FC</span><span class="u">đ/tháng</span></label>
-            <input class="inp" id="iFC" type="number" min="0" inputmode="numeric" placeholder="30000000" oninput="live()"></div>
+  <footer>
+    <span>CVP Lab · ©2026 | PhD Candidate Do Thuy Huong</span>
+    <nav aria-label="Liên kết">
+      <a href="cmr-lab.html" id="cmrLink">← CMR Lab</a>
+      <a href="bo-do-tien-quyet.html" id="mapLink">Bản đồ tiên quyết</a>
+      <a href="../universe.html" id="uniLink">Vũ trụ →</a>
+    </nav>
+  </footer>
 
-          <div class="field" style="margin-top:4px"><label><span data-i18n="f_pi">LN mục tiêu (tuỳ chọn)</span><span class="u">đ/tháng</span></label>
-            <input class="inp" id="iPi" type="number" min="0" inputmode="numeric" placeholder="50000000" oninput="live()"></div>
-
-          <label class="switch" for="swTax">
-            <input type="checkbox" id="swTax" onchange="live()"><span class="knob"></span>
-            <span class="sl" data-i18n="tax_sw">LN trên là SAU thuế<small data-i18n="tax_sub">Bật để quy đổi π ÷ (1 − t)</small></span>
-          </label>
-          <div class="field" id="taxField" style="display:none;margin-top:12px">
-            <label><span data-i18n="f_t">Thuế suất t</span><span class="u">%</span></label>
-            <input class="inp" id="iT" type="number" min="0" max="99" inputmode="numeric" placeholder="20" oninput="live()"></div>
-          <div class="note-tax" id="taxNote"></div>
-
-          <div class="field" style="margin-top:4px"><label><span data-i18n="f_ar">Doanh thu thực/kỳ vọng (cho MoS)</span><span class="u">đ/tháng</span></label>
-            <input class="inp" id="iAR" type="number" min="0" inputmode="numeric" placeholder="60000000" oninput="live()"></div>
-
-          <button class="go" onclick="calculate()" data-i18n="go">Tính toán &amp; Nhận XP</button>
-
-          <div class="traps">
-            <div class="trap"><b data-i18n="trap1b">Bẫy 1.</b> <span data-i18n="trap1">CM = DT − Biến phí, KHÁC lợi nhuận (đã trừ cả định phí).</span></div>
-            <div class="trap"><b data-i18n="trap2b">Bẫy 2.</b> <span data-i18n="trap2">Q* tính bằng SỐ ĐƠN VỊ, TR* tính bằng TIỀN — đọc kỹ đề.</span></div>
-            <div class="trap"><b data-i18n="trap3b">Bẫy 3.</b> <span data-i18n="trap3">Chia cho CMR dạng thập phân (0,657) — không phải 65,7.</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Right: chart + results -->
-      <div class="col-stack">
-        <div class="card chart-card">
-          <div class="card-h"><span class="ix" style="background:color-mix(in srgb,var(--profit) 18%,transparent);color:var(--profit)">📈</span>
-            <h2 data-i18n="chart_t">Đồ thị CVP</h2><span class="hint" data-i18n="chart_h">TR · TC · FC · BEP</span></div>
-          <div class="card-b">
-            <div class="chart-meta">
-              <span class="lg rev"><i></i><span data-i18n="lg_tr">Doanh thu (TR)</span></span>
-              <span class="lg tc"><i></i><span data-i18n="lg_tc">Tổng chi phí (TC)</span></span>
-              <span class="lg fc"><i></i><span data-i18n="lg_fc">Định phí (FC)</span></span>
-              <span class="lg bep"><i></i><span data-i18n="lg_bep">Điểm hòa vốn</span></span>
-            </div>
-            <div class="warn-bep" id="warnBep"></div>
-            <div id="chartHost">
-              <div class="chart-empty" id="chartEmpty"><div class="big">📉</div><span data-i18n="chart_empty">Nhập Giá bán P và Biến phí v để dựng đồ thị.</span></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="metrics">
-          <div class="metric cm"><div class="ml" data-i18n="m_cm">CM đơn vị</div><div class="mv" id="vCM">—</div><div class="mx" data-i18n="m_cm_x">P − v</div></div>
-          <div class="metric cmr"><div class="ml" data-i18n="m_cmr">CMR</div><div class="mv" id="vCMR">—</div><div class="mx" id="vCMRdec">—</div></div>
-          <div class="metric bq"><div class="ml" data-i18n="m_bq">BEP — sản lượng</div><div class="mv" id="vBQ">—</div><div class="mx" data-i18n="m_bq_x">Q* = FC / CM</div></div>
-          <div class="metric btr"><div class="ml" data-i18n="m_btr">BEP — doanh thu</div><div class="mv" id="vBTR">—</div><div class="mx" data-i18n="m_btr_x">TR* = FC / CMR</div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Target + MoS -->
-    <div class="split sec-gap">
-      <div class="card">
-        <div class="card-h"><span class="ix" style="background:color-mix(in srgb,var(--amber) 18%,transparent);color:var(--amber)">🎯</span>
-          <h2 data-i18n="tgt_t">Lợi nhuận mục tiêu</h2><span class="hint" id="tgtTag"></span></div>
-        <div class="card-b" id="tgtBody">
-          <div class="iline empty" data-i18n="tgt_empty">Nhập LN mục tiêu ở cột trái để tính sản lượng cần đạt.</div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-h"><span class="ix" style="background:color-mix(in srgb,var(--green) 18%,transparent);color:var(--green)">🛡️</span>
-          <h2 data-i18n="mos_t">Biên an toàn (MoS)</h2></div>
-        <div class="card-b" id="mosBody">
-          <div class="iline empty" data-i18n="mos_empty">Nhập "Doanh thu thực/kỳ vọng" ở cột trái để đo MoS.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Interpretation -->
-    <div class="card sec-gap">
-      <div class="card-h"><span class="ix" style="background:color-mix(in srgb,var(--rev) 18%,transparent);color:var(--rev)">💬</span>
-        <h2 data-i18n="interp_t">Diễn giải bằng lời</h2><span class="hint" data-i18n="interp_h">Hiểu, không chỉ tính</span></div>
-      <div class="card-b"><div class="interp" id="interp"><div class="iline empty" data-i18n="interp_empty">Tính toán xong, phần diễn giải sẽ xuất hiện ở đây — dùng để giải thích miệng cho Hội đồng.</div></div></div>
-    </div>
-
-    <!-- Challenges -->
-    <div class="card sec-gap">
-      <div class="card-h"><span class="ix" style="background:color-mix(in srgb,var(--amber) 18%,transparent);color:var(--amber)">🏆</span>
-        <h2 data-i18n="ch_t">Thử thách</h2><span class="hint" id="chCount">0/6</span></div>
-      <div class="card-b" id="chList"></div>
-    </div>
-
-    <!-- Leaderboard -->
-    <div class="card sec-gap">
-      <div class="card-h"><span class="ix" style="background:color-mix(in srgb,var(--t4) 18%,transparent);color:var(--t4)">📊</span>
-        <h2 data-i18n="lb_t">Bảng xếp hạng lớp</h2><span class="hint" data-i18n="lb_h">Theo XP</span></div>
-      <div class="card-b" style="overflow-x:auto"><table class="lb" id="lbTable"></table></div>
-    </div>
-  </div>
-
-  <footer>CVP Studio v1.0 · Mô phỏng tình huống trong kinh doanh · 2026 · © PhD Candidate Do Thuy Huong</footer>
+  <nav class="tabbar" id="tabbar" aria-label="Tabs"></nav>
 </div>
 
-<div id="toast"><span class="ic">✨</span><span id="toastTxt"></span></div>
-<div class="modal-bg" id="modal">
-  <div class="modal"><div class="burst">🎉</div><h3 data-i18n="lvlup">Lên cấp!</h3>
-    <div class="lvbig" id="mLvl">Level 2</div><p id="mName">Nhà phân tích</p>
-    <button onclick="closeModal()" data-i18n="cont">Tiếp tục</button></div>
+<section class="teacher" id="teacher" hidden>
+  <div class="t-left">
+    <div class="t-head">
+      <div class="t-id">
+        <div class="t-boat"><img src="../assets/cvp-lab/dragon-boat.jpg" alt="" width="170" height="170"></div>
+        <div>
+          <div class="t-kick" id="tClass">CVP LAB · MÀN HÌNH LỚP</div>
+          <h2 class="t-title" id="tRace">Đua nhóm</h2>
+        </div>
+      </div>
+      <div class="tstats">
+        <div class="tstat"><small id="tTotalL">Tổng XP</small><b id="tTotal">475</b></div>
+        <div class="tstat"><small id="tLiveL">Thử thách đang mở</small><b id="tLive">3 / 6</b></div>
+      </div>
+    </div>
+    <div class="tcols" id="tcols"></div>
+  </div>
+  <div class="t-right">
+    <div class="tcard">
+      <h2 id="tRel">Mở thử thách</h2>
+      <div id="relCtl"></div>
+    </div>
+    <div class="tcard">
+      <h2 id="tAward">Thưởng XP</h2>
+      <div class="award" id="awardCtl"></div>
+    </div>
+    <button class="reset" type="button" id="tReset" data-act="reset">Đặt lại lớp</button>
+    <div class="t-foot">
+      <a href="#" data-act="student" id="tBack">← Quay lại màn hình sinh viên</a>
+      <div class="seg" role="group" aria-label="Ngôn ngữ / Language">
+        <button type="button" data-act="lang" data-v="vi">VI</button>
+        <button type="button" data-act="lang" data-v="en">EN</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="scrim" id="modal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <div class="dimg"><img src="../assets/cvp-lab/dragon-jump.jpg" alt="" width="220" height="220"></div>
+    <div class="lvlc"><small>LVL</small><b id="mLvl">1</b></div>
+    <h2 id="mTitle">Lên cấp!</h2>
+    <p id="mText">Bạn đã mở khóa cấp mới</p>
+    <div class="gain">+50 XP</div>
+    <button class="btn" type="button" data-act="close" id="mCont">Tiếp tục</button>
+  </div>
 </div>
+
+<div class="toast" id="toast" role="status" hidden></div>
 
 <script>
-"use strict";
-/* ===================== i18n ===================== */
-const I18N = {
-  vi:{
-    brand_sub:"CVP & Hòa vốn", theme:"Sáng",
-    eyebrow:"Workshop CVP · Buổi đóng Chương 1",
-    title_a:"Đọc được", title_b:"điểm hòa vốn", title_c:"trước khi đặt cược.",
-    lead:"Nhập số liệu doanh nghiệp của nhóm → xem ngay đồ thị CVP, điểm hòa vốn (BEP), sản lượng để đạt lợi nhuận mục tiêu, và biên an toàn (MoS). Thử nhiều mô hình, mở khóa huy hiệu, đua giữa 5 nhóm.",
-    xp:"XP", step1:"Chọn nhóm của bạn", step1h:"T01 – T05",
-    step2:"Số liệu doanh nghiệp",
-    f_name:"Tên DN / Sản phẩm", f_p:"Giá bán P", f_v:"Biến phí v", f_fc:"Định phí FC",
-    f_pi:"LN mục tiêu (tuỳ chọn)", f_t:"Thuế suất t", f_ar:"Doanh thu thực/kỳ vọng (cho MoS)",
-    tax_sw:"LN trên là SAU thuế", tax_sub:"Bật để quy đổi π ÷ (1 − t)",
-    go:"Tính toán & Nhận XP",
-    trap1b:"Bẫy 1.", trap1:"CM = DT − Biến phí, KHÁC lợi nhuận (đã trừ cả định phí).",
-    trap2b:"Bẫy 2.", trap2:"Q* tính bằng SỐ ĐƠN VỊ, TR* tính bằng TIỀN — đọc kỹ đề.",
-    trap3b:"Bẫy 3.", trap3:"Chia cho CMR dạng thập phân (0,657) — không phải 65,7.",
-    chart_t:"Đồ thị CVP", chart_h:"TR · TC · FC · BEP",
-    lg_tr:"Doanh thu (TR)", lg_tc:"Tổng chi phí (TC)", lg_fc:"Định phí (FC)", lg_bep:"Điểm hòa vốn",
-    chart_empty:"Nhập Giá bán P và Biến phí v để dựng đồ thị.",
-    m_cm:"CM đơn vị", m_cm_x:"P − v", m_cmr:"CMR", m_bq:"BEP — sản lượng", m_bq_x:"Q* = FC / CM",
-    m_btr:"BEP — doanh thu", m_btr_x:"TR* = FC / CMR",
-    tgt_t:"Lợi nhuận mục tiêu", tgt_empty:"Nhập LN mục tiêu ở cột trái để tính sản lượng cần đạt.",
-    mos_t:"Biên an toàn (MoS)", mos_empty:'Nhập "Doanh thu thực/kỳ vọng" ở cột trái để đo MoS.',
-    interp_t:"Diễn giải bằng lời", interp_h:"Hiểu, không chỉ tính",
-    interp_empty:"Tính toán xong, phần diễn giải sẽ xuất hiện ở đây — dùng để giải thích miệng cho Hội đồng.",
-    ch_t:"Thử thách", lb_t:"Bảng xếp hạng lớp", lb_h:"Theo XP",
-    lvlup:"Lên cấp!", cont:"Tiếp tục",
-    // dynamic
-    pre:"TRƯỚC THUẾ", post:"SAU THUẾ",
-    k_qtarget:"Sản lượng cần (Q_target)", k_trtarget:"Doanh thu cần (TR_target)",
-    k_perday:"≈ mỗi ngày (30 ngày)", k_pipre:"LN trước thuế quy đổi", k_piafter:"LN sau thuế mong muốn",
-    unit:"đơn vị", unitday:"đv/ngày",
-    mos_actual:"Doanh thu thực", mos_bep:"Doanh thu hòa vốn (TR*)", mos_val:"MoS",
-    zgreen:"VÙNG XANH — DN khỏe, chịu được biến cố lớn.",
-    zamber:"VÙNG VÀNG — ổn nhưng cần thận trọng khi mở rộng.",
-    zred:"VÙNG ĐỎ — rủi ro cao, một biến cố nhỏ là lỗ!",
-    zloss:"ĐANG LỖ — doanh thu thực dưới điểm hòa vốn.",
-    warn_nobep:"CM ≤ 0: giá bán chưa bù nổi biến phí → không có điểm hòa vốn. Tăng giá P hoặc giảm biến phí v.",
-    needP:"Hãy nhập Giá bán P > 0 và Biến phí v ≥ 0.",
-    needPI:"Hãy nhập LN mục tiêu > 0 để dùng chế độ sau thuế.",
-    i_bep_a:"Để hòa vốn, cần bán", i_bep_b:"mỗi tháng", i_bep_c:"hoặc đạt doanh thu",
-    i_tgt_a:"Để đạt lãi", i_tgt_b:"cần bán", i_tgt_c:"tương đương doanh thu",
-    i_mos_a:"Doanh thu thực", i_mos_b:"cao hơn hòa vốn → được phép giảm",
-    i_mos_c:"trước khi rơi vào lỗ.", i_mos_loss:"đang DƯỚI hòa vốn — cần tăng doanh thu hoặc cắt định phí.",
-    tax_note_a:"LN sau thuế", tax_note_b:"→ trước thuế =",
-    badges:{first:"Khởi động",cm:"Tìm CM",bep:"Hòa vốn",bal:"Cân bằng",tgt:"Đặt mục tiêu lãi",tax:"Thoát bẫy thuế",mos:"Vùng xanh MoS",full:"Đọc đồ thị"},
-    badgesD:{first:"Nhập đủ P, v, FC hợp lệ lần đầu",cm:"Đạt CM > 0 (giá cao hơn biến phí)",bep:"Tính được BEP hữu hạn",bal:"CMR trong khoảng 40–70%",tgt:"Nhập LN mục tiêu và tính được Q_target",tax:"Bật chế độ sau thuế, hiểu bẫy (1−t)",mos:"Đạt MoS ≥ 30% (vùng xanh)",full:"Đủ P, v, FC, π, doanh thu → ra mọi chỉ số"},
-    chs:[
-      {t:"Nhập P, v, FC để tìm điểm hòa vốn",s:"Khởi động — đặt nền 3 con số."},
-      {t:"Đạt CMR 40%–70% (vùng cân bằng F&B)",s:"Mô hình quán ăn/đồ uống điển hình."},
-      {t:"Đạt BEP ≤ 1.500 đơn vị/tháng",s:"Vận hành tinh gọn — ~50/ngày là khả thi."},
-      {t:"Đặt LN mục tiêu & tính sản lượng cần",s:"Vượt hòa vốn — bắt đầu sống, không chỉ tồn tại."},
-      {t:"Bật chế độ SAU THUẾ với t > 0",s:"Thoát bẫy (1 − t) — phân biệt 7đ và 9đ."},
-      {t:"Đạt MoS ≥ 30% (vùng xanh)",s:"Có vùng đệm an toàn trước biến cố."}
-    ],
-    levels:["Người học việc","Nhà phân tích","Chiến lược gia","Giám đốc","Master Founder"],
-    tn:["Nhóm cyan","Nhóm xanh lá","Nhóm cam","Nhóm tím","Nhóm hồng"],
-    teamWord:"Nhóm"
-  },
-  en:{
-    brand_sub:"CVP & Break-even", theme:"Light",
-    eyebrow:"CVP Workshop · Chapter 1 finale",
-    title_a:"Read the", title_b:"break-even point", title_c:"before you bet.",
-    lead:"Enter your team's numbers → instantly see the CVP chart, break-even point (BEP), the volume needed to hit a target profit, and the margin of safety (MoS). Try many models, unlock badges, race across 5 teams.",
-    xp:"XP", step1:"Choose your team", step1h:"T01 – T05",
-    step2:"Business numbers",
-    f_name:"Business / Product name", f_p:"Price P", f_v:"Variable cost v", f_fc:"Fixed cost FC",
-    f_pi:"Target profit (optional)", f_t:"Tax rate t", f_ar:"Actual/expected revenue (for MoS)",
-    tax_sw:"Profit above is AFTER tax", tax_sub:"On = convert π ÷ (1 − t)",
-    go:"Calculate & Earn XP",
-    trap1b:"Trap 1.", trap1:"CM = Rev − Variable cost — NOT profit (which also subtracts fixed cost).",
-    trap2b:"Trap 2.", trap2:"Q* is in UNITS, TR* is in MONEY — read the question.",
-    trap3b:"Trap 3.", trap3:"Divide by CMR as a decimal (0.657), not 65.7.",
-    chart_t:"CVP Chart", chart_h:"TR · TC · FC · BEP",
-    lg_tr:"Revenue (TR)", lg_tc:"Total cost (TC)", lg_fc:"Fixed cost (FC)", lg_bep:"Break-even",
-    chart_empty:"Enter Price P and Variable cost v to draw the chart.",
-    m_cm:"Unit CM", m_cm_x:"P − v", m_cmr:"CMR", m_bq:"BEP — units", m_bq_x:"Q* = FC / CM",
-    m_btr:"BEP — revenue", m_btr_x:"TR* = FC / CMR",
-    tgt_t:"Target profit", tgt_empty:"Enter a target profit on the left to compute the required volume.",
-    mos_t:"Margin of Safety (MoS)", mos_empty:'Enter "Actual/expected revenue" on the left to measure MoS.',
-    interp_t:"Plain-language read-out", interp_h:"Understand, not just compute",
-    interp_empty:"After calculating, the read-out appears here — use it to explain to the panel.",
-    ch_t:"Challenges", lb_t:"Class leaderboard", lb_h:"By XP",
-    lvlup:"Level up!", cont:"Continue",
-    pre:"PRE-TAX", post:"AFTER-TAX",
-    k_qtarget:"Units needed (Q_target)", k_trtarget:"Revenue needed (TR_target)",
-    k_perday:"≈ per day (30 days)", k_pipre:"Converted pre-tax profit", k_piafter:"Desired after-tax profit",
-    unit:"units", unitday:"u/day",
-    mos_actual:"Actual revenue", mos_bep:"Break-even revenue (TR*)", mos_val:"MoS",
-    zgreen:"GREEN — healthy, can absorb big shocks.",
-    zamber:"AMBER — stable but cautious about expansion.",
-    zred:"RED — high risk, a small shock means a loss!",
-    zloss:"IN LOSS — actual revenue is below break-even.",
-    warn_nobep:"CM ≤ 0: price doesn't cover variable cost → no break-even. Raise P or lower v.",
-    needP:"Please enter Price P > 0 and Variable cost v ≥ 0.",
-    needPI:"Enter a target profit > 0 to use after-tax mode.",
-    i_bep_a:"To break even, sell", i_bep_b:"per month", i_bep_c:"or reach revenue",
-    i_tgt_a:"To earn", i_tgt_b:"sell", i_tgt_c:"i.e. revenue",
-    i_mos_a:"Actual revenue", i_mos_b:"is above break-even → it may drop",
-    i_mos_c:"before turning into a loss.", i_mos_loss:"is BELOW break-even — raise revenue or cut fixed cost.",
-    tax_note_a:"After-tax profit", tax_note_b:"→ pre-tax =",
-    badges:{first:"Warm-up",cm:"Find CM",bep:"Break-even",bal:"Balanced",tgt:"Aim for profit",tax:"Beat the tax trap",mos:"Green MoS",full:"Read the chart"},
-    badgesD:{first:"Enter valid P, v, FC for the first time",cm:"Reach CM > 0 (price above variable cost)",bep:"Compute a finite BEP",bal:"CMR within 40–70%",tgt:"Enter a target profit and compute Q_target",tax:"Turn on after-tax mode, grasp the (1−t) trap",mos:"Reach MoS ≥ 30% (green)",full:"P, v, FC, π, revenue → every metric"},
-    chs:[
-      {t:"Enter P, v, FC to find break-even",s:"Warm-up — set the 3 core numbers."},
-      {t:"Reach CMR 40%–70% (balanced F&B zone)",s:"Typical cafe/restaurant model."},
-      {t:"Reach BEP ≤ 1,500 units/month",s:"Lean operation — ~50/day is feasible."},
-      {t:"Set a target profit & compute volume",s:"Beyond break-even — start to live."},
-      {t:"Turn on AFTER-TAX mode with t > 0",s:"Beat the (1 − t) trap — 7 vs 9 out of 10."},
-      {t:"Reach MoS ≥ 30% (green)",s:"A safety buffer against shocks."}
-    ],
-    levels:["Apprentice","Analyst","Strategist","Director","Master Founder"],
-    tn:["Cyan team","Green team","Orange team","Purple team","Pink team"],
-    teamWord:"Team"
-  }
+const T = {
+  en: { sub: 'Workshop CVP & Break-even', cls: '← Class script', kicker: 'CVP WORKSHOP · CHAPTER 1 WRAP-UP', hero1: 'Read the', hero2: 'break-even point', hero3: 'before you place the bet.', intro: 'Enter your team\'s business numbers and instantly see the CVP chart, break-even point (BEP), units for a target profit, and margin of safety (MoS). Try different models, unlock badges, race 5 teams.', xpp: 'Experience points', badges: 'Badges earned', pick: 'Pick your team', teamSub: 'T01 – T05 · each team has its own XP and badges.', biz: 'Business numbers', step: 'STEP', name: 'Business / Product name', fP: 'Selling price P', fV: 'Variable cost v', fFC: 'Fixed cost FC', fT: 'Target profit (optional)', sP: 'Price P', sV: 'Var. cost v', sFC: 'Fixed cost FC', sT: 'Target π', uUnit: '₫/unit', uMonth: '₫/month', uUnits: 'units / month', afterTax: 'Target is AFTER tax', afterTaxHint: 'Turn on to convert π ÷ (1 − t)', tax: 'Tax rate t', taxS: 'Tax rate t (%)', rev: 'Actual / expected revenue (for MoS)', revS: 'Actual revenue R (₫/month)', calc: 'Calculate & earn XP', trapsT: 'Three traps', traps: ['CM = Revenue − Variable cost. It is NOT profit (profit also subtracts fixed cost).', 'Q* is in UNITS, TR* is in MONEY — read the question carefully.', 'Divide by CMR as a decimal (0.657), not as 65.7.'], chart: 'CVP chart', lTR: 'Revenue (TR)', lTC: 'Total cost (TC)', lFC: 'Fixed cost (FC)', lBEP: 'Break-even', lAct: 'Actual sales', axisQ: 'Q (units)', chartEmpty: 'Enter Price P and Variable cost v to draw the chart.', unitCM: 'Unit CM', bepQ: 'BEP — units', bepTR: 'BEP — revenue', tgt: 'Target profit', tgtEmpty: 'Enter a target profit on the left to see the units needed.', preTax: 'Pre-tax profit needed', tgtRev: 'Revenue needed', mos: 'Margin of safety', mosEmpty: 'Enter "Actual / expected revenue" on the left to measure MoS.', mosRisk: 'RISKY (<10%)', mosSafe: 'SAFE (>25%)', zSafe: 'Safe', zMid: 'Watch', zRisk: 'Risky', zLoss: 'Below BEP', explain: 'Explain it in words', explainSub: 'Understand, not just calculate', explainEmpty: 'Once calculated, the explanation appears here — use it to explain orally to the panel.', chal: 'Challenges', board: 'Class leaderboard', boardS: 'Leaderboard', uni: 'Universe →', map: 'Prerequisite map', lvlUp: 'Level up!', unlocked: "You've unlocked a new level", cont: 'Continue', done: 'Completed!', classView: 'CVP LAB · CLASS VIEW', race: 'Team race', total: 'Total XP', live: 'Challenges live', release: 'Release challenges', award: 'Award bonus XP', reset: 'Reset class', lock: 'LOCKED', wait: 'Waiting for teacher', notq: 'Not quite', team: 'Team', tabs: ['Numbers', 'Chart', 'Challenges', 'Ranking'], levels: ['Apprentice', 'Analyst', 'Strategist', 'Master'], vErr: 'Variable cost v must be lower than price P (and P > 0).', backStudent: '← Back to student view', chartAria: 'CVP chart: revenue, total cost and fixed cost lines with the break-even point', bnames: ['Break-even calculated', 'Target profit calculated', 'Margin of safety measured', 'All 6 challenges solved'], dragonHero: 'BizOn dragon with a magnifier', dragonUp: 'BizOn dragon celebrating',
+    q: ['Price rises 10%. New BEP in units/month?', 'Variable cost rises by 3,000₫/unit. New CMR?', 'Pre-tax target profit 10,000,000₫/month. Units needed?', 'AFTER-tax target 10,000,000₫, tax rate 20%. Units needed?', 'What is the break-even revenue TR*?', 'Actual revenue is 40,000,000₫/month. What is MoS %?'],
+    rel: ['C1 · Price +10%', 'C2 · v +3,000₫', 'C3 · Target profit', 'C4 · After-tax target', 'C5 · BEP revenue', 'C6 · Margin of safety'] },
+  vi: { sub: 'Workshop CVP & Hòa vốn', cls: '← Kịch bản lớp học', kicker: 'WORKSHOP CVP · BUỔI ĐÓNG CHƯƠNG 1', hero1: 'Đọc được', hero2: 'điểm hòa vốn', hero3: 'trước khi đặt cược.', intro: 'Nhập số liệu doanh nghiệp của nhóm → xem ngay đồ thị CVP, điểm hòa vốn (BEP), sản lượng để đạt lợi nhuận mục tiêu, và biên an toàn (MoS). Thử nhiều mô hình, mở khóa huy hiệu, đua giữa 5 nhóm.', xpp: 'Điểm kinh nghiệm', badges: 'Huy hiệu đạt được', pick: 'Chọn nhóm của bạn', teamSub: 'T01 – T05 · mỗi nhóm có XP và huy hiệu riêng.', biz: 'Số liệu doanh nghiệp', step: 'BƯỚC', name: 'Tên DN / Sản phẩm', fP: 'Giá bán P', fV: 'Biến phí v', fFC: 'Định phí FC', fT: 'LN mục tiêu (tuỳ chọn)', sP: 'Giá bán P', sV: 'Biến phí v', sFC: 'Định phí FC', sT: 'LN mục tiêu', uUnit: 'đ/SP', uMonth: 'đ/tháng', uUnits: 'SP / tháng', afterTax: 'LN trên là SAU thuế', afterTaxHint: 'Bật để quy đổi π ÷ (1 − t)', tax: 'Thuế suất t', taxS: 'Thuế suất t (%)', rev: 'Doanh thu thực/kỳ vọng (cho MoS)', revS: 'Doanh thu thực R (đ/tháng)', calc: 'Tính toán & Nhận XP', trapsT: 'Ba cái bẫy', traps: ['CM = DT − Biến phí, KHÁC lợi nhuận (đã trừ cả định phí).', 'Q* tính bằng SỐ ĐƠN VỊ, TR* tính bằng TIỀN — đọc kỹ đề.', 'Chia cho CMR dạng thập phân (0,657) — không phải 65,7.'], chart: 'Đồ thị CVP', lTR: 'Doanh thu (TR)', lTC: 'Tổng chi phí (TC)', lFC: 'Định phí (FC)', lBEP: 'Điểm hòa vốn', lAct: 'Doanh số thực', axisQ: 'Q (SP)', chartEmpty: 'Nhập Giá bán P và Biến phí v để dựng đồ thị.', unitCM: 'CM đơn vị', bepQ: 'BEP — sản lượng', bepTR: 'BEP — doanh thu', tgt: 'Lợi nhuận mục tiêu', tgtEmpty: 'Nhập LN mục tiêu ở cột trái để tính sản lượng cần đạt.', preTax: 'LN trước thuế cần đạt', tgtRev: 'Doanh thu cần đạt', mos: 'Biên an toàn (MoS)', mosEmpty: 'Nhập "Doanh thu thực/kỳ vọng" ở cột trái để đo MoS.', mosRisk: 'RỦI RO (<10%)', mosSafe: 'AN TOÀN (>25%)', zSafe: 'An toàn', zMid: 'Cần theo dõi', zRisk: 'Rủi ro', zLoss: 'Dưới hòa vốn', explain: 'Diễn giải bằng lời', explainSub: 'Hiểu, không chỉ tính', explainEmpty: 'Tính toán xong, phần diễn giải sẽ xuất hiện ở đây — dùng để giải thích miệng cho Hội đồng.', chal: 'Thử thách', board: 'Bảng xếp hạng lớp', boardS: 'Xếp hạng', uni: 'Vũ trụ →', map: 'Bản đồ tiên quyết', lvlUp: 'Lên cấp!', unlocked: 'Bạn đã mở khóa cấp mới', cont: 'Tiếp tục', done: 'Hoàn thành!', classView: 'CVP LAB · MÀN HÌNH LỚP', race: 'Đua nhóm', total: 'Tổng XP', live: 'Thử thách đang mở', release: 'Mở thử thách', award: 'Thưởng XP', reset: 'Đặt lại lớp', lock: 'KHÓA', wait: 'Chờ giảng viên mở', notq: 'Chưa đúng', team: 'Nhóm', tabs: ['Số liệu', 'Đồ thị', 'Thử thách', 'Xếp hạng'], levels: ['Người học việc', 'Nhà phân tích', 'Nhà chiến lược', 'Bậc thầy'], vErr: 'Biến phí v phải nhỏ hơn giá bán P (và P > 0).', backStudent: '← Quay lại màn hình sinh viên', chartAria: 'Đồ thị CVP: đường doanh thu, tổng chi phí, định phí và điểm hòa vốn', bnames: ['Đã tính điểm hòa vốn', 'Đã tính lợi nhuận mục tiêu', 'Đã đo biên an toàn', 'Giải đủ 6 thử thách'], dragonHero: 'Rồng BizOn cầm kính lúp', dragonUp: 'Rồng BizOn ăn mừng',
+    q: ['Giá bán tăng 10%. BEP mới là bao nhiêu SP/tháng?', 'Biến phí tăng thêm 3.000đ/SP. CMR mới là bao nhiêu?', 'LN mục tiêu trước thuế 10.000.000đ/tháng. Cần bán bao nhiêu SP?', 'LN mục tiêu SAU thuế 10.000.000đ, thuế suất 20%. Cần bán bao nhiêu SP?', 'Doanh thu hòa vốn TR* là bao nhiêu?', 'Doanh thu thực 40.000.000đ/tháng. MoS % là bao nhiêu?'],
+    rel: ['TT1 · Giá +10%', 'TT2 · v +3.000đ', 'TT3 · LN mục tiêu', 'TT4 · LN sau thuế', 'TT5 · DT hòa vốn', 'TT6 · Biên an toàn'] },
 };
-let LANG = localStorage.getItem('cvpstudio_lang') || 'vi';
-function t(k){ return (I18N[LANG] && I18N[LANG][k]!==undefined) ? I18N[LANG][k] : k; }
 
-/* ===================== Config ===================== */
-const TEAMS = [
-  {id:'T01',c:'var(--t1)'},{id:'T02',c:'var(--t2)'},{id:'T03',c:'var(--t3)'},
-  {id:'T04',c:'var(--t4)'},{id:'T05',c:'var(--t5)'}
-];
-const LEVELS = [0,100,250,450,700];
-const BADGES = [
-  {id:'first',icon:'🎯',xp:20},{id:'cm',icon:'🧮',xp:20},{id:'bep',icon:'🎯',xp:30},
-  {id:'bal',icon:'⚖️',xp:30},{id:'tgt',icon:'🪙',xp:30},{id:'tax',icon:'🧾',xp:40},
-  {id:'mos',icon:'🛡️',xp:40},{id:'full',icon:'📈',xp:50}
-];
-const CH_XP = [20,30,30,40,40,50];
+const COLORS = ['#8C2F39', '#A8703A', '#C9A24A', '#3E5C8A', '#7E5E77'];
+const DARK = [false, false, true, false, false];
+const START_XP = [70, 150, 40, 120, 95];
+const REL0 = [true, true, true, false, false, false];
+const ORD = [[1, 0, 2], [2, 1, 0], [0, 2, 1], [2, 0, 1], [1, 2, 0], [0, 1, 2]];
+const STORE = 'cvplab-v1';
+const INPUTS = { inName: 'name', inP: 'P', inV: 'v', inFC: 'FC', inTgt: 'tgt', inTax: 'tax', inR: 'R' };
 
-/* ===================== State ===================== */
-const SKEY = 'cvpstudio_state_v1';
-let store = load();
-let current = null; // team id
+const DEFAULT_STATE = { team: 0, lang: 'vi', name: 'Bizon Coffee', P: '35000', v: '12000', FC: '18000000', tgt: '10000000', afterTax: false, tax: '20', R: '40000000', xp: START_XP.slice(), claimed: false, answers: {}, released: REL0.slice(), edited: false, tab: 0, modal: false, toast: false };
+let S = clone(DEFAULT_STATE);
+let toastTimer = null;
+let view = 'student';
+const mq = window.matchMedia('(max-width: 720px)');
 
-function load(){ try{ return JSON.parse(localStorage.getItem(SKEY)) || {}; }catch(e){ return {}; } }
-function save(){ try{ localStorage.setItem(SKEY, JSON.stringify(store)); }catch(e){} }
-function blank(){ return {name:'',p:'',v:'',fc:'',pi:'',tax:'',afterTax:false,ar:'',xp:0,badges:{},chs:{}}; }
-function team(){ if(!store[current]) store[current]=blank(); return store[current]; }
-
-/* ===================== Helpers ===================== */
-function num(x){ const n = parseFloat(x); return isFinite(n)?n:0; }
-const fmtVND = new Intl.NumberFormat('vi-VN');
-const fmtNum = new Intl.NumberFormat('vi-VN',{maximumFractionDigits:0});
-function vnd(x){ if(!isFinite(x)) return '∞'; return fmtVND.format(Math.round(x))+'đ'; }
-function vndShort(x){
-  if(!isFinite(x)) return '∞';
-  const a=Math.abs(x);
-  if(a>=1e9) return (x/1e9).toLocaleString('vi-VN',{maximumFractionDigits:2})+' tỷ';
-  if(a>=1e6) return (x/1e6).toLocaleString('vi-VN',{maximumFractionDigits:1})+'tr';
-  if(a>=1e3) return (x/1e3).toLocaleString('vi-VN',{maximumFractionDigits:0})+'k';
-  return fmtVND.format(Math.round(x))+'đ';
+function clone(o) { return JSON.parse(JSON.stringify(o)); }
+function load() {
+  try {
+    const d = JSON.parse(localStorage.getItem(STORE) || 'null');
+    if (!d || typeof d !== 'object') return;
+    const n = Object.assign(clone(DEFAULT_STATE), d, { modal: S.modal, toast: S.toast, tab: S.tab });
+    if (!Array.isArray(n.xp) || n.xp.length !== 5 || n.xp.some(x => typeof x !== 'number' || !isFinite(x))) n.xp = START_XP.slice();
+    if (!Array.isArray(n.released) || n.released.length !== 6) n.released = REL0.slice();
+    n.released = n.released.map(Boolean);
+    if (!(n.team >= 0 && n.team <= 4)) n.team = 0;
+    n.team = Math.floor(n.team);
+    if (n.lang !== 'vi' && n.lang !== 'en') n.lang = 'vi';
+    if (!n.answers || typeof n.answers !== 'object') n.answers = {};
+    ['name', 'P', 'v', 'FC', 'tgt', 'tax', 'R'].forEach(k => { n[k] = String(n[k] == null ? '' : n[k]); });
+    n.afterTax = !!n.afterTax; n.claimed = !!n.claimed;
+    S = n;
+  } catch (e) {}
 }
-function units(x){ if(!isFinite(x)) return '∞'; return fmtNum.format(Math.ceil(x)); }
-function pct(x,d){ return (x*100).toLocaleString('vi-VN',{maximumFractionDigits:d===undefined?1:d})+'%'; }
+function save() {
+  try {
+    localStorage.setItem(STORE, JSON.stringify({ team: S.team, lang: S.lang, name: S.name, P: S.P, v: S.v, FC: S.FC, tgt: S.tgt, afterTax: S.afterTax, tax: S.tax, R: S.R, xp: S.xp, claimed: S.claimed, answers: S.answers, released: S.released, edited: S.edited }));
+  } catch (e) {}
+}
+function num(s) { return Number(String(s).replace(/[^\d]/g, '')) || 0; }
+function fmt(n) { return Math.round(n).toLocaleString(S.lang === 'vi' ? 'vi-VN' : 'en-US'); }
+function pct(n) { const s = n.toFixed(1); return S.lang === 'vi' ? s.replace('.', ',') : s; }
+function no(i) { return String(i + 1).padStart(2, '0'); }
+function fg(i) { return DARK[i] ? '#1F2A44' : '#fff'; }
+function $(id) { return document.getElementById(id); }
+function txt(id, s) { const el = $(id); if (el.textContent !== String(s)) el.textContent = s; }
+function lvName(x) { return T[S.lang].levels[Math.min(3, Math.floor(x / 100))]; }
+function addXp(i, n) { S.xp = S.xp.slice(); S.xp[i] += n; }
 
-/* ===================== Core compute ===================== */
-function compute(s){
-  const P=num(s.p), v=num(s.v), FC=num(s.fc), piIn=num(s.pi);
-  const tr = s.afterTax ? num(s.tax)/100 : 0;
-  const AR=num(s.ar);
-  const CM = P - v;
-  const CMR = P>0 ? CM/P : 0;
-  const BEPq = CM>0 ? FC/CM : Infinity;
-  const BEPtr = CMR>0 ? FC/CMR : Infinity;
-  let piPre = piIn;
-  if(s.afterTax){ piPre = (tr<1) ? piIn/(1-tr) : Infinity; }
-  const Qt = (CM>0 && piIn>0) ? (FC+piPre)/CM : Infinity;
-  const TRt = (CMR>0 && piIn>0) ? (FC+piPre)/CMR : Infinity;
-  const MoS = (AR>0 && isFinite(BEPtr)) ? (AR-BEPtr)/AR : null;
-  return {P,v,FC,piIn,tr,AR,CM,CMR,BEPq,BEPtr,piPre,Qt,TRt,MoS};
+function calc() {
+  const P = num(S.P), v = num(S.v), FC = num(S.FC), pi = num(S.tgt), R = num(S.R);
+  const tax = Math.min(99, num(S.tax)) / 100;
+  const ok = P > 0 && v < P;
+  const CM = ok ? P - v : 0, CMR = ok ? CM / P : 0, BEP = ok ? Math.ceil(FC / CM) : 0, TRs = ok ? FC / CMR : 0;
+  const pre = S.afterTax ? pi / (1 - tax) : pi, Qt = ok ? Math.ceil((FC + pre) / CM) : 0;
+  const hasTgt = ok && pi > 0, hasMos = ok && R > 0;
+  const MoS = R - TRs, MoSp = hasMos ? MoS / R * 100 : 0;
+  return { P, v, FC, pi, R, tax, ok, CM, CMR, BEP, TRs, pre, Qt, hasTgt, hasMos, MoS, MoSp };
 }
 
-/* ===================== Live (no XP) ===================== */
-function live(){
-  if(!current) return;
-  const s=team();
-  s.name=val('iName'); s.p=val('iP'); s.v=val('iV'); s.fc=val('iFC');
-  s.pi=val('iPi'); s.afterTax=document.getElementById('swTax').checked; s.tax=val('iT'); s.ar=val('iAR');
-  document.getElementById('taxField').style.display = s.afterTax ? 'block' : 'none';
-  save();
-  render(compute(s), s);
-  renderTeams();
-}
-function val(id){ return document.getElementById(id).value; }
-
-/* ===================== Render results ===================== */
-function render(r, s){
-  // metrics
-  setT('vCM', r.P>0||r.v>0 ? vnd(r.CM) : '—');
-  setT('vCMR', r.P>0 ? pct(r.CMR) : '—');
-  setT('vCMRdec', r.P>0 ? '= '+r.CMR.toLocaleString('vi-VN',{maximumFractionDigits:3}) : '—');
-  setT('vBQ', isFinite(r.BEPq) ? units(r.BEPq) : '∞');
-  setT('vBTR', isFinite(r.BEPtr) ? vndShort(r.BEPtr) : '∞');
-
-  // CM color
-  document.getElementById('vCM').style.color = (r.P>0||r.v>0) ? (r.CM>0?'var(--profit)':'var(--red)') : '';
-
-  // tax note
-  const tn=document.getElementById('taxNote');
-  if(s.afterTax && r.piIn>0 && r.tr<1){
-    tn.style.display='block';
-    tn.innerHTML = `${t('tax_note_a')} <span class="mono">${vndShort(r.piIn)}</span> ${t('tax_note_b')} <span class="mono">${vndShort(r.piIn)} ÷ (1−${r.tr.toLocaleString('vi-VN',{maximumFractionDigits:2})}) = ${vndShort(r.piPre)}</span>`;
-  } else tn.style.display='none';
-
-  drawChart(r);
-  renderTarget(r, s);
-  renderMoS(r);
-  renderInterp(r, s);
-}
-function setT(id,txt){ const e=document.getElementById(id); if(e) e.textContent=txt; }
-
-/* ===================== CVP chart (SVG) ===================== */
-function niceCeil(x){
-  if(x<=0||!isFinite(x)) return 10;
-  const p=Math.pow(10,Math.floor(Math.log10(x)));
-  const n=x/p;
-  let m; if(n<=1)m=1; else if(n<=2)m=2; else if(n<=2.5)m=2.5; else if(n<=5)m=5; else m=10;
-  return m*p;
-}
-function drawChart(r){
-  const host=document.getElementById('chartHost');
-  const warn=document.getElementById('warnBep');
-  if(!(r.P>0 || r.v>0) || (r.P<=0 && r.FC<=0)){
-    host.innerHTML = '<div class="chart-empty" id="chartEmpty"><div class="big">📉</div><span>'+t('chart_empty')+'</span></div>';
-    warn.style.display='none';
-    return;
-  }
-  // No break-even case
-  const noBep = !(r.CM>0);
-  warn.style.display = noBep ? 'block' : 'none';
-  if(noBep) warn.textContent = t('warn_nobep');
-
-  // domain
-  let anchor;
-  if(r.CM>0){ anchor = r.BEPq; } else { anchor = (r.FC>0 && r.P>0) ? r.FC/Math.max(r.P,1) : 1000; }
-  let Qmax = anchor*2;
-  if(isFinite(r.Qt) && r.Qt>0) Qmax = Math.max(Qmax, r.Qt*1.12);
-  Qmax = niceCeil(Math.max(Qmax,10));
-  const TRmax = r.P*Qmax;
-  const TCmax = r.FC + r.v*Qmax;
-  let Ymax = niceCeil(Math.max(TRmax, TCmax, r.FC*1.2, 1));
-
-  // svg geometry
-  const W=720, H=420, padL=64, padR=20, padT=18, padB=44;
-  const x = q => padL + (q/Qmax)*(W-padL-padR);
-  const y = m => (H-padB) - (m/Ymax)*(H-padT-padB);
-
-  const beQ = r.CM>0 ? r.BEPq : null;
-  const beM = beQ!=null ? r.P*beQ : null;
-
-  // grid + ticks
-  const xt=5, yt=5; let grid='';
-  for(let i=0;i<=xt;i++){ const gx=padL+(i/xt)*(W-padL-padR); grid+=`<line x1="${gx}" y1="${padT}" x2="${gx}" y2="${H-padB}" class="gl"/>`; }
-  for(let i=0;i<=yt;i++){ const gy=(H-padB)-(i/yt)*(H-padT-padB); grid+=`<line x1="${padL}" y1="${gy}" x2="${W-padR}" y2="${gy}" class="gl"/>`; }
-  let xlab=''; for(let i=0;i<=xt;i++){ const q=(i/xt)*Qmax; xlab+=`<text x="${padL+(i/xt)*(W-padL-padR)}" y="${H-padB+18}" class="ax" text-anchor="middle">${fmtNum.format(Math.round(q))}</text>`; }
-  let ylab=''; for(let i=0;i<=yt;i++){ const m=(i/yt)*Ymax; ylab+=`<text x="${padL-8}" y="${(H-padB)-(i/yt)*(H-padT-padB)+4}" class="ax" text-anchor="end">${vndShort(m)}</text>`; }
-
-  // areas
-  let lossArea='', profitArea='';
-  if(beQ!=null && beQ<=Qmax){
-    lossArea = `<polygon points="${x(0)},${y(r.FC)} ${x(beQ)},${y(beM)} ${x(0)},${y(0)}" class="aLoss"/>`;
-    profitArea = `<polygon points="${x(beQ)},${y(beM)} ${x(Qmax)},${y(TRmax)} ${x(Qmax)},${y(TCmax)}" class="aProfit"/>`;
+function chartSVG(c, m) {
+  const t = T[S.lang], cur = S.lang === 'vi' ? 'đ' : '₫';
+  const L = 56, Rr = 628, B = 284, Tp = 16;
+  const Qa = c.hasMos ? c.R / c.P : 0;
+  const Qmax = Math.max(c.BEP * 2, c.Qt * 1.15, Qa * 1.15, 1);
+  const Ymax = Math.max(c.P * Qmax, c.FC + c.v * Qmax) * 1.06 || 1;
+  const X = q => +(L + q / Qmax * (Rr - L)).toFixed(1), Y = mny => +(B - mny / Ymax * (B - Tp)).toFixed(1);
+  const xB = X(c.BEP), yB = Y(c.P * c.BEP), yFC = Y(c.FC), yTC1 = Y(c.FC + c.v * Qmax), yTR1 = Y(c.P * Qmax), xA = X(Qa);
+  const F = "font-family=\"'Plus Jakarta Sans',sans-serif\" font-weight=\"800\"";
+  const sw = m ? [3, 5, 7] : [2, 3, 4];
+  let s = `<svg viewBox="0 0 640 320" role="img" aria-label="${t.chartAria}">`;
+  s += `<line x1="56" y1="284" x2="628" y2="284" stroke="#9AA0AC" stroke-width="${sw[0]}"/><line x1="56" y1="12" x2="56" y2="284" stroke="#9AA0AC" stroke-width="${sw[0]}"/>`;
+  s += `<polygon points="${L},${B} ${L},${yFC} ${xB},${yB}" fill="#8C2F39" fill-opacity=".14"/>`;
+  s += `<polygon points="${xB},${yB} ${Rr},${yTR1} ${Rr},${yTC1}" fill="#3F6E52" fill-opacity=".16"/>`;
+  s += `<line x1="56" y1="${yFC}" x2="628" y2="${yFC}" stroke="#A8703A" stroke-width="${sw[1]}" stroke-dasharray="${m ? '12 8' : '8 6'}"/>`;
+  s += `<line x1="${L}" y1="${yFC}" x2="${Rr}" y2="${yTC1}" stroke="#8C2F39" stroke-width="${sw[2]}" stroke-linecap="round"/>`;
+  s += `<line x1="${L}" y1="284" x2="${Rr}" y2="${yTR1}" stroke="#3E5C8A" stroke-width="${sw[2]}" stroke-linecap="round"/>`;
+  if (m) {
+    s += `<circle cx="${xB}" cy="${yB}" r="16" fill="#C9A24A" stroke="#1F2A44" stroke-width="4"/>`;
+    s += `<text x="${xB}" y="312" text-anchor="middle" ${F} font-size="26" fill="#1F2A44">Q* ${fmt(c.BEP)}</text>`;
   } else {
-    // whole region loss
-    lossArea = `<polygon points="${x(0)},${y(r.FC)} ${x(Qmax)},${y(TCmax)} ${x(Qmax)},${y(TRmax)} ${x(0)},${y(0)}" class="aLoss"/>`;
+    s += `<line x1="${xA}" y1="284" x2="${xA}" y2="16" stroke="#3F6E52" stroke-width="3" stroke-dasharray="2 6" stroke-linecap="round" opacity="${c.hasMos ? 1 : 0}"/>`;
+    s += `<line x1="${xB}" y1="284" x2="${xB}" y2="${yB}" stroke="#1F2A44" stroke-width="2" stroke-dasharray="4 4"/>`;
+    s += `<circle cx="${xB}" cy="${yB}" r="10" fill="#C9A24A" stroke="#1F2A44" stroke-width="3"/>`;
+    s += `<text x="${xB}" y="304" text-anchor="middle" ${F} font-size="15" fill="#1F2A44">Q* ${fmt(c.BEP)}</text>`;
+    s += `<text x="${Math.min(xB + 16, 470)}" y="${yB - 16}" ${F} font-size="15" fill="#1F2A44">TR* ${fmt(c.TRs)}</text>`;
+    s += `<text x="62" y="${yFC - 8}" ${F} font-size="12" fill="#A8703A">FC</text>`;
+    s += `<text x="620" y="304" text-anchor="end" ${F} font-size="12" fill="#5F6675">${t.axisQ}</text>`;
+    s += `<text x="62" y="24" ${F} font-size="12" fill="#5F6675">${cur}</text>`;
   }
-
-  // lines
-  const fcLine = `<line x1="${x(0)}" y1="${y(r.FC)}" x2="${x(Qmax)}" y2="${y(r.FC)}" class="lFC"/>`;
-  const tcLine = `<line x1="${x(0)}" y1="${y(r.FC)}" x2="${x(Qmax)}" y2="${y(TCmax)}" class="lTC"/>`;
-  const trLine = `<line x1="${x(0)}" y1="${y(0)}" x2="${x(Qmax)}" y2="${y(TRmax)}" class="lTR"/>`;
-
-  // BEP marker + target line
-  let bep='';
-  if(beQ!=null && beQ<=Qmax){
-    bep = `<line x1="${x(beQ)}" y1="${y(0)}" x2="${x(beQ)}" y2="${y(beM)}" class="drop"/>
-           <circle cx="${x(beQ)}" cy="${y(beM)}" r="6.5" class="bepDot"/>
-           <text x="${x(beQ)}" y="${y(beM)-12}" class="bepLab" text-anchor="middle">BEP · Q*=${fmtNum.format(Math.ceil(beQ))}</text>`;
-  }
-  let tgt='';
-  if(isFinite(r.Qt) && r.Qt>0 && r.Qt<=Qmax){
-    tgt = `<line x1="${x(r.Qt)}" y1="${padT}" x2="${x(r.Qt)}" y2="${y(0)}" class="tgtLine"/>
-           <text x="${x(r.Qt)}" y="${padT+12}" class="tgtLab" text-anchor="middle">🎯 ${fmtNum.format(Math.ceil(r.Qt))}</text>`;
-  }
-
-  const axisLabels = `<text x="${(W)/2}" y="${H-6}" class="axt" text-anchor="middle">${LANG==='vi'?'Sản lượng Q (đơn vị/tháng)':'Volume Q (units/month)'}</text>
-    <text x="14" y="${(H)/2}" class="axt" text-anchor="middle" transform="rotate(-90 14 ${(H)/2})">${LANG==='vi'?'Tiền (đồng)':'Money (đ)'}</text>`;
-
-  host.innerHTML = `
-  <svg id="cvp" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" role="img">
-    <style>
-      #cvp .gl{stroke:var(--line);stroke-width:1;opacity:.6}
-      #cvp .ax{fill:var(--faint);font:600 11px 'JetBrains Mono',monospace}
-      #cvp .axt{fill:var(--muted);font:700 12px 'Plus Jakarta Sans',sans-serif}
-      #cvp .lTR{stroke:var(--rev);stroke-width:3;fill:none}
-      #cvp .lTC{stroke:var(--cost);stroke-width:3;fill:none}
-      #cvp .lFC{stroke:var(--fc);stroke-width:2.4;stroke-dasharray:7 5;fill:none}
-      #cvp .aLoss{fill:var(--red);opacity:.12}
-      #cvp .aProfit{fill:var(--profit);opacity:.14}
-      #cvp .bepDot{fill:var(--bep);stroke:var(--panel2);stroke-width:3}
-      #cvp .bepLab{fill:var(--bep);font:800 12px 'JetBrains Mono',monospace}
-      #cvp .drop{stroke:var(--bep);stroke-width:1.5;stroke-dasharray:3 4;opacity:.8}
-      #cvp .tgtLine{stroke:var(--amber);stroke-width:1.6;stroke-dasharray:2 5;opacity:.85}
-      #cvp .tgtLab{fill:var(--amber);font:800 11px 'JetBrains Mono',monospace}
-      #cvp .axis{stroke:var(--line2);stroke-width:1.5}
-    </style>
-    ${grid}
-    <line x1="${padL}" y1="${padT}" x2="${padL}" y2="${H-padB}" class="axis"/>
-    <line x1="${padL}" y1="${H-padB}" x2="${W-padR}" y2="${H-padB}" class="axis"/>
-    ${lossArea}${profitArea}
-    ${fcLine}${tcLine}${trLine}
-    ${bep}${tgt}
-    ${xlab}${ylab}${axisLabels}
-  </svg>`;
+  return s + '</svg>';
 }
 
-/* ===================== Target profit ===================== */
-function renderTarget(r, s){
-  const body=document.getElementById('tgtBody');
-  const tag=document.getElementById('tgtTag');
-  if(!(r.piIn>0) || !(r.CM>0)){
-    tag.innerHTML=''; body.innerHTML='<div class="iline empty">'+t('tgt_empty')+'</div>'; return;
-  }
-  tag.innerHTML = s.afterTax ? `<span class="tag post">${t('post')}</span>` : `<span class="tag pre">${t('pre')}</span>`;
-  let rows='';
-  if(s.afterTax){
-    rows+=kv(t('k_piafter'), vndShort(r.piIn));
-    rows+=kv(t('k_pipre'), '<span style="color:var(--amber)">'+vndShort(r.piPre)+'</span>');
-  }
-  rows+=kv(t('k_qtarget'), units(r.Qt)+' '+t('unit'));
-  rows+=kv(t('k_perday'), units(r.Qt/30)+' '+t('unitday'));
-  rows+=kv(t('k_trtarget'), vndShort(r.TRt));
-  body.innerHTML = rows;
-}
-function kv(k,v){ return `<div class="kv"><span class="k">${k}</span><span class="v">${v}</span></div>`; }
-
-/* ===================== MoS ===================== */
-function renderMoS(r){
-  const body=document.getElementById('mosBody');
-  if(r.MoS===null){ body.innerHTML='<div class="iline empty">'+t('mos_empty')+'</div>'; return; }
-  const m=r.MoS;
-  let cls,msg;
-  if(m<0){ cls='red'; msg=t('zloss'); }
-  else if(m<0.15){ cls='red'; msg=t('zred'); }
-  else if(m<0.30){ cls='amber'; msg=t('zamber'); }
-  else { cls='green'; msg=t('zgreen'); }
-  const mkPos = Math.max(0, Math.min(m,1))*100;
-  body.innerHTML = `
-    ${kv(t('mos_actual'), vndShort(r.AR))}
-    ${kv(t('mos_bep'), vndShort(r.BEPtr))}
-    ${kv(t('mos_val'), '<span style="color:var(--'+cls+')">'+pct(m)+'</span>')}
-    <div class="gauge">
-      <div class="mk" data-v="${pct(m,0)}" style="left:${mkPos}%"></div>
-      <span class="seglab" style="left:7.5%">&lt;15%</span>
-      <span class="seglab" style="left:22.5%">15–30%</span>
-      <span class="seglab" style="left:65%">&gt;30%</span>
-    </div>
-    <div class="verdict ${cls}"><span>${cls==='green'?'🟢':cls==='amber'?'🟡':'🔴'}</span><span>${msg}</span></div>`;
-}
-
-/* ===================== Interpretation ===================== */
-function renderInterp(r, s){
-  const box=document.getElementById('interp');
-  const lines=[];
-  if(r.CM>0 && isFinite(r.BEPq)){
-    lines.push(iline('🎯',
-      `${t('i_bep_a')} <b>${units(r.BEPq)} ${t('unit')}</b> ${t('i_bep_b')} (≈ ${units(r.BEPq/30)} ${t('unitday')}), ${t('i_bep_c')} <b>${vndShort(r.BEPtr)}</b>.`));
-  }
-  if(r.piIn>0 && r.CM>0){
-    const lbl = s.afterTax ? `${vndShort(r.piIn)} (${t('post')})` : `${vndShort(r.piIn)} (${t('pre')})`;
-    lines.push(iline('🪙',
-      `${t('i_tgt_a')} <b>${lbl}</b>, ${t('i_tgt_b')} <b>${units(r.Qt)} ${t('unit')}</b> (≈ ${units(r.Qt/30)} ${t('unitday')}), ${t('i_tgt_c')} <b>${vndShort(r.TRt)}</b>.`));
-  }
-  if(r.MoS!==null){
-    if(r.MoS<0){
-      lines.push(iline('🛡️', `${t('i_mos_a')} <b>${vndShort(r.AR)}</b> ${t('i_mos_loss')}`));
-    } else {
-      lines.push(iline('🛡️', `${t('i_mos_a')} <b>${vndShort(r.AR)}</b> ${t('i_mos_b')} <b>${pct(r.MoS)}</b> ${t('i_mos_c')}`));
-    }
-  }
-  box.innerHTML = lines.length ? lines.join('') : '<div class="iline empty">'+t('interp_empty')+'</div>';
-}
-function iline(ic,html){ return `<div class="iline"><span class="ic">${ic}</span><span>${html}</span></div>`; }
-
-/* ===================== Calculate (award XP) ===================== */
-function calculate(){
-  if(!current){ toast('⚠️', t('step1')); return; }
-  const s=team();
-  s.name=val('iName'); s.p=val('iP'); s.v=val('iV'); s.fc=val('iFC');
-  s.pi=val('iPi'); s.afterTax=document.getElementById('swTax').checked; s.tax=val('iT'); s.ar=val('iAR');
-  const r=compute(s);
-  if(!(r.P>0)){ toast('⚠️', t('needP')); return; }
-  if(s.afterTax && !(r.piIn>0)){ toast('⚠️', t('needPI')); }
-
-  // evaluate badges + challenges
-  const cond={
-    first: r.P>0 && r.v>=0 && r.FC>0,
-    cm: r.CM>0,
-    bep: isFinite(r.BEPq) && r.FC>0,
-    bal: r.CMR>=0.4 && r.CMR<=0.7,
-    tgt: r.piIn>0 && isFinite(r.Qt),
-    tax: s.afterTax && r.tr>0 && r.piIn>0,
-    mos: r.MoS!==null && r.MoS>=0.30,
-    full: r.P>0 && r.v>=0 && r.FC>0 && r.piIn>0 && r.AR>0 && isFinite(r.BEPq)
-  };
-  const chCond=[
-    cond.first,
-    cond.bal,
-    isFinite(r.BEPq) && r.BEPq>0 && r.BEPq<=1500,
-    cond.tgt,
-    cond.tax,
-    cond.mos
+function challengeOpts(c) {
+  const f = fmt, pc = pct, cur = S.lang === 'vi' ? 'đ' : '₫';
+  const { P, v, FC, CM, CMR, BEP } = c;
+  const trs = FC / (CMR || 1), R6 = 40000000;
+  // Đáp án đúng luôn ở chỉ số 0; đáp án số SP làm tròn LÊN như Q* và Qt.
+  return [
+    [f(Math.ceil(FC / (P * 1.1 - v))), f(BEP * 0.9), f(FC / (CM * 1.1))],
+    [pc((CM - 3000) / P * 100) + '%', pc(CMR * 100 - 3) + '%', pc((CM - 3000) / (P + 3000) * 100) + '%'],
+    [f(Math.ceil((FC + 1e7) / CM)), f(1e7 / CM), f((FC + 1e7) / P)],
+    [f(Math.ceil((FC + 1e7 / 0.8) / CM)), f((FC + 1e7 * 0.8) / CM), f((FC + 1e7 * 1.2) / CM)],
+    [f(trs) + cur, f(FC / (CMR * 100)) + cur, f(BEP * CM) === f(trs) ? f(FC / CM) + cur : f(BEP * CM) + cur],
+    [pc((R6 - trs) / R6 * 100) + '%', pc((R6 - trs) / trs * 100) + '%', pc(trs / R6 * 100) + '%'],
   ];
+}
 
-  let gained=0; const newly=[];
-  BADGES.forEach(b=>{ if(cond[b.id] && !s.badges[b.id]){ s.badges[b.id]=1; gained+=b.xp; newly.push(t('badges')[b.id]); } });
-  chCond.forEach((ok,i)=>{ if(ok && !s.chs[i]){ s.chs[i]=1; gained+=CH_XP[i]; } });
+function setVal(id, val) {
+  const el = $(id);
+  if (document.activeElement !== el && el.value !== String(val)) el.value = val;
+}
 
-  const before=s.xp;
-  s.xp += gained;
+function metricsHTML(c, t) {
+  const f = fmt, cur = S.lang === 'vi' ? 'đ' : '₫';
+  const tile = (cls, lab, val, sub) => `<div class="metric ${cls}"><small>${lab}</small><b class="${String(val).length > 9 ? 'sm' : ''}">${val}</b><span>${sub}</span></div>`;
+  const m = mq.matches;
+  return tile('m-cm', t.unitCM, c.ok ? f(c.CM) : '—', 'P − v') +
+    tile('m-cmr', 'CMR', c.ok ? pct(c.CMR * 100) + '%' : '—', 'CM / P') +
+    tile('m-q', m ? 'Q*' : t.bepQ, c.ok ? f(c.BEP) : '—', 'Q* = FC / CM') +
+    tile('m-tr', m ? 'TR*' : t.bepTR, c.ok ? f(c.TRs) : '—', 'TR* = FC / CMR');
+}
+
+function render() {
+  const t = T[S.lang], vi = S.lang === 'vi';
+  document.documentElement.lang = vi ? 'vi' : 'en';
+  document.querySelectorAll('[data-act="lang"]').forEach(b => { b.classList.toggle('on', b.dataset.v === S.lang); b.setAttribute('aria-pressed', String(b.dataset.v === S.lang)); });
+  if (view === 'teacher') renderTeacher(t); else renderStudent(t, vi);
   save();
-
-  // level up?
-  const lvlBefore=levelOf(before), lvlAfter=levelOf(s.xp);
-  render(r, s); renderGame(); renderChs(); renderTeams(); renderLB();
-
-  if(lvlAfter>lvlBefore){ showModal(lvlAfter); }
-  else if(gained>0){ toast('✨', '+'+gained+' XP' + (newly.length? ' · '+newly[0] : '')); }
-  else { toast('✅', LANG==='vi'?'Đã cập nhật. Thử bộ số khác để mở khóa thêm huy hiệu!':'Updated. Try other numbers to unlock more badges!'); }
 }
-function levelOf(xp){ let l=1; for(let i=0;i<LEVELS.length;i++){ if(xp>=LEVELS[i]) l=i+1; } return l; }
 
-/* ===================== Gamification UI ===================== */
-function renderGame(){
-  if(!current) return;
-  const s=team(); const lvl=levelOf(s.xp);
-  document.getElementById('lvlNum').textContent=lvl;
-  document.getElementById('lvlName').textContent=t('levels')[lvl-1];
-  document.getElementById('teamTag').textContent=t('teamWord')+' '+current+(s.name?(' · '+s.name):'');
-  const cur=LEVELS[lvl-1], next=LEVELS[lvl]||LEVELS[LEVELS.length-1];
-  let prog,frac;
-  if(lvl>=LEVELS.length){ frac=1; document.getElementById('xpTxt').textContent=s.xp+' XP · MAX'; }
-  else { frac=(s.xp-cur)/(next-cur); document.getElementById('xpTxt').textContent=s.xp+' / '+next; }
-  document.getElementById('xpFill').style.width=Math.min(frac*100,100)+'%';
-  const C=2*Math.PI*26;
-  document.getElementById('lvlArc').style.strokeDashoffset = C*(1-Math.min(frac,1));
-  // badges
-  const bg=document.getElementById('badgeGrid');
-  bg.innerHTML = BADGES.map(b=>{
-    const got=!!s.badges[b.id];
-    return `<div class="badge ${got?'got':''}">${b.icon}<span class="tip"><b>${t('badges')[b.id]}</b><br>${t('badgesD')[b.id]} · +${b.xp}</span></div>`;
+function renderStudent(t, vi) {
+  const c = calc(), f = fmt, pc = pct, cur = vi ? 'đ' : '₫', m = mq.matches;
+  const xp = S.xp[S.team], lvl = Math.floor(xp / 100), max = Math.max(...S.xp, 1);
+
+  txt('navSub', t.sub); txt('clsLink', t.cls); txt('lang1', vi ? 'EN' : 'VI');
+  $('lang1').setAttribute('aria-label', vi ? 'Switch to English' : 'Chuyển sang tiếng Việt');
+  const nb = $('navBadge'); nb.textContent = no(S.team); nb.style.background = COLORS[S.team]; nb.style.color = fg(S.team);
+  txt('navXp', xp + ' XP');
+
+  txt('eyebrow', t.kicker); txt('hero1', t.hero1); txt('hero2', t.hero2); txt('hero3', t.hero3); txt('intro', t.intro);
+  $('heroDragon').alt = t.dragonHero;
+  const tc = $('teamCard'); tc.style.background = COLORS[S.team]; tc.style.color = fg(S.team);
+  txt('tcName', t.team.toUpperCase() + ' T' + no(S.team)); txt('tcLevel', lvName(xp)); txt('lvlNo', lvl + 1);
+  txt('xpLbl', t.xpp); txt('xpTxt', (xp % 100) + ' / 100 XP'); $('xpFill').style.width = (xp % 100) + '%';
+  txt('bdT', t.badges);
+  const solved = Object.values(S.answers).filter(a => a === 0).length;
+  const earned = [S.claimed && c.ok, S.claimed && c.hasTgt, S.claimed && c.hasMos, solved === 6];
+  $('badges').innerHTML = ['Q*', 'π', 'MoS', '6C'].map((b, i) => `<div class="bdg ${earned[i] ? 'on' : 'off'}" role="img" title="${t.bnames[i]}" aria-label="${b}: ${t.bnames[i]}${earned[i] ? ' ✓' : ''}">${b}</div>`).join('');
+
+  txt('pickTitle', t.pick); txt('pickSub', t.teamSub);
+  $('teams').innerHTML = S.xp.map((x, i) => `<button type="button" class="team-tile${i === S.team ? ' on' : ''}" data-act="team" data-i="${i}" aria-pressed="${i === S.team}" aria-label="${t.team} T${no(i)} · ${x} XP" style="background:${COLORS[i]};color:${fg(i)}"><b><i>T</i>${no(i)}</b><span>${x} XP</span></button>`).join('');
+
+  // biz numbers
+  txt('bizTitle', t.biz); txt('step1', t.step + ' 1');
+  txt('lName', t.name);
+  [['P', t.fP, t.sP, t.uUnit], ['V', t.fV, t.sV, t.uUnit], ['FC', t.fFC, t.sFC, t.uMonth], ['Tgt', t.fT, t.sT, t.uMonth]].forEach(r => { txt('l' + r[0], r[1]); txt('s' + r[0], r[2]); txt('u' + r[0], r[3]); });
+  txt('lTax', t.tax); txt('sTax', t.taxS);
+  txt('lR', t.rev); txt('sR', t.revS); txt('uR', t.uMonth);
+  Object.keys(INPUTS).forEach(id => setVal(id, S[INPUTS[id]]));
+  const bad = !c.ok;
+  $('inP').setAttribute('aria-invalid', String(bad && num(S.P) <= 0));
+  $('inV').setAttribute('aria-invalid', String(bad && num(S.P) > 0));
+  $('vErr').hidden = !bad; txt('vErr', t.vErr);
+  txt('atL', t.afterTax); txt('atT', ' · t ' + S.tax + '%'); txt('atH', t.afterTaxHint);
+  const sw = $('swTax'); sw.classList.toggle('on', S.afterTax); sw.setAttribute('aria-checked', String(S.afterTax));
+  $('fTax').hidden = !S.afterTax;
+  txt('calcL', t.calc); txt('calcTag', S.claimed ? '✓' : '+50 XP');
+  $('calc').disabled = S.claimed || !c.ok; $('calc').classList.toggle('done', S.claimed);
+  txt('trapsT', t.trapsT);
+  $('trapList').innerHTML = t.traps.map((x, i) => `<div class="trap"><b>${i + 1}</b><p>${x}</p></div>`).join('');
+
+  // chart
+  txt('chartT', t.chart); txt('step2', t.step + ' 2');
+  $('legend').innerHTML = m
+    ? `<span style="color:#3E5C8A">● TR</span><span style="color:#8C2F39">● TC</span><span style="color:#A8703A">● FC</span><span>● BEP</span>`
+    : `<span><i class="lg" style="background:#3E5C8A"></i>${t.lTR}</span><span><i class="lg" style="background:#8C2F39"></i>${t.lTC}</span><span><i class="lg dash"></i>${t.lFC}</span><span><i class="lg bep"></i>${t.lBEP}</span><span><i class="lg dot"></i>${t.lAct}</span>`;
+  $('chartBox').innerHTML = c.ok ? chartSVG(c, m) : `<div class="chart-empty">${t.chartEmpty}</div>`;
+  const mh = metricsHTML(c, t);
+  $('metricsD').innerHTML = mh; $('metricsM').innerHTML = mh;
+
+  // target
+  txt('tgtT', t.tgt); txt('step3', t.step + ' 3');
+  const formula = S.afterTax ? `Q = (FC + π ÷ (1 − ${pc(c.tax * 100)}%)) / CM` : 'Q = (FC + π) / CM';
+  $('tgtBody').innerHTML = c.hasTgt
+    ? `<div class="big" style="color:var(--plum)">${f(c.Qt)} <small>${t.uUnits}</small></div>
+       <div class="kv"><span>${t.preTax}</span><b>${f(c.pre)}${cur}</b><span>${t.tgtRev}</span><b>${f(c.Qt * c.P)}${cur}</b></div>
+       <div class="fchip">${formula}</div>`
+    : `<p class="empty-t">${t.tgtEmpty}</p>`;
+
+  // MoS
+  txt('mosT', m ? 'MoS' : t.mos);
+  const mz = !c.hasMos ? ['—', '#9AA0AC'] : c.MoSp < 0 ? [t.zLoss, '#8C2F39'] : c.MoSp < 10 ? [t.zRisk, '#8C2F39'] : c.MoSp <= 25 ? [t.zMid, '#A8703A'] : [t.zSafe, '#3F6E52'];
+  const mzEl = $('mosZone'); mzEl.textContent = mz[0]; mzEl.style.background = mz[1];
+  const bar = c.hasMos ? Math.max(2, Math.min(100, c.MoSp * 2)) : 0;
+  $('mosBody').innerHTML = c.hasMos
+    ? `<div class="big" style="color:${mz[1]}">${pc(c.MoSp)}% <small>· ${f(c.MoS)}${cur}</small></div>
+       <div class="mosbar" role="meter" aria-valuemin="0" aria-valuemax="50" aria-valuenow="${Math.max(0, Math.min(50, c.MoSp)).toFixed(1)}" aria-label="MoS %"><i style="width:${bar}%;background:${mz[1]}"></i></div>
+       <div class="moslab"><span>${t.mosRisk}</span><span>${t.mosSafe}</span></div>
+       <div class="fchip d-only">MoS = R − TR* · MoS% = MoS / R</div>`
+    : `<p class="empty-t">${t.mosEmpty}</p>`;
+
+  // explain
+  txt('explainT', t.explain); txt('explainSub', t.explainSub);
+  const { CM, CMR, BEP, TRs, pi, Qt, P, hasTgt, hasMos, MoS, MoSp } = c;
+  const story = !c.ok ? [t.explainEmpty] : (vi ? [
+    `Mỗi SP bán ra còn lại ${f(CM)}đ sau biến phí; ${pc(CMR * 100)}% mỗi đồng doanh thu dùng để trả định phí.`,
+    `Hòa vốn tại ${f(BEP)} SP/tháng (doanh thu ${f(TRs)}đ) — khoảng ${f(BEP / 30)} SP mỗi ngày.`,
+    hasTgt ? `Muốn lãi ${f(pi)}đ${S.afterTax ? ' sau thuế' : ''}, cần bán ${f(Qt)} SP (doanh thu ${f(Qt * P)}đ).` : t.tgtEmpty,
+    hasMos ? (MoS >= 0 ? `Doanh thu có thể giảm ${pc(MoSp)}% (${f(MoS)}đ) trước khi bắt đầu lỗ.` : `Doanh thu hiện thấp hơn hòa vốn ${f(-MoS)}đ — đang lỗ.`) : t.mosEmpty,
+  ] : [
+    `Each unit sold leaves ${f(CM)}₫ after variable cost; ${pc(CMR * 100)}% of every 1₫ of revenue goes to cover fixed cost.`,
+    `You break even at ${f(BEP)} units/month (${f(TRs)}₫ revenue) — about ${f(BEP / 30)} units per day.`,
+    hasTgt ? `To earn ${f(pi)}₫${S.afterTax ? ' after tax' : ''}, sell ${f(Qt)} units (${f(Qt * P)}₫ revenue).` : t.tgtEmpty,
+    hasMos ? (MoS >= 0 ? `Revenue can fall ${pc(MoSp)}% (${f(MoS)}₫) before you start losing money.` : `Revenue is ${f(-MoS)}₫ below break-even — currently a loss.`) : t.mosEmpty,
+  ]);
+  $('story').innerHTML = story.map((x, i) => `<div class="st"><b>${i + 1}</b><p>${x}</p></div>`).join('');
+
+  // challenges
+  txt('chalT', t.chal); txt('solved', solved + '/6'); txt('step4', t.step + ' 4');
+  const opts = challengeOpts(c);
+  $('chals').innerHTML = opts.map((o, ci) => {
+    const a = S.answers[ci], done = a !== undefined, rel = S.released[ci], live = c.ok && rel, right = a === 0;
+    const tag = !rel ? t.wait : !c.ok ? t.lock : done ? (right ? '+10 XP ✓' : t.notq) : '+10 XP';
+    const tagBg = done ? (right ? '#3F6E52' : '#8C2F39') : !live ? '#B9B5AC' : '#C9A24A';
+    const tagFg = done ? '#fff' : '#1F2A44';
+    const btns = ORD[ci].map(oi => {
+      const bg = done && oi === 0 ? '#8FAF98' : a === oi ? '#8C2F39' : '#ECE7DC';
+      const col = a === oi && oi !== 0 ? '#fff' : '#1F2A44';
+      return `<button type="button" class="opt" style="background:${bg};color:${col}" ${!live || done ? 'disabled' : ''} data-act="answer" data-ci="${ci}" data-oi="${oi}">${live ? o[oi] : '—'}</button>`;
+    }).join('');
+    return `<div class="chal" style="opacity:${rel ? 1 : .55};--tagc:${tagBg}"><div class="chal-top"><p class="q">${t.q[ci]}</p><span class="ctag" style="background:${tagBg};color:${tagFg}">${tag}</span></div><div class="opts" role="group" aria-label="${t.q[ci]}">${btns}</div></div>`;
   }).join('');
-}
-function renderChs(){
-  const s = current? team():null;
-  const host=document.getElementById('chList');
-  host.innerHTML = I18N[LANG].chs.map((c,i)=>{
-    const done = s && s.chs[i];
-    return `<div class="ch ${done?'done':''}"><span class="box">✓</span>
-      <span class="ctxt">${c.t}<small>${c.s}</small></span><span class="cxp">+${CH_XP[i]}</span></div>`;
-  }).join('');
-  const got = s ? Object.keys(s.chs).length : 0;
-  document.getElementById('chCount').textContent = got+'/6';
+
+  // leaderboard
+  txt('boardT', t.board); txt('boardS', t.boardS);
+  $('boardRows').innerHTML = S.xp.map((x, i) => ({ i, x })).sort((a, b) => b.x - a.x).map((r, k) => `
+    <div class="brow${r.i === S.team ? ' me' : ''}">
+      <div class="rank" style="background:${COLORS[r.i]};color:${fg(r.i)}">${k + 1}</div>
+      <div><div class="bname">${t.team} T${no(r.i)} · ${lvName(r.x)}</div><div class="bbar"><i style="width:${r.x / max * 100}%;background:${COLORS[r.i]}"></i></div></div>
+      <div class="bxp">${r.x} XP</div>
+    </div>`).join('');
+
+  txt('uniLink', t.uni); txt('mapLink', t.map);
+
+  $('tabbar').innerHTML = t.tabs.map((l, i) => `<button type="button" class="${S.tab === i ? 'on' : ''}" data-act="tab" data-i="${i}" aria-pressed="${S.tab === i}">${l}</button>`).join('');
+  document.querySelectorAll('#student [data-tab]').forEach(el => el.classList.toggle('on', Number(el.dataset.tab) === S.tab));
+
+  // overlays
+  $('modal').hidden = !S.modal;
+  txt('mLvl', lvl + 1); txt('mTitle', t.lvlUp); txt('mText', t.unlocked + ' · ' + lvName(xp)); txt('mCont', t.cont);
+  $('modal').querySelector('img').alt = t.dragonUp;
+  const to = $('toast'); to.hidden = !S.toast;
+  if (S.toast) to.innerHTML = `${t.done}<span>+10 XP</span>`;
 }
 
-/* ===================== Teams + Leaderboard ===================== */
-function renderTeams(){
-  const host=document.getElementById('teams');
-  host.innerHTML = TEAMS.map(tm=>{
-    const d=store[tm.id]; const xp=d?d.xp:0; const lvl=levelOf(xp);
-    return `<div class="team ${current===tm.id?'active':''}" style="--c:${tm.c}" onclick="pick('${tm.id}')">
-      <span class="stripe"></span>
-      <div class="tid">${tm.id}</div>
-      <div class="tlbl">${t('tn')[TEAMS.indexOf(tm)]}</div>
-      <div class="tstat">Lv ${lvl} · ${xp} XP</div>
-    </div>`;
-  }).join('');
-}
-function renderLB(){
-  const rows = TEAMS.map(tm=>{ const d=store[tm.id]||{}; return {id:tm.id,c:tm.c,name:d.name||'—',xp:d.xp||0,badges:Object.keys(d.badges||{}).length,lvl:levelOf(d.xp||0)}; })
-    .sort((a,b)=> b.xp-a.xp || b.badges-a.badges);
-  const med=['🥇','🥈','🥉'];
-  const head = LANG==='vi'
-    ? `<tr><th>Hạng</th><th>Nhóm</th><th>DN</th><th>Level</th><th>Huy hiệu</th><th style="text-align:right">XP</th></tr>`
-    : `<tr><th>Rank</th><th>Team</th><th>Business</th><th>Level</th><th>Badges</th><th style="text-align:right">XP</th></tr>`;
-  document.getElementById('lbTable').innerHTML = head + rows.map((r,i)=>`
-    <tr class="${r.id===current?'me':''}">
-      <td class="rk">${i<3?'<span class="medal">'+med[i]+'</span>':'#'+(i+1)}</td>
-      <td><span class="tdot" style="background:${r.c}"></span>${r.id}</td>
-      <td>${r.name}</td><td>Lv ${r.lvl}</td><td>${r.badges}/8</td>
-      <td class="xpc">${r.xp}</td>
-    </tr>`).join('');
+function renderTeacher(t) {
+  const max = Math.max(...S.xp, 1);
+  txt('tClass', t.classView); txt('tRace', t.race);
+  txt('tTotalL', t.total); txt('tTotal', S.xp.reduce((a, b) => a + b, 0));
+  txt('tLiveL', t.live); txt('tLive', S.released.filter(Boolean).length + ' / 6');
+  $('tcols').innerHTML = S.xp.map((x, i) => `
+    <div class="tc">
+      <div class="v">${x}</div>
+      <div class="bw"><i style="height:${Math.max(6, x / max * 100)}%;background:${COLORS[i]}"></i></div>
+      <div class="tn"><span style="background:${COLORS[i]}"></span>T${no(i)}</div>
+    </div>`).join('');
+  txt('tRel', t.release);
+  $('relCtl').innerHTML = t.rel.map((l, i) => `<button type="button" class="rel${S.released[i] ? ' on' : ''}" role="switch" aria-checked="${S.released[i]}" data-act="rel" data-i="${i}"><span>${l}</span><span class="track" aria-hidden="true"><i></i></span></button>`).join('');
+  txt('tAward', t.award);
+  $('awardCtl').innerHTML = S.xp.map((x, i) => `<button type="button" data-act="award" data-i="${i}" aria-label="${t.award} T${no(i)} +10 XP" style="background:${COLORS[i]};color:${fg(i)}"><b>T${no(i)}</b><span>+10</span></button>`).join('');
+  txt('tReset', t.reset); txt('tBack', t.backStudent);
+  $('modal').hidden = true; $('toast').hidden = true;
 }
 
-/* ===================== Pick team ===================== */
-function pick(id){
-  current=id; const s=team();
-  document.getElementById('iName').value=s.name||'';
-  document.getElementById('iP').value=s.p||'';
-  document.getElementById('iV').value=s.v||'';
-  document.getElementById('iFC').value=s.fc||'';
-  document.getElementById('iPi').value=s.pi||'';
-  document.getElementById('iAR').value=s.ar||'';
-  document.getElementById('swTax').checked=!!s.afterTax;
-  document.getElementById('iT').value=s.tax||'';
-  document.getElementById('taxField').style.display=s.afterTax?'block':'none';
-  document.getElementById('gamebar').style.display='block';
-  document.getElementById('work').style.display='block';
-  renderTeams(); renderGame(); renderChs(); renderLB();
-  render(compute(s), s);
-  document.getElementById('work').scrollIntoView({behavior:'smooth',block:'start'});
+function applyView() {
+  view = location.hash === '#teacher' ? 'teacher' : 'student';
+  $('student').hidden = view === 'teacher';
+  $('teacher').hidden = view !== 'teacher';
+  render();
 }
 
-/* ===================== Toast / Modal ===================== */
-let toastTimer;
-function toast(ic,msg){
-  document.querySelector('#toast .ic').textContent=ic;
-  document.getElementById('toastTxt').textContent=msg;
-  const el=document.getElementById('toast'); el.classList.add('show');
-  clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove('show'),2600);
-}
-function showModal(lvl){
-  document.getElementById('mLvl').textContent=(LANG==='vi'?'Cấp ':'Level ')+lvl;
-  document.getElementById('mName').textContent=t('levels')[lvl-1];
-  document.getElementById('modal').classList.add('show');
-}
-function closeModal(){ document.getElementById('modal').classList.remove('show'); }
-
-/* ===================== Theme / Lang ===================== */
-function toggleTheme(){
-  const cur=document.documentElement.getAttribute('data-theme')||'dark';
-  const next=cur==='dark'?'light':'dark';
-  applyTheme(next); localStorage.setItem('cvpstudio_theme',next);
-}
-function applyTheme(th){
-  document.documentElement.setAttribute('data-theme',th);
-  document.getElementById('themeBtn').innerHTML = (th==='dark'?'☀️ ':'🌙 ')+'<span data-i18n="theme">'+t('theme')+'</span>';
-}
-function setLang(l){
-  LANG=l; localStorage.setItem('cvpstudio_lang',l);
-  document.documentElement.setAttribute('lang',l);
-  document.getElementById('langVI').classList.toggle('on',l==='vi');
-  document.getElementById('langEN').classList.toggle('on',l==='en');
-  applyI18N();
-  // re-render dynamic
-  if(current){ renderGame(); renderChs(); renderLB(); render(compute(team()), team()); }
-}
-function applyI18N(){
-  document.querySelectorAll('[data-i18n]').forEach(el=>{ el.textContent=t(el.getAttribute('data-i18n')); });
-  // placeholders stay as-is (example numbers)
-  document.getElementById('themeBtn').querySelector('span').textContent=t('theme');
+function showToast() {
+  S.toast = true;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { S.toast = false; render(); }, 1800);
 }
 
-/* ===================== Init ===================== */
-(function init(){
-  applyTheme(localStorage.getItem('cvpstudio_theme')||'dark');
-  document.documentElement.setAttribute('lang',LANG);
-  document.getElementById('langVI').classList.toggle('on',LANG==='vi');
-  document.getElementById('langEN').classList.toggle('on',LANG==='en');
-  applyI18N();
-  renderTeams(); renderChs();
-})();
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-act]');
+  if (!el) return;
+  if (el.tagName === 'A') e.preventDefault();
+  const act = el.dataset.act;
+  if (act === 'lang') { S.lang = el.dataset.v; }
+  else if (act === 'langT') { S.lang = S.lang === 'vi' ? 'en' : 'vi'; }
+  else if (act === 'team') { const i = Number(el.dataset.i); S.team = i; S.claimed = false; S.answers = {}; }
+  else if (act === 'tab') { S.tab = Number(el.dataset.i); window.scrollTo(0, 0); }
+  else if (act === 'tax') { S.afterTax = !S.afterTax; S.edited = true; }
+  else if (act === 'calc') {
+    S.edited = true;
+    if (!S.claimed && calc().ok) { addXp(S.team, 50); S.claimed = true; S.modal = true; }
+  }
+  else if (act === 'answer') {
+    const ci = Number(el.dataset.ci), oi = Number(el.dataset.oi);
+    if (!calc().ok || !S.released[ci] || S.answers[ci] !== undefined) return;
+    S.answers = Object.assign({}, S.answers, { [ci]: oi });
+    if (oi === 0) { addXp(S.team, 10); showToast(); }
+  }
+  else if (act === 'close') { S.modal = false; }
+  else if (act === 'rel') { const i = Number(el.dataset.i); S.released = S.released.slice(); S.released[i] = !S.released[i]; }
+  else if (act === 'award') { addXp(Number(el.dataset.i), 10); }
+  else if (act === 'reset') { S.xp = START_XP.slice(); S.claimed = false; S.answers = {}; S.released = REL0.slice(); }
+  else if (act === 'student') { history.replaceState(null, '', location.pathname + location.search); applyView(); return; }
+  else return;
+  render();
+  if (act === 'close') $('calc').focus();
+  if (act === 'calc' && S.modal) $('mCont').focus();
+});
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && S.modal) { S.modal = false; render(); } });
+
+Object.keys(INPUTS).forEach(id => {
+  $(id).addEventListener('input', e => { S[INPUTS[id]] = e.target.value; S.edited = true; render(); });
+});
+// Màn hình lớp (#teacher) mở ở cửa sổ khác trên cùng máy → đồng bộ qua localStorage.
+window.addEventListener('storage', e => { if (e.key === STORE) { load(); render(); } });
+window.addEventListener('hashchange', applyView);
+if (mq.addEventListener) mq.addEventListener('change', render); else if (mq.addListener) mq.addListener(render);
+
+load();
+applyView();
 </script>
-<!-- Lối nhỏ về Vũ trụ (ngôn ngữ đất sét) — không phải thanh nav thể chế -->
-<a class="vutru-goc" href="../universe.html" aria-label="Về Vũ trụ BizOn">
-  <span class="vg-o" aria-hidden="true"></span><span>Vũ trụ</span>
-</a>
-<style>
-.vutru-goc{position:fixed;left:14px;bottom:14px;z-index:9999;display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:16px;background:#fff;color:#033337;text-decoration:none;font-family:'Manrope','Manrope Fallback',system-ui,sans-serif;font-weight:700;font-size:.82rem;box-shadow:0 8px 22px -6px rgba(0,102,135,.25),inset 0 -3px 0 rgba(0,0,0,.06);border:1px solid rgba(3,51,55,.08);transition:transform .18s ease,box-shadow .18s ease}
-.vutru-goc:hover{transform:translateY(-2px);box-shadow:0 12px 28px -6px rgba(0,102,135,.32),inset 0 -3px 0 rgba(0,0,0,.06)}
-.vutru-goc:focus-visible{outline:2px solid #0F5C4E;outline-offset:3px}
-.vutru-goc .vg-o{width:16px;height:16px;border-radius:50%;background:#0F5C4E;box-shadow:inset -4px 0 0 -1px #7FD9BE}
-@media(max-width:520px){.vutru-goc{left:10px;bottom:10px;padding:7px 11px;font-size:.76rem}}
-@media print{.vutru-goc{display:none}}
-</style>
 </body>
 </html>
