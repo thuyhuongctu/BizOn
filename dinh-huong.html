@@ -57,7 +57,7 @@
   .dh-lang{flex:none;display:flex;padding:3px;border-radius:999px;background:var(--dh-tray);box-shadow:var(--dh-tray-sh)}
   .dh-lang button{min-width:40px;height:38px;border:0;cursor:pointer;border-radius:999px;font:800 12.5px var(--dh-head);background:transparent;color:var(--dh-muted)}
   .dh-lang button[aria-pressed="true"]{background:var(--dh-card);color:var(--dh-teal);box-shadow:var(--dh-pill-on)}
-  .dh-print{flex:none;height:44px;border:0;cursor:pointer;padding:0 16px;border-radius:999px;background:#E8762D;color:#1F0E02;font:800 13.5px var(--dh-head);box-shadow:var(--dh-btn-sh);white-space:nowrap}
+  .dh-print{flex:none;display:inline-flex;align-items:center;text-decoration:none;height:44px;border:0;cursor:pointer;padding:0 16px;border-radius:999px;background:#E8762D;color:#1F0E02;font:800 13.5px var(--dh-head);box-shadow:var(--dh-btn-sh);white-space:nowrap}
   .dh-print .short{display:none}
   .dh-prog{display:block;width:100%;max-width:1140px;height:6px;margin:8px auto 0;border:0;border-radius:999px;background:var(--dh-tray);box-shadow:inset 0 2px 3px rgba(110,70,30,.18);overflow:hidden;color:#FDA127;-webkit-appearance:none;appearance:none}
   .dh-prog::-webkit-progress-bar{background:transparent;border-radius:999px}
@@ -305,7 +305,7 @@
     <nav class="dh-toc" aria-label="Mục lục" data-en-aria="Contents"><div class="dh-toc-track"><a href="#dinh-vi" data-en="Positioning">Định vị</a><a href="#tam-nhin" data-en="Vision">Tầm nhìn</a><a href="#ly-thuyet" data-en="Theory">Lý thuyết</a><a href="#su-menh" data-en="Mission">Sứ mệnh</a><a href="#gia-tri" data-en="Values">Giá trị</a><a href="#chi-bao" data-en="2030 indicators">Chỉ báo 2030</a><a href="#rui-ro" data-en="Risks">Rủi ro</a><a href="#uu-tien" data-en="Priorities">Ưu tiên</a><a href="#tai-lieu" data-en="References">Tài liệu</a></div></nav>
     <button type="button" class="dh-menu-btn" aria-expanded="false" aria-controls="dh-menu"><span class="dh-sr" data-en="Contents:">Mục lục:</span><span class="dh-menu-cur">Định vị</span><span class="dh-menu-ic" aria-hidden="true">▼</span></button>
     <div class="dh-lang" role="group" aria-label="Ngôn ngữ" data-en-aria="Language"><button type="button" data-lang="vi" lang="vi" aria-pressed="true">VI</button><button type="button" data-lang="en" lang="en" aria-pressed="false">EN</button></div>
-    <button type="button" class="dh-print"><span class="long" data-en="Print / A4 PDF">In / PDF A4</span><span class="short">PDF</span></button>
+    <a class="dh-print" href="assets/docs/BizOn-Dinh-huong-tac-dong-vung.pdf" download="BizOn-Dinh-huong-tac-dong-vung.pdf" type="application/pdf"><span class="long" data-en="Download PDF (Vietnamese)">Tải PDF A4</span><span class="short" data-en="PDF">PDF</span></a>
     <nav id="dh-menu" class="dh-menu" aria-label="Mục lục (menu)" data-en-aria="Contents (menu)" hidden>
         <a href="#dinh-vi"><span class="n" aria-hidden="true">01</span><span data-en="Positioning">Định vị</span></a>
         <a href="#tam-nhin"><span class="n" aria-hidden="true">02</span><span data-en="Vision">Tầm nhìn</span></a>
@@ -719,10 +719,6 @@
         else { try { localStorage.setItem('bizon-lang', code); } catch (e) {} location.reload(); }
       });
     });
-
-    /* ---- In ---- */
-    var printBtn = $('.dh-print');
-    if (printBtn) printBtn.addEventListener('click', function () { window.print(); });
 
     /* ---- Lộ trình bốn mắt xích (tablist) ---- */
     var tabs = $$('.dh-tab'), panels = $$('.dh-panel');
