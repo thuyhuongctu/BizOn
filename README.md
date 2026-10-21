@@ -1,175 +1,208 @@
-# BizOn Bật Nghiệp – Business Simulation Game Ecosystem
+<div align="center">
 
-> **BizOn – Bật Nghiệp: Trò chơi mô phỏng kinh doanh 3D phong cách đất sét dành cho đào tạo khởi nghiệp.**
->
-> *A 3D claymorphism business-simulation game for entrepreneurship education* – student teams run a virtual company through **6 rounds** across a map of Vietnam, guided by the AI advisor **Lumina**, face **3 rival CEOs** with distinct personalities, expand to international markets with **BizOn Go Global**, and train reflexes in the **BizOn Arcade**. One app, many games – and still growing.
+<a href="https://bizonland.com/"><img src="assets/icons/icon-192.png" alt="BizOn" width="88"></a>
 
-![version](https://img.shields.io/badge/version-1.1-blue)
-![license](https://img.shields.io/badge/license-Proprietary%20·%20All%20rights%20reserved-lightgrey)
-![PWA](https://img.shields.io/badge/PWA-offline%20ready-5cc4e6)
-![deploy](https://img.shields.io/badge/GitHub%20Pages-live-2ea44f)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21592241.svg)](https://doi.org/10.5281/zenodo.21592241)
+# BizOn – Bật Nghiệp
 
-| | |
-|---|---|
-| **Authors** | **Do Thuy Huong** (Founder & Creative Lead) · **Phan Anh Tu** (Co-founder & Academic Advisor) |
-| **Affiliation** | Can Tho University (CTU), Vietnam |
-| **Start here** | 🪐 [Universe BizOn – ecosystem map](https://bizonland.com/universe.html) (the landing page: one engine core, many worlds) |
-| **Play now** | 🎮 [Game](https://bizonland.com/) · 🌐 [Landing page](https://bizonland.com/gioi-thieu.html) · 🕹️ [Arcade](https://bizonland.com/games.html) · 🌏 [BizOn Go Global](https://bizonland.com/global.html) · ▶️ [Google Play (Android)](https://play.google.com/store/apps/details?id=io.github.thuyhuongctu.bizon) |
-| **For faculty** | 🏛️ [Institutional site](https://bizonland.com/truong.html) · [Academic foundations](https://bizonland.com/truong-hoc-thuat.html) · [For instructors](https://bizonland.com/truong-giang-vien.html) · [Data policy](https://bizonland.com/truong-chinh-sach.html) |
-| **Contact** | bricoleur@bizonland.com |
-| **Archive & DOI** | Zenodo concept DOI: [10.5281/zenodo.21592241](https://doi.org/10.5281/zenodo.21592241) – every release is permanently archived |
+**Simulation-based business learning, from Vietnam to the world.**<br>
+*Học kinh doanh qua mô phỏng – từ Đồng bằng sông Cửu Long ra thế giới.*
 
----
+Explainable, clay-styled 3D business simulations for learning, research and internationalization.<br>
+They pair deterministic engines with AI-enhanced reflection and open-science practice.
 
-## 🎬 Intro video · Video giới thiệu
+[![Website](https://img.shields.io/badge/website-bizonland.com-006687?style=for-the-badge)](https://bizonland.com/)
+[![Google Play](https://img.shields.io/badge/Google%20Play-Android-E8762D?style=for-the-badge&logo=googleplay&logoColor=white)](https://play.google.com/store/apps/details?id=io.github.thuyhuongctu.bizon)
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.21592241-033337?style=for-the-badge)](https://doi.org/10.5281/zenodo.21592241)
 
-<video src="https://raw.githubusercontent.com/thuyhuongctu/BizOn/main/assets/video/bizon-intro.mp4" controls muted playsinline poster="https://raw.githubusercontent.com/thuyhuongctu/BizOn/main/assets/video/bizon-intro-poster.jpg" width="720"></video>
+![version](https://img.shields.io/badge/version-1.3-1E7E8C)
+![PWA](https://img.shields.io/badge/PWA-offline%20ready-7FD3DC)
+![languages](https://img.shields.io/badge/UI-Ti%E1%BA%BFng%20Vi%E1%BB%87t%20%C2%B7%20English-FDA127)
+![license](https://img.shields.io/badge/license-proprietary-lightgrey)
 
-> ▶️ If the player above doesn't load, watch the reel on **[Universe BizOn](https://bizonland.com/universe.html)** or [download the MP4](assets/video/bizon-intro.mp4).
->
-> ℹ️ **This reel is an AI-generated illustration, not real classroom footage.**
-> *Video là hình ảnh minh hoạ do AI dựng, không phải cảnh quay thực tế trên lớp học.*
-
-[![BizOn intro reel](assets/video/bizon-intro-poster.jpg)](https://bizonland.com/universe.html)
+</div>
 
 ---
 
-## 🗺️ Ecosystem
+## 🎬 BizOn in one minute
 
-| Page | Content |
+<div align="center">
+
+<a href="https://bizonland.com/assets/video/bizon-intro-1min-en-v2.mp4">
+  <img src="assets/video/bizon-intro-1min-v2-poster.jpg" alt="Watch the 1-minute BizOn intro" width="820">
+</a>
+
+**[▶ Watch the 1-minute intro](https://bizonland.com/assets/video/bizon-intro-1min-en-v2.mp4)** · 63 s · English narration · music: *And The World Say Hello! (Original)*<br>
+<sub>An animated walkthrough of bizonland.com: roles, the three game levels, support tools, trailers, evidence and the theory-to-decision flow. You can also <a href="assets/video/bizon-intro-1min-en-v2.mp4">download the MP4</a>.</sub>
+
+</div>
+
+---
+
+## 🎮 Three game levels
+
+Start at Level 1. Each level builds on the one before, and every game has a 3D version and a 2D version.
+
+<table>
+<tr>
+<td width="50%" valign="top">
+<a href="https://bizonland.com/ben-phu-sa-3d.html"><img src="assets/covers/ben-phu-sa-3d.webp" alt="Bến Phù Sa"></a>
+
+**Level 1 · Start-up — Bến Phù Sa**<br>
+A riverside street-vendor start-up on a Mekong floating market. Each week you pick a Method, Product and Location, and learn when to test cheaply and when to scale.<br>
+<sub>5 weeks · solo or team play</sub><br>
+[Play in 3D](https://bizonland.com/ben-phu-sa-3d.html) · [3D team play](https://bizonland.com/ben-phu-sa-v8.html) · [2D](https://bizonland.com/ben-phu-sa.html) · [Trailer](https://bizonland.com/assets/video/ben-phu-sa-trailer-v2.mp4)
+</td>
+<td width="50%" valign="top">
+<a href="https://bizonland.com/BizOn%20Game%203D.html"><img src="assets/covers/bat-nghiep-3d.webp" alt="Bật Nghiệp"></a>
+
+**Level 2 · Running a business — Bật Nghiệp**<br>
+Build and run a company through multi-round strategic decisions in a Vietnamese market. You face three rival CEOs, and the AI advisor Lumina guides you.<br>
+<sub>6 decision rounds · market arena</sub><br>
+[Play in 3D](https://bizonland.com/BizOn%20Game%203D.html) · [2D](https://bizonland.com/game.html) · [Trailer](https://bizonland.com/assets/video/bizon-trailer-v2.mp4)
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+<a href="https://bizonland.com/Ho%20Chieu%20Thuong%20Hieu%203D.html"><img src="assets/covers/ho-chieu-thuong-hieu-3d.webp" alt="Brand Passport"></a>
+
+**Level 3 · Going global — Brand Passport**<br>
+Take a Vietnamese brand across borders through market intelligence, entry strategy, adaptation and resilience.<br>
+<sub>6 quarters · 7 markets</sub><br>
+[Play in 3D](https://bizonland.com/Ho%20Chieu%20Thuong%20Hieu%203D.html) · [2D](https://bizonland.com/brand-passport.html) · [Lite 3D](https://bizonland.com/Ho%20Chieu%20Mini%203D.html) · [Lite 2D](https://bizonland.com/Ho%20Chieu%20Mini.dc.html) · [Trailer](https://bizonland.com/assets/video/bp-trailer-v2.mp4)
+</td>
+<td width="50%" valign="top">
+<a href="https://bizonland.com/lab/ho-chieu-sau-rieng-3d.html"><img src="assets/covers/ho-chieu-sau-rieng-3d.webp" alt="Durian Passport"></a>
+
+**Level 3 · Going global — Durian Passport**<br>
+Take Vietnamese durian to the world over 6 seasons on a walkable 3D map. Topics include planting-area codes, the China phytosanitary protocol, official versus border trade, and frozen and premium markets.<br>
+<sub>6 seasons · teams of 5 roles vs AI rivals</sub><br>
+[Play in 3D](https://bizonland.com/lab/ho-chieu-sau-rieng-3d.html) · [2D](https://bizonland.com/lab/ho-chieu-sau-rieng.html) · [Classroom playbook](https://bizonland.com/lop-hoc.html) · [Trailer](https://bizonland.com/assets/video/srp-trailer.mp4)
+</td>
+</tr>
+</table>
+
+## 🧰 Support tools
+
+Use these alongside the games to practise one model or skill at a time.
+
+| Tool | What it does |
 |---|---|
-| [`index.html`](https://bizonland.com/) | **Main game** – a 6-round conquest across the map of Vietnam (Cần Thơ → Hà Nội); win a round's market share *and* turn a profit to plant your flag 🚩; the map features the Lũng Cú flag tower and the Hoàng Sa & Trường Sa archipelagos |
-| [`gioi-thieu.html`](https://bizonland.com/gioi-thieu.html) | International-style landing page: interactive demo, 5 leadership roles, the 6-round journey, mini-games, an AI tour guide, FAQ, instructor section |
-| [`games.html`](https://bizonland.com/games.html) | **BizOn Arcade** – 8 games in the ecosystem |
-| [`global.html`](https://bizonland.com/global.html) | **BizOn Go Global** (beta) – from Vietnam to the world: pick a market and an entry mode (Export · Licensing · Joint Venture · Greenfield FDI), with a live World Market board and the **IE Lab** (International Entrepreneurship, data simulation) |
-| [`doi-ngu.html`](https://bizonland.com/doi-ngu.html) | Founding team, the 5-member Demo Team, mission & vision 2026 |
-| [`am-nhac.html`](https://bizonland.com/am-nhac.html) | **Music library** – the project's original soundtrack («Hương on Return», «Bật Nghiệp», «Vừa Đủ Để Bay Cao», «Hương sans frontières» VI/EN, «And The World Say Hello!»…) |
-| [`thu-vien.html`](https://bizonland.com/thu-vien.html) | Creative library: characters, artwork, the «Bản đồ Việt Nam» enamel-pin merch |
-| [`giai-phap.html`](https://bizonland.com/giai-phap.html) · [`du-an.html`](https://bizonland.com/du-an.html) · [`tuyen-dung.html`](https://bizonland.com/tuyen-dung.html) · [`lien-he.html`](https://bizonland.com/lien-he.html) | Startup presence: solutions for instructors, project portfolio, join-us page, contact |
-| [`chinh-sach.html`](https://bizonland.com/chinh-sach.html) | Privacy policy (no ads, no personal-data collection) |
-| [`khao-sat.html`](https://bizonland.com/khao-sat.html) | Printable pre/post classroom survey forms |
+| 🌏 **[IE Lab](https://bizonland.com/global.html)** · strategy model | Experiment with internationalization assumptions and see how strategic variables change the outcomes. |
+| 🧪 **Practicum labs**, one session each | **[CMR Lab](https://bizonland.com/lab/cmr-lab.html)**: contribution margin ratio, seen through four lenses.<br>**[CVP Lab](https://bizonland.com/lab/cvp-studio.html)**: cost–volume–profit, break-even and margin of safety.<br>**[Gravity Lab](https://thuyhuongctu.github.io/Gravity-Lab/)**: the gravity model of trade and FDI into Viet Nam (OLS and PPML in the browser).<br>**[FDI Lab](https://bizonland.com/lab/nha-may-fdi.html)**: an FDI factory run over 8 quarters (local content, rules of origin, transshipment). |
+| 🕹️ **[Arcade](https://bizonland.com/games.html)** · skill drills | Short, focused simulations, each practising one business skill or decision pattern. |
+| 🎵 **[Soundtrack](https://bizonland.com/am-nhac.html)** | The original music library. You can play whole albums, set a sleep timer and download tracks. |
 
-Every page supports **light/dark mode**, a **Vietnamese–English bilingual interface**, and **background music** from the project's original soundtrack (lyrics in [`docs/loi-bai-hat.md`](docs/loi-bai-hat.md)).
+## 👥 Start from your role
 
-## 🏛️ Institutional site & landing page
-
-BizOn ships in **two design registers**, and the boundary is the screen frame: outside the frame is the **institutional register** (restrained, Be Vietnam Pro / jade — for deans and review boards); inside the game frame is the **clay register** (friendly, encourages trial and error — for students). The two never mix. The institutional register is a self-contained set of pages, all self-hosting their fonts (no CDN):
-
-| Page | Content |
+| You are… | Go to |
 |---|---|
-| [`universe.html`](https://bizonland.com/universe.html) | **Universe BizOn – the landing page.** One-glance ecosystem map: a deterministic engine core with the two pillars and subsystems (AIBIS · Lumina · VietLens · living market) orbiting it, over one shared infrastructure layer |
-| [`truong.html`](https://bizonland.com/truong.html) | Institutional home – two pillars, the design-register principle, an overview for a department head |
-| [`truong-gioi-thieu.html`](https://bizonland.com/truong-gioi-thieu.html) | About the project – the problem it addresses, the ecosystem, provenance (DOI · CITATION.cff · ORCID), the author team |
-| [`truong-hoc-thuat.html`](https://bizonland.com/truong-hoc-thuat.html) | Academic foundations – Model Cards, the reproducibility contract (frozen snapshots), strategy-diversity health metric, two-purpose consent, and known limitations |
-| [`truong-giang-vien.html`](https://bizonland.com/truong-giang-vien.html) | For instructors – four-step class flow, the four-level rubric (grades *reasoning*, not win/lose), CLO/BP learning-outcome matrix, engine-logged anchor metrics |
-| [`truong-chinh-sach.html`](https://bizonland.com/truong-chinh-sach.html) | Data policy & IP – six hard data principles, the consent gate (default **off**), license terms, and the open legal questions left to counsel |
+| **Student** | Play a short round, make decisions and get feedback from Lumina. Start with [Bến Phù Sa →](https://bizonland.com/ben-phu-sa-3d.html) |
+| **Instructor** | Run a class, follow decision traces and grade with rubrics: [Class dashboard](https://bizonland.com/Trang%20Giang%20Vien.dc.html) · [Instructor page](https://bizonland.com/truong-giang-vien.html) · [Classroom playbook](https://bizonland.com/lop-hoc.html) |
+| **Researcher** | Review the models, assumptions, equations and published limitations: [Academic framework](https://bizonland.com/truong-hoc-thuat.html) |
+| **Institution · partner · funder** | See the pilot results and how to deploy BizOn at your institution: [Evidence](https://bizonland.com/bang-chung.html) · [Solutions](https://bizonland.com/giai-phap.html) |
 
-## 🧪 Academic engine layer
+Everything starts at **[Universe BizOn](https://bizonland.com/universe.html)**, a one-page map of the ecosystem.
 
-Under the games sits a small, deterministic, test-covered engine layer that makes results reproducible and gradable. **No language model runs in the scored loop** — behavioral profiles are deterministic response functions.
+## 🔬 Evidence before marketing
 
-| Module | Role |
-|---|---|
-| [`js/decision-log.js`](js/decision-log.js) | The single **decision-log schema** (shared data contract) with a **two-purpose consent gate** (`research` / `product`, both default off), hashed `team_id`, PII guard, and a withdrawal API whose technical limits are stated plainly |
-| [`js/aibis/country-role-view.js`](js/aibis/country-role-view.js) | `roleOf(country, viewer)` — labels are relations, never stored on the country |
-| [`js/aibis/anchor-profiles.js`](js/aibis/anchor-profiles.js) | Designer-written strategy prototypes + a permanent anti-degeneration reserve; a Simpson diversity index as a market-health metric |
-| [`js/aibis/round-swap.js`](js/aibis/round-swap.js) | Frozen co-cohort snapshots with a hash — grading runs on the frozen snapshot, not live state (the reproducibility contract) |
+- **Explainable engine:** core scoring is deterministic, so every result can be inspected, discussed and reproduced. No language model runs in the scored loop.
+- **Observable decisions:** strategic choices leave traces that support debriefing, rubrics, reflection and classroom analysis.
+- **Learning evidence:** the game mechanics are linked to learning outcomes, pre/post measures and documented limitations. A preliminary classroom pilot ran with 40 learners.
+- **AI interprets; it does not score:** Lumina asks reflective questions, but the engine and the rubric decide the results.
 
-Contracts are guarded by Node tests (`test/decision-log.test.js`, `test/round-swap.test.js`, `test/anchor-profiles.test.js`, `test/country-role-view.test.js`) run in CI. The consent framework's technical scaffold is implemented, but the **data-collection flow stays off by default** until a consent form is approved — the legal/ethics questions (including *who owns learner data when the product is licensed to another school*) are documented for counsel and the ethics board, not answered in code. See [`docs/BRANCH-POLICY.md`](docs/BRANCH-POLICY.md) and [`docs/learning/CONSENT-FRAMEWORK-DRAFT-V1.md`](docs/learning/CONSENT-FRAMEWORK-DRAFT-V1.md).
+The engine layer is small and covered by tests. It includes a shared decision-log schema with a consent gate that is off by default ([`js/decision-log.js`](js/decision-log.js)) and frozen co-cohort snapshots for reproducible grading ([`js/aibis/round-swap.js`](js/aibis/round-swap.js)). It also has deterministic strategy prototypes with a diversity health metric ([`js/aibis/anchor-profiles.js`](js/aibis/anchor-profiles.js)). These contracts are guarded by Node tests in `test/` that run in CI. The legal and ethics questions around learner data are documented for counsel and the ethics board, not answered in code. See [`docs/learning/CONSENT-FRAMEWORK-DRAFT-V1.md`](docs/learning/CONSENT-FRAMEWORK-DRAFT-V1.md).
 
-## 🎮 Key features
+## 🚀 Run locally
 
-| Area | Details |
-|---|---|
-| Play time | A full 6-round match ≈ 30–45 minutes (5–7 min/round) – fits one class session; BizOn Go Global ≈ 10–15 minutes for 4 quarters |
-| Rounds | 6 rounds = 6 provinces on Vietnam's new administrative map; each round brings a market event (Golden Opportunity, Price War, Energy Crisis, Credit Squeeze, Vietnam Rising Dragon) |
-| Decisions | Price · Marketing · R&D · Production volume · Workforce & training · Funding source (equity / 8.5% loans) · 30/60/90-day payment terms · Maintenance |
-| virtual rivals | Three rival CEOs with 3D portraits and distinct playbooks – 🐺 Alpha Dynamics (budget) · 🐘 Mekong Ventures (balanced) · 🦚 Star Clay Co. (premium); tap a rival for its **Rival Intelligence** profile (motto, playbook, weakness, counter-strategy); behavior is **deterministic per team seed**, which makes grading easy |
-| Lumina advisor | "What-If" scenarios, role-specific risk alerts, Vietnamese voice chat (STT/TTS), a dedicated advisor brain for CEO · CFO · CMO · COO · SEC |
-| Reports | P&L, three-activity cash flow, CVP break-even, HR, Business Model Canvas, depreciation, energy audit ⚡ |
-| Learn by playing | Quests, a skill tree, completion certificates, a team journal, the Clay Reward Shop, mini-games, and an **educational badge system** (conquest, What-If explorer, team player, champion…) with in-game toasts |
-| Instructor tools | Class IDs, round locking, bonus funding with an audit log – full guide at [`docs/huong-dan-giang-vien.md`](docs/huong-dan-giang-vien.md) |
-| BizOn Monitor | A terminal-style market board: sparklines for the team's metrics and all 3 virtual rivals, round by round |
-| Team meeting | The Demo Team (CEO Minh Long · CFO Thu Hà · CMO Mạnh Chi · COO Bảo Ngọc · Legal Secretary Gia Hân) proposes role-based numbers each round (deterministic per seed) – one tap applies them to the sliders |
-| Battle arena | After every commit, the four companies enter an animated arena named after the round's province; market-share bars race and the verdict decides the flag 🚩 |
-| Onboarding | Win-condition banner, live market-share forecast, Basic/Advanced decision modes (rounds 1–2 simplified), a one-line "Why?" after each round, and a plain-language glossary |
-
-## 🔬 Simulation model
-
-The **IE Lab** mode (on the BizOn Go Global page) is a **data-simulation sandbox** for International Entrepreneurship courses: players pick a market type, drag the internationalization level (FSTS %) and digital-capability sliders, and watch simulated firm performance respond. The stylized scenarios include:
-
-- An **inverted-U** curve with an illustrative turning point around **43% FSTS** (transition markets and the pooled all-Asia scenario);
-- Strong-institution economies (Singapore, Japan): near-linear curves, with a **"digital shield"** effect in the Singapore scenario;
-- A small-island scenario (Pacific SIDS): a monotonically negative curve – internationalization is not always beneficial.
-
-> All curves and figures in the IE Lab are illustrative simulation parameters for teaching, not real statistics of any firm or dataset.
-
-## 🚀 Run & deploy
+BizOn is a static site, so there is nothing to install or build.
 
 ```bash
-# run locally (no install needed)
-python3 -m http.server 8000   # then open http://localhost:8000
+git clone https://github.com/thuyhuongctu/BizOn.git
+cd BizOn
+python3 -m http.server 8000   # open http://localhost:8000
 ```
 
-- **Web:** the [`deploy-pages.yml`](.github/workflows/deploy-pages.yml) workflow auto-deploys to GitHub Pages on every push to `main`.
-- **Mobile (PWA):** open the link on a phone → "Add to Home Screen" – runs full-screen and plays offline (service worker + manifest).
-- **Android (Google Play):** [BizOn – Bật Nghiệp](https://play.google.com/store/apps/details?id=io.github.thuyhuongctu.bizon) – a Trusted Web Activity that opens this same web app, so it always runs the latest version.
-- Game progress is saved in each device's `localStorage`.
+| Channel | How it ships |
+|---|---|
+| **Web** | [`deploy-pages.yml`](.github/workflows/deploy-pages.yml) deploys to GitHub Pages ([bizonland.com](https://bizonland.com/)) on every push to `main`. |
+| **PWA** | Open the site on a phone and tap *Add to Home Screen*. It runs full-screen and works offline through the service worker ([`sw.js`](sw.js)). |
+| **Android** | [Google Play](https://play.google.com/store/apps/details?id=io.github.thuyhuongctu.bizon): a Trusted Web Activity that opens this web app, so it always runs the latest version. |
 
-## 🧱 Source layout
+Game progress is saved in each device's `localStorage`. Every page supports light and dark mode and a Vietnamese/English interface.
+
+<details>
+<summary><b>🧱 Source layout</b></summary>
 
 ```
-index.html            # Game SPA – all screens + Tailwind config + PWA registration
-gioi-thieu.html       # International landing page
-games.html            # BizOn Arcade (8 games)
-global.html           # BizOn Go Global + World Market LIVE + IE Lab
-doi-ngu.html          # Founding-team page
-js/engine.js          # Simulation engine: 6 rounds, events, items, skills
-js/app.js             # Game UI: rendering, navigation, conquest map, intro
-js/site-ui.js         # Shared light/dark mode + Vietnamese–English dictionary
-sw.js                 # Service worker – app shell, offline play, auto-refresh on update
-assets/character/     # 3D characters: Lumina, Tú Phan (áo dài & suit), Demo Team, 3 rival CEOs
-assets/audio/         # 9 original tracks + Lumina voice lines
-assets/merch/         # «Bản đồ Việt Nam» enamel-pin product photos
-android/              # TWA config for the CH Play (Google Play) release
-docs/                 # Instructor guide, song lyrics, CH Play guide + store assets, technical docs
+index.html                 # Homepage (clay design system); mirrored by academia3d-v2.html
+universe.html              # Ecosystem map – the landing page for the whole project
+ben-phu-sa*.html           # Level 1 · Bến Phù Sa (3D solo, 3D team play, 2D)
+BizOn Game 3D.html, game.html                    # Level 2 · Bật Nghiệp (3D, 2D)
+Ho Chieu Thuong Hieu 3D.html, brand-passport.html # Level 3 · Brand Passport
+lab/                       # Durian Passport + practicum labs (CMR, CVP, FDI)
+global.html, games.html    # IE Lab · Arcade
+am-nhac.html               # Soundtrack (js/am-nhac-clay.js + js/music-data.js)
+css/bizon-clay.css         # Clay design system (tokens, nav, cards)
+js/                        # Engines, game UI, i18n, shared clay nav
+sw.js                      # Service worker – app shell, offline play, update channel
+assets/                    # Characters, covers, audio, video, self-hosted fonts
+BizOn Intro.dc.html, bizon-intro.jsx  # Source of the 1-minute intro animation (docs/intro/)
+android/                   # TWA config for the Google Play release
+docs/                      # Instructor guides, academic docs, store assets
+test/                      # Node contract tests run in CI
 ```
 
-## 📚 Citation & archiving
+</details>
+
+## 📚 Cite BizOn
 
 If you use BizOn in teaching or research, please cite:
 
 > Do, T. H., & Phan, A. T. (2026). *BizOn Bật Nghiệp: A 3D claymorphism business-simulation game for entrepreneurship education* (Version v.1.3) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.23325489
 
-- Machine-readable citation file: [`CITATION.cff`](CITATION.cff) (GitHub shows a **"Cite this repository"** button).
-- **Zenodo:** version DOI for v.1.3 [10.5281/zenodo.23325489](https://doi.org/10.5281/zenodo.23325489); concept DOI [10.5281/zenodo.21592241](https://doi.org/10.5281/zenodo.21592241) represents all versions. Each GitHub release is archived with its own version DOI.
+- The machine-readable citation is in [`CITATION.cff`](CITATION.cff); GitHub shows a **Cite this repository** button for it.
+- Zenodo version DOI for v1.3: [10.5281/zenodo.23325489](https://doi.org/10.5281/zenodo.23325489).
+- Concept DOI covering all versions: [10.5281/zenodo.21592241](https://doi.org/10.5281/zenodo.21592241). Each GitHub release is archived with its own DOI.
 
 ## ⚖️ Copyright & intellectual property
 
-**Proprietary software** – see [`LICENSE`](LICENSE). The source code, the simulation-engine algorithms, the character designs (**Lumina**, **Tú Phan**, the Demo Team), the original music library, and the **BizOn** name and identity belong to the authors **Do Thuy Huong & Phan Anh Tu**.
+**Proprietary software:** see [`LICENSE`](LICENSE). The authors **Do Thuy Huong & Phan Anh Tu** own:
+- the source code and the simulation-engine algorithms;
+- the character designs (**Lumina**, **Tú Phan**, the Demo Team);
+- the original music library;
+- the **BizOn** name and identity.
 
-✅ **Free tiers (scope-limited).** The **BizOn Arcade** and the **Level-1 game** (*Gánh hàng rong* / Street Vendor) are free to use at the official URL, indefinitely. The **two pillars** — *Bật Nghiệp* and *Hộ chiếu Thương hiệu* — are free for **Can Tho University**, and free for a **single trial semester** at any other institution. ❌ **Beyond those tiers** — continued use of the two pillars at other institutions, the **Instructor Studio**, copying or re-deploying the source, extracting characters/music, or any fee-charging use — requires a **written license**. Contact bricoleur@bizonland.com. This scope-limited grant replaces the earlier blanket "free for non-commercial classroom teaching" statement.
+✅ **Free tiers (limited scope):**
+- The **BizOn Arcade** and the **Level-1 game** are free to use at the official URL, with no time limit.
+- The **two pillars**, *Bật Nghiệp* and *Hộ chiếu Thương hiệu*, are free for **Can Tho University**.
+- Any other institution may use the two pillars free for **one trial semester**.
 
-Registration dossiers (copyright, trademark) and the commercialization strategy are managed in the authors' private document repository.
+❌ **Outside those tiers, a written license is required** for:
+- continued use of the two pillars at other institutions;
+- the **Instructor Studio**;
+- copying or re-deploying the source;
+- extracting the characters or the music;
+- any use that charges a fee.
 
-Fonts are **self-hosted** (no CDN) as static `.woff2` files under `assets/fonts/` — Plus Jakarta Sans, Manrope, IBM Plex Mono, DM Serif Display and Be Vietnam Pro, all under the **SIL Open Font License 1.1**; the OFL applies to those font files. Tailwind CSS (MIT) provides the utility layer. No runtime third-party font or script dependency is loaded from a CDN.
+To request a license, write to bricoleur@bizonland.com.
 
-## 🛣️ Roadmap
+The authors' private document repository holds the registration dossiers (copyright and trademark) and the commercialization strategy.
 
-0. **CH Play (Google Play) release** – TWA packaging ready ([`docs/huong-dan-ch-play.md`](docs/huong-dan-ch-play.md), store assets in `docs/ch-play-assets/`); awaiting Play Console setup.
-1. Backend API per [`docs/api-structure.md`](docs/api-structure.md) (JWT, commit-processing queue) → real-time multi-team mode.
-2. PostgreSQL database per [`docs/database-schema.md`](docs/database-schema.md).
-3. A real AI advisor via a large-language-model API, replacing the rule-based advisor.
-4. **V-Monitor** – a real-data dashboard for the Vietnamese market, to be developed as an independent project (internal proposal).
+**Fonts and libraries:** the fonts are self-hosted `.woff2` files in `assets/fonts/` (Plus Jakarta Sans, Manrope, IBM Plex Mono, DM Serif Display and Be Vietnam Pro), all under the **SIL Open Font License 1.1**. Tailwind CSS (MIT) provides the utility layer. No font or script is loaded from a third-party CDN at runtime.
 
----
+## 🧑‍🔬 Authors
 
-## 👥 Authors
-
-| Author | Role |
+| | |
 |---|---|
-| **Do Thuy Huong** | Founder & Creative Lead – game design, embodiment of the Lumina character · bricoleur@bizonland.com |
-| **Phan Anh Tu** | Co-founder & Academic Advisor – academic oversight, business-administration expertise |
+| **Do Thuy Huong** | Founder & Project Lead · PhD candidate in Business Administration, Can Tho University. Research in internationalization strategy, firm performance, meta-analysis, quantitative methods and AI-assisted management research. |
+| **Assoc. Prof. Dr. Phan Anh Tu** | Co-founder & Chief Academic Advisor. Responsible for academic direction, model review and classroom implementation design. |
 
-© 2026 Do Thuy Huong & Phan Anh Tu · **BizOn Bật Nghiệp** – All rights reserved.
+<div align="center">
+
+**Vision:** a Mekong Delta where young people do not have to leave home to build a livelihood. They start enterprises on their own soil and bring Vietnamese products to the world.
+
+[bizonland.com](https://bizonland.com/) · bricoleur@bizonland.com · Can Tho University, Vietnam
+
+<sub>© 2026 Do Thuy Huong & Phan Anh Tu · BizOn Bật Nghiệp · All rights reserved.</sub>
+
+</div>
