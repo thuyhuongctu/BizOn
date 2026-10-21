@@ -946,14 +946,16 @@ function buildAch() {
 }
 function buildLB() {
   clearRoom(); const s = ev('S'), total = s.history.reduce((a, r) => a + r.netProfit, 0), share = s.history.length ? s.history[s.history.length - 1].share : 25, trial = ev('isTrial()');
-  let all = [{ key: 'star', id: 'ceo', name: s.profile.teamName + T(' (Bạn)', ' (You)'), profit: total, share, me: true }];
-  if (trial) all = all.concat(s.competitors.map(c => ({ key: KEY_OF[c.name] || 'wolf', id: RIVAL_ID[c.style] || 'alpha', name: c.name, profit: c.profit, share: c.share }))).sort((a, b) => b.profit - a.profit);
-  roomHead(T('🏆 Bảng xếp hạng', '🏆 Leaderboard'), trial ? T('🧪 Chơi thử · so với 3 đối thủ ảo theo tổng lợi nhuận', '🧪 Trial play · vs 3 virtual rivals by total profit') : T('🔒 Bảng xếp hạng chéo đội đang tạm khóa — chỉ hiện kết quả của đội bạn', '🔒 The cross-team leaderboard is locked for now — showing your team only'));
+  // Chơi thử: xếp theo số cờ trước, lợi nhuận sau (cùng luật danh hiệu «Vô địch BizOn» và js/app.js)
+  const cq = s.conquest || [], flagsOf = n => cq.filter(c => !c.win && c.winner === n).length;
+  let all = [{ key: 'star', id: 'ceo', name: s.profile.teamName + T(' (Bạn)', ' (You)'), profit: total, share, me: true, flags: cq.filter(c => c.win).length }];
+  if (trial) all = all.concat(s.competitors.map(c => ({ key: KEY_OF[c.name] || 'wolf', id: RIVAL_ID[c.style] || 'alpha', name: c.name, profit: c.profit, share: c.share, flags: flagsOf(c.name) }))).sort((a, b) => b.flags - a.flags || b.profit - a.profit);
+  roomHead(T('🏆 Bảng xếp hạng', '🏆 Leaderboard'), trial ? T('🧪 Chơi thử · so với 3 đối thủ ảo theo số cờ, rồi lợi nhuận', '🧪 Trial play · vs 3 virtual rivals by flags, then profit') : T('🔒 Bảng xếp hạng chéo đội đang tạm khóa — chỉ hiện kết quả của đội bạn', '🔒 The cross-team leaderboard is locked for now — showing your team only'));
   const HX = all.length === 1 ? [0] : [-1.5, -4.2, 1.2, 3.9], HH = [1.5, 1.05, 0.75, 0.5], order = all.length === 1 ? [0] : [1, 0, 2, 3];
   order.forEach((rank, j) => { const t = all[rank]; if (!t) return; const p = pedestal(HX[j] === undefined ? 0 : [-1.4, 0, 1.4, 2.8][j], 0, new THREE.Color(TEAMS[t.key].color).getHex(), HH[rank]);
     p.position.x = all.length === 1 ? 0 : [-1.9, 0, 1.9, 3.8][j] - 0.95;
     const ch = chars.build(t.id); ch.scale.setScalar(1.7); ch.position.y = HH[rank] + 0.07; ch.traverse(m => { if (m.isMesh) m.castShadow = true; }); p.add(ch); p.userData.ch = ch; p.userData.rank = rank; RM.spin.push(p);
-    lab(p, `${t.key === 'star' ? '<img src="assets/dragon/champion.png" alt="" style="width:46px;display:block;margin:0 auto 3px">' : ''}<i>${['🥇', '🥈', '🥉', '4️⃣'][rank]}</i><b>${t.name} · ${fmt(t.profit)} · ${(+t.share).toFixed(1)}%</b>`, HH[rank] + 2.7, t.me ? 'hot' : ''); });
+    lab(p, `${t.key === 'star' ? '<img src="assets/dragon/champion.png" alt="" style="width:46px;display:block;margin:0 auto 3px">' : ''}<i>${['🥇', '🥈', '🥉', '4️⃣'][rank]}</i><b>${t.name} · 🚩 ${t.flags} · ${fmt(t.profit)} · ${(+t.share).toFixed(1)}%</b>`, HH[rank] + 2.7, t.me ? 'hot' : ''); });
   setRoomCam(new THREE.Vector3(0, 3.4, 9.6), new THREE.Vector3(0, 1.6, 0));
   rmCard.innerHTML = '';
 }
@@ -1120,7 +1122,7 @@ function finale3D() {
   const s = ev('S'); if (!s) return; /* giọng Lumina đã tắt */
   const cq = s.conquest || [], mine = cq.filter(c => c.win).length, H = s.history || [], last = H[H.length - 1] || {};
   const profit = H.reduce((a, h) => a + (+h.netProfit || 0), 0), cnt = {}; cq.forEach(c => { const k = c.win ? 'star' : (KEY_OF[c.winner] || 'wolf'); cnt[k] = (cnt[k] || 0) + 1; });
-  const rank = ORDER.map(k => ({ k, n: cnt[k] || 0, sh: k === 'star' ? +last.share || 0 : ((s.competitors || []).find(c => KEY_OF[c.name] === k) || {}).share || 0 })).sort((a, b) => b.n - a.n || b.sh - a.sh);
+  const rank = ORDER.map(k => ({ k, n: cnt[k] || 0, pf: k === 'star' ? profit : ((s.competitors || []).find(c => KEY_OF[c.name] === k) || {}).profit || 0 })).sort((a, b) => b.n - a.n || b.pf - a.pf); /* hoà cờ xét lợi nhuận tích lũy – cùng luật danh hiệu «Vô địch BizOn» (js/engine.js) */
   const myRank = rank.findIndex(r => r.k === 'star') + 1, champ = myRank === 1;
   if (FIN) scene.remove(FIN); FIN = G('finale', scene, -3.9, 0, 3.9, Math.atan2(0.62, 0.75));
   const step = (w, h, x, col) => B(FIN, 'podium', w, h, 0.9, mat(col, 0.85), x, 0, 0, 0.03);

@@ -2250,8 +2250,8 @@
 "BizOn champion"
 ],
 [
-"Kết thúc 6 vòng với lợi nhuận cao nhất sàn đấu.",
-"Finish all 6 rounds with the highest profit in the arena."
+"Kết thúc 6 vòng với nhiều cờ nhất bản đồ chinh phục (hoà cờ thì xét lợi nhuận).",
+"Finish all 6 rounds with the most flags on the conquest map (ties go to profit)."
 ],
 [
 "Dang tay chào đón · cài áo Bản đồ Việt Nam trên ve áo",

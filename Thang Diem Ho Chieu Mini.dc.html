@@ -101,7 +101,7 @@ const TX = {
   h2: X('Điểm được tính thế nào', 'How the score is calculated', 'Cara skor dihitung'),
   p2a: X('Game chỉ dùng một chỉ số: giá trị doanh nghiệp cuối game so với vốn khởi điểm 20 triệu USD. Giá trị doanh nghiệp = tiền ở nước nhà + 80% tài sản ở nước ngoài + lợi nhuận đang giữ ở nước ngoài sau thuế khấu trừ.', 'The game uses one measure: final firm value compared with the $20M starting capital. Firm value = cash at home + 80% of assets abroad + profit held abroad after withholding tax.', 'Game memakai satu ukuran: nilai perusahaan akhir dibanding modal awal US$20 jt. Nilai perusahaan = kas di negara asal + 80% aset di luar negeri + laba yang ditahan setelah pajak potong.'),
   formula: X('Điểm = 3 + (Giá trị cuối ÷ 20 − 1) × k   (tối thiểu 1, tối đa 10)', 'Score = 3 + (Final value ÷ 20 − 1) × k   (min 1, max 10)', 'Skor = 3 + (Nilai akhir ÷ 20 − 1) × k   (min 1, maks 10)'),
-  p2b: X('Hệ số k = 27 với 4 quý và 13,8 với 5 quý, để hai bản có độ khó tương đương. Không đầu tư gì được 3 điểm.', 'k = 27 for 4 quarters and 13.8 for 5 quarters, so both editions are equally demanding. Not investing at all scores 3.', 'k = 27 untuk 4 kuartal dan 13,8 untuk 5 kuartal agar kedua edisi setara. Tidak berinvestasi sama sekali mendapat skor 3.'),
+  p2b: X('Hệ số k = 36 với 4 quý và 18,4 với 5 quý, để hai bản có độ khó tương đương. Không đầu tư gì được 3 điểm.', 'k = 36 for 4 quarters and 18.4 for 5 quarters, so both editions are equally demanding. Not investing at all scores 3.', 'k = 36 untuk 4 kuartal dan 18,4 untuk 5 kuartal agar kedua edisi setara. Tidak berinvestasi sama sekali mendapat skor 3.'),
   valueCol: X('Giá trị cuối', 'Final value', 'Nilai akhir'), ratioCol: X('So với vốn đầu', 'vs. start', 'vs. awal'), s4: X('Điểm (4 quý)', 'Score (4 qtrs)', 'Skor (4 kuartal)'), s5: X('Điểm (5 quý)', 'Score (5 qtrs)', 'Skor (5 kuartal)'),
   h3: X('Các quyết định ảnh hưởng tới điểm', 'Decisions that drive your score', 'Keputusan yang memengaruhi skor'),
   decCol: X('Quyết định', 'Decision', 'Keputusan'), goodCol: X('Làm tốt khi', 'Works well when', 'Berhasil bila'), riskCol: X('Rủi ro', 'Risk', 'Risiko'),
@@ -142,7 +142,7 @@ class Component extends DCLogic {
     const l = this.state.lang || this.props.lang || 'vi';
     const t = {}; Object.keys(TX).forEach(k => t[k] = TX[k][l]);
     const n = (v, d = 1) => { const s = v.toFixed(d); return l === 'en' ? s : s.replace('.', ','); };
-    const sc = (v, Q) => Math.max(1, Math.min(10, Math.round((3 + (v / 20 - 1) * 27 * Math.pow(4 / Q, 3)) * 10) / 10));
+    const sc = (v, Q) => Math.max(1, Math.min(10, Math.round((3 + (v / 20 - 1) * 36 * Math.pow(4 / Q, 3)) * 10) / 10));
     const money = v => l === 'vi' ? n(v) + ' tr USD' : l === 'id' ? 'US$' + n(v) + ' jt' : '$' + n(v) + 'M';
     return { t,
       langs: ['vi', 'en', 'id'].map(x => ({ label: x.toUpperCase(), bg: x === l ? '#fda127' : 'transparent', fg: x === l ? '#033337' : '#fff', onClick: () => this.setState({ lang: x }) })),
