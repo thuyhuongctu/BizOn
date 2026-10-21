@@ -1,7 +1,7 @@
 /* BizOn Bật Nghiệp 2026 – Service Worker (offline app shell)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
 
-const CACHE = 'bizon-v504';
+const CACHE = 'bizon-v505';
 const SHELL = [
   './',
   './index.html',
@@ -334,7 +334,8 @@ self.addEventListener('activate', e => {
 // Chiến lược theo loại tài nguyên (không bao giờ trả index.html cho request không phải điều hướng):
 //  - Điều hướng HTML: network-first → cache trang đó → index.html (chỉ ở đây mới fallback index)
 //  - Ảnh: stale-while-revalidate (trả cache ngay, cập nhật nền)
-//  - Audio/video: cache-on-demand (không cache phản hồi 206 Range)
+//  - Audio/video: KHÔNG chặn — để trình duyệt tự tải theo Range. Trả bản cache 200 cho yêu cầu
+//    Range, hoặc lưu cả tệp mp4 khi người dùng mở thẳng liên kết, làm video trên điện thoại bị cắt giữa chừng.
 //  - JS/CSS/font/còn lại: cache-first theo phiên bản CACHE, lỗi mạng thì báo lỗi thật
 //
 // QUY TẮC KHI SỬA NỘI DUNG MỘT TẤM ẢNH: phải ĐỔI TÊN TỆP, ví dụ thêm hậu tố
@@ -357,6 +358,7 @@ self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
   const url = new URL(e.request.url);
   if (url.origin !== self.location.origin) return; // CDN/fonts: để trình duyệt tự xử lý
+  if (/\.(mp4|m4v|webm|mov|mp3|m4a|ogg|oga|wav)$/i.test(url.pathname)) return; // audio/video: để trình duyệt tự xử lý Range
 
   if (e.request.mode === 'navigate') {
     e.respondWith(
@@ -376,9 +378,6 @@ self.addEventListener('fetch', e => {
     );
     return;
   }
-  if (dest === 'audio' || dest === 'video') {
-    e.respondWith(caches.match(e.request).then(hit => hit || fetch(e.request).then(res => putIfOk(e.request, res))));
-    return;
-  }
+  if (dest === 'audio' || dest === 'video' || e.request.headers.has('range')) return;
   e.respondWith(caches.match(e.request).then(hit => hit || fetch(e.request).then(res => putIfOk(e.request, res))));
 });
