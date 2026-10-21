@@ -190,7 +190,7 @@
         asset: 'cvpStudioScene',
         href: 'lab/cvp-studio.html',
         kicker: { vi: 'XƯỞNG MÔ HÌNH CVP', en: 'CVP STUDIO' },
-        title: { vi: 'CVP Studio · Điểm hòa vốn', en: 'CVP Studio · Break-even' },
+        title: { vi: 'CVP Lab · Điểm hòa vốn', en: 'CVP Lab · Break-even' },
         description: {
           vi: 'Thử nghiệm quan hệ Chi phí – Sản lượng – Lợi nhuận và tìm điểm hòa vốn cho một kế hoạch kinh doanh.',
           en: 'Explore the Cost–Volume–Profit relationship and find the break-even point for a business plan.'

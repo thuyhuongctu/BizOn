@@ -104,12 +104,12 @@ test('Đọc CSV dấu chấm phẩy và dấu thập phân phẩy', () => {
   assert.strictEqual(t.rows[1].id, 'KOR');
 });
 
-test('Trang HTML nạp đúng hai tệp JS và có ghi công tác giả', () => {
+test('URL cũ chuyển hướng sang bản đầy đủ /gravity-lab/ và giữ ghi công tác giả', () => {
   const html = fs.readFileSync(path.join(__dirname, '../lab/gravity-lab.html'), 'utf8');
-  assert.ok(html.includes('gravity-lab-engine.js') && html.includes('gravity-lab-data.js'));
+  assert.ok(html.includes('url=../gravity-lab/') && html.includes("location.replace('../gravity-lab/'"));
   assert.ok(html.includes('Phan Anh Tú') && html.includes('Đỗ Thùy Hương'));
   assert.ok(!/https?:\/\/(cdn|fonts\.googleapis)/.test(html), 'Không dùng CDN');
-  assert.ok(/<input type="checkbox" id="checkToggle">/.test(html), 'Kiểm tra nhất quán mặc định tắt');
+  assert.ok(fs.existsSync(path.join(__dirname, '../gravity-lab/index.html')), 'Có bản build đầy đủ');
 });
 
 console.log(`\n${passed} kiểm thử đạt.`);
