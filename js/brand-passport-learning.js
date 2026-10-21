@@ -227,11 +227,11 @@
 
   function cloFor(record) {
     var clos = [];
-    if (record.decision.entry_market) clos.push('CLO 1 — đánh giá mức hấp dẫn và mức hiểu biết thị trường');
-    if (record.decision.entry_mode) clos.push('CLO 2 — lựa chọn phương thức thâm nhập phù hợp');
-    if (record.decision.intelligence_source_ids.length) clos.push('CLO 3 — đánh giá độ tin cậy và thiên lệch của thông tin');
-    clos.push('CLO 5 — nhận diện path dependence và hệ quả của chuỗi quyết định');
-    clos.push('CLO 6 — ra quyết định đa tiêu chí và giải thích trade-off');
+    if (record.decision.entry_market) clos.push('CLO 1 – đánh giá mức hấp dẫn và mức hiểu biết thị trường');
+    if (record.decision.entry_mode) clos.push('CLO 2 – lựa chọn phương thức thâm nhập phù hợp');
+    if (record.decision.intelligence_source_ids.length) clos.push('CLO 3 – đánh giá độ tin cậy và thiên lệch của thông tin');
+    clos.push('CLO 5 – nhận diện path dependence và hệ quả của chuỗi quyết định');
+    clos.push('CLO 6 – ra quyết định đa tiêu chí và giải thích trade-off');
     return clos;
   }
 

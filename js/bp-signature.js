@@ -129,7 +129,7 @@
     },
     3: {
       ahead: ['HC_KL_02', 'Chúng tôi đã có mặt ở ba thị trường. Các bạn vẫn còn đang mua báo cáo à?', 'We’re already in three markets. Still buying reports?'],
-      behind: ['HC_KL_02B', 'Thừa nhận đi, thị phần các bạn đang nhỉnh hơn tụi tôi rồi. Quý tới tụi tôi sẽ tăng tốc.', 'Fine, I’ll admit it — your market share is ahead of ours right now. We’re speeding up next quarter.'],
+      behind: ['HC_KL_02B', 'Thừa nhận đi, thị phần các bạn đang nhỉnh hơn tụi tôi rồi. Quý tới tụi tôi sẽ tăng tốc.', 'Fine, I’ll admit it – your market share is ahead of ours right now. We’re speeding up next quarter.'],
     },
     5: {
       ahead: ['HC_KL_03', 'Quý cuối rồi. Để xem ai mới là thương hiệu đi xa nhất.', 'Final quarter. Let’s see whose brand travels furthest.'],

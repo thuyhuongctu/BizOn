@@ -123,7 +123,7 @@ const QUIZ_BANK_EN = [
    "Nguyễn Việt Nam, a fashion designer, in 2020"
   ],
   "a": 1,
-  "e": "Suggested answer — not yet confirmed by the instructor."
+  "e": "Suggested answer – not yet confirmed by the instructor."
  },
  {
   "c": "Case · Tired City",
@@ -135,7 +135,7 @@ const QUIZ_BANK_EN = [
    "More than 300 artists and over 10,000 original artworks"
   ],
   "a": 0,
-  "e": "Suggested answer — not yet confirmed by the instructor."
+  "e": "Suggested answer – not yet confirmed by the instructor."
  },
  {
   "c": "Case · Tired City",
@@ -147,7 +147,7 @@ const QUIZ_BANK_EN = [
    "VLAG had not yet launched at that point"
   ],
   "a": 1,
-  "e": "Suggested answer — not yet confirmed by the instructor."
+  "e": "Suggested answer – not yet confirmed by the instructor."
  },
  {
   "c": "Case · Tired City",
@@ -159,7 +159,7 @@ const QUIZ_BANK_EN = [
    "It restricted its catalog to a single flagship product to protect exclusivity"
   ],
   "a": 1,
-  "e": "Suggested answer — not yet confirmed by the instructor."
+  "e": "Suggested answer – not yet confirmed by the instructor."
  },
  {
   "c": "Case · Tired City",
@@ -171,7 +171,7 @@ const QUIZ_BANK_EN = [
    "Commercial success made community activities unnecessary over time"
   ],
   "a": 2,
-  "e": "Suggested answer — not yet confirmed by the instructor."
+  "e": "Suggested answer – not yet confirmed by the instructor."
  },
  {
   "c": "Case · Tired City",
@@ -183,7 +183,7 @@ const QUIZ_BANK_EN = [
    "Zoom, Slack, and Microsoft Teams"
   ],
   "a": 1,
-  "e": "Suggested answer — not yet confirmed by the instructor."
+  "e": "Suggested answer – not yet confirmed by the instructor."
  },
  {
   "c": "Case · Tired City",
@@ -195,7 +195,7 @@ const QUIZ_BANK_EN = [
    "90%"
   ],
   "a": 2,
-  "e": "Suggested answer — not yet confirmed by the instructor."
+  "e": "Suggested answer – not yet confirmed by the instructor."
  },
  {
   "c": "Case · Tired City",
@@ -207,7 +207,7 @@ const QUIZ_BANK_EN = [
    "As a replacement for the Vietnam Local Artist Group's curatorial role"
   ],
   "a": 3,
-  "e": "Suggested answer — not yet confirmed by the instructor."
+  "e": "Suggested answer – not yet confirmed by the instructor."
  },
  {
   "c": "Case · Tired City",
@@ -219,7 +219,7 @@ const QUIZ_BANK_EN = [
    "There is no meaningful difference; both are described as equivalent tools"
   ],
   "a": 0,
-  "e": "Suggested answer — not yet confirmed by the instructor."
+  "e": "Suggested answer – not yet confirmed by the instructor."
  },
  {
   "c": "Case · Tired City",
@@ -231,7 +231,7 @@ const QUIZ_BANK_EN = [
    "An external management consultant hired for the case"
   ],
   "a": 1,
-  "e": "Suggested answer — not yet confirmed by the instructor."
+  "e": "Suggested answer – not yet confirmed by the instructor."
  },
  {
   "c": "Case · Betterteem",
@@ -351,7 +351,7 @@ const QUIZ_BANK_EN = [
    "A government labor-policy official in the Philippines"
   ],
   "a": 1,
-  "e": "Suggested answer — not yet confirmed by the instructor."
+  "e": "Suggested answer – not yet confirmed by the instructor."
  },
  {
   "c": "Case · Betterteem",
@@ -363,7 +363,7 @@ const QUIZ_BANK_EN = [
    "It dropped from a premium enterprise price to a near-free consumer price"
   ],
   "a": 1,
-  "e": "Suggested answer — not yet confirmed by the instructor."
+  "e": "Suggested answer – not yet confirmed by the instructor."
  },
  {
   "c": "Case · Betterteem",
@@ -375,7 +375,7 @@ const QUIZ_BANK_EN = [
    "100%, with no dissenting responses"
   ],
   "a": 2,
-  "e": "Suggested answer — not yet confirmed by the instructor."
+  "e": "Suggested answer – not yet confirmed by the instructor."
  },
  {
   "c": "Case · Betterteem",
@@ -387,7 +387,7 @@ const QUIZ_BANK_EN = [
    "A government tourism board"
   ],
   "a": 0,
-  "e": "Suggested answer — not yet confirmed by the instructor."
+  "e": "Suggested answer – not yet confirmed by the instructor."
  },
  {
   "c": "Case · Betterteem",
@@ -399,7 +399,7 @@ const QUIZ_BANK_EN = [
    "2026"
   ],
   "a": 2,
-  "e": "Suggested answer — not yet confirmed by the instructor."
+  "e": "Suggested answer – not yet confirmed by the instructor."
  },
  {
   "c": "Case · Betterteem",
@@ -411,7 +411,7 @@ const QUIZ_BANK_EN = [
    "A guaranteed multi-year government procurement contract"
   ],
   "a": 3,
-  "e": "Suggested answer — not yet confirmed by the instructor."
+  "e": "Suggested answer – not yet confirmed by the instructor."
  },
  {
   "c": "Case · Betterteem",
@@ -423,7 +423,7 @@ const QUIZ_BANK_EN = [
    "Whether the country had no existing HR-tech competitors at all"
   ],
   "a": 1,
-  "e": "Suggested answer — not yet confirmed by the instructor."
+  "e": "Suggested answer – not yet confirmed by the instructor."
  },
  {
   "c": "Case · Betterteem",
@@ -435,7 +435,7 @@ const QUIZ_BANK_EN = [
    "Government restrictions preventing the company from hiring locally at all"
   ],
   "a": 1,
-  "e": "Suggested answer — not yet confirmed by the instructor."
+  "e": "Suggested answer – not yet confirmed by the instructor."
  },
  {
   "c": "Case · Betterteem",
@@ -447,7 +447,7 @@ const QUIZ_BANK_EN = [
    "United Arab Emirates"
   ],
   "a": 0,
-  "e": "Suggested answer — not yet confirmed by the instructor."
+  "e": "Suggested answer – not yet confirmed by the instructor."
  },
  {
   "c": "Case · Betterteem",
@@ -459,7 +459,7 @@ const QUIZ_BANK_EN = [
    "A strategy of acquiring local competitors in every market before entering"
   ],
   "a": 1,
-  "e": "Suggested answer — not yet confirmed by the instructor."
+  "e": "Suggested answer – not yet confirmed by the instructor."
  }
 ];
 if (typeof module !== "undefined") module.exports = QUIZ_BANK_EN;

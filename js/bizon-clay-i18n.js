@@ -1,5 +1,5 @@
 /* ============================================================================
-   BizOn Clay — i18n song ngữ tự chứa (VI/EN) cho các trang bản đất sét.
+   BizOn Clay – i18n song ngữ tự chứa (VI/EN) cho các trang bản đất sét.
    Không phụ thuộc site-ui.js. Dùng thuộc tính data-en* ngay trên phần tử:
      data-en          → đổi textContent
      data-en-html     → đổi innerHTML (dùng cho đoạn có <b>/<a>…)

@@ -1,5 +1,5 @@
 /* ============================================================================
-   BizOn Clay — Kho Âm nhạc v2: bàn xoay đĩa than + trình phát (vanilla).
+   BizOn Clay – Kho Âm nhạc v2: bàn xoay đĩa than + trình phát (vanilla).
    Đọc window.BZ_MUSIC (js/music-data.js). Song ngữ theo window.clayCurrentLang().
    Nạp SAU bizon-clay-i18n.js và music-data.js.
    ----------------------------------------------------------------------------

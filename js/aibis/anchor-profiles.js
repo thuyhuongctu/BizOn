@@ -23,7 +23,7 @@
 })(typeof globalThis !== 'undefined' ? globalThis : this, function () {
   'use strict';
 
-  var REF_PRICE = 150; // nghìn ₫ — khớp js/engine.js
+  var REF_PRICE = 150; // nghìn ₫ – khớp js/engine.js
   // Tỉ lệ quần thể luôn dành cho hồ sơ neo (không bao giờ đổi) — chống thoái hóa.
   var ANCHOR_RESERVE = 0.25;
 

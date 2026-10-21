@@ -1,5 +1,5 @@
 /* ===========================================================================
-   BizOn ACADEMIA 3D — mô-típ âm thanh cho các cổng sản phẩm
+   BizOn ACADEMIA 3D – mô-típ âm thanh cho các cổng sản phẩm
    ---------------------------------------------------------------------------
    Mỗi cổng có một câu nhạc 2,2 giây cắt từ chính ca khúc của màn đó. Rê chuột
    lên thẻ thì nghe được câu ấy. Đây là thứ khó bắt chước nhất của BizOn: kho

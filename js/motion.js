@@ -1,9 +1,9 @@
 /* ===========================================================================
-   BizOn ACADEMIA 3D — lớp chuyển động (JS)
+   BizOn ACADEMIA 3D – lớp chuyển động (JS)
    Đi cùng css/bizon-motion.css. Không phụ thuộc thư viện ngoài.
 
    Ba nguyên tắc:
-     1. Tôn trọng prefers-reduced-motion — có thì không gắn gì cả.
+     1. Tôn trọng prefers-reduced-motion – có thì không gắn gì cả.
      2. Parallax chỉ chạy khi thiết bị có con trỏ tinh (chuột/bút), không chạy
         trên cảm ứng (§5).
      3. Mọi thứ chạy trong requestAnimationFrame, không nghe scroll/mousemove

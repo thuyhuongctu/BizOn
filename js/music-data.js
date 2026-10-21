@@ -1,5 +1,5 @@
 /* ============================================================================
-   BizOn — dữ liệu Kho Âm nhạc (song ngữ VI/EN).
+   BizOn – dữ liệu Kho Âm nhạc (song ngữ VI/EN).
    group  = [nameVi, art, descVi, tracks, descEn, nameEn?]  (nameEn mặc định = nameVi)
    track  = [titleVi, subVi, audioId, titleEn, subEn]
    album  = [nameVi, art, toneVi, href, files[], toneEn]    (name dùng chung)

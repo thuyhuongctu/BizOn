@@ -1,5 +1,5 @@
 /* ============================================================================
-   BizOn Clay — Thư viện Sáng tạo: lưới ảnh + tìm kiếm + lọc nhóm + lightbox.
+   BizOn Clay – Thư viện Sáng tạo: lưới ảnh + tìm kiếm + lọc nhóm + lightbox.
    Đọc window.BZ_LIB (js/thu-vien-data.js). Chrome song ngữ theo clayCurrentLang();
    chú thích từng mục giữ tiếng Việt (nguồn tư liệu). Nạp SAU bizon-clay-i18n.js
    và thu-vien-data.js.

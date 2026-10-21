@@ -28,17 +28,17 @@
     { key: 'decision_id', required: true, kind: 'id' },
     { key: 'session_id', required: true, kind: 'id' },
     { key: 'cohort_id', required: true, kind: 'string' },   // ví dụ '2026A-KT330H' (mã lớp, không phải danh tính cá nhân)
-    { key: 'team_id', required: true, kind: 'hashed' },      // BẮT BUỘC băm — không lưu danh tính
+    { key: 'team_id', required: true, kind: 'hashed' },      // BẮT BUỘC băm – không lưu danh tính
     { key: 'pillar', required: true, kind: 'enum', values: ['bat-nghiep', 'ho-chieu'] },
     { key: 'role', required: true, kind: 'enum', values: ['home_outbound', 'host_inbound'] },
     { key: 'round', required: true, kind: 'int' },
     { key: 'scenario_pack', required: true, kind: 'string' },
-    { key: 'snapshot_hash', required: true, kind: 'string' },// mã băm ảnh chụp đồng khóa (Bước 4) — để tái lập
+    { key: 'snapshot_hash', required: true, kind: 'string' },// mã băm ảnh chụp đồng khóa (Bước 4) – để tái lập
     { key: 'decision', required: true, kind: 'object' },
     { key: 'state_before', required: false, kind: 'object' },
     { key: 'result_after', required: false, kind: 'object' },
     { key: 'timestamp', required: true, kind: 'iso' },
-    { key: 'consent_version', required: true, kind: 'string' },// phiên bản phiếu đồng thuận — bắt buộc
+    { key: 'consent_version', required: true, kind: 'string' },// phiên bản phiếu đồng thuận – bắt buộc
     { key: 'consent_purposes', required: false, kind: 'array' }// tập mục đích được cấp phép cho bản ghi (research/product)
   ];
   var FIELD_KEYS = FIELDS.map(function (f) { return f.key; });

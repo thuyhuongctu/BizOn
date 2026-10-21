@@ -1,5 +1,5 @@
 /* ============================================================================
-   BizOn Clay — thanh điều hướng đất sét (pill-nav) dùng chung cho trang đất sét.
+   BizOn Clay – thanh điều hướng đất sét (pill-nav) dùng chung cho trang đất sét.
    Bơm #clay-nav vào đầu <body>. Nút VI/EN nối với js/bizon-clay-i18n.js.
    Nạp SAU bizon-clay-i18n.js. CSS ở css/bizon-clay.css.
    ========================================================================== */
@@ -20,9 +20,9 @@
   var DL_ARIA = { vi:'Tải app BizOn', en:'Get the BizOn app' };
   var DL_OPTIONS = [
     { href:'https://play.google.com/store/apps/details?id=io.github.thuyhuongctu.bizon', ext:true,
-      vi:'🤖 Android — Google Play', en:'🤖 Android — Google Play' },
+      vi:'🤖 Android – Google Play', en:'🤖 Android – Google Play' },
     { href:'huong-dan-cai-dat.html', ext:false,
-      vi:'🍎 iPhone / iPad — Xem hướng dẫn cài', en:'🍎 iPhone / iPad — See install guide' }
+      vi:'🍎 iPhone / iPad – Xem hướng dẫn cài', en:'🍎 iPhone / iPad – See install guide' }
   ];
 
   var here = (location.pathname.split('/').pop() || 'index.html').toLowerCase();

@@ -182,7 +182,7 @@
         title: { vi: 'CMR Lab · Số dư đảm phí', en: 'CMR Lab · Contribution Margin' },
         description: {
           vi: 'Hiểu «túi đỏ» số dư đảm phí: giá, chi phí biến đổi và phần đóng góp của mỗi sản phẩm bán ra – nền tảng để chơi Bật Nghiệp tốt hơn.',
-          en: 'Master contribution margin — price, variable cost and what each unit contributes — to play Startup Lab better.'
+          en: 'Master contribution margin – price, variable cost and what each unit contributes – to play Startup Lab better.'
         }
       },
       {
