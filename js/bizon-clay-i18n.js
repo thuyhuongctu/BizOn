@@ -5,6 +5,8 @@
      data-en-html     → đổi innerHTML (dùng cho đoạn có <b>/<a>…)
      data-en-ph       → đổi placeholder
      data-en-aria     → đổi aria-label
+     data-en-content  → đổi content của <meta> (vd meta description)
+     <title data-en>  → đổi tiêu đề tab (title không có thẻ con nên dùng data-en như chữ thường)
    Ngôn ngữ lưu ở localStorage['bizon-lang'] (dùng chung toàn site).
    Phát sự kiện 'bizon:langchange' để script khác (nav) đồng bộ nút VI/EN.
    ========================================================================== */
@@ -37,6 +39,7 @@
     document.querySelectorAll('[data-en-html]').forEach(function(el){ swapHtml(el, lang); });
     document.querySelectorAll('[data-en-ph]').forEach(function(el){ swapAttr(el, 'placeholder', 'viPh', el.dataset.enPh, lang); });
     document.querySelectorAll('[data-en-aria]').forEach(function(el){ swapAttr(el, 'aria-label', 'viAria', el.dataset.enAria, lang); });
+    document.querySelectorAll('meta[data-en-content]').forEach(function(el){ swapAttr(el, 'content', 'viContent', el.dataset.enContent, lang); });
     document.documentElement.lang = lang;
     store(lang);
     window.__bizonLang = lang;

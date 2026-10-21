@@ -128,6 +128,13 @@
   #clay-nav .cn-links{display:none}
   #clay-nav .cn-row2{display:flex}
 }
+/* Hàng 2 còn mục khuất bên phải (bizon-clay-nav.js gắn .cn-more): làm mờ mép phải để người xem biết vuốt tiếp */
+#clay-nav .cn-row2.cn-more{-webkit-mask-image:linear-gradient(90deg,#000 80%,transparent);mask-image:linear-gradient(90deg,#000 80%,transparent)}
+/* Máy rất hẹp (≤340px): thu nút «Bắt đầu» để thanh nav không tràn ngang */
+@media (max-width:340px){
+  #clay-nav .cn-bar{gap:8px;padding-left:14px}
+  #clay-nav .cn-cta{padding:9px 10px;font-size:14px}
+}
 
 /* ============================================================================
    Chân trang đất sét (bơm bởi js/bizon-clay-footer.js)

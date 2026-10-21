@@ -15,17 +15,18 @@
   var GP = 'https://play.google.com/store/apps/details?id=io.github.thuyhuongctu.bizon';
   var cols =
     col('Trò chơi','Games',[
-      { href:'game.html', vi:'Game Bật Nghiệp', en:'BizOn: Startup' },
+      { href:'game.html', vi:'Game Bật Nghiệp', en:'BizOn Bật Nghiệp' },
       { href:'games.html', vi:'BizOn Arcade', en:'BizOn Arcade' },
-      { href:'brand-passport.html', vi:'Brand Passport', en:'Brand Passport' },
-      { href:'ben-phu-sa.html', vi:'Bến Phù Sa', en:'Ben Phu Sa' }
+      { href:'brand-passport.html', vi:'Hộ Chiếu Thương Hiệu', en:'Brand Passport' },
+      { href:'ho-chieu-sau-rieng.html', vi:'Hộ Chiếu Sầu Riêng', en:'Durian Passport' },
+      { href:'ben-phu-sa.html', vi:'Bến Phù Sa', en:'Bến Phù Sa' }
     ])
     + col('Sáng tạo','Creative',[
       { href:'am-nhac.html', vi:'Kho Âm nhạc', en:'Music library' },
       { href:'thu-vien.html', vi:'Thư viện Sáng tạo', en:'Creative library' }
     ])
     + col('Về BizOn','About',[
-      { href:'gioi-thieu.html', vi:'Giới thiệu', en:'About' },
+      { href:'truong-gioi-thieu.html', vi:'Giới thiệu dự án', en:'About the project' },
       { href:'doi-ngu.html', vi:'Đội ngũ sáng lập', en:'Team' },
       { href:'dinh-huong.html', vi:'Định hướng tác động vùng', en:'Regional impact' },
       { href:'bang-chung.html', vi:'Bằng chứng lớp học', en:'Evidence' },
@@ -41,7 +42,7 @@
     '<div class="cf-wave" aria-hidden="true"></div>'
     + '<div class="cf-inner">'
       + '<div class="cf-cols">' + cols + '</div>'
-      + '<div data-en="© 2026 Bizonland · Do Thuy Huong &amp; Phan Anh Tu · All rights reserved">© 2026 Bizonland · Đỗ Thùy Hương &amp; Phan Anh Tú · All rights reserved</div>'
+      + '<div data-en="© 2026 Bizonland · Do Thuy Huong &amp; Phan Anh Tu · All rights reserved">© 2026 Bizonland · Đỗ Thùy Hương &amp; Phan Anh Tú · Bảo lưu mọi quyền</div>'
       + '<div style="font-size:12px"><span data-en="Cite as:" data-vi="Trích dẫn:">Trích dẫn:</span> <a href="https://doi.org/10.5281/zenodo.23325489" target="_blank" rel="noopener" style="color:var(--clay-foot-link)">doi:10.5281/zenodo.23325489</a></div>'
       + '<a class="cf-gp" href="'+GP+'" target="_blank" rel="noopener" data-en="▶ Get it on Google Play">▶ Tải trên Google Play</a>'
       + '<div style="display:flex;flex-wrap:wrap;gap:16px">'

@@ -7,8 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BizOn – Sổ điểm: chấm trên ảnh chụp đóng băng</title>
-<meta name="description" content="Công cụ sổ điểm cho giảng viên: nạp nhật ký quyết định, chấm trên ảnh chụp đóng băng nên tái lập, lọc và sắp xếp theo lớp/vòng, xuất CSV và bản in. Không AI tự chấm – chỉ cấp chỉ số neo làm bằng chứng.">
+<title data-vi="BizOn – Sổ điểm: chấm trên ảnh chụp đóng băng" data-en="BizOn – Gradebook: grading on frozen snapshots">BizOn – Sổ điểm: chấm trên ảnh chụp đóng băng</title>
+<meta name="description" data-content-vi="Công cụ sổ điểm cho giảng viên: nạp nhật ký quyết định, chấm trên ảnh chụp đóng băng nên tái lập, lọc và sắp xếp theo lớp/vòng, xuất CSV và bản in. Không AI tự chấm – chỉ cấp chỉ số neo làm bằng chứng." data-content-en="Gradebook for instructors: load decision logs, grade on frozen snapshots so results are reproducible, filter and sort by class/round, export CSV and print. No AI auto-grading – only anchor indicators as evidence." content="Công cụ sổ điểm cho giảng viên: nạp nhật ký quyết định, chấm trên ảnh chụp đóng băng nên tái lập, lọc và sắp xếp theo lớp/vòng, xuất CSV và bản in. Không AI tự chấm – chỉ cấp chỉ số neo làm bằng chứng.">
 <meta name="theme-color" content="#FFFFFF">
 <link rel="icon" type="image/svg+xml" href="assets/brand/bizon-favicon.svg">
 <link rel="stylesheet" href="css/bizon-institutional-fonts.css">
@@ -89,16 +89,16 @@ tr[hidden]{display:none}
      phiên đăng nhập có email thuộc danh sách quản trị (js/instructor-api.js). -->
 <div id="gv-gate" style="position:fixed;inset:0;z-index:99999;background:#02303a;color:#fff;display:grid;place-items:center;padding:24px;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif">
   <div style="width:min(420px,100%);background:#fff;color:#02303a;border-radius:18px;padding:28px;box-shadow:0 30px 60px -20px rgba(0,0,0,.5)">
-    <div style="font-size:22px;font-weight:800">🔒 Trang Giảng viên</div>
-    <p style="margin:10px 0 2px;font-size:14px;line-height:1.6;color:#3b5a5c">Chỉ giảng viên được cấp quyền mới mở được Sổ điểm này. Vui lòng đăng nhập bằng email giảng viên.</p>
+    <div style="font-size:22px;font-weight:800" data-vi="🔒 Trang Giảng viên" data-en="🔒 Instructor page">🔒 Trang Giảng viên</div>
+    <p style="margin:10px 0 2px;font-size:14px;line-height:1.6;color:#3b5a5c" data-vi="Chỉ giảng viên được cấp quyền mới mở được Sổ điểm này. Vui lòng đăng nhập bằng email giảng viên." data-en="Please sign in with your instructor email.">Chỉ giảng viên được cấp quyền mới mở được Sổ điểm này. Vui lòng đăng nhập bằng email giảng viên.</p>
     <p style="margin:0 0 4px;font-size:12px;line-height:1.5;color:#8aa0a2">Only authorized instructors can open this gradebook.</p>
     <form id="gv-form" style="margin-top:16px;display:flex;flex-direction:column;gap:10px">
       <input id="gv-email" type="email" required placeholder="Email giảng viên" autocomplete="username" style="border:1.5px solid #cdd9da;border-radius:12px;padding:12px 14px;font:500 15px system-ui,sans-serif;color:#02303a">
       <input id="gv-pass" type="password" required placeholder="Mật khẩu" autocomplete="current-password" style="border:1.5px solid #cdd9da;border-radius:12px;padding:12px 14px;font:500 15px system-ui,sans-serif;color:#02303a">
-      <button type="submit" style="border:0;cursor:pointer;border-radius:12px;padding:13px;background:#006687;color:#fff;font:800 15px system-ui,sans-serif">Đăng nhập →</button>
+      <button type="submit" style="border:0;cursor:pointer;border-radius:12px;padding:13px;background:#006687;color:#fff;font:800 15px system-ui,sans-serif" data-vi="Đăng nhập →" data-en="Sign in →">Đăng nhập →</button>
       <div id="gv-err" role="alert" style="display:none;color:#b3261e;font-size:13px;line-height:1.5"></div>
     </form>
-    <a href="universe.html" style="display:inline-block;margin-top:14px;font-size:13px;font-weight:700;color:#006687;text-decoration:none">← Về trang chính</a>
+    <a href="universe.html" style="display:inline-block;margin-top:14px;font-size:13px;font-weight:700;color:#006687;text-decoration:none" data-vi="← Về trang chính" data-en="← Back to the main page">← Về trang chính</a>
   </div>
 </div>
 

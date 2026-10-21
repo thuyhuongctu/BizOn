@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Bản đồ tiên quyết · CM &amp; CMR</title>
-<meta name="description" content="Bản đồ tiên quyết của chuỗi kiến thức Số dư đảm phí: kiến thức nào cần nắm trước khi học kiến thức nào.">
+<title data-en="Prerequisite map · CM &amp; CMR">Bản đồ tiên quyết · CM &amp; CMR</title>
+<meta name="description" data-en-content="Prerequisite map for the contribution-margin chain: which concept to master before which." content="Bản đồ tiên quyết của chuỗi kiến thức Số dư đảm phí: kiến thức nào cần nắm trước khi học kiến thức nào.">
 <meta name="copyright" content="© 2026 Đỗ Thùy Hương & PGS.TS. Phan Anh Tú">
 <link rel="icon" type="image/png" href="../assets/icons/icon-192.png">
 <link rel="stylesheet" href="../css/bizon-clay-fonts.css">
@@ -37,6 +37,9 @@
   .pq-cols .none{color:var(--clay-sub);font-style:italic}
   .pq-lab{display:inline-block;margin-top:14px;font-weight:800;color:var(--clay-teal);text-decoration:none}
   .pq-hint{font-size:13px;color:var(--clay-sub);margin-top:18px}
+  .pq-lang{display:flex;gap:4px;padding:4px;border-radius:999px;background:var(--clay-tray)}
+  .pq-lang button{border:0;cursor:pointer;padding:6px 11px;border-radius:999px;background:transparent;color:var(--clay-sub);font:800 12px var(--clay-head)}
+  .pq-lang button[aria-pressed="true"]{background:var(--clay-teal);color:#fff}
   @media (max-width:900px){
     .pq-board{grid-template-columns:repeat(3,minmax(0,1fr))}
   }
@@ -50,35 +53,36 @@
 <body>
 <div class="pq-wrap">
   <div class="pq-top">
-    <a href="../universe.html">← Vũ trụ</a>
-    <a href="cmr-lab.html">Mở CMR Lab →</a>
+    <a href="../universe.html" data-en="← Universe">← Vũ trụ</a>
+    <div class="pq-lang" role="group" aria-label="Ngôn ngữ / Language"><button type="button" data-lang="vi">VI</button><button type="button" data-lang="en">EN</button></div>
+    <a href="cmr-lab.html" data-en="Open CMR Lab →">Mở CMR Lab →</a>
   </div>
 
   <header class="pq-head">
-    <div class="clay-eyebrow">Lab · Bản đồ tiên quyết</div>
-    <h1>Học theo thứ tự nào?</h1>
-    <p>Mỗi ô là một kiến thức trong chuỗi Số dư đảm phí. Bấm một ô để xem những kiến thức cần nắm trước và những kiến thức mở ra sau nó.</p>
+    <div class="clay-eyebrow" data-en="Lab · Prerequisite map">Lab · Bản đồ tiên quyết</div>
+    <h1 data-en="In what order should you learn?">Học theo thứ tự nào?</h1>
+    <p data-en="Each tile is one concept in the contribution-margin chain. Tap a tile to see what you need to master first and what it unlocks next.">Mỗi ô là một kiến thức trong chuỗi Số dư đảm phí. Bấm một ô để xem những kiến thức cần nắm trước và những kiến thức mở ra sau nó.</p>
   </header>
 
-  <div class="pq-board" id="board" role="group" aria-label="Các kiến thức trong chuỗi"></div>
+  <div class="pq-board" id="board" role="group" aria-label="Các kiến thức trong chuỗi" data-en-aria="Concepts in the chain"></div>
 
   <section class="pq-panel" id="panel" aria-live="polite"></section>
 
-  <p class="pq-hint">Bản đồ này chỉ thể hiện thứ tự học, không chấm điểm và không lưu trạng thái.</p>
+  <p class="pq-hint" data-en="This map only shows learning order; it does not grade or save anything.">Bản đồ này chỉ thể hiện thứ tự học, không chấm điểm và không lưu trạng thái.</p>
 </div>
 
 <script>
   // Đồ thị tiên quyết do BizOn tự xây dựng cho chuỗi CM/CMR.
   // Không dùng dữ liệu chương trình của bên khác.
   const NODES = [
-    { id: 'chi-phi',   nm: 'Phân loại chi phí',                 ds: 'Tách biến phí và định phí. Đây là điểm xuất phát của mọi phép tính.', needs: [],                         lab: null },
-    { id: 'cm',        nm: 'Giá bán và số dư đảm phí (CM)',      ds: 'CM = Giá bán − Biến phí đơn vị. Phần CM trả định phí trước khi có lãi.', needs: ['chi-phi'],                lab: 'cmr-lab.html' },
-    { id: 'cmr',       nm: 'Tỷ lệ CMR',                          ds: 'CMR = CM / Giá bán. Cho biết mỗi đồng doanh thu còn lại bao nhiêu để trả định phí.', needs: ['cm'],             lab: 'cmr-lab.html' },
-    { id: 'bep',       nm: 'Điểm hòa vốn (BEP)',                 ds: 'BEP = Định phí / CM đơn vị. Số lượng bán để lợi nhuận bằng 0.', needs: ['cm'],                     lab: 'cvp-studio.html' },
-    { id: 'an-toan',   nm: 'Vùng an toàn và đòn bẩy',            ds: 'So sánh doanh số thực với BEP. Đòn bẩy cho biết lợi nhuận nhạy thế nào khi doanh số đổi.', needs: ['cmr', 'bep'], lab: 'cmr-lab.html' },
-    { id: 'thu-gia',   nm: 'Thử nghiệm giá và biến phí',         ds: 'Đổi giá hoặc biến phí rồi xem BEP và CMR thay đổi ra sao.', needs: ['bep'],                    lab: 'cvp-studio.html' },
-    { id: 'loi-nhuan', nm: 'Lợi nhuận mục tiêu',                 ds: 'Tính số lượng cần bán để đạt một mức lãi đặt trước.', needs: ['bep'],                           lab: 'cvp-studio.html' },
-    { id: 'chien-luoc',nm: 'Quyết định chiến lược',              ds: 'Chọn giá, quy mô và kênh bán dựa trên các chỉ số đã tính.', needs: ['an-toan', 'thu-gia', 'loi-nhuan'], lab: null },
+    { id: 'chi-phi',   nm: 'Phân loại chi phí',                 ds: 'Tách biến phí và định phí. Đây là điểm xuất phát của mọi phép tính.', nmEn: 'Cost classification', dsEn: 'Separate variable and fixed costs. This is where every calculation starts.', needs: [],                         lab: null },
+    { id: 'cm',        nm: 'Giá bán và số dư đảm phí (CM)',      ds: 'CM = Giá bán − Biến phí đơn vị. Phần CM trả định phí trước khi có lãi.', nmEn: 'Selling price and contribution margin (CM)', dsEn: 'CM = Selling price − Unit variable cost. CM covers fixed costs before any profit.', needs: ['chi-phi'],                lab: 'cmr-lab.html' },
+    { id: 'cmr',       nm: 'Tỷ lệ CMR',                          ds: 'CMR = CM / Giá bán. Cho biết mỗi đồng doanh thu còn lại bao nhiêu để trả định phí.', nmEn: 'CM ratio (CMR)', dsEn: 'CMR = CM / Selling price. How much of each unit of revenue is left to cover fixed costs.', needs: ['cm'],             lab: 'cmr-lab.html' },
+    { id: 'bep',       nm: 'Điểm hòa vốn (BEP)',                 ds: 'BEP = Định phí / CM đơn vị. Số lượng bán để lợi nhuận bằng 0.', nmEn: 'Break-even point (BEP)', dsEn: 'BEP = Fixed costs / Unit CM. The quantity sold at which profit is zero.', needs: ['cm'],                     lab: 'cvp-studio.html' },
+    { id: 'an-toan',   nm: 'Vùng an toàn và đòn bẩy',            ds: 'So sánh doanh số thực với BEP. Đòn bẩy cho biết lợi nhuận nhạy thế nào khi doanh số đổi.', nmEn: 'Margin of safety and leverage', dsEn: 'Compare actual sales with BEP. Leverage shows how sensitive profit is to changes in sales.', needs: ['cmr', 'bep'], lab: 'cmr-lab.html' },
+    { id: 'thu-gia',   nm: 'Thử nghiệm giá và biến phí',         ds: 'Đổi giá hoặc biến phí rồi xem BEP và CMR thay đổi ra sao.', nmEn: 'Testing price and variable cost', dsEn: 'Change the price or variable cost and see how BEP and CMR move.', needs: ['bep'],                    lab: 'cvp-studio.html' },
+    { id: 'loi-nhuan', nm: 'Lợi nhuận mục tiêu',                 ds: 'Tính số lượng cần bán để đạt một mức lãi đặt trước.', nmEn: 'Target profit', dsEn: 'Work out the quantity needed to reach a preset profit.', needs: ['bep'],                           lab: 'cvp-studio.html' },
+    { id: 'chien-luoc',nm: 'Quyết định chiến lược',              ds: 'Chọn giá, quy mô và kênh bán dựa trên các chỉ số đã tính.', nmEn: 'Strategic decision', dsEn: 'Choose price, scale and sales channel from the computed indicators.', needs: ['an-toan', 'thu-gia', 'loi-nhuan'], lab: null },
   ];
 
   const byId = Object.fromEntries(NODES.map(n => [n.id, n]));
@@ -105,7 +109,26 @@
   }
   NODES.forEach(n => depth(n.id));
 
-  const LEVEL_TITLES = ['Bắt đầu', 'Nền tảng', 'Đo lường', 'Ứng dụng', 'Ra quyết định'];
+  // Ngôn ngữ chung toàn site (localStorage bizon-lang); nút VI/EN ở đầu trang đổi và lưu lại.
+  const T = {
+    vi: { levels: ['Bắt đầu', 'Nền tảng', 'Đo lường', 'Ứng dụng', 'Ra quyết định'], lvl: 'Cấp ', pick: 'Chọn một kiến thức',
+          pickSub: 'Bấm một ô trên bản đồ để xem thứ tự học. Các ô đậm viền cam là những kiến thức cần nắm trước ô đang chọn.',
+          need: 'Cần nắm trước', none: 'Không cần kiến thức nào trước – đây là điểm bắt đầu.', next: 'Mở ra sau', last: 'Đây là kiến thức cuối chuỗi.', lab: 'Thực hành trong lab →' },
+    en: { levels: ['Start', 'Foundation', 'Measure', 'Apply', 'Decide'], lvl: 'Level ', pick: 'Pick a concept',
+          pickSub: 'Tap a tile on the map to see the learning order. Tiles with a bold orange outline are what you need before the selected one.',
+          need: 'Master first', none: 'Nothing needed first – this is the starting point.', next: 'Unlocks next', last: 'This is the last concept in the chain.', lab: 'Practise in the lab →' }
+  };
+  let lang = 'vi';
+  try { lang = localStorage.getItem('bizon-lang') === 'en' ? 'en' : 'vi'; } catch (e) {}
+  const nm = n => lang === 'en' ? n.nmEn : n.nm;
+  const ds = n => lang === 'en' ? n.dsEn : n.ds;
+  function applyStatic() {
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-en]').forEach(el => { if (el.dataset.vi == null) el.dataset.vi = el.textContent; el.textContent = lang === 'en' ? el.dataset.en : el.dataset.vi; });
+    document.querySelectorAll('meta[data-en-content]').forEach(el => { if (el.dataset.viContent == null) el.dataset.viContent = el.content; el.content = lang === 'en' ? el.dataset.enContent : el.dataset.viContent; });
+    document.querySelectorAll('[data-en-aria]').forEach(el => { if (el.dataset.viAria == null) el.dataset.viAria = el.getAttribute('aria-label'); el.setAttribute('aria-label', lang === 'en' ? el.dataset.enAria : el.dataset.viAria); });
+    document.querySelectorAll('.pq-lang button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+  }
   const board = document.getElementById('board');
   const panel = document.getElementById('panel');
   let selected = null;
@@ -116,15 +139,15 @@
     NODES.forEach(n => { (cols[level[n.id]] = cols[level[n.id]] || []).push(n); });
     board.innerHTML = cols.map((nodes, li) => `
       <div class="pq-col">
-        <h2>${String(li + 1).padStart(2, '0')} · ${LEVEL_TITLES[li] || 'Cấp ' + (li + 1)}</h2>
+        <h2>${String(li + 1).padStart(2, '0')} · ${T[lang].levels[li] || T[lang].lvl + (li + 1)}</h2>
         ${nodes.map(n => {
           const cls = ['pq-node',
             n.id === selected ? 'is-sel' : '',
             prereqs.has(n.id) ? 'is-need' : '',
             (selected && !prereqs.has(n.id) && n.id !== selected) ? 'is-next' : ''].join(' ');
           return `<button type="button" class="${cls}" data-id="${n.id}" aria-pressed="${n.id === selected}">
-            <span class="nm">${n.nm}</span>
-            <span class="ds">${n.ds}</span>
+            <span class="nm">${nm(n)}</span>
+            <span class="ds">${ds(n)}</span>
           </button>`;
         }).join('')}
       </div>`).join('');
@@ -132,31 +155,37 @@
 
   function renderPanel() {
     if (!selected) {
-      panel.innerHTML = `<h2>Chọn một kiến thức</h2>
-        <p class="sub">Bấm một ô trên bản đồ để xem thứ tự học. Các ô đậm viền cam là những kiến thức cần nắm trước ô đang chọn.</p>`;
+      panel.innerHTML = `<h2>${T[lang].pick}</h2>
+        <p class="sub">${T[lang].pickSub}</p>`;
       return;
     }
     const n = byId[selected];
     const pre = [...allPrereqs(selected)];
     const next = dependents(selected);
-    const item = id => `<li><button type="button" data-go="${id}">${byId[id].nm}</button></li>`;
+    const item = id => `<li><button type="button" data-go="${id}">${nm(byId[id])}</button></li>`;
     panel.innerHTML = `
-      <h2>${n.nm}</h2>
-      <p class="sub">${n.ds}</p>
+      <h2>${nm(n)}</h2>
+      <p class="sub">${ds(n)}</p>
       <div class="pq-cols">
         <div>
-          <h3>Cần nắm trước</h3>
-          ${pre.length ? `<ul>${pre.map(item).join('')}</ul>` : '<p class="none">Không cần kiến thức nào trước — đây là điểm bắt đầu.</p>'}
+          <h3>${T[lang].need}</h3>
+          ${pre.length ? `<ul>${pre.map(item).join('')}</ul>` : `<p class="none">${T[lang].none}</p>`}
         </div>
         <div>
-          <h3>Mở ra sau</h3>
-          ${next.length ? `<ul>${next.map(item).join('')}</ul>` : '<p class="none">Đây là kiến thức cuối chuỗi.</p>'}
+          <h3>${T[lang].next}</h3>
+          ${next.length ? `<ul>${next.map(item).join('')}</ul>` : `<p class="none">${T[lang].last}</p>`}
         </div>
       </div>
-      ${n.lab ? `<a class="pq-lab" href="${n.lab}">Thực hành trong lab →</a>` : ''}`;
+      ${n.lab ? `<a class="pq-lab" href="${n.lab}">${T[lang].lab}</a>` : ''}`;
   }
 
-  function render() { renderBoard(); renderPanel(); }
+  function render() { applyStatic(); renderBoard(); renderPanel(); }
+
+  document.querySelectorAll('.pq-lang button').forEach(b => b.addEventListener('click', () => {
+    lang = b.dataset.lang === 'en' ? 'en' : 'vi';
+    try { localStorage.setItem('bizon-lang', lang); } catch (e) {}
+    render();
+  }));
 
   board.addEventListener('click', e => {
     const btn = e.target.closest('.pq-node');

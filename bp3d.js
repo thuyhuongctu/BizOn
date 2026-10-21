@@ -781,7 +781,7 @@ R.domElement.addEventListener('pointerup', e => {
   if (islAdv[m]) islAdv[m].until = LIFE.t + 4.5;
   let msg = MK[m].icon + ' ' + MK[m].name;
   const sl = $('bp3d-street'); if (sl) sl.href = 'Pho%20Thi%20Truong%203D.html?m=' + m;
-  if (B && B.MKTS) { const mk = B.MKTS[m], S = B.S; msg += ' — ' + tr(mk.trait, mk.traitEn) + ' · ' + tr('tri thức ', 'intel ') + S.know[m] + '%'; if (S.entered[m] !== null && B.MODES) msg += ' · ' + MODE_ICON[S.entered[m]] + ' ' + tr(B.MODES[S.entered[m]].name, B.MODES[S.entered[m]].nameEn); }
+  if (B && B.MKTS) { const mk = B.MKTS[m], S = B.S; msg += ' – ' + tr(mk.trait, mk.traitEn) + ' · ' + tr('tri thức ', 'intel ') + S.know[m] + '%'; if (S.entered[m] !== null && B.MODES) msg += ' · ' + MODE_ICON[S.entered[m]] + ' ' + tr(B.MODES[S.entered[m]].name, B.MODES[S.entered[m]].nameEn); }
   if (!openAct(m)) say(msg, 4600);
 });
 function duelFx(I) {

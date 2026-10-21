@@ -154,7 +154,7 @@ footer{color:var(--faint);font-size:12px;text-align:center;margin-top:24px}
       units: 'units', m: 'm', foot: 'Events inspired by the US–China trade war (2018–2019), the EVFTA (2020), COVID-19 (2020–2021), the Red Sea disruption (2023–2024) and US reciprocal tariffs (2025). All magnitudes in the simulation are illustrative. Reference figures: Vietnam Customs (2026), Tables 017.T and 018.T.'
     }
   };
-  let LANG = store.get('fdifactory_lang') === 'en' ? 'en' : 'vi';
+  let LANG = (store.get('bizon-lang') || store.get('fdifactory_lang')) === 'en' ? 'en' : 'vi'; // ngôn ngữ chung toàn site đi trước
   const t = k => T[LANG][k];
   const nf = (x, d) => (Number.isFinite(x) ? x : 0).toLocaleString(LANG === 'vi' ? 'vi-VN' : 'en-US', { maximumFractionDigits: d === undefined ? 0 : d, minimumFractionDigits: d === undefined ? 0 : d });
   const musd = x => nf(x / 1e6, 2);
@@ -172,8 +172,8 @@ footer{color:var(--faint);font-size:12px;text-align:center;margin-top:24px}
     $('langVI').classList.toggle('on', LANG === 'vi'); $('langEN').classList.toggle('on', LANG === 'en');
     document.documentElement.lang = LANG; $('footSrc').textContent = t('foot');
   }
-  $('langVI').onclick = () => { LANG = 'vi'; store.set('fdifactory_lang', 'vi'); render(); };
-  $('langEN').onclick = () => { LANG = 'en'; store.set('fdifactory_lang', 'en'); render(); };
+  $('langVI').onclick = () => { LANG = 'vi'; store.set('fdifactory_lang', 'vi'); store.set('bizon-lang', 'vi'); render(); };
+  $('langEN').onclick = () => { LANG = 'en'; store.set('fdifactory_lang', 'en'); store.set('bizon-lang', 'en'); render(); };
   $('themeBtn').onclick = () => { const n = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; document.documentElement.setAttribute('data-theme', n); store.set('fdifactory_theme', n); render(); };
 
   function render() {

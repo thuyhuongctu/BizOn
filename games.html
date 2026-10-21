@@ -4,8 +4,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Trung tâm trò chơi · BizOn Bật Nghiệp</title>
-<meta name="description" content="Trung tâm trò chơi BizOn Arcade: 4 game mô phỏng chính (Bến Phù Sa, Bật Nghiệp, Hộ Chiếu Thương Hiệu, Hộ Chiếu Sầu Riêng) cùng các mini-game EnQuiz, Đoán Giá Thị Trường, Đấu Trường 1v1 và game phản xạ.">
+<title data-en="Game Centre · BizOn Bật Nghiệp">Trung tâm trò chơi · BizOn Bật Nghiệp</title>
+<meta name="description" data-en-content="BizOn Arcade game centre: 4 main simulations (Bến Phù Sa, BizOn Bật Nghiệp, Brand Passport, Durian Passport) plus the EnQuiz, Market Price Guess, 1v1 Arena and reflex mini-games." content="Trung tâm trò chơi BizOn Arcade: 4 game mô phỏng chính (Bến Phù Sa, Bật Nghiệp, Hộ Chiếu Thương Hiệu, Hộ Chiếu Sầu Riêng) cùng các mini-game EnQuiz, Đoán Giá Thị Trường, Đấu Trường 1v1 và game phản xạ.">
 <meta name="copyright" content="© 2026 Đỗ Thùy Hương & PGS.TS. Phan Anh Tú">
 <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
 <link rel="stylesheet" href="css/bizon-clay-fonts.css">
@@ -15,7 +15,9 @@
   @media (prefers-reduced-motion:reduce){ .ar-hero .sun,.ar-hero .art img{animation:none!important} }
   .clay-main.ar-wide{max-width:1160px}
   .ar-hero{position:relative;overflow:hidden;margin-top:28px;border-radius:40px;background:var(--clay-cream-deep);box-shadow:inset 0 -10px 0 rgba(140,80,20,.1),inset 0 6px 0 rgba(255,255,255,.7),0 30px 44px -30px rgba(110,70,30,.6)}
-  .ar-hero .sun{position:absolute;right:-6%;top:-30%;width:min(560px,62%);aspect-ratio:1;border-radius:50%;background:url(assets/brand/trong-dong.svg) center/contain no-repeat;box-shadow:inset 0 -16px 0 rgba(200,110,20,.2);opacity:.85;animation:arSpin 90s linear infinite;pointer-events:none}
+  .ar-hero .sun{position:absolute;right:3%;top:5%;width:min(420px,42%);aspect-ratio:1;border-radius:50%;background:url(assets/brand/trong-dong.svg) center/contain no-repeat;box-shadow:inset 0 -16px 0 rgba(200,110,20,.2);opacity:.85;animation:arSpin 90s linear infinite;pointer-events:none}
+  /* Một cột (máy hẹp, tablet dọc): đặt trọn vòng trống đồng sau nhóm rồng thay vì tràn ra mép trên/phải */
+  @media (max-width:880px){ .ar-hero .sun{top:auto;bottom:70px;right:auto;left:50%;width:min(330px,82%);margin-left:calc(min(330px,82%) / -2)} }
   .ar-hero .grid{position:relative;z-index:2;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:0 24px;align-items:end;padding:clamp(24px,4vw,44px) clamp(20px,4vw,44px) 0}
   .ar-hero h1{margin:16px 0 0;font-size:clamp(42px,5.6vw,72px)}
   .ar-hero .art{position:relative;height:340px}
@@ -80,7 +82,7 @@
         </span>
       </a>
       <a href="lab/cvp-studio.html" style="display:flex;flex-direction:column;border-radius:32px;background:var(--clay-card);padding:12px;color:var(--clay-ink);box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 rgba(255,255,255,.95),0 26px 36px -22px rgba(110,70,30,.5)">
-        <span style="position:relative;display:block;aspect-ratio:16/10;border-radius:24px;overflow:hidden;background:#6F6255;box-shadow:inset 0 -8px 0 rgba(0,0,0,.06)"><img src="assets/cvp-lab/dragon-scroll.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 38%" loading="lazy"></span>
+        <span style="position:relative;display:block;aspect-ratio:16/10;border-radius:24px;overflow:hidden;background:#6F6255;box-shadow:inset 0 -8px 0 rgba(0,0,0,.06)"><img src="assets/cvp-lab/dragon-scroll.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%" loading="lazy"></span>
         <span style="padding:16px 10px 10px;display:flex;flex-direction:column;gap:8px;flex:1">
           <span style="font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--clay-accent)" data-en="LAB · MANAGEMENT ACCOUNTING">LAB · KẾ TOÁN QUẢN TRỊ</span>
           <span style="font-family:var(--clay-head);font-weight:800;font-size:26px;line-height:1.14">CVP Lab</span>

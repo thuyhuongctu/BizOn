@@ -206,6 +206,14 @@
       padding: var(--doc-page-margin);
     }
     .frame { width: 100%; border-collapse: collapse; }
+    /* BizOn: phone-width screens. A flowing (not paginated, not scaled-fit)
+     * document reflows to the viewport instead of keeping the fixed paper
+     * width, so students can read it without horizontal scrolling. Screen
+     * only – print keeps the exact paper geometry. */
+    @media screen and (max-width: 900px) {
+      :host { min-width: 0; padding: 12px 8px; }
+      .sheet:not(.paginated):not(.fit-mode) { width: 100%; padding: 22px 16px; }
+    }
     /* Scaled-fit mode (content-width/content-height): the inner .fit box
      * lays the content out at its authored fixed size and scales it onto
      * the printable area; .fit-box reserves the scaled footprint in flow
