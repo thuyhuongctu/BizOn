@@ -1030,6 +1030,10 @@
 "Projects portfolio"
 ],
 [
+"Định hướng tác động vùng",
+"Regional impact orientation"
+],
+[
 "Tham gia nhóm",
 "Join the team"
 ],

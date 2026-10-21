@@ -42,6 +42,7 @@
     ]],
     ['🏛️ Về BizOn · About', [
       ['Giới thiệu', 'gioi-thieu.html'],
+      ['Định hướng tác động vùng', 'dinh-huong.html'],
       ['Đội ngũ sáng lập', 'doi-ngu.html'],
       ['Danh mục dự án', 'du-an.html'],
       ['Giải pháp & gói triển khai', 'giai-phap.html'],
