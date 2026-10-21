@@ -305,7 +305,7 @@
     <nav class="dh-toc" aria-label="Mục lục" data-en-aria="Contents"><div class="dh-toc-track"><a href="#dinh-vi" data-en="Positioning">Định vị</a><a href="#tam-nhin" data-en="Vision">Tầm nhìn</a><a href="#ly-thuyet" data-en="Theory">Lý thuyết</a><a href="#su-menh" data-en="Mission">Sứ mệnh</a><a href="#gia-tri" data-en="Values">Giá trị</a><a href="#chi-bao" data-en="2030 indicators">Chỉ báo 2030</a><a href="#rui-ro" data-en="Risks">Rủi ro</a><a href="#uu-tien" data-en="Priorities">Ưu tiên</a><a href="#tai-lieu" data-en="References">Tài liệu</a></div></nav>
     <button type="button" class="dh-menu-btn" aria-expanded="false" aria-controls="dh-menu"><span class="dh-sr" data-en="Contents:">Mục lục:</span><span class="dh-menu-cur">Định vị</span><span class="dh-menu-ic" aria-hidden="true">▼</span></button>
     <div class="dh-lang" role="group" aria-label="Ngôn ngữ" data-en-aria="Language"><button type="button" data-lang="vi" lang="vi" aria-pressed="true">VI</button><button type="button" data-lang="en" lang="en" aria-pressed="false">EN</button></div>
-    <a class="dh-print" href="assets/docs/BizOn-Dinh-huong-tac-dong-vung.pdf" download="BizOn-Dinh-huong-tac-dong-vung.pdf" type="application/pdf"><span class="long" data-en="Download PDF (Vietnamese)">Tải PDF A4</span><span class="short" data-en="PDF">PDF</span></a>
+    <a class="dh-print" href="assets/docs/BizOn-Dinh-huong-tac-dong-vung.pdf" download="BizOn-Dinh-huong-tac-dong-vung.pdf" type="application/pdf"><span class="long" data-en="Download A4 PDF">Tải PDF A4</span><span class="short" data-en="PDF">PDF</span></a>
     <nav id="dh-menu" class="dh-menu" aria-label="Mục lục (menu)" data-en-aria="Contents (menu)" hidden>
         <a href="#dinh-vi"><span class="n" aria-hidden="true">01</span><span data-en="Positioning">Định vị</span></a>
         <a href="#tam-nhin"><span class="n" aria-hidden="true">02</span><span data-en="Vision">Tầm nhìn</span></a>
@@ -719,6 +719,18 @@
         else { try { localStorage.setItem('bizon-lang', code); } catch (e) {} location.reload(); }
       });
     });
+
+    /* ---- Tải PDF: bản tiếng Anh khi trang đang ở EN ---- */
+    var pdfBtn = $('.dh-print');
+    function syncPdf() {
+      if (!pdfBtn) return;
+      var en = ((window.clayCurrentLang && window.clayCurrentLang()) || document.documentElement.lang || 'vi').indexOf('en') === 0;
+      var f = en ? 'BizOn-Regional-Impact-Orientation-EN.pdf' : 'BizOn-Dinh-huong-tac-dong-vung.pdf';
+      pdfBtn.setAttribute('href', 'assets/docs/' + f);
+      pdfBtn.setAttribute('download', f);
+    }
+    window.addEventListener('bizon:langchange', syncPdf);
+    syncPdf();
 
     /* ---- Lộ trình bốn mắt xích (tablist) ---- */
     var tabs = $$('.dh-tab'), panels = $$('.dh-panel');
