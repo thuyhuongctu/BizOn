@@ -1,7 +1,7 @@
 {
   "packageId": "io.github.thuyhuongctu.bizon",
   "host": "thuyhuongctu.github.io",
-  "name": "BizOn Bật Nghiệp",
+  "name": "BizOn Bật Nghiệp – Simulation",
   "launcherName": "BizOn",
   "display": "standalone",
   "themeColor": "#006687",
@@ -24,7 +24,7 @@
   "appVersionCode": 1,
   "shortcuts": [
     {
-      "name": "Chơi Bật Nghiệp",
+      "name": "Play Bật Nghiệp",
       "shortName": "Bật Nghiệp",
       "url": "/BizOn/game.html",
       "chosenIconUrl": "https://thuyhuongctu.github.io/BizOn/assets/icons/icon-192.png"

@@ -1,9 +1,9 @@
 {
   "id": "./",
-  "name": "BizOn Bật Nghiệp – Business Simulation Ecosystem",
+  "name": "BizOn Bật Nghiệp – Simulation",
   "short_name": "BizOn",
-  "description": "BizOn – Bật Nghiệp: Trò chơi mô phỏng kinh doanh 3D phong cách đất sét dành cho đào tạo khởi nghiệp – hệ sinh thái gồm Bật Nghiệp, Go Global, Arcade với cố vấn AI Lumina.",
-  "lang": "vi",
+  "description": "3D clay-style business simulation games for entrepreneurship and international business learning – Bến Phù Sa, Bật Nghiệp, Brand Passport and Durian Passport, with the AI advisor Lumina.",
+  "lang": "en",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

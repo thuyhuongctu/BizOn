@@ -1,9 +1,9 @@
 {
   "id": "./release.html",
-  "name": "BizOn — Mô phỏng quyết định kinh doanh",
+  "name": "BizOn Bật Nghiệp – Simulation",
   "short_name": "BizOn",
-  "description": "Nền tảng mô phỏng quyết định kinh doanh dành cho học tập, nghiên cứu và phát triển năng lực chiến lược.",
-  "lang": "vi",
+  "description": "Business decision simulations for learning, research and strategic capability building.",
+  "lang": "en",
   "start_url": "./release.html",
   "scope": "./",
   "display": "standalone",

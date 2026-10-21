@@ -30,7 +30,7 @@ assert.equal(webManifest.id, './release.html');
 assert.equal(webManifest.start_url, './release.html');
 assert.equal(webManifest.scope, './');
 assert.equal(webManifest.display, 'standalone');
-assert.equal(webManifest.name, 'BizOn — Mô phỏng quyết định kinh doanh');
+assert.equal(webManifest.name, 'BizOn Bật Nghiệp – Simulation');
 assert.equal(webManifest.shortcuts.find(item => item.short_name === 'Command').url, './command-center.html');
 assert.equal(webManifest.shortcuts.find(item => item.short_name === 'Startup').url, '../game.html');
 assert.equal(webManifest.shortcuts.find(item => item.short_name === 'Passport').url, './brand-passport.html');

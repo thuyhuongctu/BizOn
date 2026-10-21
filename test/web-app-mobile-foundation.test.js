@@ -46,7 +46,7 @@ assert.strictEqual(manifest.id, './release.html');
 assert.strictEqual(manifest.start_url, './release.html');
 assert.strictEqual(manifest.scope, './');
 assert.strictEqual(manifest.display, 'standalone');
-assert.strictEqual(manifest.name, 'BizOn — Mô phỏng quyết định kinh doanh');
+assert.strictEqual(manifest.name, 'BizOn Bật Nghiệp – Simulation');
 assert.strictEqual(manifest.short_name, 'BizOn');
 assert.strictEqual(manifest.shortcuts.find(item => item.short_name === 'Command').url, './command-center.html');
 assert.strictEqual(manifest.shortcuts.find(item => item.short_name === 'Startup').url, '../game.html');

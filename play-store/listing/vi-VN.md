@@ -2,7 +2,7 @@
 
 ## Tên ứng dụng
 
-BizOn: Mô phỏng kinh doanh
+BizOn Bật Nghiệp – Simulation
 
 ## Mô tả ngắn
 
