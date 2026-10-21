@@ -254,7 +254,13 @@
     .dh-bar-in{padding-left:14px}
   }
   @media (max-width:760px){
-    .dh-hero-art{display:none}
+    /* Điện thoại: giữ nhân vật Anh Tú – tiêu đề trải ngang, dưới đó thẻ tác giả bên trái, nhân vật bên phải, chân khuất sau sóng */
+    .dh-hero-grid{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0 10px;align-items:end}
+    .dh-hero-text{display:contents}
+    .dh-page .dh-hero h1{grid-column:1/-1}
+    .dh-chips{grid-column:1;grid-row:2;align-self:start}
+    .dh-chip{text-wrap:balance}
+    .dh-hero-art{grid-column:2;grid-row:2;width:min(112px,30vw);margin:10px 0 26px}
   }
   @media (max-width:560px){
     .dh-bar{padding-left:8px;padding-right:8px}
