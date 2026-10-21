@@ -169,7 +169,7 @@
     mission: p => [1, 3, 4].concat(p.capab >= 55 && p.cash >= 2 ? [0] : [], (p.rep >= 55 || p.k1 >= 60) ? [2] : []),
   };
   function bpGrade(r) {
-    const d = r.detail_json || {}, pd = clamp(+r.profit / 12 * 100);
+    const d = r.detail_json || {}, pd = clamp(+r.profit / 6 * 100);
     const dims = [pd, clamp(r.rep), clamp(r.capab), clamp(r.adapt), clamp(r.sust)], lo = Math.min(...dims), tot = +r.total_score || 0;
     let a1 = tot * .05; if (d.fail) a1 = Math.min(a1, 1.5);
     const a2 = (tot >= 72 && lo >= 60 ? .6 : 0) + (d.rival != null && +r.profit > +d.rival ? .4 : 0);
