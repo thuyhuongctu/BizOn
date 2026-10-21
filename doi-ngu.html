@@ -20,7 +20,7 @@
   .dn-fig{position:relative}
   .dn-fig.h{height:clamp(234px,36vw,360px)}
   .dn-fig.t{height:clamp(260px,40vw,400px)}
-  .dn-fig img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:50% 100%;filter:drop-shadow(0 18px 14px rgba(110,70,30,.35))}
+  .dn-fig img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:50% 100%;filter:drop-shadow(0 18px 14px rgba(110,70,30,.35));transition:opacity .22s ease}
   .dn-fig img.ah{animation:clayFloat 8s ease-in-out infinite}
   .dn-fig img.at{animation:clayFloat 9s ease-in-out 1s infinite}
   .dn-bubble{position:absolute;top:-58px;left:50%;transform:translateX(-50%);max-width:220px;width:max-content;padding:10px 14px;background:#fff;font-size:13px;font-weight:700;box-shadow:0 10px 24px -8px rgba(0,102,135,.35);opacity:0;transition:opacity .4s}
@@ -222,18 +222,35 @@
     vi:[['h','Rất vui được gặp bạn! 👋'],['t','Chào mừng đến với BizOn! 🎓'],['h','Chúng tôi xây BizOn để ai cũng học được quản trị.'],['t','Mọi kịch bản đều đạt chuẩn học thuật cao nhất!'],['h','Gamification + AI = học mà chơi thật sự 🚀'],['t','Hẹn gặp bạn trong lớp học Bật Nghiệp nhé!']],
     en:[['h','So glad to meet you! 👋'],['t','Welcome to BizOn! 🎓'],['h','We built BizOn so anyone can learn management.'],['t','Every scenario meets a high academic bar!'],['h','Gamification + AI = truly learning by playing 🚀'],['t','See you in a Bật Nghiệp class!']]
   };
+  /* Mỗi câu thoại đổi một tư thế cho người đang nói */
+  var POSE = {
+    h:['assets/character/lumina-ao-dai-wave-cut.webp','assets/character/lumina-ao-dai-present-cut.webp','assets/character/lumina-ao-dai-alert-cut.webp'],
+    t:['assets/character/anh-tu-ao-dai-welcome-cut-v2.webp','assets/character/anh-tu-ao-dai-explain-cut.webp','assets/character/anh-tu-ao-dai-point-cut.webp']
+  };
   var bh = document.getElementById('dn-bh'), bt = document.getElementById('dn-bt');
   if(!bh || !bt) return;
+  var ih = document.querySelector('.dn-fig img.ah'), it = document.querySelector('.dn-fig img.at');
+  var turn = {h:0, t:0};
+  POSE.h.concat(POSE.t).forEach(function(u){ var im = new Image(); im.src = u; });
+  function pose(who){
+    var img = who === 'h' ? ih : it, list = POSE[who];
+    if(!img) return;
+    var next = list[turn[who]++ % list.length];
+    if(img.getAttribute('src') === next) return;
+    img.style.opacity = '0';
+    setTimeout(function(){ img.src = next; img.style.opacity = '1'; }, 220);
+  }
   var i = -1, timer = null, start = null;
   function lang(){ return (window.clayCurrentLang && window.clayCurrentLang()) || 'vi'; }
   function tick(){
     var sc = SCENE[lang()]; i++;
     var line = sc[i % sc.length];
+    pose(line[0]);
     if(line[0] === 'h'){ bh.textContent = line[1]; bh.style.opacity = '1'; bt.style.opacity = '0'; }
     else { bt.textContent = line[1]; bt.style.opacity = '1'; bh.style.opacity = '0'; }
   }
   function begin(){
-    clearTimeout(start); clearInterval(timer); i = -1;
+    clearTimeout(start); clearInterval(timer); i = -1; turn = {h:0, t:0};
     bh.style.opacity = '0'; bt.style.opacity = '0';
     start = setTimeout(function(){ tick(); timer = setInterval(tick, 3400); }, 1200);
   }
