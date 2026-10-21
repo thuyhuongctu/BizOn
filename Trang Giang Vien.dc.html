@@ -126,7 +126,7 @@ input,select,textarea,button{font-family:inherit}
         <img src="assets/illustrations/game/lumina-vortex.webp" alt="Lumina giám sát toàn hệ thống BizOn" style="width:100%;aspect-ratio:1100/619;object-fit:cover;display:block">
         <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(31,74,85,.92),rgba(31,74,85,.15));display:flex;flex-direction:column;justify-content:flex-end;padding:16px 20px;color:#fff">
           <div style="font:800 22px 'Baloo 2',sans-serif">🛡️ Quản trị hệ thống</div>
-          <div style="font-size:13px;opacity:.9">Toàn bộ lớp đã triển khai trên mọi giảng viên — chỉ 2 tài khoản chủ dự án thấy được màn này.</div>
+          <div style="font-size:13px;opacity:.9">Toàn bộ lớp đã triển khai trên mọi giảng viên – chỉ 2 tài khoản chủ dự án thấy được màn này.</div>
         </div>
       </div>
       <sc-if value="{{ noAdminClasses }}" hint-placeholder-val="{{ false }}">
@@ -324,7 +324,7 @@ input,select,textarea,button{font-family:inherit}
           <sc-if value="{{ hasMini }}" hint-placeholder-val="{{ false }}">
             <div style="font:800 15px 'Baloo 2',sans-serif;color:#1f4a55;margin-top:6px">🌍 Hộ Chiếu Mini (điểm tự tính trong game)</div>
             <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:16px;padding:10px 12px;margin:6px 0 10px">
-              <div style="font-size:12px;font-weight:700;color:#1f4a55;margin-bottom:4px">📋 Danh sách lớp (để ghép MSSV) — dán STT, Họ và tên, MSSV, Email, Nhóm (mỗi sinh viên một dòng, cách nhau bằng Tab hoặc dấu phẩy — dán thẳng từ Excel/Sheets cũng được)</div>
+              <div style="font-size:12px;font-weight:700;color:#1f4a55;margin-bottom:4px">📋 Danh sách lớp (để ghép MSSV) – dán STT, Họ và tên, MSSV, Email, Nhóm (mỗi sinh viên một dòng, cách nhau bằng Tab hoặc dấu phẩy – dán thẳng từ Excel/Sheets cũng được)</div>
               <textarea value="{{ rosterText }}" onChange="{{ onRosterText }}" placeholder="1&#9;Nguyễn Thị Mỹ Đình&#9;B2409655&#9;dinhb2409655@student.ctu.edu.vn&#9;ONEWAY" rows="4" style="width:100%;box-sizing:border-box;padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf;font-family:monospace;font-size:11.5px"></textarea>
               <div style="display:flex;align-items:center;gap:10px;margin-top:6px;flex-wrap:wrap">
                 <button onClick="{{ saveRoster }}" style="border:0;background:#2f8a8c;color:#fff;border-radius:10px;padding:7px 14px;font-weight:700;cursor:pointer">{{ rosterSaveLabel }}</button>
@@ -394,7 +394,7 @@ input,select,textarea,button{font-family:inherit}
       </sc-if>
       <sc-if value="{{ tabActivity }}" hint-placeholder-val="{{ false }}">
         <section style="display:flex;flex-direction:column;gap:14px">
-          <div style="font-size:13px;color:#5a6b74;text-wrap:pretty">Ma trận tham gia theo đội/vai từ Nhật ký thành viên (đề xuất, biên bản, Nếu–Thì, hỏi Lumina, chốt vòng) — <b>bằng chứng số để bạn tham khảo, không phải điểm chấm</b> (khác B5 ở tab «Chấm điểm»). «Chỉ số đồng đội» = 100 trừ chênh lệch điểm tham gia cao nhất–thấp nhất trong đội.</div>
+          <div style="font-size:13px;color:#5a6b74;text-wrap:pretty">Ma trận tham gia theo đội/vai từ Nhật ký thành viên (đề xuất, biên bản, Nếu–Thì, hỏi Lumina, chốt vòng) – <b>bằng chứng số để bạn tham khảo, không phải điểm chấm</b> (khác B5 ở tab «Chấm điểm»). «Chỉ số đồng đội» = 100 trừ chênh lệch điểm tham gia cao nhất–thấp nhất trong đội.</div>
           <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;padding:16px;display:flex;flex-direction:column;gap:10px">
             <div style="font:800 17px 'Baloo 2',sans-serif">🏷️ Nhãn 4 mức rubric (tự đặt tên, áp dụng toàn lớp)</div>
             <div style="font-size:12px;color:#5a6b74">Mức 1 = chỉ số đồng đội ≥ 85 · Mức 2 = 65–84 · Mức 3 = 45–64 · Mức 4 = dưới 45.</div>

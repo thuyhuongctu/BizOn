@@ -1,7 +1,7 @@
 /* ============================================================================
-   BizOn Clay — Kịch bản lớp học: dựng hero + mục lục + các khối nội dung.
+   BizOn Clay – Kịch bản lớp học: dựng hero + mục lục + các khối nội dung.
    Đọc window.BZ_LOP.vi / .en (js/lop-hoc-data.js + lop-hoc-data-en.js).
-   Toàn bộ nội dung song ngữ nằm trong dữ liệu — đổi ngôn ngữ thì dựng lại.
+   Toàn bộ nội dung song ngữ nằm trong dữ liệu – đổi ngôn ngữ thì dựng lại.
    Nạp SAU bizon-clay-i18n.js và hai tệp dữ liệu.
    ========================================================================== */
 (function(){

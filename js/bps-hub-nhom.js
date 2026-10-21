@@ -35,7 +35,7 @@
       npcs: [
         { id: 'lumina', img: 'assets/character/phu-sa/lumina-v2.png', icon: '🤖', name: 'Lumina', x: 700, y: 560,
           desc: T(
-            'Đội Rồng Xanh có 5 vai: CEO chốt bến, CFO giữ quỹ, CMO lo cách bán và quảng cáo, COO chọn món và số lượng nấu, Thư ký trinh sát. Mỗi vai chỉ thấy một phần tin — cả đội phải nói chuyện với nhau rồi cùng chốt trước khi hết giờ.',
+            'Đội Rồng Xanh có 5 vai: CEO chốt bến, CFO giữ quỹ, CMO lo cách bán và quảng cáo, COO chọn món và số lượng nấu, Thư ký trinh sát. Mỗi vai chỉ thấy một phần tin – cả đội phải nói chuyện với nhau rồi cùng chốt trước khi hết giờ.',
             "Team Rồng Xanh has 5 roles: the CEO picks the landing, the CFO holds the funds, the CMO runs selling and ads, the COO picks the product and quantity, the Secretary scouts. Each role sees only part of the intel, so the team has to talk and lock in before time runs out."
           ) },
       ],
@@ -44,7 +44,7 @@
           onOpen: function (api) {
             api.dialogue(
               { name: T('Tạo phòng mới', 'Create a room'), icon: '⛵', art: 'assets/illustrations/game/celebrate-shop.webp', station: true },
-              T('Bạn sẽ làm chủ phòng. Nhập tên rồi bấm «Tạo phòng» — mã phòng hiện ra để chia cho cả đội.', "You'll be the room host. Enter your name, then tap «Create room» — a room code appears for your team."),
+              T('Bạn sẽ làm chủ phòng. Nhập tên rồi bấm «Tạo phòng» – mã phòng hiện ra để chia cho cả đội.', "You'll be the room host. Enter your name, then tap «Create room» – a room code appears for your team."),
               [{ text: T('Dẫn tôi tới đó', 'Take me there'), primary: true, onPick: function () { api.exit(); focusField('bps-nhom-name-input'); } }]
             );
           } },

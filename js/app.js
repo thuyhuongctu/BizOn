@@ -55,8 +55,8 @@ function load() {
 function setDifficulty(level) {
   if (!S || !['easy', 'normal', 'hard'].includes(level)) return;
   if (!isTrial() && S.history.length > 0) {
-    alert(T('Bản tính điểm đã bắt đầu — không thể đổi độ khó giữa chừng (giữ công bằng giữa các đội).',
-            'Graded session already started — difficulty cannot change midway (to keep teams comparable).'));
+    alert(T('Bản tính điểm đã bắt đầu – không thể đổi độ khó giữa chừng (giữ công bằng giữa các đội).',
+            'Graded session already started – difficulty cannot change midway (to keep teams comparable).'));
     syncDifficultyUI();
     return;
   }
@@ -530,8 +530,8 @@ function MANUAL() { return {
       <div><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p><p class="text-[11px] font-semibold text-amber-700 mt-1">${tip}</p></div></div>`).join('')}
     <div class="clay-card p-4 mb-2 border-2 border-clay-gold/50">
       <p class="font-bold text-sm text-deep-teal">${T('📐 Ví dụ một vòng mẫu (minh họa)', '📐 A worked example round (illustrative)')}</p>
-      <p class="text-xs text-deep-teal/70 mt-1 leading-relaxed">${T('Đặt <b>giá 150.000₫</b> (bằng giá tham chiếu), <b>marketing 60 triệu₫</b>, <b>sản lượng 4.000 bộ</b>. Mỗi bộ lời ~<b>90.000₫</b> trước chi phí cố định (giá 150k − chi phí biến đổi ~60k). Cả thị trường cầu ~<b>12.000 bộ/vòng</b> chia cho bạn và 3 đối thủ ảo — nếu sức hút ngang mức trung bình, thị phần ~<b>25%</b> (~3.000 bộ), doanh thu ~<b>450 triệu₫</b>, gộp lãi ~<b>270 triệu₫</b> trước chi phí cố định + marketing.', 'Set <b>price at 150,000₫</b> (equal to the reference price), <b>marketing at 60 million₫</b>, <b>production at 4,000 units</b>. Each unit earns ~<b>90,000₫</b> before fixed costs (price 150k − variable cost ~60k). Total market demand is ~<b>12,000 units/round</b>, split between you and 3 virtual rivals — at average attractiveness, that\'s ~<b>25% share</b> (~3,000 units), revenue ~<b>450 million₫</b>, gross profit ~<b>270 million₫</b> before fixed costs + marketing.')}</p>
-      <p class="text-xs font-semibold text-emerald-700 mt-1.5">${T('🚩 Muốn cắm cờ: cần thị phần cao nhất trong 4 đội — thử hạ giá về ~140k <i>hoặc</i> tăng marketing, nhưng luôn giữ lãi dương và ≥15% tiền dự phòng.', '🚩 To claim the flag: you need the highest share among the 4 teams — try dropping price to ~140k <i>or</i> raising marketing, but always keep profit positive and ≥15% cash in reserve.')}</p>
+      <p class="text-xs text-deep-teal/70 mt-1 leading-relaxed">${T('Đặt <b>giá 150.000₫</b> (bằng giá tham chiếu), <b>marketing 60 triệu₫</b>, <b>sản lượng 4.000 bộ</b>. Mỗi bộ lời ~<b>90.000₫</b> trước chi phí cố định (giá 150k − chi phí biến đổi ~60k). Cả thị trường cầu ~<b>12.000 bộ/vòng</b> chia cho bạn và 3 đối thủ ảo – nếu sức hút ngang mức trung bình, thị phần ~<b>25%</b> (~3.000 bộ), doanh thu ~<b>450 triệu₫</b>, gộp lãi ~<b>270 triệu₫</b> trước chi phí cố định + marketing.', 'Set <b>price at 150,000₫</b> (equal to the reference price), <b>marketing at 60 million₫</b>, <b>production at 4,000 units</b>. Each unit earns ~<b>90,000₫</b> before fixed costs (price 150k − variable cost ~60k). Total market demand is ~<b>12,000 units/round</b>, split between you and 3 virtual rivals – at average attractiveness, that\'s ~<b>25% share</b> (~3,000 units), revenue ~<b>450 million₫</b>, gross profit ~<b>270 million₫</b> before fixed costs + marketing.')}</p>
+      <p class="text-xs font-semibold text-emerald-700 mt-1.5">${T('🚩 Muốn cắm cờ: cần thị phần cao nhất trong 4 đội – thử hạ giá về ~140k <i>hoặc</i> tăng marketing, nhưng luôn giữ lãi dương và ≥15% tiền dự phòng.', '🚩 To claim the flag: you need the highest share among the 4 teams – try dropping price to ~140k <i>or</i> raising marketing, but always keep profit positive and ≥15% cash in reserve.')}</p>
     </div>` },
   lumina: { icon: '🤖', name: T('Cố vấn Lumina', 'Lumina Advisor'), html: `
     <img src="assets/illustrations/game/lumina-vortex.webp" alt="${T('Lumina đồng hành cùng đội', 'Lumina accompanying the team')}" class="w-full h-36 object-cover rounded-2xl mb-4">
@@ -659,7 +659,7 @@ function showPremium() {
 // hợp với phần cuối ván chơi. Nhạc của Hộ Chiếu Thương Hiệu vẫn để riêng bên
 // brand-passport.html, không trộn vào đây.
 const BGM_TRACKS = [
-  'assets/audio/bat-nghiep-mekong-sunfire-rise.mp3', // BÀI CHÍNH khi mở game — Mekong Sunfire · Rise With The River
+  'assets/audio/bat-nghiep-mekong-sunfire-rise.mp3', // BÀI CHÍNH khi mở game – Mekong Sunfire · Rise With The River
   'assets/audio/huong-and-the-world-en.mp3', // Hương & The World (bản tiếng Anh)
   'assets/audio/bat-nghiep-co-loi.mp3',   // ca khúc chủ đề, bản thu có lời
   'assets/audio/bat-nghiep-rap-symphony.mp3', // bản rap symphony
@@ -801,7 +801,7 @@ function enterApp() {
 function CASE_INFO_LIST() {
   return {
     A: { name: T('Trường hợp A · Giữ Sân Nhà', 'Case A · Hold the Home Turf'), img: 'lumina-vest-thumbsup',
-      desc: T('Một mùa cạnh tranh với các đối thủ nội địa quen thuộc — thị trường vẫn còn nhiều dư địa để bứt phá.', 'A season competing against familiar domestic rivals — plenty of room to break out.') },
+      desc: T('Một mùa cạnh tranh với các đối thủ nội địa quen thuộc – thị trường vẫn còn nhiều dư địa để bứt phá.', 'A season competing against familiar domestic rivals – plenty of room to break out.') },
     B: { name: T('Trường hợp B · Sóng Ngoại Nhập', 'Case B · The Import Wave'), img: 'lumina-ao-dai-alert',
       desc: T('Star Clay Co., đối thủ ngoại cao cấp, sẽ gia nhập và thử thách đội bạn suốt mùa.', 'Star Clay Co., a premium foreign rival, enters and challenges your team all season.') },
     C: { name: T('Trường hợp C · Sóng Livestream Giá Rẻ', 'Case C · The Livestream Discount Wave'), img: 'lumina-vest-worried',
@@ -1215,11 +1215,11 @@ function journalLesson(r) {
 
 function JOURNAL_QUOTES_LIST() { return [
   { clip: 'quote-01', text: T('Mục tiêu không phải là đánh bại đối thủ, mà là làm cho họ trở nên không còn quan trọng.', 'The goal is not to beat your rivals, but to make them irrelevant.'), by: 'Lumina', color: 'text-primary' },
-  { clip: 'quote-02', text: T('Mọi báo cáo tài chính đều là một câu chuyện, hãy đảm bảo đội của bạn đang viết một chương thành công.', "Every financial report is a story — make sure your team is writing a successful chapter."), by: 'SEC', color: 'text-red-600' },
+  { clip: 'quote-02', text: T('Mọi báo cáo tài chính đều là một câu chuyện, hãy đảm bảo đội của bạn đang viết một chương thành công.', "Every financial report is a story – make sure your team is writing a successful chapter."), by: 'SEC', color: 'text-red-600' },
   { clip: 'quote-03', text: T('Dữ liệu cho ta biết quá khứ, quyết định hôm nay viết nên tương lai.', "Data tells us the past; today's decisions write the future."), by: 'Phan Anh Tú', color: 'text-emerald-700' },
   { clip: 'quote-04', text: T('Khủng hoảng là bài kiểm tra tốt nhất cho năng lực quản trị dòng tiền.', 'A crisis is the best test of cash-flow management skill.'), by: 'Lumina', color: 'text-primary' },
   { clip: 'quote-05', text: T('Thị phần mua được bằng tiền, nhưng lòng trung thành phải xây bằng giá trị.', 'Market share can be bought with money, but loyalty must be built with value.'), by: 'Phan Anh Tú', color: 'text-emerald-700' },
-  { clip: 'quote-06', text: T('Đừng sợ commit sai – hãy sợ việc không rút ra được bài học nào.', "Don't fear committing to the wrong call — fear learning nothing from it."), by: 'SEC', color: 'text-red-600' },
+  { clip: 'quote-06', text: T('Đừng sợ commit sai – hãy sợ việc không rút ra được bài học nào.', "Don't fear committing to the wrong call – fear learning nothing from it."), by: 'SEC', color: 'text-red-600' },
 ]; }
 
 function renderJournal() {
@@ -2113,7 +2113,7 @@ function pushLumina(advice) {
     </div>`;
   $('advisor-chat').appendChild(el);
   el.scrollIntoView({ behavior: 'smooth', block: 'end' });
-  if (advice.mute) { /* câm tiếng có chủ đích — xem renderAdvisorIntro() */ }
+  if (advice.mute) { /* câm tiếng có chủ đích – xem renderAdvisorIntro() */ }
   else if (advice.clip) playVoice(advice.clip);   // có bản thu → dùng giọng thật
   else speakLumina(advice.text);                  // chưa thu → giọng máy dự phòng
 }
@@ -3180,7 +3180,7 @@ let classLB = null;
 // BizonBackend.classLeaderboard/RPC bizon_class_leaderboard ở backend.js —
 // không có trang nào khác gọi tới, giữ lại phòng khi cần bật lại có kiểm soát
 // (ví dụ chỉ hiện sau khi kết thúc mùa giải).
-async function fetchClassLeaderboard() { /* đã tắt — xem ghi chú trên */ }
+async function fetchClassLeaderboard() { /* đã tắt – xem ghi chú trên */ }
 
 function renderLeaderboard() {
   const totalProfit = S.history.reduce((a, r) => a + r.netProfit, 0);
@@ -3206,7 +3206,7 @@ function renderLeaderboard() {
     // Đã vào lớp thật nhưng bảng xếp hạng chéo đội đang khóa (xem ghi chú ở
     // fetchClassLeaderboard) — chỉ hiện kết quả của chính đội mình.
     all = [{ name: S.profile.teamName + T(' (Bạn)', ' (You)'), profit: totalProfit, share: lastShare, me: true }];
-    note = T('🔒 Bảng xếp hạng chéo đội đang tạm khóa — chỉ hiện kết quả của đội bạn', '🔒 Cross-team leaderboard is temporarily locked — showing only your team’s results');
+    note = T('🔒 Bảng xếp hạng chéo đội đang tạm khóa – chỉ hiện kết quả của đội bạn', '🔒 Cross-team leaderboard is temporarily locked – showing only your team’s results');
   } else {
     // Chơi thử: so với 3 đối thủ ảo, xếp theo số cờ trên bản đồ chinh phục trước, lợi nhuận sau
     // (cùng luật danh hiệu «Vô địch BizOn»; đối thủ ảo không chịu lương/khấu hao/R&D nên nếu chỉ xét lợi nhuận đội luôn hạng 4).

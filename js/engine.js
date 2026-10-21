@@ -73,20 +73,20 @@ function MARKET_EVENTS_LIST() { return [
  * 'A' cho mọi ván mới/ván cũ — xem newGameState() và currentEvent()). */
 function MARKET_EVENTS_LIST_B() { return [
   null,
-  { id: 'EV_STABLE_B', round: 1, tone: 'good', icon: '🌤️', name: T('Thị trường ổn định — nhưng có tin đồn', 'Stable Market — But a Rumor Is Spreading'), tag: T('VÒNG KHỞI ĐỘNG', 'KICKOFF ROUND'),
+  { id: 'EV_STABLE_B', round: 1, tone: 'good', icon: '🌤️', name: T('Thị trường ổn định – nhưng có tin đồn', 'Stable Market – But a Rumor Is Spreading'), tag: T('VÒNG KHỞI ĐỘNG', 'KICKOFF ROUND'),
     desc: T('Vòng khởi động – nhu cầu thị trường ở mức chuẩn. Nhưng có tin đồn Star Clay Co., hãng đất sét cao cấp từ nước ngoài, đang âm thầm khảo sát thị trường Việt Nam.',
       'The kickoff round – market demand at baseline. But rumor has it Star Clay Co., a premium overseas clay brand, is quietly scouting the Vietnamese market.'), demand: 1.0, costMul: 1.0,
     impacts: [{ icon: '📈', label: T('Nhu cầu thị trường', 'Market demand'), value: T('Chuẩn', 'Baseline'), dir: 'flat' }, { icon: '👀', label: T('Tín hiệu đối thủ ngoại', 'Foreign rival signal'), value: T('Tin đồn', 'Rumor'), dir: 'flat' }],
-    luminaImg: 'lumina-vest-thumbsup', luminaMsg: T('Chào cả đội! Vòng đầu vẫn là lúc xây nền tảng — nhưng nghe đâu Star Clay Co. đang để mắt tới Việt Nam. Cứ vững vàng, đội mình xây móng cho chắc trước đã!',
-      "Hi team! The first round is still about building the foundation — but word is Star Clay Co. has its eye on Vietnam. Stay steady, let's build a solid base first!"),
+    luminaImg: 'lumina-vest-thumbsup', luminaMsg: T('Chào cả đội! Vòng đầu vẫn là lúc xây nền tảng – nhưng nghe đâu Star Clay Co. đang để mắt tới Việt Nam. Cứ vững vàng, đội mình xây móng cho chắc trước đã!',
+      "Hi team! The first round is still about building the foundation – but word is Star Clay Co. has its eye on Vietnam. Stay steady, let's build a solid base first!"),
     cta: { label: T('🎯 Nhập quyết định ngay', '🎯 Enter decisions now'), tab: 'decisions' } },
   { id: 'EV_GOLDEN_B', round: 2, tone: 'good', icon: '🌟', name: T('Làn Sóng Hội Nhập', 'The Integration Wave'), tag: T('SỰ KIỆN ĐẶC BIỆT', 'SPECIAL EVENT'),
-    desc: T('Hiệp định thương mại tự do mới vừa có hiệu lực, thuế nhập khẩu nguyên liệu giảm mạnh. Đồng thời, Star Clay Co. chính thức tuyên bố gia nhập thị trường Việt Nam với chiến dịch ra mắt rầm rộ — cơ hội và thách thức đến cùng lúc.',
-      'A new free-trade agreement just took effect, slashing import tariffs on raw materials. At the same time, Star Clay Co. officially announces its entry into Vietnam with a loud launch campaign — opportunity and threat arrive together.'),
+    desc: T('Hiệp định thương mại tự do mới vừa có hiệu lực, thuế nhập khẩu nguyên liệu giảm mạnh. Đồng thời, Star Clay Co. chính thức tuyên bố gia nhập thị trường Việt Nam với chiến dịch ra mắt rầm rộ – cơ hội và thách thức đến cùng lúc.',
+      'A new free-trade agreement just took effect, slashing import tariffs on raw materials. At the same time, Star Clay Co. officially announces its entry into Vietnam with a loud launch campaign – opportunity and threat arrive together.'),
     demand: 1.35, costMul: 1.0, rdBoost: 1.5,
     impacts: [{ icon: '🧾', label: T('Thuế nhập nguyên liệu', 'Material import tariff'), value: '-35%', dir: 'down-good' }, { icon: '🌊', label: T('Đối thủ ngoại', 'Foreign rival'), value: T('Chính thức gia nhập', 'Officially enters'), dir: 'up-bad' }],
-    luminaImg: 'lumina-ao-dai-clap', luminaMsg: T('Cơ hội lớn đây! FTA giúp CFO tiết kiệm chi phí nguyên liệu đáng kể. Nhưng đừng lơ là — Star Clay Co. vừa tuyên bố vào cuộc, CMO nên chuẩn bị tinh thần cho vòng sau!',
-      "Big opportunity! The FTA saves the CFO real money on materials. But don't get comfortable — Star Clay Co. just announced its entry, CMO should brace for next round!"),
+    luminaImg: 'lumina-ao-dai-clap', luminaMsg: T('Cơ hội lớn đây! FTA giúp CFO tiết kiệm chi phí nguyên liệu đáng kể. Nhưng đừng lơ là – Star Clay Co. vừa tuyên bố vào cuộc, CMO nên chuẩn bị tinh thần cho vòng sau!',
+      "Big opportunity! The FTA saves the CFO real money on materials. But don't get comfortable – Star Clay Co. just announced its entry, CMO should brace for next round!"),
     cta: { label: T('🏭 Tăng công suất ngay', '🏭 Ramp up capacity now'), tab: 'decisions' } },
   { id: 'EV_PRICEWAR_B', round: 3, tone: 'warn', icon: '⚔️', name: T('Ra Mắt Rầm Rộ', 'The Big Launch'), tag: T('CẢNH BÁO THỊ TRƯỜNG', 'MARKET WARNING'),
     desc: T('Star Clay Co. tung chiến dịch ra mắt: định vị cao cấp nhưng giá mở màn thấp bất ngờ để giành thị phần nhanh – khách hàng cực nhạy cảm về giá trong vòng này.',
@@ -372,8 +372,8 @@ function cmoBrain(s) {
 
   if (s.brandLoyalty < 60) return {
     status: 'RED', badge: T('ĐỎ · NGUY CẤP', 'RED · CRITICAL'), metric: T(`Brand Loyalty ${s.brandLoyalty}% < ngưỡng 60%`, `Brand Loyalty ${s.brandLoyalty}% < the 60% threshold`),
-    dialogue: T('Khách hàng đang dần rời bỏ chúng ta để sang đối thủ — dấu hiệu thương hiệu đang mất sức hút. Cân nhắc một chiến dịch tái định vị trước khi mất thêm thị phần.',
-      'Customers are gradually leaving us for rivals — a sign the brand is losing its pull. Consider a repositioning campaign before losing more share.'),
+    dialogue: T('Khách hàng đang dần rời bỏ chúng ta để sang đối thủ – dấu hiệu thương hiệu đang mất sức hút. Cân nhắc một chiến dịch tái định vị trước khi mất thêm thị phần.',
+      'Customers are gradually leaving us for rivals – a sign the brand is losing its pull. Consider a repositioning campaign before losing more share.'),
     actions: [T('Kích hoạt Branding Premium', 'Activate Branding Premium'), T('Tăng R&D để tái định vị thương hiệu', 'Increase R&D to reposition the brand')],
   };
   if (shareDrop > 5) return {
@@ -561,7 +561,7 @@ function newGameState(profile) {
     caseId: 'A',
     caseDrawn: false,   // đã hiện màn bốc thăm cho ván này chưa (chỉ hiện 1 lần)
     difficulty: 'normal',                     // easy | normal | hard (cố định cho bản tính điểm)
-    autoDiff: 1.0,                             // hệ số thích ứng — chỉ dùng khi chơi thử
+    autoDiff: 1.0,                             // hệ số thích ứng – chỉ dùng khi chơi thử
     missionsClaimed: [],
     aiAskedTotal: 0,
     itemsBought: 0,

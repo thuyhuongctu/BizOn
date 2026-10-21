@@ -1,5 +1,5 @@
 /* ============================================================================
-   BizOn Clay — Trung tâm trò chơi (Arcade): thẻ game + 3 mini-game tương tác.
+   BizOn Clay – Trung tâm trò chơi (Arcade): thẻ game + 3 mini-game tương tác.
    Song ngữ theo window.clayCurrentLang(). EnQuiz dùng ngân hàng QUIZ_BANK
    (js/quiz-bank.js). Nạp SAU bizon-clay-i18n.js và quiz-bank.js.
    ========================================================================== */

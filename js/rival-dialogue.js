@@ -23,7 +23,7 @@
       label: function () { return T('⚔️ Đối đầu trực diện, tăng ngân sách marketing.', '⚔️ Meet them head-on, raise the marketing budget.'); },
       brand: 0.05,
       cash: -15,
-      reply: function () { return T('Được thôi, tôi không ngán đâu! Nhưng đốt tiền mặt sớm thế này, đội các bạn trụ được bao lâu?', "Bring it on, I'm not scared! But burning cash this early — how long can your team hold out?"); }
+      reply: function () { return T('Được thôi, tôi không ngán đâu! Nhưng đốt tiền mặt sớm thế này, đội các bạn trụ được bao lâu?', "Bring it on, I'm not scared! But burning cash this early – how long can your team hold out?"); }
     },
     {
       key: 'quality',

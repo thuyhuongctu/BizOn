@@ -67,7 +67,7 @@
     }).sort(function (a, b) { return a.team_id < b.team_id ? -1 : (a.team_id > b.team_id ? 1 : 0); });
     return {
       graded_on: 'frozen_snapshot', // hợp đồng: chấm trên bản đóng băng, không phải trạng thái sống
-      auto_rubric: false,           // KHÔNG tự chấm rubric — chỉ cấp chỉ số neo làm bằng chứng
+      auto_rubric: false,           // KHÔNG tự chấm rubric – chỉ cấp chỉ số neo làm bằng chứng
       purpose: opts.purpose || null,
       skipped_no_snapshot: skipped,
       teams: teamList

@@ -1,5 +1,5 @@
 /* ============================================================================
-   BizOn Clay — chân trang đất sét dùng chung cho trang bản đất sét.
+   BizOn Clay – chân trang đất sét dùng chung cho trang bản đất sét.
    Bơm #clay-footer vào cuối <body>. Nạp SAU bizon-clay-i18n.js.
    ========================================================================== */
 (function(){
