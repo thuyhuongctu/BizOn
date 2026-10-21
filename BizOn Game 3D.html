@@ -943,7 +943,7 @@ function buildLB() {
   order.forEach((rank, j) => { const t = all[rank]; if (!t) return; const p = pedestal(HX[j] === undefined ? 0 : [-1.4, 0, 1.4, 2.8][j], 0, new THREE.Color(TEAMS[t.key].color).getHex(), HH[rank]);
     p.position.x = all.length === 1 ? 0 : [-1.9, 0, 1.9, 3.8][j] - 0.95;
     const ch = chars.build(t.id); ch.scale.setScalar(1.7); ch.position.y = HH[rank] + 0.07; ch.traverse(m => { if (m.isMesh) m.castShadow = true; }); p.add(ch); p.userData.ch = ch; p.userData.rank = rank; RM.spin.push(p);
-    lab(p, `<img src="assets/character/${{ star: 'rong-xanh', wolf: 'mascot-soi', elephant: 'mascot-voi', peacock: 'mascot-cong' }[t.key] || 'rong-xanh'}.webp" alt="" style="width:46px;display:block;margin:0 auto 3px"><i>${['🥇', '🥈', '🥉', '4️⃣'][rank]}</i><b>${t.name} · ${fmt(t.profit)} · ${(+t.share).toFixed(1)}%</b>`, HH[rank] + 2.7, t.me ? 'hot' : ''); });
+    lab(p, `${t.key === 'star' ? '<img src="assets/dragon/champion.png" alt="" style="width:46px;display:block;margin:0 auto 3px">' : ''}<i>${['🥇', '🥈', '🥉', '4️⃣'][rank]}</i><b>${t.name} · ${fmt(t.profit)} · ${(+t.share).toFixed(1)}%</b>`, HH[rank] + 2.7, t.me ? 'hot' : ''); });
   setRoomCam(new THREE.Vector3(0.9, 3.4, 9), new THREE.Vector3(0.9, 1.5, 0));
   rmCard.innerHTML = '';
 }
@@ -1077,7 +1077,7 @@ function result3D(r) {
   let why = ''; try { why = W.explainRound(r); } catch {}
   MOOD.kind = ok ? 'win' : 'lose'; MOOD.until = performance.now() + 60000; flyTable(true);
   if (ok) confetti3D(new THREE.Vector3(0, 0, -2.4));
-  showPanel(`<img src="assets/character/${ok ? 'rong-xanh' : 'rong-xanh-y-tuong'}.webp" alt="Rồng Xanh" style="width:84px;align-self:center"><span class="tag ${ok ? '' : 'bad'}">● ${T('Kết quả vòng', 'Round result')} ${r.round}/6</span>
+  showPanel(`<img src="assets/dragon/${ok ? 'jump' : 'magnifier'}.png" alt="Tèo Soi" style="width:84px;align-self:center"><span class="tag ${ok ? '' : 'bad'}">● ${T('Kết quả vòng', 'Round result')} ${r.round}/6</span>
     <h2 class="${ok ? '' : 'bad'}">${ok ? T('🎉 Vòng có lãi!', '🎉 A profitable round!') : T('😰 Vòng này lỗ', '😰 A loss this round')}</h2>
     <p class="d">${r.event.icon} ${r.event.name}${r.shielded ? T(' (đã chặn bởi 🛡️)', ' (blocked by 🛡️)') : ''}</p>
     <div class="say"><small>🤖 LUMINA</small>${resultLine(r)}</div>
@@ -1184,7 +1184,7 @@ function event3D() {
   const bad = e.tone === 'bad', warn = e.tone === 'warn';
   const dirIcon = d => ({ up: '📈', 'up-bad': '📈', down: '📉', 'down-good': '📉', flat: '➖' }[d] || '➖');
   const dirCol = d => d === 'up' || d === 'down-good' ? '#3f8a44' : d === 'flat' ? '#2c3552' : '#c0443a';
-  evc.innerHTML = `<img src="assets/character/${bad || warn ? 'rong-xanh-y-tuong' : 'rong-xanh'}.webp" alt="Rồng Xanh" style="width:84px;align-self:center"><span class="tag ${bad ? 'bad' : warn ? 'warn' : ''}">● ${T('Vòng', 'Round')} ${s.round}/6 · ${e.tag || T('BIẾN CỐ THỊ TRƯỜNG', 'MARKET EVENT')}</span>
+  evc.innerHTML = `<img src="assets/dragon/${bad || warn ? 'magnifier' : 'thumbs'}.png" alt="Tèo Soi" style="width:84px;align-self:center"><span class="tag ${bad ? 'bad' : warn ? 'warn' : ''}">● ${T('Vòng', 'Round')} ${s.round}/6 · ${e.tag || T('BIẾN CỐ THỊ TRƯỜNG', 'MARKET EVENT')}</span>
     <h2 class="${bad ? 'bad' : ''}">${e.icon} ${e.name}</h2><p class="d">${e.desc}</p>
     <div class="imps">${(e.impacts || []).map(im => `<div class="imp"><small>${im.icon} ${im.label}</small><b style="color:${dirCol(im.dir)}">${dirIcon(im.dir)} ${im.value}</b></div>`).join('')}</div>
     <div class="say" style="display:flex;gap:10px;align-items:flex-start"><div><small>${T('LUMINA · CỐ VẤN', 'LUMINA · ADVISOR')}</small>"${e.luminaMsg}"</div></div>
@@ -1582,9 +1582,9 @@ function buildFaceoff() {
   const fl = []; { const f = hq.teamFlag('star'); f.scale.setScalar(1.3); f.position.set(-2.7, 0, -1.2); g.add(f); fl.push(f); } if (rflag) { const f = hq.teamFlag(rflag); f.scale.setScalar(1.3); f.position.set(2.7, 0, -1.2); g.add(f); fl.push(f); }
   RM.scene.background.set(0x1b2240);
   RM.tick = (dt, t) => { chars.animate(A, t, 'talk', 0); chars.animate(B2, t, 'talk', 1.3); fl.forEach((f, i) => hq.waveFlag(f, t + i)); RM.coins.forEach(c => { c.rotation.z += dt * 2; c.position.y = 1.5 + Math.sin(t * 1.6 + c.userData.ph) * 0.18 + (c.userData.ph % 3) * 0.2; }); vn.material.opacity = 0.45 + Math.sin(t * 2) * 0.12; };
-  const MASC = { wolf: 'soi', elephant: 'voi', peacock: 'cong' }, mimg = k => `<img src="assets/character/${k}.webp" alt="" style="width:34px;vertical-align:middle;margin-right:4px">`;
-  lab(A, `${mimg('rong-xanh')}<i>🚩</i><b>${mr.label || me.toUpperCase()}: “${TL((FO_ROUND[(s.round - 1) % 6] || [])[0]) || TL(FO_LINES[me])}”</b>`, 2.35, 'hot');
-  lab(B2, `${rflag ? mimg('mascot-' + MASC[rflag]) : ''}<i>⚡</i><b>${rr.label || rv}: “${foRival(s)}”</b>`, 2.35);
+  const mimg = k => `<img src="assets/dragon/${k}.png" alt="" style="width:34px;vertical-align:middle;margin-right:4px">`;
+  lab(A, `${mimg('wave')}<i>🚩</i><b>${mr.label || me.toUpperCase()}: “${TL((FO_ROUND[(s.round - 1) % 6] || [])[0]) || TL(FO_LINES[me])}”</b>`, 2.35, 'hot');
+  lab(B2, `<i>⚡</i><b>${rr.label || rv}: “${foRival(s)}”</b>`, 2.35);
   RM.labs.slice(-2).forEach(L => { Object.assign(L.el.style, { whiteSpace: 'normal', maxWidth: '210px', textAlign: 'center' }); const b = L.el.querySelector('b'); if (b) Object.assign(b.style, { whiteSpace: 'normal', display: 'block', lineHeight: '1.25' }); });
   { const W0 = innerWidth, w = W0 >= 760 ? 1.05 : 0; setRoomCam(new THREE.Vector3(w, 2.7, W0 < 760 ? 12.5 : 11.2), new THREE.Vector3(w, 1.4, 0)); }
   const bad = e.tone === 'bad';
