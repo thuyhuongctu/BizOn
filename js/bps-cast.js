@@ -65,9 +65,9 @@
     if (R && R.right - R.left >= 560) { // máy tính: góc phải trên của cảnh, dưới nút loa
       st.left = 'auto'; st.right = (innerWidth - R.right + 12) + 'px'; st.bottom = 'auto';
       st.top = (R.col + 60) + 'px'; st.width = Math.min(380, R.right - R.left - 24) + 'px';
-    } else if (R) { // di động: đầu khung cảnh đang thấy, trên tấm trượt
+    } else if (R) { // di động: đầu khung cảnh đang thấy, trên tấm trượt; chừa cột nút loa bên phải
       st.right = 'auto'; st.left = (R.left + 12) + 'px'; st.bottom = 'auto';
-      st.top = (R.top + 10) + 'px'; st.width = Math.max(200, R.right - R.left - 24) + 'px';
+      st.top = (R.top + 10) + 'px'; st.width = Math.max(200, R.right - R.left - 24 - 52) + 'px';
     } else { st.left = 'auto'; st.right = '16px'; st.top = 'auto'; st.bottom = '16px'; st.width = ''; }
   }
   window.addEventListener('resize', place);
