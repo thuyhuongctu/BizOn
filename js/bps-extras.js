@@ -57,7 +57,7 @@
   }
   var fc = $('ft-forecast');
   if (fc) { var hb = document.createElement('button'); hb.type = 'button'; hb.setAttribute('data-en', '❓ How to play'); hb.textContent = T('❓ Cách chơi', '❓ How to play');
-    hb.style.cssText = 'display:block;margin:8px auto 0;min-height:36px;padding:0 14px;border:0;border-radius:12px;background:rgba(0,102,135,.1);color:#006687;font-weight:800;font-size:12px;cursor:pointer';
+    hb.style.cssText = 'display:block;margin:8px auto 0;min-height:44px;padding:0 14px;border:0;border-radius:12px;background:rgba(0,102,135,.1);color:#006687;font-weight:800;font-size:12px;cursor:pointer';
     hb.onclick = window.bpsTutorial; fc.after(hb); }
 
   /* ---------- Âm thanh & hiệu ứng ---------- */

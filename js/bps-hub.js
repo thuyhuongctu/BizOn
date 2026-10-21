@@ -107,7 +107,7 @@
     if (!anchor) return;
     var btn = document.createElement('button');
     btn.id = 'bps-hub-enter'; btn.type = 'button'; btn.style.position = 'relative';
-    btn.className = 'clay-btn w-full bg-deep-teal text-white font-display font-extrabold py-2.5 text-xs mt-3';
+    btn.className = 'clay-btn w-full bg-deep-teal text-white font-display font-extrabold py-2.5 text-xs mt-3'; btn.style.minHeight = '44px';
     btn.textContent = T('🏯 Ra bến gặp đối thủ', '🏯 Visit the wharf');
     btn.onclick = function () { clearNew(); window.ClayHub.open(buildConfig()); };
     anchor.insertAdjacentElement('afterend', btn);

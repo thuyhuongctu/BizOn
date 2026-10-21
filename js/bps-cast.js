@@ -50,7 +50,8 @@
     R.col = R.top + 8;
     wrap.querySelectorAll('.bps3d-chip').forEach(function (c) {
       if (c === mb || !vis(c)) return; var b = c.getBoundingClientRect();
-      if (b.right > R.right - 40 && b.top < R.top + 200) R.col = Math.max(R.col, b.bottom);
+      // chỉ chip hẹp nằm hẳn ở nửa phải, sát mép trên (không tính ô hướng dẫn/dòng gợi ý trải ngang)
+      if (b.left > (R.left + R.right) / 2 && b.right > R.right - 40 && b.top < R.top + 200) R.col = Math.max(R.col, b.bottom);
     });
     return R;
   }
@@ -96,8 +97,9 @@
 
   var G = function () { return window.__bps; };
   window.addEventListener('bps-week', function (e) { var w = e.detail.week; if (w === 0) say('BPS_HG_01'); if (w >= 0 && w < 5) say('BPS_TP_0' + (w + 1)); });
+  var endShown = function () { var end = document.getElementById('ft-end'); return !!end && !end.classList.contains('hidden'); };
   window.addEventListener('bps-result', function (e) {
-    var d = e.detail, g = G(); if (!g) return;
+    var d = e.detail, g = G(); if (!g || endShown()) return; // tuần cuối: màn kết thúc đã mở, chỉ còn lời tổng kết
     if (d.m === 2) { say('BPS_NAR_22'); return; }
     if (d.storm) say('BPS_NAR_10');
     var hit = []; g.RIVALS.forEach(function (r, k) { if (r.plan && r.plan[d.week] === d.loc) hit.push(k); });
@@ -116,7 +118,10 @@
     place();
     var end = document.getElementById('ft-end'); if (!end) return;
     var vis = !end.classList.contains('hidden');
-    if (vis && !ended) { ended = true; q = []; var rows = document.querySelectorAll('#ft-board .ft-row'), rank = 3;
+    if (vis && !ended) { ended = true; q = [];
+      // bỏ bong bóng đang nổi của màn chơi (không để nó đè bảng xếp hạng)
+      var old = document.querySelector('.bps-say'); if (old && !old.classList.contains('inline')) { clearTimeout(hideT); old.remove(); if (cur) { cur.pause(); cur = null; } busy = false; }
+      var rows = document.querySelectorAll('#ft-board .ft-row'), rank = 3;
       rows.forEach(function (r, i) { if (r.classList.contains('me')) rank = i; }); say('BPS_HG_1' + Math.min(3, rank)); }
     if (!vis) ended = false;
   }, 500);

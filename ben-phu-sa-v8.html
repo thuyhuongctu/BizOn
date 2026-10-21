@@ -201,9 +201,11 @@ body:has(#ft-play:not(.hidden)) [class*="dock"],body:has(#ft-play:not(.hidden)) 
 /* Di động: tấm HUD (52vh) che đáy cảnh – đưa thanh chế độ, dòng gợi ý, ô hướng dẫn
    và bảng khám phá lên ngay trên mép tấm; thẻ quyết định «Tuần x/5» lên trước thẻ điểm. */
 @media (max-width:900px){
+  /* 3 nút chế độ không vừa 1 hàng ở 390px → xuống 2 hàng (cao ~86px) */
+  #bps3d-modes{flex-wrap:wrap;right:14px}
   #bps3d-modes,#bps3d-checklist{bottom:calc(52vh + 10px)!important}
-  #bps3d-hint{bottom:calc(52vh + 58px)!important;left:14px!important;right:14px!important;transform:none!important;max-width:none!important;margin:0 auto!important;width:fit-content!important}
-  #bps3d-coach{bottom:calc(52vh + 112px)!important}
+  #bps3d-hint{bottom:calc(52vh + 104px)!important;left:14px!important;right:14px!important;transform:none!important;max-width:none!important;margin:0 auto!important;width:fit-content!important}
+  #bps3d-wrap #bps3d-coach{bottom:calc(52vh + 158px)!important;max-width:calc(100% - 76px)!important}
   #hud-panel>#hud-brand{order:-2}
   #hud-panel>.clay-card:has(#ft-commit){order:-1}
 }
