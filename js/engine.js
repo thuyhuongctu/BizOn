@@ -10,7 +10,7 @@ const BASE_MARKET_UNITS = 12000;     // tổng cầu thị trường mỗi vòng
 const UNIT_COST = 45;                 // nghìn ₫ / sản phẩm (chưa gồm nhân công)
 const FIXED_COST = 30;                // triệu ₫ / vòng (điện nước, mặt bằng)
 const REF_PRICE = 150;                // nghìn ₫ – giá tham chiếu
-const PRICE_ELASTICITY = 1.8;
+const PRICE_ELASTICITY = 2.2;          // trước là 1.8: giá tối ưu lợi nhuận ~230k, nay ~190k
 const STARTING_BALANCE = 500;         // triệu ₫ (vốn giảng viên cấp)
 const XP_PER_LEVEL = 100;
 const AI_QUOTA_PER_ROUND = 3;         // ERR_AI_LIMIT
@@ -103,7 +103,7 @@ function MARKET_EVENTS_LIST_B() { return [
     impacts: [{ icon: '📈', label: T('Chi phí nguyên liệu nhập', 'Import material cost'), value: '+30%', dir: 'up-bad' }, { icon: '🏭', label: T('Hiệu suất (OEE)', 'Efficiency (OEE)'), value: '-10%', dir: 'down' }],
     luminaImg: 'lumina-ao-dai-alert', luminaMsg: T('Cảnh báo khẩn cấp! Tỷ giá biến động mạnh đúng lúc đối thủ ngoại đang mạnh tay nhất. COO hãy rà soát lịch chạy máy, CFO cần dự phòng thêm vốn ngay!',
       'Urgent warning! The exchange rate is swinging hard right when the foreign rival is spending hardest. COO, review the machine schedule, and CFO, set aside extra reserve capital right away!'),
-    cta: { label: T('⚡ Tối ưu năng lượng ngay', '⚡ Optimize energy now'), tab: 'reports', report: 'energy' } },
+    cta: { label: T('📊 Rà soát chi phí ngay', '📊 Review costs now'), tab: 'reports', report: 'cvp' } },
   { id: 'EV_SUPPLY_B', round: 5, tone: 'bad', icon: '🚚', name: T('Cảng Tắc Nghẽn Vì Hàng Ngoại', 'Port Congestion from the Import Surge'), tag: T('CẢNH BÁO KHẨN CẤP', 'URGENT WARNING'),
     desc: T('Làn sóng hàng nhập khẩu – trong đó có lô hàng lớn của Star Clay Co. – khiến cảng biển quá tải nghiêm trọng, dây chuyền sản xuất của BizOn bị đình trệ theo.',
       "The import surge – including a large Star Clay Co. shipment – overwhelms the seaport, stalling BizOn's production line along with it."),
@@ -162,7 +162,7 @@ function MARKET_EVENTS_LIST_C() { return [
     impacts: [{ icon: '📈', label: T('Chi phí vận hành', 'Operating cost'), value: '+30%', dir: 'up-bad' }, { icon: '🏭', label: T('Hiệu suất (OEE)', 'Efficiency (OEE)'), value: '-10%', dir: 'down' }],
     luminaImg: 'lumina-ao-dai-alert', luminaMsg: T('Cảnh báo khẩn cấp! Cước vận chuyển nội địa tăng vọt vì quá tải mùa sale. COO hãy rà soát lịch chạy máy, còn CFO cần dự phòng thêm vốn ngay nhé!',
       'Urgent warning! Domestic freight costs have spiked from sale-season overload. COO, review the machine schedule, and CFO, set aside extra reserve capital right away!'),
-    cta: { label: T('⚡ Tối ưu năng lượng ngay', '⚡ Optimize energy now'), tab: 'reports', report: 'energy' } },
+    cta: { label: T('📊 Rà soát chi phí ngay', '📊 Review costs now'), tab: 'reports', report: 'cvp' } },
   { id: 'EV_SUPPLY_C', round: 5, tone: 'bad', icon: '📦', name: T('Kho Hàng Quá Tải', 'Warehouse Overload'), tag: T('CẢNH BÁO KHẨN CẤP', 'URGENT WARNING'),
     desc: T('Các kho hàng trung chuyển thương mại điện tử quá tải vì lượng đơn khổng lồ từ mùa livestream giảm giá, khiến dây chuyền giao nhận của BizOn bị đình trệ theo.',
       "E-commerce fulfillment warehouses are overloaded by the massive order volume from the livestream discount season, stalling BizOn's delivery pipeline along with it."),
@@ -186,7 +186,7 @@ function SHOP_ITEMS_LIST() { return [
   { id: 'MKT_BOOST_01', icon: '📣', name: T('Marketing Boost', 'Marketing Boost'), type: 'booster',    price: 80,  desc: T('+30% hiệu quả marketing trong vòng kế tiếp.', '+30% marketing effectiveness next round.') },
   { id: 'RD_UPGRADE_01', icon: '🔬', name: T('R&D Upgrade', 'R&D Upgrade'),    type: 'blueprint',  price: 120, desc: T('Giảm 8% giá thành sản xuất vĩnh viễn.', 'Permanently cuts unit production cost by 8%.') },
   { id: 'OPS_LEAN_01',  icon: '🏭', name: T('Lean Operations', 'Lean Operations'), type: 'blueprint',  price: 100, desc: T('Giảm 20% chi phí khấu hao máy móc.', 'Cuts equipment depreciation cost by 20%.') },
-  { id: 'INS_SHIELD_01', icon: '🛡️', name: T('Khiên bảo hiểm', 'Insurance Shield'), type: 'consumable', price: 60,  desc: T('Vô hiệu hóa tác động tiêu cực của 1 biến cố thị trường.', 'Cancels the negative impact of 1 market event.') },
+  { id: 'INS_SHIELD_01', icon: '🛡️', name: T('Khiên bảo hiểm', 'Insurance Shield'), type: 'consumable', price: 60,  desc: T('Giảm một nửa tác động tiêu cực của 1 biến cố thị trường.', 'Halves the negative impact of 1 market event.') },
   { id: 'DATA_PACK_01', icon: '📊', name: T('Gói dữ liệu thị trường', 'Market Data Pack'), type: 'consumable', price: 50, desc: T('Lumina tiết lộ trước biến cố của vòng sau.', "Lumina reveals next round's event in advance.") },
 ]; }
 
@@ -213,7 +213,7 @@ function MISSIONS_LIST() { return [
   { id: 'M_AI3',      icon: '🤖', name: T('Người bạn của Lumina', "Lumina's Friend"), desc: T('Hỏi Lumina tổng cộng 3 lần.', 'Ask Lumina a total of 3 times.'), rewardMoney: 15, rewardXp: 10, test: s => (s.aiAskedTotal || 0) >= 3 },
   { id: 'M_SKILL',    icon: '🌳', name: T('Học không ngừng', 'Lifelong Learner'), desc: T('Mở khóa 1 kỹ năng trong Cây kỹ năng.', 'Unlock 1 skill in the Skill Tree.'), rewardMoney: 25, rewardXp: 15, test: s => s.skills.length >= 1 },
   { id: 'M_MINIGAME', icon: '🏭', name: T('Thợ đất sét cừ khôi', 'Master Clay Worker'), desc: T('Đạt từ 15 điểm trong Clay Factory Frenzy.', 'Score at least 15 in Clay Factory Frenzy.'), rewardMoney: 25, rewardXp: 15, test: s => (s.minigameBest || 0) >= 15 },
-  { id: 'M_SURVIVE',  icon: '🛟', name: T('Thuyền trưởng bão táp', 'Storm Captain'), desc: T('Có lãi trong vòng Khủng hoảng năng lượng.', 'Turn a profit during the Energy Crisis round.'), rewardMoney: 60, rewardXp: 40, test: s => s.history.some(r => r.event.id === 'EV_RECESSION' && r.netProfit > 0) },
+  { id: 'M_SURVIVE',  icon: '🛟', name: T('Thuyền trưởng bão táp', 'Storm Captain'), desc: T('Có lãi trong vòng Khủng hoảng năng lượng.', 'Turn a profit during the Energy Crisis round.'), rewardMoney: 60, rewardXp: 40, test: s => s.history.some(r => evBase(r.event.id) === 'EV_RECESSION' && r.netProfit > 0) },
   { id: 'M_FINISH',   icon: '🎓', name: T('Tốt nghiệp BizOn', 'BizOn Graduate'), desc: T('Hoàn thành trọn vẹn 6 vòng mô phỏng.', 'Complete all 6 rounds of the simulation.'), rewardMoney: 100, rewardXp: 50, test: s => s.finished },
 ]; }
 
@@ -394,7 +394,7 @@ function cmoBrain(s) {
       "Market demand is very high but we don't have enough stock to sell. Coordinate with the COO to raise production."),
     actions: [T('Tăng sản lượng + thuê thêm nhân công', 'Raise output + hire more workers'), T('Nâng cấp dây chuyền sản xuất', 'Upgrade the production line')],
   };
-  if (ev.id === 'EV_PRICEWAR' && !s.finished) return {
+  if (evBase(ev.id) === 'EV_PRICEWAR' && !s.finished) return {
     status: 'RED', badge: T('ĐỎ · PRICE WAR', 'RED · PRICE WAR'), metric: T('Một đối thủ hạ giá 15% tại Modern Trade', 'A rival cut price 15% in Modern Trade'),
     clip: 'adv-05', dialogue: T('Thưa CMO, một đối thủ vừa hạ giá 15% và chiếm mất 8% thị phần của chúng ta. Nếu không phản ứng trong vòng tới, chúng ta sẽ mất vị thế dẫn đầu.',
       "CMO, a rival just cut price 15% and took 8% of our market share. If we don't react next round, we'll lose the lead."),
@@ -592,7 +592,7 @@ function clampNum(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
 function energyReport(s) {
   const last = s.history[s.history.length - 1];
   const factor = last ? last.decisions.production / 2800 : 1;
-  const evMul = (!s.finished && currentEvent(s).id === 'EV_RECESSION') ? 1.2 : 1;
+  const evMul = (!s.finished && evBase(currentEvent(s).id) === 'EV_RECESSION') ? 1.2 : 1;
   const lines = s.energyLines.map((base, i) => {
     let kwh = Math.round(base * factor * evMul);
     if (s.lineUpgraded[i]) kwh = Math.round(kwh * 0.6);
@@ -661,6 +661,22 @@ function currentEvent(s) {
   const list = s.caseId === 'B' ? MARKET_EVENTS_LIST_B() : s.caseId === 'C' ? MARKET_EVENTS_LIST_C() : MARKET_EVENTS_LIST();
   return list[s.round];
 }
+// Mã gốc của biến cố, bỏ hậu tố trường hợp: 'EV_RECESSION_B' → 'EV_RECESSION'. Mọi chỗ so khớp
+// theo id (thành tựu, nhiệm vụ, lời khuyên, chấm điểm) phải dùng mã gốc, kẻo đội bốc trúng B/C bị bỏ sót.
+function evBase(id) { return String(id || '').replace(/_(B|C)$/, ''); }
+// Khiên bảo hiểm: giảm MỘT NỬA phần lệch xấu của biến cố (cầu, chi phí, tỷ lệ đáp ứng, OEE) và giữ
+// nguyên hệ số thành phố (js/market-dynamic.js gộp vào demand/costMul, ghi riêng ở ev.city.mods).
+function shieldedEvent(ev) {
+  const md = (ev && ev.city && ev.city.mods) || {}, cd = md.demand || 1, cs = md.ship || 1;
+  const down = v => v < 1 ? 1 - (1 - v) / 2 : v, up = v => v > 1 ? 1 + (v - 1) / 2 : v;   // chỉ giảm phần bất lợi
+  return Object.assign({}, ev, {
+    demand: down((ev.demand || 1) / cd) * cd,
+    costMul: up((ev.costMul || 1) / cs) * cs,
+    fulfillMul: down(ev.fulfillMul || 1),
+    oeeHit: (ev.oeeHit || 0) / 2,
+    wageMul: up(ev.wageMul || 1),
+  });
+}
 
 /* Kỳ hạn thanh toán (theo màn hình Quyết định nâng cao):
  * cho khách trả chậm → cầu tăng nhưng chi phí vốn tăng */
@@ -682,7 +698,7 @@ function isGradedState(s) { return !!(((s && s.profile && s.profile.classId) || 
 // Bản có Mã lớp (tính điểm): mức CỐ ĐỊNH theo s.difficulty → mọi đội cùng lớp
 // gặp cùng độ khó, bảo toàn tính so sánh/công bằng. Chơi thử: hệ số thích ứng.
 function difficultyMul(s) {
-  if (isGradedState(s)) return DIFFICULTY_MUL[s.difficulty] || 1.0;
+  if (isGradedState(s)) return DIFFICULTY_MUL.normal;   // bản tính điểm luôn ở mức Thường – sinh viên không tự chọn được
   return clampNum(s.autoDiff || 1.0, 0.78, 1.32);
 }
 
@@ -694,7 +710,7 @@ function simulateRound(s, d) {
   d.production = Math.min(d.production, laborCap);
   const ev = currentEvent(s);
   const shielded = s.activeBoosts.includes('INS_SHIELD_01') && ev.tone === 'bad';
-  const evEff = shielded ? MARKET_EVENTS_LIST()[1] : ev;
+  const evEff = shielded ? shieldedEvent(ev) : ev;
 
   // --- Sức hấp dẫn của từng đội (attractiveness) ---
   const elasticity = PRICE_ELASTICITY * (evEff.elasticityMul || 1);
@@ -869,7 +885,7 @@ function ACHIEVEMENTS_LIST() { return [
   { id: 'A_FIRST',   icon: '🎉', name: T('Khởi nghiệp', 'Startup Launched'), desc: T('Hoàn thành vòng đầu tiên.', 'Complete the first round.'), test: (s, r) => r.round === 1 },
   { id: 'A_PROFIT',  icon: '💎', name: T('Có lãi!', 'In the Black!'), desc: T('Đạt lợi nhuận dương trong một vòng.', 'Post a positive profit in one round.'), test: (s, r) => r.netProfit > 0 },
   { id: 'A_SHARE30', icon: '👑', name: T('Dẫn đầu thị trường', 'Market Leader'), desc: T('Thị phần vượt 30%.', 'Market share above 30%.'), test: (s, r) => r.share >= 30 },
-  { id: 'A_SURVIVE', icon: '🛟', name: T('Vượt bão khủng hoảng', 'Weathered the Storm'), desc: T('Có lãi trong vòng Khủng hoảng năng lượng.', 'Turned a profit during the Energy Crisis round.'), test: (s, r) => r.event.id === 'EV_RECESSION' && r.netProfit > 0 },
+  { id: 'A_SURVIVE', icon: '🛟', name: T('Vượt bão khủng hoảng', 'Weathered the Storm'), desc: T('Có lãi trong vòng Khủng hoảng năng lượng.', 'Turned a profit during the Energy Crisis round.'), test: (s, r) => evBase(r.event.id) === 'EV_RECESSION' && r.netProfit > 0 },
   { id: 'A_RICH',    icon: '🏦', name: T('Két sắt đầy', 'Full Vault'), desc: T('Số dư ví vượt 1 tỷ ₫.', 'Wallet balance above 1 billion ₫.'), test: (s, r) => s.balance >= 1000 },
   { id: 'A_FINISH',  icon: '📜', name: T('Tốt nghiệp BizOn', 'BizOn Graduate'), desc: T('Hoàn thành cả 6 vòng mô phỏng.', 'Completed all 6 rounds of the simulation.'), test: (s) => s.finished },
   { id: 'A_FLAG',    icon: '🚩', name: T('Cắm cờ đầu tiên', 'First Flag Planted'), desc: T('Thắng một vòng trên bản đồ chinh phục.', 'Won a round on the conquest map.'), test: (s) => (s.conquest || []).some(c => c.win) },

@@ -305,7 +305,7 @@
         : [tr('KHÁCH HÀNG MỚI', 'NEW CUSTOMER'), tr('Sản phẩm ổn nhưng thương hiệu chưa đủ thuyết phục mình gắn bó lâu dài.', "The product's fine, but the brand hasn't convinced me to stick around long-term."), '#5d6770'],
       priceHigh ? [tr('KHÁCH NHẠY GIÁ', 'PRICE-SENSITIVE CUSTOMER'), tr(`Giá ${Math.round(lastD.price).toLocaleString('vi-VN')}k hoi chát so với tùi tiền... đang ngó sang đối thủ. 📉`, `${Math.round(lastD.price)}k is a bit steep... eyeing a rival. 📉`), '#c0392b']
         : [tr('KHÁCH NHẠY GIÁ', 'PRICE-SENSITIVE CUSTOMER'), tr('Mức giá hiện tại khá hợp lý so với chất lượng nhận được!', "The current price feels fair for the quality I'm getting!"), '#1f7a50'],
-      ev.id === 'EV_PRICEWAR' ? [tr('GIỚI PHÂN TÍCH', 'ANALYSTS'), tr('Đối thủ vừa giảm giá sâu. Thị trường chờ phản ứng của BizOn trong 48 giờ tới.', "A rival just made a deep price cut. The market awaits BizOn's response in 48 hours."), '#c0392b']
+      (typeof evBase === 'function' ? evBase(ev.id) : ev.id) === 'EV_PRICEWAR' ? [tr('GIỚI PHÂN TÍCH', 'ANALYSTS'), tr('Đối thủ vừa giảm giá sâu. Thị trường chờ phản ứng của BizOn trong 48 giờ tới.', "A rival just made a deep price cut. The market awaits BizOn's response in 48 hours."), '#c0392b']
         : [tr('GIỚI PHÂN TÍCH', 'ANALYSTS'), tr(`R&D tích lũy ${Math.round(s.rdCumulative || 0)}tr₫ – nền tảng đổi mới của BizOn đang được chú ý.`, `Cumulative R&D of ${Math.round(s.rdCumulative || 0)}m₫ – BizOn's innovation base is getting noticed.`), '#5d6770'],
     ];
     p.bd.innerHTML = `<div class="bzs-row on"><span class="em">${ev.icon || '📡'}</span><div style="flex:1;min-width:0"><b>${tr('Vòng ', 'Round ')}${Math.min(s.round, 6)} · ${ev.name || ''}</b><small>${ev.desc || ''}</small></div></div>

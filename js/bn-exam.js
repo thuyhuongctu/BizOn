@@ -27,14 +27,17 @@
   // Luôn theo giờ Việt Nam (không phụ thuộc múi giờ của máy sinh viên)
   var clock = function () { try { return new Date(now()).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Ho_Chi_Minh' }); } catch (e) { var d = new Date(now()); return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'); } };
 
+  // Trong «BizOn Game 3D.html» game nằm trong iframe thường bị ẩn: chuyển toast và đồng hồ lên khung ngoài.
+  var top3D = function () { try { return window.parent !== window && window.parent.__toast3D ? window.parent : null; } catch (e) { return null; } };
   function toast(msg) {
+    var P = top3D(); if (P && P.__toast3D(msg)) return;
     var el = document.createElement('div'); el.textContent = msg;
     el.style.cssText = 'position:fixed;left:50%;top:18px;transform:translateX(-50%);z-index:10000;max-width:92vw;background:#1f4a55;color:#fff;padding:10px 16px;border-radius:14px;font:700 14px/1.4 inherit;box-shadow:0 6px 20px rgba(0,0,0,.25)';
     document.body.appendChild(el); setTimeout(function () { el.remove(); }, 4200);
   }
   async function feed() {
     var s = getS(), code = s && s.profile && s.profile.classId ? String(s.profile.classId).trim().toUpperCase() : '';
-    if (!on() || !code) { exam = null; return; }
+    if (!on() || !code || code === 'DEMO-2026') { exam = null; return; }   // Đội Demo không thuộc lớp thi nào
     try {
       var r = await fetch(cfg().url.replace(/\/$/, '') + '/rest/v1/rpc/bizon_exam_feed', { method: 'POST', headers: { apikey: cfg().anonKey, Authorization: 'Bearer ' + cfg().anonKey, 'Content-Type': 'application/json' }, body: JSON.stringify({ p_class_code: code }) });
       if (!r.ok) return; var j = await r.json(); if (j && j.now) skew = Date.parse(j.now) - Date.now(); exam = (j && j.exam) || null;
@@ -42,12 +45,17 @@
   }
 
   function pill(ex) {
+    var P = top3D(); if (P && P.__examPill3D) { try { P.__examPill3D(ex ? pillText(ex) : '', ex ? pillBg(ex) : ''); } catch (e) {} }
     var el = document.getElementById('bn-exam-clock');
     if (!ex) { if (el) el.style.display = 'none'; return; }
     if (!el) { el = document.createElement('div'); el.id = 'bn-exam-clock'; el.style.cssText = 'position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:9998;padding:8px 16px;border-radius:999px;font:800 15px inherit;color:#fff;box-shadow:0 4px 0 rgba(0,0,0,.25);white-space:nowrap'; document.body.appendChild(el); }
     el.style.display = 'block';
-    el.style.background = ex.phase === 'round' && ex.left < 1 ? '#c0443a' : ex.phase === 'end' ? '#5a6b74' : '#1f4a55';
-    el.textContent = '🕒 ' + clock() + '  ·  ⏱ ' + (ex.phase === 'wait' ? TT('Thi bắt đầu sau ', 'Exam starts in ') + mmss(ex.left)
+    el.style.background = pillBg(ex);
+    el.textContent = pillText(ex);
+  }
+  function pillBg(ex) { return ex.phase === 'round' && ex.left < 1 ? '#c0443a' : ex.phase === 'end' ? '#5a6b74' : '#1f4a55'; }
+  function pillText(ex) {
+    return '🕒 ' + clock() + '  ·  ⏱ ' + (ex.phase === 'wait' ? TT('Thi bắt đầu sau ', 'Exam starts in ') + mmss(ex.left)
       : ex.phase === 'setup' ? TT('Chuẩn bị · vòng 1 mở sau ', 'Setup · Round 1 opens in ') + mmss(ex.left)
       : ex.phase === 'end' ? TT('Đã hết giờ thi', 'Exam time is over')
       : TT('Vòng ', 'Round ') + ex.round + TT(' · còn ', ' · ') + mmss(ex.left));
@@ -67,7 +75,8 @@
       }
       return o.apply(this, arguments);
     };
-    window.commitDecisions.__exam = true;
+    // Giữ cờ của các lớp bọc bên trong (js/member-log.js đánh __ml) để hai bên không bọc chồng nhau mãi.
+    window.commitDecisions.__ml = o.__ml; window.commitDecisions.__exam = true;
   }
 
   // Hết giờ vòng mà chưa Commit: tự Commit theo quyết định đang có trên thanh trượt

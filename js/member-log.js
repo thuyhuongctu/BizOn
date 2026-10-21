@@ -26,7 +26,23 @@
     const r = await fetch(c.url.replace(/\/$/, '') + '/rest/v1/member_log', { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: c.anonKey, Authorization: 'Bearer ' + c.anonKey, Prefer: 'return=minimal' }, body: JSON.stringify(row) });
     if (!r.ok) throw new Error('HTTP ' + r.status);
   }
-  async function flush() { if (!on() || !navigator.onLine) return; const q = readQ(); if (!q.length) return; const rest = []; for (const row of q) { try { await post(row); } catch (e) { rest.push(row); } } writeQ(rest); }
+  // Khoá 1 lượt gửi tại một thời điểm (giống flush() của js/backend.js): trước đây record() gọi liền nhau làm
+  // nhiều lượt cùng đọc một hàng đợi và gửi trùng dòng; dòng thêm vào giữa chừng cũng không bị ghi đè mất nữa.
+  let flushing = null, again = false;
+  function flush() {
+    if (flushing) { again = true; return flushing; }
+    flushing = (async () => {
+      do {
+        again = false;
+        if (!on() || !navigator.onLine) break;
+        const q = readQ(); if (!q.length) break;
+        const sent = new Set();
+        for (const row of q) { try { await post(row); sent.add(JSON.stringify(row)); } catch (e) {} }
+        writeQ(readQ().filter(r => !sent.has(JSON.stringify(r))));
+      } while (again);
+    })().finally(() => { flushing = null; });
+    return flushing;
+  }
   function record(kind, payload) {
     const w = who(); if (!w || !w.live || !w.team) return false;
     const round = Math.min(6, Math.max(1, w.S.round || 1));
@@ -116,7 +132,8 @@
     if (typeof window.commitDecisions === 'function' && !window.commitDecisions.__ml) {
       const o = window.commitDecisions; window.commitDecisions = function () { const S = st(), was = S && S.committed, d = typeof currentDecisionInput === 'function' ? currentDecisionInput() : {}; const x = o.apply(this, arguments);
         const S2 = st(); if (S2 && !was && S2.committed) { const last = S2.history && S2.history[S2.history.length - 1];
-          record('commit', Object.assign({}, d, last ? { overdraft: last.overdraft || 0, netProfit: last.netProfit } : {})); } return x; }; window.commitDecisions.__ml = true;
+          record('commit', Object.assign({}, d, last ? { overdraft: last.overdraft || 0, netProfit: last.netProfit } : {})); } return x; };
+      window.commitDecisions.__exam = o.__exam; window.commitDecisions.__ml = true;   // giữ cờ của js/bn-exam.js để không bọc chồng
     }
     if (typeof window.askLumina === 'function' && !window.askLumina.__ml) {
       const o = window.askLumina; window.askLumina = function (topic) { const S = st(), before = S && S.aiAskedTotal; const x = o.apply(this, arguments);

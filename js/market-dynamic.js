@@ -64,7 +64,8 @@
   const graded = s => !!(s && s.profile && String(s.profile.classId || '').trim());
   const canToggle = s => !urlOff && !(graded(s) && s.history && s.history.length > 0);
   function setEnabled(s, on) { if (!s || !canToggle(s)) return false; s.marketMode = on ? 'on' : 'off'; if (typeof save === 'function') save(); return true; }
-  // Đối thủ phản ứng theo thành phố + theo phong độ của đội (engine gọi qua window.BizonRivalAdjust)
+  // Gợi ý đối thủ phản ứng theo thành phố + phong độ của đội – CHỈ để hiển thị ở bảng thị trường;
+  // simulateRound (js/engine.js) không gọi window.BizonRivalAdjust nên không đổi kết quả vòng.
   function rivalPlan(s, style, price, mkt) {
     if (!s || s.finished || !enabled(s)) return null;
     const m = ensure(s), c = m.cities[cityRound(s) - 1];

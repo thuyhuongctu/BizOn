@@ -12,9 +12,10 @@ function currentLang() {
   try { return localStorage.getItem('bizon-lang') || 'vi'; } catch (e) { return 'vi'; }
 }
 function T(vi, en) { return currentLang() === 'en' ? en : vi; }
-const money = m => (m >= 1000 || m <= -1000)
-  ? (m / 1000).toLocaleString('vi-VN', { maximumFractionDigits: 2 }) + ' tỷ₫'
-  : Math.round(m).toLocaleString('vi-VN') + 'tr₫';
+// Bản EN dùng đơn vị m₫ / bn₫ và dấu phân cách kiểu Anh – khớp các chuỗi EN của engine (vd «-60m₫»).
+const money = m => currentLang() === 'en'
+  ? ((m >= 1000 || m <= -1000) ? (m / 1000).toLocaleString('en-US', { maximumFractionDigits: 2 }) + ' bn₫' : Math.round(m).toLocaleString('en-US') + 'm₫')
+  : ((m >= 1000 || m <= -1000) ? (m / 1000).toLocaleString('vi-VN', { maximumFractionDigits: 2 }) + ' tỷ₫' : Math.round(m).toLocaleString('vi-VN') + 'tr₫');
 // Dùng khi chèn dữ liệu người dùng tự đặt (ví dụ tên đội) thẳng vào template
 // HTML – khác với pushUserMsg()/EN map vốn chỉ xử lý chữ do BizOn viết sẵn.
 // Không dùng cho advice.text của pushLumina(): chuỗi đó có <b>/<i> cố ý.
@@ -40,7 +41,21 @@ function applyStateDefaults(s) {
   s.conquest ??= []; s.aiHistory ??= []; s.teamMembers ??= null;
   s.difficulty ??= 'normal'; s.autoDiff ??= 1.0;
   s.caseId ??= 'A'; s.caseDrawn ??= false;
+  // Bản tính điểm (có Mã lớp) luôn ở mức Thường – kể cả save cũ đã lỡ chọn mức khác (engine cũng khoá, xem difficultyMul).
+  if (((s.profile && s.profile.classId) || '').trim()) s.difficulty = 'normal';
+  relocalizeHistory(s);
   return s;
+}
+// Tên/mô tả biến cố lưu trong lịch sử theo ngôn ngữ lúc chơi vòng đó – dịch lại theo ngôn ngữ hiện tại
+// (tra theo id trong đúng danh sách của trường hợp), chỉ thay chữ, không đổi số liệu đã lưu.
+function relocalizeHistory(s) {
+  if (!s || !Array.isArray(s.history)) return;
+  const lists = [MARKET_EVENTS_LIST(), MARKET_EVENTS_LIST_B(), MARKET_EVENTS_LIST_C()];
+  s.history.forEach(h => {
+    const id = h && h.event && h.event.id; if (!id) return;
+    const e = lists.map(L => L.find(x => x && x.id === id)).find(Boolean); if (!e) return;
+    Object.assign(h.event, { name: e.name, desc: e.desc, tag: e.tag, impacts: e.impacts, luminaMsg: e.luminaMsg, cta: e.cta });
+  });
 }
 function load() {
   try {
@@ -54,9 +69,9 @@ function load() {
 // công bằng giữa các đội. Chơi thử: đổi lúc nào cũng được (còn tự thích ứng).
 function setDifficulty(level) {
   if (!S || !['easy', 'normal', 'hard'].includes(level)) return;
-  if (!isTrial() && S.history.length > 0) {
-    alert(T('Bản tính điểm đã bắt đầu – không thể đổi độ khó giữa chừng (giữ công bằng giữa các đội).',
-            'Graded session already started – difficulty cannot change midway (to keep teams comparable).'));
+  if (!isTrial()) {
+    alert(T('Bản tính điểm (có Mã lớp) luôn ở mức Thường để các đội cùng lớp công bằng.',
+            'Graded sessions (with a Class ID) always use Normal difficulty so classmates stay comparable.'));
     syncDifficultyUI();
     return;
   }
@@ -80,8 +95,8 @@ function syncDifficultyUI() {
     note.textContent = isTrial()
       ? T('Chơi thử: độ khó còn tự điều chỉnh theo phong độ của bạn.',
           'Trial: difficulty also auto-adjusts to your performance.')
-      : T('Bản tính điểm: mức cố định cả ván để các đội cùng lớp công bằng.',
-          'Graded: fixed for the whole game so classmates stay comparable.');
+      : T('Bản tính điểm: cố định mức Thường cả ván để các đội cùng lớp công bằng.',
+          'Graded: fixed at Normal for the whole game so classmates stay comparable.');
   }
 }
 
@@ -127,7 +142,7 @@ function renderRolePicker() {
 function applyGameStaticText() {
   const setPh = (id, vi, en) => { const el = $(id); if (el) el.placeholder = T(vi, en); };
   setPh('login-email', 'sinhvien@truong.edu.vn', 'student@university.edu');
-  setPh('login-team', 'VD: Rồng Xanh Corp', 'e.g. Blue Dragon Corp');
+  setPh('login-team', 'VD: Rồng Xanh Corp', 'e.g. Green Dragon Corp');
   setPh('login-class', 'VD: QTKD-2026-A', 'e.g. BUS-2026-A');
   setPh('chat-input', 'Trò chuyện với Lumina...', 'Chat with Lumina...');
   const term = $('in-term');
@@ -136,7 +151,18 @@ function applyGameStaticText() {
     term.options[1].textContent = T('60 ngày – cầu +4%, chi phí +2%', '60 days – demand +4%, cost +2%');
     term.options[2].textContent = T('90 ngày – cầu +8%, chi phí +5%', '90 days – demand +8%, cost +5%');
   }
+  // Chữ tĩnh trong game.html không có trong từ điển dịch chung của site-ui.js: ghi bản EN ở data-bn-en.
+  document.querySelectorAll('[data-bn-en]').forEach(el => {
+    if (el.dataset.bnVi == null) el.dataset.bnVi = el.innerHTML;
+    const want = T(el.dataset.bnVi, el.dataset.bnEn);
+    if (el.innerHTML !== want) el.innerHTML = want;
+  });
 }
+// Đổi ngôn ngữ giữa ván: dịch lại chữ tĩnh và tên biến cố đã lưu trong lịch sử, rồi vẽ lại.
+window.addEventListener('bizon:langchange', () => {
+  applyGameStaticText();
+  if (typeof S !== 'undefined' && S) { relocalizeHistory(S); try { renderAll(); } catch (e) {} }
+});
 
 window.addEventListener('DOMContentLoaded', () => {
   renderRolePicker();
@@ -245,7 +271,7 @@ function AI_OPPONENTS_LIST() { return [
     motto: T('Tăng trưởng thần tốc, lấy số lượng đè lợi nhuận', 'Blitz growth – volume over margin'),
     weakness: T('Biên lợi nhuận cực mỏng, đốt vốn nhanh – dễ hụt hơi trong cuộc chiến dài hơi.', 'Razor-thin margins and fast cash burn – runs out of steam in a long fight.'),
     style: T('Giá rẻ tốc chiến', 'Budget blitz'),
-    play: T('Giá ~130k · marketing ~85tr mỗi vòng (dao động ±12%)', 'Price ~130k · marketing ~85m/round (±12% variance)'),
+    play: T('Giá ~130k · marketing ~85tr mỗi vòng (dao động −10%…+15%)', 'Price ~130k · marketing ~85m/round (−10%…+15% variance)'),
     counter: T('Đừng đua giá tận đáy – giữ biên lợi nhuận, xây thương hiệu để giữ khách trung thành.', "Don't race them to the bottom on price – protect your margin and build brand loyalty instead.") },
   { name: 'Mekong Ventures', icon: '🐘', img: 'assets/character/rivals/mekong.webp', accent: '#00a0c8',
     motto: T('Chậm mà chắc, bám rễ niềm tin địa phương', 'Slow and steady, rooted in local trust'),
@@ -264,7 +290,7 @@ const AI_OPPONENTS = AI_OPPONENTS_LIST();
 
 async function doLoginDemo() {
   $('login-email').value = 'demo@bizon.vn';
-  $('login-team').value = T('Đội Demo Rồng Xanh', 'Blue Dragon Demo Team');
+  $('login-team').value = T('Đội Demo Rồng Xanh', 'Green Dragon Demo Team');
   $('login-class').value = 'DEMO-2026';
   pickedRole = 'CEO';
   window.__bizonAuthedJoin = true; // sân chơi demo dùng chung, không cần qua cổng xác thực vai trò
@@ -418,7 +444,7 @@ async function doLogin() {
   }
   S = restored || newGameState({ email, teamName: team, role: pickedRole, classId });
   // Ván mới: lấy mức khó ưu tiên đã lưu (ván khôi phục giữ mức đã lưu trong save).
-  if (!restored) { try { S.difficulty = localStorage.getItem('bizon-difficulty') || 'normal'; } catch (e) {} }
+  if (!restored) { try { S.difficulty = classId ? 'normal' : (localStorage.getItem('bizon-difficulty') || 'normal'); } catch (e) {} }
   // Ván mới: bốc thăm Trường hợp A/B, xác định (không đổi khi refresh) theo
   // classId:teamName. Đội đã có tiến trình lưu (restored) không bị đụng vào —
   // giữ nguyên caseId cũ, không bốc lại.
@@ -530,7 +556,7 @@ function MANUAL() { return {
       <div><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p><p class="text-[11px] font-semibold text-amber-700 mt-1">${tip}</p></div></div>`).join('')}
     <div class="clay-card p-4 mb-2 border-2 border-clay-gold/50">
       <p class="font-bold text-sm text-deep-teal">${T('📐 Ví dụ một vòng mẫu (minh họa)', '📐 A worked example round (illustrative)')}</p>
-      <p class="text-xs text-deep-teal/70 mt-1 leading-relaxed">${T('Đặt <b>giá 150.000₫</b> (bằng giá tham chiếu), <b>marketing 60 triệu₫</b>, <b>sản lượng 4.000 bộ</b>. Mỗi bộ lời ~<b>90.000₫</b> trước chi phí cố định (giá 150k − chi phí biến đổi ~60k). Cả thị trường cầu ~<b>12.000 bộ/vòng</b> chia cho bạn và 3 đối thủ ảo – nếu sức hút ngang mức trung bình, thị phần ~<b>25%</b> (~3.000 bộ), doanh thu ~<b>450 triệu₫</b>, gộp lãi ~<b>270 triệu₫</b> trước chi phí cố định + marketing.', 'Set <b>price at 150,000₫</b> (equal to the reference price), <b>marketing at 60 million₫</b>, <b>production at 4,000 units</b>. Each unit earns ~<b>90,000₫</b> before fixed costs (price 150k − variable cost ~60k). Total market demand is ~<b>12,000 units/round</b>, split between you and 3 virtual rivals – at average attractiveness, that\'s ~<b>25% share</b> (~3,000 units), revenue ~<b>450 million₫</b>, gross profit ~<b>270 million₫</b> before fixed costs + marketing.')}</p>
+      <p class="text-xs text-deep-teal/70 mt-1 leading-relaxed">${T('Đặt <b>giá 150.000₫</b> (bằng giá tham chiếu), <b>marketing 60 triệu₫</b>, <b>sản lượng 3.000 bộ</b> (45 nhân viên làm tối đa 3.150 bộ). Mỗi bộ lời ~<b>90.000₫</b> trước chi phí cố định (giá 150k − chi phí biến đổi ~60k). Cả thị trường cầu ~<b>12.000 bộ/vòng</b> chia cho bạn và 3 đối thủ ảo – nếu sức hút ngang mức trung bình, thị phần ~<b>25%</b> (~3.000 bộ), doanh thu ~<b>450 triệu₫</b>, gộp lãi ~<b>270 triệu₫</b> trước chi phí cố định + marketing.', 'Set <b>price at 150,000₫</b> (equal to the reference price), <b>marketing at 60 million₫</b>, <b>production at 3,000 units</b> (45 workers make up to 3,150). Each unit earns ~<b>90,000₫</b> before fixed costs (price 150k − variable cost ~60k). Total market demand is ~<b>12,000 units/round</b>, split between you and 3 virtual rivals – at average attractiveness, that\'s ~<b>25% share</b> (~3,000 units), revenue ~<b>450 million₫</b>, gross profit ~<b>270 million₫</b> before fixed costs + marketing.')}</p>
       <p class="text-xs font-semibold text-emerald-700 mt-1.5">${T('🚩 Muốn cắm cờ: cần thị phần cao nhất trong 4 đội – thử hạ giá về ~140k <i>hoặc</i> tăng marketing, nhưng luôn giữ lãi dương và ≥15% tiền dự phòng.', '🚩 To claim the flag: you need the highest share among the 4 teams – try dropping price to ~140k <i>or</i> raising marketing, but always keep profit positive and ≥15% cash in reserve.')}</p>
     </div>` },
   lumina: { icon: '🤖', name: T('Cố vấn Lumina', 'Lumina Advisor'), html: `
@@ -1100,7 +1126,7 @@ function renderMarket() {
     priceHigh
       ? { tag: T('KHÁCH NHẠY GIÁ', 'PRICE-SENSITIVE CUSTOMER'), text: T(`Giá ${lastD.price.toLocaleString('vi-VN')}k hơi chát so với túi tiền... đang ngó sang đối thủ. 📉`, `${lastD.price.toLocaleString('en-US')}k is a bit steep for my wallet... eyeing a rival. 📉`), s: 'negative' }
       : { tag: T('KHÁCH NHẠY GIÁ', 'PRICE-SENSITIVE CUSTOMER'), text: T('Mức giá hiện tại khá hợp lý so với chất lượng nhận được!', "The current price feels fair for the quality I'm getting!"), s: 'positive' },
-    ev.id === 'EV_PRICEWAR'
+    evBase(ev.id) === 'EV_PRICEWAR'
       ? { tag: T('GIỚI PHÂN TÍCH', 'ANALYSTS'), text: T('Đối thủ vừa giảm giá sâu. Thị trường chờ phản ứng của BizOn trong 48 giờ tới.', "A rival just made a deep price cut. The market is waiting for BizOn's response in the next 48 hours."), s: 'alert' }
       : { tag: T('GIỚI PHÂN TÍCH', 'ANALYSTS'), text: T(`R&D tích lũy ${Math.round(S.rdCumulative)}tr₫ – nền tảng đổi mới của BizOn đang được chú ý.`, `Cumulative R&D of ${Math.round(S.rdCumulative)}m₫ – BizOn's innovation base is getting noticed.`), s: 'neutral' },
   ];
@@ -1119,7 +1145,7 @@ function renderMarket() {
       <img src="assets/character/lumina-vest.webp" alt="Cố vấn Hương" class="w-14 h-14 rounded-2xl object-cover shadow-clay shrink-0" style="object-position:50% 10%">
       <div>
         <p class="font-display font-bold text-deep-teal text-sm">${T('Cố vấn Hương', 'Advisor Hương')} <span class="text-[9px] bg-primary-container text-white font-extrabold px-1.5 py-0.5 rounded ml-1">LIVE</span></p>
-        <p class="text-xs text-deep-teal/80 italic mt-1">"${ev.tone === 'warn' && ev.id === 'EV_PRICEWAR'
+        <p class="text-xs text-deep-teal/80 italic mt-1">"${ev.tone === 'warn' && evBase(ev.id) === 'EV_PRICEWAR'
           ? T('Nghe kỹ này: cú giảm giá của đối thủ là một cái bẫy – họ đang đốt vốn. Giữ vững vị thế và tập trung vào phân khúc Premium. Chất lượng sẽ bền hơn sự tuyệt vọng của họ.',
               "Listen closely: that rival price cut is a trap – they're burning capital. Hold your ground and focus on the Premium segment. Quality will outlast their desperation.")
           : ev.tone === 'bad'
@@ -1137,7 +1163,7 @@ function renderMarket() {
           <div class="flex flex-col items-center gap-2 h-full justify-end">
             <span class="text-[10px] font-extrabold ${t.me ? 'text-primary' : 'text-deep-teal/50'}" title="${T('% thị phần', '% market share')}">${t.share.toFixed(0)}%</span>
             <div class="clay-bar-v w-10" style="height:${Math.max(12, t.share / maxShare * 78)}%; background:${t.me ? 'linear-gradient(to top,#004d66,#00c4ff)' : '#dfe3e7'}"></div>
-            <span class="text-[9px] font-bold ${t.me ? 'text-primary' : 'text-deep-teal/50'}">${t.name}</span>
+            <span class="text-[9px] font-bold ${t.me ? 'text-primary' : 'text-deep-teal/50'}">${escapeHtml(t.name)}</span>
           </div>`).join('')}
       </div>
     </div>
@@ -1287,6 +1313,18 @@ function renderHeader() {
  * về lớp và không cấp giấy chứng nhận. */
 function isTrial() { return !((S.profile && S.profile.classId) || '').trim(); }
 
+/* Thứ hạng chung cuộc dùng chung cho Báo cáo mùa, Giấy chứng nhận và màn tổng kết 3D:
+ * số cờ chinh phục trước, hoà cờ thì lợi nhuận tích lũy, hoà nữa thì đội người chơi đứng trên
+ * (đúng luật isFlagChampion() trong js/engine.js). Quán quân cần có ít nhất 1 cờ. */
+function seasonRanking() {
+  const cq = S.conquest || [], profit = S.history.reduce((a, r) => a + r.netProfit, 0);
+  const rows = [{ name: S.profile.teamName, me: true, flags: cq.filter(c => c.win).length, profit },
+    ...S.competitors.map(c => ({ name: c.name, style: c.style, flags: cq.filter(q => !q.win && q.winner === c.name).length, profit: c.profit || 0 }))];
+  rows.sort((a, b) => b.flags - a.flags || b.profit - a.profit || (b.me ? 1 : 0) - (a.me ? 1 : 0));
+  const myRank = rows.findIndex(r => r.me) + 1;
+  return { rows, myRank, champion: myRank === 1 && rows[0].flags > 0 };
+}
+
 /* Phiên "thi thật" = có Mã lớp thật (không tính 'DEMO-2026' mà doLoginDemo()
  * tự gán cho Đội Demo chơi thử) – dùng để chặn Reset, vì kết quả mỗi vòng
  * đã gửi về giảng viên và việc reset cục bộ không xóa được dữ liệu đó. */
@@ -1351,15 +1389,16 @@ function currentDecisionInput() {
 }
 
 function syncDecisionLabels() {
-  $('v-price').textContent = (+$('in-price').value).toLocaleString('vi-VN') + '.000₫';
-  $('v-mkt').textContent = $('in-mkt').value + 'tr₫';
-  $('v-prod').textContent = (+$('in-prod').value).toLocaleString('vi-VN') + T(' sp', ' units');
-  $('v-rd').textContent = $('in-rd').value + 'tr₫';
+  const loc = T('vi-VN', 'en-US'), mil = v => v + T('tr₫', 'm₫');
+  $('v-price').textContent = (+$('in-price').value * 1000).toLocaleString(loc) + '₫';
+  $('v-mkt').textContent = mil($('in-mkt').value);
+  $('v-prod').textContent = (+$('in-prod').value).toLocaleString(loc) + T(' sp', ' units');
+  $('v-rd').textContent = mil($('in-rd').value);
   $('v-workers').textContent = $('in-workers').value + T(' người', ' people');
-  $('v-train').textContent = $('in-train').value + 'tr₫';
+  $('v-train').textContent = mil($('in-train').value);
   // Dự báo dòng tiền CVP trực tiếp
   if (!S) return;
-  const fc = forecastCash(S, currentDecisionInput());
+  const fc = liveForecast(S, currentDecisionInput());
   $('fc-in').textContent = '+ ' + money(fc.inflow);
   $('fc-out').textContent = '− ' + money(fc.outflow);
   $('fc-net').textContent = (fc.net >= 0 ? '+ ' : '− ') + money(Math.abs(fc.net));
@@ -1378,39 +1417,58 @@ function syncDecisionLabels() {
   }
 }
 
+/* Dự báo sống cho panel CVP + ô «bạn có cắm được cờ?»: dùng mô hình sức hút của simulateRound
+ * (LuminaWhatIf.forecast trong js/lumina-whatif.js – thị phần đổi theo giá/marketing, đủ chi phí, khiên,
+ * vật phẩm, R&D). forecastCash() cũ giữ thị phần vòng trước nên lệch ~100tr₫ khi đổi giá; chỉ còn làm
+ * dự phòng khi plugin chưa nạp, và vẫn dùng cho sản lượng hoà vốn/giới hạn nhân sự. */
+function liveForecast(s, d) {
+  const fc = forecastCash(s, d);
+  const LW = window.LuminaWhatIf;
+  if (!LW || typeof LW.forecast !== 'function') return fc;
+  try {
+    const f = LW.forecast(s, d);
+    return Object.assign(fc, { inflow: Math.round(f.revenue), outflow: Math.round(f.cost), net: Math.round(f.profit), estSold: f.sold, share: f.share, rivalMax: f.rivalMax });
+  } catch (e) { return fc; }
+}
+
 /* Dự báo thị phần sống – trả lời thẳng câu hỏi "tôi có cắm được cờ không?" */
 function renderMarketForecast() {
   const el = $('mf-share');
   if (!el || !S) return;
   const d = currentDecisionInput();
-  const ev = currentEvent(S) || MARKET_EVENTS_LIST()[1];
-  const last = S.history[S.history.length - 1];
-  const lastShare = last ? last.share : 25;
-  const elasticity = PRICE_ELASTICITY * (ev.elasticityMul || 1);
-  const attr = (p, m) => Math.pow(REF_PRICE / p, elasticity) * (1 + Math.sqrt(m * (ev.mktBoost || 1)) / 18) * S.brand;
-  const lastD = last && last.decisions ? last.decisions : { price: REF_PRICE, marketing: 50 };
-  const compAttr = attr(lastD.price, lastD.marketing) * (100 - lastShare) / Math.max(1, lastShare);
-  const share = 100 * attr(d.price, d.marketing) / (attr(d.price, d.marketing) + compAttr);
-  const rivalAvg = (100 - share) / 3;
-  const winning = share > rivalAvg + 1;
+  const lf = liveForecast(S, d);
+  let share = lf.share, rivalMax = lf.rivalMax;
+  if (share == null) {   // dự phòng khi js/lumina-whatif.js chưa nạp
+    const ev = currentEvent(S) || MARKET_EVENTS_LIST()[1];
+    const last = S.history[S.history.length - 1];
+    const lastShare = last ? last.share : 25;
+    const elasticity = PRICE_ELASTICITY * (ev.elasticityMul || 1);
+    const attr = (p, m) => Math.pow(REF_PRICE / p, elasticity) * (1 + Math.sqrt(m * (ev.mktBoost || 1)) / 18) * S.brand;
+    const lastD = last && last.decisions ? last.decisions : { price: REF_PRICE, marketing: 50 };
+    const compAttr = attr(lastD.price, lastD.marketing) * (100 - lastShare) / Math.max(1, lastShare);
+    share = 100 * attr(d.price, d.marketing) / (attr(d.price, d.marketing) + compAttr);
+    rivalMax = (100 - share) / 3;
+  }
+  // Cờ chỉ cắm khi thị phần CAO NHẤT trong 4 đội (không phải chỉ hơn mức trung bình đối thủ) và có lãi.
+  const winning = share >= rivalMax;
   el.textContent = share.toFixed(1) + '%';
   el.classList.toggle('text-red-600', !winning);
   el.classList.toggle('text-primary', winning);
   const bar = $('mf-bar');
   if (bar) { bar.style.width = Math.min(100, Math.max(4, share)) + '%'; bar.classList.toggle('opacity-50', !winning); }
-  const fc = forecastCash(S, d);
+  const fc = lf;
   // Dự báo chỉ tính cho vòng này; lũy kế các vòng trước có thể vẫn âm, nên nói rõ để khỏi hiểu nhầm là đã thắng cả ván.
   const cum = S.history.reduce((a, h) => a + (h.netProfit || 0), 0);
   const cumNote = cum < 0
     ? T(` <i>Lưu ý: lũy kế các vòng trước vẫn âm (${money(cum)}) – cần thêm lãi để bù.</i>`, ` <i>Note: cumulative profit from earlier rounds is still negative (${money(cum)}) – you need more profit to recover.</i>`)
     : '';
   $('mf-verdict').innerHTML = winning
-    ? (fc.net >= 0 ? T(`✅ <b>Vòng này đang thắng!</b> Ước tính bạn vượt mức trung bình đối thủ (~${rivalAvg.toFixed(0)}%/đội) và có lãi – giữ vững là cắm được cờ 🚩.${cumNote}`,
-                       `✅ <b>Winning this round!</b> Estimated above the rival average (~${rivalAvg.toFixed(0)}%/team) and profitable – hold this and you'll plant the flag 🚩.${cumNote}`)
-                   : T(`🟡 Thị phần đủ thắng (~ đối thủ ${rivalAvg.toFixed(0)}%/đội) nhưng <b>đang lỗ</b> – tăng giá nhẹ hoặc bớt chi để có lãi, vì thắng vòng cần cả hai.`,
-                       `🟡 Share is enough to win (~rivals ${rivalAvg.toFixed(0)}%/team) but you're <b>losing money</b> – raise price slightly or cut spend to turn a profit, since winning the round needs both.`))
-    : T(`🔻 Chưa đủ – mỗi đối thủ đang giữ ~${rivalAvg.toFixed(0)}%. Gợi ý: <b>giảm giá gần 150k</b> hoặc <b>tăng marketing</b> để kéo khách (xem đề xuất của Mạnh Chi ở Cuộc họp đội).`,
-        `🔻 Not enough yet – each rival holds ~${rivalAvg.toFixed(0)}%. Tip: <b>lower price toward 150k</b> or <b>raise marketing</b> to win customers (see Mạnh Chi's suggestion in the Team Meeting).`);
+    ? (fc.net >= 0 ? T(`✅ <b>Vòng này đang thắng!</b> Ước tính bạn dẫn thị phần (đối thủ mạnh nhất ~${rivalMax.toFixed(0)}%) và có lãi – giữ vững là cắm được cờ 🚩.${cumNote}`,
+                       `✅ <b>Winning this round!</b> Estimated to lead market share (strongest rival ~${rivalMax.toFixed(0)}%) and profitable – hold this and you'll plant the flag 🚩.${cumNote}`)
+                   : T(`🟡 Thị phần đủ dẫn đầu (đối thủ mạnh nhất ~${rivalMax.toFixed(0)}%) nhưng <b>đang lỗ</b> – tăng giá nhẹ hoặc bớt chi để có lãi, vì thắng vòng cần cả hai.`,
+                       `🟡 Share is enough to lead (strongest rival ~${rivalMax.toFixed(0)}%) but you're <b>losing money</b> – raise price slightly or cut spend to turn a profit, since winning the round needs both.`))
+    : T(`🔻 Chưa đủ – đối thủ mạnh nhất đang giữ ~${rivalMax.toFixed(0)}%, cờ chỉ cắm khi bạn cao nhất. Gợi ý: <b>giảm giá</b> hoặc <b>tăng marketing</b> để kéo khách, nhưng giữ lãi dương (xem đề xuất của Mạnh Chi ở Cuộc họp đội).`,
+        `🔻 Not enough yet – the strongest rival holds ~${rivalMax.toFixed(0)}%, and a flag needs the top share. Tip: <b>lower price</b> or <b>raise marketing</b> to win customers while staying profitable (see Mạnh Chi's suggestion in the Team Meeting).`);
 }
 
 /* ===== CUỘC HỌP ĐỘI – 4 thành viên demo đề xuất theo vai, tất định theo seed + vòng ===== */
@@ -1424,8 +1482,8 @@ function teamSuggestions() {
   const share = last ? last.share : 25;
   const tight = S.quickRatio < 1 || S.balance < 120;
   const priceWar = false; // regex gốc trên tên tiếng Việt chưa từng khớp – giữ nguyên hành vi cũ
-  const energy = ev.id === 'EV_RECESSION';   // trước đây match theo tên "năng lượng" – đổi theo id để không phụ thuộc ngôn ngữ hiển thị
-  const boom = ev.id === 'EV_GOLDEN' || ev.id === 'EV_MILESTONE';
+  const energy = evBase(ev.id) === 'EV_RECESSION';   // trước đây match theo tên "năng lượng" – đổi theo id để không phụ thuộc ngôn ngữ hiển thị
+  const boom = evBase(ev.id) === 'EV_GOLDEN' || evBase(ev.id) === 'EV_MILESTONE';
 
   const cfoRd = tight ? 15 : (boom ? 60 : 35 + Math.round(meetingJitter(1) * 3) * 5);
   const cmoPrice = Math.max(100, Math.min(220, (priceWar ? 130 : 150) + (S.brand > 1.2 ? 15 : 0) - (share < 22 ? 10 : 0) + Math.round(meetingJitter(2) * 2) * 5));
@@ -1557,7 +1615,9 @@ function commitDecisions() {
   }
   let d = currentDecisionInput();
   let cashNeeded = d.marketing + d.rd + d.production * UNIT_COST / 1000 + d.workers * WAGE_PER_WORKER + d.workers * d.training;
-  if (d.funding !== 'loan' && cashNeeded > S.balance + 300) {
+  // Vốn tự có chỉ chi trong phạm vi ví – trước đây cho vượt ví 300tr₫ mà không tính lãi, khiến «Vay ngân hàng»
+  // (lãi 8.5% phần thấu chi) không bao giờ có lợi hơn.
+  if (d.funding !== 'loan' && cashNeeded > Math.max(0, S.balance)) {
     // Hết giờ thi, hệ thống tự Commit (js/bn-exam.js) nhưng thanh trượt hiện tại
     // vượt vốn tự có: không được phép kẹt vô hạn chờ sinh viên sửa tay (họ có
     // thể không còn ở màn hình). Tự chuyển sang "Vay ngân hàng" như lời khuyên
@@ -1625,8 +1685,8 @@ function showArena(r, done) {
   div.innerHTML = `
     <div class="w-full max-w-sm text-center py-6">
       <h3 class="font-display font-extrabold text-white text-xl">${T(`⚔️ ĐẤU TRƯỜNG ${stop ? stop.name.toUpperCase() : 'VÒNG ' + r.round}`, `⚔️ ARENA ${stop ? stop.name.toUpperCase() : 'ROUND ' + r.round}`)}</h3>
-      <p class="text-white/60 text-xs">${r.event.icon} ${r.event.name} ${T('– 12.000 khách hàng chờ trên khán đài', '– 12,000 customers waiting in the stands')}</p>
-      ${stop ? `<p class="text-[11px] font-extrabold mb-2" style="color:rgba(253,161,39,.9)">📍 ${stop.zone}</p>` : '<p class="mb-2"></p>'}
+      <p class="text-white/60 text-xs">${r.event.icon} ${r.event.name} ${(() => { const n = Math.round((r.demandUnits || 0) * 100 / Math.max(0.1, r.share || 25) / 100) * 100 || 12000; return T(`– ${n.toLocaleString('vi-VN')} khách hàng chờ trên khán đài`, `– ${n.toLocaleString('en-US')} customers waiting in the stands`); })()}</p>
+      ${stop ? `<p class="text-[11px] font-extrabold mb-2" style="color:rgba(253,161,39,.9)">📍 ${T(stop.zone, stop.zoneEn)}</p>` : '<p class="mb-2"></p>'}
       <div class="relative mx-auto" style="width:min(96vw,376px); height:min(54vh,392px)">
         <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" style="height:100%; aspect-ratio:768/1376">
           <div class="w-full h-full" style="-webkit-mask-image:linear-gradient(to bottom, transparent 0, #000 3%, #000 97%, transparent 100%); mask-image:linear-gradient(to bottom, transparent 0, #000 3%, #000 97%, transparent 100%)">
@@ -1641,7 +1701,7 @@ function showArena(r, done) {
             ${f.img ? `<img src="${f.img}" class="w-full h-full object-cover object-top">` : `<span class="text-3xl">${f.icon}</span>`}
           </div>
           <div class="mx-auto w-10 h-1.5 rounded-full bg-black/50 blur-[2px] mt-0.5"></div>
-          <p class="text-[9px] font-extrabold ${f.me ? 'text-clay-gold' : 'text-white/80'} leading-tight mt-1 truncate">${f.me ? '🏺 ' : ''}${f.name}</p>
+          <p class="text-[9px] font-extrabold ${f.me ? 'text-clay-gold' : 'text-white/80'} leading-tight mt-1 truncate">${f.me ? '🏺 ' : ''}${escapeHtml(f.name)}</p>
           <p class="arena-num font-display font-extrabold ${f.me ? 'text-clay-gold' : 'text-white/70'} text-sm" data-share="${f.share.toFixed(1)}">0%</p>
           <div class="h-1.5 rounded-full bg-white/10 overflow-hidden mx-2"><div class="arena-bar h-full rounded-full ${f.me ? 'bg-gradient-to-r from-clay-orange to-clay-gold' : 'bg-white/40'}" style="width:0%; transition:width 1.1s cubic-bezier(.2,.8,.3,1) ${i * 0.45 + 0.3}s" data-w="${Math.max(6, f.share / max * 100)}"></div></div>
         </div>`).join('')}
@@ -1701,7 +1761,7 @@ function explainRound(r) {
   if (prev && prev.share > 35 && balRival) causes.push(T(`${balRival.name} bám đuổi bằng cách giảm giá và tăng marketing vì đang thua thị phần rõ rệt`, `${balRival.name} is catching up by cutting price and raising marketing after falling clearly behind on share`));
   if (prev && prev.brandLoyalty > 65 && premRival) causes.push(T(`${premRival.name} tăng marketing để bảo vệ phân khúc cao cấp trước thương hiệu đang mạnh lên của đội bạn`, `${premRival.name} raised marketing to defend its premium segment against your team's growing brand`));
   if (r.sold < d.production * 0.85) causes.push(T(`sản xuất ${(d.production || 0).toLocaleString('vi-VN')} sp nhưng chỉ bán ${r.sold.toLocaleString('vi-VN')} – tồn kho chôn vốn`, `produced ${(d.production || 0).toLocaleString('en-US')} units but only sold ${r.sold.toLocaleString('en-US')} – excess inventory ties up cash`));
-  if ((d.marketing || 0) < 40) causes.push(T('marketing dưới mặt bằng đối thủ (55–85tr) nên độ phủ yếu', "marketing is below the rivals' range (55-85m), so reach is weak"));
+  if ((d.marketing || 0) < 40) causes.push(T('marketing dưới mặt bằng đối thủ (~55–110tr) nên độ phủ yếu', "marketing is below the rivals' range (~55–110m), so reach is weak"));
   const head = dShare >= 1 ? T(`Thị phần tăng ${dShare.toFixed(1)} điểm`, `Market share rose ${dShare.toFixed(1)} points`) : dShare <= -1 ? T(`Thị phần giảm ${Math.abs(dShare).toFixed(1)} điểm`, `Market share dropped ${Math.abs(dShare).toFixed(1)} points`) : T('Thị phần đi ngang', 'Market share held steady');
   const tail = causes.length ? T(' – nguyên nhân chính: ', ' – main cause: ') + causes.slice(0, 2).join('; ')
     : r.netProfit > 0 ? T(' – chiến lược cân bằng, không có điểm yếu rõ rệt.', ' – a balanced strategy, no clear weak point.')
@@ -1725,7 +1785,7 @@ function showRoundResult(r) {
     <div class="clay-card max-w-sm w-full p-6 text-center ${r.event.tone === 'bad' && !r.shielded ? 'animate-shake' : ''}">
       <p class="text-4xl mb-2">${ok ? '🎉' : '😰'}</p>
       <h3 class="font-display font-extrabold text-deep-teal text-lg">${T(`Kết quả vòng ${r.round}`, `Round ${r.round} results`)}</h3>
-      <p class="text-xs text-deep-teal/60 mb-4">${r.event.icon} ${r.event.name}${r.shielded ? T(' (đã chặn bởi 🛡️)', ' (blocked by 🛡️)') : ''}</p>
+      <p class="text-xs text-deep-teal/60 mb-4">${r.event.icon} ${r.event.name}${r.shielded ? T(' (🛡️ khiên đã giảm một nửa tác động)', ' (🛡️ shield halved the impact)') : ''}</p>
       <div class="grid grid-cols-2 gap-2 text-left text-sm">
         <div class="bg-surface-bright rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">${T('Doanh thu', 'Revenue')}</p><p class="font-display font-bold text-deep-teal">${money(r.revenue)}</p></div>
         <div class="bg-surface-bright rounded-2xl p-3"><p class="text-[10px] uppercase font-bold text-deep-teal/50">${T('Lợi nhuận ròng', 'Net profit')}</p><p class="font-display font-bold ${ok ? 'text-emerald-600' : 'text-orange-600'}">${money(r.netProfit)}</p></div>
@@ -1771,12 +1831,12 @@ function showRoundResult(r) {
  * nay đều dùng chung ảnh bản đồ đất nặn 3D arena-vietnam-map-v2.webp, ghim
  * theo fx,fy: toạ độ tỉ lệ 0–1 trên ảnh đó. */
 const CONQUEST_STOPS = [
-  { name: 'Cần Thơ',          x: 108, y: 449, fx: .43, fy: .830, zone: 'Đồng bằng sông Cửu Long' },
-  { name: 'TP. Hồ Chí Minh',  x: 150, y: 406, fx: .56, fy: .735, zone: 'Đông Nam Bộ' },
-  { name: 'Khánh Hòa',        x: 208, y: 302, fx: .77, fy: .615, zone: 'Duyên hải Nam Trung Bộ' },
-  { name: 'Đà Nẵng',          x: 166, y: 220, fx: .68, fy: .460, zone: 'Duyên hải miền Trung' },
-  { name: 'Thanh Hóa',        x: 122, y: 140, fx: .34, fy: .255, zone: 'Bắc Trung Bộ' },
-  { name: 'Hà Nội',           x: 110, y:  92, fx: .32, fy: .145, zone: 'Đồng bằng sông Hồng' },
+  { name: 'Cần Thơ',          x: 108, y: 449, fx: .43, fy: .830, zone: 'Đồng bằng sông Cửu Long', zoneEn: 'Mekong Delta' },
+  { name: 'TP. Hồ Chí Minh',  x: 150, y: 406, fx: .56, fy: .735, zone: 'Đông Nam Bộ', zoneEn: 'Southeast region' },
+  { name: 'Khánh Hòa',        x: 208, y: 302, fx: .77, fy: .615, zone: 'Duyên hải Nam Trung Bộ', zoneEn: 'South Central Coast' },
+  { name: 'Đà Nẵng',          x: 166, y: 220, fx: .68, fy: .460, zone: 'Duyên hải miền Trung', zoneEn: 'Central Coast' },
+  { name: 'Thanh Hóa',        x: 122, y: 140, fx: .34, fy: .255, zone: 'Bắc Trung Bộ', zoneEn: 'North Central Coast' },
+  { name: 'Hà Nội',           x: 110, y:  92, fx: .32, fy: .145, zone: 'Đồng bằng sông Hồng', zoneEn: 'Red River Delta' },
 ];
 
 function recordConquest(report) {
@@ -2057,7 +2117,7 @@ function renderRoleDeepdive() {
           <p class="font-display font-extrabold ${S.brandLoyalty < 60 ? 'text-red-600' : 'text-primary'} text-xl">${S.brandLoyalty}%</p>
           ${loyaltyTrend ? `<div class="flex items-end gap-1 h-7 mt-1">${loyaltyTrend}</div>` : `<p class="text-[10px] text-deep-teal/50">Social Sentiment: <b class="text-emerald-600">Positive</b></p>${bar(S.brandLoyalty, false)}`}</div>
       </div>
-      ${currentEvent(S).id === 'EV_PRICEWAR' && !S.finished ? `
+      ${evBase(currentEvent(S).id) === 'EV_PRICEWAR' && !S.finished ? `
         <div class="bg-surface-bright rounded-2xl p-3 mb-2">
           <p class="text-xs font-bold text-red-600 mb-1">${T('📰 TIN NÓNG · Price War', '📰 BREAKING · Price War')}</p>
           <p class="text-[11px] text-deep-teal/70">${T('Đối thủ giảm giá 15% tại kênh Modern Trade. Đừng đua giảm giá – chọn 1 trong 2 chiến thuật:', "A rival cut price 15% in the Modern Trade channel. Don't race them down – pick one of two tactics:")}</p>
@@ -2464,7 +2524,7 @@ function renderRivalCostReport(body) {
         return roiRows.map((x, i) => `
         <div class="flex items-center gap-2 py-1.5">
           <span class="w-5 text-center text-xs">${['🥇', '🥈', '🥉', '4️⃣'][i]}</span>
-          <span class="w-24 shrink-0 text-[11px] font-bold ${x.me ? 'text-primary' : 'text-deep-teal/70'} truncate">${x.name}</span>
+          <span class="w-24 shrink-0 text-[11px] font-bold ${x.me ? 'text-primary' : 'text-deep-teal/70'} truncate">${escapeHtml(x.name)}</span>
           <div class="flex-1 h-3 rounded-full bg-surface-bright overflow-hidden relative">
             <div class="h-full rounded-full ${x.me ? 'bg-gradient-to-r from-clay-orange to-clay-gold' : ''}" style="width:${Math.max(4, x.roi / maxRoi * 100)}%${x.me ? '' : x.roi >= 3 ? ';background:rgba(16,185,129,.55)' : ';background:rgba(0,102,135,.35)'}"></div>
             <div class="absolute top-0 bottom-0 w-0.5 bg-deep-teal/30" style="left:${Math.min(97, 3 / maxRoi * 100)}%"></div>
@@ -2492,7 +2552,7 @@ function renderRivalCostReport(body) {
       ${[{ name: T('🏺 ', '🏺 ') + S.profile.teamName, cps: myCps, me: true }, ...rivalCps].sort((a, b) => a.cps - b.cps).map((x, i) => `
       <div class="flex items-center gap-2 text-xs py-1.5 border-b border-surface-bright last:border-0">
         <span class="w-5 text-center">${['🥇', '🥈', '🥉', '4️⃣'][i]}</span>
-        <span class="flex-1 font-bold ${x.me ? 'text-primary' : 'text-deep-teal/70'}">${x.name}</span>
+        <span class="flex-1 font-bold ${x.me ? 'text-primary' : 'text-deep-teal/70'}">${escapeHtml(x.name)}</span>
         <span class="font-extrabold ${x.me ? 'text-primary' : 'text-deep-teal'}">${x.cps}tr / 1%</span>
       </div>`).join('')}
     </div>
@@ -2532,17 +2592,22 @@ function renderSeasonReport(body) {
     ...Object.values(agg).map(a => ({ name: a.name, img: RIVAL_IMGS[a.style],
       share: a.shareLast, growth: Math.round((a.shareLast - (a.shareFirst || 25)) * 10) / 10,
       profit: Math.round(a.profit), roi: Math.round(1000 * a.profit / Math.max(1, a.cost)) / 10 })),
-  ].sort((a, b) => b.share - a.share);
-  const myRank = ranking.findIndex(x => x.me) + 1;
-  const champion = ranking[0].me;
+  ];
+  // Thứ hạng chung cuộc: số cờ trước, hoà cờ xét lợi nhuận tích lũy – cùng luật với màn tổng kết 3D,
+  // danh hiệu «Vô địch BizOn» (isFlagChampion) và Giấy chứng nhận (xem seasonRanking()).
+  const SR = seasonRanking();
+  SR.rows.forEach((r, i) => { const x = ranking.find(y => r.me ? y.me : y.name === r.name); if (x) { x.flags = r.flags; x.order = i; } });
+  ranking.sort((a, b) => (a.order ?? 9) - (b.order ?? 9));
+  const myRank = SR.myRank;
+  const champion = SR.champion;
 
   const maxRev = Math.max(...rounds.map(r => r.revenue), 1);
   const target = i => rounds[0].revenue * Math.pow(1.08, i);   // mục tiêu: tăng 8%/vòng từ vòng 1
 
   const achUnlocked = (S.achievements || []).map(id => ACHIEVEMENTS_LIST().find(a => a.id === id)).filter(Boolean);
   const verdict = champion
-    ? T(`Mùa giải trong mơ! Đội dẫn đầu thị phần chung cuộc với ${shareLast.toFixed(1)}% – vượt cả 3 đối thủ ảo${totalProfit > 0 ? `, kèm lợi nhuận tích lũy ${money(Math.round(totalProfit))}` : `. Lợi nhuận còn âm ${money(Math.abs(Math.round(totalProfit)))}, nhưng vị thế thị trường chính là bàn đạp cho mùa sau`}. Hãy chụp lại báo cáo này làm kỷ niệm nhé!`,
-        `A dream season! Your team leads final market share at ${shareLast.toFixed(1)}% – beating all 3 virtual rivals${totalProfit > 0 ? `, with cumulative profit of ${money(Math.round(totalProfit))}` : `. Profit is still negative at ${money(Math.abs(Math.round(totalProfit)))}, but this market position is a springboard for next season`}. Screenshot this report as a keepsake!`)
+    ? T(`Mùa giải trong mơ! Đội cắm nhiều cờ nhất bản đồ chinh phục (${ranking[0].flags} cờ), thị phần chung cuộc ${shareLast.toFixed(1)}%${totalProfit > 0 ? `, kèm lợi nhuận tích lũy ${money(Math.round(totalProfit))}` : `. Lợi nhuận còn âm ${money(Math.abs(Math.round(totalProfit)))}, nhưng vị thế thị trường chính là bàn đạp cho mùa sau`}. Hãy chụp lại báo cáo này làm kỷ niệm nhé!`,
+        `A dream season! Your team planted the most flags on the conquest map (${ranking[0].flags}), with a final market share of ${shareLast.toFixed(1)}%${totalProfit > 0 ? `, with cumulative profit of ${money(Math.round(totalProfit))}` : `. Profit is still negative at ${money(Math.abs(Math.round(totalProfit)))}, but this market position is a springboard for next season`}. Screenshot this report as a keepsake!`)
     : totalProfit > 0
       ? T(`Kết thúc mùa ở hạng ${myRank}/4 với lợi nhuận dương ${money(Math.round(totalProfit))} – nền tảng rất tốt. Khoảng cách với ${ranking[0].name} nằm ở ${growth < 5 ? 'tốc độ chiếm thị phần: hãy mạnh tay marketing sớm hơn ở mùa sau' : 'biên lợi nhuận: xem lại cấu trúc chi phí tab CVP'}.`,
           `Finished the season at rank ${myRank}/4 with a positive profit of ${money(Math.round(totalProfit))} – a solid foundation. The gap with ${ranking[0].name} is in ${growth < 5 ? 'market-share pace: push marketing harder earlier next season' : 'profit margin: revisit your cost structure in the CVP tab'}.`)
@@ -2563,14 +2628,14 @@ function renderSeasonReport(body) {
     </div>
     <div class="clay-card p-5 mb-3">
       <h3 class="font-display font-bold text-deep-teal text-sm mb-1">${T('🏆 Bảng xếp hạng chung cuộc', '🏆 Final Leaderboard')}</h3>
-      <p class="text-[11px] text-deep-teal/55 mb-3">${T('Xếp theo thị phần chung cuộc – thước đo chiến thắng của sàn đấu · tăng trưởng = thay đổi so với vòng 1', "Ranked by final market share – the arena's measure of victory · growth = change since round 1")}</p>
+      <p class="text-[11px] text-deep-teal/55 mb-3">${T('Xếp theo số cờ chinh phục, hoà cờ thì xét lợi nhuận tích lũy (cùng luật danh hiệu «Vô địch BizOn») · tăng trưởng = thay đổi thị phần so với vòng 1', 'Ranked by conquest flags, ties broken by cumulative profit (same rule as the «BizOn Champion» title) · growth = market-share change since round 1')}</p>
       ${ranking.map((x, i) => `
       <div class="flex items-center gap-2.5 py-2 border-b border-surface-bright last:border-0 ${x.me ? 'bg-clay-gold/10 rounded-xl px-2 -mx-2' : ''}">
         <span class="w-6 text-center text-base">${['🥇', '🥈', '🥉', '4️⃣'][i]}</span>
         ${x.img ? `<img src="${x.img}" class="w-8 h-8 rounded-full object-cover object-top border ${x.me ? 'border-clay-gold' : 'border-surface-bright'}">` : ''}
         <div class="flex-1 min-w-0">
-          <p class="text-xs font-extrabold ${x.me ? 'text-primary' : 'text-deep-teal/80'} truncate">${x.me ? '🏺 ' : ''}${x.name}</p>
-          <p class="text-[10px] text-deep-teal/50 font-semibold">${T('Thị phần', 'Market share')} ${x.share.toFixed(1)}% · <span class="${x.growth >= 0 ? 'text-emerald-600' : 'text-orange-600'}">${x.growth >= 0 ? '▲' : '▼'} ${T(`${Math.abs(x.growth)} điểm`, `${Math.abs(x.growth)} pts`)}</span></p>
+          <p class="text-xs font-extrabold ${x.me ? 'text-primary' : 'text-deep-teal/80'} truncate">${x.me ? '🏺 ' : ''}${escapeHtml(x.name)}</p>
+          <p class="text-[10px] text-deep-teal/50 font-semibold">🚩 ${x.flags || 0} · ${T('Thị phần', 'Market share')} ${x.share.toFixed(1)}% · <span class="${x.growth >= 0 ? 'text-emerald-600' : 'text-orange-600'}">${x.growth >= 0 ? '▲' : '▼'} ${T(`${Math.abs(x.growth)} điểm`, `${Math.abs(x.growth)} pts`)}</span></p>
         </div>
         <div class="text-right shrink-0">
           <p class="text-xs font-display font-extrabold ${x.profit >= 0 ? 'text-deep-teal' : 'text-orange-600'}">${money(x.profit)}</p>
@@ -2588,7 +2653,7 @@ function renderSeasonReport(body) {
           <div class="rounded-t-lg" style="width:45%;background:#cbd5e1;height:${Math.max(6, target(i) / Math.max(maxRev, target(rounds.length - 1)) * 100)}%"></div>
         </div>`).join('')}
       </div>
-      <div class="flex gap-2 mt-1">${rounds.map(r => `<p class="flex-1 text-center text-[10px] font-bold text-deep-teal/60">V${r.round}</p>`).join('')}</div>
+      <div class="flex gap-2 mt-1">${rounds.map(r => `<p class="flex-1 text-center text-[10px] font-bold text-deep-teal/60">${T('V', 'R')}${r.round}</p>`).join('')}</div>
       <div class="flex items-center gap-4 mt-2 justify-center">
         <span class="flex items-center gap-1 text-[10px] font-bold text-deep-teal/60"><span class="w-2.5 h-2.5 rounded-full bg-primary inline-block"></span> ${T('Thực tế', 'Actual')}</span>
         <span class="flex items-center gap-1 text-[10px] font-bold text-deep-teal/60"><span class="w-2.5 h-2.5 rounded-full bg-slate-300 inline-block"></span> ${T('Mục tiêu', 'Target')}</span>
@@ -2646,7 +2711,7 @@ function renderSeasonReport(body) {
           </div>
         </div>
         <p class="text-[9px] text-deep-teal/45 font-bold mt-3">${T(`Cấp ngày ${new Date().toLocaleDateString('vi-VN')}`, `Issued ${new Date().toLocaleDateString('en-US')}`)} · bizonland.com</p>
-        <div class="flex gap-2 justify-center mt-3"><button onclick="downloadCertificate('vi')" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-4 py-2 text-[11px]">📥 Tải chứng nhận</button><button onclick="downloadCertificate('en')" class="clay-btn bg-white text-primary border border-primary/25 font-display font-extrabold px-4 py-2 text-[11px]">📥 Certificate (EN)</button></div>
+        <div class="flex gap-2 justify-center mt-3"><button onclick="downloadCertificate('vi')" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-4 py-2 text-[11px]">📥 ${T('Tải chứng nhận', 'Certificate (VI)')}</button><button onclick="downloadCertificate('en')" class="clay-btn bg-white text-primary border border-primary/25 font-display font-extrabold px-4 py-2 text-[11px]">📥 Certificate (EN)</button></div>
       </div>
     </div>` : ''}
     ${S.finished ? `
@@ -2792,7 +2857,7 @@ async function downloadCertificate(lang = 'vi') {
 // ---------- CVP: Hòa vốn, Lợi nhuận gộp & Cấu trúc chi phí ----------
 function renderCvpReport(body) {
   const last = S.history[S.history.length - 1];
-  const d = last ? last.decisions : { price: 150, production: 2800, marketing: 50, rd: 30, workers: 45, training: 1 };
+  const d = last ? last.decisions : { price: 150, production: 2800, marketing: 50, rd: 30, workers: 45, training: 0 };
   const fc = forecastCash(S, { ...d, paymentTerm: d.paymentTerm || 30, funding: d.funding || 'equity' });
   const unitCost = last ? last.unitCost : UNIT_COST;
   const contribution = Math.max(0.001, (d.price - unitCost) / 1000);
@@ -3222,7 +3287,7 @@ function renderLeaderboard() {
   const rows = all.map((t, i) => `
     <div class="clay-card p-4 flex items-center gap-3 ${t.me ? 'border-2 border-primary-container' : ''}">
       <span class="text-2xl w-7 text-center">${medal(i)}</span>
-      <div class="flex-1 min-w-0"><p class="font-display font-bold text-deep-teal text-sm truncate">${t.name}</p>
+      <div class="flex-1 min-w-0"><p class="font-display font-bold text-deep-teal text-sm truncate">${escapeHtml(t.name)}</p>
         <p class="text-[11px] text-deep-teal/50">${T(`Thị phần ${t.share.toFixed(1)}%`, `Market share ${t.share.toFixed(1)}%`)}${t.flags != null ? ` · 🚩 ${t.flags}` : ''}</p></div>
       <span class="font-display font-bold ${t.profit >= 0 ? 'text-primary' : 'text-orange-600'}">${money(t.profit)}</span>
     </div>`).join('');

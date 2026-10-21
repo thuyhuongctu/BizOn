@@ -34,6 +34,10 @@
   /* ---------- Bật Nghiệp: B1–B6 /10 ----------
    * Lưu vào bảng điểm sẵn có: reasoning = số vòng đóng góp (B5, 0–6), teamwork = chuẩn bị trước biến cố (B6, 0/1). */
   const ADVERSE = ['EV_PRICEWAR', 'EV_RECESSION', 'EV_SUPPLY'];
+  // Trường hợp B/C có id riêng ('EV_RECESSION_B'…): so theo mã gốc để mọi đội được đếm đủ vòng bất lợi –
+  // áp cho cả bài đã nộp từ trước (result_json lưu id thô), nên chấm lại là ra B6 đúng.
+  const evBase = id => String(id || '').replace(/_(B|C)$/, '');
+  const isAdverse = id => ADVERSE.includes(evBase(id));
 
   /* ---------- Nhật ký thành viên → B5 từng người (tự động) ----------
    * Tham gia: vòng có ghi nhận trước khi đội chốt (đề xuất, biên bản, Nếu–Thì, CEO chốt) → tối đa 0,75.
@@ -73,7 +77,7 @@
   // Chuẩn bị trước biến cố (B6): vòng biến cố bất lợi có Nếu–Thì hoặc ≥ 3 ghi nhận đề xuất/biên bản trước khi chốt
   function autoPrep(t, log) {
     const L = (log || []).filter(l => tkey(l.team_name) === tkey(t.name)); if (!L.length) return null;
-    const adv = t.rs.filter(r => ADVERSE.includes(r0(r).eventId)).map(r => r.round_number);
+    const adv = t.rs.filter(r => isAdverse(r0(r).eventId)).map(r => r.round_number);
     return adv.some(n => { const R = L.filter(l => l.round_number === n); return R.some(l => l.kind === 'whatif') || R.filter(l => l.kind === 'proposal' || l.kind === 'minutes').length >= 3; });
   }
   /* Nhận xét tự động theo điểm đạt được: điểm mạnh (mục đạt ≥ 80%), điểm cần cải thiện (mục thấp nhất), xếp loại */
@@ -113,7 +117,7 @@
       const b3 = (oee == null ? 0 : band(oee, [[85, 1], [80, .7], [-1e9, .3]])) + (defect != null && defect <= 2 ? .4 : 0) + (qr != null && qr >= 1 ? .6 : 0);
       const ach = L.ach != null ? +L.ach : null, b4 = ach == null ? 0 : Math.min(1.5, ach * .15);
       const b5 = auto ? mine.reduce((a, m) => a + m.b5, 0) / mine.length : b5r === '' ? 0 : band(+b5r, [[5, 1.5], [3, 1], [1, .4]]);
-      const adv = J.filter(j => ADVERSE.includes(j.eventId));
+      const adv = J.filter(j => isAdverse(j.eventId));
       const qrBad = adv.filter(j => j.quickRatio != null && +j.quickRatio < 1).length, pOk = adv.filter(j => +j.netProfit >= 0).length;
       const b6 = (qrBad === 0 ? .4 : qrBad === 1 ? .2 : 0) + (!adv.length || pOk === adv.length ? .4 : pOk >= adv.length / 2 ? .2 : 0) + (prep ? .2 : 0);
       const missing = oee == null || defect == null || qr == null || ach == null;

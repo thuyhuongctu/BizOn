@@ -13,7 +13,8 @@
   const num = v => Math.round(v).toLocaleString(tr('vi-VN', 'en-US'));
   const sg = v => (v > 0 ? '+' : v < 0 ? '−' : '±') + Math.abs(v);
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
-  const RIVAL_BASE = { aggressive: { p: 125, m: 90 }, balanced: { p: 150, m: 60 }, premium: { p: 195, m: 75 } };
+  // Mức giá/marketing nền của đối thủ – PHẢI khớp simulateRound (js/engine.js) và RIVAL_STYLE_BASE (js/app.js).
+  const RIVAL_BASE = { aggressive: { p: 130, m: 85 }, balanced: { p: 150, m: 60 }, premium: { p: 180, m: 85 } };
   const JIT = 1.025; // kỳ vọng của jitter 0.9 + U·0.25 trong engine
 
   function forecast(s, d) {
@@ -23,7 +24,7 @@
     const items = s.items || {}, boosts = s.activeBoosts || [];
     const ev0 = (typeof currentEvent === 'function' && currentEvent(s)) || { demand: 1, costMul: 1 };
     const shielded = boosts.includes('INS_SHIELD_01') && ev0.tone === 'bad';
-    const ev = shielded && typeof MARKET_EVENTS_LIST === 'function' ? MARKET_EVENTS_LIST()[1] : ev0;
+    const ev = shielded && typeof shieldedEvent === 'function' ? shieldedEvent(ev0) : ev0;
     const term = TERMS[d.paymentTerm] || TERMS[30];
     const md = window.BizonMarket && BizonMarket.enabled(s) ? BizonMarket.mods(s) : { trust: 1 };
     const workers = d.workers || 45, prod = Math.min(d.production || 0, workers * UPW);
@@ -32,8 +33,12 @@
     const attr = (p, m, b) => Math.pow(REF / p, el) * (1 + Math.sqrt(m) / 18) * Math.pow(b, bp);
     const me = attr(d.price || REF, mktEff, (s.brand || 1) * md.trust);
     const dm = typeof difficultyMul === 'function' ? difficultyMul(s) : 1;
+    // Phản ứng theo vòng trước – y như simulateRound (engine không áp BizonRivalAdjust của thị trường động).
+    const prev = (s.history || [])[(s.history || []).length - 1];
     const rivals = (s.competitors || []).map(c => { const b = RIVAL_BASE[c.style] || { p: REF, m: 55 }; let rp = b.p * JIT, rm = b.m * JIT;
-      const adj = typeof window.BizonRivalAdjust === 'function' ? window.BizonRivalAdjust(s, c, rp, rm) : null; if (adj) { rp = adj.price; rm = adj.mkt; }
+      if (prev && c.style === 'aggressive' && prev.decisions && prev.decisions.price < REF * 0.85) rp *= 0.92;
+      if (prev && c.style === 'balanced' && prev.share > 35) { rp *= 0.95; rm *= 1.08; }
+      if (prev && c.style === 'premium' && prev.brandLoyalty > 65) rm *= 1.15;
       return { name: c.name, style: c.style, price: rp, mkt: rm, a: attr(rp, rm, c.brand || 1) * dm }; });
     const tot = me + rivals.reduce((a, x) => a + x.a, 0);
     const share = 100 * me / tot;

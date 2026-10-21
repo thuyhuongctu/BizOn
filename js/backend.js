@@ -142,7 +142,9 @@
     // vẫn chơi trọn 6 vòng, nhưng bảng dữ liệu của giảng viên chỉ còn các ván
     // thuộc lớp thật – tránh nhiễu cho chấm điểm và cho nghiên cứu.
     const classId = ((S.profile && S.profile.classId) || '').trim();
-    if (!classId) return;
+    // Đội Demo («Chơi thử với Đội Demo») dùng chung mã lớp mẫu DEMO-2026 – coi như chơi thử, không gửi
+    // (khớp lời hứa «chơi thử: dữ liệu chỉ lưu trên máy bạn» ở màn đăng nhập; tiến trình cũng đã không đồng bộ).
+    if (!classId || classId === 'DEMO-2026') return;
     try {
       // Bản kết quả gọn: đủ cho chấm điểm + nghiên cứu, bỏ các khối nặng
       const result = {
@@ -159,6 +161,8 @@
         defect: report.defect,
         ach: Array.isArray(S.achievements) ? S.achievements.length : null,
         win: conquestWin(S, report.round),
+        // Mức khó áp cho vòng này (bản tính điểm luôn 'normal') – trường thêm mới, không đổi trường cũ.
+        difficulty: S.difficulty || 'normal',
       };
       const text = JSON.stringify(result);
       const row = {
