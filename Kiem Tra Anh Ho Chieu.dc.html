@@ -48,7 +48,7 @@ button{font:inherit}
         <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="3">
           <div style="background:#fff;border-radius:14px;padding:12px;display:grid;grid-template-columns:84px minmax(0,1fr);gap:12px;box-shadow:0 1px 0 #d6e4e7;border-left:0;border-top:3px solid {{ it.bar }}">
             <div style="width:84px;height:84px;border-radius:10px;background:#f1f5f6;display:grid;place-items:center;overflow:hidden;font-size:26px">
-              <sc-if value="{{ it.ok }}" hint-placeholder-val="{{ false }}"><img src="{{ it.src }}" alt="{{ it.vi }}" style="width:100%;height:100%;object-fit:cover"></img></sc-if>
+              <sc-if value="{{ it.ok }}" hint-placeholder-val="{{ false }}"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" sc-camel-src="{{ it.src }}" alt="{{ it.vi }}" style="width:100%;height:100%;object-fit:cover"></img></sc-if>
               <sc-if value="{{ it.notOk }}" hint-placeholder-val="{{ true }}"><span>{{ it.icon }}</span></sc-if>
             </div>
             <div style="display:flex;flex-direction:column;gap:4px;min-width:0">

@@ -221,6 +221,11 @@
   .ping{animation:pulse 1.4s ease-out infinite}
   @keyframes pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
   .pop{transform-box:fill-box;transform-origin:50% 100%;animation:pop .6s ease both}
+  /* Điện thoại: mọi nút ≥ 40px để dễ chạm; trong phòng 3D ẩn nút 🧱 vì nó đè lên thẻ thông tin trượt dưới đáy */
+  @media (max-width:760px){
+    .btn{min-height:40px;min-width:40px} #rail .btn{justify-content:center} .x{width:40px;height:40px}
+    body.room #rail,body.room #more{display:none!important}
+  }
 </style>
 <script src="js/capture-guard.js"></script>
 </head>
@@ -474,11 +479,14 @@ function confetti3D(center, n = 160) { const cols = [0xf39a33, 0x2f8a8c, 0xd6453
   for (let i = 0; i < n; i++) { const m = new THREE.Mesh(new THREE.PlaneGeometry(0.09, 0.14), new THREE.MeshStandardMaterial({ color: cols[i % cols.length], side: THREE.DoubleSide, roughness: 0.7 }));
     m.position.set(center.x + (Math.random() - 0.5) * 5, 4.5 + Math.random() * 2.5, center.z + (Math.random() - 0.5) * 5); scene.add(m);
     CONF.push({ m, v: new THREE.Vector3((Math.random() - 0.5) * 1.2, -Math.random() * 0.5, (Math.random() - 0.5) * 1.2), r: (Math.random() - 0.5) * 12, life: 7 }); } }
+const CH_EN = { ceo: ['Minh Long', 'Strategy compass'], cfo: ['Thu Ha', 'Budget bag'], cmo: ['Manh Chi', 'Brand megaphone'], coo: ['Bao Ngoc', 'Tablet'], sec: ['Gia Han', 'Minutes board'],
+  lumina: ['Strategy advisor', 'White áo dài · lotus'], tu: ['Academic advisor', 'White áo dài · certificate scroll'] };
 function actor(id, x, z, ry, mode, extra = {}) {
   const r = chars.roster.find(c => c.id === id), o = chars.build(id); extra.ry0 = ry; o.scale.setScalar(CH); o.position.set(x, 0, z); o.rotation.y = ry;
   if (r.acc) hq.dress(o, r.acc);
   o.traverse(m => { if (m.isMesh) m.castShadow = true; });
-  o.userData.cid = id; o.userData.label = (r.label || '') + (r.name ? ' · ' + r.name : ''); o.userData.role = r.note || r.line || '';
+  const en = CH_EN[id] || []; // bizon-characters.js chỉ có chú thích tiếng Việt → bản EN cho chú thích khi chạm nhân vật
+  o.userData.cid = id; o.userData.label = [(r.label || '') + (r.name ? ' · ' + r.name : ''), (r.label || '') + ((en[0] || r.name) ? ' · ' + (en[0] || r.name) : '')]; o.userData.role = [r.note || r.line || '', en[1] || r.note || r.line || ''];
   world.add(o); const a = { o, mode, phase: Math.random() * 10, ...extra }; actors.push(a); return a;
 }
 actor('ceo', -0.75, -0.55, Math.PI / 2, 'talk', { duo: 'c', turn: 0 });
@@ -553,7 +561,7 @@ canvas.addEventListener('pointerup', e => {
   if (hit.object.name === 'map_face') return openResults();
   let o = hit.object; while (o && !o.userData.label) o = o.parent;
   if (o) { tipObj = o; tipUntil = performance.now() + 4000; const tab = TAB_OF[o.userData.cid];
-    tip.innerHTML = `<b>${o.userData.label}</b>${TL(o.userData.role)}${!DIORAMA && tab ? `<br><i style="color:#2f8a8c;font-style:normal;font-weight:700">→ ${tabName(tab)}</i>` : ''}`; tip.style.display = 'block';
+    tip.innerHTML = `<b>${TL(o.userData.label)}</b>${TL(o.userData.role)}${!DIORAMA && tab ? `<br><i style="color:#2f8a8c;font-style:normal;font-weight:700">→ ${tabName(tab)}</i>` : ''}`; tip.style.display = 'block';
     if (!DIORAMA) { if (o.userData.team) openResults(); else if (tab) setTimeout(() => window.__openTab && window.__openTab(tab), 700); } }
 });
 
@@ -681,7 +689,7 @@ function renderResults() {
   const bars = document.getElementById('bars');
   bars.innerHTML = rows.map(({ k, v }) => `<div class="bar" style="--c:${TEAMS[k].color}"><span class="st">${k === win ? '★' : ''}</span><div class="trk"><div class="fill" style="width:0"></div><div class="nm">${nm(k)}</div></div><span class="v" style="color:${TEAMS[k].color}">${v.toFixed(1)}%</span></div>`).join('');
   requestAnimationFrame(() => requestAnimationFrame(() => bars.querySelectorAll('.fill').forEach((f, i) => f.style.width = Math.min(100, rows[i].v / 40 * 100) + '%')));
-  const pf = document.getElementById('rProfit'); pf.textContent = empty ? '–' : (R.p >= 0 ? '↑ +' : '↓ ') + R.p + 'trđ'; pf.style.color = R.p >= 0 ? '#3f8a44' : '#c0443a'; pf.parentElement.style.borderColor = R.p >= 0 ? '#4f9a52' : '#d6453a';
+  const pf = document.getElementById('rProfit'); pf.textContent = empty ? '–' : (R.p >= 0 ? '↑ +' : '↓ −') + fmt(Math.abs(R.p)); /* cùng đơn vị money() của game (tr₫/tỷ₫), không viết tay 'trđ' */ pf.style.color = R.p >= 0 ? '#3f8a44' : '#c0443a'; pf.parentElement.style.borderColor = R.p >= 0 ? '#4f9a52' : '#d6453a';
   document.getElementById('rFlags').textContent = `${myFlags}/6`;
   document.getElementById('legend').innerHTML = ORDER.map(k => `<span style="--c:${TEAMS[k].color}"><i></i>${nm(k)}<b>${owners.filter(w => w === k).length}</b></span>`).join('');
   document.getElementById('nextRound').textContent = window.__afterMap ? T('Tiếp tục →', 'Continue →') : GS && GS.finished ? T('🏁 Tổng kết mùa giải →', '🏁 Season wrap-up →') : T(`🎯 Ra quyết định vòng ${GS ? GS.round : 1} →`, `🎯 Make decisions for round ${GS ? GS.round : 1} →`);
@@ -782,7 +790,9 @@ document.getElementById('ctaBtn').onclick = primary;
 document.querySelectorAll('#rail [data-tab]').forEach(b => b.onclick = () => window.__openTab(b.dataset.tab));
 document.getElementById('tourBtn').onclick = () => { window.__closeSheet(); tour3D(0); };
 function bridge() {
-  const w = gf.contentWindow; if (!w || typeof w.showTab !== 'function' || w.__bridged) return; W = w; W.__bridged = true;
+  // Chỉ nối cầu khi game.html đã chạy xong mọi script (readyState khác 'loading'): nếu nối sớm lúc
+  // office-scene.js… chưa nạp, các plugin đó sẽ bọc đè lên hàm 3D (vd văn phòng 2D chen vào mỗi vòng).
+  const w = gf.contentWindow; if (!w || typeof w.showTab !== 'function' || w.__bridged || !w.document || w.document.readyState === 'loading') return; W = w; W.__bridged = true;
   const st = W.document.createElement('style'); st.textContent = '#bz-dock-btn,#bz-dock{display:none!important}'; W.document.head.appendChild(st);
   ['toggleLang', 'applyLang'].forEach(f => { const o = W[f]; if (typeof o === 'function') W[f] = function () { try { localStorage.setItem('bizon-lang-user', '1'); } catch {} return o.apply(this, arguments); }; });
   const orig = W.showTab;
@@ -944,7 +954,7 @@ function buildLB() {
     p.position.x = all.length === 1 ? 0 : [-1.9, 0, 1.9, 3.8][j] - 0.95;
     const ch = chars.build(t.id); ch.scale.setScalar(1.7); ch.position.y = HH[rank] + 0.07; ch.traverse(m => { if (m.isMesh) m.castShadow = true; }); p.add(ch); p.userData.ch = ch; p.userData.rank = rank; RM.spin.push(p);
     lab(p, `${t.key === 'star' ? '<img src="assets/dragon/champion.png" alt="" style="width:46px;display:block;margin:0 auto 3px">' : ''}<i>${['🥇', '🥈', '🥉', '4️⃣'][rank]}</i><b>${t.name} · ${fmt(t.profit)} · ${(+t.share).toFixed(1)}%</b>`, HH[rank] + 2.7, t.me ? 'hot' : ''); });
-  setRoomCam(new THREE.Vector3(0.9, 3.4, 9), new THREE.Vector3(0.9, 1.5, 0));
+  setRoomCam(new THREE.Vector3(0, 3.4, 9.6), new THREE.Vector3(0, 1.6, 0));
   rmCard.innerHTML = '';
 }
 let mgRun = false, mgSpawnT = 0, mgBal0 = 0, mgRes = null;
@@ -1006,7 +1016,7 @@ function declutterLabs(list) {
   ordered.forEach(L => { L.el.style.left = L._x.toFixed(1) + 'px'; L.el.style.top = L._y.toFixed(1) + 'px'; });
 }
 function roomTick(dt, t) {
-  const sway = Math.sin(t * 0.25) * 0.5, shx = innerWidth > 760 ? Math.min(2.2, innerWidth / 900) : 0; RM.cam.position.copy(RM.cp).add(rv.set(sway + shx, 0, 0)); RM.cam.lookAt(rv.copy(RM.cl).setX(RM.cl.x + shx));
+  const sway = Math.sin(t * 0.25) * 0.5, shx = innerWidth > 760 && rmCard.firstChild ? Math.min(2.2, innerWidth / 900) : 0; /* chỉ dịch cảnh sang trái khi có thẻ bên phải (bảng xếp hạng không có thẻ) */ RM.cam.position.copy(RM.cp).add(rv.set(sway + shx, 0, 0)); RM.cam.lookAt(rv.copy(RM.cl).setX(RM.cl.x + shx));
   if (innerWidth < innerHeight) { RM.cam.position.z += 3.5; RM.cam.position.y += 1.5; }
   if (RM.mode === 'market' && RM.ticker) RM.ticker.offset.x += dt * 0.03;
   RM.spin.forEach((o, i) => { if (o.userData.pulse) o.scale.setScalar(1 + Math.sin(t * 4 + i) * 0.08); else if (o.userData.ch) chars.animate(o.userData.ch, t, o.userData.rank === 0 ? 'talk' : 'idle', i); else if (RM.mode === 'achievements') o.rotation.y = Math.sin(t * 1.5 + i) * 0.35; else o.rotation.y += dt * 0.8; });
@@ -1055,17 +1065,23 @@ function tour3D(i = 0) {
   q('#t3Skip').onclick = done;
 }
 window.__tour3D = tour3D;
-function maybeTour3D() { try { if (localStorage.getItem(T3_KEY)) return; } catch (e) { return; } setTimeout(() => { if (!document.body.classList.contains('evt')) tour3D(0); }, 1400); }
+// Trước đây chỉ thử 1 lần sau 1,4 giây: lúc đó game.html đang chiếu chuỗi giới thiệu/bốc thăm/biến cố nên hướng dẫn
+// bị bỏ qua vĩnh viễn. Nay chờ tới khi trụ sở rảnh (không biến cố, phòng 3D, đấu trường, bản đồ hay lớp phủ toàn khung).
+function maybeTour3D() { try { if (localStorage.getItem(T3_KEY)) return; } catch (e) { return; } let n = 0;
+  const iv = setInterval(() => { const b = document.body.classList;
+    if (++n > 600) return clearInterval(iv);
+    if (b.contains('evt') || b.contains('room') || b.contains('arena') || b.contains('login3d') || resEl.classList.contains('on') || frame.className === 'full') return;
+    clearInterval(iv); tour3D(0); }, 1000); }
 
 // ================= KẾT QUẢ VÒNG 3D =================
 function flyTable(wide) { const mob = innerWidth < 760; flyTo(new THREE.Vector3(mob ? 0 : -1.6, mob ? -1.2 : 0.6, -2.4), new THREE.Vector3(0.62, 0.62, 0.75).multiplyScalar((wide ? 9.5 : 7.5) * (mob ? 1.35 : 1))); }
 function showPanel(html) { evc.innerHTML = html; evc.scrollTop = 0; document.body.classList.add('evt'); sheetTab = null; setMode(); }
 function resultLine(r) {
-  const S0 = ev('S') || {}, cq = (S0.conquest || [])[r.round - 1] || {}, city = cityName(r.round - 1), np = fmt(r.netProfit), sh = (+r.share || 0).toFixed(1);
+  const S0 = ev('S') || {}, cq = (S0.conquest || [])[r.round - 1] || {}, city = cityName(r.round - 1), np = fmt(r.netProfit), npAbs = fmt(Math.abs(+r.netProfit || 0)), sh = (+r.share || 0).toFixed(1); // npAbs: số tiền lỗ không kèm dấu trừ (tránh «lỗ -78trđ»)
   if (r.netProfit > 0 && cq.win) return T(`Cờ BizOn đã cắm ở ${city}! Thị phần ${sh}% và lãi ${np}. Giữ nhịp này nhé.`, `The BizOn flag is planted in ${city}! ${sh}% market share and a ${np} profit. Keep this pace.`);
   if (r.netProfit > 0) return T(`Có lãi ${np} nhưng ${cq.winner || 'đối thủ'} vẫn đông khách hơn ở ${city}. Xem lại giá và marketing so với họ.`, `A ${np} profit, but ${cq.winner || 'a rival'} still draws more customers in ${city}. Review your price and marketing against theirs.`);
-  if (cq.hasTopShare) return T(`Mình dẫn thị phần ${sh}% nhưng bán lỗ ${np}. Cờ chỉ cắm khi vừa dẫn thị phần vừa có lãi.`, `We lead with ${sh}% market share but sold at a ${np} loss. A flag is planted only when we lead share and make a profit.`);
-  return T(`Vòng này lỗ ${np}. Đừng nản, mở báo cáo P&L xem khoản chi nào vượt.`, `A ${np} loss this round. Don't give up: open the P&L report to see which cost ran over.`);
+  if (cq.hasTopShare) return T(`Mình dẫn thị phần ${sh}% nhưng bán lỗ ${npAbs}. Cờ chỉ cắm khi vừa dẫn thị phần vừa có lãi.`, `We lead with ${sh}% market share but sold at a ${npAbs} loss. A flag is planted only when we lead share and make a profit.`);
+  return T(`Vòng này lỗ ${npAbs}. Đừng nản, mở báo cáo P&L xem khoản chi nào vượt.`, `A ${npAbs} loss this round. Don't give up: open the P&L report to see which cost ran over.`);
 }
 function result3D(r) {
   const s = ev('S'), ok = r.netProfit > 0; /* giọng Lumina đã tắt */
