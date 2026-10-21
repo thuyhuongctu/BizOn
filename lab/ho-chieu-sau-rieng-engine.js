@@ -54,7 +54,8 @@
     const role = data.roles[state.roleId];
     const pool = data.events.filter(e => !state.usedEvents.includes(e.id)
       && (!e.onlySeason || e.onlySeason === s.season)
-      && (!e.onlyBuyers || !role.ownFarm));
+      && (!e.onlyBuyers || !role.ownFarm)
+      && (!e.needsAny || e.needsAny.some(id => eligible(data, state, data.channels.find(c => c.id === id)))));
     const rnd = mulberry32(state.seed + state.n * 104729);
     return pool[Math.floor(rnd() * pool.length)] || null;
   }
@@ -179,7 +180,7 @@
     if (eff.volume) volume *= 1 + eff.volume;
 
     const depot = X ? (opts.depotEstimate || basePrice(data, state)) : depotPrice(data, state);
-    const buyCost = role.ownFarm ? P.farmCost * (s.season === 'off' && induce ? 1.3 : 1)
+    const buyCost = role.ownFarm ? P.farmCost * (s.season === 'off' && induce ? (P.offFarmMult || 1.3) : 1)
       : depot * (1 + P.linkedPremium * linked + (eff.buyCost || 0));
     const purchase = bn(volume, buyCost);
 

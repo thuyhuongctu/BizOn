@@ -286,7 +286,7 @@ footer{color:var(--faint)}
   let SETUP = { cls: '', team: '', roleId: 'exporter', timerMin: 0, avatarId: 'basaulanh' };
   let ERR = '';
 
-  const freshDec = () => DurianCore.freshDec();
+  const freshDec = roleId => DurianCore.freshDec(D, roleId);
   const owned = (a, id) => DurianCore.owned(a, id);
   const save = () => { if (APP) store.set(SAVE_KEY, JSON.stringify(APP)); };
   const roundN = () => APP.game.n;                         // vụ đang quyết định
@@ -487,7 +487,7 @@ footer{color:var(--faint)}
       const seed = SETUP.cls ? E.seedFrom(SETUP.cls + '|' + SETUP.roleId) : (Date.now() >>> 0);
       boot({
         cls: SETUP.cls, team: SETUP.team, roleId: SETUP.roleId, avatarId: SETUP.avatarId, seed, timerMin: SETUP.timerMin,
-        game: E.newGame(D, SETUP.roleId, seed), dec: freshDec(), operator: 'ceo',
+        game: E.newGame(D, SETUP.roleId, seed), dec: freshDec(SETUP.roleId), operator: 'ceo',
         session: 'S' + (Date.now() >>> 0).toString(36).toUpperCase(), roundStart: Date.now(),
         events: [], whatifs: {}, lumina: {}, sheets: {}, journals: {}, debriefs: {}, flags: [], timing: {}
       });

@@ -99,6 +99,7 @@
     depotMain: 50,             // giá vựa chính vụ, nghìn đ/kg (minh họa; nghịch vụ = depotMain × offMult)
     offMult: 2.5,              // neo vào «gấp 2–3 lần» (BC0224)
     farmCost: 20,              // giá thành tự trồng, nghìn đ/kg (minh họa, quy đổi mặt bằng giá 2024)
+    offFarmMult: 1.8,          // HTX xử lý ra hoa nghịch vụ: giá thành ×1,8 (trước ×1,3; cân bằng 10/2026, HTX quá dễ chạm trần điểm lợi nhuận)
     linkedPremium: 0.05,       // mua từ vùng liên kết có mã đắt hơn mua thương lái 5%
     baseLoss: 0.18,            // hao hụt cơ bản: mất nước 15% + thu hoạch 3% (neo CAILAY 15–40%)
     traceLossCut: 0.03,        // truy xuất + chuỗi lạnh giảm hao hụt 3 điểm % (minh họa)
@@ -107,7 +108,11 @@
     rejectedDiscount: 0.5,     // hàng rớt/hàng bị chặn bán nội địa còn 50% giá (neo «giảm 50–80%»)
     priorityCost: { area: 1.2, pack: 1.5, test: 0.6, trace: 0.8, freezer: 3.0, finance: 0 },
     fraudMult: 160 / 70,       // 160 so với 70 baht/kg (GMSARN)
-    sampling: [0.02, 0.01]     // PROTO
+    sampling: [0.02, 0.01],    // PROTO
+    // Tỷ trọng kênh mặc định khi vào ván (doanh nghiệp không khai báo defaultAlloc riêng thì dùng mức này)
+    defaultAlloc: { BORDER: 50, DOM: 40, TW: 10 },
+    // Kênh vừa mở (đủ mã / cấp đông / kiểm nghiệm) và đang 0%: vụ sau tự đưa sẵn ngần này % vào kênh đó, các kênh khác giảm theo tỷ lệ
+    openSeed: { CN: 40, FROZEN: 30, JP: 10 }
   };
 
   // ---------- Vai chơi ----------
@@ -116,7 +121,7 @@
       descVi: 'Tự trồng trên vườn của xã viên, giá thành thấp, có thể xử lý ra hoa nghịch vụ. Chưa có cơ sở đóng gói.',
       descEn: 'Grows its own fruit at low cost and can induce off-season flowering. No packing facility yet.',
       scaleVi: 'Tiểu nông / HTX', scaleEn: 'Smallholder / co-op',
-      volume: 250, benchMargin: 40, ownFarm: true, areaCode: false, packCode: false, freezer: false, cashAdj: -2 },
+      volume: 250, benchMargin: 60, ownFarm: true, areaCode: false, packCode: false, freezer: false, cashAdj: -2 },
     packer: { emoji: '📦', vi: 'Cơ sở đóng gói Đắk Lắk', en: 'Đắk Lắk packing house',
       descVi: 'Đã có mã cơ sở đóng gói; mua trái từ nhà vườn Tây Nguyên, dễ bị «bẻ kèo» khi giá lên.',
       descEn: 'Already holds a packing-facility code; buys from Central Highlands growers who may break deals when prices rise.',
@@ -131,7 +136,8 @@
       descVi: 'Có dây chuyền cấp đông; sản phẩm đông lạnh giá cao nhưng chi phí lớn và chờ nghị định thư.',
       descEn: 'Owns a freezing line; frozen products earn more but cost more, and await a protocol.',
       scaleVi: 'Doanh nghiệp chế biến (đã có mã đóng gói)', scaleEn: 'Processing company (packing code in hand)',
-      volume: 350, benchMargin: 6, ownFarm: false, areaCode: false, packCode: true, freezer: true, cashAdj: 2 }
+      volume: 350, benchMargin: 6, ownFarm: false, areaCode: false, packCode: true, freezer: true, cashAdj: 2,
+      defaultAlloc: { FROZEN: 40, BORDER: 30, DOM: 30 } }
   };
 
   // ---------- Phương thức thâm nhập (entry mode) — khung lý thuyết KDQT gắn vào từng kênh ----------
@@ -262,6 +268,7 @@
 
   // ---------- Biến cố có lựa chọn (mỗi vụ rút 1, không lặp) ----------
   // eff: tác động; các khóa engine hiểu: volume, loss, cash, rep, sus, adapt, risk, fraud, priceAll, chanCap, treeHealth, linkedNext
+  // needsAny: biến cố chỉ xuất hiện khi đội đang đi được ít nhất một kênh trong danh sách (tránh lựa chọn vô nghĩa)
   const events = [
     { id: 'break', src: 'breakDeal', vi: 'Nhà vườn «bẻ kèo»', en: 'Growers break the deal',
       textVi: 'Giá vựa tăng, một phần nhà vườn đã hứa bán cho bạn quay sang bán cho thương lái trả cao hơn.', textEn: 'Depot prices rise and some growers who promised to sell to you switch to traders paying more.',
@@ -292,26 +299,26 @@
         { vi: 'Từ chối', en: 'Refuse', eff: { rep: 3, sus: 3 } },
         { vi: 'Bán 10% sản lượng cho trung gian', en: 'Sell 10% of output to the middleman', eff: { fraud: 0.10 } }
       ] },
-    { id: 'pest', src: 'sampling', vi: 'Phát hiện rệp sáp khi đóng gói', en: 'Mealybugs found while packing',
+    { id: 'pest', src: 'sampling', needsAny: ['CN'], vi: 'Phát hiện rệp sáp khi đóng gói', en: 'Mealybugs found while packing',
       textVi: 'Tổ kỹ thuật thấy rệp sáp trên một phần lô hàng chuẩn bị đi chính ngạch.', textEn: 'Your technicians find mealybugs on part of a lot bound for official export.',
       options: [
         { vi: 'Xử lý lại, chuyển phần nghi ngờ sang nội địa', en: 'Re-treat and send suspect fruit to the domestic market', eff: { domesticShift: 0.12, rep: 2 } },
         { vi: 'Vẫn xuất cả lô', en: 'Ship the whole lot anyway', eff: { pestRisk: 0.35 } }
       ] },
-    { id: 'glut', src: 'thaiOverlap', vi: 'Hàng dồn, người mua ép giá', en: 'Glut and buyer pressure',
+    { id: 'glut', src: 'thaiOverlap', needsAny: ['CN'], vi: 'Hàng dồn, người mua ép giá', en: 'Glut and buyer pressure',
       textVi: 'Hàng về cảng và cửa khẩu dồn dập; người mua Trung Quốc ép giá thêm.', textEn: 'Shipments pile up at ports and border gates; Chinese buyers push prices down.',
       options: [
         { vi: 'Bán ngay giá thấp', en: 'Sell now at a lower price', eff: { priceCN: -0.12 } },
         { vi: 'Trữ lạnh chờ giá (0,4 tỷ, hao thêm)', en: 'Hold in cold storage (VND 0.4bn, more loss)', eff: { cash: -0.4, loss: 0.04, priceCN: -0.03 } },
         { vi: 'Chuyển bớt sang Đài Loan và Nhật', en: 'Divert some to Taiwan and Japan', eff: { capBoost: { TW: 30, JP: 15 }, adapt: 4 } }
       ] },
-    { id: 'residue', src: 'japanMRL', vi: 'Cảnh báo dư lượng thuốc', en: 'Pesticide residue warning',
+    { id: 'residue', src: 'japanMRL', needsAny: ['CN', 'JP'], vi: 'Cảnh báo dư lượng thuốc', en: 'Pesticide residue warning',
       textVi: 'Một lô sầu riêng Việt Nam sang Nhật bị tiêu hủy vì procymidone vượt giới hạn. Người mua cao cấp đòi chứng nhận kiểm nghiệm.', textEn: 'A Vietnamese lot to Japan was destroyed for procymidone above the limit. Premium buyers demand test certificates.',
       options: [
         { vi: 'Kiểm nghiệm từng lô (0,3 tỷ)', en: 'Test every lot (VND 0.3bn)', eff: { cash: -0.3, risk: -0.08, rep: 2 } },
         { vi: 'Tạm ngừng kênh Nhật vụ này', en: 'Pause Japan this season', eff: { closeJP: true } }
       ] },
-    { id: 'thaidrought', src: 'thaiDrought', vi: 'Hạn hán ở Thái Lan', en: 'Drought in Thailand',
+    { id: 'thaidrought', src: 'thaiDrought', needsAny: ['CN'], vi: 'Hạn hán ở Thái Lan', en: 'Drought in Thailand',
       textVi: 'Thái Lan mất mùa do hạn; người mua Trung Quốc tìm nguồn Việt Nam.', textEn: 'Drought cuts the Thai crop; Chinese buyers turn to Vietnam.',
       options: [
         { vi: 'Dồn hàng vào chính ngạch', en: 'Push volume into official trade', eff: { priceCN: 0.12 } },

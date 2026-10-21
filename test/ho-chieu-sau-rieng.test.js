@@ -256,6 +256,47 @@ test('Bản 3D: chữ trên giao diện khớp tham số (vùng liên kết, x�
   Object.keys(D.sourcesEn).forEach(k => assert.ok(D.sources[k], 'sourcesEn có khóa lạ: ' + k));
 });
 
+test('Cân bằng 10/2026: tỷ trọng mặc định theo doanh nghiệp, tự đưa % vào kênh vừa mở, HTX mốc 60 và giá thành nghịch vụ ×1,8', () => {
+  const ids = D.channels.map(c => c.id);
+  const sum100 = (a, name) => { Object.keys(a).forEach(k => assert.ok(ids.includes(k), name + ': kênh lạ ' + k)); assert.strictEqual(Object.values(a).reduce((x, y) => x + y, 0), 100, name + ' phải cộng đủ 100'); };
+  sum100(D.params.defaultAlloc, 'params.defaultAlloc');
+  Object.keys(D.roles).forEach(r => { if (D.roles[r].defaultAlloc) sum100(D.roles[r].defaultAlloc, r + '.defaultAlloc'); });
+  Object.entries(D.params.openSeed).forEach(([k, v]) => assert.ok(ids.includes(k) && v > 0 && v < 100));
+  const C = DCore();
+  assert.deepStrictEqual(C.freshDec(D, 'frozen').alloc, { FROZEN: 40, BORDER: 30, DOM: 30 });
+  assert.deepStrictEqual(C.freshDec(D, 'packer').alloc, D.params.defaultAlloc);
+  // Cơ sở đóng gói làm mã vùng trồng ở vụ 1 → vụ 2 chính ngạch mở, được đưa sẵn 40%, các kênh còn lại vẫn cộng đủ 100
+  const s0 = E.newGame(D, 'packer', 7), s1 = E.playSeason(D, s0, { priority: 'area', linked: 0.5, induce: false, alloc: D.params.defaultAlloc, intel: [], option: 0 });
+  const seeded = C.seedNewChannels(D, E, s0, s1, D.params.defaultAlloc);
+  assert.strictEqual(seeded.CN, D.params.openSeed.CN);
+  const open = D.channels.filter(c => E.eligible(D, s1, c)).map(c => c.id);
+  near(open.reduce((x, k) => x + (seeded[k] || 0), 0), 100, 1e-9, 'tỷ trọng sau khi đưa sẵn');
+  assert.deepStrictEqual(C.seedNewChannels(D, E, s1, s1, seeded), seeded, 'không có kênh mới thì giữ nguyên');
+  assert.strictEqual(D.roles.htx.benchMargin, 60);
+  const h0 = E.newGame(D, 'htx', 3), h1 = E.playSeason(D, h0, { priority: 'finance', linked: 1, induce: true, alloc: { DOM: 100 }, intel: [], option: 0 });
+  const h2 = E.playSeason(D, h1, { priority: 'finance', linked: 1, induce: true, alloc: { DOM: 100 }, intel: [], option: 0 }).history[1];
+  assert.strictEqual(h2.season, 'off');
+  near(h2.purchase, h2.volume * D.params.farmCost * D.params.offFarmMult / 1000, 1e-9, 'giá thành HTX nghịch vụ khi xử lý ra hoa');
+  const { template } = readBundle3D();
+  assert.ok(!/giá thành \+30%|cost \+30%|costs \+30%/.test(template), 'nhãn xử lý ra hoa còn +30% cũ');
+});
+
+test('Biến cố có needsAny chỉ xuất hiện khi đội đang đi được ít nhất một kênh trong danh sách', () => {
+  assert.ok(D.events.some(e => e.needsAny), 'chưa có biến cố nào khai báo needsAny');
+  D.events.filter(e => e.needsAny).forEach(e => e.needsAny.forEach(id => assert.ok(D.channels.some(c => c.id === id), e.id + ': kênh lạ ' + id)));
+  const plans = [['area', 'pack', 'test', 'trace', 'test', 'freezer'], ['finance', 'finance', 'finance', 'finance', 'finance', 'finance'], ['test', 'area', 'pack', 'finance', 'trace', 'test']];
+  let checked = 0;
+  Object.keys(D.roles).forEach(role => plans.forEach((plan, pi) => { for (let k = 0; k < 40; k++) {
+    let s = E.newGame(D, role, 5000 + k * 7 + pi);
+    while (s.n <= D.seasons.length) {
+      const ev = E.eventFor(D, s);
+      if (ev && ev.needsAny) { checked++; assert.ok(ev.needsAny.some(id => E.eligible(D, s, D.channels.find(c => c.id === id))), `${role} vụ ${s.n}: biến cố ${ev.id} đòi kênh đang đóng`); }
+      s = E.playSeason(D, s, { priority: plan[s.n - 1], linked: 0.7, induce: true, alloc: { CN: 50, BORDER: 20, JP: 10, DOM: 20 }, intel: [], option: 1 });
+    }
+  } }));
+  assert.ok(checked > 50, 'quá ít biến cố needsAny được kiểm: ' + checked);
+});
+
 function DCore() { global.window = global.window || {}; require('../lab/ho-chieu-sau-rieng-core.js'); return global.window.DurianCore; }
 
 console.log(`\n${passed} kiểm thử đạt`);
