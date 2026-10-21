@@ -93,8 +93,11 @@
   .cn-refresh:hover{color:var(--clay-ink)}
   .cn-refresh:active{transform:scale(.9)}
   @media (max-width:560px){ .cn-refresh{width:34px;height:34px;font-size:16px} }
-  /* Máy hẹp (≤400px): ẩn nút làm mới để thanh nav không tràn ngang, đẩy nút «Bắt đầu» ra ngoài mép */
-  @media (max-width:400px){ .cn-refresh{display:none} }
+  /* Máy hẹp (≤420px – hầu hết điện thoại và app Android): giữ nút làm mới, nhường chỗ bằng cách ẩn nút ⬇ tải app
+     (trang chủ đã có nút «Tải trên Google Play» ở hero) để thanh nav không tràn ngang */
+  .cn-refresh{flex:none}
+  @media (max-width:420px){ #clay-nav .cn-dlwrap{display:none} .cn-refresh{width:32px;height:32px;font-size:15px} }
+  @media (max-width:330px){ .cn-refresh{display:none} } /* máy cực hẹp: không đủ chỗ cho cả nút làm mới */
   /* Bản tối «đất sét đêm» (data-theme do js/bizon-boot.js đặt; bản in giữ sáng) */
   @media screen{
     html[data-theme="dark"] .hp-game{box-shadow:inset 0 -9px 0 rgba(0,0,0,.28),inset 0 2px 0 rgba(255,236,210,.10),0 0 0 1px rgba(255,230,200,.08),0 30px 44px -26px rgba(0,0,0,.8)}
