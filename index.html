@@ -20,6 +20,9 @@
   .hp-h1{margin:22px 0 0;font-size:clamp(40px,5.6vw,74px);color:var(--clay-ink)}
   .hp-lead{margin:22px 0 0;max-width:33em;font-size:18px;line-height:1.65;color:var(--clay-sub);text-wrap:pretty}
   .hp-cta{display:inline-flex;align-items:center;gap:10px;min-height:58px;padding:0 26px;border-radius:22px;font-family:var(--clay-head);font-size:19px;font-weight:700}
+  .hp-intro{display:inline-flex;align-items:center;gap:12px;margin-top:18px;padding:6px 18px 6px 6px;border-radius:999px;font-family:var(--clay-head);font-size:16px;font-weight:800;color:var(--clay-ink);background:var(--clay-card);box-shadow:var(--clay-night-shadow,inset 0 -5px 0 rgba(110,70,30,.12),inset 0 3px 0 rgba(255,255,255,.9),0 12px 20px -14px rgba(110,70,30,.5))}
+  .hp-intro-dot{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--clay-orange,#E8762D);color:#fff;font-size:14px;padding-left:2px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.18),inset 0 3px 0 rgba(255,255,255,.3)}
+  .hp-intro:hover .hp-intro-dot{transform:scale(1.08)}
   .hp-stage{position:relative;aspect-ratio:1/1.02;min-height:420px}
   .hp-stage img{position:absolute;display:block}
   .hp-sun{position:absolute;top:2%;right:6%;width:58%;aspect-ratio:1;border-radius:50%;background:url(assets/brand/trong-dong.svg) center/contain no-repeat;box-shadow:inset 0 -16px 0 rgba(200,110,20,.22),inset 0 10px 0 rgba(255,255,255,.4);animation:bzSpin 80s linear infinite;opacity:.9}
@@ -125,6 +128,7 @@
           <a class="hp-cta" style="background:var(--clay-card);color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -7px 0 rgba(110,70,30,.12),inset 0 4px 0 rgba(255,255,255,.9),0 16px 24px -14px rgba(110,70,30,.45))" href="#cong" data-en="See all simulations">Xem tất cả trò chơi</a>
           <a class="hp-cta" style="background:var(--clay-ink);color:#FFD58A;font-size:17px;font-weight:800;box-shadow:inset 0 -7px 0 rgba(0,0,0,.3),inset 0 4px 0 rgba(255,255,255,.1),0 16px 24px -14px rgba(3,51,55,.7)" href="https://play.google.com/store/apps/details?id=io.github.thuyhuongctu.bizon" target="_blank" rel="noopener" data-en="▶ Get it on Google Play">▶ Tải trên Google Play</a>
         </div>
+        <a class="hp-intro" href="assets/video/bizon-intro-1min-en.mp4" data-trailer="assets/video/bizon-intro-1min-en.mp4" data-poster="assets/video/bizon-intro-1min-poster.jpg" data-title="BizOn – intro 1 phút" data-title-en="BizOn in one minute"><span class="hp-intro-dot" aria-hidden="true">▶</span><span data-en="Watch the 1-minute intro">Xem intro 1 phút</span></a>
         <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:28px">
           <span class="hp-pill" style="background:var(--clay-c5);color:#03474F" data-en="Deterministic simulation engine">Engine mô phỏng xác định</span>
           <span class="hp-pill" style="background:var(--clay-c2);color:#7A4A0E" data-en="7 markets · 6 quarters">7 thị trường · 6 quý</span>
