@@ -8,11 +8,12 @@
 <meta name="description" data-en-content="BizOn privacy policy (Web, PWA &amp; Android): local-first, optional classroom data, retention and account/data deletion." content="Chính sách quyền riêng tư BizOn (Web, PWA & Android): local-first, dữ liệu lớp học tùy chọn, lưu giữ và xóa tài khoản/dữ liệu.">
 <meta name="copyright" content="© 2026 Đỗ Thùy Hương & PGS.TS. Phan Anh Tú">
 <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script src="js/bizon-boot.js"></script>
 <link rel="stylesheet" href="css/bizon-clay-fonts.css">
 <link rel="stylesheet" href="css/bizon-clay.css">
 <style>
   .cs-modes{margin-bottom:28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
-  .cs-mode{padding:22px;border-radius:28px;box-shadow:inset 0 -8px 0 rgba(0,0,0,.07),inset 0 5px 0 rgba(255,255,255,.5),0 20px 28px -22px rgba(110,70,30,.55)}
+  .cs-mode{padding:22px;border-radius:28px;box-shadow:var(--clay-night-shadow,inset 0 -8px 0 rgba(0,0,0,.07),inset 0 5px 0 rgba(255,255,255,.5),0 20px 28px -22px rgba(110,70,30,.55))}
   .cs-sec{padding:18px 0;border-top:2px dashed #F0E2C8;scroll-margin-top:96px}
   .cs-sec:first-child{border-top:0}
   .cs-sec h2{font-size:21px;line-height:1.2}
@@ -22,6 +23,11 @@
   .cs-notice{margin-top:12px;padding:14px 18px;border-radius:20px;background:#FDE1CE;color:#5A2608;font-size:14px;line-height:1.6;font-weight:600}
   .cs-cta{margin-bottom:72px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
   .cs-anchor{display:block;height:0;scroll-margin-top:96px}
+  /* Bản tối «đất sét đêm» (data-theme do js/bizon-boot.js đặt; bản in giữ sáng) */
+  @media screen{
+    html[data-theme="dark"] .cs-sec{border-top-color:rgba(255,230,200,.14)}
+    html[data-theme="dark"] .cs-notice{background:var(--clay-peach-soft);color:#F6B48C}
+  }
 </style>
 <meta property="og:type" content="website">
 <meta property="og:title" content="Chính sách Quyền riêng tư · BizOn Bật Nghiệp">
@@ -107,7 +113,7 @@
 
   <section class="cs-cta">
     <a class="clay-btn" href="mailto:bricoleur@bizonland.com?subject=X%C3%B3a%20d%E1%BB%AF%20li%E1%BB%87u%20BizOn" data-en="Request data deletion">Gửi yêu cầu xóa dữ liệu</a>
-    <a class="clay-btn" style="background:var(--clay-card);color:var(--clay-ink);box-shadow:inset 0 -6px 0 rgba(110,70,30,.15),inset 0 3px 0 #fff" href="truong-chinh-sach.html" data-en="Institutional version: Policy & Licensing ↗">Bản thể chế: Chính sách &amp; Cấp phép ↗</a>
+    <a class="clay-btn" style="background:var(--clay-card);color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -6px 0 rgba(110,70,30,.15),inset 0 3px 0 #fff)" href="truong-chinh-sach.html" data-en="Institutional version: Policy & Licensing ↗">Bản thể chế: Chính sách &amp; Cấp phép ↗</a>
   </section>
 </main>
 

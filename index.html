@@ -4,10 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title data-en="BizOn Bật Nghiệp – Business Simulation">BizOn Bật Nghiệp – Mô phỏng kinh doanh</title>
+<title>BizOn Bật Nghiệp – Simulation</title>
 <meta name="description" data-en-content="BizOn: explainable business simulations for learning, research and internationalization – deterministic engines, AI-supported reflection, open science. From Vietnam to the world." content="BizOn: mô phỏng kinh doanh có khả năng giải thích cho học tập, nghiên cứu và quốc tế hóa – engine xác định, phản tư có AI hỗ trợ, khoa học mở. Từ Việt Nam ra thế giới.">
 <meta name="copyright" content="© 2026 Đỗ Thùy Hương & PGS.TS. Phan Anh Tú">
 <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script src="js/bizon-boot.js"></script>
 <link rel="stylesheet" href="css/bizon-clay-fonts.css">
 <link rel="stylesheet" href="css/bizon-clay.css">
 <style>
@@ -42,7 +43,7 @@
   /* Trò chơi: 4 thẻ lớn theo bậc · công cụ bổ trợ: thẻ ngang gọn */
   .hp-games-lead{margin:18px 0 0;max-width:40em;font-size:17px;line-height:1.6;color:var(--clay-sub);text-wrap:pretty}
   .hp-games{list-style:none;margin:36px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:26px}
-  .hp-game{--lv:#2E7139;display:flex;flex-direction:column;border-radius:34px;background:var(--clay-card);padding:12px;box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 rgba(255,255,255,.95),0 30px 44px -26px rgba(110,70,30,.6);transition:transform .25s ease}
+  .hp-game{--lv:#2E7139;display:flex;flex-direction:column;border-radius:34px;background:var(--clay-card);padding:12px;box-shadow:var(--clay-night-shadow,inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 rgba(255,255,255,.95),0 30px 44px -26px rgba(110,70,30,.6));transition:transform .25s ease}
   .hp-game:hover{transform:translateY(-4px)}
   .hp-game.lv2{--lv:#A84A14}
   .hp-game.lv3{--lv:#006687}
@@ -91,9 +92,20 @@
   @media (max-width:560px){ .cn-refresh{width:34px;height:34px;font-size:16px} }
   /* Máy hẹp (≤400px): ẩn nút làm mới để thanh nav không tràn ngang, đẩy nút «Bắt đầu» ra ngoài mép */
   @media (max-width:400px){ .cn-refresh{display:none} }
+  /* Bản tối «đất sét đêm» (data-theme do js/bizon-boot.js đặt; bản in giữ sáng) */
+  @media screen{
+    html[data-theme="dark"] .hp-game{box-shadow:inset 0 -9px 0 rgba(0,0,0,.28),inset 0 2px 0 rgba(255,236,210,.10),0 0 0 1px rgba(255,230,200,.08),0 30px 44px -26px rgba(0,0,0,.8)}
+    html[data-theme="dark"] .hp-game-lv{background:rgba(43,36,30,.92)}
+    html[data-theme="dark"] .hp-game .hp-game-kicker{color:#86D093}
+    html[data-theme="dark"] .hp-game.lv2 .hp-game-kicker,html[data-theme="dark"] .hp-tool-kicker{color:#F29A62}
+    html[data-theme="dark"] .hp-game.lv3 .hp-game-kicker{color:var(--clay-teal)}
+    html[data-theme="dark"] .hp-tool-img{background:#F3E6CF} /* ô ảnh sáng: ảnh dùng mix-blend-mode:multiply */
+    html[data-theme="dark"] .hp-base{background:#C99A5C}
+    html[data-theme="dark"] .cn-refresh{box-shadow:var(--clay-tray-shadow)}
+  }
 </style>
 <meta property="og:type" content="website">
-<meta property="og:title" content="BizOn Bật Nghiệp - Business Simulation">
+<meta property="og:title" content="BizOn Bật Nghiệp – Simulation">
 <meta property="og:description" content="Mô phỏng kinh doanh có khả năng giải thích, từ Việt Nam ra thế giới.">
 <meta name="twitter:card" content="summary_large_image">
 <script src="js/capture-guard.js"></script>
@@ -110,7 +122,7 @@
         <p class="hp-lead" data-en="Explainable business simulations for learning, research and internationalization – combining deterministic engines, AI-enhanced reflection and open-science practices.">Các mô phỏng kinh doanh có khả năng giải thích, được thiết kế cho học tập, nghiên cứu và quốc tế hóa – kết hợp engine xác định, phản tư có AI hỗ trợ và định hướng khoa học mở.</p>
         <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:30px">
           <a class="hp-cta" style="background:var(--clay-teal);color:#fff;box-shadow:inset 0 -7px 0 rgba(0,0,0,.2),inset 0 4px 0 rgba(255,255,255,.25),0 16px 24px -12px rgba(0,102,135,.8)" href="ben-phu-sa.html" data-en="Start with Bến Phù Sa →">Bắt đầu với Bến Phù Sa →</a>
-          <a class="hp-cta" style="background:var(--clay-card);color:var(--clay-ink);box-shadow:inset 0 -7px 0 rgba(110,70,30,.12),inset 0 4px 0 rgba(255,255,255,.9),0 16px 24px -14px rgba(110,70,30,.45)" href="#cong" data-en="See all simulations">Xem tất cả trò chơi</a>
+          <a class="hp-cta" style="background:var(--clay-card);color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -7px 0 rgba(110,70,30,.12),inset 0 4px 0 rgba(255,255,255,.9),0 16px 24px -14px rgba(110,70,30,.45))" href="#cong" data-en="See all simulations">Xem tất cả trò chơi</a>
           <a class="hp-cta" style="background:var(--clay-ink);color:#FFD58A;font-size:17px;font-weight:800;box-shadow:inset 0 -7px 0 rgba(0,0,0,.3),inset 0 4px 0 rgba(255,255,255,.1),0 16px 24px -14px rgba(3,51,55,.7)" href="https://play.google.com/store/apps/details?id=io.github.thuyhuongctu.bizon" target="_blank" rel="noopener" data-en="▶ Get it on Google Play">▶ Tải trên Google Play</a>
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:28px">
@@ -142,25 +154,25 @@
       <div class="hp-eyebrow" style="color:#FFD58A" data-en="Start from your role">Bắt đầu từ vai trò của bạn</div>
       <h2 class="hp-h2" style="max-width:18em;color:#fff" data-en="Each audience has its own way in.">Mỗi người dùng có một lối vào riêng.</h2>
       <div class="hp-cardgrid">
-        <div style="padding:26px 24px;border-radius:30px;background:var(--clay-c2);display:flex;flex-direction:column;gap:12px;box-shadow:inset 0 -10px 0 rgba(0,0,0,.08),inset 0 6px 0 rgba(255,255,255,.5),0 24px 30px -18px rgba(0,30,40,.55)">
+        <div style="padding:26px 24px;border-radius:30px;background:var(--clay-c2);display:flex;flex-direction:column;gap:12px;box-shadow:var(--clay-night-shadow,inset 0 -10px 0 rgba(0,0,0,.08),inset 0 6px 0 rgba(255,255,255,.5),0 24px 30px -18px rgba(0,30,40,.55))">
           <div style="width:52px;height:52px;border-radius:18px;background:var(--clay-card);display:grid;place-items:center;font-family:var(--clay-head);font-size:22px;font-weight:800;color:var(--clay-teal);box-shadow:inset 0 -5px 0 rgba(0,0,0,.08),0 8px 14px -8px rgba(0,0,0,.35)">01</div>
           <div style="font-family:var(--clay-head);font-size:24px;font-weight:800;line-height:1.14;color:var(--clay-ink)" data-en="Students">Sinh viên</div>
           <p style="margin:0;font-size:15px;line-height:1.55;color:var(--clay-ink-2);flex:1" data-en="Play a short round, make decisions and get feedback from Lumina.">Chơi một ván ngắn, ra quyết định và nhận phản hồi từ Lumina.</p>
           <div style="display:flex;flex-wrap:wrap;gap:8px"><a class="hp-pill" style="background:rgba(255,251,244,.85);color:var(--clay-ink)" href="ben-phu-sa-v8.html" data-en="Bến Phù Sa →">Bến Phù Sa →</a><a class="hp-pill" style="background:rgba(255,251,244,.85);color:var(--clay-ink)" href="game.html" data-en="Bật Nghiệp →">Bật Nghiệp →</a><a class="hp-pill" style="background:rgba(255,251,244,.85);color:var(--clay-ink)" href="ho-chieu-thuong-hieu.html" data-en="Brand Passport →">Hộ Chiếu Thương Hiệu →</a><a class="hp-pill" style="background:rgba(255,251,244,.85);color:var(--clay-ink)" href="ho-chieu-sau-rieng.html" data-en="Durian Passport →">Hộ Chiếu Sầu Riêng →</a></div>
         </div>
-        <div style="padding:26px 24px;border-radius:30px;background:var(--clay-c1);display:flex;flex-direction:column;gap:12px;box-shadow:inset 0 -10px 0 rgba(0,0,0,.08),inset 0 6px 0 rgba(255,255,255,.5),0 24px 30px -18px rgba(0,30,40,.55)">
+        <div style="padding:26px 24px;border-radius:30px;background:var(--clay-c1);display:flex;flex-direction:column;gap:12px;box-shadow:var(--clay-night-shadow,inset 0 -10px 0 rgba(0,0,0,.08),inset 0 6px 0 rgba(255,255,255,.5),0 24px 30px -18px rgba(0,30,40,.55))">
           <div style="width:52px;height:52px;border-radius:18px;background:var(--clay-card);display:grid;place-items:center;font-family:var(--clay-head);font-size:22px;font-weight:800;color:var(--clay-teal);box-shadow:inset 0 -5px 0 rgba(0,0,0,.08),0 8px 14px -8px rgba(0,0,0,.35)">02</div>
           <div style="font-family:var(--clay-head);font-size:24px;font-weight:800;line-height:1.14;color:var(--clay-ink)" data-en="Instructors">Giảng viên</div>
           <p style="margin:0;font-size:15px;line-height:1.55;color:var(--clay-ink-2);flex:1" data-en="Run a class, follow decision traces and grade with rubrics.">Tổ chức lớp, theo dõi dấu vết quyết định và chấm theo rubric.</p>
-          <div style="display:flex;flex-wrap:wrap;gap:8px"><a class="hp-pill" style="background:#FFD58A;color:var(--clay-ink);font-weight:800" href="Trang Giang Vien.dc.html" data-en="Open my class dashboard →">Bảng điều khiển lớp →</a><a class="hp-pill" style="background:rgba(255,251,244,.85);color:var(--clay-ink)" href="truong-giang-vien.html" data-en="Instructor page →">Trang giảng viên →</a><a class="hp-pill" style="background:rgba(255,251,244,.85);color:var(--clay-ink)" href="lop-hoc.html" data-en="Grading scale →">Thang điểm →</a></div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px"><a class="hp-pill" style="background:var(--clay-c2);color:var(--clay-ink);font-weight:800" href="Trang Giang Vien.dc.html" data-en="Open my class dashboard →">Bảng điều khiển lớp →</a><a class="hp-pill" style="background:rgba(255,251,244,.85);color:var(--clay-ink)" href="truong-giang-vien.html" data-en="Instructor page →">Trang giảng viên →</a><a class="hp-pill" style="background:rgba(255,251,244,.85);color:var(--clay-ink)" href="lop-hoc.html" data-en="Grading scale →">Thang điểm →</a></div>
         </div>
-        <div style="padding:26px 24px;border-radius:30px;background:var(--clay-c4);display:flex;flex-direction:column;gap:12px;box-shadow:inset 0 -10px 0 rgba(0,0,0,.08),inset 0 6px 0 rgba(255,255,255,.5),0 24px 30px -18px rgba(0,30,40,.55)">
+        <div style="padding:26px 24px;border-radius:30px;background:var(--clay-c4);display:flex;flex-direction:column;gap:12px;box-shadow:var(--clay-night-shadow,inset 0 -10px 0 rgba(0,0,0,.08),inset 0 6px 0 rgba(255,255,255,.5),0 24px 30px -18px rgba(0,30,40,.55))">
           <div style="width:52px;height:52px;border-radius:18px;background:var(--clay-card);display:grid;place-items:center;font-family:var(--clay-head);font-size:22px;font-weight:800;color:var(--clay-teal);box-shadow:inset 0 -5px 0 rgba(0,0,0,.08),0 8px 14px -8px rgba(0,0,0,.35)">03</div>
           <div style="font-family:var(--clay-head);font-size:24px;font-weight:800;line-height:1.14;color:var(--clay-ink)" data-en="Researchers">Nhà nghiên cứu</div>
           <p style="margin:0;font-size:15px;line-height:1.55;color:var(--clay-ink-2);flex:1" data-en="Review the models, assumptions, equations and published limitations.">Xem mô hình, giả định, phương trình và giới hạn đã công bố.</p>
           <div style="display:flex;flex-wrap:wrap;gap:8px"><a class="hp-pill" style="background:rgba(255,251,244,.85);color:var(--clay-ink)" href="truong-hoc-thuat.html" data-en="Academic framework →">Khung học thuật →</a><a class="hp-pill" style="background:rgba(255,251,244,.85);color:var(--clay-ink)" href="global.html" data-en="IE Lab →">IE Lab →</a></div>
         </div>
-        <div style="padding:26px 24px;border-radius:30px;background:var(--clay-c3);display:flex;flex-direction:column;gap:12px;box-shadow:inset 0 -10px 0 rgba(0,0,0,.08),inset 0 6px 0 rgba(255,255,255,.5),0 24px 30px -18px rgba(0,30,40,.55)">
+        <div style="padding:26px 24px;border-radius:30px;background:var(--clay-c3);display:flex;flex-direction:column;gap:12px;box-shadow:var(--clay-night-shadow,inset 0 -10px 0 rgba(0,0,0,.08),inset 0 6px 0 rgba(255,255,255,.5),0 24px 30px -18px rgba(0,30,40,.55))">
           <div style="width:52px;height:52px;border-radius:18px;background:var(--clay-card);display:grid;place-items:center;font-family:var(--clay-head);font-size:22px;font-weight:800;color:var(--clay-teal);box-shadow:inset 0 -5px 0 rgba(0,0,0,.08),0 8px 14px -8px rgba(0,0,0,.35)">04</div>
           <div style="font-family:var(--clay-head);font-size:24px;font-weight:800;line-height:1.14;color:var(--clay-ink)" data-en="Institutions · partners · funders">Nhà trường · đối tác · quỹ</div>
           <p style="margin:0;font-size:15px;line-height:1.55;color:var(--clay-ink-2);flex:1" data-en="See pilot results and how to deploy at your institution.">Tìm hiểu kết quả pilot và cách triển khai tại cơ sở đào tạo.</p>
@@ -177,7 +189,7 @@
     <p class="hp-games-lead" data-en="Start at Level 1; each level builds on the one before. Every game has a 3D version and a 2D version.">Bắt đầu từ Bậc 1, bậc sau nối tiếp bậc trước. Trò chơi nào cũng có bản 3D và bản 2D.</p>
     <ol class="hp-games">
       <li class="hp-game">
-        <div class="hp-game-media"><img src="assets/illustrations/game/ben-phu-sa-cho-noi.webp" alt="" loading="lazy"><span class="hp-game-lv"><b>1</b><span data-en="Level 1">Bậc 1</span></span><a class="hp-game-tr" href="assets/video/ben-phu-sa-trailer-v2.mp4" data-trailer="assets/video/ben-phu-sa-trailer-v2.mp4" data-poster="assets/video/ben-phu-sa-trailer-poster.jpg" data-title="Bến Phù Sa" data-title-en="Bến Phù Sa"><span aria-hidden="true">▶</span><span data-en="Trailer">Xem trailer</span></a></div>
+        <div class="hp-game-media"><img src="assets/covers/ben-phu-sa-3d.webp" alt="" loading="lazy"><span class="hp-game-lv"><b>1</b><span data-en="Level 1">Bậc 1</span></span><a class="hp-game-tr" href="assets/video/ben-phu-sa-trailer-v2.mp4" data-trailer="assets/video/ben-phu-sa-trailer-v2.mp4" data-poster="assets/video/ben-phu-sa-trailer-poster.jpg" data-title="Bến Phù Sa" data-title-en="Bến Phù Sa"><span aria-hidden="true">▶</span><span data-en="Trailer">Xem trailer</span></a></div>
         <div class="hp-game-body">
           <div class="hp-game-kicker" data-en="LEVEL 1 · START-UP">BẬC 1 · KHỞI NGHIỆP</div>
           <h3>Bến Phù Sa</h3>
@@ -187,7 +199,7 @@
         </div>
       </li>
       <li class="hp-game lv2">
-        <div class="hp-game-media"><img src="assets/illustrations/game/phong-hop-chien-luoc.webp" alt="" loading="lazy"><span class="hp-game-lv"><b>2</b><span data-en="Level 2">Bậc 2</span></span><a class="hp-game-tr" href="assets/video/bizon-trailer-v2.mp4" data-trailer="assets/video/bizon-trailer-v2.mp4" data-poster="assets/video/bizon-trailer-poster.jpg" data-title="Bật Nghiệp" data-title-en="Bật Nghiệp"><span aria-hidden="true">▶</span><span data-en="Trailer">Xem trailer</span></a></div>
+        <div class="hp-game-media"><img src="assets/covers/bat-nghiep-3d.webp" alt="" loading="lazy"><span class="hp-game-lv"><b>2</b><span data-en="Level 2">Bậc 2</span></span><a class="hp-game-tr" href="assets/video/bizon-trailer-v2.mp4" data-trailer="assets/video/bizon-trailer-v2.mp4" data-poster="assets/video/bizon-trailer-poster.jpg" data-title="Bật Nghiệp" data-title-en="Bật Nghiệp"><span aria-hidden="true">▶</span><span data-en="Trailer">Xem trailer</span></a></div>
         <div class="hp-game-body">
           <div class="hp-game-kicker" data-en="LEVEL 2 · RUNNING A BUSINESS">BẬC 2 · ĐIỀU HÀNH DOANH NGHIỆP</div>
           <h3>Bật Nghiệp</h3>
@@ -197,7 +209,7 @@
         </div>
       </li>
       <li class="hp-game lv3">
-        <div class="hp-game-media"><img src="assets/concept/ho-chieu-thuong-hieu.jpg" alt="" loading="lazy"><span class="hp-game-lv"><b>3</b><span data-en="Level 3">Bậc 3</span></span><a class="hp-game-tr" href="assets/video/bp-trailer-v2.mp4" data-trailer="assets/video/bp-trailer-v2.mp4" data-poster="assets/video/bp-trailer-poster.jpg" data-title="Hộ Chiếu Thương Hiệu" data-title-en="Brand Passport"><span aria-hidden="true">▶</span><span data-en="Trailer">Xem trailer</span></a></div>
+        <div class="hp-game-media"><img src="assets/covers/ho-chieu-thuong-hieu-3d.webp" alt="" loading="lazy"><span class="hp-game-lv"><b>3</b><span data-en="Level 3">Bậc 3</span></span><a class="hp-game-tr" href="assets/video/bp-trailer-v2.mp4" data-trailer="assets/video/bp-trailer-v2.mp4" data-poster="assets/video/bp-trailer-poster.jpg" data-title="Hộ Chiếu Thương Hiệu" data-title-en="Brand Passport"><span aria-hidden="true">▶</span><span data-en="Trailer">Xem trailer</span></a></div>
         <div class="hp-game-body">
           <div class="hp-game-kicker" data-en="LEVEL 3 · GOING GLOBAL">BẬC 3 · RA THẾ GIỚI</div>
           <h3 data-en="Brand Passport">Hộ Chiếu Thương Hiệu</h3>
@@ -207,7 +219,7 @@
         </div>
       </li>
       <li class="hp-game lv3">
-        <div class="hp-game-media"><img src="assets/concept/ho-chieu-sau-rieng-hub-cho-noi.webp" alt="" loading="lazy"><span class="hp-game-lv"><b>3</b><span data-en="Level 3">Bậc 3</span></span><a class="hp-game-tr" href="assets/video/srp-trailer.mp4" data-trailer="assets/video/srp-trailer.mp4" data-poster="assets/video/srp-trailer-poster.jpg" data-title="Hộ Chiếu Sầu Riêng" data-title-en="Durian Passport"><span aria-hidden="true">▶</span><span data-en="Trailer">Xem trailer</span></a></div>
+        <div class="hp-game-media"><img src="assets/covers/ho-chieu-sau-rieng-3d.webp" alt="" loading="lazy"><span class="hp-game-lv"><b>3</b><span data-en="Level 3">Bậc 3</span></span><a class="hp-game-tr" href="assets/video/srp-trailer.mp4" data-trailer="assets/video/srp-trailer.mp4" data-poster="assets/video/srp-trailer-poster.jpg" data-title="Hộ Chiếu Sầu Riêng" data-title-en="Durian Passport"><span aria-hidden="true">▶</span><span data-en="Trailer">Xem trailer</span></a></div>
         <div class="hp-game-body">
           <div class="hp-game-kicker" data-en="LEVEL 3 · GOING GLOBAL">BẬC 3 · RA THẾ GIỚI</div>
           <h3 data-en="Durian Passport">Hộ Chiếu Sầu Riêng</h3>
@@ -251,7 +263,7 @@
 
   <!-- TRAILERS -->
   <section style="position:relative;background:var(--clay-ink);color:#E1F2F5">
-    <div style="height:36px;background:radial-gradient(circle at 36px 0,#FBF4E8 35px,transparent 36px) 0 0/72px 36px repeat-x" aria-hidden="true"></div>
+    <div style="height:36px;background:radial-gradient(circle at 36px 0,var(--clay-bg) 35px,transparent 36px) 0 0/72px 36px repeat-x" aria-hidden="true"></div>
     <div style="max-width:1200px;margin:0 auto;padding:56px 24px 96px">
       <div class="hp-eyebrow" style="color:#FFD58A" data-en="Trailer · built from real in-game footage">Trailer · dựng từ hình ảnh trong game</div>
       <h2 class="hp-h2" style="color:#fff" data-en="Watch before you play.">Xem trước khi bắt đầu.</h2>
@@ -274,7 +286,7 @@
         </a>
       </div>
     </div>
-    <div style="height:36px;background:radial-gradient(circle at 36px 36px,#FBF4E8 35px,transparent 36px) 0 0/72px 36px repeat-x" aria-hidden="true"></div>
+    <div style="height:36px;background:radial-gradient(circle at 36px 36px,var(--clay-bg) 35px,transparent 36px) 0 0/72px 36px repeat-x" aria-hidden="true"></div>
   </section>
 
   <!-- EVIDENCE + PRINCIPLES + FLOW -->
@@ -294,16 +306,16 @@
         </div>
       </div>
       <div style="display:flex;flex-direction:column;gap:16px">
-        <div style="display:grid;grid-template-columns:56px 1fr;gap:16px;align-items:start;padding:20px;border-radius:26px;background:var(--clay-card);box-shadow:inset 0 -7px 0 rgba(110,70,30,.08),inset 0 4px 0 #fff,0 18px 26px -20px rgba(110,70,30,.5)">
-          <div style="width:56px;height:56px;border-radius:50%;background:var(--clay-c1);display:grid;place-items:center;font-family:var(--clay-head);font-weight:800;font-size:20px;color:var(--clay-ink);box-shadow:inset 0 -5px 0 rgba(0,0,0,.1),inset 0 3px 0 rgba(255,255,255,.5)">01</div>
+        <div style="display:grid;grid-template-columns:56px 1fr;gap:16px;align-items:start;padding:20px;border-radius:26px;background:var(--clay-card);box-shadow:var(--clay-night-shadow,inset 0 -7px 0 rgba(110,70,30,.08),inset 0 4px 0 #fff,0 18px 26px -20px rgba(110,70,30,.5))">
+          <div style="width:56px;height:56px;border-radius:50%;background:var(--clay-c1);display:grid;place-items:center;font-family:var(--clay-head);font-weight:800;font-size:20px;color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -5px 0 rgba(0,0,0,.1),inset 0 3px 0 rgba(255,255,255,.5))">01</div>
           <div><div style="font-family:var(--clay-head);font-size:22px;font-weight:800;line-height:1.15" data-en="Explainable engine">Engine có khả năng giải thích</div><p style="margin:4px 0 0;font-size:15px;line-height:1.55;color:var(--clay-sub)" data-en="Core scoring remains deterministic so results can be inspected, discussed and reproduced.">Logic chấm điểm cốt lõi mang tính xác định để kết quả có thể được xem xét, thảo luận và tái lập.</p></div>
         </div>
-        <div style="display:grid;grid-template-columns:56px 1fr;gap:16px;align-items:start;padding:20px;border-radius:26px;background:var(--clay-card);box-shadow:inset 0 -7px 0 rgba(110,70,30,.08),inset 0 4px 0 #fff,0 18px 26px -20px rgba(110,70,30,.5)">
-          <div style="width:56px;height:56px;border-radius:50%;background:var(--clay-c2);display:grid;place-items:center;font-family:var(--clay-head);font-weight:800;font-size:20px;color:var(--clay-ink);box-shadow:inset 0 -5px 0 rgba(0,0,0,.1),inset 0 3px 0 rgba(255,255,255,.5)">02</div>
+        <div style="display:grid;grid-template-columns:56px 1fr;gap:16px;align-items:start;padding:20px;border-radius:26px;background:var(--clay-card);box-shadow:var(--clay-night-shadow,inset 0 -7px 0 rgba(110,70,30,.08),inset 0 4px 0 #fff,0 18px 26px -20px rgba(110,70,30,.5))">
+          <div style="width:56px;height:56px;border-radius:50%;background:var(--clay-c2);display:grid;place-items:center;font-family:var(--clay-head);font-weight:800;font-size:20px;color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -5px 0 rgba(0,0,0,.1),inset 0 3px 0 rgba(255,255,255,.5))">02</div>
           <div><div style="font-family:var(--clay-head);font-size:22px;font-weight:800;line-height:1.15" data-en="Observable decisions">Dấu vết quyết định</div><p style="margin:4px 0 0;font-size:15px;line-height:1.55;color:var(--clay-sub)" data-en="Strategic choices leave traces for debriefing, rubrics, reflection and classroom analysis.">Mỗi lựa chọn chiến lược để lại dữ liệu phục vụ debriefing, rubric, phản tư và phân tích lớp học.</p></div>
         </div>
-        <div style="display:grid;grid-template-columns:56px 1fr;gap:16px;align-items:start;padding:20px;border-radius:26px;background:var(--clay-card);box-shadow:inset 0 -7px 0 rgba(110,70,30,.08),inset 0 4px 0 #fff,0 18px 26px -20px rgba(110,70,30,.5)">
-          <div style="width:56px;height:56px;border-radius:50%;background:var(--clay-c3);display:grid;place-items:center;font-family:var(--clay-head);font-weight:800;font-size:20px;color:var(--clay-ink);box-shadow:inset 0 -5px 0 rgba(0,0,0,.1),inset 0 3px 0 rgba(255,255,255,.5)">03</div>
+        <div style="display:grid;grid-template-columns:56px 1fr;gap:16px;align-items:start;padding:20px;border-radius:26px;background:var(--clay-card);box-shadow:var(--clay-night-shadow,inset 0 -7px 0 rgba(110,70,30,.08),inset 0 4px 0 #fff,0 18px 26px -20px rgba(110,70,30,.5))">
+          <div style="width:56px;height:56px;border-radius:50%;background:var(--clay-c3);display:grid;place-items:center;font-family:var(--clay-head);font-weight:800;font-size:20px;color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -5px 0 rgba(0,0,0,.1),inset 0 3px 0 rgba(255,255,255,.5))">03</div>
           <div><div style="font-family:var(--clay-head);font-size:22px;font-weight:800;line-height:1.15" data-en="Learning evidence">Đo lường học tập</div><p style="margin:4px 0 0;font-size:15px;line-height:1.55;color:var(--clay-sub)" data-en="Game mechanics connect with learning outcomes, pre/post measures and documented limitations.">Cơ chế game được liên kết với chuẩn đầu ra, đo lường trước–sau và các giới hạn được công bố.</p></div>
         </div>
       </div>
@@ -315,13 +327,13 @@
         <div class="hp-eyebrow" data-en="Research → learning design">Từ nghiên cứu đến thiết kế học tập</div>
       </div>
       <ol style="list-style:none;margin:30px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:14px">
-        <li style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px"><span style="width:64px;height:64px;border-radius:50%;background:var(--clay-c1);display:grid;place-items:center;font-family:var(--clay-head);font-size:22px;font-weight:800;color:var(--clay-ink);box-shadow:inset 0 -6px 0 rgba(0,0,0,.12),inset 0 4px 0 rgba(255,255,255,.55),0 12px 16px -10px rgba(110,70,30,.6)">01</span><span style="font-family:var(--clay-head);font-size:19px;font-weight:800;line-height:1.14" data-en="Research">Nghiên cứu</span><span style="font-size:13px;line-height:1.4;color:var(--clay-sub)">IB · Entrepreneurship</span></li>
-        <li style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px"><span style="width:64px;height:64px;border-radius:50%;background:var(--clay-c2);display:grid;place-items:center;font-family:var(--clay-head);font-size:22px;font-weight:800;color:var(--clay-ink);box-shadow:inset 0 -6px 0 rgba(0,0,0,.12),inset 0 4px 0 rgba(255,255,255,.55),0 12px 16px -10px rgba(110,70,30,.6)">02</span><span style="font-family:var(--clay-head);font-size:19px;font-weight:800;line-height:1.14" data-en="Model">Mô hình</span><span style="font-size:13px;line-height:1.4;color:var(--clay-sub)" data-en="Assumptions & parameters">Giả định và tham số</span></li>
-        <li style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px"><span style="width:64px;height:64px;border-radius:50%;background:var(--clay-c3);display:grid;place-items:center;font-family:var(--clay-head);font-size:22px;font-weight:800;color:var(--clay-ink);box-shadow:inset 0 -6px 0 rgba(0,0,0,.12),inset 0 4px 0 rgba(255,255,255,.55),0 12px 16px -10px rgba(110,70,30,.6)">03</span><span style="font-family:var(--clay-head);font-size:19px;font-weight:800;line-height:1.14" data-en="Simulation">Mô phỏng</span><span style="font-size:13px;line-height:1.4;color:var(--clay-sub)" data-en="Consequential scenarios">Kịch bản có hệ quả</span></li>
-        <li style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px"><span style="width:64px;height:64px;border-radius:50%;background:var(--clay-c4);display:grid;place-items:center;font-family:var(--clay-head);font-size:22px;font-weight:800;color:var(--clay-ink);box-shadow:inset 0 -6px 0 rgba(0,0,0,.12),inset 0 4px 0 rgba(255,255,255,.55),0 12px 16px -10px rgba(110,70,30,.6)">04</span><span style="font-family:var(--clay-head);font-size:19px;font-weight:800;line-height:1.14" data-en="Decision">Quyết định</span><span style="font-size:13px;line-height:1.4;color:var(--clay-sub)" data-en="Actions & trade-offs">Hành động và đánh đổi</span></li>
-        <li style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px"><span style="width:64px;height:64px;border-radius:50%;background:var(--clay-c1);display:grid;place-items:center;font-family:var(--clay-head);font-size:22px;font-weight:800;color:var(--clay-ink);box-shadow:inset 0 -6px 0 rgba(0,0,0,.12),inset 0 4px 0 rgba(255,255,255,.55),0 12px 16px -10px rgba(110,70,30,.6)">05</span><span style="font-family:var(--clay-head);font-size:19px;font-weight:800;line-height:1.14" data-en="Outcome">Kết quả</span><span style="font-size:13px;line-height:1.4;color:var(--clay-sub)" data-en="Explainable consequences">Hệ quả giải thích được</span></li>
-        <li style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px"><span style="width:64px;height:64px;border-radius:50%;background:var(--clay-c2);display:grid;place-items:center;font-family:var(--clay-head);font-size:22px;font-weight:800;color:var(--clay-ink);box-shadow:inset 0 -6px 0 rgba(0,0,0,.12),inset 0 4px 0 rgba(255,255,255,.55),0 12px 16px -10px rgba(110,70,30,.6)">06</span><span style="font-family:var(--clay-head);font-size:19px;font-weight:800;line-height:1.14" data-en="Reflection">Phản tư</span><span style="font-size:13px;line-height:1.4;color:var(--clay-sub)" data-en="AI-enhanced questioning">AI hỗ trợ chất vấn</span></li>
-        <li style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px"><span style="width:64px;height:64px;border-radius:50%;background:var(--clay-c3);display:grid;place-items:center;font-family:var(--clay-head);font-size:22px;font-weight:800;color:var(--clay-ink);box-shadow:inset 0 -6px 0 rgba(0,0,0,.12),inset 0 4px 0 rgba(255,255,255,.55),0 12px 16px -10px rgba(110,70,30,.6)">07</span><span style="font-family:var(--clay-head);font-size:19px;font-weight:800;line-height:1.14" data-en="Evidence">Bằng chứng</span><span style="font-size:13px;line-height:1.4;color:var(--clay-sub)" data-en="Observable learning artifacts">Sản phẩm học tập quan sát được</span></li>
+        <li style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px"><span style="width:64px;height:64px;border-radius:50%;background:var(--clay-c1);display:grid;place-items:center;font-family:var(--clay-head);font-size:22px;font-weight:800;color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -6px 0 rgba(0,0,0,.12),inset 0 4px 0 rgba(255,255,255,.55),0 12px 16px -10px rgba(110,70,30,.6))">01</span><span style="font-family:var(--clay-head);font-size:19px;font-weight:800;line-height:1.14" data-en="Research">Nghiên cứu</span><span style="font-size:13px;line-height:1.4;color:var(--clay-sub)">IB · Entrepreneurship</span></li>
+        <li style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px"><span style="width:64px;height:64px;border-radius:50%;background:var(--clay-c2);display:grid;place-items:center;font-family:var(--clay-head);font-size:22px;font-weight:800;color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -6px 0 rgba(0,0,0,.12),inset 0 4px 0 rgba(255,255,255,.55),0 12px 16px -10px rgba(110,70,30,.6))">02</span><span style="font-family:var(--clay-head);font-size:19px;font-weight:800;line-height:1.14" data-en="Model">Mô hình</span><span style="font-size:13px;line-height:1.4;color:var(--clay-sub)" data-en="Assumptions & parameters">Giả định và tham số</span></li>
+        <li style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px"><span style="width:64px;height:64px;border-radius:50%;background:var(--clay-c3);display:grid;place-items:center;font-family:var(--clay-head);font-size:22px;font-weight:800;color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -6px 0 rgba(0,0,0,.12),inset 0 4px 0 rgba(255,255,255,.55),0 12px 16px -10px rgba(110,70,30,.6))">03</span><span style="font-family:var(--clay-head);font-size:19px;font-weight:800;line-height:1.14" data-en="Simulation">Mô phỏng</span><span style="font-size:13px;line-height:1.4;color:var(--clay-sub)" data-en="Consequential scenarios">Kịch bản có hệ quả</span></li>
+        <li style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px"><span style="width:64px;height:64px;border-radius:50%;background:var(--clay-c4);display:grid;place-items:center;font-family:var(--clay-head);font-size:22px;font-weight:800;color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -6px 0 rgba(0,0,0,.12),inset 0 4px 0 rgba(255,255,255,.55),0 12px 16px -10px rgba(110,70,30,.6))">04</span><span style="font-family:var(--clay-head);font-size:19px;font-weight:800;line-height:1.14" data-en="Decision">Quyết định</span><span style="font-size:13px;line-height:1.4;color:var(--clay-sub)" data-en="Actions & trade-offs">Hành động và đánh đổi</span></li>
+        <li style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px"><span style="width:64px;height:64px;border-radius:50%;background:var(--clay-c1);display:grid;place-items:center;font-family:var(--clay-head);font-size:22px;font-weight:800;color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -6px 0 rgba(0,0,0,.12),inset 0 4px 0 rgba(255,255,255,.55),0 12px 16px -10px rgba(110,70,30,.6))">05</span><span style="font-family:var(--clay-head);font-size:19px;font-weight:800;line-height:1.14" data-en="Outcome">Kết quả</span><span style="font-size:13px;line-height:1.4;color:var(--clay-sub)" data-en="Explainable consequences">Hệ quả giải thích được</span></li>
+        <li style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px"><span style="width:64px;height:64px;border-radius:50%;background:var(--clay-c2);display:grid;place-items:center;font-family:var(--clay-head);font-size:22px;font-weight:800;color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -6px 0 rgba(0,0,0,.12),inset 0 4px 0 rgba(255,255,255,.55),0 12px 16px -10px rgba(110,70,30,.6))">06</span><span style="font-family:var(--clay-head);font-size:19px;font-weight:800;line-height:1.14" data-en="Reflection">Phản tư</span><span style="font-size:13px;line-height:1.4;color:var(--clay-sub)" data-en="AI-enhanced questioning">AI hỗ trợ chất vấn</span></li>
+        <li style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px"><span style="width:64px;height:64px;border-radius:50%;background:var(--clay-c3);display:grid;place-items:center;font-family:var(--clay-head);font-size:22px;font-weight:800;color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -6px 0 rgba(0,0,0,.12),inset 0 4px 0 rgba(255,255,255,.55),0 12px 16px -10px rgba(110,70,30,.6))">07</span><span style="font-family:var(--clay-head);font-size:19px;font-weight:800;line-height:1.14" data-en="Evidence">Bằng chứng</span><span style="font-size:13px;line-height:1.4;color:var(--clay-sub)" data-en="Observable learning artifacts">Sản phẩm học tập quan sát được</span></li>
       </ol>
     </div>
   </section>
@@ -331,21 +343,21 @@
     <div class="hp-eyebrow" data-en="People & intellectual identity">Con người và bản sắc trí tuệ</div>
     <h2 class="hp-h2" style="max-width:20em" data-en="Research-led, locally grounded, globally oriented.">Dẫn dắt bởi nghiên cứu, bắt nguồn từ Việt Nam, hướng đến toàn cầu.</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:22px;margin-top:36px">
-      <article style="display:grid;grid-template-columns:68px 1fr;gap:18px;padding:26px;border-radius:30px;background:var(--clay-card);box-shadow:inset 0 -8px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 22px 30px -22px rgba(110,70,30,.55)">
+      <article style="display:grid;grid-template-columns:68px 1fr;gap:18px;padding:26px;border-radius:30px;background:var(--clay-card);box-shadow:var(--clay-night-shadow,inset 0 -8px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 22px 30px -22px rgba(110,70,30,.55))">
         <div style="width:68px;height:68px;border-radius:24px;display:grid;place-items:center;background:var(--clay-teal);color:#fff;font-family:var(--clay-head);font-weight:800;font-size:24px;box-shadow:inset 0 -6px 0 rgba(0,0,0,.18),inset 0 4px 0 rgba(255,255,255,.25)">TH</div>
         <div><h3 style="margin:0;font-family:var(--clay-head);font-weight:800;font-size:26px;line-height:1.14" data-en="Do Thuy Huong">Đỗ Thùy Hương</h3><div style="margin-top:4px;font-size:14px;font-weight:700;color:var(--clay-teal)" data-en="Founder & Project Lead · PhD Candidate in Business Administration, Can Tho University">Sáng lập &amp; Chủ nhiệm dự án · Nghiên cứu sinh Quản trị Kinh doanh, Trường Đại học Cần Thơ</div><p style="margin:10px 0 0;font-size:15px;line-height:1.55;color:var(--clay-sub)" data-en="Research in internationalization strategy, firm performance, meta-analysis, quantitative methods and AI-assisted management research.">Nghiên cứu chiến lược quốc tế hóa, hiệu quả doanh nghiệp, meta-analysis, phương pháp định lượng và ứng dụng AI trong nghiên cứu quản trị.</p></div>
       </article>
-      <article style="display:grid;grid-template-columns:68px 1fr;gap:18px;padding:26px;border-radius:30px;background:var(--clay-card);box-shadow:inset 0 -8px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 22px 30px -22px rgba(110,70,30,.55)">
+      <article style="display:grid;grid-template-columns:68px 1fr;gap:18px;padding:26px;border-radius:30px;background:var(--clay-card);box-shadow:var(--clay-night-shadow,inset 0 -8px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 22px 30px -22px rgba(110,70,30,.55))">
         <div style="width:68px;height:68px;border-radius:24px;display:grid;place-items:center;background:var(--clay-orange);color:#fff;font-family:var(--clay-head);font-weight:800;font-size:24px;box-shadow:inset 0 -6px 0 rgba(0,0,0,.18),inset 0 4px 0 rgba(255,255,255,.25)">AT</div>
         <div><h3 style="margin:0;font-family:var(--clay-head);font-weight:800;font-size:26px;line-height:1.14" data-en="Assoc. Prof. Dr. Phan Anh Tu">PGS.TS. Phan Anh Tú</h3><div style="margin-top:4px;font-size:14px;font-weight:700;color:var(--clay-teal)" data-en="Co-founder & Chief Academic Advisor">Đồng sáng lập &amp; Cố vấn học thuật trưởng</div><p style="margin:10px 0 0;font-size:15px;line-height:1.55;color:var(--clay-sub)" data-en="Academic direction, model review, classroom implementation design and alignment between simulations and learning outcomes.">Định hướng học thuật, phản biện mô hình, thiết kế triển khai trong lớp học và bảo đảm sự gắn kết giữa mô phỏng với mục tiêu đào tạo.</p></div>
       </article>
     </div>
-    <a style="margin-top:22px;display:block;padding:24px 28px;border-radius:32px;background:var(--clay-c2);color:var(--clay-ink);box-shadow:inset 0 -9px 0 rgba(0,0,0,.07),inset 0 5px 0 rgba(255,255,255,.5),0 24px 32px -22px rgba(110,70,30,.55)" href="dinh-huong.html">
+    <a style="margin-top:22px;display:block;padding:24px 28px;border-radius:32px;background:var(--clay-c2);color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -9px 0 rgba(0,0,0,.07),inset 0 5px 0 rgba(255,255,255,.5),0 24px 32px -22px rgba(110,70,30,.55))" href="dinh-huong.html">
       <span style="display:block;font-family:var(--clay-head);font-size:16px;font-weight:700;color:#7A4A12" data-en="Vision · Regional impact">Tầm nhìn · Tác động vùng</span>
       <span style="display:block;margin-top:4px;font-family:var(--clay-head);font-size:clamp(21px,2.4vw,28px);font-weight:800;line-height:1.3" data-en="A Mekong Delta where young people do not have to leave home to build a livelihood – starting enterprises on their own soil and bringing Vietnamese products to the world.">Một Đồng bằng sông Cửu Long nơi người trẻ không phải rời quê mới có thể lập nghiệp – khởi nghiệp trên chính đất phù sa và đưa sản phẩm Việt ra thế giới.</span>
       <span style="margin-top:14px;display:inline-flex;padding:10px 16px;border-radius:999px;background:var(--clay-card);font-weight:800;font-size:14px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.08)" data-en="Mission, values &amp; 2030 indicators →">Sứ mệnh, giá trị &amp; chỉ báo 2030 →</span>
     </a>
-    <a style="margin-top:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));align-items:center;gap:20px;padding:20px 28px;border-radius:32px;background:var(--clay-c3);color:var(--clay-ink);box-shadow:inset 0 -9px 0 rgba(0,0,0,.07),inset 0 5px 0 rgba(255,255,255,.5),0 24px 32px -22px rgba(150,60,80,.6)" href="am-nhac.html">
+    <a style="margin-top:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));align-items:center;gap:20px;padding:20px 28px;border-radius:32px;background:var(--clay-c3);color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -9px 0 rgba(0,0,0,.07),inset 0 5px 0 rgba(255,255,255,.5),0 24px 32px -22px rgba(150,60,80,.6))" href="am-nhac.html">
       <div>
         <div style="font-family:var(--clay-head);font-size:16px;font-weight:700;color:#7A2338" data-en="Immersive learning layer">Lớp trải nghiệm nhập vai</div>
         <div style="margin-top:2px;font-family:var(--clay-head);font-size:30px;font-weight:800;line-height:1.14" data-en="Soundtrack for deeper learning.">Âm nhạc cho trải nghiệm học sâu hơn.</div>
@@ -379,7 +391,7 @@ document.addEventListener('DOMContentLoaded', function(){
   btn.textContent = '⟳';
   btn.addEventListener('click', function(){ location.reload(); });
   right.insertBefore(btn, right.firstChild);
-  if(window.clayApplyLang) window.clayApplyLang(window.clayCurrentLang ? window.clayCurrentLang() : 'vi');
+  if(window.clayRefreshLang) window.clayRefreshLang();
 });
 </script>
 <script>

@@ -6,7 +6,7 @@
 (function(){
   if(window.__bizonArcade) return; window.__bizonArcade = true;
 
-  var CLAY = ['#7FD3DC','#FFD58A','#F4B6C2','#A9DCC4'];
+  var CLAY = ['var(--clay-c1)','var(--clay-c2)','var(--clay-c3)','var(--clay-c4)']; /* biến --clay-* để bản tối đổi theo */
   var BEATS = {0:2,2:1,1:0}, BASE = [[40,42],[70,30],[110,20]];
   var B = ''; /* đường dẫn tương đối: chạy được cả bản local, bản fork và app offline */
 
@@ -52,7 +52,7 @@
     set('ar-h1', esc(t.h1));
     set('ar-lead', esc(t.lead));
     set('ar-ps', '<div style="flex:1 1 300px"><div style="font-family:var(--clay-head);font-size:22px;font-weight:800;line-height:1.2;color:#fff">'+esc(t.psTitle)+'</div><div style="margin-top:4px;font-size:14px;color:#9CC9C9">'+esc(t.psBody)+'</div></div>'
-      + '<a href="https://play.google.com/store/apps/details?id=io.github.thuyhuongctu.bizon" style="display:flex;align-items:center;gap:10px;padding:12px 20px;border-radius:18px;background:var(--clay-gold);color:#033337;font:800 17px var(--clay-head);box-shadow:inset 0 -5px 0 rgba(0,0,0,.18),inset 0 3px 0 rgba(255,255,255,.4)">▶ '+esc(t.gp)+'</a>');
+      + '<a href="https://play.google.com/store/apps/details?id=io.github.thuyhuongctu.bizon" style="display:flex;align-items:center;gap:10px;padding:12px 20px;border-radius:18px;background:var(--clay-gold);color:var(--clay-ink);font:800 17px var(--clay-head);box-shadow:inset 0 -5px 0 rgba(0,0,0,.18),inset 0 3px 0 rgba(255,255,255,.4)">▶ '+esc(t.gp)+'</a>');
     set('ar-pathtag', esc(t.pathTag));
     set('ar-pathtitle', esc(t.pathTitle));
     set('ar-minitag', esc(t.miniTag));
@@ -65,20 +65,20 @@
     }).join(''));
 
     /* mains */
-    var img = ['assets/illustrations/game/ben-phu-sa-cho-noi.webp','assets/illustrations/game/phong-hop-chien-luoc.webp','assets/concept/ho-chieu-thuong-hieu.jpg','assets/concept/ho-chieu-sau-rieng-hub-cho-noi.webp'];
-    var tagBg = ['#0F5C4E','#E8762D','#B3541A','#B3541A'];
+    var img = ['assets/covers/ben-phu-sa-3d.webp','assets/covers/bat-nghiep-3d.webp','assets/covers/ho-chieu-thuong-hieu-3d.webp','assets/covers/ho-chieu-sau-rieng-3d.webp'];
+    var tagBg = ['#0F5C4E','var(--clay-orange)','#B3541A','#B3541A'];
     var play = [B+'ben-phu-sa.html', B+'game.html', B+'brand-passport.html', B+'lab/ho-chieu-sau-rieng.html'];
     var d3 = [B+'ben-phu-sa-3d.html', B+'BizOn Game 3D.html', B+'Ho Chieu Thuong Hieu 3D.html', B+'lab/ho-chieu-sau-rieng-3d.html'];
     set('ar-mains', t.mains.map(function(m,i){
-      return '<article id="g'+i+'" style="display:flex;flex-wrap:wrap;gap:22px;align-items:center;padding:14px;border-radius:32px;background:var(--clay-card);box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 26px 36px -26px rgba(110,70,30,.55)">'
+      return '<article id="g'+i+'" style="display:flex;flex-wrap:wrap;gap:22px;align-items:center;padding:14px;border-radius:32px;background:var(--clay-card);box-shadow:var(--clay-night-shadow,inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 26px 36px -26px rgba(110,70,30,.55))">'
         + '<div style="flex:1 1 340px;max-width:420px;margin:0 auto;position:relative;aspect-ratio:16/10;border-radius:24px;overflow:hidden;background:var(--clay-tray)"><img src="'+img[i]+'" alt="" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></div>'
         + '<div style="flex:999 1 320px;padding:8px 14px 8px 4px;display:flex;flex-direction:column;gap:10px">'
-        + '<div style="display:flex;flex-wrap:wrap;gap:8px"><span style="padding:5px 12px;border-radius:999px;background:'+tagBg[i]+';color:#fff;font-size:12px;font-weight:800;box-shadow:inset 0 -3px 0 rgba(0,0,0,.15)">'+esc(m[0])+'</span>'+(m[1]?'<span style="padding:5px 12px;border-radius:999px;background:#D9F0F2;color:#03474F;font-size:12px;font-weight:800">'+esc(m[1])+'</span>':'')+'</div>'
+        + '<div style="display:flex;flex-wrap:wrap;gap:8px"><span style="padding:5px 12px;border-radius:999px;background:'+tagBg[i]+';color:#fff;font-size:12px;font-weight:800;box-shadow:inset 0 -3px 0 rgba(0,0,0,.15)">'+esc(m[0])+'</span>'+(m[1]?'<span style="padding:5px 12px;border-radius:999px;background:var(--clay-c5);color:#03474F;font-size:12px;font-weight:800">'+esc(m[1])+'</span>':'')+'</div>'
         + '<h3 style="margin:0;font-family:var(--clay-head);font-size:30px;font-weight:800;line-height:1.14">'+esc(m[2])+'</h3>'
         + '<p style="margin:0;font-size:15px;line-height:1.6;color:var(--clay-sub)">'+esc(m[3])+'</p>'
         + '<div style="font-size:13px;font-weight:700;color:#6B7F80">'+esc(m[4])+'</div>'
         + '<div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:4px">'
-        + '<a href="'+esc(play[i])+'" style="padding:13px 22px;border-radius:18px;background:#E8762D;color:#fff;font-family:var(--clay-head);font-size:18px;font-weight:800;box-shadow:inset 0 -6px 0 rgba(0,0,0,.18),inset 0 3px 0 rgba(255,255,255,.3),0 12px 18px -10px rgba(232,118,45,.8)">'+esc(t.play)+'</a>'
+        + '<a href="'+esc(play[i])+'" style="padding:13px 22px;border-radius:18px;background:var(--clay-orange);color:var(--clay-on-orange);font-family:var(--clay-head);font-size:18px;font-weight:800;box-shadow:inset 0 -6px 0 rgba(0,0,0,.18),inset 0 3px 0 rgba(255,255,255,.3),0 12px 18px -10px rgba(232,118,45,.8)">'+esc(t.play)+'</a>'
         + (d3[i] ? '<a href="'+esc(d3[i])+'" style="padding:13px 20px;border-radius:18px;background:var(--clay-tray);color:var(--clay-ink);font-family:var(--clay-head);font-size:18px;font-weight:800;box-shadow:inset 0 -5px 0 rgba(110,70,30,.15)">'+(i===0?esc(t.d3solo):esc(t.d3))+'</a>'
           : '<a href="'+B+'lop-hoc.html" style="padding:13px 20px;border-radius:18px;background:var(--clay-tray);color:var(--clay-ink);font-family:var(--clay-head);font-size:18px;font-weight:800;box-shadow:inset 0 -5px 0 rgba(110,70,30,.15)">'+esc(t.playbook)+'</a>')
         + (i===0 ? '<a href="'+B+'ben-phu-sa-v8.html" style="padding:13px 20px;border-radius:18px;background:var(--clay-teal);color:#fff;font-family:var(--clay-head);font-size:18px;font-weight:800;box-shadow:inset 0 -5px 0 rgba(0,60,80,.35)">'+esc(t.d3team)+'</a>' : '')
@@ -88,19 +88,19 @@
     }).join(''));
 
     /* sides */
-    var sbg = ['#DDF1E4','#FFE6B8','#D9F0F2'];
+    var sbg = ['var(--clay-mint-soft)','var(--clay-amber-soft)','var(--clay-c5)'];
     var shref = [B+'Ho Chieu Mini.dc.html', B+'game.html', B+'global.html'];
     set('ar-sides', t.sides.map(function(s,i){
-      return '<a href="'+esc(shref[i])+'" style="display:flex;flex-direction:column;gap:8px;padding:22px;border-radius:28px;background:'+sbg[i]+';color:var(--clay-ink);box-shadow:inset 0 -8px 0 rgba(0,0,0,.07),inset 0 5px 0 rgba(255,255,255,.5),0 20px 28px -22px rgba(110,70,30,.55)">'
+      return '<a href="'+esc(shref[i])+'" style="display:flex;flex-direction:column;gap:8px;padding:22px;border-radius:28px;background:'+sbg[i]+';color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -8px 0 rgba(0,0,0,.07),inset 0 5px 0 rgba(255,255,255,.5),0 20px 28px -22px rgba(110,70,30,.55))">'
         + '<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"><span style="font-family:var(--clay-head);font-size:22px;font-weight:800">'+esc(s[0])+'</span><span style="padding:3px 10px;border-radius:999px;background:var(--clay-card);font-size:11px;font-weight:800">'+esc(s[1])+'</span></div>'
-        + '<p style="margin:0;font-size:14px;line-height:1.55;color:#24403F">'+esc(s[2])+'</p>'
+        + '<p style="margin:0;font-size:14px;line-height:1.55;color:var(--clay-ink-2)">'+esc(s[2])+'</p>'
         + '<span style="margin-top:auto;font-size:14px;font-weight:800;color:var(--clay-teal)">'+esc(s[3])+' →</span></a>';
     }).join(''));
 
     /* ext reflex games */
-    var xbg = ['#DDF1E4','#FFE6B8','#FFE6B8','#FFE6B8'];
+    var xbg = ['var(--clay-mint-soft)','var(--clay-amber-soft)','var(--clay-amber-soft)','var(--clay-amber-soft)'];
     set('ar-ext', t.ext.map(function(x){
-      return '<a href="'+esc(B+x[3])+'" style="display:flex;justify-content:space-between;gap:12px;align-items:start;padding:22px;border-radius:28px;background:var(--clay-card);color:var(--clay-ink);box-shadow:inset 0 -8px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 20px 28px -22px rgba(110,70,30,.55)">'
+      return '<a href="'+esc(B+x[3])+'" style="display:flex;justify-content:space-between;gap:12px;align-items:start;padding:22px;border-radius:28px;background:var(--clay-card);color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -8px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 20px 28px -22px rgba(110,70,30,.55))">'
         + '<div><div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"><span style="font-family:var(--clay-head);font-size:22px;font-weight:800">'+esc(x[0])+'</span><span style="padding:3px 10px;border-radius:999px;background:'+xbg[0]+';font-size:11px;font-weight:800">'+esc(x[1])+'</span></div><p style="margin:4px 0 0;font-size:14px;line-height:1.5;color:var(--clay-sub)">'+esc(x[2])+'</p></div>'
         + '<span style="flex:none;padding:10px 14px;border-radius:16px;background:var(--clay-tray);font:800 15px var(--clay-head);box-shadow:inset 0 -4px 0 rgba(110,70,30,.15)">'+esc(t.open)+' ↗</span></a>';
     }).join(''));
@@ -112,7 +112,7 @@
     var cur = quiz && !quiz.done ? quiz.set[quiz.i] : null;
     var head =
       '<div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;align-items:center">'
-      + '<div style="flex:1 1 320px"><div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"><span style="font-family:var(--clay-head);font-size:26px;font-weight:800;line-height:1.14">'+esc(t.qName)+'</span><span style="padding:4px 10px;border-radius:999px;background:#FFE6B8;color:#7A4A0E;font-size:11px;font-weight:800;box-shadow:inset 0 -2px 0 rgba(0,0,0,.08)">'+esc(t.qTag)+'</span></div>'
+      + '<div style="flex:1 1 320px"><div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"><span style="font-family:var(--clay-head);font-size:26px;font-weight:800;line-height:1.14">'+esc(t.qName)+'</span><span style="padding:4px 10px;border-radius:999px;background:var(--clay-amber-soft);color:#7A4A0E;font-size:11px;font-weight:800;box-shadow:inset 0 -2px 0 rgba(0,0,0,.08)">'+esc(t.qTag)+'</span></div>'
       + '<p style="margin:6px 0 0;font-size:15px;line-height:1.55;color:#03343A">'+esc(t.qDesc)+'</p>'
       + '<a href="https://doi.org/10.5281/zenodo.21850735" style="display:inline-flex;margin-top:10px;padding:6px 12px;border-radius:999px;background:var(--clay-card);color:var(--clay-ink);font-family:var(--clay-mono);font-size:12px;box-shadow:inset 0 -3px 0 rgba(0,0,0,.08)">Zenodo · DOI 10.5281/zenodo.21850735</a></div>'
       + '<div style="display:flex;flex-wrap:wrap;gap:10px">'
@@ -142,13 +142,13 @@
       } else {
         widget += cur.o.map(function(o,k){
           var right = k===cur.a, chosen = k===quiz.picked;
-          var bg = right ? '#DDF1E4' : (chosen ? '#FDE1CE' : 'var(--clay-bg)');
+          var bg = right ? 'var(--clay-mint-soft)' : (chosen ? 'var(--clay-peach-soft)' : 'var(--clay-bg)');
           return '<div style="padding:12px 14px;border-radius:14px;background:'+bg+';font:600 15px var(--clay-sans);color:var(--clay-ink)">'+'ABCD'[k]+'. '+esc(o)+(right?' ✅':(chosen?' ❌':''))+'</div>';
         }).join('');
         widget += '</div>';
         var fb = quiz.picked===cur.a ? '✅ '+t.qOk+(cur.e||'') : '❌ '+t.qNo+'ABCD'[cur.a]+'. '+cur.o[cur.a]+(cur.e ? ' – '+cur.e : '');
-        widget += '<p style="margin:12px 0 0;font-size:14px;line-height:1.55;color:#24403F">'+esc(fb)+'</p>';
-        widget += '<button type="button" id="ar-quiz-next" style="margin-top:12px;border:0;cursor:pointer;padding:11px 18px;border-radius:16px;background:#FFD58A;color:#033337;font:800 15px var(--clay-head);box-shadow:inset 0 -4px 0 rgba(0,0,0,.12)">'+esc(quiz.i+1<quiz.set.length?t.qNext:t.qEnd)+' →</button>';
+        widget += '<p style="margin:12px 0 0;font-size:14px;line-height:1.55;color:var(--clay-ink-2)">'+esc(fb)+'</p>';
+        widget += '<button type="button" id="ar-quiz-next" style="margin-top:12px;border:0;cursor:pointer;padding:11px 18px;border-radius:16px;background:var(--clay-c2);color:var(--clay-ink);font:800 15px var(--clay-head);box-shadow:inset 0 -4px 0 rgba(0,0,0,.12)">'+esc(quiz.i+1<quiz.set.length?t.qNext:t.qEnd)+' →</button>';
       }
     }
     widget += '</div>';
@@ -177,8 +177,8 @@
     if(price){
       body = '<div style="display:flex;gap:8px;margin-top:16px">'
         + '<input type="number" min="50" max="250" id="ar-price-in" value="'+esc(price.val)+'" placeholder="150" style="flex:1;min-width:0;border:0;outline:none;padding:12px 14px;border-radius:16px;background:var(--clay-tray);font:700 15px var(--clay-sans);color:var(--clay-ink);box-shadow:inset 3px 4px 8px rgba(110,70,30,.18)">'
-        + '<button type="button" id="ar-price-guess" style="border:0;cursor:pointer;padding:0 18px;border-radius:16px;background:#E8762D;color:#fff;font:800 15px var(--clay-head);box-shadow:inset 0 -4px 0 rgba(0,0,0,.18)">'+esc(t.guess)+'</button></div>'
-        + '<p style="margin:10px 0 0;font-size:13px;line-height:1.5;color:#24403F">'+esc(price.fb || t.pInit)+'</p>';
+        + '<button type="button" id="ar-price-guess" style="border:0;cursor:pointer;padding:0 18px;border-radius:16px;background:var(--clay-orange);color:var(--clay-on-orange);font:800 15px var(--clay-head);box-shadow:inset 0 -4px 0 rgba(0,0,0,.18)">'+esc(t.guess)+'</button></div>'
+        + '<p style="margin:10px 0 0;font-size:13px;line-height:1.5;color:var(--clay-ink-2)">'+esc(price.fb || t.pInit)+'</p>';
     }
     el.innerHTML = head + body;
     var st = document.getElementById('ar-price-start'); if(st) st.onclick = function(){ price = { target: 50+Math.floor(Math.random()*201), left:7, val:'', fb:null }; renderPrice(); };
@@ -202,7 +202,7 @@
   /* =================== Đấu trường 1v1 =================== */
   function renderH2H(){
     var t = T[lang()], el = document.getElementById('ar-h2h'); if(!el) return;
-    var res = {y:t.hW,a:t.hL,t:t.hT}, resBg = {y:'#A9DCC4',a:'#F4B6C2',t:'#F3E6CF'};
+    var res = {y:t.hW,a:t.hL,t:t.hT}, resBg = {y:'var(--clay-c4)',a:'var(--clay-c3)',t:'var(--clay-tray)'};
     var head = '<div style="display:flex;justify-content:space-between;gap:12px;align-items:start"><div><div style="font-family:var(--clay-head);font-size:22px;font-weight:800">'+esc(t.hName)+'</div><p style="margin:4px 0 0;font-size:14px;line-height:1.5;color:var(--clay-sub)">'+esc(t.hDesc)+'</p></div>'
       + '<button type="button" id="ar-h2h-start" style="flex:none;border:0;cursor:pointer;padding:10px 16px;border-radius:16px;background:var(--clay-teal);color:#fff;font:800 15px var(--clay-head);box-shadow:inset 0 -4px 0 rgba(0,0,0,.2)">'+esc(t.start)+'</button></div>';
     var body = '';
@@ -211,13 +211,13 @@
       body += '<div style="margin-top:16px;font-size:13px;font-weight:800;color:#6B5A3A">'+esc(headline)+'</div>';
       if(!h2h.done){
         body += '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px">'
-          + t.hMoves.map(function(m,k){ return '<button type="button" data-move="'+k+'" style="border:0;cursor:pointer;padding:12px 6px;border-radius:16px;background:'+CLAY[k]+';color:var(--clay-ink);font:800 14px var(--clay-head);box-shadow:inset 0 -5px 0 rgba(0,0,0,.1),inset 0 3px 0 rgba(255,255,255,.5)"><span style="display:block;font-size:17px">'+esc(m[0])+'</span><span style="display:block;font:600 11px var(--clay-sans);color:var(--clay-sub);margin-top:2px">'+esc(m[1])+'</span></button>'; }).join('')
+          + t.hMoves.map(function(m,k){ return '<button type="button" data-move="'+k+'" style="border:0;cursor:pointer;padding:12px 6px;border-radius:16px;background:'+CLAY[k]+';color:var(--clay-ink);font:800 14px var(--clay-head);box-shadow:var(--clay-night-shadow,inset 0 -5px 0 rgba(0,0,0,.1),inset 0 3px 0 rgba(255,255,255,.5))"><span style="display:block;font-size:17px">'+esc(m[0])+'</span><span style="display:block;font:600 11px var(--clay-sans);color:var(--clay-sub);margin-top:2px">'+esc(m[1])+'</span></button>'; }).join('')
           + '</div>';
       }
       body += '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px">'
         + h2h.log.map(function(l){ return '<span style="padding:5px 10px;border-radius:999px;background:'+resBg[l.win]+';font-size:12px;font-weight:800">'+esc(t.hMoves[l.m][0]+' vs '+t.hMoves[l.ai][0]+' · '+res[l.win])+'</span>'; }).join('')
         + '</div>';
-      if(h2h.done) body += '<p style="margin:10px 0 0;font-size:13px;line-height:1.5;color:#24403F">'+esc(t.hScore(h2h.y.w,h2h.a.w,Math.round(h2h.y.p),Math.round(h2h.a.p))+' · '+t.hTip)+'</p>';
+      if(h2h.done) body += '<p style="margin:10px 0 0;font-size:13px;line-height:1.5;color:var(--clay-ink-2)">'+esc(t.hScore(h2h.y.w,h2h.a.w,Math.round(h2h.y.p),Math.round(h2h.a.p))+' · '+t.hTip)+'</p>';
     }
     el.innerHTML = head + body;
     var st = document.getElementById('ar-h2h-start'); if(st) st.onclick = function(){ h2h = { round:1, y:{p:0,w:0}, a:{p:0,w:0}, log:[], done:false }; renderH2H(); };

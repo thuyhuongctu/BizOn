@@ -8,16 +8,17 @@
 <meta name="description" data-en-content="Early evidence from a real classroom: anonymised aggregate results (n=40) from the BizArena simulation model – the predecessor of BizOn." content="Bằng chứng ban đầu từ lớp học thật: kết quả tổng hợp ẩn danh (n=40) từ mô hình mô phỏng BizArena – tiền thân của BizOn.">
 <meta name="copyright" content="© 2026 Đỗ Thùy Hương & PGS.TS. Phan Anh Tú">
 <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script src="js/bizon-boot.js"></script>
 <link rel="stylesheet" href="css/bizon-clay-fonts.css">
 <link rel="stylesheet" href="css/bizon-clay.css">
 <style>
-  .bc-sec{padding:30px;border-radius:32px;background:var(--clay-card);box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 26px 36px -24px rgba(110,70,30,.5);margin-bottom:24px}
+  .bc-sec{padding:30px;border-radius:32px;background:var(--clay-card);box-shadow:var(--clay-night-shadow,inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 26px 36px -24px rgba(110,70,30,.5));margin-bottom:24px}
   .bc-h2{margin:0 0 18px;font-size:28px;display:flex;align-items:center;gap:12px}
   .bc-h2 .num{width:40px;height:40px;border-radius:14px;display:grid;place-items:center;font-size:18px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.1)}
   .bc-ctx{display:grid;grid-template-columns:minmax(120px,200px) minmax(0,1fr);gap:16px;padding:14px 0;border-top:2px dashed #F0E2C8}
   .bc-ctx>div{min-width:0;overflow-wrap:anywhere} /* chuỗi dài không dấu cách (vd «CEO–CFO–CMO–COO») không đẩy tràn ngang ở máy 360px */
   .bc-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:16px;margin-top:22px}
-  .bc-stat{padding:22px;border-radius:26px;text-align:center;box-shadow:inset 0 -8px 0 rgba(0,0,0,.08),inset 0 5px 0 rgba(255,255,255,.5),0 18px 24px -18px rgba(110,70,30,.5)}
+  .bc-stat{padding:22px;border-radius:26px;text-align:center;box-shadow:var(--clay-night-shadow,inset 0 -8px 0 rgba(0,0,0,.08),inset 0 5px 0 rgba(255,255,255,.5),0 18px 24px -18px rgba(110,70,30,.5))}
   .bc-bar-row{display:grid;grid-template-columns:minmax(150px,230px) minmax(0,1fr) 110px;gap:14px;align-items:center}
   .bc-track{height:22px;border-radius:999px;background:var(--clay-tray);box-shadow:inset 0 3px 5px rgba(110,70,30,.18);overflow:hidden}
   .bc-fill{height:100%;border-radius:999px;transform-origin:left;box-shadow:inset 0 -5px 0 rgba(0,0,0,.14),inset 0 3px 0 rgba(255,255,255,.4);animation:bzGrow 1.2s cubic-bezier(.16,1,.3,1) both}
@@ -30,6 +31,12 @@
   .bc-cta a{font-family:var(--clay-head);font-size:18px;font-weight:800;padding:14px 22px;border-radius:20px}
   @keyframes bzGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
   @media print{ #clay-nav,#clay-footer,.np,#vn-map{display:none!important} body{background:#fff} .bc-sec{box-shadow:none;border:1px solid #ddd} }
+  /* Bản tối «đất sét đêm» (data-theme do js/bizon-boot.js đặt; bản in giữ sáng) */
+  @media screen{
+    html[data-theme="dark"] .bc-ctx{border-top-color:rgba(255,230,200,.14)}
+    html[data-theme="dark"] .bc-press{background:var(--clay-card);border-color:rgba(255,230,200,.14)}
+    html[data-theme="dark"] .bc-cta{background:#0F4F5A}
+  }
 </style>
 <meta property="og:type" content="website">
 <meta property="og:title" content="Bằng chứng lớp học · BizOn Bật Nghiệp">
@@ -47,7 +54,7 @@
         <span class="clay-eyebrow" data-en="For institutions & partners · Evidence">Dành cho tổ chức &amp; đối tác · Evidence</span>
         <h1 data-en="Early evidence from a real classroom">Bằng chứng ban đầu từ lớp học thật</h1>
         <p class="lead" style="max-width:40em" data-en="Anonymised aggregate results from a university course that fully deployed the BizArena simulation model – the direct predecessor of BizOn – including a series of simulation rounds, a «Shareholders' Meeting & Funding Pitch» event and a company report.">Kết quả tổng hợp ẩn danh từ một học phần đại học đã triển khai trọn vẹn mô hình mô phỏng BizArena – tiền thân trực tiếp của BizOn – gồm chuỗi vòng chơi mô phỏng, sự kiện «Đại hội Cổ đông &amp; Pitch xin vốn» và bài tiểu luận doanh nghiệp.</p>
-        <button class="np clay-btn" type="button" onclick="window.print()" style="margin-top:24px;background:var(--clay-card);color:var(--clay-ink);box-shadow:inset 0 -5px 0 rgba(110,70,30,.12),inset 0 3px 0 #fff" data-en="Print page">In trang</button>
+        <button class="np clay-btn" type="button" onclick="window.print()" style="margin-top:24px;background:var(--clay-card);color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -5px 0 rgba(110,70,30,.12),inset 0 3px 0 #fff)" data-en="Print page">In trang</button>
       </div>
       <div class="art" style="width:min(22vw,200px);aspect-ratio:439/1046"><img src="assets/character/anh-tu-ao-dai-explain-cut.webp" alt="" loading="lazy"></div>
     </div>
@@ -138,7 +145,7 @@
     <p style="margin:12px auto 0;max-width:36em;font-size:15px;line-height:1.6;color:#D6EEF2" data-en="The full deployment kit is ready: session and tournament scripts, rubrics, pre/post measurement forms and a central results log.">Bộ công cụ triển khai trọn gói đã sẵn sàng: kịch bản buổi học &amp; giải đấu, rubric, phiếu đo lường trước–sau và hệ thống ghi nhận kết quả tập trung.</p>
     <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:22px">
       <a style="background:var(--clay-gold);color:var(--clay-ink);box-shadow:inset 0 -6px 0 rgba(0,0,0,.15),inset 0 3px 0 rgba(255,255,255,.4)" href="giai-phap.html" data-en="See deployment packages">Xem gói triển khai</a>
-      <a style="background:var(--clay-card);color:var(--clay-ink);box-shadow:inset 0 -6px 0 rgba(110,70,30,.15),inset 0 3px 0 #fff" href="lien-he.html" data-en="Book a demo / pilot">Đặt lịch demo / pilot</a>
+      <a style="background:var(--clay-card);color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -6px 0 rgba(110,70,30,.15),inset 0 3px 0 #fff)" href="lien-he.html" data-en="Book a demo / pilot">Đặt lịch demo / pilot</a>
     </div>
   </section>
 </main>

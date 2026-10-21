@@ -10,6 +10,7 @@
 <meta name="description" data-en-content="Three levels of business simulation for university classrooms: legitimacy, the domestic firm, going international. A deterministic engine with published parameters." content="Ba bậc mô phỏng kinh doanh cho lớp học đại học: chính danh hoá, doanh nghiệp trong nước, ra quốc tế. Engine xác định, tham số công bố.">
 <meta name="copyright" content="© 2026 Đỗ Thùy Hương & PGS.TS. Phan Anh Tú">
 <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script src="js/bizon-boot.js"></script>
 <link rel="stylesheet" href="css/bizon-clay-fonts.css">
 <link rel="stylesheet" href="css/bizon-clay.css">
 <style>
@@ -90,6 +91,15 @@
   .vu-head .tag{font-family:var(--clay-mono);font-size:.78rem;font-weight:800;letter-spacing:.1em;color:var(--clay-teal);text-transform:uppercase}
   .vu-head h2{margin-top:6px;font-size:clamp(28px,3.4vw,38px)}
   .vu-head .lede{margin-top:10px;font-size:15.5px;line-height:1.6;color:var(--clay-sub)}
+  /* Bản tối «đất sét đêm» (data-theme do js/bizon-boot.js đặt; bản in giữ sáng) */
+  @media screen{
+    html[data-theme="dark"] .vu-bed{stroke:rgba(255,236,210,.16)}
+    html[data-theme="dark"] .vu-sea{fill:rgba(94,196,214,.08)}
+    html[data-theme="dark"] .vu-coast{stroke:rgba(94,196,214,.4)}
+    html[data-theme="dark"] .vu-rung .go:not(.alt){color:var(--clay-on-teal)}
+    html[data-theme="dark"] .vu-st.live{background:var(--clay-mint-soft);color:#B9E3CE}
+    html[data-theme="dark"] .vu-st.soon{background:var(--clay-amber-soft);color:#F5D29A}
+  }
 </style>
 <meta property="og:type" content="website">
 <meta property="og:title" content="BizOn – Học kinh doanh bằng quyết định">
@@ -112,7 +122,7 @@
         <p class="lead" data-en="From a street cart to a domestic firm, then across borders. A deterministic engine with published parameters – every decision traceable to its cause.">Từ gánh hàng rong đến doanh nghiệp trong nước, rồi ra thị trường quốc tế. Engine tính toán xác định, tham số công bố công khai – mỗi quyết định đều truy được lý do.</p>
         <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:24px">
           <a class="clay-btn clay-btn-pill" href="#bac-thang" data-en="See the three levels →">Xem ba bậc →</a>
-          <a class="clay-btn clay-btn-pill" style="background:var(--clay-card);color:var(--clay-ink);box-shadow:inset 0 -5px 0 rgba(110,70,30,.12),inset 0 3px 0 #fff,0 10px 18px -12px rgba(110,70,30,.5)" href="truong-hoc-thuat.html" data-en="Academic foundation">Nền tảng học thuật</a>
+          <a class="clay-btn clay-btn-pill" style="background:var(--clay-card);color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -5px 0 rgba(110,70,30,.12),inset 0 3px 0 #fff,0 10px 18px -12px rgba(110,70,30,.5))" href="truong-hoc-thuat.html" data-en="Academic foundation">Nền tảng học thuật</a>
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:20px">
           <span class="clay-chip" style="background:var(--clay-c5);color:#03474F" data-en="Deterministic engine · no randomness">Engine xác định · không ngẫu nhiên</span>
@@ -205,7 +215,7 @@
 
     <div class="vu-ladder">
       <article class="vu-rung">
-        <div class="shot"><img src="assets/illustrations/game/ben-phu-sa-cho-noi.webp" alt="Chợ nổi phong cách claymation – ghe hàng trái cây, cây bẹo, người buôn bán trên sông" loading="lazy"></div>
+        <div class="shot"><img src="assets/covers/ben-phu-sa-3d.webp" alt="Chợ nổi phong cách claymation – ghe hàng trái cây, cây bẹo, người buôn bán trên sông" loading="lazy"></div>
         <div>
           <span class="no" data-en="LEVEL 1">BẬC 1</span>
           <h3>Bến Phù Sa</h3>
@@ -217,7 +227,7 @@
         </div>
       </article>
       <article class="vu-rung">
-        <div class="shot"><img src="assets/illustrations/game/phong-hop-chien-luoc.webp" alt="Phòng họp chiến lược đất sét – đội điều hành bên bàn mô hình thị trường" loading="lazy"></div>
+        <div class="shot"><img src="assets/covers/bat-nghiep-3d.webp" alt="Phòng họp chiến lược đất sét – đội điều hành bên bàn mô hình thị trường" loading="lazy"></div>
         <div>
           <span class="no" data-en="LEVEL 2">BẬC 2</span>
           <h3>Bật Nghiệp</h3>
@@ -229,7 +239,7 @@
         </div>
       </article>
       <article class="vu-rung">
-        <div class="shot"><img src="assets/concept/ho-chieu-thuong-hieu.jpg" alt="Hộ chiếu thương hiệu đất sét – đưa thương hiệu Việt ra thế giới" loading="lazy"></div>
+        <div class="shot"><img src="assets/covers/ho-chieu-thuong-hieu-3d.webp" alt="Hộ chiếu thương hiệu đất sét – đưa thương hiệu Việt ra thế giới" loading="lazy"></div>
         <div>
           <span class="no" data-en="LEVEL 3">BẬC 3</span>
           <h3 data-en="Brand Passport">Hộ chiếu Thương hiệu</h3>

@@ -176,7 +176,9 @@
 
     // Trang đất sét không có site-ui.js: tự dịch chân trang vừa bơm (data-en) theo ngôn ngữ hiện tại.
     // Trang có site-ui.js thì để applyLang() của nó lo, tránh phát bizon:langchange hai lần.
-    if (!window.applyLang && window.clayApplyLang) window.clayApplyLang(window.clayCurrentLang ? window.clayCurrentLang() : 'vi');
+    // Chỉ dịch lại, không lưu 'bizon-lang' (khách chưa chọn thì giữ mặc định của trang).
+    if (!window.applyLang && window.clayRefreshLang) window.clayRefreshLang();
+    else if (!window.applyLang && window.clayApplyLang) window.clayApplyLang(window.clayCurrentLang ? window.clayCurrentLang() : 'vi');
 
     // Từ 600px trở lên các nhóm luôn mở; hẹp hơn thì thu lại để bớt cuộn
     var wide = window.matchMedia('(min-width:600px)');
