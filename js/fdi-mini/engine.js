@@ -29,7 +29,8 @@
   function value(st) {
     var v = st.cash; Object.keys(st.pos).forEach(function (k) { var p = st.pos[k]; v += p.assets * 0.8 + p.ret * (1 - st.wht[k]); }); return v;
   }
-  function score10(st) { var r = value(st) / st.start, k = 27 * Math.pow(4 / st.Q, 3); return Math.max(1, Math.min(10, Math.round((3 + (r - 1) * k) * 10) / 10)); }
+  // k 27 → 36 (10/2026, cân bằng): điểm A đạt được bằng chiến lược FDI dám chịu rủi ro, điểm TB gần như giữ nguyên.
+  function score10(st) { var r = value(st) / st.start, k = 36 * Math.pow(4 / st.Q, 3); return Math.max(1, Math.min(10, Math.round((3 + (r - 1) * k) * 10) / 10)); }
   function resolve(st, dec) {
     if (st.done) return null;
     var ev = st.ev, lines = [], mode = null;
@@ -59,7 +60,7 @@
         var roy = 0.07 * sales * 1.5; if (ev.m === k && ev.id === 'copy') { roy *= 0.6; row.copy = 1; }
         var net = roy * (1 - st.wht[k]); st.cash += net; row.net = roy; row.home = net; row.tax = roy - net;
       } else {
-        var margin = 0.42 - 0.14 * M.cost, pre = sales * margin * (p.mode === 'jv' ? 1.2 : 1), share = p.mode === 'jv' ? 0.5 : 1;
+        var margin = 0.42 - 0.14 * M.cost, pre = sales * margin, share = p.mode === 'jv' ? 0.5 : 1; // bỏ hệ số ×1,2 của liên doanh (10/2026): trước đó liên doanh lãi/vốn cao hơn FDI và áp đảo mọi chiến lược
         var tax = p.hol > 0 ? 0 : M.cit; row.holiday = p.hol > 0; if (p.hol > 0) p.hol--;
         var n2 = pre * share * (1 - tax); row.net = n2; row.tax = pre * share * tax; p.ret += n2;
         var out = p.ret * (dec.repat || 0), got = out * (1 - st.wht[k]); p.ret -= out; st.cash += got; row.home = got; row.wht = out - got;

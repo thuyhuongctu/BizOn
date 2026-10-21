@@ -875,8 +875,21 @@ function ACHIEVEMENTS_LIST() { return [
   { id: 'A_FLAG',    icon: '🚩', name: T('Cắm cờ đầu tiên', 'First Flag Planted'), desc: T('Thắng một vòng trên bản đồ chinh phục.', 'Won a round on the conquest map.'), test: (s) => (s.conquest || []).some(c => c.win) },
   { id: 'A_WHATIF',  icon: '🔮', name: T('Chiến lược gia Nếu–Thì', 'What-If Strategist'), desc: T('Dùng mô phỏng Nếu–Thì của Lumina ít nhất một lần.', "Used Lumina's What-If simulation at least once."), test: (s) => (s.whatIfTotal || 0) > 0 },
   { id: 'A_TEAM',    icon: '🤝', name: T('Lắng nghe đội', 'Team Player'), desc: T('Áp dụng 3 gợi ý từ Cuộc họp đội.', 'Applied 3 suggestions from the Team Meeting.'), test: (s) => (s.suggestionsApplied || 0) >= 3 },
-  { id: 'A_CHAMP',   icon: '🏆', name: T('Vô địch BizOn', 'BizOn Champion'), desc: T('Kết thúc 6 vòng với lợi nhuận cao nhất sàn đấu.', 'Finished all 6 rounds with the highest profit in the arena.'), test: (s) => s.finished && s.competitors.every(c => (c.profit || 0) <= s.history.reduce((a, r2) => a + r2.netProfit, 0)) },
+  // Vô địch = cắm nhiều cờ nhất sau 6 vòng (khớp «Quán quân» ở màn tổng kết 3D), hoà cờ thì xét lợi nhuận tích lũy.
+  // Điều kiện cũ (lợi nhuận cao nhất sàn đấu) không đạt được: đối thủ ảo không chịu lương/khấu hao/R&D nên luôn lãi hơn.
+  { id: 'A_CHAMP',   icon: '🏆', name: T('Vô địch BizOn', 'BizOn Champion'), desc: T('Kết thúc 6 vòng với nhiều cờ nhất bản đồ chinh phục (hoà cờ thì xét lợi nhuận).', 'Finished all 6 rounds with the most flags on the conquest map (ties go to profit).'), test: (s) => isFlagChampion(s) },
 ]; }
+
+// Đội có nhiều cờ nhất sau đủ 6 vòng? s.conquest do recordConquest() (js/app.js) ghi: win = cờ của đội, winner = tên đối thủ thắng tỉnh.
+// Chỉ xét khi đã đủ cờ của cả 6 vòng (lần mở thành tựu trong simulateRound vòng 6 chạy trước khi cờ vòng 6 được ghi).
+function isFlagChampion(s) {
+  const cq = s.conquest || [];
+  if (!s.finished || cq.length < ROUNDS_TOTAL) return false;
+  const mine = cq.filter(c => c.win).length, cnt = {};
+  cq.forEach(c => { if (!c.win) cnt[c.winner] = (cnt[c.winner] || 0) + 1; });
+  const myProfit = s.history.reduce((a, r) => a + r.netProfit, 0);
+  return mine > 0 && s.competitors.every(c => { const n = cnt[c.name] || 0; return n < mine || (n === mine && (c.profit || 0) <= myProfit); });
+}
 
 function unlockAchievements(s, r) {
   ACHIEVEMENTS_LIST().forEach(a => {

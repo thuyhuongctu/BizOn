@@ -3208,12 +3208,14 @@ function renderLeaderboard() {
     all = [{ name: S.profile.teamName + T(' (Bạn)', ' (You)'), profit: totalProfit, share: lastShare, me: true }];
     note = T('🔒 Bảng xếp hạng chéo đội đang tạm khóa — chỉ hiện kết quả của đội bạn', '🔒 Cross-team leaderboard is temporarily locked — showing only your team’s results');
   } else {
-    // Chơi thử: so với 3 đối thủ ảo (như trước).
+    // Chơi thử: so với 3 đối thủ ảo, xếp theo số cờ trên bản đồ chinh phục trước, lợi nhuận sau
+    // (cùng luật danh hiệu «Vô địch BizOn»; đối thủ ảo không chịu lương/khấu hao/R&D nên nếu chỉ xét lợi nhuận đội luôn hạng 4).
+    const cq = S.conquest || [], flagsOf = n => cq.filter(c => !c.win && c.winner === n).length;
     all = [
-      { name: S.profile.teamName + T(' (Bạn)', ' (You)'), profit: totalProfit, share: lastShare, me: true },
-      ...S.competitors.map(c => ({ name: c.name, profit: c.profit, share: c.share })),
-    ].sort((a, b) => b.profit - a.profit);
-    note = T('🧪 Chơi thử · so với 3 đối thủ ảo (nhập Mã lớp để đua với các đội trong lớp)', '🧪 Trial · vs 3 virtual rivals (enter a Class ID to compete with classmates)');
+      { name: S.profile.teamName + T(' (Bạn)', ' (You)'), profit: totalProfit, share: lastShare, me: true, flags: cq.filter(c => c.win).length },
+      ...S.competitors.map(c => ({ name: c.name, profit: c.profit, share: c.share, flags: flagsOf(c.name) })),
+    ].sort((a, b) => b.flags - a.flags || b.profit - a.profit);
+    note = T('🧪 Chơi thử · so với 3 đối thủ ảo theo số cờ, rồi lợi nhuận (nhập Mã lớp để đua với các đội trong lớp)', '🧪 Trial · vs 3 virtual rivals by flags, then profit (enter a Class ID to compete with classmates)');
   }
 
   const medal = i => (i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `<span class="text-deep-teal/50 font-display font-bold">#${i + 1}</span>`);
@@ -3221,7 +3223,7 @@ function renderLeaderboard() {
     <div class="clay-card p-4 flex items-center gap-3 ${t.me ? 'border-2 border-primary-container' : ''}">
       <span class="text-2xl w-7 text-center">${medal(i)}</span>
       <div class="flex-1 min-w-0"><p class="font-display font-bold text-deep-teal text-sm truncate">${t.name}</p>
-        <p class="text-[11px] text-deep-teal/50">${T(`Thị phần ${t.share.toFixed(1)}%`, `Market share ${t.share.toFixed(1)}%`)}</p></div>
+        <p class="text-[11px] text-deep-teal/50">${T(`Thị phần ${t.share.toFixed(1)}%`, `Market share ${t.share.toFixed(1)}%`)}${t.flags != null ? ` · 🚩 ${t.flags}` : ''}</p></div>
       <span class="font-display font-bold ${t.profit >= 0 ? 'text-primary' : 'text-orange-600'}">${money(t.profit)}</span>
     </div>`).join('');
   $('lb-list').innerHTML =

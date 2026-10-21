@@ -195,15 +195,17 @@
     const trial = typeof isTrial === 'function' ? isTrial() : !((s.profile && s.profile.classId) || '').trim();
     let rows, note;
     if (trial) {
-      rows = [{ name: me + tr(' (Bạn)', ' (You)'), profit: totalProfit, share: lastShare, me: true }, ...(s.competitors || []).map(c => ({ name: c.name, profit: c.profit || 0, share: c.share || 25 }))].sort((a, b) => b.profit - a.profit);
-      note = tr('🧪 Chơi thử · so với 3 đối thủ ảo (nhập Mã lớp để đua với các đội trong lớp)', '🧪 Trial · vs 3 virtual rivals (enter a Class ID to compete with classmates)');
+      // Xếp theo số cờ trước, lợi nhuận sau – cùng luật bảng xếp hạng chơi thử của js/app.js và danh hiệu «Vô địch BizOn»
+      const cq = s.conquest || [], flagsOf = n => cq.filter(c => !c.win && c.winner === n).length;
+      rows = [{ name: me + tr(' (Bạn)', ' (You)'), profit: totalProfit, share: lastShare, me: true, flags: cq.filter(c => c.win).length }, ...(s.competitors || []).map(c => ({ name: c.name, profit: c.profit || 0, share: c.share || 25, flags: flagsOf(c.name) }))].sort((a, b) => b.flags - a.flags || b.profit - a.profit);
+      note = tr('🧪 Chơi thử · so với 3 đối thủ ảo theo số cờ, rồi lợi nhuận (nhập Mã lớp để đua với các đội trong lớp)', '🧪 Trial · vs 3 virtual rivals by flags, then profit (enter a Class ID to compete with classmates)');
     } else {
       rows = [{ name: me + tr(' (Bạn)', ' (You)'), profit: totalProfit, share: lastShare, me: true }];
       note = tr('🔒 Bảng xếp hạng chéo đội đang tạm khóa — chỉ hiện kết quả của đội bạn', '🔒 Cross-team leaderboard is temporarily locked — showing only your team’s results');
     }
     const medal = i => (i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '#' + (i + 1));
     const p = panel(ctx, '🏆', tr('Bảng xếp hạng', 'Leaderboard'), note, 'leaderboard');
-    p.bd.innerHTML = rows.map((t, i) => `<div class="bzs-row${t.me ? ' on' : ''}"><span class="em" style="font-size:24px">${medal(i)}</span><div style="flex:1;min-width:0"><b>${t.name}</b><small>$tr('Thị phần', 'Market share')} ${t.share.toFixed(1)}%</small></div><b style="color:${t.profit >= 0 ? '#006687' : '#c8641c'}">${fmt(t.profit)}</b></div>`).join('');
+    p.bd.innerHTML = rows.map((t, i) => `<div class="bzs-row${t.me ? ' on' : ''}"><span class="em" style="font-size:24px">${medal(i)}</span><div style="flex:1;min-width:0"><b>${t.name}</b><small>${tr('Thị phần', 'Market share')} ${t.share.toFixed(1)}%${t.flags != null ? ' · 🚩 ' + t.flags : ''}</small></div><b style="color:${t.profit >= 0 ? '#006687' : '#c8641c'}">${fmt(t.profit)}</b></div>`).join('');
   }
 
   // ---------- Clay Factory Frenzy ----------
