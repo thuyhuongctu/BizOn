@@ -6,11 +6,13 @@ on:
       - main
     paths:
       - 'lab/gravity-lab*'
+      - 'gravity-lab/**'
       - 'test/gravity-lab.test.js'
       - '.github/workflows/gravity-lab.yml'
   pull_request:
     paths:
       - 'lab/gravity-lab*'
+      - 'gravity-lab/**'
       - 'test/gravity-lab.test.js'
       - '.github/workflows/gravity-lab.yml'
 

@@ -104,12 +104,18 @@ test('Đọc CSV dấu chấm phẩy và dấu thập phân phẩy', () => {
   assert.strictEqual(t.rows[1].id, 'KOR');
 });
 
-test('URL cũ chuyển hướng sang bản đầy đủ /gravity-lab/ và giữ ghi công tác giả', () => {
-  const html = fs.readFileSync(path.join(__dirname, '../lab/gravity-lab.html'), 'utf8');
-  assert.ok(html.includes('url=../gravity-lab/') && html.includes("location.replace('../gravity-lab/'"));
-  assert.ok(html.includes('Phan Anh Tú') && html.includes('Đỗ Thùy Hương'));
-  assert.ok(!/https?:\/\/(cdn|fonts\.googleapis)/.test(html), 'Không dùng CDN');
-  assert.ok(fs.existsSync(path.join(__dirname, '../gravity-lab/index.html')), 'Có bản build đầy đủ');
+test('URL cũ chuyển hướng sang bản gốc ở kho Gravity-Lab (có DOI) và giữ ghi công tác giả', () => {
+  const U = 'https://thuyhuongctu.github.io/Gravity-Lab/';
+  for (const rel of ['../lab/gravity-lab.html', '../gravity-lab/index.html']) {
+    const html = fs.readFileSync(path.join(__dirname, rel), 'utf8');
+    assert.ok(html.includes('url=' + U) && html.includes("location.replace('" + U + "'"), rel + ' chuyển hướng sang bản gốc');
+    assert.ok(html.includes('10.5281/zenodo.23307832'), rel + ' ghi DOI');
+    assert.ok(html.includes('Phan Anh Tú') && html.includes('Đỗ Thùy Hương'));
+    assert.ok(!/https?:\/\/(cdn|fonts\.googleapis)/.test(html), 'Không dùng CDN');
+  }
+  // Service worker thay thế chỉ dọn cache "gl-*" và tự gỡ, không xoá cache của BizOn.
+  const sw = fs.readFileSync(path.join(__dirname, '../gravity-lab/sw.js'), 'utf8');
+  assert.ok(sw.includes("indexOf('gl-') === 0") && sw.includes('unregister()'));
 });
 
 console.log(`\n${passed} kiểm thử đạt.`);
