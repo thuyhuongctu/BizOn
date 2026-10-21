@@ -1,320 +1,1077 @@
 <!DOCTYPE html>
-<html lang="vi" data-theme="dark">
+<html lang="vi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nhà máy FDI</title>
+<title>FDI Lab · Nhà máy FDI</title>
 <link rel="icon" href="../assets/brand/bizon-favicon.svg" type="image/svg+xml">
-<meta name="description" content="Nhà máy FDI – trò chơi mô phỏng điều hành một nhà máy có vốn đầu tư nước ngoài tại Việt Nam qua 8 quý biến động: nguồn đầu vào, thị trường, quy tắc xuất xứ và thuế quan.">
+<meta name="description" content="FDI Lab · Nhà máy FDI – trò chơi mô phỏng điều hành một nhà máy có vốn đầu tư nước ngoài tại Việt Nam qua 8 quý biến động: nguồn đầu vào, thị trường, quy tắc xuất xứ và thuế quan; 5 nhóm đua XP, màn chiếu cho giảng viên.">
+<!-- Phông tự host (không Google Fonts CDN) để chạy offline & hợp CSP như phần còn lại của BizOn.
+     Mockup dùng Baloo 2 / Nunito → thay bằng Plus Jakarta Sans (đủ tiếng Việt) giống CMR Lab / CVP Lab.
+     Lõi mô phỏng (nha-may-fdi-engine.js) và dữ liệu (nha-may-fdi-data.js) giữ nguyên; trang này chỉ là giao diện + lớp XP. -->
 <style>
 @font-face{font-family:'Plus Jakarta Sans';font-weight:400 800;font-display:swap;src:url(../assets/fonts/PlusJakartaSans-var-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
 @font-face{font-family:'Plus Jakarta Sans';font-weight:400 800;font-display:swap;src:url(../assets/fonts/PlusJakartaSans-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2122,U+2212}
-@font-face{font-family:'JetBrains Mono';font-weight:400 500;font-display:swap;src:url(../assets/fonts/IBMPlexMono-400-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
-@font-face{font-family:'JetBrains Mono';font-weight:400 500;font-display:swap;src:url(../assets/fonts/IBMPlexMono-400-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2122,U+2212}
-:root{--bg:#0B1220;--panel:#111F38;--panel2:#0E1B31;--grid:rgba(99,179,237,.08);--ink:#E7EEF8;--muted:#93A4BD;--faint:#6B7C97;--line:#22324A;--line2:#2C3F5C;
-  --accent:#06B6D4;--accent2:#22C55E;--warn:#F59E0B;--neg:#F97316;--imp:#A78BFA;--shadow:0 10px 30px rgba(0,0,0,.35);--radius:16px}
-html[data-theme="light"]{--bg:#EEF3FA;--panel:#FFFFFF;--panel2:#F5F8FD;--grid:rgba(30,64,120,.07);--ink:#0F1A2E;--muted:#52617B;--faint:#8392AB;--line:#DDE7F3;--line2:#CBD8EA;
-  --accent:#0891B2;--accent2:#16A34A;--warn:#B45309;--neg:#C2410C;--imp:#7C3AED;--shadow:0 12px 30px rgba(20,40,80,.10)}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;min-height:100vh;
-  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:26px 26px}
-.mono,.num{font-family:'JetBrains Mono',monospace}
-.wrap{max-width:1120px;margin:0 auto;padding:0 16px 56px}
-.topbar{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.topbar-in{max-width:1120px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px}
-.logo .mark{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:17px}
-.logo .sub{display:block;font-size:11px;font-weight:600;color:var(--muted)}
-.spacer{flex:1}
-.tbtn{border:1px solid var(--line2);background:var(--panel);color:var(--ink);border-radius:10px;padding:7px 11px;font-weight:600;font-size:12.5px;font-family:inherit;cursor:pointer;text-decoration:none}
-.lang-pill{display:flex;border:1px solid var(--line2);border-radius:10px;overflow:hidden;background:var(--panel)}
-.lang-pill button{border:0;background:transparent;color:var(--muted);padding:7px 11px;font-weight:700;font-size:12.5px;cursor:pointer;font-family:inherit}
-.lang-pill button.on{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
-.hero{padding:28px 0 14px}
-.eyebrow{font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.06em}
-h1{font-size:clamp(26px,4.4vw,38px);line-height:1.15;margin:10px 0}
-.lead{color:var(--muted);max-width:800px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;margin-bottom:14px}
-.card h2{font-size:18px;margin-bottom:6px} .card h3{font-size:15px;margin:12px 0 6px}
-.muted{color:var(--muted)} .small{font-size:12.5px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px} .grid2>*{min-width:0}
-@media (max-width:860px){.grid2{grid-template-columns:1fr}}
-.prov{display:inline-flex;gap:6px;align-items:center;font-size:11.5px;font-weight:700;border-radius:999px;padding:3px 10px;border:1px solid var(--line2);color:var(--muted);margin:4px 6px 8px 0}
-.prov::before{content:'';width:8px;height:8px;border-radius:50%}
-.prov.sim::before{background:var(--warn)} .prov.pub::before{background:var(--accent2)}
-.pick{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0}
-@media (max-width:640px){.pick{grid-template-columns:1fr}}
-.pick button{text-align:left;border:2px solid var(--line2);background:var(--panel2);color:var(--ink);border-radius:14px;padding:14px;font-family:inherit;cursor:pointer}
-.pick button.on{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,var(--panel2))}
-.pick b{display:block;font-size:15px;margin-bottom:4px}
-label.ctl{display:block;margin:12px 0 2px;font-weight:700;font-size:13px}
-input[type=range]{width:100%} input[type=text],select{font:inherit;color:var(--ink);background:var(--panel2);border:1px solid var(--line2);border-radius:9px;padding:7px 9px;max-width:100%}
-.btn{border:0;border-radius:11px;padding:10px 16px;font-weight:800;font-size:14px;font-family:inherit;cursor:pointer;color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent2))}
-.btn.ghost{background:var(--panel2);color:var(--ink);border:1px solid var(--line2)}
-.event{border-left:4px solid var(--warn)}
-.event .tag{font-size:12px;font-weight:700;color:var(--warn)}
-.prog{display:flex;gap:4px;margin:6px 0 12px}
-.prog span{flex:1;height:6px;border-radius:4px;background:var(--line2)} .prog span.done{background:var(--accent2)} .prog span.now{background:var(--accent)}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-@media (max-width:640px){.kpis{grid-template-columns:1fr 1fr}}
-.kpi{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:10px}
-.kpi small{display:block;color:var(--muted);font-size:11.5px} .kpi b{font-size:19px}
-.pos{color:var(--accent2)} .neg{color:var(--neg)}
-.mrow{display:grid;grid-template-columns:150px 1fr 54px;gap:10px;align-items:center;margin:6px 0;font-size:13px}
-.mrow .num{text-align:right}
-.hint{font-size:11.5px;color:var(--muted)}
-.tblwrap{overflow-x:auto}
-table{border-collapse:collapse;width:100%;font-size:13px}
-th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
-th:first-child,td:first-child{text-align:left}
-th{color:var(--muted);font-size:12px}
-.note{border-left:3px solid var(--warn);padding:8px 12px;background:var(--panel2);border-radius:8px;font-size:13px;margin-top:10px}
-.badge{display:inline-block;border-radius:999px;padding:4px 10px;margin:3px 6px 3px 0;font-size:12.5px;font-weight:700;background:color-mix(in srgb,var(--accent) 16%,var(--panel2));border:1px solid var(--line2)}
-.qa li{margin:6px 0 6px 18px}
-footer{color:var(--faint);font-size:12px;text-align:center;margin-top:24px}
+:root{--ink:#1F2A44;--page:#F4F1EA;--card:#FBF9F4;--field:#ECE7DC;--track:#E9E4D8;--chartbg:#F1EEE6;--seg-off:#E0DACB;--muted:#5F6675;--muted2:#4F5768;--muted3:#48505F;--off:#B9B5AC;--burg:#8C2F39;--burg-d:#6B1F28;--gold:#C9A24A;--blue:#3E5C8A;--blue-d:#2A4268;--slate:#5B6C9A;--plum:#7E5E77;--copper:#A8703A;--sage:#8FAF98;--green:#3F6E52;--peri:#A9B4CF;--rose:#E3C7C2;--mist:#E4E8F1;--sand:#F3EAD3;--clay:0 26px 40px -22px rgba(31,42,68,.4),inset 0 -8px 16px rgba(0,0,0,.05),inset 0 8px 16px rgba(255,255,255,.9);--clay-s:0 22px 30px -18px rgba(31,42,68,.4),inset 0 8px 14px rgba(255,255,255,.9);--well:inset 0 4px 10px rgba(31,42,68,.18),inset 0 -2px 6px rgba(255,255,255,.9);--tile:0 14px 20px -14px rgba(31,42,68,.55),inset 0 -6px 10px rgba(0,0,0,.14),inset 0 6px 10px rgba(255,255,255,.5)}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--page);color:var(--ink);font-family:'Plus Jakarta Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none;padding:0}
+button:disabled{cursor:not-allowed}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+a{color:var(--burg);text-decoration:none;font-weight:700}
+a:hover{color:var(--burg-d);text-decoration:underline}
 [hidden]{display:none!important}
+.num{font-variant-numeric:tabular-nums}
+.wrap{max-width:1440px;margin:0 auto;padding:28px 48px 30px}
+.short{display:none}
+@media (min-width:721px){.m-only{display:none!important}}
+/* nav */
+.nav{display:flex;align-items:center;justify-content:space-between;gap:14px;background:var(--card);border-radius:999px;padding:12px 14px;box-shadow:0 14px 24px -12px rgba(31,42,68,.3),inset 0 -5px 10px rgba(0,0,0,.06),inset 0 5px 10px rgba(255,255,255,.9)}
+.nav-l,.nav-r,.brand{display:flex;align-items:center}
+.nav-l{gap:22px;min-width:0}
+.brand{gap:12px;min-width:0}
+.nav-r{gap:14px}
+.logo{flex:none;width:46px;height:46px;border-radius:16px;background:var(--blue);color:#fff;display:grid;place-items:center;font-weight:800;font-size:23px;box-shadow:0 8px 14px -6px rgba(30,45,80,.6),inset 0 -5px 8px rgba(10,20,50,.3),inset 0 5px 8px rgba(210,220,240,.7)}
+.wink{display:none;width:42px;height:42px;object-fit:contain;mix-blend-mode:multiply}
+.ttl{font-weight:800;font-size:21px;line-height:1.05;white-space:nowrap}
+.sub{font-size:12px;color:var(--muted);font-weight:700}
+.back{font-size:14px;color:var(--muted);white-space:nowrap}
+.seg{display:flex;gap:4px;background:var(--track);border-radius:999px;padding:4px;box-shadow:inset 0 3px 8px rgba(31,42,68,.18)}
+.seg button{padding:6px 14px;border-radius:999px;font-weight:800;font-size:13px;color:var(--muted)}
+.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 4px 8px -3px rgba(31,42,68,.4)}
+.lang1{display:none;min-width:44px;min-height:36px;border-radius:999px;background:var(--track);font-weight:800;font-size:12px;box-shadow:inset 0 3px 6px rgba(31,42,68,.18)}
+.xp-pill{display:flex;align-items:center;gap:10px;background:var(--gold);color:var(--ink);border-radius:999px;padding:6px 18px 6px 6px;font-weight:800;font-size:17px;white-space:nowrap;box-shadow:0 10px 16px -8px rgba(110,85,30,.6),inset 0 -5px 8px rgba(110,85,30,.25),inset 0 5px 8px rgba(250,240,215,.8)}
+.tbadge{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-size:14px;font-weight:800;box-shadow:inset 0 -4px 6px rgba(0,0,0,.18),inset 0 4px 6px rgba(255,255,255,.5)}
+/* hero (setup) */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) 240px 440px;gap:36px;align-items:center;padding:64px 0 48px}
+.hero-txt{display:flex;flex-direction:column;align-items:flex-start;gap:18px;min-width:0}
+.eyebrow{background:var(--card);border-radius:999px;padding:6px 16px;font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);box-shadow:0 8px 14px -8px rgba(31,42,68,.3),inset 0 3px 6px rgba(255,255,255,.9)}
+h1{font-size:68px;line-height:1;letter-spacing:-.025em;font-weight:800;margin:0;text-wrap:balance}
+.intro{font-size:18px;line-height:1.55;color:var(--muted2);max-width:640px;margin:0;font-weight:600;text-wrap:pretty}
+.chips{display:flex;gap:10px;flex-wrap:wrap}
+.chip{display:flex;align-items:center;gap:8px;background:var(--card);border-radius:999px;padding:6px 14px;font-size:13px;font-weight:800;color:var(--muted3);box-shadow:inset 0 3px 6px rgba(255,255,255,.9),0 6px 10px -6px rgba(31,42,68,.3)}
+.chip i{flex:none;width:10px;height:10px;border-radius:50%}
+.hero-dragon{width:280px;height:280px;justify-self:center;object-fit:contain;mix-blend-mode:multiply}
+.team-card{border-radius:36px;padding:28px;display:flex;flex-direction:column;gap:20px;box-shadow:0 26px 40px -18px rgba(31,42,68,.55),inset 0 -10px 18px rgba(0,0,0,.18),inset 0 10px 18px rgba(255,255,255,.45);transition:background .3s}
+.tc-top{display:flex;justify-content:space-between;align-items:center;gap:14px}
+.tc-name{font-weight:800;font-size:14px;letter-spacing:.1em;opacity:.9}
+.tc-level{font-weight:800;font-size:32px;line-height:1.05;letter-spacing:-.01em}
+.lvl-coin{flex:none;width:78px;height:78px;border-radius:50%;background:var(--gold);color:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;box-shadow:0 10px 16px -6px rgba(0,0,0,.3),inset 0 -6px 10px rgba(110,85,30,.3),inset 0 6px 10px rgba(250,240,215,.9)}
+.lvl-coin small{font-size:11px;font-weight:800}
+.lvl-coin b{font-size:32px;font-weight:800}
+.xp-row{display:flex;justify-content:space-between;font-weight:700;font-size:14px;margin-bottom:8px}
+.xp-bar{height:22px;border-radius:999px;background:rgba(0,0,0,.18);padding:3px;box-shadow:inset 0 4px 8px rgba(0,0,0,.25)}
+.xp-bar i{display:block;height:100%;border-radius:999px;background:var(--gold);transition:width .6s;box-shadow:inset 0 -3px 5px rgba(110,85,30,.35),inset 0 3px 5px rgba(250,240,215,.9)}
+.tc-rules{font-size:14px;font-weight:700;line-height:1.5;opacity:.95;margin:0}
+/* section heads */
+.sh{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin:0 0 16px}
+.sh h2{margin:0;font-size:30px;font-weight:800;letter-spacing:-.01em}
+.sh p{margin:0;font-size:15px;color:var(--muted);font-weight:600}
+.picker{padding-bottom:40px}
+.teams{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px}
+.team-tile{height:104px;border-radius:28px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;outline-offset:5px;transition:transform .2s;box-shadow:0 16px 22px -12px rgba(31,42,68,.5),inset 0 -8px 12px rgba(0,0,0,.16),inset 0 8px 12px rgba(255,255,255,.5)}
+.team-tile:hover{transform:translateY(-6px)}
+.team-tile.on{transform:translateY(-6px);outline:4px solid var(--ink)}
+.team-tile b{font-weight:800;font-size:34px;line-height:1}
+.team-tile b i{font-style:normal}
+.team-tile span{font-weight:800;font-size:12px;opacity:.9}
+/* cards */
+.card{background:var(--card);border-radius:36px;padding:30px;box-shadow:var(--clay);min-width:0;display:flex;flex-direction:column;gap:16px}
+.ch{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.ch h2,.ch h3{margin:0;font-weight:800;font-size:26px;letter-spacing:-.01em}
+.pill{flex:none;font-weight:800;font-size:12px;padding:5px 12px;border-radius:999px;color:#fff;white-space:nowrap}
+.setup-card{padding:32px;gap:18px;margin-bottom:48px}
+.setup-card .ch h2{font-size:28px}
+.inds{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.ind{border-radius:28px;padding:22px 24px;display:flex;flex-direction:column;gap:6px;text-align:left;background:var(--field);color:var(--ink);outline-offset:4px;box-shadow:0 16px 22px -14px rgba(31,42,68,.5),inset 0 -6px 10px rgba(0,0,0,.1),inset 0 6px 10px rgba(255,255,255,.5);transition:transform .15s}
+.ind:hover{transform:translateY(-3px)}
+.ind.on{background:var(--blue);color:#fff;outline:4px solid var(--ink)}
+.ind b{font-weight:800;font-size:26px;line-height:1.1}
+.ind span{font-size:15px;font-weight:700;opacity:.9}
+.startrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;align-items:end}
+.fld{display:flex;flex-direction:column;gap:6px;min-width:0}
+.fld>span{font-size:14px;font-weight:800}
+.hint{font-size:13px;color:var(--muted);font-weight:600;margin:0}
+.inp{width:100%;font-weight:700;font-size:18px;color:var(--ink);padding:14px 18px;border:none;border-radius:20px;background:var(--field);box-shadow:var(--well);outline:none}
+.inp:focus{box-shadow:var(--well),0 0 0 3px rgba(62,92,138,.4)}
+.btn{background:var(--burg);color:#fff;border-radius:24px;padding:18px;display:flex;justify-content:center;align-items:center;gap:12px;font-weight:800;font-size:20px;text-align:center;box-shadow:0 14px 22px -10px rgba(110,30,40,.7),inset 0 -7px 10px rgba(60,10,20,.3),inset 0 7px 10px rgba(240,205,205,.7);transition:transform .1s}
+.btn:active:not(:disabled){transform:scale(.97) translateY(3px)}
+.btn:disabled{background:#9AA0AC;box-shadow:inset 0 -7px 10px rgba(0,0,0,.12),inset 0 7px 10px rgba(255,255,255,.35)}
+.btn.start{padding:18px 48px;font-size:22px}
+.btn.blue{background:var(--blue);box-shadow:0 14px 22px -10px rgba(30,45,80,.7),inset 0 -6px 10px rgba(10,20,50,.3),inset 0 6px 10px rgba(210,220,240,.6)}
+.btn.ghost{background:var(--card);color:var(--ink);box-shadow:0 14px 22px -12px rgba(31,42,68,.45),inset 0 -6px 10px rgba(0,0,0,.06),inset 0 6px 10px rgba(255,255,255,.9)}
+.empty-t{font-size:16px;font-weight:600;color:var(--muted);margin:0;padding:24px 0}
+/* play */
+.play{display:flex;flex-direction:column;gap:28px;padding:44px 0 48px}
+.qhead{display:flex;justify-content:space-between;align-items:flex-end;gap:32px}
+.kick{font-weight:800;font-size:14px;letter-spacing:.08em;color:var(--blue);text-transform:uppercase}
+.qbig{font-weight:800;font-size:64px;line-height:1;letter-spacing:-.02em;margin:6px 0 0}
+.qbig span{color:#9AA0AC}
+.prog{flex:1;max-width:640px;display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px;padding-bottom:12px}
+.prog div{display:flex;flex-direction:column;gap:6px;align-items:center}
+.prog i{display:block;width:100%;height:16px;border-radius:999px;background:var(--seg-off);box-shadow:inset 0 2px 4px rgba(31,42,68,.15)}
+.prog i.done{background:var(--sage)}
+.prog i.now{background:var(--blue);box-shadow:0 0 0 3px var(--card),0 0 0 5px var(--blue)}
+.prog small{font-size:12px;font-weight:800;color:var(--muted)}
+.prog small.now{color:var(--blue)}
+.event{background:var(--sand);border-radius:36px;padding:28px 32px;display:grid;grid-template-columns:200px minmax(0,1fr);gap:28px;align-items:center;box-shadow:0 22px 30px -20px rgba(110,85,30,.55),inset 0 -8px 14px rgba(110,85,30,.08),inset 0 8px 14px rgba(255,255,255,.7)}
+.event img{width:200px;height:170px;object-fit:contain;mix-blend-mode:multiply;border-radius:24px}
+.ev-body{display:flex;flex-direction:column;gap:10px;min-width:0}
+.ev-tag{align-self:flex-start;background:var(--copper);color:#fff;font-weight:800;font-size:13px;padding:5px 12px;border-radius:999px}
+.event h2{margin:0;font-weight:800;font-size:38px;line-height:1.05;letter-spacing:-.01em}
+.event p{margin:0;font-size:18px;line-height:1.5;font-weight:600;color:var(--muted3);max-width:900px;text-wrap:pretty}
+.fx{display:flex;gap:8px;flex-wrap:wrap}
+.fx span{font-size:13px;font-weight:800;padding:5px 12px;border-radius:999px;color:#fff}
+.play-main{display:grid;grid-template-columns:560px minmax(0,1fr);gap:28px;align-items:start}
+.dec{gap:18px}
+.grp{display:flex;flex-direction:column;gap:8px}
+.grp h3{margin:0;font-weight:800;font-size:20px}
+.lrow{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.lrow label{font-size:15px;font-weight:800}
+.bigv{font-weight:800;font-size:30px;color:var(--blue);line-height:1}
+input[type=range]{width:100%;height:28px;margin:0;accent-color:var(--blue);cursor:pointer}
+.mrow input[type=range]{accent-color:var(--burg);height:26px}
+.prem{font-size:14px;font-weight:700;color:var(--muted)}
+.prem b{color:var(--ink)}
+.rules{display:flex;flex-direction:column;gap:6px;background:var(--field);border-radius:18px;padding:12px 14px;box-shadow:inset 0 3px 8px rgba(31,42,68,.12)}
+.rules div{display:flex;gap:8px;align-items:center;font-size:13px;font-weight:700;color:var(--muted3)}
+.rules i{flex:none;width:10px;height:10px;border-radius:50%;background:var(--off);transition:background .2s}
+.mrow{display:grid;grid-template-columns:170px minmax(0,1fr) 56px;gap:12px;align-items:center}
+.mn{display:flex;flex-direction:column;min-width:0}
+.mn label{font-size:14px;font-weight:800}
+.mn small{font-size:12px;font-weight:600;color:var(--muted)}
+.mrow b{font-weight:800;font-size:18px;text-align:right}
+.ivt{font-size:15px;font-weight:800;line-height:1.4}
+.invs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.iv{border-radius:18px;padding:12px 6px;text-align:center;font-weight:800;font-size:15px;line-height:1.2;background:var(--field);color:var(--ink);box-shadow:0 10px 16px -10px rgba(31,42,68,.5),inset 0 -5px 8px rgba(0,0,0,.1),inset 0 5px 8px rgba(255,255,255,.6)}
+.iv.on{background:var(--blue);color:#fff}
+.rules-t{font-size:13px;font-weight:700;color:var(--muted);text-align:center;margin:0}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.kpi{border-radius:24px;padding:16px 18px;display:flex;flex-direction:column;gap:2px;min-width:0;box-shadow:var(--tile)}
+.kpi small{font-size:13px;font-weight:800;line-height:1.3}
+.kpi b{font-weight:800;font-size:28px;line-height:1.15;letter-spacing:-.01em;overflow-wrap:anywhere}
+.mt{display:flex;flex-direction:column;border-radius:22px;background:var(--chartbg);padding:6px 16px;box-shadow:inset 0 4px 10px rgba(31,42,68,.1)}
+.mt>div{display:grid;grid-template-columns:minmax(0,1.6fr) repeat(4,minmax(0,1fr));gap:10px;padding:10px 0;font-size:15px;font-weight:700;border-bottom:1px solid #E6E0D2}
+.mt>div:last-child{border-bottom:0}
+.mt>div span:not(:first-child){text-align:right}
+.mt>div span:first-child{font-weight:800}
+.mt>.th{font-size:12px;font-weight:800;color:var(--muted);border-bottom:2px solid var(--seg-off)}
+.mcards{display:flex;flex-direction:column;gap:8px}
+.mcard{background:var(--card);border-radius:18px;padding:10px 14px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;box-shadow:inset 0 4px 8px rgba(255,255,255,.9),0 8px 12px -10px rgba(31,42,68,.4)}
+.mcard b{font-size:13px;font-weight:800}
+.mcard em{font-style:normal;font-weight:800;font-size:15px;text-align:right}
+.mcard small{font-size:11px;font-weight:700;color:var(--muted)}
+.mcard small+small{text-align:right;font-weight:800}
+.note{font-size:14px;font-weight:700;color:var(--muted);margin:0}
+.row-c{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:28px;align-items:start}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;font-weight:800;color:var(--muted3)}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend i{width:14px;height:14px;border-radius:4px}
+.chartbox{background:var(--chartbg);border-radius:24px;padding:12px;box-shadow:inset 0 5px 12px rgba(31,42,68,.12)}
+.chartbox svg{display:block;width:100%;height:auto}
+.dvas{display:flex;flex-direction:column;gap:6px}
+.dvas div{display:flex;justify-content:space-between;font-size:13px;font-weight:700;padding:6px 12px;border-radius:12px;background:var(--card)}
+.dvas b{font-weight:800}
+.board{background:var(--ink);color:var(--card);border-radius:36px;padding:28px;display:flex;flex-direction:column;gap:12px;box-shadow:0 26px 40px -20px rgba(31,42,68,.7),inset 0 -8px 16px rgba(0,0,0,.3),inset 0 8px 16px rgba(255,255,255,.12)}
+.board h2{margin:0;font-size:28px;font-weight:800}
+.brow{display:grid;grid-template-columns:40px minmax(0,1fr) 72px;gap:12px;align-items:center;padding:8px 10px;border-radius:20px}
+.brow.me{background:rgba(255,255,255,.12)}
+.rank{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:15px}
+.bname{font-size:14px;font-weight:800}
+.bbar{height:10px;background:rgba(255,255,255,.1);border-radius:999px;margin-top:6px}
+.bbar i{display:block;height:100%;border-radius:999px;transition:width .6s}
+.bxp{font-weight:800;font-size:16px;text-align:right;white-space:nowrap}
+/* end */
+.endhead{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:28px;align-items:center}
+.endhead h1{font-size:72px;margin-top:8px}
+.endhead img{width:220px;height:200px;object-fit:contain;mix-blend-mode:multiply}
+.endk{gap:18px}
+.endk .kpi{border-radius:26px;padding:18px 20px;box-shadow:0 16px 22px -14px rgba(31,42,68,.55),inset 0 -6px 10px rgba(0,0,0,.14),inset 0 6px 10px rgba(255,255,255,.5)}
+.endk .kpi b{font-size:32px}
+.bdgs{display:flex;gap:12px;flex-wrap:wrap}
+.bdg{display:flex;align-items:center;gap:10px;color:#fff;border-radius:999px;padding:6px 18px 6px 6px;font-weight:800;font-size:14px;box-shadow:0 10px 16px -8px rgba(31,42,68,.45),inset 0 -4px 6px rgba(0,0,0,.14),inset 0 4px 6px rgba(255,255,255,.5)}
+.bdg span{flex:none;width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);display:grid;place-items:center;font-size:13px}
+.bdg.bad span{background:rgba(255,255,255,.2);color:#fff}
+.duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
+.bench{background:var(--mist);border-radius:36px;padding:30px;display:flex;flex-direction:column;gap:14px;min-width:0;box-shadow:0 22px 30px -18px rgba(31,42,68,.4),inset 0 8px 14px rgba(255,255,255,.7)}
+.bench .chip{align-self:flex-start}
+.kv{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px 20px;align-items:center}
+.kv span{font-size:16px;font-weight:700}
+.kv b{font-weight:800;font-size:36px;text-align:right}
+.bench p{margin:0;font-size:14px;font-weight:600;color:var(--muted3);line-height:1.5}
+.bench p.sandnote{font-weight:700;background:var(--sand);border-radius:16px;padding:12px 14px}
+.qs{gap:14px}
+.ch-dragon{height:76px;width:auto;flex:none;margin:-14px 0 -8px}
+.waitnote{display:flex;align-items:center;gap:12px;margin-top:12px;padding:10px 14px;border-radius:20px;background:var(--field);font-size:13.5px;font-weight:700;color:var(--muted2);line-height:1.45}
+.waitnote img{width:64px;height:auto;flex:none}
+.qq{display:grid;grid-template-columns:32px minmax(0,1fr);gap:12px;align-items:start}
+.qq b{width:32px;height:32px;border-radius:11px;background:var(--slate);color:#fff;display:grid;place-items:center;font-weight:800;font-size:15px}
+.qq p{margin:0;font-size:15px;line-height:1.5;font-weight:600;color:#38404F;text-wrap:pretty}
+.endbtns{display:flex;gap:16px;flex-wrap:wrap}
+.endbtns .btn{padding:16px 32px;font-size:19px}
+/* footer */
+footer{display:flex;flex-direction:column;gap:6px;padding:22px 0 0;font-size:13px;color:var(--muted);font-weight:600;line-height:1.5}
+footer p{margin:0}
+footer .credit{font-weight:800}
+footer nav{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:8px;font-size:14px}
+footer a{overflow-wrap:anywhere}
+.tabbar{display:none}
+/* modal & toast */
+.scrim{position:fixed;inset:0;background:rgba(31,42,68,.5);display:grid;place-items:center;z-index:50;padding:20px;overflow:auto}
+.modal{width:440px;max-width:100%;margin-top:110px;background:var(--card);border-radius:44px;padding:40px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;box-shadow:0 40px 60px -20px rgba(0,0,0,.5),inset 0 10px 18px #fff}
+.modal .dimg{width:220px;height:200px;margin-top:-110px}
+.modal .dimg img{width:220px;height:220px;object-fit:contain;mix-blend-mode:multiply}
+.modal .lvlc{width:120px;height:120px;border-radius:50%;background:var(--gold);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;box-shadow:0 18px 26px -10px rgba(110,85,30,.7),inset 0 -10px 14px rgba(110,85,30,.35),inset 0 10px 14px rgba(250,240,215,.9)}
+.modal .lvlc small{font-weight:800;font-size:14px}
+.modal .lvlc b{font-weight:800;font-size:56px}
+.modal h2{margin:0;font-weight:800;font-size:48px;line-height:1;letter-spacing:-.02em}
+.modal p{margin:0;font-size:16px;font-weight:700;color:var(--muted2)}
+.modal .btn{padding:14px 44px}
+.toast{position:fixed;right:48px;top:110px;z-index:60;background:var(--sage);color:var(--ink);border-radius:24px;padding:14px 22px;display:flex;gap:12px;align-items:center;font-weight:800;font-size:18px;box-shadow:0 18px 26px -12px rgba(50,80,60,.7),inset 0 6px 10px rgba(255,255,255,.6)}
+.toast span{background:var(--gold);padding:0 10px;border-radius:999px}
+/* teacher */
+.teacher{background:var(--ink);color:var(--card);min-height:100vh;display:grid;grid-template-columns:minmax(0,1fr) 600px;gap:40px;padding:56px 64px}
+.t-left{display:flex;flex-direction:column;gap:28px;min-width:0}
+.t-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.t-id{display:flex;align-items:center;gap:28px;min-width:0}
+.t-dragon{width:160px;height:160px;border-radius:50%;background:var(--card);overflow:hidden;flex:none;box-shadow:0 18px 30px -12px rgba(0,0,0,.6)}
+.t-dragon img{width:100%;height:100%;object-fit:cover;mix-blend-mode:multiply}
+.t-kick{font-weight:800;font-size:22px;letter-spacing:.1em;color:var(--gold)}
+.t-title{font-size:80px;line-height:.95;font-weight:800;letter-spacing:-.025em;margin:6px 0 0}
+.tstats{display:flex;gap:20px}
+.tstat{background:rgba(255,255,255,.08);border-radius:28px;padding:18px 26px}
+.tstat small{display:block;font-weight:800;font-size:20px;color:#C3C8D4}
+.tstat b{display:block;font-weight:800;font-size:50px;line-height:1.05}
+.t-ev{background:var(--sand);color:var(--ink);border-radius:36px;padding:28px 34px;display:flex;flex-direction:column;gap:10px;box-shadow:0 22px 34px -18px rgba(0,0,0,.6),inset 0 8px 14px rgba(255,255,255,.7)}
+.t-ev .ev-tag{font-size:20px;padding:6px 16px}
+.t-ev h2{margin:0;font-weight:800;font-size:50px;line-height:1.05;letter-spacing:-.01em}
+.t-ev p{margin:0;font-size:24px;line-height:1.45;font-weight:600;color:#38404F;text-wrap:pretty}
+.t-ev .fx span{font-size:20px;padding:6px 16px}
+.tcols{flex:1;min-height:380px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:36px;align-items:end;background:rgba(255,255,255,.05);border-radius:40px;padding:28px 44px 24px;box-shadow:inset 0 10px 24px rgba(0,0,0,.3)}
+.tc{height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:10px;min-width:0}
+.tc .v{font-weight:800;font-size:36px}
+.tc .bw{flex:1;min-height:0;width:100%;position:relative}
+.tc .bw i{position:absolute;left:0;right:0;bottom:0;border-radius:30px 30px 18px 18px;transition:height .6s;box-shadow:0 20px 30px -14px rgba(0,0,0,.6),inset 0 -12px 18px rgba(0,0,0,.2),inset 0 12px 18px rgba(255,255,255,.45)}
+.tc .tn{display:flex;align-items:center;gap:10px;font-weight:800;font-size:32px}
+.tc .tn span{width:18px;height:18px;border-radius:50%}
+.t-right{display:flex;flex-direction:column;gap:22px;min-width:0}
+.tcard{background:var(--card);color:var(--ink);border-radius:40px;padding:28px;display:flex;flex-direction:column;gap:16px;box-shadow:0 26px 40px -20px rgba(0,0,0,.6),inset 0 8px 16px #fff}
+.tcard h2{margin:0;font-weight:800;font-size:32px}
+.tcard p{margin:0;font-size:20px;font-weight:700;color:var(--muted);line-height:1.35}
+.gates{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.gates button{height:88px;border-radius:26px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-weight:800;line-height:1;color:var(--ink);background:var(--field);box-shadow:0 12px 18px -10px rgba(31,42,68,.6),inset 0 -6px 10px rgba(0,0,0,.14),inset 0 6px 10px rgba(255,255,255,.5);transition:transform .1s}
+.gates button:active,.award button:active{transform:scale(.94)}
+.gates button.cur{background:var(--gold)}
+.gates button.open{background:var(--sage)}
+.gates b{font-size:32px}
+.gates span{font-size:15px;font-weight:700}
+.award{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.award button{height:88px;border-radius:26px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;line-height:1.05;box-shadow:0 12px 18px -10px rgba(31,42,68,.6),inset 0 -6px 10px rgba(0,0,0,.16),inset 0 6px 10px rgba(255,255,255,.5);transition:transform .1s}
+.award b{font-size:28px}
+.award span{font-size:20px}
+.reset{width:100%;text-align:center;padding:18px;border-radius:30px;background:rgba(255,255,255,.08);color:var(--card);font-weight:800;font-size:24px}
+.t-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.t-foot a{color:#C3C8D4;font-size:15px}
+.teacher .seg{background:rgba(255,255,255,.1)}
+.teacher .seg button{color:#C3C8D4}
+.teacher .seg button.on{color:var(--ink)}
+/* responsive */
+@media (max-width:1240px){
+  .hero{grid-template-columns:minmax(0,1fr) 200px}
+  .hero-dragon{width:200px;height:200px}
+  .team-card{grid-column:1/-1}
+  .play-main,.row-c{grid-template-columns:minmax(0,1fr)}
+  .teacher{grid-template-columns:minmax(0,1fr);padding:40px 32px}
+}
+@media (max-width:900px){
+  .hero{grid-template-columns:minmax(0,1fr)}
+  .hero-dragon{display:none}
+  h1{font-size:52px}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .duo{grid-template-columns:minmax(0,1fr)}
+  .event{grid-template-columns:140px minmax(0,1fr)}
+  .event img{width:140px;height:120px}
+  .qhead{flex-direction:column;align-items:stretch;gap:16px}
+  .prog{max-width:none}
+}
+@media (max-width:720px){
+  .wrap{padding:16px 16px 116px}
+  .d-only{display:none!important}
+  .short{display:inline}
+  .long{display:none}
+  #main [data-tab]:not(.on){display:none!important}
+  .nav{background:none;box-shadow:none;padding:2px 0 6px;border-radius:0}
+  .logo,.sub,.back,.nav .seg{display:none}
+  .wink{display:block}
+  .brand{gap:6px}
+  .ttl{font-size:19px}
+  .nav-r{gap:8px}
+  .lang1{display:block}
+  .xp-pill{font-size:15px;gap:8px;padding:4px 12px 4px 4px;box-shadow:inset 0 -4px 6px rgba(110,85,30,.25),inset 0 4px 6px rgba(250,240,215,.8)}
+  .tbadge{width:28px;height:28px;font-size:13px}
+  #main{display:flex;flex-direction:column;gap:16px;padding-top:8px}
+  .hero{display:block;padding:0}
+  h1{font-size:28px;line-height:1.05;letter-spacing:-.02em}
+  .picker{padding-bottom:0}
+  .teams{gap:8px}
+  .team-tile{height:52px;border-radius:18px;outline-offset:3px;box-shadow:0 10px 14px -8px rgba(31,42,68,.5),inset 0 -5px 8px rgba(0,0,0,.15),inset 0 5px 8px rgba(255,255,255,.5)}
+  .team-tile.on,.team-tile:hover{transform:none}
+  .team-tile b{font-size:18px}
+  .team-tile b i,.team-tile span{display:none}
+  .card{border-radius:24px;padding:16px;gap:12px;box-shadow:0 14px 20px -14px rgba(31,42,68,.4),inset 0 6px 10px rgba(255,255,255,.9)}
+  .ch h2,.ch h3{font-size:22px}
+  .setup-card{background:none;box-shadow:none;padding:0;margin:0;gap:14px}
+  .inds{grid-template-columns:minmax(0,1fr);gap:14px}
+  .ind{border-radius:22px;padding:14px 16px;gap:2px;outline-offset:3px}
+  .ind:hover{transform:none}
+  .ind b{font-size:18px;line-height:1.15}
+  .ind span{font-size:12px}
+  .startrow{grid-template-columns:minmax(0,1fr);gap:14px}
+  .fld>span{font-size:12px}
+  .inp{font-size:16px;padding:12px 14px;border-radius:16px;box-shadow:inset 0 3px 8px rgba(31,42,68,.18)}
+  .btn,.btn.start{border-radius:20px;padding:14px;font-size:17px}
+  .empty-t{font-size:14px;padding:0}
+  .play{gap:14px;padding:0}
+  .qhead{flex-direction:column;gap:10px}
+  .qhead>div:first-child{display:flex;justify-content:space-between;align-items:baseline;flex-direction:row-reverse;gap:8px}
+  .qhead .kick{font-size:11px;letter-spacing:0;text-transform:none;text-align:right;max-width:180px}
+  .endhead .kick{font-size:11px}
+  .qbig{font-size:30px;margin:0}
+  .prog{gap:4px;padding:0}
+  .prog i{height:10px;box-shadow:none}
+  .prog i.now{box-shadow:none}
+  .prog small{display:none}
+  .event{display:block;border-radius:24px;padding:16px;box-shadow:inset 0 6px 10px rgba(255,255,255,.7),0 12px 18px -14px rgba(110,85,30,.6)}
+  .ev-body{gap:6px}
+  .ev-tag{background:none;color:var(--copper);padding:0;font-size:11px}
+  .event h2{font-size:20px;line-height:1.1}
+  .event p{font-size:13px;line-height:1.45}
+  .fx{gap:6px}
+  .fx span{font-size:11px;padding:3px 9px}
+  .play-main,.row-c{gap:14px}
+  .dec{gap:10px}
+  .dec .ch{display:none}
+  .grp{gap:6px}
+  .grp h3{font-size:16px;margin-top:4px}
+  .lrow label{font-size:13px}
+  .bigv{font-size:22px}
+  input[type=range],.mrow input[type=range]{height:32px}
+  .prem{font-size:12px}
+  .rules{background:none;box-shadow:none;padding:0;gap:4px}
+  .rules div{font-size:11px;gap:6px}
+  .rules i{width:8px;height:8px}
+  .mrow{grid-template-columns:minmax(0,1fr) auto;gap:0 8px}
+  .mrow input[type=range]{grid-column:1/-1;grid-row:2}
+  .mn label{font-size:12px}
+  .mrow b{font-size:12px;grid-row:1;grid-column:2}
+  .ivt{font-size:12px;line-height:1.35}
+  .invs{gap:6px}
+  .iv{min-height:44px;border-radius:14px;font-size:12px;line-height:1.1;padding:2px;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 -4px 6px rgba(0,0,0,.1),inset 0 4px 6px rgba(255,255,255,.6)}
+  .res{background:none;box-shadow:none;padding:0}
+  .res .ch .pill,.chartcard .ch .pill{display:none}
+  .kpis{gap:10px}
+  .kpi{border-radius:20px;padding:12px 14px;box-shadow:inset 0 -5px 8px rgba(0,0,0,.14),inset 0 5px 8px rgba(255,255,255,.5)}
+  .kpi small{font-size:11px;line-height:1.25}
+  .kpi b,.endk .kpi b{font-size:20px}
+  .note{font-size:12px}
+  .chartcard{background:none;box-shadow:none;padding:0}
+  .chartcard .ch h2{font-size:22px;line-height:1.15}
+  .chartbox{background:var(--card);border-radius:22px;padding:8px;box-shadow:inset 0 4px 10px rgba(31,42,68,.12)}
+  .legend{font-size:12px;gap:12px;order:3}
+  .board{background:none;color:var(--ink);box-shadow:none;padding:0;border-radius:0;gap:10px}
+  .board h2{font-size:28px}
+  .brow{grid-template-columns:38px minmax(0,1fr) 64px;gap:10px;padding:10px;background:var(--card);box-shadow:inset 0 4px 8px rgba(255,255,255,.8)}
+  .brow.me{background:var(--mist)}
+  .bbar{display:none}
+  .endhead{display:flex;flex-direction:column-reverse;align-items:center;text-align:center;gap:8px}
+  .endhead h1{font-size:28px;margin-top:4px}
+  .endhead img{width:180px;height:160px}
+  .endk{background:none;box-shadow:none;padding:0}
+  .endk .kpi{border-radius:20px;padding:12px 14px}
+  .bdg{font-size:12px;padding:4px 14px 4px 4px}
+  .bdg span{width:28px;height:28px;font-size:11px}
+  .duo{gap:14px}
+  .bench{border-radius:24px;padding:16px;gap:10px}
+  .kv{gap:8px 12px}
+  .kv span{font-size:12px}
+  .kv b{font-size:22px}
+  .bench p{font-size:12px}
+  .qq{grid-template-columns:26px minmax(0,1fr);gap:10px}
+  .qq b{width:26px;height:26px;border-radius:9px;font-size:13px}
+  .qq p{font-size:13px}
+  .endbtns{flex-direction:column;gap:10px}
+  .endbtns .btn{padding:14px;font-size:16px}
+  footer{font-size:12px;padding-top:16px}
+  footer nav{font-size:13px}
+  .tabbar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;position:fixed;left:14px;right:14px;bottom:18px;z-index:40;background:var(--ink);border-radius:30px;padding:6px;box-shadow:0 16px 24px -10px rgba(31,42,68,.7)}
+  .tabbar button{min-height:48px;border-radius:24px;font-weight:800;font-size:12px;line-height:1.1;color:#C3C8D4}
+  .tabbar button.on{background:var(--blue);color:#fff;box-shadow:inset 0 -4px 6px rgba(10,20,50,.3),inset 0 4px 6px rgba(210,220,240,.6)}
+  .toast{right:16px;left:auto;top:72px;font-size:16px;padding:12px 18px}
+  .modal{padding:32px 24px 26px;margin-top:100px}
+  .modal h2{font-size:36px}
+  .teacher{padding:24px 16px;gap:24px}
+  .t-dragon{width:96px;height:96px}
+  .t-id{gap:16px}
+  .t-kick{font-size:14px}
+  .t-title{font-size:44px}
+  .tstats{width:100%;gap:12px}
+  .tstat{flex:1;padding:14px 16px}
+  .tstat small{font-size:13px}
+  .tstat b{font-size:32px}
+  .t-ev{border-radius:28px;padding:18px}
+  .t-ev .ev-tag{font-size:13px;padding:4px 12px}
+  .t-ev h2{font-size:28px}
+  .t-ev p{font-size:16px}
+  .t-ev .fx span{font-size:13px;padding:4px 10px}
+  .tcols{min-height:260px;gap:8px;padding:16px 10px;border-radius:28px}
+  .tc .v{font-size:16px}
+  .tc .tn{font-size:16px;gap:4px}
+  .tc .tn span{width:10px;height:10px}
+  .tc .bw i{border-radius:16px 16px 10px 10px}
+  .tcard{border-radius:28px;padding:20px;gap:12px}
+  .tcard h2{font-size:24px}
+  .tcard p{font-size:15px}
+  .gates{gap:8px}
+  .gates button{height:64px;border-radius:20px}
+  .gates b{font-size:22px}
+  .gates span{font-size:12px}
+  .award{gap:8px}
+  .award button{height:64px;border-radius:20px}
+  .award b{font-size:18px}
+  .award span{font-size:15px}
+  .reset{font-size:19px}
+}
 </style>
-<link rel="stylesheet" href="../css/clay-dark-skin.css">
 <script src="../js/capture-guard.js"></script>
 </head>
 <body>
-<div class="topbar"><div class="topbar-in">
-  <div class="logo"><span class="mark">🏭</span><span>Nhà máy FDI<span class="sub" id="brandSub"></span></span></div>
-  <div class="spacer"></div>
-  <a class="tbtn" href="../lop-hoc.html" id="backLink"></a>
-  <div class="lang-pill"><button id="langVI" class="on" type="button">VI</button><button id="langEN" type="button">EN</button></div>
-  <button class="tbtn" id="themeBtn" type="button"></button>
-</div></div>
+<div class="wrap" id="student">
+  <header class="nav">
+    <div class="nav-l">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">B</div>
+        <img class="wink" src="../assets/cvp-lab/dragon-wink.jpg" alt="" width="42" height="42">
+        <div>
+          <div class="ttl">FDI Lab</div>
+          <div class="sub" id="navSub">Nhà máy FDI · Mô phỏng chuỗi giá trị toàn cầu</div>
+        </div>
+      </div>
+      <a class="back" id="clsLink" href="../lop-hoc.html">← Kịch bản lớp học</a>
+    </div>
+    <div class="nav-r">
+      <div class="seg" role="group" aria-label="Ngôn ngữ / Language">
+        <button type="button" data-act="lang" data-v="vi">VI</button>
+        <button type="button" data-act="lang" data-v="en">EN</button>
+      </div>
+      <button type="button" class="lang1" id="lang1" data-act="langT">EN</button>
+      <div class="xp-pill"><span class="tbadge" id="navBadge">01</span><span id="navXp">70 XP</span></div>
+    </div>
+  </header>
 
-<main class="wrap" id="app"></main>
+  <main id="main"></main>
 
-<footer class="wrap">
-  <p>© 2026 PGS.TS. Phan Anh Tú &amp; NCS. Đỗ Thùy Hương · Trường Kinh tế, Đại học Cần Thơ</p>
-  <p id="footSrc"></p>
-  <p>Cite (APA 7): Phan, A. T., &amp; Do, T. H. (2026). <i>Nhà Máy FDI: an 8-quarter FDI-factory management simulation for Vietnam</i> [Computer software]. <a href="https://doi.org/10.5281/zenodo.23307829" target="_blank" rel="noopener">https://doi.org/10.5281/zenodo.23307829</a></p>
-  <p>⭐ Mã nguồn (tách từ BizOn): <a href="https://github.com/thuyhuongctu/Fdi-Lab" target="_blank" rel="noopener">github.com/thuyhuongctu/Fdi-Lab</a></p>
-</footer>
+  <footer>
+    <p class="credit">© 2026 PGS.TS. Phan Anh Tú &amp; NCS. Đỗ Thùy Hương · Trường Kinh tế, Đại học Cần Thơ</p>
+    <p id="footSrc">Sự kiện lấy cảm hứng từ chiến tranh thương mại Mỹ – Trung (2018–2019), EVFTA (2020), COVID-19 (2020–2021), gián đoạn Biển Đỏ (2023–2024) và thuế đối ứng của Hoa Kỳ (2025). Mọi độ lớn trong mô phỏng là minh họa. Số tham chiếu: Cục Hải quan (2026), Biểu 017.T và 018.T.</p>
+    <p>Cite (APA 7): Phan, A. T., &amp; Do, T. H. (2026). <i>Nhà Máy FDI: an 8-quarter FDI-factory management simulation for Vietnam</i> [Computer software]. <a href="https://doi.org/10.5281/zenodo.23307829" target="_blank" rel="noopener">https://doi.org/10.5281/zenodo.23307829</a></p>
+    <p><span id="srcLbl">Mã nguồn (tách từ BizOn):</span> <a href="https://github.com/thuyhuongctu/Fdi-Lab" target="_blank" rel="noopener">github.com/thuyhuongctu/Fdi-Lab</a></p>
+    <nav aria-label="Liên kết" id="footNav">
+      <a href="#teacher" id="teacherLink">Màn hình giảng viên →</a>
+      <a href="cmr-lab.html">CMR Lab</a>
+      <a href="cvp-studio.html">CVP Lab</a>
+      <a href="../universe.html" id="uniLink">Vũ trụ →</a>
+    </nav>
+  </footer>
+
+  <nav class="tabbar" id="tabbar" aria-label="Tabs"></nav>
+</div>
+
+<section class="teacher" id="teacher" hidden>
+  <div class="t-left">
+    <div class="t-head">
+      <div class="t-id">
+        <div class="t-dragon"><img src="../assets/cmr-lab/dragon-wave.jpg" alt="" width="160" height="160" id="tDragon"></div>
+        <div>
+          <div class="t-kick" id="tClass">FDI LAB · MÀN HÌNH LỚP</div>
+          <h2 class="t-title" id="tRace">Đua nhóm</h2>
+        </div>
+      </div>
+      <div class="tstats">
+        <div class="tstat"><small id="tTotalL">Tổng XP</small><b id="tTotal">475</b></div>
+        <div class="tstat"><small id="tOpenL">Đang mở đến</small><b id="tOpen">Q1</b></div>
+      </div>
+    </div>
+    <div class="t-ev" id="tEvent"></div>
+    <div class="tcols" id="tcols"></div>
+  </div>
+  <div class="t-right">
+    <div class="tcard">
+      <h2 id="tGateT">Mở quý cho lớp</h2>
+      <p id="tGateH"></p>
+      <div class="gates" id="gateCtl"></div>
+    </div>
+    <div class="tcard">
+      <h2 id="tAward">Thưởng XP</h2>
+      <div class="award" id="awardCtl"></div>
+    </div>
+    <button class="reset" type="button" id="tReset" data-act="reset">Đặt lại lớp</button>
+    <div class="t-foot">
+      <a href="#" data-act="student" id="tBack">← Quay lại màn hình sinh viên</a>
+      <div class="seg" role="group" aria-label="Ngôn ngữ / Language">
+        <button type="button" data-act="lang" data-v="vi">VI</button>
+        <button type="button" data-act="lang" data-v="en">EN</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="scrim" id="modal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <div class="dimg"><img src="../assets/cmr-lab/dragon-jump.jpg" alt="" width="220" height="220" id="mImg"></div>
+    <div class="lvlc"><small>LVL</small><b id="mLvl">1</b></div>
+    <h2 id="mTitle">Lên cấp!</h2>
+    <p id="mText">Bạn đã mở khóa cấp mới</p>
+    <button class="btn" type="button" data-act="close" id="mCont">Tiếp tục</button>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" hidden></div>
 
 <script src="nha-may-fdi-engine.js"></script>
 <script src="nha-may-fdi-data.js"></script>
 <script>
 (function () {
-  'use strict';
-  const E = window.FactoryEngine, D = window.FactoryData;
-  const $ = id => document.getElementById(id);
-  const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+'use strict';
+const E = window.FactoryEngine, D = window.FactoryData;
+const N8 = D.events.length;
 
-  const T = {
-    vi: {
-      brandSub: 'Mô phỏng chuỗi giá trị toàn cầu', back: '← Kịch bản lớp học', light: 'Sáng', dark: 'Tối',
-      eyebrow: 'Trò chơi mô phỏng · Kinh doanh quốc tế', title: 'Điều hành một nhà máy FDI qua 8 quý biến động',
-      lead: 'Bạn là giám đốc một nhà máy có vốn đầu tư nước ngoài tại Việt Nam. Mỗi quý, chọn mua đầu vào trong nước hay nhập khẩu, chia sản lượng cho các thị trường và quyết định có đầu tư phát triển nhà cung cấp nội địa hay không. Chiến tranh thương mại, đứt gãy chuỗi cung ứng và thuế quan sẽ thử thách mô hình của bạn. Khoảng 15 phút.',
-      provSim: 'Tham số minh họa · sự kiện lấy cảm hứng từ thực tế', provPub: 'Số tham chiếu thật: Cục Hải quan, 8 tháng 2026',
-      chooseInd: 'Chọn ngành', cohort: 'Mã lớp hoặc mã nhóm (tùy chọn, không nhập họ tên)', cohortHint: 'Cùng mã thì cùng diễn biến ngẫu nhiên, để cả lớp so sánh công bằng.',
-      start: 'Bắt đầu', quarter: 'Quý', of: '/', inspired: 'Lấy cảm hứng từ',
-      decisions: 'Quyết định quý này', local: 'Tỷ lệ đầu vào mua trong nước', premium: 'Đầu vào trong nước đắt hơn nhập khẩu',
-      roo: 'Từ 40%: đạt quy tắc xuất xứ EU, Nhật – Hàn (thuế 0%)', ts: 'Dưới 30%: có thể bị nghi trung chuyển khi Hoa Kỳ siết thuế',
-      markets: 'Chia sản lượng cho thị trường', demandHint: 'cầu bình thường khoảng', invest: 'Đầu tư phát triển nhà cung cấp trong nước (có tác dụng từ quý sau)',
-      none: 'Không đầu tư', commit: 'Chốt quý', results: 'Kết quả quý', profit: 'Lợi nhuận', exports: 'Xuất khẩu', imports: 'Nhập khẩu đầu vào',
-      dva: 'Tỷ lệ giá trị gia tăng trong nước', market: 'Thị trường', offered: 'Chào bán', sold: 'Bán được', tariff: 'Thuế', revenue: 'Doanh thu',
-      chartTitle: 'Xuất khẩu và nhập khẩu đầu vào theo quý (triệu USD)', unsold: 'Hàng không bán được thanh lý trong nước với 40% giá.',
-      produced: 'Sản lượng', endTitle: 'Báo cáo sau 8 quý', totalProfit: 'Tổng lợi nhuận', totalDva: 'Tỷ lệ giá trị gia tăng trong nước (cả kỳ)',
-      ratioYou: 'Nhập khẩu đầu vào / xuất khẩu của nhà máy bạn', ratioReal: 'Cùng tỷ lệ, khu vực FDI của nhóm hàng này (Hải quan, 8 tháng 2026)',
-      realNote: 'So sánh mang tính gợi mở: số Hải quan là cấp nhóm hàng của cả khu vực FDI, không khớp từng sản phẩm.',
-      debrief: 'Câu hỏi thảo luận', download: 'Tải nhật ký quyết định (JSON)', again: 'Chơi lại',
-      q1: 'Vì sao xuất khẩu lớn chưa chắc đem lại nhiều giá trị gia tăng cho Việt Nam? Liên hệ khái niệm giá trị gia tăng trong xuất khẩu (Koopman et al., 2014).',
-      q2: 'Quy tắc xuất xứ của EVFTA và CPTPP đã thay đổi lựa chọn nguồn đầu vào của bạn như thế nào?',
-      q3: 'Nhà máy của bạn chống chịu cú sốc quý 4 và quý 7 ra sao? Đánh đổi giữa chi phí và khả năng chống chịu là gì?',
-      q4: 'Nếu là nhà hoạch định chính sách, bạn sẽ làm gì để doanh nghiệp FDI mua nhiều hơn từ nhà cung cấp trong nước?',
-      badges: { resilient: 'Chống chịu: không quý nào lỗ', upgrader: 'Nâng cấp chuỗi: giá trị gia tăng trong nước từ 45%', assembler: 'Xưởng lắp ráp: giá trị gia tăng trong nước dưới 30%', transship_flag: 'Bị gắn cờ trung chuyển ở thị trường Hoa Kỳ' },
-      units: 'đơn vị', m: 'tr', foot: 'Sự kiện lấy cảm hứng từ chiến tranh thương mại Mỹ – Trung (2018–2019), EVFTA (2020), COVID-19 (2020–2021), gián đoạn Biển Đỏ (2023–2024) và thuế đối ứng của Hoa Kỳ (2025). Mọi độ lớn trong mô phỏng là minh họa. Số tham chiếu: Cục Hải quan (2026), Biểu 017.T và 018.T.'
-    },
-    en: {
-      brandSub: 'Global value chain simulation', back: '← Classroom script', light: 'Light', dark: 'Dark',
-      eyebrow: 'Simulation game · International business', title: 'Run a foreign-invested factory through 8 turbulent quarters',
-      lead: 'You manage a foreign-invested plant in Vietnam. Each quarter, choose local or imported inputs, split output across markets, and decide whether to invest in developing local suppliers. Trade wars, supply-chain disruption and tariffs will test your model. About 15 minutes.',
-      provSim: 'Illustrative parameters · events inspired by real episodes', provPub: 'Real reference figures: Vietnam Customs, Jan–Aug 2026',
-      chooseInd: 'Choose an industry', cohort: 'Class or team code (optional, no personal names)', cohortHint: 'The same code gives the same random path, so a class can compare fairly.',
-      start: 'Start', quarter: 'Quarter', of: '/', inspired: 'Inspired by',
-      decisions: 'This quarter\'s decisions', local: 'Share of inputs bought locally', premium: 'Local inputs cost more than imports by',
-      roo: 'From 40%: meets EU and Japan–Korea rules of origin (0% duty)', ts: 'Below 30%: may be flagged for transshipment when the US tightens tariffs',
-      markets: 'Split output across markets', demandHint: 'normal demand about', invest: 'Invest in developing local suppliers (takes effect next quarter)',
-      none: 'No investment', commit: 'Commit quarter', results: 'Quarter results', profit: 'Profit', exports: 'Exports', imports: 'Imported inputs',
-      dva: 'Domestic value-added share', market: 'Market', offered: 'Offered', sold: 'Sold', tariff: 'Tariff', revenue: 'Revenue',
-      chartTitle: 'Exports and imported inputs by quarter (USD million)', unsold: 'Unsold output is cleared locally at 40% of the price.',
-      produced: 'Output', endTitle: 'Report after 8 quarters', totalProfit: 'Total profit', totalDva: 'Domestic value-added share (whole game)',
-      ratioYou: 'Imported inputs / exports at your plant', ratioReal: 'Same ratio, FDI sector for this product group (Customs, Jan–Aug 2026)',
-      realNote: 'An indicative comparison: Customs figures are product-group totals for the whole FDI sector, not matched product by product.',
-      debrief: 'Discussion questions', download: 'Download decision log (JSON)', again: 'Play again',
-      q1: 'Why do large exports not necessarily bring Vietnam much value added? Relate this to value added in exports (Koopman et al., 2014).',
-      q2: 'How did the EVFTA and CPTPP rules of origin change your sourcing choices?',
-      q3: 'How did your plant withstand the shocks in quarters 4 and 7? What is the trade-off between cost and resilience?',
-      q4: 'As a policymaker, what would you do to make foreign-invested firms buy more from local suppliers?',
-      badges: { resilient: 'Resilient: no loss-making quarter', upgrader: 'Value-chain upgrader: domestic value added ≥ 45%', assembler: 'Assembly shop: domestic value added < 30%', transship_flag: 'Flagged for transshipment in the US market' },
-      units: 'units', m: 'm', foot: 'Events inspired by the US–China trade war (2018–2019), the EVFTA (2020), COVID-19 (2020–2021), the Red Sea disruption (2023–2024) and US reciprocal tariffs (2025). All magnitudes in the simulation are illustrative. Reference figures: Vietnam Customs (2026), Tables 017.T and 018.T.'
+const T = {
+  vi: {
+    credit: '© 2026 PGS.TS. Phan Anh Tú & NCS. Đỗ Thùy Hương · Trường Kinh tế, Đại học Cần Thơ',
+    brand: 'Nhà máy FDI', brandSub: 'Mô phỏng chuỗi giá trị toàn cầu', back: '← Kịch bản lớp học',
+    eyebrow: 'Trò chơi mô phỏng · Kinh doanh quốc tế', title: 'Điều hành một nhà máy FDI qua 8 quý biến động',
+    lead: 'Bạn là giám đốc một nhà máy có vốn đầu tư nước ngoài tại Việt Nam. Mỗi quý, chọn mua đầu vào trong nước hay nhập khẩu, chia sản lượng cho các thị trường và quyết định có đầu tư phát triển nhà cung cấp nội địa hay không. Chiến tranh thương mại, đứt gãy chuỗi cung ứng và thuế quan sẽ thử thách mô hình của bạn. Khoảng 15 phút.',
+    provSim: 'Tham số minh họa · sự kiện lấy cảm hứng từ thực tế', provPub: 'Số tham chiếu thật: Cục Hải quan, 8 tháng 2026',
+    chooseInd: 'Chọn ngành', cohort: 'Mã lớp hoặc mã nhóm (tùy chọn, không nhập họ tên)', cohortHint: 'Cùng mã thì cùng diễn biến ngẫu nhiên, để cả lớp so sánh công bằng.',
+    start: 'Bắt đầu', quarter: 'Quý', inspired: 'Lấy cảm hứng từ',
+    decisions: 'Quyết định quý này', local: 'Tỷ lệ đầu vào mua trong nước', premium: 'Đầu vào trong nước đắt hơn nhập khẩu',
+    roo: 'Từ 40%: đạt quy tắc xuất xứ EU, Nhật – Hàn (thuế 0%)', ts: 'Dưới 30%: có thể bị nghi trung chuyển khi Hoa Kỳ siết thuế',
+    rooS: 'Từ 40%: đạt quy tắc xuất xứ EU, Nhật – Hàn', tsS: 'Dưới 30%: nguy cơ bị nghi trung chuyển',
+    markets: 'Chia sản lượng cho thị trường', demandHint: 'cầu bình thường khoảng', invest: 'Đầu tư phát triển nhà cung cấp trong nước (có tác dụng từ quý sau)', investS: 'Đầu tư nhà cung cấp trong nước (từ quý sau)',
+    none2: 'Không', commit: 'Chốt quý', results: 'Kết quả quý', profit: 'Lợi nhuận', exports: 'Xuất khẩu', imports: 'Nhập khẩu đầu vào',
+    dva: 'Tỷ lệ giá trị gia tăng trong nước', dvaS: 'GTGT trong nước', market: 'Thị trường', offered: 'Chào bán', sold: 'Bán được', tariff: 'Thuế', revenue: 'Doanh thu',
+    chartTitle: 'Xuất khẩu và nhập khẩu đầu vào theo quý (triệu USD)', unsold: 'Hàng không bán được thanh lý trong nước với 40% giá.',
+    produced: 'Sản lượng', endTitle: 'Báo cáo sau 8 quý', totalProfit: 'Tổng lợi nhuận', totalDva: 'Tỷ lệ giá trị gia tăng trong nước (cả kỳ)',
+    ratioYou: 'Nhập khẩu đầu vào / xuất khẩu của nhà máy bạn', ratioReal: 'Cùng tỷ lệ, khu vực FDI của nhóm hàng này (Hải quan, 8 tháng 2026)',
+    realNote: 'So sánh mang tính gợi mở: số Hải quan là cấp nhóm hàng của cả khu vực FDI, không khớp từng sản phẩm.',
+    debrief: 'Câu hỏi thảo luận', download: 'Tải nhật ký quyết định (JSON)', again: 'Chơi lại',
+    qs: ['Vì sao xuất khẩu lớn chưa chắc đem lại nhiều giá trị gia tăng cho Việt Nam? Liên hệ khái niệm giá trị gia tăng trong xuất khẩu (Koopman et al., 2014).', 'Quy tắc xuất xứ của EVFTA và CPTPP đã thay đổi lựa chọn nguồn đầu vào của bạn như thế nào?', 'Nhà máy của bạn chống chịu cú sốc quý 4 và quý 7 ra sao? Đánh đổi giữa chi phí và khả năng chống chịu là gì?', 'Nếu là nhà hoạch định chính sách, bạn sẽ làm gì để doanh nghiệp FDI mua nhiều hơn từ nhà cung cấp trong nước?'],
+    badges: { resilient: 'Chống chịu: không quý nào lỗ', upgrader: 'Nâng cấp chuỗi: giá trị gia tăng trong nước từ 45%', assembler: 'Xưởng lắp ráp: giá trị gia tăng trong nước dưới 30%', transship_flag: 'Bị gắn cờ trung chuyển ở thị trường Hoa Kỳ' },
+    m: 'tr', perQ: 'quý', bn: 'tỷ USD',
+    foot: 'Sự kiện lấy cảm hứng từ chiến tranh thương mại Mỹ – Trung (2018–2019), EVFTA (2020), COVID-19 (2020–2021), gián đoạn Biển Đỏ (2023–2024) và thuế đối ứng của Hoa Kỳ (2025). Mọi độ lớn trong mô phỏng là minh họa. Số tham chiếu: Cục Hải quan (2026), Biểu 017.T và 018.T.',
+    src: 'Mã nguồn (tách từ BizOn):', teacherLink: 'Màn hình giảng viên →', uni: 'Vũ trụ →', links: 'Liên kết',
+    team: 'Nhóm', xpp: 'Điểm kinh nghiệm', pick: 'Chọn nhóm của bạn', teamSub: 'T01 – T05 · mỗi nhóm có XP riêng.', step: 'BƯỚC',
+    xpRules: '+10 XP mỗi quý chốt · +10 nếu có lãi · +10 nếu GTGT trong nước ≥ 45% · +25 mỗi huy hiệu cuối kỳ',
+    levels: ['Thực tập sinh', 'Quản đốc', 'Giám đốc nhà máy', 'Tổng giám đốc'],
+    board: 'Bảng xếp hạng lớp', boardS: 'Xếp hạng', lvlUp: 'Lên cấp!', unlocked: 'Bạn đã mở khóa cấp mới', cont: 'Tiếp tục', done: 'Đã chốt quý!',
+    resEmpty: 'Chốt quý 1 để xem kết quả đầu tiên.', wait: 'Chờ giảng viên mở quý', waitNote: 'Cả lớp đang chờ giảng viên mở quý tiếp theo – hít thở và xem lại kết quả quý vừa rồi nhé.',
+    eDemand: 'Cầu', eAll: 'mọi thị trường', eDisr: 'Đứt gãy đầu vào nhập', eFreight: 'Cước đầu vào nhập', ePrice: 'Giá ròng', eTariff: 'Thuế', eTrans: 'Nghi trung chuyển: thuế', eNone: 'Không có cú sốc',
+    tabs: ['Quyết định', 'Kết quả', 'Biểu đồ', 'Xếp hạng'], tabsEnd: ['Báo cáo', 'Kết quả', 'Biểu đồ', 'Xếp hạng'],
+    classView: 'FDI LAB · MÀN HÌNH LỚP', race: 'Đua nhóm', total: 'Tổng XP', openTo: 'Đang mở đến', gateT: 'Mở quý cho lớp', gateHint: 'Nhóm chỉ chốt được đến quý đang mở. Sự kiện của quý đó hiện bên trái.', open: 'đã mở', locked: 'khóa', award: 'Thưởng XP', reset: 'Đặt lại lớp', backStudent: '← Quay lại màn hình sinh viên',
+    dragonHero: 'Rồng BizOn cầm kính lúp', dragonUp: 'Rồng BizOn ăn mừng', dragonWave: 'Rồng BizOn vẫy tay', dragonScroll: 'Rồng BizOn đọc cuộn giấy', dragonIdea: 'Rồng BizOn suy nghĩ', dragonZen: 'Rồng BizOn ngồi thiền', dragonBoat: 'Rồng BizOn chèo thuyền',
+    toEn: 'Switch to English', chartAria: 'Biểu đồ cột: xuất khẩu và nhập khẩu đầu vào theo quý, kèm tỷ lệ giá trị gia tăng trong nước',
+  },
+  en: {
+    credit: '© 2026 Assoc. Prof. Dr. Phan Anh Tu & PhD Candidate Do Thuy Huong · School of Economics, Can Tho University',
+    brand: 'FDI Factory', brandSub: 'Global value chain simulation', back: '← Classroom script',
+    eyebrow: 'Simulation game · International business', title: 'Run a foreign-invested factory through 8 turbulent quarters',
+    lead: 'You manage a foreign-invested plant in Vietnam. Each quarter, choose local or imported inputs, split output across markets, and decide whether to invest in developing local suppliers. Trade wars, supply-chain disruption and tariffs will test your model. About 15 minutes.',
+    provSim: 'Illustrative parameters · events inspired by real episodes', provPub: 'Real reference figures: Vietnam Customs, Jan–Aug 2026',
+    chooseInd: 'Choose an industry', cohort: 'Class or team code (optional, no personal names)', cohortHint: 'The same code gives the same random path, so a class can compare fairly.',
+    start: 'Start', quarter: 'Quarter', inspired: 'Inspired by',
+    decisions: "This quarter's decisions", local: 'Share of inputs bought locally', premium: 'Local inputs cost more than imports by',
+    roo: 'From 40%: meets EU and Japan–Korea rules of origin (0% duty)', ts: 'Below 30%: may be flagged for transshipment when the US tightens tariffs',
+    rooS: 'From 40%: meets EU, Japan–Korea rules of origin', tsS: 'Below 30%: transshipment risk',
+    markets: 'Split output across markets', demandHint: 'normal demand about', invest: 'Invest in developing local suppliers (takes effect next quarter)', investS: 'Invest in local suppliers (from next quarter)',
+    none2: 'None', commit: 'Commit quarter', results: 'Quarter results', profit: 'Profit', exports: 'Exports', imports: 'Imported inputs',
+    dva: 'Domestic value-added share', dvaS: 'Domestic VA', market: 'Market', offered: 'Offered', sold: 'Sold', tariff: 'Tariff', revenue: 'Revenue',
+    chartTitle: 'Exports and imported inputs by quarter (USD million)', unsold: 'Unsold output is cleared locally at 40% of the price.',
+    produced: 'Output', endTitle: 'Report after 8 quarters', totalProfit: 'Total profit', totalDva: 'Domestic value-added share (whole game)',
+    ratioYou: 'Imported inputs / exports at your plant', ratioReal: 'Same ratio, FDI sector for this product group (Customs, Jan–Aug 2026)',
+    realNote: 'An indicative comparison: Customs figures are product-group totals for the whole FDI sector, not matched product by product.',
+    debrief: 'Discussion questions', download: 'Download decision log (JSON)', again: 'Play again',
+    qs: ['Why do large exports not necessarily bring Vietnam much value added? Relate this to value added in exports (Koopman et al., 2014).', 'How did the EVFTA and CPTPP rules of origin change your sourcing choices?', 'How did your plant withstand the shocks in quarters 4 and 7? What is the trade-off between cost and resilience?', 'As a policymaker, what would you do to make foreign-invested firms buy more from local suppliers?'],
+    badges: { resilient: 'Resilient: no loss-making quarter', upgrader: 'Value-chain upgrader: domestic value added ≥ 45%', assembler: 'Assembly shop: domestic value added < 30%', transship_flag: 'Flagged for transshipment in the US market' },
+    m: 'm', perQ: 'quarter', bn: 'USD bn',
+    foot: 'Events inspired by the US–China trade war (2018–2019), the EVFTA (2020), COVID-19 (2020–2021), the Red Sea disruption (2023–2024) and US reciprocal tariffs (2025). All magnitudes in the simulation are illustrative. Reference figures: Vietnam Customs (2026), Tables 017.T and 018.T.',
+    src: 'Source code (split from BizOn):', teacherLink: 'Teacher view →', uni: 'Universe →', links: 'Links',
+    team: 'Team', xpp: 'Experience points', pick: 'Pick your team', teamSub: 'T01 – T05 · each team has its own XP.', step: 'STEP',
+    xpRules: '+10 XP per committed quarter · +10 if profitable · +10 if domestic VA ≥ 45% · +25 per end-of-game badge',
+    levels: ['Intern', 'Floor manager', 'Plant director', 'CEO'],
+    board: 'Class leaderboard', boardS: 'Leaderboard', lvlUp: 'Level up!', unlocked: "You've unlocked a new level", cont: 'Continue', done: 'Quarter committed!',
+    resEmpty: 'Commit quarter 1 to see your first results.', wait: 'Waiting for teacher to open quarter', waitNote: 'The class is waiting for the teacher to open the next quarter – take a breath and review last quarter\'s results.',
+    eDemand: 'Demand', eAll: 'all markets', eDisr: 'Imported input shortfall', eFreight: 'Import freight', ePrice: 'Net price', eTariff: 'Tariff', eTrans: 'Transshipment: tariff', eNone: 'No shock',
+    tabs: ['Decide', 'Results', 'Chart', 'Ranking'], tabsEnd: ['Report', 'Results', 'Chart', 'Ranking'],
+    classView: 'FDI LAB · CLASS VIEW', race: 'Team race', total: 'Total XP', openTo: 'Open through', gateT: 'Open quarters', gateHint: 'Teams can only commit up to the open quarter. Its event is shown on the left.', open: 'open', locked: 'locked', award: 'Award bonus XP', reset: 'Reset class', backStudent: '← Back to student view',
+    dragonHero: 'BizOn dragon with a magnifier', dragonUp: 'BizOn dragon celebrating', dragonWave: 'BizOn dragon waving', dragonScroll: 'BizOn dragon reading a scroll', dragonIdea: 'BizOn dragon thinking', dragonZen: 'BizOn dragon meditating', dragonBoat: 'BizOn dragon on a boat',
+    toEn: 'Chuyển sang tiếng Việt', chartAria: 'Bar chart: exports and imported inputs by quarter, with the domestic value-added share',
+  },
+};
+
+const COLORS = ['#8C2F39', '#A8703A', '#C9A24A', '#3E5C8A', '#7E5E77'];
+const DARK = [false, false, true, false, false];
+const START_XP = [70, 150, 40, 120, 95];
+const INVESTS = [0, 250000, 500000, 1000000];
+const STORE = 'fdilab-v1';
+const DEF_DEC = () => ({ local: 0.2, alloc: { US: 45, EU: 30, JPKR: 20, CNAS: 25 }, invest: 0 });
+const DEFAULT_STATE = () => ({ lang: 'vi', team: 0, xp: START_XP.slice(), ind: 'electronics', cohort: '', game: null, dec: DEF_DEC(), gate: 1, tab: 0 });
+
+let S = DEFAULT_STATE();
+let modal = false, toast = 0, toastTimer = null, view = 'student';
+const mq = window.matchMedia('(max-width: 720px)');
+const $ = id => document.getElementById(id);
+
+// ---------- lưu trữ (localStorage có thể bị chặn: luôn bọc try/catch) ----------
+function isNum(x) { return typeof x === 'number' && isFinite(x); }
+function validGame(g) {
+  if (!g || typeof g !== 'object' || !D.industries[g.industryId]) return null;
+  if (!Number.isInteger(g.quarter) || g.quarter < 1 || g.quarter > N8 + 1) return null;
+  if (!isNum(g.seed) || !isNum(g.supplierCum) || !Array.isArray(g.history) || g.history.length !== g.quarter - 1) return null;
+  const ok = g.history.every(r => r && Array.isArray(r.byMarket) && r.decision && ['exports', 'imports', 'profit', 'dvaRatio', 'produced', 'unsold'].every(k => isNum(r[k])));
+  return ok ? g : null;
+}
+function validDec(d) {
+  const n = DEF_DEC();
+  if (!d || typeof d !== 'object') return n;
+  if (isNum(d.local) && d.local >= 0 && d.local <= 1) n.local = Math.round(d.local * 20) / 20;
+  if (d.alloc && typeof d.alloc === 'object') D.markets.forEach(m => { const v = d.alloc[m.id]; if (isNum(v) && v >= 0 && v <= 100) n.alloc[m.id] = v; });
+  if (INVESTS.indexOf(d.invest) >= 0) n.invest = d.invest;
+  return n;
+}
+function siteLang() { try { const g = localStorage.getItem('bizon-lang'); if (g === 'vi' || g === 'en') S.lang = g; } catch (e) {} }
+function load() {
+  try {
+    const d = JSON.parse(localStorage.getItem(STORE) || 'null');
+    if (d && typeof d === 'object') {
+      const n = DEFAULT_STATE();
+      if (d.lang === 'vi' || d.lang === 'en') n.lang = d.lang;
+      if (Number.isInteger(d.team) && d.team >= 0 && d.team < 5) n.team = d.team;
+      if (Array.isArray(d.xp) && d.xp.length === 5 && d.xp.every(isNum)) n.xp = d.xp.slice();
+      if (typeof d.ind === 'string' && D.industries[d.ind]) n.ind = d.ind;
+      if (typeof d.cohort === 'string') n.cohort = d.cohort.slice(0, 24);
+      n.game = validGame(d.game);
+      n.dec = validDec(d.dec);
+      if (Number.isInteger(d.gate) && d.gate >= 1 && d.gate <= N8) n.gate = d.gate;
+      if (Number.isInteger(d.tab) && d.tab >= 0 && d.tab < 4) n.tab = d.tab;
+      if (n.game) n.dec.local = Math.min(n.dec.local, D.industries[n.game.industryId].maxLocal);
+      S = n;
     }
-  };
-  let LANG = (store.get('bizon-lang') || store.get('fdifactory_lang')) === 'en' ? 'en' : 'vi'; // ngôn ngữ chung toàn site đi trước
-  const t = k => T[LANG][k];
-  const nf = (x, d) => (Number.isFinite(x) ? x : 0).toLocaleString(LANG === 'vi' ? 'vi-VN' : 'en-US', { maximumFractionDigits: d === undefined ? 0 : d, minimumFractionDigits: d === undefined ? 0 : d });
-  const musd = x => nf(x / 1e6, 2);
-  const pct = x => nf(x * 100, 0) + '%';
-  const nm = o => o[LANG] || o.vi;
+  } catch (e) {}
+  siteLang();
+}
+function save() {
+  try { localStorage.setItem(STORE, JSON.stringify({ lang: S.lang, team: S.team, xp: S.xp, ind: S.ind, cohort: S.cohort, game: S.game, dec: S.dec, gate: S.gate, tab: S.tab })); } catch (e) {}
+}
 
-  // ---------- trạng thái giao diện ----------
-  let IND = 'electronics', COHORT = '', GAME = null;
-  let DEC = { local: 0.2, alloc: { US: 45, EU: 30, JPKR: 20, CNAS: 25 }, invest: 0 };
+// ---------- định dạng ----------
+const vi = () => S.lang === 'vi';
+const nf = (x, d) => (isNum(x) ? x : 0).toLocaleString(vi() ? 'vi-VN' : 'en-US', { maximumFractionDigits: d || 0, minimumFractionDigits: d || 0 });
+const musd = x => nf(x / 1e6, 2);
+const pct = x => nf(x * 100, 0) + '%';
+const nm = o => o[S.lang] || o.vi;
+const mName = id => nm(D.markets.find(m => m.id === id));
+const no = i => String(i + 1).padStart(2, '0');
+const fg = i => DARK[i] ? '#1F2A44' : '#fff';
+const lvName = x => T[S.lang].levels[Math.min(3, Math.max(0, Math.floor(x / 100)))];
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+function txt(id, s) { const el = $(id); if (el && el.textContent !== String(s)) el.textContent = s; }
+function phase() { const g = S.game; return !g ? 'setup' : g.quarter > N8 ? 'end' : 'play'; }
 
-  function chrome() {
-    $('brandSub').textContent = t('brandSub'); $('backLink').textContent = t('back');
-    const th = document.documentElement.getAttribute('data-theme');
-    $('themeBtn').textContent = (th === 'dark' ? '☀️ ' + t('light') : '🌙 ' + t('dark'));
-    $('langVI').classList.toggle('on', LANG === 'vi'); $('langEN').classList.toggle('on', LANG === 'en');
-    document.documentElement.lang = LANG; $('footSrc').textContent = t('foot');
+// ---------- khối giao diện dùng chung ----------
+function effects(ev, t) {
+  const out = [];
+  if (ev.demand) {
+    const e = Object.entries(ev.demand), same = e.length === D.markets.length && e.every(x => x[1] === e[0][1]);
+    (same ? [[t.eAll, e[0][1]]] : e.map(([id, v]) => [mName(id), v])).forEach(([n, v]) => out.push([`${t.eDemand} ${n} ×${nf(v, 2)}`, v >= 1 ? 'var(--green)' : 'var(--burg)']));
   }
-  $('langVI').onclick = () => { LANG = 'vi'; store.set('fdifactory_lang', 'vi'); store.set('bizon-lang', 'vi'); render(); };
-  $('langEN').onclick = () => { LANG = 'en'; store.set('fdifactory_lang', 'en'); store.set('bizon-lang', 'en'); render(); };
-  $('themeBtn').onclick = () => { const n = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; document.documentElement.setAttribute('data-theme', n); store.set('fdifactory_theme', n); render(); };
+  if (ev.disruption) out.push([`${t.eDisr} −${pct(ev.disruption)}`, 'var(--burg)']);
+  if (ev.importFreight) out.push([`${t.eFreight} +${pct(ev.importFreight)}`, 'var(--burg)']);
+  if (ev.priceCut) Object.entries(ev.priceCut).forEach(([id, v]) => out.push([`${t.ePrice} ${mName(id)} −${pct(v)}`, 'var(--burg)']));
+  if (ev.tariff) Object.entries(ev.tariff).forEach(([id, v]) => out.push([`${t.eTariff} ${mName(id)} +${pct(v)}`, 'var(--burg)']));
+  if (ev.transship) out.push([`${t.eTrans} ${pct(ev.transship.rate)} (< ${pct(ev.transship.threshold)})`, 'var(--plum)']);
+  if (!out.length) out.push([t.eNone, 'var(--slate)']);
+  return out.map(([x, c]) => `<span style="background:${c}">${x}</span>`).join('');
+}
+function evTag(ev, t, q) { return ev.inspired ? `${t.inspired} ${ev.inspired}` : `${t.quarter} ${q}`; }
 
-  function render() {
-    chrome();
-    if (!GAME) return renderSetup();
-    if (GAME.quarter > D.events.length) return renderEnd();
-    renderPlay();
+function chartSVG(g, t, m) {
+  const h = g ? g.history : [];
+  const W = 760, Hh = 210, left = 48, top = 18, gw = (W - left - 16) / N8;
+  const cmax = Math.max(1, ...h.map(r => Math.max(r.exports, r.imports))) * 1.15;
+  const Y = v => +(top + (1 - v / cmax) * (Hh - top)).toFixed(1);
+  const F = "font-family=\"'Plus Jakarta Sans',sans-serif\"";
+  let s = `<svg viewBox="0 0 ${W} 240" role="img" aria-label="${t.chartAria}">`;
+  if (!m) for (let i = 0; i <= 4; i++) {
+    const v = cmax * i / 4, y = Y(v);
+    s += `<line x1="${left}" x2="${W - 16}" y1="${y}" y2="${y}" stroke="#D9D3C4" stroke-width="1"/><text x="40" y="${y + 4}" text-anchor="end" ${F} font-weight="700" font-size="11" fill="#5F6675">${nf(v / 1e6, 0)}</text>`;
   }
+  D.events.forEach((_, i) => {
+    const r = h[i], x0 = left + i * gw, bw = gw * 0.32, cur = g && i + 1 === g.quarter;
+    const cx = +(x0 + gw / 2).toFixed(1), xE = +(x0 + gw * 0.16).toFixed(1), xI = +(x0 + gw * 0.16 + bw + 3).toFixed(1), w = +bw.toFixed(1);
+    s += `<text x="${cx}" y="${m ? 234 : 232}" text-anchor="middle" ${F} font-weight="800" font-size="${m ? 24 : 12}" fill="${cur ? '#8C2F39' : '#5F6675'}">Q${i + 1}</text>`;
+    if (!r) return;
+    const yE = Y(r.exports), yI = Y(r.imports);
+    s += `<rect x="${xE}" y="${yE}" width="${w}" height="${+(Hh - yE).toFixed(1)}" rx="${m ? 8 : 6}" fill="#3E5C8A"><title>${t.exports} Q${i + 1}: ${musd(r.exports)} ${t.m}</title></rect>`;
+    s += `<rect x="${xI}" y="${yI}" width="${w}" height="${+(Hh - yI).toFixed(1)}" rx="${m ? 8 : 6}" fill="#8C2F39"><title>${t.imports} Q${i + 1}: ${musd(r.imports)} ${t.m}</title></rect>`;
+    if (!m) s += `<text x="${cx}" y="${Math.min(yE, yI) - 6}" text-anchor="middle" ${F} font-weight="800" font-size="13" fill="#1F2A44">${pct(r.dvaRatio)}</text>`;
+  });
+  return s + '</svg>';
+}
+const dvaC = v => v >= 0.45 ? 'var(--green)' : v < 0.3 ? 'var(--burg)' : 'var(--ink)';
+function chartCard(g, t, tabCls, extra) {
+  const m = mq.matches, h = g ? g.history : [];
+  return `<section class="card chartcard${tabCls}" data-tab="2">
+    <div class="ch"><h2>${t.chartTitle}</h2></div>
+    <div class="legend"><span><i style="background:#3E5C8A"></i>${t.exports}</span><span><i style="background:#8C2F39"></i>${t.imports}</span><span class="d-only">% = ${t.dva.toLowerCase()}</span></div>
+    <div class="chartbox">${chartSVG(g, t, m)}</div>
+    ${h.length ? `<div class="dvas m-only">${h.map(r => `<div><span>Q${r.quarter} · ${t.dvaS}</span><b style="color:${dvaC(r.dvaRatio)}">${pct(r.dvaRatio)}</b></div>`).join('')}</div>` : ''}
+    ${extra || ''}
+  </section>`;
+}
+function boardHTML(t, tabCls) {
+  const max = Math.max(...S.xp, 1);
+  return `<section class="board${tabCls}" data-tab="3">
+    <h2><span class="long">${t.board}</span><span class="short">${t.boardS}</span></h2>
+    <div>${S.xp.map((x, i) => ({ i, x })).sort((a, b) => b.x - a.x).map((r, k) => `
+      <div class="brow${r.i === S.team ? ' me' : ''}">
+        <div class="rank" style="background:${COLORS[r.i]};color:${fg(r.i)}">${k + 1}</div>
+        <div><div class="bname">${t.team} T${no(r.i)} · ${lvName(r.x)}</div><div class="bbar"><i style="width:${r.x / max * 100}%;background:${COLORS[r.i]}"></i></div></div>
+        <div class="bxp">${r.x} XP</div>
+      </div>`).join('')}</div>
+  </section>`;
+}
+function kpiTiles(profit, ex, im, dv, t, profitLabel, dvaLabel) {
+  const tile = (lab, val, bg, col) => `<div class="kpi" style="background:${bg};color:${col}"><small>${lab}</small><b class="num">${val}</b></div>`;
+  return `<div class="kpis">
+    ${tile(profitLabel || t.profit, `${musd(profit)} ${t.m}`, profit >= 0 ? 'var(--sage)' : 'var(--burg)', profit >= 0 ? 'var(--ink)' : '#fff')}
+    ${tile(t.exports, `${musd(ex)} ${t.m}`, 'var(--peri)', 'var(--ink)')}
+    ${tile(t.imports, `${musd(im)} ${t.m}`, 'var(--rose)', 'var(--ink)')}
+    ${tile(dvaLabel || t.dva, pct(dv), dv >= 0.45 ? 'var(--green)' : dv < 0.3 ? 'var(--gold)' : 'var(--blue)', dv < 0.3 && dv >= 0 ? 'var(--ink)' : '#fff')}
+  </div>`;
+}
 
-  // ---------- màn 1: chọn ngành ----------
-  function renderSetup() {
-    $('app').innerHTML = `
-      <section class="hero"><span class="eyebrow">${t('eyebrow')}</span><h1>${t('title')}</h1><p class="lead">${t('lead')}</p>
-        <span class="prov sim">${t('provSim')}</span><span class="prov pub">${t('provPub')}</span></section>
-      <div class="card"><h2>${t('chooseInd')}</h2>
-        <div class="pick">${Object.entries(D.industries).map(([id, ind]) => `<button type="button" data-ind="${id}" class="${id === IND ? 'on' : ''}"><b>${nm(ind)}</b>
-          <span class="small muted">${nf(ind.capacity)} ${LANG === 'vi' ? ind.unitVi : ind.unitEn}/${LANG === 'vi' ? 'quý' : 'quarter'} · ${nf(ind.price)} USD · ${t('premium').toLowerCase()} ${pct(ind.localPremium)}</span></button>`).join('')}</div>
-        <label class="ctl" for="cohort">${t('cohort')}</label><input type="text" id="cohort" maxlength="24" value="${COHORT.replace(/"/g, '')}" autocomplete="off">
-        <p class="hint">${t('cohortHint')}</p>
-        <p style="margin-top:14px"><button class="btn" id="startBtn" type="button">${t('start')}</button></p>
-      </div>`;
-    document.querySelectorAll('[data-ind]').forEach(b => b.onclick = () => { IND = b.dataset.ind; COHORT = $('cohort').value; renderSetup(); });
-    $('startBtn').onclick = () => {
-      COHORT = $('cohort').value.trim();
-      const seed = COHORT ? E.seedFrom(COHORT + '|' + IND) : (Date.now() >>> 0);
-      GAME = E.newGame(D, IND, seed);
-      DEC = { local: 0.2, alloc: { US: 45, EU: 30, JPKR: 20, CNAS: 25 }, invest: 0 };
-      render(); window.scrollTo(0, 0);
-    };
-  }
+// ---------- màn 1: thiết lập ----------
+function setupHTML(t) {
+  const xp = S.xp[S.team];
+  const inds = Object.entries(D.industries).map(([id, d]) => {
+    const on = id === S.ind;
+    return `<button type="button" class="ind${on ? ' on' : ''}" data-act="ind" data-v="${id}" aria-pressed="${on}"><b>${nm(d)}</b><span>${nf(d.capacity)} ${vi() ? d.unitVi : d.unitEn}/${t.perQ} · ${nf(d.price)} USD · ${t.premium.toLowerCase()} ${pct(d.localPremium)}</span></button>`;
+  }).join('');
+  return `
+  <section class="hero" data-tab="0">
+    <div class="hero-txt">
+      <span class="eyebrow d-only">${t.eyebrow}</span>
+      <h1>${t.title}</h1>
+      <p class="intro d-only">${t.lead}</p>
+      <div class="chips d-only"><span class="chip"><i style="background:var(--gold)"></i>${t.provSim}</span><span class="chip"><i style="background:var(--green)"></i>${t.provPub}</span></div>
+    </div>
+    <img class="hero-dragon d-only" src="../assets/cmr-lab/dragon-magnifier.jpg" alt="${t.dragonHero}" width="280" height="280">
+    <div class="team-card d-only" style="background:${COLORS[S.team]};color:${fg(S.team)}">
+      <div class="tc-top">
+        <div><div class="tc-name">${t.team.toUpperCase()} T${no(S.team)}</div><div class="tc-level">${lvName(xp)}</div></div>
+        <div class="lvl-coin"><small>LVL</small><b>${Math.floor(xp / 100) + 1}</b></div>
+      </div>
+      <div>
+        <div class="xp-row"><span>${t.xpp}</span><span>${xp % 100} / 100 XP</span></div>
+        <div class="xp-bar" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${xp % 100}" aria-label="${t.xpp}"><i style="width:${xp % 100}%"></i></div>
+      </div>
+      <p class="tc-rules">${t.xpRules}</p>
+    </div>
+  </section>
+  <section class="picker" data-tab="0">
+    <div class="sh d-only"><h2>${t.pick}</h2><p>${t.teamSub}</p></div>
+    <div class="teams" role="group" aria-label="${t.pick}">${S.xp.map((x, i) => `<button type="button" class="team-tile${i === S.team ? ' on' : ''}" data-act="team" data-i="${i}" aria-pressed="${i === S.team}" aria-label="${t.team} T${no(i)} · ${x} XP" style="background:${COLORS[i]};color:${fg(i)}"><b><i>T</i>${no(i)}</b><span>${x} XP</span></button>`).join('')}</div>
+  </section>
+  <section class="card setup-card" data-tab="0">
+    <div class="ch d-only"><h2>${t.chooseInd}</h2><span class="pill" style="background:var(--slate)">${t.step} 1</span></div>
+    <div class="inds" role="group" aria-label="${t.chooseInd}">${inds}</div>
+    <div class="startrow">
+      <label class="fld"><span>${t.cohort}</span><input class="inp" id="cohort" type="text" maxlength="24" autocomplete="off" value="${esc(S.cohort)}"></label>
+      <button type="button" class="btn start" data-act="start">${t.start} →</button>
+    </div>
+    <p class="hint">${t.cohortHint}</p>
+  </section>
+  <section class="card res m-only" data-tab="1"><div class="ch"><h2>${t.results}</h2></div><p class="empty-t">${t.resEmpty}</p></section>
+  ${chartCard(null, t, ' m-only')}
+  ${boardHTML(t, ' m-only')}`;
+}
 
-  // ---------- màn 2: chơi ----------
-  function renderPlay() {
-    const ind = D.industries[GAME.industryId], q = GAME.quarter, ev = D.events[q - 1];
-    const premium = ind.localPremium * Math.exp(-GAME.supplierCum / ind.supplierScale);
-    const last = GAME.history[GAME.history.length - 1];
-    const unit = LANG === 'vi' ? ind.unitVi : ind.unitEn;
-    const norm = E.normalizeAlloc(DEC.alloc, D.markets);
-    $('app').innerHTML = `
-      <section class="hero" style="padding-bottom:6px"><span class="eyebrow">${nm(ind)}</span>
-        <h1 style="font-size:clamp(22px,3.6vw,30px)">${t('quarter')} ${q}${t('of')}${D.events.length}</h1>
-        <div class="prog">${D.events.map((_, i) => `<span class="${i + 1 < q ? 'done' : i + 1 === q ? 'now' : ''}"></span>`).join('')}</div></section>
-      <div class="card event"><span class="tag">${ev.inspired ? t('inspired') + ' ' + ev.inspired : t('quarter') + ' ' + q}</span><h2>${LANG === 'vi' ? ev.vi : ev.en}</h2><p>${LANG === 'vi' ? ev.textVi : ev.textEn}</p></div>
-      <div class="grid2">
-        <div class="card"><h2>${t('decisions')}</h2>
-          <label class="ctl" for="local">${t('local')}: <span class="num" id="localV">${pct(DEC.local)}</span></label>
-          <input type="range" id="local" min="0" max="${ind.maxLocal * 100}" step="5" value="${Math.round(DEC.local * 100)}">
-          <p class="hint">${t('premium')} <b class="num">${pct(premium)}</b>.</p>
-          <p class="hint">● ${t('roo')}<br>● ${t('ts')}</p>
-          <h3>${t('markets')}</h3>
-          ${D.markets.map(m => `<div class="mrow"><span>${nm(m)}<br><span class="hint">${t('demandHint')} ${nf(ind.capacity * m.share * ((ev.demand && ev.demand[m.id]) || 1))} ${unit}</span></span>
-            <input type="range" data-m="${m.id}" min="0" max="100" step="5" value="${DEC.alloc[m.id]}"><span class="num" id="pct-${m.id}">${pct(norm[m.id])}</span></div>`).join('')}
-          <label class="ctl" for="invest">${t('invest')}</label>
-          <select id="invest">${[0, 250000, 500000, 1000000].map(v => `<option value="${v}" ${v === DEC.invest ? 'selected' : ''}>${v ? musd(v) + ' ' + t('m') + ' USD' : t('none')}</option>`).join('')}</select>
-          <p style="margin-top:14px"><button class="btn" id="commitBtn" type="button">${t('commit')} ${q} →</button></p>
+// ---------- màn 2: chơi ----------
+function resultsInner(r, ind, t) {
+  const unit = vi() ? ind.unitVi : ind.unitEn;
+  const tc = x => x.tariff >= 0.2 ? 'var(--burg)' : x.tariff > 0 ? 'var(--copper)' : 'var(--green)';
+  return `${kpiTiles(r.profit, r.exports, r.imports, r.dvaRatio, t)}
+    <div class="mt d-only" role="table" aria-label="${t.market}">
+      <div class="th" role="row"><span role="columnheader">${t.market}</span><span role="columnheader">${t.offered}</span><span role="columnheader">${t.sold}</span><span role="columnheader">${t.tariff}</span><span role="columnheader">${t.revenue} (${t.m})</span></div>
+      ${r.byMarket.map(x => `<div role="row"><span role="cell">${mName(x.id)}</span><span role="cell" class="num">${nf(x.offered)}</span><span role="cell" class="num">${nf(x.sold)}</span><span role="cell" class="num" style="font-weight:800;color:${tc(x)}">${pct(x.tariff)}</span><span role="cell" class="num">${musd(x.revenue)}</span></div>`).join('')}
+    </div>
+    <div class="mcards m-only">${r.byMarket.map(x => `<div class="mcard"><b>${mName(x.id)}</b><em class="num">${musd(x.revenue)} ${t.m}</em><small>${t.sold} ${nf(x.sold)} / ${nf(x.offered)}</small><small style="color:${tc(x)}">${t.tariff} ${pct(x.tariff)}</small></div>`).join('')}</div>
+    <p class="note">${t.produced}: ${nf(r.produced)} ${unit}. ${r.unsold > 0.5 ? t.unsold : ''}</p>`;
+}
+function playHTML(t) {
+  const g = S.game, ind = D.industries[g.industryId], q = g.quarter, ev = D.events[q - 1], dec = S.dec;
+  const unit = vi() ? ind.unitVi : ind.unitEn;
+  const premium = ind.localPremium * Math.exp(-g.supplierCum / ind.supplierScale);
+  const norm = E.normalizeAlloc(dec.alloc, D.markets), locked = q > S.gate;
+  const last = g.history[g.history.length - 1];
+  const prog = D.events.map((_, i) => { const c = i + 1 < q ? 'done' : i + 1 === q ? 'now' : ''; return `<div><i class="${c}"></i><small class="${i + 1 === q ? 'now' : ''}">Q${i + 1}</small></div>`; }).join('');
+  const mk = D.markets.map(m => `<div class="mrow"><div class="mn"><label for="m-${m.id}">${nm(m)}</label><small class="d-only">${t.demandHint} ${nf(ind.capacity * m.share * ((ev.demand && ev.demand[m.id]) || 1))} ${unit}</small></div>
+      <input type="range" id="m-${m.id}" data-m="${m.id}" min="0" max="100" step="5" value="${dec.alloc[m.id]}"><b class="num" id="pct-${m.id}">${pct(norm[m.id])}</b></div>`).join('');
+  const inv = INVESTS.map(v => `<button type="button" class="iv${v === dec.invest ? ' on' : ''}" data-act="inv" data-v="${v}" aria-pressed="${v === dec.invest}">${v ? `${musd(v)} ${t.m} USD` : t.none2}</button>`).join('');
+  return `<div class="play">
+  <section class="qhead" data-tab="0">
+    <div><div class="kick">${nm(ind)}</div><div class="qbig">${t.quarter} ${q}<span>/${N8}</span></div></div>
+    <div class="prog" role="progressbar" aria-valuemin="1" aria-valuemax="${N8}" aria-valuenow="${q}" aria-label="${t.quarter} ${q}/${N8}">${prog}</div>
+  </section>
+  <section class="event" data-tab="0">
+    <img class="d-only" src="../assets/cvp-lab/dragon-boat.jpg" alt="${t.dragonBoat}" width="200" height="170">
+    <div class="ev-body">
+      <span class="ev-tag">${evTag(ev, t, q)}</span>
+      <h2>${vi() ? ev.vi : ev.en}</h2>
+      <p>${vi() ? ev.textVi : ev.textEn}</p>
+      <div class="fx">${effects(ev, t)}</div>
+    </div>
+  </section>
+  <div class="play-main">
+    <section class="card dec" data-tab="0">
+      <div class="ch"><h2>${t.decisions}</h2><span class="pill" style="background:var(--slate)">${t.step} 2</span></div>
+      <div class="grp">
+        <div class="lrow"><label for="local">${t.local}</label><b class="bigv num" id="localV">${pct(dec.local)}</b></div>
+        <input type="range" id="local" min="0" max="${Math.round(ind.maxLocal * 100)}" step="5" value="${Math.round(dec.local * 100)}">
+        <div class="prem">${t.premium} <b class="num">${pct(premium)}</b>.</div>
+        <div class="rules">
+          <div><i id="rooDot"></i><span class="long">${t.roo}</span><span class="short">${t.rooS}</span></div>
+          <div><i id="tsDot"></i><span class="long">${t.ts}</span><span class="short">${t.tsS}</span></div>
         </div>
-        <div class="card">${last ? resultsHTML(last, ind) : `<h2>${t('results')}</h2><p class="muted small">—</p>`}</div>
       </div>
-      ${GAME.history.length ? `<div class="card"><h3>${t('chartTitle')}</h3>${chartHTML(GAME.history)}</div>` : ''}`;
-    $('local').oninput = e => { DEC.local = +e.target.value / 100; $('localV').textContent = pct(DEC.local); };
-    document.querySelectorAll('[data-m]').forEach(r => r.oninput = () => {
-      DEC.alloc[r.dataset.m] = +r.value;
-      const n = E.normalizeAlloc(DEC.alloc, D.markets);
-      D.markets.forEach(m => { $('pct-' + m.id).textContent = pct(n[m.id]); });
-    });
-    $('invest').onchange = e => { DEC.invest = +e.target.value; };
-    $('commitBtn').onclick = () => {
-      GAME = E.playQuarter(D, GAME, { local: DEC.local, alloc: Object.assign({}, DEC.alloc), invest: DEC.invest });
-      DEC.invest = 0; render(); window.scrollTo(0, 0);
-    };
-  }
+      <div class="grp"><h3>${t.markets}</h3>${mk}</div>
+      <div class="grp"><div class="ivt"><span class="long">${t.invest}</span><span class="short">${t.investS}</span></div><div class="invs" role="group" aria-label="${t.invest}">${inv}</div></div>
+      <button type="button" class="btn" data-act="commit" id="commitBtn"${locked ? ' disabled' : ''}>${locked ? `${t.wait} ${q}` : `${t.commit} ${q} →`}</button>
+      ${locked ? `<div class="waitnote"><img src="../assets/dragon/zen-meditate.webp" alt="${t.dragonZen}" width="72" height="73"><span>${t.waitNote}</span></div>` : ''}
+      <p class="rules-t d-only">${t.xpRules}</p>
+    </section>
+    <section class="card res" data-tab="1">
+      <div class="ch"><h2>${last ? `${t.results} ${last.quarter}` : t.results}</h2><span class="pill" style="background:var(--blue)">${t.step} 3</span></div>
+      ${last ? resultsInner(last, ind, t) : `<p class="empty-t">${t.resEmpty}</p>`}
+    </section>
+  </div>
+  <div class="row-c">
+    ${chartCard(g, t, '')}
+    ${boardHTML(t, '')}
+  </div>
+  </div>`;
+}
+function updateDec() {
+  if (phase() !== 'play') return;
+  const dec = S.dec, norm = E.normalizeAlloc(dec.alloc, D.markets);
+  txt('localV', pct(dec.local));
+  const r = $('rooDot'), s = $('tsDot');
+  if (r) r.style.background = dec.local >= 0.4 ? 'var(--green)' : 'var(--off)';
+  if (s) s.style.background = dec.local < 0.3 ? 'var(--burg)' : 'var(--off)';
+  D.markets.forEach(m => txt('pct-' + m.id, pct(norm[m.id])));
+}
 
-  function resultsHTML(r, ind) {
-    const unit = LANG === 'vi' ? ind.unitVi : ind.unitEn;
-    return `<h2>${t('results')} ${r.quarter}</h2>
-      <div class="kpis">
-        <div class="kpi"><small>${t('profit')}</small><b class="num ${r.profit >= 0 ? 'pos' : 'neg'}">${musd(r.profit)} ${t('m')}</b></div>
-        <div class="kpi"><small>${t('exports')}</small><b class="num">${musd(r.exports)} ${t('m')}</b></div>
-        <div class="kpi"><small>${t('imports')}</small><b class="num">${musd(r.imports)} ${t('m')}</b></div>
-        <div class="kpi"><small>${t('dva')}</small><b class="num ${r.dvaRatio >= 0.45 ? 'pos' : r.dvaRatio < 0.3 ? 'neg' : ''}">${pct(r.dvaRatio)}</b></div>
-      </div>
-      <div class="tblwrap" style="margin-top:10px"><table><tr><th>${t('market')}</th><th>${t('offered')}</th><th>${t('sold')}</th><th>${t('tariff')}</th><th>${t('revenue')} (${t('m')})</th></tr>
-        ${r.byMarket.map(x => `<tr><td>${nm(D.markets.find(m => m.id === x.id))}</td><td class="num">${nf(x.offered)}</td><td class="num">${nf(x.sold)}</td><td class="num">${pct(x.tariff)}</td><td class="num">${musd(x.revenue)}</td></tr>`).join('')}
-      </table></div>
-      <p class="hint">${t('produced')}: ${nf(r.produced)} ${unit}. ${r.unsold > 0.5 ? t('unsold') : ''}</p>`;
-  }
+// ---------- màn 3: báo cáo ----------
+function endHTML(t) {
+  const g = S.game, ind = D.industries[g.industryId], Sm = E.summary(g), bm = D.benchmarks[g.industryId];
+  const bad = b => b === 'assembler' || b === 'transship_flag';
+  const ratioYou = pct(Sm.exports > 0 ? Sm.imports / Sm.exports : 0), ratioReal = pct(bm.imports / bm.exports);
+  const bench = `<div class="m-only bench" style="padding:14px;border-radius:22px;box-shadow:none"><div class="kv"><span>${t.ratioYou}</span><b class="num">${ratioYou}</b><span>${t.ratioReal}</span><b class="num">${ratioReal}</b></div></div>`;
+  return `<div class="play">
+  <section class="endhead" data-tab="0">
+    <div><div class="kick">${nm(ind)}</div><h1>${t.endTitle}</h1></div>
+    <img src="../assets/cvp-lab/dragon-scroll.jpg" alt="${t.dragonScroll}" width="220" height="200">
+  </section>
+  <section class="card endk" data-tab="1">
+    <h2 class="m-only" style="margin:0;font-size:22px">${t.endTitle}</h2>
+    ${kpiTiles(Sm.profit, Sm.exports, Sm.imports, Sm.dvaRatio, t, t.totalProfit, t.totalDva)}
+    ${Sm.badges.length ? `<div class="bdgs">${Sm.badges.map(b => `<div class="bdg${bad(b) ? ' bad' : ''}" style="background:${bad(b) ? 'var(--burg)' : 'var(--blue)'}"><span>${bad(b) ? '!' : '+25'}</span>${t.badges[b]}</div>`).join('')}</div>` : ''}
+  </section>
+  ${chartCard(g, t, '', bench)}
+  <div class="duo">
+    <section class="bench" data-tab="0">
+      <span class="chip"><i style="background:var(--green)"></i>${t.provPub}</span>
+      <div class="kv"><span>${t.ratioYou}</span><b class="num" style="color:var(--blue)">${ratioYou}</b><span>${t.ratioReal}</span><b class="num" style="color:var(--burg)">${ratioReal}</b></div>
+      <p>${vi() ? bm.noteVi : bm.noteEn} (${nf(bm.exports, 1)} / ${nf(bm.imports, 1)} ${t.bn})</p>
+      <p class="sandnote">${t.realNote}</p>
+    </section>
+    <section class="card qs" data-tab="0">
+      <div class="ch"><h2>${t.debrief}</h2><img class="ch-dragon" src="../assets/dragon/idea.webp" alt="${t.dragonIdea}" width="64" height="85"></div>
+      ${t.qs.map((x, i) => `<div class="qq"><b>${i + 1}</b><p>${x}</p></div>`).join('')}
+    </section>
+  </div>
+  <div class="endbtns" data-tab="0">
+    <button type="button" class="btn blue" data-act="download">${t.download}</button>
+    <button type="button" class="btn ghost" data-act="again">${t.again}</button>
+  </div>
+  ${boardHTML(t, ' m-only')}
+  </div>`;
+}
 
-  function chartHTML(h) {
-    const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
-    const W = 760, H = 230, left = 48, bottom = 30, top = 14, n = D.events.length, gw = (W - left - 16) / n;
-    const max = Math.max(1, ...h.map(r => Math.max(r.exports, r.imports))) * 1.1;
-    const Y = v => top + (1 - v / max) * (H - top - bottom);
-    const ex = css('--accent'), im = css('--imp'), muted = css('--muted'), line = css('--line2'), ink = css('--ink');
-    let s = `<svg viewBox="0 0 ${W} ${H + 24}" width="100%" role="img" aria-label="${t('chartTitle')}">`;
-    for (let i = 0; i <= 4; i++) { const v = max * i / 4; s += `<line x1="${left}" x2="${W - 16}" y1="${Y(v)}" y2="${Y(v)}" stroke="${line}" stroke-opacity=".5"/><text x="${left - 6}" y="${Y(v) + 4}" text-anchor="end" font-size="11" fill="${muted}">${nf(v / 1e6, 0)}</text>`; }
-    for (let i = 0; i < n; i++) {
-      const x0 = left + i * gw, r = h[i];
-      s += `<text x="${x0 + gw / 2}" y="${H - 10}" text-anchor="middle" font-size="11.5" fill="${muted}">Q${i + 1}</text>`;
-      if (!r) continue;
-      const bw = gw * 0.32;
-      s += `<rect x="${x0 + gw * 0.16}" y="${Y(r.exports)}" width="${bw}" height="${Y(0) - Y(r.exports)}" rx="3" fill="${ex}"/>`;
-      s += `<rect x="${x0 + gw * 0.16 + bw + 2}" y="${Y(r.imports)}" width="${bw}" height="${Y(0) - Y(r.imports)}" rx="3" fill="${im}"/>`;
-      s += `<text x="${x0 + gw / 2}" y="${Math.min(Y(r.exports), Y(r.imports)) - 4}" text-anchor="middle" font-size="10.5" fill="${ink}">${pct(r.dvaRatio)}</text>`;
-    }
-    s += `<rect x="${left}" y="${H + 8}" width="12" height="10" rx="2" fill="${ex}"/><text x="${left + 18}" y="${H + 17}" font-size="11.5" fill="${muted}">${t('exports')}</text>`;
-    s += `<rect x="${left + 120}" y="${H + 8}" width="12" height="10" rx="2" fill="${im}"/><text x="${left + 138}" y="${H + 17}" font-size="11.5" fill="${muted}">${t('imports')}</text>`;
-    s += `<text x="${left + 300}" y="${H + 17}" font-size="11.5" fill="${muted}">% = ${t('dva').toLowerCase()}</text>`;
-    return s + '</svg>';
-  }
+// ---------- vẽ ----------
+function render() {
+  const t = T[S.lang];
+  document.documentElement.lang = S.lang;
+  document.querySelectorAll('[data-act="lang"]').forEach(b => { b.classList.toggle('on', b.dataset.v === S.lang); b.setAttribute('aria-pressed', String(b.dataset.v === S.lang)); });
+  if (view === 'teacher') renderTeacher(t); else renderStudent(t);
+}
 
-  // ---------- màn 3: báo cáo ----------
-  function renderEnd() {
-    const ind = D.industries[GAME.industryId], S = E.summary(GAME), bm = D.benchmarks[GAME.industryId];
-    const B = T[LANG].badges;
-    $('app').innerHTML = `
-      <section class="hero"><span class="eyebrow">${nm(ind)}</span><h1>${t('endTitle')}</h1></section>
-      <div class="card"><div class="kpis">
-        <div class="kpi"><small>${t('totalProfit')}</small><b class="num ${S.profit >= 0 ? 'pos' : 'neg'}">${musd(S.profit)} ${t('m')} USD</b></div>
-        <div class="kpi"><small>${t('exports')}</small><b class="num">${musd(S.exports)} ${t('m')}</b></div>
-        <div class="kpi"><small>${t('imports')}</small><b class="num">${musd(S.imports)} ${t('m')}</b></div>
-        <div class="kpi"><small>${t('totalDva')}</small><b class="num">${pct(S.dvaRatio)}</b></div></div>
-        <p style="margin-top:10px">${S.badges.map(b => `<span class="badge">${B[b]}</span>`).join('')}</p></div>
-      <div class="card"><h3>${t('chartTitle')}</h3>${chartHTML(GAME.history)}</div>
-      <div class="grid2">
-        <div class="card"><span class="prov pub">${t('provPub')}</span>
-          <p class="small">${t('ratioYou')}: <b class="num">${pct(S.imports / S.exports)}</b></p>
-          <p class="small">${t('ratioReal')}: <b class="num">${pct(bm.imports / bm.exports)}</b></p>
-          <p class="hint">${LANG === 'vi' ? bm.noteVi : bm.noteEn} (${nf(bm.exports, 1)} / ${nf(bm.imports, 1)} ${LANG === 'vi' ? 'tỷ USD' : 'USD bn'})</p>
-          <p class="note">${t('realNote')}</p></div>
-        <div class="card"><h3>${t('debrief')}</h3><ol class="qa small"><li>${t('q1')}</li><li>${t('q2')}</li><li>${t('q3')}</li><li>${t('q4')}</li></ol></div>
-      </div>
-      <p><button class="btn" id="dlBtn" type="button">${t('download')}</button> <button class="btn ghost" id="againBtn" type="button">${t('again')}</button></p>`;
-    $('dlBtn').onclick = () => {
-      const blob = new Blob([JSON.stringify({ game: 'nha-may-fdi', industry: GAME.industryId, summary: S, log: E.decisionLog(GAME, { cohort: COHORT || 'local' }) }, null, 2)], { type: 'application/json' });
-      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'nha-may-fdi-nhat-ky.json'; a.click(); URL.revokeObjectURL(a.href);
-    };
-    $('againBtn').onclick = () => { GAME = null; render(); window.scrollTo(0, 0); };
-  }
+function renderStudent(t) {
+  const xp = S.xp[S.team], ph = phase();
+  txt('navSub', t.brand + ' · ' + t.brandSub); txt('clsLink', t.back);
+  txt('lang1', vi() ? 'EN' : 'VI'); $('lang1').setAttribute('aria-label', t.toEn);
+  const nb = $('navBadge'); nb.textContent = no(S.team); nb.style.background = COLORS[S.team]; nb.style.color = fg(S.team);
+  txt('navXp', xp + ' XP');
 
-  document.documentElement.setAttribute('data-theme', store.get('fdifactory_theme') === 'light' ? 'light' : 'dark');
+  $('main').innerHTML = ph === 'setup' ? setupHTML(t) : ph === 'play' ? playHTML(t) : endHTML(t);
+  $('main').querySelectorAll('[data-tab]').forEach(el => el.classList.toggle('on', Number(el.dataset.tab) === S.tab));
+  updateDec();
+
+  const labels = ph === 'end' ? t.tabsEnd : t.tabs;
+  $('tabbar').innerHTML = labels.map((l, i) => `<button type="button" class="${S.tab === i ? 'on' : ''}" data-act="tab" data-i="${i}" aria-pressed="${S.tab === i}">${l}</button>`).join('');
+
+  document.querySelector('#student footer .credit').textContent = t.credit;
+  txt('footSrc', t.foot); txt('srcLbl', t.src); txt('teacherLink', t.teacherLink); txt('uniLink', t.uni);
+  $('footNav').setAttribute('aria-label', t.links);
+
+  $('modal').hidden = !modal;
+  txt('mLvl', Math.floor(xp / 100) + 1); txt('mTitle', t.lvlUp); txt('mText', t.unlocked + ' · ' + lvName(xp)); txt('mCont', t.cont);
+  $('mImg').alt = t.dragonUp;
+  const to = $('toast'); to.hidden = !toast;
+  if (toast) to.innerHTML = `${t.done}<span>+${toast} XP</span>`;
+}
+
+function renderTeacher(t) {
+  const max = Math.max(...S.xp, 1), gev = D.events[S.gate - 1];
+  txt('tClass', t.classView); txt('tRace', t.race); $('tDragon').alt = t.dragonWave;
+  txt('tTotalL', t.total); txt('tTotal', S.xp.reduce((a, b) => a + b, 0));
+  txt('tOpenL', t.openTo); txt('tOpen', 'Q' + S.gate);
+  $('tEvent').innerHTML = `<div><span class="ev-tag">${t.quarter} ${S.gate}${gev.inspired ? ` · ${t.inspired} ${gev.inspired}` : ''}</span></div>
+    <h2>${vi() ? gev.vi : gev.en}</h2><p>${vi() ? gev.textVi : gev.textEn}</p><div class="fx">${effects(gev, t)}</div>`;
+  $('tcols').innerHTML = S.xp.map((x, i) => `
+    <div class="tc">
+      <div class="v">${x}</div>
+      <div class="bw"><i style="height:${Math.max(6, x / max * 100)}%;background:${COLORS[i]}"></i></div>
+      <div class="tn"><span style="background:${COLORS[i]}"></span>T${no(i)}</div>
+    </div>`).join('');
+  txt('tGateT', t.gateT); txt('tGateH', t.gateHint);
+  $('gateCtl').innerHTML = D.events.map((_, i) => {
+    const n = i + 1, cls = n === S.gate ? 'cur' : n < S.gate ? 'open' : '';
+    return `<button type="button" class="${cls}" data-act="gate" data-i="${n}" aria-pressed="${n <= S.gate}" aria-label="${t.gateT}: Q${n}"><b>Q${n}</b><span>${n <= S.gate ? t.open : t.locked}</span></button>`;
+  }).join('');
+  txt('tAward', t.award);
+  $('awardCtl').innerHTML = S.xp.map((x, i) => `<button type="button" data-act="award" data-i="${i}" aria-label="${t.award} T${no(i)} +10 XP" style="background:${COLORS[i]};color:${fg(i)}"><b>T${no(i)}</b><span>+10</span></button>`).join('');
+  txt('tReset', t.reset); txt('tBack', t.backStudent);
+  $('modal').hidden = true; $('toast').hidden = true;
+}
+
+function applyView() {
+  const q = new URLSearchParams(location.search);
+  view = location.hash === '#teacher' || q.get('view') === 'teacher' ? 'teacher' : 'student';
+  $('student').hidden = view === 'teacher';
+  $('teacher').hidden = view !== 'teacher';
   render();
+}
+
+// ---------- XP ----------
+function gainXp(n) {
+  const before = Math.floor(S.xp[S.team] / 100);
+  S.xp = S.xp.slice(); S.xp[S.team] += n;
+  if (Math.floor(S.xp[S.team] / 100) > before) modal = true;
+  toast = n;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { toast = 0; if (view === 'student') $('toast').hidden = true; }, 1800);
+}
+
+function commit() {
+  const g = S.game;
+  if (!g || g.quarter > N8 || g.quarter > S.gate) return false;
+  const ng = E.playQuarter(D, g, { local: S.dec.local, alloc: Object.assign({}, S.dec.alloc), invest: S.dec.invest });
+  const r = ng.history[ng.history.length - 1];
+  let gain = 10 + (r.profit >= 0 ? 10 : 0) + (r.dvaRatio >= 0.45 ? 10 : 0);
+  if (ng.quarter > N8) gain += 25 * E.summary(ng).badges.filter(b => b !== 'assembler' && b !== 'transship_flag').length;
+  S.game = ng; S.dec = Object.assign({}, S.dec, { invest: 0 });
+  gainXp(gain);
+  return true;
+}
+
+function download() {
+  const g = S.game; if (!g) return;
+  const blob = new Blob([JSON.stringify({ game: 'nha-may-fdi', industry: g.industryId, team: 'T' + no(S.team), summary: E.summary(g), log: E.decisionLog(g, { cohort: S.cohort.trim() || 'local' }) }, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'nha-may-fdi-nhat-ky.json';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
+// ---------- sự kiện ----------
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-act]');
+  if (!el) return;
+  if (el.tagName === 'A') e.preventDefault();
+  const act = el.dataset.act, i = Number(el.dataset.i);
+  const refocus = document.activeElement === el ? `[data-act="${act}"]` + (el.dataset.i != null ? `[data-i="${el.dataset.i}"]` : '') + (el.dataset.v != null ? `[data-v="${el.dataset.v}"]` : '') : null;
+  let top = false;
+  if (act === 'lang') { S.lang = el.dataset.v; try { localStorage.setItem('bizon-lang', S.lang); } catch (err) {} }
+  else if (act === 'langT') { S.lang = vi() ? 'en' : 'vi'; try { localStorage.setItem('bizon-lang', S.lang); } catch (err) {} }
+  else if (act === 'team') { if (phase() !== 'setup') return; S.team = i; }
+  else if (act === 'ind') { if (!D.industries[el.dataset.v]) return; S.ind = el.dataset.v; }
+  else if (act === 'start') {
+    const c = S.cohort.trim();
+    const seed = c ? E.seedFrom(c + '|' + S.ind) : (Date.now() >>> 0);
+    S.game = E.newGame(D, S.ind, seed); S.dec = DEF_DEC(); S.tab = 0; top = true;
+  }
+  else if (act === 'inv') { const v = Number(el.dataset.v); if (INVESTS.indexOf(v) < 0) return; S.dec = Object.assign({}, S.dec, { invest: v }); }
+  else if (act === 'commit') { if (!commit()) return; top = true; }
+  else if (act === 'download') { download(); return; }
+  else if (act === 'again') { S.game = null; S.dec = DEF_DEC(); S.tab = 0; top = true; }
+  else if (act === 'tab') { S.tab = i; top = true; }
+  else if (act === 'close') { modal = false; }
+  else if (act === 'gate') { if (i >= 1 && i <= N8) S.gate = i; }
+  else if (act === 'award') { S.xp = S.xp.slice(); S.xp[i] += 10; }
+  else if (act === 'reset') { S.xp = START_XP.slice(); S.gate = 1; S.game = null; S.dec = DEF_DEC(); S.tab = 0; }
+  else if (act === 'student') { history.replaceState(null, '', location.pathname); applyView(); window.scrollTo(0, 0); return; }
+  else return;
+  save();
+  render();
+  if (top) window.scrollTo(0, 0);
+  if (modal && view === 'student' && (act === 'commit')) $('mCont').focus();
+  else if (act === 'close') { const c = $('commitBtn') || document.querySelector('[data-act="again"]'); if (c) c.focus(); }
+  else if (refocus) { const n = document.querySelector(refocus); if (n) n.focus({ preventScroll: true }); }
+});
+
+document.addEventListener('input', e => {
+  const el = e.target;
+  if (el.id === 'cohort') { S.cohort = el.value.slice(0, 24); save(); return; }
+  if (phase() !== 'play') return;
+  if (el.id === 'local') S.dec = Object.assign({}, S.dec, { local: Number(el.value) / 100 });
+  else if (el.dataset && el.dataset.m) S.dec = Object.assign({}, S.dec, { alloc: Object.assign({}, S.dec.alloc, { [el.dataset.m]: Number(el.value) }) });
+  else return;
+  updateDec(); save();
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && modal) { modal = false; render(); }
+  else if (e.key === 'Enter' && e.target && e.target.id === 'cohort') { const b = document.querySelector('[data-act="start"]'); if (b) b.click(); }
+});
+// Màn hình lớp (#teacher hoặc ?view=teacher) mở ở cửa sổ khác trên cùng máy → đồng bộ qua localStorage.
+// Bản production nên lấy XP và quý đang mở từ máy chủ để cả lớp đồng bộ theo thời gian thực.
+window.addEventListener('storage', e => { if (e.key === STORE) { load(); render(); } });
+window.addEventListener('hashchange', () => { applyView(); window.scrollTo(0, 0); });
+if (mq.addEventListener) mq.addEventListener('change', render); else if (mq.addListener) mq.addListener(render);
+
+load();
+applyView();
 })();
 </script>
 </body>

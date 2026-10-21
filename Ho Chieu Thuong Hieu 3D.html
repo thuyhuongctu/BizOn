@@ -190,6 +190,11 @@
   #bp-status-bar { position:sticky; top:52px; z-index:20; margin:0 0 16px; border-radius:16px;
     background:#fffaf0; box-shadow:0 10px 20px -14px rgba(0,60,80,.35); }
   html[data-theme="dark"] #bp-status-bar { background:#0e2a33; }
+  /* Dưới 1024px bảng quyết định là tấm phủ dưới tự cuộn (#bp3d-col, không có #hc-bar
+     đè lên) nên thanh dính sát mép trên tấm phủ – top:52px làm nó lơ lửng giữa
+     tấm phủ, che mất dải hộ chiếu/chỉ số bên dưới (−14px bù padding-top của tấm phủ). */
+  @media (max-width:1023px) { #bp-status-bar { top:-14px; padding:8px 12px; } }
+  #bp-status-bar > div { flex-wrap:wrap; row-gap:4px; } #bp-status-bar button, #bp-status-bar p { white-space:nowrap; }
   /* Quyết định chính nằm trên cảnh 3D (bp3d.js → __bp3dChoices): ẩn bản HTML trùng lặp
      và thu tấm phủ dưới trên điện thoại để không che các ô lựa chọn trong cảnh. */
   body.bp3d-choice-hud #bp-prio-section, body.bp3d-choice-hud #bp-budget-section,

@@ -151,8 +151,15 @@
 }
 /* Máy rất hẹp (≤340px): thu nút «Bắt đầu» để thanh nav không tràn ngang */
 @media (max-width:340px){
-  #clay-nav .cn-bar{gap:8px;padding-left:14px}
+  #clay-nav .cn-bar{gap:6px;padding-left:12px}
   #clay-nav .cn-cta{padding:9px 10px;font-size:14px}
+  /* Nút ⬇ (tải app) ẩn ở máy rất hẹp – trang nào cũng còn nút Google Play riêng;
+     để nguyên thì nút «Bắt đầu» tràn khỏi thanh nav, cả trang lệch ngang như ảnh bị cắt. */
+  #clay-nav .cn-dlwrap{display:none}
+}
+@media (max-width:310px){
+  #clay-nav .cn-brand{font-size:18px}
+  #clay-nav .cn-lang button{padding:5px 6px}
 }
 
 /* ============================================================================
