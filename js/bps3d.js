@@ -288,7 +288,8 @@ window.addEventListener('bps-commit', e => { const d = e.detail, g = G();
   const wasStorm = d.loc === stormAt && d.m !== 2;
   sendMe(d.m, d.loc, () => { showRivals(d.week); window.dispatchEvent(new CustomEvent('bps-result', { detail: Object.assign({ storm: wasStorm }, d) }));
     if (d.m === 2) pop(d.loc, '📋 ' + T('Đã ghi chép', 'Notes taken'));
-    else pop(d.loc, '+' + (Math.round(d.rev * 10) / 10).toLocaleString(EN() ? 'en-US' : 'vi-VN') + ' ' + T('tr', 'm') + (d.clash ? '<small>⚡ ' + d.clash + ' ' + T('đối thủ', 'rival(s)') + '</small>' : ''), d.clash > 0 || wasStorm);
+    // d.rev = lợi nhuận tuần (đã trừ phí ghe) – có thể âm
+    else pop(d.loc, (d.rev >= 0 ? '+' : '−') + (Math.round(Math.abs(d.rev) * 10) / 10).toLocaleString(EN() ? 'en-US' : 'vi-VN') + ' ' + T('tr', 'm') + (d.clash ? '<small>⚡ ' + d.clash + ' ' + T('đối thủ', 'rival(s)') + '</small>' : ''), d.clash > 0 || wasStorm || d.rev < 0);
     if (wasStorm) { const b = document.getElementById('bps3d-storm'); if (b) { document.getElementById('bps3d-storm-t').textContent = '🌧️ ' + T('Mưa bão ở ' + g.LOCS[d.loc][1], 'Storm at ' + g.LOCS[d.loc][3]); document.getElementById('bps3d-storm-d').textContent = T('Khu này ít khách nhất tuần. Lần sau hãy nhìn đám đông trên bản đồ trước khi chọn.', 'This was the quietest spot this week. Next time, check the crowds on the map before choosing.'); b.style.display = 'grid'; } }
   }); });
 window.addEventListener('bps-lang', labelsText);

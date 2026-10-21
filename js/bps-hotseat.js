@@ -3,7 +3,7 @@
   var EN = function () { try { return localStorage.getItem('bizon-lang') === 'en'; } catch (e) { return false; } };
   var T = function (vi, en) { return EN() ? en : vi; };
   var $ = function (id) { return document.getElementById(id); };
-  var f1 = function (v) { return (Math.round(v * 10) / 10).toLocaleString('vi-VN'); };
+  var f1 = function (v) { return (Math.round(v * 10) / 10).toLocaleString(EN() ? 'en-US' : 'vi-VN'); };
   var HS = null; try { HS = JSON.parse(sessionStorage.getItem('bps-hs') || 'null'); } catch (e) {}
   function save() { sessionStorage.setItem('bps-hs', JSON.stringify(HS)); }
   function reset() { sessionStorage.removeItem('bps-hs'); location.reload(); }

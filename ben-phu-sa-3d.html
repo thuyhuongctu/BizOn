@@ -23,7 +23,7 @@
 <script src="js/backend-config.js"></script>
 <script src="js/error-log.js"></script>
 <script src="js/game3d-login-gate.js"></script>
-<script>Game3DGate.mount({ backdrop: true, introId: 'ft-intro', ns: 'bps', title: 'Chào mừng tới Bến Phù Sa!', subtitle: 'Điền nhanh thông tin đội rồi vào thẳng phần giới thiệu — bỏ trống vẫn chơi được trọn vẹn.' });</script>
+<script>Game3DGate.mount({ backdrop: true, introId: 'ft-intro', ns: 'bps', title: 'Chào mừng tới Bến Phù Sa!', titleEn: 'Welcome to Bến Phù Sa!', subtitle: 'Điền nhanh thông tin đội rồi vào thẳng phần giới thiệu — bỏ trống vẫn chơi được trọn vẹn.', subtitleEn: 'Fill in your team details and go straight to the intro — leave it blank and you can still play the full game.' });</script>
 <!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
      nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
 <link rel="stylesheet" href="css/bizon-fonts.css">
@@ -106,6 +106,21 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
   #ft-play{position:fixed;left:0;right:0;bottom:0;top:auto;max-height:52vh;overflow-y:auto;z-index:3;padding:14px 14px 20px;border-radius:24px 24px 0 0;background:rgba(255,250,241,.96);box-shadow:0 -12px 30px -12px rgba(0,60,80,.4)}
 }
 @media (max-width:760px){.bps3d-legend{display:none}}
+/* Vùng bấm ≥40px: nút chế độ, toàn màn hình, nút cửa hàng, nhãn bến trên di động */
+#bps3d-mode-game,#bps3d-mode-explore,#bps3d-full{min-height:40px}
+#ft-shop-list .clay-btn,#ft-inv-list .clay-btn{min-height:40px}
+#bps3d-coach{bottom:96px!important}
+@media (max-width:640px){.bps3d-lab{min-height:40px;justify-content:center;padding:6px 12px}}
+/* Di động: tấm quyết định (52vh) che đáy cảnh – đưa thanh chế độ, ô hướng dẫn
+   và bảng khám phá lên ngay trên mép tấm; dòng gợi ý lên đầu cảnh (né nút loa). */
+@media (max-width:1023px){
+  #bps3d-modes{bottom:calc(52vh + 10px)!important}
+  #bps3d-checklist{bottom:calc(52vh + 10px)!important}
+  #bps3d-coach{bottom:calc(52vh + 58px)!important}
+  #bps3d-hint{top:58px!important;bottom:auto!important;left:14px!important;right:64px!important;transform:none!important;white-space:normal!important}
+}
+/* Lối nhỏ "Vũ trụ" (cố định góc trái dưới) đè thanh chế độ – ẩn khi đang chơi (như bản v8) */
+body:has(#ft-play:not(.hidden)) .vutru-goc{display:none!important}
 </style>
 <script type="importmap">{"imports":{"three":"./vendor/three/three.module.js","three/addons/controls/OrbitControls.js":"./vendor/three/OrbitControls.js"}}</script>
 <script type="module" src="js/game3d-globe.js"></script>
@@ -121,7 +136,7 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
     <p class="text-[10px] font-bold text-white/60 mt-1" data-en-html="Introductory game of the BizOn tier ladder, a chance to get a feel for the market before moving up to &lt;a href=&quot;game.html&quot; class=&quot;underline text-clay-gold&quot;&gt;Tier 2 · Bật Nghiệp →&lt;/a&gt;">Game nhập môn của bậc thang BizOn, làm quen thị trường trước khi lên <a href="game.html" class="underline text-clay-gold">Bậc 2 · Bật Nghiệp →</a></p>
     <h1 class="font-display font-extrabold text-3xl mt-2" data-en="🧺 Entrepreneurial Street Vendor: Bến Phù Sa">🧺 Gánh Hàng Khởi Nghiệp: Bến Phù Sa</h1>
     <p class="text-white/50 text-[11px] mt-1 font-bold tracking-wide">Entrepreneurial Street Vendor: Ben Phu Sa</p>
-    <p class="text-white/75 text-sm mt-3" data-en-html="You're the founder of a street-food startup in &lt;b&gt;Bến Phù Sa&lt;/b&gt; – a fictional town inspired by the river country of Vietnam's Mekong Delta. Each week, choose &lt;b&gt;Method – Product – Location&lt;/b&gt;. Goal: the highest total revenue after 5 weeks. The trick is knowing when to &lt;b&gt;test cheap and fast, then scale at the right moment&lt;/b&gt;.">Bạn là nhà sáng lập startup ẩm thực đường phố ở <b>Bến Phù Sa</b> – thị trấn giả tưởng lấy cảm hứng từ miền Tây sông nước. Mỗi tuần chọn <b>Phương thức – Món hàng – Địa điểm</b>. Mục tiêu: tổng doanh thu cao nhất sau 5 tuần. Bí quyết nằm ở việc <b>thử nghiệm nhanh rồi nhân rộng đúng lúc</b>.</p>
+    <p class="text-white/75 text-sm mt-3" data-en-html="You're the founder of a street-food startup in &lt;b&gt;Bến Phù Sa&lt;/b&gt; – a fictional town inspired by the river country of Vietnam's Mekong Delta. Each week, choose &lt;b&gt;Method – Product – Location&lt;/b&gt;. Goal: the highest profit after 5 weeks (revenue minus costs). The trick is knowing when to &lt;b&gt;test cheap and fast, then scale at the right moment&lt;/b&gt;.">Bạn là nhà sáng lập startup ẩm thực đường phố ở <b>Bến Phù Sa</b> – thị trấn giả tưởng lấy cảm hứng từ miền Tây sông nước. Mỗi tuần chọn <b>Phương thức – Món hàng – Địa điểm</b>. Mục tiêu: lợi nhuận cao nhất sau 5 tuần (doanh thu trừ chi phí). Bí quyết nằm ở việc <b>thử nghiệm nhanh rồi nhân rộng đúng lúc</b>.</p>
     <details class="mt-3">
       <summary class="text-white/55 text-[11px] font-bold cursor-pointer" data-en="ℹ️ Academic notes & inspiration (tap to expand)">ℹ️ Ghi chú học thuật &amp; nguồn cảm hứng (bấm để xem)</summary>
       <p class="text-white/55 text-[11px] mt-2" data-en="💡 A non-commercial teaching game built in-house by BizOn. The «test cheap and fast, then scale at the right moment» mechanic is a common pedagogical motif in entrepreneurship education; the Bến Phù Sa setting, characters, data, interface and dialogue are all original. Not based on and does not use the material, figures or structure of any commercial simulation. Pedagogical direction: Assoc. Prof. Dr. Phan Anh Tú (School of Economics, Can Tho University).">💡 Trò chơi giảng dạy phi thương mại do BizOn tự phát triển. Cơ chế «thử nghiệm nhanh rồi nhân rộng đúng lúc» là mô-típ sư phạm phổ biến trong đào tạo khởi nghiệp; bối cảnh Bến Phù Sa, nhân vật, dữ liệu, giao diện và lời thoại đều là nguyên bản. Không dựa trên và không sử dụng tài liệu, số liệu hay cấu trúc của bất kỳ mô phỏng thương mại nào. Định hướng sư phạm: PGS.TS. Phan Anh Tú (Trường Kinh tế, ĐH Cần Thơ).</p>
@@ -137,13 +152,14 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
   <section id="ft-intro" class="clay-card p-6 hidden">
     <h2 class="font-display font-extrabold text-deep-teal text-lg mb-3" data-en="📜 Rules of play">📜 Luật chơi</h2>
     <ul class="space-y-2 text-sm">
-      <li data-en-html="⛵ &lt;b&gt;Trading boat&lt;/b&gt;: revenue &lt;b&gt;×3&lt;/b&gt; – but locks in the product &amp; location for the whole week. For when you already &lt;i&gt;know&lt;/i&gt; the winning formula.">⛵ <b>Ghe hàng bông</b>: doanh thu <b>×3</b> – nhưng chốt cứng món hàng &amp; địa điểm cả tuần. Dành cho lúc bạn đã <i>biết</i> công thức thắng.</li>
-      <li data-en-html="🧺 &lt;b&gt;Street cart&lt;/b&gt;: revenue ~1/3 – but weaves through every market alley, so you pick up &lt;b&gt;a lot of market intel&lt;/b&gt;. The experimenter's weapon.">🧺 <b>Gánh hàng rong</b>: doanh thu ~1/3 – nhưng len lỏi khắp ngõ chợ nên nghe ngóng được <b>rất nhiều thông tin thị trường</b>. Vũ khí của người thử nghiệm.</li>
-      <li data-en-html="📋 &lt;b&gt;Market survey&lt;/b&gt;: no sales for the whole week, but you get &lt;b&gt;historical data&lt;/b&gt; (points the right way but may be stale).">📋 <b>Khảo sát chợ</b>: mất trọn tuần không bán hàng, nhận về <b>dữ liệu lịch sử</b> (đúng hướng nhưng có thể lỗi thời).</li>
+      <li data-en-html="⛵ &lt;b&gt;Trading boat&lt;/b&gt;: revenue &lt;b&gt;×3&lt;/b&gt;, costs &lt;b&gt;1.5 mn ₫/week&lt;/b&gt; (boat hire + stock) – and locks in the product &amp; location for the whole week. For when you already &lt;i&gt;know&lt;/i&gt; the winning formula.">⛵ <b>Ghe hàng bông</b>: doanh thu <b>×3</b>, tốn <b>1,5 triệu ₫/tuần</b> (thuê ghe + nhập hàng) – và chốt cứng món hàng &amp; địa điểm cả tuần. Dành cho lúc bạn đã <i>biết</i> công thức thắng.</li>
+      <li data-en-html="🧺 &lt;b&gt;Street cart&lt;/b&gt;: revenue ×1, &lt;b&gt;no fixed cost&lt;/b&gt; – and weaves through every market alley, so you pick up &lt;b&gt;a lot of market intel&lt;/b&gt;. The experimenter's weapon.">🧺 <b>Gánh hàng rong</b>: doanh thu ×1, <b>không tốn chi phí cố định</b> – lại len lỏi khắp ngõ chợ nên nghe ngóng được <b>rất nhiều thông tin thị trường</b>. Vũ khí của người thử nghiệm.</li>
+      <li data-en-html="📋 &lt;b&gt;Market survey&lt;/b&gt;: costs 0.3 mn ₫ and no sales for the whole week, but you get &lt;b&gt;historical data&lt;/b&gt; on the best product + location pair (points the right way but may be stale).">📋 <b>Khảo sát chợ</b>: tốn 0,3 triệu ₫ và mất trọn tuần không bán, nhận về <b>dữ liệu lịch sử</b> về cặp món + khu tốt nhất (đúng hướng nhưng có thể lỗi thời).</li>
     </ul>
     <details class="mt-3 text-sm">
       <summary class="font-bold text-deep-teal/70 cursor-pointer" data-en="🎯 More rules (hidden demand, products, rivals)">🎯 Xem thêm luật chơi (nhu cầu ẩn, món hàng, đối thủ)</summary>
       <ul class="space-y-2 mt-3">
+        <li data-en-html="🏆 Ranking is by &lt;b&gt;profit&lt;/b&gt; = revenue minus boat costs, survey fees and item purchases. Rivals pay the same boat cost.">🏆 Xếp hạng theo <b>lợi nhuận</b> = doanh thu trừ phí ghe, phí khảo sát và tiền mua vật phẩm. Đối thủ cũng trả phí ghe như bạn.</li>
         <li data-en-html="🎯 The real demand for each &lt;b&gt;Product × Location&lt;/b&gt; pair is hidden – different every run. Observing after each week is your most valuable clue.">🎯 Nhu cầu thật của từng cặp <b>Món hàng × Địa điểm</b> là ẩn số – mỗi ván mỗi khác. Quan sát sau từng tuần là manh mối quý nhất.</li>
         <li data-en-html="🧾 Each product has its own operating model: 🥖 &lt;b&gt;bánh mì&lt;/b&gt; is fast to serve (extra boost in peak weeks) · 🍧 &lt;b&gt;chè bưởi&lt;/b&gt; (pomelo dessert) needs careful storage (occasional spoilage) · ☕ &lt;b&gt;cà phê phin&lt;/b&gt; (drip coffee) has a high margin but brews slowly.">🧾 Mỗi món một mô hình vận hành: 🥖 <b>bánh mì</b> phục vụ nhanh (hưởng thêm tuần cao điểm) · 🍧 <b>chè bưởi</b> cần bảo quản (thi thoảng hao hụt) · ☕ <b>cà phê phin</b> biên lời cao nhưng pha chậm.</li>
         <li data-en-html="⚔️ &lt;b&gt;3 virtual competitors&lt;/b&gt; – Alpha Dynamics 🐺, Mekong Ventures 🐘, Star Clay Co. 🦚 – are also trading all over Bến Phù Sa. Hitting the same location means &lt;b&gt;splitting the customers&lt;/b&gt;!">⚔️ <b>3 đối thủ ảo</b> – Alpha Dynamics 🐺, Mekong Ventures 🐘, Star Clay Co. 🦚 – cũng buôn bán khắp Bến Phù Sa. Đụng cùng địa điểm là <b>chia nhau khách</b>!</li>
@@ -181,7 +197,7 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
       <div id="bps3d-coach" class="bps3d-chip" style="position:absolute;left:14px;bottom:84px;max-width:calc(100% - 28px);white-space:normal;line-height:1.45;background:#fda127;color:#033337;display:none"></div>
       <div id="bps3d-storm" style="position:absolute;inset:0;display:none;place-items:center;background:rgba(3,51,55,.55);z-index:3"><div style="width:min(88%,420px);background:#fffdf6;border-radius:22px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.35)"><img src="assets/scene/ben-phu-sa/ben-bao.webp" alt="" style="width:100%;height:170px;object-fit:cover;display:block"><div style="padding:14px 18px 16px;color:#033337;font:600 13.5px/1.5 'Plus Jakarta Sans',sans-serif"><b id="bps3d-storm-t" style="font-size:16px;display:block;margin-bottom:4px"></b><span id="bps3d-storm-d"></span><button type="button" onclick="this.closest('#bps3d-storm').style.display='none'" style="margin-top:12px;width:100%;padding:10px;border:0;border-radius:12px;background:#033337;color:#fff;font-weight:800;cursor:pointer">OK</button></div></div></div>
       <div id="bps3d-info" style="position:absolute;inset:0;display:none;place-items:center;background:rgba(3,51,55,.55);z-index:4"><div style="width:min(88%,440px);background:#fffdf6;border-radius:22px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.35)"><div style="padding:16px 20px 18px;color:#033337;font:600 13.5px/1.6 'Plus Jakarta Sans',sans-serif"><b id="bps3d-info-t" style="font-size:17px;display:block;margin-bottom:6px"></b><span id="bps3d-info-d"></span><button type="button" id="bps3d-info-close" style="margin-top:14px;width:100%;padding:10px;border:0;border-radius:12px;background:#033337;color:#fff;font-weight:800;cursor:pointer">OK</button></div></div></div>
-      <div style="position:absolute;left:14px;bottom:48px;display:flex;gap:6px;pointer-events:auto;z-index:2">
+      <div id="bps3d-modes" style="position:absolute;left:14px;bottom:48px;display:flex;gap:6px;pointer-events:auto;z-index:2">
         <button type="button" id="bps3d-mode-game" class="bps3d-chip bps3d-mode-on" style="cursor:pointer;border:0" data-en="🎮 Business">🎮 Kinh doanh</button>
         <button type="button" id="bps3d-mode-explore" class="bps3d-chip" style="cursor:pointer;border:0" data-en="🚶 Explore Phù Sa">🚶 Khám phá chợ nổi</button>
       </div>
@@ -196,7 +212,7 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
       <div class="grid grid-cols-3 gap-2" id="ft-menus"></div>
       <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mb-1.5 mt-4" data-en="3 · Location – tap it on the 3D map">3 · Địa điểm – bấm trên bản đồ 3D</p>
       <div id="bps3d-pick" class="rounded-2xl px-4 py-3 text-sm font-bold" style="background:#fff6ea;border:2px dashed #fda127;color:#033337">📍 <span data-en="No location picked yet – tap a spot on the 3D map above.">Chưa chọn địa điểm – bấm một điểm trên bản đồ 3D phía trên.</span></div>
-      <details class="mt-2"><summary class="text-[11px] font-bold opacity-60 cursor-pointer" data-en="Or pick from a list">Hoặc chọn từ danh sách</summary><div class="grid grid-cols-3 gap-2 mt-2" id="ft-locs"></div></details>
+      <details class="mt-2"><summary class="text-[11px] font-bold opacity-60 cursor-pointer" style="min-height:44px;display:flex;align-items:center" data-en="Or pick from a list">Hoặc chọn từ danh sách</summary><div class="grid grid-cols-3 gap-2 mt-2" id="ft-locs"></div></details>
       <button id="ft-commit" onclick="ftCommit()" class="clay-btn w-full bg-primary text-white font-display font-extrabold py-3.5 mt-5" data-en="🔒 Lock in this week">🔒 Chốt tuần này</button>
       <p id="ft-hint" class="text-xs font-semibold opacity-60 mt-2 text-center"></p>
       <p id="ft-forecast" class="text-xs font-semibold opacity-70 mt-1 text-center"></p>
@@ -206,7 +222,7 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
       <div class="flex items-center justify-between">
         <div class="flex gap-2" id="ft-weekdots"></div>
         <div class="text-right">
-          <p class="text-sm font-extrabold">💰 <span id="ft-total">0</span> <span data-en="mn ₫">triệu ₫</span></p>
+          <p class="text-sm font-extrabold">💰 <span data-en="Profit">Lợi nhuận</span> <span id="ft-total">0</span> <span data-en="mn ₫">triệu ₫</span></p>
           <p class="text-[11px] font-bold opacity-60">🪙 <span id="ft-budget">0</span> <span data-en="mn ₫ capital">triệu ₫ vốn riêng</span></p>
         </div>
       </div>
@@ -215,12 +231,12 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
     </div>
 
     <div class="clay-card p-5 mb-4" id="ft-shop-card">
-      <button onclick="ftToggleShop()" class="w-full flex items-center justify-between" id="ft-shop-toggle">
+      <button onclick="ftToggleShop()" class="w-full flex items-center justify-between" id="ft-shop-toggle" style="min-height:44px">
         <span class="font-display font-extrabold text-deep-teal text-sm">🛍️ <span data-en="Item Shop">Cửa hàng vật phẩm</span></span>
         <span class="text-xs font-bold opacity-60" id="ft-shop-caret">▾</span>
       </button>
       <div id="ft-shop-panel" class="hidden mt-4">
-        <p class="text-[11px] opacity-60 mb-3" data-en="Spend your own small starting capital for an edge – optional, not required to finish the game.">Dùng vốn riêng nhỏ đang có để mua lợi thế – không bắt buộc để hoàn thành game.</p>
+        <p class="text-[11px] opacity-60 mb-3" data-en="Buy an edge with your small starting capital (up to 1.5 mn ₫) – the cost comes straight out of your profit. Optional, not required to finish the game.">Mua lợi thế bằng vốn riêng nhỏ đang có (tối đa 1,5 triệu ₫) – tiền mua trừ thẳng vào lợi nhuận. Không bắt buộc để hoàn thành game.</p>
         <div id="ft-shop-list" class="space-y-2"></div>
         <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-4 mb-1.5">🎒 <span data-en="Your items">Vật phẩm đang có</span></p>
         <div id="ft-inv-list" class="space-y-2"></div>
@@ -264,7 +280,7 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
       <p class="font-display font-extrabold text-primary text-4xl mt-3"><span id="ft-final">0</span> <span data-en="mn ₫">triệu ₫</span></p>
       <p class="text-sm font-semibold opacity-70 mt-1.5" id="ft-eff"></p>
       <div class="mt-4 space-y-2 text-left" id="ft-board"></div>
-      <p class="text-xs opacity-60 mt-3" id="ft-reveal"></p>
+      <div class="text-xs opacity-60 mt-3" id="ft-reveal"></div>
       <div class="mt-5 hidden" id="ft-cert-box">
         <div class="rounded-[20px] p-5 text-center relative overflow-hidden" style="background:linear-gradient(180deg,#fffdf6,#f4faff);border:3px solid rgba(253,161,39,.55);box-shadow:inset 0 0 0 1px rgba(0,102,135,.18)">
           <p class="text-[10px] font-extrabold uppercase tracking-widest text-deep-teal/50" data-en="🎓 Certificate of Completion">🎓 Giấy chứng nhận hoàn thành</p>
@@ -327,9 +343,9 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
 <script>
 (function () {
   var METHODS = [
-    { id: 'truck', icon: '⛵', name: 'Ghe hàng bông', sub: 'Doanh thu ×3', nameEn: 'Trading boat', subEn: 'Revenue ×3' },
-    { id: 'cart', icon: '🧺', name: 'Gánh hàng rong', sub: 'Doanh thu ×1 · nhiều tin', nameEn: 'Street cart', subEn: 'Revenue ×1 · lots of intel' },
-    { id: 'research', icon: '📋', name: 'Khảo sát chợ', sub: 'Không bán · dữ liệu cũ', nameEn: 'Market survey', subEn: 'No sales · old data' },
+    { id: 'truck', icon: '⛵', name: 'Ghe hàng bông', sub: 'Doanh thu ×3 · phí 1,5tr', nameEn: 'Trading boat', subEn: 'Revenue ×3 · 1.5mn cost' },
+    { id: 'cart', icon: '🧺', name: 'Gánh hàng rong', sub: 'Doanh thu ×1 · không phí · nhiều tin', nameEn: 'Street cart', subEn: 'Revenue ×1 · no cost · lots of intel' },
+    { id: 'research', icon: '📋', name: 'Khảo sát chợ', sub: 'Không bán · phí 0,3tr · dữ liệu', nameEn: 'Market survey', subEn: 'No sales · 0.3mn · data' },
   ];
   function mdName(i) { return T(METHODS[i].name, METHODS[i].nameEn); }
   function mdSub(i) { return T(METHODS[i].sub, METHODS[i].subEn); }
@@ -378,16 +394,17 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
   ];
   function rStyle(r) { return T(r.style, r.styleEn); }
 
-  // Cửa hàng vật phẩm – dùng "vốn riêng" nhỏ tách khỏi doanh thu/điểm (S.total),
-  // để mua lợi thế không trực tiếp đổi điểm cuối cùng. Giữ ít vật phẩm, nhẹ đô
-  // hơn hẳn Bật Nghiệp/Hộ Chiếu Thương Hiệu, đúng tinh thần game Bậc 1 chơi nhanh.
+  // Cửa hàng vật phẩm – mua bằng "vốn riêng" nhỏ (S.budget, tối đa 1,5 tr) và
+  // tiền mua TRỪ THẲNG vào lợi nhuận/điểm (S.total) như mọi chi phí khác, để
+  // vật phẩm là một quyết định đầu tư thật chứ không phải lợi thế miễn phí.
+  // Giữ ít vật phẩm, nhẹ đô hơn hẳn Bật Nghiệp/Hộ Chiếu Thương Hiệu.
   var SHOP_ITEMS = [
     { id: 'SCOUT', icon: '🔍', type: 'consumable', price: 0.4, name: 'Thám tử chợ', nameEn: 'Market Scout',
-      desc: 'Tiết lộ ngay nhu cầu thật của 1 cặp Món hàng × Địa điểm bạn chọn.', descEn: 'Instantly reveals the true demand of one Product × Location pair you pick.' },
+      desc: 'Tiết lộ nhu cầu thật của cặp Món hàng × Địa điểm đang chọn.', descEn: 'Reveals the true demand of the Product × Location pair you have selected.' },
     { id: 'SHIELD', icon: '🛡️', type: 'consumable', price: 0.3, name: 'Bảo hiểm hao hụt', nameEn: 'Spoilage Insurance',
       desc: 'Chặn hao hụt của lần bán chè bưởi kế tiếp, dù tuần nào mới bán.', descEn: 'Blocks the spoilage risk on your next chè bưởi sale, whichever week it happens.' },
-    { id: 'AD', icon: '📣', type: 'consumable', price: 0.3, name: 'Quảng cáo chớp nhoáng', nameEn: 'Flash Ad',
-      desc: 'Doanh thu của lần bán kế tiếp +20%.', descEn: "Your next sale's revenue +20%." },
+    { id: 'AD', icon: '📣', type: 'consumable', price: 0.5, name: 'Quảng cáo chớp nhoáng', nameEn: 'Flash Ad',
+      desc: 'Doanh thu của lần bán kế tiếp +10%.', descEn: "Your next sale's revenue +10%." },
     { id: 'TIP', icon: '🗺️', type: 'consumable', price: 0.3, name: 'Gói tin vỉa hè', nameEn: 'Street-Talk Pack',
       desc: 'Tiết lộ ngay địa điểm sẽ đông khách nhất tuần sau, dù chọn phương thức nào.', descEn: 'Instantly reveals which location will be busiest next week, whichever method you pick.' },
     { id: 'REP', icon: '🌟', type: 'blueprint', price: 0.6, name: 'Uy tín thương hồ', nameEn: "Trader's Reputation",
@@ -399,8 +416,11 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
   var seed = Math.floor(Math.random() * 1e9);
   function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
 
-  // Nhu cầu thật ẩn: D[menu][loc] (triệu ₫ cơ sở cho Gánh hàng rong) 1.0–3.4
-  var D = MENUS.map(function () { return LOCS.map(function () { return 1 + rnd() * 2.4; }); });
+  // Phí cố định – cùng luật với bản 2D/v8: ghe 1,5 tr/tuần (cả đối thủ), khảo sát 0,3 tr
+  var BOAT_COST = 1.5, SURVEY_COST = 0.3;
+  // Nhu cầu thật ẩn: D[menu][loc] (triệu ₫ cơ sở cho Gánh hàng rong) – lệch
+  // thấp (0,4–3,4, mũ 1,6): ít cặp thật sự tốt, nhiều cặp kém → chạy ghe mù rủi ro thật.
+  var D = MENUS.map(function () { return LOCS.map(function () { return 0.4 + Math.pow(rnd(), 1.6) * 3; }); });
   // Hệ số tuần theo địa điểm 0.8–1.25
   var W = [0, 1, 2, 3, 4].map(function () { return LOCS.map(function () { return 0.8 + rnd() * 0.45; }); });
 
@@ -422,7 +442,9 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
 
   var S = {
     week: 0, total: 0, team: 0, cap: 0, sel: { m: null, menu: null, loc: null }, log: [], ritualDone: false,
-    budget: 1.5, items: {}, shopOpen: false, knownPairs: {}, shieldSpoilage: false, adBoost: false,
+    budget: 1.5, items: {}, shopOpen: false, knownPairs: {}, shieldSpoilage: false, adBoost: false, surveyMenu: null, surveyLoc: null,
+    shopSpent: 0, // tiền đã mua vật phẩm (đã trừ vào S.total)
+    history: [], // {w, m, menu, loc, net} mỗi tuần – để debrief cuối ván giải thích ĐÚNG đường đi của ván này
   };
   var $ = function (id) { return document.getElementById(id); };
   window.__bps = { get S() { return S; }, get D() { return D; }, get W() { return W; }, get RIVALS() { return RIVALS; }, get LOCS() { return LOCS; }, get MENUS() { return MENUS; }, get cap() { return TEAM()[S.cap]; } };
@@ -431,10 +453,41 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
   var MS = function () { return T('tr₫', 'mn₫'); }; // đơn vị tiền rút gọn (bảng xếp hạng)
 
   function bestAt(loc) { var b = 0; for (var m = 1; m < 3; m++) if (D[m][loc] > D[b][loc]) b = m; return b; }
+  function bestLocFor(menu) { var b = 0; for (var l = 1; l < 6; l++) if (D[menu][l] > D[menu][b]) b = l; return b; }
+  // Hệ số món kỳ vọng (không rút rnd(), không tính vật phẩm): bánh mì tuần cao
+  // điểm +15%, chè bưởi hao hụt kỳ vọng ×0,97, cà phê +18% (cao điểm −7%).
+  function expAdj(menu, w, loc) {
+    var f = 1;
+    if (menu === 0 && W[w][loc] >= 1.05) f *= 1.15;
+    if (menu === 1) f *= 0.97;
+    if (menu === 2) { f *= 1.18; if (W[w][loc] >= 1.05) f *= 0.93; }
+    return f;
+  }
+  // Cặp thắng = cặp có doanh thu kỳ vọng cả mùa cao nhất Σ_w D·W·hệ số món
+  // (không chỉ D thô – món hợp tuần cao điểm hay lời dày có thể thắng cặp D cao hơn).
   function bestCombo() {
+    var bm = 0, bl = 0, bv = -1;
+    for (var m = 0; m < 3; m++) for (var l = 0; l < 6; l++) {
+      var v = 0; for (var w = 0; w < 5; w++) v += D[m][l] * W[w][l] * expAdj(m, w, l);
+      if (v > bv) { bv = v; bm = m; bl = l; }
+    }
+    return [bm, bl];
+  }
+  // Dữ liệu LỊCH SỬ (mùa trước) cho Khảo sát chợ: cặp có nhu cầu gốc D cao nhất –
+  // không biết lượng khách từng tuần mùa này (W) nên "đúng hướng nhưng có thể lỗi thời".
+  function bestBaseD() {
     var bm = 0, bl = 0;
     for (var m = 0; m < 3; m++) for (var l = 0; l < 6; l++) if (D[m][l] > D[bm][bl]) { bm = m; bl = l; }
     return [bm, bl];
+  }
+  // Trần thật của 1 tuần: cặp × phương thức tốt nhất tuần đó (ghe ×3 − phí hoặc gánh ×1), chưa tính đụng độ
+  function bestWeek(w) {
+    var best = -1e9;
+    for (var m = 0; m < 3; m++) for (var l = 0; l < 6; l++) {
+      var base = D[m][l] * W[w][l] * expAdj(m, w, l);
+      best = Math.max(best, base * 3 - BOAT_COST, base);
+    }
+    return best;
   }
 
   // Đụng độ địa điểm: n người bán cùng khu thì mỗi người chỉ giữ được 1/(1+0.4(n−1)) lượng khách
@@ -447,7 +500,7 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
   // allowRisk cũng đóng vai trò "đây là lượt của người chơi, không phải đối
   // thủ" – cửa hàng vật phẩm (bảo hiểm hao hụt, uy tín thương hồ) chỉ áp dụng
   // khi allowRisk=true, y hệt cách rnd() hao hụt chỉ rút cho người chơi.
-  function menuAdj(menu, w, loc, allowRisk) {
+  function menuAdj(menu, w, loc, allowRisk, isBoat) {
     var f = 1;
     if (menu === 0 && W[w][loc] >= 1.05) f *= 1.15;
     if (menu === 1 && allowRisk) {
@@ -455,7 +508,8 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
       else if (rnd() < 0.25) f *= 0.88;
     }
     if (menu === 2) { f *= 1.18; if (W[w][loc] >= 1.05) f *= 0.93; }
-    if (menu === 0 && allowRisk && (S.items.REP || 0) > 0) f *= 1.08;
+    // Uy tín thương hồ: +8% cho mọi lần bán bằng GHE (không phải theo món)
+    if (isBoat && allowRisk && (S.items.REP || 0) > 0) f *= 1.08;
     return f;
   }
 
@@ -546,8 +600,9 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
     if (!it || S.budget < it.price) return;
     if (it.type === 'blueprint' && (S.items[id] || 0) > 0) return;
     S.budget -= it.price;
+    S.total -= it.price; S.shopSpent += it.price; // tiền mua vật phẩm trừ thẳng vào lợi nhuận
     S.items[id] = (S.items[id] || 0) + 1;
-    addLog(S.week + 1, T('🛍️ Mua <b>' + it.name + '</b> (' + f1(it.price) + ' ' + MS() + ').', '🛍️ Bought <b>' + it.nameEn + '</b> (' + f1(it.price) + ' ' + MS() + ').'));
+    addLog(S.week + 1, T('🛍️ Mua <b>' + it.name + '</b> (−' + f1(it.price) + ' ' + MS() + ', trừ vào lợi nhuận).', '🛍️ Bought <b>' + it.nameEn + '</b> (−' + f1(it.price) + ' ' + MS() + ', deducted from profit).'));
     renderShop(); renderOptions();
   };
 
@@ -560,7 +615,7 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
     } else if (id === 'AD') {
       if (S.adBoost) return;
       S.items[id]--; S.adBoost = true;
-      addLog(S.week + 1, T('📣 Kích hoạt Quảng cáo chớp nhoáng – doanh thu lần bán kế tiếp +20%.', "📣 Activated Flash Ad – your next sale's revenue +20%."));
+      addLog(S.week + 1, T('📣 Kích hoạt Quảng cáo chớp nhoáng – doanh thu lần bán kế tiếp +10%.', "📣 Activated Flash Ad – your next sale's revenue +10%."));
     } else if (id === 'TIP') {
       if (S.week >= 4) return;
       var nw = S.week + 1, best = 0;
@@ -568,14 +623,12 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
       S.items[id]--;
       addLog(S.week + 1, T('🗺️ Gói tin vỉa hè: tuần sau, khu <b>' + lName(best) + '</b> sẽ đông khách nhất.', '🗺️ Street-Talk Pack: next week, <b>' + lName(best) + '</b> will be the busiest spot.'));
     } else if (id === 'SCOUT') {
-      var pickM = prompt(T('Chọn món hàng (1-3):\n1 = ' + mName(0) + '\n2 = ' + mName(1) + '\n3 = ' + mName(2), 'Pick a product (1-3):\n1 = ' + mName(0) + '\n2 = ' + mName(1) + '\n3 = ' + mName(2)));
-      var mm = parseInt(pickM, 10) - 1;
-      if (!(mm >= 0 && mm <= 2)) return;
-      var pickL = prompt(T('Chọn địa điểm (1-6):\n' + LOCS.map(function (l, i) { return (i + 1) + ' = ' + lName(i); }).join('\n'), 'Pick a location (1-6):\n' + LOCS.map(function (l, i) { return (i + 1) + ' = ' + lName(i); }).join('\n')));
-      var ll = parseInt(pickL, 10) - 1;
-      if (!(ll >= 0 && ll <= 5)) return;
+      // Dò đúng cặp Món hàng + Địa điểm đang chọn trên màn quyết định (như v8)
+      // thay vì prompt() – không chặn luồng chơi trên di động.
+      var mm = S.sel.menu, ll = S.sel.loc;
+      if (mm === null || ll === null) { $('ft-hint').textContent = T('🔍 Chọn trước Món hàng và Địa điểm muốn dò, rồi bấm Dùng.', '🔍 Pick the Product and Location you want scouted first, then tap Use.'); return; }
       S.items[id]--; S.knownPairs[mm + '-' + ll] = true;
-      addLog(S.week + 1, T('🔍 Thám tử chợ: nhu cầu thật của ' + mName(mm) + ' tại ' + lName(ll) + ' là <b>' + f1(D[mm][ll]) + '</b> (thang cơ sở 1,0–3,4).', '🔍 Market Scout: the true demand for ' + mName(mm) + ' at ' + lName(ll) + ' is <b>' + f1(D[mm][ll]) + '</b> (base scale 1.0–3.4).'));
+      addLog(S.week + 1, T('🔍 Thám tử chợ: nhu cầu thật của ' + mName(mm) + ' tại ' + lName(ll) + ' là <b>' + f1(D[mm][ll]) + '</b> (thang cơ sở 0,4–3,4).', '🔍 Market Scout: the true demand for ' + mName(mm) + ' at ' + lName(ll) + ' is <b>' + f1(D[mm][ll]) + '</b> (base scale 0.4–3.4).'));
     }
     renderShop(); syncSel();
   };
@@ -614,24 +667,36 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
     syncSel();
   };
 
-  // Dự báo doanh thu: ước tính dải doanh thu tuần này cho cặp Món hàng ×
-  // Địa điểm × Phương thức đang chọn – hẹp lại nếu cặp đó đã được Thám tử chợ
-  // tiết lộ hoặc từng bán qua, không thì để dải rộng theo biên độ D toàn cục
-  // (1,0–3,4). Không rút rnd() mới nên không đổi ván khi chỉ đang xem thử.
+  // Dự báo LỢI NHUẬN tuần này cho cặp Món hàng × Địa điểm × Phương thức đang
+  // chọn (như bản 2D/v8) – hẹp lại nếu cặp đó đã được Thám tử chợ tiết lộ hoặc
+  // từng bán qua, không thì để dải rộng theo biên độ D toàn cục (0,4–3,4); đã
+  // nhân hệ số món biết trước (forecastAdj) và trừ phí ghe. Không rút rnd() mới
+  // nên không đổi ván khi chỉ đang xem thử.
+  function forecastAdj(menu, w, loc, isBoat) {
+    var f = 1;
+    if (menu === 0 && W[w][loc] >= 1.05) f *= 1.15;
+    if (menu === 1 && !S.shieldSpoilage) f *= 0.97; // kỳ vọng hao hụt 25% × −12%
+    if (menu === 2) { f *= 1.18; if (W[w][loc] >= 1.05) f *= 0.93; }
+    if (isBoat && (S.items.REP || 0) > 0) f *= 1.08;
+    if (S.adBoost) f *= 1.1;
+    return f;
+  }
   function forecastText() {
     if (S.sel.m === null || S.sel.m === 2 || S.sel.menu === null || S.sel.loc === null) return '';
     var mult = S.sel.m === 0 ? 3 : 1;
     var baseW = W[S.week][S.sel.loc];
+    var adj = forecastAdj(S.sel.menu, S.week, S.sel.loc, S.sel.m === 0);
     var known = S.knownPairs[S.sel.menu + '-' + S.sel.loc];
     var lo, hi;
     if (known) {
-      var exact = D[S.sel.menu][S.sel.loc] * baseW * mult;
+      var exact = D[S.sel.menu][S.sel.loc] * baseW * mult * adj;
       lo = exact * 0.9; hi = exact * 1.1;
     } else {
-      lo = 1.0 * baseW * mult * 0.7; hi = 3.4 * baseW * mult * 1.1;
+      lo = 0.4 * baseW * mult * adj; hi = 3.4 * baseW * mult * 1.1 * adj;
     }
-    return T('🔮 Dự báo doanh thu tuần này: khoảng ' + f1(lo) + '–' + f1(hi) + ' ' + MU() + ' (chưa tính đụng độ đối thủ).',
-      "🔮 This week's revenue forecast: about " + f1(lo) + '–' + f1(hi) + ' ' + MU() + ' (before any rival clash).');
+    if (S.sel.m === 0) { lo -= BOAT_COST; hi -= BOAT_COST; }
+    return T('🔮 Dự báo lợi nhuận tuần này: khoảng ' + f1(lo) + '–' + f1(hi) + ' ' + MU() + ' (đã trừ chi phí, chưa tính đụng độ).',
+      "🔮 This week's profit forecast: about " + f1(lo) + '–' + f1(hi) + ' ' + MU() + ' (after costs, before any rival clash).');
   }
 
   function syncSel() {
@@ -649,8 +714,16 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
     if ($('ft-forecast')) $('ft-forecast').textContent = forecastText();
   }
 
+  // Nhiều addLog() được gọi liên tiếp trong CÙNG 1 tuần (kết quả bán → cảm
+  // nhận/điềm báo → tin đồn...) – unshift thẳng sẽ đảo ngược thứ tự trong
+  // tuần đó, chôn kết quả bán (dòng quan trọng nhất, gọi đầu tiên) xuống
+  // dưới các dòng flavor gọi sau. Theo dõi vị trí chèn của tuần hiện tại để
+  // các dòng trong cùng 1 tuần vẫn theo đúng thứ tự gọi, còn tuần mới hơn
+  // vẫn luôn nằm trên các tuần cũ (cùng cách với bản 2D/v8).
   function addLog(week, html) {
-    S.log.unshift('<li><b>' + T('Tuần ' + week, 'Week ' + week) + ':</b> ' + html + '</li>');
+    var li = '<li><b>' + T('Tuần ' + week, 'Week ' + week) + ':</b> ' + html + '</li>';
+    if (week !== S.logWeek) { S.log.unshift(li); S.logWeek = week; S.logInsertAt = 1; }
+    else { S.log.splice(S.logInsertAt, 0, li); S.logInsertAt++; }
     $('ft-log').innerHTML = S.log.join('');
   }
 
@@ -664,23 +737,29 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
     if (m !== 2) count[loc]++;
 
     if (m === 2) {
-      // Nghiên cứu: dữ liệu lịch sử – đúng hướng nhưng 20% bị nhiễu
-      var bc = bestCombo();
+      // Khảo sát: dữ liệu lịch sử về CẶP món + khu tốt nhất – đúng hướng nhưng
+      // 20% là dữ liệu lỗi thời (lệch cả món lẫn khu); tốn phí khảo sát.
+      S.total -= SURVEY_COST;
+      var bc = bestBaseD();
       var noisy = rnd() < 0.2;
       var rm = noisy ? (bc[0] + 1) % 3 : bc[0];
       var rl = noisy ? (bc[1] + 1 + Math.floor(rnd() * 5)) % 6 : bc[1];
+      S.surveyMenu = rm; S.surveyLoc = rl;
+      S.history.push({ w: w, m: 2, menu: null, loc: null, net: -SURVEY_COST });
       addLog(w + 1, T(
-        '📋 Sổ ghi chép của tiểu thương: mùa trước, ' + MENUS[rm][0] + ' <b>' + mName(rm) + '</b> bán chạy nhất, khu <b>' + lName(rl) + '</b> đông khách nhất. <i>(dữ liệu cũ – chỉ mang tính tham khảo)</i>',
-        "📋 The trader's old ledger: last season, " + MENUS[rm][0] + ' <b>' + mName(rm) + '</b> sold best, and <b>' + lName(rl) + '</b> was the busiest spot. <i>(old data – for reference only)</i>'
+        '📋 Sổ ghi chép của tiểu thương: mùa trước, cặp bán chạy nhất là ' + MENUS[rm][0] + ' <b>' + mName(rm) + '</b> × ' + LOCS[rl][0] + ' <b>' + lName(rl) + '</b> <i>(dữ liệu cũ – đúng hướng nhưng có thể lỗi thời · phí ' + f1(SURVEY_COST) + ' ' + MU() + ')</i>.',
+        "📋 The trader's old ledger: last season, the best-selling pair was " + MENUS[rm][0] + ' <b>' + mName(rm) + '</b> × ' + LOCS[rl][0] + ' <b>' + lName(rl) + '</b> <i>(old data – points the right way but may be stale · cost ' + f1(SURVEY_COST) + ' ' + MU() + ')</i>.'
       ));
     } else {
       var mult = m === 0 ? 3 : 1;
       var shieldActiveBefore = S.shieldSpoilage;
-      var adj = menuAdj(menu, w, loc, true);
+      var adj = menuAdj(menu, w, loc, true, m === 0);
       var rev = D[menu][loc] * W[w][loc] * mult * adj * share(count[loc]);
       var adApplied = S.adBoost;
-      if (adApplied) { rev *= 1.2; S.adBoost = false; }
-      S.total += rev;
+      if (adApplied) { rev *= 1.1; S.adBoost = false; }
+      var cost = m === 0 ? BOAT_COST : 0;
+      S.total += rev - cost;
+      S.history.push({ w: w, m: m, menu: menu, loc: loc, net: rev - cost });
       S.knownPairs[menu + '-' + loc] = true;
       var icon = m === 0 ? '⛵' : '🧺';
       var isBest = bestAt(loc) === menu;
@@ -690,12 +769,12 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
       if (menu === 1 && shieldActiveBefore && !S.shieldSpoilage) notes.push(T('🛡️ hao hụt được Bảo hiểm hao hụt chặn', '🛡️ spoilage blocked by Spoilage Insurance'));
       else if (menu === 1 && adj < 1) notes.push(T('🍧 hao hụt bảo quản −12%', '🍧 storage spoilage −12%'));
       if (menu === 2) notes.push(W[w][loc] >= 1.05 ? T('☕ biên lời cao +18%, nhưng pha chậm lỡ bớt khách cao điểm', '☕ high margin +18%, but slow brewing misses some peak-week customers') : T('☕ biên lời cao +18%', '☕ high margin +18%'));
-      if (menu === 0 && (S.items.REP || 0) > 0) notes.push(T('🌟 uy tín thương hồ +8%', "🌟 trader's reputation +8%"));
-      if (adApplied) notes.push(T('📣 quảng cáo chớp nhoáng +20%', '📣 flash ad +20%'));
+      if (m === 0 && (S.items.REP || 0) > 0) notes.push(T('🌟 uy tín thương hồ +8%', "🌟 trader's reputation +8%"));
+      if (adApplied) notes.push(T('📣 quảng cáo chớp nhoáng +10%', '📣 flash ad +10%'));
       if (clash > 0) notes.push(T('⚡ đụng độ ' + clash + ' đối thủ – chia nhau khách!', '⚡ clashed with ' + clash + ' rival(s) – splitting the customers!'));
       addLog(w + 1, T(
-        icon + ' Bán ' + MENUS[menu][0] + ' ' + mName(menu) + ' tại ' + LOCS[loc][0] + ' ' + lName(loc) + ' → <b>' + f1(rev) + ' ' + MU() + '</b>' + (notes.length ? ' <i>(' + notes.join(' · ') + ')</i>' : ''),
-        icon + ' Sold ' + MENUS[menu][0] + ' ' + mName(menu) + ' at ' + LOCS[loc][0] + ' ' + lName(loc) + ' → <b>' + f1(rev) + ' ' + MU() + '</b>' + (notes.length ? ' <i>(' + notes.join(' · ') + ')</i>' : '')
+        icon + ' Bán ' + MENUS[menu][0] + ' ' + mName(menu) + ' tại ' + LOCS[loc][0] + ' ' + lName(loc) + ' → <b>' + f1(rev) + ' ' + MU() + '</b>' + (cost ? ' − ' + f1(cost) + ' phí ghe = <b>' + f1(rev - cost) + '</b>' : '') + (notes.length ? ' <i>(' + notes.join(' · ') + ')</i>' : ''),
+        icon + ' Sold ' + MENUS[menu][0] + ' ' + mName(menu) + ' at ' + LOCS[loc][0] + ' ' + lName(loc) + ' → <b>' + f1(rev) + ' ' + MU() + '</b>' + (cost ? ' − ' + f1(cost) + ' boat cost = <b>' + f1(rev - cost) + '</b>' : '') + (notes.length ? ' <i>(' + notes.join(' · ') + ')</i>' : '')
       ));
       // Thị trường động: địa điểm phản ứng lại đúng hiệu suất thật của người
       // chơi ở đó (không phải kịch bản cố định) – bán tốt & không đụng độ thì
@@ -727,6 +806,12 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
           '🧺 <i>Nghe ngóng:</i> tại ' + lName(loc) + ', khách hỏi <b>' + mName(b) + '</b> nhiều nhất.',
           '🧺 <i>Word on the street:</i> at ' + lName(loc) + ', customers ask for <b>' + mName(b) + '</b> the most.'
         ));
+        // Khách quen kể: món đang bán chạy nhất ở khu nào (như bản v8)
+        var bl4 = bestLocFor(menu);
+        addLog(w + 1, T(
+          '👂 <i>Khách quen kể:</i> ' + mName(menu) + ' bán chạy nhất ở <b>' + lName(bl4) + '</b>.',
+          '👂 <i>A regular says:</i> ' + mName(menu) + ' sells best at <b>' + lName(bl4) + '</b>.'
+        ));
         if (w < 4) {
           var l1 = Math.floor(rnd() * 6), l2 = (l1 + 1 + Math.floor(rnd() * 5)) % 6;
           var hot = W[w + 1][l1] >= W[w + 1][l2] ? l1 : l2;
@@ -740,10 +825,10 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
       }
     }
 
-    // Đối thủ bán theo kế hoạch riêng – cùng chịu luật chia khách
+    // Đối thủ bán theo kế hoạch riêng – cùng chịu luật chia khách và phí ghe
     RIVALS.forEach(function (r) {
       var rl2 = r.plan[w];
-      r.total += D[r.menu][rl2] * W[w][rl2] * r.mult[w] * menuAdj(r.menu, w, rl2, false) * share(count[rl2]);
+      r.total += D[r.menu][rl2] * W[w][rl2] * r.mult[w] * menuAdj(r.menu, w, rl2, false, r.mult[w] === 3) * share(count[rl2]) - (r.mult[w] === 3 ? BOAT_COST : 0);
     });
     addLog(w + 1, '⚔️ <i>' + T('Đối thủ tuần này', "This week's rivals") + ':</i> ' + RIVALS.map(function (r) {
       var rl2 = r.plan[w];
@@ -779,10 +864,11 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
   function ftEnd() {
     $('ft-play').classList.add('hidden');
     $('ft-end').classList.remove('hidden');
-    // Chuẩn so sánh: chạy ghe hàng bông đúng cặp tốt nhất cả 5 tuần
-    var bc = bestCombo(), maxRev = 0;
-    for (var w = 0; w < 5; w++) maxRev += D[bc[0]][bc[1]] * W[w][bc[1]] * 3;
-    var eff = Math.min(100, Math.round(S.total / maxRev * 100));
+    // Chuẩn so sánh (kịch bản hoàn hảo = trần thật): mỗi tuần chọn đúng cặp ×
+    // phương thức có lợi nhuận kỳ vọng cao nhất tuần đó (đã trừ phí ghe).
+    var bc = bestCombo(), maxRev = 0, maxPerWeek = [];
+    for (var w = 0; w < 5; w++) { var mw = bestWeek(w); maxPerWeek.push(mw); maxRev += mw; }
+    var eff = Math.max(0, Math.min(100, Math.round(S.total / maxRev * 100)));
     $('ft-final').textContent = f1(S.total);
     $('ft-eff').textContent = T('Hiệu suất ' + eff + '% so với kịch bản hoàn hảo (' + f1(maxRev) + ' triệu ₫).', 'Efficiency ' + eff + '% versus the perfect-play scenario (' + f1(maxRev) + ' mn ₫).');
 
@@ -808,10 +894,21 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
     // trước và bản tải về như lỗi đã gặp và sửa ở Hộ Chiếu Thương Hiệu.
     initSubmit();
     renderCertBox(crown[1]);
+    // Đường đi THẬT của ván này (như bản 2D/v8): từng tuần đã "để lại trên bàn"
+    // bao nhiêu so với lựa chọn tốt nhất tuần đó (S.history ghi ở ftCommit).
+    var pathHtml = S.history.map(function (h) {
+      var left = maxPerWeek[h.w] - h.net;
+      var desc = h.m === 2 ? T('khảo sát chợ', 'a market survey') : MENUS[h.menu][0] + ' ' + mName(h.menu) + ' × ' + LOCS[h.loc][0] + ' ' + lName(h.loc);
+      return '<li><b>' + T('Tuần ' + (h.w + 1), 'Week ' + (h.w + 1)) + ':</b> ' + METHODS[h.m].icon + ' ' + desc + ' → <b>' + f1(h.net) + ' ' + MU() + '</b>' +
+        (left > 0.05 ? ' <span style="opacity:.65">(' + T('để lại trên bàn ~', 'left ~') + f1(left) + ' ' + MU() + T('', ' on the table') + ')</span>' : '') + '</li>';
+    }).join('') + (S.shopSpent > 0 ? '<li>🛍️ ' + T('Vật phẩm đã mua', 'Items bought') + ' → <b>−' + f1(S.shopSpent) + ' ' + MU() + '</b></li>' : '');
+    var totalLeft = Math.max(0, maxRev - S.total);
     $('ft-reveal').innerHTML = T(
-      '🔍 Đáp án của ván này: cặp thắng là ' + MENUS[bc[0]][0] + ' <b>' + mName(bc[0]) + '</b> × ' + LOCS[bc[1]][0] + ' <b>' + lName(bc[1]) + '</b>. Chiến lược tham chiếu: gánh hàng rong tuần 1–2 để dò, ghe hàng bông tuần 3–5 với cặp tốt nhất – và né khu đông đối thủ khi doanh thu gốc ngang nhau.',
-      '🔍 This run\'s answer key: the winning pair was ' + MENUS[bc[0]][0] + ' <b>' + mName(bc[0]) + '</b> × ' + LOCS[bc[1]][0] + ' <b>' + lName(bc[1]) + '</b>. Reference strategy: street cart in weeks 1–2 to scout, trading boat in weeks 3–5 with the best pair – and avoid crowded spots when base revenue is close.'
-    );
+      '🔍 Đáp án của ván này: cặp thắng là ' + MENUS[bc[0]][0] + ' <b>' + mName(bc[0]) + '</b> × ' + LOCS[bc[1]][0] + ' <b>' + lName(bc[1]) + '</b>. Chiến lược tham chiếu: dò 1 tuần bằng gánh hàng rong (rẻ, nhiều tin) rồi chạy ghe hàng bông 4 tuần với cặp tốt nhất – và né khu đông đối thủ. Chạy ghe ngay từ đầu khi chưa biết thị trường thường lỗ phí ghe.',
+      '🔍 This run\'s answer key: the winning pair was ' + MENUS[bc[0]][0] + ' <b>' + mName(bc[0]) + '</b> × ' + LOCS[bc[1]][0] + ' <b>' + lName(bc[1]) + '</b>. Reference strategy: scout for 1 week with the street cart (cheap, lots of intel), then run the trading boat for 4 weeks on the best pair – and avoid crowded spots. Launching the boat blind usually burns the boat cost.'
+    ) + '<span class="block font-display font-extrabold text-deep-teal text-[11px] uppercase tracking-wide mt-3 mb-1">' + T('📖 Đường đi của bạn ván này', '📖 Your path this run') + '</span>' +
+      '<ul class="text-left space-y-1">' + pathHtml + '</ul>' +
+      '<span class="block mt-2"><b>' + T('Tổng cộng bạn để lại trên bàn khoảng ', 'In total you left about ') + f1(totalLeft) + ' ' + MU() + '</b> ' + T('so với chơi tối ưu cả 5 tuần.', 'compared to playing optimally all 5 weeks.') + '</span>';
   }
 
   /* ================= CHỨNG CHỈ HOÀN THÀNH ================= */
@@ -825,8 +922,8 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
     box.classList.remove('hidden');
     $('ft-cert-name').textContent = certName();
     $('ft-cert-desc').innerHTML = T(
-      'đã hoàn thành trọn vẹn 5 tuần mô phỏng <b>«Gánh Hàng Khởi Nghiệp: Bến Phù Sa»</b> cùng <b>' + tmName(S.team) + '</b>, đạt <b>' + f1(S.total) + ' triệu ₫</b> – ' + titleText + '.',
-      'has fully completed all 5 weeks of the <b>«Entrepreneurial Street Vendor: Bến Phù Sa»</b> simulation with <b>' + tmName(S.team) + '</b>, earning <b>' + f1(S.total) + ' mn ₫</b> – ' + titleText + '.'
+      'đã hoàn thành trọn vẹn 5 tuần mô phỏng <b>«Gánh Hàng Khởi Nghiệp: Bến Phù Sa»</b> cùng <b>' + tmName(S.team) + '</b>, đạt lợi nhuận <b>' + f1(S.total) + ' triệu ₫</b> – ' + titleText + '.',
+      'has fully completed all 5 weeks of the <b>«Entrepreneurial Street Vendor: Bến Phù Sa»</b> simulation with <b>' + tmName(S.team) + '</b>, earning a profit of <b>' + f1(S.total) + ' mn ₫</b> – ' + titleText + '.'
     );
     $('ft-cert-date').textContent = T('Cấp ngày ' + new Date().toLocaleDateString('vi-VN'), 'Issued ' + new Date().toLocaleDateString('en-US')) + ' · bizonland.com';
   }
@@ -859,13 +956,13 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
     var L = EN ? {
       small: '🎓 BIZON BUSINESS SIMULATION ECOSYSTEM', to: 'Awarded to',
       desc: 'has fully completed all 5 weeks of the «Entrepreneurial Street Vendor: Bến Phù Sa» simulation with ' + tmName(S.team),
-      stats: ['FINAL REVENUE', 'RESULT', 'EFFICIENCY'],
+      stats: ['FINAL PROFIT', 'RESULT', 'EFFICIENCY'],
       sig1: 'PhD Candidate Do Thuy Huong', sig2: 'Assoc. Prof. Phan Anh Tu, Ph.D.',
       date: 'Issued ' + new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) + ' · bizonland.com',
     } : {
       small: '🎓 GIẤY CHỨNG NHẬN HOÀN THÀNH', to: 'Trao cho',
       desc: 'đã hoàn thành trọn vẹn 5 tuần mô phỏng «Gánh Hàng Khởi Nghiệp: Bến Phù Sa» cùng ' + tmName(S.team),
-      stats: ['DOANH THU CUỐI', 'KẾT QUẢ', 'HIỆU SUẤT'],
+      stats: ['LỢI NHUẬN', 'KẾT QUẢ', 'HIỆU SUẤT'],
       sig1: 'NCS. Đỗ Thùy Hương', sig2: 'PGS.TS. Phan Anh Tú',
       date: 'Cấp ngày ' + new Date().toLocaleDateString('vi-VN') + ' · bizonland.com',
     };
@@ -951,9 +1048,11 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
   function initSubmit() {
     if (!backendOn()) return; // backend tắt thì ẩn luôn khối nộp
     $('ft-submit-box').classList.remove('hidden');
+    // Chỉ điền sẵn khi ô còn trống – initSubmit() chạy lại mỗi lần đổi ngôn ngữ
+    // ở màn kết thúc, không được ghi đè chữ người chơi vừa gõ.
     try {
-      $('ft-class').value = localStorage.getItem('bps-class') || '';
-      $('ft-name').value = localStorage.getItem('bps-name') || '';
+      if (!$('ft-class').value) $('ft-class').value = localStorage.getItem('bps-class') || '';
+      if (!$('ft-name').value) $('ft-name').value = localStorage.getItem('bps-name') || '';
     } catch (e) {}
   }
 
@@ -978,7 +1077,8 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
           efficiency: S.result.eff,
           final_rank: S.result.rank,
           detail_json: { exam: !!(window.BizOnBpsExam && window.BizOnBpsExam.exam && window.BizOnBpsExam.exam.active), captain: TEAM()[S.cap].name, rivals: RIVALS.map(function (r) { return { name: r.name, total: Math.round(r.total * 10) / 10 }; }) },
-          app_version: 'bizon-bps3d-v1',
+          // Phiên bản riêng từng bản để bảng giáo viên tách xếp hạng (v1 = luật cũ tính doanh thu)
+          app_version: 'bizon-bps3d-v2',
           client_ts: new Date().toISOString(),
         }),
       });

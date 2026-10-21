@@ -72,7 +72,7 @@
     else { tone(523, 0, .2, 'sine', .12); tone(659, .1, .25, 'sine', .1); } } catch (e) {} }
   function toast(delta, survey) {
     var host = $('bps3d-wrap') || document.body, pos = delta >= 0, b = document.createElement('div');
-    b.textContent = (survey ? '📋 ' : pos ? '💰 +' : '💸 ') + (Math.round(delta * 10) / 10).toLocaleString('vi-VN') + ' ' + T('tr', 'mn');
+    b.textContent = (survey ? '📋 ' : pos ? '💰 +' : '💸 ') + (Math.round(delta * 10) / 10).toLocaleString(EN() ? 'en-US' : 'vi-VN') + ' ' + T('tr', 'mn');
     b.style.cssText = 'position:absolute;left:50%;top:40%;z-index:6;pointer-events:none;padding:12px 22px;border-radius:999px;font:800 26px/1 "Plus Jakarta Sans",sans-serif;white-space:nowrap;' +
       (pos ? 'background:linear-gradient(180deg,#ffd38a,#fda127);color:#033337;box-shadow:0 5px 0 #c97a12,0 18px 30px -10px rgba(0,0,0,.5)' : 'background:#fff;color:#c0392b;box-shadow:0 5px 0 #d9c7a6,0 18px 30px -10px rgba(0,0,0,.5)');
     host.appendChild(b);
@@ -94,7 +94,8 @@
   };
   var full = $('bps3d-full');
   if (full) { var sb = document.createElement('button'); sb.type = 'button'; sb.className = 'bps3d-chip';
-    sb.style.cssText = 'position:absolute;right:12px;top:92px;cursor:pointer;z-index:2;pointer-events:auto';
+    // cột chip góc phải: Toàn màn hình (12) · Âm thanh (58, js/bps3d-v3.js) · Hiệu ứng (104) – mỗi chip cao ≥40px
+    sb.style.cssText = 'position:absolute;right:12px;top:104px;cursor:pointer;z-index:2;pointer-events:auto;min-height:40px';
     var lab = function () { sb.textContent = sfxOn ? T('🔔 Hiệu ứng: bật', '🔔 Effects: on') : T('🔕 Hiệu ứng: tắt', '🔕 Effects: off'); };
     lab(); sb.onclick = function () { sfxOn = !sfxOn; try { localStorage.setItem('bps-sfx', sfxOn ? '1' : '0'); } catch (e) {} lab(); sfx('tick'); };
     full.after(sb); window.addEventListener('storage', lab); document.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('[onclick*="Lang"],[data-lang]')) setTimeout(lab, 50); }); }

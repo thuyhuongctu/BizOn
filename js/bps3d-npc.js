@@ -154,7 +154,8 @@ export function mount(el, init) {
   function applyMode() { const on = use3d && me3.children.length > 0; me3.visible = on; meSp.visible = !on; shadow.visible = !on; team3.visible = on; sTeam.visible = !on; }
   const pos = new THREE.Vector3(HOME[0] + 6, 0.1, HOME[1] + 3); me.position.copy(pos);
   const meLab = document.createElement('div'); Object.assign(meLab.style, { position: 'absolute', left: 0, top: 0, background: '#fda127', color: '#033337', font: "800 11px 'Be Vietnam Pro',sans-serif", padding: '3px 9px', borderRadius: '999px', whiteSpace: 'nowrap' });
-  meLab.textContent = 'Ghe của bạn'; labels.appendChild(meLab);
+  const meTxt = () => (localStorage.getItem('bizon-lang') === 'en' ? 'Your boat' : 'Ghe của bạn');
+  meLab.textContent = meTxt(); labels.appendChild(meLab);
   const ambient = !!init.ambient; if (ambient) { me.visible = false; meLab.style.display = 'none'; }
 
   // điều khiển
@@ -193,7 +194,7 @@ export function mount(el, init) {
   const EN = () => localStorage.getItem('bizon-lang') === 'en';
   const ctlBar = document.createElement('div'); Object.assign(ctlBar.style, { position: 'absolute', left: '10px', top: '10px', zIndex: 4, display: 'flex', alignItems: 'center', gap: '6px' });
   const pill = (txt, title) => { const b = document.createElement('button'); b.type = 'button'; if (title) b.title = title;
-    Object.assign(b.style, { border: 0, background: 'rgba(3,51,55,.85)', color: '#fff', fontSize: '12px', height: '26px', padding: '0 10px', borderRadius: '999px', cursor: 'pointer' }); b.textContent = txt; return b; };
+    Object.assign(b.style, { border: 0, background: 'rgba(3,51,55,.85)', color: '#fff', fontSize: '14px', height: '40px', minWidth: '40px', padding: '0 12px', borderRadius: '999px', cursor: 'pointer' }); b.textContent = txt; return b; };
   const muteBtn = pill(muted ? '🔇' : '🔊', EN() ? 'Mute dock-arrival chime' : 'Tắt chuông cập bến');
   muteBtn.onclick = () => { muted = !muted; localStorage.setItem('bps3d-npc-muted', muted ? '1' : '0'); muteBtn.textContent = muted ? '🔇' : '🔊'; };
   const fullBtn = pill('⛶', EN() ? 'Fullscreen' : 'Toàn màn hình');
@@ -244,7 +245,9 @@ export function mount(el, init) {
   const ro = new ResizeObserver(() => { renderer.setSize(W(), H()); camera.aspect = W() / H(); camera.updateProjectionMatrix(); }); ro.observe(el);
   sync(); raf = requestAnimationFrame(loop);
   return {
-    update(p) { props = p; sync(); const u = !!p.models3d; if (u !== use3d) { use3d = u; applyMode(); } },
+    update(p) { props = p; sync(); const u = !!p.models3d; if (u !== use3d) { use3d = u; applyMode(); }
+      // đổi ngôn ngữ giữa chừng: cập nhật nhãn ghe của bạn + dòng gợi ý điều khiển
+      meLab.textContent = meTxt(); hintSpan.textContent = EN() ? 'WASD / joystick / tap the water · near an NPC press E' : 'WASD / joystick / bấm nước · gần NPC bấm E'; },
     destroy() { cancelAnimationFrame(raf); ro.disconnect(); removeEventListener('keydown', kd); removeEventListener('keyup', ku); renderer.dispose(); el.innerHTML = ''; }
   };
 }
