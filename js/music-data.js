@@ -29,13 +29,13 @@ window.BZ_MUSIC = {
       ['«Vươn ra thế giới» – bản 1', 'Ca khúc mới cùng tuyến · 2:47', 'huong-vuon-ra-the-gioi', '«Vươn ra thế giới» – take 1', 'A new song on the same line · 2:47'],
       ['«Vươn ra thế giới» – bản 2', 'Hòa âm khác · 2:47', 'huong-vuon-ra-the-gioi-2', '«Vươn ra thế giới» – take 2', 'Alternate arrangement · 2:47']
     ], 'BizOn Go Global song · international pop 118 BPM'],
-    ['«Đội Phù Sa»', 'illustrations/game/ben-phu-sa-cho-noi.webp', 'Anthem đội chơi game Bến Phù Sa · V-pop electronic 116 BPM', [
+    ['«Đội Phù Sa»', 'covers/ben-phu-sa-3d.webp', 'Anthem đội chơi game Bến Phù Sa · V-pop electronic 116 BPM', [
       ['Bản gốc', 'Golden silt, we rise!', 'doi-phu-sa', 'Original', 'Golden silt, we rise!'],
       ['Bản remix', 'Cùng lời, màu nhạc mới', 'doi-phu-sa-remix', 'Remix', 'Same lyrics, new colour'],
       ['Bản remix 2', '3:24 · nhịp dày hơn', 'doi-phu-sa-remix2', 'Remix 2', '3:24 · denser beat'],
       ['Bản remix 3', '4:15 · bản dài nhất', 'doi-phu-sa-remix3', 'Remix 3', '4:15 · the longest cut']
     ], 'Đội Phù Sa anthem · V-pop electronic 116 BPM'],
-    ['«Hộ Chiếu Thương Hiệu»', 'illustrations/cast-sheet-brand-passport.webp', 'Nhạc chủ đề Hộ Chiếu Thương Hiệu · từ cửa sông Vàm Thịnh ra biển lớn', [
+    ['«Hộ Chiếu Thương Hiệu»', 'covers/ho-chieu-thuong-hieu-3d.webp', 'Nhạc chủ đề Hộ Chiếu Thương Hiệu · từ cửa sông Vàm Thịnh ra biển lớn', [
       ['«Brand Passport» – bản gốc', '2:52', 'brand-passport', '«Brand Passport» – original', '2:52'],
       ['«Brand Passport» – bản phối', '2:56', 'brand-passport-v2', '«Brand Passport» – arrangement', '2:56'],
       ['«Brand Passport» – bản remix', '3:48', 'brand-passport-remix', '«Brand Passport» – remix', '3:48'],
@@ -45,7 +45,7 @@ window.BZ_MUSIC = {
       ['«Stamps Beyond Borders» – mở rộng', '4:43', 'stamps-beyond-borders-extended', '«Stamps Beyond Borders» – extended', '4:43'],
       ['«Golden Silt Route»', 'Con đường phù sa vàng', 'golden-silt-route', '«Golden Silt Route»', 'The golden-silt road']
     ], 'Brand Passport theme · from the Vàm Thịnh estuary to the open sea', '«Brand Passport»'],
-    ['«Hộ Chiếu Thương Hiệu» – tổ khúc ba phần', 'illustrations/thuyen-sen-khoi-hanh.webp', 'Hành trình từ bến sông quê ra thế giới', [
+    ['«Hộ Chiếu Thương Hiệu» – tổ khúc ba phần', 'covers/ho-chieu-thuong-hieu-3d.webp', 'Hành trình từ bến sông quê ra thế giới', [
       ['Phần I – «Từ dòng Mekong»', '3:56', 'ho-chieu-p1-tu-dong-mekong', 'Part I – «From the Mekong»', '3:56'],
       ['Phần I – bản remix', '3:51', 'ho-chieu-p1-remix', 'Part I – remix', '3:51'],
       ['Phần I – bản remix 2', '4:07', 'ho-chieu-p1-remix2', 'Part I – remix 2', '4:07'],
@@ -60,7 +60,7 @@ window.BZ_MUSIC = {
       ['Phần III tiếng Anh – bản remix', '4:42', 'ho-chieu-p3-en-remix', 'Part III (English) – remix', '4:42'],
       ['Phần III tiếng Anh – bản remix 2 ⭐', '5:33 · nhạc nền mặc định', 'ho-chieu-p3-en-remix2', 'Part III (English) – remix 2 ⭐', '5:33 · default soundtrack']
     ], 'A three-part journey from a home river wharf to the world', '«Brand Passport» – three-part suite'],
-    ['«Bật Nghiệp»', 'illustrations/hero-vietnam-2026.webp', 'Ca khúc chủ đề game Việt Nam · V-pop electronic 112 BPM', [
+    ['«Bật Nghiệp»', 'covers/bat-nghiep-3d.webp', 'Ca khúc chủ đề game Việt Nam · V-pop electronic 112 BPM', [
       ['Bản thu có lời ⭐', '3:23 · nhạc nền mở đầu', 'bat-nghiep-co-loi', 'Vocal recording ⭐', '3:23 · opening theme'],
       ['Bản Rap Symphony', 'Rap kết hợp dàn dây · 3:48', 'bat-nghiep-rap-symphony', 'Rap Symphony', 'Rap with strings · 3:48'],
       ['Remix «Mekong Sunfire 2»', '3:23', 'bat-nghiep-mekong-sunfire-2', '«Mekong Sunfire 2» remix', '3:23'],
@@ -83,22 +83,22 @@ window.BZ_MUSIC = {
     ['«BizOn Theme»', 'illustrations/bizon-music-studio.webp', 'Nhạc hiệu instrumental của hệ sinh thái', [
       ['Bản gốc – instrumental', 'Bản phối không lời', 'bizon-theme', 'Original – instrumental', 'Instrumental mix']
     ], "The ecosystem's instrumental signature"],
-    ['«Hương Ngọt Phù Sa»', 'brand/durian-passport-badge.webp', 'Hò miền Tây về vườn sầu riêng · nhạc nền Hộ Chiếu Sầu Riêng · 6:54', [
+    ['«Hương Ngọt Phù Sa»', 'covers/ho-chieu-sau-rieng-3d.webp', 'Hò miền Tây về vườn sầu riêng · nhạc nền Hộ Chiếu Sầu Riêng · 6:54', [
       ['Bản gốc ⭐', 'Lời tiếng Việt · 6:54 · nhạc nền mặc định', 'huong-ngot-phu-sa', 'Original ⭐', 'Vietnamese lyrics · 6:54 · default soundtrack']
     ], 'Mekong folk-hò about durian orchards · the Durian Passport soundtrack · 6:54'],
-    ['«Hương Ngọt Quê Mình»', 'brand/durian-passport-badge.webp', 'Hò miền Tây về vườn sầu riêng · bản hò thứ hai · 7:22', [
+    ['«Hương Ngọt Quê Mình»', 'covers/ho-chieu-sau-rieng-3d.webp', 'Hò miền Tây về vườn sầu riêng · bản hò thứ hai · 7:22', [
       ['Bản gốc', 'Lời tiếng Việt · 7:22 · nhạc nền Hộ Chiếu Sầu Riêng', 'huong-ngot-que-minh', 'Original', 'Vietnamese lyrics · 7:22 · Durian Passport soundtrack']
     ], 'Second Mekong folk-hò about durian orchards · 7:22'],
-    ['«Durian Passport»', 'brand/durian-passport-badge.webp', 'Anthem Hộ Chiếu Sầu Riêng · từ hạt giống ra thế giới', [
+    ['«Durian Passport»', 'covers/ho-chieu-sau-rieng-3d.webp', 'Anthem Hộ Chiếu Sầu Riêng · từ hạt giống ra thế giới', [
       ['Bản gốc', 'Lời tiếng Anh · 5:48', 'durian-passport', 'Original', 'English lyrics · 5:48']
     ], 'Hộ Chiếu Sầu Riêng anthem · from the seed to the world']
   ],
   collections: [
-    ['Bật Nghiệp', 'illustrations/hero-vietnam-2026.webp', 'Màu Việt Nam', 'game.html', ['bat-nghiep-co-loi', 'bat-nghiep-rap-symphony', 'bat-nghiep-mekong-sunfire-2', 'bat-nghiep-mekong-sunfire', 'bat-nghiep-mekong-sunfire-rise', 'bat-nghiep', 'huong-vuon-ra-the-gioi', 'huong-vuon-ra-the-gioi-2', 'bizon-theme', 'huong-on-return', 'huong-on-return-remix', 'vua-du-de-bay-cao'], 'Vietnam palette'],
-    ['Hộ Chiếu Thương Hiệu', 'illustrations/thuyen-sen-khoi-hanh.webp', 'Quốc tế hóa · BizOn Go Global', 'brand-passport.html', ['brand-passport', 'brand-passport-v2', 'brand-passport-remix', 'brand-passport-remix-25', 'stamps-beyond-borders', 'stamps-beyond-borders-v2', 'stamps-beyond-borders-extended', 'golden-silt-route', 'ho-chieu-p1-tu-dong-mekong', 'ho-chieu-p2-qua-nhung-thi-truong', 'ho-chieu-p3-viet-nam-ra-the-gioi', 'ho-chieu-p3-remix', 'ho-chieu-p3-remix2', 'ho-chieu-p3-vietnam-to-the-world-en', 'ho-chieu-p3-en-remix2', 'ho-chieu-p1-remix', 'ho-chieu-p1-remix2', 'ho-chieu-p1-remix3', 'ho-chieu-p2-remix', 'ho-chieu-p3-remix3', 'ho-chieu-p3-en-remix', 'journey-golden-silt', 'journey-golden-silt-remix', 'mekong-river-remix', 'mekong-river-v2', 'mekong-compass', 'huong-and-the-world', 'huong-and-the-world-en', 'huong-and-the-world-male', 'huong-et-le-monde', 'huong-sans-frontieres', 'huong-sans-frontieres-2', 'huong-vuon-ra-the-gioi', 'huong-vuon-ra-the-gioi-2'], 'Internationalization · BizOn Go Global', 'Brand Passport'],
-    ['Bến Phù Sa', 'illustrations/game/ben-phu-sa-cho-noi.webp', 'Chợ nổi Mekong · Gánh Hàng Khởi Nghiệp', 'ben-phu-sa.html', ['golden-silt-journey-ben-phu-sa', 'doi-phu-sa', 'doi-phu-sa-remix', 'doi-phu-sa-remix2', 'doi-phu-sa-remix3'], 'Mekong floating market · startup street-cart'],
-    ['Hộ Chiếu Sầu Riêng', 'brand/durian-passport-badge.webp', 'Xuất khẩu sầu riêng · Play, Grow, Go!', 'lab/ho-chieu-sau-rieng.html', ['huong-ngot-phu-sa', 'huong-ngot-que-minh', 'durian-passport'], 'Durian export · Play, Grow, Go!', 'Durian Passport'],
-    ['BizOn Arcade', 'illustrations/giai-dieu-bizon.webp', 'Nhịp nhanh', 'games.html', ['bizon-theme', 'and-the-world-say-hello', 'vua-du-de-bay-cao', 'bat-nghiep'], 'Fast tempo']
+    ['Bật Nghiệp', 'covers/bat-nghiep-3d.webp', 'Màu Việt Nam', 'game.html', ['bat-nghiep-co-loi', 'bat-nghiep-rap-symphony', 'bat-nghiep-mekong-sunfire-2', 'bat-nghiep-mekong-sunfire', 'bat-nghiep-mekong-sunfire-rise', 'bat-nghiep', 'huong-vuon-ra-the-gioi', 'huong-vuon-ra-the-gioi-2', 'bizon-theme', 'huong-on-return', 'huong-on-return-remix', 'vua-du-de-bay-cao'], 'Vietnam palette'],
+    ['Hộ Chiếu Thương Hiệu', 'covers/ho-chieu-thuong-hieu-3d.webp', 'Quốc tế hóa · BizOn Go Global', 'brand-passport.html', ['brand-passport', 'brand-passport-v2', 'brand-passport-remix', 'brand-passport-remix-25', 'stamps-beyond-borders', 'stamps-beyond-borders-v2', 'stamps-beyond-borders-extended', 'golden-silt-route', 'ho-chieu-p1-tu-dong-mekong', 'ho-chieu-p2-qua-nhung-thi-truong', 'ho-chieu-p3-viet-nam-ra-the-gioi', 'ho-chieu-p3-remix', 'ho-chieu-p3-remix2', 'ho-chieu-p3-vietnam-to-the-world-en', 'ho-chieu-p3-en-remix2', 'ho-chieu-p1-remix', 'ho-chieu-p1-remix2', 'ho-chieu-p1-remix3', 'ho-chieu-p2-remix', 'ho-chieu-p3-remix3', 'ho-chieu-p3-en-remix', 'journey-golden-silt', 'journey-golden-silt-remix', 'mekong-river-remix', 'mekong-river-v2', 'mekong-compass', 'huong-and-the-world', 'huong-and-the-world-en', 'huong-and-the-world-male', 'huong-et-le-monde', 'huong-sans-frontieres', 'huong-sans-frontieres-2', 'huong-vuon-ra-the-gioi', 'huong-vuon-ra-the-gioi-2'], 'Internationalization · BizOn Go Global', 'Brand Passport'],
+    ['Bến Phù Sa', 'covers/ben-phu-sa-3d.webp', 'Chợ nổi Mekong · Gánh Hàng Khởi Nghiệp', 'ben-phu-sa.html', ['golden-silt-journey-ben-phu-sa', 'doi-phu-sa', 'doi-phu-sa-remix', 'doi-phu-sa-remix2', 'doi-phu-sa-remix3'], 'Mekong floating market · startup street-cart'],
+    ['Hộ Chiếu Sầu Riêng', 'covers/ho-chieu-sau-rieng-3d.webp', 'Xuất khẩu sầu riêng · Play, Grow, Go!', 'lab/ho-chieu-sau-rieng.html', ['huong-ngot-phu-sa', 'huong-ngot-que-minh', 'durian-passport'], 'Durian export · Play, Grow, Go!', 'Durian Passport'],
+    ['BizOn Arcade', 'character/arcade-rong-bay-sau-rieng.webp', 'Nhịp nhanh', 'games.html', ['bizon-theme', 'and-the-world-say-hello', 'vua-du-de-bay-cao', 'bat-nghiep'], 'Fast tempo']
   ],
   voices: [
     ['Lời chào Hương', 'huong-intro', "Hương's greeting"],
