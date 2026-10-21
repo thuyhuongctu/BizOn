@@ -78,12 +78,12 @@
     depotMain: 50,             // giá vựa chính vụ, nghìn đ/kg (minh họa; nghịch vụ = depotMain × offMult)
     offMult: 2.5,              // neo vào «gấp 2–3 lần» (BC0224)
     farmCost: 20,              // giá thành tự trồng, nghìn đ/kg (minh họa, quy đổi mặt bằng giá 2024)
-    linkedPremium: 0.08,       // mua từ vùng liên kết có mã đắt hơn mua thương lái 8%
+    linkedPremium: 0.05,       // mua từ vùng liên kết có mã đắt hơn mua thương lái 5%
     baseLoss: 0.18,            // hao hụt cơ bản: mất nước 15% + thu hoạch 3% (neo CAILAY 15–40%)
     traceLossCut: 0.03,        // truy xuất + chuỗi lạnh giảm hao hụt 3 điểm % (minh họa)
     offYieldCut: 0.15,         // nghịch vụ sản lượng thấp hơn 15% (neo 10–20%, CAILAY)
     treeHealthCost: 12,        // mỗi vụ xử lý nghịch vụ trừ 12 điểm sức khỏe vườn (neo «giảm tuổi thọ 20–30%»)
-    rejectedDiscount: 0.6,     // hàng rớt/hàng bị chặn bán nội địa còn 40% giá (neo «giảm 50–80%»)
+    rejectedDiscount: 0.5,     // hàng rớt/hàng bị chặn bán nội địa còn 50% giá (neo «giảm 50–80%»)
     priorityCost: { area: 1.2, pack: 1.5, test: 0.6, trace: 0.8, freezer: 3.0, finance: 0 },
     fraudMult: 160 / 70,       // 160 so với 70 baht/kg (GMSARN)
     sampling: [0.02, 0.01]     // PROTO
@@ -129,7 +129,7 @@
   // pipeline: các khâu ngoại thương nối tiếp từ thông quan đến khi sản phẩm hiện diện tại host country (chỉ mô tả, không ảnh hưởng công thức);
   // CN chính ngạch có thêm khâu 'contract' mở đầu (hồ sơ – hợp đồng) theo quy trình 8 bước xuất khẩu chính ngạch.
   const channels = [
-    { id: 'CN', emoji: '🇨🇳', vi: 'Trung Quốc chính ngạch (tươi)', en: 'China official (fresh)', priceMult: 1.6, cost: 8, cap: null, needs: ['area', 'pack'], src: 'CAILAY',
+    { id: 'CN', emoji: '🇨🇳', vi: 'Trung Quốc chính ngạch (tươi)', en: 'China official (fresh)', priceMult: 1.8, cost: 8, cap: null, needs: ['area', 'pack'], src: 'CAILAY',
       entryMode: 'direct',
       pipeline: [
         { id: 'contract', vi: 'Đăng ký mã vùng trồng – mã cơ sở đóng gói với GACC, rồi ký hợp đồng ngoại thương trước khi giao hàng.', en: 'Register growing-area and packing-facility codes with GACC, then sign the foreign-trade contract before shipping.', src: 'codes' },
@@ -167,7 +167,7 @@
         { id: 'distribute', vi: 'Qua nhà nhập khẩu cao cấp, số lượng nhỏ, đòi hồ sơ kiểm nghiệm đầy đủ.', en: 'Through a premium importer, small volumes, full test documentation required.', src: 'japanMRL' },
         { id: 'retail', vi: 'Bán ở phân khúc trái cây cao cấp, giá cao nhất trong các kênh.', en: 'Sold in the premium fruit segment — the highest price of all channels.', src: null }
       ] },
-    { id: 'DOM', emoji: '🏪', vi: 'Nội địa (chợ đầu mối TP.HCM)', en: 'Domestic (HCMC wholesale)', priceMult: 1.1, cost: 2, cap: null, needs: [], src: 'PDIEN',
+    { id: 'DOM', emoji: '🏪', vi: 'Nội địa (chợ đầu mối TP.HCM)', en: 'Domestic (HCMC wholesale)', priceMult: 1.16, cost: 2, cap: null, needs: [], src: 'PDIEN',
       entryMode: 'domestic',
       pipeline: [
         { id: 'customs', vi: 'Không qua biên giới — chỉ kiểm chất lượng nội địa theo TCVN.', en: 'No border crossing — only domestic quality checks under TCVN.', src: 'grades' },
@@ -324,31 +324,31 @@
   const rivals = [
     { id: 'sea', group: 'channel', img: 'rivals-global/sea-cut.webp', flag: '🇸🇬', ceo: 'Wei Ming Tan', hub: 'Singapore', vi: 'Merlion Fresh', en: 'Merlion Fresh',
       styleVi: 'Trùm hub logistics: làm mã số từng bước, dùng Singapore trung chuyển sang Đài Loan và Trung Quốc', styleEn: 'Logistics hub: builds codes step by step, re-exports via Singapore to Taiwan and China',
-      plan: ['area', 'pack', 'trace', 'finance', 'test', 'finance'], linked: 0.6, induce: true,
+      plan: ['finance', 'area', 'pack', 'trace', 'finance', 'test'], linked: 0.6, induce: true,
       alloc: { CN: 45, BORDER: 10, FROZEN: 0, TW: 20, JP: 0, DOM: 25 }, options: { glut: 2 } },
     { id: 'eas', group: 'compliance', img: 'rivals-global/eas-cut.webp', flag: '🇯🇵', ceo: 'Yuki Tanaka', hub: 'Tokyo', vi: 'Sakura Fruit', en: 'Sakura Fruit',
       styleVi: 'Chất lượng thủ công: kiểm nghiệm từng lô, vùng liên kết, nhắm Nhật Bản và Đài Loan', styleEn: 'Craft quality: tests every lot, linked areas, targets Japan and Taiwan',
-      plan: ['test', 'area', 'pack', 'trace', 'test', 'freezer'], linked: 0.9, induce: false,
+      plan: ['finance', 'test', 'area', 'pack', 'trace', 'test'], linked: 0.9, induce: false,
       alloc: { CN: 30, BORDER: 0, FROZEN: 0, TW: 20, JP: 30, DOM: 20 }, options: { residue: 0 } },
     { id: 'eu', group: 'channel', img: 'rivals-global/eu-cut.webp', flag: '🇩🇪', ceo: 'Stefan Weber', hub: 'Berlin', vi: 'EuroFrost GmbH', en: 'EuroFrost GmbH',
-      styleVi: 'Tự động hóa quy mô: đầu tư cấp đông sớm, chạy dây chuyền lớn, ít linh hoạt', styleEn: 'Automation at scale: invests in freezing early, runs a large line, little flexibility',
-      plan: ['freezer', 'area', 'pack', 'test', 'trace', 'finance'], linked: 0.7, induce: true,
+      styleVi: 'Tự động hóa quy mô: làm đủ mã rồi đầu tư cấp đông, chạy dây chuyền lớn, ít linh hoạt', styleEn: 'Automation at scale: secures its codes, then invests in freezing, runs a large line, little flexibility',
+      plan: ['finance', 'area', 'pack', 'test', 'freezer', 'trace'], linked: 0.7, induce: true,
       alloc: { CN: 30, BORDER: 10, FROZEN: 40, TW: 0, JP: 0, DOM: 20 }, options: {} },
     { id: 'na', group: 'shortcut', img: 'rivals-global/na-cut.webp', flag: '🇺🇸', ceo: 'Jake Miller', hub: 'New York', vi: 'Liberty Produce', en: 'Liberty Produce',
       styleVi: 'Đổi mới theo trend: chạy nhanh theo giá, chia nhiều kênh, ít đầu tư tuân thủ', styleEn: 'Trend-chaser: moves fast with prices, spreads across channels, invests little in compliance',
-      plan: ['area', 'finance', 'pack', 'finance', 'test', 'finance'], linked: 0.3, induce: true,
+      plan: ['finance', 'area', 'finance', 'pack', 'finance', 'test'], linked: 0.3, induce: true,
       alloc: { CN: 35, BORDER: 30, FROZEN: 0, TW: 15, JP: 0, DOM: 20 }, options: { thaidrought: 0 } },
     { id: 'me', group: 'shortcut', img: 'rivals-global/me-cut.webp', flag: '🇦🇪', ceo: 'Omar Al-Rashid', hub: 'Dubai', vi: 'Falcon Trade', en: 'Falcon Trade',
       styleVi: 'Vốn sâu: mua khối lượng lớn qua thương lái, dồn tiểu ngạch, chấp nhận rủi ro kiểm dịch', styleEn: 'Deep pockets: buys big volumes via traders, leans on border trade, accepts inspection risk',
-      plan: ['finance', 'finance', 'area', 'finance', 'pack', 'finance'], linked: 0.1, induce: true,
+      plan: ['finance', 'finance', 'finance', 'area', 'finance', 'pack'], linked: 0.1, induce: true,
       alloc: { CN: 20, BORDER: 60, FROZEN: 0, TW: 0, JP: 0, DOM: 20 }, options: { pest: 1 } },
     { id: 'kr', group: 'compliance', img: 'rivals-global/kr-cut.webp', flag: '🇰🇷', ceo: 'Ji-Woo Park', hub: 'Seoul', vi: 'Hanul Agri', en: 'Hanul Agri',
       styleVi: 'Nhà máy thông minh: truy xuất GS1 trước, dữ liệu vùng trồng, rồi mở cấp đông', styleEn: 'Smart factory: GS1 traceability first, planting-area data, then freezing',
-      plan: ['trace', 'area', 'pack', 'test', 'freezer', 'finance'], linked: 0.8, induce: true,
+      plan: ['finance', 'trace', 'area', 'pack', 'test', 'freezer'], linked: 0.8, induce: true,
       alloc: { CN: 50, BORDER: 0, FROZEN: 15, TW: 10, JP: 0, DOM: 25 }, options: {} },
     { id: 'af', group: 'compliance', img: 'rivals-global/af-cut.webp', flag: '🇰🇪', ceo: 'David Kimani', hub: 'Nairobi', vi: 'Savanna Green', en: 'Savanna Green',
       styleVi: 'Tăng trưởng xanh: 100% vùng liên kết, không ép nghịch vụ, ưu tiên bền vững hơn lợi nhuận nhanh', styleEn: 'Green growth: 100% linked areas, no off-season forcing, sustainability over quick profit',
-      plan: ['area', 'pack', 'trace', 'test', 'finance', 'finance'], linked: 1.0, induce: false,
+      plan: ['finance', 'area', 'pack', 'trace', 'test', 'finance'], linked: 1.0, induce: false,
       alloc: { CN: 45, BORDER: 0, FROZEN: 0, TW: 10, JP: 0, DOM: 45 }, options: { salinity: 0, break: 2 } }
   ];
   const rivalGroups = ['compliance', 'channel', 'shortcut'];
