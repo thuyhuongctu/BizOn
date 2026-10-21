@@ -559,7 +559,7 @@
   ];
   var MODES = [
     { id: 0, icon: '🛒', name: 'Nền tảng số', nameEn: 'Digital entry', cost: 0.5, margin: 0.25, scale: 0.7, op: 0.25, note: 'cam kết thấp – vào nhanh, lời mỏng', noteEn: 'low commitment – fast entry, thin margins' },
-    { id: 1, icon: '🚢', name: 'Xuất khẩu trực tiếp', nameEn: 'Direct export', cost: 1.2, margin: 0.35, scale: 1.0, op: 0.5, note: 'cam kết vừa – kiểm soát tốt hơn', noteEn: 'moderate commitment – better control' },
+    { id: 1, icon: '🚢', name: 'Xuất khẩu trực tiếp', nameEn: 'Direct export', cost: 1.2, margin: 0.45, scale: 1.0, op: 0.5, note: 'cam kết vừa – kiểm soát tốt hơn', noteEn: 'moderate commitment – better control' },
     { id: 2, icon: '🤝', name: 'Liên minh chiến lược', nameEn: 'Strategic alliance', cost: 0.8, margin: 0.28, scale: 1.3, op: 0.35, note: 'mượn mạng lưới đối tác địa phương – phụ thuộc đối tác', noteEn: 'borrow a local partner\'s network – partner-dependent' },
     { id: 3, icon: '📜', name: 'Cấp phép', nameEn: 'Licensing', cost: 0.3, margin: 0.14, scale: 0.9, op: 0.08, note: 'vốn thấp nhất – lời mỏng, rủi ro thương hiệu nếu năng lực < 50', noteEn: 'lowest capital – thin margins, brand risk if capability < 50' },
     { id: 4, icon: '🏗️', name: 'Liên doanh', nameEn: 'Joint venture', cost: 1.8, margin: 0.32, scale: 1.4, op: 0.5, note: 'chia vốn, chia lời – học thị trường nhanh (+tri thức mỗi quý)', noteEn: 'shared equity and profit – fast market learning (+intel each quarter)' },
@@ -577,7 +577,7 @@
   // quý đó); hỏa tốc đắt hơn nhưng hiếm khi chậm.
   var SHIP_MODES = [
     { id: 0, icon: '🚤', name: 'Đường biển', nameEn: 'Sea freight', opMul: 0.8, risk: 0.16, note: 'rẻ hơn – mỗi quý có rủi ro chậm hàng', noteEn: 'cheaper – carries a delay risk each quarter' },
-    { id: 1, icon: '✈️', name: 'Hỏa tốc', nameEn: 'Express freight', opMul: 1.3, risk: 0.03, note: 'đắt hơn – hiếm khi chậm hàng', noteEn: 'pricier – rarely delayed' },
+    { id: 1, icon: '✈️', name: 'Hỏa tốc', nameEn: 'Express freight', opMul: 1.05, risk: 0.03, note: 'đắt hơn – hiếm khi chậm hàng', noteEn: 'pricier – rarely delayed' },
   ];
   var SOURCES = [
     { icon: '📊', name: 'Báo cáo ngành', nameEn: 'Industry report', cost: 0.3, know: 18, note: 'trung tính nhưng hơi cũ', noteEn: 'neutral but a bit dated' },
@@ -1384,7 +1384,7 @@
   // trường" thay vì đưa ra một con số chắc chắn.
   function forecastRange(m, mode) {
     var md = MODES[mode];
-    var base = 1.2 * H[m].fit * md.scale * H[m].trend[S.q] / H[m].comp;
+    var base = 2.0 * H[m].fit * md.scale * H[m].trend[S.q] / H[m].comp;
     base *= (0.8 + S.rep / 250) * (0.8 + S.capab / 250);
     base *= 0.7 + S.cust[m] / 100 * 0.6;
     var rivalShare = 0;
@@ -1660,7 +1660,7 @@
   // có đối thủ – rồi bị chia theo tỉ lệ độ mạnh tương đối giữa 2 bên. Vắng
   // đối thủ ở thị trường nào thì share = 100% về người chơi, công thức thị
   // trường đó giữ nguyên hành vi như trước khi có cơ chế này.
-  var RIVAL_ATTR_BASE = 0.4, RIVAL_RAMP = 0.15;
+  var RIVAL_ATTR_BASE = 0.67, RIVAL_RAMP = 0.15;
   function rivalAttr(m) {
     var qn = S.rival.qin[m] || 0;
     return RIVAL_ATTR_BASE * H[m].fit * H[m].trend[S.q] / H[m].comp * (1 + RIVAL_RAMP * qn);
@@ -1708,7 +1708,7 @@
     entMkts().forEach(function (m) {
       var mode = MODES[S.entered[m]];
       S.qin[m]++;
-      var rev = 1.2 * H[m].fit * mode.scale * H[m].trend[S.q] / H[m].comp;
+      var rev = 2.0 * H[m].fit * mode.scale * H[m].trend[S.q] / H[m].comp;
       rev *= (0.8 + S.rep / 250) * (0.8 + S.capab / 250) * bud.rev * wave;
       rev *= 0.7 + S.cust[m] / 100 * 0.6; // khách hàng hài lòng/trung thành: 0,7x–1,3x doanh thu
       if (S.sel.prio === 1) rev *= 1.15;
@@ -1844,16 +1844,18 @@
 
   /* ================= KẾT THÚC ================= */
   function scores() {
-    var pS = clamp(S.profit / 12 * 100);
-    var aS = clamp(S.resil * 0.55 + S.adapt * 9);
-    var sS = clamp(20 + S.susts * 18);
+    var pS = clamp(S.profit / 6 * 100);
+    var aS = clamp(S.resil * 0.6 + S.adapt * 12);
+    var sS = clamp(30 + S.susts * 30);
     // Hệ số bề rộng thị trường: ở yên 0-2 thị trường bị trừ tới 30% điểm tổng,
     // mở rộng từ 4-5 thị trường trở lên được cộng tới 10% – khuyến khích đúng
     // tinh thần "đưa thương hiệu ra thế giới" thay vì co cụm 1 thị trường an toàn.
     var nMk = S.entered.filter(function (v) { return v !== null && v !== undefined; }).length;
     var breadth = Math.min(1.1, 0.7 + 0.08 * nMk);
+    // Thua sớm (cạn vốn/sụp đổ) không được điểm cao hơn đi trọn 6 quý.
+    var finish = endReason ? 0.6 : 1;
     return { p: pS, r: clamp(S.rep), c: clamp(S.capab), a: aS, s: sS,
-      total: Math.round((0.3 * pS + 0.2 * clamp(S.rep) + 0.2 * clamp(S.capab) + 0.15 * aS + 0.15 * sS) * breadth) };
+      total: Math.round((0.3 * pS + 0.2 * clamp(S.rep) + 0.2 * clamp(S.capab) + 0.15 * aS + 0.15 * sS) * breadth * finish) };
   }
   // reason: null (kết thúc bình thường) · 'cash' (cạn tiền 2 quý) · 'rep' (uy tín khủng hoảng).
   // lastEvOut giữ biến cố cuối cùng (đối tượng sự kiện, có t/tEn) – vẽ lại
@@ -1913,7 +1915,8 @@
       var nMarkets = S.entered.filter(function (v) { return v !== null && v !== undefined; }).length;
       var supreme = sc.total >= 72 && sc.p >= 60 && sc.r >= 60 && sc.c >= 60 && sc.a >= 60 && sc.s >= 60;
       var nemesis = S.profit > 0 && S.profit >= S.rival.profit * 1.5;
-      var ending = supreme ? { icon: '🏆', t: T('Thương hiệu ' + HOME().dem + ' vươn khơi', 'A ' + HOME().demEn + ' Brand Sets Sail'), sub: T('Cân bằng cả 5 chiều – danh hiệu cao nhất của Hộ Chiếu Thương Hiệu.', "Balanced across all 5 dimensions – Brand Passport's highest title.") }
+      var ending = nMarkets === 0 ? { icon: '⚓', t: T('Chưa rời cảng', 'Never Left Port'), sub: T('6 quý không thâm nhập thị trường nào – hộ chiếu chưa có con dấu, chưa đủ điều kiện nhận chứng chỉ.', 'Six quarters without entering a single market – the passport has no stamps yet, so no certificate.') }
+        : supreme ? { icon: '🏆', t: T('Thương hiệu ' + HOME().dem + ' vươn khơi', 'A ' + HOME().demEn + ' Brand Sets Sail'), sub: T('Cân bằng cả 5 chiều – danh hiệu cao nhất của Hộ Chiếu Thương Hiệu.', "Balanced across all 5 dimensions – Brand Passport's highest title.") }
         : nemesis ? { icon: '🛡️', t: T('Khắc tinh của ' + RIVAL.name, RIVAL.name + "'s Nemesis"), sub: T('Lợi nhuận vượt xa ' + RIVAL.name + ' – đối thủ phải dè chừng bạn.', 'Profit far outpaces ' + RIVAL.name + " – the rival now has to watch its back.") }
         : (bestKey === 's' && sc.s >= 60) ? { icon: '🌿', t: T('Dẫn đầu xanh', 'Green Leader'), sub: T('Hồ sơ bền vững nổi bật nhất trong 5 chiều điểm số.', 'Sustainability is the standout among the 5 scoring dimensions.') }
         : (bestKey === 'p' && sc.p >= 60 && nMarkets <= 3) ? { icon: '💎', t: T('Chuyên gia ngách', 'Niche Specialist'), sub: T('Lợi nhuận cao dù chỉ tập trung ' + nMarkets + '/7 thị trường.', 'High profit from focusing on just ' + nMarkets + '/7 markets.') }
@@ -1942,7 +1945,7 @@
   function renderCertBox(sc, titleText) {
     var box = $('bp-cert-box');
     if (!box) return;
-    if (endReason !== null) { box.classList.add('hidden'); return; }
+    if (endReason !== null || !S.entered.some(function (v) { return v !== null && v !== undefined; })) { box.classList.add('hidden'); return; }
     box.classList.remove('hidden');
     var learner = ($('bp-name') && $('bp-name').value.trim()) || T('Nhà điều hành ' + F().name, F().name + ' Operator');
     $('bp-cert-name').textContent = learner;
