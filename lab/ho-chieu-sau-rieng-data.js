@@ -36,6 +36,27 @@
     THAIPH: 'Boonyaritthongchai, P. và cộng sự. Storage of Durians on a Semi-Commercial Scale. Agriculture and Natural Resources (Thái Lan), chỉ mục FAO AGRIS.'
   };
 
+  // Bản tiếng Anh của trích dẫn: giữ nguyên tên tài liệu tiếng Việt, dịch phần mô tả và kèm nghĩa trong [ ].
+  const sourcesEn = {
+    PROTO: 'Protocol on phytosanitary requirements for fresh durian exported from Viet Nam to China (MARD–GACC, 2022), Art. 2–9 and Annex.',
+    BC1022: 'Tien Giang Trade Promotion Centre (2022). Thông tin thị trường xuất khẩu tháng 10/2022 [Export market bulletin, Oct 2022].',
+    BC1223: 'Ministry of Industry and Trade (2023). Báo cáo thị trường rau quả tháng 12/2023 [Fruit and vegetable market report, Dec 2023].',
+    BC0124: 'Ministry of Industry and Trade (2024). Báo cáo thị trường rau quả tháng 01/2024 [Fruit and vegetable market report, Jan 2024].',
+    BC0224: 'Ministry of Industry and Trade (2024). Báo cáo thị trường rau quả tháng 02/2024 [Fruit and vegetable market report, Feb 2024].',
+    KQTC: 'CESTI (2024). Search results for «Xuất khẩu trái sầu riêng» [durian exports] (Apr 2024), incl. agro.gov.vn news of 8 Apr 2024.',
+    CAILAY: 'Master\'s thesis (2014). Giải pháp hoàn thiện chuỗi cung ứng sầu riêng tại huyện Cai Lậy, Tiền Giang [Improving the durian supply chain in Cai Lậy].',
+    PDIEN: 'Journal article (2017). Chiến lược và giải pháp nâng cấp chuỗi cung ứng sầu riêng huyện Phong Điền, Cần Thơ [Upgrading the Phong Điền durian supply chain].',
+    CGIAR: 'CGIAR (2022). Fruit production and value chain – Mekong River Delta, Viet Nam (climate-risk assessment).',
+    TW: 'Journal article (2020). Đẩy mạnh xuất khẩu sầu riêng của Việt Nam sang thị trường Đài Loan [Boosting Vietnamese durian exports to Taiwan].',
+    MYSC: 'Journal article (2019). From farm to China: Malaysian frozen whole durian export supply chain.',
+    GS1: 'APEC (2017). Application of global data standards for supply chain connectivity (Malaysian durian traceability pilot).',
+    TCVN: 'TCVN 10739:2015 – Fresh durian (Vietnamese national standard).',
+    CODEX: 'Codex Alimentarius – FAO/WHO, CXC 8-1976 (Code of Practice for the Processing and Handling of Quick Frozen Foods): store and distribute quick-frozen food at −18°C or below.',
+    FROZENPROTO: 'VTV/VGP (19 Aug 2024). Frozen durian officially licensed for China (MARD–GACC protocol signed).',
+    CDAO: 'Dân Việt (24 May 2025); Tuổi Trẻ (6 Feb 2025). GACC requirements for cadmium and auramine O testing of imported durian.',
+    THAIPH: 'Boonyaritthongchai, P. et al. Storage of Durians on a Semi-Commercial Scale. Agriculture and Natural Resources (Thailand), FAO AGRIS index.'
+  };
+
   // ---------- Dữ kiện dùng trong trò chơi (có trích nguồn) ----------
   const facts = {
     frozenSigned: { v: '19/8/2024', src: 'FROZENPROTO', vi: 'Bộ NN&PTNT và GACC ký nghị định thư sầu riêng đông lạnh (nguyên quả, xay nhuyễn, cơm sầu riêng). Cơ sở đóng gói phải có HACCP, truy xuất nguồn gốc, đủ năng lực cấp đông và kho lạnh.', en: 'MARD and GACC signed the frozen-durian protocol (whole fruit, purée, pulp). Packing houses need HACCP, traceability, and adequate freezing and cold-storage capacity.' },
@@ -74,10 +95,11 @@
   // ---------- Tham số minh họa ----------
   const params = {
     cash0: 12,                 // tỷ đồng tiền mặt ban đầu
-    creditLimit: 8,            // hạn mức vay ngân hàng, tỷ đồng (vượt: lãi 15%, trừ Chống chịu & Uy tín)
+    creditLimit: 8,            // hạn mức vay ngân hàng, tỷ đồng (vượt: lãi 15%, Uy tín −3; engine còn trừ chỉ số ẩn resil, không vào điểm)
     depotMain: 50,             // giá vựa chính vụ, nghìn đ/kg (minh họa; nghịch vụ = depotMain × offMult)
     offMult: 2.5,              // neo vào «gấp 2–3 lần» (BC0224)
     farmCost: 20,              // giá thành tự trồng, nghìn đ/kg (minh họa, quy đổi mặt bằng giá 2024)
+    offFarmMult: 1.8,          // HTX xử lý ra hoa nghịch vụ: giá thành ×1,8 (trước ×1,3; cân bằng 10/2026, HTX quá dễ chạm trần điểm lợi nhuận)
     linkedPremium: 0.05,       // mua từ vùng liên kết có mã đắt hơn mua thương lái 5%
     baseLoss: 0.18,            // hao hụt cơ bản: mất nước 15% + thu hoạch 3% (neo CAILAY 15–40%)
     traceLossCut: 0.03,        // truy xuất + chuỗi lạnh giảm hao hụt 3 điểm % (minh họa)
@@ -86,7 +108,11 @@
     rejectedDiscount: 0.5,     // hàng rớt/hàng bị chặn bán nội địa còn 50% giá (neo «giảm 50–80%»)
     priorityCost: { area: 1.2, pack: 1.5, test: 0.6, trace: 0.8, freezer: 3.0, finance: 0 },
     fraudMult: 160 / 70,       // 160 so với 70 baht/kg (GMSARN)
-    sampling: [0.02, 0.01]     // PROTO
+    sampling: [0.02, 0.01],    // PROTO
+    // Tỷ trọng kênh mặc định khi vào ván (doanh nghiệp không khai báo defaultAlloc riêng thì dùng mức này)
+    defaultAlloc: { BORDER: 50, DOM: 40, TW: 10 },
+    // Kênh vừa mở (đủ mã / cấp đông / kiểm nghiệm) và đang 0%: vụ sau tự đưa sẵn ngần này % vào kênh đó, các kênh khác giảm theo tỷ lệ
+    openSeed: { CN: 40, FROZEN: 30, JP: 10 }
   };
 
   // ---------- Vai chơi ----------
@@ -95,7 +121,7 @@
       descVi: 'Tự trồng trên vườn của xã viên, giá thành thấp, có thể xử lý ra hoa nghịch vụ. Chưa có cơ sở đóng gói.',
       descEn: 'Grows its own fruit at low cost and can induce off-season flowering. No packing facility yet.',
       scaleVi: 'Tiểu nông / HTX', scaleEn: 'Smallholder / co-op',
-      volume: 250, benchMargin: 40, ownFarm: true, areaCode: false, packCode: false, freezer: false, cashAdj: -2 },
+      volume: 250, benchMargin: 60, ownFarm: true, areaCode: false, packCode: false, freezer: false, cashAdj: -2 },
     packer: { emoji: '📦', vi: 'Cơ sở đóng gói Đắk Lắk', en: 'Đắk Lắk packing house',
       descVi: 'Đã có mã cơ sở đóng gói; mua trái từ nhà vườn Tây Nguyên, dễ bị «bẻ kèo» khi giá lên.',
       descEn: 'Already holds a packing-facility code; buys from Central Highlands growers who may break deals when prices rise.',
@@ -110,7 +136,8 @@
       descVi: 'Có dây chuyền cấp đông; sản phẩm đông lạnh giá cao nhưng chi phí lớn và chờ nghị định thư.',
       descEn: 'Owns a freezing line; frozen products earn more but cost more, and await a protocol.',
       scaleVi: 'Doanh nghiệp chế biến (đã có mã đóng gói)', scaleEn: 'Processing company (packing code in hand)',
-      volume: 350, benchMargin: 6, ownFarm: false, areaCode: false, packCode: true, freezer: true, cashAdj: 2 }
+      volume: 350, benchMargin: 6, ownFarm: false, areaCode: false, packCode: true, freezer: true, cashAdj: 2,
+      defaultAlloc: { FROZEN: 40, BORDER: 30, DOM: 30 } }
   };
 
   // ---------- Phương thức thâm nhập (entry mode) — khung lý thuyết KDQT gắn vào từng kênh ----------
@@ -181,8 +208,8 @@
   // chuỗi cung ứng trong nước (mua qua thương lái tự do hay liên kết vùng trồng có mã số) và hoàn tất thủ tục
   // để được công nhận là doanh nghiệp xuất khẩu chính thức — đó cũng là một "entry mode", chỉ diễn ra ở home country.
   const sourcingTheory = {
-    vi: 'Tỷ lệ mua qua vùng liên kết so với thương lái tự do (tiểu thương) chính là lựa chọn phương thức gia nhập ngay trong nước: liên kết giúp có mã số để đi chính ngạch nhưng tốn chi phí hơn (+8%); thương lái rẻ, linh hoạt nhưng dễ «bẻ kèo» và khó kiểm soát dư lượng.',
-    en: 'The share bought from linked, coded areas versus free-roaming traders (tiểu thương) is itself a home-country entry-mode choice: linked sourcing earns the codes needed for official export but costs more (+8%); traders are cheap and flexible but prone to broken deals and harder residue control.',
+    vi: `Tỷ lệ mua qua vùng liên kết so với thương lái tự do (tiểu thương) chính là lựa chọn phương thức gia nhập ngay trong nước: liên kết giúp có mã số để đi chính ngạch nhưng tốn chi phí hơn (+${Math.round(params.linkedPremium * 100)}%); thương lái rẻ, linh hoạt nhưng dễ «bẻ kèo» và khó kiểm soát dư lượng.`,
+    en: `The share bought from linked, coded areas versus free-roaming traders (tiểu thương) is itself a home-country entry-mode choice: linked sourcing earns the codes needed for official export but costs more (+${Math.round(params.linkedPremium * 100)}%); traders are cheap and flexible but prone to broken deals and harder residue control.`,
     src: 'traders80'
   };
   const formalization = {
@@ -198,7 +225,7 @@
     { id: 'test', vi: 'Kiểm nghiệm dư lượng và kim loại nặng', en: 'Residue and heavy-metal testing', effVi: 'Giảm rủi ro bị cảnh báo (tối đa 2 cấp). Bắt buộc với Nhật Bản.', effEn: 'Cuts alert risk (up to 2 levels). Required for Japan.', src: 'KQTC' },
     { id: 'trace', vi: 'Truy xuất nguồn gốc (mã vạch GS1)', en: 'Traceability (GS1 barcodes)', effVi: 'Giảm hao hụt, chống giả xuất xứ, qua kiểm tra nhanh hơn.', effEn: 'Lower losses, protection against fake origin, faster checks.', src: 'GS1' },
     { id: 'freezer', vi: 'Đầu tư cấp đông nhanh', en: 'Invest in cryogenic freezing', effVi: 'Mở kênh đông lạnh từ vụ sau. Chi phí lớn.', effEn: 'Unlocks the frozen channel from next season. Costly.', src: 'MYSOP' },
-    { id: 'finance', vi: 'Củng cố tài chính', en: 'Strengthen finances', effVi: 'Không chi tiền; +Chống chịu, giảm chi phí vốn.', effEn: 'No spending; +Resilience, lower financing cost.', src: null }
+    { id: 'finance', vi: 'Củng cố tài chính', en: 'Strengthen finances', effVi: 'Không chi tiền; nếu đang vay ngân hàng thì lãi vay vụ này giảm một nửa.', effEn: 'No spending; if the team is borrowing, this season’s interest is halved.', src: null }
   ];
 
   // ---------- Nguồn tin (mua tối đa 2 mỗi vụ) ----------
@@ -241,6 +268,7 @@
 
   // ---------- Biến cố có lựa chọn (mỗi vụ rút 1, không lặp) ----------
   // eff: tác động; các khóa engine hiểu: volume, loss, cash, rep, sus, adapt, risk, fraud, priceAll, chanCap, treeHealth, linkedNext
+  // needsAny: biến cố chỉ xuất hiện khi đội đang đi được ít nhất một kênh trong danh sách (tránh lựa chọn vô nghĩa)
   const events = [
     { id: 'break', src: 'breakDeal', vi: 'Nhà vườn «bẻ kèo»', en: 'Growers break the deal',
       textVi: 'Giá vựa tăng, một phần nhà vườn đã hứa bán cho bạn quay sang bán cho thương lái trả cao hơn.', textEn: 'Depot prices rise and some growers who promised to sell to you switch to traders paying more.',
@@ -271,26 +299,26 @@
         { vi: 'Từ chối', en: 'Refuse', eff: { rep: 3, sus: 3 } },
         { vi: 'Bán 10% sản lượng cho trung gian', en: 'Sell 10% of output to the middleman', eff: { fraud: 0.10 } }
       ] },
-    { id: 'pest', src: 'sampling', vi: 'Phát hiện rệp sáp khi đóng gói', en: 'Mealybugs found while packing',
+    { id: 'pest', src: 'sampling', needsAny: ['CN'], vi: 'Phát hiện rệp sáp khi đóng gói', en: 'Mealybugs found while packing',
       textVi: 'Tổ kỹ thuật thấy rệp sáp trên một phần lô hàng chuẩn bị đi chính ngạch.', textEn: 'Your technicians find mealybugs on part of a lot bound for official export.',
       options: [
         { vi: 'Xử lý lại, chuyển phần nghi ngờ sang nội địa', en: 'Re-treat and send suspect fruit to the domestic market', eff: { domesticShift: 0.12, rep: 2 } },
         { vi: 'Vẫn xuất cả lô', en: 'Ship the whole lot anyway', eff: { pestRisk: 0.35 } }
       ] },
-    { id: 'glut', src: 'thaiOverlap', vi: 'Hàng dồn, người mua ép giá', en: 'Glut and buyer pressure',
+    { id: 'glut', src: 'thaiOverlap', needsAny: ['CN'], vi: 'Hàng dồn, người mua ép giá', en: 'Glut and buyer pressure',
       textVi: 'Hàng về cảng và cửa khẩu dồn dập; người mua Trung Quốc ép giá thêm.', textEn: 'Shipments pile up at ports and border gates; Chinese buyers push prices down.',
       options: [
         { vi: 'Bán ngay giá thấp', en: 'Sell now at a lower price', eff: { priceCN: -0.12 } },
         { vi: 'Trữ lạnh chờ giá (0,4 tỷ, hao thêm)', en: 'Hold in cold storage (VND 0.4bn, more loss)', eff: { cash: -0.4, loss: 0.04, priceCN: -0.03 } },
         { vi: 'Chuyển bớt sang Đài Loan và Nhật', en: 'Divert some to Taiwan and Japan', eff: { capBoost: { TW: 30, JP: 15 }, adapt: 4 } }
       ] },
-    { id: 'residue', src: 'japanMRL', vi: 'Cảnh báo dư lượng thuốc', en: 'Pesticide residue warning',
+    { id: 'residue', src: 'japanMRL', needsAny: ['CN', 'JP'], vi: 'Cảnh báo dư lượng thuốc', en: 'Pesticide residue warning',
       textVi: 'Một lô sầu riêng Việt Nam sang Nhật bị tiêu hủy vì procymidone vượt giới hạn. Người mua cao cấp đòi chứng nhận kiểm nghiệm.', textEn: 'A Vietnamese lot to Japan was destroyed for procymidone above the limit. Premium buyers demand test certificates.',
       options: [
         { vi: 'Kiểm nghiệm từng lô (0,3 tỷ)', en: 'Test every lot (VND 0.3bn)', eff: { cash: -0.3, risk: -0.08, rep: 2 } },
         { vi: 'Tạm ngừng kênh Nhật vụ này', en: 'Pause Japan this season', eff: { closeJP: true } }
       ] },
-    { id: 'thaidrought', src: 'thaiDrought', vi: 'Hạn hán ở Thái Lan', en: 'Drought in Thailand',
+    { id: 'thaidrought', src: 'thaiDrought', needsAny: ['CN'], vi: 'Hạn hán ở Thái Lan', en: 'Drought in Thailand',
       textVi: 'Thái Lan mất mùa do hạn; người mua Trung Quốc tìm nguồn Việt Nam.', textEn: 'Drought cuts the Thai crop; Chinese buyers turn to Vietnam.',
       options: [
         { vi: 'Dồn hàng vào chính ngạch', en: 'Push volume into official trade', eff: { priceCN: 0.12 } },
@@ -402,8 +430,8 @@
       roleVi: 'Nông hộ trồng sầu riêng, HTX Cai Lậy', roleEn: 'Durian grower, Cai Lậy co-op' },
     { id: 'bacba', emoji: '👴', vi: 'Bác Ba', en: 'Bác Ba', img: 'hc/cast/bac-ba.webp',
       roleVi: 'Nông hộ trồng sầu riêng, một nhà vườn khác', roleEn: 'Durian grower, another household' },
-    { id: 'huong', emoji: '👩', vi: 'Hương', en: 'Hương', img: 'hc/cast/huong.webp',
-      roleVi: 'Nhà sáng lập BizOn', roleEn: 'BizOn founder' },
+    { id: 'huong', emoji: '👩', vi: 'Lumina (Hương)', en: 'Lumina (Hương)', img: 'hc/cast/huong.webp',
+      roleVi: 'Cố vấn BizOn · nhà sáng lập', roleEn: 'BizOn advisor · founder' },
     { id: 'tuphan', emoji: '👨‍🏫', vi: 'Tú Phan', en: 'Tú Phan', img: 'hc/cast/tu-phan-avatar.webp',
       roleVi: 'Giảng viên, Trường Kinh tế — Đại học Cần Thơ', roleEn: 'Lecturer, CTU School of Economics' }
   ];
@@ -504,7 +532,7 @@
     ]
   };
 
-  const api = { sources, facts, params, roles, channels, entryModes, sourcingTheory, formalization, priorities, intel, seasons, events, scoreWeights,
+  const api = { sources, sourcesEn, facts, params, roles, channels, entryModes, sourcingTheory, formalization, priorities, intel, seasons, events, scoreWeights,
     team, rivals, rivalGroups, luminaQuestions, flow, debrief, rubric, eventLogColumns, avatars, eightSteps, chain2 };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.DurianData = api;

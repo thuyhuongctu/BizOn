@@ -7,8 +7,31 @@
 
   const SHEET_CEO_MIN = 10; // lý do của CEO tối thiểu (ký tự)
 
-  function freshDec() {
-    return { priority: 'area', linked: 0.3, induce: true, alloc: { CN: 40, BORDER: 30, FROZEN: 0, TW: 5, JP: 0, DOM: 25 }, intel: [], option: 0 };
+  // Tỷ trọng kênh mặc định của doanh nghiệp (D.roles[x].defaultAlloc, nếu không có thì D.params.defaultAlloc).
+  function defaultAlloc(D, roleId) {
+    const r = D && D.roles && D.roles[roleId];
+    return Object.assign({}, (r && r.defaultAlloc) || (D && D.params && D.params.defaultAlloc) || { BORDER: 50, DOM: 40, TW: 10 });
+  }
+
+  // Kênh vừa mở ở vụ mới (trước không đi được, nay đi được) mà đang 0%: đưa sẵn D.params.openSeed[kênh] %,
+  // các kênh đang mở khác giảm theo tỷ lệ. Trả về bản sao; không sửa alloc đầu vào.
+  function seedNewChannels(D, E, prevState, nextState, alloc) {
+    const out = Object.assign({}, alloc || {});
+    const seed = (D.params && D.params.openSeed) || {};
+    if (!prevState || !nextState || nextState.n > D.seasons.length || prevState.n > D.seasons.length) return out;
+    const ch = id => D.channels.find(c => c.id === id);
+    const open = D.channels.filter(c => E.eligible(D, nextState, c)).map(c => c.id);
+    open.filter(id => seed[id] && !E.eligible(D, prevState, ch(id)) && !(out[id] > 0)).forEach(id => {
+      const m = seed[id], others = open.filter(x => x !== id), S = others.reduce((x, o) => x + Math.max(0, out[o] || 0), 0);
+      others.forEach(o => { out[o] = S > 0 ? Math.max(0, out[o] || 0) * (100 - m) / S : (100 - m) / others.length; });
+      out[id] = m;
+    });
+    return out;
+  }
+
+  // D, roleId tùy chọn: có thì dùng tỷ trọng mặc định của doanh nghiệp.
+  function freshDec(D, roleId) {
+    return { priority: 'area', linked: 0.3, induce: true, alloc: D ? defaultAlloc(D, roleId) : { BORDER: 50, DOM: 40, TW: 10 }, intel: [], option: 0 };
   }
 
   function owned(a, id) {
@@ -51,12 +74,13 @@
     const elapsed = Math.round((Date.now() - APP.roundStart) / 1000);
     APP.timing[n] = { start: new Date(APP.roundStart).toISOString(), commit: new Date().toISOString(), seconds: elapsed, onTime: !APP.timerMin || elapsed <= APP.timerMin * 60, operator: APP.operator };
     APP.sheets[n] = Object.assign({}, sh, { forecastFinal: f.profit, forecastWhatIf: (APP.whatifs[n] || []).length ? APP.whatifs[n][APP.whatifs[n].length - 1].profit : null, pBlockCN: f.pBlockCN });
+    const before = APP.game;
     APP.game = E.playSeason(D, APP.game, dec);
     const r = APP.game.history[APP.game.history.length - 1];
     APP.flags[n - 1] = E.flagFor(RIVALS, r);
     logEv(APP, D, 'COMMIT', '', JSON.stringify(dec), true);
     // giữ phương án làm điểm xuất phát vụ sau
-    const next = freshDec(); next.alloc = dec.alloc; next.linked = dec.linked; next.intel = [];
+    const next = freshDec(); next.alloc = seedNewChannels(D, E, before, APP.game, dec.alloc); next.linked = dec.linked; next.intel = [];
     const free = D.priorities.find(p => !owned(APP.game.assets, p.id));
     next.priority = free ? free.id : 'finance';
     APP.dec = next;
@@ -65,6 +89,8 @@
   window.DurianCore = {
     SHEET_CEO_MIN: SHEET_CEO_MIN,
     freshDec: freshDec,
+    defaultAlloc: defaultAlloc,
+    seedNewChannels: seedNewChannels,
     owned: owned,
     pendingJournal: pendingJournal,
     logEv: logEv,

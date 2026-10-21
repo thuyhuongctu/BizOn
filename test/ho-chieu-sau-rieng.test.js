@@ -219,4 +219,84 @@ test('Chuỗi cung ứng lạnh chi tiết (chain2) và quy trình 8 bước (ei
   });
 });
 
+// Bản 3D là bundle tự chứa: engine, data, core được nhúng (gzip + base64) trong <script type="__bundler/manifest">.
+// Đóng gói lại bằng: node scripts/release/rebundle-ho-chieu-sau-rieng-3d.mjs
+const readBundle3D = () => {
+  const zlib = require('zlib');
+  const html = fs.readFileSync(path.join(__dirname, '..', 'lab', 'ho-chieu-sau-rieng-3d.html'), 'utf8');
+  const lines = html.split('\n');
+  const at = tag => { const i = lines.findIndex(l => l.trim() === '<script type="' + tag + '">'); assert.ok(i >= 0, 'bundle thiếu ' + tag); return JSON.parse(lines[i + 1]); };
+  const manifest = at('__bundler/manifest'), template = at('__bundler/template');
+  const decode = e => { const raw = Buffer.from(e.data, 'base64'); return e.compressed ? zlib.gunzipSync(raw) : raw; };
+  return { manifest, template, decode };
+};
+
+test('Bản 3D: engine, data, core nhúng trong bundle trùng từng byte với lab/*.js và được trang chơi nạp', () => {
+  const { manifest, template, decode } = readBundle3D();
+  const js = Object.entries(manifest).filter(([, e]) => /javascript/.test(e.mime)).map(([uuid, e]) => ({ uuid, text: decode(e) }));
+  [['ho-chieu-sau-rieng-engine.js', 'root.DurianEngine = api'], ['ho-chieu-sau-rieng-data.js', 'root.DurianData = api'], ['ho-chieu-sau-rieng-core.js', 'window.DurianCore = {']].forEach(([file, marker]) => {
+    const src = fs.readFileSync(path.join(__dirname, '..', 'lab', file));
+    const same = js.filter(a => a.text.includes(marker));
+    assert.strictEqual(same.length, 1, file + ': cần đúng một bản nhúng, có ' + same.length + ' (chạy scripts/release/rebundle-ho-chieu-sau-rieng-3d.mjs)');
+    assert.ok(same[0].text.equals(src), file + ': bản nhúng trong 3D khác lab/' + file + ' (chạy scripts/release/rebundle-ho-chieu-sau-rieng-3d.mjs)');
+    assert.ok(template.includes('<script src="' + same[0].uuid + '">'), file + ': template 3D không nạp uuid ' + same[0].uuid);
+  });
+});
+
+test('Bản 3D: chữ trên giao diện khớp tham số (vùng liên kết, xử lý ra hoa), link giảng viên tồn tại, không còn chỉ số ẩn «Chống chịu»', () => {
+  const { template } = readBundle3D();
+  assert.ok(!/đắt hơn 8%|cost 8% more|sản lượng −15%|output −15%|Chống chịu −8/.test(template), 'còn chữ cũ trái với tham số');
+  assert.ok(/induce: true, intel: \[\], option: null/.test(template), 'mặc định xử lý ra hoa phải giống bản 2D (true)');
+  assert.ok(DCore().freshDec().induce === true);
+  (template.match(/<a href="([^"#]+)"/g) || []).map(a => a.slice(9, -1)).filter(h => !/^https?:/.test(h)).forEach(h => assert.ok(fs.existsSync(path.join(__dirname, '..', decodeURI(h))), 'link 3D hỏng: ' + h));
+  const html2d = fs.readFileSync(path.join(__dirname, '..', 'lab', 'ho-chieu-sau-rieng.html'), 'utf8');
+  assert.ok(!/rẻ hơn 8%|8% cheaper/.test(html2d), 'bản 2D còn «8%» cứng');
+  assert.ok(!/8%/.test(D.sourcingTheory.vi) && D.sourcingTheory.vi.includes('+' + Math.round(D.params.linkedPremium * 100) + '%'));
+  assert.ok(!/Chống chịu|Resilience/.test(D.priorities.find(p => p.id === 'finance').effVi + D.priorities.find(p => p.id === 'finance').effEn));
+  Object.keys(D.sourcesEn).forEach(k => assert.ok(D.sources[k], 'sourcesEn có khóa lạ: ' + k));
+});
+
+test('Cân bằng 10/2026: tỷ trọng mặc định theo doanh nghiệp, tự đưa % vào kênh vừa mở, HTX mốc 60 và giá thành nghịch vụ ×1,8', () => {
+  const ids = D.channels.map(c => c.id);
+  const sum100 = (a, name) => { Object.keys(a).forEach(k => assert.ok(ids.includes(k), name + ': kênh lạ ' + k)); assert.strictEqual(Object.values(a).reduce((x, y) => x + y, 0), 100, name + ' phải cộng đủ 100'); };
+  sum100(D.params.defaultAlloc, 'params.defaultAlloc');
+  Object.keys(D.roles).forEach(r => { if (D.roles[r].defaultAlloc) sum100(D.roles[r].defaultAlloc, r + '.defaultAlloc'); });
+  Object.entries(D.params.openSeed).forEach(([k, v]) => assert.ok(ids.includes(k) && v > 0 && v < 100));
+  const C = DCore();
+  assert.deepStrictEqual(C.freshDec(D, 'frozen').alloc, { FROZEN: 40, BORDER: 30, DOM: 30 });
+  assert.deepStrictEqual(C.freshDec(D, 'packer').alloc, D.params.defaultAlloc);
+  // Cơ sở đóng gói làm mã vùng trồng ở vụ 1 → vụ 2 chính ngạch mở, được đưa sẵn 40%, các kênh còn lại vẫn cộng đủ 100
+  const s0 = E.newGame(D, 'packer', 7), s1 = E.playSeason(D, s0, { priority: 'area', linked: 0.5, induce: false, alloc: D.params.defaultAlloc, intel: [], option: 0 });
+  const seeded = C.seedNewChannels(D, E, s0, s1, D.params.defaultAlloc);
+  assert.strictEqual(seeded.CN, D.params.openSeed.CN);
+  const open = D.channels.filter(c => E.eligible(D, s1, c)).map(c => c.id);
+  near(open.reduce((x, k) => x + (seeded[k] || 0), 0), 100, 1e-9, 'tỷ trọng sau khi đưa sẵn');
+  assert.deepStrictEqual(C.seedNewChannels(D, E, s1, s1, seeded), seeded, 'không có kênh mới thì giữ nguyên');
+  assert.strictEqual(D.roles.htx.benchMargin, 60);
+  const h0 = E.newGame(D, 'htx', 3), h1 = E.playSeason(D, h0, { priority: 'finance', linked: 1, induce: true, alloc: { DOM: 100 }, intel: [], option: 0 });
+  const h2 = E.playSeason(D, h1, { priority: 'finance', linked: 1, induce: true, alloc: { DOM: 100 }, intel: [], option: 0 }).history[1];
+  assert.strictEqual(h2.season, 'off');
+  near(h2.purchase, h2.volume * D.params.farmCost * D.params.offFarmMult / 1000, 1e-9, 'giá thành HTX nghịch vụ khi xử lý ra hoa');
+  const { template } = readBundle3D();
+  assert.ok(!/giá thành \+30%|cost \+30%|costs \+30%/.test(template), 'nhãn xử lý ra hoa còn +30% cũ');
+});
+
+test('Biến cố có needsAny chỉ xuất hiện khi đội đang đi được ít nhất một kênh trong danh sách', () => {
+  assert.ok(D.events.some(e => e.needsAny), 'chưa có biến cố nào khai báo needsAny');
+  D.events.filter(e => e.needsAny).forEach(e => e.needsAny.forEach(id => assert.ok(D.channels.some(c => c.id === id), e.id + ': kênh lạ ' + id)));
+  const plans = [['area', 'pack', 'test', 'trace', 'test', 'freezer'], ['finance', 'finance', 'finance', 'finance', 'finance', 'finance'], ['test', 'area', 'pack', 'finance', 'trace', 'test']];
+  let checked = 0;
+  Object.keys(D.roles).forEach(role => plans.forEach((plan, pi) => { for (let k = 0; k < 40; k++) {
+    let s = E.newGame(D, role, 5000 + k * 7 + pi);
+    while (s.n <= D.seasons.length) {
+      const ev = E.eventFor(D, s);
+      if (ev && ev.needsAny) { checked++; assert.ok(ev.needsAny.some(id => E.eligible(D, s, D.channels.find(c => c.id === id))), `${role} vụ ${s.n}: biến cố ${ev.id} đòi kênh đang đóng`); }
+      s = E.playSeason(D, s, { priority: plan[s.n - 1], linked: 0.7, induce: true, alloc: { CN: 50, BORDER: 20, JP: 10, DOM: 20 }, intel: [], option: 1 });
+    }
+  } }));
+  assert.ok(checked > 50, 'quá ít biến cố needsAny được kiểm: ' + checked);
+});
+
+function DCore() { global.window = global.window || {}; require('../lab/ho-chieu-sau-rieng-core.js'); return global.window.DurianCore; }
+
 console.log(`\n${passed} kiểm thử đạt`);
