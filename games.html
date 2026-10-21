@@ -34,6 +34,10 @@
   #ar-quiz{grid-column:1/-1;padding:24px;border-radius:30px;background:var(--clay-c5);box-shadow:var(--clay-night-shadow,inset 0 -9px 0 rgba(0,0,0,.07),inset 0 5px 0 rgba(255,255,255,.6),0 24px 32px -24px rgba(0,60,80,.55))}
   #ar-price,#ar-h2h{padding:22px;border-radius:28px;background:var(--clay-card);box-shadow:var(--clay-night-shadow,inset 0 -8px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 20px 28px -22px rgba(110,70,30,.55))}
   #ar-ext{display:contents}
+  /* 4 lab: 4 cột trên màn rộng, 2×2 trên máy tính bảng, 1 cột trên điện thoại – không để 1 thẻ lẻ hàng */
+  .lab-grid{display:grid;gap:18px;grid-template-columns:repeat(4,minmax(0,1fr))}
+  @media (max-width:1080px){.lab-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (max-width:600px){.lab-grid{grid-template-columns:1fr}}
 </style>
 <meta property="og:type" content="website">
 <meta property="og:title" content="Trung tâm trò chơi · BizOn Bật Nghiệp">
@@ -71,8 +75,8 @@
 
   <section id="lab" style="margin:64px 0 0">
     <div style="font-family:var(--clay-head);font-size:16px;font-weight:700;color:var(--clay-accent)" data-en="Practicum labs · one focused session each">Lab thực hành · mỗi lab một buổi chuyên đề</div>
-    <h2 style="margin:4px 0 22px;font-family:var(--clay-head);font-size:clamp(30px,3.6vw,42px);font-weight:800;line-height:1.14" data-en="Three labs to practise one concept deeply">Ba lab để luyện sâu một khái niệm</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:18px">
+    <h2 style="margin:4px 0 22px;font-family:var(--clay-head);font-size:clamp(30px,3.6vw,42px);font-weight:800;line-height:1.14" data-en="Four labs to practise one concept deeply">Bốn lab để luyện sâu một khái niệm</h2>
+    <div class="lab-grid">
       <a href="lab/cmr-lab.html" style="display:flex;flex-direction:column;border-radius:32px;background:var(--clay-card);padding:12px;color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 rgba(255,255,255,.95),0 26px 36px -22px rgba(110,70,30,.5))">
         <span style="position:relative;display:block;aspect-ratio:16/10;border-radius:24px;overflow:hidden;background:#FFFFFF;box-shadow:inset 0 -8px 0 rgba(0,0,0,.06)"><img src="assets/cmr-lab/dragon-magnifier.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply" loading="lazy"></span>
         <span style="padding:16px 10px 10px;display:flex;flex-direction:column;gap:8px;flex:1">
@@ -99,6 +103,16 @@
           <span style="font-size:15px;line-height:1.55;color:var(--clay-sub);flex:1" data-en="From Newton’s apple to the gravity model of trade and FDI into Viet Nam; estimate OLS and PPML right in the browser.">Từ quả táo của Newton đến mô hình lực hấp dẫn của thương mại và FDI vào Việt Nam; ước lượng OLS và PPML ngay trên trình duyệt.</span>
           <span style="font-size:13px;color:var(--clay-sub)">DOI 10.5281/zenodo.23307832</span>
           <span style="align-self:flex-start;margin-top:4px;padding:9px 14px;border-radius:999px;background:var(--clay-tray);font-weight:800;font-size:14px" data-en="Open Gravity Lab →">Mở Gravity Lab →</span>
+        </span>
+      </a>
+      <a href="lab/nha-may-fdi.html" style="display:flex;flex-direction:column;border-radius:32px;background:var(--clay-card);padding:12px;color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 rgba(255,255,255,.95),0 26px 36px -22px rgba(110,70,30,.5))">
+        <span style="position:relative;display:block;aspect-ratio:16/10;border-radius:24px;overflow:hidden;background:#CFE3DA;box-shadow:inset 0 -8px 0 rgba(0,0,0,.06)"><img src="assets/cvp-lab/dragon-boat.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 45%" loading="lazy"></span>
+        <span style="padding:16px 10px 10px;display:flex;flex-direction:column;gap:8px;flex:1">
+          <span style="font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--clay-accent)" data-en="LAB · INTERNATIONAL BUSINESS">LAB · KINH DOANH QUỐC TẾ</span>
+          <span style="font-family:var(--clay-head);font-weight:800;font-size:26px;line-height:1.14">FDI Lab</span>
+          <span style="font-size:15px;line-height:1.55;color:var(--clay-sub);flex:1" data-en="FDI Factory: 8 quarters of decisions on local content, rules of origin and transshipment risk; team XP and a teacher projector view.">Nhà máy FDI: 8 quý ra quyết định nội địa hóa, quy tắc xuất xứ và rủi ro trung chuyển; XP theo đội và màn chiếu cho giảng viên.</span>
+          <span style="font-size:13px;color:var(--clay-sub)">DOI 10.5281/zenodo.23307829</span>
+          <span style="align-self:flex-start;margin-top:4px;padding:9px 14px;border-radius:999px;background:var(--clay-tray);font-weight:800;font-size:14px" data-en="Open FDI Lab →">Mở FDI Lab →</span>
         </span>
       </a>
     </div>
