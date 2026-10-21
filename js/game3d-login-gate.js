@@ -18,8 +18,9 @@
     var ns = opts.ns;
     if (!ns) { console.warn('Game3DGate.mount: thiếu ns'); return; }
     var introId = opts.introId;
-    var title = opts.title || T('Chào mừng!', 'Welcome!');
-    var subtitle = opts.subtitle || '';
+    // titleEn/subtitleEn (tuỳ chọn): bản tiếng Anh của title/subtitle – thiếu thì dùng lại bản gốc.
+    var title = opts.title ? T(opts.title, opts.titleEn || opts.title) : T('Chào mừng!', 'Welcome!');
+    var subtitle = opts.subtitle ? T(opts.subtitle, opts.subtitleEn || opts.subtitle) : '';
     // backdrop: đặt quả địa cầu làm nền phía sau thẻ (cần Game3DGlobe đã nạp; thiếu thì bỏ qua)
     var wantGlobe = !!opts.backdrop;
 

@@ -26,7 +26,10 @@
   var MODE_C = ['m0', 'm1', 'm2', 'm3', 'm4', 'm5'];
   var hist = {}, lastEntered = null, fresh = {};
 
-  function snap() { var s = S(); if (!s) return; var k = s.q; if (!hist[k]) hist[k] = {}; hist[k] = { cash: s.cash, rep: s.rep, capab: s.capab, resil: s.resil, profit: s.profit, know: B().S.know.reduce(function (a, b) { return a + b; }, 0) / 7, mk: s.entered.filter(function (v) { return v !== null && v !== undefined; }).length }; }
+  // Khoá k = số quý ĐÃ chơi xong (0 = đầu ván). Thua sớm (cạn vốn/uy tín) thì S.q chưa tăng cho quý vừa chơi → +1.
+  function ended() { var e = $('bp-end'); return !!e && !e.classList.contains('hidden'); }
+  function played() { var s = S(); return !s ? 0 : Math.min(6, ended() && s.q < 6 ? s.q + 1 : s.q); }
+  function snap() { var s = S(); if (!s) return; var k = played(); if (!hist[k]) hist[k] = {}; hist[k] = { cash: s.cash, rep: s.rep, capab: s.capab, resil: s.resil, profit: s.profit, know: B().S.know.reduce(function (a, b) { return a + b; }, 0) / 7, mk: s.entered.filter(function (v) { return v !== null && v !== undefined; }).length }; }
   function series(key) { return Object.keys(hist).sort(function (a, b) { return a - b; }).map(function (k) { return hist[k][key]; }); }
   function spark(vals, color) {
     if (vals.length < 2) return '<svg viewBox="0 0 100 22"><line x1="0" y1="18" x2="100" y2="18" stroke="#d6e4e7" stroke-width="1.5"/></svg>';
@@ -149,7 +152,7 @@
       var ev = st.querySelector('[onclick^="bpEv("]');
       if (ev && !st.querySelector('.ib-wire')) { var card = ev.closest('.clay-card') || st.firstElementChild; if (card) card.insertAdjacentHTML('afterbegin', '<div class="ib-wire">' + T('Bản tin thị trường · Quý ', 'Market wire · Q') + (s.q + 1) + '</div>'); }
       var nx = st.querySelector('[onclick="bpNext()"]');
-      if (nx && !$('ib-qdash')) nx.insertAdjacentHTML('beforebegin', dashHtml('ib-qdash', T('Bảng điều hành sau quý ', 'Dashboard after Q') + (s.q + 1)));
+      if (nx && !$('ib-qdash')) nx.insertAdjacentHTML('beforebegin', dashHtml('ib-qdash', T('Bảng điều hành sau quý ', 'Dashboard after Q') + Math.max(1, s.q)));
     }
   }
   function lineChart(keys) {
@@ -159,7 +162,8 @@
     var n = series(keys[0][0]).length, mn = Math.min(0, Math.min.apply(0, all)), mx = Math.max.apply(0, all), r = mx - mn || 1;
     var x = function (i) { return P + (n < 2 ? 0 : i / (n - 1) * (W - P * 2)); }, y = function (v) { return H - P - (v - mn) / r * (H - P * 2); };
     var g = '<line x1="' + P + '" x2="' + (W - P) + '" y1="' + y(0) + '" y2="' + y(0) + '" stroke="#d6e4e7"/>';
-    for (var i = 0; i < n; i++) g += '<text x="' + x(i) + '" y="' + (H - 6) + '" text-anchor="middle" font-size="10" fill="#7b949a">Q' + (i + 1) + '</text>';
+    var ks = Object.keys(hist).sort(function (a, b) { return a - b; }); // nhãn trục: Đầu, Q1…Q6 (trạng thái sau mỗi quý)
+    for (var i = 0; i < n; i++) g += '<text x="' + x(i) + '" y="' + (H - 6) + '" text-anchor="middle" font-size="10" fill="#7b949a">' + (+ks[i] ? 'Q' + ks[i] : T('Đầu', 'Start')) + '</text>';
     keys.forEach(function (k) { var v = series(k[0]); g += '<polyline points="' + v.map(function (a, i) { return x(i) + ',' + y(a); }).join(' ') + '" fill="none" stroke="' + k[1] + '" stroke-width="2.5" stroke-linejoin="round"/>' + v.map(function (a, i) { return '<circle cx="' + x(i) + '" cy="' + y(a) + '" r="3" fill="' + k[1] + '"/>'; }).join(''); });
     return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + T('Biểu đồ theo quý', 'Quarterly chart') + '">' + g + '</svg><div class="ib-legend">' + keys.map(function (k) { return '<span><i style="background:' + k[1] + '"></i>' + k[2] + '</span>'; }).join('') + '</div>';
   }
@@ -172,9 +176,9 @@
   function enhanceEnd() {
     var end = $('bp-end'), bd = $('bp-breakdown'); if (!end || end.classList.contains('hidden') || !bd || $('ib-enddash')) return;
     var s = S(), b = B();
-    var stamps = '<div class="ib-dash" style="background:linear-gradient(135deg,#123a45,#0b2a33);color:#e9f3f5;border:0"><span class="ib-eyebrow" style="color:#9cc3cb">🛂 ' + T('Hộ chiếu sau 6 quý', 'Your passport after 6 quarters') + '</span><div class="ib-visas">' +
+    var stamps = '<div class="ib-dash" style="background:linear-gradient(135deg,#123a45,#0b2a33);color:#e9f3f5;border:0"><span class="ib-eyebrow" style="color:#9cc3cb">🛂 ' + T('Hộ chiếu sau ' + played() + ' quý', 'Your passport after ' + played() + (played() === 1 ? ' quarter' : ' quarters')) + '</span><div class="ib-visas">' +
       b.MKTS.map(function (mk, m) { var v = s.entered[m], r = mk.real || {}; return '<div class="ib-visa" onclick="IBUI.dossier(' + m + ')">' + (v !== null && v !== undefined ? '<div class="ib-stamp ' + MODE_C[v] + ' new" style="animation-delay:' + (m * 0.12) + 's"><span class="f">' + (r.flag || '') + '</span>' + mk.name + '<span>' + b.MODES[v].icon + '</span></div>' : '<span class="f" style="opacity:.4">' + (r.flag || '') + '</span><span class="n" style="opacity:.6">' + mk.name + '</span>') + '</div>'; }).join('') + '</div></div>';
-    bd.insertAdjacentHTML('afterend', stamps + dashHtml('ib-enddash', T('Hành trình 6 quý', 'Your 6-quarter journey')));
+    bd.insertAdjacentHTML('afterend', stamps + dashHtml('ib-enddash', T('Hành trình ' + played() + ' quý', 'Your ' + played() + '-quarter journey')));
   }
 
 

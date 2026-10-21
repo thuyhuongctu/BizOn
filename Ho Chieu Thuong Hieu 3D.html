@@ -19,7 +19,7 @@
 <script src="js/backend-config.js"></script>
 <script src="js/error-log.js"></script>
 <script src="js/game3d-login-gate.js"></script>
-<script>Game3DGate.mount({ backdrop: true, introId: 'bp-intro', ns: 'bp', title: 'Chào mừng tới Hộ Chiếu Thương Hiệu!', subtitle: 'Điền nhanh thông tin đội rồi vào thẳng phần giới thiệu — bỏ trống vẫn chơi được trọn vẹn.' });</script>
+<script>Game3DGate.mount({ backdrop: true, introId: 'bp-intro', ns: 'bp', title: 'Chào mừng tới Hộ Chiếu Thương Hiệu!', titleEn: 'Welcome to Brand Passport!', subtitle: 'Điền nhanh thông tin đội rồi vào thẳng phần giới thiệu — bỏ trống vẫn chơi được trọn vẹn.', subtitleEn: 'Fill in your team details and go straight to the intro — leave them blank and you can still play the full game.' });</script>
 <!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
      nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
 <link rel="stylesheet" href="css/bizon-fonts.css">
@@ -193,7 +193,9 @@
   /* Quyết định chính nằm trên cảnh 3D (bp3d.js → __bp3dChoices): ẩn bản HTML trùng lặp
      và thu tấm phủ dưới trên điện thoại để không che các ô lựa chọn trong cảnh. */
   body.bp3d-choice-hud #bp-prio-section, body.bp3d-choice-hud #bp-budget-section,
-  body.bp3d-choice-hud #bp-commit, body.bp3d-choice-hud #bp-dec-note { display:none !important; }
+  body.bp3d-choice-hud #bp-commit { display:none !important; }
+  /* #bp-dec-note (🔮 Dự báo Lumina, nhắc chọn vận chuyển) vẫn hiện – syncDec() chuyển nó lên ngay dưới khối vận chuyển. */
+  body.bp3d-choice-hud #bp-dec-note { margin:8px 0 0; text-align:left; opacity:.85; }
   @media (max-width:760px) { body.bp3d-choice-hud #bp3d-col { max-height:34svh !important; } }
 </style>
 <link rel="manifest" href="manifest-hochieu-3d.webmanifest">
@@ -549,11 +551,11 @@
   MKTS.forEach(function (m) { m.real = REAL[m.key]; });
   // 5 doanh nghiệp – mỗi nhà một hành trình (concept mục 2)
   var FIRMS = [
-    { icon: '🧴', name: 'Mộc Nhiên', prod: 'Mỹ phẩm thảo mộc', prodEn: 'Herbal cosmetics', adv: 'Câu chuyện thương hiệu mạnh', advEn: 'Strong brand story', weak: 'Khó đạt tiêu chuẩn quốc tế', weakEn: 'Hard to meet international standards', cash: 8, rep: 55, capab: 38, susts: 0, img: 'assets/character/firms/moc-nhien-cut.webp' },
-    { icon: '🥫', name: 'Phù Sa Foods', prod: 'Thực phẩm chế biến', prodEn: 'Processed food', adv: 'Hương vị đặc trưng · hợp khách trẻ', advEn: 'Distinctive flavor · a fit for young customers', weak: 'Chi phí bảo quản cao (+20% vận hành)', weakEn: 'High storage cost (+20% operating)', cash: 8, rep: 48, capab: 45, susts: 0, img: 'assets/character/firms/phu-sa-foods-cut.webp' },
-    { icon: '👗', name: 'Lam Việt', prod: 'Thời trang bền vững', prodEn: 'Sustainable fashion', adv: 'Hồ sơ xanh sẵn có · hợp Lục Đảo', advEn: 'Ready-made green record · a fit for Lục Đảo', weak: 'Năng lực sản xuất hạn chế', weakEn: 'Limited production capacity', cash: 8, rep: 50, capab: 32, susts: 1, img: 'assets/character/firms/lam-viet-cut.webp' },
-    { icon: '💻', name: 'Mekong Digital', prod: 'Phần mềm quản trị', prodEn: 'Management software', adv: 'Kênh số cực mạnh · biên lời cao', advEn: 'Very strong digital channel · high margins', weak: 'Mù mờ pháp luật dữ liệu', weakEn: 'Shaky on data regulations', cash: 7, rep: 46, capab: 48, susts: 0, img: 'assets/character/firms/mekong-digital-cut.webp' },
-    { icon: '🧺', name: 'Lục Bình Craft', prod: 'Thủ công mỹ nghệ', prodEn: 'Handicrafts', adv: 'Chi phí vận hành thấp · hợp đối tác địa phương', advEn: 'Low operating cost · a fit for local partners', weak: 'Tay nghề thủ công khó nhân rộng quy mô lớn', weakEn: 'Hand-made skill is hard to scale into mass production', cash: 7, rep: 52, capab: 30, susts: 1 },
+    { icon: '🧴', name: 'Mộc Nhiên', prod: 'Mỹ phẩm thảo mộc', prodEn: 'Herbal cosmetics', adv: 'Câu chuyện thương hiệu mạnh', advEn: 'Strong brand story', weak: 'Khó đạt tiêu chuẩn quốc tế', weakEn: 'Hard to meet international standards', mat: 'thảo mộc', matEn: 'herbs', story: 'câu chuyện thảo mộc Việt', storyEn: 'the Vietnamese herbal story', cash: 8, rep: 55, capab: 38, susts: 0, img: 'assets/character/firms/moc-nhien-cut.webp' },
+    { icon: '🥫', name: 'Phù Sa Foods', prod: 'Thực phẩm chế biến', prodEn: 'Processed food', adv: 'Hương vị đặc trưng · hợp khách trẻ', advEn: 'Distinctive flavor · a fit for young customers', weak: 'Chi phí bảo quản cao (+20% vận hành)', weakEn: 'High storage cost (+20% operating)', mat: 'nông sản tươi', matEn: 'fresh produce', story: 'câu chuyện hương vị miền Tây', storyEn: 'the Mekong Delta flavour story', cash: 8, rep: 48, capab: 45, susts: 0, img: 'assets/character/firms/phu-sa-foods-cut.webp' },
+    { icon: '👗', name: 'Lam Việt', prod: 'Thời trang bền vững', prodEn: 'Sustainable fashion', adv: 'Hồ sơ xanh sẵn có · hợp Lục Đảo', advEn: 'Ready-made green record · a fit for Lục Đảo', weak: 'Năng lực sản xuất hạn chế', weakEn: 'Limited production capacity', mat: 'sợi vải hữu cơ', matEn: 'organic fabric', story: 'câu chuyện thời trang xanh', storyEn: 'the green fashion story', cash: 8, rep: 50, capab: 32, susts: 1, img: 'assets/character/firms/lam-viet-cut.webp' },
+    { icon: '💻', name: 'Mekong Digital', prod: 'Phần mềm quản trị', prodEn: 'Management software', adv: 'Kênh số cực mạnh · biên lời cao', advEn: 'Very strong digital channel · high margins', weak: 'Mù mờ pháp luật dữ liệu', weakEn: 'Shaky on data regulations', mat: 'thiết bị máy chủ', matEn: 'server hardware', story: 'câu chuyện phần mềm Việt', storyEn: 'the Vietnamese software story', cash: 7, rep: 46, capab: 48, susts: 0, img: 'assets/character/firms/mekong-digital-cut.webp' },
+    { icon: '🧺', name: 'Lục Bình Craft', prod: 'Thủ công mỹ nghệ', prodEn: 'Handicrafts', adv: 'Chi phí vận hành thấp · hợp đối tác địa phương', advEn: 'Low operating cost · a fit for local partners', weak: 'Tay nghề thủ công khó nhân rộng quy mô lớn', weakEn: 'Hand-made skill is hard to scale into mass production', mat: 'lục bình khô', matEn: 'dried water hyacinth', story: 'câu chuyện làng nghề lục bình', storyEn: 'the water-hyacinth craft-village story', cash: 7, rep: 52, capab: 30, susts: 1 },
   ];
   var MODES = [
     { id: 0, icon: '🛒', name: 'Nền tảng số', nameEn: 'Digital entry', cost: 0.5, margin: 0.25, scale: 0.7, op: 0.25, note: 'cam kết thấp – vào nhanh, lời mỏng', noteEn: 'low commitment – fast entry, thin margins' },
@@ -717,7 +719,7 @@
         return '<button type="button" onclick="bpEnter(' + m + ',' + r.md.id + ')" style="display:grid;grid-template-columns:22px minmax(0,1fr) 38px;gap:8px;align-items:center;width:100%;margin-top:6px;background:' + (S.sel.enter === m && S.sel.enterMode === r.md.id ? '#e3f1f4' : 'transparent') + ';border:0;padding:3px 4px;border-radius:8px;cursor:pointer;font:inherit;color:inherit;text-align:left">' +
           '<span>' + r.md.icon + '</span><span style="min-width:0"><span style="display:flex;justify-content:space-between;font-size:12px;font-weight:800"><span>' + T(r.md.name, r.md.nameEn) + '</span><span style="opacity:.55;font-weight:600">' + f1(r.md.cost) + TY() + '</span></span><i style="display:block;height:6px;border-radius:9px;margin-top:3px;background:linear-gradient(90deg,' + (i === 0 ? '#006687' : '#9fc7cf') + ' ' + r.score + '%,#e6eef0 ' + r.score + '%)"></i></span><b class="ib-num" style="text-align:right">' + r.score + '</b></button>'; }).join('') + '</div>' +
       '<div><span class="ib-eyebrow">💡 Lumina · ' + T('khuyến nghị có giải thích', 'explained recommendation') + '</span>' + (top ? '<p style="margin:6px 0 0;font-size:12.5px;line-height:1.5"><b>' + top.md.icon + ' ' + T(top.md.name, top.md.nameEn) + '</b> ' + T('dẫn đầu với ', 'leads with ') + top.score + '/100 (' + T('độ tin cậy bằng chứng ', 'evidence confidence ') + top.conf + '%).</p>' +
-        (top.ex.strengths.length ? '<p style="margin:4px 0 0;font-size:12px">✅ ' + top.ex.strengths.join(' · ') + '</p>' : '') + (top.ex.cautions.length ? '<p style="margin:4px 0 0;font-size:12px">⚠️ ' + top.ex.cautions.join(' · ') + '</p>' : '') +
+        (top.ex.strengths.length ? '<p style="margin:4px 0 0;font-size:12px">✅ ' + T(top.ex.strengths, top.ex.strengthsEn || top.ex.strengths).join(' · ') + '</p>' : '') + (top.ex.cautions.length ? '<p style="margin:4px 0 0;font-size:12px">⚠️ ' + T(top.ex.cautions, top.ex.cautionsEn || top.ex.cautions).join(' · ') + '</p>' : '') +
         '<p style="margin:6px 0 0;font-size:11px;opacity:.7">' + T('Thành phần: ưu tiên ', 'Components: priorities ') + Math.round(top.comp.weightedPreferences) + ' · ' + T('năng lực DN ', 'firm capability ') + Math.round(top.comp.capabilityFit) + ' · ' + T('phù hợp quốc gia ', 'country fit ') + Math.round(top.comp.countryFit) + ' · ' + T('khoảng cách ', 'distance ') + Math.round(top.comp.distancePenalty) + '</p>' : '') +
         '<p style="margin:8px 0 0;font-size:10.5px;opacity:.6">' + T('Điểm phù hợp không phải xác suất thành công. Mô hình minh bạch phục vụ giảng dạy (Anderson & Gatignon, 1986; Zhao et al., 2004; Brouthers et al., 2022) – bấm một phương thức để chọn.', 'A fit score is not a probability of success. Transparent teaching model (Anderson & Gatignon, 1986; Zhao et al., 2004; Brouthers et al., 2022) – click a mode to select it.') + '</p></div></div>';
     $('bp-aibis-m').onchange = function () { aibisM = +this.value; renderAibis(); };
@@ -807,14 +809,14 @@
       { l: '🧘 Giữ nhịp, không chạy theo sóng', lEn: '🧘 Hold steady, don\'t chase the wave', fx: function () { S.flags.wave = 1.12; S.resil += 2; return T('Hưởng một phần cơn sóng (+12%), giữ sức cho đường dài (chống chịu +2).', 'You catch part of the wave (+12%), saving your strength for the long run (resilience +2).'); } }] },
     { id: 'pricewar', cat: '🪓', t: 'Đối thủ giảm giá mạnh', tEn: 'A competitor slashes prices', need: anyEnt, d: function () { return T('Đối thủ tại thị trường của bạn đồng loạt hạ giá 20%.', 'Competitors in your market all cut prices by 20%.'); }, ch: [
       { l: '📉 Giảm giá theo', lEn: '📉 Match the discount', fx: function () { S.flags.wave = 1.08; S.foot.push(T('Giảm giá theo đối thủ – khách bắt đầu quen giá thấp', "Matched a competitor's discount – customers are getting used to low prices")); S.flags.priceWar = (S.flags.priceWar || 0) + 1; return T('Giữ được khách quý này (+8%), nhưng khách quen dần với giá thấp – biên lời các quý sau mỏng đi.', "You keep your customers this quarter (+8%), but they're getting used to low prices – margins thin out in later quarters."); } },
-      { l: '🌿 Giữ giá, kể câu chuyện thảo mộc Việt', lEn: '🌿 Hold the price, tell the Vietnamese herbal story', fx: function () { S.flags.wave = 0.9; S.rep += 5; return T('Mất một phần khách (−10%) nhưng uy tín thương hiệu +5 – đúng chất Bà Sáu Lành.', 'You lose some customers (−10%) but brand reputation +5 – very Bà Sáu Lành of you.'); } }] },
+      { get l() { return '🌿 Giữ giá, kể ' + F().story; }, get lEn() { return '🌿 Hold the price, tell ' + F().storyEn; }, fx: function () { S.flags.wave = 0.9; S.rep += 5; return T('Mất một phần khách (−10%) nhưng uy tín thương hiệu +5 – đúng chất Bà Sáu Lành.', 'You lose some customers (−10%) but brand reputation +5 – very Bà Sáu Lành of you.'); } }] },
     { id: 'green', cat: '🌿', t: 'Khách hàng chuyển sang tiêu dùng xanh', tEn: 'Customers shift to green consumption', d: function () { return T('Khảo sát cho thấy khách sẵn sàng trả thêm cho bao bì bền vững.', 'A survey shows customers are willing to pay more for sustainable packaging.'); }, ch: [
       { l: '♻️ Đầu tư bao bì tái chế (0,7 tỷ)', lEn: '♻️ Invest in recyclable packaging (0.7 bn)', fx: function () { S.cash -= 0.7; S.susts += 1; S.rep += 4; return T('Bao bì mới được đón nhận – bền vững +1, uy tín +4.', 'The new packaging is well received – sustainability +1, reputation +4.'); } },
       { l: '⏸️ Chưa thay đổi đợt này', lEn: '⏸️ No change this round', fx: function () { S.flags.greenMiss = true; return T('Bạn giữ nguyên bao bì – tạm ổn, nhưng xu hướng xanh sẽ không chờ ai.', "You keep the current packaging – fine for now, but the green trend won't wait for anyone."); } }] },
-    { id: 'celeb', cat: '⭐', t: 'Người nổi tiếng nhắc đến thương hiệu', tEn: 'A celebrity mentions your brand', need: anyEnt, d: function () { return T('Một nhà sáng tạo nội dung lớn khen Mộc Nhiên hoàn toàn tự nhiên.', 'A major content creator praises Mộc Nhiên completely organically.'); }, ch: [
+    { id: 'celeb', cat: '⭐', t: 'Người nổi tiếng nhắc đến thương hiệu', tEn: 'A celebrity mentions your brand', need: anyEnt, d: function () { return T('Một nhà sáng tạo nội dung lớn khen ' + F().name + ' hoàn toàn tự nhiên.', 'A major content creator praises ' + F().name + ' completely organically.'); }, ch: [
       { l: '🙏 Cảm ơn công khai + tặng bộ sản phẩm', lEn: '🙏 Thank them publicly + gift a product set', fx: function () { S.rep += 6; S.flags.wave = 1.15; return T('Cộng đồng thích cách đáp lễ chân thành – uy tín +6, doanh thu quý +15%.', 'The community loves your sincere response – reputation +6, revenue this quarter +15%.'); } },
       { l: '💸 Đề nghị ký hợp đồng quảng cáo dài hạn (1 tỷ)', lEn: '💸 Offer a long-term ad contract (1 bn)', fx: function () { S.cash -= 1; if (rnd() < 0.5) { S.rep += 3; S.flags.wave = 1.2; return T('Hợp đồng hiệu quả – doanh thu +20%.', 'The contract pays off – revenue +20%.'); } S.rep -= 3; return T('Khán giả nhận ra quảng cáo trả tiền, bớt tin – uy tín −3.', "Audiences notice it's a paid ad and trust it a little less – reputation −3."); } }] },
-    { id: 'subst', cat: '🔄', t: 'Xuất hiện sản phẩm thay thế', tEn: 'A substitute product appears', need: anyEnt, d: function () { return T('Một dòng mỹ phẩm tổng hợp giá rẻ đang hút phân khúc của bạn.', 'A cheap synthetic cosmetics line is eating into your segment.'); }, ch: [
+    { id: 'subst', cat: '🔄', t: 'Xuất hiện sản phẩm thay thế', tEn: 'A substitute product appears', need: anyEnt, d: function () { return S.firm === 0 ? T('Một dòng mỹ phẩm tổng hợp giá rẻ đang hút phân khúc của bạn.', 'A cheap synthetic cosmetics line is eating into your segment.') : T('Một dòng ' + F().prod.toLowerCase() + ' giá rẻ đang hút phân khúc của bạn.', 'A cheap ' + F().prodEn.toLowerCase() + ' line is eating into your segment.'); }, ch: [
       { l: '🧪 Điều chỉnh công năng sản phẩm (0,8 tỷ)', lEn: '🧪 Adjust product functionality (0.8 bn)', fx: function () { S.cash -= 0.8; S.capab += 3; S.adapt += 1; return T('Bản cải tiến giữ chân khách – năng lực +3, thích ứng +1.', 'The improved version keeps customers – capability +3, adaptation +1.'); } },
       { l: '🪷 Không đổi – tin vào phân khúc trung thành', lEn: '🪷 Don\'t change – trust your loyal segment', fx: function () { S.flags.wave = 0.88; return T('Một phần khách rời đi (−12% quý này), phân khúc lõi vẫn ở lại.', 'Some customers leave (−12% this quarter), but your core segment stays.'); } }] },
     { id: 'fx', cat: '💱', t: 'Tỷ giá thuận lợi', tEn: 'A favorable exchange rate', need: anyEnt, d: function () { return T('Đồng tiền thị trường xuất khẩu mạnh lên – hàng Việt rẻ tương đối.', "The export market's currency strengthens – Vietnamese goods become relatively cheaper."); }, ch: [
@@ -829,8 +831,8 @@
       { l: '🏷️ Tăng giá bán tương ứng', lEn: '🏷️ Raise the price to match', fx: function () { S.flags.wave = 0.93; if (rnd() < 0.4) { S.rep -= 3; return T('Một phần khách phản ứng với giá mới – uy tín −3.', 'Some customers push back on the new price – reputation −3.'); } return T('Khách chấp nhận mức giá mới – thương hiệu đủ mạnh.', 'Customers accept the new price – your brand is strong enough.'); } }] },
     // need: !certBP – nếu đã có chứng nhận rồi (kể cả mua qua Cửa hàng vật
     // phẩm) thì bỏ qua sự kiện này, tránh bắt trả tiền lần hai cho việc đã có.
-    { id: 'cert', cat: '✅', t: 'Yêu cầu chứng nhận mới tại Bắc Phong', tEn: 'A new certification requirement in Bắc Phong', need: function () { return !S.certBP; }, d: function () { return T('Bắc Phong áp chuẩn kiểm định mới cho mỹ phẩm thảo mộc.', 'Bắc Phong imposes new inspection standards for herbal cosmetics.'); }, ch: [
-      { l: '🎖️ Đầu tư chứng nhận (0,9 tỷ)', lEn: '🎖️ Invest in certification (0.9 bn)', fx: function () { S.cash -= 0.9; S.certBP = true; S.capab += 4; return T('Mộc Nhiên đạt chuẩn Bắc Phong – mở khóa trọn tiềm năng thị trường này, năng lực +4.', "Mộc Nhiên meets the Bắc Phong standard – this market's full potential unlocks, capability +4."); } },
+    { id: 'cert', cat: '✅', t: 'Yêu cầu chứng nhận mới tại Bắc Phong', tEn: 'A new certification requirement in Bắc Phong', need: function () { return !S.certBP; }, d: function () { return T('Bắc Phong áp chuẩn kiểm định mới cho ' + F().prod.toLowerCase() + '.', 'Bắc Phong imposes new inspection standards for ' + F().prodEn.toLowerCase() + '.'); }, ch: [
+      { l: '🎖️ Đầu tư chứng nhận (0,9 tỷ)', lEn: '🎖️ Invest in certification (0.9 bn)', fx: function () { S.cash -= 0.9; S.certBP = true; S.capab += 4; return T(F().name + ' đạt chuẩn Bắc Phong – mở khóa trọn tiềm năng thị trường này, năng lực +4.', F().name + " meets the Bắc Phong standard – this market's full potential unlocks, capability +4."); } },
       { l: '🕰️ Trì hoãn', lEn: '🕰️ Delay', fx: function () { return S.entered[1] !== null ? T('Doanh thu Bắc Phong sẽ bị giới hạn cho tới khi có chứng nhận.', 'Bắc Phong revenue will stay capped until you get certified.') : T('Chưa ảnh hưởng ngay – nhưng cánh cửa Bắc Phong vẫn khép hờ.', 'No impact yet – but the Bắc Phong door stays only half open.'); } }] },
     { id: 'data', cat: '🔐', t: 'Siết bảo vệ dữ liệu người dùng', tEn: 'Tighter user data protection', d: function () { return T('Quy định mới về dữ liệu khách hàng trên kênh số.', 'A new regulation on customer data on digital channels.'); }, ch: [
       { l: '🛠️ Nâng cấp hệ thống (0,6 tỷ)', lEn: '🛠️ Upgrade the system (0.6 bn)', fx: function () { S.cash -= 0.6; S.capab += 4; return T('Hệ thống đạt chuẩn – năng lực +4, khách yên tâm hơn.', 'The system meets the standard – capability +4, customers feel more at ease.'); } },
@@ -845,7 +847,7 @@
     { id: 'talent', cat: '🚪', t: 'Nhân sự chủ chốt muốn nghỉ việc', tEn: 'A key employee wants to quit', d: function () { return T('Trưởng nhóm R&D nhận được lời mời hấp dẫn từ nơi khác.', 'Your R&D team lead gets an attractive offer elsewhere.'); }, ch: [
       { l: '💝 Giữ chân bằng đãi ngộ + lộ trình (0,5 tỷ)', lEn: '💝 Retain them with benefits + a career path (0.5 bn)', fx: function () { S.cash -= 0.5; S.capab += 2; return T('Chị ấy ở lại và gắn bó hơn – năng lực +2.', 'She stays and becomes even more committed – capability +2.'); } },
       { l: '👋 Chúc mừng và để đi', lEn: '👋 Wish her well and let her go', fx: function () { S.capab -= 7; return T('Mất người giỏi – năng lực −7. Tri thức ngầm khó thay thế hơn ta tưởng.', 'You lose a talented employee – capability −7. Tacit knowledge is harder to replace than you think.'); } }] },
-    { id: 'supplier', cat: '⏰', t: 'Nhà cung cấp giao hàng trễ', tEn: 'A supplier delivers late', need: anyEnt, d: function () { return T('Vùng nguyên liệu gặp mưa lớn, thảo mộc về trễ 3 tuần.', 'Heavy rain hits the growing region, herbs arrive 3 weeks late.'); }, ch: [
+    { id: 'supplier', cat: '⏰', t: 'Nhà cung cấp giao hàng trễ', tEn: 'A supplier delivers late', need: anyEnt, d: function () { return S.firm === 0 ? T('Vùng nguyên liệu gặp mưa lớn, thảo mộc về trễ 3 tuần.', 'Heavy rain hits the growing region, herbs arrive 3 weeks late.') : T('Nhà cung cấp chính gặp mưa lớn và tắc cảng, ' + F().mat + ' về trễ 3 tuần.', 'Heavy rain and port congestion hit your main supplier – ' + F().matEn + ' arrives 3 weeks late.'); }, ch: [
       { l: '🔁 Xây thêm nhà cung cấp dự phòng (0,4 tỷ)', lEn: '🔁 Build a backup supplier (0.4 bn)', fx: function () { S.cash -= 0.4; S.resil += 5; S.flags.wave = 0.95; return T('Quý này hụt nhẹ 5%, nhưng chuỗi cung từ nay có dự phòng – chống chịu +5.', 'A slight 5% dip this quarter, but your supply chain now has a backup – resilience +5.'); } },
       { l: '🤞 Chờ nguồn hàng cũ', lEn: '🤞 Wait for the original source', fx: function () { S.flags.wave = S.resil >= 50 ? 0.93 : 0.85; return T('Thiếu hàng cục bộ – doanh thu quý giảm.', 'Local shortages – revenue this quarter drops.'); } }] },
     { id: 'defect', cat: '🧯', t: 'Phát hiện lỗi chất lượng một lô hàng', tEn: 'A quality defect is found in a batch', need: anyEnt, d: function () { return T('Một lô kem dưỡng có mùi lạ do khâu bảo quản.', 'A batch of moisturizer has a strange smell from a storage issue.'); }, ch: [
@@ -863,7 +865,7 @@
     // Khủng hoảng
     { id: 'review', cat: '📉', t: 'Làn sóng đánh giá tiêu cực', tEn: 'A wave of negative reviews', need: anyEnt, d: function () { return T('Một chuỗi review 1 sao xuất hiện – có cả khách thật lẫn tài khoản lạ.', 'A string of 1-star reviews appears – some from real customers, some from unknown accounts.'); }, ch: [
       { l: '💌 Xin lỗi công khai + đền bù khách thật (0,4 tỷ)', lEn: '💌 Apologize publicly + compensate real customers (0.4 bn)', fx: function () { S.cash -= 0.4; S.rep += (S.flags.defectBomb ? 2 : 6); S.adapt += 1; return T('Phản hồi chân thành xoay chuyển dư luận – uy tín cải thiện.', 'A sincere response turns public opinion around – reputation improves.'); } },
-      { l: '⚔️ Phản bác cứng rắn', lEn: '⚔️ Push back hard', fx: function () { if (rnd() < 0.5) { S.rep -= 8; S.foot.push(T('Đối đầu với khách hàng trên mạng', 'Clashed with a customer online')); return T('Cuộc cãi vã leo thang – uy tín −8.', 'The argument escalates – reputation −8.'); } S.rep += 2; return T('Bằng chứng của bạn thuyết phục – dư luận đứng về phía Mộc Nhiên.', 'Your evidence is convincing – public opinion sides with Mộc Nhiên.'); } }] },
+      { l: '⚔️ Phản bác cứng rắn', lEn: '⚔️ Push back hard', fx: function () { if (rnd() < 0.5) { S.rep -= 8; S.foot.push(T('Đối đầu với khách hàng trên mạng', 'Clashed with a customer online')); return T('Cuộc cãi vã leo thang – uy tín −8.', 'The argument escalates – reputation −8.'); } S.rep += 2; return T('Bằng chứng của bạn thuyết phục – dư luận đứng về phía ' + F().name + '.', 'Your evidence is convincing – public opinion sides with ' + F().name + '.'); } }] },
     { id: 'held', cat: '⚓', t: 'Container bị giữ tại cảng nước ngoài', tEn: 'A container is held at a foreign port', need: anyEnt, d: function () { return T('Giấy tờ xuất xứ bị nghi vấn, hàng nằm cảng chờ đối chiếu.', 'Origin paperwork is questioned, and the goods sit at port pending review.'); }, ch: [
       { l: '🧑‍⚖️ Thuê luật sư bản địa xử lý (0,5 tỷ)', lEn: '🧑‍⚖️ Hire a local lawyer to handle it (0.5 bn)', fx: function () { S.cash -= 0.5; S.adapt += 1; return T('Hồ sơ được minh oan nhanh – hàng ra kịp, thích ứng +1.', 'The paperwork is cleared quickly – goods ship out on time, adaptation +1.'); } },
       { l: '📮 Tự gửi hồ sơ giải trình', lEn: '📮 File the explanation yourself', fx: function () { S.flags.wave = 0.8; return T('Chờ đợi kéo dài – doanh thu quý −20%.', 'The wait drags on – revenue this quarter −20%.'); } }] },
@@ -873,7 +875,7 @@
     { id: 'betray', cat: '🤝', t: 'Đối tác vi phạm cam kết', tEn: 'A partner breaks their commitment', need: function () { return S.entered.indexOf(2) >= 0; }, d: function () { return T('Nhà phân phối tự ý bán kèm sản phẩm nhái thương hiệu khác.', 'The distributor is selling counterfeit goods from another brand alongside yours.'); }, ch: [
       { l: '⚖️ Chấm dứt hợp đồng ngay', lEn: '⚖️ End the contract immediately', fx: function () { S.flags.dropPartner = true; S.rep += 3; return T('Bạn bảo vệ thương hiệu – kênh phân phối đó đóng lại, doanh thu thị trường ấy giảm mạnh quý này.', 'You protect the brand – that distribution channel closes, and revenue in that market drops sharply this quarter.'); } },
       { l: '🕊️ Đàm phán lại điều khoản', lEn: '🕊️ Renegotiate the terms', fx: function () { if (S.know[S.entered.indexOf(2)] >= 50 || S.rep >= 60) { S.adapt += 1; return T('Nhờ hiểu thị trường và uy tín, bạn siết lại điều khoản thành công – quan hệ tiếp tục.', 'Thanks to your market knowledge and reputation, you successfully tighten the terms – the relationship continues.'); } S.rep -= 4; S.flags.wave = 0.9; return T('Đàm phán bất lợi – họ lấn thêm một bước, uy tín −4.', 'The negotiation goes against you – they push further, reputation −4.'); } }] },
-    { id: 'copy', cat: '🪞', t: 'Thương hiệu bị sao chép', tEn: 'Your brand gets copied', d: function () { return T('Một bên đăng ký nhãn gần giống «Mộc Nhiên» tại thị trường bạn nhắm tới.', 'Someone registers a trademark similar to «Mộc Nhiên» in your target market.'); }, ch: [
+    { id: 'copy', cat: '🪞', t: 'Thương hiệu bị sao chép', tEn: 'Your brand gets copied', d: function () { return T('Một bên đăng ký nhãn gần giống «' + F().name + '» tại thị trường bạn nhắm tới.', 'Someone registers a trademark similar to «' + F().name + '» in your target market.'); }, ch: [
       { l: '📝 Đăng ký bảo hộ + truyền thông chính chủ (0,6 tỷ)', lEn: '📝 Register trademark protection + owned-brand communications (0.6 bn)', fx: function () { S.cash -= 0.6; S.rep += 5; S.foot.push(T('Đăng ký bảo hộ nhãn hiệu sớm', 'Registered trademark protection early')); return T('Bạn giành lại tên của mình – uy tín +5, bài học: bảo hộ phải đi trước.', 'You reclaim your own name – reputation +5, lesson: protection has to come first.'); } },
       { l: '🤷 Kệ, lo bán hàng trước', lEn: '🤷 Ignore it, focus on selling first', fx: function () { S.flags.copyLoss = true; S.foot.push(T('Chậm chân bảo hộ nhãn hiệu', 'Was slow to protect the trademark')); return T('Tạm không sao – nhưng mỗi quý hàng nhái sẽ gặm dần doanh thu của bạn.', 'No harm for now – but counterfeits will keep nibbling at your revenue every quarter.'); } }] },
     { id: 'board', cat: '🏛️', t: 'Hội đồng quản trị chất vấn', tEn: 'The board of directors questions you', need: function () { return S.q >= 3 && S.profit < 1; }, d: function () { return T('Lợi nhuận tích lũy còn thấp – hội đồng yêu cầu giải trình chiến lược.', 'Cumulative profit is still low – the board demands a strategic explanation.'); }, ch: [
@@ -902,8 +904,8 @@
 
   // Nhiệm vụ đàm phán «Cánh cửa Bắc Phong» – kích hoạt một lần ở quý 4
   var MISSION = { cat: '🚪', t: 'NHIỆM VỤ · Cánh cửa Bắc Phong', tEn: 'MISSION · The Bắc Phong Door', d: function () {
-      return T('Nhà phân phối lớn nhất Bắc Phong đề nghị đưa Mộc Nhiên vào <b>500 cửa hàng</b>, đổi lại: độc quyền 3 năm, giảm giá buôn 25%, đổi toàn bộ bao bì, bạn chịu phí chứng nhận và giao lô đầu trong 60 ngày. <b>Lina Park 🚢:</b> «Mạng lưới của tôi là cánh cửa nhanh nhất – nhưng cửa nào cũng có giá của nó.»',
-        "Bắc Phong's biggest distributor offers to place Mộc Nhiên in <b>500 stores</b>, in exchange for: 3-year exclusivity, a 25% wholesale discount, a full packaging redesign, you covering certification fees, and delivering the first batch within 60 days. <b>Lina Park 🚢:</b> «My network is the fastest door in – but every door has its price.»");
+      return T('Nhà phân phối lớn nhất Bắc Phong đề nghị đưa ' + F().name + ' vào <b>500 cửa hàng</b>, đổi lại: độc quyền 3 năm, giảm giá buôn 25%, đổi toàn bộ bao bì, bạn chịu phí chứng nhận và giao lô đầu trong 60 ngày. <b>Lina Park 🚢:</b> «Mạng lưới của tôi là cánh cửa nhanh nhất – nhưng cửa nào cũng có giá của nó.»',
+        "Bắc Phong's biggest distributor offers to place " + F().name + " in <b>500 stores</b>, in exchange for: 3-year exclusivity, a 25% wholesale discount, a full packaging redesign, you covering certification fees, and delivering the first batch within 60 days. <b>Lina Park 🚢:</b> «My network is the fastest door in – but every door has its price.»");
     }, ch: [
       { l: '✍️ Chấp nhận toàn bộ đề nghị', lEn: '✍️ Accept the offer in full', fx: function () { if (S.capab >= 55 && S.cash >= 2) { S.cash -= 2; S.entered[1] = 2; S.ship[1] = 1; S.certBP = true; S.flags.bigDeal = true; S.foot.push(T('Ký độc quyền 3 năm với nhà phân phối Bắc Phong', 'Signed a 3-year exclusivity deal with the Bắc Phong distributor')); return T('Bạn đủ lực giao lô đầu đúng hạn – Bắc Phong mở toang, nhưng biên lời mỏng và bị khóa độc quyền.', "You have the capacity to deliver the first batch on time – Bắc Phong opens wide, but margins are thin and you're locked into exclusivity."); } S.cash -= 1; S.rep -= 10; return T('Năng lực chưa đủ giao 500 cửa hàng trong 60 ngày – vỡ cam kết, uy tín −10. Cam kết lớn cần nội lực lớn.', 'Not enough capability to deliver 500 stores in 60 days – you break the commitment, reputation −10. Big commitments need real capability.'); } },
       { l: '🙅 Từ chối vì rủi ro quá cao', lEn: '🙅 Decline – too risky', fx: function () { S.resil += 3; return T('Bạn giữ thế chủ động – đôi khi «không» là quyết định chiến lược nhất.', 'You stay in control – sometimes «no» is the most strategic decision.'); } },
@@ -951,7 +953,7 @@
     function () { if (S.rep >= 60) return ['📣', 'An Nhiên', T('Uy tín đang là tài sản lớn nhất của mình. Đầu tư thêm cho cộng đồng khách hàng – họ chính là kênh phân phối trung thành nhất.', 'Reputation is your biggest asset right now. Invest more in the customer community – they are your most loyal distribution channel.')]; },
     function () { if (S.capab < 45) return ['👵', 'Bà Sáu Lành', T('Đừng nhận đơn lớn khi tay nghề chưa tới, con à. Thà chậm một quý còn hơn mất chữ tín cả đời.', "Don't take on big orders before your skills catch up, dear. Better to be a quarter slower than to lose your word for a lifetime.")]; },
     function () { if (S.entered[1] !== null && !S.certBP) return ['🎓', 'Thầy Tú Phan', T('Bắc Phong không tha thứ cho hàng thiếu chứng nhận. Đầu tư kiểm định đi – dữ liệu các ngành đều nói vậy.', "Bắc Phong shows no mercy for uncertified goods. Invest in certification – the industry data all says the same thing.")]; },
-    function () { return ['👵', 'Bà Sáu Lành', T('Ra biển lớn cũng được, nhưng chai dầu thơm của mình phải giữ mùi thảo mộc Vàm Thịnh. Mất bản sắc là mất hết.', 'Sailing to the open sea is fine, but our perfume bottle must keep the herbal scent of Vàm Thịnh. Lose your identity and you lose everything.')]; },
+    function () { return ['👵', 'Bà Sáu Lành', S.firm === 0 ? T('Ra biển lớn cũng được, nhưng chai dầu thơm của mình phải giữ mùi thảo mộc Vàm Thịnh. Mất bản sắc là mất hết.', 'Sailing to the open sea is fine, but our perfume bottle must keep the herbal scent of Vàm Thịnh. Lose your identity and you lose everything.') : T('Ra biển lớn cũng được, nhưng ' + F().name + ' phải giữ được hồn Vàm Thịnh. Mất bản sắc là mất hết.', 'Sailing to the open sea is fine, but ' + F().name + ' must keep the soul of Vàm Thịnh. Lose your identity and you lose everything.')]; },
     function () { return ['📣', 'An Nhiên', T('Kim Sa đổi xu hướng mỗi mùa – nếu vào đó, phải chuẩn bị tinh thần làm mới liên tục. Năng lượng có tính lan tỏa: tin vào tầm nhìn thì cộng đồng sẽ tự hình thành quanh mình.', "Kim Sa's trends change every season – go there and be ready to keep reinventing yourself. Energy is contagious: believe in the vision and a community will form around you.")]; },
   ];
 
@@ -1080,7 +1082,7 @@
     hud(); renderShop();
   };
 
-  window.bpUseItem = function (id) {
+  window.bpUseItem = function (id, mArg) { // mArg: thị trường cho SCOUT (bỏ trống → hiện bảng chọn)
     if (!S.items[id]) return;
     if (id === 'SHIELD') {
       if (S.flags.shield) return;
@@ -1097,8 +1099,7 @@
       addLog(T('🔮 Dùng Gói dữ liệu Lumina – Lumina sẽ tiết lộ trước thể loại sự kiện quý sau.', "🔮 Used the Lumina Data Pack – Lumina will reveal next quarter's event category in advance."));
     } else if (id === 'SCOUT') {
       var m = mArg;
-    if (m === undefined) { var pick = prompt(T('Điều tra thị trường nào?\n', 'Scout which market?\n') + MKTS.map(function (m, j) { return (j + 1) + ' = ' + m.name; }).join(' · '));
-      m = parseInt(pick, 10) - 1; }
+      if (m === undefined) { pickMkt('🕵️ ' + T('Điều tra thị trường nào?', 'Scout which market?'), function (mk) { window.bpUseItem(id, mk); }); return; }
       if (!(m >= 0 && m < MKTS.length)) return;
       S.items[id]--; S.know[m] = 100;
       var real = H[m].fit;
@@ -1158,8 +1159,8 @@
       '🔬 <i>Private analysis:</i> product fit in <b>' + MKTS[c.m2].name + '</b> is estimated as <b>' + (H[c.m2].fit >= 1.1 ? 'high' : H[c.m2].fit >= 0.9 ? 'fair' : 'low') + '</b>. <span class="opacity-60">(based on intel you bought – reliable)</span>'
     ));
     else out.push(T(
-      '📱 <i>Mạng xã hội:</i> từ khóa mỹ phẩm thảo mộc đang «nóng» tại <b>' + MKTS[c.m2].name + '</b>. <span class="opacity-60">(⚠️ lượt quan tâm không đồng nghĩa sức mua)</span>',
-      '📱 <i>Social media:</i> the herbal-cosmetics keyword is «hot» in <b>' + MKTS[c.m2].name + '</b>. <span class="opacity-60">(⚠️ attention isn\'t the same as purchasing power)</span>'
+      '📱 <i>Mạng xã hội:</i> từ khóa ' + F().prod.toLowerCase() + ' đang «nóng» tại <b>' + MKTS[c.m2].name + '</b>. <span class="opacity-60">(⚠️ lượt quan tâm không đồng nghĩa sức mua)</span>',
+      '📱 <i>Social media:</i> the «' + F().prodEn.toLowerCase() + '» keyword is «hot» in <b>' + MKTS[c.m2].name + '</b>. <span class="opacity-60">(⚠️ attention isn\'t the same as purchasing power)</span>'
     ));
     return out;
   }
@@ -1174,7 +1175,7 @@
     if (S.cash < 1.5) { who = 'Thu Hà · CFO'; msg = T('Sếp ơi, quỹ chỉ còn ' + f1(S.cash) + TY() + '. Quý này đừng mở bằng phương thức đắt tiền nhé – hết tiền 2 quý liền là phá sản.', 'Boss, we only have ' + f1(S.cash) + ' bn left. No expensive entry modes this quarter – two broke quarters and we\'re out.'); }
     else if (S.rep < 35) { who = 'Mạnh Chi · CMO'; msg = T('Uy tín đang thấp. Ưu tiên Thương hiệu một quý để khách tin mình hơn.', 'Our reputation is slipping. Prioritise Brand for a quarter so customers trust us again.'); }
     else if (S.capab < 40 && ent >= 2) { who = 'Bảo Ngọc · COO'; msg = T('Mở ' + ent + ' thị trường mà vận hành chưa theo kịp. Cân nhắc ưu tiên Năng lực.', ent + ' markets open but operations can\'t keep up. Consider prioritising Capability.'); }
-    else if (S.rival.next != null && S.rival.in.indexOf(S.rival.next) < 0) { who = 'Gia Hân · Thư ký'; msg = T('Tin nóng: thuyền đỏ ' + RIVAL.name + ' đang hướng về ' + MKTS[S.rival.next].name + '. Mình đi chặn không sếp?', 'Hot news: ' + RIVAL.name + "'s red ship is heading for " + MKTS[S.rival.next].name + '. Shall we cut them off?'); }
+    else if (S.rival.next != null && S.rival.in.indexOf(S.rival.next) < 0) { who = T('Gia Hân · Thư ký', 'Gia Hân · Secretary'); msg = T('Tin nóng: thuyền đỏ ' + RIVAL.name + ' đang hướng về ' + MKTS[S.rival.next].name + '. Mình đi chặn không sếp?', 'Hot news: ' + RIVAL.name + "'s red ship is heading for " + MKTS[S.rival.next].name + '. Shall we cut them off?'); }
     else { who = 'Minh Long · CEO'; msg = T('Cả đội sẵn sàng. Quý ' + (S.q + 1) + ' – ra khơi khảo sát rồi hãy quyết.', 'Team ready. Quarter ' + (S.q + 1) + ' – sail out and scout before deciding.'); }
     addLog('💼 <b>' + who + '</b>: ' + msg);
   }
@@ -1227,11 +1228,35 @@
     if (window.BPTour) BPTour.autoObs(S.q);
   }
 
+  // Bảng chọn thị trường ngay trong trang (thay prompt() gõ số 1–7): nút bấm song ngữ, dùng được trên điện thoại,
+  // có tiêu điểm bàn phím, Esc/bấm nền/«Huỷ» để đóng. cb(m) chỉ được gọi khi người chơi chọn một thị trường.
+  function pickMkt(title, cb) {
+    var old = $('bp-mkt-pick'); if (old) old.remove();
+    var ov = document.createElement('div');
+    ov.id = 'bp-mkt-pick'; ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-modal', 'true'); ov.setAttribute('aria-labelledby', 'bp-mkt-pick-t');
+    ov.style.cssText = 'position:fixed;inset:0;z-index:95;background:rgba(2,25,28,.72);display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto';
+    ov.innerHTML = '<div class="clay-card p-5" style="max-width:440px;width:100%;max-height:88vh;overflow:auto">' +
+      '<p id="bp-mkt-pick-t" class="font-display font-extrabold text-deep-teal text-base mb-3">' + title + '</p>' +
+      '<div class="grid grid-cols-2 gap-2">' + MKTS.map(function (mk, j) {
+        return '<button type="button" class="bp-opt" data-pm="' + j + '" style="min-height:48px">' + mktBadge(j) + mk.name + '<small>' + T('tri thức', 'knowledge') + ' ' + clamp(S.know[j]) + '/100' + (S.entered[j] !== null ? ' · ' + T('đã vào', 'entered') : '') + '</small></button>';
+      }).join('') + '</div>' +
+      '<button type="button" data-pm="x" class="clay-btn w-full bg-surface-bright text-deep-teal/70 font-bold py-3 mt-3">' + T('Huỷ', 'Cancel') + '</button></div>';
+    var close = function () { ov.remove(); document.removeEventListener('keydown', esc); };
+    var esc = function (e) { if (e.key === 'Escape') close(); };
+    ov.addEventListener('click', function (e) {
+      if (e.target === ov) return close();
+      var b = e.target.closest('[data-pm]'); if (!b) return;
+      close(); if (b.dataset.pm !== 'x') cb(+b.dataset.pm);
+    });
+    document.addEventListener('keydown', esc);
+    document.body.appendChild(ov);
+    var first = ov.querySelector('[data-pm]'); if (first) first.focus();
+  }
   window.bpIntel = function (i, mArg) {
     if (S.sel.intel.length >= 2) { $('bp-intel-note').textContent = T('Đã dùng đủ 2 nguồn trong quý này.', 'You have already used 2 sources this quarter.'); return; }
     var src = SOURCES[i];
-    var pick = prompt(T('Dùng «' + src.name + '» cho thị trường nào?\n', 'Use «' + src.nameEn + '» for which market?\n') + MKTS.map(function (m, j) { return (j + 1) + ' = ' + m.name; }).join(' · '));
-    var m = parseInt(pick, 10) - 1;
+    if (mArg === undefined) { pickMkt(src.icon + ' ' + T('Dùng «' + src.name + '» cho thị trường nào?', 'Use «' + src.nameEn + '» for which market?'), function (m) { window.bpIntel(i, m); }); return; }
+    var m = +mArg;
     if (!(m >= 0 && m < MKTS.length)) return;
     var cost = src.cost * (S.sel.prio === 0 ? 0.5 : 1);
     if (S.cash < cost) { $('bp-intel-note').textContent = T('Không đủ tiền cho nguồn này.', "You don't have enough cash for this source."); return; }
@@ -1391,18 +1416,26 @@
         '<button class="bp-opt' + (S.sel.party === 'team' ? ' sel' : '') + (canTeam ? '' : ' opacity-50') + '" data-g="party" data-i="team" onclick="bpParty(\'team\')"' + (canTeam ? '' : ' disabled') + '>👥 ' + T('Cả đội lên đảo', 'Full team') + '<small>' + T('−0,2 tỷ · +10% tri thức, +3 năng lực, giảm thiệt hại khủng hoảng', '−0.2 bn · +10% insight, +3 capability, cushions crises') + '</small></button>' +
       '</div>';
   }
+  // Bề ngang cảnh 3D còn trống (màn rộng: trừ bảng quyết định #bp3d-col bên phải) – hẹp thì xếp 5 ô Ưu tiên thành 2 hàng.
+  function choiceNarrow() { var col = $('bp3d-col'), w = window.innerWidth; if (col && w >= 1024 && getComputedStyle(col).display !== 'none') w = Math.min(w, col.getBoundingClientRect().left); return w < 900; }
+  // Lý do ô 🔒 Chốt quý còn khoá – hiện thành chú thích khi chạm ô trong cảnh 3D.
+  function lockWhy() {
+    if (S.sel.prio === null) return T('Chọn 1 Ưu tiên của quý trước đã.', 'Pick a Priority for the quarter first.');
+    if (S.sel.enter !== null && S.sel.shipMode == null) return T('Đã chọn thâm nhập ' + MKTS[S.sel.enter].name + ' – chọn thêm cách vận chuyển (🚤 Đường biển / ✈️ Hỏa tốc) ở bảng bên cạnh hoặc chạm trạm quanh đảo.', 'You picked ' + MKTS[S.sel.enter].name + ' – also pick a shipping method (🚤 Sea / ✈️ Express) in the side panel or tap a kiosk by the island.');
+    return '';
+  }
   function pushChoices() {
     if (!window.__bp3dChoices || S.phase !== 'dec') return;
-    var narrow = window.innerWidth < 760;
+    var narrow = choiceNarrow();
     var ready = S.sel.prio !== null && (S.sel.enter === null || S.sel.shipMode != null);
-    var prio = PRIOS.map(function (p, i) { return { icon: p.icon, label: T(p.name, p.nameEn), sel: S.sel.prio === i, enabled: true, onPick: function () { window.bpPick('prio', i); } }; });
-    var bud = BUDGETS.map(function (b, i) { return { icon: b.icon, label: T(b.name, b.nameEn), sel: S.sel.budget === i, enabled: true, onPick: function () { window.bpPick('bud', i); } }; });
-    var commit = { icon: '🔒', label: T('Chốt quý này', 'Lock in quarter'), sel: false, enabled: ready, onPick: function () { if (ready) window.bpCommit(); } };
+    var prio = PRIOS.map(function (p, i) { return { g: 'prio', icon: p.icon, label: T(p.name, p.nameEn), sel: S.sel.prio === i, enabled: true, onPick: function () { window.bpPick('prio', i); } }; });
+    var bud = BUDGETS.map(function (b, i) { return { g: 'bud', icon: b.icon, label: T(b.name, b.nameEn), sel: S.sel.budget === i, enabled: true, onPick: function () { window.bpPick('bud', i); } }; });
+    var commit = { g: 'commit', icon: '🔒', label: T('Chốt quý này', 'Lock in quarter'), sel: false, enabled: ready, why: lockWhy(), onPick: function () { if (ready) window.bpCommit(); } };
     lastNarrow = narrow;
     window.__bp3dChoices(narrow ? [prio.slice(0, 3), prio.slice(3), bud, [commit]] : [prio, bud, [commit]]);
   }
   var lastNarrow = null;
-  window.addEventListener('resize', function () { if ((window.innerWidth < 760) !== lastNarrow) pushChoices(); });
+  window.addEventListener('resize', function () { if (choiceNarrow() !== lastNarrow) pushChoices(); });
   function syncDec() {
     renderShipPicker();
     document.querySelectorAll('[data-g="prio"]').forEach(function (b) { b.classList.toggle('sel', Number(b.dataset.i) === S.sel.prio); });
@@ -1413,6 +1446,9 @@
     if (btn) { btn.disabled = !ready; btn.style.opacity = ready ? 1 : 0.5; }
     pushChoices();
     var note = $('bp-dec-note');
+    // Cảnh 3D đang giữ các ô quyết định (HTML Ưu tiên/Mức vận hành/Chốt bị ẩn): đưa ghi chú «🔮 Dự báo Lumina» + nhắc chọn vận chuyển lên ngay dưới khối vận chuyển cho dễ thấy.
+    var shipSec = $('bp-ship-section');
+    if (note && shipSec && document.body.classList.contains('bp3d-choice-hud') && shipSec.nextElementSibling !== note) shipSec.insertAdjacentElement('afterend', note);
     if (note) {
       if (S.sel.enter !== null) {
         var fr = forecastRange(S.sel.enter, S.sel.enterMode);
@@ -1773,7 +1809,6 @@
       RIVAL.name + ' just expanded into <b>' + MKTS[rivalEntered].name + '</b> – competition there just got tougher.'
     ));
     addLog(customerVoice(S.sel.budget, qProfit));
-    save();
     // Thua sớm?
     if (S.lowQ >= 2) return bpEnd('cash', evOut);
     if (S.rep < 15) return bpEnd('rep');
@@ -1791,6 +1826,8 @@
         S.usedEv.push(preDrawnEv.id);
       }
     }
+    // Lưu SAU khi đã sang quý mới – lưu trước S.q++ thì «Tiếp tục ván» chơi lại quý vừa chốt (ván thành 7 quý).
+    save();
     evtPostCache = { qDone: S.q, data: qLinesData, delta: qSnapshot ? {
       cash: S.cash - qSnapshot.cash, rep: S.rep - qSnapshot.rep, capab: S.capab - qSnapshot.capab,
       resil: S.resil - qSnapshot.resil, susts: S.susts - qSnapshot.susts, profit: S.profit - qSnapshot.profit,
@@ -1818,8 +1855,8 @@
       total: Math.round((0.3 * pS + 0.2 * clamp(S.rep) + 0.2 * clamp(S.capab) + 0.15 * aS + 0.15 * sS) * breadth) };
   }
   // reason: null (kết thúc bình thường) · 'cash' (cạn tiền 2 quý) · 'rep' (uy tín khủng hoảng).
-  // lastEvOut giữ nguyên câu kết quả lựa chọn cuối cùng (đã chốt ngôn ngữ lúc
-  // bấm) – chỉ phần khung câu (nhãn, câu dẫn) được dịch lại khi vẽ lại màn.
+  // lastEvOut giữ biến cố cuối cùng (đối tượng sự kiện, có t/tEn) – vẽ lại
+  // song ngữ được khi đổi ngôn ngữ trên màn kết thúc.
   var endReason = null, lastEvOut = '', endCelebrated = false;
   function bpEnd(reason, evOut) {
     localStorage.removeItem('bizon-bp-save');
@@ -1827,7 +1864,8 @@
     $('bp-end').classList.remove('hidden');
     if (window.BPTour) BPTour.close(); // tour đang đè (vd. "Tín hiệu thị trường") không được còn lại trên màn kết thúc
     endReason = reason;
-    if (evOut !== undefined) lastEvOut = evOut;
+    // Kết thúc vì cạn vốn: chỉ nêu TÊN biến cố cuối (trung tính) – không chép câu kết quả lựa chọn (có thể là lời khen «lên trình rõ rệt») vào màn thua.
+    if (evOut !== undefined) lastEvOut = window.__bpEv || '';
     fadeIn('bp-end');
     renderResultsScreen();
   }
@@ -1847,15 +1885,16 @@
     $('bp-breakdown').innerHTML = rows.map(function (r) {
       return '<div><div class="flex justify-between text-[12px] font-bold"><span>' + r[0] + '</span><span>' + r[1] + '</span></div><div class="bp-bar mt-1"><i style="width:' + r[1] + '%"></i></div></div>';
     }).join('');
+    var nPlayed = Math.min(6, endReason ? S.q + 1 : S.q); // thua sớm (cạn vốn/uy tín) thì S.q chưa tăng cho quý vừa chơi
     $('bp-rival-final').innerHTML = raceHtml(S.profit, S.rival.profit) +
       '<p class="text-[11px] opacity-60 mt-2">' + (S.profit >= S.rival.profit ?
-        T('🏆 Bạn đã vượt qua ' + RIVAL.name + ' trong cuộc đua lợi nhuận 6 quý.', '🏆 You outpaced ' + RIVAL.name + ' in the 6-quarter profit race.') :
+        T('🏆 Bạn đã vượt qua ' + RIVAL.name + ' trong cuộc đua lợi nhuận ' + nPlayed + ' quý.', '🏆 You outpaced ' + RIVAL.name + ' in the ' + nPlayed + '-quarter profit race.') :
         T('🐉 ' + RIVAL.name + ' đã về đích trước – thử lại để soán ngôi.', '🐉 ' + RIVAL.name + ' finished ahead – try again to take the lead.')) + '</p>';
     $('bp-rival-final').innerHTML += duelChartHtml();
     if (endReason === 'cash') {
       $('bp-medal').textContent = '💸';
       $('bp-title').textContent = T('Cạn vốn', 'Out of Cash');
-      $('bp-sub').textContent = T('Hai quý liên tiếp âm tiền mặt – hội đồng buộc dừng hành trình. ', 'Two consecutive quarters of negative cash – the board halts the journey. ') + lastEvOut +
+      $('bp-sub').textContent = T('Hai quý liên tiếp âm tiền mặt – hội đồng buộc dừng hành trình. ', 'Two consecutive quarters of negative cash – the board halts the journey. ') + (lastEvOut && lastEvOut.t ? T('Biến cố cuối: «' + lastEvOut.t + '».', 'Last event: «' + (lastEvOut.tEn || lastEvOut.t) + '».') : '') +
         T(' Báo cáo dưới đây cho thấy chuỗi quyết định dẫn tới kết cục này.', ' The report below shows the chain of decisions that led to this outcome.');
     } else if (endReason === 'rep') {
       $('bp-medal').textContent = '📉';
@@ -2126,11 +2165,14 @@
   /* ================= LƯU / KHÔI PHỤC ================= */
   function save() {
     try {
-      localStorage.setItem('bizon-bp-save', JSON.stringify({ seed: seed, S: S, H: H }));
+      localStorage.setItem('bizon-bp-save', JSON.stringify({ seed: seed, S: S, H: H, pre: preDrawnEv ? preDrawnEv.id : null, preM: preDrawnMissionAhead }));
     } catch (e) {}
   }
   window.bpStart = function () {
     localStorage.removeItem('bizon-bp-save');
+    // Ván mới (không phải «Tiếp tục ván»): xoá sao nhiệm vụ quý & lựa chọn đối đầu của ván cũ cùng doanh nghiệp – bp3d.js nghe 'bp:newgame' để xoá cả bản trong bộ nhớ.
+    try { localStorage.removeItem('bizon-bp3d-quests'); localStorage.removeItem('bizon-bp3d-duels'); } catch (e) {}
+    try { window.dispatchEvent(new CustomEvent('bp:newgame')); } catch (e) {}
     var f = F();
     S.cash = f.cash; S.rep = f.rep; S.capab = f.capab; S.susts = f.susts;
     $('bp-intro').classList.add('hidden');
@@ -2148,6 +2190,7 @@
       Object.keys(d.S).forEach(function (k) { S[k] = d.S[k]; });
       if (typeof applyHome === 'function') applyHome();
       d.H.forEach(function (h, i) { H[i] = h; });
+      preDrawnEv = EVENTS.filter(function (e) { return e.id === d.pre; })[0] || null; preDrawnMissionAhead = !!d.preM;
       $('bp-intro').classList.add('hidden');
       $('bp-play').classList.remove('hidden');
       stageObs();

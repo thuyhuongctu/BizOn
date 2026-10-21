@@ -52,6 +52,7 @@
   }
   var tries = 0;
   (function wait() { mountEntry(); if (!$('bp-negot-enter') && ++tries < 40) setTimeout(wait, 250); })();
+  window.addEventListener('bizon:langchange', function () { var b = $('bp-negot-enter'); if (b) { b.title = T('Đàm phán', 'Negotiate'); b.textContent = T('🤝 Đàm phán', '🤝 Negotiate'); } });
 
   window.BPNegotiate = { open: function () { window.Negotiate.open(buildConfig()); } };
 })();

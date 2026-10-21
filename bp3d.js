@@ -713,7 +713,7 @@ function sync(t) {
     }
     if (md !== null && md !== undefined && I.rival && !I.duel) {
       I.duel = duelFx(I); I.rival.rotation.y = Math.PI / 2;
-      if (!justStarted) { setTimeout(() => window.__bp3dDuel && window.__bp3dDuel(m), 1600); sfx('clash'); say('⚔️ ' + tr('Đối đầu ', 'Face-off with ') + (B.RIVAL ? B.RIVAL.name : 'Kim Long') + tr(' tại ', ' in ') + MK[m].name, 4200); }
+      if (!justStarted && !ended) { setTimeout(() => window.__bp3dDuel && window.__bp3dDuel(m), 1600); sfx('clash'); say('⚔️ ' + tr('Đối đầu ', 'Face-off with ') + (B.RIVAL ? B.RIVAL.name : 'Kim Long') + tr(' tại ', ' in ') + MK[m].name, 4200); }
     }
     const st = md !== null && md !== undefined ? MODE_ICON[md] + ' ' + tr('đã vào', 'entered') : kn >= 60 ? '🌤️ ' + tr('đã rõ', 'clear') : '🌫️ ' + tr('tri thức ', 'intel ') + kn + '%';
     const vk = userKey || key, far = vk === 'ov' || vk === 'intro';
@@ -753,7 +753,7 @@ R.domElement.addEventListener('pointerup', e => {
   if (PP.mode === 'stamp' && PP.t > 2.4 && PP.t < 4.1) { PP.t = 4.1; return; }
   const r = R.domElement.getBoundingClientRect(); ptr.set((e.clientX - r.left) / r.width * 2 - 1, -(e.clientY - r.top) / r.height * 2 + 1);
   ray.setFromCamera(ptr, cam); const h = ray.intersectObjects(hits, false)[0]; if (!h) return;
-  if (h.object.userData.choice) { h.object.userData.choice.onPick(); sfx('pop'); return; }
+  if (h.object.userData.choice) { const c = h.object.userData.choice; if (c.enabled === false) { if (c.why) say('🔒 ' + c.why, 5200); return; } c.onPick(); sfx('pop'); return; }
   const B = window.__bp;
   if (h.object.userData.kioskMode !== undefined && B && B.MODES && B.S) {
     const mode = h.object.userData.kioskMode, mk = h.object.userData.kioskM;
@@ -1309,15 +1309,23 @@ const duelCard = document.createElement('div');
 duelCard.style.cssText = 'position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.9);opacity:0;pointer-events:none;transition:all .3s;z-index:8;width:min(440px,calc(100% - 20px));max-height:calc(100% - 20px);overflow:auto;background:#fffaf0;color:#033337;border-radius:20px;padding:14px;box-shadow:0 8px 0 rgba(168,50,42,.35);border:3px solid #e8472d';
 wrap.appendChild(duelCard);
 const DK = 'bizon-bp3d-duels'; let DD = {}; try { DD = JSON.parse(localStorage.getItem(DK) || '{}'); } catch (e) {}
+// Ván mới (bpStart phát 'bp:newgame', không phát khi «Tiếp tục ván»): bỏ sao nhiệm vụ & lựa chọn đối đầu của ván cũ cùng doanh nghiệp.
+addEventListener('bp:newgame', () => { QS = {}; qSave(); qBox._h = null; DD = {}; try { localStorage.removeItem(DK); } catch (e) {} islands.forEach(I => { if (I.rival) I.rival.userData.retreat = 0; }); });
+const gameOver = () => { const e = $('bp-end'); return !!e && !e.classList.contains('hidden'); };
+// Hàng đợi lớp phủ: thẻ đối đầu / câu hỏi ôn / biểu đồ quý chỉ hiện khi không còn lớp phủ nào khác đang mở (đua sau quý, đóng dấu, Kim Long, tour…).
+const cardOn = c => c && +c.style.opacity > 0.5 && c.style.pointerEvents === 'auto';
+function modalBusy() { return !!($('bp-rival-arena') || $('bp-rival-detail') || document.querySelector('.sg-ov') || $('bp-tour-next') || $('bp-mkt-pick')) || cardOn(duelCard) || cardOn(window.__bp3dQzCard); }
+function whenFree(fn, n = 0) { if (modalBusy()) { if (n < 120) setTimeout(() => whenFree(fn, n + 1), 700); return; } fn(); }
 window.__bp3dDuel = m => {
-  const B = window.__bp; if (!B || !B.S) return; const key = (B.S.firm | 0) + ':' + m; if (DD[key] !== undefined) return;
+  const B = window.__bp; if (!B || !B.S || gameOver()) return; const key = (B.S.firm | 0) + ':' + m; if (DD[key] !== undefined) return;
+  if (modalBusy()) { whenFree(() => window.__bp3dDuel(m)); return; }
   duelCard.innerHTML = '<div style="font:800 11px/1 inherit;letter-spacing:.08em;text-transform:uppercase;color:#e8472d">⚔️ ' + tr('Đối đầu tại ', 'Face-off in ') + MK[m].icon + ' ' + MK[m].name + '</div>' +
     '<div style="font:800 17px/1.3 inherit;margin:6px 0 4px">' + tr('Kim Long vừa hạ giá 15% ngay cạnh cửa hàng của bạn. Đội phản ứng thế nào?', 'Kim Long just cut prices 15% right next to your store. How does the team respond?') + '</div>' +
     '<div style="display:flex;flex-direction:column;gap:8px;margin-top:10px">' + DUEL_OPT.map((o, i) => '<button type="button" data-i="' + i + '" style="text-align:left;border:2px solid rgba(3,51,55,.15);background:#fff;border-radius:14px;padding:10px 12px;cursor:pointer;font:700 13px/1.35 inherit;color:#033337;min-height:44px"><b style="font-size:14px">' + o.ic + ' ' + tr(o.vi, o.en) + '</b><br><span style="opacity:.7;font-size:11.5px">' + tr('Tiền ', 'Cash ') + o.fx.cash + tr(' tỷ · Uy tín ', 'B · Rep ') + (o.fx.rep > 0 ? '+' : '') + o.fx.rep + tr(' · Chống chịu +', ' · Resilience +') + o.fx.resil + '</span></button>').join('') + '</div>';
   duelCard.style.pointerEvents = 'auto'; duelCard.style.opacity = 1; duelCard.style.transform = 'translate(-50%,-50%) scale(1)'; userKey = 'm' + m; autoCam = true;
   duelCard.onclick = e => {
     const b = e.target.closest('button[data-i]'); if (!b) return; const o = DUEL_OPT[+b.dataset.i], S = B.S;
-    if (b.dataset.done) { duelCard.style.opacity = 0; duelCard.style.pointerEvents = 'none'; return; }
+    if (b.dataset.done || gameOver()) { duelCard.style.opacity = 0; duelCard.style.pointerEvents = 'none'; return; } // hết ván rồi thì không đổi chỉ số nữa
     DD[key] = +b.dataset.i; try { localStorage.setItem(DK, JSON.stringify(DD)); } catch (er) {}
     S.cash = Math.round((S.cash + o.fx.cash) * 10) / 10; S.rep = Math.max(0, Math.min(100, S.rep + o.fx.rep)); if (S.resil != null) S.resil = Math.max(0, Math.min(100, S.resil + o.fx.resil));
     (S.foot = S.foot || []).push(tr('⚔️ ' + MK[m].name + ': chọn "' + o.vi + '" khi đối đầu Kim Long.', '⚔️ ' + MK[m].name + ': chose "' + o.en + '" against Kim Long.'));
@@ -1355,10 +1363,14 @@ TB.insertBefore(cBtn, TB.children[2] || null); cBtn.addEventListener('click', ()
 let lastQ = -1; anim.push(() => { const B = window.__bp; if (!B || !B.S || B.S.phase === 'end') return; if (B.S.phase === 'obs' && B.S.q !== lastQ) { lastQ = B.S.q; if (LIFE.t > 3) setTimeout(startConvo, 1200); } });
 
 /* ---------- sổ tay học tập + câu hỏi ôn sau mỗi lần thâm nhập ---------- */
-function mkPanel(w) { const p = document.createElement('div'); p.style.cssText = 'position:absolute;left:10px;z-index:7;width:min(' + w + 'px,calc(100% - 20px));overflow:auto;background:rgba(255,250,240,.98);color:#033337;border-radius:18px;padding:14px;box-shadow:0 6px 0 rgba(3,51,55,.2);display:none;font:600 12.5px/1.5 inherit'; wrap.appendChild(p); return p; }
+function mkPanel(w) { const p = document.createElement('div'); p.style.cssText = 'position:absolute;left:10px;z-index:7;width:min(' + w + 'px,calc(100% - 20px));overflow:auto;background:rgba(255,250,240,.98);color:#033337;border-radius:18px;padding:14px;box-shadow:0 6px 0 rgba(3,51,55,.2);display:none;font:600 12.5px/1.5 inherit'; wrap.appendChild(p);
+  p.addEventListener('click', e => { if (e.target.closest('[data-x]')) p.style.display = 'none'; }); return p; }
+// nút ✕ đóng panel (góc phải tiêu đề) – dùng chung cho sổ tay & biểu đồ quý
+const xBtn = () => '<button type="button" data-x aria-label="' + tr('Đóng', 'Close') + '" style="float:right;margin:-6px -6px 0 8px;width:36px;height:36px;border:0;border-radius:50%;background:#f2eadc;color:#033337;font:800 15px/1 inherit;cursor:pointer">✕</button>';
 const hbPanel = mkPanel(460), chPanel = mkPanel(460);
 const allPanels = () => [hbPanel, chPanel, bPanel, sPanel];
-function openPanel(p, draw) { const on = p.style.display === 'none'; allPanels().forEach(x => x.style.display = 'none'); if (on) { draw(); p.style.display = 'block'; aboveTB(p, 8); } }
+// force: luôn MỞ (không bật/tắt) – dùng khi tự mở biểu đồ sau quý, để quý sau không vô tình đóng lại panel đang mở.
+function openPanel(p, draw, force) { const on = force || p.style.display === 'none'; allPanels().forEach(x => x.style.display = 'none'); if (on) { draw(); p.style.display = 'block'; aboveTB(p, 8); } }
 const CONCEPTS = [
   ['🪜', 'Thang cam kết nguồn lực (Resource commitment ladder)', 'Resource commitment ladder', 'Doanh nghiệp thường đi từ cách tốn ít vốn, ít rủi ro (bán qua nền tảng số – <i>digital platform</i>) lên cách cam kết cao hơn (xuất khẩu trực tiếp – <i>direct export</i>, liên doanh – <i>joint venture</i>) khi đã hiểu thị trường. Mô hình Uppsala (<i>Uppsala model</i>) gọi đây là quốc tế hoá theo từng bước (<i>incremental internationalisation</i>) (Johanson &amp; Vahlne, 1977, 2009).', 'Firms usually move from low-capital, low-risk entry (digital platforms) toward higher commitment (direct export, joint ventures) as they learn the market. The Uppsala model calls this incremental internationalisation (Johanson &amp; Vahlne, 1977, 2009).'],
   ['🧭', 'Khoảng cách chênh lệch về trình độ phát triển kinh tế xã hội (Psychic distance)', 'Psychic distance', 'Chênh lệch về trình độ phát triển kinh tế - xã hội, cùng khác biệt về ngôn ngữ, văn hoá, luật lệ và thói quen mua sắm, làm việc kinh doanh ở nước ngoài khó hơn (Johanson &amp; Wiedersheim-Paul, 1975). Thị trường càng "xa" (chênh lệch càng lớn), càng cần thêm tri thức thị trường (<i>market knowledge</i>) trước khi cam kết vốn (<i>resource commitment</i>) (Ghemawat, 2001).', 'Gaps in socio-economic development, together with differences in language, culture, law and buying habits, make business abroad harder (Johanson &amp; Wiedersheim-Paul, 1975). The more "distant" a market (the wider the gap), the more market knowledge you need before committing resources (Ghemawat, 2001).'],
@@ -1380,7 +1392,7 @@ const REFS = [
 function drawHandbook() {
   const B = window.__bp, MD = B && B.MODES ? B.MODES : [];
   const bar = v => '<span style="display:inline-block;width:52px;height:7px;border-radius:9px;background:rgba(3,51,55,.1);vertical-align:middle"><i style="display:block;height:100%;width:' + Math.round(v * 100) + '%;border-radius:9px;background:#2f8a8c"></i></span>';
-  hbPanel.innerHTML = '<div style="font:800 15px/1.2 inherit;margin-bottom:10px">📘 ' + tr('Sổ tay quốc tế hoá', 'Internationalisation handbook') + '</div>' +
+  hbPanel.innerHTML = xBtn() + '<div style="font:800 15px/1.2 inherit;margin-bottom:10px">📘 ' + tr('Sổ tay quốc tế hoá', 'Internationalisation handbook') + '</div>' +
     '<div style="font:800 12px/1 inherit;text-transform:uppercase;letter-spacing:.05em;opacity:.6;margin-bottom:6px">' + tr('6 phương thức thâm nhập (AIBIS)', '6 entry modes (AIBIS)') + '</div>' +
     '<div style="display:grid;gap:6px">' + MD.map(md => '<div style="background:#fff;border-radius:12px;padding:8px 10px"><b style="font-size:13.5px">' + md.icon + ' ' + tr(md.name, md.nameEn) + '</b> <span style="opacity:.6">· ' + tr(md.note, md.noteEn) + '</span>' +
       '<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px 12px;margin-top:5px;font-size:11.5px">' +
@@ -1405,9 +1417,10 @@ const QUIZ = [
   [['Rủi ro lớn nhất khi đi cùng đối tác địa phương?', 'Biggest risk of a local partner?'], [['Không có mạng lưới phân phối', 'No distribution network'], ['Phụ thuộc vào đối tác và phải chia lợi nhuận', 'Dependence on the partner and shared profits'], ['Chi phí vận hành quá thấp', 'Operating costs too low']], 1],
 ];
 const QZK = 'bizon-bp3d-quiz'; let QZ = {}; try { QZ = JSON.parse(localStorage.getItem(QZK) || '{}'); } catch (e) {}
-const qzCard = document.createElement('div'); qzCard.style.cssText = duelCard.style.cssText.replace('#e8472d', '#2f8a8c').replace('rgba(168,50,42,.35)', 'rgba(47,138,140,.35)'); wrap.appendChild(qzCard);
+const qzCard = document.createElement('div'); qzCard.style.cssText = duelCard.style.cssText.replace('#e8472d', '#2f8a8c').replace('rgba(168,50,42,.35)', 'rgba(47,138,140,.35)'); wrap.appendChild(qzCard); window.__bp3dQzCard = qzCard;
 function quiz(md) {
-  const B = window.__bp; if (!B || !B.S) return; const key = (B.S.firm | 0) + ':' + md; if (QZ[key] !== undefined || !QUIZ[md]) return;
+  const B = window.__bp; if (!B || !B.S || gameOver()) return; const key = (B.S.firm | 0) + ':' + md; if (QZ[key] !== undefined || !QUIZ[md]) return;
+  if (modalBusy()) { whenFree(() => quiz(md)); return; }
   const [qq, opts, ok] = QUIZ[md];
   qzCard.innerHTML = '<div style="font:800 11px/1 inherit;letter-spacing:.08em;text-transform:uppercase;color:#2f8a8c">📘 ' + tr('Ôn nhanh · Lumina hỏi', 'Quick check · Lumina asks') + '</div><div style="font:800 16px/1.3 inherit;margin:6px 0 10px">' + tr(qq[0], qq[1]) + '</div>' +
     opts.map((o, i) => '<button type="button" data-i="' + i + '" style="display:block;width:100%;text-align:left;border:2px solid rgba(3,51,55,.15);background:#fff;border-radius:14px;padding:10px 12px;margin-bottom:7px;cursor:pointer;font:700 13px/1.35 inherit;color:#033337;min-height:44px">' + tr(o[0], o[1]) + '</button>').join('');
@@ -1430,37 +1443,55 @@ let hq = null;
 anim.push(() => { const B = window.__bp; if (!B || !B.S) return; const S = B.S, f = S.firm | 0;
   if (S.q === 0 && S.phase === 'obs' && HIST[f] && HIST[f].length && HIST[f][HIST[f].length - 1].q > 0) HIST[f] = [];
   if (hq === S.q) return; const first = hq === null; hq = S.q;
-  const arr = HIST[f] = HIST[f] || []; if (!arr.length || arr[arr.length - 1].q !== S.q) arr.push({ q: S.q, p: +(S.profit || 0).toFixed(2), rv: +((S.rival && S.rival.rev) || 0).toFixed(2), c: S.cash, r: Math.round(S.rep || 0), n: S.entered.filter(v => v !== null && v !== undefined).length, k: Math.round(S.know.reduce((a, b) => a + b, 0) / NMK) });
+  const arr = HIST[f] = HIST[f] || []; if (!arr.length || arr[arr.length - 1].q !== S.q) arr.push({ q: S.q, p: +(S.profit || 0).toFixed(2), rv: +((S.rival && S.rival.rev) || 0).toFixed(2), rp: +((S.rival && S.rival.profit) || 0).toFixed(2), c: +(S.cash || 0).toFixed(2), r: Math.round(S.rep || 0), n: S.entered.filter(v => v !== null && v !== undefined).length, k: Math.round(S.know.reduce((a, b) => a + b, 0) / NMK) });
   try { localStorage.setItem(HK, JSON.stringify(HIST)); } catch (e) {}
-  if (!first && S.q > 0) setTimeout(() => openPanel(chPanel, drawChart), 2600);
+  // Tự mở biểu đồ một lần ở màn kết quả quý ('evt'), chờ các lớp phủ khác (đua sau quý, đóng dấu…) đóng hết – không mở trong pha Quyết định.
+  if (!first && S.q > 0 && S.q < NQ) { const q0 = S.q; setTimeout(() => whenFree(() => { const S2 = window.__bp && window.__bp.S; if (S2 && S2.q === q0 && S2.phase === 'evt' && !gameOver()) openPanel(chPanel, drawChart, true); }), 2600); }
 });
-function svgLine(series, W, H, cols, labels) {
+// Sang pha Quyết định: đóng biểu đồ để không che các ô lựa chọn 3D.
+let chPh = null; anim.push(() => { const B = window.__bp, ph = B && B.S ? B.S.phase : null; if (ph === chPh) return; chPh = ph; if (ph === 'dec') chPanel.style.display = 'none'; });
+const nf = (v, d = 2) => (Math.round((+v || 0) * Math.pow(10, d)) / Math.pow(10, d)).toLocaleString(EN() ? 'en-US' : 'vi-VN', { maximumFractionDigits: d }); // số thập phân theo ngôn ngữ (VI dùng dấu phẩy)
+function svgLine(series, W, H, cols, labels, xl) {
   const all = series.flat(), mx = Math.max(1, ...all), mn = Math.min(0, ...all), n = Math.max(2, series[0].length), x = i => 30 + i * (W - 44) / (n - 1), y = v => H - 22 - (v - mn) / (mx - mn || 1) * (H - 36);
   let s = '<svg viewBox="0 0 ' + W + ' ' + H + '" style="width:100%;height:auto;display:block">';
-  for (let g = 0; g <= 3; g++) { const v = mn + (mx - mn) * g / 3; s += '<line x1="30" x2="' + (W - 10) + '" y1="' + y(v) + '" y2="' + y(v) + '" stroke="rgba(3,51,55,.1)"/><text x="26" y="' + (y(v) + 3) + '" text-anchor="end" font-size="9" fill="#5a6b74">' + v.toFixed(1) + '</text>'; }
-  for (let i = 0; i < n; i++) s += '<text x="' + x(i) + '" y="' + (H - 6) + '" text-anchor="middle" font-size="9" fill="#5a6b74">Q' + i + '</text>';
+  for (let g = 0; g <= 3; g++) { const v = mn + (mx - mn) * g / 3; s += '<line x1="30" x2="' + (W - 10) + '" y1="' + y(v) + '" y2="' + y(v) + '" stroke="rgba(3,51,55,.1)"/><text x="26" y="' + (y(v) + 3) + '" text-anchor="end" font-size="9" fill="#5a6b74">' + nf(v, 1) + '</text>'; }
+  for (let i = 0; i < n; i++) s += '<text x="' + x(i) + '" y="' + (H - 6) + '" text-anchor="middle" font-size="9" fill="#5a6b74">' + (xl ? xl[i] : 'Q' + i) + '</text>';
   series.forEach((ser, k) => { s += '<polyline fill="none" stroke="' + cols[k] + '" stroke-width="2.5" stroke-linejoin="round" points="' + ser.map((v, i) => x(i) + ',' + y(v)).join(' ') + '"/>' + ser.map((v, i) => '<circle cx="' + x(i) + '" cy="' + y(v) + '" r="3" fill="' + cols[k] + '"/>').join(''); });
   return s + '</svg><div style="display:flex;gap:12px;font-size:11px;margin-top:2px">' + labels.map((l, k) => '<span><i style="display:inline-block;width:10px;height:3px;background:' + cols[k] + ';vertical-align:middle;margin-right:4px"></i>' + l + '</span>').join('') + '</div>';
 }
 function drawChart() {
   const B = window.__bp, S = B && B.S, arr = S ? (HIST[S.firm | 0] || []) : [];
-  if (arr.length < 2) { chPanel.innerHTML = '<div style="font:800 15px/1.2 inherit">📈 ' + tr('Kết quả theo quý', 'Quarterly results') + '</div><p style="margin:8px 0 0;opacity:.7">' + tr('Biểu đồ hiện sau khi hết quý đầu tiên.', 'The chart appears after the first quarter.') + '</p>'; return; }
-  const a = arr[arr.length - 1], b = arr[arr.length - 2], d = (v, u = '') => (v > 0 ? '+' : '') + (Math.round(v * 10) / 10) + u;
+  if (arr.length < 2) { chPanel.innerHTML = xBtn() + '<div style="font:800 15px/1.2 inherit">📈 ' + tr('Kết quả theo quý', 'Quarterly results') + '</div><p style="margin:8px 0 0;opacity:.7">' + tr('Biểu đồ hiện sau khi hết quý đầu tiên.', 'The chart appears after the first quarter.') + '</p>'; return; }
+  const a = arr[arr.length - 1], b = arr[arr.length - 2], d = (v, u = '') => (v > 0 ? '+' : '') + nf(v, 1) + u, xl = arr.map(x => x.q ? 'Q' + x.q : tr('Đầu', 'Start'));
   const chip = (l, v, dv, good) => '<div style="background:#fff;border-radius:12px;padding:7px 9px"><div style="font-size:10.5px;opacity:.6;text-transform:uppercase;letter-spacing:.04em">' + l + '</div><b style="font-size:16px">' + v + '</b> <span style="font-size:11px;font-weight:800;color:' + (good ? '#3f8a44' : dv === 0 ? '#5a6b74' : '#c0443a') + '">' + d(dv) + '</span></div>';
-  chPanel.innerHTML = '<div style="font:800 15px/1.2 inherit;margin-bottom:8px">📈 ' + tr('Kết quả sau quý ', 'Results after quarter ') + a.q + '</div>' +
-    '<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px">' + chip(tr('Lợi nhuận lũy kế (tỷ)', 'Cum. profit (B)'), a.p, a.p - b.p, a.p >= b.p) + chip(tr('Tiền mặt (tỷ)', 'Cash (B)'), a.c, +(a.c - b.c).toFixed(1), a.c >= b.c) + chip(tr('Uy tín', 'Reputation'), a.r, a.r - b.r, a.r >= b.r) + chip(tr('Tri thức TB', 'Avg. intel'), a.k + '%', a.k - b.k, a.k >= b.k) + '</div>' +
-    '<div style="background:#fff;border-radius:12px;padding:8px 10px;margin-top:8px"><b style="font-size:12px">' + tr('Bạn so với Kim Long', 'You vs. Kim Long') + '</b>' + svgLine([arr.map(x => x.p), arr.map(x => x.rv)], 400, 150, ['#2f8a8c', '#e8472d'], [tr('Lợi nhuận lũy kế của bạn', 'Your cum. profit'), tr('Doanh thu ước tính Kim Long', 'Kim Long est. revenue')]) + '</div>' +
-    '<div style="background:#fff;border-radius:12px;padding:8px 10px;margin-top:8px"><b style="font-size:12px">' + tr('Uy tín & tri thức', 'Reputation & intel') + '</b>' + svgLine([arr.map(x => x.r), arr.map(x => x.k)], 400, 130, ['#f2b53a', '#6a7fdb'], [tr('Uy tín', 'Reputation'), tr('Tri thức trung bình %', 'Avg. intel %')]) + '</div>' +
-    '<p style="font-size:11px;opacity:.6;margin:8px 0 0">' + tr('Đường đỏ là doanh thu ước tính của đối thủ, khác đơn vị với lợi nhuận của bạn – chỉ để so xu hướng.', 'The red line is the rival\'s estimated revenue, a different unit from your profit – compare trends only.') + '</p>';
+  chPanel.innerHTML = xBtn() + '<div style="font:800 15px/1.2 inherit;margin-bottom:8px">📈 ' + tr('Kết quả sau quý ', 'Results after quarter ') + a.q + '</div>' +
+    '<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px">' + chip(tr('Lợi nhuận lũy kế (tỷ)', 'Cum. profit (B)'), nf(a.p), a.p - b.p, a.p >= b.p) + chip(tr('Tiền mặt (tỷ)', 'Cash (B)'), nf(a.c), +(a.c - b.c).toFixed(1), a.c >= b.c) + chip(tr('Uy tín', 'Reputation'), a.r, a.r - b.r, a.r >= b.r) + chip(tr('Tri thức TB', 'Avg. intel'), a.k + '%', a.k - b.k, a.k >= b.k) + '</div>' +
+    '<div style="background:#fff;border-radius:12px;padding:8px 10px;margin-top:8px"><b style="font-size:12px">' + tr('Bạn so với Kim Long', 'You vs. Kim Long') + '</b>' + svgLine([arr.map(x => x.p), arr.map(x => x.rp || 0)], 400, 150, ['#2f8a8c', '#e8472d'], [tr('Lợi nhuận lũy kế của bạn', 'Your cum. profit'), tr('Lợi nhuận ước tính Kim Long', 'Kim Long est. profit')], xl) + '</div>' +
+    '<div style="background:#fff;border-radius:12px;padding:8px 10px;margin-top:8px"><b style="font-size:12px">' + tr('Uy tín & tri thức', 'Reputation & intel') + '</b>' + svgLine([arr.map(x => x.r), arr.map(x => x.k)], 400, 130, ['#f2b53a', '#6a7fdb'], [tr('Uy tín', 'Reputation'), tr('Tri thức trung bình %', 'Avg. intel %')], xl) + '</div>' +
+    '<p style="font-size:11px;opacity:.6;margin:8px 0 0">' + tr('Đường đỏ là lợi nhuận lũy kế ước tính của đối thủ – cùng phép so với thẻ «Cuộc đua» và màn kết thúc.', 'The red line is the rival\'s estimated cumulative profit – the same comparison as the «Race» card and the final screen.') + '</p>';
 }
 const chBtn = document.createElement('button'); chBtn.type = 'button'; chBtn.className = bBtn.className; chBtn.textContent = '📈';
 chBtn.setAttribute('aria-label', tr('Kết quả theo quý', 'Quarterly results')); TB.appendChild(chBtn); chBtn.addEventListener('click', () => openPanel(chPanel, drawChart));
+// Đổi ngôn ngữ giữa ván (site-ui.js phát 'bizon:langchange'): vẽ lại chữ của các nút/khung do bp3d.js tự tạo.
+addEventListener('bizon:langchange', () => {
+  landTxt(); cBtn.textContent = tr('💬 Họp cố vấn', '💬 Advisor huddle'); hbBtn.textContent = tr('📘 Sổ tay', '📘 Handbook');
+  const fb = $('bp3d-full'); if (fb) fb.textContent = document.body.classList.contains('bp3d-full') ? tr('▾ Thu nhỏ', '▾ Shrink') : tr('⤢ Mở rộng', '⤢ Expand');
+  chBtn.setAttribute('aria-label', tr('Kết quả theo quý', 'Quarterly results')); sBtn.setAttribute('aria-label', tr('Tuỳ biến thuyền & đồng phục', 'Customize boat & uniform'));
+  const lb = $('bp3d-list'); if (lb) { lb.title = tr('Xem dạng danh sách', 'View as a list'); lb.setAttribute('aria-label', lb.title); }
+  [...TB.children].forEach(b => { delete b.dataset.icon; delete b.dataset.full; }); compactTB();
+  drawBadges(); qBox._h = null; drawIntroTitle(); drawCover(); drawInside(); drawPage();
+  if (chPanel.style.display !== 'none') drawChart(); if (hbPanel.style.display !== 'none') drawHandbook(); if (sPanel.style.display !== 'none') drawStyle();
+  const ab = $('bp3d-act'); if (ab && !ab.hidden && ab.dataset.m !== undefined) openAct(+ab.dataset.m, true);
+});
 
 /* ---------- màn mở đầu & kết thúc điện ảnh ---------- */
 const introTitle = document.createElement('div');
 introTitle.style.cssText = 'position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;z-index:4;opacity:0;transition:opacity .8s;width:min(560px,92%);background:rgba(3,51,55,.72);border-radius:22px;padding:16px 18px;box-shadow:0 6px 0 rgba(3,51,55,.3)';
+function drawIntroTitle() { // vẽ lại được khi đổi ngôn ngữ
 const introBrand = (window.__bp && window.__bp.BRAND) || { kicker: tr('Quốc tế hoá thương hiệu', 'Brand internationalisation'), title: '🛂 ' + tr('Hộ Chiếu Thương Hiệu', 'Brand Passport') };
 introTitle.innerHTML = '<div style="font:800 12px/1 inherit;letter-spacing:.3em;text-transform:uppercase;color:#fff;text-shadow:0 2px 8px rgba(3,51,55,.6)">BizOn · ' + introBrand.kicker + '</div><div style="font:900 clamp(28px,6vw,54px)/1.05 inherit;color:#fff;margin-top:8px;text-shadow:0 4px 0 #033337,0 8px 24px rgba(3,51,55,.5)">' + introBrand.title + '</div><div style="font:700 14px/1.4 inherit;color:#fff;margin-top:10px;text-shadow:0 2px 6px rgba(3,51,55,.7)">' + tr(NMK + ' thị trường · ' + NQ + ' quý · 1 con thuyền sen từ Vàm Thịnh', NMK + ' markets · ' + NQ + ' quarters · 1 lotus boat from Vàm Thịnh') + '</div>';
+}
+drawIntroTitle();
 const stampEl = document.createElement('div');
 stampEl.style.cssText = 'position:absolute;left:50%;top:44%;transform:translate(-50%,-50%) rotate(-12deg) scale(2.4);opacity:0;pointer-events:none;z-index:5;border:6px solid #c23a30;color:#c23a30;border-radius:16px;padding:10px 22px;font:900 clamp(24px,5vw,42px)/1 inherit;letter-spacing:.08em;background:rgba(255,250,240,.85);transition:transform .35s cubic-bezier(.3,1.6,.5,1),opacity .2s';
 wrap.append(introTitle, stampEl);
@@ -1533,16 +1564,42 @@ function chTex(it) {
   g.font = '800 44px sans-serif'; wrapText(g, it.label, 256, 176, 440, 48);
   const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
 }
+// Vùng canvas KHÔNG bị bảng quyết định (#bp3d-col) che, theo NDC [-1,1]: màn rộng → bảng nằm bên phải (chỉ dùng phần bên trái),
+// điện thoại → bảng là tấm phủ dưới (chỉ dùng phần phía trên); chừa thêm thanh công cụ dưới đáy cảnh 3D.
+function freeNDC() {
+  const cr = R.domElement.getBoundingClientRect(), out = { x0: -1, x1: 1, y0: -1, y1: 1 }; if (!cr.width || !cr.height) return out;
+  const nx = px => (px - cr.left) / cr.width * 2 - 1, ny = py => 1 - (py - cr.top) / cr.height * 2;
+  const col = $('bp3d-col'), pr = col && getComputedStyle(col).display !== 'none' ? col.getBoundingClientRect() : null;
+  if (pr && pr.width > 0 && pr.height > 0 && pr.right > cr.left && pr.left < cr.right && pr.bottom > cr.top && pr.top < cr.bottom) {
+    if (pr.height >= cr.height * 0.6 && pr.left > cr.left + cr.width * 0.25) out.x1 = Math.min(1, nx(pr.left - 12));      // bảng bên phải
+    else if (pr.right < cr.right - cr.width * 0.25 && pr.height >= cr.height * 0.6) out.x0 = Math.max(-1, nx(pr.right + 12)); // (bảng bên trái)
+    else if (pr.top > cr.top + cr.height * 0.2) out.y0 = Math.max(-1, ny(pr.top - 10));                                  // tấm phủ dưới
+  }
+  if (TB && TB !== wrap) { const tb = TB.getBoundingClientRect(); if (tb.height && tb.top > cr.top + cr.height * 0.5) out.y0 = Math.max(out.y0, ny(tb.top - 8)); }
+  return out;
+}
 function layoutChoices() {
   if (!choiceRows) return;
-  const halfH = CH_D * Math.tan(THREE.MathUtils.degToRad(cam.fov / 2)), halfW = halfH * cam.aspect;
-  let y = halfH * CH_TOP;
-  choiceRows.forEach(row => {
-    const n = row.length, w = Math.min(n === 1 ? 1.3 : 1.9, (2 * halfW * 0.92 - CH_GAP * (n - 1)) / n), h = w / 2;
-    row.forEach((o, i) => { const x = -((n - 1) * (w + CH_GAP)) / 2 + i * (w + CH_GAP); o.sp.position.set(x, y - h / 2, -CH_D); o.sp.scale.set(w, h, 1); });
-    y -= h + CH_GAP;
+  const halfH = CH_D * Math.tan(THREE.MathUtils.degToRad(cam.fov / 2)), halfW = halfH * cam.aspect, F = freeNDC();
+  const cx = (F.x0 + F.x1) / 2 * halfW, freeW = (F.x1 - F.x0) * halfW, top = Math.min(CH_TOP, F.y1 - 0.06) * halfH, bot = (F.y0 + 0.04) * halfH;
+  const dims = choiceRows.map(row => { const n = row.length, w = Math.min(n === 1 ? 1.3 : 1.9, (freeW * 0.92 - CH_GAP * (n - 1)) / n); return [w, w / 2]; });
+  const need = dims.reduce((a, d) => a + d[1], 0) + CH_GAP * (dims.length - 1), k = need > top - bot && top > bot ? (top - bot) / need : 1; // thu nhỏ ô nếu không đủ chỗ cho mọi hàng
+  let y = top;
+  choiceRows.forEach((row, r) => {
+    const n = row.length, w = dims[r][0] * k, h = dims[r][1] * k, g = CH_GAP * k;
+    row.forEach((o, i) => { const x = cx - ((n - 1) * (w + g)) / 2 + i * (w + g); o.sp.position.set(x, y - h / 2, -CH_D); o.sp.scale.set(w, h, 1); });
+    y -= h + g;
   });
 }
+// Khung chữ nhật trên màn hình của nhóm ô (it.g: 'prio' | 'bud' | 'commit') – cho tour hướng dẫn (js/bp-tutorial.js) soi đúng chỗ.
+window.__bp3dChoiceRect = g => {
+  if (!choiceRows) return null; const cr = R.domElement.getBoundingClientRect(), v = new THREE.Vector3(); let l = 1e9, t = 1e9, r = -1e9, b = -1e9;
+  cam.updateMatrixWorld();
+  choiceRows.forEach(row => row.forEach(o => { if (g && o.it.g !== g) return; const hw = o.sp.scale.x / 2, hh = o.sp.scale.y / 2;
+    [[-hw, -hh], [hw, hh]].forEach(([dx, dy]) => { v.set(o.sp.position.x + dx, o.sp.position.y + dy, o.sp.position.z); choiceHud.localToWorld(v); v.project(cam);
+      const px = cr.left + (v.x + 1) / 2 * cr.width, py = cr.top + (1 - v.y) / 2 * cr.height; l = Math.min(l, px); r = Math.max(r, px); t = Math.min(t, py); b = Math.max(b, py); }); }));
+  return r > l ? { left: l, top: t, right: r, bottom: b, width: r - l, height: b - t } : null;
+};
 function clearChoices() {
   if (!choiceRows) return;
   choiceRows.forEach(row => row.forEach(o => {

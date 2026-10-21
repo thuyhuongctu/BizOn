@@ -22,8 +22,9 @@
       T('📍 Quý ' + (s.q + 1) + '/6 · 💼 ' + f1(s.cash) + ' tỷ ₫ tiền mặt · ⭐ ' + Math.round(s.rep) + ' uy tín', '📍 Quarter ' + (s.q + 1) + '/6 · 💼 ' + f1(s.cash) + ' bn ₫ cash · ⭐ ' + Math.round(s.rep) + ' reputation'),
       T('🌍 Đã vào ' + entered + '/7 thị trường.', '🌍 Entered ' + entered + '/7 markets.'),
     ];
+    // So LỢI NHUẬN với LỢI NHUẬN ước tính của đối thủ – đúng phép so của HUD (BPRivalIntel.cardHtml(S.profit, S.rival.profit)), không so với doanh thu đối thủ.
     if (s.q === 0) lines.push(T('Gợi ý: mua tình báo trước khi chọn thị trường đầu tiên – đừng vào mù.', 'Tip: buy intel before picking your first market – don\'t go in blind.'));
-    else if (s.profit < s.rival.rev) lines.push(T('Kim Long Exports đang dẫn trước – xem lại thị trường nào bạn chưa khai thác hết.', 'Kim Long Exports is ahead – review which markets you haven\'t fully tapped yet.'));
+    else if (s.profit < s.rival.profit) lines.push(T('Kim Long Exports đang dẫn trước – xem lại thị trường nào bạn chưa khai thác hết.', 'Kim Long Exports is ahead – review which markets you haven\'t fully tapped yet.'));
     else lines.push(T('Bạn đang dẫn trước – giữ nhịp, đừng chủ quan ở các quý cuối.', "You're ahead – keep the pace, don't get complacent in the final quarters."));
     return lines.join('\n');
   }
@@ -48,7 +49,7 @@
       npcs: [
         { id: 'rival', img: 'assets/character/firms/kim-long-rival-cut.webp', icon: '🐉', accent: '#c0392b', name: 'Kim Long Exports', x: 1100, y: 620,
           talk: function (api) {
-            if (window.BPRivalIntel && s) { api.close(); window.BPRivalIntel.showDetail(s.profit, s.rival.rev); }
+            if (window.BPRivalIntel && s) { api.close(); window.BPRivalIntel.showDetail(s.profit, s.rival.profit); }
             else api.dialogue({ name: 'Kim Long Exports', icon: '🐉', img: 'assets/character/firms/kim-long-rival-cut.webp' }, T('Thần tốc mở rộng, chiếm chỗ trước khi đối thủ kịp vào.', 'Expand fast – claim ground before anyone else arrives.'), [{ text: 'OK', primary: true, onPick: api.close }]);
           } },
       ],
@@ -82,6 +83,8 @@
   }
   var tries = 0;
   (function wait() { if ($('bp-play')) mountEntry(); if (++tries < 40) setTimeout(wait, 250); })();
+  // Đổi ngôn ngữ giữa ván: cập nhật chữ nút (giữ nguyên chấm «tin mới» nếu có).
+  window.addEventListener('bizon:langchange', function () { var b = $('bp-hub-enter'); if (!b) return; b.title = T('Văn phòng', 'Office'); b.firstChild.nodeValue = T('🏢 Văn phòng', '🏢 Office'); });
 
   // Chấm cam nhắc "có tin mới" trên nút vào văn phòng sau mỗi quý chốt xong –
   // khuyến khích học viên chủ động ghé kiểm tra đối thủ thay vì chỉ bấm lướt

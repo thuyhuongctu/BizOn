@@ -29,6 +29,8 @@
     '.sg-kl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}',
     '.sg-kl div{background:#fff;border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}.sg-kl b{font:800 20px "Plus Jakarta Sans",sans-serif}',
     '#sg-voice{position:fixed;right:14px;bottom:14px;z-index:800;width:46px;height:46px;border-radius:50%;border:0;background:#033337;color:#fff;font-size:20px;cursor:pointer;position:fixed;box-shadow:0 8px 24px rgba(0,0,0,.25)}',
+    // Có thanh trên cùng (#hc-bar) thì nút lồng tiếng nằm trong thanh, cạnh nút EN/🌙 – không còn nổi đè lên chữ của thẻ/khung quyết định ở góc dưới.
+    '#sg-voice.sg-inbar{position:relative;right:auto;bottom:auto;z-index:auto;flex:none;width:40px;height:36px;font-size:16px;background:rgba(255,255,255,.14);box-shadow:none}',
     '#sg-asktu{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:0 0 12px;padding:10px 14px;border-radius:14px;background:#fff6ea;border:1.5px dashed #fda127;font:13px Manrope,sans-serif;color:#033337}',
     '#sg-asktu button{padding:8px 14px;border:0;border-radius:10px;background:#033337;color:#fff;font-weight:800;cursor:pointer}',
   ].join('\n');
@@ -59,9 +61,11 @@
   }
   function stopVoice() { queue = []; speaking = false; if (canSpeak) { try { window.speechSynthesis.cancel(); } catch (e) {} } }
   var vb = document.createElement('button'); vb.id = 'sg-voice'; vb.type = 'button';
-  var paintVb = function () { vb.innerHTML = '🎙️' + (muted ? '<i style="position:absolute;left:10px;right:10px;top:22px;height:2.5px;background:#ff8a7a;transform:rotate(-40deg)"></i>' : ''); vb.title = T(muted ? 'Bật lồng tiếng nhân vật' : 'Tắt lồng tiếng nhân vật', muted ? 'Character voices on' : 'Character voices off'); vb.setAttribute('aria-label', vb.title); };
+  var paintVb = function () { vb.innerHTML = '🎙️' + (muted ? '<i style="position:absolute;left:10px;right:10px;top:calc(50% - 1px);height:2.5px;background:#ff8a7a;transform:rotate(-40deg)"></i>' : ''); vb.title = T(muted ? 'Bật lồng tiếng nhân vật' : 'Tắt lồng tiếng nhân vật', muted ? 'Character voices on' : 'Character voices off'); vb.setAttribute('aria-label', vb.title); };
   vb.onclick = function () { muted = !muted; try { localStorage.setItem('bizon-bp-voice', muted ? 'off' : 'on'); } catch (e) {} if (muted) stopVoice(); paintVb(); };
-  paintVb(); document.body.appendChild(vb);
+  paintVb(); var hcBar = $('hc-bar'), langB = $('lang-btn');
+  if (hcBar && langB && langB.parentNode === hcBar) { vb.classList.add('sg-inbar'); hcBar.insertBefore(vb, langB); } else document.body.appendChild(vb);
+  window.addEventListener('bizon:langchange', paintVb);
   window.BPVoice = { play: play, stop: stopVoice };
 
 
@@ -115,7 +119,7 @@
   }
 
   // 2. Kim Long – mỗi mốc 2 biến thể (đang dẫn / đang bị dẫn), chọn theo
-  // S.profit so với S.rival.rev tại thời điểm xuất hiện, cùng tiêu chí với
+  // S.profit so với S.rival.profit (LN ước tính) tại thời điểm xuất hiện, cùng tiêu chí với
   // điều kiện thắng cuối ván – để Kim Long phản ứng đúng diễn biến ván chơi
   // thay vì luôn nói một câu bất biến.
   var KL = {
@@ -134,12 +138,12 @@
   };
   function kimLong(q) {
     var m = KL[q], s = S(); if (!m) return;
-    var k = s.profit >= s.rival.rev ? m.behind : m.ahead; // Kim Long nói giọng "behind" khi CHÍNH Kim Long đang bị dẫn (người chơi đang thắng)
+    var k = s.profit >= s.rival.profit ? m.behind : m.ahead; // Kim Long nói giọng "behind" khi CHÍNH Kim Long đang bị dẫn (người chơi đang thắng)
     var you = s.entered.filter(function (v) { return v !== null && v !== undefined; }).length, them = (s.rival.in || []).length;
     overlay('<span class="sg-eb">⚔️ ' + T('Đối thủ xuất hiện · Quý ', 'Rival appears · Q') + (q + 1) + '</span>' +
       '<div id="sg-kl-tower" style="margin:-26px -26px 12px;height:0;overflow:hidden;border-radius:18px 18px 0 0"></div><div style="display:flex;gap:12px;align-items:center"><div id="sg-kl-ceo" style="width:0;height:84px;flex:none"></div><h3>Kim Long Exports</h3></div><p class="sg-q" style="animation-delay:.1s"><b>CEO Kim Long:</b> «' + T(k[1], k[2]) + '»</p>' +
       '<div class="sg-kl"><div><span style="font-size:11px;opacity:.7">' + T('Bạn', 'You') + '</span><b>' + you + ' ' + T('thị trường', 'markets') + '</b><span style="font-size:12px">' + T('Lợi nhuận ', 'Profit ') + dec(s.profit) + TY() + '</span></div>' +
-      '<div style="background:#fde8e4"><span style="font-size:11px;opacity:.7">Kim Long</span><b>' + them + ' ' + T('thị trường', 'markets') + '</b><span style="font-size:12px">' + T('Doanh số ', 'Sales ') + dec(s.rival.rev) + TY() + '</span></div></div>');
+      '<div style="background:#fde8e4"><span style="font-size:11px;opacity:.7">Kim Long</span><b>' + them + ' ' + T('thị trường', 'markets') + '</b><span style="font-size:12px">' + T('Lợi nhuận ước tính ', 'Est. profit ') + dec(s.rival.profit) + TY() + '</span></div></div>');
     play(k[0]);
     img('hq/kim-long-tower.webp', function (src) { var el = $('sg-kl-tower'); if (el) { el.style.height = '130px'; el.innerHTML = '<img src="' + src + '" alt="" style="width:100%;height:100%;object-fit:cover">'; } });
     img('cast/kim-long-ceo.png', function (src) { var el = $('sg-kl-ceo'); if (el) { el.style.width = '84px'; el.innerHTML = '<img src="' + src + '" alt="CEO Kim Long" style="width:100%;height:100%;object-fit:contain">'; } });
@@ -244,7 +248,9 @@
 
   function eventArt() {
     var s = S(), st = $('bp-stage'); if (!s || !st || s.phase !== 'evt') return;
-    var id = (s.usedEv || [])[s.usedEv.length - 1]; if (s.q === 2 && s.flags && s.flags.missionDone === false) id = 'mission';
+    // Ảnh theo đúng sự kiện đang hiện (window.__bpEv) – NHIỆM VỤ quý 4 không có id. Không lấy phần tử cuối của usedEv:
+    // quý nhiệm vụ không đẩy id nào vào đó (nên hiện nhầm ảnh quý trước), và vật phẩm Dự báo đẩy sẵn id của quý sau.
+    var ev = window.__bpEv, id = ev ? (ev.id || 'mission') : (s.usedEv || [])[s.usedEv.length - 1];
     if (!id || st.querySelector('.sg-evart[data-id="' + id + '"]')) return;
     img('event/' + id + '.webp', function (src) { if (st.querySelector('.sg-evart')) return; st.insertAdjacentHTML('afterbegin', '<div class="sg-evart" data-id="' + id + '" style="height:clamp(120px,22vw,220px);border-radius:18px;overflow:hidden;margin-bottom:12px;box-shadow:0 4px 0 rgba(3,51,55,.12)"><img src="' + src + '" alt="" style="width:100%;height:100%;object-fit:cover"></div>'); });
   }
@@ -269,7 +275,7 @@
     if (inEnd && !endDone) {
       endDone = true;
       var tot = B().scores ? B().scores().total : 0;
-      play(s.profit >= s.rival.rev ? 'HC_KL_04' : 'HC_KL_05');
+      play(s.profit >= s.rival.profit ? 'HC_KL_04' : 'HC_KL_05'); // LN vs LN – khớp tiêu đề kết thúc/HUD
       play(tot >= 85 ? 'HC_TP_20' : tot >= 72 ? 'HC_TP_21' : tot >= 60 ? 'HC_TP_22' : tot >= 45 ? 'HC_TP_23' : 'HC_TP_24');
       if (tot >= 72) play('HC_BSL_10'); play('HC_NAR_30');
     }
