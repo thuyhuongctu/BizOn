@@ -16,9 +16,11 @@
   var SHELF_BG = ['var(--clay-c1)','var(--clay-c2)','var(--clay-c3)','var(--clay-c4)','var(--clay-c5)'];
   var LBL = {
     vi:{ studio:'Phòng thu đất sét', queue:'Hàng chờ', songs:'bài', versions:'bản',
-         toGame:'Vào game', collection:'Tuyển tập', song:'Ca khúc', dl:'Tải bài này' },
+         toGame:'Vào game', collection:'Tuyển tập', song:'Ca khúc', dl:'Tải bài này',
+         playAll:'Phát cả album', repeat:'Lặp album', sleep:'Hẹn giờ tắt', off:'Tắt', min:'phút', left:'còn', about:'khoảng' },
     en:{ studio:'Clay studio', queue:'Up next', songs:'songs', versions:'versions',
-         toGame:'Open game', collection:'Collection', song:'Song', dl:'Download this track' }
+         toGame:'Open game', collection:'Collection', song:'Song', dl:'Download this track',
+         playAll:'Play whole album', repeat:'Repeat album', sleep:'Sleep timer', off:'Off', min:'min', left:'left', about:'about' }
   };
   function lang(){ return (window.clayCurrentLang && window.clayCurrentLang()) === 'en' ? 'en' : 'vi'; }
   function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]; }); }
@@ -30,6 +32,10 @@
   var A = null;                 // phần tử Audio dùng chung
   var deckK = 'g', deckI = 0;   // bàn xoay đang đặt: 'g' chùm / 'c' tuyển tập, chỉ số
   var cur = null, on = false, pos = 0, dur = 0;
+  /* Phát cả album · lặp album · hẹn giờ tắt · tổng thời lượng */
+  var repeatAll = false; try { repeatAll = localStorage.getItem('bz-music-repeat') === '1'; } catch(e){}
+  var SLEEP_OPTS = [0, 15, 30, 45, 60, 90], sleepMin = 0, sleepEnd = 0, sleepTick = null;
+  var durCache = {};
   var queueFiles = [];          // hàng chờ hiện hành (các audioId)
   var nameMap = {};             // audioId -> {t, s} (tên hiển thị theo ngôn ngữ)
 
@@ -81,11 +87,63 @@
     A.onended = function(){
       var i = queueFiles.indexOf(cur);
       if(i > -1 && i+1 < queueFiles.length){ playFile(queueFiles[i+1], queueFiles); }
+      else if(repeatAll && queueFiles.length){ playFile(queueFiles[0], queueFiles); }
       else { on = false; paint(); }
     };
     cur = f; pos = 0; dur = 0; if(q) queueFiles = q;
     A.play().catch(function(){});
     paint();
+  }
+
+  /* Phát cả album từ bài 1 (bài nối bài theo hàng chờ) */
+  function playAlbum(){
+    var fs = deckFileList(); if(!fs.length) return;
+    queueFiles = fs.slice();
+    if(cur === fs[0] && A){ A.currentTime = 0; A.play().catch(function(){}); }
+    else playFile(fs[0], queueFiles);
+  }
+
+  /* Hẹn giờ tắt: hết giờ thì nhỏ dần 3 giây rồi dừng */
+  function setSleep(min){
+    sleepMin = min; sleepEnd = min ? Date.now() + min * 60000 : 0;
+    if(sleepTick){ clearInterval(sleepTick); sleepTick = null; }
+    if(min) sleepTick = setInterval(function(){
+      if(Date.now() < sleepEnd){ paintSleep(); return; }
+      clearInterval(sleepTick); sleepTick = null; sleepMin = 0; sleepEnd = 0;
+      if(A && !A.paused){
+        var a = A, v0 = a.volume, k = 0;
+        var fade = setInterval(function(){
+          k++; a.volume = Math.max(0, v0 * (1 - k / 15));
+          if(k >= 15){ clearInterval(fade); a.pause(); a.volume = v0; }
+        }, 200);
+      }
+      paintSleep();
+    }, 1000);
+    paintSleep();
+  }
+  function paintSleep(){
+    var l = LBL[lang()], sel = document.getElementById('am-sleep'), lab = document.getElementById('am-sleepleft');
+    if(sel) sel.value = String(sleepMin);
+    if(lab) lab.textContent = sleepEnd ? l.left + ' ' + mm(Math.max(0, Math.round((sleepEnd - Date.now()) / 1000))) : '';
+  }
+
+  /* Tổng thời lượng album: đọc metadata từng bài (chỉ tải phần đầu file), nhớ lại để khỏi đọc lần nữa */
+  function paintTotal(){
+    var el = document.getElementById('am-total'); if(!el) return;
+    var l = LBL[lang()], fs = deckFileList(), sum = 0, known = 0;
+    fs.forEach(function(f){ if(durCache[f] > 0){ sum += durCache[f]; known++; } });
+    var n = fs.length + ' ' + (deckK === 'g' ? l.versions : l.songs);
+    el.textContent = known === fs.length && fs.length ? n + ' · ' + mm(sum) + ' (' + l.about + ' ' + Math.round(sum / 60) + ' ' + l.min + ')' : n;
+  }
+  function loadDurations(){
+    deckFileList().forEach(function(f){
+      if(durCache[f] !== undefined) return;
+      durCache[f] = 0;
+      var m = new Audio(); m.preload = 'metadata';
+      m.onloadedmetadata = function(){ durCache[f] = isFinite(m.duration) ? m.duration : 0; paintTotal(); m.removeAttribute('src'); m.load(); };
+      m.src = url(f);
+    });
+    paintTotal();
   }
 
   /* Nạp một bàn xoay (chùm hoặc tuyển tập) rồi phát bài đầu */
@@ -98,6 +156,7 @@
   }
 
   /* ---- Dựng giao diện ---- */
+  var PILL = 'border:0;cursor:pointer;padding:9px 14px;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;font-family:var(--clay-sans);font-size:13px;font-weight:800;box-shadow:inset 0 -3px 0 rgba(0,0,0,.25);';
   function buildDeck(){
     var box = document.getElementById('am-deck'); if(!box) return;
     var l = LBL[lang()], d = deckInfo();
@@ -136,8 +195,18 @@
             + '<button id="am-toggle" aria-label="Play" style="flex:none;border:0;cursor:pointer;display:grid;place-items:center;border-radius:50%;width:76px;height:76px;background:#FDA127;color:var(--clay-ink);font-size:26px;box-shadow:inset 0 -7px 0 rgba(0,0,0,.18),inset 0 4px 0 rgba(255,255,255,.4),0 14px 24px -10px rgba(253,161,39,.7)">▶</button>'
             + '<button id="am-next" aria-label="Next" style="flex:none;border:0;cursor:pointer;display:grid;place-items:center;border-radius:50%;width:52px;height:52px;background:#0B4A4F;color:#fff;font-size:18px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.3),inset 0 3px 0 rgba(255,255,255,.1)">⏭</button>'
             + '<a id="am-dl" href="#" download style="flex:none;display:grid;place-items:center;border-radius:50%;width:52px;height:52px;background:#0B4A4F;color:#fff;font-size:20px;font-weight:800;box-shadow:inset 0 -4px 0 rgba(0,0,0,.3),inset 0 3px 0 rgba(255,255,255,.1)">⬇</a>'
-            + '<a id="am-togame" href=""'+esc(d.dHref)+'" style="margin-left:auto;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;font-size:13px;font-weight:800">'+esc(l.toGame)+' ↗</a>'
+            + '<a id="am-togame" href="'+esc(d.dHref)+'" style="margin-left:auto;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;font-size:13px;font-weight:800">'+esc(l.toGame)+' ↗</a>'
           + '</div>'
+          /* phát cả album · lặp · hẹn giờ tắt · tổng thời lượng */
+          + '<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px">'
+            + '<button type="button" id="am-playall" style="'+PILL+'">▶ '+esc(l.playAll)+'</button>'
+            + '<button type="button" id="am-repeat" aria-pressed="false" style="'+PILL+'">🔁 '+esc(l.repeat)+'</button>'
+            + '<label style="'+PILL+'display:inline-flex;align-items:center;gap:6px;cursor:pointer">⏲ <span>'+esc(l.sleep)+'</span>'
+              + '<select id="am-sleep" aria-label="'+esc(l.sleep)+'" style="border:0;border-radius:999px;padding:3px 6px;background:#0E1F22;color:#fff;font:inherit;font-weight:800;cursor:pointer">'
+                + SLEEP_OPTS.map(function(m){ return '<option value="'+m+'">'+(m ? m+' '+esc(l.min) : esc(l.off))+'</option>'; }).join('')
+              + '</select><span id="am-sleepleft" style="font-family:var(--clay-mono);font-weight:600;color:#FFD58A"></span></label>'
+          + '</div>'
+          + '<div id="am-total" style="font-size:13px;font-weight:700;color:#9CC9C9"></div>'
         + '</div>'
       + '</div>'
       /* hàng chờ */
@@ -157,6 +226,13 @@
     document.getElementById('am-toggle').onclick = function(){ var it = deckInfo().items; var t = it[curIndexInDeck()]; if(t) playFile(t.f, deckFileList()); };
     document.getElementById('am-prev').onclick = function(){ var fs = deckFileList(); var ix = Math.max(0, fs.indexOf(cur)); playFile(fs[(ix-1+fs.length)%fs.length], fs); };
     document.getElementById('am-next').onclick = function(){ var fs = deckFileList(); var ix = Math.max(0, fs.indexOf(cur)); playFile(fs[(ix+1)%fs.length], fs); };
+    document.getElementById('am-playall').onclick = playAlbum;
+    document.getElementById('am-repeat').onclick = function(){
+      repeatAll = !repeatAll; try { localStorage.setItem('bz-music-repeat', repeatAll ? '1' : '0'); } catch(e){}
+      paint();
+    };
+    document.getElementById('am-sleep').onchange = function(e){ setSleep(+e.target.value || 0); };
+    loadDurations(); paintSleep();
     document.getElementById('am-seek').onclick = function(e){
       if(!A || !A.duration || deckFileList().indexOf(cur) < 0) return;
       var r = e.currentTarget.getBoundingClientRect();
@@ -262,6 +338,8 @@
     var tg = document.getElementById('am-togame'); if(tg){ tg.setAttribute('href', d.dHref); tg.firstChild && (tg.textContent = l.toGame + ' ↗'); }
     var dot = document.getElementById('am-dot'); if(dot) dot.style.background = deckOn ? '#FDA127' : '#3E5A5C';
     var tgl = document.getElementById('am-toggle'); if(tgl) tgl.textContent = deckOn ? '❚❚' : '▶';
+    var rp = document.getElementById('am-repeat');
+    if(rp){ rp.setAttribute('aria-pressed', repeatAll ? 'true' : 'false'); rp.style.background = repeatAll ? '#FDA127' : 'rgba(255,255,255,.1)'; rp.style.color = repeatAll ? 'var(--clay-ink)' : '#fff'; }
 
     var rec = document.getElementById('am-rec'); if(rec) rec.style.animationPlayState = ps;
     var arm = document.getElementById('am-arm'); if(arm) arm.style.transform = 'rotate(' + (deckOn ? 24 : 4) + 'deg)';
