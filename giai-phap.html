@@ -8,29 +8,35 @@
 <meta name="description" data-en-content="BizOn EdTech solutions: simulation games, Go Global, an AI advisor, claymorphism &amp; original music; a classroom deployment process and pilot packages for institutions." content="Giải pháp EdTech BizOn: game mô phỏng, Go Global, cố vấn AI, claymorphism & âm nhạc gốc; quy trình triển khai lớp học và các gói pilot cho tổ chức.">
 <meta name="copyright" content="© 2026 Đỗ Thùy Hương & PGS.TS. Phan Anh Tú">
 <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script src="js/bizon-boot.js"></script>
 <link rel="stylesheet" href="css/bizon-clay-fonts.css">
 <link rel="stylesheet" href="css/bizon-clay.css">
 <style>
   .gp-hero-btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
   .gp-sols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:20px}
-  .gp-sol{display:grid;grid-template-columns:132px minmax(0,1fr);gap:18px;padding:14px;border-radius:30px;background:var(--clay-card);box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 24px 34px -24px rgba(110,70,30,.55)}
+  .gp-sol{display:grid;grid-template-columns:132px minmax(0,1fr);gap:18px;padding:14px;border-radius:30px;background:var(--clay-card);box-shadow:var(--clay-night-shadow,inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 24px 34px -24px rgba(110,70,30,.55))}
   .gp-sol .thumb{position:relative;border-radius:22px;overflow:hidden;min-height:150px;box-shadow:inset 0 -6px 0 rgba(0,0,0,.07)}
   .gp-sol .thumb img{position:absolute;inset:0;width:100%;height:100%;object-position:50% 50%}
   .gp-sol .body{padding:8px 8px 8px 0;display:flex;flex-direction:column;gap:8px}
   .gp-link{padding:7px 12px;border-radius:999px;background:var(--clay-tray);color:var(--clay-ink);font-size:13px;font-weight:800;box-shadow:inset 0 -3px 0 rgba(110,70,30,.15)}
   .gp-link:hover{background:var(--clay-teal);color:#fff}
   .gp-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:16px;margin-top:26px}
-  .gp-step{padding:22px 18px;border-radius:26px;background:var(--clay-card);text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;box-shadow:inset 0 -7px 0 rgba(110,70,30,.08),inset 0 4px 0 #fff,0 16px 22px -16px rgba(110,70,30,.5)}
-  .gp-step .n{width:60px;height:60px;border-radius:50%;display:grid;place-items:center;font-family:var(--clay-head);font-size:24px;font-weight:800;box-shadow:inset 0 -6px 0 rgba(0,0,0,.12),inset 0 4px 0 rgba(255,255,255,.55)}
+  .gp-step{padding:22px 18px;border-radius:26px;background:var(--clay-card);text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;box-shadow:var(--clay-night-shadow,inset 0 -7px 0 rgba(110,70,30,.08),inset 0 4px 0 #fff,0 16px 22px -16px rgba(110,70,30,.5))}
+  .gp-step .n{width:60px;height:60px;border-radius:50%;display:grid;place-items:center;font-family:var(--clay-head);font-size:24px;font-weight:800;box-shadow:var(--clay-night-shadow,inset 0 -6px 0 rgba(0,0,0,.12),inset 0 4px 0 rgba(255,255,255,.55))}
   .gp-whys{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:18px}
-  .gp-why{padding:24px;border-radius:28px;box-shadow:inset 0 -9px 0 rgba(0,0,0,.07),inset 0 5px 0 rgba(255,255,255,.5),0 22px 30px -22px rgba(110,70,30,.55)}
+  .gp-why{padding:24px;border-radius:28px;box-shadow:var(--clay-night-shadow,inset 0 -9px 0 rgba(0,0,0,.07),inset 0 5px 0 rgba(255,255,255,.5),0 22px 30px -22px rgba(110,70,30,.55))}
   .gp-plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:20px;align-items:stretch}
-  .gp-plan{display:flex;flex-direction:column;padding:26px;border-radius:32px;box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 rgba(255,255,255,.8),0 26px 34px -24px rgba(110,70,30,.55)}
+  .gp-plan{display:flex;flex-direction:column;padding:26px;border-radius:32px;box-shadow:var(--clay-night-shadow,inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 rgba(255,255,255,.8),0 26px 34px -24px rgba(110,70,30,.55))}
   .gp-li{display:flex;gap:10px;font-size:14px;line-height:1.45;color:var(--clay-ink-2)}
   .gp-li .dot{flex:none;width:10px;height:10px;margin-top:5px;border-radius:50%;background:var(--clay-gold);box-shadow:inset 0 -2px 0 rgba(0,0,0,.15)}
   .gp-cta{padding:40px 30px;border-radius:36px;background:var(--clay-teal);color:#fff;text-align:center;margin-bottom:64px;box-shadow:inset 0 -12px 0 rgba(0,0,0,.18),inset 0 6px 0 rgba(255,255,255,.18),0 30px 40px -26px rgba(0,60,80,.8)}
   .gp-cta a{font-family:var(--clay-head);font-size:18px;font-weight:800;padding:14px 22px;border-radius:20px}
   @media (max-width:560px){ .gp-sol{grid-template-columns:1fr} .gp-sol .thumb{min-height:170px} }
+  /* Bản tối «đất sét đêm» (data-theme do js/bizon-boot.js đặt; bản in giữ sáng) */
+  @media screen{
+    html[data-theme="dark"] .gp-link:hover{color:var(--clay-on-teal)}
+    html[data-theme="dark"] .gp-cta{background:#0F4F5A}
+  }
 </style>
 <meta property="og:type" content="website">
 <meta property="og:title" content="Giải pháp EdTech (Pilot) · BizOn Bật Nghiệp">
@@ -50,8 +56,8 @@
         <p class="lead" style="max-width:36em" data-en="BizOn builds learn-by-playing tools for entrepreneurship and international business courses – running entirely in the browser, free, with nothing to install.">BizOn xây dựng bộ công cụ học qua chơi cho môn khởi nghiệp và kinh doanh quốc tế – chạy hoàn toàn trên trình duyệt, miễn phí, không cần cài đặt.</p>
         <div class="gp-hero-btns">
           <a class="clay-btn" href="game.html" data-en="Try it now →">Chơi thử ngay →</a>
-          <a class="clay-btn" style="background:var(--clay-card);color:var(--clay-ink);box-shadow:inset 0 -5px 0 rgba(110,70,30,.12),inset 0 3px 0 #fff" href="BizOn Game 3D.html" data-en="3D version">Bản 3D</a>
-          <a class="clay-btn" style="background:var(--clay-card);color:var(--clay-ink);box-shadow:inset 0 -5px 0 rgba(110,70,30,.12),inset 0 3px 0 #fff" href="lien-he.html" data-en="Partner with us">Hợp tác cùng nhóm</a>
+          <a class="clay-btn" style="background:var(--clay-card);color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -5px 0 rgba(110,70,30,.12),inset 0 3px 0 #fff)" href="BizOn Game 3D.html" data-en="3D version">Bản 3D</a>
+          <a class="clay-btn" style="background:var(--clay-card);color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -5px 0 rgba(110,70,30,.12),inset 0 3px 0 #fff)" href="lien-he.html" data-en="Partner with us">Hợp tác cùng nhóm</a>
         </div>
       </div>
       <div class="art" style="width:min(18vw,160px);aspect-ratio:269/841"><img src="assets/character/anh-tu-ao-dai-smile-cut.webp" alt="" loading="lazy"></div>
@@ -71,7 +77,7 @@
         </div>
       </div>
       <div class="gp-sol">
-        <div class="thumb" style="background:#D9F0F2"><img src="assets/illustrations/globe-trade.webp" alt="" style="object-fit:contain;padding:10px" loading="lazy"></div>
+        <div class="thumb" style="background:var(--clay-c5)"><img src="assets/illustrations/globe-trade.webp" alt="" style="object-fit:contain;padding:10px" loading="lazy"></div>
         <div class="body">
           <h3 style="font-size:23px" data-en="BizOn Go Global · IE Lab">BizOn Go Global · IE Lab</h3>
           <p style="font-size:14px;line-height:1.6;color:var(--clay-sub);flex:1" data-en="An international venture simulation: pick 1 of 7 markets, negotiate with AI partners, manage ESG and risk, then export a decision log (CSV) for grading and discussion.">Mô phỏng khởi nghiệp quốc tế: chọn 1 trong 7 thị trường, đàm phán với đối tác AI, quản trị ESG và rủi ro, rồi xuất nhật ký quyết định (CSV) cho giảng viên chấm và thảo luận.</p>
@@ -159,7 +165,7 @@
           <div class="gp-li"><span class="dot"></span><span data-en="Instructor training & deployment support">Đào tạo giảng viên &amp; đồng hành triển khai</span></div>
           <div class="gp-li"><span class="dot"></span><span data-en="Research Edition: anonymised data for research">Gói Research Edition: dữ liệu ẩn danh phục vụ nghiên cứu</span></div>
         </div>
-        <a href="lien-he.html" style="text-align:center;padding:13px 18px;border-radius:18px;background:var(--clay-card);color:var(--clay-ink);font-family:var(--clay-head);font-size:17px;font-weight:800;box-shadow:inset 0 -5px 0 rgba(110,70,30,.14),inset 0 3px 0 #fff" data-en="Book a demo →">Đặt lịch demo →</a>
+        <a href="lien-he.html" style="text-align:center;padding:13px 18px;border-radius:18px;background:var(--clay-card);color:var(--clay-ink);font-family:var(--clay-head);font-size:17px;font-weight:800;box-shadow:var(--clay-night-shadow,inset 0 -5px 0 rgba(110,70,30,.14),inset 0 3px 0 #fff)" data-en="Book a demo →">Đặt lịch demo →</a>
       </div>
     </div>
     <p style="margin:16px 0 0;font-size:13px;line-height:1.6;color:var(--clay-sub)"><a href="bang-chung.html" style="font-weight:800" data-en="Early evidence from a real classroom">Bằng chứng ban đầu từ lớp học thật</a> · <span data-en="Academic basis:">Cơ sở học thuật:</span> <a href="truong-hoc-thuat.html" style="font-weight:800" data-en="Learning-outcome matrix & Model Cards">Ma trận chuẩn đầu ra &amp; Model Cards</a> <span data-en="– a deterministic, explainable engine with reproducible results for grading and research.">– engine mô phỏng xác định, giải thích được, kết quả tái lập phục vụ chấm điểm và nghiên cứu.</span></p>
@@ -170,8 +176,8 @@
     <p style="margin:12px auto 0;max-width:36em;font-size:15px;line-height:1.6;color:#D6EEF2" data-en="Try it free today, or contact the team for guidance on deploying it in your course.">Dùng thử miễn phí ngay hôm nay, hoặc liên hệ nhóm để được hướng dẫn triển khai cho môn học của bạn.</p>
     <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:22px">
       <a style="background:var(--clay-gold);color:var(--clay-ink);box-shadow:inset 0 -6px 0 rgba(0,0,0,.15),inset 0 3px 0 rgba(255,255,255,.4)" href="game.html" data-en="Start playing">Bắt đầu chơi</a>
-      <a style="background:var(--clay-card);color:var(--clay-ink);box-shadow:inset 0 -6px 0 rgba(110,70,30,.15),inset 0 3px 0 #fff" href="BizOn Game 3D.html" data-en="3D version">Bản 3D</a>
-      <a style="background:var(--clay-card);color:var(--clay-ink);box-shadow:inset 0 -6px 0 rgba(110,70,30,.15),inset 0 3px 0 #fff" href="lien-he.html" data-en="Contact the team">Liên hệ nhóm</a>
+      <a style="background:var(--clay-card);color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -6px 0 rgba(110,70,30,.15),inset 0 3px 0 #fff)" href="BizOn Game 3D.html" data-en="3D version">Bản 3D</a>
+      <a style="background:var(--clay-card);color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -6px 0 rgba(110,70,30,.15),inset 0 3px 0 #fff)" href="lien-he.html" data-en="Contact the team">Liên hệ nhóm</a>
     </div>
   </section>
 </main>

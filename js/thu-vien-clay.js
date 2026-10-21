@@ -103,7 +103,7 @@
     var chipBox = document.getElementById('lib-chips');
     if(chipBox) chipBox.innerHTML = chips.map(function(c){
       var on = sec === c.i;
-      return '<button type="button" data-chip="'+c.i+'" style="flex:none;border:0;cursor:pointer;padding:8px 14px;border-radius:999px;background:'+(on?'#006687':'#FFFBF4')+';color:'+(on?'#fff':'#033337')+';font:800 13px var(--clay-head);white-space:nowrap;box-shadow:inset 0 -3px 0 rgba(0,0,0,.1)">'+esc(c.label)+' <span style="opacity:.65">'+c.n+'</span></button>';
+      return '<button type="button" data-chip="'+c.i+'" style="flex:none;border:0;cursor:pointer;padding:8px 14px;border-radius:999px;background:'+(on?'var(--clay-teal)':'var(--clay-card)')+';color:'+(on?'var(--clay-on-teal)':'var(--clay-ink)')+';font:800 13px var(--clay-head);white-space:nowrap;box-shadow:inset 0 -3px 0 rgba(0,0,0,.1)">'+esc(c.label)+' <span style="opacity:.65">'+c.n+'</span></button>';
     }).join('');
 
     /* tracks (lọc theo từ khóa) */
@@ -125,7 +125,7 @@
       html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,'+x.min+'),1fr));gap:18px;margin-top:20px">';
       x.items.forEach(function(it){
         var k = vis.length; vis.push(it);
-        html += '<figure style="margin:0;grid-column:'+it.span+';padding:10px;border-radius:26px;background:var(--clay-card);display:flex;flex-direction:column;box-shadow:inset 0 -7px 0 rgba(110,70,30,.08),inset 0 4px 0 #fff,0 18px 26px -20px rgba(110,70,30,.55)">'
+        html += '<figure style="margin:0;grid-column:'+it.span+';padding:10px;border-radius:26px;background:var(--clay-card);display:flex;flex-direction:column;box-shadow:var(--clay-night-shadow,inset 0 -7px 0 rgba(110,70,30,.08),inset 0 4px 0 #fff,0 18px 26px -20px rgba(110,70,30,.55))">'
           + '<button type="button" data-open="'+k+'" aria-label="'+esc(it.name)+'" style="border:0;padding:0;cursor:zoom-in;position:relative;display:block;width:100%;aspect-ratio:'+it.ar+';border-radius:18px;overflow:hidden;background:'+it.bg+'">'
           + '<img src="'+esc(it.src)+'" alt="'+esc(it.name)+'" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:'+it.fit+';object-position:'+it.pos+';padding:'+it.pad+'">'
           + '</button>'
@@ -136,8 +136,8 @@
       if(x.music){
         tracks.forEach(function(m){
           var on = cur === m[2];
-          html += '<button type="button" data-play="'+esc(m[2])+'" style="margin-top:12px;width:100%;border:0;cursor:pointer;text-align:left;display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;align-items:center;padding:12px 14px;border-radius:22px;background:'+(on?'#FFF3DA':'#FFFBF4')+';font-family:var(--clay-head);color:var(--clay-ink);box-shadow:inset 0 -6px 0 rgba(110,70,30,.08),0 14px 20px -16px rgba(110,70,30,.55)">'
-            + '<span style="width:44px;height:44px;border-radius:50%;background:'+(on?'#E8762D':'#006687')+';color:#fff;display:grid;place-items:center;font-size:15px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.2),inset 0 3px 0 rgba(255,255,255,.3)">'+(on?'❚❚':'▶')+'</span>'
+          html += '<button type="button" data-play="'+esc(m[2])+'" style="margin-top:12px;width:100%;border:0;cursor:pointer;text-align:left;display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;align-items:center;padding:12px 14px;border-radius:22px;background:'+(on?'var(--clay-cream-deep)':'var(--clay-card)')+';font-family:var(--clay-head);color:var(--clay-ink);box-shadow:inset 0 -6px 0 rgba(110,70,30,.08),0 14px 20px -16px rgba(110,70,30,.55)">'
+            + '<span style="width:44px;height:44px;border-radius:50%;background:'+(on?'var(--clay-orange)':'var(--clay-teal)')+';color:'+(on?'var(--clay-on-orange)':'var(--clay-on-teal)')+';display:grid;place-items:center;font-size:15px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.2),inset 0 3px 0 rgba(255,255,255,.3)">'+(on?'❚❚':'▶')+'</span>'
             + '<span style="display:flex;flex-direction:column"><strong style="font-size:15px">'+esc(m[0])+'</strong><span style="font-size:12px;color:var(--clay-sub)">'+esc(m[1])+'</span></span>'
             + '</button>';
         });

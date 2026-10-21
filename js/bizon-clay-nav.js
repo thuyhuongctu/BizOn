@@ -1,6 +1,8 @@
 /* ============================================================================
    BizOn Clay – thanh điều hướng đất sét (pill-nav) dùng chung cho trang đất sét.
    Bơm #clay-nav vào đầu <body>. Nút VI/EN nối với js/bizon-clay-i18n.js.
+   Nút ☀️/🌙 nối với js/bizon-boot.js (chỉ hiện khi trang có nạp boot, tức trang
+   web; game không nạp boot nên giữ nguyên giao diện của game).
    Nạp SAU bizon-clay-i18n.js. CSS ở css/bizon-clay.css.
    ========================================================================== */
 (function(){
@@ -18,6 +20,8 @@
   ];
   var CTA = { href:'game.html', vi:'Bắt đầu', en:'Launch' };
   var DL_ARIA = { vi:'Tải app BizOn', en:'Get the BizOn app' };
+  var THEME_ARIA = { vi:'Chế độ tối', en:'Dark mode' };
+  var hasTheme = typeof window.clayToggleTheme === 'function';
   var DL_OPTIONS = [
     { href:'https://play.google.com/store/apps/details?id=io.github.thuyhuongctu.bizon', ext:true,
       vi:'🤖 Android – Google Play', en:'🤖 Android – Google Play' },
@@ -54,6 +58,7 @@
         + '<button type="button" data-lang="vi" aria-pressed="true">VI</button>'
         + '<button type="button" data-lang="en" aria-pressed="false">EN</button>'
       + '</div>'
+      + (hasTheme ? '<button type="button" class="cn-theme" aria-pressed="false" aria-label="'+esc(THEME_ARIA.vi)+'" data-en-aria="'+esc(THEME_ARIA.en)+'">🌙</button>' : '')
       + '<div class="cn-dlwrap">'
         + '<button type="button" class="cn-dl" aria-haspopup="true" aria-expanded="false" aria-label="'+esc(DL_ARIA.vi)+'" data-en-aria="'+esc(DL_ARIA.en)+'">⬇</button>'
         + '<div class="cn-dlmenu" hidden>' + dlMenuHtml() + '</div>'
@@ -105,8 +110,22 @@
   }
   window.addEventListener('bizon:langchange', function(e){ syncLang(e.detail && e.detail.lang); });
 
-  /* Dịch nhãn nav vừa bơm theo ngôn ngữ hiện tại */
+  /* Nút sáng/tối: biểu tượng chỉ chế độ sẽ chuyển sang, aria-pressed = đang tối */
+  var themeBtn = nav.querySelector('.cn-theme');
+  function syncTheme(){
+    if(!themeBtn) return;
+    var dark = window.clayCurrentTheme && window.clayCurrentTheme() === 'dark';
+    themeBtn.textContent = dark ? '☀️' : '🌙';
+    themeBtn.setAttribute('aria-pressed', String(!!dark));
+  }
+  if(themeBtn){
+    themeBtn.addEventListener('click', function(){ window.clayToggleTheme(); });
+    window.addEventListener('bizon:themechange', syncTheme);
+    syncTheme();
+  }
+
+  /* Dịch nhãn nav vừa bơm theo ngôn ngữ hiện tại (không lưu: khách chưa chọn thì giữ mặc định) */
   var cur = window.clayCurrentLang ? window.clayCurrentLang() : 'vi';
-  if(window.clayApplyLang) window.clayApplyLang(cur); else syncLang(cur);
+  if(window.clayRefreshLang) window.clayRefreshLang(); else syncLang(cur);
   syncLang(cur);
 })();

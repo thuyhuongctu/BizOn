@@ -11,10 +11,11 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
 <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<script src="js/bizon-boot.js"></script>
 <link rel="stylesheet" href="css/bizon-clay-fonts.css">
 <link rel="stylesheet" href="css/bizon-clay.css">
 <style>
-  .dp-hero{position:relative;overflow:hidden;margin-top:28px;border-radius:40px;background:var(--clay-cream-deep);box-shadow:inset 0 -10px 0 rgba(140,80,20,.1),inset 0 6px 0 rgba(255,255,255,.7),0 30px 44px -30px rgba(110,70,30,.6);padding:clamp(28px,5vw,48px) clamp(22px,5vw,48px)}
+  .dp-hero{position:relative;overflow:hidden;margin-top:28px;border-radius:40px;background:var(--clay-cream-deep);box-shadow:var(--clay-night-shadow,inset 0 -10px 0 rgba(140,80,20,.1),inset 0 6px 0 rgba(255,255,255,.7),0 30px 44px -30px rgba(110,70,30,.6));padding:clamp(28px,5vw,48px) clamp(22px,5vw,48px)}
   .dp-hero-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(20px,4vw,40px);align-items:center}
   @media (max-width:760px){ .dp-hero-grid{grid-template-columns:1fr} }
   .dp-hero-art{border-radius:26px;overflow:hidden;box-shadow:0 20px 30px -18px rgba(110,70,30,.55),inset 0 -6px 0 rgba(0,0,0,.08)}
@@ -25,7 +26,7 @@
   .dp-hero h1{margin:16px 0 0;font-size:clamp(36px,5.2vw,60px);color:var(--clay-ink)}
   .dp-hero p{margin:14px 0 0;max-width:46em;font-size:17px;line-height:1.65;color:#4A3A20;text-wrap:pretty}
   .dp-modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:22px;margin:40px 0}
-  .dp-mode{display:flex;flex-direction:column;gap:10px;border-radius:32px;background:var(--clay-card);padding:26px;box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 rgba(255,255,255,.95),0 26px 36px -22px rgba(110,70,30,.5)}
+  .dp-mode{display:flex;flex-direction:column;gap:10px;border-radius:32px;background:var(--clay-card);padding:26px;box-shadow:var(--clay-night-shadow,inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 rgba(255,255,255,.95),0 26px 36px -22px rgba(110,70,30,.5))}
   .dp-mode .ico{width:56px;height:56px;border-radius:18px;background:var(--clay-tray);display:grid;place-items:center;font-size:26px;box-shadow:inset 0 -5px 0 rgba(0,0,0,.08)}
   .dp-mode h2{margin:4px 0 0;font-family:var(--clay-head);font-size:24px;font-weight:800;color:var(--clay-ink)}
   .dp-mode p{margin:0;font-size:15px;line-height:1.6;color:var(--clay-sub);flex:1}
@@ -35,6 +36,12 @@
   .dp-side a{color:var(--clay-accent);font-weight:700}
   .dp-cite{max-width:900px;margin:40px auto 0;padding:18px 20px;border-radius:20px;background:var(--clay-card);font-size:12.5px;line-height:1.7;color:var(--clay-sub)}
   .dp-cite a{color:var(--clay-accent)}
+  /* Bản tối «đất sét đêm» (data-theme do js/bizon-boot.js đặt; bản in giữ sáng) */
+  @media screen{
+    html[data-theme="dark"] .dp-crumb,html[data-theme="dark"] .dp-crumb a{color:#F5D29A}
+    html[data-theme="dark"] .dp-hero p{color:var(--clay-ink-2)}
+    html[data-theme="dark"] .dp-cta{background:#0F3034}
+  }
 </style>
 <script src="js/capture-guard.js"></script>
 </head>

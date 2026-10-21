@@ -55,5 +55,6 @@
 
   document.body.appendChild(f);
 
-  if(window.clayApplyLang) window.clayApplyLang(window.clayCurrentLang ? window.clayCurrentLang() : 'vi');
+  /* Dịch chân trang vừa bơm theo ngôn ngữ hiện tại, không lưu lựa chọn */
+  if(window.clayRefreshLang) window.clayRefreshLang();
 })();

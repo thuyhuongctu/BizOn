@@ -8,6 +8,7 @@
 <meta name="description" data-en-content="BizOn Music Library: a vinyl turntable with every original song of the BizOn Bật Nghiệp ecosystem – Bật Nghiệp, Hương sans frontières, Brand Passport, BizOn Theme – plus the voice of advisor Lumina." content="Kho Âm nhạc BizOn: bàn xoay đĩa than với toàn bộ ca khúc gốc của hệ sinh thái BizOn Bật Nghiệp – Bật Nghiệp, Hương sans frontières, Brand Passport, BizOn Theme – cùng giọng nói cố vấn Lumina.">
 <meta name="copyright" content="© 2026 Đỗ Thùy Hương & PGS.TS. Phan Anh Tú">
 <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script src="js/bizon-boot.js"></script>
 <link rel="stylesheet" href="css/bizon-clay-fonts.css">
 <link rel="stylesheet" href="css/bizon-clay.css">
 <style>
@@ -15,7 +16,7 @@
   @keyframes amSpin{to{transform:rotate(360deg)}}
   @keyframes amEq{0%,100%{transform:scaleY(.22)}50%{transform:scaleY(1)}}
   @media (prefers-reduced-motion:reduce){ #am-rec,#am-eq span{animation:none!important} }
-  .am-hero{position:relative;overflow:hidden;margin:28px 0 48px;border-radius:40px;background:var(--clay-cream-deep);box-shadow:inset 0 -10px 0 rgba(140,80,20,.1),inset 0 6px 0 rgba(255,255,255,.7),0 30px 44px -30px rgba(110,70,30,.6)}
+  .am-hero{position:relative;overflow:hidden;margin:28px 0 48px;border-radius:40px;background:var(--clay-cream-deep);box-shadow:var(--clay-night-shadow,inset 0 -10px 0 rgba(140,80,20,.1),inset 0 6px 0 rgba(255,255,255,.7),0 30px 44px -30px rgba(110,70,30,.6))}
   .am-hero .sun{position:absolute;right:-8%;top:-34%;width:min(520px,60%);aspect-ratio:1;border-radius:50%;background:url(assets/brand/trong-dong.svg) center/contain no-repeat;box-shadow:inset 0 -16px 0 rgba(200,110,20,.2);opacity:.85;pointer-events:none}
   .am-hero .grid{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end;padding:clamp(24px,4vw,44px) clamp(20px,4vw,44px) 0}
   .am-hero h1{margin:18px 0 0;font-size:clamp(40px,5.4vw,68px);text-wrap:balance}
@@ -98,7 +99,7 @@
         <div style="font-size:13px;font-weight:800;color:#FFD58A" data-en="New · Bến Phù Sa soundtrack">Mới · Nhạc nền Bến Phù Sa</div>
         <div style="margin-top:6px;font-family:var(--clay-head);font-size:clamp(28px,4vw,46px);font-weight:800;line-height:1.08">Golden Silt Journey</div>
         <div style="margin-top:8px;font-size:15px;color:#D6EEF2" data-en="Listen with EN · FR · VI lyrics, synced section by section">Nghe kèm lời Anh · Pháp · Việt, chạy theo từng đoạn</div>
-        <span style="display:inline-flex;margin-top:16px;white-space:nowrap;padding:12px 20px;border-radius:999px;background:var(--clay-gold);color:#033337;font-size:15px;font-weight:800;box-shadow:inset 0 -4px 0 rgba(0,0,0,.15)" data-en="▶ Open the lyric player">▶ Mở trình phát lời</span>
+        <span style="display:inline-flex;margin-top:16px;white-space:nowrap;padding:12px 20px;border-radius:999px;background:var(--clay-gold);color:var(--clay-ink);font-size:15px;font-weight:800;box-shadow:inset 0 -4px 0 rgba(0,0,0,.15)" data-en="▶ Open the lyric player">▶ Mở trình phát lời</span>
       </div>
     </a>
   </section>

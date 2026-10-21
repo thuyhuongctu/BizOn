@@ -11,9 +11,9 @@
 (function(){
   if(window.__bizonMusic) return; window.__bizonMusic = true;
 
-  var EQC = ['#7FD3DC','#FFD58A','#F4B6C2','#A9DCC4'];
+  var EQC = ['var(--clay-c1)','var(--clay-c2)','var(--clay-c3)','var(--clay-c4)']; /* biến --clay-* để bản tối đổi theo */
   var SLEEVE = ['#E8762D','#006687','#1E7E8C','#C2581B'];
-  var SHELF_BG = ['#7FD3DC','#FFD58A','#F4B6C2','#A9DCC4','#D9F0F2'];
+  var SHELF_BG = ['var(--clay-c1)','var(--clay-c2)','var(--clay-c3)','var(--clay-c4)','var(--clay-c5)'];
   var LBL = {
     vi:{ studio:'Phòng thu đất sét', queue:'Hàng chờ', songs:'bài', versions:'bản',
          toGame:'Vào game', collection:'Tuyển tập', song:'Ca khúc' },
@@ -112,28 +112,28 @@
           /* đĩa than */
           + '<div id="am-rec" style="position:absolute;inset:4%;border-radius:50%;background:repeating-radial-gradient(circle,#0E1F22 0 3px,#1A3337 3px 6px);box-shadow:0 24px 40px -14px rgba(0,0,0,.7),inset 0 0 0 10px #0A1719;animation:amSpin 6s linear infinite;animation-play-state:paused">'
             + '<div style="position:absolute;inset:30%;border-radius:50%;overflow:hidden;background:#FDA127;box-shadow:0 0 0 6px #FFD58A"><img src="'+esc(d.dArt)+'" alt="" style="width:100%;height:100%;object-fit:cover;object-position:'+(/-cut\.webp$/.test(d.dArt) ? '50% 6%' : '50% 50%')+'"></div>'
-            + '<div style="position:absolute;left:48.5%;top:48.5%;width:3%;height:3%;border-radius:50%;background:#FBF4E8"></div>'
+            + '<div style="position:absolute;left:48.5%;top:48.5%;width:3%;height:3%;border-radius:50%;background:var(--clay-bg)"></div>'
             + '<div style="position:absolute;inset:8%;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,.14),transparent 40%,transparent 60%,rgba(255,255,255,.06))"></div>'
           + '</div>'
           /* cần đọc */
           + '<div id="am-arm" style="position:absolute;right:2%;top:2%;width:12%;height:62%;transform-origin:50% 8%;transform:rotate(4deg);transition:transform .7s cubic-bezier(.3,1.4,.5,1)">'
             + '<div style="position:absolute;left:25%;top:0;width:50%;aspect-ratio:1;border-radius:50%;background:#E8762D;box-shadow:inset 0 -5px 0 rgba(0,0,0,.2),inset 0 3px 0 rgba(255,255,255,.35)"></div>'
-            + '<div style="position:absolute;left:44%;top:6%;width:12%;height:84%;border-radius:8px;background:#FFFBF4;box-shadow:inset -3px 0 0 rgba(0,0,0,.12)"></div>'
+            + '<div style="position:absolute;left:44%;top:6%;width:12%;height:84%;border-radius:8px;background:var(--clay-card);box-shadow:inset -3px 0 0 rgba(0,0,0,.12)"></div>'
             + '<div style="position:absolute;left:20%;bottom:0;width:60%;height:14%;border-radius:10px;background:#FDA127;box-shadow:inset 0 -4px 0 rgba(0,0,0,.2)"></div>'
           + '</div>'
         + '</div>'
         + '<div style="min-width:0;display:flex;flex-direction:column;gap:14px">'
-          + '<span id="am-deckname" style="align-self:flex-start;padding:6px 12px;border-radius:999px;background:#FDA127;color:#033337;font-size:12px;font-weight:800"></span>'
+          + '<span id="am-deckname" style="align-self:flex-start;padding:6px 12px;border-radius:999px;background:#FDA127;color:var(--clay-ink);font-size:12px;font-weight:800"></span>'
           + '<h2 id="am-title" style="margin:0;font-family:var(--clay-head);font-weight:800;font-size:clamp(28px,3.6vw,44px);line-height:1.12;text-wrap:balance;color:#fff"></h2>'
           + '<p id="am-sub" style="margin:0;font-size:15px;line-height:1.6;color:#BFE6EE"></p>'
           + '<div id="am-eq" style="height:64px;display:flex;align-items:flex-end;gap:5px"></div>'
           + '<div>'
-            + '<div id="am-seek" style="height:14px;border-radius:999px;background:rgba(255,255,255,.12);box-shadow:inset 0 3px 5px rgba(0,0,0,.3);cursor:pointer;overflow:hidden"><div id="am-pct" style="height:100%;width:0%;border-radius:999px;background:#7FD3DC;box-shadow:inset 0 -3px 0 rgba(0,0,0,.15)"></div></div>'
+            + '<div id="am-seek" style="height:14px;border-radius:999px;background:rgba(255,255,255,.12);box-shadow:inset 0 3px 5px rgba(0,0,0,.3);cursor:pointer;overflow:hidden"><div id="am-pct" style="height:100%;width:0%;border-radius:999px;background:var(--clay-c1);box-shadow:inset 0 -3px 0 rgba(0,0,0,.15)"></div></div>'
             + '<div style="display:flex;justify-content:space-between;margin-top:6px;font-family:var(--clay-mono);font-size:12px;color:#9CC9C9"><span id="am-tc">0:00</span><span id="am-td">–:––</span></div>'
           + '</div>'
           + '<div style="display:flex;align-items:center;gap:14px">'
             + '<button id="am-prev" aria-label="Previous" style="border:0;cursor:pointer;display:grid;place-items:center;border-radius:50%;width:52px;height:52px;background:#0B4A4F;color:#fff;font-size:18px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.3),inset 0 3px 0 rgba(255,255,255,.1)">⏮</button>'
-            + '<button id="am-toggle" aria-label="Play" style="border:0;cursor:pointer;display:grid;place-items:center;border-radius:50%;width:76px;height:76px;background:#FDA127;color:#033337;font-size:26px;box-shadow:inset 0 -7px 0 rgba(0,0,0,.18),inset 0 4px 0 rgba(255,255,255,.4),0 14px 24px -10px rgba(253,161,39,.7)">▶</button>'
+            + '<button id="am-toggle" aria-label="Play" style="border:0;cursor:pointer;display:grid;place-items:center;border-radius:50%;width:76px;height:76px;background:#FDA127;color:var(--clay-ink);font-size:26px;box-shadow:inset 0 -7px 0 rgba(0,0,0,.18),inset 0 4px 0 rgba(255,255,255,.4),0 14px 24px -10px rgba(253,161,39,.7)">▶</button>'
             + '<button id="am-next" aria-label="Next" style="border:0;cursor:pointer;display:grid;place-items:center;border-radius:50%;width:52px;height:52px;background:#0B4A4F;color:#fff;font-size:18px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.3),inset 0 3px 0 rgba(255,255,255,.1)">⏭</button>'
             + '<a id="am-togame" href="'+esc(d.dHref)+'" style="margin-left:auto;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;font-size:13px;font-weight:800">'+esc(l.toGame)+' ↗</a>'
           + '</div>'
@@ -193,7 +193,7 @@
       return '<button type="button" data-ci="'+i+'" style="border:0;cursor:pointer;padding:0;background:transparent;text-align:left;font-family:var(--clay-sans);color:var(--clay-ink)">'
         + '<div style="position:relative;aspect-ratio:1/1;margin-right:18%">'
           + '<div class="am-disc" style="position:absolute;top:6%;bottom:6%;aspect-ratio:1/1;right:-12%;border-radius:50%;background:repeating-radial-gradient(circle,#123033 0 2px,#1C3F43 2px 4px);box-shadow:0 10px 18px -8px rgba(0,0,0,.5);transition:right .5s cubic-bezier(.2,.8,.2,1)"><span style="position:absolute;inset:34%;border-radius:50%;background:'+SLEEVE[i%4]+'"></span></div>'
-          + '<div class="am-ring" style="position:absolute;inset:0;border-radius:24px;overflow:hidden;background:#F3E6CF;border:4px solid #FFFBF4;box-shadow:inset 0 -8px 0 rgba(0,0,0,.08),0 20px 28px -18px rgba(110,70,30,.6)"><div role="img" aria-label="'+esc(colName(c))+'" style="position:absolute;inset:0;width:100%;height:100%;background:url(\''+esc(art(c[1]))+'\') 50% 50%/cover no-repeat"></div></div>'
+          + '<div class="am-ring" style="position:absolute;inset:0;border-radius:24px;overflow:hidden;background:var(--clay-tray);border:4px solid var(--clay-card);box-shadow:inset 0 -8px 0 rgba(0,0,0,.08),0 20px 28px -18px rgba(110,70,30,.6)"><div role="img" aria-label="'+esc(colName(c))+'" style="position:absolute;inset:0;width:100%;height:100%;background:url(\''+esc(art(c[1]))+'\') 50% 50%/cover no-repeat"></div></div>'
         + '</div>'
         + '<div style="margin-top:14px;font-size:18px;font-weight:800;line-height:1.25">'+esc(colName(c))+'</div>'
         + '<div style="margin-top:2px;font-size:13px;font-weight:700;color:var(--clay-teal)">'+esc(colTone(c))+' · '+c[4].length+' '+l.songs+'</div>'
@@ -203,7 +203,7 @@
     /* Kệ đĩa ca khúc gốc */
     var sh = document.getElementById('am-shelf');
     if(sh) sh.innerHTML = M.groups.map(function(g,i){
-      return '<button type="button" data-gi="'+i+'" style="border:0;cursor:pointer;padding:10px 10px 14px;border-radius:24px;background:#FFFBF4;text-align:left;font-family:var(--clay-sans);color:var(--clay-ink);box-shadow:inset 0 -6px 0 rgba(110,70,30,.1),inset 0 4px 0 rgba(255,255,255,.8),0 16px 22px -16px rgba(110,70,30,.6)">'
+      return '<button type="button" data-gi="'+i+'" style="border:0;cursor:pointer;padding:10px 10px 14px;border-radius:24px;background:var(--clay-card);text-align:left;font-family:var(--clay-sans);color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -6px 0 rgba(110,70,30,.1),inset 0 4px 0 rgba(255,255,255,.8),0 16px 22px -16px rgba(110,70,30,.6))">'
         + '<div style="position:relative;aspect-ratio:1/1;border-radius:16px;overflow:hidden;background:var(--clay-bg)"><div role="img" aria-label="'+esc(groupName(g))+'" style="position:absolute;inset:0;width:100%;height:100%;background:url(\''+esc(art(g[1]))+'\') 50% 22%/cover no-repeat"></div><span style="position:absolute;right:8px;bottom:8px;padding:3px 8px;border-radius:999px;background:#033337;color:#fff;font-size:11px;font-weight:800">'+g[3].length+'</span></div>'
         + '<div style="margin-top:10px;font-size:14px;font-weight:800;line-height:1.3">'+esc(groupName(g))+'</div>'
       + '</button>';
@@ -213,7 +213,7 @@
     var vc = document.getElementById('am-voices');
     if(vc) vc.innerHTML = M.voices.map(function(v,i){
       var label = (lang()==='en' && v[2]) || v[0];
-      return '<button type="button" data-vf="'+esc(v[1])+'" style="border:0;cursor:pointer;padding:14px 18px;border-radius:22px 22px 22px 6px;background:'+SHELF_BG[i%4]+';color:var(--clay-ink);font:800 15px var(--clay-sans);box-shadow:inset 0 -5px 0 rgba(0,0,0,.08),inset 0 3px 0 rgba(255,255,255,.5),0 14px 20px -14px rgba(110,70,30,.6)"><span class="am-vicon">▶</span> '+esc(label)+'</button>';
+      return '<button type="button" data-vf="'+esc(v[1])+'" style="border:0;cursor:pointer;padding:14px 18px;border-radius:22px 22px 22px 6px;background:'+SHELF_BG[i%4]+';color:var(--clay-ink);font:800 15px var(--clay-sans);box-shadow:var(--clay-night-shadow,inset 0 -5px 0 rgba(0,0,0,.08),inset 0 3px 0 rgba(255,255,255,.5),0 14px 20px -14px rgba(110,70,30,.6))"><span class="am-vicon">▶</span> '+esc(label)+'</button>';
     }).join('');
 
     if(al) al.querySelectorAll('button[data-ci]').forEach(function(b){ b.onclick = function(){ loadDeck('c', +b.getAttribute('data-ci')); scrollDeck(); }; });
@@ -269,12 +269,12 @@
       var act = deckK==='c' && +b.getAttribute('data-ci') === deckI;
       var disc = b.querySelector('.am-disc'), ring = b.querySelector('.am-ring');
       if(disc) disc.style.right = act ? '-30%' : '-12%';
-      if(ring) ring.style.borderColor = act ? '#FDA127' : '#FFFBF4';
+      if(ring) ring.style.borderColor = act ? '#FDA127' : 'var(--clay-card)';
     });
     /* kệ đĩa: đánh dấu chùm đang trên bàn xoay */
     document.querySelectorAll('#am-shelf button[data-gi]').forEach(function(b){
       var act = deckK==='g' && +b.getAttribute('data-gi') === deckI;
-      b.style.background = act ? '#FFE6B8' : '#FFFBF4';
+      b.style.background = act ? 'var(--clay-amber-soft)' : 'var(--clay-card)';
     });
     /* giọng Lumina: biểu tượng phát */
     document.querySelectorAll('#am-voices button[data-vf]').forEach(function(b){

@@ -7,7 +7,12 @@
      data-en-aria     → đổi aria-label
      data-en-content  → đổi content của <meta> (vd meta description)
      <title data-en>  → đổi tiêu đề tab (title không có thẻ con nên dùng data-en như chữ thường)
-   Ngôn ngữ lưu ở localStorage['bizon-lang'] (dùng chung toàn site).
+   Ngôn ngữ lưu ở localStorage['bizon-lang'] (dùng chung toàn site), CHỈ khi
+   người dùng tự bấm chọn (clayApplyLang / clayToggleLang). Khách chưa chọn thì
+   dùng mặc định của trang: EN cho trang web, VI cho trang khai báo
+   <html data-default-lang="vi"> (game, trang làm việc của giảng viên) – mặc
+   định này KHÔNG được lưu, vì game đọc chung khoá và phải giữ VI cho sinh viên.
+   Script khác cần ngôn ngữ thì gọi window.clayCurrentLang(), đừng đọc thẳng khoá.
    Phát sự kiện 'bizon:langchange' để script khác (nav) đồng bộ nút VI/EN.
    ========================================================================== */
 (function(){
@@ -16,6 +21,8 @@
   var KEY = 'bizon-lang';
   function saved(){ try{ return localStorage.getItem(KEY); }catch(e){ return null; } }
   function store(v){ try{ localStorage.setItem(KEY, v); }catch(e){} }
+  function pageDefault(){ return document.documentElement.getAttribute('data-default-lang') === 'vi' ? 'vi' : 'en'; }
+  function initial(){ var s = saved(); return s === 'en' || s === 'vi' ? s : pageDefault(); }
 
   function swapText(el, lang){
     /* An toàn: bỏ qua phần tử có con là thẻ (đặt data-en nhầm trên vùng chứa
@@ -33,7 +40,8 @@
     el.setAttribute(attr, lang === 'en' ? enVal : el.dataset[viKey]);
   }
 
-  function apply(lang){
+  /* persist: true khi người dùng tự chọn; dịch lại phần tử mới bơm thì không lưu */
+  function apply(lang, persist){
     lang = lang === 'en' ? 'en' : 'vi';
     document.querySelectorAll('[data-en]').forEach(function(el){ swapText(el, lang); });
     document.querySelectorAll('[data-en-html]').forEach(function(el){ swapHtml(el, lang); });
@@ -41,18 +49,21 @@
     document.querySelectorAll('[data-en-aria]').forEach(function(el){ swapAttr(el, 'aria-label', 'viAria', el.dataset.enAria, lang); });
     document.querySelectorAll('meta[data-en-content]').forEach(function(el){ swapAttr(el, 'content', 'viContent', el.dataset.enContent, lang); });
     document.documentElement.lang = lang;
-    store(lang);
+    if(persist) store(lang);
     window.__bizonLang = lang;
+    document.documentElement.classList.remove('clay-lang-wait'); /* bizon-boot.js tạm ẩn body chờ bước này */
     try{ window.dispatchEvent(new CustomEvent('bizon:langchange', { detail:{ lang:lang } })); }catch(e){}
   }
 
-  function current(){ return window.__bizonLang || (saved() === 'en' ? 'en' : 'vi'); }
+  function current(){ return window.__bizonLang || initial(); }
 
-  window.clayApplyLang = apply;
+  window.clayApplyLang = function(lang){ apply(lang, true); };
   window.clayCurrentLang = current;
-  window.clayToggleLang = function(){ apply(current() === 'en' ? 'vi' : 'en'); };
+  window.clayToggleLang = function(){ apply(current() === 'en' ? 'vi' : 'en', true); };
+  /* Dịch lại theo ngôn ngữ hiện tại (sau khi nav/footer bơm phần tử mới), không lưu */
+  window.clayRefreshLang = function(){ apply(current(), false); };
 
-  function init(){ apply(saved() === 'en' ? 'en' : 'vi'); }
+  function init(){ apply(current(), false); }
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 

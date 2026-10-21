@@ -22,6 +22,8 @@
   --clay-accent:#C2581B;
   /* Bộ màu đất sét phụ */
   --clay-c1:#7FD3DC; --clay-c2:#FFD58A; --clay-c3:#F4B6C2; --clay-c4:#A9DCC4; --clay-c5:#D9F0F2;
+  /* Sắc nhạt hay dùng (nền thẻ phụ, ô đáp án) */
+  --clay-amber-soft:#FFE6B8; --clay-mint-soft:#DDF1E4; --clay-peach-soft:#FDE1CE;
   /* Chân footer */
   --clay-foot:#033337; --clay-foot-fg:#9CC9C9; --clay-foot-link:#FFD58A;
 
@@ -38,6 +40,8 @@
   --clay-shadow-sm:inset 0 -6px 0 rgba(110,70,30,.07), 0 14px 22px -18px rgba(110,70,30,.5);
   --clay-btn-shadow:inset 0 -5px 0 rgba(0,0,0,.16), inset 0 3px 0 rgba(255,255,255,.35);
   --clay-tray-shadow:inset 0 3px 6px rgba(110,70,30,.18);
+  /* Chữ trên nền teal / cam (bản tối đổi sang chữ sẫm vì nền sáng lên) */
+  --clay-on-teal:#fff; --clay-on-orange:#fff;
 }
 
 /* --- Nền tảng --- */
@@ -50,7 +54,8 @@
 .clay a{color:var(--clay-teal);text-decoration:none}
 .clay a:hover{color:var(--clay-ink)}
 /* Nút dạng <a>: giữ chữ trắng, không bị quy tắc màu liên kết ở trên đè (đặc hiệu cao hơn) */
-.clay a.clay-btn,.clay a.clay-btn:hover{color:#fff}
+.clay a.clay-btn,.clay a.clay-btn:hover{color:var(--clay-on-teal)}
+.clay a.clay-btn-orange,.clay a.clay-btn-orange:hover{color:var(--clay-on-orange)}
 .clay h1,.clay h2,.clay h3,.clay h4{font-family:var(--clay-head);font-weight:800;letter-spacing:-.02em;line-height:1.14;margin:0}
 .clay p{margin:0}
 .clay img{max-width:100%}
@@ -70,11 +75,12 @@
 .clay-btn{
   display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;border:0;
   padding:14px 20px;border-radius:20px;font-family:var(--clay-head);font-size:16px;font-weight:700;
-  background:var(--clay-teal);color:#fff;
+  background:var(--clay-teal);color:var(--clay-on-teal);
   box-shadow:var(--clay-btn-shadow),0 14px 22px -12px rgba(0,102,135,.8);
 }
-.clay-btn:hover{color:#fff}
+.clay-btn:hover{color:var(--clay-on-teal)}
 .clay-btn:active{transform:translateY(2px)}
+.clay-btn-orange,.clay-btn-orange:hover{color:var(--clay-on-orange)}
 .clay-btn-orange{background:var(--clay-orange);box-shadow:var(--clay-btn-shadow),0 10px 18px -8px rgba(232,118,45,.7)}
 .clay-btn-pill{border-radius:var(--clay-r-pill)}
 
@@ -105,19 +111,21 @@
 #clay-nav .cn-right{display:flex;align-items:center;gap:10px}
 #clay-nav .cn-lang{display:flex;padding:4px;border-radius:var(--clay-r-pill);background:var(--clay-tray);box-shadow:inset 0 3px 5px rgba(110,70,30,.18);font-size:12px;font-weight:800}
 #clay-nav .cn-lang button{border:0;cursor:pointer;padding:7px 12px;border-radius:var(--clay-r-pill);font:inherit;background:transparent;color:var(--clay-sub)}
-#clay-nav .cn-lang button[aria-pressed="true"]{background:var(--clay-teal);color:#fff;box-shadow:inset 0 -3px 0 rgba(0,0,0,.2),0 4px 8px -3px rgba(0,60,80,.5)}
-#clay-nav .cn-cta{white-space:nowrap;padding:11px 18px;border-radius:var(--clay-r-pill);background:var(--clay-orange);color:#fff;font-family:var(--clay-head);font-size:16px;font-weight:700;box-shadow:var(--clay-btn-shadow),0 10px 18px -8px rgba(232,118,45,.7)}
-#clay-nav .cn-cta:hover{color:#fff}
+#clay-nav .cn-lang button[aria-pressed="true"]{background:var(--clay-teal);color:var(--clay-on-teal);box-shadow:inset 0 -3px 0 rgba(0,0,0,.2),0 4px 8px -3px rgba(0,60,80,.5)}
+#clay-nav .cn-cta{white-space:nowrap;padding:11px 18px;border-radius:var(--clay-r-pill);background:var(--clay-orange);color:var(--clay-on-orange);font-family:var(--clay-head);font-size:16px;font-weight:700;box-shadow:var(--clay-btn-shadow),0 10px 18px -8px rgba(232,118,45,.7)}
+#clay-nav .cn-cta:hover{color:var(--clay-on-orange)}
 #clay-nav .cn-dlwrap{position:relative;flex:none}
-#clay-nav .cn-dl{flex:none;display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border:0;border-radius:50%;background:var(--clay-teal);color:#fff;font:inherit;font-size:16px;line-height:1;cursor:pointer;box-shadow:var(--clay-btn-shadow),0 8px 14px -8px rgba(0,60,80,.7)}
-#clay-nav .cn-dl:hover{color:#fff}
+#clay-nav .cn-dl{flex:none;display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border:0;border-radius:50%;background:var(--clay-teal);color:var(--clay-on-teal);font:inherit;font-size:16px;line-height:1;cursor:pointer;box-shadow:var(--clay-btn-shadow),0 8px 14px -8px rgba(0,60,80,.7)}
+#clay-nav .cn-dl:hover{color:var(--clay-on-teal)}
+/* Nút sáng/tối (chỉ có trên trang web, xem bizon-clay-nav.js) */
+#clay-nav .cn-theme{flex:none;display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border:0;border-radius:50%;background:var(--clay-tray);font:inherit;font-size:17px;line-height:1;cursor:pointer;box-shadow:var(--clay-tray-shadow)}
 #clay-nav .cn-dlmenu{position:absolute;right:0;top:calc(100% + 10px);z-index:20;display:flex;flex-direction:column;gap:2px;min-width:240px;padding:8px;border-radius:var(--clay-r);background:var(--clay-card);box-shadow:0 18px 30px -12px rgba(110,70,30,.5),inset 0 4px 0 rgba(255,255,255,.9)}
 #clay-nav .cn-dlmenu[hidden]{display:none}
 #clay-nav .cn-dlmenu a{padding:10px 12px;border-radius:var(--clay-r-sm);color:var(--clay-ink);font-size:14px;font-weight:700;white-space:nowrap}
 #clay-nav .cn-dlmenu a:hover{background:var(--clay-tray);color:var(--clay-teal)}
 @media (max-width:560px){
   #clay-nav .cn-right{gap:6px}
-  #clay-nav .cn-dl,#clay-nav .cn-refresh{width:32px;height:32px;font-size:14px}
+  #clay-nav .cn-dl,#clay-nav .cn-refresh,#clay-nav .cn-theme{width:32px;height:32px;font-size:14px}
   #clay-nav .cn-cta{padding:11px 14px;font-size:15px}
   #clay-nav .cn-dlmenu{right:-10px;min-width:220px;max-width:calc(100vw - 20px)}
   #clay-nav .cn-dlmenu a{white-space:normal}
@@ -130,6 +138,17 @@
 }
 /* Hàng 2 còn mục khuất bên phải (bizon-clay-nav.js gắn .cn-more): làm mờ mép phải để người xem biết vuốt tiếp */
 #clay-nav .cn-row2.cn-more{-webkit-mask-image:linear-gradient(90deg,#000 80%,transparent);mask-image:linear-gradient(90deg,#000 80%,transparent)}
+/* Máy hẹp (≤440px): thêm nút sáng/tối nên khép khoảng cách và nút VI/EN cho vừa thanh nav */
+@media (max-width:440px){
+  #clay-nav .cn-bar{gap:8px;padding-left:14px}
+  #clay-nav .cn-right{gap:4px}
+  #clay-nav .cn-lang button{padding:7px 9px}
+}
+@media (max-width:360px){
+  #clay-nav .cn-brand{font-size:20px}
+  #clay-nav .cn-lang button{padding:6px 7px}
+  #clay-nav .cn-dl,#clay-nav .cn-theme{width:30px;height:30px}
+}
 /* Máy rất hẹp (≤340px): thu nút «Bắt đầu» để thanh nav không tràn ngang */
 @media (max-width:340px){
   #clay-nav .cn-bar{gap:8px;padding-left:14px}
@@ -168,3 +187,103 @@
 
 @keyframes clayFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
 @media (prefers-reduced-motion:reduce){.clay *{animation:none!important}}
+
+/* Tạm ẩn CHỮ trong lúc bizon-clay-i18n.js đổi chữ gốc VI sang EN (class do
+   js/bizon-boot.js gắn, tự gỡ sau khi dịch hoặc sau 1,5 giây) – tránh nháy VI→EN.
+   Chỉ làm chữ trong suốt: nền, khối và ảnh vẫn vẽ ngay nên trang không trắng,
+   bố cục không nhảy và ảnh hero vẫn hiện sớm. */
+html.clay-lang-wait body,html.clay-lang-wait body *,html.clay-lang-wait body ::before,html.clay-lang-wait body ::after{color:transparent!important;-webkit-text-fill-color:transparent!important;text-shadow:none!important}
+
+/* ============================================================================
+   Bản tối «đất sét đêm» – <html data-theme="dark"> do js/bizon-boot.js đặt.
+   Chỉ cho trang web: game có data-default-lang="vi" và tự lo giao diện của mình
+   (vd ben-phu-sa.html có bản tối riêng) nên bị loại bằng :not(...).
+   Nền nâu đêm ấm, thẻ là khối đất sét tối có viền sáng nhẹ, giữ teal/cam
+   thương hiệu nhưng nâng độ sáng (chữ thường ≥ 4.5:1). Bản in luôn sáng.
+   ========================================================================== */
+@media screen{
+:root[data-theme="dark"]:not([data-default-lang="vi"]){
+  color-scheme:dark;
+  --clay-bg:#1E1915;        /* nền nâu đêm */
+  --clay-card:#2B241E;      /* khối đất sét tối */
+  --clay-tray:#16120F;      /* khay chìm */
+  --clay-cream-deep:#302820;/* khối hero */
+  --clay-ink:#F7ECDD;
+  --clay-ink-2:#EADCC8;
+  --clay-sub:#CDBBA5;
+  --clay-teal:#5EC4D6;      /* teal nâng sáng: chữ/liên kết và nền nút (chữ sẫm) */
+  --clay-teal-2:#17606B;
+  --clay-orange:#F08A45;
+  --clay-gold:#FDB24A;
+  --clay-accent:#F29A62;
+  --clay-c1:#1D4E55; --clay-c2:#5A4319; --clay-c3:#5A2D38; --clay-c4:#234B3C; --clay-c5:#1F3B3F;
+  --clay-amber-soft:#4E3A16; --clay-mint-soft:#234B3C; --clay-peach-soft:#5A3220;
+  --clay-foot:#0C2427; --clay-foot-fg:#A9D0D0; --clay-foot-link:#FFD58A;
+  --clay-on-teal:#062A30; --clay-on-orange:#1E1915;
+  /* Bóng đất sét đêm: mép trên sáng nhẹ + viền mảnh thay cho vệt trắng */
+  --clay-shadow:inset 0 -9px 0 rgba(0,0,0,.28), inset 0 2px 0 rgba(255,236,210,.10), 0 0 0 1px rgba(255,230,200,.08), 0 26px 36px -24px rgba(0,0,0,.8);
+  --clay-shadow-sm:inset 0 -6px 0 rgba(0,0,0,.25), inset 0 1px 0 rgba(255,236,210,.08), 0 0 0 1px rgba(255,230,200,.07), 0 14px 22px -18px rgba(0,0,0,.8);
+  --clay-btn-shadow:inset 0 -5px 0 rgba(0,0,0,.22), inset 0 3px 0 rgba(255,255,255,.25);
+  --clay-tray-shadow:inset 0 3px 6px rgba(0,0,0,.45);
+  /* Bóng thay thế cho các khối viết cứng vệt trắng mép trên trong trang:
+     box-shadow:var(--clay-night-shadow,<bóng sáng>) – bản sáng không định nghĩa biến này */
+  --clay-night-shadow:inset 0 -6px 0 rgba(0,0,0,.25), inset 0 1px 0 rgba(255,236,210,.10), 0 0 0 1px rgba(255,230,200,.08), 0 18px 28px -20px rgba(0,0,0,.8);
+  background:var(--clay-bg);
+}
+:root[data-theme="dark"]:not([data-default-lang="vi"]) .clay a:hover{color:var(--clay-ink)}
+:root[data-theme="dark"]:not([data-default-lang="vi"]) .clay-eyebrow{color:#F5C98A;box-shadow:inset 0 -3px 0 rgba(0,0,0,.25),0 0 0 1px rgba(255,230,200,.08)}
+:root[data-theme="dark"]:not([data-default-lang="vi"]) .clay-field{box-shadow:inset 3px 4px 8px rgba(0,0,0,.45),inset -2px -2px 4px rgba(255,236,210,.05),0 0 0 1px rgba(255,230,200,.08)}
+:root[data-theme="dark"]:not([data-default-lang="vi"]) #clay-nav .cn-bar{box-shadow:0 18px 30px -16px rgba(0,0,0,.7),inset 0 -6px 0 rgba(0,0,0,.25),inset 0 2px 0 rgba(255,236,210,.10),0 0 0 1px rgba(255,230,200,.08)}
+:root[data-theme="dark"]:not([data-default-lang="vi"]) #clay-nav a[aria-current="page"]{box-shadow:0 4px 8px -4px rgba(0,0,0,.6),inset 0 -3px 0 rgba(0,0,0,.25),0 0 0 1px rgba(255,230,200,.08)}
+:root[data-theme="dark"]:not([data-default-lang="vi"]) #clay-nav .cn-dlmenu{box-shadow:0 18px 30px -12px rgba(0,0,0,.75),0 0 0 1px rgba(255,230,200,.10)}
+:root[data-theme="dark"]:not([data-default-lang="vi"]) #clay-nav .cn-row2{box-shadow:var(--clay-tray-shadow),0 12px 20px -14px rgba(0,0,0,.7)}
+:root[data-theme="dark"]:not([data-default-lang="vi"]) #clay-footer .cf-cols h4{color:#DDEFEF}
+:root[data-theme="dark"]:not([data-default-lang="vi"]) #clay-footer .cf-dis{color:#93B9BA}
+:root[data-theme="dark"]:not([data-default-lang="vi"]) .clay-hero{box-shadow:inset 0 -10px 0 rgba(0,0,0,.25),inset 0 2px 0 rgba(255,236,210,.10),0 0 0 1px rgba(255,230,200,.08),0 30px 44px -30px rgba(0,0,0,.8)}
+:root[data-theme="dark"]:not([data-default-lang="vi"]) .clay-hero .sun{opacity:.35}
+:root[data-theme="dark"]:not([data-default-lang="vi"]) .clay-hero .art img{filter:drop-shadow(0 18px 14px rgba(0,0,0,.55))}
+
+/* --- Màu viết cứng trong style="" (HTML và chuỗi do JS dựng): đổi theo bảng đêm.
+   style="" thắng mọi luật nên phải !important. --- */
+/* nền kem / trắng / pastel → khối đất sét tối cùng tông (ô ảnh nền #FFFFFF giữ trắng
+   vì ảnh dùng mix-blend-mode:multiply) */
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="background:#fff;" i],
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="background:#FFFBF4" i],
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="background:rgba(255,251,244" i]{background:var(--clay-card)!important}
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="background:#FBF4E8" i],
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="background:#FFF3DA" i],
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="background:#F3E6CF" i]{background:var(--clay-cream-deep)!important}
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="background:#FDE1CE" i],
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="background:#FDEBD9" i]{background:#5A3220!important}
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="background:#FBD9E0" i]{background:var(--clay-c3)!important}
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="background:#E6D5B5" i]{background:#4A3D2C!important}
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="background:#DDF1E4" i]{background:var(--clay-c4)!important}
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="background:#FFD58A" i]{background:var(--clay-c2)!important}
+/* chữ sẫm viết cứng → chữ sáng cùng tông */
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="color:#03474F" i],
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="color:#03343A" i],
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="color:#123B3E" i],
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="color:#033337" i],
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="color:#0F5C4E" i],
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="color:#123B2E" i]{color:#BFE6EA!important}
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="color:#7A4A0E" i],
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="color:#7A4A12" i],
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="color:#5A3A08" i],
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="color:#4A3008" i],
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="color:#4A3A20" i],
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="color:#3B1A06" i]{color:#F5D29A!important}
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="color:#5A2608" i],
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="color:#8A3A0C" i],
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="color:#A8461A" i]{color:#F6B48C!important}
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="color:#7A2338" i],
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="color:#5B2232" i]{color:#F5BFCB!important}
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="color:#6B7F80" i]{color:#B5C4C4!important}
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="color:#006687" i]{color:var(--clay-teal)!important}
+/* nút/khối nền teal có chữ trắng: teal đêm sáng hơn nên chữ chuyển sẫm */
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="background:var(--clay-teal)"][style*="color:#fff"]{color:var(--clay-on-teal)!important}
+/* khối nền mực (dải tối trong trang sáng) → teal đêm sâu, giữ chữ sáng */
+:root[data-theme="dark"]:not([data-default-lang="vi"]) [style*="background:var(--clay-ink)"]{background:#0F3034!important}
+/* nền nghệ/cam vẫn sáng ở bản tối → chữ sẫm (kể cả con có màu chữ viết cứng) */
+:root[data-theme="dark"]:not([data-default-lang="vi"]) :is([style*="background:var(--clay-gold)"],[style*="background:#FDA127" i],[style*="background:var(--clay-orange)"]){color:#1E1915!important}
+:root[data-theme="dark"]:not([data-default-lang="vi"]) :is([style*="background:var(--clay-gold)"],[style*="background:#FDA127" i],[style*="background:var(--clay-orange)"]) [style*="color:"]{color:inherit!important}
+}

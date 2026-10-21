@@ -8,10 +8,11 @@
 <meta name="description" data-en-content="The BizOn founding team: Đỗ Thùy Hương (Founder &amp; Project Lead) and Assoc. Prof. Phan Anh Tú (Co-founder &amp; Chief Academic Advisor) – academic profiles, ORCID, OSF, Zenodo." content="Đội ngũ sáng lập BizOn: Đỗ Thùy Hương (Founder & Project Lead) và PGS.TS. Phan Anh Tú (Co-founder & Chief Academic Advisor) – hồ sơ học thuật, ORCID, OSF, Zenodo.">
 <meta name="copyright" content="© 2026 Đỗ Thùy Hương & PGS.TS. Phan Anh Tú">
 <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script src="js/bizon-boot.js"></script>
 <link rel="stylesheet" href="css/bizon-clay-fonts.css">
 <link rel="stylesheet" href="css/bizon-clay.css">
 <style>
-  .dn-hero{position:relative;overflow:hidden;margin:28px 0 0;border-radius:40px;background:var(--clay-cream-deep);box-shadow:inset 0 -10px 0 rgba(140,80,20,.1),inset 0 6px 0 rgba(255,255,255,.7),0 30px 44px -30px rgba(110,70,30,.6)}
+  .dn-hero{position:relative;overflow:hidden;margin:28px 0 0;border-radius:40px;background:var(--clay-cream-deep);box-shadow:var(--clay-night-shadow,inset 0 -10px 0 rgba(140,80,20,.1),inset 0 6px 0 rgba(255,255,255,.7),0 30px 44px -30px rgba(110,70,30,.6))}
   .dn-hero .sun{position:absolute;right:-8%;top:-30%;width:min(520px,60%);aspect-ratio:1;border-radius:50%;background:url(assets/brand/trong-dong.svg) center/contain no-repeat;box-shadow:inset 0 -16px 0 rgba(200,110,20,.2);opacity:.85;pointer-events:none}
   .dn-hero .head{position:relative;z-index:2;padding:clamp(24px,4vw,40px) 20px 0;text-align:center}
   .dn-hero h1{margin:16px 0 0;font-size:clamp(40px,5.4vw,64px)}
@@ -26,11 +27,11 @@
   .dn-bubble{position:absolute;top:-58px;left:50%;transform:translateX(-50%);max-width:220px;width:max-content;padding:10px 14px;background:#fff;font-size:13px;font-weight:700;box-shadow:0 10px 24px -8px rgba(0,102,135,.35);opacity:0;transition:opacity .4s}
   .dn-bubble.h{border-radius:18px 18px 18px 4px}
   .dn-bubble.t{border-radius:18px 18px 4px 18px}
-  .dn-card{padding:32px;border-radius:34px;background:var(--clay-card);box-shadow:inset 0 -10px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 28px 40px -28px rgba(110,70,30,.55)}
+  .dn-card{padding:32px;border-radius:34px;background:var(--clay-card);box-shadow:var(--clay-night-shadow,inset 0 -10px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 28px 40px -28px rgba(110,70,30,.55))}
   .dn-ava{width:64px;height:64px;border-radius:22px;color:#fff;display:grid;place-items:center;font-family:var(--clay-head);font-size:26px;font-weight:800;box-shadow:inset 0 -6px 0 rgba(0,0,0,.2),inset 0 4px 0 rgba(255,255,255,.25)}
   .dn-role{margin-top:4px;font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--clay-sub)}
   .dn-facets{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:14px;margin-top:20px}
-  .dn-facet{padding:16px;border-radius:22px;box-shadow:inset 0 -6px 0 rgba(0,0,0,.07),inset 0 4px 0 rgba(255,255,255,.5)}
+  .dn-facet{padding:16px;border-radius:22px;box-shadow:var(--clay-night-shadow,inset 0 -6px 0 rgba(0,0,0,.07),inset 0 4px 0 rgba(255,255,255,.5))}
   .dn-k{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
   .dn-pill{padding:7px 12px;border-radius:999px;font-size:13px;font-weight:800;box-shadow:inset 0 -3px 0 rgba(0,0,0,.08)}
   .dn-tag{padding:6px 12px;border-radius:999px;font-size:12px;font-weight:800}
@@ -39,6 +40,13 @@
   .dn-cta{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-bottom:72px}
   .dn-cta a{padding:15px 24px;border-radius:20px;font-family:var(--clay-head);font-size:18px;font-weight:800}
   @media (max-width:520px){ .dn-stage{gap:8px;padding-top:70px} }
+  /* Bản tối «đất sét đêm» (data-theme do js/bizon-boot.js đặt; bản in giữ sáng) */
+  @media screen{
+    html[data-theme="dark"] .dn-stage .base{background:#C99A5C}
+    html[data-theme="dark"] .dn-bubble{background:var(--clay-card)}
+    html[data-theme="dark"] .dn-ava{color:var(--clay-on-teal)}
+    html[data-theme="dark"] .dn-press{background:var(--clay-cream-deep);border-color:rgba(255,230,200,.14)}
+  }
 </style>
 <meta property="og:type" content="website">
 <meta property="og:title" content="Đội ngũ Sáng lập · BizOn Bật Nghiệp">
@@ -196,11 +204,11 @@
   <section style="margin-bottom:56px">
     <h2 style="margin:0 0 20px;text-align:center;font-size:clamp(30px,3.6vw,40px)" data-en="Vision & Mission">Tầm nhìn &amp; Sứ mệnh</h2>
     <div class="dn-mv">
-      <div style="padding:26px;border-radius:30px;background:var(--clay-c2);box-shadow:inset 0 -9px 0 rgba(0,0,0,.08),inset 0 5px 0 rgba(255,255,255,.5),0 22px 30px -22px rgba(110,70,30,.55)">
+      <div style="padding:26px;border-radius:30px;background:var(--clay-c2);box-shadow:var(--clay-night-shadow,inset 0 -9px 0 rgba(0,0,0,.08),inset 0 5px 0 rgba(255,255,255,.5),0 22px 30px -22px rgba(110,70,30,.55))">
         <div style="font-family:var(--clay-head);font-size:24px;font-weight:800" data-en="Vision">Tầm nhìn</div>
         <p style="margin:8px 0 0;font-size:15px;line-height:1.6;color:#4A3008" data-en="A Mekong Delta where young people do not have to leave home to build a livelihood. They start enterprises on their own soil, create opportunities for regional talent, and bring Vietnamese products to the world.">Một Đồng bằng sông Cửu Long nơi người trẻ không phải rời quê mới có thể lập nghiệp. Họ khởi nghiệp trên chính đất phù sa, tạo chỗ đứng cho người tài của vùng và đưa sản phẩm Việt ra thế giới.</p>
       </div>
-      <div style="padding:26px;border-radius:30px;background:var(--clay-c1);box-shadow:inset 0 -9px 0 rgba(0,0,0,.08),inset 0 5px 0 rgba(255,255,255,.5),0 22px 30px -22px rgba(0,60,80,.55)">
+      <div style="padding:26px;border-radius:30px;background:var(--clay-c1);box-shadow:var(--clay-night-shadow,inset 0 -9px 0 rgba(0,0,0,.08),inset 0 5px 0 rgba(255,255,255,.5),0 22px 30px -22px rgba(0,60,80,.55))">
         <div style="font-family:var(--clay-head);font-size:24px;font-weight:800" data-en="Mission">Sứ mệnh</div>
         <p style="margin:8px 0 0;font-size:15px;line-height:1.6;color:#03343A" data-en="BizOn aims to bring business decision-making experiences to classrooms across the Mekong Delta through explainable simulations grounded in the region’s products, markets, and institutions.">BizOn đưa trải nghiệm ra quyết định kinh doanh đến mọi giảng đường ĐBSCL thông qua các mô phỏng có khả năng giải thích, gắn với sản vật, thị trường và thể chế của vùng.</p>
       </div>
@@ -210,8 +218,8 @@
 
   <section class="dn-cta">
     <a style="background:var(--clay-teal);color:#fff;box-shadow:inset 0 -6px 0 rgba(0,0,0,.2),inset 0 3px 0 rgba(255,255,255,.25),0 14px 22px -12px rgba(0,102,135,.8)" href="lien-he.html" data-en="Partner with us">Liên hệ hợp tác</a>
-    <a style="background:var(--clay-card);color:var(--clay-ink);box-shadow:inset 0 -6px 0 rgba(110,70,30,.12),inset 0 3px 0 #fff,0 14px 22px -14px rgba(110,70,30,.5)" href="index.html">Website</a>
-    <a style="background:var(--clay-card);color:var(--clay-ink);box-shadow:inset 0 -6px 0 rgba(110,70,30,.12),inset 0 3px 0 #fff,0 14px 22px -14px rgba(110,70,30,.5)" href="games.html">Arcade</a>
+    <a style="background:var(--clay-card);color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -6px 0 rgba(110,70,30,.12),inset 0 3px 0 #fff,0 14px 22px -14px rgba(110,70,30,.5))" href="index.html">Website</a>
+    <a style="background:var(--clay-card);color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -6px 0 rgba(110,70,30,.12),inset 0 3px 0 #fff,0 14px 22px -14px rgba(110,70,30,.5))" href="games.html">Arcade</a>
   </section>
 </main>
 
