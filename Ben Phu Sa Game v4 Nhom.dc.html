@@ -96,7 +96,7 @@ button,input{font-family:inherit;}
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;">
           <sc-for list="{{ tc.seats }}" as="s" hint-placeholder-count="2">
             <button onClick="{{ s.onClick }}" style="border:2px solid {{ s.bd }};background:{{ s.bg }};border-radius:20px;padding:10px;cursor:pointer;color:#033337;display:flex;flex-direction:column;gap:6px;align-items:stretch;text-align:left;">
-              <div style="height:120px;border-radius:14px;background:#f4faf6;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;"><img src="{{ s.img }}" alt="{{ s.name }}" style="height:112px;width:100%;object-fit:contain;opacity:{{ s.imgOp }};"></div>
+              <div style="height:120px;border-radius:14px;background:#f4faf6;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" sc-camel-src="{{ s.img }}" alt="{{ s.name }}" style="height:112px;width:100%;object-fit:contain;opacity:{{ s.imgOp }};"></div>
               <div style="display:flex;flex-direction:column;"><b style="font-size:14px;">{{ s.name }}</b><span style="font-size:11px;opacity:.6;">{{ s.role }}</span></div>
               <div style="display:flex;flex-wrap:wrap;gap:4px;"><sc-for list="{{ s.abs }}" as="a" hint-placeholder-count="2"><span style="font-size:10px;font-weight:800;background:#eef4f3;border-radius:999px;padding:2px 7px;">{{ a }}</span></sc-for></div>
               <span style="font-size:12px;font-weight:800;color:{{ s.tagColor }};">{{ s.tag }}</span>
@@ -125,7 +125,7 @@ button,input{font-family:inherit;}
 <sc-if value="{{ inGame }}" hint-placeholder-val="{{ false }}">
 <div style="background:#033337;color:#fff;padding:10px clamp(12px,2vw,24px);display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;box-shadow:0 10px 24px -12px rgba(3,51,55,.8);position:sticky;top:0;z-index:20;">
   <div style="display:flex;align-items:center;gap:10px;min-width:0;">
-    <img src="{{ meImg }}" alt="" style="width:42px;height:42px;border-radius:50%;object-fit:cover;object-position:50% 0%;border:3px solid {{ teamColor }};">
+    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" sc-camel-src="{{ meImg }}" alt="" style="width:42px;height:42px;border-radius:50%;object-fit:cover;object-position:50% 0%;border:3px solid {{ teamColor }};">
     <div style="display:flex;flex-direction:column;line-height:1.15;min-width:0;"><b style="font-size:14px;">{{ meName }} · {{ meRole }}</b><span style="font-size:11px;opacity:.7;">{{ teamLabel }} · {{ tx.room }} {{ code }}</span></div>
   </div>
   <div style="display:flex;gap:5px;flex:1 1 220px;justify-content:center;min-width:0;">
@@ -161,8 +161,8 @@ button,input{font-family:inherit;}
           <span style="font-size:11px;opacity:.6;line-height:1.3;">{{ l.aud }}</span>
           <span style="font-size:11px;font-weight:800;color:#006687;">{{ l.known }}</span>
           <div style="display:flex;gap:3px;flex-wrap:wrap;margin-top:auto;align-items:center;">
-            <sc-for list="{{ l.voters }}" as="p" hint-placeholder-count="0"><img src="{{ p.img }}" alt="{{ p.name }}" title="{{ p.name }}" style="width:26px;height:26px;border-radius:50%;object-fit:cover;object-position:50% 0%;border:2px solid {{ p.color }};"></sc-for>
-            <sc-for list="{{ l.ai }}" as="p" hint-placeholder-count="0"><img src="{{ p.img }}" alt="{{ p.name }}" title="{{ p.name }} bán ở đây tuần trước" style="width:22px;height:22px;border-radius:50%;object-fit:cover;opacity:.75;filter:grayscale(.3);"></sc-for>
+            <sc-for list="{{ l.voters }}" as="p" hint-placeholder-count="0"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" sc-camel-src="{{ p.img }}" alt="{{ p.name }}" title="{{ p.name }}" style="width:26px;height:26px;border-radius:50%;object-fit:cover;object-position:50% 0%;border:2px solid {{ p.color }};"></sc-for>
+            <sc-for list="{{ l.ai }}" as="p" hint-placeholder-count="0"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" sc-camel-src="{{ p.img }}" alt="{{ p.name }}" title="{{ p.name }} bán ở đây tuần trước" style="width:22px;height:22px;border-radius:50%;object-fit:cover;opacity:.75;filter:grayscale(.3);"></sc-for>
           </div>
         </button>
       </sc-for>
@@ -243,7 +243,7 @@ button,input{font-family:inherit;}
       <b style="font-size:14px;">{{ teamLabel }} · {{ tx.duties }}</b>
       <sc-for list="{{ teamStatus }}" as="s" hint-placeholder-count="2">
         <div style="display:flex;gap:10px;align-items:center;">
-          <img src="{{ s.img }}" alt="" style="width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:50% 0%;opacity:{{ s.op }};">
+          <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" sc-camel-src="{{ s.img }}" alt="" style="width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:50% 0%;opacity:{{ s.op }};">
           <div style="flex:1;min-width:0;display:flex;flex-direction:column;"><b style="font-size:13px;">{{ s.name }} <span style="font-weight:600;opacity:.6;">· {{ s.who }}</span></b><span style="font-size:11px;opacity:.7;">{{ s.doing }}</span></div>
           <span style="font-size:18px;">{{ s.mark }}</span>
         </div>
@@ -270,7 +270,7 @@ button,input{font-family:inherit;}
     </div>
     <div style="display:{{ show3d }};position:relative;height:clamp(260px,40vw,400px);border-radius:28px;overflow:hidden;box-shadow:0 18px 34px -18px rgba(3,51,55,.6), 0 0 0 6px #fff;"><div ref="{{ mapRef }}" style="position:absolute;inset:0;"></div></div>
     <div style="display:flex;gap:14px;align-items:flex-end;background:#fff4dc;border-radius:24px;padding:12px 18px 0;overflow:hidden;box-shadow:0 10px 22px -12px rgba(3,51,55,.35);">
-      <img src="{{ topImg }}" alt="{{ topName }}" style="height:150px;width:120px;object-fit:contain;object-position:50% 100%;display:block;">
+      <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" sc-camel-src="{{ topImg }}" alt="{{ topName }}" style="height:150px;width:120px;object-fit:contain;object-position:50% 100%;display:block;">
       <div style="display:flex;flex-direction:column;gap:4px;padding-bottom:16px;min-width:0;"><span style="font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#e8762d;">{{ tx.topWeek }}</span><b style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;">{{ topName }}</b><span style="font-size:13px;opacity:.8;text-wrap:pretty;">{{ topLine }}</span></div>
     </div>
     <sc-for list="{{ revGroups }}" as="g" hint-placeholder-count="3">
@@ -279,7 +279,7 @@ button,input{font-family:inherit;}
         <div style="display:flex;flex-wrap:wrap;gap:8px;">
           <sc-for list="{{ g.sellers }}" as="s" hint-placeholder-count="1">
             <div style="display:flex;gap:8px;align-items:center;background:{{ s.bg }};border:2px solid {{ s.bd }};border-radius:16px;padding:6px 10px;">
-              <img src="{{ s.img }}" alt="" style="width:34px;height:34px;border-radius:50%;object-fit:cover;object-position:50% 0%;">
+              <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" sc-camel-src="{{ s.img }}" alt="" style="width:34px;height:34px;border-radius:50%;object-fit:cover;object-position:50% 0%;">
               <div style="display:flex;flex-direction:column;"><b style="font-size:13px;">{{ s.name }}</b><span style="font-size:11px;opacity:.7;">{{ s.what }}</span></div>
               <b style="font-size:15px;margin-left:6px;">{{ s.rev }}</b>
             </div>
@@ -330,7 +330,7 @@ button,input{font-family:inherit;}
     <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:baseline;"><b style="font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;">{{ teamEndT }}</b><span style="font-size:12px;opacity:.7;">{{ mvpHint }}</span></div>
     <sc-for list="{{ teamEnd }}" as="r" hint-placeholder-count="5">
       <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;background:{{ r.bg }};border-radius:16px;padding:8px 12px;">
-        <img src="{{ r.img }}" alt="" style="width:40px;height:40px;border-radius:50%;object-fit:cover;object-position:50% 0%;">
+        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" sc-camel-src="{{ r.img }}" alt="" style="width:40px;height:40px;border-radius:50%;object-fit:cover;object-position:50% 0%;">
         <div style="flex:1 1 160px;min-width:0;display:flex;flex-direction:column;"><b style="font-size:14px;">{{ r.name }} {{ r.crown }}</b><span style="font-size:11px;opacity:.7;">{{ r.role }}</span></div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;"><b style="font-size:15px;">⭐ {{ r.pts }}</b><span style="font-size:11px;opacity:.7;">{{ r.weeks }}</span></div>
         <span style="font-size:13px;font-weight:800;min-width:54px;text-align:right;">🗳 {{ r.votes }}</span>

@@ -65,7 +65,7 @@
     return '<p class="text-[10px] font-extrabold uppercase tracking-wide opacity-50 mb-1">⚔️ ' + T('Cuộc đua ở Bến Phù Sa', 'The race at Bến Phù Sa') + '</p>' +
       '<p class="text-[13px] font-extrabold mb-2">' + statusLine + '</p>' +
       rivals.map(function (r, i) {
-        return '<button type="button" onclick="BPSRivalIntel.showDetail(' + i + ')" class="w-full text-left flex items-center gap-2.5 mb-1.5">' +
+        return '<button type="button" onclick="BPSRivalIntel.showDetail(' + i + ')" class="w-full text-left flex items-center gap-2.5 mb-1.5" style="min-height:40px">' +
           '<img src="' + r.img + '" alt="" class="w-9 h-9 rounded-full object-cover shrink-0">' +
           '<div class="flex-1 min-w-0">' +
           '<p class="text-[11px] font-extrabold truncate">' + r.icon + ' ' + r.name + '</p>' +

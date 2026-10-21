@@ -522,7 +522,7 @@ function sfxStart() {
   m.connect(mf); mf.connect(mg); mg.connect(out); sfx.market = mg; sfx.mf = mf;
 }
 const sfxBtn = document.createElement('button'); sfxBtn.type = 'button'; sfxBtn.className = 'bps3d-chip'; sfxBtn.textContent = '🔇 ' + T('Âm thanh', 'Sound');
-sfxBtn.style.cssText = 'position:absolute;right:12px;top:52px;cursor:pointer;pointer-events:auto;z-index:2;border:0';
+sfxBtn.style.cssText = 'position:absolute;right:12px;top:58px;cursor:pointer;pointer-events:auto;z-index:2;border:0;min-height:40px';
 host.parentElement.appendChild(sfxBtn);
 sfxBtn.onclick = () => { if (!sfx.ctx) sfxStart(); sfx.on = !sfx.on; sfx.on ? sfx.ctx.resume() : sfx.ctx.suspend(); sfxBtn.textContent = (sfx.on ? '🔊' : '🔇') + ' ' + T('Âm thanh', 'Sound'); };
 window.addEventListener('bps-lang', () => { sfxBtn.textContent = (sfx.on ? '🔊' : '🔇') + ' ' + T('Âm thanh', 'Sound'); });

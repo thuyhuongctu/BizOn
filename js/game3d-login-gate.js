@@ -4,8 +4,11 @@
  * không mật khẩu, không auth thật, bỏ trống vẫn chơi được ở chế độ chơi thử.
  * Dùng chung class .clay-card/.clay-btn đã có trong css/tw.css nên không cần
  * CSS riêng. Nạp SCRIPT này rồi gọi: Game3DGate.mount({introId:'bp-intro', ns:'bp', ...}).
- * ns là tiền tố khoá localStorage riêng của từng họ game (ns-name / ns-class / ns-email),
- * để team/lớp của game này không ghi đè game khác.
+ * ns là tiền tố khoá localStorage riêng của từng họ game (ns-team / ns-class / ns-email),
+ * để team/lớp của game này không ghi đè game khác. Tên đội lưu ở ns-team, KHÔNG
+ * ở ns-name (ns-name là tên NGƯỜI chơi, do ô «Tên của bạn» lúc nộp bài ghi).
+ * Có sessionStorage[ns + '-hs'] (chế độ 2 người chung máy, js/bps-hotseat.js,
+ * tải lại trang mỗi lượt) thì bỏ qua cổng, vào thẳng màn intro.
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. */
 (function () {
   'use strict';
@@ -27,6 +30,9 @@
     function go() {
       var intro = document.getElementById(introId);
       if (!intro) return; // phòng khi gọi sai id, không chặn trang
+      // Đang chơi 2 người chung máy: đã qua cổng ở lượt đầu, không hỏi lại mỗi lượt
+      var hs = null; try { hs = sessionStorage.getItem(ns + '-hs'); } catch (e) {}
+      if (hs) { intro.classList.remove('hidden'); return; }
       intro.classList.add('hidden'); // phòng khi markup quên thêm sẵn 'hidden'
 
       var box = document.createElement('div');
@@ -54,7 +60,10 @@
 
       function enter(team, email, classId) {
         try {
-          localStorage.setItem(ns + '-name', team || '');
+          localStorage.setItem(ns + '-team', team || '');
+          // Dọn giá trị cũ: bản trước ghi nhầm tên đội vào ns-name (ô «Tên của bạn»)
+          var old = localStorage.getItem(ns + '-name');
+          if (old && (old === team || /^(Đội Demo|Demo Team|Đội của bạn|Your team)$/.test(old))) localStorage.removeItem(ns + '-name');
           localStorage.setItem(ns + '-class', classId || '');
           localStorage.setItem(ns + '-email', email || '');
         } catch (e) {}

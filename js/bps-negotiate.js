@@ -44,7 +44,7 @@
     if (!anchor) return;
     var btn = document.createElement('button');
     btn.id = 'bps-negot-enter'; btn.type = 'button';
-    btn.className = 'clay-btn w-full bg-primary text-white font-display font-extrabold py-2.5 text-xs mt-2';
+    btn.className = 'clay-btn w-full bg-primary text-white font-display font-extrabold py-2.5 text-xs mt-2'; btn.style.minHeight = '44px';
     btn.textContent = T('🤝 Đàm phán với khách sỉ', '🤝 Negotiate with a wholesale buyer');
     btn.onclick = function () { window.Negotiate.open(buildConfig()); };
     anchor.insertAdjacentElement('afterend', btn);

@@ -1,11 +1,20 @@
 /* Bến Phù Sa – kịch bản lồng tiếng. File mp3: assets/voice/ben-phu-sa/{vi|en}/{MÃ}.mp3. Dùng chung cho game và trang kịch bản. */
 window.BPS_VOICE = {
   base: 'assets/voice/ben-phu-sa/',
+  // Ngôn ngữ ĐÃ thu âm (có thư mục mp3 thật) – ngôn ngữ khác chỉ hiện chữ, không tải mp3
+  langs: ['vi'],
   speakers: {
-    HG: { name: 'Lumina', img: 'assets/character/advisors/lumina-chap-tay-cut.webp', note: 'AI cố vấn, giọng nữ ấm, chậm rãi' },
-    TP: { name: 'Assoc. Prof. Phan Anh Tu', img: 'assets/character/phu-sa/tu-phan-v2.png', note: 'Cố vấn học thuật, giọng nam trầm, gợi mở' },
-    RV: { name: 'Đối thủ', img: '', note: 'Giọng thách thức, vui, hơi khoe' },
-    NAR: { name: 'Người dẫn', img: '', note: 'Giọng dẫn trung tính, rõ ràng' },
+    HG: { name: 'Lumina', nameEn: 'Lumina', img: 'assets/character/advisors/lumina-chap-tay-cut.webp', note: 'AI cố vấn, giọng nữ ấm, chậm rãi' },
+    TP: { name: 'PGS.TS. Phan Anh Tú', nameEn: 'Assoc. Prof. Phan Anh Tu', img: 'assets/character/phu-sa/tu-phan-v2.png', note: 'Cố vấn học thuật, giọng nam trầm, gợi mở' },
+    RV: { name: 'Đối thủ', nameEn: 'Rival', img: '', note: 'Giọng thách thức, vui, hơi khoe' },
+    NAR: { name: 'Người dẫn', nameEn: 'Narrator', img: '', note: 'Giọng dẫn trung tính, rõ ràng' },
+  },
+  // Lời đối thủ khi trang dùng tên đối thủ khác bản thu âm (bản v8: Ghe Ba Lẹ…) –
+  // {n} = tên đối thủ thật; chỉ hiện chữ, không phát mp3 (mp3 đọc tên cũ).
+  rivalTpl: {
+    BPS_RV_01: ['{n} tới rồi! Tuần này chỗ này là của tụi tôi.', '{n} is here! This spot is ours this week.'],
+    BPS_RV_02: ['{n} bám khu này lâu rồi, bạn trẻ à.', '{n} has held this zone for ages, young one.'],
+    BPS_RV_03: ['{n} có tiếng rồi, khách sẽ nhớ tụi tôi hơn.', '{n} has the name; customers will remember us.'],
   },
   lines: [
     ['BPS_HG_01', 'HG', 'Mở đầu', 'Chào mừng các bạn đến Bến Phù Sa! Năm tuần, mỗi tuần ba quyết định: phương thức, món hàng và địa điểm. Hãy quan sát, thử nghiệm và học từ chính thị trường.', 'Welcome to Bến Phù Sa! Five weeks, three decisions each week: method, product and location. Observe, experiment and learn from the market itself.'],

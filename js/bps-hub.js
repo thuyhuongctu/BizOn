@@ -20,14 +20,18 @@
   // IIFE chạy, nên đổi ngôn ngữ giữa ván không cập nhật được nội dung này.
   function rulesText() {
     return T(
-      '⛵ Ghe hàng bông: doanh thu ×3 nhưng chốt cứng món hàng & địa điểm cả tuần.\n' +
-      '🧺 Gánh hàng rong: doanh thu ×1 nhưng nghe ngóng được nhiều thông tin thị trường.\n' +
-      '📋 Khảo sát chợ: mất trọn tuần không bán hàng, nhận dữ liệu lịch sử.\n' +
-      '⚔️ Đụng cùng địa điểm với đối thủ là chia nhau khách!',
-      '⛵ Trading boat: revenue ×3 but locks the product & location for the whole week.\n' +
-      '🧺 Street cart: revenue ×1 but you gather a lot of market intel.\n' +
-      '📋 Market survey: no sales for the week, but you get historical data.\n' +
-      '⚔️ Hitting the same location as a rival means splitting the customers!'
+      '⛵ Ghe hàng bông: doanh thu ×3, tốn 1,5 triệu ₫/tuần (thuê ghe + nhập hàng), chốt cứng món hàng & địa điểm cả tuần.\n' +
+      '🧺 Gánh hàng rong: doanh thu ×1, không tốn phí cố định, nghe ngóng được nhiều thông tin thị trường.\n' +
+      '📋 Khảo sát chợ: tốn 0,3 triệu ₫ và mất trọn tuần không bán, nhận dữ liệu lịch sử về cặp món + khu tốt nhất (đúng hướng nhưng có thể lỗi thời).\n' +
+      '🛍️ Tiền mua vật phẩm trừ thẳng vào lợi nhuận.\n' +
+      '⚔️ Đụng cùng địa điểm với đối thủ là chia nhau khách!\n' +
+      '🏆 Xếp hạng theo lợi nhuận sau 5 tuần (doanh thu trừ chi phí).',
+      '⛵ Trading boat: revenue ×3, costs 1.5 mn ₫/week (boat hire + stock), locks the product & location for the whole week.\n' +
+      '🧺 Street cart: revenue ×1, no fixed cost, and you gather a lot of market intel.\n' +
+      '📋 Market survey: costs 0.3 mn ₫ and no sales for the week, but you get historical data on the best product + location pair (points the right way but may be stale).\n' +
+      '🛍️ Item purchases come straight out of your profit.\n' +
+      '⚔️ Hitting the same location as a rival means splitting the customers!\n' +
+      '🏆 Ranked by profit after 5 weeks (revenue minus costs).'
     );
   }
 
@@ -35,7 +39,7 @@
     var b = G(); var s = b && b.S, R = b && b.RIVALS; if (!s || !R) return '';
     var rank = R.filter(function (r) { return r.total > s.total; }).length;
     var lines = [
-      T('📍 Tuần ' + (s.week + 1) + '/5 · 💰 ' + f1(s.total) + ' triệu ₫ · 🪙 ' + f1(s.budget) + ' triệu ₫ vốn riêng', '📍 Week ' + (s.week + 1) + '/5 · 💰 ' + f1(s.total) + ' mn ₫ · 🪙 ' + f1(s.budget) + ' mn ₫ capital'),
+      T('📍 Tuần ' + (s.week + 1) + '/5 · 💰 Lợi nhuận ' + f1(s.total) + ' triệu ₫ · 🪙 ' + f1(s.budget) + ' triệu ₫ vốn riêng', '📍 Week ' + (s.week + 1) + '/5 · 💰 Profit ' + f1(s.total) + ' mn ₫ · 🪙 ' + f1(s.budget) + ' mn ₫ capital'),
       rank === 0 ? T('🏆 Bạn đang dẫn đầu cả bến!', '🏆 You are leading the whole wharf!') : T('🌊 Bạn đang xếp hạng ' + (rank + 1) + '/4.', '🌊 You are ranked ' + (rank + 1) + '/4.'),
     ];
     if (s.week === 0) lines.push(T('Gợi ý: tuần đầu thử gánh hàng rong để nghe ngóng trước khi dồn vốn vào ghe hàng bông.', 'Tip: try the street cart in week 1 to scout before committing to the trading boat.'));
@@ -82,7 +86,8 @@
         { x: 160, y: 20, w: 200, h: 130, img: 'assets/illustrations/game/river-worldmap.webp' },
         { x: 1040, y: 20, w: 200, h: 130, img: 'assets/illustrations/game/mekong-capital.webp' },
       ],
-      player: { img: capImg, name: capName, x: 700, y: 760 },
+      // Đứng lệch sang khoảng trống giữa 2 đối thủ đầu – không đè nhãn tên đối thủ giữa (x 700)
+      player: { img: capImg, name: capName, x: 530, y: 800 },
       npcs: npcs,
       stations: [
         { id: 'shop', icon: '🛍️', art: 'assets/illustrations/game/celebrate-shop.webp', name: T('Cửa hàng', 'Shop'), x: 420, y: 380,
@@ -102,7 +107,7 @@
     if (!anchor) return;
     var btn = document.createElement('button');
     btn.id = 'bps-hub-enter'; btn.type = 'button'; btn.style.position = 'relative';
-    btn.className = 'clay-btn w-full bg-deep-teal text-white font-display font-extrabold py-2.5 text-xs mt-3';
+    btn.className = 'clay-btn w-full bg-deep-teal text-white font-display font-extrabold py-2.5 text-xs mt-3'; btn.style.minHeight = '44px';
     btn.textContent = T('🏯 Ra bến gặp đối thủ', '🏯 Visit the wharf');
     btn.onclick = function () { clearNew(); window.ClayHub.open(buildConfig()); };
     anchor.insertAdjacentElement('afterend', btn);
@@ -120,6 +125,12 @@
     btn.appendChild(dot);
   }
   function clearNew() { var dot = $('bps-hub-dot'); if (dot) dot.remove(); }
+
+  // Nút loa lồng tiếng (#bps-mute, js/bps-cast.js) dời lên góc phải trên khi hub mở –
+  // đẩy thông báo nổi của hub sang trái để hai thứ không chồng nhau.
+  var hubCss = document.createElement('style');
+  hubCss.textContent = '#chub .toast{right:72px}';
+  document.head.appendChild(hubCss);
 
   window.BPSHub = { open: function () { clearNew(); window.ClayHub.open(buildConfig()); }, markNew: markNew };
 })();
