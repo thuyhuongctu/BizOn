@@ -3841,7 +3841,7 @@
 ],
 [
 "Game Bật Nghiệp",
-"Bật Nghiệp game"
+"BizOn Bật Nghiệp"
 ],
 [
 "Hướng dẫn chơi",
@@ -4818,6 +4818,26 @@
 "🌌 Universe · Hub"
 ],
 [
+"Vũ trụ",
+"Universe"
+],
+[
+"Hệ sinh thái mô phỏng kinh doanh 3D phong cách đất nặn cho đào tạo khởi nghiệp.",
+"Claymorphism 3D business-simulation ecosystem for entrepreneurship education."
+],
+[
+"© 2026 Bizonland · Đỗ Thùy Hương & Phan Anh Tú · Bảo lưu mọi quyền",
+"© 2026 Bizonland · Do Thuy Huong & Phan Anh Tu · All rights reserved"
+],
+[
+"✉️ Liên hệ · Contact:",
+"✉️ Contact:"
+],
+[
+"🎓 Trang web chỉ phục vụ mục đích giáo dục và nghiên cứu, không đại diện, không liên kết và không nhận tài trợ từ bất kỳ tổ chức chính trị nào. · This website serves educational and research purposes only and is not affiliated with any political organization.",
+"🎓 This website serves educational and research purposes only and is not affiliated with, nor funded by, any political organization."
+],
+[
 "Bản đồ Vũ trụ",
 "Universe Map"
 ],
@@ -4986,6 +5006,13 @@
       var html = lang === 'en' ? s.en : el.dataset.viHtml;
       if (el.innerHTML !== html) el.innerHTML = html;
     });
+    // Tiêu đề tab: trang nào ghi <title data-en="..."> thì đổi theo ngôn ngữ (cùng quy ước với bizon-clay-i18n.js)
+    var tt = document.querySelector('title[data-en]');
+    if (tt) {
+      if (tt.dataset.vi == null) tt.dataset.vi = tt.textContent;
+      var tw = lang === 'en' ? tt.dataset.en : tt.dataset.vi;
+      if (document.title !== tw) document.title = tw;
+    }
     document.documentElement.lang = lang === 'en' ? 'en' : 'vi';
     langBtnSync(lang);
     try { localStorage.setItem('bizon-lang', lang); } catch (e) {}

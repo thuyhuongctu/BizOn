@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thẻ mô tả hệ thống Lumina · BizOn Bật Nghiệp</title>
+<meta name="description" content="Lumina thực sự hoạt động bằng gì, đọc dữ liệu nào và có giới hạn ra sao: cố vấn trong game chạy bằng luật «nếu – thì» ngay trên trình duyệt.">
 <script>window.__resources=Object.assign({},window.__resources,{"https://unpkg.com/react@18.3.1/umd/react.production.min.js":"vendor/react/react.production.min.js","https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js":"vendor/react/react-dom.production.min.js"});</script>
 <script src="./support.js"></script>
 <script src="js/capture-guard.js"></script>
@@ -206,15 +208,17 @@ lTitle:'Known limitations',lNote:'Listed so instructors know before using it in 
 kTitle:'How to verify',kNote:'Every claim on this page can be read directly in the published source:',k:['Advice rules','«What if» simulation','Question limits','Data upload condition (Class code only)'],kFoot:'Note: the published repository is the browser-side code. The authors keep some internal documents private and have not published the full project record.',
 disclaimer:'This website serves educational and research purposes only and does not represent any political organization.'}};
 class Component extends DCLogic{
-  state={lang:null};
+  /* Ngôn ngữ chung toàn site: mở trang theo bizon-lang đã chọn ở trang khác, bấm VI/EN thì lưu lại */
+  state={lang:(()=>{try{return localStorage.getItem('bizon-lang')==='en'?'en':null}catch(e){return null}})()};
+  setLang(l){try{localStorage.setItem('bizon-lang',l)}catch(e){}this.setState({lang:l});}
   renderVals(){
-    const lang=this.state.lang||this.props.lang||'vi';const t=T[lang];
+    const lang=this.state.lang||this.props.lang||'vi';document.documentElement.lang=lang;document.title=lang==='en'?'Lumina system card · BizOn Bật Nghiệp':'Thẻ mô tả hệ thống Lumina · BizOn Bật Nghiệp';const t=T[lang];
     if(!this._art)this._art=React.createElement('img',{src:'assets/character/advisors/lumina-y-tuong-cut.webp',alt:'Lumina',style:{position:'absolute',inset:0,width:'100%',height:'100%',objectFit:'contain',objectPosition:'50% 100%',filter:'drop-shadow(0 18px 14px rgba(0,0,0,.4))',animation:'bzFloat 6s ease-in-out infinite'}});
     const on='inset 0 -3px 0 rgba(0,0,0,.2),0 4px 8px -3px rgba(0,60,80,.5)';
     const qn=['3','+2','2','6'],qc=['#006687','#E8762D','#1E7E8C','#7A4A0E'];
     const files=[['js/engine.js','luminaAdvice()'],['js/engine.js','whatIfSimulate()'],['AI_QUOTA_PER_ROUND','WHAT_IF_LIMIT'],['js/backend.js','']];
     return{t,heroArt:this._art,
-      setVi:()=>this.setState({lang:'vi'}),setEn:()=>this.setState({lang:'en'}),
+      setVi:()=>this.setLang('vi'),setEn:()=>this.setLang('en'),
       viBg:lang==='vi'?'#006687':'transparent',viFg:lang==='vi'?'#fff':'#3E5A5C',viSh:lang==='vi'?on:'none',
       enBg:lang==='en'?'#006687':'transparent',enFg:lang==='en'?'#fff':'#3E5A5C',enSh:lang==='en'?on:'none',
       navLinks:NAVX7(lang,''),

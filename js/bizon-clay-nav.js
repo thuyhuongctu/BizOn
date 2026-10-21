@@ -65,6 +65,14 @@
 
   document.body.insertBefore(nav, document.body.firstChild);
 
+  /* Hàng 2 (màn hẹp): đánh dấu .cn-more khi còn mục khuất bên phải để CSS làm mờ mép */
+  var row2 = nav.querySelector('.cn-row2');
+  function syncMore(){ row2.classList.toggle('cn-more', row2.scrollLeft + row2.clientWidth < row2.scrollWidth - 4); }
+  row2.addEventListener('scroll', syncMore, { passive:true });
+  window.addEventListener('resize', syncMore);
+  window.addEventListener('bizon:langchange', syncMore);
+  syncMore();
+
   /* Nút tải app: mở menu chọn Android / iPhone */
   var dlBtn = nav.querySelector('.cn-dl');
   var dlMenu = nav.querySelector('.cn-dlmenu');

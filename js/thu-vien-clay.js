@@ -1,8 +1,8 @@
 /* ============================================================================
    BizOn Clay – Thư viện Sáng tạo: lưới ảnh + tìm kiếm + lọc nhóm + lightbox.
    Đọc window.BZ_LIB (js/thu-vien-data.js). Chrome song ngữ theo clayCurrentLang();
-   chú thích từng mục giữ tiếng Việt (nguồn tư liệu). Nạp SAU bizon-clay-i18n.js
-   và thu-vien-data.js.
+   chú thích từng mục lấy bản tiếng Anh ở js/thu-vien-data-en.js khi xem EN. Nạp SAU bizon-clay-i18n.js,
+   thu-vien-data.js và thu-vien-data-en.js.
    ========================================================================== */
 (function(){
   if(window.__bizonLib) return; window.__bizonLib = true;
@@ -27,6 +27,16 @@
 
   var q = '', sec = -1, lb = null, cur = null, A = null, vis = [];
 
+  /* Ảnh bối cảnh không hợp khung 16:10 cắt kiểu cover: logo ngang rất dài và ảnh tách nền (quả địa cầu…)
+     – hiện trọn bằng contain trên nền hợp màu, không cắt mất chữ hay chủ thể */
+  var SCENE_FIT = {
+    'logo-bizon-dark.webp':{ fit:'contain', pos:'50% 50%', pad:'14px', bg:'#0A0B0D' },
+    'globe-trade.webp':{ fit:'contain', pos:'50% 50%', pad:'8px' },
+    'event-energy-crisis.webp':{ fit:'contain', pos:'50% 50%', pad:'8px' }
+  };
+  /* Tên & chú thích tiếng Anh của từng mục (js/thu-vien-data-en.js); thiếu bản dịch thì giữ tiếng Việt */
+  function loc(a, key){ var E = lang() === 'en' && window.BZ_LIB_EN && window.BZ_LIB_EN[key == null ? a[0] : a[key]]; return E ? [a[0], E[0], E[1]].concat(a.slice(3)) : a; }
+  function locMusic(m){ var E = lang() === 'en' && window.BZ_LIB_EN && window.BZ_LIB_EN[m[2]]; return E ? [E[0], E[1], m[2]] : m; }
   function fig(src,name,desc){ return {src:art(src),name:name,desc:desc,ar:'4/5',fit:'contain',pos:'50% 100%',pad:'8px 8px 0',bg:'#EAF4F2',span:'auto'}; }
   function sheet(a){ return {src:art(a[0]),name:a[1],desc:a[2],ar:'16/9',fit:'contain',pos:'50% 50%',pad:'0',bg:'#FFF3DA',span:'1 / -1'}; }
 
@@ -34,16 +44,16 @@
     var D = window.BZ_LIB, t = T[lang()];
     return [
       { h:t.s[0], note:t.n[0], min:'180px', items:
-        D.chars.map(function(a){ return fig('character/'+a[0], a[1], a[2]); })
+        D.chars.map(function(a){ a = loc(a); return fig('character/'+a[0], a[1], a[2]); })
         .concat(D.expr.map(function(k){ return Object.assign(fig('character/expressions/'+k+'-expressions.webp', t.expr+' – '+t.roles[k], t.exprD), {ar:'4/3',fit:'contain',pos:'50% 50%',pad:'0',bg:'#FFFFFF'}); }))
-        .concat(D.sheets.slice(0,2).map(sheet)) },
+        .concat(D.sheets.slice(0,2).map(function(a){ return sheet(loc(a)); })) },
       { h:t.s[1], note:t.n[1], min:'160px', items:
-        D.cast.map(function(a){ return fig('character/'+a[0], a[1], a[2]); }).concat([sheet(D.sheets[2])]) },
+        D.cast.map(function(a){ a = loc(a); return fig('character/'+a[0], a[1], a[2]); }).concat([sheet(loc(D.sheets[2]))]) },
       { h:t.s[2], note:'', min:'260px', items:
-        D.scenes.map(function(a){ return {src:art('illustrations/'+a[0]),name:a[1],desc:a[2],ar:'16/10',fit:'cover',pos:'50% 30%',pad:'0',bg:'#F3E6CF',span:'auto'}; }) },
+        D.scenes.map(function(a){ a = loc(a); return Object.assign({src:art('illustrations/'+a[0]),name:a[1],desc:a[2],ar:'16/10',fit:'cover',pos:'50% 30%',pad:'0',bg:'#F3E6CF',span:'auto'}, SCENE_FIT[a[0]] || {}); }) },
       { h:t.s[3], note:'', min:'200px', items:[], music:true },
       { h:t.s[4], note:t.n[4], min:'240px', items:
-        D.merch.map(function(a){ return {src:art(a[0]),name:a[1],desc:a[2],ar:'1/1',fit:'cover',pos:'50% 30%',pad:'0',bg:'#F3E4C8',span:'auto'}; }) }
+        D.merch.map(function(a){ a = loc(a); return {src:art(a[0]),name:a[1],desc:a[2],ar:'1/1',fit:'cover',pos:'50% 30%',pad:'0',bg:'#F3E4C8',span:'auto'}; }) }
     ];
   }
 
@@ -97,7 +107,7 @@
     }).join('');
 
     /* tracks (lọc theo từ khóa) */
-    var tracks = D.music.filter(function(m){ return match({name:m[0],desc:m[1]}); });
+    var tracks = D.music.map(locMusic).filter(function(m){ return match({name:m[0],desc:m[1]}); });
 
     /* sections đã lọc + vis[] cho lightbox */
     vis = [];

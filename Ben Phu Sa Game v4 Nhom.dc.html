@@ -436,7 +436,7 @@ class Component extends DCLogic {
   openPeerHost(code){if(!window.Peer)return this.fail(T('Không tải được thư viện kết nối. Kiểm tra Internet hoặc chọn “Thử nhiều tab”.','Could not load the connection library. Check your Internet or choose “Multi-tab test”.'));
     const p=new window.Peer(PFX+code);this.peer=p;
     const openTimer=setTimeout(()=>{try{p.destroy();}catch(e){}
-      this.fail(T('Không mở được phòng sau '+(PEER_TIMEOUT_MS/1000)+' giây — mạng có thể đang chặn kết nối trực tiếp. Thử lại, hoặc chọn “Thử nhiều tab” nếu cả nhóm dùng chung một máy/mạng.','Could not open the room after '+(PEER_TIMEOUT_MS/1000)+'s — the network may be blocking direct connections. Try again, or use “Multi-tab test” if the whole team is on the same device/network.'),()=>this.createRoom());},PEER_TIMEOUT_MS);
+      this.fail(T('Không mở được phòng sau '+(PEER_TIMEOUT_MS/1000)+' giây – mạng có thể đang chặn kết nối trực tiếp. Thử lại, hoặc chọn “Thử nhiều tab” nếu cả nhóm dùng chung một máy/mạng.','Could not open the room after '+(PEER_TIMEOUT_MS/1000)+'s – the network may be blocking direct connections. Try again, or use “Multi-tab test” if the whole team is on the same device/network.'),()=>this.createRoom());},PEER_TIMEOUT_MS);
     p.on('open',()=>{clearTimeout(openTimer);this.broadcast();});
     p.on('connection',c=>{c.on('data',m=>this.onHostMsg(m,c));c.on('close',()=>{const pid=Object.keys(this.conns).find(k=>this.conns[k]===c);if(pid&&this.H.players[pid]){this.H.players[pid].online=false;delete this.conns[pid];this.checkProgress();this.broadcast();}});});
     p.on('error',e=>{clearTimeout(openTimer);if(e.type==='unavailable-id'){p.destroy();this.H.code=genCode();this.openPeerHost(this.H.code);}else this.fail(T('Lỗi kết nối: ','Connection error: ')+e.type,()=>this.createRoom());});}
@@ -449,10 +449,10 @@ class Component extends DCLogic {
     if(!window.Peer)return this.fail(T('Không tải được thư viện kết nối. Kiểm tra Internet.','Could not load the connection library. Check your Internet.'));
     const p=new window.Peer();this.peer=p;
     const openTimer=setTimeout(()=>{try{p.destroy();}catch(e){}
-      this.fail(T('Không kết nối được tới phòng '+code+' sau '+(PEER_TIMEOUT_MS/1000)+' giây — mạng có thể đang chặn kết nối trực tiếp. Thử lại, hoặc nhờ chủ phòng dùng “Thử nhiều tab” nếu cả nhóm cùng một máy/mạng.','Could not connect to room '+code+' after '+(PEER_TIMEOUT_MS/1000)+'s — the network may be blocking direct connections. Try again, or ask the host to use “Multi-tab test” if the whole team is on the same device/network.'),()=>this.joinRoom());},PEER_TIMEOUT_MS);
+      this.fail(T('Không kết nối được tới phòng '+code+' sau '+(PEER_TIMEOUT_MS/1000)+' giây – mạng có thể đang chặn kết nối trực tiếp. Thử lại, hoặc nhờ chủ phòng dùng “Thử nhiều tab” nếu cả nhóm cùng một máy/mạng.','Could not connect to room '+code+' after '+(PEER_TIMEOUT_MS/1000)+'s – the network may be blocking direct connections. Try again, or ask the host to use “Multi-tab test” if the whole team is on the same device/network.'),()=>this.joinRoom());},PEER_TIMEOUT_MS);
     p.on('open',()=>{clearTimeout(openTimer);const c=p.connect(PFX+code,{reliable:true});this.conn=c;
       const connTimer=setTimeout(()=>{try{p.destroy();}catch(e){}
-        this.fail(T('Không kết nối được tới phòng '+code+' — kiểm tra lại mã phòng hoặc thử lại.','Could not connect to room '+code+' — double-check the room code, or try again.'),()=>this.joinRoom());},PEER_TIMEOUT_MS);
+        this.fail(T('Không kết nối được tới phòng '+code+' – kiểm tra lại mã phòng hoặc thử lại.','Could not connect to room '+code+' – double-check the room code, or try again.'),()=>this.joinRoom());},PEER_TIMEOUT_MS);
       c.on('open',()=>{clearTimeout(connTimer);c.send({t:'hello',pid,name});});c.on('data',m=>this.onClientMsg(m));
       c.on('close',()=>this.fail(T('Mất kết nối với chủ phòng.','Lost connection to the host.'),()=>this.joinRoom()));});
     p.on('error',e=>{clearTimeout(openTimer);this.fail(e.type==='peer-unavailable'?T('Không tìm thấy phòng ','Room not found: ')+code:T('Lỗi kết nối: ','Connection error: ')+e.type,()=>this.joinRoom());});}
@@ -590,7 +590,7 @@ class Component extends DCLogic {
       seats:ss.map(s=>{const vs=v.seats.find(x=>x.id===s.id),mine=v.seat===s.id,taken=!!vs.by;return {name:s.name,role:roleOf(s),img:s.img,abs:s.ab.map(a=>ABX[a]),imgOp:taken&&!mine?.55:1,
         bg:mine?'#fff4dc':'#fff',bd:mine?'#fda127':taken?'rgba(3,51,55,.2)':'rgba(3,51,55,.08)',tag:mine?T('✓ Ghế của bạn (bấm để rời)','✓ Your seat (tap to leave)'):taken?'🔒 '+vs.by:T('Chọn ghế này','Take this seat'),tagColor:mine?'#e8762d':taken?'#7a8a8a':'#006687',
         onClick:()=>this.act({k:'seat',seat:mine?null:s.id})};})};});
-    out.playerCount=v.players.length;out.playerNames=v.players.map(p=>p.name+(p.pid===v.host?T(' (chủ phòng)',' (host)'):'')+(p.seat?' · '+seatDef(p.seat).name:T(' · chưa chọn ghế',' · no seat'))+(p.online?'':T(' · mất kết nối',' · offline'))).join(' — ');
+    out.playerCount=v.players.length;out.playerNames=v.players.map(p=>p.name+(p.pid===v.host?T(' (chủ phòng)',' (host)'):'')+(p.seat?' · '+seatDef(p.seat).name:T(' · chưa chọn ghế',' · no seat'))+(p.online?'':T(' · mất kết nối',' · offline'))).join(' – ');
     out.timerOpts=[60,90,120].map(s=>({label:s+'s',bg:v.timer===s?'#fda127':'transparent',onClick:()=>this.act({k:'timer',v:s})}));
     const nSeat=v.seats.filter(x=>x.by).length;out.startBg=nSeat?'#fda127':'#d9e4e2';out.startLabel=nSeat?T('⛵ Bắt đầu mùa buôn','⛵ Start the season'):T('Cần ít nhất 1 ghế','Need at least 1 seat');out.start=()=>this.act({k:'start'});
     // game common

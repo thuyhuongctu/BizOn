@@ -4,8 +4,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>BizOn Bật Nghiệp - Business Simulation</title>
-<meta name="description" content="BizOn: mô phỏng kinh doanh có khả năng giải thích cho học tập, nghiên cứu và quốc tế hóa – engine xác định, phản tư có AI hỗ trợ, khoa học mở. Từ Việt Nam ra thế giới.">
+<title data-en="BizOn Bật Nghiệp – Business Simulation">BizOn Bật Nghiệp – Mô phỏng kinh doanh</title>
+<meta name="description" data-en-content="BizOn: explainable business simulations for learning, research and internationalization – deterministic engines, AI-supported reflection, open science. From Vietnam to the world." content="BizOn: mô phỏng kinh doanh có khả năng giải thích cho học tập, nghiên cứu và quốc tế hóa – engine xác định, phản tư có AI hỗ trợ, khoa học mở. Từ Việt Nam ra thế giới.">
 <meta name="copyright" content="© 2026 Đỗ Thùy Hương & PGS.TS. Phan Anh Tú">
 <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
 <link rel="stylesheet" href="css/bizon-clay-fonts.css">
@@ -50,7 +50,7 @@
   .hp-game-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
   .hp-game-lv{position:absolute;left:14px;top:14px;display:inline-flex;align-items:center;gap:8px;padding:6px 14px 6px 6px;border-radius:999px;background:rgba(255,251,244,.95);font:800 13px/1 var(--clay-head);color:var(--clay-ink);box-shadow:0 10px 18px -10px rgba(0,0,0,.55)}
   .hp-game-lv b{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--lv);color:#fff;font-size:15px;box-shadow:inset 0 -3px 0 rgba(0,0,0,.22)}
-  .clay .hp-game-tr{position:absolute;right:14px;bottom:14px;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px 0 6px;border-radius:999px;background:rgba(3,51,55,.86);color:#fff;font:800 14px var(--clay-head);box-shadow:0 10px 18px -10px rgba(0,0,0,.6)}
+  .clay .hp-game-tr{position:absolute;right:14px;top:14px;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px 0 6px;border-radius:999px;background:rgba(3,51,55,.86);color:#fff;font:800 14px var(--clay-head);box-shadow:0 10px 18px -10px rgba(0,0,0,.6)}
   .hp-game-tr span:first-child{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--clay-gold);color:var(--clay-ink);font-size:12px}
   .hp-game-body{padding:20px 12px 10px;display:flex;flex-direction:column;gap:10px;flex:1}
   .hp-game-kicker{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--lv)}
@@ -89,6 +89,8 @@
   .cn-refresh:hover{color:var(--clay-ink)}
   .cn-refresh:active{transform:scale(.9)}
   @media (max-width:560px){ .cn-refresh{width:34px;height:34px;font-size:16px} }
+  /* Máy hẹp (≤400px): ẩn nút làm mới để thanh nav không tràn ngang, đẩy nút «Bắt đầu» ra ngoài mép */
+  @media (max-width:400px){ .cn-refresh{display:none} }
 </style>
 <meta property="og:type" content="website">
 <meta property="og:title" content="BizOn Bật Nghiệp - Business Simulation">
@@ -144,7 +146,7 @@
           <div style="width:52px;height:52px;border-radius:18px;background:var(--clay-card);display:grid;place-items:center;font-family:var(--clay-head);font-size:22px;font-weight:800;color:var(--clay-teal);box-shadow:inset 0 -5px 0 rgba(0,0,0,.08),0 8px 14px -8px rgba(0,0,0,.35)">01</div>
           <div style="font-family:var(--clay-head);font-size:24px;font-weight:800;line-height:1.14;color:var(--clay-ink)" data-en="Students">Sinh viên</div>
           <p style="margin:0;font-size:15px;line-height:1.55;color:var(--clay-ink-2);flex:1" data-en="Play a short round, make decisions and get feedback from Lumina.">Chơi một ván ngắn, ra quyết định và nhận phản hồi từ Lumina.</p>
-          <div style="display:flex;flex-wrap:wrap;gap:8px"><a class="hp-pill" style="background:rgba(255,251,244,.85);color:var(--clay-ink)" href="ben-phu-sa-v8.html" data-en="Bến Phù Sa →">Bến Phù Sa →</a><a class="hp-pill" style="background:rgba(255,251,244,.85);color:var(--clay-ink)" href="game.html" data-en="Bật Nghiệp →">Bật Nghiệp →</a><a class="hp-pill" style="background:rgba(255,251,244,.85);color:var(--clay-ink)" href="ho-chieu-thuong-hieu.html" data-en="Brand Passport →">Hộ Chiếu Thương Hiệu →</a><a class="hp-pill" style="background:rgba(255,251,244,.85);color:var(--clay-ink)" href="ho-chieu-sau-rieng.html" data-en="Sầu Riêng Passport →">Hộ Chiếu Sầu Riêng →</a></div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px"><a class="hp-pill" style="background:rgba(255,251,244,.85);color:var(--clay-ink)" href="ben-phu-sa-v8.html" data-en="Bến Phù Sa →">Bến Phù Sa →</a><a class="hp-pill" style="background:rgba(255,251,244,.85);color:var(--clay-ink)" href="game.html" data-en="Bật Nghiệp →">Bật Nghiệp →</a><a class="hp-pill" style="background:rgba(255,251,244,.85);color:var(--clay-ink)" href="ho-chieu-thuong-hieu.html" data-en="Brand Passport →">Hộ Chiếu Thương Hiệu →</a><a class="hp-pill" style="background:rgba(255,251,244,.85);color:var(--clay-ink)" href="ho-chieu-sau-rieng.html" data-en="Durian Passport →">Hộ Chiếu Sầu Riêng →</a></div>
         </div>
         <div style="padding:26px 24px;border-radius:30px;background:var(--clay-c1);display:flex;flex-direction:column;gap:12px;box-shadow:inset 0 -10px 0 rgba(0,0,0,.08),inset 0 6px 0 rgba(255,255,255,.5),0 24px 30px -18px rgba(0,30,40,.55)">
           <div style="width:52px;height:52px;border-radius:18px;background:var(--clay-card);display:grid;place-items:center;font-family:var(--clay-head);font-size:22px;font-weight:800;color:var(--clay-teal);box-shadow:inset 0 -5px 0 rgba(0,0,0,.08),0 8px 14px -8px rgba(0,0,0,.35)">02</div>
@@ -268,7 +270,7 @@
         </a>
         <a style="display:flex;flex-direction:column;gap:14px;padding:12px;border-radius:30px;background:#0B4A4F;color:#E1F2F5;box-shadow:inset 0 -8px 0 rgba(0,0,0,.2),inset 0 5px 0 rgba(255,255,255,.08)" href="assets/video/srp-trailer.mp4" data-trailer="assets/video/srp-trailer.mp4" data-poster="assets/video/srp-trailer-poster.jpg" data-title="Hộ Chiếu Sầu Riêng" data-title-en="Durian Passport">
           <div style="position:relative;aspect-ratio:16/9;border-radius:22px;overflow:hidden;background:#022225"><img src="assets/video/srp-trailer-poster.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" loading="lazy"><span class="hp-vplay" aria-hidden="true">▶</span></div>
-          <div style="padding:0 8px 8px"><div style="font-family:var(--clay-head);font-size:24px;font-weight:700;color:#fff" data-en="Durian Passport">Hộ Chiếu Sầu Riêng</div><div style="margin-top:2px;font-size:14px;color:#9CC9C9" data-en="Durian export through 6 seasons · English narration · 1:40">Xuất khẩu sầu riêng qua 6 mùa · thuyết minh tiếng Anh · 1:40</div></div>
+          <div style="padding:0 8px 8px"><div style="font-family:var(--clay-head);font-size:24px;font-weight:700;color:#fff" data-en="Durian Passport">Hộ Chiếu Sầu Riêng</div><div style="margin-top:2px;font-size:14px;color:#9CC9C9" data-en="Durian export through 6 seasons · English narration · 1:40">Xuất khẩu sầu riêng qua 6 vụ · thuyết minh tiếng Anh · 1:40</div></div>
         </a>
       </div>
     </div>

@@ -266,7 +266,7 @@ function shots(info, m) {
   const md = SNAP.entered[m], th = TH[m], f = SNAP.firm, list = [];
   const inQ = SNAP.qin ? SNAP.qin[m] : 0;
   list.push({ d: 5, p: [V(-26, th.h[1] + 9, 0.5), V(-13, th.h[1] * 0.45 + 3, 1.2)], l: [V(-6, 1.5, -2), V(-1, 2, -4.5)],
-    cap: th.icon + ' ' + th.name + ' — ' + tr(th.trait[0], th.trait[1]) });
+    cap: th.icon + ' ' + th.name + ' – ' + tr(th.trait[0], th.trait[1]) });
   list.push({ d: 5.5, p: [V(-14, 1.7, 3.9), V(-4.5, 1.7, 3.4)], l: [V(-6, 1.6, -3), V(0, 1.8, -5.5)],
     cap: info.ent ? tr('Lượng khách ', 'Customer traffic ') + info.cust + '/100 · ' + (SNAP.know ? tr('tri thức thị trường ', 'market intel ') + SNAP.know[m] + '%' : '')
       : tr('Phố vẫn đông, nhưng thương hiệu của bạn chưa có mặt ở đây.', 'The street is busy, but your brand is not here yet.') });

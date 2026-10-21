@@ -147,7 +147,7 @@ class Component extends DCLogic {
       const data=await res.json();
       const rows=(data||[]).map(d=>({name:d.player_name||'(ẩn danh)',klass,mode:d.exam?'exam':'solo',total:Number(d.total_revenue)||0,rank:Number(d.final_rank)||0,eff:Number(d.efficiency)||0,code:'Nộp trực tiếp',date:(d.created_at||'').slice(0,10),quiz:'',team:'',role:'',room:'',of:4,pts:'',mvpVotes:0,isMvp:false,ver:d.app_version||'unknown'}));
       this.setState({remoteRows:rows,remoteStatus:rows.length?'✅ Đã tải '+rows.length+' bài của lớp '+klass+'.':'Không có bài nộp trực tiếp nào cho lớp này.'});
-    }catch(e){this.setState({remoteStatus:'⚠️ Chưa tải được — kiểm tra mạng rồi thử lại.'});}
+    }catch(e){this.setState({remoteStatus:'⚠️ Chưa tải được – kiểm tra mạng rồi thử lại.'});}
   }
   csv(rows){const head='Hoc sinh,Lop,Che do,Phien ban,Doi,Vai tro,Phong,Diem (tr),Hieu suat (%),Hang,Ma,Ngay,On tap (/5),Diem vai,Phieu MVP,MVP';const esc=v=>'"'+String(v).replace(/"/g,'""')+'"';
     const body=rows.map(r=>[r.name,r.klass,r.mode==='exam'?'Thi thu':r.mode==='team'?'Choi nhom':r.mode==='solo'?'Nop truc tiep':'Luyen tap',r.ver||'',r.team,r.role,r.room,r.total,r.eff,r.rank,r.code,r.date,r.quiz,r.pts,r.mvpVotes,r.isMvp?'MVP':''].map(esc).join(','));

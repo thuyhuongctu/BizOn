@@ -184,7 +184,7 @@ test('Chỉ số vận hành luôn nằm trong khoảng cho phép', () => {
 
 /* ================= VẬT PHẨM & QUYẾT ĐỊNH TÀI CHÍNH ================= */
 
-test('Khiên bảo hiểm vô hiệu hoá biến cố xấu đúng một lần', () => {
+test('Khiên bảo hiểm giảm một nửa tác động biến cố xấu đúng một lần', () => {
   const badRound = E.MARKET_EVENTS_LIST().findIndex((e, i) => i >= 1 && e && e.tone === 'bad');
   check(badRound > 0, `tìm được vòng có biến cố xấu: vòng ${badRound}`);
   if (badRound <= 0) return;

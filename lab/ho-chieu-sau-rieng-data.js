@@ -146,7 +146,7 @@
     direct: { vi: 'Xuất khẩu trực tiếp chính ngạch', en: 'Direct official export' },
     direct_strict: { vi: 'Xuất khẩu trực tiếp, rào cản kỹ thuật cao', en: 'Direct export, high technical barriers' },
     process_export: { vi: 'Xuất khẩu qua chế biến (nâng cấp chuỗi giá trị)', en: 'Export via processing (value-chain upgrading)' },
-    domestic: { vi: 'Không xuất khẩu — thị trường nội địa', en: 'No export — domestic market' }
+    domestic: { vi: 'Không xuất khẩu – thị trường nội địa', en: 'No export – domestic market' }
   };
 
   // ---------- Kênh bán ----------
@@ -168,9 +168,9 @@
     { id: 'BORDER', emoji: '🛻', vi: 'Trung Quốc tiểu ngạch', en: 'China border trade', priceMult: 1.35, cost: 5, cap: 260, needs: [], src: 'CAILAY',
       entryMode: 'indirect',
       pipeline: [
-        { id: 'customs', vi: 'Qua lối mở biên giới, thủ tục đơn giản hơn nhưng dễ bị siết bất ngờ.', en: 'Through informal border crossings — simpler paperwork but prone to sudden tightening.', src: 'border2018' },
+        { id: 'customs', vi: 'Qua lối mở biên giới, thủ tục đơn giản hơn nhưng dễ bị siết bất ngờ.', en: 'Through informal border crossings – simpler paperwork but prone to sudden tightening.', src: 'border2018' },
         { id: 'distribute', vi: 'Thương lái biên giới gom và bán lại cho đầu mối Trung Quốc ngay tại cửa khẩu.', en: 'Border traders consolidate loads and resell to Chinese buyers right at the gate.', src: 'traders80' },
-        { id: 'retail', vi: 'Khó truy xuất khi ra thị trường — không mang thương hiệu Việt Nam.', en: 'Hard to trace once on the market — carries no Vietnamese branding.', src: null }
+        { id: 'retail', vi: 'Khó truy xuất khi ra thị trường – không mang thương hiệu Việt Nam.', en: 'Hard to trace once on the market – carries no Vietnamese branding.', src: null }
       ] },
     { id: 'FROZEN', emoji: '❄️', vi: 'Đông lạnh (múi, nguyên trái)', en: 'Frozen (pulp, whole fruit)', priceMult: 2.6, cost: 6, freezeCost: 0.6, cap: 220, needs: ['freezer'], src: 'JETRO',
       entryMode: 'process_export',
@@ -192,12 +192,12 @@
       pipeline: [
         { id: 'customs', vi: 'Kiểm nghiệm dư lượng nghiêm ngặt (procymidone ≤0,01 ppm); vi phạm là tiêu hủy cả lô.', en: 'Strict residue testing (procymidone ≤0.01 ppm); a violation means the whole lot is destroyed.', src: 'japanMRL' },
         { id: 'distribute', vi: 'Qua nhà nhập khẩu cao cấp, số lượng nhỏ, đòi hồ sơ kiểm nghiệm đầy đủ.', en: 'Through a premium importer, small volumes, full test documentation required.', src: 'japanMRL' },
-        { id: 'retail', vi: 'Bán ở phân khúc trái cây cao cấp, giá cao nhất trong các kênh.', en: 'Sold in the premium fruit segment — the highest price of all channels.', src: null }
+        { id: 'retail', vi: 'Bán ở phân khúc trái cây cao cấp, giá cao nhất trong các kênh.', en: 'Sold in the premium fruit segment – the highest price of all channels.', src: null }
       ] },
     { id: 'DOM', emoji: '🏪', vi: 'Nội địa (chợ đầu mối TP.HCM)', en: 'Domestic (HCMC wholesale)', priceMult: 1.16, cost: 2, cap: null, needs: [], src: 'PDIEN',
       entryMode: 'domestic',
       pipeline: [
-        { id: 'customs', vi: 'Không qua biên giới — chỉ kiểm chất lượng nội địa theo TCVN.', en: 'No border crossing — only domestic quality checks under TCVN.', src: 'grades' },
+        { id: 'customs', vi: 'Không qua biên giới – chỉ kiểm chất lượng nội địa theo TCVN.', en: 'No border crossing – only domestic quality checks under TCVN.', src: 'grades' },
         { id: 'distribute', vi: 'Qua chợ đầu mối TP.HCM rồi đi các tỉnh.', en: 'Via HCMC\'s wholesale market out to the provinces.', src: null },
         { id: 'retail', vi: 'Lên sạp chợ và cửa hàng trái cây trong nước.', en: 'Reaches domestic market stalls and fruit shops.', src: null }
       ] }
@@ -213,8 +213,8 @@
     src: 'traders80'
   };
   const formalization = {
-    vi: 'Khi vừa có mã vùng trồng vừa có mã cơ sở đóng gói, cơ sở thu mua đủ điều kiện trở thành doanh nghiệp xuất khẩu chính ngạch — đây là quá trình "gia nhập" (entry mode) diễn ra ngay tại Việt Nam, trước khi tính đến phương thức thâm nhập thị trường nước ngoài.',
-    en: 'Once both the planting-area code and the packing-facility code are held, the buying operation becomes eligible to export officially — a home-country "entry mode" process that happens before any foreign-market entry mode even applies.',
+    vi: 'Khi vừa có mã vùng trồng vừa có mã cơ sở đóng gói, cơ sở thu mua đủ điều kiện trở thành doanh nghiệp xuất khẩu chính ngạch – đây là quá trình "gia nhập" (entry mode) diễn ra ngay tại Việt Nam, trước khi tính đến phương thức thâm nhập thị trường nước ngoài.',
+    en: 'Once both the planting-area code and the packing-facility code are held, the buying operation becomes eligible to export officially – a home-country "entry mode" process that happens before any foreign-market entry mode even applies.',
     src: 'codes'
   };
 
@@ -406,7 +406,7 @@
   const debrief = [
     { id: 'what', vi: 'What? Đội đã quyết định gì và kết quả ra sao?', en: 'What? What did the team decide and what happened?' },
     { id: 'why', vi: 'Why? Vì sao kết quả khác hoặc giống dự báo «Nếu – Thì»?', en: 'Why? Why did results differ from (or match) the what-if forecast?' },
-    { id: 'sowhat', vi: 'So what? Điều này liên quan lý thuyết nào (TBT/SPS, phương thức thâm nhập — tiểu thương/liên kết ở nhà, kênh nào gián tiếp/trực tiếp/qua chế biến ra nước ngoài —, nâng cấp chuỗi giá trị)?', en: 'So what? Which theory does this relate to (TBT/SPS, entry modes — trader vs. linked sourcing at home, which channels are indirect/direct/processed abroad —, value-chain upgrading)?' },
+    { id: 'sowhat', vi: 'So what? Điều này liên quan lý thuyết nào (TBT/SPS, phương thức thâm nhập – tiểu thương/liên kết ở nhà, kênh nào gián tiếp/trực tiếp/qua chế biến ra nước ngoài –, nâng cấp chuỗi giá trị)?', en: 'So what? Which theory does this relate to (TBT/SPS, entry modes – trader vs. linked sourcing at home, which channels are indirect/direct/processed abroad –, value-chain upgrading)?' },
     { id: 'nowhat', vi: 'Now what? Đội sẽ thay đổi điều gì ở vụ tiếp theo?', en: 'Now what? What will the team change next season?' }
   ];
 
@@ -433,7 +433,7 @@
     { id: 'huong', emoji: '👩', vi: 'Lumina (Hương)', en: 'Lumina (Hương)', img: 'hc/cast/huong.webp',
       roleVi: 'Cố vấn BizOn · nhà sáng lập', roleEn: 'BizOn advisor · founder' },
     { id: 'tuphan', emoji: '👨‍🏫', vi: 'Tú Phan', en: 'Tú Phan', img: 'hc/cast/tu-phan-avatar.webp',
-      roleVi: 'Giảng viên, Trường Kinh tế — Đại học Cần Thơ', roleEn: 'Lecturer, CTU School of Economics' }
+      roleVi: 'Giảng viên, Trường Kinh tế – Đại học Cần Thơ', roleEn: 'Lecturer, CTU School of Economics' }
   ];
 
   // ---------- Quy trình 8 bước xuất khẩu sầu riêng chính ngạch sang Trung Quốc (tài liệu tham khảo) ----------

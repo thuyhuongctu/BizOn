@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Trang giảng viên BizOn Bật Nghiệp: đăng nhập, quản lý mã lớp, theo dõi bài nộp và chấm điểm.">
 <script>window.__resources=Object.assign({},window.__resources,{"https://unpkg.com/react@18.3.1/umd/react.production.min.js":"vendor/react/react.production.min.js","https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js":"vendor/react/react-dom.production.min.js"});</script>
 <script src="./support.js"></script>
 <script src="js/capture-guard.js"></script>
@@ -487,7 +488,7 @@ class Component extends DCLogic {
   async loadClasses() { try { const c = await this.api().myClasses(); this.setState({ classes: c || [], view: 'classes', err: '' }); } catch (e) { this.fail(e); } }
   async loadAdmin() { try { const c = await this.api().adminAllClasses(); this.setState({ adminClasses: c || [], view: 'admin', err: '' }); } catch (e) { this.fail(e); } }
   async removeClass(code) {
-    if (!confirm('Xóa lớp ' + code + '? Lớp sẽ hết thuộc quyền quản lý — dữ liệu bài nộp cũ của sinh viên vẫn được giữ nguyên, có thể đăng ký lại mã này sau.')) return;
+    if (!confirm('Xóa lớp ' + code + '? Lớp sẽ hết thuộc quyền quản lý – dữ liệu bài nộp cũ của sinh viên vẫn được giữ nguyên, có thể đăng ký lại mã này sau.')) return;
     try { await this.api().deleteClass(code); if (this.state.view === 'admin') this.loadAdmin(); else this.loadClasses(); } catch (e) { this.fail(e); } }
   async openClass(code) { this.setState({ code, view: 'class', tab: 'teams', err: '', edits: {}, saved: {}, exSetup: '', exRound: '', certCode: '', certName: '', certDates: '', certSaved: false, rLv1: '', rLv2: '', rLv3: '', rLv4: '', rubricSaved: false, rosterText: this.getRosterText(code), rosterSaved: false }); await this.reload(code); }
   getRosterText(code) { try { return localStorage.getItem('bizon-gv-roster-' + code) || ''; } catch (e) { return ''; } }
@@ -535,7 +536,7 @@ class Component extends DCLogic {
     const rosterGroups = Object.keys(roster).length;
     const c = (s.st && s.st.controls) || {}, lock = c.locked_round;
     const ex = s.exam, ep = examPhase(ex, Date.now());
-    const examStatus = !ep ? 'Chưa bắt đầu tính giờ — chọn số phút rồi bấm «Bắt đầu tính giờ» khi cả lớp sẵn sàng vào phòng thi.'
+    const examStatus = !ep ? 'Chưa bắt đầu tính giờ – chọn số phút rồi bấm «Bắt đầu tính giờ» khi cả lớp sẵn sàng vào phòng thi.'
       : ep.phase === 'wait' ? `⏳ Sắp bắt đầu · còn ${examMMSS(ep.remainMs)}`
       : ep.phase === 'setup' ? `⏳ Chuẩn bị đăng nhập · còn ${examMMSS(ep.remainMs)}`
       : ep.phase === 'round' ? `🔵 Vòng/Quý ${ep.round} đang mở · còn ${examMMSS(ep.remainMs)}`
@@ -597,7 +598,7 @@ class Component extends DCLogic {
         save: () => this.saveScore(g), saveLabel: s.saved[g.name] ? '✓ Đã lưu' : 'Lưu' })),
       hasMini: !!MINI.length,
       rosterText: s.rosterText, onRosterText: e => this.setState({ rosterText: e.target.value }), saveRoster: () => this.saveRosterText(), rosterSaveLabel: s.rosterSaved ? '✓ Đã lưu' : 'Lưu danh sách',
-      rosterHint: rosterGroups ? `Đã nhận ${rosterGroups} nhóm từ danh sách dán bên dưới — điểm Hộ Chiếu Mini sẽ tự ghép MSSV theo tên nhóm đã nộp.` : 'Chưa có danh sách lớp — bảng và Excel sẽ hiện tên nhóm đã nộp, chưa có MSSV.',
+      rosterHint: rosterGroups ? `Đã nhận ${rosterGroups} nhóm từ danh sách dán bên dưới – điểm Hộ Chiếu Mini sẽ tự ghép MSSV theo tên nhóm đã nộp.` : 'Chưa có danh sách lớp – bảng và Excel sẽ hiện tên nhóm đã nộp, chưa có MSSV.',
       miniHead: ['Nhóm/Đội', 'MSSV', 'Họ và tên', 'Email', 'Quốc gia xuất phát', 'Số thị trường', 'Hồ sơ nhà đầu tư', 'Điểm /10', 'Điểm chữ', 'Nộp lúc'],
       miniRows: ok ? P.miniExport(BP, roster).map(r => ({ group: r.group, mssv: r.mssv, name: r.name, email: r.email, home: r.home, markets: r.markets, profile: r.profile, total: P.f1(r.total), letter: r.letter, when: r.when })) : [],
       memberRows: MB.map(m => ({ team: m.team, name: m.name, role: m.role,

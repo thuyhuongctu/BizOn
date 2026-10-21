@@ -41,9 +41,16 @@
       var a = el.getAttribute('data-alt-' + l);
       if (a) el.setAttribute('alt', a);
     });
+    document.querySelectorAll('meta[data-content-vi]').forEach(function (el) {
+      var c = el.getAttribute('data-content-' + l);
+      if (c) el.setAttribute('content', c);
+    });
+    /* dùng chung khoá ngôn ngữ toàn site để sang trang khác vẫn giữ VI/EN */
+    try { localStorage.setItem('bizon-lang', l); } catch (e) {}
   };
   if (bvi) bvi.onclick = function () { window.setLang('vi'); };
   if (ben) ben.onclick = function () { window.setLang('en'); };
+  try { if (localStorage.getItem('bizon-lang') === 'en') window.setLang('en'); } catch (e) {}
 
   /* công tắc sáng / tối */
   var dark = document.documentElement.getAttribute('data-theme') !== 'light';

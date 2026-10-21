@@ -26,6 +26,8 @@
   .brand span{font-size:12px;color:#6b6f7a}
   .btn{font:700 14px "Baloo 2",sans-serif;border:3px solid #e6d6bf;background:#fbf6ee;color:#2c3552;border-radius:16px;padding:8px 14px;cursor:pointer;box-shadow:0 4px 0 #d9c5a8;display:flex;align-items:center;gap:6px;text-decoration:none;white-space:nowrap}
   .btn:hover{transform:translateY(-1px)} .btn:active{transform:translateY(2px);box-shadow:0 2px 0 #d9c5a8}
+  /* Lớp nhãn phủ đúng khung nhìn: nhãn của vật ở ngoài màn hình bị cắt, không làm trang tràn ngang trên điện thoại */
+  #labels{position:fixed;inset:0;overflow:hidden;pointer-events:none}
   .label{position:absolute;transform:translate(-50%,-100%);background:rgba(251,246,238,.94);border:2px solid #e6d6bf;border-radius:12px;padding:3px 9px;font:700 12px "Baloo 2",sans-serif;color:#1f4a55;white-space:nowrap;pointer-events:none;transition:opacity .15s}
   #info{position:fixed;z-index:6;left:50%;bottom:16px;transform:translateX(-50%);max-width:min(520px,92vw);background:#fbf6ee;border:3px solid #e6d6bf;border-radius:20px;padding:14px 18px;box-shadow:0 6px 0 #d9c5a8;text-align:center;display:none}
   #info b{font:800 16px "Baloo 2",sans-serif;color:#1f6f8a;display:block;margin-bottom:2px}

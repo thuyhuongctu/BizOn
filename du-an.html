@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Danh mục dự án · BizOn Bật Nghiệp</title>
+<meta name="description" content="Danh mục dự án BizOn: các sản phẩm đang chạy thật – game mô phỏng, ứng dụng học tập, kho nhạc và công cụ lớp học.">
 <script>window.__resources=Object.assign({},window.__resources,{"https://unpkg.com/react@18.3.1/umd/react.production.min.js":"vendor/react/react.production.min.js","https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js":"vendor/react/react-dom.production.min.js"});</script>
 <script src="./support.js"></script>
 <script src="js/capture-guard.js"></script>
@@ -122,12 +124,14 @@ p:[['International entrepreneurship','BizOn Go Global & IE Lab','A simulation ta
 ctaH:'Want to build the next project with us?',ctaP:'We welcome instructors, researchers and creative collaborators.',ctaC:'Get in touch',ctaJ:'Join the team',
 disclaimer:'This website serves educational and research purposes only and does not represent any political organization. Flag and map images are cultural and educational illustrations only.'}};
 class Component extends DCLogic{
-  state={lang:null};
+  /* Ngôn ngữ chung toàn site: mở trang theo bizon-lang đã chọn ở trang khác, bấm VI/EN thì lưu lại */
+  state={lang:(()=>{try{return localStorage.getItem('bizon-lang')==='en'?'en':null}catch(e){return null}})()};
+  setLang(l){try{localStorage.setItem('bizon-lang',l)}catch(e){}this.setState({lang:l});}
   renderVals(){
-    const lang=this.state.lang||this.props.lang||'vi';const t=T[lang];
+    const lang=this.state.lang||this.props.lang||'vi';document.documentElement.lang=lang;document.title=lang==='en'?'Project portfolio · BizOn Bật Nghiệp':'Danh mục dự án · BizOn Bật Nghiệp';const t=T[lang];
     const on='inset 0 -3px 0 rgba(0,0,0,.2),0 4px 8px -3px rgba(0,60,80,.5)';
     return{t,
-      setVi:()=>this.setState({lang:'vi'}),setEn:()=>this.setState({lang:'en'}),
+      setVi:()=>this.setLang('vi'),setEn:()=>this.setLang('en'),
       viBg:lang==='vi'?'#006687':'transparent',viFg:lang==='vi'?'#fff':'#3E5A5C',viSh:lang==='vi'?on:'none',
       enBg:lang==='en'?'#006687':'transparent',enFg:lang==='en'?'#fff':'#3E5A5C',enSh:lang==='en'?on:'none',
       navLinks:NAVX7(lang,''),

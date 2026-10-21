@@ -37,7 +37,7 @@
   function groupDesc(g){ var en = lang()==='en'; return (en && g[4]) || g[2]; }
   function trackTitle(r){ var en = lang()==='en'; return (en && r[3]) || r[0]; }
   function trackSub(r){ var en = lang()==='en'; return (en && r[4]) || r[1]; }
-  function colName(c){ return c[0]; }
+  function colName(c){ return (lang()==='en' && c[6]) || c[0]; }
   function colTone(c){ var en = lang()==='en'; return (en && c[5]) || c[2]; }
 
   function buildNameMap(){
@@ -111,7 +111,7 @@
           + '<div style="position:absolute;inset:-4%;border-radius:36px;background:#0B4A4F;box-shadow:inset 0 -10px 0 rgba(0,0,0,.25),inset 0 6px 0 rgba(255,255,255,.08)"></div>'
           /* đĩa than */
           + '<div id="am-rec" style="position:absolute;inset:4%;border-radius:50%;background:repeating-radial-gradient(circle,#0E1F22 0 3px,#1A3337 3px 6px);box-shadow:0 24px 40px -14px rgba(0,0,0,.7),inset 0 0 0 10px #0A1719;animation:amSpin 6s linear infinite;animation-play-state:paused">'
-            + '<div style="position:absolute;inset:30%;border-radius:50%;overflow:hidden;background:#FDA127;box-shadow:0 0 0 6px #FFD58A"><img src="'+esc(d.dArt)+'" alt="" style="width:100%;height:100%;object-fit:cover"></div>'
+            + '<div style="position:absolute;inset:30%;border-radius:50%;overflow:hidden;background:#FDA127;box-shadow:0 0 0 6px #FFD58A"><img src="'+esc(d.dArt)+'" alt="" style="width:100%;height:100%;object-fit:cover;object-position:'+(/-cut\.webp$/.test(d.dArt) ? '50% 6%' : '50% 50%')+'"></div>'
             + '<div style="position:absolute;left:48.5%;top:48.5%;width:3%;height:3%;border-radius:50%;background:#FBF4E8"></div>'
             + '<div style="position:absolute;inset:8%;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,.14),transparent 40%,transparent 60%,rgba(255,255,255,.06))"></div>'
           + '</div>'

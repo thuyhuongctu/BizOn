@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hậu trường Kho Âm nhạc · BizOn Bật Nghiệp</title>
+<meta name="description" content="Kho nhạc BizOn được làm ra thế nào: các bước sản xuất từng bài, ghi lại phục vụ hồ sơ quyền tác giả.">
 <script>window.__resources=Object.assign({},window.__resources,{"https://unpkg.com/react@18.3.1/umd/react.production.min.js":"vendor/react/react.production.min.js","https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js":"vendor/react/react-dom.production.min.js"});</script>
 <script src="./support.js"></script>
 <script src="js/capture-guard.js"></script>
@@ -175,12 +177,14 @@ mTitle:'How production works at BizOn',mNote:'The whole library is made in-house
 todoT:'Still in progress',todo:[{b:'Recordings not yet registered for copyright.',r:'The file is in preparation; this page is part of the documentation of the creative process.'}],
 cT:'Copyright',c1:'All songs, lyrics and recordings belong to ',c2:'. The library is used only for education and research within the BizOn Bật Nghiệp ecosystem and is not released commercially.',lMusic:'Music Library →',lLumina:'Lumina system card →'}};
 class Component extends DCLogic{
-  state={lang:null};
+  /* Ngôn ngữ chung toàn site: mở trang theo bizon-lang đã chọn ở trang khác, bấm VI/EN thì lưu lại */
+  state={lang:(()=>{try{return localStorage.getItem('bizon-lang')==='en'?'en':null}catch(e){return null}})()};
+  setLang(l){try{localStorage.setItem('bizon-lang',l)}catch(e){}this.setState({lang:l});}
   renderVals(){
-    const lang=this.state.lang||this.props.lang||'vi';const t=T[lang];
+    const lang=this.state.lang||this.props.lang||'vi';document.documentElement.lang=lang;document.title=lang==='en'?'Behind the Music Library · BizOn Bật Nghiệp':'Hậu trường Kho Âm nhạc · BizOn Bật Nghiệp';const t=T[lang];
     const on='inset 0 -3px 0 rgba(0,0,0,.2),0 4px 8px -3px rgba(0,60,80,.5)';
     return{t,
-      setVi:()=>this.setState({lang:'vi'}),setEn:()=>this.setState({lang:'en'}),
+      setVi:()=>this.setLang('vi'),setEn:()=>this.setLang('en'),
       viBg:lang==='vi'?'#006687':'transparent',viFg:lang==='vi'?'#fff':'#3E5A5C',viSh:lang==='vi'?on:'none',
       enBg:lang==='en'?'#006687':'transparent',enFg:lang==='en'?'#fff':'#3E5A5C',enSh:lang==='en'?on:'none',
       navLinks:NAVX7(lang,''),

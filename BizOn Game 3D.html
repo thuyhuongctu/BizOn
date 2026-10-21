@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8">
-<script>try{if(!localStorage.getItem('bizon3d-lang-v1')){localStorage.setItem('bizon3d-lang-v1','1');if(localStorage.getItem('bizon-lang')==='en')localStorage.setItem('bizon-lang','vi');}}catch(e){}</script>
+<!-- Ngôn ngữ: theo lựa chọn chung của site (bizon-lang). Trước đây trang này tự ép về tiếng Việt và ghi đè cả toàn site. -->
 <title>BizOn BẬT NGHIỆP – Trụ sở 3D</title>
 <link rel="manifest" href="app-sinhvien.webmanifest">
 <meta name="theme-color" content="#2f8a8c">
@@ -13,7 +13,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script>try{localStorage.setItem('bizon-tour-seen','1')}catch(e){}try{if(!localStorage.getItem('bizon-lang-user'))localStorage.setItem('bizon-lang','vi')}catch(e){}</script>
+<script>try{localStorage.setItem('bizon-tour-seen','1')}catch(e){}</script>
 <script type="importmap">
 { "imports": {
   "three": "./js/vendor/three.module.js",
@@ -164,6 +164,14 @@
   #room .lab.hot b{background:#2f8a8c;border-color:#23706f;color:#fff}
   #rmCard{position:absolute;right:14px;bottom:14px;width:min(380px,calc(100vw - 28px));pointer-events:auto;background:#f6efe2;border:4px solid #e6d6bf;border-radius:24px;box-shadow:0 6px 0 #d9c5a8,0 20px 50px rgba(20,28,56,.25);padding:14px;box-sizing:border-box;display:flex;flex-direction:column;gap:8px}
   #rmCard:empty{display:none}
+  #room .rh{z-index:2;position:absolute} #rmLabs{position:absolute;inset:0;z-index:1;pointer-events:none} #rmCard{z-index:3}  /* nhãn núm 3D không đè lên tiêu đề phòng và thẻ thông tin */
+  /* Thông báo của game (iframe thường bị ẩn) chuyển lên khung 3D: toast, đồng hồ thi, cảnh báo chưa gửi được */
+  #toast3d{position:fixed;z-index:120;left:50%;top:14px;transform:translateX(-50%);display:flex;flex-direction:column;gap:6px;align-items:center;pointer-events:none;width:min(560px,calc(100vw - 24px))}
+  #toast3d div{background:#1f4a55;color:#fff;border-radius:14px;padding:10px 16px;font:700 14px/1.4 'Be Vietnam Pro',sans-serif;box-shadow:0 4px 0 #10303a;text-align:center;display:flex;gap:8px;align-items:center}
+  #toast3d img{width:36px}
+  #examPill3d{position:fixed;z-index:110;left:50%;bottom:62px;transform:translateX(-50%);padding:6px 14px;border-radius:999px;font:800 14px 'Baloo 2',sans-serif;color:#fff;box-shadow:0 4px 0 rgba(0,0,0,.25);white-space:nowrap;display:none}
+  #syncWarn3d{position:fixed;z-index:110;left:12px;right:12px;bottom:12px;display:none;gap:10px;align-items:center;justify-content:space-between;background:#fff3cd;color:#664d03;border:2px solid #e0c36a;border-radius:14px;padding:8px 12px;font:600 13px 'Be Vietnam Pro',sans-serif}
+  #syncWarn3d button{flex:none;border:0;border-radius:8px;padding:6px 10px;background:#664d03;color:#fff;font:700 13px 'Be Vietnam Pro',sans-serif;cursor:pointer}
   #rmCard h3{margin:0;font:800 22px/1.2 "Baloo 2",sans-serif;color:#2c3552;display:flex;gap:8px;align-items:center}
   #rmCard p{margin:0;font-size:14px;color:#4a4f5c;text-wrap:pretty}
   #rmCard .k{font:800 12px "Baloo 2",sans-serif;letter-spacing:.05em;color:#2f8a8c;text-transform:uppercase}
@@ -176,7 +184,7 @@
   #rmCard .stats div{background:#fffaf2;border:3px solid #eadcc5;border-radius:14px;padding:4px}
   #rmCard .stats small{display:block;font:800 10px "Baloo 2",sans-serif;color:#6b6f7a;letter-spacing:.05em}
   #rmCard .stats b{font:800 20px "Baloo 2",sans-serif;color:#2c3552}
-  @media (max-width:760px){#rmCard{left:0;right:0;bottom:0;width:auto;border-radius:24px 24px 0 0;border-width:4px 0 0;max-height:46vh;overflow:auto}#room .rt b{font-size:18px}}
+  @media (max-width:760px){#examPill3d{bottom:auto;top:62px} #evc>img:first-child{width:52px!important} #rmCard{left:0;right:0;bottom:0;width:auto;border-radius:24px 24px 0 0;border-width:4px 0 0;max-height:40vh;overflow:auto}#room .rt b{font-size:18px}}
   #zones{bottom:14px;left:14px;right:14px;flex-wrap:nowrap;overflow-x:auto;justify-content:safe center;padding-bottom:6px;scrollbar-width:none}
   #zones .btn{font-size:13px;padding:6px 12px}
   #zones .btn[aria-pressed="true"]{background:#2c3552;border-color:#1c2340;color:#fff;box-shadow:0 4px 0 #11162a}
@@ -254,6 +262,7 @@
     <div style="font:500 11px/1.35 'Be Vietnam Pro',sans-serif;color:#8a969c;margin:-2px 0 2px"><span data-en="Trial play (no class code): all data stays on your device. With a class code: each round's results and this email are sent to the class server for instructor grading – see ">Chơi thử (không Mã lớp): mọi dữ liệu chỉ lưu trên máy bạn. Có Mã lớp: kết quả mỗi vòng và email này được gửi về máy chủ lớp học để giảng viên chấm điểm – xem </span><a href="chinh-sach.html" target="_blank" rel="noopener" style="color:#2f8a8c" data-en="Privacy policy">Chính sách quyền riêng tư</a>.</div>
     <label for="l3Team" data-en="Team name – also your company name">Tên đội – cũng là tên doanh nghiệp</label><input id="l3Team" type="text" placeholder="VD: Rồng Xanh Corp" data-en-ph="e.g. Green Dragon Corp">
     <label for="l3Class"><span data-en="Class code">Mã lớp</span> <span style="font-weight:400;color:#8a969c" data-en="(optional – leave blank for trial play)">(tùy chọn – để trống là chơi thử)</span></label><input id="l3Class" type="text" placeholder="VD: QTKD-2026-A" data-en-ph="e.g. BA-2026-A" style="text-transform:uppercase">
+    <details id="l3SyncBox" style="font-size:12px;color:#5a6b74"><summary style="cursor:pointer;font-weight:700" data-en="Switching devices? Enter the team sync code">Đổi máy? Nhập Mã đồng bộ của đội</summary><input id="l3Sync" type="text" autocomplete="off" spellcheck="false" placeholder="48 ký tự" data-en-ph="48 characters" style="width:100%;box-sizing:border-box;margin-top:6px"></details>
     <label data-en="Your role">Vai trò của bạn</label>
     <div class="roles" id="l3Roles"></div>
     <button class="go" id="l3Go" data-en="Start ▶">Bắt đầu ▶</button>
@@ -275,7 +284,8 @@
 </div>
 <div id="rail" class="hud">
   <button class="btn" id="musicBtn"><i>🎵</i><span>Nhạc nền</span></button>
-  <button class="btn" data-tab="instructor"><i>👩‍🏫</i><span data-en="Instructor">Giảng viên</span></button>
+  <button class="btn" id="homeBtn"><i>🏠</i><span data-en="Overview">Tổng quan</span></button>
+  <a class="btn" id="instructorBtn" href="Trang Giang Vien.dc.html" target="_blank" rel="noopener"><i>👩‍🏫</i><span data-en="Instructor">Giảng viên</span></a>
   <button class="btn" data-tab="advisor"><i>🤖</i><span>Lumina</span></button>
   <button class="btn" data-tab="reports"><i>📊</i><span data-en="Reports">Báo cáo</span></button>
   <button class="btn" data-tab="shop"><i>🛒</i><span data-en="Shop">Cửa hàng</span></button>
@@ -312,6 +322,8 @@
 <div id="room"><div class="rh"><div class="rt"><img id="rmScene" alt="" style="display:none;width:min(260px,40vw);border-radius:16px;border:3px solid #e6d6bf;margin-bottom:6px"><b id="rmTitle"></b><span id="rmSub"></span></div><div class="rb"><button class="btn" id="rm2d" data-en="📋 List view">📋 Dạng danh sách</button><button class="btn primary" id="rmClose" data-en="✕ Back to HQ">✕ Về trụ sở</button></div></div><div id="rmLabs"></div><div id="rmCard"></div></div>
 <div id="frame" class="full"><iframe id="gf" src="game.html" title="BizOn BẬT NGHIỆP"></iframe></div>
 <div id="tip"></div>
+<div id="toast3d" aria-live="polite"></div><div id="examPill3d" role="timer"></div>
+<div id="syncWarn3d" role="alert"><span></span><button type="button" onclick="window.__resend3D && window.__resend3D()" data-en="Resend">Gửi lại</button></div>
 
 <div id="res" role="dialog" aria-modal="true" aria-label="Kết quả vòng">
   <div class="rs"><div class="rs-in">
@@ -682,16 +694,16 @@ function renderResults() {
   const lead = R.sh.indexOf(Math.max(...R.sh)), myName = (GS && GS.profile && GS.profile.teamName) || TEAMS.star.name;
   const head = document.getElementById('rHead'); head.className = me || empty ? '' : 'lost';
   const nmL = nm;
-  head.innerHTML = empty ? '<span class="flagi"></span><span>' + T('Chưa cắm cờ nào', 'No flags planted yet') + '</span>' : `<span class="flagi" style="--c:${TEAMS[win].color}"></span><span>${me ? T(`Đội bạn cắm cờ tại ${SN(stop)}!`, `Your team planted a flag in ${SN(stop)}!`) : T(`${nm(win)} cắm cờ tại ${SN(stop)}`, `${nm(win)} planted a flag in ${SN(stop)}`)}</span>`;
+  head.innerHTML = empty ? '<span class="flagi"></span><span>' + T('Chưa cắm cờ nào', 'No flags planted yet') + '</span>' : `<span class="flagi" style="--c:${TEAMS[win].color}"></span><span>${me ? T(`Đội bạn cắm cờ tại ${SN(stop)}!`, `Your team planted a flag in ${SN(stop)}!`) : T(`${esc(nm(win))} cắm cờ tại ${SN(stop)}`, `${esc(nm(win))} planted a flag in ${SN(stop)}`)}</span>`;
   document.getElementById('rSub').textContent = empty ? T('Hoàn thành vòng 1 với thị phần cao nhất và có lãi để cắm cờ đầu tiên tại Cần Thơ.', 'Finish round 1 with the highest market share and a profit to plant the first flag in Can Tho.') : me ? T('Thị phần cao nhất và có lãi. Tỉnh này mang màu cờ của đội bạn.', 'Highest market share and a profit. This province now carries your team colours.')
     : lead === 0 ? T('Đội bạn dẫn thị phần nhưng lỗ vòng này, nên cờ thuộc về đối thủ có thị phần cao nhất.', 'Your team led market share but made a loss this round, so the flag goes to the rival with the highest share.') : T(`${nm(win)} có thị phần cao nhất vòng này, cờ tỉnh thuộc về họ.`, `${nm(win)} had the highest market share this round, so the province flag is theirs.`);
   const rows = ORDER.map((k, i) => ({ k, v: R.sh[i] })).sort((a, b) => b.v - a.v);
   const bars = document.getElementById('bars');
-  bars.innerHTML = rows.map(({ k, v }) => `<div class="bar" style="--c:${TEAMS[k].color}"><span class="st">${k === win ? '★' : ''}</span><div class="trk"><div class="fill" style="width:0"></div><div class="nm">${nm(k)}</div></div><span class="v" style="color:${TEAMS[k].color}">${v.toFixed(1)}%</span></div>`).join('');
+  bars.innerHTML = rows.map(({ k, v }) => `<div class="bar" style="--c:${TEAMS[k].color}"><span class="st">${k === win ? '★' : ''}</span><div class="trk"><div class="fill" style="width:0"></div><div class="nm">${esc(nm(k))}</div></div><span class="v" style="color:${TEAMS[k].color}">${v.toFixed(1)}%</span></div>`).join('');
   requestAnimationFrame(() => requestAnimationFrame(() => bars.querySelectorAll('.fill').forEach((f, i) => f.style.width = Math.min(100, rows[i].v / 40 * 100) + '%')));
   const pf = document.getElementById('rProfit'); pf.textContent = empty ? '–' : (R.p >= 0 ? '↑ +' : '↓ −') + fmt(Math.abs(R.p)); /* cùng đơn vị money() của game (tr₫/tỷ₫), không viết tay 'trđ' */ pf.style.color = R.p >= 0 ? '#3f8a44' : '#c0443a'; pf.parentElement.style.borderColor = R.p >= 0 ? '#4f9a52' : '#d6453a';
   document.getElementById('rFlags').textContent = `${myFlags}/6`;
-  document.getElementById('legend').innerHTML = ORDER.map(k => `<span style="--c:${TEAMS[k].color}"><i></i>${nm(k)}<b>${owners.filter(w => w === k).length}</b></span>`).join('');
+  document.getElementById('legend').innerHTML = ORDER.map(k => `<span style="--c:${TEAMS[k].color}"><i></i>${esc(nm(k))}<b>${owners.filter(w => w === k).length}</b></span>`).join('');
   document.getElementById('nextRound').textContent = window.__afterMap ? T('Tiếp tục →', 'Continue →') : GS && GS.finished ? T('🏁 Tổng kết mùa giải →', '🏁 Season wrap-up →') : T(`🎯 Ra quyết định vòng ${GS ? GS.round : 1} →`, `🎯 Make decisions for round ${GS ? GS.round : 1} →`);
 }
 const resEl = document.getElementById('res');
@@ -723,7 +735,13 @@ function setMode() {
   const m = !booted || overlayOn() ? 'full' : sheetTab ? 'sheet' : 'hide';
   if (frame.className !== m) { frame.className = m; document.body.classList.toggle('sheet', m === 'sheet'); }
 }
-window.__openTab = (tab, rep) => { if (!W || !booted) return; if (rep) ev('currentReport=' + JSON.stringify(rep)); W.showTab(tab); setMode(); };
+window.__openTab = (tab, rep) => { if (!W || !booted || !W.document.getElementById('tab-' + tab)) return;
+  // CTA biến cố trỏ tới một báo cáo cụ thể (vd ⚡ Năng lượng): mở thẳng báo cáo 2D đó, không vào phòng biểu đồ 3D.
+  if (rep) { ev('currentReport=' + JSON.stringify(rep)); if (tab === 'reports') { force2D = true; W.showTab(tab); force2D = false; setMode(); return; } }
+  W.showTab(tab); setMode(); };
+// Nút 🏠 Tổng quan: mở Trang chủ 2D dạng ngăn kéo (Phòng đàm phán, thẻ đối thủ, Sổ tay, bản đồ chinh phục…).
+let homeSheet = false;
+window.__openHome = () => { if (!W || !booted) return; closeRoom(); closeEvent(); homeSheet = true; try { W.showTab('home'); } finally { homeSheet = false; } };
 window.__closeSheet = () => { sheetTab = null; setMode(); zb.querySelectorAll('button').forEach((x, i) => x.setAttribute('aria-pressed', i === 0)); };
 document.getElementById('sheetX').onclick = window.__closeSheet;
 function primary() { if (!GS) return; GS.finished ? finale3D() : window.__openTab('decisions'); }
@@ -756,7 +774,8 @@ function l3Enter(demo) {
     const email = document.getElementById('l3Email').value.trim();
     // Có Mã lớp: vào thẳng như bản 2D (cổng email trường đã tắt từ hotfix doLogin trong js/app.js).
     g('login-email').value = email; g('login-team').value = document.getElementById('l3Team').value.trim();
-    g('login-class').value = classId; try { W.pickRole(L3.role); } catch (e) {} ev('doLogin()');
+    g('login-class').value = classId; if (g('login-sync')) g('login-sync').value = document.getElementById('l3Sync').value.trim();
+    try { W.pickRole(L3.role); } catch (e) {} ev('doLogin()');
   }
   actors.forEach(o => { if (o.mode0) o.mode = o.mode0; });
   setTimeout(() => { setMode(); zb.children[0] && zb.children[0].click(); if (!DIORAMA) maybeTour3D(); }, 600);
@@ -785,33 +804,56 @@ if (DIORAMA) {
   };
   setTimeout(dismissChain, 1500);
 }
-['l3Email', 'l3Team', 'l3Class'].forEach(id => document.getElementById(id).addEventListener('keydown', e => { if (e.key === 'Enter') l3Enter(false); }));
+['l3Email', 'l3Team', 'l3Class', 'l3Sync'].forEach(id => document.getElementById(id).addEventListener('keydown', e => { if (e.key === 'Enter') l3Enter(false); }));
 document.getElementById('ctaBtn').onclick = primary;
 document.querySelectorAll('#rail [data-tab]').forEach(b => b.onclick = () => window.__openTab(b.dataset.tab));
+document.getElementById('homeBtn').onclick = () => window.__openHome();
 document.getElementById('tourBtn').onclick = () => { window.__closeSheet(); tour3D(0); };
 function bridge() {
   // Chỉ nối cầu khi game.html đã chạy xong mọi script (readyState khác 'loading'): nếu nối sớm lúc
   // office-scene.js… chưa nạp, các plugin đó sẽ bọc đè lên hàm 3D (vd văn phòng 2D chen vào mỗi vòng).
   const w = gf.contentWindow; if (!w || typeof w.showTab !== 'function' || w.__bridged || !w.document || w.document.readyState === 'loading') return; W = w; W.__bridged = true;
   const st = W.document.createElement('style'); st.textContent = '#bz-dock-btn,#bz-dock{display:none!important}'; W.document.head.appendChild(st);
-  ['toggleLang', 'applyLang'].forEach(f => { const o = W[f]; if (typeof o === 'function') W[f] = function () { try { localStorage.setItem('bizon-lang-user', '1'); } catch {} return o.apply(this, arguments); }; });
   const orig = W.showTab;
   W.showTab = function (t) { const r = orig.apply(this, arguments);
     if (booted && ROOM3D[t] && !force2D && !(t === 'reports' && ev('currentReport') === 'season')) { sheetTab = null; setMode(); room3D(t); return r; }
     if (booted && t === 'advisor' && !force2D) { window.__advisor3D(); return r; }
-    if (booted) { sheetTab = t === 'home' ? null : t; const zi = ZONE_OF[t]; if (zi) { fly(zi); zb.children[zi].click(); } else if (t === 'advisor') flyLumina(); } setMode(); return r; };
+    if (booted) { sheetTab = t === 'home' && !homeSheet ? null : t; const zi = ZONE_OF[t]; if (zi) { fly(zi); zb.children[zi].click(); } else if (t === 'advisor') flyLumina(); } setMode(); return r; };
   W.showArena = (r, done) => arena3D(r, done);
   W.showRoundResult = result3D; W.showVictory = victory3D;
-  const oTM = W.renderTeamMeeting; W.renderTeamMeeting = function () { const x = oTM.apply(this, arguments); const box = W.document.getElementById('team-meeting');
-    if (box && box.firstElementChild && !box.querySelector('.tm3d')) box.firstElementChild.insertAdjacentHTML('afterbegin', '<button class="tm3d clay-btn w-full bg-deep-teal text-white font-display font-bold py-3 mb-3" onclick="parent.__meeting3D()">' + T('🎥 Họp đội trong trụ sở 3D', '🎥 Team meeting in the 3D HQ') + '</button>'); return x; };
+  const oTM = W.renderTeamMeeting; W.renderTeamMeeting = Object.assign(function () { const x = oTM.apply(this, arguments); const box = W.document.getElementById('team-meeting');
+    if (box && box.firstElementChild && !box.querySelector('.tm3d')) box.firstElementChild.insertAdjacentHTML('afterbegin', '<button class="tm3d clay-btn w-full bg-deep-teal text-white font-display font-bold py-3 mb-3" onclick="parent.__meeting3D()">' + T('🎥 Họp đội trong trụ sở 3D', '🎥 Team meeting in the 3D HQ') + '</button>'); return x; }, oTM);   // giữ cờ __ml của js/member-log.js để không bị bọc thêm lớp
   W.maybeShowEventIntro = event3D;
+  // Màn «Lên cấp» (app.js gọi 0,9 giây sau Commit) mở trong iframe đúng lúc Đấu trường 3D đang chạy nên bị che:
+  // giữ lại, hiện sau khi người chơi xem xong kết quả vòng và bản đồ.
+  const oLU = W.showLevelUp; if (typeof oLU === 'function') W.showLevelUp = function (lv) {
+    if (AR.on || document.body.classList.contains('evt') || resEl.classList.contains('on') || ev('S&&S.committed')) { pendingLevel = Math.max(pendingLevel, lv); return; }
+    return oLU.apply(this, arguments); };
+  W.__showLevelUpNow = lv => oLU && oLU(lv);
+  // Cảnh báo «chưa gửi được kết quả» của js/backend.js nằm trong iframe bị ẩn – hiện lại ở khung 3D.
+  W.addEventListener('bizon-sync', e => { const d = e.detail || {}, el = document.getElementById('syncWarn3d');
+    el.style.display = d.pending || d.stateError ? 'flex' : 'none';
+    el.firstElementChild.textContent = d.pending ? T(`⚠️ Chưa gửi được ${d.pending} kết quả vòng lên máy chủ – kiểm tra mạng rồi bấm «Gửi lại».`, `⚠️ ${d.pending} round result(s) not sent yet – check your connection and tap «Resend».`)
+      : T('⚠️ Chưa lưu được tiến trình đội lên máy chủ – kiểm tra mạng rồi bấm «Gửi lại».', '⚠️ Team progress not saved to the server yet – check your connection and tap «Resend».'); });
 }
+window.__resend3D = () => { try { W.BizonBackend.flush(); W.BizonBackend.syncTeamState(ev('S')); } catch (e) {} };
+let pendingLevel = 0;
+function flushLevelUp() { if (!pendingLevel || !W || !W.__showLevelUpNow) return; const lv = pendingLevel; pendingLevel = 0; W.__showLevelUpNow(lv); }
+// Toast và đồng hồ thi do game (iframe) gửi lên – js/bn-exam.js, js/class-sync.js gọi khi chạy trong trang này.
+window.__toast3D = (msg, pose) => {
+  const box = document.getElementById('toast3d'); if (!box) return false;
+  const d = document.createElement('div'); if (pose) { const im = document.createElement('img'); im.src = 'assets/dragon/' + pose + '.png'; im.alt = ''; d.appendChild(im); }
+  d.appendChild(document.createTextNode(msg)); box.appendChild(d); setTimeout(() => d.remove(), 6000); return true;
+};
+window.__examPill3D = (text, bg) => { const el = document.getElementById('examPill3d'); if (!el) return; el.style.display = text ? 'block' : 'none'; el.textContent = text; if (bg) el.style.background = bg; };
 gf.addEventListener('load', bridge);
 bridge(); { let n = 0; const iv = setInterval(() => { bridge(); if ((W && W.__bridged) || ++n > 100) clearInterval(iv); }, 100); }
 { let n = 0; const iv = setInterval(() => { if ((W && W.__bridged) || ++n > 120) { clearInterval(iv); window.__boot && window.__boot(1); } else window.__boot && window.__boot(0.7 + Math.min(0.28, n * 0.01)); }, 100); }
 const fmt = v => ev('money(' + (+v || 0) + ')') || Math.round(v) + 'tr₫';
+// Tên đội do sinh viên gõ – thoát ký tự HTML trước khi chèn vào innerHTML.
+const esc = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 function hud() {
-  if (!W) return; const dk = W.document && W.document.getElementById('bz-dock-btn'); if (dk) dk.remove(); setMode(); GS = ev('typeof S!=="undefined"?S:null'); const s = GS; if (!s || !booted) return;
+  if (!W || document.hidden) return; const dk = W.document && W.document.getElementById('bz-dock-btn'); if (dk) dk.remove(); setMode(); GS = ev('typeof S!=="undefined"?S:null'); const s = GS; if (!s || !booted) return;
   const e = ev('currentEvent(S)'), last = s.history && s.history[s.history.length - 1];
   document.getElementById('hTeam').textContent = (s.profile && s.profile.teamName ? s.profile.teamName : 'BizOn BẬT NGHIỆP') + T(' · Trụ sở Cần Thơ', ' · Can Tho Headquarters');
   document.getElementById('hEvent').innerHTML = s.finished ? '<span class="ev good">' + T('🏁 Đã hoàn thành 6 vòng', '🏁 All 6 rounds completed') + '</span>' : e ? `<span class="ev ${e.tone}">${T('Vòng', 'Round')} ${s.round}/6 · ${e.icon} ${e.name}</span>` : '';
@@ -829,7 +871,7 @@ function hud() {
   if (lastHist >= 0 && n > lastHist) { fly(9); zb.children[9].click(); }
   lastHist = n;
 }
-setInterval(hud, 300);
+setInterval(hud, 500);
 
 // ================= PHÒNG 3D: Cửa hàng · Kỹ năng · Thành tựu · Xếp hạng · Mini-game =================
 const ROOM3D = { shop: 1, skills: 1, achievements: 1, leaderboard: 1, minigame: 1 };
@@ -895,7 +937,7 @@ function buildShop() {
     const p = pedestal(x, z, COL[it.type] || 0x2f8a8c); p.rotation.y = -a; const m = itemModel(it.id); m.position.y = 0.95; p.add(m); RM.spin.push(m);
     const own = (s.items || {})[it.id] || 0, act = (s.activeBoosts || []).includes(it.id);
     p.userData.pick = it; RM.picks.push(p);
-    lab(p, `<i>${it.icon}</i><b>${it.name} · ${it.price}tr₫${own ? ' · x' + own : ''}${act ? ' · ✓' : ''}</b>`, 2.2, RM.sel === it.id ? 'sel' : act ? 'hot' : '');
+    lab(p, `<i>${it.icon}</i><b>${it.name} · ${fmt(it.price)}${own ? ' · x' + own : ''}${act ? ' · ✓' : ''}</b>`, 2.2, RM.sel === it.id ? 'sel' : act ? 'hot' : '');
   });
   setRoomCam(new THREE.Vector3(0, 4.6, 9.5), new THREE.Vector3(0, 0.9, -0.8));
   if (!LOW) { const sh = hq.build('productShowcase'); sh.scale.setScalar(2.2); sh.position.set(0, 0, -5.4); RM.g.add(sh); const ks = hq.build('kraftGiftSet'); ks.scale.setScalar(1.6); ks.position.set(-4.6, 0, -1.6); ks.rotation.y = 0.7; RM.g.add(ks); const cr = hq.build('exportCrate'); cr.scale.setScalar(1.4); cr.position.set(5.2, 0, -1.4); cr.rotation.y = -0.6; RM.g.add(cr); }
@@ -903,8 +945,8 @@ function buildShop() {
   if (!it) { rmCard.innerHTML = T('<p class="k">Chạm một bục trưng bày</p><p>Bản thiết kế có hiệu lực vĩnh viễn. Vật phẩm dùng 1 lần cần bấm "Sử dụng" trước vòng muốn áp dụng.</p>', '<p class="k">Tap a display stand</p><p>Blueprints last forever. Single-use items must be activated with "Use" before the round you want them applied to.</p>'); return; }
   const own = (s.items || {})[it.id] || 0, act = (s.activeBoosts || []).includes(it.id);
   const TY = { blueprint: ['Bản thiết kế · vĩnh viễn', 'Blueprint · permanent'], booster: ['Vật phẩm tăng lực · 1 vòng', 'Booster · 1 round'], consumable: ['Vật phẩm dùng 1 lần', 'Single-use item'] };
-  rmCard.innerHTML = `<p class="k">${TL(TY[it.type])}</p><h3>${it.icon} ${it.name}</h3><p>${it.desc}</p><p><b>${T('Giá', 'Price')}: ${it.price}tr₫</b>${own ? T(' · Đang có: ', ' · Owned: ') + own : ''}${act ? ' · <b style="color:#2f8a8c">' + T('Đang kích hoạt', 'Active') + '</b>' : ''}</p>
-    <div class="row"><button class="btn primary" id="rmBuy">${T('Mua', 'Buy')} · ${it.price}tr₫</button>${it.type !== 'blueprint' && (own > 0 || act) ? `<button class="btn" id="rmUse">${act ? T('Tắt kích hoạt', 'Deactivate') : T('Sử dụng 🚀', 'Use 🚀')}</button>` : ''}</div>`;
+  rmCard.innerHTML = `<p class="k">${TL(TY[it.type])}</p><h3>${it.icon} ${it.name}</h3><p>${it.desc}</p><p><b>${T('Giá', 'Price')}: ${fmt(it.price)}</b>${own ? T(' · Đang có: ', ' · Owned: ') + own : ''}${act ? ' · <b style="color:#2f8a8c">' + T('Đang kích hoạt', 'Active') + '</b>' : ''}</p>
+    <div class="row"><button class="btn primary" id="rmBuy">${T('Mua', 'Buy')} · ${fmt(it.price)}</button>${it.type !== 'blueprint' && (own > 0 || act) ? `<button class="btn" id="rmUse">${act ? T('Tắt kích hoạt', 'Deactivate') : T('Sử dụng 🚀', 'Use 🚀')}</button>` : ''}</div>`;
   rmCard.querySelector('#rmBuy').onclick = () => { W.buyItem(it.id); confettiRoom(); buildShop(); };
   const u = rmCard.querySelector('#rmUse'); if (u) u.onclick = () => { W.toggleBoost(it.id); buildShop(); };
 }
@@ -950,12 +992,12 @@ function buildLB() {
   const cq = s.conquest || [], flagsOf = n => cq.filter(c => !c.win && c.winner === n).length;
   let all = [{ key: 'star', id: 'ceo', name: s.profile.teamName + T(' (Bạn)', ' (You)'), profit: total, share, me: true, flags: cq.filter(c => c.win).length }];
   if (trial) all = all.concat(s.competitors.map(c => ({ key: KEY_OF[c.name] || 'wolf', id: RIVAL_ID[c.style] || 'alpha', name: c.name, profit: c.profit, share: c.share, flags: flagsOf(c.name) }))).sort((a, b) => b.flags - a.flags || b.profit - a.profit);
-  roomHead(T('🏆 Bảng xếp hạng', '🏆 Leaderboard'), trial ? T('🧪 Chơi thử · so với 3 đối thủ ảo theo số cờ, rồi lợi nhuận', '🧪 Trial play · vs 3 virtual rivals by flags, then profit') : T('🔒 Bảng xếp hạng chéo đội đang tạm khóa — chỉ hiện kết quả của đội bạn', '🔒 The cross-team leaderboard is locked for now — showing your team only'));
+  roomHead(T('🏆 Bảng xếp hạng', '🏆 Leaderboard'), trial ? T('🧪 Chơi thử · so với 3 đối thủ ảo theo số cờ, rồi lợi nhuận', '🧪 Trial play · vs 3 virtual rivals by flags, then profit') : T('🔒 Bảng xếp hạng chéo đội đang tạm khóa – chỉ hiện kết quả của đội bạn', '🔒 The cross-team leaderboard is locked for now – showing your team only'));
   const HX = all.length === 1 ? [0] : [-1.5, -4.2, 1.2, 3.9], HH = [1.5, 1.05, 0.75, 0.5], order = all.length === 1 ? [0] : [1, 0, 2, 3];
   order.forEach((rank, j) => { const t = all[rank]; if (!t) return; const p = pedestal(HX[j] === undefined ? 0 : [-1.4, 0, 1.4, 2.8][j], 0, new THREE.Color(TEAMS[t.key].color).getHex(), HH[rank]);
     p.position.x = all.length === 1 ? 0 : [-1.9, 0, 1.9, 3.8][j] - 0.95;
     const ch = chars.build(t.id); ch.scale.setScalar(1.7); ch.position.y = HH[rank] + 0.07; ch.traverse(m => { if (m.isMesh) m.castShadow = true; }); p.add(ch); p.userData.ch = ch; p.userData.rank = rank; RM.spin.push(p);
-    lab(p, `${t.key === 'star' ? '<img src="assets/dragon/champion.png" alt="" style="width:46px;display:block;margin:0 auto 3px">' : ''}<i>${['🥇', '🥈', '🥉', '4️⃣'][rank]}</i><b>${t.name} · 🚩 ${t.flags} · ${fmt(t.profit)} · ${(+t.share).toFixed(1)}%</b>`, HH[rank] + 2.7, t.me ? 'hot' : ''); });
+    lab(p, `${t.key === 'star' ? '<img src="assets/dragon/champion.png" alt="" style="width:46px;display:block;margin:0 auto 3px">' : ''}<i>${['🥇', '🥈', '🥉', '4️⃣'][rank]}</i><b>${esc(t.name)} · 🚩 ${t.flags} · ${fmt(t.profit)} · ${(+t.share).toFixed(1)}%</b>`, HH[rank] + 2.7, t.me ? 'hot' : ''); });
   setRoomCam(new THREE.Vector3(0, 3.4, 9.6), new THREE.Vector3(0, 1.6, 0));
   rmCard.innerHTML = '';
 }
@@ -975,9 +1017,9 @@ function buildMG() {
 function mgCard() {
   const s = ev('S'), st = ev('mg?{s:mg.score,t:mg.time,g:mg.target}:null'), plays = s.minigamePlays || 0;
   if (st) { rmCard.innerHTML = `<div class="tgt"><i>${st.g}</i><div><p class="k">${T('Đóng gói món này', 'Pack this item')}</p><h3>${TL(MGN[st.g])}</h3></div></div>
-    <div class="stats"><div><small>${T('ĐIỂM', 'SCORE')}</small><b id="mgS">${st.s}</b></div><div><small>${T('GIÂY', 'SECONDS')}</small><b id="mgT">${st.t}</b></div><div><small>${T('LƯỢT', 'PLAYS')}</small><b>${plays}/3</b></div></div><p>${T('Đúng món +1 điểm, sai món −1 điểm. Mỗi điểm = 2tr₫ (tối đa 60tr₫).', 'Right item +1 point, wrong item −1 point. Each point = 2tr₫ (max 60tr₫).')}</p>`; return; }
+    <div class="stats"><div><small>${T('ĐIỂM', 'SCORE')}</small><b id="mgS">${st.s}</b></div><div><small>${T('GIÂY', 'SECONDS')}</small><b id="mgT">${st.t}</b></div><div><small>${T('LƯỢT', 'PLAYS')}</small><b>${plays}/3</b></div></div><p>${T('Đúng món +1 điểm, sai món −1 điểm. Mỗi điểm = 2tr₫ (tối đa 60tr₫).', 'Right item +1 point, wrong item −1 point. Each point = 2m₫ (max 60m₫).')}</p>`; return; }
   const out = plays >= 3;
-  rmCard.innerHTML = `${mgRes !== null ? `<p class="k">${T('Kết thúc lượt', 'Play over')}</p><div class="big">+${mgRes}tr₫</div>` : '<p class="k">' + T('Xưởng đất sét', 'Clay workshop') + '</p>'}
+  rmCard.innerHTML = `${mgRes !== null ? `<p class="k">${T('Kết thúc lượt', 'Play over')}</p><div class="big">+${fmt(mgRes)}</div>` : '<p class="k">' + T('Xưởng đất sét', 'Clay workshop') + '</p>'}
     <div class="stats"><div><small>${T('KỶ LỤC', 'BEST')}</small><b>${s.minigameBest || 0}</b></div><div><small>${T('ĐIỂM THƯỞNG', 'BONUS POINTS')}</small><b>${NUM(s.minigamePoints || 0)}</b></div><div><small>${T('LƯỢT', 'PLAYS')}</small><b>${Math.min(3, plays + (out ? 0 : 1))}/3</b></div></div>
     <button class="btn primary" id="mgGo" ${out ? 'disabled style="opacity:.5"' : ''}>${out ? T('⏳ Hết lượt – commit vòng mới để chơi tiếp', '⏳ No plays left – commit a new round to play again') : mgRes !== null ? T('Chơi lại ▶', 'Play again ▶') : T('Bắt đầu ▶', 'Start ▶')}</button>
     <button class="btn" id="mgShop">🎁 Clay Reward Shop</button>`;
@@ -989,7 +1031,8 @@ function spawnMG() { const e = ['🏺', '🫖', '🧱', '🪴', '🏆'][Math.flo
 function confettiRoom() { const c = RM.cp ? RM.cl : new THREE.Vector3(); for (let i = 0; i < 90; i++) { const m = new THREE.Mesh(new THREE.PlaneGeometry(0.09, 0.14), new THREE.MeshStandardMaterial({ color: [0xf39a33, 0x2f8a8c, 0xd6453a, 0xf2c14e, 0x3f78c0][i % 5], side: THREE.DoubleSide }));
   m.position.set(c.x + (Math.random() - 0.5) * 5, 5 + Math.random() * 2, c.z + (Math.random() - 0.5) * 3); RM.scene.add(m); (RM.conf ??= []).push({ m, v: new THREE.Vector3((Math.random() - 0.5), -Math.random() * 0.5, (Math.random() - 0.5)), r: (Math.random() - 0.5) * 12, life: 5 }); } }
 const BUILD = { shop: buildShop, skills: buildSkills, achievements: buildAch, leaderboard: buildLB, minigame: buildMG };
-const ROOM_SCENE = { decisions: 'ceo-minh-long-expansion-compass', reports: 'ceo-cfo-revenue-targets', journal: 'sec-compliance-checklist', market: 'ceo-sec-market-checkpoint', missions: 'goo-coo-production-planning', profile: 'team-holo-meeting', achievements: 'rong-bay-doi-bizon', leaderboard: 'team-victory-celebration' };
+// Bàn quyết định không dùng ảnh minh họa: ảnh làm thẻ tiêu đề cao lên và che hàng núm trên cùng.
+const ROOM_SCENE = { reports: 'ceo-cfo-revenue-targets', journal: 'sec-compliance-checklist', market: 'ceo-sec-market-checkpoint', missions: 'goo-coo-production-planning', profile: 'team-holo-meeting', achievements: 'rong-bay-doi-bizon', leaderboard: 'team-victory-celebration' };
 function room3D(mode) { closeEvent(); if (RM.mode !== mode) RM.sel = null; RM.mode = mode; mgRes = null; BUILD[mode]();
   { const im = document.getElementById('rmScene'), k = ROOM_SCENE[mode]; if (k && innerWidth >= 760) { im.onerror = () => { im.style.display = 'none'; }; im.src = 'assets/illustrations/' + k + '.webp'; im.style.display = 'block'; } else im.style.display = 'none'; } RM.on = true; controls.enabled = false; document.body.classList.add('room'); resizeRoom(); }
 function closeRoom() { if (mgRun) { ev('endMinigame()'); mgRun = false; } RM.on = false; controls.enabled = true; document.body.classList.remove('room'); }
@@ -1060,18 +1103,23 @@ function tour3D(i = 0) {
     <div class="dots">${T3.map((_, k) => `<i class="${k === i ? 'on' : ''}"></i>`).join('')}</div>
     <div class="row"><button class="btn" id="t3Prev" ${i ? '' : 'disabled'}>${T('‹ Trước', '‹ Back')}</button>${i < 2 ? '<button class="btn primary" id="t3Next">' + T('Tiếp ›', 'Next ›') + '</button>' : '<button class="btn primary" id="t3End">' + T('🎯 Vào bàn quyết định', '🎯 Go to the decision table') + '</button>'}</div>
     <button class="btn" id="t3Skip">${T('Bỏ qua hướng dẫn', 'Skip the guide')}</button>`);
-  const q = s => evc.querySelector(s), done = () => { try { localStorage.setItem(T3_KEY, '1'); } catch (e) {} closeEvent(); };
+  // Hướng dẫn mở đầu vòng 1 chạy TRƯỚC thẻ biến cố (xem event3D); xong/bỏ qua thì đi tiếp tới biến cố.
+  const q = s => evc.querySelector(s), done = () => { try { localStorage.setItem(T3_KEY, '1'); } catch (e) {} closeEvent(); const f = tourThen; tourThen = null; if (f) f(); return !!f; };
   if (q('#t3Prev')) q('#t3Prev').onclick = () => tour3D(t3i - 1);
   if (q('#t3Next')) q('#t3Next').onclick = () => tour3D(t3i + 1);
-  if (q('#t3End')) q('#t3End').onclick = () => { done(); window.__openTab('decisions'); };
+  if (q('#t3End')) q('#t3End').onclick = () => { if (!done()) window.__openTab('decisions'); };
   q('#t3Skip').onclick = done;
 }
 window.__tour3D = tour3D;
+let tourThen = null;
+const tourSeen = () => { try { return !!localStorage.getItem(T3_KEY); } catch (e) { return true; } };
 // Trước đây chỉ thử 1 lần sau 1,4 giây: lúc đó game.html đang chiếu chuỗi giới thiệu/bốc thăm/biến cố nên hướng dẫn
 // bị bỏ qua vĩnh viễn. Nay chờ tới khi trụ sở rảnh (không biến cố, phòng 3D, đấu trường, bản đồ hay lớp phủ toàn khung).
-function maybeTour3D() { try { if (localStorage.getItem(T3_KEY)) return; } catch (e) { return; } let n = 0;
+function maybeTour3D() { if (tourSeen()) return; let n = 0;
   const iv = setInterval(() => { const b = document.body.classList;
     if (++n > 600) return clearInterval(iv);
+    // Chỉ dùng khi đội vào giữa ván (đã qua biến cố vòng 1); ván mới thì hướng dẫn đi trước thẻ biến cố (event3D).
+    if (GS && ((GS.history || []).length || GS.committed)) { clearInterval(iv); try { localStorage.setItem(T3_KEY, '1'); } catch (e) {} return; }
     if (b.contains('evt') || b.contains('room') || b.contains('arena') || b.contains('login3d') || resEl.classList.contains('on') || frame.className === 'full') return;
     clearInterval(iv); tour3D(0); }, 1000); }
 
@@ -1097,7 +1145,7 @@ function result3D(r) {
   if (ok) confetti3D(new THREE.Vector3(0, 0, -2.4));
   showPanel(`<img src="assets/dragon/${ok ? 'jump' : 'magnifier'}.png" alt="Tèo Soi" style="width:84px;align-self:center"><span class="tag ${ok ? '' : 'bad'}">● ${T('Kết quả vòng', 'Round result')} ${r.round}/6</span>
     <h2 class="${ok ? '' : 'bad'}">${ok ? T('🎉 Vòng có lãi!', '🎉 A profitable round!') : T('😰 Vòng này lỗ', '😰 A loss this round')}</h2>
-    <p class="d">${r.event.icon} ${r.event.name}${r.shielded ? T(' (đã chặn bởi 🛡️)', ' (blocked by 🛡️)') : ''}</p>
+    <p class="d">${r.event.icon} ${r.event.name}${r.shielded ? T(' (🛡️ khiên đã giảm một nửa tác động)', ' (🛡️ shield halved the impact)') : ''}</p>
     <div class="say"><small>🤖 LUMINA</small>${resultLine(r)}</div>
     <p class="d" style="text-align:center;font-weight:700">${T('🐉 Rồng Xanh', '🐉 Green Dragon')}: “${cq && cq.win ? T('Cờ của mình!', 'That flag is ours!') : ok ? T('Sắp tới lượt mình rồi!', 'Our turn is coming!') : T('Để Rồng Xanh xem lại số liệu…', 'Let Green Dragon check the numbers…')}”</p>
     ${ok ? '' : '<div class="q">' + T('"Dữ liệu cho ta biết quá khứ, quyết định hôm nay viết nên tương lai." – <b>Phan Anh Tú · Cố vấn học thuật</b>', '"Data tells us about the past; today\'s decisions write the future." – <b>Phan Anh Tú · Academic advisor</b>') + '</div>'}
@@ -1112,7 +1160,7 @@ function result3D(r) {
     ${fresh.map(a => `<span class="ach">${T(`🎖️ Thành tựu mới: ${a}. Ghi vào nhật ký đội nhé.`, `🎖️ New achievement: ${a}. Note it in the team journal.`)}</span>`).join('')}
     <button class="btn primary" id="rsGo">${T('Xác nhận & tiếp tục 🚩', 'Confirm & continue 🚩')}</button>`);
   evc.querySelector('#rsGo').onclick = () => { closeEvent(); MOOD.until = 0; fly(9); zb.children[9].click();
-    window.__afterMap = () => { ev('renderAll()'); if (ev('S.finished')) finale3D();
+    window.__afterMap = () => { ev('renderAll()'); flushLevelUp(); if (ev('S.finished')) finale3D();
       else if (r.isNewPeak) W.showVictory(r); else W.maybeShowEventIntro(); };
     setTimeout(openResults, 700); };
 }
@@ -1122,8 +1170,10 @@ function finale3D() {
   const s = ev('S'); if (!s) return; /* giọng Lumina đã tắt */
   const cq = s.conquest || [], mine = cq.filter(c => c.win).length, H = s.history || [], last = H[H.length - 1] || {};
   const profit = H.reduce((a, h) => a + (+h.netProfit || 0), 0), cnt = {}; cq.forEach(c => { const k = c.win ? 'star' : (KEY_OF[c.winner] || 'wolf'); cnt[k] = (cnt[k] || 0) + 1; });
-  const rank = ORDER.map(k => ({ k, n: cnt[k] || 0, pf: k === 'star' ? profit : ((s.competitors || []).find(c => KEY_OF[c.name] === k) || {}).profit || 0 })).sort((a, b) => b.n - a.n || b.pf - a.pf); /* hoà cờ xét lợi nhuận tích lũy – cùng luật danh hiệu «Vô địch BizOn» (js/engine.js) */
-  const myRank = rank.findIndex(r => r.k === 'star') + 1, champ = myRank === 1;
+  // Cùng một bảng xếp hạng với Báo cáo mùa và Giấy chứng nhận: seasonRanking() trong js/app.js (cờ → lợi nhuận).
+  const SR = ev('seasonRanking()') || { rows: [], myRank: 1, champion: false };
+  const rank = SR.rows.map(r => ({ k: r.me ? 'star' : (KEY_OF[r.name] || 'wolf'), n: r.flags, pf: r.profit }));
+  const myRank = SR.myRank, champ = SR.champion;
   if (FIN) scene.remove(FIN); FIN = G('finale', scene, -3.9, 0, 3.9, Math.atan2(0.62, 0.75));
   const step = (w, h, x, col) => B(FIN, 'podium', w, h, 0.9, mat(col, 0.85), x, 0, 0, 0.03);
   step(0.9, 0.55, 0, 0xe8b64a); step(0.9, 0.38, -0.95, 0xc4cad1); step(0.9, 0.25, 0.95, 0xc98a52);
@@ -1134,7 +1184,7 @@ function finale3D() {
   flyTo(new THREE.Vector3(-4.0, 0.8, 4.0), new THREE.Vector3(0.62, 0.55, 0.75).normalize().multiplyScalar(innerWidth < 760 ? 12 : 9.5));
   const medal = ['🥇', '🥈', '🥉', '4️⃣'][myRank - 1];
   showPanel(`${champ ? '<img src="assets/character/teo-soi-cut.webp" alt="Tèo Soi ôm cúp" style="width:96px;align-self:center"><img src="assets/illustrations/team-victory-celebration.webp" alt="Lễ trao cúp vô địch BizOn Bật Nghiệp" style="width:100%;border-radius:18px;border:3px solid #e6d6bf;display:block">' : ''}<span class="tag">${T('🏁 TỔNG KẾT MÙA GIẢI · 6 VÒNG', '🏁 SEASON WRAP-UP · 6 ROUNDS')}</span><h2>${champ ? T('Quán quân sàn đấu!', 'Champions of the arena!') : `${T('Hạng', 'Rank')} ${myRank}/4`} ${medal}</h2>
-    <p class="d">${champ ? T(`${s.profile.teamName} cắm nhiều cờ nhất trên bản đồ Việt Nam. Đội Rồng Xanh lên bục cao nhất.`, `${s.profile.teamName} planted the most flags on the map of Vietnam. Team Green Dragon takes the top step.`) : T(`${nm(rank[0].k)} dẫn đầu với ${rank[0].n} cờ. Đội bạn có ${mine} cờ – xem lại báo cáo để rút bài học.`, `${nm(rank[0].k)} leads with ${rank[0].n} flags. Your team has ${mine} – review the reports for the lessons.`)}</p>
+    <p class="d">${champ ? T(`${esc(s.profile.teamName)} cắm nhiều cờ nhất trên bản đồ Việt Nam. Đội Rồng Xanh lên bục cao nhất.`, `${esc(s.profile.teamName)} planted the most flags on the map of Vietnam. Team Green Dragon takes the top step.`) : T(`${esc(nm(rank[0].k))} dẫn đầu với ${rank[0].n} cờ. Đội bạn có ${mine} cờ – xem lại báo cáo để rút bài học.`, `${esc(nm(rank[0].k))} leads with ${rank[0].n} flags. Your team has ${mine} – review the reports for the lessons.`)}</p>
     <div class="imps"><div class="imp"><small>${T('Cờ cả mùa', 'Season flags')}</small><b>🚩 ${mine}/6</b></div><div class="imp"><small>${T('Lợi nhuận tích lũy', 'Cumulative profit')}</small><b style="color:${profit >= 0 ? '#3f8a44' : '#c0443a'}">${fmt(profit)}</b></div><div class="imp"><small>${T('Thị phần cuối', 'Final share')}</small><b>${(+last.share || 0).toFixed(1)}%</b></div><div class="imp"><small>${T('Số dư ví', 'Wallet balance')}</small><b>${fmt(s.balance)}</b></div></div>
     <div class="say"><small>🤖 LUMINA</small>${champ ? T('Quán quân sàn đấu! Đội cắm nhiều cờ nhất trên bản đồ Việt Nam.', 'Champions of the arena! The team planted the most flags on the map of Vietnam.') : T('Sáu vòng là sáu bài học. Đọc lại nhật ký đội, rồi thử lại mùa mới nhé.', 'Six rounds, six lessons. Reread the team journal, then try a new season.')}</div>
     <div class="q">"${champ ? T('Một chiến lược được thực thi kỷ luật suốt sáu vòng – đó là điều đáng tự hào nhất.', 'A strategy executed with discipline for six rounds – that is the thing to be proudest of.') : T('Doanh nghiệp giỏi không phải doanh nghiệp không bao giờ sai, mà là doanh nghiệp sửa sai nhanh.', 'A good business is not one that never errs, but one that corrects its errors fast.')}" – <b>Phan Anh Tú</b></div>
@@ -1196,6 +1246,7 @@ const evc = document.getElementById('evc');
 function closeEvent() { window.__EVON = false; document.body.classList.remove('evt'); }
 function event3D() {
   const s = ev('S'); if (!s || s.finished || s.committed || s.eventShownRound >= s.round) return;
+  if (!DIORAMA && s.round === 1 && !(s.history || []).length && !tourSeen()) { tourThen = event3D; tour3D(0); return; }
   const e = ev('currentEvent(S)'); if (!e) return;
   ev('S.eventShownRound=S.round;save();try{playEventSting(currentEvent(S).tone)}catch(e){}');
   sheetTab = null; setMode();
@@ -1268,9 +1319,9 @@ async function arena3D(r, done) {
   const rp = AR.pins[stopI].position; AR.ring.position.set(rp.x, 0.26, rp.z);
   AR.crown.visible = false; AR.winner = AR.pods.reduce((a, b) => b.share > a.share ? b : a);
   document.getElementById('aTitle').textContent = T('⚔️ ĐẤU TRƯỜNG ', '⚔️ ARENA ') + (st ? SN(st).toUpperCase() : T('VÒNG ', 'ROUND ') + r.round);
-  document.getElementById('aSub').textContent = `${r.event.icon} ${r.event.name} – ${T('12.000 khách hàng chờ trên khán đài', '12,000 customers waiting in the stands')}`;
+  document.getElementById('aSub').textContent = `${r.event.icon} ${r.event.name} – ${(n => T(`${n.toLocaleString('vi-VN')} khách hàng chờ trên khán đài`, `${n.toLocaleString('en-US')} customers waiting in the stands`))(Math.round((r.demandUnits || 0) * 100 / Math.max(0.1, +r.share || 25) / 100) * 100 || 12000)}`;
   document.getElementById('aZone').textContent = st ? '📍 ' + TL(st.zone) : '';
-  aLabs.innerHTML = AR.pods.map(p => `<div class="lab${p.me ? ' me' : ''}" style="--c:${TEAMS[p.key].color}"><i>0%</i><b>${p.me ? '🏺 ' : ''}${p.name}</b></div>`).join('');
+  aLabs.innerHTML = AR.pods.map(p => `<div class="lab${p.me ? ' me' : ''}" style="--c:${TEAMS[p.key].color}"><i>0%</i><b>${p.me ? '🏺 ' : ''}${esc(p.name)}</b></div>`).join('');
   AR.labs = [...aLabs.children];
   const v = document.getElementById('aVerdict');
   v.textContent = cur.win ? T(`🚩 ${s.profile.teamName} thắng sàn đấu – cắm cờ tại ${SN(st)}!`, `🚩 ${s.profile.teamName} wins the arena – flag planted in ${SN(st)}!`) : cur.hasTopShare ? T('⚠️ Thị phần cao nhất nhưng vòng này lỗ – cần có lãi mới cắm được cờ!', '⚠️ Highest market share but a loss this round – you need a profit to plant a flag!') : T(`🏴 ${AR.winner.name} giữ vị trí số 1 vòng này, cờ ${st ? SN(st) : ''} thuộc về họ`, `🏴 ${AR.winner.name} holds the number-one spot this round; the ${st ? SN(st) : ''} flag is theirs`);
@@ -1322,7 +1373,8 @@ const TX0 = -2.6, TX1 = 2.6, TY = 0.98;
 function slVal(s) { const e = gd(s.id); return { v: +e.value, min: +e.min, max: +e.max, step: +e.step || 1 }; }
 function buildDecisions() {
   clearRoom(); const s = ev('S'), e = ev('currentEvent(S)') || {}, locked = s.committed || s.finished;
-  const showAdv = decAdv || s.round >= 3, list = SL.filter(x => !x.adv || showAdv);
+  // Nhân viên & Đào tạo hiện ngay từ vòng 1: ẩn đi thì sản lượng bị cắt im lặng ở 45×70 = 3.150 sp (kể cả vòng cầu ×1,35).
+  const list = SL;
   roomHead(T('🎯 Bàn ra quyết định · Vòng ', '🎯 Decision table · Round ') + Math.min(s.round, 6) + '/6', (e.icon ? e.icon + ' ' + e.name + ' · ' : '') + (locked ? T('Đã khóa quyết định vòng này', 'Decisions locked for this round') : T('Kéo núm đất sét để chỉnh, thống nhất với cả đội rồi Commit', 'Drag the clay knobs to adjust, agree with the team, then Commit')));
   const g = RM.g, wood = cm(0xa86a3f), top = cm(0xc4834f);
   mk(g, new THREE.BoxGeometry(7.6, 0.16, 1.05 * list.length + 0.9), top, 0, TY - 0.08, 0.2);
@@ -1340,7 +1392,8 @@ function buildDecisions() {
     const L = lab(knob, '', 0.55, locked ? 'dim' : '');
     const K = { sl, knob, fill, col, L, min, max }; RM.knobs.push(K); placeKnob(K, v);
   });
-  setRoomCam(new THREE.Vector3(0, 6.4, 6.2 + list.length * 0.35), new THREE.Vector3(0, TY, 0.1));
+  { const zc = 0.1 * (list.length - 1) + 0.2;   // tâm các hàng núm – camera lùi theo số thanh để hàng cuối không tràn khỏi màn
+    setRoomCam(new THREE.Vector3(0, 6.0 + list.length * 0.25, zc + 5.6 + list.length * 0.45), new THREE.Vector3(0, TY, zc)); }
   decCard();
 }
 function placeKnob(K, v) {
@@ -1361,20 +1414,25 @@ function decCard() {
     <div class="stats"><div><small>${T('THỊ PHẦN', 'MARKET SHARE')}</small><b id="dcShare"></b></div><div><small>${T('DÒNG TIỀN RÒNG', 'NET CASH FLOW')}</small><b id="dcNet"></b></div><div><small>${T('VÍ ĐỘI', 'TEAM WALLET')}</small><b>${fmt(s.balance)}</b></div></div>
     <p id="dcVerdict"></p><p id="dcBe" style="font-size:12px"></p>
     <p class="k">${T('Nguồn vốn', 'Funding')}</p><div class="row"><button class="btn${fund === 'equity' ? ' primary' : ''}" data-f="equity">${T('💼 Vốn tự có', '💼 Equity')}</button><button class="btn${fund === 'loan' ? ' primary' : ''}" data-f="loan">${T('🏦 Vay ngân hàng', '🏦 Bank loan')}</button></div>
-    ${showAdv ? `<p class="k">${T('Kỳ hạn thanh toán cho khách', 'Customer payment terms')}</p><div class="row">${[30, 60, 90].map(d => `<button class="btn${term === d ? ' primary' : ''}" data-t="${d}">${d} ${T('ngày', 'days')}</button>`).join('')}</div>` : '<button class="btn" id="dcAdv">' + T('⚙️ Hiện quyết định nâng cao', '⚙️ Show advanced decisions') + '</button>'}
+    ${showAdv ? `<p class="k">${T('Kỳ hạn thanh toán cho khách', 'Customer payment terms')}</p><div class="row">${[30, 60, 90].map(d => `<button class="btn${term === d ? ' primary' : ''}" data-t="${d}">${d} ${T('ngày', 'days')}</button>`).join('')}</div>` : '<button class="btn" id="dcAdv">' + T('⚙️ Kỳ hạn thanh toán cho khách (nâng cao)', '⚙️ Customer payment terms (advanced)') + '</button>'}
     <div class="row"><button class="btn" id="dcMeet">${T('🗣️ Họp đội 3D', '🗣️ 3D team meeting')}</button><button class="btn" id="dcWhat">${T('🔮 Nếu–Thì', '🔮 What-if')} (${wq})</button></div>
+    ${gd('member-panel') && !locked ? `<button class="btn" id="dcMember">${T('📋 Gửi đề xuất / biên bản của bạn', '📋 Send your proposal / minutes')}</button>` : ''}
     <button class="btn primary" id="dcCommit" ${locked ? 'disabled style="opacity:.5"' : ''}>${locked ? (s.finished ? T('🏁 Mô phỏng đã kết thúc', '🏁 Simulation finished') : T('🔒 Đã commit vòng này', '🔒 Committed this round')) : T('🔒 Commit – Khóa quyết định', '🔒 Commit – Lock in decisions')}</button>`;
   decStats();
   rmCard.querySelectorAll('[data-f]').forEach(b => b.onclick = () => { if (locked) return; W.setFunding(b.dataset.f); decCard(); });
   rmCard.querySelectorAll('[data-t]').forEach(b => b.onclick = () => { if (locked) return; gd('in-term').value = b.dataset.t; W.syncDecisionLabels(); decCard(); });
   const adv = rmCard.querySelector('#dcAdv'); if (adv) adv.onclick = () => { decAdv = true; buildDecisions(); };
   rmCard.querySelector('#dcMeet').onclick = () => { closeRoom(); window.__meeting3D(); };
+  // Ghi nhận đóng góp từng thành viên (dùng chấm B5) nằm ở bảng quyết định 2D – mở thẳng tới khung đó.
+  const mb = rmCard.querySelector('#dcMember'); if (mb) mb.onclick = () => { closeRoom(); force2D = true; W.showTab('decisions'); force2D = false; setTimeout(() => { const m = gd('member-panel'); if (m) m.scrollIntoView({ block: 'center' }); }, 250); };
   rmCard.querySelector('#dcWhat').onclick = () => { closeRoom(); force2D = true; W.showTab('decisions'); force2D = false; setTimeout(() => { const w = gd('whatif-result'); if (w) W.scrollTo(0, w.getBoundingClientRect().top + W.scrollY - 200); }, 200); };
   rmCard.querySelector('#dcCommit').onclick = () => { if (locked) return;
-    const short = ev('(()=>{const d=currentDecisionInput();const need=d.marketing+d.rd+d.production*UNIT_COST/1000+d.workers*WAGE_PER_WORKER+d.workers*d.training;return d.funding!=="loan"&&need>S.balance+300?Math.round(need-S.balance):0})()');
+    const short = ev('(()=>{const d=currentDecisionInput();const need=d.marketing+d.rd+d.production*UNIT_COST/1000+d.workers*WAGE_PER_WORKER+d.workers*d.training;return d.funding!=="loan"&&need>Math.max(0,S.balance)?Math.round(need-S.balance):0})()');   /* cùng luật với commitDecisions() trong js/app.js */
     if (short) { rmCard.insertAdjacentHTML('afterbegin', `<div id="dcWarn" style="background:#fde4e1;border:3px solid #e8a39c;border-radius:16px;padding:8px 12px;font-size:13px;color:#8a2a22">${T(`<b>Không đủ vốn tự có</b> – kế hoạch vượt ví ${fmt(short)}. Giảm ngân sách hoặc vay ngân hàng (lãi 8.5%/vòng).`, `<b>Not enough equity</b> – the plan exceeds the wallet by ${fmt(short)}. Cut the budget or take a bank loan (8.5% interest per round).`)}<div class="row" style="margin-top:6px"><button class="btn" id="dcLoan">${T('🏦 Chuyển sang vay', '🏦 Switch to a loan')}</button></div></div>`);
       rmCard.querySelector('#dcLoan').onclick = () => { W.setFunding('loan'); decCard(); }; rmCard.scrollTop = 0; return; }
-    W.commitDecisions(); if (ev('S.committed')) closeRoom(); else decCard(); };
+    W.commitDecisions(); if (ev('S.committed')) { closeRoom(); return; }
+    // Không commit được (vòng chưa mở theo lịch thi, giảng viên đang khóa vòng…): nói rõ ngay trên thẻ.
+    decCard(); rmCard.insertAdjacentHTML('afterbegin', `<div id="dcWarn" style="background:#fdf0d8;border:3px solid #e8c48c;border-radius:16px;padding:8px 12px;font-size:13px;color:#7a4a10">${T('⏳ Chưa commit được: vòng này chưa mở theo lịch thi hoặc giảng viên đang khóa vòng. Xem thông báo phía trên màn hình.', '⏳ Not committed yet: this round is not open in the exam schedule, or your instructor has locked it. See the notice at the top of the screen.')}</div>`); rmCard.scrollTop = 0; };
 }
 const dragPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -(TY + 0.1)), dragHit = new THREE.Vector3();
 canvas.addEventListener('pointerdown', e => {
@@ -1423,8 +1481,8 @@ function buildReports() {
   }
   setRoomCam(new THREE.Vector3(0, 4.3, 9.4), new THREE.Vector3(0, 1.8, 0));
   rmCard.innerHTML = `<p class="k">${T('Biểu đồ đất sét', 'Clay charts')}</p><div class="row" style="flex-wrap:wrap">${REP.map(([k, n]) => `<button class="btn${repSel === k ? ' primary' : ''}" data-r="${k}" style="flex:1 1 40%;font-size:13px">${TL(n)}</button>`).join('')}</div>
-    ${repSel === 'share' ? `<div class="row" style="flex-wrap:wrap;gap:6px">${ORDER.map(k => `<span style="font-size:12px;display:flex;gap:4px;align-items:center"><i style="width:10px;height:10px;border-radius:3px;background:${TEAMS[k].color}"></i>${k === 'star' ? s.profile.teamName : TEAMS[k].name}</span>`).join('')}</div>` : ''}
-    <p class="k">${T('Báo cáo chi tiết (9 loại)', 'Detailed reports (9 types)')}</p><div class="row" style="flex-wrap:wrap;gap:6px">${REP2D.filter(r => r[0] !== 'season' || s.finished).map(([k, n]) => `<button class="btn" data-d="${k}" style="flex:1 1 30%;font-size:12px;padding:6px">${TL(n)}</button>`).join('')}</div>`;
+    ${repSel === 'share' ? `<div class="row" style="flex-wrap:wrap;gap:6px">${ORDER.map(k => `<span style="font-size:12px;display:flex;gap:4px;align-items:center"><i style="width:10px;height:10px;border-radius:3px;background:${TEAMS[k].color}"></i>${k === 'star' ? esc(s.profile.teamName) : TEAMS[k].name}</span>`).join('')}</div>` : ''}
+    <p class="k">${(n => T(`Báo cáo chi tiết (${n} loại)`, `Detailed reports (${n} types)`))(REP2D.filter(r => r[0] !== 'season' || s.finished).length)}</p><div class="row" style="flex-wrap:wrap;gap:6px">${REP2D.filter(r => r[0] !== 'season' || s.finished).map(([k, n]) => `<button class="btn" data-d="${k}" style="flex:1 1 30%;font-size:12px;padding:6px">${TL(n)}</button>`).join('')}</div>`;
   rmCard.querySelectorAll('[data-r]').forEach(b => b.onclick = () => { repSel = b.dataset.r; buildReports(); });
   rmCard.querySelectorAll('[data-d]').forEach(b => b.onclick = () => { closeRoom(); ev('currentReport=' + JSON.stringify(b.dataset.d)); force2D = true; W.showTab('reports'); force2D = false; });
 }
@@ -1477,7 +1535,7 @@ function buildMissions() {
     const PAP = { ready: '#ffe08a', claimed: '#cfe8c8', pending: '#f6efe2' }[m.st];
     const tex = ctex(360, 300, (x, w, h) => { x.fillStyle = PAP; x.fillRect(0, 0, w, h); x.fillStyle = 'rgba(0,0,0,.06)'; x.fillRect(0, h - 14, w, 14);
       x.font = '64px sans-serif'; x.textAlign = 'center'; x.fillText(m.icon, w / 2, 86); x.fillStyle = '#2c3552'; x.font = '800 34px "Baloo 2",sans-serif'; x.fillText(m.name, w / 2, 150);
-      x.font = '600 26px "Be Vietnam Pro",sans-serif'; x.fillStyle = '#1f6f8a'; x.fillText(`🎁 ${m.rm}tr₫ + ${m.rx} XP`, w / 2, 200);
+      x.font = '600 26px "Be Vietnam Pro",sans-serif'; x.fillStyle = '#1f6f8a'; x.fillText(`🎁 ${fmt(m.rm)} + ${m.rx} XP`, w / 2, 200);
       x.font = '800 30px "Baloo 2",sans-serif'; x.fillStyle = m.st === 'ready' ? '#c8641c' : m.st === 'claimed' ? '#3f8a44' : '#8a8f99'; x.fillText(m.st === 'ready' ? T('SẴN SÀNG NHẬN', 'READY TO CLAIM') : m.st === 'claimed' ? T('✓ ĐÃ NHẬN', '✓ CLAIMED') : T('🔒 CHƯA ĐẠT', '🔒 NOT YET'), w / 2, 262); });
     const note = new THREE.Group(); note.position.set(-2.3 + (i % 3) * 2.3, 4.05 - Math.floor(i / 3) * 1.4, -2.4); note.rotation.z = ((i * 37) % 7 - 3) * 0.02; g.add(note);
     const p = new THREE.Mesh(new THREE.PlaneGeometry(1.8, 1.25), new THREE.MeshStandardMaterial({ map: tex, roughness: 0.95 })); p.castShadow = true; note.add(p);
@@ -1486,7 +1544,7 @@ function buildMissions() {
   });
   setRoomCam(new THREE.Vector3(0, 2.8, 7.6), new THREE.Vector3(0, 2.6, -2.5));
   const m = list.find(x => x.id === RM.sel);
-  rmCard.innerHTML = m ? `<p class="k">${m.st === 'ready' ? T('Sẵn sàng nhận', 'Ready to claim') : m.st === 'claimed' ? T('Đã nhận', 'Claimed') : T('Chưa đạt', 'Not yet')}</p><h3>${m.icon} ${m.name}</h3><p>${m.desc}</p><p><b>🎁 ${m.rm}tr₫ + ${m.rx} XP</b></p>${m.st === 'ready' ? '<button class="btn primary" id="msGo">' + T('Nhận thưởng', 'Claim reward') + '</button>' : ''}`
+  rmCard.innerHTML = m ? `<p class="k">${m.st === 'ready' ? T('Sẵn sàng nhận', 'Ready to claim') : m.st === 'claimed' ? T('Đã nhận', 'Claimed') : T('Chưa đạt', 'Not yet')}</p><h3>${m.icon} ${m.name}</h3><p>${m.desc}</p><p><b>🎁 ${fmt(m.rm)} + ${m.rx} XP</b></p>${m.st === 'ready' ? '<button class="btn primary" id="msGo">' + T('Nhận thưởng', 'Claim reward') + '</button>' : ''}`
     : T('<p class="k">Chạm một tờ giấy ghim</p><p>Giấy vàng là nhiệm vụ đã đạt, bấm để nhận tiền và XP. Giấy xanh là đã nhận.</p>', '<p class="k">Tap a pinned note</p><p>Yellow notes are completed missions – tap one to claim money and XP. Green notes are already claimed.</p>');
   const b = rmCard.querySelector('#msGo'); if (b) b.onclick = () => { W.doClaimMission(m.id); confettiRoom(); buildMissions(); rmCard.insertAdjacentHTML('afterbegin', '<img src="assets/character/teo-soi-cut.webp" alt="Tèo Soi" style="width:90px;display:block;margin:0 auto"><p style="text-align:center;font-weight:700">' + T('🐉 Rồng Xanh: “Cảm ơn cả đội!”', '🐉 Green Dragon: “Thanks, team!”') + '</p>'); };
 }
@@ -1544,7 +1602,7 @@ function buildJournal() {
     const b = rmCard.querySelector('#jGo'); if (b) b.onclick = () => window.__openTab('decisions'); return; }
   const d = r0.decisions || {}, q = Q[(r0.round - 1) % Math.max(1, Q.length)] || {}; let les = ''; try { les = W.journalLesson(r0); } catch {}
   rmCard.innerHTML = `<p class="k">${T('Vòng', 'Round')} ${r0.round}/6 · ${T('hoàn thành', 'completed')}</p><h3>${r0.event && r0.event.icon ? r0.event.icon + ' ' + r0.event.name : T('Chu kỳ ', 'Cycle ') + r0.round}</h3>
-    <div class="stats"><div><small>${T('GIÁ', 'PRICE')}</small><b style="font-size:16px">${d.price}k</b></div><div><small>MARKETING</small><b style="font-size:16px">${d.marketing}tr</b></div><div><small>${T('SẢN LƯỢNG', 'OUTPUT')}</small><b style="font-size:16px">${NUM(+d.production || 0)}</b></div></div>
+    <div class="stats"><div><small>${T('GIÁ', 'PRICE')}</small><b style="font-size:16px">${d.price}k</b></div><div><small>MARKETING</small><b style="font-size:16px">${fmt(d.marketing)}</b></div><div><small>${T('SẢN LƯỢNG', 'OUTPUT')}</small><b style="font-size:16px">${NUM(+d.production || 0)}</b></div></div>
     <p><b>${T('Kết quả', 'Result')}:</b> ${fmt(r0.netProfit)} · ${T('thị phần', 'market share')} ${(+r0.share).toFixed(1)}%</p><p><b>${T('Bài học', 'Lesson')}:</b> ${les}</p>${q.text ? `<p style="font-style:italic">"${q.text}" – <b>${q.by}</b></p>` : ''}`;
 }
 const ROLE_ID = { CEO: 'ceo', CFO: 'cfo', CMO: 'cmo', COO: 'coo', SEC: 'sec' };
@@ -1561,7 +1619,7 @@ function buildProfile() {
   RM.tick = (dt, t) => { chars.animate(me, t, 'talk', 0); chars.animate(lu, t, 'idle', 2); };
   lab(p, `<i>🏅</i><b>${T('Cấp', 'Level')} ${lvl} · ${TL(TIERS[Math.min(lvl - 1, 5)])}</b>`, 3.6, 'hot');
   setRoomCam(new THREE.Vector3(0, 3.6, 8.2), new THREE.Vector3(0, 1.5, -0.6));
-  rmCard.innerHTML = `<p class="k">${role} · Tier ${Math.min(lvl, 6)}</p><h3>${s.profile.teamName}</h3><p>${s.profile.email || ''}${s.profile.classId ? T(' · Lớp ', ' · Class ') + s.profile.classId : ''}</p>
+  rmCard.innerHTML = `<p class="k">${role} · Tier ${Math.min(lvl, 6)}</p><h3>${esc(s.profile.teamName)}</h3><p>${esc(s.profile.email || '')}${s.profile.classId ? T(' · Lớp ', ' · Class ') + s.profile.classId : ''}</p>
     <div style="height:12px;border-radius:999px;background:#e6d6bf;overflow:hidden"><div style="height:100%;width:${Math.round(pct * 100)}%;background:#f2c14e"></div></div>
     <div class="stats"><div><small>XP</small><b style="font-size:16px">${NUM(s.xp)}</b></div><div><small>${T('LỢI NHUẬN', 'PROFIT')}</small><b style="font-size:16px">${fmt(total)}</b></div><div><small>${T('VÒNG', 'ROUNDS')}</small><b style="font-size:16px">${(s.history || []).length}/6</b></div></div>
     <div class="row"><button class="btn" id="pfSet">${T('⚙️ Cài đặt', '⚙️ Settings')}</button><button class="btn" id="pfReset">${T('↺ Chơi lại', '↺ Play again')}</button></div>
@@ -1606,7 +1664,10 @@ function buildFaceoff() {
   RM.labs.slice(-2).forEach(L => { Object.assign(L.el.style, { whiteSpace: 'normal', maxWidth: '210px', textAlign: 'center' }); const b = L.el.querySelector('b'); if (b) Object.assign(b.style, { whiteSpace: 'normal', display: 'block', lineHeight: '1.25' }); });
   { const W0 = innerWidth, w = W0 >= 760 ? 1.05 : 0; setRoomCam(new THREE.Vector3(w, 2.7, W0 < 760 ? 12.5 : 11.2), new THREE.Vector3(w, 1.4, 0)); }
   const bad = e.tone === 'bad';
-  rmCard.innerHTML = `<p class="k">${e.tag || T('BIẾN CỐ THỊ TRƯỜNG', 'MARKET EVENT')}</p><h3 style="${bad ? 'color:#c0443a' : ''}">${e.icon || '📣'} ${e.name || T('Đối thủ ra đòn', 'A rival strikes')}</h3><p>${e.desc || ''}</p>
+  const dirIcon = d => ({ up: '📈', 'up-bad': '📈', down: '📉', 'down-good': '📉', flat: '➖' }[d] || '➖'), dirCol = d => d === 'up' || d === 'down-good' ? '#3f8a44' : d === 'flat' ? '#2c3552' : '#c0443a';
+  // Thẻ biến cố ở trụ sở chỉ hiện ~1,4 giây trước khi chuyển sang phòng này – nhắc lại các ô tác động ở đây.
+  const imps = (e.impacts || []).length ? `<div class="stats" style="grid-template-columns:repeat(${Math.min(4, e.impacts.length)},1fr)">${e.impacts.map(im => `<div><small>${im.icon} ${im.label}</small><b style="font-size:15px;color:${dirCol(im.dir)}">${dirIcon(im.dir)} ${im.value}</b></div>`).join('')}</div>` : '';
+  rmCard.innerHTML = `<p class="k">${e.tag || T('BIẾN CỐ THỊ TRƯỜNG', 'MARKET EVENT')}</p><h3 style="${bad ? 'color:#c0443a' : ''}">${e.icon || '📣'} ${e.name || T('Đối thủ ra đòn', 'A rival strikes')}</h3><p>${e.desc || ''}</p>${imps}
     ${e.luminaMsg ? `<p style="font-style:italic">🤖 Lumina: “${e.luminaMsg}”</p>` : ''}
     <button class="btn primary" id="foGo">${e.cta ? e.cta.label : T('🎯 Nhập quyết định', '🎯 Enter decisions')}</button><button class="btn" id="foHome">${T('Về trụ sở', 'Back to HQ')}</button>`;
   rmCard.querySelector('#foGo').onclick = () => { closeRoom(); window.__openTab(e.cta ? e.cta.tab : 'decisions', e.cta && e.cta.report); };

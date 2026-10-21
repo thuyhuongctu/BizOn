@@ -11,43 +11,43 @@
   if (/game\.html$/.test(location.pathname)) return;
 
   var COLS = [
-    ['🌌 Vũ trụ · Hub', [
-      ['Bản đồ Vũ trụ', 'universe.html'],
-      ['Trường (thể chế)', 'truong.html'],
-      ['Nền tảng học thuật', 'truong-hoc-thuat.html'],
-      ['Sổ điểm giảng viên', 'instructor-grading.html'],
+    ['🌌 Vũ trụ · Hub', '🌌 Universe · Hub', [
+      ['Bản đồ Vũ trụ', 'universe.html', 'Universe Map'],
+      ['Trường (thể chế)', 'truong.html', 'The School (institution)'],
+      ['Nền tảng học thuật', 'truong-hoc-thuat.html', 'Academic Platform'],
+      ['Sổ điểm giảng viên', 'instructor-grading.html', 'Instructor Gradebook'],
     ]],
-    ['🎮 Trò chơi · Games', [
-      ['Game Bật Nghiệp', 'game.html'],
-      ['Hướng dẫn chơi', 'huong-dan.html'],
-      ['BizOn Arcade', 'games.html'],
-      ['Hộ Chiếu Thương Hiệu', 'brand-passport.html'],
-      ['Go Global', 'global.html'],
-      ['Gánh Hàng Khởi Nghiệp', 'ben-phu-sa.html'],
-      ['🧪 Sảnh 3D (thử nghiệm)', 'hub-3d.html'],
+    ['🎮 Trò chơi · Games', '🎮 Games', [
+      ['Game Bật Nghiệp', 'game.html', 'BizOn Bật Nghiệp'],
+      ['Hướng dẫn chơi', 'huong-dan.html', 'How to play'],
+      ['BizOn Arcade', 'games.html', 'BizOn Arcade'],
+      ['Hộ Chiếu Thương Hiệu', 'brand-passport.html', 'Brand Passport'],
+      ['Go Global', 'global.html', 'Go Global'],
+      ['Gánh Hàng Khởi Nghiệp', 'ben-phu-sa.html', 'Entrepreneurial Street Vendor'],
+      ['🧪 Sảnh 3D (thử nghiệm)', 'hub-3d.html', '🧪 3D Lobby (experimental)'],
     ]],
-    ['🎨 Kho sáng tạo · Creative', [
-      ['Kho Âm nhạc', 'am-nhac.html'],
-      ['Thư viện Sáng tạo', 'thu-vien.html'],
-      ['Hậu trường sản xuất nhạc', 'hau-truong.html'],
+    ['🎨 Kho sáng tạo · Creative', '🎨 Creative', [
+      ['Kho Âm nhạc', 'am-nhac.html', 'Music library'],
+      ['Thư viện Sáng tạo', 'thu-vien.html', 'Creative Library'],
+      ['Hậu trường sản xuất nhạc', 'hau-truong.html', 'Behind the Scenes: Music Production'],
     ]],
-    ['🎓 Giảng dạy · Educators', [
-      ['Kịch bản lớp học', 'lop-hoc.html'],
-      ['Bảng điều khiển lớp', 'giang-vien.html'],
-      ['Khảo sát trước–sau', 'khao-sat-online.html'],
-      ['Phiếu khảo sát (bản in A4)', 'khao-sat.html'],
-      ['Học thuật & Model Cards', 'hoc-thuat.html'],
-      ['Thẻ mô tả Lumina', 'lumina.html'],
-      ['Bằng chứng lớp học', 'bang-chung.html'],
+    ['🎓 Giảng dạy · Educators', '🎓 Educators', [
+      ['Kịch bản lớp học', 'lop-hoc.html', 'Classroom scenario'],
+      ['Bảng điều khiển lớp', 'giang-vien.html', 'Class dashboard'],
+      ['Khảo sát trước–sau', 'khao-sat-online.html', 'Pre/post survey'],
+      ['Phiếu khảo sát (bản in A4)', 'khao-sat.html', 'Survey Sheet (A4 printable)'],
+      ['Học thuật & Model Cards', 'hoc-thuat.html', 'Academics & Model Cards'],
+      ['Thẻ mô tả Lumina', 'lumina.html', 'Lumina system card'],
+      ['Bằng chứng lớp học', 'bang-chung.html', 'Classroom evidence'],
     ]],
-    ['🏛️ Về BizOn · About', [
-      ['Giới thiệu', 'gioi-thieu.html'],
-      ['Định hướng tác động vùng', 'dinh-huong.html'],
-      ['Đội ngũ sáng lập', 'doi-ngu.html'],
-      ['Danh mục dự án', 'du-an.html'],
-      ['Giải pháp & gói triển khai', 'giai-phap.html'],
-      ['Tham gia nhóm', 'tuyen-dung.html'],
-      ['Liên hệ & Hợp tác', 'lien-he.html'],
+    ['🏛️ Về BizOn · About', '🏛️ About BizOn', [
+      ['Giới thiệu', 'gioi-thieu.html', 'About'],
+      ['Định hướng tác động vùng', 'dinh-huong.html', 'Regional impact orientation'],
+      ['Đội ngũ sáng lập', 'doi-ngu.html', 'The founding team'],
+      ['Danh mục dự án', 'du-an.html', 'Projects portfolio'],
+      ['Giải pháp & gói triển khai', 'giai-phap.html', 'Solutions & Deployment Plans'],
+      ['Tham gia nhóm', 'tuyen-dung.html', 'Join the team'],
+      ['Liên hệ & Hợp tác', 'lien-he.html', 'Contact & Partnership'],
     ]],
   ];
 
@@ -132,8 +132,8 @@
     f.id = 'bz-footer';
     var cols = COLS.map(function (c) {
       var hub = c[0].indexOf('Vũ trụ') !== -1 ? ' bzf-col-hub' : '';
-      return '<details class="bzf-col' + hub + '"><summary>' + c[0] + '</summary><ul>' +
-        c[1].map(function (l) { return '<li><a href="' + l[1] + '">' + l[0] + '</a></li>'; }).join('') +
+      return '<details class="bzf-col' + hub + '"><summary data-en="' + c[1] + '">' + c[0] + '</summary><ul>' +
+        c[2].map(function (l) { return '<li><a href="' + l[1] + '" data-en="' + l[2] + '">' + l[0] + '</a></li>'; }).join('') +
         '</ul></details>';
     }).join('');
     f.innerHTML =
@@ -141,7 +141,7 @@
         '<div class="bzf-top">' +
           '<div class="bzf-brand">' +
             '<a class="bzf-logo" href="index.html"><img src="assets/icons/icon-192.png" alt="BizOn">BizOn <span class="bzf-accent">Bật Nghiệp</span></a>' +
-            '<p>Hệ sinh thái mô phỏng kinh doanh 3D phong cách đất nặn cho đào tạo khởi nghiệp.<br>Business simulation ecosystem for entrepreneurship education.</p>' +
+            '<p><span data-en="Claymorphism 3D business-simulation ecosystem for entrepreneurship education.">Hệ sinh thái mô phỏng kinh doanh 3D phong cách đất nặn cho đào tạo khởi nghiệp.</span></p>' +
           '</div>' +
           '<div class="bzf-meta">' +
             '📦 DOI <a href="https://doi.org/10.5281/zenodo.21592241" target="_blank" rel="noopener">10.5281/zenodo.21592241</a><br>' +
@@ -150,7 +150,7 @@
         '</div>' +
         '<div class="bzf-grid">' + cols + '</div>' +
         '<div class="bzf-eco">' +
-          '<span class="bzf-eco-label">Hệ sinh thái · <b>Je m\'appelle Hương</b></span>' +
+          '<span class="bzf-eco-label" data-en-html="Ecosystem · &lt;b&gt;Je m\'appelle Hương&lt;/b&gt;">Hệ sinh thái · <b>Je m\'appelle Hương</b></span>' +
           '<span class="bzf-eco-links">' +
             '<a class="bzf-eco-cur" href="index.html" aria-current="true">BizOn</a>' +
             '<a href="vietlens/gioi-thieu.html">VietLens AI</a>' +
@@ -160,8 +160,8 @@
         '<p class="bzf-cite">Cite (APA 7): Do, T. H., &amp; Phan, A. T. (2026). <i>BizOn Bật Nghiệp: A claymorphism business-simulation ecosystem for entrepreneurship education</i> [Computer software]. https://doi.org/10.5281/zenodo.21592241</p>' +
         '<div class="bzf-tail" id="bzf-tail"></div>' +
         '<div class="bzf-legal">' +
-          '<span>© 2026 Bizonland · Đỗ Thùy Hương &amp; Phan Anh Tú · All rights reserved</span>' +
-          '<span><a href="chinh-sach.html">Chính sách quyền riêng tư</a> · <a href="reset.html">Làm mới ứng dụng</a></span>' +
+          '<span data-en="© 2026 Bizonland · Do Thuy Huong &amp; Phan Anh Tu · All rights reserved">© 2026 Bizonland · Đỗ Thùy Hương &amp; Phan Anh Tú · Bảo lưu mọi quyền</span>' +
+          '<span><a href="chinh-sach.html" data-en="Privacy policy">Chính sách quyền riêng tư</a> · <a href="reset.html" data-en="Refresh the app">Làm mới ứng dụng</a></span>' +
         '</div>' +
       '</div>';
     document.body.appendChild(f);
@@ -170,8 +170,13 @@
     var tail = document.getElementById('bzf-tail');
     Array.prototype.slice.call(document.querySelectorAll('body > p')).forEach(function (p) {
       var t = p.textContent || '';
-      if (t.indexOf('✉️ Liên hệ') === 0 || t.indexOf('🎓 Trang web') === 0) tail.appendChild(p);
+      if (t.indexOf('✉️ Liên hệ') === 0 || t.indexOf('🎓 Trang web') === 0 ||
+          t.indexOf('✉️ Contact') === 0 || t.indexOf('🎓 This website') === 0) tail.appendChild(p);
     });
+
+    // Trang đất sét không có site-ui.js: tự dịch chân trang vừa bơm (data-en) theo ngôn ngữ hiện tại.
+    // Trang có site-ui.js thì để applyLang() của nó lo, tránh phát bizon:langchange hai lần.
+    if (!window.applyLang && window.clayApplyLang) window.clayApplyLang(window.clayCurrentLang ? window.clayCurrentLang() : 'vi');
 
     // Từ 600px trở lên các nhóm luôn mở; hẹp hơn thì thu lại để bớt cuộn
     var wide = window.matchMedia('(min-width:600px)');
