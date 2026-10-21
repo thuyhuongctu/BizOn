@@ -73,11 +73,13 @@ assert.match(aibis, /app-shell\.js/);
 
 // The clay music page (am-nhac.html) now loads its cover art from js/music-data.js,
 // so check both the page shell and its data module for the required existing assets.
+// Since #811 the album covers are the current games' 3D covers (the older illustration
+// covers were retired from the music page on request; they stay cached in app/sw.js below).
 const music = read('am-nhac.html') + '\n' + read('js/music-data.js');
 assert.match(music, /arena-vietnam-map-v2\.webp/);
-assert.match(music, /hero-vietnam-2026\.webp/);
-assert.match(music, /giai-dieu-bizon\.webp/);
-assert.match(music, /cast-sheet-brand-passport\.webp/);
+for (const cover of ['ben-phu-sa-3d', 'bat-nghiep-3d', 'ho-chieu-thuong-hieu-3d', 'ho-chieu-sau-rieng-3d']) {
+  assert.match(music, new RegExp('covers/' + cover + '\\.webp'));
+}
 
 const stylesheet = read('css/bizon-existing-assets.css');
 assert.match(stylesheet, /\.bz-existing-cast/);
