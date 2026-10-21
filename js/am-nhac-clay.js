@@ -25,6 +25,15 @@
   function lang(){ return (window.clayCurrentLang && window.clayCurrentLang()) === 'en' ? 'en' : 'vi'; }
   function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]; }); }
   function art(p){ return 'assets/' + p; }
+  /* Cách đặt ảnh bìa vào ô để không cắt mất đầu/nhân vật:
+     ảnh nhân vật tách nền (nền trong suốt) → hiện trọn hình, đứng ở đáy ô;
+     bản đồ dọc → hiện trọn trên nền biển tối; ảnh ngang còn lại → phủ kín ô 16:10 */
+  function artBg(p){
+    if (/-cut\.webp$|bizon-duo-music|globe-trade|music-studio/.test(p)) return 'url(\''+esc(art(p))+'\') 50% 100%/contain no-repeat';
+    if (/arcade-rong/.test(p)) return '#FFFFFF url(\''+esc(art(p))+'\') 50% 50%/contain no-repeat';
+    if (/vietnam-map/.test(p)) return '#052A30 url(\''+esc(art(p))+'\') 50% 50%/contain no-repeat';
+    return 'url(\''+esc(art(p))+'\') 50% 50%/cover no-repeat';
+  }
   function url(id){ return 'assets/audio/' + id + '.mp3'; }
   function mm(x){ x = Math.floor(x||0); return Math.floor(x/60) + ':' + String(x%60).padStart(2,'0'); }
 
@@ -268,9 +277,9 @@
     var al = document.getElementById('am-albums');
     if(al) al.innerHTML = M.collections.map(function(c,i){
       return '<button type="button" data-ci="'+i+'" style="border:0;cursor:pointer;padding:0;background:transparent;text-align:left;font-family:var(--clay-sans);color:var(--clay-ink)">'
-        + '<div style="position:relative;aspect-ratio:1/1;margin-right:18%">'
+        + '<div style="position:relative;aspect-ratio:16/10;margin-right:18%">'
           + '<div class="am-disc" style="position:absolute;top:6%;bottom:6%;aspect-ratio:1/1;right:-12%;border-radius:50%;background:repeating-radial-gradient(circle,#123033 0 2px,#1C3F43 2px 4px);box-shadow:0 10px 18px -8px rgba(0,0,0,.5);transition:right .5s cubic-bezier(.2,.8,.2,1)"><span style="position:absolute;inset:34%;border-radius:50%;background:'+SLEEVE[i%4]+'"></span></div>'
-          + '<div class="am-ring" style="position:absolute;inset:0;border-radius:24px;overflow:hidden;background:var(--clay-tray);border:4px solid var(--clay-card);box-shadow:inset 0 -8px 0 rgba(0,0,0,.08),0 20px 28px -18px rgba(110,70,30,.6)"><div role="img" aria-label="'+esc(colName(c))+'" style="position:absolute;inset:0;width:100%;height:100%;background:url(\''+esc(art(c[1]))+'\') 50% 50%/cover no-repeat"></div></div>'
+          + '<div class="am-ring" style="position:absolute;inset:0;border-radius:24px;overflow:hidden;background:var(--clay-tray);border:4px solid var(--clay-card);box-shadow:inset 0 -8px 0 rgba(0,0,0,.08),0 20px 28px -18px rgba(110,70,30,.6)"><div role="img" aria-label="'+esc(colName(c))+'" style="position:absolute;inset:0;width:100%;height:100%;background:'+artBg(c[1])+'"></div></div>'
         + '</div>'
         + '<div style="margin-top:14px;font-size:18px;font-weight:800;line-height:1.25">'+esc(colName(c))+'</div>'
         + '<div style="margin-top:2px;font-size:13px;font-weight:700;color:var(--clay-teal)">'+esc(colTone(c))+' · '+c[4].length+' '+l.songs+'</div>'
@@ -281,7 +290,7 @@
     var sh = document.getElementById('am-shelf');
     if(sh) sh.innerHTML = M.groups.map(function(g,i){
       return '<button type="button" data-gi="'+i+'" style="border:0;cursor:pointer;padding:10px 10px 14px;border-radius:24px;background:var(--clay-card);text-align:left;font-family:var(--clay-sans);color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -6px 0 rgba(110,70,30,.1),inset 0 4px 0 rgba(255,255,255,.8),0 16px 22px -16px rgba(110,70,30,.6))">'
-        + '<div style="position:relative;aspect-ratio:1/1;border-radius:16px;overflow:hidden;background:var(--clay-bg)"><div role="img" aria-label="'+esc(groupName(g))+'" style="position:absolute;inset:0;width:100%;height:100%;background:url(\''+esc(art(g[1]))+'\') 50% 22%/cover no-repeat"></div><span style="position:absolute;right:8px;bottom:8px;padding:3px 8px;border-radius:999px;background:#033337;color:#fff;font-size:11px;font-weight:800">'+g[3].length+'</span></div>'
+        + '<div style="position:relative;aspect-ratio:16/10;border-radius:16px;overflow:hidden;background:var(--clay-bg)"><div role="img" aria-label="'+esc(groupName(g))+'" style="position:absolute;inset:0;width:100%;height:100%;background:'+artBg(g[1])+'"></div><span style="position:absolute;right:8px;bottom:8px;padding:3px 8px;border-radius:999px;background:#033337;color:#fff;font-size:11px;font-weight:800">'+g[3].length+'</span></div>'
         + '<div style="margin-top:10px;font-size:14px;font-weight:800;line-height:1.3">'+esc(groupName(g))+'</div>'
       + '</button>';
     }).join('');

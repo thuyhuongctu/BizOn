@@ -90,7 +90,7 @@ function Nav({ T }) {
   );
 }
 
-function HeroStage({ T, t0, left = 860, top = 170, w = 516 }) {
+function HeroStage({ T, t0, left = 900, top = 175, w = 500 }) {
   const h = w * 1.02;
   const sh = 'drop-shadow(0 18px 14px rgba(110,70,30,.35))';
   const img = (src, style, popAt, motion) => (
@@ -125,7 +125,7 @@ function River({ T, t0 }) {
   );
 }
 
-const ctaBase = { display: 'inline-flex', alignItems: 'center', gap: 10, minHeight: 58, padding: '0 26px', borderRadius: 22, fontFamily: HEAD, fontSize: 19, fontWeight: 700, whiteSpace: 'nowrap' };
+const ctaBase = { display: 'inline-flex', alignItems: 'center', gap: 8, minHeight: 52, padding: '0 18px', borderRadius: 20, fontFamily: HEAD, fontSize: 16, fontWeight: 700, whiteSpace: 'nowrap' };
 const CTA_TEAL = { ...ctaBase, background: C.teal, color: '#fff', boxShadow: 'inset 0 -7px 0 rgba(0,0,0,.2),inset 0 4px 0 rgba(255,255,255,.25),0 16px 24px -12px rgba(0,102,135,.8)' };
 const pill = { padding: '8px 13px', borderRadius: 999, fontSize: 13, fontWeight: 800, boxShadow: 'inset 0 -3px 0 rgba(0,0,0,.08)', whiteSpace: 'nowrap' };
 
@@ -133,22 +133,27 @@ function Hero({ T }) {
   return (
     <Panel name="Hero" bg={C.bg}>
       <Nav T={T} />
-      <div style={{ position: 'absolute', left: L, top: 136, width: 610 }}>
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '8px 16px 8px 8px', borderRadius: 999, background: C.card, boxShadow: '0 10px 20px -12px rgba(110,70,30,.4),inset 0 -4px 0 rgba(0,0,0,.05)', fontSize: 13, fontWeight: 700, color: C.sub, ...MOTION.enter(T, 0.4) }}>
+      <div style={{ position: 'absolute', left: L, top: 104, width: 600 }}>
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '8px 16px 8px 8px', borderRadius: 999, background: C.card, boxShadow: '0 10px 20px -12px rgba(110,70,30,.4),inset 0 -4px 0 rgba(0,0,0,.05)', fontSize: 13, fontWeight: 700, color: C.sub, whiteSpace: 'nowrap', ...MOTION.enter(T, 0.4) }}>
           <span style={{ width: 26, height: 26, borderRadius: '50%', background: '#DA251D', display: 'grid', placeItems: 'center', color: '#FFDD00', fontSize: 13, boxShadow: 'inset 0 -3px 0 rgba(0,0,0,.18)' }}>★</span>
           Designed in the Mekong Delta · Built for the World
         </span>
-        <h1 style={{ ...H, marginTop: 22, fontSize: 56, color: C.ink }}>
+        <h1 style={{ ...H, marginTop: 18, fontSize: 52, color: C.ink }}>
           <span style={{ display: 'block', ...MOTION.enter(T, 0.7, 0.8, 40) }}>Simulation-based business learning</span>
           <span style={{ display: 'block', color: C.teal, ...MOTION.enter(T, 1.1, 0.8, 40) }}>from Vietnam to the world.</span>
         </h1>
-        <p style={{ margin: '22px 0 0', maxWidth: '33em', fontSize: 18, lineHeight: 1.65, color: C.sub, textWrap: 'pretty', ...MOTION.enter(T, 1.7) }}>Explainable business simulations for learning, research and internationalization – combining deterministic engines, AI-enhanced reflection and open-science practices.</p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14, marginTop: 30 }}>
+        <p style={{ margin: '16px 0 0', maxWidth: '36em', fontSize: 18, lineHeight: 1.65, color: C.sub, textWrap: 'pretty', ...MOTION.enter(T, 1.7) }}>Explainable business simulations for learning, research and internationalization – combining deterministic engines, AI-enhanced reflection and open-science practices.</p>
+        <div style={{ display: 'flex', flexWrap: 'nowrap', gap: 12, marginTop: 24 }}>
           <span style={{ ...CTA_TEAL, ...MOTION.enter(T, 2.2) }}>Start with Bến Phù Sa →</span>
           <span style={{ ...ctaBase, background: C.card, color: C.ink, boxShadow: 'inset 0 -7px 0 rgba(110,70,30,.12),inset 0 4px 0 rgba(255,255,255,.9),0 16px 24px -14px rgba(110,70,30,.45)', ...MOTION.enter(T, 2.35) }}>See all simulations</span>
-          <span style={{ ...ctaBase, background: C.ink, color: '#FFD58A', fontSize: 17, fontWeight: 800, boxShadow: 'inset 0 -7px 0 rgba(0,0,0,.3),inset 0 4px 0 rgba(255,255,255,.1),0 16px 24px -14px rgba(3,51,55,.7)', ...MOTION.enter(T, 2.5) }}>▶ Get it on Google Play</span>
+          <span style={{ ...ctaBase, background: C.ink, color: '#FFD58A', fontSize: 15, fontWeight: 800, boxShadow: 'inset 0 -7px 0 rgba(0,0,0,.3),inset 0 4px 0 rgba(255,255,255,.1),0 16px 24px -14px rgba(3,51,55,.7)', ...MOTION.enter(T, 2.5) }}>▶ Get it on Google Play</span>
         </div>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginTop: 28 }}>
+        <div style={{ display: 'flex', marginTop: 14, ...MOTION.enter(T, 2.65) }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 12, padding: '6px 18px 6px 6px', borderRadius: 999, fontFamily: HEAD, fontSize: 16, fontWeight: 800, color: C.ink, background: C.card, boxShadow: 'inset 0 -5px 0 rgba(110,70,30,.12),inset 0 3px 0 rgba(255,255,255,.9),0 12px 20px -14px rgba(110,70,30,.5)' }}>
+            <span style={{ display: 'grid', placeItems: 'center', width: 40, height: 40, borderRadius: '50%', background: C.orange, color: '#fff', fontSize: 14, paddingLeft: 2, boxSizing: 'border-box', boxShadow: 'inset 0 -4px 0 rgba(0,0,0,.18),inset 0 3px 0 rgba(255,255,255,.3)' }}>▶</span>Watch the 1-minute intro
+          </span>
+        </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginTop: 18 }}>
           <span style={{ ...pill, background: C.c5, color: '#03474F', ...MOTION.pop(T, 2.9) }}>Deterministic simulation engine</span>
           <span style={{ ...pill, background: C.c2, color: '#7A4A0E', ...MOTION.pop(T, 3.05) }}>7 markets · 6 quarters</span>
           <span style={{ ...pill, background: '#FBD9E0', color: '#7A2338', ...MOTION.pop(T, 3.2) }}>Preliminary classroom evidence</span>
@@ -273,19 +278,20 @@ function Games({ T, CUES }) {
 // ── Tools ────────────────────────────────────────────
 const TOOLS = [
   { img: 'hc/item/forecast.png', k: 'STRATEGY MODEL', t: 'IE Lab', d: 'Experiment with internationalization assumptions and observe how strategic variables change outcomes.', l: ['Explore the model'] },
-  { img: 'cmr-lab/dragon-magnifier.jpg', pad: true, mul: true, k: 'PRACTICUM LABS', t: 'Practicum labs', d: 'Three one-session labs: contribution margin ratio (CMR), cost–volume–profit and break-even (CVP), and the gravity model of trade and FDI into Viet Nam.', l: ['CMR Lab', 'CVP Lab', 'Gravity Lab'] },
+  { img: 'cmr-lab/dragon-magnifier.jpg', pad: true, mul: true, k: 'PRACTICUM LABS', t: 'Practicum labs', d: 'Four one-session labs: contribution margin ratio (CMR), cost–volume–profit and break-even (CVP), the gravity model of trade and FDI into Viet Nam, and an FDI factory run over 8 quarters (local content, rules of origin, transshipment).', l: ['CMR Lab', 'CVP Lab', 'Gravity Lab', 'FDI Lab'] },
   { img: 'character/arcade-rong-bay-sau-rieng.webp', pad: true, k: 'SKILL DRILLS', t: 'Arcade', d: 'Short, focused simulations for practicing one business skill or decision pattern at a time.', l: ['Practice a skill'] },
 ];
 function Tools({ T, CUES }) {
   const S = CUES.Tools;
   return (
     <Panel name="Tools" bg={C.bg}>
-      <div style={{ position: 'absolute', left: L, top: 120, width: W, display: 'flex', flexWrap: 'wrap', alignItems: 'baseline', gap: '6px 18px' }}>
+      <div style={{ position: 'absolute', left: L, top: 110, width: W, display: 'flex', flexWrap: 'wrap', alignItems: 'baseline', gap: '6px 18px' }}>
         <h3 style={{ ...H, fontSize: 44, color: C.ink, ...MOTION.enter(T, S + 0.3) }}>Support tools</h3>
         <p style={{ margin: 0, fontSize: 20, color: C.sub, ...MOTION.enter(T, S + 0.5) }}>Use alongside the games to practise one model or skill at a time.</p>
       </div>
+      <div style={{ position: 'absolute', left: L, top: 205, width: W, display: 'flex', flexDirection: 'column', gap: 16 }}>
       {TOOLS.map((x, i) => (
-        <div key={i} style={{ position: 'absolute', left: L, top: 230 + i * 172, width: W, ...MOTION.enter(T, S + 0.8 + i * 0.35, 0.8, i % 2 ? -160 : 160, 'X') }}>
+        <div key={i} style={{ ...MOTION.enter(T, S + 0.8 + i * 0.35, 0.8, i % 2 ? -160 : 160, 'X') }}>
           <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: 22, alignItems: 'center', padding: 18, borderRadius: 30, background: C.card, boxShadow: 'inset 0 -6px 0 rgba(110,70,30,.07), 0 14px 22px -18px rgba(110,70,30,.5)' }}>
             <div style={{ width: 120, height: 120, borderRadius: 24, overflow: 'hidden', background: '#fff', boxShadow: 'inset 0 -5px 0 rgba(0,0,0,.05)', ...MOTION.pop(T, S + 1.1 + i * 0.35) }}>
               <img src={IMG + x.img} alt="" style={{ width: '100%', height: '100%', objectFit: 'contain', boxSizing: 'border-box', padding: x.pad ? '6%' : 0, mixBlendMode: x.mul ? 'multiply' : 'normal' }} />
@@ -301,6 +307,7 @@ function Tools({ T, CUES }) {
           </div>
         </div>
       ))}
+      </div>
     </Panel>
   );
 }
@@ -459,41 +466,30 @@ function useVoiceover(T, CUES, playing, enabled, volume) {
       } else if (!a.paused) a.pause();
     });
   });
-  return ref;
 }
 
-// Background music: «Hương and the World (EN)», ducked to ~−20 dB under the voice,
-// brought back up in the gaps and after the closing line. Same levels as the rendered MP4.
-const MUSIC = IMG + 'audio/huong-and-the-world-en.mp3';
-const MUSIC_GAP = 0.6, MUSIC_DUCK = 0.12, MUSIC_RAMP = 0.3;
-function musicGain(T, CUES, total, voice, vo) {
-  const fadeIn = clamp(T / 1.0, 0, 1), fadeOut = clamp((total - T) / 1.2, 0, 1);
-  let duck = 0;
-  if (voice) VO.forEach(([, scene, off], i) => {
-    const s = (CUES[scene] ?? 0) + off, d = vo && isFinite(vo[i].duration) ? vo[i].duration : 0;
-    if (!d) return;
-    duck = Math.max(duck, clamp((T - s + MUSIC_RAMP) / MUSIC_RAMP, 0, 1) * clamp((s + d + MUSIC_RAMP - T) / MUSIC_RAMP, 0, 1));
-  });
-  return (MUSIC_GAP - (MUSIC_GAP - MUSIC_DUCK) * duck) * fadeIn * fadeOut;
-}
-function useMusic(T, CUES, total, playing, voice, volume, voRef) {
+function useMusic(T, CUES, total, playing, enabled, vol) {
   const ref = React.useRef(null);
-  if (!ref.current && typeof Audio !== 'undefined') { ref.current = new Audio(MUSIC); ref.current.preload = 'auto'; }
+  if (!ref.current && typeof Audio !== 'undefined') { ref.current = new Audio(IMG + 'audio/and-the-world-say-hello.mp3'); ref.current.preload = 'auto'; }
   React.useEffect(() => () => ref.current && ref.current.pause(), []);
   React.useEffect(() => {
     const a = ref.current; if (!a) return;
-    a.volume = clamp(musicGain(T, CUES, total, voice, voRef.current) * volume, 0, 1);
-    if (playing && T < total) {
-      if (Math.abs(a.currentTime - T) > 0.3) a.currentTime = T;
+    // duck under voice clips
+    let speaking = false;
+    VO.forEach(([, scene, off], i) => { const st = (CUES[scene] ?? 0) + off; if (T > st - 0.3 && T < st + 11 && T < st + (VO_DUR[i] || 6) + 0.3) speaking = true; });
+    const fadeIn = clamp(T / 1.5, 0, 1), fadeOut = clamp((total - T) / 2.5, 0, 1);
+    a.volume = clamp(vol * (speaking ? 0.22 : 1) * fadeIn * fadeOut, 0, 1);
+    if (enabled && playing && T < total) {
+      if (Math.abs(a.currentTime - T) > 0.35) a.currentTime = T;
       if (a.paused) a.play().catch(() => {});
     } else if (!a.paused) a.pause();
   });
 }
-
-function Piece({ zoom = 1, voice = true, volume = 1, music = true }) {
+const VO_DUR = [5.64, 5.5, 10.92, 4.83, 3.24, 6.84, 3.5, 3.5];
+function Piece({ zoom = 1, voice = true, volume = 1, music = true, musicVolume = 0.6 }) {
   const { T, CUES, authoredTotal, playing } = useComposition();
-  const voRef = useVoiceover(T, CUES, playing, voice, volume);
-  useMusic(T, CUES, authoredTotal, playing && music, voice, volume, voRef);
+  useVoiceover(T, CUES, playing, voice, volume);
+  useMusic(T, CUES, authoredTotal, playing, music, musicVolume);
   const cam = camera(T, CUES, zoom);
   const fadeOut = MOTION.draw(T, authoredTotal - 0.7, 0.7);
   const props = { T, CUES };
@@ -521,15 +517,17 @@ function BizonIntro() {
   return (
     <>
       <CompositionStage width={1920} height={1080} scenes={window.OM_SCENES} playback={window.OM_PLAYBACK} bg={C.bg}>
-        <Piece zoom={t.zoomIntensity} voice={t.voiceover} volume={t.voiceVolume} music={t.music} />
+        <Piece zoom={t.zoomIntensity} voice={t.voiceover} volume={t.voiceVolume} music={t.music} musicVolume={t.musicVolume} />
       </CompositionStage>
       <TweaksPanel>
         <TweakSection label="Playback" />
         <TweakToggle label="Motion editor" value={t.motionEditor} onChange={v => setTweak('motionEditor', v)} />
         <TweakSection label="Voiceover" />
         <TweakToggle label="Voiceover" value={t.voiceover} onChange={v => setTweak('voiceover', v)} />
-        <TweakToggle label="Music" value={t.music} onChange={v => setTweak('music', v)} />
         <TweakSlider label="Volume" value={t.voiceVolume} min={0} max={1} step={0.05} onChange={v => setTweak('voiceVolume', v)} />
+        <TweakSection label="Music" />
+        <TweakToggle label="Music" value={t.music} onChange={v => setTweak('music', v)} />
+        <TweakSlider label="Music volume" value={t.musicVolume} min={0} max={1} step={0.05} onChange={v => setTweak('musicVolume', v)} />
         <TweakSection label="Camera" />
         <TweakSlider label="Zoom intensity" value={t.zoomIntensity} min={0} max={1.5} step={0.05} onChange={v => setTweak('zoomIntensity', v)} />
       </TweaksPanel>
