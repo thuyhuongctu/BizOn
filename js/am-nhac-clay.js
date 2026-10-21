@@ -16,9 +16,9 @@
   var SHELF_BG = ['var(--clay-c1)','var(--clay-c2)','var(--clay-c3)','var(--clay-c4)','var(--clay-c5)'];
   var LBL = {
     vi:{ studio:'Phòng thu đất sét', queue:'Hàng chờ', songs:'bài', versions:'bản',
-         toGame:'Vào game', collection:'Tuyển tập', song:'Ca khúc' },
+         toGame:'Vào game', collection:'Tuyển tập', song:'Ca khúc', dl:'Tải bài này' },
     en:{ studio:'Clay studio', queue:'Up next', songs:'songs', versions:'versions',
-         toGame:'Open game', collection:'Collection', song:'Song' }
+         toGame:'Open game', collection:'Collection', song:'Song', dl:'Download this track' }
   };
   function lang(){ return (window.clayCurrentLang && window.clayCurrentLang()) === 'en' ? 'en' : 'vi'; }
   function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]; }); }
@@ -131,11 +131,12 @@
             + '<div id="am-seek" style="height:14px;border-radius:999px;background:rgba(255,255,255,.12);box-shadow:inset 0 3px 5px rgba(0,0,0,.3);cursor:pointer;overflow:hidden"><div id="am-pct" style="height:100%;width:0%;border-radius:999px;background:var(--clay-c1);box-shadow:inset 0 -3px 0 rgba(0,0,0,.15)"></div></div>'
             + '<div style="display:flex;justify-content:space-between;margin-top:6px;font-family:var(--clay-mono);font-size:12px;color:#9CC9C9"><span id="am-tc">0:00</span><span id="am-td">–:––</span></div>'
           + '</div>'
-          + '<div style="display:flex;align-items:center;gap:14px">'
-            + '<button id="am-prev" aria-label="Previous" style="border:0;cursor:pointer;display:grid;place-items:center;border-radius:50%;width:52px;height:52px;background:#0B4A4F;color:#fff;font-size:18px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.3),inset 0 3px 0 rgba(255,255,255,.1)">⏮</button>'
-            + '<button id="am-toggle" aria-label="Play" style="border:0;cursor:pointer;display:grid;place-items:center;border-radius:50%;width:76px;height:76px;background:#FDA127;color:var(--clay-ink);font-size:26px;box-shadow:inset 0 -7px 0 rgba(0,0,0,.18),inset 0 4px 0 rgba(255,255,255,.4),0 14px 24px -10px rgba(253,161,39,.7)">▶</button>'
-            + '<button id="am-next" aria-label="Next" style="border:0;cursor:pointer;display:grid;place-items:center;border-radius:50%;width:52px;height:52px;background:#0B4A4F;color:#fff;font-size:18px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.3),inset 0 3px 0 rgba(255,255,255,.1)">⏭</button>'
-            + '<a id="am-togame" href="'+esc(d.dHref)+'" style="margin-left:auto;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;font-size:13px;font-weight:800">'+esc(l.toGame)+' ↗</a>'
+          + '<div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px 14px">'
+            + '<button id="am-prev" aria-label="Previous" style="flex:none;border:0;cursor:pointer;display:grid;place-items:center;border-radius:50%;width:52px;height:52px;background:#0B4A4F;color:#fff;font-size:18px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.3),inset 0 3px 0 rgba(255,255,255,.1)">⏮</button>'
+            + '<button id="am-toggle" aria-label="Play" style="flex:none;border:0;cursor:pointer;display:grid;place-items:center;border-radius:50%;width:76px;height:76px;background:#FDA127;color:var(--clay-ink);font-size:26px;box-shadow:inset 0 -7px 0 rgba(0,0,0,.18),inset 0 4px 0 rgba(255,255,255,.4),0 14px 24px -10px rgba(253,161,39,.7)">▶</button>'
+            + '<button id="am-next" aria-label="Next" style="flex:none;border:0;cursor:pointer;display:grid;place-items:center;border-radius:50%;width:52px;height:52px;background:#0B4A4F;color:#fff;font-size:18px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.3),inset 0 3px 0 rgba(255,255,255,.1)">⏭</button>'
+            + '<a id="am-dl" href="#" download style="flex:none;display:grid;place-items:center;border-radius:50%;width:52px;height:52px;background:#0B4A4F;color:#fff;font-size:20px;font-weight:800;box-shadow:inset 0 -4px 0 rgba(0,0,0,.3),inset 0 3px 0 rgba(255,255,255,.1)">⬇</a>'
+            + '<a id="am-togame" href=""'+esc(d.dHref)+'" style="margin-left:auto;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;font-size:13px;font-weight:800">'+esc(l.toGame)+' ↗</a>'
           + '</div>'
         + '</div>'
       + '</div>'
@@ -248,6 +249,16 @@
     set('am-title','textContent', item ? item.t : '');
     set('am-sub','textContent', item ? item.s : '');
     set('am-queuehead','textContent', l.queue + ' · ' + d.items.length);
+    /* Nút tải: luôn trỏ tới bài đang hiện trên bàn xoay, tên file dễ đọc (bỏ ký tự cấm trong tên file) */
+    var dl = document.getElementById('am-dl');
+    if(dl && item){
+      var nm = ((nameMap[item.f] && nameMap[item.f].t) || item.t).replace(/[«»"\/\\:*?<>|]/g, '').replace(/\s+/g, ' ').trim();
+      /* tên file chỉ dùng ASCII (bỏ dấu, đ→d, bỏ emoji): một số trình duyệt bỏ qua thuộc tính download có ký tự Unicode */
+      var fn = nm.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D')
+        .replace(/[^A-Za-z0-9 ._-]+/g, ' ').trim().replace(/\s+/g, '-').replace(/-{2,}/g, '-') || item.f;
+      dl.setAttribute('href', url(item.f)); dl.setAttribute('download', 'BizOn-' + fn + '.mp3');
+      dl.setAttribute('title', l.dl + ' · ' + nm); dl.setAttribute('aria-label', l.dl + ': ' + nm);
+    }
     var tg = document.getElementById('am-togame'); if(tg){ tg.setAttribute('href', d.dHref); tg.firstChild && (tg.textContent = l.toGame + ' ↗'); }
     var dot = document.getElementById('am-dot'); if(dot) dot.style.background = deckOn ? '#FDA127' : '#3E5A5C';
     var tgl = document.getElementById('am-toggle'); if(tgl) tgl.textContent = deckOn ? '❚❚' : '▶';
