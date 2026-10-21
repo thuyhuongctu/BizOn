@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & PGS.TS. Phan Anh Tú -->
+<!-- Tuyên bố định hướng theo tác động vùng · bản hiệu chỉnh học thuật 21/10/2026. Chỉ tiêu 2030 để «Đang chốt» cho đến khi nhóm dự án thống nhất. -->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Định hướng tác động vùng · BizOn Bật Nghiệp</title>
+<meta name="description" content="Tuyên bố định hướng của BizOn: phát triển vùng Đồng bằng sông Cửu Long thông qua giáo dục khởi nghiệp. Tầm nhìn, sứ mệnh, năm giá trị cốt lõi, lộ trình bốn mắt xích từ trải nghiệm đến đóng góp vùng, khung chỉ báo 2030 và nguyên tắc bằng chứng.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & PGS.TS. Phan Anh Tú">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<link rel="stylesheet" href="css/bizon-clay-fonts.css">
+<link rel="stylesheet" href="css/bizon-clay.css">
+<style>
+  .bc-sec{padding:30px;border-radius:32px;background:var(--clay-card);box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 26px 36px -24px rgba(110,70,30,.5);margin-bottom:24px;scroll-margin-top:84px}
+  .bc-h2{margin:0 0 18px;font-size:28px;display:flex;align-items:center;gap:12px;line-height:1.2}
+  .bc-h2 .num{flex:none;width:44px;height:40px;border-radius:14px;display:grid;place-items:center;font-size:16px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.1)}
+  .bc-limit{display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px;padding:14px 16px;border-radius:20px}
+  .bc-limit .dot{width:22px;height:22px;margin-top:2px;border-radius:50%;box-shadow:inset 0 -3px 0 rgba(0,0,0,.18)}
+  .dh-note{background:#DDF1E4;margin-top:16px;font-size:15px;line-height:1.6;color:var(--clay-ink-2)}
+  .dh-note strong{color:var(--clay-ink)}
+  .dh-p{margin:0 0 14px;max-width:72ch;font-size:16px;line-height:1.7;color:var(--clay-ink-2)}
+  .dh-p strong{color:var(--clay-ink)}
+  .dh-small{font-size:14px;color:var(--clay-sub)}
+  .dh-h3{margin:26px 0 12px;font-family:var(--clay-head);font-size:21px;font-weight:800}
+  .dh-vision{margin:0;padding:22px 24px;border-radius:26px;background:var(--clay-c2);font-family:var(--clay-head);font-size:clamp(19px,2.2vw,24px);font-weight:700;line-height:1.45;color:#4A3008;box-shadow:inset 0 -8px 0 rgba(0,0,0,.07),inset 0 5px 0 rgba(255,255,255,.5)}
+  .dh-mission{background:var(--clay-c4);color:#103B2C;margin-bottom:14px}
+  .dh-list{margin:0 0 6px;padding-left:22px;display:flex;flex-direction:column;gap:6px;font-size:15.5px;line-height:1.6;color:var(--clay-ink-2)}
+  .dh-table{border-radius:22px;overflow:hidden;border:2px solid #F0E2C8;background:#fff;margin-top:6px}
+  .dh-row{display:grid;gap:14px;padding:14px 16px;border-top:2px dashed #F0E2C8;font-size:14.5px;line-height:1.55;color:var(--clay-ink-2)}
+  .dh-row:first-child{border-top:none}
+  .dh-head{background:var(--clay-tray);font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--clay-teal)}
+  .dh-k{font-weight:800;color:var(--clay-ink)}
+  .dh-table + .dh-p{margin-top:14px}
+  .dh-table{margin-bottom:4px}
+  .dh-g2 .dh-row{grid-template-columns:minmax(0,1fr) minmax(0,2fr)}
+  .dh-g3 .dh-row{grid-template-columns:minmax(0,1fr) minmax(0,1.3fr) minmax(0,1.5fr)}
+  .dh-g4 .dh-row{grid-template-columns:minmax(0,.8fr) minmax(0,2fr) minmax(0,1.3fr) minmax(0,.8fr)}
+  .dh-g4 .dh-row:not(.dh-head) div:last-child span{display:inline-block;padding:3px 10px;border-radius:999px;background:var(--clay-tray);font-size:12px;font-weight:800;color:var(--clay-orange)}
+  .dh-values{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:14px}
+  .dh-value{padding:20px;border-radius:24px;box-shadow:inset 0 -7px 0 rgba(0,0,0,.07),inset 0 4px 0 rgba(255,255,255,.5),0 16px 22px -18px rgba(110,70,30,.5)}
+  .dh-vk{font-family:var(--clay-head);font-size:19px;font-weight:800;line-height:1.25;color:#1D2B26}
+  .dh-value p{margin:8px 0 0;font-size:14.5px;line-height:1.55;color:#2E3A34}
+  .dh-todo{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+  .dh-todo li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:12px;padding:14px 16px;border-radius:18px;background:var(--clay-tray);font-size:15px;line-height:1.55;color:var(--clay-ink-2)}
+  .dh-todo .box{width:18px;height:18px;margin-top:3px;border-radius:5px;border:2.5px solid var(--clay-teal);background:#fff}
+  .dh-refs{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:10px;font-size:14.5px;line-height:1.6;color:var(--clay-sub)}
+  .dh-refs a{word-break:break-all;font-weight:700}
+  .dh-links{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+  .dh-links a,.dh-toc a{display:inline-flex;padding:9px 14px;border-radius:999px;background:var(--clay-tray);font-weight:800;font-size:14px;color:var(--clay-ink);box-shadow:inset 0 -4px 0 rgba(110,70,30,.1)}
+  .dh-toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+  .dh-toc a{background:var(--clay-card);font-size:13px;padding:7px 12px}
+  .dh-meta{margin-top:12px;font-size:13px;font-weight:700;color:var(--clay-sub)}
+  @media (max-width:760px){
+    .dh-g2 .dh-row,.dh-g3 .dh-row,.dh-g4 .dh-row{grid-template-columns:1fr;gap:6px}
+    .dh-head{display:none}
+    .bc-sec{padding:22px 18px}
+    .bc-h2{font-size:23px}
+  }
+  @media print{ #clay-nav,#clay-footer,.np,#vn-map{display:none!important} body{background:#fff} .bc-sec{box-shadow:none;border:1px solid #ddd;break-inside:avoid} }
+</style>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Định hướng tác động vùng · BizOn">
+<meta property="og:description" content="Một Đồng bằng sông Cửu Long nơi người trẻ không phải rời quê mới có thể lập nghiệp. Tầm nhìn, sứ mệnh, giá trị cốt lõi và khung chỉ báo 2030 của BizOn.">
+<meta name="twitter:card" content="summary_large_image">
+<script src="js/capture-guard.js"></script>
+</head>
+<body class="clay">
+
+<main class="clay-main">
+  <section class="clay-hero">
+    <div class="sun" aria-hidden="true"></div>
+    <div class="grid">
+      <div class="htext">
+        <span class="clay-eyebrow" data-en="About BizOn · Direction">Về BizOn · Định hướng</span>
+        <h1 data-en="Regional impact through entrepreneurship education">Tác động vùng qua giáo dục khởi nghiệp</h1>
+        <p class="lead" style="max-width:40em" data-en="BizOn’s statement of direction: why we exist, the vision and mission we pursue, the values we keep, and how we measure – and how carefully we claim – our contribution to the Mekong Delta.">Tuyên bố định hướng của BizOn: vì sao dự án tồn tại, tầm nhìn và sứ mệnh theo đuổi, giá trị gìn giữ, cách đo lường – và cách thận trọng khi công bố – đóng góp cho Đồng bằng sông Cửu Long.</p>
+        <p class="dh-meta" data-en="Academic revision · 21 October 2026 · Assoc. Prof. Dr. Phan Anh Tu">Bản hiệu chỉnh học thuật · 21/10/2026 · PGS.TS. Phan Anh Tú</p>
+    <nav class="dh-toc np" aria-label="Mục lục" data-en-aria="Contents"><a href="#dinh-vi" data-en="Positioning">Định vị</a><a href="#tam-nhin" data-en="Vision">Tầm nhìn</a><a href="#ly-thuyet" data-en="Theory">Lý thuyết</a><a href="#su-menh" data-en="Mission">Sứ mệnh</a><a href="#gia-tri" data-en="Values">Giá trị</a><a href="#chi-bao" data-en="2030 indicators">Chỉ báo 2030</a><a href="#rui-ro" data-en="Risks">Rủi ro</a><a href="#uu-tien" data-en="Priorities">Ưu tiên</a><a href="#tai-lieu" data-en="References">Tài liệu</a></nav>
+        <button class="np clay-btn" type="button" onclick="window.print()" style="margin-top:18px;background:var(--clay-card);color:var(--clay-ink);box-shadow:inset 0 -5px 0 rgba(110,70,30,.12),inset 0 3px 0 #fff" data-en="Print page">In trang</button>
+      </div>
+      <div class="art" style="width:min(26vw,220px);aspect-ratio:484/1047"><img src="assets/character/anh-tu-ao-dai-welcome-cut-v2.webp" alt="" loading="lazy"></div>
+    </div>
+    <div class="wave" aria-hidden="true"></div>
+  </section>
+
+  <section class="bc-sec" id="dinh-vi">
+    <h2 class="bc-h2"><span class="num" style="background:var(--clay-c1)">01</span><span data-en="Strategic positioning">Định vị chiến lược</span></h2>
+    <p class="dh-p" data-en="BizOn is a regional development initiative through entrepreneurship education, not merely an educational technology (EdTech) platform. Its value is examined along an evidence-based results chain: from the simulation experience, to decision-making capability, to entrepreneurial action and long-term contribution to the region.">BizOn là sáng kiến phát triển vùng thông qua giáo dục khởi nghiệp, không chỉ là nền tảng công nghệ giáo dục (EdTech). Giá trị của BizOn được xem xét theo chuỗi kết quả có bằng chứng: từ trải nghiệm mô phỏng, năng lực ra quyết định, đến hành động khởi nghiệp và đóng góp dài hạn cho vùng.</p>
+    <p class="dh-p"><strong data-en="Core premise:">Luận điểm nền tảng:</strong> <span data-en="the Mekong Delta does not lack talent; it lacks the environment and opportunities for that talent to flourish, especially through creating and growing enterprises. BizOn helps close this gap through education built on experience and data.">Đồng bằng sông Cửu Long (ĐBSCL) không thiếu người tài, nhưng còn thiếu môi trường và cơ hội để người tài phát huy năng lực, đặc biệt thông qua hoạt động tạo lập và phát triển doanh nghiệp. BizOn góp phần thu hẹp khoảng trống này bằng giáo dục dựa trên trải nghiệm và dữ liệu.</span></p>
+  </section>
+  <section class="bc-sec" id="tam-nhin">
+    <h2 class="bc-h2"><span class="num" style="background:var(--clay-c2)">02</span><span data-en="Vision">Tầm nhìn</span></h2>
+    <blockquote class="dh-vision"><span data-en="A Mekong Delta where young people do not have to leave home to build a livelihood. They start enterprises on their own soil, create opportunities for regional talent, and bring Vietnamese products to the world.">Một Đồng bằng sông Cửu Long nơi người trẻ không phải rời quê mới có thể lập nghiệp. Họ khởi nghiệp trên chính đất phù sa, tạo chỗ đứng cho người tài của vùng và đưa sản phẩm Việt ra thế giới.</span></blockquote>
+    <div class="bc-limit dh-note"><span class="dot" style="background:var(--clay-teal)"></span><div><strong data-en="Throughout:">Định hướng xuyên suốt:</strong> <span data-en="we connect opportunities to build a livelihood in the region with international competitiveness, consistent with Brand Passport, Durian Passport and the motto “From Vietnam to the world”. The vision does not mean young people are required to stay in their home region.">kết nối cơ hội lập nghiệp tại vùng với năng lực cạnh tranh quốc tế; nhất quán với Hộ Chiếu Thương Hiệu, Hộ Chiếu Sầu Riêng và khẩu hiệu «Từ Việt Nam ra thế giới». Tầm nhìn không đồng nghĩa với yêu cầu người trẻ phải ở lại quê.</span></div></div>
+  </section>
+  <section class="bc-sec" id="ly-thuyet">
+    <h2 class="bc-h2"><span class="num" style="background:var(--clay-c3)">03</span><span data-en="Theoretical basis and results pathway">Cơ sở lý thuyết và lộ trình chuyển hóa kết quả</span></h2>
+    <p class="dh-p" data-en="BizOn applies two complementary logics of entrepreneurial decision-making (Sarasvathy, 2001), set in an experiential-learning environment (Kolb, 1984) that builds self-efficacy for action (Bandura, 1977). The focus is not only the intention to start a business, but the quality of decisions and the ability to take practical next steps.">BizOn vận dụng hai logic ra quyết định khởi nghiệp có tính bổ trợ (Sarasvathy, 2001), đặt trong môi trường học qua trải nghiệm (Kolb, 1984) và rèn luyện năng lực tự tin hành động (Bandura, 1977). Trọng tâm không dừng ở mong muốn khởi nghiệp, mà là chất lượng quyết định và khả năng triển khai bước đi thực tế.</p>
+    <div class="dh-table dh-g3">
+      <div class="dh-row dh-head"><div><span data-en="Logic">Logic</span></div><div><span data-en="Guiding question">Câu hỏi định hướng</span></div><div><span data-en="Use in the simulation">Ứng dụng trong mô phỏng</span></div></div>
+      <div class="dh-row"><div class="dh-k"><span data-en="Causation — goal-driven planning">Causation — lập kế hoạch theo mục tiêu</span></div><div><span data-en="Which goal must be reached? How should we analyse the market, forecast and allocate resources?">Mục tiêu nào cần đạt? Cần phân tích thị trường, dự báo và phân bổ nguồn lực ra sao?</span></div><div><span data-en="Choosing target markets, costing and break-even, revenue forecasting, drafting a business plan.">Lựa chọn thị trường mục tiêu, tính giá thành và điểm hòa vốn, dự báo doanh thu, lập phương án kinh doanh.</span></div></div>
+      <div class="dh-row"><div class="dh-k"><span data-en="Effectuation — acting from available means">Effectuation — hành động từ nguồn lực sẵn có</span></div><div><span data-en="Who am I, what do I know, whom do I know? What can I test at an affordable loss?">Tôi là ai, biết gì, quen ai? Có thể thử nghiệm điều gì với tổn thất chấp nhận được?</span></div><div><span data-en="Starting from current resources, finding partners, testing with customers, adjusting course based on feedback and uncertainty.">Bắt đầu từ nguồn lực hiện có, tìm đối tác, thử nghiệm khách hàng, điều chỉnh hướng đi theo phản hồi và tình huống bất định.</span></div></div>
+    </div>
+    <p class="dh-p dh-small" data-en="The two logics are not mutually exclusive: learners choose and combine them according to the goal, resources and degree of uncertainty in each situation. McMullen and Shepherd (2006) suggest observing action decisions under uncertainty; Gollwitzer (1999) stresses turning goals into concrete action plans.">Hai logic không loại trừ nhau: người học lựa chọn và phối hợp theo mục tiêu, nguồn lực và mức độ bất định của từng tình huống. McMullen và Shepherd (2006) gợi mở việc quan sát quyết định hành động dưới bất định; Gollwitzer (1999) nhấn mạnh chuyển mục tiêu thành kế hoạch hành động cụ thể.</p>
+    <h3 class="dh-h3" data-en="A four-link pathway: from experience to regional contribution">Lộ trình bốn mắt xích: từ trải nghiệm đến đóng góp vùng</h3>
+    <div class="dh-table dh-g3">
+      <div class="dh-row dh-head"><div><span data-en="Link">Mắt xích</span></div><div><span data-en="Outcome and evidence to collect">Kết quả và bằng chứng cần thu thập</span></div><div><span data-en="Limit of the conclusion">Giới hạn kết luận</span></div></div>
+      <div class="dh-row"><div class="dh-k"><span data-en="1. Experience">1. Trải nghiệm</span></div><div><span data-en="Learners play simulation rounds and make business choices. Evidence: class logs, decision data, the four-level rubric.">Người học thực hiện các vòng mô phỏng và đưa ra lựa chọn kinh doanh. Bằng chứng: nhật ký lớp, dữ liệu quyết định, rubric bốn mức.</span></div><div><span data-en="Recorded directly.">Ghi nhận trực tiếp.</span></div></div>
+      <div class="dh-row"><div class="dh-k"><span data-en="2. Capability">2. Năng lực</span></div><div><span data-en="Better decision quality, forecasting, adaptation and judgement of consequences. Pre–post measurement and rubric scoring; comparison groups preferred.">Cải thiện chất lượng quyết định, khả năng dự báo, thích ứng và đánh giá hệ quả. Đo trước–sau, chấm rubric; ưu tiên nhóm so sánh.</span></div><div><span data-en="Change can be assessed; an appropriate design is needed to identify BizOn’s influence.">Đánh giá được thay đổi; cần thiết kế phù hợp để xác định ảnh hưởng của BizOn.</span></div></div>
+      <div class="dh-row"><div class="dh-k"><span data-en="3. Decision and action">3. Quyết định và hành động</span></div><div><span data-en="Learners choose, on evidence, to pursue, adjust or pause a business opportunity, and take a validation step (customer interviews, a price test, a prototype/MVP or a partner connection).">Người học lựa chọn theo đuổi, điều chỉnh hoặc tạm dừng cơ hội kinh doanh có căn cứ; thực hiện bước kiểm chứng (phỏng vấn khách hàng, thử nghiệm giá, mẫu sản phẩm/MVP hoặc kết nối đối tác).</span></div><div><span data-en="Verified through behaviour; not equated with registering a company.">Kiểm chứng bằng hành vi; không đồng nhất với việc thành lập doanh nghiệp.</span></div></div>
+      <div class="dh-row"><div class="dh-k"><span data-en="4. Regional contribution">4. Đóng góp vùng</span></div><div><span data-en="Jobs, new enterprises, production–business linkages and the ability to build a livelihood in the Mekong Delta; followed up after 12–24 months.">Cơ hội việc làm, doanh nghiệp mới, liên kết sản xuất–kinh doanh và khả năng lập nghiệp tại ĐBSCL; theo dõi sau 12–24 tháng.</span></div><div><span data-en="We only conclude that BizOn contributes; we do not claim it is the sole cause.">Chỉ kết luận BizOn góp phần thúc đẩy, không khẳng định là nguyên nhân duy nhất.</span></div></div>
+    </div>
+    <div class="bc-limit dh-note"><span class="dot" style="background:var(--clay-teal)"></span><div><strong data-en="Evidence principle:">Nguyên tắc bằng chứng:</strong> <span data-en="“measurable” does not mean “caused by BizOn”. For long-term outcomes we say “BizOn contributes to…” and examine other influencing factors, following Mayne’s (2012) contribution analysis.">«Đo được» không đồng nghĩa «do BizOn gây ra». Đối với kết quả dài hạn, sử dụng «BizOn góp phần thúc đẩy…» và kiểm tra các yếu tố ảnh hưởng khác theo tiếp cận phân tích đóng góp của Mayne (2012).</span></div></div>
+  </section>
+  <section class="bc-sec" id="su-menh">
+    <h2 class="bc-h2"><span class="num" style="background:var(--clay-c4)">04</span><span data-en="Mission">Sứ mệnh</span></h2>
+    <p class="dh-p" data-en="BizOn builds the capacity to choose and act entrepreneurially through simulation-based education, while creating a shared evidence base for “Triple Helix” collaboration (universities – businesses – government).">BizOn thúc đẩy năng lực lựa chọn và hành động khởi nghiệp thông qua giáo dục dựa trên mô phỏng, đồng thời tạo nền tảng dữ liệu chung cho phối hợp «Ba nhà» (nhà trường – doanh nghiệp – chính quyền).</p>
+    <blockquote class="dh-vision dh-mission"><span data-en="BizOn aims to bring business decision-making experiences to classrooms across the Mekong Delta through explainable simulations grounded in the region’s products, markets, and institutions.">BizOn đưa trải nghiệm ra quyết định kinh doanh đến mọi giảng đường ĐBSCL thông qua các mô phỏng có khả năng giải thích, gắn với sản vật, thị trường và thể chế của vùng.</span></blockquote>
+    <p class="dh-p" style="margin-bottom:6px" data-en="In doing so:">Qua đó:</p>
+    <ul class="dh-list">
+      <li data-en="learners evaluate opportunities, make entrepreneurial decisions and take initial steps toward venture creation;">Người học biết phân tích cơ hội, đưa ra quyết định và thực hiện bước khởi nghiệp đầu tiên;</li>
+      <li data-en="instructors assess decision quality and observable actions using data;">Giảng viên đo lường năng lực ra quyết định và minh chứng hành động bằng dữ liệu;</li>
+      <li data-en="universities, businesses and government agencies share evidence to coordinate action.">Nhà trường, doanh nghiệp và chính quyền chia sẻ bằng chứng để phối hợp hành động.</li>
+    </ul>
+    <h3 class="dh-h3" data-en="Implications for implementation">Hàm ý triển khai</h3>
+    <div class="dh-table dh-g2">
+      <div class="dh-row dh-head"><div><span data-en="Element">Nội dung</span></div><div><span data-en="Strategic implication">Hàm ý chiến lược</span></div></div>
+      <div class="dh-row"><div class="dh-k"><span data-en="Mekong Delta classrooms">Phạm vi giảng đường ĐBSCL</span></div><div><span data-en="Expand coverage step by step, tracking the number of institutions, courses and learners.">Từng bước mở rộng độ phủ, theo dõi số cơ sở đào tạo, học phần và người học.</span></div></div>
+      <div class="dh-row"><div class="dh-k"><span data-en="Products, markets and institutions as context">Bối cảnh sản vật, thị trường và thể chế</span></div><div><span data-en="Use durian, floating markets, growing-area codes and the river economy as business cases that call for real decisions.">Lấy sầu riêng, chợ nổi, mã số vùng trồng và kinh tế sông nước làm tình huống kinh doanh có thể ra quyết định.</span></div></div>
+      <div class="dh-row"><div class="dh-k"><span data-en="Triple Helix connection">Kết nối «Ba nhà»</span></div><div><span data-en="Develop the Institution Pass, the Research Edition and cooperation with the Department of Science and Technology on a base of real evidence.">Định hướng Institution Pass, Research Edition và hợp tác với Sở Khoa học và Công nghệ trên nền tảng bằng chứng thực tế.</span></div></div>
+    </div>
+    <p class="dh-p dh-small" data-en="The mission is structured around four user groups: students, instructors, researchers, and institutions/partners.">Cấu trúc sứ mệnh phù hợp bốn nhóm người dùng: sinh viên, giảng viên, nhà nghiên cứu và nhà trường/đối tác.</p>
+  </section>
+  <section class="bc-sec" id="gia-tri">
+    <h2 class="bc-h2"><span class="num" style="background:var(--clay-c1)">05</span><span data-en="Core values">Giá trị cốt lõi</span></h2>
+    <p class="dh-p" data-en="Our five core values remain, with an emphasis on practice, transparency and responsibility when reporting impact.">Năm giá trị cốt lõi được giữ nguyên, với trọng tâm thực hành, tính minh bạch và trách nhiệm khi công bố tác động.</p>
+    <div class="dh-values">
+      <div class="dh-value" style="background:var(--clay-c1)"><div class="dh-vk" data-en="1. Mekong-rooted, world-facing">1. Gốc phù sa, tầm thế giới</div><p data-en="Cases are designed from real Mekong Delta business problems, linking regional opportunity to international markets and value chains.">Thiết kế tình huống từ bài toán kinh doanh của ĐBSCL, gắn cơ hội vùng với thị trường và chuỗi giá trị quốc tế.</p></div>
+      <div class="dh-value" style="background:var(--clay-c2)"><div class="dh-vk" data-en="2. Learner dignity &amp; access">2. Tôn trọng người học</div><p data-en="Access is ensured for institutions outside major centres; learning stays free, usable offline and installable as a PWA.">Bảo đảm cơ hội tiếp cận cho cơ sở đào tạo ngoài trung tâm; ưu tiên miễn phí cho học tập, khả năng sử dụng ngoại tuyến và công nghệ PWA.</p></div>
+      <div class="dh-value" style="background:var(--clay-c3)"><div class="dh-vk" data-en="3. Learning through consequences">3. Học từ hệ quả</div><p data-en="A safe space to try, fail, adjust and learn to take responsibility for business decisions.">Tạo môi trường an toàn để thử, sai, điều chỉnh và học cách chịu trách nhiệm đối với quyết định kinh doanh.</p></div>
+      <div class="dh-value" style="background:var(--clay-c4)"><div class="dh-vk" data-en="4. Explainable by design">4. Giải thích được</div><p data-en="The logic of choices, simulation results and assessment criteria are explained; aggregate data supports policy dialogue where appropriate.">Giải thích logic lựa chọn, kết quả mô phỏng và tiêu chí đánh giá; cung cấp dữ liệu tổng hợp phục vụ đối thoại chính sách khi phù hợp.</p></div>
+      <div class="dh-value" style="background:var(--clay-c1)"><div class="dh-vk" data-en="5. Evidence before promotion">5. Bằng chứng trước, quảng bá sau</div><p data-en="We report within the scope of the evidence: direct results, assessed change and long-term contribution; we never overstate impact.">Công bố đúng phạm vi bằng chứng: kết quả trực tiếp, thay đổi được đánh giá và đóng góp dài hạn; không phóng đại tác động.</p></div>
+    </div>
+    <div class="bc-limit dh-note"><span class="dot" style="background:var(--clay-teal)"></span><div><strong data-en="Values statement:">Tuyên ngôn giá trị:</strong> <span data-en="“We start from the alluvial soil, respect every learner, teach through consequences, explain every result and say only what the evidence allows.”">«Chúng tôi bắt đầu từ phù sa, tôn trọng từng người học, dạy bằng hệ quả, giải thích mọi kết quả và chỉ nói điều bằng chứng cho phép.»</span></div></div>
+  </section>
+  <section class="bc-sec" id="chi-bao">
+    <h2 class="bc-h2"><span class="num" style="background:var(--clay-c2)">06</span><span data-en="Results and contribution indicators to 2030">Khung chỉ báo kết quả và đóng góp đến năm 2030</span></h2>
+    <p class="dh-p" data-en="Indicators favour evidence of decisions and practical action; stated intentions are not used as a substitute for entrepreneurial behaviour. Quantitative 2030 targets are still being agreed by the project team.">Chỉ báo ưu tiên minh chứng quyết định và hành động thực tiễn, không sử dụng câu trả lời về mong muốn làm thước đo thay thế cho hành vi khởi nghiệp. Chỉ tiêu định lượng năm 2030 tiếp tục để nhóm dự án thống nhất.</p>
+    <div class="dh-table dh-g4">
+      <div class="dh-row dh-head"><div><span data-en="Level">Cấp độ</span></div><div><span data-en="Priority indicator">Chỉ báo ưu tiên</span></div><div><span data-en="Data source">Nguồn dữ liệu</span></div><div><span data-en="2030 target">Mục tiêu 2030</span></div></div>
+      <div class="dh-row"><div class="dh-k"><span data-en="Reach">Độ phủ</span></div><div><span data-en="Number of institutions, courses and classes taking part in the Mekong Delta; share of institutions outside Can Tho.">Số cơ sở đào tạo, học phần, lớp tham gia tại ĐBSCL; tỷ lệ cơ sở ngoài Cần Thơ.</span></div><div><span data-en="Pilot registrations; class logs.">Đăng ký thí điểm; nhật ký lớp.</span></div><div><span data-en="To be agreed">Đang chốt</span></div></div>
+      <div class="dh-row"><div class="dh-k"><span data-en="Capability">Năng lực</span></div><div><span data-en="Gains in knowledge, decision quality and the ability to apply causation/effectuation; attainment of course learning outcomes (CLOs).">Mức cải thiện kiến thức, chất lượng quyết định và năng lực ứng dụng causation/effectuation; mức đạt CLO.</span></div><div><span data-en="15-item pre/post-test; rubric; simulation data.">Pre/post-test 15 câu; rubric; dữ liệu mô phỏng.</span></div><div><span data-en="To be agreed">Đang chốt</span></div></div>
+      <div class="dh-row"><div class="dh-k"><span data-en="Action">Hành động</span></div><div><span data-en="Share of learners with a justified business decision who take ≥1 opportunity-validation step (customers, price test, MVP, partner).">Tỷ lệ người học có quyết định kinh doanh được giải trình; thực hiện ≥1 bước kiểm chứng cơ hội (khách hàng, thử nghiệm giá, MVP, đối tác).</span></div><div><span data-en="Decision logs; product evidence; project logs.">Nhật ký quyết định; minh chứng sản phẩm; nhật ký dự án.</span></div><div><span data-en="To be agreed">Đang chốt</span></div></div>
+      <div class="dh-row"><div class="dh-k"><span data-en="Follow-up">Theo dõi</span></div><div><span data-en="Share of alumni running a project or venture, or working in the Mekong Delta, after 12 and 24 months; where they chose to build their livelihood.">Tỷ lệ cựu người học thực hiện dự án/khởi nghiệp hoặc làm việc tại ĐBSCL sau 12 và 24 tháng; ghi nhận lựa chọn địa bàn lập nghiệp.</span></div><div><span data-en="Tracer study; alumni network.">Khảo sát theo dõi (tracer study); mạng lưới cựu người học.</span></div><div><span data-en="To be agreed">Đang chốt</span></div></div>
+      <div class="dh-row"><div class="dh-k"><span data-en="Ecosystem">Hệ sinh thái</span></div><div><span data-en="Number of firms and cooperatives co-designing scenarios; number of times BizOn data is used in policy dialogue.">Số doanh nghiệp, hợp tác xã đồng thiết kế kịch bản; số lần dữ liệu BizOn được sử dụng trong đối thoại chính sách.</span></div><div><span data-en="Cooperation minutes; consultation documents.">Biên bản hợp tác; văn bản tham vấn.</span></div><div><span data-en="To be agreed">Đang chốt</span></div></div>
+    </div>
+    <div class="bc-limit dh-note"><span class="dot" style="background:var(--clay-teal)"></span><div><strong data-en="Measurement design:">Thiết kế đo lường:</strong> <span data-en="we separate decisions inside the simulation from real-world action and only record actions with evidence. We prefer comparison groups, 12–24-month follow-up surveys and informed research consent. The KT330H and KT301H pilots will add forms recording decisions, opportunity-validation steps and where learners choose to build their livelihood.">phân biệt quyết định trong mô phỏng với hành động ngoài thực tế; chỉ ghi nhận hành động có minh chứng. Ưu tiên nhóm so sánh, khảo sát theo dõi 12–24 tháng và đồng thuận tham gia nghiên cứu. Thí điểm KT330H và KT301H cần bổ sung phiếu ghi nhận quyết định, bước kiểm chứng cơ hội và lựa chọn địa bàn lập nghiệp.</span></div></div>
+  </section>
+  <section class="bc-sec" id="rui-ro">
+    <h2 class="bc-h2"><span class="num" style="background:var(--clay-c3)">07</span><span data-en="Risks and mitigation">Rủi ro và biện pháp giảm thiểu</span></h2>
+    <p class="dh-p" data-en="The key risk is over-interpreting BizOn’s role in enterprise formation and migration decisions, which are shaped by many economic, social and institutional conditions.">Rủi ro trọng yếu là diễn giải quá mức vai trò của BizOn đối với hình thành doanh nghiệp và quyết định di cư, vốn chịu tác động của nhiều điều kiện kinh tế, xã hội và thể chế.</p>
+    <div class="dh-table dh-g2">
+      <div class="dh-row dh-head"><div><span data-en="Risk">Rủi ro</span></div><div><span data-en="Mitigation">Biện pháp giảm thiểu</span></div></div>
+      <div class="dh-row"><div class="dh-k"><span data-en="Seen as a purely local initiative">Bị xem là sáng kiến chỉ phục vụ địa phương</span></div><div><span data-en="Keep the aim of taking Vietnamese products to the world; develop the Mekong Delta into a transferable living lab.">Duy trì định hướng đưa sản phẩm Việt ra thế giới; phát triển ĐBSCL thành phòng thí nghiệm sống (living lab) có thể chuyển giao.</span></div></div>
+      <div class="dh-row"><div class="dh-k"><span data-en="Mistaking learning gains for real start-ups; overstating effects on out-migration">Nhầm tiến bộ học tập với khởi nghiệp thực tế; phóng đại tác động xuất cư</span></div><div><span data-en="Tier the evidence; verify actions outside the simulation; use only contribution language for long-term impact.">Phân tầng bằng chứng; kiểm chứng hành động ngoài mô phỏng; chỉ sử dụng ngôn ngữ đóng góp cho tác động dài hạn.</span></div></div>
+      <div class="dh-row"><div class="dh-k"><span data-en="Conflict of interest between the policy-expert and co-founder roles">Xung đột lợi ích giữa vai trò chuyên gia chính sách và đồng sáng lập</span></div><div><span data-en="Separate the roles in communication; disclose the co-founder relationship whenever BizOn results are cited.">Tách vai khi truyền thông; công khai quan hệ đồng sáng lập khi trích dẫn kết quả từ BizOn.</span></div></div>
+      <div class="dh-row"><div class="dh-k"><span data-en="Dependence on public funding">Phụ thuộc nguồn tài trợ công</span></div><div><span data-en="Keep the principle “free to learn, paid for support” to protect access.">Duy trì nguyên tắc «miễn phí cho học, có phí cho đồng hành» nhằm bảo vệ quyền tiếp cận.</span></div></div>
+    </div>
+  </section>
+  <section class="bc-sec" id="uu-tien">
+    <h2 class="bc-h2"><span class="num" style="background:var(--clay-c4)">08</span><span data-en="Next implementation priorities">Ưu tiên triển khai tiếp theo</span></h2>
+    <ul class="dh-todo">
+      <li><span class="box" aria-hidden="true"></span><span data-en="Design cases that make learners choose between goal-driven planning (causation) and acting from available means (effectuation).">Thiết kế các tình huống buộc người học lựa chọn giữa lập kế hoạch theo mục tiêu (causation) và hành động từ nguồn lực sẵn có (effectuation).</span></li>
+      <li><span class="box" aria-hidden="true"></span><span data-en="Finalise the decision-quality rubric, the action log and the 12–24-month follow-up tools for the KT330H and KT301H pilots.">Hoàn thiện rubric chất lượng quyết định, nhật ký hành động và công cụ theo dõi 12–24 tháng cho thí điểm KT330H, KT301H.</span></li>
+      <li><span class="box" aria-hidden="true"></span><span data-en="Agree the 2030 targets; complete the “About BizOn” page, including disclosures on the AI advisor and the free/paid principle.">Chốt chỉ tiêu 2030; hoàn thiện trang «Về BizOn» gồm công bố về cố vấn AI và nguyên tắc miễn phí/trả phí.</span></li>
+      <li><span class="box" aria-hidden="true"></span><span data-en="Prepare a theory-of-change diagram and an evidence pack for discussions with the Department of Science and Technology, partners and funders.">Chuẩn bị sơ đồ lý thuyết thay đổi và bộ bằng chứng phục vụ trao đổi với Sở Khoa học và Công nghệ, đối tác và nhà tài trợ.</span></li>
+    </ul>
+  </section>
+  <section class="bc-sec" id="tai-lieu">
+    <h2 class="bc-h2"><span class="num" style="background:var(--clay-c1)">09</span><span data-en="Academic basis and related documents">Cơ sở học thuật và tài liệu liên quan</span></h2>
+    <ol class="dh-refs">
+      <li>Sarasvathy, S. D. (2001). Causation and effectuation: Toward a theoretical shift from economic inevitability to entrepreneurial contingency. <i>Academy of Management Review, 26</i>(2), 243–263. <a href="https://doi.org/10.5465/amr.2001.4378020" target="_blank" rel="noopener">https://doi.org/10.5465/amr.2001.4378020</a></li>
+      <li>McMullen, J. S., &amp; Shepherd, D. A. (2006). Entrepreneurial action and the role of uncertainty in the theory of the entrepreneur. <i>Academy of Management Review, 31</i>(1), 132–152. <a href="https://doi.org/10.5465/amr.2006.19379628" target="_blank" rel="noopener">https://doi.org/10.5465/amr.2006.19379628</a></li>
+      <li>Kolb, D. A. (1984). <i>Experiential learning: Experience as the source of learning and development</i>. Prentice Hall.</li>
+      <li>Bandura, A. (1977). Self-efficacy: Toward a unifying theory of behavioral change. <i>Psychological Review, 84</i>(2), 191–215. <a href="https://doi.org/10.1037/0033-295X.84.2.191" target="_blank" rel="noopener">https://doi.org/10.1037/0033-295X.84.2.191</a></li>
+      <li>Gollwitzer, P. M. (1999). Implementation intentions: Strong effects of simple plans. <i>American Psychologist, 54</i>(7), 493–503. <a href="https://doi.org/10.1037/0003-066X.54.7.493" target="_blank" rel="noopener">https://doi.org/10.1037/0003-066X.54.7.493</a></li>
+      <li>Mayne, J. (2012). Contribution analysis: Coming of age? <i>Evaluation, 18</i>(3), 270–280. <a href="https://doi.org/10.1177/1356389012451663" target="_blank" rel="noopener">https://doi.org/10.1177/1356389012451663</a></li>
+    </ol>
+    <h3 class="dh-h3" data-en="BizOn foundation documents">Tài liệu nền tảng BizOn</h3>
+    <div class="dh-links"><a href="index.html" data-en="Home">Trang chủ</a><a href="bang-chung.html" data-en="Classroom evidence">Bằng chứng lớp học</a><a href="truong-hoc-thuat.html" data-en="Academic foundations &amp; Model Cards">Nền tảng học thuật &amp; Model Cards</a><a href="giai-phap.html" data-en="EdTech solutions (Pilot)">Giải pháp EdTech (Pilot)</a></div>
+    <p class="dh-p dh-small" data-en="Note: the additional theoretical frameworks guide design and evaluation; BizOn’s real-world effectiveness is only claimed when supported by suitable research data.">Lưu ý: các khung lý thuyết bổ sung có vai trò định hướng thiết kế và đánh giá; hiệu quả thực tế của BizOn chỉ được khẳng định khi có dữ liệu nghiên cứu phù hợp.</p>
+  </section>
+  <section class="bc-cta np" style="position:relative;overflow:hidden;padding:40px 30px;border-radius:36px;background:var(--clay-teal);color:#fff;text-align:center;margin-bottom:64px;box-shadow:inset 0 -12px 0 rgba(0,0,0,.18),inset 0 6px 0 rgba(255,255,255,.18),0 30px 40px -26px rgba(0,60,80,.8)">
+    <h2 style="font-size:clamp(28px,3.4vw,40px)" data-en="Build the evidence with us">Cùng chúng tôi xây bằng chứng</h2>
+    <p style="margin:12px auto 0;max-width:36em;font-size:15px;line-height:1.6;color:#D6EEF2" data-en="Institutions, businesses, cooperatives and government partners can co-design scenarios, join a pilot or use aggregate data for policy dialogue.">Nhà trường, doanh nghiệp, hợp tác xã và cơ quan quản lý có thể đồng thiết kế kịch bản, tham gia thí điểm hoặc sử dụng dữ liệu tổng hợp cho đối thoại chính sách.</p>
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:22px">
+      <a style="font-family:var(--clay-head);font-size:18px;font-weight:800;padding:14px 22px;border-radius:20px;background:var(--clay-gold);color:var(--clay-ink);box-shadow:inset 0 -6px 0 rgba(0,0,0,.15),inset 0 3px 0 rgba(255,255,255,.4)" href="bang-chung.html" data-en="See classroom evidence">Xem bằng chứng lớp học</a>
+      <a style="font-family:var(--clay-head);font-size:18px;font-weight:800;padding:14px 22px;border-radius:20px;background:var(--clay-card);color:var(--clay-ink);box-shadow:inset 0 -6px 0 rgba(110,70,30,.15),inset 0 3px 0 #fff" href="lien-he.html" data-en="Partner with us">Liên hệ hợp tác</a>
+    </div>
+  </section>
+</main>
+
+<script src="js/site-vnmap.js" defer></script>
+<script src="js/bizon-clay-i18n.js" defer></script>
+<script src="js/bizon-clay-nav.js" defer></script>
+<script src="js/bizon-clay-footer.js" defer></script>
+</body>
+</html>
