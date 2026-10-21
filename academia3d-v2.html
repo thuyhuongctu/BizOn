@@ -39,6 +39,51 @@
   @keyframes bzDrift{0%{transform:translateX(-30%) rotate(-2deg)}50%{transform:translateX(30%) rotate(2deg)}100%{transform:translateX(-30%) rotate(-2deg)}}
   @media (prefers-reduced-motion:reduce){*{animation:none!important}}
   @media (max-width:560px){ .hp-stage{min-height:340px} }
+  /* Trò chơi: 4 thẻ lớn theo bậc · công cụ bổ trợ: thẻ ngang gọn */
+  .hp-games-lead{margin:18px 0 0;max-width:40em;font-size:17px;line-height:1.6;color:var(--clay-sub);text-wrap:pretty}
+  .hp-games{list-style:none;margin:36px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:26px}
+  .hp-game{--lv:#2E7139;display:flex;flex-direction:column;border-radius:34px;background:var(--clay-card);padding:12px;box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 rgba(255,255,255,.95),0 30px 44px -26px rgba(110,70,30,.6);transition:transform .25s ease}
+  .hp-game:hover{transform:translateY(-4px)}
+  .hp-game.lv2{--lv:#A84A14}
+  .hp-game.lv3{--lv:#006687}
+  .hp-game-media{position:relative;aspect-ratio:16/10;border-radius:26px;overflow:hidden;background:var(--lv);box-shadow:inset 0 -8px 0 rgba(0,0,0,.08)}
+  .hp-game-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .hp-game-lv{position:absolute;left:14px;top:14px;display:inline-flex;align-items:center;gap:8px;padding:6px 14px 6px 6px;border-radius:999px;background:rgba(255,251,244,.95);font:800 13px/1 var(--clay-head);color:var(--clay-ink);box-shadow:0 10px 18px -10px rgba(0,0,0,.55)}
+  .hp-game-lv b{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--lv);color:#fff;font-size:15px;box-shadow:inset 0 -3px 0 rgba(0,0,0,.22)}
+  .clay .hp-game-tr{position:absolute;right:14px;bottom:14px;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px 0 6px;border-radius:999px;background:rgba(3,51,55,.86);color:#fff;font:800 14px var(--clay-head);box-shadow:0 10px 18px -10px rgba(0,0,0,.6)}
+  .hp-game-tr span:first-child{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--clay-gold);color:var(--clay-ink);font-size:12px}
+  .hp-game-body{padding:20px 12px 10px;display:flex;flex-direction:column;gap:10px;flex:1}
+  .hp-game-kicker{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--lv)}
+  .hp-game h3{margin:0;font-family:var(--clay-head);font-weight:800;font-size:clamp(28px,3vw,34px);line-height:1.1;color:var(--clay-ink)}
+  .hp-game p{margin:0;font-size:15.5px;line-height:1.6;color:var(--clay-sub);flex:1;text-wrap:pretty}
+  .hp-game-meta{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+  .hp-game-meta li{padding:6px 12px;border-radius:999px;background:var(--clay-tray);font-size:13px;font-weight:700;color:var(--clay-ink-2)}
+  .hp-game-cta{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;margin-top:8px}
+  .clay .hp-play{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 24px;border-radius:18px;background:var(--clay-orange);color:#1F0E02;font:800 17px var(--clay-head);box-shadow:var(--clay-btn-shadow),0 12px 20px -12px rgba(194,88,27,.8)}
+  .clay .hp-play:hover{filter:brightness(1.05);color:#1F0E02}
+  .clay .hp-game-tr:hover{color:#FFD58A}
+  .hp-alt{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;font-size:14px;font-weight:700;color:var(--clay-sub)}
+  .hp-alt a{color:var(--clay-teal);text-decoration:underline;text-underline-offset:3px}
+  .hp-tools-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px;margin-top:64px}
+  .hp-tools-head h3{margin:0;font-family:var(--clay-head);font-size:24px;font-weight:800;color:var(--clay-ink)}
+  .hp-tools-head p{margin:0;font-size:15px;color:var(--clay-sub)}
+  .hp-tools{list-style:none;margin:18px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:18px}
+  .hp-tool{display:grid;grid-template-columns:84px 1fr;gap:16px;align-items:start;padding:16px;border-radius:26px;background:var(--clay-card);box-shadow:var(--clay-shadow-sm)}
+  .hp-tool-img{width:84px;height:84px;border-radius:20px;overflow:hidden;background:#fff;box-shadow:inset 0 -5px 0 rgba(0,0,0,.05)}
+  .hp-tool-img img{width:100%;height:100%;object-fit:contain}
+  .hp-tool-kicker{font-size:11px;font-weight:800;letter-spacing:.12em;color:#A84A14}
+  .hp-tool h4{margin:3px 0 0;font-family:var(--clay-head);font-size:20px;font-weight:800;color:var(--clay-ink)}
+  .hp-tool p{margin:6px 0 0;font-size:14px;line-height:1.5;color:var(--clay-sub)}
+  .hp-tool-links{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .hp-tool-links a{padding:6px 12px;border-radius:999px;background:var(--clay-tray);font-size:13px;font-weight:800;color:var(--clay-ink);box-shadow:inset 0 -3px 0 rgba(0,0,0,.08)}
+  /* Trailer phát ngay trong trang */
+  .hp-vplay{position:absolute;right:14px;top:14px;width:50px;height:50px;border-radius:50%;background:var(--clay-gold);display:grid;place-items:center;color:var(--clay-ink);font-size:16px;box-shadow:inset 0 -5px 0 rgba(0,0,0,.18),0 8px 14px -6px rgba(0,0,0,.5)}
+  .hp-dlg{width:min(1100px,calc(100vw - 24px));max-width:none;padding:0;border:0;border-radius:24px;background:#022225;color:#fff;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+  .hp-dlg::backdrop{background:rgba(2,20,22,.82)}
+  .hp-dlg-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 10px 10px 20px;font:800 17px var(--clay-head)}
+  .hp-dlg-x{display:grid;place-items:center;width:44px;height:44px;border:0;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font-size:20px;cursor:pointer}
+  .hp-dlg video{display:block;width:100%;aspect-ratio:16/9;background:#000}
+  @media (max-width:560px){ .hp-tool{grid-template-columns:68px 1fr} .hp-tool-img{width:68px;height:68px} .clay .hp-play{width:100%;justify-content:center} }
   /* Nút "làm mới trang" — chỉ trang chủ, bơm vào thanh nav đất sét chung */
   .cn-refresh{display:grid;place-items:center;width:38px;height:38px;border:0;border-radius:50%;background:var(--clay-tray);color:var(--clay-sub);font-size:18px;line-height:1;cursor:pointer;box-shadow:inset 0 3px 5px rgba(110,70,30,.18)}
   .cn-refresh:hover{color:var(--clay-ink)}
@@ -127,71 +172,79 @@
   <section id="cong" class="hp-sec">
     <div class="hp-eyebrow" data-en="Three game levels · three support tools">Ba bậc trò chơi · ba công cụ bổ trợ</div>
     <h2 class="hp-h2" style="max-width:18em" data-en="Learn business by making consequential decisions.">Học kinh doanh bằng những quyết định có hệ quả.</h2>
-    <div class="hp-cardgrid">
-      <article style="display:flex;flex-direction:column;border-radius:32px;background:var(--clay-card);padding:12px;box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 rgba(255,255,255,.95),0 26px 36px -22px rgba(110,70,30,.5)">
-        <div style="position:relative;aspect-ratio:4/5;border-radius:24px;overflow:hidden;background:#D7ECEA;box-shadow:inset 0 -8px 0 rgba(0,0,0,.06)"><img src="assets/illustrations/game/ben-phu-sa-cho-noi.webp" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" loading="lazy"></div>
-        <div style="padding:16px 10px 10px;display:flex;flex-direction:column;gap:8px;flex:1">
-          <div style="font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--clay-accent)" data-en="LEVEL 1 · START-UP">BẬC 1 · KHỞI NGHIỆP</div>
-          <h3 style="margin:0;font-family:var(--clay-head);font-weight:800;font-size:28px;line-height:1.14">Bến Phù Sa</h3>
-          <p style="margin:0;font-size:15px;line-height:1.55;color:var(--clay-sub);flex:1" data-en="A riverside street-vendor start-up on Bến Phù Sa's floating market: pick a Method, Product and Location each week, and learn when to test cheap and when to scale.">Khởi nghiệp gánh hàng rong trên sông nước Bến Phù Sa: mỗi tuần chọn Phương thức – Món hàng – Địa điểm, học khi nào nên thử nhanh và khi nào nên nhân rộng.</p>
-          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px"><a class="hp-pill" style="background:var(--clay-tray);color:var(--clay-ink)" href="ben-phu-sa-3d.html" data-en="3D">Bản 3D</a><a class="hp-pill" style="background:var(--clay-tray);color:var(--clay-ink)" href="ben-phu-sa-v8.html" data-en="3D · team play">Bản 3D · chơi nhóm</a><a class="hp-pill" style="background:var(--clay-tray);color:var(--clay-ink)" href="ben-phu-sa.html" data-en="2D">Bản 2D</a></div>
+    <p class="hp-games-lead" data-en="Start at Level 1; each level builds on the one before. Every game has a 3D version and a 2D version.">Bắt đầu từ Bậc 1, bậc sau nối tiếp bậc trước. Trò chơi nào cũng có bản 3D và bản 2D.</p>
+    <ol class="hp-games">
+      <li class="hp-game">
+        <div class="hp-game-media"><img src="assets/illustrations/game/ben-phu-sa-cho-noi.webp" alt="" loading="lazy"><span class="hp-game-lv"><b>1</b><span data-en="Level 1">Bậc 1</span></span><a class="hp-game-tr" href="assets/video/ben-phu-sa-trailer.mp4" data-trailer="assets/video/ben-phu-sa-trailer.mp4" data-poster="assets/video/ben-phu-sa-trailer-poster.jpg" data-title="Bến Phù Sa" data-title-en="Bến Phù Sa"><span aria-hidden="true">▶</span><span data-en="Trailer">Xem trailer</span></a></div>
+        <div class="hp-game-body">
+          <div class="hp-game-kicker" data-en="LEVEL 1 · START-UP">BẬC 1 · KHỞI NGHIỆP</div>
+          <h3>Bến Phù Sa</h3>
+          <p data-en="A riverside street-vendor start-up on Bến Phù Sa's floating market: pick a Method, Product and Location each week, and learn when to test cheap and when to scale.">Khởi nghiệp gánh hàng rong trên sông nước Bến Phù Sa: mỗi tuần chọn Phương thức – Món hàng – Địa điểm, học khi nào nên thử nhanh và khi nào nên nhân rộng.</p>
+          <ul class="hp-game-meta"><li data-en="5 weeks">5 tuần</li><li data-en="Solo or team play">Chơi một mình hoặc theo nhóm</li></ul>
+          <div class="hp-game-cta"><a class="hp-play" href="ben-phu-sa-3d.html"><span data-en="Play in 3D">Chơi bản 3D</span><span aria-hidden="true">→</span></a><div class="hp-alt"><span data-en="Other versions:">Bản khác:</span><a href="ben-phu-sa-v8.html" data-en="3D · team play">3D · chơi nhóm</a><a href="ben-phu-sa.html" data-en="2D">2D</a></div></div>
         </div>
-      </article>
-      <article style="display:flex;flex-direction:column;border-radius:32px;background:var(--clay-card);padding:12px;box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 rgba(255,255,255,.95),0 26px 36px -22px rgba(110,70,30,.5)">
-        <div style="position:relative;aspect-ratio:4/5;border-radius:24px;overflow:hidden;background:#FFE6B8;box-shadow:inset 0 -8px 0 rgba(0,0,0,.06)"><img src="assets/concept/tier-2a-bat-nghiep.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain" loading="lazy"></div>
-        <div style="padding:16px 10px 10px;display:flex;flex-direction:column;gap:8px;flex:1">
-          <div style="font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--clay-accent)" data-en="LEVEL 2 · RUNNING A BUSINESS">BẬC 2 · ĐIỀU HÀNH DOANH NGHIỆP</div>
-          <h3 style="margin:0;font-family:var(--clay-head);font-weight:800;font-size:28px;line-height:1.14">Bật Nghiệp</h3>
-          <p style="margin:0;font-size:15px;line-height:1.55;color:var(--clay-sub);flex:1" data-en="Build and operate a business through multi-round strategic decisions in a Vietnamese context.">Xây dựng và điều hành doanh nghiệp qua các vòng quyết định chiến lược trong bối cảnh Việt Nam.</p>
-          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px"><a class="hp-pill" style="background:var(--clay-tray);color:var(--clay-ink)" href="BizOn Game 3D.html" data-en="3D">Bản 3D</a><a class="hp-pill" style="background:var(--clay-tray);color:var(--clay-ink)" href="game.html" data-en="2D">Bản 2D</a></div>
+      </li>
+      <li class="hp-game lv2">
+        <div class="hp-game-media"><img src="assets/illustrations/game/phong-hop-chien-luoc.webp" alt="" loading="lazy"><span class="hp-game-lv"><b>2</b><span data-en="Level 2">Bậc 2</span></span><a class="hp-game-tr" href="assets/video/bizon-trailer.mp4" data-trailer="assets/video/bizon-trailer.mp4" data-poster="assets/video/bizon-trailer-poster.jpg" data-title="Bật Nghiệp" data-title-en="Bật Nghiệp"><span aria-hidden="true">▶</span><span data-en="Trailer">Xem trailer</span></a></div>
+        <div class="hp-game-body">
+          <div class="hp-game-kicker" data-en="LEVEL 2 · RUNNING A BUSINESS">BẬC 2 · ĐIỀU HÀNH DOANH NGHIỆP</div>
+          <h3>Bật Nghiệp</h3>
+          <p data-en="Build and operate a business through multi-round strategic decisions in a Vietnamese context.">Xây dựng và điều hành doanh nghiệp qua các vòng quyết định chiến lược trong bối cảnh Việt Nam.</p>
+          <ul class="hp-game-meta"><li data-en="6 decision rounds">6 vòng quyết định</li><li data-en="Market arena">Đấu trường thị trường</li></ul>
+          <div class="hp-game-cta"><a class="hp-play" href="BizOn Game 3D.html"><span data-en="Play in 3D">Chơi bản 3D</span><span aria-hidden="true">→</span></a><div class="hp-alt"><span data-en="Other versions:">Bản khác:</span><a href="game.html" data-en="2D">2D</a></div></div>
         </div>
-      </article>
-      <article style="display:flex;flex-direction:column;border-radius:32px;background:var(--clay-card);padding:12px;box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 rgba(255,255,255,.95),0 26px 36px -22px rgba(110,70,30,.5)">
-        <div style="position:relative;aspect-ratio:4/5;border-radius:24px;overflow:hidden;background:#DCEFEC;box-shadow:inset 0 -8px 0 rgba(0,0,0,.06)"><img src="assets/hc/stamp/passport-cover-cut.webp" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:14% 16%;filter:drop-shadow(0 18px 16px rgba(3,51,55,.25))" loading="lazy"></div>
-        <div style="padding:16px 10px 10px;display:flex;flex-direction:column;gap:8px;flex:1">
-          <div style="font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--clay-accent)" data-en="LEVEL 3 · GOING GLOBAL">BẬC 3 · RA THẾ GIỚI</div>
-          <h3 style="margin:0;font-family:var(--clay-head);font-weight:800;font-size:28px;line-height:1.14" data-en="Brand Passport">Hộ Chiếu Thương Hiệu</h3>
-          <p style="margin:0;font-size:15px;line-height:1.55;color:var(--clay-sub);flex:1" data-en="Take a Vietnamese brand across borders through market intelligence, entry strategy, adaptation and resilience.">Đưa thương hiệu Việt vượt biên giới bằng thông tin thị trường, phương thức thâm nhập, thích nghi và sức chống chịu.</p>
-          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px"><a class="hp-pill" style="background:var(--clay-tray);color:var(--clay-ink)" href="Ho Chieu Thuong Hieu 3D.html" data-en="3D">Bản 3D</a><a class="hp-pill" style="background:var(--clay-tray);color:var(--clay-ink)" href="brand-passport.html" data-en="2D">Bản 2D</a><a class="hp-pill" style="background:var(--clay-tray);color:var(--clay-ink)" href="Ho Chieu Mini 3D.html" data-en="Lite 3D">Bản rút gọn 3D</a><a class="hp-pill" style="background:var(--clay-tray);color:var(--clay-ink)" href="Ho Chieu Mini.dc.html" data-en="Lite 2D">Bản rút gọn 2D</a></div>
+      </li>
+      <li class="hp-game lv3">
+        <div class="hp-game-media"><img src="assets/concept/ho-chieu-thuong-hieu.jpg" alt="" loading="lazy"><span class="hp-game-lv"><b>3</b><span data-en="Level 3">Bậc 3</span></span><a class="hp-game-tr" href="assets/video/bp-trailer.mp4" data-trailer="assets/video/bp-trailer.mp4" data-poster="assets/video/bp-trailer-poster.jpg" data-title="Hộ Chiếu Thương Hiệu" data-title-en="Brand Passport"><span aria-hidden="true">▶</span><span data-en="Trailer">Xem trailer</span></a></div>
+        <div class="hp-game-body">
+          <div class="hp-game-kicker" data-en="LEVEL 3 · GOING GLOBAL">BẬC 3 · RA THẾ GIỚI</div>
+          <h3 data-en="Brand Passport">Hộ Chiếu Thương Hiệu</h3>
+          <p data-en="Take a Vietnamese brand across borders through market intelligence, entry strategy, adaptation and resilience.">Đưa thương hiệu Việt vượt biên giới bằng thông tin thị trường, phương thức thâm nhập, thích nghi và sức chống chịu.</p>
+          <ul class="hp-game-meta"><li data-en="6 quarters">6 quý</li><li data-en="7 markets">7 thị trường</li></ul>
+          <div class="hp-game-cta"><a class="hp-play" href="Ho Chieu Thuong Hieu 3D.html"><span data-en="Play in 3D">Chơi bản 3D</span><span aria-hidden="true">→</span></a><div class="hp-alt"><span data-en="Other versions:">Bản khác:</span><a href="brand-passport.html" data-en="2D">2D</a><a href="Ho Chieu Mini 3D.html" data-en="Lite 3D">Rút gọn 3D</a><a href="Ho Chieu Mini.dc.html" data-en="Lite 2D">Rút gọn 2D</a></div></div>
         </div>
-      </article>
-      <article style="display:flex;flex-direction:column;border-radius:32px;background:var(--clay-card);padding:12px;box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 rgba(255,255,255,.95),0 26px 36px -22px rgba(110,70,30,.5)">
-        <div style="position:relative;aspect-ratio:4/5;border-radius:24px;overflow:hidden;background:#FBF4E8;box-shadow:inset 0 -8px 0 rgba(0,0,0,.06)"><img src="assets/concept/tier-2b-ho-chieu-sau-rieng-v2.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" loading="lazy"></div>
-        <div style="padding:16px 10px 10px;display:flex;flex-direction:column;gap:8px;flex:1">
-          <div style="font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--clay-accent)" data-en="LEVEL 3 · GOING GLOBAL">BẬC 3 · RA THẾ GIỚI</div>
-          <h3 style="margin:0;font-family:var(--clay-head);font-weight:800;font-size:28px;line-height:1.14" data-en-html="Sầu Riêng Passport<span style=&quot;display:block;margin-top:2px;font-size:15px;font-weight:700;color:var(--clay-sub)&quot;>Durian</span>">Hộ Chiếu Sầu Riêng</h3>
-          <p style="margin:0;font-size:15px;line-height:1.55;color:var(--clay-sub);flex:1" data-en="Take Vietnamese durian to the world over 6 seasons on a walkable 3D map: planting-area codes, the China phytosanitary protocol, official vs border trade, frozen and premium markets. Teams of 5 roles face AI rivals.">Đưa sầu riêng Việt ra thế giới qua 6 vụ trên bản đồ 3D đi lại: mã số vùng trồng, nghị định thư kiểm dịch với Trung Quốc, chính ngạch – tiểu ngạch, đông lạnh và thị trường cao cấp. Đội 5 vai đấu các đối thủ AI.</p>
-          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px"><a class="hp-pill" style="background:var(--clay-tray);color:var(--clay-ink)" href="lab/ho-chieu-sau-rieng-3d.html" data-en="3D">Bản 3D</a><a class="hp-pill" style="background:var(--clay-tray);color:var(--clay-ink)" href="lab/ho-chieu-sau-rieng.html" data-en="2D">Bản 2D</a><a class="hp-pill" style="background:var(--clay-tray);color:var(--clay-ink)" href="lop-hoc.html" data-en="Classroom playbook">Kịch bản lớp học</a></div>
+      </li>
+      <li class="hp-game lv3">
+        <div class="hp-game-media"><img src="assets/concept/ho-chieu-sau-rieng-hub-cho-noi.webp" alt="" loading="lazy"><span class="hp-game-lv"><b>3</b><span data-en="Level 3">Bậc 3</span></span><a class="hp-game-tr" href="assets/video/srp-trailer.mp4" data-trailer="assets/video/srp-trailer.mp4" data-poster="assets/video/srp-trailer-poster.jpg" data-title="Hộ Chiếu Sầu Riêng" data-title-en="Durian Passport"><span aria-hidden="true">▶</span><span data-en="Trailer">Xem trailer</span></a></div>
+        <div class="hp-game-body">
+          <div class="hp-game-kicker" data-en="LEVEL 3 · GOING GLOBAL">BẬC 3 · RA THẾ GIỚI</div>
+          <h3 data-en="Durian Passport">Hộ Chiếu Sầu Riêng</h3>
+          <p data-en="Take Vietnamese durian to the world over 6 seasons on a walkable 3D map: planting-area codes, the China phytosanitary protocol, official vs border trade, frozen and premium markets. Teams of 5 roles face AI rivals.">Đưa sầu riêng Việt ra thế giới qua 6 vụ trên bản đồ 3D đi lại: mã số vùng trồng, nghị định thư kiểm dịch với Trung Quốc, chính ngạch – tiểu ngạch, đông lạnh và thị trường cao cấp. Đội 5 vai đấu các đối thủ AI.</p>
+          <ul class="hp-game-meta"><li data-en="6 seasons">6 vụ</li><li data-en="Teams of 5 roles">Đội 5 vai</li></ul>
+          <div class="hp-game-cta"><a class="hp-play" href="lab/ho-chieu-sau-rieng-3d.html"><span data-en="Play in 3D">Chơi bản 3D</span><span aria-hidden="true">→</span></a><div class="hp-alt"><span data-en="Other versions:">Bản khác:</span><a href="lab/ho-chieu-sau-rieng.html" data-en="2D">2D</a><a href="lop-hoc.html" data-en="Classroom playbook">Kịch bản lớp học</a></div></div>
         </div>
-      </article>
-      <article style="display:flex;flex-direction:column;border-radius:32px;background:var(--clay-card);padding:12px;box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 rgba(255,255,255,.95),0 26px 36px -22px rgba(110,70,30,.5)">
-        <div style="position:relative;aspect-ratio:4/5;border-radius:24px;overflow:hidden;background:#FFFFFF;box-shadow:inset 0 -8px 0 rgba(0,0,0,.06)"><img src="assets/hc/item/forecast.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" loading="lazy"></div>
-        <div style="padding:16px 10px 10px;display:flex;flex-direction:column;gap:8px;flex:1">
-          <div style="font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--clay-accent)" data-en="SUPPORT · STRATEGY MODEL">BỔ TRỢ · MÔ HÌNH CHIẾN LƯỢC</div>
-          <h3 style="margin:0;font-family:var(--clay-head);font-weight:800;font-size:28px;line-height:1.14">IE Lab</h3>
-          <p style="margin:0;font-size:15px;line-height:1.55;color:var(--clay-sub);flex:1" data-en="Experiment with internationalization assumptions and observe how strategic variables change outcomes.">Thử nghiệm các giả định quốc tế hóa và quan sát cách biến chiến lược làm thay đổi kết quả.</p>
-          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px"><a class="hp-pill" style="background:var(--clay-tray);color:var(--clay-ink)" href="global.html" data-en="Explore the model">Khám phá mô hình</a></div>
+      </li>
+    </ol>
+    <div class="hp-tools-head"><h3 data-en="Support tools">Công cụ bổ trợ</h3><p data-en="Use alongside the games to practise one model or skill at a time.">Dùng kèm trò chơi để luyện riêng từng mô hình hoặc kỹ năng.</p></div>
+    <ul class="hp-tools">
+      <li class="hp-tool">
+        <div class="hp-tool-img"><img src="assets/hc/item/forecast.png" alt="" loading="lazy"></div>
+        <div>
+          <div class="hp-tool-kicker" data-en="STRATEGY MODEL">MÔ HÌNH CHIẾN LƯỢC</div>
+          <h4>IE Lab</h4>
+          <p data-en="Experiment with internationalization assumptions and observe how strategic variables change outcomes.">Thử nghiệm các giả định quốc tế hóa và quan sát cách biến chiến lược làm thay đổi kết quả.</p>
+          <div class="hp-tool-links"><a href="global.html" data-en="Explore the model">Khám phá mô hình</a></div>
         </div>
-      </article>
-      <article style="display:flex;flex-direction:column;border-radius:32px;background:var(--clay-card);padding:12px;box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 rgba(255,255,255,.95),0 26px 36px -22px rgba(110,70,30,.5)">
-        <div style="position:relative;aspect-ratio:4/5;border-radius:24px;overflow:hidden;background:#FFFFFF;box-shadow:inset 0 -8px 0 rgba(0,0,0,.06)"><img src="assets/cmr-lab/dragon-magnifier.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:8%;mix-blend-mode:multiply" loading="lazy"></div>
-        <div style="padding:16px 10px 10px;display:flex;flex-direction:column;gap:8px;flex:1">
-          <div style="font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--clay-accent)" data-en="SUPPORT · PRACTICUM LABS">BỔ TRỢ · LAB THỰC HÀNH</div>
-          <h3 style="margin:0;font-family:var(--clay-head);font-weight:800;font-size:28px;line-height:1.14" data-en="Practicum labs">Lab thực hành</h3>
-          <p style="margin:0;font-size:15px;line-height:1.55;color:var(--clay-sub);flex:1" data-en="Three one-session labs: contribution margin ratio (CMR), cost–volume–profit and break-even (CVP), and the gravity model of trade and FDI into Viet Nam.">Ba lab một buổi: tỷ lệ số dư đảm phí (CMR), chi phí – sản lượng – lợi nhuận và hòa vốn (CVP), mô hình lực hấp dẫn của thương mại và FDI vào Việt Nam.</p>
-          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px"><a class="hp-pill" style="background:var(--clay-tray);color:var(--clay-ink)" href="lab/cmr-lab.html">CMR Lab</a><a class="hp-pill" style="background:var(--clay-tray);color:var(--clay-ink)" href="lab/cvp-studio.html">CVP Lab</a><a class="hp-pill" style="background:var(--clay-tray);color:var(--clay-ink)" href="https://thuyhuongctu.github.io/Gravity-Lab/">Gravity Lab</a></div>
+      </li>
+      <li class="hp-tool">
+        <div class="hp-tool-img"><img src="assets/cmr-lab/dragon-magnifier.jpg" alt="" loading="lazy" style="padding:6%;mix-blend-mode:multiply"></div>
+        <div>
+          <div class="hp-tool-kicker" data-en="PRACTICUM LABS">LAB THỰC HÀNH</div>
+          <h4 data-en="Practicum labs">Lab thực hành</h4>
+          <p data-en="Three one-session labs: contribution margin ratio (CMR), cost–volume–profit and break-even (CVP), and the gravity model of trade and FDI into Viet Nam.">Ba lab một buổi: tỷ lệ số dư đảm phí (CMR), chi phí – sản lượng – lợi nhuận và hòa vốn (CVP), mô hình lực hấp dẫn của thương mại và FDI vào Việt Nam.</p>
+          <div class="hp-tool-links"><a href="lab/cmr-lab.html">CMR Lab</a><a href="lab/cvp-studio.html">CVP Lab</a><a href="https://thuyhuongctu.github.io/Gravity-Lab/">Gravity Lab</a></div>
         </div>
-      </article>
-      <article style="display:flex;flex-direction:column;border-radius:32px;background:var(--clay-card);padding:12px;box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 rgba(255,255,255,.95),0 26px 36px -22px rgba(110,70,30,.5)">
-        <div style="position:relative;aspect-ratio:4/5;border-radius:24px;overflow:hidden;background:#FFFFFF;box-shadow:inset 0 -8px 0 rgba(0,0,0,.06)"><img src="assets/character/arcade-rong-bay-sau-rieng.webp" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:10%" loading="lazy"></div>
-        <div style="padding:16px 10px 10px;display:flex;flex-direction:column;gap:8px;flex:1">
-          <div style="font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--clay-accent)" data-en="SUPPORT · SKILL DRILLS">BỔ TRỢ · LUYỆN KỸ NĂNG</div>
-          <h3 style="margin:0;font-family:var(--clay-head);font-weight:800;font-size:28px;line-height:1.14">Arcade</h3>
-          <p style="margin:0;font-size:15px;line-height:1.55;color:var(--clay-sub);flex:1" data-en="Short, focused simulations for practicing one business skill or decision pattern at a time.">Các mô phỏng ngắn, tập trung để luyện một kỹ năng hoặc một mẫu quyết định kinh doanh.</p>
-          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px"><a class="hp-pill" style="background:var(--clay-tray);color:var(--clay-ink)" href="games.html" data-en="Practice a skill">Luyện một kỹ năng</a></div>
+      </li>
+      <li class="hp-tool">
+        <div class="hp-tool-img"><img src="assets/character/arcade-rong-bay-sau-rieng.webp" alt="" loading="lazy" style="padding:6%"></div>
+        <div>
+          <div class="hp-tool-kicker" data-en="SKILL DRILLS">LUYỆN KỸ NĂNG</div>
+          <h4>Arcade</h4>
+          <p data-en="Short, focused simulations for practicing one business skill or decision pattern at a time.">Các mô phỏng ngắn, tập trung để luyện một kỹ năng hoặc một mẫu quyết định kinh doanh.</p>
+          <div class="hp-tool-links"><a href="games.html" data-en="Practice a skill">Luyện một kỹ năng</a></div>
         </div>
-      </article>
-    </div>
+      </li>
+    </ul>
   </section>
 
   <!-- TRAILERS -->
@@ -201,21 +254,21 @@
       <div class="hp-eyebrow" style="color:#FFD58A" data-en="Trailer · built from real in-game footage">Trailer · dựng từ hình ảnh trong game</div>
       <h2 class="hp-h2" style="color:#fff" data-en="Watch before you play.">Xem trước khi bắt đầu.</h2>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:22px;margin-top:36px">
-        <a style="display:flex;flex-direction:column;gap:14px;padding:12px;border-radius:30px;background:#0B4A4F;color:#E1F2F5;box-shadow:inset 0 -8px 0 rgba(0,0,0,.2),inset 0 5px 0 rgba(255,255,255,.08)" href="assets/video/bizon-trailer.mp4">
-          <div style="position:relative;aspect-ratio:16/9;border-radius:22px;overflow:hidden;background:#022225"><img src="assets/video/bizon-trailer-poster.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" loading="lazy"><span style="position:absolute;left:14px;bottom:14px;width:50px;height:50px;border-radius:50%;background:var(--clay-gold);display:grid;place-items:center;color:var(--clay-ink);font-size:16px;box-shadow:inset 0 -5px 0 rgba(0,0,0,.18),0 8px 14px -6px rgba(0,0,0,.5)" aria-hidden="true">▶</span></div>
-          <div style="padding:0 8px 8px"><div style="font-family:var(--clay-head);font-size:24px;font-weight:700;color:#fff">Bật Nghiệp</div><div style="margin-top:2px;font-size:14px;color:#9CC9C9" data-en="A 6-round market arena · English narration">Đấu trường 6 vòng thị trường · thuyết minh tiếng Anh</div></div>
+        <a style="display:flex;flex-direction:column;gap:14px;padding:12px;border-radius:30px;background:#0B4A4F;color:#E1F2F5;box-shadow:inset 0 -8px 0 rgba(0,0,0,.2),inset 0 5px 0 rgba(255,255,255,.08)" href="assets/video/bizon-trailer.mp4" data-trailer="assets/video/bizon-trailer.mp4" data-poster="assets/video/bizon-trailer-poster.jpg" data-title="Bật Nghiệp" data-title-en="Bật Nghiệp">
+          <div style="position:relative;aspect-ratio:16/9;border-radius:22px;overflow:hidden;background:#022225"><img src="assets/video/bizon-trailer-poster.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" loading="lazy"><span class="hp-vplay" aria-hidden="true">▶</span></div>
+          <div style="padding:0 8px 8px"><div style="font-family:var(--clay-head);font-size:24px;font-weight:700;color:#fff">Bật Nghiệp</div><div style="margin-top:2px;font-size:14px;color:#9CC9C9" data-en="A 6-round market arena · English narration · 1:30">Đấu trường 6 vòng thị trường · thuyết minh tiếng Anh · 1:30</div></div>
         </a>
-        <a style="display:flex;flex-direction:column;gap:14px;padding:12px;border-radius:30px;background:#0B4A4F;color:#E1F2F5;box-shadow:inset 0 -8px 0 rgba(0,0,0,.2),inset 0 5px 0 rgba(255,255,255,.08)" href="assets/video/ben-phu-sa-trailer.mp4">
-          <div style="position:relative;aspect-ratio:16/9;border-radius:22px;overflow:hidden;background:#022225"><img src="assets/video/ben-phu-sa-trailer-poster.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" loading="lazy"><span style="position:absolute;left:14px;bottom:14px;width:50px;height:50px;border-radius:50%;background:var(--clay-gold);display:grid;place-items:center;color:var(--clay-ink);font-size:16px;box-shadow:inset 0 -5px 0 rgba(0,0,0,.18),0 8px 14px -6px rgba(0,0,0,.5)" aria-hidden="true">▶</span></div>
-          <div style="padding:0 8px 8px"><div style="font-family:var(--clay-head);font-size:24px;font-weight:700;color:#fff">Bến Phù Sa</div><div style="margin-top:2px;font-size:14px;color:#9CC9C9" data-en="A riverside street-vendor start · English narration">Gánh hàng khởi nghiệp trên sông · thuyết minh tiếng Anh</div></div>
+        <a style="display:flex;flex-direction:column;gap:14px;padding:12px;border-radius:30px;background:#0B4A4F;color:#E1F2F5;box-shadow:inset 0 -8px 0 rgba(0,0,0,.2),inset 0 5px 0 rgba(255,255,255,.08)" href="assets/video/ben-phu-sa-trailer.mp4" data-trailer="assets/video/ben-phu-sa-trailer.mp4" data-poster="assets/video/ben-phu-sa-trailer-poster.jpg" data-title="Bến Phù Sa" data-title-en="Bến Phù Sa">
+          <div style="position:relative;aspect-ratio:16/9;border-radius:22px;overflow:hidden;background:#022225"><img src="assets/video/ben-phu-sa-trailer-poster.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" loading="lazy"><span class="hp-vplay" aria-hidden="true">▶</span></div>
+          <div style="padding:0 8px 8px"><div style="font-family:var(--clay-head);font-size:24px;font-weight:700;color:#fff">Bến Phù Sa</div><div style="margin-top:2px;font-size:14px;color:#9CC9C9" data-en="A riverside street-vendor start · English narration · 1:30">Gánh hàng khởi nghiệp trên sông · thuyết minh tiếng Anh · 1:30</div></div>
         </a>
-        <a style="display:flex;flex-direction:column;gap:14px;padding:12px;border-radius:30px;background:#0B4A4F;color:#E1F2F5;box-shadow:inset 0 -8px 0 rgba(0,0,0,.2),inset 0 5px 0 rgba(255,255,255,.08)" href="assets/video/bp-trailer.mp4">
-          <div style="position:relative;aspect-ratio:16/9;border-radius:22px;overflow:hidden;background:#022225"><img src="assets/video/bp-trailer-poster.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" loading="lazy"><span style="position:absolute;left:14px;bottom:14px;width:50px;height:50px;border-radius:50%;background:var(--clay-gold);display:grid;place-items:center;color:var(--clay-ink);font-size:16px;box-shadow:inset 0 -5px 0 rgba(0,0,0,.18),0 8px 14px -6px rgba(0,0,0,.5)" aria-hidden="true">▶</span></div>
-          <div style="padding:0 8px 8px"><div style="font-family:var(--clay-head);font-size:24px;font-weight:700;color:#fff">Hộ Chiếu Thương Hiệu</div><div style="margin-top:2px;font-size:14px;color:#9CC9C9" data-en="Taking a brand to 7 markets · English narration">Đưa thương hiệu ra 7 thị trường · thuyết minh tiếng Anh</div></div>
+        <a style="display:flex;flex-direction:column;gap:14px;padding:12px;border-radius:30px;background:#0B4A4F;color:#E1F2F5;box-shadow:inset 0 -8px 0 rgba(0,0,0,.2),inset 0 5px 0 rgba(255,255,255,.08)" href="assets/video/bp-trailer.mp4" data-trailer="assets/video/bp-trailer.mp4" data-poster="assets/video/bp-trailer-poster.jpg" data-title="Hộ Chiếu Thương Hiệu" data-title-en="Brand Passport">
+          <div style="position:relative;aspect-ratio:16/9;border-radius:22px;overflow:hidden;background:#022225"><img src="assets/video/bp-trailer-poster.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" loading="lazy"><span class="hp-vplay" aria-hidden="true">▶</span></div>
+          <div style="padding:0 8px 8px"><div style="font-family:var(--clay-head);font-size:24px;font-weight:700;color:#fff" data-en="Brand Passport">Hộ Chiếu Thương Hiệu</div><div style="margin-top:2px;font-size:14px;color:#9CC9C9" data-en="Taking a brand to 7 markets · English narration · 1:30">Đưa thương hiệu ra 7 thị trường · thuyết minh tiếng Anh · 1:30</div></div>
         </a>
-        <a style="display:flex;flex-direction:column;gap:14px;padding:12px;border-radius:30px;background:#0B4A4F;color:#E1F2F5;box-shadow:inset 0 -8px 0 rgba(0,0,0,.2),inset 0 5px 0 rgba(255,255,255,.08)" href="assets/video/srp-trailer.mp4">
-          <div style="position:relative;aspect-ratio:16/9;border-radius:22px;overflow:hidden;background:#022225"><img src="assets/video/srp-trailer-poster.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" loading="lazy"><span style="position:absolute;left:14px;bottom:14px;width:50px;height:50px;border-radius:50%;background:var(--clay-gold);display:grid;place-items:center;color:var(--clay-ink);font-size:16px;box-shadow:inset 0 -5px 0 rgba(0,0,0,.18),0 8px 14px -6px rgba(0,0,0,.5)" aria-hidden="true">▶</span></div>
-          <div style="padding:0 8px 8px"><div style="font-family:var(--clay-head);font-size:24px;font-weight:700;color:#fff">Hộ Chiếu Sầu Riêng</div><div style="margin-top:2px;font-size:14px;color:#9CC9C9" data-en="Durian export through 6 seasons · English narration">Xuất khẩu sầu riêng qua 6 mùa · thuyết minh tiếng Anh</div></div>
+        <a style="display:flex;flex-direction:column;gap:14px;padding:12px;border-radius:30px;background:#0B4A4F;color:#E1F2F5;box-shadow:inset 0 -8px 0 rgba(0,0,0,.2),inset 0 5px 0 rgba(255,255,255,.08)" href="assets/video/srp-trailer.mp4" data-trailer="assets/video/srp-trailer.mp4" data-poster="assets/video/srp-trailer-poster.jpg" data-title="Hộ Chiếu Sầu Riêng" data-title-en="Durian Passport">
+          <div style="position:relative;aspect-ratio:16/9;border-radius:22px;overflow:hidden;background:#022225"><img src="assets/video/srp-trailer-poster.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" loading="lazy"><span class="hp-vplay" aria-hidden="true">▶</span></div>
+          <div style="padding:0 8px 8px"><div style="font-family:var(--clay-head);font-size:24px;font-weight:700;color:#fff" data-en="Durian Passport">Hộ Chiếu Sầu Riêng</div><div style="margin-top:2px;font-size:14px;color:#9CC9C9" data-en="Durian export through 6 seasons · English narration · 1:40">Xuất khẩu sầu riêng qua 6 mùa · thuyết minh tiếng Anh · 1:40</div></div>
         </a>
       </div>
     </div>
@@ -300,6 +353,10 @@
       <img src="assets/character/bizon-duo-music.webp" alt="" style="width:100%;max-height:220px;object-fit:contain" loading="lazy">
     </a>
   </section>
+  <dialog id="hp-trailer" class="hp-dlg" aria-labelledby="hp-trailer-title">
+    <div class="hp-dlg-bar"><span id="hp-trailer-title">Trailer</span><button type="button" class="hp-dlg-x" data-close aria-label="Đóng" data-en-aria="Close">✕</button></div>
+    <video controls playsinline preload="none"></video>
+  </dialog>
 </main>
 
 <script src="js/site-vnmap.js" defer></script>
@@ -322,6 +379,30 @@ document.addEventListener('DOMContentLoaded', function(){
   right.insertBefore(btn, right.firstChild);
   if(window.clayApplyLang) window.clayApplyLang(window.clayCurrentLang ? window.clayCurrentLang() : 'vi');
 });
+</script>
+<script>
+/* Trailer: phát ngay trong trang (hộp thoại) thay vì mở tệp mp4 trần — tệp mp4 mở trực tiếp trên điện thoại
+   dễ bị trình duyệt cắt giữa chừng. Trình duyệt không có <dialog> thì liên kết vẫn mở tệp như cũ. */
+(function(){
+  var dlg = document.getElementById('hp-trailer');
+  if(!dlg || typeof dlg.showModal !== 'function') return;
+  var v = dlg.querySelector('video'), t = document.getElementById('hp-trailer-title');
+  document.addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('[data-trailer]');
+    if(!a || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    e.preventDefault();
+    var en = (document.documentElement.lang || '').indexOf('en') === 0;
+    t.textContent = (en && a.getAttribute('data-title-en')) || a.getAttribute('data-title') || 'Trailer';
+    v.poster = a.getAttribute('data-poster') || '';
+    v.src = a.getAttribute('data-trailer');
+    dlg.showModal();
+    var p = v.play(); if(p && p.catch) p.catch(function(){});
+  });
+  dlg.addEventListener('click', function(e){
+    if(e.target === dlg || (e.target.closest && e.target.closest('[data-close]'))) dlg.close();
+  });
+  dlg.addEventListener('close', function(){ v.pause(); v.removeAttribute('src'); v.load(); });
+})();
 </script>
 </body>
 </html>
