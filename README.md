@@ -97,7 +97,7 @@ Use these alongside the games to practise one model or skill at a time.
 | You are… | Go to |
 |---|---|
 | **Student** | Play a short round, make decisions and get feedback from Lumina. Start with [Bến Phù Sa →](https://bizonland.com/ben-phu-sa-3d.html) |
-| **Instructor** | Run a class, follow decision traces and grade with rubrics: [Class dashboard](https://bizonland.com/Trang%20Giang%20Vien.dc.html) · [Instructor page](https://bizonland.com/truong-giang-vien.html) · [Classroom playbook](https://bizonland.com/lop-hoc.html) |
+| **Instructor** | Run a class, follow decision traces and grade with rubrics: [Instructor corner](https://bizonland.com/giang-vien.html) · [Class dashboard](https://bizonland.com/Trang%20Giang%20Vien.dc.html) · [Instructor page](https://bizonland.com/truong-giang-vien.html) · [Classroom playbook](https://bizonland.com/lop-hoc.html) |
 | **Researcher** | Review the models, assumptions, equations and published limitations: [Academic framework](https://bizonland.com/truong-hoc-thuat.html) |
 | **Institution · partner · funder** | See the pilot results and how to deploy BizOn at your institution: [Evidence](https://bizonland.com/bang-chung.html) · [Solutions](https://bizonland.com/giai-phap.html) |
 

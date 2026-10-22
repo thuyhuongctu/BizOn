@@ -82,6 +82,7 @@ const SHELL = [
   './du-an.html',
   './tuyen-dung.html',
   './lien-he.html',
+  './giang-vien.html',
   './chinh-sach.html',
   './css/tw.css',
   // Phông tự host. Nạp sẵn cả bảng khai báo lẫn hai tập ký tự mà trang tiếng Việt
