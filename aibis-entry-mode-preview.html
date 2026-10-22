@@ -1,2 +1,380 @@
-<!doctype html><html lang="vi" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BizOn AIBIS Entry Mode</title><link rel="stylesheet" href="css/aibis-entry-mode-preview.css"><script src="js/capture-guard.js"></script>
-</head><body><div class="app"><aside><h1>◉ BIZON</h1><small>AI BUSINESS SIMULATION</small><nav><a>⌂ Command Center</a><a>◇ Startup Lab</a><a class="on">◎ AIBIS Global</a><a>♙ Classroom</a><a>▥ Analytics</a></nav><div class="status">● Preview mode<br><small>No production write</small><a href="app/aibis.html" style="display:block;margin-top:12px;color:#1cc8ff;font-weight:700;text-decoration:none">→ Mở AIBIS Global (ứng dụng thật)</a></div></aside><header><div><small>Workspace</small><b>EcoFuture Team</b></div><div><small>Scenario</small><b>AIBIS Global Expansion</b></div><div><small>Round</small><b>3 / 8 · Entry Mode</b></div><button id="theme">◐</button></header><main><section class="title"><div><small>AIBIS DECISION WORKSPACE</small><h2>Entry Mode Simulator</h2><p>So sánh phương thức thâm nhập cho thị trường <b>Nhật Bản</b>.</p></div><ol><li>Intelligence</li><li>Market</li><li class="active">Entry Mode</li><li>Localization</li><li>Shock</li><li>Learning</li><li>Board</li></ol></section><section class="hero"><article class="panel country"><h3>🇯🇵 Japan</h3><div class="score">74<small>/100</small></div><dl id="country"></dl></article><article class="panel map"><div class="tabs">Market fit · Trade flow · Risk · Logistics</div><svg viewBox="0 0 900 420" role="img" aria-label="Bản đồ luồng thương mại châu Á"><rect width="900" height="420" rx="20"/><path class="land" d="M70 80l110-42 86 38 56 57 89 5 74 56 98-16 88 50 91 17 64 71-65 65-97-11-69 29-78-19-82 31-72-31-84 13-66-55-73-4-31-70 43-45-23-64z"/><g class="routes"><path d="M160 300Q450 50 720 165"/><path d="M350 355Q520 155 720 165"/><path d="M550 330Q630 220 720 165"/></g><g class="nodes"><circle cx="160" cy="300" r="7"/><circle cx="350" cy="355" r="7"/><circle cx="550" cy="330" r="7"/><circle class="target" cx="720" cy="165" r="12"/></g><text x="742" y="160">JAPAN</text></svg><div class="mapstats"><span>Potential <b>High</b></span><span>Institutions <b>Very high</b></span><span>Logistics <b>High</b></span></div></article><article class="panel weights"><h3>Decision priorities</h3><label>Control<input id="control" type="range" min="0" max="100" value="55"><output>55</output></label><label>Speed<input id="speed" type="range" min="0" max="100" value="70"><output>70</output></label><label>Learning<input id="learning" type="range" min="0" max="100" value="65"><output>65</output></label><label>Capital limit<input id="capital" type="range" min="0" max="100" value="75"><output>75</output></label><label>Risk tolerance<input id="risk" type="range" min="0" max="100" value="40"><output>40</output></label></article></section><section class="modes"><div class="sectionhead"><div><small>ENTRY MODE PORTFOLIO</small><h2>Sáu phương thức thâm nhập</h2></div><b id="recommended">Đang tính...</b></div><div id="modeGrid" class="grid"></div></section><section class="analysis"><article class="panel"><h3>Lumina Insights</h3><div id="insights"></div></article><article class="panel"><h3>What-if Comparison</h3><div class="compare"><select id="a"></select><span>vs.</span><select id="b"></select><button id="run">Compare</button></div><div id="result"></div></article><article class="panel"><h3>Japan considerations</h3><ul><li>Quality and service expectations are high.</li><li>Trust and local networks matter.</li><li>Compliance investment is required early.</li><li>Long-term commitment improves legitimacy.</li></ul></article><article class="panel selection"><h3>Your selection</h3><div id="selection">Chưa chọn phương thức.</div><button id="continue" disabled>Tiếp tục → Localization</button></article></section></main><footer>Preview only · Illustrative parameters · Local interaction</footer></div><div role="note" style="position:fixed;left:0;right:0;bottom:0;z-index:9999;background:rgba(8,18,15,.94);border-top:1px solid rgba(28,200,255,.4);color:#d6eef5;font-family:system-ui,-apple-system,sans-serif;font-size:.72rem;letter-spacing:.01em;padding:8px 16px;display:flex;gap:16px;align-items:center;justify-content:center;flex-wrap:wrap;backdrop-filter:blur(6px)"><a href="universe.html" style="color:#1cc8ff;font-weight:700;text-decoration:none;flex:none">← Vũ trụ</a><span><b>Preview kỹ thuật</b> · số liệu minh hoạ, chưa phải xếp hạng quốc gia thật · đang kiểm định mô hình · <b>dữ liệu quốc gia có xuất xứ sẽ cắm vào khi sẵn sàng</b></span><span>Trích dẫn (APA 7): Phan, A. T., &amp; Do, T. H. (2026). <i>AIBIS Global Market Engine</i> (v0.1.1) [Computer software]. <a href="https://doi.org/10.5281/zenodo.23317597" target="_blank" rel="noopener" style="color:#1cc8ff">https://doi.org/10.5281/zenodo.23317597</a></span></div><script src="js/aibis/entry-mode-preview-data.js"></script><script src="js/aibis/entry-mode-preview.js"></script></body></html>
+<!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & PGS.TS. Phan Anh Tú. Bảo lưu mọi quyền. -->
+<!--
+  AIBIS Entry Mode Preview: bản xem trước kỹ thuật của bước «Phương thức thâm nhập»
+  trong AIBIS Global (thị trường mẫu: Nhật Bản). Số liệu minh hoạ, tương tác cục bộ,
+  không ghi dữ liệu thật. Dữ liệu ở js/aibis/entry-mode-preview-data.js; logic chấm
+  điểm giữ nguyên công thức của js/aibis/entry-mode-preview.js, viết lại ngay trong
+  trang để chữ do script dựng cũng song ngữ VI/EN.
+-->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<script src="js/bizon-lang.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title data-en="AIBIS Entry Mode Simulator · BizOn">Mô phỏng phương thức thâm nhập AIBIS · BizOn</title>
+<meta name="description" data-en-content="Technical preview of the AIBIS Global entry-mode step: compare export, licensing, joint venture, alliance, FDI and digital entry for the Japan market with adjustable decision priorities." content="Bản xem trước kỹ thuật bước Phương thức thâm nhập của AIBIS Global: so sánh xuất khẩu, cấp phép, liên doanh, liên minh, FDI và thâm nhập số cho thị trường Nhật Bản theo các ưu tiên quyết định có thể điều chỉnh.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & PGS.TS. Phan Anh Tú">
+<link rel="canonical" href="https://bizonland.com/aibis-entry-mode-preview.html">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script src="js/bizon-boot.js"></script>
+<link rel="stylesheet" href="css/bizon-clay-fonts.css">
+<link rel="stylesheet" href="css/bizon-clay.css">
+<style>
+  /* Bố cục riêng trang AIBIS Entry Mode Preview */
+  .em-hero{position:relative;overflow:hidden;margin:28px 0 20px;border-radius:40px;background:var(--clay-cream-deep);box-shadow:var(--clay-night-shadow,inset 0 -10px 0 rgba(140,80,20,.1),inset 0 6px 0 rgba(255,255,255,.7),0 30px 44px -30px rgba(110,70,30,.6))}
+  .em-hero .grid{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end;padding:clamp(22px,4vw,44px) clamp(18px,4vw,44px) 0}
+  .em-hero .htext{padding-bottom:clamp(24px,4vw,40px);min-width:0}
+  .em-hero h1{margin:16px 0 0;font-size:clamp(32px,5vw,58px);text-wrap:balance}
+  .em-hero .lead{margin:14px 0 0;max-width:34em;font-size:17px;line-height:1.6;color:var(--clay-sub);text-wrap:pretty}
+  .em-hero .acts{display:flex;flex-wrap:wrap;gap:12px;margin:22px 0 0}
+  .em-hero .art{width:min(18vw,170px);align-self:end}
+  .em-hero .art img{display:block;width:100%;height:auto;filter:drop-shadow(0 18px 14px rgba(110,70,30,.3))}
+  :root[data-theme="dark"] .em-hero .art img{filter:drop-shadow(0 18px 14px rgba(0,0,0,.55))}
+  .em-ctx{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 0;padding:0;list-style:none}
+  .em-ctx li{display:flex;flex-direction:column;gap:2px;min-width:0;padding:9px 16px;border-radius:20px;background:var(--clay-card);box-shadow:var(--clay-shadow-sm)}
+  .em-ctx small{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--clay-sub)}
+  .em-ctx b{font-family:var(--clay-head);font-size:15px;color:var(--clay-ink)}
+  .em-ctx .live b{color:var(--clay-teal)}
+  .em-steps{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 18px;padding:6px;list-style:none;border-radius:26px;background:var(--clay-tray);box-shadow:var(--clay-tray-shadow)}
+  .em-steps li{padding:7px 13px;border-radius:var(--clay-r-pill);font-size:13px;font-weight:700;color:var(--clay-sub)}
+  .em-steps li[aria-current]{background:var(--clay-teal);color:var(--clay-on-teal);box-shadow:var(--clay-btn-shadow)}
+  .em-note{margin:0 0 40px;padding:14px 18px;border-radius:22px;background:var(--clay-amber-soft);color:var(--clay-ink-2);font-size:14px;line-height:1.55;box-shadow:var(--clay-shadow-sm)}
+  .em-sec{margin:44px 0 0}
+  .em-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:10px 20px;margin:0 0 18px}
+  .em-head h2{margin:10px 0 0;font-size:clamp(24px,3vw,32px)}
+  .em-rec{padding:9px 16px;border-radius:var(--clay-r-pill);background:var(--clay-c4);color:var(--clay-ink);font-family:var(--clay-head);font-weight:800;font-size:15px;box-shadow:var(--clay-btn-shadow)}
+  .em-panel{min-width:0;padding:22px;border-radius:var(--clay-r-lg);background:var(--clay-card);color:var(--clay-ink);box-shadow:var(--clay-shadow)}
+  .em-panel h3{margin:0 0 12px;font-size:19px}
+  .em-top{display:grid;grid-template-columns:220px minmax(0,1fr) 300px;gap:18px;align-items:start}
+  .em-country h3{font-size:22px}
+  .em-score{font-family:var(--clay-head);font-size:48px;font-weight:800;line-height:1;color:var(--clay-teal)}
+  .em-score small{font-size:15px;color:var(--clay-sub)}
+  .em-country dl{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 10px;margin:16px 0 0;font-size:14px}
+  .em-country dt{color:var(--clay-sub)}
+  .em-country dd{margin:0;font-weight:800}
+  .em-map{padding:16px}
+  .em-tabs{margin:2px 6px 10px;font-size:13px;font-weight:700;color:var(--clay-sub)}
+  .em-map svg{display:block;width:100%;height:auto;border-radius:20px}
+  .em-map .sea{fill:var(--clay-c5)}
+  .em-map .land{fill:var(--clay-c4);stroke:var(--clay-teal);stroke-width:2}
+  .em-map .routes path{fill:none;stroke:var(--clay-orange);stroke-width:3;stroke-dasharray:8 7}
+  .em-map .nodes circle{fill:var(--clay-teal)}
+  .em-map .nodes .target{fill:var(--clay-orange);stroke:var(--clay-card);stroke-width:4}
+  .em-map text{fill:var(--clay-ink);font-family:var(--clay-head);font-size:20px;font-weight:800}
+  .em-mapstats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}
+  .em-mapstats span{padding:10px 12px;border-radius:16px;background:var(--clay-tray);box-shadow:var(--clay-tray-shadow);font-size:13px;color:var(--clay-sub)}
+  .em-mapstats b{display:block;margin-top:2px;font-size:15px;color:var(--clay-teal)}
+  .em-weights .row{display:grid;grid-template-columns:minmax(0,1fr) minmax(80px,120px) 30px;align-items:center;gap:8px;margin:14px 0 0;font-size:14px;font-weight:700;color:var(--clay-ink-2)}
+  .em-weights input{width:100%;min-width:0;margin:0;accent-color:var(--clay-teal)}
+  .em-weights output{font-weight:800;text-align:right;color:var(--clay-ink)}
+  .em-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,290px),1fr));gap:18px}
+  .em-mode{position:relative;display:flex;flex-direction:column;padding:20px;transition:transform .15s ease}
+  .em-mode:hover{transform:translateY(-3px)}
+  .em-mode.selected{outline:3px solid var(--clay-teal);outline-offset:3px}
+  .em-mode .icon{width:46px;height:46px;border-radius:16px;display:grid;place-items:center;font-size:22px;background:var(--clay-c1);color:var(--clay-ink);box-shadow:inset 0 -4px 0 rgba(0,0,0,.1),inset 0 3px 0 rgba(255,255,255,.4)}
+  .em-mode .badge{position:absolute;top:16px;right:16px;padding:4px 10px;border-radius:var(--clay-r-pill);background:var(--clay-orange);color:var(--clay-on-orange);font-size:11px;font-weight:800;letter-spacing:.04em;box-shadow:var(--clay-btn-shadow)}
+  .em-mode h3{margin:14px 0 6px;font-size:19px}
+  .em-mode p{margin:0 0 10px;font-size:14px;line-height:1.5;color:var(--clay-sub)}
+  .em-metric{display:flex;justify-content:space-between;gap:8px;margin:8px 0 4px;font-size:12.5px;font-weight:700;color:var(--clay-sub)}
+  .em-metric span:last-child{color:var(--clay-ink)}
+  .em-bar{height:8px;border-radius:8px;background:var(--clay-tray);box-shadow:inset 0 2px 3px rgba(0,0,0,.12);overflow:hidden}
+  .em-bar i{display:block;height:100%;border-radius:8px;background:var(--clay-teal)}
+  .em-mode .clay-btn{width:100%;margin-top:auto;padding:12px 16px;font-size:15px}
+  .em-mode .em-metrics{margin-bottom:16px}
+  .em-analysis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+  .em-analysis p,.em-analysis li{font-size:14.5px;line-height:1.6;color:var(--clay-ink-2)}
+  .em-analysis p+p{margin-top:8px}
+  .em-analysis ul{margin:0;padding-left:20px}
+  .em-analysis li+li{margin-top:4px}
+  .em-compare{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:12px}
+  .em-compare select{flex:1 1 140px;min-width:0;padding:11px 14px;border-radius:16px;font-size:14px}
+  .em-compare .clay-btn{padding:11px 18px;font-size:15px}
+  .em-sel{margin-bottom:14px}
+  .em-sel b{font-family:var(--clay-head);font-size:17px}
+  .em-sel p{margin-top:4px}
+  .em-panel .clay-btn:disabled{opacity:.45;cursor:not-allowed}
+  .em-lumina{background:var(--clay-c5)}
+  .em-foot{margin:40px 0 0;padding:18px 22px;border-radius:24px;background:var(--clay-tray);box-shadow:var(--clay-tray-shadow);font-size:13px;line-height:1.6;color:var(--clay-sub);overflow-wrap:anywhere}
+  .em-foot p+p{margin-top:6px}
+  @media (max-width:1000px){
+    .em-top{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+    .em-map{grid-column:1/-1;grid-row:1}
+  }
+  @media (max-width:700px){
+    .em-top,.em-analysis{grid-template-columns:1fr}
+    .em-hero .grid{grid-template-columns:1fr}
+    .em-hero .art{display:none}
+  }
+  @media (max-width:480px){
+    .clay-main{padding:0 16px}
+    .em-panel{padding:18px}
+    .em-mapstats{grid-template-columns:1fr}
+    .em-hero{border-radius:30px}
+  }
+</style>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mô phỏng phương thức thâm nhập AIBIS · BizOn">
+<meta property="og:description" content="Bản xem trước kỹ thuật: so sánh sáu phương thức thâm nhập thị trường Nhật Bản.">
+<meta name="twitter:card" content="summary_large_image">
+<script src="js/capture-guard.js"></script>
+</head>
+<body class="clay">
+
+<main class="clay-main">
+  <section class="em-hero">
+    <div class="grid">
+      <div class="htext">
+        <span class="clay-eyebrow" data-en="AIBIS decision workspace · Technical preview">Không gian quyết định AIBIS · Bản xem trước</span>
+        <h1 data-en="Entry Mode Simulator">Mô phỏng phương thức thâm nhập</h1>
+        <p class="lead" data-en-html="Compare entry modes for the &lt;b&gt;Japan&lt;/b&gt; market.">So sánh phương thức thâm nhập cho thị trường <b>Nhật Bản</b>.</p>
+        <ul class="em-ctx">
+          <li><small data-en="Workspace">Không gian làm việc</small><b>EcoFuture Team</b></li>
+          <li><small data-en="Scenario">Kịch bản</small><b>AIBIS Global Expansion</b></li>
+          <li><small data-en="Round">Vòng</small><b data-en="3 / 8 · Entry Mode">3 / 8 · Phương thức thâm nhập</b></li>
+          <li class="live"><small data-en="Status">Trạng thái</small><b data-en="● Preview mode · no production write">● Xem trước · không ghi dữ liệu thật</b></li>
+        </ul>
+        <div class="acts">
+          <a class="clay-btn clay-btn-pill clay-btn-orange" href="app/aibis.html" data-en="Open AIBIS Global (the real app) →">Mở AIBIS Global (ứng dụng thật) →</a>
+          <a class="clay-btn clay-btn-pill" href="universe.html" data-en="← Universe">← Vũ trụ</a>
+        </div>
+      </div>
+      <div class="art"><img src="assets/character/lumina-ao-dai-present-cut.webp" alt="" width="374" height="805"></div>
+    </div>
+  </section>
+
+  <ol class="em-steps" aria-label="Các bước của vòng" data-en-aria="Round steps">
+    <li data-en="Intelligence">Tình báo thị trường</li>
+    <li data-en="Market">Thị trường</li>
+    <li aria-current="step" data-en="Entry Mode">Phương thức thâm nhập</li>
+    <li data-en="Localization">Bản địa hóa</li>
+    <li data-en="Shock">Cú sốc</li>
+    <li data-en="Learning">Học hỏi</li>
+    <li data-en="Board">Hội đồng quản trị</li>
+  </ol>
+
+  <p class="em-note" role="note" data-en-html="&lt;b&gt;Technical preview&lt;/b&gt; · illustrative figures, not a real country ranking · model under validation · &lt;b&gt;country data with provenance will be plugged in when ready&lt;/b&gt;"><b>Preview kỹ thuật</b> · số liệu minh hoạ, chưa phải xếp hạng quốc gia thật · đang kiểm định mô hình · <b>dữ liệu quốc gia có xuất xứ sẽ cắm vào khi sẵn sàng</b></p>
+
+  <section class="em-sec" aria-labelledby="em-market-h">
+    <div class="em-head">
+      <div>
+        <span class="clay-eyebrow" data-en="Target market">Thị trường mục tiêu</span>
+        <h2 id="em-market-h" data-en="Market context and your priorities">Bối cảnh thị trường và ưu tiên của bạn</h2>
+      </div>
+    </div>
+    <div class="em-top">
+      <article class="em-panel em-country">
+        <h3 data-en="🇯🇵 Japan">🇯🇵 Nhật Bản</h3>
+        <div class="em-score">74<small>/100</small></div>
+        <dl id="country"></dl>
+      </article>
+      <article class="em-panel em-map">
+        <div class="em-tabs" data-en="Market fit · Trade flow · Risk · Logistics">Độ phù hợp thị trường · Luồng thương mại · Rủi ro · Logistics</div>
+        <svg viewBox="0 0 900 420" role="img" aria-label="Bản đồ luồng thương mại châu Á" data-en-aria="Asia trade-flow map">
+          <rect class="sea" width="900" height="420" rx="20"/>
+          <path class="land" d="M70 80l110-42 86 38 56 57 89 5 74 56 98-16 88 50 91 17 64 71-65 65-97-11-69 29-78-19-82 31-72-31-84 13-66-55-73-4-31-70 43-45-23-64z"/>
+          <g class="routes"><path d="M160 300Q450 50 720 165"/><path d="M350 355Q520 155 720 165"/><path d="M550 330Q630 220 720 165"/></g>
+          <g class="nodes"><circle cx="160" cy="300" r="8"/><circle cx="350" cy="355" r="8"/><circle cx="550" cy="330" r="8"/><circle class="target" cx="720" cy="165" r="13"/></g>
+          <text x="742" y="160" data-en="JAPAN">NHẬT BẢN</text>
+        </svg>
+        <div class="em-mapstats">
+          <span data-en-html="Potential &lt;b&gt;High&lt;/b&gt;">Tiềm năng <b>Cao</b></span>
+          <span data-en-html="Institutions &lt;b&gt;Very high&lt;/b&gt;">Thể chế <b>Rất cao</b></span>
+          <span data-en-html="Logistics &lt;b&gt;High&lt;/b&gt;">Logistics <b>Cao</b></span>
+        </div>
+      </article>
+      <article class="em-panel em-weights">
+        <h3 data-en="Decision priorities">Ưu tiên quyết định</h3>
+        <div class="row"><label for="control" data-en="Control">Kiểm soát</label><input id="control" type="range" min="0" max="100" value="55"><output for="control">55</output></div>
+        <div class="row"><label for="speed" data-en="Speed">Tốc độ</label><input id="speed" type="range" min="0" max="100" value="70"><output for="speed">70</output></div>
+        <div class="row"><label for="learning" data-en="Learning">Học hỏi</label><input id="learning" type="range" min="0" max="100" value="65"><output for="learning">65</output></div>
+        <div class="row"><label for="capital" data-en="Capital limit">Giới hạn vốn</label><input id="capital" type="range" min="0" max="100" value="75"><output for="capital">75</output></div>
+        <div class="row"><label for="risk" data-en="Risk tolerance">Chấp nhận rủi ro</label><input id="risk" type="range" min="0" max="100" value="40"><output for="risk">40</output></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="em-sec" aria-labelledby="em-modes-h">
+    <div class="em-head">
+      <div>
+        <span class="clay-eyebrow" data-en="Entry mode portfolio">Danh mục phương thức thâm nhập</span>
+        <h2 id="em-modes-h" data-en="Six entry modes">Sáu phương thức thâm nhập</h2>
+      </div>
+      <b id="recommended" class="em-rec" aria-live="polite">Đang tính...</b>
+    </div>
+    <div id="modeGrid" class="em-grid"></div>
+  </section>
+
+  <section class="em-sec" aria-labelledby="em-analysis-h">
+    <div class="em-head">
+      <div>
+        <span class="clay-eyebrow" data-en="Analysis">Phân tích</span>
+        <h2 id="em-analysis-h" data-en="Insights, comparison and your choice">Nhận định, so sánh và lựa chọn</h2>
+      </div>
+    </div>
+    <div class="em-analysis">
+      <article class="em-panel em-lumina">
+        <h3 data-en="Lumina Insights">Nhận định của Lumina</h3>
+        <div id="insights"></div>
+      </article>
+      <article class="em-panel">
+        <h3 data-en="What-if comparison">So sánh giả định (what-if)</h3>
+        <div class="em-compare">
+          <select id="a" class="clay-field" aria-label="Phương thức A" data-en-aria="Mode A"></select>
+          <span>vs.</span>
+          <select id="b" class="clay-field" aria-label="Phương thức B" data-en-aria="Mode B"></select>
+          <button id="run" type="button" class="clay-btn clay-btn-pill" data-en="Compare">So sánh</button>
+        </div>
+        <div id="result" aria-live="polite"></div>
+      </article>
+      <article class="em-panel">
+        <h3 data-en="Japan considerations">Lưu ý khi vào Nhật Bản</h3>
+        <ul>
+          <li data-en="Quality and service expectations are high.">Kỳ vọng về chất lượng và dịch vụ rất cao.</li>
+          <li data-en="Trust and local networks matter.">Niềm tin và mạng lưới địa phương rất quan trọng.</li>
+          <li data-en="Compliance investment is required early.">Cần đầu tư cho tuân thủ ngay từ sớm.</li>
+          <li data-en="Long-term commitment improves legitimacy.">Cam kết dài hạn giúp tăng tính chính danh.</li>
+        </ul>
+      </article>
+      <article class="em-panel">
+        <h3 data-en="Your selection">Lựa chọn của bạn</h3>
+        <div id="selection" class="em-sel" aria-live="polite"></div>
+        <button id="continue" type="button" class="clay-btn clay-btn-pill clay-btn-orange" disabled data-en="Continue → Localization">Tiếp tục → Bản địa hóa</button>
+      </article>
+    </div>
+  </section>
+
+  <div class="em-foot">
+    <p data-en="Preview only · Illustrative parameters · Local interaction (nothing is sent or saved)">Chỉ là bản xem trước · Tham số minh hoạ · Tương tác cục bộ (không gửi, không lưu dữ liệu)</p>
+    <p data-en-html="Cite (APA 7): Phan, A. T., &amp;amp; Do, T. H. (2026). &lt;i&gt;AIBIS Global Market Engine&lt;/i&gt; (v0.1.1) [Computer software]. &lt;a href=&quot;https://doi.org/10.5281/zenodo.23317597&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://doi.org/10.5281/zenodo.23317597&lt;/a&gt;">Trích dẫn (APA 7): Phan, A. T., &amp; Do, T. H. (2026). <i>AIBIS Global Market Engine</i> (v0.1.1) [Computer software]. <a href="https://doi.org/10.5281/zenodo.23317597" target="_blank" rel="noopener">https://doi.org/10.5281/zenodo.23317597</a></p>
+  </div>
+</main>
+
+<script src="js/aibis/entry-mode-preview-data.js"></script>
+<script>
+/* Entry Mode Preview – cùng công thức chấm điểm với js/aibis/entry-mode-preview.js,
+   thêm chữ VI/EN cho phần do script dựng; dựng lại khi đổi ngôn ngữ (bizon:langchange). */
+(function(){
+  'use strict';
+  var D = window.AIBIS_ENTRY_PREVIEW;
+  if(!D) return;
+  function $(s){ return document.querySelector(s); }
+  var W = { control:55, speed:70, learning:65, capital:75, risk:40 };
+  var selected = null, compared = null;
+
+  var NAME = {
+    'export':        { vi:'Xuất khẩu', en:'Export' },
+    'licensing':     { vi:'Cấp phép (licensing)', en:'Licensing' },
+    'joint-venture': { vi:'Liên doanh', en:'Joint Venture' },
+    'alliance':      { vi:'Liên minh chiến lược', en:'Strategic Alliance' },
+    'fdi':           { vi:'FDI (sở hữu toàn bộ)', en:'FDI (Wholly Owned)' },
+    'digital':       { vi:'Thâm nhập số', en:'Digital Entry' }
+  };
+  var DESC_EN = {
+    'export':'Sell from Vietnam through distributors or direct channels.',
+    'licensing':'License technology, brand or processes to a Japanese partner.',
+    'joint-venture':'Co-own and operate together with a local company.',
+    'alliance':'Partner without necessarily investing equity, to share resources and networks.',
+    'fdi':'Set up a subsidiary that the firm wholly owns.',
+    'digital':'Enter through digital platforms, e-commerce or apps.'
+  };
+  var COUNTRY = {
+    marketSize:{ vi:'Quy mô thị trường', en:'Market size' },
+    growth:{ vi:'Tăng trưởng', en:'Growth' },
+    competition:{ vi:'Cạnh tranh', en:'Competition' },
+    culturalDistance:{ vi:'Khoảng cách văn hóa', en:'Cultural distance' },
+    digitalReadiness:{ vi:'Mức sẵn sàng số', en:'Digital readiness' },
+    institutionQuality:{ vi:'Chất lượng thể chế', en:'Institution quality' },
+    tradeOpenness:{ vi:'Độ mở thương mại', en:'Trade openness' },
+    tariffPressure:{ vi:'Áp lực thuế quan', en:'Tariff pressure' }
+  };
+  var T = {
+    vi:{ rec:'Đề xuất', badge:'ĐỀ XUẤT', capFit:'Phù hợp vốn', control:'Kiểm soát', riskFit:'Phù hợp rủi ro', speed:'Tốc độ', learning:'Học hỏi',
+         select:'Chọn & mô phỏng', none:'Chưa chọn phương thức.', fit:'Điểm phù hợp hiện tại', capital:'Vốn', risk:'Rủi ro',
+         ins:function(b){ return '<p><b>'+b+'</b> đang phù hợp nhất với các ưu tiên hiện tại.</p><p>Nhật Bản có mức sẵn sàng số và chất lượng thể chế cao; tuy nhiên cạnh tranh và khoảng cách văn hóa làm tăng giá trị của đối tác địa phương.</p><p>Đây là kết quả mô phỏng minh họa, chưa phải khuyến nghị đầu tư thực tế.</p>'; },
+         cmp:function(w){ return w+' phù hợp hơn với bộ ưu tiên hiện tại. Hãy kiểm tra trade-off vốn, kiểm soát và tốc độ trước khi quyết định.'; } },
+    en:{ rec:'Recommended', badge:'RECOMMENDED', capFit:'Capital fit', control:'Control', riskFit:'Risk fit', speed:'Speed', learning:'Learning',
+         select:'Select & simulate', none:'No mode selected yet.', fit:'Current fit score', capital:'Capital', risk:'Risk',
+         ins:function(b){ return '<p><b>'+b+'</b> currently fits your priorities best.</p><p>Japan has high digital readiness and institutional quality; however, competition and cultural distance raise the value of a local partner.</p><p>This is an illustrative simulation result, not real investment advice.</p>'; },
+         cmp:function(w){ return w+' fits the current set of priorities better. Check the capital, control and speed trade-offs before you decide.'; } }
+  };
+
+  function lang(){
+    if(typeof window.clayCurrentLang === 'function') return window.clayCurrentLang() === 'en' ? 'en' : 'vi';
+    return document.documentElement.lang === 'en' ? 'en' : 'vi';
+  }
+  function nm(m, L){ return (NAME[m.id] && NAME[m.id][L]) || m.name; }
+  function desc(m, L){ return L === 'en' ? (DESC_EN[m.id] || m.desc) : m.desc; }
+
+  function score(m){
+    var capitalFit = 100 - m.investment, riskFit = 100 - Math.abs(m.risk - W.risk);
+    return Math.round((m.control*W.control + m.speed*W.speed + m.learning*W.learning + capitalFit*W.capital + riskFit*(100 - W.risk) + m.fit*80) / 500);
+  }
+  function rank(){ return D.modes.map(function(m){ return Object.assign({}, m, { score:score(m) }); }).sort(function(a, b){ return b.score - a.score; }); }
+  function metric(label, value){
+    return '<div class="em-metric"><span>'+label+'</span><span>'+value+'</span></div><div class="em-bar"><i style="width:'+value+'%"></i></div>';
+  }
+
+  function renderCountry(L){
+    $('#country').innerHTML = Object.keys(D.country).map(function(k){
+      var label = COUNTRY[k] ? COUNTRY[k][L] : k;
+      return '<dt>'+label+'</dt><dd>'+D.country[k]+'</dd>';
+    }).join('');
+  }
+
+  function renderSelection(L, t){
+    var box = $('#selection');
+    if(!selected){ box.textContent = t.none; return; }
+    var m = D.modes.find(function(x){ return x.id === selected; });
+    box.innerHTML = '<b>'+nm(m, L)+'</b><p>'+t.fit+': '+score(m)+'/100</p><p>'+t.capital+': '+m.investment+' · '+t.control+': '+m.control+' · '+t.risk+': '+m.risk+'</p>';
+  }
+
+  function renderCompare(L, t){
+    if(!compared){ $('#result').innerHTML = ''; return; }
+    var a = D.modes.find(function(m){ return m.id === compared[0]; }), b = D.modes.find(function(m){ return m.id === compared[1]; });
+    var sa = score(a), sb = score(b), winner = sa >= sb ? a : b;
+    $('#result').innerHTML = '<p><b>'+nm(a, L)+': '+sa+'</b> vs. <b>'+nm(b, L)+': '+sb+'</b></p><p>'+t.cmp(nm(winner, L))+'</p>';
+  }
+
+  function fillSelects(L){
+    ['#a', '#b'].forEach(function(id, i){
+      var el = $(id), old = el.value;
+      el.innerHTML = D.modes.map(function(m, j){ return '<option value="'+m.id+'"'+((!old && j === i) ? ' selected' : '')+'>'+nm(m, L)+'</option>'; }).join('');
+      if(old) el.value = old;
+    });
+  }
+
+  function render(){
+    var L = lang(), t = T[L], ranked = rank(), best = ranked[0];
+    renderCountry(L);
+    $('#recommended').textContent = t.rec+': '+nm(best, L)+' · '+best.score+'/100';
+    $('#modeGrid').innerHTML = ranked.map(function(m){
+      var cls = 'em-panel em-mode'+(m.id === selected ? ' selected' : '')+(m.id === best.id ? ' recommended' : '');
+      return '<article class="'+cls+'" data-id="'+m.id+'">'
+        + (m.id === best.id ? '<span class="badge">'+t.badge+'</span>' : '')
+        + '<div class="icon" aria-hidden="true">'+m.icon+'</div><h3>'+nm(m, L)+'</h3><p>'+desc(m, L)+'</p>'
+        + '<div class="em-metrics">'+metric(t.capFit, 100 - m.investment)+metric(t.control, m.control)+metric(t.riskFit, 100 - Math.abs(m.risk - W.risk))+metric(t.speed, m.speed)+metric(t.learning, m.learning)+'</div>'
+        + '<button type="button" class="clay-btn clay-btn-pill"'+(m.id === selected ? ' aria-pressed="true"' : '')+'>'+t.select+'</button></article>';
+    }).join('');
+    document.querySelectorAll('.em-mode button').forEach(function(b){ b.onclick = function(){ choose(b.parentElement.dataset.id); }; });
+    $('#insights').innerHTML = t.ins(nm(best, L));
+    renderSelection(L, t);
+    fillSelects(L);
+    renderCompare(L, t);
+  }
+
+  function choose(id){ selected = id; $('#continue').disabled = false; render(); }
+
+  document.querySelectorAll('.em-weights input').forEach(function(el){
+    el.addEventListener('input', function(){ W[el.id] = Number(el.value); el.nextElementSibling.value = el.value; render(); });
+  });
+  $('#run').onclick = function(){ compared = [$('#a').value, $('#b').value]; renderCompare(lang(), T[lang()]); };
+  window.addEventListener('bizon:langchange', render);
+  render();
+})();
+</script>
+<script src="js/bizon-clay-i18n.js" defer></script>
+<script src="js/bizon-clay-nav.js" defer></script>
+<script src="js/bizon-clay-footer.js" defer></script>
+</body>
+</html>
