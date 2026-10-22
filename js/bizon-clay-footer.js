@@ -37,8 +37,8 @@
       { href:'chinh-sach.html', vi:'Chính sách quyền riêng tư', en:'Privacy policy' }
     ]);
 
-  var disVi = 'Trang web chỉ phục vụ mục đích giáo dục và nghiên cứu, không đại diện cho bất kỳ tổ chức chính trị nào. Hình ảnh quốc kỳ, bản đồ chỉ mang ý nghĩa minh họa văn hóa – giáo dục.';
-  var disEn = 'This website serves educational and research purposes only and does not represent any political organization. Flag and map images are cultural and educational illustrations only.';
+  var disVi = 'Trang web chỉ phục vụ mục đích giáo dục và nghiên cứu, không đại diện cho bất kỳ tổ chức chính trị nào. Hình ảnh quốc kỳ, bản đồ chỉ mang ý nghĩa minh họa văn hóa – giáo dục; quần đảo Hoàng Sa và Trường Sa thuộc chủ quyền Việt Nam. Bản đồ dữ liệu dùng ranh giới Natural Earth (dữ liệu công cộng), tham chiếu Bản đồ nền – Hệ thống VNSDI, Bộ Nông nghiệp và Môi trường.';
+  var disEn = 'This website serves educational and research purposes only and does not represent any political organization. Flag and map images are cultural and educational illustrations only; the Hoàng Sa and Trường Sa archipelagos are part of Viet Nam. Data maps use Natural Earth boundaries (public domain), referenced against the national basemap of the VNSDI system, Ministry of Agriculture and Environment.';
 
   var f = document.createElement('footer');
   f.id = 'clay-footer';
