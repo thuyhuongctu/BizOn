@@ -9,7 +9,7 @@
 
 | Field | Value |
 |---|---|
-| App name | BizOn Bật Nghiệp – Simulation |
+| App name | BizOn – Mô phỏng kinh doanh |
 | Default language | English (United States) |
 | App or game | App |
 | Free or paid | Free |
