@@ -35,7 +35,7 @@
     'event-energy-crisis-cut.webp':{ fit:'contain', pos:'50% 50%', pad:'8px' }
   };
   /* Tên & chú thích tiếng Anh của từng mục (js/thu-vien-data-en.js); thiếu bản dịch thì giữ tiếng Việt */
-  function loc(a, key){ var E = lang() === 'en' && window.BZ_LIB_EN && window.BZ_LIB_EN[key == null ? a[0] : a[key]]; return E ? [a[0], E[0], E[1]].concat(a.slice(3)) : a; }
+  function loc(a, key){ var E = lang() === 'en' && window.BZ_LIB_EN && window.BZ_LIB_EN[key == null ? a[0] : a[key]]; return E ? [a[0], E[0], E[1]].concat(E.length > 2 ? E.slice(2) : a.slice(3)) : a; }
   function locMusic(m){ var E = lang() === 'en' && window.BZ_LIB_EN && window.BZ_LIB_EN[m[2]]; return E ? [E[0], E[1], m[2]] : m; }
   function fig(src,name,desc){ return {src:art(src),name:name,desc:desc,ar:'4/5',fit:'contain',pos:'50% 100%',pad:'8px 8px 0',bg:'#EAF4F2',span:'auto'}; }
   function sheet(a){ return {src:art(a[0]),name:a[1],desc:a[2],ar:'16/9',fit:'contain',pos:'50% 50%',pad:'0',bg:'#FFF3DA',span:'1 / -1'}; }
@@ -50,7 +50,7 @@
       { h:t.s[1], note:t.n[1], min:'160px', items:
         D.cast.map(function(a){ a = loc(a); return fig('character/'+a[0], a[1], a[2]); }).concat([sheet(loc(D.sheets[2]))]) },
       { h:t.s[2], note:'', min:'260px', items:
-        D.scenes.map(function(a){ a = loc(a); return Object.assign({src:art('illustrations/'+a[0]),name:a[1],desc:a[2],ar:'16/10',fit:'cover',pos:'50% 30%',pad:'0',bg:'#F3E6CF',span:'auto'}, SCENE_FIT[a[0]] || {}); }) },
+        D.scenes.map(function(a){ a = loc(a); return Object.assign({src:art('illustrations/'+a[0]),name:a[1],desc:a[2],long:a[3]||'',ar:'16/10',fit:'cover',pos:'50% 30%',pad:'0',bg:'#F3E6CF',span:'auto'}, SCENE_FIT[a[0]] || {}); }) },
       { h:t.s[3], note:'', min:'200px', items:[], music:true },
       { h:t.s[4], note:t.n[4], min:'240px', items:
         D.merch.map(function(a){ a = loc(a); return {src:art(a[0]),name:a[1],desc:a[2],ar:'1/1',fit:'cover',pos:'50% 30%',pad:'0',bg:'#F3E4C8',span:'auto'}; }) }
@@ -79,10 +79,12 @@
     document.documentElement.style.overflow = 'hidden';
     root.style.display = 'flex';
     root.innerHTML =
-      '<img src="'+esc(it.src)+'" alt="'+esc(it.name)+'" style="max-width:min(92vw,1100px);max-height:74vh;object-fit:contain;border-radius:20px;background:rgba(255,255,255,.05)">'
+      '<img src="'+esc(it.src)+'" alt="'+esc(it.name)+'" style="max-width:min(92vw,1100px);max-height:'+(it.long?'52vh':'74vh')+';object-fit:contain;border-radius:20px;background:rgba(255,255,255,.05)">'
       + '<div style="margin-top:16px;max-width:min(92vw,760px);text-align:center;color:#fff">'
         + '<div style="font-size:18px;font-weight:800">'+esc(it.name)+'</div>'
         + '<div style="margin-top:4px;font-size:14px;color:rgba(255,255,255,.72)">'+esc(it.desc)+'</div>'
+        /* Mô tả đầy đủ (nếu có): đoạn văn căn trái, cuộn riêng để ảnh vẫn nằm trong khung */
+        + (it.long ? '<div style="margin-top:12px;max-height:24vh;overflow:auto;text-align:left;'+(innerWidth < 640 ? 'padding:0 40px;' : '')+'font-size:13.5px;line-height:1.6;color:rgba(255,255,255,.86)">' + it.long.split(/\n\n/).map(function(p){ return '<p style="margin:0 0 10px">'+esc(p)+'</p>'; }).join('') + '</div>' : '')
         + '<div style="margin-top:8px;font-size:12px;font-weight:800;color:rgba(255,255,255,.5)">'+(lb+1)+' / '+vis.length+'</div>'
       + '</div>'
       + '<button data-lb="x" aria-label="Close" style="position:absolute;border:0;cursor:pointer;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;font:800 20px var(--clay-head);top:20px;right:20px">✕</button>'
