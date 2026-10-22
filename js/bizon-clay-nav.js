@@ -7,11 +7,15 @@
    ========================================================================== */
 (function(){
   if(window.__bizonClayNav) return; window.__bizonClayNav = true;
+  /* Trang được nhúng trong khung (vd pilot nhúng Learning Edition) dùng menu của trang ngoài */
+  try{ if(window.top !== window.self) return; }catch(e){ return; }
   window.BIZON_NO_NAV = true; /* chặn site-nav.js cũ nếu vô tình được nạp */
 
   var LINKS = [
     { href:'universe.html',         vi:'Vũ trụ',    en:'Universe' },
     { href:'games.html',            vi:'Trò chơi',  en:'Games' },
+    /* Góc giảng viên: đặt sớm để hàng menu cuộn ngang trên điện thoại vẫn thấy ngay */
+    { href:'giang-vien.html',       vi:'Giảng viên',en:'Instructors' },
     { href:'lop-hoc.html',          vi:'Lớp học',   en:'Classroom' },
     { href:'truong-hoc-thuat.html', vi:'Học thuật', en:'Academic' },
     { href:'bang-chung.html',       vi:'Bằng chứng',en:'Evidence' },

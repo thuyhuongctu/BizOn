@@ -13,9 +13,16 @@
      window.BIZON_LANG_RELOAD = true trước tệp này → đổi VI/EN trên menu thì tải lại trang. */
   var startLang = null;
   try{ startLang = localStorage.getItem('bizon-lang'); }catch(err){}
+  var userPick = false;
+  document.addEventListener('click', function(e){
+    if(e.target && e.target.closest && e.target.closest('#clay-nav .cn-lang button')) userPick = true;
+  }, true);
   window.addEventListener('bizon:langchange', function(e){
     if(busy) return;
     var lang = e && e.detail && e.detail.lang === 'en' ? 'en' : 'vi';
+    /* Tài liệu có bản riêng cho từng ngôn ngữ: window.BIZON_LANG_ALT = { en:'…html' } → người dùng bấm VI/EN trên menu thì mở bản kia */
+    var alt = window.BIZON_LANG_ALT;
+    if(alt && alt[lang] && userPick){ busy = true; location.href = alt[lang]; return; }
     if(window.BIZON_LANG_RELOAD){ if(startLang && lang !== startLang){ busy = true; location.reload(); } return; }
     busy = true;
     try{

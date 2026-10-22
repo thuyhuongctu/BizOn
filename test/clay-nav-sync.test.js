@@ -20,7 +20,7 @@ const SUBDIR = ['app/release.html', 'app/command-center.html', 'app/instructor-s
   'app/blueprint-2030.html', 'lab/ie-lab.html', 'lab/cmr-lab.html', 'lab/cvp-studio.html', 'lab/nha-may-fdi.html'];
 // Trang trùng lặp đã gộp → trang chuyển hướng (giữ link cũ)
 const MERGED = { 'truong.html': 'universe.html', 'truong-gioi-thieu.html': 'doi-ngu.html',
-  'truong-chinh-sach.html': 'chinh-sach.html', 'giang-vien.html': 'app/instructor-studio.html' };
+  'truong-chinh-sach.html': 'chinh-sach.html' };
 
 test('bizon-clay-chrome.css khớp bizon-clay.css', async () => {
   const { buildClayChrome } = await import(path.join(ROOT, 'scripts', 'build-clay-chrome.mjs'));
@@ -62,6 +62,26 @@ for (const [from, to] of Object.entries(MERGED)) {
   });
 }
 
+// Trang ứng dụng/tài liệu ở thư mục gốc: chỉ gắn menu + chân trang chung
+const ROOT_TOOLS = ['brand-passport-learning.html', 'brand-passport-learning-pilot.html', 'Thang Diem Danh Gia.dc.html',
+  'Thang Diem Chi Tiet.dc.html', 'Thang Diem Ho Chieu Mini.dc.html', 'Thang Diem Bat Nghiep - Sinh Vien.dc.html',
+  'Grading Scale Bat Nghiep - Student EN.dc.html', 'Thang Diem Ho Chieu - Sinh Vien.dc.html', 'Grading Scale Ho Chieu - Student EN.dc.html'];
+for (const f of ROOT_TOOLS) {
+  test(f + ': menu + chân trang đất sét', () => {
+    const s = read(f);
+    for (const need of ['css/bizon-clay-chrome.css', 'js/bizon-clay-i18n.js', 'js/bizon-clay-bridge.js', 'js/bizon-clay-nav.js', 'js/bizon-clay-footer.js'])
+      assert.ok(s.includes(need), f + ' thiếu ' + need);
+    const alt = s.match(/BIZON_LANG_ALT = (\{[^;]+\});/);
+    if (alt) for (const target of Object.values(JSON.parse(alt[1])))
+      assert.ok(fs.existsSync(path.join(ROOT, decodeURI(target))), f + ': bản ngôn ngữ kia không tồn tại ' + target);
+  });
+}
+
+test('nav/footer đất sét không tự gắn khi trang nằm trong khung (iframe)', () => {
+  for (const f of ['js/bizon-clay-nav.js', 'js/bizon-clay-footer.js'])
+    assert.ok(/window\.top !== window\.self/.test(read(f)), f + ' thiếu chặn iframe');
+});
+
 test('nội dung gộp có mặt ở trang giữ lại', () => {
   const uni = read('universe.html'), dn = read('doi-ngu.html'), cs = read('chinh-sach.html');
   for (const id of ['hoc-phan', 'cau-hoi']) assert.ok(uni.includes('id="' + id + '"'), 'universe thiếu #' + id);
@@ -82,4 +102,18 @@ test('sw.js lưu sẵn tệp mới', () => {
   for (const f of ['./css/bizon-clay-chrome.css', './css/clay-legacy.css', './js/bizon-clay-bridge.js']) {
     assert.ok(sw.includes("'" + f + "'"), 'sw.js thiếu ' + f);
   }
+});
+
+test('Góc giảng viên: trang riêng gom công cụ, có lối vào trên menu + chân trang', () => {
+  const s = read('giang-vien.html');
+  assert.ok(!s.includes('http-equiv="refresh"'), 'giang-vien.html không còn là trang chuyển hướng');
+  for (const need of ['js/bizon-clay-nav.js', 'js/bizon-clay-footer.js', 'id="bang-dieu-khien"', 'id="thang-diem"'])
+    assert.ok(s.includes(need), 'giang-vien.html thiếu ' + need);
+  const links = [...s.matchAll(/<a [^>]*href="([^"#]+)/g)].map(m => decodeURI(m[1]));
+  for (const tool of ['Trang Giang Vien.dc.html', 'app/instructor-studio.html', 'instructor-grading.html', 'truong-giang-vien.html'])
+    assert.ok(links.includes(tool), 'giang-vien.html thiếu thẻ ' + tool);
+  for (const l of links) assert.ok(fs.existsSync(path.join(ROOT, l)), 'giang-vien.html trỏ tệp không tồn tại: ' + l);
+  assert.ok(/href:'giang-vien\.html'/.test(read('js/bizon-clay-nav.js')), 'menu thiếu mục Giảng viên');
+  assert.ok(/href:'giang-vien\.html'/.test(read('js/bizon-clay-footer.js')), 'chân trang thiếu Góc giảng viên');
+  assert.ok(read('sw.js').includes("'./giang-vien.html'"), 'sw.js thiếu giang-vien.html');
 });

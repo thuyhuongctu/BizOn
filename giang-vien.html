@@ -1,36 +1,220 @@
 <!DOCTYPE html>
 <!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & PGS.TS. Phan Anh Tú. Bảo lưu mọi quyền. -->
 <!--
-  Bảng điều khiển cũ dùng khóa giảng viên chung (đã thu hồi) – thay bằng app/instructor-studio.html.
-  Giữ URL cũ và chuyển hướng (không xoá – đảo ngược được). GitHub Pages không có
-  chuyển hướng phía máy chủ nên dùng meta refresh + canonical; script giữ ?query và #neo.
+  Góc giảng viên: một lối vào duy nhất cho mọi công cụ dành cho giảng viên
+  (bảng điều khiển lớp, Instructor Studio, sổ điểm, bảng tổng kết, hướng dẫn, thang điểm).
+  Menu đất sét có mục «Giảng viên» trỏ về trang này trên mọi trang.
 -->
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
 <script src="js/bizon-lang.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Đã chuyển: Bảng điều khiển giảng viên (bản cũ) · BizOn</title>
-<link rel="canonical" href="https://bizonland.com/app/instructor-studio.html">
-<meta http-equiv="refresh" content="0; url=app/instructor-studio.html">
-<meta name="robots" content="noindex, follow">
-<script>
-(function(){
-  var map = {};
-  var h = location.hash, to = 'app/instructor-studio.html';
-  location.replace(to + location.search + (h ? (h in map ? map[h] : h) : ''));
-})();
-</script>
+<title data-en="Instructor corner · BizOn">Góc giảng viên · BizOn</title>
+<meta name="description" data-en-content="Every BizOn tool for instructors in one place: class dashboard, Instructor Studio, gradebook, class summaries, setup guide and grading scales." content="Mọi công cụ BizOn dành cho giảng viên ở một chỗ: bảng điều khiển lớp, Instructor Studio, sổ điểm, bảng tổng kết lớp, hướng dẫn mở lớp và thang điểm.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & PGS.TS. Phan Anh Tú">
+<link rel="canonical" href="https://bizonland.com/giang-vien.html">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script src="js/bizon-boot.js"></script>
+<link rel="stylesheet" href="css/bizon-clay-fonts.css">
+<link rel="stylesheet" href="css/bizon-clay.css">
 <style>
-  body{margin:0;min-height:100vh;display:grid;place-items:center;padding:2rem;background:#FBF4E8;color:#033337;
-    font:500 16px/1.6 "Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",sans-serif;text-align:center}
-  a{color:#006687;font-weight:800}
+  /* Bố cục riêng trang Góc giảng viên */
+  .gv-hero{position:relative;overflow:hidden;margin:28px 0 40px;border-radius:40px;background:var(--clay-cream-deep);box-shadow:var(--clay-night-shadow,inset 0 -10px 0 rgba(140,80,20,.1),inset 0 6px 0 rgba(255,255,255,.7),0 30px 44px -30px rgba(110,70,30,.6))}
+  .gv-hero .grid{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end;padding:clamp(24px,4vw,44px) clamp(20px,4vw,44px) 0}
+  .gv-hero h1{margin:18px 0 0;font-size:clamp(36px,5vw,62px);text-wrap:balance}
+  .gv-hero .lead{margin:16px 0 0;max-width:34em;font-size:17px;line-height:1.65;color:var(--clay-sub);text-wrap:pretty}
+  .gv-hero .acts{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0 clamp(28px,4vw,48px)}
+  .gv-hero .art{width:min(34vw,380px);align-self:end}
+  .gv-hero .art img{display:block;width:100%;height:auto;filter:drop-shadow(0 18px 14px rgba(110,70,30,.3))}
+  .gv-jump{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 36px}
+  .gv-jump a{padding:9px 16px;border-radius:var(--clay-r-pill);background:var(--clay-tray);color:var(--clay-sub);font-size:14px;font-weight:800;box-shadow:var(--clay-tray-shadow)}
+  .gv-jump a:hover{color:var(--clay-teal)}
+  .gv-main{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:24px;align-items:center;padding:clamp(24px,3.5vw,40px);border-radius:36px;background:var(--clay-c2);color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -10px 0 rgba(0,0,0,.07),inset 0 6px 0 rgba(255,255,255,.55),0 28px 40px -26px rgba(140,90,20,.6))}
+  .gv-main h2{margin:10px 0 0;font-size:clamp(28px,3.4vw,40px)}
+  .gv-main p{margin:12px 0 0;font-size:16px;line-height:1.6;color:var(--clay-ink-2);text-wrap:pretty}
+  .gv-main ul{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .gv-main li{padding:12px 14px;border-radius:18px;background:rgba(255,251,244,.8);font-size:14px;font-weight:700;line-height:1.35;box-shadow:inset 0 -3px 0 rgba(110,70,30,.1)}
+  .gv-main .acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+  .gv-sec{margin:56px 0 0;scroll-margin-top:110px}
+  .gv-sec>h2{font-size:clamp(26px,3vw,34px)}
+  .gv-sec>p{margin:8px 0 22px;max-width:46em;font-size:15px;line-height:1.6;color:var(--clay-sub);text-wrap:pretty}
+  .gv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:18px}
+  .gv-tool{display:flex;flex-direction:column;gap:8px;padding:22px;border-radius:28px;background:var(--clay-card);color:var(--clay-ink);box-shadow:var(--clay-shadow);transition:transform .15s ease}
+  .gv-tool:hover{color:var(--clay-ink);transform:translateY(-3px)}
+  .gv-tool .ic{width:46px;height:46px;border-radius:16px;display:grid;place-items:center;font-size:22px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.1),inset 0 3px 0 rgba(255,255,255,.5)}
+  .gv-tool h3{margin:6px 0 0;font-size:19px;line-height:1.25}
+  .gv-tool p{margin:0;flex:1;font-size:14px;line-height:1.55;color:var(--clay-sub)}
+  .gv-tool .go{font-size:14px;font-weight:800;color:var(--clay-teal)}
+  .gv-help{margin:64px 0 72px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding:26px 30px;border-radius:32px;background:var(--clay-c4);box-shadow:var(--clay-night-shadow,inset 0 -9px 0 rgba(0,0,0,.07),inset 0 5px 0 rgba(255,255,255,.5),0 26px 36px -24px rgba(30,90,60,.5))}
+  .gv-help p{margin:4px 0 0;font-size:15px;line-height:1.55;color:var(--clay-ink-2)}
+  @media (max-width:820px){ .gv-main{grid-template-columns:1fr} }
+  @media (max-width:640px){ .gv-hero .grid{grid-template-columns:1fr} .gv-hero .art{display:none} .gv-main ul{grid-template-columns:1fr} }
 </style>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Góc giảng viên · BizOn">
+<meta property="og:description" content="Mọi công cụ BizOn dành cho giảng viên ở một chỗ.">
+<meta name="twitter:card" content="summary_large_image">
+<script src="js/capture-guard.js"></script>
 </head>
-<body>
-<main>
-  <p>Trang <strong>Bảng điều khiển giảng viên (bản cũ)</strong> đã được gộp vào <strong>Instructor Studio</strong>.</p>
-  <p>Nếu trình duyệt không tự chuyển, bấm vào đây: <a href="app/instructor-studio.html">Instructor Studio →</a></p>
+<body class="clay">
+
+<main class="clay-main">
+  <section class="gv-hero">
+    <div class="grid">
+      <div>
+        <span class="clay-eyebrow" data-en="Instructor corner">Góc giảng viên</span>
+        <h1 data-en="Every teaching tool, in one place">Mọi công cụ dạy học, ở một chỗ</h1>
+        <p class="lead" data-en="Open your class, lock rounds, time the exam, follow decision traces and grade – all BizOn instructor apps and documents gathered here.">Mở lớp, khóa vòng, tính giờ thi, theo dõi dấu vết quyết định và chấm điểm – mọi ứng dụng và tài liệu BizOn dành cho giảng viên gom về đây.</p>
+        <div class="acts">
+          <a class="clay-btn clay-btn-pill clay-btn-orange" href="Trang Giang Vien.dc.html" data-en="Open class dashboard →">Mở bảng điều khiển lớp →</a>
+          <a class="clay-btn clay-btn-pill" href="truong-giang-vien.html" data-en="New here? 5-step guide">Lần đầu? Hướng dẫn 5 bước</a>
+        </div>
+      </div>
+      <div class="art"><img src="assets/character/anh-tu-desk-laptop-cut-v2.webp" alt="" width="698" height="657"></div>
+    </div>
+  </section>
+
+  <nav class="gv-jump" aria-label="Mục trên trang" data-en-aria="On this page">
+    <a href="#bang-dieu-khien" data-en="Class dashboard">Bảng điều khiển lớp</a>
+    <a href="#theo-doi" data-en="Monitor &amp; grade">Theo dõi &amp; chấm</a>
+    <a href="#chuan-bi" data-en="Prepare a class">Chuẩn bị lớp</a>
+    <a href="#thang-diem" data-en="Grading scales">Thang điểm</a>
+  </nav>
+
+  <!-- Ứng dụng chính -->
+  <section class="gv-main" id="bang-dieu-khien">
+    <div>
+      <span class="clay-chip" style="background:var(--clay-card);color:#7A4A0E" data-en="Main app">Ứng dụng chính</span>
+      <h2 data-en="Instructor page – class dashboard">Trang Giảng viên – Bảng điều khiển lớp</h2>
+      <p data-en="Sign in with your instructor account, create a class code and run the session live: everything students do in Bật Nghiệp and Brand Passport 3D shows up here.">Đăng nhập bằng tài khoản giảng viên, tạo mã lớp và điều khiển buổi học trực tiếp: mọi thao tác của sinh viên trong Bật Nghiệp và Hộ Chiếu Thương Hiệu 3D hiện về đây.</p>
+      <div class="acts">
+        <a class="clay-btn clay-btn-pill clay-btn-orange" href="Trang Giang Vien.dc.html" data-en="Open dashboard →">Mở bảng điều khiển →</a>
+      </div>
+    </div>
+    <ul>
+      <li data-en="🔑 Create class codes">🔑 Tạo mã lớp</li>
+      <li data-en="🔒 Lock rounds for the whole class">🔒 Khóa vòng cho cả lớp</li>
+      <li data-en="⏱️ Exam timer">⏱️ Tính giờ thi</li>
+      <li data-en="📒 Gradebook &amp; rubric">📒 Sổ điểm &amp; rubric</li>
+      <li data-en="📊 Export to Excel">📊 Xuất Excel</li>
+      <li data-en="🎓 Official CTU certificates">🎓 Chứng nhận chính thức ĐHCT</li>
+    </ul>
+  </section>
+
+  <!-- Theo dõi & chấm -->
+  <section class="gv-sec" id="theo-doi">
+    <h2 data-en="Monitor &amp; grade">Theo dõi &amp; chấm điểm</h2>
+    <p data-en="Tools for following each team after class and grading on reproducible evidence. No AI grades students' reflections.">Công cụ xem lại từng đội sau buổi học và chấm trên bằng chứng tái lập được. Không dùng AI để chấm phần phản tư của sinh viên.</p>
+    <div class="gv-grid">
+      <a class="gv-tool" href="app/instructor-studio.html">
+        <span class="ic" style="background:var(--clay-c1)" aria-hidden="true">🧭</span>
+        <h3>Instructor Studio</h3>
+        <p data-en="Class-scoped view: Bật Nghiệp leaderboard, round-lock timeline, Brand Passport results, Decision Trace &amp; reflection, pre/post survey.">Xem theo mã lớp: bảng xếp hạng Bật Nghiệp, dòng thời gian khóa vòng, kết quả Hộ Chiếu, Decision Trace &amp; phản tư, khảo sát trước–sau.</p>
+        <span class="go" data-en="Open →">Mở →</span>
+      </a>
+      <a class="gv-tool" href="instructor-grading.html">
+        <span class="ic" style="background:var(--clay-c2)" aria-hidden="true">📒</span>
+        <h3 data-en="Gradebook (frozen snapshots)">Sổ điểm (ảnh chụp đóng băng)</h3>
+        <p data-en="Load decision logs, grade on frozen snapshots so results can be reproduced, filter by class/round, export CSV and print.">Nạp nhật ký quyết định, chấm trên ảnh chụp đóng băng để tái lập được, lọc theo lớp/vòng, xuất CSV và bản in.</p>
+        <span class="go" data-en="Open →">Mở →</span>
+      </a>
+      <a class="gv-tool" href="Ho Chieu Thuong Hieu - GV Bang Diem CSV.html">
+        <span class="ic" style="background:var(--clay-c3)" aria-hidden="true">🛂</span>
+        <h3 data-en="Brand Passport class summary (CSV)">Bảng tổng kết Hộ Chiếu (CSV)</h3>
+        <p data-en="Drag and drop the CSV files students export from Brand Passport 3D to see the whole class – works offline.">Kéo-thả các file CSV sinh viên xuất từ Hộ Chiếu Thương Hiệu 3D để xem cả lớp – không cần mạng.</p>
+        <span class="go" data-en="Open →">Mở →</span>
+      </a>
+      <a class="gv-tool" href="Bang Giao Vien.dc.html">
+        <span class="ic" style="background:var(--clay-c4)" aria-hidden="true">⛵</span>
+        <h3 data-en="Bến Phù Sa teacher board">Bảng giáo viên Bến Phù Sa</h3>
+        <p data-en="Paste results students send via Zalo, Messenger or email (mainly team play); the board reads and ranks them.">Dán kết quả sinh viên gửi qua Zalo, Messenger hoặc email (chủ yếu bài chơi nhóm); bảng tự đọc và xếp hạng.</p>
+        <span class="go" data-en="Open →">Mở →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Chuẩn bị lớp -->
+  <section class="gv-sec" id="chuan-bi">
+    <h2 data-en="Prepare a class">Chuẩn bị lớp</h2>
+    <p data-en="Read once before your first session: setup steps, the classroom playbook and the pre/post survey.">Đọc một lần trước buổi đầu tiên: các bước mở lớp, kịch bản lớp học và phiếu khảo sát trước–sau.</p>
+    <div class="gv-grid">
+      <a class="gv-tool" href="truong-giang-vien.html">
+        <span class="ic" style="background:var(--clay-c5)" aria-hidden="true">🧰</span>
+        <h3 data-en="Open a class in 5 steps">Mở lớp trong 5 bước</h3>
+        <p data-en="Ready-to-download toolkit, five clear steps and transparent grading – no computer lab needed.">Bộ công cụ tải sẵn, năm bước rõ ràng và cách chấm minh bạch – không cần phòng máy.</p>
+        <span class="go" data-en="Read →">Xem →</span>
+      </a>
+      <a class="gv-tool" href="lop-hoc.html">
+        <span class="ic" style="background:var(--clay-c1)" aria-hidden="true">🗓️</span>
+        <h3 data-en="Classroom playbook">Kịch bản lớp học</h3>
+        <p data-en="A session plan for 40–60 students, plus four practicum labs with a teacher projector view.">Kịch bản buổi học cho lớp 40–60 sinh viên, kèm bốn lab thực hành có màn hình chiếu cho giảng viên.</p>
+        <span class="go" data-en="Read →">Xem →</span>
+      </a>
+      <a class="gv-tool" href="khao-sat-online.html">
+        <span class="ic" style="background:var(--clay-c3)" aria-hidden="true">📝</span>
+        <h3 data-en="Pre/post survey (online)">Khảo sát trước–sau (online)</h3>
+        <p data-en="Students answer on their phones with a self-chosen anonymous code; results go to the research system.">Sinh viên làm trên điện thoại với mã ẩn danh tự đặt; kết quả nộp về hệ thống nghiên cứu.</p>
+        <span class="go" data-en="Open →">Mở →</span>
+      </a>
+      <a class="gv-tool" href="khao-sat.html">
+        <span class="ic" style="background:var(--clay-c2)" aria-hidden="true">🖨️</span>
+        <h3 data-en="Pre/post survey (print, A4)">Khảo sát trước–sau (bản in A4)</h3>
+        <p data-en="The same questionnaire as a printable A4 sheet for classes without phones.">Cùng bộ câu hỏi, dạng phiếu in khổ A4 cho lớp không dùng điện thoại.</p>
+        <span class="go" data-en="Open →">Mở →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Thang điểm -->
+  <section class="gv-sec" id="thang-diem">
+    <h2 data-en="Grading scales &amp; rubrics">Thang điểm &amp; rubric</h2>
+    <p data-en="Instructor documents and the student-facing scales you can hand out before class.">Tài liệu cho giảng viên và bản thang điểm phát cho sinh viên trước buổi học.</p>
+    <div class="gv-grid">
+      <a class="gv-tool" href="Thang Diem Danh Gia.dc.html">
+        <span class="ic" style="background:var(--clay-c4)" aria-hidden="true">⚖️</span>
+        <h3 data-en="Assessment scale (10-point)">Thang điểm đánh giá (thang 10)</h3>
+        <p data-en="General principles and the 10-point scale for Brand Passport 3D (individual) and Bật Nghiệp (team).">Nguyên tắc chung và thang 10 cho Hộ Chiếu Thương Hiệu 3D (cá nhân) và Bật Nghiệp (theo đội).</p>
+        <span class="go" data-en="Read →">Xem →</span>
+      </a>
+      <a class="gv-tool" href="Thang Diem Chi Tiet.dc.html">
+        <span class="ic" style="background:var(--clay-c5)" aria-hidden="true">🔍</span>
+        <h3 data-en="Detailed grading guide">Hướng dẫn chấm chi tiết</h3>
+        <p data-en="The grading process and criterion-by-criterion guidance for both games.">Quy trình chấm và hướng dẫn từng tiêu chí cho cả hai game.</p>
+        <span class="go" data-en="Read →">Xem →</span>
+      </a>
+      <a class="gv-tool" href="Thang Diem Bat Nghiep - Sinh Vien.dc.html">
+        <span class="ic" style="background:var(--clay-c2)" aria-hidden="true">🚀</span>
+        <h3 data-en="Student scale – Bật Nghiệp">Thang điểm sinh viên – Bật Nghiệp</h3>
+        <p data-en="Hand-out for students (English version available from the language switch).">Bản phát cho sinh viên (có bản tiếng Anh qua nút đổi ngôn ngữ).</p>
+        <span class="go" data-en="Read →">Xem →</span>
+      </a>
+      <a class="gv-tool" href="Thang Diem Ho Chieu - Sinh Vien.dc.html">
+        <span class="ic" style="background:var(--clay-c3)" aria-hidden="true">🛂</span>
+        <h3 data-en="Student scale – Brand Passport">Thang điểm sinh viên – Hộ Chiếu</h3>
+        <p data-en="Hand-out for students (English version available from the language switch).">Bản phát cho sinh viên (có bản tiếng Anh qua nút đổi ngôn ngữ).</p>
+        <span class="go" data-en="Read →">Xem →</span>
+      </a>
+      <a class="gv-tool" href="Thang Diem Ho Chieu Mini.dc.html">
+        <span class="ic" style="background:var(--clay-c1)" aria-hidden="true">⏳</span>
+        <h3 data-en="Student scale – Passport Mini">Thang điểm sinh viên – Hộ Chiếu Mini</h3>
+        <p data-en="For the 60-minute International Investment and Indonesia editions; the game computes the score.">Cho bản Đầu tư quốc tế và bản Indonesia 60 phút; điểm do game tính.</p>
+        <span class="go" data-en="Read →">Xem →</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="gv-help">
+    <div>
+      <h2 style="font-size:24px" data-en="Need an instructor account or a trial session?">Cần tài khoản giảng viên hoặc buổi dạy thử?</h2>
+      <p data-en="Write to the BizOn team – we reply to every instructor.">Viết cho nhóm BizOn – chúng tôi trả lời mọi giảng viên.</p>
+    </div>
+    <a class="clay-btn clay-btn-pill" href="lien-he.html" data-en="Contact us →">Liên hệ →</a>
+  </section>
 </main>
+
+<script src="js/bizon-clay-i18n.js" defer></script>
+<script src="js/bizon-clay-nav.js" defer></script>
+<script src="js/bizon-clay-footer.js" defer></script>
 </body>
 </html>
