@@ -212,7 +212,7 @@
      * only – print keeps the exact paper geometry. */
     @media screen and (max-width: 900px) {
       :host { min-width: 0; padding: 12px 8px; }
-      .sheet:not(.paginated):not(.fit-mode) { width: 100%; padding: 22px 16px; }
+      .sheet:not(.paginated):not(.fit-mode) { width: 100%; padding: 22px 16px; overflow-x: auto; } /* bảng/dòng không ngắt được cuộn trong trang giấy, không đẩy cả trang tràn ngang */
     }
     /* Scaled-fit mode (content-width/content-height): the inner .fit box
      * lays the content out at its authored fixed size and scales it onto

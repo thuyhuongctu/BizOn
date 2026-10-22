@@ -20,6 +20,7 @@
   .bc-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:16px;margin-top:22px}
   .bc-stat{padding:22px;border-radius:26px;text-align:center;box-shadow:var(--clay-night-shadow,inset 0 -8px 0 rgba(0,0,0,.08),inset 0 5px 0 rgba(255,255,255,.5),0 18px 24px -18px rgba(110,70,30,.5))}
   .bc-bar-row{display:grid;grid-template-columns:minmax(150px,230px) minmax(0,1fr) 110px;gap:14px;align-items:center}
+  @media (max-width:520px){ .bc-bar-row{grid-template-columns:minmax(0,1fr) auto;gap:6px 12px} .bc-bar-row>:first-child{grid-column:1/-1} } /* máy hẹp: nhãn lên dòng riêng, thanh + số liệu ở dòng dưới */
   .bc-track{height:22px;border-radius:999px;background:var(--clay-tray);box-shadow:inset 0 3px 5px rgba(110,70,30,.18);overflow:hidden}
   .bc-fill{height:100%;border-radius:999px;transform-origin:left;box-shadow:inset 0 -5px 0 rgba(0,0,0,.14),inset 0 3px 0 rgba(255,255,255,.4);animation:bzGrow 1.2s cubic-bezier(.16,1,.3,1) both}
   .bc-limit{display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px;padding:14px 16px;border-radius:20px}
