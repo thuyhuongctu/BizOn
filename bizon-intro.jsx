@@ -1,3 +1,7 @@
+const LANG = (typeof window !== 'undefined' && window.BZ_LANG) || 'en';
+const VI = {"Four one-session labs: contribution margin ratio (CMR), cost–volume–profit and break-even (CVP), the gravity model of trade and FDI into Viet Nam, and an FDI factory run over 8 quarters (local content, rules of origin, transshipment).":"Bốn lab một buổi: tỷ lệ số dư đảm phí (CMR), chi phí – sản lượng – lợi nhuận và hòa vốn (CVP), mô hình lực hấp dẫn của thương mại và FDI vào Việt Nam, và điều hành nhà máy FDI qua 8 quý (nội địa hóa, quy tắc xuất xứ, trung chuyển).","Take Vietnamese durian to the world over 6 seasons on a walkable 3D map: planting-area codes, the China phytosanitary protocol, official vs border trade, frozen and premium markets. Teams of 5 roles face AI rivals.":"Đưa sầu riêng Việt ra thế giới qua 6 vụ trên bản đồ 3D đi lại: mã số vùng trồng, nghị định thư kiểm dịch với Trung Quốc, chính ngạch – tiểu ngạch, đông lạnh và thị trường cao cấp. Đội 5 vai đấu các đối thủ AI.","Explainable business simulations for learning, research and internationalization – combining deterministic engines, AI-enhanced reflection and open-science practices.":"Các mô phỏng kinh doanh có khả năng giải thích, được thiết kế cho học tập, nghiên cứu và quốc tế hóa – kết hợp engine xác định, phản tư có AI hỗ trợ và định hướng khoa học mở.","Take a Vietnamese brand across borders through market intelligence, entry strategy, adaptation and resilience.":"Đưa thương hiệu Việt vượt biên giới bằng thông tin thị trường, phương thức thâm nhập, thích nghi và sức chống chịu.","Experiment with internationalization assumptions and observe how strategic variables change outcomes.":"Thử nghiệm các giả định quốc tế hóa và quan sát cách biến chiến lược làm thay đổi kết quả.","Start at Level 1; each level builds on the one before. Every game has a 3D version and a 2D version.":"Bắt đầu từ Bậc 1, bậc sau nối tiếp bậc trước. Trò chơi nào cũng có bản 3D và bản 2D.","Build and operate a business through multi-round strategic decisions in a Vietnamese context.":"Xây dựng và điều hành doanh nghiệp qua các vòng quyết định chiến lược trong bối cảnh Việt Nam.","Game mechanics connect with learning outcomes, pre/post measures and documented limitations.":"Cơ chế game được liên kết với chuẩn đầu ra, đo lường trước–sau và các giới hạn được công bố.","Short, focused simulations for practicing one business skill or decision pattern at a time.":"Các mô phỏng ngắn, tập trung để luyện một kỹ năng hoặc một mẫu quyết định kinh doanh.","Strategic choices leave traces for debriefing, rubrics, reflection and classroom analysis.":"Mỗi lựa chọn chiến lược để lại dữ liệu phục vụ debriefing, rubric, phản tư và phân tích lớp học.","Core scoring remains deterministic so results can be inspected, discussed and reproduced.":"Logic chấm điểm cốt lõi mang tính xác định để kết quả có thể được xem xét, thảo luận và tái lập.","Review the models, assumptions, equations and published limitations.":"Xem mô hình, giả định, phương trình và giới hạn đã công bố.","Use alongside the games to practise one model or skill at a time.":"Dùng kèm trò chơi để luyện riêng từng mô hình hoặc kỹ năng.","Play a short round, make decisions and get feedback from Lumina.":"Chơi một ván ngắn, ra quyết định và nhận phản hồi từ Lumina.","Run a class, follow decision traces and grade with rubrics.":"Tổ chức lớp, theo dõi dấu vết quyết định và chấm theo rubric.","Informal venture start-up on a floating market · English narration · 1:30":"Khởi sự kinh doanh phi chính thức trên chợ nổi · thuyết minh tiếng Anh · 1:30","Durian export through 6 seasons · English narration · 1:40":"Xuất khẩu sầu riêng qua 6 vụ · thuyết minh tiếng Anh · 1:40","See pilot results and how to deploy at your institution.":"Tìm hiểu kết quả pilot và cách triển khai tại cơ sở đào tạo.","Taking a brand to 7 markets · English narration · 1:30":"Đưa thương hiệu ra 7 thị trường · thuyết minh tiếng Anh · 1:30","Designed in the Mekong Delta · Built for the World":"Thiết kế tại Đồng bằng sông Cửu Long · Vươn ra thế giới","Learn business by making consequential decisions.":"Học kinh doanh bằng những quyết định có hệ quả.","A 6-round market arena · English narration · 1:30":"Đấu trường 6 vòng thị trường · thuyết minh tiếng Anh · 1:30","AI interprets; it does not replace scoring":"AI diễn giải, không thay engine chấm điểm","Trailer · built from real in-game footage":"Trailer · dựng từ hình ảnh trong game","Preliminary classroom pilot: 40 learners":"Pilot lớp học ban đầu: 40 người học","Three game levels · three support tools":"Ba bậc trò chơi · ba công cụ bổ trợ","Published model cards and equations":"Model cards và phương trình công khai","Simulation-based business learning":"Học kinh doanh qua mô phỏng","Each audience has its own way in.":"Mỗi người dùng có một lối vào riêng.","Institutions · partners · funders":"Nhà trường · đối tác · quỹ","Deterministic simulation engine":"Engine mô phỏng xác định","Preliminary classroom evidence":"Bằng chứng lớp học ban đầu","Learning that can be examined.":"Việc học có thể được quan sát và kiểm tra.","Observable learning artifacts":"Sản phẩm học tập quan sát được","LEVEL 2 · RUNNING A BUSINESS":"BẬC 2 · VẬN HÀNH DOANH NGHIỆP","from Vietnam to the world.":"từ Việt Nam ra thế giới.","Research → learning design":"Từ nghiên cứu đến thiết kế học tập","Open my class dashboard →":"Bảng điều khiển lớp →","Evidence before marketing":"Bằng chứng trước quảng bá","View Academic Framework →":"Xem khung học thuật →","Watch the 1-minute intro":"Xem intro 1 phút","From theory to decision.":"Từ lý thuyết đến quyết định.","Assumptions & parameters":"Giả định và tham số","Explainable consequences":"Hệ quả giải thích được","Start with Bến Phù Sa →":"Bắt đầu với Bến Phù Sa →","▶ Get it on Google Play":"▶ Tải trên Google Play","Consequential scenarios":"Kịch bản có hệ quả","AI-enhanced questioning":"AI hỗ trợ chất vấn","7 markets · 6 quarters":"7 thị trường · 6 quý","LEVEL 3 · INTERNATIONALISATION":"BẬC 3 · QUỐC TẾ HÓA","Watch before you play.":"Xem trước khi bắt đầu.","Start from your role":"Bắt đầu từ vai trò của bạn","Academic framework →":"Khung học thuật →","Observable decisions":"Dấu vết quyết định","Actions & trade-offs":"Hành động và đánh đổi","See all simulations":"Xem tất cả trò chơi","LEVEL 1 · VENTURE START-UP":"BẬC 1 · KHỞI SỰ KINH DOANH","Classroom playbook":"Kịch bản lớp học","Explainable engine":"Engine có khả năng giải thích","Durian Passport →":"Hộ Chiếu Sầu Riêng →","Instructor page →":"Trang giảng viên →","Pilot programme →":"Chương trình pilot →","Solo or team play":"Chơi một mình hoặc theo nhóm","6 decision rounds":"6 vòng quyết định","Explore the model":"Khám phá mô hình","Learning evidence":"Đo lường học tập","Brand Passport →":"Hộ Chiếu Thương Hiệu →","Teams of 5 roles":"Đội 5 vai","Practice a skill":"Luyện một kỹ năng","Grading scale →":"Thang điểm →","Other versions:":"Bản khác:","Durian Passport":"Hộ Chiếu Sầu Riêng","View Evidence →":"Xem bằng chứng →","3D · team play":"3D · chơi nhóm","Brand Passport":"Hộ Chiếu Thương Hiệu","STRATEGY MODEL":"MÔ HÌNH CHIẾN LƯỢC","PRACTICUM LABS":"LAB THỰC HÀNH","Practicum labs":"Lab thực hành","Support tools":"Công cụ bổ trợ","Bến Phù Sa →":"Bến Phù Sa →","Bật Nghiệp →":"Bật Nghiệp →","Market arena":"Đấu trường thị trường","SKILL DRILLS":"LUYỆN KỸ NĂNG","Instructors":"Giảng viên","Researchers":"Nhà nghiên cứu","Evidence →":"Bằng chứng →","Play in 3D":"Chơi bản 3D","6 quarters":"6 quý","Simulation":"Mô phỏng","Reflection":"Phản tư","7 markets":"7 thị trường","6 seasons":"6 vụ","Classroom":"Lớp học","Students":"Sinh viên","IE Lab →":"IE Lab →","Research":"Nghiên cứu","Decision":"Quyết định","Evidence":"Bằng chứng","Universe":"Vũ trụ","Academic":"Học thuật","Trailer":"Xem trailer","5 weeks":"5 tuần","Lite 3D":"Rút gọn 3D","Lite 2D":"Rút gọn 2D","Outcome":"Kết quả","Launch":"Bắt đầu","Model":"Mô hình","Games":"Trò chơi","Pilot":"Pilot","About":"Đội ngũ","2D":"2D"};
+const tr = s => (LANG === 'vi' && VI[s]) || s;
+const COPYRIGHT = LANG === 'vi' ? '© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.' : '© 2026 Đỗ Thùy Hương & Phan Anh Tú. All rights reserved.';
 // BizOn homepage intro — one continuous composition, 1920x1080.
 // World = the homepage laid out as 1600px-wide panels (page scale 1.2), filmed by one camera.
 const C = {
@@ -32,10 +36,10 @@ function camera(T, CUES, zoom) {
   const K = [
     [0, 800, 450, 1], [3.4, 800, 450, 1], [7.4, 1080, y('Hero', 470), 1.45], [R - 0.7, 1060, y('Hero', 480), 1.5],
     [R + 0.4, 800, y('Roles', 450), 1], [R + 2.6, 800, y('Roles', 450), 1], [R + 3.4, 380, y('Roles', 425), 1.55], [G - 0.9, 1220, y('Roles', 425), 1.55],
-    [G + 0.4, 800, y('Games', 450), 1], [Tl - 0.7, 800, y('Games', 450), 1.03],
+    [G + 0.4, 800, y(tr('Games'), 450), 1], [Tl - 0.7, 800, y(tr('Games'), 450), 1.03],
     [Tl + 0.4, 800, y('Tools', 450), 1], [Tr - 0.7, 800, y('Tools', 460), 1.08],
     [Tr + 0.4, 790, y('Trailers', 330), 1.28], [E - 0.7, 810, y('Trailers', 340), 1.36],
-    [E + 0.4, 800, y('Evidence', 420), 1.12], [F - 0.7, 800, y('Evidence', 420), 1.18],
+    [E + 0.4, 800, y(tr('Evidence'), 420), 1.12], [F - 0.7, 800, y(tr('Evidence'), 420), 1.18],
     [F + 0.4, 800, y('Flow', 440), 1.2], [Cl - 0.7, 800, y('Flow', 440), 1.27],
     [Cl + 0.4, 800, y('Close', 450), 1], [Cl + 8, 820, y('Close', 455), 1.05],
   ];
@@ -69,7 +73,7 @@ function Panel({ name, bg, h = 900, children }) {
 
 // ── Hero ─────────────────────────────────────────────
 function Nav({ T }) {
-  const links = ['Universe', 'Games', 'Classroom', 'Academic', 'Evidence', 'Pilot', 'About'];
+  const links = [tr('Universe'), tr('Games'), tr('Classroom'), tr('Academic'), tr('Evidence'), tr('Pilot'), tr('About')];
   return (
     <div style={{ position: 'absolute', left: 216, top: 12, width: 1168, ...MOTION.enter(T, 0.1, 0.8, -40) }}>
       <div style={{ display: 'grid', gridTemplateColumns: 'auto minmax(0,1fr) auto', alignItems: 'center', gap: 14, minHeight: 68, padding: '8px 10px 8px 20px', borderRadius: 999, background: C.card, boxShadow: '0 18px 30px -16px rgba(110,70,30,.35),inset 0 -6px 0 rgba(0,0,0,.05),inset 0 4px 0 rgba(255,255,255,.9)' }}>
@@ -79,11 +83,10 @@ function Nav({ T }) {
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <div style={{ display: 'flex', padding: 4, borderRadius: 999, background: C.tray, boxShadow: 'inset 0 3px 5px rgba(110,70,30,.18)', fontSize: 12, fontWeight: 800 }}>
-            <span style={{ padding: '7px 12px', borderRadius: 999, color: C.sub }}>VI</span>
-            <span style={{ padding: '7px 12px', borderRadius: 999, background: C.teal, color: '#fff', boxShadow: 'inset 0 -3px 0 rgba(0,0,0,.2),0 4px 8px -3px rgba(0,60,80,.5)' }}>EN</span>
+            {['VI', 'EN'].map(l => <span key={l} style={l.toLowerCase() === LANG ? { padding: '7px 12px', borderRadius: 999, background: C.teal, color: '#fff', boxShadow: 'inset 0 -3px 0 rgba(0,0,0,.2),0 4px 8px -3px rgba(0,60,80,.5)' } : { padding: '7px 12px', borderRadius: 999, color: C.sub }}>{l}</span>)}
           </div>
           <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 38, height: 38, borderRadius: '50%', background: C.teal, color: '#fff', fontSize: 16, boxShadow: 'inset 0 -5px 0 rgba(0,0,0,.16),inset 0 3px 0 rgba(255,255,255,.35),0 8px 14px -8px rgba(0,60,80,.7)' }}>⬇</span>
-          <span style={{ whiteSpace: 'nowrap', padding: '11px 18px', borderRadius: 999, background: C.orange, color: '#fff', fontFamily: HEAD, fontSize: 16, fontWeight: 700, boxShadow: 'inset 0 -5px 0 rgba(0,0,0,.16),inset 0 3px 0 rgba(255,255,255,.35),0 10px 18px -8px rgba(232,118,45,.7)' }}>Launch</span>
+          <span style={{ whiteSpace: 'nowrap', padding: '11px 18px', borderRadius: 999, background: C.orange, color: '#fff', fontFamily: HEAD, fontSize: 16, fontWeight: 700, boxShadow: 'inset 0 -5px 0 rgba(0,0,0,.16),inset 0 3px 0 rgba(255,255,255,.35),0 10px 18px -8px rgba(232,118,45,.7)' }}>{tr('Launch')}</span>
         </div>
       </div>
     </div>
@@ -136,27 +139,27 @@ function Hero({ T }) {
       <div style={{ position: 'absolute', left: L, top: 104, width: 600 }}>
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '8px 16px 8px 8px', borderRadius: 999, background: C.card, boxShadow: '0 10px 20px -12px rgba(110,70,30,.4),inset 0 -4px 0 rgba(0,0,0,.05)', fontSize: 13, fontWeight: 700, color: C.sub, whiteSpace: 'nowrap', ...MOTION.enter(T, 0.4) }}>
           <span style={{ width: 26, height: 26, borderRadius: '50%', background: '#DA251D', display: 'grid', placeItems: 'center', color: '#FFDD00', fontSize: 13, boxShadow: 'inset 0 -3px 0 rgba(0,0,0,.18)' }}>★</span>
-          Designed in the Mekong Delta · Built for the World
+          {tr('Designed in the Mekong Delta · Built for the World')}
         </span>
         <h1 style={{ ...H, marginTop: 18, fontSize: 52, color: C.ink }}>
-          <span style={{ display: 'block', ...MOTION.enter(T, 0.7, 0.8, 40) }}>Simulation-based business learning</span>
-          <span style={{ display: 'block', color: C.teal, ...MOTION.enter(T, 1.1, 0.8, 40) }}>from Vietnam to the world.</span>
+          <span style={{ display: 'block', ...MOTION.enter(T, 0.7, 0.8, 40) }}>{tr('Simulation-based business learning')}</span>
+          <span style={{ display: 'block', color: C.teal, ...MOTION.enter(T, 1.1, 0.8, 40) }}>{tr('from Vietnam to the world.')}</span>
         </h1>
-        <p style={{ margin: '16px 0 0', maxWidth: '36em', fontSize: 18, lineHeight: 1.65, color: C.sub, textWrap: 'pretty', ...MOTION.enter(T, 1.7) }}>Explainable business simulations for learning, research and internationalization – combining deterministic engines, AI-enhanced reflection and open-science practices.</p>
+        <p style={{ margin: '16px 0 0', maxWidth: '36em', fontSize: 18, lineHeight: 1.65, color: C.sub, textWrap: 'pretty', ...MOTION.enter(T, 1.7) }}>{tr('Explainable business simulations for learning, research and internationalization – combining deterministic engines, AI-enhanced reflection and open-science practices.')}</p>
         <div style={{ display: 'flex', flexWrap: 'nowrap', gap: 12, marginTop: 24 }}>
-          <span style={{ ...CTA_TEAL, ...MOTION.enter(T, 2.2) }}>Start with Bến Phù Sa →</span>
-          <span style={{ ...ctaBase, background: C.card, color: C.ink, boxShadow: 'inset 0 -7px 0 rgba(110,70,30,.12),inset 0 4px 0 rgba(255,255,255,.9),0 16px 24px -14px rgba(110,70,30,.45)', ...MOTION.enter(T, 2.35) }}>See all simulations</span>
-          <span style={{ ...ctaBase, background: C.ink, color: '#FFD58A', fontSize: 15, fontWeight: 800, boxShadow: 'inset 0 -7px 0 rgba(0,0,0,.3),inset 0 4px 0 rgba(255,255,255,.1),0 16px 24px -14px rgba(3,51,55,.7)', ...MOTION.enter(T, 2.5) }}>▶ Get it on Google Play</span>
+          <span style={{ ...CTA_TEAL, ...MOTION.enter(T, 2.2) }}>{tr('Start with Bến Phù Sa →')}</span>
+          <span style={{ ...ctaBase, background: C.card, color: C.ink, boxShadow: 'inset 0 -7px 0 rgba(110,70,30,.12),inset 0 4px 0 rgba(255,255,255,.9),0 16px 24px -14px rgba(110,70,30,.45)', ...MOTION.enter(T, 2.35) }}>{tr('See all simulations')}</span>
+          <span style={{ ...ctaBase, background: C.ink, color: '#FFD58A', fontSize: 15, fontWeight: 800, boxShadow: 'inset 0 -7px 0 rgba(0,0,0,.3),inset 0 4px 0 rgba(255,255,255,.1),0 16px 24px -14px rgba(3,51,55,.7)', ...MOTION.enter(T, 2.5) }}>{tr('▶ Get it on Google Play')}</span>
         </div>
         <div style={{ display: 'flex', marginTop: 14, ...MOTION.enter(T, 2.65) }}>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 12, padding: '6px 18px 6px 6px', borderRadius: 999, fontFamily: HEAD, fontSize: 16, fontWeight: 800, color: C.ink, background: C.card, boxShadow: 'inset 0 -5px 0 rgba(110,70,30,.12),inset 0 3px 0 rgba(255,255,255,.9),0 12px 20px -14px rgba(110,70,30,.5)' }}>
-            <span style={{ display: 'grid', placeItems: 'center', width: 40, height: 40, borderRadius: '50%', background: C.orange, color: '#fff', fontSize: 14, paddingLeft: 2, boxSizing: 'border-box', boxShadow: 'inset 0 -4px 0 rgba(0,0,0,.18),inset 0 3px 0 rgba(255,255,255,.3)' }}>▶</span>Watch the 1-minute intro
+            <span style={{ display: 'grid', placeItems: 'center', width: 40, height: 40, borderRadius: '50%', background: C.orange, color: '#fff', fontSize: 14, paddingLeft: 2, boxSizing: 'border-box', boxShadow: 'inset 0 -4px 0 rgba(0,0,0,.18),inset 0 3px 0 rgba(255,255,255,.3)' }}>▶</span>{tr('Watch the 1-minute intro')}
           </span>
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginTop: 18 }}>
-          <span style={{ ...pill, background: C.c5, color: '#03474F', ...MOTION.pop(T, 2.9) }}>Deterministic simulation engine</span>
-          <span style={{ ...pill, background: C.c2, color: '#7A4A0E', ...MOTION.pop(T, 3.05) }}>7 markets · 6 quarters</span>
-          <span style={{ ...pill, background: '#FBD9E0', color: '#7A2338', ...MOTION.pop(T, 3.2) }}>Preliminary classroom evidence</span>
+          <span style={{ ...pill, background: C.c5, color: '#03474F', ...MOTION.pop(T, 2.9) }}>{tr('Deterministic simulation engine')}</span>
+          <span style={{ ...pill, background: C.c2, color: '#7A4A0E', ...MOTION.pop(T, 3.05) }}>{tr('7 markets · 6 quarters')}</span>
+          <span style={{ ...pill, background: '#FBD9E0', color: '#7A2338', ...MOTION.pop(T, 3.2) }}>{tr('Preliminary classroom evidence')}</span>
         </div>
       </div>
       <HeroStage T={T} t0={0.3} />
@@ -167,10 +170,10 @@ function Hero({ T }) {
 
 // ── Roles ────────────────────────────────────────────
 const ROLES = [
-  { n: '01', bg: C.c2, t: 'Students', d: 'Play a short round, make decisions and get feedback from Lumina.', p: ['Bến Phù Sa →', 'Bật Nghiệp →', 'Brand Passport →', 'Durian Passport →'] },
-  { n: '02', bg: C.c1, t: 'Instructors', d: 'Run a class, follow decision traces and grade with rubrics.', p: ['Open my class dashboard →', 'Instructor page →', 'Grading scale →'], hl: 0 },
-  { n: '03', bg: C.c4, t: 'Researchers', d: 'Review the models, assumptions, equations and published limitations.', p: ['Academic framework →', 'IE Lab →'] },
-  { n: '04', bg: C.c3, t: 'Institutions · partners · funders', d: 'See pilot results and how to deploy at your institution.', p: ['Evidence →', 'Pilot programme →'] },
+  { n: '01', bg: C.c2, t: tr('Students'), d: tr('Play a short round, make decisions and get feedback from Lumina.'), p: [tr('Bến Phù Sa →'), tr('Bật Nghiệp →'), tr('Brand Passport →'), tr('Durian Passport →')] },
+  { n: '02', bg: C.c1, t: tr('Instructors'), d: tr('Run a class, follow decision traces and grade with rubrics.'), p: [tr('Open my class dashboard →'), tr('Instructor page →'), tr('Grading scale →')], hl: 0 },
+  { n: '03', bg: C.c4, t: tr('Researchers'), d: tr('Review the models, assumptions, equations and published limitations.'), p: [tr('Academic framework →'), tr('IE Lab →')] },
+  { n: '04', bg: C.c3, t: tr('Institutions · partners · funders'), d: tr('See pilot results and how to deploy at your institution.'), p: [tr('Evidence →'), tr('Pilot programme →')] },
 ];
 function Roles({ T, CUES }) {
   const R = CUES.Roles, cw = (W - 60) / 4;
@@ -179,8 +182,8 @@ function Roles({ T, CUES }) {
   return (
     <Panel name="Roles" bg={C.teal2}>
       <div style={{ position: 'absolute', left: L, top: 90, width: W }}>
-        <div style={{ fontFamily: HEAD, fontSize: 16, fontWeight: 700, color: '#FFD58A', ...MOTION.enter(T, R + 0.3) }}>Start from your role</div>
-        <h2 style={{ ...H, marginTop: 6, fontSize: 52, maxWidth: '18em', color: '#fff', ...MOTION.enter(T, R + 0.5, 0.8, 40) }}>Each audience has its own way in.</h2>
+        <div style={{ fontFamily: HEAD, fontSize: 16, fontWeight: 700, color: '#FFD58A', ...MOTION.enter(T, R + 0.3) }}>{tr('Start from your role')}</div>
+        <h2 style={{ ...H, marginTop: 6, fontSize: 52, maxWidth: '18em', color: '#fff', ...MOTION.enter(T, R + 0.5, 0.8, 40) }}>{tr('Each audience has its own way in.')}</h2>
       </div>
       {ROLES.map((r, i) => {
         const near = T > R + 3.0 ? Math.max(0, 1 - Math.abs(focus - i)) : 0;
@@ -205,10 +208,10 @@ function Roles({ T, CUES }) {
 
 // ── Games ────────────────────────────────────────────
 const GAMES = [
-  { lv: 1, c: '#2E7139', img: 'covers/ben-phu-sa-3d.webp', z: 1, o: '50% 50%', k: 'LEVEL 1 · VENTURE START-UP', t: 'Bến Phù Sa', d: "A riverside street-vendor start-up on Bến Phù Sa's floating market: pick a Method, Product and Location each week, and learn when to test cheap and when to scale.", m: ['5 weeks', 'Solo or team play'], alt: ['3D · team play', '2D'] },
-  { lv: 2, c: '#A84A14', img: 'covers/bat-nghiep-3d.webp', z: 1, o: '50% 50%', k: 'LEVEL 2 · RUNNING A BUSINESS', t: 'Bật Nghiệp', d: 'Build and operate a business through multi-round strategic decisions in a Vietnamese context.', m: ['6 decision rounds', 'Market arena'], alt: ['2D'] },
-  { lv: 3, c: '#006687', img: 'covers/ho-chieu-thuong-hieu-3d.webp', z: 1, o: '50% 50%', k: 'LEVEL 3 · INTERNATIONALISATION', t: 'Brand Passport', d: 'Take a Vietnamese brand across borders through market intelligence, entry strategy, adaptation and resilience.', m: ['6 quarters', '7 markets'], alt: ['2D', 'Lite 3D', 'Lite 2D'] },
-  { lv: 3, c: '#006687', img: 'covers/ho-chieu-sau-rieng-3d.webp', z: 1, o: '50% 50%', k: 'LEVEL 3 · INTERNATIONALISATION', t: 'Durian Passport', d: 'Take Vietnamese durian to the world over 6 seasons on a walkable 3D map: planting-area codes, the China phytosanitary protocol, official vs border trade, frozen and premium markets. Teams of 5 roles face AI rivals.', m: ['6 seasons', 'Teams of 5 roles'], alt: ['2D', 'Classroom playbook'] },
+  { lv: 1, c: '#2E7139', img: 'covers/ben-phu-sa-3d.webp', z: 1, o: '50% 50%', k: tr('LEVEL 1 · VENTURE START-UP'), t: 'Bến Phù Sa', d: "A riverside street-vendor start-up on Bến Phù Sa's floating market: pick a Method, Product and Location each week, and learn when to test cheap and when to scale.", m: [tr('5 weeks'), tr('Solo or team play')], alt: [tr('3D · team play'), tr('2D')] },
+  { lv: 2, c: '#A84A14', img: 'covers/bat-nghiep-3d.webp', z: 1, o: '50% 50%', k: tr('LEVEL 2 · RUNNING A BUSINESS'), t: 'Bật Nghiệp', d: tr('Build and operate a business through multi-round strategic decisions in a Vietnamese context.'), m: [tr('6 decision rounds'), tr('Market arena')], alt: [tr('2D')] },
+  { lv: 3, c: '#006687', img: 'covers/ho-chieu-thuong-hieu-3d.webp', z: 1, o: '50% 50%', k: tr('LEVEL 3 · INTERNATIONALISATION'), t: tr('Brand Passport'), d: tr('Take a Vietnamese brand across borders through market intelligence, entry strategy, adaptation and resilience.'), m: [tr('6 quarters'), tr('7 markets')], alt: [tr('2D'), tr('Lite 3D'), tr('Lite 2D')] },
+  { lv: 3, c: '#006687', img: 'covers/ho-chieu-sau-rieng-3d.webp', z: 1, o: '50% 50%', k: tr('LEVEL 3 · INTERNATIONALISATION'), t: tr('Durian Passport'), d: tr('Take Vietnamese durian to the world over 6 seasons on a walkable 3D map: planting-area codes, the China phytosanitary protocol, official vs border trade, frozen and premium markets. Teams of 5 roles face AI rivals.'), m: [tr('6 seasons'), tr('Teams of 5 roles')], alt: [tr('2D'), tr('Classroom playbook')] },
 ];
 function GameCard({ g, T, kb }) {
   return (
@@ -219,7 +222,7 @@ function GameCard({ g, T, kb }) {
           <b style={{ display: 'grid', placeItems: 'center', width: 30, height: 30, borderRadius: '50%', background: g.c, color: '#fff', fontSize: 15, boxShadow: 'inset 0 -3px 0 rgba(0,0,0,.22)' }}>{g.lv}</b>Level {g.lv}
         </span>
         <span style={{ position: 'absolute', right: 14, top: 14, display: 'inline-flex', alignItems: 'center', gap: 8, minHeight: 44, padding: '0 16px 0 6px', borderRadius: 999, background: 'rgba(3,51,55,.86)', color: '#fff', font: `800 14px ${HEAD}`, boxShadow: '0 10px 18px -10px rgba(0,0,0,.6)' }}>
-          <span style={{ display: 'grid', placeItems: 'center', width: 32, height: 32, borderRadius: '50%', background: C.gold, color: C.ink, fontSize: 12 }}>▶</span>Trailer
+          <span style={{ display: 'grid', placeItems: 'center', width: 32, height: 32, borderRadius: '50%', background: C.gold, color: C.ink, fontSize: 12 }}>▶</span>{tr('Trailer')}
         </span>
       </div>
       <div style={{ padding: '22px 22px 14px', display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -230,9 +233,9 @@ function GameCard({ g, T, kb }) {
           {g.m.map(m => <span key={m} style={{ padding: '6px 12px', borderRadius: 999, background: C.tray, fontSize: 13, fontWeight: 700, color: C.ink2 }}>{m}</span>)}
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px 18px', marginTop: 6 }}>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10, minHeight: 52, padding: '0 24px', borderRadius: 18, background: C.orange, color: '#1F0E02', font: `800 17px ${HEAD}`, boxShadow: 'inset 0 -5px 0 rgba(0,0,0,.16),inset 0 3px 0 rgba(255,255,255,.35),0 12px 20px -12px rgba(194,88,27,.8)' }}>Play in 3D <span>→</span></span>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10, minHeight: 52, padding: '0 24px', borderRadius: 18, background: C.orange, color: '#1F0E02', font: `800 17px ${HEAD}`, boxShadow: 'inset 0 -5px 0 rgba(0,0,0,.16),inset 0 3px 0 rgba(255,255,255,.35),0 12px 20px -12px rgba(194,88,27,.8)' }}>{tr('Play in 3D')} <span>→</span></span>
           <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '6px 14px', fontSize: 14, fontWeight: 700, color: C.sub }}>
-            <span>Other versions:</span>
+            <span>{tr('Other versions:')}</span>
             {g.alt.map(a => <span key={a} style={{ color: C.teal, textDecoration: 'underline', textUnderlineOffset: 3 }}>{a}</span>)}
           </div>
         </div>
@@ -241,15 +244,15 @@ function GameCard({ g, T, kb }) {
   );
 }
 function Games({ T, CUES }) {
-  const G = CUES.Games, s0 = G + 1.4, step = 2.8;
+  const G = CUES.Games, s0 = G + 1.4, step = LANG === 'vi' ? 3.6 : 2.8;
   const act = [1, 2, 3].reduce((a, i) => a + MOTION.draw(T, s0 + i * step - 0.3, 0.7), 0);
   const inK = MOTION.draw(T, s0 - 0.4, 0.9);
   return (
     <Panel name="Games" bg={C.bg}>
       <div style={{ position: 'absolute', left: L, top: 70, width: W }}>
-        <div style={{ fontFamily: HEAD, fontSize: 16, fontWeight: 700, color: C.accent, ...MOTION.enter(T, G + 0.3) }}>Three game levels · three support tools</div>
-        <h2 style={{ ...H, marginTop: 6, fontSize: 52, maxWidth: '18em', color: C.ink, ...MOTION.enter(T, G + 0.5, 0.8, 40) }}>Learn business by making consequential decisions.</h2>
-        <p style={{ margin: '18px 0 0', maxWidth: '40em', fontSize: 17, lineHeight: 1.6, color: C.sub, ...MOTION.enter(T, G + 0.8) }}>Start at Level 1; each level builds on the one before. Every game has a 3D version and a 2D version.</p>
+        <div style={{ fontFamily: HEAD, fontSize: 16, fontWeight: 700, color: C.accent, ...MOTION.enter(T, G + 0.3) }}>{tr('Three game levels · three support tools')}</div>
+        <h2 style={{ ...H, marginTop: 6, fontSize: 52, maxWidth: '18em', color: C.ink, ...MOTION.enter(T, G + 0.5, 0.8, 40) }}>{tr('Learn business by making consequential decisions.')}</h2>
+        <p style={{ margin: '18px 0 0', maxWidth: '40em', fontSize: 17, lineHeight: 1.6, color: C.sub, ...MOTION.enter(T, G + 0.8) }}>{tr('Start at Level 1; each level builds on the one before. Every game has a 3D version and a 2D version.')}</p>
       </div>
       {GAMES.map((g, i) => {
         const off = i - act;
@@ -277,17 +280,17 @@ function Games({ T, CUES }) {
 
 // ── Tools ────────────────────────────────────────────
 const TOOLS = [
-  { img: 'hc/item/forecast.png', k: 'STRATEGY MODEL', t: 'IE Lab', d: 'Experiment with internationalization assumptions and observe how strategic variables change outcomes.', l: ['Explore the model'] },
-  { img: 'cmr-lab/dragon-magnifier.jpg', pad: true, mul: true, k: 'PRACTICUM LABS', t: 'Practicum labs', d: 'Four one-session labs: contribution margin ratio (CMR), cost–volume–profit and break-even (CVP), the gravity model of trade and FDI into Viet Nam, and an FDI factory run over 8 quarters (local content, rules of origin, transshipment).', l: ['CMR Lab', 'CVP Lab', 'Gravity Lab', 'FDI Lab'] },
-  { img: 'character/arcade-rong-bay-sau-rieng.webp', pad: true, k: 'SKILL DRILLS', t: 'Arcade', d: 'Short, focused simulations for practicing one business skill or decision pattern at a time.', l: ['Practice a skill'] },
+  { img: 'hc/item/forecast.png', k: tr('STRATEGY MODEL'), t: 'IE Lab', d: tr('Experiment with internationalization assumptions and observe how strategic variables change outcomes.'), l: [tr('Explore the model')] },
+  { img: 'cmr-lab/dragon-magnifier.jpg', pad: true, mul: true, k: tr('PRACTICUM LABS'), t: tr('Practicum labs'), d: tr('Four one-session labs: contribution margin ratio (CMR), cost–volume–profit and break-even (CVP), the gravity model of trade and FDI into Viet Nam, and an FDI factory run over 8 quarters (local content, rules of origin, transshipment).'), l: ['CMR Lab', 'CVP Lab', 'Gravity Lab', 'FDI Lab'] },
+  { img: 'character/arcade-rong-bay-sau-rieng.webp', pad: true, k: tr('SKILL DRILLS'), t: 'Arcade', d: tr('Short, focused simulations for practicing one business skill or decision pattern at a time.'), l: [tr('Practice a skill')] },
 ];
 function Tools({ T, CUES }) {
   const S = CUES.Tools;
   return (
     <Panel name="Tools" bg={C.bg}>
       <div style={{ position: 'absolute', left: L, top: 110, width: W, display: 'flex', flexWrap: 'wrap', alignItems: 'baseline', gap: '6px 18px' }}>
-        <h3 style={{ ...H, fontSize: 44, color: C.ink, ...MOTION.enter(T, S + 0.3) }}>Support tools</h3>
-        <p style={{ margin: 0, fontSize: 20, color: C.sub, ...MOTION.enter(T, S + 0.5) }}>Use alongside the games to practise one model or skill at a time.</p>
+        <h3 style={{ ...H, fontSize: 44, color: C.ink, ...MOTION.enter(T, S + 0.3) }}>{tr('Support tools')}</h3>
+        <p style={{ margin: 0, fontSize: 20, color: C.sub, ...MOTION.enter(T, S + 0.5) }}>{tr('Use alongside the games to practise one model or skill at a time.')}</p>
       </div>
       <div style={{ position: 'absolute', left: L, top: 205, width: W, display: 'flex', flexDirection: 'column', gap: 16 }}>
       {TOOLS.map((x, i) => (
@@ -314,10 +317,10 @@ function Tools({ T, CUES }) {
 
 // ── Trailers ─────────────────────────────────────────
 const TRAILERS = [
-  { img: 'video/bizon-trailer-poster.jpg', t: 'Bật Nghiệp', d: 'A 6-round market arena · English narration · 1:30' },
-  { img: 'video/ben-phu-sa-trailer-poster.jpg', t: 'Bến Phù Sa', d: 'Informal venture start-up on a floating market · English narration · 1:30' },
-  { img: 'video/bp-trailer-poster.jpg', t: 'Brand Passport', d: 'Taking a brand to 7 markets · English narration · 1:30' },
-  { img: 'video/srp-trailer-poster.jpg', t: 'Durian Passport', d: 'Durian export through 6 seasons · English narration · 1:40' },
+  { img: 'video/bizon-trailer-poster.jpg', t: 'Bật Nghiệp', d: tr('A 6-round market arena · English narration · 1:30') },
+  { img: 'video/ben-phu-sa-trailer-poster.jpg', t: 'Bến Phù Sa', d: tr('Informal venture start-up on a floating market · English narration · 1:30') },
+  { img: 'video/bp-trailer-poster.jpg', t: tr('Brand Passport'), d: tr('Taking a brand to 7 markets · English narration · 1:30') },
+  { img: 'video/srp-trailer-poster.jpg', t: tr('Durian Passport'), d: tr('Durian export through 6 seasons · English narration · 1:40') },
 ];
 function Trailers({ T, CUES }) {
   const S = CUES.Trailers, cw = (W - 66) / 4;
@@ -325,8 +328,8 @@ function Trailers({ T, CUES }) {
     <Panel name="Trailers" bg={C.ink}>
       <div style={{ position: 'absolute', left: 0, top: 0, width: PW, height: 36, background: `radial-gradient(circle at 36px 0,${C.bg} 35px,transparent 36px) 0 0/72px 36px repeat-x` }}></div>
       <div style={{ position: 'absolute', left: L, top: 92, width: W }}>
-        <div style={{ fontFamily: HEAD, fontSize: 16, fontWeight: 700, color: '#FFD58A', ...MOTION.enter(T, S + 0.4) }}>Trailer · built from real in-game footage</div>
-        <h2 style={{ ...H, marginTop: 6, fontSize: 52, color: '#fff', ...MOTION.enter(T, S + 0.6, 0.8, 40) }}>Watch before you play.</h2>
+        <div style={{ fontFamily: HEAD, fontSize: 16, fontWeight: 700, color: '#FFD58A', ...MOTION.enter(T, S + 0.4) }}>{tr('Trailer · built from real in-game footage')}</div>
+        <h2 style={{ ...H, marginTop: 6, fontSize: 52, color: '#fff', ...MOTION.enter(T, S + 0.6, 0.8, 40) }}>{tr('Watch before you play.')}</h2>
       </div>
       {TRAILERS.map((x, i) => {
         const fs = S + 2.0 + i * 1.1;
@@ -353,9 +356,9 @@ function Trailers({ T, CUES }) {
 
 // ── Evidence ─────────────────────────────────────────
 const PRINC = [
-  { n: '01', bg: C.c1, t: 'Explainable engine', d: 'Core scoring remains deterministic so results can be inspected, discussed and reproduced.' },
-  { n: '02', bg: C.c2, t: 'Observable decisions', d: 'Strategic choices leave traces for debriefing, rubrics, reflection and classroom analysis.' },
-  { n: '03', bg: C.c3, t: 'Learning evidence', d: 'Game mechanics connect with learning outcomes, pre/post measures and documented limitations.' },
+  { n: '01', bg: C.c1, t: tr('Explainable engine'), d: tr('Core scoring remains deterministic so results can be inspected, discussed and reproduced.') },
+  { n: '02', bg: C.c2, t: tr('Observable decisions'), d: tr('Strategic choices leave traces for debriefing, rubrics, reflection and classroom analysis.') },
+  { n: '03', bg: C.c3, t: tr('Learning evidence'), d: tr('Game mechanics connect with learning outcomes, pre/post measures and documented limitations.') },
 ];
 function Evidence({ T, CUES }) {
   const S = CUES.Evidence, cw = (W - 48) / 2;
@@ -363,18 +366,18 @@ function Evidence({ T, CUES }) {
   return (
     <Panel name="Evidence" bg={C.bg}>
       <div style={{ position: 'absolute', left: L, top: 190, width: cw }}>
-        <div style={{ fontFamily: HEAD, fontSize: 16, fontWeight: 700, color: C.accent, ...MOTION.enter(T, S + 0.3) }}>Evidence before marketing</div>
-        <h2 style={{ ...H, marginTop: 6, fontSize: 52, color: C.ink, ...MOTION.enter(T, S + 0.5, 0.8, 40) }}>Learning that can be examined.</h2>
+        <div style={{ fontFamily: HEAD, fontSize: 16, fontWeight: 700, color: C.accent, ...MOTION.enter(T, S + 0.3) }}>{tr('Evidence before marketing')}</div>
+        <h2 style={{ ...H, marginTop: 6, fontSize: 52, color: C.ink, ...MOTION.enter(T, S + 0.5, 0.8, 40) }}>{tr('Learning that can be examined.')}</h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 26 }}>
-          {['Preliminary classroom pilot: 40 learners', 'Published model cards and equations', 'AI interprets; it does not replace scoring'].map((t, i) => (
+          {[tr('Preliminary classroom pilot: 40 learners'), tr('Published model cards and equations'), tr('AI interprets; it does not replace scoring')].map((t, i) => (
             <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, fontSize: 15, fontWeight: 700, color: C.sub, ...MOTION.enter(T, S + 1.2 + i * 0.25, 0.6, -24, 'X') }}>
               <span style={{ width: 14, height: 14, borderRadius: '50%', background: C.gold, boxShadow: 'inset 0 -3px 0 rgba(0,0,0,.15)', ...MOTION.pop(T, S + 1.3 + i * 0.25, 0.5) }}></span>{t}
             </div>
           ))}
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 28 }}>
-          <span style={{ ...btn, ...MOTION.enter(T, S + 2.2) }}>View Academic Framework →</span>
-          <span style={{ ...btn, ...MOTION.enter(T, S + 2.35) }}>View Evidence →</span>
+          <span style={{ ...btn, ...MOTION.enter(T, S + 2.2) }}>{tr('View Academic Framework →')}</span>
+          <span style={{ ...btn, ...MOTION.enter(T, S + 2.35) }}>{tr('View Evidence →')}</span>
         </div>
       </div>
       <div style={{ position: 'absolute', left: L + cw + 48, top: 190, width: cw, display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -394,8 +397,8 @@ function Evidence({ T, CUES }) {
 
 // ── Flow ─────────────────────────────────────────────
 const FLOW = [
-  ['01', C.c1, 'Research', 'IB · Entrepreneurship'], ['02', C.c2, 'Model', 'Assumptions & parameters'], ['03', C.c3, 'Simulation', 'Consequential scenarios'],
-  ['04', C.c4, 'Decision', 'Actions & trade-offs'], ['05', C.c1, 'Outcome', 'Explainable consequences'], ['06', C.c2, 'Reflection', 'AI-enhanced questioning'], ['07', C.c3, 'Evidence', 'Observable learning artifacts'],
+  ['01', C.c1, tr('Research'), 'IB · Entrepreneurship'], ['02', C.c2, tr('Model'), tr('Assumptions & parameters')], ['03', C.c3, tr('Simulation'), tr('Consequential scenarios')],
+  ['04', C.c4, tr('Decision'), tr('Actions & trade-offs')], ['05', C.c1, tr('Outcome'), tr('Explainable consequences')], ['06', C.c2, tr('Reflection'), tr('AI-enhanced questioning')], ['07', C.c3, tr('Evidence'), tr('Observable learning artifacts')],
 ];
 function Flow({ T, CUES }) {
   const S = CUES.Flow, inner = W - 56, colW = (inner - 6 * 14) / 7;
@@ -404,8 +407,8 @@ function Flow({ T, CUES }) {
     <Panel name="Flow" bg={C.bg}>
       <div style={{ position: 'absolute', left: L, top: 270, width: W, padding: '34px 28px', boxSizing: 'border-box', borderRadius: 36, background: C.tray, boxShadow: 'inset 0 6px 12px rgba(110,70,30,.15)', ...MOTION.enter(T, S + 0.2, 0.8, 50) }}>
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'baseline', gap: 10 }}>
-          <div style={{ fontFamily: HEAD, fontSize: 32, fontWeight: 800, color: C.ink, ...MOTION.enter(T, S + 0.5) }}>From theory to decision.</div>
-          <div style={{ fontFamily: HEAD, fontSize: 16, fontWeight: 700, color: C.accent, ...MOTION.enter(T, S + 0.7) }}>Research → learning design</div>
+          <div style={{ fontFamily: HEAD, fontSize: 32, fontWeight: 800, color: C.ink, ...MOTION.enter(T, S + 0.5) }}>{tr('From theory to decision.')}</div>
+          <div style={{ fontFamily: HEAD, fontSize: 16, fontWeight: 700, color: C.accent, ...MOTION.enter(T, S + 0.7) }}>{tr('Research → learning design')}</div>
         </div>
         <div style={{ position: 'relative', marginTop: 30 }}>
           <div style={{ position: 'absolute', left: colW / 2, top: 30, height: 4, borderRadius: 2, width: (inner - colW) * line, background: C.teal, opacity: 0.35 }}></div>
@@ -433,9 +436,10 @@ function Close({ T, CUES }) {
       <div style={{ position: 'absolute', left: L, top: 250, width: 600 }}>
         <div style={{ ...MOTION.pop(T, S + 0.5, 0.8), transformOrigin: '0 50%' }}><Wordmark size={132} /></div>
         <div style={{ display: 'flex', marginTop: 56, ...MOTION.enter(T, S + 1.4) }}>
-          <span style={{ ...CTA_TEAL, minHeight: 72, padding: '0 34px', fontSize: 26, borderRadius: 26, transform: `translateY(${press * 3}px) scale(${1 + 0.04 * Math.sin(Math.max(0, T - S - 2) * 3)})` }}>Start with Bến Phù Sa →</span>
+          <span style={{ ...CTA_TEAL, minHeight: 72, padding: '0 34px', fontSize: 26, borderRadius: 26, transform: `translateY(${press * 3}px) scale(${1 + 0.04 * Math.sin(Math.max(0, T - S - 2) * 3)})` }}>{tr('Start with Bến Phù Sa →')}</span>
         </div>
         <div style={{ marginTop: 26, fontFamily: HEAD, fontSize: 28, fontWeight: 700, color: C.sub, ...MOTION.enter(T, S + 1.9) }}>bizonland.com</div>
+        <div style={{ marginTop: 18, fontSize: 15, fontWeight: 500, color: C.sub, whiteSpace: 'nowrap', ...MOTION.enter(T, S + 2.3) }}>{COPYRIGHT}</div>
       </div>
       <HeroStage T={T} t0={S + 0.3} />
       <River T={T} t0={S - 2} />
@@ -451,7 +455,7 @@ const VO = [
 function useVoiceover(T, CUES, playing, enabled, volume) {
   const ref = React.useRef(null);
   if (!ref.current && typeof Audio !== 'undefined') {
-    ref.current = VO.map(([f]) => { const a = new Audio(IMG + 'vo/' + f + '.mp3'); a.preload = 'auto'; return a; });
+    ref.current = VO.map(([f]) => { const a = new Audio(IMG + (LANG === 'vi' ? 'vo-vi/' : 'vo/') + f + '.mp3'); a.preload = 'auto'; return a; });
   }
   React.useEffect(() => () => ref.current && ref.current.forEach(a => a.pause()), []);
   React.useEffect(() => {
@@ -470,13 +474,13 @@ function useVoiceover(T, CUES, playing, enabled, volume) {
 
 function useMusic(T, CUES, total, playing, enabled, vol) {
   const ref = React.useRef(null);
-  if (!ref.current && typeof Audio !== 'undefined') { ref.current = new Audio(IMG + 'audio/and-the-world-say-hello.mp3'); ref.current.preload = 'auto'; }
+  if (!ref.current && typeof Audio !== 'undefined') { ref.current = new Audio(IMG + (LANG === 'vi' ? 'audio/music-vi.mp3' : 'audio/music.mp3')); ref.current.preload = 'auto'; }
   React.useEffect(() => () => ref.current && ref.current.pause(), []);
   React.useEffect(() => {
     const a = ref.current; if (!a) return;
     // duck under voice clips
     let speaking = false;
-    VO.forEach(([, scene, off], i) => { const st = (CUES[scene] ?? 0) + off; if (T > st - 0.3 && T < st + 11 && T < st + (VO_DUR[i] || 6) + 0.3) speaking = true; });
+    VO.forEach(([, scene, off], i) => { const st = (CUES[scene] ?? 0) + off; if (T > st - 0.3 && T < st + 15 && T < st + (VO_DUR[i] || 6) + 0.3) speaking = true; });
     const fadeIn = clamp(T / 1.5, 0, 1), fadeOut = clamp((total - T) / 2.5, 0, 1);
     a.volume = clamp(vol * (speaking ? 0.22 : 1) * fadeIn * fadeOut, 0, 1);
     if (enabled && playing && T < total) {
@@ -485,7 +489,7 @@ function useMusic(T, CUES, total, playing, enabled, vol) {
     } else if (!a.paused) a.pause();
   });
 }
-const VO_DUR = [5.64, 5.5, 10.92, 4.83, 3.24, 6.84, 3.5, 3.5];
+const VO_DUR = LANG === 'vi' ? [6.69, 5.56, 13.64, 8.52, 3.71, 6.35, 4.52, 8.99] : [5.64, 5.5, 10.92, 4.83, 3.24, 6.84, 3.5, 3.5];
 function Piece({ zoom = 1, voice = true, volume = 1, music = true, musicVolume = 0.6 }) {
   const { T, CUES, authoredTotal, playing } = useComposition();
   useVoiceover(T, CUES, playing, voice, volume);
@@ -507,6 +511,7 @@ function Piece({ zoom = 1, voice = true, volume = 1, music = true, musicVolume =
         <Close {...props} />
         </CamCtx.Provider>
       </div>
+      <div style={{ position: 'absolute', right: 28, bottom: 22, padding: '6px 14px', borderRadius: 999, background: 'rgba(3,51,55,.55)', color: '#fff', fontFamily: SANS, fontSize: 15, fontWeight: 600, opacity: MOTION.draw(T, 3, 0.8) * (1 - MOTION.draw(T, CUES.Close, 0.6)) }}>© 2026 BizOn · bizonland.com</div>
       <div style={{ position: 'absolute', inset: 0, background: C.bg, opacity: fadeOut, pointerEvents: 'none' }}></div>
     </div>
   );

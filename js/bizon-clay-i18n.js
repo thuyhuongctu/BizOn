@@ -48,6 +48,7 @@
     document.querySelectorAll('[data-en-ph]').forEach(function(el){ swapAttr(el, 'placeholder', 'viPh', el.dataset.enPh, lang); });
     document.querySelectorAll('[data-en-aria]').forEach(function(el){ swapAttr(el, 'aria-label', 'viAria', el.dataset.enAria, lang); });
     document.querySelectorAll('meta[data-en-content]').forEach(function(el){ swapAttr(el, 'content', 'viContent', el.dataset.enContent, lang); });
+    document.querySelectorAll('img[data-en-src]').forEach(function(el){ swapAttr(el, 'src', 'viSrc', el.dataset.enSrc, lang); });
     document.documentElement.lang = lang;
     if(persist) store(lang);
     window.__bizonLang = lang;

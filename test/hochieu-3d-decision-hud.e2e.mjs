@@ -18,6 +18,7 @@ const browser = await chromium.launch({
 // serviceWorkers: 'block' — sw-hochieu.js có thể tự tải lại trang giữa chừng và làm hỏng bối cảnh kiểm thử.
 const context = await browser.newContext({ viewport: { width: 1280, height: 860 }, serviceWorkers: 'block' });
 const page = await context.newPage();
+await page.addInitScript(() => { try { localStorage.setItem('bizon-lang', 'vi'); } catch (e) {} });
 const errors = [];
 page.on('pageerror', e => errors.push(e.message));
 page.on('dialog', d => d.accept());

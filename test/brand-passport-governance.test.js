@@ -28,6 +28,8 @@ function check(condition, message) {
   fs.mkdirSync(OUT, { recursive: true });
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+  // Bộ kiểm thử này viết cho giao diện tiếng Việt; site mặc định tiếng Anh nên đặt rõ ngôn ngữ.
+  await page.addInitScript(() => { try { localStorage.setItem('bizon-lang', 'vi'); } catch (e) {} });
   const errors = [];
   const requests = { submit: 0, delete: 0, submitBody: null, deleteBody: null };
   page.on('pageerror', error => errors.push(error.message));
