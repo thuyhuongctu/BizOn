@@ -15,7 +15,8 @@ permissions:
 
 jobs:
   decision-hud:
-    runs-on: ubuntu-latest
+    # Ghim 24.04: ubuntu-latest đang chuyển sang Ubuntu 26, nơi `playwright@1.54.1 install --with-deps` không cài được gói hệ thống
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - name: Checkout repository
