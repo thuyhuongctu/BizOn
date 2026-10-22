@@ -53,6 +53,7 @@
   #frame iframe{border:0;width:100%;height:100%;display:block}
   #frame.full{inset:0}
   #login3d{position:fixed;z-index:40;inset:0;display:none;pointer-events:none;background:#2a2340 url('assets/illustrations/rong-bay-doi-bizon.webp') center/cover no-repeat}
+  @media (max-width:600px){ #login3d, #boot{background-position:58% 22% !important} } /* điện thoại dọc: giữ rồng + nhân vật trong khung thay vì nửa khuôn mặt */
   body.login3d #login3d{display:block} body.login3d #frame{visibility:hidden} body.login3d .hud,body.login3d #zones,body.login3d #more{display:none!important}
   body.diorama #cta,body.diorama #rail [data-tab]{display:none!important}
   #login3d .card{pointer-events:auto;position:absolute;left:clamp(12px,4vw,56px);top:50%;transform:translateY(-50%);width:min(420px,calc(100vw - 24px));max-height:calc(100vh - 24px);overflow:auto;box-sizing:border-box;background:#fbf6ee;border:4px solid #e6d6bf;border-radius:28px;box-shadow:0 10px 0 #d9c5a8,0 30px 60px rgba(20,28,56,.25);padding:22px;display:flex;flex-direction:column;gap:9px;font-family:'Be Vietnam Pro',sans-serif;color:#1f3f4a}

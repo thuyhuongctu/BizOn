@@ -117,6 +117,13 @@
   html[data-theme="dark"] .bg-surface-bright\/90 { background-color:rgba(10,34,42,.92) !important; }
   html[data-theme="dark"] .clay-button-secondary { background:#0e2a33; box-shadow:0 4px 0 #05141a, 0 8px 16px rgba(0,0,0,.35); }
   html[data-theme="dark"] .text-primary { color:#5cc4e6 !important; }
+  /* Form đăng nhập ở chế độ tối: tw.css biên dịch sẵn màu deep-teal cố định (không theo --dt) → chữ xanh đậm chìm trên thẻ tối */
+  html[data-theme="dark"] #screen-login .text-deep-teal:not([class*="bg-"]) { color:rgb(214 236 240) !important; }
+  html[data-theme="dark"] #screen-login .text-deep-teal\/40:not([class*="bg-"]) { color:rgb(214 236 240 / .55) !important; }
+  html[data-theme="dark"] #screen-login .text-deep-teal\/55:not([class*="bg-"]) { color:rgb(214 236 240 / .55) !important; }
+  html[data-theme="dark"] #screen-login .text-deep-teal\/60:not([class*="bg-"]) { color:rgb(214 236 240 / .60) !important; }
+  html[data-theme="dark"] #screen-login .text-deep-teal\/70:not([class*="bg-"]) { color:rgb(214 236 240 / .70) !important; }
+  html[data-theme="dark"] #screen-login .text-deep-teal\/80:not([class*="bg-"]) { color:rgb(214 236 240 / .80) !important; }
   html[data-theme="dark"] .nav-item.active { color:#5cc4e6; }
   /* Máy nhỏ: thu gọn nút & ảnh đại diện để tên đội có thêm chỗ, thanh đầu không tràn */
   @media (max-width: 400px) {

@@ -859,7 +859,7 @@ function playHTML(t) {
       <div class="grp"><h3>${t.markets}</h3>${mk}</div>
       <div class="grp"><div class="ivt"><span class="long">${t.invest}</span><span class="short">${t.investS}</span></div><div class="invs" role="group" aria-label="${t.invest}">${inv}</div></div>
       <button type="button" class="btn" data-act="commit" id="commitBtn"${locked ? ' disabled' : ''}>${locked ? `${t.wait} ${q}` : `${t.commit} ${q} →`}</button>
-      ${locked ? `<div class="waitnote"><img src="../assets/dragon/zen-meditate.webp" alt="${t.dragonZen}" width="72" height="73"><span>${t.waitNote}<br><button type="button" class="selfopen" data-act="gate" data-i="${q}">${t.selfOpen}</button></span></div>` : ''}
+      ${locked ? `<div class="waitnote"><img src="../assets/dragon/zen-meditate-cut-v2.webp" alt="${t.dragonZen}" width="72" height="73"><span>${t.waitNote}<br><button type="button" class="selfopen" data-act="gate" data-i="${q}">${t.selfOpen}</button></span></div>` : ''}
       <p class="rules-t d-only">${t.xpRules}</p>
     </section>
     <section class="card res" data-tab="1">
@@ -908,7 +908,7 @@ function endHTML(t) {
       <p class="sandnote">${t.realNote}</p>
     </section>
     <section class="card qs" data-tab="0">
-      <div class="ch"><h2>${t.debrief}</h2><img class="ch-dragon" src="../assets/dragon/idea.webp" alt="${t.dragonIdea}" width="64" height="85"></div>
+      <div class="ch"><h2>${t.debrief}</h2><img class="ch-dragon" src="../assets/dragon/idea-cut-v2.webp" alt="${t.dragonIdea}" width="64" height="85"></div>
       ${t.qs.map((x, i) => `<div class="qq"><b>${i + 1}</b><p>${x}</p></div>`).join('')}
     </section>
   </div>
