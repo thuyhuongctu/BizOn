@@ -306,8 +306,9 @@
   };
   /* Mỗi câu thoại đổi một tư thế cho người đang nói */
   var POSE = {
-    h:['assets/character/lumina-ao-dai-wave-cut.webp','assets/character/lumina-ao-dai-present-cut.webp','assets/character/lumina-ao-dai-alert-cut.webp'],
-    t:['assets/character/anh-tu-ao-dai-welcome-cut-v2.webp','assets/character/anh-tu-ao-dai-explain-cut.webp','assets/character/anh-tu-ao-dai-point-cut.webp']
+    /* theo đúng thứ tự câu thoại: chào → giới thiệu → hào hứng (Hương); chào → giải thích → hẹn gặp (thầy Tú) */
+    h:['assets/character/lumina-ao-dai-wave-cut.webp','assets/character/lumina-ao-dai-present-cut.webp','assets/character/lumina-cheer-cut.webp'],
+    t:['assets/character/anh-tu-ao-dai-welcome-cut-v2.webp','assets/character/anh-tu-ao-dai-explain-cut.webp','assets/character/anh-tu-ao-dai-smile-cut.webp']
   };
   var bh = document.getElementById('dn-bh'), bt = document.getElementById('dn-bt');
   if(!bh || !bt) return;
