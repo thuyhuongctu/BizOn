@@ -687,6 +687,7 @@ function showPremium() {
 // brand-passport.html, không trộn vào đây.
 const BGM_TRACKS = [
   'assets/audio/bat-nghiep-mekong-sunfire-rise.mp3', // BÀI CHÍNH khi mở game – Mekong Sunfire · Rise With The River
+  'assets/audio/bat-nghiep-mekong-sunfire-rise-2.mp3', // Mekong Sunfire · Rise With The River – bản 2 (song ngữ, 4:55)
   'assets/audio/huong-and-the-world-en.mp3', // Hương & The World (bản tiếng Anh)
   'assets/audio/bat-nghiep-co-loi.mp3',   // ca khúc chủ đề, bản thu có lời
   'assets/audio/bat-nghiep-rap-symphony.mp3', // bản rap symphony
