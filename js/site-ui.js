@@ -1814,8 +1814,8 @@
 "• Full teaching toolkit + data export"
 ],
 [
-"• Gói Research Edition: dữ liệu ẩn danh phục vụ nghiên cứu",
-"• Research Edition: anonymised data for research"
+"• Gói Nghiên cứu (Research Edition): hỗ trợ thiết kế nghiên cứu, công cụ xuất dữ liệu của chính lớp học/đơn vị, quy trình đạo đức nghiên cứu (phiếu đồng thuận, ẩn danh hóa trước khi phân tích). BizOn không bán hoặc chuyển giao dữ liệu người học cho bên thứ ba.",
+"• Research Edition: support for research design, export tools for the institution's own class data, and a research-ethics workflow (consent forms, anonymisation before analysis). BizOn does not sell or transfer learner data to third parties."
 ],
 [
 "• Hỗ trợ trực tuyến trong buổi chơi",
