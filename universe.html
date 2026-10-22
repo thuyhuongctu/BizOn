@@ -5,6 +5,7 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
+<script src="js/bizon-lang.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title data-en="BizOn – Learn Business by Making Decisions">BizOn – Học kinh doanh bằng quyết định</title>
 <meta name="description" data-en-content="Three levels of business simulation for university classrooms: venture start-up, running a business, internationalisation. A deterministic engine with published parameters." content="Ba bậc mô phỏng kinh doanh cho lớp học đại học: khởi sự kinh doanh, vận hành doanh nghiệp, quốc tế hóa. Engine xác định, tham số công bố.">
@@ -198,10 +199,13 @@
     <p class="vu-arrow" data-en="Four inputs → core engine → one live class">Bốn đầu vào → engine lõi → một buổi học sống</p>
 
     <div class="vu-reel">
-      <video controls playsinline preload="metadata" poster="assets/video/bizon-intro-1min-v2-poster.jpg" aria-label="Video giới thiệu BizOn (1 phút)">
-        <source src="assets/video/bizon-intro-1min-en-v2.mp4" type="video/mp4">
+      <video id="vu-intro" controls playsinline preload="metadata" poster="assets/video/bizon-intro-en-v3-poster.jpg" data-vi-src="assets/video/bizon-intro-vi-v3.mp4" data-vi-poster="assets/video/bizon-intro-vi-v3-poster.jpg" aria-label="Video giới thiệu BizOn" data-en-aria="BizOn intro video">
+        <source src="assets/video/bizon-intro-en-v3.mp4" type="video/mp4">
         <p data-en="Your browser cannot play this video.">Trình duyệt của bạn không phát được video này.</p>
       </video>
+      <script>/* bản lồng tiếng Việt khi người xem chọn giao diện tiếng Việt */
+      (function(){ var v=document.getElementById('vu-intro'), l=''; try{ l=localStorage.getItem('bizon-lang')||''; }catch(e){}
+        if(v && l==='vi'){ v.poster=v.dataset.viPoster; v.src=v.dataset.viSrc; } })();</script>
     </div>
   </section>
 

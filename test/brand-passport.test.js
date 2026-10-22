@@ -49,6 +49,8 @@ const SEED = 424242; // ván chơi lặp lại được
 
 async function newGame(browser, opts = {}) {
   const page = await browser.newPage({ viewport: { width: 1200, height: 950 } });
+  // Bộ kiểm thử này viết cho giao diện tiếng Việt; site mặc định tiếng Anh nên đặt rõ ngôn ngữ.
+  await page.addInitScript(() => { try { localStorage.setItem('bizon-lang', 'vi'); } catch (e) {} });
   page.setDefaultTimeout(15000);
   const errors = [];
   page.on('pageerror', e => errors.push(e.message));
