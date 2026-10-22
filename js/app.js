@@ -742,6 +742,23 @@ function playFinaleTheme() {
   // nếu nhạc đã chạy bằng đường khác thì giữ nguyên, đừng phát chồng.
   a.play().catch(() => { if (a.paused) finaleThemePlayed = false; });
 }
+// Phát một bài cụ thể trong tuyển tập (khung «Lời bài hát» gọi khi chọn bài có lời).
+function playBgmTrack(id) {
+  const src = 'assets/audio/' + id + '.mp3';
+  const i = BGM_TRACKS.indexOf(src);
+  if (i < 0) return;
+  localStorage.setItem('bizon-music', 'on');
+  bgmIdx = i;
+  const a = ensureBgm(src);
+  if (!a.src.endsWith(src)) { a.src = src; a.currentTime = 0; }
+  a.play().catch(() => {});
+  const t = $('music-toggle'); if (t) t.checked = true;
+}
+// Khung lời bài hát (js/bn-lyrics.js + js/music-lyrics.js): hiện lời của bài nhạc nền đang phát.
+function toggleLyrics() {
+  if (!window.BNLyrics) return;
+  window.BNLyrics.toggle({ audio: () => bgm, play: playBgmTrack, en: () => currentLang() === 'en' });
+}
 function toggleMusic() {
   if (musicEnabled()) { localStorage.setItem('bizon-music', 'off'); if (bgm) bgm.pause(); }
   else { localStorage.setItem('bizon-music', 'on'); startMusic(); }

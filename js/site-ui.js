@@ -2386,6 +2386,10 @@
 "🎶 BizOn Music Library"
 ],
 [
+"🎤 Lời bài hát (nhạc nền đang phát)",
+"🎤 Lyrics (current background song)"
+],
+[
 "Ca khúc gốc, trình phát đầy đủ, lời bài hát và giọng Lumina.",
 "Original songs, a full player, lyrics and the Lumina voice."
 ],

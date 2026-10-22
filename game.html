@@ -260,6 +260,7 @@
         <button id="theme-btn" onclick="toggleTheme()" aria-label="Chuyển chế độ Sáng/Tối" class="hdr-toggle w-9 h-9 rounded-full clay-card !rounded-full text-sm" title="Chế độ Sáng/Tối · Light/Dark">🌙</button>
         <button id="lang-btn" onclick="toggleLang()" aria-label="Chuyển ngôn ngữ Tiếng Việt / English" class="hdr-toggle w-9 h-9 rounded-full clay-card !rounded-full text-[10px] font-extrabold text-primary" title="Tiếng Việt / English">EN</button>
         <button onclick="toggleMusic(); renderAll()" aria-label="Bật/tắt nhạc nền" class="hdr-toggle w-9 h-9 rounded-full clay-card !rounded-full text-sm" title="Nhạc nền BizOn">🎵</button>
+        <button id="lyrics-btn" onclick="toggleLyrics()" aria-label="Lời bài hát" class="hdr-toggle w-9 h-9 rounded-full clay-card !rounded-full text-sm" title="Lời bài hát · Lyrics">🎤</button>
       </div>
       <div class="hdr-money clay-card shrink-0 px-2.5 sm:px-4 py-2 flex items-center gap-1">
         <span>💰</span><span id="hdr-balance" class="font-display font-bold text-deep-teal text-xs sm:text-sm whitespace-nowrap">0₫</span>
@@ -802,6 +803,7 @@
         <div class="p-5"><a href="games.html" class="font-bold text-sm text-primary block">🕹️ BizOn Arcade (trung tâm trò chơi)</a></div>
         <div class="p-5"><a href="lab/ie-lab.html" class="font-bold text-sm text-primary block">🌏 Bậc 3 · Quốc tế hóa · IE Lab (thử nghiệm)</a></div>
         <div class="p-5"><a href="thu-vien.html" class="font-bold text-sm text-primary block">📚 Thư viện Sáng tạo</a></div>
+        <div class="p-5"><button onclick="toggleLyrics()" class="font-bold text-sm text-deep-teal w-full text-left">🎤 Lời bài hát (nhạc nền đang phát)</button></div>
         <div class="p-5"><a href="am-nhac.html" class="font-bold text-sm text-primary block">🎶 Kho Âm nhạc BizOn</a></div>
         <div class="p-5"><a href="index.html" class="font-bold text-sm text-primary block">🏠 Trang chủ BizOn</a></div>
         <div class="p-5"><a href="https://github.com/thuyhuongctu/BizOn/tree/main" target="_blank" rel="noopener" class="font-bold text-sm text-primary block">⭐ Mã nguồn trên GitHub</a></div>
@@ -861,6 +863,9 @@
 <script src="js/engine.js"></script>
 <script src="js/core/seed-engine.js"></script>
 <script src="js/backend.js"></script>
+<script src="js/music-data.js"></script>
+<script src="js/music-lyrics.js"></script>
+<script src="js/bn-lyrics.js"></script>
 <script src="js/app.js"></script>
 <script src="js/market-dynamic.js"></script>
 <script src="js/class-sync.js"></script>

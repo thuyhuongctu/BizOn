@@ -239,6 +239,9 @@
   }
 </style>
 <script src="js/capture-guard.js"></script>
+<script src="js/music-data.js" defer></script>
+<script src="js/music-lyrics.js" defer></script>
+<script src="js/bn-lyrics.js" defer></script>
 </head>
 <body>
 <div id="boot" style="position:fixed;inset:0;z-index:200;background:#2a2340 url('assets/illustrations/rong-bay-doi-bizon.webp') center/cover no-repeat;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;font-family:'Baloo 2','Be Vietnam Pro',sans-serif;color:#2b4a55;transition:opacity .5s">
@@ -287,6 +290,7 @@
 </div>
 <div id="rail" class="hud">
   <button class="btn" id="musicBtn"><i>🎵</i><span>Nhạc nền</span></button>
+  <button class="btn" id="lyrBtn"><i>🎤</i><span data-en="Lyrics">Lời bài hát</span></button>
   <button class="btn" id="homeBtn"><i>🏠</i><span data-en="Overview">Tổng quan</span></button>
   <a class="btn" id="instructorBtn" href="Trang Giang Vien.dc.html" target="_blank" rel="noopener"><i>👩‍🏫</i><span data-en="Instructor">Giảng viên</span></a>
   <button class="btn" data-tab="advisor"><i>🤖</i><span>Lumina</span></button>
@@ -528,6 +532,11 @@ let paintMusic = () => {};
 { const mb = document.getElementById('musicBtn'), on = () => localStorage.getItem('bizon-music') !== 'off', paint = () => { mb.innerHTML = on() ? '<i>🎵</i><span>' + T('Nhạc: Bật', 'Music: On') + '</span>' : '<i>🔇</i><span>' + T('Nhạc: Tắt', 'Music: Off') + '</span>'; }; paint(); paintMusic = paint;
   mb.onclick = () => { try { ev('toggleMusic()'); } catch (e) { localStorage.setItem('bizon-music', on() ? 'off' : 'on'); } paint(); };
   addEventListener('pointerdown', () => { try { if (on()) ev('startMusic()'); } catch (e) {} }, { once: true }); }
+// Lời bài hát: nhạc nền chạy trong iframe game.html (biến bgm của js/app.js), khung lời vẽ ở trang 3D này.
+document.getElementById('lyrBtn').onclick = () => window.BNLyrics && BNLyrics.toggle({
+  audio: () => ev('bgm'),
+  play: id => { ev('playBgmTrack(' + JSON.stringify(id) + ')'); paintMusic(); },
+  en: () => T(false, true) });
 applyLow();
 function setNight(on) {
   night = on; document.body.classList.toggle('night', on);
