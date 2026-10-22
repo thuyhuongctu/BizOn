@@ -104,7 +104,7 @@
     { label: 'Hộ Chiếu Thương Hiệu', icon: '🛂', url: 'brand-passport.html', color: '#006687' },
     { label: 'Game Bật Nghiệp', icon: '🎮', url: 'game.html', color: '#0f8f6b' },
     { label: 'BizOn Arcade', icon: '🕹️', url: 'games.html', color: '#7b3fa0' },
-    { label: 'IE Lab · Quốc tế hóa', icon: '🌏', url: 'global.html', color: '#1c6fd1' },
+    { label: 'IE Lab · Quốc tế hóa', icon: '🌏', url: 'lab/ie-lab.html', color: '#1c6fd1' },
     { label: 'Bến Phù Sa', icon: '🛶', url: 'ben-phu-sa.html', color: '#c2740c' },
   ];
 

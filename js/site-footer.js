@@ -22,7 +22,7 @@
       ['Hướng dẫn chơi', 'huong-dan.html', 'How to play'],
       ['BizOn Arcade', 'games.html', 'BizOn Arcade'],
       ['Hộ Chiếu Thương Hiệu', 'brand-passport.html', 'Brand Passport'],
-      ['IE Lab · Quốc tế hóa', 'global.html', 'IE Lab · Internationalisation'],
+      ['IE Lab · Quốc tế hóa', 'lab/ie-lab.html', 'IE Lab · Internationalisation'],
       ['Bến Phù Sa', 'ben-phu-sa.html', 'Bến Phù Sa'],
       ['🧪 Sảnh 3D (thử nghiệm)', 'hub-3d.html', '🧪 3D Lobby (experimental)'],
     ]],

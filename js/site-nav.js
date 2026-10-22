@@ -37,7 +37,7 @@
       ['Hướng dẫn chơi', 'huong-dan.html'],
       ['BizOn Arcade', 'games.html'],
       ['Hộ Chiếu Thương Hiệu', 'brand-passport.html'],
-      ['IE Lab · Quốc tế hóa', 'global.html'],
+      ['IE Lab · Quốc tế hóa', 'lab/ie-lab.html'],
       ['Bến Phù Sa', 'ben-phu-sa.html'],
       ['🧪 Sảnh 3D (thử nghiệm)', 'hub-3d.html'],
     ]],

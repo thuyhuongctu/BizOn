@@ -89,7 +89,7 @@
 
     /* sides */
     var sbg = ['var(--clay-mint-soft)','var(--clay-amber-soft)','var(--clay-c5)'];
-    var shref = [B+'Ho Chieu Mini.dc.html', B+'game.html', B+'global.html'];
+    var shref = [B+'Ho Chieu Mini.dc.html', B+'game.html', B+'lab/ie-lab.html'];
     set('ar-sides', t.sides.map(function(s,i){
       return '<a href="'+esc(shref[i])+'" style="display:flex;flex-direction:column;gap:8px;padding:22px;border-radius:28px;background:'+sbg[i]+';color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -8px 0 rgba(0,0,0,.07),inset 0 5px 0 rgba(255,255,255,.5),0 20px 28px -22px rgba(110,70,30,.55))">'
         + '<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"><span style="font-family:var(--clay-head);font-size:22px;font-weight:800">'+esc(s[0])+'</span><span style="padding:3px 10px;border-radius:999px;background:var(--clay-card);font-size:11px;font-weight:800">'+esc(s[1])+'</span></div>'
