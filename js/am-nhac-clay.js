@@ -17,10 +17,12 @@
   var LBL = {
     vi:{ studio:'Phòng thu đất sét', queue:'Hàng chờ', songs:'bài', versions:'bản',
          toGame:'Vào game', collection:'Tuyển tập', song:'Ca khúc', dl:'Tải bài này',
-         playAll:'Phát cả album', repeat:'Lặp album', sleep:'Hẹn giờ tắt', off:'Tắt', min:'phút', left:'còn', about:'khoảng' },
+         playAll:'Phát cả album', repeat:'Lặp album', sleep:'Hẹn giờ tắt', off:'Tắt', min:'phút', left:'còn', about:'khoảng',
+         lyrics:'Lời bài hát', hideLyrics:'Ẩn lời' },
     en:{ studio:'Clay studio', queue:'Up next', songs:'songs', versions:'versions',
          toGame:'Open game', collection:'Collection', song:'Song', dl:'Download this track',
-         playAll:'Play whole album', repeat:'Repeat album', sleep:'Sleep timer', off:'Off', min:'min', left:'left', about:'about' }
+         playAll:'Play whole album', repeat:'Repeat album', sleep:'Sleep timer', off:'Off', min:'min', left:'left', about:'about',
+         lyrics:'Lyrics', hideLyrics:'Hide lyrics' }
   };
   function lang(){ return (window.clayCurrentLang && window.clayCurrentLang()) === 'en' ? 'en' : 'vi'; }
   function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]; }); }
@@ -46,6 +48,7 @@
   var SLEEP_OPTS = [0, 15, 30, 45, 60, 90], sleepMin = 0, sleepEnd = 0, sleepTick = null;
   var durCache = {};
   var queueFiles = [];          // hàng chờ hiện hành (các audioId)
+  var lyrOpen = false;          // khung lời bài hát đang mở (js/music-lyrics.js)
   var nameMap = {};             // audioId -> {t, s} (tên hiển thị theo ngôn ngữ)
 
   function groupName(g){ var en = lang()==='en'; return (en && g[5]) || g[0]; }
@@ -214,8 +217,11 @@
               + '<select id="am-sleep" aria-label="'+esc(l.sleep)+'" style="border:0;border-radius:999px;padding:3px 6px;background:#0E1F22;color:#fff;font:inherit;font-weight:800;cursor:pointer">'
                 + SLEEP_OPTS.map(function(m){ return '<option value="'+m+'">'+(m ? m+' '+esc(l.min) : esc(l.off))+'</option>'; }).join('')
               + '</select><span id="am-sleepleft" style="font-family:var(--clay-mono);font-weight:600;color:#FFD58A"></span></label>'
+            + '<button type="button" id="am-lyr" aria-expanded="false" aria-controls="am-lyrics" hidden style="'+PILL+'"></button>'
           + '</div>'
           + '<div id="am-total" style="font-size:13px;font-weight:700;color:#9CC9C9"></div>'
+          /* lời bài hát: chỉ hiện khi bài đang chọn có lời trong window.BZ_LYRICS */
+          + '<div id="am-lyrics" hidden tabindex="0" style="max-height:min(52vh,420px);overflow-y:auto;padding:18px 20px;border-radius:22px;background:#0B4A4F;color:#E9F6F7;font-size:15px;line-height:1.7;box-shadow:inset 0 4px 10px rgba(0,0,0,.3)"></div>'
         + '</div>'
       + '</div>'
       /* hàng chờ */
@@ -241,6 +247,7 @@
       paint();
     };
     document.getElementById('am-sleep').onchange = function(e){ setSleep(+e.target.value || 0); };
+    document.getElementById('am-lyr').onclick = function(){ lyrOpen = !lyrOpen; paint(); };
     loadDurations(); paintSleep();
     document.getElementById('am-seek').onclick = function(e){
       if(!A || !A.duration || deckFileList().indexOf(cur) < 0) return;
@@ -249,6 +256,17 @@
     };
     buildQueue();
     paint();
+  }
+
+  /* Lời bài hát: [Tên đoạn] → nhãn; [ghi chú dài có dấu câu] → in nghiêng; dòng trống → ngắt khổ */
+  function lyricsHtml(lines){
+    return lines.map(function(t){
+      var m = /^\[(.+)\]$/.exec(t);
+      if(m && /^[\w\s\/—-]{1,26}$/.test(m[1])) return '<div style="margin:14px 0 4px;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#7FD3DC">'+esc(m[1])+'</div>';
+      if(m) return '<div style="font-size:13px;font-style:italic;color:#9CC9C9">'+esc(m[1])+'</div>';
+      if(!t) return '<div style="height:10px"></div>';
+      return '<div>'+esc(t)+'</div>';
+    }).join('');
   }
 
   function deckFileList(){
@@ -343,6 +361,15 @@
         .replace(/[^A-Za-z0-9 ._-]+/g, ' ').trim().replace(/\s+/g, '-').replace(/-{2,}/g, '-') || item.f;
       dl.setAttribute('href', url(item.f)); dl.setAttribute('download', 'BizOn-' + fn + '.mp3');
       dl.setAttribute('title', l.dl + ' · ' + nm); dl.setAttribute('aria-label', l.dl + ': ' + nm);
+    }
+    var lines = item && window.BZ_LYRICS && window.BZ_LYRICS[item.f];
+    var lb = document.getElementById('am-lyr'), lp = document.getElementById('am-lyrics');
+    if(lb && lp){
+      lb.hidden = !lines; lp.hidden = !(lines && lyrOpen);
+      lb.textContent = '📜 ' + (lyrOpen ? l.hideLyrics : l.lyrics);
+      lb.setAttribute('aria-expanded', lines && lyrOpen ? 'true' : 'false');
+      lb.style.background = lyrOpen ? '#FDA127' : 'rgba(255,255,255,.1)'; lb.style.color = lyrOpen ? 'var(--clay-ink)' : '#fff';
+      if(lines && lyrOpen && lp.getAttribute('data-f') !== item.f){ lp.innerHTML = lyricsHtml(lines); lp.setAttribute('data-f', item.f); lp.scrollTop = 0; }
     }
     var tg = document.getElementById('am-togame'); if(tg){ tg.setAttribute('href', d.dHref); tg.firstChild && (tg.textContent = l.toGame + ' ↗'); }
     var dot = document.getElementById('am-dot'); if(dot) dot.style.background = deckOn ? '#FDA127' : '#3E5A5C';
