@@ -33,6 +33,21 @@
         .style('cursor', function (f) { return d.onPick && hostIso[f.id] ? 'pointer' : null; })
         .on('click', function (e, f) { var h = hostIso[f.id]; if (h && d.onPick) d.onPick(h.m); })
         .append('title').text(function (f) { var h = hostIso[f.id]; return h ? h.tip : f.id === homeIso ? d.home.label : (f.properties && f.properties.name) || ''; });
+      // Quần đảo Hoàng Sa và Trường Sa (Việt Nam): dữ liệu 110m không có đảo nhỏ nên vẽ bằng cụm chấm cùng màu lãnh thổ Việt Nam,
+      // kèm nhãn và tên biển «Biển Đông». Toạ độ gần đúng theo vị trí các đảo chính.
+      var vnFill = homeIso === '704' ? '#fda127' : hostIso['704'] ? (hostIso['704'].entered ? '#2f8a8c' : '#a9ccd2') : '#c9d6d2';
+      var ARCH = [
+        { vi: 'QĐ. Hoàng Sa (Việt Nam)', en: 'Hoàng Sa (Paracel) Is. – Viet Nam', at: [112.0, 16.5], pts: [[112.33, 16.83], [112.2, 16.95], [111.62, 16.53], [111.75, 16.45], [111.5, 16.45], [112.55, 16.05], [111.2, 15.78], [112.9, 16.07]] },
+        { vi: 'QĐ. Trường Sa (Việt Nam)', en: 'Trường Sa (Spratly) Is. – Viet Nam', at: [114.3, 9.8], pts: [[114.28, 11.06], [114.36, 10.38], [114.0, 10.9], [114.7, 10.5], [115.0, 9.9], [115.5, 9.0], [113.85, 8.85], [111.92, 8.64], [112.8, 9.2], [116.2, 10.2], [113.0, 7.9]] }
+      ];
+      var ga = svg.append('g').attr('pointer-events', 'none');
+      var sea = proj([115.2, 13.2]);
+      if (sea) ga.append('text').attr('x', sea[0]).attr('y', sea[1]).attr('text-anchor', 'middle').attr('font-size', 8).attr('font-style', 'italic').attr('fill', '#5a8a92').text(T('Biển Đông', 'East Sea'));
+      ARCH.forEach(function (a) {
+        a.pts.forEach(function (q) { var p = proj(q); if (p) ga.append('circle').attr('cx', p[0]).attr('cy', p[1]).attr('r', 1.4).attr('fill', vnFill).attr('stroke', '#033337').attr('stroke-width', 0.4); });
+        var c = proj(a.at); if (c) ga.append('text').attr('x', c[0] + 9).attr('y', c[1] + 3).attr('font-size', 8.5).attr('font-weight', 700).attr('fill', '#335a5e')
+          .attr('paint-order', 'stroke').attr('stroke', '#fff').attr('stroke-width', 2.5).text(T(a.vi, a.en));
+      });
       // Tuyến thương mại home → host (đường tròn lớn)
       var g = svg.append('g');
       d.hosts.forEach(function (h) {
@@ -66,7 +81,9 @@
       lg.innerHTML = sw('#fda127', T('Quốc gia của bạn', 'Your home country')) + sw('#2f8a8c', T('Đã thâm nhập', 'Entered')) + sw('#a9ccd2', T('Chưa thâm nhập', 'Not entered')) +
         sw('#2f8a8c', T('Có FTA', 'FTA in force'), 'solid') + sw('#e8762d', T('Không FTA', 'No FTA'), 'solid') +
         '<span style="display:flex;gap:5px;align-items:center"><i style="display:inline-block;width:11px;height:11px;border-radius:50%;border:2px dashed #c0443a"></i>' + T('Đối thủ Kim Long có mặt', 'Rival Kim Long present') + '</span>' +
-        '<span style="opacity:.7">CD = ' + T('khoảng cách văn hoá (Kogut & Singh, 1988)', 'cultural distance (Kogut & Singh, 1988)') + ' · Natural Earth</span>';
+        '<span style="opacity:.7">CD = ' + T('khoảng cách văn hoá (Kogut & Singh, 1988)', 'cultural distance (Kogut & Singh, 1988)') + '</span>' +
+        '<span style="flex-basis:100%;opacity:.8">' + T('Quần đảo Hoàng Sa và Trường Sa thuộc chủ quyền Việt Nam. Ranh giới: Natural Earth 1:110m (dữ liệu công cộng), giản lược, không dùng làm bản đồ chính thức. Tham chiếu: Bản đồ nền – Hệ thống VNSDI, Bộ Nông nghiệp và Môi trường (vnsdi.mae.gov.vn/bandonen).',
+          'The Hoàng Sa (Paracel) and Trường Sa (Spratly) archipelagos are part of Viet Nam. Boundaries: Natural Earth 1:110m (public domain), simplified, not an official map. Reference: base map of the VNSDI system, Ministry of Agriculture and Environment of Viet Nam (vnsdi.mae.gov.vn/bandonen).') + '</span>';
       el.appendChild(lg);
     }).catch(function () {
       el.innerHTML = '<p style="margin:0;padding:14px;font-size:12px;opacity:.6">' + T('Không tải được dữ liệu bản đồ – kiểm tra kết nối mạng.', 'Could not load the map data – check your connection.') + '</p>';

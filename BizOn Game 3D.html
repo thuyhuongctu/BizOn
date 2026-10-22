@@ -107,6 +107,7 @@
   #arena .ah b{display:block;font:800 30px/1.2 "Baloo 2",sans-serif;text-shadow:0 3px 0 rgba(0,0,0,.25)}
   #arena .ah span{display:block;font-size:14px;color:#d4ecef}
   #arena .ah em{display:block;font:800 13px "Baloo 2",sans-serif;font-style:normal;color:#ffc56a;margin-top:2px}
+  #arena .ah .asov{display:block;margin-top:3px;font-size:10.5px;color:rgba(255,255,255,.72);text-shadow:0 1px 2px rgba(0,0,0,.45)}
   #arena .lab{position:absolute;transform:translate(-50%,-100%);text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px}
   #arena .lab b{font:800 13px/1.5 "Baloo 2",sans-serif;color:#fff;background:var(--c);border-radius:10px;padding:0 9px;white-space:nowrap;box-shadow:0 3px 0 rgba(0,0,0,.25)}
   #arena .lab i{font:800 26px/1 "Baloo 2",sans-serif;font-style:normal;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.4)}
@@ -318,7 +319,7 @@
 <div id="zones" class="hud"></div>
 <button class="btn" id="sheetX" data-en="✕ Back to HQ">✕ Về trụ sở</button>
 <div id="evc" role="dialog" aria-label="Biến cố thị trường"></div><div id="bub"></div>
-<div id="arena"><div class="ah"><b id="aTitle">⚔️ ĐẤU TRƯỜNG</b><span id="aSub"></span><em id="aZone"></em></div><div id="aLabs"></div>
+<div id="arena"><div class="ah"><b id="aTitle">⚔️ ĐẤU TRƯỜNG</b><span id="aSub"></span><em id="aZone"></em><small class="asov" data-en="Hoàng Sa &amp; Trường Sa archipelagos (Viet Nam) · coastline: Natural Earth · illustrative, not to scale">QĐ. Hoàng Sa, Trường Sa (Việt Nam) · đường bờ: Natural Earth · minh họa, không theo tỉ lệ</small></div><div id="aLabs"></div>
   <div class="af" id="aFoot"><div class="verdict" id="aVerdict"></div><button class="btn primary" id="aNext" data-en="See detailed results →">Xem kết quả chi tiết →</button></div></div>
 <div id="room"><div class="rh"><div class="rt"><img id="rmScene" alt="" style="display:none;width:min(260px,40vw);border-radius:16px;border:3px solid #e6d6bf;margin-bottom:6px"><b id="rmTitle"></b><span id="rmSub"></span></div><div class="rb"><button class="btn" id="rm2d" data-en="📋 List view">📋 Dạng danh sách</button><button class="btn primary" id="rmClose" data-en="✕ Back to HQ">✕ Về trụ sở</button></div></div><div id="rmLabs"></div><div id="rmCard"></div></div>
 <div id="frame" class="full"><iframe id="gf" src="game.html" title="BizOn BẬT NGHIỆP"></iframe></div>
@@ -678,9 +679,10 @@ function renderResults() {
     ${[...Array(9)].map((_, i) => `<path d="M${-6},${40 + i * 50} q60,-10 120,0 t120,0 t140,0" stroke="rgba(255,255,255,.12)" stroke-width="3" fill="none"/>`).join('')}
     <path d="${vnPath}" fill="url(#grain)" stroke="#4a8a35" stroke-width="2.2" stroke-linejoin="round" filter="url(#clay)"/>
     ${[[0, 0], [9, 5], [-6, 8], [14, -4], [4, 12]].map(([dx, dy]) => `<circle cx="${hoang[0] + dx}" cy="${hoang[1] + dy}" r="2.6" fill="#8cc46a" stroke="#4a8a35"/>`).join('')}
-    ${[[0, 0], [10, 8], [-8, 14], [18, -6], [4, 22], [-14, -4], [22, 16]].map(([dx, dy]) => `<circle cx="${truong[0] + dx}" cy="${truong[1] + dy}" r="2.3" fill="#8cc46a" stroke="#4a8a35"/>`).join('')}
-    <text x="${hoang[0] - 30}" y="${hoang[1] - 10}" font-size="10" font-family="Be Vietnam Pro" fill="#eaf6ff">${T('QĐ. Hoàng Sa', 'Hoang Sa Is.')}</text>
-    <text x="${truong[0] - 34}" y="${truong[1] - 12}" font-size="10" font-family="Be Vietnam Pro" fill="#eaf6ff">${T('QĐ. Trường Sa', 'Truong Sa Is.')}</text>
+    ${[[0, 0], [10, 8], [-8, 14], [18, -6], [4, 22], [-14, -4], [22, 16], [-20, 36], [-57, 44], [-32, 30], [10, 38]].map(([dx, dy]) => `<circle cx="${truong[0] + dx}" cy="${truong[1] + dy}" r="2.3" fill="#8cc46a" stroke="#4a8a35"/>`).join('')}
+    <text x="${hoang[0] - 30}" y="${hoang[1] - 10}" font-size="10" font-family="Be Vietnam Pro, sans-serif" fill="#eaf6ff">${T('QĐ. Hoàng Sa', 'Hoàng Sa Is.')}</text>
+    <text x="${truong[0] - 34}" y="${truong[1] - 12}" font-size="10" font-family="Be Vietnam Pro, sans-serif" fill="#eaf6ff">${T('QĐ. Trường Sa', 'Trường Sa Is.')}</text>
+    <text x="4" y="468" font-size="7.5" font-family="Be Vietnam Pro, sans-serif" fill="#eaf6ff" opacity=".85">${T('QĐ. Hoàng Sa, Trường Sa thuộc chủ quyền Việt Nam · Đường bờ: Natural Earth (dữ liệu công cộng) · minh họa, không theo tỉ lệ', 'Hoàng Sa & Trường Sa archipelagos are part of Viet Nam · Coastline: Natural Earth (public domain) · illustrative, not to scale')}</text>
     <path d="${routeD(sea)}" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 11"/>
     ${pts.map(([x, y], i) => `<circle cx="${x}" cy="${y}" r="${owners[i] ? 6 : 5}" fill="${owners[i] ? TEAMS[owners[i]].color : '#fff'}" stroke="#fff" stroke-width="2.5"/>`).join('')}
     <circle class="ping" cx="${pts[empty ? 0 : Math.min(5, RR.length)][0]}" cy="${pts[empty ? 0 : Math.min(5, RR.length)][1]}" r="8" fill="none" stroke="#3ff0e0" stroke-width="3"/>
@@ -1289,7 +1291,9 @@ function buildArena() {
       const m = new THREE.Mesh(eg, land); m.position.y = -0.06; m.castShadow = m.receiveShadow = true; m.name = 'arena_vietnam'; S3.add(m);
     } catch {}
     const isl = mat(0x8cc46a, 0.9);
-    [[111.9, 16.4, 5], [113.9, 10.1, 7]].forEach(([lo, la, n]) => { for (let i = 0; i < n; i++) { const p = APt([lo + Math.sin(i * 2.1) * 0.5, la + Math.cos(i * 1.7) * 0.5]); hq.S(S3, 'island', 0.07, isl, p.x, 0.02, p.z); } });
+    // Quần đảo Hoàng Sa, Trường Sa (Việt Nam) – vnm.json (Natural Earth) không có hai quần đảo nên dựng bằng cụm đảo nhỏ theo vị trí các đảo chính
+    [[112.33, 16.83], [111.62, 16.53], [111.75, 16.45], [112.55, 16.05], [111.2, 15.78], [112.9, 16.07]].forEach(q => { const p = APt(q); hq.S(S3, 'island', 0.11, isl, p.x, 0.03, p.z); });
+    [[114.28, 11.06], [114.36, 10.38], [114.7, 10.5], [115.0, 9.9], [115.5, 9.0], [113.85, 8.85], [111.92, 8.64], [112.8, 9.2], [116.2, 10.2]].forEach(q => { const p = APt(q); hq.S(S3, 'island', 0.1, isl, p.x, 0.03, p.z); });
     AR.pins = STOPS.map((st, i) => { const p = APt(st.ll), g = G('pin_' + i, S3, p.x, 0.2, p.z); Cy(g, 'pin_base', 0.13, 0.15, 0.08, mat(0xfbf6ee, 0.8)); return g; });
     const ring = new THREE.Mesh(new THREE.TorusGeometry(0.3, 0.04, 10, 40), new THREE.MeshBasicMaterial({ color: 0x3ff0e0 })); ring.rotation.x = Math.PI / 2; S3.add(ring); AR.ring = ring;
     const crown = G('crown', S3); Cy(crown, 'crown_band', 0.16, 0.16, 0.09, mat(0xf2c14e, 0.35, 0.5));

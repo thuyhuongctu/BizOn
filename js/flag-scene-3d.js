@@ -58,7 +58,7 @@
     var hoang = P([111.9, 16.4]), truong = P([113.9, 10.1]), cur = pts[round], curO = ownerOf(round);
     var waves = ''; for (var i = 0; i < 9; i++) waves += '<path d="M-6,' + (40 + i * 50) + ' q60,-10 120,0 t120,0 t140,0" stroke="rgba(255,255,255,.12)" stroke-width="3" fill="none"/>';
     var isl = [[0, 0], [9, 5], [-6, 8], [14, -4], [4, 12]].map(function (d) { return '<circle cx="' + (hoang[0] + d[0]) + '" cy="' + (hoang[1] + d[1]) + '" r="2.6" fill="#8cc46a" stroke="#4a8a35"/>'; }).join('') +
-      [[0, 0], [10, 8], [-8, 14], [18, -6], [4, 22], [-14, -4], [22, 16]].map(function (d) { return '<circle cx="' + (truong[0] + d[0]) + '" cy="' + (truong[1] + d[1]) + '" r="2.3" fill="#8cc46a" stroke="#4a8a35"/>'; }).join('');
+      [[0, 0], [10, 8], [-8, 14], [18, -6], [4, 22], [-14, -4], [22, 16], [-20, 36], [-57, 44], [-32, 30], [10, 38]].map(function (d) { return '<circle cx="' + (truong[0] + d[0]) + '" cy="' + (truong[1] + d[1]) + '" r="2.3" fill="#8cc46a" stroke="#4a8a35"/>'; }).join('');
     var dots = pts.map(function (p, i) { var o = ownerOf(i); return '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="' + (o ? 6 : 5) + '" fill="' + colorOf(o) + '" stroke="#fff" stroke-width="2.5"/>'; }).join('');
     var flags = pts.map(function (p, i) { var o = ownerOf(i); return o && i !== round ? flagSVG(p[0], p[1], colorOf(o), false) : ''; }).join('');
     var names = st.map(function (s, i) { if (i !== round && i !== 0 && i !== st.length - 1) return ''; var p = pts[i]; return '<text x="' + (p[0] - (i === st.length - 1 ? 30 : 60)) + '" y="' + (p[1] + (i === 0 ? 22 : -8)) + '">' + s.name + '</text>'; }).join('');
@@ -69,7 +69,8 @@
       '<pattern id="bzfgrain" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="6" fill="#6fae4f"/><circle cx="1.5" cy="2" r=".8" fill="#80bd5d"/><circle cx="4.5" cy="4.5" r=".7" fill="#5f9c43"/></pattern></defs>' +
       '<rect x="-6" y="-6" width="392" height="478" fill="#4b9fcf"/>' + waves +
       '<path d="' + vnPath + '" fill="url(#bzfgrain)" stroke="#4a8a35" stroke-width="2.2" stroke-linejoin="round" filter="url(#bzfclay)"/>' + isl +
-      '<text x="' + (hoang[0] - 30) + '" y="' + (hoang[1] - 10) + '" font-size="10" font-family="Be Vietnam Pro" fill="#eaf6ff">QĐ. Hoàng Sa</text><text x="' + (truong[0] - 34) + '" y="' + (truong[1] - 12) + '" font-size="10" font-family="Be Vietnam Pro" fill="#eaf6ff">QĐ. Trường Sa</text>' +
+      '<text x="' + (hoang[0] - 30) + '" y="' + (hoang[1] - 10) + '" font-size="10" font-family="Be Vietnam Pro, sans-serif" fill="#eaf6ff">' + tr('QĐ. Hoàng Sa', 'Hoàng Sa Is.') + '</text><text x="' + (truong[0] - 34) + '" y="' + (truong[1] - 12) + '" font-size="10" font-family="Be Vietnam Pro, sans-serif" fill="#eaf6ff">' + tr('QĐ. Trường Sa', 'Trường Sa Is.') + '</text>' +
+      '<text x="4" y="468" font-size="7.5" font-family="Be Vietnam Pro, sans-serif" fill="#eaf6ff" opacity=".85">' + tr('QĐ. Hoàng Sa, Trường Sa thuộc chủ quyền Việt Nam · Đường bờ: Natural Earth (dữ liệu công cộng) · minh họa, không theo tỉ lệ', 'Hoàng Sa & Trường Sa archipelagos are part of Viet Nam · Coastline: Natural Earth (public domain) · illustrative, not to scale') + '</text>' +
       '<path d="' + routeD(sea) + '" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 11"/>' + dots +
       '<circle class="bzf-ping" cx="' + cur[0] + '" cy="' + cur[1] + '" r="8" fill="none" stroke="#3ff0e0" stroke-width="3"/>' + flags +
       (curO ? flagSVG(cur[0], cur[1], colorOf(curO), true, 'bzf-pop', emblemOf(curO)) : '') +

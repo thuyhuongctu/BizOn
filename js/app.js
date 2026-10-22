@@ -1693,7 +1693,7 @@ function showArena(r, done) {
       <div class="relative mx-auto" style="width:min(96vw,376px); height:min(54vh,392px)">
         <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" style="height:100%; aspect-ratio:768/1376">
           <div class="w-full h-full" style="-webkit-mask-image:linear-gradient(to bottom, transparent 0, #000 3%, #000 97%, transparent 100%); mask-image:linear-gradient(to bottom, transparent 0, #000 3%, #000 97%, transparent 100%)">
-            <img src="assets/illustrations/arena-vietnam-map-v2.webp" alt="Bản đồ Việt Nam – sàn đấu giành thị phần" class="w-full h-full object-contain" style="-webkit-mask-image:linear-gradient(to right, transparent 0, #000 3%, #000 97%, transparent 100%); mask-image:linear-gradient(to right, transparent 0, #000 3%, #000 97%, transparent 100%)">
+            <img src="assets/illustrations/arena-vietnam-map-v2.webp" alt="${T('Bản đồ Việt Nam – sàn đấu giành thị phần', 'Map of Viet Nam – the market-share arena')}" class="w-full h-full object-contain" style="-webkit-mask-image:linear-gradient(to right, transparent 0, #000 3%, #000 97%, transparent 100%); mask-image:linear-gradient(to right, transparent 0, #000 3%, #000 97%, transparent 100%)">
           </div>
           ${pin}
         </div>
@@ -1709,6 +1709,7 @@ function showArena(r, done) {
           <div class="h-1.5 rounded-full bg-white/10 overflow-hidden mx-2"><div class="arena-bar h-full rounded-full ${f.me ? 'bg-gradient-to-r from-clay-orange to-clay-gold' : 'bg-white/40'}" style="width:0%; transition:width 1.1s cubic-bezier(.2,.8,.3,1) ${i * 0.45 + 0.3}s" data-w="${Math.max(6, f.share / max * 100)}"></div></div>
         </div>`).join('')}
       </div>
+      <p class="text-[9px] text-white/55 mt-1">${T('Hình minh họa, không theo tỉ lệ · QĐ. Hoàng Sa, Trường Sa thuộc chủ quyền Việt Nam', 'Illustration, not to scale · Hoàng Sa & Trường Sa archipelagos are part of Viet Nam')}</p>
       <p id="arena-verdict" class="text-sm font-extrabold mt-3 min-h-[1.5rem] text-white opacity-0" style="transition:opacity .4s"></p>
       <button id="arena-next" class="clay-btn w-full bg-white text-deep-teal font-display font-extrabold py-3.5 mt-2 opacity-0" style="transition:opacity .4s">${T('Xem kết quả chi tiết →', 'View detailed results →')}</button>
     </div>`;
@@ -1877,9 +1878,10 @@ function renderConquest() {
   }).join('');
   box.innerHTML = `
     <div class="relative w-full mx-auto rounded-2xl overflow-hidden shadow-clay" style="aspect-ratio:768/1376">
-      <img src="assets/illustrations/arena-vietnam-map-v2.webp" alt="Bản đồ chinh phục Việt Nam đất sét 3D – Hoàng Sa & Trường Sa là của Việt Nam" class="w-full h-full object-contain" style="background:#062b3a">
+      <img src="assets/illustrations/arena-vietnam-map-v2.webp" alt="${T('Bản đồ chinh phục Việt Nam đất sét 3D – quần đảo Hoàng Sa và Trường Sa thuộc chủ quyền Việt Nam', 'Clay 3D conquest map of Viet Nam, including the Hoàng Sa and Trường Sa archipelagos')}" class="w-full h-full object-contain" style="background:#062b3a">
       ${marks}
-    </div>`;
+    </div>
+    <p class="mt-1 text-[9px] leading-snug text-deep-teal/55">${T('Hình minh họa, không theo tỉ lệ. Quần đảo Hoàng Sa và Trường Sa thuộc chủ quyền Việt Nam.', 'Illustration, not to scale. The Hoàng Sa and Trường Sa archipelagos are part of Viet Nam.')}</p>`;
 
   const list = $('conquest-list');
   if (list) list.innerHTML = CONQUEST_STOPS.map((st, i) => {
