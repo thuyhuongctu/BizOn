@@ -364,6 +364,8 @@
     ] },
   ];
   function tmName(i) { return T(TEAMS[i].name, TEAMS[i].nameEn); }
+  // Tên đội người chơi gõ ở cổng vào (js/game3d-login-gate.js ghi 'bps-team'); bỏ trống thì dùng tên đội mẫu.
+  function myTeam() { var t = ''; try { t = (localStorage.getItem('bps-team') || '').replace(/[<>&"]/g, '').trim().slice(0, 40); } catch (e) {} return (t && !/^(Đội Demo|Demo Team|Đội của bạn|Your team)$/.test(t)) ? t : tmName(S.team); }
   function mRole(member) { return T(member.role, member.roleEn); }
   function TEAM() { return TEAMS[S.team].members; }
   // 3 đối thủ ảo của hệ sinh thái BizOn – mỗi "nhà" một tính cách kinh doanh
@@ -427,7 +429,7 @@
     history: [], // {w, m, menu, loc, net} mỗi tuần – để debrief cuối ván giải thích ĐÚNG đường đi của ván này
   };
   var $ = function (id) { return document.getElementById(id); };
-  var f1 = function (v) { return (Math.round(v * 10) / 10).toLocaleString(isEN() ? 'en-US' : 'vi-VN', { maximumFractionDigits: 1 }); };
+  var f1 = function (v) { return (Math.round(v * 10) / 10 || 0).toLocaleString(isEN() ? 'en-US' : 'vi-VN', { maximumFractionDigits: 1 }); };
   var MU = function () { return T('triệu ₫', 'mn ₫'); }; // đơn vị tiền đầy đủ
   var MS = function () { return T('tr₫', 'mn₫'); }; // đơn vị tiền rút gọn (bảng xếp hạng)
 
@@ -900,7 +902,7 @@
     $('ft-eff').textContent = T('Hiệu suất ' + eff + '% so với kịch bản hoàn hảo (' + f1(maxRev) + ' triệu ₫).', 'Efficiency ' + eff + '% versus the perfect-play scenario (' + f1(maxRev) + ' mn ₫).');
 
     // Bảng xếp hạng 4 đội – thứ hạng quyết định danh hiệu
-    var rows = [{ img: TEAM()[S.cap].img, name: TEAMS[S.team].icon + ' ' + tmName(S.team) + ' – ' + T('thuyền trưởng', 'captain') + ' ' + TEAM()[S.cap].name, total: S.total, me: true }]
+    var rows = [{ img: TEAM()[S.cap].img, name: TEAMS[S.team].icon + ' ' + myTeam() + ' – ' + T('thuyền trưởng', 'captain') + ' ' + TEAM()[S.cap].name, total: S.total, me: true }]
       .concat(RIVALS.map(function (r) { return { img: r.img, name: r.icon + ' ' + r.name + ' <span style="font-weight:600;opacity:.55;font-size:11px">(' + rStyle(r) + ')</span>', total: r.total }; }));
     rows.sort(function (a, b) { return b.total - a.total; });
     var rank = rows.findIndex(function (r) { return r.me; });
@@ -944,7 +946,7 @@
   /* ================= CHỨNG CHỈ HOÀN THÀNH ================= */
   // Game này không có điều kiện thua sớm – luôn hiện khi hoàn thành trọn 5 tuần.
   function certName() {
-    return ($('ft-name') && $('ft-name').value.trim()) || T('Thuyền trưởng ' + tmName(S.team), tmName(S.team) + ' Captain');
+    return ($('ft-name') && $('ft-name').value.trim()) || T('Thuyền trưởng ' + myTeam(), myTeam() + ' Captain');
   }
   function renderCertBox(titleText) {
     var box = $('ft-cert-box');
@@ -952,8 +954,8 @@
     box.classList.remove('hidden');
     $('ft-cert-name').textContent = certName();
     $('ft-cert-desc').innerHTML = T(
-      'đã hoàn thành trọn vẹn 5 tuần mô phỏng <b>«Gánh Hàng Khởi Nghiệp: Bến Phù Sa»</b> cùng <b>' + tmName(S.team) + '</b>, đạt lợi nhuận <b>' + f1(S.total) + ' triệu ₫</b> – ' + titleText + '.',
-      'has fully completed all 5 weeks of the <b>«Entrepreneurial Street Vendor: Bến Phù Sa»</b> simulation with <b>' + tmName(S.team) + '</b>, earning a profit of <b>' + f1(S.total) + ' mn ₫</b> – ' + titleText + '.'
+      'đã hoàn thành trọn vẹn 5 tuần mô phỏng <b>«Gánh Hàng Khởi Nghiệp: Bến Phù Sa»</b> cùng <b>' + myTeam() + '</b>, đạt lợi nhuận <b>' + f1(S.total) + ' triệu ₫</b> – ' + titleText + '.',
+      'has fully completed all 5 weeks of the <b>«Entrepreneurial Street Vendor: Bến Phù Sa»</b> simulation with <b>' + myTeam() + '</b>, earning a profit of <b>' + f1(S.total) + ' mn ₫</b> – ' + titleText + '.'
     );
     $('ft-cert-date').textContent = T('Cấp ngày ' + new Date().toLocaleDateString('vi-VN'), 'Issued ' + new Date().toLocaleDateString('en-US')) + ' · bizonland.com';
   }
@@ -985,13 +987,13 @@
     var EN = isEN();
     var L = EN ? {
       small: '🎓 BIZON BUSINESS SIMULATION ECOSYSTEM', to: 'Awarded to',
-      desc: 'has fully completed all 5 weeks of the «Entrepreneurial Street Vendor: Bến Phù Sa» simulation with ' + tmName(S.team),
+      desc: 'has fully completed all 5 weeks of the «Entrepreneurial Street Vendor: Bến Phù Sa» simulation with ' + myTeam(),
       stats: ['FINAL PROFIT', 'RESULT', 'EFFICIENCY'],
       sig1: 'PhD Candidate Do Thuy Huong', sig2: 'Assoc. Prof. Phan Anh Tu, Ph.D.',
       date: 'Issued ' + new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) + ' · bizonland.com',
     } : {
       small: '🎓 GIẤY CHỨNG NHẬN HOÀN THÀNH', to: 'Trao cho',
-      desc: 'đã hoàn thành trọn vẹn 5 tuần mô phỏng «Gánh Hàng Khởi Nghiệp: Bến Phù Sa» cùng ' + tmName(S.team),
+      desc: 'đã hoàn thành trọn vẹn 5 tuần mô phỏng «Gánh Hàng Khởi Nghiệp: Bến Phù Sa» cùng ' + myTeam(),
       stats: ['LỢI NHUẬN', 'KẾT QUẢ', 'HIỆU SUẤT'],
       sig1: 'NCS. Đỗ Thùy Hương', sig2: 'PGS.TS. Phan Anh Tú',
       date: 'Cấp ngày ' + new Date().toLocaleDateString('vi-VN') + ' · bizonland.com',
@@ -1114,7 +1116,7 @@
         body: JSON.stringify({
           class_code: klass,
           player_name: name || null,
-          team_name: tmName(S.team) + ' – ' + TEAM()[S.cap].name,
+          team_name: myTeam() + ' – ' + TEAM()[S.cap].name,
           total_revenue: Math.round(S.total * 10) / 10,
           efficiency: S.result.eff,
           final_rank: S.result.rank,

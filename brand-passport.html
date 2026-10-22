@@ -319,7 +319,7 @@
   var $ = function (id) { return document.getElementById(id); };
   var isEN = function () { try { return (localStorage.getItem('bizon-lang') || 'vi') === 'en'; } catch (e) { return false; } };
   // Số theo ngôn ngữ: vi dùng dấu phẩy thập phân, en dùng dấu chấm.
-  var f1 = function (v) { return (Math.round(v * 10) / 10).toLocaleString(isEN() ? 'en-US' : 'vi-VN', { maximumFractionDigits: 1 }); };
+  var f1 = function (v) { return (Math.round(v * 10) / 10 || 0).toLocaleString(isEN() ? 'en-US' : 'vi-VN', { maximumFractionDigits: 1 }); };
   var clamp = function (v) { return Math.max(0, Math.min(100, Math.round(v))); };
   var reduceMotion = (function () { try { return matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; } })();
   // Đếm chạy thay vì nhảy thẳng số – chỉ dùng cho vài con số nổi bật (tiền
@@ -781,7 +781,7 @@
     hud(); renderShop();
   };
 
-  window.bpUseItem = function (id) {
+  window.bpUseItem = function (id, mArg) { // mArg: thị trường cho SCOUT (bỏ trống → hiện bảng chọn)
     if (!S.items[id]) return;
     if (id === 'SHIELD') {
       if (S.flags.shield) return;
@@ -797,8 +797,8 @@
       S.items[id]--; S.flags.forecastPeek = true;
       addLog(T('🔮 Dùng Gói dữ liệu Lumina – Lumina sẽ tiết lộ trước thể loại sự kiện quý sau.', "🔮 Used the Lumina Data Pack – Lumina will reveal next quarter's event category in advance."));
     } else if (id === 'SCOUT') {
-      var pick = prompt(T('Điều tra thị trường nào?\n', 'Scout which market?\n') + MKTS.map(function (m, j) { return (j + 1) + ' = ' + m.name; }).join(' · '));
-      var m = parseInt(pick, 10) - 1;
+      var m = mArg;
+      if (m === undefined) { pickMkt('🕵️ ' + T('Điều tra thị trường nào?', 'Scout which market?'), function (mk) { window.bpUseItem(id, mk); }); return; }
       if (!(m >= 0 && m < MKTS.length)) return;
       S.items[id]--; S.know[m] = 100;
       var real = H[m].fit;
@@ -890,11 +890,35 @@
     if (window.BPTour) BPTour.autoObs(S.q);
   }
 
-  window.bpIntel = function (i) {
+  // Bảng chọn thị trường ngay trong trang (thay prompt() gõ số 1–7): nút bấm song ngữ, dùng được trên điện thoại,
+  // có tiêu điểm bàn phím, Esc/bấm nền/«Huỷ» để đóng. cb(m) chỉ được gọi khi người chơi chọn một thị trường.
+  function pickMkt(title, cb) {
+    var old = $('bp-mkt-pick'); if (old) old.remove();
+    var ov = document.createElement('div');
+    ov.id = 'bp-mkt-pick'; ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-modal', 'true'); ov.setAttribute('aria-labelledby', 'bp-mkt-pick-t');
+    ov.style.cssText = 'position:fixed;inset:0;z-index:95;background:rgba(2,25,28,.72);display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto';
+    ov.innerHTML = '<div class="clay-card p-5" style="max-width:440px;width:100%;max-height:88vh;overflow:auto">' +
+      '<p id="bp-mkt-pick-t" class="font-display font-extrabold text-deep-teal text-base mb-3">' + title + '</p>' +
+      '<div class="grid grid-cols-2 gap-2">' + MKTS.map(function (mk, j) {
+        return '<button type="button" class="bp-opt" data-pm="' + j + '" style="min-height:48px">' + mktBadge(j) + mk.name + '<small>' + T('tri thức', 'knowledge') + ' ' + clamp(S.know[j]) + '/100' + (S.entered[j] !== null ? ' · ' + T('đã vào', 'entered') : '') + '</small></button>';
+      }).join('') + '</div>' +
+      '<button type="button" data-pm="x" class="clay-btn w-full bg-surface-bright text-deep-teal/70 font-bold py-3 mt-3">' + T('Huỷ', 'Cancel') + '</button></div>';
+    var close = function () { ov.remove(); document.removeEventListener('keydown', esc); };
+    var esc = function (e) { if (e.key === 'Escape') close(); };
+    ov.addEventListener('click', function (e) {
+      if (e.target === ov) return close();
+      var b = e.target.closest('[data-pm]'); if (!b) return;
+      close(); if (b.dataset.pm !== 'x') cb(+b.dataset.pm);
+    });
+    document.addEventListener('keydown', esc);
+    document.body.appendChild(ov);
+    var first = ov.querySelector('[data-pm]'); if (first) first.focus();
+  }
+  window.bpIntel = function (i, mArg) {
     if (S.sel.intel.length >= 2) { $('bp-intel-note').textContent = T('Đã dùng đủ 2 nguồn trong quý này.', 'You have already used 2 sources this quarter.'); return; }
     var src = SOURCES[i];
-    var pick = prompt(T('Dùng «' + src.name + '» cho thị trường nào?\n', 'Use «' + src.nameEn + '» for which market?\n') + MKTS.map(function (m, j) { return (j + 1) + ' = ' + m.name; }).join(' · '));
-    var m = parseInt(pick, 10) - 1;
+    if (mArg === undefined) { pickMkt(src.icon + ' ' + T('Dùng «' + src.name + '» cho thị trường nào?', 'Use «' + src.nameEn + '» for which market?'), function (m) { window.bpIntel(i, m); }); return; }
+    var m = +mArg;
     if (!(m >= 0 && m < MKTS.length)) return;
     var cost = src.cost * (S.sel.prio === 0 ? 0.5 : 1);
     if (S.cash < cost) { $('bp-intel-note').textContent = T('Không đủ tiền cho nguồn này.', "You don't have enough cash for this source."); return; }
@@ -1101,7 +1125,7 @@
       '<h2 class="font-display font-extrabold text-deep-teal text-base mb-1">' + T('Quý', 'Quarter') + ' ' + (evQ + 1) + '/6 – ' + ev.cat + ' ' + T(ev.t, ev.tEn) + '</h2>' +
       '<p class="text-[13px] mt-2">' + ev.d() + '</p>' +
       '<div class="space-y-2 mt-4">' + ev.ch.map(function (c, i) {
-        return '<button class="bp-opt" onclick="bpEv(' + i + ')">' + T(c.l, c.lEn) + '</button>';
+        return '<button class="bp-opt" onclick="bpEv(' + i + ')"' + (evtPostCache ? ' disabled' : '') + '>' + T(c.l, c.lEn) + '</button>';
       }).join('') + '</div>' +
       '<div id="bp-evt-post"></div>';
     hud();
@@ -1110,6 +1134,9 @@
   }
 
   window.bpEv = function (i) {
+    // Mỗi sự kiện chỉ được chọn một lần: bấm lại sau khi đã chốt sẽ gọi settle() thêm lần nữa → nhảy quý và cộng lặp tác động.
+    if (S.phase !== 'evt' || evtPostCache || !window.__bpEv) return;
+    document.querySelectorAll('#bp-stage .bp-opt').forEach(function (b, k) { b.disabled = true; if (k === i) b.classList.add('sel'); });
     // Bảo hiểm rủi ro (vật phẩm SHIELD): chặn phần thiệt hại của sự kiện kế
     // tiếp – chụp số liệu trước/sau, khôi phục lại bất kỳ chỉ số nào bị giảm.
     // Nhiều sự kiện không trừ thẳng vào cash/rep... mà đặt S.flags.wave < 1
@@ -1332,7 +1359,6 @@
       RIVAL.name + ' just expanded into <b>' + MKTS[rivalEntered].name + '</b> – competition there just got tougher.'
     ));
     addLog(customerVoice(S.sel.budget, qProfit));
-    save();
     // Thua sớm?
     if (S.lowQ >= 2) return bpEnd('cash', evOut);
     if (S.rep < 15) return bpEnd('rep');
@@ -1350,6 +1376,8 @@
         S.usedEv.push(preDrawnEv.id);
       }
     }
+    // Lưu SAU khi đã sang quý mới – lưu trước S.q++ thì «Tiếp tục ván» chơi lại quý vừa chốt (ván thành 7 quý).
+    save();
     evtPostCache = { qDone: S.q, data: qLinesData, delta: qSnapshot ? {
       cash: S.cash - qSnapshot.cash, rep: S.rep - qSnapshot.rep, capab: S.capab - qSnapshot.capab,
       resil: S.resil - qSnapshot.resil, susts: S.susts - qSnapshot.susts, profit: S.profit - qSnapshot.profit,
@@ -1624,7 +1652,7 @@
   /* ================= LƯU / KHÔI PHỤC ================= */
   function save() {
     try {
-      localStorage.setItem('bizon-bp-save', JSON.stringify({ seed: seed, S: S, H: H }));
+      localStorage.setItem('bizon-bp-save', JSON.stringify({ seed: seed, S: S, H: H, pre: preDrawnEv ? preDrawnEv.id : null, preM: preDrawnMissionAhead }));
     } catch (e) {}
   }
   window.bpStart = function () {
@@ -1645,6 +1673,7 @@
       seed = d.seed;
       Object.keys(d.S).forEach(function (k) { S[k] = d.S[k]; });
       d.H.forEach(function (h, i) { H[i] = h; });
+      preDrawnEv = EVENTS.filter(function (e) { return e.id === d.pre; })[0] || null; preDrawnMissionAhead = !!d.preM;
       $('bp-intro').classList.add('hidden');
       $('bp-play').classList.remove('hidden');
       stageObs();
