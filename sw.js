@@ -1,7 +1,7 @@
 /* BizOn Bật Nghiệp 2026 – Service Worker (offline app shell)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
 
-const CACHE = 'bizon-v549';
+const CACHE = 'bizon-v550';
 const SHELL = [
   './',
   './index.html',
@@ -22,6 +22,18 @@ const SHELL = [
   './lab/nha-may-fdi.html',
   './lab/nha-may-fdi-engine.js',
   './lab/nha-may-fdi-data.js',
+  './lab/ie-lab.html',
+  './lab/ie-lab.js',
+  './assets/ielab/dragon-magnifier.jpg',
+  './assets/ielab/dragon-scroll.jpg',
+  './assets/ielab/dragon-jump.jpg',
+  './assets/ielab/dragon-jump-cut.webp',
+  './assets/ielab/dragon-wink.jpg',
+  './assets/ielab/dragon-wave.jpg',
+  './assets/fonts/Baloo2-var-vietnamese.woff2',
+  './assets/fonts/Baloo2-var-latin.woff2',
+  './assets/fonts/Nunito-var-vietnamese.woff2',
+  './assets/fonts/Nunito-var-latin.woff2',
   './ho-chieu-sau-rieng.html',
   './lab/ho-chieu-sau-rieng.html',
   './lab/ho-chieu-sau-rieng-3d.html',

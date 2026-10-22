@@ -1,4 +1,4 @@
-Hai bộ phông trong thư mục này lấy từ Google Fonts và phát hành theo
+Các bộ phông trong thư mục này lấy từ Google Fonts và phát hành theo
 SIL Open Font License, Version 1.1 – giấy phép cho phép dùng, nhúng,
 sửa và phân phối lại, kể cả cho mục đích thương mại.
 
@@ -6,6 +6,10 @@ sửa và phân phối lại, kể cả cho mục đích thương mại.
                      https://fonts.google.com/specimen/Manrope
   Plus Jakarta Sans  © Tokotype
                      https://fonts.google.com/specimen/Plus+Jakarta+Sans
+  Baloo 2            © Ek Type (dùng cho IE Lab – lab/ie-lab.html)
+                     https://fonts.google.com/specimen/Baloo+2
+  Nunito             © Vernon Adams, Cyreal, Jacques Le Bailly (IE Lab)
+                     https://fonts.google.com/specimen/Nunito
 
 Toàn văn giấy phép: https://openfontlicense.org/open-font-license-official-text/
 
