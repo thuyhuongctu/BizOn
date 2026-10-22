@@ -1,0 +1,13 @@
+/* BizOn Clay – đưa phần đầu trang (hero) của trang cũ về khối đất sét kem.
+   Dùng cùng js/bizon-clay-bridge.js trên các trang đã đổi sang #clay-nav.
+   Gắn class "clay-legacy-hero" lên <header> hero cũ (nền gradient xanh đậm). */
+.clay-legacy-hero{position:relative;overflow:hidden;max-width:1168px;margin:20px auto 8px!important;padding:clamp(28px,4vw,44px) 0!important;border-radius:40px;background:#FFF3DA!important;color:#033337!important;box-shadow:inset 0 -10px 0 rgba(140,80,20,.1),inset 0 6px 0 rgba(255,255,255,.7),0 30px 44px -30px rgba(110,70,30,.6)}
+@media (max-width:1200px){.clay-legacy-hero{margin:20px 16px 8px!important}}
+.clay-legacy-hero h1,.clay-legacy-hero h2{color:#033337!important}
+.clay-legacy-hero .text-white,.clay-legacy-hero [class*="text-white/"]{color:#3E5A5C!important}
+.clay-legacy-hero .text-clay-gold{color:#A8461A!important}
+.clay-legacy-hero b,.clay-legacy-hero strong{color:#033337!important}
+.clay-legacy-hero a:not([class*="btn"]):not([class*="clay-btn"]){color:#006687}
+#clay-nav{font-family:"Be Vietnam Pro","BVP Fallback",system-ui,sans-serif}
+#clay-nav a,#clay-footer a{text-decoration:none}
+.clay-legacy-hero .text-primary-container{color:#006687!important}

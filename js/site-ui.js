@@ -4985,6 +4985,9 @@
   window.applyLang = function (lang) {
     document.querySelectorAll('h1,h2,h3,h4,p,a,button,span,b,label,th,td,li,small,summary').forEach(function (el) {
       if (el.childElementCount) return;
+      // Trang có nạp bizon-clay-i18n.js: phần tử mang data-en do bộ đó dịch
+      // (nó cũng giữ bản VI ở data-vi) – đụng vào sẽ xoá mất bản VI đã chụp.
+      if (window.__bizonClayI18n && el.hasAttribute('data-en')) return;
       var cur = el.textContent.trim();
       var vi = el.dataset.vi;
       // Nếu nội dung hiện tại không còn khớp với bản vi/en đã chụp lần

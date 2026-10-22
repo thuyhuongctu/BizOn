@@ -79,27 +79,14 @@
   .spec li{grid-template-columns:1fr;gap:5px}
 }
 </style>
+<link rel="stylesheet" href="css/bizon-clay-chrome.css">
 <link rel="stylesheet" href="css/clay-tool-skin.css">
+<link rel="stylesheet" href="css/clay-legacy.css">
 <script src="js/capture-guard.js"></script>
 </head>
 <body>
 
 <div class="prog" id="prog"></div>
-
-<header class="nav" id="nav">
-  <div class="shell nav-in">
-    <a class="wm" href="universe.html">
-      <span class="wm-txt">Biz<svg class="wm-mark" width="0.98em" height="1em" viewBox="0 0 98 100" aria-hidden="true"><ellipse cx="49" cy="58" rx="40" ry="34" fill="none" stroke="currentColor" stroke-width="15"/><circle cx="63" cy="58" r="11" fill="var(--jade)"/></svg>n</span>
-      <span class="wm-sub">Bật Nghiệp</span>
-    </a>
-    <div class="tgl" role="group" aria-label="Ngôn ngữ">
-      <button id="bvi" type="button" aria-pressed="true">VI</button>
-      <button id="ben" type="button" aria-pressed="false">EN</button>
-    </div>
-    <button class="ico" id="bth" type="button" aria-pressed="false" aria-label="Đổi giao diện sáng / tối"><span id="thi" aria-hidden="true">☾</span></button>
-    <a class="btn btn-solid btn-sm" href="truong-hoc-thuat.html" data-vi="Học thuật" data-en="Academic">Học thuật</a>
-  </div>
-</header>
 
 <main id="top">
 
@@ -261,22 +248,12 @@
 
 </main>
 
-<footer>
-  <div class="shell fgrid">
-    <div>
-      <p class="tag">BizOn</p>
-      <p class="body" data-vi="Mô phỏng kinh doanh cho lớp học đại học.<br>Đại học Cần Thơ · Trường Kinh tế." data-en="Business simulation for university classrooms.<br>Can Tho University · School of Economics.">Mô phỏng kinh doanh cho lớp học đại học.<br>Đại học Cần Thơ · Trường Kinh tế.</p>
-    </div>
-    <nav class="flinks" aria-label="Chân trang">
-      <a href="universe.html" data-vi="Vũ trụ" data-en="Universe">Vũ trụ</a>
-      <a href="truong.html" data-vi="Trang chủ" data-en="Home">Trang chủ</a>
-      <a href="truong-hoc-thuat.html" data-vi="Học thuật" data-en="Academic">Học thuật</a>
-      <a href="truong-giang-vien.html" data-vi="Giảng viên" data-en="Instructors">Giảng viên</a>
-    </nav>
-  </div>
-</footer>
 
 <script src="assets/js/shell.js"></script>
+<script src="js/bizon-clay-i18n.js" defer></script>
+<script src="js/bizon-clay-bridge.js" defer></script>
+<script src="js/bizon-clay-nav.js" defer></script>
+<script src="js/bizon-clay-footer.js" defer></script>
 <script>window.BIZON_DOCK_SONG='huong-and-the-world-en.mp3';</script>
 <script src="js/site-dock.js" defer></script>
 </body>
