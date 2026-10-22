@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & PGS.TS. Phan Anh Tú. Bảo lưu mọi quyền. -->
+<!--
+  Kho báo chí: mọi bài báo, phỏng vấn có ý kiến của đội ngũ BizOn.
+  Các vùng giữa mốc BAO-CHI:*:start/end do scripts/build-press.mjs sinh từ data/bao-chi.json – đừng sửa tay.
+  Thêm bài: sửa data/bao-chi.json rồi chạy  node scripts/build-press.mjs
+-->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<script src="js/bizon-lang.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title data-en="Press archive · BizOn">Kho báo chí · BizOn</title>
+<meta name="description" data-en-content="Every press article and interview featuring the BizOn founding team: labour and migration in the Mekong Delta, innovation, the private economy, FDI and infrastructure." content="Mọi bài báo và phỏng vấn có ý kiến của đội ngũ sáng lập BizOn: lao động và di cư ở miền Tây, đổi mới sáng tạo, kinh tế tư nhân, FDI và hạ tầng.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & PGS.TS. Phan Anh Tú">
+<link rel="canonical" href="https://bizonland.com/bao-chi.html">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script src="js/bizon-boot.js"></script>
+<link rel="stylesheet" href="css/bizon-clay-fonts.css">
+<link rel="stylesheet" href="css/bizon-clay.css">
+<style>
+  /* Bố cục riêng trang Kho báo chí */
+  .bz-hero{position:relative;overflow:hidden;margin:28px 0 28px;border-radius:40px;background:var(--clay-cream-deep);box-shadow:var(--clay-night-shadow,inset 0 -10px 0 rgba(140,80,20,.1),inset 0 6px 0 rgba(255,255,255,.7),0 30px 44px -30px rgba(110,70,30,.6))}
+  .bz-hero .grid{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end;padding:clamp(24px,4vw,44px) clamp(20px,4vw,44px) 0}
+  .bz-hero h1{margin:18px 0 0;font-size:clamp(34px,4.6vw,58px);text-wrap:balance}
+  .bz-hero .lead{margin:16px 0 0;max-width:36em;font-size:17px;line-height:1.65;color:var(--clay-sub);text-wrap:pretty}
+  .bz-hero .art{align-self:end}
+  .bz-hero .art img{display:block;width:auto;height:clamp(240px,26vw,340px);filter:drop-shadow(0 18px 14px rgba(110,70,30,.3))}
+  .bz-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:24px 0 clamp(24px,4vw,44px);max-width:560px}
+  .bz-stat{padding:12px 14px;border-radius:20px;background:var(--clay-card);box-shadow:var(--clay-tray-shadow)}
+  .bz-stat b{display:block;font-family:var(--clay-head);font-size:26px;line-height:1.1;color:var(--clay-accent)}
+  .bz-stat span{font-size:13px;font-weight:700;color:var(--clay-sub)}
+  .bz-filter{position:sticky;top:76px;z-index:5;display:flex;flex-wrap:wrap;gap:8px;margin:0 0 8px;padding:10px 0}
+  .bz-filter button{padding:9px 16px;border:0;border-radius:var(--clay-r-pill);background:var(--clay-tray);color:var(--clay-sub);font:inherit;font-size:14px;font-weight:800;cursor:pointer;box-shadow:var(--clay-tray-shadow)}
+  .bz-filter button small{font-size:12px;opacity:.75}
+  .bz-filter button[aria-pressed="true"]{background:var(--clay-teal);color:#fff;box-shadow:inset 0 -3px 0 rgba(0,0,0,.2)}
+  .bz-month{margin:28px 0 0}
+  .bz-month>h2{margin:0 0 14px;font-size:clamp(22px,2.6vw,28px)}
+  .bz-list{display:flex;flex-direction:column;gap:16px}
+  .bz-item{display:grid;grid-template-columns:76px minmax(0,1fr);gap:18px;padding:22px;border-radius:28px;background:var(--clay-card);box-shadow:var(--clay-shadow);scroll-margin-top:140px}
+  .bz-item[hidden]{display:none}
+  .bz-item:target{outline:3px solid var(--clay-gold);outline-offset:3px}
+  .bz-date{align-self:start;padding:10px 0;border-radius:20px;background:var(--clay-c2);color:#5A3A08;text-align:center;box-shadow:inset 0 -4px 0 rgba(0,0,0,.08)}
+  .bz-date b{display:block;font-family:var(--clay-head);font-size:28px;line-height:1}
+  .bz-date span{font-size:12px;font-weight:800}
+  .bz-meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+  .bz-outlet{color:var(--clay-accent)}
+  .bz-kind{padding:3px 9px;border-radius:999px;background:var(--clay-tray);color:var(--clay-sub);letter-spacing:.04em}
+  .bz-item h3{margin:8px 0 0;font-size:clamp(19px,2vw,23px);line-height:1.3;text-wrap:balance}
+  .bz-item h3 a{color:var(--clay-ink)}
+  .bz-item h3 a:hover{color:var(--clay-teal)}
+  .bz-body>p{margin:8px 0 0;font-size:15px;line-height:1.6;color:var(--clay-sub);text-wrap:pretty}
+  .bz-item blockquote{margin:12px 0 0;padding:12px 16px;border-radius:18px;background:var(--clay-c2);color:#5A3A08;font-size:15px;font-style:italic;font-weight:700;line-height:1.5;box-shadow:inset 0 -4px 0 rgba(0,0,0,.06)}
+  .bz-foot{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:14px}
+  .bz-tag{padding:5px 11px;border-radius:999px;background:var(--clay-c5);color:var(--clay-ink-2);font-size:12px;font-weight:800}
+  .bz-read{margin-left:auto;font-size:14px;font-weight:800;color:var(--clay-accent)}
+  .bz-body>p.bz-by{margin-top:8px;font-size:12px;color:#6B7F80}
+  .bz-empty{margin:20px 0;font-size:15px;color:var(--clay-sub)}
+  .bz-credit{margin:28px 0 0;font-size:12px;line-height:1.55;color:#6B7F80}
+  .bz-help{margin:48px 0 72px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding:26px 30px;border-radius:32px;background:var(--clay-c4);box-shadow:var(--clay-night-shadow,inset 0 -9px 0 rgba(0,0,0,.07),inset 0 5px 0 rgba(255,255,255,.5),0 26px 36px -24px rgba(30,90,60,.5))}
+  .bz-help p{margin:4px 0 0;font-size:15px;line-height:1.55;color:var(--clay-ink-2)}
+  @media (max-width:640px){
+    .bz-hero .grid{grid-template-columns:1fr} .bz-hero .art{display:none}
+    .bz-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .bz-filter{position:static}
+    .bz-item{grid-template-columns:1fr;gap:10px;padding:18px}
+    .bz-date{display:flex;gap:6px;align-items:baseline;justify-self:start;padding:6px 12px}
+    .bz-date b{font-size:18px}
+    .bz-read{margin-left:0}
+  }
+  @media screen{
+    html[data-theme="dark"] .bz-date,html[data-theme="dark"] .bz-item blockquote{color:var(--clay-ink)}
+  }
+  @media print{ #clay-nav,#clay-footer,.bz-filter,.bz-help{display:none!important} .bz-item{box-shadow:none;border:1px solid #ddd;break-inside:avoid} }
+</style>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Kho báo chí · BizOn">
+<meta property="og:description" content="Mọi bài báo và phỏng vấn có ý kiến của đội ngũ sáng lập BizOn.">
+<meta name="twitter:card" content="summary_large_image">
+<script src="js/capture-guard.js"></script>
+</head>
+<body class="clay">
+
+<main class="clay-main">
+  <section class="bz-hero">
+    <div class="grid">
+      <div>
+        <span class="clay-eyebrow" data-en="Press archive">Kho báo chí</span>
+        <h1 data-en="The BizOn team in the press">Đội ngũ BizOn trên báo chí</h1>
+        <p class="lead" data-en="Interviews, expert opinions and coverage featuring Assoc. Prof. Phan Anh Tú and the BizOn founding team – on Mekong labour and migration, innovation, the private economy and regional development. Newest first.">Các bài phỏng vấn, ý kiến chuyên gia và tin bài có PGS.TS. Phan Anh Tú cùng đội ngũ sáng lập BizOn – về lao động và di cư ở miền Tây, đổi mới sáng tạo, kinh tế tư nhân và phát triển vùng. Bài mới nhất ở trên cùng.</p>
+        <div class="bz-stats">
+          <!-- BAO-CHI:stats:start -->
+          <div class="bz-stat"><b>9</b><span data-en="articles">bài báo</span></div>
+          <div class="bz-stat"><b>6</b><span data-en="publications">tòa soạn</span></div>
+          <div class="bz-stat"><b>5</b><span data-en="quotes">câu trích</span></div>
+          <div class="bz-stat"><b>10/2026</b><span data-en="latest article">bài mới nhất</span></div>
+          <!-- BAO-CHI:stats:end -->
+        </div>
+      </div>
+      <div class="art"><img src="assets/character/anh-tu-ao-dai-explain-cut.webp" alt="" width="439" height="1046"></div>
+    </div>
+  </section>
+
+  <div class="bz-filter" role="group" aria-label="Lọc theo chủ đề" data-en-aria="Filter by topic">
+    <!-- BAO-CHI:filters:start -->
+    <button type="button" data-topic="all" aria-pressed="true"><span data-en="All">Tất cả</span> <small>9</small></button>
+    <button type="button" data-topic="lao-dong" aria-pressed="false"><span data-en="Labour &amp; migration">Lao động &amp; di cư</span> <small>4</small></button>
+    <button type="button" data-topic="doi-moi-sang-tao" aria-pressed="false"><span data-en="Innovation">Đổi mới sáng tạo</span> <small>3</small></button>
+    <button type="button" data-topic="kinh-te-tu-nhan" aria-pressed="false"><span data-en="Private economy">Kinh tế tư nhân</span> <small>3</small></button>
+    <button type="button" data-topic="fdi-ha-tang" aria-pressed="false"><span data-en="FDI &amp; infrastructure">FDI &amp; hạ tầng</span> <small>2</small></button>
+    <!-- BAO-CHI:filters:end -->
+  </div>
+
+  <div id="bz-archive">
+    <!-- BAO-CHI:archive:start -->
+    <section class="bz-month" data-month="2026-10">
+    <h2 data-en="October 2026">Tháng 10/2026</h2>
+    <div class="bz-list">
+    <article class="bz-item" id="bai-tuoitre-2026-10-22" data-topics="lao-dong">
+    <div class="bz-date"><b>22</b><span>10/2026</span></div>
+    <div class="bz-body">
+    <div class="bz-meta"><span class="bz-outlet" data-en="Tuoi Tre Online">Tuổi Trẻ Online</span><span class="bz-kind" data-en="Expert opinion">Ý kiến chuyên gia</span></div>
+    <h3><a href="https://tuoitre.vn/mien-tay-thieu-lao-dong-ky-1-doanh-nghiep-thuong-chuyen-can-de-giu-chan-lao-dong-100261022131305041.htm" target="_blank" rel="noopener" data-en="«Mekong Delta labour shortage – Part 1: Firms pay &quot;attendance bonuses&quot; to retain workers»">«Miền Tây thiếu lao động – Kỳ 1: Doanh nghiệp "thưởng chuyên cần" để giữ chân lao động»</a></h3>
+    <p data-en="The opening part of the series on Mekong firms competing to keep workers (attendance bonuses, an interest-free loan fund). In the boxed opinion «Understanding &quot;the Mekong labour shortage&quot; correctly», responding to proposals to import labour for Mekong firms, Assoc. Prof. Phan Anh Tú argues there is no need yet to import general labour on a large scale.">Kỳ mở đầu loạt bài về cuộc đua giữ chân lao động của doanh nghiệp miền Tây (thưởng chuyên cần, quỹ cho vay không lãi). Trong hộp ý kiến «Cần hiểu đúng về "miền Tây thiếu lao động"», trước đề xuất nhập khẩu lao động cho doanh nghiệp ở miền Tây, PGS.TS. Phan Anh Tú cho rằng chưa cần nhập khẩu lao động phổ thông đại trà.</p>
+    <blockquote data-en="&quot;The Mekong Delta does not lack labour – it lacks people willing to work at current wages and conditions.&quot;">"Miền Tây không thiếu lao động mà là thiếu người chịu làm ở mức lương và điều kiện hiện tại."</blockquote>
+    <div class="bz-foot">
+    <span class="bz-tag" data-en="Labour &amp; migration">Lao động &amp; di cư</span>
+    <a class="bz-read" href="https://tuoitre.vn/mien-tay-thieu-lao-dong-ky-1-doanh-nghiep-thuong-chuyen-can-de-giu-chan-lao-dong-100261022131305041.htm" target="_blank" rel="noopener" data-en="Read on tuoitre.vn →">Đọc bài trên tuoitre.vn →</a>
+    </div>
+    <p class="bz-by" data-en="Reporter: Ca Linh – Khắc Tâm">PV Ca Linh – Khắc Tâm</p>
+    </div>
+    </article>
+    <article class="bz-item" id="bai-baochinhphu-2026-10-13" data-topics="kinh-te-tu-nhan">
+    <div class="bz-date"><b>13</b><span>10/2026</span></div>
+    <div class="bz-body">
+    <div class="bz-meta"><span class="bz-outlet" data-en="Chinhphu.vn (Government e-newspaper)">Báo Điện tử Chính phủ</span><span class="bz-kind" data-en="Coverage">Đưa tin</span></div>
+    <h3><a href="https://baochinhphu.vn/can-tho-kinh-te-tu-nhan-dong-gop-74-grdp-can-lon-len-bang-so-hoa-xanh-hoa-102261013145523304.htm" target="_blank" rel="noopener" data-en="«Can Tho: private economy contributes 74% of GRDP, must grow bigger through digital-green transformation»">«Cần Thơ: Kinh tế tư nhân đóng góp 74% GRDP, cần lớn lên bằng số hóa-xanh hóa»</a></h3>
+    <p data-en="Coverage of the Can Tho local dialogue of the Vietnam Private Economy Forum 2026: about 20,500 private enterprises contribute roughly 74% of GRDP and over 80% of city budget revenue; the bottleneck is human capacity to apply technology and data.">Đưa tin phiên đối thoại địa phương tại Diễn đàn Kinh tế tư nhân Việt Nam 2026 tại Cần Thơ: gần 20.500 doanh nghiệp tư nhân đóng góp khoảng 74% GRDP và trên 80% thu ngân sách; nút thắt là năng lực con người trong ứng dụng công nghệ và dữ liệu.</p>
+    <div class="bz-foot">
+    <span class="bz-tag" data-en="Private economy">Kinh tế tư nhân</span>
+    <a class="bz-read" href="https://baochinhphu.vn/can-tho-kinh-te-tu-nhan-dong-gop-74-grdp-can-lon-len-bang-so-hoa-xanh-hoa-102261013145523304.htm" target="_blank" rel="noopener" data-en="Read on baochinhphu.vn →">Đọc bài trên baochinhphu.vn →</a>
+    </div>
+    </div>
+    </article>
+    <article class="bz-item" id="bai-congthuong-2026-10-13" data-topics="kinh-te-tu-nhan">
+    <div class="bz-date"><b>13</b><span>10/2026</span></div>
+    <div class="bz-body">
+    <div class="bz-meta"><span class="bz-outlet" data-en="Kinh tế Việt Nam (Cong Thuong newspaper)">Kinh tế Việt Nam (Báo Công Thương)</span><span class="bz-kind" data-en="Coverage">Đưa tin</span></div>
+    <h3><a href="https://congthuong.vn/can-tho-tim-giai-phap-chuyen-doi-so-chuyen-doi-xanh-cho-doanh-nghiep-476692.html" target="_blank" rel="noopener" data-en="«Can Tho seeks solutions for digital and green transformation for enterprises»">«Cần Thơ tìm giải pháp chuyển đổi số, chuyển đổi xanh cho doanh nghiệp»</a></h3>
+    <p data-en="Coverage of the forum: Assoc. Prof. Phan Anh Tú proposes deeper ties between government, enterprises and universities, with enterprises co-designing training programmes and co-assessing students.">Đưa tin diễn đàn: PGS.TS. Phan Anh Tú đề xuất liên kết chặt hơn giữa chính quyền, doanh nghiệp và trường đại học; doanh nghiệp cùng xây dựng chương trình đào tạo và cùng đánh giá sinh viên.</p>
+    <blockquote data-en="&quot;Digital and green transformation begins not only with technology but first of all with human capacity.&quot;">"chuyển đổi số, chuyển đổi xanh không chỉ bắt đầu từ công nghệ mà trước hết từ năng lực con người"</blockquote>
+    <div class="bz-foot">
+    <span class="bz-tag" data-en="Private economy">Kinh tế tư nhân</span>
+    <a class="bz-read" href="https://congthuong.vn/can-tho-tim-giai-phap-chuyen-doi-so-chuyen-doi-xanh-cho-doanh-nghiep-476692.html" target="_blank" rel="noopener" data-en="Read on congthuong.vn →">Đọc bài trên congthuong.vn →</a>
+    </div>
+    </div>
+    </article>
+    <article class="bz-item" id="bai-baocantho-2026-10-13" data-topics="kinh-te-tu-nhan">
+    <div class="bz-date"><b>13</b><span>10/2026</span></div>
+    <div class="bz-body">
+    <div class="bz-meta"><span class="bz-outlet" data-en="Can Tho Online">Báo Cần Thơ Online</span><span class="bz-kind" data-en="Coverage">Đưa tin</span></div>
+    <h3><a href="https://baocantho.com.vn/can-tho-thuc-day-kinh-te-tu-nhan-chuyen-doi-so-chuyen-doi-xanh-a217890.html" target="_blank" rel="noopener" data-en="«Can Tho promotes private economy digital and green transformation»">«Cần Thơ thúc đẩy kinh tế tư nhân chuyển đổi số, chuyển đổi xanh»</a></h3>
+    <p data-en="Coverage of the forum: the city commits to shifting from a management mindset to service and development facilitation, improving the investment and business environment, and invites enterprises to raise their difficulties at the forum.">Đưa tin diễn đàn: thành phố cam kết chuyển từ tư duy quản lý sang phục vụ, kiến tạo phát triển; cải thiện môi trường đầu tư, kinh doanh và đề nghị doanh nghiệp phản ánh khó khăn tại diễn đàn.</p>
+    <div class="bz-foot">
+    <span class="bz-tag" data-en="Private economy">Kinh tế tư nhân</span>
+    <a class="bz-read" href="https://baocantho.com.vn/can-tho-thuc-day-kinh-te-tu-nhan-chuyen-doi-so-chuyen-doi-xanh-a217890.html" target="_blank" rel="noopener" data-en="Read on baocantho.com.vn →">Đọc bài trên baocantho.com.vn →</a>
+    </div>
+    </div>
+    </article>
+    </div>
+    </section>
+    <section class="bz-month" data-month="2026-09">
+    <h2 data-en="September 2026">Tháng 9/2026</h2>
+    <div class="bz-list">
+    <article class="bz-item" id="bai-vietnamplus-2026-09-17" data-topics="fdi-ha-tang">
+    <div class="bz-date"><b>17</b><span>09/2026</span></div>
+    <div class="bz-body">
+    <div class="bz-meta"><span class="bz-outlet" data-en="VietnamPlus (Vietnam News Agency)">VietnamPlus (TTXVN)</span><span class="bz-kind" data-en="Interview">Phỏng vấn</span></div>
+    <h3><a href="https://www.vietnamplus.vn/can-tho-nang-cao-chat-dong-von-fdi-tao-dong-luc-tang-truong-moi-post1136685.vnp" target="_blank" rel="noopener" data-en="«Can Tho improves the quality of FDI capital flows, creating new growth momentum»">«Cần Thơ nâng cao chất dòng vốn FDI, tạo động lực tăng trưởng mới»</a></h3>
+    <p data-en="Interview with Assoc. Prof. Phan Anh Tú on how FDI in Can Tho remains a stable &quot;pillar&quot; rather than a new growth driver, and his call for an &quot;investment-ready&quot; profile for each industrial zone.">Phỏng vấn PGS.TS. Phan Anh Tú về việc FDI tại Cần Thơ mới là một "trụ đỡ" ổn định chứ chưa trở thành động lực tăng trưởng mới, cùng khuyến nghị xây dựng bộ hồ sơ "sẵn sàng đầu tư" cho từng khu công nghiệp.</p>
+    <blockquote data-en="&quot;FDI is currently a fairly stable 'pillar' for the city's economy, but has not yet become a new growth driver.&quot;">"FDI đang là một 'trụ đỡ' tương đối ổn định đối với kinh tế thành phố, nhưng chưa trở thành động lực tăng trưởng mới."</blockquote>
+    <div class="bz-foot">
+    <span class="bz-tag" data-en="FDI &amp; infrastructure">FDI &amp; hạ tầng</span>
+    <a class="bz-read" href="https://www.vietnamplus.vn/can-tho-nang-cao-chat-dong-von-fdi-tao-dong-luc-tang-truong-moi-post1136685.vnp" target="_blank" rel="noopener" data-en="Read on vietnamplus.vn →">Đọc bài trên vietnamplus.vn →</a>
+    </div>
+    </div>
+    </article>
+    </div>
+    </section>
+    <section class="bz-month" data-month="2026-08">
+    <h2 data-en="August 2026">Tháng 8/2026</h2>
+    <div class="bz-list">
+    <article class="bz-item" id="bai-vietnamplus-2026-08-23" data-topics="fdi-ha-tang lao-dong">
+    <div class="bz-date"><b>23</b><span>08/2026</span></div>
+    <div class="bz-body">
+    <div class="bz-meta"><span class="bz-outlet" data-en="VietnamPlus (Vietnam News Agency)">VietnamPlus (TTXVN)</span><span class="bz-kind" data-en="Interview">Phỏng vấn</span></div>
+    <h3><a href="https://www.vietnamplus.vn/chien-luoc-phat-trien-dong-bang-song-cuu-long-tu-duong-ray-den-truc-dong-luc-kinh-te-moi-post1131888.vnp" target="_blank" rel="noopener" data-en="«Mekong Delta development strategy: from rail line to new economic growth axis»">«Chiến lược phát triển Đồng bằng sông Cửu Long: Từ đường ray đến trục động lực kinh tế mới»</a></h3>
+    <p data-en="Interview with Assoc. Prof. Phan Anh Tú on the resource- and workforce-conversion challenge behind the HCMC–Can Tho railway.">Phỏng vấn PGS.TS. Phan Anh Tú về bài toán chuyển hóa nguồn lực và nhân lực của tuyến đường sắt TP.HCM–Cần Thơ.</p>
+    <blockquote data-en="&quot;Rail infrastructure moves one step ahead – the workforce must move two steps ahead.&quot;">"Đường sắt đi trước một bước, nhân lực phải đi trước hai bước."</blockquote>
+    <div class="bz-foot">
+    <span class="bz-tag" data-en="FDI &amp; infrastructure">FDI &amp; hạ tầng</span>
+    <span class="bz-tag" data-en="Labour &amp; migration">Lao động &amp; di cư</span>
+    <a class="bz-read" href="https://www.vietnamplus.vn/chien-luoc-phat-trien-dong-bang-song-cuu-long-tu-duong-ray-den-truc-dong-luc-kinh-te-moi-post1131888.vnp" target="_blank" rel="noopener" data-en="Read on vietnamplus.vn →">Đọc bài trên vietnamplus.vn →</a>
+    </div>
+    <p class="bz-by" data-en="Reporter: Nguyễn Văn Việt">PV Nguyễn Văn Việt</p>
+    </div>
+    </article>
+    <article class="bz-item" id="bai-tuoitre-2026-08-05" data-topics="lao-dong doi-moi-sang-tao">
+    <div class="bz-date"><b>05</b><span>08/2026</span></div>
+    <div class="bz-body">
+    <div class="bz-meta"><span class="bz-outlet" data-en="Tuoi Tre Online">Tuổi Trẻ Online</span><span class="bz-kind" data-en="Coverage">Đưa tin</span></div>
+    <h3><a href="https://tuoitre.vn/thay-vi-di-binh-duong-thi-tao-dong-di-cu-moi-ve-mien-tay-duoc-khong-100260805154121768.htm" target="_blank" rel="noopener" data-en="«Instead of &quot;going to Binh Duong&quot;, can we create a new migration flow back to the Mekong Delta?»">«Thay vì "đi Bình Dương" thì tạo dòng di cư mới về miền Tây được không?»</a></h3>
+    <p data-en="Continuing the series on out-migration from the Mekong Delta, the article frames migration as the equilibrium of a labour market short on demand: the region does not lack talent, it lacks places to use it. It cites three independent studies pointing to the same bottleneck in the business sector rather than institutions or training, so innovation that creates more firms is key – the founding premise of BizOn.">Tiếp nối loạt bài về xuất cư ĐBSCL: di cư được nhìn như kết quả cân bằng của một thị trường lao động thiếu cầu – vùng không thiếu người tài, mà thiếu chỗ để dùng người tài. Bài dẫn ba nghiên cứu độc lập cùng chỉ về một điểm nghẽn nằm ở khu vực doanh nghiệp (không phải thể chế hay khâu đào tạo) – nên đổi mới sáng tạo để có thêm nhiều doanh nghiệp là mấu chốt, đúng luận điểm nền tảng của BizOn.</p>
+    <div class="bz-foot">
+    <span class="bz-tag" data-en="Labour &amp; migration">Lao động &amp; di cư</span>
+    <span class="bz-tag" data-en="Innovation">Đổi mới sáng tạo</span>
+    <a class="bz-read" href="https://tuoitre.vn/thay-vi-di-binh-duong-thi-tao-dong-di-cu-moi-ve-mien-tay-duoc-khong-100260805154121768.htm" target="_blank" rel="noopener" data-en="Read on tuoitre.vn →">Đọc bài trên tuoitre.vn →</a>
+    </div>
+    <p class="bz-by" data-en="Reporter: Chí Quốc">PV Chí Quốc</p>
+    </div>
+    </article>
+    </div>
+    </section>
+    <section class="bz-month" data-month="2026-07">
+    <h2 data-en="July 2026">Tháng 7/2026</h2>
+    <div class="bz-list">
+    <article class="bz-item" id="bai-1thegioi-2026-07-30" data-topics="doi-moi-sang-tao">
+    <div class="bz-date"><b>30</b><span>07/2026</span></div>
+    <div class="bz-body">
+    <div class="bz-meta"><span class="bz-outlet" data-en="Mot The Gioi magazine">Tạp chí Một Thế Giới</span><span class="bz-kind" data-en="Interview">Phỏng vấn</span></div>
+    <h3><a href="https://1thegioi.vn/doi-moi-sang-tao-o-can-tho-diem-sang-va-khoang-trong-phat-trien-255702.html" target="_blank" rel="noopener" data-en="«Innovation in Can Tho: bright spots and development gaps»">«Đổi mới sáng tạo ở Cần Thơ: Điểm sáng và khoảng trống phát triển»</a></h3>
+    <p data-en="Interview with Assoc. Prof. Phan Anh Tú on the paradox in Can Tho's 2025 Provincial Innovation Index: 4th of 34 for institutions but only 29th of 34 for business sophistication, and a proposed «triple helix» network (state – university – business) with Can Tho University as the knowledge hub.">Phỏng vấn PGS.TS. Phan Anh Tú về nghịch lý Chỉ số đổi mới sáng tạo (PII) 2025 của Cần Thơ: thể chế hạng 4/34 nhưng trình độ phát triển doanh nghiệp chỉ hạng 29/34, và đề xuất mạng lưới «Ba nhà» (nhà nước – nhà trường – doanh nghiệp) với ĐH Cần Thơ làm hạt nhân trung chuyển tri thức.</p>
+    <blockquote data-en="&quot;Universities and institutes do not lack the capacity to create new knowledge – what is missing is the enterprise sector's capacity to absorb it and turn it into productivity.&quot;">"Hệ thống viện, trường không thiếu năng lực tạo tri thức mới, nhưng khu vực doanh nghiệp… lại thiếu năng lực hấp thụ và chuyển hóa tri thức đó thành năng suất."</blockquote>
+    <div class="bz-foot">
+    <span class="bz-tag" data-en="Innovation">Đổi mới sáng tạo</span>
+    <a class="bz-read" href="https://1thegioi.vn/doi-moi-sang-tao-o-can-tho-diem-sang-va-khoang-trong-phat-trien-255702.html" target="_blank" rel="noopener" data-en="Read on 1thegioi.vn →">Đọc bài trên 1thegioi.vn →</a>
+    </div>
+    <p class="bz-by" data-en="Reporter: Văn Kim Khanh">PV Văn Kim Khanh</p>
+    </div>
+    </article>
+    <article class="bz-item" id="bai-tuoitre-2026-07-27" data-topics="doi-moi-sang-tao lao-dong">
+    <div class="bz-date"><b>27</b><span>07/2026</span></div>
+    <div class="bz-body">
+    <div class="bz-meta"><span class="bz-outlet" data-en="Tuoi Tre Online">Tuổi Trẻ Online</span><span class="bz-kind" data-en="Coverage">Đưa tin</span></div>
+    <h3><a href="https://tuoitre.vn/doi-moi-sang-tao-co-the-tao-ra-dong-di-cu-moi-ve-dong-bang-song-cuu-long-100260727183852615.htm" target="_blank" rel="noopener" data-en="«Innovation could create a new migration flow back to the Mekong Delta»">«Đổi mới sáng tạo có thể tạo ra dòng di cư mới về Đồng bằng sông Cửu Long»</a></h3>
+    <p data-en="Coverage of Assoc. Prof. Phan Anh Tú's talk at the workshop on raising Can Tho's innovation index (Can Tho Department of Science &amp; Technology): Mekong out-migration, the share of graduates working in their field falling from 86% to 74%, and the hope that innovative start-ups can draw people from big cities back to rural areas.">Đưa tin phần trình bày của PGS.TS. Phan Anh Tú tại hội thảo «Giải pháp thúc đẩy nâng cao chỉ số đổi mới sáng tạo TP Cần Thơ» (Sở KH&amp;CN Cần Thơ): tình trạng xuất cư của ĐBSCL, tỉ lệ cử nhân làm đúng chuyên môn giảm từ 86% xuống 74%, và kỳ vọng khởi nghiệp đổi mới sáng tạo tạo ra dòng di cư mới từ các thành phố lớn về nông thôn.</p>
+    <div class="bz-foot">
+    <span class="bz-tag" data-en="Innovation">Đổi mới sáng tạo</span>
+    <span class="bz-tag" data-en="Labour &amp; migration">Lao động &amp; di cư</span>
+    <a class="bz-read" href="https://tuoitre.vn/doi-moi-sang-tao-co-the-tao-ra-dong-di-cu-moi-ve-dong-bang-song-cuu-long-100260727183852615.htm" target="_blank" rel="noopener" data-en="Read on tuoitre.vn →">Đọc bài trên tuoitre.vn →</a>
+    </div>
+    </div>
+    </article>
+    </div>
+    </section>
+    <!-- BAO-CHI:archive:end -->
+  </div>
+  <p class="bz-empty" id="bz-empty" hidden data-en="No articles on this topic yet.">Chưa có bài nào cho chủ đề này.</p>
+
+  <!-- BAO-CHI:credits:start -->
+  <p class="bz-credit" data-en="Articles are copyright of their respective publications (Tuoi Tre Online – reporter Ca Linh – Khắc Tâm, Chí Quốc; VietnamPlus (Vietnam News Agency) – reporter Nguyễn Văn Việt; Mot The Gioi magazine – reporter Văn Kim Khanh); BizOn only cites and summarises, and does not republish the full text.">Các bài viết thuộc bản quyền của tòa soạn tương ứng (Tuổi Trẻ Online – PV Ca Linh – Khắc Tâm, Chí Quốc; VietnamPlus (TTXVN) – PV Nguyễn Văn Việt; Tạp chí Một Thế Giới – PV Văn Kim Khanh); BizOn chỉ dẫn nguồn và trích lược, không đăng lại toàn văn.</p>
+  <!-- BAO-CHI:credits:end -->
+
+  <section class="bz-help">
+    <div>
+      <h2 style="font-size:24px" data-en="Journalist looking for an expert comment?">Phóng viên cần ý kiến chuyên gia?</h2>
+      <p data-en="Contact the BizOn team to arrange an interview with Assoc. Prof. Phan Anh Tú.">Liên hệ nhóm BizOn để sắp xếp phỏng vấn PGS.TS. Phan Anh Tú.</p>
+    </div>
+    <a class="clay-btn clay-btn-pill" href="lien-he.html" data-en="Contact us →">Liên hệ →</a>
+  </section>
+</main>
+
+<script>
+/* Lọc theo chủ đề: ẩn bài không khớp và ẩn tháng không còn bài nào. */
+(function(){
+  var bar = document.querySelector('.bz-filter');
+  if(!bar) return;
+  bar.addEventListener('click', function(e){
+    var b = e.target.closest('button[data-topic]'); if(!b) return;
+    var t = b.getAttribute('data-topic'), shown = 0;
+    bar.querySelectorAll('button').forEach(function(x){ x.setAttribute('aria-pressed', String(x === b)); });
+    document.querySelectorAll('.bz-item').forEach(function(it){
+      var ok = t === 'all' || (' ' + it.getAttribute('data-topics') + ' ').indexOf(' ' + t + ' ') >= 0;
+      it.hidden = !ok; if(ok) shown++;
+    });
+    document.querySelectorAll('.bz-month').forEach(function(m){ m.hidden = !m.querySelector('.bz-item:not([hidden])'); });
+    document.getElementById('bz-empty').hidden = shown > 0;
+  });
+})();
+</script>
+<script src="js/bizon-clay-i18n.js" defer></script>
+<script src="js/bizon-clay-nav.js" defer></script>
+<script src="js/bizon-clay-footer.js" defer></script>
+</body>
+</html>

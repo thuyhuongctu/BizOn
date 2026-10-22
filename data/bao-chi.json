@@ -1,0 +1,263 @@
+{
+  "_huong_dan": "Thêm bài mới lên ĐẦU danh sách \"articles\" rồi chạy: node scripts/build-press.mjs (cập nhật bao-chi.html, doi-ngu.html, bang-chung.html). Tên bài không kèm «»; câu trích không kèm ngoặc kép.",
+  "outlets": {
+    "tuoitre": {
+      "vi": "Tuổi Trẻ Online",
+      "en": "Tuoi Tre Online",
+      "host": "tuoitre.vn"
+    },
+    "baochinhphu": {
+      "vi": "Báo Điện tử Chính phủ",
+      "en": "Chinhphu.vn (Government e-newspaper)",
+      "host": "baochinhphu.vn"
+    },
+    "congthuong": {
+      "vi": "Kinh tế Việt Nam (Báo Công Thương)",
+      "en": "Kinh tế Việt Nam (Cong Thuong newspaper)",
+      "host": "congthuong.vn"
+    },
+    "baocantho": {
+      "vi": "Báo Cần Thơ Online",
+      "en": "Can Tho Online",
+      "host": "baocantho.com.vn"
+    },
+    "vietnamplus": {
+      "vi": "VietnamPlus (TTXVN)",
+      "en": "VietnamPlus (Vietnam News Agency)",
+      "host": "vietnamplus.vn"
+    },
+    "1thegioi": {
+      "vi": "Tạp chí Một Thế Giới",
+      "en": "Mot The Gioi magazine",
+      "host": "1thegioi.vn"
+    }
+  },
+  "topics": {
+    "lao-dong": {
+      "vi": "Lao động & di cư",
+      "en": "Labour & migration"
+    },
+    "doi-moi-sang-tao": {
+      "vi": "Đổi mới sáng tạo",
+      "en": "Innovation"
+    },
+    "kinh-te-tu-nhan": {
+      "vi": "Kinh tế tư nhân",
+      "en": "Private economy"
+    },
+    "fdi-ha-tang": {
+      "vi": "FDI & hạ tầng",
+      "en": "FDI & infrastructure"
+    }
+  },
+  "kinds": {
+    "phong-van": {
+      "vi": "Phỏng vấn",
+      "en": "Interview"
+    },
+    "y-kien": {
+      "vi": "Ý kiến chuyên gia",
+      "en": "Expert opinion"
+    },
+    "dua-tin": {
+      "vi": "Đưa tin",
+      "en": "Coverage"
+    }
+  },
+  "articles": [
+    {
+      "id": "tuoitre-2026-10-22",
+      "date": "2026-10-22",
+      "outlet": "tuoitre",
+      "reporter": "Ca Linh – Khắc Tâm",
+      "kind": "y-kien",
+      "topics": [
+        "lao-dong"
+      ],
+      "url": "https://tuoitre.vn/mien-tay-thieu-lao-dong-ky-1-doanh-nghiep-thuong-chuyen-can-de-giu-chan-lao-dong-100261022131305041.htm",
+      "title": {
+        "vi": "Miền Tây thiếu lao động – Kỳ 1: Doanh nghiệp \"thưởng chuyên cần\" để giữ chân lao động",
+        "en": "Mekong Delta labour shortage – Part 1: Firms pay \"attendance bonuses\" to retain workers"
+      },
+      "summary": {
+        "vi": "Kỳ mở đầu loạt bài về cuộc đua giữ chân lao động của doanh nghiệp miền Tây (thưởng chuyên cần, quỹ cho vay không lãi). Trong hộp ý kiến «Cần hiểu đúng về \"miền Tây thiếu lao động\"», trước đề xuất nhập khẩu lao động cho doanh nghiệp ở miền Tây, PGS.TS. Phan Anh Tú cho rằng chưa cần nhập khẩu lao động phổ thông đại trà.",
+        "en": "The opening part of the series on Mekong firms competing to keep workers (attendance bonuses, an interest-free loan fund). In the boxed opinion «Understanding \"the Mekong labour shortage\" correctly», responding to proposals to import labour for Mekong firms, Assoc. Prof. Phan Anh Tú argues there is no need yet to import general labour on a large scale."
+      },
+      "quote": {
+        "vi": "Miền Tây không thiếu lao động mà là thiếu người chịu làm ở mức lương và điều kiện hiện tại.",
+        "en": "The Mekong Delta does not lack labour – it lacks people willing to work at current wages and conditions."
+      }
+    },
+    {
+      "id": "baochinhphu-2026-10-13",
+      "date": "2026-10-13",
+      "outlet": "baochinhphu",
+      "reporter": "",
+      "kind": "dua-tin",
+      "topics": [
+        "kinh-te-tu-nhan"
+      ],
+      "url": "https://baochinhphu.vn/can-tho-kinh-te-tu-nhan-dong-gop-74-grdp-can-lon-len-bang-so-hoa-xanh-hoa-102261013145523304.htm",
+      "title": {
+        "vi": "Cần Thơ: Kinh tế tư nhân đóng góp 74% GRDP, cần lớn lên bằng số hóa-xanh hóa",
+        "en": "Can Tho: private economy contributes 74% of GRDP, must grow bigger through digital-green transformation"
+      },
+      "summary": {
+        "vi": "Đưa tin phiên đối thoại địa phương tại Diễn đàn Kinh tế tư nhân Việt Nam 2026 tại Cần Thơ: gần 20.500 doanh nghiệp tư nhân đóng góp khoảng 74% GRDP và trên 80% thu ngân sách; nút thắt là năng lực con người trong ứng dụng công nghệ và dữ liệu.",
+        "en": "Coverage of the Can Tho local dialogue of the Vietnam Private Economy Forum 2026: about 20,500 private enterprises contribute roughly 74% of GRDP and over 80% of city budget revenue; the bottleneck is human capacity to apply technology and data."
+      }
+    },
+    {
+      "id": "congthuong-2026-10-13",
+      "date": "2026-10-13",
+      "outlet": "congthuong",
+      "reporter": "",
+      "kind": "dua-tin",
+      "topics": [
+        "kinh-te-tu-nhan"
+      ],
+      "url": "https://congthuong.vn/can-tho-tim-giai-phap-chuyen-doi-so-chuyen-doi-xanh-cho-doanh-nghiep-476692.html",
+      "title": {
+        "vi": "Cần Thơ tìm giải pháp chuyển đổi số, chuyển đổi xanh cho doanh nghiệp",
+        "en": "Can Tho seeks solutions for digital and green transformation for enterprises"
+      },
+      "summary": {
+        "vi": "Đưa tin diễn đàn: PGS.TS. Phan Anh Tú đề xuất liên kết chặt hơn giữa chính quyền, doanh nghiệp và trường đại học; doanh nghiệp cùng xây dựng chương trình đào tạo và cùng đánh giá sinh viên.",
+        "en": "Coverage of the forum: Assoc. Prof. Phan Anh Tú proposes deeper ties between government, enterprises and universities, with enterprises co-designing training programmes and co-assessing students."
+      },
+      "quote": {
+        "vi": "chuyển đổi số, chuyển đổi xanh không chỉ bắt đầu từ công nghệ mà trước hết từ năng lực con người",
+        "en": "Digital and green transformation begins not only with technology but first of all with human capacity."
+      }
+    },
+    {
+      "id": "baocantho-2026-10-13",
+      "date": "2026-10-13",
+      "outlet": "baocantho",
+      "reporter": "",
+      "kind": "dua-tin",
+      "topics": [
+        "kinh-te-tu-nhan"
+      ],
+      "url": "https://baocantho.com.vn/can-tho-thuc-day-kinh-te-tu-nhan-chuyen-doi-so-chuyen-doi-xanh-a217890.html",
+      "title": {
+        "vi": "Cần Thơ thúc đẩy kinh tế tư nhân chuyển đổi số, chuyển đổi xanh",
+        "en": "Can Tho promotes private economy digital and green transformation"
+      },
+      "summary": {
+        "vi": "Đưa tin diễn đàn: thành phố cam kết chuyển từ tư duy quản lý sang phục vụ, kiến tạo phát triển; cải thiện môi trường đầu tư, kinh doanh và đề nghị doanh nghiệp phản ánh khó khăn tại diễn đàn.",
+        "en": "Coverage of the forum: the city commits to shifting from a management mindset to service and development facilitation, improving the investment and business environment, and invites enterprises to raise their difficulties at the forum."
+      }
+    },
+    {
+      "id": "vietnamplus-2026-09-17",
+      "date": "2026-09-17",
+      "outlet": "vietnamplus",
+      "reporter": "",
+      "kind": "phong-van",
+      "topics": [
+        "fdi-ha-tang"
+      ],
+      "url": "https://www.vietnamplus.vn/can-tho-nang-cao-chat-dong-von-fdi-tao-dong-luc-tang-truong-moi-post1136685.vnp",
+      "title": {
+        "vi": "Cần Thơ nâng cao chất dòng vốn FDI, tạo động lực tăng trưởng mới",
+        "en": "Can Tho improves the quality of FDI capital flows, creating new growth momentum"
+      },
+      "summary": {
+        "vi": "Phỏng vấn PGS.TS. Phan Anh Tú về việc FDI tại Cần Thơ mới là một \"trụ đỡ\" ổn định chứ chưa trở thành động lực tăng trưởng mới, cùng khuyến nghị xây dựng bộ hồ sơ \"sẵn sàng đầu tư\" cho từng khu công nghiệp.",
+        "en": "Interview with Assoc. Prof. Phan Anh Tú on how FDI in Can Tho remains a stable \"pillar\" rather than a new growth driver, and his call for an \"investment-ready\" profile for each industrial zone."
+      },
+      "quote": {
+        "vi": "FDI đang là một 'trụ đỡ' tương đối ổn định đối với kinh tế thành phố, nhưng chưa trở thành động lực tăng trưởng mới.",
+        "en": "FDI is currently a fairly stable 'pillar' for the city's economy, but has not yet become a new growth driver."
+      }
+    },
+    {
+      "id": "vietnamplus-2026-08-23",
+      "date": "2026-08-23",
+      "outlet": "vietnamplus",
+      "reporter": "Nguyễn Văn Việt",
+      "kind": "phong-van",
+      "topics": [
+        "fdi-ha-tang",
+        "lao-dong"
+      ],
+      "url": "https://www.vietnamplus.vn/chien-luoc-phat-trien-dong-bang-song-cuu-long-tu-duong-ray-den-truc-dong-luc-kinh-te-moi-post1131888.vnp",
+      "title": {
+        "vi": "Chiến lược phát triển Đồng bằng sông Cửu Long: Từ đường ray đến trục động lực kinh tế mới",
+        "en": "Mekong Delta development strategy: from rail line to new economic growth axis"
+      },
+      "summary": {
+        "vi": "Phỏng vấn PGS.TS. Phan Anh Tú về bài toán chuyển hóa nguồn lực và nhân lực của tuyến đường sắt TP.HCM–Cần Thơ.",
+        "en": "Interview with Assoc. Prof. Phan Anh Tú on the resource- and workforce-conversion challenge behind the HCMC–Can Tho railway."
+      },
+      "quote": {
+        "vi": "Đường sắt đi trước một bước, nhân lực phải đi trước hai bước.",
+        "en": "Rail infrastructure moves one step ahead – the workforce must move two steps ahead."
+      }
+    },
+    {
+      "id": "tuoitre-2026-08-05",
+      "date": "2026-08-05",
+      "outlet": "tuoitre",
+      "reporter": "Chí Quốc",
+      "kind": "dua-tin",
+      "topics": [
+        "lao-dong",
+        "doi-moi-sang-tao"
+      ],
+      "url": "https://tuoitre.vn/thay-vi-di-binh-duong-thi-tao-dong-di-cu-moi-ve-mien-tay-duoc-khong-100260805154121768.htm",
+      "title": {
+        "vi": "Thay vì \"đi Bình Dương\" thì tạo dòng di cư mới về miền Tây được không?",
+        "en": "Instead of \"going to Binh Duong\", can we create a new migration flow back to the Mekong Delta?"
+      },
+      "summary": {
+        "vi": "Tiếp nối loạt bài về xuất cư ĐBSCL: di cư được nhìn như kết quả cân bằng của một thị trường lao động thiếu cầu – vùng không thiếu người tài, mà thiếu chỗ để dùng người tài. Bài dẫn ba nghiên cứu độc lập cùng chỉ về một điểm nghẽn nằm ở khu vực doanh nghiệp (không phải thể chế hay khâu đào tạo) – nên đổi mới sáng tạo để có thêm nhiều doanh nghiệp là mấu chốt, đúng luận điểm nền tảng của BizOn.",
+        "en": "Continuing the series on out-migration from the Mekong Delta, the article frames migration as the equilibrium of a labour market short on demand: the region does not lack talent, it lacks places to use it. It cites three independent studies pointing to the same bottleneck in the business sector rather than institutions or training, so innovation that creates more firms is key – the founding premise of BizOn."
+      }
+    },
+    {
+      "id": "1thegioi-2026-07-30",
+      "date": "2026-07-30",
+      "outlet": "1thegioi",
+      "reporter": "Văn Kim Khanh",
+      "kind": "phong-van",
+      "topics": [
+        "doi-moi-sang-tao"
+      ],
+      "url": "https://1thegioi.vn/doi-moi-sang-tao-o-can-tho-diem-sang-va-khoang-trong-phat-trien-255702.html",
+      "title": {
+        "vi": "Đổi mới sáng tạo ở Cần Thơ: Điểm sáng và khoảng trống phát triển",
+        "en": "Innovation in Can Tho: bright spots and development gaps"
+      },
+      "summary": {
+        "vi": "Phỏng vấn PGS.TS. Phan Anh Tú về nghịch lý Chỉ số đổi mới sáng tạo (PII) 2025 của Cần Thơ: thể chế hạng 4/34 nhưng trình độ phát triển doanh nghiệp chỉ hạng 29/34, và đề xuất mạng lưới «Ba nhà» (nhà nước – nhà trường – doanh nghiệp) với ĐH Cần Thơ làm hạt nhân trung chuyển tri thức.",
+        "en": "Interview with Assoc. Prof. Phan Anh Tú on the paradox in Can Tho's 2025 Provincial Innovation Index: 4th of 34 for institutions but only 29th of 34 for business sophistication, and a proposed «triple helix» network (state – university – business) with Can Tho University as the knowledge hub."
+      },
+      "quote": {
+        "vi": "Hệ thống viện, trường không thiếu năng lực tạo tri thức mới, nhưng khu vực doanh nghiệp… lại thiếu năng lực hấp thụ và chuyển hóa tri thức đó thành năng suất.",
+        "en": "Universities and institutes do not lack the capacity to create new knowledge – what is missing is the enterprise sector's capacity to absorb it and turn it into productivity."
+      }
+    },
+    {
+      "id": "tuoitre-2026-07-27",
+      "date": "2026-07-27",
+      "outlet": "tuoitre",
+      "reporter": "",
+      "kind": "dua-tin",
+      "topics": [
+        "doi-moi-sang-tao",
+        "lao-dong"
+      ],
+      "url": "https://tuoitre.vn/doi-moi-sang-tao-co-the-tao-ra-dong-di-cu-moi-ve-dong-bang-song-cuu-long-100260727183852615.htm",
+      "title": {
+        "vi": "Đổi mới sáng tạo có thể tạo ra dòng di cư mới về Đồng bằng sông Cửu Long",
+        "en": "Innovation could create a new migration flow back to the Mekong Delta"
+      },
+      "summary": {
+        "vi": "Đưa tin phần trình bày của PGS.TS. Phan Anh Tú tại hội thảo «Giải pháp thúc đẩy nâng cao chỉ số đổi mới sáng tạo TP Cần Thơ» (Sở KH&CN Cần Thơ): tình trạng xuất cư của ĐBSCL, tỉ lệ cử nhân làm đúng chuyên môn giảm từ 86% xuống 74%, và kỳ vọng khởi nghiệp đổi mới sáng tạo tạo ra dòng di cư mới từ các thành phố lớn về nông thôn.",
+        "en": "Coverage of Assoc. Prof. Phan Anh Tú's talk at the workshop on raising Can Tho's innovation index (Can Tho Department of Science & Technology): Mekong out-migration, the share of graduates working in their field falling from 86% to 74%, and the hope that innovative start-ups can draw people from big cities back to rural areas."
+      }
+    }
+  ]
+}

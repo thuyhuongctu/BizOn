@@ -31,6 +31,7 @@
     + col('Về BizOn','About',[
       { href:'doi-ngu.html', vi:'Giới thiệu & Đội ngũ', en:'About & team' },
       { href:'giang-vien.html', vi:'Góc giảng viên', en:'Instructor corner' },
+      { href:'bao-chi.html', vi:'Kho báo chí', en:'Press archive' },
       { href:'dinh-huong.html', vi:'Định hướng tác động vùng', en:'Regional impact' },
       { href:'bang-chung.html', vi:'Bằng chứng lớp học', en:'Evidence' }
     ])
