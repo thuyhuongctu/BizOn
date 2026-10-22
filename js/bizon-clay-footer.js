@@ -5,10 +5,15 @@
 (function(){
   if(window.__bizonClayFooter) return; window.__bizonClayFooter = true;
 
+  /* Trang ở thư mục con nạp '../js/bizon-clay-footer.js' → gắn tiền tố gốc cho liên kết tương đối */
+  var cs = document.currentScript;
+  var BASE = cs ? (cs.getAttribute('src') || '').replace(/js\/bizon-clay-footer\.js.*$/, '') : '';
+  function u(h){ return /^(?:[a-z]+:|#|\/)/i.test(h) ? h : BASE + h; }
+
   function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]; }); }
   function col(titleVi, titleEn, links){
     return '<div><h4 data-en="'+esc(titleEn)+'">'+esc(titleVi)+'</h4>'
-      + links.map(function(l){ return '<a href="'+l.href+'" data-en="'+esc(l.en)+'">'+esc(l.vi)+'</a>'; }).join('')
+      + links.map(function(l){ return '<a href="'+u(l.href)+'" data-en="'+esc(l.en)+'">'+esc(l.vi)+'</a>'; }).join('')
       + '</div>';
   }
 
@@ -22,8 +27,7 @@
       { href:'games.html', vi:'BizOn Arcade', en:'BizOn Arcade' }
     ])
     + col('Về BizOn','About',[
-      { href:'truong-gioi-thieu.html', vi:'Giới thiệu dự án', en:'About the project' },
-      { href:'doi-ngu.html', vi:'Đội ngũ sáng lập', en:'Team' },
+      { href:'doi-ngu.html', vi:'Giới thiệu & Đội ngũ', en:'About & team' },
       { href:'dinh-huong.html', vi:'Định hướng tác động vùng', en:'Regional impact' },
       { href:'bang-chung.html', vi:'Bằng chứng lớp học', en:'Evidence' }
     ])
@@ -34,7 +38,7 @@
     + col('Liên hệ','Contact',[
       { href:'lien-he.html', vi:'Liên hệ & Hợp tác', en:'Contact & partnerships' },
       { href:'tuyen-dung.html', vi:'Tuyển dụng', en:'Jobs' },
-      { href:'chinh-sach.html', vi:'Chính sách quyền riêng tư', en:'Privacy policy' }
+      { href:'chinh-sach.html', vi:'Chính sách dữ liệu & quyền riêng tư', en:'Data & privacy policy' }
     ]);
 
   var disVi = 'Trang web chỉ phục vụ mục đích giáo dục và nghiên cứu, không đại diện cho bất kỳ tổ chức chính trị nào. Hình ảnh quốc kỳ, bản đồ chỉ mang ý nghĩa minh họa văn hóa – giáo dục; quần đảo Hoàng Sa và Trường Sa thuộc chủ quyền Việt Nam. Bản đồ dữ liệu dùng ranh giới Natural Earth (dữ liệu công cộng), tham chiếu Bản đồ nền – Hệ thống VNSDI, Bộ Nông nghiệp và Môi trường.';
@@ -48,7 +52,7 @@
     + '<div class="cf-inner">'
       + '<div class="cf-top">'
         + '<div class="cf-brand">'
-          + '<a class="cf-logo" href="index.html" aria-label="BizOn">Biz<span class="cf-o" aria-hidden="true"></span>n</a>'
+          + '<a class="cf-logo" href="'+u('index.html')+'" aria-label="BizOn">Biz<span class="cf-o" aria-hidden="true"></span>n</a>'
           + '<p data-en="Decision simulations for business education – from the Mekong Delta.">Mô phỏng ra quyết định cho giáo dục kinh doanh – từ Đồng bằng sông Cửu Long.</p>'
           + '<a class="cf-gp" href="'+GP+'" target="_blank" rel="noopener" data-en="▶ Get it on Google Play">▶ Tải trên Google Play</a>'
         + '</div>'

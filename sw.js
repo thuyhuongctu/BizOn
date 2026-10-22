@@ -1,7 +1,7 @@
 /* BizOn Bật Nghiệp 2026 – Service Worker (offline app shell)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
 
-const CACHE = 'bizon-v552';
+const CACHE = 'bizon-v557';
 const SHELL = [
   './',
   './index.html',
@@ -60,7 +60,6 @@ const SHELL = [
   './global.html',
   './giai-phap.html',
   './lop-hoc.html',
-  './giang-vien.html',
   './khao-sat-online.html',
   './brand-passport.html',
   './ho-chieu-thuong-hieu.html',
@@ -97,6 +96,9 @@ const SHELL = [
   './css/bizon-clay-fonts.css',
   './css/bizon-clay.css',
   './css/clay-tool-skin.css',
+  './css/clay-legacy.css',
+  './css/bizon-clay-chrome.css',
+  './js/bizon-clay-bridge.js',
   './css/clay-dark-skin.css',
   './css/clay-vietlens-skin.css',
   './assets/fonts/BeVietnamPro-400-vietnamese.woff2',
@@ -185,6 +187,12 @@ const SHELL = [
   './manifest-brand-passport.webmanifest',
   './assets/character/lumina-ao-dai.webp',
   './assets/character/lumina-ao-dai-clap.webp',
+  './assets/character/lumina-cheer-cut.webp',
+  './assets/character/arcade-rong-bay-sau-rieng-cut.webp',
+  './assets/character/anh-tu-desk-laptop-cut.webp',
+  './assets/character/huong-ao-dai-portrait-cut.webp',
+  './assets/character/lumina-sweater-huong-cut.webp',
+  './assets/character/lumina-dj-cut.webp',
   './assets/character/lumina-ao-dai-alert.webp',
   './assets/character/lumina-vest.webp',
   './assets/character/lumina-vest-worried.webp',

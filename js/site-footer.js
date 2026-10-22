@@ -13,7 +13,6 @@
   var COLS = [
     ['🌌 Vũ trụ · Hub', '🌌 Universe · Hub', [
       ['Bản đồ Vũ trụ', 'universe.html', 'Universe Map'],
-      ['Trường (thể chế)', 'truong.html', 'The School (institution)'],
       ['Nền tảng học thuật', 'truong-hoc-thuat.html', 'Academic Platform'],
       ['Sổ điểm giảng viên', 'instructor-grading.html', 'Instructor Gradebook'],
     ]],
@@ -33,7 +32,7 @@
     ]],
     ['🎓 Giảng dạy · Educators', '🎓 Educators', [
       ['Kịch bản lớp học', 'lop-hoc.html', 'Classroom scenario'],
-      ['Bảng điều khiển lớp', 'giang-vien.html', 'Class dashboard'],
+      ['Bảng điều khiển lớp', 'app/instructor-studio.html', 'Class dashboard'],
       ['Khảo sát trước–sau', 'khao-sat-online.html', 'Pre/post survey'],
       ['Phiếu khảo sát (bản in A4)', 'khao-sat.html', 'Survey Sheet (A4 printable)'],
       ['Học thuật & Model Cards', 'hoc-thuat.html', 'Academics & Model Cards'],

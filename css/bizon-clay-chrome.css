@@ -1,0 +1,135 @@
+/* TỰ SINH từ css/bizon-clay.css bởi scripts/build-clay-chrome.mjs – đừng sửa tay.
+   Chỉ gồm biến màu + #clay-nav + #clay-footer cho trang công cụ cũ. */
+:root{
+  /* Nền & bề mặt */
+  --clay-bg:#FBF4E8;        /* nền kem */
+  --clay-card:#FFFBF4;      /* thẻ */
+  --clay-tray:#F3E6CF;      /* khay chìm (nav, input) */
+  --clay-cream-deep:#FFF3DA;/* khối hero */
+  /* Mực & chữ */
+  --clay-ink:#033337;       /* mực chính */
+  --clay-ink-2:#24403F;
+  --clay-sub:#3E5A5C;       /* chữ phụ */
+  /* Teal / cam / nghệ */
+  --clay-teal:#006687;
+  --clay-teal-2:#1E7E8C;
+  --clay-orange:#E8762D;
+  --clay-gold:#FDA127;
+  --clay-accent:#C2581B;
+  /* Bộ màu đất sét phụ */
+  --clay-c1:#7FD3DC; --clay-c2:#FFD58A; --clay-c3:#F4B6C2; --clay-c4:#A9DCC4; --clay-c5:#D9F0F2;
+  /* Sắc nhạt hay dùng (nền thẻ phụ, ô đáp án) */
+  --clay-amber-soft:#FFE6B8; --clay-mint-soft:#DDF1E4; --clay-peach-soft:#FDE1CE;
+  /* Chân footer */
+  --clay-foot:#033337; --clay-foot-fg:#9CC9C9; --clay-foot-link:#FFD58A;
+
+  /* Font */
+  --clay-sans:'Be Vietnam Pro','BVP Fallback',system-ui,sans-serif;
+  --clay-head:'Plus Jakarta Sans','PJS Fallback',system-ui,sans-serif;
+  --clay-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+
+  /* Bo góc */
+  --clay-r-sm:16px; --clay-r:22px; --clay-r-lg:28px; --clay-r-xl:36px; --clay-r-pill:999px;
+
+  /* Bóng đất sét */
+  --clay-shadow:inset 0 -9px 0 rgba(110,70,30,.08), inset 0 5px 0 #fff, 0 26px 36px -24px rgba(110,70,30,.5);
+  --clay-shadow-sm:inset 0 -6px 0 rgba(110,70,30,.07), 0 14px 22px -18px rgba(110,70,30,.5);
+  --clay-btn-shadow:inset 0 -5px 0 rgba(0,0,0,.16), inset 0 3px 0 rgba(255,255,255,.35);
+  --clay-tray-shadow:inset 0 3px 6px rgba(110,70,30,.18);
+  /* Chữ trên nền teal / cam (bản tối đổi sang chữ sẫm vì nền sáng lên) */
+  --clay-on-teal:#fff; --clay-on-orange:#fff;
+}
+
+/* ============================================================================
+   Thanh điều hướng đất sét (bơm bởi js/bizon-clay-nav.js)
+   ========================================================================== */
+#clay-nav{position:sticky;top:12px;z-index:50;max-width:1200px;margin:12px auto 0;padding:0 16px 10px;background:var(--clay-bg);border-radius:28px}
+#clay-nav .cn-bar{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:14px;min-height:68px;padding:8px 10px 8px 20px;border-radius:var(--clay-r-pill);background:var(--clay-card);box-shadow:0 18px 30px -16px rgba(110,70,30,.35),inset 0 -6px 0 rgba(0,0,0,.05),inset 0 4px 0 rgba(255,255,255,.9)}
+#clay-nav .cn-brand{display:flex;align-items:center;gap:0;color:var(--clay-ink);font-family:var(--clay-sans);font-weight:800;font-size:24px;letter-spacing:-.045em;line-height:1}
+#clay-nav .cn-brand .cn-o{position:relative;display:inline-block;width:.86em;height:.72em;border:.15em solid currentColor;border-radius:50%;margin:0 .02em 0 .04em}
+#clay-nav .cn-brand .cn-o::after{content:"";position:absolute;right:.06em;top:50%;width:.26em;height:.26em;margin-top:-.13em;border-radius:50%;background:var(--clay-gold)}
+#clay-nav .cn-links{justify-self:center;display:flex;gap:4px;padding:5px;border-radius:var(--clay-r-pill);background:var(--clay-tray);box-shadow:var(--clay-tray-shadow);overflow-x:auto;scrollbar-width:none;font-size:14px;font-weight:700;white-space:nowrap;max-width:100%}
+#clay-nav .cn-links::-webkit-scrollbar,#clay-nav .cn-row2::-webkit-scrollbar{display:none}
+#clay-nav .cn-links a,#clay-nav .cn-row2 a{flex:none;padding:8px 14px;border-radius:var(--clay-r-pill);color:var(--clay-sub)}
+#clay-nav .cn-links a:hover,#clay-nav .cn-row2 a:hover{color:var(--clay-teal)}
+#clay-nav a[aria-current="page"]{color:var(--clay-teal);background:var(--clay-card);box-shadow:0 4px 8px -4px rgba(110,70,30,.5),inset 0 -3px 0 rgba(110,70,30,.12)}
+#clay-nav .cn-right{display:flex;align-items:center;gap:10px}
+#clay-nav .cn-lang{display:flex;padding:4px;border-radius:var(--clay-r-pill);background:var(--clay-tray);box-shadow:inset 0 3px 5px rgba(110,70,30,.18);font-size:12px;font-weight:800}
+#clay-nav .cn-lang button{border:0;cursor:pointer;padding:7px 12px;border-radius:var(--clay-r-pill);font:inherit;background:transparent;color:var(--clay-sub)}
+#clay-nav .cn-lang button[aria-pressed="true"]{background:var(--clay-teal);color:var(--clay-on-teal);box-shadow:inset 0 -3px 0 rgba(0,0,0,.2),0 4px 8px -3px rgba(0,60,80,.5)}
+#clay-nav .cn-cta{white-space:nowrap;padding:11px 18px;border-radius:var(--clay-r-pill);background:var(--clay-orange);color:var(--clay-on-orange);font-family:var(--clay-head);font-size:16px;font-weight:700;box-shadow:var(--clay-btn-shadow),0 10px 18px -8px rgba(232,118,45,.7)}
+#clay-nav .cn-cta:hover{color:var(--clay-on-orange)}
+#clay-nav .cn-dlwrap{position:relative;flex:none}
+#clay-nav .cn-dl{flex:none;display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border:0;border-radius:50%;background:var(--clay-teal);color:var(--clay-on-teal);font:inherit;font-size:16px;line-height:1;cursor:pointer;box-shadow:var(--clay-btn-shadow),0 8px 14px -8px rgba(0,60,80,.7)}
+#clay-nav .cn-dl:hover{color:var(--clay-on-teal)}
+/* Nút sáng/tối (chỉ có trên trang web, xem bizon-clay-nav.js) */
+#clay-nav .cn-theme{flex:none;display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border:0;border-radius:50%;background:var(--clay-tray);font:inherit;font-size:17px;line-height:1;cursor:pointer;box-shadow:var(--clay-tray-shadow)}
+#clay-nav .cn-dlmenu{position:absolute;right:0;top:calc(100% + 10px);z-index:20;display:flex;flex-direction:column;gap:2px;min-width:240px;padding:8px;border-radius:var(--clay-r);background:var(--clay-card);box-shadow:0 18px 30px -12px rgba(110,70,30,.5),inset 0 4px 0 rgba(255,255,255,.9)}
+#clay-nav .cn-dlmenu[hidden]{display:none}
+#clay-nav .cn-dlmenu a{padding:10px 12px;border-radius:var(--clay-r-sm);color:var(--clay-ink);font-size:14px;font-weight:700;white-space:nowrap}
+#clay-nav .cn-dlmenu a:hover{background:var(--clay-tray);color:var(--clay-teal)}
+@media (max-width:560px){
+  #clay-nav .cn-right{gap:6px}
+  #clay-nav .cn-dl,#clay-nav .cn-refresh,#clay-nav .cn-theme{width:32px;height:32px;font-size:14px}
+  #clay-nav .cn-cta{padding:11px 14px;font-size:15px}
+  #clay-nav .cn-dlmenu{right:-10px;min-width:220px;max-width:calc(100vw - 20px)}
+  #clay-nav .cn-dlmenu a{white-space:normal}
+}
+/* Hàng điều hướng thứ hai cho màn hình hẹp */
+#clay-nav .cn-row2{margin:8px auto 0;width:fit-content;max-width:100%;padding:5px;display:none;gap:4px;border-radius:var(--clay-r-pill);background:var(--clay-tray);box-shadow:var(--clay-tray-shadow),0 12px 20px -14px rgba(110,70,30,.5);overflow-x:auto;scrollbar-width:none;font-size:14px;font-weight:700;white-space:nowrap}
+@media (max-width:1040px){
+  #clay-nav .cn-links{display:none}
+  #clay-nav .cn-row2{display:flex}
+}
+/* Hàng 2 còn mục khuất bên phải (bizon-clay-nav.js gắn .cn-more): làm mờ mép phải để người xem biết vuốt tiếp */
+#clay-nav .cn-row2.cn-more{-webkit-mask-image:linear-gradient(90deg,#000 80%,transparent);mask-image:linear-gradient(90deg,#000 80%,transparent)}
+/* Máy hẹp (≤440px): thêm nút sáng/tối nên khép khoảng cách và nút VI/EN cho vừa thanh nav */
+@media (max-width:440px){
+  #clay-nav .cn-bar{gap:8px;padding-left:14px}
+  #clay-nav .cn-right{gap:4px}
+  #clay-nav .cn-lang button{padding:7px 9px}
+}
+@media (max-width:360px){
+  #clay-nav .cn-brand{font-size:20px}
+  #clay-nav .cn-lang button{padding:6px 7px}
+  #clay-nav .cn-dl,#clay-nav .cn-theme{width:30px;height:30px}
+}
+/* Máy rất hẹp (≤340px): thu nút «Bắt đầu» để thanh nav không tràn ngang */
+@media (max-width:340px){
+  #clay-nav .cn-bar{gap:6px;padding-left:12px}
+  #clay-nav .cn-cta{padding:9px 10px;font-size:14px}
+  /* Nút ⬇ (tải app) ẩn ở máy rất hẹp – trang nào cũng còn nút Google Play riêng;
+     để nguyên thì nút «Bắt đầu» tràn khỏi thanh nav, cả trang lệch ngang như ảnh bị cắt. */
+  #clay-nav .cn-dlwrap{display:none}
+}
+@media (max-width:310px){
+  #clay-nav .cn-brand{font-size:18px}
+  #clay-nav .cn-lang button{padding:5px 6px}
+}
+
+/* ============================================================================
+   Chân trang đất sét (bơm bởi js/bizon-clay-footer.js)
+   ========================================================================== */
+#clay-footer{background:var(--clay-foot);color:var(--clay-foot-fg);margin-top:64px}
+#clay-footer .cf-wave{height:30px;background:radial-gradient(circle at 30px 0,var(--clay-bg) 29px,transparent 30px) 0 0/60px 30px repeat-x}
+#clay-footer .cf-inner{max-width:1080px;margin:0 auto;padding:28px 24px 40px;font-size:13px;line-height:1.6}
+#clay-footer .cf-top{display:grid;grid-template-columns:minmax(220px,1fr) 2.6fr;gap:32px;align-items:start}
+#clay-footer .cf-brand{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+#clay-footer .cf-brand p{margin:0;max-width:30ch;color:var(--clay-foot-fg)}
+#clay-footer .cf-logo{display:inline-flex;align-items:center;color:#fff;font-family:var(--clay-sans);font-weight:800;font-size:26px;letter-spacing:-.045em;line-height:1}
+#clay-footer .cf-o{position:relative;display:inline-block;width:.86em;height:.72em;border:.15em solid currentColor;border-radius:50%;margin:0 .02em 0 .04em}
+#clay-footer .cf-o::after{content:"";position:absolute;right:.06em;top:50%;width:.26em;height:.26em;margin-top:-.13em;border-radius:50%;background:var(--clay-gold)}
+#clay-footer .cf-cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+#clay-footer .cf-cols h4{margin:0 0 8px;font-family:var(--clay-head);font-size:13px;font-weight:800;color:#CFE7E7;letter-spacing:.02em}
+#clay-footer .cf-cols a{display:block;padding:3px 0;color:var(--clay-foot-fg)}
+#clay-footer .cf-cols a:hover{color:var(--clay-foot-link)}
+#clay-footer .cf-gp{padding:8px 14px;border-radius:var(--clay-r-pill);background:#0B4A4F;color:var(--clay-foot-link);font-weight:800;box-shadow:inset 0 -3px 0 rgba(0,0,0,.25)}
+#clay-footer .cf-gp:hover{color:var(--clay-foot-link)}
+#clay-footer .cf-bottom{margin-top:28px;padding-top:18px;border-top:1px solid rgba(207,231,231,.16);display:flex;flex-direction:column;gap:8px}
+#clay-footer .cf-legal{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:12.5px}
+#clay-footer .cf-legal a{color:var(--clay-foot-link)}
+#clay-footer .cf-dis{font-size:12px;color:#7FA9AA}
+@media (max-width:820px){
+  #clay-footer .cf-top{grid-template-columns:1fr;gap:24px}
+  #clay-footer .cf-cols{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 16px}
+}

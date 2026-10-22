@@ -16,6 +16,11 @@
 <link rel="stylesheet" href="css/bizon-clay.css">
 <style>
   .vu-wide{max-width:1160px}
+  .vu-path{display:inline-block;margin-top:10px;padding:4px 10px;border-radius:999px;background:var(--clay-tray);font-size:12px;font-weight:800;color:var(--clay-teal)}
+  .vu-deep a.vu-inp{display:block;color:var(--clay-ink);text-decoration:none;transition:transform .15s ease}
+  .vu-deep a.vu-inp:hover{transform:translateY(-3px)}
+  .vu-inp .d{margin:8px 0 0;font-size:14px;line-height:1.55;color:var(--clay-sub)}
+  .vu-deep .go{display:block;margin-top:10px;font-size:13px;font-weight:800;color:var(--clay-teal)}
 
   /* Bản đồ dòng chảy châu thổ — lại màu đất sét */
   .vu-map{padding:28px clamp(16px,4vw,32px);margin:32px 0}
@@ -131,7 +136,7 @@
           <span class="clay-chip" style="background:#FBD9E0;color:#7A2338" data-en="Works on weak connections">Chạy được khi mạng yếu</span>
         </div>
       </div>
-      <div class="art" style="width:min(17vw,170px);aspect-ratio:268/700"><img src="assets/character/lumina-ao-dai-wave-cut.webp" alt="Lumina – cố vấn học tập AI của BizOn" loading="lazy"></div>
+      <div class="art" style="width:min(17vw,170px);aspect-ratio:272/900"><img src="assets/character/advisors/lumina-chap-tay-cut.webp" alt="Lumina – cố vấn học tập AI của BizOn" loading="lazy"></div>
     </div>
     <div class="wave" aria-hidden="true"></div>
   </section>
@@ -275,7 +280,7 @@
         </div>
       </article>
       <article class="vu-card3d">
-        <div class="slot"><img src="assets/character/anh-tu-ao-dai-explain-cut.webp" alt="PGS.TS Phan Anh Tú – cố vấn học thuật, mặc áo dài" loading="lazy"></div>
+        <div class="slot"><img src="assets/character/anh-tu-ao-dai-cut-v2.webp" alt="PGS.TS Phan Anh Tú – cố vấn học thuật, mặc áo dài" loading="lazy"></div>
         <div class="meta">
           <span class="role" data-en="Academic advisor">Cố vấn học thuật</span>
           <h3 data-en="Tú Phan">Tú Phan</h3>
@@ -339,7 +344,7 @@
         <p class="body" data-en="Model Cards publish variables, equations, assumptions – and what the model cannot do.">Model Card công bố biến số, phương trình, giả định – và cả những gì mô hình không làm được.</p>
         <span class="go" data-en="Read the Model Cards →">Đọc Model Card →</span>
       </a>
-      <a class="vu-mod" href="truong-chinh-sach.html">
+      <a class="vu-mod" href="chinh-sach.html#quan-tri-du-lieu">
         <div class="top"><span class="no">06</span><span class="vu-st live">Live</span></div>
         <h3 data-en="Data policy">Chính sách dữ liệu</h3>
         <p class="body" data-en="No ads, no data sales. Learning data leaves the device only when the user submits it.">Không quảng cáo, không bán dữ liệu. Dữ liệu học tập chỉ rời máy khi người dùng chủ động nộp.</p>
@@ -391,6 +396,56 @@
         <p class="body" data-en="Current evidence of learning gains is retrospective and lacks a control group. A rigorous experimental design is in preparation.">Bằng chứng hiệu quả học tập hiện có mang tính hồi cứu và chưa có nhóm đối chứng. Một thiết kế thực nghiệm chặt chẽ đang được chuẩn bị.</p>
         <span class="src" data-en="Stated plainly on the academic page">Nêu thẳng trên trang học thuật</span>
       </div>
+    </div>
+  </section>
+
+  <!-- ═══ GẮN VÀO HỌC PHẦN (gộp từ truong.html) ═══ -->
+  <section class="clay-section" id="hoc-phan">
+    <div class="vu-head">
+      <p class="tag" data-en="Where it fits">Dùng ở đâu</p>
+      <h2 data-en="Which course it fits">Gắn vào học phần nào</h2>
+    </div>
+    <div class="vu-inputs">
+      <div class="vu-inp">
+        <span class="k" data-en="Entrepreneurship faculty">Khoa dạy khởi nghiệp</span>
+        <p class="d" data-en="Start with venture start-up, then run a firm in a familiar market – the full domestic startup arc.">Bắt đầu từ khởi sự kinh doanh, rồi điều hành một doanh nghiệp trong thị trường quen thuộc – trọn mạch khởi nghiệp trong nước.</p>
+        <span class="vu-path" data-en="Level 1 + Level 2">Bậc 1 + Bậc 2</span>
+      </div>
+      <div class="vu-inp">
+        <span class="k" data-en="International business faculty">Khoa dạy kinh doanh quốc tế</span>
+        <p class="d" data-en="Start with venture start-up, then cross borders as both entrant and incumbent – the full market-entry arc.">Bắt đầu từ khởi sự kinh doanh, rồi qua biên giới với vai người đi ra và người đi vào – trọn mạch thâm nhập thị trường.</p>
+        <span class="vu-path" data-en="Level 1 + Level 3">Bậc 1 + Bậc 3</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ BỐN CÂU HỎI (gộp từ truong.html) ═══ -->
+  <section class="clay-section" id="cau-hoi">
+    <div class="vu-head">
+      <p class="tag" data-en="Go deeper">Tìm hiểu thêm</p>
+      <h2 data-en="Four questions instructors ask">Bốn câu hỏi giảng viên hay hỏi</h2>
+    </div>
+    <div class="vu-inputs vu-deep">
+      <a class="vu-inp" href="truong-giang-vien.html">
+        <span class="k" data-en="How do I run it in class?">Tôi dùng trong lớp thế nào?</span>
+        <p class="d" data-en="Five steps to open a class, ready-to-download toolkit, and how grading works – run it without calling support.">Năm bước mở lớp, bộ công cụ tải sẵn, và cách chấm – chạy được mà không cần gọi hỗ trợ.</p>
+        <span class="go" data-en="For instructors →">Cho giảng viên →</span>
+      </a>
+      <a class="vu-inp" href="truong-hoc-thuat.html">
+        <span class="k" data-en="Does it survive scrutiny?">Có chịu được chất vấn không?</span>
+        <p class="d" data-en="Model Cards, a reproducibility contract, learning outcomes – and what the model cannot do.">Model Card, hợp đồng tái lập, chuẩn đầu ra – và công bố cả những gì mô hình không làm được.</p>
+        <span class="go" data-en="Academic foundation →">Nền tảng học thuật →</span>
+      </a>
+      <a class="vu-inp" href="doi-ngu.html#vi-sao">
+        <span class="k" data-en="Who's behind it, and why?">Ai đứng sau, vì sao có?</span>
+        <p class="d" data-en="The problem it solves, the regional context, the provenance timeline and the authors.">Vấn đề dự án giải, bối cảnh vùng, dòng thời gian xuất xứ và nhóm tác giả.</p>
+        <span class="go" data-en="About & team →">Giới thiệu &amp; đội ngũ →</span>
+      </a>
+      <a class="vu-inp" href="chinh-sach.html#quan-tri-du-lieu">
+        <span class="k" data-en="Where does student data go?">Dữ liệu sinh viên đi đâu?</span>
+        <p class="d" data-en="No ads, no data sales; two separate consent purposes; and the limits of withdrawal stated upfront.">Không quảng cáo, không bán dữ liệu; đồng thuận hai mục đích tách riêng; và giới hạn quyền rút lui nói trước.</p>
+        <span class="go" data-en="Data policy →">Chính sách dữ liệu →</span>
+      </a>
     </div>
   </section>
 

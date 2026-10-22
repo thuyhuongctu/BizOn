@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="../css/bizon-unified.css">
 <link rel="stylesheet" href="../css/clay-dark-skin.css">
 <style>@media (max-width:400px){ .bz-command-top{flex-wrap:wrap;gap:8px;padding:8px 4px} .bz-command-actions{margin-left:0} .bz-net{display:none} }</style>
+<link rel="stylesheet" href="../css/bizon-clay-chrome.css">
+<link rel="stylesheet" href="../css/clay-legacy.css">
 <script src="../js/capture-guard.js"></script>
 </head>
 <body class="bizon-command">
@@ -24,7 +26,7 @@
       <a href="../game.html">☆ Startup Lab</a>
       <a href="./brand-passport.html">◇ Brand Passport</a>
       <a href="./aibis.html">◎ AIBIS Global</a>
-      <a href="../giang-vien.html">♙ Classroom</a>
+      <a href="./instructor-studio.html">♙ Classroom</a>
       <a href="#analytics">▥ Analytics</a>
       <a href="../hoc-thuat.html">▤ Reports</a>
       <a href="../lumina.html">✦ Lumina</a>
@@ -95,7 +97,7 @@
 
       <article class="bz-card bz-mini-panel"><h3>DECISION TIMELINE</h3><div class="bz-timeline"><div><b>Round 1</b><span>Market Research</span><span style="color:var(--bz-green)">✓</span></div><div><b>Round 2</b><span>Product & Pricing</span><span style="color:var(--bz-green)">✓</span></div><div><b>Round 3</b><span>Marketing & Sales</span><span style="color:var(--bz-green)">✓</span></div><div style="border:1px solid var(--bz-line-strong)"><b>Round 4</b><span>Operations Optimization</span><span style="color:var(--bz-cyan)">Now</span></div><div><b>Round 5</b><span>Global Market Entry</span><span>○</span></div></div></article>
 
-      <article class="bz-card bz-mini-panel"><h3>TEAM & LEARNING</h3><div class="bz-team"><span class="bz-avatar">EH</span><span class="bz-avatar">GR</span><span class="bz-avatar">FW</span><span class="bz-avatar">BO</span></div><div class="bz-learning"><div class="bz-ring"><b>83%</b></div><div style="font-size:.65rem;color:var(--bz-muted);line-height:1.9">Engagement <b style="float:right;color:#fff">91%</b><br>Decision Quality <b style="float:right;color:#fff">78%</b><br>Collaboration <b style="float:right;color:#fff">85%</b><br>Knowledge Gain <b style="float:right;color:#fff">83%</b></div></div><a href="../giang-vien.html" style="display:block;margin-top:10px;color:var(--bz-cyan);font-size:.65rem">Go to Classroom →</a></article>
+      <article class="bz-card bz-mini-panel"><h3>TEAM & LEARNING</h3><div class="bz-team"><span class="bz-avatar">EH</span><span class="bz-avatar">GR</span><span class="bz-avatar">FW</span><span class="bz-avatar">BO</span></div><div class="bz-learning"><div class="bz-ring"><b>83%</b></div><div style="font-size:.65rem;color:var(--bz-muted);line-height:1.9">Engagement <b style="float:right;color:#fff">91%</b><br>Decision Quality <b style="float:right;color:#fff">78%</b><br>Collaboration <b style="float:right;color:#fff">85%</b><br>Knowledge Gain <b style="float:right;color:#fff">83%</b></div></div><a href="./instructor-studio.html" style="display:block;margin-top:10px;color:var(--bz-cyan);font-size:.65rem">Go to Classroom →</a></article>
     </section>
 
     <section class="bz-card" style="margin-top:10px;padding:13px;display:grid;grid-template-columns:repeat(5,1fr);gap:8px">
@@ -103,14 +105,13 @@
     </section>
   </main>
 </div>
-<nav class="bz-mobile-nav" aria-label="Điều hướng ứng dụng" data-en-aria="App navigation"><a href="./release.html" data-en="Home">Trang chủ</a><a class="active" href="./command-center.html" data-en="Command">Điều hành</a><a href="../game.html">Startup</a><a href="./aibis.html">AIBIS</a><a href="../giang-vien.html" data-en="Classroom">Lớp học</a></nav>
+<nav class="bz-mobile-nav" aria-label="Điều hướng ứng dụng" data-en-aria="App navigation"><a href="./release.html" data-en="Home">Trang chủ</a><a class="active" href="./command-center.html" data-en="Command">Điều hành</a><a href="../game.html">Startup</a><a href="./aibis.html">AIBIS</a><a href="./instructor-studio.html" data-en="Classroom">Lớp học</a></nav>
 <script src="../js/app-shell/route-registry.js" defer></script>
 <script src="../js/app-shell/unified-app.js" defer></script>
 
 <script src="../js/bizon-clay-i18n.js"></script>
-<button type="button" id="clay-lang-fab" onclick="window.clayToggleLang&&clayToggleLang()" aria-label="VI / EN" style="position:fixed;left:14px;bottom:14px;z-index:9999;border:0;cursor:pointer;padding:9px 14px;border-radius:999px;background:#FFFBF4;color:#033337;font:800 13px 'Be Vietnam Pro',system-ui,sans-serif;box-shadow:0 10px 18px -8px rgba(110,70,30,.55),inset 0 -4px 0 rgba(110,70,30,.12)">VI · EN</button>
-<script>(function(){var b=document.getElementById('clay-lang-fab');function lbl(){var l=window.clayCurrentLang?clayCurrentLang():'vi';b.textContent=l==='en'?'Tiếng Việt':'English';}
-window.addEventListener('bizon:langchange',lbl);setTimeout(lbl,0);
-setInterval(function(){try{var s=localStorage.getItem('bizon-lang')==='en'?'en':'vi';if(window.clayApplyLang&&window.__bizonLang&&s!==window.__bizonLang)clayApplyLang(s);}catch(e){}},600);})();</script>
+<script src="../js/bizon-clay-bridge.js" defer></script>
+<script src="../js/bizon-clay-nav.js" defer></script>
+<script src="../js/bizon-clay-footer.js" defer></script>
 </body>
 </html>

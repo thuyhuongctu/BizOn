@@ -2,7 +2,7 @@
 
 ## App name
 
-BizOn – Mô phỏng kinh doanh
+BizOn: Business Simulation
 
 ## Short description
 
