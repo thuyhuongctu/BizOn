@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <!-- Ngôn ngữ: theo lựa chọn chung của site (bizon-lang). Trước đây trang này tự ép về tiếng Việt và ghi đè cả toàn site. -->
-<title>BizOn BẬT NGHIỆP – Trụ sở 3D</title>
+<title>Bật Nghiệp 3D – Bậc 2 · Vận hành doanh nghiệp · BizOn</title>
 <link rel="manifest" href="app-sinhvien.webmanifest">
 <meta name="theme-color" content="#2f8a8c">
 <link rel="apple-touch-icon" href="assets/icons/rong-xanh-192.png">
@@ -242,7 +242,7 @@
 <body>
 <div id="boot" style="position:fixed;inset:0;z-index:200;background:#2a2340 url('assets/illustrations/rong-bay-doi-bizon.webp') center/cover no-repeat;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;font-family:'Baloo 2','Be Vietnam Pro',sans-serif;color:#2b4a55;transition:opacity .5s">
   
-  <div style="font-size:26px;font-weight:800;letter-spacing:.5px;white-space:nowrap;text-align:center;color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.35),0 8px 24px rgba(0,0,0,.4)">BizOn BẬT NGHIỆP</div>
+  <div style="font-size:26px;font-weight:800;letter-spacing:.5px;white-space:nowrap;text-align:center;color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.35),0 8px 24px rgba(0,0,0,.4)">BẬT NGHIỆP</div>
   <div style="width:min(320px,70vw);height:14px;border-radius:10px;background:#dccbb0;border:2px solid #cbb797;overflow:hidden"><div id="bootBar" style="height:100%;width:4%;background:#2f8a8c;border-radius:10px;transition:width .35s"></div></div>
   <div id="bootMsg" data-en="Loading the 3D library…" style="margin-bottom:8vh;background:rgba(251,246,238,.92);padding:4px 12px;border-radius:10px;text-align:center;font:600 14px 'Be Vietnam Pro',sans-serif;color:#5a6b74">Đang tải thư viện 3D…</div>
   <button id="bootLow" style="display:none;margin-top:6px;font:700 13px 'Baloo 2',sans-serif;background:#fbf6ee;border:2px solid #cbb797;border-radius:12px;padding:6px 12px;color:#2b4a55;cursor:pointer" data-en="Slow network? Play the light 2D version →">Mạng chậm? Chơi bản 2D nhẹ →</button>
@@ -257,7 +257,7 @@
 </script>
 <div id="login3d">
   <div class="card">
-    <div style="display:flex;align-items:center;gap:10px"><h1>BizOn Bật Nghiệp</h1></div>
+    <div style="display:flex;align-items:center;gap:10px"><h1>Bật Nghiệp</h1></div>
     <p data-en="Welcome to BizOn headquarters in Can Tho. Over the next six quarters, your team will run a clay-goods workshop and travel from Can Tho all the way to Hanoi.">Chào mừng các bạn đến trụ sở BizOn ở Cần Thơ. Sáu quý tới, đội mình sẽ điều hành một xưởng đồ đất sét và đi từ Cần Thơ ra tới Hà Nội.</p>
     <p style="font-size:13px" data-en="Pick your role first. The CEO holds the compass, the CFO the purse, the CMO the megaphone, the COO the workshop and the SEC the minutes.">Chọn vai của bạn trước nhé. CEO giữ la bàn, CFO giữ túi tiền, CMO giữ loa, COO giữ xưởng, SEC giữ biên bản.</p>
     <label for="l3Email">Email <span style="font-weight:400;color:#8a969c" data-en="(optional)">(tùy chọn)</span></label><input id="l3Email" type="email" placeholder="sinhvien@truong.edu.vn" autocomplete="email">
@@ -276,7 +276,7 @@
 </div>
 <canvas id="c"></canvas>
 <div id="top" class="hud">
-  <div class="brand"><b id="hTeam" data-en="BizOn BẬT NGHIỆP · Can Tho Headquarters">BizOn BẬT NGHIỆP · Trụ sở Cần Thơ</b><span id="hEvent" data-en="Tap a department or a character to get to work">Chạm phòng ban hoặc nhân vật để làm việc</span></div>
+  <div class="brand"><b id="hTeam" data-en="BẬT NGHIỆP · Can Tho Headquarters">BẬT NGHIỆP · Trụ sở Cần Thơ</b><span id="hEvent" data-en="Tap a department or a character to get to work">Chạm phòng ban hoặc nhân vật để làm việc</span></div>
   <div class="kpis">
     <div class="kpi"><small data-en="CASH">TIỀN MẶT</small><b id="kCash">–</b></div>
     <div class="kpi"><small data-en="MARKET SHARE">THỊ PHẦN</small><b id="kShare">–</b></div>
@@ -322,7 +322,7 @@
 <div id="arena"><div class="ah"><b id="aTitle">⚔️ ĐẤU TRƯỜNG</b><span id="aSub"></span><em id="aZone"></em><small class="asov" data-en="Hoàng Sa &amp; Trường Sa archipelagos (Viet Nam) · coastline: Natural Earth · illustrative, not to scale">QĐ. Hoàng Sa, Trường Sa (Việt Nam) · đường bờ: Natural Earth · minh họa, không theo tỉ lệ</small></div><div id="aLabs"></div>
   <div class="af" id="aFoot"><div class="verdict" id="aVerdict"></div><button class="btn primary" id="aNext" data-en="See detailed results →">Xem kết quả chi tiết →</button></div></div>
 <div id="room"><div class="rh"><div class="rt"><img id="rmScene" alt="" style="display:none;width:min(260px,40vw);border-radius:16px;border:3px solid #e6d6bf;margin-bottom:6px"><b id="rmTitle"></b><span id="rmSub"></span></div><div class="rb"><button class="btn" id="rm2d" data-en="📋 List view">📋 Dạng danh sách</button><button class="btn primary" id="rmClose" data-en="✕ Back to HQ">✕ Về trụ sở</button></div></div><div id="rmLabs"></div><div id="rmCard"></div></div>
-<div id="frame" class="full"><iframe id="gf" src="game.html" title="BizOn BẬT NGHIỆP"></iframe></div>
+<div id="frame" class="full"><iframe id="gf" src="game.html" title="BẬT NGHIỆP"></iframe></div>
 <div id="tip"></div>
 <div id="toast3d" aria-live="polite"></div><div id="examPill3d" role="timer"></div>
 <div id="syncWarn3d" role="alert"><span></span><button type="button" onclick="window.__resend3D && window.__resend3D()" data-en="Resend">Gửi lại</button></div>
@@ -428,7 +428,7 @@ const rdSign = G('rd_post', world, -2.6, 0, 1.4); Cy(rdSign, 'post', 0.04, 0.04,
 const banner = G('banner', world, 0, 3.55, -5.62);
 B(banner, 'banner_rod', 4.6, 0.06, 0.06, M.woodD, 0, 0.62, 0, 0.02);
 for (const s of [-1, 1]) Cy(banner, 'rope', 0.012, 0.012, 1.2, M.sand, s * 2.1, 0.65, 0, 6);
-panel(banner, 'banner_cloth', 4.3, 1.2, ctex(1024, 288, (x, w, h) => { x.fillStyle = '#f6ecd8'; x.fillRect(0, 0, w, h); x.strokeStyle = '#c8643a'; x.lineWidth = 12; x.strokeRect(10, 10, w - 20, h - 20); x.textAlign = 'center'; x.fillStyle = '#1f6f8a'; x.font = '800 100px "Baloo 2",sans-serif'; x.fillText('BizOn BẬT NGHIỆP', w / 2, 118); x.fillStyle = '#2c3552'; x.font = '600 38px "Baloo 2",sans-serif'; x.fillText('Executive Headquarters & Integrated Production Workshop', w / 2, 184); x.font = '500 32px "Be Vietnam Pro",sans-serif'; x.fillText(T('Cần Thơ, Việt Nam', 'Can Tho, Vietnam'), w / 2, 238); }), 0, 0, 0.035);
+panel(banner, 'banner_cloth', 4.3, 1.2, ctex(1024, 288, (x, w, h) => { x.fillStyle = '#f6ecd8'; x.fillRect(0, 0, w, h); x.strokeStyle = '#c8643a'; x.lineWidth = 12; x.strokeRect(10, 10, w - 20, h - 20); x.textAlign = 'center'; x.fillStyle = '#1f6f8a'; x.font = '800 100px "Baloo 2",sans-serif'; x.fillText('BẬT NGHIỆP', w / 2, 118); x.fillStyle = '#2c3552'; x.font = '600 38px "Baloo 2",sans-serif'; x.fillText('Executive Headquarters & Integrated Production Workshop', w / 2, 184); x.font = '500 32px "Be Vietnam Pro",sans-serif'; x.fillText(T('Cần Thơ, Việt Nam', 'Can Tho, Vietnam'), w / 2, 238); }), 0, 0, 0.035);
 
 // ---------- place items
 let LOWHIDE_EXTRA = [];
@@ -858,7 +858,7 @@ const esc = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => ({ '&': '&a
 function hud() {
   if (!W || document.hidden) return; const dk = W.document && W.document.getElementById('bz-dock-btn'); if (dk) dk.remove(); setMode(); GS = ev('typeof S!=="undefined"?S:null'); const s = GS; if (!s || !booted) return;
   const e = ev('currentEvent(S)'), last = s.history && s.history[s.history.length - 1];
-  document.getElementById('hTeam').textContent = (s.profile && s.profile.teamName ? s.profile.teamName : 'BizOn BẬT NGHIỆP') + T(' · Trụ sở Cần Thơ', ' · Can Tho Headquarters');
+  document.getElementById('hTeam').textContent = (s.profile && s.profile.teamName ? s.profile.teamName : 'BẬT NGHIỆP') + T(' · Trụ sở Cần Thơ', ' · Can Tho Headquarters');
   document.getElementById('hEvent').innerHTML = s.finished ? '<span class="ev good">' + T('🏁 Đã hoàn thành 6 vòng', '🏁 All 6 rounds completed') + '</span>' : e ? `<span class="ev ${e.tone}">${T('Vòng', 'Round')} ${s.round}/6 · ${e.icon} ${e.name}</span>` : '';
   document.getElementById('kCash').textContent = fmt(s.balance);
   document.getElementById('kShare').textContent = last ? (+last.share).toFixed(1) + '%' : '–';
@@ -1035,7 +1035,7 @@ function confettiRoom() { const c = RM.cp ? RM.cl : new THREE.Vector3(); for (le
   m.position.set(c.x + (Math.random() - 0.5) * 5, 5 + Math.random() * 2, c.z + (Math.random() - 0.5) * 3); RM.scene.add(m); (RM.conf ??= []).push({ m, v: new THREE.Vector3((Math.random() - 0.5), -Math.random() * 0.5, (Math.random() - 0.5)), r: (Math.random() - 0.5) * 12, life: 5 }); } }
 const BUILD = { shop: buildShop, skills: buildSkills, achievements: buildAch, leaderboard: buildLB, minigame: buildMG };
 // Bàn quyết định không dùng ảnh minh họa: ảnh làm thẻ tiêu đề cao lên và che hàng núm trên cùng.
-const ROOM_SCENE = { reports: 'ceo-cfo-revenue-targets', journal: 'sec-compliance-checklist', market: 'ceo-sec-market-checkpoint', missions: 'goo-coo-production-planning', profile: 'team-holo-meeting', achievements: 'rong-bay-doi-bizon', leaderboard: 'team-victory-celebration' };
+const ROOM_SCENE = { reports: 'ceo-cfo-revenue-targets', journal: 'sec-compliance-checklist', market: 'ceo-sec-market-checkpoint-hstss', missions: 'goo-coo-production-planning', profile: 'team-holo-meeting', achievements: 'rong-bay-doi-bizon', leaderboard: 'team-victory-celebration' };
 function room3D(mode) { closeEvent(); if (RM.mode !== mode) RM.sel = null; RM.mode = mode; mgRes = null; BUILD[mode]();
   { const im = document.getElementById('rmScene'), k = ROOM_SCENE[mode]; if (k && innerWidth >= 760) { im.onerror = () => { im.style.display = 'none'; }; im.src = 'assets/illustrations/' + k + '.webp'; im.style.display = 'block'; } else im.style.display = 'none'; } RM.on = true; controls.enabled = false; document.body.classList.add('room'); resizeRoom(); }
 function closeRoom() { if (mgRun) { ev('endMinigame()'); mgRun = false; } RM.on = false; controls.enabled = true; document.body.classList.remove('room'); }
@@ -1186,7 +1186,7 @@ function finale3D() {
   MOOD.kind = champ ? 'win' : 'idle'; MOOD.until = performance.now() + 12000; confetti3D(new THREE.Vector3(-3.9, 0, 3.9), champ ? 320 : 120);
   flyTo(new THREE.Vector3(-4.0, 0.8, 4.0), new THREE.Vector3(0.62, 0.55, 0.75).normalize().multiplyScalar(innerWidth < 760 ? 12 : 9.5));
   const medal = ['🥇', '🥈', '🥉', '4️⃣'][myRank - 1];
-  showPanel(`${champ ? '<img src="assets/character/teo-soi-cut.webp" alt="Tèo Soi ôm cúp" style="width:96px;align-self:center"><img src="assets/illustrations/team-victory-celebration.webp" alt="Lễ trao cúp vô địch BizOn Bật Nghiệp" style="width:100%;border-radius:18px;border:3px solid #e6d6bf;display:block">' : ''}<span class="tag">${T('🏁 TỔNG KẾT MÙA GIẢI · 6 VÒNG', '🏁 SEASON WRAP-UP · 6 ROUNDS')}</span><h2>${champ ? T('Quán quân sàn đấu!', 'Champions of the arena!') : `${T('Hạng', 'Rank')} ${myRank}/4`} ${medal}</h2>
+  showPanel(`${champ ? '<img src="assets/character/teo-soi-cut.webp" alt="Tèo Soi ôm cúp" style="width:96px;align-self:center"><img src="assets/illustrations/team-victory-celebration.webp" alt="Lễ trao cúp vô địch Bật Nghiệp" style="width:100%;border-radius:18px;border:3px solid #e6d6bf;display:block">' : ''}<span class="tag">${T('🏁 TỔNG KẾT MÙA GIẢI · 6 VÒNG', '🏁 SEASON WRAP-UP · 6 ROUNDS')}</span><h2>${champ ? T('Quán quân sàn đấu!', 'Champions of the arena!') : `${T('Hạng', 'Rank')} ${myRank}/4`} ${medal}</h2>
     <p class="d">${champ ? T(`${esc(s.profile.teamName)} cắm nhiều cờ nhất trên bản đồ Việt Nam. Đội Rồng Xanh lên bục cao nhất.`, `${esc(s.profile.teamName)} planted the most flags on the map of Vietnam. Team Green Dragon takes the top step.`) : T(`${esc(nm(rank[0].k))} dẫn đầu với ${rank[0].n} cờ. Đội bạn có ${mine} cờ – xem lại báo cáo để rút bài học.`, `${esc(nm(rank[0].k))} leads with ${rank[0].n} flags. Your team has ${mine} – review the reports for the lessons.`)}</p>
     <div class="imps"><div class="imp"><small>${T('Cờ cả mùa', 'Season flags')}</small><b>🚩 ${mine}/6</b></div><div class="imp"><small>${T('Lợi nhuận tích lũy', 'Cumulative profit')}</small><b style="color:${profit >= 0 ? '#3f8a44' : '#c0443a'}">${fmt(profit)}</b></div><div class="imp"><small>${T('Thị phần cuối', 'Final share')}</small><b>${(+last.share || 0).toFixed(1)}%</b></div><div class="imp"><small>${T('Số dư ví', 'Wallet balance')}</small><b>${fmt(s.balance)}</b></div></div>
     <div class="say"><small>🤖 LUMINA</small>${champ ? T('Quán quân sàn đấu! Đội cắm nhiều cờ nhất trên bản đồ Việt Nam.', 'Champions of the arena! The team planted the most flags on the map of Vietnam.') : T('Sáu vòng là sáu bài học. Đọc lại nhật ký đội, rồi thử lại mùa mới nhé.', 'Six rounds, six lessons. Reread the team journal, then try a new season.')}</div>
@@ -1511,7 +1511,7 @@ function buildMarket() {
   });
   const frame = mk(g, new THREE.BoxGeometry(6.6, 3.9, 0.25), cm(0x2c3552), 0, 2.9, -3.4);
   const scr = new THREE.Mesh(new THREE.PlaneGeometry(6.2, 3.49), new THREE.MeshBasicMaterial({ map: tv })); scr.position.set(0, 2.9, -3.26); g.add(scr);
-  const news = [e.icon ? `${e.icon} ${e.name}: ${e.desc}` : '', ...s.competitors.map(c => T(`${c.name} giữ ${(+c.share || 25).toFixed(1)}% thị phần`, `${c.name} holds ${(+c.share || 25).toFixed(1)}% market share`)), H.length ? T(`Đội ${s.profile.teamName}: thị phần ${(+H[H.length - 1].share).toFixed(1)}%, lợi nhuận ${fmt(H[H.length - 1].netProfit)}`, `Team ${s.profile.teamName}: ${(+H[H.length - 1].share).toFixed(1)}% market share, profit ${fmt(H[H.length - 1].netProfit)}`) : T('Mùa giải BizOn BẬT NGHIỆP bắt đầu tại Cần Thơ', 'The BizOn BẬT NGHIỆP season begins in Can Tho')].filter(Boolean).join('     ●     ');
+  const news = [e.icon ? `${e.icon} ${e.name}: ${e.desc}` : '', ...s.competitors.map(c => T(`${c.name} giữ ${(+c.share || 25).toFixed(1)}% thị phần`, `${c.name} holds ${(+c.share || 25).toFixed(1)}% market share`)), H.length ? T(`Đội ${s.profile.teamName}: thị phần ${(+H[H.length - 1].share).toFixed(1)}%, lợi nhuận ${fmt(H[H.length - 1].netProfit)}`, `Team ${s.profile.teamName}: ${(+H[H.length - 1].share).toFixed(1)}% market share, profit ${fmt(H[H.length - 1].netProfit)}`) : T('Mùa giải BẬT NGHIỆP bắt đầu tại Cần Thơ', 'The BẬT NGHIỆP season begins in Can Tho')].filter(Boolean).join('     ●     ');
   const tick = ctex(4096, 128, (x, w, h) => { x.fillStyle = '#1b2240'; x.fillRect(0, 0, w, h); x.fillStyle = '#ffd28a'; x.font = '700 62px "Be Vietnam Pro",sans-serif'; x.textBaseline = 'middle'; x.fillText(news + '     ●     ', 20, h / 2); });
   tick.wrapS = THREE.RepeatWrapping; tick.repeat.x = 0.35;
   mk(g, new THREE.BoxGeometry(8.6, 0.55, 0.2), cm(0x2c3552), 0, 5.2, -3.4);

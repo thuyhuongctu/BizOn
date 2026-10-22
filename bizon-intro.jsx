@@ -205,10 +205,10 @@ function Roles({ T, CUES }) {
 
 // ── Games ────────────────────────────────────────────
 const GAMES = [
-  { lv: 1, c: '#2E7139', img: 'covers/ben-phu-sa-3d.webp', z: 1, o: '50% 50%', k: 'LEVEL 1 · START-UP', t: 'Bến Phù Sa', d: "A riverside street-vendor start-up on Bến Phù Sa's floating market: pick a Method, Product and Location each week, and learn when to test cheap and when to scale.", m: ['5 weeks', 'Solo or team play'], alt: ['3D · team play', '2D'] },
+  { lv: 1, c: '#2E7139', img: 'covers/ben-phu-sa-3d.webp', z: 1, o: '50% 50%', k: 'LEVEL 1 · VENTURE START-UP', t: 'Bến Phù Sa', d: "A riverside street-vendor start-up on Bến Phù Sa's floating market: pick a Method, Product and Location each week, and learn when to test cheap and when to scale.", m: ['5 weeks', 'Solo or team play'], alt: ['3D · team play', '2D'] },
   { lv: 2, c: '#A84A14', img: 'covers/bat-nghiep-3d.webp', z: 1, o: '50% 50%', k: 'LEVEL 2 · RUNNING A BUSINESS', t: 'Bật Nghiệp', d: 'Build and operate a business through multi-round strategic decisions in a Vietnamese context.', m: ['6 decision rounds', 'Market arena'], alt: ['2D'] },
-  { lv: 3, c: '#006687', img: 'covers/ho-chieu-thuong-hieu-3d.webp', z: 1, o: '50% 50%', k: 'LEVEL 3 · GOING GLOBAL', t: 'Brand Passport', d: 'Take a Vietnamese brand across borders through market intelligence, entry strategy, adaptation and resilience.', m: ['6 quarters', '7 markets'], alt: ['2D', 'Lite 3D', 'Lite 2D'] },
-  { lv: 3, c: '#006687', img: 'covers/ho-chieu-sau-rieng-3d.webp', z: 1, o: '50% 50%', k: 'LEVEL 3 · GOING GLOBAL', t: 'Durian Passport', d: 'Take Vietnamese durian to the world over 6 seasons on a walkable 3D map: planting-area codes, the China phytosanitary protocol, official vs border trade, frozen and premium markets. Teams of 5 roles face AI rivals.', m: ['6 seasons', 'Teams of 5 roles'], alt: ['2D', 'Classroom playbook'] },
+  { lv: 3, c: '#006687', img: 'covers/ho-chieu-thuong-hieu-3d.webp', z: 1, o: '50% 50%', k: 'LEVEL 3 · INTERNATIONALISATION', t: 'Brand Passport', d: 'Take a Vietnamese brand across borders through market intelligence, entry strategy, adaptation and resilience.', m: ['6 quarters', '7 markets'], alt: ['2D', 'Lite 3D', 'Lite 2D'] },
+  { lv: 3, c: '#006687', img: 'covers/ho-chieu-sau-rieng-3d.webp', z: 1, o: '50% 50%', k: 'LEVEL 3 · INTERNATIONALISATION', t: 'Durian Passport', d: 'Take Vietnamese durian to the world over 6 seasons on a walkable 3D map: planting-area codes, the China phytosanitary protocol, official vs border trade, frozen and premium markets. Teams of 5 roles face AI rivals.', m: ['6 seasons', 'Teams of 5 roles'], alt: ['2D', 'Classroom playbook'] },
 ];
 function GameCard({ g, T, kb }) {
   return (
@@ -315,7 +315,7 @@ function Tools({ T, CUES }) {
 // ── Trailers ─────────────────────────────────────────
 const TRAILERS = [
   { img: 'video/bizon-trailer-poster.jpg', t: 'Bật Nghiệp', d: 'A 6-round market arena · English narration · 1:30' },
-  { img: 'video/ben-phu-sa-trailer-poster.jpg', t: 'Bến Phù Sa', d: 'A riverside street-vendor start · English narration · 1:30' },
+  { img: 'video/ben-phu-sa-trailer-poster.jpg', t: 'Bến Phù Sa', d: 'Informal venture start-up on a floating market · English narration · 1:30' },
   { img: 'video/bp-trailer-poster.jpg', t: 'Brand Passport', d: 'Taking a brand to 7 markets · English narration · 1:30' },
   { img: 'video/srp-trailer-poster.jpg', t: 'Durian Passport', d: 'Durian export through 6 seasons · English narration · 1:40' },
 ];

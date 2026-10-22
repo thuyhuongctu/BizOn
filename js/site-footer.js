@@ -18,12 +18,12 @@
       ['Sổ điểm giảng viên', 'instructor-grading.html', 'Instructor Gradebook'],
     ]],
     ['🎮 Trò chơi · Games', '🎮 Games', [
-      ['Game Bật Nghiệp', 'game.html', 'BizOn Bật Nghiệp'],
+      ['Game Bật Nghiệp', 'game.html', 'Bật Nghiệp game'],
       ['Hướng dẫn chơi', 'huong-dan.html', 'How to play'],
       ['BizOn Arcade', 'games.html', 'BizOn Arcade'],
       ['Hộ Chiếu Thương Hiệu', 'brand-passport.html', 'Brand Passport'],
-      ['Go Global', 'global.html', 'Go Global'],
-      ['Gánh Hàng Khởi Nghiệp', 'ben-phu-sa.html', 'Entrepreneurial Street Vendor'],
+      ['IE Lab · Quốc tế hóa', 'global.html', 'IE Lab · Internationalisation'],
+      ['Bến Phù Sa', 'ben-phu-sa.html', 'Bến Phù Sa'],
       ['🧪 Sảnh 3D (thử nghiệm)', 'hub-3d.html', '🧪 3D Lobby (experimental)'],
     ]],
     ['🎨 Kho sáng tạo · Creative', '🎨 Creative', [
@@ -140,7 +140,7 @@
       '<div class="bzf-in">' +
         '<div class="bzf-top">' +
           '<div class="bzf-brand">' +
-            '<a class="bzf-logo" href="index.html"><img src="assets/icons/icon-192.png" alt="BizOn">BizOn <span class="bzf-accent">Bật Nghiệp</span></a>' +
+            '<a class="bzf-logo" href="index.html"><img src="assets/icons/icon-192.png" alt="BizOn">BizOn</a>' +
             '<p><span data-en="Claymorphism 3D business-simulation ecosystem for entrepreneurship education.">Hệ sinh thái mô phỏng kinh doanh 3D phong cách đất nặn cho đào tạo khởi nghiệp.</span></p>' +
           '</div>' +
           '<div class="bzf-meta">' +

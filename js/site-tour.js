@@ -81,14 +81,14 @@
       voiceOn: '🔊 Giọng', voiceOff: '🔇 Giọng',
       stop: '✕ Dừng', next: '▶ Tiếp', done: '🏁 Xong',
       launch: 'Hương AI dẫn tham quan trang',
-      greet: 'Xin chào! Mình là Hương – hướng dẫn viên AI của BizOn Bật Nghiệp. Để mình dẫn bạn đi một vòng nhé.'
+      greet: 'Xin chào! Mình là Hương – hướng dẫn viên AI của BizOn. Để mình dẫn bạn đi một vòng nhé.'
     },
     en: {
       who: 'Huong AI · Guided tour',
       voiceOn: '🔊 Voice', voiceOff: '🔇 Voice',
       stop: '✕ Stop', next: '▶ Next', done: '🏁 Done',
       launch: 'Huong AI guided tour of this page',
-      greet: "Hello! I'm Huong, the AI guide for BizOn Bật Nghiệp. Let me walk you through this page."
+      greet: "Hello! I'm Huong, the AI guide for BizOn. Let me walk you through this page."
     }
   };
 

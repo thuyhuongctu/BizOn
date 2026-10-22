@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Thư viện clip · BizOn Bật Nghiệp</title>
+<title>Thư viện clip · BizOn</title>
 <meta name="description" content="Bảng theo dõi sản xuất thư viện clip noir đất sét của BizOn: từng bản dựng, đạt gì, sai gì.">
 <script>window.__resources=Object.assign({},window.__resources,{"https://unpkg.com/react@18.3.1/umd/react.production.min.js":"vendor/react/react.production.min.js","https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js":"vendor/react/react-dom.production.min.js"});</script>
 <script src="./support.js"></script>
@@ -179,7 +179,7 @@ class Component extends DCLogic{
   state={lang:(()=>{try{return localStorage.getItem('bizon-lang')==='en'?'en':null}catch(e){return null}})()};
   setLang(l){try{localStorage.setItem('bizon-lang',l)}catch(e){}this.setState({lang:l});}
   renderVals(){
-    const lang=this.state.lang||this.props.lang||'vi';document.documentElement.lang=lang;document.title=lang==='en'?'Clip library · BizOn Bật Nghiệp':'Thư viện clip · BizOn Bật Nghiệp';const t=T[lang];
+    const lang=this.state.lang||this.props.lang||'vi';document.documentElement.lang=lang;document.title=lang==='en'?'Clip library · BizOn':'Thư viện clip · BizOn';const t=T[lang];
     const on='inset 0 -3px 0 rgba(0,0,0,.2),0 4px 8px -3px rgba(0,60,80,.5)';
     const cell=(x)=>({t:x,jc:'center',fs:'12px',fw:'800',fg:'#3E5A5C',pad:'0',bg:'transparent'});
     const grid=[...t.gHead.map((h,i)=>({...cell(h),jc:i?'center':'flex-start',fg:'#7A4A0E'})),

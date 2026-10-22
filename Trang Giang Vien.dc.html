@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Trang giảng viên BizOn Bật Nghiệp: đăng nhập, quản lý mã lớp, theo dõi bài nộp và chấm điểm.">
+<meta name="description" content="Trang giảng viên BizOn: đăng nhập, quản lý mã lớp, theo dõi bài nộp và chấm điểm.">
 <script>window.__resources=Object.assign({},window.__resources,{"https://unpkg.com/react@18.3.1/umd/react.production.min.js":"vendor/react/react.production.min.js","https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js":"vendor/react/react-dom.production.min.js"});</script>
 <script src="./support.js"></script>
 <script src="js/capture-guard.js"></script>
@@ -11,7 +11,7 @@
 <body>
 <x-dc>
 <helmet>
-<title>BizOn Bật Nghiệp – Trang Giảng viên</title>
+<title>BizOn – Trang Giảng viên</title>
 <link rel="manifest" href="app-giangvien.webmanifest">
 <meta name="theme-color" content="#1f4a55">
 <link rel="apple-touch-icon" href="assets/icons/rong-xanh-192.png">
@@ -34,7 +34,7 @@ input,select,textarea,button{font-family:inherit}
   <header style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 22px;background:#fbf6ee;border-bottom:3px solid #e6d6bf">
     <div style="display:flex;align-items:center;gap:12px">
       <img src="assets/icons/rong-xanh-192.png" alt="BizOn" style="width:42px;height:42px;border-radius:12px;box-shadow:0 4px 0 #1b5a5a">
-      <div><div style="font:800 20px/1.1 'Baloo 2',sans-serif;color:#1f4a55">BizOn Bật Nghiệp · Giảng viên</div><div style="font-size:13px;color:#5a6b74">{{ subtitle }}</div></div>
+      <div><div style="font:800 20px/1.1 'Baloo 2',sans-serif;color:#1f4a55">BizOn · Giảng viên</div><div style="font-size:13px;color:#5a6b74">{{ subtitle }}</div></div>
     </div>
     <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}">
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">

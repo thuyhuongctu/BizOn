@@ -37,8 +37,8 @@
       ['Hướng dẫn chơi', 'huong-dan.html'],
       ['BizOn Arcade', 'games.html'],
       ['Hộ Chiếu Thương Hiệu', 'brand-passport.html'],
-      ['Go Global', 'global.html'],
-      ['Gánh Hàng Khởi Nghiệp', 'ben-phu-sa.html'],
+      ['IE Lab · Quốc tế hóa', 'global.html'],
+      ['Bến Phù Sa', 'ben-phu-sa.html'],
       ['🧪 Sảnh 3D (thử nghiệm)', 'hub-3d.html'],
     ]],
     ['🎨 Sáng tạo', [
@@ -150,9 +150,9 @@
     nav.id = 'bz-nav';
     nav.setAttribute('aria-label', 'Điều hướng chính');
     nav.innerHTML =
-      '<a class="bz-brand" href="index.html" aria-label="BizOn Bật Nghiệp – trang chủ">' +
+      '<a class="bz-brand" href="index.html" aria-label="BizOn – trang chủ">' +
         '<img src="assets/icons/icon-192.png" alt="">' +
-        '<b>BizOn <span>Bật Nghiệp</span><small>Business Simulation</small></b>' +
+        '<b>BizOn<small>Business Simulation</small></b>' +
       '</a>' +
       '<div class="bz-groups">' + groupsHtml + '</div>' +
       '<button class="bz-burger" type="button" aria-label="Mở menu" aria-expanded="false">☰</button>';

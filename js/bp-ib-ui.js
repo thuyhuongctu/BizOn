@@ -193,7 +193,7 @@
     var steps = [['🏠', T('Chọn quốc gia xuất phát', 'Pick a home country')], ['🏢', T('Chọn doanh nghiệp', 'Pick a company')], ['🔍', T('Mua thông tin, so nguồn tin', 'Buy and compare intel')], ['◐', T('Chọn thị trường & phương thức (AIBIS)', 'Choose market & mode (AIBIS)')], ['📰', T('Xử lý cú sốc thị trường', 'Handle market shocks')], ['🛂', T('Nhận hộ chiếu tổng kết', 'Collect your passport')]];
     var sig = [hm.flag, EN(), canResume, mis ? mis.innerHTML.length : 0].join('|'); if (box.dataset.sig === sig) return; box.dataset.sig = sig;
     box.innerHTML = '<div class="ib-hero-in">' +
-      '<div class="ib-hero-l"><span class="ib-eyebrow" style="color:#9cc3cb">BizOn Go Global · ' + T('Mô phỏng kinh doanh quốc tế', 'International business simulation') + '</span>' +
+      '<div class="ib-hero-l"><span class="ib-eyebrow" style="color:#9cc3cb">' + T('Bậc 3 · Quốc tế hóa · Mô phỏng kinh doanh quốc tế', 'Level 3 · Internationalisation · International business simulation') + '</span>' +
         '<h1>' + T('Hộ Chiếu<br>Thương Hiệu', 'Brand<br>Passport') + '</h1>' +
         '<p class="ib-hero-sub">' + T('Từ ', 'From ') + hm.flag + ' ' + T(hm.c, hm.cEn) + T(' ra thế giới', ' to the world') + ' <span style="letter-spacing:.15em;opacity:.9">' + flags.join(' ') + '</span></p>' +
         (mis ? '<p class="ib-hero-mis">' + mis.innerHTML + '</p>' : '') +

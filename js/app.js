@@ -520,7 +520,7 @@ function MANUAL() { return {
     </video>
     <p class="text-xs text-deep-teal/50 -mt-2 mb-4">${T('📺 Video hướng dẫn chơi (~47 giây, 2 vòng minh họa).', '📺 How-to-play video (~47 seconds, 2 rounds shown).')}</p>
     <img src="assets/illustrations/game/team-portrait.webp" alt="${T('Đội ngũ đất sét BizOn', 'The BizOn clay-style team')}" class="w-full h-36 object-cover rounded-2xl mb-4">
-    <p class="text-sm text-deep-teal/75 mb-4">${T('Chào mừng bạn đến với BizOn – môi trường mô phỏng kinh doanh 3D. ⏱️ Thời lượng: cả ván 6 vòng ≈ 30–45 phút (mỗi vòng 5–7 phút gồm đọc biến cố, họp đội, chốt quyết định và xem đấu trường); bản Go Global 4 quý ≈ 10–15 phút. Ba bước thiết lập:', 'Welcome to BizOn – a 3D business simulation. ⏱️ Duration: a full 6-round match ≈ 30–45 minutes (5–7 minutes per round: read the event, team huddle, lock in decisions, watch the arena); the 4-quarter Go Global version ≈ 10–15 minutes. Three setup steps:')}</p>
+    <p class="text-sm text-deep-teal/75 mb-4">${T('Chào mừng bạn đến với BizOn – môi trường mô phỏng kinh doanh 3D. ⏱️ Thời lượng: cả ván 6 vòng ≈ 30–45 phút (mỗi vòng 5–7 phút gồm đọc biến cố, họp đội, chốt quyết định và xem đấu trường); bản IE Lab (Bậc 3 · Quốc tế hóa) 4 quý ≈ 10–15 phút. Ba bước thiết lập:', 'Welcome to BizOn – a 3D business simulation. ⏱️ Duration: a full 6-round match ≈ 30–45 minutes (5–7 minutes per round: read the event, team huddle, lock in decisions, watch the arena); the 4-quarter IE Lab (Level 3 · Internationalisation) ≈ 10–15 minutes. Three setup steps:')}</p>
     ${[['1', T('Lập đội & chọn vai trò', 'Form your team & pick a role'), T('Đăng nhập với tên đội (cũng là tên doanh nghiệp của bạn), Class ID (nếu học trên lớp) và chọn vai trò CEO · CFO · CMO · COO · SEC. Doanh nghiệp là xưởng đồ chơi đất sét – sản phẩm chủ lực «Bộ linh vật đất sét Việt».', 'Sign in with your team name (also your company name), a Class ID if you\'re in a class, and pick a role: CEO · CFO · CMO · COO · SEC. Your company is a handcraft clay-toy workshop – flagship product: the "Vietnamese Clay Mascot Set".')],
        ['2', T('Nhận vốn khởi điểm', 'Get your starting capital'), T('Mỗi đội bắt đầu với 500tr₫ vốn giảng viên cấp. Giữ ít nhất 15% dự phòng cho biến cố!', 'Every team starts with 500m₫ in instructor-issued capital. Keep at least 15% in reserve for events!')],
        ['3', T('Vào vòng 1', 'Enter Round 1'), T('Đọc biến cố thị trường, hỏi Lumina, rồi vào Quyết định để chốt kế hoạch đầu tiên.', 'Read the market event, ask Lumina, then go to Decisions to lock in your first plan.')]].map(([n, t, d]) => `
@@ -583,7 +583,7 @@ function MANUAL() { return {
     <img src="assets/illustrations/game/bridge-music.webp" alt="${T('Đội bước qua cầu ra thế giới', 'The team crossing a bridge to the world')}" class="w-full h-36 object-cover rounded-2xl mb-4">
     <p class="text-sm text-deep-teal/75 mb-4">${T('BizOn không chỉ có 6 vòng trong nước – cả một hệ sinh thái đang chờ bạn:', 'BizOn is more than 6 domestic rounds – a whole ecosystem is waiting for you:')}</p>
     ${[[T('🗺️ Bản đồ chinh phục', '🗺️ Conquest map'), T('Thị phần cao nhất VÀ có lãi vòng đó mới cắm được một lá cờ 🚩 lên bản đồ Việt Nam – từ Cần Thơ tới cột cờ Lũng Cú, kèm hai quần đảo Hoàng Sa & Trường Sa.', 'Top market share AND a profit that round plants a flag 🚩 on the map of Vietnam – from Cần Thơ to the Lũng Cú flagpole, including the Hoàng Sa & Trường Sa archipelagos.')],
-       [T('🌏 BizOn Go Global', '🌏 BizOn Go Global'), T('Ra biển lớn: khai hồ sơ doanh nghiệp, chọn 1 trong 7 thị trường, đàm phán với đối tác bản địa, chọn phương thức thâm nhập (Export · Licensing · Liên doanh · FDI) và kinh doanh 4 quý. Có IE Lab mô phỏng số liệu và nút xuất nhật ký CSV để nộp giảng viên.', 'Head out to the wider world: file your company profile, pick 1 of 7 markets, negotiate with a local partner, choose an entry mode (Export · Licensing · Joint Venture · FDI), and run 4 quarters of business. Includes an IE Lab for number-crunching and a CSV log export to submit to your instructor.')],
+       [T('🌏 Bậc 3 · Quốc tế hóa · IE Lab', '🌏 Level 3 · Internationalisation · IE Lab'), T('Ra biển lớn: khai hồ sơ doanh nghiệp, chọn 1 trong 7 thị trường, đàm phán với đối tác bản địa, chọn phương thức thâm nhập (Export · Licensing · Liên doanh · FDI) và kinh doanh 4 quý. Có IE Lab mô phỏng số liệu và nút xuất nhật ký CSV để nộp giảng viên.', 'Head out to the wider world: file your company profile, pick 1 of 7 markets, negotiate with a local partner, choose an entry mode (Export · Licensing · Joint Venture · FDI), and run 4 quarters of business. Includes an IE Lab for number-crunching and a CSV log export to submit to your instructor.')],
        [T('🕹️ BizOn Arcade', '🕹️ BizOn Arcade'), T('Các mini-game phản xạ 30–60 giây: Clay Factory Frenzy, Trắc nghiệm Khởi nghiệp, Đoán Giá, Bắt Vốn Vàng.', '30–60 second reflex mini-games: Clay Factory Frenzy, Entrepreneurship Quiz, Guess the Price, Catch the Golden Capital.')],
        [T('📚 Thư viện & 🎶 Kho Âm nhạc', '📚 Library & 🎶 Music Vault'), T('Tạo hình nhân vật, sản phẩm cài áo, và toàn bộ ca khúc gốc với trình phát đầy đủ – mở từ Cài đặt hoặc Trang chủ.', 'Character art, product lineup, and the full original soundtrack with a full player – open from Settings or the Home page.')]].map(([t, d]) => `
     <div class="clay-card p-4 mb-3"><p class="font-bold text-sm text-deep-teal">${t}</p><p class="text-xs text-deep-teal/60 mt-0.5">${d}</p></div>`).join('')}` },
@@ -1911,8 +1911,8 @@ function INTRO_SLIDES_LIST() { return [
     text: T('CEO chèo lái chiến lược, CFO giữ két sắt, CMO đánh chiếm thị trường, COO vận hành xưởng, SEC ghi biên bản – bên cạnh cố vấn Lumina và thầy Phan Anh Tú.',
             "CEO steers strategy, CFO guards the cash box, CMO wins the market, COO runs the workshop, SEC keeps the minutes – alongside advisor Lumina and Assoc. Prof. Phan Anh Tú.") },
   { icon: '🌏', title: T('Sau đó: ra biển lớn', 'What comes next: going global'), img: 'assets/illustrations/game/globe-walk.webp',
-    text: T('Chinh phục xong Việt Nam? BizOn Go Global đang chờ – chọn 1 trong 7 thị trường quốc tế, đàm phán với đối tác bản địa và thử sức 4 phương thức thâm nhập.',
-            'Conquered Vietnam? BizOn Go Global is waiting – pick 1 of 7 international markets, negotiate with local partners, and try 4 market-entry modes.') },
+    text: T('Chinh phục xong Việt Nam? Bậc 3 · Quốc tế hóa đang chờ – chọn 1 trong 7 thị trường quốc tế, đàm phán với đối tác bản địa và thử sức 4 phương thức thâm nhập.',
+            'Conquered Vietnam? Level 3 · Internationalisation is waiting – pick 1 of 7 international markets, negotiate with local partners, and try 4 market-entry modes.') },
   { icon: '🏆', title: T('Mục tiêu của bạn', 'Your goal'), img: 'assets/illustrations/game/conquest-spiral.webp',
     text: T('Cắm nhiều cờ nhất, đạt TOP 1 thị phần Việt Nam và nhận chứng nhận hoàn thành. Sẵn sàng Bật Nghiệp? 🚀', 'Plant the most flags, reach #1 market share in Vietnam, and earn your certificate of completion. Ready to Bật Nghiệp? 🚀') },
 ]; }
@@ -2692,7 +2692,7 @@ function renderSeasonReport(body) {
         <p class="text-[11px] text-deep-teal/60 mt-3 italic">${T('Trao cho', 'Awarded to')}</p>
         <p class="font-display font-extrabold text-primary text-2xl mt-0.5 px-6 pb-1.5 border-b-2 border-clay-gold/40 inline-block">${escapeHtml(S.profile.teamName)}</p>
         ${S.profile.classId ? `<p class="text-[10px] font-extrabold text-deep-teal/60 mt-1.5">${T('Lớp / Mã lớp', 'Class / Class ID')}: ${S.profile.classId}</p>` : ''}
-        <p class="text-[11px] text-deep-teal/70 mt-2.5 max-w-xs mx-auto">${T(`đã hoàn thành trọn vẹn ${rounds.length} vòng mô phỏng kinh doanh <b>«BizOn Bật Nghiệp»</b>${champion ? ' với ngôi vị Quán quân sàn đấu' : ''}`, `has fully completed ${rounds.length} rounds of the <b>«BizOn Bật Nghiệp»</b> business simulation${champion ? ' as Arena Champion' : ''}`)}</p>
+        <p class="text-[11px] text-deep-teal/70 mt-2.5 max-w-xs mx-auto">${T(`đã hoàn thành trọn vẹn ${rounds.length} vòng mô phỏng kinh doanh <b>«Bật Nghiệp»</b>${champion ? ' với ngôi vị Quán quân sàn đấu' : ''}`, `has fully completed ${rounds.length} rounds of the <b>«Bật Nghiệp»</b> business simulation${champion ? ' as Arena Champion' : ''}`)}</p>
         <div class="grid grid-cols-3 gap-2 mt-3.5">
           <div class="clay-sunken rounded-2xl p-2"><p class="text-[9px] uppercase font-bold text-deep-teal/50">${T('Hạng chung cuộc', 'Final rank')}</p><p class="font-display font-extrabold text-primary text-base">${champion ? '👑 #1' : '#' + myRank}/4</p></div>
           <div class="clay-sunken rounded-2xl p-2"><p class="text-[9px] uppercase font-bold text-deep-teal/50">${T('Thị phần (%)', 'Market share (%)')}</p><p class="font-display font-extrabold text-primary text-base">${shareLast.toFixed(1)}%</p></div>
@@ -2724,7 +2724,7 @@ function renderSeasonReport(body) {
       <img src="assets/illustrations/globe-trade.webp" alt="" aria-hidden="true" class="absolute -right-6 -bottom-6 w-32 opacity-25 pointer-events-none">
       <p class="text-[10px] font-extrabold uppercase tracking-widest text-white/55 relative">${T('Chặng tiếp theo', 'Next stop')}</p>
       <p class="font-display font-extrabold text-white text-lg mt-1 relative">${T('Chinh phục xong Việt Nam.<br>Bạn có muốn ra biển lớn?', 'Vietnam conquered.<br>Ready for the open seas?')}</p>
-      <p class="text-[12px] text-white/70 mt-2 max-w-xs mx-auto relative">${T('«BizOn Go Global» – chọn 1 trong 7 thị trường quốc tế, đàm phán với đối tác bản địa và thử sức 4 phương thức thâm nhập.', '«BizOn Go Global» – pick 1 of 7 international markets, negotiate with local partners, and try 4 market-entry modes.')}</p>
+      <p class="text-[12px] text-white/70 mt-2 max-w-xs mx-auto relative">${T('«Bậc 3 · Quốc tế hóa» – chọn 1 trong 7 thị trường quốc tế, đàm phán với đối tác bản địa và thử sức 4 phương thức thâm nhập.', '«Level 3 · Internationalisation» – pick 1 of 7 international markets, negotiate with local partners, and try 4 market-entry modes.')}</p>
       <div class="flex gap-2 justify-center mt-4 relative">
         <a href="global.html" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-5 py-2.5 text-xs">${T('🌏 Ra biển lớn →', '🌏 Go global →')}</a>
         <a href="brand-passport.html" class="clay-btn bg-white/10 border border-white/25 text-white font-display font-extrabold px-4 py-2.5 text-xs">${T('🛂 Hộ Chiếu Thương Hiệu', '🛂 Brand Passport')}</a>
@@ -2778,7 +2778,7 @@ async function downloadCertificate(lang = 'vi') {
   const L = EN ? {
     small: '🎓 BIZON BUSINESS SIMULATION ECOSYSTEM', to: 'This is to certify that',
     cls: `Class ID: ${c.classId}`,
-    desc: `has successfully completed all ${c.rounds} rounds of the «BizOn Bật Nghiệp» business simulation`,
+    desc: `has successfully completed all ${c.rounds} rounds of the «Bật Nghiệp» business simulation`,
     champ: 'as Champion of the Arena',
     stats: ['FINAL RANK', 'MARKET SHARE', 'CUMULATIVE PROFIT'],
     sig1: 'PhD Candidate Do Thuy Huong', sig2: 'Assoc. Prof. Phan Anh Tu, Ph.D.',
@@ -2786,7 +2786,7 @@ async function downloadCertificate(lang = 'vi') {
   } : {
     small: '🎓 GIẤY CHỨNG NHẬN HOÀN THÀNH', to: 'Trao cho',
     cls: `Lớp / Mã lớp: ${c.classId}`,
-    desc: `đã hoàn thành trọn vẹn ${c.rounds} vòng mô phỏng kinh doanh «BizOn Bật Nghiệp»`,
+    desc: `đã hoàn thành trọn vẹn ${c.rounds} vòng mô phỏng kinh doanh «Bật Nghiệp»`,
     champ: 'với ngôi vị Quán quân sàn đấu',
     stats: ['HẠNG CHUNG CUỘC', 'THỊ PHẦN', 'LỢI NHUẬN TÍCH LŨY'],
     sig1: 'NCS. Đỗ Thùy Hương', sig2: 'PGS.TS. Phan Anh Tú',

@@ -20,7 +20,7 @@
   };
 
   /* ---------- Song ngữ Việt / Anh ---------- */
-  var EN = new Map([["🎮 Chơi bản 2D →","🎮 Play the 2D version →"],["🧊 Chơi bản 3D →","🧊 Play the 3D version →"],["Hệ thống game mô phỏng và mini-game của BizOn Bật Nghiệp – từ chiến lược nhiều vòng đến phản xạ 30 giây. Chọn và chơi ngay!","BizOn Bật Nghiệp's simulation games and mini-games – from multi-round strategy to 30-second reflexes. Pick one and play now!"],["BizOn xây dựng bộ công cụ học qua chơi cho môn khởi nghiệp và kinh doanh quốc tế – chạy hoàn toàn trên trình duyệt, miễn phí, không cần cài đặt.","BizOn builds a learn-through-play toolkit for entrepreneurship and international business – runs entirely in the browser, free, no install required."],["Mọi thứ dưới đây đều đang chạy thật và dùng được ngay – do nhóm BizOn tự thiết kế, lập trình và sản xuất.","Everything below is live and ready to use right now – designed, coded and produced by the BizOn team."],
+  var EN = new Map([["🎮 Chơi bản 2D →","🎮 Play the 2D version →"],["🧊 Chơi bản 3D →","🧊 Play the 3D version →"],["Hệ thống game mô phỏng và mini-game của BizOn – từ chiến lược nhiều vòng đến phản xạ 30 giây. Chọn và chơi ngay!","BizOn's simulation games and mini-games – from multi-round strategy to 30-second reflexes. Pick one and play now!"],["BizOn xây dựng bộ công cụ học qua chơi cho môn khởi nghiệp và kinh doanh quốc tế – chạy hoàn toàn trên trình duyệt, miễn phí, không cần cài đặt.","BizOn builds a learn-through-play toolkit for entrepreneurship and international business – runs entirely in the browser, free, no install required."],["Mọi thứ dưới đây đều đang chạy thật và dùng được ngay – do nhóm BizOn tự thiết kế, lập trình và sản xuất.","Everything below is live and ready to use right now – designed, coded and produced by the BizOn team."],
 [
 "Tính năng",
 "Features"
@@ -354,8 +354,8 @@
 "Hương AI tour guide"
 ],
 [
-"Xin chào! Mình là Hương – hướng dẫn viên AI của BizOn Bật Nghiệp. Để mình dẫn bạn tham quan trò chơi nhé?",
-"Hi! I'm Hương – BizOn Bật Nghiệp's AI tour guide. Shall I show you around?"
+"Xin chào! Mình là Hương – hướng dẫn viên AI của BizOn. Để mình dẫn bạn tham quan trò chơi nhé?",
+"Hi! I'm Hương – BizOn's AI tour guide. Shall I show you around?"
 ],
 [
 "▶️ Bắt đầu tour",
@@ -366,8 +366,8 @@
 "Game hub"
 ],
 [
-"6 trò chơi của hệ sinh thái BizOn Bật Nghiệp – từ mô phỏng chiến lược 6 vòng đến các game phản xạ 30 giây. Chọn và chơi ngay!",
-"The BizOn Bật Nghiệp game ecosystem – from the 6-round strategy sim to 30-second reflex games. Pick one and play!"
+"6 trò chơi của hệ sinh thái BizOn – từ mô phỏng chiến lược 6 vòng đến các game phản xạ 30 giây. Chọn và chơi ngay!",
+"The BizOn game ecosystem – from the 6-round strategy sim to 30-second reflex games. Pick one and play!"
 ],
 [
 "Chọn phiên bản & chế độ chơi",
@@ -818,12 +818,12 @@
 "🎼 M-AIDA – source code"
 ],
 [
-"🌏 BizOn Go Global (thử nghiệm)",
-"🌏 BizOn Go Global (beta)"
+"🌏 Bậc 3 · Quốc tế hóa (thử nghiệm)",
+"🌏 Level 3 · Internationalisation (beta)"
 ],
 [
-"🌏 BizOn Go Global (thử nghiệm quốc tế)",
-"🌏 BizOn Go Global (international beta)"
+"🌏 Bậc 3 · Quốc tế hóa · IE Lab (thử nghiệm)",
+"🌏 Level 3 · Internationalisation · IE Lab (beta)"
 ],
 [
 "⭐ Mã nguồn trên GitHub",
@@ -1878,8 +1878,8 @@
 "🌏 Original – Vietnamese"
 ],
 [
-"🌏 Hoặc chinh phục thị trường quốc tế – Go Global",
-"🌏 Or conquer international markets – Go Global"
+"🌏 Hoặc chinh phục thị trường quốc tế – Bậc 3 · Quốc tế hóa",
+"🌏 Or conquer international markets – Level 3 · Internationalisation"
 ],
 [
 "🌏 Hệ sinh thái khởi nghiệp – từ Việt Nam vươn ra quốc tế",
@@ -2394,8 +2394,8 @@
 "All of BizOn's own original songs and Lumina voice clips – with a full player."
 ],
 [
-"Toàn bộ ca khúc gốc và giọng nói của vũ trụ BizOn Bật Nghiệp – sáng tác riêng cho game, thuộc bản quyền của nhóm tác giả.",
-"All original songs and voices of the BizOn Bật Nghiệp universe – composed for the game, copyright of the authors."
+"Toàn bộ ca khúc gốc và giọng nói của vũ trụ BizOn – sáng tác riêng cho game, thuộc bản quyền của nhóm tác giả.",
+"All original songs and voices of the BizOn universe – composed for the game, copyright of the authors."
 ],
 [
 "💿 Ca khúc gốc",
@@ -2958,8 +2958,9 @@
 "🖨️ Printable A4"
 ],
 ["Mô phỏng khởi nghiệp · 5 tuần", "Startup simulation · 5 weeks"],
-["🧺 Gánh Hàng Khởi Nghiệp: Bến Phù Sa", "🧺 Entrepreneurial Street Vendor: Ben Phu Sa"],
-["Gánh Hàng Khởi Nghiệp", "Entrepreneurial Street Vendor"],
+["🧺 Bến Phù Sa", "🧺 Bến Phù Sa"],
+["Khởi sự kinh doanh phi chính thức trên chợ nổi (5 tuần)", "Informal venture start-up on a floating market (5 weeks)"],
+["IE Lab · Quốc tế hóa", "IE Lab · Internationalisation"],
 ["Khởi nghiệp hàng rong ở thị trấn giả tưởng Bến Phù Sa: mỗi tuần chọn Phương thức – Món hàng – Địa điểm. Trò chơi giảng dạy phi thương mại nguyên bản do BizOn tự phát triển, theo định hướng của PGS.TS. Phan Anh Tú.", "A street-vendor startup in the fictional river town of Bến Phù Sa: each week pick Method – Product – Location. An original non-commercial teaching game developed by BizOn, guided by Assoc. Prof. Dr. Phan Anh Tú."],
 ["«Từ một gánh hàng nhỏ, bạn có thể xây dựng nên một thương hiệu lớn – nếu biết quan sát thị trường, thấu hiểu khách hàng và ra quyết định đúng lúc.»", "\"From one small street stall, you can build a big brand – if you watch the market, understand your customers, and decide at the right moment.\""],
 ["💡 Trò chơi giảng dạy phi thương mại do BizOn tự phát triển. Cơ chế «thử nghiệm nhanh rồi nhân rộng đúng lúc» là mô-típ sư phạm phổ biến; bối cảnh Bến Phù Sa, nhân vật, dữ liệu, giao diện và lời thoại đều là nguyên bản. Không dựa trên và không sử dụng tài liệu, số liệu hay cấu trúc của bất kỳ mô phỏng thương mại nào. Định hướng sư phạm: PGS.TS. Phan Anh Tú (Trường Kinh tế, ĐH Cần Thơ).", "💡 An original non-commercial teaching game developed by BizOn. The «test fast, then scale» explore–exploit loop is a common pedagogical motif; the Bến Phù Sa setting, characters, data, interface and writing are all original. Not based on and does not use the materials, data or structure of any commercial simulation. Pedagogical guidance: Assoc. Prof. Dr. Phan Anh Tú (School of Economics, Can Tho University)."],
@@ -3019,9 +3020,9 @@
 ["Nhập Mã lớp trước đã nhé.", "Please enter your Class code first."],
 ["✅ Đã nộp! Kết quả đã hiện trên bảng của giảng viên.", "✅ Submitted! Your result now shows on the instructor's board."],
 ["⚠️ Chưa gửi được – kiểm tra mạng rồi thử lại.", "⚠️ Could not send – check your connection and try again."],
-["🧺 Gánh Hàng Khởi Nghiệp – kết quả lớp", "🧺 Entrepreneurial Street Vendor – class results"],
+["🧺 Bến Phù Sa – kết quả lớp", "🧺 Bến Phù Sa – class results"],
 ["Hộ Chiếu Thương Hiệu", "Brand Passport"],
-["BizOn Go Global: chọn 1 trong 4 doanh nghiệp, đưa thương hiệu Việt từ Vàm Thịnh ra 7 thị trường giả tưởng – sương mù thông tin, đàm phán đối tác, sự kiện bất định; thành công đo bằng 5 chiều: lợi nhuận, uy tín, năng lực, thích ứng, bền vững.", "BizOn Go Global: pick 1 of 4 companies and take a Vietnamese brand from Vàm Thịnh to 7 fictional markets – information fog, partner negotiation, uncertain events; success measured in 5 dimensions: profit, reputation, capability, adaptability, sustainability."],
+["Chọn 1 trong 4 doanh nghiệp, đưa thương hiệu Việt từ Vàm Thịnh ra 7 thị trường giả tưởng – sương mù thông tin, đàm phán đối tác, sự kiện bất định; thành công đo bằng 5 chiều: lợi nhuận, uy tín, năng lực, thích ứng, bền vững.", "Pick 1 of 4 companies and take a Vietnamese brand from Vàm Thịnh to 7 fictional markets – information fog, partner negotiation, uncertain events; success measured in 5 dimensions: profit, reputation, capability, adaptability, sustainability."],
 ["Sinh viên nộp từ màn kết thúc của game (cùng Mã lớp). Mỗi người tính ván có hiệu suất cao nhất; hạng là thứ hạng so với 3 đối thủ ảo trong ván đó.", "Students submit from the game's end screen (same Class code). Each player counts their best-efficiency run; rank is their placing against the 3 virtual rivals in that run."],
 ["Sinh viên", "Student"],
 ["Hiệu suất", "Efficiency"],
@@ -3100,8 +3101,8 @@
 "🛂 Brand Passport game"
 ],
 [
-"🌏 Bản đồ Go Global",
-"🌏 Go Global map"
+"🌏 Bản đồ quốc tế hóa",
+"🌏 Internationalisation map"
 ],
 [
 "🕹️ Khu mini-game",
@@ -3160,8 +3161,8 @@
 "Brand Passport game"
 ],
 [
-"Bản đồ Go Global",
-"Go Global map"
+"Bản đồ quốc tế hóa",
+"Internationalisation map"
 ],
 [
 "Khu mini-game",
@@ -3841,7 +3842,7 @@
 ],
 [
 "Game Bật Nghiệp",
-"BizOn Bật Nghiệp"
+"Bật Nghiệp game"
 ],
 [
 "Hướng dẫn chơi",
@@ -4554,8 +4555,8 @@
 "This certifies that team"
 ],
 [
-"đã hoàn thành 6 vòng mô phỏng kinh doanh BizOn Bật Nghiệp 2026.",
-"has completed all 6 rounds of the BizOn Bật Nghiệp 2026 business simulation."
+"đã hoàn thành 6 vòng mô phỏng kinh doanh Bật Nghiệp (Bậc 2 · Vận hành doanh nghiệp).",
+"has completed all 6 rounds of the Bật Nghiệp business simulation (Level 2 · Running a business)."
 ],
 [
 "📋 Nhiệm vụ",
@@ -4742,8 +4743,8 @@
 "Decisions"
 ],
 [
-"BizOn Go Global · Mô phỏng chiến lược · 6 quý · Game gốc BizOn",
-"BizOn Go Global · Strategy Simulation · 6 Quarters · An Original BizOn Game"
+"Bậc 3 · Quốc tế hóa · Mô phỏng chiến lược · 6 quý · Game gốc BizOn",
+"Level 3 · Internationalisation · Strategy Simulation · 6 Quarters · An Original BizOn Game"
 ],
 [
 "💡 «Không có một con đường quốc tế hóa phù hợp với mọi doanh nghiệp.» · Các thị trường trong game là giả tưởng · Kịch bản, dữ liệu, thuật toán và nhân vật do BizOn tự thiết kế từ đầu.",

@@ -27,7 +27,7 @@ window.BZ_LIB_EN={
 'team/aodai-nam-diploma-crop.webp':['Team representative – áo dài (male)','White lotus-embroidered áo dài · holding the simulation-round certificate'],
 'team/aodai-nu-lotus-crop.webp':['Team representative – áo dài (female)','White áo dài with a red-flag badge · holding a lotus flower'],
 /* sheets */
-'character/team/lineup-cut.webp':['BizOn Bật Nghiệp demo team – 5 clay members','COO Bảo Ngọc · CFO Thu Hà · CEO Minh Long · CMO Mạnh Chi · Company Secretary Gia Hân'],
+'character/team/lineup-cut.webp':['Bật Nghiệp demo team – 5 clay members','COO Bảo Ngọc · CFO Thu Hà · CEO Minh Long · CMO Mạnh Chi · Company Secretary Gia Hân'],
 'illustrations/turnaround-huong.webp':['Character Turnaround Sheet – character design file','3 standard views (front · 45° side · back) · applied-art copyright registration document · code VN-HƯƠNG-CLAY-001'],
 'illustrations/cast-sheet-brand-passport.webp':['Character Sheet – the «Brand Passport» cast','21 designs on one standard frame · applied-art copyright registration document · code VN-BIZON-BP-CAST-001'],
 /* cast */
@@ -74,13 +74,13 @@ window.BZ_LIB_EN={
 'lumina-holo-classroom.webp':['Hologram simulation classroom','Lumina runs the session in front of a data dashboard – lead image of the home page'],
 'anh-tu-lecture-hall.webp':['The BizOn lecture hall','Assoc. Prof. Phan Anh Tú between two lecterns & growth charts – lead image of the home page'],
 'anh-tu-library-study.webp':['Research hour in the library','Mr Tú with a laptop, open books and coffee – where the Model Cards were born'],
-'ceo-sec-market-checkpoint.webp':['Market checkpoint','The CEO & Company Secretary review a checklist in front of a map of Vietnam – the spirit of Brand Passport'],
+'ceo-sec-market-checkpoint-hstss.webp':['Market checkpoint','The CEO & Company Secretary review a checklist in front of a map of Vietnam – the spirit of Brand Passport'],
 'ceo-cfo-revenue-targets.webp':['Revenue-target meeting','The CEO & CFO compare the Revenue Targets chart with quarterly cash flow'],
 'holo-strategy-briefing.webp':['Hologram strategy briefing','Ceremonial áo dài, a Gantt board & growth charts floating in the meeting room'],
 'goo-coo-production-planning.webp':['Production-capacity planning','A Production Capacity chart on a pinboard & a miniature route model'],
 'lumina-advisor-pro-scenario.webp':['Lumina Advisor Pro','What-if scenario analysis, profit & risk forecasts on a touch board'],
 'strategy-notes-podium.webp':['Simulation strategy notebook','Notes on «Cash-flow risk management» & «CVP cost optimisation» beside a compass'],
-'ceo-minh-long-expansion-compass.webp':['Market-expansion compass','Expansion plan & a 6-round strategy – pins on Hà Nội, Đà Nẵng, TP.HCM'],
+'ceo-minh-long-expansion-compass-hstss.webp':['Market-expansion compass','Expansion plan & a 6-round strategy – pins on Hà Nội, Đà Nẵng, TP.HCM'],
 'sec-compliance-checklist.webp':['Governance & compliance log','The round’s compliance checklist beside a «Market Alert» sign'],
 'oee-logistics-tablet.webp':['OEE operations board','Equipment efficiency and logistics milestones tracked side by side'],
 'team-victory-celebration.webp':['Champions’ night','The whole team lifts the BizOn Bật Nghiệp trophy amid confetti & stage lights'],
@@ -94,7 +94,7 @@ window.BZ_LIB_EN={
 'huong-and-the-world-male':['Hương sans frontières (male)','Male-vocal arrangement · English lyrics'],
 'huong-et-le-monde':['Hương et le Monde (FR)','French version · vocal recording'],
 /* merch */
-'merch/pin-vietnam.webp':['Vietnam-map pin','Red enamel with gold trim, the Lũng Cú gold star – symbol of the 6-round journey'],
+'merch/pin-vietnam-clay3d.webp':['Vietnam-map badge','3D red clay with a gold rim and raised gold star, including the Hoàng Sa and Trường Sa archipelagos – symbol of the 6-round journey. Illustration, not to scale.'],
 'merch/pin-set.webp':['Trio: Red star · +84 · VIETNAM','The BizOn Go Global pin set – taking the +84 country code to the world'],
 'character/anh-tu-pin.webp':['Tú Phan with the Vietnam pin','The academic advisor wearing the Vietnam-map pin on his suit lapel']
 };

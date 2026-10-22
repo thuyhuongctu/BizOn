@@ -509,7 +509,7 @@ function drawCover() {
   g.globalAlpha = 1; g.fillStyle = '#0b4a55'; g.beginPath(); g.arc(256, 380, 16, 0, Math.PI * 2); g.fill();
   g.fillStyle = '#e9b54a'; g.font = '800 34px ' + FONT; g.fillText(f.name.toUpperCase(), 256, 520);
   g.font = '700 22px ' + FONT; g.fillText('Vàm Thịnh → ' + tr('Thế giới', 'the World'), 256, 566);
-  g.font = '700 16px ' + FONT; g.globalAlpha = 0.7; g.fillText('BizOn Go Global · 2026', 256, 620); g.globalAlpha = 1;
+  g.font = '700 16px ' + FONT; g.globalAlpha = 0.7; g.fillText(tr('BizOn · Quốc tế hóa · 2026', 'BizOn · Internationalisation · 2026'), 256, 620); g.globalAlpha = 1;
   t.needsUpdate = true;
 }
 function paper(g) {
