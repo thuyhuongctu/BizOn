@@ -29,6 +29,7 @@
   .bc-courses{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
   .bc-course{padding:20px;border-radius:24px;background:var(--clay-tray);box-shadow:inset 0 -6px 0 rgba(110,70,30,.1)}
   .bc-press{padding:20px;border-radius:24px;border:2px solid #F0E2C8;background:#fff}
+  .bc-more{display:inline-flex;margin-top:16px;padding:10px 16px;border-radius:999px;background:var(--clay-c1);color:var(--clay-ink);font-size:14px;font-weight:800;box-shadow:inset 0 -4px 0 rgba(0,0,0,.1)}
   .bc-cta{position:relative;overflow:hidden;padding:40px 30px;border-radius:36px;background:var(--clay-teal);color:#fff;text-align:center;margin-bottom:64px;box-shadow:inset 0 -12px 0 rgba(0,0,0,.18),inset 0 6px 0 rgba(255,255,255,.18),0 30px 40px -26px rgba(0,60,80,.8)}
   .bc-cta a{font-family:var(--clay-head);font-size:18px;font-weight:800;padding:14px 22px;border-radius:20px}
   @keyframes bzGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
@@ -38,6 +39,7 @@
     html[data-theme="dark"] .bc-ctx{border-top-color:rgba(255,230,200,.14)}
     html[data-theme="dark"] .bc-press{background:var(--clay-card);border-color:rgba(255,230,200,.14)}
     html[data-theme="dark"] .bc-cta{background:#0F4F5A}
+    html[data-theme="dark"] .bc-more{color:var(--clay-ink)}
   }
 </style>
 <meta property="og:type" content="website">
@@ -119,27 +121,32 @@
   <section class="bc-sec">
     <h2 class="bc-h2"><span class="num" style="background:var(--clay-c1)">5</span><span data-en="Media & press">Truyền thông &amp; báo chí</span></h2>
     <p style="margin:10px 0 18px;font-size:14px;color:var(--clay-sub)" data-en="Appearances by BizOn's founding team in the press as subject experts – evidence of the academic grounding behind the project.">Các lần đội ngũ sáng lập BizOn xuất hiện trên báo chí với tư cách chuyên gia – minh chứng cho nền tảng học thuật đứng sau dự án.</p>
+    <!-- BAO-CHI:evidence:start -->
     <div style="display:flex;flex-direction:column;gap:14px">
-      <article class="bc-press">
-        <div style="font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--clay-accent)">Tạp chí Một Thế Giới · 30/07/2026</div>
-        <div style="margin-top:6px;font-family:var(--clay-head);font-size:21px;font-weight:800;line-height:1.2" data-en="«Innovation in Can Tho: bright spots and development gaps»">«Đổi mới sáng tạo ở Cần Thơ: Điểm sáng và khoảng trống phát triển»</div>
-        <p style="margin:8px 0 0;font-size:14px;line-height:1.6;color:var(--clay-sub)" data-en="An interview with Assoc. Prof. Dr. Phan Anh Tu – BizOn co-founder and Vice Dean of the School of Economics (Can Tho University) – on the paradox in Can Tho's 2025 Provincial Innovation Index: 4th of 34 for institutions but only 29th of 34 for business sophistication, and a proposed «triple helix» network (state – university – business) with Can Tho University as the knowledge hub.">Phỏng vấn PGS.TS. Phan Anh Tú – đồng sáng lập BizOn, Phó hiệu trưởng Trường Kinh tế (ĐH Cần Thơ) – về nghịch lý Chỉ số đổi mới sáng tạo (PII) 2025 của Cần Thơ: thể chế hạng 4/34 nhưng trình độ phát triển doanh nghiệp chỉ hạng 29/34, và đề xuất mạng lưới «Ba nhà» (nhà nước – nhà trường – doanh nghiệp) với ĐH Cần Thơ làm hạt nhân trung chuyển tri thức.</p>
-        <a href="https://1thegioi.vn/doi-moi-sang-tao-o-can-tho-diem-sang-va-khoang-trong-phat-trien-255702.html" target="_blank" rel="noopener" style="display:inline-flex;margin-top:10px;font-size:13px;font-weight:800" data-en="Read the full article on 1thegioi.vn →">Đọc toàn văn trên 1thegioi.vn →</a>
-      </article>
-      <article class="bc-press">
-        <div style="font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--clay-accent)">Tuổi Trẻ Online · 05/08/2026</div>
-        <div style="margin-top:6px;font-family:var(--clay-head);font-size:21px;font-weight:800;line-height:1.2" data-en="«Instead of &quot;going to Bình Dương&quot;, can we create a new migration back to the Mekong?»">«Thay vì "đi Bình Dương" thì tạo dòng di cư mới về miền Tây được không?»</div>
-        <p style="margin:8px 0 0;font-size:14px;line-height:1.6;color:var(--clay-sub)" data-en="Continuing the series on out-migration from the Mekong Delta, the article frames migration as the equilibrium of a labour market short on demand: the region does not lack talent, it lacks places to use it. It cites three independent studies pointing to the same bottleneck in the business sector rather than institutions or training, so innovation that creates more firms is key – the founding premise of BizOn.">Tiếp nối loạt bài về xuất cư ĐBSCL: di cư được nhìn như «kết quả cân bằng của một thị trường lao động thiếu cầu – vùng không thiếu người tài, mà thiếu chỗ để dùng người tài». Bài dẫn ba nghiên cứu độc lập cùng chỉ về một điểm nghẽn nằm ở khu vực doanh nghiệp (không phải thể chế hay khâu đào tạo) – nên đổi mới sáng tạo để có thêm nhiều doanh nghiệp là mấu chốt, đúng luận điểm nền tảng của BizOn.</p>
-        <a href="https://tuoitre.vn/thay-vi-di-binh-duong-thi-tao-dong-di-cu-moi-ve-mien-tay-duoc-khong-100260805154121768.htm" target="_blank" rel="noopener" style="display:inline-flex;margin-top:10px;font-size:13px;font-weight:800" data-en="Read the full article on tuoitre.vn →">Đọc toàn văn trên tuoitre.vn →</a>
-      </article>
-      <article class="bc-press">
-        <div style="font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--clay-accent)">Tuổi Trẻ Online · 27/07/2026</div>
-        <div style="margin-top:6px;font-family:var(--clay-head);font-size:21px;font-weight:800;line-height:1.2" data-en="«Innovation could create a new migration flow back to the Mekong Delta»">«Đổi mới sáng tạo có thể tạo ra dòng di cư mới về Đồng bằng sông Cửu Long»</div>
-        <p style="margin:8px 0 0;font-size:14px;line-height:1.6;color:var(--clay-sub)" data-en="Coverage of Assoc. Prof. Dr. Phan Anh Tu's talk at the workshop on raising Can Tho's innovation index (Can Tho Department of Science & Technology): Mekong out-migration, the share of graduates working in their field falling from 86% to 74%, and the hope that innovative start-ups can draw people from big cities back to rural areas.">Đưa tin phần trình bày của PGS.TS. Phan Anh Tú tại hội thảo «Giải pháp thúc đẩy nâng cao chỉ số đổi mới sáng tạo TP Cần Thơ» (Sở KH&amp;CN Cần Thơ): tình trạng xuất cư của ĐBSCL, tỉ lệ cử nhân làm đúng chuyên môn giảm 86% → 74%, và kỳ vọng «với đổi mới sáng tạo có thể tạo ra dòng di cư mới từ các thành phố lớn về nông thôn bằng cách khởi nghiệp đổi mới sáng tạo».</p>
-        <a href="https://tuoitre.vn/doi-moi-sang-tao-co-the-tao-ra-dong-di-cu-moi-ve-dong-bang-song-cuu-long-100260727183852615.htm" target="_blank" rel="noopener" style="display:inline-flex;margin-top:10px;font-size:13px;font-weight:800" data-en="Read the full article on tuoitre.vn →">Đọc toàn văn trên tuoitre.vn →</a>
-      </article>
+    <article class="bc-press">
+    <div style="font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--clay-accent)" data-en="Tuoi Tre Online · Oct 22, 2026">Tuổi Trẻ Online · 22/10/2026</div>
+    <div style="margin-top:6px;font-family:var(--clay-head);font-size:21px;font-weight:800;line-height:1.2" data-en="«Mekong Delta labour shortage – Part 1: Firms pay &quot;attendance bonuses&quot; to retain workers»">«Miền Tây thiếu lao động – Kỳ 1: Doanh nghiệp "thưởng chuyên cần" để giữ chân lao động»</div>
+    <p style="margin:8px 0 0;font-size:14px;line-height:1.6;color:var(--clay-sub)" data-en="The opening part of the series on Mekong firms competing to keep workers (attendance bonuses, an interest-free loan fund). In the boxed opinion «Understanding &quot;the Mekong labour shortage&quot; correctly», responding to proposals to import labour for Mekong firms, Assoc. Prof. Phan Anh Tú argues there is no need yet to import general labour on a large scale.">Kỳ mở đầu loạt bài về cuộc đua giữ chân lao động của doanh nghiệp miền Tây (thưởng chuyên cần, quỹ cho vay không lãi). Trong hộp ý kiến «Cần hiểu đúng về "miền Tây thiếu lao động"», trước đề xuất nhập khẩu lao động cho doanh nghiệp ở miền Tây, PGS.TS. Phan Anh Tú cho rằng chưa cần nhập khẩu lao động phổ thông đại trà.</p>
+    <a href="https://tuoitre.vn/mien-tay-thieu-lao-dong-ky-1-doanh-nghiep-thuong-chuyen-can-de-giu-chan-lao-dong-100261022131305041.htm" target="_blank" rel="noopener" style="display:inline-flex;margin-top:10px;font-size:13px;font-weight:800" data-en="Read the full article on tuoitre.vn →">Đọc toàn văn trên tuoitre.vn →</a>
+    </article>
+    <article class="bc-press">
+    <div style="font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--clay-accent)" data-en="Kinh tế Việt Nam (Cong Thuong newspaper) · Oct 13, 2026">Kinh tế Việt Nam (Báo Công Thương) · 13/10/2026</div>
+    <div style="margin-top:6px;font-family:var(--clay-head);font-size:21px;font-weight:800;line-height:1.2" data-en="«Can Tho seeks solutions for digital and green transformation for enterprises»">«Cần Thơ tìm giải pháp chuyển đổi số, chuyển đổi xanh cho doanh nghiệp»</div>
+    <p style="margin:8px 0 0;font-size:14px;line-height:1.6;color:var(--clay-sub)" data-en="Coverage of the forum: Assoc. Prof. Phan Anh Tú proposes deeper ties between government, enterprises and universities, with enterprises co-designing training programmes and co-assessing students.">Đưa tin diễn đàn: PGS.TS. Phan Anh Tú đề xuất liên kết chặt hơn giữa chính quyền, doanh nghiệp và trường đại học; doanh nghiệp cùng xây dựng chương trình đào tạo và cùng đánh giá sinh viên.</p>
+    <a href="https://congthuong.vn/can-tho-tim-giai-phap-chuyen-doi-so-chuyen-doi-xanh-cho-doanh-nghiep-476692.html" target="_blank" rel="noopener" style="display:inline-flex;margin-top:10px;font-size:13px;font-weight:800" data-en="Read the full article on congthuong.vn →">Đọc toàn văn trên congthuong.vn →</a>
+    </article>
+    <article class="bc-press">
+    <div style="font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--clay-accent)" data-en="VietnamPlus (Vietnam News Agency) · Sep 17, 2026">VietnamPlus (TTXVN) · 17/09/2026</div>
+    <div style="margin-top:6px;font-family:var(--clay-head);font-size:21px;font-weight:800;line-height:1.2" data-en="«Can Tho improves the quality of FDI capital flows, creating new growth momentum»">«Cần Thơ nâng cao chất dòng vốn FDI, tạo động lực tăng trưởng mới»</div>
+    <p style="margin:8px 0 0;font-size:14px;line-height:1.6;color:var(--clay-sub)" data-en="Interview with Assoc. Prof. Phan Anh Tú on how FDI in Can Tho remains a stable &quot;pillar&quot; rather than a new growth driver, and his call for an &quot;investment-ready&quot; profile for each industrial zone.">Phỏng vấn PGS.TS. Phan Anh Tú về việc FDI tại Cần Thơ mới là một "trụ đỡ" ổn định chứ chưa trở thành động lực tăng trưởng mới, cùng khuyến nghị xây dựng bộ hồ sơ "sẵn sàng đầu tư" cho từng khu công nghiệp.</p>
+    <a href="https://www.vietnamplus.vn/can-tho-nang-cao-chat-dong-von-fdi-tao-dong-luc-tang-truong-moi-post1136685.vnp" target="_blank" rel="noopener" style="display:inline-flex;margin-top:10px;font-size:13px;font-weight:800" data-en="Read the full article on vietnamplus.vn →">Đọc toàn văn trên vietnamplus.vn →</a>
+    </article>
     </div>
-    <p style="margin:14px 0 0;font-size:12px;line-height:1.5;color:#6B7F80" data-en="Articles are copyright of their respective publications (Một Thế Giới – reporter Văn Kim Khanh; Tuổi Trẻ Online – reporter Chí Quốc); BizOn only cites and summarises, and does not republish the full text.">Các bài viết thuộc bản quyền của tòa soạn tương ứng (Tạp chí Một Thế Giới – PV Văn Kim Khanh; Tuổi Trẻ Online – PV Chí Quốc); BizOn chỉ dẫn nguồn và trích lược, không đăng lại toàn văn.</p>
+    <a class="bc-more" href="bao-chi.html" data-en="See all 9 articles in the press archive →">Xem cả 9 bài trong kho báo chí →</a>
+    <!-- BAO-CHI:evidence:end -->
+    <!-- BAO-CHI:credits:start -->
+    <p style="margin:14px 0 0;font-size:12px;line-height:1.5;color:#6B7F80" data-en="Articles are copyright of their respective publications (Tuoi Tre Online – reporter Ca Linh – Khắc Tâm, Chí Quốc; VietnamPlus (Vietnam News Agency) – reporter Nguyễn Văn Việt; Mot The Gioi magazine – reporter Văn Kim Khanh); BizOn only cites and summarises, and does not republish the full text.">Các bài viết thuộc bản quyền của tòa soạn tương ứng (Tuổi Trẻ Online – PV Ca Linh – Khắc Tâm, Chí Quốc; VietnamPlus (TTXVN) – PV Nguyễn Văn Việt; Tạp chí Một Thế Giới – PV Văn Kim Khanh); BizOn chỉ dẫn nguồn và trích lược, không đăng lại toàn văn.</p>
+    <!-- BAO-CHI:credits:end -->
   </section>
 
   <section class="bc-cta np">
