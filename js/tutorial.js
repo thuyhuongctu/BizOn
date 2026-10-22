@@ -120,7 +120,8 @@
       const introOpen = document.querySelector('#intro-next'); // slide Giới thiệu đang mở
       const eventOpen = document.querySelector('#ev-close');   // màn biến cố toàn màn hình đang mở
       const caseDrawOpen = document.querySelector('#case-draw-cta'); // màn bốc thăm Trường hợp đang mở
-      if (app && !app.classList.contains('hidden') && !introOpen && !eventOpen && !caseDrawOpen && !overlay) {
+      const rivalOpen = document.querySelector('#rd-choices, #rd-close'); // hội thoại đối thủ đầu vòng đang mở
+      if (app && !app.classList.contains('hidden') && !introOpen && !eventOpen && !caseDrawOpen && !rivalOpen && !overlay) {
         clearInterval(iv);
         start();
       }

@@ -36,6 +36,11 @@
   .foot { font-size: 10px; color: #789; margin-top: 10px; text-align: center; }
   .toolbar { max-width: 210mm; margin: 14px auto 0; display: flex; gap: 10px; }
   .toolbar button, .toolbar a { background: #006687; color: #fff; border: 0; border-radius: 999px; padding: 9px 20px; font-weight: 700; font-size: 13px; cursor: pointer; text-decoration: none; }
+  @media screen and (max-width: 480px) {
+    .sheet { padding: 16px 12px; overflow-x: auto; }
+    table.likert { font-size: 11px; }
+    table.likert th, table.likert td { padding: 3px 4px; }
+  }
   @media print {
     body { background: #fff; }
     .sheet { box-shadow: none; margin: 0 auto; max-width: none; padding: 8mm 10mm; }

@@ -52,8 +52,7 @@ async function newGame(browser, opts = {}) {
   page.setDefaultTimeout(15000);
   const errors = [];
   page.on('pageerror', e => errors.push(e.message));
-  // bpIntel hỏi thị trường bằng prompt(); trả lời theo cấu hình của từng phép thử
-  page.on('dialog', d => d.accept(String(opts.intelMarket == null ? 1 : opts.intelMarket + 1)));
+  // bpIntel(i) không đối số thứ hai sẽ mở bảng chọn thị trường trong trang; các phép thử truyền thẳng thị trường: bpIntel(i, m)
   // Máy chậm hoặc máy chủ tĩnh đang nghẽn có thể làm lần mở trang đầu quá hạn.
   // Thử lại một lần để phép thử không trượt vì lý do ngoài phạm vi kiểm tra.
   const url = `${BASE}/brand-passport.html?seed=${opts.seed || SEED}`;
@@ -132,7 +131,7 @@ test('Tri thức tính trên toàn bộ bảy thị trường, không chỉ ba t
       const t = document.getElementById('bp-hud').textContent.match(/Tri thức\s*(\d+)/);
       return t ? Number(t[1]) : null;
     });
-    await p.evaluate(() => window.bpIntel(4)); // «Thử nghiệm bán hàng» = +35
+    await p.evaluate(m => window.bpIntel(4, m), m); // «Thử nghiệm bán hàng» = +35
     await p.waitForTimeout(300);
     const s = await st(p);
     const after = await p.evaluate(() => {
@@ -157,9 +156,9 @@ test('Gợi ý «bay trong sương mù» tắt khi đã hiểu rõ một thị t
   const p = await newGame(browser, { intelMarket: 5 }); // Tân Cảng – thị trường thứ 6
   check(await fogOf(p), 'đầu ván, khi cả bảy thị trường đều mù, gợi ý có hiện');
 
-  await p.evaluate(() => window.bpIntel(4)); // +35
+  await p.evaluate(() => window.bpIntel(4, 5)); // +35
   await p.waitForTimeout(300);
-  await p.evaluate(() => window.bpIntel(2)); // +30
+  await p.evaluate(() => window.bpIntel(2, 5)); // +30
   await p.waitForTimeout(300);
   const s = await st(p);
   check(s.know[5] >= 35, `know[5] = ${s.know[5]} — đã vượt ngưỡng 35`);
@@ -222,15 +221,15 @@ test('Mỗi quý chỉ được vào tối đa một thị trường', async bro
 test('Tiền mặt không tự sinh: mua tình báo trừ đúng tiền và giới hạn 2 nguồn/quý', async browser => {
   const p = await newGame(browser, { intelMarket: 2 });
   const c0 = (await st(p)).cash;
-  await p.evaluate(() => window.bpIntel(0)); // Báo cáo ngành – 0,3 tỷ
+  await p.evaluate(() => window.bpIntel(0, 2)); // Báo cáo ngành – 0,3 tỷ
   await p.waitForTimeout(250);
   const c1 = (await st(p)).cash;
   near(c0 - c1, 0.3, 0.001, 'nguồn «Báo cáo ngành» trừ 0,3 tỷ');
-  await p.evaluate(() => window.bpIntel(1)); // Khảo sát khách hàng – 0,5 tỷ
+  await p.evaluate(() => window.bpIntel(1, 2)); // Khảo sát khách hàng – 0,5 tỷ
   await p.waitForTimeout(250);
   const c2 = (await st(p)).cash;
   near(c1 - c2, 0.5, 0.001, 'nguồn «Khảo sát khách hàng» trừ 0,5 tỷ');
-  await p.evaluate(() => window.bpIntel(2)); // nguồn thứ ba – phải bị chặn
+  await p.evaluate(() => window.bpIntel(2, 2)); // nguồn thứ ba – phải bị chặn
   await p.waitForTimeout(250);
   const c3 = (await st(p)).cash;
   eq(c3, c2, 'nguồn thứ ba trong cùng quý bị chặn, không trừ thêm tiền');

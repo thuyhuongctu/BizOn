@@ -32,7 +32,7 @@
   var SCENE_FIT = {
     'logo-bizon-dark.webp':{ fit:'contain', pos:'50% 50%', pad:'14px', bg:'#0A0B0D' },
     'globe-trade.webp':{ fit:'contain', pos:'50% 50%', pad:'8px' },
-    'event-energy-crisis.webp':{ fit:'contain', pos:'50% 50%', pad:'8px' }
+    'event-energy-crisis-cut.webp':{ fit:'contain', pos:'50% 50%', pad:'8px' }
   };
   /* Tên & chú thích tiếng Anh của từng mục (js/thu-vien-data-en.js); thiếu bản dịch thì giữ tiếng Việt */
   function loc(a, key){ var E = lang() === 'en' && window.BZ_LIB_EN && window.BZ_LIB_EN[key == null ? a[0] : a[key]]; return E ? [a[0], E[0], E[1]].concat(a.slice(3)) : a; }

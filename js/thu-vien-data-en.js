@@ -68,7 +68,7 @@ window.BZ_LIB_EN={
 'globe-trade.webp':['Out to the open sea','Flight paths & cargo ships radiating from the Vietnam pin – the spirit of BizOn Go Global'],
 'event-vietnam-2026.webp':['The «Vietnam 2026» scenario','An economic-development gateway & a golden arrow – the final-round event image'],
 'solar-farm.webp':['Clean-energy field','Illustration for the Solar Panel item – the ESG strategy in the game'],
-'event-energy-crisis.webp':['Energy crisis','Round-4 event image – a risk-management test for the COO & CFO'],
+'event-energy-crisis-cut.webp':['Energy crisis','Round-4 event image – a risk-management test for the COO & CFO'],
 'logo-bizon-dark.webp':['«Bo» logo – dark version','BizOn Bật Nghiệp brand identity · orange clay on navy'],
 'lumina-holo-classroom.webp':['Hologram simulation classroom','Lumina runs the session in front of a data dashboard – lead image of the home page'],
 'anh-tu-lecture-hall.webp':['The BizOn lecture hall','Assoc. Prof. Phan Anh Tú between two lecterns & growth charts – lead image of the home page'],

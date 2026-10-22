@@ -144,6 +144,7 @@ function applyGameStaticText() {
   setPh('login-email', 'sinhvien@truong.edu.vn', 'student@university.edu');
   setPh('login-team', 'VD: Rồng Xanh Corp', 'e.g. Green Dragon Corp');
   setPh('login-class', 'VD: QTKD-2026-A', 'e.g. BUS-2026-A');
+  setPh('login-sync', '48 ký tự', '48 characters');
   setPh('chat-input', 'Trò chuyện với Lumina...', 'Chat with Lumina...');
   const term = $('in-term');
   if (term && term.options.length >= 3) {
@@ -805,6 +806,8 @@ function playHuongIntro() {
 }
 
 function enterApp() {
+  // «Tiếp tục ván» đi thẳng vào đây, không qua doLogin() – phải tự ẩn form đăng nhập, nếu không nó nằm đè lên bảng điều khiển.
+  const login = $('screen-login'); if (login) login.classList.remove('active');
   $('app-shell').classList.remove('hidden');
   showTab('home');
   // Chuỗi giới thiệu đúng thứ tự tài liệu thiết kế (xem dismissChain() trong

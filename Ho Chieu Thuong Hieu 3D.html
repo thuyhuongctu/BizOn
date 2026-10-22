@@ -458,7 +458,7 @@
   var $ = function (id) { return document.getElementById(id); };
   var isEN = function () { try { return (localStorage.getItem('bizon-lang') || 'vi') === 'en'; } catch (e) { return false; } };
   // Số theo ngôn ngữ: vi dùng dấu phẩy thập phân, en dùng dấu chấm.
-  var f1 = function (v) { return (Math.round(v * 10) / 10).toLocaleString(isEN() ? 'en-US' : 'vi-VN', { maximumFractionDigits: 1 }); };
+  var f1 = function (v) { return (Math.round(v * 10) / 10 || 0).toLocaleString(isEN() ? 'en-US' : 'vi-VN', { maximumFractionDigits: 1 }); };
   var clamp = function (v) { return Math.max(0, Math.min(100, Math.round(v))); };
   var reduceMotion = (function () { try { return matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; } })();
   // Đếm chạy thay vì nhảy thẳng số – chỉ dùng cho vài con số nổi bật (tiền
@@ -1537,7 +1537,7 @@
       '<h2 class="font-display font-extrabold text-deep-teal text-base mb-1">' + T('Quý', 'Quarter') + ' ' + (evQ + 1) + '/6 – ' + ev.cat + ' ' + T(ev.t, ev.tEn) + '</h2>' +
       '<p class="text-[13px] mt-2">' + ev.d() + '</p>' +
       '<div class="space-y-2 mt-4">' + ev.ch.map(function (c, i) {
-        return '<button class="bp-opt" onclick="bpEv(' + i + ')">' + T(c.l, c.lEn) + '</button>';
+        return '<button class="bp-opt" onclick="bpEv(' + i + ')"' + (evtPostCache ? ' disabled' : '') + '>' + T(c.l, c.lEn) + '</button>';
       }).join('') + '</div>' +
       '<div id="bp-evt-post"></div>';
     hud();
@@ -1549,6 +1549,9 @@
   // đội tại chỗ (S.party[m]==='team') giúp xử lý nhanh hơn, giảm bớt thiệt hại.
   var CRISIS_EV = ['review', 'held', 'devalue', 'betray', 'copy', 'board', 'defect', 'supplier', 'cashflow'];
   window.bpEv = function (i) {
+    // Mỗi sự kiện chỉ được chọn một lần: bấm lại sau khi đã chốt sẽ gọi settle() thêm lần nữa → nhảy quý và cộng lặp tác động.
+    if (S.phase !== 'evt' || evtPostCache || !window.__bpEv) return;
+    document.querySelectorAll('#bp-stage .bp-opt').forEach(function (b, k) { b.disabled = true; if (k === i) b.classList.add('sel'); });
     // Bảo hiểm rủi ro (vật phẩm SHIELD): chặn phần thiệt hại của sự kiện kế
     // tiếp – chụp số liệu trước/sau, khôi phục lại bất kỳ chỉ số nào bị giảm.
     // Nhiều sự kiện không trừ thẳng vào cash/rep... mà đặt S.flags.wave < 1

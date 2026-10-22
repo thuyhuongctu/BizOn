@@ -10,7 +10,7 @@
   var isEN = function () { try { return (localStorage.getItem('bizon-lang') || 'vi') === 'en'; } catch (e) { return false; } };
   function T(vi, en) { return isEN() ? en : vi; }
   var $ = function (id) { return document.getElementById(id); };
-  var f1 = function (v) { return (Math.round(v * 10) / 10).toLocaleString(isEN() ? 'en-US' : 'vi-VN', { maximumFractionDigits: 1 }); };
+  var f1 = function (v) { return (Math.round(v * 10) / 10 || 0).toLocaleString(isEN() ? 'en-US' : 'vi-VN', { maximumFractionDigits: 1 }); };
   function MU() { return T('triệu ₫', 'mn ₫'); }
 
   // Hồ sơ tình báo tĩnh (động cơ/điểm yếu/cách đối phó) – khớp tên với mảng

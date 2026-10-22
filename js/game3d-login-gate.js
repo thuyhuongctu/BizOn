@@ -37,6 +37,11 @@
 
       var box = document.createElement('div');
       box.id = 'g3d-gate';
+      // Thẻ cổng vào luôn giữ nền sáng (chữ/ô nhập dùng màu xanh đậm cố định) – kể cả khi trang bật chế độ tối,
+      // nếu không .clay-card bị đổi sang nền tối và chữ xanh đậm chìm hẳn.
+      if (!document.getElementById('g3d-gate-css')) { var st = document.createElement('style'); st.id = 'g3d-gate-css';
+        st.textContent = '#g3d-gate .clay-card{background:#FFFAF0!important;color:#033337}#g3d-gate .clay-card input{background:#fff!important;color:#033337!important}#g3d-gate .clay-card input::placeholder{color:rgba(3,51,55,.45)}';
+        document.head.appendChild(st); }
       box.style.cssText = 'position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(160deg,#02191c 0%,#033337 60%,#02444d 100%);overflow-y:auto';
       box.innerHTML =
         (wantGlobe && window.Game3DGlobe ? '<div id="g3d-globe" aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;opacity:.5"></div>' : '') +

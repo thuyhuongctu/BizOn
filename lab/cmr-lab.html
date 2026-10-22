@@ -2,6 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/png" href="../assets/icons/icon-192.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CMR Lab</title>
 <!-- Phông tự host (không Google Fonts CDN) để chạy offline & hợp CSP như phần còn lại của BizOn. Plus Jakarta Sans (chữ chính, đủ tiếng Việt), IBM Plex Mono (số/nhãn). -->
@@ -159,6 +160,8 @@ footer a{color:var(--muted);text-decoration:none;white-space:nowrap}
   .wrap{padding:16px 16px 110px}
   .nav .sub,.nav .back{display:none}
   .nav .ttl,.xp-pill{white-space:nowrap}
+  .nav{gap:8px}
+  .nav .ttl{min-width:0;overflow:hidden;text-overflow:ellipsis}
   .hero{grid-template-columns:1fr;gap:16px;margin:16px 0}
   .hero-dragon{display:none}
   h1{font-size:44px}
@@ -183,6 +186,10 @@ footer a{color:var(--muted);text-decoration:none;white-space:nowrap}
   .teacher h2{font-size:48px}
   .chart{height:260px;gap:6px;padding:16px 10px}
   .tstat b{font-size:36px}
+}
+@media (max-width: 360px){
+  .xp-pill{padding:6px 10px}
+  #navBadge{display:none}
 }
 </style>
 <script src="../js/capture-guard.js"></script>

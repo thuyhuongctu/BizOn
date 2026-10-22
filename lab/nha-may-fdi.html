@@ -205,6 +205,7 @@ input[type=range]{width:100%;height:28px;margin:0;accent-color:var(--blue);curso
 .ch-dragon{height:76px;width:auto;flex:none;margin:-14px 0 -8px}
 .waitnote{display:flex;align-items:center;gap:12px;margin-top:12px;padding:10px 14px;border-radius:20px;background:var(--field);font-size:13.5px;font-weight:700;color:var(--muted2);line-height:1.45}
 .waitnote img{width:64px;height:auto;flex:none}
+.waitnote .selfopen{margin-top:6px;padding:0;border:0;background:none;font:inherit;font-weight:800;color:var(--ink);text-decoration:underline;cursor:pointer}
 .qq{display:grid;grid-template-columns:32px minmax(0,1fr);gap:12px;align-items:start}
 .qq b{width:32px;height:32px;border-radius:11px;background:var(--slate);color:#fff;display:grid;place-items:center;font-weight:800;font-size:15px}
 .qq p{margin:0;font-size:15px;line-height:1.5;font-weight:600;color:#38404F;text-wrap:pretty}
@@ -575,7 +576,7 @@ const T = {
     xpRules: '+10 XP mỗi quý chốt · +10 nếu có lãi · +10 nếu GTGT trong nước ≥ 45% · +25 mỗi huy hiệu cuối kỳ',
     levels: ['Thực tập sinh', 'Quản đốc', 'Giám đốc nhà máy', 'Tổng giám đốc'],
     board: 'Bảng xếp hạng lớp', boardS: 'Xếp hạng', lvlUp: 'Lên cấp!', unlocked: 'Bạn đã mở khóa cấp mới', cont: 'Tiếp tục', done: 'Đã chốt quý!',
-    resEmpty: 'Chốt quý 1 để xem kết quả đầu tiên.', wait: 'Chờ giảng viên mở quý', waitNote: 'Cả lớp đang chờ giảng viên mở quý tiếp theo – hít thở và xem lại kết quả quý vừa rồi nhé.',
+    resEmpty: 'Chốt quý 1 để xem kết quả đầu tiên.', wait: 'Chờ giảng viên mở quý', waitNote: 'Cả lớp đang chờ giảng viên mở quý tiếp theo – hít thở và xem lại kết quả quý vừa rồi nhé.', selfOpen: 'Đang chơi một mình? Tự mở quý này →',
     eDemand: 'Cầu', eAll: 'mọi thị trường', eDisr: 'Đứt gãy đầu vào nhập', eFreight: 'Cước đầu vào nhập', ePrice: 'Giá ròng', eTariff: 'Thuế', eTrans: 'Nghi trung chuyển: thuế', eNone: 'Không có cú sốc',
     tabs: ['Quyết định', 'Kết quả', 'Biểu đồ', 'Xếp hạng'], tabsEnd: ['Báo cáo', 'Kết quả', 'Biểu đồ', 'Xếp hạng'],
     classView: 'FDI LAB · MÀN HÌNH LỚP', race: 'Đua nhóm', total: 'Tổng XP', openTo: 'Đang mở đến', gateT: 'Mở quý cho lớp', gateHint: 'Nhóm chỉ chốt được đến quý đang mở. Sự kiện của quý đó hiện bên trái.', open: 'đã mở', locked: 'khóa', award: 'Thưởng XP', reset: 'Đặt lại lớp', backStudent: '← Quay lại màn hình sinh viên',
@@ -610,7 +611,7 @@ const T = {
     xpRules: '+10 XP per committed quarter · +10 if profitable · +10 if domestic VA ≥ 45% · +25 per end-of-game badge',
     levels: ['Intern', 'Floor manager', 'Plant director', 'CEO'],
     board: 'Class leaderboard', boardS: 'Leaderboard', lvlUp: 'Level up!', unlocked: "You've unlocked a new level", cont: 'Continue', done: 'Quarter committed!',
-    resEmpty: 'Commit quarter 1 to see your first results.', wait: 'Waiting for teacher to open quarter', waitNote: 'The class is waiting for the teacher to open the next quarter – take a breath and review last quarter\'s results.',
+    resEmpty: 'Commit quarter 1 to see your first results.', wait: 'Waiting for teacher to open quarter', waitNote: 'The class is waiting for the teacher to open the next quarter – take a breath and review last quarter\'s results.', selfOpen: 'Playing solo? Open this quarter yourself →',
     eDemand: 'Demand', eAll: 'all markets', eDisr: 'Imported input shortfall', eFreight: 'Import freight', ePrice: 'Net price', eTariff: 'Tariff', eTrans: 'Transshipment: tariff', eNone: 'No shock',
     tabs: ['Decide', 'Results', 'Chart', 'Ranking'], tabsEnd: ['Report', 'Results', 'Chart', 'Ranking'],
     classView: 'FDI LAB · CLASS VIEW', race: 'Team race', total: 'Total XP', openTo: 'Open through', gateT: 'Open quarters', gateHint: 'Teams can only commit up to the open quarter. Its event is shown on the left.', open: 'open', locked: 'locked', award: 'Award bonus XP', reset: 'Reset class', backStudent: '← Back to student view',
@@ -858,7 +859,7 @@ function playHTML(t) {
       <div class="grp"><h3>${t.markets}</h3>${mk}</div>
       <div class="grp"><div class="ivt"><span class="long">${t.invest}</span><span class="short">${t.investS}</span></div><div class="invs" role="group" aria-label="${t.invest}">${inv}</div></div>
       <button type="button" class="btn" data-act="commit" id="commitBtn"${locked ? ' disabled' : ''}>${locked ? `${t.wait} ${q}` : `${t.commit} ${q} →`}</button>
-      ${locked ? `<div class="waitnote"><img src="../assets/dragon/zen-meditate.webp" alt="${t.dragonZen}" width="72" height="73"><span>${t.waitNote}</span></div>` : ''}
+      ${locked ? `<div class="waitnote"><img src="../assets/dragon/zen-meditate-cut-v2.webp" alt="${t.dragonZen}" width="72" height="73"><span>${t.waitNote}<br><button type="button" class="selfopen" data-act="gate" data-i="${q}">${t.selfOpen}</button></span></div>` : ''}
       <p class="rules-t d-only">${t.xpRules}</p>
     </section>
     <section class="card res" data-tab="1">
@@ -907,7 +908,7 @@ function endHTML(t) {
       <p class="sandnote">${t.realNote}</p>
     </section>
     <section class="card qs" data-tab="0">
-      <div class="ch"><h2>${t.debrief}</h2><img class="ch-dragon" src="../assets/dragon/idea.webp" alt="${t.dragonIdea}" width="64" height="85"></div>
+      <div class="ch"><h2>${t.debrief}</h2><img class="ch-dragon" src="../assets/dragon/idea-cut-v2.webp" alt="${t.dragonIdea}" width="64" height="85"></div>
       ${t.qs.map((x, i) => `<div class="qq"><b>${i + 1}</b><p>${x}</p></div>`).join('')}
     </section>
   </div>

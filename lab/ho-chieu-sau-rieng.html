@@ -641,7 +641,7 @@ footer{color:var(--faint)}
       <section class="hero" style="padding-bottom:6px"><div class="hero-row"><div><span class="eyebrow">${role.emoji} ${nm(role)} · ${L('Lớp', 'Class')} ${esc(APP.cls || '—')} · ${L('Đội', 'Team')} ${esc(APP.team || '—')}</span>
         <h1 style="font-size:clamp(22px,3.6vw,30px)">${L('Vụ', 'Season')} ${n}/${D.seasons.length} · ${seasonLabel(s)}</h1>
         ${flagsHTML(n)}${flowHTML()}</div>
-        <div class="hero-cast"><img src="../assets/dragon/read-strategy.webp" alt="${L('Rồng đọc sách Chiến lược toàn cầu dưới gốc sầu riêng', 'The dragon reading a global strategy book under a durian tree')}"></div></div>
+        <div class="hero-cast"><img src="../assets/dragon/read-strategy-cut-v2.webp" alt="${L('Rồng đọc sách Chiến lược toàn cầu dưới gốc sầu riêng', 'The dragon reading a global strategy book under a durian tree')}"></div></div>
         <div class="ops"><span class="small muted">${L('Vai đang thao tác', 'Operating role')}:</span>
           ${D.team.map(m => `<button type="button" class="chip ${APP.operator === m.id ? 'on' : ''}" data-op="${m.id}">${m.id.toUpperCase()}</button>`).join('')}
           ${APP.timerMin ? `<span class="spacer"></span><span class="small muted">${L('Còn lại', 'Time left')}</span><span class="timer" id="timer"></span>` : ''}</div>
@@ -847,7 +847,7 @@ footer{color:var(--faint)}
       <section class="hero" style="padding-bottom:6px"><div class="hero-row"><div><span class="eyebrow">${L('Kết quả vụ', 'Season result')} ${n} · ${seasonLabel(s)}</span>
         <h1 style="font-size:clamp(22px,3.6vw,30px)">${fl.win ? '🟩 ' + L('Đội cắm cờ vụ này!', 'Your team plants the flag!') : '🟥 ' + L('Đối thủ giữ cờ vụ này', 'A rival takes this season\'s flag')}</h1>
         ${flagsHTML(0)}</div>
-        <div class="hero-cast"><img src="../assets/dragon/${fl.win ? 'durian-cart.webp' : 'idea.webp'}" alt="${fl.win ? L('Rồng đẩy xe sầu riêng loại A đi giao', 'The dragon pushing a cart of grade-A durian') : L('Rồng suy nghĩ cách làm vụ sau', 'The dragon thinking about next season')}"></div></div></section>
+        <div class="hero-cast"><img src="../assets/dragon/${fl.win ? 'durian-cart-cut-v2.webp' : 'idea-cut-v2.webp'}" alt="${fl.win ? L('Rồng đẩy xe sầu riêng loại A đi giao', 'The dragon pushing a cart of grade-A durian') : L('Rồng suy nghĩ cách làm vụ sau', 'The dragon thinking about next season')}"></div></div></section>
       ${justFormalized ? `<div class="card" style="border:2px solid var(--accent)"><h2>🏷️ ${L('Mốc: chính thức hóa doanh nghiệp xuất khẩu', 'Milestone: formalised as an export business')}</h2>
         <p class="small">${LANG === 'en' ? D.formalization.en : D.formalization.vi} <span class="src">[${D.facts[D.formalization.src].src}]</span></p></div>` : ''}
       <div class="grid2">
@@ -862,7 +862,7 @@ footer{color:var(--faint)}
           <p class="hint">${L('Giá vựa thực tế', 'Actual depot price')} ${nf(r.depot)} ${L('nghìn đ/kg', 'VND k/kg')}${r.blockedCN ? ' · ' + L('lô chính ngạch bị chặn', 'official lot blocked') : ''}.</p></div>
       </div>
 
-      <div class="card sheet"><h2 class="j-head">${L('Nhật ký SEC', 'SEC journal')}<img class="j-dragon" src="../assets/dragon/reflect-journal.webp" alt="${L('Rồng ghi nhật ký phản tư', 'The dragon writing a reflection journal')}" width="104" height="100"></h2>
+      <div class="card sheet"><h2 class="j-head">${L('Nhật ký SEC', 'SEC journal')}<img class="j-dragon" src="../assets/dragon/reflect-journal-cut-v2.webp" alt="${L('Rồng ghi nhật ký phản tư', 'The dragon writing a reflection journal')}" width="104" height="100"></h2>
         <label class="ctl req">${L('Nguyên nhân chính của sai lệch', 'Main cause of the gap')}</label>
         <div class="radios">${Object.entries(CAUSES())
           .map(([k, v]) => `<button type="button" class="chip ${j.cause === k ? 'on' : ''}" data-cause="${k}">${v}</button>`).join('')}</div>
@@ -1034,7 +1034,7 @@ footer{color:var(--faint)}
       <section class="hero"><div class="hero-row"><div><span class="eyebrow">${role.emoji} ${nm(role)} · ${L('Lớp', 'Class')} ${esc(APP.cls || '—')} · ${L('Đội', 'Team')} ${esc(APP.team || '—')}</span>
         <h1>${L('Báo cáo sau 6 vụ', 'Report after 6 seasons')}</h1>${flagsHTML(0)}
         <p class="lead">${L(`Đội cắm ${flagsWon}/6 cờ. Sai lệch bình quân giữa dự báo và lợi nhuận thực tế: ${money(mae)} mỗi vụ.`, `Your team planted ${flagsWon}/6 flags. Mean absolute gap between forecast and actual profit: ${money(mae)} per season.`)}</p></div>
-        <div class="hero-cast"><img src="${flagsWon >= 3 ? '../assets/dragon/durian-deal.webp' : IMG('lumina-ao-dai-thumbsup.webp')}" alt="${flagsWon >= 3 ? L('Rồng bắt tay đối tác, chốt hợp đồng sầu riêng', 'The dragon shaking hands on a durian deal') : 'Lumina'}"></div></div></section>
+        <div class="hero-cast"><img src="${flagsWon >= 3 ? '../assets/dragon/durian-deal-cut-v2.webp' : IMG('lumina-ao-dai-thumbsup.webp')}" alt="${flagsWon >= 3 ? L('Rồng bắt tay đối tác, chốt hợp đồng sầu riêng', 'The dragon shaking hands on a durian deal') : 'Lumina'}"></div></div></section>
       <div class="grid2">
         <div class="card"><div class="kpis" style="grid-template-columns:1fr 1fr">
           <div class="kpi"><small>${L('Điểm tổng trong game', 'In-game total')}</small><b class="num">${nf(S.total)}/100</b></div>
