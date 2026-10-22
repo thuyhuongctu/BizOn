@@ -72,7 +72,7 @@
       avatar: 'assets/character/lumina-ao-dai-wave.webp',
       lines: [
         ['Lumina', 'Chào bạn! Mình là Lumina – người dẫn đường ở Sảnh BizOn. 👋'],
-        ['Lumina', 'Đây là hub 3D nối tới mọi trò chơi trong vũ trụ Bật Nghiệp.'],
+        ['Lumina', 'Đây là hub 3D nối tới mọi trò chơi trong vũ trụ BizOn.'],
         ['Lumina', 'Đi tới gần một cánh cửa quanh sân rồi nhấn E (hoặc chạm nút) để bước sang game đó.'],
         ['Lumina', 'Trong lúc chờ khám phá hết, bạn có thể ghé chơi luôn Hộ Chiếu Thương Hiệu nhé!'],
       ],
@@ -81,7 +81,7 @@
     tu: {
       avatar: 'assets/character/anh-tu-ao-dai-explain-cut.webp',
       lines: [
-        ['PGS.TS. Phan Anh Tú', 'Chào bạn! Thầy là Tú – cố vấn học thuật của BizOn Bật Nghiệp. 📚'],
+        ['PGS.TS. Phan Anh Tú', 'Chào bạn! Thầy là Tú – cố vấn học thuật của BizOn. 📚'],
         ['PGS.TS. Phan Anh Tú', 'Mỗi ván Hộ Chiếu Thương Hiệu hay Bến Phù Sa đều dựng trên mô hình kinh tế thật, không chỉ là trò chơi.'],
         ['PGS.TS. Phan Anh Tú', 'Nếu muốn tìm hiểu sâu hơn về phương pháp giảng dạy đứng sau, ghé Nền tảng học thuật nhé!'],
       ],
@@ -90,8 +90,8 @@
     board: {
       avatar: 'assets/icons/icon-192.png',
       lines: [
-        ['📋 Bảng thông tin', 'Sảnh 3D là hub thử nghiệm kết nối tới mọi trò chơi trong vũ trụ BizOn Bật Nghiệp.'],
-        ['📋 Bảng thông tin', '5 game hiện có: Hộ Chiếu Thương Hiệu, Game Bật Nghiệp, BizOn Arcade, Go Global, Gánh Hàng Khởi Nghiệp.'],
+        ['📋 Bảng thông tin', 'Sảnh 3D là hub thử nghiệm kết nối tới mọi trò chơi trong vũ trụ BizOn.'],
+        ['📋 Bảng thông tin', '5 game hiện có: Hộ Chiếu Thương Hiệu, Game Bật Nghiệp, BizOn Arcade, IE Lab · Quốc tế hóa, Bến Phù Sa.'],
         ['📋 Bảng thông tin', 'Toàn bộ chạy thẳng trong trình duyệt bằng three.js, không cần cài đặt gì cả.'],
       ],
       cta: null,
@@ -104,8 +104,8 @@
     { label: 'Hộ Chiếu Thương Hiệu', icon: '🛂', url: 'brand-passport.html', color: '#006687' },
     { label: 'Game Bật Nghiệp', icon: '🎮', url: 'game.html', color: '#0f8f6b' },
     { label: 'BizOn Arcade', icon: '🕹️', url: 'games.html', color: '#7b3fa0' },
-    { label: 'Go Global', icon: '🌏', url: 'global.html', color: '#1c6fd1' },
-    { label: 'Gánh Hàng Khởi Nghiệp', icon: '🛶', url: 'ben-phu-sa.html', color: '#c2740c' },
+    { label: 'IE Lab · Quốc tế hóa', icon: '🌏', url: 'global.html', color: '#1c6fd1' },
+    { label: 'Bến Phù Sa', icon: '🛶', url: 'ben-phu-sa.html', color: '#c2740c' },
   ];
 
   var canvas, renderer, scene, camera;

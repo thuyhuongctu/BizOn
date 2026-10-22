@@ -2,7 +2,7 @@
 
 <a href="https://bizonland.com/"><img src="assets/icons/icon-192.png" alt="BizOn" width="88"></a>
 
-# BizOn – Bật Nghiệp
+# BizOn
 
 **Simulation-based business learning, from Vietnam to the world.**<br>
 *Học kinh doanh qua mô phỏng – từ Đồng bằng sông Cửu Long ra thế giới.*
@@ -47,7 +47,7 @@ Start at Level 1. Each level builds on the one before, and every game has a 3D v
 <td width="50%" valign="top">
 <a href="https://bizonland.com/ben-phu-sa-3d.html"><img src="assets/covers/ben-phu-sa-3d.webp" alt="Bến Phù Sa"></a>
 
-**Level 1 · Start-up — Bến Phù Sa**<br>
+**Level 1 · Venture start-up — Bến Phù Sa**<br>
 A riverside street-vendor start-up on a Mekong floating market. Each week you pick a Method, Product and Location, and learn when to test cheaply and when to scale.<br>
 <sub>5 weeks · solo or team play</sub><br>
 [Play in 3D](https://bizonland.com/ben-phu-sa-3d.html) · [3D team play](https://bizonland.com/ben-phu-sa-v8.html) · [2D](https://bizonland.com/ben-phu-sa.html) · [Trailer](https://bizonland.com/assets/video/ben-phu-sa-trailer-v2.mp4)
@@ -65,7 +65,7 @@ Build and run a company through multi-round strategic decisions in a Vietnamese 
 <td width="50%" valign="top">
 <a href="https://bizonland.com/Ho%20Chieu%20Thuong%20Hieu%203D.html"><img src="assets/covers/ho-chieu-thuong-hieu-3d.webp" alt="Brand Passport"></a>
 
-**Level 3 · Going global — Brand Passport**<br>
+**Level 3 · Internationalisation — Brand Passport**<br>
 Take a Vietnamese brand across borders through market intelligence, entry strategy, adaptation and resilience.<br>
 <sub>6 quarters · 7 markets</sub><br>
 [Play in 3D](https://bizonland.com/Ho%20Chieu%20Thuong%20Hieu%203D.html) · [2D](https://bizonland.com/brand-passport.html) · [Lite 3D](https://bizonland.com/Ho%20Chieu%20Mini%203D.html) · [Lite 2D](https://bizonland.com/Ho%20Chieu%20Mini.dc.html) · [Trailer](https://bizonland.com/assets/video/bp-trailer-v2.mp4)
@@ -73,7 +73,7 @@ Take a Vietnamese brand across borders through market intelligence, entry strate
 <td width="50%" valign="top">
 <a href="https://bizonland.com/lab/ho-chieu-sau-rieng-3d.html"><img src="assets/covers/ho-chieu-sau-rieng-3d.webp" alt="Durian Passport"></a>
 
-**Level 3 · Going global — Durian Passport**<br>
+**Level 3 · Internationalisation — Durian Passport**<br>
 Take Vietnamese durian to the world over 6 seasons on a walkable 3D map. Topics include planting-area codes, the China phytosanitary protocol, official versus border trade, and frozen and premium markets.<br>
 <sub>6 seasons · teams of 5 roles vs AI rivals</sub><br>
 [Play in 3D](https://bizonland.com/lab/ho-chieu-sau-rieng-3d.html) · [2D](https://bizonland.com/lab/ho-chieu-sau-rieng.html) · [Classroom playbook](https://bizonland.com/lop-hoc.html) · [Trailer](https://bizonland.com/assets/video/srp-trailer.mp4)

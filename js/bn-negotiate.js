@@ -13,7 +13,7 @@
     return {
       id: 'bn-investor',
       title: T('Phòng đàm phán', 'Negotiation Room'),
-      subtitle: T('BizOn Bật Nghiệp', 'BizOn Bật Nghiệp'),
+      subtitle: T('Bật Nghiệp', 'Bật Nghiệp'),
       scenario: T('Một nhà đầu tư thiên thần quan tâm rót vốn cho đội của bạn, nhưng muốn bàn rõ định giá và tỷ lệ cổ phần trước khi ký.', 'An angel investor is interested in funding your team, but wants to negotiate valuation and equity before signing.'),
       partner: { name: T('Nhà đầu tư thiên thần', 'Angel Investor'), icon: '💼', accent: '#1f9a63' },
       openingLines: [

@@ -99,7 +99,7 @@
 
   var dock = document.createElement('div');
   dock.id = 'bz-dock';
-  var shareText = encodeURIComponent('BizOn Bật Nghiệp – trò chơi mô phỏng kinh doanh 3D cho đào tạo khởi nghiệp');
+  var shareText = encodeURIComponent('BizOn – Hệ sinh thái mô phỏng ra quyết định kinh doanh');
   var pageUrl = encodeURIComponent(SITE_URL);
   dock.innerHTML =
     '<p class="bz-cap">🎛️ Tiện ích · Quick controls</p>' +
