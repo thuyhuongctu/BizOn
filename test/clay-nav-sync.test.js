@@ -62,6 +62,26 @@ for (const [from, to] of Object.entries(MERGED)) {
   });
 }
 
+// Trang ứng dụng/tài liệu ở thư mục gốc: chỉ gắn menu + chân trang chung
+const ROOT_TOOLS = ['brand-passport-learning.html', 'brand-passport-learning-pilot.html', 'Thang Diem Danh Gia.dc.html',
+  'Thang Diem Chi Tiet.dc.html', 'Thang Diem Ho Chieu Mini.dc.html', 'Thang Diem Bat Nghiep - Sinh Vien.dc.html',
+  'Grading Scale Bat Nghiep - Student EN.dc.html', 'Thang Diem Ho Chieu - Sinh Vien.dc.html', 'Grading Scale Ho Chieu - Student EN.dc.html'];
+for (const f of ROOT_TOOLS) {
+  test(f + ': menu + chân trang đất sét', () => {
+    const s = read(f);
+    for (const need of ['css/bizon-clay-chrome.css', 'js/bizon-clay-i18n.js', 'js/bizon-clay-bridge.js', 'js/bizon-clay-nav.js', 'js/bizon-clay-footer.js'])
+      assert.ok(s.includes(need), f + ' thiếu ' + need);
+    const alt = s.match(/BIZON_LANG_ALT = (\{[^;]+\});/);
+    if (alt) for (const target of Object.values(JSON.parse(alt[1])))
+      assert.ok(fs.existsSync(path.join(ROOT, decodeURI(target))), f + ': bản ngôn ngữ kia không tồn tại ' + target);
+  });
+}
+
+test('nav/footer đất sét không tự gắn khi trang nằm trong khung (iframe)', () => {
+  for (const f of ['js/bizon-clay-nav.js', 'js/bizon-clay-footer.js'])
+    assert.ok(/window\.top !== window\.self/.test(read(f)), f + ' thiếu chặn iframe');
+});
+
 test('nội dung gộp có mặt ở trang giữ lại', () => {
   const uni = read('universe.html'), dn = read('doi-ngu.html'), cs = read('chinh-sach.html');
   for (const id of ['hoc-phan', 'cau-hoi']) assert.ok(uni.includes('id="' + id + '"'), 'universe thiếu #' + id);

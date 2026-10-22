@@ -4,6 +4,8 @@
    ========================================================================== */
 (function(){
   if(window.__bizonClayFooter) return; window.__bizonClayFooter = true;
+  /* Trang được nhúng trong khung (vd pilot nhúng Learning Edition) dùng menu của trang ngoài */
+  try{ if(window.top !== window.self) return; }catch(e){ return; }
 
   /* Trang ở thư mục con nạp '../js/bizon-clay-footer.js' → gắn tiền tố gốc cho liên kết tương đối */
   var cs = document.currentScript;

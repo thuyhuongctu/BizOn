@@ -7,6 +7,8 @@
    ========================================================================== */
 (function(){
   if(window.__bizonClayNav) return; window.__bizonClayNav = true;
+  /* Trang được nhúng trong khung (vd pilot nhúng Learning Edition) dùng menu của trang ngoài */
+  try{ if(window.top !== window.self) return; }catch(e){ return; }
   window.BIZON_NO_NAV = true; /* chặn site-nav.js cũ nếu vô tình được nạp */
 
   var LINKS = [
