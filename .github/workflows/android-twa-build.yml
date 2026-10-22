@@ -76,7 +76,7 @@ jobs:
           assert manifest['start_url'] == './release.html'
           assert manifest['scope'] == './'
           assert manifest['display'] == 'standalone'
-          assert manifest['name'] == 'BizOn – Mô phỏng kinh doanh'
+          assert manifest['name'] == 'BizOn – Bật Nghiệp'
           assert next(item for item in manifest['shortcuts'] if item['short_name'] == 'Command')['url'] == './command-center.html'
           assert next(item for item in manifest['shortcuts'] if item['short_name'] == 'Startup')['url'] == '../game.html'
           assert next(item for item in manifest['shortcuts'] if item['short_name'] == 'Passport')['url'] == './brand-passport.html'
