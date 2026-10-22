@@ -28,7 +28,6 @@
   var GROUPS = [
     ['🌌 Vũ trụ', [
       ['Bản đồ Vũ trụ', 'universe.html'],
-      ['Trường (thể chế)', 'truong.html'],
       ['Nền tảng học thuật', 'truong-hoc-thuat.html'],
       ['Sổ điểm giảng viên', 'instructor-grading.html'],
     ]],
@@ -48,7 +47,7 @@
     ]],
     ['🎓 Giảng dạy', [
       ['Kịch bản lớp học', 'lop-hoc.html'],
-      ['Bảng điều khiển lớp', 'giang-vien.html'],
+      ['Bảng điều khiển lớp', 'app/instructor-studio.html'],
       ['Khảo sát trước–sau', 'khao-sat-online.html'],
       ['Học thuật & Model Cards', 'hoc-thuat.html'],
       ['Thẻ mô tả Lumina', 'lumina.html'],

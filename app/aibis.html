@@ -14,6 +14,8 @@
   <link rel="stylesheet" href="../css/aibis-app.css">
   <link rel="stylesheet" href="../css/bizon-unified-overrides.css">
 <link rel="stylesheet" href="../css/clay-dark-skin.css">
+<link rel="stylesheet" href="../css/bizon-clay-chrome.css">
+<link rel="stylesheet" href="../css/clay-legacy.css">
 <script src="../js/capture-guard.js"></script>
 </head>
 <body>
@@ -62,7 +64,7 @@
     </section>
   </main>
 
-  <nav class="mobile-nav" aria-label="Điều hướng di động" data-en-aria="Mobile navigation"><a href="./release.html" data-en="Home">Trang chủ</a><a href="./command-center.html" data-en="Command">Điều hành</a><a href="../game.html" data-en="Startup">Khởi nghiệp</a><a class="active" href="./aibis.html">AIBIS</a><a href="../giang-vien.html" data-en="Instructor">Giảng viên</a></nav>
+  <nav class="mobile-nav" aria-label="Điều hướng di động" data-en-aria="Mobile navigation"><a href="./release.html" data-en="Home">Trang chủ</a><a href="./command-center.html" data-en="Command">Điều hành</a><a href="../game.html" data-en="Startup">Khởi nghiệp</a><a class="active" href="./aibis.html">AIBIS</a><a href="./instructor-studio.html" data-en="Instructor">Giảng viên</a></nav>
 </div>
 <script src="../js/app-shell/app-shell.js" defer></script>
 <script src="../js/aibis/country-profile-registry.js" defer></script>
@@ -71,9 +73,8 @@
 <script src="../js/app-shell/aibis-workspace.js" defer></script>
 
 <script src="../js/bizon-clay-i18n.js"></script>
-<button type="button" id="clay-lang-fab" onclick="window.clayToggleLang&&clayToggleLang()" aria-label="VI / EN" style="position:fixed;left:14px;bottom:14px;z-index:9999;border:0;cursor:pointer;padding:9px 14px;border-radius:999px;background:#FFFBF4;color:#033337;font:800 13px 'Be Vietnam Pro',system-ui,sans-serif;box-shadow:0 10px 18px -8px rgba(110,70,30,.55),inset 0 -4px 0 rgba(110,70,30,.12)">VI · EN</button>
-<script>(function(){var b=document.getElementById('clay-lang-fab');function lbl(){var l=window.clayCurrentLang?clayCurrentLang():'vi';b.textContent=l==='en'?'Tiếng Việt':'English';}
-window.addEventListener('bizon:langchange',lbl);setTimeout(lbl,0);
-setInterval(function(){try{var s=localStorage.getItem('bizon-lang')==='en'?'en':'vi';if(window.clayApplyLang&&window.__bizonLang&&s!==window.__bizonLang)clayApplyLang(s);}catch(e){}},600);})();</script>
+<script src="../js/bizon-clay-bridge.js" defer></script>
+<script src="../js/bizon-clay-nav.js" defer></script>
+<script src="../js/bizon-clay-footer.js" defer></script>
 </body>
 </html>

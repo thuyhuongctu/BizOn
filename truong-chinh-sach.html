@@ -1,260 +1,36 @@
 <!DOCTYPE html>
-<!-- THANH GHI: THỂ CHẾ (chính sách dữ liệu & SHTT). Vỏ dùng chung: assets/css/shell.css + assets/js/shell.js.
-     CẨN TRỌNG: KHÔNG đổi URL, KHÔNG chuyển hướng. Giữ nguyên nội dung chính sách, chỉ đổi trình bày.
-     Trang riêng biệt với chinh-sach.html (chính sách quyền riêng tư Google Play) — KHÔNG đụng tệp đó. -->
-<html lang="vi" data-theme="light">
+<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & PGS.TS. Phan Anh Tú. Bảo lưu mọi quyền. -->
+<!--
+  Trang "truong-chinh-sach.html" đã gộp vào chinh-sach.html (Phần B – Quản trị dữ liệu & SHTT).
+  Giữ URL cũ và chuyển hướng (không xoá – đảo ngược được). GitHub Pages không có
+  chuyển hướng phía máy chủ nên dùng meta refresh + canonical; script giữ ?query và #neo.
+-->
+<html lang="vi">
 <head>
 <meta charset="UTF-8">
 <script src="js/bizon-lang.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title data-vi="BizOn – Chính sách dữ liệu &amp; Sở hữu trí tuệ" data-en="BizOn – Data policy &amp; Intellectual property">BizOn – Chính sách dữ liệu &amp; Sở hữu trí tuệ</title>
-<meta name="description" data-content-vi="Chính sách dữ liệu của BizOn: không quảng cáo, không mua bán dữ liệu, không lưu thông tin định danh; luồng thu thập dữ liệu nghiên cứu tắt theo mặc định. Gồm sáu nguyên tắc quản trị dữ liệu, phạm vi thu thập, đồng thuận tách biệt theo mục đích, giới hạn của quyền rút lại đồng thuận, phạm vi sở hữu trí tuệ và các vấn đề pháp lý chưa được giải quyết." data-content-en="BizOn data policy: no advertising, no data trading, no stored identifying information; research data collection disabled by default. Six data-governance principles, the scope of collection, purpose-specific consent, the limits of withdrawal, intellectual-property scope and unresolved legal questions." content="Chính sách dữ liệu của BizOn: không quảng cáo, không mua bán dữ liệu, không lưu thông tin định danh; luồng thu thập dữ liệu nghiên cứu tắt theo mặc định. Gồm sáu nguyên tắc quản trị dữ liệu, phạm vi thu thập, đồng thuận tách biệt theo mục đích, giới hạn của quyền rút lại đồng thuận, phạm vi sở hữu trí tuệ và các vấn đề pháp lý chưa được giải quyết.">
-<meta name="theme-color" content="#FFFFFF">
-<link rel="icon" type="image/svg+xml" href="assets/brand/bizon-favicon.svg">
-<meta property="og:type" content="website">
-<meta property="og:title" content="BizOn – Chính sách dữ liệu &amp; SHTT">
-<meta property="og:description" content="Dữ liệu học tập thuộc về lớp học: nguyên tắc và giới hạn. Không quảng cáo, không mua bán dữ liệu, đồng thuận tách biệt theo mục đích và các vấn đề pháp lý chưa được giải quyết.">
-<meta property="og:image" content="https://bizonland.com/assets/brand/og-truong.png">
-<link rel="stylesheet" href="css/bizon-institutional-fonts.css">
-<link rel="stylesheet" href="assets/css/shell.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Đã chuyển: Chính sách dữ liệu & SHTT · BizOn</title>
+<link rel="canonical" href="https://bizonland.com/chinh-sach.html">
+<meta http-equiv="refresh" content="0; url=chinh-sach.html#quan-tri-du-lieu">
+<meta name="robots" content="noindex, follow">
+<script>
+(function(){
+  var map = {"#lien-he": "#lien-he-chinh-sach"};
+  var h = location.hash, to = 'chinh-sach.html';
+  location.replace(to + location.search + (h ? (h in map ? map[h] : h) : '#quan-tri-du-lieu'));
+})();
+</script>
 <style>
-/* ═══════════ RIÊNG TRANG CHÍNH SÁCH ═══════════ */
-.hero-sm{padding:clamp(46px,7vw,88px) 0 clamp(28px,4vw,44px);border-bottom:1px solid var(--rule)}
-.hero-sm h1{font-size:clamp(2rem,4.6vw,3.4rem)}
-.hero-sm h1 em{font-style:normal;color:var(--jade)}
-.hero-sm .lede{margin-top:1.1rem}
-
-.principles{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule)}
-.principle{background:var(--paper);padding:22px 20px}
-.principle .no{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;color:var(--jade);display:block;margin-bottom:.55rem}
-.principle h3{font-size:1rem;margin-bottom:.4rem}
-.principle .body{font-size:.88rem}
-
-.cols2{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule)}
-.col{background:var(--paper);padding:clamp(22px,2.6vw,30px)}
-.col .ct{font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:1rem}
-.col.yes .ct{color:var(--jade)}
-.col.no .ct{color:var(--silt)}
-.col ul{list-style:none;display:grid;gap:.7rem}
-.col li{display:grid;grid-template-columns:20px 1fr;gap:10px;align-items:baseline;font-size:.9rem}
-.col.yes li .m{color:var(--jade);font-weight:700}
-.col.no li .m{color:var(--silt);font-weight:700}
-
-.consent{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2.4vw,24px)}
-.cbox{border:1px solid var(--rule);padding:clamp(20px,2.4vw,26px);background:var(--paper)}
-.cbox .off{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--silt);margin-bottom:.9rem}
-.cbox .sw{width:30px;height:17px;border-radius:9px;background:color-mix(in srgb,var(--silt) 30%,var(--band));position:relative;flex:none}
-.cbox .sw::after{content:"";position:absolute;top:2px;left:2px;width:13px;height:13px;border-radius:50%;background:var(--paper);box-shadow:0 1px 2px rgba(0,0,0,.2)}
-.cbox h3{margin-bottom:.45rem}
-.cbox .body{font-size:.9rem}
-.consent-note{border-left:3px solid var(--jade);padding-left:18px;margin-top:clamp(18px,2.4vw,26px);font-size:.92rem;color:var(--ink-2);max-width:70ch}
-.consent-note b{color:var(--ink);font-weight:600}
-
-.limits{border:2px solid var(--silt);background:color-mix(in srgb,var(--silt) 6%,var(--paper));padding:clamp(22px,3vw,32px)}
-.limits h3{color:var(--silt);margin-bottom:.6rem}
-.limits .body{font-size:.95rem;max-width:72ch}
-.limits .body b{color:var(--ink);font-weight:600}
-
-.spec{list-style:none}
-.spec li{padding:15px 0;border-top:1px solid var(--rule);display:grid;grid-template-columns:170px 1fr;gap:18px;align-items:baseline}
-.spec li:last-child{border-bottom:1px solid var(--rule)}
-.spec .k{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
-.spec .v{font-size:.9rem;color:var(--ink)}
-.spec .v a{color:var(--jade);text-decoration:none}
-.spec .v a:hover{text-decoration:underline}
-.spec .v em{font-style:normal;color:var(--jade);font-weight:500}
-.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,52px);align-items:start}
-.split .note{border-left:3px solid var(--rule);padding-left:18px;font-size:.9rem;color:var(--ink-2);margin-top:1.2rem}
-.split .note b{color:var(--ink);font-weight:600}
-.split .note a{color:var(--jade);text-decoration:none}
-
-.open{list-style:none;display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule)}
-.open li{background:var(--paper);padding:18px 20px;display:grid;grid-template-columns:34px 1fr;gap:14px;align-items:baseline;font-size:.92rem}
-.open li b.n{font-family:var(--mono);font-size:.8rem;color:var(--jade)}
-.open li b{color:var(--ink);font-weight:600}
-
-@media(max-width:820px){
-  .principles{grid-template-columns:1fr}
-  .cols2,.consent,.split{grid-template-columns:1fr}
-  .spec li{grid-template-columns:1fr;gap:5px}
-}
+  body{margin:0;min-height:100vh;display:grid;place-items:center;padding:2rem;background:#FBF4E8;color:#033337;
+    font:500 16px/1.6 "Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",sans-serif;text-align:center}
+  a{color:#006687;font-weight:800}
 </style>
-<link rel="stylesheet" href="css/bizon-clay-chrome.css">
-<link rel="stylesheet" href="css/clay-tool-skin.css">
-<link rel="stylesheet" href="css/clay-legacy.css">
-<script src="js/capture-guard.js"></script>
 </head>
 <body>
-
-<div class="prog" id="prog"></div>
-
-<main id="top">
-
-<!-- ═══ HERO NHỎ ═══ -->
-<section class="hero-sm">
-  <div class="shell">
-    <p class="tag" data-vi="Chính sách dữ liệu &amp; SHTT" data-en="Data policy &amp; IP">Chính sách dữ liệu &amp; SHTT</p>
-    <h1 data-vi="Dữ liệu học tập thuộc về lớp học: &lt;em&gt;nguyên tắc và giới hạn&lt;/em&gt;" data-en="Learning data belongs to the class: principles and limits">Dữ liệu học tập thuộc về lớp học: <em>nguyên tắc và giới hạn</em></h1>
-    <p class="lede" data-vi="Văn bản này trình bày chính sách dữ liệu của BizOn dành cho lãnh đạo khoa, hội đồng chuyên môn và bộ phận mua sắm. BizOn không hiển thị quảng cáo, không mua bán dữ liệu và không lưu thông tin định danh người học; luồng thu thập dữ liệu phục vụ nghiên cứu được tắt theo mặc định. Văn bản đồng thời xác định các vấn đề pháp lý chưa được giải quyết, thay vì đưa ra những cam kết vượt quá khả năng kỹ thuật của phần mềm." data-en="This document sets out BizOn's data policy for faculty leadership, review committees and procurement offices. BizOn displays no advertising, does not trade in data and stores no learner-identifying information; the research data-collection flow is disabled by default. The document also identifies the legal questions that remain unresolved, rather than making commitments that exceed the software's technical capabilities.">Văn bản này trình bày chính sách dữ liệu của BizOn dành cho lãnh đạo khoa, hội đồng chuyên môn và bộ phận mua sắm. BizOn không hiển thị quảng cáo, không mua bán dữ liệu và không lưu thông tin định danh người học; luồng thu thập dữ liệu phục vụ nghiên cứu được tắt theo mặc định. Văn bản đồng thời xác định các vấn đề pháp lý chưa được giải quyết, thay vì đưa ra những cam kết vượt quá khả năng kỹ thuật của phần mềm.</p>
-  </div>
-</section>
-
-<!-- ═══ SÁU NGUYÊN TẮC ═══ -->
-<section id="nguyen-tac">
-  <div class="shell">
-    <div class="head rv">
-      <p class="tag" data-vi="Nguyên tắc dữ liệu" data-en="Data principles">Nguyên tắc dữ liệu</p>
-      <h2 data-vi="Sáu nguyên tắc quản trị dữ liệu" data-en="Six data-governance principles">Sáu nguyên tắc quản trị dữ liệu</h2>
-      <p class="lede" data-vi="Các nguyên tắc dưới đây là ràng buộc thiết kế mà hệ thống tuân thủ, không phải tuyên bố mang tính tiếp thị. Chúng nhất quán với khung quản trị dữ liệu của chương trình thí điểm học tập." data-en="The principles below are design constraints to which the system adheres, not marketing statements. They are consistent with the data-governance framework of the learning pilot.">Các nguyên tắc dưới đây là ràng buộc thiết kế mà hệ thống tuân thủ, không phải tuyên bố mang tính tiếp thị. Chúng nhất quán với khung quản trị dữ liệu của chương trình thí điểm học tập.</p>
-    </div>
-    <div class="principles rv">
-      <div class="principle"><span class="no">01</span><h3 data-vi="Cục bộ là mặc định" data-en="Local-first by default">Cục bộ là mặc định</h3><p class="body" data-vi="Tiến trình học được lưu trên thiết bị của người dùng. Dữ liệu chỉ được truyền đi khi người học chủ động đồng ý (opt-in); hệ thống không tự động gửi dữ liệu." data-en="Learning progress is stored on the user's device. Data is transmitted only when the learner explicitly opts in; the system never sends data automatically.">Tiến trình học được lưu trên thiết bị của người dùng. Dữ liệu chỉ được truyền đi khi người học chủ động đồng ý (opt-in); hệ thống không tự động gửi dữ liệu.</p></div>
-      <div class="principle"><span class="no">02</span><h3 data-vi="Không yêu cầu danh tính" data-en="No identity required">Không yêu cầu danh tính</h3><p class="body" data-vi="Không bắt buộc danh tính: người học có thể chơi mà không cung cấp họ tên, email hay số điện thoại. Email chỉ được ghi nhận khi người học tự nguyện nhập ở chế độ lớp học (có mã lớp); khi đó email và kết quả được gửi đến máy chủ lớp học để giảng viên đánh giá. Mã đội được băm (hash); nhật ký lỗi kỹ thuật không chứa thông tin định danh. Thời hạn lưu trữ: kết quả lớp học 12 tháng, khảo sát 24 tháng, tiến trình đội 90 ngày kể từ lần dùng cuối." data-en="No identity required: learners can play without giving a name, email or phone number. An email is recorded only if a learner voluntarily enters it in classroom mode (with a class code); it is then sent with the results to the class server for instructor assessment. Team codes are hashed; technical error logs contain no personal identifiers. Retention: classroom results 12 months, surveys 24 months, team progress 90 days after last use.">Không bắt buộc danh tính: người học có thể chơi mà không cung cấp họ tên, email hay số điện thoại. Email chỉ được ghi nhận khi người học tự nguyện nhập ở chế độ lớp học (có mã lớp); khi đó email và kết quả được gửi đến máy chủ lớp học để giảng viên đánh giá. Mã đội được băm (hash); nhật ký lỗi kỹ thuật không chứa thông tin định danh. Thời hạn lưu trữ: kết quả lớp học 12 tháng, khảo sát 24 tháng, tiến trình đội 90 ngày kể từ lần dùng cuối.</p></div>
-      <div class="principle"><span class="no">03</span><h3 data-vi="Thời hạn lưu rõ ràng" data-en="Clear retention window">Thời hạn lưu rõ ràng</h3><p class="body" data-vi="Dữ liệu có thời hạn lưu trữ xác định và cơ chế xóa sớm ở tầng lưu trữ, thay vì được lưu giữ vô thời hạn." data-en="Data has a defined retention period and an early-deletion mechanism at the storage layer, rather than being retained indefinitely.">Dữ liệu có thời hạn lưu trữ xác định và cơ chế xóa sớm ở tầng lưu trữ, thay vì được lưu giữ vô thời hạn.</p></div>
-      <div class="principle"><span class="no">04</span><h3 data-vi="Không chấm điểm tự động bằng AI" data-en="No automated grading by AI">Không chấm điểm tự động bằng AI</h3><p class="body" data-vi="Nội dung thảo luận và phản tư của người học không được sử dụng để mô hình ngôn ngữ chấm điểm tự động." data-en="Learner discussion and reflection are not used for automated grading by a language model.">Nội dung thảo luận và phản tư của người học không được sử dụng để mô hình ngôn ngữ chấm điểm tự động.</p></div>
-      <div class="principle"><span class="no">05</span><h3 data-vi="Engine tất định là nguồn kết quả duy nhất" data-en="The deterministic engine is the sole source of outcomes">Engine tất định là nguồn kết quả duy nhất</h3><p class="body" data-vi="Mọi kết quả mô phỏng đều được tạo ra từ engine tất định, nguồn duy nhất của kết quả; do đó kết quả có thể tái lập và giải thích được." data-en="All simulation outcomes are produced by the deterministic engine, the single source of outcomes; they are therefore reproducible and explainable.">Mọi kết quả mô phỏng đều được tạo ra từ engine tất định, nguồn duy nhất của kết quả; do đó kết quả có thể tái lập và giải thích được.</p></div>
-      <div class="principle"><span class="no">06</span><h3 data-vi="Không quảng cáo, không bán dữ liệu" data-en="No ads, no data sales">Không quảng cáo, không bán dữ liệu</h3><p class="body" data-vi="Sản phẩm không chứa quảng cáo; dữ liệu người học không được xem là hàng hóa để trao đổi." data-en="The product contains no advertising; learner data is not treated as a tradable commodity.">Sản phẩm không chứa quảng cáo; dữ liệu người học không được xem là hàng hóa để trao đổi.</p></div>
-    </div>
-    <p class="body rv" data-vi="Chi tiết kỹ thuật và quản trị được trình bày trong khung quản trị dữ liệu của chương trình thí điểm (&lt;b&gt;docs/learning/&lt;/b&gt;). Trang này là bản tóm tắt chính sách và không thay thế phê duyệt đạo đức nghiên cứu, quy định của cơ sở đào tạo hoặc ý kiến tư vấn pháp lý." data-en="Technical and governance details are set out in the pilot's data-governance framework (docs/learning/). This page is a policy summary and does not replace research-ethics approval, institutional regulations or legal advice.">Chi tiết kỹ thuật và quản trị được trình bày trong khung quản trị dữ liệu của chương trình thí điểm (<b>docs/learning/</b>). Trang này là bản tóm tắt chính sách và không thay thế phê duyệt đạo đức nghiên cứu, quy định của cơ sở đào tạo hoặc ý kiến tư vấn pháp lý.</p>
-  </div>
-</section>
-
-<!-- ═══ THU GÌ / KHÔNG THU GÌ ═══ -->
-<section class="band" id="thu-gi">
-  <div class="shell">
-    <div class="head rv">
-      <p class="tag" data-vi="Minh bạch thu thập" data-en="Collection transparency">Minh bạch thu thập</p>
-      <h2 data-vi="Phạm vi dữ liệu được và không được thu thập" data-en="Scope of data collected and not collected">Phạm vi dữ liệu được và không được thu thập</h2>
-    </div>
-    <div class="cols2 rv">
-      <div class="col yes">
-        <span class="ct" data-vi="Được thu thập (khi có đồng thuận)" data-en="Collected (subject to consent)">Được thu thập (khi có đồng thuận)</span>
-        <ul>
-          <li><span class="m">+</span><span data-vi="Mã đội đã băm, không thể truy ngược đến cá nhân." data-en="Hashed team code – not traceable to an individual.">Mã đội đã băm, không thể truy ngược đến cá nhân.</span></li>
-          <li><span class="m">+</span><span data-vi="Nhật ký chuỗi quyết định của đội trong mỗi ván chơi." data-en="The team's decision-sequence log for each game.">Nhật ký chuỗi quyết định của đội trong mỗi ván chơi.</span></li>
-          <li><span class="m">+</span><span data-vi="Ảnh chụp trạng thái cố định (đóng băng) ở mỗi vòng, phục vụ chấm điểm và tái lập kết quả." data-en="Frozen state snapshots for each round, used for grading and reproducing results.">Ảnh chụp trạng thái cố định (đóng băng) ở mỗi vòng, phục vụ chấm điểm và tái lập kết quả.</span></li>
-          <li><span class="m">+</span><span data-vi="Mã băm của lượt chơi, dùng để kiểm chứng khả năng tái lập." data-en="A play-through hash used to verify reproducibility.">Mã băm của lượt chơi, dùng để kiểm chứng khả năng tái lập.</span></li>
-        </ul>
-      </div>
-      <div class="col no">
-        <span class="ct" data-vi="Không thu thập" data-en="Not collected">Không thu thập</span>
-        <ul>
-          <li><span class="m">−</span><span data-vi="Họ tên, số điện thoại và các thông tin định danh cá nhân khác (PII); email chỉ khi người học tự nguyện nhập ở chế độ lớp học (xem mục 02)." data-en="Name, phone number and other personally identifiable information (PII); an email only if a learner voluntarily enters it in classroom mode (see 02).">Họ tên, số điện thoại và các thông tin định danh cá nhân khác (PII); email chỉ khi người học tự nguyện nhập ở chế độ lớp học (xem mục 02).</span></li>
-          <li><span class="m">−</span><span data-vi="Dữ liệu theo dõi phục vụ quảng cáo hoặc mã định danh thiết bị dùng cho tiếp thị." data-en="Ad-tracking data or device identifiers for marketing.">Dữ liệu theo dõi phục vụ quảng cáo hoặc mã định danh thiết bị dùng cho tiếp thị.</span></li>
-          <li><span class="m">−</span><span data-vi="Vị trí, dữ liệu sinh trắc học, danh bạ hoặc quyền truy cập vượt quá nhu cầu sử dụng." data-en="Location, biometric data, contacts, or permissions beyond what is required.">Vị trí, dữ liệu sinh trắc học, danh bạ hoặc quyền truy cập vượt quá nhu cầu sử dụng.</span></li>
-          <li><span class="m">−</span><span data-vi="Nội dung phản tư của người học nhằm mục đích chấm điểm tự động bằng AI." data-en="Learner reflections for the purpose of automated grading by AI.">Nội dung phản tư của người học nhằm mục đích chấm điểm tự động bằng AI.</span></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ ĐỒNG THUẬN HAI MỤC ĐÍCH ═══ -->
-<section id="dong-thuan">
-  <div class="shell">
-    <div class="head rv">
-      <p class="tag" data-vi="Đồng thuận" data-en="Consent">Đồng thuận</p>
-      <h2 data-vi="Đồng thuận tách biệt theo mục đích sử dụng" data-en="Separate consent for each purpose">Đồng thuận tách biệt theo mục đích sử dụng</h2>
-      <p class="lede" data-vi="“Nghiên cứu học thuật” và “cải tiến sản phẩm” là hai lựa chọn đồng thuận độc lập, cả hai đều tắt theo mặc định. Việc từ chối một hoặc cả hai lựa chọn không ảnh hưởng đến khả năng sử dụng đầy đủ sản phẩm." data-en="“Academic research” and “product improvement” are two independent consent options, both disabled by default. Declining either or both does not restrict access to the full product.">“Nghiên cứu học thuật” và “cải tiến sản phẩm” là hai lựa chọn đồng thuận độc lập, cả hai đều tắt theo mặc định. Việc từ chối một hoặc cả hai lựa chọn không ảnh hưởng đến khả năng sử dụng đầy đủ sản phẩm.</p>
-    </div>
-    <div class="consent rv">
-      <div class="cbox">
-        <span class="off"><span class="sw" aria-hidden="true"></span><span data-vi="Mặc định TẮT" data-en="OFF by default">Mặc định TẮT</span></span>
-        <h3 class="h-md" data-vi="Nghiên cứu học thuật" data-en="Academic research">Nghiên cứu học thuật</h3>
-        <p class="body" data-vi="Dữ liệu chỉ được ghi nhận khi có phiếu nghiên cứu đã được hội đồng đạo đức phê duyệt. Nhật ký đã băm được sử dụng để đánh giá hiệu quả học tập." data-en="Data is recorded only under a research form approved by an ethics committee. Hashed logs are used to evaluate learning effectiveness.">Dữ liệu chỉ được ghi nhận khi có phiếu nghiên cứu đã được hội đồng đạo đức phê duyệt. Nhật ký đã băm được sử dụng để đánh giá hiệu quả học tập.</p>
-      </div>
-      <div class="cbox">
-        <span class="off"><span class="sw" aria-hidden="true"></span><span data-vi="Mặc định TẮT" data-en="OFF by default">Mặc định TẮT</span></span>
-        <h3 class="h-md" data-vi="Cải tiến sản phẩm" data-en="Product improvement">Cải tiến sản phẩm</h3>
-        <p class="body" data-vi="Dữ liệu chỉ được ghi nhận khi người dùng bật riêng lựa chọn này. Dữ liệu đã băm được sử dụng để khắc phục lỗi và cải thiện trải nghiệm người dùng." data-en="Data is recorded only when the user enables this option separately. Hashed data is used to fix defects and improve the user experience.">Dữ liệu chỉ được ghi nhận khi người dùng bật riêng lựa chọn này. Dữ liệu đã băm được sử dụng để khắc phục lỗi và cải thiện trải nghiệm người dùng.</p>
-      </div>
-    </div>
-    <p class="consent-note rv" data-vi="&lt;b&gt;Việc chấm điểm độc lập với đồng thuận.&lt;/b&gt; Nhật ký quyết định là hợp đồng dữ liệu chung cho cả chấm điểm và (khi có đồng thuận) nghiên cứu. Tuy nhiên, quá trình chấm điểm không cần thông tin về việc ai đã đồng ý, vì điểm được tính trên ảnh chụp trạng thái cố định và nhật ký chỉ chứa mã băm." data-en="Grading is independent of consent. The decision log is a shared data contract for both grading and (with consent) research. Grading, however, requires no information about who consented, because scores are computed on frozen snapshots and the log contains only hashes."><b>Việc chấm điểm độc lập với đồng thuận.</b> Nhật ký quyết định là hợp đồng dữ liệu chung cho cả chấm điểm và (khi có đồng thuận) nghiên cứu. Tuy nhiên, quá trình chấm điểm không cần thông tin về việc ai đã đồng ý, vì điểm được tính trên ảnh chụp trạng thái cố định và nhật ký chỉ chứa mã băm.</p>
-  </div>
-</section>
-
-<!-- ═══ GIỚI HẠN QUYỀN RÚT LUI ═══ -->
-<section class="band" id="rut-lui">
-  <div class="shell">
-    <div class="head rv">
-      <p class="tag" data-vi="Quyền rút lại đồng thuận" data-en="Right to withdraw consent">Quyền rút lại đồng thuận</p>
-      <h2 data-vi="Giới hạn của quyền rút lại đồng thuận" data-en="Limits of the right to withdraw consent">Giới hạn của quyền rút lại đồng thuận</h2>
-    </div>
-    <div class="limits rv">
-      <h3 data-vi="Việc rút lại đồng thuận chỉ có hiệu lực về sau" data-en="Withdrawal takes effect only prospectively">Việc rút lại đồng thuận chỉ có hiệu lực về sau</h3>
-      <p class="body" data-vi="&lt;b&gt;Khi người học rút lại đồng thuận, mọi hoạt động ghi nhận và ước lượng tiếp theo đều bị chặn.&lt;/b&gt; Tuy nhiên, khi dữ liệu đã được tổng hợp vào các &lt;b&gt;tham số cụm&lt;/b&gt; tính toán trước đó, phần đóng góp của từng cá nhân không còn tách riêng được. Giới hạn này được công bố ngay từ đầu, vì cam kết “xóa sạch mọi dấu vết” vượt quá khả năng kỹ thuật của hệ thống." data-en="Withdrawal blocks all subsequent recording and estimation. However, once data has been aggregated into previously computed cluster parameters, an individual contribution can no longer be isolated. This limitation is disclosed from the outset, because a commitment to “erase every trace” would exceed the technical capability of the system."><b>Khi người học rút lại đồng thuận, mọi hoạt động ghi nhận và ước lượng tiếp theo đều bị chặn.</b> Tuy nhiên, khi dữ liệu đã được tổng hợp vào các <b>tham số cụm</b> tính toán trước đó, phần đóng góp của từng cá nhân không còn tách riêng được. Giới hạn này được công bố ngay từ đầu, vì cam kết “xóa sạch mọi dấu vết” vượt quá khả năng kỹ thuật của hệ thống.</p>
-      <p class="body" data-vi="Phiếu đồng thuận cần mô tả chính xác giới hạn này. Chi tiết kỹ thuật được trình bày tại &lt;a href=&quot;truong-hoc-thuat.html#chuan-dau-ra&quot;&gt;trang nền tảng học thuật&lt;/a&gt;." data-en="The consent form must describe this limitation accurately. Technical details are given on the academic foundation page.">Phiếu đồng thuận cần mô tả chính xác giới hạn này. Chi tiết kỹ thuật được trình bày tại <a href="truong-hoc-thuat.html#chuan-dau-ra">trang nền tảng học thuật</a>.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ SỞ HỮU TRÍ TUỆ ═══ -->
-<section id="shtt">
-  <div class="shell">
-    <div class="head rv">
-      <p class="tag" data-vi="Sở hữu trí tuệ &amp; giấy phép" data-en="Intellectual property &amp; licence">Sở hữu trí tuệ &amp; giấy phép</p>
-      <h2 data-vi="Phần mềm độc quyền, miễn phí có giới hạn cho giảng dạy" data-en="Proprietary software with limited free use for teaching">Phần mềm độc quyền, miễn phí có giới hạn cho giảng dạy</h2>
-      <p class="lede" data-vi="Mã nguồn, thuật toán của engine mô phỏng, thiết kế nhân vật (Lumina, Tú Phan, Đội Demo), thư viện nhạc gốc, cùng tên gọi và bộ nhận diện BizOn thuộc quyền sở hữu của nhóm tác giả. Nội dung dưới đây tóm lược tệp &lt;em&gt;LICENSE&lt;/em&gt; và mục bản quyền trong README." data-en="The source code, the simulation-engine algorithms, the character designs (Lumina, Tú Phan, the Demo Team), the original music library, and the BizOn name and visual identity are the property of the authors. The following summarises the LICENSE file and the copyright section of the README.">Mã nguồn, thuật toán của engine mô phỏng, thiết kế nhân vật (Lumina, Tú Phan, Đội Demo), thư viện nhạc gốc, cùng tên gọi và bộ nhận diện BizOn thuộc quyền sở hữu của nhóm tác giả. Nội dung dưới đây tóm lược tệp <em>LICENSE</em> và mục bản quyền trong README.</p>
-    </div>
-    <div class="split rv">
-      <div>
-        <ul class="spec">
-          <li><span class="k" data-vi="Loại giấy phép" data-en="Licence type">Loại giấy phép</span><span class="v" data-vi="Phần mềm độc quyền – xem tệp LICENSE." data-en="Proprietary software – see the LICENSE file.">Phần mềm <em>độc quyền</em> – xem tệp LICENSE.</span></li>
-          <li><span class="k" data-vi="Phạm vi miễn phí" data-en="Free-use scope">Phạm vi miễn phí</span><span class="v" data-vi="Arcade và game bậc 1 (Bến Phù Sa): miễn phí, không giới hạn thời gian. Hai trụ cột: miễn phí cho Trường Đại học Cần Thơ và trong một học kỳ dùng thử tại các cơ sở đào tạo khác." data-en="Arcade and the Level-1 game (Bến Phù Sa): free of charge with no time limit. The two pillars: free for Can Tho University and for one trial semester at other institutions.">Arcade và game bậc 1 (Bến Phù Sa): miễn phí, không giới hạn thời gian. Hai trụ cột: miễn phí cho Trường Đại học Cần Thơ và trong một học kỳ dùng thử tại các cơ sở đào tạo khác.</span></li>
-          <li><span class="k" data-vi="Trường hợp cần giấy phép bằng văn bản" data-en="Cases requiring a written licence">Trường hợp cần giấy phép bằng văn bản</span><span class="v" data-vi="Tiếp tục sử dụng hai trụ cột tại cơ sở khác; sử dụng Instructor Studio; sao chép hoặc triển khai lại mã nguồn; trích xuất nhân vật hoặc âm nhạc; và mọi hình thức sử dụng có thu phí." data-en="Continued use of the two pillars at other institutions; use of Instructor Studio; copying or redeploying the source; extracting characters or music; and any fee-charging use.">Tiếp tục sử dụng hai trụ cột tại cơ sở khác; sử dụng Instructor Studio; sao chép hoặc triển khai lại mã nguồn; trích xuất nhân vật hoặc âm nhạc; và mọi hình thức sử dụng có thu phí.</span></li>
-          <li><span class="k" data-vi="Liên hệ cấp phép" data-en="Licensing contact">Liên hệ cấp phép</span><span class="v"><a href="mailto:bricoleur@bizonland.com">bricoleur@bizonland.com</a></span></li>
-        </ul>
-      </div>
-      <div>
-        <p class="body" data-vi="Hồ sơ đăng ký quyền tác giả, nhãn hiệu và chiến lược thương mại hóa được quản lý trong kho tài liệu riêng của nhóm tác giả." data-en="Registration records (copyright, trademark) and the commercialisation strategy are managed in the authors' own document repository.">Hồ sơ đăng ký quyền tác giả, nhãn hiệu và chiến lược thương mại hóa được quản lý trong kho tài liệu riêng của nhóm tác giả.</p>
-        <p class="note" data-vi="&lt;b&gt;Phông chữ tự lưu trữ.&lt;/b&gt; Các tệp &lt;em&gt;.woff2&lt;/em&gt; trong &lt;em&gt;assets/fonts/&lt;/em&gt; được cấp phép theo SIL Open Font License 1.1; giấy phép OFL chỉ áp dụng cho các tệp phông này. Hệ thống không tải phông chữ hoặc mã của bên thứ ba từ CDN khi vận hành." data-en="Self-hosted fonts. The .woff2 files in assets/fonts/ are licensed under the SIL Open Font License 1.1; the OFL applies only to those font files. No third-party fonts or code are loaded from a CDN at runtime."><b>Phông chữ tự lưu trữ.</b> Các tệp <em>.woff2</em> trong <em>assets/fonts/</em> được cấp phép theo SIL Open Font License 1.1; giấy phép OFL chỉ áp dụng cho các tệp phông này. Hệ thống không tải phông chữ hoặc mã của bên thứ ba từ CDN khi vận hành.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ CÂU HỎI PHÁP LÝ CÒN MỞ ═══ -->
-<section class="band" id="con-mo">
-  <div class="shell">
-    <div class="head rv">
-      <p class="tag" data-vi="Vấn đề pháp lý chưa được giải quyết" data-en="Unresolved legal questions">Vấn đề pháp lý chưa được giải quyết</p>
-      <h2 data-vi="Các vấn đề thuộc thẩm quyền pháp lý và đạo đức" data-en="Questions reserved for legal and ethics review">Các vấn đề thuộc thẩm quyền pháp lý và đạo đức</h2>
-      <p class="lede" data-vi="Chính sách cần phân định rõ những vấn đề có thể giải quyết bằng thiết kế phần mềm và những vấn đề thuộc thẩm quyền quyết định của con người. Các mục dưới đây là vấn đề &lt;em class=&quot;em-jade&quot;&gt;pháp lý&lt;/em&gt;, không phải kỹ thuật, và thuộc thẩm quyền của luật sư và hội đồng đạo đức." data-en="A policy must distinguish between issues that software design can resolve and those that require human decision. The items below are legal, not technical, matters and fall within the remit of legal counsel and the ethics committee.">Chính sách cần phân định rõ những vấn đề có thể giải quyết bằng thiết kế phần mềm và những vấn đề thuộc thẩm quyền quyết định của con người. Các mục dưới đây là vấn đề <em class="em-jade">pháp lý</em>, không phải kỹ thuật, và thuộc thẩm quyền của luật sư và hội đồng đạo đức.</p>
-    </div>
-    <ul class="open rv">
-      <li><b class="n">01</b><span><b data-vi="Quyền sở hữu dữ liệu người học khi sản phẩm được chuyển nhượng hoặc cấp phép cho cơ sở đào tạo khác." data-en="Ownership of learner data when the product is transferred or licensed to another institution.">Quyền sở hữu dữ liệu người học khi sản phẩm được chuyển nhượng hoặc cấp phép cho cơ sở đào tạo khác.</b> <span data-vi="Hợp đồng cần có điều khoản chuyển giao vai trò bên kiểm soát dữ liệu (data controller); hiện chưa có phương án hoàn chỉnh và đang chờ ý kiến luật sư." data-en="The contract requires a clause transferring the data-controller role; no complete solution exists yet, pending legal advice.">Hợp đồng cần có điều khoản chuyển giao vai trò bên kiểm soát dữ liệu (data controller); hiện chưa có phương án hoàn chỉnh và đang chờ ý kiến luật sư.</span></span></li>
-      <li><b class="n">02</b><span><b data-vi="Nội dung chính xác của hai lựa chọn đồng thuận" data-en="The exact wording of the two consent options">Nội dung chính xác của hai lựa chọn đồng thuận</b> <span data-vi="cùng phiếu đồng thuận song ngữ có giá trị pháp lý, do hội đồng đạo đức phê duyệt, không do phần mềm tự xác lập." data-en="and a legally valid bilingual form, to be approved by the ethics committee rather than defined by the software.">cùng phiếu đồng thuận song ngữ có giá trị pháp lý, do hội đồng đạo đức phê duyệt, không do phần mềm tự xác lập.</span></span></li>
-      <li><b class="n">03</b><span><b data-vi="Xung đột vai trò khi giảng viên đồng thời là nhà nghiên cứu" data-en="Role conflict when the instructor is also the researcher">Xung đột vai trò khi giảng viên đồng thời là nhà nghiên cứu</b><span data-vi=": quy trình tách người thu nhận đồng thuận khỏi người chấm điểm cần được hội đồng phê duyệt, bổ sung cho các biện pháp đã có trong thiết kế (băm dữ liệu và chấm điểm trên ảnh chụp trạng thái)." data-en=": a procedure separating the person who collects consent from the person who grades requires committee approval, in addition to the safeguards already built into the design (hashing and grading on snapshots).">: quy trình tách người thu nhận đồng thuận khỏi người chấm điểm cần được hội đồng phê duyệt, bổ sung cho các biện pháp đã có trong thiết kế (băm dữ liệu và chấm điểm trên ảnh chụp trạng thái).</span></span></li>
-      <li><b class="n">04</b><span><b data-vi="Thời hạn lưu trữ và lịch xóa cụ thể" data-en="Specific retention period and deletion schedule">Thời hạn lưu trữ và lịch xóa cụ thể</b> <span data-vi="đối với dữ liệu thô, cần được xác lập theo quy định của cơ sở đào tạo và ý kiến tư vấn pháp lý." data-en="for raw data, to be determined in line with institutional regulations and legal advice.">đối với dữ liệu thô, cần được xác lập theo quy định của cơ sở đào tạo và ý kiến tư vấn pháp lý.</span></span></li>
-    </ul>
-    <p class="consent-note rv" data-vi="&lt;b&gt;Cho đến khi bốn nội dung trên được phê duyệt,&lt;/b&gt; luồng thu thập dữ liệu nghiên cứu tiếp tục được tắt theo mặc định: hạ tầng ghi nhận đã sẵn sàng nhưng không ghi nhận dữ liệu thực." data-en="Until the four items above are approved, the research data-collection flow remains disabled by default: the recording infrastructure is in place but records no real data."><b>Cho đến khi bốn nội dung trên được phê duyệt,</b> luồng thu thập dữ liệu nghiên cứu tiếp tục được tắt theo mặc định: hạ tầng ghi nhận đã sẵn sàng nhưng không ghi nhận dữ liệu thực.</p>
-  </div>
-</section>
-
-<!-- ═══ CTA ═══ -->
-<section id="lien-he">
-  <div class="shell">
-    <div class="head rv">
-      <p class="tag" data-vi="Liên hệ" data-en="Contact">Liên hệ</p>
-      <h2 data-vi="Hỏi về chính sách dữ liệu" data-en="Ask about the data policy">Hỏi về chính sách dữ liệu</h2>
-      <p class="lede" data-vi="Nhóm tác giả có thể cung cấp khung quản trị dữ liệu, bản thảo khung đồng thuận và tệp giấy phép để bộ phận pháp chế và hội đồng của nhà trường thẩm định trước khi triển khai." data-en="The authors can provide the data-governance framework, the draft consent framework and the licence file for review by the institution's legal office and committees prior to deployment.">Nhóm tác giả có thể cung cấp khung quản trị dữ liệu, bản thảo khung đồng thuận và tệp giấy phép để bộ phận pháp chế và hội đồng của nhà trường thẩm định trước khi triển khai.</p>
-    </div>
-    <div class="btn-row rv">
-      <a class="btn btn-solid" href="mailto:bricoleur@bizonland.com?subject=BizOn%20-%20H%E1%BB%8Fi%20v%E1%BB%81%20ch%C3%ADnh%20s%C3%A1ch%20d%E1%BB%AF%20li%E1%BB%87u" data-vi="Gửi câu hỏi qua email" data-en="Email a question">Gửi câu hỏi qua email</a>
-      <a class="btn btn-line" href="truong-hoc-thuat.html" data-vi="Xem nền tảng học thuật" data-en="Academic foundation">Xem nền tảng học thuật</a>
-    </div>
-  </div>
-</section>
-
+<main>
+  <p>Trang <strong>Chính sách dữ liệu & SHTT</strong> đã được gộp vào <strong>Chính sách dữ liệu & quyền riêng tư</strong>.</p>
+  <p>Nếu trình duyệt không tự chuyển, bấm vào đây: <a href="chinh-sach.html#quan-tri-du-lieu">Chính sách dữ liệu & quyền riêng tư →</a></p>
 </main>
-
-
-<script src="assets/js/shell.js"></script>
-<script src="js/bizon-clay-i18n.js" defer></script>
-<script src="js/bizon-clay-bridge.js" defer></script>
-<script src="js/bizon-clay-nav.js" defer></script>
-<script src="js/bizon-clay-footer.js" defer></script>
-<script>window.BIZON_DOCK_SONG='huong-and-the-world-en.mp3';</script>
-<script src="js/site-dock.js" defer></script>
 </body>
 </html>

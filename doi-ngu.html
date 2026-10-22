@@ -38,6 +38,29 @@
   .dn-tag{padding:6px 12px;border-radius:999px;font-size:12px;font-weight:800}
   .dn-press{padding:16px 18px;border-radius:22px;background:#FFF7EA;border:2px solid #F7E3C3}
   .dn-mv{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px}
+  .dn-sec{margin:0 0 56px}
+  .dn-sec>h2{margin:10px 0 18px;font-size:clamp(28px,3.4vw,38px);text-wrap:balance}
+  .dn-sec .lede{margin:0 0 18px;max-width:46em;font-size:16px;line-height:1.65;color:var(--clay-sub)}
+  .dn-sec .sub{margin:16px 0 0;max-width:46em;font-size:14px;line-height:1.6;color:var(--clay-sub)}
+  .dn-gaps{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:16px}
+  .dn-gap,.dn-ctx,.dn-cite{padding:24px;border-radius:30px;background:var(--clay-card);box-shadow:var(--clay-shadow-sm)}
+  .dn-gap .n{font-family:var(--clay-head);font-size:28px;font-weight:800;color:var(--clay-orange)}
+  .dn-gap p{margin:8px 0 0;font-size:15px;line-height:1.6}
+  .dn-ctx{margin-top:18px;background:var(--clay-cream-deep)}
+  .dn-ctx h3{margin:8px 0 10px;font-size:22px}
+  .dn-ctx p{margin:0;font-size:15px;line-height:1.65}
+  .dn-tl{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:14px}
+  .dn-tl li{padding:20px;border-radius:26px;background:var(--clay-card);box-shadow:var(--clay-shadow-sm)}
+  .dn-tl li.now{background:var(--clay-c1)}
+  .dn-tl .yr{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--clay-teal)}
+  .dn-tl h3{margin:6px 0 8px;font-size:18px}
+  .dn-tl p{margin:0;font-size:14px;line-height:1.55;color:var(--clay-sub)}
+  .dn-cite .apa{margin:0;padding:16px 18px;border-radius:20px;background:var(--clay-tray);font-size:15px;line-height:1.6;overflow-wrap:anywhere}
+  .dn-cite .ok{font-size:13px;font-weight:800;color:var(--clay-teal)}
+  .dn-meta{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:8px 18px;margin:18px 0 0;font-size:14px}
+  .dn-meta dt{font-weight:800}
+  .dn-meta dd{margin:0;overflow-wrap:anywhere;color:var(--clay-sub)}
+  @media (max-width:520px){ .dn-meta{grid-template-columns:1fr;gap:2px} .dn-meta dd{margin-bottom:8px} }
   .dn-cta{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-bottom:72px}
   .dn-cta a{padding:15px 24px;border-radius:20px;font-family:var(--clay-head);font-size:18px;font-weight:800}
   @media (max-width:520px){ .dn-stage{gap:8px;padding-top:70px} }
@@ -202,6 +225,56 @@
     </article>
   </section>
 
+  <!-- ═══ VÌ SAO CÓ BIZON (gộp từ truong-gioi-thieu.html) ═══ -->
+  <section class="dn-sec" id="vi-sao">
+    <span class="clay-eyebrow" data-en="The problem">Vấn đề</span>
+    <h2 data-en="Three gaps in teaching business decision-making">Ba khoảng trống khi dạy ra quyết định kinh doanh</h2>
+    <div class="dn-gaps">
+      <div class="dn-gap"><span class="n">01</span><p data-en-html="First, teaching lacks tools to assess &lt;b&gt;decision-making ability&lt;/b&gt;. Written exams measure knowledge, but struggle to measure a sequence of choices under constraint – pricing, demand estimation, cash-flow balancing – where each decision binds on the last. Instructors need a place where a student's reasoning leaves a gradable trace.">Thứ nhất, giảng dạy thiếu công cụ đánh giá <b>năng lực ra quyết định</b>. Bài kiểm tra viết đo được kiến thức, nhưng khó đo được một chuỗi lựa chọn dưới ràng buộc – định giá, ước lượng cầu, cân đối dòng tiền – nơi mỗi quyết định ràng vào quyết định trước. Giảng viên cần một nơi mà lập luận của sinh viên để lại dấu vết chấm được.</p></div>
+      <div class="dn-gap"><span class="n">02</span><p data-en-html="Second, international simulation software is often &lt;b&gt;expensive and mis-calibrated for local context&lt;/b&gt;. Students spend most of their attention guessing an unfamiliar foreign market instead of practising business reasoning. Per-seat licensing also puts many classes out of reach.">Thứ hai, phần mềm mô phỏng quốc tế thường <b>đắt và hiệu chỉnh sai bối cảnh</b>. Sinh viên phải dành phần lớn sức chú ý để đoán một thị trường nước ngoài xa lạ, thay vì rèn lập luận kinh doanh. Chi phí bản quyền theo đầu người lại khiến nhiều lớp không tiếp cận được.</p></div>
+      <div class="dn-gap"><span class="n">03</span><p data-en-html="Third, &lt;b&gt;black-box models cannot grade reasoning&lt;/b&gt;. When an outcome appears with no traceable cause, instructors cannot tell a good decision from a lucky one. BizOn takes the opposite path: a deterministic engine – the same sequence of decisions always yields the same outcome – and every model ships with a Model Card publishing its variables, equations, assumptions, and what it does not do.">Thứ ba, <b>mô hình hộp đen thì không chấm được lập luận</b>. Khi kết quả xuất hiện mà không truy được vì sao, giảng viên khó phân biệt một quyết định giỏi với một cú may. BizOn chọn hướng ngược lại: engine xác định – cùng một chuỗi quyết định luôn cho cùng một kết quả – và mỗi mô hình đi kèm một Model Card công bố biến số, phương trình, giả định và cả những gì mô hình không làm được.</p></div>
+    </div>
+    <div class="dn-ctx">
+      <span class="clay-eyebrow" data-en="Regional context">Bối cảnh vùng</span>
+      <h3 data-en="The gap between local institutions and enterprise capacity">Khoảng cách giữa thể chế địa phương và sức bật doanh nghiệp</h3>
+      <p data-en-html="The Mekong Delta has a deep density of small enterprise and a long floating-market trading culture, yet &lt;b&gt;the formal management capacity of its small-business sector still lags its potential&lt;/b&gt;. A decision-training tool, set in the region's own context, is a way to close that gap from the classroom onward.">Đồng bằng sông Cửu Long có mật độ khởi sự kinh doanh và văn hoá thương hồ lâu đời, nhưng <b>năng lực quản trị bài bản của khu vực doanh nghiệp nhỏ vẫn còn khoảng cách so với tiềm năng</b>. Một công cụ đào tạo ra quyết định, đặt trong đúng bối cảnh vùng, là cách thu hẹp khoảng cách đó ngay từ giảng đường.</p>
+      <p class="sub" data-en-html="We &lt;b&gt;cite no figure that lacks a published source and clear year&lt;/b&gt;. When indicators on local institutional ranking or enterprise density are added, each number will carry its source and date, following the VietLens data principle – no provenance, no place on the board.">Chúng tôi <b>không nêu con số nào chưa có nguồn công bố và năm rõ ràng</b>. Khi bổ sung số liệu về xếp hạng thể chế địa phương hay mật độ doanh nghiệp, mỗi con số sẽ đi kèm nguồn và mốc thời gian, đúng nguyên tắc dữ liệu VietLens – không có xuất xứ thì không lên bảng.</p>
+    </div>
+  </section>
+
+  <!-- ═══ NGUỒN GỐC (gộp từ truong-gioi-thieu.html) ═══ -->
+  <section class="dn-sec" id="nguon-goc">
+    <span class="clay-eyebrow" data-en="Provenance">Nguồn gốc</span>
+    <h2 data-en="Four stages: from BizArena to BizOn">Bốn giai đoạn: từ BizArena đến BizOn</h2>
+    <p class="lede" data-en="This timeline is both the story and the evidence of origin: BizOn did not appear at once, but grew across four public repositories, each step leaving a verifiable trace.">Dòng thời gian này vừa là câu chuyện, vừa là chứng cứ xuất xứ: BizOn không xuất hiện một lần, mà lớn dần qua bốn kho công khai, mỗi bước để lại dấu vết kiểm chứng được.</p>
+    <ol class="dn-tl">
+      <li><span class="yr" data-en="Stage 1">Giai đoạn 1</span><h3 data-en="BizArena – the play-loop prototype">BizArena – nguyên mẫu vòng chơi</h3><p data-en="The first prototype: a business-decision play loop, testing the idea of teaching reasoning through simulation rather than memorisation.">Nguyên mẫu đầu tiên: một vòng chơi ra quyết định kinh doanh, thử nghiệm ý tưởng dùng mô phỏng để dạy lập luận thay vì thuộc lòng.</p></li>
+      <li><span class="yr" data-en="Stage 2">Giai đoạn 2</span><h3 data-en="BSS – the simulation scaffold">BSS – bộ khung mô phỏng</h3><p data-en="Business Simulation System: separating the engine from the interface, laying the ground for a reusable simulation core across scenarios.">Business Simulation System: tách engine ra khỏi giao diện, đặt nền cho một lõi mô phỏng có thể tái dùng cho nhiều kịch bản.</p></li>
+      <li><span class="yr" data-en="Stage 3">Giai đoạn 3</span><h3 data-en="SIMULATION-GAMEs – scenarios and provenance timeline">SIMULATION-GAMEs – kịch bản và dòng thời gian xuất xứ</h3><p data-en="Expanding into several scenario games, with a publicly recorded provenance timeline – the first step turning the development story into evidence.">Mở rộng thành nhiều trò chơi kịch bản, kèm dòng thời gian xuất xứ được ghi lại công khai – bước đầu biến câu chuyện phát triển thành chứng cứ.</p></li>
+      <li class="now"><span class="yr" data-en="Stage 4 · current">Giai đoạn 4 · hiện tại</span><h3 data-en="BizOn – the institutionalised ecosystem">BizOn – hệ sinh thái thể chế hoá</h3><p data-en="Consolidated into today's ecosystem: three levels on one deterministic engine, one shared clay design system, academic and instructor documentation, and a DOI-archived release for citation.">Hợp nhất thành hệ sinh thái hiện tại: ba bậc chơi trên một engine xác định, một hệ thiết kế đất sét chung, tài liệu học thuật và tài liệu giảng viên, cùng bản lưu trữ có DOI để trích dẫn.</p></li>
+    </ol>
+    <p class="sub" data-en-html="&lt;b&gt;Because each stage is a public repository with commit history&lt;/b&gt;, this timeline is externally verifiable – not a claim about origin but a trail to follow."><b>Vì mỗi giai đoạn là một kho công khai có lịch sử commit</b>, dòng thời gian này kiểm chứng được từ bên ngoài – không phải một tuyên bố về xuất xứ mà là một dấu vết để lần theo.</p>
+  </section>
+
+  <!-- ═══ TRÍCH DẪN (gộp từ truong-gioi-thieu.html) ═══ -->
+  <section class="dn-sec" id="trich-dan">
+    <span class="clay-eyebrow" data-en="Citation">Trích dẫn</span>
+    <h2 data-en="Archived for academic citation">Lưu trữ để trích dẫn học thuật</h2>
+    <div class="dn-cite">
+      <p class="lede" data-en="Each version has a permanent archive with a digital identifier. Recommended APA citation:">Mỗi phiên bản có bản lưu vĩnh viễn kèm mã định danh số. Trích dẫn khuyến nghị theo APA:</p>
+      <p class="apa" id="apa">Do, T. H., &amp; Phan, A. T. (2026). <em>BizOn Bật Nghiệp: A 3D claymorphism business-simulation game for entrepreneurship education</em> (Version v.1.3) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.23325489</p>
+      <p style="margin:12px 0 0;display:flex;align-items:center;gap:10px"><button type="button" class="clay-btn clay-btn-pill" id="copyCite" data-en="Copy citation">Sao chép trích dẫn</button><span class="ok" id="copyOk" role="status" aria-live="polite"></span></p>
+      <dl class="dn-meta">
+        <dt data-en="DOI">Mã DOI</dt><dd><a href="https://doi.org/10.5281/zenodo.23325489" target="_blank" rel="noopener">10.5281/zenodo.23325489</a> <span data-en="– DOI of version v.1.3">– DOI của phiên bản v.1.3</span></dd>
+        <dt data-en="Concept DOI">DOI khái niệm</dt><dd><a href="https://doi.org/10.5281/zenodo.21592241" target="_blank" rel="noopener">10.5281/zenodo.21592241</a> <span data-en="– represents all versions">– đại diện cho mọi phiên bản</span></dd>
+        <dt data-en="Archive">Lưu trữ</dt><dd data-en="Zenodo – each release permanently archived with its own DOI">Zenodo – mỗi bản phát hành được lưu trữ vĩnh viễn với DOI riêng</dd>
+        <dt data-en="Citation file">Tệp trích dẫn</dt><dd data-en="CITATION.cff – GitHub shows a “Cite this repository” button">CITATION.cff – GitHub hiện nút “Cite this repository”</dd>
+        <dt data-en="Licence">Giấy phép</dt><dd data-en="Proprietary – open-archived for citation, no reuse rights granted">Độc quyền – lưu trữ mở để trích dẫn, không cấp quyền tái sử dụng</dd>
+        <dt data-en="Institution">Đơn vị</dt><dd>Trường Đại học Cần Thơ (Can Tho University)</dd>
+      </dl>
+    </div>
+  </section>
+
   <section style="margin-bottom:56px">
     <h2 style="margin:0 0 20px;text-align:center;font-size:clamp(30px,3.6vw,40px)" data-en="Vision & Mission">Tầm nhìn &amp; Sứ mệnh</h2>
     <div class="dn-mv">
@@ -265,6 +338,19 @@
   }
   window.addEventListener('bizon:langchange', begin);
   begin();
+})();
+</script>
+<script>
+/* Sao chép trích dẫn APA */
+(function(){
+  var btn = document.getElementById('copyCite'), ok = document.getElementById('copyOk'), apa = document.getElementById('apa');
+  if (!btn || !apa) return;
+  btn.addEventListener('click', function(){
+    var done = function(){ ok.textContent = (window.clayCurrentLang && clayCurrentLang() === 'en') ? 'Copied' : 'Đã sao chép'; setTimeout(function(){ ok.textContent = ''; }, 1800); };
+    var text = apa.textContent.trim();
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, done);
+    else done();
+  });
 })();
 </script>
 <script src="js/site-vnmap.js" defer></script>

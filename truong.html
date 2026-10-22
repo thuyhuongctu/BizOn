@@ -1,212 +1,36 @@
 <!DOCTYPE html>
-<!-- THANH GHI: THỂ CHẾ (trang chủ thể chế). Vỏ dùng chung: assets/css/shell.css + assets/js/shell.js.
-     Trang trong: nền sáng, hero nhỏ, KHÔNG dòng chảy châu thổ (chữ ký chỉ ở trang đích). -->
-<html lang="vi" data-theme="light">
+<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & PGS.TS. Phan Anh Tú. Bảo lưu mọi quyền. -->
+<!--
+  Trang thể chế "truong.html" đã gộp vào universe.html (cùng nội dung chào mời ba bậc).
+  Giữ URL cũ và chuyển hướng (không xoá – đảo ngược được). GitHub Pages không có
+  chuyển hướng phía máy chủ nên dùng meta refresh + canonical; script giữ ?query và #neo.
+-->
+<html lang="vi">
 <head>
 <meta charset="UTF-8">
 <script src="js/bizon-lang.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title data-vi="BizOn – Mô phỏng kinh doanh cho lớp học đại học" data-en="BizOn – Business simulation for university classrooms">BizOn – Mô phỏng kinh doanh cho lớp học đại học</title>
-<meta name="description" data-content-vi="Ba bậc mô phỏng kinh doanh cho lớp học đại học: khởi sự kinh doanh, vận hành doanh nghiệp, quốc tế hóa. Engine xác định, tham số công bố, chấm được lập luận. Trường Đại học Cần Thơ." data-content-en="Three levels of business simulation for university classrooms: venture start-up, running a business, internationalisation. A deterministic engine, published parameters, reasoning you can grade. Can Tho University." content="Ba bậc mô phỏng kinh doanh cho lớp học đại học: khởi sự kinh doanh, vận hành doanh nghiệp, quốc tế hóa. Engine xác định, tham số công bố, chấm được lập luận. Trường Đại học Cần Thơ.">
-<meta name="theme-color" content="#FFFFFF">
-<link rel="icon" type="image/svg+xml" href="assets/brand/bizon-favicon.svg">
-<meta property="og:type" content="website">
-<meta property="og:title" content="BizOn – Mô phỏng kinh doanh cho lớp học đại học">
-<meta property="og:description" content="Sản phẩm giảng dạy nghiêm túc, có bằng chứng, dùng được trong học phần. Trường Đại học Cần Thơ · Trường Kinh tế.">
-<meta property="og:image" content="https://bizonland.com/assets/brand/og-truong.png">
-<link rel="stylesheet" href="css/bizon-institutional-fonts.css">
-<link rel="stylesheet" href="assets/css/shell.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Đã chuyển: Trường BizOn · BizOn</title>
+<link rel="canonical" href="https://bizonland.com/universe.html">
+<meta http-equiv="refresh" content="0; url=universe.html">
+<meta name="robots" content="noindex, follow">
+<script>
+(function(){
+  var map = {};
+  var h = location.hash, to = 'universe.html';
+  location.replace(to + location.search + (h ? (h in map ? map[h] : h) : ''));
+})();
+</script>
 <style>
-/* ═══════════ RIÊNG TRANG CHỦ THỂ CHẾ ═══════════ */
-.hero-sm{padding:clamp(46px,7vw,88px) 0 clamp(30px,4.4vw,48px);border-bottom:1px solid var(--rule)}
-.hero-sm h1{font-size:clamp(2rem,4.6vw,3.4rem)}
-.hero-sm .lede{margin-top:1.1rem}
-.hero-sm .hero-cta{display:flex;gap:11px;margin-top:1.8rem;flex-wrap:wrap}
-
-.affirm{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule)}
-.aff{background:var(--paper);padding:26px 24px}
-.aff h3{margin-bottom:.5rem}
-.aff .src{font-family:var(--mono);font-size:.64rem;color:var(--jade);letter-spacing:.03em;margin-top:.8rem;display:block}
-
-.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.tier{border:1px solid var(--rule);padding:26px 24px;background:var(--band)}
-.tier .no{font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;color:var(--jade);display:block;margin-bottom:.65rem}
-.tier h3{font-size:1.18rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.45rem}
-
-.audience{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.aud{border:1px solid var(--rule);padding:26px 24px;background:var(--paper)}
-.aud .k{font-family:var(--mono);font-size:.62rem;letter-spacing:.15em;color:var(--ink-2);text-transform:uppercase;margin-bottom:.7rem;display:block}
-.aud .path{margin-top:.85rem;font-weight:600;color:var(--jade)}
-
-.deep{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule)}
-.dl{background:var(--paper);padding:26px 24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:background .2s}
-.dl:hover{background:var(--band)}
-.dl h3{margin-bottom:.4rem}
-.dl .go{margin-top:.9rem;color:var(--jade);font-size:.83rem;font-weight:500;display:inline-flex;gap:.4rem;transition:gap .2s}
-.dl:hover .go{gap:.72rem}
-
-.cta2{background:var(--jade);color:var(--on-jade)}
-.cta2 h2,.cta2 .lede{color:var(--on-jade)}
-.cta2 .lede{opacity:.86;margin-top:1.1rem}
-.cta2 .hero-cta{display:flex;gap:11px;margin-top:1.7rem;flex-wrap:wrap}
-.cta2 .btn-solid{background:var(--on-jade);color:var(--jade)}
-.cta2 .btn-solid:hover{background:var(--band)}
-.cta2 .btn-line{border-color:rgba(255,255,255,.34);color:var(--on-jade)}
-.cta2 .btn-line:hover{border-color:var(--on-jade)}
-
-@media(max-width:820px){.affirm,.tiers,.audience,.deep{grid-template-columns:1fr}}
+  body{margin:0;min-height:100vh;display:grid;place-items:center;padding:2rem;background:#FBF4E8;color:#033337;
+    font:500 16px/1.6 "Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",sans-serif;text-align:center}
+  a{color:#006687;font-weight:800}
 </style>
-<link rel="stylesheet" href="css/bizon-clay-chrome.css">
-<link rel="stylesheet" href="css/clay-tool-skin.css">
-<link rel="stylesheet" href="css/clay-legacy.css">
-<script src="js/capture-guard.js"></script>
 </head>
 <body>
-
-<div class="prog" id="prog"></div>
-
-<main id="top">
-
-<!-- ═══ HERO NHỎ ═══ -->
-<section class="hero-sm">
-  <div class="shell">
-    <p class="tag" data-vi="Đại học Cần Thơ · Trường Kinh tế" data-en="Can Tho University · School of Economics">Đại học Cần Thơ · Trường Kinh tế</p>
-    <h1 data-vi="Mô phỏng kinh doanh cho lớp học đại học" data-en="Business simulation for the university classroom">Mô phỏng kinh doanh cho lớp học đại học</h1>
-    <p class="lede" data-vi="Ba bậc quyết định – từ khởi sự kinh doanh đến vận hành doanh nghiệp rồi quốc tế hóa. Kết quả xác định, tham số công bố, và điều quan trọng nhất: chấm được lập luận của người học, không chấm may rủi." data-en="Three levels of decisions – from venture start-up to running a business, then internationalisation. Deterministic outcomes, published parameters, and above all: you grade the learner's reasoning, not luck.">Ba bậc quyết định – từ khởi sự kinh doanh đến vận hành doanh nghiệp rồi quốc tế hóa. Kết quả xác định, tham số công bố, và điều quan trọng nhất: chấm được lập luận của người học, không chấm may rủi.</p>
-    <div class="hero-cta">
-      <a class="btn btn-solid" href="truong-giang-vien.html" data-vi="Cho giảng viên →" data-en="For instructors →">Cho giảng viên →</a>
-      <a class="btn btn-line" href="truong-hoc-thuat.html" data-vi="Nền tảng học thuật" data-en="Academic foundation">Nền tảng học thuật</a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ DẢI KHẲNG ĐỊNH ═══ -->
-<section>
-  <div class="shell">
-    <div class="affirm rv">
-      <div class="aff">
-        <h3 data-vi="Xác định, không ngẫu nhiên" data-en="Deterministic, not random">Xác định, không ngẫu nhiên</h3>
-        <p class="body" data-vi="Cùng một chuỗi quyết định luôn cho cùng một kết quả – nên giảng viên chấm được lập luận, người học truy được nguyên nhân." data-en="The same sequence always yields the same outcome – so instructors grade reasoning and learners trace causes.">Cùng một chuỗi quyết định luôn cho cùng một kết quả – nên giảng viên chấm được lập luận, người học truy được nguyên nhân.</p>
-        <span class="src" data-vi="Model Card công bố phương trình" data-en="Model Cards publish the equations">Model Card công bố phương trình</span>
-      </div>
-      <div class="aff">
-        <h3 data-vi="Đã triển khai trong học phần đại học" data-en="Used in a university course">Đã triển khai trong học phần đại học</h3>
-        <p class="body" data-vi="Đã đưa vào buổi học thật ở bậc đại học. Bằng chứng hiện có mang tính hồi cứu – chúng tôi nói rõ điều đó, không thổi phồng." data-en="Already run in real undergraduate sessions. Current evidence is retrospective – we say so plainly, without overclaiming.">Đã đưa vào buổi học thật ở bậc đại học. Bằng chứng hiện có mang tính hồi cứu – chúng tôi nói rõ điều đó, không thổi phồng.</p>
-        <span class="src" data-vi="Giới hạn nêu trên trang học thuật" data-en="Limitations stated on the academic page">Giới hạn nêu trên trang học thuật</span>
-      </div>
-      <div class="aff">
-        <h3 data-vi="Trích dẫn được" data-en="Citable">Trích dẫn được</h3>
-        <p class="body" data-vi="Bản lưu trữ có mã định danh số, tệp trích dẫn chuẩn máy đọc, và định danh nghiên cứu của nhóm tác giả." data-en="An archived record with a DOI, a machine-readable citation file, and researcher identifiers for the authors.">Bản lưu trữ có mã định danh số, tệp trích dẫn chuẩn máy đọc, và định danh nghiên cứu của nhóm tác giả.</p>
-        <span class="src">DOI · CITATION.cff · ORCID</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ BA BẬC ═══ -->
-<section class="band">
-  <div class="shell">
-    <div class="head rv">
-      <p class="tag" data-vi="Sản phẩm" data-en="The product">Sản phẩm</p>
-      <h2 data-vi="Ba bậc, một engine" data-en="Three levels, one engine">Ba bậc, một engine</h2>
-    </div>
-    <div class="tiers rv">
-      <div class="tier">
-        <span class="no" data-vi="BẬC 1" data-en="LEVEL 1">BẬC 1</span>
-        <h3 data-vi="Bến Phù Sa" data-en="Bến Phù Sa">Bến Phù Sa</h3>
-        <p class="body" data-vi="Khởi sự kinh doanh: khởi nghiệp phi chính thức trên chợ nổi trong 5 tuần. Bậc nhập môn, chơi trước." data-en="Venture start-up: an informal start-up on a floating market over 5 weeks. The entry rung, played first.">Khởi sự kinh doanh: khởi nghiệp phi chính thức trên chợ nổi trong 5 tuần. Bậc nhập môn, chơi trước.</p>
-      </div>
-      <div class="tier">
-        <span class="no" data-vi="BẬC 2" data-en="LEVEL 2">BẬC 2</span>
-        <h3 data-vi="Bật Nghiệp" data-en="Bật Nghiệp">Bật Nghiệp</h3>
-        <p class="body" data-vi="Doanh nghiệp trong nước, sáu vòng: định giá, ước lượng cầu, cơ cấu chi phí, dòng tiền." data-en="A domestic firm over six rounds: pricing, demand estimation, cost structure, cash flow.">Doanh nghiệp trong nước, sáu vòng: định giá, ước lượng cầu, cơ cấu chi phí, dòng tiền.</p>
-      </div>
-      <div class="tier">
-        <span class="no" data-vi="BẬC 3" data-en="LEVEL 3">BẬC 3</span>
-        <h3 data-vi="Hộ chiếu Thương hiệu" data-en="Brand Passport">Hộ chiếu Thương hiệu</h3>
-        <p class="body" data-vi="Kinh doanh quốc tế: nửa lớp đi ra, nửa kia đi vào, rồi hoán vai để hiểu cả hai phía." data-en="International business: half the class goes out, half comes in, then roles swap to see both sides.">Kinh doanh quốc tế: nửa lớp đi ra, nửa kia đi vào, rồi hoán vai để hiểu cả hai phía.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ CHO AI ═══ -->
-<section>
-  <div class="shell">
-    <div class="head rv">
-      <p class="tag" data-vi="Dùng ở đâu" data-en="Where it fits">Dùng ở đâu</p>
-      <h2 data-vi="Gắn vào học phần nào" data-en="Which course it fits">Gắn vào học phần nào</h2>
-    </div>
-    <div class="audience rv">
-      <div class="aud">
-        <span class="k" data-vi="Khoa dạy khởi nghiệp" data-en="Entrepreneurship faculty">Khoa dạy khởi nghiệp</span>
-        <p class="body" data-vi="Bắt đầu từ khởi sự kinh doanh, rồi điều hành một doanh nghiệp trong thị trường quen thuộc – trọn mạch khởi nghiệp trong nước." data-en="Start with venture start-up, then run a firm in a familiar market – the full domestic startup arc.">Bắt đầu từ khởi sự kinh doanh, rồi điều hành một doanh nghiệp trong thị trường quen thuộc – trọn mạch khởi nghiệp trong nước.</p>
-        <p class="path" data-vi="Bậc 1 + Bậc 2" data-en="Level 1 + Level 2">Bậc 1 + Bậc 2</p>
-      </div>
-      <div class="aud">
-        <span class="k" data-vi="Khoa dạy kinh doanh quốc tế" data-en="International business faculty">Khoa dạy kinh doanh quốc tế</span>
-        <p class="body" data-vi="Bắt đầu từ khởi sự kinh doanh, rồi qua biên giới với vai người đi ra và người đi vào – trọn mạch thâm nhập thị trường." data-en="Start with venture start-up, then cross borders as both entrant and incumbent – the full market-entry arc.">Bắt đầu từ khởi sự kinh doanh, rồi qua biên giới với vai người đi ra và người đi vào – trọn mạch thâm nhập thị trường.</p>
-        <p class="path" data-vi="Bậc 1 + Bậc 3" data-en="Level 1 + Level 3">Bậc 1 + Bậc 3</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ BỐN LIÊN KẾT SÂU ═══ -->
-<section class="band">
-  <div class="shell">
-    <div class="head rv">
-      <p class="tag" data-vi="Tìm hiểu thêm" data-en="Go deeper">Tìm hiểu thêm</p>
-      <h2 data-vi="Bốn câu hỏi người mua hay hỏi" data-en="Four questions buyers ask">Bốn câu hỏi người mua hay hỏi</h2>
-    </div>
-    <div class="deep rv">
-      <a class="dl" href="truong-giang-vien.html">
-        <h3 data-vi="Tôi dùng trong lớp thế nào?" data-en="How do I run it in class?">Tôi dùng trong lớp thế nào?</h3>
-        <p class="body" data-vi="Năm bước mở lớp, bộ công cụ tải sẵn, và cách chấm – chạy được mà không cần gọi hỗ trợ." data-en="Five steps to open a class, ready-to-download toolkit, and how grading works – run it without calling support.">Năm bước mở lớp, bộ công cụ tải sẵn, và cách chấm – chạy được mà không cần gọi hỗ trợ.</p>
-        <span class="go" data-vi="Cho giảng viên →" data-en="For instructors →">Cho giảng viên →</span>
-      </a>
-      <a class="dl" href="truong-hoc-thuat.html">
-        <h3 data-vi="Có chịu được chất vấn không?" data-en="Does it survive scrutiny?">Có chịu được chất vấn không?</h3>
-        <p class="body" data-vi="Model Card, hợp đồng tái lập, chuẩn đầu ra – và công bố cả những gì mô hình không làm được." data-en="Model Cards, a reproducibility contract, learning outcomes – and what the model cannot do.">Model Card, hợp đồng tái lập, chuẩn đầu ra – và công bố cả những gì mô hình không làm được.</p>
-        <span class="go" data-vi="Nền tảng học thuật →" data-en="Academic foundation →">Nền tảng học thuật →</span>
-      </a>
-      <a class="dl" href="truong-gioi-thieu.html">
-        <h3 data-vi="Ai đứng sau, vì sao có?" data-en="Who's behind it, and why?">Ai đứng sau, vì sao có?</h3>
-        <p class="body" data-vi="Vấn đề dự án giải, bối cảnh vùng, dòng thời gian xuất xứ và nhóm tác giả." data-en="The problem it solves, the regional context, the provenance timeline and the authors.">Vấn đề dự án giải, bối cảnh vùng, dòng thời gian xuất xứ và nhóm tác giả.</p>
-        <span class="go" data-vi="Giới thiệu dự án →" data-en="About the project →">Giới thiệu dự án →</span>
-      </a>
-      <a class="dl" href="truong-chinh-sach.html">
-        <h3 data-vi="Dữ liệu sinh viên đi đâu?" data-en="Where does student data go?">Dữ liệu sinh viên đi đâu?</h3>
-        <p class="body" data-vi="Không quảng cáo, không bán dữ liệu; đồng thuận hai mục đích tách riêng; và giới hạn quyền rút lui nói trước." data-en="No ads, no data sales; two separate consent purposes; and the limits of withdrawal stated upfront.">Không quảng cáo, không bán dữ liệu; đồng thuận hai mục đích tách riêng; và giới hạn quyền rút lui nói trước.</p>
-        <span class="go" data-vi="Chính sách dữ liệu →" data-en="Data policy →">Chính sách dữ liệu →</span>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ CTA ═══ -->
-<section class="cta2">
-  <div class="shell">
-    <div class="rv">
-      <h2 data-vi="Thử một buổi với lớp của thầy cô" data-en="Try one session with your class">Thử một buổi với lớp của thầy cô</h2>
-      <p class="lede" data-vi="Chúng tôi mở tài khoản giảng viên, gửi sổ tay và rubric, và đồng hành buổi đầu tiên. Sau buổi đó thầy cô tự chạy được – không cần phòng máy, chạy trên điện thoại sinh viên." data-en="We open an instructor account, send the handbook and rubric, and join the first session. After that you run it yourself – no computer lab, works on students' phones.">Chúng tôi mở tài khoản giảng viên, gửi sổ tay và rubric, và đồng hành buổi đầu tiên. Sau buổi đó thầy cô tự chạy được – không cần phòng máy, chạy trên điện thoại sinh viên.</p>
-      <div class="hero-cta">
-        <a class="btn btn-solid" href="truong-giang-vien.html" data-vi="Đăng ký buổi thử →" data-en="Book a session →">Đăng ký buổi thử →</a>
-        <a class="btn btn-line" href="truong-giang-vien.html" data-vi="Tài liệu cho giảng viên" data-en="Instructor materials">Tài liệu cho giảng viên</a>
-      </div>
-    </div>
-  </div>
-</section>
-
+<main>
+  <p>Trang <strong>Trường BizOn</strong> đã được gộp vào <strong>Vũ trụ BizOn</strong>.</p>
+  <p>Nếu trình duyệt không tự chuyển, bấm vào đây: <a href="universe.html">Vũ trụ BizOn →</a></p>
 </main>
-
-
-<script src="assets/js/shell.js"></script>
-<script src="js/bizon-clay-i18n.js" defer></script>
-<script src="js/bizon-clay-bridge.js" defer></script>
-<script src="js/bizon-clay-nav.js" defer></script>
-<script src="js/bizon-clay-footer.js" defer></script>
-<script>window.BIZON_DOCK_SONG='huong-and-the-world-en.mp3';</script>
-<script src="js/site-dock.js" defer></script>
 </body>
 </html>

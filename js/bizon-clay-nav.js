@@ -30,19 +30,24 @@
   ];
 
   var here = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  /* Trang ở thư mục con (app/, lab/…) nạp '../js/bizon-clay-nav.js': lấy phần trước
+     'js/' làm gốc để mọi liên kết tương đối trỏ đúng về trang ở thư mục gốc. */
+  var cs = document.currentScript;
+  var BASE = cs ? (cs.getAttribute('src') || '').replace(/js\/bizon-clay-nav\.js.*$/, '') : '';
+  function u(h){ return /^(?:[a-z]+:|#|\/)/i.test(h) ? h : BASE + h; }
   function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]; }); }
 
   function linksHtml(){
     return LINKS.map(function(l){
       var cur = l.href.toLowerCase() === here ? ' aria-current="page"' : '';
-      return '<a href="'+l.href+'"'+cur+' data-en="'+esc(l.en)+'">'+esc(l.vi)+'</a>';
+      return '<a href="'+u(l.href)+'"'+cur+' data-en="'+esc(l.en)+'">'+esc(l.vi)+'</a>';
     }).join('');
   }
 
   function dlMenuHtml(){
     return DL_OPTIONS.map(function(o){
       var extra = o.ext ? ' target="_blank" rel="noopener"' : '';
-      return '<a href="'+o.href+'"'+extra+' data-en="'+esc(o.en)+'">'+esc(o.vi)+'</a>';
+      return '<a href="'+u(o.href)+'"'+extra+' data-en="'+esc(o.en)+'">'+esc(o.vi)+'</a>';
     }).join('');
   }
 
@@ -51,7 +56,7 @@
   nav.setAttribute('aria-label', 'BizOn');
   nav.innerHTML =
     '<div class="cn-bar">'
-    + '<a class="cn-brand" href="index.html" aria-label="BizOn">Biz<span class="cn-o"></span>n</a>'
+    + '<a class="cn-brand" href="'+u('index.html')+'" aria-label="BizOn">Biz<span class="cn-o"></span>n</a>'
     + '<div class="cn-links">' + linksHtml() + '</div>'
     + '<div class="cn-right">'
       + '<div class="cn-lang" role="group" aria-label="Ngôn ngữ / Language">'
@@ -63,7 +68,7 @@
         + '<button type="button" class="cn-dl" aria-haspopup="true" aria-expanded="false" aria-label="'+esc(DL_ARIA.vi)+'" data-en-aria="'+esc(DL_ARIA.en)+'">⬇</button>'
         + '<div class="cn-dlmenu" hidden>' + dlMenuHtml() + '</div>'
       + '</div>'
-      + '<a class="cn-cta" href="'+CTA.href+'" data-en="'+esc(CTA.en)+'">'+esc(CTA.vi)+'</a>'
+      + '<a class="cn-cta" href="'+u(CTA.href)+'" data-en="'+esc(CTA.en)+'">'+esc(CTA.vi)+'</a>'
     + '</div>'
     + '</div>'
     + '<div class="cn-row2">' + linksHtml() + '</div>';

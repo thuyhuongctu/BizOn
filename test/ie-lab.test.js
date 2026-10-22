@@ -184,13 +184,16 @@ test('VI/EN: đổi nội dung và dùng chung bizon-lang với toàn site', asy
   const p = await open(browser, { lang: 'en' });
   assert.match(await p.textContent('h1'), /How much/);
   assert.strictEqual(await p.getAttribute('html', 'lang'), 'en');
-  await p.click('.nav .seg button[data-v="vi"]');
+  // Nút VI/EN chung nằm trên menu đất sét (#clay-nav); đổi ngôn ngữ thì lab tải lại theo bizon-lang
+  await Promise.all([p.waitForNavigation(), p.click('#clay-nav .cn-lang button[data-lang="vi"]')]);
+  await p.waitForSelector('#missions .mis', { state: 'attached' });
   assert.match(await p.textContent('h1'), /Quốc tế hóa/);
   assert.match(await p.textContent('#illus'), /Minh họa – cần giảng viên xác nhận/);
   assert.strictEqual(await p.textContent('#score'), '68,0');
   assert.strictEqual(await p.evaluate(() => localStorage.getItem('bizon-lang')), 'vi');
   assert.strictEqual(JSON.parse(await p.evaluate(() => localStorage.getItem('ielab-v1'))).lang, 'vi');
-  await p.click('.nav .seg button[data-v="en"]');
+  await Promise.all([p.waitForNavigation(), p.click('#clay-nav .cn-lang button[data-lang="en"]')]);
+  await p.waitForSelector('#missions .mis', { state: 'attached' });
   assert.match(await p.textContent('#illus'), /Illustrative – to be confirmed by the instructor/);
   assert.strictEqual(await p.evaluate(() => localStorage.getItem('bizon-lang')), 'en');
   // ngôn ngữ chung của site thắng lựa chọn cũ đã lưu trong ielab-v1

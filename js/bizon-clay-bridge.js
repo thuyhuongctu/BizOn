@@ -9,9 +9,14 @@
 (function(){
   if(window.__bizonClayBridge) return; window.__bizonClayBridge = true;
   var busy = false;
+  /* Trang tự dựng giao diện theo ngôn ngữ lúc nạp (các Lab): đặt
+     window.BIZON_LANG_RELOAD = true trước tệp này → đổi VI/EN trên menu thì tải lại trang. */
+  var startLang = null;
+  try{ startLang = localStorage.getItem('bizon-lang'); }catch(err){}
   window.addEventListener('bizon:langchange', function(e){
     if(busy) return;
     var lang = e && e.detail && e.detail.lang === 'en' ? 'en' : 'vi';
+    if(window.BIZON_LANG_RELOAD){ if(startLang && lang !== startLang){ busy = true; location.reload(); } return; }
     busy = true;
     try{
       /* đổi từ nút cũ (vd VI/EN trong dock ⋯ → site-ui) thì kéo bộ dịch đất sét theo */
