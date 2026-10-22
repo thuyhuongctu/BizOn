@@ -19,6 +19,7 @@
     ['Bật Nghiệp – Mekong Sunfire', 'bat-nghiep-mekong-sunfire.mp3'],
     ['Bật Nghiệp – Mekong Sunfire Rise 🌅 (4:45)', 'bat-nghiep-mekong-sunfire-rise.mp3'],
     ['Bật Nghiệp – Mekong Sunfire · Rise With The River 2 🌅 (4:55)', 'bat-nghiep-mekong-sunfire-rise-2.mp3'],
+    ['Bật Nghiệp – Mekong Sunfire 1 🔥 (4:26)', 'bat-nghiep-mekong-sunfire-1.mp3'],
     ['Bật Nghiệp (instrumental · V-pop 112 BPM)', 'bat-nghiep.mp3'],
     ['BizOn Theme (instrumental)', 'bizon-theme.mp3'],
     ['Vừa Đủ Để Bay Cao', 'vua-du-de-bay-cao.mp3'],
