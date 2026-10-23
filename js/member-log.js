@@ -4,7 +4,9 @@
  *  - SEC: gửi biên bản vòng.
  *  - CEO: xem đề xuất của đội, bấm Áp dụng; lúc Commit, hệ thống ghi quyết định đã chốt.
  *  - Mọi vai: mỗi lần chạy mô phỏng Nếu–Thì được ghi lại.
- * Mất mạng: xếp hàng trong localStorage, tự gửi lại. Cần migration 20260930000000_member_log.sql. */
+ * Mất mạng: xếp hàng trong localStorage, tự gửi lại. Cần migration 20260930000000_member_log.sql.
+ * Từ 10/2026 ghi và đọc nhật ký bằng phiên sinh viên (js/student-login.js): máy chủ lấy đội, vai, email
+ * từ tư cách thành viên đội (bizon_log_member, bizon_team_log_v2 – migration 20261023000000). */
 (function () {
   const QKEY = 'bizon-member-log-queue';
   const cfg = () => window.BIZON_BACKEND || {};
@@ -20,14 +22,20 @@
   };
   const st = () => (typeof S !== 'undefined' ? S : null); // biến toàn cục `let S` của app.js
   const who = () => { const S = st(); if (!S || !S.profile) return null; const p = S.profile, c = (p.classId || '').trim();
-    return { S, classCode: c, team: (p.teamName || '').trim(), role: p.role || 'CEO', email: p.email || null, name: (p.email || '').split('@')[0] || p.role, live: !!c && c !== 'DEMO-2026' && on() }; };
+    return { S, classCode: c, team: (p.teamName || '').trim(), role: p.role || 'CEO', email: p.email || null, name: (p.email || '').split('@')[0] || p.role, live: !!c && c !== 'DEMO-2026' && on() && signedIn() }; };
   const readQ = () => { try { return JSON.parse(localStorage.getItem(QKEY) || '[]'); } catch (e) { return []; } };
   const writeQ = q => { try { localStorage.setItem(QKEY, JSON.stringify(q.slice(-120))); } catch (e) {} };
-  async function post(row) {
+  const signedIn = () => !!(window.StudentLogin && StudentLogin.signedIn());
+  async function rpcAuth(fn, args) {
+    const t = window.StudentLogin ? await StudentLogin.token() : null;
+    if (!t) throw new Error('nologin');
     const c = cfg();
-    const r = await fetch(c.url.replace(/\/$/, '') + '/rest/v1/member_log', { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: c.anonKey, Authorization: 'Bearer ' + c.anonKey, Prefer: 'return=minimal' }, body: JSON.stringify(row) });
+    const r = await fetch(c.url.replace(/\/$/, '') + '/rest/v1/rpc/' + fn, { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: c.anonKey, Authorization: 'Bearer ' + t }, body: JSON.stringify(args) });
     if (!r.ok) throw new Error('HTTP ' + r.status);
+    return r.json().catch(() => null);
   }
+  // Dòng xếp hàng kiểu cũ (cột của member_log) vẫn gửi được: đổi sang tham số hàm.
+  const post = row => rpcAuth('bizon_log_member', row.p_class_code ? row : { p_class_code: row.class_code, p_round: row.round_number, p_kind: row.kind, p_payload: row.payload, p_member_name: row.member_name, p_client_ts: row.client_ts });
   // Khoá 1 lượt gửi tại một thời điểm (giống flush() của js/backend.js): trước đây record() gọi liền nhau làm
   // nhiều lượt cùng đọc một hàng đợi và gửi trùng dòng; dòng thêm vào giữa chừng cũng không bị ghi đè mất nữa.
   let flushing = null, again = false;
@@ -36,7 +44,7 @@
     flushing = (async () => {
       do {
         again = false;
-        if (!on() || !navigator.onLine) break;
+        if (!on() || !navigator.onLine || !signedIn()) break;
         const q = readQ(); if (!q.length) break;
         const sent = new Set();
         for (const row of q) { try { await post(row); sent.add(JSON.stringify(row)); } catch (e) {} }
@@ -48,18 +56,16 @@
   function record(kind, payload) {
     const w = who(); if (!w || !w.live || !w.team) return false;
     const round = Math.min(6, Math.max(1, w.S.round || 1));
-    const q = readQ(); q.push({ class_code: w.classCode, team_name: w.team, round_number: round, member_email: w.email, member_name: w.name, role: w.role, kind, payload: payload || {}, client_ts: new Date().toISOString() });
+    const q = readQ(); q.push({ p_class_code: w.classCode, p_round: round, p_kind: kind, p_payload: payload || {}, p_member_name: w.name, p_client_ts: new Date().toISOString() });
     writeQ(q); flush(); return true;
   }
   async function teamLog() {
     const w = who(); if (!w || !w.live) return [];
-    try { const c = cfg(); const r = await fetch(c.url.replace(/\/$/, '') + '/rest/v1/rpc/bizon_team_log', { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: c.anonKey, Authorization: 'Bearer ' + c.anonKey }, body: JSON.stringify({ p_class_code: w.classCode, p_team_name: w.team, p_round: Math.min(6, w.S.round || 1) }) });
-      return r.ok ? (await r.json()) || [] : []; } catch (e) { return []; }
+    try { return (await rpcAuth('bizon_team_log_v2', { p_class_code: w.classCode, p_round: Math.min(6, w.S.round || 1) })) || []; } catch (e) { return []; }
   }
   async function teamAllLog() {
     const w = who(); if (!w || !w.live) return [];
-    try { const c = cfg(); const r = await fetch(c.url.replace(/\/$/, '') + '/rest/v1/rpc/bizon_team_all_log', { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: c.anonKey, Authorization: 'Bearer ' + c.anonKey }, body: JSON.stringify({ p_class_code: w.classCode, p_team_name: w.team }) });
-      return r.ok ? (await r.json()) || [] : []; } catch (e) { return []; }
+    try { return (await rpcAuth('bizon_team_all_log_v2', { p_class_code: w.classCode })) || []; } catch (e) { return []; }
   }
   // Gộp nhật ký đội thành thống kê theo thành viên (vai + tên) cho tab "Hiệu suất thành viên".
   // Đếm số hành động ghi nhận được – KHÔNG phải điểm chấm, chỉ đo mức độ tham gia tương đối.
@@ -94,7 +100,7 @@
     if (w.S.finished || w.S.committed) { box.innerHTML = ''; return; }
     const r = w.S.round || 1, key = 'r' + r;
     const head = `<p class="font-display font-bold text-deep-teal text-sm mb-1">${TT('📋 Ghi nhận đóng góp – vòng ' + r, '📋 Contribution log – round ' + r)} <span class="text-[10px] font-extrabold text-primary">${w.role}</span></p>`;
-    if (!w.live) { box.innerHTML = `<div class="clay-card p-4">${head}<p class="text-[11px] text-deep-teal/60">${TT('Đóng góp của từng thành viên chỉ được ghi nhận khi đội chơi bằng Mã lớp thật và máy chủ đang bật.', 'Individual contributions are only logged when the team plays with a real class code and the server is on.')}</p></div>`; return; }
+    if (!w.live) { box.innerHTML = `<div class="clay-card p-4">${head}<p class="text-[11px] text-deep-teal/60">${TT('Đóng góp của từng thành viên chỉ được ghi nhận khi đội chơi bằng Mã lớp thật và bạn đã đăng nhập email trường.', 'Individual contributions are only logged when the team plays with a real class code and you are signed in with your school email.')}</p></div>`; return; }
     if (w.role === 'CEO') {
       box.innerHTML = `<div class="clay-card p-4">${head}<p class="text-[11px] text-deep-teal/60 mb-2">${TT('Đề xuất các thành viên gửi từ máy của họ. Áp dụng rồi mới Commit – đề xuất được dùng sẽ được tính điểm cho người gửi.', 'Proposals members send from their own devices. Apply before you Commit – adopted proposals earn points for the sender.')}</p><div id="mp-list" class="text-xs text-deep-teal/60">${TT('Đang tải…', 'Loading…')}</div></div>`;
       const rows = await teamLog(), list = $('mp-list'); if (!list) return;

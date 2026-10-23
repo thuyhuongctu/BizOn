@@ -53,7 +53,8 @@
         const raw = sessionStorage.getItem(SESSION_KEY);
         if (!raw) return;
         const saved = JSON.parse(raw);
-        if (saved && saved.accessToken && saved.expiresAt > Date.now()) {
+        // Hết hạn nhưng còn refresh token vẫn dùng được (StudentLogin.token() tự làm mới).
+        if (saved && saved.accessToken && (saved.expiresAt > Date.now() || (saved.refreshToken && window.StudentLogin))) {
           state.session = saved;
           showTeamBlock();
           setStatus('Đã khôi phục phiên đăng nhập. Nhập Mã lớp + Tên đội để tham gia.', 'success');
@@ -91,12 +92,15 @@
       const backend = cfg();
       if (!backend.url || !backend.anonKey) throw new Error('Backend chưa được cấu hình');
       if (!state.session) throw new Error('Chưa đăng nhập');
+      // Buổi học dài hơn 1 giờ: lấy token qua StudentLogin để tự làm mới khi hết hạn.
+      const t = window.StudentLogin ? await StudentLogin.token() : state.session.accessToken;
+      if (!t) { signOut(); throw new Error('Phiên đăng nhập đã hết, hãy đăng nhập lại'); }
       const res = await fetch(`${backend.url.replace(/\/$/, '')}/rest/v1/rpc/${fn}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           apikey: backend.anonKey,
-          Authorization: `Bearer ${state.session.accessToken}`,
+          Authorization: `Bearer ${t}`,
         },
         body: JSON.stringify(args),
       });
@@ -216,8 +220,8 @@
     // Điền danh tính đã xác thực vào màn login cũ rồi gọi thẳng doLogin() có
     // sẵn trong js/app.js (cùng phạm vi global, script này load sau app.js) —
     // tái dùng nguyên vẹn logic khôi phục tiến trình/vào app/nhạc/giọng chào,
-    // không viết lại. Việc lưu/tải tiến trình khi chơi vẫn qua BizonBackend/
-    // team_saves y hệt đường cũ bằng (Mã lớp, Tên đội) — không đổi gì ở đó.
+    // không viết lại. Lưu/tải tiến trình và nộp kết quả khi chơi đi qua
+    // BizonBackend bằng chính phiên đăng nhập này (đội lấy theo tài khoản).
     function startSimulation() {
       if (!state.team || !state.session) return;
       const emailEl = document.getElementById('login-email');

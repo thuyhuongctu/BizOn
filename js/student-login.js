@@ -101,7 +101,9 @@
     return data;
   }
 
-  function getSession() { session = session || loadSession(); return session; }
+  // Đọc lại sessionStorage mỗi lần: trên game.html, js/student-auth.js đăng nhập/
+  // đăng xuất ghi vào cùng khóa, nên bản nhớ tạm ở đây không được giữ phiên cũ.
+  function getSession() { session = loadSession(); return session; }
   // Phiên còn dùng được (còn hạn hoặc làm mới được) – để trang quyết định có cho bấm Nộp không.
   function signedIn() { const s = getSession(); return !!(s && (s.expiresAt > Date.now() || s.refreshToken)); }
 
