@@ -16,7 +16,7 @@
   const STAFF = ['thuyhuongctu@gmail.com', 'patu@ctu.edu.vn'];
   const isStaffTeam = (name, rs) => /^gv(\s|$)/i.test(String(name || '').trim()) ||
     (rs.length > 0 && rs.every(r => STAFF.includes(String(r.student_email || '').trim().toLowerCase())));
-  // MSSV trong email/tên (vd. "kimb2301347@student…") – để gộp các dòng nhật ký của cùng một SV.
+  // MSSV trong email/tên (vd. "vanab2400001@student…") – để gộp các dòng nhật ký của cùng một SV.
   const mssvOf = (...xs) => { for (const x of xs) { const m = String(x || '').match(/[bm]\d{7}/i); if (m) return m[0].toUpperCase(); } return ''; };
   const f1 = v => v == null ? '–' : rnd1(v).toFixed(1).replace('.', ',');
   function teams(subs) {

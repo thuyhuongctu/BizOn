@@ -10,6 +10,8 @@
   const cfg = () => window.BIZON_BACKEND || {};
   const on = () => cfg().enabled && cfg().url && !cfg().url.includes('YOUR-PROJECT');
   const $ = id => document.getElementById(id);
+  // Tên, vai đọc từ máy chủ (ai cũng ghi được) → luôn lọc trước khi đưa vào innerHTML.
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
   const TT = (vi, en) => (typeof T === 'function' ? T(vi, en) : vi);
   const FIELDS = {
     CFO: [['in-rd', 'rd', 'R&D', 'tr'], ['in-term', 'paymentTerm', 'Kỳ hạn thanh toán', ' ngày']],
@@ -98,7 +100,7 @@
       const rows = await teamLog(), list = $('mp-list'); if (!list) return;
       const latest = {}; rows.forEach(x => { if (!latest[x.role + x.kind]) latest[x.role + x.kind] = x; });
       const L = Object.values(latest);
-      list.innerHTML = L.length ? L.map((x, i) => `<div class="clay-sunken rounded-2xl p-3 mb-2"><p class="text-[11px] font-extrabold text-deep-teal">${x.role} · ${x.member_name || ''}</p>
+      list.innerHTML = L.length ? L.map((x, i) => `<div class="clay-sunken rounded-2xl p-3 mb-2"><p class="text-[11px] font-extrabold text-deep-teal">${esc(x.role)} · ${esc(x.member_name)}</p>
         <p class="text-[11px] text-deep-teal/75 mt-0.5">${x.kind === 'minutes' ? '📝 ' + String((x.payload || {}).text || '').replace(/</g, '&lt;') : fmt(x.role, x.payload || {})}</p>
         ${x.kind === 'proposal' ? `<button data-mp="${i}" class="clay-btn bg-surface-bright text-primary text-[10px] font-extrabold px-3 py-1.5 mt-1.5">${TT('👍 Áp dụng vào thanh trượt', '👍 Apply to sliders')}</button>` : ''}</div>`).join('')
         : TT('Chưa có đề xuất nào. Nhắc CFO, CMO, COO gửi đề xuất và SEC gửi biên bản.', 'No proposals yet. Remind the CFO, CMO and COO to send proposals and the SEC to send minutes.');
@@ -156,7 +158,7 @@
     return parts.join(' · ') || TT('Chưa ghi nhận hành động nào', 'No actions recorded yet');
   }
   function exportPdf(members, balance, meta) {
-    const rows = members.map(m => `<tr><td>${(m.name || '').replace(/</g, '&lt;')}</td><td>${ROLE_NAME[m.role] || m.role}</td><td style="text-align:center">${m.score}</td><td>${statLine(m).replace(/<[^>]+>/g, '')}</td></tr>`).join('');
+    const rows = members.map(m => `<tr><td>${esc(m.name)}</td><td>${esc(ROLE_NAME[m.role] || m.role)}</td><td style="text-align:center">${m.score}</td><td>${statLine(m).replace(/<[^>]+>/g, '')}</td></tr>`).join('');
     const html = `<!doctype html><html><head><meta charset="utf-8"><title>${TT('Báo cáo hiệu suất thành viên', 'Member performance report')}</title>
       <style>body{font-family:Arial,Helvetica,sans-serif;padding:28px;color:#1f3f4a}h1{font-size:21px;margin:0 0 4px}
       .meta{font-size:12px;color:#5a6b74;margin-bottom:14px}.balance{font-size:30px;font-weight:800;margin:6px 0 16px}
@@ -196,7 +198,7 @@
         ${members.map(m => `
           <div class="clay-sunken rounded-2xl p-3 mb-2">
             <div class="flex items-center justify-between mb-1">
-              <p class="text-xs font-extrabold text-deep-teal">${m.name} <span class="text-primary">${ROLE_NAME[m.role] || m.role}</span></p>
+              <p class="text-xs font-extrabold text-deep-teal">${esc(m.name)} <span class="text-primary">${esc(ROLE_NAME[m.role] || m.role)}</span></p>
               <p class="font-display font-bold text-deep-teal text-sm">${m.score}<span class="text-[10px] text-deep-teal/40">${TT('đ', 'pt')}</span></p>
             </div>
             <div class="w-full h-1.5 rounded-full bg-primary/10 overflow-hidden mb-1.5"><div class="h-full bg-primary rounded-full" style="width:${m.score}%"></div></div>

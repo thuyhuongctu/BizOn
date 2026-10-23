@@ -49,9 +49,9 @@ assert.equal(G[0].missing, false);
 // 5) Nhật ký thành viên: cùng MSSV (email gõ thiếu một lần) là một người; tên đội khác hoa/thường vẫn khớp.
 T = P.teams(six('PHUSA', {}));
 const log = [
-  { team_name: 'PHUSA', member_email: 'khoab2301345@student.ctu.edu.vn', role: 'CFO', round_number: 1, kind: 'proposal', payload: {}, created_at: '2026-10-16T00:30:00Z' },
-  { team_name: 'phusa', member_email: 'khoab2301345@student', role: 'CFO', round_number: 2, kind: 'proposal', payload: {}, created_at: '2026-10-16T01:30:00Z' },
-  { team_name: 'PHUSA', member_email: 'khoab2301345@student.ctu.edu.vn', role: 'CFO', round_number: 3, kind: 'proposal', payload: {}, created_at: '2026-10-16T02:30:00Z' },
+  { team_name: 'PHUSA', member_email: 'vanab2400001@student.ctu.edu.vn', role: 'CFO', round_number: 1, kind: 'proposal', payload: {}, created_at: '2026-10-16T00:30:00Z' },
+  { team_name: 'phusa', member_email: 'vanab2400001@student', role: 'CFO', round_number: 2, kind: 'proposal', payload: {}, created_at: '2026-10-16T01:30:00Z' },
+  { team_name: 'PHUSA', member_email: 'vanab2400001@student.ctu.edu.vn', role: 'CFO', round_number: 3, kind: 'proposal', payload: {}, created_at: '2026-10-16T02:30:00Z' },
 ];
 const MB = P.members(T, log);
 assert.equal(MB.length, 1, 'gộp thành 1 thành viên');
