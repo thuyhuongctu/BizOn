@@ -142,7 +142,7 @@ export function mount(el, init) {
   const me = new THREE.Group(); scene.add(me);
   const hull = new THREE.Group(); me.add(hull);
   const shadow = M(new THREE.CircleGeometry(2.6, 24), new THREE.MeshBasicMaterial({ color: 0x033337, transparent: true, opacity: 0.22 }), 0, 0.12, 0.3, hull); shadow.rotation.x = -Math.PI / 2; shadow.castShadow = false; shadow.scale.set(1, 0.45, 1);
-  const meSp = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex('assets/character/phu-sa/doi-phu-sa-ghe-v7.png'), transparent: true, alphaTest: 0.4 })); meSp.center.set(0.5, 0); meSp.scale.set(6.4, 3.96, 1); meSp.position.y = 0.15; me.add(meSp);
+  const meSp = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex('assets/character/phu-sa/huong-tu-ghe-chonoi-v2.webp'), transparent: true, alphaTest: 0.4 })); meSp.center.set(0.5, 0); meSp.scale.set(6.4, 3.94, 1); meSp.position.y = 0.15; me.add(meSp);
   const me3 = new THREE.Group(); me3.visible = false; me3.scale.setScalar(1.15); hull.add(me3);
   const team3 = new THREE.Group(); team3.visible = false; team3.scale.setScalar(0.95); team3.rotation.y = 0.5;
   MODELS.then(m => { if (!m) return; const { M: MM } = m;
