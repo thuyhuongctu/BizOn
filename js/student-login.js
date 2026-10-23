@@ -11,9 +11,12 @@
  *
  * API: window.StudentLogin.mount(container, {onChange}) – vẽ UI đăng nhập
  * gọn vào container; .getSession() – phiên hiện tại hoặc null nếu hết hạn/
- * chưa đăng nhập; .rpc(fn, args) – gọi RPC xác thực, báo lỗi rõ nếu chưa
- * đăng nhập. Nộp điểm ẩn danh (không đăng nhập) vẫn hoạt động y nguyên ở
- * nơi gọi – StudentLogin chỉ CỘNG THÊM lựa chọn, không bắt buộc. */
+ * chưa đăng nhập; .token() – access token còn hạn (tự làm mới bằng refresh
+ * token khi hết hạn, null nếu chưa đăng nhập); .rpc(fn, args) – gọi RPC
+ * xác thực, báo lỗi rõ nếu chưa đăng nhập.
+ * Từ 10/2026 nộp kết quả về lớp BẮT BUỘC đăng nhập (migration
+ * 20261023000000_require_student_login.sql): không đăng nhập vẫn chơi được,
+ * nhưng kết quả chỉ nằm trên máy. */
 (function () {
   'use strict';
   const SESSION_KEY = 'bizon-student-session';
@@ -25,7 +28,8 @@
       const raw = sessionStorage.getItem(SESSION_KEY);
       if (!raw) return null;
       const s = JSON.parse(raw);
-      if (s && s.accessToken && s.expiresAt > Date.now()) return s;
+      // Hết hạn nhưng còn refresh token thì giữ lại để token() làm mới.
+      if (s && s.accessToken && (s.expiresAt > Date.now() || s.refreshToken)) return s;
       sessionStorage.removeItem(SESSION_KEY);
     } catch (_) {}
     return null;
@@ -54,6 +58,7 @@
     if (!data.access_token) throw new Error('Máy chủ không trả về phiên đăng nhập hợp lệ.');
     session = {
       accessToken: data.access_token,
+      refreshToken: data.refresh_token || (session && session.refreshToken) || null,
       email: (data.user && data.user.email) || email,
       expiresAt: Date.now() + (Number(data.expires_in || 3600) - 30) * 1000,
     };
@@ -61,13 +66,34 @@
     return session;
   }
 
+  // Access token còn hạn; hết hạn thì đổi refresh token lấy phiên mới (buổi học
+  // dài hơn 1 giờ vẫn nộp được). Không làm mới được thì coi như đăng xuất.
+  let refreshing = null;
+  async function token() {
+    const s = getSession();
+    if (!s) return null;
+    if (s.expiresAt > Date.now()) return s.accessToken;
+    if (!s.refreshToken) { session = null; saveSession(null); return null; }
+    if (!refreshing) {
+      refreshing = authRequest('token?grant_type=refresh_token', { refresh_token: s.refreshToken })
+        .then(data => applyAuthResponse(data, s.email).accessToken)
+        .catch(() => { session = null; saveSession(null); return null; })
+        .finally(() => { refreshing = null; });
+    }
+    return refreshing;
+  }
+  const isStudentEmail = e => /@student\.ctu\.edu\.vn$/i.test(String(e || '').trim());
+  const EN = () => /^en/i.test(document.documentElement.lang || '');
+  const TT = (vi, en) => (EN() ? en : vi);
+
   async function rpc(fn, args) {
     const backend = cfg();
     if (!backend.url || !backend.anonKey) throw new Error('Backend chưa được cấu hình');
-    if (!session) throw new Error('Chưa đăng nhập');
+    const t = await token();
+    if (!t) throw new Error(TT('Chưa đăng nhập', 'Not signed in'));
     const res = await fetch(`${backend.url.replace(/\/$/, '')}/rest/v1/rpc/${fn}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', apikey: backend.anonKey, Authorization: `Bearer ${session.accessToken}` },
+      headers: { 'Content-Type': 'application/json', apikey: backend.anonKey, Authorization: `Bearer ${t}` },
       body: JSON.stringify(args),
     });
     const data = await res.json().catch(() => ({}));
@@ -76,6 +102,8 @@
   }
 
   function getSession() { session = session || loadSession(); return session; }
+  // Phiên còn dùng được (còn hạn hoặc làm mới được) – để trang quyết định có cho bấm Nộp không.
+  function signedIn() { const s = getSession(); return !!(s && (s.expiresAt > Date.now() || s.refreshToken)); }
 
   function mount(container, opts) {
     opts = opts || {};
@@ -87,20 +115,20 @@
 
     function render() {
       wrap.innerHTML = '';
-      if (session) {
+      if (signedIn()) {
         const row = document.createElement('div');
         row.style.cssText = 'display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap';
         const label = document.createElement('span');
         label.style.color = '#006687';
-        label.textContent = '🔒 Đã đăng nhập: ' + session.email;
+        label.textContent = TT('🔒 Đã đăng nhập: ', '🔒 Signed in: ') + session.email;
         const signOutBtn = document.createElement('button');
         signOutBtn.type = 'button';
-        signOutBtn.textContent = 'Đăng xuất';
+        signOutBtn.textContent = TT('Đăng xuất', 'Sign out');
         signOutBtn.style.cssText = 'border:0;border-radius:10px;padding:5px 10px;background:#eef3f3;cursor:pointer;font:700 12px inherit';
         signOutBtn.onclick = () => { session = null; saveSession(null); render(); onChange(null); };
         const delBtn = document.createElement('button');
         delBtn.type = 'button';
-        delBtn.textContent = '🗑️ Xóa tài khoản';
+        delBtn.textContent = TT('🗑️ Xóa tài khoản', '🗑️ Delete account');
         delBtn.style.cssText = 'border:0;border-radius:10px;padding:5px 10px;background:transparent;color:#b91c1c;text-decoration:underline;cursor:pointer;font:700 12px inherit';
         delBtn.onclick = async () => {
           if (!window.confirm('Xóa tài khoản sẽ xóa vĩnh viễn đăng nhập email này. Kết quả đã nộp của lớp KHÔNG bị xóa. Không thể hoàn tác. Tiếp tục?')) return;
@@ -116,30 +144,31 @@
       } else {
         const title = document.createElement('p');
         title.style.cssText = 'color:#006687;font-weight:800;margin:0 0 6px;text-transform:uppercase;font-size:11px;letter-spacing:.04em';
-        title.textContent = '🔒 Đăng nhập bằng email trường (tùy chọn)';
+        title.textContent = TT('🔒 Đăng nhập bằng email trường để nộp về lớp', '🔒 Sign in with your school email to submit');
         const hint = document.createElement('p');
         hint.style.cssText = 'margin:0 0 8px;opacity:.65;font-weight:600;font-size:11px';
-        hint.textContent = 'Để giảng viên truy được đúng người qua email khi chấm điểm/thi. Không đăng nhập vẫn nộp được bình thường.';
+        hint.textContent = TT('Bắt buộc để kết quả về bảng của giảng viên. Không đăng nhập vẫn chơi được, nhưng kết quả chỉ lưu trên máy này. Bảng xếp hạng lớp chỉ hiện biệt danh, không hiện email.',
+          'Required for your result to reach the instructor. You can still play without signing in, but results stay on this device. The class leaderboard shows nicknames only, never emails.');
         const emailEl = document.createElement('input');
         emailEl.type = 'email'; emailEl.placeholder = 'b2400001@student.ctu.edu.vn';
         emailEl.style.cssText = 'width:100%;box-sizing:border-box;border:1.5px solid rgba(0,102,135,.25);border-radius:10px;padding:8px 10px;margin-bottom:6px;font:600 13px inherit';
         const pwEl = document.createElement('input');
-        pwEl.type = 'password'; pwEl.placeholder = 'Mật khẩu (≥ 8 ký tự)';
+        pwEl.type = 'password'; pwEl.placeholder = TT('Mật khẩu (≥ 8 ký tự)', 'Password (≥ 8 characters)');
         pwEl.style.cssText = emailEl.style.cssText;
         const row = document.createElement('div');
         row.style.cssText = 'display:flex;gap:8px';
         const signUpBtn = document.createElement('button');
-        signUpBtn.type = 'button'; signUpBtn.textContent = 'Đăng ký';
+        signUpBtn.type = 'button'; signUpBtn.textContent = TT('Đăng ký', 'Sign up');
         const signInBtn = document.createElement('button');
-        signInBtn.type = 'button'; signInBtn.textContent = 'Đăng nhập';
+        signInBtn.type = 'button'; signInBtn.textContent = TT('Đăng nhập', 'Sign in');
         [signUpBtn, signInBtn].forEach(b => { b.style.cssText = 'flex:1;border:0;border-radius:10px;padding:8px;background:#eef3f3;cursor:pointer;font:700 12px inherit'; });
         const status = document.createElement('p');
         status.style.cssText = 'margin:6px 0 0;font-size:11px;font-weight:700;opacity:.75';
 
         async function doAuth(path, successMsg) {
           const email = emailEl.value.trim(), password = pwEl.value;
-          if (!email || !password || password.length < 8) { status.textContent = 'Cần email @student.ctu.edu.vn hợp lệ và mật khẩu ≥ 8 ký tự.'; status.style.color = '#c0392b'; return; }
-          status.textContent = 'Đang xử lý…'; status.style.color = '';
+          if (!isStudentEmail(email) || !password || password.length < 8) { status.textContent = TT('Cần email @student.ctu.edu.vn và mật khẩu ≥ 8 ký tự.', 'Use your @student.ctu.edu.vn email and a password of 8+ characters.'); status.style.color = '#c0392b'; return; }
+          status.textContent = TT('Đang xử lý…', 'Working…'); status.style.color = '';
           try {
             const data = await authRequest(path, { email, password });
             if (data.access_token) {
@@ -147,21 +176,22 @@
               render();
               onChange(session);
             } else {
-              status.textContent = 'Đã tạo tài khoản. Kiểm tra email để xác nhận, rồi bấm "Đăng nhập".';
+              status.textContent = TT('Đã tạo tài khoản. Kiểm tra email để xác nhận, rồi bấm "Đăng nhập".', 'Account created. Confirm it from your email, then tap "Sign in".');
               status.style.color = '#1a7a4c';
             }
-          } catch (e) { status.textContent = successMsg + ' thất bại (' + e.message + ').'; status.style.color = '#c0392b'; }
+          } catch (e) { status.textContent = successMsg + TT(' thất bại (', ' failed (') + e.message + ').'; status.style.color = '#c0392b'; }
         }
-        signUpBtn.onclick = () => doAuth('signup', 'Đăng ký');
-        signInBtn.onclick = () => doAuth('token?grant_type=password', 'Đăng nhập');
+        signUpBtn.onclick = () => doAuth('signup', TT('Đăng ký', 'Sign-up'));
+        signInBtn.onclick = () => doAuth('token?grant_type=password', TT('Đăng nhập', 'Sign-in'));
 
         row.appendChild(signUpBtn); row.appendChild(signInBtn);
         wrap.appendChild(title); wrap.appendChild(hint); wrap.appendChild(emailEl); wrap.appendChild(pwEl); wrap.appendChild(row); wrap.appendChild(status);
       }
     }
     render();
-    if (session) onChange(session);
+    if (signedIn()) onChange(session);
+    return { render };
   }
 
-  window.StudentLogin = { mount, getSession, rpc };
+  window.StudentLogin = { mount, getSession, signedIn, token, rpc, isStudentEmail };
 })();
