@@ -86,13 +86,13 @@ window.BZ_MUSIC = {
     ['«BizOn Theme»', 'illustrations/bizon-music-studio.webp', 'Nhạc hiệu instrumental của hệ sinh thái', [
       ['Bản gốc – instrumental', 'Bản phối không lời', 'bizon-theme', 'Original – instrumental', 'Instrumental mix']
     ], "The ecosystem's instrumental signature"],
-    ['«Hương Ngọt Phù Sa»', 'covers/ho-chieu-sau-rieng-3d.webp', 'Hò miền Tây về vườn sầu riêng · nhạc nền Hộ Chiếu Sầu Riêng · 6:54', [
+    ['«Hương Ngọt Phù Sa»', 'covers/ho-chieu-sau-rieng-cho-noi.webp', 'Hò miền Tây về vườn sầu riêng · nhạc nền Hộ Chiếu Sầu Riêng · 6:54', [
       ['Bản gốc ⭐', 'Lời tiếng Việt · 6:54 · nhạc nền mặc định', 'huong-ngot-phu-sa', 'Original ⭐', 'Vietnamese lyrics · 6:54 · default soundtrack']
     ], 'Mekong folk-hò about durian orchards · the Durian Passport soundtrack · 6:54'],
-    ['«Hương Ngọt Quê Mình»', 'covers/ho-chieu-sau-rieng-3d.webp', 'Hò miền Tây về vườn sầu riêng · bản hò thứ hai · 7:22', [
+    ['«Hương Ngọt Quê Mình»', 'covers/ho-chieu-sau-rieng-cho-noi.webp', 'Hò miền Tây về vườn sầu riêng · bản hò thứ hai · 7:22', [
       ['Bản gốc', 'Lời tiếng Việt · 7:22 · nhạc nền Hộ Chiếu Sầu Riêng', 'huong-ngot-que-minh', 'Original', 'Vietnamese lyrics · 7:22 · Durian Passport soundtrack']
     ], 'Second Mekong folk-hò about durian orchards · 7:22'],
-    ['«Durian Passport»', 'covers/ho-chieu-sau-rieng-3d.webp', 'Anthem Hộ Chiếu Sầu Riêng · từ hạt giống ra thế giới', [
+    ['«Durian Passport»', 'covers/ho-chieu-sau-rieng-cho-noi.webp', 'Anthem Hộ Chiếu Sầu Riêng · từ hạt giống ra thế giới', [
       ['Bản gốc', 'Lời tiếng Anh · 5:48', 'durian-passport', 'Original', 'English lyrics · 5:48']
     ], 'Hộ Chiếu Sầu Riêng anthem · from the seed to the world']
   ],
@@ -100,7 +100,7 @@ window.BZ_MUSIC = {
     ['Bật Nghiệp', 'covers/bat-nghiep-3d.webp', 'Màu Việt Nam', 'game.html', ['bat-nghiep-mekong-sunfire-rise', 'bat-nghiep-mekong-sunfire-rise-2', 'bat-nghiep-mekong-sunfire-1', 'huong-and-the-world-en', 'bat-nghiep-co-loi', 'bat-nghiep-rap-symphony', 'bat-nghiep-mekong-sunfire-2', 'bat-nghiep-mekong-sunfire', 'bat-nghiep', 'huong-vuon-ra-the-gioi', 'huong-sans-frontieres-2', 'bizon-theme', 'huong-on-return', 'huong-on-return-remix', 'vua-du-de-bay-cao', 'doi-phu-sa', 'doi-phu-sa-remix', 'doi-phu-sa-remix2'], 'Vietnam palette'],
     ['Hộ Chiếu Thương Hiệu', 'covers/ho-chieu-thuong-hieu-3d.webp', 'Bậc 3 · Quốc tế hóa', 'brand-passport.html', ['brand-passport', 'brand-passport-v2', 'brand-passport-remix', 'brand-passport-remix-25', 'stamps-beyond-borders', 'stamps-beyond-borders-v2', 'stamps-beyond-borders-extended', 'golden-silt-route', 'ho-chieu-p1-tu-dong-mekong', 'ho-chieu-p2-qua-nhung-thi-truong', 'ho-chieu-p3-viet-nam-ra-the-gioi', 'ho-chieu-p3-remix', 'ho-chieu-p3-remix2', 'ho-chieu-p3-vietnam-to-the-world-en', 'ho-chieu-p3-en-remix2', 'ho-chieu-p1-remix', 'ho-chieu-p1-remix2', 'ho-chieu-p1-remix3', 'ho-chieu-p2-remix', 'ho-chieu-p3-remix3', 'ho-chieu-p3-en-remix', 'journey-golden-silt', 'journey-golden-silt-remix', 'mekong-river-remix', 'mekong-river-v2', 'mekong-compass', 'huong-and-the-world', 'huong-and-the-world-en', 'huong-and-the-world-male', 'huong-et-le-monde', 'huong-sans-frontieres', 'huong-sans-frontieres-2', 'huong-vuon-ra-the-gioi', 'huong-vuon-ra-the-gioi-2'], 'Level 3 · Internationalisation', 'Brand Passport'],
     ['Bến Phù Sa', 'covers/ben-phu-sa-3d.webp', 'Chợ nổi Mekong · Bậc 1 · Khởi sự kinh doanh', 'ben-phu-sa.html', ['golden-silt-journey-ben-phu-sa', 'golden-silt-journey-ben-phu-sa-2', 'doi-phu-sa', 'doi-phu-sa-remix', 'doi-phu-sa-remix2', 'doi-phu-sa-remix3'], 'Mekong floating market · Level 1 · Venture start-up'],
-    ['Hộ Chiếu Sầu Riêng', 'covers/ho-chieu-sau-rieng-3d.webp', 'Xuất khẩu sầu riêng · Play, Grow, Go!', 'lab/ho-chieu-sau-rieng.html', ['huong-ngot-phu-sa', 'huong-ngot-que-minh', 'durian-passport'], 'Durian export · Play, Grow, Go!', 'Durian Passport'],
+    ['Hộ Chiếu Sầu Riêng', 'covers/ho-chieu-sau-rieng-cho-noi.webp', 'Xuất khẩu sầu riêng · Play, Grow, Go!', 'lab/ho-chieu-sau-rieng.html', ['huong-ngot-phu-sa', 'huong-ngot-que-minh', 'durian-passport'], 'Durian export · Play, Grow, Go!', 'Durian Passport'],
     ['BizOn Arcade', 'character/arcade-rong-bay-sau-rieng-cut.webp', 'Nhịp nhanh', 'games.html', ['bizon-theme', 'and-the-world-say-hello', 'vua-du-de-bay-cao', 'bat-nghiep'], 'Fast tempo']
   ],
   voices: [

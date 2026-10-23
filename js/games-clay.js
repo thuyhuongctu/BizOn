@@ -65,7 +65,7 @@
     }).join(''));
 
     /* mains */
-    var img = ['assets/covers/ben-phu-sa-3d.webp','assets/covers/bat-nghiep-3d.webp','assets/covers/ho-chieu-thuong-hieu-3d.webp','assets/covers/ho-chieu-sau-rieng-3d.webp'];
+    var img = ['assets/covers/ben-phu-sa-3d.webp','assets/covers/bat-nghiep-3d.webp','assets/covers/ho-chieu-thuong-hieu-3d.webp','assets/covers/ho-chieu-sau-rieng-cho-noi.webp'];
     var tagBg = ['#0F5C4E','var(--clay-orange)','#B3541A','#B3541A'];
     var play = [B+'ben-phu-sa.html', B+'game.html', B+'brand-passport.html', B+'lab/ho-chieu-sau-rieng.html'];
     var d3 = [B+'ben-phu-sa-3d.html', B+'BizOn Game 3D.html', B+'Ho Chieu Thuong Hieu 3D.html', B+'lab/ho-chieu-sau-rieng-3d.html'];

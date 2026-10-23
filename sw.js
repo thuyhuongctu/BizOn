@@ -207,7 +207,7 @@ const SHELL = [
   './assets/covers/ben-phu-sa-3d.webp',
   './assets/covers/bat-nghiep-3d.webp',
   './assets/covers/ho-chieu-thuong-hieu-3d.webp',
-  './assets/covers/ho-chieu-sau-rieng-3d.webp',
+  './assets/covers/ho-chieu-sau-rieng-cho-noi.webp',
   './assets/illustrations/game/river-worldmap.webp',
   './assets/illustrations/game/team-table.webp',
   './assets/illustrations/game/paths-compass.webp',
