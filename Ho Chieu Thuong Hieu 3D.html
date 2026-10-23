@@ -2405,7 +2405,7 @@
 <script src="ho-chieu-voice-2.js"></script>
 <script src="js/bp-signature.js"></script>
 <script type="module" src="bp3d.js"></script>
-<script>if ('serviceWorker' in navigator && location.protocol.startsWith('http')) addEventListener('load', function () { navigator.serviceWorker.register('sw-hochieu.js').catch(function () {}); });</script>
+<script>/* Một service worker cho cả trang (sw.js ở gốc); sw-hochieu.js/sw-bizon.js cũ từng giành phạm vi gốc với sw.js gây vòng tải lại. */if ('serviceWorker' in navigator && location.protocol.startsWith('http')) addEventListener('load', function () { navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).catch(function () {}); });</script>
 <script src="js/site-ui.js" defer></script>
 <p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2" style="color:rgba(100,116,125,.85)"><span>✉️ Liên hệ · Contact:</span> <a href="mailto:bricoleur@bizonland.com" style="color:inherit;text-decoration:underline">bricoleur@bizonland.com</a></p>
 <p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2 pb-6" style="color:rgba(100,116,125,.75)">🎓 Trang web chỉ phục vụ mục đích giáo dục và nghiên cứu, không đại diện, không liên kết và không nhận tài trợ từ bất kỳ tổ chức chính trị nào. · This website serves educational and research purposes only and is not affiliated with any political organization.</p>
