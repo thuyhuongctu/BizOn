@@ -1,7 +1,7 @@
 /* BizOn Bật Nghiệp 2026 – Service Worker (offline app shell)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
 
-const CACHE = 'bizon-v575';
+const CACHE = 'bizon-v576';
 const SHELL = [
   './',
   './index.html',
@@ -189,32 +189,28 @@ const IMG_MAX = 600;
 
 // Nhạc/video không lưu sẵn (bên dưới cũng không phục vụ chúng từ cache) – chỉ làm nặng lần cài đầu.
 // Lưu từng tệp riêng: một tệp lỗi không làm hỏng cả lần cài như addAll.
-// Tăng CACHE không bắt điện thoại tải lại tệp chưa đổi: tệp có trong cache bản cũ thì hỏi lại
-// máy chủ bằng ETag (If-None-Match); trả 304 thì chép bản cũ sang, chỉ tệp đã đổi mới tải về.
-// Tải 6 tệp một lúc để không giành hết băng thông của trang người chơi đang mở.
+// Tăng CACHE không bắt điện thoại tải lại tệp chưa đổi: sw-manifest.json (tạo lúc deploy bởi
+// scripts/release/sw-manifest.mjs) ghi mã băm nội dung từng tệp; tệp có mã trùng với bản đã lưu
+// trong cache cũ thì chép sang, chỉ tệp đã đổi mới tải về. Không có manifest (chạy cục bộ) thì
+// tải hết như trước. Tải 6 tệp một lúc để không giành hết băng thông của trang đang mở.
+const MANIFEST = './sw-manifest.json';
 async function oldCaches() {
   const keys = (await caches.keys()).filter(k => /^bizon-v\d+$/.test(k) && k !== CACHE).sort((x, y) => y.slice(7) - x.slice(7));
   return Promise.all(keys.map(k => caches.open(k)));
 }
-async function install1(c, olds, u) {
-  for (const o of olds) {
-    const prev = await o.match(u);
-    if (!prev) continue;
-    const tag = prev.headers.get('ETag');
-    if (!tag) break;
-    try {
-      const res = await fetch(u, { headers: { 'If-None-Match': tag }, cache: 'no-store' });
-      if (res.status === 304) return c.put(u, prev);
-      if (res.ok && res.status === 200) return c.put(u, res);
-    } catch (e) { return c.put(u, prev); } // mất mạng giữa chừng: giữ bản cũ còn hơn không có
-    break;
-  }
-  return c.add(u);
-}
+async function readFiles(res) { try { return (await res.json()).files || {}; } catch (e) { return {}; } }
 self.addEventListener('install', e => {
   e.waitUntil((async () => {
     const c = await caches.open(CACHE), olds = await oldCaches(), q = SHELL.slice();
-    await Promise.all(Array.from({ length: 6 }, async () => { while (q.length) { const u = q.shift(); try { await install1(c, olds, u); } catch (err) { /* một tệp lỗi không chặn cả lần cài */ } } }));
+    let man = null, now = {}, before = {};
+    try { const r = await fetch(MANIFEST, { cache: 'no-store' }); if (r.ok) { man = r.clone(); now = await readFiles(r); } } catch (err) { /* không có manifest */ }
+    for (const o of olds) { const r = await o.match(MANIFEST); if (r) { before = await readFiles(r); break; } }
+    const one = async u => {
+      if (now[u] && now[u] === before[u]) for (const o of olds) { const prev = await o.match(u); if (prev) return c.put(u, prev); }
+      return c.add(new Request(u, { cache: 'no-cache' }));
+    };
+    await Promise.all(Array.from({ length: 6 }, async () => { while (q.length) { const u = q.shift(); try { await one(u); } catch (err) { /* một tệp lỗi không chặn cả lần cài */ } } }));
+    if (man) await c.put(MANIFEST, man);
     await self.skipWaiting();
   })());
 });
