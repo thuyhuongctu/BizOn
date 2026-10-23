@@ -1,7 +1,7 @@
 /* BizOn Bật Nghiệp 2026 – Service Worker (offline app shell)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
 
-const CACHE = 'bizon-v584';
+const CACHE = 'bizon-v586';
 const SHELL = [
   './',
   './index.html',
@@ -219,7 +219,9 @@ self.addEventListener('install', e => {
 self.addEventListener('activate', e => {
   e.waitUntil(
     caches.keys()
-      .then(keys => Promise.all(keys.filter(k => /^bizon-v\d+$/.test(k) && k !== CACHE).map(k => caches.delete(k)))) // chỉ dọn bản cũ của chính sw.js; cache của sw-bizon.js, sw-hochieu.js, app/sw.js và IMG_CACHE để nguyên
+      // Dọn bản cũ của chính sw.js và cache của sw-bizon.js/sw-hochieu.js đã ngừng ('bizon-3d*',
+      // 'bizon-hochieu*'); IMG_CACHE và cache của app/sw.js (phạm vi /app/) để nguyên.
+      .then(keys => Promise.all(keys.filter(k => (/^bizon-v\d+$/.test(k) && k !== CACHE) || /^bizon-(3d|hochieu)-v\d+$/.test(k)).map(k => caches.delete(k))))
       .then(() => self.clients.claim())
   );
 });
@@ -239,6 +241,9 @@ self.addEventListener('activate', e => {
 // HTTP của trình duyệt hoạt động độc lập. Tên mới là URL mới nên không thể
 // trúng bản đệm cũ. (Đổi tên tệp – không phải thêm ?v= – vì query string bị
 // một số proxy và trình duyệt bỏ qua khi đối chiếu cache.)
+// Chỉ tra cache của chính sw.js: caches.match() không giới hạn sẽ trúng cả cache của service
+// worker khác cùng nguồn (app/sw.js, bản cũ của sw-hochieu.js…) và trả về JS cũ.
+const fromCache = (req, name = CACHE) => caches.open(name).then(c => c.match(req));
 function putIfOk(req, res, name = CACHE) {
   if (res && res.ok && res.status === 200) {
     const copy = res.clone();
@@ -261,7 +266,7 @@ self.addEventListener('fetch', e => {
   if (e.request.mode === 'navigate') {
     e.respondWith(
       fetch(e.request).then(res => putIfOk(e.request, res))
-        .catch(() => caches.match(e.request).then(hit => hit || caches.match('./index.html')))
+        .catch(() => fromCache(e.request).then(hit => hit || fromCache('./index.html')))
     );
     return;
   }
@@ -269,7 +274,7 @@ self.addEventListener('fetch', e => {
   const dest = e.request.destination;
   if (dest === 'image' || /\.(webp|png|jpe?g|gif|svg|pdf)$/i.test(url.pathname)) {
     e.respondWith(
-      caches.match(e.request).then(hit => {
+      fromCache(e.request, IMG_CACHE).then(hit => hit || fromCache(e.request)).then(hit => { // ảnh trong SHELL nằm ở CACHE
         const net = fetch(e.request).then(res => putIfOk(e.request, res, IMG_CACHE)).catch(() => hit);
         return hit || net;
       })
@@ -277,5 +282,5 @@ self.addEventListener('fetch', e => {
     return;
   }
   if (dest === 'audio' || dest === 'video' || e.request.headers.has('range')) return;
-  e.respondWith(caches.match(e.request).then(hit => hit || fetch(e.request).then(res => putIfOk(e.request, res))));
+  e.respondWith(fromCache(e.request).then(hit => hit || fetch(e.request).then(res => putIfOk(e.request, res))));
 });

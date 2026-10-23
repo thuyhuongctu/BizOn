@@ -5055,22 +5055,56 @@
   });
 })();
 
-/* ===== Service worker toàn site: đăng ký + kiểm tra bản mới bỏ qua HTTP cache
- * + tự tải lại trang một lần khi phiên bản mới tiếp quản (mọi trang, không riêng game) ===== */
+/* ===== Service worker toàn site: đăng ký + kiểm tra bản mới bỏ qua HTTP cache.
+ * Đường dẫn tính từ chính tệp này (js/site-ui.js) nên trang trong lab/ cũng đăng ký đúng sw.js
+ * ở gốc, không phải lab/sw.js (không tồn tại). Khi bản mới tiếp quản thì CHỈ hiện thanh
+ * «Có bản mới · Tải lại», không tự tải lại: tự tải lại từng gây vòng lặp khi hai service worker
+ * giành phạm vi gốc, và cắt ngang người đang chơi giữa vòng. ===== */
 (function () {
   if (!('serviceWorker' in navigator)) return;
+  var me = document.currentScript && document.currentScript.src;
+  var swUrl = me ? new URL('../sw.js', me).href : 'sw.js';
+  var opts = me ? { scope: new URL('../', me).href, updateViaCache: 'none' } : { updateViaCache: 'none' };
   window.addEventListener('load', function () {
-    navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' })
+    navigator.serviceWorker.register(swUrl, opts)
       .then(function (reg) { if (reg && reg.update) reg.update(); })
       .catch(function () {});
   });
+  // js/bizon-clay-i18n.js có cùng thanh này cho trang clay; cờ chung để trang nạp cả hai chỉ gắn một lần.
+  if (window.__bizonSwUpdateBar) return;
+  window.__bizonSwUpdateBar = true;
   var hadController = !!navigator.serviceWorker.controller;
-  var swReloaded = false;
+  var shown = false;
   navigator.serviceWorker.addEventListener('controllerchange', function () {
-    if (!hadController || swReloaded) return;
-    swReloaded = true;
-    location.reload();
+    if (!hadController || shown) return;
+    shown = true;
+    showUpdateBar();
   });
+  function showUpdateBar() {
+    if (!document.body || document.getElementById('bizon-update-bar')) return;
+    var en = false;
+    try { en = localStorage.getItem('bizon-lang') === 'en'; } catch (e) {}
+    var bar = document.createElement('div');
+    bar.id = 'bizon-update-bar';
+    bar.setAttribute('role', 'status');
+    bar.style.cssText = 'position:fixed;left:16px;right:16px;margin:0 auto;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:2147483000;display:flex;align-items:center;gap:10px;max-width:520px;box-sizing:border-box;padding:8px 8px 8px 18px;border-radius:999px;background:#033337;color:#fff;font:600 14px/1.3 system-ui,sans-serif;box-shadow:0 10px 28px rgba(0,0,0,.3)';
+    var msg = document.createElement('span');
+    msg.style.cssText = 'flex:1;min-width:0';
+    msg.textContent = en ? 'A new version of BizOn is ready.' : 'Đã có bản mới của BizOn.';
+    var go = document.createElement('button');
+    go.type = 'button';
+    go.textContent = en ? 'Reload' : 'Tải lại';
+    go.style.cssText = 'border:0;border-radius:999px;padding:10px 16px;min-height:44px;background:#fda127;color:#033337;font:800 14px system-ui,sans-serif;cursor:pointer;flex:none';
+    go.onclick = function () { location.reload(); };
+    var x = document.createElement('button');
+    x.type = 'button';
+    x.textContent = '×';
+    x.setAttribute('aria-label', en ? 'Later' : 'Để sau');
+    x.style.cssText = 'border:0;background:transparent;color:#fff;font:700 20px system-ui,sans-serif;min-width:44px;min-height:44px;cursor:pointer';
+    x.onclick = function () { bar.remove(); };
+    bar.append(msg, go, x);
+    document.body.appendChild(bar);
+  }
 })();
 
 /* Accessibility toàn site (WCAG 2.2): tôn trọng prefers-reduced-motion + trạng thái focus rõ ràng */

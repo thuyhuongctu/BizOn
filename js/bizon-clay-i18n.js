@@ -68,10 +68,42 @@
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 
-  /* Đăng ký service worker để trang đất sét vẫn chạy offline (idempotent). */
+  /* Đăng ký service worker để trang đất sét vẫn chạy offline (idempotent). Đường dẫn tính từ
+     chính tệp này (js/) để trang trong thư mục con cũng đăng ký đúng sw.js ở gốc. */
   if('serviceWorker' in navigator){
+    var me = document.currentScript && document.currentScript.src;
+    var swUrl = me ? new URL('../sw.js', me).href : 'sw.js';
+    var swOpts = me ? { scope: new URL('../', me).href, updateViaCache:'none' } : { updateViaCache:'none' };
     window.addEventListener('load', function(){
-      navigator.serviceWorker.register('sw.js', { updateViaCache:'none' }).catch(function(){});
+      navigator.serviceWorker.register(swUrl, swOpts).catch(function(){});
     });
+    /* Bản mới tiếp quản → chỉ hiện thanh «Tải lại», không tự tải lại (giống js/site-ui.js;
+       cờ chung để trang nạp cả hai tệp chỉ gắn một lần). */
+    if(!window.__bizonSwUpdateBar){
+      window.__bizonSwUpdateBar = true;
+      var hadCtl = !!navigator.serviceWorker.controller, barShown = false;
+      navigator.serviceWorker.addEventListener('controllerchange', function(){
+        if(!hadCtl || barShown || !document.body || document.getElementById('bizon-update-bar')) return;
+        barShown = true;
+        var en = current() === 'en';
+        var bar = document.createElement('div');
+        bar.id = 'bizon-update-bar';
+        bar.setAttribute('role', 'status');
+        bar.style.cssText = 'position:fixed;left:16px;right:16px;margin:0 auto;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:2147483000;display:flex;align-items:center;gap:10px;max-width:520px;box-sizing:border-box;padding:8px 8px 8px 18px;border-radius:999px;background:#033337;color:#fff;font:600 14px/1.3 system-ui,sans-serif;box-shadow:0 10px 28px rgba(0,0,0,.3)';
+        var msg = document.createElement('span');
+        msg.style.cssText = 'flex:1;min-width:0';
+        msg.textContent = en ? 'A new version of BizOn is ready.' : 'Đã có bản mới của BizOn.';
+        var go = document.createElement('button');
+        go.type = 'button'; go.textContent = en ? 'Reload' : 'Tải lại';
+        go.style.cssText = 'border:0;border-radius:999px;padding:10px 16px;min-height:44px;background:#fda127;color:#033337;font:800 14px system-ui,sans-serif;cursor:pointer;flex:none';
+        go.onclick = function(){ location.reload(); };
+        var x = document.createElement('button');
+        x.type = 'button'; x.textContent = '×'; x.setAttribute('aria-label', en ? 'Later' : 'Để sau');
+        x.style.cssText = 'border:0;background:transparent;color:#fff;font:700 20px system-ui,sans-serif;min-width:44px;min-height:44px;cursor:pointer';
+        x.onclick = function(){ bar.remove(); };
+        bar.append(msg, go, x);
+        document.body.appendChild(bar);
+      });
+    }
   }
 })();
