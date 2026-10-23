@@ -133,9 +133,10 @@ function sprite(url, h, y) { const s = new THREE.Sprite(new THREE.SpriteMaterial
 const dock = new THREE.Group(); dock.position.set(-4, 0, 7.5); scene.add(dock);
 box(4.4, 0.35, 2, 0xb58a5a, 0, 0, 0, dock);
 box(0.4, 0.42, 0.4, 0x5a4632, 1.85, 0.35, -0.75, dock); lantern(1.85, 1.08, -0.75, dock); // đôn gỗ + đèn dầu bên bến
-const sTu = sprite('assets/character/phu-sa/tu-cut.webp', 3.2, 2); sTu.position.x = -1; dock.add(sTu);
-const sHg = sprite('assets/character/phu-sa/huong-cut-v2.webp', 3, 1.9); sHg.position.x = 1.1; dock.add(sHg);
-const RIMG = ['assets/character/rivals/alpha.webp', 'assets/character/rivals/mekong.webp', 'assets/character/rivals/star.webp'];
+// Ảnh toàn thân đã tách nền sạch (giống bản v8); tâm sprite ở giữa nên y = mặt bến + nửa chiều cao.
+const sTu = sprite('assets/character/phu-sa/tu-new.png', 3.1, 1.75); sTu.position.x = -1.05; dock.add(sTu);
+const sHg = sprite('assets/character/phu-sa/huong-new.png', 3.1, 1.75); sHg.position.x = 1.0; dock.add(sHg);
+const RIMG = ['assets/character/rivals/alpha.webp', 'assets/character/rivals/mekong.webp', 'assets/character/rivals/star-v2.webp'];
 const RC = [0x7a7f8a, 0x9a8a78, 0x3f8a44];
 const rivals = RC.map((c, k) => { const v = vessel(0, c); v.add(sprite(RIMG[k], 2.6, 2.6)); v.position.set(-40 + k * 3, 0, 34); v.visible = false; v.userData.home = v.position.clone(); return v; });
 let me = null, meKind = -1;
@@ -185,7 +186,7 @@ function showRivals(prevWeek) {
 function tween(obj, to, ms, done) { anim.push({ obj, from: obj.position.clone(), to, t0: performance.now(), ms, done }); }
 function sendMe(m, loc, done) {
   if (me && meKind !== m) { scene.remove(me); me = null; }
-  if (!me) { me = vessel(m, 0xfda127); if (m === 0) { const sp = sprite('assets/character/phu-sa/doi-phu-sa-ghe.webp', 3.4, 3.4); me.add(sp); } me.scale.setScalar(1.25); me.position.copy(HOME); meKind = m; }
+  if (!me) { me = vessel(m, 0xfda127); if (m === 0) { const sp = sprite('assets/character/phu-sa/huong-tu-ghe-chonoi-v2.webp', 3.4, 3.4); me.add(sp); } me.scale.setScalar(1.25); me.position.copy(HOME); meKind = m; }
   const p = P[loc], to = m === 2 ? new THREE.Vector3(p[0] - 2, 0.1, p[1] + 4.5) : new THREE.Vector3(p[0] - 1.5, 0.1, p[1] + 4.2);
   me.lookAt(to.x, me.position.y, to.z); tween(me, to, 1600, done);
 }

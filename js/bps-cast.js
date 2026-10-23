@@ -7,7 +7,7 @@
   var muted = false; try { muted = localStorage.getItem('bizon-bps-voice') === 'off'; } catch (e) {}
   var q = [], cur = null, busy = false, hideT = null;
   // Tên/ảnh đối thủ trong bản thu âm – trang nào dùng đối thủ khác (bản v8) thì lấy từ window.__bps.RIVALS
-  var RV_IMG = ['assets/character/rivals/alpha.webp', 'assets/character/rivals/mekong.webp', 'assets/character/rivals/star.webp'];
+  var RV_IMG = ['assets/character/rivals/alpha.webp', 'assets/character/rivals/mekong.webp', 'assets/character/rivals/star-v2.webp'];
   var RV_NAME = ['Alpha Dynamics', 'Mekong Ventures', 'Star Clay Co.'];
   // Chỉ phát mp3 ở ngôn ngữ đã thu âm (V.langs) – ngôn ngữ khác chỉ hiện chữ, không tải thử file
   var hasAudio = function () { return (V.langs || ['vi']).indexOf(EN() ? 'en' : 'vi') >= 0; };
