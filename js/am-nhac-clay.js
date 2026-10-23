@@ -89,6 +89,8 @@
   }
 
   /* ---- Trình phát ---- */
+  // Bấm phát MV (js/am-mv.js) thì dừng bài đang phát trên bàn xoay, không để hai tiếng chồng nhau.
+  window.addEventListener('bizon:mv-play', function(){ if(A && !A.paused) A.pause(); });
   function playFile(f, q){
     if(cur === f && A){ if(A.paused) A.play().catch(function(){}); else A.pause(); return; }
     if(A){ A.pause(); A.ontimeupdate = A.onended = A.onplay = A.onpause = null; }
