@@ -37,6 +37,11 @@
   .am-voices{display:flex;flex-wrap:wrap;gap:12px}
   .am-bps{position:relative;display:block;border-radius:36px;overflow:hidden;width:100%;aspect-ratio:688/300;min-height:240px;background:#033337 url('assets/illustrations/game/ben-phu-sa-cho-noi.webp') 50% 45%/cover no-repeat;box-shadow:0 30px 44px -28px rgba(0,40,45,.8)}
   .am-bps:hover{transform:translateY(-4px)}
+  .am-mv{position:relative;aspect-ratio:16/9;border-radius:32px;overflow:hidden;background:#033337;box-shadow:inset 0 -10px 0 rgba(0,0,0,.2),0 18px 30px -18px rgba(3,51,55,.55)}
+  .am-mv button{position:absolute;inset:0;width:100%;height:100%;padding:0;border:0;cursor:pointer;background:#033337 url('assets/covers/mv-mekong-sunfire.webp') center/cover no-repeat}
+  .am-mv .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:84px;height:84px;border-radius:50%;background:var(--clay-gold);color:var(--clay-ink);font-size:34px;line-height:84px;box-shadow:inset 0 -6px 0 rgba(0,0,0,.18),0 10px 24px rgba(0,0,0,.35);transition:transform .15s}
+  .am-mv button:hover .play,.am-mv button:focus-visible .play{transform:translate(-50%,-50%) scale(1.08)}
+  .am-mv .note{position:absolute;left:0;right:0;bottom:0;padding:28px 18px 12px;background:linear-gradient(transparent,rgba(3,51,55,.85));color:#D6EEF2;font-size:12px;font-weight:700;text-align:left}
   @media (max-width:560px){ .am-hero .grid{grid-template-columns:1fr} .am-hero .art{display:none} .am-voices-sec{grid-template-columns:1fr} .am-voices-sec .luminart{display:none} }
 </style>
 <meta property="og:type" content="website">
@@ -69,6 +74,18 @@
     <h2 data-en="Which music for which game?">Nhạc nào cho game nào?</h2>
     <p data-en="Each game has its own collection and only rotates within it. Pick a sleeve to put it on the turntable.">Mỗi game có tuyển tập riêng và chỉ xoay vòng trong tuyển tập của mình. Chọn một bìa đĩa để đặt lên bàn xoay.</p>
     <div id="am-albums" class="am-albums"></div>
+  </section>
+
+  <!-- MV: ảnh bìa trên trang, bấm mới tải trình phát YouTube (js/am-mv.js) -->
+  <section class="am-sec">
+    <h2 data-en="Music video «Mekong Sunfire»">MV «Mekong Sunfire»</h2>
+    <p data-en="From a Mekong workshop to Marina Bay and back to the river at sunset – the BizOn Go Global theme. The audio versions are in the «Bật Nghiệp» collection below.">Từ xưởng gỗ miền Tây tới Marina Bay rồi về lại sông nước lúc hoàng hôn – tinh thần BizOn Go Global. Các bản thu âm nằm trong tuyển tập «Bật Nghiệp» ở trên.</p>
+    <div class="am-mv">
+      <button type="button" data-yt="_9JqRSA-HXI" aria-label="Phát MV Mekong Sunfire trên YouTube">
+        <span class="play" aria-hidden="true">▶</span>
+        <span class="note" data-en="Tap to play · the video loads from YouTube">Bấm để phát · video tải từ YouTube</span>
+      </button>
+    </div>
   </section>
 
   <!-- Kệ đĩa ca khúc gốc -->
@@ -113,6 +130,7 @@
 <script src="js/music-data.js" defer></script>
 <script src="js/music-lyrics.js" defer></script>
 <script src="js/am-nhac-clay.js" defer></script>
+<script src="js/am-mv.js" defer></script>
 <script src="js/bizon-clay-nav.js" defer></script>
 <script src="js/bizon-clay-footer.js" defer></script>
 </body>
