@@ -58,6 +58,8 @@ select pg_temp.expect_fail($q$select public.bizon_log_member('KT-TEST',1,'hack',
 select public.bizon_submit_ft_result('KT-TEST', 'Rong Xanh', 'Doi A', 500, 80, 1, '{}'::jsonb, 'bizon-bps2d-v2');
 select pg_temp.expect_fail($q$select public.bizon_submit_bp_result('KT-TEST','A','Cty',150,0,0,0,0,0,'t',4,'{}'::jsonb,'v')$q$, 'không hợp lệ');
 select public.bizon_submit_bp_result('KT-TEST', 'Rong Xanh', 'Cty A', 88, 1, 1, 1, 1, 1, 'Danh hieu', 4, '{}'::jsonb, 'v');
+select public.bizon_submit_bp_result('KT-TEST', 'Rong Xanh', 'Cty B', 70, 1, 1, 1, 1, 1, 'Danh hieu', 6, '{}'::jsonb, 'v3d', 3, 5, 2);
+select pg_temp.expect_fail($q$select public.bizon_submit_bp_result('KT-TEST','A','Cty',50,0,0,0,0,0,'t',4,'{}'::jsonb,'v',999,0,0)$q$, 'không hợp lệ');
 select public.bizon_student_upsert_save('KT-TEST', '{"round":2}'::jsonb);
 do $$ begin
   if (select count(*) from public.bizon_team_all_log_v2('KT-TEST')) <> 1 then raise exception 'A phải thấy 1 dòng nhật ký đội mình'; end if;
@@ -142,7 +144,9 @@ begin
   select count(*) into n from public.ft_class_results_by_version('KT-TEST');
   if n <> 1 then raise exception 'ft_class_results_by_version phải bỏ lượt ẩn danh, được %', n; end if;
   select count(*), string_agg(player_name, ',') into n, names from public.bp_class_leaderboard('KT-TEST');
-  if n <> 1 or names <> 'Rong Xanh' then raise exception 'bp_class_leaderboard sai: % (%)', names, n; end if;
+  if n <> 2 or names <> 'Rong Xanh,Rong Xanh' then raise exception 'bp_class_leaderboard sai: % (%)', names, n; end if;
+  if not exists (select 1 from public.bp_class_leaderboard('KT-TEST') where company = 'Cty B' and markets = 3 and stars = 2) then
+    raise exception 'bp_class_leaderboard phải có markets/stars của bản 3D'; end if;
 end $$;
 reset role;
 

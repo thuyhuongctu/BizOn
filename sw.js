@@ -100,6 +100,7 @@ const SHELL = [
   './js/core/seed-engine.js',
   './js/backend-config.js',
   './js/backend.js',
+  './js/student-login.js',
   './js/error-log.js',
   './js/tutorial.js',
   './js/bp-tutorial.js',

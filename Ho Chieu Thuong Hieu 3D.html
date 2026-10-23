@@ -18,6 +18,7 @@
 <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
 <script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
 <script src="js/backend-config.js"></script>
+<script src="js/student-login.js"></script>
 <script src="js/error-log.js"></script>
 <script src="js/game3d-login-gate.js"></script>
 <script>Game3DGate.mount({ backdrop: true, introId: 'bp-intro', ns: 'bp', title: 'Chào mừng tới Hộ Chiếu Thương Hiệu!', titleEn: 'Welcome to Brand Passport!', subtitle: 'Điền nhanh thông tin đội rồi vào thẳng phần giới thiệu – bỏ trống vẫn chơi được trọn vẹn.', subtitleEn: 'Fill in your team details and go straight to the intro – leave them blank and you can still play the full game.' });</script>
@@ -413,10 +414,11 @@
         </div>
       </div>
       <div class="mt-5 text-left hidden" id="bp-submit-box">
-        <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mb-1.5" data-en="📡 Submit your result to the instructor (optional)">📡 Nộp kết quả cho giảng viên (tùy chọn)</p>
+        <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mb-1.5" data-en="📡 Submit your result to the instructor">📡 Nộp kết quả cho giảng viên</p>
+        <div id="bp-login"></div>
         <div class="flex flex-col sm:flex-row gap-2">
           <input id="bp-class" placeholder="Mã lớp (VD: QTKD-2026-A)" data-en-ph="Class code (e.g. QTKD-2026-A)" class="flex-1 border-2 rounded-xl px-3 py-2.5 text-sm font-semibold" style="border-color:rgba(0,102,135,.25);background:transparent;color:inherit">
-          <input id="bp-name" placeholder="Tên của bạn" data-en-ph="Your name" class="flex-1 border-2 rounded-xl px-3 py-2.5 text-sm font-semibold" style="border-color:rgba(0,102,135,.25);background:transparent;color:inherit">
+          <input id="bp-name" maxlength="60" placeholder="Tên hoặc biệt danh (hiện trên bảng lớp)" data-en-ph="Name or nickname (shown on the class board)" class="flex-1 border-2 rounded-xl px-3 py-2.5 text-sm font-semibold" style="border-color:rgba(0,102,135,.25);background:transparent;color:inherit">
           <button id="bp-send" onclick="bpSubmit()" class="clay-btn bg-deep-teal text-white font-display font-extrabold px-5 py-2.5 text-sm shrink-0" data-en="Submit">Nộp</button>
         </div>
         <p id="bp-send-msg" class="text-[11px] font-semibold opacity-60 mt-1.5"></p>
@@ -1941,7 +1943,7 @@
       S.foot.map(function (t) { return '<p>• ' + t + '</p>'; }).join('') : '';
     window.__bpFinal = { sc: sc, fail: endReason !== null, title: $('bp-title').textContent };
     var elClass = $('bp-class'); if (elClass) elClass.placeholder = T('Mã lớp (VD: QTKD-2026-A)', 'Class code (e.g. QTKD-2026-A)');
-    var elName = $('bp-name'); if (elName) elName.placeholder = T('Tên của bạn', 'Your name');
+    var elName = $('bp-name'); if (elName) elName.placeholder = T('Tên hoặc biệt danh (hiện trên bảng lớp)', 'Name or nickname (shown on the class board)');
     // initSubmit() TRƯỚC renderCertBox(): điền sẵn tên đã lưu (nếu có) vào
     // ô #bp-name, để chứng chỉ hiện đúng tên ngay từ lần vẽ đầu tiên thay vì
     // phải đợi người chơi đổi ngôn ngữ mới thấy tên được điền.
@@ -2100,12 +2102,14 @@
     document.body.appendChild(a); a.click(); a.remove();
   };
 
-  /* ===== Nộp kết quả cho giảng viên – bảng bp_results, INSERT-only ===== */
+  /* ===== Nộp kết quả cho giảng viên – bizon_submit_bp_result, bắt buộc đăng nhập email trường =====
+   * (migration 20261023000000_require_student_login.sql; email lấy từ tài khoản, không nhận từ trang). */
   var bcfg = function () { return window.BIZON_BACKEND || {}; };
   var backendOn = function () { var c = bcfg(); return c.enabled && c.url && !c.url.includes('YOUR-PROJECT'); };
   function initSubmit() {
     if (!backendOn()) return;
     $('bp-submit-box').classList.remove('hidden');
+    if (window.StudentLogin && $('bp-login')) StudentLogin.mount($('bp-login'));
     try {
       $('bp-class').value = localStorage.getItem('bp-class') || '';
       $('bp-name').value = localStorage.getItem('bp-name') || '';
@@ -2137,41 +2141,34 @@
     var klass = $('bp-class').value.trim(), name = $('bp-name').value.trim();
     var msg = $('bp-send-msg'), btn = $('bp-send');
     if (!klass) { msg.textContent = T('Nhập Mã lớp trước đã nhé.', 'Please enter a Class code first.'); return; }
+    if (!window.StudentLogin || !StudentLogin.signedIn()) { msg.textContent = T('Đăng nhập email trường ở khung phía trên trước đã nhé.', 'Sign in with your school email in the box above first.'); return; }
     var fin = window.__bpFinal;
     if (!fin) return;
     try { localStorage.setItem('bp-class', klass); localStorage.setItem('bp-name', name); } catch (e) {}
     btn.disabled = true; btn.style.opacity = 0.5;
     msg.textContent = T('Đang gửi…', 'Sending…');
     try {
-      var c = bcfg();
-      var post = function (b) { return fetch(c.url.replace(/\/$/, '') + '/rest/v1/bp_results', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', apikey: c.anonKey, Authorization: 'Bearer ' + c.anonKey, Prefer: 'return=minimal' },
-        body: JSON.stringify(b) }); };
-      var body = {
-          class_code: klass,
-          player_name: name || null,
-          company: F().name,
-          total_score: fin.sc.total,
-          profit: Math.round(S.profit * 10) / 10,
-          rep: fin.sc.r, capab: fin.sc.c, adapt: fin.sc.a, sust: fin.sc.s,
-          title: fin.title,
-          quarters: S.q >= 6 ? 6 : S.q + 1,
-          detail_json: { home: S.home || 'vn', foot: S.foot, markets: S.entered, know: S.know, party: S.party, fail: fin.fail, picks: S.picks || [], negQ: S.negQ || 0, rival: Math.round(S.rival.rev * 10) / 10 },
-          markets: S.entered.filter(function (v) { return v !== null && v !== undefined; }).length,
-          badges: window.__bp3dBadges ? Object.keys(window.__bp3dBadges()).length : null,
-          stars: window.__bp3dQuests ? Object.values(window.__bp3dQuests()).filter(function (x) { return x.done && x.firm === S.firm; }).length : null,
-          app_version: 'bizon-v303',
-          client_ts: new Date().toISOString(),
-      };
-      var res = await post(body);
-      if (res.status === 400) { delete body.markets; delete body.badges; delete body.stars; res = await post(body); }
-      if (!res.ok) throw new Error('HTTP ' + res.status);
+      await StudentLogin.rpc('bizon_submit_bp_result', {
+        p_class_code: klass,
+        p_player_name: name || null,
+        p_company: F().name,
+        p_total_score: Math.round(fin.sc.total),
+        p_profit: Math.round(S.profit * 10) / 10,
+        p_rep: Math.round(fin.sc.r), p_capab: Math.round(fin.sc.c), p_adapt: Math.round(fin.sc.a), p_sust: Math.round(fin.sc.s),
+        p_title: fin.title,
+        p_quarters: S.q >= 6 ? 6 : S.q + 1,
+        p_detail_json: { home: S.home || 'vn', foot: S.foot, markets: S.entered, know: S.know, party: S.party, fail: fin.fail, picks: S.picks || [], negQ: S.negQ || 0, rival: Math.round(S.rival.rev * 10) / 10 },
+        p_markets: S.entered.filter(function (v) { return v !== null && v !== undefined; }).length,
+        p_badges: window.__bp3dBadges ? Object.keys(window.__bp3dBadges()).length : null,
+        p_stars: window.__bp3dQuests ? Object.values(window.__bp3dQuests()).filter(function (x) { return x.done && x.firm === S.firm; }).length : null,
+        p_app_version: 'bizon-v303',
+      });
       window.bpBoard && window.bpBoard(klass, name);
       msg.textContent = T('✅ Đã nộp! Kết quả đã hiện trên bảng của giảng viên.', "✅ Submitted! Your result now shows on the instructor's board.");
     } catch (e) {
       btn.disabled = false; btn.style.opacity = 1;
-      msg.textContent = T('⚠️ Chưa gửi được – kiểm tra mạng rồi thử lại.', '⚠️ Could not submit – check your connection and try again.');
+      // Lỗi từ máy chủ (chưa đăng nhập, mã lớp sai…) nói rõ lý do; còn lại là lỗi mạng.
+      msg.textContent = /^HTTP|fetch|network/i.test(e.message || '') ? T('⚠️ Chưa gửi được – kiểm tra mạng rồi thử lại.', '⚠️ Could not submit – check your connection and try again.') : '⚠️ ' + e.message;
     }
   };
 

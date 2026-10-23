@@ -15,6 +15,7 @@
 <x-dc>
 <helmet>
 <script src="./js/backend-config.js"></script>
+<script src="./js/student-login.js"></script>
 <script src="./js/fdi-mini/data.js"></script>
 <script src="./js/fdi-mini/engine.js"></script>
 <script src="./js/official-cert.js"></script>
@@ -248,6 +249,7 @@ button{font:inherit}
         <span style="font-size:11px;opacity:.7">{{ t.codeL }}</span>
         <b style="font:700 15px ui-monospace,monospace;letter-spacing:.03em;word-break:break-all;color:#fda127">{{ end.code }}</b>
         <span style="font-size:12px;opacity:.85;margin-top:4px">{{ subMsg }}</span>
+        <div id="hcm-login" style="margin-top:6px;border-radius:14px;background:#fff;color:#033337"></div>
         <sc-if value="{{ subRetry }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ retry }}" style="align-self:flex-start;margin-top:4px;padding:6px 12px;border:0;border-radius:8px;background:#fda127;color:#033337;font-weight:800;cursor:pointer">{{ t.retry }}</button></sc-if>
       </div>
       <button type="button" onClick="{{ restart }}" style="padding:11px;border:1.5px solid rgba(255,255,255,.4);border-radius:12px;background:transparent;color:#fff;font-weight:800;cursor:pointer">↺ {{ t.again }}</button>
@@ -372,6 +374,7 @@ const T = {
   board: L3('Bảng xếp hạng lớp', 'Class leaderboard', 'Papan peringkat kelas'), refresh: L3('Làm mới', 'Refresh', 'Muat ulang'), retry: L3('Gửi lại', 'Retry', 'Kirim ulang'),
   subNone: L3('Chưa nhập mã lớp nên kết quả chỉ lưu trên máy. Hãy gửi mã kết quả cho giảng viên.', 'No class code, so the result is saved on this device only. Send the result code to your instructor.', 'Tanpa kode kelas, hasil hanya tersimpan di perangkat ini. Kirim kode hasil ke dosen.'),
   subBad: L3('Mã lớp không hợp lệ (3–40 ký tự chữ/số). Hãy gửi mã kết quả cho giảng viên.', 'Invalid class code (3–40 letters/digits). Send the result code to your instructor.', 'Kode kelas tidak valid (3–40 huruf/angka). Kirim kode hasil ke dosen.'),
+  subLogin: L3('Đăng nhập email trường ở khung dưới để gửi kết quả về lớp; bảng lớp chỉ hiện tên đội, không hiện email.', 'Sign in with your school email below to send your result to the class; the class board shows team names only, never emails.', 'Masuk dengan email kampus di bawah untuk mengirim hasil ke kelas; papan kelas hanya menampilkan nama tim, bukan email.'),
   subSending: L3('Đang gửi kết quả lên lớp…', 'Sending your result to the class…', 'Mengirim hasil ke kelas…'),
   subOk: L3('✓ Đã gửi kết quả cho giảng viên.', '✓ Result sent to your instructor.', '✓ Hasil terkirim ke dosen.'),
   subFail: L3('Không gửi được (mạng hoặc máy chủ). Bấm «Gửi lại» hoặc gửi mã kết quả.', 'Couldn’t send (network or server). Tap “Retry” or send the result code.', 'Gagal mengirim (jaringan/server). Ketuk “Kirim ulang” atau kirim kode hasil.'),
@@ -441,17 +444,22 @@ class Component extends DCLogic {
     this.iv = setInterval(() => { if (this.state.view === 'play' && this.cfg().mins) this.setState({ now: Date.now() }); }, 1000);
   }
   componentWillUnmount() { clearInterval(this.iv); }
+  // Khung đăng nhập email trường ở màn kết thúc (js/student-login.js tự vẽ vào div trống); đăng nhập xong thì nộp luôn.
+  componentDidUpdate() {
+    const el = document.getElementById('hcm-login');
+    if (!el || el.__sl || !window.StudentLogin) return;
+    el.__sl = true;
+    StudentLogin.mount(el, { onChange: s => { if (s && this.state.g && this.state.sub === 'login') this.submit(this.state.g); } });
+  }
   be() { const b = window.BIZON_BACKEND; return b && b.enabled && b.url && b.anonKey ? b : null; }
   hdr(b) { return { apikey: b.anonKey, Authorization: 'Bearer ' + b.anonKey, 'Content-Type': 'application/json' }; }
-  // Nộp bằng đường anon INSERT vào bp_results (không còn tài khoản Supabase
-  // Auth, giống Bật Nghiệp – xem supabase/migrations/20261006020000). Lưu ý: bỏ trường
-  // "markets" khỏi row trước đây gửi lên — bp_results không có cột đó, nên
-  // mọi lần nộp trước migration này thực ra luôn bị PostgREST từ chối
-  // (PGRST204) và rơi vào nhánh 'fail' một cách im lặng; sửa luôn ở đây.
+  // Nộp qua bizon_submit_bp_result bằng phiên sinh viên (bắt buộc đăng nhập email trường từ
+  // 10/2026, migration 20261023000000_require_student_login.sql); email lấy từ tài khoản.
   submit(g) {
     const b = this.be(), E = window.FDIMini;
     if (!b || !/^[A-Za-z0-9_-]{3,40}$/.test(g.cls || '')) { this.setState({ sub: g.cls ? 'bad' : 'none' }); return; }
     if (g.submitted) { this.setState({ sub: 'ok' }); this.loadBoard(g); return; }
+    if (!window.StudentLogin || !StudentLogin.signedIn()) { this.setState({ sub: 'login' }); this.loadBoard(g); return; }
     const c = this.cfg();
     const playerName = (g.team || '').slice(0, 60), company = 'HC Mini ' + c.ed,
       totalScore = Math.round(E.score10(g) * 10), profit = Math.round((E.value(g) - g.start) * 10) / 10,
@@ -460,10 +468,9 @@ class Component extends DCLogic {
     this.setState({ sub: 'sending' });
     const done = () => { g.submitted = true; this.save(); this.setState({ sub: 'ok' }); this.loadBoard(g); };
     const fail = () => this.setState({ sub: 'fail' });
-    const row = { class_code: g.cls, player_name: playerName, company, total_score: totalScore, profit, quarters, title, app_version: 'hcmini-1', client_ts: new Date().toISOString(), detail_json: detail };
-    fetch(b.url + '/rest/v1/bp_results', { method: 'POST', headers: Object.assign(this.hdr(b), { Prefer: 'return=minimal' }), body: JSON.stringify(row) })
-      .then(r => { if (!r.ok) throw new Error(r.status); done(); })
-      .catch(fail);
+    StudentLogin.rpc('bizon_submit_bp_result', { p_class_code: g.cls, p_player_name: playerName, p_company: company, p_total_score: totalScore, p_profit: profit,
+      p_rep: null, p_capab: null, p_adapt: null, p_sust: null, p_title: title, p_quarters: quarters, p_detail_json: detail, p_app_version: 'hcmini-1' })
+      .then(done, fail);
   }
   loadBoard(g) {
     const b = this.be(); if (!b || !g.cls) return;
@@ -579,7 +586,7 @@ class Component extends DCLogic {
     if (s.view === 'end' && g) {
       const sc = E.score10(g), gr = E.grade(sc), pf = PROF[E.profile(g)], hm = D.HOMES.find(h => h.id === g.home);
       const vals = [g.start].concat(g.log.map(q => q.value)), mx = Math.max.apply(0, vals);
-      const SUB = { none: T.subNone, bad: T.subBad, sending: T.subSending, ok: T.subOk, fail: T.subFail };
+      const SUB = { none: T.subNone, bad: T.subBad, login: T.subLogin, sending: T.subSending, ok: T.subOk, fail: T.subFail };
       const board = (s.board || []).map((r, k) => ({ rank: ['🥇', '🥈', '🥉'][k] || String(k + 1), name: r.player_name, score: fmtN((+r.total_score || 0) / 10), me: r.player_name === g.team ? '#fff6ea' : 'transparent' }));
       if (!s.sub && !s.subTried) setTimeout(() => { this.setState({ subTried: true }); this.submit(g); }, 0);
       Object.assign(base, { subMsg: s.sub && SUB[s.sub] ? SUB[s.sub][i] : '', subRetry: s.sub === 'fail', retry: () => this.submit(g), board, hasBoard: board.length > 0, boardTitle: t.board + (g.cls ? ' · ' + g.cls : ''), refresh: () => this.loadBoard(g) });

@@ -16,7 +16,8 @@
 --      student_team_membership (bizon_join_team), không nhận từ client.
 --   3. bizon_team_log_v2 / bizon_team_all_log_v2: chỉ thành viên đúng đội
 --      xem nhật ký đội mình.
---   4. bizon_submit_bp_result / bizon_submit_ft_result: thêm kiểm tra giá trị.
+--   4. bizon_submit_bp_result / bizon_submit_ft_result: thêm kiểm tra giá trị;
+--      bản Hộ Chiếu nhận thêm markets/badges/stars (tùy chọn) cho bảng xếp hạng 3D.
 -- Bước 2/2 (20261023010000_revoke_anon_writes.sql) thu hồi đường ghi ẩn danh
 -- và chỉ cho bảng xếp hạng hiện các lượt đã đăng nhập (biệt danh, không email)
 -- — áp SAU khi các trang đã lên bản mới. An toàn khi chạy lại.
@@ -293,11 +294,18 @@ $$;
 revoke all on function public.bizon_team_all_log_v2(text) from public, anon;
 grant execute on function public.bizon_team_all_log_v2(text) to authenticated;
 
--- ---------- 4. Hộ Chiếu / Bến Phù Sa: giữ chữ ký hàm, thêm kiểm tra giá trị ----------
+-- ---------- 4. Hộ Chiếu / Bến Phù Sa: thêm kiểm tra giá trị ----------
+-- Hộ Chiếu 3D gửi thêm số thị trường / huy hiệu / sao (cột từ 20260929000000_bp_leaderboard.sql).
+-- Bản 13 tham số cũ chưa trang nào gọi; bỏ đi để PostgREST không phải chọn giữa 2 bản.
+alter table public.bp_results add column if not exists markets int;
+alter table public.bp_results add column if not exists badges int;
+alter table public.bp_results add column if not exists stars int;
+drop function if exists public.bizon_submit_bp_result(text, text, text, int, numeric, int, int, int, int, text, int, jsonb, text);
 create or replace function public.bizon_submit_bp_result(
   p_class_code text, p_player_name text, p_company text, p_total_score int,
   p_profit numeric, p_rep int, p_capab int, p_adapt int, p_sust int,
-  p_title text, p_quarters int, p_detail_json jsonb, p_app_version text
+  p_title text, p_quarters int, p_detail_json jsonb, p_app_version text,
+  p_markets int default null, p_badges int default null, p_stars int default null
 )
 returns void
 language plpgsql
@@ -318,22 +326,24 @@ begin
     raise exception 'Mã lớp không hợp lệ.';
   end if;
   if coalesce(p_total_score, 0) not between 0 and 100 or coalesce(length(p_player_name), 0) > 60
+     or coalesce(p_markets, 0) not between 0 and 50 or coalesce(p_badges, 0) not between 0 and 200
+     or coalesce(p_stars, 0) not between 0 and 200
      or coalesce(length(p_detail_json::text), 0) > 20000 then
     raise exception 'Kết quả không hợp lệ.';
   end if;
 
   insert into public.bp_results (
     class_code, player_name, company, total_score, profit, rep, capab, adapt, sust,
-    title, quarters, detail_json, app_version, client_ts, student_id, student_email
+    title, quarters, detail_json, app_version, client_ts, student_id, student_email, markets, badges, stars
   ) values (
     trim(p_class_code), nullif(trim(coalesce(p_player_name, '')), ''), left(p_company, 80), p_total_score, p_profit,
     p_rep, p_capab, p_adapt, p_sust, left(p_title, 80), p_quarters, p_detail_json,
-    left(p_app_version, 40), now(), auth.uid(), v_email
+    left(p_app_version, 40), now(), auth.uid(), v_email, p_markets, p_badges, p_stars
   );
 end;
 $$;
-revoke all on function public.bizon_submit_bp_result(text, text, text, int, numeric, int, int, int, int, text, int, jsonb, text) from public, anon;
-grant execute on function public.bizon_submit_bp_result(text, text, text, int, numeric, int, int, int, int, text, int, jsonb, text) to authenticated;
+revoke all on function public.bizon_submit_bp_result(text, text, text, int, numeric, int, int, int, int, text, int, jsonb, text, int, int, int) from public, anon;
+grant execute on function public.bizon_submit_bp_result(text, text, text, int, numeric, int, int, int, int, text, int, jsonb, text, int, int, int) to authenticated;
 
 create or replace function public.bizon_submit_ft_result(
   p_class_code text, p_player_name text, p_team_name text, p_total_revenue numeric,

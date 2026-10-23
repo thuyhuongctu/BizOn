@@ -83,7 +83,8 @@
     return refreshing;
   }
   const isStudentEmail = e => /@student\.ctu\.edu\.vn$/i.test(String(e || '').trim());
-  const EN = () => /^en/i.test(document.documentElement.lang || '');
+  // Tiếng Anh cho mọi ngôn ngữ không phải tiếng Việt (vd bản Indonesia của Hộ Chiếu Mini).
+  const EN = () => !/^vi/i.test(document.documentElement.lang || 'vi');
   const TT = (vi, en) => (EN() ? en : vi);
 
   async function rpc(fn, args) {
@@ -112,7 +113,7 @@
     const onChange = opts.onChange || function () {};
     container.innerHTML = '';
     const wrap = document.createElement('div');
-    wrap.style.cssText = 'border:2px solid #006687;border-radius:16px;padding:12px 14px;margin-bottom:10px;font:600 13px/1.4 inherit';
+    wrap.style.cssText = 'border:2px solid #006687;border-radius:16px;padding:12px 14px;margin-bottom:10px;font-weight:600;font-size:13px;line-height:1.4';
     container.appendChild(wrap);
 
     function render() {
@@ -126,12 +127,12 @@
         const signOutBtn = document.createElement('button');
         signOutBtn.type = 'button';
         signOutBtn.textContent = TT('Đăng xuất', 'Sign out');
-        signOutBtn.style.cssText = 'border:0;border-radius:10px;padding:5px 10px;background:#eef3f3;cursor:pointer;font:700 12px inherit';
+        signOutBtn.style.cssText = 'border:0;border-radius:10px;padding:5px 10px;background:#eef3f3;cursor:pointer;font-weight:700;font-size:12px;font-family:inherit';
         signOutBtn.onclick = () => { session = null; saveSession(null); render(); onChange(null); };
         const delBtn = document.createElement('button');
         delBtn.type = 'button';
         delBtn.textContent = TT('🗑️ Xóa tài khoản', '🗑️ Delete account');
-        delBtn.style.cssText = 'border:0;border-radius:10px;padding:5px 10px;background:transparent;color:#b91c1c;text-decoration:underline;cursor:pointer;font:700 12px inherit';
+        delBtn.style.cssText = 'border:0;border-radius:10px;padding:5px 10px;background:transparent;color:#b91c1c;text-decoration:underline;cursor:pointer;font-weight:700;font-size:12px;font-family:inherit';
         delBtn.onclick = async () => {
           if (!window.confirm('Xóa tài khoản sẽ xóa vĩnh viễn đăng nhập email này. Kết quả đã nộp của lớp KHÔNG bị xóa. Không thể hoàn tác. Tiếp tục?')) return;
           try { await rpc('bizon_delete_my_account', {}); } catch (e) { alert('Không xóa được: ' + e.message); return; }
@@ -153,7 +154,7 @@
           'Required for your result to reach the instructor. You can still play without signing in, but results stay on this device. The class leaderboard shows nicknames only, never emails.');
         const emailEl = document.createElement('input');
         emailEl.type = 'email'; emailEl.placeholder = 'b2400001@student.ctu.edu.vn';
-        emailEl.style.cssText = 'width:100%;box-sizing:border-box;border:1.5px solid rgba(0,102,135,.25);border-radius:10px;padding:8px 10px;margin-bottom:6px;font:600 13px inherit';
+        emailEl.style.cssText = 'width:100%;box-sizing:border-box;border:1.5px solid rgba(0,102,135,.25);border-radius:10px;padding:8px 10px;margin-bottom:6px;font-weight:600;font-size:13px;font-family:inherit;color:inherit;background:transparent';
         const pwEl = document.createElement('input');
         pwEl.type = 'password'; pwEl.placeholder = TT('Mật khẩu (≥ 8 ký tự)', 'Password (≥ 8 characters)');
         pwEl.style.cssText = emailEl.style.cssText;
@@ -163,7 +164,7 @@
         signUpBtn.type = 'button'; signUpBtn.textContent = TT('Đăng ký', 'Sign up');
         const signInBtn = document.createElement('button');
         signInBtn.type = 'button'; signInBtn.textContent = TT('Đăng nhập', 'Sign in');
-        [signUpBtn, signInBtn].forEach(b => { b.style.cssText = 'flex:1;border:0;border-radius:10px;padding:8px;background:#eef3f3;cursor:pointer;font:700 12px inherit'; });
+        [signUpBtn, signInBtn].forEach(b => { b.style.cssText = 'flex:1;border:0;border-radius:10px;padding:8px;background:#eef3f3;cursor:pointer;font-weight:700;font-size:12px;font-family:inherit'; });
         const status = document.createElement('p');
         status.style.cssText = 'margin:6px 0 0;font-size:11px;font-weight:700;opacity:.75';
 
