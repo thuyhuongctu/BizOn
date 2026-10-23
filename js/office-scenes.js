@@ -9,13 +9,13 @@
   const st = () => (typeof S !== 'undefined' ? S : null);
   const num = v => Math.round(v || 0).toLocaleString(tr('vi-VN', 'en-US'));
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
-  const IMG = { coo: ['assets/character/v2/coo.png', 'assets/character/team/coo-cut.webp'], sec: ['assets/character/v2/sec.png', 'assets/character/team/sec-cut.webp'],
-    ceo: ['assets/character/v2/ceo.png', 'assets/character/team/ceo-full-cut.webp'], cfo: ['assets/character/v2/cfo.png', 'assets/character/team/cfo-cut.webp'], cmo: ['assets/character/v2/cmo.png', 'assets/character/team/cmo-cut.webp'],
+  const CS = r => ['assets/character/csuite/' + r + '-smile.webp', 'assets/character/team/' + r + '-cut.webp'];
+  const IMG = { coo: CS('coo'), sec: CS('sec'), ceo: CS('ceo'), cfo: CS('cfo'), cmo: CS('cmo'),
     lumina: ['assets/character/v2/lumina.png', 'assets/character/advisors/lumina-vest-cut.webp'],
     alpha: ['assets/character/rivals/alpha.webp'], mekong: ['assets/character/rivals/mekong.webp'], star: ['assets/character/rivals/star.webp'] };
   const img = (k, extra = '') => { const [a, b] = IMG[k] || IMG.lumina; return `<img src="${a}" ${b ? `onerror="this.onerror=null;this.src='${b}'"` : ''} alt="" ${extra}>`; };
   const RIV = { aggressive: { k: 'alpha', icon: '🐺', c: '#e8762d', base: [125, 90] }, balanced: { k: 'mekong', icon: '🐘', c: '#2e8b57', base: [150, 60] }, premium: { k: 'star', icon: '🦚', c: '#6a3fb5', base: [195, 75] } };
-  const NAME = { coo: 'Bảo Đông · COO', sec: 'Gia Hân · SEC' };
+  const NAME = { coo: 'Bảo Ngọc · COO', sec: 'Gia Hân · SEC' };
   const roleKey = s => { const r = String((s && s.profile && s.profile.role) || 'CEO').toLowerCase(); return IMG[r] ? r : 'ceo'; };
 
   const CSS = `

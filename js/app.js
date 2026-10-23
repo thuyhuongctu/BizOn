@@ -259,12 +259,14 @@ function pickRole(id) {
 }
 
 // ---------- Đội demo 5 nhân vật & 3 đối thủ đại diện ----------
+// Bộ C-suite đất sét (assets/character/csuite/<vai>-<biểu cảm>.webp): smile · surprised · think · worried · cheer
+const CSUITE = (r, m) => 'assets/character/csuite/' + r + '-' + (m || 'smile') + '.webp';
 function DEMO_TEAM_LIST() { return [
-  { role: 'CEO', icon: '🧭', img: 'assets/character/team/ceo.webp', name: 'Minh Long',  note: T('Nhà lãnh đạo tầm nhìn', 'Visionary Leader') },
-  { role: 'CFO', icon: '💰', img: 'assets/character/team/cfo.webp', name: 'Thu Hà',     note: T('Chiến lược gia tài chính', 'Finance Strategist') },
-  { role: 'CMO', icon: '📣', img: 'assets/character/team/cmo.webp', name: 'Mạnh Chi',   note: T('Phù thủy marketing', 'Marketing Wizard') },
-  { role: 'COO', icon: '🏭', img: 'assets/character/team/coo.webp', name: 'Bảo Ngọc',   note: T('Chuyên gia vận hành', 'Operations Expert') },
-  { role: 'SEC', icon: '📝', img: 'assets/character/team/sec.webp', name: 'Gia Hân',    note: T('Thư ký pháp chế', 'Legal Secretary') },
+  { role: 'CEO', icon: '🧭', img: CSUITE('ceo'), name: 'Minh Long',  note: T('Nhà lãnh đạo tầm nhìn', 'Visionary Leader') },
+  { role: 'CFO', icon: '💰', img: CSUITE('cfo'), name: 'Thu Hà',     note: T('Chiến lược gia tài chính', 'Finance Strategist') },
+  { role: 'CMO', icon: '📣', img: CSUITE('cmo'), name: 'Mạnh Chi',   note: T('Phù thủy marketing', 'Marketing Wizard') },
+  { role: 'COO', icon: '🏭', img: CSUITE('coo'), name: 'Bảo Ngọc',   note: T('Chuyên gia vận hành', 'Operations Expert') },
+  { role: 'SEC', icon: '📝', img: CSUITE('sec'), name: 'Gia Hân',    note: T('Thư ký pháp chế', 'Legal Secretary') },
 ]; }
 const DEMO_TEAM = DEMO_TEAM_LIST();
 function AI_OPPONENTS_LIST() { return [
@@ -1511,25 +1513,25 @@ function teamSuggestions() {
   };
 
   const out = [
-    { img: 'assets/character/team/cfo.webp', name: 'Thu Hà · CFO', icon: '💰',
+    { img: CSUITE('cfo', tight ? 'worried' : boom ? 'cheer' : 'smile'), name: 'Thu Hà · CFO', icon: '💰',
       say: tight ? T(`Thanh khoản đang căng (quick ratio ${S.quickRatio.toFixed(2)}). Em đề xuất giảm R&D về ${cfoRd}tr, ưu tiên giữ tiền mặt – cần thì vay ngắn hạn thay vì cắt marketing sát sàn.`,
                      `Liquidity is tight (quick ratio ${S.quickRatio.toFixed(2)}). I suggest cutting R&D to ${cfoRd}m and prioritizing cash – take a short-term loan if needed instead of slashing marketing to the bone.`)
                  : T(`Két sắt ổn (${Math.round(S.balance)}tr). Em đề xuất R&D ${cfoRd}tr – biến cố tốt thì đầu tư cho vòng sau, đừng để tiền nằm im.`,
                      `The cash box looks healthy (${Math.round(S.balance)}m). I suggest R&D of ${cfoRd}m – with a good event on our side, let's invest for next round instead of sitting on cash.`),
       apply: { 'in-rd': cfoRd } },
-    { img: 'assets/character/team/cmo.webp', name: 'Mạnh Chi · CMO', icon: '📣',
+    { img: CSUITE('cmo', priceWar ? 'surprised' : boom ? 'cheer' : S.brand > 1.2 ? 'smile' : 'think'), name: 'Mạnh Chi · CMO', icon: '📣',
       say: priceWar ? T(`Đối thủ đang phá giá! Em đề xuất giá ${cmoPrice}k + marketing ${cmoMkt}tr – mình không đua tận đáy nhưng phải giữ độ phủ.`,
                         `A rival is undercutting on price! I suggest price ${cmoPrice}k + marketing ${cmoMkt}m – we won't race to the bottom, but we need to keep our reach.`)
                     : T(`Với thương hiệu hiện tại, em đề xuất giá ${cmoPrice}k và marketing ${cmoMkt}tr${boom ? ' – biến cố này là thời cơ vàng để bung!' : ' – đủ áp lực lên cả ba đối thủ.'}`,
                         `Given our current brand, I suggest price ${cmoPrice}k and marketing ${cmoMkt}m${boom ? " – this event is a golden chance to go big!" : ' – enough pressure on all three rivals.'}`),
       apply: { 'in-price': cmoPrice, 'in-mkt': cmoMkt } },
-    { img: 'assets/character/team/coo.webp', name: 'Bảo Ngọc · COO', icon: '🏭',
+    { img: CSUITE('coo', energy ? 'worried' : last && (last.inventory > 400 || last.lostSales > 200) ? 'think' : 'smile'), name: 'Bảo Ngọc · COO', icon: '🏭',
       say: energy ? T(`Khủng hoảng năng lượng – em đề xuất hạ sản lượng về ${cooProd.toLocaleString('vi-VN')} sp và ${cooWorkers} nhân công, chạy máy quá tải lúc này là đốt tiền điện.`,
                       `Energy crisis – I suggest lowering output to ${cooProd.toLocaleString('en-US')} units with ${cooWorkers} workers; overloading the machines now just burns money on power.`)
                   : T(`Công suất máy ${S.machineCapacity.toLocaleString('vi-VN')} sp – em đề xuất sản xuất ${cooProd.toLocaleString('vi-VN')} sp với ${cooWorkers} nhân công, chừa ~12% đệm cho bảo trì.`,
                       `Machine capacity is ${S.machineCapacity.toLocaleString('en-US')} units – I suggest producing ${cooProd.toLocaleString('en-US')} units with ${cooWorkers} workers, leaving ~12% buffer for maintenance.`),
       apply: { 'in-prod': cooProd, 'in-workers': cooWorkers } },
-    { img: 'assets/character/team/sec.webp', name: 'Gia Hân · SEC', icon: '📝',
+    { img: CSUITE('sec', tight ? 'think' : 'smile'), name: 'Gia Hân · SEC', icon: '📝',
       say: T(`Tóm tắt cuộc họp: biến cố vòng này là «${ev.name || '–'}». ${ev.icon || ''} ${tight ? 'Ưu tiên số 1 theo CFO: an toàn dòng tiền. ' : ''}Em đã ghi biên bản – cả đội thống nhất xong thì CEO bấm Commit nhé!`,
               `Meeting summary: this round's event is «${ev.name || '–'}». ${ev.icon || ''} ${tight ? "CFO's top priority: protect cash safety. " : ''}I've logged the minutes – once the team agrees, the CEO can hit Commit!`) },
   ];
@@ -1670,7 +1672,7 @@ const RIVAL_IMGS = { aggressive: 'assets/character/rivals/alpha.webp', balanced:
 function showArena(r, done) {
   const stop = CONQUEST_STOPS[r.round - 1];
   const fighters = [
-    { name: S.profile.teamName, share: r.share, me: true, img: 'assets/character/team/ceo.webp', pos: 'bottom' },
+    { name: S.profile.teamName, share: r.share, me: true, img: CSUITE('ceo'), pos: 'bottom' },
     ...S.competitors.map((c, i) => ({ name: c.name, share: c.share || 25, icon: RIVAL_ICONS[c.style] || '🤖',
       img: RIVAL_IMGS[c.style], pos: ['top', 'left', 'right'][i] })),
   ];
@@ -2437,7 +2439,7 @@ function renderRivalCostReport(body) {
 
   // --- Băng ghế tổng chi phí: 4 cột xếp từ thấp đến cao, đội bạn nổi bật ---
   const bench = [
-    { name: S.profile.teamName, cost: Math.round(myCost), me: true, img: 'assets/character/team/ceo.webp' },
+    { name: S.profile.teamName, cost: Math.round(myCost), me: true, img: CSUITE('ceo') },
     ...rivals.map(x => ({ name: x.name, cost: x.cost, img: RIVAL_IMGS[x.style] })),
   ].sort((a, b) => a.cost - b.cost);
   const maxCost = Math.max(...bench.map(b => b.cost), 1);
@@ -2447,7 +2449,7 @@ function renderRivalCostReport(body) {
 
   // --- Marketing: chi thật của từng đối thủ vòng này ---
   const mktRows = [
-    { name: S.profile.teamName, mkt: last.marketing, me: true, img: 'assets/character/team/ceo.webp' },
+    { name: S.profile.teamName, mkt: last.marketing, me: true, img: CSUITE('ceo') },
     ...rivals.map(x => ({ name: x.name, mkt: x.mkt, img: RIVAL_IMGS[x.style] })),
   ].sort((a, b) => b.mkt - a.mkt);
   const maxMkt = Math.max(...mktRows.map(m => m.mkt), 1);
@@ -2593,7 +2595,7 @@ function renderSeasonReport(body) {
   }));
   const teamCostTotal = rounds.reduce((a, r) => a + r.revenue - r.netProfit, 0);
   const ranking = [
-    { name: S.profile.teamName, me: true, img: 'assets/character/team/ceo.webp',
+    { name: S.profile.teamName, me: true, img: CSUITE('ceo'),
       share: shareLast, growth, profit: Math.round(totalProfit),
       roi: Math.round(1000 * totalProfit / Math.max(1, teamCostTotal)) / 10 },
     ...Object.values(agg).map(a => ({ name: a.name, img: RIVAL_IMGS[a.style],

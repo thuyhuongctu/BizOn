@@ -1,7 +1,7 @@
 /* BizOn Bật Nghiệp 2026 – Service Worker (offline app shell)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
 
-const CACHE = 'bizon-v569';
+const CACHE = 'bizon-v570';
 const SHELL = [
   './',
   './index.html',
@@ -313,12 +313,12 @@ const SHELL = [
   './assets/illustrations/game/evt-copy.webp',
   './assets/illustrations/game/evt-board.webp',
   './assets/character/team/lineup-cut.webp',
-  './assets/character/team/csuite-lineup.webp',
-  './assets/character/team/ceo-cut.webp',
-  './assets/character/team/cfo-cut.webp',
-  './assets/character/team/cmo-cut.webp',
-  './assets/character/team/coo-cut.webp',
-  './assets/character/team/sec-cut.webp',
+  './assets/character/csuite/lineup.webp',
+  './assets/character/csuite/ceo-smile.webp',
+  './assets/character/csuite/cfo-smile.webp',
+  './assets/character/csuite/cmo-smile.webp',
+  './assets/character/csuite/coo-smile.webp',
+  './assets/character/csuite/sec-smile.webp',
   './assets/character/team/gia-han-cut.webp',
   './assets/character/team/thu-ha-cut.webp',
   './assets/character/team/minh-long-cut.webp',

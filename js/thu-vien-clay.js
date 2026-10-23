@@ -11,13 +11,13 @@
     vi:{ all:'Tất cả', items:'mục', none:'Không có mục nào khớp từ khóa.', ph:'Tìm trong thư viện – tên nhân vật, bối cảnh, ca khúc…',
       s:['Tạo hình nhân vật','Dàn nhân vật «Hộ Chiếu Thương Hiệu»','Bối cảnh & minh họa','Âm nhạc gốc','Sản phẩm & Quà tặng'],
       n:['', 'Bộ 21 tạo hình đất nặn 3D của game Hộ Chiếu Thương Hiệu – 6 cố vấn đồng hành và 4 doanh nghiệp Việt, phần lớn nhân vật có cả bản thường và bản lễ phục áo dài. Cả 21 tệp dựng trên cùng khung chuẩn 760 × 1100 px, chiều cao nhân vật thống nhất và cùng một đường chân.', '', '', 'Bộ cài áo (lapel pin) chính thức của BizOn – quà tặng cho đội vô địch và vật phẩm nhận diện thương hiệu.'],
-      expr:'Bảng biểu cảm', exprD:'Hài lòng · Ngạc nhiên · Suy nghĩ',
+      expr:'Bảng biểu cảm', exprD:'Hài lòng · Ngạc nhiên · Suy nghĩ', exprD5:'Tươi cười · Ngạc nhiên · Suy nghĩ · Lo lắng · Ăn mừng',
       roles:{ceo:'CEO',cfo:'CFO',coo:'COO',cmo:'CMO',sec:'Thư ký pháp chế','aodai-nam':'Đại diện đội áo dài nam','aodai-nu':'Đại diện đội áo dài nữ'},
       musicLink:'Kho Âm nhạc BizOn' },
     en:{ all:'All', items:'items', none:'Nothing matches that search.', ph:'Search the library – character, scene, song…',
       s:['Character designs','The «Brand Passport» cast','Scenes & illustrations','Original music','Merch & gifts'],
       n:['', '21 3D clay figures for the Brand Passport game – 6 advisors and 4 Vietnamese firms, most with both an everyday and a formal áo dài version. All 21 files share one 760 × 1100 px frame, the same figure height and baseline.', '', '', 'Official BizOn lapel pins – prizes for the winning team and brand identity items.'],
-      expr:'Expression sheet', exprD:'Pleased · Surprised · Thinking',
+      expr:'Expression sheet', exprD:'Pleased · Surprised · Thinking', exprD5:'Smiling · Surprised · Thinking · Worried · Celebrating',
       roles:{ceo:'CEO',cfo:'CFO',coo:'COO',cmo:'CMO',sec:'Company Secretary','aodai-nam':'Team rep áo dài (male)','aodai-nu':'Team rep áo dài (female)'},
       musicLink:'BizOn Music Library' }
   };
@@ -45,7 +45,8 @@
     return [
       { h:t.s[0], note:t.n[0], min:'180px', items:
         D.chars.map(function(a){ a = loc(a); return fig('character/'+a[0], a[1], a[2]); })
-        .concat(D.expr.map(function(k){ return Object.assign(fig('character/expressions/'+k+'-expressions.webp', t.expr+' – '+t.roles[k], t.exprD), {ar:'4/3',fit:'contain',pos:'50% 50%',pad:'0',bg:'#FFFFFF'}); }))
+        /* Bộ C-suite mới: bảng 5 biểu cảm ghép từ assets/character/csuite/<vai>-<biểu cảm>.webp */
+        .concat(D.expr.map(function(k){ var cs = /^(ceo|cfo|coo|cmo|sec)$/.test(k); return Object.assign(fig(cs ? 'character/csuite/'+k+'-moods.webp' : 'character/expressions/'+k+'-expressions.webp', t.expr+' – '+t.roles[k], cs ? t.exprD5 : t.exprD), {ar:'4/3',fit:'contain',pos:'50% 50%',pad:'0',bg:'#FFFFFF'}); }))
         .concat(D.sheets.slice(0,2).map(function(a){ return sheet(loc(a)); })) },
       { h:t.s[1], note:t.n[1], min:'160px', items:
         D.cast.map(function(a){ a = loc(a); return fig('character/'+a[0], a[1], a[2]); }).concat([sheet(loc(D.sheets[2]))]) },
