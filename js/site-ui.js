@@ -1378,8 +1378,8 @@
 "Project"
 ],
 [
-"Game mô phỏng điều hành doanh nghiệp linh vật đất sét: 6 vòng kinh doanh, 5 vai trò, sự kiện thị trường, đấu trường đối thủ và cố vấn AI. Ứng dụng web PWA, chơi được cả khi ngoại tuyến.",
-"A business management simulation with clay mascots: 6 business rounds, 5 roles, market events, a rival arena and an AI adviser. A PWA web app that also runs offline."
+"Game mô phỏng điều hành doanh nghiệp linh vật đất sét: 6 vòng kinh doanh, 5 vai trò, sự kiện thị trường, đấu trường đối thủ và cố vấn theo luật. Ứng dụng web PWA, chơi được cả khi ngoại tuyến.",
+"A business management simulation with clay mascots: 6 business rounds, 5 roles, market events, a rival arena and a rule-based adviser. A PWA web app that also runs offline."
 ],
 [
 "Giáo dục trước tiên",

@@ -1,0 +1,13 @@
+# BizOn – bizonland.com
+User-agent: *
+Disallow: /android/
+Disallow: /supabase/
+Disallow: /test/
+Disallow: /scripts/
+Disallow: /governance-qa/
+Disallow: /play-store/
+Disallow: /release/
+Disallow: /config/
+Disallow: /design/
+
+Sitemap: https://bizonland.com/sitemap.xml
