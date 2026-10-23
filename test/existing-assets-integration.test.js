@@ -77,7 +77,7 @@ assert.match(aibis, /app-shell\.js/);
 // covers were retired from the music page on request; they stay cached in app/sw.js below).
 const music = read('am-nhac.html') + '\n' + read('js/music-data.js');
 assert.match(music, /arena-vietnam-map-v2\.webp/);
-for (const cover of ['ben-phu-sa-3d', 'bat-nghiep-3d', 'ho-chieu-thuong-hieu-3d', 'ho-chieu-sau-rieng-3d']) {
+for (const cover of ['ben-phu-sa-3d', 'bat-nghiep-3d', 'ho-chieu-thuong-hieu-3d', 'ho-chieu-sau-rieng-cho-noi']) {
   assert.match(music, new RegExp('covers/' + cover + '\\.webp'));
 }
 

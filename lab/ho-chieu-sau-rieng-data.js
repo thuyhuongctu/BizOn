@@ -333,15 +333,15 @@
 
   // Đội 5 vai. Nhân vật đất sét dùng chung với Bật Nghiệp; mỗi vai phụ trách một nhóm quyết định.
   const team = [
-    { id: 'ceo', name: 'Minh Long', img: 'team/ceo-cut.webp', vi: 'CEO – điều phối, chạy «Nếu – Thì», chốt vụ', en: 'CEO – coordinates, runs what-ifs, commits',
+    { id: 'ceo', name: 'Minh Long', img: 'csuite/sr-ceo.webp', vi: 'CEO – điều phối, chạy «Nếu – Thì», chốt vụ', en: 'CEO – coordinates, runs what-ifs, commits',
       owns: ['whatif', 'commit'] },
-    { id: 'cmo', name: 'Lan Chi', img: 'team/cmo-cut.webp', vi: 'CMO – mua tin, đọc giá, chia kênh bán', en: 'CMO – buys information, reads prices, splits channels',
+    { id: 'cmo', name: 'Mạnh Chi', img: 'csuite/sr-cmo.webp', vi: 'CMO – mua tin, đọc giá, chia kênh bán', en: 'CMO – buys information, reads prices, splits channels',
       owns: ['intel', 'alloc'] },
-    { id: 'coo', name: 'Bảo Ngọc', img: 'team/bao-ngoc-cut.webp', vi: 'COO – nguồn hàng, vùng trồng có mã, hao hụt, nghịch vụ', en: 'COO – sourcing, coded areas, losses, off-season',
+    { id: 'coo', name: 'Bảo Ngọc', img: 'csuite/sr-coo.webp', vi: 'COO – nguồn hàng, vùng trồng có mã, hao hụt, nghịch vụ', en: 'COO – sourcing, coded areas, losses, off-season',
       owns: ['linked', 'induce'] },
-    { id: 'cfo', name: 'Thu Hà', img: 'team/cfo-cut.webp', vi: 'CFO – tiền mặt, ưu tiên đầu tư, chi phí tuân thủ', en: 'CFO – cash, investment priority, compliance costs',
+    { id: 'cfo', name: 'Thu Hà', img: 'csuite/sr-cfo.webp', vi: 'CFO – tiền mặt, ưu tiên đầu tư, chi phí tuân thủ', en: 'CFO – cash, investment priority, compliance costs',
       owns: ['priority'] },
-    { id: 'sec', name: 'Gia Hân', img: 'team/gia-han-cut.webp', vi: 'SEC – đọc biến cố, ghi phiếu quyết định và nhật ký đội', en: 'SEC – reads events, keeps the decision sheet and team journal',
+    { id: 'sec', name: 'Gia Hân', img: 'csuite/sr-sec.webp', vi: 'SEC – đọc biến cố, ghi phiếu quyết định và nhật ký đội', en: 'SEC – reads events, keeps the decision sheet and team journal',
       owns: ['option', 'journal'] }
   ];
 
