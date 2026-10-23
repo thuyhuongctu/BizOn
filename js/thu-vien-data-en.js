@@ -27,7 +27,7 @@ window.BZ_LIB_EN={
 'team/aodai-nam-diploma-crop.webp':['Team representative – áo dài (male)','White lotus-embroidered áo dài · holding the simulation-round certificate'],
 'team/aodai-nu-lotus-crop.webp':['Team representative – áo dài (female)','White áo dài with a red-flag badge · holding a lotus flower'],
 /* sheets */
-'character/team/lineup-cut.webp':['Bật Nghiệp demo team – 5 clay members','COO Bảo Ngọc · CFO Thu Hà · CEO Minh Long · CMO Mạnh Chi · Company Secretary Gia Hân'],
+'character/csuite/lineup.webp':['Bật Nghiệp demo team – 5 clay members','COO Bảo Ngọc · CFO Thu Hà · CEO Minh Long · CMO Mạnh Chi · Company Secretary Gia Hân'],
 'illustrations/turnaround-huong.webp':['Character Turnaround Sheet – character design file','3 standard views (front · 45° side · back) · applied-art copyright registration document · code VN-HƯƠNG-CLAY-001'],
 'illustrations/cast-sheet-brand-passport.webp':['Character Sheet – the «Brand Passport» cast','21 designs on one standard frame · applied-art copyright registration document · code VN-BIZON-BP-CAST-001'],
 /* cast */
