@@ -121,7 +121,7 @@
         hint.style.cssText = 'margin:0 0 8px;opacity:.65;font-weight:600;font-size:11px';
         hint.textContent = 'Để giảng viên truy được đúng người qua email khi chấm điểm/thi. Không đăng nhập vẫn nộp được bình thường.';
         const emailEl = document.createElement('input');
-        emailEl.type = 'email'; emailEl.placeholder = '23017163@student.ctu.edu.vn';
+        emailEl.type = 'email'; emailEl.placeholder = 'b2400001@student.ctu.edu.vn';
         emailEl.style.cssText = 'width:100%;box-sizing:border-box;border:1.5px solid rgba(0,102,135,.25);border-radius:10px;padding:8px 10px;margin-bottom:6px;font:600 13px inherit';
         const pwEl = document.createElement('input');
         pwEl.type = 'password'; pwEl.placeholder = 'Mật khẩu (≥ 8 ký tự)';
