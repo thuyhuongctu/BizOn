@@ -3,7 +3,7 @@
  * riêng cho Bật Nghiệp, có thêm bước "tham gia đội"/lưu tiến trình).
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú.
  *
- * Cùng một Supabase Auth với Bật Nghiệp (email @student.ctu.edu.vn + mật
+ * Cùng một Supabase Auth với Bật Nghiệp (email trường – @student.ctu.edu.vn hoặc trường đối tác – + mật
  * khẩu, gọi thẳng REST GoTrue, không SDK) và CÙNG khóa sessionStorage
  * ('bizon-student-session') nên một sinh viên đã đăng nhập ở game.html rồi
  * mở Hộ Chiếu Mini/Bến Phù Sa trong cùng tab/phiên trình duyệt sẽ thấy
@@ -82,7 +82,26 @@
     }
     return refreshing;
   }
-  const isStudentEmail = e => /@student\.ctu\.edu\.vn$/i.test(String(e || '').trim());
+  // Tên miền email sinh viên được nộp bài: CTU + trường đối tác quản trị thêm trên máy chủ
+  // (bảng student_email_domains). Chỉ để báo lỗi sớm trên trang; máy chủ vẫn tự kiểm.
+  let domains = ['student.ctu.edu.vn'];
+  (async () => {
+    try {
+      const c = cfg();
+      if (!c.enabled || !c.url || !c.anonKey) return;
+      const res = await fetch(`${c.url.replace(/\/$/, '')}/rest/v1/rpc/bizon_student_domains`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', apikey: c.anonKey, Authorization: `Bearer ${c.anonKey}` },
+        body: '{}',
+      });
+      const d = res.ok ? await res.json() : null;
+      if (Array.isArray(d) && d.length) domains = d.map(x => String(x).toLowerCase());
+    } catch (_) {}
+  })();
+  const isStudentEmail = e => {
+    const m = /^[^@\s]+@([^@\s]+)$/.exec(String(e || '').trim().toLowerCase());
+    return !!m && domains.includes(m[1]);
+  };
   // Tiếng Anh cho mọi ngôn ngữ không phải tiếng Việt (vd bản Indonesia của Hộ Chiếu Mini).
   const EN = () => !/^vi/i.test(document.documentElement.lang || 'vi');
   const TT = (vi, en) => (EN() ? en : vi);
@@ -153,7 +172,7 @@
         hint.textContent = TT('Bắt buộc để kết quả về bảng của giảng viên. Không đăng nhập vẫn chơi được, nhưng kết quả chỉ lưu trên máy này. Bảng xếp hạng lớp chỉ hiện biệt danh, không hiện email.',
           'Required for your result to reach the instructor. You can still play without signing in, but results stay on this device. The class leaderboard shows nicknames only, never emails.');
         const emailEl = document.createElement('input');
-        emailEl.type = 'email'; emailEl.placeholder = 'b2400001@student.ctu.edu.vn';
+        emailEl.type = 'email'; emailEl.placeholder = TT('b2400001@student.ctu.edu.vn', 'you@student.your-school.edu');
         emailEl.style.cssText = 'width:100%;box-sizing:border-box;border:1.5px solid rgba(0,102,135,.25);border-radius:10px;padding:8px 10px;margin-bottom:6px;font-weight:600;font-size:13px;font-family:inherit;color:inherit;background:transparent';
         const pwEl = document.createElement('input');
         pwEl.type = 'password'; pwEl.placeholder = TT('Mật khẩu (≥ 8 ký tự)', 'Password (≥ 8 characters)');
@@ -170,7 +189,7 @@
 
         async function doAuth(path, successMsg) {
           const email = emailEl.value.trim(), password = pwEl.value;
-          if (!isStudentEmail(email) || !password || password.length < 8) { status.textContent = TT('Cần email @student.ctu.edu.vn và mật khẩu ≥ 8 ký tự.', 'Use your @student.ctu.edu.vn email and a password of 8+ characters.'); status.style.color = '#c0392b'; return; }
+          if (!isStudentEmail(email) || !password || password.length < 8) { status.textContent = TT('Cần email trường (vd @student.ctu.edu.vn) và mật khẩu ≥ 8 ký tự.', 'Use your school email (e.g. @student.ctu.edu.vn) and a password of 8+ characters.'); status.style.color = '#c0392b'; return; }
           status.textContent = TT('Đang xử lý…', 'Working…'); status.style.color = '';
           try {
             const data = await authRequest(path, { email, password });

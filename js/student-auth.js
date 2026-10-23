@@ -112,8 +112,8 @@
     async function signUp() {
       const email = $('sa-email')?.value.trim();
       const password = $('sa-password')?.value;
-      if (!email || !password || password.length < 8) {
-        setStatus('Cần email @student.ctu.edu.vn hợp lệ và mật khẩu tối thiểu 8 ký tự.', 'error');
+      if (!email || !password || password.length < 8 || (window.StudentLogin && !StudentLogin.isStudentEmail(email))) {
+        setStatus('Cần email trường hợp lệ (vd @student.ctu.edu.vn) và mật khẩu tối thiểu 8 ký tự.', 'error');
         return;
       }
       setStatus('Đang tạo tài khoản…');

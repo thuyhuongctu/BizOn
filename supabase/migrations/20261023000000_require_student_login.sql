@@ -18,6 +18,9 @@
 --      xem nhật ký đội mình.
 --   4. bizon_submit_bp_result / bizon_submit_ft_result: thêm kiểm tra giá trị;
 --      bản Hộ Chiếu nhận thêm markets/badges/stars (tùy chọn) cho bảng xếp hạng 3D.
+--   5. student_email_domains: tên miền email sinh viên được nộp bài. Seed
+--      student.ctu.edu.vn; thêm trường đối tác (vd bản Indonesia của Hộ Chiếu
+--      Mini) bằng một dòng insert, không phải sửa hàm. bizon_join_team đổi theo.
 -- Bước 2/2 (20261023010000_revoke_anon_writes.sql) thu hồi đường ghi ẩn danh
 -- và chỉ cho bảng xếp hạng hiện các lượt đã đăng nhập (biệt danh, không email)
 -- — áp SAU khi các trang đã lên bản mới. An toàn khi chạy lại.
@@ -150,6 +153,124 @@ $$;
 revoke all on function public.bizon_admin_set_instructor(text, boolean, text) from public, anon;
 grant execute on function public.bizon_admin_set_instructor(text, boolean, text) to authenticated;
 
+-- ---------- 1b. Tên miền email sinh viên ----------
+-- Thêm trường đối tác (SQL Editor):
+--   insert into public.student_email_domains (domain, note) values ('student.truong-doi-tac.ac.id', 'Đối tác Indonesia');
+create table if not exists public.student_email_domains (
+  domain text primary key check (domain = lower(domain) and domain ~ '^[a-z0-9-]+(\.[a-z0-9-]+)+$'),
+  note text,
+  added_by text,
+  created_at timestamptz not null default now()
+);
+alter table public.student_email_domains enable row level security;
+revoke all on public.student_email_domains from anon, authenticated;
+insert into public.student_email_domains (domain, note, added_by)
+values ('student.ctu.edu.vn', 'Sinh viên Đại học Cần Thơ', 'migration')
+on conflict (domain) do nothing;
+
+-- Email có thuộc tên miền sinh viên được duyệt không (so khớp đúng phần sau @).
+create or replace function public.bizon_is_student_email(p_email text)
+returns boolean
+language sql
+security definer
+stable
+set search_path = public
+as $$
+  select exists (
+    select 1 from student_email_domains d
+    where d.domain = split_part(lower(trim(coalesce(p_email, ''))), '@', 2)
+      and lower(trim(coalesce(p_email, ''))) ~ '^[^@\s]+@[^@\s]+$'
+  );
+$$;
+revoke all on function public.bizon_is_student_email(text) from public, anon, authenticated;
+
+-- Danh sách tên miền cho khung đăng nhập (chỉ để báo lỗi sớm; máy chủ vẫn tự kiểm).
+create or replace function public.bizon_student_domains()
+returns setof text
+language sql
+security definer
+stable
+set search_path = public
+as $$ select domain from student_email_domains order by created_at; $$;
+revoke all on function public.bizon_student_domains() from public;
+grant execute on function public.bizon_student_domains() to anon, authenticated;
+
+create or replace function public.bizon_admin_set_student_domain(p_domain text, p_allowed boolean, p_note text default null)
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_domain text := lower(trim(both '@ ' from coalesce(p_domain, '')));
+begin
+  if not public.bizon_is_admin() then
+    raise exception 'Chỉ quản trị BizOn sửa được danh sách tên miền sinh viên.';
+  end if;
+  if p_allowed then
+    insert into student_email_domains (domain, note, added_by)
+    values (v_domain, left(nullif(trim(coalesce(p_note, '')), ''), 120), auth.email())
+    on conflict (domain) do update set note = coalesce(excluded.note, student_email_domains.note);
+  else
+    delete from student_email_domains where domain = v_domain;
+  end if;
+end;
+$$;
+revoke all on function public.bizon_admin_set_student_domain(text, boolean, text) from public, anon;
+grant execute on function public.bizon_admin_set_student_domain(text, boolean, text) to authenticated;
+
+-- Tham gia đội: như 20260914020000 nhưng kiểm tên miền theo danh sách trên.
+create or replace function public.bizon_join_team(p_class_code text, p_team_name text, p_role text)
+returns table (class_code text, team_name text, role text)
+language plpgsql
+security definer
+set search_path = public
+as $$
+#variable_conflict use_column
+declare
+  v_class text := upper(trim(p_class_code));
+  v_team text := trim(p_team_name);
+  v_role text := upper(trim(p_role));
+  v_email text;
+begin
+  if auth.uid() is null then
+    raise exception 'Cần đăng nhập trước khi tham gia đội.';
+  end if;
+
+  v_email := lower(coalesce(auth.jwt()->>'email', ''));
+  if not public.bizon_is_student_email(v_email) then
+    raise exception 'Cần dùng đúng email trường (vd @student.ctu.edu.vn) để tham gia đội.';
+  end if;
+
+  if v_class !~ '^[A-Z0-9_-]{3,40}$' then
+    raise exception 'Mã lớp cần 3-40 ký tự: chữ hoa, số, gạch dưới hoặc gạch nối.';
+  end if;
+  if v_team = '' or char_length(v_team) > 60 then
+    raise exception 'Tên đội cần 1-60 ký tự.';
+  end if;
+  if v_role not in ('CEO','CFO','CMO','COO','SEC') then
+    raise exception 'Vai trò phải là một trong CEO, CFO, CMO, COO, SEC.';
+  end if;
+
+  begin
+    insert into student_team_membership (student_id, class_code, team_name, role, student_email)
+    values (auth.uid(), v_class, v_team, v_role, v_email)
+    on conflict (student_id, class_code)
+      do update set team_name = excluded.team_name, role = excluded.role,
+                     student_email = excluded.student_email, updated_at = now();
+  exception when unique_violation then
+    raise exception 'Vai trò % của đội % trong lớp % đã có người khác giữ.', v_role, v_team, v_class;
+  end;
+
+  return query
+    select m.class_code, m.team_name, m.role
+    from student_team_membership m
+    where m.student_id = auth.uid() and m.class_code = v_class;
+end;
+$$;
+revoke all on function public.bizon_join_team(text, text, text) from public, anon;
+grant execute on function public.bizon_join_team(text, text, text) to authenticated;
+
 -- ---------- 2. Nộp Bật Nghiệp bằng danh tính thật ----------
 -- Thành viên đội của người gọi trong một lớp (null nếu chưa tham gia / sai domain).
 create or replace function public.bizon_my_membership(p_class_code text)
@@ -164,8 +285,8 @@ begin
   if auth.uid() is null then
     raise exception 'Cần đăng nhập bằng email trường để gửi kết quả về lớp.';
   end if;
-  if lower(coalesce(auth.jwt()->>'email', '')) !~ '@student\.ctu\.edu\.vn$' then
-    raise exception 'Cần dùng đúng email trường (@student.ctu.edu.vn).';
+  if not public.bizon_is_student_email(auth.jwt()->>'email') then
+    raise exception 'Cần dùng đúng email trường (vd @student.ctu.edu.vn).';
   end if;
   return query
     select m.class_code, m.team_name, m.role, m.student_email
@@ -319,8 +440,8 @@ begin
     raise exception 'Cần đăng nhập để nộp kết quả.';
   end if;
   v_email := lower(coalesce(auth.jwt()->>'email', ''));
-  if v_email !~ '@student\.ctu\.edu\.vn$' then
-    raise exception 'Cần dùng đúng email trường (@student.ctu.edu.vn) để nộp kết quả.';
+  if not public.bizon_is_student_email(v_email) then
+    raise exception 'Cần dùng đúng email trường (vd @student.ctu.edu.vn) để nộp kết quả.';
   end if;
   if coalesce(trim(p_class_code), '') !~ '^[A-Za-z0-9_-]{3,40}$' then
     raise exception 'Mã lớp không hợp lệ.';
@@ -361,8 +482,8 @@ begin
     raise exception 'Cần đăng nhập để nộp kết quả.';
   end if;
   v_email := lower(coalesce(auth.jwt()->>'email', ''));
-  if v_email !~ '@student\.ctu\.edu\.vn$' then
-    raise exception 'Cần dùng đúng email trường (@student.ctu.edu.vn) để nộp kết quả.';
+  if not public.bizon_is_student_email(v_email) then
+    raise exception 'Cần dùng đúng email trường (vd @student.ctu.edu.vn) để nộp kết quả.';
   end if;
   if coalesce(trim(p_class_code), '') !~ '^[A-Za-z0-9_-]{3,40}$' then
     raise exception 'Mã lớp không hợp lệ.';

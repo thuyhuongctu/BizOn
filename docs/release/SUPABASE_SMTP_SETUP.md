@@ -46,3 +46,19 @@ Báo lại cho Claude. Các bước tiếp theo:
 1. Áp `supabase/migrations/20261023000000_require_student_login.sql`. Migration này chỉ thêm, không làm gãy trang đang chạy.
 2. Gộp PR sửa các game. Từ lúc này sinh viên đăng nhập để nộp điểm.
 3. Áp `supabase/migrations/20261023010000_revoke_anon_writes.sql` để đóng hẳn đường ghi ẩn danh.
+
+## Thêm trường đối tác (ví dụ bản Indonesia của Hộ Chiếu Mini)
+
+Mặc định chỉ email `@student.ctu.edu.vn` được nộp bài. Sau khi áp migration A, có thể thêm tên miền email sinh viên của trường đối tác:
+
+1. Vào **SQL Editor** của dự án Supabase.
+2. Chạy lệnh dưới, thay tên miền bằng phần đứng sau `@` trong email sinh viên đối tác:
+
+```sql
+insert into public.student_email_domains (domain, note)
+values ('student.truong-doi-tac.ac.id', 'Đối tác Indonesia');
+```
+
+3. Muốn gỡ một tên miền: `delete from public.student_email_domains where domain = '...';`
+
+Trang đăng nhập tự đọc danh sách này. Không cần sửa code, cũng không cần gộp PR mới.

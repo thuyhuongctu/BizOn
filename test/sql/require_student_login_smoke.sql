@@ -26,7 +26,8 @@ insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-0000000000a3', 'ngoai@gmail.com'),
   ('00000000-0000-0000-0000-0000000000b1', 'gv.duyet@ctu.edu.vn'),
   ('00000000-0000-0000-0000-0000000000b2', 'gv.la@gmail.com'),
-  ('00000000-0000-0000-0000-0000000000c1', 'thuyhuongctu@gmail.com');
+  ('00000000-0000-0000-0000-0000000000c1', 'thuyhuongctu@gmail.com'),
+  ('00000000-0000-0000-0000-0000000000d1', 'sv@student.doitac.ac.id');
 insert into public.instructor_allowlist (email, note, added_by) values ('gv.duyet@ctu.edu.vn', 'test', 'test');
 -- Lượt nộp ẩn danh cũ (trước khi khóa): không được hiện trên bảng xếp hạng công khai.
 insert into public.ft_results (class_code, player_name, team_name, total_revenue, efficiency, final_rank)
@@ -103,6 +104,30 @@ select pg_temp.expect_fail($q$select public.bizon_submit_ft_result('KT-TEST','X'
 select pg_temp.expect_fail($q$select public.bizon_submit_round('KT-TEST',1,'{}'::jsonb,'nohash',null)$q$, 'email trường');
 reset role;
 
+-- ---------- 4b. Trường đối tác: chưa có tên miền thì bị chặn, thêm vào thì nộp được ----------
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-0000000000d1","email":"sv@student.doitac.ac.id","role":"authenticated"}', false);
+set role authenticated;
+select pg_temp.expect_fail($q$select public.bizon_submit_bp_result('KT-TEST','Garuda','HC Mini indo',60,0,null,null,null,null,'t',5,'{}'::jsonb,'hcmini-1')$q$, 'email trường');
+select pg_temp.expect_fail($q$select public.bizon_admin_set_student_domain('student.doitac.ac.id', true, null)$q$, 'Chỉ quản trị');
+do $$ begin
+  if not exists (select 1 from public.bizon_student_domains() d where d = 'student.ctu.edu.vn') then raise exception 'Phải liệt kê tên miền CTU'; end if;
+end $$;
+reset role;
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-0000000000c1","email":"thuyhuongctu@gmail.com","role":"authenticated"}', false);
+set role authenticated;
+select public.bizon_admin_set_student_domain('@Student.DoiTac.ac.id', true, 'Đối tác Indonesia');
+reset role;
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-0000000000d1","email":"sv@student.doitac.ac.id","role":"authenticated"}', false);
+set role authenticated;
+select public.bizon_submit_bp_result('KT-TEST','Garuda','HC Mini indo',60,0,null,null,null,null,'t',5,'{}'::jsonb,'hcmini-1');
+select * from public.bizon_join_team('KT-TEST', 'Doi D', 'CEO');
+-- Tên miền giả dạng (đuôi trùng nhưng khác tên miền) vẫn bị chặn.
+reset role;
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-0000000000a3","email":"x@evilstudent.doitac.ac.id","role":"authenticated"}', false);
+set role authenticated;
+select pg_temp.expect_fail($q$select public.bizon_submit_ft_result('KT-TEST','X','Doi C',1,1,1,'{}'::jsonb,'v')$q$, 'email trường');
+reset role;
+
 -- ---------- 5. Giảng viên: chưa duyệt bị chặn, đã duyệt nhận được lớp ----------
 select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-0000000000b2","email":"gv.la@gmail.com","role":"authenticated"}', false);
 set role authenticated;
@@ -143,8 +168,8 @@ begin
   if n <> 1 or names <> 'Rong Xanh' then raise exception 'ft_class_leaderboard phải chỉ có biệt danh đã đăng nhập, được: % (%)', names, n; end if;
   select count(*) into n from public.ft_class_results_by_version('KT-TEST');
   if n <> 1 then raise exception 'ft_class_results_by_version phải bỏ lượt ẩn danh, được %', n; end if;
-  select count(*), string_agg(player_name, ',') into n, names from public.bp_class_leaderboard('KT-TEST');
-  if n <> 2 or names <> 'Rong Xanh,Rong Xanh' then raise exception 'bp_class_leaderboard sai: % (%)', names, n; end if;
+  select count(*), string_agg(player_name, ',' order by player_name) into n, names from public.bp_class_leaderboard('KT-TEST');
+  if n <> 3 or names <> 'Garuda,Rong Xanh,Rong Xanh' then raise exception 'bp_class_leaderboard sai: % (%)', names, n; end if;
   if not exists (select 1 from public.bp_class_leaderboard('KT-TEST') where company = 'Cty B' and markets = 3 and stars = 2) then
     raise exception 'bp_class_leaderboard phải có markets/stars của bản 3D'; end if;
 end $$;
