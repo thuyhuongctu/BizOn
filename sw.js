@@ -1,7 +1,7 @@
 /* BizOn Bật Nghiệp 2026 – Service Worker (offline app shell)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
 
-const CACHE = 'bizon-v567';
+const CACHE = 'bizon-v568';
 const SHELL = [
   './',
   './index.html',
@@ -73,7 +73,6 @@ const SHELL = [
   './js/hub3d.js',
   './assets/character/team/aodai-nam-diploma-cut.webp',
   './assets/character/team/aodai-nu-lotus-cut.webp',
-  './assets/audio/bizon-theme.mp3',
   './huong-dan.html',
   './bang-chung.html',
   './dinh-huong.html',
@@ -277,9 +276,7 @@ const SHELL = [
   // Bài chủ đề game Hộ Chiếu Thương Hiệu – nạp sẵn để mở offline vẫn có nhạc.
   // 7,1MB: đây là mục nặng nhất trong danh sách, cân nhắc bỏ nếu muốn rút ngắn
   // thời gian cài đặt (nhạc vẫn tải và lưu đệm ngay lần đầu người chơi bật).
-  './assets/audio/ho-chieu-p3-en-remix2.mp3',
   // Bài chủ đề game Hộ Chiếu Sầu Riêng – nạp sẵn để mở offline vẫn có nhạc.
-  './assets/audio/huong-ngot-phu-sa.mp3',
   './assets/character/rivals/alpha.webp',
   './assets/character/rivals/mekong.webp',
   './assets/character/rivals/star.webp',
@@ -347,19 +344,20 @@ const SHELL = [
   './assets/docs/guide-mini/guide-p3.webp',
   './assets/docs/guide-mini/guide-p4.webp',
   './assets/docs/guide-mini/guide-p5.webp',
-  './assets/audio/huong-intro.mp3',
   './assets/icons/icon-192.png',
   './assets/icons/icon-512.png',
 ];
 
+// Nhạc/video không lưu sẵn (bên dưới cũng không phục vụ chúng từ cache) – chỉ làm nặng lần cài đầu.
+// Lưu từng tệp riêng: một tệp lỗi không làm hỏng cả lần cài như addAll.
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
+  e.waitUntil(caches.open(CACHE).then(c => Promise.allSettled(SHELL.map(u => c.add(u)))).then(() => self.skipWaiting()));
 });
 
 self.addEventListener('activate', e => {
   e.waitUntil(
     caches.keys()
-      .then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
+      .then(keys => Promise.all(keys.filter(k => /^bizon-v\d+$/.test(k) && k !== CACHE).map(k => caches.delete(k)))) // chỉ dọn bản cũ của chính sw.js; cache của sw-bizon.js, sw-hochieu.js, app/sw.js để nguyên
       .then(() => self.clients.claim())
   );
 });

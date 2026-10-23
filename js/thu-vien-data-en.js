@@ -3,7 +3,7 @@
    Mục nào thiếu ở đây thì trang giữ nguyên bản tiếng Việt. */
 window.BZ_LIB_EN={
 /* chars */
-'lumina-ao-dai-wave.webp':['Lumina in áo dài','In-game AI learning advisor · also the avatar of Đỗ Thùy Hương'],
+'lumina-ao-dai-wave.webp':['Lumina in áo dài','In-game learning advisor (rule-based) · also the avatar of Đỗ Thùy Hương'],
 'lumina-office-present.webp':['Lumina in a white suit','In-game AI strategy advisor'],
 'anh-tu-ao-dai-welcome-cut-v2.webp':['Tú Phan','Academic advisor · appears at key moments'],
 'lumina-vest.webp':['Lumina in a vest – original','Advisor chat-window avatar'],
@@ -31,7 +31,7 @@ window.BZ_LIB_EN={
 'illustrations/turnaround-huong.webp':['Character Turnaround Sheet – character design file','3 standard views (front · 45° side · back) · applied-art copyright registration document · code VN-HƯƠNG-CLAY-001'],
 'illustrations/cast-sheet-brand-passport.webp':['Character Sheet – the «Brand Passport» cast','21 designs on one standard frame · applied-art copyright registration document · code VN-BIZON-BP-CAST-001'],
 /* cast */
-'advisors/lumina-vest-cut.webp':['Lumina','AI advisor · the narrator through all six quarters'],
+'advisors/lumina-vest-cut.webp':['Lumina','Rule-based advisor · the narrator through all six quarters'],
 'advisors/lumina-aodai-cut.webp':['Lumina – áo dài','Ceremonial dress · the welcome screen and the Brand Passport award night'],
 'advisors/lumina-nghe-nhac-dung-cut.webp':['Lumina – listening to music (standing)','Music Library look · white áo dài, headphones and floating notes'],
 'advisors/lumina-nghe-nhac-ngoi-cut.webp':['Lumina – listening to music (seated)','Music Library look · seated on a clay chair, petals falling around'],
