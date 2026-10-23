@@ -211,7 +211,7 @@ test('Bản lớp học: đủ 5 vai, câu hỏi Lumina, rubric 100%, cột nh�
 test('Chuỗi cung ứng lạnh chi tiết (chain2) và quy trình 8 bước (eightSteps): đủ ảnh trên đĩa', () => {
   assert.strictEqual(D.chain2.stages.length, 8);
   const chainImgs = D.chain2.stages.flatMap(st => st.items.map(it => it.img)).concat(D.chain2.cast.map(c => c.img));
-  assert.strictEqual(chainImgs.length, 50);
+  assert.strictEqual(chainImgs.length, 59);
   chainImgs.forEach(img => assert.ok(fs.existsSync(path.join(__dirname, '..', 'assets', img)), 'thiếu ảnh chain2 ' + img));
   assert.strictEqual(D.eightSteps.steps.length, 8);
   D.eightSteps.steps.forEach(st => {
