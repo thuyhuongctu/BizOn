@@ -16,7 +16,7 @@
 <meta name="theme-color" content="#1f4a55">
 <link rel="apple-touch-icon" href="assets/icons/rong-xanh-192.png">
 <link rel="icon" href="assets/icons/rong-xanh-192.png">
-<script>if ('serviceWorker' in navigator && location.protocol.startsWith('http')) addEventListener('load', () => navigator.serviceWorker.register('sw-bizon.js').catch(() => {}));</script>
+<script>/* Một service worker cho cả trang (sw.js ở gốc); sw-hochieu.js/sw-bizon.js cũ từng giành phạm vi gốc với sw.js gây vòng tải lại. */if ('serviceWorker' in navigator && location.protocol.startsWith('http')) addEventListener('load', function () { navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).catch(function () {}); });</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="js/backend-config.js"></script>

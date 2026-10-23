@@ -67,6 +67,6 @@
   <div id="ps-chips" role="tablist" aria-label="Chọn thị trường"></div>
 </div>
 <script type="module" src="bp3d-streets.js"></script>
-<script>if ('serviceWorker' in navigator && location.protocol.startsWith('http')) addEventListener('load', function () { navigator.serviceWorker.register('sw-hochieu.js').catch(function () {}); });</script>
+<script>/* Một service worker cho cả trang (sw.js ở gốc); sw-hochieu.js/sw-bizon.js cũ từng giành phạm vi gốc với sw.js gây vòng tải lại. */if ('serviceWorker' in navigator && location.protocol.startsWith('http')) addEventListener('load', function () { navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).catch(function () {}); });</script>
 </body>
 </html>
