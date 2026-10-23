@@ -1,7 +1,7 @@
 /* BizOn Bật Nghiệp 2026 – Service Worker (offline app shell)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
 
-const CACHE = 'bizon-v574';
+const CACHE = 'bizon-v575';
 const SHELL = [
   './',
   './index.html',
@@ -24,12 +24,6 @@ const SHELL = [
   './lab/nha-may-fdi-data.js',
   './lab/ie-lab.html',
   './lab/ie-lab.js',
-  './assets/ielab/dragon-magnifier.jpg',
-  './assets/ielab/dragon-scroll.jpg',
-  './assets/ielab/dragon-jump.jpg',
-  './assets/ielab/dragon-jump-cut.webp',
-  './assets/ielab/dragon-wink.jpg',
-  './assets/ielab/dragon-wave.jpg',
   './assets/fonts/Baloo2-var-vietnamese.woff2',
   './assets/fonts/Baloo2-var-latin.woff2',
   './assets/fonts/Nunito-var-vietnamese.woff2',
@@ -48,11 +42,6 @@ const SHELL = [
   './am-nhac.html',
   './lumina.html',
   './hau-truong.html',
-  './assets/brand/trong-dong.svg',
-  './assets/character/advisors/lumina-chap-tay-cut.webp',
-  './assets/character/advisors/lumina-y-tuong-cut.webp',
-  './assets/character/advisors/lumina-vo-tay-cut.webp',
-  './assets/character/advisors/lumina-bien-co-thi-truong-cut.webp',
   './gioi-thieu.html',
   './games.html',
   './demo.html',
@@ -71,8 +60,6 @@ const SHELL = [
   // cache ở lượt tải đầu tiên khi ai đó thực sự mở trang qua handler chung.
   './hub-3d.html',
   './js/hub3d.js',
-  './assets/character/team/aodai-nam-diploma-cut.webp',
-  './assets/character/team/aodai-nu-lotus-cut.webp',
   './huong-dan.html',
   './bang-chung.html',
   './dinh-huong.html',
@@ -127,8 +114,6 @@ const SHELL = [
   './js/bps-negotiate.js',
   './js/bn-negotiate.js',
   './js/official-cert.js',
-  './assets/docs/ctu-logo.png',
-  './assets/docs/soe-logo.png',
   './js/lumina-mascot.js',
   './js/site-dock.js',
   './js/site-footer.js',
@@ -187,184 +172,64 @@ const SHELL = [
   './css/bizon-fonts-v8.css',
   './manifest.webmanifest',
   './manifest-brand-passport.webmanifest',
-  './assets/character/lumina-ao-dai.webp',
-  './assets/character/lumina-ao-dai-clap.webp',
-  './assets/character/lumina-cheer-cut.webp',
-  './assets/character/arcade-rong-bay-sau-rieng-cut.webp',
-  './assets/character/anh-tu-desk-laptop-cut-v2.webp',
-  './assets/character/huong-ao-dai-portrait-cut.webp',
-  './assets/character/anh-tu-ao-dai-portrait-cut.webp',
-  './assets/character/lumina-sweater-huong-cut.webp',
-  './assets/character/lumina-dj-cut.webp',
-  './assets/character/lumina-ao-dai-alert.webp',
-  './assets/character/lumina-vest.webp',
-  './assets/character/lumina-vest-worried.webp',
-  './assets/character/lumina-vest-thumbsup.webp',
-  './assets/illustrations/hero-vietnam-2026.webp',
-  './assets/illustrations/arena-vietnam-map-v2.webp',
-  // Bộ ảnh đất sét dùng cho màn Giới thiệu + Sổ tay hướng dẫn của game
-  './assets/illustrations/game/ben-phu-sa-cho-noi.webp',
-  './assets/covers/ben-phu-sa-3d.webp',
-  './assets/covers/bat-nghiep-3d.webp',
-  './assets/covers/ho-chieu-thuong-hieu-3d.webp',
-  './assets/covers/ho-chieu-sau-rieng-cho-noi.webp',
-  './assets/illustrations/game/river-worldmap.webp',
-  './assets/illustrations/game/team-table.webp',
-  './assets/illustrations/game/paths-compass.webp',
-  './assets/illustrations/game/team-portrait.webp',
-  './assets/illustrations/game/globe-walk.webp',
-  './assets/illustrations/game/celebrate-shop.webp',
-  './assets/illustrations/game/table-model.webp',
-  './assets/illustrations/game/lumina-vortex.webp',
-  './assets/illustrations/game/bridge-music.webp',
-  './assets/illustrations/game/phong-hop-chien-luoc.webp',
-  './assets/illustrations/game/dragon-hoa-rong.webp',
-  './assets/illustrations/game/workshop-lumina.webp',
-  './assets/illustrations/game/conquest-spiral.webp',
-  './assets/illustrations/game/boardroom-lumina.webp',
-  './assets/illustrations/game/sen-shield.webp',
-  './assets/illustrations/game/mekong-capital.webp',
-  './assets/illustrations/game/celebrate-win.webp',
-  './assets/illustrations/game/lumina-portrait.webp',
-  './assets/illustrations/game/tu-portrait.webp',
-  './assets/illustrations/giai-dieu-bizon.webp',
-  './assets/illustrations/thuyen-sen-khoi-hanh.webp',
-  './assets/character/advisors/lumina-nghe-nhac-dung-cut.webp',
-  './assets/character/advisors/lumina-nghe-nhac-ngoi-cut.webp',
-  './assets/character/bizon-duo-music.webp',
-  './assets/character/bizon-duo-phong-thu-cut.webp',
-  './assets/illustrations/bizon-music-studio.webp',
-  './assets/illustrations/phong-thu-bizon.webp',
-  './assets/illustrations/globe-trade.webp',
-  './assets/illustrations/command-center.webp',
-  './assets/illustrations/team-holo-meeting.webp',
-  './assets/illustrations/logo-splash.webp',
-  './assets/illustrations/login-clay.webp',
-  './assets/character/anh-tu-ao-dai-welcome-cut-v3.webp',
-  './assets/character/anh-tu-ao-dai-explain-cut.webp',
-  './assets/character/anh-tu-ao-dai-point-cut.webp',
-  './assets/character/anh-tu-ao-dai-work-cut.webp',
-  './assets/character/anh-tu-ao-dai-cut-v2.webp',
-  './assets/character/anh-tu-ao-dai-smile-cut.webp',
-  './assets/character/anh-tu-suit-green.webp',
-  './assets/character/advisors/ba-sau-lanh-cut.webp',
-  './assets/character/advisors/victor-lam-cut.webp',
-  './assets/character/advisors/lina-park-cut.webp',
-  './assets/character/advisors/ba-sau-lanh-aodai-cut.webp',
-  './assets/character/advisors/victor-lam-aodai-cut.webp',
-  './assets/character/advisors/lina-park-aodai-cut.webp',
-  './assets/character/advisors/minh-khang-aodai-cut.webp',
-  './assets/character/advisors/an-nhien-aodai-cut.webp',
-  './assets/character/advisors/lumina-aodai-cut.webp',
-  './assets/character/advisors/lumina-vest-cut.webp',
-  './assets/character/advisors/an-nhien-cut.webp',
-  './assets/character/advisors/minh-khang-cut.webp',
-  './assets/character/advisors/victor-lam-doithuong-cut.webp',
-  './assets/character/firms/moc-nhien-cut.webp',
-  './assets/character/firms/mekong-digital-doithuong-cut.webp',
-  './assets/character/firms/phu-sa-foods-cut.webp',
-  './assets/character/firms/lam-viet-cut.webp',
-  './assets/character/firms/mekong-digital-cut.webp',
-  './assets/character/firms/moc-nhien-aodai-cut.webp',
-  './assets/character/firms/phu-sa-foods-aodai-cut.webp',
-  './assets/character/firms/lam-viet-aodai-cut.webp',
-  './assets/character/phu-sa/huong-cut-v2.webp',
-  './assets/character/phu-sa/tu-cut.webp',
-  './assets/character/phu-sa/doi-phu-sa-ghe-v2.png',
-  './assets/character/phu-sa/doi-phu-sa-ghe-v7.png',
-  './assets/character/phu-sa/doi-5-nguoi.png',
+  // Ảnh (webp/png/jpg/svg) và PDF không nạp sẵn: tải lần đầu người chơi mở tới rồi
+  // nằm trong IMG_CACHE (bên dưới), không bị xoá khi tăng CACHE.
   // Bài chủ đề game Hộ Chiếu Thương Hiệu – nạp sẵn để mở offline vẫn có nhạc.
   // 7,1MB: đây là mục nặng nhất trong danh sách, cân nhắc bỏ nếu muốn rút ngắn
   // thời gian cài đặt (nhạc vẫn tải và lưu đệm ngay lần đầu người chơi bật).
   // Bài chủ đề game Hộ Chiếu Sầu Riêng – nạp sẵn để mở offline vẫn có nhạc.
-  './assets/character/rivals/alpha.webp',
-  './assets/character/rivals/mekong.webp',
-  './assets/character/rivals/star.webp',
-  './assets/character/firms/kim-long-rival-cut.webp',
-  './assets/illustrations/game/mkt-hai-lam.webp',
-  './assets/illustrations/game/mkt-bac-phong.webp',
-  './assets/illustrations/game/mkt-kim-sa.webp',
-  './assets/illustrations/game/mkt-luc-dao.webp',
-  './assets/illustrations/game/mkt-nhat-quang.webp',
-  './assets/illustrations/game/mkt-tan-cang.webp',
-  './assets/illustrations/game/mkt-hoa-son.webp',
-  './assets/illustrations/game/evt-trend.webp',
-  './assets/illustrations/game/evt-pricewar.webp',
-  './assets/illustrations/game/evt-green.webp',
-  './assets/illustrations/game/evt-celeb.webp',
-  './assets/illustrations/game/evt-subst.webp',
-  './assets/illustrations/game/evt-fx.webp',
-  './assets/illustrations/game/evt-reg.webp',
-  './assets/illustrations/game/evt-tax.webp',
-  './assets/illustrations/game/evt-cert.webp',
-  './assets/illustrations/game/evt-data.webp',
-  './assets/illustrations/game/evt-greenlaw.webp',
-  './assets/illustrations/game/evt-port.webp',
-  './assets/illustrations/game/evt-talent.webp',
-  './assets/illustrations/game/evt-supplier.webp',
-  './assets/illustrations/game/evt-defect.webp',
-  './assets/illustrations/game/evt-cashflow.webp',
-  './assets/illustrations/game/evt-conflict.webp',
-  './assets/illustrations/game/evt-training.webp',
-  './assets/illustrations/game/evt-review.webp',
-  './assets/illustrations/game/evt-held.webp',
-  './assets/illustrations/game/evt-devalue.webp',
-  './assets/illustrations/game/evt-betray.webp',
-  './assets/illustrations/game/evt-copy.webp',
-  './assets/illustrations/game/evt-board.webp',
-  './assets/character/team/lineup-cut.webp',
-  './assets/character/csuite/lineup.webp',
-  './assets/character/csuite/ceo-smile.webp',
-  './assets/character/csuite/cfo-smile.webp',
-  './assets/character/csuite/cmo-smile.webp',
-  './assets/character/csuite/coo-smile.webp',
-  './assets/character/csuite/sec-smile.webp',
-  './assets/character/team/gia-han-cut.webp',
-  './assets/character/team/thu-ha-cut.webp',
-  './assets/character/team/minh-long-cut.webp',
-  './assets/character/team/lan-chi-cut.webp',
-  './assets/character/team/bao-ngoc-cut.webp',
-  './assets/character/anh-tu-ao-dai-welcome.webp',
-  './assets/character/anh-tu-ao-dai.webp',
-  './assets/character/anh-tu-ao-dai-smile.jpg',
-  './assets/character/anh-tu-ao-dai-explain.webp',
-  './assets/character/anh-tu-ao-dai-work.webp',
-  './assets/character/anh-tu-ao-dai-point.webp',
-  './assets/character/lumina-ao-dai-wave.webp',
-  './assets/character/lumina-ao-dai-present.webp',
-  './assets/character/lumina-office-present.webp',
-  './assets/character/lumina-ao-dai-cheer.webp',
-  './assets/character/lumina-ao-dai-thumbsup.webp',
-  './assets/character/lumina-office-welcome.webp',
-  './assets/docs/sig-huong.png',
-  './assets/docs/sig-tu.png',
-  './assets/docs/huong-dan-ho-chieu-mini.pdf',
-  './assets/docs/guide-mini/guide-p1.webp',
-  './assets/docs/guide-mini/guide-p2.webp',
-  './assets/docs/guide-mini/guide-p3.webp',
-  './assets/docs/guide-mini/guide-p4.webp',
-  './assets/docs/guide-mini/guide-p5.webp',
   './assets/icons/icon-192.png',
   './assets/icons/icon-512.png',
 ];
 
+// Ảnh và PDF: cache riêng, không gắn số phiên bản nên không bị xoá khi tăng CACHE.
+// An toàn vì quy tắc đổi tên tệp khi sửa ảnh (xem putIfOk); giới hạn số mục để không phình mãi.
+const IMG_CACHE = 'bizon-img';
+const IMG_MAX = 600;
+
 // Nhạc/video không lưu sẵn (bên dưới cũng không phục vụ chúng từ cache) – chỉ làm nặng lần cài đầu.
 // Lưu từng tệp riêng: một tệp lỗi không làm hỏng cả lần cài như addAll.
+// Tăng CACHE không bắt điện thoại tải lại tệp chưa đổi: tệp có trong cache bản cũ thì hỏi lại
+// máy chủ bằng ETag (If-None-Match); trả 304 thì chép bản cũ sang, chỉ tệp đã đổi mới tải về.
+// Tải 6 tệp một lúc để không giành hết băng thông của trang người chơi đang mở.
+async function oldCaches() {
+  const keys = (await caches.keys()).filter(k => /^bizon-v\d+$/.test(k) && k !== CACHE).sort((x, y) => y.slice(7) - x.slice(7));
+  return Promise.all(keys.map(k => caches.open(k)));
+}
+async function install1(c, olds, u) {
+  for (const o of olds) {
+    const prev = await o.match(u);
+    if (!prev) continue;
+    const tag = prev.headers.get('ETag');
+    if (!tag) break;
+    try {
+      const res = await fetch(u, { headers: { 'If-None-Match': tag }, cache: 'no-store' });
+      if (res.status === 304) return c.put(u, prev);
+      if (res.ok && res.status === 200) return c.put(u, res);
+    } catch (e) { return c.put(u, prev); } // mất mạng giữa chừng: giữ bản cũ còn hơn không có
+    break;
+  }
+  return c.add(u);
+}
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => Promise.allSettled(SHELL.map(u => c.add(u)))).then(() => self.skipWaiting()));
+  e.waitUntil((async () => {
+    const c = await caches.open(CACHE), olds = await oldCaches(), q = SHELL.slice();
+    await Promise.all(Array.from({ length: 6 }, async () => { while (q.length) { const u = q.shift(); try { await install1(c, olds, u); } catch (err) { /* một tệp lỗi không chặn cả lần cài */ } } }));
+    await self.skipWaiting();
+  })());
 });
 
 self.addEventListener('activate', e => {
   e.waitUntil(
     caches.keys()
-      .then(keys => Promise.all(keys.filter(k => /^bizon-v\d+$/.test(k) && k !== CACHE).map(k => caches.delete(k)))) // chỉ dọn bản cũ của chính sw.js; cache của sw-bizon.js, sw-hochieu.js, app/sw.js để nguyên
+      .then(keys => Promise.all(keys.filter(k => /^bizon-v\d+$/.test(k) && k !== CACHE).map(k => caches.delete(k)))) // chỉ dọn bản cũ của chính sw.js; cache của sw-bizon.js, sw-hochieu.js, app/sw.js và IMG_CACHE để nguyên
       .then(() => self.clients.claim())
   );
 });
 
 // Chiến lược theo loại tài nguyên (không bao giờ trả index.html cho request không phải điều hướng):
 //  - Điều hướng HTML: network-first → cache trang đó → index.html (chỉ ở đây mới fallback index)
-//  - Ảnh: stale-while-revalidate (trả cache ngay, cập nhật nền)
+//  - Ảnh và PDF: stale-while-revalidate (trả cache ngay, cập nhật nền), lưu ở IMG_CACHE
 //  - Audio/video: KHÔNG chặn — để trình duyệt tự tải theo Range. Trả bản cache 200 cho yêu cầu
 //    Range, hoặc lưu cả tệp mp4 khi người dùng mở thẳng liên kết, làm video trên điện thoại bị cắt giữa chừng.
 //  - JS/CSS/font/còn lại: cache-first theo phiên bản CACHE, lỗi mạng thì báo lỗi thật
@@ -377,12 +242,17 @@ self.addEventListener('activate', e => {
 // HTTP của trình duyệt hoạt động độc lập. Tên mới là URL mới nên không thể
 // trúng bản đệm cũ. (Đổi tên tệp – không phải thêm ?v= – vì query string bị
 // một số proxy và trình duyệt bỏ qua khi đối chiếu cache.)
-function putIfOk(req, res) {
+function putIfOk(req, res, name = CACHE) {
   if (res && res.ok && res.status === 200) {
     const copy = res.clone();
-    caches.open(CACHE).then(c => c.put(req, copy));
+    caches.open(name).then(c => c.put(req, copy).then(() => name === IMG_CACHE && trimImg(c)));
   }
   return res;
+}
+// Bỏ các ảnh lưu sớm nhất khi vượt IMG_MAX (keys() trả theo thứ tự đã lưu).
+async function trimImg(c) {
+  const keys = await c.keys();
+  for (let i = 0; i < keys.length - IMG_MAX; i++) await c.delete(keys[i]);
 }
 
 self.addEventListener('fetch', e => {
@@ -400,10 +270,10 @@ self.addEventListener('fetch', e => {
   }
 
   const dest = e.request.destination;
-  if (dest === 'image') {
+  if (dest === 'image' || /\.(webp|png|jpe?g|gif|svg|pdf)$/i.test(url.pathname)) {
     e.respondWith(
       caches.match(e.request).then(hit => {
-        const net = fetch(e.request).then(res => putIfOk(e.request, res)).catch(() => hit);
+        const net = fetch(e.request).then(res => putIfOk(e.request, res, IMG_CACHE)).catch(() => hit);
         return hit || net;
       })
     );

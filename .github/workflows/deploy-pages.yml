@@ -28,6 +28,13 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # ETag của Pages = mtime + kích thước. Giữ mtime theo commit cuối để tệp không
+      # đổi giữ nguyên ETag qua các lần deploy (trình duyệt và sw.js chỉ cần 304).
+      - name: Đặt mtime theo commit cuối của từng tệp
+        run: node scripts/release/restore-mtime.mjs
 
       - name: Publish lên branch gh-pages
         uses: peaceiris/actions-gh-pages@v4
