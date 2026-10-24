@@ -24,20 +24,40 @@
   // Biến cố ngẫu nhiên: áp vào 1 thành phố sắp tới (hoặc tất cả nếu all)
   const SHOCKS = [
     { id: 'storm', icon: '🌀', w: 2, pick: [3, 4, 5], vi: 'Bão đổ bộ', en: 'Storm makes landfall', eff: { demand: -0.14, ship: 0.07 },
-      dvi: 'Cầu giảm, đường vận chuyển gián đoạn.', den: 'Demand falls, shipping routes disrupted.' },
+      dvi: 'Cầu giảm, đường vận chuyển gián đoạn.', den: 'Demand falls, shipping routes disrupted.',
+      lt: 'risk', lr: 'high', lvi: 'Bão ở {c}: cầu giảm khoảng 14%, vận chuyển đắt hơn. Nếu giữ sản lượng như vòng trước, hàng tồn sẽ đội lên; cân nhắc giảm sản lượng 10–15% và giữ tiền mặt dự phòng.', len: 'Storm in {c}: demand drops about 14% and shipping costs more. Keeping last round\'s output would pile up stock; consider cutting production 10–15% and holding a cash buffer.' },
     { id: 'inflation', icon: '💸', w: 2, all: true, vi: 'Lạm phát tăng', en: 'Inflation rises', eff: { ship: 0.03, sens: 0.05 },
-      dvi: 'Chi phí logistics tăng, khách cân nhắc giá kỹ hơn.', den: 'Logistics costs rise, buyers weigh prices harder.' },
+      dvi: 'Chi phí logistics tăng, khách cân nhắc giá kỹ hơn.', den: 'Logistics costs rise, buyers weigh prices harder.',
+      lt: 'pricing', lr: 'medium', lvi: 'Lạm phát: khách ở {c} so giá kỹ hơn trong khi chi phí logistics tăng. Tránh tăng giá mạnh; nếu buộc phải tăng, hãy đi kèm marketing nói rõ giá trị sản phẩm.', len: 'Inflation: buyers in {c} compare prices harder while logistics costs rise. Avoid a sharp price rise; if you must raise it, back it with marketing that explains the value.' },
     { id: 'trend', icon: '📱', w: 3, vi: 'Trend linh vật đất sét', en: 'Clay mascot trend', eff: { demand: 0.2, trust: 4 },
-      dvi: 'Video lan truyền, nhu cầu tăng vọt.', den: 'A viral video sends demand soaring.' },
+      dvi: 'Video lan truyền, nhu cầu tăng vọt.', den: 'A viral video sends demand soaring.',
+      lt: 'marketing', lr: 'low', lvi: 'Trend linh vật đất sét: cầu ở {c} tăng khoảng 20%. Thiếu hàng thì mất đơn và mất niềm tin, nên kiểm tra sản lượng và nhân sự trước khi chốt.', len: 'Clay mascot trend: demand in {c} rises about 20%. Running out of stock loses orders and trust, so check production and staffing before you commit.' },
     { id: 'festival', icon: '🏮', w: 2, pick: [3, 4, 6], vi: 'Mùa lễ hội & du lịch', en: 'Festival & tourism season', eff: { demand: 0.15, sens: -0.05 },
-      dvi: 'Khách du lịch mua quà, ít so giá.', den: 'Tourists buy gifts and compare prices less.' },
+      dvi: 'Khách du lịch mua quà, ít so giá.', den: 'Tourists buy gifts and compare prices less.',
+      lt: 'pricing', lr: 'low', lvi: 'Mùa lễ hội ở {c}: khách du lịch ít so giá và cầu tăng. Có thể giữ hoặc nhích giá 3–5% mà ít mất thị phần.', len: 'Festival season in {c}: tourists compare prices less and demand rises. You can hold or nudge price up 3–5% with little share lost.' },
     { id: 'fuel', icon: '⛽', w: 2, vi: 'Giá xăng dầu tăng', en: 'Fuel prices climb', eff: { ship: 0.06 },
-      dvi: 'Chi phí vận chuyển tới thành phố này tăng.', den: 'Shipping to this city costs more.' },
+      dvi: 'Chi phí vận chuyển tới thành phố này tăng.', den: 'Shipping to this city costs more.',
+      lt: 'pricing', lr: 'medium', lvi: 'Giá xăng dầu tăng: giao hàng tới {c} tốn hơn nên biên lợi nhuận mỏng đi. Đừng giảm giá sâu ở vòng này.', len: 'Fuel prices climb: delivering to {c} costs more, so margins get thinner. Avoid deep price cuts this round.' },
     { id: 'store', icon: '🏬', w: 2, vi: 'Đối thủ mở cửa hàng', en: 'A rival opens a store', eff: { comp: 12 },
-      dvi: 'Cạnh tranh tại chỗ gắt hơn.', den: 'Local competition gets tougher.' },
+      dvi: 'Cạnh tranh tại chỗ gắt hơn.', den: 'Local competition gets tougher.',
+      lt: 'marketing', lr: 'medium', lvi: 'Đối thủ vừa mở cửa hàng ở {c}: cạnh tranh tại chỗ gắt hơn. Marketing và R&D giữ khách tốt hơn là lao vào đua giảm giá.', len: 'A rival just opened a store in {c}: local competition is tougher. Marketing and R&D keep customers better than a price war.' },
     { id: 'kol', icon: '⭐', w: 2, vi: 'KOL địa phương review tốt', en: 'Local KOL gives a great review', eff: { trust: 8 },
-      dvi: 'Niềm tin với hàng Việt thủ công tăng.', den: 'Trust in handmade Vietnamese goods rises.' },
+      dvi: 'Niềm tin với hàng Việt thủ công tăng.', den: 'Trust in handmade Vietnamese goods rises.',
+      lt: 'marketing', lr: 'low', lvi: 'KOL ở {c} vừa review tốt: niềm tin tăng. Đây là lúc mỗi đồng marketing mang lại hiệu quả cao hơn bình thường.', len: 'A KOL in {c} just gave a great review: trust is up. Every marketing dollar works harder than usual right now.' },
+    // Ba cú sốc thêm ngày 24/10/2026. Chỉ ván tạo SAU ngày ấy mới bốc thăm cả mười (S.mkt.bo = 2, xem ensure):
+    // thêm phần tử làm đổi phép bốc thăm có trọng số, nên ván đang chơi dở vẫn dùng bảy cú sốc cũ để kết quả không đổi.
+    { id: 'flood', icon: '🌊', w: 2, pick: [2, 4, 5], vi: 'Ngập lụt, triều cường', en: 'Flooding and high tides', eff: { demand: -0.1, ship: 0.05 },
+      dvi: 'Đường ngập, cửa hàng đóng sớm, giao hàng chậm.', den: 'Flooded roads, shops close early, deliveries slow down.',
+      lt: 'risk', lr: 'medium', lvi: 'Ngập lụt ở {c}: cầu giảm khoảng 10%, giao hàng chậm và đắt hơn. Giữ sản lượng vừa phải và dành tiền mặt dự phòng.', len: 'Flooding in {c}: demand drops about 10%, deliveries are slower and dearer. Keep output moderate and set cash aside.' },
+    { id: 'supply', icon: '⛓️', w: 1, all: true, vi: 'Đứt gãy chuỗi cung ứng', en: 'Supply chain disruption', eff: { ship: 0.05, comp: -5 },
+      dvi: 'Nguyên liệu khan hiếm, mọi đội đều khó giữ hàng.', den: 'Materials are scarce; every team struggles to keep stock.',
+      lt: 'risk', lr: 'medium', lvi: 'Chuỗi cung ứng đứt gãy trên toàn quốc: vận chuyển đắt hơn nhưng đối thủ cũng thiếu hàng, nên cạnh tranh dịu đi. Đội nào giữ được hàng sẽ có thêm thị phần, miễn là đừng sản xuất vượt sức bán.', len: 'Nationwide supply disruption: shipping costs more, but rivals are short of stock too, so competition eases. A team that keeps stock gains share, as long as it does not produce beyond what it can sell.' },
+    { id: 'credit', icon: '🏦', w: 1, all: true, vi: 'Ngân hàng siết tín dụng', en: 'Banks tighten credit', eff: { demand: -0.06, sens: 0.04 },
+      dvi: 'Vay tiêu dùng khó hơn, khách chi tiêu dè dặt.', den: 'Consumer loans get harder; buyers spend cautiously.',
+      lt: 'pricing', lr: 'medium', lvi: 'Ngân hàng siết tín dụng: sức mua ở {c} giảm và khách nhạy giá hơn. Hạn chế vay thêm, ưu tiên dòng tiền; nếu giảm giá thì giảm vừa phải.', len: 'Banks tighten credit: purchasing power in {c} falls and buyers are more price-sensitive. Limit new borrowing and protect cash flow; if you cut price, cut moderately.' },
   ];
+  const SHOCKS_V1 = SHOCKS.slice(0, 7);
+  const shockList = m => (m && m.bo >= 2 ? SHOCKS : SHOCKS_V1);
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const r1 = v => Math.round(v * 10) / 10;
   const hash = str => { let h = 2166136261; for (const ch of String(str)) { h ^= ch.charCodeAt(0); h = Math.imul(h, 16777619); } return (h >>> 0) || 1; };
@@ -49,7 +69,7 @@
     if (s.mkt && s.mkt.v === 1) return s.mkt;
     const rnd = prng(seedOf(s));
     s.mkt = { v: 1, cities: CITY.map(c => ({ n: c.n, demand: r1(c.demand * (0.96 + rnd() * 0.08) * 100) / 100, sens: c.sens, comp: Math.round(c.comp + (rnd() - .5) * 8),
-      trust: Math.round(c.trust + (rnd() - .5) * 6), ship: c.ship, price: Math.round(c.price + (rnd() - .5) * 6), played: null })), news: [], changes: [], appliedRound: 0 };
+      trust: Math.round(c.trust + (rnd() - .5) * 6), ship: c.ship, price: Math.round(c.price + (rnd() - .5) * 6), played: null })), news: [], changes: [], appliedRound: 0, bo: 2 };
     return s.mkt;
   }
   const cityRound = s => clamp((s && s.round) || 1, 1, 6);
@@ -101,6 +121,21 @@
       };
       f.__mk = true; window.currentEvent = f;
     }
+    // Lumina ứng phó sự kiện: lời khuyên gốc của engine giữ nguyên, nối thêm lời về cú sốc của thành phố vòng này.
+    // Chủ đề «rủi ro» kể mọi cú sốc; «giá» và «marketing» chỉ kể cú sốc thuộc chủ đề ấy. Không đổi điểm, chỉ đổi lời.
+    if (typeof window.luminaAdvice === 'function' && !window.luminaAdvice.__mk) {
+      const orig = window.luminaAdvice;
+      const f = function (s, topic) {
+        const a = orig.apply(this, arguments);
+        let list = [];
+        try { list = activeShocks(s).filter(x => topic === 'risk' || x.topic === topic); } catch (e) { list = []; }
+        if (!a || !list.length) return a;
+        const risk = list.reduce((m, x) => (RISK_RANK[x.risk] > RISK_RANK[m] ? x.risk : m), a.risk || 'low');
+        const head = tr('Biến động thị trường', 'Market shock');
+        return { ...a, risk, shocks: list.map(x => x.id), text: a.text + list.map(x => ` ${x.icon} ${head}: ${x.text}`).join('') };
+      };
+      f.__mk = true; window.luminaAdvice = f;
+    }
     if (typeof window.difficultyMul === 'function' && !window.difficultyMul.__mk) {
       const orig = window.difficultyMul;
       const f = function (s) { const v = orig.apply(this, arguments); return s && !s.finished && s.mkt && enabled(s) ? v * mods(s).comp : v; };
@@ -121,6 +156,19 @@
       f.__mk = true; window.simulateRound = f;
     }
   };
+
+  // ---------- Cú sốc đang tác động lên thành phố của vòng hiện tại (cho Lumina) ----------
+  // Tin ở vòng k áp vào thành phố đích (n) hoặc mọi thành phố sau k (n = 0). Vòng hiện tại là thành phố cityRound(s).
+  function activeShocks(s) {
+    if (!s || s.finished || !enabled(s) || !s.mkt) return [];
+    const r = cityRound(s), city = CITY[r - 1].short;
+    return (s.mkt.news || []).filter(x => x.round < r && (x.n === r || x.n === 0)).map(x => {
+      const sh = SHOCKS.find(z => z.id === x.id); if (!sh) return null;
+      const c = x.n === 0 ? tr('mọi tỉnh, kể cả ' + city, 'every province, including ' + city) : city;
+      return { id: sh.id, icon: sh.icon, round: x.round, topic: sh.lt, risk: sh.lr, title: x.title, text: tr(sh.lvi, sh.len).split('{c}').join(c) };
+    }).filter(Boolean);
+  }
+  const RISK_RANK = { low: 0, medium: 1, high: 2 };
 
   // ---------- Diễn biến sau mỗi vòng ----------
   function afterRound(s, r, n) {
@@ -163,8 +211,8 @@
       const rnd = prng(seedOf(s) + n * 7919);
       const cnt = rnd() < 0.45 ? 2 : 1;
       for (let i = 0; i < cnt; i++) {
-        const tw = SHOCKS.reduce((a, x) => a + x.w, 0); let p = rnd() * tw, sh = SHOCKS[0];
-        for (const x of SHOCKS) { if ((p -= x.w) <= 0) { sh = x; break; } }
+        const LIST = shockList(m), tw = LIST.reduce((a, x) => a + x.w, 0); let p = rnd() * tw, sh = LIST[0];
+        for (const x of LIST) { if ((p -= x.w) <= 0) { sh = x; break; } }
         const pool = (sh.pick || [2, 3, 4, 5, 6]).filter(k => k > n);
         const targets = sh.all ? m.cities.filter(t => t.n > n) : pool.length ? [m.cities[pool[Math.floor(rnd() * pool.length)] - 1]] : [];
         if (!targets.length) continue;
@@ -453,5 +501,5 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
   hook();
 
-  window.BizonMarket = { open, openSummary, snapshot, ensure, mods, enabled, setEnabled, canToggle, rivalPlan, afterRound: (s, r) => { afterRound(s, r, r && r.round || cityRound(s)); toast(s); }, livePrice: lp, CITY };
+  window.BizonMarket = { open, openSummary, snapshot, ensure, mods, enabled, activeShocks, setEnabled, canToggle, rivalPlan, afterRound: (s, r) => { afterRound(s, r, r && r.round || cityRound(s)); toast(s); }, livePrice: lp, CITY };
 })();
