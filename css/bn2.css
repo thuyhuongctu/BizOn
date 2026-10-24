@@ -114,3 +114,24 @@ body.bn2{background:var(--clay-bg);color:var(--clay-ink);font-family:var(--clay-
 .bn2-grade-total span{font:800 18px var(--clay-head);color:var(--clay-sub)}
 .bn2-grade-tab td{vertical-align:top}
 .bn2-grade-tab td:last-child{white-space:nowrap}
+
+/* phiếu in (BN2Grade.printSheet) – chỉ hiện khi in */
+#bn2-print-sheet{display:none}
+@media print{
+  @page{size:A4;margin:14mm 14mm 16mm}
+  body.bn2-printing>*:not(#bn2-print-sheet){display:none !important}
+  body.bn2-printing{background:#fff}
+  body.bn2-printing #bn2-print-sheet{display:block;color:#000;font:11pt/1.45 var(--clay-sans)}
+  #bn2-print-sheet h3{font:800 12pt var(--clay-head);margin:14px 0 6px}
+  #bn2-print-sheet table{width:100%;border-collapse:collapse;font-size:10pt}
+  #bn2-print-sheet td,#bn2-print-sheet th{border:1px solid #bbb;padding:4px 6px;text-align:left;vertical-align:top}
+  #bn2-print-sheet .ps-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;border-bottom:2px solid #000;padding-bottom:8px;margin-bottom:10px;font-size:12pt}
+  #bn2-print-sheet .ps-stamp{border:2px solid #000;padding:4px 8px;font-weight:800;font-size:9pt;text-align:center;max-width:46%}
+  #bn2-print-sheet .ps-info td:nth-child(odd){width:20%;color:#444}
+  #bn2-print-sheet .ps-grade .bn2-eyebrow{color:#000;margin-top:14px}
+  #bn2-print-sheet .bn2-grade-total b{color:#000;font-size:24pt}
+  #bn2-print-sheet .bn2-flag{border:1px solid #000;background:none;padding:6px 8px}
+  #bn2-print-sheet a{color:#000}
+  #bn2-print-sheet .ps-foot{margin-top:12px;font-size:9pt;color:#333}
+  #bn2-print-sheet tr{break-inside:avoid}
+}
