@@ -1,0 +1,59 @@
+name: Supabase – bật SMTP riêng cho email xác nhận
+
+# Bấm tay (Actions → «Supabase – bật SMTP riêng…» → Run workflow) để cấu hình SMTP cho Supabase Auth
+# của dự án production qua Management API, thay cho các bước bấm trong dashboard
+# (docs/release/SUPABASE_SMTP_SETUP.md). Cần 2 repository secret:
+#   SUPABASE_ACCESS_TOKEN – personal access token Supabase (https://supabase.com/dashboard/account/tokens)
+#   BIZON_SMTP_PASSWORD   – mật khẩu ứng dụng Gmail (16 ký tự) hoặc API key Resend
+on:
+  workflow_dispatch:
+    inputs:
+      provider:
+        description: 'Dịch vụ gửi mail'
+        type: choice
+        options: [gmail, resend]
+        default: gmail
+      smtp_user:
+        description: 'Gmail: địa chỉ Gmail gửi đi (vd bizonland.noreply@gmail.com). Resend: để trống'
+        type: string
+        required: false
+      sender_email:
+        description: 'Địa chỉ người gửi (để trống = Gmail ở trên; Resend mặc định no-reply@bizonland.com)'
+        type: string
+        required: false
+      rate_limit:
+        description: 'Số email tối đa mỗi giờ'
+        type: string
+        default: '100'
+      dry_run:
+        description: 'Chỉ đọc cấu hình hiện tại, không thay đổi'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: supabase-smtp
+  cancel-in-progress: false
+
+jobs:
+  configure:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Cấu hình SMTP cho Supabase Auth
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          SMTP_PASSWORD: ${{ secrets.BIZON_SMTP_PASSWORD }}
+          SMTP_PROVIDER: ${{ inputs.provider }}
+          SMTP_USER: ${{ inputs.smtp_user }}
+          SMTP_SENDER_EMAIL: ${{ inputs.sender_email }}
+          EMAIL_RATE_LIMIT: ${{ inputs.rate_limit }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: node scripts/release/configure-supabase-smtp.mjs
