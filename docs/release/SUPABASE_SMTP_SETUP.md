@@ -4,6 +4,29 @@
 
 Tên mục trong dashboard Supabase có thể đổi nhẹ theo phiên bản. Hướng dẫn dưới đây theo bố cục cuối năm 2026.
 
+## Cách tự động: workflow «Supabase – bật SMTP riêng» (khuyến nghị)
+
+Thay cho bước 2–4 của cách Gmail bên dưới. Bạn chỉ cần có mật khẩu SMTP, ví dụ mật khẩu ứng dụng Gmail ở bước 1, rồi:
+
+1. **Tạo access token Supabase.**
+   - Vào https://supabase.com/dashboard/account/tokens → **Generate new token**.
+   - Đặt tên «BizOn SMTP», rồi chép token (dạng `sbp_…`).
+2. **Thêm 2 secret vào kho GitHub.**
+   - Vào **Settings → Secrets and variables → Actions → New repository secret**.
+   - `SUPABASE_ACCESS_TOKEN`: token ở bước 1.
+   - `BIZON_SMTP_PASSWORD`: mật khẩu ứng dụng Gmail (16 ký tự), hoặc API key Resend.
+3. **Chạy workflow.**
+   - Vào **Actions → «Supabase – bật SMTP riêng cho email xác nhận» → Run workflow** (nhánh `main`).
+   - Chọn `gmail`, điền địa chỉ Gmail gửi đi. Nếu dùng Resend thì chọn `resend` và để trống.
+
+Workflow (`scripts/release/configure-supabase-smtp.mjs`) gọi Management API của Supabase để làm các việc sau:
+- Bật SMTP riêng.
+- Đặt giới hạn 100 email/giờ.
+- Đặt Site URL là `https://bizonland.com` và thêm `https://bizonland.com/**` vào Redirect URLs, giữ nguyên các mục đã có.
+- Đọc lại cấu hình để xác nhận Supabase đã nhận đúng.
+
+Log chỉ in cấu hình, không in mật khẩu hay token. Muốn xem cấu hình hiện tại mà không đổi gì thì tick «dry_run». Sau đó làm bước 5 (Thử) của cách Gmail. Có thể xóa token Supabase sau khi chạy xong.
+
 ## Cách nhanh: Gmail + mật khẩu ứng dụng (khoảng 500 email/ngày)
 
 1. **Tạo mật khẩu ứng dụng Gmail.**
