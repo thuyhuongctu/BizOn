@@ -29,7 +29,7 @@ assert.match(template, /sc-camel-on-click="\{\{ openRp \}\}"[^>]*>\{\{ t\.report
 assert.match(template, /report: 'BÁO CÁO 6 VỤ', repTag: 'BÁO CÁO SAU 6 VỤ'/);
 assert.match(template, /report: '6-SEASON REPORT', repTag: 'REPORT AFTER 6 SEASONS'/);
 assert.match(template, /l: tr\('📊 Xem báo cáo sau 6 vụ', '📊 See the six-season report'\), fn: \(\) => \{ close\(\); this\.setState\(\{ rp: true/);
-assert.match(template, /if \(e\.key === 'Escape'\) \{ if \(this\.state\.rp\) this\.setState\(\{ rp: false \}\);/);
+assert.match(template, /if \(e\.key === 'Escape'\) \{ (if \(this\.state\.\w+\) this\.setState\(\{ \w+: false \}\); else )*if \(this\.state\.rp\) this\.setState\(\{ rp: false \}\);/);
 assert.match(template, /out\.rp = this\.reportOut\(L, t, cls\);/);
 
 // 3. Chứng nhận chỉ cho ván có Mã lớp của giảng viên (mã mặc định BIZON-01 không được cấp), tên lấy theo vị trí người chơi giữ.
