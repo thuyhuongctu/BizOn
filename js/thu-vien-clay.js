@@ -9,14 +9,14 @@
 
   var T = {
     vi:{ all:'Tất cả', items:'mục', none:'Không có mục nào khớp từ khóa.', ph:'Tìm trong thư viện – tên nhân vật, bối cảnh, ca khúc…',
-      s:['Tạo hình nhân vật','Dàn nhân vật «Hộ Chiếu Thương Hiệu»','Bối cảnh & minh họa','Âm nhạc gốc','Sản phẩm & Quà tặng'],
-      n:['', 'Bộ 21 tạo hình đất nặn 3D của game Hộ Chiếu Thương Hiệu – 6 cố vấn đồng hành và 4 doanh nghiệp Việt, phần lớn nhân vật có cả bản thường và bản lễ phục áo dài. Cả 21 tệp dựng trên cùng khung chuẩn 760 × 1100 px, chiều cao nhân vật thống nhất và cùng một đường chân.', '', '', 'Bộ cài áo (lapel pin) chính thức của BizOn – quà tặng cho đội vô địch và vật phẩm nhận diện thương hiệu.'],
+      s:['Tạo hình nhân vật','Dàn nhân vật «Hộ Chiếu Thương Hiệu»','Hộ Chiếu Sầu Riêng – Tèo Soi & nhân vật','Hộ Chiếu Sầu Riêng – Bối cảnh & mô hình','Bối cảnh & minh họa','Âm nhạc gốc','Sản phẩm & Quà tặng'],
+      n:['', 'Bộ 21 tạo hình đất nặn 3D của game Hộ Chiếu Thương Hiệu – 6 cố vấn đồng hành và 4 doanh nghiệp Việt, phần lớn nhân vật có cả bản thường và bản lễ phục áo dài. Cả 21 tệp dựng trên cùng khung chuẩn 760 × 1100 px, chiều cao nhân vật thống nhất và cùng một đường chân.', 'Tạo hình đất nặn 3D của Hộ Chiếu Sầu Riêng 3D: rồng Tèo Soi với 33 tư thế theo tình huống trong game, «Bạn» là cậu bé nón lá cùng Tèo, các đại diện doanh nghiệp trên chuỗi sầu riêng, người mua, hải quan và kiểm dịch.', 'Các chặng trên chuỗi xuất khẩu sầu riêng – từ vườn, nhà máy cấp đông, cảng tới gian hàng ở nước ngoài – và mô hình bốn doanh nghiệp người chơi chọn ở đầu game.', '', '', 'Bộ cài áo (lapel pin) chính thức của BizOn – quà tặng cho đội vô địch và vật phẩm nhận diện thương hiệu.'],
       expr:'Bảng biểu cảm', exprD:'Hài lòng · Ngạc nhiên · Suy nghĩ', exprD5:'Tươi cười · Ngạc nhiên · Suy nghĩ · Lo lắng · Ăn mừng',
       roles:{ceo:'CEO',cfo:'CFO',coo:'COO',cmo:'CMO',sec:'Thư ký pháp chế','aodai-nam':'Đại diện đội áo dài nam','aodai-nu':'Đại diện đội áo dài nữ'},
       musicLink:'Kho Âm nhạc BizOn' },
     en:{ all:'All', items:'items', none:'Nothing matches that search.', ph:'Search the library – character, scene, song…',
-      s:['Character designs','The «Brand Passport» cast','Scenes & illustrations','Original music','Merch & gifts'],
-      n:['', '21 3D clay figures for the Brand Passport game – 6 advisors and 4 Vietnamese firms, most with both an everyday and a formal áo dài version. All 21 files share one 760 × 1100 px frame, the same figure height and baseline.', '', '', 'Official BizOn lapel pins – prizes for the winning team and brand identity items.'],
+      s:['Character designs','The «Brand Passport» cast','Durian Passport – Tèo Soi & cast','Durian Passport – Scenes & models','Scenes & illustrations','Original music','Merch & gifts'],
+      n:['', '21 3D clay figures for the Brand Passport game – 6 advisors and 4 Vietnamese firms, most with both an everyday and a formal áo dài version. All 21 files share one 760 × 1100 px frame, the same figure height and baseline.', '3D clay figures from Durian Passport 3D: Tèo Soi the dragon in 33 in-game poses, «You» the straw-hat boy with Tèo, the firms along the durian chain, buyers, customs and quarantine officers.', 'Stages of the durian export chain – orchard, freezing plant, port and an overseas stall – plus models of the four firms players choose from at the start.', '', '', 'Official BizOn lapel pins – prizes for the winning team and brand identity items.'],
       expr:'Expression sheet', exprD:'Pleased · Surprised · Thinking', exprD5:'Smiling · Surprised · Thinking · Worried · Celebrating',
       roles:{ceo:'CEO',cfo:'CFO',coo:'COO',cmo:'CMO',sec:'Company Secretary','aodai-nam':'Team rep áo dài (male)','aodai-nu':'Team rep áo dài (female)'},
       musicLink:'BizOn Music Library' }
@@ -50,10 +50,14 @@
         .concat(D.sheets.slice(0,2).map(function(a){ return sheet(loc(a)); })) },
       { h:t.s[1], note:t.n[1], min:'160px', items:
         D.cast.map(function(a){ a = loc(a); return fig('character/'+a[0], a[1], a[2]); }).concat([sheet(loc(D.sheets[2]))]) },
-      { h:t.s[2], note:'', min:'260px', items:
+      { h:t.s[2], note:t.n[2], min:'160px', items:
+        (D.durian || []).map(function(a){ a = loc(a); return fig(a[0], a[1], a[2]); }) },
+      { h:t.s[3], note:t.n[3], min:'240px', items:
+        (D.durianScenes || []).map(function(a){ a = loc(a); var m = /^hc\/roles\//.test(a[0]); return {src:art(a[0]),name:a[1],desc:a[2],ar:'16/10',fit:m?'contain':'cover',pos:'50% 50%',pad:m?'6px':'0',bg:m?'#FFFFFF':'#F3E6CF',span:'auto'}; }) },
+      { h:t.s[4], note:'', min:'260px', items:
         D.scenes.map(function(a){ a = loc(a); return Object.assign({src:art('illustrations/'+a[0]),name:a[1],desc:a[2],long:a[3]||'',ar:'16/10',fit:'cover',pos:'50% 30%',pad:'0',bg:'#F3E6CF',span:'auto'}, SCENE_FIT[a[0]] || {}); }) },
-      { h:t.s[3], note:'', min:'200px', items:[], music:true },
-      { h:t.s[4], note:t.n[4], min:'240px', items:
+      { h:t.s[5], note:'', min:'200px', items:[], music:true },
+      { h:t.s[6], note:t.n[6], min:'240px', items:
         D.merch.map(function(a){ a = loc(a); return {src:art(a[0]),name:a[1],desc:a[2],ar:'1/1',fit:'cover',pos:'50% 30%',pad:'0',bg:'#F3E4C8',span:'auto'}; }) }
     ];
   }
