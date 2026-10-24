@@ -34,6 +34,21 @@ const assert = require('node:assert/strict');
   assert.ok(!JSON.stringify(s).includes('abcdabcdabcdabcd'), 'summary không được chứa mật khẩu');
   assert.equal(m.PRODUCTION_PROJECT_REF, 'ceytblfelodpnudomccn');
 
+  // Làm sạch và nhận diện token sai dạng (lỗi 401 «Format is Authorization: Bearer …» lần chạy đầu).
+  assert.equal(m.cleanToken('  Bearer sbp_abc123\n'), 'sbp_abc123');
+  assert.equal(m.tokenProblem('sbp_abc123'), null);
+  assert.equal(m.tokenProblem('sbp_v0_9f8e7d'), null);
+  assert.match(m.tokenProblem(''), /Thiếu SUPABASE_ACCESS_TOKEN/);
+  assert.match(m.tokenProblem('abcd efgh ijkl mnop'), /mật khẩu ứng dụng Gmail/);
+  assert.match(m.tokenProblem('abcdefghijklmnop'), /mật khẩu ứng dụng Gmail/);
+  assert.match(m.tokenProblem('eyJhbGciOiJIUzI1NiJ9.x.y'), /anon\/service key/);
+  assert.match(m.tokenProblem('sb_secret_abc'), /API key của dự án/);
+  assert.match(m.tokenProblem('sbp_abc def'), /khoảng trắng/);
+  assert.ok(!m.tokenProblem('abcd efgh ijkl mnop').includes('abcd'), 'thông báo không chứa giá trị secret');
+  assert.equal(m.cleanPassword(' abcd efgh ijkl mnop ', 'gmail'), 'abcdefghijklmnop');
+  assert.equal(m.cleanPassword(' re_abc ', 'resend'), 're_abc');
+  await assert.rejects(m.main({ SUPABASE_ACCESS_TOKEN: 'abcd efgh ijkl mnop' }), /dán nhầm hai secret/);
+
   // Chạy main() với Management API giả: PATCH đúng dự án, đọc lại xác nhận, log không lộ mật khẩu.
   let cfg = { uri_allow_list: 'https://bizonland.com/game.html', smtp_host: null }, calls = [], logs = [];
   const realFetch = globalThis.fetch, realLog = console.log;
@@ -44,7 +59,7 @@ const assert = require('node:assert/strict');
   };
   console.log = (...a) => logs.push(a.join(' '));
   try {
-    await m.main({ SUPABASE_ACCESS_TOKEN: 'sbp_test', SMTP_PASSWORD: 'matkhau-bimat-123', SMTP_PROVIDER: 'gmail', SMTP_USER: 'bizon.noreply@gmail.com', DRY_RUN: 'false' });
+    await m.main({ SUPABASE_ACCESS_TOKEN: ' Bearer sbp_test\n', SMTP_PASSWORD: 'matkhau-bimat-123', SMTP_PROVIDER: 'gmail', SMTP_USER: 'bizon.noreply@gmail.com', DRY_RUN: 'false' });
     assert.deepEqual(calls.map(c => c[0]), ['GET', 'PATCH', 'GET']);
     assert.ok(calls.every(c => c[1] === 'https://api.supabase.com/v1/projects/ceytblfelodpnudomccn/config/auth' && c[2] === 'Bearer sbp_test'));
     assert.ok(!logs.join('\n').includes('matkhau-bimat-123') && !logs.join('\n').includes('sbp_test'), 'log không lộ bí mật');
