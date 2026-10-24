@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>BizOn Bật Nghiệp · giao diện mới (thử nghiệm)</title>
+<meta name="description" content="BizOn Bật Nghiệp – giao diện mới, dùng nguyên engine mô phỏng 6 vòng (js/engine.js) và đồng bộ lớp học (js/backend.js) của bản game.html.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/brand/bizon-favicon.svg" type="image/svg+xml">
+<script src="js/bizon-lang.js"></script>
+<link rel="stylesheet" href="css/bizon-clay-fonts.css">
+<link rel="stylesheet" href="css/bizon-clay.css">
+<link rel="stylesheet" href="css/bn2.css">
+<script src="js/backend-config.js"></script>
+</head>
+<body class="bn2">
+<!--
+  BizOn Bật Nghiệp · giao diện mới (bản thử nghiệm, song song với game.html)
+  © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.
+
+  Chỉ thay GIAO DIỆN. Mọi con số do js/engine.js tính (simulateRound, whatIfSimulate, forecastCash,
+  luminaAdvice) – cùng engine, cùng quyết định thì cùng kết quả với game.html. Tiến trình dùng chung
+  khoá localStorage 'bizon2026' và js/backend.js, nên đội chơi ở đây rồi mở game.html vẫn tiếp tục đúng ván.
+  Thị trường động (js/market-dynamic.js) và điều khiển của giảng viên (js/class-sync.js) nạp như bản gốc.
+-->
+<a class="bn2-skip" href="#bn2-main" data-vi="Bỏ qua tới nội dung" data-en="Skip to content">Bỏ qua tới nội dung</a>
+<div id="bn2-app" aria-live="polite"></div>
+
+<script src="js/engine.js"></script>
+<script src="js/core/seed-engine.js"></script>
+<script src="js/backend.js"></script>
+<script src="js/bn2-ui.js"></script>
+<script src="js/market-dynamic.js"></script>
+<script src="js/lumina-whatif.js"></script>
+<script src="js/class-sync.js"></script>
+<script>BN2.start();</script>
+</body>
+</html>
