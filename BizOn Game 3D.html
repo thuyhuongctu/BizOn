@@ -787,7 +787,18 @@ function l3Enter(demo) {
   else {
     const classId = document.getElementById('l3Class').value.trim().toUpperCase();
     const email = document.getElementById('l3Email').value.trim();
-    // Có Mã lớp: vào thẳng như bản 2D (cổng email trường đã tắt từ hotfix doLogin trong js/app.js).
+    // Có Mã lớp: phải đăng nhập email trường và «Tham gia đội» (cổng trong doLogin của js/app.js).
+    // Khung đó nằm ở màn đăng nhập 2D, nên chuyển sang màn 2D, điền sẵn lớp/đội và cuộn tới khung.
+    if (classId && classId !== 'DEMO-2026' && !W.__bizonAuthedJoin) {
+      const team = document.getElementById('l3Team').value.trim();
+      if (g('sa-class') && !g('sa-class').value) g('sa-class').value = classId;
+      if (g('sa-team') && !g('sa-team').value) g('sa-team').value = team;
+      if (g('sa-role')) g('sa-role').value = L3.role;
+      if (g('sa-email') && !g('sa-email').value && /@student\.ctu\.edu\.vn$/i.test(email)) g('sa-email').value = email;
+      L3.classic = true; document.body.classList.remove('login3d'); L3.on = false; setMode();
+      const box = g('student-auth-panel'); if (box) setTimeout(() => box.scrollIntoView({ behavior: 'smooth', block: 'center' }), 50);
+      return;
+    }
     g('login-email').value = email; g('login-team').value = document.getElementById('l3Team').value.trim();
     g('login-class').value = classId; if (g('login-sync')) g('login-sync').value = document.getElementById('l3Sync').value.trim();
     try { W.pickRole(L3.role); } catch (e) {} ev('doLogin()');

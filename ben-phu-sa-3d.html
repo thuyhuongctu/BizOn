@@ -30,6 +30,7 @@
   function T(vi, en) { return isEN() ? en : vi; }
 </script>
 <script src="js/backend-config.js"></script>
+<script src="js/student-login.js"></script>
 <script src="js/error-log.js"></script>
 <script src="js/game3d-login-gate.js"></script>
 <script>Game3DGate.mount({ backdrop: true, introId: 'ft-intro', ns: 'bps', title: 'Chào mừng tới Bến Phù Sa!', titleEn: 'Welcome to Bến Phù Sa!', subtitle: 'Điền nhanh thông tin đội rồi vào thẳng phần giới thiệu – bỏ trống vẫn chơi được trọn vẹn.', subtitleEn: 'Fill in your team details and go straight to the intro – leave it blank and you can still play the full game.' });</script>
@@ -321,10 +322,11 @@ body:has(#ft-play:not(.hidden)) .vutru-goc{display:none!important}
         </div>
       </div>
       <div class="mt-5 text-left hidden" id="ft-submit-box">
-        <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mb-1.5" data-en="📡 Submit your result to the instructor (optional)">📡 Nộp kết quả cho giảng viên (tùy chọn)</p>
+        <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mb-1.5" data-en="📡 Submit your result to the instructor">📡 Nộp kết quả cho giảng viên</p>
+        <div id="ft-login"></div>
         <div class="flex flex-col sm:flex-row gap-2">
           <input id="ft-class" placeholder="Mã lớp (VD: QTKD-2026-A)" data-en-ph="Class code (e.g. QTKD-2026-A)" class="flex-1 border-2 rounded-xl px-3 py-2.5 text-sm font-semibold" style="border-color:rgba(0,102,135,.25);background:transparent;color:inherit">
-          <input id="ft-name" placeholder="Tên của bạn" data-en-ph="Your name" class="flex-1 border-2 rounded-xl px-3 py-2.5 text-sm font-semibold" style="border-color:rgba(0,102,135,.25);background:transparent;color:inherit">
+          <input id="ft-name" maxlength="60" placeholder="Tên hoặc biệt danh (hiện trên bảng lớp)" data-en-ph="Name or nickname (shown on the class board)" class="flex-1 border-2 rounded-xl px-3 py-2.5 text-sm font-semibold" style="border-color:rgba(0,102,135,.25);background:transparent;color:inherit">
           <button id="ft-send" onclick="ftSubmit()" class="clay-btn bg-deep-teal text-white font-display font-extrabold px-5 py-2.5 text-sm shrink-0" data-en="Submit">Nộp</button>
         </div>
         <p id="ft-send-msg" class="text-[11px] font-semibold opacity-60 mt-1.5"></p>
@@ -1053,13 +1055,16 @@ body:has(#ft-play:not(.hidden)) .vutru-goc{display:none!important}
     });
   };
 
-  // ===== Nộp kết quả cho giảng viên (tùy chọn) – bảng ft_results, INSERT-only =====
+  // ===== Nộp kết quả cho giảng viên – bizon_submit_ft_result, bắt buộc đăng nhập email trường =====
+  // (migration 20261023000000_require_student_login.sql; email lấy từ tài khoản, không nhận từ trang).
   var bcfg = function () { return window.BIZON_BACKEND || {}; };
   var backendOn = function () { var c = bcfg(); return c.enabled && c.url && !c.url.includes('YOUR-PROJECT'); };
 
   function initSubmit() {
     if (!backendOn()) return; // backend tắt thì ẩn luôn khối nộp
     $('ft-submit-box').classList.remove('hidden');
+    // Vẽ lại khung đăng nhập mỗi lần (initSubmit chạy lại khi đổi ngôn ngữ) để chữ đúng ngôn ngữ.
+    if (window.StudentLogin && $('ft-login')) StudentLogin.mount($('ft-login'));
     // Chỉ điền sẵn khi ô còn trống – initSubmit() chạy lại mỗi lần đổi ngôn ngữ
     // ở màn kết thúc, không được ghi đè chữ người chơi vừa gõ.
     try {
@@ -1072,33 +1077,28 @@ body:has(#ft-play:not(.hidden)) .vutru-goc{display:none!important}
     var klass = $('ft-class').value.trim(), name = $('ft-name').value.trim();
     var msg = $('ft-send-msg'), btn = $('ft-send');
     if (!klass) { msg.textContent = T('Nhập Mã lớp trước đã nhé.', 'Enter a class code first.'); return; }
+    if (!window.StudentLogin || !StudentLogin.signedIn()) { msg.textContent = T('Đăng nhập email trường ở khung phía trên trước đã nhé.', 'Sign in with your school email in the box above first.'); return; }
     if (!S.result) return;
     try { localStorage.setItem('bps-class', klass); localStorage.setItem('bps-name', name); } catch (e) {}
     btn.disabled = true; btn.style.opacity = 0.5;
     msg.textContent = T('Đang gửi…', 'Sending…');
     try {
-      var c = bcfg();
-      var res = await fetch(c.url.replace(/\/$/, '') + '/rest/v1/ft_results', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', apikey: c.anonKey, Authorization: 'Bearer ' + c.anonKey, Prefer: 'return=minimal' },
-        body: JSON.stringify({
-          class_code: klass,
-          player_name: name || null,
-          team_name: myTeam() + ' – ' + TEAM()[S.cap].name,
-          total_revenue: Math.round(S.total * 10) / 10,
-          efficiency: S.result.eff,
-          final_rank: S.result.rank,
-          detail_json: { exam: !!(window.BizOnBpsExam && window.BizOnBpsExam.exam && window.BizOnBpsExam.exam.active), captain: TEAM()[S.cap].name, rivals: RIVALS.map(function (r) { return { name: r.name, total: Math.round(r.total * 10) / 10 }; }) },
-          // Phiên bản riêng từng bản để bảng giáo viên tách xếp hạng (v1 = luật cũ tính doanh thu)
-          app_version: 'bizon-bps3d-v2',
-          client_ts: new Date().toISOString(),
-        }),
+      await StudentLogin.rpc('bizon_submit_ft_result', {
+        p_class_code: klass,
+        p_player_name: name || null,
+        p_team_name: myTeam() + ' – ' + TEAM()[S.cap].name,
+        p_total_revenue: Math.round(S.total * 10) / 10,
+        p_efficiency: Math.round(S.result.eff),
+        p_final_rank: S.result.rank,
+        p_detail_json: { exam: !!(window.BizOnBpsExam && window.BizOnBpsExam.exam && window.BizOnBpsExam.exam.active), captain: TEAM()[S.cap].name, rivals: RIVALS.map(function (r) { return { name: r.name, total: Math.round(r.total * 10) / 10 }; }) },
+        // Phiên bản riêng từng bản để bảng giáo viên tách xếp hạng (v1 = luật cũ tính doanh thu)
+        p_app_version: 'bizon-bps3d-v2',
       });
-      if (!res.ok) throw new Error('HTTP ' + res.status);
       msg.textContent = T('✅ Đã nộp! Kết quả đã hiện trên bảng của giảng viên.', "✅ Submitted! Your result now shows on the instructor's dashboard.");
     } catch (e) {
       btn.disabled = false; btn.style.opacity = 1;
-      msg.textContent = T('⚠️ Chưa gửi được – kiểm tra mạng rồi thử lại.', "⚠️ Couldn't send – check your connection and try again.");
+      // Lỗi từ máy chủ (chưa đăng nhập, mã lớp sai…) nói rõ lý do; còn lại là lỗi mạng.
+      msg.textContent = /^HTTP|fetch|network/i.test(e.message || '') ? T('⚠️ Chưa gửi được – kiểm tra mạng rồi thử lại.', "⚠️ Couldn't send – check your connection and try again.") : '⚠️ ' + e.message;
     }
   };
 

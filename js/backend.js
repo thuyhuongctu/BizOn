@@ -5,7 +5,14 @@
  * kết quả mỗi lần đội khóa vòng – kèm mã băm SHA-256 để giảng viên đối
  * chiếu. Mất mạng không sao: kết quả xếp hàng trong localStorage và tự
  * gửi lại khi có mạng. Lỗi không chặn game, nhưng nếu còn kết quả chưa gửi
- * được thì hiện một thanh cảnh báo để sinh viên biết và bấm "Gửi lại". */
+ * được thì hiện một thanh cảnh báo để sinh viên biết và bấm "Gửi lại".
+ *
+ * Từ 10/2026 máy chủ chỉ nhận kết quả từ sinh viên đã đăng nhập email trường
+ * và «Tham gia đội» (migration 20261023000000_require_student_login.sql):
+ * kết quả vòng qua bizon_submit_round, tiến trình đội qua
+ * bizon_student_get_save/upsert_save – đội và email do máy chủ lấy từ tài
+ * khoản, không nhận từ trình duyệt. Phiên đăng nhập do js/student-login.js
+ * giữ (tự làm mới token); chưa đăng nhập thì không gửi gì, chỉ báo. */
 (function () {
   const QKEY = 'bizon-backend-queue';
   const cfg = () => window.BIZON_BACKEND || {};
@@ -25,19 +32,29 @@
     try { localStorage.setItem(QKEY, JSON.stringify(q.slice(-60))); } catch (e) {}
   }
 
-  async function post(row) {
+  const signedIn = () => !!(window.StudentLogin && StudentLogin.signedIn());
+
+  // RPC bằng phiên sinh viên (Bearer = access token, không phải anon key).
+  async function rpcAuth(fnName, payload) {
+    const t = window.StudentLogin ? await StudentLogin.token() : null;
+    if (!t) throw new Error('nologin');
     const c = cfg();
-    const res = await fetch(c.url.replace(/\/$/, '') + '/rest/v1/round_submissions', {
+    const res = await fetch(c.url.replace(/\/$/, '') + '/rest/v1/rpc/' + fnName, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        apikey: c.anonKey,
-        Authorization: 'Bearer ' + c.anonKey,
-        Prefer: 'return=minimal',
-      },
-      body: JSON.stringify(row),
+      headers: { 'Content-Type': 'application/json', apikey: c.anonKey, Authorization: 'Bearer ' + t },
+      body: JSON.stringify(payload),
     });
-    if (!res.ok && res.status !== 409) throw new Error('HTTP ' + res.status);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    return res.json().catch(() => null);
+  }
+
+  // Hàng đợi có thể còn dòng kiểu cũ (cột của round_submissions) từ trước 10/2026:
+  // đổi sang tham số hàm, đội lấy theo tài khoản nên bỏ team_name/student_email.
+  async function post(row) {
+    await rpcAuth('bizon_submit_round', row.p_class_code ? row : {
+      p_class_code: row.class_code, p_round: row.round_number, p_result_json: row.result_json,
+      p_result_hash: row.result_hash, p_client_ts: row.client_ts,
+    });
   }
 
   async function rpc(fnName, payload) {
@@ -56,7 +73,7 @@
   }
 
   async function doFlush() {
-    if (!on() || !navigator.onLine) return;
+    if (!on() || !navigator.onLine || !signedIn()) return;
     const q = readQueue();
     if (!q.length) return;
     const rest = [];
@@ -73,18 +90,19 @@
   // Trạng thái gửi: số kết quả vòng còn chờ + tiến trình đội lưu lên máy chủ có lỗi hay không.
   let stateError = false;
   let lastState = null;
+  let needLogin = false; // ván có Mã lớp nhưng tab này chưa đăng nhập: không gửi được gì về lớp
   function notify() {
     let pending = 0;
     try { pending = readQueue().length; } catch (e) {}
-    window.dispatchEvent(new CustomEvent('bizon-sync', { detail: { pending, stateError } }));
-    showSyncBanner(pending, stateError);
+    window.dispatchEvent(new CustomEvent('bizon-sync', { detail: { pending, stateError, needLogin } }));
+    showSyncBanner(pending, stateError, needLogin);
   }
 
   // Thanh cảnh báo cố định dưới màn hình, chỉ hiện khi còn việc chưa gửi được.
   // Dùng textContent (không innerHTML) vì tên đội do sinh viên nhập.
-  function showSyncBanner(pending, stateErr) {
+  function showSyncBanner(pending, stateErr, noLogin) {
     let el = document.getElementById('bizon-sync-banner');
-    if (!pending && !stateErr) { if (el) el.remove(); return; }
+    if (!pending && !stateErr && !noLogin) { if (el) el.remove(); return; }
     if (!el) {
       if (!document.body) return;
       el = document.createElement('div');
@@ -95,7 +113,9 @@
     }
     el.textContent = '';
     const msg = document.createElement('span');
-    msg.textContent = pending
+    msg.textContent = noLogin
+      ? '⚠️ Phiên đăng nhập email trường đã hết, nên kết quả chưa gửi về lớp. Tải lại trang, đăng nhập và «Tham gia đội» rồi chơi tiếp. / Your school sign-in has ended, so results are not reaching your class. Reload, sign in and «Join team», then continue.'
+      : pending
       ? '⚠️ Chưa gửi được ' + pending + ' kết quả vòng chơi lên máy chủ. Kiểm tra mạng rồi bấm "Gửi lại". / ' +
         pending + ' round result(s) not sent yet. Check your connection and tap "Resend".'
       : '⚠️ Chưa lưu được tiến trình đội lên máy chủ. Kiểm tra mạng rồi bấm "Gửi lại". / Team progress not saved to the server yet. Check your connection and tap "Resend".';
@@ -107,7 +127,7 @@
       flush();
       if (stateError && lastState) saveTeamStateNow(lastState);
     };
-    el.append(msg, btn);
+    if (noLogin) el.append(msg); else el.append(msg, btn);
   }
 
   // flush() được gọi từ nhiều nơi (submitRound, sự kiện 'online',
@@ -145,6 +165,8 @@
     // Đội Demo («Chơi thử với Đội Demo») dùng chung mã lớp mẫu DEMO-2026 – coi như chơi thử, không gửi
     // (khớp lời hứa «chơi thử: dữ liệu chỉ lưu trên máy bạn» ở màn đăng nhập; tiến trình cũng đã không đồng bộ).
     if (!classId || classId === 'DEMO-2026') return;
+    if (!signedIn()) { needLogin = true; notify(); return; }
+    needLogin = false;
     try {
       // Bản kết quả gọn: đủ cho chấm điểm + nghiên cứu, bỏ các khối nặng
       const result = {
@@ -166,13 +188,11 @@
       };
       const text = JSON.stringify(result);
       const row = {
-        class_code: classId,
-        team_name: (S.profile && S.profile.teamName) || 'Đội chưa đặt tên',
-        student_email: (S.profile && S.profile.email) || null,
-        round_number: report.round,
-        result_json: result,
-        result_hash: await sha256(text),
-        client_ts: new Date().toISOString(),
+        p_class_code: classId,
+        p_round: report.round,
+        p_result_json: result,
+        p_result_hash: await sha256(text),
+        p_client_ts: new Date().toISOString(),
       };
       const q = readQueue();
       q.push(row);
@@ -186,11 +206,10 @@
    * phòng máy dùng chung vẫn tiếp tục đúng chỗ đang chơi dở. Cùng điều
    * kiện với submitRound: chỉ đội có Mã lớp mới đồng bộ lên máy chủ.
    *
-   * Chống đội khác đoán (class_code, team_name) để đọc/ghi đè tiến trình
-   * đội mình: mỗi đội tự sinh 1 token ngẫu nhiên lưu trong localStorage
-   * ngay lần lưu đầu tiên, sau đó bắt buộc gửi kèm token này cho cả đọc
-   * lẫn ghi. Server chỉ giữ bản băm SHA-256 của token (xem migration
-   * team_saves.sql), không giữ token gốc. */
+   * Máy chủ tìm đội theo tài khoản đã «Tham gia đội» (bizon_student_*_save),
+   * nên thành viên nào đăng nhập trên máy nào cũng tải đúng tiến trình đội
+   * mình, không cần Mã đồng bộ. saveToken/getSyncCode/adoptSyncCode còn lại
+   * chỉ để màn đăng nhập cũ không lỗi; máy chủ không dùng token này nữa. */
   function saveToken(classCode, teamName) {
     const k = 'bizon-save-token:' + classCode + ':' + teamName;
     try {
@@ -217,9 +236,10 @@
     if (!on()) return;
     const key = teamKey(S);
     if (!key) return;
+    if (!signedIn()) { needLogin = true; notify(); return; }
     lastState = S;
     try {
-      await rpc('upsert_team_save', { p_class_code: key.classCode, p_team_name: key.teamName, p_state: S, p_token: saveToken(key.classCode, key.teamName) });
+      await rpcAuth('bizon_student_upsert_save', { p_class_code: key.classCode, p_state: S });
       stateError = false;
     } catch (e) {
       // Lỗi lưu tiến trình không chặn game; báo để sinh viên biết và bấm "Gửi lại".
@@ -246,9 +266,9 @@
     if (!on()) return null;
     const classCode = String(classId || '').trim();
     const team = String(teamName || '').trim();
-    if (!classCode || !team || classCode === 'DEMO-2026') return null;
+    if (!classCode || !team || classCode === 'DEMO-2026' || !signedIn()) return null;
     try {
-      const rows = await rpc('get_team_save', { p_class_code: classCode, p_team_name: team, p_token: saveToken(classCode, team) });
+      const rows = await rpcAuth('bizon_student_get_save', { p_class_code: classCode });
       return Array.isArray(rows) && rows.length ? rows[0] : null; // {state_json, updated_at}
     } catch (e) { return null; }
   }
@@ -269,16 +289,20 @@
   window.addEventListener('online', flush);
   document.addEventListener('DOMContentLoaded', flush);
   // Best-effort: gửi nốt bản lưu đang chờ nếu người chơi đóng tab trước khi hết giờ debounce.
+  // sendBeacon không gửi được header Authorization nên dùng fetch keepalive, với
+  // access token đang còn hạn (lúc đóng tab không kịp chờ làm mới token).
   window.addEventListener('beforeunload', () => {
     if (pendingState && on()) {
       const key = teamKey(pendingState);
-      if (key) {
+      const s = window.StudentLogin && StudentLogin.getSession();
+      if (key && s && s.expiresAt > Date.now()) {
         try {
           const c = cfg();
-          navigator.sendBeacon(
-            c.url.replace(/\/$/, '') + '/rest/v1/rpc/upsert_team_save?apikey=' + encodeURIComponent(c.anonKey),
-            new Blob([JSON.stringify({ p_class_code: key.classCode, p_team_name: key.teamName, p_state: pendingState, p_token: saveToken(key.classCode, key.teamName) })], { type: 'application/json' }),
-          );
+          fetch(c.url.replace(/\/$/, '') + '/rest/v1/rpc/bizon_student_upsert_save', {
+            method: 'POST', keepalive: true,
+            headers: { 'Content-Type': 'application/json', apikey: c.anonKey, Authorization: 'Bearer ' + s.accessToken },
+            body: JSON.stringify({ p_class_code: key.classCode, p_state: pendingState }),
+          });
         } catch (e) { /* im lặng */ }
       }
     }

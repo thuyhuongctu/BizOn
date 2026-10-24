@@ -408,14 +408,16 @@ async function doLogin() {
   const team = $('login-team').value.trim() || T('Đội Claymorphism', 'Team Claymorphism');
   const classId = $('login-class').value.trim();
 
-  // Cổng "phải qua đăng nhập email trường mới được dùng Mã lớp" đã TẮT tạm thời
-  // (2026-10-09) — khung email trường bị chặn bởi giới hạn gửi email xác thực
-  // mặc định của Supabase khi nhiều SV đăng ký cùng lúc. Mất đi: chặn trùng vai
-  // bằng unique constraint (bizon_join_team) — 2 SV cùng đội lỡ chọn trùng vai sẽ
-  // đè tiến trình của nhau khi lưu, không báo lỗi (báo cáo thực tế trước đây:
-  // nhóm "Novara"). Bật lại cổng này sau khi đã cấu hình SMTP riêng cho Supabase
-  // Auth (Settings → SMTP Settings) bằng cách khôi phục khối if bên dưới:
-  //   if (classId && !window.__bizonAuthedJoin) { alert(...); return; }
+  // Cổng "phải qua đăng nhập email trường mới được dùng Mã lớp" (bật lại 10/2026 cùng
+  // SMTP riêng cho Supabase Auth, xem docs/release/SUPABASE_SMTP_SETUP.md): máy chủ chỉ
+  // nhận kết quả từ tài khoản đã «Tham gia đội» (migration 20261023000000), nên gõ Mã lớp
+  // tự do sẽ không có gì về giảng viên – chặn ngay ở đây thay vì để đội tưởng đã nộp.
+  // Còn chặn trùng vai: bizon_join_team giữ mỗi vai cho đúng một tài khoản.
+  if (classId && classId !== 'DEMO-2026' && !window.__bizonAuthedJoin) {
+    alert(T('Muốn kết quả về lớp, hãy đăng nhập bằng email trường ở khung «🔒 Đăng nhập bằng email trường», bấm «Tham gia đội» rồi «Bắt đầu mô phỏng». Muốn chơi thử thì để trống Mã lớp.',
+            'To send results to your class, sign in with your school email in the «🔒 Sign in» box, tap «Join team», then «Start the simulation». For practice, leave the Class ID empty.'));
+    return;
+  }
   window.__bizonAuthedJoin = false; // dùng 1 lần – lượt doLogin() kế tiếp phải qua lại cổng
 
   // Đội chơi trên máy khác: nếu có Mã đồng bộ thì gắn vào máy này trước khi tải tiến trình.
