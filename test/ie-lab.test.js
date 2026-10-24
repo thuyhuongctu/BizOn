@@ -14,7 +14,7 @@ const path = require('path');
 const vm = require('vm');
 
 const BASE = process.env.BIZON_URL || 'http://127.0.0.1:8899';
-const CHROME = process.env.BIZON_CHROME || '/opt/pw-browsers/chromium';
+const CHROME = process.env.BIZON_CHROME; // không đặt thì dùng Chromium mặc định của Playwright (CI, máy cá nhân);
 const ROOT = path.join(__dirname, '..');
 const read = f => fs.readFileSync(path.join(ROOT, f), 'utf8');
 
@@ -223,7 +223,7 @@ test('Di động 390×844: không tràn ngang ở cả 4 tab, nút bấm ≥ 44 
 
 /* ================= CHẠY ================= */
 (async () => {
-  const browser = await chromium.launch({ executablePath: CHROME });
+  const browser = await chromium.launch(CHROME ? { executablePath: CHROME } : {});
   let failed = 0;
   for (const t of results) {
     try { await t.fn(browser); console.log('ok -', t.name); } catch (e) { failed++; console.log('✗', t.name, '\n   ', e.message.split('\n').slice(0, 4).join('\n    ')); }
