@@ -77,7 +77,7 @@
     var filenamePrefix = opts.filenamePrefix || 'BizOn';
     var verifyCode = opts.verifyCode || shortCode(name + '|' + courseCode + '|' + courseDates);
 
-    Promise.all([loadImg('assets/docs/ctu-logo.png'), loadImg('assets/docs/soe-logo.png'), loadImg('assets/docs/sig-tu.png')]).then(function (imgs) {
+    Promise.all([loadImg('assets/docs/ctu-logo.png'), loadImg('assets/docs/soe-logo.png'), loadImg('assets/docs/sig-tu-in.png')]).then(function (imgs) {
       var ctuLogo = imgs[0], soeLogo = imgs[1], sigTu = imgs[2];
       var cv = document.createElement('canvas'); cv.width = 1400; cv.height = 990;
       var g = cv.getContext('2d');
@@ -107,7 +107,7 @@
 
       // chữ ký
       var sx = 1000, sy = 700;
-      if (sigTu) { var h = 90, w = sigTu.width * h / sigTu.height; g.drawImage(sigTu, sx - w / 2, sy - h, w, h); }
+      if (sigTu) { var w = Math.min(300, sigTu.width * 90 / sigTu.height), h = w * sigTu.height / sigTu.width; g.drawImage(sigTu, sx - w / 2, sy - h, w, h); }
       else { g.font = 'italic 36px "Segoe Script", cursive'; g.fillStyle = '#0a3d62'; g.fillText('Phan Anh Tu', sx, sy - 20); }
       g.strokeStyle = 'rgba(3,51,55,.35)'; g.lineWidth = 1.5; g.beginPath(); g.moveTo(sx - 150, sy + 10); g.lineTo(sx + 150, sy + 10); g.stroke();
       g.fillStyle = '#033337'; g.font = '800 15px "Hanken Grotesk", sans-serif';

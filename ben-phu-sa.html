@@ -260,7 +260,7 @@
           <p id="ft-cert-desc" class="text-[11px] text-deep-teal/70 mt-2.5 max-w-xs mx-auto"></p>
           <div class="flex items-end justify-between gap-2 mt-5">
             <div class="text-center flex-1">
-              <img src="assets/docs/sig-huong.png" alt="Chữ ký Đỗ Thùy Hương" class="h-11 w-auto mx-auto">
+              <img src="assets/docs/sig-huong-in.png" alt="Chữ ký Đỗ Thùy Hương" class="h-11 w-auto mx-auto" style="max-width:100%;object-fit:contain">
               <div class="h-px bg-deep-teal/20 my-1 mx-2"></div>
               <p class="text-[9px] font-extrabold text-deep-teal leading-tight">NCS. Đỗ Thùy Hương</p>
               <p class="text-[8px] text-deep-teal/50 font-bold">Founder &amp; Project Lead</p>
@@ -269,7 +269,7 @@
               <div class="text-center leading-none"><p class="text-[7px] font-extrabold text-clay-orange uppercase">Official</p><p class="text-[10px] font-display font-extrabold text-clay-orange">BizOn</p><p class="text-[8px]">✓</p></div>
             </div>
             <div class="text-center flex-1">
-              <img src="assets/docs/sig-tu.png" alt="Chữ ký Phan Anh Tú" class="h-10 w-auto mx-auto mt-1">
+              <img src="assets/docs/sig-tu-in.png" alt="Chữ ký Phan Anh Tú" class="h-10 w-auto mx-auto mt-1" style="max-width:100%;object-fit:contain">
               <div class="h-px bg-deep-teal/20 my-1 mx-2"></div>
               <p class="text-[9px] font-extrabold text-deep-teal leading-tight">PGS.TS. Phan Anh Tú</p>
               <p class="text-[8px] text-deep-teal/50 font-bold">Co-founder &amp; Chief Academic Advisor</p>
@@ -999,7 +999,7 @@
       sig1: 'NCS. Đỗ Thùy Hương', sig2: 'PGS.TS. Phan Anh Tú',
       date: 'Cấp ngày ' + new Date().toLocaleDateString('vi-VN') + ' · bizonland.com',
     };
-    var imgs = await Promise.all([loadSigImg('assets/docs/sig-huong.png'), loadSigImg('assets/docs/sig-tu.png')]);
+    var imgs = await Promise.all([loadSigImg('assets/docs/sig-huong-in.png'), loadSigImg('assets/docs/sig-tu-in.png')]);
     var sigH = imgs[0], sigT = imgs[1];
     var cv = document.createElement('canvas');
     cv.width = 1400; cv.height = 990;
@@ -1035,7 +1035,7 @@
     });
     function sign(x, sig, name, line1, line2) {
       if (sig) {
-        var h = 120, w = sig.width * h / sig.height;
+        var w = Math.min(340, sig.width * 120 / sig.height), h = w * sig.height / sig.width;
         g.drawImage(sig, x - w / 2, 775 - h, w, h);
       } else {
         g.fillStyle = '#006687'; g.font = 'italic 44px "Segoe Script", "Brush Script MT", cursive';
