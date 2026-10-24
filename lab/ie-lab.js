@@ -83,10 +83,10 @@ if (typeof document !== 'undefined') (function () {
     vi: {
       title: 'IE Lab – Bậc 3 · Quốc tế hóa · BizOn',
       sub: 'Khởi nghiệp quốc tế · BizOn Lab', back: '← BizOn Go Global', kicker: 'IE LAB · MÔ PHỎNG SỐ LIỆU', hero1: 'Quốc tế hóa', hero2: 'bao nhiêu', hero3: 'là vừa?',
-      intro: 'Chọn thị trường, kéo mức quốc tế hóa (FSTS %) và đầu tư năng lực số – xem hiệu quả doanh nghiệp thay đổi theo từng kiểu thể chế. Hoàn thành 5 nhiệm vụ để nhận XP cho nhóm.',
+      intro: 'Chọn thị trường, kéo mức quốc tế hóa (FSTS %) và đầu tư năng lực số – xem hiệu quả hoạt động kinh doanh của doanh nghiệp thay đổi theo từng kiểu thể chế. Hoàn thành 5 nhiệm vụ để nhận XP cho nhóm.',
       xpp: 'Điểm kinh nghiệm', badges: 'Kiểu thị trường đã khám phá', pick: 'Chọn nhóm của bạn', teamSub: 'T01 – T05 · mỗi nhóm có XP riêng.', step: 'BƯỚC', chooseM: 'Chọn thị trường',
       fsts: 'Mức quốc tế hóa – FSTS', fstsH: '% doanh thu từ nước ngoài', tci: 'Năng lực công nghệ (TCI)', tciH: 'Nâng mặt bằng hiệu quả ở mọi mức FSTS', dai: 'Ứng dụng số (DAI)', daiH: 'Ở Singapore còn tạo "lá chắn số"',
-      perf: 'Hiệu quả doanh nghiệp (điểm)', peak: 'đỉnh ≈', reg: { transition: 'Thể chế chuyển đổi', strong: 'Thể chế mạnh', fip: 'Đảo nhỏ (SIDS)', pooled: 'Gộp châu Á' },
+      perf: 'Hiệu quả hoạt động kinh doanh của doanh nghiệp (điểm)', peak: 'đỉnh ≈', reg: { transition: 'Thể chế chuyển đổi', strong: 'Thể chế mạnh', fip: 'Đảo nhỏ (SIDS)', pooled: 'Gộp châu Á' },
       vFipHi: 'Lumina: bạn đang thấy FIP vận hành – ở SIDS, mỗi % FSTS thêm vào lại bào mòn hiệu quả. Bài học: quốc tế hóa không phải lúc nào cũng tốt!', vFipLo: 'Lumina: giữ FSTS thấp là hợp lý ở SIDS – thị trường nội địa nhỏ nhưng quốc tế hóa cưỡng bức còn tệ hơn.',
       vStrong: 'Lumina: thể chế mạnh hấp thụ chi phí phối hợp – cứ tự tin vươn xa', vShield: ', và đầu tư DAI để kích hoạt "lá chắn số"!',
       vOver: 'Lumina: bạn đã vượt điểm ngoặt – chi phí phối hợp, thanh khoản ngoại tệ và quản trị đa thị trường đang nuốt lợi ích. Lùi về gần 43% nhé.', vUnder: 'Lumina: còn dư địa – tăng dần FSTS để hưởng lợi ích học hỏi và quy mô, đỉnh nằm quanh 43%.', vOpt: 'Lumina: vùng tối ưu! Mức quốc tế hóa "vừa đủ sâu" đúng vùng đẹp nhất của mô phỏng.',
