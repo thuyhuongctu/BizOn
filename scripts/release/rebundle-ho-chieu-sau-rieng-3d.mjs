@@ -27,7 +27,10 @@ const BUNDLE = resolve(ROOT, 'lab/ho-chieu-sau-rieng-3d.html');
 export const ASSETS = {
   '34b8e811-733d-42a5-8047-c2311f4b9411': 'lab/ho-chieu-sau-rieng-engine.js',
   '62ff4bdc-13be-40e1-95aa-ec770011ad8c': 'lab/ho-chieu-sau-rieng-data.js',
-  'c0de5a17-d0c1-4e5a-9b0e-3a1d2c4f5e6b': 'lab/ho-chieu-sau-rieng-core.js'
+  'c0de5a17-d0c1-4e5a-9b0e-3a1d2c4f5e6b': 'lab/ho-chieu-sau-rieng-core.js',
+  // Hai tệp dùng chung toàn site cho màn «Báo cáo sau 6 vụ»: cấu hình backend công khai và chứng nhận ĐHCT
+  '5d1f0c7e-9a3b-4c2d-8e1f-0a1b2c3d4e5f': 'js/backend-config.js',
+  '7e2a9b4c-1d3f-4a5b-9c6d-1e2f3a4b5c6d': 'js/official-cert.js'
 };
 const NEW_ASSET_MIME = 'application/javascript';
 
