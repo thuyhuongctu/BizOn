@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & PGS.TS. Phan Anh Tú -->
+<!-- Thiết kế nghiên cứu can thiệp BizOn: bản thảo giao thức 24/10/2026, viết để phản biện. Số liệu mẫu (n, ICC, d) là giả định lập kế hoạch, ghi rõ tại chỗ. -->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<link rel="canonical" href="https://bizonland.com/thiet-ke-nghien-cuu.html">
+<link rel="alternate" hreflang="vi" href="https://bizonland.com/thiet-ke-nghien-cuu.html?lang=vi">
+<link rel="alternate" hreflang="en" href="https://bizonland.com/thiet-ke-nghien-cuu.html?lang=en">
+<link rel="alternate" hreflang="x-default" href="https://bizonland.com/thiet-ke-nghien-cuu.html">
+<meta property="og:url" content="https://bizonland.com/thiet-ke-nghien-cuu.html">
+<meta property="og:image" content="https://bizonland.com/assets/og/og-cover.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="vi_VN"><meta property="og:locale:alternate" content="en_US">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#006687">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<script src="js/bizon-lang.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title data-en="Intervention study design · BizOn">Thiết kế nghiên cứu can thiệp · BizOn</title>
+<meta name="description" data-en-content="Protocol draft for the BizOn intervention study: two arms, four measurement points, linked data from surveys, decision traces and learning products, survey revisions, analysis plan and ethics." content="Bản thảo giao thức nghiên cứu can thiệp BizOn: hai nhánh, bốn thời điểm đo, ghép dữ liệu phiếu khảo sát – dấu vết quyết định – sản phẩm học tập, các sửa đổi phiếu, kế hoạch phân tích và đạo đức.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & PGS.TS. Phan Anh Tú">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script src="js/bizon-boot.js"></script>
+<link rel="stylesheet" href="css/bizon-clay-fonts.css">
+<link rel="stylesheet" href="css/bizon-clay.css">
+<style>
+  .rd-tag{font-family:var(--clay-head);font-size:16px;font-weight:700;color:var(--clay-accent)}
+  .rd-h2{margin:4px 0 0;font-size:clamp(28px,3.4vw,40px);line-height:1.14}
+  .rd-lead{margin:10px 0 22px;font-size:15px;line-height:1.6;color:var(--clay-sub)}
+  .rd-sec{margin-bottom:64px}
+  .rd-sec[id]{scroll-margin-top:96px}
+  .rd-card{padding:22px 24px;border-radius:28px;background:var(--clay-card);box-shadow:var(--clay-night-shadow,inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 24px 34px -24px rgba(110,70,30,.55))}
+  .rd-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px}
+  .rd-k{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#7A4A0E}
+  .rd-card h3{margin:0 0 8px;font-size:21px;line-height:1.2}
+  .rd-card p,.rd-card li{font-size:14.5px;line-height:1.6;color:var(--clay-ink-2)}
+  .rd-card ul{margin:8px 0 0;padding-left:20px}
+  .rd-fig{margin:0 0 22px;padding:18px 18px 12px;border-radius:28px;background:var(--clay-card);box-shadow:var(--clay-night-shadow,inset 0 -7px 0 rgba(110,70,30,.08),inset 0 4px 0 #fff,0 16px 22px -16px rgba(110,70,30,.5))}
+  .rd-fig figcaption{margin:0 0 10px;font-family:var(--clay-head);font-size:15px;font-weight:800;color:var(--clay-ink)}
+  .rd-scroll{display:none;margin:0 0 8px;font-size:12.5px;font-weight:700;color:var(--clay-sub)}
+  .rd-svg{display:block;width:100%;height:auto;font-family:var(--clay-sans);overflow:visible}
+  .rd-svg rect{stroke:rgba(110,70,30,.18);stroke-width:2}
+  .rd-svg .eb{font-size:11.5px;font-weight:800;letter-spacing:.08em;fill:var(--clay-ink)}
+  .rd-svg .h{font-family:var(--clay-head);font-size:19px;font-weight:800;fill:var(--clay-ink)}
+  .rd-svg .b{font-size:13px;font-weight:600;fill:var(--clay-ink-2)}
+  .rd-svg .lb{font-size:12px;font-weight:800;fill:var(--clay-sub)}
+  .rd-svg .axis{stroke:var(--clay-ink);stroke-width:3}
+  .rd-svg .tick{fill:var(--clay-ink)}
+  .rd-svg .link{fill:none;stroke:var(--clay-ink);stroke-width:2.5}
+  .rd-svg .link.dashed{stroke-dasharray:7 6}
+  .rd-svg .arrow{fill:var(--clay-ink)}
+  .rd-svg .lane-a rect{fill:var(--clay-c1)}.rd-svg .lane-b rect{fill:var(--clay-c2)}
+  .rd-svg .m rect{fill:var(--clay-c5)}.rd-svg .m.t1 rect{fill:var(--clay-mint-soft)}
+  .rd-svg .src rect{fill:var(--clay-c5)}.rd-svg .hub rect{fill:var(--clay-c2)}.rd-svg .master rect{fill:var(--clay-c4)}
+  .rd-svg .locked rect{fill:var(--clay-cream-deep);stroke:var(--clay-accent);stroke-width:3;stroke-dasharray:9 7}
+  .rd-table{width:100%;border-collapse:separate;border-spacing:0;border-radius:22px;overflow:hidden;border:2px solid #F0E2C8;background:var(--clay-card);font-size:14px;line-height:1.55;color:var(--clay-ink-2)}
+  .rd-table th,.rd-table td{padding:12px 14px;text-align:left;vertical-align:top;border-bottom:2px dashed #F0E2C8}
+  .rd-table tbody tr:last-child>*{border-bottom:0}
+  .rd-table thead th{font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#006687}
+  .rd-table tbody th{font-weight:800;color:var(--clay-ink)}
+  .rd-table code{font-family:var(--clay-mono);font-size:12.5px;color:#006687}
+  .rd-pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11.5px;font-weight:800;background:var(--clay-c5);color:#03474F;white-space:nowrap}
+  .rd-pill.new{background:#FDE1CE;color:#8A3A0C}
+  .rd-pill.have{background:var(--clay-mint-soft);color:#123B2E}
+  .rd-warn{padding:16px 18px;border-radius:22px;background:#FDE1CE;border:3px solid var(--clay-orange);font-size:14.5px;line-height:1.6;color:#3B1A06}
+  .rd-warn b{color:#8A3A0C}
+  .rd-eq{display:inline-block;padding:10px 16px;border-radius:14px;background:var(--clay-ink);color:var(--clay-gold);font-family:var(--clay-mono);font-size:13px}
+  .rd-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:14px}
+  .rd-step{padding:18px;border-radius:22px;background:var(--clay-card);box-shadow:inset 0 -6px 0 rgba(110,70,30,.08),0 14px 20px -16px rgba(110,70,30,.5)}
+  .rd-step .n{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;font-family:var(--clay-head);font-size:17px;font-weight:800;box-shadow:inset 0 -4px 0 rgba(0,0,0,.12)}
+  .rd-step h4{margin:10px 0 4px;font-size:16px}
+  .rd-step p{margin:0;font-size:13.5px;line-height:1.55;color:var(--clay-sub)}
+  @media (max-width:720px){.rd-fig{padding:12px 10px 8px}.rd-fig .rd-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}.rd-svg{min-width:760px}.rd-scroll{display:block}
+    .rd-table thead{display:none}.rd-table tr{display:block;padding:6px 0}.rd-table td,.rd-table th{display:block;border-bottom:0;padding:6px 14px}.rd-table tbody tr{border-bottom:2px dashed #F0E2C8}.rd-table tbody tr:last-child{border-bottom:0}
+    .rd-table td[data-l]::before{content:attr(data-l);}
+    html[lang="en"] .rd-table td[data-l-en]::before{content:attr(data-l-en)}
+    .rd-table td[data-l]::before{display:block;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#006687;margin-bottom:2px}}
+  @media screen{
+    html[data-theme="dark"] .rd-svg rect{stroke:rgba(255,230,200,.14)}
+    html[data-theme="dark"] .rd-table{border-color:rgba(255,230,200,.14)}
+    html[data-theme="dark"] .rd-table th,html[data-theme="dark"] .rd-table td{border-bottom-color:rgba(255,230,200,.14)}
+    html[data-theme="dark"] .rd-warn{background:#4A2A18;color:#F7D9C4}
+    html[data-theme="dark"] .rd-warn b{color:#FFB38A}
+    html[data-theme="dark"] .rd-pill.new{background:#4A2A18;color:#FFB38A}
+  }
+</style>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Thiết kế nghiên cứu can thiệp · BizOn">
+<meta property="og:description" content="Hai nhánh, bốn thời điểm đo, ghép dữ liệu bằng mã nghiên cứu, sửa phiếu khảo sát, kế hoạch phân tích, đạo đức.">
+<meta name="twitter:card" content="summary_large_image">
+<script src="js/capture-guard.js"></script>
+</head>
+<body class="clay">
+
+<main class="clay-main" style="max-width:1120px">
+  <section class="clay-hero">
+    <div class="sun" aria-hidden="true"></div>
+    <div class="grid">
+      <div class="htext">
+        <span class="clay-eyebrow" data-en="Research protocol · draft 24 Oct 2026">Giao thức nghiên cứu · bản thảo 24/10/2026</span>
+        <h1 data-en="Intervention study design for BizOn">Thiết kế nghiên cứu can thiệp BizOn</h1>
+        <p class="lead" style="max-width:38em" data-en="Written to answer the first criticism in the academic review: current evidence is retrospective and uncontrolled. This page sets out a two-arm pre/post design, what is measured when, how three data sources are linked by one research code, what must change in the current survey, and how the data will be analysed. Planning numbers are assumptions and are labelled as such.">Viết để trả lời phản biện số 1 của bản nhận xét học thuật: bằng chứng hiện có là hồi cứu và không có đối chứng. Trang này nêu thiết kế hai nhánh trước–sau, đo gì vào lúc nào, cách ghép ba nguồn dữ liệu bằng một mã nghiên cứu, những gì phải sửa ở phiếu hiện tại, và kế hoạch phân tích. Các con số lập kế hoạch là giả định và được ghi rõ.</p>
+      </div>
+      <div class="art" style="width:min(20vw,180px);aspect-ratio:359/780"><img src="assets/character/lumina-ao-dai-alert-cut.webp" alt="" loading="lazy"></div>
+    </div>
+    <div class="wave" aria-hidden="true"></div>
+  </section>
+
+  <section class="rd-sec" id="hien-trang">
+    <div class="rd-tag" data-en="Where we stand">Hiện trạng</div>
+    <h2 class="rd-h2" data-en="What the October 2026 pilot can and cannot say">Đợt thử nghiệm 10/2026 nói được gì, không nói được gì</h2>
+    <p class="rd-lead" data-en="Two classes (KTM330HM01, KTM330HM02; about 130 forms after class-code normalisation) completed the pre and post surveys and played Bật Nghiệp. Three facts limit what this data can support.">Hai lớp (KTM330HM01, KTM330HM02; khoảng 130 phiếu sau khi gộp mã lớp) đã làm phiếu trước, phiếu sau và chơi Bật Nghiệp. Ba sự thật giới hạn điều dữ liệu này chứng minh được.</p>
+    <div class="rd-warn">
+      <p style="margin:0 0 8px"><b data-en="1 · The post survey was not a post-test.">1 · Phiếu SAU chưa phải hậu kiểm.</b> <span data-en="Students were asked to fill both forms before the session started; most post forms were submitted 2–14 minutes after the pre form. For the next cohort the POST link is sent only after the debrief, and any post form less than 60 minutes after its pre form is excluded.">Sinh viên được dặn làm cả hai phiếu trước khi vào buổi học; phần lớn phiếu sau nộp chỉ 2–14 phút sau phiếu trước. Lượt tới, link phiếu SAU chỉ gửi sau debrief, và phiếu sau cách phiếu trước dưới 60 phút sẽ bị loại.</span></p>
+      <p style="margin:0 0 8px"><b data-en="2 · Part A has a ceiling.">2 · Phần A bị trần điểm.</b> <span data-en="Mean 14.2 of 15 before playing leaves no room to measure gain. Five items must be replaced by application items (see section 5).">Trung bình 14,2/15 trước khi chơi thì không còn chỗ để đo mức tiến bộ. Năm câu phải thay bằng câu vận dụng (xem mục 5).</span></p>
+      <p style="margin:0"><b data-en="3 · Survey and game data cannot be linked.">3 · Phiếu và dữ liệu game chưa ghép được.</b> <span data-en="The survey uses a self-chosen 4-character code; the game uses team and email. Without one shared research code, decision-trace questions (RQ3–RQ6) cannot be answered at the individual level.">Phiếu dùng mã tự đặt 4 ký tự; game dùng đội và email. Không có một mã nghiên cứu chung thì các câu hỏi về dấu vết quyết định (RQ3–RQ6) không trả lời được ở mức cá nhân.</span></p>
+    </div>
+  </section>
+
+  <section class="rd-sec" id="cau-hoi">
+    <div class="rd-tag" data-en="Research questions">Câu hỏi nghiên cứu</div>
+    <h2 class="rd-h2" data-en="Eight questions, three data sources">Tám câu hỏi, ba nguồn dữ liệu</h2>
+    <p class="rd-lead" data-en="Each question names the data that answers it. A green pill means the current instruments already collect it; an orange pill means something must be added.">Mỗi câu hỏi ghi rõ dữ liệu trả lời nó. Nhãn xanh: công cụ hiện có đã thu; nhãn cam: phải bổ sung.</p>
+    <table class="rd-table">
+      <thead><tr><th scope="col">RQ</th><th scope="col" data-en="Question">Câu hỏi</th><th scope="col" data-en="Data">Dữ liệu</th><th scope="col" data-en="Status">Trạng thái</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">RQ1</th><td data-l="Câu hỏi" data-l-en="Question" data-en="Do business knowledge and entrepreneurial self-efficacy change after six rounds?">Kiến thức kinh doanh và tự hiệu quả khởi nghiệp có thay đổi sau sáu vòng không?</td><td data-l="Dữ liệu" data-l-en="Data" data-en="Survey Part A (15 items), Part B (8 items), T0 and T2">Phiếu Phần A (15 câu), Phần B (8 câu), T0 và T2</td><td data-l="Trạng thái" data-l-en="Status"><span class="rd-pill have" data-en="collected">đã thu</span> <span class="rd-pill new" data-en="fix ceiling">sửa trần điểm</span></td></tr>
+        <tr><th scope="row">RQ2</th><td data-l="Câu hỏi" data-l-en="Question" data-en="Does the change differ by major, gender, business experience or team role?">Mức thay đổi có khác nhau theo chuyên ngành, giới, kinh nghiệm kinh doanh hay vai trò trong đội không?</td><td data-l="Dữ liệu" data-l-en="Data" data-en="Background items at T0; role at T2">Câu nền ở T0; vai trò ở T2</td><td data-l="Trạng thái" data-l-en="Status"><span class="rd-pill have" data-en="role only">mới có vai trò</span> <span class="rd-pill new" data-en="add background">thêm câu nền</span></td></tr>
+        <tr><th scope="row">RQ3</th><td data-l="Câu hỏi" data-l-en="Question" data-en="Do forecasts and «what-if» runs reduce the gap between predicted and actual profit?">Dự báo và lượt «Nếu–Thì» có giảm sai lệch giữa lợi nhuận dự báo và thực tế không?</td><td data-l="Dữ liệu" data-l-en="Data" data-en="Decision traces: forecast, what-if count, result per round">Dấu vết quyết định: dự báo, số lượt Nếu–Thì, kết quả từng vòng</td><td data-l="Trạng thái" data-l-en="Status"><span class="rd-pill have" data-en="in game log">có trong log game</span></td></tr>
+        <tr><th scope="row">RQ4</th><td data-l="Câu hỏi" data-l-en="Question" data-en="Do teams that adjust to data improve faster than teams that hold their decisions?">Đội điều chỉnh theo dữ liệu có cải thiện nhanh hơn đội giữ nguyên quyết định không?</td><td data-l="Dữ liệu" data-l-en="Data" data-en="Adaptation index from round-to-round decision changes">Chỉ số thích nghi từ thay đổi quyết định giữa các vòng</td><td data-l="Trạng thái" data-l-en="Status"><span class="rd-pill have" data-en="in game log">có trong log game</span></td></tr>
+        <tr><th scope="row">RQ5</th><td data-l="Câu hỏi" data-l-en="Question" data-en="Is the frequency and type of Lumina questions related to reflection quality and decision outcomes?">Tần suất và loại câu hỏi gửi Lumina có liên quan đến chất lượng phản tư và kết quả quyết định không?</td><td data-l="Dữ liệu" data-l-en="Data" data-en="Lumina log + SEC journal (instructor-rated)">Log Lumina + nhật ký SEC (giảng viên chấm)</td><td data-l="Trạng thái" data-l-en="Status"><span class="rd-pill have" data-en="in game log">có trong log game</span> <span class="rd-pill new" data-en="rubric for journals">rubric nhật ký</span></td></tr>
+        <tr><th scope="row">RQ6</th><td data-l="Câu hỏi" data-l-en="Question" data-en="Do students evaluate and reject AI advice, or follow it?">Sinh viên có đánh giá và bác bỏ khuyến nghị AI hay chỉ làm theo?</td><td data-l="Dữ liệu" data-l-en="Data" data-en="Decision sheet field «Lumina advice used / rejected» + interviews">Ô «ý kiến Lumina được dùng / bác bỏ» trong phiếu quyết định + phỏng vấn</td><td data-l="Trạng thái" data-l-en="Status"><span class="rd-pill new" data-en="add field">thêm ô</span></td></tr>
+        <tr><th scope="row">RQ7</th><td data-l="Câu hỏi" data-l-en="Question" data-en="How do leaderboard, flags, XP and items affect engagement?">Bảng xếp hạng, cờ, XP, vật phẩm ảnh hưởng thế nào đến mức gắn kết?</td><td data-l="Dữ liệu" data-l-en="Data" data-en="Short T1 survey after round 3 (5 items) + Part C at T2">Phiếu ngắn T1 sau vòng 3 (5 câu) + Phần C ở T2</td><td data-l="Trạng thái" data-l-en="Status"><span class="rd-pill have" data-en="Part C">có Phần C</span> <span class="rd-pill new" data-en="add T1">thêm T1</span></td></tr>
+        <tr><th scope="row">RQ8</th><td data-l="Câu hỏi" data-l-en="Question" data-en="Do these mechanics focus students on learning or on short-term score optimisation?">Các cơ chế này làm sinh viên tập trung vào học hay vào tối ưu điểm ngắn hạn?</td><td data-l="Dữ liệu" data-l-en="Data" data-en="Behavioural log + focus-group interviews">Log hành vi + phỏng vấn nhóm</td><td data-l="Trạng thái" data-l-en="Status"><span class="rd-pill new" data-en="interview guide">bộ câu hỏi phỏng vấn</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="rd-sec" id="thiet-ke">
+    <div class="rd-tag" data-en="Design">Thiết kế</div>
+    <h2 class="rd-h2" data-en="Two arms, four measurement points">Hai nhánh, bốn thời điểm đo</h2>
+    <p class="rd-lead" data-en="A quasi-experimental pretest–posttest design with a comparison arm. Classes, not students, are assigned to arms because the simulation runs in teams within a class. The comparison arm studies the same syllabus through case discussion (for example BizRuptors cases) and a written business plan, matched in contact hours.">Thiết kế bán thực nghiệm trước–sau có nhánh so sánh. Phân nhánh theo lớp chứ không theo sinh viên, vì mô phỏng chạy theo đội trong lớp. Nhánh so sánh học cùng đề cương bằng thảo luận tình huống (ví dụ các case BizRuptors) và bài kế hoạch kinh doanh, cân bằng số tiết.</p>
+    <figure class="rd-fig">
+      <figcaption><span data-en="Figure 1 · Timeline and measurements by arm">Hình 1 · Dòng thời gian và các phép đo theo nhánh</span></figcaption>
+      <p class="rd-scroll" data-en="On a phone, swipe sideways to read the diagram.">Trên điện thoại, kéo ngang để đọc sơ đồ.</p>
+      <div class="rd-wrap"><svg class="rd-svg" viewBox="0 0 960 440" role="img" aria-labelledby="rd-fig1-t" xmlns="http://www.w3.org/2000/svg">
+        <title id="rd-fig1-t">Hai nhánh nghiên cứu và bốn thời điểm đo T0–T3</title>
+        <defs><marker id="rd-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5 0 10z" class="arrow"></path></marker></defs>
+        <path d="M180 70 L180 256" class="link dashed"></path>
+        <path d="M420 70 L420 256" class="link dashed"></path>
+        <path d="M640 70 L640 256" class="link dashed"></path>
+        <path d="M860 70 L860 256" class="link dashed"></path>
+        <line x1="130" y1="60" x2="930" y2="60" class="axis" marker-end="url(#rd-arr)"></line>
+        <g class="tick"><circle cx="180" cy="60" r="7"></circle><circle cx="420" cy="60" r="7"></circle><circle cx="640" cy="60" r="7"></circle><circle cx="860" cy="60" r="7"></circle></g>
+        <text x="180" y="36" text-anchor="middle" class="eb"><tspan data-en="T0 · WEEK 1">T0 · TUẦN 1</tspan></text>
+        <text x="420" y="36" text-anchor="middle" class="eb"><tspan data-en="T1 · AFTER ROUND 3">T1 · SAU VÒNG 3</tspan></text>
+        <text x="640" y="36" text-anchor="middle" class="eb"><tspan data-en="T2 · AFTER ROUND 6 + DEBRIEF">T2 · SAU VÒNG 6 + DEBRIEF</tspan></text>
+        <text x="860" y="36" text-anchor="middle" class="eb"><tspan data-en="T3 · 3–6 MONTHS">T3 · 3–6 THÁNG</tspan></text>
+        <text x="24" y="118" class="h"><tspan data-en="Arm A">Nhánh A</tspan></text>
+        <text x="24" y="138" class="lb"><tspan data-en="BizOn">BizOn</tspan></text>
+        <g class="lane-a">
+          <rect x="130" y="88" width="620" height="64" rx="18"></rect>
+          <text x="150" y="114" class="b"><tspan data-en="Bật Nghiệp, 6 rounds in 4 sessions: briefing → read market → role proposals → what-if → commit → results → debrief">Bật Nghiệp, 6 vòng trong 4 buổi: briefing → đọc thị trường → đề xuất theo vai → Nếu–Thì → chốt → kết quả → debrief</tspan></text>
+          <text x="150" y="138" class="b"><tspan data-en="Teams of 5 roles · decision sheet each round · SEC journal · Lumina log · instructor locks rounds">Đội 5 vai · phiếu quyết định mỗi vòng · nhật ký SEC · log Lumina · giảng viên khóa vòng</tspan></text>
+        </g>
+        <text x="24" y="200" class="h"><tspan data-en="Arm B">Nhánh B</tspan></text>
+        <text x="24" y="220" class="lb"><tspan data-en="comparison">so sánh</tspan></text>
+        <g class="lane-b">
+          <rect x="130" y="170" width="620" height="64" rx="18"></rect>
+          <text x="150" y="196" class="b"><tspan data-en="Same syllabus, same contact hours: case discussion + written business plan, no simulation">Cùng đề cương, cùng số tiết: thảo luận tình huống + bài kế hoạch kinh doanh, không mô phỏng</tspan></text>
+          <text x="150" y="220" class="b"><tspan data-en="Plays BizOn after T2 (waitlist), so no class is denied the tool">Chơi BizOn sau T2 (danh sách chờ), nên không lớp nào bị từ chối công cụ</tspan></text>
+        </g>
+        <g class="m"><rect x="110" y="262" width="150" height="150" rx="18"></rect>
+          <text x="125" y="286" class="eb"><tspan data-en="BOTH ARMS">CẢ HAI NHÁNH</tspan></text>
+          <text x="125" y="308" class="b"><tspan data-en="Part A knowledge">Phần A kiến thức</tspan></text>
+          <text x="125" y="328" class="b"><tspan data-en="Part B self-efficacy">Phần B tự hiệu quả</tspan></text>
+          <text x="125" y="348" class="b"><tspan data-en="Intention (new)">Ý định khởi nghiệp (mới)</tspan></text>
+          <text x="125" y="368" class="b"><tspan data-en="Background (new)">Câu nền (mới)</tspan></text>
+          <text x="125" y="388" class="b"><tspan data-en="Consent + code">Đồng thuận + mã</tspan></text></g>
+        <g class="m t1"><rect x="350" y="262" width="150" height="150" rx="18"></rect>
+          <text x="365" y="286" class="eb"><tspan data-en="ARM A ONLY">CHỈ NHÁNH A</tspan></text>
+          <text x="365" y="308" class="b"><tspan data-en="5-item check:">Phiếu 5 câu:</tspan></text>
+          <text x="365" y="328" class="b"><tspan data-en="engagement, flow,">gắn kết, dòng chảy,</tspan></text>
+          <text x="365" y="348" class="b"><tspan data-en="difficulty, fairness">độ khó, công bằng</tspan></text>
+          <text x="365" y="368" class="b"><tspan data-en="≤ 5 minutes">≤ 5 phút</tspan></text></g>
+        <g class="m"><rect x="565" y="262" width="150" height="150" rx="18"></rect>
+          <text x="580" y="286" class="eb"><tspan data-en="BOTH ARMS">CẢ HAI NHÁNH</tspan></text>
+          <text x="580" y="308" class="b"><tspan data-en="Part A, B again">Phần A, B lần hai</tspan></text>
+          <text x="580" y="328" class="b"><tspan data-en="Intention again">Ý định lần hai</tspan></text>
+          <text x="580" y="348" class="b"><tspan data-en="Arm A: Part C, NPS,">Nhánh A: Phần C, NPS,</tspan></text>
+          <text x="580" y="368" class="b"><tspan data-en="role, open answers">vai trò, câu mở</tspan></text>
+          <text x="580" y="388" class="b"><tspan data-en="≥ 60 min after T0">≥ 60 phút sau T0</tspan></text></g>
+        <g class="m"><rect x="785" y="262" width="150" height="150" rx="18"></rect>
+          <text x="800" y="286" class="eb"><tspan data-en="TRACER">THEO DÕI SAU</tspan></text>
+          <text x="800" y="308" class="b"><tspan data-en="Start-up activity,">Hoạt động khởi nghiệp,</tspan></text>
+          <text x="800" y="328" class="b"><tspan data-en="competitions, projects,">cuộc thi, dự án,</tspan></text>
+          <text x="800" y="348" class="b"><tspan data-en="ideas continued">ý tưởng còn theo đuổi</tspan></text>
+          <text x="800" y="368" class="b"><tspan data-en="Short online form">Phiếu ngắn trực tuyến</tspan></text></g>
+      </svg></div>
+    </figure>
+    <div class="rd-grid">
+      <article class="rd-card"><div class="rd-k" data-en="Unit of assignment">Đơn vị phân nhánh</div><h3 data-en="Class, with the class as a cluster in the analysis">Lớp, và lớp là cụm trong phân tích</h3><p data-en="Randomising students inside one class is not possible because teams play together and talk. Arms are therefore whole classes, ideally matched by the same instructor and syllabus. The analysis treats the class as a cluster; intra-class correlation is estimated from the pilot.">Không thể ngẫu nhiên hoá sinh viên trong cùng một lớp vì các đội chơi chung và trao đổi với nhau. Vì vậy mỗi nhánh là cả lớp, tốt nhất là cùng giảng viên và cùng đề cương. Phân tích coi lớp là một cụm; tương quan nội cụm ước lượng từ đợt thử nghiệm.</p></article>
+      <article class="rd-card"><div class="rd-k" data-en="Primary outcome">Kết quả chính</div><h3 data-en="Change in Part A and Part B from T0 to T2">Thay đổi Phần A và Phần B từ T0 đến T2</h3><p data-en="Secondary: entrepreneurial intention (Liñán &amp; Chen, 2009 scale, 6 items), decision quality from traces (RQ3–RQ4), engagement (T1, Part C), tracer outcomes at T3.">Thứ cấp: ý định khởi nghiệp (thang Liñán &amp; Chen, 2009, 6 câu), chất lượng quyết định từ dấu vết (RQ3–RQ4), mức gắn kết (T1, Phần C), kết quả theo dõi sau ở T3.</p></article>
+      <article class="rd-card"><div class="rd-k" data-en="Planning assumptions">Giả định lập kế hoạch</div><h3 data-en="How many students are needed">Cần bao nhiêu sinh viên</h3><p data-en="For a between-arm effect of d = 0.40 on the T2 score adjusted for T0, α = .05 two-sided, power .80: about 100 students per arm before clustering. With classes of about 40 and an assumed ICC of .05, the design effect is 1 + (40 − 1) × .05 ≈ 2.95, so about 6–8 classes per arm. These are planning numbers; the ICC is replaced by the pilot estimate.">Với hiệu ứng giữa hai nhánh d = 0,40 trên điểm T2 đã hiệu chỉnh theo T0, α = 0,05 hai phía, lực kiểm định 0,80: khoảng 100 sinh viên mỗi nhánh trước khi tính cụm. Với lớp khoảng 40 người và ICC giả định 0,05, hệ số thiết kế là 1 + (40 − 1) × 0,05 ≈ 2,95, tức khoảng 6–8 lớp mỗi nhánh. Đây là số lập kế hoạch; ICC sẽ thay bằng ước lượng từ đợt thử nghiệm.</p></article>
+    </div>
+  </section>
+
+  <section class="rd-sec" id="ghep-du-lieu">
+    <div class="rd-tag" data-en="Data linkage">Ghép dữ liệu</div>
+    <h2 class="rd-h2" data-en="One research code links three sources">Một mã nghiên cứu nối ba nguồn</h2>
+    <p class="rd-lead" data-en="The survey, the game's decision traces and the learning products must meet on one anonymous code. The identity file that maps codes to names stays with the instructor, separate from the research master and from the grade file.">Phiếu khảo sát, dấu vết quyết định của game và sản phẩm học tập phải gặp nhau trên một mã ẩn danh. Tệp định danh nối mã với tên do giảng viên giữ, tách khỏi tệp nghiên cứu và tệp điểm.</p>
+    <figure class="rd-fig">
+      <figcaption><span data-en="Figure 2 · Three sources, one code, three separated files">Hình 2 · Ba nguồn, một mã, ba tệp tách riêng</span></figcaption>
+      <p class="rd-scroll" data-en="On a phone, swipe sideways to read the diagram.">Trên điện thoại, kéo ngang để đọc sơ đồ.</p>
+      <div class="rd-wrap"><svg class="rd-svg" viewBox="0 0 960 400" role="img" aria-labelledby="rd-fig2-t" xmlns="http://www.w3.org/2000/svg">
+        <title id="rd-fig2-t">Sơ đồ ghép dữ liệu bằng mã nghiên cứu</title>
+        <g class="src"><rect x="24" y="24" width="250" height="104" rx="18"></rect>
+          <text x="42" y="50" class="eb"><tspan data-en="SURVEYS T0 · T1 · T2 · T3">PHIẾU T0 · T1 · T2 · T3</tspan></text>
+          <text x="42" y="74" class="b"><tspan data-en="khao-sat-online.html → Supabase">khao-sat-online.html → Supabase</tspan></text>
+          <text x="42" y="94" class="b"><tspan data-en="table survey_responses">bảng survey_responses</tspan></text>
+          <text x="42" y="114" class="b"><tspan data-en="code · class · phase · answers">mã · lớp · phiếu · câu trả lời</tspan></text></g>
+        <g class="src"><rect x="24" y="148" width="250" height="104" rx="18"></rect>
+          <text x="42" y="174" class="eb"><tspan data-en="DECISION TRACES">DẤU VẾT QUYẾT ĐỊNH</tspan></text>
+          <text x="42" y="198" class="b"><tspan data-en="round_submissions, member_log,">round_submissions, member_log,</tspan></text>
+          <text x="42" y="218" class="b"><tspan data-en="Lumina log, what-if runs">log Lumina, lượt Nếu–Thì</tspan></text>
+          <text x="42" y="238" class="b"><tspan data-en="team · email · role · round">đội · email · vai · vòng</tspan></text></g>
+        <g class="src"><rect x="24" y="272" width="250" height="104" rx="18"></rect>
+          <text x="42" y="298" class="eb"><tspan data-en="LEARNING PRODUCTS">SẢN PHẨM HỌC TẬP</tspan></text>
+          <text x="42" y="322" class="b"><tspan data-en="decision sheets, SEC journal,">phiếu quyết định, nhật ký SEC,</tspan></text>
+          <text x="42" y="342" class="b"><tspan data-en="reflection, peer rating, pitch">phản tư, đánh giá đồng đẳng, pitch</tspan></text>
+          <text x="42" y="362" class="b"><tspan data-en="rubric-scored by instructor">giảng viên chấm theo rubric</tspan></text></g>
+        <path d="M280 76 L384 190" class="link" marker-end="url(#rd-arr)"></path>
+        <path d="M280 200 L384 200" class="link" marker-end="url(#rd-arr)"></path>
+        <path d="M280 324 L384 210" class="link" marker-end="url(#rd-arr)"></path>
+        <g class="hub"><rect x="392" y="150" width="200" height="100" rx="50"></rect>
+          <text x="492" y="190" text-anchor="middle" class="h"><tspan data-en="research code">mã nghiên cứu</tspan></text>
+          <text x="492" y="214" text-anchor="middle" class="b"><tspan data-en="e.g. HM02-A17">ví dụ HM02-A17</tspan></text></g>
+        <path d="M598 200 L704 200" class="link" marker-end="url(#rd-arr)"></path>
+        <g class="master"><rect x="712" y="130" width="224" height="140" rx="18"></rect>
+          <text x="730" y="156" class="eb"><tspan data-en="RESEARCH MASTER">TỆP NGHIÊN CỨU</tspan></text>
+          <text x="730" y="180" class="b"><tspan data-en="anonymous, one row per">ẩn danh, mỗi dòng một</tspan></text>
+          <text x="730" y="200" class="b"><tspan data-en="student × time point">sinh viên × thời điểm</tspan></text>
+          <text x="730" y="220" class="b"><tspan data-en="analysed, shared on request">để phân tích, chia sẻ theo yêu cầu</tspan></text>
+          <text x="730" y="240" class="b"><tspan data-en="retention 180 days after study">lưu 180 ngày sau nghiên cứu</tspan></text></g>
+        <g class="locked"><rect x="392" y="24" width="200" height="86" rx="18"></rect>
+          <text x="410" y="50" class="eb"><tspan data-en="🔒 IDENTITY FILE">🔒 TỆP ĐỊNH DANH</tspan></text>
+          <text x="410" y="74" class="b"><tspan data-en="code ↔ name, email">mã ↔ tên, email</tspan></text>
+          <text x="410" y="94" class="b"><tspan data-en="instructor only, offline">chỉ giảng viên, lưu ngoại tuyến</tspan></text></g>
+        <g class="locked"><rect x="392" y="290" width="200" height="86" rx="18"></rect>
+          <text x="410" y="316" class="eb"><tspan data-en="🔒 GRADE FILE">🔒 TỆP ĐIỂM</tspan></text>
+          <text x="410" y="340" class="b"><tspan data-en="course grades">điểm học phần</tspan></text>
+          <text x="410" y="360" class="b"><tspan data-en="never joined without approval">không ghép nếu chưa được duyệt</tspan></text></g>
+        <path d="M492 116 L492 144" class="link dashed"></path>
+        <path d="M492 256 L492 284" class="link dashed"></path>
+      </svg></div>
+    </figure>
+    <div class="rd-grid">
+      <article class="rd-card"><div class="rd-k" data-en="How the code is built">Cách tạo mã</div><h3 data-en="Class suffix + team letter + two digits">Đuôi lớp + chữ cái đội + hai chữ số</h3><p data-en="Example HM02-A17: class KTM330HM02, team A, student 17 on the team roster the leader sends. The instructor assigns it once at T0 and keeps the mapping offline. Students type the same code in every survey and in the game's «join team» form, so no survey answer carries a name.">Ví dụ HM02-A17: lớp KTM330HM02, đội A, sinh viên số 17 trong danh sách đội do nhóm trưởng gửi. Giảng viên cấp một lần ở T0 và giữ bảng đối chiếu ngoại tuyến. Sinh viên gõ đúng mã này vào mọi phiếu và vào ô «tham gia đội» của game, nên không câu trả lời nào mang tên.</p></article>
+      <article class="rd-card"><div class="rd-k" data-en="What the game must add">Game phải thêm gì</div><h3 data-en="One field, pre-filled by link">Một ô, điền sẵn qua link</h3><p data-en="Bật Nghiệp already records email, team and role per round. One optional field «research code» in the join-team form, pre-filled from the instructor's link the same way the survey pre-fills the class code (?lop=), closes the gap. It is stored next to the submission, never shown on leaderboards.">Bật Nghiệp đã ghi email, đội và vai từng vòng. Thêm một ô tuỳ chọn «mã nghiên cứu» ở biểu mẫu tham gia đội, điền sẵn từ link giảng viên gửi giống cách phiếu khảo sát điền sẵn mã lớp (?lop=), là khép được khoảng hở. Mã lưu cạnh bài nộp, không bao giờ hiện trên bảng xếp hạng.</p></article>
+      <article class="rd-card"><div class="rd-k" data-en="Why not the self-chosen code">Vì sao không dùng mã tự đặt</div><h3 data-en="It cannot reach the game, and it collides">Không tới được game, và dễ trùng</h3><p data-en="Two letters plus two digits gives 67,600 combinations, but students pick memorable ones (initials + birth day), so collisions inside a class of 40 are likely and the game never sees the code. The pilot already shows unmatched pre/post pairs for this reason.">Hai chữ cái cộng hai chữ số cho 67.600 tổ hợp, nhưng sinh viên chọn mã dễ nhớ (chữ cái tên + ngày sinh), nên trùng trong một lớp 40 người là chuyện dễ xảy ra, và game không bao giờ thấy mã này. Đợt thử nghiệm đã có các cặp trước/sau không ghép được vì lý do đó.</p></article>
+    </div>
+  </section>
+
+  <section class="rd-sec" id="sua-phieu">
+    <div class="rd-tag" data-en="Instrument revisions">Sửa phiếu khảo sát</div>
+    <h2 class="rd-h2" data-en="Six changes before the next cohort">Sáu thay đổi trước lượt lớp tới</h2>
+    <p class="rd-lead" data-en="Changing an instrument mid-cohort breaks comparability, so all six changes ship together between cohorts and the October 2026 data is reported as the pilot with the old form.">Đổi công cụ giữa một lượt lớp làm mất tính so sánh, nên cả sáu thay đổi đưa cùng lúc giữa hai lượt lớp, và dữ liệu 10/2026 được báo cáo là đợt thử nghiệm với phiếu cũ.</p>
+    <table class="rd-table">
+      <thead><tr><th scope="col">#</th><th scope="col" data-en="Change">Thay đổi</th><th scope="col" data-en="Wording / rule">Câu chữ / quy tắc</th><th scope="col" data-en="Serves">Phục vụ</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">1</th><td data-l="Thay đổi" data-l-en="Change" data-en="Research code replaces the self-chosen code">Mã nghiên cứu thay mã tự đặt</td><td data-l="Câu chữ" data-l-en="Wording" data-en="Field «Research code (from your instructor), e.g. HM02-A17»; pre-filled by link ?ma=; validated against pattern [A-Z]{2}\d{2}-[A-Z]\d{2}.">Ô «Mã nghiên cứu (giảng viên cấp), ví dụ HM02-A17»; điền sẵn qua link ?ma=; kiểm tra theo mẫu [A-Z]{2}\d{2}-[A-Z]\d{2}.</td><td data-l="Phục vụ" data-l-en="Serves">RQ1–RQ6</td></tr>
+        <tr><th scope="row">2</th><td data-l="Thay đổi" data-l-en="Change" data-en="Entrepreneurial intention scale (6 items, 1–7)">Thang ý định khởi nghiệp (6 câu, 1–7)</td><td data-l="Câu chữ" data-l-en="Wording" data-en="Liñán &amp; Chen (2009) EIQ, Vietnamese adaptation: «I am ready to do anything to be an entrepreneur»; «My professional goal is to become an entrepreneur»; «I will make every effort to start and run my own firm»; «I am determined to create a firm in the future»; «I have very seriously thought of starting a firm»; «I have the firm intention to start a firm some day».">EIQ của Liñán &amp; Chen (2009), bản Việt hoá: «Tôi sẵn sàng làm mọi việc để trở thành doanh nhân»; «Mục tiêu nghề nghiệp của tôi là trở thành doanh nhân»; «Tôi sẽ nỗ lực hết mình để khởi sự và điều hành doanh nghiệp của riêng mình»; «Tôi quyết tâm lập một doanh nghiệp trong tương lai»; «Tôi đã nghĩ rất nghiêm túc về việc khởi sự doanh nghiệp»; «Tôi có ý định chắc chắn sẽ khởi sự doanh nghiệp vào một ngày nào đó».</td><td data-l="Phục vụ" data-l-en="Serves">RQ1, T3</td></tr>
+        <tr><th scope="row">3</th><td data-l="Thay đổi" data-l-en="Change" data-en="Background items at T0">Câu nền ở T0</td><td data-l="Câu chữ" data-l-en="Wording" data-en="Major; gender (with «prefer not to say»); business or sales experience (none / family business / own small venture / part-time sales); prior simulation experience (yes/no).">Chuyên ngành; giới (có «không muốn nêu»); kinh nghiệm kinh doanh hoặc bán hàng (chưa / kinh doanh gia đình / tự khởi sự nhỏ / bán hàng bán thời gian); từng chơi mô phỏng kinh doanh (có/không).</td><td data-l="Phục vụ" data-l-en="Serves">RQ2</td></tr>
+        <tr><th scope="row">4</th><td data-l="Thay đổi" data-l-en="Change" data-en="Harder Part A">Phần A khó hơn</td><td data-l="Câu chữ" data-l-en="Wording" data-en="Keep 10 anchor items for comparability; replace the 5 items with the highest pilot pass rate by application items that need a calculation or a trade-off (break-even from given numbers, margin after a price cut, choosing between two entry modes given cash). Target difficulty .40–.70; pilot on one class first.">Giữ 10 câu neo để so sánh được; thay 5 câu có tỷ lệ đúng cao nhất trong đợt thử bằng câu vận dụng cần tính toán hoặc đánh đổi (điểm hoà vốn từ số cho sẵn, biên lời sau khi giảm giá, chọn giữa hai phương thức thâm nhập khi biết tiền mặt). Độ khó mục tiêu 0,40–0,70; thử trước trên một lớp.</td><td data-l="Phục vụ" data-l-en="Serves">RQ1</td></tr>
+        <tr><th scope="row">5</th><td data-l="Thay đổi" data-l-en="Change" data-en="Short T1 form and a 60-minute rule">Phiếu T1 ngắn và quy tắc 60 phút</td><td data-l="Câu chữ" data-l-en="Wording" data-en="T1: five 1–5 items (I lost track of time; I understood what to do; the rounds felt fair; the team argued productively; the pace was too fast). Post forms submitted less than 60 minutes after the pre form are flagged and excluded; the POST link is sent only after the debrief.">T1: năm câu 1–5 (tôi quên cả thời gian; tôi hiểu phải làm gì; các vòng công bằng; đội tranh luận có ích; nhịp độ quá nhanh). Phiếu sau nộp cách phiếu trước dưới 60 phút được gắn cờ và loại; link phiếu SAU chỉ gửi sau debrief.</td><td data-l="Phục vụ" data-l-en="Serves">RQ7, chất lượng dữ liệu</td></tr>
+        <tr><th scope="row">6</th><td data-l="Thay đổi" data-l-en="Change" data-en="Decision sheet field on AI advice">Ô về khuyến nghị AI trong phiếu quyết định</td><td data-l="Câu chữ" data-l-en="Wording" data-en="Each round: «Lumina suggested … · we used / adapted / rejected it because …». Instructor codes the free text with a 3-level rubric (copied / weighed / justified).">Mỗi vòng: «Lumina gợi ý … · đội dùng / điều chỉnh / bác bỏ vì …». Giảng viên mã hoá đoạn tự do theo rubric 3 mức (chép lại / cân nhắc / có lập luận).</td><td data-l="Phục vụ" data-l-en="Serves">RQ5, RQ6</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="rd-sec" id="phan-tich">
+    <div class="rd-tag" data-en="Analysis plan">Kế hoạch phân tích</div>
+    <h2 class="rd-h2" data-en="Pre-registered before the first class opens">Đăng ký trước khi mở lớp đầu tiên</h2>
+    <div class="rd-grid">
+      <article class="rd-card"><div class="rd-k" data-en="Main model">Mô hình chính</div><h3 data-en="ANCOVA with class as a cluster">ANCOVA với lớp là cụm</h3><p data-en="T2 score regressed on arm and T0 score, standard errors clustered by class (or a mixed model with a class random intercept). Report the adjusted mean difference with 95% CI and Hedges' g. Within-arm paired change is reported but is not the causal estimate.">Điểm T2 hồi quy theo nhánh và điểm T0, sai số chuẩn gộp theo lớp (hoặc mô hình hỗn hợp với hệ số chặn ngẫu nhiên theo lớp). Báo cáo chênh lệch trung bình đã hiệu chỉnh với khoảng tin cậy 95% và Hedges' g. Thay đổi ghép cặp trong từng nhánh có báo cáo nhưng không phải ước lượng nhân quả.</p><p style="margin-top:10px"><span class="rd-eq">T2 = β₀ + β₁·Arm + β₂·T0 + u_class + ε</span></p></article>
+      <article class="rd-card"><div class="rd-k" data-en="Before the model">Trước khi chạy mô hình</div><h3 data-en="Reliability, ceiling, missingness">Độ tin cậy, trần điểm, dữ liệu thiếu</h3><ul><li data-en="Cronbach's α and McDonald's ω for Part B, Part C and the intention scale; item-total correlations for Part A.">Cronbach's α và McDonald's ω cho Phần B, Phần C và thang ý định; tương quan câu–tổng cho Phần A.</li><li data-en="Ceiling check: share scoring ≥ 14/15 at T0; if above 15%, the harder form is mandatory.">Kiểm trần: tỷ lệ đạt ≥ 14/15 ở T0; trên 15% thì bắt buộc dùng phiếu khó hơn.</li><li data-en="Pairing rate T0→T2 and reasons for loss; multiple imputation if loss is above 10% and plausibly at random.">Tỷ lệ ghép được T0→T2 và lý do mất; đa quy nạp nếu mất trên 10% và có thể coi là ngẫu nhiên.</li><li data-en="Non-normal change scores: Wilcoxon signed-rank as a sensitivity analysis.">Điểm thay đổi không chuẩn: Wilcoxon signed-rank làm phân tích độ nhạy.</li></ul></article>
+      <article class="rd-card"><div class="rd-k" data-en="Decision traces">Dấu vết quyết định</div><h3 data-en="Two indices from the game log">Hai chỉ số từ log game</h3><p data-en="Forecast gap per round = |predicted − actual profit| / |actual|. Adaptation index = sum over decision variables of the normalised absolute change from the previous round (each variable scaled to 0–1 by its range so marketing budget does not dominate price). Both are related to the T2 outcomes in the same clustered model, controlling for T0.">Sai lệch dự báo mỗi vòng = |lợi nhuận dự báo − thực tế| / |thực tế|. Chỉ số thích nghi = tổng theo các biến quyết định của mức thay đổi tuyệt đối đã chuẩn hoá so với vòng trước (mỗi biến đưa về 0–1 theo biên độ của nó, để ngân sách marketing không lấn át giá). Cả hai được gắn với kết quả T2 trong cùng mô hình gộp cụm, có kiểm soát T0.</p></article>
+      <article class="rd-card"><div class="rd-k" data-en="What is not claimed">Điều không tuyên bố</div><h3 data-en="Contribution, not attribution">Đóng góp, không quy kết</h3><p data-en="A T0→T2 difference inside Arm A is not an effect of BizOn: maturation, the instructor and the course all move with it. Only the arm contrast at T2 is read as the intervention estimate, and T3 outcomes are reported as association following Mayne's contribution analysis.">Chênh lệch T0→T2 trong nhánh A không phải hiệu quả của BizOn: sự trưởng thành, giảng viên và cả học phần cùng chuyển động với nó. Chỉ chênh lệch giữa hai nhánh ở T2 được đọc là ước lượng can thiệp, và kết quả T3 báo cáo ở mức liên hệ theo contribution analysis của Mayne.</p></article>
+    </div>
+  </section>
+
+  <section class="rd-sec" id="dao-duc">
+    <div class="rd-tag" data-en="Ethics">Đạo đức</div>
+    <h2 class="rd-h2" data-en="Consent, grades and withdrawal">Đồng thuận, điểm số và rút lui</h2>
+    <div class="rd-steps">
+      <div class="rd-step"><span class="n" style="background:var(--clay-c1)">1</span><h4 data-en="Two purposes, two boxes">Hai mục đích, hai ô</h4><p data-en="Playing for the course and donating data to research are consented separately; declining research never changes the grade.">Chơi cho học phần và cho dữ liệu vào nghiên cứu là hai ô đồng thuận riêng; từ chối nghiên cứu không ảnh hưởng điểm.</p></div>
+      <div class="rd-step"><span class="n" style="background:var(--clay-c2)">2</span><h4 data-en="Ethics approval first">Duyệt đạo đức trước</h4><p data-en="Protocol, instruments and consent text go to the university committee before T0; the approval number is printed on the consent screen.">Giao thức, công cụ và văn bản đồng thuận gửi hội đồng trường trước T0; số quyết định in trên màn đồng thuận.</p></div>
+      <div class="rd-step"><span class="n" style="background:var(--clay-c4)">3</span><h4 data-en="Withdrawal by code">Rút lui theo mã</h4><p data-en="A student sends the research code to the instructor; rows with that code are deleted from the research master with a deletion receipt, within 180 days.">Sinh viên gửi mã nghiên cứu cho giảng viên; các dòng mang mã đó bị xoá khỏi tệp nghiên cứu kèm biên nhận xoá, trong 180 ngày.</p></div>
+      <div class="rd-step"><span class="n" style="background:var(--clay-c3)">4</span><h4 data-en="Open science without raw logs">Khoa học mở, không công khai log thô</h4><p data-en="Model cards, scoring code and the analysis script are public; the research master is shared on request under agreement, never the identity file.">Model card, mã chấm điểm và kịch bản phân tích công khai; tệp nghiên cứu chia sẻ theo thoả thuận, tệp định danh không bao giờ.</p></div>
+    </div>
+  </section>
+
+  <section class="rd-sec" id="cong-bo">
+    <div class="rd-tag" data-en="Outputs">Sản phẩm</div>
+    <h2 class="rd-h2" data-en="Which survey feeds which paper">Phiếu nào nuôi bài nào</h2>
+    <p class="rd-lead" data-en="Three manuscripts are planned from this design. The codes P… are assigned by the author in the dissertation plan and are left blank here on purpose.">Ba bản thảo dự kiến từ thiết kế này. Mã P… do tác giả gán trong kế hoạch luận án và được để trống ở đây có chủ ý.</p>
+    <table class="rd-table">
+      <thead><tr><th scope="col" data-en="Manuscript">Bản thảo</th><th scope="col" data-en="Data used">Dữ liệu dùng</th><th scope="col" data-en="Earliest draft">Bản nháp sớm nhất</th></tr></thead>
+      <tbody>
+        <tr><th scope="row" data-en="P__ · Design and reproducibility of a deterministic business simulation with explainable advisor (method / tool paper)">P__ · Thiết kế và tính tái lập của một mô phỏng kinh doanh tất định có cố vấn giải thích được (bài phương pháp / công cụ)</th><td data-l="Dữ liệu" data-l-en="Data" data-en="Model cards, reproducibility contract, theory map, pilot descriptives (n ≈ 130 forms)">Model card, hợp đồng tái lập, bản đồ lý thuyết, mô tả đợt thử nghiệm (n ≈ 130 phiếu)</td><td data-l="Bản nháp" data-l-en="Earliest draft" data-en="Now – no new data needed">Ngay bây giờ – không cần dữ liệu mới</td></tr>
+        <tr><th scope="row" data-en="P__ · Effect of a decision simulation on business knowledge and entrepreneurial self-efficacy: a two-arm pretest–posttest study">P__ · Tác động của mô phỏng ra quyết định lên kiến thức kinh doanh và tự hiệu quả khởi nghiệp: nghiên cứu hai nhánh trước–sau</th><td data-l="Dữ liệu" data-l-en="Data" data-en="Survey T0, T2 (Parts A, B, intention), background; both arms">Phiếu T0, T2 (Phần A, B, ý định), câu nền; cả hai nhánh</td><td data-l="Bản nháp" data-l-en="Earliest draft" data-en="End of the next semester (after T2 of 6–8 classes per arm)">Cuối học kỳ tới (sau T2 của 6–8 lớp mỗi nhánh)</td></tr>
+        <tr><th scope="row" data-en="P__ · Decision traces as learning analytics: forecasting, adaptation and the use of a rule-based advisor">P__ · Dấu vết quyết định như learning analytics: dự báo, thích nghi và việc dùng cố vấn theo luật</th><td data-l="Dữ liệu" data-l-en="Data" data-en="Game log (round_submissions, Lumina log), decision sheets, T1 and Part C; Arm A only">Log game (round_submissions, log Lumina), phiếu quyết định, T1 và Phần C; chỉ nhánh A</td><td data-l="Bản nháp" data-l-en="Earliest draft" data-en="Same semester, once the research code links log and survey">Cùng học kỳ, khi mã nghiên cứu đã nối được log và phiếu</td></tr>
+      </tbody>
+    </table>
+    <p style="margin:16px 0 0;font-size:14px;line-height:1.6;color:var(--clay-sub)"><span data-en="Related pages:">Trang liên quan:</span> <a href="truong-hoc-thuat.html" style="font-weight:800" data-en="Academic foundation →">Nền tảng học thuật →</a> · <a href="dinh-huong.html#dh-map-h" style="font-weight:800" data-en="Theory map by game →">Bản đồ lý thuyết theo từng game →</a> · <a href="bang-chung.html" style="font-weight:800" data-en="Classroom evidence →">Bằng chứng lớp học →</a></p>
+  </section>
+
+  <section class="rd-sec" style="margin-bottom:72px">
+    <div class="rd-tag" data-en="References">Tài liệu tham khảo</div>
+    <ol style="margin:12px 0 0;padding-left:22px;display:flex;flex-direction:column;gap:10px;font-size:14.5px;line-height:1.6;color:var(--clay-sub)">
+      <li>Liñán, F., &amp; Chen, Y.-W. (2009). Development and cross-cultural application of a specific instrument to measure entrepreneurial intentions. <i>Entrepreneurship Theory and Practice, 33</i>(3), 593–617. <a href="https://doi.org/10.1111/j.1540-6520.2009.00318.x" target="_blank" rel="noopener">doi:10.1111/j.1540-6520.2009.00318.x</a></li>
+      <li>Bandura, A. (1977). Self-efficacy: Toward a unifying theory of behavioral change. <i>Psychological Review, 84</i>(2), 191–215. <a href="https://doi.org/10.1037/0033-295X.84.2.191" target="_blank" rel="noopener">doi:10.1037/0033-295X.84.2.191</a></li>
+      <li>Mayne, J. (2012). Contribution analysis: Coming of age? <i>Evaluation, 18</i>(3), 270–280. <a href="https://doi.org/10.1177/1356389012451663" target="_blank" rel="noopener">doi:10.1177/1356389012451663</a></li>
+      <li>Shadish, W. R., Cook, T. D., &amp; Campbell, D. T. (2002). <i>Experimental and quasi-experimental designs for generalized causal inference</i>. Houghton Mifflin.</li>
+      <li>Hedges, L. V. (2007). Effect sizes in cluster-randomized designs. <i>Journal of Educational and Behavioral Statistics, 32</i>(4), 341–370. <a href="https://doi.org/10.3102/1076998606298043" target="_blank" rel="noopener">doi:10.3102/1076998606298043</a></li>
+    </ol>
+  </section>
+</main>
+
+<script src="js/site-vnmap.js" defer></script>
+<script src="js/bizon-clay-i18n.js" defer></script>
+<script src="js/bizon-clay-nav.js" defer></script>
+<script src="js/bizon-clay-footer.js" defer></script>
+</body>
+</html>

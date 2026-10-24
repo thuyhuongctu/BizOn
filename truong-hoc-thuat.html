@@ -42,9 +42,37 @@
   .ht-ethics{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:18px}
   .ht-ethic{padding:24px;border-radius:28px;box-shadow:var(--clay-night-shadow,inset 0 -9px 0 rgba(0,0,0,.07),inset 0 5px 0 rgba(255,255,255,.5),0 22px 30px -22px rgba(110,70,30,.55))}
   section[id]{scroll-margin-top:96px}
+  /* Mục Khung lý thuyết: hai sơ đồ SVG + thẻ khung */
+  .ht-fig{margin:0 0 22px;padding:18px 18px 12px;border-radius:28px;background:var(--clay-card);box-shadow:var(--clay-night-shadow,inset 0 -7px 0 rgba(110,70,30,.08),inset 0 4px 0 #fff,0 16px 22px -16px rgba(110,70,30,.5))}
+  .ht-fig figcaption{margin:0 0 10px;font-family:var(--clay-head);font-size:15px;font-weight:800;color:var(--clay-ink)}
+  .ht-svg{display:block;width:100%;height:auto;font-family:var(--clay-sans);overflow:visible}
+  .ht-svg rect{stroke:rgba(110,70,30,.18);stroke-width:2}
+  .ht-svg .ht-eb{font-size:11.5px;font-weight:800;letter-spacing:.08em;fill:var(--clay-ink)}
+  .ht-svg .ht-h{font-family:var(--clay-head);font-size:22px;font-weight:800;fill:var(--clay-ink)}
+  .ht-svg .ht-b{font-size:13.5px;font-weight:600;fill:var(--clay-ink-2)}
+  .ht-svg .ht-lb{font-size:12px;font-weight:800;fill:var(--clay-sub)}
+  .ht-svg .ht-link{fill:none;stroke:var(--clay-ink);stroke-width:2.5}
+  .ht-svg .ht-link.dashed{stroke-dasharray:7 6}
+  .ht-svg .ht-arrow{fill:var(--clay-ink)}
+  .ht-svg .t1 rect{fill:var(--clay-c1)}.ht-svg .t2 rect{fill:var(--clay-c2)}.ht-svg .t3 rect{fill:var(--clay-c4)}
+  .ht-svg .ht-cross rect{fill:var(--clay-c5)}.ht-svg .ht-cross.ev rect{fill:var(--clay-mint-soft)}
+  .ht-svg .n1 rect{fill:var(--clay-c5)}.ht-svg .n2 rect{fill:var(--clay-c2)}.ht-svg .n3 rect{fill:var(--clay-c1)}
+  .ht-svg .n4 rect{fill:var(--clay-cream-deep)}.ht-svg .pending rect{stroke:var(--clay-accent);stroke-width:3;stroke-dasharray:9 7}
+  .ht-cite{margin:-8px 0 0;font-family:var(--clay-mono);font-size:12.5px;color:var(--clay-sub)}
+  .ht-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .ht-cell{padding:14px;border-radius:18px;font-size:14px;line-height:1.5}
+  .ht-cell.a{background:var(--clay-c5)}.ht-cell.b{background:var(--clay-cream-deep)}
+  .ht-cell .ht-k,.ht-limit .ht-k{margin-bottom:6px}
+  .ht-limit{padding:14px 16px;border-radius:18px;background:#FDE1CE;box-shadow:inset 0 3px 6px rgba(150,70,20,.15);font-size:14px;line-height:1.5;font-weight:600;color:#5A2608}
+  .ht-limit .ht-k{color:#8A3A0C}
+  .ht-scroll{display:none;margin:0 0 8px;font-size:12.5px;font-weight:700;color:var(--clay-sub)}
+  @media (max-width:720px){.ht-two{grid-template-columns:1fr}.ht-fig{padding:12px 10px 8px}.ht-fig .ht-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}.ht-svg{min-width:760px}.ht-scroll{display:block}}
   /* Bản tối «đất sét đêm» (data-theme do js/bizon-boot.js đặt; bản in giữ sáng) */
   @media screen{
     html[data-theme="dark"] .ht-vl{border-top-color:rgba(255,230,200,.14)}
+    html[data-theme="dark"] .ht-svg rect{stroke:rgba(255,230,200,.14)}
+    html[data-theme="dark"] .ht-limit{background:#4A2A18;color:#F7D9C4}
+    html[data-theme="dark"] .ht-limit .ht-k{color:#FFB38A}
   }
 </style>
 <meta property="og:type" content="website">
@@ -107,6 +135,144 @@
         <div style="padding:14px 16px;border-radius:18px;background:#FDE1CE;box-shadow:inset 0 3px 6px rgba(150,70,20,.15)"><div class="ht-k" style="color:#8A3A0C" data-en="What the model does NOT do">Mô hình KHÔNG làm được</div><div style="margin-top:6px;font-size:14px;line-height:1.5;font-weight:700;color:#5A2608" data-en="Does not learn from the player, nor adapt beyond published rules.">Không học từ người chơi, không thích nghi ngoài luật đã công bố.</div></div>
       </article>
     </div>
+  </section>
+
+  <section id="ly-thuyet-kdqt" style="margin-bottom:64px">
+    <div class="ht-tag" data-en="Theoretical frameworks">Khung lý thuyết</div>
+    <h2 class="ht-h2" data-en="Which theories run inside the engine">Lý thuyết nào đang chạy trong engine</h2>
+    <p style="margin:10px 0 22px;font-size:15px;line-height:1.6;color:var(--clay-sub)" data-en="BizOn rests on two layers. The entrepreneurship layer (causation/effectuation, experiential learning, self-efficacy) shapes how every game is taught. The international-business layer is written into the Brand Passport, Durian Passport and lab engines as variables the learner changes and formulas that respond. The diagrams below show where each framework sits; the full row-by-row map with source files is on the Regional impact page.">BizOn dựa trên hai lớp lý thuyết. Lớp khởi nghiệp (causation/effectuation, học qua trải nghiệm, niềm tin tự hiệu quả) định hình cách dạy mọi game. Lớp kinh doanh quốc tế được viết thẳng vào engine của Hộ Chiếu Thương Hiệu, Hộ Chiếu Sầu Riêng và các phòng lab: thành biến số người học thao tác và công thức phản hồi lại. Hai sơ đồ dưới cho thấy mỗi khung nằm ở đâu; bảng đầy đủ từng dòng kèm tên tệp mã nguồn ở trang Định hướng tác động vùng.</p>
+
+    <figure class="ht-fig">
+      <figcaption><span data-en="Figure 1 · Three tiers, three theory layers – and what runs across all of them">Hình 1 · Ba bậc, ba lớp lý thuyết – và những gì xuyên suốt</span></figcaption>
+      <p class="ht-scroll" data-en="On a phone, swipe sideways to read the diagram.">Trên điện thoại, kéo ngang để đọc sơ đồ.</p><div class="ht-wrap"><svg class="ht-svg" viewBox="0 0 960 330" role="img" aria-labelledby="ht-fig1-t" xmlns="http://www.w3.org/2000/svg">
+        <title id="ht-fig1-t">Ba bậc BizOn và khung lý thuyết tương ứng</title>
+        <defs>
+          <marker id="ht-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5 0 10z" class="ht-arrow"></path></marker>
+        </defs>
+        <g class="ht-tier t1">
+          <rect x="16" y="40" width="284" height="150" rx="22"></rect>
+          <text x="36" y="70" class="ht-eb"><tspan data-en="TIER 1 · VENTURE START-UP">BẬC 1 · KHỞI SỰ</tspan></text>
+          <text x="36" y="96" class="ht-h"><tspan>Bến Phù Sa</tspan></text>
+          <text x="36" y="122" class="ht-b"><tspan data-en="Effectuation · affordable loss">Effectuation · tổn thất chấp nhận được</tspan></text>
+          <text x="36" y="142" class="ht-b"><tspan data-en="Explore–exploit: test small, then scale">Thăm dò – khai thác: thử nhỏ rồi nhân rộng</tspan></text>
+          <text x="36" y="162" class="ht-b"><tspan data-en="Informal sector (GSO data)">Khu vực phi chính thức (số liệu TCTK)</tspan></text>
+        </g>
+        <path d="M304 115 L330 115" class="ht-link" marker-end="url(#ht-arr)"></path>
+        <g class="ht-tier t2">
+          <rect x="338" y="40" width="284" height="150" rx="22"></rect>
+          <text x="358" y="70" class="ht-eb"><tspan data-en="TIER 2 · RUNNING A FIRM">BẬC 2 · VẬN HÀNH DOANH NGHIỆP</tspan></text>
+          <text x="358" y="96" class="ht-h"><tspan>Bật Nghiệp</tspan></text>
+          <text x="358" y="122" class="ht-b"><tspan data-en="Price elasticity of demand">Độ co giãn của cầu theo giá</tspan></text>
+          <text x="358" y="142" class="ht-b"><tspan data-en="Marketing mix · competitive response">Marketing mix · phản ứng cạnh tranh</tspan></text>
+          <text x="358" y="162" class="ht-b"><tspan data-en="Cash flow and payment terms">Dòng tiền và kỳ hạn thanh toán</tspan></text>
+        </g>
+        <path d="M626 115 L652 115" class="ht-link" marker-end="url(#ht-arr)"></path>
+        <g class="ht-tier t3">
+          <rect x="660" y="40" width="284" height="150" rx="22"></rect>
+          <text x="680" y="70" class="ht-eb"><tspan data-en="TIER 3 · INTERNATIONALISATION">BẬC 3 · QUỐC TẾ HÓA</tspan></text>
+          <text x="680" y="96" class="ht-h"><tspan data-en="Passports · Labs">Hộ Chiếu · Phòng lab</tspan></text>
+          <text x="680" y="122" class="ht-b"><tspan data-en="Uppsala: knowledge → commitment">Uppsala: tri thức → cam kết</tspan></text>
+          <text x="680" y="142" class="ht-b"><tspan data-en="LOF · entry modes (TCE, OLI)">LOF · phương thức thâm nhập (TCE, OLI)</tspan></text>
+          <text x="680" y="162" class="ht-b"><tspan data-en="Institutions: SPS, rules of origin, voids">Thể chế: kiểm dịch, xuất xứ, khoảng trống</tspan></text>
+        </g>
+        <g class="ht-cross">
+          <rect x="16" y="214" width="928" height="46" rx="23"></rect>
+          <text x="480" y="243" text-anchor="middle" class="ht-b"><tspan data-en="Across all tiers: Kolb (1984) experiential cycle · Bandura (1977) self-efficacy · McMullen &amp; Shepherd (2006) action under uncertainty">Xuyên suốt: vòng trải nghiệm Kolb (1984) · tự hiệu quả Bandura (1977) · hành động dưới bất định McMullen &amp; Shepherd (2006)</tspan></text>
+        </g>
+        <g class="ht-cross ev">
+          <rect x="16" y="272" width="928" height="46" rx="23"></rect>
+          <text x="480" y="301" text-anchor="middle" class="ht-b"><tspan data-en="Evidence rule: decision traces → debrief → rubric; impact claims follow contribution analysis (Mayne, 2012)">Nguyên tắc bằng chứng: dấu vết quyết định → debrief → rubric; tuyên bố tác động theo contribution analysis (Mayne, 2012)</tspan></text>
+        </g>
+      </svg></div>
+    </figure>
+
+    <figure class="ht-fig">
+      <figcaption><span data-en="Figure 2 · The Uppsala loop as it runs in Brand Passport (network position and the institutional-voids event were added to the engine in October 2026)">Hình 2 · Vòng Uppsala như đang chạy trong Hộ Chiếu Thương Hiệu (vị thế mạng lưới và sự kiện khoảng trống thể chế đã vào engine từ 10/2026)</span></figcaption>
+      <p class="ht-scroll" data-en="On a phone, swipe sideways to read the diagram.">Trên điện thoại, kéo ngang để đọc sơ đồ.</p><div class="ht-wrap"><svg class="ht-svg" viewBox="0 0 960 400" role="img" aria-labelledby="ht-fig2-t" xmlns="http://www.w3.org/2000/svg">
+        <title id="ht-fig2-t">Vòng tri thức – cam kết – kết quả – mạng lưới trong Hộ Chiếu Thương Hiệu</title>
+        <g class="ht-node n1">
+          <rect x="24" y="24" width="400" height="140" rx="22"></rect>
+          <text x="44" y="54" class="ht-eb"><tspan data-en="MARKET KNOWLEDGE · S.know[m] 0–100">TRI THỨC THỊ TRƯỜNG · S.know[m] 0–100</tspan></text>
+          <text x="44" y="82" class="ht-b"><tspan data-en="Learner: buys up to 2 of 6 intel sources per quarter">Người học: mua tối đa 2 trong 6 nguồn tin mỗi quý</tspan></text>
+          <text x="44" y="104" class="ht-b"><tspan data-en="Engine: +6 per quarter of selling; forecast error">Engine: +6 mỗi quý bán hàng; sai số dự báo</tspan></text>
+          <text x="44" y="126" class="ht-b"><tspan data-en="55% → 32% → 15% as knowledge passes 25 and 50">55% → 32% → 15% khi tri thức vượt 25 và 50</tspan></text>
+          <text x="44" y="148" class="ht-b"><tspan data-en="Cultural distance (Kogut–Singh) slows learning">Khoảng cách văn hoá (Kogut–Singh) làm học chậm</tspan></text>
+        </g>
+        <path d="M430 94 L522 94" class="ht-link" marker-end="url(#ht-arr)"></path>
+        <text x="476" y="84" text-anchor="middle" class="ht-lb"><tspan data-en="knowledge first">tri thức trước</tspan></text>
+        <g class="ht-node n2">
+          <rect x="536" y="24" width="400" height="140" rx="22"></rect>
+          <text x="556" y="54" class="ht-eb"><tspan data-en="COMMITMENT · entry mode and capital">CAM KẾT · phương thức và vốn</tspan></text>
+          <text x="556" y="82" class="ht-b"><tspan data-en="Digital platform 0.5 bn · direct export 1.2 bn">Nền tảng số 0,5 tỷ · xuất khẩu trực tiếp 1,2 tỷ</tspan></text>
+          <text x="556" y="104" class="ht-b"><tspan data-en="Local partner 0.8 bn (borrowed network)">Đối tác địa phương 0,8 tỷ (mượn mạng lưới)</tspan></text>
+          <text x="556" y="126" class="ht-b"><tspan data-en="AIBIS scores each mode: TCE, OLI, Uppsala, institutions">AIBIS chấm từng phương thức: TCE, OLI, Uppsala, thể chế</tspan></text>
+          <text x="556" y="148" class="ht-b"><tspan data-en="Mr Tú hints when knowledge is under 40 (advisory only)">Thầy Tú nhắc khi tri thức dưới 40 (chỉ gợi ý)</tspan></text>
+        </g>
+        <path d="M736 170 L736 222" class="ht-link" marker-end="url(#ht-arr)"></path>
+        <g class="ht-node n3">
+          <rect x="536" y="236" width="400" height="140" rx="22"></rect>
+          <text x="556" y="266" class="ht-eb"><tspan data-en="OPERATIONS · quarterly revenue">HOẠT ĐỘNG · doanh thu quý</tspan></text>
+          <text x="556" y="294" class="ht-b"><tspan data-en="rev = fit × scale × trend ÷ competition × rep × capab">dt = fit × scale × trend ÷ cạnh tranh × uy tín × năng lực</tspan></text>
+          <text x="556" y="316" class="ht-b"><tspan data-en="Liability of foreignness: up to −12% in the first 2 quarters">LOF: giảm tới 12% trong 2 quý đầu</tspan></text>
+          <text x="556" y="338" class="ht-b"><tspan data-en="No FTA: ×0.92 · Bắc Phong without certification: ×0.45">Không FTA: ×0,92 · Bắc Phong thiếu chứng nhận: ×0,45</tspan></text>
+          <text x="556" y="360" class="ht-b"><tspan data-en="Rival present: revenue split by relative strength">Có đối thủ: chia doanh thu theo sức mạnh tương đối</tspan></text>
+        </g>
+        <path d="M530 306 L430 306" class="ht-link" marker-end="url(#ht-arr)"></path>
+        <path d="M224 230 L224 170" class="ht-link" marker-end="url(#ht-arr)"></path>
+        <text x="190" y="206" text-anchor="end" class="ht-lb"><tspan data-en="selling teaches (+6)">bán hàng là học (+6)</tspan></text>
+        <g class="ht-node n4">
+          <rect x="24" y="236" width="400" height="140" rx="22"></rect>
+          <text x="44" y="266" class="ht-eb"><tspan data-en="NETWORK POSITION · outsidership (Uppsala 2009)">VỊ THẾ MẠNG LƯỚI · outsidership (Uppsala 2009)</tspan></text>
+          <text x="44" y="294" class="ht-b"><tspan data-en="Learner: joins a trade body, works with partners">Người học: vào hiệp hội ngành, làm việc với đối tác</tspan></text>
+          <text x="44" y="316" class="ht-b"><tspan data-en="Engine: revenue × (0.9 + 0.1·net/100) while an outsider">Engine: doanh thu × (0,9 + 0,1·mạng lưới/100) khi còn ngoài cuộc</tspan></text>
+          <text x="44" y="338" class="ht-b"><tspan data-en="Institutional voids event (Khanna &amp; Palepu, 1997):">Sự kiện khoảng trống thể chế (Khanna &amp; Palepu, 1997):</tspan></text>
+          <text x="44" y="360" class="ht-b"><tspan data-en="no independent certifier – build, borrow or wait">không có kiểm định độc lập – tự xây, mượn hay chờ</tspan></text>
+        </g>
+        <path d="M424 320 C 520 320, 540 230, 556 172" class="ht-link" marker-end="url(#ht-arr)"></path>
+        <text x="472" y="192" text-anchor="middle" class="ht-lb"><tspan data-en="insiders commit">người trong cuộc</tspan></text>
+        <text x="472" y="208" text-anchor="middle" class="ht-lb"><tspan data-en="with less risk">cam kết ít rủi ro hơn</tspan></text>
+      </svg></div>
+    </figure>
+
+    <div class="ht-grid" style="margin-top:22px">
+      <article class="ht-model">
+        <h3 style="font-size:22px" data-en="Uppsala process model">Mô hình tiến trình Uppsala</h3>
+        <p class="ht-cite">Johanson &amp; Vahlne (1977, 2009)</p>
+        <div class="ht-two">
+          <div class="ht-cell a"><div class="ht-k" style="color:#03474F" data-en="Learner changes">Người học thay đổi</div><div data-en="Buys market intel, chooses how much capital to commit and in which order of markets.">Mua tin thị trường, chọn mức vốn cam kết và thứ tự thị trường.</div></div>
+          <div class="ht-cell b"><div class="ht-k" style="color:#7A4A0E" data-en="Engine responds">Engine phản hồi</div><div data-en="Knowledge narrows forecast error; each quarter of selling adds knowledge; a hint fires when committing below 40/100.">Tri thức thu hẹp sai số dự báo; mỗi quý bán hàng cộng tri thức; có nhắc khi cam kết dưới 40/100.</div></div>
+        </div>
+        <div class="ht-limit"><div class="ht-k" data-en="Limit">Giới hạn</div><div data-en="Knowledge improves forecasts but does not feed revenue directly; only network position does (at most −10%). The hint does not block the decision.">Tri thức làm dự báo chính xác hơn nhưng không đi thẳng vào doanh thu; chỉ vị thế mạng lưới mới vào doanh thu (tối đa −10%). Lời nhắc không chặn quyết định.</div></div>
+      </article>
+      <article class="ht-model">
+        <h3 style="font-size:22px" data-en="Liability of foreignness and cultural distance">Bất lợi người nước ngoài và khoảng cách văn hoá</h3>
+        <p class="ht-cite">Zaheer (1995) · Kogut &amp; Singh (1988)</p>
+        <div class="ht-two">
+          <div class="ht-cell a"><div class="ht-k" style="color:#03474F" data-en="Learner changes">Người học thay đổi</div><div data-en="Picks a home market and a target market; decides whether to wait, certify or partner.">Chọn thị trường quê nhà và thị trường đích; quyết định chờ, lấy chứng nhận hay tìm đối tác.</div></div>
+          <div class="ht-cell b"><div class="ht-k" style="color:#7A4A0E" data-en="Engine responds">Engine phản hồi</div><div data-en="Culturally distant markets cut revenue by up to 12% in the first two quarters and slow learning; no FTA costs 8%.">Thị trường xa văn hoá giảm doanh thu tới 12% hai quý đầu và học chậm hơn; không có FTA mất 8%.</div></div>
+        </div>
+        <div class="ht-limit"><div class="ht-k" data-en="Limit">Giới hạn</div><div data-en="Distance is a Kogut–Singh style index on illustrative profiles of seven fictional markets, not measured data.">Khoảng cách là chỉ số kiểu Kogut–Singh trên hồ sơ minh hoạ của bảy thị trường giả tưởng, không phải số đo thật.</div></div>
+      </article>
+      <article class="ht-model">
+        <h3 style="font-size:22px" data-en="Entry modes: transaction costs and OLI">Phương thức thâm nhập: chi phí giao dịch và OLI</h3>
+        <p class="ht-cite">Anderson &amp; Gatignon (1986) · Dunning (1988)</p>
+        <div class="ht-two">
+          <div class="ht-cell a"><div class="ht-k" style="color:#03474F" data-en="Learner changes">Người học thay đổi</div><div data-en="Chooses digital platform, direct export or local partner (six modes in the 3D edition and Passport Mini).">Chọn nền tảng số, xuất khẩu trực tiếp hay đối tác địa phương (sáu phương thức ở bản 3D và Hộ Chiếu Mini).</div></div>
+          <div class="ht-cell b"><div class="ht-k" style="color:#7A4A0E" data-en="Engine responds">Engine phản hồi</div><div data-en="Each mode trades capital, margin, scale and control; a partner can break commitments; AIBIS labels each mode with its theory.">Mỗi phương thức đánh đổi vốn, biên lời, quy mô và kiểm soát; đối tác có thể vi phạm cam kết; AIBIS gắn nhãn lý thuyết cho từng phương thức.</div></div>
+        </div>
+        <div class="ht-limit"><div class="ht-k" data-en="Limit">Giới hạn</div><div data-en="AIBIS theory tags are advisory and do not enter the score formula.">Nhãn lý thuyết của AIBIS chỉ để tham khảo, chưa đi vào công thức chấm điểm.</div></div>
+      </article>
+      <article class="ht-model">
+        <h3 style="font-size:22px" data-en="Institutions and institutional voids">Thể chế và khoảng trống thể chế</h3>
+        <p class="ht-cite">Peng, Wang &amp; Jiang (2008) · Khanna &amp; Palepu (1997)</p>
+        <div class="ht-two">
+          <div class="ht-cell a"><div class="ht-k" style="color:#03474F" data-en="Learner changes">Người học thay đổi</div><div data-en="Registers growing-area codes, chooses official or border trade (Durian Passport); meets rules of origin (FDI Factory); certifies for Bắc Phong.">Đăng ký mã số vùng trồng, chọn chính ngạch hay tiểu ngạch (Sầu Riêng); đáp ứng quy tắc xuất xứ (Nhà máy FDI); lấy chứng nhận Bắc Phong.</div></div>
+          <div class="ht-cell b"><div class="ht-k" style="color:#7A4A0E" data-en="Engine responds">Engine phản hồi</div><div data-en="Phytosanitary risk and code suspension; tariff preference only above 40% local content; uncertified goods sell at 45%.">Rủi ro kiểm dịch và treo mã; ưu đãi thuế chỉ khi nội địa hoá trên 40%; hàng thiếu chứng nhận chỉ bán được 45%.</div></div>
+        </div>
+        <div class="ht-limit"><div class="ht-k" data-en="Limit">Giới hạn</div><div data-en="The institutional-voids event in Brand Passport (missing certifiers, weak contract enforcement; see Figure 2) is drawn without replacement, so it is normally met once per game; its coefficients are design assumptions, not calibrated to data.">Sự kiện khoảng trống thể chế trong Hộ Chiếu (thiếu kiểm định độc lập, hợp đồng khó cưỡng chế; xem Hình 2) được rút không hoàn lại nên thường chỉ gặp một lần mỗi ván; các hệ số là giả định thiết kế, chưa hiệu chỉnh theo số liệu.</div></div>
+      </article>
+    </div>
+    <p style="margin:16px 0 0;font-size:14px;line-height:1.6;color:var(--clay-sub)"><span data-en="Full row-by-row map with source files:">Bảng đầy đủ từng dòng kèm tên tệp mã nguồn:</span> <a href="dinh-huong.html#dh-map-h" style="font-weight:800" data-en="Theory map by game →">Bản đồ lý thuyết theo từng game →</a></p>
   </section>
 
   <section style="margin-bottom:64px;padding:34px 28px;border-radius:36px;background:var(--clay-tray);box-shadow:inset 0 6px 12px rgba(110,70,30,.15)">
@@ -187,8 +353,16 @@
       <li>Bandura, A. (1977). Self-efficacy: Toward a unifying theory of behavioral change. <i>Psychological Review, 84</i>(2), 191–215. <a href="https://doi.org/10.1037/0033-295X.84.2.191" target="_blank" rel="noopener">doi:10.1037/0033-295X.84.2.191</a></li>
       <li>Gollwitzer, P. M. (1999). Implementation intentions: Strong effects of simple plans. <i>American Psychologist, 54</i>(7), 493–503. <a href="https://doi.org/10.1037/0003-066X.54.7.493" target="_blank" rel="noopener">doi:10.1037/0003-066X.54.7.493</a></li>
       <li>Mayne, J. (2012). Contribution analysis: Coming of age? <i>Evaluation, 18</i>(3), 270–280. <a href="https://doi.org/10.1177/1356389012451663" target="_blank" rel="noopener">doi:10.1177/1356389012451663</a></li>
+      <li>Johanson, J., &amp; Vahlne, J.-E. (1977). The internationalization process of the firm: A model of knowledge development and increasing foreign market commitments. <i>Journal of International Business Studies, 8</i>(1), 23–32. <a href="https://doi.org/10.1057/palgrave.jibs.8490676" target="_blank" rel="noopener">doi:10.1057/palgrave.jibs.8490676</a></li>
+      <li>Johanson, J., &amp; Vahlne, J.-E. (2009). The Uppsala internationalization process model revisited: From liability of foreignness to liability of outsidership. <i>Journal of International Business Studies, 40</i>(9), 1411–1431. <a href="https://doi.org/10.1057/jibs.2009.24" target="_blank" rel="noopener">doi:10.1057/jibs.2009.24</a></li>
+      <li>Zaheer, S. (1995). Overcoming the liability of foreignness. <i>Academy of Management Journal, 38</i>(2), 341–363. <a href="https://doi.org/10.2307/256683" target="_blank" rel="noopener">doi:10.2307/256683</a></li>
+      <li>Kogut, B., &amp; Singh, H. (1988). The effect of national culture on the choice of entry mode. <i>Journal of International Business Studies, 19</i>(3), 411–432. <a href="https://doi.org/10.1057/palgrave.jibs.8490394" target="_blank" rel="noopener">doi:10.1057/palgrave.jibs.8490394</a></li>
+      <li>Anderson, E., &amp; Gatignon, H. (1986). Modes of foreign entry: A transaction cost analysis and propositions. <i>Journal of International Business Studies, 17</i>(3), 1–26. <a href="https://doi.org/10.1057/palgrave.jibs.8490432" target="_blank" rel="noopener">doi:10.1057/palgrave.jibs.8490432</a></li>
+      <li>Dunning, J. H. (1988). The eclectic paradigm of international production: A restatement and some possible extensions. <i>Journal of International Business Studies, 19</i>(1), 1–31. <a href="https://doi.org/10.1057/palgrave.jibs.8490372" target="_blank" rel="noopener">doi:10.1057/palgrave.jibs.8490372</a></li>
+      <li>Peng, M. W., Wang, D. Y. L., &amp; Jiang, Y. (2008). An institution-based view of international business strategy: A focus on emerging economies. <i>Journal of International Business Studies, 39</i>(5), 920–936. <a href="https://doi.org/10.1057/palgrave.jibs.8400377" target="_blank" rel="noopener">doi:10.1057/palgrave.jibs.8400377</a></li>
+      <li>Khanna, T., &amp; Palepu, K. (1997). Why focused strategies may be wrong for emerging markets. <i>Harvard Business Review, 75</i>(4), 41–51.</li>
     </ol>
-    <p style="margin:16px 0 0;font-size:14px;line-height:1.6;color:var(--clay-sub)"><span data-en="Sources 4–9 underpin the causation/effectuation logic, the experiential-learning design and the evidence principle; see">Nguồn 4–9 làm nền cho hai logic causation/effectuation, thiết kế học qua trải nghiệm và nguyên tắc bằng chứng; xem</span> <a href="dinh-huong.html#ly-thuyet" style="font-weight:800" data-en="Regional impact orientation →">Định hướng tác động vùng →</a></p>
+    <p style="margin:16px 0 0;font-size:14px;line-height:1.6;color:var(--clay-sub)"><span data-en="Sources 4–9 underpin the causation/effectuation logic, the experiential-learning design and the evidence principle; sources 10–17 are the international-business frameworks of Figure 2 and the theory cards; see">Nguồn 4–9 làm nền cho hai logic causation/effectuation, thiết kế học qua trải nghiệm và nguyên tắc bằng chứng; nguồn 10–17 là các khung kinh doanh quốc tế ở Hình 2 và các thẻ khung lý thuyết; xem</span> <a href="dinh-huong.html#dh-map-h" style="font-weight:800" data-en="Regional impact orientation →">Định hướng tác động vùng →</a></p>
   </section>
 </main>
 
