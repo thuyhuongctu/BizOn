@@ -327,7 +327,7 @@ const BN2 = (() => {
       ${ach.length ? `<div class="bn2-row" style="justify-content:center;margin-top:14px">${ach.map(a => `<span class="bn2-chip" title="${esc(a.desc)}">${a.icon} ${esc(a.name)}</span>`).join('')}</div>` : ''}
       <p class="bn2-muted" style="margin-top:14px">${isTrial() ? T('Ván chơi thử: kết quả chỉ lưu trên máy này.', 'Trial game: results stay on this device.') : T('Kết quả đã gửi về lớp. Chứng nhận và phiếu chấm xem ở bản đầy đủ.', 'Results were sent to your class. See the certificate and score sheet in the full version.')}</p>
       <div class="bn2-row" style="justify-content:center;margin-top:10px"><a class="bn2-btn teal" href="game.html">${T('Mở bản đầy đủ (chứng nhận)', 'Open the full version (certificate)')}</a><button class="bn2-btn" data-act="new">${T('Chơi ván mới', 'New game')}</button></div>
-    </section>${viewHistory()}</main>`;
+    </section>${window.BN2Grade ? BN2Grade.html(S) : ''}${viewHistory()}</main>`;
   }
 
   // ---------- vẽ và sự kiện ----------
@@ -337,6 +337,7 @@ const BN2 = (() => {
     if (ui.screen === 'start' || !S) { el.innerHTML = viewStart(); return; }
     if (!ui.d) ui.d = lastDecisions();
     el.innerHTML = (S.finished && ui.screen !== 'report') ? viewEnd() : viewPlay();
+    if (S.finished && window.BN2Grade) BN2Grade.load(S);   // đọc bảng xếp hạng lớp cho B1, vẽ lại riêng khung bảng điểm
     if (ui.screen === 'report' && ui.reportIdx != null) el.insertAdjacentHTML('beforeend', viewReport(ui.reportIdx));
   }
 
