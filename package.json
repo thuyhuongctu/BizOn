@@ -1,0 +1,8 @@
+{
+  "name": "bizon",
+  "private": true,
+  "description": "BizOn – mô phỏng kinh doanh cho giáo dục khởi nghiệp. Trang tĩnh, không cần build; package.json chỉ để chạy test.",
+  "scripts": {
+    "test": "node scripts/run-tests.mjs"
+  }
+}

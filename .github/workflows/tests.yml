@@ -1,0 +1,50 @@
+name: Tests – chạy mọi bộ test
+
+# Một workflow chạy MỌI test/*.test.js (npm test → scripts/run-tests.mjs), kể cả các bộ trước đây
+# không workflow nào gọi: engine.test.js (mô phỏng, chấm điểm Bật Nghiệp), brand-passport, ie-lab,
+# clay-nav-sync, press-archive, android-twa-contract. Các workflow riêng theo đường dẫn vẫn giữ nguyên.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    # Ghim 24.04: ubuntu-latest đang chuyển sang Ubuntu 26, nơi `playwright@1.54.1 install --with-deps` không cài được gói hệ thống
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      # Bộ test Hộ Chiếu / IE Lab mở trang thật bằng Chromium (require('playwright-core'))
+      - name: Cài Playwright + Chromium
+        run: |
+          npm install --no-save playwright@1.54.1
+          npx playwright install --with-deps chromium
+
+      # scripts/run-tests.mjs tự bật máy chủ tĩnh ở 127.0.0.1:8899 cho các bộ test trình duyệt
+      - name: npm test
+        run: npm test
+
+      - name: Lưu ảnh chụp QA
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-qa
+          path: |
+            artifacts/
+            governance-qa/
+          retention-days: 7
+          if-no-files-found: ignore
