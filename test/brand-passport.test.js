@@ -12,7 +12,7 @@
 
 const path = require('path');
 const BASE = process.env.BIZON_URL || 'http://127.0.0.1:8899';
-const CHROME = process.env.BIZON_CHROME || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
+const CHROME = process.env.BIZON_CHROME; // không đặt thì dùng Chromium mặc định của Playwright (CI, máy cá nhân);
 
 let chromium;
 try {
@@ -295,7 +295,7 @@ test('Không có lỗi JavaScript trong suốt một ván đầy đủ', async b
 
 /* ================= CHẠY ================= */
 (async () => {
-  const browser = await chromium.launch({ executablePath: CHROME });
+  const browser = await chromium.launch(CHROME ? { executablePath: CHROME } : {});
   let failed = 0;
   for (const t of results) {
     current = { checks: [], failed: false };
