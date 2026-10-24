@@ -1718,7 +1718,7 @@
 "conquering the map of Vietnam"
 ],
 [
-"chiến lược quốc tế hóa & hiệu quả doanh nghiệp",
+"chiến lược quốc tế hóa & hiệu quả hoạt động kinh doanh của doanh nghiệp",
 "internationalisation strategy & firm performance"
 ],
 [
