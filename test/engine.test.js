@@ -28,7 +28,7 @@ vm.runInContext(src + `
   newGameState, simulateRound, currentEvent, rng, energyReport,
   approveLoan, doMaintenance, optimizeLine, cutCosts, brandingPremium,
   claimMission, missionStatus, MISSIONS_LIST,
-  whatIfSimulate, WHAT_IF_LIMIT, forecastCash, esgScore,
+  whatIfSimulate, WHAT_IF_LIMIT, luminaAdvice, evBase, forecastCash, esgScore,
   ROUNDS_TOTAL, STARTING_BALANCE, UNITS_PER_WORKER, REF_PRICE,
   MARKET_EVENTS_LIST, SHOP_ITEMS_LIST, ACHIEVEMENTS_LIST, BASE_MARKET_UNITS,
 };`, ctx, { filename: 'js/engine.js' });
@@ -293,6 +293,42 @@ test('Điểm ESG nằm trong thang hợp lệ', () => {
   const v = E.esgScore(s);
   check(typeof v === 'number' && isFinite(v), `trả về số hữu hạn: ${v}`);
   check(v >= 0 && v <= 100, `nằm trong 0–100: ${v}`);
+});
+
+/* ================= LUMINA ================= */
+
+/* Lumina chỉ được gọi «Chiến tranh giá» ở đúng vòng có biến cố ấy. Trước đây
+ * luminaAdvice() chỉ kiểm ev.elasticityMul có giá trị hay không, nên vòng 6
+ * (elasticityMul 0,85 – khách ÍT nhạy giá) cũng bị gọi là chiến tranh giá; và
+ * khi bật thị trường động, js/market-dynamic.js luôn gắn elasticityMul theo
+ * độ nhạy giá của tỉnh nên vòng nào cũng thành chiến tranh giá. */
+test('Lumina chỉ cảnh báo chiến tranh giá ở vòng có biến cố chiến tranh giá', () => {
+  const s = newGame();
+  const PW = 'Chiến tranh giá';
+  for (let i = 1; i <= E.ROUNDS_TOTAL; i++) {
+    const ev = E.currentEvent(s);
+    const isPW = E.evBase(ev.id) === 'EV_PRICEWAR';
+    const txt = E.luminaAdvice(s, 'pricing').text;
+    check(txt.includes(PW) === isPW, `vòng ${i} (${ev.id}): ${isPW ? 'phải' : 'không được'} nói «${PW}»`);
+    E.simulateRound(s, DEC());
+  }
+});
+
+test('Thị trường động bật thì Lumina vẫn không gọi nhầm chiến tranh giá', () => {
+  // Bọc currentEvent y như js/market-dynamic.js: elasticityMul luôn có mặt,
+  // nhân với độ nhạy giá của tỉnh (Cần Thơ 1,10; Thanh Hóa 1,14).
+  const orig = ctx.currentEvent;
+  ctx.currentEvent = function (st) { const ev = orig(st); return Object.assign({}, ev, { elasticityMul: (ev.elasticityMul || 1) * 1.14 }); };
+  try {
+    const s = newGame();
+    for (let i = 1; i <= E.ROUNDS_TOTAL; i++) {
+      const ev = orig(s);
+      const isPW = E.evBase(ev.id) === 'EV_PRICEWAR';
+      const txt = E.luminaAdvice(s, 'pricing').text;
+      check(txt.includes('Chiến tranh giá') === isPW, `vòng ${i} (${ev.id}) khi có độ nhạy tỉnh 1,14`);
+      E.simulateRound(s, DEC());
+    }
+  } finally { ctx.currentEvent = orig; }
 });
 
 /* ================= CHẠY ================= */
