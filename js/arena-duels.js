@@ -81,7 +81,9 @@
   #bza .meter span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#f2c94c,#e2622a)}
   #bza .go{border:0;border-radius:14px;padding:11px 14px;min-height:44px;background:#006687;color:#fff;font:800 13px "Be Vietnam Pro";cursor:pointer;box-shadow:0 4px 0 #004a62}
   #bza .council{background:#fff;border-radius:22px;overflow:hidden}
-  #bza .council img{display:block;width:100%;aspect-ratio:909/503;object-fit:cover}
+  /* Ba lãnh đạo đối thủ: chân dung riêng xếp một hàng (không có ảnh chụp chung) */
+  #bza .council .trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));background:linear-gradient(#e9f3f6,#fff)}
+  #bza .council .trio img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 35%}
   #bza .rv{display:grid;grid-template-columns:40px minmax(0,1fr);gap:10px;padding:10px 14px;border-top:1px solid #eef1f5;font-size:12px;color:#4a5a6a}
   #bza .rv span{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px}
   #bza .rv b{color:#033337;font-size:14px}
@@ -115,10 +117,10 @@
     const root = document.createElement('div'); root.id = 'bza'; root.setAttribute('role', 'dialog'); root.setAttribute('aria-label', 'Đấu trường C-Suite');
     root.innerHTML = `<div class="wrap">
       <div class="top"><button class="ib" data-x aria-label="${tr('Đóng', 'Close')}">←</button><b>${tr('Đấu trường C-Suite', 'C-Suite Arena')}<small>${tr('Vòng', 'Round')} ${k.round}/6 · ${team} ${tr('đối đầu 3 đối thủ ảo & biến cố thị trường', 'vs 3 virtual rivals & market events')}</small></b></div>
-      <div class="hero"><img src="${A(dark ? 'lineup-flags-night.jpg' : 'lineup-flags-day.jpg')}" alt="${tr('Đội C-Suite của bạn đối mắt ba đối thị quanh bàn sa bàn Việt Nam', 'Your C-suite faces three rivals around the Vietnam sand table')}">
-        <div class="cap"><span>⚑ ${tr('Mặt trận: sa bàn kinh tế Đồng bằng sông Cửa Long & TP.HCM', 'Front: Mekong Delta & HCMC economic sand table')}</span><span>◎ ${tr('Lumina giám sát 24/7', 'Lumina on watch 24/7')}</span></div></div>
+      <div class="hero"><img src="${dark ? A('hq-night-cutaway.jpg') : 'assets/illustrations/game/phong-hop-chien-luoc.webp'}" alt="${dark ? tr('Trụ sở BizOn về đêm, các phòng ban vẫn sáng đèn', 'BizOn HQ at night, every department still lit') : tr('Đội C-Suite của bạn họp quanh bàn chiến lược', 'Your C-suite meeting around the strategy table')}">
+        <div class="cap"><span>⚑ ${tr('Mặt trận: sa bàn kinh tế Đồng bằng sông Cửu Long & TP.HCM', 'Front: Mekong Delta & HCMC economic sand table')}</span><span>◎ ${tr('Lumina giám sát 24/7', 'Lumina on watch 24/7')}</span></div></div>
       <div class="stats">
-        <div class="st"><small>${tr('Thỉ phần', 'Market share')}</small><b>${k.share}</b>${k.shareDelta ? `<i>${k.shareDelta}</i>` : ''}</div>
+        <div class="st"><small>${tr('Thị phần', 'Market share')}</small><b>${k.share}</b>${k.shareDelta ? `<i>${k.shareDelta}</i>` : ''}</div>
         <div class="st"><small>${tr('Lợi nhuận vòng trước', 'Last round profit')}</small><b>${k.profit}</b></div>
         <div class="st"><small>${tr('Chỉ số thương hiệu', 'Brand index')}</small><b>${k.brand}</b></div>
         <div class="st"><small>${tr('Khối phòng ban', 'Departments')}</small><b>5/5</b><i>${tr('sẵn sàng', 'ready')}</i></div>
@@ -139,7 +141,7 @@
             <button class="go" data-tab="decisions">${tr('Chốt lệnh', 'Commit')} ${d.role} →</button></div>
         </div></article>`).join('')}
       ${R.length ? `<p class="sec-h">${tr('Hội đồng đối thủ', 'Rival council')}</p>
-      <div class="council"><img src="${A('rivals-lineup.jpg')}" alt="${tr('Ba lãnh đạo đối thệ: Alpha Dynamics, Mekong Ventures, Star Clay Co.', 'Three rival leaders')}" loading="lazy">
+      <div class="council"><div class="trio">${['alpha.webp', 'mekong.webp', 'star-v2.webp'].map((f, i) => `<img src="assets/character/rivals/${f}" alt="${['Alpha Dynamics', 'Mekong Ventures', 'Star Clay Co.'][i]}" loading="lazy">`).join('')}</div>
         ${R.map(r => `<div class="rv"><span style="background:${r.accent}22">${r.icon || ''}</span><div><b>${esc(r.name)}</b> · ${esc(r.style || '')}<br>${esc(r.motto || '')}<br><span style="all:unset;color:#006687;font-weight:700">↳ ${esc(r.counter || '')}</span></div></div>`).join('')}</div>` : ''}
     </div>`;
     document.body.appendChild(root);

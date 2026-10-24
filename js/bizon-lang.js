@@ -1,6 +1,8 @@
-/* BizOn – ngôn ngữ mặc định của site là tiếng Anh.
+/* BizOn – ngôn ngữ mặc định của site là tiếng Anh, trừ khi trình duyệt đặt tiếng Việt.
    Nạp sớm trong <head>, trước mọi script khác đọc localStorage 'bizon-lang':
-   - Khách chưa chọn ngôn ngữ → đặt 'en' và đánh dấu "tự động".
+   - Khách chưa chọn ngôn ngữ → trình duyệt ưu tiên tiếng Việt (navigator.languages) thì 'vi',
+     còn lại 'en'; đánh dấu "tự động". (Trước 10/2026 luôn 'en', nên khách Việt lần đầu vào
+     đều thấy tiếng Anh kèm viên gợi ý che cuối màn hình.)
    - ?lang=vi hoặc ?lang=en trên URL → ghi nhận như lựa chọn của người dùng.
    - Khi đang ở tiếng Anh tự động → hiện gợi ý nhỏ «Xem bằng tiếng Việt?»
      (tắt được, không hiện lại sau khi đã chọn hoặc đã đóng). */
@@ -10,7 +12,10 @@
   try {
     var q = (location.search.match(/[?&]lang=(en|vi)(?:&|$)/) || [])[1];
     if (q) { ls.setItem(K, q); ls.removeItem(AUTO); }
-    else if (ls.getItem(K) !== 'en' && ls.getItem(K) !== 'vi') { ls.setItem(K, 'en'); ls.setItem(AUTO, '1'); }
+    else if (ls.getItem(K) !== 'en' && ls.getItem(K) !== 'vi') {
+      var nl = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || '']);
+      ls.setItem(K, /^vi\b/i.test(String(nl[0] || '')) ? 'vi' : 'en'); ls.setItem(AUTO, '1');
+    }
     else if (ls.getItem(K) !== 'en') ls.removeItem(AUTO);
   } catch (e) { return; }
 
