@@ -84,8 +84,9 @@
   }
   // Tên miền email sinh viên được nộp bài: CTU + trường đối tác quản trị thêm trên máy chủ
   // (bảng student_email_domains). Chỉ để báo lỗi sớm trên trang; máy chủ vẫn tự kiểm.
-  let domains = ['student.ctu.edu.vn'];
-  (async () => {
+  // Chỉ hỏi máy chủ khi sinh viên thật sự dùng ô đăng nhập – không gọi lúc tải trang.
+  let domains = ['student.ctu.edu.vn'], domainsP = null;
+  const loadDomains = () => domainsP || (domainsP = (async () => {
     try {
       const c = cfg();
       if (!c.enabled || !c.url || !c.anonKey) return;
@@ -97,7 +98,7 @@
       const d = res.ok ? await res.json() : null;
       if (Array.isArray(d) && d.length) domains = d.map(x => String(x).toLowerCase());
     } catch (_) {}
-  })();
+  })());
   const isStudentEmail = e => {
     const m = /^[^@\s]+@([^@\s]+)$/.exec(String(e || '').trim().toLowerCase());
     return !!m && domains.includes(m[1]);
@@ -189,6 +190,7 @@
 
         async function doAuth(path, successMsg) {
           const email = emailEl.value.trim(), password = pwEl.value;
+          await loadDomains();
           if (!isStudentEmail(email) || !password || password.length < 8) { status.textContent = TT('Cần email trường (vd @student.ctu.edu.vn) và mật khẩu ≥ 8 ký tự.', 'Use your school email (e.g. @student.ctu.edu.vn) and a password of 8+ characters.'); status.style.color = '#c0392b'; return; }
           status.textContent = TT('Đang xử lý…', 'Working…'); status.style.color = '';
           try {
@@ -215,5 +217,5 @@
     return { render };
   }
 
-  window.StudentLogin = { mount, getSession, signedIn, token, rpc, isStudentEmail };
+  window.StudentLogin = { mount, getSession, signedIn, token, rpc, isStudentEmail, loadDomains };
 })();
