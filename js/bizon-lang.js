@@ -18,6 +18,12 @@
     }
     else if (ls.getItem(K) !== 'en') ls.removeItem(AUTO);
   } catch (e) { return; }
+  // ?lang=… là một bản ngôn ngữ riêng (hreflang trong <head>) → canonical/og:url trỏ về chính bản đó
+  if (q) document.addEventListener('DOMContentLoaded', function () {
+    var c = document.querySelector('link[rel="canonical"]'), o = document.querySelector('meta[property="og:url"]');
+    if (c) c.setAttribute('href', c.getAttribute('href').split('?')[0] + '?lang=' + q);
+    if (o) o.setAttribute('content', o.getAttribute('content').split('?')[0] + '?lang=' + q);
+  });
 
   function hint() {
     try {
