@@ -64,6 +64,30 @@ export function summary(cfg) {
   };
 }
 
+// Giá trị secret dán từ trình duyệt hay dính khoảng trắng/xuống dòng hoặc chữ «Bearer»; làm sạch rồi
+// kiểm tra dạng token cá nhân Supabase (sbp_…). Chỉ mô tả hình dạng, không bao giờ in giá trị.
+export function cleanToken(raw) {
+  return String(raw || '').trim().replace(/^Bearer\s+/i, '').trim();
+}
+
+export function tokenProblem(token) {
+  if (!token) return 'Thiếu SUPABASE_ACCESS_TOKEN (tạo ở https://supabase.com/dashboard/account/tokens).';
+  if (/^sbp_[A-Za-z0-9_]+$/.test(token)) return null;
+  const hints = [];
+  if (/\s/.test(token)) hints.push('có khoảng trắng hoặc xuống dòng');
+  if (/^[a-z]{4}(\s?[a-z]{4}){3}$/i.test(token)) hints.push('trông giống mật khẩu ứng dụng Gmail (16 chữ) – có thể đã dán nhầm hai secret');
+  else if (/^eyJ/.test(token)) hints.push('trông giống anon/service key của dự án (eyJ…), không phải token cá nhân');
+  else if (/^sb_(secret|publishable)_/.test(token)) hints.push('là API key của dự án (sb_…), không phải token cá nhân');
+  else if (!/^sbp_/.test(token)) hints.push('không bắt đầu bằng «sbp_»');
+  return 'SUPABASE_ACCESS_TOKEN không đúng dạng token cá nhân Supabase (sbp_…): ' + hints.join('; ') +
+    '. Tạo token ở https://supabase.com/dashboard/account/tokens rồi dán lại vào secret, chỉ phần sbp_…, không kèm chữ Bearer.';
+}
+
+export function cleanPassword(raw, provider) {
+  const p = String(raw || '').trim();
+  return provider === 'gmail' ? p.replace(/\s+/g, '') : p; // Google hiển thị mật khẩu ứng dụng thành 4 nhóm cách nhau
+}
+
 async function api(method, ref, token, body) {
   const res = await fetch(`https://api.supabase.com/v1/projects/${ref}/config/auth`, {
     method,
@@ -76,16 +100,17 @@ async function api(method, ref, token, body) {
 }
 
 export async function main(env = process.env) {
-  const token = env.SUPABASE_ACCESS_TOKEN;
+  const token = cleanToken(env.SUPABASE_ACCESS_TOKEN);
   const ref = env.SUPABASE_PROJECT_REF || PRODUCTION_PROJECT_REF;
-  if (!token) throw new Error('Thiếu SUPABASE_ACCESS_TOKEN (tạo ở https://supabase.com/dashboard/account/tokens).');
+  const problem = tokenProblem(token);
+  if (problem) throw new Error(problem);
   const before = await api('GET', ref, token);
   console.log('Cấu hình hiện tại:', JSON.stringify(summary(before), null, 2));
   if (/^(1|true|yes)$/i.test(env.DRY_RUN || '')) { console.log('DRY_RUN: không thay đổi gì.'); return; }
 
   const patch = buildAuthPatch({
     provider: env.SMTP_PROVIDER, host: env.SMTP_HOST, port: env.SMTP_PORT, user: env.SMTP_USER,
-    sender: env.SMTP_SENDER_EMAIL, senderName: env.SMTP_SENDER_NAME, password: env.SMTP_PASSWORD,
+    sender: env.SMTP_SENDER_EMAIL, senderName: env.SMTP_SENDER_NAME, password: cleanPassword(env.SMTP_PASSWORD, env.SMTP_PROVIDER),
     rateLimit: env.EMAIL_RATE_LIMIT,
   }, before);
   await api('PATCH', ref, token, patch);

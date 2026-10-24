@@ -1,0 +1,54 @@
+name: Supabase – áp migration lên production
+
+# Bấm tay (Actions → «Supabase – áp migration lên production» → Run workflow) để áp một file
+# supabase/migrations/*.sql lên dự án production qua Management API, thay cho chép SQL vào SQL Editor.
+# File lấy từ nhánh «source_ref» (mặc định main); main chưa có thì tự tìm trong nhánh các PR đang mở,
+# để áp được migration của một PR trước khi gộp PR đó mà không phải điền tên nhánh.
+# Không gõ APPLY ở «confirm» thì chỉ kiểm tra trước rồi dừng. Cần repository secret SUPABASE_ACCESS_TOKEN.
+on:
+  workflow_dispatch:
+    inputs:
+      migration:
+        description: 'Tên file trong supabase/migrations (vd 20261023000000_require_student_login.sql)'
+        type: string
+        required: true
+      source_ref:
+        description: 'Nhánh chứa file (để trống = main, main chưa có thì tự tìm trong các PR đang mở)'
+        type: string
+        required: false
+      confirm:
+        description: 'Gõ APPLY để áp thật (để trống = chỉ kiểm tra)'
+        type: string
+        required: false
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: supabase-migrate
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Lấy file migration
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MIGRATION: ${{ inputs.migration }}
+          SOURCE_REF: ${{ inputs.source_ref }}
+        run: bash scripts/release/fetch-migration.sh "$MIGRATION" "$SOURCE_REF" "$RUNNER_TEMP/migration.sql"
+      - name: Áp migration
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          MIGRATION_FILE: ${{ inputs.migration }}
+          MIGRATION_PATH: ${{ runner.temp }}/migration.sql
+          CONFIRM: ${{ inputs.confirm }}
+        run: node scripts/release/apply-supabase-migration.mjs
