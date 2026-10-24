@@ -2706,7 +2706,7 @@ function renderSeasonReport(body) {
         </div>
         <div class="flex items-end justify-between gap-2 mt-5">
           <div class="text-center flex-1">
-            <img src="assets/docs/sig-huong.png" alt="Chữ ký Đỗ Thùy Hương" class="h-11 w-auto mx-auto">
+            <img src="assets/docs/sig-huong-in.png" alt="Chữ ký Đỗ Thùy Hương" class="h-11 w-auto mx-auto" style="max-width:100%;object-fit:contain">
             <div class="h-px bg-deep-teal/20 my-1 mx-2"></div>
             <p class="text-[9px] font-extrabold text-deep-teal leading-tight">NCS. Đỗ Thùy Hương</p>
             <p class="text-[8px] text-deep-teal/50 font-bold">Founder &amp; Project Lead</p>
@@ -2715,7 +2715,7 @@ function renderSeasonReport(body) {
             <div class="text-center leading-none"><p class="text-[7px] font-extrabold text-clay-orange uppercase">Official</p><p class="text-[10px] font-display font-extrabold text-clay-orange">BizOn</p><p class="text-[8px]">✓</p></div>
           </div>
           <div class="text-center flex-1">
-            <img src="assets/docs/sig-tu.png" alt="Chữ ký Phan Anh Tú" class="h-10 w-auto mx-auto mt-1">
+            <img src="assets/docs/sig-tu-in.png" alt="Chữ ký Phan Anh Tú" class="h-10 w-auto mx-auto mt-1" style="max-width:100%;object-fit:contain">
             <div class="h-px bg-deep-teal/20 my-1 mx-2"></div>
             <p class="text-[9px] font-extrabold text-deep-teal leading-tight">PGS.TS. Phan Anh Tú</p>
             <p class="text-[8px] text-deep-teal/50 font-bold">Co-founder &amp; Chief Academic Advisor</p>
@@ -2798,7 +2798,7 @@ async function downloadCertificate(lang = 'vi') {
     sig1: 'NCS. Đỗ Thùy Hương', sig2: 'PGS.TS. Phan Anh Tú',
     date: `Cấp ngày ${new Date().toLocaleDateString('vi-VN')} · bizonland.com`,
   };
-  const [sigH, sigT] = await Promise.all([loadSigImg('assets/docs/sig-huong.png'), loadSigImg('assets/docs/sig-tu.png')]);
+  const [sigH, sigT] = await Promise.all([loadSigImg('assets/docs/sig-huong-in.png'), loadSigImg('assets/docs/sig-tu-in.png')]);
   const cv = document.createElement('canvas');
   cv.width = 1400; cv.height = 990;
   const g = cv.getContext('2d');
@@ -2837,7 +2837,7 @@ async function downloadCertificate(lang = 'vi') {
   });
   const sign = (x, sig, name, line1, line2) => {
     if (sig) {
-      const h = 120, w = sig.width * h / sig.height;
+      const w = Math.min(340, sig.width * 120 / sig.height), h = w * sig.height / sig.width;
       g.drawImage(sig, x - w / 2, 775 - h, w, h);
     } else {
       g.fillStyle = '#006687'; g.font = 'italic 44px "Segoe Script", "Brush Script MT", cursive';

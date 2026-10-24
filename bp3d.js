@@ -618,7 +618,7 @@ P(GE.box, WOOD2, easel, 0, 1.3, -0.35, 0.1, 2.6, 0.1).rotation.x = 0.35;
 const cert = mkCanvas(1024, 720);
 const certBoard = new THREE.Mesh(new THREE.BoxGeometry(2.7, 1.9, 0.06), [M(0xc98f52), M(0xc98f52), M(0xc98f52), M(0xc98f52), new THREE.MeshStandardMaterial({ map: cert.t, roughness: 0.9 }), M(0xc98f52)]);
 certBoard.position.set(0, 2.25, 0.32); certBoard.rotation.x = -0.12; certBoard.castShadow = true; easel.add(certBoard);
-const sigs = ['assets/docs/sig-huong.png', 'assets/docs/sig-tu.png'].map(src => { const im = new Image(); im.onload = () => endT >= 0 && drawCert(); im.src = src; return im; });
+const sigs = ['assets/docs/sig-huong-in.png', 'assets/docs/sig-tu-in.png'].map(src => { const im = new Image(); im.onload = () => endT >= 0 && drawCert(); im.src = src; return im; });
 function wrapText(g, txt, x, y, mw, lh) { const w = txt.split(' '); let line = ''; for (const wd of w) { const t = line ? line + ' ' + wd : wd; if (g.measureText(t).width > mw && line) { g.fillText(line, x, y); line = wd; y += lh; } else line = t; } g.fillText(line, x, y); }
 function drawCert() {
   const { g, t } = cert, W = 1024, H = 720, B = window.__bp, f = firmInfo(), sc = B ? B.scores() : { total: 0 };
@@ -636,7 +636,7 @@ function drawCert() {
   g.fillStyle = 'rgba(3,51,55,.78)'; g.font = '700 23px ' + FONT;
   wrapText(g, tr('Đưa ' + f.name + ' từ Vàm Thịnh ra ' + stamps.length + ' thị trường qua ' + NQ + ' quý', 'Took ' + f.name + ' from Vàm Thịnh to ' + stamps.length + ' markets over ' + NQ + ' quarters') + ' · ' + tr('Điểm tổng', 'Total') + ' ' + sc.total + '/100' + (title ? ' · ' + title : ''), W / 2, 388, 760, 32);
   [[250, sigs[0], 'NCS. Đỗ Thùy Hương', 'Founder & Project Lead'], [774, sigs[1], 'PGS.TS. Phan Anh Tú', 'Co-founder & Chief Academic Advisor']].forEach(([x, im, n, r]) => {
-    if (im.complete && im.naturalWidth) { const h = 70, w = h * im.naturalWidth / im.naturalHeight; g.drawImage(im, x - w / 2, 496, w, h); }
+    if (im.complete && im.naturalWidth) { const w = Math.min(280, 70 * im.naturalWidth / im.naturalHeight), h = w * im.naturalHeight / im.naturalWidth; g.drawImage(im, x - w / 2, 566 - h, w, h); }
     g.strokeStyle = 'rgba(3,51,55,.25)'; g.lineWidth = 2; g.beginPath(); g.moveTo(x - 150, 576); g.lineTo(x + 150, 576); g.stroke();
     g.fillStyle = '#033337'; g.font = '800 20px ' + FONT; g.fillText(n, x, 604); g.fillStyle = 'rgba(3,51,55,.55)'; g.font = '700 15px ' + FONT; g.fillText(r, x, 628);
   });
