@@ -242,6 +242,7 @@ footer{color:var(--faint)}
   <div class="spacer"></div>
   <button class="tbtn music" id="musicBtn" type="button" aria-pressed="false">♪</button>
   <button class="tbtn" id="trackBtn" type="button"></button>
+  <button class="tbtn" id="exitBtn" type="button" hidden></button>
   <a class="tbtn" href="ho-chieu-sau-rieng-3d.html" id="map3dLink">🗺️</a>
   <a class="tbtn" href="../lop-hoc.html" id="backLink"></a>
   <a class="tbtn" href="../index.html" id="homeLink"></a>
@@ -330,6 +331,9 @@ footer{color:var(--faint)}
     $('backLink').textContent = L('← Kịch bản lớp học', '← Classroom script');
     $('homeLink').textContent = L('← Trang chủ', '← Home');
     $('map3dLink').textContent = L('🗺️ Bản 3D', '🗺️ 3D version');
+    $('exitBtn').hidden = !APP;
+    $('exitBtn').textContent = L('⏏ Thoát ván', '⏏ Quit game');
+    $('exitBtn').title = L('Về màn mở đầu: chơi tiếp ván đang lưu, xóa ván hoặc bắt đầu ván mới', 'Back to the start screen: resume the saved game, delete it or start a new one');
     $('map3dLink').title = L('Bản đồ 3D: khám phá chuỗi cung ứng cùng Bà Sáu Lành', '3D map: explore the supply chain with Bà Sáu Lành');
     $('langVI').classList.toggle('on', LANG === 'vi'); $('langEN').classList.toggle('on', LANG === 'en');
     $('musicBtn').title = L('Bật/tắt nhạc nền', 'Play/pause background music');
@@ -1108,6 +1112,11 @@ footer{color:var(--faint)}
     };
   }
 
+  // Thoát ván đang chơi về màn mở đầu. Ván vẫn lưu trên máy: ở màn mở đầu có «Chơi tiếp», «Xóa ván» và «Bắt đầu ván mới».
+  $('exitBtn').onclick = () => {
+    if (!APP || !confirm(L('Thoát ván đang chơi về màn mở đầu? Ván vẫn được lưu: bạn có thể chơi tiếp, xóa ván hoặc bắt đầu ván mới.', 'Quit to the start screen? The game stays saved: you can resume it, delete it or start a new one.'))) return;
+    save(); APP = null; RIVALS = null; render(); window.scrollTo(0, 0);
+  };
   render();
 })();
 </script>
