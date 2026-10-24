@@ -30,6 +30,15 @@
   .ks-opt input { margin-top:3px; accent-color:#006687; }
   .likert-row { display:grid; grid-template-columns:1fr repeat(5, 40px); gap:6px; align-items:center; padding:9px 0; border-top:1px solid rgba(0,102,135,.1); font-size:13px; font-weight:600; }
   .likert-row input { accent-color:#006687; width:18px; height:18px; justify-self:center; }
+  .likert-row .lk { display:flex; flex-direction:column; align-items:center; gap:2px; justify-self:center; cursor:pointer; }
+  .likert-row .lk i { display:none; font-style:normal; font-size:11px; font-weight:800; opacity:.6; }
+  /* Điện thoại: câu hỏi chiếm trọn một dòng, 5 lựa chọn dàn đều bên dưới kèm số 1–5 (thay cho hàng tiêu đề). */
+  @media (max-width:560px) {
+    .likert-row { grid-template-columns:repeat(5, 1fr); row-gap:8px; }
+    .likert-row > span { grid-column:1 / -1; }
+    .likert-row .lk i { display:block; }
+    .likert-head { display:none !important; }
+  }
   .miss { outline:3px solid #e8762d; outline-offset:4px; border-radius:14px; }
   :root { --dt: 3 51 55; }
   html[data-theme="dark"] { --dt: 214 236 240; background:#081a20; color-scheme:dark; }
@@ -136,14 +145,14 @@
     <div class="clay-card p-6">
       <h2 class="font-display font-extrabold text-deep-teal text-lg mb-1">💪 Phần B – Mức độ tự tin</h2>
       <p class="text-xs opacity-60 font-semibold mb-2">1 = hoàn toàn không tự tin · 5 = rất tự tin</p>
-      <div class="grid grid-cols-[1fr_repeat(5,40px)] gap-1.5 text-[11px] font-extrabold opacity-60 text-center"><span></span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+      <div class="likert-head grid grid-cols-[1fr_repeat(5,40px)] gap-1.5 text-[11px] font-extrabold opacity-60 text-center"><span></span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
       <div id="ks-b"></div>
     </div>
 
     <div id="ks-c-card" class="clay-card p-6 hidden">
       <h2 class="font-display font-extrabold text-deep-teal text-lg mb-1">🎮 Phần C – Trải nghiệm với BizOn</h2>
       <p class="text-xs opacity-60 font-semibold mb-2">1 = hoàn toàn không đồng ý · 5 = hoàn toàn đồng ý</p>
-      <div class="grid grid-cols-[1fr_repeat(5,40px)] gap-1.5 text-[11px] font-extrabold opacity-60 text-center"><span></span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+      <div class="likert-head grid grid-cols-[1fr_repeat(5,40px)] gap-1.5 text-[11px] font-extrabold opacity-60 text-center"><span></span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
       <div id="ks-c"></div>
       <div class="mt-5">
         <label class="block text-sm font-extrabold mb-1.5" for="ks-nps">Trên thang 0–10, bạn sẵn lòng giới thiệu BizOn cho bạn học khác ở mức nào?</label>
@@ -264,7 +273,7 @@
 
   // ===== Render =====
   const likertRows = (arr, name) => arr.map((s, i) => `
-    <div class="likert-row" id="${name}-${i + 1}"><span>${i + 1}. ${esc(s)}</span>${[1,2,3,4,5].map(v => `<input type="radio" name="${name}${i + 1}" value="${v}">`).join('')}</div>`).join('');
+    <div class="likert-row" id="${name}-${i + 1}"><span>${i + 1}. ${esc(s)}</span>${[1,2,3,4,5].map(v => `<label class="lk"><input type="radio" name="${name}${i + 1}" value="${v}" aria-label="${v}"><i>${v}</i></label>`).join('')}</div>`).join('');
   function renderBank() {
     const B = BANKS[curInstr()];
     $('ks-a').innerHTML = B.qa.map((item, i) => `
