@@ -155,6 +155,7 @@ footer{color:var(--faint);font-size:12px;text-align:center;margin-top:24px}
 .rvs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .rvs7{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
 .rvs7 .rv{padding:8px} .rvs7 .rv img{height:96px}
+.rvs3{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}.rvs3 .rv{text-align:left}.rvs3 .rv img{height:84px;width:84px;border-radius:50%;object-fit:cover;object-position:top;display:block;margin:0 auto}.rvs3 .rv b{text-align:center}.rvs3 .rv .ctr{display:block;text-align:center}.rvs3 .rv .ln{display:block;margin-top:4px}
 @media (max-width:640px){.rvs{grid-template-columns:1fr}}
 .flow{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 10px;padding:0;list-style:none}
 .flow li{font-size:12px;border:1px solid var(--line2);border-radius:999px;padding:4px 10px;color:var(--muted);background:var(--panel2)}
@@ -682,6 +683,10 @@ footer{color:var(--faint)}
           ${APP.timerMin ? `<span class="spacer"></span><span class="small muted">${L('Còn lại', 'Time left')}</span><span class="timer" id="timer"></span>` : ''}</div>
         ${n === 3 || n === 4 ? `<p class="hint" style="margin-top:6px">🔄 ${L('Gợi ý: luân chuyển vai ở vụ 3 hoặc 4 để mỗi bạn trải nghiệm một chức năng khác.', 'Tip: rotate roles in season 3 or 4 so everyone experiences another function.')}</p>` : ''}
       </section>
+
+      <details class="refcard" id="rivalCards" ${n === 1 ? 'open' : ''}><summary><h2>${L('👥 Ba đối thủ AI của ván này', '👥 The three AI rivals in this game')}</h2><span class="tag">${L('kịch bản cố định · mốc so sánh', 'fixed scripts · benchmark')}</span><span class="chev">▸</span></summary>
+        <div class="body"><div class="rvs7 rvs3">${RIVALS.map(r => DurianCore.rivalCard(D, rivalInfo(r.id), L)).map(c => `<div class="rv"><img src="${IMG(c.img)}" alt="CEO ${esc(c.ceo)}" loading="lazy"><b>${esc(c.name)} ${c.flag}</b><span class="hint ctr">CEO ${esc(c.ceo)} · ${esc(c.hub)}</span><span class="hint ctr"><span class="tag">${esc(c.group)}</span></span><span class="hint ln">${esc(c.style)}</span><span class="hint ln"><b>${L('Kế hoạch 6 vụ', '6-season plan')}:</b> ${esc(c.planText)}</span><span class="hint ln"><b>${L('Chia kênh', 'Channel split')}:</b> ${esc(c.alloc)}</span><span class="hint ln">${esc(c.linked)}</span></div>`).join('')}</div>
+        <p class="small muted" style="margin-top:10px">${DurianCore.rivalNote(L)}</p></div></details>
 
       <div class="grid2">
         <div class="card event"><span class="tag">① ${L('Đọc thị trường · mốc thực tế', 'Read the market · real milestone')}</span><h2>${nm(s)} ${window.DurianVoice && window.DurianVoice.canSpeak ? `<button type="button" class="mini" data-speak-season title="${L('Nghe vụ này', 'Listen to this season')}">🔊</button>` : ''}</h2><p>${LANG === 'en' ? s.textEn : s.textVi}</p>

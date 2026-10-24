@@ -135,6 +135,25 @@
     ];
   }
 
+
+  // Thẻ giới thiệu một đối thủ AI (dùng chung bản thẻ và bản 3D): kịch bản cố định đọc thẳng từ dữ liệu.
+  // rv: phần tử của D.rivals · L(vi, en). Trả về chuỗi đã dịch, chưa thoát HTML.
+  function rivalCard(D, rv, L) {
+    const nm = o => L(o.vi, o.en), pri = id => { const p = D.priorities.find(x => x.id === id); return p ? nm(p) : id; };
+    const GROUP = { compliance: L('Tuân thủ cao', 'High compliance'), channel: L('Kênh và quy mô', 'Channels and scale'), shortcut: L('Đi tắt', 'Shortcut') };
+    const alloc = Object.keys(rv.alloc || {}).filter(k => rv.alloc[k] > 0).sort((a, b) => rv.alloc[b] - rv.alloc[a])
+      .map(k => { const c = D.channels.find(x => x.id === k); return (c ? c.emoji + ' ' + nm(c).split(' (')[0] : k) + ' ' + rv.alloc[k] + '%'; }).join(' · ');
+    const plan = (rv.plan || []).map(pri);
+    return { id: rv.id, name: nm(rv), flag: rv.flag || '', ceo: rv.ceo || '', hub: rv.hub || '', img: rv.img, group: GROUP[rv.group] || rv.group || '',
+      style: L(rv.styleVi, rv.styleEn), plan, planText: plan.map((x, i) => (i + 1) + '. ' + x).join(' · '), alloc,
+      linked: L('Vùng liên kết ', 'Linked areas ') + Math.round((rv.linked || 0) * 100) + '%' + (rv.induce ? L(' · có xử lý nghịch vụ', ' · induces off-season') : L(' · không ép nghịch vụ', ' · no off-season forcing')) };
+  }
+  // Câu nói rõ vai trò của đối thủ, dùng ở mọi chỗ giới thiệu đối thủ.
+  function rivalNote(L) {
+    return L('Ba đối thủ chơi cùng doanh nghiệp, cùng 6 vụ, cùng engine với đội, theo kịch bản cố định ghi ở trên. Họ không phản ứng với quyết định của đội và không giành thị phần: đây là mốc để so sánh. Đội cắm cờ ở vụ nào lợi nhuận vụ đó bằng hoặc hơn đối thủ cao nhất.',
+      'The three rivals play the same firm, the same 6 seasons and the same engine as your team, following the fixed scripts above. They do not react to your decisions and do not take market share from you: they are a benchmark. You plant a flag in any season where your profit matches or beats the best rival.');
+  }
+
   window.DurianCore = {
     SHEET_CEO_MIN: SHEET_CEO_MIN,
     freshDec: freshDec,
@@ -146,6 +165,8 @@
     sheetComplete: sheetComplete,
     goals: goals,
     howToPlay: howToPlay,
+    rivalCard: rivalCard,
+    rivalNote: rivalNote,
     commitSeason: commitSeason
   };
 })();
