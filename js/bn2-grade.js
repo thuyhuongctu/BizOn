@@ -11,8 +11,10 @@
  */
 (function () {
   'use strict';
-  const L = (vi, en) => (typeof T === 'function' ? T(vi, en) : vi);
-  const en = () => (typeof currentLang === 'function' && currentLang() === 'en');
+  // Trang 3D («BizOn Game 3D.html») không có T()/currentLang() toàn cục: đọc thẳng lựa chọn ngôn ngữ đã lưu.
+  const savedEn = () => { try { return localStorage.getItem('bizon-lang') === 'en'; } catch (e) { return false; } };
+  const en = () => (typeof currentLang === 'function' ? currentLang() === 'en' : savedEn());
+  const L = (vi, en_) => (typeof T === 'function' ? T(vi, en_) : (en() ? en_ : vi));
   const f1 = v => { const s = (Math.round((+v || 0) * 10 + 1e-7) / 10).toFixed(1); return en() ? s : s.replace('.', ','); };
   const e = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const tkey = n => String(n == null ? '' : n).trim().replace(/\s+/g, ' ').toLowerCase();
@@ -130,12 +132,13 @@
   }
 
   // Đọc bảng xếp hạng lớp một lần mỗi 60 giây rồi vẽ lại riêng khung bảng điểm.
-  function load(s) {
-    const cls = classOf(s);
-    if (isTrial(s) || !window.BizonBackend || typeof BizonBackend.classLeaderboard !== 'function') return;
+  // backend: mặc định window.BizonBackend; trang 3D truyền backend của khung game.html.
+  function load(s, backend) {
+    const cls = classOf(s), B = backend || window.BizonBackend;
+    if (isTrial(s) || !B || typeof B.classLeaderboard !== 'function') return;
     if (board.cls === cls && Date.now() - board.at < 60000) return;
     board = { cls, rows: board.cls === cls ? board.rows : null, at: Date.now() };
-    BizonBackend.classLeaderboard(cls).then(rows => {
+    B.classLeaderboard(cls).then(rows => {
       if (!rows) return;
       board = { cls, rows, at: Date.now() };
       const el = document.getElementById('bn2-grade'); if (el) el.innerHTML = inner(s);
