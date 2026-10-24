@@ -254,12 +254,18 @@
          đóng intro như #ft-mv ở ben-phu-sa-v8.html. -->
     <figure id="bp-mv" class="clay-card mb-6" style="margin:0 0 24px;padding:10px;border-radius:24px;overflow:hidden">
       <div style="position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:repeating-linear-gradient(135deg,#e9f3f6 0 12px,#dcebef 12px 24px)">
-        <iframe id="bp-mv-frame" src="bp3d-explainer.html" title="Video giới thiệu Hộ Chiếu Thương Hiệu" loading="lazy" allow="autoplay; fullscreen" style="position:absolute;inset:0;width:100%;height:100%;border:0;display:block"></iframe>
+        <!-- Phim giới thiệu đóng gói một tệp ~20 MB: chỉ tải khi người xem bấm ▶ (khung này nằm trong lớp mở đầu hiện ngay khi vào game, loading="lazy" không giúp được). -->
+        <button type="button" id="bp-mv-play" style="position:absolute;inset:0;width:100%;height:100%;border:0;padding:0;margin:0;cursor:pointer;background:#f9f5ec">
+          <img src="assets/covers/bp3d-explainer-poster.webp" alt="" width="1200" height="675" style="width:100%;height:100%;object-fit:cover;display:block">
+          <span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:10px;white-space:nowrap;background:rgba(3,51,55,.88);color:#fff;border-radius:999px;padding:12px 20px;font:800 15px/1 'Plus Jakarta Sans',sans-serif;box-shadow:0 10px 24px -8px rgba(0,0,0,.5)"><span aria-hidden="true" style="font-size:17px">▶</span><span data-en="Play intro video">Xem video giới thiệu</span></span>
+        </button>
+        <iframe id="bp-mv-frame" title="Video giới thiệu Hộ Chiếu Thương Hiệu" allow="autoplay; fullscreen" style="position:absolute;inset:0;width:100%;height:100%;border:0;display:none"></iframe>
       </div>
       <figcaption style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 6px 2px;font:800 13px/1.3 'Plus Jakarta Sans',sans-serif;color:#033337"><span data-en="🎬 Intro video – Brand Passport">🎬 Video giới thiệu – Hộ Chiếu Thương Hiệu</span><a href="bp3d-explainer.html" target="_blank" style="font-weight:700;font-size:11px;color:#006687;white-space:nowrap" data-en="⤢ Open full screen">⤢ Mở toàn màn hình</a></figcaption>
     </figure>
-    <script>(function(){var fr=document.getElementById('bp-mv-frame'),intro=document.getElementById('bp-intro');
-      new MutationObserver(function(){if(intro.classList.contains('hidden')){try{fr.contentWindow.document.querySelectorAll('audio,video').forEach(function(m){m.pause();});}catch(e){} fr.src='about:blank';}}).observe(intro,{attributes:true});})();</script>
+    <script>(function(){var fr=document.getElementById('bp-mv-frame'),btn=document.getElementById('bp-mv-play'),intro=document.getElementById('bp-intro');
+      btn.addEventListener('click',function(){fr.src='bp3d-explainer.html';fr.style.display='block';btn.style.display='none';});
+      new MutationObserver(function(){if(intro.classList.contains('hidden')&&fr.style.display==='block'){try{fr.contentWindow.document.querySelectorAll('audio,video').forEach(function(m){m.pause();});}catch(e){} fr.src='about:blank';fr.style.display='none';btn.style.display='';}}).observe(intro,{attributes:true});})();</script>
     <section id="bp-howto" class="clay-card p-5 mb-6">
       <button type="button" onclick="document.getElementById('bp-howto-box').classList.toggle('hidden');this.querySelector('b').textContent=document.getElementById('bp-howto-box').classList.contains('hidden')?'▾':'▴'" class="w-full flex items-center justify-between">
         <span>
