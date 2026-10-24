@@ -107,3 +107,10 @@ body.bn2{background:var(--clay-bg);color:var(--clay-ink);font-family:var(--clay-
 .bn2-busy i{width:56px;height:56px;border-radius:50%;border:6px solid var(--clay-tray);border-top-color:var(--clay-orange);animation:bn2spin .9s linear infinite}
 @keyframes bn2spin{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion:reduce){.bn2-busy i{animation:none}}
+
+/* bảng điểm dự kiến (js/bn2-grade.js) */
+.bn2-grade-total{display:flex;align-items:baseline;gap:10px;margin:8px 0 12px}
+.bn2-grade-total b{font:800 40px var(--clay-head);color:var(--clay-teal)}
+.bn2-grade-total span{font:800 18px var(--clay-head);color:var(--clay-sub)}
+.bn2-grade-tab td{vertical-align:top}
+.bn2-grade-tab td:last-child{white-space:nowrap}
