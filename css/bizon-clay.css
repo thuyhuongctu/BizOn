@@ -41,7 +41,7 @@
   --clay-btn-shadow:inset 0 -5px 0 rgba(0,0,0,.16), inset 0 3px 0 rgba(255,255,255,.35);
   --clay-tray-shadow:inset 0 3px 6px rgba(110,70,30,.18);
   /* Chữ trên nền teal / cam (bản tối đổi sang chữ sẫm vì nền sáng lên) */
-  --clay-on-teal:#fff; --clay-on-orange:#fff;
+  --clay-on-teal:#fff; --clay-on-orange:#1E1915; /* chữ tối trên cam: 5,86:1 (chữ trắng chỉ 2,97:1) */
 }
 
 /* --- Nền tảng --- */
