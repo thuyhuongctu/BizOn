@@ -439,7 +439,8 @@
     { icon: '🎓', name: 'Tư vấn chuyên gia', nameEn: 'Expert consulting', cost: 0.7, know: 30, note: 'chính xác, giá cao', noteEn: 'accurate, priced high' },
     { icon: '📱', name: 'Dữ liệu mạng xã hội', nameEn: 'Social media data', cost: 0.2, know: 12, note: '⚠️ hay thổi phồng độ quan tâm', noteEn: '⚠️ tends to overstate interest' },
     { icon: '🧪', name: 'Thử nghiệm bán hàng', nameEn: 'Sales pilot test', cost: 0.8, know: 35, note: 'dữ liệu thật từ đơn hàng nhỏ', noteEn: 'real data from a small batch of orders' },
-    { icon: '🤝', name: 'Tin từ đối tác địa phương', nameEn: 'Tip from a local partner', cost: 0.1, know: 15, note: '⚠️ có thể hướng bạn theo lợi ích của họ', noteEn: "⚠️ may steer you toward their own interests" },
+    { icon: '🤝', name: 'Tin từ đối tác địa phương', nameEn: 'Tip from a local partner', cost: 0.1, know: 15, net: 10, note: '⚠️ có thể hướng bạn theo lợi ích của họ', noteEn: "⚠️ may steer you toward their own interests" },
+    { icon: '🏛️', name: 'Hiệp hội ngành hàng & cộng đồng doanh nhân Việt', nameEn: 'Trade association & Vietnamese business community', cost: 0.4, know: 8, net: 25, note: 'ít số liệu, nhưng mở cửa mạng lưới – giảm bất lợi người ngoài cuộc', noteEn: 'little data, but opens the network – less outsider penalty' },
   ];
   var PRIOS = [
     { icon: '🔍', name: 'Thăm dò thị trường', nameEn: 'Scout the market', note: 'giá mua thông tin −50% quý này', noteEn: 'intel prices −50% this quarter' },
@@ -492,6 +493,7 @@
   var S = {
     q: 0, firm: 0, cash: 8, rep: 50, capab: 40, resil: 50,
     know: [10, 10, 10, 10, 10, 10, 10], entered: [null, null, null, null, null, null, null],
+    net: [10, 10, 10, 10, 10, 10, 10],   // vị thế mạng lưới 0–100 từng thị trường (Johanson & Vahlne 2009: người ngoài cuộc → người trong cuộc)
     ship: [null, null, null, null, null, null, null],
     qin: [0, 0, 0, 0, 0, 0, 0], certBP: false, items: {}, shopOpen: false,
     cust: [60, 60, 60, 60, 60, 60, 60],
@@ -534,6 +536,10 @@
   // Tri thức trung bình tính trên TOÀN BỘ thị trường – trước đây chỉ cộng ba thị
   // trường đầu nên người chơi đi Lục Đảo / Nhật Quang / Tân Cảng bị bỏ sót hoàn toàn
   function kAvgAll() { return S.know.reduce(function (a, b) { return a + b; }, 0) / MKTS.length; }
+  // Thị trường đang hiện diện có vị thế mạng lưới thấp nhất – nơi khoảng trống thể chế lộ ra trước.
+  function voidMkt() { var ms = entMkts(); if (!ms.length) return 0; return ms.slice().sort(function (a, b) { return S.net[a] - S.net[b] || a - b; })[0]; }
+  // Mạng lưới trung bình trên các thị trường đang hiện diện (chưa vào đâu thì tính cả bảy).
+  function netAvg() { var ms = entMkts(); var arr = ms.length ? ms.map(function (m) { return S.net[m]; }) : S.net; return arr.reduce(function (a, b) { return a + b; }, 0) / arr.length; }
   var EVENTS = [
     // Thị trường
     { id: 'trend', cat: '🔥', t: 'Sản phẩm bất ngờ thành xu hướng', tEn: 'Product unexpectedly goes viral', need: anyEnt, d: function () { return T('Một video về ' + F().name + ' lan mạnh tại ' + MKTS[entMkts()[0]].name + '.', 'A video about ' + F().name + ' is spreading fast in ' + MKTS[entMkts()[0]].name + '.'); }, ch: [
@@ -610,6 +616,10 @@
     { id: 'copy', cat: '🪞', t: 'Thương hiệu bị sao chép', tEn: 'Your brand gets copied', d: function () { return T('Một bên đăng ký nhãn gần giống «Mộc Nhiên» tại thị trường bạn nhắm tới.', 'Someone registers a trademark similar to «Mộc Nhiên» in your target market.'); }, ch: [
       { l: '📝 Đăng ký bảo hộ + truyền thông chính chủ (0,6 tỷ)', lEn: '📝 Register trademark protection + owned-brand communications (0.6 bn)', fx: function () { S.cash -= 0.6; S.rep += 5; S.foot.push(T('Đăng ký bảo hộ nhãn hiệu sớm', 'Registered trademark protection early')); return T('Bạn giành lại tên của mình – uy tín +5, bài học: bảo hộ phải đi trước.', 'You reclaim your own name – reputation +5, lesson: protection has to come first.'); } },
       { l: '🤷 Kệ, lo bán hàng trước', lEn: '🤷 Ignore it, focus on selling first', fx: function () { S.flags.copyLoss = true; S.foot.push(T('Chậm chân bảo hộ nhãn hiệu', 'Was slow to protect the trademark')); return T('Tạm không sao – nhưng mỗi quý hàng nhái sẽ gặm dần doanh thu của bạn.', 'No harm for now – but counterfeits will keep nibbling at your revenue every quarter.'); } }] },
+    { id: 'voids', cat: '🕳️', t: 'Khoảng trống thể chế', tEn: 'An institutional void', need: anyEnt, d: function () { var m = voidMkt(); S.flags.voidM = m; return T('Tại ' + MKTS[m].name + ' không có cơ quan kiểm định độc lập và hợp đồng khó cưỡng chế: nhà bán lẻ đòi bạn tự chứng minh chất lượng, còn đối tác thanh toán chậm 60 ngày.', 'In ' + MKTS[m].name + ' there is no independent certifier and contracts are hard to enforce: retailers want you to prove quality yourself, and partners pay 60 days late.'); }, ch: [
+      { l: '🏗️ Tự lấp khoảng trống: phòng kiểm định + ký quỹ (0,7 tỷ)', lEn: '🏗️ Fill the void yourself: in-house testing + escrow (0.7 bn)', fx: function () { var m = S.flags.voidM || 0; S.cash -= 0.7; S.capab += 5; S.net[m] = clamp(S.net[m] + 15); S.foot.push(T('Tự xây thể chế thay thế ở ' + MKTS[m].name, 'Built substitute institutions in ' + MKTS[m].name)); return T('Tốn kém, nhưng bạn thành người đặt chuẩn ở ' + MKTS[m].name + ' – năng lực +5, mạng lưới +15. Khanna & Palepu: lấp khoảng trống thể chế chính là một lợi thế cạnh tranh.', 'Costly, but you become the standard-setter in ' + MKTS[m].name + ' – capability +5, network +15. Khanna & Palepu: filling an institutional void is itself a competitive advantage.'); } },
+      { l: '🤝 Nhờ người trong cuộc bảo lãnh', lEn: '🤝 Ask an insider to vouch for you', fx: function () { var m = S.flags.voidM || 0; if (S.net[m] >= 40 || S.entered[m] === 2) { S.adapt += 1; S.rep += 3; return T('Hiệp hội và đối tác đứng ra bảo lãnh – giao dịch thông suốt, uy tín +3, thích ứng +1. Đây là lợi thế của người trong cuộc.', 'The association and your partners vouch for you – business flows, reputation +3, adaptation +1. This is the insider advantage.'); } S.flags.wave = 0.85; S.rep -= 3; S.foot.push(T('Nhờ bảo lãnh khi chưa có chỗ đứng trong mạng lưới', 'Asked for backing before having a network position')); return T('Chưa ai đứng ra cho người ngoài cuộc (mạng lưới ' + clamp(S.net[m]) + '/100) – lô hàng bị trả lại: doanh thu quý này −15%, uy tín −3.', 'No one vouches for an outsider (network ' + clamp(S.net[m]) + '/100) – the shipment is returned: revenue this quarter −15%, reputation −3.'); } },
+      { l: '⏳ Thu hẹp hoạt động, chờ thể chế hoàn thiện', lEn: '⏳ Scale back and wait for institutions to mature', fx: function () { S.flags.wave = 0.8; S.resil += 4; S.foot.push(T('Chờ thể chế thay vì tự xây', 'Waited for institutions instead of building them')); return T('An toàn nhưng chậm: doanh thu quý này −20%, chống chịu +4. Khoảng trống vẫn còn đó ở quý sau.', 'Safe but slow: revenue this quarter −20%, resilience +4. The void will still be there next quarter.'); } }] },
     { id: 'board', cat: '🏛️', t: 'Hội đồng quản trị chất vấn', tEn: 'The board of directors questions you', need: function () { return S.q >= 3 && S.profit < 1; }, d: function () { return T('Lợi nhuận tích lũy còn thấp – hội đồng yêu cầu giải trình chiến lược.', 'Cumulative profit is still low – the board demands a strategic explanation.'); }, ch: [
       { l: '📊 Trình bày lộ trình bằng dữ liệu thị trường', lEn: '📊 Present the roadmap backed by market data', fx: function () { if (kAvgAll() >= 40) { S.adapt += 1; return T('Dữ liệu thuyết phục – hội đồng gia hạn niềm tin, thích ứng +1.', 'Convincing data – the board extends its trust, adaptation +1.'); } S.rep -= 5; return T('Thiếu dữ liệu chứng minh – niềm tin sứt mẻ, uy tín −5.', 'Not enough data to prove your case – trust erodes, reputation −5.'); } },
       { l: '🤝 Hứa tăng tốc doanh số ngay', lEn: '🤝 Promise to accelerate sales right away', fx: function () { S.flags.wave = 1.1; S.resil -= 5; S.foot.push(T('Hứa với hội đồng chỉ tiêu ngắn hạn', 'Promised the board a short-term target')); return T('Cả công ty tăng tốc (+10% quý này) nhưng căng như dây đàn – chống chịu −5.', 'The whole company speeds up (+10% this quarter) but is stretched thin – resilience −5.'); } }] },
@@ -681,6 +691,10 @@
       if (entMkts().length >= 3) return ['🤖', 'Lumina', T('Bạn đang hiện diện ở ' + entMkts().length + '/' + MKTS.length + ' thị trường. Dữ liệu cho thấy mở rộng nhanh hơn năng lực giao hàng là nguyên nhân số một của «tăng trưởng nghẽn cổ chai» – hãy nâng năng lực trước khi thêm cửa mới.', 'You are now present in ' + entMkts().length + '/' + MKTS.length + ' markets. Data shows expanding faster than delivery capability is the number-one cause of «bottlenecked growth» – raise your capability before opening a new door.')];
       return null;
     },
+    function () { // Lumina: bất lợi người ngoài cuộc ở thị trường đã vào mà mạng lưới còn mỏng
+      var ms = entMkts().filter(function (m) { return S.net[m] < 30 && S.qin[m] >= 1; }); if (!ms.length) return null; var m = ms[0];
+      return ['🤖', 'Lumina', T('Ở ' + MKTS[m].name + ' bạn vẫn là người ngoài cuộc (mạng lưới ' + clamp(S.net[m]) + '/100) nên doanh thu đang bị phạt. Hiệp hội ngành hàng hay đối tác địa phương mở cửa nhanh hơn quảng cáo (Johanson & Vahlne, 2009).', 'In ' + MKTS[m].name + ' you are still an outsider (network ' + clamp(S.net[m]) + '/100), so revenue is being penalised. A trade association or a local partner opens doors faster than advertising (Johanson & Vahlne, 2009).')];
+    },
     function () { if (S.know.every(function (k) { return k < 35; })) return ['🌍', 'Victor Lâm', T('Ta đang bay trong sương mù. Mua dữ liệu trước khi đặt cược – nhưng nhớ hỏi: nguồn này có lợi ích gì khi nói với ta điều đó?', "We're flying in the fog. Buy intel before you place a bet – but always ask: what does this source stand to gain by telling me this?")]; },
     function () { if (S.rep >= 60) return ['📣', 'An Nhiên', T('Uy tín đang là tài sản lớn nhất của mình. Đầu tư thêm cho cộng đồng khách hàng – họ chính là kênh phân phối trung thành nhất.', 'Reputation is your biggest asset right now. Invest more in the customer community – they are your most loyal distribution channel.')]; },
     function () { if (S.capab < 45) return ['👵', 'Bà Sáu Lành', T('Đừng nhận đơn lớn khi tay nghề chưa tới, con à. Thà chậm một quý còn hơn mất chữ tín cả đời.', "Don't take on big orders before your skills catch up, dear. Better to be a quarter slower than to lose your word for a lifetime.")]; },
@@ -697,6 +711,7 @@
       '<span class="bp-chip">⭐ ' + T('Uy tín', 'Reputation') + ' ' + clamp(S.rep) + '</span>' +
       '<span class="bp-chip">🏭 ' + T('Năng lực', 'Capability') + ' ' + clamp(S.capab) + '</span>' +
       '<span class="bp-chip">📚 ' + T('Tri thức', 'Knowledge') + ' ' + kAvg + '</span>' +
+      '<span class="bp-chip">🤝 ' + T('Mạng lưới', 'Network') + ' ' + Math.round(netAvg()) + '</span>' +
       '<span class="bp-chip">🛡️ ' + T('Chống chịu', 'Resilience') + ' ' + clamp(S.resil) + '</span>' +
       '<span class="bp-chip">🌱 ' + T('Bền vững', 'Sustainability') + ' ' + S.susts + '</span>' +
       '<span class="bp-chip">💹 ' + T('LN tích lũy', 'Cumulative profit') + ' ' + f1(S.profit) + TY() + '</span>';
@@ -893,7 +908,7 @@
         preDrawnMissionAhead ? '<div class="bp-adv mt-2">' + faceHtml('Lumina', '🤖') + '<div><p class="who">Lumina</p><p>' + T('🔮 Dự báo: quý sau là mốc đặc biệt, một NHIỆM VỤ lớn chứ không phải sự kiện thường.', '🔮 Forecast: next quarter is a special milestone, a major MISSION rather than a regular event.') + '</p></div></div>' : '') +
       '<p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-4 mb-1.5">' + T('Mua thông tin thị trường (tối đa 2 nguồn/quý)', 'Buy market intel (max 2 sources/quarter)') + '</p>' +
       '<div class="grid sm:grid-cols-2 gap-2" id="bp-intel-grid">' + SOURCES.map(function (s, i) {
-        return '<button class="bp-opt" data-src="' + i + '" onclick="bpIntel(' + i + ')">' + s.icon + ' ' + T(s.name, s.nameEn) + ' – ' + f1(s.cost * discount) + TY() + '<small>+' + s.know + ' ' + T('tri thức', 'knowledge') + ' · ' + T(s.note, s.noteEn) + '</small></button>';
+        return '<button class="bp-opt" data-src="' + i + '" onclick="bpIntel(' + i + ')">' + s.icon + ' ' + T(s.name, s.nameEn) + ' – ' + f1(s.cost * discount) + TY() + '<small>+' + s.know + ' ' + T('tri thức', 'knowledge') + (s.net ? ' · +' + s.net + ' ' + T('mạng lưới', 'network') : '') + ' · ' + T(s.note, s.noteEn) + '</small></button>';
       }).join('') + '</div>' +
       '<p id="bp-intel-note" class="text-[11px] opacity-60 mt-1.5">' + T('Chọn nguồn rồi chọn thị trường muốn tìm hiểu. Có thể bỏ qua nếu muốn tiết kiệm.', 'Pick a source, then pick the market you want to research. You can skip this to save cash.') + '</p>' +
       '<button onclick="bpToDecide()" class="clay-btn w-full bg-primary text-white font-display font-extrabold py-3.5 mt-4">➡️ ' + T('Sang bước Quyết định', 'Move to the Decision step') + '</button>';
@@ -912,7 +927,7 @@
     ov.innerHTML = '<div class="clay-card p-5" style="max-width:440px;width:100%;max-height:88vh;overflow:auto">' +
       '<p id="bp-mkt-pick-t" class="font-display font-extrabold text-deep-teal text-base mb-3">' + title + '</p>' +
       '<div class="grid grid-cols-2 gap-2">' + MKTS.map(function (mk, j) {
-        return '<button type="button" class="bp-opt" data-pm="' + j + '" style="min-height:48px">' + mktBadge(j) + mk.name + '<small>' + T('tri thức', 'knowledge') + ' ' + clamp(S.know[j]) + '/100' + (S.entered[j] !== null ? ' · ' + T('đã vào', 'entered') : '') + '</small></button>';
+        return '<button type="button" class="bp-opt" data-pm="' + j + '" style="min-height:48px">' + mktBadge(j) + mk.name + '<small>' + T('tri thức', 'knowledge') + ' ' + clamp(S.know[j]) + '/100 · 🤝 ' + clamp(S.net[j]) + (S.entered[j] !== null ? ' · ' + T('đã vào', 'entered') : '') + '</small></button>';
       }).join('') + '</div>' +
       '<button type="button" data-pm="x" class="clay-btn w-full bg-surface-bright text-deep-teal/70 font-bold py-3 mt-3">' + T('Huỷ', 'Cancel') + '</button></div>';
     var close = function () { ov.remove(); document.removeEventListener('keydown', esc); };
@@ -936,11 +951,13 @@
     if (S.cash < cost) { $('bp-intel-note').textContent = T('Không đủ tiền cho nguồn này.', "You don't have enough cash for this source."); return; }
     S.cash -= cost;
     S.know[m] = clamp(S.know[m] + src.know);
+    if (src.net) S.net[m] = clamp(S.net[m] + src.net);
     S.sel.intel.push(i);
     var real = H[m].fit;
     var msg;
     if (i === 3) msg = T('MXH nói nhu cầu tại ' + MKTS[m].name + ' đang «bùng nổ» 🔥 (thực tế có thể thấp hơn nhiều)', 'Social media says demand in ' + MKTS[m].name + ' is «exploding» 🔥 (reality may be much lower)');
     else if (i === 5) msg = T('Đối tác địa phương khuyên bạn nên vào ' + MKTS[m].name + ' «càng sớm càng tốt, qua kênh của họ»', 'Your local partner advises entering ' + MKTS[m].name + ' «as soon as possible, through their channel»');
+    else if (i === 6) msg = T('Hiệp hội giới thiệu bạn với ba nhà phân phối và một đơn vị kiểm định tại ' + MKTS[m].name + ' – mạng lưới ' + clamp(S.net[m]) + '/100, từ người ngoài cuộc dần thành người trong cuộc', 'The association introduces you to three distributors and a testing lab in ' + MKTS[m].name + ' – network ' + clamp(S.net[m]) + '/100, from outsider toward insider');
     else msg = T('Độ phù hợp sản phẩm tại ' + MKTS[m].name + ': ' + (real >= 1.1 ? 'CAO' : real >= 0.9 ? 'KHÁ' : 'THẤP') + (i === 4 ? ' (số liệu từ đơn thử – rất đáng tin)' : ''),
                   'Product fit in ' + MKTS[m].name + ': ' + (real >= 1.1 ? 'HIGH' : real >= 0.9 ? 'FAIR' : 'LOW') + (i === 4 ? ' (pilot-order data – very reliable)' : ''));
     addLog(src.icon + ' ' + T(src.name, src.nameEn) + ' → ' + msg + '.');
@@ -989,7 +1006,7 @@
       '<p class="text-[10px] opacity-55 mb-1.5">' + T('🧭 <b>AIBIS</b> (engine tất định) chấm mức phù hợp 0–100 cho mỗi phương thức theo hồ sơ thị trường &amp; doanh nghiệp (<i>tham khảo, số liệu minh hoạ</i>).', '🧭 <b>AIBIS</b> (a deterministic engine) scores each entry mode 0–100 based on the market &amp; company profile (<i>for reference, illustrative figures</i>).') + '</p>' +
       (notIn.length ? '<div class="space-y-2">' + notIn.map(function (m) {
         var _fit = aibisFit(m);
-        return '<div class="text-[12px] font-bold mt-1">' + mktBadge(m) + MKTS[m].name + ' <span class="opacity-55 font-semibold">(' + T('tri thức', 'knowledge') + ' ' + clamp(S.know[m]) + '/100 – ' + T(MKTS[m].trait, MKTS[m].traitEn) + ')</span>' +
+        return '<div class="text-[12px] font-bold mt-1">' + mktBadge(m) + MKTS[m].name + ' <span class="opacity-55 font-semibold">(' + T('tri thức', 'knowledge') + ' ' + clamp(S.know[m]) + '/100 · ' + T('mạng lưới', 'network') + ' ' + clamp(S.net[m]) + '/100 – ' + T(MKTS[m].trait, MKTS[m].traitEn) + ')</span>' +
           (S.rival.in.indexOf(m) >= 0 ? ' <span class="bp-chip" style="font-size:9.5px; padding:2px 7px">' + RIVAL.icon + ' ' + T('đối thủ đã có mặt', 'rival already here') + '</span>' : '') + '</div>' +
           '<div class="grid sm:grid-cols-3 gap-2">' + MODES.map(function (md) {
             return '<button class="bp-opt" data-g="ent" data-m="' + m + '" data-md="' + md.id + '" onclick="bpEnter(' + m + ',' + md.id + ')">' + md.icon + ' ' + T(md.name, md.nameEn) + '<small>' + T('vốn', 'capital') + ' ' + f1(md.cost) + TY() + ' · ' + T(md.note, md.noteEn) + '</small>' + (_fit && _fit[md.id] != null ? '<span style="display:block;margin-top:3px;font-family:ui-monospace,monospace;font-size:10px;font-weight:800;color:#0F5C4E">AIBIS ' + _fit[md.id] + ' · ' + T('phù hợp', 'fit') + '</span>' : '') + '</button>';
@@ -1276,9 +1293,14 @@
     entMkts().forEach(function (m) {
       var mode = MODES[S.entered[m]];
       S.qin[m]++;
+      // Mạng lưới: quý nào cũng làm việc với người địa phương nên dần thành người trong cuộc; phương thức đối tác và vật phẩm Mạng lưới đối tác đẩy nhanh hơn.
+      S.net[m] = clamp(S.net[m] + (S.entered[m] === 2 ? 12 : 5) + (S.items.NETWORK ? 4 : 0));
       var rev = 1.2 * H[m].fit * mode.scale * H[m].trend[S.q] / H[m].comp;
       rev *= (0.8 + S.rep / 250) * (0.8 + S.capab / 250) * bud.rev * wave;
       rev *= 0.7 + S.cust[m] / 100 * 0.6; // khách hàng hài lòng/trung thành: 0,7x–1,3x doanh thu
+      // Bất lợi người ngoài cuộc (Johanson & Vahlne 2009): chưa có chỗ đứng trong mạng lưới thì doanh thu bị phạt tới 10%;
+      // phương thức đối tác «mượn» mạng lưới của họ nên được tính như đã có vị thế ít nhất 50.
+      rev *= 0.9 + 0.1 * clamp(S.entered[m] === 2 ? Math.max(S.net[m], 50) : S.net[m]) / 100;
       if (S.sel.prio === 1) rev *= 1.15;
       if (m === 0 && S.entered[m] === 0) rev *= 1.25;           // Hải Lam thưởng kênh số
       if (m === 1 && !S.certBP) rev *= 0.45;                    // Bắc Phong thiếu chứng nhận
@@ -1681,6 +1703,7 @@
       if (!d) return;
       seed = d.seed;
       Object.keys(d.S).forEach(function (k) { S[k] = d.S[k]; });
+      if (!S.net || S.net.length !== MKTS.length) S.net = MKTS.map(function () { return 10; }); // ván lưu từ bản chưa có mạng lưới
       d.H.forEach(function (h, i) { H[i] = h; });
       preDrawnEv = EVENTS.filter(function (e) { return e.id === d.pre; })[0] || null; preDrawnMissionAhead = !!d.preM;
       $('bp-intro').classList.add('hidden');
@@ -1696,6 +1719,8 @@
   window.bpTest = {
     seed: function () { return seed; },
     markets: function () { return MKTS.length; },
+    events: function () { return EVENTS.map(function (e) { return e.id; }); },
+    sources: function () { return SOURCES.map(function (x) { return { know: x.know, net: x.net || 0, cost: x.cost }; }); },
     scores: function () { return scores(); },
     ended: function () { return !$('bp-end').classList.contains('hidden'); },
     // Toàn bộ gợi ý đang thoả điều kiện, kể cả những gợi ý không lọt vào hai ô
@@ -1707,7 +1732,7 @@
     state: function () {
       return {
         q: S.q, firm: S.firm, cash: S.cash, rep: S.rep, capab: S.capab, resil: S.resil,
-        know: S.know.slice(), entered: S.entered.slice(), qin: S.qin.slice(),
+        know: S.know.slice(), entered: S.entered.slice(), qin: S.qin.slice(), net: S.net.slice(),
         profit: S.profit, susts: S.susts, adapt: S.adapt, lowQ: S.lowQ,
         certBP: S.certBP, phase: S.phase, flags: JSON.parse(JSON.stringify(S.flags)),
         sel: { prio: S.sel.prio, budget: S.sel.budget, enter: S.sel.enter,
