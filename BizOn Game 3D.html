@@ -140,6 +140,19 @@
   #evc .imp b{font:800 19px/1.3 "Baloo 2",sans-serif}
   #evc .say{background:#fff;border:3px solid #cfe2e0;border-radius:18px 18px 18px 4px;padding:10px 12px;font-size:14px;font-style:italic;color:#2c3552;text-wrap:pretty}
   #evc .say small{display:block;font:800 11px "Baloo 2",sans-serif;font-style:normal;color:#2f8a8c;letter-spacing:.05em;margin-bottom:2px}
+  #evc .say .shock,#rmCard .shock{display:block;margin-top:6px;padding-top:6px;border-top:2px dashed #e6d6bf;font-style:normal}
+  /* Bảng điểm dự kiến (js/bn2-grade.js) trong màn tổng kết 3D */
+  #evc #bn2-grade{background:#fff;border:3px solid #e6d6bf;border-radius:18px;padding:12px;font-size:13px;color:#2c3552}
+  #evc .bn2-eyebrow{margin:0;font:800 12px "Baloo 2",sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#1f6f8a}
+  #evc .bn2-grade-total{margin:4px 0 8px}
+  #evc .bn2-grade-total b{font:800 32px "Baloo 2",sans-serif;color:#1f6f8a}
+  #evc .bn2-grade-total span{font:800 15px "Baloo 2",sans-serif;color:#8a7a68}
+  #evc .bn2-table{width:100%;border-collapse:collapse;font-size:12.5px}
+  #evc .bn2-table th,#evc .bn2-table td{padding:6px 4px;text-align:left;border-bottom:1px solid #efe4d3}
+  #evc .bn2-table td:last-child,#evc .bn2-table th:last-child{text-align:right}
+  #evc .bn2-flag{margin:8px 0;padding:8px 10px;border-radius:12px;background:#fdf0d8;font:700 13px "Be Vietnam Pro",sans-serif;color:#a8651a}
+  #evc .bn2-muted{color:#6b6458} #evc .bn2-small{font-size:12px;line-height:1.5} #evc #bn2-grade a{color:#1f6f8a}
+  #evc .bn2-btn{font:700 14px "Baloo 2",sans-serif;border:3px solid #e6d6bf;background:#fbf6ee;color:#2c3552;border-radius:16px;padding:8px 14px;cursor:pointer;box-shadow:0 4px 0 #d9c5a8}
   #evc .q{font-size:12px;color:#4a4f5c;font-style:italic;border-top:2px dashed #e6d6bf;padding-top:8px}
   #evc .btn{justify-content:center;font-size:16px;padding:10px}
   @media (max-width:760px){#evc{top:auto;bottom:0;left:0;width:100%;max-height:60vh;border-radius:26px 26px 0 0;border-width:4px 0 0} body.evt #zones{display:none} #arena .ah b{font-size:22px} #arena .lab i{font-size:18px} #arena .lab b{font-size:11px}}
@@ -250,6 +263,10 @@
   }
 </style>
 <script src="js/capture-guard.js"></script>
+<!-- Bảng điểm dự kiến ở màn tổng kết: cùng bộ chấm với Trang Giảng viên và bat-nghiep-v2.html -->
+<script src="js/bizon-grading.js"></script>
+<script src="js/bn2-grade.js"></script>
+<link rel="stylesheet" href="css/bn2-grade.css">
 </head>
 <body>
 <div id="boot" style="position:fixed;inset:0;z-index:200;background:#2a2340 url('assets/illustrations/rong-bay-doi-bizon.webp') center/cover no-repeat;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;font-family:'Baloo 2','Be Vietnam Pro',sans-serif;color:#2b4a55;transition:opacity .5s">
@@ -794,7 +811,7 @@ function l3Enter(demo) {
       if (g('sa-class') && !g('sa-class').value) g('sa-class').value = classId;
       if (g('sa-team') && !g('sa-team').value) g('sa-team').value = team;
       if (g('sa-role')) g('sa-role').value = L3.role;
-      if (g('sa-email') && !g('sa-email').value && /@student\.ctu\.edu\.vn$/i.test(email)) g('sa-email').value = email;
+      if (g('sa-email') && !g('sa-email').value && /@g?student\.ctu\.edu\.vn$/i.test(email)) g('sa-email').value = email;
       L3.classic = true; document.body.classList.remove('login3d'); L3.on = false; setMode();
       const box = g('student-auth-panel'); if (box) setTimeout(() => box.scrollIntoView({ behavior: 'smooth', block: 'center' }), 50);
       return;
@@ -1214,9 +1231,12 @@ function finale3D() {
     <div class="imps"><div class="imp"><small>${T('Cờ cả mùa', 'Season flags')}</small><b>🚩 ${mine}/6</b></div><div class="imp"><small>${T('Lợi nhuận tích lũy', 'Cumulative profit')}</small><b style="color:${profit >= 0 ? '#3f8a44' : '#c0443a'}">${fmt(profit)}</b></div><div class="imp"><small>${T('Thị phần cuối', 'Final share')}</small><b>${(+last.share || 0).toFixed(1)}%</b></div><div class="imp"><small>${T('Số dư ví', 'Wallet balance')}</small><b>${fmt(s.balance)}</b></div></div>
     <div class="say"><small>🤖 LUMINA</small>${champ ? T('Quán quân sàn đấu! Đội cắm nhiều cờ nhất trên bản đồ Việt Nam.', 'Champions of the arena! The team planted the most flags on the map of Vietnam.') : T('Sáu vòng là sáu bài học. Đọc lại nhật ký đội, rồi thử lại mùa mới nhé.', 'Six rounds, six lessons. Reread the team journal, then try a new season.')}</div>
     <div class="q">"${champ ? T('Một chiến lược được thực thi kỷ luật suốt sáu vòng – đó là điều đáng tự hào nhất.', 'A strategy executed with discipline for six rounds – that is the thing to be proudest of.') : T('Doanh nghiệp giỏi không phải doanh nghiệp không bao giờ sai, mà là doanh nghiệp sửa sai nhanh.', 'A good business is not one that never errs, but one that corrects its errors fast.')}" – <b>Phan Anh Tú</b></div>
+    ${window.BN2Grade ? BN2Grade.html(s) : ''}
     <div class="row"><button class="btn primary" id="fnRep">${T('📊 Báo cáo mùa giải', '📊 Season report')}</button><button class="btn" id="fnAch">${T('🎖️ Thành tựu', '🎖️ Achievements')}</button></div>
     <button class="btn" id="fnNew">${T('🔄 Chơi lại mùa mới', '🔄 Play a new season')}</button>
     <p style="font-size:11px;color:#8a7a68;margin-top:4px;line-height:1.4">${s.profile.classId && s.profile.classId !== 'DEMO-2026' ? T('Phiên thi có mã lớp: không thể Reset – kết quả đã gửi về giảng viên.', 'Graded session with a class code: no reset – results were sent to the instructor.') : T('Chỉ Reset khi vòng chơi thật sự gặp lỗi.', 'Reset only if the game is truly broken.')}</p>`);
+  // Bảng xếp hạng lớp (cho B1) đọc qua backend của khung game; vẽ lại riêng khung #bn2-grade khi có dữ liệu.
+  if (window.BN2Grade) BN2Grade.load(s, W.BizonBackend);
   evc.querySelector('#fnRep').onclick = () => { closeEvent(); ev("currentReport='season'"); force2D = true; W.showTab('reports'); force2D = false; };
   evc.querySelector('#fnAch').onclick = () => { closeEvent(); window.__openTab('achievements'); };
   evc.querySelector('#fnNew').onclick = () => { closeEvent(); if (FIN) { scene.remove(FIN); FIN = null; } for (let i = actors.length - 1; i >= 0; i--) if (actors[i].fin) actors.splice(i, 1); ev('resetGame()'); };
@@ -1269,7 +1289,14 @@ bubTick();
 
 // ================= BIẾN CỐ 3D (Lumina trong trụ sở) =================
 const evc = document.getElementById('evc');
+// 🖨️ In phiếu kết quả dự kiến (A4): trạng thái ván nằm trong khung game.html nên truyền S vào bộ in.
+evc.addEventListener('click', e => { if (e.target.closest('[data-bn2-print]') && window.BN2Grade) { const s = ev('S'); if (s) BN2Grade.printSheet(s); } });
 function closeEvent() { window.__EVON = false; document.body.classList.remove('evt'); }
+// Cú sốc thị trường động đang tác động lên tỉnh của vòng (js/market-dynamic.js): cùng lời Lumina ở tab Cố vấn 2D.
+function shockNotes() {
+  const list = ev('window.BizonMarket && BizonMarket.activeShocks ? BizonMarket.activeShocks(S) : []') || [];
+  return list.map(x => `<span class="shock">${x.icon} <b>${T('Biến động thị trường', 'Market shock')}:</b> ${x.text}</span>`).join('');
+}
 function event3D() {
   const s = ev('S'); if (!s || s.finished || s.committed || s.eventShownRound >= s.round) return;
   if (!DIORAMA && s.round === 1 && !(s.history || []).length && !tourSeen()) { tourThen = event3D; tour3D(0); return; }
@@ -1282,7 +1309,7 @@ function event3D() {
   evc.innerHTML = `<img src="assets/dragon/${bad || warn ? 'magnifier' : 'thumbs'}.png" alt="Tèo Soi" style="width:84px;align-self:center"><span class="tag ${bad ? 'bad' : warn ? 'warn' : ''}">● ${T('Vòng', 'Round')} ${s.round}/6 · ${e.tag || T('BIẾN CỐ THỊ TRƯỜNG', 'MARKET EVENT')}</span>
     <h2 class="${bad ? 'bad' : ''}">${e.icon} ${e.name}</h2><p class="d">${e.desc}</p>
     <div class="imps">${(e.impacts || []).map(im => `<div class="imp"><small>${im.icon} ${im.label}</small><b style="color:${dirCol(im.dir)}">${dirIcon(im.dir)} ${im.value}</b></div>`).join('')}</div>
-    <div class="say" style="display:flex;gap:10px;align-items:flex-start"><div><small>${T('LUMINA · CỐ VẤN', 'LUMINA · ADVISOR')}</small>"${e.luminaMsg}"</div></div>
+    <div class="say" style="display:flex;gap:10px;align-items:flex-start"><div><small>${T('LUMINA · CỐ VẤN', 'LUMINA · ADVISOR')}</small>"${e.luminaMsg}"${shockNotes()}</div></div>
     ${bad ? '<div class="q">' + T('"Bình tĩnh phân tích số liệu trước khi hành động – khủng hoảng luôn ẩn chứa cơ hội cho đội có kỷ luật." – <b>Phan Anh Tú · Cố vấn học thuật</b>', '"Analyse the numbers calmly before acting – a crisis always hides an opportunity for a disciplined team." – <b>Phan Anh Tú · Academic advisor</b>') + '</div>' : ''}
     <button class="btn primary" id="evGo">${e.cta ? e.cta.label : T('🎯 Nhập quyết định', '🎯 Enter decisions')}</button><button class="btn" id="evHome">${T('Về trụ sở', 'Back to HQ')}</button>`;
   evc.querySelector('#evGo').onclick = () => { closeEvent(); window.__openTab(e.cta ? e.cta.tab : 'decisions', e.cta && e.cta.report); };
@@ -1696,7 +1723,7 @@ function buildFaceoff() {
   // Thẻ biến cố ở trụ sở chỉ hiện ~1,4 giây trước khi chuyển sang phòng này – nhắc lại các ô tác động ở đây.
   const imps = (e.impacts || []).length ? `<div class="stats" style="grid-template-columns:repeat(${Math.min(4, e.impacts.length)},1fr)">${e.impacts.map(im => `<div><small>${im.icon} ${im.label}</small><b style="font-size:15px;color:${dirCol(im.dir)}">${dirIcon(im.dir)} ${im.value}</b></div>`).join('')}</div>` : '';
   rmCard.innerHTML = `<p class="k">${e.tag || T('BIẾN CỐ THỊ TRƯỜNG', 'MARKET EVENT')}</p><h3 style="${bad ? 'color:#c0443a' : ''}">${e.icon || '📣'} ${e.name || T('Đối thủ ra đòn', 'A rival strikes')}</h3><p>${e.desc || ''}</p>${imps}
-    ${e.luminaMsg ? `<p style="font-style:italic">🤖 Lumina: “${e.luminaMsg}”</p>` : ''}
+    ${e.luminaMsg ? `<p style="font-style:italic">🤖 Lumina: “${e.luminaMsg}”</p>` : ''}${shockNotes()}
     <button class="btn primary" id="foGo">${e.cta ? e.cta.label : T('🎯 Nhập quyết định', '🎯 Enter decisions')}</button><button class="btn" id="foHome">${T('Về trụ sở', 'Back to HQ')}</button>`;
   rmCard.querySelector('#foGo').onclick = () => { closeRoom(); window.__openTab(e.cta ? e.cta.tab : 'decisions', e.cta && e.cta.report); };
   rmCard.querySelector('#foHome').onclick = () => { closeRoom(); ev('showTab("home")'); };
