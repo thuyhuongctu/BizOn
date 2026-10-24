@@ -384,7 +384,7 @@ footer{color:var(--faint)}
   }
 
   const formulaHTML = () => Object.entries(D.scoreWeights).map(([k, w]) => `<b>${w}%</b> ${partName(k)}`).join(' + ');
-  const partName = k => ({ profit: L('Lợi nhuận', 'Profit'), reputation: L('Uy tín', 'Reputation'), capability: L('Năng lực', 'Capability'), adaptation: L('Thích ứng', 'Adaptation'), sustainability: L('Bền vững', 'Sustainability') })[k];
+  const partName = k => ({ profit: L('Lợi nhuận', 'Profit'), reputation: L('Uy tín', 'Reputation'), capability: L('Năng lực', 'Capability'), adaptation: L('Ứng phó biến cố', 'Shock response'), sustainability: L('Bền vững', 'Sustainability') })[k];
   // «Cách chơi 6 vụ»: luật rút từ dữ liệu và tham số qua DurianCore.howToPlay (dùng chung với bản 3D)
   const rulesHTML = () => DurianCore.howToPlay(D, L).map(sec => `<h3>${esc(sec.title)}</h3><dl>${sec.lines.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>`).join('');
   const openRules = () => { $('rulesTitle').textContent = L('📘 Cách chơi 6 vụ', '📘 How to play the 6 seasons'); $('rulesBody').innerHTML = rulesHTML(); $('rulesModal').hidden = false; $('rulesClose').focus(); };
@@ -704,7 +704,7 @@ footer{color:var(--faint)}
           <div class="kpis" style="margin-top:8px">
             <div class="kpi"><small>${L('Tiền mặt', 'Cash')}</small><b class="num ${g.cash >= 0 ? 'pos' : 'neg'}">${money(g.cash)}</b></div>
             <div class="kpi"><small>${L('Uy tín', 'Reputation')}</small><b class="num">${nf(g.rep)}</b></div>
-            <div class="kpi"><small>${L('Thích ứng', 'Adaptation')}</small><b class="num">${nf(g.adapt)}</b></div>
+            <div class="kpi"><small>${L('Ứng phó biến cố', 'Shock response')}</small><b class="num">${nf(g.adapt)}</b></div>
             <div class="kpi"><small>${role.ownFarm ? L('Sức khỏe vườn', 'Orchard health') : L('Bền vững', 'Sustainability')}</small><b class="num">${nf(role.ownFarm ? g.treeHealth : g.sus)}</b></div></div></div>
         <div class="card"><h2>${L('Bảng xếp hạng', 'Leaderboard')}</h2>${leaderboardHTML(n - 1)}
           <p class="hint">${L('Chỉ hiện lợi nhuận và số lô bị chặn; đối thủ đã chơi xong các vụ trước.', 'Shows profit and blocked lots only; rivals have finished the previous seasons.')}</p></div>
