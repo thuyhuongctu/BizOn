@@ -16,6 +16,9 @@ const assert = require('node:assert/strict');
   assert.match(h, /''a''/, 'nháy đơn trong SQL được thoát');
   assert.match(h, /on conflict \(version\) do nothing/);
   assert.ok(m.CHECKS.revoke_anon_writes.pre.length, 'B phải kiểm tra A đã áp');
+  assert.ok(m.CHECKS.add_gstudent_domain.pre.length && /gstudent\.ctu\.edu\.vn/.test(m.CHECKS.add_gstudent_domain.post[0][0]), 'migration gstudent cần A và kiểm tra tên miền');
+  assert.match(fs.readFileSync('supabase/migrations/20261024000000_add_gstudent_domain.sql', 'utf8'), /'gstudent\.ctu\.edu\.vn'[\s\S]*on conflict \(domain\) do nothing/);
+  assert.match(fs.readFileSync('js/student-login.js', 'utf8'), /let domains = \['student\.ctu\.edu\.vn', 'gstudent\.ctu\.edu\.vn'\]/);
 
   const tmp = path.join(os.tmpdir(), 'bizon-mig-test.sql');
   fs.writeFileSync(tmp, 'create table if not exists public.t(id int);');
@@ -62,7 +65,13 @@ const assert = require('node:assert/strict');
   assert.match(wf, /^on:\n  workflow_dispatch:/m);
   assert.doesNotMatch(wf, /^\s+(push|pull_request|schedule):/m);
   assert.match(wf, /if: github\.ref == 'refs\/heads\/main'/);
-  assert.match(wf, /bash scripts\/release\/fetch-migration\.sh "\$MIGRATION" "\$SOURCE_REF"/);
+  assert.match(wf, /M="\$\{MIGRATION_KHAC:-\$MIGRATION\}"/);
+  assert.match(wf, /bash scripts\/release\/fetch-migration\.sh "\$M" "\$SOURCE_REF"/);
+  assert.match(wf, /echo "MIGRATION_FILE=\$M" >> "\$GITHUB_ENV"/);
+  // Ô migration là danh sách chọn (gõ tên file trên điện thoại dễ giữ nhầm giá trị cũ); mục đầu là mặc định.
+  const opts = (wf.match(/migration:\n[\s\S]*?options:\n((?:\s+- .+\n)+)/) || [])[1] || '';
+  const list = opts.trim().split('\n').map(l => l.trim().replace(/^- /, ''));
+  assert.ok(list.length >= 3 && list.every(f => fs.existsSync('supabase/migrations/' + f)), 'mọi lựa chọn phải là file migration có thật: ' + list);
   assert.match(wf, /pull-requests: read/);
   const sh = fs.readFileSync('scripts/release/fetch-migration.sh', 'utf8');
   assert.match(sh, /\[\[ "\$M" =~ \^\[0-9\]\{14\}_\[a-z0-9_\]\+\\\.sql\$ \]\]/);

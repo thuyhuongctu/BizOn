@@ -111,6 +111,7 @@ select pg_temp.expect_fail($q$select public.bizon_submit_bp_result('KT-TEST','Ga
 select pg_temp.expect_fail($q$select public.bizon_admin_set_student_domain('student.doitac.ac.id', true, null)$q$, 'Chỉ quản trị');
 do $$ begin
   if not exists (select 1 from public.bizon_student_domains() d where d = 'student.ctu.edu.vn') then raise exception 'Phải liệt kê tên miền CTU'; end if;
+  if not exists (select 1 from public.bizon_student_domains() d where d = 'gstudent.ctu.edu.vn') then raise exception 'Phải liệt kê tên miền nghiên cứu sinh CTU'; end if;
 end $$;
 reset role;
 select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-0000000000c1","email":"thuyhuongctu@gmail.com","role":"authenticated"}', false);

@@ -21,6 +21,14 @@ export const CHECKS = {
       ["exists (select 1 from pg_proc p join pg_namespace n on n.oid = p.pronamespace where n.nspname = 'public' and p.proname = 'bizon_submit_round')", 'có hàm bizon_submit_round'],
     ],
   },
+  add_gstudent_domain: {
+    pre: [
+      ["to_regclass('public.student_email_domains') is not null", 'migration A (require_student_login) đã áp'],
+    ],
+    post: [
+      ["exists (select 1 from public.student_email_domains where domain = 'gstudent.ctu.edu.vn')", 'có tên miền gstudent.ctu.edu.vn'],
+    ],
+  },
   revoke_anon_writes: {
     pre: [
       ["to_regclass('public.student_email_domains') is not null", 'migration A (require_student_login) đã được áp'],

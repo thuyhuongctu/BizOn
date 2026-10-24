@@ -4,7 +4,8 @@
  * Cùng kiến trúc với js/app-shell/instructor-studio.js: gọi thẳng REST
  * của Supabase Auth (GoTrue) + RPC, không SDK, không tốn phí.
  *
- * Luồng: Đăng ký/Đăng nhập bằng email @student.ctu.edu.vn + mật khẩu →
+ * Luồng: Đăng ký/Đăng nhập bằng email @student.ctu.edu.vn (sinh viên – học viên) hoặc
+ * @gstudent.ctu.edu.vn (nghiên cứu sinh) + mật khẩu →
  * Tham gia đội (Mã lớp + Tên đội + Vai trò, qua bizon_join_team, gắn danh
  * tính xác thực vào student_team_membership) → "Bắt đầu mô phỏng" điền
  * sẵn Email/Tên đội/Mã lớp/Vai trò rồi gọi thẳng doLogin() có sẵn trong
@@ -114,7 +115,7 @@
       const password = $('sa-password')?.value;
       if (window.StudentLogin && StudentLogin.loadDomains) await StudentLogin.loadDomains();
       if (!email || !password || password.length < 8 || (window.StudentLogin && !StudentLogin.isStudentEmail(email))) {
-        setStatus('Cần email trường hợp lệ (vd @student.ctu.edu.vn) và mật khẩu tối thiểu 8 ký tự.', 'error');
+        setStatus('Cần email trường hợp lệ (@student.ctu.edu.vn hoặc @gstudent.ctu.edu.vn) và mật khẩu tối thiểu 8 ký tự.', 'error');
         return;
       }
       setStatus('Đang tạo tài khoản…');

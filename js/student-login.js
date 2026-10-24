@@ -3,7 +3,7 @@
  * riêng cho Bật Nghiệp, có thêm bước "tham gia đội"/lưu tiến trình).
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú.
  *
- * Cùng một Supabase Auth với Bật Nghiệp (email trường – @student.ctu.edu.vn hoặc trường đối tác – + mật
+ * Cùng một Supabase Auth với Bật Nghiệp (email trường – @student/@gstudent.ctu.edu.vn hoặc trường đối tác – + mật
  * khẩu, gọi thẳng REST GoTrue, không SDK) và CÙNG khóa sessionStorage
  * ('bizon-student-session') nên một sinh viên đã đăng nhập ở game.html rồi
  * mở Hộ Chiếu Mini/Bến Phù Sa trong cùng tab/phiên trình duyệt sẽ thấy
@@ -85,7 +85,7 @@
   // Tên miền email sinh viên được nộp bài: CTU + trường đối tác quản trị thêm trên máy chủ
   // (bảng student_email_domains). Chỉ để báo lỗi sớm trên trang; máy chủ vẫn tự kiểm.
   // Chỉ hỏi máy chủ khi sinh viên thật sự dùng ô đăng nhập – không gọi lúc tải trang.
-  let domains = ['student.ctu.edu.vn'], domainsP = null;
+  let domains = ['student.ctu.edu.vn', 'gstudent.ctu.edu.vn'], domainsP = null;
   const loadDomains = () => domainsP || (domainsP = (async () => {
     try {
       const c = cfg();
@@ -191,7 +191,7 @@
         async function doAuth(path, successMsg) {
           const email = emailEl.value.trim(), password = pwEl.value;
           await loadDomains();
-          if (!isStudentEmail(email) || !password || password.length < 8) { status.textContent = TT('Cần email trường (vd @student.ctu.edu.vn) và mật khẩu ≥ 8 ký tự.', 'Use your school email (e.g. @student.ctu.edu.vn) and a password of 8+ characters.'); status.style.color = '#c0392b'; return; }
+          if (!isStudentEmail(email) || !password || password.length < 8) { status.textContent = TT('Cần email trường (vd @student.ctu.edu.vn, @gstudent.ctu.edu.vn) và mật khẩu ≥ 8 ký tự.', 'Use your school email (e.g. @student.ctu.edu.vn) and a password of 8+ characters.'); status.style.color = '#c0392b'; return; }
           status.textContent = TT('Đang xử lý…', 'Working…'); status.style.color = '';
           try {
             const data = await authRequest(path, { email, password });
