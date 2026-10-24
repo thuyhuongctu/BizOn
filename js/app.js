@@ -1202,7 +1202,7 @@ function renderMarket() {
         </svg>
         <div class="flex-1 space-y-2">
           <div class="clay-sunken rounded-xl p-3 flex justify-between text-xs"><span class="text-deep-teal/70">${T('Quan tâm sản phẩm xanh', 'Interest in green products')}</span><b class="text-primary">+12.4%</b></div>
-          <div class="clay-sunken rounded-xl p-3 flex justify-between text-xs"><span class="text-deep-teal/70">${T('Độ nhạy cảm về giá', 'Price sensitivity')}</span><b class="${ev.elasticityMul ? 'text-red-600' : 'text-deep-teal'}">${ev.elasticityMul ? '+18.0%' : '+4.2%'}</b></div>
+          <div class="clay-sunken rounded-xl p-3 flex justify-between text-xs"><span class="text-deep-teal/70">${T('Độ nhạy cảm về giá', 'Price sensitivity')}</span><b class="${evBase(ev.id) === 'EV_PRICEWAR' ? 'text-red-600' : 'text-deep-teal'}">${evBase(ev.id) === 'EV_PRICEWAR' ? '+18.0%' : '+4.2%'}</b></div>
         </div>
       </div>
     </div>
@@ -2994,7 +2994,7 @@ function renderBmcReport(body) {
   body.innerHTML = `
     <p class="text-[11px] text-deep-teal/50 mb-3">${T(`Business Model Canvas của đội ${escapeHtml(S.profile.teamName)} – cập nhật theo dữ liệu vòng ${Math.min(S.round, ROUNDS_TOTAL)}.`, `Business Model Canvas for team ${escapeHtml(S.profile.teamName)} – updated with round ${Math.min(S.round, ROUNDS_TOTAL)} data.`)}</p>
     <div class="grid grid-cols-2 gap-3">
-      ${block(T('Phân khúc khách hàng', 'Customer Segments'), '🎯', T(`Thị trường đại chúng ${share}% thị phần; khách nhạy giá ${currentEvent(S).elasticityMul ? 'CAO (chiến tranh giá!)' : 'trung bình'}.`, `Mass market at ${share}% share; price sensitivity ${currentEvent(S).elasticityMul ? 'HIGH (price war!)' : 'average'}.`))}
+      ${block(T('Phân khúc khách hàng', 'Customer Segments'), '🎯', T(`Thị trường đại chúng ${share}% thị phần; khách nhạy giá ${evBase(currentEvent(S).id) === 'EV_PRICEWAR' ? 'CAO (chiến tranh giá!)' : 'trung bình'}.`, `Mass market at ${share}% share; price sensitivity ${evBase(currentEvent(S).id) === 'EV_PRICEWAR' ? 'HIGH (price war!)' : 'average'}.`))}
       ${block(T('Đề xuất giá trị (Value Proposition)', 'Value Proposition'), '💎', T(`Sản phẩm giá ${(last ? last.decisions.price : 150).toLocaleString('vi-VN')}k₫, thương hiệu hạng ${S.brand >= 1.2 ? 'A' : 'B+'}, R&D tích lũy ${Math.round(S.rdCumulative)}tr₫.`, `Product priced ${(last ? last.decisions.price : 150).toLocaleString('en-US')}k₫, brand grade ${S.brand >= 1.2 ? 'A' : 'B+'}, cumulative R&D ${Math.round(S.rdCumulative)}m₫.`))}
       ${block(T('Kênh phân phối', 'Channels'), '🚚', T(`Kênh Modern Trade + trực tuyến; tỷ lệ đáp ứng đơn ${currentEvent(S).fulfillMul ? '85% (khủng hoảng cung ứng)' : '100%'}.`, `Modern Trade + online channels; order fulfillment rate ${currentEvent(S).fulfillMul ? '85% (supply chain crisis)' : '100%'}.`))}
       ${block(T('Quan hệ khách hàng', 'Customer Relationships'), '❤️', T(`Brand Loyalty ${S.brandLoyalty}%; độ hài lòng ${Math.min(5, S.brandLoyalty / 19).toFixed(1)}/5.`, `Brand Loyalty ${S.brandLoyalty}%; satisfaction ${Math.min(5, S.brandLoyalty / 19).toFixed(1)}/5.`))}

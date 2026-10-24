@@ -920,7 +920,9 @@ function luminaAdvice(s, topic) {
   const fmt = n => n.toLocaleString('vi-VN');
 
   if (topic === 'pricing') {
-    if (ev.elasticityMul) return { risk: 'high', clip: 'topic-01', text: T(`Vòng này là Chiến tranh giá – khách cực nhạy về giá. Nếu bạn giữ giá trên ${fmt(REF_PRICE)}k₫, thị phần có thể rơi mạnh. Cân nhắc giảm 10–15% và bù bằng sản lượng.`,
+    // So mã biến cố, không so elasticityMul: vòng 6 có 0,85 (khách ÍT nhạy giá) và
+    // js/market-dynamic.js luôn gắn elasticityMul theo tỉnh, nên trường ấy có mặt cả ở vòng thường.
+    if (evBase(ev.id) === 'EV_PRICEWAR') return { risk: 'high', clip: 'topic-01', text: T(`Vòng này là Chiến tranh giá – khách cực nhạy về giá. Nếu bạn giữ giá trên ${fmt(REF_PRICE)}k₫, thị phần có thể rơi mạnh. Cân nhắc giảm 10–15% và bù bằng sản lượng.`,
       `This round is a Price War – customers are extremely price-sensitive. If you keep price above ${REF_PRICE.toLocaleString('en-US')}k₫, market share could drop sharply. Consider cutting 10-15% and making it up on volume.`) };
     if (last && last.lostSales > 0) return { risk: 'low', clip: 'topic-02', text: T(`Vòng trước bạn hụt ${fmt(last.lostSales)} đơn vì thiếu hàng – cầu đang vượt cung. Nếu tăng giá 5–10%, lợi nhuận biên sẽ cải thiện mà thị phần giảm không đáng kể.`,
       `Last round you missed ${last.lostSales.toLocaleString('en-US')} orders from a stock shortfall – demand is outrunning supply. Raising price 5-10% would improve margin with only a minor share drop.`) };
