@@ -111,7 +111,8 @@
         </div>
         <div>
           <label class="block text-xs font-extrabold mb-1.5 opacity-70" for="ks-class">Mã lớp học (giảng viên phát)</label>
-          <input id="ks-class" class="gv-input" placeholder="VD: QTKD-2026-A" autocomplete="off">
+          <input id="ks-class" class="gv-input uppercase" placeholder="VD: QTKD-2026-A" autocomplete="off">
+          <p id="ks-class-lock" class="hidden text-[11px] font-bold mt-1 opacity-70">🔒 Mã lớp lấy từ link giảng viên gửi – không cần gõ.</p>
         </div>
         <div id="ks-post-meta" class="hidden grid grid-cols-2 gap-3">
           <div>
@@ -274,8 +275,19 @@
     $('ks-b').innerHTML = likertRows(B.likb, 'b');
   }
   window.ksInstr = renderBank; // đổi bộ câu hỏi là vẽ lại phần A + B (đáp án được làm mới)
-  // Cho phép game dẫn thẳng tới đúng bộ: khao-sat-online.html?bo=quocte
-  try { if (new URLSearchParams(location.search).get('bo') === 'quocte') document.querySelector('input[name="instr"][value="quocte"]').checked = true; } catch (e) {}
+  // Link giảng viên gửi lớp (Instructor Studio → Khảo sát): khao-sat-online.html?lop=KTM330HM02&phieu=truoc&bo=quocte
+  // – điền sẵn và khóa Mã lớp để cả lớp nộp về đúng một mã (trước đây gõ tay lệch thành nhiều mã),
+  //   chọn sẵn bộ câu hỏi và phiếu trước/sau.
+  // Mã lớp lưu viết hoa, bỏ khoảng trắng – khớp mã giảng viên đăng ký ở Instructor Studio (cũng viết hoa).
+  const normClass = v => String(v || '').trim().toUpperCase().replace(/\s+/g, '');
+  let QS; try { QS = new URLSearchParams(location.search); } catch (e) { QS = new URLSearchParams(''); }
+  try { if (QS.get('bo') === 'quocte') document.querySelector('input[name="instr"][value="quocte"]').checked = true; } catch (e) {}
+  const linkClass = normClass(QS.get('lop')).slice(0, 40);
+  if (/^[A-Z0-9][A-Z0-9._-]*$/.test(linkClass)) {
+    $('ks-class').value = linkClass;
+    $('ks-class').readOnly = true;
+    $('ks-class-lock').classList.remove('hidden');
+  }
   renderBank();
   $('ks-c').innerHTML = likertRows(LIKERT_C, 'c');
 
@@ -284,6 +296,9 @@
     $('ks-post-meta').classList.toggle('hidden', !post);
     $('ks-c-card').classList.toggle('hidden', !post);
   };
+
+  const linkPhase = ({ truoc: 'pre', pre: 'pre', sau: 'post', post: 'post' })[String(QS.get('phieu') || '').toLowerCase()];
+  if (linkPhase) { document.querySelector(`input[name="phase"][value="${linkPhase}"]`).checked = true; window.ksPhase(); }
 
   const val = name => { const el = document.querySelector(`input[name="${name}"]:checked`); return el ? el.value : null; };
 
@@ -321,7 +336,7 @@
     document.querySelectorAll('.miss').forEach(el => el.classList.remove('miss'));
     const phase = document.querySelector('input[name="phase"]:checked').value;
     const code = $('ks-code').value.trim().toUpperCase();
-    const klass = $('ks-class').value.trim();
+    const klass = normClass($('ks-class').value);
     const missing = [];
     if (!$('ks-consent-chk').checked) missing.push($('ks-consent-opt'));
     if (!/^[A-Z]{2}[0-9]{2}$/.test(code)) missing.push($('ks-code'));

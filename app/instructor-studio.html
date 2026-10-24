@@ -192,6 +192,21 @@
             <button class="bi-btn" id="bi-export-surveys" type="button" data-en="Export CSV">Xuất CSV</button>
           </div>
         </div>
+        <div class="bi-survey-link" id="bi-survey-link">
+          <div class="bi-survey-link-head">
+            <strong data-en="Survey link for students">Link khảo sát gửi sinh viên</strong>
+            <span data-en="The class code is filled in and locked, so students cannot mistype it.">Mã lớp được điền sẵn và khoá lại, sinh viên không gõ nhầm được.</span>
+          </div>
+          <div class="bi-survey-link-row">
+            <select class="bi-input" id="bi-survey-instrument" aria-label="Bộ câu hỏi" data-en-aria="Question set">
+              <option value="batnghiep" data-en="Startup set">Bộ Khởi nghiệp</option>
+              <option value="quocte" data-en="International business set">Bộ KD quốc tế</option>
+            </select>
+            <button class="bi-btn secondary" id="bi-copy-survey-pre" type="button" data-en="Copy PRE link">Chép link phiếu TRƯỚC</button>
+            <button class="bi-btn secondary" id="bi-copy-survey-post" type="button" data-en="Copy POST link">Chép link phiếu SAU</button>
+          </div>
+          <input class="bi-input" id="bi-survey-link-output" type="text" readonly aria-label="Link khảo sát" data-en-aria="Survey link" placeholder="Kết nối lớp để tạo link" data-en-ph="Connect a class to build the link">
+        </div>
         <div class="bi-summary-grid">
           <article class="bi-summary"><small data-en="UNIQUE FORMS">PHIẾU DUY NHẤT</small><strong id="bi-survey-total">0</strong></article>
           <article class="bi-summary"><small data-en="PRE/POST PAIRS">CẶP TRƯỚC–SAU</small><strong id="bi-survey-pairs">0</strong></article>
