@@ -159,8 +159,8 @@ test('Trang HTML nạp đúng hai tệp lõi, có bản quyền, không gọi m�
   const html = fs.readFileSync(path.join(__dirname, '..', 'lab', 'ho-chieu-sau-rieng.html'), 'utf8');
   assert.ok(html.includes('src="ho-chieu-sau-rieng-engine.js"') && html.includes('src="ho-chieu-sau-rieng-data.js"'));
   assert.ok(html.includes('Phan Anh Tú') && html.includes('Đỗ Thùy Hương'));
-  // Thẻ canonical / Open Graph cần URL tuyệt đối nhưng không gây tải mạng: bỏ ra trước khi dò.
-  const noMeta = html.replace(/<footer[\s\S]*?<\/footer>/, '').replace(/<link rel="canonical"[^>]*>|<meta property="og:[^"]*" content="[^"]*">/g, '');
+  // Thẻ canonical / hreflang / Open Graph cần URL tuyệt đối nhưng không gây tải mạng: bỏ ra trước khi dò.
+  const noMeta = html.replace(/<footer[\s\S]*?<\/footer>/, '').replace(/<link rel="(?:canonical|alternate)"[^>]*>|<meta property="og:[^"]*" content="[^"]*">/g, '');
   assert.ok(!/fetch\(|XMLHttpRequest|https?:\/\/(?!www\.w3\.org)/.test(noMeta), 'có gọi mạng');
   const sw = fs.readFileSync(path.join(__dirname, '..', 'sw.js'), 'utf8');
   ['ho-chieu-sau-rieng.html', 'ho-chieu-sau-rieng-3d.html', 'ho-chieu-sau-rieng-engine.js', 'ho-chieu-sau-rieng-data.js'].forEach(f => assert.ok(sw.includes('./lab/' + f), 'sw.js thiếu ' + f));

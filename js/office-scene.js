@@ -18,14 +18,14 @@
   const rivalsList = () => { try { return typeof AI_OPPONENTS_LIST === 'function' ? AI_OPPONENTS_LIST() : []; } catch (e) { return []; } };
 
   const ROLES = {
-    ceo: { name: 'CEO Minh Long', img: A('v2/ceo.png') },
-    cfo: { name: 'CFO Thu Hà', img: A('v2/cfo.png') },
-    cmo: { name: 'CMO Mạnh Chi', img: A('v2/cmo.png') },
-    coo: { name: 'COO Bảo Ngọc', img: A('v2/coo.png') },
-    sec: { name: 'SEC Gia Hân', img: A('v2/sec.png') },
+    ceo: { name: 'CEO Minh Long', img: A('v2/ceo.webp') },
+    cfo: { name: 'CFO Thu Hà', img: A('v2/cfo.webp') },
+    cmo: { name: 'CMO Mạnh Chi', img: A('v2/cmo.webp') },
+    coo: { name: 'COO Bảo Ngọc', img: A('v2/coo.webp') },
+    sec: { name: 'SEC Gia Hân', img: A('v2/sec.webp') },
   };
   const SPOTS = [[330, 560], [2070, 560], [330, 1060], [2070, 1060], [720, 900]];
-  const LUMINA = { name: 'Lumina', img: A('v2/lumina.png'), x: 1200, y: 640 };
+  const LUMINA = { name: 'Lumina', img: A('v2/lumina.webp'), x: 1200, y: 640 };
   const RIVAL_SPOTS = { alpha: [800, 1360], mekong: [1200, 1380], star: [1600, 1360] };
   const RIVAL_DEF = {
     alpha: { name: 'Alpha Dynamics', img: A('rivals/alpha.webp'), fb: A('rivals/alpha.webp'), accent: '#e8762d', icon: '🐺' },
@@ -229,7 +229,7 @@
     const lead = !decide ? null : (R.lead === myRole ? 'lumina' : R.lead);
     const cast = {};
     Object.keys(ROLES).filter(k => k !== myRole).forEach((k, i) => { cast[k] = { ...ROLES[k], x: SPOTS[i][0], y: SPOTS[i][1] }; });
-    cast.lumina = { ...LUMINA, img: A(LUMINA_POSE[n] || 'v2/lumina.png'), fb: LUMINA.img };
+    cast.lumina = { ...LUMINA, img: A(LUMINA_POSE[n] || 'v2/lumina.webp'), fb: LUMINA.img };
     for (const k of Object.keys(RIVAL_DEF)) cast[k] = { ...RIVAL_DEF[k], name: 'CEO ' + RIVAL_DEF[k].name, x: RIVAL_SPOTS[k][0], y: RIVAL_SPOTS[k][1], rival: true };
     let evName = ''; try { evName = typeof currentEvent === 'function' ? currentEvent(s).name : ''; } catch (e) {}
     const city = R ? R.city : ((typeof CONQUEST_STOPS !== 'undefined' && CONQUEST_STOPS[Math.min(s.round, 6) - 1]) || {}).name || '';

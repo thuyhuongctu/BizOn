@@ -200,7 +200,7 @@
   function stampsData() {
     var s = S(), b = B();
     return s.entered.map(function (v, m) { if (v === null || v === undefined) return null; var mk = b.MKTS[m], md = b.MODES[v], r = mk.real || {};
-      var cc = hostCode(m); return { m: m, simg: IMGC['stamp/' + cc + '.png'] === true ? new URL('assets/hc/stamp/' + cc + '.png', location.href).href : '', flag: r.flag || mk.icon, name: mk.name, c: r.c ? T(r.c, r.cEn) : '', icon: md.icon, mode: T(md.name, md.nameEn), q: Math.max(1, s.q - (s.qin[m] || 1) + 2), ink: INK[v % 6] }; }).filter(Boolean);
+      var cc = hostCode(m); return { m: m, simg: IMGC['stamp/' + cc + '.webp'] === true ? new URL('assets/hc/stamp/' + cc + '.webp', location.href).href : '', flag: r.flag || mk.icon, name: mk.name, c: r.c ? T(r.c, r.cEn) : '', icon: md.icon, mode: T(md.name, md.nameEn), q: Math.max(1, s.q - (s.qin[m] || 1) + 2), ink: INK[v % 6] }; }).filter(Boolean);
   }
   function printPassport() {
     var s = S(), b = B(), sc = b.scores(), P = PORT[portraitKey()], f = b.FIRMS[s.firm] || {}, hm = b.HOME ? b.HOME() : { flag: '', c: '' };
@@ -293,6 +293,6 @@
     wasPlay = true; last = cur2;
     askBox(); eventArt(); if (cur2.phase !== last.phase || cur2.q !== last.q) castMood();
   }
-  ['us', 'de', 'kr', 'nz', 'jp', 'sg', 'id', 'vn'].forEach(function (c) { img('stamp/' + c + '.png', function () {}); });
+  ['us', 'de', 'kr', 'nz', 'jp', 'sg', 'id', 'vn'].forEach(function (c) { img('stamp/' + c + '.webp', function () {}); });
   setInterval(tick, 400);
 })();
