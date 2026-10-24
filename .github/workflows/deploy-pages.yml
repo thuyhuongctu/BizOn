@@ -1,10 +1,10 @@
 name: Deploy lên GitHub Pages
 
-# Deploy theo HAI đường ray để chống sự cố cấu hình nguồn Pages:
-#  1. Đẩy nội dung lên branch gh-pages (phục vụ nguồn "Deploy from a branch").
-#  2. Deploy chính thức qua actions/deploy-pages (phục vụ nguồn "GitHub Actions").
-# Nguồn Pages đang ở chế độ nào thì đường ray tương ứng sẽ xuất bản site;
-# đường còn lại được phép thất bại êm (continue-on-error).
+# Một đường deploy duy nhất: actions/deploy-pages (nguồn Pages = "GitHub Actions").
+# Trước 10/2026 còn đẩy thêm cả kho lên nhánh gh-pages (≈940 MB) phòng khi nguồn Pages là
+# "Deploy from a branch"; nhưng Pages đã không dựng từ gh-pages kể từ 27/07/2026, nên bước đó
+# chỉ tốn thời gian. Hai bước deploy cũng đều continue-on-error nên lỗi thật bị che – nay bỏ.
+# Chỉ đưa lên tệp của trang: mã kiểm thử, script, SQL, Android, cấu hình nội bộ… không lên web.
 
 on:
   push:
@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -33,16 +33,16 @@ jobs:
       - name: Tạo sw-manifest.json
         run: node scripts/release/sw-manifest.mjs
 
-      - name: Publish lên branch gh-pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .
-          exclude_assets: '.github,docs'
-          commit_message: 'Deploy BizOn Bật Nghiệp'
-
-      - name: Loại thư mục không phục vụ khỏi artifact
-        run: rm -rf .github docs
+      # Không trang nào tải tệp trong các thư mục này (chỉ được nhắc trong chú thích mã).
+      # Giữ: kt330h/ (ứng dụng lớp KT330H), data/, vietlens/, gravity-lab/, logo/, .well-known/.
+      - name: Chỉ giữ tệp của trang
+        run: |
+          rm -rf .github .claude docs test scripts supabase android play-store config release design node_modules
+          rm -f package.json .gitignore .htmlvalidate.json .htmlvalidate-institutional.json
+          for f in index.html 404.html CNAME sw.js sw-manifest.json robots.txt sitemap.xml; do
+            test -e "$f" || { echo "::error::Thiếu $f trong bản deploy"; exit 1; }
+          done
+          du -sh . --exclude=.git
 
       - name: Cấu hình Pages (tự bật lại nếu bị tắt)
         uses: actions/configure-pages@v5
@@ -57,4 +57,3 @@ jobs:
       - name: Deploy qua GitHub Actions
         id: deployment
         uses: actions/deploy-pages@v4
-        continue-on-error: true
