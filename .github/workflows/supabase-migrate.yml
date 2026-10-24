@@ -2,7 +2,8 @@ name: Supabase – áp migration lên production
 
 # Bấm tay (Actions → «Supabase – áp migration lên production» → Run workflow) để áp một file
 # supabase/migrations/*.sql lên dự án production qua Management API, thay cho chép SQL vào SQL Editor.
-# File lấy từ nhánh «source_ref» (mặc định main) để áp được migration của một PR trước khi gộp PR đó.
+# File lấy từ nhánh «source_ref» (mặc định main); main chưa có thì tự tìm trong nhánh các PR đang mở,
+# để áp được migration của một PR trước khi gộp PR đó mà không phải điền tên nhánh.
 # Không gõ APPLY ở «confirm» thì chỉ kiểm tra trước rồi dừng. Cần repository secret SUPABASE_ACCESS_TOKEN.
 on:
   workflow_dispatch:
@@ -12,9 +13,9 @@ on:
         type: string
         required: true
       source_ref:
-        description: 'Nhánh chứa file migration'
+        description: 'Nhánh chứa file (để trống = main, main chưa có thì tự tìm trong các PR đang mở)'
         type: string
-        default: main
+        required: false
       confirm:
         description: 'Gõ APPLY để áp thật (để trống = chỉ kiểm tra)'
         type: string
@@ -22,6 +23,7 @@ on:
 
 permissions:
   contents: read
+  pull-requests: read
 
 concurrency:
   group: supabase-migrate
@@ -37,16 +39,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-      - name: Lấy file migration từ nhánh nguồn
+      - name: Lấy file migration
         env:
+          GH_TOKEN: ${{ github.token }}
           MIGRATION: ${{ inputs.migration }}
           SOURCE_REF: ${{ inputs.source_ref }}
-        run: |
-          [[ "$MIGRATION" =~ ^[0-9]{14}_[a-z0-9_]+\.sql$ ]] || { echo "Tên file migration không hợp lệ"; exit 1; }
-          [[ "$SOURCE_REF" =~ ^[A-Za-z0-9._/-]+$ ]] || { echo "Tên nhánh không hợp lệ"; exit 1; }
-          git fetch --depth=1 origin "refs/heads/$SOURCE_REF"
-          git show "FETCH_HEAD:supabase/migrations/$MIGRATION" > "$RUNNER_TEMP/migration.sql"
-          echo "Lấy $MIGRATION từ $SOURCE_REF ($(git rev-parse --short FETCH_HEAD)), $(wc -l < "$RUNNER_TEMP/migration.sql") dòng."
+        run: bash scripts/release/fetch-migration.sh "$MIGRATION" "$SOURCE_REF" "$RUNNER_TEMP/migration.sql"
       - name: Áp migration
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
