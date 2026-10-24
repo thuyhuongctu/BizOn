@@ -16,6 +16,8 @@ const assert = require('node:assert/strict');
   assert.match(h, /''a''/, 'nháy đơn trong SQL được thoát');
   assert.match(h, /on conflict \(version\) do nothing/);
   assert.ok(m.CHECKS.revoke_anon_writes.pre.length, 'B phải kiểm tra A đã áp');
+  assert.ok(m.CHECKS.normalize_survey_class_codes.post.length === 2, 'migration gộp mã lớp có 2 kiểm tra sau');
+  assert.match(fs.readFileSync('supabase/migrations/20261024010000_normalize_survey_class_codes.sql', 'utf8'), /insert into public\.survey_class_code_fixes[\s\S]*update public\.survey_responses s\s+set class_code = t\.new_code/);
   assert.ok(m.CHECKS.add_gstudent_domain.pre.length && /gstudent\.ctu\.edu\.vn/.test(m.CHECKS.add_gstudent_domain.post[0][0]), 'migration gstudent cần A và kiểm tra tên miền');
   assert.match(fs.readFileSync('supabase/migrations/20261024000000_add_gstudent_domain.sql', 'utf8'), /'gstudent\.ctu\.edu\.vn'[\s\S]*on conflict \(domain\) do nothing/);
   assert.match(fs.readFileSync('js/student-login.js', 'utf8'), /let domains = \['student\.ctu\.edu\.vn', 'gstudent\.ctu\.edu\.vn'\]/);

@@ -12,6 +12,7 @@ on:
         description: 'Migration cần áp (chọn trong danh sách)'
         type: choice
         options:
+          - 20261024010000_normalize_survey_class_codes.sql
           - 20261024000000_add_gstudent_domain.sql
           - 20261023010000_revoke_anon_writes.sql
           - 20261023000000_require_student_login.sql

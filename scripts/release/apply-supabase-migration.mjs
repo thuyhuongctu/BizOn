@@ -21,6 +21,15 @@ export const CHECKS = {
       ["exists (select 1 from pg_proc p join pg_namespace n on n.oid = p.pronamespace where n.nspname = 'public' and p.proname = 'bizon_submit_round')", 'có hàm bizon_submit_round'],
     ],
   },
+  normalize_survey_class_codes: {
+    pre: [
+      ["to_regclass('public.survey_responses') is not null", 'có bảng survey_responses'],
+    ],
+    post: [
+      ["to_regclass('public.survey_class_code_fixes') is not null", 'có bảng lưu mã gốc survey_class_code_fixes'],
+      ["not exists (select 1 from public.survey_responses where upper(regexp_replace(class_code, '[[:space:].-]', '', 'g')) in ('KT330HM02','KT330M02','KT330HM01','KT330M01','KT33HM01') or (upper(regexp_replace(class_code, '[[:space:].-]', '', 'g')) in ('KTM330HM02','KTM330HM01') and class_code not in ('KTM330HM02','KTM330HM01')))", 'không còn mã lớp gõ lệch của KTM330HM01/M02'],
+    ],
+  },
   add_gstudent_domain: {
     pre: [
       ["to_regclass('public.student_email_domains') is not null", 'migration A (require_student_login) đã áp'],
