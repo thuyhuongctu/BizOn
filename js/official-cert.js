@@ -7,7 +7,8 @@
  *
  * API:
  *   window.OfficialCert.download({ name, courseCode, courseName,
- *     courseDates, filenamePrefix }) – tất cả tham số đều tuỳ chọn.
+ *     courseDates, filenamePrefix, signature }) – tất cả tham số đều tuỳ chọn.
+ *   window.OfficialCert.render(opts) – Promise<canvas>, cùng tham số.
  *   window.OfficialCert.fetchConfig() – trả về Promise<{course_code,
  *     course_name, course_dates}>, đọc mã lớp đã nhập (localStorage khoá
  *     'bizon-ft-class'/'bizon-class', dùng chung với tất cả các game) rồi
@@ -68,16 +69,21 @@
     return h.toString(36).toUpperCase();
   }
 
-  function download(opts) {
+  // Vẽ chứng nhận lên canvas 1400×990. opts.signature (tuỳ chọn): nguồn ảnh
+  // chữ ký thay cho chữ ký in mặc định – Trang Giảng viên truyền ảnh chữ ký thật
+  // do giảng viên tự chọn từ máy mình (chỉ lưu trong trình duyệt đó, không có
+  // trên web).
+  function render(opts) {
     opts = opts || {};
     var name = opts.name || T('Học viên BizOn', 'BizOn Learner');
     var courseCode = opts.courseCode || 'KT330H';
     var courseName = opts.courseName || T('Khởi nghiệp (Entrepreneurship)', 'Entrepreneurship');
     var courseDates = opts.courseDates || new Date().toLocaleDateString(isEN() ? 'en-US' : 'vi-VN', { year: 'numeric', month: 'long', day: 'numeric' });
-    var filenamePrefix = opts.filenamePrefix || 'BizOn';
     var verifyCode = opts.verifyCode || shortCode(name + '|' + courseCode + '|' + courseDates);
 
-    Promise.all([loadImg('assets/docs/ctu-logo.png'), loadImg('assets/docs/soe-logo.png'), loadImg('assets/docs/sig-tu-in.png')]).then(function (imgs) {
+    // Chờ font của khuôn (nếu trang có nạp) để canvas không vẽ bằng font dự phòng.
+    var fonts = document.fonts && document.fonts.load ? Promise.all(['800 46px "Plus Jakarta Sans"', '21px "Hanken Grotesk"', 'italic 21px "Hanken Grotesk"', '800 15px "Hanken Grotesk"'].map(function (f) { return document.fonts.load(f).catch(function () {}); })) : Promise.resolve();
+    return Promise.all([loadImg('assets/docs/ctu-logo.png'), loadImg('assets/docs/soe-logo.png'), loadImg(opts.signature || 'assets/docs/sig-tu-in.png'), fonts]).then(function (imgs) {
       var ctuLogo = imgs[0], soeLogo = imgs[1], sigTu = imgs[2];
       var cv = document.createElement('canvas'); cv.width = 1400; cv.height = 990;
       var g = cv.getContext('2d');
@@ -119,12 +125,25 @@
       g.fillText(T('Cấp ngày ', 'Issued on ') + new Date().toLocaleDateString(isEN() ? 'en-US' : 'vi-VN') + '  ·  bizonland.com', 60, 950);
       g.textAlign = 'right'; g.fillText(T('Mã xác thực ', 'Verification code ') + verifyCode, 1340, 950);
 
+      return cv;
+    });
+  }
+
+  function fileName(opts) {
+    var name = (opts && opts.name) || T('Học viên BizOn', 'BizOn Learner');
+    // Tên tệp không dấu: có trình duyệt bỏ qua tên tệp có ký tự ngoài ASCII và lưu thành «download».
+    var ascii = name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').replace(/[^A-Za-z0-9]+/g, '');
+    return ((opts && opts.filenamePrefix) || 'BizOn') + '-ChungNhanDHCT-' + (ascii || 'HocVien') + '.png';
+  }
+
+  function download(opts) {
+    return render(opts).then(function (cv) {
       var a = document.createElement('a');
-      a.download = filenamePrefix + '-ChungNhanDHCT-' + name.replace(/[^\p{L}\p{N}]+/gu, '') + '.png';
+      a.download = fileName(opts);
       a.href = cv.toDataURL('image/png');
       a.click();
     });
   }
 
-  window.OfficialCert = { download: download, fetchConfig: fetchConfig };
+  window.OfficialCert = { download: download, render: render, fileName: fileName, fetchConfig: fetchConfig };
 })();
