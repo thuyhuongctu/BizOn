@@ -35,14 +35,18 @@ input,select,textarea,button{font-family:inherit}
   <header style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 22px;background:#fbf6ee;border-bottom:3px solid #e6d6bf">
     <div style="display:flex;align-items:center;gap:12px">
       <img src="assets/icons/rong-xanh-192.png" alt="BizOn" style="width:42px;height:42px;border-radius:12px;box-shadow:0 4px 0 #1b5a5a">
-      <div><div style="font:800 20px/1.1 'Baloo 2',sans-serif;color:#1f4a55">BizOn · Giảng viên</div><div style="font-size:13px;color:#5a6b74">{{ subtitle }}</div></div>
+      <div><div style="font:800 20px/1.1 'Baloo 2',sans-serif;color:#1f4a55">{{ tHead }}</div><div style="font-size:13px;color:#5a6b74">{{ subtitle }}</div></div>
+    </div>
+    <div role="group" aria-label="Ngôn ngữ / Language" style="display:flex;padding:3px;border-radius:999px;background:#efe4d2;border:2px solid #e6d6bf;margin-left:auto">
+      <button onClick="{{ setVi }}" aria-pressed="{{ viOn }}" style="border:0;cursor:pointer;padding:5px 11px;border-radius:999px;font-weight:800;font-size:12px;background:{{ viBg }};color:{{ viFg }}">VI</button>
+      <button onClick="{{ setEn }}" aria-pressed="{{ enOn }}" style="border:0;cursor:pointer;padding:5px 11px;border-radius:999px;font-weight:800;font-size:12px;background:{{ enBg }};color:{{ enFg }}">EN</button>
     </div>
     <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}">
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
         <span style="font-size:13px;color:#5a6b74">{{ email }}</span>
         <sc-if value="{{ showBackNav }}" hint-placeholder-val="{{ false }}"><button onClick="{{ backToClasses }}" style="border:2px solid #cbb797;background:#fff;border-radius:12px;padding:7px 12px;font-weight:700;color:#1f4a55;cursor:pointer">← Lớp của tôi</button></sc-if>
         <sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}"><button onClick="{{ openAdmin }}" style="border:2px solid #2f8a8c;background:#e3f1ef;border-radius:12px;padding:7px 12px;font-weight:700;color:#1f4a55;cursor:pointer">🛡️ Quản trị hệ thống</button></sc-if>
-        <button onClick="{{ signOut }}" style="border:2px solid #cbb797;background:#fff;border-radius:12px;padding:7px 12px;font-weight:700;color:#1f4a55;cursor:pointer">Đăng xuất</button>
+        <button onClick="{{ signOut }}" style="border:2px solid #cbb797;background:#fff;border-radius:12px;padding:7px 12px;font-weight:700;color:#1f4a55;cursor:pointer">{{ tSignOut }}</button>
       </div>
     </sc-if>
   </header>
@@ -58,33 +62,33 @@ input,select,textarea,button{font-family:inherit}
   <sc-if value="{{ showLogin }}" hint-placeholder-val="{{ true }}">
     <main style="flex:1;display:flex;align-items:center;justify-content:center;padding:32px 16px">
       <div style="width:100%;max-width:420px;background:#fbf6ee;border:3px solid #e6d6bf;border-radius:26px;padding:28px;box-shadow:0 8px 0 #d9c5a8;display:flex;flex-direction:column;gap:12px">
-        <div style="font:800 26px/1.1 'Baloo 2',sans-serif;color:#1f4a55">{{ loginTitle }}</div>
-        <div style="font-size:14px;color:#5a6b74;text-wrap:pretty">Tài khoản giảng viên dùng Supabase Auth. Mỗi mã lớp chỉ thuộc về một giảng viên.</div>
+        <h1 style="margin:0;font:800 26px/1.1 'Baloo 2',sans-serif;color:#1f4a55">{{ loginTitle }}</h1>
+        <div style="font-size:14px;color:#5a6b74;text-wrap:pretty">{{ tAuthNote }}</div>
         <sc-if value="{{ showEmailField }}" hint-placeholder-val="{{ true }}">
           <label style="font-weight:700;font-size:13px">Email</label>
-          <input value="{{ fEmail }}" onChange="{{ onEmail }}" type="email" placeholder="giangvien@truong.edu.vn" style="padding:12px 14px;border-radius:14px;border:2px solid #e6d6bf;background:#fff;font-size:15px"></input>
+          <input value="{{ fEmail }}" onChange="{{ onEmail }}" type="email" autocomplete="username" placeholder="{{ tEmailPh }}" style="padding:12px 14px;border-radius:14px;border:2px solid #e6d6bf;background:#fff;font-size:15px"></input>
         </sc-if>
         <sc-if value="{{ showPassField }}" hint-placeholder-val="{{ true }}">
-          <label style="font-weight:700;font-size:13px">Mật khẩu</label>
-          <input value="{{ fPass }}" onChange="{{ onPass }}" type="password" placeholder="Tối thiểu 6 ký tự" style="padding:12px 14px;border-radius:14px;border:2px solid #e6d6bf;background:#fff;font-size:15px"></input>
+          <label style="font-weight:700;font-size:13px">{{ tPass }}</label>
+          <input value="{{ fPass }}" onChange="{{ onPass }}" type="password" autocomplete="current-password" placeholder="{{ tPassPh }}" style="padding:12px 14px;border-radius:14px;border:2px solid #e6d6bf;background:#fff;font-size:15px"></input>
         </sc-if>
         <sc-if value="{{ showNewPassField }}" hint-placeholder-val="{{ false }}">
-          <label style="font-weight:700;font-size:13px">Mật khẩu mới</label>
-          <input value="{{ fNewPass }}" onChange="{{ onNewPass }}" type="password" placeholder="Tối thiểu 6 ký tự" style="padding:12px 14px;border-radius:14px;border:2px solid #e6d6bf;background:#fff;font-size:15px"></input>
+          <label style="font-weight:700;font-size:13px">{{ tNewPass }}</label>
+          <input value="{{ fNewPass }}" onChange="{{ onNewPass }}" type="password" autocomplete="new-password" placeholder="{{ tPassPh }}" style="padding:12px 14px;border-radius:14px;border:2px solid #e6d6bf;background:#fff;font-size:15px"></input>
         </sc-if>
         <button onClick="{{ submitLogin }}" style="margin-top:6px;border:0;background:#2f8a8c;color:#fff;border-radius:16px;padding:13px;font:800 17px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #1b5a5a;cursor:pointer">{{ loginBtn }}</button>
         <sc-if value="{{ showForgotLink }}" hint-placeholder-val="{{ false }}">
-          <button onClick="{{ forgotLink }}" style="border:0;background:none;color:#1f6f8a;font-weight:700;cursor:pointer;font-size:13px;text-align:left">Quên mật khẩu?</button>
+          <button onClick="{{ forgotLink }}" style="border:0;background:none;color:#1f6f8a;font-weight:700;cursor:pointer;font-size:13px;text-align:left">{{ tForgot }}</button>
         </sc-if>
         <sc-if value="{{ showModeLink }}" hint-placeholder-val="{{ true }}">
           <button onClick="{{ toggleMode }}" style="border:0;background:none;color:#1f6f8a;font-weight:700;cursor:pointer;font-size:14px">{{ modeLink }}</button>
         </sc-if>
         <sc-if value="{{ showBackLink }}" hint-placeholder-val="{{ false }}">
-          <button onClick="{{ backToLogin }}" style="border:0;background:none;color:#1f6f8a;font-weight:700;cursor:pointer;font-size:14px">← Quay lại đăng nhập</button>
+          <button onClick="{{ backToLogin }}" style="border:0;background:none;color:#1f6f8a;font-weight:700;cursor:pointer;font-size:14px">{{ tBack }}</button>
         </sc-if>
         <sc-if value="{{ showDemoBlock }}" hint-placeholder-val="{{ true }}">
           <div style="border-top:2px dashed #e6d6bf;padding-top:12px;display:flex;flex-direction:column;gap:6px">
-            <button onClick="{{ tryDemo }}" style="border:2px solid #cbb797;background:#fff;border-radius:14px;padding:11px;font-weight:700;color:#1f4a55;cursor:pointer">👀 Dùng thử với lớp mẫu DEMO-2026</button>
+            <button onClick="{{ tryDemo }}" style="border:2px solid #cbb797;background:#fff;border-radius:14px;padding:11px;font-weight:700;color:#1f4a55;cursor:pointer">{{ tDemo }}</button>
             <div style="font-size:12px;color:#5a6b74;text-align:center">{{ backendNote }}</div>
           </div>
         </sc-if>
@@ -514,11 +518,16 @@ function certStudentList(text) {
 }
 const SIG_KEY = 'bizon-gv-sig-tu';
 function examMMSS(ms) { const s = Math.max(0, Math.round(ms / 1000)); return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); }
+// Ngôn ngữ dùng chung với toàn site (localStorage «bizon-lang»); mặc định tiếng Việt cho giảng viên.
+const GV_LANG = () => { try { return localStorage.getItem('bizon-lang') === 'en' ? 'en' : 'vi'; } catch (e) { return 'vi'; } };
 class Component extends DCLogic {
-  state = { view: 'login', mode: 'in', err: '', fEmail: '', fPass: '', fNewPass: '', recoveryToken: '', fCode: '', classes: [], adminClasses: [], code: '', tab: 'teams', subs: [], st: {}, memberLog: [], bpResults: [], exam: null, examNow: null, exSetup: '', exRound: '', selTeam: '', fEvent: '', fMsg: '', gTeam: '*', gAmt: '', gReason: '', edits: {}, saved: {}, board: false, ready: false, certCode: '', certName: '', certDates: '', certSaved: false, rubric: {}, rLv1: '', rLv2: '', rLv3: '', rLv4: '', rubricSaved: false, rosterText: '', rosterSaved: false, sigTu: '', certMsg: '' };
+  state = { view: 'login', mode: 'in', err: '', fEmail: '', fPass: '', fNewPass: '', recoveryToken: '', fCode: '', classes: [], adminClasses: [], code: '', tab: 'teams', subs: [], st: {}, memberLog: [], bpResults: [], exam: null, examNow: null, exSetup: '', exRound: '', selTeam: '', fEvent: '', fMsg: '', gTeam: '*', gAmt: '', gReason: '', edits: {}, saved: {}, board: false, ready: false, certCode: '', certName: '', certDates: '', certSaved: false, rubric: {}, rLv1: '', rLv2: '', rLv3: '', rLv4: '', rubricSaved: false, rosterText: '', rosterSaved: false, sigTu: '', certMsg: '', lang: GV_LANG() };
+  tr(vi, en) { return this.state.lang === 'en' ? en : vi; }
+  setLang(l) { try { localStorage.setItem('bizon-lang', l); } catch (e) {} document.documentElement.lang = l; this.setState({ lang: l }); }
   api() { return window.BizOnInstructor; }
   P() { return window.BizOnInstructorPage; }
   componentDidMount() {
+    document.documentElement.lang = this.state.lang;
     try { const sig = localStorage.getItem(SIG_KEY); if (sig) this.setState({ sigTu: sig }); } catch (e) {}
     const t = setInterval(() => { if (this.api() && this.P()) { clearInterval(t); this.setState({ ready: true }); if (this.api().signedIn) this.loadClasses(); } }, 100);
     setInterval(() => { if (this.state.tab === 'controls' && this.state.exam && this.state.exam.active) this.forceUpdate(); }, 1000);
@@ -549,17 +558,17 @@ class Component extends DCLogic {
         rLv3: this.state.rLv3 === '' ? (rubric.level3 || 'Lệch rõ') : this.state.rLv3, rLv4: this.state.rLv4 === '' ? (rubric.level4 || 'Lệch nhiều') : this.state.rLv4, err: '' });
     } catch (e) { this.fail(e); } }
   async login() {
-    const { fEmail, fPass, mode } = this.state; if (!fEmail || !fPass) return this.fail('Nhập email và mật khẩu.');
-    try { if (mode === 'up') { const ok = await this.api().signUp(fEmail, fPass); if (!ok) return this.setState({ err: 'Đã tạo tài khoản. Kiểm tra email để xác nhận rồi đăng nhập.', mode: 'in' }); }
+    const { fEmail, fPass, mode } = this.state; if (!fEmail || !fPass) return this.fail(this.tr('Nhập email và mật khẩu.', 'Enter your email and password.'));
+    try { if (mode === 'up') { const ok = await this.api().signUp(fEmail, fPass); if (!ok) return this.setState({ err: this.tr('Đã tạo tài khoản. Kiểm tra email để xác nhận rồi đăng nhập.', 'Account created. Check your email to confirm, then sign in.'), mode: 'in' }); }
       else await this.api().signIn(fEmail, fPass);
       this.setState({ fPass: '' }); this.loadClasses(); } catch (e) { this.fail(e); } }
   async requestReset() {
-    const { fEmail } = this.state; if (!fEmail) return this.fail('Nhập email để đặt lại mật khẩu.');
-    try { await this.api().resetPassword(fEmail); this.setState({ mode: 'in', err: 'Nếu email này có tài khoản, một email đặt lại mật khẩu đã được gửi. Kiểm tra hộp thư (cả Spam).' }); }
+    const { fEmail } = this.state; if (!fEmail) return this.fail(this.tr('Nhập email để đặt lại mật khẩu.', 'Enter your email to reset the password.'));
+    try { await this.api().resetPassword(fEmail); this.setState({ mode: 'in', err: this.tr('Nếu email này có tài khoản, một email đặt lại mật khẩu đã được gửi. Kiểm tra hộp thư (cả Spam).', 'If this email has an account, a password-reset email has been sent. Check your inbox (and Spam).') }); }
     catch (e) { this.fail(e); } }
   async submitNewPassword() {
-    const { fNewPass, recoveryToken } = this.state; if (!fNewPass || fNewPass.length < 6) return this.fail('Mật khẩu mới cần tối thiểu 6 ký tự.');
-    try { await this.api().completeRecovery(recoveryToken, fNewPass); this.setState({ mode: 'in', fPass: '', fNewPass: '', recoveryToken: '', err: 'Đã đặt lại mật khẩu. Đăng nhập bằng mật khẩu mới.' }); }
+    const { fNewPass, recoveryToken } = this.state; if (!fNewPass || fNewPass.length < 6) return this.fail(this.tr('Mật khẩu mới cần tối thiểu 6 ký tự.', 'The new password needs at least 6 characters.'));
+    try { await this.api().completeRecovery(recoveryToken, fNewPass); this.setState({ mode: 'in', fPass: '', fNewPass: '', recoveryToken: '', err: this.tr('Đã đặt lại mật khẩu. Đăng nhập bằng mật khẩu mới.', 'Password reset. Sign in with your new password.') }); }
     catch (e) { this.fail(e); } }
   async claim() { try { await this.api().claimClass(this.state.fCode); this.setState({ fCode: '' }); this.loadClasses(); } catch (e) { this.fail(e); } }
   async setLock(n) { try { const c = Object.assign({}, (this.state.st.controls || {}), { locked_round: n }); await this.api().setControls(this.state.code, c); this.reload(); } catch (e) { this.fail(e); } }
@@ -620,7 +629,7 @@ class Component extends DCLogic {
   async saveScore(g) { const s = this.state; try { await this.api().saveScore(s.code, g.name, g.reasoning === '' ? null : +g.reasoning, g.teamwork === '' ? null : +g.teamwork, g.note); this.setState({ saved: Object.assign({}, s.saved, { [g.name]: true }) }); this.reload(); } catch (e) { this.fail(e); } }
   curRound() { const T = this.P().teams(this.state.subs); return Math.min(6, Math.max(1, ...T.map(t => t.rs.length + 1), 1)); }
   renderVals() {
-    const s = this.state, A = this.api(), P = this.P(), ok = s.ready && A && P;
+    const s = this.state, A = this.api(), P = this.P(), ok = s.ready && A && P, tr = (vi, en) => s.lang === 'en' ? en : vi;
     const signedIn = !!(ok && A.signedIn), v = signedIn ? s.view : 'login', inClass = v === 'class', inAdmin = v === 'admin';
     const T = ok ? P.teams(s.subs) : [], G = ok ? P.grades(T, (s.st && s.st.scores) || [], s.edits, s.memberLog) : [], money = ok ? P.money : (x => x);
     const MB = ok ? P.members(T, s.memberLog) : [], BP = s.bpResults || [];
@@ -642,13 +651,19 @@ class Component extends DCLogic {
     const dec = ok ? P.decRows(T.find(t => t.name === selTeam)) : { head: [], cells: [] };
     const maxShare = Math.max(1, ...T.map(t => t.share));
     return {
-      subtitle: inClass ? 'Bảng điều khiển lớp' : inAdmin ? 'Quản trị hệ thống' : signedIn ? 'Quản lý lớp học' : 'Đăng nhập giảng viên',
+      subtitle: inClass ? 'Bảng điều khiển lớp' : inAdmin ? 'Quản trị hệ thống' : signedIn ? 'Quản lý lớp học' : tr('Đăng nhập giảng viên', 'Instructor sign-in'),
+      tHead: tr('BizOn · Giảng viên', 'BizOn · Instructors'), tSignOut: tr('Đăng xuất', 'Sign out'),
+      tAuthNote: tr('Tài khoản giảng viên dùng Supabase Auth. Mỗi mã lớp chỉ thuộc về một giảng viên.', 'Instructor accounts use Supabase Auth. Each class code belongs to one instructor.'),
+      tEmailPh: tr('giangvien@truong.edu.vn', 'instructor@university.edu'), tPass: tr('Mật khẩu', 'Password'), tNewPass: tr('Mật khẩu mới', 'New password'), tPassPh: tr('Tối thiểu 6 ký tự', 'At least 6 characters'),
+      tForgot: tr('Quên mật khẩu?', 'Forgot password?'), tBack: tr('← Quay lại đăng nhập', '← Back to sign-in'), tDemo: tr('👀 Dùng thử với lớp mẫu DEMO-2026', '👀 Try the DEMO-2026 sample class'),
+      setVi: () => this.setLang('vi'), setEn: () => this.setLang('en'), viOn: s.lang !== 'en' ? 'true' : 'false', enOn: s.lang === 'en' ? 'true' : 'false',
+      viBg: s.lang !== 'en' ? '#1f4a55' : 'transparent', viFg: s.lang !== 'en' ? '#fff' : '#1f4a55', enBg: s.lang === 'en' ? '#1f4a55' : 'transparent', enFg: s.lang === 'en' ? '#fff' : '#1f4a55',
       migNote: ok && inClass && !A.demo && A.needsMigration ? A.migrationNote : '',
       signedIn, email: ok && A.email, isAdmin: ok && A.isAdmin, inClass, showBackNav: inClass || inAdmin, showLogin: v === 'login', showClasses: v === 'classes', showAdmin: inAdmin, error: s.err,
-      loginTitle: s.mode === 'up' ? 'Tạo tài khoản giảng viên' : s.mode === 'forgot' ? 'Đặt lại mật khẩu' : s.mode === 'newpass' ? 'Đặt mật khẩu mới' : 'Đăng nhập giảng viên',
-      loginBtn: s.mode === 'up' ? 'Tạo tài khoản' : s.mode === 'forgot' ? 'Gửi email đặt lại' : s.mode === 'newpass' ? 'Lưu mật khẩu mới' : 'Đăng nhập',
-      modeLink: s.mode === 'up' ? 'Đã có tài khoản? Đăng nhập' : 'Chưa có tài khoản? Tạo mới',
-      backendNote: ok && A.backendOn ? 'Đang kết nối Supabase của dự án.' : 'Máy chủ chưa bật – chỉ dùng được lớp mẫu.',
+      loginTitle: s.mode === 'up' ? tr('Tạo tài khoản giảng viên', 'Create an instructor account') : s.mode === 'forgot' ? tr('Đặt lại mật khẩu', 'Reset password') : s.mode === 'newpass' ? tr('Đặt mật khẩu mới', 'Set a new password') : tr('Đăng nhập giảng viên', 'Instructor sign-in'),
+      loginBtn: s.mode === 'up' ? tr('Tạo tài khoản', 'Create account') : s.mode === 'forgot' ? tr('Gửi email đặt lại', 'Send reset email') : s.mode === 'newpass' ? tr('Lưu mật khẩu mới', 'Save new password') : tr('Đăng nhập', 'Sign in'),
+      modeLink: s.mode === 'up' ? tr('Đã có tài khoản? Đăng nhập', 'Already have an account? Sign in') : tr('Chưa có tài khoản? Tạo mới', 'No account yet? Create one'),
+      backendNote: ok && A.backendOn ? tr('Đang kết nối Supabase của dự án.', 'Connected to the project Supabase.') : tr('Máy chủ chưa bật – chỉ dùng được lớp mẫu.', 'Server is off – only the sample class is available.'),
       showEmailField: s.mode === 'in' || s.mode === 'up' || s.mode === 'forgot', showPassField: s.mode === 'in' || s.mode === 'up', showNewPassField: s.mode === 'newpass',
       showForgotLink: s.mode === 'in', showModeLink: s.mode === 'in' || s.mode === 'up', showBackLink: s.mode === 'forgot' || s.mode === 'newpass', showDemoBlock: s.mode === 'in' || s.mode === 'up',
       fEmail: s.fEmail, fPass: s.fPass, fNewPass: s.fNewPass, fCode: s.fCode,
