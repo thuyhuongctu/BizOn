@@ -33,7 +33,8 @@
       { href:'giang-vien.html', vi:'Góc giảng viên', en:'Instructor corner' },
       { href:'bao-chi.html', vi:'Kho báo chí', en:'Press archive' },
       { href:'dinh-huong.html', vi:'Định hướng tác động vùng', en:'Regional impact' },
-      { href:'bang-chung.html', vi:'Bằng chứng lớp học', en:'Evidence' }
+      { href:'bang-chung.html', vi:'Bằng chứng lớp học', en:'Evidence' },
+      { href:'thiet-ke-nghien-cuu.html', vi:'Thiết kế nghiên cứu', en:'Study design' }
     ])
     + col('Sáng tạo','Creative',[
       { href:'am-nhac.html', vi:'Kho Âm nhạc', en:'Music library' },
