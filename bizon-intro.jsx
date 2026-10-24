@@ -474,7 +474,7 @@ function useVoiceover(T, CUES, playing, enabled, volume) {
 
 function useMusic(T, CUES, total, playing, enabled, vol) {
   const ref = React.useRef(null);
-  if (!ref.current && typeof Audio !== 'undefined') { ref.current = new Audio(IMG + (LANG === 'vi' ? 'audio/music-vi.mp3' : 'audio/music.mp3')); ref.current.preload = 'auto'; }
+  if (!ref.current && typeof Audio !== 'undefined') { ref.current = new Audio(IMG + (LANG === 'vi' ? 'audio/huong-and-the-world.mp3' : 'audio/huong-and-the-world-en.mp3')); // nhạc gốc của intro (#807); music.mp3 / music-vi.mp3 chưa từng có trong kho (404) ref.current.preload = 'auto'; }
   React.useEffect(() => () => ref.current && ref.current.pause(), []);
   React.useEffect(() => {
     const a = ref.current; if (!a) return;
