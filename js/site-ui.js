@@ -2902,6 +2902,10 @@
 "Class ID (from your instructor)"
 ],
 [
+"🔒 Mã lớp lấy từ link giảng viên gửi – không cần gõ.",
+"🔒 Class ID comes from your instructor's link – no need to type it."
+],
+[
 "Vai trò trong đội",
 "Your team role"
 ],

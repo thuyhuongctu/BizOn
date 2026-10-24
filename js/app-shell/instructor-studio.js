@@ -160,6 +160,7 @@
     state.session = null;
     state.classCode = '';
     saveSession();
+    renderSurveyLink();
     clearInterval(state.timer);
     $('bi-studio-content')?.classList.add('bi-hidden');
     $('bi-class-block')?.classList.add('bi-hidden');
@@ -403,18 +404,56 @@
     $('bi-studio-content').classList.remove('bi-hidden');
     clearInterval(state.timer);
     state.timer = setInterval(() => refreshWithStatus({ quiet: true }), 10000);
+    renderSurveyLink();
   }
 
   async function runDemo() {
     state.mode = 'demo';
     state.classCode = 'DEMO-2026';
     $('bi-class-label').textContent = 'DEMO-2026 (xem thử)';
+    renderSurveyLink();
     setStatus('Đang tải lớp mẫu…');
     const connected = await refreshWithStatus();
     if (!connected) return;
     $('bi-studio-content').classList.remove('bi-hidden');
     clearInterval(state.timer);
     state.timer = setInterval(() => refreshWithStatus({ quiet: true }), 10000);
+  }
+
+  function surveyLink(phase) {
+    if (state.mode !== 'auth' || !state.classCode) return '';
+    const url = new URL('../khao-sat-online.html', location.href);
+    url.searchParams.set('lop', state.classCode);
+    url.searchParams.set('phieu', phase === 'post' ? 'sau' : 'truoc');
+    if ($('bi-survey-instrument')?.value === 'quocte') url.searchParams.set('bo', 'quocte');
+    return url.href;
+  }
+
+  function renderSurveyLink(phase = 'pre') {
+    const output = $('bi-survey-link-output');
+    if (!output) return;
+    output.value = surveyLink(phase);
+    $('bi-copy-survey-pre').disabled = !output.value;
+    $('bi-copy-survey-post').disabled = !output.value;
+  }
+
+  async function copySurveyLink(phase) {
+    const link = surveyLink(phase);
+    if (!link) {
+      setStatus('Hãy đăng nhập và đăng ký lớp thật trước khi tạo link khảo sát.', 'error');
+      return;
+    }
+    renderSurveyLink(phase);
+    const label = phase === 'post' ? 'phiếu SAU' : 'phiếu TRƯỚC';
+    try {
+      await navigator.clipboard.writeText(link);
+      setStatus(`Đã chép link ${label} của lớp ${state.classCode}. Dán vào nhóm lớp để sinh viên mở.`, 'success');
+    } catch (_) {
+      const output = $('bi-survey-link-output');
+      output.focus();
+      output.select();
+      setStatus(`Trình duyệt chặn chép tự động. Link ${label} đã được bôi đen — bấm Ctrl+C (hoặc giữ để chép trên điện thoại).`);
+    }
   }
 
   async function loadSurveys() {
@@ -478,7 +517,9 @@
       setStatus('Chưa có dữ liệu khảo sát trong phiên. Bấm “Tải khảo sát” trước.', 'error');
       return;
     }
-    const header = 'bo_cau_hoi,phieu,ma_sv,vai_tro,so_vong,diem_A,diem_gioi_thieu,thich_nhat,can_cai_thien,nop_luc\n';
+    const likertHeader = [1, 2, 3, 4, 5, 6, 7, 8].map(i => `b${i}`).concat([1, 2, 3, 4, 5].map(i => `c${i}`)).join(',');
+    const header = `bo_cau_hoi,phieu,ma_sv,vai_tro,so_vong,diem_A,diem_gioi_thieu,thich_nhat,can_cai_thien,nop_luc,diem_A_theo_chuan,${likertHeader}\n`;
+    const likert = (values, count) => Array.from({ length: count }, (_, i) => (Array.isArray(values) ? values[i] ?? '' : ''));
     const rows = state.surveys.map(row => [
       csvCell(row.instrument || 'batnghiep'),
       csvCell(row.phase),
@@ -489,7 +530,10 @@
       row.nps ?? '',
       csvCell(row.open_like),
       csvCell(row.open_improve),
-      csvCell(row.created_at)
+      csvCell(row.created_at),
+      csvCell(row.score_by_outcome ? JSON.stringify(row.score_by_outcome) : ''),
+      ...likert(row.likert_b, 8),
+      ...likert(row.likert_c, 5)
     ].join(',')).join('\n');
     download(`bizon-survey-${state.classCode || 'class'}.csv`, `﻿${header}${rows}`, 'text/csv;charset=utf-8');
   }
@@ -521,6 +565,10 @@
     $('bi-export-leaderboard')?.addEventListener('click', exportLeaderboard);
     $('bi-export-traces')?.addEventListener('click', exportTraces);
     $('bi-export-surveys')?.addEventListener('click', exportSurveys);
+    $('bi-copy-survey-pre')?.addEventListener('click', () => copySurveyLink('pre'));
+    $('bi-copy-survey-post')?.addEventListener('click', () => copySurveyLink('post'));
+    $('bi-survey-instrument')?.addEventListener('change', () => renderSurveyLink());
+    renderSurveyLink();
     document.querySelectorAll('.bi-tab').forEach(button => button.addEventListener('click', () => selectTab(button)));
   });
 
