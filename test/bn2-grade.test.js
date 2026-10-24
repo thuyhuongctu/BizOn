@@ -16,7 +16,7 @@ const vm = require('vm');
 const ROOT = path.resolve(__dirname, '..');
 const read = f => fs.readFileSync(path.join(ROOT, f), 'utf8');
 
-const ctx = { console, T: (vi) => vi, currentLang: () => 'vi', document: { getElementById: () => null } };
+const ctx = { console, T: (vi) => vi, currentLang: () => 'vi', document: { getElementById: () => null, addEventListener() {} } };
 ctx.window = ctx;
 vm.createContext(ctx);
 vm.runInContext(read('js/engine.js'), ctx, { filename: 'js/engine.js' });
@@ -88,6 +88,17 @@ test('Không có lịch sử thì không vẽ gì; ván không Mã lớp ghi rõ
   const s = finished('Thử', 2); s.profile.classId = '';
   check(/không tính điểm/.test(G.html(s)), 'ván chơi thử có dòng «không tính điểm»');
   check(!/không tính điểm/.test(G.html(finished('Lớp thật', 2))), 'ván có Mã lớp không có dòng ấy');
+});
+
+test('Phiếu in: có dấu «dự kiến», số liệu thật của ván, thoát ký tự tên đội, không có ô chữ ký hay tên trường', () => {
+  const s = finished('Đội <b>X</b> & "Y"', 3);
+  const h = G.sheet(s);
+  check(/DỰ KIẾN – KHÔNG PHẢI ĐIỂM CHÍNH THỨC/.test(h), 'có dấu dự kiến');
+  check(h.includes('Đội &lt;b&gt;X&lt;/b&gt; &amp; &quot;Y&quot;') && !h.includes('<b>X</b>'), 'tên đội đã thoát ký tự');
+  check(s.history.every(r => h.includes(r.event.name.replace(/&/g, '&amp;'))), 'đủ tên biến cố 6 vòng');
+  check(!/chữ ký|ký tên|ký và ghi|đóng dấu|signature/i.test(h), 'không có ô chữ ký');
+  check(!/data-bn2-print/.test(h), 'không in kèm nút in');
+  check((h.match(/<tr>/g) || []).length >= 6 + 6, 'đủ 6 dòng vòng chơi và 6 dòng tiêu chí');
 });
 
 let failed = 0;
