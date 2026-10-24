@@ -1,0 +1,30 @@
+name: Supabase – đếm phiếu khảo sát theo Mã lớp
+
+# Bấm tay (Actions → «Supabase – đếm phiếu khảo sát theo Mã lớp» → Run workflow). CHỈ ĐỌC:
+# đếm phiếu trước/sau trong survey_responses theo Mã lớp, hiện bảng ở trang kết quả lần chạy.
+# Không in câu trả lời, mã sinh viên hay ý kiến tự do. Cần repository secret SUPABASE_ACCESS_TOKEN.
+on:
+  workflow_dispatch:
+    inputs:
+      class_filter:
+        description: 'Chỉ xem Mã lớp chứa chuỗi này (để trống = tất cả)'
+        type: string
+        required: false
+
+permissions:
+  contents: read
+
+jobs:
+  count:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Đếm phiếu khảo sát
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          CLASS_FILTER: ${{ inputs.class_filter }}
+        run: node scripts/release/survey-count.mjs
