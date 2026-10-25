@@ -24,59 +24,7 @@
 <script src="js/bizon-boot.js"></script>
 <link rel="stylesheet" href="css/bizon-clay-fonts.css">
 <link rel="stylesheet" href="css/bizon-clay.css">
-<style>
-  .ht-tag{font-family:var(--clay-head);font-size:16px;font-weight:700;color:var(--clay-accent)}
-  .ht-h2{margin:4px 0 0;font-size:clamp(30px,3.6vw,42px);line-height:1.14}
-  .ht-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:20px}
-  .ht-model{padding:24px;border-radius:30px;background:var(--clay-card);display:flex;flex-direction:column;gap:14px;box-shadow:var(--clay-night-shadow,inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 24px 34px -24px rgba(110,70,30,.55))}
-  .ht-k{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
-  .ht-repro{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:16px}
-  .ht-rcard{padding:22px;border-radius:26px;background:var(--clay-card);box-shadow:var(--clay-night-shadow,inset 0 -7px 0 rgba(110,70,30,.08),inset 0 4px 0 #fff,0 16px 22px -16px rgba(110,70,30,.5))}
-  .ht-rcard .n{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;font-family:var(--clay-head);font-size:20px;font-weight:800;box-shadow:var(--clay-night-shadow,inset 0 -5px 0 rgba(0,0,0,.12),inset 0 3px 0 rgba(255,255,255,.55))}
-  .ht-bloom{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px 20px;align-items:center;padding:18px 22px;border-radius:24px;background:var(--clay-card);box-shadow:inset 0 -6px 0 rgba(110,70,30,.08),0 14px 20px -16px rgba(110,70,30,.5)}
-  .ht-ladder{display:flex;gap:4px;align-items:flex-end}
-  .ht-ladder span{width:12px;border-radius:6px;box-shadow:inset 0 -2px 0 rgba(0,0,0,.15)}
-  .ht-rubric{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:16px;align-items:end}
-  .ht-rcell{padding:20px;border-radius:26px;display:flex;flex-direction:column;justify-content:flex-end;box-shadow:var(--clay-night-shadow,inset 0 -9px 0 rgba(0,0,0,.08),inset 0 5px 0 rgba(255,255,255,.5),0 20px 26px -20px rgba(110,70,30,.55))}
-  .ht-vl{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:6px 18px;padding:14px 0;border-top:2px dashed #F0E2C8}
-  .ht-ethics{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:18px}
-  .ht-ethic{padding:24px;border-radius:28px;box-shadow:var(--clay-night-shadow,inset 0 -9px 0 rgba(0,0,0,.07),inset 0 5px 0 rgba(255,255,255,.5),0 22px 30px -22px rgba(110,70,30,.55))}
-  section[id]{scroll-margin-top:96px}
-  /* Mục Khung lý thuyết: hai sơ đồ SVG + thẻ khung */
-  .ht-fig{margin:0 0 22px;padding:18px 18px 12px;border-radius:28px;background:var(--clay-card);box-shadow:var(--clay-night-shadow,inset 0 -7px 0 rgba(110,70,30,.08),inset 0 4px 0 #fff,0 16px 22px -16px rgba(110,70,30,.5))}
-  .ht-fig figcaption{margin:0 0 10px;font-family:var(--clay-head);font-size:15px;font-weight:800;color:var(--clay-ink)}
-  .ht-svg{display:block;width:100%;height:auto;font-family:var(--clay-sans);overflow:visible}
-  .ht-svg rect{stroke:rgba(110,70,30,.18);stroke-width:2}
-  .ht-svg .ht-eb{font-size:11.5px;font-weight:800;letter-spacing:.08em;fill:var(--clay-ink)}
-  .ht-svg .ht-h{font-family:var(--clay-head);font-size:22px;font-weight:800;fill:var(--clay-ink)}
-  .ht-svg .ht-b{font-size:13.5px;font-weight:600;fill:var(--clay-ink-2)}
-  .ht-svg .ht-lb{font-size:12px;font-weight:800;fill:var(--clay-sub)}
-  .ht-svg .ht-link{fill:none;stroke:var(--clay-ink);stroke-width:2.5}
-  .ht-svg .ht-link.dashed{stroke-dasharray:7 6}
-  .ht-svg .ht-arrow{fill:var(--clay-ink)}
-  .ht-svg .t1 rect{fill:var(--clay-c1)}.ht-svg .t2 rect{fill:var(--clay-c2)}.ht-svg .t3 rect{fill:var(--clay-c4)}
-  .ht-svg .ht-cross rect{fill:var(--clay-c5)}.ht-svg .ht-cross.ev rect{fill:var(--clay-mint-soft)}
-  .ht-svg .n1 rect{fill:var(--clay-c5)}.ht-svg .n2 rect{fill:var(--clay-c2)}.ht-svg .n3 rect{fill:var(--clay-c1)}
-  .ht-svg .n4 rect{fill:var(--clay-cream-deep)}.ht-svg .pending rect{stroke:var(--clay-accent);stroke-width:3;stroke-dasharray:9 7}
-  .ht-cite{margin:-8px 0 0;font-family:var(--clay-mono);font-size:12.5px;color:var(--clay-sub)}
-  .ht-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .ht-cell{padding:14px;border-radius:18px;font-size:14px;line-height:1.5}
-  .ht-cell.a{background:var(--clay-c5)}.ht-cell.b{background:var(--clay-cream-deep)}
-  .ht-cell .ht-k,.ht-limit .ht-k{margin-bottom:6px}
-  .ht-limit{padding:14px 16px;border-radius:18px;background:#FDE1CE;box-shadow:inset 0 3px 6px rgba(150,70,20,.15);font-size:14px;line-height:1.5;font-weight:600;color:#5A2608}
-  .ht-limit .ht-k{color:#8A3A0C}
-  .ht-scroll{display:none;margin:0 0 8px;font-size:12.5px;font-weight:700;color:var(--clay-sub)}
-  .ht-ptable{width:100%;min-width:760px;border-collapse:collapse;font-size:14px;line-height:1.45}.ht-ptable th,.ht-ptable td{padding:9px 10px;border-bottom:1px solid rgba(110,70,30,.14);text-align:left;vertical-align:top}.ht-ptable thead th{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--clay-sub)}.ht-ptable tbody th{font-family:var(--clay-mono);font-weight:700;font-size:13px;white-space:nowrap}.ht-ptable td.v{font-family:var(--clay-mono);font-size:13px;white-space:nowrap}.ht-ptable td.s{font-size:13px;color:var(--clay-sub)}
-  .ht-fig .ht-wrap:has(.ht-ptable){overflow-x:auto;-webkit-overflow-scrolling:touch}
-  @media (max-width:720px){.ht-two{grid-template-columns:1fr}.ht-fig{padding:12px 10px 8px}.ht-fig .ht-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}.ht-svg{min-width:760px}.ht-scroll{display:block}}
-  /* Bản tối «đất sét đêm» (data-theme do js/bizon-boot.js đặt; bản in giữ sáng) */
-  @media screen{
-    html[data-theme="dark"] .ht-vl{border-top-color:rgba(255,230,200,.14)}
-    html[data-theme="dark"] .ht-svg rect{stroke:rgba(255,230,200,.14)}
-    html[data-theme="dark"] .ht-limit{background:#4A2A18;color:#F7D9C4}
-    html[data-theme="dark"] .ht-limit .ht-k{color:#FFB38A}
-  }
-</style>
+<link rel="stylesheet" href="css/academic-foundation.css">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Nền tảng học thuật & Model Cards · BizOn">
 <meta property="og:description" content="Phương trình, giả định, giới hạn, hợp đồng tái lập, ma trận Bloom, rubric, VietLens, đạo đức nghiên cứu.">
@@ -84,101 +32,170 @@
 <script src="js/capture-guard.js"></script>
 </head>
 <body class="clay">
+<!--
+  Trang Học thuật – bản thiết kế lại 10-2026 theo gói design_handoff_academic_foundation: mục lục dính + chỉ báo tiến độ,
+  model card dạng xếp/mở với ba góc nhìn, bảng tham số lọc/tìm được kèm nhãn «có nguồn / minh hoạ» và mã nguồn bấm được,
+  hai sơ đồ lý thuyết tương tác, mô phỏng mã băm tái lập, rubric chọn mức, nút chép trích dẫn, bản in.
+  Nội dung giữ nguyên bản cũ (VI trong HTML, EN qua data-en của js/bizon-clay-i18n.js). Bảng tham số vẫn là các dòng
+  <tr data-param data-value> sinh từ lab/ho-chieu-sau-rieng-data.js – test/durian-params-page.test.js giữ bảng bằng mã.
+  Tương tác ở js/academic-foundation.js, kiểu dáng ở css/academic-foundation.css (trên nền css/bizon-clay.css).
+-->
 
-<main class="clay-main" style="max-width:1120px">
-  <section class="clay-hero">
-    <div class="sun" aria-hidden="true"></div>
-    <div class="grid">
-      <div class="htext">
-        <span class="clay-eyebrow" data-en="Academic foundation">Nền tảng học thuật</span>
-        <h1 data-en="Results and their limitations, published together">Công bố kết quả cùng các giới hạn</h1>
-        <p class="lead" style="max-width:36em" data-en="This page is intended for critical review. It sets out the model equations, assumptions, reproducibility contract and learning outcomes, and specifies what the model cannot do together with the limitations of the current evidence.">Trang này phục vụ việc thẩm định học thuật. Nội dung trình bày phương trình, giả định, hợp đồng tái lập và chuẩn đầu ra của mô hình, đồng thời xác định rõ những gì mô hình không thực hiện được cùng các giới hạn của bằng chứng hiện có.</p>
-      </div>
-      <div class="art" style="width:min(20vw,180px);aspect-ratio:359/780"><img src="assets/character/lumina-ao-dai-alert-cut.webp" alt="" loading="lazy"></div>
-    </div>
-    <div class="wave" aria-hidden="true"></div>
-  </section>
+<main class="clay-main af af-main">
+  <div class="af-layout">
+    <aside class="af-toc" aria-label="Mục lục trang" data-en-aria="Page contents">
+      <div class="af-toc-eb" data-en="On this page">Trên trang này</div>
+      <nav class="af-toc-list" aria-label="Các mục" data-en-aria="Sections">
+        <a href="#model-cards"><span class="n">01</span><span data-en="Model cards">Model cards</span></a>
+        <a href="#tham-so-sau-rieng"><span class="n">02</span><span data-en="Parameters">Tham số</span></a>
+        <a href="#ly-thuyet-kdqt"><span class="n">03</span><span data-en="Theoretical frameworks">Khung lý thuyết</span></a>
+        <a href="#tai-lap"><span class="n">04</span><span data-en="Reproducibility">Tái lập</span></a>
+        <a href="#chuan-dau-ra"><span class="n">05</span><span data-en="Learning outcomes">Chuẩn đầu ra</span></a>
+        <a href="#vietlens"><span class="n">06</span><span data-en="VietLens data">Dữ liệu VietLens</span></a>
+        <a href="#dao-duc"><span class="n">07</span><span data-en="Research ethics">Đạo đức nghiên cứu</span></a>
+        <a href="#gioi-han"><span class="n">08</span><span data-en="Evidence limits">Giới hạn bằng chứng</span></a>
+        <a href="#tai-lieu"><span class="n">09</span><span data-en="References">Tài liệu tham khảo</span></a>
+      </nav>
+      <div class="af-prog"><span id="af-prog-label">01 / 09</span><span class="bar"><i id="af-prog-bar"></i></span></div>
+      <button type="button" class="af-printbtn" data-act="print" data-en="Print / PDF">In / PDF</button>
+      <div class="af-readfirst"><div class="eb" data-en="Read first">Đọc trước</div><a href="#gioi-han" data-en="Limits of current evidence →">Giới hạn của bằng chứng hiện có →</a></div>
+    </aside>
 
-  <section style="margin-bottom:64px">
-    <div class="ht-tag">Model Card</div>
-    <h2 class="ht-h2" data-en="Variables, equations, assumptions – and limits">Biến số, phương trình, giả định – và giới hạn</h2>
-    <p style="margin:10px 0 22px;font-size:15px;color:var(--clay-sub)" data-en="The last column – what the model does NOT do – is the most important one.">Cột cuối cùng – mô hình KHÔNG làm được gì – là cột quan trọng nhất.</p>
-    <div class="ht-grid">
-      <article class="ht-model">
-        <h3 style="font-size:26px" data-en="Price-demand">Cầu theo giá</h3>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-          <div style="padding:14px;border-radius:18px;background:var(--clay-c5)"><div class="ht-k" style="color:#03474F" data-en="Equation / mechanism">Phương trình / cơ chế</div><div style="margin-top:6px;font-size:14px;line-height:1.5" data-en="Demand falls as price rises, by a published elasticity per segment.">Cầu giảm khi giá tăng, theo độ co giãn công bố cho mỗi phân khúc.</div></div>
-          <div style="padding:14px;border-radius:18px;background:var(--clay-cream-deep)"><div class="ht-k" style="color:#7A4A0E" data-en="Assumption">Giả định</div><div style="margin-top:6px;font-size:14px;line-height:1.5" data-en="Elasticity is fixed within a game.">Độ co giãn cố định trong một ván.</div></div>
-        </div>
-        <div style="padding:14px 16px;border-radius:18px;background:#FDE1CE;box-shadow:inset 0 3px 6px rgba(150,70,20,.15)"><div class="ht-k" style="color:#8A3A0C" data-en="What the model does NOT do">Mô hình KHÔNG làm được</div><div style="margin-top:6px;font-size:14px;line-height:1.5;font-weight:700;color:#5A2608" data-en="Does not model macro shocks outside the scenario, nor real-time media reactions.">Không mô phỏng cú sốc vĩ mô ngoài kịch bản, không phản ứng truyền thông thời gian thực.</div></div>
-      </article>
-      <article class="ht-model">
-        <h3 style="font-size:26px" data-en="Market share">Chia thị phần</h3>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-          <div style="padding:14px;border-radius:18px;background:var(--clay-c5)"><div class="ht-k" style="color:#03474F" data-en="Equation / mechanism">Phương trình / cơ chế</div><div style="margin-top:6px;font-size:14px;line-height:1.5" data-en="When several sell in one location, each keeps 1/(1+k(n−1)) of customers.">Khi nhiều bên cùng một khu, mỗi bên giữ 1/(1+k(n−1)) lượng khách.</div></div>
-          <div style="padding:14px;border-radius:18px;background:var(--clay-cream-deep)"><div class="ht-k" style="color:#7A4A0E" data-en="Assumption">Giả định</div><div style="margin-top:6px;font-size:14px;line-height:1.5" data-en="Customers split by relative attractiveness.">Khách chia đều theo sức hấp dẫn tương đối.</div></div>
-        </div>
-        <div style="padding:14px 16px;border-radius:18px;background:#FDE1CE;box-shadow:inset 0 3px 6px rgba(150,70,20,.15)"><div class="ht-k" style="color:#8A3A0C" data-en="What the model does NOT do">Mô hình KHÔNG làm được</div><div style="margin-top:6px;font-size:14px;line-height:1.5;font-weight:700;color:#5A2608" data-en="Does not model long-term brand loyalty or word of mouth.">Không mô hình lòng trung thành thương hiệu dài hạn hay truyền miệng.</div></div>
-      </article>
-      <article class="ht-model">
-        <h3 style="font-size:26px" data-en="Cash flow">Dòng tiền</h3>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-          <div style="padding:14px;border-radius:18px;background:var(--clay-c5)"><div class="ht-k" style="color:#03474F" data-en="Equation / mechanism">Phương trình / cơ chế</div><div style="margin-top:6px;font-size:14px;line-height:1.5" data-en="Revenue − variable cost − fixed cost − scheduled payments.">Doanh thu − chi phí biến đổi − chi phí cố định − khoản trả kỳ hạn.</div></div>
-          <div style="padding:14px;border-radius:18px;background:var(--clay-cream-deep)"><div class="ht-k" style="color:#7A4A0E" data-en="Assumption">Giả định</div><div style="margin-top:6px;font-size:14px;line-height:1.5" data-en="Payment terms follow published parameters.">Kỳ hạn thanh toán theo tham số công bố.</div></div>
-        </div>
-        <div style="padding:14px 16px;border-radius:18px;background:#FDE1CE;box-shadow:inset 0 3px 6px rgba(150,70,20,.15)"><div class="ht-k" style="color:#8A3A0C" data-en="What the model does NOT do">Mô hình KHÔNG làm được</div><div style="margin-top:6px;font-size:14px;line-height:1.5;font-weight:700;color:#5A2608" data-en="Does not model inflation, free-floating FX or a full capital market.">Không mô phỏng lạm phát, tỷ giá biến động tự do hay thị trường vốn đầy đủ.</div></div>
-      </article>
-      <article class="ht-model">
-        <h3 style="font-size:26px" data-en="Virtual rivals">Đối thủ ảo</h3>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-          <div style="padding:14px;border-radius:18px;background:var(--clay-c5)"><div class="ht-k" style="color:#03474F" data-en="Equation / mechanism">Phương trình / cơ chế</div><div style="margin-top:6px;font-size:14px;line-height:1.5" data-en="Act by published deterministic rules; no language model in the scored loop.">Hành xử theo luật tất định công bố, không dùng mô hình ngôn ngữ trong vòng chấm điểm.</div></div>
-          <div style="padding:14px;border-radius:18px;background:var(--clay-cream-deep)"><div class="ht-k" style="color:#7A4A0E" data-en="Assumption">Giả định</div><div style="margin-top:6px;font-size:14px;line-height:1.5" data-en="Rival strategy is fixed by profile.">Chiến lược đối thủ cố định theo hồ sơ.</div></div>
-        </div>
-        <div style="padding:14px 16px;border-radius:18px;background:#FDE1CE;box-shadow:inset 0 3px 6px rgba(150,70,20,.15)"><div class="ht-k" style="color:#8A3A0C" data-en="What the model does NOT do">Mô hình KHÔNG làm được</div><div style="margin-top:6px;font-size:14px;line-height:1.5;font-weight:700;color:#5A2608" data-en="Does not learn from the player, nor adapt beyond published rules.">Không học từ người chơi, không thích nghi ngoài luật đã công bố.</div></div>
-      </article>
-    </div>
-  </section>
+    <div class="af-content">
+      <nav class="af-chips" aria-label="Mục lục ngắn" data-en-aria="Quick contents"><a href="#model-cards" data-en="Models">Model cards</a><a href="#tham-so-sau-rieng" data-en="Params">Tham số</a><a href="#ly-thuyet-kdqt" data-en="Theory">Lý thuyết</a><a href="#tai-lap" data-en="Repro">Tái lập</a><a href="#chuan-dau-ra" data-en="Outcomes">Đầu ra</a><a href="#vietlens" data-en="Data">Dữ liệu</a><a href="#dao-duc" data-en="Ethics">Đạo đức</a><a href="#gioi-han" data-en="Limits">Giới hạn</a><a href="#tai-lieu" data-en="Refs">Tài liệu</a></nav>
 
-  <section id="tham-so-sau-rieng" style="margin-bottom:64px">
-    <div class="ht-tag" data-en="Parameters · Durian Passport">Tham số · Hộ Chiếu Sầu Riêng</div>
-    <h2 class="ht-h2" data-en="Every number the engine uses, and where it comes from">Mọi con số engine dùng, và lấy từ đâu</h2>
-    <p style="margin:10px 0 18px;font-size:15px;color:var(--clay-sub)" data-en="Values are read from the game's data file (lab/ho-chieu-sau-rieng-data.js); a test keeps this table equal to the code. «Illustrative» means a design choice with no measured source: it fixes scale and balance, not a real-world estimate. Codes in the last column refer to the list below the table.">Giá trị đọc từ tệp dữ liệu của game (lab/ho-chieu-sau-rieng-data.js); một phép thử giữ bảng này luôn bằng mã. «Minh hoạ» nghĩa là lựa chọn thiết kế không có nguồn đo: nó ấn định thang và cân bằng, không phải ước lượng thực tế. Mã ở cột cuối trỏ tới danh mục dưới bảng.</p>
-    <div class="ht-fig"><p class="ht-scroll" data-en="Swipe sideways to see the whole table →">Vuốt ngang để xem hết bảng →</p><div class="ht-wrap">
-      <table class="ht-ptable">
-        <thead><tr><th scope="col" data-en="Parameter">Tham số</th><th scope="col" data-en="Value">Giá trị</th><th scope="col" data-en="Meaning">Ý nghĩa</th><th scope="col" data-en="Anchor / source">Neo / nguồn</th></tr></thead>
-        <tbody>
-        <tr data-param="cash0" data-value="12"><th scope="row">cash0</th><td class="v"><span data-en="VND 12 bn">12 tỷ đồng</span></td><td><span data-en="Starting cash, adjusted by firm">Tiền mặt ban đầu, cộng trừ theo doanh nghiệp</span></td><td class="s"><span data-en="illustrative (design)">minh hoạ (thiết kế)</span></td></tr>
-        <tr data-param="creditLimit" data-value="8"><th scope="row">creditLimit</th><td class="v"><span data-en="VND 8 bn">8 tỷ đồng</span></td><td><span data-en="Bank credit limit; 8 %/season within it, 15 %/season above it plus −3 reputation">Hạn mức vay ngân hàng; trong hạn mức lãi 8 %/vụ, phần vượt 15 %/vụ và −3 uy tín</span></td><td class="s"><span data-en="illustrative (design)">minh hoạ (thiết kế)</span></td></tr>
-        <tr data-param="depotMain" data-value="50"><th scope="row">depotMain</th><td class="v"><span data-en="VND 50k/kg">50 nghìn đ/kg</span></td><td><span data-en="Main-season depot price">Giá vựa chính vụ</span></td><td class="s"><span data-en="illustrative (design)">minh hoạ (thiết kế)</span></td></tr>
-        <tr data-param="offMult" data-value="2.5"><th scope="row">offMult</th><td class="v"><span data-en="×2.5">×2,5</span></td><td><span data-en="Off-season depot price vs main season">Giá vựa nghịch vụ so với chính vụ</span></td><td class="s"><span data-en="BC0224: “2–3 times”">BC0224: «gấp 2–3 lần»</span></td></tr>
-        <tr data-param="farmCost" data-value="20"><th scope="row">farmCost</th><td class="v"><span data-en="VND 20k/kg">20 nghìn đ/kg</span></td><td><span data-en="Cooperative’s own growing cost">Giá thành tự trồng của hợp tác xã</span></td><td class="s"><span data-en="illustrative, 2024 price level">minh hoạ, quy đổi mặt bằng giá 2024</span></td></tr>
-        <tr data-param="offFarmMult" data-value="1.8"><th scope="row">offFarmMult</th><td class="v"><span data-en="×1.8">×1,8</span></td><td><span data-en="Growing cost when inducing off-season flowering">Giá thành khi xử lý ra hoa nghịch vụ</span></td><td class="s"><span data-en="balanced Oct 2026 (was ×1.3: the cooperative hit the profit ceiling too easily)">cân bằng 10/2026 (trước ×1,3: hợp tác xã chạm trần điểm lợi nhuận quá dễ)</span></td></tr>
-        <tr data-param="linkedPremium" data-value="0.05"><th scope="row">linkedPremium</th><td class="v"><span data-en="+5 %">+5 %</span></td><td><span data-en="Linked coded areas cost more than traders">Mua từ vùng liên kết có mã đắt hơn mua thương lái</span></td><td class="s"><span data-en="illustrative (design)">minh hoạ (thiết kế)</span></td></tr>
-        <tr data-param="baseLoss" data-value="0.18"><th scope="row">baseLoss</th><td class="v"><span data-en="18 %">18 %</span></td><td><span data-en="Base loss: 15 % moisture + 3 % harvest">Hao hụt cơ bản: mất nước 15 % + thu hoạch 3 %</span></td><td class="s"><span data-en="CAILAY: 15–40 %">CAILAY: 15–40 %</span></td></tr>
-        <tr data-param="traceLossCut" data-value="0.03"><th scope="row">traceLossCut</th><td class="v"><span data-en="−3 pp">−3 điểm %</span></td><td><span data-en="Traceability and cold chain cut losses">Truy xuất nguồn gốc và chuỗi lạnh giảm hao hụt</span></td><td class="s"><span data-en="illustrative (design)">minh hoạ (thiết kế)</span></td></tr>
-        <tr data-param="offYieldCut" data-value="0.15"><th scope="row">offYieldCut</th><td class="v"><span data-en="−15 %">−15 %</span></td><td><span data-en="Off-season volume below main season">Sản lượng nghịch vụ thấp hơn chính vụ</span></td><td class="s"><span data-en="CAILAY: 10–20 %">CAILAY: 10–20 %</span></td></tr>
-        <tr data-param="treeHealthCost" data-value="12"><th scope="row">treeHealthCost</th><td class="v"><span data-en="12 pts/season">12 điểm/vụ</span></td><td><span data-en="Orchard health lost per induced off-season">Sức khỏe vườn mất đi mỗi vụ xử lý nghịch vụ</span></td><td class="s"><span data-en="CAILAY: “tree lifespan cut 20–30 %”">CAILAY: «giảm tuổi thọ cây 20–30 %»</span></td></tr>
-        <tr data-param="rejectedDiscount" data-value="0.5"><th scope="row">rejectedDiscount</th><td class="v"><span data-en="50 % of price">50 % giá</span></td><td><span data-en="Blocked or rejected lots resold domestically">Hàng bị chặn hoặc rớt kiểm bán lại nội địa</span></td><td class="s"><span data-en="qualitative anchor “50–80 % off”, illustrative">neo định tính «giảm 50–80 %», minh hoạ</span></td></tr>
-        <tr data-param="fraudMult" data-value="2.2857142857142856"><th scope="row">fraudMult</th><td class="v"><span data-en="×2.29">×2,29</span></td><td><span data-en="Price when relabelled as Thai vs depot price">Giá bán khi «dán nhãn Thái» so với giá vựa</span></td><td class="s"><span data-en="GMSARN: 160 vs 70 baht/kg">GMSARN: 160 so với 70 baht/kg</span></td></tr>
-        <tr data-param="sampling" data-value="[0.02, 0.01]"><th scope="row">sampling</th><td class="v"><span data-en="2 % → 1 %">2 % → 1 %</span></td><td><span data-en="Quarantine sampling rate: first 2 years, then lower">Tỷ lệ lấy mẫu kiểm dịch: 2 năm đầu rồi giảm</span></td><td class="s"><span data-en="PROTO, Art. 7">PROTO, Điều 7</span></td></tr>
-        <tr data-param="cadmiumRiskMult" data-value="2.5"><th scope="row">cadmiumRiskMult</th><td class="v"><span data-en="×2.5">×2,5</span></td><td><span data-en="Cadmium-alert season (season 4): block risk for official lots is multiplied">Vụ cảnh báo cadimi (vụ 4): rủi ro lô chính ngạch bị chặn nhân lên</span></td><td class="s"><span data-en="KQTC: 30 lots from 18 firms; multiple illustrative">KQTC: 30 lô của 18 doanh nghiệp; mức nhân minh hoạ</span></td></tr>
-        <tr data-param="thaiDryPriceMult" data-value="0.92"><th scope="row">thaiDryPriceMult</th><td class="v"><span data-en="×0.92">×0,92</span></td><td><span data-en="Thai dry-matter season (season 5): official price without testing or traceability">Vụ Thái Lan nâng chuẩn độ khô (vụ 5): giá chính ngạch khi chưa có kiểm nghiệm hay truy xuất</span></td><td class="s"><span data-en="BC1223: 32 % → 35 %; cut illustrative">BC1223: 32 % → 35 %; mức giảm minh hoạ</span></td></tr>
-        <tr data-param="frozenProtoMult" data-value="1.15"><th scope="row">frozenProtoMult</th><td class="v"><span data-en="×1.15">×1,15</span></td><td><span data-en="Frozen-protocol season (season 6): frozen price with both codes">Vụ ký nghị định thư đông lạnh (vụ 6): giá đông lạnh khi đủ mã vùng trồng và mã đóng gói</span></td><td class="s"><span data-en="FROZENPROTO; premium illustrative">FROZENPROTO; mức tăng minh hoạ</span></td></tr>
-        <tr data-param="cleanSamplingMult" data-value="0.6"><th scope="row">cleanSamplingMult</th><td class="v"><span data-en="×0.6">×0,6</span></td><td><span data-en="After 2 clean official seasons: quarantine pest risk">Sau 2 vụ chính ngạch không vi phạm: rủi ro sinh vật gây hại khi kiểm dịch</span></td><td class="s"><span data-en="PROTO: sampling 2 % → 1 %; factor illustrative">PROTO: lấy mẫu 2 % → 1 %; hệ số minh hoạ</span></td></tr>
-        <tr data-param="priorityCost" data-value="{&quot;area&quot;: 1.2, &quot;pack&quot;: 1.5, &quot;test&quot;: 0.6, &quot;trace&quot;: 0.8, &quot;freezer&quot;: 3, &quot;finance&quot;: 0}"><th scope="row">priorityCost</th><td class="v"><span data-en="1.2 · 1.5 · 0.6 · 0.8 · 3.0 · 0 bn">1,2 · 1,5 · 0,6 · 0,8 · 3,0 · 0 tỷ</span></td><td><span data-en="Cost of one investment priority: area code, packing code, testing, traceability, freezer, finances">Chi phí một ưu tiên đầu tư: mã vùng trồng, mã đóng gói, kiểm nghiệm, truy xuất, cấp đông, củng cố tài chính</span></td><td class="s"><span data-en="mechanisms per PROTO, KQTC, GS1, MYSOP; amounts illustrative">cơ chế theo PROTO, KQTC, GS1, MYSOP; số tiền minh hoạ</span></td></tr>
-        <tr data-param="channels.priceMult" data-value="{&quot;CN&quot;: 1.8, &quot;BORDER&quot;: 1.5, &quot;FROZEN&quot;: 2.6, &quot;TW&quot;: 2.1, &quot;JP&quot;: 2.4, &quot;DOM&quot;: 1.16}"><th scope="row">channels.priceMult</th><td class="v"><span data-en="×1.8 · 1.5 · 2.6 · 2.1 · 2.4 · 1.16">×1,8 · 1,5 · 2,6 · 2,1 · 2,4 · 1,16</span></td><td><span data-en="Channel price multiple vs depot price: official, border, frozen, Taiwan, Japan, domestic">Hệ số giá từng kênh so với giá vựa: chính ngạch, tiểu ngạch, đông lạnh, Đài Loan, Nhật Bản, nội địa</span></td><td class="s"><span data-en="CAILAY, JETRO, TW, BC1223, PDIEN; ratios illustrative; border ×1.5 since Oct 2026 (was ×1.35: the default channel mix lost money in season 1)">CAILAY, JETRO, TW, BC1223, PDIEN; tỷ lệ minh hoạ; tiểu ngạch ×1,5 từ 10/2026 (trước ×1,35: tỷ trọng mặc định lỗ ngay vụ 1)</span></td></tr>
-        <tr data-param="channels.cap" data-value="{&quot;BORDER&quot;: 260, &quot;FROZEN&quot;: 220, &quot;TW&quot;: 50, &quot;JP&quot;: 30}"><th scope="row">channels.cap</th><td class="v"><span data-en="260 · 220 · 50 · 30 t">260 · 220 · 50 · 30 tấn</span></td><td><span data-en="Per-season volume caps for border, frozen, Taiwan, Japan (official and domestic uncapped)">Trần sản lượng mỗi vụ của tiểu ngạch, đông lạnh, Đài Loan, Nhật Bản (chính ngạch và nội địa không trần)</span></td><td class="s"><span data-en="illustrative (design)">minh hoạ (thiết kế)</span></td></tr>
-        <tr data-param="channels.TW.tariff" data-value="0.17"><th scope="row">channels.TW.tariff</th><td class="v"><span data-en="17 %">17 %</span></td><td><span data-en="Taiwan import tariff">Thuế nhập khẩu Đài Loan</span></td><td class="s"><span data-en="TW">TW</span></td></tr>
-        <tr data-param="seasons.borderCut" data-value="[0, 0.15, 0.3, 0.45, 0.55, 0.6]"><th scope="row">seasons.borderCut</th><td class="v"><span data-en="0 → 15 → 30 → 45 → 55 → 60 %">0 → 15 → 30 → 45 → 55 → 60 %</span></td><td><span data-en="Border-trade share cut, seasons 1 to 6">Phần kênh tiểu ngạch bị cắt từ vụ 1 đến vụ 6</span></td><td class="s"><span data-en="TW: tightening since 2018; KQTC">TW: siết từ 2018; KQTC</span></td></tr>
-        <tr data-param="seasons.demand" data-value="[0.9, 1, 0.75, 1.05, 0.95, 1.1]"><th scope="row">seasons.demand</th><td class="v"><span data-en="0.9 · 1.0 · 0.75 · 1.05 · 0.95 · 1.1">0,9 · 1,0 · 0,75 · 1,05 · 0,95 · 1,1</span></td><td><span data-en="Season demand factor (season 3 overlaps Thailand, season 5 Thai drought)">Hệ số cầu từng vụ (vụ 3 trùng vụ Thái Lan, vụ 5 Thái Lan hạn hán)</span></td><td class="s"><span data-en="CAILAY (overlap), KQTC (2024 share); levels illustrative">CAILAY (trùng vụ), KQTC (thị phần 2024); mức minh hoạ</span></td></tr>
-        <tr data-param="scoreWeights" data-value="{&quot;profit&quot;: 30, &quot;reputation&quot;: 20, &quot;capability&quot;: 20, &quot;adaptation&quot;: 15, &quot;sustainability&quot;: 15}"><th scope="row">scoreWeights</th><td class="v"><span data-en="30 · 20 · 20 · 15 · 15 %">30 · 20 · 20 · 15 · 15 %</span></td><td><span data-en="Total-score weights: profit, reputation, capability, shock response, sustainability">Trọng số điểm tổng: lợi nhuận, uy tín, năng lực, ứng phó biến cố, bền vững</span></td><td class="s"><span data-en="illustrative (design)">minh hoạ (thiết kế)</span></td></tr>
-        <tr data-param="capability" data-value="{&quot;base&quot;: 10, &quot;area&quot;: 20, &quot;pack&quot;: 20, &quot;testPerLevel&quot;: 10, &quot;trace&quot;: 15, &quot;freezer&quot;: 15}"><th scope="row">capability</th><td class="v"><span data-en="10 + 20 + 20 + 10/level + 15 + 15">10 + 20 + 20 + 10/cấp + 15 + 15</span></td><td><span data-en="Capability points: base, area code, packing code, per testing level, traceability, freezer">Điểm năng lực: nền, mã vùng trồng, mã đóng gói, mỗi cấp kiểm nghiệm, truy xuất, cấp đông</span></td><td class="s"><span data-en="illustrative (design)">minh hoạ (thiết kế)</span></td></tr>
-        <tr data-param="roles.benchMargin" data-value="{&quot;htx&quot;: 80, &quot;packer&quot;: 4, &quot;exporter&quot;: 4, &quot;frozen&quot;: 6}"><th scope="row">roles.benchMargin</th><td class="v"><span data-en="VND 80 · 4 · 4 · 6k/kg">80 · 4 · 4 · 6 nghìn đ/kg</span></td><td><span data-en="Benchmark margin for the cooperative, packing house, exporter and freezing company; the 100-point profit mark = volume × 6 seasons × margin">Biên lãi chuẩn của hợp tác xã, cơ sở đóng gói, công ty xuất khẩu, doanh nghiệp cấp đông; mốc 100 điểm lợi nhuận = sản lượng × 6 vụ × biên chuẩn</span></td><td class="s"><span data-en="illustrative; cooperative balanced Oct 2026 (was 60: every play style scored 90–99 on profit)">minh hoạ; HTX cân bằng 10/2026 (trước 60: mọi lối chơi đều đạt 90–99 điểm lợi nhuận)</span></td></tr>
-        </tbody>
-      </table>
-    </div></div>
-    <p style="margin:14px 0 8px;font-size:14px;font-weight:800" data-en="Sources cited in the table">Nguồn dẫn trong bảng</p>
-    <ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;font-size:13.5px;line-height:1.55;color:var(--clay-sub)">
+      <section class="clay-hero af-hero">
+        <div class="sun" aria-hidden="true"></div>
+        <div class="grid">
+          <div class="htext">
+            <span class="clay-eyebrow" data-en="Academic foundation">Nền tảng học thuật</span>
+            <h1 data-en="Results and their limitations, published together">Công bố kết quả cùng các giới hạn</h1>
+            <p class="lead" style="max-width:36em" data-en="This page is intended for critical review. It sets out the model equations, assumptions, reproducibility contract and learning outcomes, and specifies what the model cannot do together with the limitations of the current evidence.">Trang này phục vụ việc thẩm định học thuật. Nội dung trình bày phương trình, giả định, hợp đồng tái lập và chuẩn đầu ra của mô hình, đồng thời xác định rõ những gì mô hình không thực hiện được cùng các giới hạn của bằng chứng hiện có.</p>
+            <div class="af-hero-btns">
+              <a class="clay-btn clay-btn-pill af-btn" href="#model-cards" data-en="Read the model cards">Đọc model card</a>
+              <a class="af-btn2" href="#gioi-han" data-en="Jump to evidence limits">Tới phần giới hạn bằng chứng</a>
+            </div>
+          </div>
+          <div class="art" style="width:min(20vw,180px);aspect-ratio:359/780"><img src="assets/character/lumina-ao-dai-alert-cut.webp" alt="" loading="lazy"></div>
+        </div>
+        <div class="wave" aria-hidden="true"></div>
+      </section>
+
+      <section id="model-cards" class="af-sec">
+        <div class="af-eb">01 · Model Card</div>
+        <h2 class="af-h2" data-en="Variables, equations, assumptions – and limits">Biến số, phương trình, giả định – và giới hạn</h2>
+        <p class="af-lead" data-en="The last column – what the model does NOT do – is the most important one.">Cột cuối cùng – mô hình KHÔNG làm được gì – là cột quan trọng nhất.</p>
+        <div class="af-models">
+          <details class="af-model" id="m1" open>
+            <summary>
+              <span class="num">01</span>
+              <span class="ttl"><b data-en="Price-demand">Cầu theo giá</b><span class="peek c" data-en="Does not model macro shocks outside the scenario, nor real-time media reactions.">Không mô phỏng cú sốc vĩ mô ngoài kịch bản, không phản ứng truyền thông thời gian thực.</span><span class="peek o" data-en="Compare mechanism, assumption and limit">So sánh cơ chế, giả định và giới hạn</span></span>
+              <span class="tg" aria-hidden="true"></span>
+            </summary>
+            <div class="body">
+              <div class="af-tabs" role="tablist" aria-label="Góc nhìn model card" data-en-aria="Model card views"><button type="button" role="tab" id="m1-t-limit" aria-controls="m1-p-limit" aria-selected="true" data-tab="limit" data-en="Does NOT do">KHÔNG làm được</button><button type="button" role="tab" id="m1-t-mech" aria-controls="m1-p-mech" aria-selected="false" tabindex="-1" data-tab="mech" data-en="Mechanism">Cơ chế</button><button type="button" role="tab" id="m1-t-assume" aria-controls="m1-p-assume" aria-selected="false" tabindex="-1" data-tab="assume" data-en="Assumption">Giả định</button></div>
+              <div class="af-panel limit" role="tabpanel" id="m1-p-limit" aria-labelledby="m1-t-limit" data-panel="limit"><div class="k" data-en="What the model does NOT do">Mô hình KHÔNG làm được</div><p data-en="Does not model macro shocks outside the scenario, nor real-time media reactions.">Không mô phỏng cú sốc vĩ mô ngoài kịch bản, không phản ứng truyền thông thời gian thực.</p></div>
+              <div class="af-panel mech" role="tabpanel" id="m1-p-mech" aria-labelledby="m1-t-mech" data-panel="mech" hidden><div class="k" data-en="Equation / mechanism">Phương trình / cơ chế</div><p data-en="Demand falls as price rises, by a published elasticity per segment.">Cầu giảm khi giá tăng, theo độ co giãn công bố cho mỗi phân khúc.</p></div>
+              <div class="af-panel assume" role="tabpanel" id="m1-p-assume" aria-labelledby="m1-t-assume" data-panel="assume" hidden><div class="k" data-en="Assumption">Giả định</div><p data-en="Elasticity is fixed within a game.">Độ co giãn cố định trong một ván.</p></div>
+            </div>
+          </details>
+          <details class="af-model" id="m2">
+            <summary>
+              <span class="num">02</span>
+              <span class="ttl"><b data-en="Market share">Chia thị phần</b><span class="peek c" data-en="Does not model long-term brand loyalty or word of mouth.">Không mô hình lòng trung thành thương hiệu dài hạn hay truyền miệng.</span><span class="peek o" data-en="Compare mechanism, assumption and limit">So sánh cơ chế, giả định và giới hạn</span></span>
+              <span class="tg" aria-hidden="true"></span>
+            </summary>
+            <div class="body">
+              <div class="af-tabs" role="tablist" aria-label="Góc nhìn model card" data-en-aria="Model card views"><button type="button" role="tab" id="m2-t-limit" aria-controls="m2-p-limit" aria-selected="true" data-tab="limit" data-en="Does NOT do">KHÔNG làm được</button><button type="button" role="tab" id="m2-t-mech" aria-controls="m2-p-mech" aria-selected="false" tabindex="-1" data-tab="mech" data-en="Mechanism">Cơ chế</button><button type="button" role="tab" id="m2-t-assume" aria-controls="m2-p-assume" aria-selected="false" tabindex="-1" data-tab="assume" data-en="Assumption">Giả định</button></div>
+              <div class="af-panel limit" role="tabpanel" id="m2-p-limit" aria-labelledby="m2-t-limit" data-panel="limit"><div class="k" data-en="What the model does NOT do">Mô hình KHÔNG làm được</div><p data-en="Does not model long-term brand loyalty or word of mouth.">Không mô hình lòng trung thành thương hiệu dài hạn hay truyền miệng.</p></div>
+              <div class="af-panel mech" role="tabpanel" id="m2-p-mech" aria-labelledby="m2-t-mech" data-panel="mech" hidden><div class="k" data-en="Equation / mechanism">Phương trình / cơ chế</div><p data-en="When several sell in one location, each keeps 1/(1+k(n−1)) of customers.">Khi nhiều bên cùng một khu, mỗi bên giữ 1/(1+k(n−1)) lượng khách.</p></div>
+              <div class="af-panel assume" role="tabpanel" id="m2-p-assume" aria-labelledby="m2-t-assume" data-panel="assume" hidden><div class="k" data-en="Assumption">Giả định</div><p data-en="Customers split by relative attractiveness.">Khách chia đều theo sức hấp dẫn tương đối.</p></div>
+            </div>
+          </details>
+          <details class="af-model" id="m3">
+            <summary>
+              <span class="num">03</span>
+              <span class="ttl"><b data-en="Cash flow">Dòng tiền</b><span class="peek c" data-en="Does not model inflation, free-floating FX or a full capital market.">Không mô phỏng lạm phát, tỷ giá biến động tự do hay thị trường vốn đầy đủ.</span><span class="peek o" data-en="Compare mechanism, assumption and limit">So sánh cơ chế, giả định và giới hạn</span></span>
+              <span class="tg" aria-hidden="true"></span>
+            </summary>
+            <div class="body">
+              <div class="af-tabs" role="tablist" aria-label="Góc nhìn model card" data-en-aria="Model card views"><button type="button" role="tab" id="m3-t-limit" aria-controls="m3-p-limit" aria-selected="true" data-tab="limit" data-en="Does NOT do">KHÔNG làm được</button><button type="button" role="tab" id="m3-t-mech" aria-controls="m3-p-mech" aria-selected="false" tabindex="-1" data-tab="mech" data-en="Mechanism">Cơ chế</button><button type="button" role="tab" id="m3-t-assume" aria-controls="m3-p-assume" aria-selected="false" tabindex="-1" data-tab="assume" data-en="Assumption">Giả định</button></div>
+              <div class="af-panel limit" role="tabpanel" id="m3-p-limit" aria-labelledby="m3-t-limit" data-panel="limit"><div class="k" data-en="What the model does NOT do">Mô hình KHÔNG làm được</div><p data-en="Does not model inflation, free-floating FX or a full capital market.">Không mô phỏng lạm phát, tỷ giá biến động tự do hay thị trường vốn đầy đủ.</p></div>
+              <div class="af-panel mech" role="tabpanel" id="m3-p-mech" aria-labelledby="m3-t-mech" data-panel="mech" hidden><div class="k" data-en="Equation / mechanism">Phương trình / cơ chế</div><p data-en="Revenue − variable cost − fixed cost − scheduled payments.">Doanh thu − chi phí biến đổi − chi phí cố định − khoản trả kỳ hạn.</p></div>
+              <div class="af-panel assume" role="tabpanel" id="m3-p-assume" aria-labelledby="m3-t-assume" data-panel="assume" hidden><div class="k" data-en="Assumption">Giả định</div><p data-en="Payment terms follow published parameters.">Kỳ hạn thanh toán theo tham số công bố.</p></div>
+            </div>
+          </details>
+          <details class="af-model" id="m4">
+            <summary>
+              <span class="num">04</span>
+              <span class="ttl"><b data-en="Virtual rivals">Đối thủ ảo</b><span class="peek c" data-en="Does not learn from the player, nor adapt beyond published rules.">Không học từ người chơi, không thích nghi ngoài luật đã công bố.</span><span class="peek o" data-en="Compare mechanism, assumption and limit">So sánh cơ chế, giả định và giới hạn</span></span>
+              <span class="tg" aria-hidden="true"></span>
+            </summary>
+            <div class="body">
+              <div class="af-tabs" role="tablist" aria-label="Góc nhìn model card" data-en-aria="Model card views"><button type="button" role="tab" id="m4-t-limit" aria-controls="m4-p-limit" aria-selected="true" data-tab="limit" data-en="Does NOT do">KHÔNG làm được</button><button type="button" role="tab" id="m4-t-mech" aria-controls="m4-p-mech" aria-selected="false" tabindex="-1" data-tab="mech" data-en="Mechanism">Cơ chế</button><button type="button" role="tab" id="m4-t-assume" aria-controls="m4-p-assume" aria-selected="false" tabindex="-1" data-tab="assume" data-en="Assumption">Giả định</button></div>
+              <div class="af-panel limit" role="tabpanel" id="m4-p-limit" aria-labelledby="m4-t-limit" data-panel="limit"><div class="k" data-en="What the model does NOT do">Mô hình KHÔNG làm được</div><p data-en="Does not learn from the player, nor adapt beyond published rules.">Không học từ người chơi, không thích nghi ngoài luật đã công bố.</p></div>
+              <div class="af-panel mech" role="tabpanel" id="m4-p-mech" aria-labelledby="m4-t-mech" data-panel="mech" hidden><div class="k" data-en="Equation / mechanism">Phương trình / cơ chế</div><p data-en="Act by published deterministic rules; no language model in the scored loop.">Hành xử theo luật tất định công bố, không dùng mô hình ngôn ngữ trong vòng chấm điểm.</p></div>
+              <div class="af-panel assume" role="tabpanel" id="m4-p-assume" aria-labelledby="m4-t-assume" data-panel="assume" hidden><div class="k" data-en="Assumption">Giả định</div><p data-en="Rival strategy is fixed by profile.">Chiến lược đối thủ cố định theo hồ sơ.</p></div>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section id="tham-so-sau-rieng" class="af-sec">
+        <div class="af-eb" data-en="02 · Parameters · Durian Passport">02 · Tham số · Hộ Chiếu Sầu Riêng</div>
+        <h2 class="af-h2" data-en="Every number the engine uses, and where it comes from">Mọi con số engine dùng, và lấy từ đâu</h2>
+        <p class="af-lead" data-en="Values are read from the game's data file (lab/ho-chieu-sau-rieng-data.js); a test keeps this table equal to the code. «Illustrative» means a design choice with no measured source: it fixes scale and balance, not a real-world estimate. Codes in the last column refer to the list below the table.">Giá trị đọc từ tệp dữ liệu của game (lab/ho-chieu-sau-rieng-data.js); một phép thử giữ bảng này luôn bằng mã. «Minh hoạ» nghĩa là lựa chọn thiết kế không có nguồn đo: nó ấn định thang và cân bằng, không phải ước lượng thực tế. Mã ở cột cuối trỏ tới danh mục dưới bảng.</p>
+        <div class="af-tools">
+          <label class="af-searchwrap"><span class="sr" data-en="Search parameters">Tìm tham số</span><input type="search" id="af-search" class="af-search" autocomplete="off" placeholder="Tìm tham số, ý nghĩa hoặc nguồn…" data-en-ph="Search parameter, meaning or source…"></label>
+          <div class="af-filters" role="group" aria-label="Lọc theo loại nguồn" data-en-aria="Filter by source kind">
+            <button type="button" data-kind="all" aria-pressed="true"><span data-en="All">Tất cả</span><i>27</i></button>
+            <button type="button" data-kind="sourced" aria-pressed="false"><span data-en="Sourced">Có nguồn</span><i>0</i></button>
+            <button type="button" data-kind="mixed" aria-pressed="false"><span data-en="Mixed">Hỗn hợp</span><i>0</i></button>
+            <button type="button" data-kind="illustrative" aria-pressed="false"><span data-en="Illustrative">Minh hoạ</span><i>0</i></button>
+          </div>
+        </div>
+        <div class="af-ratio" aria-hidden="true"><i class="sourced" data-kind="sourced"></i><i class="mixed" data-kind="mixed"></i><i class="illustrative" data-kind="illustrative"></i></div>
+        <div class="af-legend"><span data-kind="sourced" style="--sw:#2F8F6B"><span data-en="Sourced">Có nguồn</span> <i>0</i></span><span data-kind="mixed" style="--sw:#FDA127"><span data-en="Mixed">Hỗn hợp</span> <i>0</i></span><span data-kind="illustrative" style="--sw:#D8C3A0"><span data-en="Illustrative">Minh hoạ</span> <i>0</i></span></div>
+        <div class="af-count" aria-live="polite"><span id="af-count-n">27 / 27</span> <span data-en="parameters">tham số</span></div>
+        <div class="af-tablewrap"><div class="af-scroll">
+          <table class="af-ptable" id="af-ptable">
+            <thead><tr><th scope="col" data-en="Parameter">Tham số</th><th scope="col" data-en="Value">Giá trị</th><th scope="col" data-en="Meaning">Ý nghĩa</th><th scope="col" data-en="Anchor / source">Neo / nguồn</th></tr></thead>
+            <tbody>
+        <tr data-param="cash0" data-value="12"><th scope="row">cash0</th><td class="v"><span data-en="VND 12 bn">12 tỷ đồng</span></td><td class="m"><span data-en="Starting cash, adjusted by firm">Tiền mặt ban đầu, cộng trừ theo doanh nghiệp</span></td><td class="s"><span data-en="illustrative (design)">minh hoạ (thiết kế)</span></td></tr>
+        <tr data-param="creditLimit" data-value="8"><th scope="row">creditLimit</th><td class="v"><span data-en="VND 8 bn">8 tỷ đồng</span></td><td class="m"><span data-en="Bank credit limit; 8 %/season within it, 15 %/season above it plus −3 reputation">Hạn mức vay ngân hàng; trong hạn mức lãi 8 %/vụ, phần vượt 15 %/vụ và −3 uy tín</span></td><td class="s"><span data-en="illustrative (design)">minh hoạ (thiết kế)</span></td></tr>
+        <tr data-param="depotMain" data-value="50"><th scope="row">depotMain</th><td class="v"><span data-en="VND 50k/kg">50 nghìn đ/kg</span></td><td class="m"><span data-en="Main-season depot price">Giá vựa chính vụ</span></td><td class="s"><span data-en="illustrative (design)">minh hoạ (thiết kế)</span></td></tr>
+        <tr data-param="offMult" data-value="2.5"><th scope="row">offMult</th><td class="v"><span data-en="×2.5">×2,5</span></td><td class="m"><span data-en="Off-season depot price vs main season">Giá vựa nghịch vụ so với chính vụ</span></td><td class="s"><span data-en="BC0224: “2–3 times”">BC0224: «gấp 2–3 lần»</span></td></tr>
+        <tr data-param="farmCost" data-value="20"><th scope="row">farmCost</th><td class="v"><span data-en="VND 20k/kg">20 nghìn đ/kg</span></td><td class="m"><span data-en="Cooperative’s own growing cost">Giá thành tự trồng của hợp tác xã</span></td><td class="s"><span data-en="illustrative, 2024 price level">minh hoạ, quy đổi mặt bằng giá 2024</span></td></tr>
+        <tr data-param="offFarmMult" data-value="1.8"><th scope="row">offFarmMult</th><td class="v"><span data-en="×1.8">×1,8</span></td><td class="m"><span data-en="Growing cost when inducing off-season flowering">Giá thành khi xử lý ra hoa nghịch vụ</span></td><td class="s"><span data-en="balanced Oct 2026 (was ×1.3: the cooperative hit the profit ceiling too easily)">cân bằng 10/2026 (trước ×1,3: hợp tác xã chạm trần điểm lợi nhuận quá dễ)</span></td></tr>
+        <tr data-param="linkedPremium" data-value="0.05"><th scope="row">linkedPremium</th><td class="v"><span data-en="+5 %">+5 %</span></td><td class="m"><span data-en="Linked coded areas cost more than traders">Mua từ vùng liên kết có mã đắt hơn mua thương lái</span></td><td class="s"><span data-en="illustrative (design)">minh hoạ (thiết kế)</span></td></tr>
+        <tr data-param="baseLoss" data-value="0.18"><th scope="row">baseLoss</th><td class="v"><span data-en="18 %">18 %</span></td><td class="m"><span data-en="Base loss: 15 % moisture + 3 % harvest">Hao hụt cơ bản: mất nước 15 % + thu hoạch 3 %</span></td><td class="s"><span data-en="CAILAY: 15–40 %">CAILAY: 15–40 %</span></td></tr>
+        <tr data-param="traceLossCut" data-value="0.03"><th scope="row">traceLossCut</th><td class="v"><span data-en="−3 pp">−3 điểm %</span></td><td class="m"><span data-en="Traceability and cold chain cut losses">Truy xuất nguồn gốc và chuỗi lạnh giảm hao hụt</span></td><td class="s"><span data-en="illustrative (design)">minh hoạ (thiết kế)</span></td></tr>
+        <tr data-param="offYieldCut" data-value="0.15"><th scope="row">offYieldCut</th><td class="v"><span data-en="−15 %">−15 %</span></td><td class="m"><span data-en="Off-season volume below main season">Sản lượng nghịch vụ thấp hơn chính vụ</span></td><td class="s"><span data-en="CAILAY: 10–20 %">CAILAY: 10–20 %</span></td></tr>
+        <tr data-param="treeHealthCost" data-value="12"><th scope="row">treeHealthCost</th><td class="v"><span data-en="12 pts/season">12 điểm/vụ</span></td><td class="m"><span data-en="Orchard health lost per induced off-season">Sức khỏe vườn mất đi mỗi vụ xử lý nghịch vụ</span></td><td class="s"><span data-en="CAILAY: “tree lifespan cut 20–30 %”">CAILAY: «giảm tuổi thọ cây 20–30 %»</span></td></tr>
+        <tr data-param="rejectedDiscount" data-value="0.5"><th scope="row">rejectedDiscount</th><td class="v"><span data-en="50 % of price">50 % giá</span></td><td class="m"><span data-en="Blocked or rejected lots resold domestically">Hàng bị chặn hoặc rớt kiểm bán lại nội địa</span></td><td class="s"><span data-en="qualitative anchor “50–80 % off”, illustrative">neo định tính «giảm 50–80 %», minh hoạ</span></td></tr>
+        <tr data-param="fraudMult" data-value="2.2857142857142856"><th scope="row">fraudMult</th><td class="v"><span data-en="×2.29">×2,29</span></td><td class="m"><span data-en="Price when relabelled as Thai vs depot price">Giá bán khi «dán nhãn Thái» so với giá vựa</span></td><td class="s"><span data-en="GMSARN: 160 vs 70 baht/kg">GMSARN: 160 so với 70 baht/kg</span></td></tr>
+        <tr data-param="sampling" data-value="[0.02, 0.01]"><th scope="row">sampling</th><td class="v"><span data-en="2 % → 1 %">2 % → 1 %</span></td><td class="m"><span data-en="Quarantine sampling rate: first 2 years, then lower">Tỷ lệ lấy mẫu kiểm dịch: 2 năm đầu rồi giảm</span></td><td class="s"><span data-en="PROTO, Art. 7">PROTO, Điều 7</span></td></tr>
+        <tr data-param="cadmiumRiskMult" data-value="2.5"><th scope="row">cadmiumRiskMult</th><td class="v"><span data-en="×2.5">×2,5</span></td><td class="m"><span data-en="Cadmium-alert season (season 4): block risk for official lots is multiplied">Vụ cảnh báo cadimi (vụ 4): rủi ro lô chính ngạch bị chặn nhân lên</span></td><td class="s"><span data-en="KQTC: 30 lots from 18 firms; multiple illustrative">KQTC: 30 lô của 18 doanh nghiệp; mức nhân minh hoạ</span></td></tr>
+        <tr data-param="thaiDryPriceMult" data-value="0.92"><th scope="row">thaiDryPriceMult</th><td class="v"><span data-en="×0.92">×0,92</span></td><td class="m"><span data-en="Thai dry-matter season (season 5): official price without testing or traceability">Vụ Thái Lan nâng chuẩn độ khô (vụ 5): giá chính ngạch khi chưa có kiểm nghiệm hay truy xuất</span></td><td class="s"><span data-en="BC1223: 32 % → 35 %; cut illustrative">BC1223: 32 % → 35 %; mức giảm minh hoạ</span></td></tr>
+        <tr data-param="frozenProtoMult" data-value="1.15"><th scope="row">frozenProtoMult</th><td class="v"><span data-en="×1.15">×1,15</span></td><td class="m"><span data-en="Frozen-protocol season (season 6): frozen price with both codes">Vụ ký nghị định thư đông lạnh (vụ 6): giá đông lạnh khi đủ mã vùng trồng và mã đóng gói</span></td><td class="s"><span data-en="FROZENPROTO; premium illustrative">FROZENPROTO; mức tăng minh hoạ</span></td></tr>
+        <tr data-param="cleanSamplingMult" data-value="0.6"><th scope="row">cleanSamplingMult</th><td class="v"><span data-en="×0.6">×0,6</span></td><td class="m"><span data-en="After 2 clean official seasons: quarantine pest risk">Sau 2 vụ chính ngạch không vi phạm: rủi ro sinh vật gây hại khi kiểm dịch</span></td><td class="s"><span data-en="PROTO: sampling 2 % → 1 %; factor illustrative">PROTO: lấy mẫu 2 % → 1 %; hệ số minh hoạ</span></td></tr>
+        <tr data-param="priorityCost" data-value="{&quot;area&quot;: 1.2, &quot;pack&quot;: 1.5, &quot;test&quot;: 0.6, &quot;trace&quot;: 0.8, &quot;freezer&quot;: 3, &quot;finance&quot;: 0}"><th scope="row">priorityCost</th><td class="v"><span data-en="1.2 · 1.5 · 0.6 · 0.8 · 3.0 · 0 bn">1,2 · 1,5 · 0,6 · 0,8 · 3,0 · 0 tỷ</span></td><td class="m"><span data-en="Cost of one investment priority: area code, packing code, testing, traceability, freezer, finances">Chi phí một ưu tiên đầu tư: mã vùng trồng, mã đóng gói, kiểm nghiệm, truy xuất, cấp đông, củng cố tài chính</span></td><td class="s"><span data-en="mechanisms per PROTO, KQTC, GS1, MYSOP; amounts illustrative">cơ chế theo PROTO, KQTC, GS1, MYSOP; số tiền minh hoạ</span></td></tr>
+        <tr data-param="channels.priceMult" data-value="{&quot;CN&quot;: 1.8, &quot;BORDER&quot;: 1.5, &quot;FROZEN&quot;: 2.6, &quot;TW&quot;: 2.1, &quot;JP&quot;: 2.4, &quot;DOM&quot;: 1.16}"><th scope="row">channels.priceMult</th><td class="v"><span data-en="×1.8 · 1.5 · 2.6 · 2.1 · 2.4 · 1.16">×1,8 · 1,5 · 2,6 · 2,1 · 2,4 · 1,16</span></td><td class="m"><span data-en="Channel price multiple vs depot price: official, border, frozen, Taiwan, Japan, domestic">Hệ số giá từng kênh so với giá vựa: chính ngạch, tiểu ngạch, đông lạnh, Đài Loan, Nhật Bản, nội địa</span></td><td class="s"><span data-en="CAILAY, JETRO, TW, BC1223, PDIEN; ratios illustrative; border ×1.5 since Oct 2026 (was ×1.35: the default channel mix lost money in season 1)">CAILAY, JETRO, TW, BC1223, PDIEN; tỷ lệ minh hoạ; tiểu ngạch ×1,5 từ 10/2026 (trước ×1,35: tỷ trọng mặc định lỗ ngay vụ 1)</span></td></tr>
+        <tr data-param="channels.cap" data-value="{&quot;BORDER&quot;: 260, &quot;FROZEN&quot;: 220, &quot;TW&quot;: 50, &quot;JP&quot;: 30}"><th scope="row">channels.cap</th><td class="v"><span data-en="260 · 220 · 50 · 30 t">260 · 220 · 50 · 30 tấn</span></td><td class="m"><span data-en="Per-season volume caps for border, frozen, Taiwan, Japan (official and domestic uncapped)">Trần sản lượng mỗi vụ của tiểu ngạch, đông lạnh, Đài Loan, Nhật Bản (chính ngạch và nội địa không trần)</span></td><td class="s"><span data-en="illustrative (design)">minh hoạ (thiết kế)</span></td></tr>
+        <tr data-param="channels.TW.tariff" data-value="0.17"><th scope="row">channels.TW.tariff</th><td class="v"><span data-en="17 %">17 %</span></td><td class="m"><span data-en="Taiwan import tariff">Thuế nhập khẩu Đài Loan</span></td><td class="s"><span data-en="TW">TW</span></td></tr>
+        <tr data-param="seasons.borderCut" data-value="[0, 0.15, 0.3, 0.45, 0.55, 0.6]"><th scope="row">seasons.borderCut</th><td class="v"><span data-en="0 → 15 → 30 → 45 → 55 → 60 %">0 → 15 → 30 → 45 → 55 → 60 %</span></td><td class="m"><span data-en="Border-trade share cut, seasons 1 to 6">Phần kênh tiểu ngạch bị cắt từ vụ 1 đến vụ 6</span></td><td class="s"><span data-en="TW: tightening since 2018; KQTC">TW: siết từ 2018; KQTC</span></td></tr>
+        <tr data-param="seasons.demand" data-value="[0.9, 1, 0.75, 1.05, 0.95, 1.1]"><th scope="row">seasons.demand</th><td class="v"><span data-en="0.9 · 1.0 · 0.75 · 1.05 · 0.95 · 1.1">0,9 · 1,0 · 0,75 · 1,05 · 0,95 · 1,1</span></td><td class="m"><span data-en="Season demand factor (season 3 overlaps Thailand, season 5 Thai drought)">Hệ số cầu từng vụ (vụ 3 trùng vụ Thái Lan, vụ 5 Thái Lan hạn hán)</span></td><td class="s"><span data-en="CAILAY (overlap), KQTC (2024 share); levels illustrative">CAILAY (trùng vụ), KQTC (thị phần 2024); mức minh hoạ</span></td></tr>
+        <tr data-param="scoreWeights" data-value="{&quot;profit&quot;: 30, &quot;reputation&quot;: 20, &quot;capability&quot;: 20, &quot;adaptation&quot;: 15, &quot;sustainability&quot;: 15}"><th scope="row">scoreWeights</th><td class="v"><span data-en="30 · 20 · 20 · 15 · 15 %">30 · 20 · 20 · 15 · 15 %</span></td><td class="m"><span data-en="Total-score weights: profit, reputation, capability, shock response, sustainability">Trọng số điểm tổng: lợi nhuận, uy tín, năng lực, ứng phó biến cố, bền vững</span></td><td class="s"><span data-en="illustrative (design)">minh hoạ (thiết kế)</span></td></tr>
+        <tr data-param="capability" data-value="{&quot;base&quot;: 10, &quot;area&quot;: 20, &quot;pack&quot;: 20, &quot;testPerLevel&quot;: 10, &quot;trace&quot;: 15, &quot;freezer&quot;: 15}"><th scope="row">capability</th><td class="v"><span data-en="10 + 20 + 20 + 10/level + 15 + 15">10 + 20 + 20 + 10/cấp + 15 + 15</span></td><td class="m"><span data-en="Capability points: base, area code, packing code, per testing level, traceability, freezer">Điểm năng lực: nền, mã vùng trồng, mã đóng gói, mỗi cấp kiểm nghiệm, truy xuất, cấp đông</span></td><td class="s"><span data-en="illustrative (design)">minh hoạ (thiết kế)</span></td></tr>
+        <tr data-param="roles.benchMargin" data-value="{&quot;htx&quot;: 80, &quot;packer&quot;: 4, &quot;exporter&quot;: 4, &quot;frozen&quot;: 6}"><th scope="row">roles.benchMargin</th><td class="v"><span data-en="VND 80 · 4 · 4 · 6k/kg">80 · 4 · 4 · 6 nghìn đ/kg</span></td><td class="m"><span data-en="Benchmark margin for the cooperative, packing house, exporter and freezing company; the 100-point profit mark = volume × 6 seasons × margin">Biên lãi chuẩn của hợp tác xã, cơ sở đóng gói, công ty xuất khẩu, doanh nghiệp cấp đông; mốc 100 điểm lợi nhuận = sản lượng × 6 vụ × biên chuẩn</span></td><td class="s"><span data-en="illustrative; cooperative balanced Oct 2026 (was 60: every play style scored 90–99 on profit)">minh hoạ; HTX cân bằng 10/2026 (trước 60: mọi lối chơi đều đạt 90–99 điểm lợi nhuận)</span></td></tr>
+
+            </tbody>
+          </table>
+          <div class="af-empty" id="af-empty" hidden><span data-en="No parameter matches.">Không có tham số phù hợp.</span> <button type="button" data-act="clear" data-en="Clear filters">Xoá bộ lọc</button></div>
+        </div></div>
+        <div class="af-srcpanel" id="af-srcpanel" role="status" hidden><span class="code"></span><div class="txt"><span class="t"></span><div class="uses"><span data-en="Used by: ">Dùng bởi: </span><span class="u"></span></div></div><button type="button" class="x" data-act="closesrc" aria-label="Đóng" data-en-aria="Close">×</button></div>
+        <button type="button" class="af-pillbtn" data-act="togglesrc" aria-expanded="false" aria-controls="af-srclist"><span class="s0" data-en="Show the 12 source codes">Hiện 12 mã nguồn</span><span class="s1" hidden data-en="Hide the 12 source codes">Ẩn 12 mã nguồn</span></button>
+        <ul class="af-sources" id="af-srclist" hidden>
       <li><b>PROTO</b> · <span data-en="Protocol on phytosanitary requirements for fresh durian exported from Viet Nam to China (MARD–GACC, 2022), Art. 2–9 and Annex.">Nghị định thư về yêu cầu kiểm dịch thực vật đối với quả sầu riêng tươi xuất khẩu từ Việt Nam sang Trung Quốc (MARD–GACC, 2022), Điều 2–9 và Phụ lục.</span></li>
       <li><b>KQTC</b> · <span data-en="CESTI (2024). Search results for «Xuất khẩu trái sầu riêng» [durian exports] (Apr 2024), incl. agro.gov.vn news of 8 Apr 2024.">CESTI (2024). Kết quả tra cứu «Xuất khẩu trái sầu riêng» (04/2024), gồm tin agro.gov.vn ngày 8/4/2024.</span></li>
       <li><b>CAILAY</b> · <span data-en="Master&#x27;s thesis (2014). Giải pháp hoàn thiện chuỗi cung ứng sầu riêng tại huyện Cai Lậy, Tiền Giang [Improving the durian supply chain in Cai Lậy].">Luận văn thạc sĩ (2014). Giải pháp hoàn thiện chuỗi cung ứng sầu riêng tại huyện Cai Lậy, Tiền Giang.</span></li>
@@ -191,242 +208,221 @@
       <li><b>MYSOP</b> · <span data-en="MARDI (2023). The SOP for exporting frozen whole durian fruit.">MARDI (2023). The SOP for exporting frozen whole durian fruit.</span></li>
       <li><b>FROZENPROTO</b> · <span data-en="VTV/VGP (19 Aug 2024). Frozen durian officially licensed for China (MARD–GACC protocol signed).">VTV/VGP (19/8/2024). Chính thức cấp phép sầu riêng đông lạnh sang Trung Quốc (Bộ NN&amp;PTNT – GACC ký nghị định thư).</span></li>
       <li><b>GS1</b> · <span data-en="APEC (2017). Application of global data standards for supply chain connectivity (Malaysian durian traceability pilot).">APEC (2017). Application of global data standards for supply chain connectivity (thí điểm truy xuất sầu riêng Malaysia).</span></li>
-    </ul>
-    <p style="margin:14px 0 0;font-size:13.5px;color:var(--clay-sub)" data-en="The four milestone multipliers (cadmium, dry matter, frozen protocol, sampling after two clean seasons) moved from the engine code into the data file in Oct 2026 and sit in the table. Two further rules live in the engine code rather than the data file: interest of 8 % per season within the credit limit and 15 % above it, and a 50 % seeded chance that relabelling as Thai is exposed. Events are drawn without replacement by the class-code seed, so every team in a class meets the same sequence.">Bốn hệ số theo mốc (cadimi, độ khô, nghị định thư đông lạnh, lấy mẫu sau 2 vụ sạch) đã chuyển từ mã engine sang tệp dữ liệu từ 10/2026 và có trong bảng. Hai luật nữa nằm trong mã engine chứ không trong tệp dữ liệu: lãi vay 8 %/vụ trong hạn mức và 15 % phần vượt, và xác suất 50 % (theo hạt giống) bị phát hiện khi «dán nhãn Thái». Biến cố rút không hoàn lại theo hạt giống của mã lớp, nên mọi đội trong một lớp gặp cùng một dãy.</p>
-  </section>
+        </ul>
+        <p class="af-note" data-en="The four milestone multipliers (cadmium, dry matter, frozen protocol, sampling after two clean seasons) moved from the engine code into the data file in Oct 2026 and sit in the table. Two further rules live in the engine code rather than the data file: interest of 8 % per season within the credit limit and 15 % above it, and a 50 % seeded chance that relabelling as Thai is exposed. Events are drawn without replacement by the class-code seed, so every team in a class meets the same sequence.">Bốn hệ số theo mốc (cadimi, độ khô, nghị định thư đông lạnh, lấy mẫu sau 2 vụ sạch) đã chuyển từ mã engine sang tệp dữ liệu từ 10/2026 và có trong bảng. Hai luật nữa nằm trong mã engine chứ không trong tệp dữ liệu: lãi vay 8 %/vụ trong hạn mức và 15 % phần vượt, và xác suất 50 % (theo hạt giống) bị phát hiện khi «dán nhãn Thái». Biến cố rút không hoàn lại theo hạt giống của mã lớp, nên mọi đội trong một lớp gặp cùng một dãy.</p>
+      </section>
 
-  <section id="ly-thuyet-kdqt" style="margin-bottom:64px">
-    <div class="ht-tag" data-en="Theoretical frameworks">Khung lý thuyết</div>
-    <h2 class="ht-h2" data-en="Which theories run inside the engine">Lý thuyết nào đang chạy trong engine</h2>
-    <p style="margin:10px 0 22px;font-size:15px;line-height:1.6;color:var(--clay-sub)" data-en="BizOn rests on two layers. The entrepreneurship layer (causation/effectuation, experiential learning, self-efficacy) shapes how every game is taught. The international-business layer is written into the Brand Passport, Durian Passport and lab engines as variables the learner changes and formulas that respond. The diagrams below show where each framework sits; the full row-by-row map with source files is on the Regional impact page.">BizOn dựa trên hai lớp lý thuyết. Lớp khởi nghiệp (causation/effectuation, học qua trải nghiệm, niềm tin tự hiệu quả) định hình cách dạy mọi game. Lớp kinh doanh quốc tế được viết thẳng vào engine của Hộ Chiếu Thương Hiệu, Hộ Chiếu Sầu Riêng và các phòng lab: thành biến số người học thao tác và công thức phản hồi lại. Hai sơ đồ dưới cho thấy mỗi khung nằm ở đâu; bảng đầy đủ từng dòng kèm tên tệp mã nguồn ở trang Định hướng tác động vùng.</p>
+      <section id="ly-thuyet-kdqt" class="af-sec">
+        <div class="af-eb" data-en="03 · Theoretical frameworks">03 · Khung lý thuyết</div>
+        <h2 class="af-h2" data-en="Which theories run inside the engine">Lý thuyết nào đang chạy trong engine</h2>
+        <p class="af-lead" data-en="BizOn rests on two layers. The entrepreneurship layer (causation/effectuation, experiential learning, self-efficacy) shapes how every game is taught. The international-business layer is written into the Brand Passport, Durian Passport and lab engines as variables the learner changes and formulas that respond.">BizOn dựa trên hai lớp lý thuyết. Lớp khởi nghiệp (causation/effectuation, học qua trải nghiệm, niềm tin tự hiệu quả) định hình cách dạy mọi game. Lớp kinh doanh quốc tế được viết thẳng vào engine của Hộ Chiếu Thương Hiệu, Hộ Chiếu Sầu Riêng và các phòng lab: thành biến số người học thao tác và công thức phản hồi lại.</p>
 
-    <figure class="ht-fig">
-      <figcaption><span data-en="Figure 1 · Three tiers, three theory layers – and what runs across all of them">Hình 1 · Ba bậc, ba lớp lý thuyết – và những gì xuyên suốt</span></figcaption>
-      <p class="ht-scroll" data-en="On a phone, swipe sideways to read the diagram.">Trên điện thoại, kéo ngang để đọc sơ đồ.</p><div class="ht-wrap"><svg class="ht-svg" viewBox="0 0 960 330" role="img" aria-labelledby="ht-fig1-t" xmlns="http://www.w3.org/2000/svg">
-        <title id="ht-fig1-t">Ba bậc BizOn và khung lý thuyết tương ứng</title>
-        <defs>
-          <marker id="ht-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5 0 10z" class="ht-arrow"></path></marker>
-        </defs>
-        <g class="ht-tier t1">
-          <rect x="16" y="40" width="284" height="150" rx="22"></rect>
-          <text x="36" y="70" class="ht-eb"><tspan data-en="TIER 1 · VENTURE START-UP">BẬC 1 · KHỞI SỰ</tspan></text>
-          <text x="36" y="96" class="ht-h"><tspan>Bến Phù Sa</tspan></text>
-          <text x="36" y="122" class="ht-b"><tspan data-en="Effectuation · affordable loss">Effectuation · tổn thất chấp nhận được</tspan></text>
-          <text x="36" y="142" class="ht-b"><tspan data-en="Explore–exploit: test small, then scale">Thăm dò – khai thác: thử nhỏ rồi nhân rộng</tspan></text>
-          <text x="36" y="162" class="ht-b"><tspan data-en="Informal sector (GSO data)">Khu vực phi chính thức (số liệu TCTK)</tspan></text>
-        </g>
-        <path d="M304 115 L330 115" class="ht-link" marker-end="url(#ht-arr)"></path>
-        <g class="ht-tier t2">
-          <rect x="338" y="40" width="284" height="150" rx="22"></rect>
-          <text x="358" y="70" class="ht-eb"><tspan data-en="TIER 2 · RUNNING A FIRM">BẬC 2 · VẬN HÀNH DOANH NGHIỆP</tspan></text>
-          <text x="358" y="96" class="ht-h"><tspan>Bật Nghiệp</tspan></text>
-          <text x="358" y="122" class="ht-b"><tspan data-en="Price elasticity of demand">Độ co giãn của cầu theo giá</tspan></text>
-          <text x="358" y="142" class="ht-b"><tspan data-en="Marketing mix · competitive response">Marketing mix · phản ứng cạnh tranh</tspan></text>
-          <text x="358" y="162" class="ht-b"><tspan data-en="Cash flow and payment terms">Dòng tiền và kỳ hạn thanh toán</tspan></text>
-        </g>
-        <path d="M626 115 L652 115" class="ht-link" marker-end="url(#ht-arr)"></path>
-        <g class="ht-tier t3">
-          <rect x="660" y="40" width="284" height="150" rx="22"></rect>
-          <text x="680" y="70" class="ht-eb"><tspan data-en="TIER 3 · INTERNATIONALISATION">BẬC 3 · QUỐC TẾ HÓA</tspan></text>
-          <text x="680" y="96" class="ht-h"><tspan data-en="Passports · Labs">Hộ Chiếu · Phòng lab</tspan></text>
-          <text x="680" y="122" class="ht-b"><tspan data-en="Uppsala: knowledge → commitment">Uppsala: tri thức → cam kết</tspan></text>
-          <text x="680" y="142" class="ht-b"><tspan data-en="LOF · entry modes (TCE, OLI)">LOF · phương thức thâm nhập (TCE, OLI)</tspan></text>
-          <text x="680" y="162" class="ht-b"><tspan data-en="Institutions: SPS, rules of origin, voids">Thể chế: kiểm dịch, xuất xứ, khoảng trống</tspan></text>
-        </g>
-        <g class="ht-cross">
-          <rect x="16" y="214" width="928" height="46" rx="23"></rect>
-          <text x="480" y="243" text-anchor="middle" class="ht-b"><tspan data-en="Across all tiers: Kolb (1984) experiential cycle · Bandura (1977) self-efficacy · McMullen &amp; Shepherd (2006) action under uncertainty">Xuyên suốt: vòng trải nghiệm Kolb (1984) · tự hiệu quả Bandura (1977) · hành động dưới bất định McMullen &amp; Shepherd (2006)</tspan></text>
-        </g>
-        <g class="ht-cross ev">
-          <rect x="16" y="272" width="928" height="46" rx="23"></rect>
-          <text x="480" y="301" text-anchor="middle" class="ht-b"><tspan data-en="Evidence rule: decision traces → debrief → rubric; impact claims follow contribution analysis (Mayne, 2012)">Nguyên tắc bằng chứng: dấu vết quyết định → debrief → rubric; tuyên bố tác động theo contribution analysis (Mayne, 2012)</tspan></text>
-        </g>
-      </svg></div>
-    </figure>
+        <figure class="af-fig">
+          <figcaption data-en="Figure 1 · Three tiers, three theory layers – and what runs across all of them">Hình 1 · Ba bậc, ba lớp lý thuyết – và những gì xuyên suốt</figcaption>
+          <div class="hint" data-en="Select a tier to see its theory layer.">Chọn một bậc để xem lớp lý thuyết.</div>
+          <div class="af-tiers">
+            <button type="button" class="af-tier" data-tier="t1" aria-pressed="false"><span class="lvl"><span data-en="Level 1 of 3">Bậc 1 / 3</span> ↗</span><span class="eb" data-en="TIER 1 · VENTURE START-UP">BẬC 1 · KHỞI SỰ</span><span class="nm" data-en="Bến Phù Sa">Bến Phù Sa</span></button>
+            <button type="button" class="af-tier" data-tier="t2" aria-pressed="false"><span class="lvl"><span data-en="Level 2 of 3">Bậc 2 / 3</span> ↗</span><span class="eb" data-en="TIER 2 · RUNNING A FIRM">BẬC 2 · VẬN HÀNH DOANH NGHIỆP</span><span class="nm" data-en="Bật Nghiệp">Bật Nghiệp</span></button>
+            <button type="button" class="af-tier" data-tier="t3" aria-pressed="true"><span class="lvl"><span data-en="Level 3 of 3">Bậc 3 / 3</span> ↗</span><span class="eb" data-en="TIER 3 · INTERNATIONALISATION">BẬC 3 · QUỐC TẾ HÓA</span><span class="nm" data-en="Passports · Labs">Hộ Chiếu · Phòng lab</span></button>
+          </div>
+          <div class="af-tray">
+            <div data-tier-panel="t1" hidden><div class="eb" data-en="TIER 1 · VENTURE START-UP">BẬC 1 · KHỞI SỰ</div><div class="af-chipset"><span data-en="Effectuation · affordable loss">Effectuation · tổn thất chấp nhận được</span><span data-en="Explore–exploit: test small, then scale">Thăm dò – khai thác: thử nhỏ rồi nhân rộng</span><span data-en="Informal sector (GSO data)">Khu vực phi chính thức (số liệu TCTK)</span></div></div>
+            <div data-tier-panel="t2" hidden><div class="eb" data-en="TIER 2 · RUNNING A FIRM">BẬC 2 · VẬN HÀNH DOANH NGHIỆP</div><div class="af-chipset"><span data-en="Price elasticity of demand">Độ co giãn của cầu theo giá</span><span data-en="Marketing mix · competitive response">Marketing mix · phản ứng cạnh tranh</span><span data-en="Cash flow and payment terms">Dòng tiền và kỳ hạn thanh toán</span></div></div>
+            <div data-tier-panel="t3"><div class="eb" data-en="TIER 3 · INTERNATIONALISATION">BẬC 3 · QUỐC TẾ HÓA</div><div class="af-chipset"><span data-en="Uppsala: knowledge → commitment">Uppsala: tri thức → cam kết</span><span data-en="LOF · entry modes (TCE, OLI)">LOF · phương thức thâm nhập (TCE, OLI)</span><span data-en="Institutions: SPS, rules of origin, voids">Thể chế: kiểm dịch, xuất xứ, khoảng trống</span></div></div>
+          </div>
+          <div class="af-bands">
+            <div class="af-band a" data-en="Across all tiers: Kolb (1984) experiential cycle · Bandura (1977) self-efficacy · McMullen &amp; Shepherd (2006) action under uncertainty">Xuyên suốt: vòng trải nghiệm Kolb (1984) · tự hiệu quả Bandura (1977) · hành động dưới bất định McMullen &amp; Shepherd (2006)</div>
+            <div class="af-band b" data-en="Evidence rule: decision traces → debrief → rubric; impact claims follow contribution analysis (Mayne, 2012)">Nguyên tắc bằng chứng: dấu vết quyết định → debrief → rubric; tuyên bố tác động theo contribution analysis (Mayne, 2012)</div>
+          </div>
+        </figure>
 
-    <figure class="ht-fig">
-      <figcaption><span data-en="Figure 2 · The Uppsala loop as it runs in Brand Passport (network position and the institutional-voids event were added to the engine in October 2026)">Hình 2 · Vòng Uppsala như đang chạy trong Hộ Chiếu Thương Hiệu (vị thế mạng lưới và sự kiện khoảng trống thể chế đã vào engine từ 10/2026)</span></figcaption>
-      <p class="ht-scroll" data-en="On a phone, swipe sideways to read the diagram.">Trên điện thoại, kéo ngang để đọc sơ đồ.</p><div class="ht-wrap"><svg class="ht-svg" viewBox="0 0 960 400" role="img" aria-labelledby="ht-fig2-t" xmlns="http://www.w3.org/2000/svg">
-        <title id="ht-fig2-t">Vòng tri thức – cam kết – kết quả – mạng lưới trong Hộ Chiếu Thương Hiệu</title>
-        <g class="ht-node n1">
-          <rect x="24" y="24" width="400" height="140" rx="22"></rect>
-          <text x="44" y="54" class="ht-eb"><tspan data-en="MARKET KNOWLEDGE · S.know[m] 0–100">TRI THỨC THỊ TRƯỜNG · S.know[m] 0–100</tspan></text>
-          <text x="44" y="82" class="ht-b"><tspan data-en="Learner: buys up to 2 of 6 intel sources per quarter">Người học: mua tối đa 2 trong 6 nguồn tin mỗi quý</tspan></text>
-          <text x="44" y="104" class="ht-b"><tspan data-en="Engine: +6 per quarter of selling; forecast error">Engine: +6 mỗi quý bán hàng; sai số dự báo</tspan></text>
-          <text x="44" y="126" class="ht-b"><tspan data-en="55% → 32% → 15% as knowledge passes 25 and 50">55% → 32% → 15% khi tri thức vượt 25 và 50</tspan></text>
-          <text x="44" y="148" class="ht-b"><tspan data-en="Cultural distance (Kogut–Singh) slows learning">Khoảng cách văn hoá (Kogut–Singh) làm học chậm</tspan></text>
-        </g>
-        <path d="M430 94 L522 94" class="ht-link" marker-end="url(#ht-arr)"></path>
-        <text x="476" y="84" text-anchor="middle" class="ht-lb"><tspan data-en="knowledge first">tri thức trước</tspan></text>
-        <g class="ht-node n2">
-          <rect x="536" y="24" width="400" height="140" rx="22"></rect>
-          <text x="556" y="54" class="ht-eb"><tspan data-en="COMMITMENT · entry mode and capital">CAM KẾT · phương thức và vốn</tspan></text>
-          <text x="556" y="82" class="ht-b"><tspan data-en="Digital platform 0.5 bn · direct export 1.2 bn">Nền tảng số 0,5 tỷ · xuất khẩu trực tiếp 1,2 tỷ</tspan></text>
-          <text x="556" y="104" class="ht-b"><tspan data-en="Local partner 0.8 bn (borrowed network)">Đối tác địa phương 0,8 tỷ (mượn mạng lưới)</tspan></text>
-          <text x="556" y="126" class="ht-b"><tspan data-en="AIBIS scores each mode: TCE, OLI, Uppsala, institutions">AIBIS chấm từng phương thức: TCE, OLI, Uppsala, thể chế</tspan></text>
-          <text x="556" y="148" class="ht-b"><tspan data-en="Mr Tú hints when knowledge is under 40 (advisory only)">Thầy Tú nhắc khi tri thức dưới 40 (chỉ gợi ý)</tspan></text>
-        </g>
-        <path d="M736 170 L736 222" class="ht-link" marker-end="url(#ht-arr)"></path>
-        <g class="ht-node n3">
-          <rect x="536" y="236" width="400" height="140" rx="22"></rect>
-          <text x="556" y="266" class="ht-eb"><tspan data-en="OPERATIONS · quarterly revenue">HOẠT ĐỘNG · doanh thu quý</tspan></text>
-          <text x="556" y="294" class="ht-b"><tspan data-en="rev = fit × scale × trend ÷ competition × rep × capab">dt = fit × scale × trend ÷ cạnh tranh × uy tín × năng lực</tspan></text>
-          <text x="556" y="316" class="ht-b"><tspan data-en="Liability of foreignness: up to −12% in the first 2 quarters">LOF: giảm tới 12% trong 2 quý đầu</tspan></text>
-          <text x="556" y="338" class="ht-b"><tspan data-en="No FTA: ×0.92 · Bắc Phong without certification: ×0.45">Không FTA: ×0,92 · Bắc Phong thiếu chứng nhận: ×0,45</tspan></text>
-          <text x="556" y="360" class="ht-b"><tspan data-en="Rival present: revenue split by relative strength">Có đối thủ: chia doanh thu theo sức mạnh tương đối</tspan></text>
-        </g>
-        <path d="M530 306 L430 306" class="ht-link" marker-end="url(#ht-arr)"></path>
-        <path d="M224 230 L224 170" class="ht-link" marker-end="url(#ht-arr)"></path>
-        <text x="190" y="206" text-anchor="end" class="ht-lb"><tspan data-en="selling teaches (+6)">bán hàng là học (+6)</tspan></text>
-        <g class="ht-node n4">
-          <rect x="24" y="236" width="400" height="140" rx="22"></rect>
-          <text x="44" y="266" class="ht-eb"><tspan data-en="NETWORK POSITION · outsidership (Uppsala 2009)">VỊ THẾ MẠNG LƯỚI · outsidership (Uppsala 2009)</tspan></text>
-          <text x="44" y="294" class="ht-b"><tspan data-en="Learner: joins a trade body, works with partners">Người học: vào hiệp hội ngành, làm việc với đối tác</tspan></text>
-          <text x="44" y="316" class="ht-b"><tspan data-en="Engine: revenue × (0.9 + 0.1·net/100) while an outsider">Engine: doanh thu × (0,9 + 0,1·mạng lưới/100) khi còn ngoài cuộc</tspan></text>
-          <text x="44" y="338" class="ht-b"><tspan data-en="Institutional voids event (Khanna &amp; Palepu, 1997):">Sự kiện khoảng trống thể chế (Khanna &amp; Palepu, 1997):</tspan></text>
-          <text x="44" y="360" class="ht-b"><tspan data-en="no independent certifier – build, borrow or wait">không có kiểm định độc lập – tự xây, mượn hay chờ</tspan></text>
-        </g>
-        <path d="M424 320 C 520 320, 540 230, 556 172" class="ht-link" marker-end="url(#ht-arr)"></path>
-        <text x="472" y="192" text-anchor="middle" class="ht-lb"><tspan data-en="insiders commit">người trong cuộc</tspan></text>
-        <text x="472" y="208" text-anchor="middle" class="ht-lb"><tspan data-en="with less risk">cam kết ít rủi ro hơn</tspan></text>
-      </svg></div>
-    </figure>
+        <figure class="af-fig">
+          <figcaption data-en="Figure 2 · The Uppsala loop as it runs in Brand Passport (network position and the institutional-voids event were added to the engine in October 2026)">Hình 2 · Vòng Uppsala như đang chạy trong Hộ Chiếu Thương Hiệu (vị thế mạng lưới và sự kiện khoảng trống thể chế đã vào engine từ 10/2026)</figcaption>
+          <div class="hint" data-en="Step through the loop: knowledge → commitment → operations → network → back to commitment.">Đi qua từng bước: tri thức → cam kết → hoạt động → mạng lưới → quay lại cam kết.</div>
+          <div class="af-loopwrap">
+            <div class="af-loop">
+              <div class="af-arrow v top"><b aria-hidden="true">→</b><span data-en="knowledge first">tri thức trước</span></div>
+              <div class="af-arrow right"><b aria-hidden="true">↓</b><span data-en="operate">vận hành</span></div>
+              <div class="af-arrow v bottom"><b aria-hidden="true">←</b><span data-en="build network">xây mạng lưới</span></div>
+              <div class="af-arrow left"><b aria-hidden="true">↑</b><span data-en="selling teaches (+6)">bán hàng là học (+6)</span></div>
+              <div class="af-loopc" aria-hidden="true">UPPSALA<br>LOOP</div>
+              <button type="button" class="af-node" data-node="n1" aria-pressed="true"><span class="step">1</span><span><span class="eb" data-en="MARKET KNOWLEDGE">TRI THỨC THỊ TRƯỜNG</span><span class="code" data-en="S.know[m] 0–100">S.know[m] 0–100</span></span></button>
+              <button type="button" class="af-node" data-node="n2" aria-pressed="false"><span class="step">2</span><span><span class="eb" data-en="COMMITMENT">CAM KẾT</span><span class="code" data-en="entry mode and capital">phương thức và vốn</span></span></button>
+              <button type="button" class="af-node" data-node="n3" aria-pressed="false"><span class="step">3</span><span><span class="eb" data-en="OPERATIONS">HOẠT ĐỘNG</span><span class="code" data-en="quarterly revenue">doanh thu quý</span></span></button>
+              <button type="button" class="af-node" data-node="n4" aria-pressed="false"><span class="step">4</span><span><span class="eb" data-en="NETWORK POSITION">VỊ THẾ MẠNG LƯỚI</span><span class="code" data-en="outsidership (Uppsala 2009)">outsidership (Uppsala 2009)</span></span></button>
+            </div>
+            <div class="af-nodepanel">
+              <div data-node-panel="n1"><div class="hd"><span data-en="MARKET KNOWLEDGE">TRI THỨC THỊ TRƯỜNG</span> · <code data-en="S.know[m] 0–100">S.know[m] 0–100</code></div><div class="items"><div data-en="Learner: buys up to 2 of 6 intel sources per quarter">Người học: mua tối đa 2 trong 6 nguồn tin mỗi quý</div><div data-en="Engine: +6 per quarter of selling; forecast error">Engine: +6 mỗi quý bán hàng; sai số dự báo</div><div data-en="55% → 32% → 15% as knowledge passes 25 and 50">55% → 32% → 15% khi tri thức vượt 25 và 50</div><div data-en="Cultural distance (Kogut–Singh) slows learning">Khoảng cách văn hoá (Kogut–Singh) làm học chậm</div></div><div class="next">→ <span data-en="knowledge first">tri thức trước</span></div></div>
+              <div data-node-panel="n2" hidden><div class="hd"><span data-en="COMMITMENT">CAM KẾT</span> · <code data-en="entry mode and capital">phương thức và vốn</code></div><div class="items"><div data-en="Digital platform 0.5 bn · direct export 1.2 bn">Nền tảng số 0,5 tỷ · xuất khẩu trực tiếp 1,2 tỷ</div><div data-en="Local partner 0.8 bn (borrowed network)">Đối tác địa phương 0,8 tỷ (mượn mạng lưới)</div><div data-en="AIBIS scores each mode: TCE, OLI, Uppsala, institutions">AIBIS chấm từng phương thức: TCE, OLI, Uppsala, thể chế</div><div data-en="Mr Tú hints when knowledge is under 40 (advisory only)">Thầy Tú nhắc khi tri thức dưới 40 (chỉ gợi ý)</div></div><div class="next">→ <span data-en="commit">cam kết</span></div></div>
+              <div data-node-panel="n3" hidden><div class="hd"><span data-en="OPERATIONS">HOẠT ĐỘNG</span> · <code data-en="quarterly revenue">doanh thu quý</code></div><div class="items"><div data-en="rev = fit × scale × trend ÷ competition × rep × capab">dt = fit × scale × trend ÷ cạnh tranh × uy tín × năng lực</div><div data-en="Liability of foreignness: up to −12% in the first 2 quarters">LOF: giảm tới 12% trong 2 quý đầu</div><div data-en="No FTA: ×0.92 · Bắc Phong without certification: ×0.45">Không FTA: ×0,92 · Bắc Phong thiếu chứng nhận: ×0,45</div><div data-en="Rival present: revenue split by relative strength">Có đối thủ: chia doanh thu theo sức mạnh tương đối</div></div><div class="next">→ <span data-en="selling teaches (+6)">bán hàng là học (+6)</span></div></div>
+              <div data-node-panel="n4" hidden><div class="hd"><span data-en="NETWORK POSITION">VỊ THẾ MẠNG LƯỚI</span> · <code data-en="outsidership (Uppsala 2009)">outsidership (Uppsala 2009)</code></div><div class="items"><div data-en="Learner: joins a trade body, works with partners">Người học: vào hiệp hội ngành, làm việc với đối tác</div><div data-en="Engine: revenue × (0.9 + 0.1·net/100) while an outsider">Engine: doanh thu × (0,9 + 0,1·mạng lưới/100) khi còn ngoài cuộc</div><div data-en="Institutional voids event (Khanna &amp; Palepu, 1997):">Sự kiện khoảng trống thể chế (Khanna &amp; Palepu, 1997):</div><div data-en="no independent certifier – build, borrow or wait">không có kiểm định độc lập – tự xây, mượn hay chờ</div></div><div class="next">→ <span data-en="insiders commit with less risk">người trong cuộc cam kết ít rủi ro hơn</span></div></div>
+              <div class="foot" data-en="Shortcut 4 → 2: insiders commit with less risk.">Đường tắt 4 → 2: người trong cuộc cam kết ít rủi ro hơn.</div>
+            </div>
+          </div>
+        </figure>
 
-    <div class="ht-grid" style="margin-top:22px">
-      <article class="ht-model">
-        <h3 style="font-size:22px" data-en="Uppsala process model">Mô hình tiến trình Uppsala</h3>
-        <p class="ht-cite">Johanson &amp; Vahlne (1977, 2009)</p>
-        <div class="ht-two">
-          <div class="ht-cell a"><div class="ht-k" style="color:#03474F" data-en="Learner changes">Người học thay đổi</div><div data-en="Buys market intel, chooses how much capital to commit and in which order of markets.">Mua tin thị trường, chọn mức vốn cam kết và thứ tự thị trường.</div></div>
-          <div class="ht-cell b"><div class="ht-k" style="color:#7A4A0E" data-en="Engine responds">Engine phản hồi</div><div data-en="Knowledge narrows forecast error; each quarter of selling adds knowledge; a hint fires when committing below 40/100.">Tri thức thu hẹp sai số dự báo; mỗi quý bán hàng cộng tri thức; có nhắc khi cam kết dưới 40/100.</div></div>
+        <div class="af-theories">
+          <article class="af-theory">
+            <h3 data-en="Uppsala process model">Mô hình tiến trình Uppsala</h3>
+            <div class="af-cite"><span>Johanson &amp; Vahlne (1977, 2009)</span><button type="button" class="af-copy" data-act="copy" data-copy="Johanson &amp; Vahlne (1977, 2009)"><span class="c0" data-en="Copy cite">Chép trích dẫn</span><span class="c1" data-en="Copied">Đã chép</span></button></div>
+            <div class="af-flow">
+              <div class="af-step a"><div class="hd"><span class="n">1</span><span class="k" data-en="Learner changes">Người học thay đổi</span></div><span data-en="Buys market intel, chooses how much capital to commit and in which order of markets.">Mua tin thị trường, chọn mức vốn cam kết và thứ tự thị trường.</span></div>
+              <div class="ar" aria-hidden="true"></div>
+              <div class="af-step b"><div class="hd"><span class="n">2</span><span class="k" data-en="Engine responds">Engine phản hồi</span></div><span data-en="Knowledge narrows forecast error; each quarter of selling adds knowledge; a hint fires when committing below 40/100.">Tri thức thu hẹp sai số dự báo; mỗi quý bán hàng cộng tri thức; có nhắc khi cam kết dưới 40/100.</span></div>
+              <div class="ar o" aria-hidden="true"></div>
+              <div class="af-step l"><div class="hd"><span class="n">!</span><span class="k" data-en="Limit">Giới hạn</span></div><span data-en="Knowledge improves forecasts but does not feed revenue directly; only network position does (at most −10%). The hint does not block the decision.">Tri thức làm dự báo chính xác hơn nhưng không đi thẳng vào doanh thu; chỉ vị thế mạng lưới mới vào doanh thu (tối đa −10%). Lời nhắc không chặn quyết định.</span></div>
+            </div>
+          </article>
+          <article class="af-theory">
+            <h3 data-en="Liability of foreignness and cultural distance">Bất lợi người nước ngoài và khoảng cách văn hoá</h3>
+            <div class="af-cite"><span>Zaheer (1995) · Kogut &amp; Singh (1988)</span><button type="button" class="af-copy" data-act="copy" data-copy="Zaheer (1995) · Kogut &amp; Singh (1988)"><span class="c0" data-en="Copy cite">Chép trích dẫn</span><span class="c1" data-en="Copied">Đã chép</span></button></div>
+            <div class="af-flow">
+              <div class="af-step a"><div class="hd"><span class="n">1</span><span class="k" data-en="Learner changes">Người học thay đổi</span></div><span data-en="Picks a home market and a target market; decides whether to wait, certify or partner.">Chọn thị trường quê nhà và thị trường đích; quyết định chờ, lấy chứng nhận hay tìm đối tác.</span></div>
+              <div class="ar" aria-hidden="true"></div>
+              <div class="af-step b"><div class="hd"><span class="n">2</span><span class="k" data-en="Engine responds">Engine phản hồi</span></div><span data-en="Culturally distant markets cut revenue by up to 12% in the first two quarters and slow learning; no FTA costs 8%.">Thị trường xa văn hoá giảm doanh thu tới 12% hai quý đầu và học chậm hơn; không có FTA mất 8%.</span></div>
+              <div class="ar o" aria-hidden="true"></div>
+              <div class="af-step l"><div class="hd"><span class="n">!</span><span class="k" data-en="Limit">Giới hạn</span></div><span data-en="Distance is a Kogut–Singh style index on illustrative profiles of seven fictional markets, not measured data.">Khoảng cách là chỉ số kiểu Kogut–Singh trên hồ sơ minh hoạ của bảy thị trường giả tưởng, không phải số đo thật.</span></div>
+            </div>
+          </article>
+          <article class="af-theory">
+            <h3 data-en="Entry modes: transaction costs and OLI">Phương thức thâm nhập: chi phí giao dịch và OLI</h3>
+            <div class="af-cite"><span>Anderson &amp; Gatignon (1986) · Dunning (1988)</span><button type="button" class="af-copy" data-act="copy" data-copy="Anderson &amp; Gatignon (1986) · Dunning (1988)"><span class="c0" data-en="Copy cite">Chép trích dẫn</span><span class="c1" data-en="Copied">Đã chép</span></button></div>
+            <div class="af-flow">
+              <div class="af-step a"><div class="hd"><span class="n">1</span><span class="k" data-en="Learner changes">Người học thay đổi</span></div><span data-en="Chooses digital platform, direct export or local partner (six modes in the 3D edition and Passport Mini).">Chọn nền tảng số, xuất khẩu trực tiếp hay đối tác địa phương (sáu phương thức ở bản 3D và Hộ Chiếu Mini).</span></div>
+              <div class="ar" aria-hidden="true"></div>
+              <div class="af-step b"><div class="hd"><span class="n">2</span><span class="k" data-en="Engine responds">Engine phản hồi</span></div><span data-en="Each mode trades capital, margin, scale and control; a partner can break commitments; AIBIS labels each mode with its theory.">Mỗi phương thức đánh đổi vốn, biên lời, quy mô và kiểm soát; đối tác có thể vi phạm cam kết; AIBIS gắn nhãn lý thuyết cho từng phương thức.</span></div>
+              <div class="ar o" aria-hidden="true"></div>
+              <div class="af-step l"><div class="hd"><span class="n">!</span><span class="k" data-en="Limit">Giới hạn</span></div><span data-en="AIBIS theory tags are advisory and do not enter the score formula.">Nhãn lý thuyết của AIBIS chỉ để tham khảo, chưa đi vào công thức chấm điểm.</span></div>
+            </div>
+          </article>
+          <article class="af-theory">
+            <h3 data-en="Institutions and institutional voids">Thể chế và khoảng trống thể chế</h3>
+            <div class="af-cite"><span>Peng, Wang &amp; Jiang (2008) · Khanna &amp; Palepu (1997)</span><button type="button" class="af-copy" data-act="copy" data-copy="Peng, Wang &amp; Jiang (2008) · Khanna &amp; Palepu (1997)"><span class="c0" data-en="Copy cite">Chép trích dẫn</span><span class="c1" data-en="Copied">Đã chép</span></button></div>
+            <div class="af-flow">
+              <div class="af-step a"><div class="hd"><span class="n">1</span><span class="k" data-en="Learner changes">Người học thay đổi</span></div><span data-en="Registers growing-area codes, chooses official or border trade (Durian Passport); meets rules of origin (FDI Factory); certifies for Bắc Phong.">Đăng ký mã số vùng trồng, chọn chính ngạch hay tiểu ngạch (Sầu Riêng); đáp ứng quy tắc xuất xứ (Nhà máy FDI); lấy chứng nhận Bắc Phong.</span></div>
+              <div class="ar" aria-hidden="true"></div>
+              <div class="af-step b"><div class="hd"><span class="n">2</span><span class="k" data-en="Engine responds">Engine phản hồi</span></div><span data-en="Phytosanitary risk and code suspension; tariff preference only above 40% local content; uncertified goods sell at 45%.">Rủi ro kiểm dịch và treo mã; ưu đãi thuế chỉ khi nội địa hoá trên 40%; hàng thiếu chứng nhận chỉ bán được 45%.</span></div>
+              <div class="ar o" aria-hidden="true"></div>
+              <div class="af-step l"><div class="hd"><span class="n">!</span><span class="k" data-en="Limit">Giới hạn</span></div><span data-en="The institutional-voids event in Brand Passport (missing certifiers, weak contract enforcement; see Figure 2) is drawn without replacement, so it is normally met once per game; its coefficients are design assumptions, not calibrated to data.">Sự kiện khoảng trống thể chế trong Hộ Chiếu (thiếu kiểm định độc lập, hợp đồng khó cưỡng chế; xem Hình 2) được rút không hoàn lại nên thường chỉ gặp một lần mỗi ván; các hệ số là giả định thiết kế, chưa hiệu chỉnh theo số liệu.</span></div>
+            </div>
+          </article>
         </div>
-        <div class="ht-limit"><div class="ht-k" data-en="Limit">Giới hạn</div><div data-en="Knowledge improves forecasts but does not feed revenue directly; only network position does (at most −10%). The hint does not block the decision.">Tri thức làm dự báo chính xác hơn nhưng không đi thẳng vào doanh thu; chỉ vị thế mạng lưới mới vào doanh thu (tối đa −10%). Lời nhắc không chặn quyết định.</div></div>
-      </article>
-      <article class="ht-model">
-        <h3 style="font-size:22px" data-en="Liability of foreignness and cultural distance">Bất lợi người nước ngoài và khoảng cách văn hoá</h3>
-        <p class="ht-cite">Zaheer (1995) · Kogut &amp; Singh (1988)</p>
-        <div class="ht-two">
-          <div class="ht-cell a"><div class="ht-k" style="color:#03474F" data-en="Learner changes">Người học thay đổi</div><div data-en="Picks a home market and a target market; decides whether to wait, certify or partner.">Chọn thị trường quê nhà và thị trường đích; quyết định chờ, lấy chứng nhận hay tìm đối tác.</div></div>
-          <div class="ht-cell b"><div class="ht-k" style="color:#7A4A0E" data-en="Engine responds">Engine phản hồi</div><div data-en="Culturally distant markets cut revenue by up to 12% in the first two quarters and slow learning; no FTA costs 8%.">Thị trường xa văn hoá giảm doanh thu tới 12% hai quý đầu và học chậm hơn; không có FTA mất 8%.</div></div>
+        <p class="af-note"><span data-en="Full row-by-row map with source files:">Bảng đầy đủ từng dòng kèm tên tệp mã nguồn:</span> <a href="dinh-huong.html#dh-map-h" style="font-weight:800" data-en="Theory map by game →">Bản đồ lý thuyết theo từng game →</a></p>
+      </section>
+
+      <section id="tai-lap" class="af-sec af-dark">
+        <div class="af-eb" data-en="04 · Reproducibility">04 · Tái lập</div>
+        <h2 class="af-h2" data-en="Reproducibility contract">Hợp đồng tái lập</h2>
+        <p class="af-lead" data-en="A play-through is fully determined by three things. Given all three, anyone can reconstruct the exact outcome.">Một lượt chơi được xác định hoàn toàn bởi ba thứ. Có đủ ba, ai cũng dựng lại được đúng kết quả.</p>
+        <div class="af-rcards">
+          <div class="af-rcard c1"><span class="n">01</span><b data-en="Scenario pack">Gói kịch bản</b><p data-en="Market parameters, events, rival profiles – published and versioned.">Tham số thị trường, biến cố, hồ sơ đối thủ – công bố và gắn phiên bản.</p></div>
+          <div class="af-rcard c2"><span class="n">02</span><b data-en="Locked snapshot">Ảnh chụp đồng khóa</b><p data-en="State frozen at each round – grading uses this snapshot, not live state.">Trạng thái đóng băng tại mỗi vòng – chấm điểm dựa trên ảnh này, không dựa trạng thái sống.</p></div>
+          <div class="af-rcard c3"><span class="n">03</span><b data-en="Decision sequence">Chuỗi quyết định</b><p data-en="The exact order of a team's choices, recorded in the class log.">Đúng thứ tự các lựa chọn của đội, ghi vào nhật ký lớp.</p></div>
         </div>
-        <div class="ht-limit"><div class="ht-k" data-en="Limit">Giới hạn</div><div data-en="Distance is a Kogut–Singh style index on illustrative profiles of seven fictional markets, not measured data.">Khoảng cách là chỉ số kiểu Kogut–Singh trên hồ sơ minh hoạ của bảy thị trường giả tưởng, không phải số đo thật.</div></div>
-      </article>
-      <article class="ht-model">
-        <h3 style="font-size:22px" data-en="Entry modes: transaction costs and OLI">Phương thức thâm nhập: chi phí giao dịch và OLI</h3>
-        <p class="ht-cite">Anderson &amp; Gatignon (1986) · Dunning (1988)</p>
-        <div class="ht-two">
-          <div class="ht-cell a"><div class="ht-k" style="color:#03474F" data-en="Learner changes">Người học thay đổi</div><div data-en="Chooses digital platform, direct export or local partner (six modes in the 3D edition and Passport Mini).">Chọn nền tảng số, xuất khẩu trực tiếp hay đối tác địa phương (sáu phương thức ở bản 3D và Hộ Chiếu Mini).</div></div>
-          <div class="ht-cell b"><div class="ht-k" style="color:#7A4A0E" data-en="Engine responds">Engine phản hồi</div><div data-en="Each mode trades capital, margin, scale and control; a partner can break commitments; AIBIS labels each mode with its theory.">Mỗi phương thức đánh đổi vốn, biên lời, quy mô và kiểm soát; đối tác có thể vi phạm cam kết; AIBIS gắn nhãn lý thuyết cho từng phương thức.</div></div>
+        <div class="af-hash">
+          <div class="eb" data-en="TRY IT · change any input and the hash changes">THỬ · đổi một đầu vào bất kỳ thì mã băm đổi theo</div>
+          <div class="row"><span class="i">01</span><button type="button" data-rp="pack:0" aria-pressed="true">durian-v2026.10</button><button type="button" data-rp="pack:1" aria-pressed="false">durian-v2026.09</button></div>
+          <div class="row"><span class="i">02</span><button type="button" data-rp="round:0" aria-pressed="false">R1</button><button type="button" data-rp="round:1" aria-pressed="false">R2</button><button type="button" data-rp="round:2" aria-pressed="false">R3</button><button type="button" data-rp="round:3" aria-pressed="false">R4</button><button type="button" data-rp="round:4" aria-pressed="false">R5</button><button type="button" data-rp="round:5" aria-pressed="true">R6</button></div>
+          <div class="row"><span class="i">03</span><button type="button" data-rp="seq:0" aria-pressed="true" data-en="A · official first">A · chính ngạch trước</button><button type="button" data-rp="seq:1" aria-pressed="false" data-en="B · border first">B · tiểu ngạch trước</button></div>
+          <div class="out">
+            <div class="you"><span class="k" data-en="YOUR HASH">MÃ BĂM CỦA BẠN</span><code id="af-hash-you"></code></div>
+            <div><span class="k" data-en="CLASS LOG HASH">MÃ BĂM TRONG NHẬT KÝ LỚP</span><code id="af-hash-ref"></code></div>
+          </div>
+          <div class="af-match ok" id="af-match" aria-live="polite"><span class="m1" data-en="Match · exact reproduction">Trùng · tái lập nguyên vẹn</span><span class="m0" data-en="No match · a different play-through">Không trùng · một lượt chơi khác</span></div>
+          <div class="fn" data-en="Illustration only: the hash function here is a demo, not the engine's.">Chỉ để minh hoạ: hàm băm ở đây là bản demo, không phải của engine.</div>
         </div>
-        <div class="ht-limit"><div class="ht-k" data-en="Limit">Giới hạn</div><div data-en="AIBIS theory tags are advisory and do not enter the score formula.">Nhãn lý thuyết của AIBIS chỉ để tham khảo, chưa đi vào công thức chấm điểm.</div></div>
-      </article>
-      <article class="ht-model">
-        <h3 style="font-size:22px" data-en="Institutions and institutional voids">Thể chế và khoảng trống thể chế</h3>
-        <p class="ht-cite">Peng, Wang &amp; Jiang (2008) · Khanna &amp; Palepu (1997)</p>
-        <div class="ht-two">
-          <div class="ht-cell a"><div class="ht-k" style="color:#03474F" data-en="Learner changes">Người học thay đổi</div><div data-en="Registers growing-area codes, chooses official or border trade (Durian Passport); meets rules of origin (FDI Factory); certifies for Bắc Phong.">Đăng ký mã số vùng trồng, chọn chính ngạch hay tiểu ngạch (Sầu Riêng); đáp ứng quy tắc xuất xứ (Nhà máy FDI); lấy chứng nhận Bắc Phong.</div></div>
-          <div class="ht-cell b"><div class="ht-k" style="color:#7A4A0E" data-en="Engine responds">Engine phản hồi</div><div data-en="Phytosanitary risk and code suspension; tariff preference only above 40% local content; uncertified goods sell at 45%.">Rủi ro kiểm dịch và treo mã; ưu đãi thuế chỉ khi nội địa hoá trên 40%; hàng thiếu chứng nhận chỉ bán được 45%.</div></div>
+      </section>
+
+      <section id="chuan-dau-ra" class="af-sec">
+        <div class="af-eb" data-en="05 · Learning outcomes">05 · Chuẩn đầu ra</div>
+        <h2 class="af-h2" style="margin-bottom:22px" data-en="Bloom matrix">Ma trận Bloom</h2>
+        <div class="af-bloom">
+          <div class="hd"><div class="l1" data-en="UNDERSTAND">HIỂU</div><div class="l2" data-en="APPLY">ÁP DỤNG</div><div class="l3" data-en="ANALYZE">PHÂN TÍCH</div><div class="l4" data-en="EVALUATE">ĐÁNH GIÁ</div></div>
+          <div class="bd"><div><b data-en="Read market signals">Đọc tín hiệu thị trường</b><p data-en="Explain why revenue changed after a decision.">Giải thích vì sao doanh thu đổi sau một quyết định.</p></div><div><b data-en="Estimate demand">Ước lượng cầu</b><p data-en="Use several rounds of data to predict a good product–location pair.">Dùng dữ liệu vài vòng để dự đoán cặp món–địa điểm tốt.</p></div><div><b data-en="Manage cash flow">Quản trị dòng tiền</b><p data-en="Identify which round thinned the cash and why.">Chỉ ra vòng nào làm mỏng két và vì sao.</p></div><div><b data-en="Weigh strategic trade-offs">Cân đánh đổi chiến lược</b><p data-en="Defend a decision against an alternative, grounded in data.">Bảo vệ một quyết định trước phương án thay thế, dựa trên số liệu.</p></div></div>
         </div>
-        <div class="ht-limit"><div class="ht-k" data-en="Limit">Giới hạn</div><div data-en="The institutional-voids event in Brand Passport (missing certifiers, weak contract enforcement; see Figure 2) is drawn without replacement, so it is normally met once per game; its coefficients are design assumptions, not calibrated to data.">Sự kiện khoảng trống thể chế trong Hộ Chiếu (thiếu kiểm định độc lập, hợp đồng khó cưỡng chế; xem Hình 2) được rút không hoàn lại nên thường chỉ gặp một lần mỗi ván; các hệ số là giả định thiết kế, chưa hiệu chỉnh theo số liệu.</div></div>
-      </article>
-    </div>
-    <p style="margin:16px 0 0;font-size:14px;line-height:1.6;color:var(--clay-sub)"><span data-en="Full row-by-row map with source files:">Bảng đầy đủ từng dòng kèm tên tệp mã nguồn:</span> <a href="dinh-huong.html#dh-map-h" style="font-weight:800" data-en="Theory map by game →">Bản đồ lý thuyết theo từng game →</a></p>
-  </section>
+        <h3 class="af-h3" id="rubric" data-en="Four-level rubric for grading reasoning">Rubric bốn mức chấm lập luận</h3>
+        <div class="af-rubric">
+          <button type="button" class="af-rub" data-lvl="0" aria-pressed="false"><span class="lvl" data-en="Level 1">Mức 1</span><span class="nm" data-en="Not yet">Chưa đạt</span><span class="ds" data-en="Recounts what was done, without explaining.">Kể lại đã làm gì, chưa giải thích.</span></button>
+          <button type="button" class="af-rub" data-lvl="1" aria-pressed="false"><span class="lvl" data-en="Level 2">Mức 2</span><span class="nm" data-en="Pass">Đạt</span><span class="ds" data-en="States a qualitative relation (price up → demand down).">Nêu quan hệ định tính (giá tăng → cầu giảm).</span></button>
+          <button type="button" class="af-rub" data-lvl="2" aria-pressed="false"><span class="lvl" data-en="Level 3">Mức 3</span><span class="nm" data-en="Good">Khá</span><span class="ds" data-en="Cites data from at least two rounds to explain a decision.">Dẫn số liệu ít nhất hai vòng để giải thích một quyết định.</span></button>
+          <button type="button" class="af-rub" data-lvl="3" aria-pressed="true"><span class="lvl" data-en="Level 4">Mức 4</span><span class="nm" data-en="Excellent">Xuất sắc</span><span class="ds" data-en="Identifies the weak round and derives a reasonable threshold from the data.">Chỉ ra vòng kém hiệu quả và tính ngưỡng hợp lý từ dữ liệu.</span></button>
+        </div>
+        <div class="af-sample">
+          <div class="hd"><span data-en="Sample answer">Câu trả lời mẫu</span><span aria-hidden="true">·</span><span id="af-sample-lvl"></span><span class="tag" data-en="Illustrative, not student data">Minh hoạ, không phải dữ liệu sinh viên</span></div>
+          <blockquote id="af-sample"><p data-sample="0" hidden data-en="We lowered the price in round 3, then raised it again in round 4.">Vòng 3 chúng em giảm giá, rồi vòng 4 lại tăng giá.</p><p data-sample="1" hidden data-en="We lowered the price because demand falls when the price goes up.">Chúng em giảm giá vì giá tăng thì cầu giảm.</p><p data-sample="2" hidden data-en="In round 2 we sold 120 units at 30k; in round 3, 150 units at 25k. We kept 25k for round 4.">Vòng 2 bán 120 suất ở giá 30 nghìn; vòng 3 bán 150 suất ở giá 25 nghìn. Vì vậy vòng 4 giữ giá 25 nghìn.</p><p data-sample="3" data-en="Round 3 was the weak round: at 22k the margin fell below 4k a unit. Across rounds 2–4 every price under 24k lost money, so 24k is our floor.">Vòng 3 là vòng kém: ở giá 22 nghìn, biên lãi xuống dưới 4 nghìn mỗi suất. Qua vòng 2–4, mọi mức giá dưới 24 nghìn đều lỗ, nên 24 nghìn là giá sàn.</p></blockquote>
+        </div>
+      </section>
 
-  <section style="margin-bottom:64px;padding:34px 28px;border-radius:36px;background:var(--clay-tray);box-shadow:inset 0 6px 12px rgba(110,70,30,.15)">
-    <div class="ht-tag" data-en="Reproducibility">Tái lập</div>
-    <h2 class="ht-h2" data-en="Reproducibility contract">Hợp đồng tái lập</h2>
-    <p style="margin:10px 0 22px;font-size:15px;color:var(--clay-sub)" data-en="A play-through is fully determined by three things. Given all three, anyone can reconstruct the exact outcome.">Một lượt chơi được xác định hoàn toàn bởi ba thứ. Có đủ ba, ai cũng dựng lại được đúng kết quả.</p>
-    <div class="ht-repro">
-      <div class="ht-rcard"><span class="n" style="background:var(--clay-c1)">01</span><div style="margin-top:12px;font-family:var(--clay-head);font-size:21px;font-weight:800" data-en="Scenario pack">Gói kịch bản</div><p style="margin:6px 0 0;font-size:14px;line-height:1.55;color:var(--clay-sub)" data-en="Market parameters, events, rival profiles – published and versioned.">Tham số thị trường, biến cố, hồ sơ đối thủ – công bố và gắn phiên bản.</p></div>
-      <div class="ht-rcard"><span class="n" style="background:var(--clay-c2)">02</span><div style="margin-top:12px;font-family:var(--clay-head);font-size:21px;font-weight:800" data-en="Locked snapshot">Ảnh chụp đồng khóa</div><p style="margin:6px 0 0;font-size:14px;line-height:1.55;color:var(--clay-sub)" data-en="State frozen at each round – grading uses this snapshot, not live state.">Trạng thái đóng băng tại mỗi vòng – chấm điểm dựa trên ảnh này, không dựa trạng thái sống.</p></div>
-      <div class="ht-rcard"><span class="n" style="background:var(--clay-c3)">03</span><div style="margin-top:12px;font-family:var(--clay-head);font-size:21px;font-weight:800" data-en="Decision sequence">Chuỗi quyết định</div><p style="margin:6px 0 0;font-size:14px;line-height:1.55;color:var(--clay-sub)" data-en="The exact order of a team's choices, recorded in the class log.">Đúng thứ tự các lựa chọn của đội, ghi vào nhật ký lớp.</p></div>
-    </div>
-    <div style="margin-top:18px;display:inline-flex;padding:10px 16px;border-radius:999px;background:var(--clay-ink);color:var(--clay-gold);font-family:var(--clay-mono);font-size:13px" data-en="→ Each play-through carries a hash. A matching hash means an exact reproduction.">→ Mỗi lượt có một mã băm. Trùng mã băm nghĩa là tái lập được nguyên vẹn.</div>
-  </section>
+      <section id="vietlens" class="af-sec">
+        <div class="af-eb" data-en="06 · Data layer">06 · Lớp dữ liệu</div>
+        <h2 class="af-h2" style="margin-bottom:20px" data-en="VietLens – data with provenance">VietLens – số có xuất xứ</h2>
+        <div class="af-vl">
+          <div class="row"><b data-en="Informal sector share">Tỷ lệ khu vực phi chính thức</b><span class="src" data-en="GSO Vietnam">Tổng cục Thống kê</span><span class="yr">2023</span></div>
+          <div class="row"><b data-en="Compliance cost of registration">Chi phí tuân thủ đăng ký hộ kinh doanh</b><span class="src" data-en="Project survey (small sample)">Khảo sát dự án (mẫu nhỏ)</span><span class="yr">2025</span></div>
+          <div class="row"><b data-en="Household spending by region">Cơ cấu chi tiêu hộ theo vùng</b><span class="src" data-en="Living Standards Survey">Điều tra mức sống dân cư</span><span class="yr">2022</span></div>
+        </div>
+        <div class="af-principle" data-en="Principle: no provenance, no place on the board. Every indicator must carry a source and a date, or it is left out.">Nguyên tắc: không có xuất xứ thì không lên bảng. Mỗi chỉ tiêu phải đi kèm nguồn và mốc thời gian, nếu không sẽ bị loại.</div>
+      </section>
 
-  <section id="chuan-dau-ra" style="margin-bottom:64px">
-    <div class="ht-tag" data-en="Learning outcomes">Chuẩn đầu ra</div>
-    <h2 class="ht-h2" style="margin-bottom:22px" data-en="Bloom matrix">Ma trận Bloom</h2>
-    <div style="display:flex;flex-direction:column;gap:12px">
-      <div class="ht-bloom"><div style="font-family:var(--clay-head);font-size:20px;font-weight:800;line-height:1.15" data-en="Read market signals">Đọc tín hiệu thị trường</div><div style="display:flex;align-items:center;gap:10px"><span class="ht-ladder"><span style="height:12px;background:var(--clay-teal)"></span><span style="height:16px;background:#E6D5B5"></span><span style="height:20px;background:#E6D5B5"></span><span style="height:24px;background:#E6D5B5"></span></span><span style="font-size:13px;font-weight:800;color:var(--clay-teal)">Hiểu · Understand</span></div><div style="font-size:14px;line-height:1.5;color:var(--clay-sub)" data-en="Explain why revenue changed after a decision.">Giải thích vì sao doanh thu đổi sau một quyết định.</div></div>
-      <div class="ht-bloom"><div style="font-family:var(--clay-head);font-size:20px;font-weight:800;line-height:1.15" data-en="Estimate demand">Ước lượng cầu</div><div style="display:flex;align-items:center;gap:10px"><span class="ht-ladder"><span style="height:12px;background:var(--clay-teal)"></span><span style="height:16px;background:var(--clay-teal)"></span><span style="height:20px;background:#E6D5B5"></span><span style="height:24px;background:#E6D5B5"></span></span><span style="font-size:13px;font-weight:800;color:var(--clay-teal)">Áp dụng · Apply</span></div><div style="font-size:14px;line-height:1.5;color:var(--clay-sub)" data-en="Use several rounds of data to predict a good product–location pair.">Dùng dữ liệu vài vòng để dự đoán cặp món–địa điểm tốt.</div></div>
-      <div class="ht-bloom"><div style="font-family:var(--clay-head);font-size:20px;font-weight:800;line-height:1.15" data-en="Manage cash flow">Quản trị dòng tiền</div><div style="display:flex;align-items:center;gap:10px"><span class="ht-ladder"><span style="height:12px;background:var(--clay-teal)"></span><span style="height:16px;background:var(--clay-teal)"></span><span style="height:20px;background:var(--clay-teal)"></span><span style="height:24px;background:#E6D5B5"></span></span><span style="font-size:13px;font-weight:800;color:var(--clay-teal)">Phân tích · Analyze</span></div><div style="font-size:14px;line-height:1.5;color:var(--clay-sub)" data-en="Identify which round thinned the cash and why.">Chỉ ra vòng nào làm mỏng két và vì sao.</div></div>
-      <div class="ht-bloom"><div style="font-family:var(--clay-head);font-size:20px;font-weight:800;line-height:1.15" data-en="Weigh strategic trade-offs">Cân đánh đổi chiến lược</div><div style="display:flex;align-items:center;gap:10px"><span class="ht-ladder"><span style="height:12px;background:var(--clay-teal)"></span><span style="height:16px;background:var(--clay-teal)"></span><span style="height:20px;background:var(--clay-teal)"></span><span style="height:24px;background:var(--clay-teal)"></span></span><span style="font-size:13px;font-weight:800;color:var(--clay-teal)">Đánh giá · Evaluate</span></div><div style="font-size:14px;line-height:1.5;color:var(--clay-sub)" data-en="Defend a decision against an alternative, grounded in data.">Bảo vệ một quyết định trước phương án thay thế, dựa trên số liệu.</div></div>
-    </div>
+      <section id="dao-duc" class="af-sec">
+        <div class="af-eb" data-en="07 · Research ethics">07 · Đạo đức nghiên cứu</div>
+        <h2 class="af-h2" style="margin-bottom:22px" data-en="Three ethical commitments">Ba cam kết đạo đức</h2>
+        <div class="af-ethics">
+          <div class="af-ethic c1"><span class="n">I</span><b data-en="Two-purpose consent, separated">Đồng thuận hai mục đích, tách riêng</b><p data-en="Scientific research and product improvement are two separate consent boxes. Declining one still lets you use the product.">Nghiên cứu khoa học và cải tiến sản phẩm là hai ô đồng thuận riêng. Từ chối một mục vẫn dùng được sản phẩm.</p></div>
+          <div class="af-ethic c4"><span class="n">II</span><b data-en="No personal data collected">Không thu thông tin định danh</b><p data-en="Off by default. Team IDs are hashed; learning data leaves the device only when the user submits it.">Mặc định tắt. Mã đội được băm; dữ liệu học tập chỉ rời máy khi người dùng chủ động nộp.</p></div>
+          <div class="af-ethic c2"><span class="n">III</span><b data-en="Technical limit of withdrawal">Giới hạn kỹ thuật của quyền rút lui</b><p data-en="Once data has been aggregated into cluster parameters, individual contributions can no longer be isolated. This limitation is disclosed in advance.">Khi dữ liệu đã được tổng hợp vào tham số cụm, phần đóng góp của từng cá nhân không còn tách riêng được. Giới hạn này được công bố từ trước.</p></div>
+        </div>
+      </section>
 
-    <div id="rubric" class="ht-tag" style="margin-top:48px" data-en="Grading reasoning">Chấm lập luận</div>
-    <h2 class="ht-h2" style="margin-bottom:22px" data-en="Four-level rubric">Rubric bốn mức</h2>
-    <div class="ht-rubric">
-      <div class="ht-rcell" style="background:var(--clay-tray);min-height:170px"><div style="font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--clay-ink-2)" data-en="Level 1">Mức 1</div><div style="margin-top:4px;font-family:var(--clay-head);font-size:24px;font-weight:800" data-en="Not yet">Chưa đạt</div><p style="margin:6px 0 0;font-size:14px;line-height:1.5;color:var(--clay-ink-2)" data-en="Recounts what was done, without explaining.">Kể lại đã làm gì, chưa giải thích.</p></div>
-      <div class="ht-rcell" style="background:var(--clay-c5);min-height:206px"><div style="font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--clay-ink-2)" data-en="Level 2">Mức 2</div><div style="margin-top:4px;font-family:var(--clay-head);font-size:24px;font-weight:800" data-en="Pass">Đạt</div><p style="margin:6px 0 0;font-size:14px;line-height:1.5;color:var(--clay-ink-2)" data-en="States a qualitative relation (price up → demand down).">Nêu quan hệ định tính (giá tăng → cầu giảm).</p></div>
-      <div class="ht-rcell" style="background:var(--clay-c1);min-height:242px"><div style="font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--clay-ink-2)" data-en="Level 3">Mức 3</div><div style="margin-top:4px;font-family:var(--clay-head);font-size:24px;font-weight:800" data-en="Good">Khá</div><p style="margin:6px 0 0;font-size:14px;line-height:1.5;color:var(--clay-ink-2)" data-en="Cites data from at least two rounds to explain a decision.">Dẫn số liệu ít nhất hai vòng để giải thích một quyết định.</p></div>
-      <div class="ht-rcell" style="background:var(--clay-c2);min-height:278px"><div style="font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--clay-ink-2)" data-en="Level 4">Mức 4</div><div style="margin-top:4px;font-family:var(--clay-head);font-size:24px;font-weight:800" data-en="Excellent">Xuất sắc</div><p style="margin:6px 0 0;font-size:14px;line-height:1.5;color:var(--clay-ink-2)" data-en="Identifies the weak round and derives a reasonable threshold from the data.">Chỉ ra vòng kém hiệu quả và tính ngưỡng hợp lý từ dữ liệu.</p></div>
-    </div>
-  </section>
+      <section id="gioi-han" class="af-sec af-limits">
+        <div class="af-eb" data-en="08 · Disclosure">08 · Công bố minh bạch</div>
+        <h2 class="af-h2" data-en="Limits of current evidence">Giới hạn của bằng chứng hiện có</h2>
+        <p class="af-lead" data-en="This section is deliberately placed before the reference list rather than at the end of the page.">Mục này được đặt trước danh mục tài liệu tham khảo, thay vì ở cuối trang, để người đọc tiếp cận ngay.</p>
+        <div class="af-limgrid">
+          <div class="af-lim"><span class="n">1</span><div><span data-en="Current evidence of learning gains is retrospective – observed after teaching, not a controlled trial.">Bằng chứng hiệu quả học tập hiện có mang tính hồi cứu – quan sát sau khi dạy, không phải thử nghiệm có kiểm soát.</span><a href="#chuan-dau-ra" data-en="See: Learning outcomes →">Xem: Chuẩn đầu ra →</a></div></div>
+          <div class="af-lim"><span class="n">2</span><div><span data-en="Sample sizes are still small; there is no control group for comparison yet.">Cỡ mẫu còn nhỏ; chưa có nhóm đối chứng để so sánh.</span><a href="#vietlens" data-en="See: VietLens data →">Xem: Dữ liệu VietLens →</a></div></div>
+          <div class="af-lim"><span class="n">3</span><div><span data-en="The completion criterion – an outside instructor runs a full session unaided – is still being verified.">Tiêu chí hoàn thành «giảng viên ngoài nhóm chạy trọn buổi không cần hỏi ai» vẫn đang được kiểm chứng.</span><a href="#tai-lap" data-en="See: Reproducibility contract →">Xem: Hợp đồng tái lập →</a></div></div>
+          <div class="af-lim"><span class="n">4</span><div><span data-en="A rigorous experimental design (controlled, pre/post) is in preparation.">Một thiết kế thực nghiệm chặt chẽ (có đối chứng, tiền/hậu kiểm) đang được chuẩn bị.</span><a href="#ly-thuyet-kdqt" data-en="See: Evidence rule, Figure 1 →">Xem: Nguyên tắc bằng chứng, Hình 1 →</a></div></div>
+        </div>
+      </section>
 
-  <section style="margin-bottom:64px;padding:30px;border-radius:32px;background:var(--clay-card);box-shadow:var(--clay-night-shadow,inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 26px 36px -24px rgba(110,70,30,.5))">
-    <div class="ht-tag" data-en="Data layer">Lớp dữ liệu</div>
-    <h2 class="ht-h2" style="margin-bottom:18px" data-en="VietLens – data with provenance">VietLens – số có xuất xứ</h2>
-    <div style="display:flex;flex-direction:column">
-      <div class="ht-vl" style="border-top:0"><div style="font-size:15px;font-weight:800" data-en="Informal sector share">Tỷ lệ khu vực phi chính thức</div><div style="font-size:14px;font-weight:700;color:#0F5C4E" data-en="GSO Vietnam">Tổng cục Thống kê</div><div style="font-family:var(--clay-mono);font-size:13px;color:var(--clay-sub)">2023</div></div>
-      <div class="ht-vl"><div style="font-size:15px;font-weight:800" data-en="Compliance cost of registration">Chi phí tuân thủ đăng ký hộ kinh doanh</div><div style="font-size:14px;font-weight:700;color:#0F5C4E" data-en="Project survey (small sample)">Khảo sát dự án (mẫu nhỏ)</div><div style="font-family:var(--clay-mono);font-size:13px;color:var(--clay-sub)">2025</div></div>
-      <div class="ht-vl"><div style="font-size:15px;font-weight:800" data-en="Household spending by region">Cơ cấu chi tiêu hộ theo vùng</div><div style="font-size:14px;font-weight:700;color:#0F5C4E" data-en="Living Standards Survey">Điều tra mức sống dân cư</div><div style="font-family:var(--clay-mono);font-size:13px;color:var(--clay-sub)">2022</div></div>
+      <section id="tai-lieu" class="af-sec">
+        <div class="af-refhd">
+          <div>
+            <div class="af-eb" data-en="09 · References">09 · Tài liệu tham khảo</div>
+            <h2 class="af-h2" data-en="Academic sources">Nguồn học thuật</h2>
+          </div>
+          <button type="button" class="af-copyall af-copy" data-act="copyall"><span class="c0" data-en="Copy all 17">Chép cả 17</span><span class="c1" data-en="Copied 17 references">Đã chép 17 tài liệu</span></button>
+        </div>
+        <ol class="af-refs">
+          <li><span class="t">Nguyễn Trần Quỳnh Châu &amp; Nguyễn Thị Bé Ba (2025). Overview of Floating Markets in the Mekong Delta and Cai Rang Floating Market. <i>ICoISSEE-5</i>, Trường Đại học Cần Thơ.</span><button type="button" class="af-copy" data-act="copyref"><span class="c0" data-en="Copy">Chép</span><span class="c1" data-en="Copied">Đã chép</span></button></li>
+          <li><span class="t">Bloom, B. S. (1956). <i>Taxonomy of Educational Objectives: The Classification of Educational Goals</i>. Longmans, Green.</span><button type="button" class="af-copy" data-act="copyref"><span class="c0" data-en="Copy">Chép</span><span class="c1" data-en="Copied">Đã chép</span></button></li>
+          <li><span class="t">Trịnh Hoài Đức. <i>Gia Định thành thông chí</i> – <span data-en='cited for the river "bát–cạy" rule (regional cultural context).'>dẫn cho luật "bát–cạy" trên sông (bối cảnh văn hóa vùng).</span></span><button type="button" class="af-copy" data-act="copyref"><span class="c0" data-en="Copy">Chép</span><span class="c1" data-en="Copied">Đã chép</span></button></li>
+          <li><span class="t">Sarasvathy, S. D. (2001). Causation and effectuation: Toward a theoretical shift from economic inevitability to entrepreneurial contingency. <i>Academy of Management Review, 26</i>(2), 243–263. <a href="https://doi.org/10.5465/amr.2001.4378020" target="_blank" rel="noopener">doi:10.5465/amr.2001.4378020</a></span><button type="button" class="af-copy" data-act="copyref"><span class="c0" data-en="Copy">Chép</span><span class="c1" data-en="Copied">Đã chép</span></button></li>
+          <li><span class="t">McMullen, J. S., &amp; Shepherd, D. A. (2006). Entrepreneurial action and the role of uncertainty in the theory of the entrepreneur. <i>Academy of Management Review, 31</i>(1), 132–152. <a href="https://doi.org/10.5465/amr.2006.19379628" target="_blank" rel="noopener">doi:10.5465/amr.2006.19379628</a></span><button type="button" class="af-copy" data-act="copyref"><span class="c0" data-en="Copy">Chép</span><span class="c1" data-en="Copied">Đã chép</span></button></li>
+          <li><span class="t">Kolb, D. A. (1984). <i>Experiential learning: Experience as the source of learning and development</i>. Prentice Hall.</span><button type="button" class="af-copy" data-act="copyref"><span class="c0" data-en="Copy">Chép</span><span class="c1" data-en="Copied">Đã chép</span></button></li>
+          <li><span class="t">Bandura, A. (1977). Self-efficacy: Toward a unifying theory of behavioral change. <i>Psychological Review, 84</i>(2), 191–215. <a href="https://doi.org/10.1037/0033-295X.84.2.191" target="_blank" rel="noopener">doi:10.1037/0033-295X.84.2.191</a></span><button type="button" class="af-copy" data-act="copyref"><span class="c0" data-en="Copy">Chép</span><span class="c1" data-en="Copied">Đã chép</span></button></li>
+          <li><span class="t">Gollwitzer, P. M. (1999). Implementation intentions: Strong effects of simple plans. <i>American Psychologist, 54</i>(7), 493–503. <a href="https://doi.org/10.1037/0003-066X.54.7.493" target="_blank" rel="noopener">doi:10.1037/0003-066X.54.7.493</a></span><button type="button" class="af-copy" data-act="copyref"><span class="c0" data-en="Copy">Chép</span><span class="c1" data-en="Copied">Đã chép</span></button></li>
+          <li><span class="t">Mayne, J. (2012). Contribution analysis: Coming of age? <i>Evaluation, 18</i>(3), 270–280. <a href="https://doi.org/10.1177/1356389012451663" target="_blank" rel="noopener">doi:10.1177/1356389012451663</a></span><button type="button" class="af-copy" data-act="copyref"><span class="c0" data-en="Copy">Chép</span><span class="c1" data-en="Copied">Đã chép</span></button></li>
+          <li><span class="t">Johanson, J., &amp; Vahlne, J.-E. (1977). The internationalization process of the firm: A model of knowledge development and increasing foreign market commitments. <i>Journal of International Business Studies, 8</i>(1), 23–32. <a href="https://doi.org/10.1057/palgrave.jibs.8490676" target="_blank" rel="noopener">doi:10.1057/palgrave.jibs.8490676</a></span><button type="button" class="af-copy" data-act="copyref"><span class="c0" data-en="Copy">Chép</span><span class="c1" data-en="Copied">Đã chép</span></button></li>
+          <li><span class="t">Johanson, J., &amp; Vahlne, J.-E. (2009). The Uppsala internationalization process model revisited: From liability of foreignness to liability of outsidership. <i>Journal of International Business Studies, 40</i>(9), 1411–1431. <a href="https://doi.org/10.1057/jibs.2009.24" target="_blank" rel="noopener">doi:10.1057/jibs.2009.24</a></span><button type="button" class="af-copy" data-act="copyref"><span class="c0" data-en="Copy">Chép</span><span class="c1" data-en="Copied">Đã chép</span></button></li>
+          <li><span class="t">Zaheer, S. (1995). Overcoming the liability of foreignness. <i>Academy of Management Journal, 38</i>(2), 341–363. <a href="https://doi.org/10.2307/256683" target="_blank" rel="noopener">doi:10.2307/256683</a></span><button type="button" class="af-copy" data-act="copyref"><span class="c0" data-en="Copy">Chép</span><span class="c1" data-en="Copied">Đã chép</span></button></li>
+          <li><span class="t">Kogut, B., &amp; Singh, H. (1988). The effect of national culture on the choice of entry mode. <i>Journal of International Business Studies, 19</i>(3), 411–432. <a href="https://doi.org/10.1057/palgrave.jibs.8490394" target="_blank" rel="noopener">doi:10.1057/palgrave.jibs.8490394</a></span><button type="button" class="af-copy" data-act="copyref"><span class="c0" data-en="Copy">Chép</span><span class="c1" data-en="Copied">Đã chép</span></button></li>
+          <li><span class="t">Anderson, E., &amp; Gatignon, H. (1986). Modes of foreign entry: A transaction cost analysis and propositions. <i>Journal of International Business Studies, 17</i>(3), 1–26. <a href="https://doi.org/10.1057/palgrave.jibs.8490432" target="_blank" rel="noopener">doi:10.1057/palgrave.jibs.8490432</a></span><button type="button" class="af-copy" data-act="copyref"><span class="c0" data-en="Copy">Chép</span><span class="c1" data-en="Copied">Đã chép</span></button></li>
+          <li><span class="t">Dunning, J. H. (1988). The eclectic paradigm of international production: A restatement and some possible extensions. <i>Journal of International Business Studies, 19</i>(1), 1–31. <a href="https://doi.org/10.1057/palgrave.jibs.8490372" target="_blank" rel="noopener">doi:10.1057/palgrave.jibs.8490372</a></span><button type="button" class="af-copy" data-act="copyref"><span class="c0" data-en="Copy">Chép</span><span class="c1" data-en="Copied">Đã chép</span></button></li>
+          <li><span class="t">Peng, M. W., Wang, D. Y. L., &amp; Jiang, Y. (2008). An institution-based view of international business strategy: A focus on emerging economies. <i>Journal of International Business Studies, 39</i>(5), 920–936. <a href="https://doi.org/10.1057/palgrave.jibs.8400377" target="_blank" rel="noopener">doi:10.1057/palgrave.jibs.8400377</a></span><button type="button" class="af-copy" data-act="copyref"><span class="c0" data-en="Copy">Chép</span><span class="c1" data-en="Copied">Đã chép</span></button></li>
+          <li><span class="t">Khanna, T., &amp; Palepu, K. (1997). Why focused strategies may be wrong for emerging markets. <i>Harvard Business Review, 75</i>(4), 41–51.</span><button type="button" class="af-copy" data-act="copyref"><span class="c0" data-en="Copy">Chép</span><span class="c1" data-en="Copied">Đã chép</span></button></li>
+        </ol>
+        <p class="af-note"><span data-en="Sources 4–9 underpin the causation/effectuation logic, the experiential-learning design and the evidence principle; sources 10–17 are the international-business frameworks of Figure 2 and the theory cards; see">Nguồn 4–9 làm nền cho hai logic causation/effectuation, thiết kế học qua trải nghiệm và nguyên tắc bằng chứng; nguồn 10–17 là các khung kinh doanh quốc tế ở Hình 2 và các thẻ khung lý thuyết; xem</span> <a href="dinh-huong.html#dh-map-h" style="font-weight:800" data-en="Regional impact orientation →">Định hướng tác động vùng →</a></p>
+      </section>
     </div>
-    <div style="margin-top:14px;padding:14px 18px;border-radius:20px;background:#DDF1E4;font-size:15px;font-weight:700;line-height:1.55;color:#123B2E" data-en="Principle: no provenance, no place on the board. Every indicator must carry a source and a date, or it is left out.">Nguyên tắc: không có xuất xứ thì không lên bảng. Mỗi chỉ tiêu phải đi kèm nguồn và mốc thời gian, nếu không sẽ bị loại.</div>
-  </section>
-
-  <section style="margin-bottom:64px">
-    <div class="ht-tag" data-en="Research ethics">Đạo đức nghiên cứu</div>
-    <h2 class="ht-h2" style="margin-bottom:22px" data-en="Three ethical commitments">Ba cam kết đạo đức</h2>
-    <div class="ht-ethics">
-      <div class="ht-ethic" style="background:var(--clay-c1)"><div style="font-family:var(--clay-head);font-size:21px;font-weight:800;line-height:1.15" data-en="Two-purpose consent, separated">Đồng thuận hai mục đích, tách riêng</div><p style="margin:8px 0 0;font-size:14px;line-height:1.6;color:var(--clay-ink-2)" data-en="Scientific research and product improvement are two separate consent boxes. Declining one still lets you use the product.">Nghiên cứu khoa học và cải tiến sản phẩm là hai ô đồng thuận riêng. Từ chối một mục vẫn dùng được sản phẩm.</p></div>
-      <div class="ht-ethic" style="background:var(--clay-c4)"><div style="font-family:var(--clay-head);font-size:21px;font-weight:800;line-height:1.15" data-en="No personal data collected">Không thu thông tin định danh</div><p style="margin:8px 0 0;font-size:14px;line-height:1.6;color:var(--clay-ink-2)" data-en="Off by default. Team IDs are hashed; learning data leaves the device only when the user submits it.">Mặc định tắt. Mã đội được băm; dữ liệu học tập chỉ rời máy khi người dùng chủ động nộp.</p></div>
-      <div class="ht-ethic" style="background:var(--clay-c2)"><div style="font-family:var(--clay-head);font-size:21px;font-weight:800;line-height:1.15" data-en="Technical limit of withdrawal">Giới hạn kỹ thuật của quyền rút lui</div><p style="margin:8px 0 0;font-size:14px;line-height:1.6;color:var(--clay-ink-2)" data-en="Once data has been aggregated into cluster parameters, individual contributions can no longer be isolated. This limitation is disclosed in advance.">Khi dữ liệu đã được tổng hợp vào tham số cụm, phần đóng góp của từng cá nhân không còn tách riêng được. Giới hạn này được công bố từ trước.</p></div>
-    </div>
-  </section>
-
-  <section style="margin-bottom:64px;padding:32px;border-radius:32px;background:#FDE1CE;border:3px solid var(--clay-orange);box-shadow:inset 0 -9px 0 rgba(150,70,20,.1),0 26px 36px -26px rgba(150,70,20,.6)">
-    <div class="ht-tag" style="color:#8A3A0C" data-en="Disclosure">Công bố minh bạch</div>
-    <h2 class="ht-h2" style="color:#5A2608" data-en="Limits of current evidence">Giới hạn của bằng chứng hiện có</h2>
-    <p style="margin:10px 0 16px;font-size:15px;color:#5A2608" data-en="This section is deliberately placed before the reference list rather than at the end of the page.">Mục này được đặt trước danh mục tài liệu tham khảo, thay vì ở cuối trang, để người đọc tiếp cận ngay.</p>
-    <div style="display:flex;flex-direction:column;gap:10px">
-      <div style="display:flex;gap:12px;font-size:15px;line-height:1.55;color:#3B1A06"><span style="flex:none;width:12px;height:12px;margin-top:6px;border-radius:50%;background:var(--clay-orange);box-shadow:inset 0 -2px 0 rgba(0,0,0,.2)"></span><span data-en="Current evidence of learning gains is retrospective – observed after teaching, not a controlled trial.">Bằng chứng hiệu quả học tập hiện có mang tính hồi cứu – quan sát sau khi dạy, không phải thử nghiệm có kiểm soát.</span></div>
-      <div style="display:flex;gap:12px;font-size:15px;line-height:1.55;color:#3B1A06"><span style="flex:none;width:12px;height:12px;margin-top:6px;border-radius:50%;background:var(--clay-orange);box-shadow:inset 0 -2px 0 rgba(0,0,0,.2)"></span><span data-en="Sample sizes are still small; there is no control group for comparison yet.">Cỡ mẫu còn nhỏ; chưa có nhóm đối chứng để so sánh.</span></div>
-      <div style="display:flex;gap:12px;font-size:15px;line-height:1.55;color:#3B1A06"><span style="flex:none;width:12px;height:12px;margin-top:6px;border-radius:50%;background:var(--clay-orange);box-shadow:inset 0 -2px 0 rgba(0,0,0,.2)"></span><span data-en="The completion criterion – an outside instructor runs a full session unaided – is still being verified.">Tiêu chí hoàn thành 'giảng viên ngoài nhóm chạy trọn buổi không cần hỏi ai' vẫn đang được kiểm chứng.</span></div>
-      <div style="display:flex;gap:12px;font-size:15px;line-height:1.55;color:#3B1A06"><span style="flex:none;width:12px;height:12px;margin-top:6px;border-radius:50%;background:var(--clay-orange);box-shadow:inset 0 -2px 0 rgba(0,0,0,.2)"></span><span data-en="A rigorous experimental design (controlled, pre/post) is in preparation.">Một thiết kế thực nghiệm chặt chẽ (có đối chứng, tiền/hậu kiểm) đang được chuẩn bị.</span></div>
-    </div>
-  </section>
-
-  <section style="margin-bottom:72px">
-    <div class="ht-tag" data-en="References">Tài liệu tham khảo</div>
-    <h2 class="ht-h2" style="margin-bottom:18px" data-en="Academic sources">Nguồn học thuật</h2>
-    <ol style="margin:0;padding-left:22px;display:flex;flex-direction:column;gap:10px;font-size:15px;line-height:1.6;color:var(--clay-sub)">
-      <li>Nguyễn Trần Quỳnh Châu &amp; Nguyễn Thị Bé Ba (2025). Overview of Floating Markets in the Mekong Delta and Cai Rang Floating Market. <i>ICoISSEE-5</i>, Trường Đại học Cần Thơ.</li>
-      <li>Bloom, B. S. (1956). <i>Taxonomy of Educational Objectives: The Classification of Educational Goals</i>. Longmans, Green.</li>
-      <li>Trịnh Hoài Đức. <i>Gia Định thành thông chí</i> – <span data-en='cited for the river "bát–cạy" rule (regional cultural context).'>dẫn cho luật "bát–cạy" trên sông (bối cảnh văn hóa vùng).</span></li>
-      <li>Sarasvathy, S. D. (2001). Causation and effectuation: Toward a theoretical shift from economic inevitability to entrepreneurial contingency. <i>Academy of Management Review, 26</i>(2), 243–263. <a href="https://doi.org/10.5465/amr.2001.4378020" target="_blank" rel="noopener">doi:10.5465/amr.2001.4378020</a></li>
-      <li>McMullen, J. S., &amp; Shepherd, D. A. (2006). Entrepreneurial action and the role of uncertainty in the theory of the entrepreneur. <i>Academy of Management Review, 31</i>(1), 132–152. <a href="https://doi.org/10.5465/amr.2006.19379628" target="_blank" rel="noopener">doi:10.5465/amr.2006.19379628</a></li>
-      <li>Kolb, D. A. (1984). <i>Experiential learning: Experience as the source of learning and development</i>. Prentice Hall.</li>
-      <li>Bandura, A. (1977). Self-efficacy: Toward a unifying theory of behavioral change. <i>Psychological Review, 84</i>(2), 191–215. <a href="https://doi.org/10.1037/0033-295X.84.2.191" target="_blank" rel="noopener">doi:10.1037/0033-295X.84.2.191</a></li>
-      <li>Gollwitzer, P. M. (1999). Implementation intentions: Strong effects of simple plans. <i>American Psychologist, 54</i>(7), 493–503. <a href="https://doi.org/10.1037/0003-066X.54.7.493" target="_blank" rel="noopener">doi:10.1037/0003-066X.54.7.493</a></li>
-      <li>Mayne, J. (2012). Contribution analysis: Coming of age? <i>Evaluation, 18</i>(3), 270–280. <a href="https://doi.org/10.1177/1356389012451663" target="_blank" rel="noopener">doi:10.1177/1356389012451663</a></li>
-      <li>Johanson, J., &amp; Vahlne, J.-E. (1977). The internationalization process of the firm: A model of knowledge development and increasing foreign market commitments. <i>Journal of International Business Studies, 8</i>(1), 23–32. <a href="https://doi.org/10.1057/palgrave.jibs.8490676" target="_blank" rel="noopener">doi:10.1057/palgrave.jibs.8490676</a></li>
-      <li>Johanson, J., &amp; Vahlne, J.-E. (2009). The Uppsala internationalization process model revisited: From liability of foreignness to liability of outsidership. <i>Journal of International Business Studies, 40</i>(9), 1411–1431. <a href="https://doi.org/10.1057/jibs.2009.24" target="_blank" rel="noopener">doi:10.1057/jibs.2009.24</a></li>
-      <li>Zaheer, S. (1995). Overcoming the liability of foreignness. <i>Academy of Management Journal, 38</i>(2), 341–363. <a href="https://doi.org/10.2307/256683" target="_blank" rel="noopener">doi:10.2307/256683</a></li>
-      <li>Kogut, B., &amp; Singh, H. (1988). The effect of national culture on the choice of entry mode. <i>Journal of International Business Studies, 19</i>(3), 411–432. <a href="https://doi.org/10.1057/palgrave.jibs.8490394" target="_blank" rel="noopener">doi:10.1057/palgrave.jibs.8490394</a></li>
-      <li>Anderson, E., &amp; Gatignon, H. (1986). Modes of foreign entry: A transaction cost analysis and propositions. <i>Journal of International Business Studies, 17</i>(3), 1–26. <a href="https://doi.org/10.1057/palgrave.jibs.8490432" target="_blank" rel="noopener">doi:10.1057/palgrave.jibs.8490432</a></li>
-      <li>Dunning, J. H. (1988). The eclectic paradigm of international production: A restatement and some possible extensions. <i>Journal of International Business Studies, 19</i>(1), 1–31. <a href="https://doi.org/10.1057/palgrave.jibs.8490372" target="_blank" rel="noopener">doi:10.1057/palgrave.jibs.8490372</a></li>
-      <li>Peng, M. W., Wang, D. Y. L., &amp; Jiang, Y. (2008). An institution-based view of international business strategy: A focus on emerging economies. <i>Journal of International Business Studies, 39</i>(5), 920–936. <a href="https://doi.org/10.1057/palgrave.jibs.8400377" target="_blank" rel="noopener">doi:10.1057/palgrave.jibs.8400377</a></li>
-      <li>Khanna, T., &amp; Palepu, K. (1997). Why focused strategies may be wrong for emerging markets. <i>Harvard Business Review, 75</i>(4), 41–51.</li>
-    </ol>
-    <p style="margin:16px 0 0;font-size:14px;line-height:1.6;color:var(--clay-sub)"><span data-en="Sources 4–9 underpin the causation/effectuation logic, the experiential-learning design and the evidence principle; sources 10–17 are the international-business frameworks of Figure 2 and the theory cards; see">Nguồn 4–9 làm nền cho hai logic causation/effectuation, thiết kế học qua trải nghiệm và nguyên tắc bằng chứng; nguồn 10–17 là các khung kinh doanh quốc tế ở Hình 2 và các thẻ khung lý thuyết; xem</span> <a href="dinh-huong.html#dh-map-h" style="font-weight:800" data-en="Regional impact orientation →">Định hướng tác động vùng →</a></p>
-  </section>
+  </div>
 </main>
 
 <script src="js/site-vnmap.js" defer></script>
 <script src="js/bizon-clay-i18n.js" defer></script>
 <script src="js/bizon-clay-nav.js" defer></script>
 <script src="js/bizon-clay-footer.js" defer></script>
+<script src="js/academic-foundation.js" defer></script>
 </body>
 </html>
