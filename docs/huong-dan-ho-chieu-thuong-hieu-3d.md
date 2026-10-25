@@ -24,6 +24,9 @@ Nhập mã lớp ở cổng vào thì mọi đội trong lớp gặp cùng hồ 
 
 Công thức điểm và tham số đối thủ nằm trong `js/bp-core.js`, dùng chung cho bản thẻ (`brand-passport.html`) và bản 3D nên hai bản luôn chấm cùng một thước. Gói độc lập phải chép kèm file này.
 
+## Lớp phủ không chồng nhau
+Tour hướng dẫn của Lumina (`js/bp-tutorial.js`) nhường chỗ cho mọi lớp phủ khác: lễ đóng dấu, Kim Long xuất hiện, hỏi thầy Tú, màn đua sau quý, hồ sơ đối thủ, bảng chọn thị trường, luật chơi, đàm phán, văn phòng 3D và trạm hộ chiếu. Tour đang chạy mà có lớp phủ mở lên thì tạm ẩn, đóng xong hiện lại và vẽ lại đúng vị trí; tour chưa chạy thì chờ lớp phủ đóng rồi mới bắt đầu. Màn đua sau quý vẫn chờ lễ đóng dấu đóng xong mới hiện như trước.
+
 ## Chuyển động danh sách
 Nhật ký, cửa hàng và kho vật phẩm dùng thư viện auto-animate (`js/vendor/auto-animate.min.js`, MIT, bản đóng gói toàn cục của gói npm `@formkit/auto-animate` 0.10.0): dòng mới trượt vào, dòng mất mờ đi, dòng còn lại dịch chỗ mượt. Thư viện tự tắt khi hệ điều hành đặt «giảm chuyển động». Cửa hàng và kho vẽ lại theo khóa (`data-key`) nên chỉ dòng thay đổi mới có hoạt ảnh. Gói độc lập phải chép kèm file này; thiếu file thì trang vẫn chạy, chỉ không có chuyển động.
 
