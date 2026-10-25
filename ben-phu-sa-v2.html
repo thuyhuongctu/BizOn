@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>BizOn Bến Phù Sa · bản gọn</title>
+<meta name="description" content="Bến Phù Sa – bản gọn: mỗi tuần đi từng bước Món hàng → Địa điểm → Cách bán, có dự báo trước khi chốt; cùng engine và bảng xếp hạng với bản đầy đủ ben-phu-sa.html.">
+<link rel="icon" href="assets/brand/bizon-favicon.svg" type="image/svg+xml">
+<script src="js/bizon-lang.js"></script>
+<link rel="stylesheet" href="css/bizon-clay-fonts.css">
+<link rel="stylesheet" href="css/bizon-clay.css">
+<link rel="stylesheet" href="css/bn2.css">
+<link rel="stylesheet" href="css/bp2.css">
+<link rel="stylesheet" href="css/bps2.css">
+<script src="js/backend-config.js"></script>
+</head>
+<body class="bn2 bp2 bps2">
+<!--
+  BizOn Bến Phù Sa · bản gọn (kiểu Bật Nghiệp v2)
+  © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.
+
+  Chỉ thay GIAO DIỆN. Engine là chính trang ben-phu-sa.html, nạp trong iframe ẩn với ?embed=1: nhu cầu ẩn, hệ số tuần,
+  đối thủ, hao hụt, đụng độ, hiệu suất và bảng xếp hạng đều do một bản công thức tính. Khi ván xong, màn Kết thúc của
+  engine (xếp hạng, hiệu suất, đáp án, chứng nhận, nộp bài) được hiện thẳng từ iframe. Dùng chung css/bn2.css và css/bp2.css.
+-->
+<a class="bn2-skip" href="#bps2-main" data-vi="Bỏ qua tới nội dung" data-en="Skip to content">Bỏ qua tới nội dung</a>
+<div id="bps2-app" aria-live="polite"></div>
+<iframe id="bps2-engine" title="Engine Bến Phù Sa" hidden></iframe>
+<script src="js/bps2-ui.js"></script>
+<script>BPS2.start();</script>
+</body>
+</html>
