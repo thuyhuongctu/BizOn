@@ -45,7 +45,7 @@
     var el = $('bp30-live'); if (!el) return;
     el.innerHTML = DATA.live.map(function (c) {
       return '<a class="bp30-live" href="' + esc(c.href) + '">' +
-        '<div class="bp30-live-img"><img src="' + esc(c.img) + '" alt="" loading="lazy">' + status(tagCls(c.tag), c.tag) + '</div>' +
+        '<div class="bp30-live-img"><img src="' + esc(c.img) + '" alt="">' + status(tagCls(c.tag), c.tag) + '</div>' +
         '<div class="bp30-live-body"><h3>' + esc(c.title) + '</h3><p>' + esc(L(c.desc)) + '</p><strong>' + esc(L(c.cta)) + '</strong></div></a>';
     }).join('');
   }
