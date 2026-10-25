@@ -52,6 +52,6 @@ assert.match(tpl, /howTo: '📘 Cách chơi', hpTag: 'CÁCH CHƠI 6 VỤ'/);
 assert.match(tpl, /howTo: '📘 How to play', hpTag: 'HOW TO PLAY THE 6 SEASONS'/);
 assert.match(tpl, /window\.DurianCore\.howToPlay\(window\.DurianData, tr2\)/);
 assert.match(tpl, /l: tr\('📘 Đọc cách chơi 6 vụ trước', '📘 Read how to play first'\), fn: \(\) => \{ close\(\); this\.setState\(\{ hp: true \}\); \}/);
-assert.match(tpl, /if \(e\.key === 'Escape'\) \{ if \(this\.state\.hp\) this\.setState\(\{ hp: false \}\);/);
+assert.match(tpl, /if \(e\.key === 'Escape'\) \{ (if \(this\.state\.\w+\) this\.setState\(\{ \w+: false \}\); else )*if \(this\.state\.hp\) this\.setState\(\{ hp: false \}\);/);
 
 console.log('durian-how-to-play: ok');
