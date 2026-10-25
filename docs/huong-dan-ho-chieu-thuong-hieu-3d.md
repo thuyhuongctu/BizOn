@@ -24,6 +24,9 @@ Nhập mã lớp ở cổng vào thì mọi đội trong lớp gặp cùng hồ 
 
 Công thức điểm và tham số đối thủ nằm trong `js/bp-core.js`, dùng chung cho bản thẻ (`brand-passport.html`) và bản 3D nên hai bản luôn chấm cùng một thước. Gói độc lập phải chép kèm file này.
 
+## Chuyển động danh sách
+Nhật ký, cửa hàng và kho vật phẩm dùng thư viện auto-animate (`js/vendor/auto-animate.min.js`, MIT, bản đóng gói toàn cục của gói npm `@formkit/auto-animate` 0.10.0): dòng mới trượt vào, dòng mất mờ đi, dòng còn lại dịch chỗ mượt. Thư viện tự tắt khi hệ điều hành đặt «giảm chuyển động». Cửa hàng và kho vẽ lại theo khóa (`data-key`) nên chỉ dòng thay đổi mới có hoạt ảnh. Gói độc lập phải chép kèm file này; thiếu file thì trang vẫn chạy, chỉ không có chuyển động.
+
 ## Đối thủ Kim Long Exports
 Kim Long là đối thủ cùng tăng tốc theo ván: sức hút khởi điểm `RIVAL.attrBase`, mỗi quý tăng `RIVAL.ramp`, biên lợi nhuận `RIVAL.margin`, xác suất vào thị trường mới tăng từ `RIVAL.enterBase` thêm `RIVAL.enterStep` mỗi quý. Mức hiện tại (0,8 / 0,17 / 0,30 / 0,25 / 0,055) chọn bằng mô phỏng 32 ván mỗi mức: mức cũ cho đội thắng Kim Long 74 % ván, mức mới 61 % (đội tập trung 50 %, mở rộng có kỷ luật 63 %, hãng phần mềm 100 %, đội lan man 29 %), mức mạnh hơn nữa rơi xuống 31 %. Giảng viên muốn ván dễ hay khó hơn chỉ cần đổi các số trong `js/bp-core.js`.
 

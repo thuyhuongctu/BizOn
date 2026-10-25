@@ -475,6 +475,7 @@
 <script src="js/aibis/entry-mode-models.js"></script>
 <script src="js/aibis/entry-mode-engine.js"></script>
 <script src="js/bp-core.js"></script>
+<script src="js/vendor/auto-animate.min.js"></script>
 <script>
 (function () {
   var $ = function (id) { return document.getElementById(id); };
@@ -1084,6 +1085,42 @@
     log.insertBefore(li, log.firstChild);
   }
 
+  // Vẽ lại danh sách theo khóa (data-key): dòng đã có thì chỉ cập nhật nội dung,
+  // dòng mới thì thêm, dòng mất thì gỡ – để auto-animate chỉ làm mượt đúng chỗ
+  // thay đổi thay vì nhấp nháy cả danh sách như khi thay toàn bộ innerHTML.
+  function syncList(parent, rows, emptyHtml) {
+    if (!parent) return;
+    if (!rows.length) { parent.innerHTML = emptyHtml || ''; return; }
+    var keep = {};
+    rows.forEach(function (r) { keep[r.key] = true; });
+    Array.prototype.slice.call(parent.children).forEach(function (ch) {
+      if (!keep[ch.getAttribute('data-key')]) parent.removeChild(ch);
+    });
+    var prev = null;
+    rows.forEach(function (r) {
+      var el = parent.querySelector('[data-key="' + r.key + '"]');
+      if (!el) {
+        el = document.createElement('div');
+        el.setAttribute('data-key', r.key);
+        el.className = 'bp-opt';
+        el.style.cssText = 'display:flex;align-items:center;gap:10px;cursor:default';
+      }
+      el.innerHTML = r.html;
+      var ref = prev ? prev.nextSibling : parent.firstChild;
+      if (el !== ref) parent.insertBefore(el, ref);
+      prev = el;
+    });
+  }
+  // auto-animate (js/vendor/auto-animate.min.js, MIT): làm mượt khi dòng nhật ký
+  // hay vật phẩm được thêm, bớt, đổi chỗ. Thư viện tự tắt khi hệ điều hành đặt
+  // «giảm chuyển động»; thiếu file thì trang vẫn chạy như cũ.
+  if (typeof window.autoAnimate === 'function') {
+    ['bp-log', 'bp-shop-list', 'bp-inv-list'].forEach(function (id) {
+      var el = $(id);
+      if (el) window.autoAnimate(el, { duration: 220, easing: 'ease-out' });
+    });
+  }
+
   /* ================= CỬA HÀNG VẬT PHẨM ================= */
   window.bpToggleShop = function () {
     S.shopOpen = !S.shopOpen;
@@ -1102,32 +1139,32 @@
   function renderShop() {
     var listEl = $('bp-shop-list');
     if (!listEl) return;
-    listEl.innerHTML = SHOP_ITEMS.map(function (it) {
+    syncList(listEl, SHOP_ITEMS.map(function (it) {
       var owned = (it.type === 'blueprint' && blueprintOwned(it.id)) || (it.type === 'invest' && it.max && (S.items[it.id] || 0) >= it.max);
       var afford = S.cash >= it.price && !owned;
-      return '<div class="bp-opt" style="display:flex;align-items:center;gap:10px;cursor:default">' +
+      return { key: it.id, html:
         '<span style="font-size:22px">' + it.icon + '</span>' +
         '<span style="flex:1"><b>' + T(it.name, it.nameEn) + '</b>' + (it.type === 'blueprint' ? ' <span class="opacity-50" style="font-size:10px">(' + T('vĩnh viễn', 'permanent') + ')</span>' : it.type === 'invest' ? ' <span class="opacity-50" style="font-size:10px">(' + T('đã mua', 'bought') + ' ' + (S.items[it.id] || 0) + '/' + it.max + ')</span>' : '') +
         '<small>' + T(it.desc, it.descEn) + '</small></span>' +
         (owned ? '<span class="text-[10px] font-bold opacity-50 shrink-0">✅ ' + (it.type === 'invest' ? T('Đủ ' + it.max + ' lần', 'Maxed at ' + it.max) : T('Đã có', 'Owned')) + '</span>' :
           '<button onclick="bpBuyItem(\'' + it.id + '\')" class="clay-btn bg-primary text-white text-xs font-bold px-3 py-2 shrink-0"' + (afford ? '' : ' disabled style="opacity:.4"') + '>' + f1(it.price) + TY() + '</button>') +
-        '</div>';
-    }).join('');
+        '' };
+    }));
     var owned = Object.keys(S.items).filter(function (id) { return S.items[id] > 0; });
     var invEl = $('bp-inv-list');
-    invEl.innerHTML = owned.length ? owned.map(function (id) {
+    syncList(invEl, owned.map(function (id) {
       var it = shopItem(id);
       var forecastPending = S.flags.forecastPeek || !!preDrawnEv || preDrawnMissionAhead;
       var canUse = it.type === 'consumable' && !(id === 'SHIELD' && S.flags.shield) && !(id === 'FORECAST' && forecastPending);
-      return '<div class="bp-opt" style="display:flex;align-items:center;gap:10px;cursor:default">' +
+      return { key: id, html:
         '<span style="font-size:20px">' + it.icon + '</span>' +
         '<span style="flex:1"><b>' + T(it.name, it.nameEn) + '</b> ×' + S.items[id] +
         (id === 'SHIELD' && S.flags.shield ? '<small>' + T('Đã kích hoạt – chờ chặn sự kiện kế tiếp', 'Active – waiting to block the next event') + '</small>' : '') +
         (id === 'FORECAST' && forecastPending ? '<small>' + T('Đang chờ tiết lộ ở quý sau', 'Waiting to reveal next quarter') + '</small>' : '') + '</span>' +
         (it.type === 'blueprint' || it.type === 'invest' ? '<span class="text-[10px] font-bold opacity-50">✅ ' + T('Đang áp dụng', 'In effect') + '</span>' :
           '<button onclick="bpUseItem(\'' + id + '\')" class="clay-btn bg-clay-gold text-deep-teal text-xs font-bold px-3 py-2 shrink-0"' + (canUse ? '' : ' disabled style="opacity:.4"') + '>' + T('Dùng', 'Use') + '</button>') +
-        '</div>';
-    }).join('') : '<p class="text-[11px] opacity-50">' + T('Chưa có vật phẩm nào.', 'No items yet.') + '</p>';
+        '' };
+    }), '<p class="text-[11px] opacity-50">' + T('Chưa có vật phẩm nào.', 'No items yet.') + '</p>');
   }
 
   window.bpBuyItem = function (id) {
