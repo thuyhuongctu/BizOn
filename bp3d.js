@@ -1031,7 +1031,7 @@ const QUESTS = [
   { id: 'clear', who: 'Lumina', ic: '🌤️', vi: 'Đưa một đảo lên tri thức ≥ 60%', en: 'Bring an island to ≥60% intel', ok: (S, b) => S.know.some((k, m) => k >= 60 && b.kn[m] < 60) },
   { id: 'cash', who: 'Minh Khang', ic: '💰', vi: 'Kết thúc quý với tiền mặt không thấp hơn đầu quý', en: 'End the quarter with no less cash', ok: (S, b) => S.cash >= b.cash, atEnd: true },
   { id: 'rival', who: 'Tu Phan', ic: '⚔️', vi: 'Có mặt ở một thị trường Kim Long đã vào', en: 'Be present where Kim Long is', ok: S => !!(S.rival && S.rival.in.some(m => S.entered[m] !== null && S.entered[m] !== undefined)) },
-  { id: 'two', who: 'Lina Park', ic: '🔍', vi: 'Dùng đủ 2 nguồn tin trong quý', en: 'Use 2 intel sources this quarter', ok: S => !!(S.sel && S.sel.intel && S.sel.intel.length >= 2) },
+  { id: 'two', who: 'Lina Park', ic: '📚', vi: 'Vào một thị trường mới khi tri thức ở đó đã ≥ 50', en: 'Enter a new market only once its knowledge is ≥ 50', ok: (S, b) => !!(b.entArr && S.entered.some((v, m) => v !== null && v !== undefined && (b.entArr[m] === null || b.entArr[m] === undefined) && S.know[m] >= 50)) },
 ];
 function sum(a) { return (a || []).reduce((x, y) => x + (+y || 0), 0); }
 function cntE(S) { return S.entered.filter(v => v !== null && v !== undefined).length; }
@@ -1049,7 +1049,7 @@ function questTick() {
   if (!cur || cur.firm !== S.firm) {
     const prev = QS[q - 1]; if (prev && !prev.done && prev.firm === S.firm) { const Q0 = QUESTS.find(x => x.id === prev.id); if (Q0 && Q0.atEnd && Q0.ok(S, prev.b)) { prev.done = true; celebrate(Q0); } }
     const Q = QUESTS[(q * 5 + (S.firm | 0)) % QUESTS.length];
-    cur = QS[q] = { id: Q.id, firm: S.firm, done: false, b: { know: sum(S.know), ent: cntE(S), kn: S.know.slice(), cash: S.cash } }; qSave();
+    cur = QS[q] = { id: Q.id, firm: S.firm, done: false, b: { know: sum(S.know), ent: cntE(S), kn: S.know.slice(), entArr: S.entered.slice(), cash: S.cash } }; qSave();
     if (q > 0 || Object.keys(QS).length > 1) say(Q.ic + ' ' + Q.who + ': ' + tr(Q.vi, Q.en), 5000);
   }
   const Q = QUESTS.find(x => x.id === cur.id); if (!Q) return;

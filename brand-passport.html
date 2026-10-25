@@ -185,6 +185,7 @@
     <h3 class="font-display font-extrabold text-deep-teal text-sm mt-5 mb-2" data-en="📜 Rules of play">📜 Luật chơi</h3>
     <ul id="bp-rules-list" class="space-y-1.5 text-[12.5px]">
       <li data-en-html="🌫️ <b>Market fog</b>: each market's true profile is hidden – buy intel from 6 sources with different cost, accuracy and <b>bias</b>, then judge reliability yourself.">🌫️ <b>Sương mù thị trường</b>: hồ sơ thật của mỗi thị trường bị ẩn – mua thông tin từ 6 nguồn có chi phí, độ chính xác và <b>thiên lệch</b> khác nhau, rồi tự đánh giá độ tin cậy.</li>
+      <li data-en-html="📚 <b>Knowledge pays</b>: revenue in each market is multiplied by 0.9 + 0.15 × knowledge/100 (0/100 → ×0.90, 100/100 → ×1.05). Knowledge grows through intel sources, selling there (+6 per quarter).">📚 <b>Tri thức sinh lời</b>: doanh thu ở mỗi thị trường nhân với 0,9 + 0,15 × tri thức/100 (0/100 → ×0,90; 100/100 → ×1,05). Tri thức tăng nhờ mua tin, bán hàng tại đó (+6 mỗi quý).</li>
       <li data-en-html="🔐 <b>Class code = seed</b>: enter your class code at the entrance and every team in the class gets the same hidden market profiles and the same event sequence – fair to compare, and the instructor can replay any game from the seed shown on the end screen and in the CSV.">🔐 <b>Mã lớp = hạt giống</b>: nhập mã lớp ở cổng vào thì mọi đội trong lớp gặp cùng hồ sơ thị trường ẩn và cùng chuỗi biến cố – so sánh công bằng, và giảng viên dựng lại được ván từ hạt giống ghi ở màn kết thúc và trong CSV.</li>
       <li data-en-html="🌱 <b>Sustainability</b> is built, not drawn by luck: buy «Green record & traceability» in the item shop (0.7 bn each, up to 3) or take the recyclable-packaging option when the green-consumption event appears. Lục Đảo and the green incentive need a record of 2 or more.">🌱 <b>Bền vững</b> là thứ xây được, không phụ thuộc may rủi: mua «Hồ sơ xanh &amp; truy xuất» trong Cửa hàng vật phẩm (0,7 tỷ/lần, tối đa 3) hoặc chọn bao bì tái chế khi gặp biến cố tiêu dùng xanh. Lục Đảo và ưu đãi xanh cần hồ sơ từ 2 trở lên.</li>
       <li data-en-html="🚪 <b>3 entry modes</b>: digital platform (low commitment) · direct export (balanced) · local partner (borrow the network, partner-dependent).">🚪 <b>3 phương thức thâm nhập</b>: nền tảng số (cam kết thấp) · xuất khẩu trực tiếp (cân bằng) · đối tác địa phương (mượn mạng lưới, phụ thuộc đối tác).</li>
@@ -1362,6 +1363,7 @@
       // Bất lợi người ngoài cuộc (Johanson & Vahlne 2009): chưa có chỗ đứng trong mạng lưới thì doanh thu bị phạt tới 10%;
       // phương thức đối tác «mượn» mạng lưới của họ nên được tính như đã có vị thế ít nhất 50.
       rev *= 0.9 + 0.1 * clamp(S.entered[m] === 2 ? Math.max(S.net[m], 50) : S.net[m]) / 100;
+      rev *= window.BPCore.knowMul(S.know[m]);             // Tri thức thị trường (Uppsala): 0/100 ×0,90 … 100/100 ×1,05 – xem js/bp-core.js
       if (S.sel.prio === 1) rev *= 1.15;
       if (m === 0 && S.entered[m] === 0) rev *= 1.25;           // Hải Lam thưởng kênh số
       if (m === 1 && !S.certBP) rev *= 0.45;                    // Bắc Phong thiếu chứng nhận
