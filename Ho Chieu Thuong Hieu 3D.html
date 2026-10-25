@@ -208,6 +208,10 @@
   body.bp3d-choice-hud #bp-commit { display:none !important; }
   /* #bp-dec-note (🔮 Dự báo Lumina, nhắc chọn vận chuyển) vẫn hiện – syncDec() chuyển nó lên ngay dưới khối vận chuyển. */
   body.bp3d-choice-hud #bp-dec-note { margin:8px 0 0; text-align:left; opacity:.85; }
+  .bp-runway{display:inline-block;margin-top:6px;padding:6px 10px;border-radius:12px;font-weight:600;opacity:1}
+  .bp-runway.ok{background:rgba(0,102,135,.08)}
+  .bp-runway.warn{background:rgba(253,161,39,.16);color:#7A3E00}
+  .bp-runway.bad{background:rgba(178,58,46,.14);color:#8A1F14}
   @media (max-width:760px) { body.bp3d-choice-hud #bp3d-col { max-height:34svh !important; } }
 </style>
 <link rel="manifest" href="manifest-hochieu-3d.webmanifest">
@@ -604,10 +608,15 @@
     { id: 2, icon: '🤝', name: 'Liên minh chiến lược', nameEn: 'Strategic alliance', cost: 0.8, margin: 0.28, scale: 1.3, op: 0.35, note: 'mượn mạng lưới đối tác địa phương – phụ thuộc đối tác', noteEn: 'borrow a local partner\'s network – partner-dependent' },
     { id: 3, icon: '📜', name: 'Cấp phép', nameEn: 'Licensing', cost: 0.3, margin: 0.14, scale: 0.9, op: 0.08, note: 'vốn thấp nhất – lời mỏng, rủi ro thương hiệu nếu năng lực < 50', noteEn: 'lowest capital – thin margins, brand risk if capability < 50' },
     { id: 4, icon: '🏗️', name: 'Liên doanh', nameEn: 'Joint venture', cost: 1.8, margin: 0.32, scale: 1.4, op: 0.5, note: 'chia vốn, chia lời – học thị trường nhanh (+tri thức mỗi quý)', noteEn: 'shared equity and profit – fast market learning (+intel each quarter)' },
-    { id: 5, icon: '🏭', name: 'Đầu tư 100% vốn (FDI)', nameEn: 'Wholly owned FDI', cost: 3.2, margin: 0.45, scale: 1.5, op: 0.9, note: 'kiểm soát tối đa, né thuế quan – cần năng lực ≥ 55, rủi ro cao', noteEn: 'maximum control, avoids tariffs – needs capability ≥ 55, high risk' },
+    { id: 5, icon: '🏭', name: 'Đầu tư 100% vốn (FDI)', nameEn: 'Wholly owned FDI', cost: 3.0, margin: 0.55, scale: 1.6, op: 0.8, note: 'kiểm soát tối đa, né thuế quan – cần năng lực ≥ 55, rủi ro cao', noteEn: 'maximum control, avoids tariffs – needs capability ≥ 55, high risk' },
   ];
+  // FDI 100 % vốn (10-2025): trước là vốn 3,2 · biên lời 0,45 · quy mô 1,5 · vận hành 0,9 – chỉ nhỉnh hơn xuất khẩu
+  // trực tiếp ~0,05 tỷ/quý dù tốn thêm 2 tỷ vốn, nên lối FDI có chuẩn bị vẫn kém xuất khẩu và lối liều phá sản 63 % ván.
+  // Bộ mới (mô phỏng 8 hạt giống × 6 lối chơi, xem docs/huong-dan-ho-chieu-thuong-hieu-3d.md): FDI có chuẩn bị (nâng
+  // năng lực ≥ 55, vào Kim Sa quý 3, tàu biển) đạt 56 điểm so với xuất khẩu 49; FDI vào Tân Cảng 55; lối liều (3 lần
+  // nâng cấp rồi FDI vào Bắc Phong chưa chứng nhận, hoả tốc) vẫn phá sản 29 % – cam kết cao vẫn phải có kỷ luật dòng tiền.
   // Đối thủ không có "phương thức vào" riêng như người chơi nên không có
-  // margin thật để tính – dùng margin trung bình của 6 MODES (~0,30) làm
+  // margin thật để tính – dùng margin trung bình của 6 MODES (~0,33) làm
   // ước tính lợi nhuận đối thủ, để so sánh LỢI NHUẬN với LỢI NHUẬN (không
   // so lợi nhuận người chơi với DOANH THU đối thủ – luôn lớn hơn lợi nhuận,
   // khiến đội chơi có lãi thật vẫn bị báo "thua").
@@ -963,7 +972,7 @@
       return T('Nhà phân phối lớn nhất Bắc Phong đề nghị đưa ' + F().name + ' vào <b>500 cửa hàng</b>, đổi lại: độc quyền 3 năm, giảm giá buôn 25%, đổi toàn bộ bao bì, bạn chịu phí chứng nhận và giao lô đầu trong 60 ngày. <b>Lina Park 🚢:</b> «Mạng lưới của tôi là cánh cửa nhanh nhất – nhưng cửa nào cũng có giá của nó.»',
         "Bắc Phong's biggest distributor offers to place " + F().name + " in <b>500 stores</b>, in exchange for: 3-year exclusivity, a 25% wholesale discount, a full packaging redesign, you covering certification fees, and delivering the first batch within 60 days. <b>Lina Park 🚢:</b> «My network is the fastest door in – but every door has its price.»");
     }, ch: [
-      { l: '✍️ Chấp nhận toàn bộ đề nghị', lEn: '✍️ Accept the offer in full', fx: function () { if (S.capab >= 55 && S.cash >= 2) { S.cash -= 2; S.entered[1] = 2; S.ship[1] = 1; S.certBP = true; S.flags.bigDeal = true; S.foot.push(T('Ký độc quyền 3 năm với nhà phân phối Bắc Phong', 'Signed a 3-year exclusivity deal with the Bắc Phong distributor')); return T('Bạn đủ lực giao lô đầu đúng hạn – Bắc Phong mở toang, nhưng biên lời mỏng và bị khóa độc quyền.', "You have the capacity to deliver the first batch on time – Bắc Phong opens wide, but margins are thin and you're locked into exclusivity."); } S.cash -= 1; S.rep -= 10; return T('Năng lực chưa đủ giao 500 cửa hàng trong 60 ngày – vỡ cam kết, uy tín −10. Cam kết lớn cần nội lực lớn.', 'Not enough capability to deliver 500 stores in 60 days – you break the commitment, reputation −10. Big commitments need real capability.'); } },
+      { l: '✍️ Chấp nhận toàn bộ đề nghị', lEn: '✍️ Accept the offer in full', fx: function () { if (S.capab >= 55 && S.cash >= 2) { S.cash -= 2; if (S.entered[1] === null) { S.entered[1] = 2; S.ship[1] = 1; } S.certBP = true; S.flags.bigDeal = true; S.foot.push(T('Ký độc quyền 3 năm với nhà phân phối Bắc Phong', 'Signed a 3-year exclusivity deal with the Bắc Phong distributor')); return T('Bạn đủ lực giao lô đầu đúng hạn – Bắc Phong mở toang, nhưng biên lời mỏng và bị khóa độc quyền.', "You have the capacity to deliver the first batch on time – Bắc Phong opens wide, but margins are thin and you're locked into exclusivity."); } S.cash -= 1; S.rep -= 10; return T('Năng lực chưa đủ giao 500 cửa hàng trong 60 ngày – vỡ cam kết, uy tín −10. Cam kết lớn cần nội lực lớn.', 'Not enough capability to deliver 500 stores in 60 days – you break the commitment, reputation −10. Big commitments need real capability.'); } },
       { l: '🙅 Từ chối vì rủi ro quá cao', lEn: '🙅 Decline – too risky', fx: function () { S.resil += 3; return T('Bạn giữ thế chủ động – đôi khi «không» là quyết định chiến lược nhất.', 'You stay in control – sometimes «no» is the most strategic decision.'); } },
       { l: '🕊️ Đàm phán rút độc quyền còn 1 năm', lEn: '🕊️ Negotiate exclusivity down to 1 year', fx: function () { if (S.rep >= 55 || S.know[1] >= 60) { if (S.entered[1] === null) { S.entered[1] = 2; S.ship[1] = 0; } S.certBP = true; S.cash -= 1.2; S.adapt += 2; S.foot.push(T('Đàm phán thành công điều khoản Bắc Phong', 'Successfully renegotiated the Bắc Phong terms')); return T('Uy tín và hiểu biết thị trường cho bạn thế mạnh trên bàn đàm phán – hợp đồng công bằng hơn nhiều, thích ứng +2.', 'Your reputation and market knowledge give you leverage at the table – a much fairer deal, adaptation +2.'); } return T('Bạn chưa đủ uy tín hoặc dữ liệu để mặc cả – Lina lịch sự rút lời đề nghị.', "You don't have enough reputation or data to negotiate – Lina politely withdraws the offer."); } },
       { l: '🧪 Đề xuất thử nghiệm 50 cửa hàng trước (0,5 tỷ)', lEn: '🧪 Propose a 50-store pilot first (0.5 bn)', fx: function () { S.cash -= 0.5; S.know[1] = clamp(S.know[1] + 25); S.adapt += 1; S.flags.pilot = true; return T('Lô thử cho bạn dữ liệu thật về Bắc Phong – tri thức +25, giữ được quyền lựa chọn.', 'The pilot batch gives you real data on Bắc Phong – knowledge +25, and you keep your options open.'); } },
@@ -1483,6 +1492,25 @@
   // đang chọn, từ đúng công thức settle() dùng (không rút rnd() mới) – dải
   // rộng hay hẹp tùy tri thức đã có, phản ánh đúng tinh thần "sương mù thị
   // trường" thay vì đưa ra một con số chắc chắn.
+  // Dòng tiền sau khi vào thị trường mới: tiền còn lại sau vốn thâm nhập + ưu tiên có phí, so với chi vận hành ước mỗi quý
+  // của RIÊNG thị trường đó (cùng hệ số với settle(): mức vận hành, cá tính doanh nghiệp, Tân Cảng ×1,4, vận chuyển).
+  // Cạn tiền 2 quý liên tiếp là thua sớm, nên Minh Khang lên tiếng khi tiền còn lại không đủ ~2 quý vận hành – đặc biệt
+  // với FDI 100 % vốn (vốn lớn nhất, chi vận hành cao nhất). Chỉ là cảnh báo, người chơi vẫn được chốt.
+  function runwayHtml(m, mode, shipMode, fr) {
+    var md = MODES[mode], bud = BUDGETS[S.sel.budget], ship = SHIP_MODES[shipMode == null ? 0 : shipMode];
+    var prioCost = S.sel.prio === 2 ? 0.5 : S.sel.prio === 3 ? 0.8 : 0;
+    var after = S.cash - prioCost - md.cost;
+    var op = md.op * bud.op * (S.firm === 1 ? 1.2 : 1) * (S.firm === 4 ? 0.8 : 1) * (m === 5 ? 1.4 : 1) * ship.opMul;
+    var margin = Math.max(0.08, md.margin + (S.firm === 3 ? 0.05 : 0));
+    var pfLo = fr.lo * margin - op, pfHi = fr.hi * margin - op;
+    var pfTxt = T(' · lãi/lỗ quý ước tại đây ' + (pfLo >= 0 ? '+' : '') + f1(pfLo) + ' … ' + (pfHi >= 0 ? '+' : '') + f1(pfHi) + ' tỷ (chi vận hành ~' + f1(op) + ' tỷ/quý)',
+                  ' · estimated quarterly profit here ' + (pfLo >= 0 ? '+' : '') + f1(pfLo) + ' … ' + (pfHi >= 0 ? '+' : '') + f1(pfHi) + ' bn (operating cost ~' + f1(op) + ' bn/quarter)');
+    if (after < 0) return '<br><span class="bp-runway bad">⛔ ' + T('Không đủ tiền để vào: cần ' + f1(md.cost + prioCost) + ' tỷ (kể cả ưu tiên có phí), đang có ' + f1(S.cash) + ' tỷ – chốt thì phần thâm nhập sẽ bị bỏ qua.', 'Not enough cash to enter: needs ' + f1(md.cost + prioCost) + ' bn (paid priority included), you have ' + f1(S.cash) + ' bn – if you lock in, the entry is skipped.') + '</span>';
+    var q = op > 0 ? after / op : 9;
+    if (q < 2) return '<br><span class="bp-runway warn">💰 <b>Minh Khang:</b> ' + T('sau khi vào còn ' + f1(after) + ' tỷ, chỉ đủ khoảng ' + f1(q) + ' quý vận hành nếu doanh thu chưa về' + pfTxt + '. Cạn tiền 2 quý liên tiếp là thua sớm – cân nhắc phương thức rẻ hơn, vận chuyển đường biển hoặc chờ thêm một quý.',
+      'after entering you keep ' + f1(after) + ' bn, only about ' + f1(q) + ' quarters of operating cost if revenue is slow' + pfTxt + '. Two straight quarters below zero ends the game early – consider a cheaper mode, sea freight or waiting one more quarter.') + '</span>';
+    return '<br><span class="bp-runway ok">💼 ' + T('Sau khi vào còn ' + f1(after) + ' tỷ (~' + f1(q) + ' quý vận hành)' + pfTxt + '.', 'After entering you keep ' + f1(after) + ' bn (~' + f1(q) + ' quarters of operating cost)' + pfTxt + '.') + '</span>';
+  }
   function forecastRange(m, mode) {
     var md = MODES[mode];
     var base = 2.0 * H[m].fit * md.scale * H[m].trend[S.q] / H[m].comp;
@@ -1560,7 +1588,7 @@
         note.innerHTML = T(
           'Sẽ thâm nhập ' + MKTS[S.sel.enter].name + ' bằng ' + MODES[S.sel.enterMode].name + ' (vốn ' + f1(MODES[S.sel.enterMode].cost) + ' tỷ).<br>🔮 <b>Dự báo Lumina:</b> doanh thu quý ước ' + f1(fr.lo) + '–' + f1(fr.hi) + ' tỷ ₫ · ' + compTxt + rivalTxt + '.' + shipTxt,
           'Will enter ' + MKTS[S.sel.enter].name + ' via ' + MODES[S.sel.enterMode].nameEn + ' (capital ' + f1(MODES[S.sel.enterMode].cost) + ' bn).<br>🔮 <b>Lumina forecast:</b> estimated quarterly revenue ' + f1(fr.lo) + '–' + f1(fr.hi) + ' bn ₫ · ' + compTxt + rivalTxt + '.' + shipTxt
-        );
+        ) + runwayHtml(S.sel.enter, S.sel.enterMode, S.sel.shipMode, fr);
       } else {
         note.textContent = T('Chọn Ưu tiên và Mức vận hành để chốt.', 'Pick a Priority and an Operating stance to lock in.');
       }
