@@ -322,6 +322,7 @@
     <ul id="bp-rules-list" class="space-y-1.5 text-[12.5px]">
       <li data-en-html="🌫️ <b>Market fog</b>: each market's true profile is hidden – buy intel from 6 sources with different cost, accuracy and <b>bias</b>, then judge reliability yourself.">🌫️ <b>Sương mù thị trường</b>: hồ sơ thật của mỗi thị trường bị ẩn – mua thông tin từ 6 nguồn có chi phí, độ chính xác và <b>thiên lệch</b> khác nhau, rồi tự đánh giá độ tin cậy.</li>
       <li data-en-html="🔐 <b>Class code = seed</b>: enter your class code at the entrance and every team in the class gets the same hidden market profiles and the same event sequence – fair to compare, and the instructor can replay any game from the seed shown on the end screen and in the CSV.">🔐 <b>Mã lớp = hạt giống</b>: nhập mã lớp ở cổng vào thì mọi đội trong lớp gặp cùng hồ sơ thị trường ẩn và cùng chuỗi biến cố – so sánh công bằng, và giảng viên dựng lại được ván từ hạt giống ghi ở màn kết thúc và trong CSV.</li>
+      <li data-en-html="🌱 <b>Sustainability</b> is built, not drawn by luck: buy «Green record & traceability» in the item shop (0.7 bn each, up to 3) or take the recyclable-packaging option when the green-consumption event appears. Lục Đảo and the green incentive need a record of 2 or more.">🌱 <b>Bền vững</b> là thứ xây được, không phụ thuộc may rủi: mua «Hồ sơ xanh &amp; truy xuất» trong Cửa hàng vật phẩm (0,7 tỷ/lần, tối đa 3) hoặc chọn bao bì tái chế khi gặp biến cố tiêu dùng xanh. Lục Đảo và ưu đãi xanh cần hồ sơ từ 2 trở lên.</li>
       <li data-en-html="🚪 <b>6 entry modes</b>: digital platform (low commitment) · direct export (balanced) · strategic alliance (borrow the network, partner-dependent) · licensing (lowest capital) · joint venture (shared equity, fast learning) · wholly owned FDI (maximum control, needs capability ≥ 55).">🚪 <b>6 phương thức thâm nhập</b>: nền tảng số (cam kết thấp) · xuất khẩu trực tiếp (cân bằng) · liên minh chiến lược (mượn mạng lưới, phụ thuộc đối tác) · cấp phép (vốn thấp nhất) · liên doanh (chia vốn, học nhanh) · đầu tư 100% vốn FDI (kiểm soát tối đa, cần năng lực ≥ 55).</li>
       <li data-en-html="🧭 Each quarter: read signals → set a priority → decide entry &amp; operating level → handle an event → take a lesson.">🧭 Mỗi quý: đọc tín hiệu → chọn ưu tiên → quyết định thâm nhập &amp; mức vận hành → xử lý sự kiện → nhận bài học.</li>
       <li data-en-html="👣 <b>Decision footprint</b>: constant discounting, ignored complaints, broken commitments… all leave consequences in later quarters.">👣 <b>Dấu chân quyết định</b>: giảm giá liên tục, bỏ qua khiếu nại, phá cam kết… đều để lại hệ quả ở các quý sau.</li>
@@ -654,6 +655,8 @@
       desc: 'Vĩnh viễn: đạt luôn chuẩn Bắc Phong mà không cần chờ sự kiện.', descEn: 'Permanent: instantly meet the Bắc Phong standard without waiting for the event.' },
     { id: 'NETWORK', icon: '🤝', type: 'blueprint', price: 0.8, name: 'Mạng lưới đối tác', nameEn: 'Partner Network',
       desc: 'Vĩnh viễn: +10% doanh thu ở các thị trường thâm nhập bằng Đối tác địa phương.', descEn: 'Permanent: +10% revenue in markets entered via Local partner.' },
+    { id: 'GREEN', icon: '🌱', type: 'invest', price: 0.7, max: 3, name: 'Hồ sơ xanh & truy xuất', nameEn: 'Green record & traceability',
+      desc: 'Mua được nhiều lần (tối đa 3): mỗi lần +1 bền vững, hiệu lực ngay. Lục Đảo mở hết tiềm năng và ưu đãi xanh cần từ 2 lần.', descEn: 'Repeatable (up to 3): each purchase adds +1 sustainability, effective at once. Lục Đảo opens fully and green incentives need 2 or more.' },
   ];
   function shopItem(id) { for (var i = 0; i < SHOP_ITEMS.length; i++) if (SHOP_ITEMS[i].id === id) return SHOP_ITEMS[i]; return null; }
 
@@ -995,7 +998,7 @@
     function () { if (S.cash < 2.5) return ['💰', 'Minh Khang', T('Tiền mặt đang mỏng. Quý này tôi đề nghị củng cố thay vì mở rộng – doanh nghiệp chết vì hết tiền, không phải vì hết ý tưởng.', "Cash is running thin. This quarter I'd recommend consolidating instead of expanding – businesses die from running out of cash, not out of ideas.")]; },
     function () { // Lumina đọc chỉ số và nhắc điều dễ bỏ sót
       if (S.resil < 40) return ['🤖', 'Lumina', T('Chỉ số chống chịu đang thấp: một cú sốc tỷ giá hoặc đứt chuỗi cung lúc này sẽ ăn sâu vào lợi nhuận. Dành một quý củng cố nội lực là đầu tư, không phải mất lượt.', 'Your resilience index is low: an exchange-rate shock or a supply-chain break right now would cut deep into profit. Spending a quarter on internal strength is an investment, not a wasted turn.')];
-      if (S.susts < 2) return ['🤖', 'Lumina', T('Hồ sơ bền vững còn mỏng – Lục Đảo sẽ chỉ mở 60% tiềm năng và các gói ưu đãi xanh đều đòi bằng chứng truy xuất. Đây là đầu tư có lãi kép.', 'Your sustainability record is still thin – Lục Đảo will only open 60% of its potential and green incentive packages all demand traceability evidence. This is an investment with compounding returns.')];
+      if (S.susts < 2) return ['🤖', 'Lumina', T('Hồ sơ bền vững còn mỏng – Lục Đảo sẽ chỉ mở 60% tiềm năng và các gói ưu đãi xanh đều đòi bằng chứng truy xuất. Đây là đầu tư có lãi kép. Mua «Hồ sơ xanh & truy xuất» trong Cửa hàng vật phẩm.', 'Your sustainability record is still thin – Lục Đảo will only open 60% of its potential and green incentive packages all demand traceability evidence. This is an investment with compounding returns. Buy «Green record & traceability» in the item shop.')];
       if (entMkts().length >= 3) return ['🤖', 'Lumina', T('Bạn đang hiện diện ở ' + entMkts().length + '/' + MKTS.length + ' thị trường. Dữ liệu cho thấy mở rộng nhanh hơn năng lực giao hàng là nguyên nhân số một của «tăng trưởng nghẽn cổ chai» – hãy nâng năng lực trước khi thêm cửa mới.', 'You are now present in ' + entMkts().length + '/' + MKTS.length + ' markets. Data shows expanding faster than delivery capability is the number-one cause of «bottlenecked growth» – raise your capability before opening a new door.')];
       return null;
     },
@@ -1099,13 +1102,13 @@
     var listEl = $('bp-shop-list');
     if (!listEl) return;
     listEl.innerHTML = SHOP_ITEMS.map(function (it) {
-      var owned = it.type === 'blueprint' && blueprintOwned(it.id);
+      var owned = (it.type === 'blueprint' && blueprintOwned(it.id)) || (it.type === 'invest' && it.max && (S.items[it.id] || 0) >= it.max);
       var afford = S.cash >= it.price && !owned;
       return '<div class="bp-opt" style="display:flex;align-items:center;gap:10px;cursor:default">' +
         '<span style="font-size:22px">' + it.icon + '</span>' +
-        '<span style="flex:1"><b>' + T(it.name, it.nameEn) + '</b>' + (it.type === 'blueprint' ? ' <span class="opacity-50" style="font-size:10px">(' + T('vĩnh viễn', 'permanent') + ')</span>' : '') +
+        '<span style="flex:1"><b>' + T(it.name, it.nameEn) + '</b>' + (it.type === 'blueprint' ? ' <span class="opacity-50" style="font-size:10px">(' + T('vĩnh viễn', 'permanent') + ')</span>' : it.type === 'invest' ? ' <span class="opacity-50" style="font-size:10px">(' + T('đã mua', 'bought') + ' ' + (S.items[it.id] || 0) + '/' + it.max + ')</span>' : '') +
         '<small>' + T(it.desc, it.descEn) + '</small></span>' +
-        (owned ? '<span class="text-[10px] font-bold opacity-50 shrink-0">✅ ' + T('Đã có', 'Owned') + '</span>' :
+        (owned ? '<span class="text-[10px] font-bold opacity-50 shrink-0">✅ ' + (it.type === 'invest' ? T('Đủ ' + it.max + ' lần', 'Maxed at ' + it.max) : T('Đã có', 'Owned')) + '</span>' :
           '<button onclick="bpBuyItem(\'' + it.id + '\')" class="clay-btn bg-primary text-white text-xs font-bold px-3 py-2 shrink-0"' + (afford ? '' : ' disabled style="opacity:.4"') + '>' + f1(it.price) + TY() + '</button>') +
         '</div>';
     }).join('');
@@ -1120,7 +1123,7 @@
         '<span style="flex:1"><b>' + T(it.name, it.nameEn) + '</b> ×' + S.items[id] +
         (id === 'SHIELD' && S.flags.shield ? '<small>' + T('Đã kích hoạt – chờ chặn sự kiện kế tiếp', 'Active – waiting to block the next event') + '</small>' : '') +
         (id === 'FORECAST' && forecastPending ? '<small>' + T('Đang chờ tiết lộ ở quý sau', 'Waiting to reveal next quarter') + '</small>' : '') + '</span>' +
-        (it.type === 'blueprint' ? '<span class="text-[10px] font-bold opacity-50">✅ ' + T('Đang áp dụng', 'In effect') + '</span>' :
+        (it.type === 'blueprint' || it.type === 'invest' ? '<span class="text-[10px] font-bold opacity-50">✅ ' + T('Đang áp dụng', 'In effect') + '</span>' :
           '<button onclick="bpUseItem(\'' + id + '\')" class="clay-btn bg-clay-gold text-deep-teal text-xs font-bold px-3 py-2 shrink-0"' + (canUse ? '' : ' disabled style="opacity:.4"') + '>' + T('Dùng', 'Use') + '</button>') +
         '</div>';
     }).join('') : '<p class="text-[11px] opacity-50">' + T('Chưa có vật phẩm nào.', 'No items yet.') + '</p>';
@@ -1130,9 +1133,11 @@
     var it = shopItem(id);
     if (!it || S.cash < it.price) return;
     if (it.type === 'blueprint' && blueprintOwned(id)) return;
+    if (it.type === 'invest' && it.max && (S.items[id] || 0) >= it.max) return;
     S.cash -= it.price;
     S.items[id] = (S.items[id] || 0) + 1;
     if (id === 'CERT_FT') { S.certBP = true; addLog(T('🎖️ Mua <b>Chứng nhận nhanh Bắc Phong</b> – đạt chuẩn Bắc Phong ngay lập tức.', '🎖️ Bought <b>Bắc Phong Fast-Track Certification</b> – instantly meets the Bắc Phong standard.')); }
+    else if (id === 'GREEN') { S.susts += 1; addLog(T('🌱 Đầu tư <b>Hồ sơ xanh & truy xuất</b> lần ' + S.items[id] + ' (' + f1(it.price) + TY() + ') – hồ sơ bền vững ' + S.susts + (S.susts >= 2 ? ': Lục Đảo mở hết tiềm năng, đủ điều kiện ưu đãi xanh.' : '/2 – thêm một lần nữa để Lục Đảo mở hết tiềm năng.'), '🌱 Invested in <b>Green record & traceability</b> #' + S.items[id] + ' (' + f1(it.price) + TY() + ') – sustainability record ' + S.susts + (S.susts >= 2 ? ': Lục Đảo opens fully and green incentives are unlocked.' : '/2 – one more to open Lục Đảo fully.'))); }
     else addLog(T('🛍️ Mua <b>' + it.name + '</b> (' + f1(it.price) + TY() + ').', '🛍️ Bought <b>' + it.nameEn + '</b> (' + f1(it.price) + TY() + ').'));
     hud(); renderShop();
   };

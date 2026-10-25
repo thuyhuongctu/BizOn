@@ -16,6 +16,9 @@ Gói tự đủ: không cần mạng để tải three.js, font hay ảnh. Sau l
 ## Mã lớp = hạt giống chung của lớp
 Nhập mã lớp ở cổng vào thì mọi đội trong lớp gặp cùng hồ sơ thị trường ẩn và cùng chuỗi biến cố (hạt giống sinh từ mã lớp, cùng cách với Hộ Chiếu Sầu Riêng). Hạt giống hiện ở nhật ký đầu ván, màn kết thúc, cột `seed` của CSV và `detail_json.seed` khi nộp bài; giảng viên mở `?seed=<số>` để dựng lại ván. Không có mã lớp thì kịch bản ngẫu nhiên như trước.
 
+## Bền vững xây được, không chờ may rủi
+Điểm Bền vững (15 %) tăng bằng vật phẩm «🌱 Hồ sơ xanh & truy xuất» trong Cửa hàng (0,7 tỷ/lần, tối đa 3, hiệu lực ngay) hoặc phương án bao bì tái chế của biến cố tiêu dùng xanh. Lục Đảo mở hết tiềm năng và gói ưu đãi xanh cần hồ sơ từ 2.
+
 ## Nộp kết quả & bảng xếp hạng lớp (tuỳ chọn)
 1. Điền URL + anon key Supabase trong `js/backend-config.js`.
 2. Chạy `supabase/20260929000000_bp_leaderboard.sql` trong Supabase SQL Editor.
