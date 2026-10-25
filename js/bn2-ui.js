@@ -227,7 +227,7 @@ const BN2 = (() => {
       <div class="bn2-row" style="justify-content:space-between"><h2 id="bn2-lum-h" style="font-size:22px">${T('Hỏi Lumina', 'Ask Lumina')}</h2><span class="bn2-chip">${T('Còn', 'Left')} ${left}/${quota()}</span></div>
       <p class="bn2-small bn2-muted" style="margin:4px 0 10px">${T('Lumina gợi ý theo luật dựa trên số liệu của đội; Lumina không chấm điểm và không quyết thay bạn.', "Lumina gives rule-based hints from your team's numbers; she never scores or decides for you.")}</p>
       <div class="bn2-row">${[['pricing', T('Về giá', 'Pricing')], ['marketing', 'Marketing'], ['risk', T('Rủi ro vòng này', 'Risks this round')]].map(([k, l]) => `<button class="bn2-btn" data-act="ask" data-v="${k}" ${left <= 0 || S.finished ? 'disabled' : ''}>${l}</button>`).join('')}</div>
-      ${ui.advice.slice(-3).map(a => `<div class="bn2-advice risk-${esc(a.risk)}">${a.text}</div>`).join('')}
+      <div data-aa="advice">${ui.advice.slice(-3).map((a, i, arr) => `<div class="bn2-advice risk-${esc(a.risk)}" data-k="a${ui.advice.length - arr.length + i}">${a.text}</div>`).join('')}</div>
       <div class="bn2-row" style="justify-content:space-between;margin-top:16px"><h3 style="font-size:17px">${T('Nếu – Thì', 'What-if')} (${esc(role)})</h3><span class="bn2-chip">${T('Còn', 'Left')} ${wLeft}/${WHAT_IF_LIMIT}</span></div>
       <p class="bn2-small bn2-muted" style="margin:4px 0 8px">${T('Thử kế hoạch đang kéo trên các thanh trượt trước khi chốt.', 'Test the plan on your sliders before you commit.')}</p>
       <button class="bn2-btn teal" data-act="whatif" ${wLeft <= 0 || S.committed || S.finished ? 'disabled' : ''}>${T('Chạy mô phỏng Nếu – Thì', 'Run what-if')}</button>
@@ -239,13 +239,14 @@ const BN2 = (() => {
   function viewRivals() {
     const last = S.history[S.history.length - 1];
     const rows = [{ me: true, name: S.profile.teamName, share: last ? last.share : 25, img: CSUITE(S.profile.role || 'CEO'), color: 'var(--clay-teal)', note: T('Đội của bạn', 'Your team') }]
-      .concat(S.competitors.map(c => ({ name: c.name, share: c.share || 25, img: (RIVALS[c.style] || {}).img, color: (RIVALS[c.style] || {}).color, note: T((RIVALS[c.style] || {}).vi, (RIVALS[c.style] || {}).en) })));
+      .concat(S.competitors.map(c => ({ k: c.style, name: c.name, share: c.share || 25, img: (RIVALS[c.style] || {}).img, color: (RIVALS[c.style] || {}).color, note: T((RIVALS[c.style] || {}).vi, (RIVALS[c.style] || {}).en) })))
+      .sort((a, b) => b.share - a.share);   // xếp theo thị phần: đổi hạng là thấy trượt (bn2-motion.js)
     return `<section class="bn2-card"><h2 style="font-size:22px">${T('Thị phần sàn đấu', 'Arena market share')}</h2>
       <p class="bn2-small bn2-muted" style="margin:4px 0 6px">${last ? T('Sau vòng ', 'After round ') + last.round : T('Khởi điểm: mỗi đội 25%', 'Starting point: 25% each')}</p>
-      ${rows.map(r => `<div class="bn2-rival"><img src="${esc(r.img)}" alt="" onerror="this.style.visibility='hidden'">
+      <div data-aa="rivals">${rows.map(r => `<div class="bn2-rival" data-k="${r.me ? 'me' : esc(r.k)}"><img src="${esc(r.img)}" alt="" onerror="this.style.visibility='hidden'">
         <div style="min-width:0"><b style="${r.me ? 'color:var(--clay-teal)' : ''}">${esc(r.name)}</b><div class="bn2-small bn2-muted">${esc(r.note)}</div>
           <div class="bn2-bar"><i style="width:${Math.min(100, r.share)}%;background:${r.color}"></i></div></div>
-        <b>${pct(r.share)}</b></div>`).join('')}
+        <b>${pct(r.share)}</b></div>`).join('')}</div>
       <p class="bn2-small bn2-muted" style="margin:8px 0 0">${T('Cắm cờ tỉnh khi đội có thị phần cao nhất VÀ có lãi trong vòng.', 'Plant the flag when your team has the top share AND a profit that round.')}</p>
     </section>`;
   }
@@ -261,7 +262,7 @@ const BN2 = (() => {
     if (!S.history.length) return '';
     return `<section class="bn2-card"><h2 style="font-size:22px">${T('Các vòng đã chơi', 'Rounds played')}</h2>
       <div style="overflow-x:auto"><table class="bn2-table"><thead><tr><th>${T('Vòng', 'Round')}</th><th>${T('Doanh thu', 'Revenue')}</th><th>${T('Lãi/lỗ', 'Profit')}</th><th>${T('Thị phần', 'Share')}</th><th>${T('Cờ', 'Flag')}</th></tr></thead>
-      <tbody>${S.history.map((r, i) => `<tr><td>${r.round} · ${esc((CONQUEST_STOPS[i] || {}).name || '')}</td><td>${money(r.revenue)}</td><td class="${r.netProfit >= 0 ? 'pos' : 'neg'}">${sgn(r.netProfit)}</td><td>${pct(r.share)}</td><td>${(S.conquest[i] || {}).win ? '🚩' : '–'}</td></tr>`).join('')}</tbody></table></div>
+      <tbody data-aa="hist">${S.history.map((r, i) => `<tr data-k="r${r.round}"><td>${r.round} · ${esc((CONQUEST_STOPS[i] || {}).name || '')}</td><td>${money(r.revenue)}</td><td class="${r.netProfit >= 0 ? 'pos' : 'neg'}">${sgn(r.netProfit)}</td><td>${pct(r.share)}</td><td>${(S.conquest[i] || {}).win ? '🚩' : '–'}</td></tr>`).join('')}</tbody></table></div>
       <button class="bn2-btn ghost" style="margin-top:10px" data-act="report" data-v="${S.history.length - 1}">${T('Xem lại báo cáo vòng gần nhất', 'Review the latest round report')}</button>
     </section>`;
   }
@@ -336,7 +337,9 @@ const BN2 = (() => {
     document.documentElement.lang = currentLang();
     if (ui.screen === 'start' || !S) { el.innerHTML = viewStart(); return; }
     if (!ui.d) ui.d = lastDecisions();
+    const keep = window.BN2Motion ? BN2Motion.before(el) : null;
     el.innerHTML = (S.finished && ui.screen !== 'report') ? viewEnd() : viewPlay();
+    if (keep) BN2Motion.after(el, keep, ui.screen === 'report' ? ['rivals', 'hist'] : []);   // giữ khung danh sách cũ để có chuyển động khi thêm, bớt, đổi hạng; báo cáo vòng đang mở thì đợi đóng mới đổi
     if (S.finished && window.BN2Grade) BN2Grade.load(S);   // đọc bảng xếp hạng lớp cho B1, vẽ lại riêng khung bảng điểm
     if (ui.screen === 'report' && ui.reportIdx != null) el.insertAdjacentHTML('beforeend', viewReport(ui.reportIdx));
   }
