@@ -163,6 +163,7 @@ footer{color:var(--faint);font-size:12px;text-align:center;margin-top:24px}
 .flags{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 8px}
 .flags span{font-size:12px;border-radius:10px;padding:4px 8px;border:1px solid var(--line2);background:var(--panel2)}
 .flags span.win{border-color:var(--accent2)} .flags span.lose{border-color:var(--neg)} .flags span.now{border-color:var(--accent);font-weight:800}
+.flags.cum{margin-top:-4px} .flags.cum span{font-size:11px;padding:3px 7px} .flags.cum span.lg{border:0;background:none;color:var(--muted,#6b6458);padding-left:0}
 .ops{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .timer{font-family:'JetBrains Mono',monospace;font-weight:700;border:1px solid var(--line2);border-radius:10px;padding:4px 10px;background:var(--panel2)}
 .timer.late{color:var(--neg);border-color:var(--neg)}
@@ -654,8 +655,10 @@ footer{color:var(--faint)}
 
   // ================= màn 2: một vụ =================
   function flagsHTML(nowN) {
+    // Hàng 1: cờ từng vụ (lãi vụ ≥ đối thủ cao nhất). Hàng 2: cờ lũy kế 🏁 (lãi cộng dồn tới vụ đó ≥ đối thủ cao nhất) và hạng lũy kế.
+    const cum = APP.flags.map((f, i) => f ? DurianCore.cumFlag(RIVALS, APP.game.history, i + 1) : null);
     return `<div class="flags">${D.seasons.map((s, i) => { const f = APP.flags[i];
-      return `<span class="${f ? (f.win ? 'win' : 'lose') : (i + 1 === nowN ? 'now' : '')}">${f ? (f.win ? '🟩' : '🟥') : (i + 1 === nowN ? '📍' : '⬜')} ${L('Vụ', 'S')}${i + 1}</span>`; }).join('')}</div>`;
+      return `<span class="${f ? (f.win ? 'win' : 'lose') : (i + 1 === nowN ? 'now' : '')}">${f ? (f.win ? '🟩' : '🟥') : (i + 1 === nowN ? '📍' : '⬜')} ${L('Vụ', 'S')}${i + 1}</span>`; }).join('')}</div>${cum.some(Boolean) ? `<div class="flags cum" id="cumFlags">${cum.map((c, i) => c ? `<span class="${c.win ? 'win' : ''}" title="${L('Lãi cộng dồn tới vụ', 'Cumulative profit through season')} ${i + 1}: ${money(c.team)}">${c.win ? '🏁' : '·'} ${L('Lũy kế', 'Cum.')} ${i + 1} · #${c.rank}</span>` : '').join('')}<span class="lg">${L('🏁 = dẫn đầu lãi cộng dồn tới vụ đó · # = hạng trong 4', '🏁 = leads cumulative profit through that season · # = rank of 4')}</span></div>` : ''}`;
   }
   function leaderboardHTML(upto) {
     const rows = [{ id: 'me', img: null, name: L('Đội của bạn', 'Your team') + (APP.team ? ' · ' + esc(APP.team) : ''), h: APP.game.history.slice(0, upto) }]
@@ -886,6 +889,7 @@ footer{color:var(--faint)}
     $('app').innerHTML = `
       <section class="hero" style="padding-bottom:6px"><div class="hero-row"><div><span class="eyebrow">${L('Kết quả vụ', 'Season result')} ${n} · ${seasonLabel(s)}</span>
         <h1 style="font-size:clamp(22px,3.6vw,30px)">${fl.win ? '🟩 ' + L('Đội cắm cờ vụ này!', 'Your team plants the flag!') : '🟥 ' + L('Đối thủ giữ cờ vụ này', 'A rival takes this season\'s flag')}</h1>
+        <p class="hint" id="cumLine" style="margin:2px 0 6px">${(() => { const cf = DurianCore.cumFlag(RIVALS, APP.game.history, n); return `${cf.win ? '🏁 ' : ''}${L('Lũy kế sau vụ', 'Cumulative after season')} ${n}: ${L('hạng', 'rank')} ${cf.rank}/${cf.of} · ${money(cf.team)}${cf.best !== null ? ' · ' + L('đối thủ cao nhất', 'best rival') + ' ' + esc(nm(rivalInfo(cf.bestId))) + ' ' + money(cf.best) : ''}`; })()}</p>
         ${flagsHTML(0)}</div>
         <div class="hero-cast"><img src="../assets/dragon/${fl.win ? 'durian-cart-cut-v2.webp' : 'idea-cut-v2.webp'}" alt="${fl.win ? L('Rồng đẩy xe sầu riêng loại A đi giao', 'The dragon pushing a cart of grade-A durian') : L('Rồng suy nghĩ cách làm vụ sau', 'The dragon thinking about next season')}"></div></div></section>
       ${justFormalized ? `<div class="card" style="border:2px solid var(--accent)"><h2>🏷️ ${L('Mốc: chính thức hóa doanh nghiệp xuất khẩu', 'Milestone: formalised as an export business')}</h2>
