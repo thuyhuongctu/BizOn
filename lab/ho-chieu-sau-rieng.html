@@ -411,6 +411,7 @@ footer{color:var(--faint)}
         <ol><li>${L('Điền mã lớp và mã đội (mục 1)', 'Fill in your class and team code (section 1)')}</li>
           <li>${L('Chọn nhân vật đại diện (mục 1b)', 'Pick your avatar (section 1b)')}</li>
           <li>${L('Chọn doanh nghiệp của đội (mục 2a)', 'Choose your team\'s firm (section 2a)')}</li></ol>
+        <p class="small muted" style="margin-top:8px">⚡ ${L('Mới chơi lần đầu? Thử', 'New here? Try the')} <a href="ho-chieu-sau-rieng-v2.html">${L('bản gọn', 'lean version')}</a>${L(': mỗi vụ một thẻ ba bước, cùng engine, cùng đối thủ và cùng ván lưu với bản này.', ': one three-step card per season, same engine, rivals and saved game as this edition.')}</p>
         <details class="gv" style="margin-top:10px"><summary>${L('📖 Từ điển nhanh: các từ chuyên môn hay gặp', '📖 Quick glossary: common trade terms')}</summary>
           <dl class="glossary small">
             <dt>${L('Chính ngạch', 'Official trade (chính ngạch)')}</dt><dd>${L('Xuất khẩu qua cửa khẩu có đăng ký, đủ giấy tờ hải quan/kiểm dịch – con đường chính thức, ổn định hơn.', 'Exporting through a registered border gate with full customs/quarantine paperwork – the formal, more stable route.')}</dd>
@@ -1147,6 +1148,8 @@ footer{color:var(--faint)}
     if (!APP || !confirm(L('Thoát ván đang chơi về màn mở đầu? Ván vẫn được lưu: bạn có thể chơi tiếp, xóa ván hoặc bắt đầu ván mới.', 'Quit to the start screen? The game stays saved: you can resume it, delete it or start a new one.'))) return;
     save(); APP = null; RIVALS = null; render(); window.scrollTo(0, 0);
   };
+  // ?resume=1 (liên kết từ bản gọn ho-chieu-sau-rieng-v2.html): mở thẳng ván đang lưu thay vì màn mở đầu
+  if (/[?&]resume=1(?:&|$)/.test(location.search)) { const s0 = load(); if (s0) { boot(s0); logEv('RESUME', '', 'R' + s0.game.n); save(); } }
   render();
 })();
 </script>
