@@ -991,7 +991,7 @@ footer{color:var(--faint)}
   }
 
   const GOALS = () => DurianCore.goals(L);
-  const CAUSES = () => ({ event: L('Biến cố', 'Event'), price: L('Giá vựa khác ước tính', 'Depot price differed'), inspection: L('Kiểm dịch, kiểm tra', 'Inspection, audit'), assumption: L('Giả định sai', 'Wrong assumption'), rivals: L('Đối thủ', 'Rivals'), other: L('Khác', 'Other') });
+  const CAUSES = () => DurianCore.causes(L);
 
   // Hai chứng nhận giống Bến Phù Sa / Bật Nghiệp: chứng chỉ BizOn (vẽ canvas) và
   // chứng nhận ĐHCT (js/official-cert.js). Chỉ cấp cho ván có Mã lớp.

@@ -65,6 +65,11 @@
     return { share: L('Thị phần chính ngạch', 'Official market share'), profit: L('Lợi nhuận', 'Profit'), cash: L('Tiền mặt', 'Cash'), rep: L('Uy tín, tuân thủ', 'Reputation, compliance'), capability: L('Năng lực dài hạn', 'Long-term capability') };
   }
 
+  // Nguyên nhân sai lệch dự báo – thực tế trong nhật ký phản tư sau vụ (dùng chung bản thẻ và bản 3D).
+  function causes(L) {
+    return { event: L('Biến cố', 'Event'), price: L('Giá vựa khác ước tính', 'Depot price differed'), inspection: L('Kiểm dịch, kiểm tra', 'Inspection, audit'), assumption: L('Giả định sai', 'Wrong assumption'), rivals: L('Đối thủ', 'Rivals'), other: L('Khác', 'Other') };
+  }
+
   // Chuyển trạng thái một vụ: ghi thời gian, phiếu, kết quả, cờ, nhật ký COMMIT,
   // rồi chuẩn bị quyết định cho vụ sau. Không lưu và không vẽ lại; bên gọi làm việc đó.
   // sh: phiếu đã kiểm tra bằng sheetComplete (goal, assume, ceo, …).
@@ -181,6 +186,7 @@
     logEv: logEv,
     sheetComplete: sheetComplete,
     goals: goals,
+    causes: causes,
     howToPlay: howToPlay,
     rivalCard: rivalCard,
     rivalNote: rivalNote,
