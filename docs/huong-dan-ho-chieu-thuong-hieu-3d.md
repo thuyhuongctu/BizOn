@@ -22,6 +22,11 @@ Nhập mã lớp ở cổng vào thì mọi đội trong lớp gặp cùng hồ 
 ## Điểm số: hai hệ số và lợi nhuận vận hành
 Điểm tổng = (30 % Lợi nhuận + 20 % Uy tín + 20 % Năng lực + 15 % Thích ứng + 15 % Bền vững) × bề rộng thị trường (0,7 + 0,08 × số thị trường đã vào, trần 1,1) × 0,6 nếu thua sớm. Lợi nhuận là lợi nhuận vận hành; vốn thâm nhập, ưu tiên có phí, mua tin, vật phẩm và biến cố trừ vào tiền mặt, nên có thể lãi mà vẫn cạn vốn. Màn kết thúc có khung «Tiền đi đâu» và mỗi quý có chip «Chi ngoài LN».
 
+Công thức điểm và tham số đối thủ nằm trong `js/bp-core.js`, dùng chung cho bản thẻ (`brand-passport.html`) và bản 3D nên hai bản luôn chấm cùng một thước. Gói độc lập phải chép kèm file này.
+
+## Đối thủ Kim Long Exports
+Kim Long là đối thủ cùng tăng tốc theo ván: sức hút khởi điểm `RIVAL.attrBase`, mỗi quý tăng `RIVAL.ramp`, biên lợi nhuận `RIVAL.margin`, xác suất vào thị trường mới tăng từ `RIVAL.enterBase` thêm `RIVAL.enterStep` mỗi quý. Mức hiện tại (0,8 / 0,17 / 0,30 / 0,25 / 0,055) chọn bằng mô phỏng 32 ván mỗi mức: mức cũ cho đội thắng Kim Long 74 % ván, mức mới 61 % (đội tập trung 50 %, mở rộng có kỷ luật 63 %, hãng phần mềm 100 %, đội lan man 29 %), mức mạnh hơn nữa rơi xuống 31 %. Giảng viên muốn ván dễ hay khó hơn chỉ cần đổi các số trong `js/bp-core.js`.
+
 ## Nộp kết quả & bảng xếp hạng lớp (tuỳ chọn)
 1. Điền URL + anon key Supabase trong `js/backend-config.js`.
 2. Chạy `supabase/20260929000000_bp_leaderboard.sql` trong Supabase SQL Editor.

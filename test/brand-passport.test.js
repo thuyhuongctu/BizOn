@@ -247,8 +247,11 @@ test('Chấm điểm: năm chiều đều trong 0–100 và tổng đúng trọn
   ['p', 'r', 'c', 'a', 's'].forEach(k => {
     check(sc[k] >= 0 && sc[k] <= 100, `chiều ${k} = ${sc[k]} nằm trong 0–100`);
   });
-  const expect = Math.round(0.3 * sc.p + 0.2 * sc.r + 0.2 * sc.c + 0.15 * sc.a + 0.15 * sc.s);
-  eq(sc.total, expect, 'tổng điểm khớp trọng số 30/20/20/15/15');
+  // Từ 10/2026 hai bản dùng chung js/bp-core.js: tổng = (30/20/20/15/15) × bề rộng thị trường × hệ số thua sớm.
+  const expect = Math.round((0.3 * sc.p + 0.2 * sc.r + 0.2 * sc.c + 0.15 * sc.a + 0.15 * sc.s) * sc.breadth * sc.finish);
+  eq(sc.total, expect, 'tổng điểm khớp trọng số 30/20/20/15/15 × bề rộng × thua sớm');
+  eq(sc.breadth, 0.78, 'vào 1 thị trường → hệ số bề rộng 0,78');
+  eq(sc.finish, 1, 'chưa thua sớm → hệ số 1');
   check(Number.isInteger(sc.total), 'tổng điểm là số nguyên');
   await p.close();
 });

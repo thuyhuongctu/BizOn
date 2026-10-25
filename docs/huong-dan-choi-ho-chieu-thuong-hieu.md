@@ -84,7 +84,7 @@ Doanh thu, lợi nhuận theo từng thị trường đang hiện diện và ti�
 ```
 Điểm tổng = 30% Lợi nhuận + 20% Uy tín + 20% Năng lực + 15% Thích ứng + 15% Bền vững
 
-> Lợi nhuận trong điểm là **lợi nhuận vận hành**. Vốn thâm nhập, ưu tiên có phí, mua tin, vật phẩm và biến cố trừ vào tiền mặt chứ không trừ vào lợi nhuận, nên đội có thể lãi mà vẫn cạn vốn; màn kết thúc có khung «Tiền đi đâu» nối vốn ban đầu + lợi nhuận − chi ngoài lợi nhuận = tiền mặt. Bản 3D còn nhân hệ số bề rộng thị trường (0,7 + 0,08 × số thị trường, trần 1,1) và ×0,6 khi thua sớm.
+> Lợi nhuận trong điểm là **lợi nhuận vận hành**. Vốn thâm nhập, ưu tiên có phí, mua tin, vật phẩm và biến cố trừ vào tiền mặt chứ không trừ vào lợi nhuận, nên đội có thể lãi mà vẫn cạn vốn; màn kết thúc có khung «Tiền đi đâu» nối vốn ban đầu + lợi nhuận − chi ngoài lợi nhuận = tiền mặt. Cả hai bản (thẻ và 3D) dùng chung một công thức trong `js/bp-core.js`: điểm 5 chiều × hệ số bề rộng thị trường (0,7 + 0,08 × số thị trường, trần 1,1) × 0,6 khi thua sớm; cùng một ván ra cùng một điểm ở hai bản.
 ```
 
 Doanh thu cao nhất chưa chắc thắng — tăng trưởng nóng làm cạn vốn, mất đối tác hoặc vi phạm quy định sẽ trả giá. Cân bằng cả 5 chiều (mỗi chiều ≥60) mở khóa danh hiệu cao nhất: **🏆 Thương hiệu Việt vươn khơi**.
