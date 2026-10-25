@@ -57,8 +57,11 @@ const waitTour = async (page) => { try { await page.waitForFunction(() => { cons
         const s2 = await waitTour(page);
         check(s2.el && s2.visible, name + ': đóng lễ đóng dấu → tour Biến cố hiện');
       } else {
+        // Máy chậm (CI): lễ đóng dấu bản 3D có thể tới muộn hơn 2,5 s và chặn tour – chờ tour HOẶC lễ; lễ tới thì đóng rồi mới chờ tour.
+        try { await page.waitForFunction(() => !!document.querySelector('.sg-ov') || (function () { const n = document.querySelector('#bp-tour-next'); return !!n && n.closest('div[style*="z-index: 90"]').style.display !== 'none'; })(), null, { timeout: 8000 }); } catch (e) {}
+        const late = await page.evaluate(() => { const b = document.querySelector('.sg-ov .sg-btn'); if (b) { b.click(); return true; } return false; });
         const s2 = await waitTour(page);
-        check(s2.el && s2.visible, name + ': không có lễ đóng dấu → tour Biến cố hiện bình thường');
+        check(s2.el && s2.visible, name + ': không có lễ đóng dấu' + (late ? ' (lễ tới muộn, đã đóng)' : '') + ' → tour Biến cố hiện bình thường');
       }
       check(errors.length === 0, name + ': không lỗi JS (' + errors.slice(0, 2).join(' | ') + ')');
       await ctx.close();

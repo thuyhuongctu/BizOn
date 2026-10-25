@@ -79,6 +79,16 @@ Doanh thu, lợi nhuận theo từng thị trường đang hiện diện và ti�
 
 ---
 
+### Bản gọn (brand-passport-v2.html) — cùng 4 bước, một thẻ mỗi quý
+
+Với lớp mới chơi lần đầu hoặc chơi trên điện thoại, dùng **bản gọn**: https://thuyhuongctu.github.io/BizOn/brand-passport-v2.html
+
+- Bước 1 và bước 2 gộp thành **một thẻ quyết định**: tin thị trường ở đầu thẻ, rồi ① Ưu tiên · ② Mức vận hành · ③ Thị trường mới (chọn trong danh sách, kèm cách vào có điểm AIBIS và cách vận chuyển). Mua tin và vật phẩm nằm trong mục «Nâng cao» để không làm rối người mới.
+- Dưới thẻ có **«Dự báo trước khi chốt»**: doanh thu ước (dải rộng khi tri thức thấp), chi vận hành, lãi/lỗ dự kiến, chi một lần và tiền mặt cuối quý ước — ước tính từ dự báo Lumina, chưa gồm biến cố và chậm hàng.
+- Bước 3 (biến cố) và bước 4 (kết quả quý) là hai thẻ riêng, có bảng theo thị trường, dòng so với Kim Long và «Chuyện gì đã xảy ra».
+- **Cùng engine, cùng điểm**: bản gọn chạy chính trang brand-passport.html ẩn bên dưới, nên cùng mã lớp (hạt giống) và cùng quyết định thì ra đúng kết quả của bản đầy đủ; màn kết thúc (điểm, huy hiệu, chứng nhận, nộp bài) là màn của bản đầy đủ. Ván đang dở dùng chung bộ nhớ, mở bản nào cũng chơi tiếp được.
+- Khác biệt: không có video hướng dẫn, ban cố vấn đầy đủ, phòng đàm phán, tour tân thủ và nhạc nền — bấm ❓ trên thanh đầu trang để xem cách chơi và luật.
+
 ## 3 · Công thức điểm — công khai từ quý 1
 
 ```

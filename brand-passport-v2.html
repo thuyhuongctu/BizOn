@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>BizOn Hộ Chiếu Thương Hiệu · bản gọn</title>
+<meta name="description" content="Hộ Chiếu Thương Hiệu – bản gọn: mỗi quý một thẻ quyết định, dự báo trước khi chốt, cùng engine và cách chấm điểm với bản đầy đủ brand-passport.html.">
+<link rel="icon" href="assets/brand/bizon-favicon.svg" type="image/svg+xml">
+<script src="js/bizon-lang.js"></script>
+<link rel="stylesheet" href="css/bizon-clay-fonts.css">
+<link rel="stylesheet" href="css/bizon-clay.css">
+<link rel="stylesheet" href="css/bn2.css">
+<link rel="stylesheet" href="css/bp2.css">
+<script src="js/backend-config.js"></script>
+</head>
+<body class="bn2 bp2">
+<!--
+  BizOn Hộ Chiếu Thương Hiệu · bản gọn (kiểu Bật Nghiệp v2)
+  © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.
+
+  Chỉ thay GIAO DIỆN. Engine là chính trang brand-passport.html, nạp trong iframe ẩn với ?embed=1 (xem phần <head> của
+  trang đó): mọi con số – doanh thu, đối thủ Kim Long, biến cố, điểm – vẫn do một bản công thức duy nhất tính, nên cùng
+  hạt giống, cùng quyết định thì cùng kết quả với bản đầy đủ và bản 3D. Tiến trình dùng chung khoá localStorage
+  'bizon-bp-save', mã lớp dùng chung 'bp-class'. Khi ván kết thúc, màn Kết thúc của engine (điểm, chứng nhận, nộp bài)
+  được hiện thẳng từ iframe.
+-->
+<a class="bn2-skip" href="#bp2-main" data-vi="Bỏ qua tới nội dung" data-en="Skip to content">Bỏ qua tới nội dung</a>
+<div id="bp2-app" aria-live="polite"></div>
+<iframe id="bp2-engine" title="Engine Hộ Chiếu Thương Hiệu" hidden></iframe>
+<script src="js/bp2-ui.js"></script>
+<script>BP2.start();</script>
+</body>
+</html>
