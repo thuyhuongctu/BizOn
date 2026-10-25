@@ -41,7 +41,7 @@ assert.match(tpl, /this\.setState\(\{ rv: true, log: \[\], recorded: false, phas
 assert.match(tpl, /sc-camel-on-click="\{\{ openRv \}\}"[^>]*>\{\{ t\.rvBtn \}\}<\/div>/);
 assert.match(tpl, /window\.DurianCore\.rivalCard\(window\.DurianData, x, tr2\)/);
 assert.match(tpl, /note: window\.DurianCore\.rivalNote\(tr2\)/);
-assert.match(tpl, /if \(e\.key === 'Escape'\) \{ if \(this\.state\.rv\) this\.setState\(\{ rv: false \}\);/);
+assert.match(tpl, /if \(e\.key === 'Escape'\) \{ (if \(this\.state\.\w+\) this\.setState\(\{ \w+: false \}\); else )*if \(this\.state\.rv\) this\.setState\(\{ rv: false \}\);/);
 assert.match(tpl, /rvTag: 'ĐỐI THỦ CỦA VÁN NÀY', rvBtn: '👥 Đối thủ'/);
 
 console.log('durian-rival-cards: ok');

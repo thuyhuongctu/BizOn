@@ -50,5 +50,5 @@ assert.match(tpl, /flagsK: 'Cờ · lũy kế'/);
 assert.match(tpl, /Lãi lũy kế hạng ' \+ cfS\.rank \+ '\/' \+ cfS\.of/);
 assert.match(tpl, /cum: window\.DurianCore\.cumFlag\(s\.rivals \|\| \[\], h, r\.n\)\.win \? '🏁' : ''/);
 assert.match(tpl, /\{\{ r\.flag \}\}\{\{ r\.cum \}\}/);
-assert.match(tpl, /'flag_win', 'cum_flag_win'\]/);
+assert.match(tpl, /'flag_win', 'cum_flag_win', 'journal_cause'/);
 console.log('durian-cum-flag: ok');
