@@ -86,6 +86,8 @@ Doanh thu, lợi nhuận theo từng thị trường đang hiện diện và ti�
 
 > Lợi nhuận trong điểm là **lợi nhuận vận hành**. Vốn thâm nhập, ưu tiên có phí, mua tin, vật phẩm và biến cố trừ vào tiền mặt chứ không trừ vào lợi nhuận, nên đội có thể lãi mà vẫn cạn vốn; màn kết thúc có khung «Tiền đi đâu» nối vốn ban đầu + lợi nhuận − chi ngoài lợi nhuận = tiền mặt. Cả hai bản (thẻ và 3D) dùng chung một công thức trong `js/bp-core.js`: điểm 5 chiều × hệ số bề rộng thị trường (0,7 + 0,08 × số thị trường, trần 1,1) × 0,6 khi thua sớm; cùng một ván ra cùng một điểm ở hai bản.
 
+> Tour hướng dẫn của Lumina ở cả hai bản nhường chỗ cho lớp phủ khác (luật chơi, màn đua Kim Long, lễ đóng dấu ở bản 3D…): đang chạy thì tạm ẩn rồi hiện lại khi lớp phủ đóng, chưa chạy thì chờ.
+
 > Nhật ký, cửa hàng và kho vật phẩm ở cả hai bản có chuyển động khi thêm, bớt dòng (thư viện auto-animate, `js/vendor/auto-animate.min.js`); hệ điều hành đặt «giảm chuyển động» thì tự tắt.
 ```
 

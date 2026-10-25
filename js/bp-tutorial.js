@@ -99,6 +99,7 @@
   function paint() {
     if (endShowing()) { stop(); return; }
     if (!steps || idx < 0) return; // tour đã stop() giữa chừng (xem chú thích ở go())
+    if (paused) return; // đang nhường chỗ cho lớp phủ khác – sẽ vẽ lại khi lớp phủ đó đóng
     var step = steps[idx];
     var el = $q(step.sel), r = null;
     if (step.grid && el) el = el.closest('.clay-card') || el;
@@ -152,7 +153,7 @@
 
   function stop() {
     if (overlay) { overlay.remove(); overlay = null; }
-    steps = null; idx = -1;
+    steps = null; idx = -1; deferred = null; paused = false;
   }
 
   // Màn kết thúc đang hiện thì không được có tour nào nằm đè lên nó – kể cả
@@ -163,12 +164,33 @@
     return !!e && !e.classList.contains('hidden');
   }
 
+  // Các lớp phủ khác của trang: lễ đóng dấu / Kim Long / hỏi thầy Tú (.sg-ov, js/bp-signature.js), màn đua và hồ sơ
+  // đối thủ (js/bp-rival-intel.js), bảng chọn thị trường, luật chơi, đàm phán, văn phòng 3D, trạm hộ chiếu. Tour không
+  // được nằm dưới hay đè lên chúng: đang chạy thì tạm ẩn, chưa chạy thì chờ; lớp phủ đóng hết mới hiện và vẽ lại
+  // (phần tử được soi có thể đã đổi chỗ trong lúc chờ).
+  var BLOCKERS = '.sg-ov, #bp-rival-arena, #bp-rival-detail, #bp-mkt-pick, #bp-rules-overlay, #negot, #chub, #ib-ovl';
+  function blocked() { return !!document.querySelector(BLOCKERS); }
+  var deferred = null, paused = false, watcher = null;
+  function watch() {
+    if (watcher || typeof MutationObserver !== 'function') return;
+    watcher = new MutationObserver(function () {
+      var b = blocked();
+      if (overlay) {
+        if (b && !paused) { paused = true; overlay.style.display = 'none'; }
+        else if (!b && paused) { paused = false; overlay.style.display = ''; paint(); }
+      } else if (deferred && !b) { var w = deferred; deferred = null; run(w); }
+    });
+    watcher.observe(document.body, { childList: true, subtree: true });
+  }
+
   function run(which) {
     if (overlay || endShowing()) return; // đã có tour đang chạy (obs/dec/evt) thì không chồng lên nhau
+    if (blocked()) { deferred = which; watch(); return; } // có lớp phủ khác đang mở → chờ nó đóng rồi mới bắt đầu
     steps = which === 'obs' ? OBS_STEPS : which === 'evt' ? EVT_STEPS : DEC_STEPS;
     overlay = document.createElement('div');
     overlay.style.cssText = 'position:fixed; inset:0; z-index:90; background:transparent;';
     document.body.appendChild(overlay);
+    paused = false; watch();
     go(0);
   }
 
@@ -214,5 +236,7 @@
     else if (phase === 'evt') run('evt');
   }
 
-  window.BPTour = { autoObs: autoObs, autoDecide: autoDecide, autoEvt: autoEvt, replay: replay, close: stop };
+  // state(): cho kiểm thử – tour đang chạy/tạm ẩn/đang chờ lớp phủ khác đóng.
+  window.BPTour = { autoObs: autoObs, autoDecide: autoDecide, autoEvt: autoEvt, replay: replay, close: stop,
+    state: function () { return { running: !!overlay, paused: paused, deferred: deferred, step: idx }; } };
 })();
