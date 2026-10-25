@@ -274,7 +274,7 @@ test('Cân bằng 10/2026: tỷ trọng mặc định theo doanh nghiệp, tự 
   const open = D.channels.filter(c => E.eligible(D, s1, c)).map(c => c.id);
   near(open.reduce((x, k) => x + (seeded[k] || 0), 0), 100, 1e-9, 'tỷ trọng sau khi đưa sẵn');
   assert.deepStrictEqual(C.seedNewChannels(D, E, s1, s1, seeded), seeded, 'không có kênh mới thì giữ nguyên');
-  assert.strictEqual(D.roles.htx.benchMargin, 60);
+  assert.strictEqual(D.roles.htx.benchMargin, 80);
   const h0 = E.newGame(D, 'htx', 3), h1 = E.playSeason(D, h0, { priority: 'finance', linked: 1, induce: true, alloc: { DOM: 100 }, intel: [], option: 0 });
   const h2 = E.playSeason(D, h1, { priority: 'finance', linked: 1, induce: true, alloc: { DOM: 100 }, intel: [], option: 0 }).history[1];
   assert.strictEqual(h2.season, 'off');
