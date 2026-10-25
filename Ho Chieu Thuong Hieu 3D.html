@@ -474,6 +474,7 @@
 <!-- AIBIS: engine tất định chọn phương thức thâm nhập (dùng chung với app/aibis). Nạp trước mã game. -->
 <script src="js/aibis/entry-mode-models.js"></script>
 <script src="js/aibis/entry-mode-engine.js"></script>
+<script src="js/bp-core.js"></script>
 <script>
 (function () {
   var $ = function (id) { return document.getElementById(id); };
@@ -608,7 +609,6 @@
   // ước tính lợi nhuận đối thủ, để so sánh LỢI NHUẬN với LỢI NHUẬN (không
   // so lợi nhuận người chơi với DOANH THU đối thủ – luôn lớn hơn lợi nhuận,
   // khiến đội chơi có lãi thật vẫn bị báo "thua").
-  var RIVAL_MARGIN = 0.30;
   // Vận tải: lựa chọn/rủi ro RIÊNG, tách khỏi giá vốn cố định của MODES ở
   // trên – chọn 1 lần khi thâm nhập 1 thị trường, áp dụng mọi quý sau đó.
   // Đường biển rẻ hơn nhưng mỗi quý có rủi ro chậm hàng (mất nửa doanh thu
@@ -1728,10 +1728,10 @@
   // có đối thủ – rồi bị chia theo tỉ lệ độ mạnh tương đối giữa 2 bên. Vắng
   // đối thủ ở thị trường nào thì share = 100% về người chơi, công thức thị
   // trường đó giữ nguyên hành vi như trước khi có cơ chế này.
-  var RIVAL_ATTR_BASE = 0.67, RIVAL_RAMP = 0.15;
+  // Tham số sức mạnh đối thủ nằm ở js/bp-core.js (BPCore.RIVAL) – dùng chung hai bản.
   function rivalAttr(m) {
     var qn = S.rival.qin[m] || 0;
-    return RIVAL_ATTR_BASE * H[m].fit * H[m].trend[S.q] / H[m].comp * (1 + RIVAL_RAMP * qn);
+    return window.BPCore.RIVAL.attrBase * H[m].fit * H[m].trend[S.q] / H[m].comp * (1 + window.BPCore.RIVAL.ramp * qn);
   }
   // Đối thủ có mở thêm 1 thị trường mới trong quý này không – xác suất tăng
   // dần theo quý. Dùng rnd() CHÍNH (không phải rivalRnd()) vì từ nay đây là
@@ -1742,7 +1742,7 @@
     if (S.rival.block === S.q) return null; // đã trả tiền chặn đầu quý này – khỏi tung xác suất
     var target = S.rival.next;
     if (target == null || S.rival.in.indexOf(target) >= 0) return null; // đã vào market đó theo cách khác giữa chừng quý
-    if (rnd() < 0.22 + S.q * 0.05) {
+    if (rnd() < window.BPCore.rivalEnterProb(S.q)) {
       S.rival.in.push(target);
       return target;
     }
@@ -1861,7 +1861,7 @@
       if (S.entered[m] === null) qRivalRev += rivalAttr(m);
     });
     S.rival.rev += qRivalRev;
-    var qRivalProfit = qRivalRev * RIVAL_MARGIN;
+    var qRivalProfit = qRivalRev * window.BPCore.RIVAL.margin;
     S.rival.profit += qRivalProfit;
     if (S.sel.prio === 1) S.resil -= 3;
     var loanPaid = false;
@@ -1926,20 +1926,8 @@
       T('vốn ban đầu ', 'starting cash ') + f1(b.start) + TY() + ' + ' + T('lợi nhuận vận hành ', 'operating profit ') + pf + ' − ' + T('chi ngoài lợi nhuận ', 'spending outside profit ') + f1(b.spent) + TY() + ' = ' + T('tiền mặt ', 'cash ') + f1(b.cash) + TY() + '.<br>' +
       '<span class="opacity-60">' + T('Chi ngoài lợi nhuận gồm vốn thâm nhập, ưu tiên có phí, mua tin, vật phẩm, biến cố và lãi vay – không tính vào điểm Lợi nhuận, nên có thể lãi mà vẫn cạn vốn.', 'Spending outside profit covers entry capital, paid priorities, intel, items, events and loan interest – it is not part of the Profit score, so you can be profitable and still run out of cash.') + '</span></div>';
   }
-  function scores() {
-    var pS = clamp(S.profit / 6 * 100);
-    var aS = clamp(S.resil * 0.6 + S.adapt * 12);
-    var sS = clamp(30 + S.susts * 30);
-    // Hệ số bề rộng thị trường: ở yên 0-2 thị trường bị trừ tới 30% điểm tổng,
-    // mở rộng từ 4-5 thị trường trở lên được cộng tới 10% – khuyến khích đúng
-    // tinh thần "đưa thương hiệu ra thế giới" thay vì co cụm 1 thị trường an toàn.
-    var nMk = S.entered.filter(function (v) { return v !== null && v !== undefined; }).length;
-    var breadth = Math.min(1.1, 0.7 + 0.08 * nMk);
-    // Thua sớm (cạn vốn/sụp đổ) không được điểm cao hơn đi trọn 6 quý.
-    var finish = endReason ? 0.6 : 1;
-    return { p: pS, r: clamp(S.rep), c: clamp(S.capab), a: aS, s: sS,
-      total: Math.round((0.3 * pS + 0.2 * clamp(S.rep) + 0.2 * clamp(S.capab) + 0.15 * aS + 0.15 * sS) * breadth * finish) };
-  }
+  // Một công thức điểm cho cả bản thẻ và bản 3D – xem js/bp-core.js (5 chiều × hệ số bề rộng × hệ số thua sớm).
+  function scores() { return window.BPCore.scoreOf(S, endReason); }
   // reason: null (kết thúc bình thường) · 'cash' (cạn tiền 2 quý) · 'rep' (uy tín khủng hoảng).
   // lastEvOut giữ biến cố cuối cùng (đối tượng sự kiện, có t/tEn) – vẽ lại
   // song ngữ được khi đổi ngôn ngữ trên màn kết thúc.
