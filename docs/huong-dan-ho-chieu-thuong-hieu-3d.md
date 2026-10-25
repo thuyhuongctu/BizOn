@@ -19,6 +19,9 @@ Nhập mã lớp ở cổng vào thì mọi đội trong lớp gặp cùng hồ 
 ## Bền vững xây được, không chờ may rủi
 Điểm Bền vững (15 %) tăng bằng vật phẩm «🌱 Hồ sơ xanh & truy xuất» trong Cửa hàng (0,7 tỷ/lần, tối đa 3, hiệu lực ngay) hoặc phương án bao bì tái chế của biến cố tiêu dùng xanh. Lục Đảo mở hết tiềm năng và gói ưu đãi xanh cần hồ sơ từ 2.
 
+## Điểm số: hai hệ số và lợi nhuận vận hành
+Điểm tổng = (30 % Lợi nhuận + 20 % Uy tín + 20 % Năng lực + 15 % Thích ứng + 15 % Bền vững) × bề rộng thị trường (0,7 + 0,08 × số thị trường đã vào, trần 1,1) × 0,6 nếu thua sớm. Lợi nhuận là lợi nhuận vận hành; vốn thâm nhập, ưu tiên có phí, mua tin, vật phẩm và biến cố trừ vào tiền mặt, nên có thể lãi mà vẫn cạn vốn. Màn kết thúc có khung «Tiền đi đâu» và mỗi quý có chip «Chi ngoài LN».
+
 ## Nộp kết quả & bảng xếp hạng lớp (tuỳ chọn)
 1. Điền URL + anon key Supabase trong `js/backend-config.js`.
 2. Chạy `supabase/20260929000000_bp_leaderboard.sql` trong Supabase SQL Editor.
