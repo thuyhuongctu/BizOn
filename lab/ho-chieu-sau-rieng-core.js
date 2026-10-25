@@ -94,6 +94,7 @@
     const num = v => (vi ? String(v).replace('.', ',') : String(v)), pct = x => Math.round(x * 100) + '%', bn = v => num(v) + L(' tỷ', ' bn');
     const nm = o => L(o.vi, o.en), need = { area: L('mã vùng trồng', 'area code'), pack: L('mã đóng gói', 'packing code'), freezer: L('cấp đông', 'freezer'), test: L('kiểm nghiệm', 'testing') };
     const cuts = D.seasons.map(s => pct(s.borderCut || 0)).join(' → ');
+    const sN = k => { const s = D.seasons.find(x => x[k]); return s ? s.n : '?'; };
     const part = { profit: L('Lợi nhuận', 'Profit'), reputation: L('Uy tín', 'Reputation'), capability: L('Năng lực', 'Capability'), adaptation: L('Ứng phó biến cố', 'Shock response'), sustainability: L('Bền vững', 'Sustainability') };
     const why = {
       profit: L('100 điểm khi lãi lũy kế 6 vụ bằng mốc của doanh nghiệp (sản lượng chuẩn × 6 vụ × biên chuẩn); lãi 0 = 50 điểm; lỗ bằng mốc = 0.', '100 points when 6-season cumulative profit equals the firm\'s benchmark (standard volume × 6 seasons × standard margin); zero profit = 50; a loss equal to the benchmark = 0.'),
@@ -106,6 +107,8 @@
       { title: L('Vòng chơi', 'The round'), lines: [
         [L('6 vụ, 2022–2025', '6 seasons, 2022–2025'), L('xen kẽ chính vụ và nghịch vụ, mỗi vụ bám một mốc thật. Nghịch vụ giá vựa gấp ' + num(P.offMult) + ' lần nhưng sản lượng thấp hơn.', 'main and off seasons alternate, each anchored to a real milestone. Off-season depot prices are ' + num(P.offMult) + '× but volumes are lower.')],
         [L('Tiểu ngạch bị siết dần', 'Border trade tightens'), L('phần kênh bị cắt qua 6 vụ: ' + cuts + '. Không làm mã số thì về cuối hụt kênh.', 'share cut over the 6 seasons: ' + cuts + '. Without codes you run out of channels late in the game.')],
+        [L('Mốc có luật riêng', 'Milestones with their own rule'), L('vụ ' + sN('cadmium') + ' (cảnh báo cadimi): rủi ro lô chính ngạch bị chặn ×' + num(P.cadmiumRiskMult) + '; vụ ' + sN('thaiDry') + ' (Thái Lan nâng chuẩn độ khô): giá chính ngạch ×' + num(P.thaiDryPriceMult) + ' nếu chưa có kiểm nghiệm hay truy xuất; vụ ' + sN('frozenProtocol') + ' (nghị định thư đông lạnh): giá đông lạnh ×' + num(P.frozenProtoMult) + ' khi đủ hai mã. Sau 2 vụ chính ngạch sạch, rủi ro kiểm dịch ×' + num(P.cleanSamplingMult) + '.',
+          'season ' + sN('cadmium') + ' (cadmium alerts): block risk for official lots ×' + num(P.cadmiumRiskMult) + '; season ' + sN('thaiDry') + ' (Thai dry-matter standard): official price ×' + num(P.thaiDryPriceMult) + ' without testing or traceability; season ' + sN('frozenProtocol') + ' (frozen protocol): frozen price ×' + num(P.frozenProtoMult) + ' with both codes. After 2 clean official seasons, quarantine risk ×' + num(P.cleanSamplingMult) + '.')],
         [L('Nhịp một vụ', 'One season'), L('đọc biến cố → mua tin → họp đội theo vai → tối đa 2 lượt «Nếu – Thì» → phiếu quyết định → CEO chốt → kết quả và cờ.', 'read the event → buy information → role meeting → up to 2 what-ifs → decision sheet → CEO commits → results and flag.')]
       ] },
       { title: L('Năm quyết định, mỗi vai một việc', 'Five decisions, one per role'), lines: [

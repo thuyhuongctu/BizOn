@@ -128,7 +128,6 @@
       // Cục BVTV chỉ cảnh báo rủi ro, không báo giá (tránh nguồn tin «biết trước giá thật»)
       if (src.reveals === 'risk') return { id, price: null, risk: riskLevel(data, state, ev) };
       return { id, price: p * (1 + src.bias + src.noise * (2 * rnd() - 1)) };
-      return out;
     }).filter(Boolean);
   }
 
@@ -236,16 +235,16 @@
       let price = depot * ch.priceMult;
       if (ch.id === 'CN') {
         price *= 1 + (eff.priceCN || 0);
-        if (s.thaiDry && !(assets.test || assets.trace)) price *= 0.92;     // người mua đòi chuẩn cao hơn
+        if (s.thaiDry && !(assets.test || assets.trace)) price *= P.thaiDryPriceMult || 0.92;     // người mua đòi chuẩn cao hơn
       }
-      if (ch.id === 'FROZEN' && s.frozenProtocol && assets.area && assets.pack) price *= 1.15;
+      if (ch.id === 'FROZEN' && s.frozenProtocol && assets.area && assets.pack) price *= P.frozenProtoMult || 1.15;
       let revenue = bn(b.qty, price) * (1 - (ch.tariff || 0));
       let cost = bn(b.qty, ch.cost + (ch.freezeCost ? ch.freezeCost * depot : 0));
       let status = 'ok';
       if (b.qty > 0 && ch.id === 'CN') {
         let risk = (0.05 + 0.15 * traderShare) * (1 - 0.35 * assets.test) + (eff.risk || 0);
-        if (s.cadmium) risk *= 2.5;
-        const sampling = state.cleanCN >= 2 ? 0.6 : 1;                       // 2% → 1% (PROTO)
+        if (s.cadmium) risk *= P.cadmiumRiskMult || 2.5;
+        const sampling = state.cleanCN >= 2 ? (P.cleanSamplingMult || 0.6) : 1;   // 2% → 1% (PROTO)
         const pest = ((eff.pestRisk || 0) + 0.03) * sampling;
         if (X) {
           pBlockCN = 1 - (1 - clamp(risk, 0, 0.9)) * (1 - clamp(pest, 0, 0.9));

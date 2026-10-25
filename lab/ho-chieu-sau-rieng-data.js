@@ -109,6 +109,11 @@
     priorityCost: { area: 1.2, pack: 1.5, test: 0.6, trace: 0.8, freezer: 3.0, finance: 0 },
     fraudMult: 160 / 70,       // 160 so với 70 baht/kg (GMSARN)
     sampling: [0.02, 0.01],    // PROTO
+    // Bốn hệ số theo mốc (trước 10/2026 nằm cứng trong engine); seasons.cadmium / thaiDry / frozenProtocol đánh dấu vụ áp dụng
+    cadmiumRiskMult: 2.5,      // vụ cảnh báo cadimi: rủi ro lô chính ngạch bị chặn ×2,5 (neo KQTC: 30 lô của 18 DN; mức nhân minh họa)
+    thaiDryPriceMult: 0.92,    // vụ Thái Lan nâng chuẩn độ khô: giá chính ngạch ×0,92 nếu chưa có kiểm nghiệm hay truy xuất (neo BC1223; mức giảm minh họa)
+    frozenProtoMult: 1.15,     // vụ ký nghị định thư đông lạnh: giá đông lạnh ×1,15 khi đủ mã vùng trồng + mã đóng gói (neo FROZENPROTO; mức tăng minh họa)
+    cleanSamplingMult: 0.6,    // sau 2 vụ chính ngạch sạch, rủi ro sinh vật gây hại khi kiểm dịch ×0,6 (neo PROTO: lấy mẫu 2% → 1%)
     // Tỷ trọng kênh mặc định khi vào ván (doanh nghiệp không khai báo defaultAlloc riêng thì dùng mức này)
     defaultAlloc: { BORDER: 50, DOM: 40, TW: 10 },
     // Kênh vừa mở (đủ mã / cấp đông / kiểm nghiệm) và đang 0%: vụ sau tự đưa sẵn ngần này % vào kênh đó, các kênh khác giảm theo tỷ lệ
@@ -116,12 +121,14 @@
   };
 
   // ---------- Vai chơi ----------
+  // benchMargin: biên lãi chuẩn (nghìn đ/kg) để tính mốc 100 điểm lợi nhuận = volume × 6 vụ × benchMargin.
+  // HTX 80 (cân bằng 10/2026, trước 60: với mốc 90 tỷ mọi lối chơi của HTX đều đạt 90–99 điểm lợi nhuận, không phân biệt được).
   const roles = {
     htx: { emoji: '🌳', vi: 'HTX nhà vườn Cai Lậy', en: 'Cai Lậy growers\' cooperative',
       descVi: 'Tự trồng trên vườn của xã viên, giá thành thấp, có thể xử lý ra hoa nghịch vụ. Chưa có cơ sở đóng gói.',
       descEn: 'Grows its own fruit at low cost and can induce off-season flowering. No packing facility yet.',
       scaleVi: 'Tiểu nông / HTX', scaleEn: 'Smallholder / co-op',
-      volume: 250, benchMargin: 60, ownFarm: true, areaCode: false, packCode: false, freezer: false, cashAdj: -2 },
+      volume: 250, benchMargin: 80, ownFarm: true, areaCode: false, packCode: false, freezer: false, cashAdj: -2 },
     packer: { emoji: '📦', vi: 'Cơ sở đóng gói Đắk Lắk', en: 'Đắk Lắk packing house',
       descVi: 'Đã có mã cơ sở đóng gói; mua trái từ nhà vườn Tây Nguyên, dễ bị «bẻ kèo» khi giá lên.',
       descEn: 'Already holds a packing-facility code; buys from Central Highlands growers who may break deals when prices rise.',
@@ -152,7 +159,7 @@
   // ---------- Kênh bán ----------
   // priceMult: giá bán so với giá vựa trong vụ. Neo: DN xuất khẩu Cai Lậy mua 26.333, bán 47.333 đ/kg (×1,8; CAILAY);
   // bán lẻ 82.200 so với vựa 71.100 đ/kg (×1,16; PDIEN); đông lạnh/tươi ×2,47 và chi phí cấp đông ≈ 0,5 giá tươi (JETRO).
-  // Các hệ số còn lại là minh họa. · cost: chi phí logistics/kiểm dịch, nghìn đ/kg · cap: tấn/vụ (null = không giới hạn)
+  // Các hệ số còn lại là minh họa; tiểu ngạch ×1,5 (cân bằng 10/2026, trước ×1,35: với hao hụt 18% kênh mặc định của vai mua hàng lỗ ngay vụ 1). · cost: chi phí logistics/kiểm dịch, nghìn đ/kg · cap: tấn/vụ (null = không giới hạn)
   // pipeline: các khâu ngoại thương nối tiếp từ thông quan đến khi sản phẩm hiện diện tại host country (chỉ mô tả, không ảnh hưởng công thức);
   // CN chính ngạch có thêm khâu 'contract' mở đầu (hồ sơ – hợp đồng) theo quy trình 8 bước xuất khẩu chính ngạch.
   const channels = [
@@ -165,7 +172,7 @@
         { id: 'distribute', vi: 'Vào chợ đầu mối biên giới rồi hệ thống bán sỉ nội địa Trung Quốc.', en: 'Into border wholesale markets, then China\'s domestic wholesale network.', src: 'china92' },
         { id: 'retail', vi: 'Lên sạp trái cây và sàn thương mại điện tử ở các đô thị lớn.', en: 'Reaches fruit stalls and e-commerce platforms in major cities.', src: 'share57' }
       ] },
-    { id: 'BORDER', emoji: '🛻', vi: 'Trung Quốc tiểu ngạch', en: 'China border trade', priceMult: 1.35, cost: 5, cap: 260, needs: [], src: 'CAILAY',
+    { id: 'BORDER', emoji: '🛻', vi: 'Trung Quốc tiểu ngạch', en: 'China border trade', priceMult: 1.5, cost: 5, cap: 260, needs: [], src: 'CAILAY',
       entryMode: 'indirect',
       pipeline: [
         { id: 'customs', vi: 'Qua lối mở biên giới, thủ tục đơn giản hơn nhưng dễ bị siết bất ngờ.', en: 'Through informal border crossings – simpler paperwork but prone to sudden tightening.', src: 'border2018' },

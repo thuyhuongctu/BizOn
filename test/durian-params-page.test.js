@@ -26,6 +26,8 @@ const expect = {
   'channels.TW.tariff': D.channels.find(c => c.id === 'TW').tariff,
   'seasons.borderCut': D.seasons.map(s => s.borderCut || 0), 'seasons.demand': D.seasons.map(s => s.demand),
   scoreWeights: D.scoreWeights,
+  cadmiumRiskMult: D.params.cadmiumRiskMult, thaiDryPriceMult: D.params.thaiDryPriceMult, frozenProtoMult: D.params.frozenProtoMult, cleanSamplingMult: D.params.cleanSamplingMult,
+  'roles.benchMargin': Object.fromEntries(Object.keys(D.roles).map(k => [k, D.roles[k].benchMargin])),
   capability: (() => { const c = a => E.capability(Object.assign({ test: 0 }, a)), b0 = c({}); return { base: b0, area: c({ area: 1 }) - b0, pack: c({ pack: 1 }) - b0, testPerLevel: c({ test: 1 }) - b0, trace: c({ trace: 1 }) - b0, freezer: c({ freezer: 1 }) - b0 }; })()
 };
 for (const [k, v] of Object.entries(expect)) {
@@ -34,10 +36,16 @@ for (const [k, v] of Object.entries(expect)) {
 }
 assert.equal(Object.keys(rows).length, Object.keys(expect).length, 'không có dòng thừa ngoài danh sách kiểm');
 // Nguồn dẫn: mọi mã trong cột nguồn đều có trong danh mục dưới bảng và trong D.sources
-for (const code of ['PROTO', 'KQTC', 'CAILAY', 'PDIEN', 'BC0224', 'BC1223', 'JETRO', 'TW', 'GMSARN', 'MYSOP', 'GS1']) {
+for (const code of ['PROTO', 'KQTC', 'CAILAY', 'PDIEN', 'BC0224', 'BC1223', 'JETRO', 'TW', 'GMSARN', 'MYSOP', 'GS1', 'FROZENPROTO']) {
   assert.ok(D.sources[code], 'D.sources thiếu ' + code);
   assert.ok(sec.includes('<li><b>' + code + '</b>'), 'danh mục dưới bảng thiếu ' + code);
 }
+// Bốn hệ số theo mốc không còn nằm cứng trong engine: engine đọc từ params
+for (const k of ['cadmiumRiskMult', 'thaiDryPriceMult', 'frozenProtoMult', 'cleanSamplingMult']) {
+  assert.equal(typeof D.params[k], 'number', 'params.' + k);
+  assert.ok(read('lab/ho-chieu-sau-rieng-engine.js').includes('P.' + k), 'engine đọc P.' + k);
+}
+assert.ok(!/price \*= 0\.92;|price \*= 1\.15;|risk \*= 2\.5;|\? 0\.6 : 1;/.test(read('lab/ho-chieu-sau-rieng-engine.js')), 'không còn hệ số theo mốc viết cứng trong engine');
 // Hai luật trong mã engine được nêu đúng số
 assert.match(read('lab/ho-chieu-sau-rieng-engine.js'), /Math\.min\(debt, lim\) \* 0\.08 \+ Math\.max\(0, debt - lim\) \* 0\.15/, 'lãi 8 %/15 % trong engine');
 assert.match(read('lab/ho-chieu-sau-rieng-engine.js'), /fraudExposed = rnd\(\) < 0\.5/, 'xác suất 50 % bị phát hiện');
