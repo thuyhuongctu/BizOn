@@ -127,7 +127,8 @@
       ] },
       { title: L('Đối thủ và cờ', 'Rivals and flags'), lines: [
         [L('3 doanh nghiệp AI', '3 AI firms'), L('rút theo mã lớp từ 7 CEO Go Global; chơi cùng doanh nghiệp, cùng 6 vụ, cùng engine, theo kịch bản cố định. Họ không phản ứng với đội: là mốc để so sánh, không giành thị phần.', 'drawn by class code from the 7 Go Global CEOs; same firm, same 6 seasons, same engine, fixed scripts. They do not react to you: a benchmark, not a fight for market share.')],
-        [L('Cờ mỗi vụ', 'Flag each season'), L('đội cắm cờ khi lợi nhuận vụ đó bằng hoặc hơn đối thủ cao nhất.', 'you plant a flag when that season\'s profit matches or beats the best rival.')]
+        [L('Cờ mỗi vụ', 'Flag each season'), L('đội cắm cờ 🟩 khi lợi nhuận vụ đó bằng hoặc hơn đối thủ cao nhất.', 'you plant a 🟩 flag when that season\'s profit matches or beats the best rival.')],
+        [L('Cờ lũy kế', 'Cumulative flag'), L('🏁 khi lãi cộng dồn từ vụ 1 tới vụ đó bằng hoặc hơn đối thủ cao nhất. Cờ vụ nói ai thắng vụ này; cờ lũy kế nói ai đang dẫn cả chặng.', '🏁 when profit accumulated from season 1 to that season matches or beats the best rival. The season flag says who won this season; the cumulative flag says who leads the whole run.')]
       ] },
       { title: L('Điểm tổng 0–100', 'Total score 0–100'), lines: Object.keys(W).map(k => [W[k] + '% ' + part[k], why[k]]).concat([
         [L('Huy hiệu', 'Badges'), L('chính ngạch sạch (không lô nào bị chặn), đa dạng (từ 4 kênh), chống chịu (không vụ nào lỗ); huy hiệu xấu nếu dính giả xuất xứ hay vườn kiệt sức.', 'clean official trade (no blocked lot), diversified (4+ channels), resilient (no losing season); bad badges for fake origin or an exhausted orchard.')]
@@ -154,6 +155,19 @@
       'The three rivals play the same firm, the same 6 seasons and the same engine as your team, following the fixed scripts above. They do not react to your decisions and do not take market share from you: they are a benchmark. You plant a flag in any season where your profit matches or beats the best rival.');
   }
 
+
+  // Cờ lũy kế sau vụ n: lãi cộng dồn của đội từ vụ 1 tới n so với từng đối thủ (cùng cách tính flagFor nhưng theo lũy kế).
+  // rivals: [{ id, state }] từ E.rivalsRun · history: lịch sử engine của đội · n: vụ (1-based).
+  // Trả về { n, win, rank, of, team, best, bestId }: win khi lãi lũy kế của đội ≥ đối thủ cao nhất; rank 1 = dẫn đầu.
+  function cumFlag(rivals, history, n) {
+    const sum = h => h.slice(0, n).reduce((x, r) => x + (+r.profit || 0), 0);
+    const team = sum(history || []);
+    const rv = (rivals || []).map(r => ({ id: r.id, p: sum((r.state && r.state.history) || []) }));
+    const best = rv.reduce((b, r) => (!b || r.p > b.p ? r : b), null);
+    const rank = 1 + rv.filter(r => r.p > team).length;
+    return { n, win: !best || team >= best.p, rank, of: rv.length + 1, team, best: best ? best.p : null, bestId: best ? best.id : null };
+  }
+
   window.DurianCore = {
     SHEET_CEO_MIN: SHEET_CEO_MIN,
     freshDec: freshDec,
@@ -167,6 +181,7 @@
     howToPlay: howToPlay,
     rivalCard: rivalCard,
     rivalNote: rivalNote,
+    cumFlag: cumFlag,
     commitSeason: commitSeason
   };
 })();
