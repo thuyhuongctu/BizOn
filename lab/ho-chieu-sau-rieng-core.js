@@ -86,6 +86,55 @@
     APP.dec = next;
   }
 
+
+  // «Cách chơi 6 vụ»: luật chơi rút thẳng từ dữ liệu và tham số (không chép tay số), dùng chung cho bản thẻ và bản 3D.
+  // L(vi, en) → chuỗi theo ngôn ngữ trang. Trả về [{ title, lines: [[nhãn, giải thích], …] }].
+  function howToPlay(D, L) {
+    const P = D.params, W = D.scoreWeights, vi = L('x', 'y') === 'x';
+    const num = v => (vi ? String(v).replace('.', ',') : String(v)), pct = x => Math.round(x * 100) + '%', bn = v => num(v) + L(' tỷ', ' bn');
+    const nm = o => L(o.vi, o.en), need = { area: L('mã vùng trồng', 'area code'), pack: L('mã đóng gói', 'packing code'), freezer: L('cấp đông', 'freezer'), test: L('kiểm nghiệm', 'testing') };
+    const cuts = D.seasons.map(s => pct(s.borderCut || 0)).join(' → ');
+    const part = { profit: L('Lợi nhuận', 'Profit'), reputation: L('Uy tín', 'Reputation'), capability: L('Năng lực', 'Capability'), adaptation: L('Thích ứng', 'Adaptation'), sustainability: L('Bền vững', 'Sustainability') };
+    const why = {
+      profit: L('100 điểm khi lãi lũy kế 6 vụ bằng mốc của doanh nghiệp (sản lượng chuẩn × 6 vụ × biên chuẩn); lãi 0 = 50 điểm; lỗ bằng mốc = 0.', '100 points when 6-season cumulative profit equals the firm\'s benchmark (standard volume × 6 seasons × standard margin); zero profit = 50; a loss equal to the benchmark = 0.'),
+      reputation: L('tăng khi tuân thủ, giảm khi lô bị chặn, bị phát hiện giả xuất xứ hay vượt hạn mức vay.', 'rises with compliance; falls when a lot is blocked, fake origin is exposed or the credit limit is exceeded.'),
+      capability: L('nền 10; mã vùng trồng +20, mã đóng gói +20, mỗi cấp kiểm nghiệm +10, truy xuất +15, cấp đông +15.', 'base 10; area code +20, packing code +20, each testing level +10, traceability +15, freezer +15.'),
+      adaptation: L('tăng khi chọn phương án biến cố có tính thích ứng (trữ nước, hợp đồng bao tiêu, kiểm nghiệm từng lô…).', 'rises when you pick adaptive event responses (water storage, forward contracts, lot-by-lot testing…).'),
+      sustainability: L('tăng/giảm theo phương án biến cố; hợp tác xã tính thêm 40% sức khỏe vườn (xử lý nghịch vụ liên tục làm vườn kiệt).', 'moves with event responses; for the cooperative 40% comes from orchard health (repeated off-season inducing exhausts trees).')
+    };
+    return [
+      { title: L('Vòng chơi', 'The round'), lines: [
+        [L('6 vụ, 2022–2025', '6 seasons, 2022–2025'), L('xen kẽ chính vụ và nghịch vụ, mỗi vụ bám một mốc thật. Nghịch vụ giá vựa gấp ' + num(P.offMult) + ' lần nhưng sản lượng thấp hơn.', 'main and off seasons alternate, each anchored to a real milestone. Off-season depot prices are ' + num(P.offMult) + '× but volumes are lower.')],
+        [L('Tiểu ngạch bị siết dần', 'Border trade tightens'), L('phần kênh bị cắt qua 6 vụ: ' + cuts + '. Không làm mã số thì về cuối hụt kênh.', 'share cut over the 6 seasons: ' + cuts + '. Without codes you run out of channels late in the game.')],
+        [L('Nhịp một vụ', 'One season'), L('đọc biến cố → mua tin → họp đội theo vai → tối đa 2 lượt «Nếu – Thì» → phiếu quyết định → CEO chốt → kết quả và cờ.', 'read the event → buy information → role meeting → up to 2 what-ifs → decision sheet → CEO commits → results and flag.')]
+      ] },
+      { title: L('Năm quyết định, mỗi vai một việc', 'Five decisions, one per role'), lines: [
+        ['SEC', L('chọn cách ứng phó biến cố đầu vụ; mỗi phương án đổi tiền, sản lượng, uy tín, bền vững.', 'picks the response to the season\'s event; each option trades cash, volume, reputation and sustainability.')],
+        ['CMO', L('mua tối đa 2 nguồn tin (' + D.intel.map(nm).join(', ') + '). Tin quyết định dự báo giá vựa; có nguồn thổi giá, có nguồn ép giá.', 'buys up to 2 information sources (' + D.intel.map(nm).join(', ') + '). They drive the price forecast; some talk prices up, some down.')],
+        ['COO', L('tỷ lệ mua từ vùng liên kết có mã (đắt hơn ' + pct(P.linkedPremium) + ', cần cho chính ngạch). Hợp tác xã còn chọn xử lý ra hoa nghịch vụ, mỗi lần hao ' + P.treeHealthCost + ' điểm sức khỏe vườn.', 'share bought from linked coded areas (' + pct(P.linkedPremium) + ' dearer, needed for official trade). The cooperative can also induce off-season flowering, costing ' + P.treeHealthCost + ' orchard-health points each time.')],
+        ['CFO', L('một ưu tiên đầu tư mỗi vụ (bảng «Đầu tư gì, mở kênh gì»).', 'one investment priority per season (see «What unlocks what»).')],
+        ['CEO', L('chia sản lượng cho các kênh đang mở rồi chốt vụ; phiếu quyết định phải có mục tiêu và lý do.', 'splits output across open channels and commits; the decision sheet needs a goal and a reason.')]
+      ] },
+      { title: L('Đầu tư gì, mở kênh gì', 'What unlocks what'), lines: D.priorities.map(p => [nm(p) + (P.priorityCost[p.id] ? ' · ' + bn(P.priorityCost[p.id]) : ' · ' + L('0 đồng', 'free')), L(p.effVi, p.effEn)]) },
+      { title: L('Sáu kênh bán', 'Six channels'), lines: D.channels.map(c => [c.emoji + ' ' + nm(c),
+        L('giá ×' + num(c.priceMult) + (c.cap ? ', trần ' + c.cap + ' tấn' : '') + (c.tariff ? ', thuế ' + pct(c.tariff) : '') + (c.needs.length ? '; cần ' + c.needs.map(k => need[k]).join(' + ') : '; không cần điều kiện') + (c.id === 'BORDER' ? '; bị siết dần' : '') + '.',
+          'price ×' + num(c.priceMult) + (c.cap ? ', cap ' + c.cap + ' t' : '') + (c.tariff ? ', tariff ' + pct(c.tariff) : '') + (c.needs.length ? '; needs ' + c.needs.map(k => need[k]).join(' + ') : '; no requirement') + (c.id === 'BORDER' ? '; tightening' : '') + '.')]) },
+      { title: L('Tiền, vay và hao hụt', 'Cash, credit and losses'), lines: [
+        [L('Tiền ban đầu', 'Starting cash'), L(bn(P.cash0) + ', cộng trừ theo doanh nghiệp.', bn(P.cash0) + ', adjusted by firm.')],
+        [L('Hạn mức vay', 'Credit limit'), L(bn(P.creditLimit) + ': trong hạn mức lãi 8%/vụ, phần vượt lãi 15% và trừ 3 uy tín. «Củng cố tài chính» giảm nửa lãi vụ đó.', bn(P.creditLimit) + ': 8% per season within the limit, 15% above it plus −3 reputation. «Strengthen finances» halves that season\'s interest.')],
+        [L('Hao hụt', 'Losses'), L('cơ bản ' + pct(P.baseLoss) + '; truy xuất nguồn gốc giảm ' + Math.round(P.traceLossCut * 100) + ' điểm %.', 'base ' + pct(P.baseLoss) + '; traceability cuts ' + Math.round(P.traceLossCut * 100) + ' points.')],
+        [L('Hàng bị chặn hoặc rớt', 'Blocked or rejected lots'), L('quay về bán nội địa với ' + pct(P.rejectedDiscount) + ' giá.', 'go back to the domestic market at ' + pct(P.rejectedDiscount) + ' of the price.')]
+      ] },
+      { title: L('Đối thủ và cờ', 'Rivals and flags'), lines: [
+        [L('3 doanh nghiệp AI', '3 AI firms'), L('rút theo mã lớp từ 7 CEO Go Global; chơi cùng doanh nghiệp, cùng 6 vụ, cùng engine, theo kịch bản cố định. Họ không phản ứng với đội: là mốc để so sánh, không giành thị phần.', 'drawn by class code from the 7 Go Global CEOs; same firm, same 6 seasons, same engine, fixed scripts. They do not react to you: a benchmark, not a fight for market share.')],
+        [L('Cờ mỗi vụ', 'Flag each season'), L('đội cắm cờ khi lợi nhuận vụ đó bằng hoặc hơn đối thủ cao nhất.', 'you plant a flag when that season\'s profit matches or beats the best rival.')]
+      ] },
+      { title: L('Điểm tổng 0–100', 'Total score 0–100'), lines: Object.keys(W).map(k => [W[k] + '% ' + part[k], why[k]]).concat([
+        [L('Huy hiệu', 'Badges'), L('chính ngạch sạch (không lô nào bị chặn), đa dạng (từ 4 kênh), chống chịu (không vụ nào lỗ); huy hiệu xấu nếu dính giả xuất xứ hay vườn kiệt sức.', 'clean official trade (no blocked lot), diversified (4+ channels), resilient (no losing season); bad badges for fake origin or an exhausted orchard.')]
+      ]) }
+    ];
+  }
+
   window.DurianCore = {
     SHEET_CEO_MIN: SHEET_CEO_MIN,
     freshDec: freshDec,
@@ -96,6 +145,7 @@
     logEv: logEv,
     sheetComplete: sheetComplete,
     goals: goals,
+    howToPlay: howToPlay,
     commitSeason: commitSeason
   };
 })();
