@@ -1,0 +1,33 @@
+/* Bến Phù Sa · bản gọn (ben-phu-sa-v2.html). Dùng chung css/bn2.css + css/bp2.css; đây chỉ là phần riêng. */
+.bps2-menu{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+@media(max-width:520px){.bps2-menu{grid-template-columns:1fr}}
+.bps2-menu .bp2-opt{text-align:center}
+.bps2-menu .ic{display:block;font-size:34px;line-height:1.1;margin-bottom:4px}
+.bps2-locs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+@media(max-width:620px){.bps2-locs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.bps2-locs .bp2-opt{position:relative;padding-right:34px}
+.bps2-locs .ic{font-size:22px;margin-right:4px}
+.bps2-locs .tag{position:absolute;right:8px;top:8px;font:800 11px var(--clay-head);color:var(--clay-teal);background:#fff;border-radius:999px;padding:3px 7px}
+.bps2-locs .tag.known{background:var(--clay-mint-soft)}
+.bps2-methods{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+@media(max-width:620px){.bps2-methods{grid-template-columns:1fr}}
+.bps2-methods .ic{font-size:26px;margin-right:6px;vertical-align:-3px}
+.bps2-news{display:grid;gap:6px}
+.bps2-news li{list-style:none;background:#fff;border-radius:12px;padding:8px 10px;font-size:13.5px;line-height:1.5}
+.bps2-news li b:first-child{display:none}
+.bps2-rank{display:grid;gap:6px;margin-top:8px}
+.bps2-rank .row{display:grid;grid-template-columns:36px 1fr auto;gap:8px;align-items:center;font-size:13px;background:#fff;border-radius:12px;padding:6px 10px}
+.bps2-rank .row.me{background:var(--clay-amber-soft);font-weight:800}
+.bps2-rank img{width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:top;background:var(--clay-tray)}
+.bps2-cap{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.bps2-cap button{border:0;border-radius:16px;padding:8px 4px;background:var(--clay-tray);font:800 12px var(--clay-head);color:var(--clay-ink)}
+.bps2-cap button img{width:100%;aspect-ratio:1;object-fit:cover;object-position:top;border-radius:12px;display:block;margin-bottom:4px;background:#fff}
+.bps2-cap button.on{background:var(--clay-c2);box-shadow:0 0 0 3px var(--clay-orange)}
+.bps2-result .sale{font:800 22px var(--clay-head);color:var(--clay-teal)}
+.bps2-result .sale.neg{color:#B3261E}
+.bps2-ritual{text-align:center}
+.bps2-ritual .big{font-size:52px}
+.bps2-dots{display:flex;gap:6px}
+.bps2-dots span{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:800 13px var(--clay-head);background:var(--clay-tray);color:var(--clay-sub)}
+.bps2-dots span.done{background:var(--clay-orange);color:#fff}
+.bps2-dots span.cur{background:var(--clay-teal);color:#fff;box-shadow:0 0 0 4px var(--clay-c5)}
