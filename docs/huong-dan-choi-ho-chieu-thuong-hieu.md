@@ -32,7 +32,7 @@ Không có lựa chọn "mạnh nhất" — mỗi doanh nghiệp một hành tr�
 | 🌐 Hải Lam | Thị trường số phát triển — vào nhanh, cạnh tranh online rất cao |
 | 🏔️ Bắc Phong | Tiêu chuẩn nghiêm ngặt — giá và uy tín cao, chi phí tuân thủ lớn, **cần chứng nhận** mới mở hết tiềm năng |
 | 🌅 Kim Sa | Khách trẻ — tăng trưởng nhanh, xu hướng đổi liên tục |
-| 🏝️ Lục Đảo | Ưu tiên môi trường — cần hồ sơ bền vững + truy xuất nguồn gốc |
+| 🏝️ Lục Đảo | Ưu tiên môi trường — cần hồ sơ bền vững + truy xuất nguồn gốc (mua «Hồ sơ xanh & truy xuất» trong Cửa hàng vật phẩm, 0,7 tỷ/lần, hoặc biến cố tiêu dùng xanh; cần từ 2 lần) |
 | 🌸 Nhật Quang | Lòng tin xây chậm — đối tác trung thành, doanh thu tăng dần theo số quý gắn bó |
 | ⚓ Tân Cảng | Trung tâm khu vực — cửa ngõ nhiều thị trường, chi phí vận hành cao nhưng quy mô lớn |
 | 🌋 Hỏa Sơn | Dân số trẻ, số hóa nhanh, thị trường phân mảnh theo vùng đảo, **cần Đối tác địa phương** mới phủ được hết |
