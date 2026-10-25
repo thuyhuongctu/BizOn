@@ -321,6 +321,7 @@
     <h3 class="font-display font-extrabold text-deep-teal text-sm mt-5 mb-2" data-en="📜 Rules of play">📜 Luật chơi</h3>
     <ul id="bp-rules-list" class="space-y-1.5 text-[12.5px]">
       <li data-en-html="🌫️ <b>Market fog</b>: each market's true profile is hidden – buy intel from 6 sources with different cost, accuracy and <b>bias</b>, then judge reliability yourself.">🌫️ <b>Sương mù thị trường</b>: hồ sơ thật của mỗi thị trường bị ẩn – mua thông tin từ 6 nguồn có chi phí, độ chính xác và <b>thiên lệch</b> khác nhau, rồi tự đánh giá độ tin cậy.</li>
+      <li data-en-html="🔐 <b>Class code = seed</b>: enter your class code at the entrance and every team in the class gets the same hidden market profiles and the same event sequence – fair to compare, and the instructor can replay any game from the seed shown on the end screen and in the CSV.">🔐 <b>Mã lớp = hạt giống</b>: nhập mã lớp ở cổng vào thì mọi đội trong lớp gặp cùng hồ sơ thị trường ẩn và cùng chuỗi biến cố – so sánh công bằng, và giảng viên dựng lại được ván từ hạt giống ghi ở màn kết thúc và trong CSV.</li>
       <li data-en-html="🚪 <b>6 entry modes</b>: digital platform (low commitment) · direct export (balanced) · strategic alliance (borrow the network, partner-dependent) · licensing (lowest capital) · joint venture (shared equity, fast learning) · wholly owned FDI (maximum control, needs capability ≥ 55).">🚪 <b>6 phương thức thâm nhập</b>: nền tảng số (cam kết thấp) · xuất khẩu trực tiếp (cân bằng) · liên minh chiến lược (mượn mạng lưới, phụ thuộc đối tác) · cấp phép (vốn thấp nhất) · liên doanh (chia vốn, học nhanh) · đầu tư 100% vốn FDI (kiểm soát tối đa, cần năng lực ≥ 55).</li>
       <li data-en-html="🧭 Each quarter: read signals → set a priority → decide entry &amp; operating level → handle an event → take a lesson.">🧭 Mỗi quý: đọc tín hiệu → chọn ưu tiên → quyết định thâm nhập &amp; mức vận hành → xử lý sự kiện → nhận bài học.</li>
       <li data-en-html="👣 <b>Decision footprint</b>: constant discounting, ignored complaints, broken commitments… all leave consequences in later quarters.">👣 <b>Dấu chân quyết định</b>: giảm giá liên tục, bỏ qua khiếu nại, phá cam kết… đều để lại hệ quả ở các quý sau.</li>
@@ -551,6 +552,18 @@
   // thị trường vốn đã seed theo rnd() (ảnh hưởng tới tính lặp lại của ?seed=…).
   var rivalSeed = (seed + 7919) % 233280;
   function rivalRnd() { rivalSeed = (rivalSeed * 9301 + 49297) % 233280; return rivalSeed / 233280; }
+  // Hạt giống theo MÃ LỚP (cùng cách với Hộ Chiếu Sầu Riêng): có mã lớp ở cổng vào thì mọi đội trong lớp
+  // gặp cùng hồ sơ thị trường và cùng chuỗi biến cố – so sánh giữa các đội mới công bằng, và giảng viên dựng
+  // lại được ván từ hạt giống ghi trong CSV/kết quả nộp. ?seed= trên URL vẫn được ưu tiên (bộ kiểm thử, video).
+  // Không có mã lớp: ngẫu nhiên như trước. seedBase là hạt giống gốc (seed bị cuộn dần khi rnd() chạy).
+  var seedBase = seed, seedSource = seedParam ? 'url' : 'random', seedClass = '';
+  function seedFromText(text) { var h = 2166136261; for (var i = 0; i < text.length; i++) { h ^= text.charCodeAt(i); h = Math.imul(h, 16777619); } return (h >>> 0) % 1000000000; }
+  function classCodeNow() { try { return (localStorage.getItem('bp-class') || '').trim().toUpperCase(); } catch (e) { return ''; } }
+  function seedLine() {
+    return seedSource === 'class' ? T('🔐 Mã lớp <b>' + seedClass + '</b>: cả lớp chơi cùng hồ sơ thị trường và chuỗi biến cố (hạt giống ' + seedBase + ').', '🔐 Class code <b>' + seedClass + '</b>: the whole class plays the same market profiles and event sequence (seed ' + seedBase + ').')
+      : seedSource === 'url' ? T('🔗 Hạt giống ' + seedBase + ' lấy từ địa chỉ trang (?seed=).', '🔗 Seed ' + seedBase + ' taken from the page address (?seed=).')
+      : T('🎲 Chưa có mã lớp: kịch bản ngẫu nhiên (hạt giống ' + seedBase + '). Nhập mã lớp ở cổng vào để cả lớp cùng một kịch bản.', '🎲 No class code: random scenario (seed ' + seedBase + '). Enter a class code at the entrance so the whole class shares one scenario.');
+  }
 
   var MKTS = [
     { id: 0, key: 'hl', icon: '🌐', name: 'Hải Lam', trait: 'thị trường số – cạnh tranh online cao', traitEn: 'digital market – high online competition', img: 'assets/illustrations/game/mkt-hai-lam.webp' },
@@ -650,14 +663,18 @@
   var RIVAL = { name: 'Kim Long Exports', icon: '🐉', img: 'assets/character/firms/kim-long-rival-cut.webp' };
 
   // Hồ sơ ẩn của thị trường – sinh từ seed, mỗi ván mỗi khác
-  var H = MKTS.map(function () {
-    return { fit: 0.7 + rnd() * 0.7, comp: 0.85 + rnd() * 0.3, trend: [] };
-  });
+  var H = MKTS.map(function () { return { fit: 1, comp: 1, trend: [] }; });
   // Biên độ dao động theo tính cách thị trường: Nhật Quang êm, Kim Sa dữ dội
   var VARS = [0.3, 0.2, 0.6, 0.25, 0.12, 0.3, 0.35];
-  for (var q0 = 0; q0 < 6; q0++) for (var m0 = 0; m0 < MKTS.length; m0++) {
-    H[m0].trend.push(1 - VARS[m0] / 2 + rnd() * VARS[m0] + (m0 === 2 ? -0.05 : 0));
+  // Sinh hồ sơ ẩn của 7 thị trường từ hạt giống hiện tại (thứ tự rút rnd() giữ nguyên như trước: fit, comp từng
+  // thị trường rồi xu hướng 6 quý) – gọi lúc nạp trang và gọi lại ở bpStart() khi đổi sang hạt giống theo mã lớp.
+  function rollWorld() {
+    MKTS.forEach(function (_, m) { H[m].fit = 0.7 + rnd() * 0.7; H[m].comp = 0.85 + rnd() * 0.3; H[m].trend = []; });
+    for (var q0 = 0; q0 < 6; q0++) for (var m0 = 0; m0 < MKTS.length; m0++) {
+      H[m0].trend.push(1 - VARS[m0] / 2 + rnd() * VARS[m0] + (m0 === 2 ? -0.05 : 0));
+    }
   }
+  rollWorld();
 
   var S = {
     q: 0, firm: 0, cash: 8, rep: 50, capab: 40, resil: 50,
@@ -1979,6 +1996,7 @@
     $('bp-footprint').innerHTML = S.foot.length ?
       '<p class="font-extrabold text-[11px] uppercase tracking-wide opacity-55 mb-1">👣 ' + T('Dấu chân quyết định của bạn', 'Your decision footprint') + '</p>' +
       S.foot.map(function (t) { return '<p>• ' + t + '</p>'; }).join('') : '';
+    $('bp-footprint').innerHTML += '<p class="text-[11px] opacity-60 mt-2" id="bp-seed-line">' + seedLine() + '</p>';
     window.__bpFinal = { sc: sc, fail: endReason !== null, title: $('bp-title').textContent };
     var elClass = $('bp-class'); if (elClass) elClass.placeholder = T('Mã lớp (VD: QTKD-2026-A)', 'Class code (e.g. QTKD-2026-A)');
     var elName = $('bp-name'); if (elName) elName.placeholder = T('Tên hoặc biệt danh (hiện trên bảng lớp)', 'Name or nickname (shown on the class board)');
@@ -2131,8 +2149,8 @@
     var won = (S.duelHist || []).filter(function (h) { return h.you > h.riv; }).length;
     var q = function (x) { return '"' + String(x === null || x === undefined ? '' : x).replace(/"/g, '""') + '"'; };
     var rows = [
-      ['code', 'name', 'firm', 'class', 'total', 'title', 'markets', 'profit_bn', 'rival_bn', 'rival_markets', 'quarters_won', 'home', 'date'].join(','),
-      ['#BP3D', name, F().name, cls, sc.total, title, nMk, f1(S.profit).replace(',', '.'), f1(S.rival.rev).replace(',', '.'), S.rival.in.length, won + '/' + (S.duelHist || []).length, S.home || 'vn', new Date().toISOString().slice(0, 10)].map(q).join(','),
+      ['code', 'name', 'firm', 'class', 'total', 'title', 'markets', 'profit_bn', 'rival_bn', 'rival_markets', 'quarters_won', 'home', 'seed', 'seed_source', 'date'].join(','),
+      ['#BP3D', name, F().name, cls, sc.total, title, nMk, f1(S.profit).replace(',', '.'), f1(S.rival.rev).replace(',', '.'), S.rival.in.length, won + '/' + (S.duelHist || []).length, S.home || 'vn', seedBase, seedSource, new Date().toISOString().slice(0, 10)].map(q).join(','),
     ];
     var a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob(['﻿' + rows.join('\n')], { type: 'text/csv' }));
@@ -2195,7 +2213,7 @@
         p_rep: Math.round(fin.sc.r), p_capab: Math.round(fin.sc.c), p_adapt: Math.round(fin.sc.a), p_sust: Math.round(fin.sc.s),
         p_title: fin.title,
         p_quarters: S.q >= 6 ? 6 : S.q + 1,
-        p_detail_json: { home: S.home || 'vn', foot: S.foot, markets: S.entered, know: S.know, party: S.party, fail: fin.fail, picks: S.picks || [], negQ: S.negQ || 0, rival: Math.round(S.rival.rev * 10) / 10 },
+        p_detail_json: { seed: seedBase, seed_source: seedSource, home: S.home || 'vn', foot: S.foot, markets: S.entered, know: S.know, party: S.party, fail: fin.fail, picks: S.picks || [], negQ: S.negQ || 0, rival: Math.round(S.rival.rev * 10) / 10 },
         p_markets: S.entered.filter(function (v) { return v !== null && v !== undefined; }).length,
         p_badges: window.__bp3dBadges ? Object.keys(window.__bp3dBadges()).length : null,
         p_stars: window.__bp3dQuests ? Object.values(window.__bp3dQuests()).filter(function (x) { return x.done && x.firm === S.firm; }).length : null,
@@ -2213,11 +2231,17 @@
   /* ================= LƯU / KHÔI PHỤC ================= */
   function save() {
     try {
-      localStorage.setItem('bizon-bp-save', JSON.stringify({ seed: seed, S: S, H: H, pre: preDrawnEv ? preDrawnEv.id : null, preM: preDrawnMissionAhead }));
+      localStorage.setItem('bizon-bp-save', JSON.stringify({ seed: seed, base: seedBase, src: seedSource, cls: seedClass, S: S, H: H, pre: preDrawnEv ? preDrawnEv.id : null, preM: preDrawnMissionAhead }));
     } catch (e) {}
   }
   window.bpStart = function () {
     localStorage.removeItem('bizon-bp-save');
+    if (!seedParam) {
+      var cc = classCodeNow();
+      if (cc) { seed = seedFromText('BP|' + cc); seedSource = 'class'; seedClass = cc; }
+      else { seed = Math.floor(Math.random() * 1e9); seedSource = 'random'; seedClass = ''; }
+      seedBase = seed; rivalSeed = (seed + 7919) % 233280; rollWorld();
+    }
     // Ván mới (không phải «Tiếp tục ván»): xoá sao nhiệm vụ quý & lựa chọn đối đầu của ván cũ cùng doanh nghiệp – bp3d.js nghe 'bp:newgame' để xoá cả bản trong bộ nhớ.
     try { localStorage.removeItem('bizon-bp3d-quests'); localStorage.removeItem('bizon-bp3d-duels'); } catch (e) {}
     try { window.dispatchEvent(new CustomEvent('bp:newgame')); } catch (e) {}
@@ -2227,6 +2251,7 @@
     $('bp-play').classList.remove('hidden');
     addLog(T('🏢 Bạn tiếp quản <b>' + f.icon + ' ' + f.name + '</b> (' + f.prod + ') – ' + f.adv + '.',
              '🏢 You take over <b>' + f.icon + ' ' + f.name + '</b> (' + f.prodEn + ') – ' + f.advEn + '.'));
+    addLog(seedLine());
     autoTheme();
     stageObs();
   };
@@ -2234,7 +2259,7 @@
     try {
       var d = JSON.parse(localStorage.getItem('bizon-bp-save'));
       if (!d) return;
-      seed = d.seed;
+      seed = d.seed; seedBase = d.base || d.seed; seedSource = d.src || 'random'; seedClass = d.cls || '';
       Object.keys(d.S).forEach(function (k) { S[k] = d.S[k]; });
       if (!S.net || S.net.length !== MKTS.length) S.net = MKTS.map(function () { return 10; }); // ván lưu từ bản chưa có mạng lưới
       if (typeof applyHome === 'function') applyHome();
@@ -2252,6 +2277,9 @@
    * phụ thuộc vào nó – gỡ đi trò chơi vẫn chạy y nguyên. */
   window.bpTest = {
     seed: function () { return seed; },
+    seedBase: function () { return seedBase; },
+    seedSource: function () { return seedSource; },
+    world: function () { return H.map(function (h) { return { fit: h.fit, comp: h.comp, trend: h.trend.slice() }; }); },
     markets: function () { return MKTS.length; },
     events: function () { return EVENTS.map(function (e) { return e.id; }); },
     sources: function () { return SOURCES.map(function (x) { return { know: x.know, net: x.net || 0, cost: x.cost }; }); },
