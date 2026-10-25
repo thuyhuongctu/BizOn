@@ -454,7 +454,7 @@
       { n: 3, icon: '📦', vi: 'Thu hoạch, phân loại và đóng gói đúng tiêu chuẩn nhãn mác.', en: 'Harvest, grade and pack to the labelling standard.', factSrc: 'grades', img: 'hc/pipeline/harvest.webp', imgAlt: 'Thu hoạch, phân loại và đóng gói sầu riêng' },
       { n: 4, icon: '🌿', vi: 'Kiểm dịch thực vật & xin giấy Phytosanitary Certificate.', en: 'Phytosanitary inspection and certificate.', factSrc: 'sampling', img: 'hc/pipeline/quarantine.webp', imgAlt: 'Cán bộ kiểm dịch thực vật' },
       { n: 5, icon: '🖥️', vi: 'Khai báo hải quan xuất khẩu trên hệ thống VNACCS.', en: 'File the export customs declaration on VNACCS.', img: 'hc/pipeline/customs.webp', imgAlt: 'Nhân viên hải quan' },
-      { n: 6, icon: '🚚', vi: 'Vận chuyển bằng đường bộ, đường biển hoặc đường sắt.', en: 'Transport by road, sea or rail.' },
+      { n: 6, icon: '🚚', vi: 'Vận chuyển bằng đường bộ, đường biển hoặc đường sắt.', en: 'Transport by road, sea or rail.', img: 'hc/durian/cau-container.webp', imgAlt: 'Cẩu container lạnh lên tàu tại cảng' },
       { n: 7, icon: '🔬', vi: 'Thông quan phía Trung Quốc & kiểm tra MRL ngẫu nhiên.', en: 'Clearance in China and random MRL testing.', factSrc: 'cadmium', img: 'hc/pipeline/lab-f.webp', img2: 'hc/pipeline/lab-m.webp', imgAlt: 'Kỹ thuật viên kiểm nghiệm dư lượng' },
       { n: 8, icon: '🗂️', vi: 'Hoàn tất thanh toán & lưu trữ hồ sơ xuất khẩu.', en: 'Settle payment and keep export records.', img: 'hc/pipeline/payment.webp', imgAlt: 'Hoàn tất thanh toán xuất khẩu' }
     ],
@@ -470,6 +470,10 @@
   const chain2 = {
     stages: [
       { id: 'farm', vi: 'Tại vườn & sơ chế', en: 'At the orchard & initial processing', items: [
+        { img: 'hc/durian/ban-do-4-chang.webp', vi: 'Toàn cảnh bốn chặng của Hộ Chiếu Sầu Riêng: vườn Đắk Lắk có mã PUC → nhà máy chế biến và kho lạnh → cảng biển và tàu Durian Express → bán lẻ quốc tế.', en: 'The four stages of the Durian Passport at a glance: a PUC-coded Đắk Lắk orchard → processing plant and cold store → seaport and the Durian Express → international retail.' },
+        { img: 'hc/durian/vuon-dak-lak-puc.webp', vi: 'Chặng 1 · Vườn Đắk Lắk đã đăng ký mã PUC: thu hoạch, kiểm tra độ già và chuẩn VietGAP.', en: 'Stage 1 · A PUC-registered Đắk Lắk orchard: harvest, maturity checks and VietGAP standards.' },
+        { img: 'hc/durian/nha-vuon-xep-thung.webp', vi: 'Nhà vườn xếp thùng sầu riêng lên xe lạnh ngay tại sân nhà, Tèo Soi ghi sổ.', en: 'Growers load crates of durian onto the reefer truck right in the yard while Tèo Soi keeps the tally.' },
+        { img: 'hc/durian/nha-vuon-dem.webp', vi: 'Vườn nghịch vụ thắp đèn ban đêm: xử lý ra hoa trái vụ để bán được giá cao hơn.', en: 'An off-season orchard lit at night: flowering is induced out of season to sell at a higher price.' },
         { img: 'scenes/orchard.jpg', vi: 'Vườn sầu riêng đạt mã số vùng trồng (PUC): cây khỏe, trái treo đủ độ già trước khi cắt.', en: 'Durian orchard with a registered planting-unit code (PUC): healthy trees, fruit left to mature before cutting.' },
         { img: 'scenes/packhouse.jpg', vi: 'Cơ sở đóng gói có mã số (PHC): phân loại, cân, đóng thùng và dán nhãn truy xuất trước khi lên xe lạnh.', en: 'Packing house with a registered code (PHC): grading, weighing, boxing and traceability labels before the reefer truck.' },
         { img: 'hc/chain2/01-vuon-kiem-tra.webp', vi: 'Vườn đạt mã số vùng trồng, chuyên gia kiểm tra chất lượng trước vụ hái.', en: 'Orchard with a registered growing-area code; specialists check quality before harvest.' },
@@ -482,6 +486,7 @@
         { img: 'hc/scene/sa-ban-chuoi.webp', vi: 'Cả chuỗi trên một sa bàn: vườn, nhà sơ chế và kiểm tra chất lượng, đường xe lạnh, cảng xuất khẩu.', en: 'The whole chain on one model: orchard, processing and quality-check house, reefer road and export port.' }
       ] },
       { id: 'paperwork', vi: 'Thủ tục & hải quan xuất khẩu', en: 'Export paperwork & customs clearance', items: [
+        { img: 'hc/durian/ky-hop-dong-cang.webp', vi: 'Lễ ký hợp đồng xuất khẩu tại cảng: 10.000 tấn sầu riêng chuỗi lạnh có chứng nhận.', en: 'Export contract signing at the port: 10,000 tonnes of certified cold-chain durian.' },
         { img: 'scenes/port.jpg', vi: 'Cảng container: container lạnh được cắm điện, kiểm tra nhiệt độ rồi mới cẩu lên tàu.', en: 'Container port: reefers are plugged in and temperature-checked before loading onto the vessel.' },
         { img: 'hc/chain2/07-ky-hop-dong-ngoai-thuong.webp', vi: 'Ký hợp đồng ngoại thương trước khi giao hàng.', en: 'Signing the foreign-trade contract before shipping.' },
         { img: 'hc/chain2/08-ho-so-xuat-khau.webp', vi: 'Chuẩn bị bộ hồ sơ: L/C, vận đơn, chứng thư kiểm dịch, hồ sơ truy xuất GACC.', en: 'Preparing the paper trail: L/C, bill of lading, phytosanitary certificate, GACC traceability dossier.' },
@@ -490,6 +495,9 @@
         { img: 'hc/chain2/11-kiem-dich-noi-dia.webp', vi: 'Kiểm dịch thực vật tại trạm kiểm soát nội địa trước khi ra cửa khẩu.', en: 'Phytosanitary inspection at a domestic checkpoint before reaching the border.' }
       ] },
       { id: 'cold-pack', vi: 'Đóng hàng lạnh & vận chuyển nội địa', en: 'Cold packing & domestic transport', items: [
+        { img: 'hc/durian/cabin-xe-lanh.webp', vi: 'Trong cabin xe lạnh: tài xế và đội đối chiếu lộ trình ra cảng trước khi lăn bánh.', en: 'Inside the reefer cab: the driver and the team check the route to the port before setting off.' },
+        { img: 'hc/durian/cao-toc-ra-cang.webp', vi: 'Đoàn xe lạnh chạy cao tốc ra cảng quốc tế, còn 15 km tới bến xuất khẩu.', en: 'Reefer trucks on the expressway to the international seaport, 15 km from the export terminal.' },
+        { img: 'hc/durian/tram-can-cong-cang.webp', vi: 'Trạm cân cổng cảng: xe 18,5 tấn đạt, nhiệt độ container −18 °C ổn định.', en: 'Port gate weigh station: 18.5 t verified, container holding a stable −18 °C.' },
         { img: 'hc/scene/xe-ra-cang.webp', vi: 'Xe container lạnh chở sầu riêng từ vùng trồng ra cảng biển.', en: 'Reefer trucks carry durian from the growing area to the seaport.' },
         { img: 'hc/chain2/12-dong-cont-lanh.webp', vi: 'Đóng hàng vào container lạnh đạt chuẩn GACC tại kho.', en: 'Loading the cold container to GACC standard at the depot.' },
         { img: 'hc/chain2/13-quet-qr-cont-lanh.webp', vi: 'Quét mã QR niêm phong container để truy xuất nguồn gốc.', en: "Scanning the container's sealed QR code for traceability." },
@@ -508,6 +516,13 @@
         { img: 'hc/chain2/23-gacc-fast-track.webp', vi: 'Làn ưu tiên GACC: kiểm dịch nhanh cho lô hàng đã có đủ hồ sơ.', en: 'The GACC fast-track lane: quick inspection for a shipment with a complete dossier.' }
       ] },
       { id: 'rail-sea', vi: 'Đường sắt & đường biển liên vận', en: 'Rail & sea freight', items: [
+        { img: 'hc/durian/cang-boc-xep-container.webp', vi: 'Chặng 3 · Cảng biển quốc tế: bốc container lạnh lên tàu Durian Express, hải quan đã thông quan.', en: 'Stage 3 · International seaport: reefer containers are loaded onto the Durian Express after customs clearance.' },
+        { img: 'hc/durian/tau-keo-roi-cang.webp', vi: 'Hai tàu kéo đưa tàu Durian Express rời bến, bắt đầu hành trình xuất khẩu.', en: 'Two tugboats ease the Durian Express away from the quay to start the export voyage.' },
+        { img: 'hc/durian/cau-container.webp', vi: 'Cẩu giàn nhấc container lạnh Durian Passport lên tàu.', en: 'A gantry crane lifts the Durian Passport reefer container onto the ship.' },
+        { img: 'hc/durian/tau-bao.webp', vi: 'Tàu gặp bão trên biển: container lạnh vẫn giữ −18 °C ổn định.', en: 'The ship rides out a storm at sea while the reefers hold a stable −18 °C.' },
+        { img: 'hc/durian/tau-ca-heo.webp', vi: 'Biển lặng, cá heo theo tàu Durian Express.', en: 'Calm seas, with dolphins escorting the Durian Express.' },
+        { img: 'hc/durian/tau-dem-cuc-quang.webp', vi: 'Đêm trên biển xa: tàu đi dưới cực quang tới thị trường mới.', en: 'Night on a distant sea: the ship sails under the aurora toward a new market.' },
+        { img: 'hc/durian/container-lanh-cang.webp', vi: 'Mở container lạnh tại cảng đến: sầu riêng còn nguyên độ tươi, hộ chiếu đi kèm lô hàng.', en: 'Opening the reefer at the destination port: the durian is still fresh and the passport travels with the lot.' },
         { img: 'hc/scene/tau-ra-khoi.webp', vi: 'Tàu chở container lạnh rời cảng, đưa sầu riêng ra thị trường quốc tế.', en: 'A reefer container ship leaves port, taking durian to overseas markets.' },
         { img: 'hc/chain2/24-ga-lien-van-dong-dang.webp', vi: 'Đoàn tàu lạnh liên vận quốc tế qua ga Đồng Đăng.', en: 'A refrigerated international freight train passes through Đồng Đăng station.' },
         { img: 'hc/chain2/25-cang-cau-container.webp', vi: 'Container lạnh được cẩu lên tàu tại cảng biển.', en: 'Reefer containers are craned onto the ship at a seaport.' },
@@ -523,12 +538,18 @@
         { img: 'hc/chain2/32-chat-hang-len-may-bay.webp', vi: 'Chất ULD lên máy bay, duy trì 13–15°C.', en: 'Loading ULDs onto the aircraft, keeping 13–15°C.' }
       ] },
       { id: 'process', vi: 'Chế biến giá trị gia tăng', en: 'Value-added processing', items: [
+        { img: 'hc/durian/nha-may-che-bien-phc.webp', vi: 'Chặng 2 · Nhà máy chế biến sâu có mã PHC: kiểm nghiệm, đóng gói và kho lạnh −18 °C.', en: 'Stage 2 · A PHC-registered deep-processing plant: testing, packing and −18 °C cold storage.' },
         { img: 'hc/scene/nha-may-cap-dong.webp', vi: 'Nhà máy cấp đông: dây chuyền soi trái, buồng cấp đông nhanh và kho lạnh.', en: 'Freezing plant: fruit inspection line, blast-freezing chamber and cold store.' },
         { img: 'hc/chain2/33-kho-lanh-che-bien.webp', vi: 'Kho lạnh tại nhà máy chế biến, giữ −18,5°C.', en: 'Cold storage at the processing plant, held at −18.5°C.' },
         { img: 'hc/chain2/34-nha-may-che-bien.webp', vi: 'Dây chuyền chế biến sầu riêng sấy dẻo và đông lạnh đạt chuẩn HACCP, ISO 22000.', en: 'The dried and frozen durian processing line meets HACCP and ISO 22000 standards.' },
         { img: 'hc/scene/nha-may-cap-dong-qa.webp', vi: 'Nhân viên QA kiểm tra múi sầu riêng và đóng dấu trước khi cấp đông.', en: 'A QA officer checks the durian pulp and stamps the lot before freezing.' }
       ] },
       { id: 'consumer', vi: 'Đến tay người tiêu dùng', en: 'Reaching the end consumer', items: [
+        { img: 'hc/durian/gian-hang-nem-thu.webp', vi: 'Chặng 4 · Gian hàng nếm thử hạng A+ ở siêu thị nước ngoài: lô VN-EXP-889, chuỗi lạnh đã xác thực.', en: 'Stage 4 · A Grade A+ tasting pavilion in an overseas supermarket: lot VN-EXP-889, cold chain verified.' },
+        { img: 'hc/durian/cua-hang-durian-passport.webp', vi: 'Cửa hàng Durian Passport: sầu riêng Việt hạng A+ truy xuất 100 %, xe lạnh giao tận nơi.', en: 'A Durian Passport shop: 100 % traceable Grade A+ Vietnamese durian, delivered by reefer van.' },
+        { img: 'hc/durian/quay-thanh-toan-truy-xuat.webp', vi: 'Quầy thanh toán nhanh: quét mã trên hộp để xem nguồn gốc, hạng và nhiệt độ chuỗi lạnh.', en: 'Express checkout: scan the box to see origin, grade and cold-chain temperature.' },
+        { img: 'hc/durian/nem-thu-tai-cang.webp', vi: 'Nếm thử sầu riêng Việt ngay tại cảng đến, bên tàu Durian Express.', en: 'Tasting Vietnamese durian right at the destination port, beside the Durian Express.' },
+        { img: 'hc/durian/an-duoi-goc-cay.webp', vi: 'Thưởng thức sầu riêng chín cây dưới gốc – phần thưởng cuối chuỗi.', en: 'Enjoying tree-ripened durian under the tree – the reward at the end of the chain.' },
         { img: 'scenes/supermarket.jpg', vi: 'Siêu thị nước ngoài: sầu riêng tươi, đông lạnh và sản phẩm chế biến được bày theo hạng, có mã truy xuất.', en: 'Overseas supermarket: fresh, frozen and processed durian displayed by grade with traceability codes.' },
         { img: 'hc/chain2/35-cho-ban-le-trung-quoc.webp', vi: 'Bắt tay giao hàng tại chợ bán lẻ Trung Quốc.', en: 'Handshake delivery at a retail market in China.' },
         { img: 'hc/chain2/36-quan-trang-mieng.webp', vi: 'Sầu riêng Việt thành món tráng miệng: crepe, gelato, chè.', en: 'Vietnamese durian becomes dessert: crepes, gelato, sweet bowls.' },
