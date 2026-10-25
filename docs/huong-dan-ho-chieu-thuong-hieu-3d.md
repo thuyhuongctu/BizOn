@@ -33,6 +33,23 @@ Nhật ký, cửa hàng và kho vật phẩm dùng thư viện auto-animate (`js
 ## Tri thức thị trường có giá trị kinh tế
 Doanh thu ở mỗi thị trường nhân với 0,9 + 0,15 × tri thức/100 (`BPCore.knowMul`, dùng chung hai bản): vào khi tri thức 0 thì mất 10 %, đạt 100 thì được thêm 5 %. Tri thức tăng nhờ mua tin (có nhân hệ số khoảng cách văn hoá), bán hàng tại đó (+6 mỗi quý) và liên doanh (+6 mỗi quý). Khung «Vì sao» của từng dòng doanh thu hiện hệ số này. Nhiệm vụ của Lina Park trong cảnh 3D đổi từ «dùng đủ 2 nguồn tin trong quý» (khuyến khích chi tới 1,6 tỷ/quý cho tin) thành «vào một thị trường mới khi tri thức ở đó đã ≥ 50».
 
+## FDI 100 % vốn chơi được, vẫn rủi ro
+
+Phương thức đắt nhất (vốn 3,0 tỷ, biên lời 0,55, quy mô 1,6, chi vận hành 0,8 tỷ/quý, cần năng lực ≥ 55) được cân bằng lại 10-2025. Bộ cũ (3,2 · 0,45 · 1,5 · 0,9) chỉ nhỉnh hơn xuất khẩu trực tiếp khoảng 0,05 tỷ/quý dù tốn thêm 2 tỷ vốn, nên FDI gần như không bao giờ đáng chọn trong 6 quý và lối liều phá sản 63 % ván.
+
+Mô phỏng 8 hạt giống, bot chơi qua API của trang (điểm trung bình /100, phá sản = cạn tiền 2 quý liên tiếp):
+
+| Lối chơi | Bộ cũ | Bộ mới |
+|---|---|---|
+| FDI có chuẩn bị: nâng năng lực 2 quý, FDI vào Kim Sa quý 3, tàu biển (Phù Sa Foods) | 46 · 0 % phá sản | 56 · 0 % |
+| Cùng kế hoạch nhưng xuất khẩu trực tiếp (đối chứng) | 49 | 50 |
+| Cùng kế hoạch nhưng liên doanh | 49 | 48 |
+| FDI vào Tân Cảng (chi vận hành ×1,4) | 36 · 14 % | 55 · 0 % |
+| FDI có chuẩn bị, Mekong Digital | 54 | 61 |
+| Lối liều: 3 lần nâng cấp rồi FDI vào Bắc Phong chưa chứng nhận, hoả tốc (Mộc Nhiên) | 27 · 63 % | 34 · 29 % |
+
+Kèm theo, dưới nút «Chốt quý» có dòng **dòng tiền sau khi vào**: tiền còn lại, ước số quý vận hành chịu được và lãi/lỗ quý ước tại thị trường đó. Không đủ tiền thì báo đỏ (phần thâm nhập sẽ bị bỏ qua khi chốt); còn dưới 2 quý vận hành thì Minh Khang cảnh báo vàng, vì cạn tiền 2 quý liên tiếp là thua sớm. Nhiệm vụ «Cánh cửa Bắc Phong» khi chấp nhận không còn ghi đè phương thức đã vào Bắc Phong, chỉ thêm chứng nhận và hợp đồng lớn (cả bản thẻ).
+
 ## Đối thủ Kim Long Exports
 Kim Long là đối thủ cùng tăng tốc theo ván: sức hút khởi điểm `RIVAL.attrBase`, mỗi quý tăng `RIVAL.ramp`, biên lợi nhuận `RIVAL.margin`, xác suất vào thị trường mới tăng từ `RIVAL.enterBase` thêm `RIVAL.enterStep` mỗi quý. Mức hiện tại (0,8 / 0,17 / 0,30 / 0,25 / 0,055) chọn bằng mô phỏng 32 ván mỗi mức: mức cũ cho đội thắng Kim Long 74 % ván, mức mới 61 % (đội tập trung 50 %, mở rộng có kỷ luật 63 %, hãng phần mềm 100 %, đội lan man 29 %), mức mạnh hơn nữa rơi xuống 31 %. Giảng viên muốn ván dễ hay khó hơn chỉ cần đổi các số trong `js/bp-core.js`.
 
