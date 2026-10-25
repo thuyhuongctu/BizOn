@@ -22,6 +22,16 @@
 <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
 <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
 <script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<!-- Chế độ nhúng (?embed=1): bản gọn brand-passport-v2.html nạp trang này trong iframe ẩn để dùng nguyên engine (một
+     bản công thức, một kết quả). Mọi giao diện bị ẩn, chỉ màn Kết thúc (#bp-end: điểm, chứng nhận, nộp bài) hiện ra khi
+     ván xong; cổng đăng nhập, tour tân thủ và nhạc nền không chạy. Trang bình thường không đổi gì. -->
+<script>if(/[?&]embed=1(?:&|$)/.test(location.search))document.documentElement.classList.add('bp-embed');</script>
+<style>
+.bp-embed body>*:not(main){display:none!important}
+.bp-embed main>*:not(#bp-end){display:none!important}
+.bp-embed main{padding:0!important;max-width:none!important}
+.bp-embed body{background:transparent!important}
+</style>
 <script src="js/backend-config.js"></script>
 <script src="js/student-login.js"></script>
 <script src="js/error-log.js"></script>
@@ -213,6 +223,7 @@
     <p class="text-[11px] text-deep-teal/50 mt-1.5" data-en="&laquo;Brand Passport – Part III&raquo; · remix 2, English lyrics · 5:33">«Hộ Chiếu Thương Hiệu – Phần III» · bản remix 2, lời tiếng Anh · 5:33</p>
     <button id="bp-resume" onclick="bpResume()" class="clay-btn w-full bg-deep-teal text-white font-display font-extrabold py-3.5 mt-5 hidden" data-en="▶️ Resume your game in progress">▶️ Tiếp tục ván đang dở</button>
     <button onclick="bpStart()" class="clay-btn w-full bg-clay-gold text-deep-teal font-display font-extrabold py-4 mt-3" data-en="🛫 Begin the 6-quarter journey">🛫 Bắt đầu hành trình 6 quý</button>
+    <p class="text-[11px] opacity-60 mt-3 text-center" data-en-html="⚡ Too many steps? Try the <a href=&quot;brand-passport-v2.html&quot; class=&quot;underline font-bold&quot;>lean version</a> – same engine and scoring, one decision card per quarter.">⚡ Thấy nhiều bước quá? Thử <a href="brand-passport-v2.html" class="underline font-bold">bản gọn</a> – cùng engine và cách chấm điểm, mỗi quý một thẻ quyết định.</p>
   </section>
 
   <!-- MÀN CHƠI -->
@@ -335,6 +346,7 @@
 (function () {
   var $ = function (id) { return document.getElementById(id); };
   var isEN = function () { try { return (localStorage.getItem('bizon-lang') || 'vi') === 'en'; } catch (e) { return false; } };
+  var EMBED = document.documentElement.classList.contains('bp-embed'); // nhúng trong brand-passport-v2.html (xem <head>)
   // Số theo ngôn ngữ: vi dùng dấu phẩy thập phân, en dùng dấu chấm.
   var f1 = function (v) { return (Math.round(v * 10) / 10 || 0).toLocaleString(isEN() ? 'en-US' : 'vi-VN', { maximumFractionDigits: 1 }); };
   var clamp = function (v) { return Math.max(0, Math.min(100, Math.round(v))); };
@@ -1810,14 +1822,76 @@
     },
     state: function () {
       return {
-        q: S.q, firm: S.firm, cash: S.cash, rep: S.rep, capab: S.capab, resil: S.resil,
+        q: S.q, firm: S.firm, cash: S.cash, cash0: S.cash0, rep: S.rep, capab: S.capab, resil: S.resil,
         know: S.know.slice(), entered: S.entered.slice(), qin: S.qin.slice(), net: S.net.slice(),
+        cust: S.cust.slice(), ship: S.ship.slice(), items: JSON.parse(JSON.stringify(S.items)),
         profit: S.profit, susts: S.susts, adapt: S.adapt, lowQ: S.lowQ,
         certBP: S.certBP, phase: S.phase, flags: JSON.parse(JSON.stringify(S.flags)),
         sel: { prio: S.sel.prio, budget: S.sel.budget, enter: S.sel.enter,
-               enterMode: S.sel.enterMode, intel: S.sel.intel.slice() },
+               enterMode: S.sel.enterMode, shipMode: S.sel.shipMode, intel: S.sel.intel.slice() },
       };
     },
+    /* Các hàm đọc dưới đây phục vụ bản gọn (brand-passport-v2.html + js/bp2-ui.js) chạy trang này trong iframe ẩn:
+     * bản gọn chỉ VẼ LẠI giao diện, mọi con số vẫn do các hàm ở trên tính. Tất cả chỉ đọc, không đổi trạng thái. */
+    embed: function () { return EMBED; },
+    data: function () { return JSON.parse(JSON.stringify({ MKTS: MKTS, FIRMS: FIRMS, MODES: MODES, SHIP_MODES: SHIP_MODES, SOURCES: SOURCES, PRIOS: PRIOS, BUDGETS: BUDGETS, SHOP_ITEMS: SHOP_ITEMS, RIVAL: RIVAL, CAST: CAST })); },
+    seedLine: function () { return seedLine(); },
+    firmName: function () { return F().name; },
+    // Tín hiệu quý này – chỉ trả về khi màn Quan sát đã rút (không gọi rnd() mới để không lệch chuỗi ngẫu nhiên).
+    signals: function () { return sigCache ? signals() : []; },
+    adviceRows: function () {
+      var out = [];
+      for (var i = 0; i < ADVICE.length && out.length < 2; i++) { var a = ADVICE[i](); if (a) out.push({ icon: a[0], who: a[1], text: a[2], face: FACE[a[1]] || null }); }
+      return out;
+    },
+    forecastAhead: function () { return preDrawnEv ? { cat: preDrawnEv.cat, title: T(preDrawnEv.t, preDrawnEv.tEn) } : preDrawnMissionAhead ? { mission: true } : null; },
+    event: function () {
+      var ev = window.__bpEv;
+      if (!ev || S.phase !== 'evt') return null;
+      return { cat: ev.cat, title: T(ev.t, ev.tEn), desc: ev.d(), img: EVT_IMG[ev.id] || null, q: evQ + 1, answered: !!evtPostCache,
+               choices: ev.ch.map(function (c) { return T(c.l, c.lEn); }) };
+    },
+    post: function () {
+      if (!evtPostCache) return null;
+      return { qDone: evtPostCache.qDone, delta: evtPostCache.delta ? JSON.parse(JSON.stringify(evtPostCache.delta)) : null,
+               lines: evtPostCache.data.map(function (d) { return { m: d.m, rev: d.rev, pf: d.pf, delayed: !!d.delayed, ship: S.ship[d.m], cust: clamp(S.cust[d.m]) }; }) };
+    },
+    forecast: function (m, mode) { return forecastRange(m, mode); },
+    // Dự báo cả quý cho lựa chọn đang chọn (S.sel): cộng dải doanh thu Lumina của từng thị trường đang hiện diện (và thị
+    // trường sắp vào), nhân mức vận hành/ưu tiên, trừ chi phí vận hành như settle() – KHÔNG gồm biến cố, chậm hàng,
+    // đối thủ mở thêm thị trường hay các hệ số riêng từng thị trường, nên chỉ là ước tính để người chơi cân nhắc.
+    forecastQuarter: function () {
+      var bud = BUDGETS[S.sel.budget];
+      var ms = entMkts().slice();
+      if (S.sel.enter !== null && ms.indexOf(S.sel.enter) < 0) ms.push(S.sel.enter);
+      var revLo = 0, revHi = 0, pfLo = 0, pfHi = 0, op = 0;
+      ms.forEach(function (m) {
+        var modeIdx = S.entered[m] !== null ? S.entered[m] : S.sel.enterMode;
+        var md = MODES[modeIdx], fr = forecastRange(m, modeIdx);
+        var k = bud.rev * (S.sel.prio === 1 ? 1.15 : 1) * (window.BPCore.knowMul ? window.BPCore.knowMul(S.know[m]) : 1);
+        var shipIdx = S.entered[m] !== null ? S.ship[m] : (S.sel.shipMode == null ? 0 : S.sel.shipMode);
+        var opHere = md.op * bud.op * (S.firm === 1 ? 1.2 : 1) * (m === 5 ? 1.4 : 1) * SHIP_MODES[shipIdx].opMul;
+        var margin = Math.max(0.08, md.margin + (S.firm === 3 ? 0.05 : 0));
+        revLo += fr.lo * k; revHi += fr.hi * k; op += opHere;
+        pfLo += fr.lo * k * margin - opHere; pfHi += fr.hi * k * margin - opHere;
+      });
+      var spend = (S.sel.prio === 2 ? 0.5 : S.sel.prio === 3 ? 0.8 : 0) + (S.sel.enter !== null ? MODES[S.sel.enterMode].cost : 0);
+      return { markets: ms.length, revLo: revLo, revHi: revHi, op: op, pfLo: pfLo, pfHi: pfHi, spend: spend };
+    },
+    rival: function () { return { name: RIVAL.name, icon: RIVAL.icon, img: RIVAL.img, rev: S.rival.rev, profit: S.rival.profit, in: S.rival.in.slice() }; },
+    logs: function (n) { return Array.prototype.slice.call($('bp-log').children, 0, n || 5).map(function (li) { return li.innerHTML; }); },
+    shop: function () {
+      var forecastPending = S.flags.forecastPeek || !!preDrawnEv || preDrawnMissionAhead;
+      return SHOP_ITEMS.map(function (it) {
+        var owned = (it.type === 'blueprint' && blueprintOwned(it.id)) || (it.type === 'invest' && it.max && (S.items[it.id] || 0) >= it.max);
+        return { id: it.id, icon: it.icon, type: it.type, price: it.price, max: it.max || 0, name: T(it.name, it.nameEn), desc: T(it.desc, it.descEn),
+                 owned: !!owned, count: S.items[it.id] || 0,
+                 canUse: it.type === 'consumable' && (S.items[it.id] || 0) > 0 && !(it.id === 'SHIELD' && S.flags.shield) && !(it.id === 'FORECAST' && forecastPending) };
+      });
+    },
+    aibis: function (m) { return aibisFit(m); },
+    rulesHtml: function () { var b = $('bp-rules-block'); return b ? b.innerHTML : ''; },
+    cashBridge: function () { return cashBridge(); },
   };
   // Dàn nhân vật ở màn giới thiệu
   renderCast();
@@ -1852,6 +1926,7 @@
     else { d.play(THEME); musicBtnSync(true); try { localStorage.setItem('bizon-bp-music', '1'); } catch (e) {} }
   };
   function autoTheme() { // bấm Bắt đầu là cử chỉ người dùng → được phép phát
+    if (EMBED) return; // bản gọn nhúng: trang mẹ không có trình phát, không phát nhạc từ khung ẩn
     try { if (localStorage.getItem('bizon-bp-music') !== '1') return; } catch (e) { return; }
     if (window.BizonDock && !window.BizonDock.isPlaying()) {
       if (window.BizonDock.scope) window.BizonDock.scope(SOUNDTRACK, 'Hộ Chiếu Thương Hiệu');
@@ -1946,7 +2021,10 @@
 </script>
 <script src="js/bp-rival-intel.js"></script>
 <script src="js/bp-tutorial.js"></script>
-<script src="js/game3d-login-gate.js"></script><script>Game3DGate.mount({ introId: 'bp-intro', ns: 'bp', title: 'Chào mừng tới Hộ Chiếu Thương Hiệu!', titleEn: 'Welcome to Brand Passport!', subtitle: 'Điền nhanh thông tin đội rồi vào thẳng phần giới thiệu – bỏ trống vẫn chơi được trọn vẹn.', subtitleEn: 'Fill in your team details and go straight to the intro – leave them blank and you can still play the full game.' });</script><script>window.BIZON_GAME_NS='bp';</script><script src="js/official-cert.js"></script>
+<script>if (document.documentElement.classList.contains('bp-embed')) { window.BPTour = null;
+  // Liên kết trong khung nhúng (Arcade, khảo sát, tài liệu…) mở ở cửa sổ mẹ, không mở bên trong khung ẩn.
+  document.addEventListener('click', function (e) { var a = e.target && e.target.closest('a[href]'); if (a && !a.target && !/^(#|javascript:)/.test(a.getAttribute('href'))) a.target = '_top'; }); }</script>
+<script src="js/game3d-login-gate.js"></script><script>if (!document.documentElement.classList.contains('bp-embed')) Game3DGate.mount({ introId: 'bp-intro', ns: 'bp', title: 'Chào mừng tới Hộ Chiếu Thương Hiệu!', titleEn: 'Welcome to Brand Passport!', subtitle: 'Điền nhanh thông tin đội rồi vào thẳng phần giới thiệu – bỏ trống vẫn chơi được trọn vẹn.', subtitleEn: 'Fill in your team details and go straight to the intro – leave them blank and you can still play the full game.' });</script><script>window.BIZON_GAME_NS='bp';</script><script src="js/official-cert.js"></script>
 <script src="js/negotiate.js"></script>
 <script src="js/bp-negotiate.js"></script>
 <script src="js/bizon-clay-i18n.js" defer></script>
