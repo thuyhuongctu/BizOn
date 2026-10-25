@@ -99,6 +99,8 @@ Doanh thu cao nhất chưa chắc thắng — tăng trưởng nóng làm cạn v
 
 ## 5 · Dành cho giảng viên (GV)
 
+**Mã lớp = hạt giống chung:** yêu cầu sinh viên nhập mã lớp ở cổng vào. Khi đó mọi đội trong lớp gặp cùng hồ sơ thị trường ẩn và cùng chuỗi biến cố, so sánh giữa các đội công bằng; hạt giống hiện ở màn kết thúc và trong CSV nộp bài, mở `?seed=<số>` để dựng lại ván của bất kỳ đội nào.
+
 1. Phát cho lớp đường link chơi (không cần tài khoản): `https://thuyhuongctu.github.io/BizOn/brand-passport.html`
 2. Thống nhất **mã lớp** (VD: `QTKD-2026-A`) để SV nhập khi nộp kết quả.
 3. Theo dõi cả lớp trực tiếp qua **Bảng điều khiển giảng viên** (`giang-vien.html`, mục "🛂 Hộ Chiếu Thương Hiệu"): xem điểm từng đội, xuất CSV để chấm điểm.

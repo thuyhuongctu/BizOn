@@ -13,6 +13,9 @@ Gói tự đủ: không cần mạng để tải three.js, font hay ảnh. Sau l
 - `Ho Chieu Thuong Hieu 3D.html` – game chính (6 quý, 7 thị trường, bản đồ 3D).
 - `Pho Thi Truong 3D.html` – phố mua sắm 3D của từng thị trường đã thâm nhập.
 
+## Mã lớp = hạt giống chung của lớp
+Nhập mã lớp ở cổng vào thì mọi đội trong lớp gặp cùng hồ sơ thị trường ẩn và cùng chuỗi biến cố (hạt giống sinh từ mã lớp, cùng cách với Hộ Chiếu Sầu Riêng). Hạt giống hiện ở nhật ký đầu ván, màn kết thúc, cột `seed` của CSV và `detail_json.seed` khi nộp bài; giảng viên mở `?seed=<số>` để dựng lại ván. Không có mã lớp thì kịch bản ngẫu nhiên như trước.
+
 ## Nộp kết quả & bảng xếp hạng lớp (tuỳ chọn)
 1. Điền URL + anon key Supabase trong `js/backend-config.js`.
 2. Chạy `supabase/20260929000000_bp_leaderboard.sql` trong Supabase SQL Editor.
