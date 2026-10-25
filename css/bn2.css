@@ -76,7 +76,7 @@ body.bn2{background:var(--clay-bg);color:var(--clay-ink);font-family:var(--clay-
 .bn2-rival{display:grid;grid-template-columns:44px 1fr auto;gap:10px;align-items:center;padding:8px 0}
 .bn2-rival img{width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:top;background:var(--clay-tray)}
 .bn2-bar{height:8px;border-radius:999px;background:var(--clay-tray);overflow:hidden;margin-top:4px}
-.bn2-bar i{display:block;height:100%;border-radius:999px}
+.bn2-bar i{display:block;height:100%;border-radius:999px;transition:width .6s cubic-bezier(.2,.8,.2,1)}
 
 /* màn mở đầu */
 .bn2-hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px 16px;background:radial-gradient(circle at 70% 20%,var(--clay-cream-deep),var(--clay-bg) 60%)}
@@ -106,4 +106,4 @@ body.bn2{background:var(--clay-bg);color:var(--clay-ink);font-family:var(--clay-
 .bn2-busy{position:fixed;inset:0;z-index:120;background:rgba(251,244,232,.9);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;font:800 18px var(--clay-head)}
 .bn2-busy i{width:56px;height:56px;border-radius:50%;border:6px solid var(--clay-tray);border-top-color:var(--clay-orange);animation:bn2spin .9s linear infinite}
 @keyframes bn2spin{to{transform:rotate(360deg)}}
-@media (prefers-reduced-motion:reduce){.bn2-busy i{animation:none}}
+@media (prefers-reduced-motion:reduce){.bn2-busy i{animation:none}.bn2-bar i{transition:none}}
