@@ -94,7 +94,7 @@
     const num = v => (vi ? String(v).replace('.', ',') : String(v)), pct = x => Math.round(x * 100) + '%', bn = v => num(v) + L(' tỷ', ' bn');
     const nm = o => L(o.vi, o.en), need = { area: L('mã vùng trồng', 'area code'), pack: L('mã đóng gói', 'packing code'), freezer: L('cấp đông', 'freezer'), test: L('kiểm nghiệm', 'testing') };
     const cuts = D.seasons.map(s => pct(s.borderCut || 0)).join(' → ');
-    const part = { profit: L('Lợi nhuận', 'Profit'), reputation: L('Uy tín', 'Reputation'), capability: L('Năng lực', 'Capability'), adaptation: L('Thích ứng', 'Adaptation'), sustainability: L('Bền vững', 'Sustainability') };
+    const part = { profit: L('Lợi nhuận', 'Profit'), reputation: L('Uy tín', 'Reputation'), capability: L('Năng lực', 'Capability'), adaptation: L('Ứng phó biến cố', 'Shock response'), sustainability: L('Bền vững', 'Sustainability') };
     const why = {
       profit: L('100 điểm khi lãi lũy kế 6 vụ bằng mốc của doanh nghiệp (sản lượng chuẩn × 6 vụ × biên chuẩn); lãi 0 = 50 điểm; lỗ bằng mốc = 0.', '100 points when 6-season cumulative profit equals the firm\'s benchmark (standard volume × 6 seasons × standard margin); zero profit = 50; a loss equal to the benchmark = 0.'),
       reputation: L('tăng khi tuân thủ, giảm khi lô bị chặn, bị phát hiện giả xuất xứ hay vượt hạn mức vay.', 'rises with compliance; falls when a lot is blocked, fake origin is exposed or the credit limit is exceeded.'),
