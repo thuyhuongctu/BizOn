@@ -30,6 +30,9 @@ Tour hướng dẫn của Lumina (`js/bp-tutorial.js`) nhường chỗ cho mọi
 ## Chuyển động danh sách
 Nhật ký, cửa hàng và kho vật phẩm dùng thư viện auto-animate (`js/vendor/auto-animate.min.js`, MIT, bản đóng gói toàn cục của gói npm `@formkit/auto-animate` 0.10.0): dòng mới trượt vào, dòng mất mờ đi, dòng còn lại dịch chỗ mượt. Thư viện tự tắt khi hệ điều hành đặt «giảm chuyển động». Cửa hàng và kho vẽ lại theo khóa (`data-key`) nên chỉ dòng thay đổi mới có hoạt ảnh. Gói độc lập phải chép kèm file này; thiếu file thì trang vẫn chạy, chỉ không có chuyển động.
 
+## Tri thức thị trường có giá trị kinh tế
+Doanh thu ở mỗi thị trường nhân với 0,9 + 0,15 × tri thức/100 (`BPCore.knowMul`, dùng chung hai bản): vào khi tri thức 0 thì mất 10 %, đạt 100 thì được thêm 5 %. Tri thức tăng nhờ mua tin (có nhân hệ số khoảng cách văn hoá), bán hàng tại đó (+6 mỗi quý) và liên doanh (+6 mỗi quý). Khung «Vì sao» của từng dòng doanh thu hiện hệ số này. Nhiệm vụ của Lina Park trong cảnh 3D đổi từ «dùng đủ 2 nguồn tin trong quý» (khuyến khích chi tới 1,6 tỷ/quý cho tin) thành «vào một thị trường mới khi tri thức ở đó đã ≥ 50».
+
 ## Đối thủ Kim Long Exports
 Kim Long là đối thủ cùng tăng tốc theo ván: sức hút khởi điểm `RIVAL.attrBase`, mỗi quý tăng `RIVAL.ramp`, biên lợi nhuận `RIVAL.margin`, xác suất vào thị trường mới tăng từ `RIVAL.enterBase` thêm `RIVAL.enterStep` mỗi quý. Mức hiện tại (0,8 / 0,17 / 0,30 / 0,25 / 0,055) chọn bằng mô phỏng 32 ván mỗi mức: mức cũ cho đội thắng Kim Long 74 % ván, mức mới 61 % (đội tập trung 50 %, mở rộng có kỷ luật 63 %, hãng phần mềm 100 %, đội lan man 29 %), mức mạnh hơn nữa rơi xuống 31 %. Giảng viên muốn ván dễ hay khó hơn chỉ cần đổi các số trong `js/bp-core.js`.
 

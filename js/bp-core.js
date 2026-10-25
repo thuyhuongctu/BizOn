@@ -29,5 +29,12 @@
   // (chơi tập trung 50 %, mở rộng có kỷ luật 63 %, hãng phần mềm 100 %, chơi lan man 29 %).
   var RIVAL = { attrBase: 0.8, ramp: 0.17, margin: 0.30, enterBase: 0.25, enterStep: 0.055 };
   function rivalEnterProb(q) { return RIVAL.enterBase + (q || 0) * RIVAL.enterStep; }
-  return Object.freeze({ VERSION: '2026-10-25', WEIGHTS: WEIGHTS, PROFIT_FULL: PROFIT_FULL, clamp: clamp, scoreOf: scoreOf, RIVAL: RIVAL, rivalEnterProb: rivalEnterProb });
+  // Tri thức thị trường (Uppsala: học trước rồi mới cam kết): doanh thu ở một thị trường nhân với
+  // KNOW.base + KNOW.span × tri thức/100 → 0/100 ×0,90, 67/100 ×1,00, 100/100 ×1,05. Tâm quanh 1 để
+  // không đổi mặt bằng cân bằng với Kim Long; mua tin, bán hàng (+6/quý) và liên doanh (+6/quý) đều nâng tri thức.
+  // Mô phỏng 32 ván (10-2025) với Kim Long giữ nguyên: lối có mua tin không đổi (mở rộng 63 %, tập trung 50 %),
+  // lối vào mù giảm (tập trung không mua tin 50 % → 38 %, lan man 29 % → 25 %); tổng thể 61 % → 56 %.
+  var KNOW = { base: 0.9, span: 0.15 };
+  function knowMul(k) { return KNOW.base + KNOW.span * clamp(k) / 100; }
+  return Object.freeze({ VERSION: '2026-10-25', WEIGHTS: WEIGHTS, PROFIT_FULL: PROFIT_FULL, clamp: clamp, scoreOf: scoreOf, RIVAL: RIVAL, rivalEnterProb: rivalEnterProb, KNOW: KNOW, knowMul: knowMul });
 });
