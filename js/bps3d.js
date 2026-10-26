@@ -135,7 +135,7 @@ box(4.4, 0.35, 2, 0xb58a5a, 0, 0, 0, dock);
 box(0.4, 0.42, 0.4, 0x5a4632, 1.85, 0.35, -0.75, dock); lantern(1.85, 1.08, -0.75, dock); // đôn gỗ + đèn dầu bên bến
 // Ảnh toàn thân đã tách nền sạch (giống bản v8); tâm sprite ở giữa nên y = mặt bến + nửa chiều cao.
 const sTu = sprite('assets/character/phu-sa/tu-new.png', 3.1, 1.75); sTu.position.x = -1.05; dock.add(sTu);
-const sHg = sprite('assets/character/phu-sa/huong-new.png', 3.1, 1.75); sHg.position.x = 1.0; dock.add(sHg);
+const sHg = sprite('assets/character/phu-sa/huong-new-v2.webp', 3.1, 1.75); sHg.position.x = 1.0; dock.add(sHg);
 const RIMG = ['assets/character/rivals/alpha.webp', 'assets/character/rivals/mekong.webp', 'assets/character/rivals/star-v2.webp'];
 const RC = [0x7a7f8a, 0x9a8a78, 0x3f8a44];
 const rivals = RC.map((c, k) => { const v = vessel(0, c); v.add(sprite(RIMG[k], 2.6, 2.6)); v.position.set(-40 + k * 3, 0, 34); v.visible = false; v.userData.home = v.position.clone(); return v; });
