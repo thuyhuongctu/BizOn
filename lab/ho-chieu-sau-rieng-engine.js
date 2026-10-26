@@ -298,7 +298,8 @@
     const revenue = results.reduce((x, r) => x + r.revenue, 0) + fraudRev;
     const logistics = results.reduce((x, r) => x + r.cost, 0);
     // Lãi vay: 8% trong hạn mức tín dụng, 15% cho phần vượt hạn mức; ưu tiên «tài chính» giảm một nửa
-    const lim = P.creditLimit || 8, debt = Math.max(0, -state.cash), half = pr === 'finance' ? 0.5 : 1;
+    // Hành trình 3 bậc: còn nợ cuối Bậc 2 → hạn mức tín dụng giảm (state.journey.creditLimitAdj, js/core/journey.js applyToDurian); không có thì y nguyên.
+    const lim = (P.creditLimit || 8) + ((state.journey && Number(state.journey.creditLimitAdj)) || 0), debt = Math.max(0, -state.cash), half = pr === 'finance' ? 0.5 : 1;
     const finance = (Math.min(debt, lim) * 0.08 + Math.max(0, debt - lim) * 0.15) * half;
     const profit = revenue - purchase - logistics - pCost - intelCost - (eff.cash ? -eff.cash : 0) - finance;
 

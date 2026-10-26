@@ -81,6 +81,17 @@
     } else if (nt === 't1') { $('jr-carry').innerHTML = `<p class="sub" style="margin:0">${esc(t('Bậc 1 là điểm xuất phát: chưa có hành trang. Chơi xong Bến Phù Sa, hành trang vào Bật Nghiệp sẽ hiện ở đây.', 'Level 1 is the starting point: no carry-over yet. Finish Bến Phù Sa and the carry-over into Bật Nghiệp appears here.'))}</p>`; box.hidden = false; }
     else box.hidden = true;
 
+    // nhìn lại cả hành trình (khi có ít nhất một bậc xong)
+    const doneTiers = ['t1', 't2', 't3'].filter(k => J.tierDone(p, k));
+    $('jr-timeline-box').hidden = !doneTiers.length;
+    if (doneTiers.length) {
+      const CARRY = { t2: p.carry.t2, t3: p.carry.t3 };
+      const carryLine = k => { const c = CARRY[k]; if (!c || !Object.keys(c).length) return '';
+        if (k === 't2') return t(`Mang sang Bậc 2: vốn ${c.balance} triệu ₫ (+${c.balanceBonus}), thương hiệu ×${c.brand}${c.marketBrief ? ', bản tin thị trường' : ''}`, `Carried into Level 2: capital ${c.balance}m ₫ (+${c.balanceBonus}), brand ×${c.brand}${c.marketBrief ? ', market brief' : ''}`);
+        return t(`Mang sang Bậc 3: vốn ×${c.cashMul} = ${c.cash} tỷ ₫, uy tín +${c.rep}, chống chịu ${c.resil >= 0 ? '+' : ''}${c.resil}${c.adapt != null ? ', ứng phó +' + c.adapt : ''}${c.capab != null ? ', năng lực +' + c.capab : ''}${c.linkedBonus ? ', hợp đồng liên kết' : ''}${c.net && c.net.length ? ', mạng lưới +' + c.net[0].add : ''}`, `Carried into Level 3: cash ×${c.cashMul} = ${c.cash}bn ₫, reputation +${c.rep}, resilience ${c.resil >= 0 ? '+' : ''}${c.resil}${c.adapt != null ? ', response +' + c.adapt : ''}${c.capab != null ? ', capability +' + c.capab : ''}${c.linkedBonus ? ', linked contract' : ''}${c.net && c.net.length ? ', network +' + c.net[0].add : ''}`); };
+      $('jr-timeline').innerHTML = doneTiers.map(k => { const d = C.TIER[k], next = k === 't1' ? 't2' : k === 't2' ? 't3' : null, cl = next && J.tierDone(p, k) ? carryLine(next) : '';
+        return `<li><div class="ic" aria-hidden="true">${d.icon}</div><div><b>${esc(t(`Bậc ${d.n} · `, `Level ${d.n} · `))}${esc(C.tierName(k, lang(), variant))}</b><span>${esc(resultLine(p, k))}</span>${cl ? `<em class="carry">→ ${esc(cl)}</em>` : ''}</div></li>`; }).join('');
+    }
     // chỉ số nghiên cứu
     const sm = p.summary || {}, keys = Object.keys(sm);
     $('jr-summary-box').hidden = !keys.length;
@@ -108,6 +119,18 @@
       setTimeout(() => URL.revokeObjectURL(a.href), 2000); msg('jr-msg', t('Đã xuất tệp hộ chiếu.', 'Passport file exported.'), true);
     });
     $('jr-import').addEventListener('change', e => importFile(e.target, 'jr-msg'));
+    // CSV ẩn danh một dòng cho thiết kế nghiên cứu: journeyId băm (FNV-1a), không email/tên; chỉ số và vài số liệu chính.
+    $('jr-csv').addEventListener('click', () => {
+      const p = S.load(); if (!p) return;
+      let h = 2166136261; for (const ch of String(p.journeyId)) { h ^= ch.codePointAt(0); h = Math.imul(h, 16777619); } const hid = (h >>> 0).toString(16).padStart(8, '0');
+      const t1 = p.tiers.t1 || {}, t2 = p.tiers.t2 || {}, t3 = p.tiers.t3 || {}, sm = p.summary || {};
+      const cols = ['journey_hash', 'carry_enabled', 't1_eff', 't1_rank', 't1_explore_weeks', 't1_survey_weeks', 't2_balance_end', 't2_share_end', 't2_profitable_rounds', 't2_case', 't3_variant', 't3_total', 'effectuation_index', 'causation_index', 'intl_pattern'];
+      const vals = [hid, p.carryEnabled !== false ? 1 : 0, t1.eff ?? '', t1.rank ?? '', t1.style ? t1.style.exploreWeeks : '', t1.style ? t1.style.surveyWeeks : '', t2.balanceEnd ?? '', t2.shareEnd ?? '', t2.profitableRounds ?? '', t2.caseId ?? '', t3.variant ?? '', t3.total ?? '', sm.effectuationIndex ?? '', sm.causationIndex ?? '', sm.intlPattern ?? ''];
+      const csv = cols.join(',') + '\n' + vals.map(v => String(v).replace(/[",\n]/g, ' ')).join(',') + '\n';
+      const blob = new Blob([csv], { type: 'text/csv' }), a = document.createElement('a');
+      a.href = URL.createObjectURL(blob); a.download = 'hanh-trinh-' + hid + '.csv'; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(a.href), 2000); msg('jr-msg', t('Đã xuất CSV ẩn danh.', 'Anonymised CSV exported.'), true);
+    });
     $('jr-reset').addEventListener('click', () => {
       if (!confirm(t('Xóa hộ chiếu này và bắt đầu hành trình mới? Kết quả đã ghi trong hộ chiếu sẽ mất (các ván game không bị ảnh hưởng).', 'Delete this passport and start a new journey? Results recorded in the passport are lost (game saves are not affected).'))) return;
       S.clear(); render();
