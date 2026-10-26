@@ -157,8 +157,8 @@ const dock = new THREE.Group(); dock.position.set(-4, 0, 7.5); scene.add(dock);
 box(4.4, 0.35, 2, 0xb58a5a, 0, 0, 0, dock);
 box(0.4, 0.42, 0.4, 0x5a4632, 1.85, 0.35, -0.75, dock); lantern(1.85, 1.08, -0.75, dock); // đôn gỗ + đèn dầu bên bến
 const sDuo = new THREE.Group(); sDuo.position.set(0.2, 0.35, 0.2); dock.add(sDuo); // Lumina & Tú Phan đứng ở bến nhà
-{ const h = sprite('assets/character/phu-sa/huong-new.png?v=7', 2.6, 1.3); h.position.x = -0.8; const tu = sprite('assets/character/phu-sa/tu-new.png?v=5', 2.9, 1.45); tu.position.x = 0.8; sDuo.add(h, tu); }
-function duoOnBoat(v) { const h = sprite('assets/character/phu-sa/huong-new.png?v=7', 2.2, 1.7); h.position.set(-0.55, 0, 0.1); const tu = sprite('assets/character/phu-sa/tu-new.png?v=5', 2.45, 1.82); tu.position.set(0.6, 0, -0.1); v.add(h, tu); }
+{ const h = sprite('assets/character/phu-sa/huong-new-v2.webp', 2.6, 1.3); h.position.x = -0.8; const tu = sprite('assets/character/phu-sa/tu-new.png?v=5', 2.9, 1.45); tu.position.x = 0.8; sDuo.add(h, tu); }
+function duoOnBoat(v) { const h = sprite('assets/character/phu-sa/huong-new-v2.webp', 2.2, 1.7); h.position.set(-0.55, 0, 0.1); const tu = sprite('assets/character/phu-sa/tu-new.png?v=5', 2.45, 1.82); tu.position.set(0.6, 0, -0.1); v.add(h, tu); }
 // Đội Demo Rồng Xanh (5 bạn) trên ghe mui neo gần bến
 const team5 = new THREE.Group(); team5.position.set(-14, 0.1, 3.2); scene.add(team5);
 const sTeam = sprite('assets/doi-5-nguoi.png', 4.8, 2.0); team5.add(sTeam);
