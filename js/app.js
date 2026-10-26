@@ -459,6 +459,15 @@ async function doLogin() {
       S.caseId = BizOnSeedEngine.pick(seed, 'case', ['A', 'B', 'C']);
     } catch (e) { /* giữ mặc định 'A' nếu có lỗi */ }
   }
+  // Hành trình 3 bậc (?journey=): ván mới hỏi nhận hành trang Bậc 1 → 2 trước màn mở đầu. Lớp có mã thật chỉ áp khi cờ lớp
+  // journey_carry bật (đọc một lần, chờ tối đa 2,5 giây); hộ chiếu được ghi dấu vào ván để Lumina chào theo phong cách Bậc 1.
+  if (!restored && window.BizOnJourneyLink && window.__bnJourney && window.__bnJourney.active) {
+    let controls = null;
+    try { if (window.BizOnClassSync && BizOnClassSync.fetchControls) controls = await Promise.race([BizOnClassSync.fetchControls(classId, team), new Promise(r => setTimeout(() => r(null), 2500))]); } catch (e) {}
+    const applied = await BizOnJourneyLink.offerCarry(window.__bnJourney, { classControls: controls });
+    BizOnJourneyLink.stamp(S, window.__bnJourney, applied);
+    if (applied) BizOnJourney.applyToTier2(S, { applied });
+  }
   save();
   $('screen-login').classList.remove('active');
   enterApp();
@@ -899,6 +908,7 @@ function maybeShowEventIntro() {
           <div class="speech-tail"></div>
           <p class="text-[10px] font-extrabold text-primary mb-1">JE M'APPELLE HƯƠNG · ADVISOR</p>
           <p class="text-sm text-deep-teal italic leading-relaxed">"${ev.luminaMsg}"</p>
+          ${window.BizOnJourneyLink ? BizOnJourneyLink.introExtrasHtml(S) : ''}
         </div>
       </div>
       ${bad ? `
@@ -1819,7 +1829,7 @@ function showRoundResult(r) {
     </div>`;
   const proceed = () => {
     div.remove(); renderAll();
-    if (S.finished) { currentReport = 'season'; showTab('reports'); createConfetti(); }
+    if (S.finished) { journeyFinish2(); currentReport = 'season'; showTab('reports'); createConfetti(); }
     else if (r.isNewPeak) showVictory(r);
     else maybeShowEventIntro();
   };
@@ -2575,7 +2585,18 @@ function renderRivalCostReport(body) {
 }
 
 // ---------- 🏁 Tổng kết mùa giải – báo cáo năm kiểu Stitch: hero, xếp hạng, thành tựu ----------
+// Hành trình 3 bậc: ghi Bậc 2 vào hộ chiếu khi ván xong (một lần) và chèn khối «Sang Bậc 3» lên đầu báo cáo mùa.
+function journeyFinish2() { if (window.BizOnJourneyLink && window.__bnJourney && S) BizOnJourneyLink.finish(window.__bnJourney, S, { appVersion: 'bizon-bn-v1' }); }
+window.__bnJourneyFinish = journeyFinish2;
+function journeyEndBlock(body) {
+  if (!body || !window.BizOnJourneyLink || !window.__bnJourney || !window.__bnJourney.id || body.querySelector('#ft-journey-next')) return;
+  const html = BizOnJourneyLink.endHtml(window.__bnJourney); if (html) body.insertAdjacentHTML('afterbegin', html);
+}
 function renderSeasonReport(body) {
+  renderSeasonReportBody(body);
+  if (S && S.finished) { journeyFinish2(); journeyEndBlock(body); }
+}
+function renderSeasonReportBody(body) {
   if (!S.history.length) {
     body.innerHTML = `<div class="clay-card p-8 text-center text-sm text-deep-teal/50">${T('Chưa có dữ liệu – hãy hoàn thành vòng đầu tiên!', 'No data yet – complete the first round!')}</div>`;
     return;

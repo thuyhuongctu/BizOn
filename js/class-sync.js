@@ -42,7 +42,9 @@
     if (ctl && ctl.message && ctl.message !== lastMsg) { lastMsg = ctl.message; toast(ctl.message); }
     if (dirty) { try { save(); renderAll(); } catch (e) {} }
   }
-  window.BizOnClassSync = { tick, get controls() { return ctl; } };
+  // Đọc controls của lớp một lần, không đụng trạng thái ván (dùng trước khi áp hành trang hành trình 3 bậc). null nếu backend tắt/lỗi/không mã lớp.
+  async function fetchControls(code, team) { code = String(code || '').trim().toUpperCase(); team = String(team || '').trim(); if (!on() || !code || !team || code === 'DEMO-2026') return null; try { const j = await feed(code, team); return (j && j.controls) || null; } catch (e) { return null; } }
+  window.BizOnClassSync = { tick, fetchControls, get controls() { return ctl; } };
   setTimeout(tick, 2500); setInterval(tick, 20000);
   addEventListener('visibilitychange', () => { if (!document.hidden) tick(); });
 })();
