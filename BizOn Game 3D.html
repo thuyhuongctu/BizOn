@@ -52,12 +52,24 @@
   .kpi b{font:800 18px/1.15 "Baloo 2",sans-serif;color:#2c3552;white-space:nowrap}
   .ev{display:inline-flex;gap:4px;align-items:center;font-weight:600}
   .ev.bad{color:#c0443a}.ev.warn{color:#b8741a}.ev.good{color:#3f8a44}
-  #rail{top:96px;right:14px;bottom:132px;flex-direction:column;flex-wrap:nowrap;align-items:stretch;gap:6px;overflow-y:auto;scrollbar-width:none;padding:2px 2px 6px}
+  #rail{top:96px;right:14px;flex-direction:column;flex-wrap:nowrap;align-items:stretch;gap:6px;padding:2px 2px 6px}
+  /* Dải nút gom 5 mục: Tổng quan · Lumina · 3 nhóm (Phân tích, Công ty, Thêm). Nút nhóm .rgb mở bảng con .rgm bung sang trái (điện thoại: bung lên). */
+  #rail .rg{position:relative;display:flex;flex-direction:column}
+  #rail .rgm{display:none;position:absolute;top:0;right:calc(100% + 10px);flex-direction:column;gap:6px;background:#fbf6ee;border:3px solid #e6d6bf;border-radius:18px;padding:8px;box-shadow:0 6px 0 #d9c5a8;min-width:200px;max-width:calc(100vw - 24px);z-index:27}
+  #rail .rg.open .rgm{display:flex} #rail .rg.open>.rgb{background:#e3f1ef;border-color:#2f8a8c}
+  body.railopen #rail{z-index:28} /* bảng con đang mở phải nằm trên nút chính/ô Việc tiếp theo (cùng z-index 5, vẽ sau) */
+  #rail .rgm .btn span{display:inline!important} #rail .rgb::after{content:'‹';margin-left:auto;font-weight:800;color:#6b6f7a}
+  body.night #rail .rgm{background:#232c4d;border-color:#35406a} body.night #rail .rg.open>.rgb{background:#2f8a8c;border-color:#23706f}
   #rail .btn{font-size:13px;padding:5px 10px;justify-content:flex-start;position:relative}
   #rail .btn i{font-style:normal;width:20px;text-align:center}
   .badge{position:absolute;top:-6px;right:-6px;background:#d6453a;color:#fff;border-radius:999px;font:800 11px/18px "Baloo 2";min-width:18px;height:18px;text-align:center;padding:0 4px;box-sizing:border-box;display:none}
   #cta{bottom:70px;left:50%;transform:translateX(-50%);flex-direction:column;gap:4px;align-items:center}
   #cta .btn{font-size:18px;padding:10px 22px;border-radius:20px}
+  /* Ô «Việc tiếp theo»: 3 việc của một vòng (đọc biến cố → chốt quyết định → xem kết quả); việc đang làm tô cam, việc xong gạch bỏ. */
+  #next{display:flex;gap:4px 10px;align-items:center;flex-wrap:wrap;justify-content:center;background:rgba(251,246,238,.94);border:3px solid #e6d6bf;border-radius:16px;padding:4px 12px;box-shadow:0 4px 0 #d9c5a8;font:700 12px "Be Vietnam Pro",sans-serif;color:#6b6f7a;max-width:calc(100vw - 28px)}
+  #next b{font:800 10px "Baloo 2",sans-serif;letter-spacing:.08em;color:#1f6f8a}
+  #next .st{border:0;background:none;padding:0;font:inherit;color:inherit;cursor:default} #next .st.done{color:#3f8a44;text-decoration:line-through} #next .st.now{color:#c8641c} #next .st.link{cursor:pointer;text-decoration:underline dotted}
+  body.night #next{background:rgba(35,44,77,.94);border-color:#35406a;color:#b9bfd6} body.night #next b{color:#8fd0ee}
   #cta small{font-size:12px;background:rgba(251,246,238,.92);border-radius:10px;padding:2px 10px;color:#4a4f5c}
   body.night #cta small{background:rgba(35,44,77,.92);color:#d9ddeb}
   body.night .kpi{background:#232c4d;border-color:#35406a;box-shadow:0 4px 0 #11162a} body.night .kpi b{color:#f1e6d3} body.night .kpi small{color:#b9bfd6}
@@ -67,7 +79,7 @@
   #login3d{position:fixed;z-index:40;inset:0;display:none;pointer-events:none;background:#2a2340 url('assets/illustrations/rong-bay-doi-bizon.webp') center/cover no-repeat}
   @media (max-width:600px){ #login3d, #boot{background-position:58% 22% !important} } /* điện thoại dọc: giữ rồng + nhân vật trong khung thay vì nửa khuôn mặt */
   body.login3d #login3d{display:block} body.login3d #frame{visibility:hidden} body.login3d .hud,body.login3d #zones,body.login3d #more{display:none!important}
-  body.diorama #cta,body.diorama #rail [data-tab]{display:none!important}
+  body.diorama #cta,body.diorama #rail [data-tab],body.diorama #rgCo{display:none!important}
   #login3d .card{pointer-events:auto;position:absolute;left:clamp(12px,4vw,56px);top:50%;transform:translateY(-50%);width:min(420px,calc(100vw - 24px));max-height:calc(100vh - 24px);overflow:auto;box-sizing:border-box;background:#fbf6ee;border:4px solid #e6d6bf;border-radius:28px;box-shadow:0 10px 0 #d9c5a8,0 30px 60px rgba(20,28,56,.25);padding:22px;display:flex;flex-direction:column;gap:9px;font-family:'Be Vietnam Pro',sans-serif;color:#1f3f4a}
   #l3Globe{position:absolute;right:22px;top:22px;width:150px;height:150px;pointer-events:none;opacity:.9}
   @media (max-width:760px){#l3Globe{display:none}}
@@ -84,7 +96,7 @@
   @media (max-width:760px){#login3d .card{top:auto;bottom:0;left:0;transform:none;width:100%;border-radius:26px 26px 0 0;max-height:78vh} #login3d .rtip{display:none}}
   #frame.sheet,#frame.hide{top:12px;right:12px;bottom:12px;width:min(480px,46vw);border-radius:26px;border:4px solid #e6d6bf;box-shadow:0 20px 60px rgba(20,28,56,.35);box-sizing:border-box}
   #frame.hide{transform:translateX(calc(100% + 40px));visibility:hidden}
-  @media (max-height:720px) and (min-width:761px){#rail .btn span{display:none}#rail .btn{justify-content:center}}
+  @media (max-height:720px) and (min-width:761px){#rail>.btn span,#rail .rgb span{display:none}#rail>.btn,#rail .rgb{justify-content:center}#rail .rgb::after{display:none}}
   #sheetX{position:fixed;z-index:31;top:92px;right:calc(min(480px,46vw) + 24px);display:none}
   body.sheet #sheetX{display:flex}
   body.sheet #rail,body.sheet #cta{display:none}
@@ -95,17 +107,18 @@
     body.sheet #top{display:none}
     .brand{padding:6px 10px}.brand b{font-size:15px}
     .kpi{min-width:0;padding:3px 8px}.kpi b{font-size:15px}
-    #rail{top:auto;bottom:118px;left:10px;right:10px;flex-direction:row;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}
-    #rail .btn span{display:none}
+    #rail{top:auto;bottom:118px;left:10px;right:10px;flex-direction:row;flex-wrap:nowrap;justify-content:center}
+    #rail>.btn span,#rail .rgb span{display:none} #rail .rgb::after{display:none}
+    #rail .rgm{top:auto;bottom:calc(100% + 10px);right:auto;left:50%;transform:translateX(-50%)} #rail #rgMore .rgm{left:auto;right:0;transform:none}
     #cta{bottom:168px}
-    #cta .btn{font-size:16px}
+    #cta .btn{font-size:16px} #cta small{display:none} /* điện thoại: ô Việc tiếp theo đã nói rõ việc cần làm, bỏ dòng phụ cho đỡ chật */
   }
   @media (max-width:380px){
     #login3d .card{padding:12px 12px 14px;gap:4px;max-height:84vh} #login3d h1{font-size:21px} #login3d .card>div:first-child img{width:42px!important}
     #login3d .card>p{font-size:12px} #login3d .card>p+p{display:none} #login3d label{font-size:12px;margin-top:2px} #login3d input{padding:8px 10px;font-size:14px}
     #login3d .roles{gap:4px} #login3d .role{padding:2px 1px 4px;border-width:2px;border-radius:12px;font-size:10px} #login3d .role img{height:36px}
     #login3d .go{padding:10px;font-size:16px;margin-top:4px} #login3d .alt{padding:7px;font-size:13px} #login3d .links{font-size:12px}
-    #rail{bottom:108px;left:6px;right:6px;gap:4px} #rail .btn{padding:4px 7px;font-size:12px;min-width:40px;min-height:40px;justify-content:center} #rail .btn i{width:auto;font-size:17px}
+    #rail{bottom:108px;left:6px;right:6px;gap:4px} #rail>.btn,#rail .rgb{padding:4px 7px;font-size:12px;min-width:40px;min-height:40px;justify-content:center} #rail>.btn i,#rail .rgb i{width:auto;font-size:17px}
     #zones{left:6px;right:6px;bottom:10px} #zones .btn{font-size:11px;padding:5px 9px}
     #cta{bottom:156px} #cta .btn{font-size:14px;padding:8px 14px}
     .brand b{font-size:13px} .kpi{padding:2px 6px} .kpi b{font-size:13px}
@@ -167,6 +180,12 @@
   #evc .dots i{width:10px;height:10px;border-radius:50%;background:#e6d6bf}
   #evc .dots i.on{background:#2f8a8c}
   #evc .row{display:flex;gap:8px}#evc .row .btn{flex:1}
+  #evc .pic{width:100%;height:118px;object-fit:cover;border-radius:16px;border:3px solid #e6d6bf;background:#fff}
+  #evc .song{display:flex;gap:8px;align-items:center;font-size:12px;color:#4a4f5c;background:#fffaf2;border:2px dashed #e6d6bf;border-radius:12px;padding:6px 10px} #evc .song b{color:#1f6f8a} #evc .song .btn{font-size:12px;padding:4px 10px;margin-left:auto}
+  #evc .cards{display:flex;gap:10px;justify-content:center;margin:4px 0} #evc .cards i{font:800 26px/1 "Baloo 2",sans-serif;font-style:normal;width:56px;height:72px;display:flex;align-items:center;justify-content:center;border-radius:14px;border:3px solid #e6d6bf;background:#fffaf2;color:#b9a98c;animation:cdFlip .5s ease both}
+  #evc .cards i:nth-child(2){animation-delay:.15s} #evc .cards i:nth-child(3){animation-delay:.3s}
+  #evc .cards i.hit{background:#2f8a8c;border-color:#23706f;color:#fff;box-shadow:0 4px 0 #1b5a5a;animation:cdFlip .5s ease both,cdHit .6s .7s ease both}
+  @keyframes cdFlip{from{transform:rotateY(90deg);opacity:0}to{transform:none;opacity:1}} @keyframes cdHit{0%{transform:scale(1)}50%{transform:scale(1.18) rotate(-4deg)}100%{transform:scale(1.08)}}
   #evc .btn.done{opacity:.6}
   #bub{position:fixed;z-index:24;transform:translate(-50%,-100%);display:none;pointer-events:none;font:800 13px "Baloo 2",sans-serif;background:#fff;border:3px solid #2f8a8c;color:#1f6f8a;border-radius:14px;padding:2px 10px;white-space:nowrap}
   #bub:after{content:"";position:absolute;left:50%;bottom:-9px;margin-left:-6px;border:6px solid transparent;border-top-color:#2f8a8c}
@@ -175,7 +194,8 @@
   body.room #room{display:block}
   body.room #top,body.room #cta,body.room #zones,body.room #sheetX,body.room #tip,body.room #evc{display:none!important}
   body.room #rail{display:flex!important;top:auto;left:14px;right:auto;bottom:14px;z-index:38}
-  body.room #rail>.btn:not(#moreBtn){display:none!important}
+  body.room #rail>*:not(#rgMore){display:none!important}
+  body.room #rail .rgm{right:auto;left:calc(100% + 10px);top:auto;bottom:0}
   body.room #more{z-index:38!important;right:auto!important;left:14px!important;bottom:56px!important}
   #room .rh{position:absolute;top:14px;left:14px;right:14px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
   #room .rh>*{pointer-events:auto}
@@ -314,26 +334,41 @@
   </div>
 </div>
 <div id="rail" class="hud">
-  <button class="btn" id="musicBtn"><i>🎵</i><span>Nhạc nền</span></button>
   <button class="btn" id="homeBtn"><i>🏠</i><span data-en="Overview">Tổng quan</span></button>
-  <a class="btn" id="instructorBtn" href="Trang Giang Vien.dc.html" target="_blank" rel="noopener"><i>👩‍🏫</i><span data-en="Instructor">Giảng viên</span></a>
   <button class="btn" data-tab="advisor"><i>🤖</i><span>Lumina</span></button>
-  <button class="btn" data-tab="reports"><i>📊</i><span data-en="Reports">Báo cáo</span></button>
-  <button class="btn" data-tab="shop"><i>🛒</i><span data-en="Shop">Cửa hàng</span></button>
-  <button class="btn" data-tab="skills"><i>🌳</i><span data-en="Skills">Kỹ năng</span></button>
-  <button class="btn" data-tab="missions"><i>📋</i><span data-en="Missions">Nhiệm vụ</span><b class="badge" id="bMis"></b></button>
-  <button class="btn" data-tab="achievements"><i>🎖️</i><span data-en="Achievements">Thành tựu</span></button>
-  <button class="btn" data-tab="leaderboard"><i>🏆</i><span data-en="Leaderboard">Xếp hạng</span></button>
-  <button class="btn" data-tab="minigame"><i>🏭</i><span>Mini-game</span></button>
-  <button class="btn" id="openRes"><i>🚩</i><span data-en="Flag map">Bản đồ cờ</span></button>
-  <button class="btn" data-tab="profile"><i>👤</i><span data-en="Profile">Hồ sơ</span></button>
-  <button class="btn" data-tab="journal"><i>📔</i><span data-en="Journal">Nhật ký</span></button>
-  <button class="btn" data-tab="settings"><i>⚙️</i><span data-en="Settings">Cài đặt</span></button>
-  <button class="btn" id="tourBtn"><i>❓</i><span data-en="Guide">Hướng dẫn</span></button>
-  <button class="btn" id="langBtn"><i>🌐</i><span>Tiếng Việt</span></button>
-  <button class="btn" id="night">🌙 Ban đêm</button>
-  <button class="btn" id="lowBtn"><i>⚡</i><span>Chi tiết thấp</span></button>
-  <button class="btn" id="moreBtn"><i>🧱</i><span data-en="3D collection">Bộ sưu tập 3D</span></button>
+  <div class="rg" id="rgPlan">
+    <button class="btn rgb" aria-expanded="false" aria-controls="rgmPlan"><i>📊</i><span data-en="Analysis">Phân tích</span></button>
+    <div class="rgm" id="rgmPlan">
+      <button class="btn" data-tab="reports"><i>📊</i><span data-en="Reports">Báo cáo</span></button>
+      <button class="btn" id="openRes"><i>🚩</i><span data-en="Flag map">Bản đồ cờ</span></button>
+      <button class="btn" data-tab="leaderboard"><i>🏆</i><span data-en="Leaderboard">Xếp hạng</span></button>
+      <button class="btn" data-tab="journal"><i>📔</i><span data-en="Journal">Nhật ký</span></button>
+    </div>
+  </div>
+  <div class="rg" id="rgCo">
+    <button class="btn rgb" aria-expanded="false" aria-controls="rgmCo"><i>🏢</i><span data-en="Company">Công ty</span><b class="badge" id="bCo"></b></button>
+    <div class="rgm" id="rgmCo">
+      <button class="btn" data-tab="missions"><i>📋</i><span data-en="Missions">Nhiệm vụ</span><b class="badge" id="bMis"></b></button>
+      <button class="btn" data-tab="shop"><i>🛒</i><span data-en="Shop">Cửa hàng</span></button>
+      <button class="btn" data-tab="skills"><i>🌳</i><span data-en="Skills">Kỹ năng</span></button>
+      <button class="btn" data-tab="achievements"><i>🎖️</i><span data-en="Achievements">Thành tựu</span></button>
+      <button class="btn" data-tab="minigame"><i>🏭</i><span>Mini-game</span></button>
+      <button class="btn" data-tab="profile"><i>👤</i><span data-en="Profile">Hồ sơ</span></button>
+    </div>
+  </div>
+  <div class="rg" id="rgMore">
+    <button class="btn rgb" aria-expanded="false" aria-controls="rgmMore"><i>⚙️</i><span data-en="More">Thêm</span></button>
+    <div class="rgm" id="rgmMore">
+      <button class="btn" id="tourBtn"><i>❓</i><span data-en="Guide">Hướng dẫn</span></button>
+      <button class="btn" id="musicBtn"><i>🎵</i><span>Nhạc nền</span></button>
+      <button class="btn" id="langBtn"><i>🌐</i><span>Tiếng Việt</span></button>
+      <button class="btn" id="night">🌙 Ban đêm</button>
+      <button class="btn" id="lowBtn"><i>⚡</i><span>Chi tiết thấp</span></button>
+      <button class="btn" data-tab="settings"><i>⚙️</i><span data-en="Settings">Cài đặt</span></button>
+      <a class="btn" id="instructorBtn" href="Trang Giang Vien.dc.html" target="_blank" rel="noopener"><i>👩‍🏫</i><span data-en="Instructor">Giảng viên</span></a>
+      <button class="btn" id="moreBtn"><i>🧱</i><span data-en="3D collection">Bộ sưu tập 3D</span></button>
+    </div>
+  </div>
 </div>
 <div id="more" style="position:fixed;z-index:26;right:14px;bottom:70px;display:none;flex-direction:column;gap:6px;background:#fbf6ee;border:3px solid #e6d6bf;border-radius:18px;padding:10px;box-shadow:0 6px 0 #d9c5a8">
   <a class="btn" href="Characters 3D.html" data-en="🧍 3D characters">🧍 Nhân vật 3D</a>
@@ -344,7 +379,7 @@
   <a class="btn" href="BizOn Office Game.html" data-en="🚶 2D office (walk & talk)">🚶 Văn phòng 2D (đi lại & hội thoại)</a>
   <a class="btn" href="game.html" data-en="📱 Original 2D version (game.html)">📱 Bản 2D gốc (game.html)</a>
 </div>
-<div id="cta" class="hud"><button class="btn primary" id="ctaBtn" data-en="🎯 Make decisions">🎯 Ra quyết định</button><small id="ctaSub" data-en="Loading the game…">Đang tải trò chơi…</small></div>
+<div id="cta" class="hud"><div id="next" hidden><b data-en="NEXT UP">VIỆC TIẾP THEO</b><button type="button" class="st" id="ns1">1 · <span data-en="Read the event">Đọc biến cố</span></button><button type="button" class="st" id="ns2">2 · <span data-en="Lock decisions">Chốt quyết định</span></button><button type="button" class="st" id="ns3">3 · <span data-en="See results">Xem kết quả</span></button></div><button class="btn primary" id="ctaBtn" data-en="🎯 Make decisions">🎯 Ra quyết định</button><small id="ctaSub" data-en="Loading the game…">Đang tải trò chơi…</small></div>
 <div id="zones" class="hud"></div>
 <button class="btn" id="sheetX" data-en="✕ Back to HQ">✕ Về trụ sở</button>
 <div id="evc" role="dialog" aria-label="Biến cố thị trường"></div><div id="bub"></div>
@@ -850,6 +885,13 @@ if (DIORAMA) {
 ['l3Email', 'l3Team', 'l3Class', 'l3Sync'].forEach(id => document.getElementById(id).addEventListener('keydown', e => { if (e.key === 'Enter') l3Enter(false); }));
 document.getElementById('ctaBtn').onclick = primary;
 document.querySelectorAll('#rail [data-tab]').forEach(b => b.onclick = () => window.__openTab(b.dataset.tab));
+// Dải nút gom nhóm: bấm nút nhóm mở/đóng bảng con; bấm một nút trong bảng hoặc bấm ra ngoài thì đóng.
+{ const rail = document.getElementById('rail'), groups = [...rail.querySelectorAll('.rg')];
+  const closeGroups = keep => { groups.forEach(g => { if (g !== keep) { g.classList.remove('open'); g.querySelector('.rgb').setAttribute('aria-expanded', 'false'); } }); document.body.classList.toggle('railopen', groups.some(g => g.classList.contains('open'))); };
+  groups.forEach(g => { const b = g.querySelector('.rgb'); b.onclick = () => { const on = !g.classList.contains('open'); closeGroups(g); g.classList.toggle('open', on); b.setAttribute('aria-expanded', String(on)); document.body.classList.toggle('railopen', on); }; });
+  rail.addEventListener('click', e => { if (e.target.closest('.rgm .btn')) closeGroups(); });
+  addEventListener('pointerdown', e => { if (!rail.contains(e.target)) closeGroups(); });
+  window.__railGroups = closeGroups; }
 document.getElementById('homeBtn').onclick = () => window.__openHome();
 document.getElementById('tourBtn').onclick = () => { window.__closeSheet(); tour3D(0); };
 function bridge() {
@@ -867,6 +909,10 @@ function bridge() {
   const oTM = W.renderTeamMeeting; W.renderTeamMeeting = Object.assign(function () { const x = oTM.apply(this, arguments); const box = W.document.getElementById('team-meeting');
     if (box && box.firstElementChild && !box.querySelector('.tm3d')) box.firstElementChild.insertAdjacentHTML('afterbegin', '<button class="tm3d clay-btn w-full bg-deep-teal text-white font-display font-bold py-3 mb-3" onclick="parent.__meeting3D()">' + T('🎥 Họp đội trong trụ sở 3D', '🎥 Team meeting in the 3D HQ') + '</button>'); return x; }, oTM);   // giữ cờ __ml của js/member-log.js để không bị bọc thêm lớp
   W.maybeShowEventIntro = event3D;
+  // Truyện mở đầu (6 slide) và bốc thăm đầu mùa của game.html là hai lớp phủ toàn khung che mất trụ sở 3D.
+  // Bản 3D kể truyện ngay trong tour của Lumina (T3) và bốc thăm trong bảng trên trụ sở (caseDraw3D), nên tắt hai màn 2D.
+  W.showIntro = cb => { try { W.localStorage.setItem('bizon-intro-seen', '1'); } catch (e) {} if (cb) cb(); };
+  W.maybeShowCaseDraw = cb => { if (cb) cb(); };
   // Màn «Lên cấp» (app.js gọi 0,9 giây sau Commit) mở trong iframe đúng lúc Đấu trường 3D đang chạy nên bị che:
   // giữ lại, hiện sau khi người chơi xem xong kết quả vòng và bản đồ.
   const oLU = W.showLevelUp; if (typeof oLU === 'function') W.showLevelUp = function (lv) {
@@ -907,7 +953,8 @@ function hud() {
   const btn = document.getElementById('ctaBtn'), sub = document.getElementById('ctaSub');
   btn.textContent = s.finished ? T('🏁 Tổng kết mùa giải', '🏁 Season wrap-up') : s.committed ? T('⏳ Đang mô phỏng…', '⏳ Simulating…') : T(`🎯 Ra quyết định · Vòng ${s.round}/6`, `🎯 Make decisions · Round ${s.round}/6`);
   sub.textContent = s.finished ? T('Xem xếp hạng chung cuộc, thành tựu và chứng nhận', 'See the final rankings, achievements and certificate') : T('Chốt giá, marketing, sản lượng cùng cả đội rồi khóa quyết định', 'Settle price, marketing and output with the team, then lock in the decisions');
-  const mis = ev('MISSIONS_LIST().filter(m=>missionStatus(S,m)==="ready").length') || 0, bm = document.getElementById('bMis'); bm.textContent = mis; bm.style.display = mis ? 'block' : 'none';
+  const mis = ev('MISSIONS_LIST().filter(m=>missionStatus(S,m)==="ready").length') || 0; ['bMis', 'bCo'].forEach(id => { const bm = document.getElementById(id); bm.textContent = mis; bm.style.display = mis ? 'block' : 'none'; });
+  paintNext(s);
   const cnt = { star: 0, elephant: 0, wolf: 0, peacock: 0 }; cq.forEach(c => { const k = c.win ? 'star' : KEY_OF[c.winner]; if (k) cnt[k]++; });
   flags.forEach(f => f.userData.goal = 0.8 + cnt[f.userData.team] * 0.12);
   const n = (s.history || []).length;
@@ -915,6 +962,14 @@ function hud() {
   lastHist = n;
 }
 setInterval(hud, 500);
+// Ô «Việc tiếp theo» dưới nút chính: việc 1 bấm được để xem lại thẻ biến cố của vòng.
+function paintNext(s) {
+  const box = document.getElementById('next'); if (!s) return; box.hidden = !!s.finished || !!s.committed;
+  const cur = s.eventShownRound < s.round ? 0 : !s.committed ? 1 : 2;
+  ['ns1', 'ns2', 'ns3'].forEach((id, i) => { const el = document.getElementById(id); el.className = 'st' + (i < cur ? ' done' : i === cur ? ' now' : '') + (i === 0 && cur > 0 ? ' link' : ''); });
+}
+document.getElementById('ns1').onclick = () => { if (GS && GS.eventShownRound >= GS.round && !GS.committed) event3D(true); };
+document.getElementById('ns2').onclick = () => { if (GS && !GS.committed && GS.eventShownRound >= GS.round) window.__openTab('decisions'); };
 
 // ================= PHÒNG 3D: Cửa hàng · Kỹ năng · Thành tựu · Xếp hạng · Mini-game =================
 const ROOM3D = { shop: 1, skills: 1, achievements: 1, leaderboard: 1, minigame: 1 };
@@ -1133,25 +1188,54 @@ function flyLumina() { const L = actors.find(a => a.o.userData.cid === 'lumina')
 
 // ================= HƯỚNG DẪN LẦN ĐẦU 3D (LUMINA, 3 BƯỚC) =================
 const T3_KEY = 'bizon-tour3d-seen';
+const musicOn = () => { try { return localStorage.getItem('bizon-music') !== 'off'; } catch (e) { return true; } };
+const THEME_SONG = 'Mekong Sunfire · Rise With The River';
+// Tour của Lumina gộp luôn truyện mở đầu (trước đây là 6 slide toàn khung của game.html): 3 bước, mỗi bước camera bay tới đúng chỗ trong trụ sở.
 const T3 = [
-  { cam: () => flyLumina(), img: 'assets/character/solid/lumina-tex.webp', title: ['👋 Chào mừng đến trụ sở!', '👋 Welcome to headquarters!'], text: ['Mình là Lumina, cố vấn của đội. Đây là trụ sở BizOn ở Cần Thơ. Kéo để xoay, chụm hai ngón để phóng to. Chạm vào một khu hoặc chọn ở thanh khu vực để đi tới đó.', 'I am Lumina, the team advisor. This is BizOn headquarters in Can Tho. Drag to rotate, pinch to zoom. Tap an area, or pick one on the zone bar, to go there.'] },
-  { cam: () => { fly(1); zb.children[1].click(); }, img: 'assets/character/csuite/ceo-smile.webp', title: ['🗳️ Bàn quyết định của CEO', '🗳️ The CEO\'s decision table'], text: ['Mỗi vòng, cả đội họp tại đây để chốt <b>giá bán, sản lượng, marketing</b>. Nghe đề xuất của CFO, CMO, COO, SEC rồi bấm <b>Commit</b>. Đã khóa thì không sửa lại được.', 'Each round the whole team meets here to settle <b>price, output and marketing</b>. Hear the CFO, CMO, COO and SEC proposals, then press <b>Commit</b>. Once locked, nothing can be changed.'] },
-  { cam: () => { fly(0); zb.children[0].click(); }, img: 'assets/character/teo-soi-cut.webp', title: ['🚩 Cắm cờ khắp Việt Nam', '🚩 Plant flags across Vietnam'], text: ['Sau mỗi vòng, bản đồ cho biết ai chiếm tỉnh đó. Cờ BizOn chỉ cắm khi đội <b>dẫn thị phần và có lãi</b>. Sáu vòng, từ Cần Thơ ra Hà Nội. Bắt đầu thôi!', 'After each round the map shows who holds that province. A BizOn flag is planted only when the team <b>leads market share and makes a profit</b>. Six rounds, from Can Tho to Hanoi. Let\'s begin!'] }];
+  { cam: () => flyLumina(), img: 'assets/character/solid/lumina-tex.webp', pic: 'assets/illustrations/game/workshop-lumina.webp', title: ['👋 Chào mừng đến trụ sở!', '👋 Welcome to headquarters!'],
+    text: ['Mình là Lumina, cố vấn của đội. Việt Nam 2026 đang vươn mình «Hóa Rồng», và đội bạn điều hành một <b>xưởng đồ chơi đất sét ở Cần Thơ</b>: vốn khởi điểm <b>500 triệu ₫</b>, sản phẩm chủ lực «Bộ linh vật đất sét Việt» giá tham chiếu 150.000 ₫/bộ. Đây là trụ sở: kéo để xoay, chụm hai ngón để phóng to, chạm vào một khu để đi tới đó.',
+      'I am Lumina, the team advisor. Vietnam 2026 is rising to become a "Dragon", and your team runs a <b>clay-toy workshop in Can Tho</b>: <b>500 million ₫</b> in starting capital, flagship product the «Vietnamese Clay Mascot Set» at a 150,000 ₫ reference price. This is headquarters: drag to rotate, pinch to zoom, tap an area to go there.'] },
+  { cam: () => { fly(1); zb.children[1].click(); }, img: 'assets/character/csuite/ceo-smile.webp', pic: 'assets/illustrations/game/team-portrait.webp', title: ['🗳️ Bàn quyết định của C-Suite', '🗳️ The C-Suite decision table'],
+    text: ['Mỗi vòng là một quý kinh doanh. Cả đội họp tại đây để chốt <b>giá bán, sản lượng, marketing</b>: CEO chèo lái, CFO giữ két sắt, CMO đánh chiếm thị trường, COO vận hành xưởng, SEC ghi biên bản. Nghe đề xuất của từng người rồi bấm <b>Commit</b>. Đã khóa thì không sửa lại được.',
+      'Each round is a business quarter. The whole team meets here to settle <b>price, output and marketing</b>: the CEO steers, the CFO guards the cash box, the CMO wins the market, the COO runs the workshop, the SEC keeps the minutes. Hear each proposal, then press <b>Commit</b>. Once locked, nothing can be changed.'] },
+  { cam: () => { fly(0); zb.children[0].click(); }, img: 'assets/character/teo-soi-cut.webp', pic: 'assets/illustrations/game/mekong-capital.webp', title: ['🚩 6 vòng · 6 tỉnh thành', '🚩 6 rounds · 6 provinces'],
+    text: ['Cần Thơ → TP. Hồ Chí Minh → Khánh Hòa → Đà Nẵng → Thanh Hóa → Hà Nội. Sau mỗi vòng, bản đồ cho biết ai chiếm tỉnh đó: cờ BizOn chỉ cắm khi đội <b>dẫn thị phần VÀ có lãi</b>. Mục tiêu: nhiều cờ nhất, TOP 1 thị phần và chứng nhận hoàn thành. Chinh phục xong Việt Nam thì Bậc 3 · ra biển lớn đang chờ. Bắt đầu thôi!',
+      'Can Tho → Ho Chi Minh City → Khanh Hoa → Da Nang → Thanh Hoa → Hanoi. After each round the map shows who holds that province: a BizOn flag is planted only when the team <b>leads market share AND makes a profit</b>. Goal: the most flags, #1 market share and the completion certificate. Conquer Vietnam and Level 3 · going global awaits. Let\'s begin!'] }];
 let t3i = 0;
 function tour3D(i = 0) {
-  t3i = i; const st = T3[i]; if (!st) return; st.cam();
-  showPanel(`<span class="tag">${T('🤖 LUMINA HƯỚNG DẪN', '🤖 LUMINA GUIDE')} · ${i + 1}/3</span>
+  t3i = i; const st = T3[i]; if (!st) return; st.cam(); const last = i === T3.length - 1, pend = drawPending();
+  showPanel(`<span class="tag">${T('🤖 LUMINA HƯỚNG DẪN', '🤖 LUMINA GUIDE')} · ${i + 1}/${T3.length}</span>
+    ${st.pic ? `<img class="pic" src="${st.pic}" alt="">` : ''}
     <div class="who"><img src="${st.img}" alt=""><div><b>${TL(st.title)}</b></div></div>
     <p class="d">${TL(st.text)}</p>
+    ${i === 0 ? `<div class="song">🎵 <span>${T('Nhạc chủ đề', 'Theme song')}: <b>${THEME_SONG}</b></span>${musicOn() ? '' : '<button class="btn" id="t3Music">▶ ' + T('Bật nhạc', 'Play') + '</button>'}</div>` : ''}
     <div class="dots">${T3.map((_, k) => `<i class="${k === i ? 'on' : ''}"></i>`).join('')}</div>
-    <div class="row"><button class="btn" id="t3Prev" ${i ? '' : 'disabled'}>${T('‹ Trước', '‹ Back')}</button>${i < 2 ? '<button class="btn primary" id="t3Next">' + T('Tiếp ›', 'Next ›') + '</button>' : '<button class="btn primary" id="t3End">' + T('🎯 Vào bàn quyết định', '🎯 Go to the decision table') + '</button>'}</div>
+    <div class="row"><button class="btn" id="t3Prev" ${i ? '' : 'disabled'}>${T('‹ Trước', '‹ Back')}</button>${!last ? '<button class="btn primary" id="t3Next">' + T('Tiếp ›', 'Next ›') + '</button>' : '<button class="btn primary" id="t3End">' + (pend ? T('🎲 Bốc thăm đầu mùa', '🎲 Season draw') : T('🎯 Vào bàn quyết định', '🎯 To the decision table')) + '</button>'}</div>
     <button class="btn" id="t3Skip">${T('Bỏ qua hướng dẫn', 'Skip the guide')}</button>`);
-  // Hướng dẫn mở đầu vòng 1 chạy TRƯỚC thẻ biến cố (xem event3D); xong/bỏ qua thì đi tiếp tới biến cố.
+  // Ván mới: tour → bốc thăm đầu mùa → thẻ biến cố vòng 1 → bàn quyết định (xem event3D). Xong/bỏ qua thì đi tiếp theo tourThen.
   const q = s => evc.querySelector(s), done = () => { try { localStorage.setItem(T3_KEY, '1'); } catch (e) {} closeEvent(); const f = tourThen; tourThen = null; if (f) f(); return !!f; };
   if (q('#t3Prev')) q('#t3Prev').onclick = () => tour3D(t3i - 1);
   if (q('#t3Next')) q('#t3Next').onclick = () => tour3D(t3i + 1);
   if (q('#t3End')) q('#t3End').onclick = () => { if (!done()) window.__openTab('decisions'); };
+  if (q('#t3Music')) q('#t3Music').onclick = () => { try { ev('toggleMusic()'); ev('startMusic()'); } catch (e) {} paintMusic(); tour3D(t3i); };
   q('#t3Skip').onclick = done;
+}
+// Bốc thăm đầu mùa (Trường hợp A/B/C) ngay trên trụ sở 3D, thay lớp phủ toàn khung maybeShowCaseDraw() của game.html.
+function drawPending() { const s = ev('typeof S!=="undefined"?S:null'); return !!(s && !s.caseDrawn && s.round === 1 && !(s.history || []).length); }
+function caseDraw3D(then) {
+  if (!drawPending()) return false;
+  ev('S.caseDrawn=true;save()');
+  if (DIORAMA) { if (then) then(); return true; }
+  const id = ev('S.caseId') || 'A', info = ev('CASE_INFO_LIST()[S.caseId]||CASE_INFO_LIST().A') || {};
+  try { ev('playEventSting("good")'); } catch (e) {}
+  fly(1); zb.children[1].click();
+  showPanel(`<span class="tag">🎲 ${T('BỐC THĂM ĐẦU MÙA', 'SEASON DRAW')}</span>
+    <div class="cards">${['A', 'B', 'C'].map(k => `<i class="${k === id ? 'hit' : ''}">${k}</i>`).join('')}</div>
+    <h2>${esc(info.name)}</h2><p class="d">${esc(info.desc)}</p>
+    <div class="who"><img src="assets/character/${esc(info.img || 'lumina-vest')}.webp" alt="" onerror="this.onerror=null;this.src='assets/character/lumina-vest.webp'"><div><b>Lumina</b><span>${T('Kịch bản này theo đội suốt 6 vòng. Giờ xem biến cố đầu tiên của vòng 1 nhé!', 'This scenario follows the team for all 6 rounds. Now let\'s see the first event of round 1!')}</span></div></div>
+    <button class="btn primary" id="cdGo">${T('Xem biến cố vòng 1 ›', 'See the round-1 event ›')}</button>`);
+  evc.querySelector('#cdGo').onclick = () => { closeEvent(); if (then) then(); };
+  return true;
 }
 window.__tour3D = tour3D;
 let tourThen = null;
@@ -1160,7 +1244,8 @@ const tourSeen = () => { try { return !!localStorage.getItem(T3_KEY); } catch (e
 // bị bỏ qua vĩnh viễn. Nay chờ tới khi trụ sở rảnh (không biến cố, phòng 3D, đấu trường, bản đồ hay lớp phủ toàn khung).
 function maybeTour3D() { if (tourSeen()) return; let n = 0;
   const iv = setInterval(() => { const b = document.body.classList;
-    if (++n > 600) return clearInterval(iv);
+    // Tour có thể đã chạy xong theo đường event3D (ván mới) trong lúc đang chờ: không mở lại lần hai.
+    if (++n > 600 || tourSeen()) return clearInterval(iv);
     // Chỉ dùng khi đội vào giữa ván (đã qua biến cố vòng 1); ván mới thì hướng dẫn đi trước thẻ biến cố (event3D).
     if (GS && ((GS.history || []).length || GS.committed)) { clearInterval(iv); try { localStorage.setItem(T3_KEY, '1'); } catch (e) {} return; }
     if (b.contains('evt') || b.contains('room') || b.contains('arena') || b.contains('login3d') || resEl.classList.contains('on') || frame.className === 'full') return;
@@ -1297,11 +1382,13 @@ function shockNotes() {
   const list = ev('window.BizonMarket && BizonMarket.activeShocks ? BizonMarket.activeShocks(S) : []') || [];
   return list.map(x => `<span class="shock">${x.icon} <b>${T('Biến động thị trường', 'Market shock')}:</b> ${x.text}</span>`).join('');
 }
-function event3D() {
-  const s = ev('S'); if (!s || s.finished || s.committed || s.eventShownRound >= s.round) return;
-  if (!DIORAMA && s.round === 1 && !(s.history || []).length && !tourSeen()) { tourThen = event3D; tour3D(0); return; }
+function event3D(force) {
+  const s = ev('S'); if (!s || s.finished || s.committed || (!force && s.eventShownRound >= s.round)) return;
+  // Ván mới: tour kể truyện → bốc thăm đầu mùa → thẻ biến cố này → nút «Vào bàn quyết định» mở thẳng phòng bàn núm.
+  if (!force && !DIORAMA && s.round === 1 && !(s.history || []).length && !tourSeen()) { tourThen = () => caseDraw3D(event3D); tour3D(0); return; }
+  if (!force && caseDraw3D(event3D)) return;
   const e = ev('currentEvent(S)'); if (!e) return;
-  ev('S.eventShownRound=S.round;save();try{playEventSting(currentEvent(S).tone)}catch(e){}');
+  if (!force) ev('S.eventShownRound=S.round;save();try{playEventSting(currentEvent(S).tone)}catch(e){}');
   sheetTab = null; setMode();
   const bad = e.tone === 'bad', warn = e.tone === 'warn';
   const dirIcon = d => ({ up: '📈', 'up-bad': '📈', down: '📉', 'down-good': '📉', flat: '➖' }[d] || '➖');
@@ -1311,11 +1398,11 @@ function event3D() {
     <div class="imps">${(e.impacts || []).map(im => `<div class="imp"><small>${im.icon} ${im.label}</small><b style="color:${dirCol(im.dir)}">${dirIcon(im.dir)} ${im.value}</b></div>`).join('')}</div>
     <div class="say" style="display:flex;gap:10px;align-items:flex-start"><div><small>${T('LUMINA · CỐ VẤN', 'LUMINA · ADVISOR')}</small>"${e.luminaMsg}"${shockNotes()}</div></div>
     ${bad ? '<div class="q">' + T('"Bình tĩnh phân tích số liệu trước khi hành động – khủng hoảng luôn ẩn chứa cơ hội cho đội có kỷ luật." – <b>Phan Anh Tú · Cố vấn học thuật</b>', '"Analyse the numbers calmly before acting – a crisis always hides an opportunity for a disciplined team." – <b>Phan Anh Tú · Academic advisor</b>') + '</div>' : ''}
-    <button class="btn primary" id="evGo">${e.cta ? e.cta.label : T('🎯 Nhập quyết định', '🎯 Enter decisions')}</button><button class="btn" id="evHome">${T('Về trụ sở', 'Back to HQ')}</button>`;
+    <button class="btn primary" id="evGo">${e.cta ? e.cta.label : T('🎯 Vào bàn quyết định', '🎯 To the decision table')}</button><button class="btn" id="evHome">${T('Về trụ sở', 'Back to HQ')}</button>`;
   evc.querySelector('#evGo').onclick = () => { closeEvent(); window.__openTab(e.cta ? e.cta.tab : 'decisions', e.cta && e.cta.report); };
   evc.querySelector('#evHome').onclick = closeEvent;
   evc.scrollTop = 0; window.__EVON = true; document.body.classList.add('evt'); flyLumina();
-  FO_EVENT = e; setTimeout(() => { if (window.__EVON) room3D('faceoff'); }, 1400);
+  FO_EVENT = e; if (!force) setTimeout(() => { if (window.__EVON) room3D('faceoff'); }, 1400);
 }
 
 // ================= ĐẤU TRƯỜNG 3D =================
