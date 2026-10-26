@@ -106,6 +106,7 @@ const BN2 = (() => {
   function viewStart() {
     const old = load();
     return `<main id="bn2-main" class="bn2-hero"><div class="bn2-card">
+      ${ui.journey && ui.journey.id && window.BizOnJourneyLink ? BizOnJourneyLink.bannerHtml(ui.journey) : ''}
       <div class="bn2-row" style="justify-content:space-between">
         <img class="logo" src="assets/brand/bizon-wordmark-ink.png" alt="BizOn">
         <button class="bn2-iconbtn" data-act="lang">${T('EN', 'VI')}</button>
@@ -144,6 +145,14 @@ const BN2 = (() => {
       if (window.BizOnSeedEngine) { try { S.caseId = BizOnSeedEngine.pick(BizOnSeedEngine.createSeed(classId || 'TRIAL', team, 'case-draw'), 'case', ['A', 'B', 'C']); } catch (e) {} }
     }
     applyStateDefaults(S);
+    // Hành trình 3 bậc (?journey=): ván mới hỏi nhận hành trang Bậc 1 → 2 (lớp có mã thật: theo cờ lớp journey_carry, đọc một lần).
+    if (!restored && window.BizOnJourneyLink && ui.journey && ui.journey.active) {
+      let controls = null;
+      try { if (window.BizOnClassSync && BizOnClassSync.fetchControls) controls = await Promise.race([BizOnClassSync.fetchControls(classId, team), new Promise(r => setTimeout(() => r(null), 2500))]); } catch (e) {}
+      const applied = await BizOnJourneyLink.offerCarry(ui.journey, { classControls: controls });
+      BizOnJourneyLink.stamp(S, ui.journey, applied);
+      if (applied) BizOnJourney.applyToTier2(S, { applied });
+    }
     save();
     ui.d = lastDecisions(); ui.advice = []; ui.whatIf = null; ui.screen = 'play';
     render();
@@ -175,6 +184,7 @@ const BN2 = (() => {
         <h2 class="tone-${esc(ev.tone)}" style="font-size:26px;margin:6px 0">${esc(ev.icon || '')} ${esc(ev.name)}</h2>
         ${ev.tag ? `<span class="bn2-chip">${esc(ev.tag)}</span>` : ''}
         <p style="margin:8px 0">${esc(ev.desc)}</p>
+        ${window.BizOnJourneyLink ? BizOnJourneyLink.introExtrasHtml(S) : ''}
         <div class="bn2-row">${(ev.impacts || []).map(m => `<span class="bn2-chip ${/up-bad|down$/.test(m.dir) ? 'down' : /up|down-good/.test(m.dir) ? 'up' : 'flat'}">${esc(m.icon)} ${esc(m.label)}: <b>${esc(m.value)}</b></span>`).join('')}</div>
         ${ev.luminaMsg ? `<div class="bn2-say"><b>Lumina:</b> ${esc(ev.luminaMsg)}</div>` : ''}
         ${ev.city && ev.city.name ? `<p class="bn2-small bn2-muted" style="margin:8px 0 0">${T('Thị trường động', 'Dynamic market')}: ${esc(ev.city.name)}</p>` : ''}
@@ -328,7 +338,7 @@ const BN2 = (() => {
       ${ach.length ? `<div class="bn2-row" style="justify-content:center;margin-top:14px">${ach.map(a => `<span class="bn2-chip" title="${esc(a.desc)}">${a.icon} ${esc(a.name)}</span>`).join('')}</div>` : ''}
       <p class="bn2-muted" style="margin-top:14px">${isTrial() ? T('Ván chơi thử: kết quả chỉ lưu trên máy này.', 'Trial game: results stay on this device.') : T('Kết quả đã gửi về lớp. Chứng nhận và phiếu chấm xem ở bản đầy đủ.', 'Results were sent to your class. See the certificate and score sheet in the full version.')}</p>
       <div class="bn2-row" style="justify-content:center;margin-top:10px"><a class="bn2-btn teal" href="game.html">${T('Mở bản đầy đủ (chứng nhận)', 'Open the full version (certificate)')}</a><button class="bn2-btn" data-act="new">${T('Chơi ván mới', 'New game')}</button></div>
-    </section>${window.BN2Grade ? BN2Grade.html(S) : ''}${viewHistory()}</main>`;
+    </section>${window.BizOnJourneyLink && ui.journey ? BizOnJourneyLink.endHtml(ui.journey) : ''}${window.BN2Grade ? BN2Grade.html(S) : ''}${viewHistory()}</main>`;
   }
 
   // ---------- vẽ và sự kiện ----------
@@ -338,6 +348,7 @@ const BN2 = (() => {
     if (ui.screen === 'start' || !S) { el.innerHTML = viewStart(); return; }
     if (!ui.d) ui.d = lastDecisions();
     const keep = window.BN2Motion ? BN2Motion.before(el) : null;
+    if (S.finished && window.BizOnJourneyLink && ui.journey && ui.journey.active) BizOnJourneyLink.finish(ui.journey, S, { appVersion: 'bizon-bn-v2' });   // hành trình 3 bậc: ghi Bậc 2 một lần
     el.innerHTML = (S.finished && ui.screen !== 'report') ? viewEnd() : viewPlay();
     if (keep) BN2Motion.after(el, keep, ui.screen === 'report' ? ['rivals', 'hist'] : []);   // giữ khung danh sách cũ để có chuyển động khi thêm, bớt, đổi hạng; báo cáo vòng đang mở thì đợi đóng mới đổi
     if (S.finished && window.BN2Grade) BN2Grade.load(S);   // đọc bảng xếp hạng lớp cho B1, vẽ lại riêng khung bảng điểm
@@ -424,6 +435,7 @@ const BN2 = (() => {
   }
 
   function start() {
+    ui.journey = window.BizOnJourneyLink ? BizOnJourneyLink.attach('t2') : null;   // hành trình 3 bậc (?journey=)
     document.addEventListener('click', onClick);
     document.addEventListener('input', onInput);
     document.addEventListener('change', onInput);

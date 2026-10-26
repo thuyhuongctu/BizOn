@@ -36,3 +36,12 @@ html[data-theme="dark"] .jc-primary{background:#2f8a8c;border-color:#23706f;colo
 .jl-next:hover{transform:translateY(-1px)} .jl-next:focus-visible{outline:3px solid #fda127;outline-offset:2px}
 html[data-theme="dark"] .jl-banner{background:#1b3b4a;border-color:#2d5566;color:#d9ebee} html[data-theme="dark"] .jl-banner.jl-off{background:#4a3a1c;border-color:#6b5428;color:#f3dcb0}
 html[data-theme="dark"] .jl-link{color:#8fd0ee} html[data-theme="dark"] .jl-done{background:#1b3b4a;border-color:#2d5566;color:#d9ebee} html[data-theme="dark"] .jl-done h3{color:#8fd0ee}
+
+/* Hộp thoại «Hành trang» trước màn mở đầu (offerCarry) + lời chào/bản tin trong thẻ biến cố vòng 1 */
+#jl-modal{position:fixed;inset:0;z-index:9000;display:flex;align-items:center;justify-content:center;padding:14px;background:rgba(2,25,28,.66);overflow:auto}
+.jl-modal-box{width:100%;max-width:560px;max-height:calc(100vh - 28px);overflow:auto;border-radius:28px}
+.jl-modal-note{margin:8px auto 0;max-width:560px;padding:8px 12px;border-radius:14px;background:#fdf0d8;color:#6b4a12;font:600 13px/1.45 "Be Vietnam Pro",Nunito,system-ui,sans-serif;text-align:center}
+.jl-greet{margin:8px 0 0;padding-top:6px;border-top:2px dashed rgba(0,102,135,.18);font-size:12.5px;line-height:1.5;color:#1f4a55;font-style:normal}
+.jl-brief{margin:8px 0 0;padding:8px 10px;border-radius:12px;background:rgba(227,241,239,.9);font-size:12.5px;line-height:1.5;color:#1f4a55;text-align:left}
+.jl-brief b{display:block;margin-bottom:2px} .jl-brief ul{margin:0;padding-left:18px}
+html[data-theme="dark"] .jl-greet{color:#d9ebee;border-color:#35406a} html[data-theme="dark"] .jl-brief{background:#1b3b4a;color:#d9ebee}

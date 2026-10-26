@@ -173,7 +173,7 @@ Xuất CSV ẩn danh (journeyId băm, không email) phục vụ thiết kế ngh
 | J2 | `js/core/journey.js` (hàm thuần, VI/EN) + `test/journey-carry.test.js`, `test/journey-passport.test.js` + workflow `journey-core.yml` – **đã làm** | J1 | 1 ngày |
 | J3 | Hộ chiếu cục bộ (`js/journey-store.js`: `localStorage['bizon-journey']` + bản sao lưu, xuất/nhập JSON), trang `hanh-trinh.html` (+ `js/hanh-trinh.js`), thẻ Hành trang dùng chung (`js/journey-card.js`, `css/journey.css`) – **đã làm** | J2 | 2 ngày |
 | J4 | Bến Phù Sa (`ben-phu-sa.html`, bản gọn `ben-phu-sa-v2.html` chuyển tham số, và `ben-phu-sa-3d.html`) đọc `?journey=`, băng ở màn mở đầu, ghi `tiers.t1` cuối ván qua `js/journey-link.js`, khối «Sang Bậc 2» với xem trước hành trang – **đã làm** | J3 | 1 ngày |
-| J5 | Bật Nghiệp (`game.html`, bản v2) đọc hành trang sau cờ lớp, ghi `tiers.t2`, Lumina chào theo phong cách Bậc 1 | J3 | 2 ngày |
+| J5 | Bật Nghiệp (`game.html`, `bat-nghiep-v2.html`, bản 3D chuyển tham số) hỏi nhận hành trang trước màn mở đầu (`offerCarry`, lớp có mã thật theo cờ `journey_carry` đọc một lần qua `BizOnClassSync.fetchControls`), `applyToTier2`, Lumina chào theo phong cách Bậc 1 + bản tin thị trường ở thẻ biến cố vòng 1, ghi `tiers.t2` khi xong 6 vòng, khối «Sang Bậc 3» trên báo cáo mùa – **đã làm** | J3 | 2 ngày |
 | J6 | Hộ Chiếu Thương Hiệu v2 và Hộ Chiếu Sầu Riêng v2 đọc hành trang, ghi `tiers.t3`; debrief xuyên suốt trên trang Hành trình | J3 | 2–3 ngày |
 | J7 | Migration `journey_passports` + 2 RPC + cờ `class_controls.journey_carry` + cột trên bảng giảng viên; kịch bản kiểm thử Postgres cục bộ trước khi áp dụng thật | J4–J6 | 2 ngày + xác nhận |
 | J8 | Bản 3D của ba bậc nhận cùng mô-đun; quét cân bằng; cập nhật model card sau pilot | J7 | 2 ngày |

@@ -90,5 +90,57 @@
     return r;
   }
 
-  root.BizOnJourneyLink = Object.freeze({ HUB, attach, bannerHtml, mountBanner, finish, nextHtml, complete, lang });
+  // Hộp thoại «Hành trang» trước màn mở đầu (Bậc 2–3): trả Promise → applied (nhận) hoặc null (chơi độc lập / không có / tắt).
+  // opts: { variant, roleId, cashAdj, classControls } – classControls là controls của lớp (cờ journey_carry), null nếu chưa có.
+  function offerCarry(ctx, opts) {
+    const o = opts || {};
+    return new Promise(resolve => {
+      if (!ctx || !ctx.active || !ctx.passport) return resolve(null);
+      const p = ctx.passport, enabled = J.resolveCarryEnabled(p, o.classControls);
+      const carry = J.journeyCarry(p, ctx.tier, { variant: o.variant, roleId: o.roleId, cashAdj: o.cashAdj, enabled });
+      if (!carry.lines.length && !(carry.preview && Object.keys(carry.preview).length)) return resolve(null);
+      const old = document.getElementById('jl-modal'); if (old) old.remove();
+      const wrap = document.createElement('div'); wrap.id = 'jl-modal'; wrap.setAttribute('role', 'dialog'); wrap.setAttribute('aria-modal', 'true');
+      wrap.innerHTML = `<div class="jl-modal-box">${C.html(carry, { lang: lang(), tier: ctx.tier, variant: o.variant })}` +
+        (!enabled && p.classCode && p.classCode !== 'TU-HOC' && p.classCode !== 'DEMO-2026' ? `<p class="jl-modal-note">${esc(t('Lớp chấm điểm: hành trang mặc định tắt cho công bằng; giảng viên bật trong cài đặt lớp thì mới áp.', 'Graded class: carry-over is off by default for fairness; it applies only once the instructor enables it in the class settings.'))}</p>` : '') + '</div>';
+      document.body.appendChild(wrap);
+      const done = v => { ctx.choice = v ? 'accept' : 'solo'; wrap.remove(); resolve(v); };
+      const acc = wrap.querySelector('#jc-accept'), solo = wrap.querySelector('#jc-solo');
+      if (acc) acc.onclick = () => done(carry.applied);
+      if (solo) solo.onclick = () => done(null);
+      (acc || solo || wrap).focus && (acc || solo).focus();
+    });
+  }
+  // Ghi dấu hộ chiếu vào trạng thái ván (để nộp kết quả kèm p_detail_json.journey ở J7 và để Lumina chào theo phong cách Bậc 1).
+  function stamp(S, ctx, applied) {
+    if (!S || !ctx || !ctx.id) return S;
+    const g = greeting(ctx.passport);
+    S.journey = Object.assign({}, S.journey, { id: ctx.id, tier: ctx.tier, carryApplied: applied || null, marketBrief: !!(applied && applied.marketBrief), greeting: g });
+    return S;
+  }
+  // Lời chào của Lumina ở vòng 1 theo hồ sơ phong cách Bậc 1 (effectuation: gánh/khảo sát nhiều · causation: ghe sớm).
+  function greeting(p) {
+    const t1 = p && p.tiers && p.tiers.t1; if (!t1 || t1.status !== 'done' || !t1.style) return null;
+    const st = t1.style, explore = (st.exploreWeeks || 0) + (st.surveyWeeks || 0), boat = st.exploitWeeks || 0;
+    if (explore >= 3) return { vi: `Ở Bến Phù Sa bạn dò đường kỹ (${explore}/5 tuần gánh hàng và khảo sát) rồi mới nhân rộng – kiểu effectuation. Bật Nghiệp cần thêm kế hoạch dài hơi: hãy dùng dự báo Nếu – Thì trước khi chốt.`, en: `At Bến Phù Sa you scouted carefully (${explore}/5 weeks of street cart and surveys) before scaling – effectuation style. Bật Nghiệp needs longer-range planning too: run the What-If forecast before you commit.` };
+    if (boat >= 3) return { vi: `Ở Bến Phù Sa bạn lên ghe sớm (${boat}/5 tuần nhân rộng) – kiểu lập kế hoạch táo bạo. Ở đây thị trường đổi từng vòng: nhớ đọc biến cố và báo cáo trước khi đặt sản lượng lớn.`, en: `At Bến Phù Sa you took the trading boat early (${boat}/5 weeks of scaling) – a bold planning style. Here the market shifts every round: read the event and the reports before committing big volumes.` };
+    return { vi: 'Ở Bến Phù Sa bạn cân bằng giữa thử nghiệm và nhân rộng. Giữ nhịp đó: một vòng thăm dò, rồi tăng tốc khi số liệu rõ.', en: 'At Bến Phù Sa you balanced testing and scaling. Keep that rhythm: one probing round, then accelerate once the numbers are clear.' };
+  }
+  // Phần thêm cho thẻ biến cố vòng 1: lời chào + bản tin thị trường (tên và phong cách 3 đối thủ) nếu hành trang có marketBrief.
+  const STYLE = { aggressive: ['giá rẻ, quảng cáo mạnh', 'low prices, heavy advertising'], balanced: ['cân bằng, ổn định', 'balanced, steady'], premium: ['cao cấp, giá cao', 'premium, high prices'] };
+  function introExtrasHtml(S) {
+    if (!S || !S.journey || S.round !== 1) return '';
+    const L = lang(); let out = '';
+    if (S.journey.greeting) out += `<p class="jl-greet">🧭 ${esc(L === 'en' ? S.journey.greeting.en : S.journey.greeting.vi)}</p>`;
+    if (S.journey.marketBrief && Array.isArray(S.competitors)) out += `<div class="jl-brief"><b>📰 ${esc(t('Bản tin thị trường (hành trang từ chợ nổi)', 'Market brief (carried over from the floating market)'))}</b><ul>${S.competitors.map(c => `<li>${esc(c.name)} – ${esc(STYLE[c.style] ? (L === 'en' ? STYLE[c.style][1] : STYLE[c.style][0]) : c.style)}</li>`).join('')}</ul></div>`;
+    return out;
+  }
+  // Khối cuối ván cho giao diện vẽ lại bằng chuỗi (bản gọn): có khi bậc này đã ghi vào đúng hộ chiếu.
+  function endHtml(ctx) {
+    if (!ctx || !ctx.id) return '';
+    const p = S.load(); if (!p || p.journeyId !== ctx.id || !J.tierDone(p, ctx.tier)) return '';
+    return nextHtml(p, ctx.tier);
+  }
+
+  root.BizOnJourneyLink = Object.freeze({ HUB, attach, bannerHtml, mountBanner, finish, nextHtml, complete, offerCarry, stamp, greeting, introExtrasHtml, endHtml, lang });
 })(window);

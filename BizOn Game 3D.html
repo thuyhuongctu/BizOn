@@ -387,6 +387,7 @@
   <div class="af" id="aFoot"><div class="verdict" id="aVerdict"></div><button class="btn primary" id="aNext" data-en="See detailed results →">Xem kết quả chi tiết →</button></div></div>
 <div id="room"><div class="rh"><div class="rt"><img id="rmScene" alt="" style="display:none;width:min(260px,40vw);border-radius:16px;border:3px solid #e6d6bf;margin-bottom:6px"><b id="rmTitle"></b><span id="rmSub"></span></div><div class="rb"><button class="btn" id="rm2d" data-en="📋 List view">📋 Dạng danh sách</button><button class="btn primary" id="rmClose" data-en="✕ Back to HQ">✕ Về trụ sở</button></div></div><div id="rmLabs"></div><div id="rmCard"></div></div>
 <div id="frame" class="full"><iframe id="gf" src="game.html" title="BẬT NGHIỆP"></iframe></div>
+<script>(function () { var m = /[?&]journey=([^&#]+)/.exec(location.search); if (m) document.getElementById('gf').src = 'game.html?journey=' + m[1]; })();</script>
 <div id="tip"></div>
 <div id="toast3d" aria-live="polite"></div><div id="examPill3d" role="timer"></div>
 <div id="syncWarn3d" role="alert"><span></span><button type="button" onclick="window.__resend3D && window.__resend3D()" data-en="Resend">Gửi lại</button></div>
