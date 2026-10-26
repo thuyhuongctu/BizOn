@@ -106,6 +106,7 @@ const DP2 = (() => {
   function viewStart() {
     const saved = load(), su = ui.setup;
     return `<main id="dp2-main" class="bn2-hero"><div class="bn2-card">
+      ${ui.journey && ui.journey.id && window.BizOnJourneyLink ? BizOnJourneyLink.bannerHtml(ui.journey) : ''}
       <div class="bn2-row" style="justify-content:space-between">
         <img class="logo" src="../assets/brand/bizon-wordmark-ink.png" alt="BizOn">
         <button class="bn2-iconbtn" data-act="lang">${T('EN', 'VI')}</button>
@@ -272,7 +273,7 @@ const DP2 = (() => {
       <p class="bn2-small bn2-muted" style="margin-top:10px">${T('Đối thủ dùng chiến lược cố định; so sánh để thảo luận lối đi nào bền vững.', 'Rivals use fixed strategies; compare them to discuss which path is sustainable.')}</p>
       <div class="bn2-row" style="justify-content:center;margin-top:14px"><a class="bn2-btn pri" href="ho-chieu-sau-rieng.html?resume=1">📄 ${T('Báo cáo đầy đủ, chứng nhận, xuất dữ liệu →', 'Full report, certificates, data export →')}</a><button type="button" class="bn2-btn ghost" data-act="again">🔄 ${T('Chơi ván mới', 'Play a new game')}</button></div>
       <p class="bn2-small bn2-muted" style="margin-top:8px">${T('Ván này đã lưu trên máy; bản lớp học mở đúng ván này (dấu vết quyết định, câu hỏi thảo luận, CSV/JSON, hai chứng nhận cho ván có Mã lớp).', 'This game is saved on the device; the classroom edition opens the same game (decision trail, discussion questions, CSV/JSON, two certificates for games with a Class ID).')}</p>
-    </section>`;
+    </section>${window.BizOnJourneyLink && ui.journey ? BizOnJourneyLink.endHtml(ui.journey) : ''}`;
   }
   function viewHelp() {
     const rvs = RIVALS ? RIVALS.map(r => C.rivalCard(D, D.rivals.find(x => x.id === r.id), T)) : [];
@@ -294,6 +295,7 @@ const DP2 = (() => {
     document.documentElement.lang = lang();
     const ph = phase();
     if (ph === 'start') { el.innerHTML = viewStart(); return; }
+    if (ph === 'end' && window.BizOnJourneyLink && ui.journey && ui.journey.active) BizOnJourneyLink.finish(ui.journey, durianResult(), { variant: 'durian', roleId: APP.roleId, appVersion: 'bizon-srp-v2' });   // hành trình 3 bậc: ghi Bậc 3 một lần
     const main = ph === 'end' ? viewEnd() : ph === 'result' ? viewResult() : viewDecide();
     el.innerHTML = viewTop() + `<main id="dp2-main" class="bn2-wrap"><div class="bn2-grid main"><div class="bn2-grid">${main}</div><div class="bn2-grid">${viewSide()}</div></div></main>` + (ui.help ? viewHelp() : '');
   }
@@ -338,16 +340,33 @@ const DP2 = (() => {
     else if (el.dataset.field === 'why') { logEv('EDIT_SHEET_CEO', '', el.value.length + ' chars'); save(); }
     else if (el.dataset.field === 'next') save();
   }
-  function onSubmit(e) {
+  async function onSubmit(e) {
     if (!e.target || e.target.id !== 'dp2-login') return;
     e.preventDefault();
     const fd = new FormData(e.target);
     const saved = load();
     if (saved && !confirm(T('Bắt đầu ván mới sẽ ghi đè ván đang dở. Tiếp tục?', 'A new game will overwrite the saved one. Continue?'))) return;
     newGame({ cls: String(fd.get('cls') || ''), team: String(fd.get('team') || '').toUpperCase(), roleId: ui.setup.roleId });
+    // Hành trình 3 bậc (?journey=): hỏi nhận hành trang Bậc 2 → 3 (vốn theo vai, uy tín, chống chịu, ứng phó, liên kết, hạn mức) trước vụ 1.
+    if (window.BizOnJourneyLink && ui.journey && ui.journey.active) {
+      const applied = await BizOnJourneyLink.offerCarry(ui.journey, { variant: 'durian', roleId: APP.roleId, cashAdj: (D.roles[APP.roleId] || {}).cashAdj || 0 });
+      BizOnJourneyLink.stamp(APP, ui.journey, applied);
+      if (applied) BizOnJourney.applyToDurian(APP.game, { applied });
+      try { BizOnJourneyStore.update(p => BizOnJourney.setTier3Variant(p, 'durian', APP.roleId)); ui.journey.passport = BizOnJourneyStore.load() || ui.journey.passport; } catch (err) {}
+      save();
+    }
     ui.view = 'decide'; ui.err = ''; render(); window.scrollTo(0, 0);
   }
+  // Kết quả Bậc 3 để ghi vào hộ chiếu: tổng kết engine + thứ tự mở kênh (vụ đầu tiên mỗi kênh có hàng) cho chỉ số kiểu quốc tế hoá.
+  function durianResult() {
+    const G = g(), S = E.summary(D, G), order = [];
+    G.history.forEach(r => (r.byChannel || []).forEach(c => { if (c.qty > 0.5 && !order.includes(c.id)) order.push(c.id); }));
+    return Object.assign({}, S, { channelOrder: order });
+  }
   function start() {
+    // Hành trình 3 bậc (?journey=): biến thể Sầu Riêng; vai đã chọn trên trang Hành trình được chọn sẵn.
+    ui.journey = window.BizOnJourneyLink ? BizOnJourneyLink.attach('t3', undefined, { variant: 'durian' }) : null;
+    if (ui.journey && ui.journey.active && ui.journey.passport.tiers.t3.roleId && D.roles[ui.journey.passport.tiers.t3.roleId]) ui.setup.roleId = ui.journey.passport.tiers.t3.roleId;
     document.addEventListener('click', onClick); document.addEventListener('input', onInput); document.addEventListener('change', onChange); document.addEventListener('submit', onSubmit);
     window.addEventListener('bizon:langchange', render);
     render();

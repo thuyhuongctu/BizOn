@@ -18,7 +18,8 @@
   const TAG = () => `<span class="jl-tag">🧭 ${esc(t('HÀNH TRÌNH 3 BẬC', '3-LEVEL JOURNEY'))}</span>`;
 
   // ctx = { tier, id, passport, active, reason: none | missing | mismatch | locked | done | ok }
-  function attach(tier, search) {
+  // opts.variant ('durian' | 'brand'): game Bậc 3 khai báo biến thể của mình; hộ chiếu chọn biến thể khác → chơi độc lập (reason 'variant').
+  function attach(tier, search, opts) {
     const id = C.journeyIdFromUrl(search); const ctx = { tier, id, passport: null, active: false, reason: id ? 'missing' : 'none' };
     if (!id) return ctx;
     const p = S.load(); if (!p) return ctx;
@@ -26,6 +27,7 @@
     if (p.journeyId !== id) { ctx.reason = 'mismatch'; return ctx; }
     if (J.tierDone(p, tier)) { ctx.reason = 'done'; return ctx; }
     if (!J.canPlay(p, tier)) { ctx.reason = 'locked'; return ctx; }
+    if (tier === 't3' && opts && opts.variant && (p.tiers.t3.variant || J.DEFAULT_T3_VARIANT) !== opts.variant) { ctx.reason = 'variant'; return ctx; }
     ctx.active = true; ctx.reason = 'ok';
     if (p.tiers[tier].status === 'pending') { try { ctx.passport = S.update(q => { q.tiers[tier].status = 'playing'; return q; }) || p; } catch (e) {} }
     return ctx;
@@ -37,6 +39,7 @@
     if (ctx.active) return `<div class="jl-banner" id="ft-journey" data-reason="ok">${TAG()}<b>${esc(t(`Bậc ${n}/3`, `Level ${n}/3`))} · ${esc(ctx.passport.teamName)}</b><span>${esc(t('Kết quả ván này sẽ ghi vào hộ chiếu khi kết thúc.', 'This run\'s result is recorded in the passport at the end.'))}</span>${link}</div>`;
     const why = ctx.reason === 'done' ? t('Bậc này đã ghi trong hộ chiếu; ván này chơi tự do, không ghi đè.', 'This level is already recorded in the passport; this run is free play and will not overwrite it.')
       : ctx.reason === 'locked' ? t('Bậc này chưa mở trong hộ chiếu (chưa xong bậc trước). Ván này chơi độc lập.', 'This level is not yet unlocked in the passport (previous level unfinished). This run is standalone.')
+      : ctx.reason === 'variant' ? t(`Hộ chiếu đã chọn ${C.tierName('t3', lang(), ctx.passport.tiers.t3.variant)} cho Bậc 3. Ván này chơi độc lập; đổi biến thể trên trang Hành trình nếu muốn.`, `The passport chose ${C.tierName('t3', lang(), ctx.passport.tiers.t3.variant)} for Level 3. This run is standalone; change the variant on the Journey page if you wish.`)
       : t('Không tìm thấy hộ chiếu hành trình này trên máy. Ván này chơi độc lập.', 'This journey passport was not found on this device. This run is standalone.');
     return `<div class="jl-banner jl-off" id="ft-journey" data-reason="${esc(ctx.reason)}">${TAG()}<span>${esc(why)}</span>${link}</div>`;
   }

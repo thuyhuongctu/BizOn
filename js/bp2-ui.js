@@ -34,7 +34,8 @@ const BP2 = (() => {
   function mountEngine() {
     const fr = $('bp2-engine');
     const seed = (location.search.match(/[?&]seed=(\d{1,9})(?:&|$)/) || [])[1];
-    fr.src = 'brand-passport.html?embed=1' + (seed ? '&seed=' + seed : '');
+    const jm = /[?&]journey=([^&#]+)/.exec(location.search);   // hành trình 3 bậc: engine cũng đọc hộ chiếu để ghi Bậc 3 ở màn Kết thúc
+    fr.src = 'brand-passport.html?embed=1' + (seed ? '&seed=' + seed : '') + (jm ? '&journey=' + jm[1] : '');
     // Nút «Chơi lại» ở màn Kết thúc của engine tải lại khung con – trang mẹ tải lại theo để về màn mở đầu.
     fr.addEventListener('load', () => { if (ui.screen === 'end') location.reload(); });
     const tick = setInterval(() => {
@@ -55,6 +56,7 @@ const BP2 = (() => {
   function viewStart() {
     const firms = D ? D.FIRMS : [];
     return `<main id="bp2-main" class="bn2-hero"><div class="bn2-card">
+      ${ui.journey && ui.journey.id && window.BizOnJourneyLink ? BizOnJourneyLink.bannerHtml(ui.journey) : ''}
       <div class="bn2-row" style="justify-content:space-between">
         <img class="logo" src="assets/brand/bizon-wordmark-ink.png" alt="BizOn">
         <button class="bn2-iconbtn" data-act="lang">${T('EN', 'VI')}</button>
@@ -303,9 +305,14 @@ const BP2 = (() => {
   }
 
   /* ---------- hành động ---------- */
-  function begin(teamName, classId) {
+  async function begin(teamName, classId) {
     ls('bp-team', teamName); ls('bp-class', classId.toUpperCase());
     call('bpFirm', ui.firm); call('bpStart');
+    // Hành trình 3 bậc (?journey=): hỏi nhận hành trang Bậc 2 → 3 ở trang mẹ (iframe đang ẩn), rồi áp vào engine.
+    if (window.BizOnJourneyLink && ui.journey && ui.journey.active) {
+      const applied = await BizOnJourneyLink.offerCarry(ui.journey, { variant: 'brand' });
+      call('bpApplyCarry', applied);
+    }
     ui.screen = 'play'; ui.adv = false; ui.note = ''; render();
   }
   function pickMarket(v) {
@@ -365,6 +372,7 @@ const BP2 = (() => {
   }
 
   function start() {
+    ui.journey = window.BizOnJourneyLink ? BizOnJourneyLink.attach('t3', undefined, { variant: 'brand' }) : null;   // hành trình 3 bậc (?journey=)
     document.addEventListener('click', onClick);
     document.addEventListener('change', onChange);
     document.addEventListener('submit', onSubmit);
