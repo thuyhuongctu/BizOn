@@ -108,6 +108,33 @@
     $('jr-carry-on').checked = p.carryEnabled !== false;
   }
 
+  // Đồng bộ với lớp (J7): hộp đăng nhập sinh viên + nút đồng bộ; tự đồng bộ một lần khi đã đăng nhập.
+  function bindSync() {
+    const Y = window.BizOnJourneySync, box = $('jr-sync'); if (!box) return;
+    if (!Y || !Y.available()) { box.hidden = true; return; }
+    box.hidden = false;
+    let syncing = false;
+    const run = async (opts, quiet) => {
+      if (syncing) return; if (!Y.signedIn()) { if (!quiet) msg('jr-sync-msg', t('Đăng nhập email trường ở khung trên trước đã.', 'Sign in with your school email above first.')); return; }
+      syncing = true;
+      try {
+        const r = await Y.sync(opts);
+        if (r.action === 'conflict') {
+          const srvTeam = (r.server && r.server.teamName) || '?', srvAt = r.server && r.server.updatedAt ? new Date(r.server.updatedAt).toLocaleString() : '';
+          const takeServer = confirm(t(`Trên máy chủ đang có một hộ chiếu khác của đội này (${srvTeam}, cập nhật ${srvAt}). Bấm OK để LẤY bản máy chủ về (bản trên máy này bị thay), Cancel để GIỮ bản máy này và ghi đè máy chủ.`, `The server holds a different passport for this team (${srvTeam}, updated ${srvAt}). OK = TAKE the server copy (this device's copy is replaced); Cancel = KEEP this device's copy and overwrite the server.`));
+          const r2 = await Y.sync({ resolve: takeServer ? 'pull' : 'push' }); render();
+          msg('jr-sync-msg', r2.action === 'pull' ? t('Đã lấy hộ chiếu từ máy chủ.', 'Passport taken from the server.') : t('Đã ghi hộ chiếu của máy này lên máy chủ.', 'This device’s passport saved to the server.'), true);
+        } else if (r.action === 'pull') { render(); msg('jr-sync-msg', r.mine === false ? t('Đã lấy hộ chiếu mới hơn của đội từ máy chủ.', 'Took the team’s newer passport from the server.') : t('Đã lấy bản mới hơn từ máy chủ.', 'Took the newer copy from the server.'), true); }
+        else if (r.action === 'push') msg('jr-sync-msg', t('Đã lưu hộ chiếu lên máy chủ lớp.', 'Passport saved to the class server.'), true);
+        else if (r.action === 'same') msg('jr-sync-msg', t('Máy này và máy chủ đã giống nhau.', 'This device and the server already match.'), true);
+      } catch (e) { msg('jr-sync-msg', t('Không đồng bộ được: ', 'Could not sync: ') + (e && e.message ? e.message : e)); }
+      syncing = false;
+    };
+    if (window.StudentLogin && $('jr-login')) StudentLogin.mount($('jr-login'), { onChange: () => { if (Y.signedIn()) run(null, true); } });
+    $('jr-sync-now').addEventListener('click', () => run(null, false));
+    if (Y.signedIn()) run(null, true);
+  }
+
   function bindDash() {
     $('jr-variant').addEventListener('change', e => { if (e.target.name !== 'variant2') return; S.update(p => J.setTier3Variant(p, e.target.value, $('jr-role2').value)); render(); });
     $('jr-role2').addEventListener('change', e => { S.update(p => J.setTier3Variant(p, p.tiers.t3.variant, e.target.value)); render(); });
@@ -131,6 +158,7 @@
       a.href = URL.createObjectURL(blob); a.download = 'hanh-trinh-' + hid + '.csv'; document.body.appendChild(a); a.click(); a.remove();
       setTimeout(() => URL.revokeObjectURL(a.href), 2000); msg('jr-msg', t('Đã xuất CSV ẩn danh.', 'Anonymised CSV exported.'), true);
     });
+    bindSync();
     $('jr-reset').addEventListener('click', () => {
       if (!confirm(t('Xóa hộ chiếu này và bắt đầu hành trình mới? Kết quả đã ghi trong hộ chiếu sẽ mất (các ván game không bị ảnh hưởng).', 'Delete this passport and start a new journey? Results recorded in the passport are lost (game saves are not affected).'))) return;
       S.clear(); render();

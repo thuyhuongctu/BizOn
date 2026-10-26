@@ -34,7 +34,7 @@
   }
 
   // ---------- dữ liệu mẫu ----------
-  const D = { classes: [{ class_code: 'DEMO-2026', created_at: new Date().toISOString() }], controls: { locked_round: null, forced_event: null, message: '' }, grants: [], scores: {}, subs: [], exam: null, cert: { course_code: 'KT330H', course_name: 'Entrepreneurship', course_dates: '' }, rubric: { level1: 'Rất cân bằng', level2: 'Khá cân bằng', level3: 'Lệch rõ', level4: 'Lệch nhiều' } };
+  const D = { classes: [{ class_code: 'DEMO-2026', created_at: new Date().toISOString() }], controls: { locked_round: null, forced_event: null, message: '', journey_carry: null }, grants: [], journey: [], scores: {}, subs: [], exam: null, cert: { course_code: 'KT330H', course_name: 'Entrepreneurship', course_dates: '' }, rubric: { level1: 'Rất cân bằng', level2: 'Khá cân bằng', level3: 'Lệch rõ', level4: 'Lệch nhiều' } };
   (function seed() {
     const T = [['Đội Rồng Vàng', 1.0], ['Đội Sông Hậu', 0.9], ['Đội Miệt Vườn', 0.8], ['Đội Phù Sa', 1.1], ['Đội Gốm Đỏ', 0.7]];
     T.forEach(([n, k], ti) => { const rounds = 6 - (ti % 3); for (let r = 1; r <= rounds; r++) {
@@ -76,6 +76,10 @@
       try { return (await rpc('bizon_class_state_v2', { p_class_code: code })) || {}; } catch (e) { if (missing(e)) { api.needsMigration = true; return {}; } throw e; } },
     async setControls(code, c) { if (demo) { Object.assign(D.controls, c); return true; }
       return guard(rpc('bizon_set_controls', { p_class_code: code, p_locked_round: c.locked_round ?? null, p_forced_event: c.forced_event || '', p_forced_event_round: c.forced_event_round ?? null, p_message: c.message || '' })); },
+    // Hành trình 3 bậc (J7): cờ hành trang của lớp và hộ chiếu đã đồng bộ (migration 20261026000000_journey_passports.sql)
+    async setJourneyCarry(code, on) { if (demo) { D.controls.journey_carry = !!on; return true; }
+      return guard(rpc('bizon_set_journey_carry', { p_class_code: code, p_on: !!on })); },
+    async journeyPassports(code) { if (demo) return D.journey; try { return (await rpc('bizon_journey_class', { p_class_code: code })) || []; } catch (e) { if (missing(e)) return []; throw e; } },
     async setExam(code, ex) { if (demo) { D.exam = ex; return true; }
       return guard(rpc('bizon_set_exam', { p_class_code: code, p_active: !!ex.active, p_start_at: ex.start_at || null, p_setup_min: ex.setup_min ?? 10, p_round_min: ex.round_min ?? 8, p_capital: ex.capital ?? 500 })); },
     async examFeed(code) { if (demo) return { now: new Date().toISOString(), exam: D.exam }; try { return (await rpc('bizon_exam_feed', { p_class_code: code })) || {}; } catch (e) { if (missing(e)) return {}; throw e; } },

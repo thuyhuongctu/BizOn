@@ -180,6 +180,13 @@
           </div>
           <p class="jr-msg" id="jr-msg" aria-live="polite"></p>
         </div>
+        <div class="block" id="jr-sync" style="grid-column:1/-1" hidden>
+          <b data-en="Class sync (optional)">Đồng bộ với lớp (tùy chọn)</b>
+          <p class="sub" data-en="Sign in with your school email to keep this passport on the class server too: continue on another device, and your instructor can see the journey. Without signing in the passport stays only in this browser.">Đăng nhập email trường để giữ thêm một bản hộ chiếu trên máy chủ lớp: chơi tiếp ở máy khác, giảng viên xem được hành trình. Không đăng nhập thì hộ chiếu chỉ nằm trong trình duyệt này.</p>
+          <div id="jr-login"></div>
+          <div class="jr-actions"><button type="button" class="jr-btn" id="jr-sync-now" data-en="🔄 Sync now">🔄 Đồng bộ ngay</button></div>
+          <p class="jr-msg" id="jr-sync-msg" aria-live="polite"></p>
+        </div>
       </div>
     </div>
   </section>
@@ -190,6 +197,9 @@
 <script src="js/core/journey.js" defer></script>
 <script src="js/journey-store.js" defer></script>
 <script src="js/journey-card.js" defer></script>
+<script src="js/backend-config.js" defer></script>
+<script src="js/student-login.js" defer></script>
+<script src="js/journey-sync.js" defer></script>
 <script src="js/bizon-clay-i18n.js" defer></script>
 <script src="js/hanh-trinh.js" defer></script>
 <script src="js/bizon-clay-nav.js" defer></script>
