@@ -28,7 +28,7 @@ assert.match(tpl, /evShow: !!ev && dec\.option == null/);
 assert.match(tpl, /<sc-for list="\{\{ ev\.opts \}\}" as="o" hint-placeholder-count="3"><span role="button" tabindex="0" sc-camel-on-click="\{\{ o\.pick \}\}"/);
 // «Việc tiếp theo» và nút Việc của tôi / Hỏi Tèo Soi nằm trong ngăn kéo; bản nổi ẩn đi
 assert.match(tpl, /nextShow: !!\(this\.goalTxt\), nextTxt: this\.goalTxt \|\| '', nextGo: \(\) => \{ const g2 = this\.goalNpc; if \(g2\) this\.talkTo\(g2\); \}/);
-assert.match(tpl, /out\.askDisp = dockOn \? 'none' : 'flex'; out\.keysDisp = dockOn \? 'none' : 'flex'; out\.myTaskDisp = dockOn \? 'none' : 'flex';/);
+assert.match(tpl, /out\.askDisp = dockOn \? 'none' : 'flex'; out\.keysDisp = dockOn \|\| this\.sbOn \? 'none' : 'flex'; out\.myTaskDisp = dockOn \? 'none' : 'flex';/);
 assert.match(tpl, /if \(dockOn\) \{[\s\S]*?out\.goal = Object\.assign\(\{\}, out\.goal, \{ show: false \}\);\n    \}/);
 
 // 3. Dải 4 chặng: số liệu sống (mã vùng trồng, mã đóng gói, cấp đông, kênh lớn nhất, kết quả vụ trước), ẩn khi đang xem bảng hoặc hội thoại.
