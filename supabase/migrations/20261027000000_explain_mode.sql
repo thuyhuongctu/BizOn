@@ -7,7 +7,8 @@
 --   1. class_controls.explain_hidden (boolean; null/false = hiện giải thích như mặc định, true = ẩn).
 --   2. bizon_set_explain_hidden(p_class_code, p_on): chủ lớp bật/tắt (Trang Giảng viên).
 --   3. bizon_class_feed trả thêm explain_hidden (game đọc ẩn danh theo mã lớp; js/explain-mode.js).
--- Chạy SAU 20261026000000_journey_passports.sql (giữ journey_carry trong feed). Kiểm thử: test/sql/explain_mode_smoke.sql.
+-- Chạy SAU 20261026000000_journey_passports.sql (giữ journey_carry trong feed); nếu về sau chạy lại tệp 20261026 thì phải
+-- chạy lại tệp này vì tệp đó định nghĩa lại bizon_class_feed không có explain_hidden. Kiểm thử: test/sql/explain_mode_smoke.sql.
 -- ============================================================
 alter table public.class_controls add column if not exists explain_hidden boolean;
 comment on column public.class_controls.explain_hidden is 'Nhánh nghiên cứu: true = ẩn phần giải thích cơ chế trong game của lớp này (hộp đen); null/false = hiện (mặc định).';
