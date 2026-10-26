@@ -946,6 +946,8 @@ body:has(#ft-play:not(.hidden)) .vutru-goc{display:none!important}
     $('ft-medal').textContent = crown[0];
     $('ft-title').textContent = crown[1];
     S.result = { eff: eff, rank: rank + 1 };
+    // Hành trình 3 bậc (?journey=): ghi Bậc 1 vào hộ chiếu một lần, chèn khối «Sang Bậc 2» và đổi nút «Lên Bậc 2» về trang Hành trình.
+    if (window.BizOnJourneyLink && window.__ftJourney) BizOnJourneyLink.complete(window.__ftJourney, S, { appVersion: 'bizon-bps3d-v2' }, { host: 'ft-end', before: 'a[href="game.html"]' });
     // initSubmit() TRƯỚC renderCertBox() để tên đã lưu (nếu có) được điền lên
     // ô #ft-name trước khi chứng chỉ vẽ lần đầu – tránh lệch tên giữa bản xem
     // trước và bản tải về như lỗi đã gặp và sửa ở Hộ Chiếu Thương Hiệu.
@@ -1189,6 +1191,10 @@ body:has(#ft-play:not(.hidden)) .vutru-goc{display:none!important}
   renderAvatars();
 })();
 </script>
+<!-- Hành trình 3 bậc: chỉ hoạt động khi URL có ?journey=<id> (docs/architecture/HANH-TRINH-3-BAC.md, J4) -->
+<link rel="stylesheet" href="css/journey.css">
+<script src="js/core/journey.js"></script><script src="js/journey-store.js"></script><script src="js/journey-card.js"></script><script src="js/journey-link.js"></script>
+<script>window.__ftJourney = window.BizOnJourneyLink ? BizOnJourneyLink.attach('t1') : null; if (window.__ftJourney && window.__ftJourney.id) BizOnJourneyLink.mountBanner(window.__ftJourney, 'ft-intro');</script>
 <script src="js/bps-rival-intel.js"></script>
 <script src="js/clay-hub.js"></script>
 <script src="js/bps-hub.js"></script>

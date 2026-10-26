@@ -135,11 +135,12 @@
   // ---------- ghi kết quả từng bậc ----------
   function stamp(p) { p.updatedAt = new Date().toISOString(); return p; }
 
-  // Bến Phù Sa: S = { total, result:{eff, rank}, history[{w,m,menu,loc,net}], knownPairs{'menu-loc':true} }; m: 0 gánh · 1 ghe · 2 khảo sát.
+  // Bến Phù Sa: S = { total, result:{eff, rank}, history[{w,m,menu,loc,net}], knownPairs{'menu-loc':true} };
+  // m theo METHODS của ben-phu-sa.html: 0 ghe hàng bông (nhân rộng) · 1 gánh hàng rong (thử nghiệm) · 2 khảo sát chợ.
   function recordTier1(p, S, meta = {}) {
     const q = clone(p); const h = Array.isArray(S.history) ? S.history : [];
     const res = S.result || {};
-    const style = { exploreWeeks: h.filter(w => w.m === 0).length, exploitWeeks: h.filter(w => w.m === 1).length, surveyWeeks: h.filter(w => w.m === 2).length };
+    const style = { exploreWeeks: h.filter(w => w.m === 1).length, exploitWeeks: h.filter(w => w.m === 0).length, surveyWeeks: h.filter(w => w.m === 2).length };
     const knownPairs = Array.isArray(S.knownPairs) ? S.knownPairs.slice() : Object.keys(S.knownPairs || {}).filter(k => S.knownPairs[k]);
     q.tiers.t1 = {
       status: 'done', appVersion: text(meta.appVersion, 'bizon-bps-v1'), finishedAt: text(meta.finishedAt) || new Date().toISOString(),
