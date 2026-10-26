@@ -13,8 +13,8 @@
 <helmet>
 <title>Bến Phù Sa – Chơi nhóm 5 vai (3D)</title>
 <template id="__bundler_thumbnail" data-bg-color="#033337"><svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg"><rect width="1200" height="800" fill="#033337"></rect><path d="M360 470 L840 470 L760 560 L440 560 Z" fill="#fda127"></path><rect x="590" y="250" width="16" height="220" fill="#fff"></rect><path d="M606 260 L760 440 L606 440 Z" fill="#fff"></path></svg></template>
-<meta name="ext-resource-dependency" content="assets/character/phu-sa/huong-new.png">
-<meta name="ext-resource-dependency" content="assets/character/phu-sa/huong-new.png?v=7">
+<meta name="ext-resource-dependency" content="assets/character/phu-sa/huong-new-v2.webp">
+<meta name="ext-resource-dependency" content="assets/character/phu-sa/huong-new-v2.webp">
 <meta name="ext-resource-dependency" content="assets/character/phu-sa/tu-new.png">
 <meta name="ext-resource-dependency" content="assets/character/team/minh-long-cut.webp">
 <meta name="ext-resource-dependency" content="assets/character/team/thu-ha-cut.webp">
@@ -353,14 +353,14 @@ button,input{font-family:inherit;}
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 const SEATS=[
-{id:'lumina',team:'ps',name:'Lumina',role:'Nhà sáng lập',img:'assets/character/phu-sa/huong-new.png?v=7',ab:['land','method','menu']},
+{id:'lumina',team:'ps',name:'Lumina',role:'Nhà sáng lập',img:'assets/character/phu-sa/huong-new-v2.webp',ab:['land','method','menu']},
 {id:'tuphan',team:'ps',name:'Tú Phan',role:'Người đồng hành',img:'assets/character/phu-sa/tu-new.png',ab:['scout','shop','ally','trade']},
 {id:'minhlong',team:'rx',name:'Minh Long',role:'CEO',img:'assets/character/team/minh-long-cut.webp',ab:['land','ally']},
 {id:'thuha',team:'rx',name:'Thu Hà',role:'CFO',img:'assets/character/team/thu-ha-cut.webp',ab:['shop','trade']},
 {id:'lanchi',team:'rx',name:'Lan Chi',role:'CMO',img:'assets/character/team/lan-chi-cut.webp',ab:['method']},
 {id:'baongoc',team:'rx',name:'Bảo Ngọc',role:'COO',img:'assets/character/team/bao-ngoc-cut.webp',ab:['menu']},
 {id:'giahan',team:'rx',name:'Gia Hân',role:'Thư ký',img:'assets/character/team/gia-han-cut.webp',ab:['scout']}];
-const TEAMDEF={ps:{name:'Đội Phù Sa',icon:'🌾',color:'#e8762d',img:'assets/character/phu-sa/huong-new.png?v=7'},rx:{name:'Đội Rồng Xanh',icon:'🐉',color:'#006687',img:'assets/character/team/minh-long-cut.webp'}};
+const TEAMDEF={ps:{name:'Đội Phù Sa',icon:'🌾',color:'#e8762d',img:'assets/character/phu-sa/huong-new-v2.webp'},rx:{name:'Đội Rồng Xanh',icon:'🐉',color:'#006687',img:'assets/character/team/minh-long-cut.webp'}};
 const AB={land:'📍 Chốt bến · Phủ quyết',method:'⛵ Cách bán · Quảng cáo',menu:'🥖 Món · Số lượng',scout:'🔭 Trinh sát (tin riêng)',shop:'💰 Quỹ',ally:'🤝 Liên minh',trade:'📰 Chợ tin'};
 const LOCS=[['🛶','Chợ nổi','du khách sáng sớm'],['⛴️','Bến phà','khách vãng lai'],['🎓','Làng đại học','sinh viên'],['🌳','Công viên bờ sông','gia đình cuối tuần'],['🏭','Khu công nghiệp','công nhân tan ca'],['🌙','Chợ đêm','giới trẻ về đêm'],['🏮','Sân đình lễ hội','khách dự lễ'],['🥭','Vườn trái cây','khách miệt vườn']];
 const MENUS=[['🥖','Bánh mì','Phục vụ nhanh: +15% ở bến đông'],['🍧','Chè bưởi','Có thể hao hụt −12% nếu không bảo hiểm'],['☕','Cà phê phin','Lời +18%, chậm ở bến đông'],['🧃','Nước mía','Ăn theo thời tiết']];
