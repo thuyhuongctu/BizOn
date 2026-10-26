@@ -1152,7 +1152,7 @@
         p_total_revenue: Math.round(S.total * 10) / 10,
         p_efficiency: Math.round(S.result.eff),
         p_final_rank: S.result.rank,
-        p_detail_json: { captain: TEAM()[S.cap].name, rivals: RIVALS.map(function (r) { return { name: r.name, total: Math.round(r.total * 10) / 10 }; }) },
+        p_detail_json: { journey: window.BizOnJourneyLink ? BizOnJourneyLink.submitInfo(window.__ftJourney) : null, captain: TEAM()[S.cap].name, rivals: RIVALS.map(function (r) { return { name: r.name, total: Math.round(r.total * 10) / 10 }; }) },
         // Phiên bản riêng từng bản để bảng giáo viên tách xếp hạng (bản cũ ghi 'bizon-v302')
         p_app_version: 'bizon-bps2d-v2',
       });

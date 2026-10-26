@@ -142,6 +142,14 @@
     if (S.journey.marketBrief && Array.isArray(S.competitors)) out += `<div class="jl-brief"><b>📰 ${esc(t('Bản tin thị trường (hành trang từ chợ nổi)', 'Market brief (carried over from the floating market)'))}</b><ul>${S.competitors.map(c => `<li>${esc(c.name)} – ${esc(STYLE[c.style] ? (L === 'en' ? STYLE[c.style][1] : STYLE[c.style][0]) : c.style)}</li>`).join('')}</ul></div>`;
     return out;
   }
+  // Phần «journey» đính kèm kết quả nộp về lớp (p_detail_json / result_json): { journeyId, tier, carryApplied } hoặc null khi ván không thuộc hành trình.
+  // Nhận trạng thái ván đã stamp() (S.journey) hoặc ngữ cảnh attach() (Bậc 1 không có hành trang).
+  function submitInfo(src) {
+    const j = src && (src.journey || (src.id && src.tier ? src : null)); if (!j) return null;
+    const id = j.id || j.journeyId; if (!id) return null;
+    const c = j.carryApplied && typeof j.carryApplied === 'object' && Object.keys(j.carryApplied).length ? JSON.parse(JSON.stringify(j.carryApplied)) : null;
+    return { journeyId: String(id), tier: String(j.tier || ''), carryApplied: c };
+  }
   // Khối cuối ván cho giao diện vẽ lại bằng chuỗi (bản gọn): có khi bậc này đã ghi vào đúng hộ chiếu.
   function endHtml(ctx) {
     if (!ctx || !ctx.id) return '';
@@ -149,5 +157,5 @@
     return nextHtml(p, ctx.tier);
   }
 
-  root.BizOnJourneyLink = Object.freeze({ HUB, attach, bannerHtml, mountBanner, finish, nextHtml, complete, offerCarry, stamp, greeting, introExtrasHtml, endHtml, lang });
+  root.BizOnJourneyLink = Object.freeze({ HUB, attach, bannerHtml, mountBanner, finish, nextHtml, complete, offerCarry, stamp, greeting, introExtrasHtml, endHtml, submitInfo, lang });
 })(window);

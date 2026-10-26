@@ -185,6 +185,8 @@
         win: conquestWin(S, report.round),
         // Mức khó áp cho vòng này (bản tính điểm luôn 'normal') – trường thêm mới, không đổi trường cũ.
         difficulty: S.difficulty || 'normal',
+        // Hành trình 3 bậc: { journeyId, tier, carryApplied } khi ván thuộc hành trình (S.journey do journey-link.stamp), null khi không.
+        journey: (window.BizOnJourneyLink && typeof BizOnJourneyLink.submitInfo === 'function') ? BizOnJourneyLink.submitInfo(S) : null,
       };
       const text = JSON.stringify(result);
       const row = {
