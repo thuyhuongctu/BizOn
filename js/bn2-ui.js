@@ -139,6 +139,7 @@ const BN2 = (() => {
     const same = (a, b) => String(a || '').trim().replace(/\s+/g, ' ').toLowerCase() === String(b || '').trim().replace(/\s+/g, ' ').toLowerCase();
     if (!restored) { const local = load(); if (local && local.profile && same(local.profile.classId, classId) && same(local.profile.teamName, team)) restored = local; }
     S = restored || newGameState({ email: 'sinhvien@bizon.vn', teamName: team, role, classId });
+    if (window.BizOnExplain) BizOnExplain.init({ classCode: classId });   // nhánh hộp đen (R1)
     if (!restored) {
       S.difficulty = 'normal';
       // Bốc thăm trường hợp A/B/C như doLogin() của js/app.js: cố định theo Mã lớp + tên đội.
@@ -186,7 +187,7 @@ const BN2 = (() => {
         <p style="margin:8px 0">${esc(ev.desc)}</p>
         ${window.BizOnJourneyLink ? BizOnJourneyLink.introExtrasHtml(S) : ''}
         <div class="bn2-row">${(ev.impacts || []).map(m => `<span class="bn2-chip ${/up-bad|down$/.test(m.dir) ? 'down' : /up|down-good/.test(m.dir) ? 'up' : 'flat'}">${esc(m.icon)} ${esc(m.label)}: <b>${esc(m.value)}</b></span>`).join('')}</div>
-        ${ev.luminaMsg ? `<div class="bn2-say"><b>Lumina:</b> ${esc(ev.luminaMsg)}</div>` : ''}
+        ${ev.luminaMsg ? `<div class="bn2-say bz-explain"><b>Lumina:</b> ${esc(ev.luminaMsg)}</div>` : ''}
         ${ev.city && ev.city.name ? `<p class="bn2-small bn2-muted" style="margin:8px 0 0">${T('Thị trường động', 'Dynamic market')}: ${esc(ev.city.name)}</p>` : ''}
       </div></div></section>`;
   }
@@ -214,7 +215,7 @@ const BN2 = (() => {
         <div class="bn2-seg" role="group">${[['equity', T('Vốn tự có', 'Equity')], ['loan', T('Vay ngân hàng · lãi 8,5%', 'Bank loan · 8.5%')]].map(([v, l]) => `<button type="button" data-act="fund" data-v="${v}" class="${ui.d.funding === v ? 'on' : ''}" aria-pressed="${ui.d.funding === v}">${l}</button>`).join('')}</div></div>
       <div class="bn2-field"><label for="bn2-term">${T('Kỳ hạn thanh toán cho khách', 'Customer payment terms')}</label>
         <select id="bn2-term" data-dec="paymentTerm">${[30, 60, 90].map(v => `<option value="${v}" ${+ui.d.paymentTerm === v ? 'selected' : ''}>${v} ${T('ngày', 'days')}${v === 60 ? T(' (+4% cầu, +2% chi phí)', ' (+4% demand, +2% cost)') : v === 90 ? T(' (+8% cầu, +5% chi phí)', ' (+8% demand, +5% cost)') : ''}</option>`).join('')}</select></div>
-      <div class="bn2-sunk" style="margin-top:6px"><p class="bn2-small" style="margin:0 0 8px"><b>${T('Dự báo trước khi chốt', 'Forecast before you commit')}</b> <span class="bn2-muted">${T('(ước tính, kết quả thật còn tuỳ đối thủ)', '(estimate – the real result depends on rivals)')}</span></p>
+      <div class="bn2-sunk bz-explain" style="margin-top:6px"><p class="bn2-small" style="margin:0 0 8px"><b>${T('Dự báo trước khi chốt', 'Forecast before you commit')}</b> <span class="bn2-muted">${T('(ước tính, kết quả thật còn tuỳ đối thủ)', '(estimate – the real result depends on rivals)')}</span></p>
         <div class="bn2-fc">
           <div><span>${T('Tiền vào', 'Inflow')}</span><b>${money(fc.inflow)}</b></div>
           <div><span>${T('Tiền ra', 'Outflow')}</span><b>${money(fc.outflow)}</b></div>
@@ -233,7 +234,7 @@ const BN2 = (() => {
     const role = S.profile.role || 'CEO';
     const st = { SAFE: ['low', T('An toàn', 'Safe')], SAFE_AND_EFFICIENT: ['low', T('An toàn & hiệu quả', 'Safe & efficient')], VIABLE_BUT_RISKY: ['medium', T('Khả thi nhưng rủi ro', 'Viable but risky')], CAPITAL_EROSION: ['medium', T('Cảnh báo mòn vốn', 'Capital erosion')], HIGH_RISK: ['high', T('Rủi ro cao', 'High risk')], INSOLVENCY_RISK: ['high', T('Nguy cơ mất thanh khoản', 'Insolvency risk')] };
     const w = ui.whatIf, ws = w && (st[w.status] || ['medium', w.status]);
-    return `<section class="bn2-card" aria-labelledby="bn2-lum-h">
+    return `<section class="bn2-card bz-blackbox-note" style="align-self:start" aria-label="${T('Nhánh hộp đen', 'Black-box condition')}"><p class="bn2-small bn2-muted" style="margin:0">${T('Lớp này chơi không có gợi ý của Lumina và mô phỏng Nếu – Thì. Hãy quyết định từ số liệu của đội.', 'This class plays without Lumina hints and what-if simulation. Decide from your team\'s numbers.')}</p></section><section class="bn2-card bz-explain" aria-labelledby="bn2-lum-h">
       <div class="bn2-row" style="justify-content:space-between"><h2 id="bn2-lum-h" style="font-size:22px">${T('Hỏi Lumina', 'Ask Lumina')}</h2><span class="bn2-chip">${T('Còn', 'Left')} ${left}/${quota()}</span></div>
       <p class="bn2-small bn2-muted" style="margin:4px 0 10px">${T('Lumina gợi ý theo luật dựa trên số liệu của đội; Lumina không chấm điểm và không quyết thay bạn.', "Lumina gives rule-based hints from your team's numbers; she never scores or decides for you.")}</p>
       <div class="bn2-row">${[['pricing', T('Về giá', 'Pricing')], ['marketing', 'Marketing'], ['risk', T('Rủi ro vòng này', 'Risks this round')]].map(([k, l]) => `<button class="bn2-btn" data-act="ask" data-v="${k}" ${left <= 0 || S.finished ? 'disabled' : ''}>${l}</button>`).join('')}</div>

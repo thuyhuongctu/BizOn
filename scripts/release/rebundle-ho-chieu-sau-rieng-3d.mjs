@@ -35,7 +35,7 @@ export const ASSETS = {
   // Bốn mô-đun ghép thành MỘT asset (theo thứ tự phụ thuộc) vì runtime nạp các <script> trong <helmet> bất đồng bộ,
   // không giữ thứ tự giữa các tệp.
   '3b7f2c91-6d4e-4a8b-9c15-2e7d8f0a1b3c': 'css/journey.css',
-  '8a4e6d12-3f5b-4c7a-8d9e-1b2c3d4e5f60': ['js/core/journey.js', 'js/journey-store.js', 'js/journey-card.js', 'js/journey-link.js', 'js/journey-sync.js']
+  '8a4e6d12-3f5b-4c7a-8d9e-1b2c3d4e5f60': ['js/core/journey.js', 'js/journey-store.js', 'js/journey-card.js', 'js/journey-link.js', 'js/journey-sync.js', 'js/explain-mode.js']
 };
 const nameOf = file => (Array.isArray(file) ? file.join(' + ') : file);
 const mimeOf = file => (nameOf(file).endsWith('.css') ? 'text/css' : 'application/javascript');

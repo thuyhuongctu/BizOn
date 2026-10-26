@@ -52,6 +52,7 @@
   // Ghi kết quả bậc (một lần; đã ghi thì giữ nguyên). Trả về { recorded, passport }.
   function finish(ctx, state, meta) {
     if (!ctx || !ctx.active) return { recorded: false, passport: ctx && ctx.passport || null };
+    meta = Object.assign({}, meta || {}, { explain: (root.BizOnExplain && typeof root.BizOnExplain.condition === 'function') ? root.BizOnExplain.condition() : 'shown' });   // nhánh hộp đen (R1): điều kiện lúc ghi bậc
     let p = null;
     try {
       p = S.update(q => {

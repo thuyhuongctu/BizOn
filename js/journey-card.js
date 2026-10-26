@@ -65,7 +65,7 @@
     const lines = c.lines && c.lines.length ? c.lines : [];
     const off = !c.enabled;
     const body = lines.length
-      ? '<ul class="jc-lines">' + lines.map(l => `<li class="jc-line" data-key="${esc(l.key)}"><b class="jc-val">${fmtVal(l.key, l.value, lang)}</b><span>${esc(t(lang, l.vi, l.en))}</span></li>`).join('') + '</ul>'
+      ? '<ul class="jc-lines">' + lines.map(l => `<li class="jc-line" data-key="${esc(l.key)}"><b class="jc-val">${fmtVal(l.key, l.value, lang)}</b><span>${esc(t(lang, l.vi, l.en))}</span></li>`).join('') + '</ul>' + `<p class="jc-bb jc-muted">${esc(t(lang, 'Hành trang đã áp; chi tiết từng khoản được ẩn trong lớp này.', 'Carry-over applied; the line-by-line details are hidden in this class.'))}</p>`
       : (c.preview && Object.keys(c.preview).length
         ? `<p class="jc-muted">${esc(t(lang, 'Hành trang đang tắt (lớp chấm điểm hoặc bạn đã chọn chơi độc lập). Kết quả bậc trước vẫn được ghi vào hộ chiếu.', 'Carry-over is off (graded class, or you chose to play standalone). The previous level\'s result is still recorded in the passport.'))}</p>`
         : `<p class="jc-muted">${esc(t(lang, 'Chưa có hành trang: hoàn thành bậc trước để nhận.', 'No carry-over yet: finish the previous level to earn it.'))}</p>`);

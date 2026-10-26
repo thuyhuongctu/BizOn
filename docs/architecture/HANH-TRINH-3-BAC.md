@@ -59,14 +59,14 @@ Một bản ghi JSON có phiên bản, gọi là **hộ chiếu hành trình** (
   "carryEnabled": true,
   "tiers": {
     "t1": {
-      "status": "done", "appVersion": "bizon-bps3d-v2", "finishedAt": "…",
+      "status": "done", "appVersion": "bizon-bps3d-v2", "finishedAt": "…", "explain": "shown",
       "total": 4.2, "eff": 71, "rank": 2,
       "weeks": [{ "w": 1, "m": 1, "menu": 0, "loc": 2, "net": 1.0 }],
       "knownPairs": ["0-2", "1-4"],
       "style": { "exploreWeeks": 3, "exploitWeeks": 2, "surveyWeeks": 1 }
     },
     "t2": {
-      "status": "done", "appVersion": "bizon-bn-v2", "finishedAt": "…",
+      "status": "done", "appVersion": "bizon-bn-v2", "finishedAt": "…", "explain": "shown",
       "balanceEnd": 612, "netProfitTotal": 96, "shareEnd": 31.5,
       "oeeEnd": 88, "quickRatioEnd": 1.3, "brandEnd": 1.22, "loanEnd": 0,
       "rdCumulative": 60, "profitableRounds": 5, "whatIfUsed": 4, "caseId": "A"
@@ -194,6 +194,7 @@ Mỗi lần đổi tham số: tăng `MODULE_VERSION`, chạy lại `journey-bala
 | J6 | Hộ Chiếu Sầu Riêng v2 (`js/dp2-ui.js`: vai chọn sẵn, hộp thoại hành trang, `applyToDurian`, engine đọc `journey.creditLimitAdj`, ghi `tiers.t3` với thứ tự mở kênh) và Hộ Chiếu Thương Hiệu (engine `brand-passport.html` + bản gọn `js/bp2-ui.js`: `bpApplyCarry`, `applyToBrand`, ghi `tiers.t3` với `entered[]` ở `bpEnd`); biến thể không khớp → chơi độc lập; trang Hành trình thêm «Nhìn lại cả hành trình» và CSV ẩn danh một dòng – **đã làm** | J3 | 2–3 ngày |
 | J7 | Migration `supabase/migrations/20261026000000_journey_passports.sql`: bảng `journey_passports` (RLS, chỉ qua RPC), `bizon_journey_upsert` / `bizon_journey_get` (phiên sinh viên, đọc bản của mình hoặc bản mới nhất của đội mình), `bizon_journey_class` (giảng viên sở hữu lớp), cờ `class_controls.journey_carry` + `bizon_set_journey_carry`, `bizon_class_feed` trả `journey_carry`, `bizon_purge_expired` dọn 12 tháng; kiểm thử `test/sql/journey_passports_smoke.sql` chạy trên Postgres cục bộ và CI (áp toàn bộ migration + áp lại); client: `js/journey-sync.js` (hợp nhất theo `updatedAt`, xung đột hỏi người dùng), khối «Đồng bộ với lớp» trên trang Hành trình, thẻ «Hành trang hành trình 3 bậc» + danh sách hộ chiếu trên Trang Giảng viên – **đã làm; migration đã áp lên dự án thật 26/10/2026** (game tự đẩy hộ chiếu sau mỗi bậc khi đã đăng nhập: `journey-link.finish` → `BizOnJourneySync.sync({ pushOnly })`) | J4–J6 | 2 ngày + xác nhận |
 | J8 | Bản 3D của ba bậc nhận cùng mô-đun: Bến Phù Sa 3D và Bật Nghiệp 3D (đã nối ở J4–J5), Hộ Chiếu Thương Hiệu 3D (`Ho Chieu Thuong Hieu 3D.html`: hộp thoại sau Bắt đầu, `bpApplyCarry`, ghi Bậc 3 ở `bpEnd`), Hộ Chiếu Sầu Riêng 3D (template trong bundle `lab/ho-chieu-sau-rieng-3d.html`: 4 mô-đun + CSS trong manifest, vai chọn sẵn, hộp thoại trước vụ 1, ghi Bậc 3 khi hết mùa, lối «Xem tổng kết hành trình» trên bảng tổng kết); trang Hành trình thêm nút «🧊 Bản 3D» mỗi bậc; quét cân bằng giữ nguyên (test journey-balance) – **đã làm**; model card as-built ở mục 8 và thẻ 05 trên trang Học thuật, kế hoạch hiệu chỉnh sau pilot kèm ngưỡng | J7 | 2 ngày |
+| R1 | Nhánh nghiên cứu «hộp đen»: cờ lớp `class_controls.explain_hidden` (migration `20261027000000_explain_mode.sql`, `bizon_set_explain_hidden`, feed trả `explain_hidden`), `js/explain-mode.js` + `css/explain-mode.css` giấu phần giải thích cơ chế trong ba game, điều kiện `explain: 'hidden'|'shown'` ghi vào mọi kết quả nộp và `tiers.tN.explain` của hộ chiếu (+ cột CSV), thẻ «🔬 Giải thích cơ chế» trên Trang Giảng viên; danh sách bề mặt ẩn ở `docs/architecture/NHANH-HOP-DEN.md` – **đã làm** (`test/explain-mode.test.js`, `test/sql/explain_mode_smoke.sql`) | J7, J9, J10 | 1 ngày |
 
 Mỗi PR một nhánh từ `main`, một tệp test, tăng `CACHE` trong `sw.js`, gộp theo lệnh.
 

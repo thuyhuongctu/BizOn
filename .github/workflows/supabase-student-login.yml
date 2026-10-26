@@ -8,6 +8,7 @@ on:
       - 'test/sql/supabase_auth_stub.sql'
       - 'test/sql/require_student_login_smoke.sql'
       - 'test/sql/journey_passports_smoke.sql'
+      - 'test/sql/explain_mode_smoke.sql'
       - '.github/workflows/supabase-student-login.yml'
   pull_request:
     paths:
@@ -15,6 +16,7 @@ on:
       - 'test/sql/supabase_auth_stub.sql'
       - 'test/sql/require_student_login_smoke.sql'
       - 'test/sql/journey_passports_smoke.sql'
+      - 'test/sql/explain_mode_smoke.sql'
       - '.github/workflows/supabase-student-login.yml'
 
 jobs:
@@ -47,3 +49,9 @@ jobs:
         run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/journey_passports_smoke.sql
       - name: Áp lại migration hành trình (phải an toàn khi chạy lại)
         run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f supabase/migrations/20261026000000_journey_passports.sql
+      - name: Kiểm nhánh hộp đen (cờ ẩn giải thích của lớp, feed ẩn danh)
+        run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/explain_mode_smoke.sql
+      - name: Áp lại migration hộp đen rồi kiểm lại (phải an toàn khi chạy lại; feed vẫn có journey_carry)
+        run: |
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f supabase/migrations/20261027000000_explain_mode.sql
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/explain_mode_smoke.sql

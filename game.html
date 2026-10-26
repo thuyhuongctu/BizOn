@@ -363,7 +363,7 @@
           </p>
           <p id="dash-lumina" class="text-xs text-deep-teal/70 mt-0.5">Xin chào! Hãy vào mục Cố vấn để nhận gợi ý chiến thuật nhé.</p>
         </div>
-        <button onclick="showTab('advisor')" class="clay-btn bg-primary-container/30 text-primary font-bold px-3 py-2 text-xs">Hỏi</button>
+        <button onclick="showTab('advisor')" class="clay-btn bg-primary-container/30 text-primary font-bold px-3 py-2 text-xs bz-explain">Hỏi</button>
       </div>
       <h3 class="font-display font-bold text-deep-teal mb-3">Tiện ích</h3>
       <div class="grid grid-cols-4 gap-3 mb-4">
@@ -527,7 +527,7 @@
           <span class="w-9 h-9 rounded-xl flex items-center justify-center text-lg shrink-0" style="background:rgba(0,196,255,.15)">👑</span>
           <div><p class="font-display font-extrabold text-deep-teal text-sm">CEO – Nhà lãnh đạo tầm nhìn</p><p class="text-[10px] text-deep-teal/50">Điều phối họp đội, chạy thử kịch bản, chốt và khóa quyết định</p></div>
         </div>
-      <div class="clay-card p-4 mb-4">
+      <div class="clay-card p-4 mb-4 bz-explain">
         <p class="font-bold text-sm text-deep-teal mb-1">🔮 Mô phỏng "Nếu – Thì" trước khi Commit</p>
         <p class="text-[11px] text-deep-teal/60 mb-3"><span>Lumina chạy thử kịch bản với thông số bạn đang chọn (</span><span id="whatif-quota">2</span><span> lượt/chu kỳ).</span></p>
         <div class="grid grid-cols-2 gap-2">
@@ -587,7 +587,8 @@
         <span class="text-primary text-lg shrink-0">➜</span>
       </button>
       <div id="advisor-chat" class="space-y-3 mb-4"></div>
-      <div class="clay-card p-4 mb-4">
+      <div class="clay-card p-4 mb-4 bz-blackbox-note"><p class="text-sm text-deep-teal" data-vi="Lớp này chơi không có gợi ý của Lumina và mô phỏng «Nếu – Thì». Hãy quyết định từ số liệu trong Bảng điều khiển và Báo cáo." data-en="This class plays without Lumina hints and what-if simulation. Decide from the numbers in the Dashboard and Reports.">Lớp này chơi không có gợi ý của Lumina và mô phỏng «Nếu – Thì». Hãy quyết định từ số liệu trong Bảng điều khiển và Báo cáo.</p></div>
+      <div class="clay-card p-4 mb-4 bz-explain">
         <div class="flex items-center justify-between mb-2">
           <p class="font-bold text-sm text-deep-teal"><span>Hỏi Lumina (</span><span id="ai-quota">3</span><span> lượt/chu kỳ)</span></p>
           <div class="flex items-center gap-1.5 clay-input rounded-full p-1">
@@ -901,6 +902,8 @@
 <script src="js/backend.js"></script>
 <!-- Hành trình 3 bậc: chỉ hoạt động khi URL có ?journey=<id> (docs/architecture/HANH-TRINH-3-BAC.md, J5) -->
 <link rel="stylesheet" href="css/journey.css">
+<link rel="stylesheet" href="css/explain-mode.css">
+<script src="js/explain-mode.js"></script>
 <script src="js/journey-sync.js"></script>
 <script src="js/core/journey.js"></script><script src="js/journey-store.js"></script><script src="js/journey-card.js"></script><script src="js/journey-link.js"></script>
 <script src="js/app.js"></script>

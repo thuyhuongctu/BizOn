@@ -242,6 +242,13 @@ input,select,textarea,button{font-family:inherit}
             <div style="font-size:13px;font-weight:700">{{ jpHead }}</div>
             <sc-for list="{{ jpRows }}" as="r" hint-placeholder-count="3"><div style="display:flex;justify-content:space-between;gap:8px;font-size:13px;padding:6px 0;border-top:1px solid #eadcc6"><span>{{ r.team }} · {{ r.email }}</span><span style="white-space:nowrap">{{ r.tiers }} · {{ r.when }}</span></div></sc-for>
           </div>
+          <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px" data-panel="explain">
+            <div style="font:800 19px 'Baloo 2',sans-serif">🔬 Giải thích cơ chế (nhánh nghiên cứu)</div>
+            <div style="font-size:13px;color:#5a6b74">{{ xNote }}</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <sc-for list="{{ xBtns }}" as="b" hint-placeholder-count="2"><button onClick="{{ b.go }}" style="border:3px solid {{ b.border }};background:{{ b.bg }};color:{{ b.fg }};border-radius:12px;padding:8px 11px;font-weight:700;cursor:pointer">{{ b.label }}</button></sc-for>
+            </div>
+          </div>
           <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px">
             <div style="font:800 19px 'Baloo 2',sans-serif">💸 Cấp / trừ vốn</div>
             <select value="{{ gTeam }}" onChange="{{ onGTeam }}" style="padding:10px;border-radius:12px;border:2px solid #e6d6bf;background:#fff;font-weight:600">
@@ -581,6 +588,7 @@ class Component extends DCLogic {
     try { await this.api().completeRecovery(recoveryToken, fNewPass); this.setState({ mode: 'in', fPass: '', fNewPass: '', recoveryToken: '', err: this.tr('Đã đặt lại mật khẩu. Đăng nhập bằng mật khẩu mới.', 'Password reset. Sign in with your new password.') }); }
     catch (e) { this.fail(e); } }
   async claim() { try { await this.api().claimClass(this.state.fCode); this.setState({ fCode: '' }); this.loadClasses(); } catch (e) { this.fail(e); } }
+  async setExplainHidden(on) { try { await this.api().setExplainHidden(this.state.code, on); this.reload(); } catch (e) { this.fail(e); } }
   async setJourneyCarry(on) { try { await this.api().setJourneyCarry(this.state.code, on); this.reload(); } catch (e) { this.fail(e); } }
   async setLock(n) { try { const c = Object.assign({}, (this.state.st.controls || {}), { locked_round: n }); await this.api().setControls(this.state.code, c); this.reload(); } catch (e) { this.fail(e); } }
   async saveEvent() { try { const s = this.state, cur = (s.st.controls || {}); await this.api().setControls(s.code, Object.assign({}, cur, { forced_event: s.fEvent, forced_event_round: s.fEvent ? this.curRound() : null, message: s.fMsg })); this.reload(); } catch (e) { this.fail(e); } }
@@ -701,13 +709,15 @@ class Component extends DCLogic {
       teams: T.map(t => ({ name: t.name + (t.rs.some(r => r.result_json && r.result_json.journey) ? ' 🧭' : ''), share: t.share.toFixed(1) + '%', profit: money(t.profit), profitColor: t.profit >= 0 ? '#3f8a44' : '#c0443a', flags: '🚩 ' + t.flags + '/6',
         last: t.last ? new Date(t.last.created_at).toLocaleString('vi-VN') : '–',
         dots: [1, 2, 3, 4, 5, 6].map(n => { const r = t.rs.find(x => x.round_number === n), j = r ? (r.result_json || {}) : null;
-          return { n, tip: r ? `V${n}: ${(+j.share || 0).toFixed(1)}% · ${money(j.netProfit)}${j.win === true ? ' · 🚩 Cắm cờ' : j.win === false ? ' · ' + (j.winner ? j.winner + ' chiếm' : 'Chưa cắm cờ') : ''}${j.journey ? ' · 🧭 hành trình' + (j.journey.carryApplied ? ' (có hành trang)' : ' (không hành trang)') : ''}` : `V${n}: chưa nộp`, bg: !r ? '#d9cbb4' : j.win === true ? '#e8a22d' : (+j.netProfit >= 0 ? '#3f8a44' : '#c0443a') }; }) })),
+          return { n, tip: r ? `V${n}: ${(+j.share || 0).toFixed(1)}% · ${money(j.netProfit)}${j.win === true ? ' · 🚩 Cắm cờ' : j.win === false ? ' · ' + (j.winner ? j.winner + ' chiếm' : 'Chưa cắm cờ') : ''}${j.journey ? ' · 🧭 hành trình' + (j.journey.carryApplied ? ' (có hành trang)' : ' (không hành trang)') : ''}${j.explain === 'hidden' ? ' · 🔬 hộp đen' : ''}` : `V${n}: chưa nộp`, bg: !r ? '#d9cbb4' : j.win === true ? '#e8a22d' : (+j.netProfit >= 0 ? '#3f8a44' : '#c0443a') }; }) })),
       teamOptions: T.map(t => t.name), selTeam, onSelTeam: e => this.setState({ selTeam: e.target.value }), decHead: dec.head, decCells: dec.cells,
       lockNote: lock != null ? `Các đội không thể chốt vòng ${lock + 1} trở đi cho tới khi bạn mở khóa.` : 'Chọn vòng cuối cùng được phép chơi. Đội nào đi nhanh sẽ phải chờ cả lớp.',
       lockBtns: [null, 0, 1, 2, 3, 4, 5].map(n => { const on = lock === n || (n === null && lock == null);
         return { label: n === null ? '🔓 Mở' : n === 0 ? 'Chưa cho chơi' : 'Đến V' + n, go: () => this.setLock(n), bg: on ? '#1f4a55' : '#fff', fg: on ? '#fff' : '#1f4a55', border: on ? '#10303a' : '#e6d6bf' }; }),
       jCarryNote: c.journey_carry === true ? 'Đang BẬT: đội có hộ chiếu hành trình được nhận hành trang (vốn, uy tín…) từ bậc trước khi vào game của lớp này.' : 'Đang TẮT (mặc định, công bằng khi chấm): mọi đội xuất phát y như chơi riêng; hộ chiếu vẫn ghi kết quả. Bật nếu lớp chơi xuyên suốt 3 bậc có nối tiếp.',
       jCarryBtns: [[false, '🔒 Tắt hành trang'], [true, '🎒 Bật hành trang']].map(([v, label]) => { const on = (c.journey_carry === true) === v; return { label, go: () => this.setJourneyCarry(v), bg: on ? '#1f4a55' : '#fff', fg: on ? '#fff' : '#1f4a55', border: on ? '#10303a' : '#e6d6bf' }; }),
+      xNote: c.explain_hidden === true ? 'Đang ẨN (nhánh hộp đen): lớp này chơi không thấy lời giải cơ chế – gợi ý của Lumina/cố vấn, dự báo «Nếu – Thì», bài học cốt lõi, dòng giải thích hành trang. Engine, biến cố, luật và điểm giữ nguyên. Điều kiện được ghi vào mỗi kết quả nộp (🔬).' : 'Đang HIỆN (mặc định): sinh viên thấy đầy đủ lời giải cơ chế. Chỉ ẨN cho lớp thuộc nhánh đối chứng của nghiên cứu (docs/architecture/NHANH-HOP-DEN.md); đặt trước khi lớp bắt đầu chơi.',
+      xBtns: [[false, '💡 Hiện giải thích'], [true, '🔬 Ẩn giải thích']].map(([v, label]) => { const on = (c.explain_hidden === true) === v; return { label, go: () => this.setExplainHidden(v), bg: on ? '#1f4a55' : '#fff', fg: on ? '#fff' : '#1f4a55', border: on ? '#10303a' : '#e6d6bf' }; }),
       jpHead: 'Hộ chiếu đã đồng bộ lên lớp: ' + ((s.jp || []).length) + (((s.jp || []).length) ? '' : ' (sinh viên bấm «Đồng bộ ngay» trên trang Hành trình)'),
       jpRows: (s.jp || []).slice(0, 30).map(r => { const tiers = (r.passport && r.passport.tiers) || {}; return { team: r.team_name, email: r.student_email || '—', tiers: ['t1', 't2', 't3'].map((k, i) => 'B' + (i + 1) + (tiers[k] && tiers[k].status === 'done' ? '✓' : '·')).join(' '), when: r.updated_at ? new Date(r.updated_at).toLocaleDateString('vi-VN') : '' }; }),
       eventOpts: ok ? P.EVENTS.map(([v, l]) => ({ v, l })) : [], fEvent: s.fEvent, onEvent: e => this.setState({ fEvent: e.target.value }), fMsg: s.fMsg, onMsg: e => this.setState({ fMsg: e.target.value }), saveEvent: () => this.saveEvent(),

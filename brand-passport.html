@@ -344,6 +344,8 @@
 <script src="js/bp-core.js"></script>
 <!-- Hành trình 3 bậc: chỉ hoạt động khi URL có ?journey=<id> (bản gọn chuyển tham số vào đây) -->
 <link rel="stylesheet" href="css/journey.css">
+<link rel="stylesheet" href="css/explain-mode.css">
+<script src="js/explain-mode.js"></script>
 <script src="js/journey-sync.js"></script>
 <script src="js/core/journey.js"></script><script src="js/journey-store.js"></script><script src="js/journey-card.js"></script><script src="js/journey-link.js"></script>
 <script src="js/vendor/auto-animate.min.js"></script>
@@ -1746,6 +1748,7 @@
     var fin = window.__bpFinal;
     if (!fin) return;
     try { localStorage.setItem('bp-class', klass); localStorage.setItem('bp-name', name); } catch (e) {}
+    if (window.BizOnExplain) BizOnExplain.init({ classCode: klass });   // nhánh hộp đen (R1)
     btn.disabled = true; btn.style.opacity = 0.5;
     msg.textContent = T('Đang gửi…', 'Sending…');
     try {
@@ -1758,7 +1761,7 @@
         p_rep: Math.round(fin.sc.r), p_capab: Math.round(fin.sc.c), p_adapt: Math.round(fin.sc.a), p_sust: Math.round(fin.sc.s),
         p_title: fin.title,
         p_quarters: S.q >= 6 ? 6 : S.q + 1,
-        p_detail_json: { journey: window.BizOnJourneyLink ? BizOnJourneyLink.submitInfo(S) : null, seed: seedBase, seed_source: seedSource, foot: S.foot, markets: S.entered, know: S.know, fail: fin.fail },
+        p_detail_json: { journey: window.BizOnJourneyLink ? BizOnJourneyLink.submitInfo(S) : null, explain: window.BizOnExplain ? BizOnExplain.condition() : 'shown', seed: seedBase, seed_source: seedSource, foot: S.foot, markets: S.entered, know: S.know, fail: fin.fail },
         p_app_version: 'bizon-v302',
       });
       msg.textContent = T('✅ Đã nộp! Kết quả đã hiện trên bảng của giảng viên.', "✅ Submitted! Your result now shows on the instructor's board.");
