@@ -17,7 +17,7 @@ const root = path.join(__dirname, '..');
 const read = f => fs.readFileSync(path.join(root, f), 'utf8');
 
 const page = read('truong-hoc-thuat.html'), css = read('css/academic-foundation.css'), js = read('js/academic-foundation.js'), sw = read('sw.js');
-const ORDER = ['model-cards', 'tham-so-sau-rieng', 'ly-thuyet-kdqt', 'tai-lap', 'chuan-dau-ra', 'vietlens', 'dao-duc', 'gioi-han', 'tai-lieu'];
+const ORDER = ['model-cards', 'tham-so-sau-rieng', 'ly-thuyet-kdqt', 'tai-lap', 'chuan-dau-ra', 'vietlens', 'dao-duc', 'doi-sanh', 'gioi-han', 'tai-lieu'];
 const found = [...page.matchAll(/<section id="([a-z-]+)" class="af-sec/g)].map(m => m[1]);
 check(found.join(',') === ORDER.join(','), '9 mục đúng thứ tự (được: ' + found.join(',') + ')');
 check(page.includes('id="rubric"') && page.includes('href="#chuan-dau-ra"'), 'neo cũ #chuan-dau-ra và #rubric vẫn còn (trang khác liên kết tới)');
@@ -48,7 +48,7 @@ check(details === 4 && open === 1, '4 model card dạng <details>, thẻ 1 mở 
       sample: document.getElementById('af-sample-lvl').textContent, m1: document.getElementById('m1').open, m2: document.getElementById('m2').open }));
     check(r0.counts.all === 27 && r0.counts.sourced === 8 && r0.counts.mixed === 8 && r0.counts.illustrative === 11, 'nhãn loại nguồn: 8 có nguồn · 8 hỗn hợp · 11 minh hoạ (được ' + JSON.stringify(r0.counts) + ')');
     check(r0.toc === 'sticky' && r0.chips === 'none' && r0.navH > 40, 'desktop: mục lục dính dưới menu đất sét (nav ' + r0.navH + 'px), hàng chip ẩn');
-    check(r0.active === 'model-cards' && r0.prog === '01 / 09', 'đầu trang: mục 01 đang đọc, chỉ báo 01 / 09');
+    check(r0.active === 'model-cards' && r0.prog === '01 / 10', 'đầu trang: mục 01 đang đọc, chỉ báo 01 / 10');
     check(/Công bố kết quả/.test(r0.h1) && r0.badge === 'Có nguồn' && r0.codes >= 20, 'VI mặc định đã chọn; baseLoss gắn nhãn «Có nguồn»; có mã nguồn bấm được');
     check(r0.hashOk && r0.sample === 'Mức 4 · Xuất sắc' && r0.m1 && !r0.m2, 'mã băm trùng mặc định, rubric chọn mức 4, chỉ thẻ 1 mở');
     // model card: tab + mở thẻ 2
@@ -96,11 +96,11 @@ check(details === 4 && open === 1, '4 model card dạng <details>, thẻ 1 mở 
     check(/^Sarasvathy, S\. D\. \(2001\)\..*243–263\. https:\/\/doi\.org\/10\.5465\/amr\.2001\.4378020$/.test(r12.t) && r12.flash, 'chép tài liệu 4: chữ thuần + liên kết DOI, nút báo «Đã chép»');
     await pg.click('[data-act="copyall"]');
     const r13 = await pg.evaluate(() => AF.lastCopied().split('\n'));
-    check(r13.length === 17 && /Khanna, T\./.test(r13[16]) && !/doi:/.test(r13.join('')), 'chép cả 17 tài liệu, mỗi dòng một tài liệu');
+    check(r13.length === 18 && /Khanna, T\./.test(r13[16]) && /Capelo, C\./.test(r13[17]) && !/doi:/.test(r13.join('')), 'chép cả 18 tài liệu, mỗi dòng một tài liệu');
     // mục lục: cuộn tới cuối → Tài liệu; bấm mục lục → Tái lập nằm dưới menu
     await pg.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight)); await pg.waitForTimeout(300);
     const r14 = await pg.evaluate(() => AF.state().active + '|' + document.getElementById('af-prog-label').textContent + '|' + document.querySelector('.af-toc-list a[aria-current="true"]').getAttribute('href'));
-    check(r14 === 'tai-lieu|09 / 09|#tai-lieu', 'cuộn tới cuối → mục 09 Tài liệu (được ' + r14 + ')');
+    check(r14 === 'tai-lieu|10 / 10|#tai-lieu', 'cuộn tới cuối → mục 10 Tài liệu (được ' + r14 + ')');
     await pg.click('.af-toc-list a[href="#tai-lap"]'); await pg.waitForTimeout(400);
     const r15 = await pg.evaluate(() => ({ active: AF.state().active, top: Math.round(document.getElementById('tai-lap').getBoundingClientRect().top), navH: parseFloat(getComputedStyle(document.querySelector('.af')).getPropertyValue('--af-nav-h')) }));
     check(r15.active === 'tai-lap' && r15.top >= r15.navH && r15.top < r15.navH + 80, 'bấm mục lục «Tái lập» → mục nằm ngay dưới menu dính (top ' + r15.top + ', nav ' + r15.navH + ')');
