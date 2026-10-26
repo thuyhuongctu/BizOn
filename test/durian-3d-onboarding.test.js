@@ -61,13 +61,13 @@ const D = ctx.DurianData;
 const used = new Set([...tpl.matchAll(/hc\/durian\/[a-z0-9-]+\.webp/g)].map(m => m[0]).concat([...tpl.matchAll(/'assets\/hc\/durian\/' \+ \[([^\]]+)\]/g)].flatMap(m => m[1].split(',').map(x => 'hc/durian/' + x.trim().replace(/'/g, '') + '.webp'))));
 D.chain2.stages.forEach(st => st.items.forEach(it => { if (it.img.startsWith('hc/durian/')) used.add(it.img); }));
 D.eightSteps.steps.forEach(st => { if (st.img && st.img.startsWith('hc/durian/')) used.add(st.img); });
-assert.ok(used.size >= 24, 'ít nhất 24 ảnh mới được dùng, thấy ' + used.size);
+assert.ok(used.size >= 33, 'ít nhất 33 ảnh mới được dùng, thấy ' + used.size);
 used.forEach(img => assert.ok(fs.existsSync(path.join(ROOT, 'assets', img)), 'thiếu ' + img));
 const onDisk = fs.readdirSync(path.join(ROOT, 'assets/hc/durian')).filter(f => f.endsWith('.webp'));
 onDisk.forEach(f => assert.ok(used.has('hc/durian/' + f), 'ảnh chưa dùng tới: ' + f));
 // bước 6 quy trình 8 bước nay có ảnh; chuỗi lạnh có thêm ảnh tàu, xe, vườn
 assert.equal(D.eightSteps.steps.find(s => s.n === 6).img, 'hc/durian/cau-container.webp');
 assert.ok(D.chain2.stages.find(s => s.id === 'rail-sea').items.some(it => it.img === 'hc/durian/tau-bao.webp'));
-assert.equal(D.chain2.stages.find(s => s.id === 'farm').items[0].img, 'hc/durian/ban-do-4-chang.webp', 'chặng Tại vườn mở đầu bằng bản đồ 4 chặng');
+assert.equal(D.chain2.stages.find(s => s.id === 'farm').items[0].img, 'hc/durian/dao-8-chang.webp', 'chặng Tại vườn mở đầu bằng bản đồ đảo 8 chặng');
 
 console.log('durian-3d-onboarding: ok');
