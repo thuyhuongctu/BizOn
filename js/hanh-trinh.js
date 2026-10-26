@@ -57,7 +57,7 @@
     const name = C.tierName(k, lang(), variant), sub = t(d.subVi, d.subEn), prev = k === 't2' ? 1 : 2;
     const res = st === 'done' ? resultLine(p, k) : st === 'locked' ? t(`Xong Bậc ${prev} để mở.`, `Finish Level ${prev} to unlock.`) : t('Mở game, nhận hành trang (nếu có) và chơi như bình thường.', 'Open the game, take the carry-over (if any) and play as usual.');
     const link = C.gameLink(p, k, variant);
-    const btn = st === 'open' ? `<a class="go" href="${esc(link)}" data-tier="${k}">${esc(t(`Chơi Bậc ${d.n} →`, `Play Level ${d.n} →`))}</a>`
+    const btn = st === 'open' ? `<a class="go" href="${esc(link)}" data-tier="${k}">${esc(t(`Chơi Bậc ${d.n} →`, `Play Level ${d.n} →`))}</a><a class="go alt" href="${esc(C.gameLink(p, k, variant, '3d'))}" data-tier="${k}" data-mode="3d">${esc(t('🧊 Bản 3D', '🧊 3D version'))}</a>`
       : st === 'done' ? `<a class="go off" aria-disabled="true" href="${esc(link)}">${esc(t('Đã hoàn thành', 'Completed'))}</a>`
       : `<span class="go off" aria-disabled="true">🔒 ${esc(t(`Bậc ${d.n}`, `Level ${d.n}`))}</span>`;
     return `<article class="jr-tier" data-tier="${k}" data-status="${st}"><div class="ic" aria-hidden="true">${d.icon}</div><span class="st">${esc(t(STATUS[st][0], STATUS[st][1]))}</span><h3>${esc(t(`Bậc ${d.n} · `, `Level ${d.n} · `))}${esc(name)}</h3><p class="sub">${esc(sub)}</p><p class="res">${esc(res)}</p>${btn}</article>`;

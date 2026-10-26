@@ -19,6 +19,8 @@
 
   // Trang vào của từng bậc (bản 2D trước – nguyên tắc N6); bản 3D nhận cùng mô-đun ở J8.
   const GAME_URL = Object.freeze({ t1: 'ben-phu-sa.html', t2: 'game.html', t3: Object.freeze({ durian: 'lab/ho-chieu-sau-rieng-v2.html', brand: 'brand-passport-v2.html' }) });
+  // Bản 3D của ba bậc (J8) – cùng mô-đun, cùng hộ chiếu; trang Hành trình đưa cả hai lối vào.
+  const GAME_URL_3D = Object.freeze({ t1: 'ben-phu-sa-3d.html', t2: 'BizOn Game 3D.html', t3: Object.freeze({ durian: 'lab/ho-chieu-sau-rieng-3d.html', brand: 'Ho Chieu Thuong Hieu 3D.html' }) });
   const TIER = Object.freeze({
     t1: { n: 1, icon: '🛶', vi: 'Bến Phù Sa', en: 'Bến Phù Sa', subVi: 'Khởi nghiệp gánh hàng · 5 tuần', subEn: 'Street-cart start-up · 5 weeks' },
     t2: { n: 2, icon: '🏭', vi: 'Bật Nghiệp', en: 'Bật Nghiệp', subVi: 'Xưởng đất sét · 6 vòng · 6 tỉnh', subEn: 'Clay workshop · 6 rounds · 6 provinces' },
@@ -33,8 +35,9 @@
     return t(lang, d.vi, d.en);
   }
   // Liên kết sâu: ?journey=<journeyId> (game đọc tham số, nạp hộ chiếu cục bộ, gọi journeyCarry).
-  function gameLink(p, tier, variant) {
-    const base = tier === 't3' ? GAME_URL.t3[VARIANT[variant] ? variant : (p && p.tiers && p.tiers.t3 && p.tiers.t3.variant) || J.DEFAULT_T3_VARIANT] : GAME_URL[tier];
+  function gameLink(p, tier, variant, mode) {
+    const U = mode === '3d' ? GAME_URL_3D : GAME_URL;
+    const base = encodeURI(tier === 't3' ? U.t3[VARIANT[variant] ? variant : (p && p.tiers && p.tiers.t3 && p.tiers.t3.variant) || J.DEFAULT_T3_VARIANT] : U[tier]);
     if (!base) return '#';
     const id = p && p.journeyId ? encodeURIComponent(p.journeyId) : '';
     return id ? base + (base.includes('?') ? '&' : '?') + 'journey=' + id : base;
@@ -71,5 +74,5 @@
     return `<section class="jc-card${off ? ' jc-off' : ''}" aria-label="${esc(title)}"><span class="jc-tag">🧭 ${esc(t(lang, 'HÀNH TRÌNH 3 BẬC', '3-LEVEL JOURNEY'))}</span><h3 class="jc-title">${esc(title)}</h3>${body}${note}${buttons}</section>`;
   }
 
-  return Object.freeze({ GAME_URL, TIER, VARIANT, DURIAN_ROLES, tierName, gameLink, journeyIdFromUrl, html, esc });
+  return Object.freeze({ GAME_URL, GAME_URL_3D, TIER, VARIANT, DURIAN_ROLES, tierName, gameLink, journeyIdFromUrl, html, esc });
 });

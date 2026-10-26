@@ -480,6 +480,9 @@
 <script src="js/aibis/entry-mode-models.js"></script>
 <script src="js/aibis/entry-mode-engine.js"></script>
 <script src="js/bp-core.js"></script>
+<!-- Hành trình 3 bậc: chỉ hoạt động khi URL có ?journey=<id> (J8: bản 3D nhận cùng mô-đun bản 2D) -->
+<link rel="stylesheet" href="css/journey.css">
+<script src="js/core/journey.js"></script><script src="js/journey-store.js"></script><script src="js/journey-card.js"></script><script src="js/journey-link.js"></script>
 <script src="js/vendor/auto-animate.min.js"></script>
 <script>
 (function () {
@@ -2010,6 +2013,8 @@
     if (evOut !== undefined) lastEvOut = window.__bpEv || '';
     fadeIn('bp-end');
     renderResultsScreen();
+    // Hành trình 3 bậc: ghi Bậc 3 vào hộ chiếu một lần + khối «Xem tổng kết hành trình» trước nút «Chơi lại».
+    if (window.BizOnJourneyLink && window.__bpJourney) BizOnJourneyLink.complete(window.__bpJourney, { total: scores().total, entered: S.entered, cash: S.cash, rep: S.rep }, { variant: 'brand', appVersion: 'bizon-bp-3d' }, { host: 'bp-end', before: '.flex.gap-3.mt-6' });
   }
   // Vẽ lại toàn bộ màn Kết thúc từ trạng thái hiện có (endReason/lastEvOut +
   // S) – không đụng tới localStorage hay điểm số, để gọi lại an toàn khi đổi
@@ -2309,6 +2314,14 @@
       localStorage.setItem('bizon-bp-save', JSON.stringify({ seed: seed, base: seedBase, src: seedSource, cls: seedClass, S: S, H: H, pre: preDrawnEv ? preDrawnEv.id : null, preM: preDrawnMissionAhead }));
     } catch (e) {}
   }
+  // Hành trình 3 bậc: áp hành trang Bậc 2 → 3 vào ván vừa bắt đầu (hộp thoại hỏi sau khi bấm Bắt đầu, như bản 2D đầy đủ).
+  window.__bpJourney = window.BizOnJourneyLink ? BizOnJourneyLink.attach('t3', undefined, { variant: 'brand' }) : null;
+  window.bpApplyCarry = function (applied) {
+    if (!window.BizOnJourney || !window.__bpJourney) return;
+    BizOnJourneyLink.stamp(S, window.__bpJourney, applied);
+    if (applied) BizOnJourney.applyToBrand(S, { applied: applied });
+    save(); hud(); stageObs();
+  };
   window.bpStart = function () {
     localStorage.removeItem('bizon-bp-save');
     if (!seedParam) {
@@ -2329,6 +2342,7 @@
     addLog(seedLine());
     autoTheme();
     stageObs();
+    if (window.BizOnJourneyLink && window.__bpJourney && window.__bpJourney.active) BizOnJourneyLink.offerCarry(window.__bpJourney, { variant: 'brand' }).then(window.bpApplyCarry);
   };
   window.bpResume = function () {
     try {
@@ -2351,6 +2365,8 @@
    * kiểm thử không sửa được trạng thái thật, và không dòng nào của trò chơi
    * phụ thuộc vào nó – gỡ đi trò chơi vẫn chạy y nguyên. */
   window.bpTest = {
+    // Chỉ cho kiểm thử: kết thúc ván ngay để soi màn Kết thúc không cần chơi 6 quý.
+    end: function () { bpEnd(null); },
     seed: function () { return seed; },
     seedBase: function () { return seedBase; },
     seedSource: function () { return seedSource; },
