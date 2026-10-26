@@ -116,7 +116,10 @@ const SHELL = [
   './js/tutorial.js',
   './js/bp-tutorial.js',
   './js/bps-tutorial.js',
+<<<<<<< HEAD
   './js/bps-saban.js',
+=======
+>>>>>>> origin/main
   './js/bp-core.js',
   './js/vendor/auto-animate.min.js',
   './js/bp-rival-intel.js',
