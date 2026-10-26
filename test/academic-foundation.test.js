@@ -29,7 +29,7 @@ check(sw.includes("'./css/academic-foundation.css'") && sw.includes("'./js/acade
 check(/@media print/.test(css) && /@media \(max-width:899px\)/.test(css) && /prefers-reduced-motion/.test(css) && /:root\[data-theme="dark"\] \.af/.test(css), 'CSS: bản in, breakpoint 899, reduced motion, bản tối');
 check(/bizon:langchange/.test(js) && /clayRefreshLang/.test(js) && /beforeprint/.test(js), 'script làm mới khi đổi ngôn ngữ, dịch nhãn mới bơm, xử lý bản in');
 const details = (page.match(/<details class="af-model"/g) || []).length, open = (page.match(/<details class="af-model" id="m1" open>/g) || []).length;
-check(details === 4 && open === 1, '4 model card dạng <details>, thẻ 1 mở sẵn');
+check(details === 5 && open === 1, '5 model card dạng <details> (4 engine + hành trang hành trình), thẻ 1 mở sẵn');
 
 (async () => {
   const browser = await chromium.launch();
