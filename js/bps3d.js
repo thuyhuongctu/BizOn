@@ -166,7 +166,7 @@ function setWeek(w) {
 }
 function coach() {
   const c = document.getElementById('bps3d-coach'), g = G(); if (!c || !g) return;
-  if (typeof exploreMode !== 'undefined' && exploreMode) { c.style.display = 'none'; return; }
+  if (typeof exploreMode !== 'undefined' && exploreMode) { c.style.display = 'block'; c.innerHTML = '🚶 ' + T('Tham quan: bấm vào 8 cây bẹo 🪧 để đọc chuyện chợ nổi · đã xem ', 'Tour mode: tap the 8 bẹo poles 🪧 to read floating-market stories · seen ') + visited.size + '/' + EXPLORE.length; return; }
   const s = g.S.sel; if (week > 0 || (s.m !== null && s.menu !== null && s.loc !== null)) { c.style.display = 'none'; return; }
   const step = s.m === null ? 1 : s.menu === null ? 2 : 3;
   c.style.display = 'block';
@@ -255,6 +255,7 @@ function showExplore(i) {
 }
 window.addEventListener('bps-mode', e => {
   exploreMode = e.detail.mode === 'explore';
+  if (!exploreMode) highlight(sel);
   explorePins.forEach(p => { p.g.visible = exploreMode; p.lab.style.display = exploreMode ? '' : 'none'; });
   marketBoats.forEach(g => { g.visible = exploreMode; });
   controls.maxPolarAngle = exploreMode ? 1.5 : 1.2;
@@ -321,7 +322,9 @@ function frame() {
   });
   ripples.forEach(r => { const k = (t * 0.35 + r.userData.ph * 0.2) % 1; r.scale.setScalar(0.6 + k * 1.4); r.material.opacity = 1; });
   skyClouds.forEach((c, k) => { c.position.x += Math.sin(t * 0.1 + k) * 0.01; c.position.y += Math.sin(t * 0.6 + k) * 0.004; });
-  spots.forEach(s => { if (s.cloud.visible) s.drops.forEach(d => { d.position.y -= 0.25; if (d.position.y < 0) d.position.y = 8; }); s.pad.rotation.y = t * 0.3; });
+  // Bước 3 (đã có phương thức + món, chưa có địa điểm): 6 vòng đệm nhấp nháy vàng để người mới biết phải bấm vào đâu
+  { const g = G(), need = !exploreMode && sel == null && g && g.S.sel.m !== null && g.S.sel.m !== 2 && g.S.sel.menu !== null && g.S.sel.loc === null;
+    spots.forEach((s, i) => { if (s.cloud.visible) s.drops.forEach(d => { d.position.y -= 0.25; if (d.position.y < 0) d.position.y = 8; }); s.pad.rotation.y = t * 0.3; if (sel == null) s.pad.material.opacity = need ? 0.2 + 0.18 * Math.sin(t * 3.4 + i) : 0; }); }
   anim = anim.filter(a => { const k = Math.min(1, (now - a.t0) / a.ms), e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2; a.obj.position.lerpVectors(a.from, a.to, e); a.obj.position.y = a.to.y + Math.sin(k * Math.PI) * 1.2; if (k >= 1) { if (a.done) a.done(); return false; } return true; });
   if (camGoal) { controls.target.lerp(camGoal, 0.04); if (controls.target.distanceTo(camGoal) < 0.05) camGoal = null; }
   controls.update(); renderer.render(scene, camera);
