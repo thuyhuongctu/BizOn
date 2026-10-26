@@ -40,7 +40,18 @@ assert.equal(webManifest.shortcuts.find(item => item.short_name === 'Passport').
 assert.equal(webManifest.shortcuts.find(item => item.short_name === 'AIBIS').url, './aibis.html');
 assert.equal(assetlinksTemplate[0].target.package_name, 'vn.bizon.simulation');
 assert.deepEqual(assetlinksTemplate[0].target.sha256_cert_fingerprints, ['REPLACE_WITH_PLAY_APP_SIGNING_SHA256']);
-assert.equal(fs.existsSync('.well-known/assetlinks.json'), false, 'Do not publish assetlinks.json with a fake fingerprint');
+// assetlinks.json chỉ được có khi mọi dấu vân tay là SHA-256 thật (32 cặp hex), không còn chỗ giữ chỗ.
+if (fs.existsSync('.well-known/assetlinks.json')) {
+  const published = JSON.parse(fs.readFileSync('.well-known/assetlinks.json', 'utf8'));
+  assert.ok(Array.isArray(published) && published.length > 0, 'assetlinks.json must be a non-empty array');
+  for (const entry of published) {
+    assert.equal(entry.target.namespace, 'android_app');
+    assert.ok(entry.target.sha256_cert_fingerprints.length > 0, 'assetlinks.json needs at least one fingerprint');
+    for (const fingerprint of entry.target.sha256_cert_fingerprints) {
+      assert.match(fingerprint, /^([0-9A-F]{2}:){31}[0-9A-F]{2}$/, 'Do not publish assetlinks.json with a fake fingerprint');
+    }
+  }
+}
 
 for (const path of ['app/release.html', 'app/brand-passport.html', 'brand-passport-learning.html']) {
   assert.equal(fs.existsSync(path), true, `${path} must exist`);
