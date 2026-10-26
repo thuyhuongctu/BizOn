@@ -1,6 +1,6 @@
 {
   "packageId": "io.github.thuyhuongctu.bizon",
-  "host": "thuyhuongctu.github.io",
+  "host": "bizonland.com",
   "name": "BizOn – Bật Nghiệp",
   "launcherName": "BizOn",
   "display": "standalone",
@@ -12,32 +12,32 @@
   "navigationDividerColorDark": "#081a20",
   "backgroundColor": "#f4faff",
   "enableNotifications": false,
-  "startUrl": "/BizOn/index.html",
-  "iconUrl": "https://thuyhuongctu.github.io/BizOn/assets/icons/icon-512.png",
-  "maskableIconUrl": "https://thuyhuongctu.github.io/BizOn/assets/icons/icon-512.png",
+  "startUrl": "/index.html",
+  "iconUrl": "https://bizonland.com/assets/icons/icon-512.png",
+  "maskableIconUrl": "https://bizonland.com/assets/icons/icon-512.png",
   "splashScreenFadeOutDuration": 300,
   "signingKey": {
     "path": "./android.keystore",
     "alias": "bizon"
   },
-  "appVersionName": "1.1.0",
-  "appVersionCode": 1,
+  "appVersionName": "1.2.0",
+  "appVersionCode": 2,
   "shortcuts": [
     {
       "name": "Play Bật Nghiệp",
       "shortName": "Bật Nghiệp",
-      "url": "/BizOn/game.html",
-      "chosenIconUrl": "https://thuyhuongctu.github.io/BizOn/assets/icons/icon-192.png"
+      "url": "/game.html",
+      "chosenIconUrl": "https://bizonland.com/assets/icons/icon-192.png"
     },
     {
       "name": "BizOn GO GlObal",
       "shortName": "GO GlObal",
-      "url": "/BizOn/global.html",
-      "chosenIconUrl": "https://thuyhuongctu.github.io/BizOn/assets/icons/icon-192.png"
+      "url": "/global.html",
+      "chosenIconUrl": "https://bizonland.com/assets/icons/icon-192.png"
     }
   ],
   "generatorApp": "bubblewrap-cli",
-  "webManifestUrl": "https://thuyhuongctu.github.io/BizOn/manifest.webmanifest",
+  "webManifestUrl": "https://bizonland.com/manifest.webmanifest",
   "fallbackType": "customtabs",
   "features": {},
   "alphaDependencies": {
@@ -46,11 +46,11 @@
   "enableSiteSettingsShortcut": true,
   "isChromeOSOnly": false,
   "isMetaQuest": false,
-  "fullScopeUrl": "https://thuyhuongctu.github.io/BizOn/",
-  "minSdkVersion": 21,
+  "fullScopeUrl": "https://bizonland.com/",
+  "minSdkVersion": 24,
   "orientation": "default",
   "fingerprints": [],
   "additionalTrustedOrigins": [],
   "retainedBundles": [],
-  "appVersion": "1.1.0"
+  "appVersion": "1.2.0"
 }
