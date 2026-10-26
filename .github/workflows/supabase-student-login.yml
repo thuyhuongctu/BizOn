@@ -9,6 +9,7 @@ on:
       - 'test/sql/require_student_login_smoke.sql'
       - 'test/sql/journey_passports_smoke.sql'
       - 'test/sql/explain_mode_smoke.sql'
+      - 'test/sql/case_tasks_smoke.sql'
       - '.github/workflows/supabase-student-login.yml'
   pull_request:
     paths:
@@ -17,6 +18,7 @@ on:
       - 'test/sql/require_student_login_smoke.sql'
       - 'test/sql/journey_passports_smoke.sql'
       - 'test/sql/explain_mode_smoke.sql'
+      - 'test/sql/case_tasks_smoke.sql'
       - '.github/workflows/supabase-student-login.yml'
 
 jobs:
@@ -49,10 +51,14 @@ jobs:
         run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/journey_passports_smoke.sql
       - name: Kiểm nhánh hộp đen (cờ ẩn giải thích của lớp, feed ẩn danh)
         run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/explain_mode_smoke.sql
-      # Chạy lại migration hành trình sẽ định nghĩa lại bizon_class_feed không có explain_hidden,
-      # nên sau đó phải chạy lại migration hộp đen (thứ tự thời gian) rồi kiểm lại cả hai.
-      - name: Áp lại hai migration theo thứ tự (phải an toàn khi chạy lại) rồi kiểm lại
+      - name: Kiểm bài tình huống trước – sau (nộp có đăng nhập, một bài mỗi giai đoạn, chủ lớp xem, dọn 12 tháng)
+        run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/case_tasks_smoke.sql
+      # Chạy lại migration hành trình định nghĩa lại bizon_class_feed (mất explain_hidden) và bizon_purge_expired
+      # (mất case_tasks), nên phải chạy lại các migration sau nó theo thứ tự thời gian rồi kiểm lại tất cả.
+      - name: Áp lại ba migration theo thứ tự (phải an toàn khi chạy lại) rồi kiểm lại
         run: |
           psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f supabase/migrations/20261026000000_journey_passports.sql
           psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f supabase/migrations/20261027000000_explain_mode.sql
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f supabase/migrations/20261028000000_case_tasks.sql
           psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/explain_mode_smoke.sql
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/case_tasks_smoke.sql
