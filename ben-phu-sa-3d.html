@@ -130,6 +130,16 @@ body:has(#ft-play:not(.hidden)) > header.pt-24{display:none!important}
   #bps3d-coach{bottom:calc(52vh + 58px)!important}
   #bps3d-hint{top:84px!important;bottom:auto!important;left:14px!important;right:64px!important;transform:none!important;white-space:normal!important}
 }
+/* Tuần 1 (chưa chốt tuần nào): giấu cửa hàng, bến đối thủ, đàm phán để màn đầu chỉ còn vòng chơi chính; mở lại từ tuần 2 */
+body.bps-w1 #ft-shop-card,body.bps-w1 #bps-hub-enter,body.bps-w1 #bps-negot-enter{display:none!important}
+/* Tour Lumina đang chạy: chip ① ② ③ tạm ẩn (tour nói thay); bước bản đồ thì nhãn bến nổi lên trên lớp tối */
+body.bps-tour-on #bps3d-coach{display:none!important}
+body.bps-tour-map #bps3d-wrap{z-index:91!important}
+#bps3d-tour{min-height:40px}
+/* Điện thoại: chip Lumina nằm dưới dòng gợi ý ở đầu cảnh, không đè nhãn bến; chữ nhỏ hơn */
+@media (max-width:1023px){
+  #bps3d-coach{top:132px!important;bottom:auto!important;left:14px!important;right:64px!important;max-width:none!important;font-size:11px!important}
+}
 /* Lối nhỏ "Vũ trụ" (cố định góc trái dưới) đè thanh chế độ – ẩn khi đang chơi (như bản v8) */
 body:has(#ft-play:not(.hidden)) .vutru-goc{display:none!important}
 </style>
@@ -161,8 +171,22 @@ body:has(#ft-play:not(.hidden)) .vutru-goc{display:none!important}
 
   <!-- MÀN GIỚI THIỆU -->
   <section id="ft-intro" class="clay-card p-6 hidden">
-    <h2 class="font-display font-extrabold text-deep-teal text-lg mb-3" data-en="📜 Rules of play">📜 Luật chơi</h2>
-    <ul class="space-y-2 text-sm">
+    <div id="ft-goal" class="rounded-2xl p-4 mb-4" style="background:linear-gradient(135deg,#fff6ea,#ffe9c9);border:2px solid #fda127">
+      <p class="font-display font-extrabold text-deep-teal text-lg" data-en="⛵ 5 weeks · 3 decisions a week · ranked by profit">⛵ 5 tuần · mỗi tuần 3 quyết định · xếp hạng theo lợi nhuận</p>
+      <ol class="mt-2 text-sm font-semibold text-deep-teal/80 space-y-1" style="list-style:decimal inside">
+        <li data-en-html="Pick a &lt;b&gt;Method&lt;/b&gt; (cart · boat · survey), a &lt;b&gt;Product&lt;/b&gt; and a &lt;b&gt;Location&lt;/b&gt; on the 3D map, then &lt;b&gt;Lock in&lt;/b&gt;.">Chọn <b>Phương thức</b> (gánh · ghe · khảo sát), <b>Món hàng</b> và <b>Địa điểm</b> trên bản đồ 3D, rồi <b>Chốt tuần</b>.</li>
+        <li data-en-html="Real demand is hidden – read &lt;b&gt;Watch the market&lt;/b&gt; after each week to choose better.">Nhu cầu thật là ẩn số – đọc <b>Quan sát thị trường</b> sau mỗi tuần để chọn khôn hơn.</li>
+        <li data-en-html="Beat 3 rival teams on &lt;b&gt;profit&lt;/b&gt; after 5 weeks. Lumina guides your first week step by step.">Thắng 3 đội đối thủ về <b>lợi nhuận</b> sau 5 tuần. Lumina dẫn bạn đi từng bước ở tuần đầu.</li>
+      </ol>
+    </div>
+    <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mb-1.5" data-en="Choose your team">Chọn đội của bạn</p>
+    <div class="grid grid-cols-2 gap-2" id="ft-teams"></div>
+    <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-4 mb-1.5" data-en="Choose your captain">Chọn thuyền trưởng</p>
+    <div class="grid grid-cols-5 gap-2" id="ft-avatars"></div>
+    <button onclick="ftStart()" class="clay-btn w-full bg-clay-gold text-deep-teal font-display font-extrabold py-4 mt-4" data-en="🚀 Start week 1 (Lumina guides you)">🚀 Bắt đầu tuần 1 (Lumina dẫn đường)</button>
+    <details id="ft-rules" class="mt-4 text-sm">
+    <summary class="font-display font-extrabold text-deep-teal cursor-pointer" style="min-height:44px;display:flex;align-items:center" data-en="📜 Detailed rules (methods, products, rivals)">📜 Luật chơi chi tiết (phương thức, món hàng, đối thủ)</summary>
+    <ul class="space-y-2 text-sm mt-3">
       <li data-en-html="⛵ &lt;b&gt;Trading boat&lt;/b&gt;: revenue &lt;b&gt;×3&lt;/b&gt;, costs &lt;b&gt;1.5 mn ₫/week&lt;/b&gt; (boat hire + stock) – and locks in the product &amp; location for the whole week. For when you already &lt;i&gt;know&lt;/i&gt; the winning formula.">⛵ <b>Ghe hàng bông</b>: doanh thu <b>×3</b>, tốn <b>1,5 triệu ₫/tuần</b> (thuê ghe + nhập hàng) – và chốt cứng món hàng &amp; địa điểm cả tuần. Dành cho lúc bạn đã <i>biết</i> công thức thắng.</li>
       <li data-en-html="🧺 &lt;b&gt;Street cart&lt;/b&gt;: revenue ×1, &lt;b&gt;no fixed cost&lt;/b&gt; – and weaves through every market alley, so you pick up &lt;b&gt;a lot of market intel&lt;/b&gt;. The experimenter's weapon.">🧺 <b>Gánh hàng rong</b>: doanh thu ×1, <b>không tốn chi phí cố định</b> – lại len lỏi khắp ngõ chợ nên nghe ngóng được <b>rất nhiều thông tin thị trường</b>. Vũ khí của người thử nghiệm.</li>
       <li data-en-html="📋 &lt;b&gt;Market survey&lt;/b&gt;: costs 0.3 mn ₫ and no sales for the whole week, but you get &lt;b&gt;historical data&lt;/b&gt; on the best product + location pair (points the right way but may be stale).">📋 <b>Khảo sát chợ</b>: tốn 0,3 triệu ₫ và mất trọn tuần không bán, nhận về <b>dữ liệu lịch sử</b> về cặp món + khu tốt nhất (đúng hướng nhưng có thể lỗi thời).</li>
@@ -186,13 +210,11 @@ body:has(#ft-play:not(.hidden)) .vutru-goc{display:none!important}
       </ul>
     </details>
     <p class="text-xs font-semibold opacity-70 mt-4 italic text-center" data-en="«From one small cart, you can build a big brand – if you know how to watch the market, understand your customers, and decide at the right moment.»">«Từ một gánh hàng nhỏ, bạn có thể xây dựng nên một thương hiệu lớn – nếu biết quan sát thị trường, thấu hiểu khách hàng và ra quyết định đúng lúc.»</p>
-    <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-5 mb-1.5" data-en="Choose your team">Chọn đội của bạn</p>
-    <div class="grid grid-cols-2 gap-2" id="ft-teams"></div>
-    <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-4 mb-1.5" data-en="Choose your captain">Chọn thuyền trưởng</p>
-    <div class="grid grid-cols-5 gap-2" id="ft-avatars"></div>
-    <button id="ft-music" onclick="ftMusic()" class="clay-btn w-full bg-deep-teal text-white font-display font-extrabold py-3 text-sm mt-4" data-en="🎵 Play theme song «Đội Phù Sa»">🎵 Bật nhạc chủ đề «Đội Phù Sa»</button>
-    <a href="bp3d-boat/ghe-hang-bong.html" class="clay-btn w-full bg-primary text-white font-display font-extrabold py-3 text-sm mt-3 block text-center" data-en="🎬 Watch the 3D floating-market scene (song «Golden Silt Journey»)">🎬 Xem cảnh 3D ghe hàng bông (nhạc «Golden Silt Journey»)</a>
-    <button onclick="ftStart()" class="clay-btn w-full bg-clay-gold text-deep-teal font-display font-extrabold py-4 mt-3" data-en="🚀 Start the 5-week venture">🚀 Bắt đầu 5 tuần kinh doanh</button>
+    </details>
+    <div class="grid grid-cols-2 gap-2 mt-4">
+      <button id="ft-music" onclick="ftMusic()" class="clay-btn bg-deep-teal text-white font-display font-extrabold py-2.5 text-xs" data-en="🎵 Theme song">🎵 Nhạc chủ đề</button>
+      <a href="bp3d-boat/ghe-hang-bong.html" class="clay-btn bg-primary text-white font-display font-extrabold py-2.5 text-xs block text-center" data-en="🎬 3D boat scene">🎬 Cảnh 3D ghe hàng bông</a>
+    </div>
   </section>
 
   <!-- MÀN CHƠI -->
@@ -211,6 +233,7 @@ body:has(#ft-play:not(.hidden)) .vutru-goc{display:none!important}
       <div id="bps3d-modes" style="position:absolute;left:14px;bottom:48px;display:flex;gap:6px;pointer-events:auto;z-index:2">
         <button type="button" id="bps3d-mode-game" class="bps3d-chip bps3d-mode-on" style="cursor:pointer;border:0" data-en="🎮 Business">🎮 Kinh doanh</button>
         <button type="button" id="bps3d-mode-explore" class="bps3d-chip" style="cursor:pointer;border:0" data-en="🚶 Explore Phù Sa">🚶 Khám phá chợ nổi</button>
+        <button type="button" id="bps3d-tour" class="bps3d-chip" style="cursor:pointer;border:0" data-en="❓ Guide">❓ Hướng dẫn</button>
       </div>
       <span id="bps3d-checklist" class="bps3d-chip" style="position:absolute;right:12px;bottom:48px;display:none">🎯 0/8</span>
       <p id="bps3d-hint" class="bps3d-chip" style="position:absolute;left:50%;bottom:12px;transform:translateX(-50%);margin:0;pointer-events:none;white-space:nowrap" data-en="Drag to rotate · scroll to zoom · tap a spot to choose">Kéo để xoay · cuộn để phóng to · bấm vào một điểm để chọn</p>
@@ -1152,6 +1175,7 @@ body:has(#ft-play:not(.hidden)) .vutru-goc{display:none!important}
 <script>window.BIZON_GAME_NS='bps';</script><script src="js/official-cert.js"></script>
 <script src="js/negotiate.js"></script>
 <script src="js/bps-negotiate.js"></script>
+<script src="js/bps-tutorial.js"></script>
 <script src="js/site-ui.js" defer></script>
 <script src="js/site-vnmap.js" defer></script>
 <script>
@@ -1207,7 +1231,13 @@ body:has(#ft-play:not(.hidden)) .vutru-goc{display:none!important}
   var C0 = window.ftCommit; window.ftCommit = function () { var b = window.__bps, s = b.S, w = s.week, m = s.sel.m, loc = s.sel.loc, t0 = s.total; C0.apply(this, arguments);
     if (m !== null && s.week !== w) { var clash = b.RIVALS.filter(function (r) { return r.plan && r.plan[w] === loc; }).length; ev('bps-commit', { week: w, m: m, loc: loc == null ? 0 : loc, rev: s.total - t0, clash: m === 2 ? 0 : clash }); document.getElementById('bps3d-pick').innerHTML = '📍 ' + (localStorage.getItem('bizon-lang') === 'en' ? 'No location picked yet – tap a spot on the 3D map above.' : 'Chưa chọn địa điểm – bấm một điểm trên bản đồ 3D phía trên.');
       setTimeout(function () { if (s.week < 5) ev('bps-week', { week: s.week }); }, 2300); } };
-  var S0 = window.ftStart; window.ftStart = function () { S0.apply(this, arguments); ev('bps-week', { week: 0 }); };
+  var S0 = window.ftStart; window.ftStart = function () { S0.apply(this, arguments); ev('bps-week', { week: 0 });
+    var s = window.__bps && window.__bps.S; document.body.classList.toggle('bps-w1', !!s && s.week === 0 && !(s.history || []).length);
+    // Điện thoại: bản đồ 3D nằm sau tấm quyết định, mở sẵn danh sách địa điểm để bước 3 không phải cuộn
+    if (innerWidth < 1024) { var d = document.getElementById('bps3d-pick'); d = d && d.nextElementSibling; if (d && d.tagName === 'DETAILS') d.open = true; }
+    if (window.BPSTour) BPSTour.auto(); };
+  window.addEventListener('bps-commit', function () { document.body.classList.remove('bps-w1'); });
+  document.getElementById('bps3d-tour').onclick = function () { if (window.BPSTour) BPSTour.replay(); };
   document.getElementById('bps3d-full').onclick = function () { var w = document.getElementById('bps3d-wrap'); if (document.fullscreenElement) document.exitFullscreen(); else if (w.requestFullscreen) w.requestFullscreen(); };
   new MutationObserver(function () { ev('bps-lang'); }).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
   function setMode(m) {
