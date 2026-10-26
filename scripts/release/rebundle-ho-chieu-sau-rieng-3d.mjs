@@ -30,9 +30,17 @@ export const ASSETS = {
   'c0de5a17-d0c1-4e5a-9b0e-3a1d2c4f5e6b': 'lab/ho-chieu-sau-rieng-core.js',
   // Hai tệp dùng chung toàn site cho màn «Báo cáo sau 6 vụ»: cấu hình backend công khai và chứng nhận ĐHCT
   '5d1f0c7e-9a3b-4c2d-8e1f-0a1b2c3d4e5f': 'js/backend-config.js',
-  '7e2a9b4c-1d3f-4a5b-9c6d-1e2f3a4b5c6d': 'js/official-cert.js'
+  '7e2a9b4c-1d3f-4a5b-9c6d-1e2f3a4b5c6d': 'js/official-cert.js',
+  // Hành trình 3 bậc (J8): cùng CSS và bốn mô-đun với bản 2D – hộp thoại hành trang, ghi Bậc 3 vào hộ chiếu cục bộ.
+  // Bốn mô-đun ghép thành MỘT asset (theo thứ tự phụ thuộc) vì runtime nạp các <script> trong <helmet> bất đồng bộ,
+  // không giữ thứ tự giữa các tệp.
+  '3b7f2c91-6d4e-4a8b-9c15-2e7d8f0a1b3c': 'css/journey.css',
+  '8a4e6d12-3f5b-4c7a-8d9e-1b2c3d4e5f60': ['js/core/journey.js', 'js/journey-store.js', 'js/journey-card.js', 'js/journey-link.js']
 };
-const NEW_ASSET_MIME = 'application/javascript';
+const nameOf = file => (Array.isArray(file) ? file.join(' + ') : file);
+const mimeOf = file => (nameOf(file).endsWith('.css') ? 'text/css' : 'application/javascript');
+// Nguồn của một asset: tệp đơn, hoặc nhiều tệp nối nhau bằng một dòng trống (giữ nguyên byte từng tệp).
+export const sourceOf = file => (Array.isArray(file) ? Buffer.concat(file.flatMap((f, i) => (i ? [Buffer.from('\n'), readFileSync(resolve(ROOT, f))] : [readFileSync(resolve(ROOT, f))]))) : readFileSync(resolve(ROOT, file)));
 
 const MANIFEST_TAG = '<script type="__bundler/manifest">';
 const TEMPLATE_TAG = '<script type="__bundler/template">';
@@ -75,19 +83,20 @@ function main() {
 
   const problems = [];
   let changed = template !== b.template;
-  for (const [uuid, file] of Object.entries(ASSETS)) {
-    const src = readFileSync(resolve(ROOT, file));
+  for (const [uuid, spec] of Object.entries(ASSETS)) {
+    const file = nameOf(spec), src = sourceOf(spec);
     const e = b.manifest[uuid];
     if (!template.includes('"' + uuid + '"')) problems.push(`${file}: template không nạp uuid ${uuid}`);
+    if (e && e.mime !== mimeOf(file)) { problems.push(`${file}: mime trong bundle (${e.mime}) khác ${mimeOf(file)}`); e.mime = mimeOf(file); changed = true; }
     if (e && decodeEntry(e).equals(src)) continue;
     problems.push(`${file}: ${e ? 'nội dung trong bundle khác tệp nguồn' : 'chưa có trong manifest'}`);
-    b.manifest[uuid] = { mime: e ? e.mime : NEW_ASSET_MIME, compressed: true, data: encodeGzip(src) };
+    b.manifest[uuid] = { mime: mimeOf(file), compressed: true, data: encodeGzip(src) };
     changed = true;
   }
 
   if (check) {
     if (problems.length) { console.error('Bundle 3D lệch nguồn:\n  ' + problems.join('\n  ')); process.exit(1); }
-    console.log('Bundle 3D khớp ' + Object.values(ASSETS).join(', '));
+    console.log('Bundle 3D khớp ' + Object.values(ASSETS).map(nameOf).join(', '));
     return;
   }
   if (!changed) { console.log('Bundle 3D đã khớp nguồn, không cần ghi.'); return; }

@@ -25,7 +25,7 @@ assert.match(bp, /window\.bpApplyCarry = function \(applied\) \{/); assert.match
 assert.match(bp, /BizOnJourneyLink\.complete\(window\.__bpJourney, \{ total: scores\(\)\.total, entered: S\.entered, cash: S\.cash, rep: S\.rep \}, \{ variant: 'brand', appVersion: 'bizon-bp-v2' \}, \{ host: 'bp-end', before: '\.flex\.gap-3\.mt-6' \}\)/);
 assert.match(bp, /end: function \(\) \{ bpEnd\(null\); \},/, 'bpTest.end cho kiểm thử');
 assert.match(ht, /\$\('jr-csv'\)\.addEventListener\('click'/); assert.match(read('hanh-trinh.html'), /id="jr-timeline-box" hidden/);
-assert.match(read('sw.js'), /const CACHE = 'bizon-v672';/);
+assert.match(read('sw.js'), /const CACHE = 'bizon-v\d+';/);   // phiên bản cache tăng mỗi PR, không ghim số
 
 // Hộ chiếu: Bậc 1 + Bậc 2 xong (như journey-t2) → hành trang Bậc 3 có sẵn
 const base = J.recordTier2(J.recordTier1(J.createPassport({ teamName: 'Đội Thử', createdAt: '2026-11-03T02:10:00Z' }), { total: 4.2, result: { eff: 71, rank: 2 }, history: [{ w: 1, m: 1 }, { w: 2, m: 2 }, { w: 3, m: 1 }, { w: 4, m: 0 }, { w: 5, m: 0 }], knownPairs: { '0-2': true, '1-4': true, '2-1': true } }),
@@ -119,7 +119,7 @@ assert.equal(expD.cash, 13.8); assert.equal(expB.cash, 9.2); assert.equal(expB.n
 
   // ---- Trang Hành trình: hộ chiếu đủ ba bậc → khối «Nhìn lại cả hành trình» 3 dòng, nút CSV tải một dòng ẩn danh ----
   await page.goto(`${BASE}/hanh-trinh.html`, { waitUntil: 'commit', timeout: 60000 });
-  await page.waitForFunction(() => !document.getElementById('jr-timeline-box').hidden, null, { timeout: 60000 });
+  await page.waitForFunction(() => { const b = document.getElementById('jr-timeline-box'); return !!b && !b.hidden; }, null, { timeout: 60000 });   // trang có thể chưa dựng xong DOM khi hàm chạy lần đầu
   const tl = await page.evaluate(() => ({ n: document.querySelectorAll('#jr-timeline li').length, txt: document.getElementById('jr-timeline').textContent, carries: document.querySelectorAll('#jr-timeline .carry').length }));
   assert.equal(tl.n, 3); assert.equal(tl.carries, 2); assert.match(tl.txt, /Bậc 1 · Bến Phù Sa/); assert.match(tl.txt, /Mang sang Bậc 3: vốn ×1\.15 = 9\.2 tỷ/);
   const [dl] = await Promise.all([page.waitForEvent('download', { timeout: 15000 }), page.click('#jr-csv')]);
