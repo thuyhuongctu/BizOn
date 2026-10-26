@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & PGS.TS. Phan Anh Tú -->
+<html lang="vi" data-default-lang="vi">
+<head>
+<meta charset="UTF-8">
+<link rel="canonical" href="https://bizonland.com/hanh-trinh.html">
+<link rel="alternate" hreflang="vi" href="https://bizonland.com/hanh-trinh.html?lang=vi">
+<link rel="alternate" hreflang="en" href="https://bizonland.com/hanh-trinh.html?lang=en">
+<link rel="alternate" hreflang="x-default" href="https://bizonland.com/hanh-trinh.html">
+<meta property="og:url" content="https://bizonland.com/hanh-trinh.html">
+<meta property="og:image" content="https://bizonland.com/assets/og/og-cover.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="vi_VN"><meta property="og:locale:alternate" content="en_US">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#006687">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<script src="js/bizon-lang.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title data-en="3-Level Journey · BizOn">Hành trình 3 bậc · BizOn</title>
+<meta name="description" data-en-content="One team, three levels: Bến Phù Sa → Bật Nghiệp → Passport. A journey passport carries a capped, transparent carry-over from one level to the next; every level still plays standalone." content="Một đội, ba bậc: Bến Phù Sa → Bật Nghiệp → Hộ Chiếu. Hộ chiếu hành trình mang hành trang có trần, minh bạch từ bậc trước sang bậc sau; từng bậc vẫn chơi độc lập được.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & PGS.TS. Phan Anh Tú">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script src="js/bizon-boot.js"></script>
+<link rel="stylesheet" href="css/bizon-clay-fonts.css">
+<link rel="stylesheet" href="css/bizon-clay.css">
+<link rel="stylesheet" href="css/journey.css">
+<style>
+  /* Bố cục riêng trang Hành trình 3 bậc */
+  .jr-hero{position:relative;overflow:hidden;margin:28px 0 36px;border-radius:40px;background:var(--clay-cream-deep);box-shadow:var(--clay-night-shadow,inset 0 -10px 0 rgba(140,80,20,.1),inset 0 6px 0 rgba(255,255,255,.7))}
+  .jr-hero .grid{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end;padding:clamp(24px,4vw,44px) clamp(20px,4vw,44px) 0}
+  .jr-hero h1{margin:14px 0 0;font-size:clamp(36px,5vw,62px);text-wrap:balance}
+  .jr-hero .lead{margin:16px 0 0;max-width:40em;font-size:17px;line-height:1.65;color:var(--clay-sub);text-wrap:pretty}
+  .jr-hero .art{width:min(22vw,200px);aspect-ratio:600/881;position:relative;margin-bottom:22px}
+  .jr-hero .art img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:50% 100%;filter:drop-shadow(0 18px 14px rgba(110,70,30,.35));animation:clayFloat 6s ease-in-out infinite}
+  .jr-hero .wave{position:relative;z-index:3;height:44px;margin-top:-44px;background:radial-gradient(circle at 36px 0,transparent 35px,var(--clay-teal-2) 36px) 0 0/72px 36px repeat-x,linear-gradient(var(--clay-teal-2),var(--clay-teal-2)) 0 36px/100% 8px no-repeat}
+  .jr-steps{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+  .jr-steps span{padding:7px 12px;border-radius:999px;background:var(--clay-tray);font-weight:800;font-size:13px}
+  .jr-box{border-radius:32px;background:var(--clay-card);padding:clamp(18px,3vw,28px);box-shadow:var(--clay-night-shadow,inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 rgba(255,255,255,.9));margin-bottom:22px}
+  .jr-box h2{margin:0 0 6px;font-family:var(--clay-head);font-size:clamp(24px,3vw,32px);font-weight:800;line-height:1.14}
+  .jr-box .sub{margin:0 0 16px;color:var(--clay-sub);font-size:15px;line-height:1.55;text-wrap:pretty}
+  .jr-form{display:grid;gap:14px;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .jr-form label{display:flex;flex-direction:column;gap:6px;font-weight:800;font-size:14px}
+  .jr-form input,.jr-form select{font:500 16px var(--clay-body,inherit);padding:11px 13px;border-radius:14px;border:2px solid rgba(110,70,30,.18);background:var(--clay-cream,#fff);color:var(--clay-ink)}
+  .jr-form input:focus-visible,.jr-form select:focus-visible,.jr-radio input:focus-visible+span{outline:3px solid #fda127;outline-offset:2px}
+  .jr-form .full{grid-column:1/-1}
+  .jr-radios{display:flex;flex-wrap:wrap;gap:8px}
+  .jr-radio{position:relative;cursor:pointer}
+  .jr-radio input{position:absolute;opacity:0;inset:0;pointer-events:none}
+  .jr-radio span{display:inline-block;padding:9px 14px;border-radius:999px;background:var(--clay-tray);font-weight:800;font-size:14px;border:2px solid transparent}
+  .jr-radio input:checked+span{background:var(--clay-teal);color:#fff}
+  .jr-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:16px}
+  .jr-btn{font:800 15px var(--clay-head);border:0;border-radius:999px;padding:12px 20px;cursor:pointer;background:var(--clay-tray);color:var(--clay-ink);box-shadow:inset 0 -4px 0 rgba(0,0,0,.08)}
+  .jr-btn.primary{background:var(--clay-teal);color:#fff;box-shadow:inset 0 -4px 0 rgba(0,0,0,.18)}
+  .jr-btn.danger{background:#fde4e1;color:#9c2f27}
+  .jr-btn:focus-visible{outline:3px solid #fda127;outline-offset:2px}
+  .jr-btn[aria-disabled="true"]{opacity:.55;pointer-events:none}
+  .jr-meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 16px;font-size:14px;color:var(--clay-sub)}
+  .jr-meta b{color:var(--clay-ink)}
+  .jr-meta code{font-size:12px;padding:3px 8px;border-radius:8px;background:var(--clay-tray)}
+  .jr-tiers{display:grid;gap:16px;grid-template-columns:repeat(3,minmax(0,1fr))}
+  .jr-tier{position:relative;display:flex;flex-direction:column;gap:10px;border-radius:26px;padding:18px;background:var(--clay-cream,#fffaf2);box-shadow:inset 0 -8px 0 rgba(110,70,30,.07)}
+  .jr-tier .ic{font-size:34px;line-height:1}
+  .jr-tier h3{margin:0;font-family:var(--clay-head);font-size:22px;font-weight:800;line-height:1.15}
+  .jr-tier .sub{margin:0;color:var(--clay-sub);font-size:14px;line-height:1.5}
+  .jr-tier .st{align-self:flex-start;padding:5px 11px;border-radius:999px;font-weight:800;font-size:12px;letter-spacing:.04em}
+  .jr-tier[data-status="done"] .st{background:#dff3e4;color:#246b3a}
+  .jr-tier[data-status="open"] .st{background:#fde9c8;color:#9a5b12}
+  .jr-tier[data-status="locked"] .st{background:var(--clay-tray);color:var(--clay-sub)}
+  .jr-tier[data-status="locked"]{opacity:.78}
+  .jr-tier .res{margin:0;font-size:14px;line-height:1.5}
+  .jr-tier .go{margin-top:auto;align-self:flex-start;padding:10px 16px;border-radius:999px;background:var(--clay-teal);color:#fff;font-weight:800;font-size:14px;text-decoration:none}
+  .jr-tier .go.off{background:var(--clay-tray);color:var(--clay-sub);pointer-events:none}
+  .jr-settings{display:grid;gap:14px;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .jr-settings .block{display:flex;flex-direction:column;gap:8px}
+  .jr-settings .block>b{font-size:14px}
+  .jr-check{display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.5;cursor:pointer}
+  .jr-check input{width:20px;height:20px;margin-top:2px;accent-color:#2f8a8c}
+  .jr-summary{display:grid;gap:12px;grid-template-columns:repeat(3,minmax(0,1fr))}
+  .jr-summary div{border-radius:20px;padding:14px;background:var(--clay-cream,#fffaf2);box-shadow:inset 0 -6px 0 rgba(110,70,30,.07)}
+  .jr-summary b{display:block;font-family:var(--clay-head);font-size:28px;line-height:1.1;color:var(--clay-accent)}
+  .jr-summary span{font-size:13px;color:var(--clay-sub);line-height:1.45}
+  .jr-msg{margin:10px 0 0;font-size:14px;color:#9a5b12;min-height:1.4em}
+  @media (max-width:900px){.jr-tiers{grid-template-columns:1fr}.jr-summary{grid-template-columns:1fr}}
+  @media (max-width:640px){.jr-hero .grid{grid-template-columns:1fr}.jr-hero .art{display:none}.jr-form,.jr-settings{grid-template-columns:1fr}}
+  @media screen{html[data-theme="dark"] .jr-tier,html[data-theme="dark"] .jr-summary div{background:#232c4d}html[data-theme="dark"] .jr-form input,html[data-theme="dark"] .jr-form select{background:#1b2340;border-color:#35406a;color:#f1e6d3}html[data-theme="dark"] .jr-tier[data-status="done"] .st{background:#1e4d2e;color:#bfe9c9}html[data-theme="dark"] .jr-tier[data-status="open"] .st{background:#5a3b10;color:#fde9c8}html[data-theme="dark"] .jr-btn.danger{background:#5a2420;color:#fde4e1}}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hành trình 3 bậc · BizOn">
+<meta property="og:description" content="Một đội, ba bậc: Bến Phù Sa → Bật Nghiệp → Hộ Chiếu, với hành trang có trần và minh bạch.">
+<meta name="twitter:card" content="summary_large_image">
+<script src="js/capture-guard.js"></script>
+</head>
+<body class="clay">
+
+<main class="clay-main">
+  <section class="jr-hero">
+    <div class="grid">
+      <div style="padding-bottom:clamp(24px,4vw,56px)">
+        <span class="clay-eyebrow" data-en="3-level journey · one team, one passport">Hành trình 3 bậc · một đội, một hộ chiếu</span>
+        <h1 data-en="From the River Silt to the World">Từ Phù Sa ra Thế giới</h1>
+        <p class="lead" data-en="Play Bến Phù Sa, then Bật Nghiệp, then a Passport as one continuous story. Each finished level leaves a capped, explained carry-over for the next; the rules of every level stay unchanged, and any level still plays standalone.">Chơi Bến Phù Sa, rồi Bật Nghiệp, rồi Hộ Chiếu như một câu chuyện liền mạch. Mỗi bậc hoàn thành để lại hành trang có trần, có giải thích cho bậc sau; luật từng bậc giữ nguyên, và bậc nào cũng vẫn chơi riêng được.</p>
+        <div class="jr-steps" aria-hidden="true"><span>1 · 🛶 Bến Phù Sa</span><span>2 · 🏭 Bật Nghiệp</span><span>3 · 🛂 Hộ Chiếu</span></div>
+      </div>
+      <div class="art"><img src="assets/character/lumina-sweater-huong-cut.webp" alt="" loading="lazy"></div>
+    </div>
+    <div class="wave" aria-hidden="true"></div>
+  </section>
+
+  <section class="jr-box" id="jr-setup" hidden>
+    <h2 data-en="Create your journey passport">Tạo hộ chiếu hành trình</h2>
+    <p class="sub" data-en="The passport lives in this browser (export it to keep a copy). Leave the class code empty when self-studying. In a graded class, the carry-over is applied only when the instructor enables it for the class.">Hộ chiếu lưu trong trình duyệt này (xuất tệp để giữ bản sao). Tự học thì để trống mã lớp. Trong lớp chấm điểm, hành trang chỉ được áp khi giảng viên bật cho lớp.</p>
+    <form class="jr-form" id="jr-form" autocomplete="off">
+      <label><span data-en="Team name">Tên đội</span><input type="text" id="jr-team" name="team" maxlength="60" required placeholder="Đội Phù Sa" data-en-ph="Team Phù Sa"></label>
+      <label><span data-en="Class code (optional)">Mã lớp (không bắt buộc)</span><input type="text" id="jr-class" name="class" maxlength="40" placeholder="QTKD-K48" style="text-transform:uppercase"></label>
+      <div class="full"><div style="font-weight:800;font-size:14px;margin-bottom:8px" data-en="Level 3 variant">Biến thể Bậc 3</div>
+        <div class="jr-radios" id="jr-variant-new">
+          <label class="jr-radio"><input type="radio" name="variant" value="durian" checked><span data-en="🍈 Durian Passport (default)">🍈 Hộ Chiếu Sầu Riêng (mặc định)</span></label>
+          <label class="jr-radio"><input type="radio" name="variant" value="brand"><span data-en="🏷️ Brand Passport">🏷️ Hộ Chiếu Thương Hiệu</span></label>
+        </div></div>
+      <label id="jr-role-wrap"><span data-en="Durian role (Level 3)">Vai Sầu Riêng (Bậc 3)</span><select id="jr-role" name="role"></select></label>
+      <div class="jr-actions full">
+        <button type="submit" class="jr-btn primary" id="jr-create" data-en="🧭 Create passport and start Level 1">🧭 Tạo hộ chiếu và bắt đầu Bậc 1</button>
+        <label class="jr-btn" style="cursor:pointer"><span data-en="📥 Import a passport file">📥 Nhập tệp hộ chiếu</span><input type="file" id="jr-import-new" accept="application/json,.json" hidden></label>
+      </div>
+      <p class="jr-msg full" id="jr-msg-new" aria-live="polite"></p>
+    </form>
+  </section>
+
+  <section id="jr-dash" hidden>
+    <div class="jr-box">
+      <h2 id="jr-title">Hành trình</h2>
+      <div class="jr-meta" id="jr-meta"></div>
+      <div class="jr-tiers" id="jr-tiers"></div>
+    </div>
+
+    <div class="jr-box" id="jr-carry-box">
+      <h2 data-en="Carry-over for the next level">Hành trang cho bậc kế tiếp</h2>
+      <p class="sub" data-en="What the next level will start with, computed from the finished levels. Shown here for preview; the game asks you to take it or play standalone before its opening screen.">Bậc kế tiếp sẽ xuất phát với gì, tính từ các bậc đã xong. Ở đây chỉ xem trước; game sẽ hỏi bạn nhận hay chơi độc lập trước màn mở đầu.</p>
+      <div id="jr-carry"></div>
+    </div>
+
+    <div class="jr-box" id="jr-summary-box" hidden>
+      <h2 data-en="Research indices (not scored)">Chỉ số nghiên cứu (không vào điểm)</h2>
+      <div class="jr-summary" id="jr-summary"></div>
+    </div>
+
+    <div class="jr-box">
+      <h2 data-en="Settings and backup">Cài đặt và sao lưu</h2>
+      <div class="jr-settings">
+        <div class="block"><b data-en="Level 3 variant">Biến thể Bậc 3</b>
+          <div class="jr-radios" id="jr-variant">
+            <label class="jr-radio"><input type="radio" name="variant2" value="durian"><span data-en="🍈 Durian Passport">🍈 Hộ Chiếu Sầu Riêng</span></label>
+            <label class="jr-radio"><input type="radio" name="variant2" value="brand"><span data-en="🏷️ Brand Passport">🏷️ Hộ Chiếu Thương Hiệu</span></label>
+          </div>
+          <label id="jr-role2-wrap" style="display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:800"><span data-en="Durian role">Vai Sầu Riêng</span><select id="jr-role2" style="font:500 15px inherit;padding:9px 12px;border-radius:12px;border:2px solid rgba(110,70,30,.18)"></select></label>
+          <p class="jr-msg" id="jr-variant-note"></p>
+        </div>
+        <div class="block"><b data-en="Carry-over">Hành trang</b>
+          <label class="jr-check"><input type="checkbox" id="jr-carry-on"><span data-en-html="<b>Take the carry-over between levels.</b> Off = every level starts exactly as a standalone game; results are still recorded. In a graded class the instructor's class setting decides."><b>Nhận hành trang giữa các bậc.</b> Tắt = bậc nào cũng xuất phát y như chơi riêng; kết quả vẫn được ghi. Trong lớp chấm điểm, cờ lớp của giảng viên quyết định.</span></label>
+          <div class="jr-actions">
+            <button type="button" class="jr-btn" id="jr-export" data-en="💾 Export passport (.json)">💾 Xuất hộ chiếu (.json)</button>
+            <label class="jr-btn" style="cursor:pointer"><span data-en="📥 Import">📥 Nhập</span><input type="file" id="jr-import" accept="application/json,.json" hidden></label>
+            <button type="button" class="jr-btn danger" id="jr-reset" data-en="🗑️ New journey (delete this passport)">🗑️ Hành trình mới (xóa hộ chiếu này)</button>
+          </div>
+          <p class="jr-msg" id="jr-msg" aria-live="polite"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <noscript><p style="text-align:center;color:var(--clay-sub);margin:40px 0">Cần bật JavaScript để dùng Hành trình 3 bậc. · Enable JavaScript to use the 3-level journey.</p></noscript>
+</main>
+
+<script src="js/core/journey.js" defer></script>
+<script src="js/journey-store.js" defer></script>
+<script src="js/journey-card.js" defer></script>
+<script src="js/bizon-clay-i18n.js" defer></script>
+<script src="js/hanh-trinh.js" defer></script>
+<script src="js/bizon-clay-nav.js" defer></script>
+<script src="js/bizon-clay-footer.js" defer></script>
+</body>
+</html>
