@@ -1,0 +1,24 @@
+/* Hành trình 3 bậc – thẻ «Hành trang» (js/journey-card.js) dùng chung cho trang hanh-trinh.html và bốn game.
+   Tự chứa: không phụ thuộc bizon-clay.css, màu đất sét nhạt, có bản tối theo html[data-theme="dark"]. */
+.jc-card{position:relative;box-sizing:border-box;max-width:560px;margin:0 auto;padding:18px 20px 16px;border-radius:26px;background:#fbf6ee;border:3px solid #e6d6bf;box-shadow:0 6px 0 #d9c5a8;color:#2c3552;font-family:"Be Vietnam Pro",Nunito,system-ui,sans-serif;text-align:left}
+.jc-card.jc-off{opacity:.92}
+.jc-tag{display:inline-block;font:800 11px/1 "Baloo 2",system-ui,sans-serif;letter-spacing:.08em;border-radius:999px;padding:5px 12px;background:#e3f1ef;color:#1f6f8a}
+.jc-title{margin:10px 0 8px;font:800 22px/1.2 "Baloo 2",system-ui,sans-serif;color:#1f6f8a;text-wrap:balance}
+.jc-lines{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.jc-line{display:grid;grid-template-columns:64px minmax(0,1fr);gap:10px;align-items:center;padding:8px 10px;border-radius:16px;background:#fffaf2;border:2px solid #eadcc5;font-size:14px;line-height:1.45}
+.jc-val{font:800 18px/1 "Baloo 2",system-ui,sans-serif;color:#2f8a8c;text-align:center}
+.jc-line[data-key="resil"] .jc-val,.jc-line[data-key="creditLimit"] .jc-val{color:#b8741a}
+.jc-muted{margin:4px 0 0;font-size:14px;line-height:1.5;color:#6b6f7a}
+.jc-note{margin:10px 0 0;padding-top:8px;border-top:2px dashed #e6d6bf;font-size:12.5px;line-height:1.5;color:#4a4f5c}
+.jc-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.jc-btn{flex:1;min-width:140px;font:800 15px "Baloo 2",system-ui,sans-serif;border:3px solid #e6d6bf;background:#fbf6ee;color:#2c3552;border-radius:16px;padding:10px 14px;cursor:pointer;box-shadow:0 4px 0 #d9c5a8}
+.jc-btn:hover{transform:translateY(-1px)} .jc-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #d9c5a8}
+.jc-btn:focus-visible{outline:3px solid #fda127;outline-offset:2px}
+.jc-primary{background:#2f8a8c;border-color:#23706f;color:#fff;box-shadow:0 4px 0 #1b5a5a}
+@media (max-width:420px){.jc-card{padding:14px 14px 12px;border-radius:20px}.jc-line{grid-template-columns:54px minmax(0,1fr);font-size:13px}.jc-val{font-size:16px}}
+html[data-theme="dark"] .jc-card{background:#232c4d;border-color:#35406a;box-shadow:0 6px 0 #11162a;color:#f1e6d3}
+html[data-theme="dark"] .jc-title{color:#8fd0ee} html[data-theme="dark"] .jc-tag{background:#1b3b4a;color:#8fd0ee}
+html[data-theme="dark"] .jc-line{background:#2a3458;border-color:#35406a} html[data-theme="dark"] .jc-val{color:#7fd1c9}
+html[data-theme="dark"] .jc-muted,html[data-theme="dark"] .jc-note{color:#b9bfd6;border-color:#35406a}
+html[data-theme="dark"] .jc-btn{background:#2a3458;border-color:#35406a;color:#f1e6d3;box-shadow:0 4px 0 #11162a}
+html[data-theme="dark"] .jc-primary{background:#2f8a8c;border-color:#23706f;color:#fff}

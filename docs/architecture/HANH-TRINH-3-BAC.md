@@ -125,7 +125,7 @@ Không chuyển vật phẩm, kỹ năng, điểm XP, huy hiệu, hay bất cứ
 
 | Lớp | Cách làm | Ghi chú |
 |---|---|---|
-| Cục bộ | `localStorage['bizon-journey']` = hộ chiếu (JSON, có `schemaVersion`); ghi qua `js/core/persistence.js` để có sao lưu và xuất/nhập | Không đụng khóa cũ nào. |
+| Cục bộ | `localStorage['bizon-journey']` = hộ chiếu (JSON, có `schemaVersion`) + `bizon-journey-backup`; mô-đun riêng `js/journey-store.js` (cùng kiểu `persistence.js`: storage tiêm được, kiểm tra lược đồ khi đọc/ghi, phục hồi từ sao lưu, gói xuất `bizon-journey-export` v1) | Không đụng khóa cũ nào. |
 | Máy chủ | Bảng mới `journey_passports(class_code, team_name, student_id, passport jsonb, updated_at)` + RPC `bizon_journey_get(p_class_code, p_team_name)` và `bizon_journey_upsert(p_class_code, p_team_name, p_passport)`; yêu cầu phiên sinh viên như `require_student_login`; dọn theo `retention_purge` | Một migration; **chỉ áp dụng lên dự án thật sau khi được xác nhận**. |
 | Kết quả từng bậc | Giữ nguyên `ft_results`, `round_submissions` / `class_scores`, `bp_results`; thêm `p_detail_json.journey = { journeyId, tier, carryApplied }` | Không đổi lược đồ bảng kết quả; bảng giáo viên lọc được ván có hành trang. |
 | Khóa lớp | `class_controls` thêm cờ `journey_carry` (mặc định bật cho tự học, giảng viên tắt khi chấm) | Khi tắt, hộ chiếu vẫn ghi kết quả, chỉ không áp hành trang. |
@@ -171,7 +171,7 @@ Xuất CSV ẩn danh (journeyId băm, không email) phục vụ thiết kế ngh
 |---|---|---|---|
 | J1 | Tài liệu này + bảng tham số trên trang Học thuật | — | 0,5 ngày |
 | J2 | `js/core/journey.js` (hàm thuần, VI/EN) + `test/journey-carry.test.js`, `test/journey-passport.test.js` + workflow `journey-core.yml` – **đã làm** | J1 | 1 ngày |
-| J3 | Hộ chiếu cục bộ (`persistence.js`), trang `hanh-trinh.html`, thẻ Hành trang dùng chung (`js/journey-card.js`) | J2 | 2 ngày |
+| J3 | Hộ chiếu cục bộ (`js/journey-store.js`: `localStorage['bizon-journey']` + bản sao lưu, xuất/nhập JSON), trang `hanh-trinh.html` (+ `js/hanh-trinh.js`), thẻ Hành trang dùng chung (`js/journey-card.js`, `css/journey.css`) – **đã làm** | J2 | 2 ngày |
 | J4 | Bến Phù Sa (2D rồi 3D) ghi `tiers.t1` cuối ván; nút «Sang Bậc 2» | J3 | 1 ngày |
 | J5 | Bật Nghiệp (`game.html`, bản v2) đọc hành trang sau cờ lớp, ghi `tiers.t2`, Lumina chào theo phong cách Bậc 1 | J3 | 2 ngày |
 | J6 | Hộ Chiếu Thương Hiệu v2 và Hộ Chiếu Sầu Riêng v2 đọc hành trang, ghi `tiers.t3`; debrief xuyên suốt trên trang Hành trình | J3 | 2–3 ngày |
