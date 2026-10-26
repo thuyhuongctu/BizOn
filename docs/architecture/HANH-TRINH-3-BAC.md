@@ -1,6 +1,6 @@
 # Hành trình 3 bậc «Từ Phù Sa ra Thế giới» – thiết kế kỹ thuật
 
-Trạng thái: bản đề xuất để duyệt (chưa có mã). Phiên bản: 2026-10-26. Người viết: Đỗ Thùy Hương & Phan Anh Tú.
+Trạng thái: đã duyệt 26/10/2026 (ba câu hỏi ở mục 11 đã chốt); J2 có mã trong `js/core/journey.js`. Phiên bản: 2026-10-26b. Người viết: Đỗ Thùy Hương & Phan Anh Tú.
 
 Mục tiêu: cho một đội chơi liền mạch Bậc 1 (Bến Phù Sa) → Bậc 2 (Bật Nghiệp) → Bậc 3 (Hộ Chiếu Thương Hiệu hoặc Hộ Chiếu Sầu Riêng), trong đó kết quả bậc trước để lại **hành trang** có giới hạn, minh bạch và tất định cho bậc sau, còn luật chơi từng bậc giữ nguyên. Một ván của bậc nào cũng vẫn chơi độc lập được như hiện nay.
 
@@ -110,8 +110,10 @@ Gọi `k = clamp((balanceEnd − 500) / 500, −0.15, +0.15)`.
 | Vốn | `cash = 8 × (1 + k)` | `cash = (12 + cashAdj) × (1 + k)` | ±15 % |
 | Uy tín | `rep += round(5 × clamp((brandEnd − 1) / 0.5, 0, 1))` | như bên | 0…+5 |
 | Chống chịu | `resil += quickRatioEnd ≥ 1.2 ? 3 : 0`; `loanEnd > 0 ? −3 : 0` | như bên; thêm `creditLimit −1` tỷ nếu `loanEnd > 0` | −3…+3 |
-| Năng lực | `capab += min(5, round(rdCumulative / 20))` | `assets.test = rdCumulative ≥ 60 ? 1 : 0` (một bậc kiểm nghiệm) | +5 / 1 bậc |
+| Năng lực / ứng phó | `capab += min(5, round(rdCumulative / 20))` | `adapt += min(5, round(rdCumulative / 20))` (ứng phó biến cố; **không** chuyển tài sản kiểm nghiệm – xem ghi chú) | +5 / +5 |
 | Vị thế mạng lưới | `net[i] += 5` cho hai thị trường gần nhất về khoảng cách tâm lý nếu `profitableRounds ≥ 4` | `linkedBonus = 0.05` (một hợp đồng liên kết nhỏ) nếu `profitableRounds ≥ 4` | +5 / 5 % |
+
+Ghi chú (quét cân bằng 26/10, `test/journey-balance.test.js`): bản nháp định chuyển «một bậc kiểm nghiệm» sang Sầu Riêng, nhưng tài sản này là **mở khóa kênh** (Nhật Bản cần kiểm nghiệm, qua kiểm toán, giảm rủi ro gian lận) nên cùng hạt giống và cùng quyết định, điểm cuối lệch tới +42/100. Khoản đó bị thay bằng «ứng phó biến cố +0…+5» (liên tục, có trần); sau khi thay, chênh lớn nhất trên 24 ván × 4 vai ≤ 8/100. Các khoản tiền, uy tín, chống chịu, liên kết mỗi khoản lệch ≤ 1 điểm.
 
 Lệ thuộc đường đi (path dependence): đội kết thúc Bậc 2 với nợ vào Bậc 3 yếu hơn một chút; đội có lãi đều vào Bậc 3 với vài mối quan hệ sẵn. Đây là hệ quả dài hạn mà các mô-đun rời không cho thấy.
 
@@ -150,7 +152,7 @@ Xuất CSV ẩn danh (journeyId băm, không email) phục vụ thiết kế ngh
 ## 8 · Model card của hàm `journeyCarry`
 
 - **Đầu vào**: hộ chiếu (`schemaVersion` 1), bậc đích, biến thể Bậc 3, vai Sầu Riêng. **Đầu ra**: đối tượng hành trang + danh sách dòng giải thích VI/EN.
-- **Tham số** (xem mục 4): `T1_CASH_PER_EFF = 0.4`, `T1_RANK1_BONUS = 10`, `T1_BRAND = 1.05`, `T1_BRIEF_MIN_PAIRS = 3`, `T2_CASH_CAP = 0.15`, `T2_REP_MAX = 5`, `T2_RESIL = ±3`, `T2_CAPAB_MAX = 5`, `T2_NET = 5`, `T2_LINKED = 0.05`, `T2_PROFITABLE_MIN = 4`.
+- **Tham số** (xem mục 4): `T1_CASH_PER_EFF = 0.4`, `T1_RANK1_BONUS = 10`, `T1_BRAND = 1.05`, `T1_BRIEF_MIN_PAIRS = 3`, `T2_CASH_CAP = 0.15`, `T2_REP_MAX = 5`, `T2_RESIL = ±3`, `T2_CAPAB_MAX = 5`, `T2_ADAPT_PER_RD = 20`, `T2_ADAPT_MAX = 5`, `T2_NET = 5`, `T2_LINKED = 0.05`, `T2_PROFITABLE_MIN = 4`.
 - **Giới hạn**: tham số là minh họa, chưa có dữ liệu lớp học để hiệu chỉnh; sẽ công bố cùng bảng tham số trên trang Học thuật và cập nhật sau pilot.
 - **Không làm**: không đổi xác suất biến cố, không mở khóa phương thức/kênh, không ảnh hưởng điểm rubric thảo luận.
 
@@ -159,8 +161,8 @@ Xuất CSV ẩn danh (journeyId băm, không email) phục vụ thiết kế ngh
 | Kiểm thử | Nội dung |
 |---|---|
 | `test/journey-carry.test.js` | Hàm thuần: hộ chiếu rỗng → hành trang rỗng; ba hồ sơ mẫu (yếu / trung bình / mạnh) → đúng trần; tất định (hai lần gọi giống nhau); đơn vị tiền đúng theo bậc. |
-| `test/journey-passport.test.js` | Lược đồ: `schemaVersion`, trạng thái bậc, ghi/đọc qua `persistence.js`, từ chối JSON hỏng. |
-| Quét cân bằng | Kịch bản Node chạy `rivalsRun`/`simulateRound` với và không có hành trang cực đại: chênh điểm cuối Bậc 3 ≤ 8/100, Bậc 2 ≤ 10 % lợi nhuận. |
+| `test/journey-passport.test.js` | Lược đồ: `schemaVersion`, trạng thái bậc, không nhảy cóc, từ chối JSON hỏng (J2); ghi/đọc qua `persistence.js` bổ sung ở J3. |
+| Quét cân bằng | `test/journey-balance.test.js` (J2): engine Sầu Riêng, 4 vai × 6 hạt giống, cùng quyết định, có và không có hành trang cực đại → chênh điểm cuối ≤ 8/100; kèm đối chứng tài sản kiểm nghiệm phải lệch > 8 (để không ai thêm lại). Bậc 2 (`simulateRound`, ≤ 10 % lợi nhuận) và Thương Hiệu bổ sung ở J5/J6 khi engine chạy được ngoài trang. |
 | Playwright | Đi hết ba bậc trên bản 2D với `?journey=`, kiểm tra thẻ Hành trang hiện đúng số và `p_detail_json.journey` trong payload nộp (mock RPC). |
 
 ## 10 · Lộ trình PR
@@ -168,7 +170,7 @@ Xuất CSV ẩn danh (journeyId băm, không email) phục vụ thiết kế ngh
 | PR | Nội dung | Phụ thuộc | Ước lượng |
 |---|---|---|---|
 | J1 | Tài liệu này + bảng tham số trên trang Học thuật | — | 0,5 ngày |
-| J2 | `js/core/journey.js` (hàm thuần, VI/EN) + `test/journey-carry.test.js` + workflow kiểm tra | J1 | 1 ngày |
+| J2 | `js/core/journey.js` (hàm thuần, VI/EN) + `test/journey-carry.test.js`, `test/journey-passport.test.js` + workflow `journey-core.yml` – **đã làm** | J1 | 1 ngày |
 | J3 | Hộ chiếu cục bộ (`persistence.js`), trang `hanh-trinh.html`, thẻ Hành trang dùng chung (`js/journey-card.js`) | J2 | 2 ngày |
 | J4 | Bến Phù Sa (2D rồi 3D) ghi `tiers.t1` cuối ván; nút «Sang Bậc 2» | J3 | 1 ngày |
 | J5 | Bật Nghiệp (`game.html`, bản v2) đọc hành trang sau cờ lớp, ghi `tiers.t2`, Lumina chào theo phong cách Bậc 1 | J3 | 2 ngày |
@@ -186,7 +188,12 @@ Rủi ro:
 - **Phức tạp lưu ván**: hộ chiếu tách khỏi ván từng bậc; mất hộ chiếu chỉ mất hành trang, không mất ván.
 - **Khớp câu chuyện**: Bậc 1 bán bánh mì, chè bưởi, cà phê; Bậc 3 Sầu Riêng là nông sản. Cầu nối kể chuyện («vốn và uy tín từ chợ nổi») đủ cho giai đoạn đầu; thêm món «sầu riêng» cho Bậc 1 là việc riêng, không cần cho J1–J8.
 
-Câu hỏi cần quyết trước J2:
-1. Biến thể Bậc 3 mặc định của hành trình: **Sầu Riêng** (theo đề xuất nông sản ĐBSCL) hay Thương Hiệu?
-2. Lớp chấm điểm: hành trang **mặc định tắt** (an toàn) hay bật?
-3. Có cho phép bỏ qua một bậc (vào thẳng Bậc 3 với hộ chiếu chỉ có Bậc 1) không? Thiết kế trên cho phép, hành trang chỉ tính từ các bậc đã xong.
+Ba câu hỏi đã chốt (26/10/2026):
+
+| # | Câu hỏi | Quyết định | Thể hiện trong mã |
+|---|---|---|---|
+| 1 | Biến thể Bậc 3 mặc định | **Sầu Riêng** (nông sản ĐBSCL); Thương Hiệu vẫn chọn được trên trang Hành trình | `DEFAULT_T3_VARIANT = 'durian'`; `setTier3Variant()` |
+| 2 | Hành trang trong lớp chấm điểm | **Mặc định tắt**: lớp có mã thật chỉ áp hành trang khi `class_controls.journey_carry === true`; tự học (không mã lớp / `DEMO-2026`) theo cờ hộ chiếu | `resolveCarryEnabled(passport, classControls)` |
+| 3 | Bỏ qua bậc | **Không**: chỉ chơi được bậc kế tiếp bậc đã xong; muốn chơi riêng một bậc thì mở game đó như hiện nay, không qua hành trình | `nextTier()`, `canPlay()`, `validatePassport()` từ chối hộ chiếu nhảy cóc (`tier_order_t2/t3`) |
+
+Giả định còn mở (đổi tham số là đủ, không đổi cấu trúc): «hai thị trường gần nhất về khoảng cách tâm lý» của Hộ Chiếu Thương Hiệu tạm lấy Tân Cảng (5) và Kim Sa (2) – `PARAMS.T2_NET_MARKETS`; dữ liệu thị trường hiện chưa có trường khoảng cách tâm lý.

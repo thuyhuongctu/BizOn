@@ -1,0 +1,32 @@
+name: Journey Core
+
+on:
+  pull_request:
+    paths:
+      - 'js/core/journey.js'
+      - 'test/journey-carry.test.js'
+      - 'test/journey-passport.test.js'
+      - 'test/journey-balance.test.js'
+      - 'lab/ho-chieu-sau-rieng-engine.js'
+      - 'lab/ho-chieu-sau-rieng-data.js'
+      - 'docs/architecture/HANH-TRINH-3-BAC.md'
+      - '.github/workflows/journey-core.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Syntax check
+        run: node --check js/core/journey.js
+      - name: Carry and passport tests
+        run: |
+          node test/journey-carry.test.js
+          node test/journey-passport.test.js
+          node test/journey-balance.test.js
