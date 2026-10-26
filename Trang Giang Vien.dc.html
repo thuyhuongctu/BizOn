@@ -21,6 +21,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800;900&family=Hanken+Grotesk:ital,wght@0,400;0,700;0,800;1,400&display=swap" rel="stylesheet">
 <script src="js/backend-config.js"></script>
 <script src="js/instructor-api.js"></script>
+<script src="js/case-task-data.js"></script>
 <script src="js/bizon-grading.js"></script>
 <script src="js/official-cert.js"></script>
 <style>
@@ -239,6 +240,7 @@ input,select,textarea,button{font-family:inherit}
             <div style="display:flex;gap:6px;flex-wrap:wrap">
               <sc-for list="{{ jCarryBtns }}" as="b" hint-placeholder-count="2"><button onClick="{{ b.go }}" style="border:3px solid {{ b.border }};background:{{ b.bg }};color:{{ b.fg }};border-radius:12px;padding:8px 11px;font-weight:700;cursor:pointer">{{ b.label }}</button></sc-for>
             </div>
+            <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px;font-weight:700;padding-top:6px;border-top:1px solid #eadcc6"><span>{{ ctHead }}</span><button onClick="{{ exportCt }}" style="border:0;background:#3f8a44;color:#fff;border-radius:12px;padding:7px 12px;font-weight:700;cursor:pointer;box-shadow:0 3px 0 #2b6330">⬇ CSV bài tình huống</button></div>
             <div style="font-size:13px;font-weight:700">{{ jpHead }}</div>
             <sc-for list="{{ jpRows }}" as="r" hint-placeholder-count="3"><div style="display:flex;justify-content:space-between;gap:8px;font-size:13px;padding:6px 0;border-top:1px solid #eadcc6"><span>{{ r.team }} · {{ r.email }}</span><span style="white-space:nowrap">{{ r.tiers }} · {{ r.when }}</span></div></sc-for>
           </div>
@@ -568,7 +570,8 @@ class Component extends DCLogic {
     try { const [subs, st, memberLog, bpResults, ef, cf, rf] = await Promise.all([this.api().submissions(code), this.api().state(code), this.api().memberLog(code), this.api().bpResults(code), this.api().examFeed(code), this.api().certFeed(code), this.api().rubricFeed(code)]);
       const c = (st && st.controls) || {}, exam = (ef && ef.exam) || null, cert = cf || {}, rubric = rf || {};
       const jp = await this.api().journeyPassports(code).catch(() => []);   // hành trình 3 bậc: hộ chiếu đã đồng bộ (rỗng khi chưa có migration)
-      this.setState({ subs: subs || [], st: st || {}, memberLog: memberLog || [], bpResults: bpResults || [], jp, fEvent: c.forced_event || '', fMsg: c.message || '',
+      const ct = await this.api().caseTasks(code).catch(() => []);   // bài tình huống trước – sau (R2)
+      this.setState({ subs: subs || [], st: st || {}, memberLog: memberLog || [], bpResults: bpResults || [], jp, ct, fEvent: c.forced_event || '', fMsg: c.message || '',
         exam, examNow: (ef && ef.now) || null, exSetup: this.state.exSetup === '' ? String((exam && exam.setup_min) ?? 10) : this.state.exSetup, exRound: this.state.exRound === '' ? String((exam && exam.round_min) ?? 8) : this.state.exRound,
         certCode: this.state.certCode === '' ? (cert.course_code || 'KT330H') : this.state.certCode, certName: this.state.certName === '' ? (cert.course_name || 'Entrepreneurship') : this.state.certName, certDates: this.state.certDates === '' ? (cert.course_dates || '') : this.state.certDates,
         rubric, rLv1: this.state.rLv1 === '' ? (rubric.level1 || 'Rất cân bằng') : this.state.rLv1, rLv2: this.state.rLv2 === '' ? (rubric.level2 || 'Khá cân bằng') : this.state.rLv2,
@@ -588,6 +591,7 @@ class Component extends DCLogic {
     try { await this.api().completeRecovery(recoveryToken, fNewPass); this.setState({ mode: 'in', fPass: '', fNewPass: '', recoveryToken: '', err: this.tr('Đã đặt lại mật khẩu. Đăng nhập bằng mật khẩu mới.', 'Password reset. Sign in with your new password.') }); }
     catch (e) { this.fail(e); } }
   async claim() { try { await this.api().claimClass(this.state.fCode); this.setState({ fCode: '' }); this.loadClasses(); } catch (e) { this.fail(e); } }
+  exportCaseTasks() { const rows = this.state.ct || []; if (!rows.length) { alert("Chưa có bài tình huống nào trong lớp này."); return; } try { this.P().caseTaskCsv(this.state.code, rows); } catch (e) { this.fail(e); } }
   async setExplainHidden(on) { try { await this.api().setExplainHidden(this.state.code, on); this.reload(); } catch (e) { this.fail(e); } }
   async setJourneyCarry(on) { try { await this.api().setJourneyCarry(this.state.code, on); this.reload(); } catch (e) { this.fail(e); } }
   async setLock(n) { try { const c = Object.assign({}, (this.state.st.controls || {}), { locked_round: n }); await this.api().setControls(this.state.code, c); this.reload(); } catch (e) { this.fail(e); } }
@@ -718,6 +722,8 @@ class Component extends DCLogic {
       jCarryBtns: [[false, '🔒 Tắt hành trang'], [true, '🎒 Bật hành trang']].map(([v, label]) => { const on = (c.journey_carry === true) === v; return { label, go: () => this.setJourneyCarry(v), bg: on ? '#1f4a55' : '#fff', fg: on ? '#fff' : '#1f4a55', border: on ? '#10303a' : '#e6d6bf' }; }),
       xNote: c.explain_hidden === true ? 'Đang ẨN (nhánh hộp đen): lớp này chơi không thấy lời giải cơ chế – gợi ý của Lumina/cố vấn, dự báo «Nếu – Thì», bài học cốt lõi, dòng giải thích hành trang. Engine, biến cố, luật và điểm giữ nguyên. Điều kiện được ghi vào mỗi kết quả nộp (🔬).' : 'Đang HIỆN (mặc định): sinh viên thấy đầy đủ lời giải cơ chế. Chỉ ẨN cho lớp thuộc nhánh đối chứng của nghiên cứu (docs/architecture/NHANH-HOP-DEN.md); đặt trước khi lớp bắt đầu chơi.',
       xBtns: [[false, '💡 Hiện giải thích'], [true, '🔬 Ẩn giải thích']].map(([v, label]) => { const on = (c.explain_hidden === true) === v; return { label, go: () => this.setExplainHidden(v), bg: on ? '#1f4a55' : '#fff', fg: on ? '#fff' : '#1f4a55', border: on ? '#10303a' : '#e6d6bf' }; }),
+      ctHead: (() => { const r = s.ct || [], pre = r.filter(x => x.phase === 'pre').length, post = r.filter(x => x.phase === 'post').length; return 'Bài tình huống trước – sau: ' + pre + ' trước · ' + post + ' sau' + (r.length ? '' : ' (sinh viên làm ở bai-tinh-huong.html)'); })(),
+      exportCt: () => this.exportCaseTasks(),
       jpHead: 'Hộ chiếu đã đồng bộ lên lớp: ' + ((s.jp || []).length) + (((s.jp || []).length) ? '' : ' (sinh viên bấm «Đồng bộ ngay» trên trang Hành trình)'),
       jpRows: (s.jp || []).slice(0, 30).map(r => { const tiers = (r.passport && r.passport.tiers) || {}; return { team: r.team_name, email: r.student_email || '—', tiers: ['t1', 't2', 't3'].map((k, i) => 'B' + (i + 1) + (tiers[k] && tiers[k].status === 'done' ? '✓' : '·')).join(' '), when: r.updated_at ? new Date(r.updated_at).toLocaleDateString('vi-VN') : '' }; }),
       eventOpts: ok ? P.EVENTS.map(([v, l]) => ({ v, l })) : [], fEvent: s.fEvent, onEvent: e => this.setState({ fEvent: e.target.value }), fMsg: s.fMsg, onMsg: e => this.setState({ fMsg: e.target.value }), saveEvent: () => this.saveEvent(),

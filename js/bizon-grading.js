@@ -240,6 +240,24 @@
     });
     return { head, cells };
   }
+  // Bài tình huống trước – sau (R2): một dòng cho mỗi câu trả lời; khoá ẩn danh = FNV-1a(email) và băm journey_id (khớp CSV trang Hành trình).
+  function caseTaskCsv(code, rows) {
+    const D = window.BizOnCaseTaskData, fnv = s => { let h = 2166136261; for (const ch of String(s)) { h ^= ch.codePointAt(0); h = Math.imul(h, 16777619); } return (h >>> 0).toString(16).padStart(8, '0'); };
+    const cell = v => { const s = String(v == null ? '' : v); return /[",\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+    const head = ['class', 'student_key', 'team', 'phase', 'form', 'item', 'mech', 'choice', 'expected', 'aligned', 'logic', 'why', 'duration_s', 'explain_condition', 'journey_hash', 'submitted_at', 'answers_version'];
+    const lines = [head.join(',')];
+    for (const r of rows || []) {
+      const items = (r.answers && Array.isArray(r.answers.items)) ? r.answers.items : [];
+      for (const it of items) {
+        const def = D && D.item ? D.item(r.form, it.id) : null, exp = def && def.expected ? def.expected : '';
+        lines.push([code, fnv(String(r.student_email || '').toLowerCase()), r.team_name || '', r.phase, r.form, it.id, it.mech || (def && def.mech) || '', it.choice || '', exp, exp && it.choice ? (it.choice === exp ? 1 : 0) : '',
+          def && def.logic && it.choice ? def.logic[it.choice] || '' : '', it.why != null ? it.why : (it.text || ''), r.duration_s ?? '', r.explain || '', r.journey_id ? fnv(r.journey_id) : '', r.updated_at || r.created_at || '', (r.answers && r.answers.version) || ''].map(cell).join(','));
+      }
+    }
+    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['\ufeff' + lines.join('\n') + '\n'], { type: 'text/csv;charset=utf-8' })); a.download = `BizOn-${code}-bai-tinh-huong.csv`; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+    return lines;
+  }
   function xls(code, T, G, BP, MB, AC, rubric, roster) {
     const esc = v => String(v == null ? '' : v).replace(/&/g, '&amp;').replace(/</g, '&lt;');
     const row = c => '<Row>' + c.map(x => `<Cell><Data ss:Type="${typeof x === 'number' && isFinite(x) ? 'Number' : 'String'}">${esc(x)}</Data></Cell>`).join('') + '</Row>';
@@ -267,5 +285,5 @@
     const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([xml], { type: 'application/vnd.ms-excel' })); a.download = `BizOn-${code}-so-diem.xls`; document.body.appendChild(a); a.click(); a.remove();
   }
   const EVENTS = [['', 'Theo kịch bản (không can thiệp)'], ['EV_STABLE', '🌤️ Thị trường ổn định'], ['EV_GOLDEN', '🌟 Cơ hội vàng – tổng cầu tăng'], ['EV_PRICEWAR', '⚔️ Cạnh tranh về giá – nhạy giá'], ['EV_RECESSION', '⚡ Khủng hoảng năng lượng'], ['EV_SUPPLY', '🚢 Khủng hoảng chuỗi cung ứng'], ['EV_MILESTONE', '🐉 Việt Nam hóa Rồng']];
-  window.BizOnInstructorPage = { money, f1, letter, members, autoNote, teams, grades, bpGrade, miniGrade, parseRoster, rosterGroup, miniExport, decRows, xls, EVENTS, memberActivity, rubricLevel };
+  window.BizOnInstructorPage = { money, f1, letter, members, autoNote, teams, grades, bpGrade, miniGrade, parseRoster, rosterGroup, miniExport, decRows, xls, caseTaskCsv, EVENTS, memberActivity, rubricLevel };
 })();

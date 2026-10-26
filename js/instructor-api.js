@@ -34,7 +34,7 @@
   }
 
   // ---------- dữ liệu mẫu ----------
-  const D = { classes: [{ class_code: 'DEMO-2026', created_at: new Date().toISOString() }], controls: { locked_round: null, forced_event: null, message: '', journey_carry: null, explain_hidden: null }, grants: [], journey: [], scores: {}, subs: [], exam: null, cert: { course_code: 'KT330H', course_name: 'Entrepreneurship', course_dates: '' }, rubric: { level1: 'Rất cân bằng', level2: 'Khá cân bằng', level3: 'Lệch rõ', level4: 'Lệch nhiều' } };
+  const D = { classes: [{ class_code: 'DEMO-2026', created_at: new Date().toISOString() }], controls: { locked_round: null, forced_event: null, message: '', journey_carry: null, explain_hidden: null }, grants: [], journey: [], caseTasks: [], scores: {}, subs: [], exam: null, cert: { course_code: 'KT330H', course_name: 'Entrepreneurship', course_dates: '' }, rubric: { level1: 'Rất cân bằng', level2: 'Khá cân bằng', level3: 'Lệch rõ', level4: 'Lệch nhiều' } };
   (function seed() {
     const T = [['Đội Rồng Vàng', 1.0], ['Đội Sông Hậu', 0.9], ['Đội Miệt Vườn', 0.8], ['Đội Phù Sa', 1.1], ['Đội Gốm Đỏ', 0.7]];
     T.forEach(([n, k], ti) => { const rounds = 6 - (ti % 3); for (let r = 1; r <= rounds; r++) {
@@ -81,6 +81,7 @@
       return guard(rpc('bizon_set_journey_carry', { p_class_code: code, p_on: !!on })); },
     async setExplainHidden(code, on) { if (demo) { D.controls.explain_hidden = !!on; return true; }
       return guard(rpc('bizon_set_explain_hidden', { p_class_code: code, p_on: !!on })); },
+    async caseTasks(code) { if (demo) return D.caseTasks; try { return (await rpc('bizon_case_task_class', { p_class_code: code })) || []; } catch (e) { if (missing(e)) return []; throw e; } },
     async journeyPassports(code) { if (demo) return D.journey; try { return (await rpc('bizon_journey_class', { p_class_code: code })) || []; } catch (e) { if (missing(e)) return []; throw e; } },
     async setExam(code, ex) { if (demo) { D.exam = ex; return true; }
       return guard(rpc('bizon_set_exam', { p_class_code: code, p_active: !!ex.active, p_start_at: ex.start_at || null, p_setup_min: ex.setup_min ?? 10, p_round_min: ex.round_min ?? 8, p_capital: ex.capital ?? 500 })); },
