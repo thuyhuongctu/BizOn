@@ -14,6 +14,7 @@
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta property="og:locale" content="vi_VN"><meta property="og:locale:alternate" content="en_US">
 <script src="js/bizon-lang.js"></script>
+<script src="js/clay-light.js"></script>
 <!-- Ngôn ngữ: theo lựa chọn chung của site (bizon-lang). Trước đây trang này tự ép về tiếng Việt và ghi đè cả toàn site. -->
 <title>Bật Nghiệp 3D – Bậc 2 · Vận hành doanh nghiệp · BizOn</title>
 <link rel="manifest" href="app-sinhvien.webmanifest">
@@ -457,6 +458,7 @@ const { B, Cy, G, M, mat, TX, panel, ctex, bulbMat } = hq;
 // ---------- lights
 const hemi = new THREE.HemisphereLight(0xfff4e6, 0xb58a66, 1.2); scene.add(hemi);
 const sun = new THREE.DirectionalLight(0xfff1dc, 2.4); sun.position.set(9, 16, 11); sun.castShadow = true;
+if (window.BizOnClayLight) BizOnClayLight.rig(THREE, scene, { distance: 14 });   // đèn bù + đèn viền đất sét (js/clay-light.js)
 sun.shadow.mapSize.set(LOW ? 1024 : 2048, LOW ? 1024 : 2048); Object.assign(sun.shadow.camera, { left: -13, right: 13, top: 13, bottom: -13, near: 1, far: 50 }); sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.02;
 scene.add(sun);
 
@@ -682,6 +684,7 @@ function tick() {
   flags.forEach((f, i) => { hq.waveFlag(f, t + i * 0.7); const s = f.userData.goal || 1; f.scale.y += (s - f.scale.y) * Math.min(1, dt * 3); });
   spinners.forEach(o => { if (o.userData.spin) o.rotation.y += dt * 3; else if (o.name === 'drone_body') o.position.y = 0.45 + Math.sin(t * 2) * 0.05; else o.rotation.y += dt * 0.8; });
   roverObj.position.set(1.2 + Math.cos(t * 0.35) * 0.55, 0, 3.75 + Math.sin(t * 0.35) * 0.3); roverObj.rotation.y = -t * 0.35 + Math.PI;
+  if (window.BizOnClayLight && pendants.length && pendants[0].visible) pendants.forEach((p, i) => BizOnClayLight.float(p, t, { amp: 0.025, speed: 0.9, phase: i * 1.7, rot: 0.03 }));
   if (tween) { const k = Math.min(1, (performance.now() - tween.t0) / 900), e = 1 - Math.pow(1 - k, 3); camera.position.lerpVectors(tween.fp, tween.p, e); controls.target.lerpVectors(tween.ft, tween.t, e); if (k >= 1) tween = null; }
   if (window.__ARTICK && window.__ARTICK(dt, t)) { requestAnimationFrame(tick); return; }
   controls.update(); renderer.render(scene, camera);
@@ -977,6 +980,7 @@ const ROOM3D = { shop: 1, skills: 1, achievements: 1, leaderboard: 1, minigame: 
 let force2D = false;
 const RM = { on: false, scene: new THREE.Scene(), cam: new THREE.PerspectiveCamera(36, 1, 0.1, 200), g: null, picks: [], labs: [], mode: null, sel: null, spin: [], belt: [], mg: null };
 RM.scene.background = new THREE.Color(0xefe4d2);
+if (window.BizOnClayLight) BizOnClayLight.rig(THREE, RM.scene, { distance: 10 });
 { const hl = new THREE.HemisphereLight(0xfff4e6, 0xb58a66, 1.15), dl = new THREE.DirectionalLight(0xfff1dc, 2.2); dl.position.set(5, 12, 9); dl.castShadow = true; dl.shadow.mapSize.set(2048, 2048);
   Object.assign(dl.shadow.camera, { left: -10, right: 10, top: 10, bottom: -10, near: 1, far: 40 }); dl.shadow.bias = -0.0004; dl.shadow.normalBias = 0.02; RM.scene.add(hl, dl);
   const fl = new THREE.Mesh(new THREE.CylinderGeometry(9, 9.2, 0.4, 72), new THREE.MeshStandardMaterial({ map: plank, color: 0xffffff, roughness: 0.9 })); fl.position.y = -0.2; fl.receiveShadow = true; RM.scene.add(fl);
@@ -1409,6 +1413,7 @@ function event3D(force) {
 // ================= ĐẤU TRƯỜNG 3D =================
 const AR = { on: false, scene: new THREE.Scene(), cam: new THREE.PerspectiveCamera(34, 1, 0.1, 200), pods: [], built: null, flags: [] };
 AR.scene.background = new THREE.Color(0x0b3440); AR.scene.fog = new THREE.Fog(0x0b3440, 30, 70);
+if (window.BizOnClayLight) BizOnClayLight.rig(THREE, AR.scene, { distance: 11, intensity: 0.7 });
 { const hl = new THREE.HemisphereLight(0xfff4e6, 0x2a4a55, 1.15); const dl = new THREE.DirectionalLight(0xfff1dc, 2.3); dl.position.set(6, 14, 10); dl.castShadow = true; dl.shadow.mapSize.set(2048, 2048);
   Object.assign(dl.shadow.camera, { left: -11, right: 11, top: 11, bottom: -11, near: 1, far: 45 }); dl.shadow.bias = -0.0004; dl.shadow.normalBias = 0.02; AR.scene.add(hl, dl); }
 const AS = 0.026, AOX = -2.8, AOZ = -9.4, PODX = [-4.2, -1.4, 1.4, 4.2], PODZ = 4.6, CHS = 1.75;

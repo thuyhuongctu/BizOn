@@ -30,6 +30,7 @@ const sun = new THREE.DirectionalLight(0xfff0d8, 2.2); sun.position.set(-26, 44,
 sun.shadow.mapSize.set(2048, 2048); sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.06;
 Object.assign(sun.shadow.camera, { left: -52, right: 52, top: 52, bottom: -52, far: 140 }); scene.add(sun);
 const fill = new THREE.DirectionalLight(0xbcd8ff, 0.45); fill.position.set(30, 18, -30); scene.add(fill);
+if (window.BizOnClayLight) BizOnClayLight.rig(THREE, scene, { distance: 40 });   // đèn bù xanh ngọc + đèn viền kem (js/clay-light.js)
 
 // vân tay đất sét: bump map nhiễu mềm dùng chung
 const clayTex = (() => { const c = document.createElement('canvas'); c.width = c.height = 256; const x = c.getContext('2d'); x.fillStyle = '#808080'; x.fillRect(0, 0, 256, 256);
