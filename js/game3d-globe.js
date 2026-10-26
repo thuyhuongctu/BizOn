@@ -22,6 +22,7 @@ import * as THREE from 'three';
     var sun = new THREE.DirectionalLight(0xfff1d6, 1.4);
     sun.position.set(3, 2, 4);
     scene.add(sun);
+    if (window.BizOnClayLight) BizOnClayLight.rig(THREE, scene, { distance: 4, intensity: 0.8 });   // đèn bù + đèn viền đất sét
 
     var R = 1;
     function latLonToVec3(lat, lon, r) {

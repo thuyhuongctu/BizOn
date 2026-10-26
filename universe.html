@@ -214,13 +214,13 @@
     <p class="vu-arrow" data-en="Four inputs → core engine → one live class">Bốn đầu vào → engine lõi → một buổi học sống</p>
 
     <div class="vu-reel">
-      <video id="vu-intro" controls playsinline preload="metadata" poster="assets/video/bizon-intro-en-v5-poster.jpg" data-vi-src="assets/video/bizon-intro-vi-v4.mp4" data-vi-poster="assets/video/bizon-intro-vi-v3-poster.jpg" aria-label="Video giới thiệu BizOn" data-en-aria="BizOn intro video">
-        <source src="assets/video/bizon-intro-en-v5.mp4" type="video/mp4">
+      <video id="vu-intro" controls playsinline preload="metadata" poster="assets/video/bizon-intro-en-v5-poster.webp" data-vi-src="assets/video/bizon-intro-vi-v4.mp4" data-vi-poster="assets/video/bizon-intro-vi-v3-poster.webp" aria-label="Video giới thiệu BizOn" data-en-aria="BizOn intro video">
+        <source src="assets/video/bizon-intro-en-v5.webm" type="video/webm"><source src="assets/video/bizon-intro-en-v5.mp4" type="video/mp4">
         <p data-en="Your browser cannot play this video.">Trình duyệt của bạn không phát được video này.</p>
       </video>
       <script>/* bản lồng tiếng Việt khi người xem chọn giao diện tiếng Việt */
       (function(){ var v=document.getElementById('vu-intro'), l=''; try{ l=localStorage.getItem('bizon-lang')||''; }catch(e){}
-        if(v && l==='vi'){ v.poster=v.dataset.viPoster; v.src=v.dataset.viSrc; } })();</script>
+        if(v && l==='vi'){ v.poster=v.dataset.viPoster; v.innerHTML=''; var m=v.dataset.viSrc, w=m.replace(/\.mp4$/,'.webm'); [[w,'video/webm'],[m,'video/mp4']].forEach(function(p){ var s=document.createElement('source'); s.src=p[0]; s.type=p[1]; v.appendChild(s); }); v.load(); } })();</script>
     </div>
   </section>
 
