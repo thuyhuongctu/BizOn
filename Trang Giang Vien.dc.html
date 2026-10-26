@@ -698,10 +698,10 @@ class Component extends DCLogic {
       saveCertConfig: () => this.saveCertConfig(), certSaved: s.certSaved,
       tabs: tabDefs.map(([k, l]) => ({ label: l, go: () => this.setState({ tab: k }), bg: s.tab === k ? '#2f8a8c' : '#fbf6ee', fg: s.tab === k ? '#fff' : '#1f4a55', border: s.tab === k ? '#23706f' : '#e6d6bf' })),
       tabTeams: s.tab === 'teams', tabDecisions: s.tab === 'decisions', tabControls: s.tab === 'controls', tabGrading: s.tab === 'grading', tabMembers: s.tab === 'members', tabActivity: s.tab === 'activity', noTeams: !T.length,
-      teams: T.map(t => ({ name: t.name, share: t.share.toFixed(1) + '%', profit: money(t.profit), profitColor: t.profit >= 0 ? '#3f8a44' : '#c0443a', flags: '🚩 ' + t.flags + '/6',
+      teams: T.map(t => ({ name: t.name + (t.rs.some(r => r.result_json && r.result_json.journey) ? ' 🧭' : ''), share: t.share.toFixed(1) + '%', profit: money(t.profit), profitColor: t.profit >= 0 ? '#3f8a44' : '#c0443a', flags: '🚩 ' + t.flags + '/6',
         last: t.last ? new Date(t.last.created_at).toLocaleString('vi-VN') : '–',
         dots: [1, 2, 3, 4, 5, 6].map(n => { const r = t.rs.find(x => x.round_number === n), j = r ? (r.result_json || {}) : null;
-          return { n, tip: r ? `V${n}: ${(+j.share || 0).toFixed(1)}% · ${money(j.netProfit)}${j.win === true ? ' · 🚩 Cắm cờ' : j.win === false ? ' · ' + (j.winner ? j.winner + ' chiếm' : 'Chưa cắm cờ') : ''}` : `V${n}: chưa nộp`, bg: !r ? '#d9cbb4' : j.win === true ? '#e8a22d' : (+j.netProfit >= 0 ? '#3f8a44' : '#c0443a') }; }) })),
+          return { n, tip: r ? `V${n}: ${(+j.share || 0).toFixed(1)}% · ${money(j.netProfit)}${j.win === true ? ' · 🚩 Cắm cờ' : j.win === false ? ' · ' + (j.winner ? j.winner + ' chiếm' : 'Chưa cắm cờ') : ''}${j.journey ? ' · 🧭 hành trình' + (j.journey.carryApplied ? ' (có hành trang)' : ' (không hành trang)') : ''}` : `V${n}: chưa nộp`, bg: !r ? '#d9cbb4' : j.win === true ? '#e8a22d' : (+j.netProfit >= 0 ? '#3f8a44' : '#c0443a') }; }) })),
       teamOptions: T.map(t => t.name), selTeam, onSelTeam: e => this.setState({ selTeam: e.target.value }), decHead: dec.head, decCells: dec.cells,
       lockNote: lock != null ? `Các đội không thể chốt vòng ${lock + 1} trở đi cho tới khi bạn mở khóa.` : 'Chọn vòng cuối cùng được phép chơi. Đội nào đi nhanh sẽ phải chờ cả lớp.',
       lockBtns: [null, 0, 1, 2, 3, 4, 5].map(n => { const on = lock === n || (n === null && lock == null);

@@ -1758,7 +1758,7 @@
         p_rep: Math.round(fin.sc.r), p_capab: Math.round(fin.sc.c), p_adapt: Math.round(fin.sc.a), p_sust: Math.round(fin.sc.s),
         p_title: fin.title,
         p_quarters: S.q >= 6 ? 6 : S.q + 1,
-        p_detail_json: { seed: seedBase, seed_source: seedSource, foot: S.foot, markets: S.entered, know: S.know, fail: fin.fail },
+        p_detail_json: { journey: window.BizOnJourneyLink ? BizOnJourneyLink.submitInfo(S) : null, seed: seedBase, seed_source: seedSource, foot: S.foot, markets: S.entered, know: S.know, fail: fin.fail },
         p_app_version: 'bizon-v302',
       });
       msg.textContent = T('✅ Đã nộp! Kết quả đã hiện trên bảng của giảng viên.', "✅ Submitted! Your result now shows on the instructor's board.");

@@ -127,7 +127,7 @@ Không chuyển vật phẩm, kỹ năng, điểm XP, huy hiệu, hay bất cứ
 |---|---|---|
 | Cục bộ | `localStorage['bizon-journey']` = hộ chiếu (JSON, có `schemaVersion`) + `bizon-journey-backup`; mô-đun riêng `js/journey-store.js` (cùng kiểu `persistence.js`: storage tiêm được, kiểm tra lược đồ khi đọc/ghi, phục hồi từ sao lưu, gói xuất `bizon-journey-export` v1) | Không đụng khóa cũ nào. |
 | Máy chủ | Bảng mới `journey_passports(class_code, team_name, student_id, passport jsonb, updated_at)` + RPC `bizon_journey_get(p_class_code, p_team_name)` và `bizon_journey_upsert(p_class_code, p_team_name, p_passport)`; yêu cầu phiên sinh viên như `require_student_login`; dọn theo `retention_purge` | Một migration; **chỉ áp dụng lên dự án thật sau khi được xác nhận**. |
-| Kết quả từng bậc | Giữ nguyên `ft_results`, `round_submissions` / `class_scores`, `bp_results`; thêm `p_detail_json.journey = { journeyId, tier, carryApplied }` | Không đổi lược đồ bảng kết quả; bảng giáo viên lọc được ván có hành trang. |
+| Kết quả từng bậc | Giữ nguyên `ft_results`, `round_submissions` / `class_scores`, `bp_results`; thêm `p_detail_json.journey = { journeyId, tier, carryApplied }` (Bến Phù Sa 2D/3D, Hộ Chiếu Thương Hiệu đầy đủ/3D) và `result_json.journey` (Bật Nghiệp, `js/backend.js`) qua `BizOnJourneyLink.submitInfo` – **đã làm** | Không đổi lược đồ bảng kết quả; Trang Giảng viên đánh dấu 🧭 đội có ván thuộc hành trình, tooltip vòng ghi có/không hành trang. |
 | Khóa lớp | `class_controls` thêm cờ `journey_carry` (mặc định bật cho tự học, giảng viên tắt khi chấm) | Khi tắt, hộ chiếu vẫn ghi kết quả, chỉ không áp hành trang. |
 
 ## 6 · Giao diện: trang Hành trình và thẻ Hành trang
@@ -180,7 +180,7 @@ Mỗi lần đổi tham số: tăng `MODULE_VERSION`, chạy lại `journey-bala
 | `test/journey-carry.test.js` | Hàm thuần: hộ chiếu rỗng → hành trang rỗng; ba hồ sơ mẫu (yếu / trung bình / mạnh) → đúng trần; tất định (hai lần gọi giống nhau); đơn vị tiền đúng theo bậc. |
 | `test/journey-passport.test.js` | Lược đồ: `schemaVersion`, trạng thái bậc, không nhảy cóc, từ chối JSON hỏng (J2); ghi/đọc qua `persistence.js` bổ sung ở J3. |
 | Quét cân bằng | `test/journey-balance.test.js` (J2): engine Sầu Riêng, 4 vai × 6 hạt giống, cùng quyết định, có và không có hành trang cực đại → chênh điểm cuối ≤ 8/100; kèm đối chứng tài sản kiểm nghiệm phải lệch > 8 (để không ai thêm lại). Bậc 2 (`simulateRound`, ≤ 10 % lợi nhuận) và Thương Hiệu bổ sung ở J5/J6 khi engine chạy được ngoài trang. |
-| Playwright | Đi hết ba bậc trên bản 2D với `?journey=`, kiểm tra thẻ Hành trang hiện đúng số và `p_detail_json.journey` trong payload nộp (mock RPC). |
+| Playwright | `journey-t1/t2/t3/3d`: đi từng bậc với `?journey=`, thẻ Hành trang đúng số; `journey-submit`: `p_detail_json.journey` trong payload nộp Bến Phù Sa và `submitInfo` cho Bậc 2/3 (RPC giả lập). |
 
 ## 10 · Lộ trình PR
 
