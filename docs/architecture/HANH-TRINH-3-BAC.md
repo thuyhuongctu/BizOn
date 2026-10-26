@@ -172,7 +172,7 @@ Xuất CSV ẩn danh (journeyId băm, không email) phục vụ thiết kế ngh
 | J1 | Tài liệu này + bảng tham số trên trang Học thuật | — | 0,5 ngày |
 | J2 | `js/core/journey.js` (hàm thuần, VI/EN) + `test/journey-carry.test.js`, `test/journey-passport.test.js` + workflow `journey-core.yml` – **đã làm** | J1 | 1 ngày |
 | J3 | Hộ chiếu cục bộ (`js/journey-store.js`: `localStorage['bizon-journey']` + bản sao lưu, xuất/nhập JSON), trang `hanh-trinh.html` (+ `js/hanh-trinh.js`), thẻ Hành trang dùng chung (`js/journey-card.js`, `css/journey.css`) – **đã làm** | J2 | 2 ngày |
-| J4 | Bến Phù Sa (2D rồi 3D) ghi `tiers.t1` cuối ván; nút «Sang Bậc 2» | J3 | 1 ngày |
+| J4 | Bến Phù Sa (`ben-phu-sa.html`, bản gọn `ben-phu-sa-v2.html` chuyển tham số, và `ben-phu-sa-3d.html`) đọc `?journey=`, băng ở màn mở đầu, ghi `tiers.t1` cuối ván qua `js/journey-link.js`, khối «Sang Bậc 2» với xem trước hành trang – **đã làm** | J3 | 1 ngày |
 | J5 | Bật Nghiệp (`game.html`, bản v2) đọc hành trang sau cờ lớp, ghi `tiers.t2`, Lumina chào theo phong cách Bậc 1 | J3 | 2 ngày |
 | J6 | Hộ Chiếu Thương Hiệu v2 và Hộ Chiếu Sầu Riêng v2 đọc hành trang, ghi `tiers.t3`; debrief xuyên suốt trên trang Hành trình | J3 | 2–3 ngày |
 | J7 | Migration `journey_passports` + 2 RPC + cờ `class_controls.journey_carry` + cột trên bảng giảng viên; kịch bản kiểm thử Postgres cục bộ trước khi áp dụng thật | J4–J6 | 2 ngày + xác nhận |

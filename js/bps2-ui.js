@@ -29,7 +29,9 @@ const BPS2 = (() => {
 
   function mountEngine() {
     const fr = $('bps2-engine');
-    fr.src = 'ben-phu-sa.html?embed=1';
+    // Hành trình 3 bậc: chuyển ?journey=<id> của bản gọn vào engine để engine ghi hộ chiếu cuối ván (js/journey-link.js).
+    const jm = /[?&]journey=([^&#]+)/.exec(location.search);
+    fr.src = 'ben-phu-sa.html?embed=1' + (jm ? '&journey=' + jm[1] : '');
     fr.addEventListener('load', () => { if (ui.screen === 'end') location.reload(); });
     const tick = setInterval(() => {
       try {

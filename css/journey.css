@@ -22,3 +22,17 @@ html[data-theme="dark"] .jc-line{background:#2a3458;border-color:#35406a} html[d
 html[data-theme="dark"] .jc-muted,html[data-theme="dark"] .jc-note{color:#b9bfd6;border-color:#35406a}
 html[data-theme="dark"] .jc-btn{background:#2a3458;border-color:#35406a;color:#f1e6d3;box-shadow:0 4px 0 #11162a}
 html[data-theme="dark"] .jc-primary{background:#2f8a8c;border-color:#23706f;color:#fff}
+
+/* Móc nối trong game (js/journey-link.js): băng ở màn mở đầu và khối «đã ghi vào hộ chiếu» ở màn kết thúc. */
+.jl-banner{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;box-sizing:border-box;margin:0 0 14px;padding:10px 14px;border-radius:16px;background:#e3f1ef;border:2px solid #bfe0dc;font:600 13px/1.45 "Be Vietnam Pro",Nunito,system-ui,sans-serif;color:#1f4a55;text-align:left}
+.jl-banner b{font-weight:800}
+.jl-banner.jl-off{background:#fdf0d8;border-color:#f3dcb0;color:#6b4a12}
+.jl-tag{display:inline-block;font:800 11px/1 "Baloo 2",system-ui,sans-serif;letter-spacing:.08em;border-radius:999px;padding:5px 10px;background:#1f6f8a;color:#fff}
+.jl-link{margin-left:auto;font-weight:800;color:#1f6f8a;text-decoration:underline;white-space:nowrap}
+.jl-done{box-sizing:border-box;margin:18px 0 0;padding:16px;border-radius:22px;background:#f0f8f6;border:3px solid #bfe0dc;text-align:center;font-family:"Be Vietnam Pro",Nunito,system-ui,sans-serif;color:#1f4a55}
+.jl-done h3{margin:8px 0 12px;font:800 18px/1.25 "Baloo 2",system-ui,sans-serif;color:#1f6f8a;text-wrap:balance}
+.jl-done .jc-card{margin:0 auto 4px;text-align:left}
+.jl-next{display:block;margin-top:12px;padding:12px 16px;border-radius:16px;background:#2f8a8c;color:#fff;font:800 16px "Baloo 2",system-ui,sans-serif;text-decoration:none;box-shadow:0 4px 0 #1b5a5a}
+.jl-next:hover{transform:translateY(-1px)} .jl-next:focus-visible{outline:3px solid #fda127;outline-offset:2px}
+html[data-theme="dark"] .jl-banner{background:#1b3b4a;border-color:#2d5566;color:#d9ebee} html[data-theme="dark"] .jl-banner.jl-off{background:#4a3a1c;border-color:#6b5428;color:#f3dcb0}
+html[data-theme="dark"] .jl-link{color:#8fd0ee} html[data-theme="dark"] .jl-done{background:#1b3b4a;border-color:#2d5566;color:#d9ebee} html[data-theme="dark"] .jl-done h3{color:#8fd0ee}
