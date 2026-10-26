@@ -1,0 +1,15 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "io.github.thuyhuongctu.bizon",
+      "sha256_cert_fingerprints": [
+        "B1:A9:C4:C1:DF:0C:A0:A9:83:4B:F4:26:DC:4A:F2:02:9E:59:91:C5:30:ED:2A:06:0E:A7:80:B1:85:09:7C:42",
+        "13:8A:EC:DC:9D:89:F8:67:C0:2E:61:2E:E0:22:F2:9B:9B:3B:31:80:44:6A:21:79:4A:D4:9C:4F:6A:CA:1A:51"
+      ]
+    }
+  }
+]

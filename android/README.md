@@ -89,3 +89,10 @@ Không commit release keystore, password hoặc secret vào repository.
 ## Ranh giới dữ liệu
 
 Android shell chỉ khai báo quyền Internet. Nội dung, save và offline behavior thuộc PWA. Privacy Policy phân biệt local-only mặc định với optional classroom submission. Brand Passport Learning Pilot vẫn giữ remote submission tắt cho đến khi governance và staging được phê duyệt.
+
+## Bản trên Google Play (`io.github.thuyhuongctu.bizon`), cập nhật 26/10/2026
+
+- Ứng dụng trên Play dựng bằng Bubblewrap từ `android/twa-manifest.json`, không dùng dự án Gradle `vn.bizon.simulation` ở trên.
+- Từ khi kho có `CNAME` = `bizonland.com`, địa chỉ `thuyhuongctu.github.io/BizOn/…` chuyển hướng 301 sang `bizonland.com`. Bản 1.1.0 (versionCode 1) chỉ khai báo `thuyhuongctu.github.io`, nên khi bị chuyển sang tên miền mới Chrome không xác minh được và hiện thanh địa chỉ.
+- Sửa: `twa-manifest.json` đổi `host` sang `bizonland.com`, `startUrl` `/index.html`, versionCode 2 (1.2.0), minSdk 24 (thư viện TWA hiện hành yêu cầu). `.well-known/assetlinks.json` của `bizonland.com` khai khóa ký của Play (B1:A9:…:7C:42) và khóa tải lên (13:8A:…:1A:51).
+- Thứ tự: đẩy `assetlinks.json` lên web trước, kiểm `https://bizonland.com/.well-known/assetlinks.json` trả 200, rồi mới tải bản .aab versionCode 2 lên Play.
