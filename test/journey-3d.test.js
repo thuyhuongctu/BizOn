@@ -12,7 +12,7 @@ let chromium; try { chromium = require('playwright').chromium; } catch (e) { con
 
 const read = f => fs.readFileSync(path.join(__dirname, '..', f), 'utf8');
 const bp3 = read('Ho Chieu Thuong Hieu 3D.html'), ht = read('js/hanh-trinh.js');
-assert.match(bp3, /<script src="js\/bp-core\.js"><\/script>\n<!-- Hành trình 3 bậc[^\n]*-->\n<link rel="stylesheet" href="css\/journey\.css">\n<script src="js\/journey-sync\.js"><\/script>\n<script src="js\/core\/journey\.js"><\/script><script src="js\/journey-store\.js"><\/script><script src="js\/journey-card\.js"><\/script><script src="js\/journey-link\.js"><\/script>/);
+assert.match(bp3, /<script src="js\/bp-core\.js"><\/script>\n<!-- Hành trình 3 bậc[^\n]*-->\n<link rel="stylesheet" href="css\/journey\.css">\n<link rel="stylesheet" href="css\/explain-mode\.css">\n<script src="js\/explain-mode\.js"><\/script>\n<script src="js\/journey-sync\.js"><\/script>\n<script src="js\/core\/journey\.js"><\/script><script src="js\/journey-store\.js"><\/script><script src="js\/journey-card\.js"><\/script><script src="js\/journey-link\.js"><\/script>/);
 assert.match(bp3, /window\.__bpJourney = window\.BizOnJourneyLink \? BizOnJourneyLink\.attach\('t3', undefined, \{ variant: 'brand' \}\) : null;/);
 assert.match(bp3, /stageObs\(\);\n    if \(window\.BizOnJourneyLink && window\.__bpJourney && window\.__bpJourney\.active\) BizOnJourneyLink\.offerCarry\(window\.__bpJourney, \{ variant: 'brand' \}\)\.then\(window\.bpApplyCarry\);\n  \};/);
 assert.match(bp3, /BizOnJourneyLink\.complete\(window\.__bpJourney, \{ total: scores\(\)\.total, entered: S\.entered, cash: S\.cash, rep: S\.rep \}, \{ variant: 'brand', appVersion: 'bizon-bp-3d' \}, \{ host: 'bp-end', before: '\.flex\.gap-3\.mt-6' \}\)/);
@@ -27,8 +27,8 @@ const lines = read('lab/ho-chieu-sau-rieng-3d.html').split('\n');
 const at = tag => { const i = lines.findIndex(l => l.trim() === '<script type="' + tag + '">'); assert.ok(i >= 0, 'bundle thiếu ' + tag); return JSON.parse(lines[i + 1]); };
 const manifest = at('__bundler/manifest'), template = at('__bundler/template');
 const decode = e => { const raw = Buffer.from(e.data, 'base64'); return e.compressed ? zlib.gunzipSync(raw) : raw; };
-// Bốn mô-đun ghép thành một asset theo thứ tự phụ thuộc (helmet nạp <script> bất đồng bộ, không giữ thứ tự giữa các tệp)
-const MODS = ['js/core/journey.js', 'js/journey-store.js', 'js/journey-card.js', 'js/journey-link.js', 'js/journey-sync.js'];
+// Các mô-đun hành trình (+ nhánh hộp đen R1) ghép thành một asset theo thứ tự phụ thuộc (helmet nạp <script> bất đồng bộ, không giữ thứ tự giữa các tệp)
+const MODS = ['js/core/journey.js', 'js/journey-store.js', 'js/journey-card.js', 'js/journey-link.js', 'js/journey-sync.js', 'js/explain-mode.js'];
 const ASSETS = { '3b7f2c91-6d4e-4a8b-9c15-2e7d8f0a1b3c': 'css/journey.css', '8a4e6d12-3f5b-4c7a-8d9e-1b2c3d4e5f60': MODS };
 const srcOf = f => (Array.isArray(f) ? Buffer.concat(f.flatMap((x, i) => (i ? [Buffer.from('\n'), fs.readFileSync(path.join(__dirname, '..', x))] : [fs.readFileSync(path.join(__dirname, '..', x))]))) : fs.readFileSync(path.join(__dirname, '..', f)));
 for (const [uuid, file] of Object.entries(ASSETS)) {

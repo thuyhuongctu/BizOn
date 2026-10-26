@@ -151,8 +151,8 @@
       const p = S.load(); if (!p) return;
       let h = 2166136261; for (const ch of String(p.journeyId)) { h ^= ch.codePointAt(0); h = Math.imul(h, 16777619); } const hid = (h >>> 0).toString(16).padStart(8, '0');
       const t1 = p.tiers.t1 || {}, t2 = p.tiers.t2 || {}, t3 = p.tiers.t3 || {}, sm = p.summary || {};
-      const cols = ['journey_hash', 'carry_enabled', 't1_eff', 't1_rank', 't1_explore_weeks', 't1_survey_weeks', 't2_balance_end', 't2_share_end', 't2_profitable_rounds', 't2_case', 't3_variant', 't3_total', 'effectuation_index', 'causation_index', 'intl_pattern'];
-      const vals = [hid, p.carryEnabled !== false ? 1 : 0, t1.eff ?? '', t1.rank ?? '', t1.style ? t1.style.exploreWeeks : '', t1.style ? t1.style.surveyWeeks : '', t2.balanceEnd ?? '', t2.shareEnd ?? '', t2.profitableRounds ?? '', t2.caseId ?? '', t3.variant ?? '', t3.total ?? '', sm.effectuationIndex ?? '', sm.causationIndex ?? '', sm.intlPattern ?? ''];
+      const cols = ['journey_hash', 'carry_enabled', 't1_eff', 't1_rank', 't1_explore_weeks', 't1_survey_weeks', 't2_balance_end', 't2_share_end', 't2_profitable_rounds', 't2_case', 't3_variant', 't3_total', 'explain_t1', 'explain_t2', 'explain_t3', 'effectuation_index', 'causation_index', 'intl_pattern'];
+      const vals = [hid, p.carryEnabled !== false ? 1 : 0, t1.eff ?? '', t1.rank ?? '', t1.style ? t1.style.exploreWeeks : '', t1.style ? t1.style.surveyWeeks : '', t2.balanceEnd ?? '', t2.shareEnd ?? '', t2.profitableRounds ?? '', t2.caseId ?? '', t3.variant ?? '', t3.total ?? '', t1.explain ?? '', t2.explain ?? '', t3.explain ?? '', sm.effectuationIndex ?? '', sm.causationIndex ?? '', sm.intlPattern ?? ''];
       const csv = cols.join(',') + '\n' + vals.map(v => String(v).replace(/[",\n]/g, ' ')).join(',') + '\n';
       const blob = new Blob([csv], { type: 'text/csv' }), a = document.createElement('a');
       a.href = URL.createObjectURL(blob); a.download = 'hanh-trinh-' + hid + '.csv'; document.body.appendChild(a); a.click(); a.remove();

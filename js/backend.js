@@ -187,6 +187,7 @@
         difficulty: S.difficulty || 'normal',
         // Hành trình 3 bậc: { journeyId, tier, carryApplied } khi ván thuộc hành trình (S.journey do journey-link.stamp), null khi không.
         journey: (window.BizOnJourneyLink && typeof BizOnJourneyLink.submitInfo === 'function') ? BizOnJourneyLink.submitInfo(S) : null,
+        explain: window.BizOnExplain ? BizOnExplain.condition() : 'shown',   // nhánh hộp đen (R1)
       };
       const text = JSON.stringify(result);
       const row = {

@@ -388,7 +388,7 @@ body:has(#ft-play:not(.hidden)) .vutru-goc{display:none!important}
         <li data-en-html="How did you balance &lt;b&gt;learning&lt;/b&gt; (street cart) against &lt;b&gt;scaling&lt;/b&gt; (trading boat)?">Bạn cân bằng thế nào giữa <b>học hỏi</b> (gánh hàng rong) và <b>nhân rộng</b> (ghe hàng bông)?</li>
         <li data-en="Which lesson applies to a real startup?">Bài học nào áp dụng được cho khởi nghiệp thật?</li>
       </ol>
-      <p class="text-xs opacity-60 mt-3" data-en-html="💡 Core lesson: &lt;b&gt;test cheap and fast first&lt;/b&gt; (prototyping with the street cart), then &lt;b&gt;bet big&lt;/b&gt; once the signal is clear enough (trading boat). Historical data only points a direction – direct observation is the real gold.">💡 Bài học lõi: <b>thử nghiệm rẻ và nhanh trước</b> (prototyping bằng gánh hàng rong), khi tín hiệu đủ rõ mới <b>đặt cược lớn</b> (ghe hàng bông). Dữ liệu lịch sử chỉ mang tính định hướng – quan sát trực tiếp mới là vàng.</p>
+      <p class="text-xs opacity-60 mt-3 bz-explain" data-en-html="💡 Core lesson: &lt;b&gt;test cheap and fast first&lt;/b&gt; (prototyping with the street cart), then &lt;b&gt;bet big&lt;/b&gt; once the signal is clear enough (trading boat). Historical data only points a direction – direct observation is the real gold.">💡 Bài học lõi: <b>thử nghiệm rẻ và nhanh trước</b> (prototyping bằng gánh hàng rong), khi tín hiệu đủ rõ mới <b>đặt cược lớn</b> (ghe hàng bông). Dữ liệu lịch sử chỉ mang tính định hướng – quan sát trực tiếp mới là vàng.</p>
       <p class="text-xs opacity-60 mt-2" data-en-html="📰 A true story: Croatian expat &lt;b&gt;Matko Kmezic&lt;/b&gt; opened a «Viet Drip» phin-coffee cart with low Vietnamese-style street stools in Amsterdam – in the early days he sold only 3–4 cups a day, patiently explaining the robusta flavor to every customer, until people started lining up. The exact lesson of this game: test small, learn fast, scale at the right moment. &lt;a href=&quot;https://znews.vn/xe-ca-phe-phin-ghe-nhua-do-kieu-viet-o-ha-lan-post1672015.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot; class=&quot;underline font-bold&quot;&gt;Znews, 26/7/2026 →&lt;/a&gt;">📰 Chuyện thật ngoài đời: chàng trai Croatia <b>Matko Kmezic</b> mở xe cà phê phin «Viet Drip» với ghế nhựa thấp kiểu vỉa hè Việt giữa Amsterdam – những ngày đầu chỉ bán được 3–4 ly/ngày, anh kiên trì giải thích vị robusta cho từng vị khách, rồi người ta bắt đầu xếp hàng. Đúng bài học của game: thử nhỏ, học nhanh, nhân rộng đúng lúc. <a href="https://znews.vn/xe-ca-phe-phin-ghe-nhua-do-kieu-viet-o-ha-lan-post1672015.html" target="_blank" rel="noopener" class="underline font-bold">Znews, 26/7/2026 →</a></p>
     </div>
   </section>
@@ -1125,6 +1125,7 @@ body:has(#ft-play:not(.hidden)) .vutru-goc{display:none!important}
     if (!window.StudentLogin || !StudentLogin.signedIn()) { msg.textContent = T('Đăng nhập email trường ở khung phía trên trước đã nhé.', 'Sign in with your school email in the box above first.'); return; }
     if (!S.result) return;
     try { localStorage.setItem('bps-class', klass); localStorage.setItem('bps-name', name); } catch (e) {}
+    if (window.BizOnExplain) BizOnExplain.init({ classCode: klass });   // nhánh hộp đen (R1)
     btn.disabled = true; btn.style.opacity = 0.5;
     msg.textContent = T('Đang gửi…', 'Sending…');
     try {
@@ -1135,7 +1136,7 @@ body:has(#ft-play:not(.hidden)) .vutru-goc{display:none!important}
         p_total_revenue: Math.round(S.total * 10) / 10,
         p_efficiency: Math.round(S.result.eff),
         p_final_rank: S.result.rank,
-        p_detail_json: { journey: window.BizOnJourneyLink ? BizOnJourneyLink.submitInfo(window.__ftJourney) : null, exam: !!(window.BizOnBpsExam && window.BizOnBpsExam.exam && window.BizOnBpsExam.exam.active), captain: TEAM()[S.cap].name, rivals: RIVALS.map(function (r) { return { name: r.name, total: Math.round(r.total * 10) / 10 }; }) },
+        p_detail_json: { journey: window.BizOnJourneyLink ? BizOnJourneyLink.submitInfo(window.__ftJourney) : null, explain: window.BizOnExplain ? BizOnExplain.condition() : 'shown', exam: !!(window.BizOnBpsExam && window.BizOnBpsExam.exam && window.BizOnBpsExam.exam.active), captain: TEAM()[S.cap].name, rivals: RIVALS.map(function (r) { return { name: r.name, total: Math.round(r.total * 10) / 10 }; }) },
         // Phiên bản riêng từng bản để bảng giáo viên tách xếp hạng (v1 = luật cũ tính doanh thu)
         p_app_version: 'bizon-bps3d-v2',
       });
@@ -1193,6 +1194,8 @@ body:has(#ft-play:not(.hidden)) .vutru-goc{display:none!important}
 </script>
 <!-- Hành trình 3 bậc: chỉ hoạt động khi URL có ?journey=<id> (docs/architecture/HANH-TRINH-3-BAC.md, J4) -->
 <link rel="stylesheet" href="css/journey.css">
+<link rel="stylesheet" href="css/explain-mode.css">
+<script src="js/explain-mode.js"></script>
 <script src="js/journey-sync.js"></script>
 <script src="js/core/journey.js"></script><script src="js/journey-store.js"></script><script src="js/journey-card.js"></script><script src="js/journey-link.js"></script>
 <script>window.__ftJourney = window.BizOnJourneyLink ? BizOnJourneyLink.attach('t1') : null; if (window.__ftJourney && window.__ftJourney.id) BizOnJourneyLink.mountBanner(window.__ftJourney, 'ft-intro');</script>

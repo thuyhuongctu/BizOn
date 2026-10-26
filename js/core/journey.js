@@ -143,7 +143,7 @@
     const style = { exploreWeeks: h.filter(w => w.m === 1).length, exploitWeeks: h.filter(w => w.m === 0).length, surveyWeeks: h.filter(w => w.m === 2).length };
     const knownPairs = Array.isArray(S.knownPairs) ? S.knownPairs.slice() : Object.keys(S.knownPairs || {}).filter(k => S.knownPairs[k]);
     q.tiers.t1 = {
-      status: 'done', appVersion: text(meta.appVersion, 'bizon-bps-v1'), finishedAt: text(meta.finishedAt) || new Date().toISOString(),
+      status: 'done', appVersion: text(meta.appVersion, 'bizon-bps-v1'), finishedAt: text(meta.finishedAt) || new Date().toISOString(), explain: text(meta.explain, 'shown'),
       total: r2(num(S.total)), eff: clamp(Math.round(num(res.eff)), 0, 100), rank: clamp(Math.round(num(res.rank, 4)), 1, 4),
       weeks: h.map(w => ({ w: num(w.w), m: num(w.m), menu: w.menu == null ? null : num(w.menu), loc: w.loc == null ? null : num(w.loc), net: r2(num(w.net)) })),
       knownPairs, style
@@ -157,7 +157,7 @@
   function recordTier2(p, s, meta = {}) {
     const q = clone(p); const h = Array.isArray(s.history) ? s.history : []; const last = h[h.length - 1] || {};
     q.tiers.t2 = {
-      status: 'done', appVersion: text(meta.appVersion, 'bizon-bn-v2'), finishedAt: text(meta.finishedAt) || new Date().toISOString(),
+      status: 'done', appVersion: text(meta.appVersion, 'bizon-bn-v2'), finishedAt: text(meta.finishedAt) || new Date().toISOString(), explain: text(meta.explain, 'shown'),
       balanceEnd: Math.round(num(s.balance)), netProfitTotal: Math.round(h.reduce((a, r) => a + num(r.netProfit), 0)),
       shareEnd: r2(num(last.share)), oeeEnd: Math.round(num(last.oee, num(s.oee))), quickRatioEnd: r2(num(s.quickRatio, 1)),
       brandEnd: r2(num(s.brand, 1)), loanEnd: Math.round(num(s.loan)), rdCumulative: Math.round(num(s.rdCumulative)),
@@ -173,7 +173,7 @@
   // Hộ Chiếu: variant 'brand' (S của brand-passport, điểm BPCore.scoreOf) hoặc 'durian' (summary() của engine Sầu Riêng).
   function recordTier3(p, variant, result, meta = {}) {
     const q = clone(p); const v = VARIANTS.includes(variant) ? variant : q.tiers.t3.variant || DEFAULT_T3_VARIANT;
-    const t3 = { status: 'done', variant: v, appVersion: text(meta.appVersion, v === 'brand' ? 'bizon-bp-v2' : 'bizon-srp-v2'), finishedAt: text(meta.finishedAt) || new Date().toISOString(),
+    const t3 = { status: 'done', variant: v, appVersion: text(meta.appVersion, v === 'brand' ? 'bizon-bp-v2' : 'bizon-srp-v2'), finishedAt: text(meta.finishedAt) || new Date().toISOString(), explain: text(meta.explain, 'shown'),
       carryApplied: q.carry.t3 || {}, total: r2(num(result.total)) };
     if (v === 'brand') {
       t3.entered = Array.isArray(result.entered) ? result.entered.map(x => (x == null ? null : num(x))) : [];

@@ -432,6 +432,7 @@ async function doLogin() {
   // sang máy khác ở phòng máy dùng chung vẫn tiếp tục đúng chỗ đang chơi
   // dở, thay vì bị ghi đè bằng ván mới.
   let restored = null;
+  if (window.BizOnExplain) BizOnExplain.init({ classCode: classId });   // nhánh hộp đen (R1): đọc cờ lớp ngay khi có mã lớp
   if (classId && window.BizonBackend) {
     try {
       const saved = await BizonBackend.loadTeamState(classId, team);
@@ -902,12 +903,12 @@ function maybeShowEventIntro() {
             <p class="font-display font-extrabold text-2xl ${dirCls(im.dir)}">${dirIcon(im.dir)} ${im.value}</p>
           </div>`).join('')}
       </div>
-      <div class="flex items-end gap-3 mt-6">
+      <div class="flex items-end gap-3 mt-6${(window.BizOnJourneyLink && BizOnJourneyLink.introExtrasHtml(S)) ? '' : ' bz-explain'}">
         <img src="assets/character/${ev.luminaImg || 'lumina-vest'}.webp" onerror="this.onerror=null;this.src='assets/character/lumina-vest.webp'" alt="Lumina Advisor" class="w-28 shrink-0 rounded-2xl object-cover animate-float drop-shadow-xl" style="aspect-ratio:3/4; object-position:50% 8%">
         <div class="relative clay-raised p-4 rounded-bl-none border-l-4 border-primary-container flex-1">
           <div class="speech-tail"></div>
-          <p class="text-[10px] font-extrabold text-primary mb-1">JE M'APPELLE HƯƠNG · ADVISOR</p>
-          <p class="text-sm text-deep-teal italic leading-relaxed">"${ev.luminaMsg}"</p>
+          <p class="text-[10px] font-extrabold text-primary mb-1 bz-explain">JE M'APPELLE HƯƠNG · ADVISOR</p>
+          <p class="text-sm text-deep-teal italic leading-relaxed bz-explain">"${ev.luminaMsg}"</p>
           ${window.BizOnJourneyLink ? BizOnJourneyLink.introExtrasHtml(S) : ''}
         </div>
       </div>

@@ -32,6 +32,7 @@
     if (!code || !team || code === 'DEMO-2026') return;   // Đội Demo dùng chung mã lớp mẫu – không nhận lệnh lớp
     let j; try { j = await feed(code, team); } catch (e) { return; }
     ctl = (j && j.controls) || null; let dirty = false;
+    if (window.BizOnExplain) BizOnExplain.applyControls(ctl || {}, code);   // nhánh hộp đen (R1): cờ explain_hidden của lớp
     const lk = ctl && ctl.locked_round != null ? S.round > ctl.locked_round : false;
     if (S.roundLocked !== lk) { S.roundLocked = lk; dirty = true; if (lk) toast(TT(`Cả lớp đang chờ nhau. Giảng viên sẽ mở vòng ${ctl.locked_round + 1} khi mọi đội xong.`, `The class is waiting for everyone. Your instructor will open round ${ctl.locked_round + 1} once all teams finish.`), 'checklist'); else toast(TT('Giảng viên đã mở vòng mới. Tiếp tục thôi!', 'Your instructor opened a new round. Let\'s go!'), 'wave'); }
     S.classGrantIds = S.classGrantIds || [];

@@ -11,7 +11,7 @@ const read = f => fs.readFileSync(path.join(__dirname, '..', f), 'utf8');
 
 assert.match(read('js/journey-link.js'), /function submitInfo\(src\)/); assert.match(read('js/journey-link.js'), /endHtml, submitInfo, lang \}\)/);
 for (const f of ['ben-phu-sa.html', 'ben-phu-sa-3d.html']) assert.ok(read(f).includes('p_detail_json: { journey: window.BizOnJourneyLink ? BizOnJourneyLink.submitInfo(window.__ftJourney) : null, '), f);
-for (const f of ['brand-passport.html', 'Ho Chieu Thuong Hieu 3D.html']) assert.ok(read(f).includes('p_detail_json: { journey: window.BizOnJourneyLink ? BizOnJourneyLink.submitInfo(S) : null, seed: seedBase,'), f);
+for (const f of ['brand-passport.html', 'Ho Chieu Thuong Hieu 3D.html']) assert.ok(read(f).includes('p_detail_json: { journey: window.BizOnJourneyLink ? BizOnJourneyLink.submitInfo(S) : null, explain: window.BizOnExplain ? BizOnExplain.condition() : \'shown\', seed: seedBase,'), f);
 assert.match(read('js/backend.js'), /journey: \(window\.BizOnJourneyLink && typeof BizOnJourneyLink\.submitInfo === 'function'\) \? BizOnJourneyLink\.submitInfo\(S\) : null,/);
 const gv = read('Trang Giang Vien.dc.html'); assert.match(gv, /t\.rs\.some\(r => r\.result_json && r\.result_json\.journey\) \? ' 🧭' : ''/); assert.match(gv, /🧭 hành trình/);
 

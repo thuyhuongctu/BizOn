@@ -54,6 +54,7 @@ const DP2 = (() => {
   const logEv = (type, o, n, committed) => C.logEv(APP, D, type, o, n, committed);
   function newGame(setup) {
     const cls = (setup.cls || '').trim(), team = (setup.team || '').trim(), roleId = D.roles[setup.roleId] ? setup.roleId : 'exporter';
+    if (window.BizOnExplain) BizOnExplain.init({ classCode: cls });   // nhánh hộp đen (R1)
     const seed = cls ? E.seedFrom(cls + '|' + roleId) : (Date.now() >>> 0);
     boot({
       cls, team, roleId, avatarId: 'basaulanh', seed, timerMin: 0, lean: true,
@@ -208,7 +209,7 @@ const DP2 = (() => {
         <div class="dp2-chips">${D.intel.map(i => `<button type="button" class="${d.intel.includes(i.id) ? 'on' : ''}" data-act="intel" data-v="${i.id}" ${!d.intel.includes(i.id) && d.intel.length >= 2 ? 'disabled' : ''}>${esc(nm(i))} · ${i.cost ? money(i.cost) : T('miễn phí', 'free')}${i.warnVi ? ' · ' + esc(lang() === 'en' ? i.warnEn : i.warnVi) : ''}</button>`).join('')}</div>
         ${sig.length ? `<ul class="dp2-sig">${sig.map(x => { const src = D.intel.find(i => i.id === x.id); return `<li><b>${esc(nm(src))}</b>: ${x.price != null ? T('giá vựa ≈', 'depot price ≈') + ' <b>' + nf(x.price) + '</b> ' + T('nghìn đ/kg', 'VND k/kg') : T('rủi ro kiểm dịch', 'quarantine risk') + ': <b>' + esc(String(x.risk)) + '</b>'}</li>`; }).join('')}</ul>` : ''}</div>` : ''}
 
-      <div class="bn2-sunk" style="margin-top:14px"><p class="bn2-small" style="margin:0 0 8px"><b>${T('Dự báo của engine trước khi chốt', 'Engine forecast before you commit')}</b> <span class="bn2-muted">${T('(giá vựa ước từ tin đã mua; thực tế còn tuỳ giá thật và may rủi kiểm dịch)', '(depot price estimated from bought information; actual results depend on the real price and inspection luck)')}</span></p>
+      <div class="bn2-sunk bz-explain" style="margin-top:14px"><p class="bn2-small" style="margin:0 0 8px"><b>${T('Dự báo của engine trước khi chốt', 'Engine forecast before you commit')}</b> <span class="bn2-muted">${T('(giá vựa ước từ tin đã mua; thực tế còn tuỳ giá thật và may rủi kiểm dịch)', '(depot price estimated from bought information; actual results depend on the real price and inspection luck)')}</span></p>
         <div class="dp2-kpis"><div><span>${T('Lợi nhuận dự báo', 'Forecast profit')}</span><b class="${f.profit >= 0 ? 'pos' : 'neg'}">${sgnMoney(f.profit)}</b></div><div><span>${T('Tiền mặt cuối vụ', 'Cash after')}</span><b class="${f.cashAfter >= 0 ? 'pos' : 'neg'}">${money(f.cashAfter)}</b></div>
           <div><span>${T('Khả năng lô chính ngạch bị chặn', 'Official-lot block chance')}</span><b>${pct(f.pBlockCN || 0)}</b></div><div><span>${T('Giá vựa ước', 'Est. depot price')}</span><b>${nf(f.depotEstimate)} <small>${T('nghìn đ/kg', 'k/kg')}</small></b></div></div></div>
 

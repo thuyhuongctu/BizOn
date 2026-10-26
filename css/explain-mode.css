@@ -1,0 +1,18 @@
+/* BizOn — nhánh «hộp đen» (R1): html.bz-blackbox do js/explain-mode.js bật theo cờ lớp class_controls.explain_hidden.
+ * Danh sách bề mặt bị ẩn là biến độc lập của nghiên cứu – đổi ở đây phải đổi cả docs/architecture/NHANH-HOP-DEN.md. */
+html.bz-blackbox .bz-explain { display: none !important; }
+/* Bật Nghiệp (game.html): dòng gợi ý của Lumina trên bảng điều khiển, khung hỏi Cố vấn, mô phỏng Nếu – Thì */
+html.bz-blackbox #dash-lumina,
+html.bz-blackbox #advisor-chat,
+html.bz-blackbox #advisor-history { display: none !important; }
+/* Hộ Chiếu Thương Hiệu (đầy đủ, bản gọn qua iframe, 3D): lời bình cơ chế của cố vấn, dấu chân hệ quả, bài học cốt lõi */
+html.bz-blackbox .bp-adv,
+html.bz-blackbox #bp-footprint,
+html.bz-blackbox #bp-lesson { display: none !important; }
+/* Hành trang hành trình: giữ giá trị áp, ẩn dòng giải thích «vì sao» */
+html.bz-blackbox .jc-lines { display: none !important; }
+html.bz-blackbox .jc-bb { display: block !important; }
+.jc-bb { display: none; }
+/* Ghi chú chỉ hiện trong lớp hộp đen */
+.bz-blackbox-note { display: none; }
+html.bz-blackbox .bz-blackbox-note { display: block; }
