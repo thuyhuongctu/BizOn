@@ -62,7 +62,11 @@
       });
     } catch (e) { return { recorded: false, passport: ctx.passport, error: e }; }
     const recorded = !!(p && J.tierDone(p, ctx.tier));
-    if (recorded) { ctx.active = false; ctx.reason = 'done'; ctx.passport = p; }
+    if (recorded) {
+      ctx.active = false; ctx.reason = 'done'; ctx.passport = p;
+      // J7: đã đăng nhập email trường → đẩy hộ chiếu lên máy chủ lớp ngay (chỉ đẩy, không kéo; lỗi mạng bỏ qua, trang Hành trình đồng bộ lại sau).
+      try { const Y = root.BizOnJourneySync; if (Y && Y.signedIn()) Y.sync({ pushOnly: true }).catch(() => {}); } catch (e) {}
+    }
     return { recorded, passport: p };
   }
 

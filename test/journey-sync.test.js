@@ -21,6 +21,7 @@ assert.equal(Y.decide(mk('A', '2026-11-03T00:00:00Z'), mk('B', '2026-11-01T00:00
 (async () => {
   const p0 = J.recordTier1(J.createPassport({ teamName: 'Đội Sync', createdAt: '2026-11-03T02:10:00Z' }), { total: 4, result: { eff: 70, rank: 2 }, history: [], knownPairs: {} });
   const newer = J.recordTier2(p0, { balance: 600, brand: 1.1, quickRatio: 1.2, loan: 0, rdCumulative: 40, history: [] });
+  newer.updatedAt = new Date(Date.parse(p0.updatedAt) + 60000).toISOString();   // hai bản có thể cùng mili-giây → ép bản máy chủ mới hơn
   let saved = null, calls = [];
   const sync = Y.create({ rpc: async (fn, args) => { calls.push([fn, args]); if (fn === 'bizon_journey_get') return { passport: newer, updated_at: newer.updatedAt, mine: true }; return { journey_id: args.p_passport.journeyId, updated_at: '2026-11-05T00:00:00Z' }; }, store: { load: () => p0, save: p => { saved = p; return p; } } });
   let r = await sync.sync(); assert.equal(r.action, 'pull'); assert.equal(saved.tiers.t2.status, 'done'); assert.equal(calls[0][1].p_class_code, 'TU-HOC'); assert.equal(calls[0][1].p_team_name, 'Đội Sync');
@@ -33,6 +34,12 @@ assert.equal(Y.decide(mk('A', '2026-11-03T00:00:00Z'), mk('B', '2026-11-01T00:00
   // hộ chiếu máy chủ hỏng lược đồ → coi như không có → push
   const sync4 = Y.create({ rpc: async fn => (fn === 'bizon_journey_get' ? { passport: { schemaVersion: 9 } } : { ok: 1 }), store: { load: () => newer, save: () => {} } });
   r = await sync4.sync(); assert.equal(r.action, 'push');
+  // pushOnly (trong game sau khi ghi bậc): máy chủ mới hơn vẫn đẩy bản cục bộ, không bao giờ kéo; khác journeyId → để yên
+  let pushed = 0, savedP = null;
+  const sync5 = Y.create({ rpc: async fn => (fn === 'bizon_journey_get' ? { passport: newer, updated_at: newer.updatedAt } : (pushed++, { ok: 1 })), store: { load: () => p0, save: p => { savedP = p; } } });
+  r = await sync5.sync({ pushOnly: true }); assert.equal(r.action, 'push'); assert.equal(pushed, 1); assert.equal(savedP, null, 'pushOnly không ghi đè kho cục bộ');
+  const sync6 = Y.create({ rpc: async fn => (fn === 'bizon_journey_get' ? { passport: other, updated_at: other.updatedAt } : (pushed++, { ok: 1 })), store: { load: () => newer, save: () => {} } });
+  r = await sync6.sync({ pushOnly: true }); assert.equal(r.action, 'conflict'); assert.equal(pushed, 1, 'khác journeyId: không đẩy');
 })().then(() => {
   // ---- 2. Tĩnh: migration, kiểm thử SQL, CI, trang ----
   const mig = read('supabase/migrations/20261026000000_journey_passports.sql');
@@ -49,6 +56,13 @@ assert.equal(Y.decide(mk('A', '2026-11-03T00:00:00Z'), mk('B', '2026-11-01T00:00
   const gv = read('Trang Giang Vien.dc.html'); assert.match(gv, /data-panel="journey"/); assert.match(gv, /setJourneyCarry\(on\)/); assert.match(gv, /this\.api\(\)\.journeyPassports\(code\)\.catch\(\(\) => \[\]\)/);
   const api = read('js/instructor-api.js'); assert.match(api, /rpc\('bizon_set_journey_carry', \{ p_class_code: code, p_on: !!on \}\)/); assert.match(api, /rpc\('bizon_journey_class', \{ p_class_code: code \}\)/);
   assert.match(read('js/class-sync.js'), /fetchControls/, 'journey-link đọc cờ qua fetchControls (J5)');
+  // Tự đẩy sau khi ghi bậc: móc chung + mọi trang game nạp journey-sync.js trước dòng mô-đun; sw precache; model card 05
+  assert.match(read('js/journey-link.js'), /const Y = root\.BizOnJourneySync; if \(Y && Y\.signedIn\(\)\) Y\.sync\(\{ pushOnly: true \}\)\.catch\(\(\) => \{\}\);/);
+  for (const [f, pre] of [['ben-phu-sa.html', 'js/'], ['ben-phu-sa-3d.html', 'js/'], ['game.html', 'js/'], ['bat-nghiep-v2.html', 'js/'], ['brand-passport.html', 'js/'], ['Ho Chieu Thuong Hieu 3D.html', 'js/'], ['lab/ho-chieu-sau-rieng-v2.html', '../js/']])
+    assert.ok(read(f).includes(`<script src="${pre}journey-sync.js"></script>\n<script src="${pre}core/journey.js"></script>`), f + ': nạp journey-sync.js trước mô-đun');
+  assert.ok(read('lab/ho-chieu-sau-rieng-v2.html').includes('<script src="../js/backend-config.js"></script>'), 'Sầu Riêng v2 có cấu hình backend');
+  assert.ok(read('sw.js').includes("'./js/journey-sync.js'"), 'sw precache journey-sync');
+  const af = read('truong-hoc-thuat.html'); assert.match(af, /<details class="af-model" id="m5">/); assert.match(af, /id="m5-p-limit"/); assert.match(af, /1,8\/100/);
   return run();
 }).catch(e => { console.error(e); process.exit(1); });
 
@@ -90,6 +104,34 @@ async function run() {
   await page.reload({ waitUntil: 'commit' }); await page.waitForFunction(() => { const b = document.getElementById('jr-sync'); return !!b && !b.hidden; }, null, { timeout: 60000 });
   await page.click('#jr-sync-now'); await page.waitForFunction(() => /Đăng nhập email trường/.test(document.getElementById('jr-sync-msg').textContent), null, { timeout: 10000 });
   assert.equal(rpcCalls.slice(before).filter(c => /journey/.test(c.fn)).length, 0, 'không gọi RPC hành trình khi chưa đăng nhập');
+  // ---- 4. Trong game: xong Bậc 1 ở Bến Phù Sa khi đã đăng nhập → tự đẩy hộ chiếu (upsert) với token của phiên ----
+  const p1 = J.createPassport({ classCode: 'KT-TEST', teamName: 'Đội Sync', createdAt: '2026-11-03T02:10:00Z' });
+  await page.evaluate(p => { localStorage.setItem('bizon-journey', JSON.stringify(p)); sessionStorage.setItem('bizon-student-session', JSON.stringify({ accessToken: 'test-token', email: 'sva@student.ctu.edu.vn', expiresAt: Date.now() + 3600000 })); }, p1);
+  serverMode = 'none'; const n0 = rpcCalls.length;
+  await page.goto(`${BASE}/ben-phu-sa.html?journey=${encodeURIComponent(p1.journeyId)}`, { waitUntil: 'commit', timeout: 60000 });
+  await page.waitForFunction(() => !!window.ftTest && window.__ftJourney && window.BizOnJourneySync, null, { timeout: 60000 });
+  await page.evaluate(() => { window.ftTeam(0); window.ftStart(); });
+  for (let w = 0; w < 5; w++) {
+    await page.evaluate(() => { window.ftPick('menu', 0); window.ftPick('loc', 2); window.ftPick('m', 1); window.ftCommit(); });
+    await page.waitForTimeout(150);
+    if (await page.evaluate(() => window.ftTest.phase() === 'ritual')) await page.evaluate(() => window.ftRitualNext(true));
+  }
+  await page.waitForFunction(() => window.ftTest.phase() === 'end', null, { timeout: 10000 });
+  await page.waitForFunction(() => window.__jsUp === undefined || true, null, { timeout: 1000 }).catch(() => {});
+  for (let i = 0; i < 40 && !rpcCalls.slice(n0).some(c => c.fn === 'bizon_journey_upsert'); i++) await page.waitForTimeout(250);
+  const up = rpcCalls.slice(n0).filter(c => c.fn === 'bizon_journey_upsert');
+  assert.equal(up.length, 1, 'xong bậc → đúng một lần đẩy'); assert.equal(up[0].body.p_passport.tiers.t1.status, 'done'); assert.equal(up[0].body.p_passport.journeyId, p1.journeyId); assert.equal(up[0].auth, 'Bearer test-token');
+  assert.equal(up[0].body.p_class_code, 'KT-TEST');
+  // ---- 5. Trang không có hộp đăng nhập (Sầu Riêng v2): đường dự phòng đọc phiên và gọi REST thẳng ----
+  await page.goto(`${BASE}/lab/ho-chieu-sau-rieng-v2.html?journey=${encodeURIComponent(p1.journeyId)}`, { waitUntil: 'commit', timeout: 60000 });
+  await page.waitForFunction(() => window.BizOnJourneySync && window.DP2, null, { timeout: 60000 });
+  const fb = await page.evaluate(async () => { const r = await BizOnJourneySync.sync({ pushOnly: true }); return { hasLogin: !!window.StudentLogin, signed: BizOnJourneySync.signedIn(), action: r.action }; });
+  assert.deepEqual(fb, { hasLogin: false, signed: true, action: 'push' });
+  const up2 = rpcCalls.filter(c => c.fn === 'bizon_journey_upsert'); assert.equal(up2[up2.length - 1].auth, 'Bearer test-token');
+  // hết hạn phiên → không đăng nhập, không gọi
+  await page.evaluate(() => sessionStorage.setItem('bizon-student-session', JSON.stringify({ accessToken: 'old', expiresAt: Date.now() - 1000 })));
+  assert.equal(await page.evaluate(() => BizOnJourneySync.signedIn()), false);
+
   await browser.close();
   assert.deepEqual(errors, [], 'không lỗi JS');
   console.log('journey-sync: OK');
