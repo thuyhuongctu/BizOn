@@ -317,7 +317,8 @@
 /* 08 · Đối sánh nền tảng: bảng định tính cuộn ngang trên màn hẹp, cột BizOn tô nhẹ */
 .af-cmpwrap{overflow-x:auto;margin:18px 0 14px;border-radius:22px;border:1px solid var(--af-line);background:var(--af-glass)}
 .af-cmp{width:100%;min-width:720px;border-collapse:collapse;font-size:13.5px;line-height:1.5}
-.af-cmp caption{caption-side:bottom;text-align:left;padding:10px 16px 12px;font-size:12px;color:var(--clay-sub)}
+.af-cmpnote{margin:-4px 0 16px;font-size:12px;line-height:1.5;color:var(--clay-sub)}
+.af-path{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.92em;word-break:break-all}
 .af-cmp th,.af-cmp td{padding:12px 14px;border-bottom:1px solid var(--af-line);vertical-align:top;text-align:left}
 .af-cmp thead th{font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--clay-sub);background:rgba(3,51,55,.04)}
 .af-cmp tbody th{font-weight:800;min-width:130px}
