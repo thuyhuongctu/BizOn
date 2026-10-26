@@ -233,6 +233,15 @@ input,select,textarea,button{font-family:inherit}
             <input value="{{ fMsg }}" onChange="{{ onMsg }}" placeholder="Thông báo cho cả lớp (tùy chọn)" style="padding:10px 12px;border-radius:12px;border:2px solid #e6d6bf"></input>
             <button onClick="{{ saveEvent }}" style="border:0;background:#e8843a;color:#fff;border-radius:14px;padding:10px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #b8611f;cursor:pointer">Áp dụng cho lớp</button>
           </div>
+          <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px" data-panel="journey">
+            <div style="font:800 19px 'Baloo 2',sans-serif">🧭 Hành trang hành trình 3 bậc</div>
+            <div style="font-size:13px;color:#5a6b74">{{ jCarryNote }}</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <sc-for list="{{ jCarryBtns }}" as="b" hint-placeholder-count="2"><button onClick="{{ b.go }}" style="border:3px solid {{ b.border }};background:{{ b.bg }};color:{{ b.fg }};border-radius:12px;padding:8px 11px;font-weight:700;cursor:pointer">{{ b.label }}</button></sc-for>
+            </div>
+            <div style="font-size:13px;font-weight:700">{{ jpHead }}</div>
+            <sc-for list="{{ jpRows }}" as="r" hint-placeholder-count="3"><div style="display:flex;justify-content:space-between;gap:8px;font-size:13px;padding:6px 0;border-top:1px solid #eadcc6"><span>{{ r.team }} · {{ r.email }}</span><span style="white-space:nowrap">{{ r.tiers }} · {{ r.when }}</span></div></sc-for>
+          </div>
           <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px">
             <div style="font:800 19px 'Baloo 2',sans-serif">💸 Cấp / trừ vốn</div>
             <select value="{{ gTeam }}" onChange="{{ onGTeam }}" style="padding:10px;border-radius:12px;border:2px solid #e6d6bf;background:#fff;font-weight:600">
@@ -551,7 +560,8 @@ class Component extends DCLogic {
   async reload(code = this.state.code) {
     try { const [subs, st, memberLog, bpResults, ef, cf, rf] = await Promise.all([this.api().submissions(code), this.api().state(code), this.api().memberLog(code), this.api().bpResults(code), this.api().examFeed(code), this.api().certFeed(code), this.api().rubricFeed(code)]);
       const c = (st && st.controls) || {}, exam = (ef && ef.exam) || null, cert = cf || {}, rubric = rf || {};
-      this.setState({ subs: subs || [], st: st || {}, memberLog: memberLog || [], bpResults: bpResults || [], fEvent: c.forced_event || '', fMsg: c.message || '',
+      const jp = await this.api().journeyPassports(code).catch(() => []);   // hành trình 3 bậc: hộ chiếu đã đồng bộ (rỗng khi chưa có migration)
+      this.setState({ subs: subs || [], st: st || {}, memberLog: memberLog || [], bpResults: bpResults || [], jp, fEvent: c.forced_event || '', fMsg: c.message || '',
         exam, examNow: (ef && ef.now) || null, exSetup: this.state.exSetup === '' ? String((exam && exam.setup_min) ?? 10) : this.state.exSetup, exRound: this.state.exRound === '' ? String((exam && exam.round_min) ?? 8) : this.state.exRound,
         certCode: this.state.certCode === '' ? (cert.course_code || 'KT330H') : this.state.certCode, certName: this.state.certName === '' ? (cert.course_name || 'Entrepreneurship') : this.state.certName, certDates: this.state.certDates === '' ? (cert.course_dates || '') : this.state.certDates,
         rubric, rLv1: this.state.rLv1 === '' ? (rubric.level1 || 'Rất cân bằng') : this.state.rLv1, rLv2: this.state.rLv2 === '' ? (rubric.level2 || 'Khá cân bằng') : this.state.rLv2,
@@ -571,6 +581,7 @@ class Component extends DCLogic {
     try { await this.api().completeRecovery(recoveryToken, fNewPass); this.setState({ mode: 'in', fPass: '', fNewPass: '', recoveryToken: '', err: this.tr('Đã đặt lại mật khẩu. Đăng nhập bằng mật khẩu mới.', 'Password reset. Sign in with your new password.') }); }
     catch (e) { this.fail(e); } }
   async claim() { try { await this.api().claimClass(this.state.fCode); this.setState({ fCode: '' }); this.loadClasses(); } catch (e) { this.fail(e); } }
+  async setJourneyCarry(on) { try { await this.api().setJourneyCarry(this.state.code, on); this.reload(); } catch (e) { this.fail(e); } }
   async setLock(n) { try { const c = Object.assign({}, (this.state.st.controls || {}), { locked_round: n }); await this.api().setControls(this.state.code, c); this.reload(); } catch (e) { this.fail(e); } }
   async saveEvent() { try { const s = this.state, cur = (s.st.controls || {}); await this.api().setControls(s.code, Object.assign({}, cur, { forced_event: s.fEvent, forced_event_round: s.fEvent ? this.curRound() : null, message: s.fMsg })); this.reload(); } catch (e) { this.fail(e); } }
   async startExam() { const s = this.state; try { await this.api().setExam(s.code, { active: true, start_at: new Date().toISOString(), setup_min: +s.exSetup || 10, round_min: +s.exRound || 8, capital: 500 }); this.reload(); } catch (e) { this.fail(e); } }
@@ -695,6 +706,10 @@ class Component extends DCLogic {
       lockNote: lock != null ? `Các đội không thể chốt vòng ${lock + 1} trở đi cho tới khi bạn mở khóa.` : 'Chọn vòng cuối cùng được phép chơi. Đội nào đi nhanh sẽ phải chờ cả lớp.',
       lockBtns: [null, 0, 1, 2, 3, 4, 5].map(n => { const on = lock === n || (n === null && lock == null);
         return { label: n === null ? '🔓 Mở' : n === 0 ? 'Chưa cho chơi' : 'Đến V' + n, go: () => this.setLock(n), bg: on ? '#1f4a55' : '#fff', fg: on ? '#fff' : '#1f4a55', border: on ? '#10303a' : '#e6d6bf' }; }),
+      jCarryNote: c.journey_carry === true ? 'Đang BẬT: đội có hộ chiếu hành trình được nhận hành trang (vốn, uy tín…) từ bậc trước khi vào game của lớp này.' : 'Đang TẮT (mặc định, công bằng khi chấm): mọi đội xuất phát y như chơi riêng; hộ chiếu vẫn ghi kết quả. Bật nếu lớp chơi xuyên suốt 3 bậc có nối tiếp.',
+      jCarryBtns: [[false, '🔒 Tắt hành trang'], [true, '🎒 Bật hành trang']].map(([v, label]) => { const on = (c.journey_carry === true) === v; return { label, go: () => this.setJourneyCarry(v), bg: on ? '#1f4a55' : '#fff', fg: on ? '#fff' : '#1f4a55', border: on ? '#10303a' : '#e6d6bf' }; }),
+      jpHead: 'Hộ chiếu đã đồng bộ lên lớp: ' + ((s.jp || []).length) + (((s.jp || []).length) ? '' : ' (sinh viên bấm «Đồng bộ ngay» trên trang Hành trình)'),
+      jpRows: (s.jp || []).slice(0, 30).map(r => { const tiers = (r.passport && r.passport.tiers) || {}; return { team: r.team_name, email: r.student_email || '—', tiers: ['t1', 't2', 't3'].map((k, i) => 'B' + (i + 1) + (tiers[k] && tiers[k].status === 'done' ? '✓' : '·')).join(' '), when: r.updated_at ? new Date(r.updated_at).toLocaleDateString('vi-VN') : '' }; }),
       eventOpts: ok ? P.EVENTS.map(([v, l]) => ({ v, l })) : [], fEvent: s.fEvent, onEvent: e => this.setState({ fEvent: e.target.value }), fMsg: s.fMsg, onMsg: e => this.setState({ fMsg: e.target.value }), saveEvent: () => this.saveEvent(),
       gTeam: s.gTeam, onGTeam: e => this.setState({ gTeam: e.target.value }), gAmt: s.gAmt, onGAmt: e => this.setState({ gAmt: e.target.value }), gReason: s.gReason, onGReason: e => this.setState({ gReason: e.target.value }), doGrant: () => this.doGrant(),
       grants: ((s.st && s.st.grants) || []).slice(0, 20).map(g => ({ team: g.team_name === '*' ? 'Cả lớp' : g.team_name, reason: g.reason || '—', amt: (g.amount > 0 ? '+' : '') + g.amount + ' tr₫', color: g.amount >= 0 ? '#3f8a44' : '#c0443a' })),

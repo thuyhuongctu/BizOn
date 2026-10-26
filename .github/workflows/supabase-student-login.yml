@@ -7,12 +7,14 @@ on:
       - 'supabase/**'
       - 'test/sql/supabase_auth_stub.sql'
       - 'test/sql/require_student_login_smoke.sql'
+      - 'test/sql/journey_passports_smoke.sql'
       - '.github/workflows/supabase-student-login.yml'
   pull_request:
     paths:
       - 'supabase/**'
       - 'test/sql/supabase_auth_stub.sql'
       - 'test/sql/require_student_login_smoke.sql'
+      - 'test/sql/journey_passports_smoke.sql'
       - '.github/workflows/supabase-student-login.yml'
 
 jobs:
@@ -41,3 +43,7 @@ jobs:
           done
       - name: Kiểm hành vi (anon bị chặn, sinh viên đúng đội nộp được, giảng viên phải được duyệt)
         run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/require_student_login_smoke.sql
+      - name: Kiểm hành trình 3 bậc (hộ chiếu trên máy chủ, cờ hành trang của lớp, dọn dữ liệu)
+        run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/journey_passports_smoke.sql
+      - name: Áp lại migration hành trình (phải an toàn khi chạy lại)
+        run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f supabase/migrations/20261026000000_journey_passports.sql
