@@ -81,6 +81,7 @@
       return guard(rpc('bizon_set_journey_carry', { p_class_code: code, p_on: !!on })); },
     async setExplainHidden(code, on) { if (demo) { D.controls.explain_hidden = !!on; return true; }
       return guard(rpc('bizon_set_explain_hidden', { p_class_code: code, p_on: !!on })); },
+    async surveyExport(code) { if (demo) return []; try { return (await rpc('bizon_survey_export_v2', { p_class_code: code })) || []; } catch (e) { if (missing(e)) return []; throw e; } },
     async caseTasks(code) { if (demo) return D.caseTasks; try { return (await rpc('bizon_case_task_class', { p_class_code: code })) || []; } catch (e) { if (missing(e)) return []; throw e; } },
     async journeyPassports(code) { if (demo) return D.journey; try { return (await rpc('bizon_journey_class', { p_class_code: code })) || []; } catch (e) { if (missing(e)) return []; throw e; } },
     async setExam(code, ex) { if (demo) { D.exam = ex; return true; }
