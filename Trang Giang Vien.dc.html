@@ -286,13 +286,13 @@ input,select,textarea,button{font-family:inherit}
             </div>
           </div>
           <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px">
-            <div style="font:800 19px 'Baloo 2',sans-serif">📜 Chứng nhận chính thức (ĐH Cần Thơ)</div>
-            <div style="font-size:13px;color:#5a6b74;text-wrap:pretty">Áp dụng cho cả 3 game của lớp này. Sinh viên sẽ thấy nút tải «🎓 Chứng nhận ĐHCT» cạnh chứng chỉ BizOn mặc định, dùng đúng mã môn/tên môn/ngày học bạn nhập dưới đây.</div>
+            <div style="font:800 19px 'Baloo 2',sans-serif">📜 Chứng nhận chính thức</div>
+            <div style="font-size:13px;color:#5a6b74;text-wrap:pretty">Áp dụng cho cả 3 game của lớp này. Sinh viên sẽ thấy nút tải «🎓 Chứng nhận chính thức» cạnh chứng chỉ BizOn mặc định, dùng đúng mã môn/tên môn/ngày học bạn nhập dưới đây. Mặc định chứng nhận do BizOn cấp; muốn mang tên trường bạn thì điền phần «Đơn vị cấp» bên dưới.</div>
             <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">Mã môn
-              <input value="{{ certCode }}" onChange="{{ onCertCode }}" placeholder="KT330H" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
+              <input value="{{ certCode }}" onChange="{{ onCertCode }}" placeholder="VD: KT330H (để trống nếu không có)" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
             </label>
             <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">Tên môn
-              <input value="{{ certName }}" onChange="{{ onCertName }}" placeholder="Entrepreneurship" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
+              <input value="{{ certName }}" onChange="{{ onCertName }}" placeholder="BizOn Bật Nghiệp" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
             </label>
             <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">Ngày học (hiển thị nguyên văn trên chứng nhận)
               <input value="{{ certDates }}" onChange="{{ onCertDates }}" placeholder="4th, 10th and 11th March 2026" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
@@ -302,8 +302,34 @@ input,select,textarea,button{font-family:inherit}
               <sc-if value="{{ certSaved }}" hint-placeholder-val="{{ false }}"><span style="color:#1f9a63;font-weight:800;font-size:13px">✅ Đã lưu</span></sc-if>
             </div>
             <div style="border-top:2px dashed #e6d6bf;margin-top:6px;padding-top:12px;display:flex;flex-direction:column;gap:9px">
+              <div style="font:800 17px 'Baloo 2',sans-serif">🏛️ Đơn vị cấp chứng nhận (tuỳ chọn)</div>
+              <div style="font-size:12.5px;color:#5a6b74;text-wrap:pretty">Để trống = chứng nhận do BizOn cấp (logo BizOn, chữ ký in của người sáng lập). Điền tên đơn vị để chứng nhận mang tên trường bạn: tên đơn vị, đơn vị trực thuộc, đường dẫn logo (ảnh trên web, ví dụ assets/docs/ctu-logo.png), logo thứ hai cho khoa/trường thành viên (ví dụ assets/docs/soe-logo.png; trống thì góc phải là logo BizOn), người ký và chức danh. Chỉ áp dụng cho lớp này và chỉ bạn sửa được.</div>
+              <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">Tên đơn vị cấp
+                <input value="{{ certOrgName }}" onChange="{{ onCertOrgName }}" placeholder="VD: Trường Đại học Cần Thơ" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
+              </label>
+              <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">Đơn vị trực thuộc (khoa / trường thành viên)
+                <input value="{{ certOrgSub }}" onChange="{{ onCertOrgSub }}" placeholder="VD: Trường Kinh tế" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
+              </label>
+              <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">Đường dẫn logo (tuỳ chọn)
+                <input value="{{ certOrgLogo }}" onChange="{{ onCertOrgLogo }}" placeholder="VD: assets/docs/ctu-logo.png hoặc https://…/logo.png" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
+              </label>
+              <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">Đường dẫn logo thứ hai (khoa / trường thành viên, tuỳ chọn)
+                <input value="{{ certOrgLogo2 }}" onChange="{{ onCertOrgLogo2 }}" placeholder="VD: assets/docs/soe-logo.png" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
+              </label>
+              <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">Người ký
+                <input value="{{ certSignerName }}" onChange="{{ onCertSignerName }}" placeholder="VD: PGS.TS. Nguyễn Văn A" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
+              </label>
+              <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">Chức danh / đơn vị của người ký
+                <input value="{{ certSignerTitle }}" onChange="{{ onCertSignerTitle }}" placeholder="VD: Giảng viên, Trường Kinh tế" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
+              </label>
+              <div style="display:flex;align-items:center;gap:10px">
+                <button onClick="{{ saveCertIssuer }}" style="border:0;background:#1f4a55;color:#fff;border-radius:14px;padding:9px 16px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #10303a;cursor:pointer">💾 Lưu đơn vị cấp</button>
+                <sc-if value="{{ certIssuerSaved }}" hint-placeholder-val="{{ false }}"><span style="color:#1f9a63;font-weight:800;font-size:13px">✅ Đã lưu</span></sc-if>
+              </div>
+            </div>
+            <div style="border-top:2px dashed #e6d6bf;margin-top:6px;padding-top:12px;display:flex;flex-direction:column;gap:9px">
               <div style="font:800 17px 'Baloo 2',sans-serif">✍️ Giảng viên cấp chứng nhận (chữ ký thật)</div>
-              <div style="font-size:12.5px;color:#5a6b74;text-wrap:pretty">Cùng mẫu chứng nhận ĐHCT ở trên, một chữ ký của PGS.TS. Phan Anh Tú. Ảnh chữ ký thật chỉ lưu trong trình duyệt của máy này – không tải lên web hay máy chủ. Bản sinh viên tự tải vẫn dùng chữ ký in.</div>
+              <div style="font-size:12.5px;color:#5a6b74;text-wrap:pretty">Cùng mẫu chứng nhận ở trên, chữ ký của giảng viên cấp chứng nhận (tên và chức danh lấy từ «Đơn vị cấp»; để trống thì là chứng nhận BizOn). Ảnh chữ ký thật chỉ lưu trong trình duyệt của máy này – không tải lên web hay máy chủ. Bản sinh viên tự tải vẫn dùng chữ ký in.</div>
               <sc-if value="{{ hasSig }}" hint-placeholder-val="{{ false }}">
                 <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
                   <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" sc-camel-src="{{ sigTu }}" alt="Chữ ký đã chọn" style="height:52px;max-width:220px;object-fit:contain;background:#fff;border:2px solid #e6d6bf;border-radius:10px;padding:4px 10px"></img>
@@ -542,7 +568,7 @@ function examMMSS(ms) { const s = Math.max(0, Math.round(ms / 1000)); return Str
 // Ngôn ngữ dùng chung với toàn site (localStorage «bizon-lang»); mặc định tiếng Việt cho giảng viên.
 const GV_LANG = () => { try { return localStorage.getItem('bizon-lang') === 'en' ? 'en' : 'vi'; } catch (e) { return 'vi'; } };
 class Component extends DCLogic {
-  state = { view: 'login', mode: 'in', err: '', fEmail: '', fPass: '', fNewPass: '', recoveryToken: '', fCode: '', classes: [], adminClasses: [], code: '', tab: 'teams', subs: [], st: {}, memberLog: [], bpResults: [], exam: null, examNow: null, exSetup: '', exRound: '', selTeam: '', fEvent: '', fMsg: '', gTeam: '*', gAmt: '', gReason: '', edits: {}, saved: {}, board: false, ready: false, certCode: '', certName: '', certDates: '', certSaved: false, rubric: {}, rLv1: '', rLv2: '', rLv3: '', rLv4: '', rubricSaved: false, rosterText: '', rosterSaved: false, sigTu: '', certMsg: '', lang: GV_LANG() };
+  state = { view: 'login', mode: 'in', err: '', fEmail: '', fPass: '', fNewPass: '', recoveryToken: '', fCode: '', classes: [], adminClasses: [], code: '', tab: 'teams', subs: [], st: {}, memberLog: [], bpResults: [], exam: null, examNow: null, exSetup: '', exRound: '', selTeam: '', fEvent: '', fMsg: '', gTeam: '*', gAmt: '', gReason: '', edits: {}, saved: {}, board: false, ready: false, certCode: '', certName: '', certDates: '', certSaved: false, certOrgName: '', certOrgSub: '', certOrgLogo: '', certOrgLogo2: '', certSignerName: '', certSignerTitle: '', certIssuerSaved: false, rubric: {}, rLv1: '', rLv2: '', rLv3: '', rLv4: '', rubricSaved: false, rosterText: '', rosterSaved: false, sigTu: '', certMsg: '', lang: GV_LANG() };
   tr(vi, en) { return this.state.lang === 'en' ? en : vi; }
   setLang(l) { try { localStorage.setItem('bizon-lang', l); } catch (e) {} document.documentElement.lang = l; this.setState({ lang: l }); }
   api() { return window.BizOnInstructor; }
@@ -566,7 +592,7 @@ class Component extends DCLogic {
   async removeClass(code) {
     if (!confirm('Xóa lớp ' + code + '? Lớp sẽ hết thuộc quyền quản lý – dữ liệu bài nộp cũ của sinh viên vẫn được giữ nguyên, có thể đăng ký lại mã này sau.')) return;
     try { await this.api().deleteClass(code); if (this.state.view === 'admin') this.loadAdmin(); else this.loadClasses(); } catch (e) { this.fail(e); } }
-  async openClass(code) { this.setState({ code, view: 'class', tab: 'teams', err: '', edits: {}, saved: {}, exSetup: '', exRound: '', certCode: '', certName: '', certDates: '', certSaved: false, rLv1: '', rLv2: '', rLv3: '', rLv4: '', rubricSaved: false, rosterText: this.getRosterText(code), rosterSaved: false }); await this.reload(code); }
+  async openClass(code) { this.setState({ code, view: 'class', tab: 'teams', err: '', edits: {}, saved: {}, exSetup: '', exRound: '', certCode: '', certName: '', certDates: '', certSaved: false, certOrgName: '', certOrgSub: '', certOrgLogo: '', certOrgLogo2: '', certSignerName: '', certSignerTitle: '', certIssuerSaved: false, rLv1: '', rLv2: '', rLv3: '', rLv4: '', rubricSaved: false, rosterText: this.getRosterText(code), rosterSaved: false }); await this.reload(code); }
   getRosterText(code) { try { return localStorage.getItem('bizon-gv-roster-' + code) || ''; } catch (e) { return ''; } }
   saveRosterText() { const s = this.state; try { localStorage.setItem('bizon-gv-roster-' + s.code, s.rosterText); } catch (e) {} this.setState({ rosterSaved: true }); setTimeout(() => this.setState({ rosterSaved: false }), 2200); }
   async reload(code = this.state.code) {
@@ -576,7 +602,8 @@ class Component extends DCLogic {
       const ct = await this.api().caseTasks(code).catch(() => []);   // bài tình huống trước – sau (R2)
       this.setState({ subs: subs || [], st: st || {}, memberLog: memberLog || [], bpResults: bpResults || [], jp, ct, fEvent: c.forced_event || '', fMsg: c.message || '',
         exam, examNow: (ef && ef.now) || null, exSetup: this.state.exSetup === '' ? String((exam && exam.setup_min) ?? 10) : this.state.exSetup, exRound: this.state.exRound === '' ? String((exam && exam.round_min) ?? 8) : this.state.exRound,
-        certCode: this.state.certCode === '' ? (cert.course_code || 'KT330H') : this.state.certCode, certName: this.state.certName === '' ? (cert.course_name || 'Entrepreneurship') : this.state.certName, certDates: this.state.certDates === '' ? (cert.course_dates || '') : this.state.certDates,
+        certCode: this.state.certCode === '' ? (cert.course_code || '') : this.state.certCode, certName: this.state.certName === '' ? (cert.course_name || 'BizOn Bật Nghiệp') : this.state.certName, certDates: this.state.certDates === '' ? (cert.course_dates || '') : this.state.certDates,
+        certOrgName: this.state.certOrgName || cert.org_name || '', certOrgSub: this.state.certOrgSub || cert.org_sub || '', certOrgLogo: this.state.certOrgLogo || cert.org_logo || '', certOrgLogo2: this.state.certOrgLogo2 || cert.org_logo2 || '', certSignerName: this.state.certSignerName || cert.signer_name || '', certSignerTitle: this.state.certSignerTitle || cert.signer_title || '', certSignerSig: cert.signer_sig || '',
         rubric, rLv1: this.state.rLv1 === '' ? (rubric.level1 || 'Rất cân bằng') : this.state.rLv1, rLv2: this.state.rLv2 === '' ? (rubric.level2 || 'Khá cân bằng') : this.state.rLv2,
         rLv3: this.state.rLv3 === '' ? (rubric.level3 || 'Lệch rõ') : this.state.rLv3, rLv4: this.state.rLv4 === '' ? (rubric.level4 || 'Lệch nhiều') : this.state.rLv4, err: '' });
     } catch (e) { this.fail(e); } }
@@ -610,6 +637,8 @@ class Component extends DCLogic {
   async saveEvent() { try { const s = this.state, cur = (s.st.controls || {}); await this.api().setControls(s.code, Object.assign({}, cur, { forced_event: s.fEvent, forced_event_round: s.fEvent ? this.curRound() : null, message: s.fMsg })); this.reload(); } catch (e) { this.fail(e); } }
   async startExam() { const s = this.state; try { await this.api().setExam(s.code, { active: true, start_at: new Date().toISOString(), setup_min: +s.exSetup || 10, round_min: +s.exRound || 8, capital: 500 }); this.reload(); } catch (e) { this.fail(e); } }
   async stopExam() { const s = this.state, ex = s.exam || {}; try { await this.api().setExam(s.code, { active: false, start_at: ex.start_at || null, setup_min: +s.exSetup || 10, round_min: +s.exRound || 8, capital: 500 }); this.reload(); } catch (e) { this.fail(e); } }
+  async saveCertIssuer() { const s = this.state; try { await this.api().setCertIssuer(s.code, this.certIssuer()); this.setState({ certIssuerSaved: true }); setTimeout(() => this.setState({ certIssuerSaved: false }), 2500); } catch (e) { this.fail(e); } }
+  certIssuer() { const s = this.state; return { org_name: s.certOrgName || '', org_sub: s.certOrgSub || '', org_logo: s.certOrgLogo || '', org_logo2: s.certOrgLogo2 || '', signer_name: s.certSignerName || '', signer_title: s.certSignerTitle || '', signer_sig: s.certSignerSig || '' }; }
   async saveCertConfig() { const s = this.state; try { await this.api().setCertConfig(s.code, { course_code: s.certCode, course_name: s.certName, course_dates: s.certDates }); this.setState({ certSaved: true }); setTimeout(() => this.setState({ certSaved: false }), 2500); } catch (e) { this.fail(e); } }
   // Ảnh chữ ký thật: thu về tối đa 1200×400 (giữ nền trong suốt) rồi lưu localStorage của máy này.
   pickSig(e) {
@@ -634,7 +663,7 @@ class Component extends DCLogic {
     try { localStorage.removeItem(SIG_KEY); } catch (e) {}
     this.setState({ sigTu: '', certMsg: 'Đã xoá chữ ký khỏi máy này.' });
   }
-  certOpts(st) { const s = this.state; return { name: st.name, courseCode: s.certCode || 'KT330H', courseName: s.certName || 'Entrepreneurship', courseDates: s.certDates || undefined, signature: s.sigTu, filenamePrefix: (s.code || 'BizOn') + (st.mssv ? '-' + st.mssv : '') }; }
+  certOpts(st) { const s = this.state; return { name: st.name, courseCode: s.certCode || '', courseName: s.certName || 'BizOn Bật Nghiệp', courseDates: s.certDates || undefined, signature: s.sigTu, org: this.certIssuer(), filenamePrefix: (s.code || 'BizOn') + (st.mssv ? '-' + st.mssv : '') }; }
   issueOne(st) {
     if (!this.state.sigTu) return this.setState({ certMsg: 'Chọn ảnh chữ ký thật trước khi cấp.' });
     window.OfficialCert.download(this.certOpts(st)).catch(e => this.fail(e));
@@ -652,7 +681,7 @@ class Component extends DCLogic {
       const pages = [];
       for (const st of list) pages.push((await window.OfficialCert.render(this.certOpts(st))).toDataURL('image/jpeg', 0.92));
       w.document.open();
-      w.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>Chứng nhận ĐHCT · ' + (s.code || '') + '</title><style>@page{size:A4 landscape;margin:0}html,body{margin:0}img{display:block;width:297mm;height:210mm;break-after:page}img:last-child{break-after:auto}@media screen{body{background:#4a4a4a;padding:12px}img{width:min(100%,1123px);height:auto;margin:0 auto 12px}}</style></head><body>'
+      w.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>Chứng nhận chính thức · ' + (s.code || '') + '</title><style>@page{size:A4 landscape;margin:0}html,body{margin:0}img{display:block;width:297mm;height:210mm;break-after:page}img:last-child{break-after:auto}@media screen{body{background:#4a4a4a;padding:12px}img{width:min(100%,1123px);height:auto;margin:0 auto 12px}}</style></head><body>'
         + pages.map((src, i) => '<img alt="Chứng nhận ' + (i + 1) + '" src="' + src + '">').join('')
         + '<script>window.onload=function(){setTimeout(function(){window.print()},300)}<\/script></body></html>');
       w.document.close();
@@ -720,6 +749,8 @@ class Component extends DCLogic {
       certName: s.certName, onCertName: e => this.setState({ certName: e.target.value }),
       certDates: s.certDates, onCertDates: e => this.setState({ certDates: e.target.value }),
       saveCertConfig: () => this.saveCertConfig(), certSaved: s.certSaved,
+      certOrgName: s.certOrgName, onCertOrgName: e => this.setState({ certOrgName: e.target.value }), certOrgSub: s.certOrgSub, onCertOrgSub: e => this.setState({ certOrgSub: e.target.value }), certOrgLogo: s.certOrgLogo, onCertOrgLogo: e => this.setState({ certOrgLogo: e.target.value }), certOrgLogo2: s.certOrgLogo2, onCertOrgLogo2: e => this.setState({ certOrgLogo2: e.target.value }),
+      certSignerName: s.certSignerName, onCertSignerName: e => this.setState({ certSignerName: e.target.value }), certSignerTitle: s.certSignerTitle, onCertSignerTitle: e => this.setState({ certSignerTitle: e.target.value }), saveCertIssuer: () => this.saveCertIssuer(), certIssuerSaved: s.certIssuerSaved,
       tabs: tabDefs.map(([k, l]) => ({ label: l, go: () => this.setState({ tab: k }), bg: s.tab === k ? '#2f8a8c' : '#fbf6ee', fg: s.tab === k ? '#fff' : '#1f4a55', border: s.tab === k ? '#23706f' : '#e6d6bf' })),
       tabTeams: s.tab === 'teams', tabDecisions: s.tab === 'decisions', tabControls: s.tab === 'controls', tabGrading: s.tab === 'grading', tabMembers: s.tab === 'members', tabActivity: s.tab === 'activity', noTeams: !T.length,
       teams: T.map(t => ({ name: t.name + (t.rs.some(r => r.result_json && r.result_json.journey) ? ' 🧭' : ''), share: t.share.toFixed(1) + '%', profit: money(t.profit), profitColor: t.profit >= 0 ? '#3f8a44' : '#c0443a', flags: '🚩 ' + t.flags + '/6',

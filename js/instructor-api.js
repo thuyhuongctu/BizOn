@@ -34,7 +34,7 @@
   }
 
   // ---------- dữ liệu mẫu ----------
-  const D = { classes: [{ class_code: 'DEMO-2026', created_at: new Date().toISOString() }], controls: { locked_round: null, forced_event: null, message: '', journey_carry: null, explain_hidden: null }, grants: [], journey: [], caseTasks: [], scores: {}, subs: [], exam: null, cert: { course_code: 'KT330H', course_name: 'Entrepreneurship', course_dates: '' }, rubric: { level1: 'Rất cân bằng', level2: 'Khá cân bằng', level3: 'Lệch rõ', level4: 'Lệch nhiều' } };
+  const D = { classes: [{ class_code: 'DEMO-2026', created_at: new Date().toISOString() }], controls: { locked_round: null, forced_event: null, message: '', journey_carry: null, explain_hidden: null }, grants: [], journey: [], caseTasks: [], scores: {}, subs: [], exam: null, cert: { course_code: '', course_name: 'BizOn Bật Nghiệp', course_dates: '', org_name: '', org_sub: '', org_logo: '', org_logo2: '', signer_name: '', signer_title: '', signer_sig: '' }, rubric: { level1: 'Rất cân bằng', level2: 'Khá cân bằng', level3: 'Lệch rõ', level4: 'Lệch nhiều' } };
   (function seed() {
     const T = [['Đội Rồng Vàng', 1.0], ['Đội Sông Hậu', 0.9], ['Đội Miệt Vườn', 0.8], ['Đội Phù Sa', 1.1], ['Đội Gốm Đỏ', 0.7]];
     T.forEach(([n, k], ti) => { const rounds = 6 - (ti % 3); for (let r = 1; r <= rounds; r++) {
@@ -89,6 +89,8 @@
     async examFeed(code) { if (demo) return { now: new Date().toISOString(), exam: D.exam }; try { return (await rpc('bizon_exam_feed', { p_class_code: code })) || {}; } catch (e) { if (missing(e)) return {}; throw e; } },
     async setCertConfig(code, c) { if (demo) { Object.assign(D.cert, c); return true; }
       return guard(rpc('bizon_set_cert_config', { p_class_code: code, p_course_code: c.course_code || '', p_course_name: c.course_name || '', p_course_dates: c.course_dates || '' })); },
+    async setCertIssuer(code, c) { if (demo) { Object.assign(D.cert, c); return true; }
+      return guard(rpc('bizon_set_cert_issuer', { p_class_code: code, p_org_name: c.org_name || '', p_org_sub: c.org_sub || '', p_org_logo: c.org_logo || '', p_org_logo2: c.org_logo2 || '', p_signer_name: c.signer_name || '', p_signer_title: c.signer_title || '', p_signer_sig: c.signer_sig || '' })); },
     async certFeed(code) { if (demo) return D.cert; try { return (await rpc('bizon_cert_feed', { p_class_code: code })) || D.cert; } catch (e) { if (missing(e)) return D.cert; throw e; } },
     async grant(code, team, amount, reason) { if (demo) { D.grants.unshift({ team_name: team, amount, reason, created_at: new Date().toISOString() }); return true; } return guard(rpc('bizon_grant', { p_class_code: code, p_team_name: team, p_amount: amount, p_reason: reason || '' })); },
     async saveScore(code, team, reasoning, teamwork, note) { if (demo) { D.scores[team] = { team_name: team, reasoning, teamwork, note }; return true; } return guard(rpc('bizon_save_score', { p_class_code: code, p_team_name: team, p_reasoning: reasoning, p_teamwork: teamwork, p_note: note || '' })); },

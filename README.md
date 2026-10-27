@@ -174,8 +174,8 @@ If you use BizOn in teaching or research, please cite:
 
 ✅ **Free tiers (limited scope):**
 - The **BizOn Arcade** and the **Level-1 game** are free to use at the official URL, with no time limit.
-- The **two pillars**, *Bật Nghiệp* and *Hộ chiếu Thương hiệu*, are free for **Can Tho University**.
-- Any other institution may use the two pillars free for **one trial semester**.
+- Any institution may use the **two pillars**, *Bật Nghiệp* and *Hộ chiếu Thương hiệu*, free for **one trial semester**.
+- **Can Tho University** uses the two pillars under a written licence granted by the authors; the licence names the authors as owners and does not transfer any right.
 
 ❌ **Outside those tiers, a written license is required** for:
 - continued use of the two pillars at other institutions;

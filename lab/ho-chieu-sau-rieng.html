@@ -995,7 +995,7 @@ footer{color:var(--faint)}
   const CAUSES = () => DurianCore.causes(L);
 
   // Hai chứng nhận giống Bến Phù Sa / Bật Nghiệp: chứng chỉ BizOn (vẽ canvas) và
-  // chứng nhận ĐHCT (js/official-cert.js). Chỉ cấp cho ván có Mã lớp.
+  // chứng nhận chính thức (js/official-cert.js). Chỉ cấp cho ván có Mã lớp.
   function labLoadImg(src) {
     return new Promise(res => { const im = new Image(); im.onload = () => res(im); im.onerror = () => res(null); im.src = src; });
   }
@@ -1096,7 +1096,7 @@ footer{color:var(--faint)}
       <div class="card"><h2>${L('Chứng nhận', 'Certificates')}</h2>
         <p class="small muted">${APP.cls ? L('Hai chứng nhận dành cho ván có Mã lớp. Ván thử không được cấp.', 'Both certificates are for sessions with a Class ID. Trial sessions get none.') : L('Ván thử không được cấp chứng nhận. Nhập Mã lớp (Class ID) của giảng viên khi bắt đầu ván để nhận chứng nhận.', 'Trial sessions get no certificate. Enter your instructor’s Class ID when you start a session to get one.')}</p>
         <p style="margin-top:8px"><button class="btn" id="certDone" type="button" ${APP.cls ? '' : 'disabled'}>${L('📥 Chứng chỉ hoàn thành', '📥 Certificate of completion')}</button>
-          <button class="btn ghost" id="certOfficial" type="button" ${APP.cls ? '' : 'disabled'}>${L('🎓 Chứng nhận ĐHCT', '🎓 Official CTU certificate')}</button></p>
+          <button class="btn ghost" id="certOfficial" type="button" ${APP.cls ? '' : 'disabled'}>${L('🎓 Chứng nhận chính thức', '🎓 Official certificate')}</button></p>
         <p id="certMsg" class="small" style="color:#c0392b"></p></div>
       <div class="card"><h2>${L('Dấu vết quyết định', 'Decision trail')}</h2>
         <div class="tblwrap"><table><tr><th>${L('Vụ', 'Season')}</th><th>${L('Mục tiêu', 'Goal')}</th><th>${L('Ưu tiên', 'Priority')}</th><th>${L('Dự báo', 'Forecast')}</th><th>${L('Thực tế', 'Actual')}</th><th>${L('Nguyên nhân (SEC)', 'Cause (SEC)')}</th><th>${L('Chỉ số thích nghi', 'Adaptation index')}</th><th>${L('Đúng hạn', 'On time')}</th><th>${L('Cờ', 'Flag')}</th></tr>
