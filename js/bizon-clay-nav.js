@@ -80,6 +80,18 @@
 
   document.body.insertBefore(nav, document.body.firstChild);
 
+  /* Liên kết «Bỏ qua tới nội dung»: phần tử đầu tiên khi bấm Tab, ẩn tới khi được focus – người dùng bàn phím và
+     trình đọc màn hình nhảy qua menu vào thẳng <main> (rà soát 27/10/2026, theo danh mục ship requirements). */
+  var mainEl = document.querySelector('main');
+  if (mainEl) {
+    if (!mainEl.id) mainEl.id = 'noi-dung';
+    if (!mainEl.hasAttribute('tabindex')) mainEl.setAttribute('tabindex', '-1');
+    var skip = document.createElement('a');
+    skip.className = 'cn-skip'; skip.href = '#' + mainEl.id;
+    skip.textContent = 'Bỏ qua tới nội dung'; skip.setAttribute('data-en', 'Skip to content');
+    document.body.insertBefore(skip, document.body.firstChild);
+  }
+
   /* Hàng 2 (màn hẹp): đánh dấu .cn-more khi còn mục khuất bên phải để CSS làm mờ mép */
   var row2 = nav.querySelector('.cn-row2');
   function syncMore(){ row2.classList.toggle('cn-more', row2.scrollLeft + row2.clientWidth < row2.scrollWidth - 4); }
