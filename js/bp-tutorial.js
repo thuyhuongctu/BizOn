@@ -109,14 +109,15 @@
     var pad = 8;
     var top = Math.max(8, r.top - pad), left = Math.max(8, r.left - pad);
     var w = Math.min(innerWidth - left - 8, r.width + pad * 2), h = r.height + pad * 2;
-    var below = r.top < innerHeight * 0.45;
+    var phone = innerWidth < 640;   // điện thoại: thẻ luôn nằm sát đáy, gọn hơn; phần tử được cuộn lên vùng trên (xem go())
+    var below = !phone && r.top < innerHeight * 0.45;
     overlay.innerHTML =
       '<div style="position:fixed; top:' + top + 'px; left:' + left + 'px; width:' + w + 'px; height:' + h + 'px;' +
       'border-radius:20px; box-shadow:0 0 0 4px rgba(253,161,39,.95), 0 0 0 9999px rgba(2,25,28,.78);' +
       'transition:all .28s ease; pointer-events:none"></div>' +
       '<div class="clay-card" style="position:fixed; left:50%; transform:translateX(-50%);' +
-      (below ? 'top:' + Math.min(innerHeight - 240, top + h + 14) + 'px' : 'bottom:' + Math.max(16, innerHeight - top + 14) + 'px') +
-      '; width:min(92vw, 360px); padding:18px 18px 14px; z-index:1; text-align:left">' +
+      (phone ? 'bottom:calc(10px + env(safe-area-inset-bottom, 0px))' : below ? 'top:' + Math.min(innerHeight - 240, top + h + 14) + 'px' : 'bottom:' + Math.max(16, innerHeight - top + 14) + 'px') +
+      '; width:min(92vw, 360px); padding:' + (phone ? '12px 14px 10px' : '18px 18px 14px') + '; z-index:1; text-align:left' + (phone ? '; max-height:42vh; overflow:auto' : '') + '">' +
       '<div style="display:flex; gap:10px; align-items:center; margin-bottom:6px">' +
       '<img src="' + (step.face || FACE_NEUTRAL).src + '" alt="" style="width:38px; height:38px;' +
       (step.face && step.face.contain ? ' object-fit:contain; filter:drop-shadow(0 2px 4px rgba(0,102,135,.25))' : ' border-radius:999px; object-fit:cover; object-position:50% 12%') + '">' +
@@ -144,7 +145,9 @@
       // mà lần gọi go() này phụ trách.
       if (!steps || idx !== i) return;
       var el = $q(steps[idx].sel);
-      if (shown(el)) el.scrollIntoView({ behavior: 'instant', block: 'center' });
+      // điện thoại: thẻ hướng dẫn chiếm đáy màn hình → đưa phần tử lên phần ba trên để không bị thẻ che
+      if (shown(el)) el.scrollIntoView({ behavior: 'instant', block: innerWidth < 640 ? 'start' : 'center' });
+      if (innerWidth < 640 && shown(el)) { var rr = el.getBoundingClientRect(); if (rr.top < 56) scrollBy(0, rr.top - 56); }
       setTimeout(paint, 120);
     }, 180);
   }
@@ -153,6 +156,7 @@
 
   function stop() {
     if (overlay) { overlay.remove(); overlay = null; }
+    document.body.classList.remove('bp-tour-on');
     steps = null; idx = -1; deferred = null; paused = false;
   }
 
@@ -190,6 +194,9 @@
     overlay = document.createElement('div');
     overlay.style.cssText = 'position:fixed; inset:0; z-index:90; background:transparent;';
     document.body.appendChild(overlay);
+    // Tour đang chạy: nút ⋯ (dock) và gợi ý ngôn ngữ (z-index rất cao) không được đè lên thẻ hướng dẫn ở đáy màn hình điện thoại.
+    if (!document.getElementById('bp-tour-css')) { var st = document.createElement('style'); st.id = 'bp-tour-css'; st.textContent = 'body.bp-tour-on #bz-dock-btn, body.bp-tour-on #bz-lang-hint { display: none !important; }'; document.head.appendChild(st); }
+    document.body.classList.add('bp-tour-on');
     paused = false; watch();
     go(0);
   }
