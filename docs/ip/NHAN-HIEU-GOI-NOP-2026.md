@@ -7,6 +7,7 @@
 > `docs/ho-so-so-huu-tri-tue.md`.
 
 Chủ đơn: **Đỗ Thùy Hương** & **Phan Anh Tú** (đồng sở hữu) · Cần Thơ.
+Người nộp: **Đỗ Thùy Hương** (tự nộp trực tuyến bằng VNeID trên dichvucong.ipvietnam.gov.vn; là người liên hệ). Từ 01/04/2026 tờ khai dùng **Mẫu số 04, Thông tư 10/2026/TT-BKHCN**.
 
 ---
 
@@ -38,6 +39,7 @@ Trích Nhóm A (`bohososhtt.html` §1.1). Thứ tự nộp đề xuất theo c�
 
 | Dấu hiệu | Dạng | Nhóm Nice | Ưu tiên | Mẫu nhãn (specimen) | Sẵn sàng |
 |---|---|---|---|---|---|
+| **BIZONLAND** | Chữ | 9 · 41 · 42 | ★ Cao nhất — **nộp trực tuyến trước**, tờ khai: [`NHAN-HIEU-BIZONLAND-TO-KHAI-2026.md`](./NHAN-HIEU-BIZONLAND-TO-KHAI-2026.md) | (nhãn chữ — không cần ảnh) | ✅ |
 | **BizOn + hình công tắc** (kết hợp) | Kết hợp | 9 · 41 · 42 | ★ Cao nhất | `logo/bizon-logo-mau-2400.png` · `-den-trang-2400.png` | PNG 2400px ✅ (SVG chữ chờ) |
 | **Bật Nghiệp** | Chữ | 9 · 41 · 42 | ★ Cao nhất trong nước | (nhãn chữ — không cần ảnh) | ✅ |
 | **BizOn** | Chữ | 9 · 41 · 42 | Cao | (nhãn chữ — không cần ảnh) | ✅ |
@@ -115,6 +117,7 @@ phiên bản hiện hành và để đại diện SHCN chuẩn hoá.
 ## 6 · Thứ tự nộp đề xuất
 
 1. **Tra cứu (Bước 0)** — không bỏ qua.
+1b. **BIZONLAND** (nhãn chữ) — Nhóm 9 + 41, hai đồng chủ đơn, Hương nộp trực tuyến qua VNeID. Tên miền và tên hệ sinh thái đang dùng công khai nên đi trước.
 2. **BizOn + hình công tắc** (kết hợp) — Nhóm 9 + 41. Bảo hộ mạnh nhất, gồm cả chữ lẫn hình.
 3. **Bật Nghiệp** — Nhóm 9 + 41. Trụ cột nhận diện trong nước.
 4. **Hình công tắc** (biểu tượng đơn) — Nhóm 9 + 41. Mẫu vector đã đủ.
