@@ -19,7 +19,7 @@ assert.ok(js.includes("PB.html(p, { lang: lang() })") && js.includes('PB.png(p, 
 assert.ok(js.includes("Biến thể đã chọn: ${C.tierName('t3', lang(), variant)}"));
 assert.ok(mod.includes('root.BizOnJourneyPassport = Object.freeze({ html, lines, draw, png, fileName, doneCount })'));
 assert.ok(css.includes('.jp-book{') && css.includes('.jp-stamp{') && css.includes('@media print{') && css.includes('.jr-box:not(#jr-book-box)'));
-assert.ok(read('sw.js').includes("'./js/journey-passport.js'") && /CACHE = 'bizon-v689'/.test(read('sw.js')));
+assert.ok(read('sw.js').includes("'./js/journey-passport.js'") && +(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 689, 'sw.js precache journey-passport.js và từ bizon-v689 trở lên');
 assert.doesNotMatch(html, /[ \t]+$/m, 'không khoảng trắng cuối dòng');
 // mô-đun chạy được trong Node với lõi thật
 { const vm = require('node:vm'); const g = { console }; g.window = g; g.self = g; const ctx = vm.createContext(g);

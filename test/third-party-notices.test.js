@@ -64,5 +64,5 @@ assert.ok(read('docs/ip/NHAN-HIEU-GOI-NOP-2026.md').includes('| **BIZONLAND** | 
 for (const [f, base] of [['docs/ip/NHAN-HIEU-BIZONLAND-TO-KHAI-2026.md', 'docs/ip'], ['THIRD-PARTY-NOTICES.md', '.']]) {
   for (const m of read(f).matchAll(/\]\(([^)#http][^)]*)\)/g)) assert.ok(fs.existsSync(path.join(ROOT, base, m[1])), f + ' liên kết hỏng: ' + m[1]);
 }
-assert.match(read('sw.js'), /CACHE = 'bizon-v687'/);
+assert.ok(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 687, 'sw.js phải từ bizon-v687 trở lên');   // không khoá số chính xác để PR sau tăng CACHE không làm đỏ test này
 console.log('third-party-notices: OK (' + vendored.length + ' tệp vendor, ' + fam.size + ' họ phông)');
