@@ -45,9 +45,11 @@ Mã định danh công bố (DOI): 10.5281/zenodo.21592241
    - Dùng nội dung kho này làm dữ liệu huấn luyện hệ thống AI thương mại.
 
 4. NGOẠI LỆ — THÀNH PHẦN BÊN THỨ BA
-   Các thành phần bên thứ ba được sử dụng theo giấy phép riêng của chúng:
-   - Tailwind CSS (MIT License) — https://tailwindcss.com
-   - Google Fonts: Plus Jakarta Sans, Manrope (SIL Open Font License 1.1)
+   Các thành phần bên thứ ba được sử dụng theo giấy phép riêng của chúng và
+   không thuộc phạm vi giấy phép này. Danh mục đầy đủ (thư viện three.js,
+   GSAP, D3, React, PeerJS, auto-animate, Tailwind CSS; các phông chữ theo
+   SIL Open Font License 1.1; dữ liệu bản đồ, mô hình 3D, dịch vụ) nằm trong
+   tệp THIRD-PARTY-NOTICES.md ở gốc kho.
 
 5. CẤP PHÉP THƯƠNG MẠI
    Nhu cầu cấp phép cho khoa/trường, tùy biến nội dung, đồng thương hiệu
@@ -81,8 +83,8 @@ extracting the character designs, music, lyrics, artwork, or the BizOn brand
 for separate use; any use in paid products, services, or fee-charging
 training; using this repository as training data for commercial AI systems.
 
-Third-party components (Tailwind CSS — MIT; Google Fonts — OFL 1.1) remain
-under their respective licenses.
+Third-party components remain under their respective licenses; the full
+list is in THIRD-PARTY-NOTICES.md at the repository root.
 
 Commercial, institutional, or co-branding licensing (non-exclusive, by
 written agreement): bricoleur@bizonland.com

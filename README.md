@@ -188,7 +188,7 @@ To request a license, write to bricoleur@bizonland.com.
 
 The authors' private document repository holds the registration dossiers (copyright and trademark) and the commercialization strategy.
 
-**Fonts and libraries:** the fonts are self-hosted `.woff2` files in `assets/fonts/` (Plus Jakarta Sans, Manrope, IBM Plex Mono, DM Serif Display and Be Vietnam Pro), all under the **SIL Open Font License 1.1**. Tailwind CSS (MIT) provides the utility layer. No font or script is loaded from a third-party CDN at runtime.
+**Fonts and libraries:** the fonts are self-hosted `.woff2` files in `assets/fonts/` (Be Vietnam Pro, Plus Jakarta Sans, Manrope, IBM Plex Mono, DM Serif Display, Nunito and Baloo 2), all under the **SIL Open Font License 1.1**. The vendored libraries (three.js, GSAP, D3, React, PeerJS, auto-animate, a purged Tailwind CSS build) keep their own licences. The main pages load no font or script from a third-party CDN at runtime; the few internal pages that still do are listed, with every other third-party component, in [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md).
 
 ## 🧑‍🔬 Authors
 
