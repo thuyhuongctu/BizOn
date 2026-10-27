@@ -34,6 +34,7 @@
 .dp2-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
 .dp2-chips button,.dp2-chips span{border:0;border-radius:999px;padding:7px 12px;background:var(--clay-tray);font:700 13px var(--clay-sans);color:var(--clay-ink)}
 .dp2-chips button.on{background:var(--clay-c2);box-shadow:0 0 0 3px var(--clay-orange)}
+.dp2-hints button{border-radius:12px;text-align:left;font-weight:600;font-size:12.5px;line-height:1.4}
 .dp2-chips button[disabled]{opacity:.45}
 .dp2-chips span.on{background:var(--clay-mint-soft)}
 .dp2-sig{font-size:13px;margin:6px 0 0;padding-left:16px}

@@ -218,6 +218,8 @@ const DP2 = (() => {
       <div class="dp2-chips">${Object.entries(goals).map(([k, v]) => `<button type="button" class="${sh.goal === k ? 'on' : ''}" data-act="goal" data-v="${k}" aria-pressed="${sh.goal === k}">${esc(v)}</button>`).join('')}</div>
       <label class="bn2-small" for="dp2-why" style="display:block;margin-top:10px">${T('Đội tin điều gì sẽ xảy ra, và vì sao chọn vậy? (từ 10 ký tự)', 'What does the team expect, and why this choice? (10+ characters)')}</label>
       <textarea class="dp2-text" id="dp2-why" data-field="why" maxlength="600">${esc(sh.ceo || '')}</textarea>
+      ${(() => { const H = C.sheetHints ? C.sheetHints(D, E, g(), dec(), sh.goal, T) : {}, list = (H.why || []).concat((H.assume || []).slice(0, 2)), cur = sh.ceo || '';
+        return list.length ? `<p class="bn2-small bn2-muted" style="margin:6px 0 4px">${T('Gợi ý · bấm để thêm vào ô, bấm lại để bỏ', 'Suggestions · tap to add, tap again to remove')}</p><div class="dp2-chips dp2-hints">${list.map((h, i) => `<button type="button" class="${cur.includes(h) ? 'on' : ''}" data-act="hint" data-v="${i}" aria-pressed="${cur.includes(h)}">${cur.includes(h) ? '✓ ' : ''}${esc(h)}</button>`).join('')}</div>` : ''; })()}
       ${ui.err ? `<p class="dp2-err">${esc(ui.err)}</p>` : ''}
       <button type="button" class="bn2-btn pri block" style="margin-top:14px" data-act="commit" id="dp2-commit" ${complete ? '' : 'disabled'}>${T('Chốt vụ', 'Commit season')} ${n} →</button>
     </section>`;
@@ -319,6 +321,11 @@ const DP2 = (() => {
     if (act === 'ind') { setDec('induce', v === '1'); render(); return; }
     if (act === 'intel') { setDec('intel', v); render(); return; }
     if (act === 'goal') { setSheet({ goal: v }); logEv('SHEET_GOAL', '', v); save(); ui.err = ''; render(); return; }
+    if (act === 'hint') {   // gợi ý chọn sẵn (DurianCore.sheetHints): thêm/bỏ câu vào ô «giả định và lý do» (ghi cả assume và ceo như khi gõ)
+      const H = C.sheetHints(D, E, g(), dec(), sheet().goal, T), list = (H.why || []).concat((H.assume || []).slice(0, 2)), h = list[+v]; if (!h) return;
+      const cur = sheet().ceo || '', had = cur.includes(h), nv = C.toggleHint(cur, h);
+      setSheet({ assume: nv, ceo: nv }); logEv(had ? 'UNUSE_HINT' : 'USE_HINT', 'why', h); ui.err = ''; render(); return;
+    }
     if (act === 'commit') { commit(); return; }
     if (act === 'cause') { draft().cause = v; save(); ui.err = ''; render(); return; }
     if (act === 'journal') { journalDone(); return; }
