@@ -94,6 +94,8 @@ Kho mã có chứa thành phần của bên thứ ba. **Không được kê khai
 
 Khai đúng phần của mình **làm hồ sơ mạnh hơn**, không yếu đi – vì tránh được nguy cơ bị phản đối sau này.
 
+> **Danh mục đầy đủ thành phần bên thứ ba** (thư viện three.js, GSAP, D3, React, PeerJS, auto-animate; bảy họ phông OFL; dữ liệu bản đồ Natural Earth; mô hình Kenney CC0; dịch vụ Supabase, GitHub Pages, Google Play; nội dung có công cụ AI tham gia) nằm ở [`THIRD-PARTY-NOTICES.md`](../THIRD-PARTY-NOTICES.md) ở gốc kho và được test tự động giữ khớp với kho. Bảng trên chỉ là ví dụ; khi lập bản in nộp Cục, **loại toàn bộ danh mục đó** khỏi phần mã do nhóm viết.
+
 ---
 
 ## B2 · Tác phẩm mỹ thuật ứng dụng
@@ -224,6 +226,7 @@ Kho nhạc gồm **13 tác phẩm âm nhạc riêng biệt** với **33 bản th
 
 | Ưu tiên | Nhãn hiệu | Dạng | Lý do |
 |---|---|---|---|
+| **0** | **BIZONLAND** | Chữ | Tên miền, tên hệ sinh thái và địa chỉ thư đang dùng công khai; từ tự tạo, phân biệt mạnh hơn «BizOn» đứng một mình — **xem C6, nộp trực tuyến trước** |
 | **1** | **BizOn** | Chữ | Tên thương hiệu chính, dùng trong mọi sản phẩm |
 | **2** | **BizOn Bật Nghiệp** | Chữ | Tên đầy đủ tiếng Việt |
 | **3** | Logo «Bo» đất nặn | Hình + chữ | Nhận diện thị giác |
@@ -273,6 +276,50 @@ Kho nhạc gồm **13 tác phẩm âm nhạc riêng biệt** với **33 bản th
 3. Cân nhắc trả phí tra cứu chuyên sâu qua tổ chức đại diện (~500.000 đ) – rẻ hơn nhiều so với mất 2 năm rồi bị từ chối
 
 Nếu «BizOn» đơn thuần bị vướng, **«BizOn Bật Nghiệp»** dạng kết hợp chữ + hình có khả năng được chấp nhận cao hơn vì tính phân biệt mạnh hơn.
+
+---
+
+## C6 · Nhãn hiệu «BIZONLAND» — hai tác giả đồng chủ đơn, nộp trực tuyến *(bổ sung 27/10/2026)*
+
+**Quyết định:** nộp **nhãn chữ «BIZONLAND»** (Nhóm 9 + 41, Nhóm 42 bổ sung sau) với **hai đồng chủ đơn Đỗ Thùy Hương và Phan Anh Tú** (tỷ lệ 50/50 theo thoả thuận đồng sở hữu, Mục F2); **Đỗ Thùy Hương là người nộp**, nộp **trực tuyến** bằng tài khoản VNeID trên Cổng dịch vụ công của Cục Sở hữu trí tuệ, đồng thời là người liên hệ của đơn. Tờ khai điền sẵn: [`docs/ip/NHAN-HIEU-BIZONLAND-TO-KHAI-2026.md`](ip/NHAN-HIEU-BIZONLAND-TO-KHAI-2026.md).
+
+### Vì sao «BIZONLAND» đi trước
+
+| Lý do | Giải thích |
+|---|---|
+| Đang dùng công khai | Tên miền bizonland.com, địa chỉ thư bricoleur@bizonland.com, tên hiển thị trên trang chủ và ứng dụng Play — bất kỳ ai cũng thấy và có thể nộp trước (nguyên tắc nộp đơn trước, E-bis.3) |
+| Phân biệt mạnh hơn | Từ tự tạo chín chữ cái; «BizOn» đứng một mình có thành tố mô tả «Biz» và dễ trùng hơn (C5). Thẩm định viên có thể yêu cầu không bảo hộ riêng «BIZ» — chấp nhận được |
+| Nhãn chữ, không màu | Bảo hộ mọi cách thể hiện; không phụ thuộc logo đang chờ vector hoá phần chữ |
+| Rẻ và nhanh nhất | Tự nộp trực tuyến, không phí đại diện; hai khoản lệ phí đang được miễn/giảm có thời hạn (bảng dưới) |
+
+### Hai chủ đơn nhưng một người nộp
+
+- Tờ khai (Mẫu số 04, Thông tư 10/2026/TT-BKHCN, hiệu lực 01/04/2026) khai **đủ hai chủ đơn**; **cả hai ký**, hoặc Tú lập **văn bản uỷ quyền** cho Hương ký và nộp thay (mẫu `docs/ip/NHAN-HIEU-GIAY-UY-QUYEN-MAU.md`, đổi bên nhận uỷ quyền).
+- Tài khoản nộp, biên lai, số đơn và mọi thông báo của Cục về **tài khoản và thư của Hương**; Tú nhận bản sao khi cần ký.
+- Theo Luật SHTT, đồng chủ sở hữu **cùng sử dụng** nhãn hiệu với tư cách chung và việc sử dụng không được gây nhầm lẫn; chuyển nhượng hay cấp li-xăng cần **cả hai đồng ý**. Thoả thuận đồng sở hữu phải ghi rõ điều này và ghi rõ người nộp, người liên hệ — **ký trước khi nộp** (F2).
+- Văn bằng (nếu được cấp) ghi tên **cả hai**; việc một bên không góp phí không làm thay đổi tỷ lệ đã ghi trong thoả thuận — phần này là nội dung thoả thuận, không phải nội dung tờ khai.
+
+### Các bước và chi phí
+
+1. **Tra cứu** (bắt buộc): wipopublish.ipvietnam.gov.vn và Madrid Monitor với `BIZONLAND`, `BIZON LAND`, `BIZON`, `BISONLAND`, `BIZOLAND`; tra cứu chuyên sâu ~500.000 đ nếu muốn chắc.
+2. **Ký** thoả thuận đồng sở hữu và văn bản uỷ quyền (hoặc Tú ký trực tiếp tờ khai).
+3. **Nộp** trên dichvucong.ipvietnam.gov.vn bằng VNeID mức 2 của Hương: thủ tục «Đăng ký nhãn hiệu» → khai chủ đơn → tải tờ khai PDF đã ký + mẫu nhãn PNG → kiểm tra danh mục Nice (≤ 6 mục/nhóm) → nộp phí trực tuyến → lưu biên lai, số đơn, **ngày nộp = ngày ưu tiên**.
+4. **Theo dõi** thẩm định hình thức (~1 tháng) → công bố (~2 tháng) → thẩm định nội dung (thực tế 18–30 tháng).
+
+| Khoản (Nhóm 9 + 41, ≤ 6 mục/nhóm) | Mức gốc TT 263/2016 | Nộp qua VNeID, ước tính |
+|---|---|---|
+| Lệ phí nộp đơn | 150.000 đ | 0 đ (miễn theo TT 29/2026/TT-BTC, 01/04–31/12/2026; nếu không được miễn: 75.000 đ theo TT 64/2025/TT-BTC) |
+| Phí phân loại · công bố đơn · tra cứu · thẩm định nội dung | 200.000 + 120.000 + 360.000 + 1.100.000 đ | 1.780.000 đ (không giảm) |
+| Phí đăng bạ + công bố văn bằng · lệ phí cấp văn bằng | 240.000 + 120.000 đ | 240.000 + 0 đ (miễn; nếu không: 60.000 đ) |
+| **Tổng** | **≈ 2.290.000 đ** | **≈ 2.020.000 đ** |
+
+*Biểu phí hiển thị trên cổng ở bước thanh toán là căn cứ cuối cùng; mức miễn/giảm có thời hạn và phải đối chiếu khi nộp. Thông tư 10/2026/TT-BKHCN thay mẫu tờ khai cũ của Nghị định 65/2023/NĐ-CP từ 01/04/2026.*
+
+### Sau khi nộp
+
+- Ghi số đơn và ngày nộp vào Mục E (chứng cứ) và vào `docs/ip/NHAN-HIEU-GOI-NOP-2026.md`.
+- Dùng ký hiệu ™ bên cạnh BIZONLAND trên trang web là được phép ngay; ký hiệu ® chỉ dùng **sau khi được cấp văn bằng**.
+- Tiếp theo: đơn «BizOn + hình công tắc» (nhãn kết hợp) và «Bật Nghiệp» theo thứ tự ở §6 của gói nộp.
 
 ---
 
@@ -420,6 +467,8 @@ Hồ sơ có hai đồng tác giả. **Bắt buộc phải có văn bản thỏa
 
 Không có văn bản này thì Cục sẽ trả hồ sơ. Nên công chứng để tránh tranh chấp về sau.
 
+> **Đã quyết (27/10/2026):** tỷ lệ **50/50** cho mọi loại tác phẩm và nhãn hiệu; **Đỗ Thùy Hương** đứng tên nộp đơn, là người liên hệ và giữ tài khoản nộp trực tuyến (VNeID), tài khoản Google Play; Phan Anh Tú ký tờ khai hoặc uỷ quyền cho Hương ký thay. Khai thác thương mại và cấp li-xăng cần cả hai đồng ý. Ghi các điểm này vào thoả thuận trước khi nộp đơn BIZONLAND (C6).
+
 ## F3 · Lời bài hát chưa đủ
 
 Như đã nêu ở Mục B3: cần lời đầy đủ của **cả 14 ca khúc**, hiện mới có 2. Đây là việc phải làm thủ công trước khi nộp đơn âm nhạc.
@@ -449,13 +498,14 @@ Thứ tự ưu tiên theo giá trị bảo vệ trên mỗi đồng chi phí:
 
 | Thứ tự | Đơn | Phí | Vì sao trước |
 |---|---|---|---|
-| 1 | **Nhãn hiệu «BizOn» – Nhóm 9 + 41** | ~2,2 tr | Thời gian xử lý dài nhất (18–30 tháng), ngày nộp là ngày ưu tiên |
+| 1 | **Nhãn hiệu «BIZONLAND» – Nhóm 9 + 41, nộp trực tuyến (C6)** | ~2,0 tr | Tên đang dùng công khai; thời gian xử lý dài nhất (18–30 tháng), ngày nộp là ngày ưu tiên |
+| 1b | **Nhãn hiệu «BizOn + hình» – Nhóm 9 + 41** | ~2,2 tr | Nhận diện chính có phần hình; nộp ngay sau BIZONLAND |
 | 2 | **Chương trình máy tính** | 600 k | Tài sản cốt lõi, khó chứng minh nhất nếu tranh chấp |
 | 3 | **Mỹ thuật ứng dụng** | 400 k | Dễ bị sao chép nhất |
 | 4 | **Tác phẩm viết** | 100 k | Giá trị học thuật, chi phí thấp |
 | 5 | **Tuyển tập âm nhạc** | 100 k | Sau khi giải quyết xong Mục F1 và F3 |
 
-**Tổng chi phí nhà nước ước tính: ≈ 3,4 triệu đồng.** Nếu thuê tổ chức đại diện làm trọn gói, cộng thêm khoảng 10–20 triệu.
+**Tổng chi phí nhà nước ước tính: ≈ 3,2 triệu đồng cho BIZONLAND + bốn đơn quyền tác giả; thêm ≈ 2,2 triệu nếu nộp tiếp «BizOn + hình».** Nếu thuê tổ chức đại diện làm trọn gói, cộng thêm khoảng 10–20 triệu.
 
 ---
 
