@@ -8,7 +8,7 @@
   const $ = id => document.getElementById(id);
   const lang = () => (typeof window.clayCurrentLang === 'function' ? window.clayCurrentLang() : 'vi');
   const t = (vi, en) => (lang() === 'en' ? en : vi);
-  const esc = C.esc;
+  const esc = C.esc, PB = window.BizOnJourneyPassport;
 
   function roleOptions(sel, cur) {
     sel.innerHTML = Object.keys(C.DURIAN_ROLES).map(id => `<option value="${id}"${id === cur ? ' selected' : ''}>${esc(t(C.DURIAN_ROLES[id].vi, C.DURIAN_ROLES[id].en))}</option>`).join('');
@@ -55,7 +55,8 @@
   function tierCard(p, k) {
     const d = C.TIER[k], st = tierStatus(p, k), variant = p.tiers.t3.variant || J.DEFAULT_T3_VARIANT;
     const name = C.tierName(k, lang(), variant), sub = t(d.subVi, d.subEn), prev = k === 't2' ? 1 : 2;
-    const res = st === 'done' ? resultLine(p, k) : st === 'locked' ? t(`Xong Bậc ${prev} để mở.`, `Finish Level ${prev} to unlock.`) : t('Mở game, nhận hành trang (nếu có) và chơi như bình thường.', 'Open the game, take the carry-over (if any) and play as usual.');
+    const v3 = k === 't3' && st !== 'done' ? ' ' + t(`Biến thể đã chọn: ${C.tierName('t3', lang(), variant)} — đổi ở «Cài đặt» bên dưới.`, `Chosen variant: ${C.tierName('t3', lang(), variant)} — change it under “Settings” below.`) : '';
+    const res = (st === 'done' ? resultLine(p, k) : st === 'locked' ? t(`Xong Bậc ${prev} để mở.`, `Finish Level ${prev} to unlock.`) : t('Mở game, nhận hành trang (nếu có) và chơi như bình thường.', 'Open the game, take the carry-over (if any) and play as usual.')) + v3;
     const link = C.gameLink(p, k, variant);
     const btn = st === 'open' ? `<a class="go" href="${esc(link)}" data-tier="${k}">${esc(t(`Chơi Bậc ${d.n} →`, `Play Level ${d.n} →`))}</a><a class="go alt" href="${esc(C.gameLink(p, k, variant, '3d'))}" data-tier="${k}" data-mode="3d">${esc(t('🧊 Bản 3D', '🧊 3D version'))}</a>`
       : st === 'done' ? `<a class="go off" aria-disabled="true" href="${esc(link)}">${esc(t('Đã hoàn thành', 'Completed'))}</a>`
@@ -82,6 +83,7 @@
     else box.hidden = true;
 
     // nhìn lại cả hành trình (khi có ít nhất một bậc xong)
+    if (PB && $('jr-book')) $('jr-book').innerHTML = PB.html(p, { lang: lang() });
     const doneTiers = ['t1', 't2', 't3'].filter(k => J.tierDone(p, k));
     $('jr-timeline-box').hidden = !doneTiers.length;
     if (doneTiers.length) {
@@ -146,6 +148,14 @@
       setTimeout(() => URL.revokeObjectURL(a.href), 2000); msg('jr-msg', t('Đã xuất tệp hộ chiếu.', 'Passport file exported.'), true);
     });
     $('jr-import').addEventListener('change', e => importFile(e.target, 'jr-msg'));
+    if (PB && $('jr-book-png')) $('jr-book-png').addEventListener('click', () => {
+      const p = S.load(); if (!p) return;
+      PB.png(p, { lang: lang() }).then(blob => {
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = PB.fileName(p); document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(() => URL.revokeObjectURL(a.href), 2000); msg('jr-book-msg', t('Đã tải ảnh cuốn hộ chiếu.', 'Booklet image downloaded.'), true);
+      }).catch(() => msg('jr-book-msg', t('Không vẽ được ảnh trên trình duyệt này.', 'Could not render the image in this browser.')));
+    });
+    if ($('jr-book-print')) $('jr-book-print').addEventListener('click', () => window.print());
     // CSV ẩn danh một dòng cho thiết kế nghiên cứu: journeyId băm (FNV-1a), không email/tên; chỉ số và vài số liệu chính.
     $('jr-csv').addEventListener('click', () => {
       const p = S.load(); if (!p) return;
