@@ -28,6 +28,7 @@ const SHELL = [
   './js/journey-card.js',
   './js/journey-link.js',
   './js/journey-sync.js',
+  './js/journey-passport.js',
   './js/explain-mode.js',
   './css/explain-mode.css',
   './css/journey.css',

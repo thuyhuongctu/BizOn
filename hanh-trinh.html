@@ -123,9 +123,10 @@
       <label><span data-en="Class code (optional)">Mã lớp (không bắt buộc)</span><input type="text" id="jr-class" name="class" maxlength="40" placeholder="QTKD-K48" style="text-transform:uppercase"></label>
       <div class="full"><div style="font-weight:800;font-size:14px;margin-bottom:8px" data-en="Level 3 variant">Biến thể Bậc 3</div>
         <div class="jr-radios" id="jr-variant-new">
-          <label class="jr-radio"><input type="radio" name="variant" value="durian" checked><span data-en="🍈 Durian Passport (default)">🍈 Hộ Chiếu Sầu Riêng (mặc định)</span></label>
+          <label class="jr-radio"><input type="radio" name="variant" value="durian" checked><span data-en="🍈 Durian Passport">🍈 Hộ Chiếu Sầu Riêng</span></label>
           <label class="jr-radio"><input type="radio" name="variant" value="brand"><span data-en="🏷️ Brand Passport">🏷️ Hộ Chiếu Thương Hiệu</span></label>
-        </div></div>
+        </div>
+        <p class="sub" id="jr-variant-help" style="margin:8px 0 0" data-en="Pick one of the two games as Level 3. The passport records only the game you pick; the other one can still be played, but standalone, outside the journey. You can change this choice on this page until Level 3 is done.">Chọn một trong hai game làm Bậc 3. Hộ chiếu chỉ ghi kết quả của game đã chọn; game kia vẫn chơi được nhưng chơi độc lập, không ghi vào hành trình. Đổi được trên trang này cho tới khi Bậc 3 xong.</p></div>
       <label id="jr-role-wrap"><span data-en="Durian role (Level 3)">Vai Sầu Riêng (Bậc 3)</span><select id="jr-role" name="role"></select></label>
       <div class="jr-actions full">
         <button type="submit" class="jr-btn primary" id="jr-create" data-en="🧭 Create passport and start Level 1">🧭 Tạo hộ chiếu và bắt đầu Bậc 1</button>
@@ -140,6 +141,14 @@
       <h2 id="jr-title">Hành trình</h2>
       <div class="jr-meta" id="jr-meta"></div>
       <div class="jr-tiers" id="jr-tiers"></div>
+    </div>
+
+    <div class="jr-box" id="jr-book-box">
+      <h2 data-en="Your passport booklet">Cuốn hộ chiếu</h2>
+      <p class="sub" data-en="One cover and three visa pages. Each finished level stamps its page; after all three, download the booklet as an image or print it for the class debrief.">Một bìa và ba trang thị thực. Mỗi bậc chơi xong sẽ đóng dấu vào trang của mình; đi hết ba bậc thì tải cuốn hộ chiếu thành ảnh hoặc in ra cho buổi tổng kết lớp.</p>
+      <div id="jr-book"></div>
+      <div class="jr-actions"><button type="button" class="jr-btn" id="jr-book-png" data-en="🖼️ Download the booklet (PNG)">🖼️ Tải cuốn hộ chiếu (PNG)</button><button type="button" class="jr-btn" id="jr-book-print" data-en="🖨️ Print">🖨️ In</button></div>
+      <p class="jr-msg" id="jr-book-msg" aria-live="polite"></p>
     </div>
 
     <div class="jr-box" id="jr-carry-box">
@@ -201,7 +210,7 @@
 
 <script src="js/core/journey.js" defer></script>
 <script src="js/journey-store.js" defer></script>
-<script src="js/journey-card.js" defer></script>
+<script src="js/journey-card.js" defer></script><script src="js/journey-passport.js" defer></script>
 <script src="js/backend-config.js" defer></script>
 <script src="js/student-login.js" defer></script>
 <script src="js/journey-sync.js" defer></script>
