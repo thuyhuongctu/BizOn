@@ -74,7 +74,7 @@ Các trang chính của bizonland.com (trang chủ, bốn trò chơi, hành trì
 
 ## 6 · Công cụ phát triển (không được phân phối cùng sản phẩm)
 
-Chỉ chạy trên máy phát triển hoặc trong CI; không có mã của chúng trong trang web: Node.js, **Playwright** (Apache 2.0, kiểm thử trình duyệt), **html-validate** (MIT), **sharp**/libvips (Apache 2.0 / LGPL, xử lý ảnh), **ffmpeg** với libvpx và libopus (LGPL/BSD, mã hoá video WebM), **rembg** (MIT) với mô hình U²-Net (Apache 2.0, tách nền ảnh — tệp mới, không ghi đè ảnh gốc), Android SDK và Gradle (xây gói Android), các action chính thức của GitHub.
+Chỉ chạy trên máy phát triển hoặc trong CI; không có mã của chúng trong trang web: Node.js, **Playwright** (Apache 2.0, kiểm thử trình duyệt), **html-validate** (MIT), **sharp**/libvips (Apache 2.0 / LGPL, xử lý ảnh), **ffmpeg** (LGPL, mã hoá lại video MP4 H.264/AAC), **rembg** (MIT) với mô hình U²-Net (Apache 2.0, tách nền ảnh — tệp mới, không ghi đè ảnh gốc), Android SDK và Gradle (xây gói Android), các action chính thức của GitHub.
 
 ## 7 · Nội dung được tạo với sự hỗ trợ của công cụ AI
 

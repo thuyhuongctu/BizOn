@@ -453,9 +453,10 @@ document.addEventListener('DOMContentLoaded', function(){
     var en = (document.documentElement.lang || '').indexOf('en') === 0;
     t.textContent = (en && a.getAttribute('data-title-en')) || a.getAttribute('data-title') || 'Trailer';
     v.poster = (!en && a.getAttribute('data-poster-vi')) || a.getAttribute('data-poster') || '';
-    /* WebM (VP9, nhẹ hơn ~40 %) trước, MP4 dự phòng cho trình duyệt cũ – cùng tên tệp, khác đuôi */
+    /* Chỉ MP4 (H.264/AAC): bản WebM VP9/Opus từng được ưu tiên làm một số điện thoại phát thiếu tiếng – MP4 là định dạng
+       mọi điện thoại giải mã bằng phần cứng (xem PR #803 và #947). */
     var mp4 = (!en && a.getAttribute('data-trailer-vi')) || a.getAttribute('data-trailer'); v.innerHTML = ''; v.removeAttribute('src');
-    [[mp4.replace(/\.mp4$/, '.webm'), 'video/webm'], [mp4, 'video/mp4']].forEach(function(p){ var s = document.createElement('source'); s.src = p[0]; s.type = p[1]; v.appendChild(s); });
+    [[mp4, 'video/mp4']].forEach(function(p){ var s = document.createElement('source'); s.src = p[0]; s.type = p[1]; v.appendChild(s); });
     v.load();
     dlg.showModal();
     var p = v.play(); if(p && p.catch) p.catch(function(){});
