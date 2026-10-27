@@ -3348,9 +3348,9 @@ function renderAchievements() {
   }
 }
 
-// Chứng nhận chính thức kiểu ĐH Cần Thơ (cạnh thẻ Thành tựu) – xem
+// Chứng nhận chính thức (đơn vị cấp do giảng viên cấu hình, mặc định BizOn) (cạnh thẻ Thành tựu) – xem
 // js/official-cert.js. Mã môn/tên môn/ngày học lấy từ cấu hình giảng viên
-// theo mã lớp (S.profile.classId), hoặc mặc định KT330H/Entrepreneurship
+// theo mã lớp (S.profile.classId), hoặc mặc định BizOn
 // nếu chưa cấu hình/chơi thử không có mã lớp.
 window.bnDownloadCertOfficial = function () {
   if (!window.OfficialCert || !S || !S.profile) return;
