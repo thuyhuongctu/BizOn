@@ -16,8 +16,8 @@ const dimg = tpl.match(/static DIMG = \{[\s\S]*?\n  \};/)[0];
 for (const m of dimg.matchAll(/'([a-z0-9-]+)'/g)) keys.add(m[1]);
 const ts = tpl.match(/static TS = \[([^\]]*)\]/)[1];
 for (const m of ts.matchAll(/'([a-z0-9-]+)'/g)) keys.add('ts-' + m[1]);
-const sprite = tpl.match(/keys = \[([^\]]*)\];\n    keys\.forEach/)[1];
-for (const m of sprite.matchAll(/'([a-z0-9-]+)'/g)) keys.add(m[1]);
+// ảnh rồng bộ cũ được nạp (từ 27/10/2026 chỉ còn «wave» dự phòng – xem durian-3d-light.test.js)
+for (const m of tpl.matchAll(/assets\/dragon\/sprite\/([a-z0-9-]+)\.webp/g)) keys.add(m[1]);
 for (const m of tpl.matchAll(/'(ts-[a-z0-9-]+)'/g)) keys.add(m[1]);
 
 for (const k of keys) {
