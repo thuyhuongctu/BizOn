@@ -21,7 +21,7 @@ for (const f of ['ben-phu-sa.html', 'ben-phu-sa-3d.html', 'ben-phu-sa-v8.html', 
   const s = read(f); assert.ok(s.includes('phu-sa/huong-new-v3.webp') && !s.includes('phu-sa/huong-new-v2.webp'), f + ' chưa dùng ảnh Hương v3');
 }
 assert.ok(fs.existsSync(path.join(ROOT, 'assets/character/phu-sa/huong-new-v3.webp')) && fs.existsSync(path.join(ROOT, 'assets/character/phu-sa/huong-new-v2.webp')), 'ảnh v2 phải giữ nguyên, v3 là tệp mới');
-assert.match(read('sw.js'), /CACHE = 'bizon-v688'/);
+assert.ok(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 688, 'sw.js phải từ bizon-v688 trở lên');
 
 // --- 2 · trình duyệt ---
 (async () => {
