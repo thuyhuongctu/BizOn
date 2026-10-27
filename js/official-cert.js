@@ -3,7 +3,8 @@
  * và Trang Giảng viên. Vẽ bằng canvas, độc lập – nhận toàn bộ dữ liệu qua tham
  * số, không đọc state riêng của từng trang.
  *
- * Đơn vị cấp: MẶC ĐỊNH là BizOn (bizonland.com, chữ ký in của người sáng lập).
+ * Đơn vị cấp: MẶC ĐỊNH là BizOn (bizonland.com, chữ ký in của hai nhà sáng lập: PGS.TS. Phan Anh Tú
+ * bên trái, Đỗ Thùy Hương bên phải).
  * Lớp nào muốn chứng nhận mang tên trường mình thì giảng viên cấu hình trên
  * Trang Giảng viên (tên đơn vị, đơn vị trực thuộc, logo, người ký, chức danh,
  * ảnh chữ ký) – lưu ở class_cert_config (migration 20261029000000_cert_issuer.sql)
@@ -30,7 +31,7 @@
   var isEN = function () { try { return (localStorage.getItem('bizon-lang') || 'vi') === 'en'; } catch (e) { return false; } };
   function T(vi, en) { return isEN() ? en : vi; }
   var DEFAULTS = { course_code: '', course_name: 'BizOn Bật Nghiệp', course_dates: '', org_name: '', org_sub: '', org_logo: '', org_logo2: '', signer_name: '', signer_title: '', signer_sig: '' };
-  var BIZON = { logo: 'assets/icons/icon-512.png', sig: 'assets/docs/sig-huong-in.png', signer: 'Đỗ Thùy Hương' };
+  var BIZON = { logo: 'assets/icons/icon-512.png', sig: 'assets/docs/sig-huong-in.png', signer: 'Đỗ Thùy Hương', sig2: 'assets/docs/sig-tu-in.png', signer2: 'PGS.TS. Phan Anh Tú' };
   var lastCfg = null;
 
   function classCode() {
@@ -50,7 +51,7 @@
   // cũng lấy từ cấu hình (trống thì không vẽ chữ ký, chỉ ghi tên đơn vị).
   function issuer(cfg) {
     var c = norm(cfg || lastCfg || {}), name = (c.org_name || '').trim();
-    if (!name) return { custom: false, name: 'BIZONLAND', logo2: '', sub: T('Hệ sinh thái mô phỏng kinh doanh BizOn', 'BizOn business simulation ecosystem'), logo: BIZON.logo, signerName: BIZON.signer, signerTitle: T('Người sáng lập BizOn', 'Founder, BizOn'), signerSig: BIZON.sig, place: T('trên nền tảng BizOn · bizonland.com', 'on the BizOn platform · bizonland.com') };
+    if (!name) return { custom: false, name: 'BIZONLAND', logo2: '', sub: T('Hệ sinh thái mô phỏng kinh doanh BizOn', 'BizOn business simulation ecosystem'), logo: BIZON.logo, signerName: BIZON.signer, signerTitle: T('Người sáng lập BizOn', 'Founder, BizOn'), signerSig: BIZON.sig, signer2Name: BIZON.signer2, signer2Title: T('Đồng sáng lập · Cố vấn học thuật BizOn', 'Co-founder & Chief Academic Advisor, BizOn'), signer2Sig: BIZON.sig2, place: T('trên nền tảng BizOn · bizonland.com', 'on the BizOn platform · bizonland.com') };
     return { custom: true, name: name, sub: (c.org_sub || '').trim(), logo: (c.org_logo || '').trim(), logo2: (c.org_logo2 || '').trim() || BIZON.logo, signerName: (c.signer_name || '').trim(), signerTitle: (c.signer_title || '').trim() || name, signerSig: (c.signer_sig || '').trim(), place: T('tại ', 'at ') + [(c.org_sub || '').trim(), name].filter(Boolean).join(', ') + T(' · trên nền tảng BizOn', ' · on the BizOn platform') };
   }
   // classCodeOverride: truyền thẳng mã lớp khi trang không dùng chung khoá
@@ -117,8 +118,8 @@
 
     // Chờ font của khuôn (nếu trang có nạp) để canvas không vẽ bằng font dự phòng.
     var fonts = document.fonts && document.fonts.load ? Promise.all(['800 46px "Plus Jakarta Sans"', '21px "Hanken Grotesk"', 'italic 21px "Hanken Grotesk"', '800 15px "Hanken Grotesk"'].map(function (f) { return document.fonts.load(f).catch(function () {}); })) : Promise.resolve();
-    return Promise.all([loadImg(I.logo), loadImg(I.logo2), loadImg(sigSrc), fonts]).then(function (imgs) {
-      var orgLogo = imgs[0], rightLogo = imgs[1], sig = imgs[2];
+    return Promise.all([loadImg(I.logo), loadImg(I.logo2), loadImg(sigSrc), I.signer2Name ? loadImg(I.signer2Sig) : null, fonts]).then(function (imgs) {
+      var orgLogo = imgs[0], rightLogo = imgs[1], sig = imgs[2], sig2 = imgs[3];
       var cv = document.createElement('canvas'); cv.width = 1400; cv.height = 990;
       var g = cv.getContext('2d');
 
@@ -145,15 +146,20 @@
       g.font = '19px "Hanken Grotesk", sans-serif'; g.fillStyle = '#033337';
       wrapText(g, T('Vào ', 'On ') + courseDates + ' – ' + I.place, 700, 535, 1050, 28);
 
-      // chữ ký và người ký
-      var sx = 1000, sy = 700;
-      if (sig) { var w = Math.min(300, sig.width * 90 / sig.height), h = w * sig.height / sig.width; g.drawImage(sig, sx - w / 2, sy - h, w, h); }
-      else if (I.signerName) { g.font = 'italic 36px "Segoe Script", cursive'; g.fillStyle = '#0a3d62'; g.fillText(I.signerName, sx, sy - 20); }
-      g.strokeStyle = 'rgba(3,51,55,.35)'; g.lineWidth = 1.5; g.beginPath(); g.moveTo(sx - 150, sy + 10); g.lineTo(sx + 150, sy + 10); g.stroke();
-      g.fillStyle = '#033337'; g.font = '800 15px "Hanken Grotesk", sans-serif';
-      g.fillText(I.signerName || I.name, sx, sy + 34);
-      g.font = '700 12px "Hanken Grotesk", sans-serif'; g.fillStyle = 'rgba(3,51,55,.6)';
-      g.fillText(I.signerTitle, sx, sy + 52);
+      // chữ ký và người ký: đơn vị BizOn mặc định có hai người ký (trái: thầy Tú, phải: cô Hương)
+      function signBlock(img, script, who, role, sx) {
+        var sy = 700;
+        g.textAlign = 'center';
+        if (img) { var w = Math.min(300, img.width * 90 / img.height), h = w * img.height / img.width; g.drawImage(img, sx - w / 2, sy - h, w, h); }
+        else if (script) { g.font = 'italic 36px "Segoe Script", cursive'; g.fillStyle = '#0a3d62'; g.fillText(script, sx, sy - 20); }
+        g.strokeStyle = 'rgba(3,51,55,.35)'; g.lineWidth = 1.5; g.beginPath(); g.moveTo(sx - 150, sy + 10); g.lineTo(sx + 150, sy + 10); g.stroke();
+        g.fillStyle = '#033337'; g.font = '800 15px "Hanken Grotesk", sans-serif';
+        g.fillText(who, sx, sy + 34);
+        g.font = '700 12px "Hanken Grotesk", sans-serif'; g.fillStyle = 'rgba(3,51,55,.6)';
+        g.fillText(role, sx, sy + 52);
+      }
+      if (I.signer2Name) signBlock(sig2, I.signer2Name, I.signer2Name, I.signer2Title, 400);
+      signBlock(sig, I.signerName, I.signerName || I.name, I.signerTitle, 1000);
 
       g.textAlign = 'left'; g.font = '11px "Hanken Grotesk", sans-serif'; g.fillStyle = 'rgba(3,51,55,.4)';
       g.fillText(T('Cấp ngày ', 'Issued on ') + new Date().toLocaleDateString(isEN() ? 'en-US' : 'vi-VN') + '  ·  bizonland.com', 60, 950);

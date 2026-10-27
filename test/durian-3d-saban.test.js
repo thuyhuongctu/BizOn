@@ -13,7 +13,8 @@ const tpl = JSON.parse(lines[lines.findIndex(l => l.trim() === '<script type="__
 assert.match(tpl, /static SB_PIN = \[\[13\.3, 28\.5\], \[11, 41\], \[45\.8, 62\], \[38\.6, 29\.5\], \[64\.6, 46\], \[53\.8, 56\], \[72\.3, 64\.5\], \[57\.9, 18\.5\]\];/);
 assert.match(tpl, /static Z8POS = \[\[-39, 31, 0\], \[-11, 22, 4\], \[-8, -50, 13\], \[-24, -50, 13\], \[-21, -22, 4\], \[24, -15, 3\], \[62, -21, 3\], \[34, -50, 9\.5\]\];/); // chỗ đứng nằm ngoài vòng va chạm của đồi, nhà máy, gian bán lẻ
 assert.ok(tpl.indexOf('<sc-if value="{{ sb.show }}">') < tpl.indexOf('<div ref="{{ tbRef }}"'), 'lớp sa bàn phải đứng trước thanh trên');
-assert.match(tpl, /<img src="\{\{ sb\.img \}\}" alt="" style="position:absolute;inset:0;width:100%;height:100%;border-radius:18px;display:block">/);
+// đường dẫn cố định (không dùng {{ sb.img }}): tránh trình duyệt tải chuỗi mẫu trước khi gắn dữ liệu → 404
+assert.match(tpl, /<img src="assets\/hc\/durian\/dao-8-chang\.webp" alt="" style="position:absolute;inset:0;width:100%;height:100%;border-radius:18px;display:block">/);
 assert.match(tpl, /img: 'assets\/hc\/durian\/dao-8-chang\.webp'/);
 assert.match(tpl, /const sbOn = this\.sbOn = !!\(s\.ov && s\.ready && s\.sb !== '3d'\)/);
 assert.match(tpl, /tabs: \[\['img', tr2\('🧱 Ảnh sa bàn', '🧱 Clay model'\)\], \['3d', tr2\('🔄 3D xoay 360°', '🔄 3D turntable'\)\]\]/);
