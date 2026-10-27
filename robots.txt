@@ -4,7 +4,6 @@ Disallow: /android/
 Disallow: /supabase/
 Disallow: /test/
 Disallow: /scripts/
-Disallow: /governance-qa/
 Disallow: /play-store/
 Disallow: /release/
 Disallow: /config/
