@@ -55,6 +55,56 @@
     });
   }
 
+  // Gợi ý cho phiếu quyết định: vài câu ngắn dựng từ chính quyết định đội đang chọn (phản ứng biến cố, nguồn tin đã mua,
+  // ưu tiên đầu tư, chia kênh, mục tiêu). Đội bấm để thêm/bỏ câu vào ô; vẫn sửa tay được. Câu gợi ý chỉ diễn đạt lại lựa chọn
+  // của đội, không cho biết phương án nào tốt hơn. Trả về { assume: [], risk: [], why: [] } (mỗi mục tối đa 4 câu).
+  function sheetHints(D, E, st, dec, goal, L) {
+    const nm = o => o ? L(o.vi, o.en) : '';
+    const short = c => nm(c).split(' (')[0];
+    const out = { assume: [], risk: [], why: [] };
+    if (!D || !st || !dec) return out;
+    const ev = E && E.eventFor ? E.eventFor(D, st) : null;
+    const opt = ev && dec.option != null ? ev.options[dec.option] : null;
+    const alloc = dec.alloc || {};
+    const mix = Object.keys(alloc).filter(k => alloc[k] > 0).sort((a, b) => alloc[b] - alloc[a]).map(id => ({ c: D.channels.find(c => c.id === id), p: Math.round(alloc[id]) })).filter(x => x.c);
+    const top = mix[0];
+    const intel = (dec.intel || []).map(id => D.intel.find(i => i.id === id)).filter(Boolean);
+    const pri = dec.priority ? D.priorities.find(p => p.id === dec.priority) : null;
+    const GOAL = { profit: L('giữ lợi nhuận', 'protect profit'), share: L('giữ thị phần chính ngạch', 'hold official market share'), cash: L('giữ tiền mặt an toàn', 'keep cash safe'),
+      rep: L('giữ uy tín và tuân thủ', 'protect reputation and compliance'), reputation: L('giữ uy tín và tuân thủ', 'protect reputation and compliance'),
+      capability: L('xây năng lực cho các vụ sau', 'build capability for later seasons'), adaptation: L('ứng phó biến cố tốt hơn', 'respond better to shocks'),
+      sustainability: L('bền vững cho vườn và vùng trồng', 'keep orchards and growing areas sustainable') };
+    const why = GOAL[goal] || L('cân bằng lợi nhuận và rủi ro', 'balance profit and risk');
+    // giả định
+    if (opt) out.assume.push(L(`Cách «${nm(opt)}» sẽ giúp đội qua «${nm(ev)}» tốt hơn hai cách còn lại.`, `«${nm(opt)}» will get the team through «${nm(ev)}» better than the other two.`));
+    if (top) out.assume.push(L(`Kênh ${short(top.c)} (${top.p}%) vẫn bán được với giá gần như dự báo.`, `${short(top.c)} (${top.p}%) still sells at roughly the forecast price.`));
+    if (intel.length) out.assume.push(L(`Tin từ ${intel.map(nm).join(' và ')} đủ gần với giá thật để dựa vào.`, `${intel.map(nm).join(' and ')} is close enough to the real price to rely on.`));
+    else out.assume.push(L('Giá vựa vụ này ở quanh mức giá nền như các vụ trước.', 'Depot prices this season stay near the usual base level.'));
+    if (pri) out.assume.push(L(`Đầu tư «${nm(pri)}» sẽ có tác dụng ngay từ vụ này hoặc vụ sau.`, `Investing in «${nm(pri)}» pays off this season or next.`));
+    // rủi ro
+    intel.filter(i => i.warnVi).forEach(i => out.risk.push(L(`${nm(i)}: ${i.warnVi.toLowerCase()}, nên giá thật có thể khác.`, `${nm(i)}: ${String(i.warnEn || '').toLowerCase()}, so the real price may differ.`)));
+    if (!intel.length) out.risk.push(L('Không mua nguồn tin nào nên giá vựa có thể lệch xa dự báo.', 'No intel bought, so depot prices may be far from the forecast.'));
+    if (top && top.p >= 60) out.risk.push(L(`Dồn ${top.p}% vào ${short(top.c)}: kênh này tắc thì cả vụ chịu ảnh hưởng.`, `${top.p}% in ${short(top.c)}: if that channel stalls, the whole season suffers.`));
+    if (mix.some(x => ['CN', 'BORDER', 'JP'].includes(x.c.id)) && !((st.assets || {}).test >= 2) && dec.priority !== 'test') out.risk.push(L('Lô hàng bị cảnh báo dư lượng hoặc bị giữ lại ở cửa khẩu.', 'A shipment is flagged for residues or held at the border.'));
+    if (ev) out.risk.push(L(`«${nm(ev)}» nặng hơn đội nghĩ.`, `«${nm(ev)}» turns out worse than the team thinks.`));
+    out.risk.push(L('Đối thủ AI cùng mua hàng làm giá vựa tăng.', 'AI rivals buying the same fruit push depot prices up.'));
+    // lý do của CEO (≥ 10 ký tự)
+    if (opt) out.why.push(L(`Chọn «${nm(opt)}» để ${why}.`, `Chose «${nm(opt)}» to ${why}.`));
+    if (pri) out.why.push(L(`Ưu tiên «${nm(pri)}» vì mục tiêu vụ này là ${why}.`, `Prioritised «${nm(pri)}» because this season's goal is to ${why}.`));
+    if (mix.length) out.why.push(L(`Chia kênh ${mix.map(x => short(x.c) + ' ' + x.p + '%').join(' · ')} để cân bằng giá và rủi ro.`, `Split channels ${mix.map(x => short(x.c) + ' ' + x.p + '%').join(' · ')} to balance price and risk.`));
+    if (intel.length) out.why.push(L(`Mua tin ${intel.map(nm).join(' và ')} để dự báo bớt mù mờ.`, `Bought ${intel.map(nm).join(' and ')} to make the forecast less blind.`));
+    Object.keys(out).forEach(k => { out[k] = out[k].slice(0, 4); });
+    return out;
+  }
+
+  // Bấm một câu gợi ý: chưa có trong ô thì nối vào cuối, đã có thì bỏ ra. Trả về chuỗi mới.
+  function toggleHint(text, hint) {
+    const t = String(text || '').trim();
+    if (!hint) return t;
+    if (t.includes(hint)) return t.replace(hint, '').replace(/\s{2,}/g, ' ').trim();
+    return t ? t + (/[.!?…]$/.test(t) ? ' ' : '. ') + hint : hint;
+  }
+
   // Phiếu đủ điều kiện chốt: có mục tiêu, có giả định, lý do CEO đủ dài.
   function sheetComplete(sh) {
     return !!(sh && sh.goal && (sh.assume || '').trim() && (sh.ceo || '').trim().length >= SHEET_CEO_MIN);
@@ -185,6 +235,8 @@
     pendingJournal: pendingJournal,
     logEv: logEv,
     sheetComplete: sheetComplete,
+    sheetHints: sheetHints,
+    toggleHint: toggleHint,
     goals: goals,
     causes: causes,
     howToPlay: howToPlay,

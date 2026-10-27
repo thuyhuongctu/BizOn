@@ -204,6 +204,10 @@
 .clay-hero .art.tall{width:min(24vw,220px);aspect-ratio:3/4}
 .clay-hero .wave{position:relative;z-index:3;height:44px;margin-top:-44px;background:radial-gradient(circle at 36px 0,transparent 35px,var(--clay-teal-2) 36px) 0 0/72px 36px repeat-x,linear-gradient(var(--clay-teal-2),var(--clay-teal-2)) 0 36px/100% 100% no-repeat}
 @media (max-width:560px){.clay-hero .grid{grid-template-columns:1fr}.clay-hero .art{display:none}}
+/* Chữ hero luôn đọc được khi trống đồng nằm dưới (màn 560–1100px, kể cả điện
+   thoại bật «trang cho máy tính»): quầng nền kem quanh chữ, trống nhỏ và nhạt hơn. */
+.clay-hero h1,.clay-hero .lead{text-shadow:0 0 3px var(--clay-cream-deep),0 0 10px var(--clay-cream-deep),0 0 18px var(--clay-cream-deep)}
+@media (max-width:1100px){.clay-hero .sun{width:min(420px,50%);top:-28%;opacity:.5}}
 
 @keyframes clayFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
 @media (prefers-reduced-motion:reduce){.clay *{animation:none!important}}

@@ -133,6 +133,10 @@ footer{color:var(--faint);font-size:12px;text-align:center;margin-top:24px}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
 .chip{border:1px solid var(--line2);background:var(--panel2);color:var(--ink);border-radius:999px;padding:6px 11px;font:inherit;font-size:12.5px;cursor:pointer}
 .chip.on{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 18%,var(--panel2));font-weight:700}
+.hints{display:flex;flex-wrap:wrap;gap:5px;margin:-2px 0 8px}
+.hints .hint-l{width:100%;font-size:11.5px;color:var(--muted,#5f6b62)}
+.chip.hintc{font-size:12px;padding:5px 10px;text-align:left;line-height:1.35}
+.chip.hintc.on::before{content:'✓ ';font-weight:800}
 .chip[disabled]{opacity:.45;cursor:not-allowed}
 .src{font-size:11px;color:var(--faint)}
 .lock{color:var(--faint);font-size:11.5px}
@@ -677,6 +681,10 @@ footer{color:var(--faint)}
     const norm = E.normalizeAlloc(Object.fromEntries(okIds.map(id => [id, dec.alloc[id]])), okIds);
     const wf = APP.whatifs[n] || [], lq = APP.lumina[n] || [], sh = APP.sheets[n] || {};
     const advice = teamAdvice();
+    // gợi ý chọn sẵn cho phiếu (dựng từ quyết định hiện tại; bấm để thêm/bỏ câu, vẫn sửa tay được) – DurianCore.sheetHints
+    const HINTS = DurianCore.sheetHints(D, E, g, dec, sh.goal, L), HKEY = { assume: 'assume', risk: 'risk', ceo: 'why' };
+    const hintRow = f => { const list = HINTS[HKEY[f]] || []; if (!list.length) return '';
+      return `<div class="hints" role="group" aria-label="${L('Gợi ý', 'Suggestions')}"><span class="hint-l">${L('Gợi ý · bấm để thêm vào ô, bấm lại để bỏ', 'Suggestions · tap to add, tap again to remove')}</span>${list.map((h, i) => `<button type="button" class="chip hintc ${(sh[f] || '').includes(h) ? 'on' : ''}" data-hint-f="${f}" data-hint-i="${i}" aria-pressed="${(sh[f] || '').includes(h)}">${esc(h)}</button>`).join('')}</div>`; };
     $('app').innerHTML = `
       <section class="hero" style="padding-bottom:6px"><div class="hero-row"><div><span class="eyebrow">${role.emoji} ${nm(role)} · ${L('Lớp', 'Class')} ${esc(APP.cls || '—')} · ${L('Đội', 'Team')} ${esc(APP.team || '—')}</span>
         <h1 style="font-size:clamp(22px,3.6vw,30px)">${L('Vụ', 'Season')} ${n}/${D.seasons.length} · ${seasonLabel(s)}</h1>
@@ -768,11 +776,11 @@ footer{color:var(--faint)}
         <div class="radios">${Object.entries(GOALS())
           .map(([k, v]) => `<button type="button" class="chip ${sh.goal === k ? 'on' : ''}" data-goal="${k}">${v}</button>`).join('')}</div>
         <div class="grid2"><div>
-          <label class="ctl req" for="sh-assume">${L('Giả định: đội tin điều gì sẽ xảy ra?', 'Assumption: what does the team believe will happen?')}</label><textarea id="sh-assume" data-sh="assume">${esc(sh.assume)}</textarea>
-          <label class="ctl" for="sh-risk">${L('Rủi ro: biến nào có thể làm dự báo sai?', 'Risk: what could make the forecast wrong?')}</label><textarea id="sh-risk" data-sh="risk">${esc(sh.risk)}</textarea>
+          <label class="ctl req" for="sh-assume">${L('Giả định: đội tin điều gì sẽ xảy ra?', 'Assumption: what does the team believe will happen?')}</label><textarea id="sh-assume" data-sh="assume">${esc(sh.assume)}</textarea>${hintRow('assume')}
+          <label class="ctl" for="sh-risk">${L('Rủi ro: biến nào có thể làm dự báo sai?', 'Risk: what could make the forecast wrong?')}</label><textarea id="sh-risk" data-sh="risk">${esc(sh.risk)}</textarea>${hintRow('risk')}
         </div><div>
           <label class="ctl" for="sh-disagree">${L('Bất đồng: thành viên nào không đồng ý, ở điểm nào?', 'Disagreement: who disagreed, and on what?')}</label><textarea id="sh-disagree" data-sh="disagree">${esc(sh.disagree)}</textarea>
-          <label class="ctl req" for="sh-ceo">${L('CEO chọn phương án nào và vì sao?', 'Which option did the CEO choose, and why?')}</label><textarea id="sh-ceo" data-sh="ceo">${esc(sh.ceo)}</textarea>
+          <label class="ctl req" for="sh-ceo">${L('CEO chọn phương án nào và vì sao?', 'Which option did the CEO choose, and why?')}</label><textarea id="sh-ceo" data-sh="ceo">${esc(sh.ceo)}</textarea>${hintRow('ceo')}
         </div></div>
         <p class="small" style="margin-top:8px">${L('Dự báo ghi vào phiếu', 'Forecast on the sheet')}: ${wf.length ? `<b class="num">${money(wf[wf.length - 1].profit)}</b> (${L('lần «Nếu – Thì» gần nhất', 'latest what-if')})` : `<span class="muted">${L('chưa chạy «Nếu – Thì»', 'no what-if yet')}</span>`}</p>
         <p style="margin-top:14px"><button class="btn" id="commitBtn" type="button">⑦ ${L('CEO chốt vụ', 'CEO commits season')} ${n} →</button></p>
@@ -837,6 +845,12 @@ footer{color:var(--faint)}
     document.querySelectorAll('[data-sh]').forEach(t => {
       t.oninput = () => { APP.sheets[n] = Object.assign({}, APP.sheets[n], { [t.dataset.sh]: t.value }); };
       t.onchange = () => { logEv('EDIT_SHEET_' + t.dataset.sh.toUpperCase(), '', t.value.length + ' chars'); save(); };
+    });
+    document.querySelectorAll('[data-hint-f]').forEach(b => b.onclick = () => {
+      const f = b.dataset.hintF, h = (HINTS[HKEY[f]] || [])[+b.dataset.hintI]; if (!h) return;
+      const cur = (APP.sheets[n] || {})[f] || '', had = cur.includes(h);
+      APP.sheets[n] = Object.assign({}, APP.sheets[n], { [f]: DurianCore.toggleHint(cur, h) });
+      logEv(had ? 'UNUSE_HINT' : 'USE_HINT', f, h); rerender();   // ghi nhật ký: phân biệt câu chọn từ gợi ý với câu tự viết
     });
     $('commitBtn').onclick = () => commit();
     startTimer();

@@ -57,6 +57,30 @@
     document.head.appendChild(st); document.body.appendChild(box);
     setTimeout(function () { if (box.isConnected) box.remove(); }, 15000);
   }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(hint, 900); });
-  else setTimeout(hint, 900);
+  // Điện thoại đang bật «Trang web dành cho máy tính» (Chrome nhớ theo từng site): trang dựng
+  // ở bề rộng ~980px rồi thu nhỏ, chữ li ti, phải phóng to mới đọc được và mọi thanh nút bị che.
+  // Nhận ra khi màn cảm ứng hẹp (< 600px) mà khung trang rộng gấp rưỡi → nhắc cách tắt.
+  function deskHint() {
+    var sw = Math.min(screen.width || 0, screen.height || 0), coarse = false;
+    try { coarse = matchMedia('(pointer: coarse)').matches || navigator.maxTouchPoints > 0; } catch (e) {}
+    if (window.top !== window || !coarse || !sw || sw >= 600 || window.innerWidth < sw * 1.5) return;
+    try { if (ls.getItem('bizon-desk-hint-off') === '1') return; } catch (e) {}
+    if (document.getElementById('bz-desk-hint')) return;
+    var en = ls.getItem(K) === 'en', k = Math.max(1, window.innerWidth / sw);
+    var box = document.createElement('div');
+    box.id = 'bz-desk-hint'; box.setAttribute('role', 'alert'); box.setAttribute('lang', en ? 'en' : 'vi');
+    box.style.cssText = 'position:fixed;left:0;right:0;top:0;z-index:2147483001;display:flex;align-items:flex-start;gap:' + 8 * k + 'px;padding:' + 10 * k + 'px ' + 12 * k + 'px;background:#fffbf4;color:#033337;font:600 ' + 14 * k + 'px/1.4 "Be Vietnam Pro",system-ui,sans-serif;box-shadow:0 ' + 4 * k + 'px ' + 16 * k + 'px rgba(3,51,55,.35)';
+    box.innerHTML = '<span style="flex:1">' + (en
+      ? '📱 Your phone is showing the <b>desktop version</b>, so text is tiny and bars get covered. Open the browser menu ⋮ and untick <b>Desktop site</b>.'
+      : '📱 Điện thoại đang hiện <b>bản cho máy tính</b> nên chữ rất nhỏ và các thanh nút bị che. Mở menu ⋮ của trình duyệt, bỏ chọn <b>Trang web dành cho máy tính</b>.') +
+      '</span><button type="button" aria-label="' + (en ? 'Dismiss' : 'Đóng') + '" style="font:inherit;border:0;background:#006687;color:#fff;border-radius:999px;padding:' + 4 * k + 'px ' + 12 * k + 'px;cursor:pointer">' + (en ? 'OK' : 'Đã hiểu') + '</button>';
+    box.querySelector('button').onclick = function () {
+      try { ls.setItem('bizon-desk-hint-off', '1'); } catch (e) {}
+      box.remove();
+    };
+    document.body.appendChild(box);
+  }
+  function boot() { setTimeout(hint, 900); setTimeout(deskHint, 600); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
 })();
