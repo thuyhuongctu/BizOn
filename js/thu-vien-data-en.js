@@ -109,7 +109,6 @@ window.BZ_LIB_EN={
 "dragon/teo-soi/passport-show.webp":["Tèo Soi – Showing the passport","The Durian Passport with its stamps"],
 "dragon/teo-soi/carry-jump.webp":["Tèo Soi – Leaping with a durian","When a shipment is accepted"],
 "dragon/teo-soi/eat.webp":["Tèo Soi – Eating durian","A treat after a winning season"],
-"dragon/teo-soi/lick.webp":["Tèo Soi – Licking its lips","When the player stays idle for a while"],
 "dragon/teo-soi/yawn.webp":["Tèo Soi – Yawning","After 30 seconds standing still"],
 "dragon/teo-soi/nap.webp":["Tèo Soi – Napping","After 45 seconds standing still"],
 "dragon/teo-soi/sleep.webp":["Tèo Soi – Fast asleep","After 90 seconds standing still"],
