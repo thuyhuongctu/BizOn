@@ -1,5 +1,7 @@
 # Brand Passport Learning Edition — Lumina Coach–Critic–Reflection V1
 
+> **Cập nhật 27/10/2026:** đã gỡ trang `brand-passport-learning-pilot.html` cùng `js/brand-passport-governance.js`, workflow `brand-passport-governance.yml` và `test/brand-passport-governance.test.js` vì trang chưa từng gắn vào site và RPC nộp vẫn đang khóa. Schema `bp_learning_traces`, các migration và RPC đọc/xóa của giảng viên giữ nguyên; phần dưới đây là thiết kế lưu lại để tham khảo nếu sau này mở lại pilot.
+
 ## 1. Mục tiêu
 
 Triển khai một lớp hỗ trợ học tập có thể kiểm tra cho Brand Passport theo chuỗi:

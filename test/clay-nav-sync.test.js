@@ -63,7 +63,7 @@ for (const [from, to] of Object.entries(MERGED)) {
 }
 
 // Trang ứng dụng/tài liệu ở thư mục gốc: chỉ gắn menu + chân trang chung
-const ROOT_TOOLS = ['brand-passport-learning.html', 'brand-passport-learning-pilot.html', 'Thang Diem Danh Gia.dc.html',
+const ROOT_TOOLS = ['brand-passport-learning.html', 'Thang Diem Danh Gia.dc.html',
   'Thang Diem Chi Tiet.dc.html', 'Thang Diem Ho Chieu Mini.dc.html', 'Thang Diem Bat Nghiep - Sinh Vien.dc.html',
   'Grading Scale Bat Nghiep - Student EN.dc.html', 'Thang Diem Ho Chieu - Sinh Vien.dc.html', 'Grading Scale Ho Chieu - Student EN.dc.html'];
 for (const f of ROOT_TOOLS) {

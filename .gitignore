@@ -1,5 +1,4 @@
 # Ảnh chụp và tệp tạm do test sinh ra (npm test) – không commit
 artifacts/
-governance-qa/
 node_modules/
 __pycache__/
