@@ -13,8 +13,10 @@ assert.ok(fs.existsSync(R(poster)) && fs.statSync(R(poster)).size < 200e3, 'ản
 
 const home = read('index.html');
 assert.equal(home, read('academia3d-v2.html'), 'index.html và academia3d-v2.html giống hệt');
-assert.ok(home.includes(`href="${mp4}" data-trailer="${mp4}" data-poster="${poster}" data-title="Gravity Lab"`), 'thẻ trailer trên trang chủ');
+const mp4s = mp4.replace('.mp4', '-720p.mp4');   // từ 27/10/2026 trang dùng bản nén 720p
+assert.ok(fs.existsSync(R(mp4s)) && fs.statSync(R(mp4s)).size < fs.statSync(R(mp4)).size, 'có bản 720p nhỏ hơn bản gốc');
+assert.ok(home.includes(`href="${mp4s}" data-trailer="${mp4s}" data-poster="${poster}" data-title="Gravity Lab"`), 'thẻ trailer trên trang chủ');
 assert.ok(!home.includes('gravity-lab-trailer.webm'), 'chỉ MP4');
-assert.ok(read('README.md').includes('(https://bizonland.com/' + mp4 + ')'), 'README có liên kết trailer');
+assert.ok(read('README.md').includes('(https://bizonland.com/' + mp4s + ')'), 'README có liên kết trailer');
 assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 695, 'sw.js nâng phiên bản bộ nhớ đệm');
 console.log('gravity-lab-trailer: ok');
