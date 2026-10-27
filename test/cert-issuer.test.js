@@ -10,8 +10,9 @@ const ROOT = path.join(__dirname, '..'), read = f => fs.readFileSync(path.join(R
 
 // --- 1 · mô-đun: không còn trường nào viết cứng; mặc định BizOn ---
 const cert = read('js/official-cert.js'), certCode = cert.slice(cert.indexOf('*/'));   // bỏ chú thích đầu tệp (dòng bản quyền)
-for (const bad of ['ctu-logo', 'soe-logo', 'sig-tu-in', 'CAN THO UNIVERSITY', 'SCHOOL OF ECONOMICS', 'Phan Anh T', 'KT330H', 'Entrepreneurship', 'Cần Thơ']) assert.ok(!certCode.includes(bad), 'official-cert.js còn: ' + bad);
-assert.match(cert, /var BIZON = \{ logo: 'assets\/icons\/icon-512\.png', sig: 'assets\/docs\/sig-huong-in\.png', signer: 'Đỗ Thùy Hương' \};/);
+for (const bad of ['ctu-logo', 'soe-logo', 'CAN THO UNIVERSITY', 'SCHOOL OF ECONOMICS', 'KT330H', 'Entrepreneurship', 'Cần Thơ']) assert.ok(!certCode.includes(bad), 'official-cert.js còn: ' + bad);
+// mặc định BizOn: hai nhà sáng lập cùng ký (PGS.TS. Phan Anh Tú trái, Đỗ Thùy Hương phải)
+assert.match(cert, /var BIZON = \{ logo: 'assets\/icons\/icon-512\.png', sig: 'assets\/docs\/sig-huong-in\.png', signer: 'Đỗ Thùy Hương', sig2: 'assets\/docs\/sig-tu-in\.png', signer2: 'PGS\.TS\. Phan Anh Tú' \};/);
 assert.match(cert, /window\.OfficialCert = \{ download: download, render: render, fileName: fileName, fetchConfig: fetchConfig, issuer: issuer, DEFAULTS: DEFAULTS \};/);
 assert.ok(cert.includes("'-ChungNhan-'") && !cert.includes('ChungNhanDHCT'));
 assert.ok(fs.existsSync(path.join(ROOT, 'assets/docs/sig-huong-in.png')) && fs.existsSync(path.join(ROOT, 'assets/icons/icon-512.png')));
@@ -63,10 +64,10 @@ assert.ok(!read('README.md').includes('are free for **Can Tho University**'));
   const r1 = await page.evaluate(async () => { const cfg = await OfficialCert.fetchConfig('ANY-CLASS'); const I = OfficialCert.issuer(); window.__drawn = []; window.__imgs = []; const cv = await OfficialCert.render({ name: 'Nguyễn Văn A', courseDates: '20/10/2026' }); return { cfg, custom: I.custom, w: cv.width, h: cv.height, drawn: window.__drawn, imgs: window.__imgs, file: OfficialCert.fileName({ name: 'Nguyễn Văn A', filenamePrefix: 'BizOn-BatNghiep' }) }; });
   assert.equal(r1.custom, false); assert.equal(r1.cfg.org_name, ''); assert.equal(r1.cfg.course_name, 'BizOn Bật Nghiệp'); assert.equal(r1.cfg.course_code, '');
   assert.deepEqual([r1.w, r1.h], [1400, 990]);
-  for (const t of ['BIZONLAND', 'CERTIFICATE OF COMPLETION', 'Nguyễn Văn A', 'Đỗ Thùy Hương', 'Người sáng lập BizOn', '“BizOn Bật Nghiệp”']) assert.ok(r1.drawn.includes(t), 'mặc định thiếu: ' + t);
+  for (const t of ['BIZONLAND', 'CERTIFICATE OF COMPLETION', 'Nguyễn Văn A', 'Đỗ Thùy Hương', 'Người sáng lập BizOn', 'PGS.TS. Phan Anh Tú', 'Đồng sáng lập · Cố vấn học thuật BizOn', '“BizOn Bật Nghiệp”']) assert.ok(r1.drawn.includes(t), 'mặc định thiếu: ' + t);
   assert.ok(r1.drawn.some(t => t.includes('trên nền tảng BizOn · bizonland.com')));
-  assert.ok(!r1.drawn.some(t => /CAN THO|Cần Thơ|Phan Anh/.test(t)), 'mặc định không nhắc ĐHCT: ' + r1.drawn.join(' | '));
-  assert.ok(r1.imgs.includes('assets/icons/icon-512.png') && r1.imgs.includes('assets/docs/sig-huong-in.png'), 'logo BizOn + chữ ký in: ' + r1.imgs.join(','));
+  assert.ok(!r1.drawn.some(t => /CAN THO|Cần Thơ/.test(t)), 'mặc định không nhắc ĐHCT: ' + r1.drawn.join(' | '));
+  assert.ok(r1.imgs.includes('assets/icons/icon-512.png') && r1.imgs.includes('assets/docs/sig-huong-in.png') && r1.imgs.includes('assets/docs/sig-tu-in.png'), 'logo BizOn + chữ ký in của hai nhà sáng lập: ' + r1.imgs.join(','));
   assert.equal(r1.file, 'BizOn-BatNghiep-ChungNhan-NguyenVanA.png');
   const r2 = await page.evaluate(async () => { window.__drawn = []; window.__imgs = []; await OfficialCert.render({ name: 'Trần Thị B', courseCode: 'KT330H', courseName: 'Entrepreneurship', courseDates: '4–11/3/2026', org: { org_name: 'Trường Đại học Cần Thơ', org_sub: 'Trường Kinh tế', org_logo: 'assets/docs/ctu-logo.png', org_logo2: 'assets/docs/soe-logo.png', signer_name: 'PGS.TS. Phan Anh Tú', signer_title: 'Trường Kinh tế, Đại học Cần Thơ', signer_sig: 'assets/docs/sig-tu-in.png' } }); return { drawn: window.__drawn, imgs: window.__imgs }; });
   for (const t of ['TRƯỜNG ĐẠI HỌC CẦN THƠ', 'TRƯỜNG KINH TẾ', 'CERTIFICATE OF PARTICIPATION', 'Trần Thị B', '“Entrepreneurship – Code KT330H”', 'PGS.TS. Phan Anh Tú', 'Trường Kinh tế, Đại học Cần Thơ']) assert.ok(r2.drawn.includes(t), 'theo đơn vị thiếu: ' + t);
