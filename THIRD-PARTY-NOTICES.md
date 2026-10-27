@@ -74,7 +74,7 @@ Các trang chính của bizonland.com (trang chủ, bốn trò chơi, hành trì
 
 ## 6 · Công cụ phát triển (không được phân phối cùng sản phẩm)
 
-Chỉ chạy trên máy phát triển hoặc trong CI; không có mã của chúng trong trang web: Node.js, **Playwright** (Apache 2.0, kiểm thử trình duyệt), **html-validate** (MIT), **sharp**/libvips (Apache 2.0 / LGPL, xử lý ảnh), **ffmpeg** với libvpx và libopus (LGPL/BSD, mã hoá video WebM), **rembg** (MIT) với mô hình U²-Net (Apache 2.0, tách nền ảnh — tệp mới, không ghi đè ảnh gốc), Android SDK và Gradle (xây gói Android), các action chính thức của GitHub.
+Chỉ chạy trên máy phát triển hoặc trong CI; không có mã của chúng trong trang web: Node.js, **Playwright** (Apache 2.0, kiểm thử trình duyệt), **html-validate** (MIT), **sharp**/libvips (Apache 2.0 / LGPL, xử lý ảnh), **ffmpeg** (LGPL, mã hoá lại video MP4 H.264/AAC), **rembg** (MIT) với mô hình U²-Net (Apache 2.0, tách nền ảnh — tệp mới, không ghi đè ảnh gốc), **Demucs** (MIT, tách giọng khỏi nhạc nền), **faster-whisper** (MIT) với mô hình Whisper (MIT, nhận dạng lời để kiểm phát âm), **edge-tts** (LGPL-3.0, gọi dịch vụ đọc của Edge), Android SDK và Gradle (xây gói Android), các action chính thức của GitHub.
 
 ## 7 · Nội dung được tạo với sự hỗ trợ của công cụ AI
 
@@ -86,6 +86,7 @@ Một phần tài sản nghe nhìn của BizOn được dựng với công cụ 
 | Bản thu âm nhạc (`assets/audio/`) | Hoà âm và giọng hát bằng công cụ sản xuất nhạc có AI (ghi trong `docs/loi-bai-hat.md`) | Toàn bộ lời ca, thể loại, nhịp độ, cấu trúc bài, nghe chọn qua nhiều vòng |
 | Giọng Lumina và giọng Tú Phan | Mô hình giọng nhân bản | Giọng gốc là **giọng của chính hai tác giả**, tự đồng ý (xem `docs/ip/BIZON_EXTERNAL_MEDIA_PROVENANCE_phan-anh-tu-media_2026-08-04.md`) |
 | Video giới thiệu (`assets/video/`) | Dựng hình bằng công cụ AI, ghép bằng ffmpeg | Kịch bản, lời dẫn, dựng, phụ đề |
+| Lời đọc trailer Bật Nghiệp bản v3 (`assets/video/bizon-trailer-v3.mp4`) | Giọng thần kinh `en-US-AvaMultilingualNeural` của Microsoft (dịch vụ đọc của Edge); nhạc nền tách từ bản v2 bằng Demucs | Kịch bản, chọn cách đọc từng tên riêng tiếng Việt, căn giờ, trộn — xem `docs/video/trailer-bat-nghiep-loi-doc.md` |
 
 Điều khoản dịch vụ của từng công cụ tại thời điểm tạo được lưu kèm hồ sơ SHTT (việc 🔎 trong tài liệu nguồn gốc media).
 

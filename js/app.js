@@ -530,7 +530,6 @@ function showLevelUp(level) {
 function MANUAL() { return {
   start: { icon: '🚀', name: T('Bắt đầu', 'Getting Started'), html: `
     <video controls preload="none" playsinline poster="${T('assets/video/bizon-huong-dan-choi-vi-poster.webp', 'assets/video/bizon-huong-dan-choi-en-poster.webp')}" class="w-full rounded-2xl mb-4">
-      <source src="${T('assets/video/bizon-huong-dan-choi-vi.webm', 'assets/video/bizon-huong-dan-choi-en.webm')}" type="video/webm">
       <source src="${T('assets/video/bizon-huong-dan-choi-vi.mp4', 'assets/video/bizon-huong-dan-choi-en.mp4')}" type="video/mp4">
     </video>
     <p class="text-xs text-deep-teal/50 -mt-2 mb-4">${T('📺 Video hướng dẫn chơi (~47 giây, 2 vòng minh họa).', '📺 How-to-play video (~47 seconds, 2 rounds shown).')}</p>
