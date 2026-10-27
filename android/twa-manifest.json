@@ -24,6 +24,12 @@
   "appVersionCode": 2,
   "shortcuts": [
     {
+      "name": "Hành trình 3 bậc",
+      "shortName": "Hành trình",
+      "url": "/hanh-trinh.html",
+      "chosenIconUrl": "https://bizonland.com/assets/icons/icon-192.png"
+    },
+    {
       "name": "Play Bật Nghiệp",
       "shortName": "Bật Nghiệp",
       "url": "/game.html",

@@ -10,6 +10,11 @@
   "orientation": "portrait",
   "theme_color": "#006687",
   "background_color": "#f4faff",
+  "shortcuts": [
+    { "name": "Hành trình 3 bậc · 3-Level Journey", "short_name": "Hành trình", "url": "./hanh-trinh.html", "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Bật Nghiệp", "short_name": "Bật Nghiệp", "url": "./game.html", "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Trang Giảng viên · Instructors", "short_name": "Giảng viên", "url": "./giang-vien.html", "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] }
+  ],
   "icons": [
     { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
     { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
