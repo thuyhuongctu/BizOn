@@ -14,6 +14,7 @@
   var LINKS = [
     { href:'universe.html',         vi:'Vũ trụ',    en:'Universe' },
     { href:'games.html',            vi:'Trò chơi',  en:'Games' },
+    { href:'hanh-trinh.html',       vi:'Hành trình',en:'Journey' },
     /* Góc giảng viên: đặt sớm để hàng menu cuộn ngang trên điện thoại vẫn thấy ngay */
     { href:'giang-vien.html',       vi:'Giảng viên',en:'Instructors' },
     { href:'lop-hoc.html',          vi:'Lớp học',   en:'Classroom' },
