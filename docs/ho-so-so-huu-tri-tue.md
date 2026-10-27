@@ -332,6 +332,7 @@ Nếu «BizOn» đơn thuần bị vướng, **«BizOn Bật Nghiệp»** dạng
 > - Bài học của bậc 1 là **chính danh hoá** (đánh đổi giữa hoạt động phi chính thức và chính danh hoá) — khác hẳn «The Food Truck Challenge».
 > - Trang trò chơi **không chứa bất kỳ dấu hiệu hay dòng ghi công nào của Harvard Business Publishing · Forio** (đã kiểm: không có chuỗi "Harvard/Forio/Food Truck Challenge/Roberto"). Liên tưởng cũ chỉ nằm ở **tên tệp**.
 > - Tệp đã đổi tên `food-truck.html → ben-phu-sa.html` để loại bỏ liên tưởng đó; URL cũ chuyển hướng sang bản mới.
+> - **27/10/2026:** gỡ hẳn trang chuyển hướng `food-truck.html` (không còn liên kết nào trỏ tới) – tên cũ không còn trong kho mã đang chạy.
 > - **Hướng dẫn "loại khỏi bản in" bên dưới không còn áp dụng** — giữ lại làm hồ sơ lịch sử.
 >
 > Nội dung pháp lý cần luật sư SHTT xác nhận trước khi nộp hồ sơ.
