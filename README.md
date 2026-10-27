@@ -50,7 +50,7 @@ Start at Level 1. Each level builds on the one before, and every game has a 3D v
 **Level 1 · Venture start-up — Bến Phù Sa**<br>
 A riverside street-vendor start-up on a Mekong floating market. Each week you pick a Method, Product and Location, and learn when to test cheaply and when to scale.<br>
 <sub>5 weeks · solo or team play</sub><br>
-[Play in 3D](https://bizonland.com/ben-phu-sa-3d.html) · [3D team play](https://bizonland.com/ben-phu-sa-v8.html) · [2D](https://bizonland.com/ben-phu-sa.html) · [Trailer](https://bizonland.com/assets/video/ben-phu-sa-trailer-v2.mp4)
+[Play in 3D](https://bizonland.com/ben-phu-sa-3d.html) · [3D team play](https://bizonland.com/ben-phu-sa-v8.html) · [2D](https://bizonland.com/ben-phu-sa.html) · [Trailer](https://bizonland.com/assets/video/ben-phu-sa-trailer-v2-720p.mp4)
 </td>
 <td width="50%" valign="top">
 <a href="https://bizonland.com/BizOn%20Game%203D.html"><img src="assets/covers/bat-nghiep-3d.webp" alt="Bật Nghiệp"></a>
@@ -58,7 +58,7 @@ A riverside street-vendor start-up on a Mekong floating market. Each week you pi
 **Level 2 · Running a business — Bật Nghiệp**<br>
 Build and run a company through multi-round strategic decisions in a Vietnamese market. You face three rival CEOs, and the AI advisor Lumina guides you.<br>
 <sub>6 decision rounds · market arena</sub><br>
-[Play in 3D](https://bizonland.com/BizOn%20Game%203D.html) · [2D](https://bizonland.com/game.html) · [Trailer](https://bizonland.com/assets/video/bizon-trailer-v3.mp4)
+[Play in 3D](https://bizonland.com/BizOn%20Game%203D.html) · [2D](https://bizonland.com/game.html) · [Trailer](https://bizonland.com/assets/video/bizon-trailer-v3-720p.mp4)
 </td>
 </tr>
 <tr>
@@ -68,7 +68,7 @@ Build and run a company through multi-round strategic decisions in a Vietnamese 
 **Level 3 · Internationalisation — Brand Passport**<br>
 Take a Vietnamese brand across borders through market intelligence, entry strategy, adaptation and resilience.<br>
 <sub>6 quarters · 7 markets</sub><br>
-[Play in 3D](https://bizonland.com/Ho%20Chieu%20Thuong%20Hieu%203D.html) · [2D](https://bizonland.com/brand-passport.html) · [Lite 3D](https://bizonland.com/Ho%20Chieu%20Mini%203D.html) · [Lite 2D](https://bizonland.com/Ho%20Chieu%20Mini.dc.html) · [Trailer](https://bizonland.com/assets/video/bp-trailer-v2.mp4)
+[Play in 3D](https://bizonland.com/Ho%20Chieu%20Thuong%20Hieu%203D.html) · [2D](https://bizonland.com/brand-passport.html) · [Lite 3D](https://bizonland.com/Ho%20Chieu%20Mini%203D.html) · [Lite 2D](https://bizonland.com/Ho%20Chieu%20Mini.dc.html) · [Trailer](https://bizonland.com/assets/video/bp-trailer-v2-720p.mp4)
 </td>
 <td width="50%" valign="top">
 <a href="https://bizonland.com/lab/ho-chieu-sau-rieng-3d.html"><img src="assets/covers/ho-chieu-sau-rieng-3d.webp" alt="Durian Passport"></a>
@@ -76,7 +76,7 @@ Take a Vietnamese brand across borders through market intelligence, entry strate
 **Level 3 · Internationalisation — Durian Passport**<br>
 Take Vietnamese durian to the world over 6 seasons on a walkable 3D map. Topics include planting-area codes, the China phytosanitary protocol, official versus border trade, and frozen and premium markets.<br>
 <sub>6 seasons · teams of 5 roles vs AI rivals</sub><br>
-[Play in 3D](https://bizonland.com/lab/ho-chieu-sau-rieng-3d.html) · [2D](https://bizonland.com/lab/ho-chieu-sau-rieng.html) · [Classroom playbook](https://bizonland.com/lop-hoc.html) · [Trailer](https://bizonland.com/assets/video/srp-trailer.mp4)
+[Play in 3D](https://bizonland.com/lab/ho-chieu-sau-rieng-3d.html) · [2D](https://bizonland.com/lab/ho-chieu-sau-rieng.html) · [Classroom playbook](https://bizonland.com/lop-hoc.html) · [Trailer](https://bizonland.com/assets/video/srp-trailer-720p.mp4)
 </td>
 </tr>
 </table>
@@ -88,7 +88,7 @@ Use these alongside the games to practise one model or skill at a time.
 | Tool | What it does |
 |---|---|
 | 🌏 **[IE Lab](https://bizonland.com/global.html)** · strategy model | Experiment with internationalization assumptions and see how strategic variables change the outcomes. |
-| 🧪 **Practicum labs**, one session each | **[CMR Lab](https://bizonland.com/lab/cmr-lab.html)**: contribution margin ratio, seen through four lenses.<br>**[CVP Lab](https://bizonland.com/lab/cvp-studio.html)**: cost–volume–profit, break-even and margin of safety.<br>**[Gravity Lab](https://thuyhuongctu.github.io/Gravity-Lab/)**: the gravity model of trade and FDI into Viet Nam (OLS and PPML in the browser). [Trailer](https://bizonland.com/assets/video/gravity-lab-trailer.mp4)<br>**[FDI Lab](https://bizonland.com/lab/nha-may-fdi.html)**: an FDI factory run over 8 quarters (local content, rules of origin, transshipment). |
+| 🧪 **Practicum labs**, one session each | **[CMR Lab](https://bizonland.com/lab/cmr-lab.html)**: contribution margin ratio, seen through four lenses.<br>**[CVP Lab](https://bizonland.com/lab/cvp-studio.html)**: cost–volume–profit, break-even and margin of safety.<br>**[Gravity Lab](https://thuyhuongctu.github.io/Gravity-Lab/)**: the gravity model of trade and FDI into Viet Nam (OLS and PPML in the browser). [Trailer](https://bizonland.com/assets/video/gravity-lab-trailer-720p.mp4)<br>**[FDI Lab](https://bizonland.com/lab/nha-may-fdi.html)**: an FDI factory run over 8 quarters (local content, rules of origin, transshipment). |
 | 🕹️ **[Arcade](https://bizonland.com/games.html)** · skill drills | Short, focused simulations, each practising one business skill or decision pattern. |
 | 🎵 **[Soundtrack](https://bizonland.com/am-nhac.html)** | The original music library. You can play whole albums, set a sleep timer and download tracks. |
 
