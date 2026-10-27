@@ -58,7 +58,7 @@ A riverside street-vendor start-up on a Mekong floating market. Each week you pi
 **Level 2 · Running a business — Bật Nghiệp**<br>
 Build and run a company through multi-round strategic decisions in a Vietnamese market. You face three rival CEOs, and the AI advisor Lumina guides you.<br>
 <sub>6 decision rounds · market arena</sub><br>
-[Play in 3D](https://bizonland.com/BizOn%20Game%203D.html) · [2D](https://bizonland.com/game.html) · [Trailer](https://bizonland.com/assets/video/bizon-trailer-v2.mp4)
+[Play in 3D](https://bizonland.com/BizOn%20Game%203D.html) · [2D](https://bizonland.com/game.html) · [Trailer](https://bizonland.com/assets/video/bizon-trailer-v3.mp4)
 </td>
 </tr>
 <tr>

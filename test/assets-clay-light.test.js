@@ -17,6 +17,11 @@ for (const f of PAGES) { const s = read(f); for (const m of s.matchAll(/assets\/
 assert.ok(mp4s.size >= 12 && posters.size >= 10, `tham chiếu: ${mp4s.size} video, ${posters.size} poster`);
 for (const v of mp4s) assert.ok(fs.existsSync(R(`assets/video/${v}.mp4`)) && size(`assets/video/${v}.mp4`) > 100000, 'thiếu MP4 ' + v);
 assert.ok(!fs.readdirSync(R('assets/video')).some(f => f.endsWith('.webm')), 'assets/video không còn tệp WebM');
+// trailer Bật Nghiệp bản v3: lời đọc đúng tên riêng tiếng Việt; bản v2 giữ nguyên trong kho, trang dùng v3
+assert.ok(read('academia3d-v2.html').includes('data-trailer="assets/video/bizon-trailer-v3.mp4"') && !read('academia3d-v2.html').includes('bizon-trailer-v2.mp4'));
+assert.ok(fs.existsSync(R('assets/video/bizon-trailer-v2.mp4')) && size('assets/video/bizon-trailer-v3.mp4') > 5e6, 'trailer v3 có, v2 giữ nguyên');
+{ const b = fs.readFileSync(R('assets/video/bizon-trailer-v3.mp4')).subarray(0, 64 * 1024).toString('latin1'); assert.ok(b.includes('moov') && b.indexOf('moov') < (b.indexOf('mdat') < 0 ? Infinity : b.indexOf('mdat')), 'faststart: moov đứng trước mdat'); assert.ok(b.includes('mp4a') && b.includes('avc1'), 'H.264 + AAC'); }
+assert.ok(read('docs/video/trailer-bat-nghiep-loi-doc.md').includes('**Hà Nội**') && read('THIRD-PARTY-NOTICES.md').includes('bizon-trailer-v3.mp4'));
 for (const p of posters) { assert.ok(fs.existsSync(R(`assets/video/${p}.webp`)), 'thiếu poster WebP ' + p); assert.ok(size(`assets/video/${p}.webp`) < size(`assets/video/${p}.jpg`), 'WebP phải nhỏ hơn JPG: ' + p); }
 // mỗi <source> là MP4; hộp thoại trailer và trang Vũ trụ chỉ dựng một nguồn MP4
 for (const f of ['universe.html', 'brand-passport.html', 'Ho Chieu Thuong Hieu 3D.html']) { const s = read(f); const n = (s.match(/<source src="assets\/video\/[a-zA-Z0-9_.-]+\.mp4" type="video\/mp4">/g) || []).length; assert.ok(n > 0 && n === (s.match(/<source /g) || []).length, f + ': mọi <source> phải là MP4'); }
