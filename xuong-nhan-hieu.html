@@ -57,6 +57,9 @@
   .xn-tab th{font-family:var(--clay-head);font-weight:800}
   details.xn-box summary{cursor:pointer;font-family:var(--clay-head);font-size:clamp(20px,2.6vw,26px);font-weight:800}
   .xn-note{font-size:14px;color:var(--clay-sub);line-height:1.55;margin-top:10px}
+  .xn-gap{margin-top:16px}
+  .xn-gap-s{margin-top:10px}
+  .xn-flat{margin:0}
   .xn-lic{font-size:13.5px;color:var(--clay-sub);text-align:center;margin:8px 0 40px}
   #xn-print{display:none}
   @media print{
@@ -73,7 +76,7 @@
     <span class="clay-eyebrow" data-en="Chapter 5 · Branding &amp; marketing mix · individual assignment">Chương 5 · Xây dựng nhãn hiệu &amp; Marketing hỗn hợp · làm cá nhân</span>
     <h1 data-en="Local Specialty Brand Lab">Xưởng Nhãn Hiệu Đặc Sản</h1>
     <p class="lead" data-en="A group of student founders wants to sell a local specialty. Pick the product, build the brand, design the 4P, then download a one-page brand card to hand in. Your draft stays on this device only.">Một nhóm sinh viên khởi nghiệp muốn kinh doanh một đặc sản địa phương. Bạn chọn sản phẩm, xây dựng nhãn hiệu, thiết kế 4P rồi tải Thẻ thương hiệu một trang để nộp. Bài làm chỉ lưu trên thiết bị này.</p>
-    <div class="xn-ctx" aria-label="Bối cảnh doanh nghiệp" data-en-aria="Business context">
+    <div class="xn-ctx" role="group" aria-label="Bối cảnh doanh nghiệp" data-en-aria="Business context">
       <span data-en="Small scale, limited capital">Quy mô nhỏ, vốn hạn chế</span>
       <span data-en="No brand on the market yet">Chưa có thương hiệu trên thị trường</span>
       <span data-en="Mainly domestic customers">Khách hàng chủ yếu trong nước</span>
@@ -141,14 +144,14 @@
       <label class="clay-label"><span data-en="Why this price?">Vì sao chọn mức giá này?</span><textarea class="clay-field" name="priceReason" maxlength="500"></textarea></label>
       <ul class="xn-hint" data-for="price"></ul>
 
-      <div class="clay-label" style="margin-top:16px"><span data-en="Place: online channels">Place: kênh trực tuyến</span></div>
+      <div class="clay-label xn-gap"><span data-en="Place: online channels">Place: kênh trực tuyến</span></div>
       <div class="xn-checks" data-group="place" data-kind="online"></div>
-      <div class="clay-label" style="margin-top:10px"><span data-en="Place: direct channels">Place: kênh trực tiếp</span></div>
+      <div class="clay-label xn-gap-s"><span data-en="Place: direct channels">Place: kênh trực tiếp</span></div>
       <div class="xn-checks" data-group="place" data-kind="direct"></div>
       <label class="clay-label"><span data-en="How will the channels work together?">Các kênh phối hợp thế nào?</span><textarea class="clay-field" name="placeNote" maxlength="400"></textarea></label>
       <ul class="xn-hint" data-for="place"></ul>
 
-      <div class="clay-label" style="margin-top:16px"><span data-en="Promotion: tactics">Promotion: cách truyền thông, quảng bá</span></div>
+      <div class="clay-label xn-gap"><span data-en="Promotion: tactics">Promotion: cách truyền thông, quảng bá</span></div>
       <div class="xn-checks" data-group="promo"></div>
       <label class="clay-label"><span data-en="Plan for the first month (what, where, how much)">Kế hoạch tháng đầu (làm gì, ở đâu, chi bao nhiêu)</span><textarea class="clay-field" name="promoNote" maxlength="600"></textarea></label>
       <ul class="xn-hint" data-for="promo"></ul>
@@ -158,7 +161,7 @@
   <div class="xn-bar" role="status" aria-live="polite">
     <div class="xn-meter" aria-hidden="true"><i id="xn-meter"></i></div>
     <b id="xn-progress">0/8</b>
-    <span id="xn-saved" class="xn-note" style="margin:0"></span>
+    <span id="xn-saved" class="xn-note xn-flat"></span>
   </div>
 
   <section class="xn-box" id="the">
