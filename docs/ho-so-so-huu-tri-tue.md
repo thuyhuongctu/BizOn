@@ -359,6 +359,13 @@ Hai điều **không được ghi** trong hồ sơ vì chưa có căn cứ:
 
 ---
 
+## D4 · CHAM Homestay — tài sản riêng của Đỗ Thùy Hương, BizOn dùng theo giấy phép *(bổ sung 28/10/2026)*
+
+- **CHAM** (kế hoạch kinh doanh homestay sinh thái trên cù lao Tân Lộc, Cần Thơ; bản gốc 2023, bản nâng cấp 2026; nhãn hiệu dự kiến «CHAM TÂN LỘC») là **tài sản riêng của Đỗ Thùy Hương**, không thuộc phạm vi đồng sở hữu BizOn tại Mục F2.
+- BizOn được **dùng theo giấy phép không độc quyền** để đăng trang tình huống `cham-homestay.html` (dạy học, không thu phí riêng). Trang ghi: «CHAM™ và nội dung tình huống © 2026 Đỗ Thùy Hương, dùng trên BizOn theo giấy phép không độc quyền».
+- **Không** khai CHAM trong bất kỳ hồ sơ đăng ký nào của BizOn; hồ sơ nhãn hiệu và quyền tác giả của CHAM đứng tên một mình Đỗ Thùy Hương, giữ ngoài kho này.
+- Bản kế hoạch 2023 **không** đăng lên BizOn nếu chưa có đồng ý riêng của tác giả. Ký hiệu ® chỉ dùng sau khi nhãn hiệu được cấp văn bằng.
+
 # PHẦN E · CHỨNG CỨ CẦN CHUẨN BỊ
 
 Ngoài hồ sơ chính thức, nên chuẩn bị bộ chứng cứ sau. Khi có tranh chấp, đây mới là thứ quyết định.
