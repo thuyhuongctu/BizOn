@@ -16,7 +16,9 @@ for (const need of ['js/bizon-clay-nav.js', 'js/bizon-clay-footer.js', 'js/bizon
 assert.ok(read('giang-vien.html').includes('href="cham-homestay.html"'), 'trang giảng viên chưa có lối vào');
 assert.ok(read('docs/ho-so-so-huu-tri-tue.md').includes('## D4 · CHAM Homestay'), 'hồ sơ SHTT chưa ghi giấy phép CHAM');
 assert.ok(read('cham-homestay.html').includes('href="https://doi.org/10.5281/zenodo.23720576"'), 'trang tình huống chưa có DOI Zenodo');
-assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 703);
+assert.ok(read('cham-homestay.html').includes('src="assets/geo/tan-loc-clay.svg"'), 'trang tình huống chưa có bản đồ cù lao');
+assert.ok(read('assets/geo/tan-loc-clay.svg').includes('OpenStreetMap'), 'bản đồ thiếu ghi nguồn OpenStreetMap');
+assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 704);
 (async () => {
   const b = await chromium.launch(); const errs = [];
   try {
