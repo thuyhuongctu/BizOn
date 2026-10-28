@@ -218,9 +218,13 @@
         <source src="assets/video/bizon-intro-en-v3.mp4" type="video/mp4">
         <p data-en="Your browser cannot play this video.">Trình duyệt của bạn không phát được video này.</p>
       </video>
-      <script>/* bản lồng tiếng Việt khi người xem chọn giao diện tiếng Việt */
+      <script src="js/video-subs.js"></script>
+      <script>/* bản lồng tiếng Việt khi người xem chọn giao diện tiếng Việt; phụ đề VI/EN gắn theo video đang dùng */
       (function(){ var v=document.getElementById('vu-intro'), l=''; try{ l=localStorage.getItem('bizon-lang')||''; }catch(e){}
-        if(v && l==='vi'){ v.poster=v.dataset.viPoster; v.innerHTML=''; var m=v.dataset.viSrc; [[m,'video/mp4']].forEach(function(p){ var s=document.createElement('source'); s.src=p[0]; s.type=p[1]; v.appendChild(s); }); v.load(); } })();</script>
+        if(!v) return;
+        if(l==='vi'){ v.poster=v.dataset.viPoster; v.innerHTML=''; var m=v.dataset.viSrc; [[m,'video/mp4']].forEach(function(p){ var s=document.createElement('source'); s.src=p[0]; s.type=p[1]; v.appendChild(s); }); }
+        if(window.BizOnSubs) BizOnSubs.attach(v, l==='vi' ? m : 'assets/video/bizon-intro-en-v3.mp4', l==='vi' ? 'vi' : 'en');
+        if(l==='vi') v.load(); })();</script>
     </div>
   </section>
 
