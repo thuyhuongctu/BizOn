@@ -423,6 +423,7 @@
 </main>
 
 <script src="js/site-vnmap.js" defer></script>
+<script src="js/video-subs.js" defer></script>
 <script src="js/bizon-clay-i18n.js" defer></script>
 <script src="js/bizon-clay-nav.js" defer></script>
 <script src="js/bizon-clay-footer.js" defer></script>
@@ -461,6 +462,7 @@ document.addEventListener('DOMContentLoaded', function(){
        mọi điện thoại giải mã bằng phần cứng (xem PR #803 và #947). */
     var mp4 = (!en && a.getAttribute('data-trailer-vi')) || a.getAttribute('data-trailer'); v.innerHTML = ''; v.removeAttribute('src');
     [[mp4, 'video/mp4']].forEach(function(p){ var s = document.createElement('source'); s.src = p[0]; s.type = p[1]; v.appendChild(s); });
+    if(window.BizOnSubs) BizOnSubs.attach(v, mp4, en ? 'en' : 'vi');
     v.load();
     dlg.showModal();
     var p = v.play(); if(p && p.catch) p.catch(function(){});
