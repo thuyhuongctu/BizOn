@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<!-- Xưởng Nhãn Hiệu Đặc Sản – phiếu bài chuyên cần chương 5. Đề bài © 2026 ThS. Đỗ Thùy Hương. -->
+<html lang="vi" data-default-lang="vi">
+<head>
+<meta charset="UTF-8">
+<link rel="canonical" href="https://bizonland.com/xuong-nhan-hieu.html">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#006687">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<script src="js/bizon-lang.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title data-en="Local Specialty Brand Lab · BizOn">Xưởng Nhãn Hiệu Đặc Sản · BizOn</title>
+<meta name="description" data-en-content="A guided worksheet for the brand and marketing-mix assignment: pick a local specialty, build a name and slogan, design the 4P, and export a one-page brand card." content="Phiếu làm bài có hướng dẫn cho bài xây dựng nhãn hiệu và marketing hỗn hợp: chọn đặc sản địa phương, đặt tên và slogan, thiết kế 4P, xuất Thẻ thương hiệu một trang.">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script src="js/bizon-boot.js"></script>
+<link rel="stylesheet" href="css/bizon-clay-fonts.css">
+<link rel="stylesheet" href="css/bizon-clay.css">
+<style>
+  .xn-hero{margin:28px 0 30px;border-radius:40px;background:var(--clay-cream-deep);box-shadow:inset 0 -10px 0 rgba(140,80,20,.1),inset 0 6px 0 rgba(255,255,255,.7);padding:clamp(24px,4vw,44px)}
+  .xn-hero h1{margin:14px 0 0;font-size:clamp(32px,5vw,52px);text-wrap:balance}
+  .xn-hero .lead{margin:14px 0 0;max-width:46em;font-size:17px;line-height:1.65;color:var(--clay-sub);text-wrap:pretty}
+  .xn-ctx{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .xn-ctx span{padding:7px 12px;border-radius:999px;background:var(--clay-card);font-size:14px;font-weight:700;color:var(--clay-ink-2)}
+  .xn-box{border-radius:32px;background:var(--clay-card);padding:clamp(18px,3vw,28px);box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 rgba(255,255,255,.9);margin-bottom:22px}
+  .xn-box h2{margin:0 0 4px;font-family:var(--clay-head);font-size:clamp(22px,3vw,30px);font-weight:800;line-height:1.15}
+  .xn-box > p{font-size:15px;line-height:1.6;color:var(--clay-sub);margin-bottom:14px}
+  .xn-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+  .xn-box .clay-label{margin-top:14px}
+  .xn-box .clay-field{width:100%;box-sizing:border-box;font-size:16px}
+  textarea.clay-field{min-height:96px;resize:vertical;line-height:1.5}
+  .xn-checks{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .xn-checks label{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:999px;background:var(--clay-tray);font-size:14.5px;font-weight:600;cursor:pointer}
+  .xn-checks input{width:18px;height:18px;accent-color:var(--clay-teal)}
+  .xn-crit{display:grid;gap:8px;margin-top:10px}
+  .xn-crit label{display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.5;cursor:pointer}
+  .xn-crit input{width:20px;height:20px;margin-top:2px;flex:none;accent-color:var(--clay-teal)}
+  .xn-hint{margin:8px 0 0;padding:0;list-style:none;display:grid;gap:6px}
+  .xn-hint li{padding:9px 12px;border-radius:14px;font-size:14px;line-height:1.5}
+  .xn-hint li.warn{background:var(--clay-amber-soft);color:#5A3B07}
+  .xn-hint li.ok{background:var(--clay-mint-soft);color:#13452F}
+  .xn-hint li::before{font-weight:800;margin-right:6px}
+  .xn-hint li.warn::before{content:"Gợi ý:"}
+  html[lang="en"] .xn-hint li.warn::before{content:"Tip:"}
+  .xn-hint li.ok::before{content:"✓"}
+  .xn-step{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;margin-right:8px;border-radius:50%;background:var(--clay-teal);color:var(--clay-on-teal);font-family:var(--clay-head);font-weight:800;font-size:17px;vertical-align:2px}
+  .xn-bar{position:sticky;bottom:12px;z-index:5;display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:0 0 22px;padding:12px 16px;border-radius:24px;background:var(--clay-card);box-shadow:0 18px 30px -16px rgba(110,70,30,.45),inset 0 4px 0 rgba(255,255,255,.9)}
+  .xn-meter{flex:1 1 160px;height:12px;border-radius:999px;background:var(--clay-tray);overflow:hidden}
+  .xn-meter i{display:block;height:100%;width:0;background:var(--clay-teal);border-radius:999px;transition:width .25s}
+  .xn-bar b{font-size:14px}
+  .xn-preview{display:block;width:100%;max-width:520px;height:auto;margin:14px auto 0;border-radius:18px;box-shadow:0 20px 34px -22px rgba(110,70,30,.6)}
+  .xn-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+  .xn-ghost{background:var(--clay-tray);color:var(--clay-ink);box-shadow:var(--clay-tray-shadow)}
+  .xn-ghost:hover{color:var(--clay-ink)}
+  .xn-scroll{overflow-x:auto;margin-top:12px}
+  .xn-tab{width:100%;border-collapse:collapse;font-size:14.5px;min-width:640px}
+  .xn-tab th,.xn-tab td{text-align:left;padding:9px 10px;border-bottom:1px solid rgba(110,70,30,.15);vertical-align:top;line-height:1.5}
+  .xn-tab th{font-family:var(--clay-head);font-weight:800}
+  details.xn-box summary{cursor:pointer;font-family:var(--clay-head);font-size:clamp(20px,2.6vw,26px);font-weight:800}
+  .xn-note{font-size:14px;color:var(--clay-sub);line-height:1.55;margin-top:10px}
+  .xn-lic{font-size:13.5px;color:var(--clay-sub);text-align:center;margin:8px 0 40px}
+  #xn-print{display:none}
+  @media print{
+    body.xn-printing > *:not(#xn-print){display:none !important}
+    body.xn-printing #xn-print{display:block;width:100%}
+    @page{size:A4;margin:0}
+  }
+</style>
+</head>
+<body class="clay">
+
+<main class="clay-main">
+  <section class="xn-hero">
+    <span class="clay-eyebrow" data-en="Chapter 5 · Branding &amp; marketing mix · individual assignment">Chương 5 · Xây dựng nhãn hiệu &amp; Marketing hỗn hợp · làm cá nhân</span>
+    <h1 data-en="Local Specialty Brand Lab">Xưởng Nhãn Hiệu Đặc Sản</h1>
+    <p class="lead" data-en="A group of student founders wants to sell a local specialty. Pick the product, build the brand, design the 4P, then download a one-page brand card to hand in. Your draft stays on this device only.">Một nhóm sinh viên khởi nghiệp muốn kinh doanh một đặc sản địa phương. Bạn chọn sản phẩm, xây dựng nhãn hiệu, thiết kế 4P rồi tải Thẻ thương hiệu một trang để nộp. Bài làm chỉ lưu trên thiết bị này.</p>
+    <div class="xn-ctx" aria-label="Bối cảnh doanh nghiệp" data-en-aria="Business context">
+      <span data-en="Small scale, limited capital">Quy mô nhỏ, vốn hạn chế</span>
+      <span data-en="No brand on the market yet">Chưa có thương hiệu trên thị trường</span>
+      <span data-en="Mainly domestic customers">Khách hàng chủ yếu trong nước</span>
+      <span data-en="Online and direct sales first">Ưu tiên bán trực tuyến và trực tiếp</span>
+    </div>
+  </section>
+
+  <div id="xn-form">
+    <section class="xn-box">
+      <h2><span class="xn-step">0</span><span data-en="Your details">Thông tin của bạn</span></h2>
+      <p data-en="Printed at the bottom of the card. Not sent anywhere.">In ở chân thẻ. Không gửi đi đâu.</p>
+      <div class="xn-grid">
+        <label class="clay-label"><span data-en="Full name">Họ và tên</span><input type="text" class="clay-field" name="hoTen" maxlength="60"></label>
+        <label class="clay-label"><span data-en="Student ID">MSSV</span><input type="text" class="clay-field" name="mssv" maxlength="20"></label>
+        <label class="clay-label"><span data-en="Class">Lớp</span><input type="text" class="clay-field" name="lop" maxlength="30"></label>
+      </div>
+    </section>
+
+    <section class="xn-box">
+      <h2><span class="xn-step">1</span><span data-en="Choose a local specialty">Chọn sản phẩm đặc sản địa phương</span></h2>
+      <p data-en="Required: not every product is accepted. Scope: processed farm products or traditional crafts.">Bắt buộc: không phải sản phẩm nào cũng được chấp nhận. Phạm vi: nông sản chế biến hoặc thủ công truyền thống.</p>
+      <div class="xn-checks" role="radiogroup" aria-label="Nhóm sản phẩm" data-en-aria="Product group">
+        <label><input type="radio" name="nhom" value="nong-san"><span data-en="Processed farm product">Nông sản chế biến</span></label>
+        <label><input type="radio" name="nhom" value="thu-cong"><span data-en="Traditional craft">Thủ công truyền thống</span></label>
+      </div>
+      <div class="xn-grid">
+        <label class="clay-label"><span data-en="Product">Sản phẩm</span><input type="text" class="clay-field" name="sanPham" maxlength="80" placeholder="Ví dụ: mắm cá linh, chiếu Cà Mau" data-en-ph="e.g. fermented linh fish, Cà Mau sedge mats"></label>
+        <label class="clay-label"><span data-en="Place (province, village)">Vùng, địa phương</span><input type="text" class="clay-field" name="vung" maxlength="80"></label>
+      </div>
+      <ul class="xn-hint" data-for="vung"></ul>
+      <label class="clay-label"><span data-en="Cultural or traditional trait">Nét văn hoá, truyền thống gắn với sản phẩm</span><textarea class="clay-field" name="vanHoa" maxlength="400"></textarea></label>
+      <div class="xn-crit">
+        <label><input type="checkbox" name="tc1"><span data-en="It is a specialty of a specific place.">Là đặc sản của một địa phương cụ thể.</span></label>
+        <label><input type="checkbox" name="tc2"><span data-en="Processing is simple enough for a small, new business.">Chế biến đơn giản, hợp với doanh nghiệp nhỏ mới thành lập.</span></label>
+        <label><input type="checkbox" name="tc3"><span data-en="It keeps its original taste or traditional identity.">Giữ được hương vị nguyên bản hoặc bản sắc truyền thống.</span></label>
+      </div>
+      <ul class="xn-hint" data-for="tieuchi"></ul>
+    </section>
+
+    <section class="xn-box">
+      <h2><span class="xn-step">2</span><span data-en="Build the brand">Xây dựng nhãn hiệu</span></h2>
+      <p data-en="The example in the brief (Hanoi Brew) only illustrates the format; create your own.">Ví dụ trong đề (Hanoi Brew) chỉ để minh hoạ cách trình bày; hãy làm nhãn hiệu của riêng bạn.</p>
+      <div class="xn-grid">
+        <label class="clay-label"><span data-en="Brand name">Tên thương hiệu</span><input type="text" class="clay-field" name="ten" maxlength="40"></label>
+        <label class="clay-label"><span data-en="Core message (short slogan)">Thông điệp cốt lõi (slogan ngắn)</span><input type="text" class="clay-field" name="slogan" maxlength="90"></label>
+      </div>
+      <ul class="xn-hint" data-for="ten"></ul>
+      <ul class="xn-hint" data-for="slogan"></ul>
+      <label class="clay-label"><span data-en="Why does this brand suit a new business?">Vì sao nhãn hiệu này phù hợp với doanh nghiệp mới?</span><textarea class="clay-field" name="giaiThich" maxlength="800"></textarea></label>
+      <ul class="xn-hint" data-for="giaiThich"></ul>
+    </section>
+
+    <section class="xn-box">
+      <h2><span class="xn-step">3</span><span data-en="Design the marketing mix (4P)">Thiết kế marketing hỗn hợp (4P)</span></h2>
+      <p data-en="Short and concrete for each P. Avoid phrases like “high quality” or “competitive price” without saying what they mean.">Ngắn gọn và cụ thể cho từng yếu tố. Tránh câu kiểu «chất lượng cao», «giá cạnh tranh» mà không nói rõ là gì.</p>
+
+      <label class="clay-label"><span data-en="Product: what stands out?">Product: sản phẩm có đặc điểm gì nổi bật?</span><textarea class="clay-field" name="product" maxlength="600"></textarea></label>
+      <ul class="xn-hint" data-for="product"></ul>
+
+      <label class="clay-label"><span data-en="Price: strategy for a new business">Price: chiến lược giá phù hợp với doanh nghiệp mới</span>
+        <select class="clay-field" name="priceStrategy"><option value="" data-en="— choose —">— chọn —</option></select></label>
+      <div class="xn-grid">
+        <label class="clay-label"><span data-en="Planned price and pack">Giá bán dự kiến và quy cách</span><input type="text" class="clay-field" name="giaBan" maxlength="60" placeholder="120.000 đ/hũ 500 g" data-en-ph="120,000 ₫ per 500 g jar"></label>
+      </div>
+      <label class="clay-label"><span data-en="Why this price?">Vì sao chọn mức giá này?</span><textarea class="clay-field" name="priceReason" maxlength="500"></textarea></label>
+      <ul class="xn-hint" data-for="price"></ul>
+
+      <div class="clay-label" style="margin-top:16px"><span data-en="Place: online channels">Place: kênh trực tuyến</span></div>
+      <div class="xn-checks" data-group="place" data-kind="online"></div>
+      <div class="clay-label" style="margin-top:10px"><span data-en="Place: direct channels">Place: kênh trực tiếp</span></div>
+      <div class="xn-checks" data-group="place" data-kind="direct"></div>
+      <label class="clay-label"><span data-en="How will the channels work together?">Các kênh phối hợp thế nào?</span><textarea class="clay-field" name="placeNote" maxlength="400"></textarea></label>
+      <ul class="xn-hint" data-for="place"></ul>
+
+      <div class="clay-label" style="margin-top:16px"><span data-en="Promotion: tactics">Promotion: cách truyền thông, quảng bá</span></div>
+      <div class="xn-checks" data-group="promo"></div>
+      <label class="clay-label"><span data-en="Plan for the first month (what, where, how much)">Kế hoạch tháng đầu (làm gì, ở đâu, chi bao nhiêu)</span><textarea class="clay-field" name="promoNote" maxlength="600"></textarea></label>
+      <ul class="xn-hint" data-for="promo"></ul>
+    </section>
+  </div>
+
+  <div class="xn-bar" role="status" aria-live="polite">
+    <div class="xn-meter" aria-hidden="true"><i id="xn-meter"></i></div>
+    <b id="xn-progress">0/8</b>
+    <span id="xn-saved" class="xn-note" style="margin:0"></span>
+  </div>
+
+  <section class="xn-box" id="the">
+    <h2><span class="xn-step">4</span><span data-en="Your brand card">Thẻ thương hiệu của bạn</span></h2>
+    <p data-en="One A4 page with the name, slogan and 4P. Hand in the PNG (or the PDF from Print). The card code is computed from your answers; identical answers give identical codes.">Một trang A4 gồm tên, slogan và 4P. Nộp tệp PNG (hoặc PDF từ nút In). Mã thẻ tính từ nội dung bài làm; hai bài giống hệt nhau sẽ có cùng một mã.</p>
+    <label class="clay-label"><span data-en="Product photo (optional, stays on your device)">Ảnh sản phẩm (không bắt buộc, chỉ dùng trên máy bạn)</span><input class="clay-field" type="file" id="xn-photo" accept="image/*"></label>
+    <canvas id="xn-card" class="xn-preview" width="1240" height="1754" role="img" aria-label="Xem trước Thẻ thương hiệu" data-en-aria="Brand card preview"></canvas>
+    <div class="xn-actions">
+      <button type="button" class="clay-btn" id="xn-png" data-en="🖼️ Download card (PNG)">🖼️ Tải thẻ (PNG)</button>
+      <button type="button" class="clay-btn clay-btn-orange" id="xn-printbtn" data-en="🖨️ Print / save as PDF">🖨️ In / lưu PDF</button>
+      <button type="button" class="clay-btn xn-ghost" id="xn-clear" data-en="Clear my answers">Xoá bài làm</button>
+    </div>
+  </section>
+
+  <details class="xn-box" id="bang-cham">
+    <summary data-en="Marking guide for instructors (10 points)">Bảng chấm cho giảng viên (thang 10)</summary>
+    <div class="xn-scroll">
+      <table class="xn-tab">
+        <thead><tr><th scope="col" data-en="Requirement">Yêu cầu</th><th scope="col" data-en="Points">Điểm</th><th scope="col" data-en="Meets well">Đạt tốt</th><th scope="col" data-en="Not yet">Chưa đạt</th></tr></thead>
+        <tbody>
+          <tr><td data-en="Product choice">Chọn sản phẩm</td><td>1</td><td data-en="A specialty of a named place, simple processing, traditional identity.">Đặc sản gắn với địa phương cụ thể, chế biến đơn giản, giữ bản sắc.</td><td data-en="Generic product or no place.">Sản phẩm phổ thông, không gắn với nơi nào.</td></tr>
+          <tr><td data-en="Brand name">Tên thương hiệu</td><td>1,5</td><td data-en="Short, distinctive, linked to the place or culture, easy to say.">Ngắn, riêng, gợi vùng hoặc văn hoá, dễ đọc.</td><td data-en="Generic (e.g. “Xanh Sạch”) or copies the example.">Chung chung (kiểu «Xanh Sạch») hoặc chép ví dụ.</td></tr>
+          <tr><td data-en="Slogan">Slogan</td><td>1</td><td data-en="Under 10 words, states the core benefit.">Dưới 10 chữ, nói được lợi ích cốt lõi.</td><td data-en="Long or could fit any business.">Dài hoặc dùng cho doanh nghiệp nào cũng được.</td></tr>
+          <tr><td data-en="Why it suits a new business">Giải thích sự phù hợp</td><td>1,5</td><td data-en="Links the brand to small capital, domestic buyers and online/direct sales.">Nối nhãn hiệu với vốn nhỏ, khách trong nước, bán trực tuyến và trực tiếp.</td><td data-en="Restates the name only.">Chỉ nhắc lại tên.</td></tr>
+          <tr><td>Product</td><td>1,25</td><td data-en="Concrete traits: ingredients, method, pack, shelf life, certification.">Đặc điểm cụ thể: nguyên liệu, cách làm, quy cách, hạn dùng, chứng nhận.</td><td data-en="“High quality, meets needs”.">«Chất lượng cao, đáp ứng nhu cầu».</td></tr>
+          <tr><td>Price</td><td>1,25</td><td data-en="Named strategy, a price per pack, reasoned against cost or competitors.">Nêu chiến lược, có giá cho một quy cách, lập luận bằng chi phí hoặc giá đối thủ.</td><td data-en="“Competitive price” with no number.">«Giá cạnh tranh» không có con số.</td></tr>
+          <tr><td>Place</td><td>1,25</td><td data-en="2–3 channels, both online and direct, with how they work together.">2–3 kênh, có cả trực tuyến và trực tiếp, nói cách phối hợp.</td><td data-en="Lists many channels with no plan.">Liệt kê nhiều kênh, không có kế hoạch.</td></tr>
+          <tr><td>Promotion</td><td>1,25</td><td data-en="Fits the budget; says what happens in month one and where.">Hợp ngân sách nhỏ; nói rõ tháng đầu làm gì, ở đâu.</td><td data-en="“Run promotions to attract customers”.">«Tổ chức khuyến mãi thu hút khách».</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="xn-note" data-en="Two cards with the same code have identical answers. The tips on this page only check form (length, missing items, vague phrases); they do not grade content.">Hai thẻ có cùng mã nghĩa là nội dung bài giống hệt nhau. Gợi ý trên trang chỉ kiểm tra hình thức (độ dài, thiếu ý, câu chung chung), không chấm nội dung.</p>
+  </details>
+
+  <p class="xn-lic" data-en="Assignment brief © 2026 MSc Đỗ Thùy Hương. Tool: BizOn.">Đề bài © 2026 ThS. Đỗ Thùy Hương. Công cụ: BizOn.</p>
+</main>
+
+<script src="js/xuong-nhan-hieu.js"></script>
+<script>
+(function () {
+  'use strict';
+  var L = window.BizOnBrandLab, KEY = 'bizon-xnh-v1';
+  var form = document.getElementById('xn-form'), canvas = document.getElementById('xn-card');
+  var lang = function () { return document.documentElement.lang === 'en' ? 'en' : 'vi'; };
+  var photo = null;
+
+  function chips(box, list, group) {
+    list.forEach(function (c) {
+      var lab = document.createElement('label'), inp = document.createElement('input'), sp = document.createElement('span');
+      inp.type = 'checkbox'; inp.name = group; inp.value = c[0];
+      sp.textContent = c[1]; sp.dataset.en = c[2];
+      lab.appendChild(inp); lab.appendChild(sp); box.appendChild(lab);
+    });
+  }
+  document.querySelectorAll('[data-group="place"]').forEach(function (b) { chips(b, L.CHANNELS[b.dataset.kind], 'place'); });
+  chips(document.querySelector('[data-group="promo"]'), L.PROMOS, 'promo');
+  var fields = function () { return form.querySelectorAll('input[name],select[name],textarea[name]'); };
+  var sel = form.querySelector('[name="priceStrategy"]');
+  L.PRICES.forEach(function (p) { var o = document.createElement('option'); o.value = p[0]; o.textContent = p[1]; o.dataset.en = p[2]; sel.appendChild(o); });
+
+  function read() {
+    var s = {};
+    Array.prototype.forEach.call(fields(), function (el) {
+      if (el.type === 'checkbox' && (el.name === 'place' || el.name === 'promo')) { (s[el.name] = s[el.name] || []); if (el.checked) s[el.name].push(el.value); }
+      else if (el.type === 'checkbox') s[el.name] = el.checked;
+      else if (el.type === 'radio') { if (el.checked) s[el.name] = el.value; }
+      else s[el.name] = el.value;
+    });
+    return s;
+  }
+  function fill(s) {
+    Array.prototype.forEach.call(fields(), function (el) {
+      if (!(el.name in s)) return;
+      if (el.type === 'checkbox' && Array.isArray(s[el.name])) el.checked = s[el.name].indexOf(el.value) >= 0;
+      else if (el.type === 'checkbox') el.checked = !!s[el.name];
+      else if (el.type === 'radio') el.checked = s[el.name] === el.value;
+      else el.value = s[el.name];
+    });
+  }
+  function renderHints(s) {
+    var h = L.hints(s), en = lang() === 'en';
+    document.querySelectorAll('.xn-hint').forEach(function (ul) {
+      ul.textContent = '';
+      (h[ul.dataset.for] || []).forEach(function (m) { var li = document.createElement('li'); li.className = m.level; li.textContent = en ? m.en : m.vi; ul.appendChild(li); });
+    });
+  }
+  var t = null;
+  function update(save) {
+    var s = read(), p = L.progress(s);
+    renderHints(s);
+    document.getElementById('xn-meter').style.width = Math.round(p.done / p.total * 100) + '%';
+    document.getElementById('xn-progress').textContent = p.done + '/' + p.total;
+    clearTimeout(t); t = setTimeout(function () { L.draw(canvas, s, { lang: lang(), image: photo }); }, 150);
+    if (save) {
+      var ok = true; try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) { ok = false; }
+      document.getElementById('xn-saved').textContent = ok ? (lang() === 'en' ? 'Draft saved on this device.' : 'Đã lưu nháp trên thiết bị này.') : '';
+    }
+  }
+  try { var saved = JSON.parse(localStorage.getItem(KEY) || 'null'); if (saved) fill(saved); } catch (e) {}
+  form.addEventListener('input', function () { update(true); });
+  form.addEventListener('change', function () { update(true); });
+  document.addEventListener('bizon:langchange', function () { update(false); });
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(function () { update(false); });
+  update(false);
+
+  document.getElementById('xn-photo').addEventListener('change', function (e) {
+    var f = e.target.files && e.target.files[0]; if (!f) { photo = null; update(false); return; }
+    var url = URL.createObjectURL(f), img = new Image();
+    img.onload = function () { photo = img; update(false); };
+    img.src = url;
+  });
+  document.getElementById('xn-png').addEventListener('click', function () {
+    var s = read(); L.draw(canvas, s, { lang: lang(), image: photo });
+    L.png(canvas).then(function (b) {
+      var a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = L.fileName(s);
+      document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+    });
+  });
+  document.getElementById('xn-printbtn').addEventListener('click', function () {
+    L.draw(canvas, read(), { lang: lang(), image: photo });
+    var img = document.getElementById('xn-print'); if (!img) { img = document.createElement('img'); img.id = 'xn-print'; img.alt = ''; document.body.appendChild(img); } img.src = canvas.toDataURL('image/png');
+    document.body.classList.add('xn-printing');
+    var done = function () { document.body.classList.remove('xn-printing'); window.removeEventListener('afterprint', done); };
+    window.addEventListener('afterprint', done);
+    img.decode ? img.decode().then(function () { window.print(); }, function () { window.print(); }) : window.print();
+  });
+  document.getElementById('xn-clear').addEventListener('click', function () {
+    if (!window.confirm(lang() === 'en' ? 'Clear all answers on this device?' : 'Xoá toàn bộ bài làm trên thiết bị này?')) return;
+    try { localStorage.removeItem(KEY); } catch (e) {}
+    Array.prototype.forEach.call(fields(), function (el) { if (el.type === 'checkbox' || el.type === 'radio') el.checked = false; else el.value = ''; });
+    photo = null; document.getElementById('xn-photo').value = ''; update(false);
+    document.getElementById('xn-saved').textContent = '';
+  });
+})();
+</script>
+<script src="js/bizon-clay-i18n.js" defer></script>
+<script src="js/bizon-clay-nav.js" defer></script>
+<script src="js/bizon-clay-footer.js" defer></script>
+</body>
+</html>
