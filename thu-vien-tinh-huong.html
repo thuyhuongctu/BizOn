@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!-- Thư viện tình huống BizOn – CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương, dùng trên BizOn theo giấy phép không độc quyền -->
+<html lang="vi" data-default-lang="vi">
+<head>
+<meta charset="UTF-8">
+<link rel="canonical" href="https://bizonland.com/thu-vien-tinh-huong.html">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#006687">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<script src="js/bizon-lang.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title data-en="Case library · BizOn">Thư viện tình huống · BizOn</title>
+<meta name="description" data-en-content="Real cases from the Mekong Delta, each with a simulation. Filter by discipline and region." content="Tình huống thật từ Đồng bằng sông Cửu Long, mỗi case gắn một mô phỏng. Lọc theo ngành học và vùng.">
+<meta name="copyright" content="CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script src="js/bizon-boot.js"></script>
+<link rel="stylesheet" href="css/bizon-clay-fonts.css">
+<link rel="stylesheet" href="css/bizon-clay.css">
+<link rel="stylesheet" href="css/cham-clay.css">
+<style>
+  .lb-filters{display:flex;flex-direction:column;gap:10px}
+  .lb-filters .ch-row > span:first-child{font:500 12px var(--ch-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ch-muted-2);min-width:6.5em}
+  .lb-case{display:flex;flex-direction:column;gap:8px;width:100%;text-align:left;border:0;cursor:pointer;font:inherit;color:inherit;padding:22px;border-radius:32px;box-shadow:14px 16px 30px rgba(150,120,80,.18),inset -5px -7px 12px rgba(0,0,0,.06),inset 5px 5px 10px rgba(255,255,255,.6)}
+  .lb-case[aria-pressed="true"]{box-shadow:0 0 0 3px var(--ch-teal),14px 16px 30px rgba(150,120,80,.2)}
+  .lb-case .st{align-self:flex-start;font:500 11px var(--ch-mono);letter-spacing:.06em;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.65)}
+  .lb-case b{font:800 26px/1.1 var(--ch-display);color:var(--ch-ink-2)}
+  .lb-case span.d{font-size:14.5px;line-height:1.5;color:#4c5859}
+  .lb-tabs{display:inline-flex;gap:4px;padding:4px;border-radius:999px;background:var(--ch-sunk);box-shadow:var(--ch-sink);flex-wrap:wrap;margin:12px 0 18px}
+  .lb-tabs button{border:0;border-radius:999px;padding:8px 14px;min-height:38px;background:transparent;color:var(--ch-muted-2);font:800 13.5px var(--ch-sans);cursor:pointer}
+  .lb-tabs button[aria-selected="true"]{background:var(--ch-raised);color:var(--ch-ink);box-shadow:var(--ch-raise-sm)}
+  .lb-goal{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px dashed rgba(110,70,30,.2)}
+  .lb-goal .n{flex:none;width:30px;height:30px;border-radius:50%;background:var(--ch-teal);color:#fff;display:flex;align-items:center;justify-content:center;font:800 15px var(--ch-display)}
+  .lb-sims{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+  .lb-sims a{display:flex;flex-direction:column;gap:4px;padding:16px 18px;border-radius:24px;box-shadow:var(--ch-raise-sm);text-decoration:none;color:var(--ch-ink-2)}
+  .lb-sims .tg{font:500 11px var(--ch-mono);letter-spacing:.06em;color:var(--ch-muted-2)}
+  .lb-sims b{font:800 19px var(--ch-display)}
+  .lb-sims span:last-child{font-size:13.5px;color:#4c5859}
+</style>
+</head>
+<body class="clay cham">
+
+<main class="ch-wrap ch-stack">
+  <header class="ch-head">
+    <span class="ch-eyebrow" data-en="BizOn · Case library">BizOn · Thư viện tình huống</span>
+    <h1 data-en="Real cases from the Delta, each with a simulation">Tình huống thật từ Đồng bằng, mỗi case một mô phỏng</h1>
+    <p class="lead" data-en="Read the case, check the numbers, then play the simulation to test your decisions. Teaching notes are for instructors.">Đọc case, soát số liệu, rồi chơi mô phỏng để kiểm chứng quyết định. Ghi chú giảng dạy dành cho giảng viên.</p>
+  </header>
+  <section class="lb-filters" aria-label="Bộ lọc" data-en-aria="Filters">
+    <div class="ch-row"><span data-en="Discipline">Ngành học</span><span class="ch-row" id="lb-disc" role="group"></span></div>
+    <div class="ch-row"><span data-en="Region">Vùng</span><span class="ch-row" id="lb-region" role="group"></span></div>
+  </section>
+  <section class="ch-grid" id="lb-cases" aria-label="Danh sách case" data-en-aria="Cases"></section>
+  <p class="ch-note" id="lb-empty" hidden data-en="No cases match these filters.">Chưa có case nào khớp bộ lọc.</p>
+  <section class="ch-card lg" id="lb-detail" aria-live="polite"></section>
+  <p class="ch-lic" data-en="CHAM™ and this case © 2017–2026 Đỗ Thùy Hương, used on BizOn under a non-exclusive licence. A planned project; figures are planning assumptions, not operating data.">CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương, dùng trên BizOn theo giấy phép không độc quyền. Dự án đang ở giai đoạn kế hoạch; số liệu là giả định, không phải kết quả hoạt động.</p>
+</main>
+
+<script src="js/bizon-clay-i18n.js" defer></script>
+<script src="js/bizon-clay-nav.js" defer></script>
+<script src="js/bizon-clay-footer.js" defer></script>
+<script src="js/cham-kit.js" defer></script>
+<script src="js/cham-library.js" defer></script>
+</body>
+</html>

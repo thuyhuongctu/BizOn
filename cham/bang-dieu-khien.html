@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!-- Bảng điều khiển giảng viên CHAM – CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương, dùng trên BizOn theo giấy phép không độc quyền -->
+<html lang="vi" data-default-lang="vi">
+<head>
+<meta charset="UTF-8">
+<link rel="canonical" href="https://bizonland.com/cham/bang-dieu-khien.html">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#006687">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<script src="../js/bizon-lang.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title data-en="Teacher dashboard · CHAM founder game · BizOn">Bảng điều khiển giảng viên · Trò chơi nhà sáng lập CHAM · BizOn</title>
+<meta name="description" data-en-content="See how the class ran CHAM: teams ranked by 5-year cash and the share choosing each option in the Founder Game." content="Xem cả lớp đã điều hành CHAM thế nào: xếp hạng các nhóm theo dòng tiền 5 năm và tỷ lệ chọn từng phương án trong Trò chơi nhà sáng lập.">
+<meta name="copyright" content="CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương">
+<link rel="icon" type="image/png" href="../assets/icons/icon-192.png">
+<script src="../js/bizon-boot.js"></script>
+<link rel="stylesheet" href="../css/bizon-clay-fonts.css">
+<link rel="stylesheet" href="../css/bizon-clay.css">
+<link rel="stylesheet" href="../css/cham-clay.css">
+<style>
+  .db{background:var(--ch-night-2);color:var(--ch-on-night);border-radius:44px;padding:clamp(20px,4vw,40px);display:flex;flex-direction:column;gap:22px}
+  .db h1{color:var(--ch-on-night);margin:0;font-size:clamp(34px,5vw,56px);line-height:1}
+  .db h2{color:var(--ch-on-night);margin:0 0 10px;font-size:22px}
+  .db-kpis{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr))}
+  .db-kpis div{padding:14px 16px;border-radius:22px;background:var(--ch-night);box-shadow:var(--ch-sink-night)}
+  .db-team{display:grid;grid-template-columns:minmax(0,9em) 1fr auto;gap:10px;align-items:center;margin:8px 0}
+  .db-team .nm{font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .db-team .tr{height:16px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden}
+  .db-team .tr i{display:block;height:100%;border-radius:999px}
+  .db-team .v{font-weight:800;font-variant-numeric:tabular-nums}
+  .db-split{margin:12px 0}
+  .db-split .q{font-weight:800;margin-bottom:6px}
+  .db-split .tr{display:flex;height:16px;border-radius:999px;overflow:hidden;background:rgba(255,255,255,.08)}
+  .db-split .a{background:#0a9cc4}.db-split .b{background:var(--ch-yellow)}
+  .db-split .lb{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:var(--ch-on-night-2);margin-top:4px}
+  .db-paste textarea{min-height:5em}
+</style>
+</head>
+<body class="clay cham">
+
+<main class="ch-wrap ch-stack">
+  <nav class="ch-crumb" aria-label="Breadcrumb"><a href="./" data-en="CHAM project">Dự án CHAM</a> / <a href="tro-choi.html" data-en="Founder game">Trò chơi nhà sáng lập</a> / <span data-en="Teacher dashboard">Bảng điều khiển</span></nav>
+  <section class="db">
+    <div><span class="ch-eyebrow" style="color:var(--ch-on-night-2)" data-en="Teacher dashboard · Founder game">Bảng điều khiển giảng viên · Trò chơi nhà sáng lập</span>
+    <h1 data-en="How the class ran CHAM">Cả lớp đã điều hành CHAM thế nào</h1></div>
+    <div class="db-paste ch-card" style="background:var(--ch-raised)">
+      <label for="db-paste" class="ch-k" data-en="Paste result codes from other devices, one per line">Dán mã kết quả từ các thiết bị khác, mỗi dòng một mã</label>
+      <textarea id="db-paste" class="ch-field" rows="3" style="margin-top:8px"></textarea>
+      <div class="ch-row" style="margin-top:10px"><button type="button" class="ch-btn" id="db-add" data-en="Add teams">Thêm nhóm</button><span id="db-status" role="status" class="ch-note"></span></div>
+      <p class="ch-note" style="margin-top:8px" data-en="Scores and results are recalculated from each team's choices, so an edited code cannot change the ranking.">Điểm và kết quả được tính lại từ lựa chọn của mỗi nhóm, nên mã bị sửa tay không làm đổi xếp hạng.</p>
+    </div>
+    <div id="db-kpis" class="db-kpis"></div>
+    <div><h2 data-en="Teams, by 5-year cash">Các nhóm, xếp theo dòng tiền 5 năm</h2><div id="db-teams"></div></div>
+    <div><h2 data-en="How the class decided">Cả lớp đã quyết định ra sao</h2><div id="db-splits"></div></div>
+    <div class="ch-row"><button type="button" class="ch-btn ghost" style="color:var(--ch-on-night);border-color:rgba(255,255,255,.25)" id="db-clear" data-en="Clear all teams on this device">Xóa toàn bộ nhóm trên thiết bị này</button></div>
+  </section>
+  <p class="ch-lic" data-en="CHAM™ and this case © 2017–2026 Đỗ Thùy Hương, used on BizOn under a non-exclusive licence. A planned project; figures are planning assumptions, not operating data.">CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương, dùng trên BizOn theo giấy phép không độc quyền. Dự án đang ở giai đoạn kế hoạch; số liệu là giả định, không phải kết quả hoạt động.</p>
+</main>
+
+<script src="../js/bizon-clay-i18n.js" defer></script>
+<script src="../js/bizon-clay-nav.js" defer></script>
+<script src="../js/bizon-clay-footer.js" defer></script>
+<script src="../js/cham-kit.js" defer></script>
+<script src="../js/cham-engine.js" defer></script>
+<script src="../js/cham-dashboard.js" defer></script>
+</body>
+</html>

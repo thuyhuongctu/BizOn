@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<!-- Mẫu website cho khách của CHAM Homestay – CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương, dùng trên BizOn theo giấy phép không độc quyền -->
+<html lang="vi" data-default-lang="vi">
+<head>
+<meta charset="UTF-8">
+<link rel="canonical" href="https://bizonland.com/cham/website.html">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#006687">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<script src="../js/bizon-lang.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title data-en="CHAM Homestay guest website mockup · BizOn">Mẫu website CHAM Homestay · BizOn</title>
+<meta name="description" data-en-content="A 3D-clay mockup of CHAM Homestay's guest website: rooms, day pass, food, evenings, shop, booking, directions, flood safety and a two-day itinerary. A teaching prototype; it takes no real bookings." content="Mẫu giao diện website cho khách của CHAM Homestay theo phong cách đất sét 3D: phòng, vé trong ngày, ẩm thực, buổi tối, đặc sản, đặt phòng, đường đến, an toàn mùa nước và lịch trình 2 ngày. Bản mẫu cho bài học, không nhận đặt phòng thật.">
+<meta name="copyright" content="CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương">
+<link rel="icon" type="image/png" href="../assets/icons/icon-192.png">
+<script src="../js/bizon-boot.js"></script>
+<link rel="stylesheet" href="../css/bizon-clay-fonts.css">
+<link rel="stylesheet" href="../css/bizon-clay.css">
+<link rel="stylesheet" href="../css/cham-clay.css">
+<style>
+  .ws-proto{position:relative;z-index:1}
+  .ws{background:var(--ch-paper);border-radius:44px;box-shadow:var(--ch-raise);padding:clamp(14px,3vw,32px);display:flex;flex-direction:column;gap:clamp(20px,3vw,32px)}
+  .ws-top{display:flex;align-items:center;gap:12px;padding:10px 12px 10px 20px;border-radius:999px;background:var(--ch-raised);box-shadow:var(--ch-raise-sm)}
+  .ws-logo{font:800 28px/1 var(--ch-display);color:var(--ch-teal);text-decoration:none;letter-spacing:-.02em}
+  .cham a.ws-logo,.cham a.ws-logo:hover{color:var(--ch-teal)}
+  .ws-logo span{color:var(--ch-brick)}
+  .ws-nav{display:flex;gap:2px;flex:1;overflow-x:auto;scrollbar-width:none}
+  .ws-nav a{white-space:nowrap;padding:8px 12px;border-radius:999px;font:800 14px var(--ch-sans);color:var(--ch-body);text-decoration:none}
+  .ws-nav a[aria-current="page"]{background:var(--ch-sunk);box-shadow:var(--ch-sink);color:var(--ch-ink)}
+  .ws-bag{white-space:nowrap;font:800 13px var(--ch-sans);padding:8px 12px;border-radius:999px;background:var(--ch-yellow-p);color:#6b4d00;text-decoration:none}
+  @media (max-width:860px){.ws-top{flex-wrap:wrap;border-radius:28px}.ws-nav{order:3;flex-basis:100%}.ws-top .ch-btn{margin-left:auto}}
+  .ws-crumb{font:700 13px var(--ch-sans);color:var(--ch-muted)}
+  .ws-screen{display:flex;flex-direction:column;gap:clamp(18px,3vw,28px)}
+  .ws-screen[hidden]{display:none!important}
+  .ws-hero h1,.ws-screen h1{margin:0;font-size:clamp(42px,6.2vw,76px);line-height:.98}
+  .ws-screen h2{margin:0;font-size:clamp(28px,3.6vw,44px);line-height:1.02}
+  .ws-lead{font-size:17px;line-height:1.6;color:var(--ch-muted);max-width:36em}
+  .ws-booker{display:flex;flex-wrap:wrap;align-items:center;gap:14px;padding:14px 16px;border-radius:30px;background:var(--ch-raised);box-shadow:var(--ch-raise)}
+  .ws-booker .f{display:flex;flex-direction:column;gap:2px;padding:6px 14px;border-radius:20px;background:var(--ch-sunk);box-shadow:var(--ch-sink)}
+  .ws-step{display:inline-flex;align-items:center;gap:10px}
+  .ws-step button{width:40px;height:40px;border-radius:50%;border:0;background:var(--ch-raised);box-shadow:var(--ch-raise-sm);font:800 20px var(--ch-sans);color:var(--ch-ink);cursor:pointer}
+  .ws-step button:active{box-shadow:var(--ch-sink)}
+  .ws-step output{min-width:1.6em;text-align:center;font:800 22px var(--ch-display);color:var(--ch-ink)}
+  .ws-offer{display:flex;flex-direction:column;gap:8px;padding:14px 14px 18px;border-radius:36px;box-shadow:var(--ch-raise);text-decoration:none;color:var(--ch-body)}
+  .ws-offer img{width:100%;height:auto;border-radius:26px;aspect-ratio:924/540;object-fit:cover;display:block}
+  .ws-offer b{font:800 24px/1.1 var(--ch-display);color:var(--ch-ink-2);padding:0 6px}
+  .ws-offer span{padding:0 6px;font-size:14px;line-height:1.45}
+  .ws-offer .p{font-weight:800;color:var(--ch-teal)}
+  .ws-night{display:grid;gap:24px;grid-template-columns:1fr 1fr;align-items:center;padding:clamp(18px,3vw,32px);border-radius:44px;background:var(--ch-night);color:var(--ch-on-night)}
+  .ws-night h2{color:var(--ch-on-night)}
+  @media (max-width:820px){.ws-night{grid-template-columns:1fr}}
+  .ws-tags{display:flex;flex-wrap:wrap;gap:8px}
+  .ws-tags span{padding:8px 14px;border-radius:999px;background:var(--ch-night-3);font-weight:800;font-size:14px}
+  .ws-tags.light span{background:var(--ch-raised);color:var(--ch-ink);box-shadow:var(--ch-raise-sm)}
+  .ws-huts{display:grid;gap:10px;grid-template-columns:repeat(6,1fr)}
+  @media (max-width:520px){.ws-huts{grid-template-columns:repeat(3,1fr)}}
+  .ws-huts div{padding:12px 6px;border-radius:20px;text-align:center;font-weight:800}
+  .ws-huts .free{background:var(--ch-raised);color:var(--ch-link);box-shadow:var(--ch-raise-sm)}
+  .ws-huts .booked{background:#e5dccd;color:#7d7566;box-shadow:inset 3px 3px 7px rgba(150,120,80,.25)}
+  .ws-huts b{display:block;font:800 26px var(--ch-display)}
+  .ws-disc{width:min(240px,60vw);aspect-ratio:1;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--ch-yellow);color:#3a2a00;box-shadow:inset -10px -12px 22px rgba(150,100,0,.35),inset 10px 10px 18px rgba(255,255,255,.5),18px 20px 34px rgba(150,120,80,.25);text-align:center}
+  .ws-disc b{font:800 clamp(40px,6vw,58px)/1 var(--ch-display)}
+  .ws-acts{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr))}
+  .ws-acts div{padding:18px;border-radius:26px;font:800 18px var(--ch-display);color:var(--ch-ink-2);box-shadow:var(--ch-raise-sm)}
+  .ws-steps3{display:flex;gap:10px;flex-wrap:wrap}
+  .ws-steps3 div{flex:1;min-width:110px;padding:14px;border-radius:24px;background:var(--ch-raised);box-shadow:var(--ch-raise-sm);font:800 18px var(--ch-display);color:var(--ch-ink-2)}
+  .ws-steps3 span{display:inline-flex;width:30px;height:30px;border-radius:50%;background:var(--ch-teal);color:#fff;align-items:center;justify-content:center;margin-right:8px;font-size:15px}
+  .ws-ev{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr))}
+  .ws-ev div{padding:18px;border-radius:26px;background:var(--ch-night);color:var(--ch-on-night)}
+  .ws-ev small{display:block;font:500 11.5px var(--ch-mono);letter-spacing:.06em;color:var(--ch-yellow);text-transform:uppercase}
+  .ws-ev b{font:800 22px var(--ch-display)}
+  .ws-prod{display:flex;flex-direction:column;gap:8px;padding:14px 14px 18px;border-radius:36px;box-shadow:var(--ch-raise)}
+  .ws-prod img{width:100%;height:auto;border-radius:26px;aspect-ratio:924/540;object-fit:cover}
+  .ws-prod b{font:800 22px var(--ch-display);color:var(--ch-ink-2)}
+  .ws-book{display:grid;gap:24px;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);align-items:start}
+  @media (max-width:860px){.ws-book{grid-template-columns:1fr}}
+  .ws-tabs{display:inline-flex;gap:4px;padding:4px;border-radius:999px;background:var(--ch-sunk);box-shadow:var(--ch-sink);flex-wrap:wrap}
+  .ws-tabs span{padding:8px 14px;border-radius:999px;font:800 13.5px var(--ch-sans);color:var(--ch-muted-2)}
+  .ws-tabs span[aria-current="step"]{background:var(--ch-raised);color:var(--ch-ink);box-shadow:var(--ch-raise-sm)}
+  .ws-ctr{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 0;border-bottom:1px dashed rgba(110,70,30,.2)}
+  .ws-ctr b{display:block;font:800 18px var(--ch-display);color:var(--ch-ink-2)}
+  .ws-extra{display:flex;gap:14px;align-items:center;width:100%;text-align:left;border:0;cursor:pointer;font:inherit;color:inherit;padding:16px;border-radius:24px;background:var(--ch-raised);box-shadow:var(--ch-raise-sm);margin-top:10px}
+  .ws-extra[aria-pressed="true"]{background:var(--ch-leaf)}
+  .ws-extra i{flex:none;width:30px;height:30px;border-radius:10px;background:#e5dccd;display:flex;align-items:center;justify-content:center;font-style:normal;font-weight:800;color:#fff}
+  .ws-extra[aria-pressed="true"] i{background:var(--ch-teal)}
+  .ws-extra b{display:block;font:800 17px var(--ch-display);color:var(--ch-ink-2)}
+  .ws-sum{padding:20px;border-radius:32px;background:var(--ch-raised);box-shadow:var(--ch-raise)}
+  .ws-sum .ln{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px dashed rgba(110,70,30,.2);font-variant-numeric:tabular-nums}
+  .ws-sum .tot{border:0;font:800 24px var(--ch-display);color:var(--ch-ink)}
+  .ws-mbar{display:none}
+  @media (max-width:860px){.ws-mbar{position:sticky;bottom:10px;z-index:4;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 10px 10px 20px;border-radius:30px;background:var(--ch-night);color:var(--ch-on-night);box-shadow:0 14px 30px -10px rgba(0,0,0,.5)}.ws-mbar b{font:800 20px var(--ch-display);color:var(--ch-yellow)}}
+  .ws-status{display:flex;gap:14px;align-items:center;padding:18px 20px;border-radius:30px;background:var(--ch-leaf);box-shadow:var(--ch-raise-sm)}
+  .ws-status i{flex:none;width:18px;height:18px;border-radius:50%;background:#3f8a4d;box-shadow:0 0 0 6px rgba(63,138,77,.2)}
+  .ws-safe{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))}
+  .ws-safe div{display:flex;gap:12px;align-items:flex-start;padding:16px;border-radius:24px;background:var(--ch-raised);box-shadow:var(--ch-raise-sm)}
+  .ws-safe span.n{flex:none;width:32px;height:32px;border-radius:50%;background:var(--ch-river-2);color:var(--ch-ink);display:flex;align-items:center;justify-content:center;font:800 16px var(--ch-display)}
+  .ws-day{display:flex;flex-direction:column;gap:10px}
+  .ws-day > div{display:grid;grid-template-columns:4.2em 1fr;gap:12px;padding:12px 14px;border-radius:22px;background:var(--ch-raised);box-shadow:var(--ch-raise-sm)}
+  .ws-day time{font:800 18px var(--ch-display);color:var(--ch-teal)}
+  .ws-day b{display:block;color:var(--ch-ink-2)}
+  .ws-map{width:100%;height:auto;border-radius:32px;box-shadow:var(--ch-raise);background:#fff3da}
+  .ws-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:16px 20px;border-radius:26px;background:var(--ch-sunk);font-size:14px;font-weight:700}
+</style>
+</head>
+<body class="clay cham">
+
+<main class="ch-wrap ch-stack">
+  <nav class="ch-crumb" aria-label="Breadcrumb"><a href="./" data-en="CHAM project">Dự án CHAM</a> / <span data-en="Guest website (mockup)">Website cho khách (bản mẫu)</span></nav>
+  <p class="ch-proto ws-proto" data-en="Teaching mockup. CHAM Homestay is a planned project and is not open: this site takes no bookings, sends nothing and charges nothing. Items marked “to confirm” are unknown and must come from the owner.">Bản mẫu dùng cho bài học. CHAM Homestay là dự án đang ở giai đoạn kế hoạch, chưa mở cửa: trang này không nhận đặt phòng, không gửi thông tin và không thu tiền. Mục ghi “cần xác nhận” là thông tin chưa có, phải lấy từ chủ homestay.</p>
+  <div class="ws">
+    <header class="ws-top">
+      <a class="ws-logo" href="#trang-chu" aria-label="CHAM – trang chủ" data-en-aria="CHAM – home">cham<span>.</span></a>
+      <nav class="ws-nav" aria-label="Website CHAM" data-en-aria="CHAM website">
+        <a href="#luu-tru" data-en="Stay">Lưu trú</a><a href="#ve-trong-ngay" data-en="Day pass">Vé trong ngày</a><a href="#am-thuc" data-en="Food">Ẩm thực</a><a href="#buoi-toi" data-en="Evenings">Buổi tối</a><a href="#dac-san" data-en="Shop">Đặc sản</a><a href="#duong-den" data-en="Getting here">Đường đến</a><a href="#lich-trinh" data-en="Itinerary">Lịch trình</a>
+      </nav>
+      <a class="ws-bag" href="#dac-san"><span data-en="Bag">Giỏ</span> · <span id="ws-cart">0</span></a>
+      <a class="ch-btn sm" href="#dat-phong" data-en="Book a room">Đặt phòng</a>
+    </header>
+
+    <section class="ws-screen" data-screen="trang-chu" aria-labelledby="h-home">
+      <div class="ch-split">
+        <div class="ch-stack" style="gap:18px">
+          <span class="ch-eyebrow" data-en="Tân Lộc islet · Cần Thơ">Cù lao Tân Lộc · Cần Thơ</span>
+          <h1 id="h-home" data-en="One night on Tân Lộc islet">Một đêm trên cù lao Tân Lộc</h1>
+          <p class="ws-lead" data-en="An eco-homestay with six thatched-roof rooms set among fruit orchards, on an islet in the Hậu River where Cần Thơ, An Giang and Đồng Tháp meet.">Homestay sinh thái với sáu phòng nhà lá giữa vườn cây trái, trên cù lao giữa sông Hậu, nơi giáp ranh Cần Thơ, An Giang và Đồng Tháp.</p>
+          <div class="ws-booker">
+            <div class="f"><span class="ch-k" data-en="Check-in">Nhận phòng</span><b data-en="Sat, 14 Nov (example)">T7, 14/11 (ví dụ)</b></div>
+            <div class="f"><span class="ch-k" id="lbl-n" data-en="Nights">Số đêm</span><span class="ws-step"><button type="button" data-step="nights" data-d="-1" aria-label="Bớt một đêm" data-en-aria="One night fewer">−</button><output id="ws-nights" aria-labelledby="lbl-n">1</output><button type="button" data-step="nights" data-d="1" aria-label="Thêm một đêm" data-en-aria="One more night">+</button></span></div>
+            <div><span class="ch-note" data-en="1 room from">1 phòng từ</span> <b id="ws-from" style="font:800 22px var(--ch-display);color:var(--ch-ink)"></b></div>
+            <a class="ch-btn" href="#luu-tru" data-en="See rooms">Xem phòng</a>
+          </div>
+        </div>
+        <div style="position:relative">
+          <img class="ch-art" src="../assets/cham/clay/canoe-pier.png" width="924" height="540" alt="Hình đất sét 3D: nhà lá trên cù lao nhỏ, cây trái, xuồng trên sông" data-en-alt="3D clay render: thatched huts on a small islet, fruit trees, a canoe on the river">
+          <div class="ch-card sm" style="position:absolute;left:16px;bottom:-16px;padding:12px 16px"><b class="ch-display" style="font-size:20px" data-en="6 thatched rooms">6 phòng nhà lá</b><div class="ch-note" data-en="2–4 guests / room">2–4 khách / phòng</div></div>
+        </div>
+      </div>
+      <div class="ch-grid" style="--ch-min:230px">
+        <a class="ws-offer ch-bg-river" href="#luu-tru"><img src="../assets/cham/clay/huts.png" width="924" height="540" alt="" loading="lazy"><b data-en="Stay">Lưu trú</b><span data-en="6 thatched rooms, 2–4 guests each, private bathroom">6 phòng nhà lá, 2–4 khách/phòng, vệ sinh riêng</span><span class="p" data-en="500,000 đ / night">500.000 đ / đêm</span></a>
+        <a class="ws-offer ch-bg-yellow" href="#ve-trong-ngay"><img src="../assets/cham/clay/chamomile-field.png" width="924" height="540" alt="" loading="lazy"><b data-en="Day pass">Vé trong ngày</b><span data-en="Farm for a day, catch fish, chamomile fields, cycle the islet, folk games">Làm nông dân, bắt cá, đồng hoa cúc la mã, đạp xe quanh cù lao, trò chơi dân gian</span><span class="p" data-en="80,000 đ / adult">80.000 đ / người lớn</span></a>
+        <a class="ws-offer ch-bg-brick" href="#am-thuc"><img src="../assets/cham/clay/hotpot.png" width="924" height="540" alt="" loading="lazy"><b data-en="Food">Ẩm thực</b><span data-en="Tân Lộc pangasius hotpot; a cooking class with what you pick yourself">Lẩu mắm cá tra Tân Lộc; lớp nấu ăn với nguyên liệu tự hái</span><span class="p" data-en="~120,000 đ / guest">~120.000 đ / khách</span></a>
+        <a class="ws-offer ch-bg-leaf" href="#dac-san"><img src="../assets/cham/clay/tea-oil.png" width="924" height="540" alt="" loading="lazy"><b data-en="Take home">Mang về</b><span data-en="Chamomile tea, chamomile essential oil, fermented pangasius">Trà cúc la mã, tinh dầu cúc la mã, mắm cá tra</span><span class="p" data-en="~150,000 đ / order">~150.000 đ / đơn</span></a>
+      </div>
+      <div class="ws-night">
+        <div class="ch-stack" style="gap:12px"><span class="ch-k" style="color:var(--ch-yellow)" data-en="For guests who stay">Dành cho khách ở lại</span><h2 data-en="After the day visitors leave">Khi khách tham quan đã về</h2>
+          <p style="color:var(--ch-on-night-2);line-height:1.6" data-en="Đờn ca tài tử music and a campfire. In season, frog-spotting by torchlight and watching fireflies.">Đờn ca tài tử và lửa trại. Theo mùa có soi ếch, soi nhái và ngắm đom đóm.</p>
+          <div class="ws-tags"><span>Đờn ca tài tử</span><span data-en="Campfire">Lửa trại</span><span data-en="Frog-spotting (seasonal)">Soi ếch (theo mùa)</span><span data-en="Fireflies (seasonal)">Đom đóm (theo mùa)</span></div></div>
+        <img class="ch-art" src="../assets/cham/clay/campfire.png" width="924" height="540" alt="Hình đất sét 3D: lửa trại, đàn kìm, đom đóm" data-en-alt="3D clay render: campfire, đàn kìm, fireflies" loading="lazy">
+      </div>
+    </section>
+
+    <section class="ws-screen" data-screen="luu-tru" aria-labelledby="h-rooms" hidden>
+      <div class="ws-crumb"><a href="#trang-chu" data-en="Home">Trang chủ</a> / <span data-en="Stay">Lưu trú</span></div>
+      <div class="ch-split">
+        <img class="ch-art" src="../assets/cham/clay/huts.png" width="924" height="540" alt="Hình đất sét 3D: nhà lá, mặt cắt nội thất" data-en-alt="3D clay render: thatched hut, interior cut-away" loading="lazy">
+        <div class="ch-stack" style="gap:14px"><h1 id="h-rooms" data-en="Six thatched rooms">Sáu phòng nhà lá</h1>
+          <div class="ws-tags light"><span data-en="2–4 guests">2–4 khách</span><span data-en="Private bathroom">Vệ sinh riêng</span><span data-en="Bamboo beds">Giường tre</span></div>
+          <b class="ch-display" style="font-size:34px;color:var(--ch-teal)" data-en="500,000 đ / night">500.000 đ / đêm</b>
+          <p class="ch-note" data-en="Price confirmed by the author: 500,000 đ a night (the original 2017 plan wrote 50,000 đ).">Giá đã được tác giả xác nhận: 500.000 đ/đêm (kế hoạch gốc 2017 ghi 50.000 đ).</p></div>
+      </div>
+      <div class="ch-card"><div class="ch-row" style="justify-content:space-between"><h2 style="font-size:24px" data-en="Availability · Sat 14 Nov (example)">Phòng trống · T7 14/11 (ví dụ)</h2><span class="ch-tbc" data-en="Room names and photos: to confirm">Tên phòng và ảnh: cần xác nhận</span></div>
+        <div class="ws-huts" id="ws-huts" style="margin-top:14px"></div></div>
+      <div><a class="ch-btn" href="#dat-phong" data-en="Book a room">Đặt phòng</a></div>
+    </section>
+
+    <section class="ws-screen" data-screen="ve-trong-ngay" aria-labelledby="h-day" hidden>
+      <div class="ws-crumb"><a href="#trang-chu" data-en="Home">Trang chủ</a> / <span data-en="Day pass">Vé trong ngày</span></div>
+      <div class="ch-split">
+        <div class="ch-stack" style="gap:14px"><h1 id="h-day" data-en="A day on the islet">Một ngày trên cù lao</h1>
+          <p class="ws-lead" data-en="One ticket covers everything below. No overnight stay needed.">Một vé cho tất cả hoạt động bên dưới. Không cần ở lại qua đêm.</p>
+          <div class="ws-tags light"><span data-en="Children under 1 m: free">Trẻ em dưới 1 m: miễn phí</span><span data-en="1–1.4 m: 30,000 đ">1–1,4 m: 30.000 đ</span><span data-en="Buy 7, get 1 free">Mua 7 vé tặng 1</span></div></div>
+        <div class="ws-disc" style="justify-self:center"><b data-en="80,000 đ">80.000 đ</b><span style="font-weight:800" data-en="per adult">/ người lớn</span></div>
+      </div>
+      <img class="ch-art" src="../assets/cham/clay/islet-overview.png" width="924" height="540" alt="Hình đất sét 3D: toàn cảnh cù lao" data-en-alt="3D clay render: the islet from above" loading="lazy">
+      <div class="ws-acts"><div class="ch-bg-leaf" data-en="Farm for a day">Làm nông dân một ngày</div><div style="background:var(--ch-river-2)" data-en="Catch fish">Bắt cá</div><div class="ch-bg-yellow" data-en="Chamomile fields">Đồng hoa cúc la mã</div><div class="ch-bg-brick" data-en="Cycle around the islet">Đạp xe quanh cù lao</div><div class="ch-bg-lilac" data-en="Folk games">Trò chơi dân gian</div></div>
+      <div><a class="ch-btn" href="#dat-phong" data-en="Buy day pass">Mua vé trong ngày</a></div>
+    </section>
+
+    <section class="ws-screen" data-screen="am-thuc" aria-labelledby="h-food" hidden>
+      <div class="ws-crumb"><a href="#trang-chu" data-en="Home">Trang chủ</a> / <span data-en="Food">Ẩm thực</span></div>
+      <div class="ch-split">
+        <img class="ch-art" src="../assets/cham/clay/hotpot.png" width="924" height="540" alt="Hình đất sét 3D: nồi lẩu sôi, cá sông, rau thơm" data-en-alt="3D clay render: a bubbling hotpot, river fish, herbs" loading="lazy">
+        <div class="ch-stack" style="gap:12px"><h1 id="h-food" data-en="Tân Lộc pangasius hotpot">Lẩu mắm cá tra Tân Lộc</h1>
+          <p class="ws-lead" data-en="Lẩu mắm cá tra, plus other country dishes.">Lẩu mắm cá tra cùng nhiều món đồng quê khác.</p>
+          <b class="ch-display" style="font-size:28px;color:var(--ch-teal)" data-en="About 120,000 đ / guest">Khoảng 120.000 đ / khách</b></div>
+      </div>
+      <div class="ch-card"><span class="ch-k" data-en="Cooking class">Lớp nấu ăn</span><h2 style="margin:6px 0" data-en="Pick it in the garden, then cook it">Tự hái trong vườn, tự nấu</h2><p data-en="You cook with ingredients you pick yourself.">Bạn nấu bằng chính nguyên liệu mình tự thu hoạch.</p>
+        <div class="ws-steps3" style="margin:14px 0"><div><span>1</span><span data-en="Pick">Hái</span></div><div><span>2</span><span data-en="Cook">Nấu</span></div><div><span>3</span><span data-en="Eat">Ăn</span></div></div>
+        <span class="ch-tbc" data-en="Class price: to confirm">Giá lớp học: cần xác nhận</span></div>
+    </section>
+
+    <section class="ws-screen" data-screen="buoi-toi" aria-labelledby="h-eve" hidden>
+      <div class="ws-crumb"><a href="#trang-chu" data-en="Home">Trang chủ</a> / <span data-en="Evenings">Buổi tối</span></div>
+      <div class="ws-night">
+        <div class="ch-stack" style="gap:12px"><span class="ch-k" style="color:var(--ch-yellow)" data-en="For overnight guests">Dành cho khách ở lại</span><h1 id="h-eve" style="color:var(--ch-on-night)" data-en="The islet after dark">Cù lao về đêm</h1></div>
+        <img class="ch-art" src="../assets/cham/clay/campfire.png" width="924" height="540" alt="Hình đất sét 3D: lửa trại, đàn kìm, đom đóm" data-en-alt="3D clay render: campfire, đàn kìm, fireflies" loading="lazy">
+      </div>
+      <div class="ws-ev"><div><small data-en="Every night">Mỗi tối</small><b>Đờn ca tài tử</b></div><div><small data-en="Every night">Mỗi tối</small><b data-en="Campfire">Lửa trại</b></div><div><small data-en="In season">Theo mùa</small><b data-en="Frog-spotting">Soi ếch, soi nhái</b></div><div><small data-en="In season">Theo mùa</small><b data-en="Firefly watching">Ngắm đom đóm</b></div></div>
+      <span class="ch-tbc" style="align-self:flex-start" data-en="Season months: to confirm">Tháng theo mùa: cần xác nhận</span>
+    </section>
+
+    <section class="ws-screen" data-screen="dac-san" aria-labelledby="h-shop" hidden>
+      <div class="ws-crumb"><a href="#trang-chu" data-en="Home">Trang chủ</a> / <span data-en="Shop">Đặc sản</span></div>
+      <div><h1 id="h-shop" data-en="Take Tân Lộc home">Mang Tân Lộc về nhà</h1><p class="ws-lead" data-en="Orders average about 150,000 đ.">Mỗi đơn trung bình khoảng 150.000 đ.</p></div>
+      <div class="ch-grid" style="--ch-min:240px" id="ws-shop"></div>
+      <p class="ch-note" data-en="Mockup: the bag only counts items on this page; nothing is sold.">Bản mẫu: giỏ chỉ đếm số món trên trang này, không bán thật.</p>
+    </section>
+
+    <section class="ws-screen" data-screen="dat-phong" aria-labelledby="h-book" hidden>
+      <div class="ws-crumb"><a href="#trang-chu" data-en="Home">Trang chủ</a> / <span data-en="Booking">Đặt phòng</span></div>
+      <h1 id="h-book" style="font-size:clamp(36px,5vw,56px)" data-en="Book your stay">Đặt chuyến đi</h1>
+      <div class="ws-book">
+        <div class="ch-card" id="ws-step"></div>
+        <aside class="ws-sum" id="ws-sum" aria-live="polite"></aside>
+      </div>
+      <div class="ws-mbar"><div><span class="ch-note" style="color:var(--ch-on-night-2)" data-en="Estimated total">Tạm tính</span><br><b id="ws-mtotal"></b></div><button type="button" class="ch-btn yellow" data-book="next" id="ws-mnext">Tiếp tục</button></div>
+    </section>
+
+    <section class="ws-screen" data-screen="xac-nhan" aria-labelledby="h-conf" hidden>
+      <div class="ch-split">
+        <div class="ch-stack" style="gap:14px"><span class="ch-k" data-en="Request received (example)">Đã nhận yêu cầu (ví dụ)</span><h1 id="h-conf" data-en="See you on the islet">Hẹn gặp bạn trên cù lao</h1>
+          <p class="ws-lead" data-en="We'll confirm by phone or Zalo.">Chúng tôi sẽ xác nhận qua điện thoại hoặc Zalo.</p>
+          <p class="ch-proto" data-en="Mockup only: no request was sent and nobody will call.">Chỉ là bản mẫu: không có yêu cầu nào được gửi đi và sẽ không có ai gọi lại.</p></div>
+        <img class="ch-art" src="../assets/cham/clay/canoe-pier.png" width="924" height="540" alt="Hình đất sét 3D: thuyền cập bến nhà lá" data-en-alt="3D clay render: a boat arriving at the huts" loading="lazy">
+      </div>
+      <div class="ch-grid" style="--ch-min:200px" id="ws-conf"></div>
+      <div class="ch-row"><a class="ch-btn soft" href="#duong-den" data-en="Getting here">Đường đến</a><a class="ch-btn soft" href="#an-toan" data-en="Flood &amp; safety">Mùa nước &amp; an toàn</a></div>
+    </section>
+
+    <section class="ws-screen" data-screen="duong-den" aria-labelledby="h-map" hidden>
+      <div class="ws-crumb"><a href="#trang-chu" data-en="Home">Trang chủ</a> / <span data-en="Getting here">Đường đến</span></div>
+      <h1 id="h-map" style="font-size:clamp(36px,5vw,56px)" data-en="Getting here">Đường đến</h1>
+      <div class="ch-split">
+        <figure style="margin:0"><img class="ws-map" src="../assets/geo/tan-loc-clay.svg" width="670" height="550" alt="Bản đồ cù lao Tân Lộc giữa sông Hậu" data-en-alt="Map of Tân Lộc islet in the Hậu River" loading="lazy">
+          <figcaption class="ch-note" style="margin-top:8px" data-en="Outline: © OpenStreetMap contributors (ODbL), simplified for illustration, not an official map.">Đường bờ: © OpenStreetMap contributors (ODbL), giản lược để minh họa, không dùng làm bản đồ chính thức.</figcaption></figure>
+        <div class="ch-stack" style="gap:14px">
+          <div class="ch-card sm"><b class="ch-display" style="font-size:20px" data-en="From Cần Thơ city">Từ trung tâm Cần Thơ</b><p style="margin-top:4px" data-en="About 40 km: Highway 91 towards Thốt Nốt (≈1 hour), then the Thuận Hưng ferry, 5–10 min (≈1,000 đ/person, 2,500 đ/motorbike).">Khoảng 40 km: theo Quốc lộ 91 hướng Thốt Nốt (≈1 giờ), qua bến đò Thuận Hưng 5–10 phút (≈1.000 đ/người, 2.500 đ/xe máy).</p></div>
+          <div class="ch-card sm"><b class="ch-display" style="font-size:20px" data-en="From Ho Chi Minh City">Từ TP. Hồ Chí Minh</b><p style="margin-top:4px" data-en="Reach Cần Thơ city first, then follow the route above.">Đến trung tâm Cần Thơ, rồi đi theo lộ trình bên trên.</p><span class="ch-tbc" data-en="Total time: to confirm">Tổng thời gian: cần xác nhận</span></div>
+          <div class="ch-card sm ch-bg-river"><b data-en="Lân Thạnh 2, Tân Lộc ward, Cần Thơ">Lân Thạnh 2, phường Tân Lộc, Cần Thơ</b><p class="ch-note" style="margin-top:4px" data-en="An islet in the Hậu River where Cần Thơ, An Giang and Đồng Tháp meet.">Cù lao giữa sông Hậu, nơi giáp ranh Cần Thơ, An Giang và Đồng Tháp.</p></div>
+          <a class="ch-btn soft" href="#an-toan" data-en="Flood &amp; safety →">Mùa nước &amp; an toàn →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="ws-screen" data-screen="an-toan" aria-labelledby="h-safe" hidden>
+      <div class="ws-crumb"><a href="#trang-chu" data-en="Home">Trang chủ</a> / <span data-en="Flood &amp; safety">Mùa nước &amp; an toàn</span></div>
+      <h1 id="h-safe" style="font-size:clamp(36px,5vw,56px)" data-en="Flood season &amp; safety">Mùa nước &amp; an toàn</h1>
+      <div class="ws-status"><i aria-hidden="true"></i><div><span class="ch-k" data-en="Flood status today">Tình trạng nước hôm nay</span><b class="ch-display" style="display:block;font-size:24px;color:var(--ch-ink-2)" data-en="Open · normal water level">Mở cửa · mực nước bình thường</b><span class="ch-note" data-en="Example state. The owner updates this (Open / Caution / Closed).">Trạng thái mẫu. Chủ homestay cập nhật (Mở cửa / Thận trọng / Tạm đóng).</span></div></div>
+      <p class="ws-lead" data-en="Floods and riverbank erosion are real risks on the islet. Here's what we tell guests before they come.">Lũ và sạt lở bờ sông là rủi ro thật trên cù lao. Đây là những điều chúng tôi báo khách trước khi đến.</p>
+      <div class="ws-safe">
+        <div><span class="n">1</span><span><b data-en="Flood-season dates and booking changes">Thời gian mùa nước và đổi lịch</b><br><span class="ch-tbc" data-en="to confirm">cần xác nhận</span></span></div>
+        <div><span class="n">2</span><span><b data-en="Riverbank areas to keep away from">Khu vực bờ sông cần tránh</b><br><span class="ch-tbc" data-en="to confirm">cần xác nhận</span></span></div>
+        <div><span class="n">3</span><span><b data-en="Life jackets for boat and fishing activities">Áo phao khi đi thuyền, bắt cá</b><br><span class="ch-tbc" data-en="to confirm">cần xác nhận</span></span></div>
+        <div><span class="n">4</span><span><b data-en="Emergency contact and evacuation point">Liên hệ khẩn cấp và điểm sơ tán</b><br><span class="ch-tbc" data-en="to confirm">cần xác nhận</span></span></div>
+      </div>
+    </section>
+
+    <section class="ws-screen" data-screen="lich-trinh" aria-labelledby="h-it" hidden>
+      <div class="ws-crumb"><a href="#trang-chu" data-en="Home">Trang chủ</a> / <span data-en="Itinerary">Lịch trình</span></div>
+      <div class="ch-row" style="justify-content:space-between;align-items:flex-end"><div><h1 id="h-it" style="font-size:clamp(36px,5vw,60px)" data-en="Two days, one night on Tân Lộc">Hai ngày một đêm ở Tân Lộc</h1><p class="ws-lead" data-en="From central Cần Thơ to Tân Lộc islet, with one night in a thatched hut at CHAM.">Từ trung tâm Cần Thơ ra cù lao Tân Lộc, ở một đêm nhà lá tại CHAM.</p></div><a class="ch-btn" href="#dat-phong" data-en="Book a night at CHAM">Đặt đêm ở CHAM</a></div>
+      <div class="ch-grid" style="--ch-min:320px">
+        <div class="ws-day"><h2 style="font-size:28px" data-en="Day 1">Ngày 1</h2>
+          <div><time>07:30</time><span><b data-en="Leave Cần Thơ">Rời Cần Thơ</b><span data-en="Highway 91 towards Thốt Nốt, about 1 hour.">Quốc lộ 91 hướng Thốt Nốt, khoảng 1 giờ.</span></span></div>
+          <div><time>08:45</time><span><b data-en="Thuận Hưng ferry">Bến đò Thuận Hưng</b><span data-en="5–10 minutes across, about 1,000 đ per person.">Qua cù lao 5–10 phút, khoảng 1.000 đ/người.</span></span></div>
+          <div><time>09:30</time><span><b data-en="Cô Điệp guava garden">Vườn ổi cô Điệp</b><span data-en="4,000 m² orchard: pick guavas, try fried guava.">Vườn 4.000 m², tự hái ổi, thử ổi chiên giòn.</span></span></div>
+          <div><time>12:00</time><span><b data-en="Lunch at CHAM">Trưa ở CHAM</b><span data-en="Mắm cá tra hotpot, found only on Tân Lộc.">Lẩu mắm cá tra, đặc sản chỉ Tân Lộc có.</span></span></div>
+          <div><time>14:30</time><span><b data-en="An afternoon on the farm">Một buổi làm nông dân</b><span data-en="Catch fish, chamomile field, cycling.">Bắt cá, đồng hoa cúc la mã, đạp xe.</span></span></div>
+          <div><time>16:30</time><span><b data-en="Lê Tấn Nhường coconut garden">Vườn dừa Lê Tấn Nhường</b><span data-en="550+ coconut palms, paddle a small canoe.">Hơn 550 gốc dừa xiêm, chèo xuồng ba lá.</span></span></div>
+          <div><time>19:00</time><span><b data-en="Evening at CHAM">Đêm ở CHAM</b><span data-en="Đờn ca tài tử, campfire; fireflies in season.">Đờn ca tài tử, lửa trại; theo mùa có đom đóm.</span></span></div>
+        </div>
+        <div class="ws-day"><h2 style="font-size:28px" data-en="Day 2">Ngày 2</h2>
+          <div><time>06:00</time><span><b data-en="Early bike ride">Đạp xe sáng sớm</b><span data-en="Shaded village lanes around the islet.">Đường làng rợp bóng cây quanh cù lao.</span></span></div>
+          <div><time>08:30</time><span><b data-en="Trần Bá Thế ancient house">Nhà cổ Trần Bá Thế</b><span data-en="A century-old French–Chinese–Vietnamese house.">Nhà trăm năm, kiến trúc Pháp – Hoa – Việt.</span></span></div>
+          <div><time>10:00</time><span><b data-en="Sáu Tia plum garden">Vườn mận Sáu Tia</b><span data-en="An Phước plums and plum wine to take home.">Mận An Phước và rượu mận làm quà.</span></span></div>
+          <div><time>11:00</time><span><b data-en="Thành Nam eco-garden">Vườn sinh thái Thành Nam</b><span data-en="1.1+ ha of jackfruit, durian, rambutan.">Hơn 1,1 ha mít, sầu riêng, chôm chôm.</span></span></div>
+          <div><time>13:00</time><span><b data-en="Shop, then ferry back">Mua đặc sản, về bờ</b><span data-en="Chamomile tea, essential oil, mắm cá tra.">Trà cúc la mã, tinh dầu, mắm cá tra.</span></span></div>
+        </div>
+      </div>
+      <span class="ch-tbc" style="align-self:flex-start" data-en="Times are suggestions. Garden opening hours: to confirm.">Giờ giấc là gợi ý. Giờ mở cửa các vườn: cần xác nhận.</span>
+    </section>
+
+    <footer class="ws-foot"><span>CHAM™ · Tân Lộc, Cần Thơ</span><span><a href="#an-toan" data-en="Flood season &amp; safety">Mùa nước &amp; an toàn</a> · <a href="#duong-den" data-en="Getting here">Đường đến</a> · <a href="#lich-trinh" data-en="Itinerary">Lịch trình</a></span></footer>
+  </div>
+  <p class="ch-lic" data-en="CHAM™ and this case © 2017–2026 Đỗ Thùy Hương, used on BizOn under a non-exclusive licence. A planned project; figures are planning assumptions, not operating data.">CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương, dùng trên BizOn theo giấy phép không độc quyền. Dự án đang ở giai đoạn kế hoạch; số liệu là giả định, không phải kết quả hoạt động.</p>
+</main>
+
+<script src="../js/bizon-clay-i18n.js" defer></script>
+<script src="../js/bizon-clay-nav.js" defer></script>
+<script src="../js/bizon-clay-footer.js" defer></script>
+<script src="../js/cham-kit.js" defer></script>
+<script src="../js/cham-website.js" defer></script>
+</body>
+</html>
