@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!-- Trò chơi nhà sáng lập CHAM – CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương, dùng trên BizOn theo giấy phép không độc quyền -->
+<html lang="vi" data-default-lang="vi">
+<head>
+<meta charset="UTF-8">
+<link rel="canonical" href="https://bizonland.com/cham/tro-choi.html">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#006687">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<script src="../js/bizon-lang.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title data-en="Founder game · CHAM Homestay · BizOn">Trò chơi nhà sáng lập · CHAM Homestay · BizOn</title>
+<meta name="description" data-en-content="Take the founder's seat: seven decisions from the CHAM business plan, five years of results against the plan, and a class leaderboard." content="Ngồi vào ghế người sáng lập: bảy quyết định từ kế hoạch CHAM, kết quả năm năm so với kế hoạch và bảng xếp hạng lớp.">
+<meta name="copyright" content="CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương">
+<link rel="icon" type="image/png" href="../assets/icons/icon-192.png">
+<script src="../js/bizon-boot.js"></script>
+<link rel="stylesheet" href="../css/bizon-clay-fonts.css">
+<link rel="stylesheet" href="../css/bizon-clay.css">
+<link rel="stylesheet" href="../css/cham-clay.css">
+<style>
+  .fg{background:var(--ch-night-2);color:var(--ch-on-night);border-radius:44px;padding:clamp(20px,4vw,44px);box-shadow:0 30px 50px -30px rgba(0,0,0,.6),inset 0 2px 0 rgba(255,255,255,.06)}
+  .fg h1,.fg h2,.fg h3{color:var(--ch-on-night)}
+  .fg-pips{display:flex;gap:6px;margin-bottom:22px}
+  .fg-pips i{flex:1;height:8px;border-radius:999px;background:#22505e}
+  .fg-pips i.on{background:var(--ch-yellow)}
+  .fg-tag{font:500 12px var(--ch-mono);letter-spacing:.1em;color:var(--ch-yellow)}
+  .fg h1{margin:8px 0 0;font-size:clamp(40px,6vw,72px);line-height:.98}
+  .fg h2{margin:8px 0 0;font-size:clamp(30px,4.4vw,52px);line-height:1}
+  .fg p{color:#cfe0e0;line-height:1.6}
+  .fg-src{margin-top:14px;padding:14px 16px;border-radius:20px;background:rgba(0,0,0,.18);font-size:14px;line-height:1.5;color:#cfe0e0}
+  .fg-src b{color:var(--ch-yellow)}
+  .fg-opts{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));margin-top:20px}
+  .fg-opt{display:flex;flex-direction:column;gap:6px;text-align:left;padding:20px;border:0;border-radius:28px;cursor:pointer;background:var(--ch-night);color:var(--ch-on-night);box-shadow:var(--ch-sink-night);font:inherit;transition:box-shadow .12s}
+  .fg-opt[aria-pressed="true"]{background:var(--ch-paper);color:var(--ch-ink-2);box-shadow:inset -4px -5px 10px rgba(0,0,0,.18),inset 4px 4px 8px rgba(255,255,255,.45),0 12px 22px rgba(0,0,0,.3)}
+  .fg-opt b{font:800 26px/1.1 var(--ch-display)}
+  .fg-opt span{font-size:14px;line-height:1.45;opacity:.85}
+  .fg-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:22px}
+  .fg-live{font-size:13px;font-weight:700;color:var(--ch-on-night-2)}
+  .fg-live b{font:800 22px var(--ch-display);color:var(--ch-yellow);margin-left:6px}
+  .fg-facts{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));margin:22px 0}
+  .fg-facts div{padding:14px 16px;border-radius:22px;background:var(--ch-night);box-shadow:var(--ch-sink-night)}
+  .fg-chart{position:relative;margin-top:10px}
+  .fg-chart .cap{position:absolute;left:0;right:0;border-top:2px dashed var(--ch-brick);pointer-events:none}
+  .fg-kpi{width:100%;border-collapse:collapse;margin-top:8px;font-size:14.5px}
+  .fg-kpi th,.fg-kpi td{padding:9px 8px;border-bottom:1px solid rgba(255,255,255,.1);text-align:right}
+  .fg-kpi th:first-child,.fg-kpi td:first-child{text-align:left}
+  .fg-kpi thead th{font:500 11.5px var(--ch-mono);letter-spacing:.06em;color:var(--ch-on-night-2)}
+  .fg-kpi td.you{color:var(--ch-yellow);font-weight:800}
+  .fg-recap{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));margin-top:12px}
+  .fg-recap div{padding:12px 14px;border-radius:20px;font-size:13.5px;line-height:1.4}
+  .fg-recap .same{background:var(--ch-night);color:var(--ch-on-night)}
+  .fg-recap .diff{background:var(--ch-paper);color:var(--ch-ink-2)}
+  .fg-recap b{display:block;font:500 11px var(--ch-mono);letter-spacing:.08em;opacity:.75}
+  .fg-recap strong{display:block;font:800 17px var(--ch-display);margin:2px 0}
+  .fg-code{word-break:break-all;font:500 11.5px/1.5 var(--ch-mono);color:var(--ch-ink-2);padding:10px 12px;border-radius:14px;background:var(--ch-sunk);box-shadow:var(--ch-sink);max-height:5.5em;overflow:auto}
+  .fg-board{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+  .fg-board li{display:grid;grid-template-columns:2em 1fr auto;gap:10px;align-items:center;padding:10px 14px;border-radius:18px;background:var(--ch-raised);box-shadow:var(--ch-raise-sm)}
+  .fg-board li:first-child{background:var(--ch-yellow-t)}
+  .fg-board .n{font:800 18px var(--ch-display);color:var(--ch-teal)}
+  .fg-board .c{text-align:right;font-weight:800;color:var(--ch-ink)}
+  .fg-board small{display:block;font-weight:700;color:var(--ch-muted)}
+</style>
+</head>
+<body class="clay cham">
+
+<main class="ch-wrap ch-stack">
+  <nav class="ch-crumb" aria-label="Breadcrumb"><a href="./" data-en="CHAM project">Dự án CHAM</a> / <span data-en="Founder game">Trò chơi nhà sáng lập</span></nav>
+  <section id="fg" class="fg" aria-live="polite"></section>
+  <section id="fg-save" class="ch-grid" style="--ch-min:320px" hidden></section>
+  <noscript><p class="ch-proto">Trò chơi cần JavaScript. · The game needs JavaScript.</p></noscript>
+  <p class="ch-lic" data-en="CHAM™ and this case © 2017–2026 Đỗ Thùy Hương, used on BizOn under a non-exclusive licence. A planned project; figures are planning assumptions, not operating data.">CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương, dùng trên BizOn theo giấy phép không độc quyền. Dự án đang ở giai đoạn kế hoạch; số liệu là giả định, không phải kết quả hoạt động.</p>
+</main>
+
+<script src="../js/bizon-clay-i18n.js" defer></script>
+<script src="../js/bizon-clay-nav.js" defer></script>
+<script src="../js/bizon-clay-footer.js" defer></script>
+<script src="../js/cham-kit.js" defer></script>
+<script src="../js/cham-engine.js" defer></script>
+<script src="../js/cham-founder.js" defer></script>
+</body>
+</html>

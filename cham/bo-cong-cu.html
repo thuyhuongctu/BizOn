@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<!-- Bộ công cụ giảng dạy CHAM – CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương, dùng trên BizOn theo giấy phép không độc quyền -->
+<html lang="vi" data-default-lang="vi">
+<head>
+<meta charset="UTF-8">
+<link rel="canonical" href="https://bizonland.com/cham/bo-cong-cu.html">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#006687">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<script src="../js/bizon-lang.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title data-en="Teaching kit · CHAM Homestay · BizOn">Bộ công cụ giảng dạy · CHAM Homestay · BizOn</title>
+<meta name="description" data-en-content="Revenue and payback calculator, plan audit, a sample booking-site listing and teaching notes for the CHAM Homestay case." content="Máy tính doanh thu và hòa vốn, bảng soát lỗi kế hoạch, tin đăng mẫu trên trang đặt phòng và ghi chú giảng dạy cho tình huống CHAM Homestay.">
+<meta name="copyright" content="CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương">
+<link rel="icon" type="image/png" href="../assets/icons/icon-192.png">
+<script src="../js/bizon-boot.js"></script>
+<link rel="stylesheet" href="../css/bizon-clay-fonts.css">
+<link rel="stylesheet" href="../css/bizon-clay.css">
+<link rel="stylesheet" href="../css/cham-clay.css">
+<style>
+  .tk-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+  .tk-h .ch-pill{background:var(--ch-yellow-t)}
+  .tk-calc{display:grid;gap:22px;grid-template-columns:minmax(0,1fr) minmax(0,1fr);margin-top:16px}
+  @media (max-width:820px){.tk-calc{grid-template-columns:1fr}}
+  .tk-sl{margin-bottom:16px}
+  .tk-sl .row{display:flex;justify-content:space-between;gap:10px;font-weight:800}
+  .tk-sl .row output{color:var(--ch-teal);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .tk-sl .ch-note{margin-top:2px}
+  .tk-seg{display:inline-flex;gap:4px;padding:4px;border-radius:999px;background:var(--ch-sunk);box-shadow:var(--ch-sink);flex-wrap:wrap}
+  .tk-seg button{border:0;border-radius:999px;padding:8px 14px;min-height:36px;background:transparent;color:var(--ch-muted-2);font:800 13px var(--ch-sans);cursor:pointer}
+  .tk-seg button[aria-pressed="true"]{background:var(--ch-raised);color:var(--ch-ink);box-shadow:var(--ch-raise-sm)}
+  .tk-lines{display:flex;flex-direction:column;gap:2px}
+  .tk-lines div{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px dashed rgba(110,70,30,.18);font-variant-numeric:tabular-nums}
+  .tk-lines .tot{border-bottom:0;font:800 22px var(--ch-display);color:var(--ch-ink)}
+  .tk-pay{margin-top:14px;padding:18px;border-radius:26px;background:var(--ch-night);color:var(--ch-on-night)}
+  .tk-pay b{display:block;font:800 clamp(30px,4vw,44px)/1.05 var(--ch-display);color:var(--ch-yellow);margin-top:4px}
+  .tk-audit{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));margin-top:14px}
+  .tk-audit div{padding:16px 18px;border-radius:24px;background:var(--ch-raised);box-shadow:var(--ch-raise-sm);border-left:6px solid var(--ch-brick)}
+  .tk-audit b{display:block;font:800 18px/1.2 var(--ch-display);color:var(--ch-ink-2)}
+  .tk-audit p{font-size:14px;line-height:1.5;margin:6px 0}
+  .tk-audit small{font:500 11.5px var(--ch-mono);color:var(--ch-muted-2)}
+  .tk-ota{display:grid;gap:18px;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) 200px;margin-top:14px;padding:16px;border-radius:24px;background:#fff;box-shadow:0 6px 20px -10px rgba(0,0,0,.25)}
+  @media (max-width:900px){.tk-ota{grid-template-columns:1fr}}
+  .tk-ota .imgs{display:grid;gap:6px;grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr}
+  .tk-ota .imgs img{width:100%;height:100%;min-height:0;object-fit:cover;border-radius:10px;display:block}
+  .tk-ota .imgs img:first-child{grid-row:1/3}
+  .tk-ota .imgs span{border-radius:10px;background:repeating-linear-gradient(45deg,#eee,#eee 6px,#f7f7f7 6px,#f7f7f7 12px);min-height:60px}
+  .tk-ota h3{font:800 20px/1.25 system-ui,sans-serif;color:#1a1a1a;margin:4px 0 8px}
+  .tk-ota .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+  .tk-ota .tags span{font-size:12px;padding:3px 8px;border-radius:6px;background:#eef6f8;color:#0b4f63;font-weight:700}
+  .tk-ota .price{border-left:1px solid #eee;padding-left:16px;display:flex;flex-direction:column;gap:6px;justify-content:center}
+  @media (max-width:900px){.tk-ota .price{border-left:0;padding-left:0}}
+  .tk-ota .price b{font:800 26px system-ui,sans-serif;color:#1a1a1a}
+  .tk-notes dl{display:grid;grid-template-columns:minmax(0,14em) 1fr;gap:10px 18px;margin:12px 0 0}
+  @media (max-width:640px){.tk-notes dl{grid-template-columns:1fr}}
+  .tk-notes dt{font-weight:800;color:var(--ch-ink-2)}
+  .tk-notes dd{margin:0;line-height:1.55}
+</style>
+</head>
+<body class="clay cham">
+
+<main class="ch-wrap ch-stack">
+  <nav class="ch-crumb" aria-label="Breadcrumb"><a href="./" data-en="CHAM project">Dự án CHAM</a> / <span data-en="Teaching kit">Bộ công cụ giảng dạy</span></nav>
+  <header class="ch-head">
+    <span class="ch-eyebrow" data-en="For instructors · CHAM Homestay">Dành cho giảng viên · CHAM Homestay</span>
+    <h1 data-en="Teaching kit">Bộ công cụ giảng dạy</h1>
+    <p class="lead" data-en="Three tools for class plus the teaching notes. Pair them with the case page and the plan review.">Ba công cụ cho lớp học kèm ghi chú giảng dạy. Dùng cùng trang tình huống và phần thẩm định kế hoạch.</p>
+    <div class="ch-row"><a class="ch-btn soft" href="ke-hoach-2017.html" data-en="← Back to the case">← Về tình huống</a><a class="ch-btn soft" href="bai-giang.html" data-en="Teaching deck">Bài giảng</a></div>
+  </header>
+
+  <section class="ch-card" aria-labelledby="tk1">
+    <div class="tk-h"><span class="ch-pill" data-en="Tool 1">Công cụ 1</span><h2 id="tk1" data-en="Revenue &amp; payback calculator">Máy tính doanh thu &amp; hòa vốn</h2></div>
+    <p data-en="Defaults come from the plan’s year 1. Drag the sliders to try other assumptions. Unit: million đ per year.">Giá trị mặc định lấy từ kế hoạch năm 1. Kéo thanh trượt để thử các giả định khác. Đơn vị: triệu đồng/năm.</p>
+    <div class="tk-calc">
+      <div>
+        <div id="tk-sliders"></div>
+        <div class="ch-k" style="margin-bottom:6px" data-en="Investment used for payback">Vốn đầu tư dùng để tính hòa vốn</div>
+        <div class="tk-seg" id="tk-cap" role="group"></div>
+        <div style="margin-top:14px"><button type="button" class="ch-btn soft" id="tk-reset" data-en="Restore the plan’s figures">Khôi phục số liệu kế hoạch</button></div>
+      </div>
+      <div>
+        <div class="ch-sunk"><div class="tk-lines" id="tk-lines"></div></div>
+        <div class="tk-pay"><span class="ch-k" style="color:var(--ch-on-night-2)" data-en="Payback = investment / (net profit + depreciation 160)">Thời gian hòa vốn = vốn / (lãi ròng + khấu hao 160)</span><b id="tk-pay" aria-live="polite"></b></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ch-card" aria-labelledby="tk2">
+    <div class="tk-h"><span class="ch-pill" data-en="Tool 2">Công cụ 2</span><h2 id="tk2" data-en="Plan audit">Soát lỗi kế hoạch</h2></div>
+    <p data-en="Places where the plan’s numbers disagree with each other. Use them for class discussion.">Những chỗ số liệu trong kế hoạch không khớp nhau. Dùng để thảo luận trên lớp.</p>
+    <div class="tk-audit">
+      <div><b data-en="Room price: 50,000 đ or 500,000 đ?">Giá phòng 50.000 đ hay 500.000 đ?</b><p data-en="The plan charges 50,000 đ per room-night and books 90 million of room revenue in year 1. The case page says 500,000 đ. Rooms are only about 5% of revenue in the plan.">Kế hoạch ghi 50.000 đ/phòng/đêm và tính doanh thu phòng 90 triệu ở năm 1. Trang tình huống ghi 500.000 đ. Phòng chỉ chiếm khoảng 5% doanh thu theo kế hoạch.</p><small data-en="§4.6 · §4.7.2">Mục 4.6 · 4.7.2</small></div>
+      <div><b data-en="Payback calculated on 500 million">Hòa vốn tính trên 500 triệu</b><p data-en="The formula uses 500 million while total capital is 4 billion (3.5 billion of it land and buildings). On 4 billion, payback is about 3.8 years, not 5 months 23 days.">Công thức dùng 500 triệu, trong khi tổng vốn là 4 tỷ (3,5 tỷ đất và nhà). Với 4 tỷ, thời gian hòa vốn khoảng 3,8 năm thay vì 5 tháng 23 ngày.</p><small data-en="§1.1 · §6.5">Mục 1.1 · 6.5</small></div>
+      <div><b data-en="Chamomile tea price doesn’t match">Giá trà cúc không khớp</b><p data-en="The price list says chamomile tea is 80,000 đ / 500 g; the revenue table uses 40,000 đ / 500 g.">Bảng giá ghi trà cúc la mã 80.000 đ/500 g; bảng doanh thu dùng 40.000 đ/500 g.</p><small data-en="§4.6 · §4.7.2">Mục 4.6 · 4.7.2</small></div>
+      <div><b data-en="Staff cost">Chi phí nhân sự</b><p data-en="Payroll for 10 staff is 27.7 million a month (≈332 million a year), without the 4 managers or the owner.">Bảng lương 10 nhân viên là 27,7 triệu/tháng (≈332 triệu/năm), chưa tính lương 4 quản lý và chủ homestay.</p><small data-en="§5.4 · §6.4">Mục 5.4 · 6.4</small></div>
+      <div><b data-en="20 guests a day, all year">20 khách/ngày, cả năm</b><p data-en="7,200 visitors a year means about 20 guests every day for 360 days, with no allowance for flood season or quiet weekdays.">7.200 lượt/năm tương ứng khoảng 20 khách mỗi ngày trong 360 ngày, chưa tính mùa nước nổi hay ngày thường vắng khách.</p><small data-en="§4.2 · §4.6">Mục 4.2 · 4.6</small></div>
+    </div>
+  </section>
+
+  <section class="ch-card" aria-labelledby="tk3">
+    <div class="tk-h"><span class="ch-pill" data-en="Tool 3">Công cụ 3</span><h2 id="tk3" data-en="Sample booking-site listing">Tin đăng mẫu trên trang đặt phòng</h2></div>
+    <p data-en="The plan intends to list on online booking sites. This is a neutral sample listing for students to rewrite: title, description and photo choice. There are no reviews because the homestay is not open yet.">Kế hoạch dự định liên kết với các trang đặt phòng trực tuyến. Đây là tin đăng mẫu trung tính để sinh viên viết lại tiêu đề, mô tả và chọn ảnh. Không có đánh giá vì homestay chưa hoạt động.</p>
+    <div class="tk-ota">
+      <div class="imgs"><img src="../assets/cham/clay/islet-overview.png" width="924" height="540" alt="Hình đất sét: toàn cảnh cù lao" data-en-alt="Clay render: the islet from above"><span aria-hidden="true"></span><span aria-hidden="true"></span></div>
+      <div>
+        <div class="ch-note" data-en="Homestay · Thốt Nốt, Cần Thơ">Homestay · Thốt Nốt, Cần Thơ</div>
+        <h3 data-en="CHAM Homestay – Thatched huts among the orchards, Tân Lộc islet">CHAM Homestay – Nhà lá giữa vườn cây trái, cù lao Tân Lộc</h3>
+        <div class="tags"><span data-en="Bamboo beds">Giường tre</span><span data-en="Fishing">Câu cá</span><span data-en="Bicycles">Xe đạp</span><span data-en="Campfire">Lửa trại</span><span data-en="Đờn ca tài tử">Đờn ca tài tử</span></div>
+        <p style="font-size:14px;line-height:1.5;color:#333" data-en="Thatched roofs, bamboo furniture and beds, wooden wardrobes. Guests pick fruit, catch fish and cook with what they harvest. Evenings bring a campfire and moon-watching; in season, frog-catching and fireflies.">Nhà lợp lá, bàn ghế và giường bằng tre, tủ gỗ. Khách tự hái trái cây, bắt cá, tự nấu bằng nguyên liệu thu hoạch được. Buổi tối có lửa trại, ngắm trăng; theo mùa có bắt ếch, bắt đom đóm.</p>
+        <p class="ch-proto" style="margin-top:10px" data-en="Exercise: rewrite the title in under 60 characters and choose the first 3 photos.">Bài tập: viết lại tiêu đề dưới 60 ký tự và chọn 3 ảnh đầu tiên.</p>
+      </div>
+      <div class="price"><span class="ch-note" data-en="Price per night">Giá mỗi đêm</span><b id="tk-ota"></b><span class="ch-note" data-en="No reviews yet">Chưa có đánh giá</span><span class="ch-btn sm" aria-hidden="true" data-en="Book now">Đặt ngay</span></div>
+    </div>
+  </section>
+
+  <section class="ch-card tk-notes" aria-labelledby="tk4">
+    <div class="tk-h"><span class="ch-pill" data-en="Instructors">Giảng viên</span><h2 id="tk4" data-en="Teaching notes">Ghi chú giảng dạy</h2></div>
+    <dl>
+      <dt data-en="Session 1 (90 min)">Buổi 1 (90 phút)</dt><dd data-en="Day Story as homework. In class: Plan Review in teams, then share the five findings.">Đọc «Một ngày ở Tân Lộc» ở nhà. Trên lớp: Thẩm định kế hoạch theo nhóm, chia sẻ năm phát hiện.</dd>
+      <dt data-en="Session 2 (90 min)">Buổi 2 (90 phút)</dt><dd data-en="Founder Game in teams, paste result codes into the teacher dashboard, discuss.">Trò chơi nhà sáng lập theo nhóm, dán mã kết quả vào bảng điều khiển giảng viên, thảo luận.</dd>
+      <dt data-en="Optional: sessions 3–4">Tùy chọn: buổi 3–4</dt><dd data-en="Tân Lộc Arena (Tier 2): four teams, six seasons, then the debrief questions.">Đấu trường Cù lao Tân Lộc (Bậc 2): bốn đội, sáu mùa, sau đó câu hỏi phản tư.</dd>
+      <dt data-en="Suggested answers">Đáp án gợi ý</dt><dd data-en="Payback on 4 billion ≈ 3.8 years. The 50,000 / 500,000 đ room-price gap needs confirming with the case author.">Hòa vốn trên 4 tỷ ≈ 3,8 năm. Chênh lệch giá phòng 50.000 / 500.000 đ cần xác nhận với tác giả tình huống.</dd>
+      <dt data-en="Grading (100 points)">Chấm điểm (100 điểm)</dt><dd data-en="Financial result 30 · pricing argument 25 · flood-season response 20 · differentiation against rivals 15 · end-of-game reflection 10.">Kết quả tài chính 30 · lập luận định giá 25 · ứng phó mùa nước 20 · khác biệt hóa trước đối thủ 15 · phản tư cuối ván 10.</dd>
+      <dt data-en="Real-world check">Đối chiếu thực tế</dt><dd data-en="Homestay Cẩm Lụa (Long Châu, Tân Lộc): rooms 250,000–450,000 đ a night, meals 100,000–150,000 đ. Hotels in Thốt Nốt: about 300,000–350,000 đ. Thuận Hưng ferry: about 1,000 đ per person. Public listings; verify before class.">Homestay Cẩm Lụa (Long Châu, Tân Lộc): phòng 250.000–450.000 đ/đêm, mâm cơm 100.000–150.000 đ. Khách sạn ở Thốt Nốt: khoảng 300.000–350.000 đ. Phà Thuận Hưng: khoảng 1.000 đ/người. Thông tin đăng công khai; kiểm lại trước giờ học.</dd>
+    </dl>
+  </section>
+  <p class="ch-lic" data-en="CHAM™ and this case © 2017–2026 Đỗ Thùy Hương, used on BizOn under a non-exclusive licence. A planned project; figures are planning assumptions, not operating data.">CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương, dùng trên BizOn theo giấy phép không độc quyền. Dự án đang ở giai đoạn kế hoạch; số liệu là giả định, không phải kết quả hoạt động.</p>
+</main>
+
+<script src="../js/bizon-clay-i18n.js" defer></script>
+<script src="../js/bizon-clay-nav.js" defer></script>
+<script src="../js/bizon-clay-footer.js" defer></script>
+<script src="../js/cham-kit.js" defer></script>
+<script src="../js/cham-engine.js" defer></script>
+<script src="../js/cham-teach.js" defer></script>
+</body>
+</html>

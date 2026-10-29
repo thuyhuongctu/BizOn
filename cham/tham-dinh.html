@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<!-- Thẩm định kế hoạch CHAM – CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương, dùng trên BizOn theo giấy phép không độc quyền -->
+<html lang="vi" data-default-lang="vi">
+<head>
+<meta charset="UTF-8">
+<link rel="canonical" href="https://bizonland.com/cham/tham-dinh.html">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#006687">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<script src="../js/bizon-lang.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title data-en="CHAM plan review · BizOn">Thẩm định kế hoạch CHAM · BizOn</title>
+<meta name="description" data-en-content="The CHAM Homestay business plan under a red pen: six sections, six findings, students' own notes and a plan-vs-reviewed summary. Print/PDF ready." content="Kế hoạch kinh doanh CHAM Homestay dưới bút đỏ: sáu phần, sáu phát hiện, ghi chú riêng của sinh viên và bảng tóm tắt kế hoạch so với sau thẩm định. Có bản in / PDF.">
+<meta name="copyright" content="CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương">
+<link rel="icon" type="image/png" href="../assets/icons/icon-192.png">
+<script src="../js/bizon-boot.js"></script>
+<link rel="stylesheet" href="../css/bizon-clay-fonts.css">
+<link rel="stylesheet" href="../css/bizon-clay.css">
+<link rel="stylesheet" href="../css/cham-clay.css">
+<style>
+  .rv-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 18px;border-radius:999px;background:var(--ch-raised);box-shadow:var(--ch-raise-sm)}
+  .rv-top .id{font:500 12px var(--ch-mono);letter-spacing:.06em;color:#221f1a}
+  .rv-count{font:500 12px var(--ch-mono);letter-spacing:.06em;color:var(--ch-red)}
+  .rv-pen{border:2px solid var(--ch-red);border-radius:999px;padding:6px 14px;min-height:36px;font:500 12px var(--ch-mono);letter-spacing:.06em;cursor:pointer;background:transparent;color:var(--ch-red)}
+  .rv-pen[aria-pressed="true"]{background:var(--ch-red);color:#fff}
+  .rv-head h1{margin:0;font-size:clamp(38px,6vw,72px);line-height:.98;color:#221f1a}
+  .rv-head h1 em{font-style:normal;color:var(--ch-red);text-decoration:underline wavy var(--ch-red) 3px;text-underline-offset:6px}
+  .rv-head p{margin:14px 0 0;max-width:46em;font-size:17px;line-height:1.6;color:var(--ch-muted)}
+  .rv-grid{display:grid;gap:22px;grid-template-columns:220px minmax(0,1fr) 320px;align-items:start}
+  @media (max-width:1100px){.rv-grid{grid-template-columns:minmax(0,1fr) 320px}.rv-toc{grid-column:1/-1}}
+  @media (max-width:760px){.rv-grid{grid-template-columns:1fr}}
+  .rv-toc ol{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:4px}
+  @media (max-width:1100px){.rv-toc ol{flex-direction:row;flex-wrap:wrap}}
+  .rv-toc button{display:flex;justify-content:space-between;gap:8px;width:100%;text-align:left;padding:9px 12px;border:0;border-left:3px solid transparent;border-radius:12px;background:transparent;font:700 14px var(--ch-sans);color:#221f1a;cursor:pointer}
+  .rv-toc button[aria-current="true"]{background:#fffdf8;border-left-color:var(--ch-red)}
+  .rv-toc .dots{color:var(--ch-red);letter-spacing:2px}
+  .rv-paper{background:#fffdf8;border-radius:8px;padding:clamp(20px,4vw,40px);box-shadow:0 18px 40px -20px rgba(80,60,30,.35),0 0 0 1px rgba(80,60,30,.08)}
+  .rv-paper .ref{display:flex;justify-content:space-between;font:500 12px var(--ch-mono);color:#7a7060}
+  .rv-paper h2{margin:10px 0 16px;font-size:clamp(26px,3.4vw,36px);color:#221f1a}
+  .rv-paper p{font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.75;color:#2a2620;margin:0 0 14px}
+  .rv-hl{background:#ffe066;padding:0 3px;border-radius:3px}
+  .rv-strike{background:#ffd3c9;padding:0 3px;border-radius:3px;text-decoration:line-through}
+  .rv-mark{font:italic 700 15px var(--ch-sans);color:var(--ch-red);margin-left:4px}
+  .rv-nav{display:flex;justify-content:space-between;margin-top:18px}
+  .rv-nav button{border:0;background:none;font:500 12px var(--ch-mono);letter-spacing:.06em;color:#7a7060;cursor:pointer;min-height:36px}
+  .rv-side{display:flex;flex-direction:column;gap:14px}
+  .rv-note{display:grid;grid-template-columns:28px 1fr;gap:10px;padding:14px;border-radius:18px;background:#fffdf8;box-shadow:0 8px 20px -14px rgba(80,60,30,.5)}
+  .rv-note .n{width:28px;height:28px;border-radius:50%;background:var(--ch-red);color:#fff;font:800 14px var(--ch-sans);display:flex;align-items:center;justify-content:center}
+  .rv-note .t{display:flex;justify-content:space-between;gap:8px;font-weight:800;color:#221f1a}
+  .rv-sev{font:500 10.5px var(--ch-mono);letter-spacing:.06em;color:#fff;padding:2px 7px;border-radius:999px;white-space:nowrap;align-self:flex-start}
+  .rv-note .d{font-size:14px;line-height:1.5;margin-top:4px}
+  .rv-note .fix{font:500 12.5px var(--ch-mono);color:var(--ch-red);margin-top:6px}
+  .rv-mine li{display:flex;gap:8px;align-items:flex-start;padding:8px 10px;border-radius:12px;background:#fffdf8;margin-top:6px;font-size:14px}
+  .rv-mine ul{list-style:none;margin:0;padding:0}
+  .rv-mine .ty{font:500 10.5px var(--ch-mono);padding:2px 6px;border-radius:999px;background:#221f1a;color:#fff;white-space:nowrap}
+  .rv-mine .x{margin-left:auto;border:0;background:none;color:var(--ch-red);font-weight:800;cursor:pointer}
+  .rv-types{display:flex;gap:6px;margin:10px 0}
+  .rv-types button{border:1.5px solid #221f1a;border-radius:999px;padding:4px 10px;min-height:32px;background:transparent;color:#221f1a;font:700 12.5px var(--ch-sans);cursor:pointer}
+  .rv-types button[aria-pressed="true"]{background:#221f1a;color:#fff}
+  .rv-sum{background:#221f1a;color:#f3ece1;border-radius:36px;padding:clamp(20px,4vw,40px)}
+  .rv-sum h2{color:#f3ece1;margin:6px 0 16px;font-size:clamp(28px,4vw,44px)}
+  .rv-sum table{width:100%;border-collapse:collapse;font-size:14.5px;min-width:620px}
+  .rv-sum th,.rv-sum td{text-align:left;padding:10px 8px;border-bottom:1px solid rgba(255,255,255,.12);vertical-align:top}
+  .rv-sum thead th{font:500 11.5px var(--ch-mono);letter-spacing:.06em;color:#bdb3a2}
+  .rv-sum td.p{text-decoration:line-through;color:#bdb3a2}.rv-sum td.r{color:#ffd166;font-weight:800}
+  #rv-print{display:none}
+  @media print{
+    .rv-top,.rv-grid,.ch-crumb,.rv-actions{display:none!important}
+    #rv-print{display:block}
+    .rv-psec{break-inside:avoid;margin:0 0 18px;padding:0 0 12px;border-bottom:1px solid #ccc}
+    .rv-psec h2{font-size:22px;margin:4px 0 8px}
+    .rv-psec p{font-family:Georgia,serif;font-size:12.5pt;line-height:1.55;margin:0 0 8px}
+    .rv-psec .rv-note{box-shadow:none;border:1px solid #ddd;margin-top:6px}
+    .rv-sum{background:#fff;color:#221f1a;border:1px solid #ccc}.rv-sum h2{color:#221f1a}.rv-sum td.r{color:#b03020}
+    .rv-head h1{font-size:34px}
+  }
+</style>
+</head>
+<body class="clay cham">
+
+<main class="ch-wrap ch-stack">
+  <nav class="ch-crumb" aria-label="Breadcrumb"><a href="./" data-en="CHAM project">Dự án CHAM</a> / <span data-en="Plan review">Thẩm định kế hoạch</span></nav>
+  <div class="rv-top">
+    <span class="id" data-en="BIZON / CASE FILE 012 · CHAM PLAN REVIEW">BIZON / HỒ SƠ 012 · THẨM ĐỊNH KẾ HOẠCH CHAM</span>
+    <span class="ch-row"><span class="rv-count" id="rv-count"></span><button type="button" class="rv-pen" id="rv-pen" aria-pressed="true">BÚT ĐỎ: BẬT</button></span>
+  </div>
+  <header class="rv-head">
+    <h1 data-en-html="A plan that breaks even in &lt;em&gt;5 months&lt;/em&gt;.">Một kế hoạch hòa vốn sau <em>5 tháng</em>.</h1>
+    <p data-en="The CHAM Homestay business plan, 20 pages, read the way an investor would. Every flagged number is checked against the plan’s own tables. Turn the red pen off to read the original.">Kế hoạch kinh doanh CHAM Homestay, 20 trang, đọc theo cách của nhà đầu tư. Mọi con số bị đánh dấu đều được đối chiếu với chính các bảng trong kế hoạch. Tắt bút đỏ để đọc bản gốc.</p>
+    <div class="ch-row rv-actions" style="margin-top:14px"><button type="button" class="ch-btn soft" id="rv-print-btn" data-en="Print / save as PDF">In / lưu PDF</button></div>
+  </header>
+  <div class="rv-grid">
+    <nav class="rv-toc" aria-labelledby="rv-toc-h"><div class="ch-k" id="rv-toc-h" data-en="Contents">Mục lục</div><ol id="rv-toc"></ol></nav>
+    <article class="rv-paper" id="rv-paper" aria-live="polite"></article>
+    <aside class="rv-side">
+      <div id="rv-notes"></div>
+      <div class="ch-card sm rv-mine">
+        <div class="ch-k" data-en="Your notes">Ghi chú của bạn</div>
+        <ul id="rv-mine"></ul>
+        <div class="rv-types" id="rv-types" role="group" aria-label="Loại ghi chú" data-en-aria="Note type"></div>
+        <label for="rv-draft" class="ch-sr" data-en="Your red-pen note for this section">Ghi chú bút đỏ cho phần này</label>
+        <textarea id="rv-draft" class="ch-field" rows="3" placeholder="Thêm ghi chú bút đỏ cho phần này…" data-en-ph="Add a red-pen note for this section…"></textarea>
+        <div class="ch-row" style="justify-content:space-between;margin-top:8px"><span class="ch-note" data-en="Saved on this device.">Lưu trên thiết bị này.</span><button type="button" class="ch-btn sm" id="rv-add" data-en="+ Add note">+ Thêm ghi chú</button></div>
+      </div>
+    </aside>
+  </div>
+  <div id="rv-print"></div>
+  <section class="rv-sum" aria-labelledby="rv-sum-h">
+    <div class="ch-k" style="color:#bdb3a2" data-en="Summary · plan vs reviewed">Tóm tắt · kế hoạch và sau thẩm định</div>
+    <h2 id="rv-sum-h" data-en="Same business, different arithmetic.">Cùng một mô hình, phép tính khác.</h2>
+    <div class="ch-scroll"><table><thead><tr><th scope="col" data-en="Item">Khoản mục</th><th scope="col" data-en="Plan">Kế hoạch</th><th scope="col" data-en="Reviewed">Thẩm định</th><th scope="col" data-en="Basis">Căn cứ</th></tr></thead><tbody id="rv-sum"></tbody></table></div>
+    <p class="ch-note" style="color:#bdb3a2;margin-top:12px" data-en="Reviewed figures change one assumption at a time, using only numbers stated elsewhere in the plan.">Mỗi con số thẩm định chỉ thay một giả định, dùng các số liệu có sẵn ở phần khác của kế hoạch.</p>
+  </section>
+  <p class="ch-lic" data-en="CHAM™ and this case © 2017–2026 Đỗ Thùy Hương, used on BizOn under a non-exclusive licence. A planned project; figures are planning assumptions, not operating data.">CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương, dùng trên BizOn theo giấy phép không độc quyền. Dự án đang ở giai đoạn kế hoạch; số liệu là giả định, không phải kết quả hoạt động.</p>
+</main>
+
+<script src="../js/bizon-clay-i18n.js" defer></script>
+<script src="../js/bizon-clay-nav.js" defer></script>
+<script src="../js/bizon-clay-footer.js" defer></script>
+<script src="../js/cham-kit.js" defer></script>
+<script src="../js/cham-review.js" defer></script>
+</body>
+</html>
