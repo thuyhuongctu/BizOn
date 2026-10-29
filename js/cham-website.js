@@ -1,6 +1,6 @@
 /* CHAM – mẫu website cho khách: điều hướng theo #mã-màn-hình, ô đếm đêm ở trang chủ, lưới 6 nhà lá, giỏ đặc sản,
  * quy trình đặt phòng 3 bước có trạng thái dùng chung với màn hình xác nhận. Bản mẫu cho bài học: không gửi dữ liệu đi đâu.
- * Quy tắc giá theo bản bàn giao: phòng 500.000 đ/đêm (cần xác nhận, kế hoạch gốc ghi 50.000 đ), bữa tối ~120.000 đ/khách. */
+ * Quy tắc giá theo bản bàn giao: phòng 500.000 đ/đêm (tác giả xác nhận 29/10/2026; kế hoạch gốc ghi 50.000 đ), bữa tối ~120.000 đ/khách. */
 (function () {
   'use strict';
   const K = window.ChamKit, t = K.t, esc = K.esc;

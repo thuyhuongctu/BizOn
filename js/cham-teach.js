@@ -7,7 +7,7 @@
     ['visitors', { vi: 'Lượt khách mua vé / năm', en: 'Ticketed visitors / year' }, 2000, 15000, 100, v => K.num(v) + t({ vi: ' lượt', en: '' }), { vi: 'Kế hoạch năm 1: 7.200 lượt (20 khách/ngày)', en: 'Plan year 1: 7,200 (20 a day)' }],
     ['ticket', { vi: 'Giá vé vào cổng', en: 'Entrance ticket' }, 30, 150, 5, v => K.vnd(v * 1000), { vi: 'Kế hoạch: 80.000 đ/người lớn', en: 'Plan: 80,000 đ per adult' }],
     ['rentals', { vi: 'Lượt thuê phòng / năm', en: 'Room rentals / year' }, 0, 2190, 30, v => K.num(v) + t({ vi: ' lượt', en: '' }), { vi: '6 phòng × 365 đêm = tối đa 2.190 lượt', en: '6 rooms × 365 nights = at most 2,190' }],
-    ['room', { vi: 'Giá phòng / đêm', en: 'Room price / night' }, 50, 800, 10, v => K.vnd(v * 1000), { vi: 'Kế hoạch: 50.000 đ · trang tình huống: 500.000 đ', en: 'Plan: 50,000 đ · case page: 500,000 đ' }],
+    ['room', { vi: 'Giá phòng / đêm', en: 'Room price / night' }, 50, 800, 10, v => K.vnd(v * 1000), { vi: 'Kế hoạch 2017: 50.000 đ · giá xác nhận: 500.000 đ', en: 'Plan 2017: 50,000 đ · confirmed price: 500,000 đ' }],
     ['fnb', { vi: 'Ăn uống + đặc sản (triệu đ)', en: 'Food + specialties (million đ)' }, 0, 2500, 5, v => K.num(v), { vi: 'Kế hoạch năm 1: ≈ 1.095 triệu (món ăn, đồ uống, combo, đặc sản)', en: 'Plan year 1: ≈ 1,095 million (dishes, drinks, combos, specialties)' }],
     ['cost', { vi: 'Tổng chi phí (triệu đ)', en: 'Total costs (million đ)' }, 300, 1500, 1, v => K.num(v), { vi: 'Kế hoạch năm 1: 798 triệu, đã gồm khấu hao 160', en: 'Plan year 1: 798 million, including 160 depreciation' }]
   ];

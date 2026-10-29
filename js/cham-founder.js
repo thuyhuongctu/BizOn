@@ -12,7 +12,7 @@
       ctx: { vi: 'Sáu nhà lá với giường tre, tủ gỗ. Kế hoạch coi phòng là phần phụ của vé trong ngày.', en: 'Six huts with bamboo beds and wooden wardrobes. The plan treats rooms as a small add-on to the day pass.' },
       src: { vi: '“Vé thuê phòng 1 đêm: 50.000 đồng/phòng”, tương ứng doanh thu phòng 90 triệu đ năm 1.', en: '“Vé thuê phòng 1 đêm: 50.000 đồng/phòng”, which gives 90 million đ of room revenue in year 1.' },
       opts: [{ v: 50, label: { vi: '50.000 đ', en: '50,000 đ' }, note: { vi: 'Như kế hoạch.', en: 'As written in the plan.' } },
-        { v: 500, label: { vi: '500.000 đ', en: '500,000 đ' }, note: { vi: 'Con số trên trang tình huống BizOn.', en: 'The figure on the BizOn case page.' } }] },
+        { v: 500, label: { vi: '500.000 đ', en: '500,000 đ' }, note: { vi: 'Giá tác giả đã xác nhận.', en: 'The price confirmed by the author.' } }] },
     { key: 'demand', tag: { vi: 'NHU CẦU', en: 'DEMAND' }, q: { vi: 'Thực tế sẽ có bao nhiêu khách?', en: 'How many visitors will really come?' },
       ctx: { vi: 'Kế hoạch đặt mục tiêu trên 20 khách/ngày. Cù lao có mùa nước nổi, ngày thường vắng hơn cuối tuần.', en: 'The plan targets more than 20 guests a day. The islet floods, and weekdays are quieter than weekends.' },
       src: { vi: '7.200 lượt khách mua vé năm 1, khoảng 20 khách/ngày trong 360 ngày.', en: '7,200 ticketed visitors in year 1, about 20 a day for 360 days.' },

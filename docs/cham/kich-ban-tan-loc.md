@@ -40,7 +40,7 @@ Tháng của mùa nước nổi là giả định, **cần xác nhận**.
 
 | Cần gạt | Khoảng | Tác động |
 |---|---|---|
-| Giá phòng/đêm | 50.000–800.000 đ (kế hoạch: 50.000; trang tình huống: 500.000) | Giá cao giảm sức hút, tăng doanh thu mỗi đêm. |
+| Giá phòng/đêm | 50.000–800.000 đ (kế hoạch 2017: 50.000; giá xác nhận: 500.000) | Giá cao giảm sức hút, tăng doanh thu mỗi đêm. |
 | Giá vé vào cổng | 30.000–150.000 đ (kế hoạch: 80.000) | Ảnh hưởng lượt khách ngày và doanh thu ăn uống kéo theo. |
 | Marketing | 0–60 triệu đ/vòng | Tăng nhận biết; nhận biết giảm 30% mỗi vòng nếu không duy trì. |
 | Nhân sự | 6–14 nhân viên; trả hay không trả lương 4 quản lý | Tỷ lệ nhân viên/khách quyết định điểm chất lượng. |

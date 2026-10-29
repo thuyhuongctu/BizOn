@@ -65,6 +65,8 @@ for (const p of PAGES.concat(fs.readdirSync(path.join(ROOT, 'js')).filter(f => f
 assert.ok(!fs.readdirSync(path.join(ROOT, 'cham')).some(f => /\.pdf$|ksdn/i.test(f)), 'không đưa tệp kế hoạch 2017 lên kho');
 assert.ok(read('giang-vien.html').includes('href="cham/"'), 'trang giảng viên chưa có lối vào');
 assert.ok(read('cham-homestay.html').includes('href="cham/"'), 'trang tình huống 2026 chưa trỏ sang bộ học liệu');
+assert.ok(read('cham/website.html').includes('Giá đã được tác giả xác nhận: 500.000 đ/đêm'), 'giá phòng xác nhận 500.000 đ');
+assert.ok(!/cần xác nhận với tác giả|trang tình huống ghi 500|case page says 500/i.test(['cham/bo-cong-cu.html', 'js/cham-review.js', 'js/cham-day.js', 'js/cham-founder.js'].map(read).join('')), 'giá phòng không còn ghi là chưa xác nhận');
 assert.ok(read('cham/website.html').includes('không nhận đặt phòng'), 'website mẫu phải ghi rõ là bản mẫu');
 assert.ok(read('THIRD-PARTY-NOTICES.md').includes('`js/vendor/qrcode.js`'));
 assert.ok(read('docs/ho-so-so-huu-tri-tue.md').includes('docs/cham/README.md'));

@@ -36,14 +36,14 @@
         fix: { vi: '−25% khách → lợi nhuận năm 1 giảm ≈ 420 tr', en: '−25% visitors → year-1 profit falls by ≈ 420 M' } }] },
     { title: { vi: 'Chiến lược giá', en: 'Pricing' }, ref: { vi: 'Mục 4.7.2', en: '§4.7.2' }, page: 11,
       paras: { vi: [[['Vé vào cổng: 80.000 đồng/người. Trẻ em dưới 1m miễn phí vé, từ 1m–1,4m là 30.000 đồng/người.']],
-        [['Vé thuê phòng 1 đêm: '], ['50.000 đồng/phòng', 'strike', '500.000 đ? (trang tình huống)'], ['.']],
+        [['Vé thuê phòng 1 đêm: '], ['50.000 đồng/phòng', 'strike', '500.000 đ (giá xác nhận)'], ['.']],
         [['Tinh dầu cúc la mã: 50.000 đồng/15ml. Trà cúc la mã: '], ['80.000 đồng/500gr', 'hl', 'bảng doanh thu dùng 40'], ['.']]],
       en: [[['Entrance ticket: 80,000 đ per person. Children under 1 m free; 1–1.4 m 30,000 đ.']],
-        [['One-night room: '], ['50,000 đ per room', 'strike', '500,000 đ? (case page)'], ['.']],
+        [['One-night room: '], ['50,000 đ per room', 'strike', '500,000 đ (confirmed price)'], ['.']],
         [['Chamomile essential oil 50,000 đ / 15 ml. Chamomile tea '], ['80,000 đ / 500 g', 'hl', 'revenue table uses 40'], ['.']]] },
       notes: [{ n: 3, sev: 'conflict', t: { vi: 'Giá phòng', en: 'Room price' },
-        d: { vi: 'Kế hoạch định giá phòng 50.000 đ và ghi doanh thu phòng 90 triệu đ. Trang tình huống BizOn ghi 500.000 đ. Với 500.000 đ, doanh thu phòng tăng khoảng 810 triệu đ.', en: 'The plan prices a room at 50,000 đ and books 90 million đ of room revenue. The BizOn case page says 500,000 đ. At 500,000 đ, rooms add about 810 million đ.' },
-        fix: { vi: 'Xác nhận lại với tác giả tình huống', en: 'Confirm with the case author' } },
+        d: { vi: 'Kế hoạch định giá phòng 50.000 đ và ghi doanh thu phòng 90 triệu đ. Giá đúng, đã được tác giả xác nhận, là 500.000 đ. Với 500.000 đ, doanh thu phòng tăng khoảng 810 triệu đ.', en: 'The plan prices a room at 50,000 đ and books 90 million đ of room revenue. The correct price, confirmed by the author, is 500,000 đ. At 500,000 đ, rooms add about 810 million đ.' },
+        fix: { vi: 'Giá xác nhận 500.000 đ → +810 tr năm 1', en: 'Confirmed 500,000 đ → +810 M in year 1' } },
       { n: 4, sev: 'typo', t: { vi: 'Giá trà', en: 'Tea price' },
         d: { vi: 'Bảng giá ghi 80.000 đ/500 g; bảng doanh thu dùng 40.000 đ cho cùng gói, nên doanh thu trà có thể bị ghi thiếu 57,6 triệu đ.', en: 'The price list says 80,000 đ per 500 g; the revenue table uses 40,000 đ for the same pack, so tea revenue may be understated by 57.6 million đ.' },
         fix: { vi: '1.440 × 40 = thiếu 57,6 tr', en: '1,440 × 40 = 57.6 M missing' } }] },
@@ -71,7 +71,7 @@
   const TYPES = [{ vi: 'Câu hỏi', en: 'Question' }, { vi: 'Vấn đề', en: 'Issue' }, { vi: 'Ý tưởng', en: 'Idea' }];
   const SUMMARY = [
     [{ vi: 'Thời gian hòa vốn', en: 'Payback period' }, { vi: '5 th 23 ng', en: '5 mo 23 d' }, { vi: '3,8 năm', en: '3.8 years' }, { vi: 'Dùng tổng vốn 4 tỷ đ (mục 1.1) thay vì 500 triệu.', en: 'Total investment 4 billion đ (§1.1) instead of 500 million.' }],
-    [{ vi: 'Doanh thu phòng năm 1', en: 'Room revenue, year 1' }, { vi: '90 tr', en: '90 M' }, { vi: '900 tr', en: '900 M' }, { vi: 'Nếu giá 500.000 đ/đêm trên trang tình huống là đúng.', en: 'If the case page’s 500,000 đ per night is correct.' }],
+    [{ vi: 'Doanh thu phòng năm 1', en: 'Room revenue, year 1' }, { vi: '90 tr', en: '90 M' }, { vi: '900 tr', en: '900 M' }, { vi: 'Giá 500.000 đ/đêm đã được tác giả xác nhận.', en: 'The author has confirmed 500,000 đ per night.' }],
     [{ vi: 'Doanh thu trà năm 1', en: 'Tea revenue, year 1' }, { vi: '57,6 tr', en: '57.6 M' }, { vi: '115,2 tr', en: '115.2 M' }, { vi: 'Dùng giá niêm yết 80.000 đ (mục 4.7.2).', en: 'Using the 80,000 đ list price (§4.7.2).' }],
     [{ vi: 'Chi phí nhân sự/năm', en: 'Staff cost, per year' }, { vi: '332,4 tr', en: '332.4 M' }, { vi: '716,4 tr', en: '716.4 M' }, { vi: 'Thêm 4 quản lý, 8 triệu đ/tháng (giả định minh họa).', en: 'Adding 4 managers at 8 million đ a month (illustrative).' }],
     [{ vi: 'Vé vào cổng năm 1', en: 'Entrance tickets, year 1' }, '7.200|7,200', '5.400|5,400', { vi: 'Trừ một phần tư năm do mùa nước nổi (giả định minh họa).', en: 'Allowing for a quarter of the year lost to flood season (illustrative).' }]

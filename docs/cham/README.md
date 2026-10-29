@@ -36,7 +36,7 @@ Khóa lưu trên thiết bị: `cham-founder-board` (bảng xếp hạng, dùng 
 
 ## Việc còn mở (từ bản bàn giao)
 
-1. Xác nhận với tác giả: giá phòng (50.000 hay 500.000 đ), lương quản lý, tháng mùa nước, chính sách thanh toán và hủy, giá lớp nấu ăn, tên phòng, giờ mở cửa các vườn.
+1. Giá phòng: **500.000 đ/đêm** (tác giả xác nhận 29/10/2026; kế hoạch 2017 ghi 50.000 đ, giữ làm điểm thẩm định). Còn chờ xác nhận: lương quản lý, tháng mùa nước, chính sách thanh toán và hủy, giá lớp nấu ăn, tên phòng, giờ mở cửa các vườn.
 2. Khóa giảng viên thật cho ghi chú giảng dạy (cần đăng nhập).
 3. Bảng xếp hạng và ghi chú sinh viên đang ở bộ nhớ thiết bị; cần máy chủ để dùng chung giữa các máy.
 4. Hiệu chỉnh engine Đấu trường với lớp thật; bản chơi nhiều đội trên nhiều máy.
