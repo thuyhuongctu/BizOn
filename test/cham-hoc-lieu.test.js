@@ -60,6 +60,8 @@ for (const p of PAGES) {
   assert.ok(s.includes('bizon-clay-i18n.js') && s.includes('bizon-clay-nav.js') && s.includes('cham-clay.css'), p + ': khung chung');
   for (const m of s.matchAll(/(?:src|href)="(\.\.\/)?((?:js|css|assets)\/[^"?#]+)"/g)) assert.ok(fs.existsSync(path.join(ROOT, m[2])), p + ': thiếu ' + m[2]);
 }
+for (const p of ['cham/index.html', 'cham/ke-hoach-2017.html', 'cham/bai-giang.html']) assert.ok(read(p).includes('Tác giả: Đỗ Thùy Hương') && read(p).includes('Author: Đỗ Thùy Hương'), p + ': ghi tác giả Đỗ Thùy Hương');
+for (const p of PAGES.concat(fs.readdirSync(path.join(ROOT, 'js')).filter(f => f.startsWith('cham-')).map(f => 'js/' + f))) assert.ok(!/bốn sinh viên|four [^.]*students/i.test(read(p)), p + ': không ghi nhóm tác giả gốc');
 assert.ok(!fs.readdirSync(path.join(ROOT, 'cham')).some(f => /\.pdf$|ksdn/i.test(f)), 'không đưa tệp kế hoạch 2017 lên kho');
 assert.ok(read('giang-vien.html').includes('href="cham/"'), 'trang giảng viên chưa có lối vào');
 assert.ok(read('cham-homestay.html').includes('href="cham/"'), 'trang tình huống 2026 chưa trỏ sang bộ học liệu');

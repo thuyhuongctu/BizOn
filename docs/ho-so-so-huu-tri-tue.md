@@ -365,7 +365,7 @@ Hai điều **không được ghi** trong hồ sơ vì chưa có căn cứ:
 - BizOn được **dùng theo giấy phép không độc quyền** để đăng trang tình huống `cham-homestay.html` (dạy học, không thu phí riêng). Trang ghi: «CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương, dùng trên BizOn theo giấy phép không độc quyền».
 - **Không** khai CHAM trong bất kỳ hồ sơ đăng ký nào của BizOn; hồ sơ nhãn hiệu và quyền tác giả của CHAM đứng tên một mình Đỗ Thùy Hương, giữ ngoài kho này.
 - Bản kế hoạch 2017 **không** đăng lên BizOn nếu chưa có đồng ý riêng của tác giả. Ký hiệu ® chỉ dùng sau khi nhãn hiệu được cấp văn bằng.
-- *(29/10/2026)* Tác giả bàn giao bộ bản mẫu học liệu CHAM và yêu cầu dựng lên BizOn: thư mục `cham/` và `thu-vien-tinh-huong.html` (xem `docs/cham/README.md`). Các trang trích số liệu và một số câu của kế hoạch 2017 để dạy thẩm định; **tệp kế hoạch 2017 (PDF/văn bản) vẫn không đưa lên kho**. Mọi trang `noindex` và mang cùng dòng giấy phép như trang tình huống.
+- *(29/10/2026)* Tác giả bàn giao bộ bản mẫu học liệu CHAM và yêu cầu dựng lên BizOn: thư mục `cham/` và `thu-vien-tinh-huong.html` (xem `docs/cham/README.md`). Các trang trích số liệu và một số câu của kế hoạch 2017 để dạy thẩm định; **tệp kế hoạch 2017 (PDF/văn bản) vẫn không đưa lên kho**. Mọi trang `noindex` và mang cùng dòng giấy phép như trang tình huống. Theo quyết định của tác giả, các trang **không** ghi nhóm tác giả gốc và ghi tác giả chính là **Đỗ Thùy Hương**.
 
 # PHẦN E · CHỨNG CỨ CẦN CHUẨN BỊ
 

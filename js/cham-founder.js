@@ -59,7 +59,7 @@
       [{ vi: 'Phòng', en: 'Rooms' }, { vi: '6 nhà lá', en: '6 huts' }], [{ vi: 'Hòa vốn theo KH', en: 'Plan’s payback' }, { vi: '5 tháng', en: '5 months' }]];
     return pips() + '<div class="fg-tag">' + t({ vi: '19/3/2018 · CÙ LAO TÂN LỘC', en: '19 MAR 2018 · TÂN LỘC ISLET' }) + '</div>' +
       '<h1>' + t({ vi: 'Điều hành CHAM trong năm năm.', en: 'Run CHAM for five years.' }) + '</h1>' +
-      '<p style="max-width:44em;margin-top:14px">' + t({ vi: 'Kế hoạch kinh doanh gốc năm 2017 cho homestay duy nhất trên cù lao Tân Lộc. Bạn ngồi vào ghế người sáng lập: bảy quyết định, rồi xem kết quả so với kế hoạch.', en: 'The original 2017 business plan for the only homestay on Tân Lộc islet. You take the founder’s seat: seven decisions, then the results against the plan.' }) + '</p>' +
+      '<p style="max-width:44em;margin-top:14px">' + t({ vi: 'Kế hoạch kinh doanh gốc năm 2017 của Đỗ Thùy Hương cho homestay duy nhất trên cù lao Tân Lộc. Bạn ngồi vào ghế người sáng lập: bảy quyết định, rồi xem kết quả so với kế hoạch.', en: 'The original 2017 business plan by Đỗ Thùy Hương for the only homestay on Tân Lộc islet. You take the founder’s seat: seven decisions, then the results against the plan.' }) + '</p>' +
       '<div class="fg-facts">' + facts.map(([k, v]) => '<div><div class="ch-k" style="color:var(--ch-on-night-2)">' + t(k) + '</div><div class="ch-v" style="color:var(--ch-on-night)">' + t(v) + '</div></div>').join('') + '</div>' +
       '<button type="button" class="ch-btn yellow" data-act="start">' + t({ vi: 'Ngồi vào ghế →', en: 'Take the seat →' }) + '</button>';
   }

@@ -29,7 +29,7 @@ Khóa lưu trên thiết bị: `cham-founder-board` (bảng xếp hạng, dùng 
 
 - Không dựng: «BizOn Case CHAM Concepts» (ba hướng ý tưởng ban đầu, chỉ là phác thảo), hai công cụ three.js tạo ảnh đất sét (Tan Loc Clay Diorama/Props), tệp PowerPoint dạng ảnh trong `export/` (7 MB, không sửa được; bài giảng HTML in ra PDF thay thế).
 - Không đưa lên kho bản PDF/văn bản kế hoạch 2017 (`uploads/`).
-- Câu «kế hoạch của bốn sinh viên Kinh tế ĐH Cần Thơ» trong bản mẫu được viết thành «kế hoạch kinh doanh gốc năm 2017 (bài học phần Khởi sự doanh nghiệp)», cho khớp hồ sơ SHTT mục D4. Tác giả quyết định có ghi nhóm tác giả gốc hay không.
+- Ghi tác giả (quyết định của tác giả, 29/10/2026): **không** ghi nhóm tác giả gốc; mọi trang ghi tác giả chính là **Đỗ Thùy Hương** («Tác giả: Đỗ Thùy Hương» ở trang tổng hợp, trang kế hoạch 2017 và slide tiêu đề; «kế hoạch kinh doanh gốc năm 2017 của Đỗ Thùy Hương» ở các đoạn giới thiệu). Câu «kế hoạch của bốn sinh viên Kinh tế ĐH Cần Thơ» trong bản mẫu không dùng.
 - Khóa giảng viên giả trong thư viện tình huống bị bỏ: không giả lập bảo mật; ghi chú giảng dạy nằm ở Bộ công cụ, kèm lời nói rõ là chưa có khóa.
 - Website cho khách gắn nhãn «bản mẫu» rõ ràng, không nhận/gửi dữ liệu đặt phòng.
 - Mã kết quả của trò chơi: bảng điều khiển tính lại dòng tiền từ các lựa chọn, nên mã sửa tay không đổi được xếp hạng. Mã của bản mẫu cũ vẫn đọc được.
