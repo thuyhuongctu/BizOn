@@ -56,7 +56,7 @@ Repo không có kế hoạch 2026 đầy đủ; các giá trị dưới đây l�
 
 ## Ảnh trưng bày và bản quyền
 
-- `assets/cham/anh/*.webp` (59 ảnh: sản phẩm, màn hình website, «Khám phá cù lao»), `assets/cham/clay/*` và `assets/giang-vien/*.webp`: ảnh minh họa đất sét do tác giả cung cấp (29–30/10/2026), 600×448 hoặc 512×512, WebP chất lượng 78.
+- `assets/cham/anh/*.webp` (74 ảnh: sản phẩm, màn hình website, «Khám phá cù lao», an toàn mùa nước, lịch trình, bản đồ đất sét), `assets/cham/clay/*` và `assets/giang-vien/*.webp`: ảnh minh họa đất sét do tác giả cung cấp (29–30/10/2026), 600×448 hoặc 512×512, WebP chất lượng 78.
 - Mỗi ảnh có **dòng bản quyền in trên ảnh**, góc dưới bên phải: «© 2026 Đỗ Thùy Hương · CHAM Tân Lộc» (ảnh CHAM) hoặc «© 2026 BizOn · Đỗ Thùy Hương & Phan Anh Tú» (ảnh Góc giảng viên). Dòng chữ nằm trong tệp ảnh nên vẫn còn khi ảnh bị tải về hay chia sẻ lại.
 - CSS neo ảnh về góc dưới bên phải (`object-position: 100% 100%`) để khung cắt ảnh không làm mất dòng bản quyền. Ảnh mới thêm sau này cần in dòng bản quyền tương tự trước khi đưa vào kho.
 
@@ -67,5 +67,5 @@ Repo không có kế hoạch 2026 đầy đủ; các giá trị dưới đây l�
 3. Bảng xếp hạng và ghi chú sinh viên đang ở bộ nhớ thiết bị; cần máy chủ để dùng chung giữa các máy.
 4. Hiệu chỉnh engine Đấu trường với lớp thật; bản chơi nhiều đội trên nhiều máy.
 5. Bản PowerPoint chỉnh sửa được (hoặc xuất từ bài giảng HTML).
-6. Ảnh đất sét: đã thay ảnh chính của trang tổng hợp, trang kế hoạch 2017, trang chủ website và trang tình huống 2026 bằng ảnh tác giả cung cấp (`assets/cham/clay/*.webp`); các ảnh `.png` còn lại vẫn là ảnh tạm.
+6. Ảnh đất sét: đã thay ảnh chính của trang tổng hợp, trang kế hoạch 2017, trang chủ website và trang tình huống 2026 bằng ảnh tác giả cung cấp (`assets/cham/clay/*.webp`); các màn hình website, cửa hàng, bài giảng, tin đăng mẫu và 4 chương «Một ngày ở Tân Lộc» cũng đã dùng ảnh của tác giả (30/10/2026); chỉ còn 3 ảnh tạm `.png` (islet-overview, canoe-pier, campfire) ở 3 chương còn lại và màn hình xác nhận.
 7. Kiểm chứng số liệu thực tế (Cẩm Lụa, khách sạn Thốt Nốt, phà Thuận Hưng) trước khi dùng trên lớp.
