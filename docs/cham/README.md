@@ -54,6 +54,12 @@ Repo không có kế hoạch 2026 đầy đủ; các giá trị dưới đây l�
 | An toàn | Áo phao bắt buộc khi đi xuồng, bắt cá; trẻ dưới 12 tuổi đi cùng người lớn; tránh đoạn bờ có biển sạt lở; điểm tập trung: nhà ăn chung; số khẩn cấp 112/113/114/115 | website (an toàn) |
 | Từ TP.HCM | Khoảng 4,5–5 giờ bằng ô tô hoặc xe khách | website (đường đến) |
 
+## Ảnh trưng bày và bản quyền
+
+- `assets/cham/anh/*.webp` (59 ảnh: sản phẩm, màn hình website, «Khám phá cù lao»), `assets/cham/clay/*` và `assets/giang-vien/*.webp`: ảnh minh họa đất sét do tác giả cung cấp (29–30/10/2026), 600×448 hoặc 512×512, WebP chất lượng 78.
+- Mỗi ảnh có **dòng bản quyền in trên ảnh**, góc dưới bên phải: «© 2026 Đỗ Thùy Hương · CHAM Tân Lộc» (ảnh CHAM) hoặc «© 2026 BizOn · Đỗ Thùy Hương & Phan Anh Tú» (ảnh Góc giảng viên). Dòng chữ nằm trong tệp ảnh nên vẫn còn khi ảnh bị tải về hay chia sẻ lại.
+- CSS neo ảnh về góc dưới bên phải (`object-position: 100% 100%`) để khung cắt ảnh không làm mất dòng bản quyền. Ảnh mới thêm sau này cần in dòng bản quyền tương tự trước khi đưa vào kho.
+
 ## Việc còn mở (từ bản bàn giao)
 
 1. ~~Giá phòng, lương, mùa nước, thanh toán và hủy, lớp nấu ăn, tên phòng, giờ~~: đã đặt giá trị ở bảng trên (29/10/2026). Giờ mở cửa thật của các vườn trên lịch trình vẫn cần hỏi từng nơi.

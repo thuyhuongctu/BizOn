@@ -103,6 +103,8 @@ textarea.ch-field{resize:vertical;line-height:1.5}
 
 .ch-art{display:block;width:100%;height:auto;aspect-ratio:924/540;object-fit:cover;border-radius:36px;background:var(--ch-river);box-shadow:var(--ch-raise)}
 .ch-art.sm{border-radius:24px}
+/* Ảnh trưng bày có dòng bản quyền ở góc dưới bên phải: khi khung cắt ảnh (object-fit: cover) thì giữ góc đó */
+.cham img[src*="assets/cham/"]{object-position:100% 100%}
 .ch-cover{display:block;width:100%;height:auto;max-height:320px;aspect-ratio:600/448;object-fit:cover;border-radius:36px;box-shadow:var(--ch-raise)}
 .ch-note{font-size:13.5px;line-height:1.55;color:var(--ch-muted)}
 .ch-tbc{display:inline-block;padding:2px 8px;border-radius:999px;background:var(--ch-yellow-p);color:#7a5600;font:800 12px var(--ch-sans)}
