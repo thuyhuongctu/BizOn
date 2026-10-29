@@ -53,8 +53,7 @@
   .gv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:18px}
   .gv-tool{display:flex;flex-direction:column;gap:8px;padding:22px;border-radius:28px;background:var(--clay-card);color:var(--clay-ink);box-shadow:var(--clay-shadow);transition:transform .15s ease}
   .gv-tool:hover{color:var(--clay-ink);transform:translateY(-3px)}
-  .gv-tool .th{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:20px;background:var(--clay-tray);box-shadow:inset 0 -4px 0 rgba(0,0,0,.08)}
-  .gv-tool .th-ic{display:grid;place-items:center;font-size:64px}
+  .gv-tool .th{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:100% 100%;border-radius:20px;background:var(--clay-tray);box-shadow:inset 0 -4px 0 rgba(0,0,0,.08)}
   .gv-tool h3{margin:6px 0 0;font-size:19px;line-height:1.25}
   .gv-tool p{margin:0;flex:1;font-size:14px;line-height:1.55;color:var(--clay-sub)}
   .gv-tool .go{font-size:14px;font-weight:800;color:var(--clay-teal)}
@@ -127,7 +126,7 @@
         <span class="go" data-en="Open →">Mở →</span>
       </a>
       <a class="gv-tool" href="instructor-grading.html">
-        <span class="th th-ic" style="background:var(--clay-c2)" aria-hidden="true">📒</span>
+        <img class="th" src="assets/giang-vien/so-diem-dong-bang.webp" alt="" width="600" height="448" loading="lazy">
         <h3 data-en="Gradebook (frozen snapshots)">Sổ điểm (ảnh chụp đóng băng)</h3>
         <p data-en="Load decision logs, grade on frozen snapshots so results can be reproduced, filter by class/round, export CSV and print.">Nạp nhật ký quyết định, chấm trên ảnh chụp đóng băng để tái lập được, lọc theo lớp/vòng, xuất CSV và bản in.</p>
         <span class="go" data-en="Open →">Mở →</span>
