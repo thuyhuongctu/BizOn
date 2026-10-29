@@ -67,6 +67,17 @@ assert.ok(read('giang-vien.html').includes('href="cham/"'), 'trang giảng viên
 assert.ok(read('cham-homestay.html').includes('href="cham/"'), 'trang tình huống 2026 chưa trỏ sang bộ học liệu');
 assert.ok(read('cham/website.html').includes('Giá đã được tác giả xác nhận: 500.000 đ/đêm'), 'giá phòng xác nhận 500.000 đ');
 assert.ok(!/cần xác nhận với tác giả|trang tình huống ghi 500|case page says 500/i.test(['cham/bo-cong-cu.html', 'js/cham-review.js', 'js/cham-day.js', 'js/cham-founder.js'].map(read).join('')), 'giá phòng không còn ghi là chưa xác nhận');
+// Thông tin vận hành đã đặt (29/10/2026): không còn mục «cần xác nhận» trên website mẫu
+assert.ok(!/cần xác nhận|to confirm/.test(read('cham/website.html') + read('js/cham-website.js')), 'website còn mục chưa xác nhận');
+for (const need of ['150.000 đ / người lớn', 'Mùa nước từ tháng 9 đến tháng 11', 'Nhận phòng 14:00']) assert.ok(read('cham/website.html').includes(need), 'website thiếu: ' + need);
+for (const need of ['Nhà Lục Bình', 'cọc 30%', 'COOK = 150000']) assert.ok(read('js/cham-website.js').includes(need), 'cham-website.js thiếu: ' + need);
+assert.ok(read('cham-homestay.html').includes('1 quản lý vận hành 10 triệu'), 'trang 2026 thiếu cơ cấu lương');
+// Ảnh minh họa mới: trang giảng viên (15 thẻ có ảnh) và ảnh chính của bộ CHAM
+{ const gv = read('giang-vien.html'), imgs = [...gv.matchAll(/<img class="th" src="([^"]+)"/g)].map(m => m[1]);
+  assert.equal(imgs.length, 15, 'số thẻ có ảnh trên trang giảng viên'); assert.equal(new Set(imgs).size, 15, 'ảnh thẻ bị trùng');
+  for (const f of imgs.concat(['assets/giang-vien/ho-tro-giang-vien.webp'])) assert.ok(gv.includes(f) && fs.existsSync(path.join(ROOT, f)), 'thiếu ảnh ' + f); }
+for (const [p, img] of [['cham/index.html', 'du-an-cham.webp'], ['cham/website.html', 'homestay-diorama.webp'], ['cham/ke-hoach-2017.html', 'thuyen-ke-hoach.webp'], ['cham-homestay.html', 'homestay-diorama.webp']])
+  assert.ok(read(p).includes('assets/cham/clay/' + img), p + ' chưa dùng ảnh ' + img);
 assert.ok(read('cham/website.html').includes('không nhận đặt phòng'), 'website mẫu phải ghi rõ là bản mẫu');
 assert.ok(read('THIRD-PARTY-NOTICES.md').includes('`js/vendor/qrcode.js`'));
 assert.ok(read('docs/ho-so-so-huu-tri-tue.md').includes('docs/cham/README.md'));
@@ -109,6 +120,10 @@ assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 707);
     await pg.waitForTimeout(200);
     assert.equal(await pg.evaluate(() => location.hash), '#xac-nhan');
     assert.ok((await pg.textContent('#ws-conf')).includes('2.240.000 đ'));
+    // Thêm lớp nấu ăn cho 2 khách: + 300.000 đ
+    await pg.evaluate(() => { location.hash = 'dat-phong'; }); await pg.waitForTimeout(200);
+    await pg.click('#ws-step [data-book=next]');  /* vẫn giữ 2 phòng × 2 đêm, 2 khách */ await pg.click('[data-extra=cls]');
+    assert.ok((await pg.textContent('#ws-sum')).includes('2.540.000 đ'), 'tạm tính có lớp nấu ăn');
     await pg.close();
     // Thẩm định: ghi chú riêng được lưu lại
     pg = await open('cham/tham-dinh.html', 'vi');

@@ -98,6 +98,7 @@ Một phần tài sản nghe nhìn của BizOn được dựng với công cụ 
 - Tên các nền tảng được nhắc tới để so sánh trong tài liệu học thuật (Capsim, Harvard Business Publishing, Forio…) là nhãn hiệu của chủ sở hữu tương ứng, dùng theo nghĩa mô tả.
 - Các thương hiệu trong trò chơi (Alpha, Star Clay, Mekong, Kim Long Exports, Lumina…) là **hư cấu**, do nhóm tạo ra.
 - Bộ học liệu CHAM (`cham/`) nhắc tên cơ sở và nền tảng có thật theo nghĩa mô tả, lấy từ thông tin đăng công khai: **Homestay Cẩm Lụa** (đối thủ trong Đấu trường Tân Lộc, giá theo thông tin đăng công khai, cần kiểm chứng), các vườn và di tích trên cù lao Tân Lộc, **Foody**, **Facebook**, **Zalo**. «Sơn Ca Garden» và «Green Lộc Retreat» trong Đấu trường là **hư cấu**.
+- Ảnh minh họa đất sét trên trang Góc giảng viên (`assets/giang-vien/*.webp`) và ảnh chính của bộ CHAM (`assets/cham/clay/*.webp`) do tác giả cung cấp (29/10/2026), thuộc nhóm tài sản tạo với công cụ AI ở Mục 7. Ảnh `bang-diem-csv.webp` có tên một số thương hiệu quốc tế làm chữ trang trí trong bảng mẫu; các tên này là nhãn hiệu của chủ sở hữu, xuất hiện theo nghĩa minh họa, không hàm ý liên kết.
 
 ---
 

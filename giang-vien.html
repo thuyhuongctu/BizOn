@@ -53,11 +53,13 @@
   .gv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:18px}
   .gv-tool{display:flex;flex-direction:column;gap:8px;padding:22px;border-radius:28px;background:var(--clay-card);color:var(--clay-ink);box-shadow:var(--clay-shadow);transition:transform .15s ease}
   .gv-tool:hover{color:var(--clay-ink);transform:translateY(-3px)}
-  .gv-tool .ic{width:46px;height:46px;border-radius:16px;display:grid;place-items:center;font-size:22px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.1),inset 0 3px 0 rgba(255,255,255,.5)}
+  .gv-tool .th{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:20px;background:var(--clay-tray);box-shadow:inset 0 -4px 0 rgba(0,0,0,.08)}
+  .gv-tool .th-ic{display:grid;place-items:center;font-size:64px}
   .gv-tool h3{margin:6px 0 0;font-size:19px;line-height:1.25}
   .gv-tool p{margin:0;flex:1;font-size:14px;line-height:1.55;color:var(--clay-sub)}
   .gv-tool .go{font-size:14px;font-weight:800;color:var(--clay-teal)}
   .gv-help{margin:64px 0 72px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding:26px 30px;border-radius:32px;background:var(--clay-c4);box-shadow:var(--clay-night-shadow,inset 0 -9px 0 rgba(0,0,0,.07),inset 0 5px 0 rgba(255,255,255,.5),0 26px 36px -24px rgba(30,90,60,.5))}
+  .gv-help-art{width:min(100%,260px);height:auto;border-radius:22px}
   .gv-help p{margin:4px 0 0;font-size:15px;line-height:1.55;color:var(--clay-ink-2)}
   @media (max-width:820px){ .gv-main{grid-template-columns:1fr} }
   @media (max-width:640px){ .gv-hero .grid{grid-template-columns:1fr} .gv-hero .art{display:none} .gv-main ul{grid-template-columns:1fr} }
@@ -119,25 +121,25 @@
     <p data-en="Tools for following each team after class and grading on reproducible evidence. No AI grades students' reflections.">Công cụ xem lại từng đội sau buổi học và chấm trên bằng chứng tái lập được. Không dùng AI để chấm phần phản tư của sinh viên.</p>
     <div class="gv-grid">
       <a class="gv-tool" href="app/instructor-studio.html">
-        <span class="ic" style="background:var(--clay-c1)" aria-hidden="true">🧭</span>
+        <img class="th" src="assets/giang-vien/instructor-studio.webp" alt="" width="600" height="448" loading="lazy">
         <h3>Instructor Studio</h3>
         <p data-en="Class-scoped view: Bật Nghiệp leaderboard, round-lock timeline, Brand Passport results, Decision Trace &amp; reflection, pre/post survey.">Xem theo mã lớp: bảng xếp hạng Bật Nghiệp, dòng thời gian khóa vòng, kết quả Hộ Chiếu, Decision Trace &amp; phản tư, khảo sát trước–sau.</p>
         <span class="go" data-en="Open →">Mở →</span>
       </a>
       <a class="gv-tool" href="instructor-grading.html">
-        <span class="ic" style="background:var(--clay-c2)" aria-hidden="true">📒</span>
+        <span class="th th-ic" style="background:var(--clay-c2)" aria-hidden="true">📒</span>
         <h3 data-en="Gradebook (frozen snapshots)">Sổ điểm (ảnh chụp đóng băng)</h3>
         <p data-en="Load decision logs, grade on frozen snapshots so results can be reproduced, filter by class/round, export CSV and print.">Nạp nhật ký quyết định, chấm trên ảnh chụp đóng băng để tái lập được, lọc theo lớp/vòng, xuất CSV và bản in.</p>
         <span class="go" data-en="Open →">Mở →</span>
       </a>
       <a class="gv-tool" href="Ho Chieu Thuong Hieu - GV Bang Diem CSV.html">
-        <span class="ic" style="background:var(--clay-c3)" aria-hidden="true">🛂</span>
+        <img class="th" src="assets/giang-vien/bang-diem-csv.webp" alt="" width="600" height="448" loading="lazy">
         <h3 data-en="Brand Passport class summary (CSV)">Bảng tổng kết Hộ Chiếu (CSV)</h3>
         <p data-en="Drag and drop the CSV files students export from Brand Passport 3D to see the whole class – works offline.">Kéo-thả các file CSV sinh viên xuất từ Hộ Chiếu Thương Hiệu 3D để xem cả lớp – không cần mạng.</p>
         <span class="go" data-en="Open →">Mở →</span>
       </a>
       <a class="gv-tool" href="Bang Giao Vien.dc.html">
-        <span class="ic" style="background:var(--clay-c4)" aria-hidden="true">⛵</span>
+        <img class="th" src="assets/giang-vien/bang-giao-vien-bps.webp" alt="" width="600" height="448" loading="lazy">
         <h3 data-en="Bến Phù Sa teacher board">Bảng giáo viên Bến Phù Sa</h3>
         <p data-en="Paste results students send via Zalo, Messenger or email (mainly team play); the board reads and ranks them.">Dán kết quả sinh viên gửi qua Zalo, Messenger hoặc email (chủ yếu bài chơi nhóm); bảng tự đọc và xếp hạng.</p>
         <span class="go" data-en="Open →">Mở →</span>
@@ -151,43 +153,43 @@
     <p data-en="Read once before your first session: setup steps, the classroom playbook and the pre/post survey.">Đọc một lần trước buổi đầu tiên: các bước mở lớp, kịch bản lớp học và phiếu khảo sát trước–sau.</p>
     <div class="gv-grid">
       <a class="gv-tool" href="truong-giang-vien.html">
-        <span class="ic" style="background:var(--clay-c5)" aria-hidden="true">🧰</span>
+        <img class="th" src="assets/giang-vien/mo-lop-5-buoc.webp" alt="" width="512" height="512" loading="lazy">
         <h3 data-en="Open a class in 5 steps">Mở lớp trong 5 bước</h3>
         <p data-en="Ready-to-download toolkit, five clear steps and transparent grading – no computer lab needed.">Bộ công cụ tải sẵn, năm bước rõ ràng và cách chấm minh bạch – không cần phòng máy.</p>
         <span class="go" data-en="Read →">Xem →</span>
       </a>
       <a class="gv-tool" href="lop-hoc.html">
-        <span class="ic" style="background:var(--clay-c1)" aria-hidden="true">🗓️</span>
+        <img class="th" src="assets/giang-vien/kich-ban-lop-hoc.webp" alt="" width="512" height="512" loading="lazy">
         <h3 data-en="Classroom playbook">Kịch bản lớp học</h3>
         <p data-en="A session plan for 40–60 students, plus four practicum labs with a teacher projector view.">Kịch bản buổi học cho lớp 40–60 sinh viên, kèm bốn lab thực hành có màn hình chiếu cho giảng viên.</p>
         <span class="go" data-en="Read →">Xem →</span>
       </a>
       <a class="gv-tool" href="khao-sat-online.html">
-        <span class="ic" style="background:var(--clay-c3)" aria-hidden="true">📝</span>
+        <img class="th" src="assets/giang-vien/khao-sat-online.webp" alt="" width="512" height="512" loading="lazy">
         <h3 data-en="Pre/post survey (online)">Khảo sát trước–sau (online)</h3>
         <p data-en="Students answer on their phones with a self-chosen anonymous code; results go to the research system.">Sinh viên làm trên điện thoại với mã ẩn danh tự đặt; kết quả nộp về hệ thống nghiên cứu.</p>
         <span class="go" data-en="Open →">Mở →</span>
       </a>
       <a class="gv-tool" href="xuong-nhan-hieu.html">
-        <span class="ic" style="background:var(--clay-c2)" aria-hidden="true">🏷️</span>
+        <img class="th" src="assets/giang-vien/xuong-nhan-hieu.webp" alt="" width="512" height="512" loading="lazy">
         <h3 data-en="Local Specialty Brand Lab">Xưởng Nhãn Hiệu Đặc Sản</h3>
         <p data-en="Guided worksheet for the chapter 5 assignment (brand + 4P): live tips, a one-page brand card to hand in, and a 10-point marking guide.">Phiếu làm bài chương 5 (nhãn hiệu + 4P) có gợi ý khi gõ, xuất Thẻ thương hiệu một trang để nộp, kèm bảng chấm thang 10.</p>
         <span class="go" data-en="Open →">Mở →</span>
       </a>
       <a class="gv-tool" href="cham-homestay.html">
-        <span class="ic" style="background:var(--clay-c4)" aria-hidden="true">🌼</span>
+        <img class="th" src="assets/cham/clay/homestay-diorama.webp" alt="" width="688" height="384" loading="lazy">
         <h3 data-en="Case: CHAM Homestay">Tình huống: CHAM Homestay</h3>
         <p data-en="A service-business case on Tân Lộc island (Cần Thơ): eco-homestay, planning assumptions and six discussion questions.">Tình huống doanh nghiệp dịch vụ trên cù lao Tân Lộc (Cần Thơ): homestay sinh thái, giả định lập kế hoạch và sáu câu hỏi thảo luận.</p>
         <span class="go" data-en="Read →">Xem →</span>
       </a>
       <a class="gv-tool" href="cham/">
-        <span class="ic" style="background:var(--clay-c2)" aria-hidden="true">🛶</span>
+        <img class="th" src="assets/cham/clay/du-an-cham.webp" alt="" width="688" height="384" loading="lazy">
         <h3 data-en="CHAM project: all teaching products">Dự án CHAM: toàn bộ học liệu</h3>
         <p data-en="Day story, founder game with teacher dashboard, plan review, teaching kit and deck, Tân Lộc Arena and a guest-website mockup, in Vietnamese and English.">Câu chuyện một ngày, trò chơi nhà sáng lập kèm bảng điều khiển giảng viên, thẩm định kế hoạch, bộ công cụ và bài giảng, Đấu trường Tân Lộc và mẫu website cho khách, song ngữ Việt – Anh.</p>
         <span class="go" data-en="Open →">Mở →</span>
       </a>
       <a class="gv-tool" href="khao-sat.html">
-        <span class="ic" style="background:var(--clay-c2)" aria-hidden="true">🖨️</span>
+        <img class="th" src="assets/giang-vien/khao-sat-a4.webp" alt="" width="512" height="512" loading="lazy">
         <h3 data-en="Pre/post survey (print, A4)">Khảo sát trước–sau (bản in A4)</h3>
         <p data-en="The same questionnaire as a printable A4 sheet for classes without phones.">Cùng bộ câu hỏi, dạng phiếu in khổ A4 cho lớp không dùng điện thoại.</p>
         <span class="go" data-en="Open →">Mở →</span>
@@ -201,31 +203,31 @@
     <p data-en="Instructor documents and the student-facing scales you can hand out before class.">Tài liệu cho giảng viên và bản thang điểm phát cho sinh viên trước buổi học.</p>
     <div class="gv-grid">
       <a class="gv-tool" href="Thang Diem Danh Gia.dc.html">
-        <span class="ic" style="background:var(--clay-c4)" aria-hidden="true">⚖️</span>
+        <img class="th" src="assets/giang-vien/thang-diem-10.webp" alt="" width="600" height="448" loading="lazy">
         <h3 data-en="Assessment scale (10-point)">Thang điểm đánh giá (thang 10)</h3>
         <p data-en="General principles and the 10-point scale for Brand Passport 3D (individual) and Bật Nghiệp (team).">Nguyên tắc chung và thang 10 cho Hộ Chiếu Thương Hiệu 3D (cá nhân) và Bật Nghiệp (theo đội).</p>
         <span class="go" data-en="Read →">Xem →</span>
       </a>
       <a class="gv-tool" href="Thang Diem Chi Tiet.dc.html">
-        <span class="ic" style="background:var(--clay-c5)" aria-hidden="true">🔍</span>
+        <img class="th" src="assets/giang-vien/huong-dan-cham.webp" alt="" width="600" height="448" loading="lazy">
         <h3 data-en="Detailed grading guide">Hướng dẫn chấm chi tiết</h3>
         <p data-en="The grading process and criterion-by-criterion guidance for both games.">Quy trình chấm và hướng dẫn từng tiêu chí cho cả hai game.</p>
         <span class="go" data-en="Read →">Xem →</span>
       </a>
       <a class="gv-tool" href="Thang Diem Bat Nghiep - Sinh Vien.dc.html">
-        <span class="ic" style="background:var(--clay-c2)" aria-hidden="true">🚀</span>
+        <img class="th" src="assets/giang-vien/thang-diem-bat-nghiep.webp" alt="" width="600" height="448" loading="lazy">
         <h3 data-en="Student scale – Bật Nghiệp">Thang điểm sinh viên – Bật Nghiệp</h3>
         <p data-en="Hand-out for students (English version available from the language switch).">Bản phát cho sinh viên (có bản tiếng Anh qua nút đổi ngôn ngữ).</p>
         <span class="go" data-en="Read →">Xem →</span>
       </a>
       <a class="gv-tool" href="Thang Diem Ho Chieu - Sinh Vien.dc.html">
-        <span class="ic" style="background:var(--clay-c3)" aria-hidden="true">🛂</span>
+        <img class="th" src="assets/giang-vien/thang-diem-ho-chieu.webp" alt="" width="600" height="448" loading="lazy">
         <h3 data-en="Student scale – Brand Passport">Thang điểm sinh viên – Hộ Chiếu</h3>
         <p data-en="Hand-out for students (English version available from the language switch).">Bản phát cho sinh viên (có bản tiếng Anh qua nút đổi ngôn ngữ).</p>
         <span class="go" data-en="Read →">Xem →</span>
       </a>
       <a class="gv-tool" href="Thang Diem Ho Chieu Mini.dc.html">
-        <span class="ic" style="background:var(--clay-c1)" aria-hidden="true">⏳</span>
+        <img class="th" src="assets/giang-vien/thang-diem-ho-chieu-mini.webp" alt="" width="600" height="448" loading="lazy">
         <h3 data-en="Student scale – Passport Mini">Thang điểm sinh viên – Hộ Chiếu Mini</h3>
         <p data-en="For the 60-minute International Investment and Indonesia editions; the game computes the score.">Cho bản Đầu tư quốc tế và bản Indonesia 60 phút; điểm do game tính.</p>
         <span class="go" data-en="Read →">Xem →</span>
@@ -234,7 +236,8 @@
   </section>
 
   <section class="gv-help">
-    <div>
+    <img class="gv-help-art" src="assets/giang-vien/ho-tro-giang-vien.webp" alt="" width="688" height="384" loading="lazy">
+    <div style="flex:1;min-width:min(100%,260px)">
       <h2 style="font-size:24px" data-en="Need an instructor account or a trial session?">Cần tài khoản giảng viên hoặc buổi dạy thử?</h2>
       <p data-en="Write to the BizOn team – we reply to every instructor.">Viết cho nhóm BizOn – chúng tôi trả lời mọi giảng viên.</p>
     </div>

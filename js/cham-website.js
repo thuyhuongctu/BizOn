@@ -4,7 +4,8 @@
 (function () {
   'use strict';
   const K = window.ChamKit, t = K.t, esc = K.esc;
-  const ROOM = 500000, DINNER = 120000, BOOKED = [2, 5];
+  const ROOM = 500000, DINNER = 120000, COOK = 150000, BOOKED = [2, 5];
+  const HUTS = [{ vi: 'Nhà Cúc', en: 'Chamomile' }, { vi: 'Nhà Dừa', en: 'Coconut' }, { vi: 'Nhà Ổi', en: 'Guava' }, { vi: 'Nhà Mận', en: 'Plum' }, { vi: 'Nhà Lục Bình', en: 'Water Hyacinth' }, { vi: 'Nhà Đom Đóm', en: 'Firefly' }];
   const SCREENS = Array.from(document.querySelectorAll('.ws-screen')).map(s => s.dataset.screen);
   const S = { nights: 1, cart: 0, step: 1, bNights: 1, bRooms: 1, bGuests: 2, dinner: true, cls: false, name: '', phone: '' };
   const LIM = { nights: [1, 7], bNights: [1, 7], bRooms: [1, 6] };
@@ -15,7 +16,8 @@
   ];
   const clamp = (v, [lo, hi]) => Math.max(lo, Math.min(hi, v));
   const roomLine = () => S.bRooms * S.bNights * ROOM, dinnerLine = () => (S.dinner ? S.bGuests * DINNER : 0);
-  const total = () => roomLine() + dinnerLine();
+  const cookLine = () => (S.cls ? S.bGuests * COOK : 0);
+  const total = () => roomLine() + dinnerLine() + cookLine();
 
   /* ---------- điều hướng ---------- */
   function route(nav) {
@@ -42,13 +44,17 @@
       counter('bRooms', { vi: 'Số phòng', en: 'Rooms' }, { vi: '2–4 khách mỗi phòng', en: '2–4 guests per room' }) +
       counter('bGuests', { vi: 'Số khách', en: 'Guests' }, { vi: 'Tối đa 4 khách/phòng', en: 'Up to 4 per room' });
     else if (S.step === 2) h += '<h2 style="font-size:26px;margin:16px 0 4px">' + t({ vi: 'Thêm vào chuyến đi', en: 'Add to your stay' }) + '</h2>' +
-      [['dinner', { vi: 'Bữa tối đồng quê cho cả nhóm', en: 'Country dinner for everyone' }, { vi: '~120.000 đ / khách', en: '~120,000 đ / guest' }], ['cls', { vi: 'Lớp nấu ăn', en: 'Cooking class' }, { vi: 'Giá cần xác nhận', en: 'Price to confirm' }]]
+      [['dinner', { vi: 'Bữa tối đồng quê cho cả nhóm', en: 'Country dinner for everyone' }, { vi: '~120.000 đ / khách', en: '~120,000 đ / guest' }], ['cls', { vi: 'Lớp nấu ăn', en: 'Cooking class' }, { vi: '150.000 đ / khách, tối thiểu 4 người', en: '150,000 đ / guest, minimum 4' }]]
         .map(([k, n, p]) => '<button type="button" class="ws-extra" data-extra="' + k + '" aria-pressed="' + S[k] + '"><i aria-hidden="true">' + (S[k] ? '✓' : '') + '</i><span><b>' + t(n) + '</b><span class="ch-note">' + t(p) + '</span></span></button>').join('');
     else h += '<h2 style="font-size:26px;margin:16px 0 10px">' + t({ vi: 'Thông tin của bạn', en: 'Your details' }) + '</h2>' +
       '<label class="ch-k" for="ws-name">' + t({ vi: 'Họ tên', en: 'Full name' }) + '</label><input id="ws-name" class="ch-field" style="margin:6px 0 12px" autocomplete="off" value="' + esc(S.name) + '" placeholder="Nguyễn Văn A">' +
       '<label class="ch-k" for="ws-phone">' + t({ vi: 'Điện thoại / Zalo', en: 'Phone / Zalo' }) + '</label><input id="ws-phone" class="ch-field" style="margin:6px 0 12px" inputmode="tel" autocomplete="off" value="' + esc(S.phone) + '" placeholder="09xx xxx xxx">' +
       '<p class="ch-proto">' + t({ vi: 'Bản mẫu: thông tin nhập ở đây không được lưu hay gửi đi.', en: 'Mockup: what you type here is not stored or sent.' }) + '</p>' +
-      '<p style="margin-top:10px"><span class="ch-tbc">' + t({ vi: 'Chính sách thanh toán và hủy: cần xác nhận', en: 'Payment and cancellation policy: to confirm' }) + '</span></p>';
+      '<div class="ch-sunk" style="margin-top:12px;font-size:14px;line-height:1.55"><b>' + t({ vi: 'Thanh toán và hủy', en: 'Payment and cancellation' }) + '</b><ul style="margin:6px 0 0;padding-left:1.1em">' +
+        [{ vi: 'Xác nhận qua Zalo; đặt cọc 30% bằng chuyển khoản (dịp Tết 50%), phần còn lại trả khi nhận phòng.', en: 'Confirmed on Zalo; 30% deposit by bank transfer (50% at Tết), the rest on arrival.' },
+         { vi: 'Hủy trước 7 ngày: hoàn 100% cọc · 3–6 ngày: hoàn 50% · dưới 3 ngày hoặc đặt dịp Tết: không hoàn.', en: 'Cancel 7+ days ahead: 100% of the deposit back · 3–6 days: 50% · under 3 days or Tết bookings: no refund.' },
+         { vi: 'Mùa nước: khi homestay «Tạm đóng», dời lịch miễn phí hoặc hoàn 100% cọc.', en: 'Flood season: if the homestay is “Closed”, move your dates free or get the full deposit back.' },
+         { vi: 'Nhận phòng 14:00 · trả phòng 11:00.', en: 'Check-in 14:00 · check-out 11:00.' }].map(x => '<li>' + t(x) + '</li>').join('') + '</ul></div>';
     h += '<div class="ch-row" style="justify-content:space-between;margin-top:18px">' + (S.step > 1 ? '<button type="button" class="ch-btn soft" data-book="back" aria-label="' + esc(t({ vi: 'Quay lại', en: 'Back' })) + '">←</button>' : '<span></span>') +
       '<button type="button" class="ch-btn" data-book="next">' + nextLabel() + '</button></div>';
     return h;
@@ -60,7 +66,7 @@
     return '<span class="ch-k">' + t({ vi: 'Chuyến đi của bạn', en: 'Your stay' }) + '</span>' +
       '<div class="ln"><span>' + rn + '</span><span>' + K.vnd(roomLine()) + '</span></div>' +
       (S.dinner ? '<div class="ln"><span>' + t({ vi: 'Bữa tối × ', en: 'Dinner × ' }) + S.bGuests + '</span><span>' + K.vnd(dinnerLine()) + '</span></div>' : '') +
-      (S.cls ? '<div class="ln"><span>' + t({ vi: 'Lớp nấu ăn', en: 'Cooking class' }) + '</span><span class="ch-tbc">' + t({ vi: 'cần xác nhận', en: 'to confirm' }) + '</span></div>' : '') +
+      (S.cls ? '<div class="ln"><span>' + t({ vi: 'Lớp nấu ăn × ', en: 'Cooking class × ' }) + S.bGuests + '</span><span>' + K.vnd(cookLine()) + '</span></div>' + (S.bGuests < 4 ? '<p class="ch-note">' + t({ vi: 'Lớp mở khi đủ 4 người (có thể ghép với khách khác).', en: 'Classes run with at least 4 people (you may join other guests).' }) + '</p>' : '') : '') +
       '<div class="ln tot"><span>' + t({ vi: 'Tạm tính', en: 'Estimated total' }) + '</span><span>' + K.vnd(total()) + '</span></div>';
   }
   function render() {
@@ -68,7 +74,7 @@
     K.$('#ws-from').textContent = K.vnd(ROOM * S.nights);
     K.$('#ws-cart').textContent = S.cart;
     K.$('#ws-huts').innerHTML = [1, 2, 3, 4, 5, 6].map(i => { const b = BOOKED.includes(i);
-      return '<div class="' + (b ? 'booked' : 'free') + '"><b>' + i + '</b>' + (b ? t({ vi: 'Đã đặt', en: 'Booked' }) : t({ vi: 'Trống', en: 'Free' })) + '</div>'; }).join('');
+      return '<div class="' + (b ? 'booked' : 'free') + '"><b>' + i + '</b><small style="display:block;font-size:12.5px;margin-bottom:2px">' + t(HUTS[i - 1]) + '</small>' + (b ? t({ vi: 'Đã đặt', en: 'Booked' }) : t({ vi: 'Trống', en: 'Free' })) + '</div>'; }).join('');
     K.$('#ws-shop').innerHTML = PRODUCTS.map((p, i) => '<div class="ws-prod" style="background:' + p.bg + '"><img src="../assets/cham/clay/' + p.img + '.png" width="924" height="540" loading="lazy" alt="' + esc(t({ vi: 'Hình đất sét: ', en: 'Clay render: ' }) + t(p.art)) + '"><b>' + t(p.name) + '</b><span class="ch-row" style="justify-content:space-between"><span style="font-weight:800;color:var(--ch-teal)">' + t(p.price) + '</span><button type="button" class="ch-btn sm" data-add="' + i + '">' + t({ vi: '+ Thêm', en: '+ Add' }) + '</button></span></div>').join('');
     K.$('#ws-step').innerHTML = bookStep();
     K.$('#ws-sum').innerHTML = summary();
