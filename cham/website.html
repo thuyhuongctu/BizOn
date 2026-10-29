@@ -100,6 +100,11 @@
   .ws-day time{font:800 18px var(--ch-display);color:var(--ch-teal)}
   .ws-day b{display:block;color:var(--ch-ink-2)}
   .ws-map{width:100%;height:auto;border-radius:32px;box-shadow:var(--ch-raise);background:#fff3da}
+  .ws-gal{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr))}
+  .ws-gal figure{margin:0;padding:10px 10px 12px;border-radius:26px;background:var(--ch-raised);box-shadow:var(--ch-raise-sm)}
+  .ws-gal img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:18px}
+  .ws-gal figcaption{margin:8px 4px 0;font-weight:800;color:var(--ch-ink-2);line-height:1.3}
+  .ws-gal figcaption small{display:block;font-weight:600;color:var(--ch-muted);font-size:12.5px}
   .ws-foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:16px 20px;border-radius:26px;background:var(--ch-sunk);font-size:14px;font-weight:700}
 </style>
 </head>
@@ -112,7 +117,7 @@
     <header class="ws-top">
       <a class="ws-logo" href="#trang-chu" aria-label="CHAM – trang chủ" data-en-aria="CHAM – home">cham<span>.</span></a>
       <nav class="ws-nav" aria-label="Website CHAM" data-en-aria="CHAM website">
-        <a href="#luu-tru" data-en="Stay">Lưu trú</a><a href="#ve-trong-ngay" data-en="Day pass">Vé trong ngày</a><a href="#am-thuc" data-en="Food">Ẩm thực</a><a href="#buoi-toi" data-en="Evenings">Buổi tối</a><a href="#dac-san" data-en="Shop">Đặc sản</a><a href="#duong-den" data-en="Getting here">Đường đến</a><a href="#lich-trinh" data-en="Itinerary">Lịch trình</a>
+        <a href="#luu-tru" data-en="Stay">Lưu trú</a><a href="#ve-trong-ngay" data-en="Day pass">Vé trong ngày</a><a href="#am-thuc" data-en="Food">Ẩm thực</a><a href="#buoi-toi" data-en="Evenings">Buổi tối</a><a href="#dac-san" data-en="Shop">Đặc sản</a><a href="#duong-den" data-en="Getting here">Đường đến</a><a href="#kham-pha" data-en="Explore">Khám phá</a><a href="#lich-trinh" data-en="Itinerary">Lịch trình</a>
       </nav>
       <a class="ws-bag" href="#dac-san"><span data-en="Bag">Giỏ</span> · <span id="ws-cart">0</span></a>
       <a class="ch-btn sm" href="#dat-phong" data-en="Book a room">Đặt phòng</a>
@@ -153,7 +158,7 @@
     <section class="ws-screen" data-screen="luu-tru" aria-labelledby="h-rooms" hidden>
       <div class="ws-crumb"><a href="#trang-chu" data-en="Home">Trang chủ</a> / <span data-en="Stay">Lưu trú</span></div>
       <div class="ch-split">
-        <img class="ch-art" src="../assets/cham/clay/huts.png" width="924" height="540" alt="Hình đất sét 3D: nhà lá, mặt cắt nội thất" data-en-alt="3D clay render: thatched hut, interior cut-away" loading="lazy">
+        <img class="ch-art" style="aspect-ratio:1;max-width:460px;justify-self:center" src="../assets/cham/anh/nha-san-mua-nuoc.webp" width="512" height="512" alt="Hình đất sét 3D: nhà sàn lá CHAM giữa vườn, xuồng trên mương và hoa súng" data-en-alt="3D clay render: CHAM’s thatched stilt house in the garden, canoes on the canal and water lilies" loading="lazy">
         <div class="ch-stack" style="gap:14px"><h1 id="h-rooms" data-en="Six thatched rooms">Sáu phòng nhà lá</h1>
           <div class="ws-tags light"><span data-en="2–4 guests">2–4 khách</span><span data-en="Private bathroom">Vệ sinh riêng</span><span data-en="Bamboo beds">Giường tre</span></div>
           <b class="ch-display" style="font-size:34px;color:var(--ch-teal)" data-en="500,000 đ / night">500.000 đ / đêm</b>
@@ -173,7 +178,7 @@
           <div class="ws-tags light"><span data-en="Children under 1 m: free">Trẻ em dưới 1 m: miễn phí</span><span data-en="1–1.4 m: 30,000 đ">1–1,4 m: 30.000 đ</span><span data-en="Buy 7, get 1 free">Mua 7 vé tặng 1</span></div></div>
         <div class="ws-disc" style="justify-self:center"><b data-en="80,000 đ">80.000 đ</b><span style="font-weight:800" data-en="per adult">/ người lớn</span></div>
       </div>
-      <img class="ch-art" src="../assets/cham/clay/islet-overview.png" width="924" height="540" alt="Hình đất sét 3D: toàn cảnh cù lao" data-en-alt="3D clay render: the islet from above" loading="lazy">
+      <img class="ch-art" style="aspect-ratio:4/3" src="../assets/cham/anh/vuon-trai-cay.webp" width="600" height="448" alt="Hình đất sét 3D: vườn trái cây cù lao Tân Lộc, mận An Phước và xoài" data-en-alt="3D clay render: a Tân Lộc orchard with An Phước plums and mangoes" loading="lazy">
       <div class="ws-acts"><div class="ch-bg-leaf" data-en="Farm for a day">Làm nông dân một ngày</div><div style="background:var(--ch-river-2)" data-en="Catch fish">Bắt cá</div><div class="ch-bg-yellow" data-en="Chamomile fields">Đồng hoa cúc la mã</div><div class="ch-bg-brick" data-en="Cycle around the islet">Đạp xe quanh cù lao</div><div class="ch-bg-lilac" data-en="Folk games">Trò chơi dân gian</div></div>
       <div><a class="ch-btn" href="#dat-phong" data-en="Buy day pass">Mua vé trong ngày</a></div>
     </section>
@@ -181,12 +186,12 @@
     <section class="ws-screen" data-screen="am-thuc" aria-labelledby="h-food" hidden>
       <div class="ws-crumb"><a href="#trang-chu" data-en="Home">Trang chủ</a> / <span data-en="Food">Ẩm thực</span></div>
       <div class="ch-split">
-        <img class="ch-art" src="../assets/cham/clay/hotpot.png" width="924" height="540" alt="Hình đất sét 3D: nồi lẩu sôi, cá sông, rau thơm" data-en-alt="3D clay render: a bubbling hotpot, river fish, herbs" loading="lazy">
+        <img class="ch-art" style="aspect-ratio:4/3" src="../assets/cham/anh/lau-mam.webp" width="600" height="448" alt="Hình đất sét 3D: nồi lẩu mắm với rau đồng, bông điên điển và bông súng" data-en-alt="3D clay render: a fermented-fish hotpot with field greens, sesbania and water-lily stems" loading="lazy">
         <div class="ch-stack" style="gap:12px"><h1 id="h-food" data-en="Tân Lộc pangasius hotpot">Lẩu mắm cá tra Tân Lộc</h1>
           <p class="ws-lead" data-en="Lẩu mắm cá tra, plus other country dishes.">Lẩu mắm cá tra cùng nhiều món đồng quê khác.</p>
           <b class="ch-display" style="font-size:28px;color:var(--ch-teal)" data-en="About 120,000 đ / guest">Khoảng 120.000 đ / khách</b></div>
       </div>
-      <div class="ch-card"><span class="ch-k" data-en="Cooking class">Lớp nấu ăn</span><h2 style="margin:6px 0" data-en="Pick it in the garden, then cook it">Tự hái trong vườn, tự nấu</h2><p data-en="You cook with ingredients you pick yourself.">Bạn nấu bằng chính nguyên liệu mình tự thu hoạch.</p>
+      <div class="ch-card"><img src="../assets/cham/anh/cha-ca.webp" width="600" height="448" alt="Hình đất sét 3D: mẻ chả cá vừa chiên trong bếp lá" data-en-alt="3D clay render: freshly fried fish cakes in a thatched kitchen" loading="lazy" style="display:block;width:100%;max-width:420px;height:auto;border-radius:22px;margin-bottom:12px"><span class="ch-k" data-en="Cooking class">Lớp nấu ăn</span><h2 style="margin:6px 0" data-en="Pick it in the garden, then cook it">Tự hái trong vườn, tự nấu</h2><p data-en="You cook with ingredients you pick yourself.">Bạn nấu bằng chính nguyên liệu mình tự thu hoạch.</p>
         <div class="ws-steps3" style="margin:14px 0"><div><span>1</span><span data-en="Pick">Hái</span></div><div><span>2</span><span data-en="Cook">Nấu</span></div><div><span>3</span><span data-en="Eat">Ăn</span></div></div>
         <b class="ch-display" style="font-size:24px;color:var(--ch-teal)" data-en="150,000 đ / adult · children 75,000 đ">150.000 đ / người lớn · trẻ em 75.000 đ</b><p class="ch-note" style="margin-top:4px" data-en="Includes the guide, tools, garden vegetables and one fish dish; minimum 4 people. Extra ingredients follow the subsidised menu (cá lóc 100,000 đ/kg, cua đồng 50,000 đ/kg).">Gồm hướng dẫn, dụng cụ, rau vườn và một món cá; tối thiểu 4 người. Nguyên liệu thêm theo bảng giá trợ giá (cá lóc 100.000 đ/kg, cua đồng 50.000 đ/kg).</p></div>
     </section>
@@ -232,6 +237,7 @@
     <section class="ws-screen" data-screen="duong-den" aria-labelledby="h-map" hidden>
       <div class="ws-crumb"><a href="#trang-chu" data-en="Home">Trang chủ</a> / <span data-en="Getting here">Đường đến</span></div>
       <h1 id="h-map" style="font-size:clamp(36px,5vw,56px)" data-en="Getting here">Đường đến</h1>
+      <img class="ch-art" style="aspect-ratio:4/3;max-width:640px" src="../assets/cham/anh/ben-do.webp" width="600" height="448" alt="Hình đất sét 3D: bến đò cù lao Tân Lộc – Thốt Nốt, phà chở khách và xe máy" data-en-alt="3D clay render: the Tân Lộc – Thốt Nốt ferry landing, with a ferry carrying people and motorbikes" loading="lazy">
       <div class="ch-split">
         <figure style="margin:0"><img class="ws-map" src="../assets/geo/tan-loc-clay.svg" width="670" height="550" alt="Bản đồ cù lao Tân Lộc giữa sông Hậu" data-en-alt="Map of Tân Lộc islet in the Hậu River" loading="lazy">
           <figcaption class="ch-note" style="margin-top:8px" data-en="Outline: © OpenStreetMap contributors (ODbL), simplified for illustration, not an official map.">Đường bờ: © OpenStreetMap contributors (ODbL), giản lược để minh họa, không dùng làm bản đồ chính thức.</figcaption></figure>
@@ -248,6 +254,7 @@
       <div class="ws-crumb"><a href="#trang-chu" data-en="Home">Trang chủ</a> / <span data-en="Flood &amp; safety">Mùa nước &amp; an toàn</span></div>
       <h1 id="h-safe" style="font-size:clamp(36px,5vw,56px)" data-en="Flood season &amp; safety">Mùa nước &amp; an toàn</h1>
       <div class="ws-status"><i aria-hidden="true"></i><div><span class="ch-k" data-en="Flood status today">Tình trạng nước hôm nay</span><b class="ch-display" style="display:block;font-size:24px;color:var(--ch-ink-2)" data-en="Open · normal water level">Mở cửa · mực nước bình thường</b><span class="ch-note" data-en="Example state. The owner updates this (Open / Caution / Closed).">Trạng thái mẫu. Chủ homestay cập nhật (Mở cửa / Thận trọng / Tạm đóng).</span></div></div>
+      <img class="ch-art" style="aspect-ratio:4/3;max-width:640px" src="../assets/cham/anh/mua-nuoc.webp" width="600" height="448" alt="Hình đất sét 3D: nhà sàn mùa nước nổi với cột đo mực nước và áo phao" data-en-alt="3D clay render: a stilt house in flood season with a water-level gauge and life jackets" loading="lazy">
       <p class="ws-lead" data-en="Floods and riverbank erosion are real risks on the islet. Here's what we tell guests before they come.">Lũ và sạt lở bờ sông là rủi ro thật trên cù lao. Đây là những điều chúng tôi báo khách trước khi đến.</p>
       <div class="ws-safe">
         <div><span class="n">1</span><span><b data-en="Flood-season dates and booking changes">Thời gian mùa nước và đổi lịch</b><br><span class="ch-note" data-en="Flood season runs September–November, peaking in October; spring tides come around the 1st and 15th of the lunar month. If status turns “Closed”, move your dates free or get a full refund.">Mùa nước từ tháng 9 đến tháng 11, đỉnh vào tháng 10; triều cường quanh mùng 1 và rằm âm lịch. Khi trạng thái chuyển «Tạm đóng», khách được dời lịch miễn phí hoặc hoàn 100% tiền cọc.</span></span></div>
@@ -281,7 +288,16 @@
       <span class="ch-tbc" style="align-self:flex-start" data-en="Times are suggestions. The gardens and the ancient house are private: they usually open in daytime, so call ahead before you go.">Giờ giấc là gợi ý. Các vườn và nhà cổ là cơ sở tư nhân, thường mở ban ngày; nên gọi trước khi đến.</span>
     </section>
 
-    <footer class="ws-foot"><span>CHAM™ · Tân Lộc, Cần Thơ</span><span><a href="#an-toan" data-en="Flood season &amp; safety">Mùa nước &amp; an toàn</a> · <a href="#duong-den" data-en="Getting here">Đường đến</a> · <a href="#lich-trinh" data-en="Itinerary">Lịch trình</a></span></footer>
+    <section class="ws-screen" data-screen="kham-pha" aria-labelledby="h-explore" hidden>
+      <div class="ws-crumb"><a href="#trang-chu" data-en="Home">Trang chủ</a> / <span data-en="Explore">Khám phá</span></div>
+      <div><h1 id="h-explore" style="font-size:clamp(36px,5vw,60px)" data-en="Explore Tân Lộc islet">Khám phá cù lao Tân Lộc</h1>
+        <p class="ws-lead" data-en="Orchards, craft villages, river food and drinks around CHAM. Ask at reception which gardens and workshops are open on the day you visit.">Vườn trái cây, làng nghề, món ăn và thức uống miệt sông quanh CHAM. Hỏi lễ tân vườn, xưởng nào mở cửa vào ngày bạn đến.</p></div>
+      <div class="ch-row" id="ws-ex-tabs" role="group" aria-label="Nhóm" data-en-aria="Group"></div>
+      <div class="ws-gal" id="ws-gal"></div>
+      <p class="ch-note" data-en="3D clay illustrations supplied by the case author, not photographs of real businesses. Names follow the author; check opening times before you go.">Ảnh minh họa đất sét 3D do tác giả tình huống cung cấp, không phải ảnh chụp cơ sở thật. Tên gọi theo tác giả; nên hỏi giờ mở cửa trước khi ghé.</p>
+    </section>
+
+    <footer class="ws-foot"><span>CHAM™ · Tân Lộc, Cần Thơ</span><span><a href="#an-toan" data-en="Flood season &amp; safety">Mùa nước &amp; an toàn</a> · <a href="#duong-den" data-en="Getting here">Đường đến</a> · <a href="#kham-pha" data-en="Explore">Khám phá</a> · <a href="#lich-trinh" data-en="Itinerary">Lịch trình</a></span></footer>
   </div>
   <p class="ch-lic" data-en="CHAM™ and this case © 2017–2026 Đỗ Thùy Hương, used on BizOn under a non-exclusive licence. A planned project; figures are planning assumptions, not operating data.">CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương, dùng trên BizOn theo giấy phép không độc quyền. Dự án đang ở giai đoạn kế hoạch; số liệu là giả định, không phải kết quả hoạt động.</p>
 </main>

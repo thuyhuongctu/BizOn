@@ -72,12 +72,20 @@ assert.ok(!/cần xác nhận|to confirm/.test(read('cham/website.html') + read(
 for (const need of ['150.000 đ / người lớn', 'Mùa nước từ tháng 9 đến tháng 11', 'Nhận phòng 14:00']) assert.ok(read('cham/website.html').includes(need), 'website thiếu: ' + need);
 for (const need of ['Nhà Lục Bình', 'cọc 30%', 'COOK = 150000']) assert.ok(read('js/cham-website.js').includes(need), 'cham-website.js thiếu: ' + need);
 assert.ok(read('cham-homestay.html').includes('1 quản lý vận hành 10 triệu'), 'trang 2026 thiếu cơ cấu lương');
-// Ảnh minh họa mới: trang giảng viên (15 thẻ có ảnh) và ảnh chính của bộ CHAM
+// Ảnh minh họa mới: trang giảng viên (16 thẻ có ảnh) và ảnh chính của bộ CHAM
 { const gv = read('giang-vien.html'), imgs = [...gv.matchAll(/<img class="th" src="([^"]+)"/g)].map(m => m[1]);
-  assert.equal(imgs.length, 15, 'số thẻ có ảnh trên trang giảng viên'); assert.equal(new Set(imgs).size, 15, 'ảnh thẻ bị trùng');
+  assert.equal(imgs.length, 16, 'số thẻ có ảnh trên trang giảng viên'); assert.equal(new Set(imgs).size, 16, 'ảnh thẻ bị trùng');
   for (const f of imgs.concat(['assets/giang-vien/ho-tro-giang-vien.webp'])) assert.ok(gv.includes(f) && fs.existsSync(path.join(ROOT, f)), 'thiếu ảnh ' + f); }
 for (const [p, img] of [['cham/index.html', 'du-an-cham.webp'], ['cham/website.html', 'homestay-diorama.webp'], ['cham/ke-hoach-2017.html', 'thuyen-ke-hoach.webp'], ['cham-homestay.html', 'homestay-diorama.webp']])
   assert.ok(read(p).includes('assets/cham/clay/' + img), p + ' chưa dùng ảnh ' + img);
+// Ảnh minh họa đất sét của bộ CHAM (assets/cham/anh): mọi ảnh đều được dùng, mọi ảnh được trỏ tới đều tồn tại
+{ const dir = path.join(ROOT, 'assets/cham/anh'), files = fs.readdirSync(dir).filter(f => f.endsWith('.webp')).map(f => f.slice(0, -5));
+  const used = PAGES.concat(['cham-homestay.html', 'js/cham-website.js']).map(read).join('\n');
+  for (const f of files) assert.ok(used.includes('anh/' + f + '.webp') || used.includes("'" + f + "'"), 'ảnh chưa dùng: ' + f);
+  const refs = [...read('js/cham-website.js').matchAll(/\['([a-z-]+)', '/g)].map(m => m[1]);
+  assert.ok(refs.length >= 45, 'màn hình Khám phá quá ít ảnh: ' + refs.length);
+  for (const f of refs) assert.ok(files.includes(f), 'thiếu ảnh ' + f);
+  assert.equal((read('cham/index.html').match(/class="hub-th"/g) || []).length, 10, 'trang tổng hợp: 10 thẻ có ảnh'); }
 assert.ok(read('cham/website.html').includes('không nhận đặt phòng'), 'website mẫu phải ghi rõ là bản mẫu');
 assert.ok(read('THIRD-PARTY-NOTICES.md').includes('`js/vendor/qrcode.js`'));
 assert.ok(read('docs/ho-so-so-huu-tri-tue.md').includes('docs/cham/README.md'));
