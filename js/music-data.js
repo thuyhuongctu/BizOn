@@ -9,7 +9,7 @@
 window.BZ_MUSIC = {
   groups: [
     ['«BizOn – L’Esprit du Mékong»', 'illustrations/globe-trade.webp', 'Bài hát chính của BizOn · Pháp–Anh–Việt · 5:13', [
-      ['Bản gốc ⭐', 'Lời Pháp–Anh–Việt · electro-pop lễ hội · 5:13', 'bizon-lesprit-du-mekong', 'Original ⭐', 'French–English–Vietnamese lyrics · festival electro-pop · 5:13']
+      ['Bản gốc ⭐', 'Đỗ Thùy Hương & Phan Anh Tú · lời Pháp–Anh–Việt · 5:13', 'bizon-lesprit-du-mekong', 'Original ⭐', 'Đỗ Thùy Hương & Phan Anh Tú · French–English–Vietnamese lyrics · 5:13']
     ], "BizOn's main song · French–English–Vietnamese · 5:13"],
     ['«Hương on Return»', 'character/lumina-ao-dai-wave-cut.webp', 'Bài hát chính đầu tiên của BizOn', [
       ['Bản gốc ⭐', 'Bản thu có lời', 'huong-on-return', 'Original ⭐', 'Vocal recording'],
