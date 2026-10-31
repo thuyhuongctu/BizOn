@@ -705,6 +705,7 @@ const BGM_TRACKS = [
   'assets/audio/bat-nghiep-mekong-sunfire-1.mp3', // Mekong Sunfire – bản 1 (song ngữ Anh–Việt, 4:26)
   'assets/audio/huong-and-the-world-en.mp3', // Hương & The World (bản tiếng Anh)
   'assets/audio/bat-nghiep-co-loi.mp3',   // ca khúc chủ đề, bản thu có lời
+  'assets/audio/bat-nghiep-thap-den-ben-song.mp3', // «Thắp đèn bên sông» – lời Việt, dân ca Nam Bộ, 5:00
   'assets/audio/bat-nghiep-rap-symphony.mp3', // bản rap symphony
   'assets/audio/bat-nghiep-mekong-sunfire-2.mp3', // Mekong Sunfire – bản đề xuất
   'assets/audio/bat-nghiep-mekong-sunfire.mp3',
