@@ -2306,6 +2306,14 @@
 "BizOn's main theme song · vocal recording"
 ],
 [
+"Bài hát chính của BizOn · Pháp–Anh–Việt · 5:13",
+"BizOn's main song · French–English–Vietnamese · 5:13"
+],
+[
+"Bài hát chính đầu tiên của BizOn",
+"BizOn's first main song"
+],
+[
 "Ca khúc tiếng Việt về «đường cong ta học» · bản thu có lời (remastered)",
 "Vietnamese song about «the curve we all learn» · vocal recording (remastered)"
 ],

@@ -11,7 +11,8 @@
   /* Playlist toàn bộ ca khúc gốc – phát nối tiếp đến hết rồi tự lặp lại từ đầu.
    * Tên bài theo đúng Kho Âm nhạc (am-nhac.html) – nguồn chuẩn của hệ sinh thái. */
   var PLAYLIST = [
-    ['Hương on Return ⭐ (bài hát chính)', 'huong-on-return.mp3'],
+    ['BizOn – L’Esprit du Mékong ⭐ (bài hát chính)', 'bizon-lesprit-du-mekong.mp3'],
+    ['Hương on Return (bài hát chính đầu tiên)', 'huong-on-return.mp3'],
     ['Hương on Return – remix (remastered)', 'huong-on-return-remix.mp3'],
     ['Bật Nghiệp ⭐ (ca khúc chủ đề game · bản thu có lời)', 'bat-nghiep-co-loi.mp3'],
     ['Bật Nghiệp – Thắp đèn bên sông 🪔 (5:00)', 'bat-nghiep-thap-den-ben-song.mp3'],

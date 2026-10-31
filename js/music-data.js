@@ -8,10 +8,13 @@
    ========================================================================== */
 window.BZ_MUSIC = {
   groups: [
-    ['«Hương on Return»', 'character/lumina-ao-dai-wave-cut.webp', 'Bài hát chính của BizOn', [
+    ['«BizOn – L’Esprit du Mékong»', 'illustrations/globe-trade.webp', 'Bài hát chính của BizOn · Pháp–Anh–Việt · 5:13', [
+      ['Bản gốc ⭐', 'Lời Pháp–Anh–Việt · electro-pop lễ hội · 5:13', 'bizon-lesprit-du-mekong', 'Original ⭐', 'French–English–Vietnamese lyrics · festival electro-pop · 5:13']
+    ], "BizOn's main song · French–English–Vietnamese · 5:13"],
+    ['«Hương on Return»', 'character/lumina-ao-dai-wave-cut.webp', 'Bài hát chính đầu tiên của BizOn', [
       ['Bản gốc ⭐', 'Bản thu có lời', 'huong-on-return', 'Original ⭐', 'Vocal recording'],
       ['Bản remix (remastered)', 'Bản phối lại mới · hành trình Go Global gói trong một bài hát', 'huong-on-return-remix', 'Remix (remastered)', 'A fresh remix · the Go Global journey in one song']
-    ], "BizOn's main song"],
+    ], "BizOn's first main song"],
     ['«Journey on the Golden Silt»', 'illustrations/globe-trade.webp', 'Global electro-pop đa ngôn ngữ Anh–Pháp–Việt · từ phù sa Mekong ra thế giới', [
       ['Bản gốc (4 phút)', 'Bản thu có lời chính thức', 'journey-golden-silt', 'Original (4 min)', 'Official vocal recording'],
       ['Bản đầy đủ «Golden Silt Journey» ⭐', 'Ba thứ tiếng Anh–Pháp–Việt · 4:18 · nhạc nền Bến Phù Sa', 'golden-silt-journey-ben-phu-sa', 'Full «Golden Silt Journey» ⭐', 'Trilingual EN–FR–VI · 4:18 · Bến Phù Sa soundtrack'],

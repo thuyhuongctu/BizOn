@@ -85,7 +85,8 @@ window.BZ_LIB_EN={
 'oee-logistics-tablet.webp':['OEE operations board','Equipment efficiency and logistics milestones tracked side by side'],
 'team-victory-celebration.webp':['Champions’ night','The whole team lifts the BizOn Bật Nghiệp trophy amid confetti & stage lights'],
 /* music (khoá = audioId) */
-'huong-on-return':['Hương on Return ⭐','BizOn’s main song · vocal recording'],
+'bizon-lesprit-du-mekong':['BizOn – L’Esprit du Mékong ⭐','BizOn’s main song · French–English–Vietnamese lyrics'],
+'huong-on-return':['Hương on Return','BizOn’s first main song · vocal recording'],
 'vua-du-de-bay-cao':['Vừa Đủ Để Bay Cao','Vietnamese song · vocal recording'],
 'bizon-theme':['BizOn Theme','Game background music · instrumental'],
 'bat-nghiep-co-loi':['Bật Nghiệp','Theme song of the Vietnam game · vocal recording'],
