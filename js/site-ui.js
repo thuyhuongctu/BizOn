@@ -4101,16 +4101,16 @@
 "Second take of the same song · 2:47 · different arrangement"
 ],
 [
-"Remix «Mekong Sunfire 2» 🎧",
-"«Mekong Sunfire 2» remix 🎧"
+"«Mekong Sunfire 2» 🎧",
+"«Mekong Sunfire 2» 🎧"
 ],
 [
 "Đề xuất nghe · 3:23 · bản dài hơn trong hai bản Mekong Sunfire",
 "Recommended listen · 3:23 · the longer of the two Mekong Sunfire cuts"
 ],
 [
-"Remix «Mekong Sunfire»",
-"«Mekong Sunfire» remix"
+"«Mekong Sunfire»",
+"«Mekong Sunfire»"
 ],
 [
 "Bản phối Mekong Sunfire · 3:18",

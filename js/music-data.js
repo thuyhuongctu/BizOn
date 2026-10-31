@@ -30,6 +30,9 @@ window.BZ_MUSIC = {
       ['«Vươn ra thế giới» – bản 1', 'Ca khúc mới cùng tuyến · 2:47', 'huong-vuon-ra-the-gioi', '«Vươn ra thế giới» – take 1', 'A new song on the same line · 2:47'],
       ['«Vươn ra thế giới» – bản 2', 'Hòa âm khác · 2:47', 'huong-vuon-ra-the-gioi-2', '«Vươn ra thế giới» – take 2', 'Alternate arrangement · 2:47']
     ], 'BizOn Go Global song · international pop 118 BPM'],
+    ['«Bến Phù Sa»', 'covers/ben-phu-sa-3d.webp', 'Bài hát của game Bến Phù Sa · lời và nhạc Đỗ Thùy Hương', [
+      ['Bản thu có lời ⭐', 'Lời tiếng Việt, song ca nam nữ · 5:49', 'bai-hat-ben-phu-sa', 'Vocal recording ⭐', 'Vietnamese lyrics, male–female duet · 5:49']
+    ], 'The song of the Bến Phù Sa game · words & music by Đỗ Thùy Hương'],
     ['«Đội Phù Sa»', 'covers/ben-phu-sa-3d.webp', 'Anthem đội chơi game Bến Phù Sa · V-pop electronic 116 BPM', [
       ['Bản gốc', 'Golden silt, we rise!', 'doi-phu-sa', 'Original', 'Golden silt, we rise!'],
       ['Bản remix', 'Cùng lời, màu nhạc mới', 'doi-phu-sa-remix', 'Remix', 'Same lyrics, new colour'],
@@ -64,9 +67,9 @@ window.BZ_MUSIC = {
     ['«Bật Nghiệp»', 'covers/bat-nghiep-3d.webp', 'Ca khúc chủ đề game Việt Nam · V-pop electronic 112 BPM', [
       ['Bản thu có lời ⭐', '3:23 · nhạc nền mở đầu', 'bat-nghiep-co-loi', 'Vocal recording ⭐', '3:23 · opening theme'],
       ['Bản Rap Symphony', 'Rap kết hợp dàn dây · 3:48', 'bat-nghiep-rap-symphony', 'Rap Symphony', 'Rap with strings · 3:48'],
-      ['Remix «Mekong Sunfire 2»', '3:23', 'bat-nghiep-mekong-sunfire-2', '«Mekong Sunfire 2» remix', '3:23'],
-      ['Remix «Mekong Sunfire»', '3:18', 'bat-nghiep-mekong-sunfire', '«Mekong Sunfire» remix', '3:18'],
-      ['Remix «Mekong Sunfire Rise»', '4:45', 'bat-nghiep-mekong-sunfire-rise', '«Mekong Sunfire Rise» remix', '4:45'],
+      ['«Mekong Sunfire 2»', '3:23', 'bat-nghiep-mekong-sunfire-2', '«Mekong Sunfire 2»', '3:23'],
+      ['«Mekong Sunfire»', '3:18', 'bat-nghiep-mekong-sunfire', '«Mekong Sunfire»', '3:18'],
+      ['«Mekong Sunfire Rise»', '4:45', 'bat-nghiep-mekong-sunfire-rise', '«Mekong Sunfire Rise»', '4:45'],
       ['«Mekong Sunfire – Rise With The River» – bản 2', 'Song ngữ Việt–Anh · 4:55', 'bat-nghiep-mekong-sunfire-rise-2', '«Mekong Sunfire – Rise With The River» – take 2', 'Vietnamese–English · 4:55'],
       ['«Mekong Sunfire» – bản 1', 'Song ngữ Anh–Việt · 4:26', 'bat-nghiep-mekong-sunfire-1', '«Mekong Sunfire» – take 1', 'English–Vietnamese · 4:26'],
       ['Bản instrumental', '1:20 · xen giữa các vòng', 'bat-nghiep', 'Instrumental', '1:20 · between rounds']
@@ -99,7 +102,7 @@ window.BZ_MUSIC = {
   collections: [
     ['Bật Nghiệp', 'covers/bat-nghiep-3d.webp', 'Màu Việt Nam', 'game.html', ['bat-nghiep-mekong-sunfire-rise', 'bat-nghiep-mekong-sunfire-rise-2', 'bat-nghiep-mekong-sunfire-1', 'huong-and-the-world-en', 'bat-nghiep-co-loi', 'bat-nghiep-rap-symphony', 'bat-nghiep-mekong-sunfire-2', 'bat-nghiep-mekong-sunfire', 'bat-nghiep', 'huong-vuon-ra-the-gioi', 'huong-sans-frontieres-2', 'bizon-theme', 'huong-on-return', 'huong-on-return-remix', 'vua-du-de-bay-cao', 'doi-phu-sa', 'doi-phu-sa-remix', 'doi-phu-sa-remix2'], 'Vietnam palette'],
     ['Hộ Chiếu Thương Hiệu', 'covers/ho-chieu-thuong-hieu-3d.webp', 'Bậc 3 · Quốc tế hóa', 'brand-passport.html', ['brand-passport', 'brand-passport-v2', 'brand-passport-remix', 'brand-passport-remix-25', 'stamps-beyond-borders', 'stamps-beyond-borders-v2', 'stamps-beyond-borders-extended', 'golden-silt-route', 'ho-chieu-p1-tu-dong-mekong', 'ho-chieu-p2-qua-nhung-thi-truong', 'ho-chieu-p3-viet-nam-ra-the-gioi', 'ho-chieu-p3-remix', 'ho-chieu-p3-remix2', 'ho-chieu-p3-vietnam-to-the-world-en', 'ho-chieu-p3-en-remix2', 'ho-chieu-p1-remix', 'ho-chieu-p1-remix2', 'ho-chieu-p1-remix3', 'ho-chieu-p2-remix', 'ho-chieu-p3-remix3', 'ho-chieu-p3-en-remix', 'journey-golden-silt', 'journey-golden-silt-remix', 'mekong-river-remix', 'mekong-river-v2', 'mekong-compass', 'huong-and-the-world', 'huong-and-the-world-en', 'huong-and-the-world-male', 'huong-et-le-monde', 'huong-sans-frontieres', 'huong-sans-frontieres-2', 'huong-vuon-ra-the-gioi', 'huong-vuon-ra-the-gioi-2'], 'Level 3 · Internationalisation', 'Brand Passport'],
-    ['Bến Phù Sa', 'covers/ben-phu-sa-3d.webp', 'Chợ nổi Mekong · Bậc 1 · Khởi sự kinh doanh', 'ben-phu-sa.html', ['golden-silt-journey-ben-phu-sa', 'golden-silt-journey-ben-phu-sa-2', 'doi-phu-sa', 'doi-phu-sa-remix', 'doi-phu-sa-remix2', 'doi-phu-sa-remix3'], 'Mekong floating market · Level 1 · Venture start-up'],
+    ['Bến Phù Sa', 'covers/ben-phu-sa-3d.webp', 'Chợ nổi Mekong · Bậc 1 · Khởi sự kinh doanh', 'ben-phu-sa.html', ['bai-hat-ben-phu-sa', 'golden-silt-journey-ben-phu-sa', 'golden-silt-journey-ben-phu-sa-2', 'doi-phu-sa', 'doi-phu-sa-remix', 'doi-phu-sa-remix2', 'doi-phu-sa-remix3'], 'Mekong floating market · Level 1 · Venture start-up'],
     ['Hộ Chiếu Sầu Riêng', 'covers/ho-chieu-sau-rieng-cho-noi.webp', 'Xuất khẩu sầu riêng · Play, Grow, Go!', 'lab/ho-chieu-sau-rieng.html', ['huong-ngot-phu-sa', 'huong-ngot-que-minh', 'durian-passport'], 'Durian export · Play, Grow, Go!', 'Durian Passport'],
     ['BizOn Arcade', 'character/arcade-rong-bay-sau-rieng-cut.webp', 'Nhịp nhanh', 'games.html', ['bizon-theme', 'and-the-world-say-hello', 'vua-du-de-bay-cao', 'bat-nghiep'], 'Fast tempo']
   ],
